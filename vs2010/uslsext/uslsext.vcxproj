@@ -1,0 +1,439 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{97FD97F4-5C0F-411E-9F3A-6549D4263664}</ProjectGuid>
+    <RootNamespace>uslsext</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\bin\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Configuration)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\bin\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\</IntDir>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release|x64'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <AdditionalOptions>/vmg %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\..\src;"..\..\3rdparty\lua-5.1.3\src";"..\..\3rdparty\glew-1.5.6\include";"..\..\3rdparty\zlib-1.2.3";"..\..\3rdparty\sqlite-3.6.16";..\..\3rdparty\tinyxml;"..\..\3rdparty\curl-7.19.7\include";..\..\3rdparty\lpng140;"..\..\3rdparty\expat-2.0.1\lib"</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;AKU_STATIC;XML_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <MinimalRebuild>true</MinimalRebuild>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ShowIncludes>false</ShowIncludes>
+    </ClCompile>
+    <Lib>
+      <AdditionalDependencies>iphlpapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)$(ProjectName).lib</OutputFile>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Midl>
+      <TargetEnvironment>X64</TargetEnvironment>
+    </Midl>
+    <ClCompile>
+      <AdditionalOptions>/vmg %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\lua-5.1.3\src;..\..\3rdparty\SOIL\src;..\..\3rdparty\openGL\include;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\sqlite-3.6.16;..\..\3rdparty\tinyxml;..\..\3rdparty\gsoap-2.7\gsoap;..\..\3rdparty\FMOD\inc;..\..\3rdparty\curl-7.19.7\include;..\..\3rdparty\lpng140;..\..\3rdparty\expat-2.0.1\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;AKU_STATIC;XML_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <MinimalRebuild>true</MinimalRebuild>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ShowIncludes>false</ShowIncludes>
+    </ClCompile>
+    <Lib>
+      <AdditionalDependencies>iphlpapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)$(ProjectName).lib</OutputFile>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <CustomBuildStep>
+      <Command>
+      </Command>
+    </CustomBuildStep>
+    <ClCompile>
+      <AdditionalOptions>/vmg %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>Full</Optimization>
+      <IntrinsicFunctions>false</IntrinsicFunctions>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <OmitFramePointers>false</OmitFramePointers>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
+      <AdditionalIncludeDirectories>..\..\src;"..\..\3rdparty\lua-5.1.3\src";"..\..\3rdparty\glew-1.5.6\include";"..\..\3rdparty\zlib-1.2.3";"..\..\3rdparty\sqlite-3.6.16";..\..\3rdparty\tinyxml;"..\..\3rdparty\curl-7.19.7\include";..\..\3rdparty\lpng140;"..\..\3rdparty\expat-2.0.1\lib"</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_LIB;_USE_32BIT_TIME_T;_CRT_SECURE_NO_WARNINGS;AKU_STATIC;XML_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <ProjectReference>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+    </ProjectReference>
+    <Lib>
+      <AdditionalOptions>/LTCG %(AdditionalOptions)</AdditionalOptions>
+      <OutputFile>$(OutDir)$(ProjectName).lib</OutputFile>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
+    </Lib>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <CustomBuildStep>
+      <Command>
+      </Command>
+    </CustomBuildStep>
+    <Midl>
+      <TargetEnvironment>X64</TargetEnvironment>
+    </Midl>
+    <ClCompile>
+      <AdditionalOptions>/vmg %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>Full</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <FavorSizeOrSpeed>Size</FavorSizeOrSpeed>
+      <OmitFramePointers>true</OmitFramePointers>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
+      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\lua-5.1.3\src;..\..\3rdparty\SOIL\src;..\..\3rdparty\openGL\include;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\sqlite-3.6.16;..\..\3rdparty\tinyxml;..\..\3rdparty\gsoap-2.7\gsoap;..\..\3rdparty\FMOD\inc;..\..\3rdparty\curl-7.19.7\include;..\..\3rdparty\lpng140;..\..\3rdparty\expat-2.0.1\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_LIB;_USE_32BIT_TIME_T;_CRT_SECURE_NO_WARNINGS;AKU_STATIC;XML_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions</EnableEnhancedInstructionSet>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Lib>
+      <AdditionalOptions>/LTCG %(AdditionalOptions)</AdditionalOptions>
+      <OutputFile>$(OutDir)$(ProjectName).lib</OutputFile>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
+    <PostBuildEvent>
+      <Command>xcopy /yr "$(OutDir)$(TargetFileName)" "..\..\windows\bin\"
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\uslsext\USAnimCurve.cpp" />
+    <ClCompile Include="..\..\src\uslsext\USCurveSampler.cpp" />
+    <ClCompile Include="..\..\src\uslsext\USDeflater.cpp" />
+    <ClCompile Include="..\..\src\uslsext\USDrawBuffer.cpp" />
+    <ClCompile Include="..\..\src\uslsext\USInflater.cpp" />
+    <ClCompile Include="..\..\src\uslsext\USZip.cpp" />
+    <ClCompile Include="..\..\src\uslsext\USZipFile.cpp" />
+    <ClCompile Include="..\..\src\uslsext\USAttributed.cpp" />
+    <ClCompile Include="..\..\src\uslsext\USAttrMap.cpp" />
+    <ClCompile Include="..\..\src\uslsext\USAttrOp.cpp" />
+    <ClCompile Include="..\..\src\uslsext\USFont.cpp" />
+    <ClCompile Include="..\..\src\uslsext\USFontRipper.cpp" />
+    <ClCompile Include="..\..\src\uslsext\USDebugLines.cpp" />
+    <ClCompile Include="..\..\src\uslsext\USGfxDevice.cpp" />
+    <ClCompile Include="..\..\src\uslsext\USBlendMode.cpp" />
+    <ClCompile Include="..\..\src\uslsext\USCamera2D.cpp" />
+    <ClCompile Include="..\..\src\uslsext\USCamera3D.cpp" />
+    <ClCompile Include="..\..\src\uslsext\USCameraFitter.cpp" />
+    <ClCompile Include="..\..\src\uslsext\USCanvas.cpp" />
+    <ClCompile Include="..\..\src\uslsext\USColor.cpp" />
+    <ClCompile Include="..\..\src\uslsext\USGLLine.cpp" />
+    <ClCompile Include="..\..\src\uslsext\USGLQuad.cpp" />
+    <ClCompile Include="..\..\src\uslsext\USImage.cpp" />
+    <ClCompile Include="..\..\src\uslsext\USTexture.cpp" />
+    <ClCompile Include="..\..\src\uslsext\USViewport.cpp" />
+    <ClCompile Include="..\..\src\uslsext\USViewQuad.cpp" />
+    <ClCompile Include="..\..\src\uslsext\USData.cpp" />
+    <ClCompile Include="..\..\src\uslsext\USDataIOTask.cpp" />
+    <ClCompile Include="..\..\src\uslsext\USBox.cpp" />
+    <ClCompile Include="..\..\src\uslsext\USCurve.cpp" />
+    <ClCompile Include="..\..\src\uslsext\USDistance.cpp" />
+    <ClCompile Include="..\..\src\uslsext\USFrustum.cpp" />
+    <ClCompile Include="..\..\src\uslsext\USInterpolate.cpp" />
+    <ClCompile Include="..\..\src\uslsext\USIntersect.cpp" />
+    <ClCompile Include="..\..\src\uslsext\USMercator.cpp" />
+    <ClCompile Include="..\..\src\uslsext\USPlane.cpp" />
+    <ClCompile Include="..\..\src\uslsext\USPolar.cpp" />
+    <ClCompile Include="..\..\src\uslsext\USQuad.cpp" />
+    <ClCompile Include="..\..\src\uslsext\USSurface2D.cpp" />
+    <ClCompile Include="..\..\src\uslsext\USTrig.cpp" />
+    <ClCompile Include="..\..\src\uslsext\USSlipMapBrush.cpp" />
+    <ClCompile Include="..\..\src\uslsext\USSlipMapTile.cpp" />
+    <ClCompile Include="..\..\src\uslsext\USSlipMapTileSource.cpp" />
+    <ClCompile Include="..\..\src\uslsext\USGrid.cpp" />
+    <ClCompile Include="..\..\src\uslsext\USPartition.cpp" />
+    <ClCompile Include="..\..\src\uslsext\USQuadCoord.cpp" />
+    <ClCompile Include="..\..\src\uslsext\USTile.cpp" />
+    <ClCompile Include="..\..\src\uslsext\USSqlBinding.cpp" />
+    <ClCompile Include="..\..\src\uslsext\USSqlColumn.cpp" />
+    <ClCompile Include="..\..\src\uslsext\USSqlConnection.cpp" />
+    <ClCompile Include="..\..\src\uslsext\USSqlRecord.cpp" />
+    <ClCompile Include="..\..\src\uslsext\USSqlStatement.cpp" />
+    <ClCompile Include="..\..\src\uslsext\USSqlValue.cpp" />
+    <ClCompile Include="..\..\src\uslsext\USMutex.cpp" />
+    <ClCompile Include="..\..\src\uslsext\USMutex_posix.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\USMutex_win32.cpp" />
+    <ClCompile Include="..\..\src\uslsext\USTask.cpp" />
+    <ClCompile Include="..\..\src\uslsext\USTaskThread.cpp" />
+    <ClCompile Include="..\..\src\uslsext\USThread.cpp" />
+    <ClCompile Include="..\..\src\uslsext\USThread_posix.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\USThread_win32.cpp" />
+    <ClCompile Include="..\..\src\uslsext\USAdapterInfo_win32.cpp" />
+    <ClCompile Include="..\..\src\uslsext\USLog.cpp" />
+    <ClCompile Include="..\..\src\uslsext\USPrettyPrint.cpp" />
+    <ClCompile Include="..\..\src\uslsext\USTypedPtr.cpp" />
+    <ClCompile Include="..\..\src\uslsext\USFileCache.cpp" />
+    <ClCompile Include="..\..\src\uslsext\USHttpTask.cpp" />
+    <ClCompile Include="..\..\src\uslsext\USHttpTask_impl.cpp" />
+    <ClCompile Include="..\..\src\uslsext\USUrlMgr.cpp" />
+    <ClCompile Include="..\..\src\uslsext\USXmlReader.cpp" />
+    <ClCompile Include="..\..\src\uslsext\pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\uslsext.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\uslsext\USAnimCurve.h" />
+    <ClInclude Include="..\..\src\uslsext\USCurveSampler.h" />
+    <ClInclude Include="..\..\src\uslsext\USDeflater.h" />
+    <ClInclude Include="..\..\src\uslsext\USDrawBuffer.h" />
+    <ClInclude Include="..\..\src\uslsext\USInflater.h" />
+    <ClInclude Include="..\..\src\uslsext\USZip.h" />
+    <ClInclude Include="..\..\src\uslsext\USZipFile.h" />
+    <ClInclude Include="..\..\src\uslsext\USAttributed.h" />
+    <ClInclude Include="..\..\src\uslsext\USAttrMap.h" />
+    <ClInclude Include="..\..\src\uslsext\USAttrOp.h" />
+    <ClInclude Include="..\..\src\uslsext\USFont.h" />
+    <ClInclude Include="..\..\src\uslsext\USFontRipper.h" />
+    <ClInclude Include="..\..\src\uslsext\USFsm.h" />
+    <ClInclude Include="..\..\src\uslsext\USFsmStateFactory.h" />
+    <ClInclude Include="..\..\src\uslsext\USDebugLines.h" />
+    <ClInclude Include="..\..\src\uslsext\USGfxDevice.h" />
+    <ClInclude Include="..\..\src\uslsext\USBlendMode.h" />
+    <ClInclude Include="..\..\src\uslsext\USCamera2D.h" />
+    <ClInclude Include="..\..\src\uslsext\USCamera3D.h" />
+    <ClInclude Include="..\..\src\uslsext\USCameraFitter.h" />
+    <ClInclude Include="..\..\src\uslsext\USCanvas.h" />
+    <ClInclude Include="..\..\src\uslsext\USColor.h" />
+    <ClInclude Include="..\..\src\uslsext\USGLLine.h" />
+    <ClInclude Include="..\..\src\uslsext\USGLQuad.h" />
+    <ClInclude Include="..\..\src\uslsext\USImage.h" />
+    <ClInclude Include="..\..\src\uslsext\USTexture.h" />
+    <ClInclude Include="..\..\src\uslsext\USViewport.h" />
+    <ClInclude Include="..\..\src\uslsext\USViewQuad.h" />
+    <ClInclude Include="..\..\src\uslsext\USData.h" />
+    <ClInclude Include="..\..\src\uslsext\USDataIOTask.h" />
+    <ClInclude Include="..\..\src\uslsext\USBox.h" />
+    <ClInclude Include="..\..\src\uslsext\USCurve.h" />
+    <ClInclude Include="..\..\src\uslsext\USDistance.h" />
+    <ClInclude Include="..\..\src\uslsext\USFrustum.h" />
+    <ClInclude Include="..\..\src\uslsext\USInterpolate.h" />
+    <ClInclude Include="..\..\src\uslsext\USIntersect.h" />
+    <ClInclude Include="..\..\src\uslsext\USMathConsts.h" />
+    <ClInclude Include="..\..\src\uslsext\USMatrix.h" />
+    <ClInclude Include="..\..\src\uslsext\USMatrix2D.h" />
+    <ClInclude Include="..\..\src\uslsext\USMatrix3D.h" />
+    <ClInclude Include="..\..\src\uslsext\USMercator.h" />
+    <ClInclude Include="..\..\src\uslsext\USPlane.h" />
+    <ClInclude Include="..\..\src\uslsext\USPolar.h" />
+    <ClInclude Include="..\..\src\uslsext\USPolygon2D.h" />
+    <ClInclude Include="..\..\src\uslsext\USQuad.h" />
+    <ClInclude Include="..\..\src\uslsext\USSurface2D.h" />
+    <ClInclude Include="..\..\src\uslsext\USTrig.h" />
+    <ClInclude Include="..\..\src\uslsext\USPolyScanner.h" />
+    <ClInclude Include="..\..\src\uslsext\USSlipMapBrush.h" />
+    <ClInclude Include="..\..\src\uslsext\USSlipMapTile.h" />
+    <ClInclude Include="..\..\src\uslsext\USSlipMapTileSource.h" />
+    <ClInclude Include="..\..\src\uslsext\USGrid.h" />
+    <ClInclude Include="..\..\src\uslsext\USPartition.h" />
+    <ClInclude Include="..\..\src\uslsext\USQuadCoord.h" />
+    <ClInclude Include="..\..\src\uslsext\USTile.h" />
+    <ClInclude Include="..\..\src\uslsext\USSqlBinding.h" />
+    <ClInclude Include="..\..\src\uslsext\USSqlColumn.h" />
+    <ClInclude Include="..\..\src\uslsext\USSqlConnection.h" />
+    <ClInclude Include="..\..\src\uslsext\USSqlRecord.h" />
+    <ClInclude Include="..\..\src\uslsext\USSqlStatement.h" />
+    <ClInclude Include="..\..\src\uslsext\USSqlValue.h" />
+    <ClInclude Include="..\..\src\uslsext\USMutex.h" />
+    <ClInclude Include="..\..\src\uslsext\USMutex_posix.h" />
+    <ClInclude Include="..\..\src\uslsext\USMutex_win32.h" />
+    <ClInclude Include="..\..\src\uslsext\USTask.h" />
+    <ClInclude Include="..\..\src\uslsext\USTaskThread.h" />
+    <ClInclude Include="..\..\src\uslsext\USThread.h" />
+    <ClInclude Include="..\..\src\uslsext\USThread_posix.h" />
+    <ClInclude Include="..\..\src\uslsext\USThread_win32.h" />
+    <ClInclude Include="..\..\src\uslsext\USDelegate.h" />
+    <ClInclude Include="..\..\src\uslsext\USLog.h" />
+    <ClInclude Include="..\..\src\uslsext\USPrettyPrint.h" />
+    <ClInclude Include="..\..\src\uslsext\USRadixSort16.h" />
+    <ClInclude Include="..\..\src\uslsext\USRadixSort32.h" />
+    <ClInclude Include="..\..\src\uslsext\USTypedPtr.h" />
+    <ClInclude Include="..\..\src\uslsext\USFileCache.h" />
+    <ClInclude Include="..\..\src\uslsext\USHttpTask.h" />
+    <ClInclude Include="..\..\src\uslsext\USHttpTask_impl.h" />
+    <ClInclude Include="..\..\src\uslsext\USUrlMgr.h" />
+    <ClInclude Include="..\..\src\uslsext\USXmlReader.h" />
+    <ClInclude Include="..\..\src\uslsext\pch.h" />
+    <ClInclude Include="..\..\src\uslsext\uslsext.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\expat\expat.vcxproj">
+      <Project>{860d46bc-ec6b-43c3-b335-3479f096fb1b}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\freetype\freetype.vcxproj">
+      <Project>{97d147f3-4dbc-45cd-87eb-6c90eb6efe21}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\glew\glew.vcxproj">
+      <Project>{48580411-0a48-46f9-87a6-cf5c9b81d146}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\libcurl\libcurl.vcxproj">
+      <Project>{41beb1cb-88c0-4c0f-b24e-f5871cf9ee49}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\libpng\libpng.vcxproj">
+      <Project>{e4bfd291-b8cf-4d71-9e86-658cd227428d}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\sqlite\sqlite.vcxproj">
+      <Project>{a9935050-2e54-4674-80f8-cfc45a2c106a}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\tinyxml\TinyXML.vcxproj">
+      <Project>{991ebc54-28ff-44a1-863e-e70617782825}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\uslscore\uslscore.vcxproj">
+      <Project>{86e29f0a-83d1-4001-9e1a-b20c6aece6f7}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\zlib\zlib.vcxproj">
+      <Project>{e6c55a0c-b5b7-4963-8f77-19f1624b9f47}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

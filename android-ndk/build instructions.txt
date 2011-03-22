@@ -1,0 +1,12 @@
+1. Set up the NDK.
+
+	http://developer.android.com/sdk/ndk/index.html
+
+2. Enter the 'project' directory and run:
+
+	$NDK/ndk-build # where $NDK is the path to the NDK
+
+	or
+
+	ndk-build	# where $NDK is in your system PATH variable
+

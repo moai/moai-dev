@@ -1,0 +1,2 @@
+moai "main.lua"
+@pause

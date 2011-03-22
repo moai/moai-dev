@@ -1,0 +1,46 @@
+// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// http://getmoai.com
+
+#ifndef	MOAIFMOD_H
+#define	MOAIFMOD_H
+#if USE_FMOD
+
+namespace FMOD {
+	class System;
+	class Sound;
+	class Channel;
+};
+
+//================================================================//
+// MOAIFmod
+//================================================================//
+/**	@brief FMOD singleton.
+*/
+class MOAIFmod :
+	public USGlobalClass < MOAIFmod, USLuaData > {
+private:
+
+	FMOD::System* mSoundSys;
+
+	//----------------------------------------------------------------//
+	static int	_init				( lua_State* L );
+
+public:
+
+	DECL_LUA_SINGLETON ( MOAIFmod )
+
+	GET ( FMOD::System*, SoundSys, mSoundSys );
+
+	//----------------------------------------------------------------//
+	void		CloseSoundSystem	();
+				MOAIFmod		();
+				~MOAIFmod		();
+	void		OpenSoundSystem		();
+	void		RegisterLuaClass	( USLuaState& state );
+	void		RegisterLuaFuncs	( USLuaState& state );
+	void		Update				();
+	STLString	ToString			();
+};
+
+#endif
+#endif

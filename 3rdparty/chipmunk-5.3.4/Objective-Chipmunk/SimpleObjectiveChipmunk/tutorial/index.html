@@ -1,0 +1,440 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>Chipmunk Game Dynamics Documentation</title>
+		<link rel="stylesheet" type="text/css" href="stylesheet.css" />
+	</head>
+	<body>
+
+<img src="images/logo1_med.png" alt="" /> <a href="http://howlingmoonsoftware.com"><img src="images/hms_logo.png" style="float:right;" alt="" /></a>
+
+<h1>Simple Objective-Chipmunk Tutorial:</h1>
+
+<img src="images/final.png" />
+
+<p>This tutorial aims to be a bare-bones introduction to using Objective-Chipmunk in an iPhone game. It is very heavily commented and should be easy to follow. Despite containing only 100 or so actual lines of code, it squeezes in an overview of a number of topics:</p>
+
+<ul>
+<li>Creating a Chipmunk space to simulate objects in it
+</li><li>Creating a bouncing box with friction
+</li><li>Controlling gravity using the device's tilt
+</li><li>Using collision callbacks to make impact sounds based on how hard objects collide
+</li><li>Using collision callbacks to track if an object is sitting on the ground or in the air
+</li><li>Using the ChipmunkObject protocol to easily add complex objects to a space
+</li><li>Using a CADisplayLink for smooth animation
+</li><li>Integrating Chipmunk into a Cocoa Touch UI
+</li></ul>
+
+<p>Even if you are just going to use the vanilla C API, this tutorial serves as a nice introduction to Chipmunk on the iPhone.</p>
+
+<p><strong>Download the project files and everything you need here: <a href="http://files.slembcke.net/chipmunk/release/ChipmunkLatest.tgz">Chipmunk Latest</a>. The project for this tutorial is located in the Objective-Chipmunk/SimpleObjectiveChipmunk/ directory.</strong></p>
+
+<h2>What Do I Need to Know First?</h2>
+
+<p>This tutorial assumes you have some prior experience with iPhone development. It does not try to explain Objective-C memory management or the Cocoa Touch APIs. You'll have to know at least a little about that to follow along.</p>
+
+<h2>What is Chipmunk?</h2>
+
+<p>Chipmunk is a 2D rigid body physics library distributed under the MIT license. It is intended to be fast, portable, numerically stable, and easy to use. For this reason it's been used in hundreds of games on just about every system you could name. This includes top quality titles such as Night Sky for the Wii and many #1 sellers on the iPhone App Store! I've put thousands of hours of work over many years to make Chipmunk what it is today. Check out Chipmunk's <a href="http://code.google.com/p/chipmunk-physics/">Google Code project page</a> for more information.</p>
+
+<h2>What is Objective-Chipmunk:</h2>
+
+<p>Objective-Chipmunk is an Objective-C wrapper for the Chipmunk Physics Library. While Chipmunk's C API is pretty easy to use, the Objective-C API is even better. The primary advantages of a native Objective-C API include integrating with the Cocoa memory management model and the Chipmunk Object protocol. The Chipmunk Object protocol unifies the basic Chipmunk types as well as making it easy to create custom composite collections of the basic types. Additionally, the wrapper adds many convenience methods for doing common setup tasks as well as helper methods that integrate it with the rest of the Cocoa Touch API. The wrapper tries to do things the Objective-C way, adding useful method variations where it makes sense to do so.</p>
+
+<p>You can find out more information on Objective-Chipmunk's <a href="http://howlingmoonsoftware.com/objectiveChipmunk.php">webpage</a>. While Objective-Chipmunk is not free like Chipmunk is, the enhanced API will almost certainly save you time and money. You'll also be helping to support further Chipmunk development!</p>
+
+<h2>Why are you using Cocoa Touch classes for a game tutorial?</h2>
+
+<p>Cocoa Touch actually works great for prototyping an iPhone game quickly. It's reasonably fast because it's hardware accelerated, and doesn't seem to slow down too much until you have a few dozen objects on the screen. Interface Builder makes a decent bare bones level editor as well. We've written several contract mini-games this way and it saved a lot of headaches dealing with libraries and dependencies. Given the simplicity of the games, using anything fancier would have been a waste of time.</p>
+
+<p>That said, we will be working on a simple <a href="http://www.cocos2d-iphone.org/">Cocos2D</a> tutorial for Objective-Chipmunk next. Cocos2D is much more applicable to a wider range of game types and is much more efficient.</p>
+
+<h1>Let's get started!</h1>
+
+<p>A very valid question of many Chipmunk beginners is how to structure their game to take advantage of Chipmunk. A lot of people try to build their game around Chipmunk, but this isn't a very good idea. Chipmunk is not meant to be a game engine. It doesn't render any graphics, and you can't get a list of all the bullets or monsters currently in the scene.</p>
+
+<p>To use Chipmunk, you should treat it as a component. When you add a game object to your game scene, add it's physics objects to the Chipmunk space you created for that scene. As you will see in this tutorial, the ChipmunkObject protocol is easy to implement, but makes it trivial to add and remove entire game objects from a Chipmunk space with a single method call. When you want to render a sprite, you can get read it's position and rotation from the Chipmunk object it is linked to. This is sort of an MVC approach applied to games, and it works quite well.</p>
+
+<p>A lot of people do this the other way around. They loop over all the collision shapes in Chipmunk and update the sprite that it is associated with. While this works, it's not very flexible. It means that each collision shape has exactly one sprite associated with it and vice versa. Furthermore, the API to iterate the shapes in a Chipmunk space is not part of the public documented API so I wouldn't recommend using it.</p>
+
+<p>The goal is to make a box that we can move around the screen by tilting the iPhone or tapping on the box. Going a bit further, we'll also use collision callbacks to change the screen color and play impact sounds. There are basically 2 classes: ViewContoller which we are using like a game controller, and FallingButton which we are using like a game object controller.</p>
+
+<h2>ViewController.m - A Bare Bones Game Controller</h2>
+
+<p>A game controller is responsible for for a couple of things. A game controller's main responsibility is to control the game's logic, to decide when the player wins or loses, that sort of thing. Our simple example doesn't really have any rules, so we'll skip straight to it's other responsibilities: managing the game loop and handling adding and removing game objects.</p>
+
+<h3>Initialization and Setup:</h3>
+
+<p>We're building our game controller as a UIViewController, so let's take a look at the <code>viewDidLoad</code> method where the initialization happens. We'll go through it line by line.</p>
+
+<p>First we need to initialize the graphics and the physics. Because we are writing this as a view controller, we can just use the view for graphics. All we need to do to set that up is call the <code>viewDidLoad</code> method in the super class:</p>
+
+<pre style="text-align:left;color:#000000; background-color:#ffffff; border:solid black 1px; padding:0.5em 1em 0.5em 1em; overflow:auto;font-size:small; font-family:monospace; ">  [<strong><span style="color:#881350;">super</span></strong> <span style="color:#6c0540;">viewDidLoad</span>];
+</pre>
+
+<p>Now we can add subviews to <code>self.view</code> and they will simply show up on the screen. That was easy.</p>
+
+<p>Initializing the physics is just as easy:</p>
+
+<pre style="text-align:left;color:#000000; background-color:#ffffff; border:solid black 1px; padding:0.5em 1em 0.5em 1em; overflow:auto;font-size:small; font-family:monospace; ">  space = [[ChipmunkSpace <strong><span style="color:#ff0000;">alloc</span></strong>] <span style="color:#6c0540;">init</span>];
+</pre>
+
+<p>The space is completely empty at this point. Anything other physics objects we add can simply fly off the screen if they wanted to. The first thing that a lot of 2D physics games do is to create a box around the screen. Objective-Chipmunk actually has a nice convenience method for that.</p>
+
+<pre style="text-align:left;color:#000000; background-color:#ffffff; border:solid black 1px; padding:0.5em 1em 0.5em 1em; overflow:auto;font-size:small; font-family:monospace; ">  [space <span style="color:#6c0540;">addBounds:</span><strong><span style="color:#881350;">self</span></strong>.view.bounds
+    <span style="color:#6c0540;">thickness:</span><span style="color:#0000ff;">10.0f</span>
+    <span style="color:#6c0540;">elasticity:</span><span style="color:#0000ff;">1.0f</span> <span style="color:#6c0540;">friction:</span><span style="color:#0000ff;">1.0f</span>
+    <span style="color:#6c0540;">layers:</span>CP_ALL_LAYERS <span style="color:#6c0540;">group:</span>CP_NO_GROUP
+    <span style="color:#6c0540;">collisionType:</span>borderType
+  ];
+</pre>
+
+<p><code>thickness</code> controls how thick the border is, <code>layers</code> and <code>group</code> control filtering of collisions. See the documentation on <a href="http://files.slembcke.net/chipmunk/release/ChipmunkLatest-Docs/#cpShape">collision shapes</a> for more information. Lastly, <code>borderType</code> is an object that we use as a key when defining collision callbacks. This lets you create a collision callback that is only called when a bullet hits a monster for example. The collision type can be any object. Class objects and global NSString objects work well as collision types as they are easy to get to. In this case, borderType was simply a global NSString that I defined at the top of the file.</p>
+
+<p>Next we'll set up a collision callback to respond to collision events when the box touches the screen border.</p>
+
+<pre style="text-align:left;color:#000000; background-color:#ffffff; border:solid black 1px; padding:0.5em 1em 0.5em 1em; overflow:auto;font-size:small; font-family:monospace; ">  [space <span style="color:#6c0540;">addCollisionHandler:</span><strong><span style="color:#881350;">self</span></strong>
+    <span style="color:#6c0540;">typeA:</span>[FallingButton <span style="color:#6c0540;">class</span>] <span style="color:#6c0540;">typeB:</span>borderType
+    <span style="color:#6c0540;">begin:</span><strong><span style="color:#881350;">@selector</span></strong>(beginCollision:space:)
+    <span style="color:#6c0540;">preSolve:</span><strong><span style="color:#881350;">nil</span></strong>
+    <span style="color:#6c0540;">postSolve:</span><strong><span style="color:#881350;">@selector</span></strong>(postSolveCollision:space:)
+    <span style="color:#6c0540;">separate:</span><strong><span style="color:#881350;">@selector</span></strong>(separateCollision:space:)
+  ];
+</pre>
+
+<p>There are 4 collision events that are sent to a collision handler. You only have to implement the ones that you are interested in. In this case, we want to know when shapes shapes start touching, when Chipmunk has resolved the collision, and when they stop touching. You can find out more from the<a href="http://files.slembcke.net/chipmunk/release/ChipmunkLatest-Docs/#Callbacks">callback documentation</a>. Also, the methods are only called when two shapes tagged with <code>[FallingButton class]</code> and <code>borderType</code> collide.</p>
+
+<p>Lastly, we'll create the falling button game object and add it's view to the scene and add it's physics objects to the Chipmunk space.</p>
+
+<pre style="text-align:left;color:#000000; background-color:#ffffff; border:solid black 1px; padding:0.5em 1em 0.5em 1em; overflow:auto;font-size:small; font-family:monospace; ">  fallingButton = [[FallingButton <strong><span style="color:#ff0000;">alloc</span></strong>] <span style="color:#6c0540;">init</span>];
+  [<strong><span style="color:#881350;">self</span></strong>.view <span style="color:#6c0540;">addSubview:</span>fallingButton.button];
+  [space <span style="color:#6c0540;">add:</span>fallingButton];
+</pre>
+
+<p>Because FallingButton implements the ChipmunkObject protocol, we can add (or remove) all of it's rigid bodies, collision shapes and joints to the space in a single method call no matter how complex it's physics are.</p>
+
+<p>That's it for the game controller initialization. Let's look at all the code together.</p>
+
+<pre style="text-align:left;color:#000000; background-color:#ffffff; border:solid black 1px; padding:0.5em 1em 0.5em 1em; overflow:auto;font-size:small; font-family:monospace; "><strong><span style="color:#881350;">static</span></strong> <span style="color:#400080;">NSString</span> *borderType = <span style="color:#760f15;">@&quot;borderType&quot;</span>;
+
+- (<strong><span style="color:#881350;">void</span></strong>)<span style="color:#6c0540;">viewDidLoad</span> {
+  [<strong><span style="color:#881350;">super</span></strong> <span style="color:#6c0540;">viewDidLoad</span>];
+  
+  space = [[ChipmunkSpace <strong><span style="color:#ff0000;">alloc</span></strong>] <span style="color:#6c0540;">init</span>];
+  [space <span style="color:#6c0540;">addBounds:</span><strong><span style="color:#881350;">self</span></strong>.view.bounds
+    <span style="color:#6c0540;">thickness:</span><span style="color:#0000ff;">10.0f</span>
+    <span style="color:#6c0540;">elasticity:</span><span style="color:#0000ff;">1.0f</span> <span style="color:#6c0540;">friction:</span><span style="color:#0000ff;">1.0f</span>
+    <span style="color:#6c0540;">layers:</span>CP_ALL_LAYERS <span style="color:#6c0540;">group:</span>CP_NO_GROUP
+    <span style="color:#6c0540;">collisionType:</span>borderType
+  ];
+  
+  [space <span style="color:#6c0540;">addCollisionHandler:</span><strong><span style="color:#881350;">self</span></strong>
+    <span style="color:#6c0540;">typeA:</span>[FallingButton <span style="color:#6c0540;">class</span>] <span style="color:#6c0540;">typeB:</span>borderType
+    <span style="color:#6c0540;">begin:</span><strong><span style="color:#881350;">@selector</span></strong>(beginCollision:space:)
+    <span style="color:#6c0540;">preSolve:</span><strong><span style="color:#881350;">nil</span></strong>
+    <span style="color:#6c0540;">postSolve:</span><strong><span style="color:#881350;">@selector</span></strong>(postSolveCollision:space:)
+    <span style="color:#6c0540;">separate:</span><strong><span style="color:#881350;">@selector</span></strong>(separateCollision:space:)
+  ];
+  
+  fallingButton = [[FallingButton <strong><span style="color:#ff0000;">alloc</span></strong>] <span style="color:#6c0540;">init</span>];
+  [<strong><span style="color:#881350;">self</span></strong>.view <span style="color:#6c0540;">addSubview:</span>fallingButton.button];
+  [space <span style="color:#6c0540;">add:</span>fallingButton];
+}
+</pre>
+
+<h3>The Game Loop: Updating the Physics and Graphics</h3>
+
+<p>So now we get to the meat of what the game controller does. Controlling the game's update loop. This tutorial uses a CADisplayLink to receive events from the iPhone OS when the screen wants to redraw itself. This is the easiest way to get smooth animation that I know of. Let's create a display link callback and an accelerometer callback quick:</p>
+
+<pre style="text-align:left;color:#000000; background-color:#ffffff; border:solid black 1px; padding:0.5em 1em 0.5em 1em; overflow:auto;font-size:small; font-family:monospace; ">- (<strong><span style="color:#881350;">void</span></strong>)<span style="color:#6c0540;">viewDidAppear:</span>(<strong><span style="color:#881350;">BOOL</span></strong>)animated {
+  displayLink = [CADisplayLink <span style="color:#6c0540;">displayLinkWithTarget:</span><strong><span style="color:#881350;">self</span></strong> <span style="color:#6c0540;">selector:</span><strong><span style="color:#881350;">@selector</span></strong>(update)];
+  displayLink.frameInterval = <span style="color:#0000ff;">1</span>;
+  [displayLink <span style="color:#6c0540;">addToRunLoop:</span>[<span style="color:#400080;">NSRunLoop</span> <span style="color:#6c0540;">mainRunLoop</span>] <span style="color:#6c0540;">forMode:</span><em><span style="color:#400080;">NSDefaultRunLoopMode</span></em>];
+  
+  <span style="color:#400080;">UIAccelerometer</span> *accel = [<span style="color:#400080;">UIAccelerometer</span> <span style="color:#6c0540;">sharedAccelerometer</span>];
+  accel.updateInterval = <span style="color:#0000ff;">1.0f</span>/<span style="color:#0000ff;">30.0f</span>;
+  accel.delegate = <strong><span style="color:#881350;">self</span></strong>;
+}
+</pre>
+
+<p>These are Apple's classes, so I won't go into too much detail here.</p>
+
+<p>Next we'll create the <code>update</code> method for the display link to call.</p>
+
+<pre style="text-align:left;color:#000000; background-color:#ffffff; border:solid black 1px; padding:0.5em 1em 0.5em 1em; overflow:auto;font-size:small; font-family:monospace; ">- (<strong><span style="color:#881350;">void</span></strong>)<span style="color:#6c0540;">update</span> {
+  cpFloat dt = displayLink.duration*displayLink.frameInterval;
+  [space <span style="color:#6c0540;">step:</span>dt];
+  
+  [fallingButton <span style="color:#6c0540;">updatePosition</span>];
+}
+</pre>
+
+<p>This simply uses the timing information from the display link to figure out the amount of time passed since the last time the method was called (<code>dt</code>). We can then step (update) the physics simulation using that time. After the simulation has been updated, we update the falling button object so it's view lines up with the physics.</p>
+
+<p> One thing to note here is that Chipmunk prefers it when you use the same dt each time you step the simulation. It's not required, but it will allow you to reduce the CPU usage significantly as well as making your game deterministic.</p>
+
+<p>Next we'll define the accelerometer callback so that we can update gravity to respect the tilt of the iPhone.</p>
+
+<pre style="text-align:left;color:#000000; background-color:#ffffff; border:solid black 1px; padding:0.5em 1em 0.5em 1em; overflow:auto;font-size:small; font-family:monospace; ">- (<strong><span style="color:#881350;">void</span></strong>)<span style="color:#6c0540;">accelerometer:</span>(<span style="color:#400080;">UIAccelerometer</span> *)accelerometer <span style="color:#6c0540;">didAccelerate:</span>(<span style="color:#400080;">UIAcceleration</span> *)accel {
+  space.gravity = <span style="color:#003369;">cpvmult</span>(<span style="color:#003369;">cpv</span>(accel.x, -accel.y), <span style="color:#0000ff;">100.0f</span>);
+}
+</pre>
+
+<p>Pretty easy. One thing to note is that all of the <code>cpv*()</code> functions are operators for Chipmunk vectors. <code>cpv()</code> creates a new vector from an x and y value, and <code>cpvmult()</code> multiplies a vector by a length. Seeing vector math done this way might take some getting used to. See the <a href="http://files.slembcke.net/chipmunk/release/ChipmunkLatest-Docs/#cpVect">cpVect C docs</a> for more information. If you are using Objective-C++ you can easily define overloaded operators for Chipmunk.</p>
+
+<h3>Collision Callbacks: begin</h3>
+
+<p>Different collision callback types have slightly different method signatures. The begin callback method should look something like this:</p>
+
+<pre style="text-align:left;color:#000000; background-color:#ffffff; border:solid black 1px; padding:0.5em 1em 0.5em 1em; overflow:auto;font-size:small; font-family:monospace; ">- (bool)<span style="color:#6c0540;">beginCollision:</span>(cpArbiter*)arbiter <span style="color:#6c0540;">space:</span>(ChipmunkSpace*)space</pre>
+
+<p>The first argument is a pointer to a C cpArbiter struct. The word <em>arbiter</em> means a judge that resolves a dispute. Because collision callbacks are trigger so often, I chose not to create a temporary Objective-C object to wrap the arbiter. Fortunately, there are only a few things you need to interact with cpArbiter structs for. For more information on arbiters, see the <a href="http://files.slembcke.net/chipmunk/release/ChipmunkLatest-Docs/#cpArbiter">cpArbiter C docs</a>.</p>
+
+
+<p>The second argument is the ChipmunkSpace object that the callback was registered on. That way you can do things like register post-step (different than a post-solve callback) callbacks that add or remove objects from the space.</p>
+
+<p>The first thing you probably want to do in a collision callback is probably to find out which two shapes collided. If you remember from earlier, we define our collision handler to be called when shapes with two specific collision types collided. So how do you figure out which object is which? Objective-Chipmunk provides a handy macro to define the ChipmunkShape variables as well as initialize them for you.</p>
+
+<pre style="text-align:left;color:#000000; background-color:#ffffff; border:solid black 1px; padding:0.5em 1em 0.5em 1em; overflow:auto;font-size:small; font-family:monospace; ">  <span style="color:#003369;">CHIPMUNK_ARBITER_GET_SHAPES</span>(arbiter, buttonShape, border);
+</pre>
+
+<p>That macro is equivalent to doing something like this:</p>
+
+<pre style="text-align:left;color:#000000; background-color:#ffffff; border:solid black 1px; padding:0.5em 1em 0.5em 1em; overflow:auto;font-size:small; font-family:monospace; ">  ChipmunkShape *buttonShape = <span style="color:#003369;">GetShapeWithTypeA</span>(arbiter);
+  ChipmunkShape *border = <span style="color:#003369;">GetShapeWithTypeB</span>(arbiter);
+</pre>
+
+<p>Where type A and type B are the same as the types you gave to the space when you defined the collision handler.</p>
+
+<p>A common thing that games need to know is when an object is touching the ground. Using Chipmunk's collision events, we can easily track this using a counter. Increment the counter in your begin callbacks, and decrement it in the separate callbacks. If the counter is 0, then you know the shape isn't touching anything. Let's do that here.</p>
+
+<p>We have a problem though. The collision callback only gave us the colliding shape and not the game object it's for! Fortunately, Chipmunk provides data pointers on it's objects so that you can always get a reference to your game object from a rigid body, shape or joint. The data pointer is set by the FallingButton class when we create it. You'll see more about this later.</p>
+
+<pre style="text-align:left;color:#000000; background-color:#ffffff; border:solid black 1px; padding:0.5em 1em 0.5em 1em; overflow:auto;font-size:small; font-family:monospace; ">  FallingButton *fb = buttonShape.data;
+</pre>
+
+<p>So now we can use that to increment the counter on our falling button.</p>
+
+<pre style="text-align:left;color:#000000; background-color:#ffffff; border:solid black 1px; padding:0.5em 1em 0.5em 1em; overflow:auto;font-size:small; font-family:monospace; ">  fb.touchedShapes++;
+</pre>
+
+<p>Lastly, lets set the background color to gray when the falling button is touching anything so we can see it.</p>
+
+<pre style="text-align:left;color:#000000; background-color:#ffffff; border:solid black 1px; padding:0.5em 1em 0.5em 1em; overflow:auto;font-size:small; font-family:monospace; ">  <strong><span style="color:#881350;">self</span></strong>.view.backgroundColor = [<em><span style="color:#400080;">UIColor</span></em> <span style="color:#6c0540;">grayColor</span>];
+</pre>
+
+<p>Lastly, the begin callback must return a boolean. If it returns <code>TRUE</code>, then Chipmunk processes the collision normally. If it returns <code>FALSE</code> then Chipmunk ignores the collision as if it never happened. This is a powerful way to implement all sorts of conditional collision filtering such as one way platforms or breakable objects. We just want to process the collision normally, so we'll just return <code>TRUE</code>. Putting this all together, we have our finished begin callback method:</p>
+
+<pre style="text-align:left;color:#000000; background-color:#ffffff; border:solid black 1px; padding:0.5em 1em 0.5em 1em; overflow:auto;font-size:small; font-family:monospace; ">- (bool)<span style="color:#6c0540;">beginCollision:</span>(cpArbiter*)arbiter <span style="color:#6c0540;">space:</span>(ChipmunkSpace*)space {
+  <span style="color:#003369;">CHIPMUNK_ARBITER_GET_SHAPES</span>(arbiter, buttonShape, border);
+
+  FallingButton *fb = buttonShape.data;
+  fb.touchedShapes++;
+  
+  <strong><span style="color:#881350;">self</span></strong>.view.backgroundColor = [<em><span style="color:#400080;">UIColor</span></em> <span style="color:#6c0540;">grayColor</span>];
+  
+  <strong><span style="color:#881350;">return</span></strong> TRUE;
+}
+</pre>
+
+<h3>Collision Callbacks: separate</h3>
+
+<p>The separate callback has a slightly different method signature from the begin callback. Because the collision is already done by the time the separate callback is called, it doesn't return a boolean that controls whether to ignore the collision.</p>
+
+<pre style="text-align:left;color:#000000; background-color:#ffffff; border:solid black 1px; padding:0.5em 1em 0.5em 1em; overflow:auto;font-size:small; font-family:monospace; ">- (<strong><span style="color:#881350;">void</span></strong>)<span style="color:#6c0540;">separateCollision:</span>(cpArbiter*)arbiter <span style="color:#6c0540;">space:</span>(ChipmunkSpace*)space
+</pre>
+
+<p>First we'll decrement the counter. This should all look familiar.</p>
+
+<pre style="text-align:left;color:#000000; background-color:#ffffff; border:solid black 1px; padding:0.5em 1em 0.5em 1em; overflow:auto;font-size:small; font-family:monospace; ">  <span style="color:#003369;">CHIPMUNK_ARBITER_GET_SHAPES</span>(arbiter, buttonShape, border);
+  
+  FallingButton *fb = buttonShape.data;
+  fb.touchedShapes--;
+</pre>
+
+<p>Now let's set the background color to a random color so you can see each time the box collides with the border. We only want to do this when the box is no longer touching any of the 4 border edges, so we check if the counter is 0 first.</p>
+
+<pre style="text-align:left;color:#000000; background-color:#ffffff; border:solid black 1px; padding:0.5em 1em 0.5em 1em; overflow:auto;font-size:small; font-family:monospace; ">  <strong><span style="color:#881350;">if</span></strong>(fb.touchedShapes == <span style="color:#0000ff;">0</span>){
+    <strong><span style="color:#881350;">self</span></strong>.view.backgroundColor = [<em><span style="color:#400080;">UIColor</span></em> <span style="color:#6c0540;">colorWithRed:</span><span style="color:#003369;">frand</span>() <span style="color:#6c0540;">green:</span><span style="color:#003369;">frand</span>() <span style="color:#6c0540;">blue:</span><span style="color:#003369;">frand</span>() <span style="color:#6c0540;">alpha:</span><span style="color:#0000ff;">1.0f</span>];
+  }
+</pre>
+
+<p>Putting this all together we have the finished separate callback:</p>
+
+<pre style="text-align:left;color:#000000; background-color:#ffffff; border:solid black 1px; padding:0.5em 1em 0.5em 1em; overflow:auto;font-size:small; font-family:monospace; ">- (<strong><span style="color:#881350;">void</span></strong>)<span style="color:#6c0540;">separateCollision:</span>(cpArbiter*)arbiter <span style="color:#6c0540;">space:</span>(ChipmunkSpace*)space {
+  <span style="color:#003369;">CHIPMUNK_ARBITER_GET_SHAPES</span>(arbiter, buttonShape, border);
+  
+  FallingButton *fb = buttonShape.data;
+  fb.touchedShapes--;
+  
+  <strong><span style="color:#881350;">if</span></strong>(fb.touchedShapes == <span style="color:#0000ff;">0</span>){
+    <strong><span style="color:#881350;">self</span></strong>.view.backgroundColor = [<em><span style="color:#400080;">UIColor</span></em> <span style="color:#6c0540;">colorWithRed:</span><span style="color:#003369;">frand</span>() <span style="color:#6c0540;">green:</span><span style="color:#003369;">frand</span>() <span style="color:#6c0540;">blue:</span><span style="color:#003369;">frand</span>() <span style="color:#6c0540;">alpha:</span><span style="color:#0000ff;">1.0f</span>];
+  }
+}
+</pre>
+
+<h3>Collision Callbacks: post-solve</h3>
+
+<p>Another pretty common thing to do with callbacks is to play impact sounds. To make it sound good, we want to set the volume of the sound based on how hard the objects hit. This is exactly the sort of thing that the post-solve callback is for. Chipmunk has finished resolving a collision, and it gives you chance to read back the impulse it applied to do it.</p>
+
+<p>The post-solve callback method signature looks like the separate one:</p>
+
+<pre style="text-align:left;color:#000000; background-color:#ffffff; border:solid black 1px; padding:0.5em 1em 0.5em 1em; overflow:auto;font-size:small; font-family:monospace; ">- (<strong><span style="color:#881350;">void</span></strong>)<span style="color:#6c0540;">postSolveCollision:</span>(cpArbiter*)arbiter <span style="color:#6c0540;">space:</span>(ChipmunkSpace*)space
+</pre>
+
+<p>Unlike the begin and separate callbacks which just happen on the first and last frames of a collision, the pre-solve and post-solve callbacks are called every frame that the two shapes are touching. For playing a collision sound, we really only care about the first frame. Chipmunk provides a C function that you can use on the arbiter to test if this is the first frame that to shapes have been colliding. We'll use that to exit early from the function if it's not the first frame.</p>
+
+<pre style="text-align:left;color:#000000; background-color:#ffffff; border:solid black 1px; padding:0.5em 1em 0.5em 1em; overflow:auto;font-size:small; font-family:monospace; ">  <strong><span style="color:#881350;">if</span></strong>(!<span style="color:#003369;">cpArbiterIsFirstContact</span>(arbiter)) <strong><span style="color:#881350;">return</span></strong>;
+</pre>
+
+<p>With that out of the way, now we just need to find out how hard the objects hit and play a sound based off of that.</p>
+
+<pre style="text-align:left;color:#000000; background-color:#ffffff; border:solid black 1px; padding:0.5em 1em 0.5em 1em; overflow:auto;font-size:small; font-family:monospace; ">  cpFloat impulse = <span style="color:#003369;">cpvlength</span>(<span style="color:#003369;">cpArbiterTotalImpulse</span>(arbiter));
+  
+  <strong><span style="color:#881350;">float</span></strong> volume = <em><span style="color:#400080;">MIN</span></em>(impulse/<span style="color:#0000ff;">500.0f</span>, <span style="color:#0000ff;">1.0f</span>);
+  <strong><span style="color:#881350;">if</span></strong>(volume &gt; <span style="color:#0000ff;">0.05f</span>){
+    [SimpleSound <span style="color:#6c0540;">playSoundWithVolume:</span>volume];
+  }
+</pre>
+
+<p><code>cpArbiterTotalImpulse()</code> returns a vector. We only really care about the size of the force, so we use <code>cpvlength()</code> to get the length of the vector. From that we calculate a volume, clamp it so that it's no bigger than 1.0 and play the sound if it's loud enough! Easy!</p>
+
+<p>Putting that all together, we have our completed post-solve callback:</p>
+
+<pre style="text-align:left;color:#000000; background-color:#ffffff; border:solid black 1px; padding:0.5em 1em 0.5em 1em; overflow:auto;font-size:small; font-family:monospace; ">- (<strong><span style="color:#881350;">void</span></strong>)<span style="color:#6c0540;">postSolveCollision:</span>(cpArbiter*)arbiter <span style="color:#6c0540;">space:</span>(ChipmunkSpace*)space {
+  <strong><span style="color:#881350;">if</span></strong>(!<span style="color:#003369;">cpArbiterIsFirstContact</span>(arbiter)) <strong><span style="color:#881350;">return</span></strong>;
+  
+  cpFloat impulse = <span style="color:#003369;">cpvlength</span>(<span style="color:#003369;">cpArbiterTotalImpulse</span>(arbiter));
+  
+  <strong><span style="color:#881350;">float</span></strong> volume = <em><span style="color:#400080;">MIN</span></em>(impulse/<span style="color:#0000ff;">500.0f</span>, <span style="color:#0000ff;">1.0f</span>);
+  <strong><span style="color:#881350;">if</span></strong>(volume &gt; <span style="color:#0000ff;">0.05f</span>){
+    [SimpleSound <span style="color:#6c0540;">playSoundWithVolume:</span>volume];
+  }
+}
+</pre>
+
+<p>That's pretty much it for the game controller.</p>
+
+<h2>Falling Button: A Simple Game Object Controller</h2>
+
+<p>Like a game controller, the game object controller's main responsibility is to manage the logic updates for a game object and bind the graphics and physics together. In this tutorial, the logic of the falling button is simple. All we want it to do is to move in a random direction when you click on it.</p>
+
+<h3>Initialization and Setup:</h3>
+
+<p>Lets start with the initialization again to get a feel for what the game object is made of. It starts off with initializing a UIButton instance. Pretty standard Cocoa programming here:</p>
+
+<pre style="text-align:left;color:#000000; background-color:#ffffff; border:solid black 1px; padding:0.5em 1em 0.5em 1em; overflow:auto;font-size:small; font-family:monospace; ">    button = [<em><span style="color:#400080;">UIButton</span></em> <span style="color:#6c0540;">buttonWithType:</span><em><span style="color:#400080;">UIButtonTypeCustom</span></em>];
+    [button <span style="color:#6c0540;">setTitle:</span><span style="color:#760f15;">@&quot;Click Me!&quot;</span> <span style="color:#6c0540;">forState:</span><em><span style="color:#400080;">UIControlStateNormal</span></em>];
+    [button <span style="color:#6c0540;">setTitleColor:</span>[<em><span style="color:#400080;">UIColor</span></em> <span style="color:#6c0540;">blueColor</span>] <span style="color:#6c0540;">forState:</span><em><span style="color:#400080;">UIControlStateNormal</span></em>];
+    [button <span style="color:#6c0540;">setBackgroundImage:</span>[<em><span style="color:#400080;">UIImage</span></em> <span style="color:#6c0540;">imageNamed:</span><span style="color:#760f15;">@&quot;logo.png&quot;</span>] <span style="color:#6c0540;">forState:</span><em><span style="color:#400080;">UIControlStateNormal</span></em>];
+    button.bounds = <em><span style="color:#400080;">CGRectMake</span></em>(<span style="color:#0000ff;">0</span>, <span style="color:#0000ff;">0</span>, SIZE, SIZE);
+    
+    [button <span style="color:#6c0540;">addTarget:</span><strong><span style="color:#881350;">self</span></strong> <span style="color:#6c0540;">action:</span><strong><span style="color:#881350;">@selector</span></strong>(buttonClicked) <span style="color:#6c0540;">forControlEvents:</span><em><span style="color:#400080;">UIControlEventTouchDown</span></em>];
+</pre>
+
+<p>Pretty easy. Now we set up the physics for it. Lets start by defining the mass and moment of inertia of the button. Wait! What is this <em>moment of inertia</em> that I'm talking about you ask? It sounds completely made up you say! If you think of the mass of an object as being how hard it is to move an object around, the moment of inertia is how hard it is to spin an object.</p>
+
+<pre style="text-align:left;color:#000000; background-color:#ffffff; border:solid black 1px; padding:0.5em 1em 0.5em 1em; overflow:auto;font-size:small; font-family:monospace; ">    cpFloat mass = <span style="color:#0000ff;">1.0f</span>;
+    cpFloat moment = <span style="color:#003369;">cpMomentForBox</span>(mass, SIZE, SIZE);
+</pre>
+
+<p>You can easily just make up numbers for the mass as you don't need to use any particular units. Just make sure that they make sense in relation to each other. If a car has a mass of 1, then a dog should have a mass of 0.01 or something like that. With the button being the only thing on the screen, it doesn't really matter what mass we give it. It would react exactly the same. On the other hand, guessing or making up numbers for the moment of inertia is a <em>really bad idea</em>. Assuming that <code>SIZE</code> is 100, then the moment of inertia calculated above will be 850!</p> 
+
+<p>Just for the fun of it, you should try seeing what other values for the moment of inertia does, and why it's important to use the moment estimation functions that Chipmunk provides. You can find more of these estimation functions in the <a href="http://files.slembcke.net/chipmunk/release/ChipmunkLatest-Docs/#cpBody">cpBody C docs</a>.</p>
+
+<p>Next, we'll use the calculated mass and moment of inertia to make a rigid body:</p>
+
+<pre style="text-align:left;color:#000000; background-color:#ffffff; border:solid black 1px; padding:0.5em 1em 0.5em 1em; overflow:auto;font-size:small; font-family:monospace; ">    body = [[ChipmunkBody <strong><span style="color:#ff0000;">alloc</span></strong>] <span style="color:#6c0540;">initWithMass:</span>mass <span style="color:#6c0540;">andMoment:</span>moment];
+</pre>
+
+<p>Rigid bodies hold the physical properties of a physics object. Things like it's mass, position, velocity and rotation. Once you've created a rigid body, you can attach any number of collision shapes and joints to it. Bodies have a number of properties that you can read and write such as <code>pos</code>, <code>vel</code>, <code>mass</code> and so on. When first created, most of these properties other than the mass and moment of inertia will be zero. Let's set the position of the shape to be somewhere in the middle of the screen.</p>
+
+<pre style="text-align:left;color:#000000; background-color:#ffffff; border:solid black 1px; padding:0.5em 1em 0.5em 1em; overflow:auto;font-size:small; font-family:monospace; ">    body.pos = <span style="color:#003369;">cpv</span>(<span style="color:#0000ff;">200.0f</span>, <span style="color:#0000ff;">200.0f</span>);
+</pre>
+
+<p>Now we can get to the interesting part and create a collision shape for it so it will collide with the screen boundary shapes. Chipmunk supports 3 collision shapes at the moment. Circrles, line segments, and polygons. It also has a convenience constructor for creating box shaped polygons. We'll use that. Because we aren't storing the object in an instance variable, we'll use the autorelease constructor. (More on this later.)</p>
+
+<pre style="text-align:left;color:#000000; background-color:#ffffff; border:solid black 1px; padding:0.5em 1em 0.5em 1em; overflow:auto;font-size:small; font-family:monospace; ">    ChipmunkShape *shape = [ChipmunkPolyShape <span style="color:#6c0540;">boxWithBody:</span>body <span style="color:#6c0540;">width:</span>SIZE <span style="color:#6c0540;">height:</span>SIZE];
+</pre>
+
+<p>This creates a square of <code>SIZE</code> and attaches it to our rigid body. The box convenience constructor simply centers the box on the center of gravity of the rigid body which is always at <code>body.pos</code>. The center of gravity is also the point that the rigid body rotates around.</p>
+
+<p>Like ChipmunkBody objects, ChipmunkShape objects have a number of properties that you might want to set:</p>
+
+<pre style="text-align:left;color:#000000; background-color:#ffffff; border:solid black 1px; padding:0.5em 1em 0.5em 1em; overflow:auto;font-size:small; font-family:monospace; ">    shape.elasticity = <span style="color:#0000ff;">0.3f</span>;
+    shape.friction = <span style="color:#0000ff;">0.3f</span>;
+</pre>
+
+<p>Elasticity controls how bouncy a body is. When two shapes collide, their elasticity values are multiplied together to get the elasticity of the collision. 0 means no bounce, and 1 would make something bounce perfectly. While you can go above 1.0, it means that the object will speed up every time it hits something and will probably fly out of control. Friction works the same way, by multiplying the friction values of the two shapes to determine the final friction to apply. You can think of the friction value as being in terms of surface slopes. If the friction value is 1 then the objects will be able to stop on a 45 degree slope. If the friction value was 0.5, then the objects would be able to stop on a slope of Atan(0.5) = 26.6 degrees</p>
+
+<p>Next we'll set up the properties used in collision callbacks:</p>
+
+<pre style="text-align:left;color:#000000; background-color:#ffffff; border:solid black 1px; padding:0.5em 1em 0.5em 1em; overflow:auto;font-size:small; font-family:monospace; ">    shape.collisionType = [FallingButton <span style="color:#6c0540;">class</span>];
+    shape.data = <strong><span style="color:#881350;">self</span></strong>;
+</pre>
+
+<p>If you remember from earlier, <code>collisionType</code> is used as a key value when setting up collision handler callbacks and the <code>data</code> property was how we got a reference back to our falling button object.</p>
+
+<p>Lastly, we need to implement the ChipmunkObject protocol so that we don't have to add the collision shape and rigid body to the space by hand. To do that, all we need to do is implement a single method <code>chipmunkObjects</code> which returns an NSSet that contains all the basic Chipmunk objects this game object uses. The easiest way to do that is to use a synthesized property. Then all you have to do is create an instance variable named <em>chipmunkObjects</em> and use the <code>ChipmunkObjectFlatten()</code> function to initialize it. You can pass anything that implements the ChipmunkObject protocol to <code>ChipmunkObjectFlatten()</code>. Just don't forget about the <code>nil</code> terminator and don't forget to retain the set it returns!</p>
+
+<pre style="text-align:left;color:#000000; background-color:#ffffff; border:solid black 1px; padding:0.5em 1em 0.5em 1em; overflow:auto;font-size:small; font-family:monospace; ">    chipmunkObjects = [<span style="color:#003369;">ChipmunkObjectFlatten</span>(body, shape, <strong><span style="color:#881350;">nil</span></strong>) <strong><span style="color:#ff0000;">retain</span></strong>];
+</pre>
+
+<p></p>
+
+<p>Putting this all together, our initialization method looks like this:</p>
+
+<pre style="text-align:left;color:#000000; background-color:#ffffff; border:solid black 1px; padding:0.5em 1em 0.5em 1em; overflow:auto;font-size:small; font-family:monospace; ">- (<strong><span style="color:#881350;">id</span></strong>)<span style="color:#6c0540;">init</span> {
+  <strong><span style="color:#881350;">if</span></strong>(<strong><span style="color:#881350;">self</span></strong> = [<strong><span style="color:#881350;">super</span></strong> <span style="color:#6c0540;">init</span>]){
+    button = [<em><span style="color:#400080;">UIButton</span></em> <span style="color:#6c0540;">buttonWithType:</span><em><span style="color:#400080;">UIButtonTypeCustom</span></em>];
+    [button <span style="color:#6c0540;">setTitle:</span><span style="color:#760f15;">@&quot;Click Me!&quot;</span> <span style="color:#6c0540;">forState:</span><em><span style="color:#400080;">UIControlStateNormal</span></em>];
+    [button <span style="color:#6c0540;">setTitleColor:</span>[<em><span style="color:#400080;">UIColor</span></em> <span style="color:#6c0540;">blueColor</span>] <span style="color:#6c0540;">forState:</span><em><span style="color:#400080;">UIControlStateNormal</span></em>];
+    [button <span style="color:#6c0540;">setBackgroundImage:</span>[<em><span style="color:#400080;">UIImage</span></em> <span style="color:#6c0540;">imageNamed:</span><span style="color:#760f15;">@&quot;logo.png&quot;</span>] <span style="color:#6c0540;">forState:</span><em><span style="color:#400080;">UIControlStateNormal</span></em>];
+    button.bounds = <em><span style="color:#400080;">CGRectMake</span></em>(<span style="color:#0000ff;">0</span>, <span style="color:#0000ff;">0</span>, SIZE, SIZE);
+    
+    [button <span style="color:#6c0540;">addTarget:</span><strong><span style="color:#881350;">self</span></strong> <span style="color:#6c0540;">action:</span><strong><span style="color:#881350;">@selector</span></strong>(buttonClicked) <span style="color:#6c0540;">forControlEvents:</span><em><span style="color:#400080;">UIControlEventTouchDown</span></em>];
+    
+    cpFloat mass = <span style="color:#0000ff;">1.0f</span>;
+    cpFloat moment = <span style="color:#003369;">cpMomentForBox</span>(mass, SIZE, SIZE);
+    
+    body = [[ChipmunkBody <strong><span style="color:#ff0000;">alloc</span></strong>] <span style="color:#6c0540;">initWithMass:</span>mass <span style="color:#6c0540;">andMoment:</span>moment];
+    body.pos = <span style="color:#003369;">cpv</span>(<span style="color:#0000ff;">200.0f</span>, <span style="color:#0000ff;">200.0f</span>);
+    
+    ChipmunkShape *shape = [ChipmunkPolyShape <span style="color:#6c0540;">boxWithBody:</span>body <span style="color:#6c0540;">width:</span>SIZE <span style="color:#6c0540;">height:</span>SIZE];
+    shape.elasticity = <span style="color:#0000ff;">0.3f</span>;
+    shape.friction = <span style="color:#0000ff;">0.3f</span>;
+    shape.collisionType = [FallingButton <span style="color:#6c0540;">class</span>];
+    shape.data = <strong><span style="color:#881350;">self</span></strong>;
+    
+    chipmunkObjects = [<span style="color:#003369;">ChipmunkObjectFlatten</span>(body, shape, <strong><span style="color:#881350;">nil</span></strong>) <strong><span style="color:#ff0000;">retain</span></strong>];
+  }
+  
+  <strong><span style="color:#881350;">return</span></strong> <strong><span style="color:#881350;">self</span></strong>;
+}
+</pre>
+
+<h3>Button Action:</h3>
+
+The only thing remaining is to make the method that gets called when the button is clicked.
+
+<pre style="text-align:left;color:#000000; background-color:#ffffff; border:solid black 1px; padding:0.5em 1em 0.5em 1em; overflow:auto;font-size:small; font-family:monospace; "><strong><span style="color:#881350;">static</span></strong> cpFloat <span style="color:#003369;">frand_unit</span>(){<strong><span style="color:#881350;">return</span></strong> <span style="color:#0000ff;">2.0f</span>*((cpFloat)<span style="color:#003369;">rand</span>()/(cpFloat)RAND_MAX) - <span style="color:#0000ff;">1.0f</span>;}
+
+- (<strong><span style="color:#881350;">void</span></strong>)<span style="color:#6c0540;">buttonClicked</span> {
+  cpVect v = <span style="color:#003369;">cpvmult</span>(<span style="color:#003369;">cpv</span>(<span style="color:#003369;">frand_unit</span>(), <span style="color:#003369;">frand_unit</span>()), <span style="color:#0000ff;">300.0f</span>);
+  body.vel = <span style="color:#003369;">cpvadd</span>(body.vel, v);
+  
+  body.angVel += <span style="color:#0000ff;">5.0f</span>*<span style="color:#003369;">frand_unit</span>();
+}
+</pre>
+
+<p>Nothing too complicated there. We just add a random change to the body's velocity and another random change to it's angular velocity.</p>
+
+<h2>Closing Thoughts:</h2>
+
+<p>Now that you've seen how easy and powerful Objective-Chipmunk can be, why not integrate it into your iPhone game? The Objective-C API will save you time (and money) by providing you a high level API that works well with popular iPhone libraries such as Cocos2D. You'll also spend less time worrying about memory management as it allows you to manage your Chipmunk memory just like the rest of your iPhone app.</p>
+
+<p>Happy Chipmunking!</p>
+
+	</body>
+</html>

@@ -1,0 +1,105 @@
+// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// http://getmoai.com
+
+#include "pch.h"
+
+#include <uslscore/USFilename.h>
+#include <uslscore/USFileSys.h>
+#include <uslscore/USDirectoryItr.h>
+#include <uslscore/USByteStream.h>
+#include <stdio.h>
+
+//================================================================//
+// USByteStream
+//================================================================//
+
+//----------------------------------------------------------------//
+void* USByteStream::GetBuffer () {
+
+	return this->mBuffer;
+}
+
+//----------------------------------------------------------------//
+u32 USByteStream::GetCursor () {
+
+	return this->mCursor;
+}
+
+//----------------------------------------------------------------//
+u32 USByteStream::GetLength () {
+
+	return this->mLength;
+}
+
+//----------------------------------------------------------------//
+u32 USByteStream::ReadBytes ( void* buffer, u32 size ) {
+
+	if (( this->mCursor + size ) > this->mLength ) {
+		size = this->mLength - this->mCursor;
+	}
+
+	if ( size ) {
+		memcpy ( buffer, &(( u8* )this->mBuffer )[ this->mCursor ], size );
+		this->mCursor += size;
+	}
+	
+	return size;
+}
+
+//----------------------------------------------------------------//
+void USByteStream::Seek ( long offset, int origin ) {
+
+	switch ( origin ) {
+		case SEEK_CUR: {
+			this->mCursor = this->mCursor + offset;
+			break;
+		}
+		case SEEK_END: {
+			this->mCursor = this->mLength;
+			break;
+		}
+		case SEEK_SET: {
+			this->mCursor = offset;
+			break;
+		}
+	}
+	
+	if ( this->mCursor > this->mLength ) {
+		this->mCursor = this->mLength;
+	}
+}
+
+//----------------------------------------------------------------//
+void USByteStream::SetBuffer ( void* buffer, u32 size ) {
+
+	this->mCursor = 0;
+	this->mLength = size;
+	this->mBuffer = buffer;
+}
+
+//----------------------------------------------------------------//
+USByteStream::USByteStream () :
+	mBuffer ( 0 ),
+	mCursor ( 0 ),
+	mLength ( 0 ) {
+}
+
+//----------------------------------------------------------------//
+USByteStream::~USByteStream () {
+}
+
+//----------------------------------------------------------------//
+u32 USByteStream::WriteBytes ( const void* buffer, u32 size ) {
+
+	if (( this->mCursor + size ) > this->mLength ) {
+		size = this->mLength - this->mCursor;
+	}
+
+	if ( size ) {
+		memcpy ( &(( u8* )this->mBuffer )[ this->mCursor ], buffer, size );
+		this->mCursor += size;
+		return size;
+	}
+	
+	return 0;
+}

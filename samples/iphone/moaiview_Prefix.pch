@@ -1,0 +1,10 @@
+//
+// Prefix header for all source files of all targets in the 'ZLSolution' project
+//
+#import <Availability.h>
+
+#ifdef __OBJC__
+	
+    #import <Foundation/Foundation.h>
+    #import <UIKit/UIKit.h>
+#endif

@@ -1,0 +1,511 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="animCurve">
+      <UniqueIdentifier>{5a4c71c9-66f7-4fb6-abfa-8f29e115eb83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="zip">
+      <UniqueIdentifier>{a1a585bb-a043-4da5-a164-62c3520b238c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="attributed">
+      <UniqueIdentifier>{a1b9c515-1bf7-400e-b282-b0d3e92258a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="font">
+      <UniqueIdentifier>{004e6618-6980-4299-b6a1-448f741c9e36}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="fsm">
+      <UniqueIdentifier>{901808a7-23a0-46a9-9ce6-5d6ef7513bb3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="gfxDevice">
+      <UniqueIdentifier>{d62e4229-5440-472b-9afd-8ffd72b3a821}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="gfxObjects">
+      <UniqueIdentifier>{24dc16d5-28ae-493a-adcf-e99b0c8cb51b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="io">
+      <UniqueIdentifier>{42e1beb0-23b3-4964-9a76-fb94425fc598}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="math">
+      <UniqueIdentifier>{1470e4f3-2803-4706-a36e-371c960a17e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="slippymap">
+      <UniqueIdentifier>{76d26779-9fe8-4164-99b8-5e70aea18e5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="spatial">
+      <UniqueIdentifier>{1770a877-6dc5-4c52-b976-188ebcb595e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sql">
+      <UniqueIdentifier>{ad2d1181-197b-4aa1-bec9-0526c71691c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="thread">
+      <UniqueIdentifier>{727c6af7-d683-4e48-937d-cbed8723f659}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="util">
+      <UniqueIdentifier>{df25416e-bd9d-45ed-9aa4-86e0111078c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="web">
+      <UniqueIdentifier>{7f97408f-8b62-44d3-bd03-7b21098f7a69}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="xml">
+      <UniqueIdentifier>{bfb53393-2460-4e4b-963a-20554ec6ccc5}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\uslsext\USAnimCurve.cpp">
+      <Filter>animCurve</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\USCurveSampler.cpp">
+      <Filter>animCurve</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\USDeflater.cpp">
+      <Filter>zip</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\USInflater.cpp">
+      <Filter>zip</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\USZip.cpp">
+      <Filter>zip</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\USZipFile.cpp">
+      <Filter>zip</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\USAttributed.cpp">
+      <Filter>attributed</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\USAttrMap.cpp">
+      <Filter>attributed</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\USAttrOp.cpp">
+      <Filter>attributed</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\USFont.cpp">
+      <Filter>font</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\USFontRipper.cpp">
+      <Filter>font</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\USDebugLines.cpp">
+      <Filter>gfxDevice</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\USGfxDevice.cpp">
+      <Filter>gfxDevice</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\USBlendMode.cpp">
+      <Filter>gfxObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\USCamera2D.cpp">
+      <Filter>gfxObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\USCamera3D.cpp">
+      <Filter>gfxObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\USCameraFitter.cpp">
+      <Filter>gfxObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\USCanvas.cpp">
+      <Filter>gfxObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\USColor.cpp">
+      <Filter>gfxObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\USGLLine.cpp">
+      <Filter>gfxObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\USGLQuad.cpp">
+      <Filter>gfxObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\USImage.cpp">
+      <Filter>gfxObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\USTexture.cpp">
+      <Filter>gfxObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\USViewport.cpp">
+      <Filter>gfxObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\USViewQuad.cpp">
+      <Filter>gfxObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\USData.cpp">
+      <Filter>io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\USDataIOTask.cpp">
+      <Filter>io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\USBox.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\USCurve.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\USDistance.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\USFrustum.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\USInterpolate.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\USIntersect.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\USMercator.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\USPlane.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\USPolar.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\USQuad.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\USSurface2D.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\USTrig.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\USSlipMapBrush.cpp">
+      <Filter>slippymap</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\USSlipMapTile.cpp">
+      <Filter>slippymap</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\USSlipMapTileSource.cpp">
+      <Filter>slippymap</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\USGrid.cpp">
+      <Filter>spatial</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\USPartition.cpp">
+      <Filter>spatial</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\USQuadCoord.cpp">
+      <Filter>spatial</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\USTile.cpp">
+      <Filter>spatial</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\USSqlBinding.cpp">
+      <Filter>sql</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\USSqlColumn.cpp">
+      <Filter>sql</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\USSqlConnection.cpp">
+      <Filter>sql</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\USSqlRecord.cpp">
+      <Filter>sql</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\USSqlStatement.cpp">
+      <Filter>sql</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\USSqlValue.cpp">
+      <Filter>sql</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\USMutex.cpp">
+      <Filter>thread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\USMutex_posix.cpp">
+      <Filter>thread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\USMutex_win32.cpp">
+      <Filter>thread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\USTask.cpp">
+      <Filter>thread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\USTaskThread.cpp">
+      <Filter>thread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\USThread.cpp">
+      <Filter>thread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\USThread_posix.cpp">
+      <Filter>thread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\USThread_win32.cpp">
+      <Filter>thread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\USAdapterInfo_win32.cpp">
+      <Filter>util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\USLog.cpp">
+      <Filter>util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\USPrettyPrint.cpp">
+      <Filter>util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\USTypedPtr.cpp">
+      <Filter>util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\USFileCache.cpp">
+      <Filter>web</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\USHttpTask.cpp">
+      <Filter>web</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\USHttpTask_impl.cpp">
+      <Filter>web</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\USUrlMgr.cpp">
+      <Filter>web</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\USXmlReader.cpp">
+      <Filter>xml</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\pch.cpp" />
+    <ClCompile Include="..\..\src\uslsext\uslsext.cpp" />
+    <ClCompile Include="..\..\src\uslsext\USDrawBuffer.cpp">
+      <Filter>gfxDevice</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\uslsext\USAnimCurve.h">
+      <Filter>animCurve</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USCurveSampler.h">
+      <Filter>animCurve</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USDeflater.h">
+      <Filter>zip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USInflater.h">
+      <Filter>zip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USZip.h">
+      <Filter>zip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USZipFile.h">
+      <Filter>zip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USAttributed.h">
+      <Filter>attributed</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USAttrMap.h">
+      <Filter>attributed</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USAttrOp.h">
+      <Filter>attributed</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USFont.h">
+      <Filter>font</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USFontRipper.h">
+      <Filter>font</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USFsm.h">
+      <Filter>fsm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USFsmStateFactory.h">
+      <Filter>fsm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USDebugLines.h">
+      <Filter>gfxDevice</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USGfxDevice.h">
+      <Filter>gfxDevice</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USBlendMode.h">
+      <Filter>gfxObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USCamera2D.h">
+      <Filter>gfxObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USCamera3D.h">
+      <Filter>gfxObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USCameraFitter.h">
+      <Filter>gfxObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USCanvas.h">
+      <Filter>gfxObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USColor.h">
+      <Filter>gfxObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USGLLine.h">
+      <Filter>gfxObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USGLQuad.h">
+      <Filter>gfxObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USImage.h">
+      <Filter>gfxObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USTexture.h">
+      <Filter>gfxObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USViewport.h">
+      <Filter>gfxObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USViewQuad.h">
+      <Filter>gfxObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USData.h">
+      <Filter>io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USDataIOTask.h">
+      <Filter>io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USBox.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USCurve.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USDistance.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USFrustum.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USInterpolate.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USIntersect.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USMathConsts.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USMatrix.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USMatrix2D.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USMatrix3D.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USMercator.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USPlane.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USPolar.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USPolygon2D.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USQuad.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USSurface2D.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USTrig.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USSlipMapBrush.h">
+      <Filter>slippymap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USSlipMapTile.h">
+      <Filter>slippymap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USSlipMapTileSource.h">
+      <Filter>slippymap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USGrid.h">
+      <Filter>spatial</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USPartition.h">
+      <Filter>spatial</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USQuadCoord.h">
+      <Filter>spatial</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USTile.h">
+      <Filter>spatial</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USSqlBinding.h">
+      <Filter>sql</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USSqlColumn.h">
+      <Filter>sql</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USSqlConnection.h">
+      <Filter>sql</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USSqlRecord.h">
+      <Filter>sql</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USSqlStatement.h">
+      <Filter>sql</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USSqlValue.h">
+      <Filter>sql</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USMutex.h">
+      <Filter>thread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USMutex_posix.h">
+      <Filter>thread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USMutex_win32.h">
+      <Filter>thread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USTask.h">
+      <Filter>thread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USTaskThread.h">
+      <Filter>thread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USThread.h">
+      <Filter>thread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USThread_posix.h">
+      <Filter>thread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USThread_win32.h">
+      <Filter>thread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USDelegate.h">
+      <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USLog.h">
+      <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USPrettyPrint.h">
+      <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USRadixSort16.h">
+      <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USRadixSort32.h">
+      <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USTypedPtr.h">
+      <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USFileCache.h">
+      <Filter>web</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USHttpTask.h">
+      <Filter>web</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USHttpTask_impl.h">
+      <Filter>web</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USUrlMgr.h">
+      <Filter>web</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USXmlReader.h">
+      <Filter>xml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\pch.h" />
+    <ClInclude Include="..\..\src\uslsext\uslsext.h" />
+    <ClInclude Include="..\..\src\uslsext\USPolyScanner.h">
+      <Filter>gfxObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USDrawBuffer.h">
+      <Filter>gfxDevice</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
