@@ -10,37 +10,6 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-//float USAnimCurve::ClampTime ( float time ) {
-//
-//	float length = this->GetLength ();
-//	
-//	if (( time >= 0.0f ) && ( time <= length )) return time;
-//	
-//	// clamp!
-//	if ( this->mClampMode == CLAMP ) {
-//		if ( time < 0.0f ) return 0.0f;
-//		return length;
-//	}
-//	
-//	float norm = time / length;
-//	int i = ( int )norm;
-//	float d = norm - ( float )i;
-//	
-//	// mirror!
-//	if ( this->mClampMode == MIRROR ){
-//	
-//		bool even = (( i & 0x01 ) == 0 );
-//	
-//		if ((( i < 0 ) && even ) || (( i >= 0 ) && !even )) {
-//			return ( 1.0f - d ) * length;
-//		}
-//	}
-//	
-//	// wrap!
-//	return d * length;
-//}
-
-//----------------------------------------------------------------//
 u32 USAnimCurve::FindKeyID ( float time ) {
 
 	u32 keyID = 0;
@@ -200,7 +169,14 @@ float USAnimCurve::GetFloatValue ( float time ) {
 	}
 	
 	float t = ( time - k0.mTime ) / span;
-	return USInterpolate::Interpolate ( k0.mMode, v0, v1, t );
+	float r0 = USInterpolate::Interpolate ( k0.mMode, v0, v1, t );
+	
+	if ( k0.mWeight == 1.0f ) {
+		return r0;
+	}
+	
+	float r1 = USInterpolate::Interpolate ( USInterpolate::kLinear, v0, v1, t );
+	return USInterpolate::Interpolate ( USInterpolate::kLinear, r1, r0, k0.mWeight );
 }
 
 //----------------------------------------------------------------//
@@ -232,12 +208,13 @@ void USAnimCurve::Init ( u32 numKeys ) {
 }
 
 //----------------------------------------------------------------//
-void USAnimCurve::SetKey ( u32 id, float time, float value, u32 mode ) {
+void USAnimCurve::SetKey ( u32 id, float time, float value, u32 mode, float weight ) {
 
 	if ( id < this->mKeys.Size ()) {
 		this->mKeys [ id ].mTime = time;
 		this->mKeys [ id ].mValue = value;
 		this->mKeys [ id ].mMode = mode;
+		this->mKeys [ id ].mWeight = weight;
 	}
 }
 

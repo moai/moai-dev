@@ -13,6 +13,7 @@ public:
 	float		mTime;
 	float		mValue;
 	u32			mMode;
+	float		mWeight;
 };
 
 //================================================================//
@@ -36,7 +37,7 @@ public:
 	int				GetIntValue			( float time );
 	float			GetLength			();
 	void			Init				( u32 numKeys );
-	void			SetKey				( u32 id, float time, float value, u32 mode );
+	void			SetKey				( u32 id, float time, float value, u32 mode, float weight = 1.0f );
 					USAnimCurve			();
 					~USAnimCurve		();
 };

@@ -69,8 +69,7 @@ float USInterpolate::Flat ( float t ) {
 float USInterpolate::Flat ( float x0, float x1, float t ) {
 
 	// flat
-	if ( t < 1.0f ) return x0;
-	return x1;
+	return ( t < 1.0f ) ? x0 : x1;
 }
 
 //----------------------------------------------------------------//
@@ -82,8 +81,8 @@ float USInterpolate::Interpolate ( u32 mode, float x0, float x1, float t ) {
 		case kFlat:			return Flat ( x0, x1, t );
 		case kLinear:		return Linear ( x0, x1, t );
 		case kSmooth:		return Smooth ( x0, x1, t );
-		case kSoftEaseIn:	return SoftEaseIn ( x0, x1, t  );
-		case kSoftEaseOut:	return SoftEaseOut ( x0, x1, t  );
+		case kSoftEaseIn:	return SoftEaseIn ( x0, x1, t );
+		case kSoftEaseOut:	return SoftEaseOut ( x0, x1, t );
 		case kSoftSmooth:	return SoftSmooth ( x0, x1, t );
 	}
 	assert ( false );
