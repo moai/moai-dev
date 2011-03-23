@@ -68,11 +68,11 @@ float USAnimCurve::GetFloatDelta ( float t0, float t1 ) {
 			float r1 = v1;
 			
 			if ( t0 > k0.mTime ) {
-				r0 = USInterpolate::Interpolate ( k0.mMode, v0, v1, ( t0 - k0.mTime ) / span );
+				r0 = USInterpolate::Interpolate ( k0.mMode, v0, v1, ( t0 - k0.mTime ) / span, k0.mWeight );
 			}
 			
 			if ( t1 <= k1.mTime ) {
-				r1 = USInterpolate::Interpolate ( k0.mMode, v0, v1, ( t1 - k0.mTime ) / span );
+				r1 = USInterpolate::Interpolate ( k0.mMode, v0, v1, ( t1 - k0.mTime ) / span, k0.mWeight );
 				more = false;
 			}
 			
@@ -115,11 +115,11 @@ float USAnimCurve::GetFloatDelta ( float t0, float t1 ) {
 			float r1 = v1;
 			
 			if ( t0 < k1.mTime ) {
-				r1 = USInterpolate::Interpolate ( k0.mMode, v0, v1, ( t0 - k0.mTime ) / span );
+				r1 = USInterpolate::Interpolate ( k0.mMode, v0, v1, ( t0 - k0.mTime ) / span, k0.mWeight );
 			}
 			
 			if ( t1 >= k0.mTime ) {
-				r0 = USInterpolate::Interpolate ( k0.mMode, v0, v1, ( t1 - k0.mTime ) / span );
+				r0 = USInterpolate::Interpolate ( k0.mMode, v0, v1, ( t1 - k0.mTime ) / span, k0.mWeight );
 				more = false;
 			}
 			
@@ -169,14 +169,7 @@ float USAnimCurve::GetFloatValue ( float time ) {
 	}
 	
 	float t = ( time - k0.mTime ) / span;
-	float r0 = USInterpolate::Interpolate ( k0.mMode, v0, v1, t );
-	
-	if ( k0.mWeight == 1.0f ) {
-		return r0;
-	}
-	
-	float r1 = USInterpolate::Interpolate ( USInterpolate::kLinear, v0, v1, t );
-	return USInterpolate::Interpolate ( USInterpolate::kLinear, r1, r0, k0.mWeight );
+	return USInterpolate::Interpolate ( k0.mMode, v0, v1, t, k0.mWeight );
 }
 
 //----------------------------------------------------------------//

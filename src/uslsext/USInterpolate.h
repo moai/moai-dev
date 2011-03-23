@@ -34,6 +34,7 @@ namespace USInterpolate {
 	float	Flat			( float t );
 	float	Flat			( float x0, float x1, float t );
 	float	Interpolate		( u32 mode, float x0, float x1, float t );
+	float	Interpolate		( u32 mode, float x0, float x1, float t, float w );
 	float	Linear			( float t );
 	float	Linear			( float x0, float x1, float t );
 	float	Smooth			( float t );

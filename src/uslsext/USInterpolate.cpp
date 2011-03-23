@@ -90,6 +90,18 @@ float USInterpolate::Interpolate ( u32 mode, float x0, float x1, float t ) {
 }
 
 //----------------------------------------------------------------//
+float USInterpolate::Interpolate ( u32 mode, float x0, float x1, float t, float w ) {
+
+	float v0 = Interpolate ( mode, x0, x1, t );
+	
+	if ( w == 1.0f ) {
+		return v0;
+	}
+	float v1 = Interpolate ( kLinear, x0, x1, t );
+	return Interpolate ( kLinear, v1, v0, w );
+}
+
+//----------------------------------------------------------------//
 float USInterpolate::Linear ( float t ) {
 
 	// linear
