@@ -8,7 +8,7 @@
 		<attribute name="sdk"/>
 		<sequential>
 			<exec executable="xcodebuild" dir="xcode" failonerror="true" output="xcode/xcodebuild.cc.output">
-				<arg line="-target Moai -configuration @{configuration} -sdk @{sdk} clean build"/>
+				<arg line="-target Moai -configuration @{configuration} -sdk @{sdk} build"/>
 			</exec>
 		</sequential>
 	</macrodef>
@@ -23,6 +23,7 @@
 			
 			<if>
 				<equals arg1="${grep.output}" arg2=""/>
+				<then/>
 				<else>
 					<echo message="${grep.output}"/>	
 				</else>
