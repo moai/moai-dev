@@ -1,7 +1,7 @@
 <project name="moai-staging" default="build-all">
 
     <!-- ================================================================ -->
-    <!-- build macro -->
+    <!-- macros -->
     <!-- ================================================================ -->
 	<macrodef name="build">
 		<attribute name="configuration"/>
@@ -13,6 +13,23 @@
 		</sequential>
 	</macrodef>
 
+	<macrodef name="parse-errors">
+		<attribute name="errorTag"/>
+		<attribute name="contextSize"/>
+		<sequential>
+			<exec executable="grep" dir="xcode" outputproperty="grep.output">
+				<arg line="-C @{contextSize} *.@{errorTag}*."/>
+			</exec>
+			
+			<if>
+				<equals arg1="${grep.output}" arg2=""/>
+				<else>
+					<echo message="${grep.output}>	
+				</else>
+			</if>
+		</sequential>
+	</macrodef>
+	
     <!-- ================================================================ -->
     <!-- build all -->
     <!-- ================================================================ -->
@@ -21,5 +38,12 @@
 		<build configuration="Distribution" sdk="iphonesimulator"/>
 		<build configuration="Debug" sdk="iphoneos"/>
 		<build configuration="Debug" sdk="iphonesimulator"/>
+	</target>
+	
+    <!-- ================================================================ -->
+    <!-- output errors -->
+    <!-- ================================================================ -->
+	<target name="output-errors">
+		<parse-errors errorTag="error:" contextSize="1"/>
 	</target>
 </project>
