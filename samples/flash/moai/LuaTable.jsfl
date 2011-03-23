@@ -73,6 +73,14 @@ LuaTable.prototype.push = function ( item ) {
 }
 
 //----------------------------------------------------------------//
+LuaTable.prototype.pushTable = function () {
+
+	var lua = new LuaTable ();
+	this.push ( lua );
+	return lua;
+}
+
+//----------------------------------------------------------------//
 LuaTable.prototype.set = function ( index, item ) {
 
 	var type = typeof index;
@@ -83,6 +91,14 @@ LuaTable.prototype.set = function ( index, item ) {
 	else if ( type == 'number' ) {
 		this.numeric [ index ] = item;
 	}
+}
+
+//----------------------------------------------------------------//
+LuaTable.prototype.setTable = function ( index ) {
+
+	var lua = new LuaTable ();
+	this.set ( index, lua );
+	return lua;
 }
 
 //----------------------------------------------------------------//
