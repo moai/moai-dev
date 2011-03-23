@@ -2,7 +2,7 @@
    
 	<target name="build-debug-win32">
 		
-		<exec executable="C:\Windows\Microsoft.NET\Framework\v4.0.30319\MSBuild.exe" outputproperty="msbuild.errors">
+		<exec executable="C:\Windows\Microsoft.NET\Framework\v4.0.30319\MSBuild.exe" outputproperty="msbuild.output">
 			<arg value="C:\Program Files (x86)\CruiseControl\projects\moai-open\vs2008\moai-open.sln"/>
 			<arg value="/p:Configuration=Debug"/>
 			<arg value="/p:Platform=Win32"/>
@@ -11,7 +11,7 @@
 			<arg value="/nologo"/>
 		</exec>
 		
-		<echo message="${msbuild.errors}"/>
+		<echo message="${msbuild.output}"/>
 	</target>
    
    <!--
