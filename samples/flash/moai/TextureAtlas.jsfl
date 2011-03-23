@@ -1,5 +1,11 @@
-﻿//----------------------------------------------------------------//
-function addRect ( list, name, width, height ) {
+﻿//================================================================//
+// TextureAtlas
+//================================================================//
+function TextureAtlas () {
+}
+
+//----------------------------------------------------------------//
+TextureAtlas.prototype.addRect = function ( list, name, width, height ) {
 
 	var rect = {};
 	
@@ -18,24 +24,51 @@ function addRect ( list, name, width, height ) {
 }
 
 //----------------------------------------------------------------//
-function createTextureAtlas () {
+TextureAtlas.prototype.createLuaBrushDeck = function () {
+
+	var lua = new LuaTable ();
 	
-	var packed = getPackListForLibrary ();
-	var size = getTextureSize ( packed );
+	for ( var i = 0; i < this.rects.length; i++ ) {
+		var rect = this.rects [ i ];
+		var uvRect = rect.uvRect;
+		
+		var brush = lua.pushTable ();
+		
+		brush.set ( 'u0', uvRect.x0 );
+		brush.set ( 'v0', uvRect.y0 );
+		brush.set ( 'u1', uvRect.x1 );
+		brush.set ( 'v1', uvRect.y1 );
+		
+		brush.set ( 'w', rect.width );
+		brush.set ( 'h', rect.height );
+		
+		if ( rect.isRotated ) {
+			brush.set ( 'r', true );
+		}
+	}
+	
+	return lua;
+}
+
+//----------------------------------------------------------------//
+TextureAtlas.prototype.createTextureAtlas = function () {
+	
+	var packed = this.getPackListForLibrary ();
+	var size = this.getTextureSize ( packed );
 	
 	var xScale = 1 / size.width;
 	var yScale = 1 / size.height;
 	
-	var atlas = {}
-	atlas.rects = packed;
-	atlas.map = {};
+	this.rects = packed;
+	this.map = {};
 
 	for ( var i = 0; i < packed.length; ++i ) {
-		var rect = packed [ i ];
-		var uvRect = {}; 
 		
-		uvRect.name = rect.name;
-		atlas.map [ rect.name ] = uvRect;
+		var rect = packed [ i ];
+		this.map [ rect.name ] = rect;
+		rect.idx = i;
+		
+		var uvRect = {}; 
 		
 		uvRect.x0 = rect.x0 * xScale;
 		uvRect.y0 = rect.y0 * yScale;
@@ -45,18 +78,16 @@ function createTextureAtlas () {
 		uvRect.width = rect.width * xScale;
 		uvRect.height = rect.height * yScale;
 		
-		uvRect.isRotated = rect.isRotated;
-		
-		uvRect.idx = i;
+		rect.uvRect = uvRect;
 	}
-	return atlas;
+	return this;
 }
 
 //----------------------------------------------------------------//
-function createTextureAtlasDoc ( atlas ) {
+TextureAtlas.prototype.createTextureAtlasDoc = function () {
 	
-	var packed = atlas.rects;
-	var size = getTextureSize ( packed );
+	var packed = this.rects;
+	var size = this.getTextureSize ( packed );
 	
 	var document = fl.getDocumentDOM ();
 	var library = document.library;
@@ -89,7 +120,7 @@ function createTextureAtlasDoc ( atlas ) {
 }
 
 //----------------------------------------------------------------//
-function getBaseHeight ( skyline, i, width ) {
+TextureAtlas.prototype.getBaseHeight = function ( skyline, i, width ) {
 
 	var span = skyline [ i++ ];
 	
@@ -113,7 +144,7 @@ function getBaseHeight ( skyline, i, width ) {
 }
 
 //----------------------------------------------------------------//
-function getPackListForLibrary () {
+TextureAtlas.prototype.getPackListForLibrary = function () {
 
 	var list = new Array ();
 	
@@ -138,7 +169,7 @@ function getPackListForLibrary () {
 		var width = Math.ceil ( element.width );
 		var height = Math.ceil ( element.height );
 		
-		addRect ( list, item.name, width + 2, height + 2 );
+		this.addRect ( list, item.name, width + 2, height + 2 );
 		
 		scratchDoc.selectAll ();
 		scratchDoc.deleteSelection ();
@@ -146,11 +177,11 @@ function getPackListForLibrary () {
 	
 	fl.closeDocument ( scratchDoc, false );
 	
-	return packRects ( list );
+	return this.packRects ( list );
 }
 
 //----------------------------------------------------------------//
-function getTextureSize ( list ) {
+TextureAtlas.prototype.getTextureSize = function ( list ) {
 
 	var width = 0;
 	var height = 0;
@@ -186,7 +217,7 @@ function getTextureSize ( list ) {
 }
 
 //----------------------------------------------------------------//
-function newSpan ( x0, x1, y ) {
+TextureAtlas.prototype.newSpan = function ( x0, x1, y ) {
 
 	var span = {};
 	span.x0 = x0;
@@ -197,9 +228,9 @@ function newSpan ( x0, x1, y ) {
 }
 
 //----------------------------------------------------------------//
-function packRects ( list ) {
+TextureAtlas.prototype.packRects = function ( list ) {
 
-	list.sort ( sortRectByHeight );
+	list.sort ( this.sortRectByHeight );
 	list.reverse ();
 	
 	var size = 1;
@@ -211,16 +242,16 @@ function packRects ( list ) {
 		fl.trace ( 'trying size: ' + size );
 		
 		var skyline = new Array ();
-		skyline.push ( newSpan ( 0, size, 0 ));
+		skyline.push ( this.newSpan ( 0, size, 0 ));
 		
 		for ( var i = 0; i < list.length; ++i ) {
 			var rect = list [ i ];
 			
-			if ( !placeRect ( skyline, rect, size )) {
+			if ( !this.placeRect ( skyline, rect, size )) {
 				packed = new Array ();
 				break;
 			}			
-			skyline = rebuildSkyline ( skyline, rect );
+			skyline = this.rebuildTextureAtlas ( skyline, rect );
 			packed.push ( rect );
 		}
 	}
@@ -228,12 +259,12 @@ function packRects ( list ) {
 }
 
 //----------------------------------------------------------------//
-function placeRect ( skyline, rect, size ) {
+TextureAtlas.prototype.placeRect = function ( skyline, rect, size ) {
 	
 	var bias = 4;
 	
 	var bestX = 0;
-	var bestY = getBaseHeight ( skyline, 0, rect.width );
+	var bestY = this.getBaseHeight ( skyline, 0, rect.width );
 	
 	for ( i = 1; i < skyline.length; ++i ) {
 		var span = skyline [ i ];
@@ -242,7 +273,7 @@ function placeRect ( skyline, rect, size ) {
 			break;
 		}
 		
-		var y = getBaseHeight ( skyline, i, rect.width );
+		var y = this.getBaseHeight ( skyline, i, rect.width );
 		
 		if ( y < ( bestY - bias )) {
 			bestX = span.x0;
@@ -262,7 +293,7 @@ function placeRect ( skyline, rect, size ) {
 }
 
 //----------------------------------------------------------------//
-function rebuildSkyline ( list, rect ) {
+TextureAtlas.prototype.rebuildTextureAtlas = function ( list, rect ) {
 	
 	var i = 0;
 	var temp = new Array ();
@@ -276,10 +307,10 @@ function rebuildSkyline ( list, rect ) {
 		else if ( span.x1 > rect.x0 ) {
 		
 			if ( span.x0 < rect.x0 ) {
-				temp.push ( newSpan ( span.x0, rect.x0, span.y ));
+				temp.push ( this.newSpan ( span.x0, rect.x0, span.y ));
 			}
 			
-			temp.push ( newSpan ( rect.x0, rect.x1, rect.y1 ));			
+			temp.push ( this.newSpan ( rect.x0, rect.x1, rect.y1 ));			
 			break;
 		}
 	}
@@ -291,11 +322,11 @@ function rebuildSkyline ( list, rect ) {
 			temp.push ( span );
 		}
 		else if ( span.x1 > rect.x1 ) {
-			temp.push ( newSpan ( rect.x1, span.x1, span.y ));
+			temp.push ( this.newSpan ( rect.x1, span.x1, span.y ));
 		}
 	}
 	
-	skyline = new Array ();
+	var skyline = new Array ();
 	var prevSpan;
 	
 	for ( i = 0; i < temp.length; ++i ) {
@@ -313,7 +344,7 @@ function rebuildSkyline ( list, rect ) {
 }
 
 //----------------------------------------------------------------//
-function sortRectByHeight ( a, b ) {
+TextureAtlas.prototype.sortRectByHeight = function ( a, b ) {
 
 	if ( a.height == b.height ) return 0;
 	return a.height < b.height ? -1 : 1;
