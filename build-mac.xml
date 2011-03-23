@@ -24,7 +24,7 @@
 			<if>
 				<equals arg1="${grep.output}" arg2=""/>
 				<else>
-					<echo message="${grep.output}>	
+					<echo message="${grep.output}"/>	
 				</else>
 			</if>
 		</sequential>
