@@ -5,10 +5,10 @@
     <!-- ================================================================ -->
 	<macrodef name="build">
 		<attribute name="configuration"/>
-		<attribute name="sdk"/>
+		<attribute name="which-sdk"/>
 		<sequential>
 			<exec executable="xcodebuild" dir="xcode" failonerror="true" output="xcode/xcodebuild.cc.output">
-				<arg line="-target Moai -configuration ${configuration} -sdk ${sdk} clean build"/>
+				<arg line="-target Moai -configuration ${configuration} -sdk ${which-sdk} clean build"/>
 			</exec>
 		</sequential>
 	</macrodef>
@@ -17,9 +17,9 @@
     <!-- build all -->
     <!-- ================================================================ -->
     <target name="build-all">
-		<build configuration="Distribution" sdk="iphoneos"/>
-		<build configuration="Distribution" sdk="iphonesimulator"/>
-		<build configuration="Debug" sdk="iphoneos"/>
-		<build configuration="Debug" sdk="iphonesimulator"/>
+		<build configuration="Distribution" which-sdk="iphoneos"/>
+		<build configuration="Distribution" which-sdk="iphonesimulator"/>
+		<build configuration="Debug" which-sdk="iphoneos"/>
+		<build configuration="Debug" which-sdk="iphonesimulator"/>
 	</target>
 </project>
