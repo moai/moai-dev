@@ -38,6 +38,6 @@
     <!-- output errors -->
     <!-- ================================================================ -->
 	<target name="output-errors">
-		<parse-errors errorTag=" error: " contextSize="1"/>
+		<parse-errors errorTag="error:" contextSize="1"/>
 	</target>
 </project>
