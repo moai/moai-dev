@@ -1,43 +1,25 @@
 <project name="moai-staging" default="build-all">
 
     <!-- ================================================================ -->
-    <!-- Build All -->
+    <!-- build macro -->
     <!-- ================================================================ -->
-    <target name="build-all" depends="build-debug-sim, build-dist-device, build-dist-sim, build-debug-device"/>
+	<macrodef name="build">
+		<attribute name="configuration"/>
+		<attribute name="sdk"/>
+		<sequential>
+			<exec executable="xcodebuild" dir="xcode" failonerror="true" output="xcode/xcodebuild.cc.output">
+				<arg line="-target Moai -configuration ${configuration} -sdk ${sdk} clean build"/>
+			</exec>
+		</sequential>
+	</macrodef>
 
     <!-- ================================================================ -->
-    <!-- Build Debug Simulator -->
+    <!-- build all -->
     <!-- ================================================================ -->
-    <target name="build-debug-sim" description="Building Debug for Simulator">
-        <exec executable="xcodebuild" dir="xcode" failonerror="true" output="xcode/xcodebuild.cc.output">
-            <arg line="-target Moai -configuration Debug -sdk iphonesimulator clean build"/>
-        </exec>
-    </target>
-    
-    <!-- ================================================================ -->
-    <!-- Build Distribution Simulator -->
-    <!-- ================================================================ -->
-    <target name="build-dist-sim" description="Building Distribution for Simulator">
-        <exec executable="xcodebuild" dir="xcode" failonerror="true" output="xcode/xcodebuild.cc.output">
-            <arg line="-target Moai -configuration Distribution -sdk iphonesimulator clean build"/>
-        </exec>
-    </target>
-    
-    <!-- ================================================================ -->
-    <!-- Build Debug Device -->
-    <!-- ================================================================ -->
-    <target name="build-debug-device" description="Building Debug for Device">
-        <exec executable="xcodebuild" dir="xcode" failonerror="true" output="xcode/xcodebuild.cc.output">
-            <arg line="-target Moai -configuration Debug -sdk iphoneos clean build"/>
-        </exec>
-    </target>
-    
-    <!-- ================================================================ -->
-    <!-- Build Distribution Device -->
-    <!-- ================================================================ -->
-    <target name="build-dist-device" description="Building Distribution for Device">
-        <exec executable="xcodebuild" dir="xcode" failonerror="true" output="xcode/xcodebuild.cc.output">
-            <arg line="-target Moai -configuration Distribution -sdk iphoneos clean build"/>
-        </exec>
-    </target>
+    <target name="build-all">
+		<build configuration="Distribution" sdk="iphoneos"/>
+		<build configuration="Distribution" sdk="iphonesimulator"/>
+		<build configuration="Debug" sdk="iphoneos"/>
+		<build configuration="Debug" sdk="iphonesimulator"/>
+	</target>
 </project>
