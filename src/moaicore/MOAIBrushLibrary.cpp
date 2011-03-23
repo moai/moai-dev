@@ -68,6 +68,47 @@ int	MOAIBrushLibrary::_scaleUVCoords ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@brief <tt>setQuad ( self, id, x0, y0, x1, y1, x2, y2, x3, y3 )</tt>\n
+\n
+	Sets a screen rect in the brush library.
+	@param self (in)
+	@param id (in) ID of this quad.
+	@param x0 (in)
+	@param y0 (in)
+	@param x1 (in)
+	@param y1 (in)
+	@param x2 (in)
+	@param y2 (in)
+	@param x3 (in)
+	@param y3 (in)
+*/
+int MOAIBrushLibrary::_setQuad ( lua_State* L ) {
+	LUA_SETUP ( MOAIBrushLibrary, "UNNNNNNNNN" )
+
+	u32 idx		= state.GetValue < u32 >( 2, 1 ) - 1;
+	MOAI_LUA_VALID_INDEX ( idx, self->mQuads.Size ())
+	
+	USGLQuad* glQuad = self->GetGLQuad ( idx );
+	if ( glQuad ) {
+	
+		USQuad quad;
+		
+		quad.mV [ 0 ].mX = state.GetValue < float >( 3, 0.0f );
+		quad.mV [ 0 ].mY = state.GetValue < float >( 4, 0.0f );
+		quad.mV [ 1 ].mX = state.GetValue < float >( 5, 0.0f );
+		quad.mV [ 1 ].mY = state.GetValue < float >( 6, 0.0f );
+		quad.mV [ 2 ].mX = state.GetValue < float >( 7, 0.0f );
+		quad.mV [ 2 ].mY = state.GetValue < float >( 8, 0.0f );
+		quad.mV [ 3 ].mX = state.GetValue < float >( 9, 0.0f );
+		quad.mV [ 3 ].mY = state.GetValue < float >( 10, 0.0f );
+
+		glQuad->SetVerts ( quad.mV [ 0 ], quad.mV [ 1 ], quad.mV [ 2 ], quad.mV [ 3 ]);
+	}
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@brief <tt>setRect ( self, idx, left, top, right, bottom )</tt>\n
 	\n
 	Sets the rectangular area to display the brush relative to the origin.
@@ -82,7 +123,6 @@ int MOAIBrushLibrary::_setRect ( lua_State* L ) {
 	LUA_SETUP ( MOAIBrushLibrary, "UNNNNN" )
 
 	u32 idx		= state.GetValue < u32 >( 2, 1 ) - 1;
-	
 	MOAI_LUA_VALID_INDEX ( idx, self->mQuads.Size ())
 	
 	float x0	= state.GetValue < float >( 3, 0.0f );
@@ -110,6 +150,47 @@ int MOAIBrushLibrary::_setTexture ( lua_State* L ) {
 
 	self->mTexture = MOAITexture::AffirmTexture ( state, 2 );
 
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@brief <tt>setQuad ( self, id, x0, y0, x1, y1, x2, y2, x3, y3 )</tt>\n
+\n
+	Sets a screen rect in the brush library.
+	@param self (in)
+	@param id (in) ID of this quad.
+	@param x0 (in)
+	@param y0 (in)
+	@param x1 (in)
+	@param y1 (in)
+	@param x2 (in)
+	@param y2 (in)
+	@param x3 (in)
+	@param y3 (in)
+*/
+int MOAIBrushLibrary::_setUVQuad ( lua_State* L ) {
+	LUA_SETUP ( MOAIBrushLibrary, "UNNNNNNNNN" )
+
+	u32 idx		= state.GetValue < u32 >( 2, 1 ) - 1;
+	MOAI_LUA_VALID_INDEX ( idx, self->mQuads.Size ())
+	
+	USGLQuad* glQuad = self->GetGLQuad ( idx );
+	if ( glQuad ) {
+	
+		USQuad quad;
+		
+		quad.mV [ 0 ].mX = state.GetValue < float >( 3, 0.0f );
+		quad.mV [ 0 ].mY = state.GetValue < float >( 4, 0.0f );
+		quad.mV [ 1 ].mX = state.GetValue < float >( 5, 0.0f );
+		quad.mV [ 1 ].mY = state.GetValue < float >( 6, 0.0f );
+		quad.mV [ 2 ].mX = state.GetValue < float >( 7, 0.0f );
+		quad.mV [ 2 ].mY = state.GetValue < float >( 8, 0.0f );
+		quad.mV [ 3 ].mX = state.GetValue < float >( 9, 0.0f );
+		quad.mV [ 3 ].mY = state.GetValue < float >( 10, 0.0f );
+
+		glQuad->SetUVs ( quad.mV [ 0 ], quad.mV [ 1 ], quad.mV [ 2 ], quad.mV [ 3 ]);
+	}
+	
 	return 0;
 }
 
@@ -160,6 +241,8 @@ bool MOAIBrushLibrary::Bind () {
 
 //----------------------------------------------------------------//
 void MOAIBrushLibrary::Draw ( MOAIDrawingMtx2D& transform, u32 idx ) {
+
+	if ( idx >= this->mQuads.Size ()) return;
 
 	USGLQuad* quad = this->GetGLQuad ( idx );
 	if ( quad ) {
@@ -255,8 +338,10 @@ void MOAIBrushLibrary::RegisterLuaFuncs ( USLuaState& state ) {
 		{ "reserveBrushes",		_reserveBrushes },
 		{ "scaleCoords",		_scaleCoords },
 		{ "scaleUVCoords",		_scaleUVCoords },
+		{ "setQuad",			_setQuad },
 		{ "setRect",			_setRect },
 		{ "setTexture",			_setTexture },
+		{ "setUVQuad",			_setUVQuad },
 		{ "setUVRect",			_setUVRect },
 		{ NULL, NULL }
 	};
