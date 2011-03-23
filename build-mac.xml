@@ -18,7 +18,7 @@
 		<attribute name="contextSize"/>
 		<sequential>
 			<exec executable="grep" dir="xcode" outputproperty="grep.output">
-				<arg line="-C @{contextSize} *.@{errorTag}*."/>
+				<arg line="-C @{contextSize} -e .*@{errorTag}.* xcodebuild.cc.output"/>
 			</exec>
 			<echo message="${grep.output}"/>	
 		</sequential>
@@ -38,6 +38,6 @@
     <!-- output errors -->
     <!-- ================================================================ -->
 	<target name="output-errors">
-		<parse-errors errorTag="error:" contextSize="1"/>
+		<parse-errors errorTag=" error: " contextSize="1"/>
 	</target>
 </project>
