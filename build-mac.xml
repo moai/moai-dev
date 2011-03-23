@@ -20,14 +20,7 @@
 			<exec executable="grep" dir="xcode" outputproperty="grep.output">
 				<arg line="-C @{contextSize} *.@{errorTag}*."/>
 			</exec>
-			
-			<if>
-				<equals arg1="${grep.output}" arg2=""/>
-				<then/>
-				<else>
-					<echo message="${grep.output}"/>	
-				</else>
-			</if>
+			<echo message="${grep.output}"/>	
 		</sequential>
 	</macrodef>
 	
