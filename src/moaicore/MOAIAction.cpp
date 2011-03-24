@@ -17,6 +17,8 @@
 */
 int MOAIAction::_addChild ( lua_State* L ) {
 	
+	error!
+	
 	USLuaState state ( L );
 	if ( !state.CheckParams ( 1, "UU" )) return 0;
 	
