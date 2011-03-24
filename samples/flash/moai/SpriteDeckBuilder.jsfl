@@ -55,10 +55,7 @@ SpriteDeckBuilder.prototype.addSpriteForFrameIdx = function ( document, timeline
 	sprite.set ( 'base', base + 1 );
 	sprite.set ( 'size', size );
 	
-	var spriteIdx = this.sprites.length;
-	this.sprites.push ( sprite );
-	
-	return spriteIdx;
+	return this.sprites.push ( sprite );
 }
 
 //----------------------------------------------------------------//

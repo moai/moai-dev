@@ -5,164 +5,116 @@ fl.runScript ( fl.configURI + 'Commands/moai/SpriteDeckBuilder.jsfl' );
 //----------------------------------------------------------------//
 function exportToLua () {
 	
+	fl.trace ( 'FOOO!' );
+	
 	var document = fl.getDocumentDOM ();
 	var folderPath = fl.browseForFolderURL ( 'Select a folder.' ) + '/';
 	
 	if ( folderPath &&  folderPath.length ) {
 		
+		var timeline = document.getTimeline ();
+		var keyframes = getKeyframeList ( timeline );
+		
 		var atlas = new TextureAtlas ();
 		atlas.createTextureAtlas ();
 		
-		var lua = getDocumentLua ( document, atlas );
+		var spriteDeckBuilder = new SpriteDeckBuilder ();
+		
+		var lua = new LuaTable ();
+		
+		lua.set ( 'texture', document.name + '.png' );
+		lua.set ( 'fps', document.frameRate );
+		lua.set ( 'width', document.width );
+		lua.set ( 'height', document.height );
+		lua.set ( 'spriteDeck', spriteDeckBuilder.spriteDeck );
+		lua.set ( 'name', timeline.name );
+		lua.set ( 'length', timeline.frameCount );
+		
+		var luaFrames = lua.setTable ( 'frames' );
+		
+		for ( var i = 0; i < keyframes.length; ++i ) {
+			var keyframe = keyframes [ i ];
+			
+			var luaFrame = luaFrames.pushTable ();
+	
+			luaFrame.set ( 'start', keyframe.idx );
+			
+			if ( keyframe.nElements ) {
+				var id = spriteDeckBuilder.addSpriteForFrameIdx ( document, timeline, atlas, keyframe.idx );
+				luaFrame.set ( 'id', id );
+			}
+			else {
+				luaFrame.set ( 'id', -1 );
+			}
+		}
 		
 		var string = lua.toLuaLocalTable ( 'anim' );
 		string += '\n';
 		string += 'return anim\n';
 		fl.trace ( string );
 		
-		var filePath = folderPath + document.name + '.lua';
-		if ( !FLfile.write ( filePath, string )) {
+		var luaFilePath = folderPath + document.name + '.lua';
+		if ( !FLfile.write ( luaFilePath, string )) {
 			alert( "Error saving file" ); 
 		}
-	}
-}
-
-//----------------------------------------------------------------//
-function getDocumentLua ( document, atlas ) {
-	
-	var timeline = document.getTimeline ();
-	var frameRate = document.frameRate;
-	
-	return getTimelineLua ( atlas, timeline, frameRate );
-}
-
-//----------------------------------------------------------------//
-function getEaseCurveLua ( curve, name ) {
-	
-	var lua = new LuaTable ();
-	
-	for ( var i = 0; i < curve.length; i++ ) {
-		var point = curve [ i ];
 		
-		var luaPoint = lua.pushTable ();
+		var pngFilePath = folderPath + document.name + '.png';
+		atlasDoc = atlas.createTextureAtlasDoc ();
+		atlasDoc.exportPNG ( pngFilePath, true, true );
+		fl.closeDocument ( atlasDoc, false );
+	}
+}
+
+//----------------------------------------------------------------//
+function getKeyframeList ( timeline ) {
+	
+	var keyframes = new Array ();
+	
+	var i = 0;
+	var lastFrame = timeline.frameCount - 1;
+	for ( ; i < timeline.frameCount; ++i ) {
 		
-		luaPoint.set ( 'x', point.x );
-		luaPoint.set ( 'y', point.y );
-	}
-	return lua;
-}
-
-//----------------------------------------------------------------//
-function getElementLua ( element, idx ) {
-
-	var lua = new LuaTable ();
-	
-	var item = element.libraryItem;
-	if ( item ) {
-		lua.set ( 'name', item.name );
-	}
-	
-	lua.set ( 'x', element.x );
-	lua.set ( 'y', element.y );
-	lua.set ( 'r', element.rotation );
-	lua.set ( 'sx', element.scaleX );
-	lua.set ( 'sy', element.scaleY );
-	
-	return lua;
-}
-
-//----------------------------------------------------------------//
-function getFrameLua ( atlas, frame, idx, startIdx ) {
-
-	var lua = new LuaTable ();
-	
-	lua.set ( 'start', startIdx );
-	lua.set ( 'length', frame.duration );
-	
-	// elements
-	var elements = lua.setTable ( 'elements' );
-	
-	for ( var i = 0; i < frame.elements.length; ++i ) {
-		element = frame.elements [ i ];
-		elements.push ( getElementLua ( element, i + 1 ));
-	}
-
-	// ease
-	if ( frame.hasCustomEase ) {
-		if ( frame.useSingleEaseCurve ) {
-			var easeCurve = getEaseCurveLua ( frame.getCustomEase (), 'easeCurve' );
-			lua.set ( 'easeCurve', easeCurve );
-		}
-		else {
-			var easeCurves = lua.setTable ( 'easeCurves' );
+		var isKeyframe = false;
+		var nElements = 0;
+		
+		var layers = timeline.layers;
+		for ( var j = 0; j < timeline.layers.length; ++j ) {
+			var layer = layers [ j ];
 			
-			easeCurves.push ( getEaseCurveLua ( frame.getCustomEase ( 'position' ), 'position' ));
-			easeCurves.push ( getEaseCurveLua ( frame.getCustomEase ( 'rotation' ), 'rotation' ));
-			easeCurves.push ( getEaseCurveLua ( frame.getCustomEase ( 'scale' ), 'scale' ));
-			easeCurves.push ( getEaseCurveLua ( frame.getCustomEase ( 'color' ), 'color' ));
+			var frame = layer.frames [ i ];
+			nElements += frame.elements.length;
+			
+			if ( frame.startFrame == i ) {
+				isKeyframe = true;
+			}
+		}
+		
+		if ( isKeyframe  || ( i == lastFrame )) {
+			var keyframe = {};
+			keyframe.idx = i;
+			keyframe.nElements = nElements;
+			keyframes.push ( keyframe );
 		}
 	}
-	else {
-		lua.set ( 'ease', frame.tweenEasing );
-	}
-
-	return lua;
+	return keyframes;
 }
 
 //----------------------------------------------------------------//
-function getLayerLua ( atlas, layer, idx ) {
-
-	var lua = new LuaTable ();
+function isKeyframe ( timeline, frameIdx ) {
 	
-	lua.set ( 'name', layer.name );
-	lua.set ( 'length', layer.frames.length );
-	
-	var frames = lua.setTable ( 'frames' );
-	
-	var idx = 1;
-	for ( var i = 0; i < layer.frames.length; ++i ) {
-		frame = layer.frames [ i ];
+	var layers = timeline.layers;
+	for ( var i = 0; i < timeline.layers.length; ++i ) {
+		var layer = layers [ i ];
 		
-		// skip non-keyframes
+		var frames = layer.frames;
+		if ( frameIdx >= frames.length ) continue;
+		
+		var frame = layer.frames [ frameIdx ];
 		if ( frame.startFrame != i ) continue;
 		
-		// skip empty keyframes
-		//if ( !frame.elements.length ) continue;
-		
-		frames.push ( getFrameLua ( atlas, frame, idx++, i ));
+		return true;
 	}
-	return lua;
-}
-
-//----------------------------------------------------------------//
-function getTimelineLua ( atlas, timeline, frameRate ) {
-	
-	var lua = new LuaTable ();
-	
-	lua.set ( 'name', timeline.name );
-	lua.set ( 'fps', frameRate );
-	lua.set ( 'length', timeline.frameCount );
-	
-	var layers = lua.setTable ( 'layers' );
-	
-	for ( var i = 0; i < timeline.layers.length; ++i ) {
-		layer = timeline.layers [ i ];
-		
-		if ( layer.layerType != 'normal' ) continue;
-		layers.push ( getLayerLua ( atlas, layer, i + 1 ));
-	}
-	return lua;
-}
-
-//----------------------------------------------------------------//
-function reflect ( objName, obj ) {
-	
-	fl.trace ( objName );
-	
-	for ( var member in obj ){
-		fl.trace ( '\t' + member + ': ' + obj [ member ]);
-	}
-	fl.trace ( '\n' );
+	return false;
 }
 
 exportToLua ();
