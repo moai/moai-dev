@@ -16,11 +16,5 @@ sprite:setGfxSource ( texture )
 sprite:moveRot ( 360, 1.5 )
 layer:insertPrim ( sprite )
 
-sprite = MOAISprite2D.new ()
-sprite:setGfxSource ( texture )
-sprite:setLoc ( 0, -128 )
-sprite:moveRot ( 360, 1.5 )
-layer:insertPrim ( sprite )
-
 MOAISim.pushRenderPass ( layer )
 MOAISim.openWindow ( "cathead", 320, 480 )
