@@ -69,6 +69,8 @@ u32 USCipherStream::GetLength () {
 //----------------------------------------------------------------//
 void USCipherStream::OpenCipher ( USStream& stream, USCipher& cipher ) {
 
+	assert ( &stream != this );
+
 	this->Clear ();
 
 	this->mStream = &stream;

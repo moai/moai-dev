@@ -18,8 +18,8 @@ class USCipherStream :
 	public USStream {
 private:
 	
-	USStream*		mStream;
-	USCipher*		mCipher;
+	USStream*	mStream;
+	USCipher*	mCipher;
 
 	u32			mPlainBlockSize;
 	u32			mPlainCursor;		// cursor in the *plain text* file

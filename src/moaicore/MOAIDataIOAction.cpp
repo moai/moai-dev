@@ -34,13 +34,28 @@ int MOAIDataIOAction::_setCallback ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIDataIOAction::Finished ( USDataIOTask* task ) {
+	UNUSED ( task );
+
+	if ( this->mOnFinish ) {
+	
+		USLuaStateHandle state = USLuaRuntime::Get ().State ();
+		
+		this->mOnFinish.PushRef ( state );
+		this->mData->PushLuaInstance ( state );
+		state.DebugCall ( 1, 0 );
+	}
+
+	this->mState = DONE;
+}
+
+//----------------------------------------------------------------//
 void MOAIDataIOAction::Init ( cc8* filename, MOAIData* data ) {
 
 	if ( this->mState != IDLE ) return;
 	
 	this->mFilename = filename;
 	this->mData = data;
-	this->mState = READY;
 }
 
 //----------------------------------------------------------------//
@@ -56,25 +71,9 @@ void MOAIDataIOAction::Load () {
 	USDataIOTask* task = taskThread.NewTask < USDataIOTask >();
 	
 	task->LoadData ( this->mFilename, *this->mData );
-	task->SetDelegate ( this, &MOAIDataIOAction::LoadFinished );
+	task->SetDelegate ( this, &MOAIDataIOAction::Finished );
 	
-	this->mState = LOADING;
-}
-
-//----------------------------------------------------------------//
-void MOAIDataIOAction::LoadFinished ( USDataIOTask* task ) {
-	UNUSED ( task );
-
-	if ( this->mOnFinish ) {
-	
-		USLuaStateHandle state = USLuaRuntime::Get ().State ();
-		
-		this->mOnFinish.PushRef ( state );
-		this->mData->PushLuaInstance ( state );
-		state.DebugCall ( 1, 0 );
-	}
-
-	this->mState = DONE;
+	this->mState = BUSY;
 }
 
 //----------------------------------------------------------------//
@@ -92,8 +91,12 @@ MOAIDataIOAction::~MOAIDataIOAction () {
 void MOAIDataIOAction::OnUpdate ( float step ) {
 	UNUSED ( step );
 
-	if ( this->mState == READY ) {
+	if ( this->mState == READY_LOAD ) {
 		this->Load ();
+	}
+
+	if ( this->mState == READY_SAVE ) {
+		this->Save ();
 	}
 
 	if ( this->mState == DONE ) {
@@ -117,4 +120,30 @@ void MOAIDataIOAction::RegisterLuaFuncs ( USLuaState& state ) {
 	};
 
 	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAIDataIOAction::Save () {
+
+	USTaskThread& taskThread = MOAISim::Get ().GetDataIOThread ();
+	USDataIOTask* task = taskThread.NewTask < USDataIOTask >();
+	
+	task->SaveData ( this->mFilename, *this->mData );
+	task->SetDelegate ( this, &MOAIDataIOAction::Finished );
+	
+	this->mState = BUSY;
+}
+
+//----------------------------------------------------------------//
+void MOAIDataIOAction::StartLoad () {
+
+	this->mState = READY_LOAD;
+	this->Start ();
+}
+
+//----------------------------------------------------------------//
+void MOAIDataIOAction::StartSave () {
+
+	this->mState = READY_SAVE;
+	this->Start ();
 }

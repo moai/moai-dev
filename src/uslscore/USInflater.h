@@ -4,7 +4,7 @@
 #ifndef USINFLATER_H
 #define USINFLATER_H
 
-class USStream;
+#include <uslscore/USStreamFormatter.h>
 
 //================================================================//
 // USInflater
@@ -14,6 +14,7 @@ class USInflater :
 private:
 
 	void*		mZStream;
+	int			mWindowBits;
 
 	//----------------------------------------------------------------//
 	void		AffirmInit				();
@@ -21,6 +22,10 @@ private:
 	u32			Format					( bool more );
 
 public:
+
+	static const int DEFAULT_WBITS = -15;
+
+	GET_SET ( int, WindowBits, mWindowBits )
 
 	//----------------------------------------------------------------//
 				USInflater				();

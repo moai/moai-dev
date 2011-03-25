@@ -3,8 +3,8 @@
 
 #include "pch.h"
 #include <zlib.h>
-#include <uslsext/USDeflater.h>
-#include <uslsext/USZip.h>
+#include <uslscore/USDeflater.h>
+#include <uslscore/USZip.h>
 
 //----------------------------------------------------------------//
 void USDeflater::AffirmInit () {
@@ -35,7 +35,7 @@ u32 USDeflater::Format ( bool more ) {
 	this->mInputCursor = 0;
 
 	if ( this->mState == READY ) {
-		int result = deflateInit2 ( stream, this->mCompressionLevel, Z_DEFLATED, -MAX_WBITS, 7, Z_DEFAULT_STRATEGY );
+		int result = deflateInit2 ( stream, this->mCompressionLevel, Z_DEFLATED, this->mWindowBits, 7, Z_DEFAULT_STRATEGY );
 		if ( result != Z_OK ) {
 			this->Finish ( ERROR );
 			return total;
@@ -88,7 +88,8 @@ void USDeflater::Finish ( u32 state ) {
 //----------------------------------------------------------------//
 USDeflater::USDeflater () :
 	mZStream ( 0 ),
-	mCompressionLevel ( DEFAULT_LEVEL ) {
+	mCompressionLevel ( DEFAULT_LEVEL ),
+	mWindowBits ( DEFAULT_WBITS ) {
 }
 
 //----------------------------------------------------------------//

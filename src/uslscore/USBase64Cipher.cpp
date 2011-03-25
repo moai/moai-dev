@@ -15,7 +15,7 @@ u32 USBase64Cipher::Decode ( const u8* crypt, u8* plain, u32 blockID ) {
 
 	this->FormatPlainBlock ( plain, blockID );
 	
-	if (crypt [ 0 ] == '=' ) return 0;
+	if ( crypt [ 0 ] == '=' ) return 0;
 
 	u32 bits = 0;
 	

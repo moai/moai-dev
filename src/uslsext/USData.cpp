@@ -9,11 +9,92 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+bool USData::Base64Decode () {
+
+	USBase64Cipher base64;
+	return this->Decode ( base64 );
+}
+
+//----------------------------------------------------------------//
+bool USData::Base64Encode () {
+
+	USBase64Cipher base64;
+	return this->Encode ( base64 );
+}
+
+//----------------------------------------------------------------//
 void USData::Clear () {
 
 	this->mMutex.Lock ();
 	this->mBytes.Clear ();
 	this->mMutex.Unlock ();
+}
+
+//----------------------------------------------------------------//
+bool USData::Decode ( USCipher& cipher ) {
+	
+	this->mMutex.Lock ();
+	
+	USByteStream cryptStream;
+	cryptStream.SetBuffer ( this->mBytes, this->mBytes.Size ());
+	
+	USCipherStream cipherStream;
+	cipherStream.OpenCipher ( cryptStream, cipher );
+	
+	USMemStream plainStream;
+	plainStream.Pipe ( cipherStream );
+	
+	cipherStream.CloseCipher ();
+	
+	size_t len = plainStream.GetLength ();
+	this->mBytes.Init ( len );
+	
+	plainStream.Seek ( 0, SEEK_SET );
+	plainStream.ReadBytes ( this->mBytes, len );
+	
+	this->mMutex.Unlock ();
+	return true;
+}
+
+//----------------------------------------------------------------//
+bool USData::Deflate ( int level, int windowBits ) {
+
+	USDeflater deflater;
+	deflater.SetCompressionLevel ( level );
+	deflater.SetWindowBits ( windowBits );
+	
+	return this->Transform ( deflater );
+}
+
+//----------------------------------------------------------------//
+bool USData::Encode ( USCipher& cipher ) {
+	
+	this->mMutex.Lock ();
+	
+	USCipherStream cipherStream;
+	USMemStream stream;
+	
+	cipherStream.OpenCipher ( stream, cipher );
+	cipherStream.WriteBytes ( this->mBytes, this->mBytes.Size ());
+	cipherStream.CloseCipher ();
+	
+	size_t len = stream.GetLength ();
+	this->mBytes.Init ( len );
+	
+	stream.Seek ( 0, SEEK_SET );
+	stream.ReadBytes ( this->mBytes, len );
+
+	this->mMutex.Unlock ();
+	return true;
+}
+
+//----------------------------------------------------------------//
+bool USData::Inflate ( int windowBits ) {
+
+	USInflater inflater;
+	inflater.SetWindowBits ( windowBits );
+	
+	return this->Transform ( inflater );
 }
 
 //----------------------------------------------------------------//
@@ -41,7 +122,7 @@ void USData::Load ( void* bytes, u32 size ) {
 	this->mBytes.Init ( size );
 	memcpy ( this->mBytes.Data (), bytes, size );
 	
-	this->Unlock ();
+	this->mMutex.Unlock ();
 }
 
 //----------------------------------------------------------------//
@@ -63,6 +144,27 @@ bool USData::Save ( cc8* filename, bool affirm_path ) {
 	out.WriteBytes ( this->mBytes , this->mBytes.Size ());
 	this->mMutex.Unlock ();
 
+	return true;
+}
+
+//----------------------------------------------------------------//
+bool USData::Transform ( USStreamFormatter& formatter ) {
+
+	this->mMutex.Lock ();
+	
+	USMemStream stream;
+	
+	formatter.SetStream ( &stream );
+	formatter.WriteBytes ( this->mBytes, this->mBytes.Size ());
+	formatter.Flush ();
+	
+	size_t len = stream.GetLength ();
+	this->mBytes.Init ( len );
+	
+	stream.Seek ( 0, SEEK_SET );
+	stream.ReadBytes ( this->mBytes, len );
+	
+	this->mMutex.Unlock ();
 	return true;
 }
 

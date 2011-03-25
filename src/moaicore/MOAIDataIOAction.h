@@ -19,8 +19,9 @@ private:
 
 	enum {
 		IDLE,
-		READY,
-		LOADING,
+		READY_LOAD,
+		READY_SAVE,
+		BUSY,
 		DONE,
 	};
 
@@ -34,9 +35,9 @@ private:
 	static int	_setCallback		( lua_State* L );
 
 	//----------------------------------------------------------------//
+	void		Finished			( USDataIOTask* task );
 	void		Load				();
-	void		LoadFinished		( USDataIOTask* task );
-	void		SetBusy				( bool isBusy );
+	void		Save				();
 
 public:
 
@@ -50,6 +51,8 @@ public:
 	void		OnUpdate			( float step );
 	void		RegisterLuaClass	( USLuaState& state );
 	void		RegisterLuaFuncs	( USLuaState& state );
+	void		StartLoad			();
+	void		StartSave			();
 };
 
 #endif

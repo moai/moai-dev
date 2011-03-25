@@ -4,6 +4,11 @@
 #ifndef ZIPFILE_H
 #define ZIPFILE_H
 
+#include <uslscore/STLList.h>
+#include <uslscore/STLString.h>
+#include <uslscore/USAccessors.h>
+#include <uslscore/USLeanArray.h>
+
 //================================================================//
 // USZipEntry
 //================================================================//

@@ -12,7 +12,6 @@
 	@param y (out)
 */
 int MOAIThread::_blockOnAction ( lua_State* L ) {
-
 	USLuaState state ( L );
 	if ( !state.CheckParams ( 1, "U" )) return 0;
 
@@ -35,11 +34,9 @@ int MOAIThread::_blockOnAction ( lua_State* L ) {
 	@param y (out)
 */
 int MOAIThread::_currentThread ( lua_State* L ) {
-
 	USLuaState state ( L );
-	if ( !state.CheckParams ( 1, "U" )) return 0;
-	
-	MOAIAction* current = state.GetLuaData < MOAIAction >( 1 );
+
+	MOAIAction* current = MOAIActionMgr::Get ().GetCurrentAction ();
 	if ( !current ) return 0;
 	
 	current->PushLuaInstance ( state );
@@ -54,12 +51,7 @@ int MOAIThread::_currentThread ( lua_State* L ) {
 	@param func (in) Function for this thread to run.
 */
 int MOAIThread::_run ( lua_State* L ) {
-
-	USLuaState state ( L );
-	if ( !state.CheckParams ( 1, "UF" )) return 0;
-	
-	MOAIThread* self = state.GetLuaData < MOAIThread >( 1 );
-	if ( !self ) return 0;
+	LUA_SETUP ( MOAIThread, "UF" )
 	
 	self->mNarg = lua_gettop ( state ) - 2;
 	self->mState = lua_newthread ( state );

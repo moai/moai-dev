@@ -2,7 +2,6 @@
 // http://getmoai.com
 
 #include "pch.h"
-//#include <moaicore/MOAICollisionMgr.h>
 #include <moaicore/MOAIDebugLines.h>
 #include <moaicore/MOAIInputMgr.h>
 #include <moaicore/MOAINodeMgr.h>
@@ -10,8 +9,6 @@
 #include <moaicore/MOAISim.h>
 #include <moaicore/MOAIFmod.h>
 #include <aku/AKU.h>
-
-#define USERPREFS_FILENAME "userprefs.lua"
 
 //================================================================//
 // local
@@ -120,6 +117,18 @@ int MOAISim::_getDeviceIDString ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAISim::_getDeviceSize ( lua_State* L ) {
+
+	USGfxDevice& gfxDevice = USGfxDevice::Get ();
+	
+	lua_pushnumber ( L, gfxDevice.GetWidth ());
+	lua_pushnumber ( L, gfxDevice.GetHeight ());
+
+	return 2;
+}
+
+//----------------------------------------------------------------//
 /**	@brief <tt>getElapsedFrames ( )</tt>\n
 \n
 	Returns the number of frames elapsed since...?
@@ -168,49 +177,6 @@ int	MOAISim::_getNetworkStatus ( lua_State* L ) {
 
 	MOAISim& device = MOAISim::Get ();
 	lua_pushboolean( L, device.mHasNetwork );
-	
-	return 1;
-}
-
-//----------------------------------------------------------------//
-/**	@brief <tt>getUserInput ( keyboardType )</tt>\n
-\n
-	Enables the user to input text. Resulting text will be sent via
-	callback set with _setTextInputCallback.
-	@param keyboardType The keyboard type to use for text input.
-*/
-int MOAISim::_getUserInput ( lua_State* L ) {
-
-	USLuaState state ( L );
-	
-	int keyboardType = state.GetValue < int >( 1, MOAISim::KEYBOARD_TYPE_DEFAULT );
-	
-	bool result = MOAISim::Get ().ShowTextPrompt ( keyboardType );
-	
-	state.Push ( result );
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@brief <tt>getUserPrefs ( )</tt>\n
-\n
-	Returns a table of variables that was saved within the project at runtime, presumably to change user settings.
-	@return A lua table of previously-set variables.
-*/
-int MOAISim::_getUserPrefs ( lua_State* L ) {
-	
-	USLuaState state ( L );
-	
-	cc8* prefPath = MOAISim::Get().mPrefsPath;
-	
-	if ( !USFileSys::CheckFileExists ( prefPath )) return 0;
-	
-	int status;
-	
-	status = luaL_loadfile ( state, prefPath );
-	if ( state.PrintErrors ( status )) return 0;
-	
-	state.DebugCall ( 0, 1 );
 	
 	return 1;
 }
@@ -376,77 +342,6 @@ int MOAISim::_setFrameSize ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>_setLoading ( ref )</tt>\n
-\n
-	Sets whether the Loading screen should be displayed or hidden.
-	@param bool Whether to show or hide the loading screen.
-*/
-int  MOAISim::_setLoading ( lua_State* L ) {
-
-	USLuaState state ( L );
-	if ( !state.CheckParams ( 1, "B" )) return 0;
-	
-	bool loadingScreenStatus = state.GetValue < bool >( 1, false );
-
-	bool result = MOAISim::Get ().SetLoadingScreenStatus ( loadingScreenStatus );
-	
-	state.Push ( result );
-	return 0;
-
-}
-
-//----------------------------------------------------------------//
-/**	@brief <tt>setTextInputCallback ( ref )</tt>\n
-\n
-	Sets the callback function for when user has entered text.
-	@param ref Function to call.
-*/
-int MOAISim::_setTextInputCallback ( lua_State* L ) {
-
-	USLuaState state ( L );
-	if ( !state.CheckParams ( 1, "F" )) return 0;
-	
-	MOAISim::Get ().mOnTextEntry.SetRef ( state, 1, false );
-	
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@brief <tt>setTextInputCallback ( ref )</tt>\n
-\n
-	Sets the cancel callback function for when user has canceled entering text.
-	@param ref Function to call.
-*/
-int MOAISim::_setTextInputCancelCallback ( lua_State* L ) {
-
-	USLuaState state ( L );
-	if ( !state.CheckParams ( 1, "F" )) return 0;
-	
-	MOAISim::Get ().mOnCancelTextEntry.SetRef ( state, 1, false );
-	
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@brief <tt>setUserPrefs ( userprefs )</tt>\n
-\n
-	Saves a table of variables during runtime so it can be accessed later, presumably for user settings.
-	@param userprefs A lua table of variables to save for later.
-*/
-int MOAISim::_setUserPrefs ( lua_State* L ) {
-	LUA_SETUP ( MOAISim, "T" )
-	
-	cc8* prefPath = MOAISim::Get().mPrefsPath;
-	
-	USLuaSerializer serializer;
-	serializer.Affirm ( state, 1 );
-	serializer.AddLuaReturn ( state, 1 );
-	serializer.SerializeToFile ( prefPath );
-	
-	return 0;
-}
-
-//----------------------------------------------------------------//
 /**	@brief <tt>timeToFrames ( time )</tt>\n
 \n
 	Converts time to a frame count.
@@ -489,10 +384,6 @@ MOAISim::MOAISim () :
 	mHasNetwork ( false ) {
 	
 	RTTI_SINGLE ( USLuaData )
-	
-	#ifdef _WIN32 
-		this->mPrefsPath = USERPREFS_FILENAME;
-	#endif
 
 	this->mDeviceTime = USDeviceTime::GetTimeInSeconds ();
 	
@@ -508,33 +399,6 @@ MOAISim::~MOAISim () {
 
 	//this->mDataIOThread.Stop ();
 	this->Clear ();
-}
-
-//----------------------------------------------------------------//
-void MOAISim::OnTextInputCallback ( cc8* text ) {
-
-	USLuaStateHandle state = this->GetSelf ();
-
-	if ( this->mOnTextEntry ) {
-		this->mOnTextEntry.PushRef ( state );
-		lua_pushstring ( state, text );
-		state.DebugCall ( 1, 0 );
-	}
-
-	return;
-}
-
-//----------------------------------------------------------------//
-void MOAISim::OnTextInputCancelCallback () {
-
-	USLuaStateHandle state = this->GetSelf ();
-
-	if ( this->mOnCancelTextEntry ) {
-		this->mOnCancelTextEntry.PushRef ( state );
-		state.DebugCall ( 1, 0 );
-	}
-
-	return;
 }
 
 //----------------------------------------------------------------//
@@ -573,12 +437,11 @@ void MOAISim::RegisterLuaClass ( USLuaState& state ) {
 		{ "exitFullscreenMode",			_exitFullscreenMode },
 		{ "framesToTime",				_framesToTime },
 		{ "getDeviceIDString",			_getDeviceIDString },
+		{ "getDeviceSize",				_getDeviceSize },
 		{ "getElapsedFrames",			_getElapsedFrames },
 		{ "getElapsedTime",				_getElapsedTime },
 		{ "getFrameSize",				_getFrameSize },
 		{ "getNetworkStatus",			_getNetworkStatus },
-		{ "getUserInput",				_getUserInput },
-		{ "getUserPrefs",				_getUserPrefs },
 		{ "openWindow",					_openWindow },
 		{ "pauseTimer",					_pauseTimer },
 		{ "popRenderPass",				_popRenderPass },
@@ -587,25 +450,11 @@ void MOAISim::RegisterLuaClass ( USLuaState& state ) {
 		{ "setClearColor",				_setClearColor },
 		{ "setClearDepth",				_setClearDepth },
 		{ "setFrameSize",				_setFrameSize },
-		{ "setLoading",					_setLoading },
-		{ "setTextInputCallback",		_setTextInputCallback },
-		{ "setTextInputCancelCallback",	_setTextInputCancelCallback },
-		{ "setUserPrefs",				_setUserPrefs },
 		{ "timeToFrames",				_timeToFrames },
 		{ NULL, NULL }
 	};
 
 	luaL_register( state, 0, regTable );
-	
-	state.SetField ( -1, "KEYBOARD_TYPE_DEFAULT",			( u32 )KEYBOARD_TYPE_DEFAULT );
-	state.SetField ( -1, "KEYBOARD_TYPE_ASCII_CAPABLE",		( u32 )KEYBOARD_TYPE_ASCII_CAPABLE );
-	state.SetField ( -1, "KEYBOARD_TYPE_NUMBERS_AND_PUNC",	( u32 )KEYBOARD_TYPE_NUMBERS_AND_PUNC );
-	state.SetField ( -1, "KEYBOARD_TYPE_URL",				( u32 )KEYBOARD_TYPE_URL );
-	state.SetField ( -1, "KEYBOARD_TYPE_NUMBER_PAD",		( u32 )KEYBOARD_TYPE_NUMBER_PAD );
-	state.SetField ( -1, "KEYBOARD_TYPE_PHONE_PAD",			( u32 )KEYBOARD_TYPE_PHONE_PAD );
-	state.SetField ( -1, "KEYBOARD_TYPE_NAME_PHONE_PAD",	( u32 )KEYBOARD_TYPE_NAME_PHONE_PAD );
-	state.SetField ( -1, "KEYBOARD_TYPE_EMAIL_ADDR",		( u32 )KEYBOARD_TYPE_EMAIL_ADDR );
-	state.SetField ( -1, "KEYBOARD_TYPE_ALPHABET",			( u32 )KEYBOARD_TYPE_ALPHABET );
 }
 
 //----------------------------------------------------------------//
@@ -693,12 +542,6 @@ void MOAISim::RunString ( cc8* script ) {
 }
 
 //----------------------------------------------------------------//
-void MOAISim::SetPrefsPath ( cc8* path ) {
-
-	mPrefsPath = path;
-}
-
-//----------------------------------------------------------------//
 void MOAISim::SetReachability ( bool networkStatus ) {
 
 	mHasNetwork = networkStatus;
@@ -708,26 +551,6 @@ void MOAISim::SetReachability ( bool networkStatus ) {
 void MOAISim::SetUniqueIdentifier ( cc8* uniqueID ) {
 
 	mUniqueID = uniqueID;
-}
-
-//----------------------------------------------------------------//
-bool MOAISim::SetLoadingScreenStatus ( bool showLoadingScreen ) {
-
-	if ( this->mLoadingScreenCallback ) {
-		this->mLoadingScreenCallback.Call ( showLoadingScreen );
-		return true;
-	}
-	return false;
-} 
-
-//----------------------------------------------------------------//
-bool MOAISim::ShowTextPrompt ( int keyboardType ) {
-
-	if ( this->mTextInputCallback ) {
-		this->mTextInputCallback.Call ( keyboardType );
-		return true;
-	}
-	return false;
 }
 
 //----------------------------------------------------------------//
@@ -745,7 +568,6 @@ void MOAISim::Update () {
 			MOAIInputMgr::Get ().Update ();
 			MOAIActionMgr::Get ().Update ( 0.0f );
 			MOAINodeMgr::Get ().Update ();
-			//MOAICollisionMgr::Get ().Update ();
 		}
 		else {
 			return;
@@ -760,7 +582,6 @@ void MOAISim::Update () {
 		MOAIInputMgr::Get ().Update ();
 		MOAIActionMgr::Get ().Update (( float )this->mStep );
 		MOAINodeMgr::Get ().Update ();
-		//MOAICollisionMgr::Get ().Update ();
 		
 		this->mTime += this->mStep;
 	}
@@ -801,7 +622,6 @@ STLString MOAISim::ToString () {
 	PRETTY_PRINT ( repr, mTime )
 	PRETTY_PRINT ( repr, mDeviceTime )
 	PRETTY_PRINT ( repr, mHasNetwork )
-	PRETTY_PRINT ( repr, mPrefsPath )
 	PRETTY_PRINT ( repr, mUniqueID )
 
 	return repr;

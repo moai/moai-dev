@@ -61,7 +61,7 @@ public:
 	void				BindNode				( MOAINode* node );
 	u32					CountAttributes			();
 						MOAINodeHarness			();
-	virtual				~MOAINodeHarness			();
+	virtual				~MOAINodeHarness		();
 	void				MapManipulatorAttr		( u32 nodeAttrID, u32 manipAttrID );
 	void				ReadManipulator			( MOAIManipulator& manipulator );
 	void				SetFlags				( u32 flags );
