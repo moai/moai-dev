@@ -3,8 +3,8 @@
 
 #include "pch.h"
 #include <zlib.h>
-#include <uslsext/USInflater.h>
-#include <uslsext/USZip.h>
+#include <uslscore/USInflater.h>
+#include <uslscore/USZip.h>
 
 //----------------------------------------------------------------//
 void USInflater::AffirmInit () {
@@ -49,7 +49,7 @@ u32 USInflater::Format ( bool more ) {
 	this->mInputCursor = 0;
 
 	if ( this->mState == READY ) {
-		int result = inflateInit2 ( stream, -MAX_WBITS );
+		int result = inflateInit2 ( stream, this->mWindowBits );
 		if ( result != Z_OK ) {
 			this->Finish ( ERROR );
 			return total;
@@ -66,6 +66,9 @@ u32 USInflater::Format ( bool more ) {
 		assert ( result != Z_STREAM_ERROR );
 
 		if (( result != Z_OK ) && ( result != Z_STREAM_END )) {
+		
+			printf ( "%s\n", USZip::GetErrMsg ( result ));
+		
 			this->Finish ( ERROR );
 			return total;
 		}
@@ -86,7 +89,8 @@ u32 USInflater::Format ( bool more ) {
 
 //----------------------------------------------------------------//
 USInflater::USInflater () :
-	mZStream ( 0 ) {
+	mZStream ( 0 ),
+	mWindowBits ( DEFAULT_WBITS ) {
 }
 
 //----------------------------------------------------------------//

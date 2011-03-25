@@ -350,42 +350,6 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="zip"
-			>
-			<File
-				RelativePath="..\..\src\uslsext\USDeflater.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USDeflater.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USInflater.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USInflater.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USZip.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USZip.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USZipFile.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USZipFile.h"
-				>
-			</File>
-		</Filter>
-		<Filter
 			Name="attributed"
 			>
 			<File

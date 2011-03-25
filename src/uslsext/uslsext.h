@@ -25,7 +25,6 @@
 #include <uslsext/USData.h>
 #include <uslsext/USDataIOTask.h>
 #include <uslsext/USDebugLines.h>
-#include <uslsext/USDeflater.h>
 #include <uslsext/USDelegate.h>
 #include <uslsext/USDistance.h>
 #include <uslsext/USDrawBuffer.h>
@@ -42,7 +41,6 @@
 #include <uslsext/USHttpTask.h>
 #include <uslsext/USHttpTask_impl.h>
 #include <uslsext/USImage.h>
-#include <uslsext/USInflater.h>
 #include <uslsext/USInterpolate.h>
 #include <uslsext/USIntersect.h>
 #include <uslsext/USLog.h>
@@ -86,8 +84,6 @@
 #include <uslsext/USViewport.h>
 #include <uslsext/USViewQuad.h>
 #include <uslsext/USXmlReader.h>
-#include <uslsext/USZip.h>
-#include <uslsext/USZipFile.h>
 
 //================================================================//
 // uslsext

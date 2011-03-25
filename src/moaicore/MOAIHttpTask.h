@@ -25,9 +25,8 @@ private:
 	STLString			mPostString;
 
 	//----------------------------------------------------------------//
-	static int		_getData		( lua_State* L );
 	static int		_getSize		( lua_State* L );
-	static int		_getText		( lua_State* L );
+	static int		_getString		( lua_State* L );
 	static int		_httpGet		( lua_State* L );
 	static int		_httpPost		( lua_State* L );
 	static int		_parseXml		( lua_State* L );

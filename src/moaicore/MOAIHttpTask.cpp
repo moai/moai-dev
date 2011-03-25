@@ -12,41 +12,13 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@brief <tt>getData ( )</tt>\n
-\n
-	Returns the data httpPost or httpGet call as an MOAIData object.
-	@return The MOAIData object containing the data of the GET request.
-*/
-int MOAIHttpTask::_getData ( lua_State* L ) {
-
-	USLuaState state ( L );
-	if ( !state.CheckParams ( 1, "U" )) return 0;
-
-	MOAIHttpTask* self = state.GetLuaData < MOAIHttpTask >( 1 );
-	if ( !self ) return 0;
-
-	u32 size = self->mSize;
-
-	MOAIData* data = new MOAIData ();
-	data->Load ( self->mBuffer, size );
-	
-	data->PushLuaInstance ( state );
-	return 1;
-}
-
-//----------------------------------------------------------------//
 /**	@brief <tt>getSize ( )</tt>\n
 \n
 	Returns the size of the string obtained from an httpPost or httpGet call.
 	@return String size.  If the call found nothing, this will return the value zero (not nil).
 */
 int MOAIHttpTask::_getSize ( lua_State* L ) {
-
-	USLuaState state ( L );
-	if ( !state.CheckParams ( 1, "U" )) return 0;
-
-	MOAIHttpTask* self = state.GetLuaData < MOAIHttpTask >( 1 );
-	if ( !self ) return 0;
+	LUA_SETUP ( MOAIHttpTask, "U" )
 
 	lua_pushnumber ( state, self->mSize );
 
@@ -59,15 +31,10 @@ int MOAIHttpTask::_getSize ( lua_State* L ) {
 	Returns the text obtained from an httpPost or httpGet call.
 	@return The text string.
 */
-int MOAIHttpTask::_getText ( lua_State* L ) {
+int MOAIHttpTask::_getString ( lua_State* L ) {
+	LUA_SETUP ( MOAIHttpTask, "U" )
 
-	USLuaState state ( L );
-	if ( !state.CheckParams ( 1, "U" )) return 0;
-
-	MOAIHttpTask* self = state.GetLuaData < MOAIHttpTask >( 1 );
-	if ( !self ) return 0;
-
-	lua_pushstring ( state, ( cc8* )self->mBuffer );
+	lua_pushlstring ( state, ( cc8* )self->mBuffer, self->mSize );
 
 	return 1;
 }
@@ -79,12 +46,7 @@ int MOAIHttpTask::_getText ( lua_State* L ) {
 	@param url A string containing the full url of the API call.
 */
 int MOAIHttpTask::_httpGet ( lua_State* L ) {
-
-	USLuaState state ( L );
-	if ( !state.CheckParams ( 1, "US" )) return 0;
-	
-	MOAIHttpTask* self = state.GetLuaData < MOAIHttpTask >( 1 );
-	if ( !self ) return 0;
+	LUA_SETUP ( MOAIHttpTask, "US" )
 	
 	cc8* url = lua_tostring ( state, 2 );
 	
@@ -104,12 +66,7 @@ int MOAIHttpTask::_httpGet ( lua_State* L ) {
 	@param data A MOAIData object to send as POST data.
 */
 int MOAIHttpTask::_httpPost ( lua_State* L ) {
-
-	USLuaState state ( L );
-	if ( !state.CheckParams ( 1, "US" )) return 0;
-	
-	MOAIHttpTask* self = state.GetLuaData < MOAIHttpTask >( 1 );
-	if ( !self ) return 0;
+	LUA_SETUP ( MOAIHttpTask, "US" )
 	
 	cc8* url = lua_tostring ( state, 2 );
 
@@ -148,12 +105,8 @@ int MOAIHttpTask::_httpPost ( lua_State* L ) {
 	@return Parsed XML code.
 */
 int MOAIHttpTask::_parseXml ( lua_State* L ) {
+	LUA_SETUP ( MOAIHttpTask, "U" )
 
-	USLuaState state ( L );
-	if ( !state.CheckParams ( 1, "U" )) return 0;
-
-	MOAIHttpTask* self = state.GetLuaData < MOAIHttpTask >( 1 );
-	if ( !self ) return 0;
 	if ( !self->mSize ) return 0;
 	
 	cc8* xml = ( cc8* )self->mBuffer;
@@ -172,12 +125,7 @@ int MOAIHttpTask::_parseXml ( lua_State* L ) {
 	@param callback The function to be called.  The completed HTTPtask is passed into the function as the first argument.
 */
 int MOAIHttpTask::_setCallback ( lua_State* L ) {
-
-	USLuaState state ( L );
-	if ( !state.CheckParams ( 1, "UF" )) return 0;
-	
-	MOAIHttpTask* self = state.GetLuaData < MOAIHttpTask >( 1 );
-	if ( !self ) return 0;
+	LUA_SETUP ( MOAIHttpTask, "UF" )
 
 	self->mOnFinish.SetRef ( state, 2, false );
 
@@ -257,9 +205,8 @@ void MOAIHttpTask::RegisterLuaClass ( USLuaState& state ) {
 void MOAIHttpTask::RegisterLuaFuncs ( USLuaState& state ) {
 
 	LuaReg regTable [] = {
-		{ "getData",			_getData },
 		{ "getSize",			_getSize },
-		{ "getText",			_getText },
+		{ "getString",			_getString },
 		{ "httpGet",			_httpGet },
 		{ "httpPost",			_httpPost },
 		{ "parseXml",			_parseXml },

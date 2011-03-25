@@ -16,7 +16,8 @@
 #include <assert.h>
 #include <zlib.h>
 
-#include <uslsext/USZip.h>
+#include <uslscore/USStream.h>
+#include <uslscore/USZip.h>
 
 //----------------------------------------------------------------//
 /**	@brief Compresses contents of source stream and stores in dest

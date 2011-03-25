@@ -4,7 +4,7 @@
 #ifndef USDEFLATER_H
 #define USDEFLATER_H
 
-class USStream;
+#include <uslscore/USStreamFormatter.h>
 
 //================================================================//
 // USDeflater
@@ -13,12 +13,9 @@ class USDeflater :
 	public USStreamFormatter {
 private:
 
-	enum {
-		DEFAULT_LEVEL = 9,
-	};
-
 	void*		mZStream;
 	u32			mCompressionLevel;
+	int			mWindowBits;
 
 	//----------------------------------------------------------------//
 	void		AffirmInit				();
@@ -27,7 +24,11 @@ private:
 
 public:
 
+	static const u32 DEFAULT_LEVEL = 9;
+	static const int DEFAULT_WBITS = -15;
+
 	GET_SET ( u32, CompressionLevel, mCompressionLevel )
+	GET_SET ( int, WindowBits, mWindowBits )
 
 	//----------------------------------------------------------------//
 				USDeflater				();

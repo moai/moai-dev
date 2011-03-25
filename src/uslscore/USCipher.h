@@ -13,7 +13,9 @@
 	@ingroup CipherLib
 */
 class USCipher {
-public:
+protected:
+
+	friend class USCipherStream;
 
 	//----------------------------------------------------------------//
 	virtual u32			Decode					( const u8* crypt, u8* plain, u32 blockID ) = 0;
@@ -22,6 +24,10 @@ public:
 	virtual void		FormatPlainBlock		( u8* plain, u32 blockID );
 	virtual u32			GetCryptBlockSize		() = 0;
 	virtual u32			GetPlainBlockSize		() = 0;
+
+public:
+	
+	//----------------------------------------------------------------//
 						USCipher				();
 	virtual				~USCipher				();
 };

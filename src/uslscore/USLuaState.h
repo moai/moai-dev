@@ -9,7 +9,9 @@
 #include <uslscore/USVec2D.h>
 #include <uslscore/USVec3D.h>
 
+class USCipher;
 class USLuaRef;
+class USStreamFormatter;
 
 #define LUA_SETUP(type,str) \
 	USLuaState state ( L );	\
@@ -32,15 +34,23 @@ private:
 
 	lua_State*	mState;
 
+	//----------------------------------------------------------------//
+	bool			Decode					( int idx, USCipher& cipher );
+	bool			Encode					( int idx, USCipher& cipher );
+	bool			Transform				( int idx, USStreamFormatter& formatter );
+
 public:
 
 	friend class USLuaStateHandle;
 
 	//----------------------------------------------------------------//
 	int				AbsIndex				( int idx );
+	bool			Base64Decode			( int idx );
+	bool			Base64Encode			( int idx );
 	bool			CheckParams				( int idx, cc8* format ); // "BCFLNSTU"
 	void			CopyToTop				( int idx );
 	int				DebugCall				( int nArgs, int nResults );
+	bool			Deflate					( int idx, int level, int windowBits );
 	void			GetField				( int idx, cc8* name );
 	void			GetField				( int idx, int key );
 	STLString		GetField				( int idx, cc8* key, cc8* value );
@@ -58,6 +68,7 @@ public:
 	bool			HasField				( int idx, int key );
 	bool			HasField				( int idx, cc8* name, int type );
 	bool			HasField				( int idx, int name, int type );
+	bool			Inflate					( int idx, int windowBits );
 	bool			IsNil					();
 	bool			IsTableOrUserdata		( int idx );
 	bool			IsType					( int idx, int type );

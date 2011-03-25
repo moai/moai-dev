@@ -7,8 +7,9 @@
 #include <assert.h>
 #include <zlib.h>
 
-#include <uslsext/USZip.h>
-#include <uslsext/USZipFile.h>
+#include <uslscore/USFileStream.h>
+#include <uslscore/USZip.h>
+#include <uslscore/USZipFile.h>
 
 //----------------------------------------------------------------//
 int USZipEntry::Inflate ( USStream& stream ) {

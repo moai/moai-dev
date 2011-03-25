@@ -25,6 +25,7 @@
 #include <uslscore/USByteStream.h>
 #include <uslscore/USCipher.h>
 #include <uslscore/USCipherStream.h>
+#include <uslscore/USDeflater.h>
 #include <uslscore/USDeviceTime.h>
 #include <uslscore/USDirectoryItr.h>
 #include <uslscore/USFactory.h>
@@ -33,6 +34,7 @@
 #include <uslscore/USFileSys.h>
 #include <uslscore/USFloat.h>
 #include <uslscore/USGlobals.h>
+#include <uslscore/USInflater.h>
 #include <uslscore/USLeanArray.h>
 #include <uslscore/USLeanList.h>
 #include <uslscore/USLeanPool.h>
@@ -49,6 +51,8 @@
 #include <uslscore/USVec2D.h>
 #include <uslscore/USVec3D.h>
 #include <uslscore/USWeak.h>
+#include <uslscore/USZip.h>
+#include <uslscore/USZipFile.h>
 
 #include <uslscore/USLuaState-impl.h>
 

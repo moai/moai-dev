@@ -2,12 +2,19 @@
 // http://getmoai.com
 
 #include "pch.h"
+
+#include <uslscore/USBase64Cipher.h>
+#include <uslscore/USByteStream.h>
+#include <uslscore/USCipherStream.h>
+#include <uslscore/USDeflater.h>
+#include <uslscore/USFileStream.h>
+#include <uslscore/USInflater.h>
 #include <uslscore/USLuaData.h>
 #include <uslscore/USLuaRef.h>
 #include <uslscore/USLuaRuntime.h>
 #include <uslscore/USLuaState.h>
-
 #include <uslscore/USLuaState-impl.h>
+#include <uslscore/USMemStream.h>
 
 //================================================================//
 // local
@@ -83,6 +90,20 @@ int USLuaState::AbsIndex ( int idx ) {
 		return lua_gettop ( this->mState ) + idx + 1;
 	}
 	return idx;
+}
+
+//----------------------------------------------------------------//
+bool USLuaState::Base64Decode ( int idx ) {
+
+	USBase64Cipher base64;
+	return this->Decode ( idx, base64 );
+}
+
+//----------------------------------------------------------------//
+bool USLuaState::Base64Encode ( int idx ) {
+
+	USBase64Cipher base64;
+	return this->Encode ( idx, base64 );
 }
 
 //----------------------------------------------------------------//
@@ -177,6 +198,78 @@ int USLuaState::DebugCall ( int nArgs, int nResults ) {
 	#endif
 	
 	return status;
+}
+
+//----------------------------------------------------------------//
+bool USLuaState::Decode ( int idx, USCipher& cipher ) {
+
+	if ( !this->IsType ( idx, LUA_TSTRING )) return false;
+
+	size_t len;
+	void* buffer = ( void* )lua_tolstring ( this->mState, idx, &len );
+	if ( !len ) return false;
+	
+	USByteStream cryptStream;
+	cryptStream.SetBuffer ( buffer, len );
+	
+	USCipherStream cipherStream;
+	cipherStream.OpenCipher ( cryptStream, cipher );
+	
+	USMemStream plainStream;
+	plainStream.Pipe ( cipherStream );
+	
+	cipherStream.CloseCipher ();
+	
+	len = plainStream.GetLength ();
+	buffer = malloc ( len );
+	
+	plainStream.Seek ( 0, SEEK_SET );
+	plainStream.ReadBytes ( buffer, len );
+	
+	lua_pushlstring ( this->mState, ( cc8* )buffer, len );
+	
+	free ( buffer );
+	
+	return true;
+}
+
+//----------------------------------------------------------------//
+bool USLuaState::Deflate ( int idx, int level, int windowBits ) {
+
+	USDeflater deflater;
+	deflater.SetCompressionLevel ( level );
+	deflater.SetWindowBits ( windowBits );
+
+	return this->Transform ( idx, deflater );
+}
+
+//----------------------------------------------------------------//
+bool USLuaState::Encode ( int idx, USCipher& cipher ) {
+
+	if ( !this->IsType ( idx, LUA_TSTRING )) return false;
+
+	size_t len;
+	cc8* buffer = lua_tolstring ( this->mState, idx, &len );
+	if ( !len ) return false;
+	
+	USCipherStream cipherStream;
+	USMemStream stream;
+	
+	cipherStream.OpenCipher ( stream, cipher );
+	cipherStream.WriteBytes ( buffer, len );
+	cipherStream.CloseCipher ();
+	
+	len = stream.GetLength ();
+	void* temp = malloc ( len );
+	
+	stream.Seek ( 0, SEEK_SET );
+	stream.ReadBytes (( void* )temp, len );
+	
+	lua_pushlstring ( this->mState, ( cc8* )temp, len );
+	
+	free ( temp );
+	
+	return true;
 }
 
 //----------------------------------------------------------------//
@@ -441,6 +534,15 @@ bool USLuaState::HasField ( int idx, int key, int type ) {
 }
 
 //----------------------------------------------------------------//
+bool USLuaState::Inflate ( int idx, int windowBits ) {
+
+	USInflater inflater;
+	inflater.SetWindowBits ( windowBits );
+	
+	return this->Transform ( idx, inflater );
+}
+
+//----------------------------------------------------------------//
 bool USLuaState::IsNil () {
 
 	return ( !this->mState );
@@ -671,6 +773,34 @@ bool USLuaState::TableItrNext ( int itr ) {
 		return true;
 	}
 	return false;
+}
+
+//----------------------------------------------------------------//
+bool USLuaState::Transform ( int idx, USStreamFormatter& formatter ) {
+
+	if ( !this->IsType ( idx, LUA_TSTRING )) return false;
+
+	size_t len;
+	cc8* buffer = lua_tolstring ( this->mState, idx, &len );
+	if ( !len ) return false;
+	
+	USMemStream stream;
+	
+	formatter.SetStream ( &stream );
+	formatter.WriteBytes ( buffer, len );
+	formatter.Flush ();
+	
+	len = stream.GetLength ();
+	void* temp = malloc ( len );
+	
+	stream.Seek ( 0, SEEK_SET );
+	stream.ReadBytes (( void* )temp, len );
+	
+	lua_pushlstring ( this->mState, ( cc8* )temp, len );
+	
+	free ( temp );
+	
+	return true;
 }
 
 //----------------------------------------------------------------//

@@ -4,7 +4,7 @@ function onFinish ( task )
 	print ( "onFinish" )
 
 	if ( task:getSize ()) then
-		print ( task:getText ())
+		print ( task:getString ())
 	else
 		print ( "nothing" )
 	end
