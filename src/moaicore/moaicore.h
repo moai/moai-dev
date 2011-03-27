@@ -40,7 +40,6 @@
 #include <moaicore/MOAINode.h>
 #include <moaicore/MOAINodeHarness.h>
 #include <moaicore/MOAINodeMgr.h>
-#include <moaicore/MOAIOscillator.h>
 #include <moaicore/MOAIParticleEmitter.h>
 #include <moaicore/MOAIParticleEngine.h>
 #include <moaicore/MOAIParticleForce.h>

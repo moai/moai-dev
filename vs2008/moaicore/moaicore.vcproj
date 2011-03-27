@@ -357,30 +357,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAIEaseDriver.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIEaseDriver.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIEaseType.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIEaseType.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIOscillator.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIOscillator.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\moaicore\MOAIThread.cpp"
 				>
 			</File>
@@ -414,6 +390,22 @@
 			</File>
 			<File
 				RelativePath="..\..\src\moaicore\MOAIAnimCurve.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIEaseDriver.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIEaseDriver.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIEaseType.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIEaseType.h"
 				>
 			</File>
 		</Filter>
@@ -745,62 +737,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAILogMessages.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAILogMessages.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAILogMgr.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAILogMgr.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAINode.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAINode.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAINodeHarness.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAINodeHarness.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAINodeMgr.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAINodeMgr.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIScriptNode.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIScriptNode.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAISerializer.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAISerializer.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\moaicore\MOAISim.cpp"
 				>
 			</File>
@@ -812,6 +748,14 @@
 		<Filter
 			Name="util"
 			>
+			<File
+				RelativePath="..\..\src\moaicore\MOAISerializer.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAISerializer.h"
+				>
+			</File>
 			<File
 				RelativePath="..\..\src\moaicore\MOAIXmlParser.cpp"
 				>
@@ -834,7 +778,7 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="text"
+			Name="text box"
 			>
 			<File
 				RelativePath="..\..\src\moaicore\MOAIFont.cpp"
@@ -1058,6 +1002,62 @@
 			</File>
 			<File
 				RelativePath="..\..\src\moaicore\MOAIBox2DWorld.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="log"
+			>
+			<File
+				RelativePath="..\..\src\moaicore\MOAILogMessages.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAILogMessages.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAILogMgr.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAILogMgr.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="node"
+			>
+			<File
+				RelativePath="..\..\src\moaicore\MOAINode.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAINode.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAINodeHarness.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAINodeHarness.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAINodeMgr.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAINodeMgr.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIScriptNode.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIScriptNode.h"
 				>
 			</File>
 		</Filter>
