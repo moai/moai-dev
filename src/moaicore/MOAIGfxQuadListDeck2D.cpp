@@ -391,19 +391,19 @@ bool MOAIGfxQuadListDeck2D::Contains ( u32 idx, const USVec2D& vec ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxQuadListDeck2D::Draw ( MOAIDrawingMtx2D& transform, u32 idx ) {
+void MOAIGfxQuadListDeck2D::Draw ( const USAffine2D& transform, u32 idx ) {
 
 	USDrawBuffer& drawBuffer = USDrawBuffer::Get ();
-	drawBuffer.SetVtxTransform ( transform.GetLocalToWorldMtx ());
+	drawBuffer.SetVtxTransform ( transform );
 
 	this->Draw ( idx, 0.0f, 0.0f, 1.0f, 1.0f );
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxQuadListDeck2D::Draw ( MOAIDrawingMtx2D& transform, MOAIGrid& grid, USTileCoord& c0, USTileCoord& c1 ) {
+void MOAIGfxQuadListDeck2D::Draw ( const USAffine2D& transform, MOAIGrid& grid, USTileCoord& c0, USTileCoord& c1 ) {
 	
 	USDrawBuffer& drawBuffer = USDrawBuffer::Get ();
-	drawBuffer.SetVtxTransform ( transform.GetLocalToWorldMtx ());
+	drawBuffer.SetVtxTransform ( transform );
 	
 	for ( int y = c0.mY; y <= c1.mY; ++y ) {
 		for ( int x = c0.mX; x <= c1.mX; ++x ) {

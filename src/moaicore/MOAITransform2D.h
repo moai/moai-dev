@@ -52,7 +52,7 @@ protected:
 	static int	_worldToModel	( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void	BuildTransforms			( float xOff, float yOff );
+	void	BuildTransforms			( float xOff, float yOff, float xStretch, float yStretch );
 	void	OnDepNodeUpdate			();
 
 public:
@@ -85,7 +85,6 @@ public:
 	bool				CanHarness						();
 	u32					CountAttributes					();
 	const USAffine2D&	GetLocalToWorldMtx				();
-	USAffine2D			GetLocalToWorldMtxNoStretch		();
 	const USAffine2D&	GetWorldToLocalMtx				();
 	void				Harness							( MOAINodeHarness& harness );
 						MOAITransform2D					();

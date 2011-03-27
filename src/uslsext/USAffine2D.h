@@ -54,6 +54,27 @@ public:
 	}
 
 	//----------------------------------------------------------------//
+	USMetaVec2D < TYPE > GetStretch () const {
+
+		USMetaVec2D < TYPE > stretch;
+		USMetaVec2D < TYPE > axis;
+
+		// x axis
+		axis.mX =	m [ C0_R0 ];
+		axis.mY =	m [ C0_R1 ];
+		
+		stretch.mX = axis.Length ();
+
+		// y axis
+		axis.mX =	m [ C1_R0 ];
+		axis.mY =	m [ C1_R1 ];
+
+		stretch.mY = axis.Length ();
+		
+		return stretch;
+	}
+
+	//----------------------------------------------------------------//
 	TYPE GetElement ( int c, int r ) const {
 
 		return m [ ( c * 3 ) + r ];

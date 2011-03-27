@@ -11,7 +11,7 @@ MOAISim.pushRenderPass ( scene )
 
 ----------------------------------------------------------------
 -- set us up the ninepatch
-ninePatch = MOAIStretchPatch.new ()
+ninePatch = MOAIStretchPatch2D.new ()
 ninePatch:setTexture ( "cathead.png" )
 
 ninePatch:reserveRows ( 3 )
@@ -36,6 +36,7 @@ sprite:setDeck ( ninePatch )
 sprite:setFrame ( -128, -128, 128, 128 )
 sprite:setFrameSource ( MOAIProp2D.FRAME_FROM_DEFINE )
 sprite:setIndex ( 2 )
+sprite:moveRot ( 360, 1.5 )
 scene:insertPrim ( sprite )
 
 ----------------------------------------------------------------

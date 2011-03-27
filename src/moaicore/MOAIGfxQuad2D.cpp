@@ -74,11 +74,11 @@ bool MOAIGfxQuad2D::Bind () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxQuad2D::Draw ( MOAIDrawingMtx2D& transform, u32 idx ) {
+void MOAIGfxQuad2D::Draw ( const USAffine2D& transform, u32 idx ) {
 	UNUSED ( idx );
 
 	USDrawBuffer& drawbuffer = USDrawBuffer::Get ();
-	drawbuffer.SetVtxTransform ( transform.GetLocalToWorldMtx ());
+	drawbuffer.SetVtxTransform ( transform );
 	
 	USGLQuad quad;
 	quad.SetVerts ( this->mRect );
@@ -87,10 +87,10 @@ void MOAIGfxQuad2D::Draw ( MOAIDrawingMtx2D& transform, u32 idx ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxQuad2D::Draw ( MOAIDrawingMtx2D& transform, MOAIGrid& grid, USTileCoord& c0, USTileCoord& c1 ) {
+void MOAIGfxQuad2D::Draw ( const USAffine2D& transform, MOAIGrid& grid, USTileCoord& c0, USTileCoord& c1 ) {
 
 	USDrawBuffer& drawbuffer = USDrawBuffer::Get ();
-	drawbuffer.SetVtxTransform ( transform.GetLocalToWorldMtx ());
+	drawbuffer.SetVtxTransform ( transform );
 
 	USGLQuad quad;
 

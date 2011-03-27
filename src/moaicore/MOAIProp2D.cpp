@@ -308,10 +308,10 @@ void MOAIProp2D::Draw () {
 		USTileCoord c1;
 		
 		this->GetBoundsInView ( c0, c1 );
-		this->mDeck->Draw ( *this, *this->mGrid, c0, c1 );
+		this->mDeck->Draw ( this->GetLocalToWorldMtx (), *this->mGrid, c0, c1 );
 	}
 	else {
-		this->mDeck->Draw ( *this, this->mIndex );
+		this->mDeck->Draw ( this->GetLocalToWorldMtx (), this->mIndex );
 	}
 	
 	MOAILayoutFrame* parentFrame = USCast < MOAILayoutFrame >( this->mParent );
@@ -343,7 +343,7 @@ void MOAIProp2D::DrawDebug () {
 				USTileCoord c1;
 				
 				this->GetBoundsInView ( c0, c1 );
-				this->mDeck->DrawDebug ( *this, *this->mGrid, c0, c1 );
+				this->mDeck->DrawDebug ( this->GetLocalToWorldMtx (), *this->mGrid, c0, c1 );
 			}
 		}
 	}
@@ -357,7 +357,7 @@ void MOAIProp2D::DrawDebug () {
 	debugLines.SetPenWidth ( 2 );
 	
 	if ( this->mDeck ) {
-		this->mDeck->DrawDebug ( *this, this->mIndex );
+		this->mDeck->DrawDebug ( this->GetLocalToWorldMtx (), this->mIndex );
 	}
 }
 //----------------------------------------------------------------//
@@ -521,8 +521,8 @@ void MOAIProp2D::OnDepNodeUpdate () {
 	// this is sort of a pain in the butt, but should be worth it
 	// well, I hope it's worth it...
 	
-	this->mStretch.Init ( 1.0f, 1.0f );
 	USVec2D offset ( 0.0f, 0.0f );
+	USVec2D stretch ( 1.0f, 1.0f );
 	
 	// default to match the local frame from source
 	USRect targetFrame = localFrame;
@@ -551,15 +551,15 @@ void MOAIProp2D::OnDepNodeUpdate () {
 		float targetWidth = targetFrame.Width ();
 		float targetHeight = targetFrame.Height ();
 		
-		this->mStretch.mX = targetWidth / localFrame.Width ();
-		this->mStretch.mY = targetHeight / localFrame.Height ();
+		stretch.mX = targetWidth / localFrame.Width ();
+		stretch.mY = targetHeight / localFrame.Height ();
 		
-		offset.mX = targetFrame.mXMin - ( localFrame.mXMin * this->mStretch.mX );
-		offset.mY = targetFrame.mYMin - ( localFrame.mYMin * this->mStretch.mY );
+		offset.mX = targetFrame.mXMin - ( localFrame.mXMin * stretch.mX );
+		offset.mY = targetFrame.mYMin - ( localFrame.mYMin * stretch.mY );
 	}
 	
 	// inherit parent and offset transforms (and compute the inverse)
-	this->BuildTransforms ( offset.mX, offset.mY );
+	this->BuildTransforms ( offset.mX, offset.mY, stretch.mX, stretch.mY );
 	
 	// update the prim location in the partition
 	// use the local frame; world transform will match it to target frame

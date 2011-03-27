@@ -491,22 +491,6 @@
 				RelativePath="..\..\src\moaicore\MOAITileDeck2D.h"
 				>
 			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAITransform2D.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAITransform2D.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAITransformBase2D.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAITransformBase2D.h"
-				>
-			</File>
 		</Filter>
 		<Filter
 			Name="widgets"
@@ -1053,6 +1037,26 @@
 			</File>
 			<File
 				RelativePath="..\..\src\moaicore\MOAIScriptNode.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="transform"
+			>
+			<File
+				RelativePath="..\..\src\moaicore\MOAITransform2D.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAITransform2D.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAITransformBase2D.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAITransformBase2D.h"
 				>
 			</File>
 		</Filter>

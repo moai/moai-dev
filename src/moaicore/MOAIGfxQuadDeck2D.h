@@ -39,8 +39,8 @@ public:
 	
 	//----------------------------------------------------------------//
 	bool		Bind					();
-	void		Draw					( MOAIDrawingMtx2D& transform, u32 idx );
-	void		Draw					( MOAIDrawingMtx2D& transform, MOAIGrid& grid, USTileCoord& c0, USTileCoord& c1 );
+	void		Draw					( const USAffine2D& transform, u32 idx );
+	void		Draw					( const USAffine2D& transform, MOAIGrid& grid, USTileCoord& c0, USTileCoord& c1 );
 	USRect		GetBounds				( u32 idx );
 				MOAIGfxQuadDeck2D		();
 				~MOAIGfxQuadDeck2D		();

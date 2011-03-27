@@ -45,13 +45,13 @@ bool MOAIDeck2D::Contains ( u32 idx, const USVec2D& vec ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIDeck2D::Draw ( MOAIDrawingMtx2D& transform, u32 idx ) {
+void MOAIDeck2D::Draw ( const USAffine2D& transform, u32 idx ) {
 	UNUSED ( transform );
 	UNUSED ( idx );
 }
 
 //----------------------------------------------------------------//
-void MOAIDeck2D::Draw ( MOAIDrawingMtx2D& transform, MOAIGrid& grid, USTileCoord& c0, USTileCoord& c1 ) {
+void MOAIDeck2D::Draw ( const USAffine2D& transform, MOAIGrid& grid, USTileCoord& c0, USTileCoord& c1 ) {
 	UNUSED ( transform );
 	UNUSED ( grid );
 	UNUSED ( c0 );
@@ -59,13 +59,13 @@ void MOAIDeck2D::Draw ( MOAIDrawingMtx2D& transform, MOAIGrid& grid, USTileCoord
 }
 
 //----------------------------------------------------------------//
-void MOAIDeck2D::DrawDebug ( MOAIDrawingMtx2D& transform, u32 idx ) {
+void MOAIDeck2D::DrawDebug ( const USAffine2D& transform, u32 idx ) {
 	UNUSED ( transform );
 	UNUSED ( idx );
 }
 
 //----------------------------------------------------------------//
-void MOAIDeck2D::DrawDebug ( MOAIDrawingMtx2D& transform, MOAIGrid& grid, USTileCoord& c0, USTileCoord& c1 ) {
+void MOAIDeck2D::DrawDebug ( const USAffine2D& transform, MOAIGrid& grid, USTileCoord& c0, USTileCoord& c1 ) {
 	UNUSED ( transform );
 	UNUSED ( grid );
 	UNUSED ( c0 );

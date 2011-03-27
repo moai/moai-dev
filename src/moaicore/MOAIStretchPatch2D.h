@@ -9,9 +9,9 @@
 class MOAITexture;
 
 //================================================================//
-// MOAINinePatchSpan
+// MOAIStretchPatchSpan
 //================================================================//
-class MOAINinePatchSpan {
+class MOAIStretchPatchSpan {
 private:
 
 	friend class MOAIStretchPatch2D;
@@ -31,8 +31,8 @@ private:
 
 	USRef < MOAITexture >	mTexture; // source texture for patch
 
-	USLeanArray < MOAINinePatchSpan >	mRows;
-	USLeanArray < MOAINinePatchSpan >	mCols;
+	USLeanArray < MOAIStretchPatchSpan >	mRows;
+	USLeanArray < MOAIStretchPatchSpan >	mCols;
 
 	// native dimensions of image; will stretch to fill model rect
 	USRect					mRect;
@@ -66,8 +66,8 @@ public:
 	
 	//----------------------------------------------------------------//
 	bool				Bind					();
-	void				Draw					( MOAIDrawingMtx2D& transform, u32 idx );
-	void				Draw					( MOAIDrawingMtx2D& transform, MOAIGrid& grid, USTileCoord& c0, USTileCoord& c1 );
+	void				Draw					( const USAffine2D& transform, u32 idx );
+	void				Draw					( const USAffine2D& transform, MOAIGrid& grid, USTileCoord& c0, USTileCoord& c1 );
 	USRect				GetBounds				( u32 idx );
 						MOAIStretchPatch2D		();
 						~MOAIStretchPatch2D		();

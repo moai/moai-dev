@@ -185,12 +185,16 @@ bool MOAIStretchPatch2D::Bind () {
 }
 
 //----------------------------------------------------------------//
-void MOAIStretchPatch2D::Draw ( MOAIDrawingMtx2D& transform, u32 idx ) {
-	
-	USDrawBuffer& drawBuffer = USDrawBuffer::Get ();
-	drawBuffer.SetVtxTransform ( transform.GetLocalToWorldMtxNoStretch ());
+void MOAIStretchPatch2D::Draw ( const USAffine2D& transform, u32 idx ) {
 	
 	USVec2D stretch = transform.GetStretch ();
+	
+	USAffine2D noStretch;
+	noStretch.Scale ( 1.0f / stretch.mX, 1.0f / stretch.mY );
+	noStretch.Append ( transform );
+	
+	USDrawBuffer& drawBuffer = USDrawBuffer::Get ();
+	drawBuffer.SetVtxTransform ( noStretch );
 	
 	this->UpdateParams ();
 	this->Draw ( idx, stretch.mX, stretch.mY );
@@ -258,7 +262,7 @@ void MOAIStretchPatch2D::Draw ( u32 idx, float xStretch, float yStretch ) {
 	
 	for ( u32 i = 0; i < totalRows; ++i ) {
 		
-		MOAINinePatchSpan& row = this->mRows [ i ];
+		MOAIStretchPatchSpan& row = this->mRows [ i ];
 		float vStep = row.mPercent * vSpan;
 		
 		float h = nativeWidth * row.mPercent;
@@ -274,7 +278,7 @@ void MOAIStretchPatch2D::Draw ( u32 idx, float xStretch, float yStretch ) {
 		
 		for ( u32 j = 0; j < totalCols; ++j ) {
 			
-			MOAINinePatchSpan& col = this->mCols [ j ];
+			MOAIStretchPatchSpan& col = this->mCols [ j ];
 			float uStep = col.mPercent * uSpan;
 			
 			float w = nativeWidth * col.mPercent;
@@ -299,7 +303,7 @@ void MOAIStretchPatch2D::Draw ( u32 idx, float xStretch, float yStretch ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIStretchPatch2D::Draw ( MOAIDrawingMtx2D& transform, MOAIGrid& grid, USTileCoord& c0, USTileCoord& c1 ) {
+void MOAIStretchPatch2D::Draw ( const USAffine2D& transform, MOAIGrid& grid, USTileCoord& c0, USTileCoord& c1 ) {
 	UNUSED ( transform );
 	UNUSED ( grid );
 	UNUSED ( c0 );
@@ -405,7 +409,7 @@ void MOAIStretchPatch2D::UpdateParams () {
 	
 	u32 totalRows = this->mRows.Size ();
 	for ( u32 i = 0; i < totalRows; ++i ) {
-		MOAINinePatchSpan& span = this->mRows [ i ];
+		MOAIStretchPatchSpan& span = this->mRows [ i ];
 		if ( span.mCanStretch ) {
 			this->mYFlex += span.mPercent;
 		}
@@ -419,7 +423,7 @@ void MOAIStretchPatch2D::UpdateParams () {
 	
 	u32 totalCols = this->mCols.Size ();
 	for ( u32 i = 0; i < totalCols; ++i ) {
-		MOAINinePatchSpan& span = this->mCols [ i ];
+		MOAIStretchPatchSpan& span = this->mCols [ i ];
 		if ( span.mCanStretch ) {
 			this->mXFlex += span.mPercent;
 		}

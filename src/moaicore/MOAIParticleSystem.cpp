@@ -347,7 +347,7 @@ void MOAIParticleSystem::Draw () {
 
 	USDrawBuffer& drawbuffer = USDrawBuffer::Get ();
 
-	MOAIDrawingMtx2D drawingMtx;
+	USAffine2D drawingMtx;
 	USAffine2D spriteMtx;
 	
 	u32 maxSprites = this->mSprites.Size ();
@@ -371,7 +371,7 @@ void MOAIParticleSystem::Draw () {
 		
 		spriteMtx.ScRoTr ( sprite.mScale, sprite.mRot * ( float )D2R, sprite.mLoc );
 		
-		drawingMtx.SetLocalToWorldMtx ( this->GetLocalToWorldMtx ());
+		drawingMtx = this->GetLocalToWorldMtx ();
 		drawingMtx.Append ( spriteMtx );
 		
 		this->mDeck->Draw ( drawingMtx, sprite.mGfxID );

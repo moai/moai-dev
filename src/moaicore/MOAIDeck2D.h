@@ -4,7 +4,6 @@
 #ifndef	MOAIDECK2D_H
 #define	MOAIDECK2D_H
 
-class MOAIDrawingMtx2D;
 class MOAIGrid;
 class MOAIShader;
 class MOAISurfaceSampler2D;
@@ -49,10 +48,10 @@ public:
 	//----------------------------------------------------------------//
 	virtual bool		Bind						();
 	virtual bool		Contains					( u32 idx, const USVec2D& vec );
-	virtual void		Draw						( MOAIDrawingMtx2D& transform, u32 idx );
-	virtual void		Draw						( MOAIDrawingMtx2D& transform, MOAIGrid& grid, USTileCoord& c0, USTileCoord& c1 );
-	virtual void		DrawDebug					( MOAIDrawingMtx2D& transform, u32 idx );
-	virtual void		DrawDebug					( MOAIDrawingMtx2D& transform, MOAIGrid& grid, USTileCoord& c0, USTileCoord& c1 );
+	virtual void		Draw						( const USAffine2D& transform, u32 idx );
+	virtual void		Draw						( const USAffine2D& transform, MOAIGrid& grid, USTileCoord& c0, USTileCoord& c1 );
+	virtual void		DrawDebug					( const USAffine2D& transform, u32 idx );
+	virtual void		DrawDebug					( const USAffine2D& transform, MOAIGrid& grid, USTileCoord& c0, USTileCoord& c1 );
 	virtual void		GatherSurfaces				( u32 idx, MOAISurfaceSampler2D& sampler );
 	virtual void		GatherSurfaces				( MOAIGrid& grid, USTileCoord& c0, USTileCoord& c1, MOAISurfaceSampler2D& sampler );
 	virtual USRect		GetBounds					( u32 idx );

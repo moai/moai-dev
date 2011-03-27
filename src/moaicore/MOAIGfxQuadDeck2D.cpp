@@ -235,7 +235,7 @@ bool MOAIGfxQuadDeck2D::Bind () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxQuadDeck2D::Draw ( MOAIDrawingMtx2D& transform, u32 idx ) {
+void MOAIGfxQuadDeck2D::Draw ( const USAffine2D& transform, u32 idx ) {
 
 	if ( idx >= this->mQuads.Size ()) return;
 
@@ -243,17 +243,17 @@ void MOAIGfxQuadDeck2D::Draw ( MOAIDrawingMtx2D& transform, u32 idx ) {
 	if ( quad ) {
 		
 		USDrawBuffer& drawBuffer = USDrawBuffer::Get ();
-		drawBuffer.SetVtxTransform ( transform.GetLocalToWorldMtx ());
+		drawBuffer.SetVtxTransform ( transform );
 			
 		quad->Draw ();
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxQuadDeck2D::Draw ( MOAIDrawingMtx2D& transform, MOAIGrid& grid, USTileCoord& c0, USTileCoord& c1 ) {
+void MOAIGfxQuadDeck2D::Draw ( const USAffine2D& transform, MOAIGrid& grid, USTileCoord& c0, USTileCoord& c1 ) {
 	
 	USDrawBuffer& drawBuffer = USDrawBuffer::Get ();
-	drawBuffer.SetVtxTransform ( transform.GetLocalToWorldMtx ());
+	drawBuffer.SetVtxTransform ( transform );
 	
 	for ( int y = c0.mY; y <= c1.mY; ++y ) {
 		for ( int x = c0.mX; x <= c1.mX; ++x ) {

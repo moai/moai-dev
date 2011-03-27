@@ -92,10 +92,10 @@ int MOAISurfaceDeck2D::_setSurface ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAISurfaceDeck2D::DrawDebug ( MOAIDrawingMtx2D& transform, u32 idx ) {
+void MOAISurfaceDeck2D::DrawDebug ( const USAffine2D& transform, u32 idx ) {
 	
 	MOAIDebugLines& debugLines = MOAIDebugLines::Get ();
-	debugLines.SetWorldMtx ( transform.GetLocalToWorldMtx ());
+	debugLines.SetWorldMtx ( transform );
 	debugLines.SetPenSpace ( USDebugLines::MODEL_SPACE );
 	
 	this->DrawDebug ( idx, 0.0f, 0.0f, false, false );
@@ -132,10 +132,10 @@ void MOAISurfaceDeck2D::DrawDebug ( u32 idx, float xOff, float yOff, bool xFlip,
 }
 
 //----------------------------------------------------------------//
-void MOAISurfaceDeck2D::DrawDebug ( MOAIDrawingMtx2D& transform, MOAIGrid& grid, USTileCoord& c0, USTileCoord& c1 ) {
+void MOAISurfaceDeck2D::DrawDebug ( const USAffine2D& transform, MOAIGrid& grid, USTileCoord& c0, USTileCoord& c1 ) {
 	
 	MOAIDebugLines& debugLines = MOAIDebugLines::Get ();
-	debugLines.SetWorldMtx ( transform.GetLocalToWorldMtx ());
+	debugLines.SetWorldMtx ( transform );
 	debugLines.SetPenSpace ( USDebugLines::MODEL_SPACE );
 	
 	for ( int y = c0.mY; y <= c1.mY; ++y ) {

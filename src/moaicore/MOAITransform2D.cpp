@@ -531,11 +531,11 @@ void MOAITransform2D::ApplyAttrOp ( u32 attrID, USAttrOp& attrOp ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITransform2D::BuildTransforms ( float xOff, float yOff ) {
+void MOAITransform2D::BuildTransforms ( float xOff, float yOff, float xStretch, float yStretch ) {
 	
 	this->mLocalToWorldMtx.ScRoTr (
-		this->mScale.mX * this->mStretch.mX,
-		this->mScale.mY * this->mStretch.mY,
+		this->mScale.mX * xStretch,
+		this->mScale.mY * yStretch,
 		( float )D2R * this->mDegrees,
 		this->mLoc.mX + xOff,
 		this->mLoc.mY + yOff
@@ -591,16 +591,6 @@ const USAffine2D& MOAITransform2D::GetLocalToWorldMtx () {
 }
 
 //----------------------------------------------------------------//
-USAffine2D MOAITransform2D::GetLocalToWorldMtxNoStretch () {
-
-	USAffine2D mtx;
-	mtx.Scale ( 1.0f / this->mStretch.mX, 1.0f / this->mStretch.mY );
-	
-	mtx.Append ( this->mLocalToWorldMtx );
-	return mtx;
-}
-
-//----------------------------------------------------------------//
 const USAffine2D& MOAITransform2D::GetWorldToLocalMtx () {
 
 	return this->mWorldToLocalMtx;
@@ -644,7 +634,7 @@ void MOAITransform2D::Harness ( MOAINodeHarness& harness ) {
 //----------------------------------------------------------------//
 void MOAITransform2D::OnDepNodeUpdate () {
 	
-	this->BuildTransforms ( 0.0f, 0.0f );
+	this->BuildTransforms ( 0.0f, 0.0f, 1.0f, 1.0f );
 }
 
 //----------------------------------------------------------------//

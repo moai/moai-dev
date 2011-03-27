@@ -106,22 +106,22 @@ bool MOAITileDeck2D::Bind () {
 }
 
 //----------------------------------------------------------------//
-void MOAITileDeck2D::Draw ( MOAIDrawingMtx2D& transform, u32 idx ) {
+void MOAITileDeck2D::Draw ( const USAffine2D& transform, u32 idx ) {
 
 	if ( idx & USTile::HIDDEN ) return;
 	idx = USTile::ToggleYFlip ( idx );
 	
 	USDrawBuffer& drawBuffer = USDrawBuffer::Get ();
-	drawBuffer.SetVtxTransform ( transform.GetLocalToWorldMtx ());
+	drawBuffer.SetVtxTransform ( transform );
 	
 	this->DrawTile ( idx, this->mRect );
 }
 
 //----------------------------------------------------------------//
-void MOAITileDeck2D::Draw ( MOAIDrawingMtx2D& transform, MOAIGrid& grid, USTileCoord& c0, USTileCoord& c1 ) {
+void MOAITileDeck2D::Draw ( const USAffine2D& transform, MOAIGrid& grid, USTileCoord& c0, USTileCoord& c1 ) {
 
 	USDrawBuffer& drawBuffer = USDrawBuffer::Get ();
-	drawBuffer.SetVtxTransform ( transform.GetLocalToWorldMtx ());
+	drawBuffer.SetVtxTransform ( transform );
 
 	for ( int y = c0.mY; y <= c1.mY; ++y ) {
 		for ( int x = c0.mX; x <= c1.mX; ++x ) {

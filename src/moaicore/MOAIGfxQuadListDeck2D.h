@@ -94,8 +94,8 @@ public:
 	//----------------------------------------------------------------//
 	bool		Bind					();
 	bool		Contains				( u32 idx, const USVec2D& vec );
-	void		Draw					( MOAIDrawingMtx2D& transform, u32 idx );
-	void		Draw					( MOAIDrawingMtx2D& transform, MOAIGrid& grid, USTileCoord& c0, USTileCoord& c1 );
+	void		Draw					( const USAffine2D& transform, u32 idx );
+	void		Draw					( const USAffine2D& transform, MOAIGrid& grid, USTileCoord& c0, USTileCoord& c1 );
 	void		EnumSprites				( u32 idx, u32 basePrimID, u32 uvRectID, u32 screenRectID, u32 total );
 	void		EnumUVTiles				( u32 idx, u32 width, u32 height, float xStep, float yStep );
 	USRect		GetBounds				( u32 idx );

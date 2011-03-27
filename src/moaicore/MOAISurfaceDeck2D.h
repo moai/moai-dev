@@ -45,8 +45,8 @@ public:
 	DECL_LUA_DATA ( MOAISurfaceDeck2D )
 	
 	//----------------------------------------------------------------//
-	void					DrawDebug				( MOAIDrawingMtx2D& transform, u32 idx );
-	void					DrawDebug				( MOAIDrawingMtx2D& transform, MOAIGrid& grid, USTileCoord& c0, USTileCoord& c1 );
+	void					DrawDebug				( const USAffine2D& transform, u32 idx );
+	void					DrawDebug				( const USAffine2D& transform, MOAIGrid& grid, USTileCoord& c0, USTileCoord& c1 );
 	void					GatherSurfaces			( u32 idx, MOAISurfaceSampler2D& sampler );
 	void					GatherSurfaces			( MOAIGrid& grid, USTileCoord& c0, USTileCoord& c1, MOAISurfaceSampler2D& sampler );
 	USRect					GetBounds				( u32 idx );
