@@ -55,6 +55,7 @@ int MOAILogMgr::_log ( lua_State* L ) {
 	@param y (out)
 */
 int MOAILogMgr::_registerLogMessage ( lua_State* L ) {
+	UNUSED ( L )
 
 	#ifdef _DEBUG
 

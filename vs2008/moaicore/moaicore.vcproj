@@ -223,7 +223,6 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				LinkLibraryDependencies="true"
 				AdditionalOptions="/LTCG"
 				OutputFile="$(OutDir)\$(ProjectName).lib"
 				AdditionalLibraryDirectories=""
@@ -782,7 +781,7 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="text box"
+			Name="textbox"
 			>
 			<File
 				RelativePath="..\..\src\moaicore\MOAIFont.cpp"

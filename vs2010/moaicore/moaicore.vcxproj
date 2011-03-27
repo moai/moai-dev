@@ -26,19 +26,19 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
-    <CharacterSet>MultiByte</CharacterSet>
+    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
-    <CharacterSet>MultiByte</CharacterSet>
+    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
-    <CharacterSet>MultiByte</CharacterSet>
+    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
-    <CharacterSet>MultiByte</CharacterSet>
+    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -60,12 +60,12 @@
     <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\bin\$(Platform)\$(Configuration)\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Configuration)\</IntDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">..\bin\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Configuration)\</IntDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\bin\$(Platform)\$(Configuration)\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration)\</IntDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">..\bin\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Configuration)\</IntDir>
     <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
     <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
     <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
@@ -99,7 +99,8 @@
       <ShowIncludes>false</ShowIncludes>
     </ClCompile>
     <Lib>
-      <AdditionalDependencies>iphlpapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName).lib</OutputFile>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
@@ -115,7 +116,7 @@
     <ClCompile>
       <AdditionalOptions>/vmg %(AdditionalOptions)</AdditionalOptions>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\lua-5.1.3\src;..\..\3rdparty\SOIL\src;..\..\3rdparty\openGL\include;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\sqlite-3.6.16;..\..\3rdparty\tinyxml;..\..\3rdparty\gsoap-2.7\gsoap;..\..\3rdparty\FMOD\inc;..\..\3rdparty\curl-7.19.7\include;..\..\3rdparty\lpng140;..\..\3rdparty\expat-2.0.1\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\src;"..\..\3rdparty\lua-5.1.3\src";"..\..\3rdparty\glew-1.5.6\include";"..\..\3rdparty\zlib-1.2.3";"..\..\3rdparty\sqlite-3.6.16";..\..\3rdparty\tinyxml;"..\..\3rdparty\curl-7.19.7\include";..\..\3rdparty\lpng140;"..\..\3rdparty\expat-2.0.1\lib";"..\..\3rdparty\freetype-2.4.4\include";"..\..\3rdparty\box2d-2.1.2\Box2D";"..\..\3rdparty\chipmunk-5.3.4\include"</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;AKU_STATIC;XML_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>true</MinimalRebuild>
@@ -131,7 +132,8 @@
       <ShowIncludes>false</ShowIncludes>
     </ClCompile>
     <Lib>
-      <AdditionalDependencies>iphlpapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName).lib</OutputFile>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
@@ -168,14 +170,13 @@
       <DebugInformationFormat>
       </DebugInformationFormat>
     </ClCompile>
-    <ProjectReference>
-      <LinkLibraryDependencies>true</LinkLibraryDependencies>
-    </ProjectReference>
+    <ProjectReference />
     <Lib>
       <AdditionalOptions>/LTCG %(AdditionalOptions)</AdditionalOptions>
       <OutputFile>$(OutDir)$(ProjectName).lib</OutputFile>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
+      <IgnoreAllDefaultLibraries>
+      </IgnoreAllDefaultLibraries>
     </Lib>
     <PostBuildEvent>
       <Command>
@@ -197,7 +198,7 @@
       <FavorSizeOrSpeed>Size</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
       <WholeProgramOptimization>true</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\lua-5.1.3\src;..\..\3rdparty\SOIL\src;..\..\3rdparty\openGL\include;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\sqlite-3.6.16;..\..\3rdparty\tinyxml;..\..\3rdparty\gsoap-2.7\gsoap;..\..\3rdparty\FMOD\inc;..\..\3rdparty\curl-7.19.7\include;..\..\3rdparty\lpng140;..\..\3rdparty\expat-2.0.1\lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\src;"..\..\3rdparty\lua-5.1.3\src";"..\..\3rdparty\glew-1.5.6\include";"..\..\3rdparty\zlib-1.2.3";"..\..\3rdparty\sqlite-3.6.16";..\..\3rdparty\tinyxml;"..\..\3rdparty\curl-7.19.7\include";..\..\3rdparty\lpng140;"..\..\3rdparty\expat-2.0.1\lib";"..\..\3rdparty\freetype-2.4.4\include";"..\..\3rdparty\box2d-2.1.2\Box2D";"..\..\3rdparty\chipmunk-5.3.4\include"</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_LIB;_USE_32BIT_TIME_T;_CRT_SECURE_NO_WARNINGS;AKU_STATIC;XML_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <ExceptionHandling>Sync</ExceptionHandling>
@@ -233,31 +234,35 @@
     <ClCompile Include="..\..\src\moaicore\MOAIBox2DWorld.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAICpArbiter.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAICpDebugDraw.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAIDataBuffer.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAIDataIOAction.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAIDeck2D.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAIEaseDriver.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAIEaseType.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIFtFontRipper.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAIGfxQuad2D.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAIGfxQuadDeck2D.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAIGfxQuadListDeck2D.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIIndexBuffer.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAILayoutFrame.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAILogMessages.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAILogMgr.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIParticleEmitter.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIParticleEngine.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIParticleForce.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIParticleScript.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIParticleState.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIParticleSystem.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAIProp2D.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIScriptNode.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAIStretchPatch2D.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAISurfaceDeck2D.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIThread.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIAnim.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIAnimCurve.cpp" />
-    <ClCompile Include="..\..\src\moaicore\MOAIAnimPlayer.cpp" />
-    <ClCompile Include="..\..\src\moaicore\MOAIForceAction.cpp" />
-    <ClCompile Include="..\..\src\moaicore\MOAIOscillator.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAITileDeck2D.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAITimer.cpp" />
-    <ClCompile Include="..\..\src\moaicore\MOAITransition.cpp" />
-    <ClCompile Include="..\..\src\moaicore\MOAIBrushLibrary.cpp" />
-    <ClCompile Include="..\..\src\moaicore\MOAIContentLibrary2D.cpp" />
-    <ClCompile Include="..\..\src\moaicore\MOAINinePatch.cpp" />
-    <ClCompile Include="..\..\src\moaicore\MOAISpriteLibrary.cpp" />
-    <ClCompile Include="..\..\src\moaicore\MOAISurfaceLibrary2D.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAITexture.cpp" />
-    <ClCompile Include="..\..\src\moaicore\MOAITileLibrary.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAISurfaceSampler2D.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIColor.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIShader.cpp" />
@@ -265,16 +270,8 @@
     <ClCompile Include="..\..\src\moaicore\MOAIVertexBuffer.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIVertexFormat.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIViewport.cpp" />
-    <ClCompile Include="..\..\src\moaicore\MOAICamera2D.cpp" />
-    <ClCompile Include="..\..\src\moaicore\MOAICameraFitter.cpp" />
-    <ClCompile Include="..\..\src\moaicore\MOAIFrame.cpp" />
-    <ClCompile Include="..\..\src\moaicore\MOAIGfxPrim2D.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAILayer2D.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAILayerBridge2D.cpp" />
-    <ClCompile Include="..\..\src\moaicore\MOAIPrim.cpp" />
-    <ClCompile Include="..\..\src\moaicore\MOAISlippyMap.cpp" />
-    <ClCompile Include="..\..\src\moaicore\MOAISprite2D.cpp" />
-    <ClCompile Include="..\..\src\moaicore\MOAITilemap.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAITransform2D.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAITransformBase2D.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIGrid.cpp" />
@@ -289,25 +286,18 @@
     <ClCompile Include="..\..\src\moaicore\MOAIPointerSensor.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAISensor.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAITouchSensor.cpp" />
-    <ClCompile Include="..\..\src\moaicore\MOAIData.cpp" />
-    <ClCompile Include="..\..\src\moaicore\MOAIDataIOAction.cpp" />
-    <ClCompile Include="..\..\src\moaicore\MOAILuaScript.cpp" />
-    <ClCompile Include="..\..\src\moaicore\MOAIPolar.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIPartition.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAICheckpoint.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIDebugLines.cpp" />
-    <ClCompile Include="..\..\src\moaicore\MOAILog.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAINode.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAINodeHarness.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAINodeMgr.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAISerializer.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAISim.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIXmlParser.cpp" />
-    <ClCompile Include="..\..\src\moaicore\MOAIFileCache.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIHttpTask.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIFont.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAITextBox.cpp" />
-    <ClCompile Include="..\..\src\moaicore\MOAITextSpoolAction.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAICp.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAICpBody.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAICpConstraint.cpp" />
@@ -333,31 +323,35 @@
     <ClInclude Include="..\..\src\moaicore\MOAIBox2DWorld.h" />
     <ClInclude Include="..\..\src\moaicore\MOAICpArbiter.h" />
     <ClInclude Include="..\..\src\moaicore\MOAICpDebugDraw.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAIDataBuffer.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAIDataIOAction.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAIDeck2D.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAIEaseDriver.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAIEaseType.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIFtFontRipper.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAIGfxQuad2D.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAIGfxQuadDeck2D.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAIGfxQuadListDeck2D.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIIndexBuffer.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAILayoutFrame.h" />
     <ClInclude Include="..\..\src\moaicore\MOAILogMessages.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAILogMgr.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIParticleEmitter.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIParticleEngine.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIParticleForce.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIParticleScript.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIParticleState.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIParticleSystem.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAIProp2D.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIScriptNode.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAIStretchPatch2D.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAISurfaceDeck2D.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIThread.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIAnim.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIAnimCurve.h" />
-    <ClInclude Include="..\..\src\moaicore\MOAIAnimPlayer.h" />
-    <ClInclude Include="..\..\src\moaicore\MOAIForceAction.h" />
-    <ClInclude Include="..\..\src\moaicore\MOAIOscillator.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAITileDeck2D.h" />
     <ClInclude Include="..\..\src\moaicore\MOAITimer.h" />
-    <ClInclude Include="..\..\src\moaicore\MOAITransition.h" />
-    <ClInclude Include="..\..\src\moaicore\MOAIBrushLibrary.h" />
-    <ClInclude Include="..\..\src\moaicore\MOAIContentLibrary2D.h" />
-    <ClInclude Include="..\..\src\moaicore\MOAINinePatch.h" />
-    <ClInclude Include="..\..\src\moaicore\MOAISpriteLibrary.h" />
-    <ClInclude Include="..\..\src\moaicore\MOAISurfaceLibrary2D.h" />
     <ClInclude Include="..\..\src\moaicore\MOAITexture.h" />
-    <ClInclude Include="..\..\src\moaicore\MOAITileLibrary.h" />
     <ClInclude Include="..\..\src\moaicore\MOAISurfaceSampler2D.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIColor.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIShader.h" />
@@ -365,16 +359,8 @@
     <ClInclude Include="..\..\src\moaicore\MOAIVertexBuffer.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIVertexFormat.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIViewport.h" />
-    <ClInclude Include="..\..\src\moaicore\MOAICamera2D.h" />
-    <ClInclude Include="..\..\src\moaicore\MOAICameraFitter.h" />
-    <ClInclude Include="..\..\src\moaicore\MOAIFrame.h" />
-    <ClInclude Include="..\..\src\moaicore\MOAIGfxPrim2D.h" />
     <ClInclude Include="..\..\src\moaicore\MOAILayer2D.h" />
     <ClInclude Include="..\..\src\moaicore\MOAILayerBridge2D.h" />
-    <ClInclude Include="..\..\src\moaicore\MOAIPrim.h" />
-    <ClInclude Include="..\..\src\moaicore\MOAISlippyMap.h" />
-    <ClInclude Include="..\..\src\moaicore\MOAISprite2D.h" />
-    <ClInclude Include="..\..\src\moaicore\MOAITilemap.h" />
     <ClInclude Include="..\..\src\moaicore\MOAITransform2D.h" />
     <ClInclude Include="..\..\src\moaicore\MOAITransformBase2D.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIGrid.h" />
@@ -389,25 +375,18 @@
     <ClInclude Include="..\..\src\moaicore\MOAIPointerSensor.h" />
     <ClInclude Include="..\..\src\moaicore\MOAISensor.h" />
     <ClInclude Include="..\..\src\moaicore\MOAITouchSensor.h" />
-    <ClInclude Include="..\..\src\moaicore\MOAIData.h" />
-    <ClInclude Include="..\..\src\moaicore\MOAIDataIOAction.h" />
-    <ClInclude Include="..\..\src\moaicore\MOAILuaScript.h" />
-    <ClInclude Include="..\..\src\moaicore\MOAIPolar.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIPartition.h" />
     <ClInclude Include="..\..\src\moaicore\MOAICheckpoint.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIDebugLines.h" />
-    <ClInclude Include="..\..\src\moaicore\MOAILog.h" />
     <ClInclude Include="..\..\src\moaicore\MOAINode.h" />
     <ClInclude Include="..\..\src\moaicore\MOAINodeHarness.h" />
     <ClInclude Include="..\..\src\moaicore\MOAINodeMgr.h" />
     <ClInclude Include="..\..\src\moaicore\MOAISerializer.h" />
     <ClInclude Include="..\..\src\moaicore\MOAISim.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIXmlParser.h" />
-    <ClInclude Include="..\..\src\moaicore\MOAIFileCache.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIHttpTask.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIFont.h" />
     <ClInclude Include="..\..\src\moaicore\MOAITextBox.h" />
-    <ClInclude Include="..\..\src\moaicore\MOAITextSpoolAction.h" />
     <ClInclude Include="..\..\src\moaicore\MOAICp.h" />
     <ClInclude Include="..\..\src\moaicore\MOAICpBody.h" />
     <ClInclude Include="..\..\src\moaicore\MOAICpConstraint.h" />
@@ -421,6 +400,14 @@
     <ClInclude Include="..\..\src\moaicore\pch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\box2d\box2d.vcxproj">
+      <Project>{ab0dd232-1af9-4b16-a0f2-5ebf32250f6b}</Project>
+      <Private>true</Private>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
     <ProjectReference Include="..\chipmunk\chipmunk.vcxproj">
       <Project>{2c12ae60-0d24-4200-99bb-cb49cba3003f}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>

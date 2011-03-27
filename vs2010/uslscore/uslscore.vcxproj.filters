@@ -1,253 +1,291 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="util">
-      <UniqueIdentifier>{a02c9f2a-4d64-4f75-85c4-a775358053ea}</UniqueIdentifier>
+    <Filter Include="src">
+      <UniqueIdentifier>{2e95fed3-deb0-4275-81ed-f6f789bd4057}</UniqueIdentifier>
     </Filter>
-    <Filter Include="lifecycle">
-      <UniqueIdentifier>{492dbbde-ead5-4fb0-8b1f-78da6db4c3a8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="lua">
-      <UniqueIdentifier>{a1cb3a8f-0e2f-42e9-918d-4d236f8dd7a0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="stl">
-      <UniqueIdentifier>{8a727962-a15d-468d-bcda-233421f9e0d0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="stream">
-      <UniqueIdentifier>{b2c8c7be-8a06-49bf-a209-943c054f04bd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="templates">
-      <UniqueIdentifier>{5412d99a-b3a6-4065-a5e0-c694a2e1b6ab}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="time">
-      <UniqueIdentifier>{a756a664-32e1-4981-830a-1c64640f75a2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="math">
+    <Filter Include="src\math">
       <UniqueIdentifier>{20eaeb26-e2bc-4e6e-bf63-b303f599bb84}</UniqueIdentifier>
     </Filter>
-    <Filter Include="cipher">
+    <Filter Include="src\lua">
+      <UniqueIdentifier>{a1cb3a8f-0e2f-42e9-918d-4d236f8dd7a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\lifecycle">
+      <UniqueIdentifier>{492dbbde-ead5-4fb0-8b1f-78da6db4c3a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\cipher">
       <UniqueIdentifier>{bde758d5-06ed-4803-a3ae-76dd0150da2d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\stl">
+      <UniqueIdentifier>{8a727962-a15d-468d-bcda-233421f9e0d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\stream">
+      <UniqueIdentifier>{b2c8c7be-8a06-49bf-a209-943c054f04bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\templates">
+      <UniqueIdentifier>{5412d99a-b3a6-4065-a5e0-c694a2e1b6ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\util">
+      <UniqueIdentifier>{a02c9f2a-4d64-4f75-85c4-a775358053ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\time">
+      <UniqueIdentifier>{a756a664-32e1-4981-830a-1c64640f75a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\zip">
+      <UniqueIdentifier>{27c05ff1-f452-46fc-b3f3-a9088d6bb6c6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\uslscore\USAccessors.h">
-      <Filter>util</Filter>
+      <Filter>src\util</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\uslscore\USDirectoryItr.h">
-      <Filter>util</Filter>
+      <Filter>src\util</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\uslscore\USFilename.h">
-      <Filter>util</Filter>
+      <Filter>src\util</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\uslscore\USFileSys.h">
-      <Filter>util</Filter>
+      <Filter>src\util</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\uslscore\USTypeID.h">
-      <Filter>util</Filter>
+      <Filter>src\util</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\uslscore\USCanary.h">
-      <Filter>lifecycle</Filter>
+      <Filter>src\lifecycle</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\uslscore\USGlobals.h">
-      <Filter>lifecycle</Filter>
+      <Filter>src\lifecycle</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\uslscore\USObject.h">
-      <Filter>lifecycle</Filter>
+      <Filter>src\lifecycle</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\uslscore\USRef.h">
-      <Filter>lifecycle</Filter>
+      <Filter>src\lifecycle</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\uslscore\USRtti.h">
-      <Filter>lifecycle</Filter>
+      <Filter>src\lifecycle</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\uslscore\USLua.h">
-      <Filter>lua</Filter>
+      <Filter>src\lua</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\uslscore\USLuaData-impl.h">
-      <Filter>lua</Filter>
+      <Filter>src\lua</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\uslscore\USLuaData.h">
-      <Filter>lua</Filter>
+      <Filter>src\lua</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\uslscore\USLuaRef.h">
-      <Filter>lua</Filter>
+      <Filter>src\lua</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\uslscore\USLuaRuntime.h">
-      <Filter>lua</Filter>
+      <Filter>src\lua</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\uslscore\USLuaSerializer.h">
-      <Filter>lua</Filter>
+      <Filter>src\lua</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\uslscore\USLuaState-impl.h">
-      <Filter>lua</Filter>
+      <Filter>src\lua</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\uslscore\USLuaState.h">
-      <Filter>lua</Filter>
+      <Filter>src\lua</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\uslscore\USLuaStateHandle.h">
-      <Filter>lua</Filter>
+      <Filter>src\lua</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\uslscore\STLArray.h">
-      <Filter>stl</Filter>
+      <Filter>src\stl</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\uslscore\STLIteration.h">
-      <Filter>stl</Filter>
+      <Filter>src\stl</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\uslscore\STLList.h">
-      <Filter>stl</Filter>
+      <Filter>src\stl</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\uslscore\STLMap.h">
-      <Filter>stl</Filter>
+      <Filter>src\stl</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\uslscore\STLSet.h">
-      <Filter>stl</Filter>
+      <Filter>src\stl</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\uslscore\STLString.h">
-      <Filter>stl</Filter>
+      <Filter>src\stl</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\uslscore\USStlHelp.h">
-      <Filter>stl</Filter>
+      <Filter>src\stl</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\uslscore\USByteStream.h">
-      <Filter>stream</Filter>
+      <Filter>src\stream</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\uslscore\USFileStream.h">
-      <Filter>stream</Filter>
+      <Filter>src\stream</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\uslscore\USMemStream.h">
-      <Filter>stream</Filter>
+      <Filter>src\stream</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\uslscore\USStream.h">
-      <Filter>stream</Filter>
+      <Filter>src\stream</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\uslscore\USStreamFormatter.h">
-      <Filter>stream</Filter>
+      <Filter>src\stream</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\uslscore\USFactory.h">
-      <Filter>templates</Filter>
+      <Filter>src\templates</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\uslscore\USLeanArray.h">
-      <Filter>templates</Filter>
+      <Filter>src\templates</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\uslscore\USLeanList.h">
-      <Filter>templates</Filter>
+      <Filter>src\templates</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\uslscore\USLeanPool.h">
-      <Filter>templates</Filter>
+      <Filter>src\templates</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\uslscore\USLeanStack.h">
-      <Filter>templates</Filter>
+      <Filter>src\templates</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\uslscore\USList.h">
-      <Filter>templates</Filter>
+      <Filter>src\templates</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\uslscore\USUnion.h">
-      <Filter>templates</Filter>
+      <Filter>src\templates</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\uslscore\USDeviceTime.h">
-      <Filter>time</Filter>
+      <Filter>src\time</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\uslscore\USFloat.h">
-      <Filter>math</Filter>
+      <Filter>src\math</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\uslscore\USRect.h">
-      <Filter>math</Filter>
+      <Filter>src\math</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\uslscore\USVec2D.h">
-      <Filter>math</Filter>
+      <Filter>src\math</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\uslscore\USVec3D.h">
-      <Filter>math</Filter>
+      <Filter>src\math</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\uslscore\USBase64Cipher.h">
-      <Filter>cipher</Filter>
+      <Filter>src\cipher</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\uslscore\USCipher.h">
-      <Filter>cipher</Filter>
+      <Filter>src\cipher</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\uslscore\USCipherStream.h">
-      <Filter>cipher</Filter>
+      <Filter>src\cipher</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\uslscore\pch.h" />
-    <ClInclude Include="..\..\src\uslscore\uslscore.h" />
+    <ClInclude Include="..\..\src\uslscore\pch.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslscore\uslscore.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslscore\USZipFile.h">
+      <Filter>src\zip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslscore\USDeflater.h">
+      <Filter>src\zip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslscore\USInflater.h">
+      <Filter>src\zip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslscore\USZip.h">
+      <Filter>src\zip</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\uslscore\USDirectoryItr_posix.cpp">
-      <Filter>util</Filter>
+      <Filter>src\util</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\uslscore\USDirectoryItr_win32.cpp">
-      <Filter>util</Filter>
+      <Filter>src\util</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\uslscore\USFilename.cpp">
-      <Filter>util</Filter>
+      <Filter>src\util</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\uslscore\USFileSys.cpp">
-      <Filter>util</Filter>
+      <Filter>src\util</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\uslscore\USCanary.cpp">
-      <Filter>lifecycle</Filter>
+      <Filter>src\lifecycle</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\uslscore\USGlobals.cpp">
-      <Filter>lifecycle</Filter>
+      <Filter>src\lifecycle</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\uslscore\USObject.cpp">
-      <Filter>lifecycle</Filter>
+      <Filter>src\lifecycle</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\uslscore\USRtti.cpp">
-      <Filter>lifecycle</Filter>
+      <Filter>src\lifecycle</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\uslscore\USLuaData.cpp">
-      <Filter>lua</Filter>
+      <Filter>src\lua</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\uslscore\USLuaRef.cpp">
-      <Filter>lua</Filter>
+      <Filter>src\lua</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\uslscore\USLuaRuntime.cpp">
-      <Filter>lua</Filter>
+      <Filter>src\lua</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\uslscore\USLuaSerializer.cpp">
-      <Filter>lua</Filter>
+      <Filter>src\lua</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\uslscore\USLuaState.cpp">
-      <Filter>lua</Filter>
+      <Filter>src\lua</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\uslscore\USLuaStateHandle.cpp">
-      <Filter>lua</Filter>
+      <Filter>src\lua</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\uslscore\STLString.cpp">
-      <Filter>stl</Filter>
+      <Filter>src\stl</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\uslscore\USByteStream.cpp">
-      <Filter>stream</Filter>
+      <Filter>src\stream</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\uslscore\USFileStream.cpp">
-      <Filter>stream</Filter>
+      <Filter>src\stream</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\uslscore\USMemStream.cpp">
-      <Filter>stream</Filter>
+      <Filter>src\stream</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\uslscore\USStream.cpp">
-      <Filter>stream</Filter>
+      <Filter>src\stream</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\uslscore\USStreamFormatter.cpp">
-      <Filter>stream</Filter>
+      <Filter>src\stream</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\uslscore\USDeviceTime_win32.cpp">
-      <Filter>time</Filter>
+      <Filter>src\time</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\uslscore\USFloat.cpp">
-      <Filter>math</Filter>
+      <Filter>src\math</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\uslscore\USBase64Cipher.cpp">
-      <Filter>cipher</Filter>
+      <Filter>src\cipher</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\uslscore\USCipher.cpp">
-      <Filter>cipher</Filter>
+      <Filter>src\cipher</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\uslscore\USCipherStream.cpp">
-      <Filter>cipher</Filter>
+      <Filter>src\cipher</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\uslscore\pch.cpp" />
-    <ClCompile Include="..\..\src\uslscore\uslscore.cpp" />
+    <ClCompile Include="..\..\src\uslscore\pch.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslscore\uslscore.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslscore\USDeflater.cpp">
+      <Filter>src\zip</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslscore\USInflater.cpp">
+      <Filter>src\zip</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslscore\USZip.cpp">
+      <Filter>src\zip</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslscore\USZipFile.cpp">
+      <Filter>src\zip</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
