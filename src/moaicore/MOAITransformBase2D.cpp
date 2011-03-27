@@ -2,7 +2,6 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moaicore/MOAINodeHarness.h>
 #include <moaicore/MOAITransformBase2D.h>
 
 //================================================================//

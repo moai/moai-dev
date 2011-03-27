@@ -460,14 +460,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAIProp2D.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIProp2D.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\moaicore\MOAIStretchPatch2D.cpp"
 				>
 			</File>
@@ -685,6 +677,22 @@
 			</File>
 			<File
 				RelativePath="..\..\src\moaicore\MOAIPartition.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIPartitionCell.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIPartitionCell.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIPartitionLayer.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIPartitionLayer.h"
 				>
 			</File>
 			<File
@@ -1016,14 +1024,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAINodeHarness.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAINodeHarness.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\moaicore\MOAINodeMgr.cpp"
 				>
 			</File>
@@ -1057,6 +1057,26 @@
 			</File>
 			<File
 				RelativePath="..\..\src\moaicore\MOAITransformBase2D.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="prop"
+			>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIProp.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIProp.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIProp2D.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIProp2D.h"
 				>
 			</File>
 		</Filter>

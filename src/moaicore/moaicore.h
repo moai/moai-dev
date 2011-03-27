@@ -38,7 +38,6 @@
 #include <moaicore/MOAILogMgr.h>
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAINode.h>
-#include <moaicore/MOAINodeHarness.h>
 #include <moaicore/MOAINodeMgr.h>
 #include <moaicore/MOAIParticleEmitter.h>
 #include <moaicore/MOAIParticleEngine.h>
@@ -47,7 +46,10 @@
 #include <moaicore/MOAIParticleState.h>
 #include <moaicore/MOAIParticleSystem.h>
 #include <moaicore/MOAIPartition.h>
+#include <moaicore/MOAIPartitionCell.h>
+#include <moaicore/MOAIPartitionLayer.h>
 #include <moaicore/MOAIPointerSensor.h>
+#include <moaicore/MOAIProp.h>
 #include <moaicore/MOAIProp2D.h>
 #include <moaicore/MOAIScriptNode.h>
 #include <moaicore/MOAISensor.h>

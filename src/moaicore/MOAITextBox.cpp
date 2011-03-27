@@ -391,7 +391,7 @@ void MOAITextBox::DrawDebug () {
 u32 MOAITextBox::GetLocalFrame ( USRect& frame ) {
 
 	frame = this->mFrame;
-	return FRAME_OK;
+	return MOAIProp::BOUNDS_OK;
 }
 
 //----------------------------------------------------------------//
@@ -448,7 +448,7 @@ MOAITextBox::MOAITextBox () :
 	RTTI_END
 	
 	this->mFrame.Init ( 0.0f, 0.0f, 0.0f, 0.0f ); 
-	this->SetQueryMask ( MOAIDeck2D::CAN_DRAW | MOAIDeck2D::CAN_DRAW_DEBUG );
+	this->SetMask ( MOAIDeck2D::CAN_DRAW | MOAIDeck2D::CAN_DRAW_DEBUG );
 }
 
 //----------------------------------------------------------------//

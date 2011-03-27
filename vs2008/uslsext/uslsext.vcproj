@@ -713,7 +713,7 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="spatial"
+			Name="grid"
 			>
 			<File
 				RelativePath="..\..\src\uslsext\USGrid.cpp"
@@ -721,14 +721,6 @@
 			</File>
 			<File
 				RelativePath="..\..\src\uslsext\USGrid.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USPartition.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USPartition.h"
 				>
 			</File>
 			<File
@@ -1021,6 +1013,26 @@
 			</File>
 			<File
 				RelativePath="..\..\src\uslsext\USXmlReader.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="partition"
+			>
+			<File
+				RelativePath="..\..\src\uslsext\USAbstractPartition.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\uslsext\USGridPartition.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\uslsext\USGridPartition.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\uslsext\USPartition.h"
 				>
 			</File>
 		</Filter>

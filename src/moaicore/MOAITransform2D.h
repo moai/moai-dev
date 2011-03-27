@@ -8,8 +8,6 @@
 
 #include <moaicore/MOAITransformBase2D.h>
 
-class MOAINodeHarness;
-
 //================================================================//
 // MOAITransform2D
 //================================================================//
@@ -82,11 +80,9 @@ public:
 	
 	//----------------------------------------------------------------//
 	void				ApplyAttrOp						( u32 attrID, USAttrOp& attrOp );
-	bool				CanHarness						();
 	u32					CountAttributes					();
 	const USAffine2D&	GetLocalToWorldMtx				();
 	const USAffine2D&	GetWorldToLocalMtx				();
-	void				Harness							( MOAINodeHarness& harness );
 						MOAITransform2D					();
 						~MOAITransform2D				();
 	void				RegisterLuaClass				( USLuaState& state );

@@ -396,7 +396,7 @@ void MOAIParticleSystem::EnqueueParticle ( MOAIParticle& particle ) {
 u32 MOAIParticleSystem::GetLocalFrame ( USRect& frame ) {
 
 	frame.Init ( -32.0f, -32.0f, 32.0f, 32.0f );
-	return FRAME_GLOBAL;
+	return MOAIProp::BOUNDS_GLOBAL;
 }
 
 //----------------------------------------------------------------//

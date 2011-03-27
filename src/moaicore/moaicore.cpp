@@ -65,6 +65,7 @@ void moaicore::InitGlobals ( USGlobals* globals ) {
 	REGISTER_LUA_TYPE ( MOAIParticleSystem )
 	REGISTER_LUA_TYPE ( MOAIPartition )
 	REGISTER_LUA_TYPE ( MOAIPointerSensor )
+	REGISTER_LUA_TYPE ( MOAIProp )
 	REGISTER_LUA_TYPE ( MOAIProp2D )
 	REGISTER_LUA_TYPE ( MOAIScriptNode )
 	REGISTER_LUA_TYPE ( MOAISerializer )

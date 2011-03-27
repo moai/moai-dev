@@ -52,7 +52,6 @@
 #include <uslsext/USMutex.h>
 #include <uslsext/USMutex_posix.h>
 #include <uslsext/USMutex_win32.h>
-#include <uslsext/USPartition.h>
 #include <uslsext/USPlane.h>
 #include <uslsext/USPolar.h>
 #include <uslsext/USPolygon2D.h>

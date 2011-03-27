@@ -4,7 +4,8 @@
 #ifndef	MOAIPARTITION_H
 #define	MOAIPARTITION_H
 
-class MOAIProp2D;
+#include <moaicore/MOAIPartitionCell.h>
+#include <moaicore/MOAIPartitionLayer.h>
 
 //================================================================//
 // MOAIPartition
@@ -12,13 +13,19 @@ class MOAIProp2D;
 /**	@brief Class for optimizing spatial queries against sets of primitives.
 */
 class MOAIPartition :
-	public virtual USLuaData,
-	public USPartition < MOAIProp2D > {
+	public virtual USLuaData {
 private:
 
 	enum {
-		MAX_RESULTS	= 64,
+		MAX_RESULTS	= 256,
 	};
+
+	USLeanArray < MOAIPartitionLayer >		mLayers;
+	MOAIPartitionCell						mEmpties;
+	MOAIPartitionCell						mGlobals;
+
+	u32										mTotalResults;
+	MOAIProp*								mResults;
 
 	//----------------------------------------------------------------//
 	static int		_insertPrim					( lua_State* L );
@@ -32,22 +39,37 @@ private:
 	static int		_sortedPrimListForRect		( lua_State* L );
 
 	//----------------------------------------------------------------//
+	void			PushResult				( MOAIProp& result );
 	void			PushResultsList			( lua_State* L );
 	void			PushSortedResultsList	( lua_State* L );
+	void			ResetResults			();
+	void			UpdateProp				( MOAIProp& prop, u32 status );
+	void			UpdateProp				( MOAIProp& prop, const USRect& bounds, u32 status );
 
 public:
 	
+	friend class MOAIPartitionCell;
+	friend class MOAIPartitionLayer;
+	friend class MOAIProp;
+	
 	DECL_LUA_DATA ( MOAIPartition )
 	
-	//----------------------------------------------------------------//
+	GET ( u32, TotalResults, mTotalResults )
 	
+	//----------------------------------------------------------------//
 	void			Clear					();
-	void			InsertPrim				( MOAIProp2D& prim );
+	u32				GatherProps				( MOAIProp* ignore, u32 mask = 0xffffffff );
+	u32				GatherProps				( USVec2D& point, MOAIProp* ignore, u32 mask = 0xffffffff );
+	u32				GatherProps				( USRect& rect, MOAIProp* ignore, u32 mask = 0xffffffff );
+	void			InsertProp				( MOAIProp& prop );
 					MOAIPartition			();
 					~MOAIPartition			();
+	MOAIProp*		PopResult				();
 	void			RegisterLuaClass		( USLuaState& state );
 	void			RegisterLuaFuncs		( USLuaState& state );
-	void			RemovePrim				( MOAIProp2D& prim );
+	void			RemoveProp				( MOAIProp& prop );
+	void			ReserveLayers			( int totalLayers );
+	void			SetLayer				( int layerID, float cellSize, int width, int height );
 	STLString		ToString				();
 };
 

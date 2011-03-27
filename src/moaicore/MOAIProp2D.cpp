@@ -47,21 +47,6 @@ int MOAIProp2D::_getIndex ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( priority ) getPriority ( self )</tt>\n
-\n
-	Returns current rendering priority of prim.
-	@param self (in)
-	@param priority (out)
-*/
-int MOAIProp2D::_getPriority ( lua_State* L ) {
-	LUA_SETUP ( MOAIProp2D, "U" )
-	
-	lua_pushnumber ( state, self->mPriority );
-
-	return 1;
-}
-
-//----------------------------------------------------------------//
 /**	@brief <tt>inside (mX, mY)</tt>\n
 	\n
 	Returns true if a point is inside of this sprite.
@@ -95,10 +80,10 @@ int MOAIProp2D::_setDeck ( lua_State* L ) {
 	self->mDeck = state.GetLuaData < MOAIDeck2D >( 2 );
 
 	if ( self->mDeck ) {
-		self->SetQueryMask ( self->mDeck->GetContentMask ());
+		self->SetMask ( self->mDeck->GetContentMask ());
 	}
 	else {
-		self->SetQueryMask ( 0 );
+		self->SetMask ( 0 );
 	}
 	
 	return 0;
@@ -176,21 +161,6 @@ int MOAIProp2D::_setIndex ( lua_State* L ) {
 
 	self->mIndex = state.GetValue < u32 >( 2, 0 );
 	self->ScheduleUpdate ();
-
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@brief <tt>() setPriority ( self, priority )</tt>\n
-\n
-	Sets the primitive's render priority.
-	@param self (in)
-	@param priority (in)
-*/
-int MOAIProp2D::_setPriority ( lua_State* L ) {
-	LUA_SETUP ( MOAIProp2D, "UN" )
-
-	self->mPriority	= state.GetValue < int >( 2, 0 );
 
 	return 0;
 }
@@ -350,7 +320,7 @@ void MOAIProp2D::DrawDebug () {
 	
 	if ( debugLines.Bind ( MOAIDebugLines::SPRITE_WORLD_BOUNDS )) {
 		debugLines.SetPenSpace ( MOAIDebugLines::WORLD_SPACE );
-		debugLines.DrawRect ( this->GetWorldBounds ());
+		debugLines.DrawRect ( this->GetBounds ( ));
 	}
 	
 	debugLines.SetPenColor ( 0x40ffffff );
@@ -358,6 +328,29 @@ void MOAIProp2D::DrawDebug () {
 	
 	if ( this->mDeck ) {
 		this->mDeck->DrawDebug ( this->GetLocalToWorldMtx (), this->mIndex );
+	}
+	
+	if ( debugLines.IsVisible ( MOAIDebugLines::PARTITION_CELLS ) || debugLines.IsVisible ( MOAIDebugLines::PARTITION_PADDED_CELLS )) {
+		
+		USRect cellRect;
+		USRect paddedRect;
+		
+		if ( this->GetCellRect ( &cellRect, &paddedRect )) {
+			
+			if ( cellRect.Area () != 0.0f ) {
+				if ( debugLines.Bind ( MOAIDebugLines::PARTITION_CELLS )) {
+					debugLines.SetPenSpace ( MOAIDebugLines::PARTITION_CELLS );
+					debugLines.DrawRect ( cellRect );
+				}
+			}
+			
+			if ( paddedRect.Area () != 0.0f ) {
+				if ( debugLines.Bind ( MOAIDebugLines::PARTITION_PADDED_CELLS )) {
+					debugLines.SetPenSpace ( MOAIDebugLines::PARTITION_PADDED_CELLS );
+					debugLines.DrawRect ( paddedRect );
+				}
+			}
+		}
 	}
 }
 //----------------------------------------------------------------//
@@ -429,15 +422,15 @@ u32 MOAIProp2D::GetLocalFrame ( USRect& frame ) {
 	if ( this->mGrid ) {
 	
 		frame = this->mGrid->GetBounds ();
-		return this->mRepeat ? FRAME_GLOBAL : FRAME_OK;
+		return this->mRepeat ? BOUNDS_GLOBAL : BOUNDS_OK;
 	}
 	else if ( this->mDeck ) {
 	
 		frame = this->mDeck->GetBounds ( this->mIndex );
-		return FRAME_OK;
+		return BOUNDS_OK;
 	}
 	
-	return FRAME_EMPTY;
+	return BOUNDS_EMPTY;
 }
 
 //----------------------------------------------------------------//
@@ -483,14 +476,14 @@ void MOAIProp2D::LoadShader () {
 MOAIProp2D::MOAIProp2D () :
 	mIndex( 0 ),
 	mRepeat ( 0 ),
-	mFrameSource ( FRAME_FROM_PARENT ),
-	mPriority ( 0 ) {
+	mFrameSource ( FRAME_FROM_PARENT ) {
 	
 	RTTI_BEGIN
+		RTTI_EXTEND ( MOAIProp )
 		RTTI_EXTEND ( MOAITransform2D )
 	RTTI_END
 	
-	this->SetQueryMask ( 0 );
+	this->SetMask ( 0 );
 	this->mFrame.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
 }
 
@@ -506,7 +499,7 @@ void MOAIProp2D::OnDepNodeUpdate () {
 	u32 frameStatus = this->GetLocalFrame ( localFrame );
 	
 	if ( localFrame.Area () == 0.0f ) {
-		frameStatus = FRAME_EMPTY;
+		frameStatus = BOUNDS_EMPTY;
 	}
 	
 	// this here is where we do the logic to fit to the target frame
@@ -542,11 +535,11 @@ void MOAIProp2D::OnDepNodeUpdate () {
 
 	// and check if the target frame is empty, too
 	if ( targetFrame.Area () == 0.0f ) {
-		frameStatus = FRAME_EMPTY;
+		frameStatus = BOUNDS_EMPTY;
 	}
 
 	// compute the scale and offset (if any)
-	if ( frameStatus != FRAME_EMPTY ) {
+	if ( frameStatus != BOUNDS_EMPTY ) {
 	
 		float targetWidth = targetFrame.Width ();
 		float targetHeight = targetFrame.Height ();
@@ -564,41 +557,16 @@ void MOAIProp2D::OnDepNodeUpdate () {
 	// update the prim location in the partition
 	// use the local frame; world transform will match it to target frame
 	switch ( frameStatus ) {
-		case FRAME_EMPTY: {
-			this->SetWorldBoundsEmpty ();
+		case BOUNDS_EMPTY:
+		case BOUNDS_GLOBAL: {
+			this->UpdateBounds ( frameStatus );
 			break;
 		}
-		case FRAME_GLOBAL: {
-			this->SetWorldBoundsGlobal ();
-			break;
-		}
-		case FRAME_OK: {
+		case BOUNDS_OK: {
 			USRect bounds = localFrame;
 			this->mLocalToWorldMtx.Transform ( bounds );
-			this->SetWorldBounds ( bounds );
+			this->UpdateBounds ( bounds, frameStatus );
 			break;
-		}
-	}
-	
-	// and draw the partition cells if debug lines enabled
-	MOAIDebugLines& debugLines = MOAIDebugLines::Get ();
-	
-	if ( debugLines.IsVisible ( MOAIDebugLines::PARTITION_CELLS ) || debugLines.IsVisible ( MOAIDebugLines::PARTITION_PADDED_CELLS )) {
-	
-		USRect cellRect;
-		USRect paddedRect;
-	
-		if ( this->GetCellRect ( &cellRect, &paddedRect )) {
-
-			if ( debugLines.Bind ( MOAIDebugLines::PARTITION_CELLS )) {
-				debugLines.SetPenSpace ( MOAIDebugLines::PARTITION_CELLS );
-				debugLines.DrawRect ( cellRect );
-			}
-			
-			if ( debugLines.Bind ( MOAIDebugLines::PARTITION_PADDED_CELLS )) {
-				debugLines.SetPenSpace ( MOAIDebugLines::PARTITION_PADDED_CELLS );
-				debugLines.DrawRect ( paddedRect );
-			}
 		}
 	}
 }
@@ -606,6 +574,7 @@ void MOAIProp2D::OnDepNodeUpdate () {
 //----------------------------------------------------------------//
 void MOAIProp2D::RegisterLuaClass ( USLuaState& state ) {
 	
+	MOAIProp::RegisterLuaClass ( state );
 	MOAITransform2D::RegisterLuaClass ( state );
 	
 	state.SetField ( -1, "ATTR_INDEX", ( u32 )ATTR_INDEX );
@@ -621,19 +590,18 @@ void MOAIProp2D::RegisterLuaClass ( USLuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIProp2D::RegisterLuaFuncs ( USLuaState& state ) {
 	
+	MOAIProp::RegisterLuaFuncs ( state );
 	MOAITransform2D::RegisterLuaFuncs ( state );
 
 	LuaReg regTable [] = {
 		{ "getGrid",			_getGrid },
 		{ "getIndex",			_getIndex },
-		{ "getPriority",		_getPriority },
 		{ "inside",				_inside },
 		{ "setDeck",			_setDeck },
 		{ "setFrame",			_setFrame },
 		{ "setFrameSource",		_setFrameSource },
 		{ "setGrid",			_setGrid },
 		{ "setIndex",			_setIndex },
-		{ "setPriority",		_setPriority },
 		{ "setRepeat",			_setRepeat },
 		{ "setShader",			_setShader },
 		{ "setUVTransform",		_setUVTransform },

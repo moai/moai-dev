@@ -4,7 +4,6 @@
 #include "pch.h"
 #include <moaicore/MOAIEaseDriver.h>
 #include <moaicore/MOAINode.h>
-#include <moaicore/MOAINodeHarness.h>
 #include <moaicore/MOAINodeMgr.h>
 
 //================================================================//
@@ -363,12 +362,6 @@ void MOAINode::AffirmPushLink ( MOAIAttrLink& link, int attrID ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAINode::CanHarness () {
-
-	return false;
-}
-
-//----------------------------------------------------------------//
 void MOAINode::ClearAttrLink ( int attrID ) {
 
 	this->ClearPullLink ( attrID );
@@ -469,11 +462,6 @@ void MOAINode::ExtendUpdate () {
 	for ( ; link ; link = link->mNextInSource ) {
 		link->mDestNode->ScheduleUpdate ();
 	}
-}
-
-//----------------------------------------------------------------//
-void MOAINode::Harness ( MOAINodeHarness& harness ) {
-	UNUSED ( harness );
 }
 
 //----------------------------------------------------------------//

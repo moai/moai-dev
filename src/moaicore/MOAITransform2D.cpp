@@ -2,7 +2,6 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moaicore/MOAINodeHarness.h>
 #include <moaicore/MOAITransform2D.h>
 
 //================================================================//
@@ -573,12 +572,6 @@ void MOAITransform2D::BuildTransforms ( float xOff, float yOff, float xStretch, 
 }
 
 //----------------------------------------------------------------//
-bool MOAITransform2D::CanHarness () {
-
-	return true;
-}
-
-//----------------------------------------------------------------//
 u32 MOAITransform2D::CountAttributes () {
 
 	return MOAITransform2D::TOTAL_ATTR;
@@ -613,22 +606,6 @@ MOAITransform2D::MOAITransform2D () :
 MOAITransform2D::~MOAITransform2D () {
 
 	this->mParent = 0;
-}
-
-//----------------------------------------------------------------//
-void MOAITransform2D::Harness ( MOAINodeHarness& harness ) {
-
-	harness.AddFloatAttribute ( "X",		ATTR_X_LOC, 0.0f );
-	harness.AddFloatAttribute ( "Y",		ATTR_Y_LOC, 0.0f );
-	harness.AddFloatAttribute ( "ANGLE",	ATTR_Z_ROT, 0.0f );
-	harness.AddFloatAttribute ( "X SCALE",	ATTR_X_SCL, 1.0f );
-	harness.AddFloatAttribute ( "Y SCALE",	ATTR_Y_SCL, 1.0f );
-	
-	harness.MapManipulatorAttr ( ATTR_X_LOC, MOAIManipulator::ATTR_X_LOC );
-	harness.MapManipulatorAttr ( ATTR_Y_LOC, MOAIManipulator::ATTR_Y_LOC );
-	harness.MapManipulatorAttr ( ATTR_Z_ROT, MOAIManipulator::ATTR_Z_ROT );
-	harness.MapManipulatorAttr ( ATTR_X_SCL, MOAIManipulator::ATTR_X_SCL );
-	harness.MapManipulatorAttr ( ATTR_Y_SCL, MOAIManipulator::ATTR_Y_SCL );
 }
 
 //----------------------------------------------------------------//

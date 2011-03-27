@@ -5,7 +5,6 @@
 #define	MOAINODE_H
 
 class MOAINode;
-class MOAINodeHarness;
 
 //================================================================//
 // MOAIAttrLink
@@ -99,10 +98,8 @@ public:
 	static const u32 NULL_ATTR = 0xffffffff;
 	
 	//----------------------------------------------------------------//
-	virtual bool	CanHarness				();
 	void			ClearDependency			( MOAINode& srcNode );
 	void			ClearAttrLink			( int attrID );
-	virtual void	Harness					( MOAINodeHarness& harness );
 					MOAINode				();
 					~MOAINode				();
 	void			RegisterLuaClass		( USLuaState& state );

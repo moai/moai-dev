@@ -6,11 +6,13 @@
 
 #include <moaicore/MOAITransform2D.h>
 #include <moaicore/MOAIPartition.h>
+#include <moaicore/MOAIProp.h>
 
 class MOAIDeck2D;
 class MOAIGrid;
 class MOAILayoutFrame;
 class MOAIOverlapPrim2D;
+class MOAIPartition;
 class MOAIShader;
 class MOAISurfaceSampler2D;
 
@@ -20,8 +22,8 @@ class MOAISurfaceSampler2D;
 /**	@brief Base class for primitives.
 */
 class MOAIProp2D :
-	public MOAITransform2D,
-	public USPartitionPrim < MOAIProp2D > {
+	public MOAIProp,
+	public MOAITransform2D {
 protected:
 	
 	enum {
@@ -46,9 +48,7 @@ protected:
 	u32						mRepeat;
 	
 	u32				mFrameSource;
-	
 	USRect			mFrame;
-	int				mPriority;
 	
 	USRef < MOAIShader >		mShader;
 	USRef < MOAITransform2D >	mUVTransform;
@@ -56,14 +56,12 @@ protected:
 	//----------------------------------------------------------------//
 	static int		_getGrid			( lua_State* L );
 	static int		_getIndex			( lua_State* L );
-	static int		_getPriority		( lua_State* L );
 	static int		_inside				( lua_State* L );
 	static int		_setDeck			( lua_State* L );
 	static int		_setFrame			( lua_State* L );
 	static int		_setFrameSource		( lua_State* L );
 	static int		_setGrid			( lua_State* L );
 	static int		_setIndex			( lua_State* L );
-	static int		_setPriority		( lua_State* L );
 	static int		_setRepeat			( lua_State* L );
 	static int		_setShader			( lua_State* L );
 	static int		_setUVTransform		( lua_State* L );
@@ -77,17 +75,10 @@ protected:
 public:
 	
 	enum {
-		FRAME_EMPTY,
-		FRAME_GLOBAL,
-		FRAME_OK,
-	};
-	
-	enum {
 		ATTR_INDEX = MOAITransform2D::TOTAL_ATTR,
 		TOTAL_ATTR,
 	};
 	
-	GET_SET ( int, Priority, mPriority )
 	GET_SET ( u32, Index, mIndex )
 	
 	DECL_LUA_DATA ( MOAIProp2D )
