@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include <moaicore/MOAIGrid.h>
-#include <moaicore/MOAIStretchPatch.h>
+#include <moaicore/MOAIStretchPatch2D.h>
 #include <moaicore/MOAITexture.h>
 #include <moaicore/MOAITransformBase2D.h>
 
@@ -18,8 +18,8 @@
 	@param self (in)
 	@param nCols (in)
 */
-int MOAIStretchPatch::_reserveColumns ( lua_State* L ) {
-	LUA_SETUP ( MOAIStretchPatch, "UN" )
+int MOAIStretchPatch2D::_reserveColumns ( lua_State* L ) {
+	LUA_SETUP ( MOAIStretchPatch2D, "UN" )
 
 	u32 total = state.GetValue < u32 >( 2, 0 );
 	self->mCols.Init ( total );
@@ -35,8 +35,8 @@ int MOAIStretchPatch::_reserveColumns ( lua_State* L ) {
 	@param self (in)
 	@param nCols (in)
 */
-int MOAIStretchPatch::_reserveRows ( lua_State* L ) {
-	LUA_SETUP ( MOAIStretchPatch, "UN" )
+int MOAIStretchPatch2D::_reserveRows ( lua_State* L ) {
+	LUA_SETUP ( MOAIStretchPatch2D, "UN" )
 
 	u32 total = state.GetValue < u32 >( 2, 0 );
 	self->mRows.Init ( total );
@@ -52,8 +52,8 @@ int MOAIStretchPatch::_reserveRows ( lua_State* L ) {
 	@param self (in)
 	@param nRects (in)
 */
-int MOAIStretchPatch::_reserveUVRects ( lua_State* L ) {
-	LUA_SETUP ( MOAIStretchPatch, "UN" )
+int MOAIStretchPatch2D::_reserveUVRects ( lua_State* L ) {
+	LUA_SETUP ( MOAIStretchPatch2D, "UN" )
 
 	u32 total = state.GetValue < u32 >( 2, 0 );
 	self->mUVRects.Init ( total );
@@ -74,8 +74,8 @@ int MOAIStretchPatch::_reserveUVRects ( lua_State* L ) {
 	@param weight (in)
 	@param canStretch (in)
 */
-int MOAIStretchPatch::_setColumn ( lua_State* L ) {
-	LUA_SETUP ( MOAIStretchPatch, "UNNB" )
+int MOAIStretchPatch2D::_setColumn ( lua_State* L ) {
+	LUA_SETUP ( MOAIStretchPatch2D, "UNNB" )
 
 	u32 idx				= state.GetValue < u32 >( 2, 0 );
 	float percent		= state.GetValue < float >( 3, 0.0f );
@@ -100,8 +100,8 @@ int MOAIStretchPatch::_setColumn ( lua_State* L ) {
 	@param right (in) Lower-right X coordinate.
 	@param bottom (in) Lower-right Y coordinate.
 */
-int MOAIStretchPatch::_setRect ( lua_State* L ) {
-	LUA_SETUP ( MOAIStretchPatch, "UNNNN" )
+int MOAIStretchPatch2D::_setRect ( lua_State* L ) {
+	LUA_SETUP ( MOAIStretchPatch2D, "UNNNN" )
 	
 	self->mRect = state.GetRect < float >( 2 );
 	
@@ -117,8 +117,8 @@ int MOAIStretchPatch::_setRect ( lua_State* L ) {
 	@param weight (in)
 	@param canStretch (in)
 */
-int MOAIStretchPatch::_setRow ( lua_State* L ) {
-	LUA_SETUP ( MOAIStretchPatch, "UNNB" )
+int MOAIStretchPatch2D::_setRow ( lua_State* L ) {
+	LUA_SETUP ( MOAIStretchPatch2D, "UNNB" )
 
 	u32 idx				= state.GetValue < u32 >( 2, 0 );
 	float percent		= state.GetValue < float >( 3, 0.0f );
@@ -140,8 +140,8 @@ int MOAIStretchPatch::_setRow ( lua_State* L ) {
 	@param self (in)
 	@param texture (in) Can be a filename or a MOAIGfxQuad2D.
 */
-int MOAIStretchPatch::_setTexture ( lua_State* L ) {
-	LUA_SETUP ( MOAIStretchPatch, "U" )
+int MOAIStretchPatch2D::_setTexture ( lua_State* L ) {
+	LUA_SETUP ( MOAIStretchPatch2D, "U" )
 
 	self->mTexture = MOAITexture::AffirmTexture ( state, 2 );
 
@@ -159,8 +159,8 @@ int MOAIStretchPatch::_setTexture ( lua_State* L ) {
 	@param right (in) Lower-right X coordinate.
 	@param bottom (in) Lower-right Y coordinate.
 */
-int MOAIStretchPatch::_setUVRect ( lua_State* L ) {
-	LUA_SETUP ( MOAIStretchPatch, "UNNNNN" )
+int MOAIStretchPatch2D::_setUVRect ( lua_State* L ) {
+	LUA_SETUP ( MOAIStretchPatch2D, "UNNNNN" )
 	
 	u32 idx = state.GetValue < u32 >( 2, 0 );
 	
@@ -171,11 +171,11 @@ int MOAIStretchPatch::_setUVRect ( lua_State* L ) {
 }
 
 //================================================================//
-// MOAIStretchPatch
+// MOAIStretchPatch2D
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIStretchPatch::Bind () {
+bool MOAIStretchPatch2D::Bind () {
 
 	USDrawBuffer& drawBuffer = USDrawBuffer::Get ();
 	if ( !drawBuffer.BindTexture ( this->mTexture )) return false;
@@ -185,7 +185,7 @@ bool MOAIStretchPatch::Bind () {
 }
 
 //----------------------------------------------------------------//
-void MOAIStretchPatch::Draw ( MOAIDrawingMtx2D& transform, u32 idx ) {
+void MOAIStretchPatch2D::Draw ( MOAIDrawingMtx2D& transform, u32 idx ) {
 	
 	USDrawBuffer& drawBuffer = USDrawBuffer::Get ();
 	drawBuffer.SetVtxTransform ( transform.GetLocalToWorldMtxNoStretch ());
@@ -197,7 +197,7 @@ void MOAIStretchPatch::Draw ( MOAIDrawingMtx2D& transform, u32 idx ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIStretchPatch::Draw ( u32 idx, float xStretch, float yStretch ) {
+void MOAIStretchPatch2D::Draw ( u32 idx, float xStretch, float yStretch ) {
 
 	USRect uvRect;
 
@@ -299,7 +299,7 @@ void MOAIStretchPatch::Draw ( u32 idx, float xStretch, float yStretch ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIStretchPatch::Draw ( MOAIDrawingMtx2D& transform, MOAIGrid& grid, USTileCoord& c0, USTileCoord& c1 ) {
+void MOAIStretchPatch2D::Draw ( MOAIDrawingMtx2D& transform, MOAIGrid& grid, USTileCoord& c0, USTileCoord& c1 ) {
 	UNUSED ( transform );
 	UNUSED ( grid );
 	UNUSED ( c0 );
@@ -309,14 +309,14 @@ void MOAIStretchPatch::Draw ( MOAIDrawingMtx2D& transform, MOAIGrid& grid, USTil
 }
 
 //----------------------------------------------------------------//
-USRect MOAIStretchPatch::GetBounds ( u32 idx ) {
+USRect MOAIStretchPatch2D::GetBounds ( u32 idx ) {
 	UNUSED ( idx );
 	
 	return this->mRect;
 }
 
 //----------------------------------------------------------------//
-MOAIStretchPatch::MOAIStretchPatch () :
+MOAIStretchPatch2D::MOAIStretchPatch2D () :
 	mNeedsUpdate ( true ) {
 
 	RTTI_SINGLE ( MOAIDeck2D )
@@ -326,11 +326,11 @@ MOAIStretchPatch::MOAIStretchPatch () :
 }
 
 //----------------------------------------------------------------//
-MOAIStretchPatch::~MOAIStretchPatch () {
+MOAIStretchPatch2D::~MOAIStretchPatch2D () {
 }
 
 //----------------------------------------------------------------//
-void MOAIStretchPatch::RegisterLuaClass ( USLuaState& state ) {
+void MOAIStretchPatch2D::RegisterLuaClass ( USLuaState& state ) {
 	UNUSED ( state );
 
 //	this->MOAIDeck2D::RegisterLuaClass ( state );
@@ -340,7 +340,7 @@ void MOAIStretchPatch::RegisterLuaClass ( USLuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIStretchPatch::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAIStretchPatch2D::RegisterLuaFuncs ( USLuaState& state ) {
 
 	this->MOAIDeck2D::RegisterLuaFuncs ( state );
 
@@ -360,7 +360,7 @@ void MOAIStretchPatch::RegisterLuaFuncs ( USLuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIStretchPatch::SerializeIn ( USLuaState& state, USLuaSerializer& serializer ) {
+void MOAIStretchPatch2D::SerializeIn ( USLuaState& state, USLuaSerializer& serializer ) {
 	UNUSED ( state );
 	UNUSED ( serializer );
 
@@ -374,7 +374,7 @@ void MOAIStretchPatch::SerializeIn ( USLuaState& state, USLuaSerializer& seriali
 }
 
 //----------------------------------------------------------------//
-void MOAIStretchPatch::SerializeOut ( USLuaState& state, USLuaSerializer& serializer ) {
+void MOAIStretchPatch2D::SerializeOut ( USLuaState& state, USLuaSerializer& serializer ) {
 	UNUSED ( state );
 	UNUSED ( serializer );
 
@@ -383,7 +383,7 @@ void MOAIStretchPatch::SerializeOut ( USLuaState& state, USLuaSerializer& serial
 }
 
 //----------------------------------------------------------------//
-STLString MOAIStretchPatch::ToString () {
+STLString MOAIStretchPatch2D::ToString () {
 
 	STLString repr;
 
@@ -396,7 +396,7 @@ STLString MOAIStretchPatch::ToString () {
 }
 
 //----------------------------------------------------------------//
-void MOAIStretchPatch::UpdateParams () {
+void MOAIStretchPatch2D::UpdateParams () {
 	
 	if ( !this->mNeedsUpdate ) return;
 	

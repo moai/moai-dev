@@ -57,7 +57,7 @@
 #include <moaicore/MOAIShader.h>
 #include <moaicore/MOAISim.h>
 #include <moaicore/MOAISimpleShader.h>
-#include <moaicore/MOAIStretchPatch.h>
+#include <moaicore/MOAIStretchPatch2D.h>
 #include <moaicore/MOAISurfaceDeck2D.h>
 #include <moaicore/MOAITextBox.h>
 #include <moaicore/MOAITextSpoolAction.h>

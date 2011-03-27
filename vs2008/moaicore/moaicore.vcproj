@@ -418,7 +418,7 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="scene graph"
+			Name="scene 2D"
 			>
 			<File
 				RelativePath="..\..\src\moaicore\MOAIDeck2D.cpp"
@@ -477,19 +477,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAIStretchPatch.cpp"
+				RelativePath="..\..\src\moaicore\MOAIStretchPatch2D.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAIStretchPatch.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAISurfaceDeck2D.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAISurfaceDeck2D.h"
+				RelativePath="..\..\src\moaicore\MOAIStretchPatch2D.h"
 				>
 			</File>
 			<File

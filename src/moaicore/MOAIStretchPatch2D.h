@@ -1,8 +1,8 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAISTRETCHPATCH_H
-#define	MOAISTRETCHPATCH_H
+#ifndef	MOAISTRETCHPATCH2D_H
+#define	MOAISTRETCHPATCH2D_H
 
 #include <moaicore/MOAIDeck2D.h>
 
@@ -14,18 +14,18 @@ class MOAITexture;
 class MOAINinePatchSpan {
 private:
 
-	friend class MOAIStretchPatch;
+	friend class MOAIStretchPatch2D;
 
 	float	mPercent;		// total percent of native width of height covered by this span
 	bool	mCanStretch;	// can this span stretch?
 };
 
 //================================================================//
-// MOAIStretchPatch
+// MOAIStretchPatch2D
 //================================================================//
 /**	@brief Stretchable image provider.
 */
-class MOAIStretchPatch :
+class MOAIStretchPatch2D :
 	virtual public MOAIDeck2D {
 private:
 
@@ -62,15 +62,15 @@ private:
 
 public:
 	
-	DECL_LUA_DATA ( MOAIStretchPatch )
+	DECL_LUA_DATA ( MOAIStretchPatch2D )
 	
 	//----------------------------------------------------------------//
 	bool				Bind					();
 	void				Draw					( MOAIDrawingMtx2D& transform, u32 idx );
 	void				Draw					( MOAIDrawingMtx2D& transform, MOAIGrid& grid, USTileCoord& c0, USTileCoord& c1 );
 	USRect				GetBounds				( u32 idx );
-						MOAIStretchPatch		();
-						~MOAIStretchPatch		();
+						MOAIStretchPatch2D		();
+						~MOAIStretchPatch2D		();
 	void				SerializeIn				( USLuaState& state, USLuaSerializer& serializer );
 	void				SerializeOut			( USLuaState& state, USLuaSerializer& serializer );
 	void				RegisterLuaClass		( USLuaState& state );
