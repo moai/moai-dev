@@ -1,14 +1,14 @@
 print ( "hello, moai!" )
 
---sprite1 = MOAISprite2D.new ()
---sprite2 = MOAISprite2D.new ()
+--sprite1 = MOAIProp2D.new ()
+--sprite2 = MOAIProp2D.new ()
 
 --sprite1:setParent ( sprite2 )
 --sprite2:setParent ( sprite1 )
 
 
 layer = MOAILayer2D.new ()
-sprite = MOAISprite2D.new ()
+sprite = MOAIProp2D.new ()
 transform = MOAITransform2D.new ()
 
 layer:insertPrim ( sprite )

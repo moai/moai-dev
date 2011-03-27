@@ -6,7 +6,7 @@
 
 #include <moaicore/MOAIAction.h>
 
-class MOAIData;
+class MOAIDataBuffer;
 
 //================================================================//
 // MOAIDataIOAction
@@ -26,7 +26,7 @@ private:
 	};
 
 	STLString				mFilename;
-	USRef < MOAIData >		mData;
+	USRef < MOAIDataBuffer >		mData;
 	USLuaRef				mOnFinish;
 
 	u32						mState;
@@ -44,7 +44,7 @@ public:
 	DECL_LUA_DATA ( MOAIDataIOAction )
 
 	//----------------------------------------------------------------//
-	void		Init				( cc8* filename, MOAIData* data );
+	void		Init				( cc8* filename, MOAIDataBuffer* data );
 	bool		IsBusy				();
 				MOAIDataIOAction	();
 				~MOAIDataIOAction	();

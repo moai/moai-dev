@@ -51,22 +51,22 @@ body2 = world:addBody ( MOAIBox2DBody.STATIC )
 fixture2 = body2:addRect ( -5, -5, 5, -3 )
 fixture2:setCollisionHandler ( onCollide, MOAIBox2DArbiter.BEGIN )
 
-texture = MOAITexture.new ()
-texture:load ( 'cathead.png' )
+texture = MOAIGfxQuad2D.new ()
+texture:setTexture ( 'cathead.png' )
 texture:setRect ( -1, -1, 1, 1 )
 
-sprite = MOAISprite2D.new ()
-sprite:setGfxSource ( texture )
+sprite = MOAIProp2D.new ()
+sprite:setDeck ( texture )
 sprite:setParent ( body )
 layer:insertPrim ( sprite )
 
 --[[
-texture = MOAITexture.new ()
-texture:load ( "cathead.png" )
+texture = MOAIGfxQuad2D.new ()
+texture:setTexture ( "cathead.png" )
 texture:setRect ( -1, -1, 1, 1 )
 
-sprite = MOAISprite2D.new ()
-sprite:setGfxSource ( texture )
+sprite = MOAIProp2D.new ()
+sprite:setDeck ( texture )
 sprite:moveRot ( 360, 1.5 )
 --layer:insertPrim ( sprite )
 ]]--
@@ -95,8 +95,8 @@ function makeThing ()
 	shape.name = "thing"
 	space:insertPrim ( shape )
 
-	sprite = MOAISprite2D.new ()
-	sprite:setGfxSource ( texture )
+	sprite = MOAIProp2D.new ()
+	sprite:setDeck ( texture )
 	sprite:setParent ( body )
 	layer:insertPrim ( sprite )
 end

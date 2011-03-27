@@ -151,7 +151,7 @@ int MOAITransform2D::_modelToWorld ( lua_State* L ) {
 int MOAITransform2D::_move ( lua_State* L ) {
 	LUA_SETUP ( MOAITransform2D, "UNNNNNN" )
 
-	MOAIForceAction* action = new MOAIForceAction ();
+	MOAIEaseDriver* action = new MOAIEaseDriver ();
 	action->ReserveForces ( 5 );
 	
 	float xLoc		= state.GetValue < float >( 2, 0.0f );
@@ -187,7 +187,7 @@ int MOAITransform2D::_move ( lua_State* L ) {
 int MOAITransform2D::_moveLoc ( lua_State* L ) {
 	LUA_SETUP ( MOAITransform2D, "UNNN" )
 
-	MOAIForceAction* action = new MOAIForceAction ();
+	MOAIEaseDriver* action = new MOAIEaseDriver ();
 	action->ReserveForces ( 2 );
 	
 	float xLoc		= state.GetValue < float >( 2, 0.0f );
@@ -216,7 +216,7 @@ int MOAITransform2D::_moveLoc ( lua_State* L ) {
 int MOAITransform2D::_moveRot ( lua_State* L ) {
 	LUA_SETUP ( MOAITransform2D, "UNN" )
 
-	MOAIForceAction* action = new MOAIForceAction ();
+	MOAIEaseDriver* action = new MOAIEaseDriver ();
 	action->ReserveForces ( 1 );
 	
 	float zRot		= state.GetValue < float >( 2, 0.0f );
@@ -244,7 +244,7 @@ int MOAITransform2D::_moveRot ( lua_State* L ) {
 int MOAITransform2D::_moveScl ( lua_State* L ) {
 	LUA_SETUP ( MOAITransform2D, "UNNN" )
 
-	MOAIForceAction* action = new MOAIForceAction ();
+	MOAIEaseDriver* action = new MOAIEaseDriver ();
 	action->ReserveForces ( 2 );
 	
 	float xScl		= state.GetValue < float >( 2, 0.0f );
@@ -277,7 +277,7 @@ int MOAITransform2D::_moveScl ( lua_State* L ) {
 int MOAITransform2D::_seek ( lua_State* L ) {
 	LUA_SETUP ( MOAITransform2D, "UNNNNNN" )
 
-	MOAIForceAction* action = new MOAIForceAction ();
+	MOAIEaseDriver* action = new MOAIEaseDriver ();
 	action->ReserveForces ( 5 );
 	
 	float xLoc		= state.GetValue < float >( 2, 0.0f );
@@ -313,7 +313,7 @@ int MOAITransform2D::_seek ( lua_State* L ) {
 int MOAITransform2D::_seekLoc ( lua_State* L ) {
 	LUA_SETUP ( MOAITransform2D, "UNNN" )
 
-	MOAIForceAction* action = new MOAIForceAction ();
+	MOAIEaseDriver* action = new MOAIEaseDriver ();
 	action->ReserveForces ( 2 );
 	
 	float xLoc		= state.GetValue < float >( 2, 0.0f );
@@ -342,7 +342,7 @@ int MOAITransform2D::_seekLoc ( lua_State* L ) {
 int MOAITransform2D::_seekRot ( lua_State* L ) {
 	LUA_SETUP ( MOAITransform2D, "UNN" )
 
-	MOAIForceAction* action = new MOAIForceAction ();
+	MOAIEaseDriver* action = new MOAIEaseDriver ();
 	action->ReserveForces ( 1 );
 	
 	float zRot		= state.GetValue < float >( 2, 0.0f );
@@ -370,7 +370,7 @@ int MOAITransform2D::_seekRot ( lua_State* L ) {
 int MOAITransform2D::_seekScl ( lua_State* L ) {
 	LUA_SETUP ( MOAITransform2D, "UNNN" )
 
-	MOAIForceAction* action = new MOAIForceAction ();
+	MOAIEaseDriver* action = new MOAIEaseDriver ();
 	action->ReserveForces ( 2 );
 	
 	float xScl		= state.GetValue < float >( 2, 0.0f );

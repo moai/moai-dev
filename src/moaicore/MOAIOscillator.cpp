@@ -31,7 +31,7 @@ int MOAIOscillator::_setAmplitude ( lua_State* L ) {
 //----------------------------------------------------------------//
 /**	@brief <tt>setBounce ( self, bounce )</tt>\n
 \n
-	Limites the wave sign to be pos/neg (no bounce) or pos/pos (bounce).
+	Limits the wave sign to be pos/neg (no bounce) or pos/pos (bounce).
 	@param self (in)
 	@param bounce (in) 'true' or 'false.'
 */

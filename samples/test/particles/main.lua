@@ -76,15 +76,15 @@ local render = MOAIParticleScript.new ()
 	render:spriteColor		( r1 )
 
 ----------------------------------------------------------------
-texture = MOAITexture.new ()
-texture:load ( "cathead.png" )
+texture = MOAIGfxQuad2D.new ()
+texture:setTexture ( "cathead.png" )
 texture:setRect ( -16, -16, 16, 16 )
 
 system = MOAIParticleSystem.new ()
 system:reserveParticles ( 256, 5 )
 system:reserveSprites ( 256 )
 system:reserveStates ( 2 )
-system:setGfxSource ( texture )
+system:setDeck ( texture )
 system:start ()
 layer:insertPrim ( system )
 

@@ -10,6 +10,24 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+/**	@brief <tt>( returns ) func ( self )</tt>\n
+\n
+	Description of method Coming Soon(tm).
+	@param self (in)
+	@param y (out)
+*/
+int MOAIAnim::_apply ( lua_State* L ) {
+	LUA_SETUP ( MOAIAnim, "U" );
+
+	float t0 = state.GetValue < float >( 2, 0.0f );
+	float t1 = state.GetValue < float >( 3, 0.0f );
+
+	self->Apply ( t0, t1 );
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@brief <tt>( length ) getLength ( self )</tt>\n
 \n
 	Returns the total length of the animation.
@@ -24,35 +42,43 @@ int	MOAIAnim::_getLength ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>reserveCurves ( self, totalCurves )</tt>\n
+/**	@brief <tt>reserveLinks ( self, totalLinks )</tt>\n
 \n
-	Reserves a specified number of animation curves.
+	Reserves links for the AnimPlayer.
 	@param self (in)
-	@param totalCurves (in) Number of curves to reserve.
+	@param totalLinks (in) Total number of links to be reserved.
 */
-int	MOAIAnim::_reserveCurves ( lua_State* L ) {
-	LUA_SETUP ( MOAIAnim, "UN" )
+int	MOAIAnim::_reserveLinks ( lua_State* L ) {
+	LUA_SETUP ( MOAIAnim, "UN" );
 	
-	u32 totalCurves = state.GetValue < u32 >( 2, 0 );
-	self->ReserveCurves ( totalCurves );
+	u32 totalLinks = state.GetValue < u32 >( 2, 0 );
+	self->ReserveLinks ( totalLinks );
 	
 	return 0;
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>() setCurve ( self, curve )</tt>\n
+/**	@brief <tt>setLink ( self, linkID, curveID, target, attrID )</tt>\n
 \n
-	Set an animation curve into a slot in the anim.
+	Sets a link from a curve to an attribute (must be bound with the bind function).
 	@param self (in)
-	@param curve (out)
+	@param linkID (in) ID of the link index.
+	@param curveID (in) ID of the curve.
+	@param target (in) Target object to animate.
+	@param attrID (in) ID of the attribute.
 */
-int	MOAIAnim::_setCurve ( lua_State* L ) {
-	LUA_SETUP ( MOAIAnim, "UNU" )
+int	MOAIAnim::_setLink ( lua_State* L ) {
+	LUA_SETUP ( MOAIAnim, "UNUUN" );
 	
-	u32 curveID				= state.GetValue < u32 >( 2, 1 ) - 1;
+	MOAINode* target = state.GetLuaData < MOAINode >( 4 );
+	if ( !target ) return 0;
+	
+	u32 linkID				= state.GetValue < u32 >( 2, 1 ) - 1;
 	MOAIAnimCurve* curve	= state.GetLuaData < MOAIAnimCurve >( 3 );
+	u32 attrID				= state.GetValue < u32 >( 5, 0 );
+	bool relative			= state.GetValue < bool >( 6, false );
 	
-	self->SetCurve ( curveID, curve );
+	self->SetLink ( linkID, curve, target, attrID, relative );
 	
 	return 0;
 }
@@ -62,35 +88,64 @@ int	MOAIAnim::_setCurve ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIAnim::Clear () {
-
-	u32 total = this->mCurves.Size ();
+void MOAIAnim::Apply ( float t ) {
+	
+	u32 total = this->mLinks.Size ();
 	for ( u32 i = 0; i < total; ++i ) {
-		MOAIAnimCurve* curve = this->mCurves [ i ];
-		if ( curve ) {
-			curve->Release ();
+		
+		MOAIAnimLink& link = this->mLinks [ i ];
+		MOAIAnimCurve* curve = link.mCurve;
+		MOAINode* target = link.mTarget;
+		
+		if ( curve && target ) {
+			
+			if ( !link.mRelative ) {
+				float value = curve->GetFloatValue ( t );
+				target->SetAttributeValue < float >( link.mAttrID, value );
+			}
+			target->ScheduleUpdate ();
 		}
 	}
-	this->mCurves.Clear ();
+}
+
+//----------------------------------------------------------------//
+void MOAIAnim::Apply ( float t0, float t1 ) {
+	
+	if ( t0 == t1 ) {
+		this->Apply ( t0 );
+		return;
+	}
+	
+	USAttrAdder adder;
+	
+	u32 total = this->mLinks.Size ();
+	for ( u32 i = 0; i < total; ++i ) {
+		
+		MOAIAnimLink& link = this->mLinks [ i ];
+		MOAIAnimCurve* curve = link.mCurve;
+		MOAINode* target = link.mTarget;
+		
+		if ( curve && target ) {
+			
+			if ( link.mRelative ) {
+				float value = curve->GetFloatDelta ( t0, t1 );
+				adder.Set ( value );
+				target->ApplyAttrOp ( link.mAttrID, adder );
+			}
+			else {
+				float value = curve->GetFloatValue ( t0 );
+				target->SetAttributeValue < float >( link.mAttrID, value );
+			}
+			target->ScheduleUpdate ();
+		}
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIAnim::Clear () {
+
+	this->mLinks.Clear ();
 	this->mLength = 0.0f;
-}
-
-//----------------------------------------------------------------//
-float MOAIAnim::Eval ( u32 curveID, float time ) {
-
-	if ( this->mCurves [ curveID ]) {
-		return this->mCurves [ curveID ]->GetFloatValue ( time );
-	}
-	return 0.0f;
-}
-
-//----------------------------------------------------------------//
-float MOAIAnim::EvalDelta ( u32 curveID, float t0, float t1 ) {
-
-	if ( this->mCurves [ curveID ]) {
-		return this->mCurves [ curveID ]->GetFloatDelta ( t0, t1 );
-	}
-	return 0.0f;
 }
 
 //----------------------------------------------------------------//
@@ -115,9 +170,10 @@ void MOAIAnim::RegisterLuaClass ( USLuaState& state ) {
 void MOAIAnim::RegisterLuaFuncs ( USLuaState& state ) {
 
 	LuaReg regTable [] = {
+		{ "apply",				_apply },
 		{ "getLength",			_getLength },
-		{ "reserveCurves",		_reserveCurves },
-		{ "setCurve",			_setCurve },
+		{ "reserveLinks",		_reserveLinks },
+		{ "setLink",			_setLink },
 		{ NULL, NULL }
 	};
 
@@ -125,33 +181,28 @@ void MOAIAnim::RegisterLuaFuncs ( USLuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIAnim::ReserveCurves ( u32 totalCurves ) {
+void MOAIAnim::ReserveLinks ( u32 totalLinks ) {
 
-	this->mCurves.Init ( totalCurves );
-	this->mCurves.Fill ( 0 );
+	this->mLinks.Init ( totalLinks );
 }
 
 //----------------------------------------------------------------//
-void MOAIAnim::SetCurve ( u32 curveID, MOAIAnimCurve* curve ) {
+void MOAIAnim::SetLink ( u32 linkID, MOAIAnimCurve* curve, MOAINode* target, u32 attrID, bool relative ) {
 
-	if ( curveID < this->mCurves.Size ()) {
-	 
-		float length = 0.0f;
+	if ( linkID >= this->mLinks.Size ()) return;
+	if ( !target ) return;
+	if ( !target->AttrExists ( attrID )) return;
 
-		if ( curve ) {
-			curve->Retain ();
-			length = curve->GetLength ();
-		}
+	MOAIAnimLink& link = this->mLinks [ linkID ];
+	link.mCurve		= curve;
+	link.mTarget	= target;
+	link.mAttrID	= attrID;
+	link.mRelative	= relative;
+	
+	float length = curve->GetLength ();
 
-		if ( this->mLength < length ) {
-			this->mLength = length;
-		}
-
-		if ( this->mCurves [ curveID ]) {
-			this->mCurves [ curveID ]->Release ();
-		}
-
-		this->mCurves [ curveID ] = curve;
+	if ( this->mLength < length ) {
+		this->mLength = length;
 	}
 }
 
@@ -161,7 +212,7 @@ STLString MOAIAnim::ToString () {
 	STLString repr;
 
 	PRETTY_PRINT ( repr, mLength )
-	PRETTY_PRINT ( repr, mCurves )
+	PRETTY_PRINT ( repr, mLinks )
 
 	return repr;
 }

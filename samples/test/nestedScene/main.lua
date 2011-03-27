@@ -7,9 +7,10 @@ function makeScene ()
 	viewport:setScale ( 128, 128 )
 	scene:setViewport ( viewport )
 
-	local tileset = MOAITileLibrary.new ()
+	local tileset = MOAITileDeck2D.new ()
 	tileset:setTexture ( "numbers.png" )
 	tileset:setSize ( 8, 8 )
+	tileset:setFlip ( false, true )
 
 	local grid = MOAIGrid.new ()
 	grid:setSize ( 4, 4, 32, 32 )
@@ -19,8 +20,8 @@ function makeScene ()
 	grid:setRow ( 2, 	0x10, 0x11, 0x12, 0x13 )
 	grid:setRow ( 3, 	0x18, 0x19, 0x1a, 0x1b )
 
-	local tilemap = MOAITilemap.new ()
-	tilemap:setGfxSource ( tileset )
+	local tilemap = MOAIProp2D.new ()
+	tilemap:setDeck ( tileset )
 	tilemap:setGrid ( grid )
 	tilemap:setRepeat ( true )
 	scene:insertPrim ( tilemap )
@@ -32,13 +33,13 @@ end
 
 function makeCathead ()
 
-	local sprite = MOAISprite2D.new ()
+	local sprite = MOAIProp2D.new ()
 
-	local texture = MOAITexture.new ()
-	texture:load ( "cathead.png" )
+	local texture = MOAIGfxQuad2D.new ()
+	texture:setTexture ( "cathead.png" )
 	texture:setRect ( -128, -128, 128, 128 )
 
-	sprite:setGfxSource ( texture )
+	sprite:setDeck ( texture )
 
 	sprite:moveLoc ( -64, -64, 2 )
 	

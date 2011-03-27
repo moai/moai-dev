@@ -21,12 +21,7 @@
 
 //----------------------------------------------------------------//
 int USLuaSerializer::_exportToFile ( lua_State* L ) {
-	
-	USLuaState state ( L );
-	if ( !state.CheckParams ( 1, "US" )) return 0;
-	
-	USLuaSerializer* self = state.GetLuaData < USLuaSerializer >( 1 );
-	if ( !self ) return 0;
+	LUA_SETUP ( USLuaSerializer, "US" )
 	
 	self->SerializeToFile ( lua_tostring ( state, 2 ));
 	
@@ -35,12 +30,7 @@ int USLuaSerializer::_exportToFile ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 int USLuaSerializer::_exportToString ( lua_State* L ) {
-	
-	USLuaState state ( L );
-	if ( !state.CheckParams ( 1, "U" )) return 0;
-	
-	USLuaSerializer* self = state.GetLuaData < USLuaSerializer >( 1 );
-	if ( !self ) return 0;
+	LUA_SETUP ( USLuaSerializer, "U" )
 	
 	STLString retStr = self->SerializeToString ();
 	

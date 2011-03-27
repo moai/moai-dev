@@ -14,7 +14,7 @@ viewport:setSize ( 480, 480 )
 viewport:setScale ( 1, 0 )
 scene:setViewport ( viewport )
 
-camera = MOAICamera2D.new ()
+camera = MOAITransform2D.new ()
 scene:setCamera ( camera )
 
 partition = MOAIPartition.new ()

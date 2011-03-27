@@ -5,7 +5,7 @@
 #define	MOAIHTTPTASK_H
 
 class USHttpTask;
-class MOAIData;
+class MOAIDataBuffer;
 
 //================================================================//
 // MOAIHttpTask
@@ -21,7 +21,7 @@ private:
 
 	USLuaRef			mOnFinish;
 	
-	USRef < MOAIData >	mPostData;
+	USRef < MOAIDataBuffer >	mPostData;
 	STLString			mPostString;
 
 	//----------------------------------------------------------------//

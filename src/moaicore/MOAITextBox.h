@@ -4,7 +4,7 @@
 #ifndef	MOAITEXTBOX_H
 #define	MOAITEXTBOX_H
 
-#include <moaicore/MOAIGfxPrim2D.h>
+#include <moaicore/MOAIProp2D.h>
 #include <moaicore/MOAITransform2D.h>
 
 class MOAIAnimCurve;
@@ -16,7 +16,7 @@ class MOAIFont;
 /**	@brief Text box class.
 */
 class MOAITextBox :
-	public MOAIGfxPrim2D {
+	public MOAIProp2D {
 private:
 
 	static const u32 REVEAL_ALL = 0xffffffff;
@@ -73,7 +73,7 @@ public:
 	friend class MOAITextSpoolAction;
 
 	enum {
-		TOTAL_ATTR = MOAIGfxPrim2D::TOTAL_ATTR,
+		TOTAL_ATTR = MOAIProp2D::TOTAL_ATTR,
 	};
 
 	DECL_LUA_DATA ( MOAITextBox )

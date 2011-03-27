@@ -31,11 +31,11 @@ public:
 	DECL_LUA_DATA ( MOAILayerBridge2D )
 	
 	//----------------------------------------------------------------//
-						MOAILayerBridge2D		();
-						~MOAILayerBridge2D		();
-	void				RegisterLuaClass		( USLuaState& state );
-	void				RegisterLuaFuncs		( USLuaState& state );
-	STLString			ToString				();
+					MOAILayerBridge2D		();
+					~MOAILayerBridge2D		();
+	void			RegisterLuaClass			( USLuaState& state );
+	void			RegisterLuaFuncs			( USLuaState& state );
+	STLString		ToString					();
 };
 
 #endif

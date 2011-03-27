@@ -4,7 +4,7 @@
 #ifndef	MOAITRANSFORM2D_H
 #define	MOAITRANSFORM2D_H
 
-#include <moaicore/MOAIForceAction.h>
+#include <moaicore/MOAIEaseDriver.h>
 
 #include <moaicore/MOAITransformBase2D.h>
 

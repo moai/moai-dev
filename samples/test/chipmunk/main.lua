@@ -12,8 +12,8 @@ layer = MOAILayer2D.new ()
 layer:setViewport ( viewport )
 MOAISim.pushRenderPass ( layer )
 
-texture = MOAITexture.new ()
-texture:load ( "cathead.png" )
+texture = MOAIGfxQuad2D.new ()
+texture:setTexture ( "cathead.png" )
 texture:setRect ( -32, -32, 32, 32 )
 
 -- set up the space and start its simulation
@@ -48,8 +48,8 @@ function makeThing ()
 	shape.name = "thing"
 	space:insertPrim ( shape )
 
-	sprite = MOAISprite2D.new ()
-	sprite:setGfxSource ( texture )
+	sprite = MOAIProp2D.new ()
+	sprite:setDeck ( texture )
 	sprite:setParent ( body )
 	layer:insertPrim ( sprite )
 end

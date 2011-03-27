@@ -357,11 +357,19 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAIForceAction.cpp"
+				RelativePath="..\..\src\moaicore\MOAIEaseDriver.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAIForceAction.h"
+				RelativePath="..\..\src\moaicore\MOAIEaseDriver.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIEaseType.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIEaseType.h"
 				>
 			</File>
 			<File
@@ -388,14 +396,6 @@
 				RelativePath="..\..\src\moaicore\MOAITimer.h"
 				>
 			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAITransition.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAITransition.h"
-				>
-			</File>
 		</Filter>
 		<Filter
 			Name="anim"
@@ -417,83 +417,131 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAIAnimPlayer.cpp"
+				RelativePath="..\..\src\moaicore\MOAIAnimDriver.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAIAnimPlayer.h"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="content"
-			>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIBrushLibrary.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIBrushLibrary.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIContentLibrary2D.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIContentLibrary2D.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAINinePatch.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAINinePatch.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAISpriteLibrary.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAISpriteLibrary.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAISurfaceLibrary2D.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAISurfaceLibrary2D.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAITexture.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAITexture.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAITileLibrary.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAITileLibrary.h"
+				RelativePath="..\..\src\moaicore\MOAIAnimDriver.h"
 				>
 			</File>
 		</Filter>
 		<Filter
-			Name="feeler"
+			Name="scene graph"
 			>
 			<File
-				RelativePath="..\..\src\moaicore\MOAISurfaceSampler2D.cpp"
+				RelativePath="..\..\src\moaicore\MOAIDeck2D.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAISurfaceSampler2D.h"
+				RelativePath="..\..\src\moaicore\MOAIDeck2D.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIGfxQuad2D.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIGfxQuad2D.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIGfxQuadDeck2D.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIGfxQuadDeck2D.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIGfxQuadListDeck2D.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIGfxQuadListDeck2D.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAILayer2D.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAILayer2D.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAILayerBridge2D.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAILayerBridge2D.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIProp2D.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIProp2D.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIStretchPatch.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIStretchPatch.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAISurfaceDeck2D.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAISurfaceDeck2D.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAITileDeck2D.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAITileDeck2D.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAITransform2D.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAITransform2D.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAITransformBase2D.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAITransformBase2D.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="layout"
+			>
+			<File
+				RelativePath="..\..\src\moaicore\MOAICameraFitter.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAICameraFitter.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAILayoutFrame.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAILayoutFrame.h"
 				>
 			</File>
 		</Filter>
@@ -533,6 +581,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\moaicore\MOAITexture.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAITexture.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\moaicore\MOAIVertexBuffer.cpp"
 				>
 			</File>
@@ -554,106 +610,6 @@
 			</File>
 			<File
 				RelativePath="..\..\src\moaicore\MOAIViewport.h"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="gfx 2D"
-			>
-			<File
-				RelativePath="..\..\src\moaicore\MOAICamera2D.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAICamera2D.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAICameraFitter.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAICameraFitter.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIFrame.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIFrame.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIGfxPrim2D.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIGfxPrim2D.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAILayer2D.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAILayer2D.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAILayerBridge2D.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAILayerBridge2D.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIPrim.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIPrim.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAISlippyMap.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAISlippyMap.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAISprite2D.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAISprite2D.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAITilemap.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAITilemap.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAITransform2D.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAITransform2D.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAITransformBase2D.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAITransformBase2D.h"
 				>
 			</File>
 		</Filter>
@@ -765,11 +721,11 @@
 			Name="io"
 			>
 			<File
-				RelativePath="..\..\src\moaicore\MOAIData.cpp"
+				RelativePath="..\..\src\moaicore\MOAIDataBuffer.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAIData.h"
+				RelativePath="..\..\src\moaicore\MOAIDataBuffer.h"
 				>
 			</File>
 			<File
@@ -782,30 +738,6 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="lua"
-			>
-			<File
-				RelativePath="..\..\src\moaicore\MOAILuaScript.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAILuaScript.h"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="math"
-			>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIPolar.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIPolar.h"
-				>
-			</File>
-		</Filter>
-		<Filter
 			Name="partition"
 			>
 			<File
@@ -814,6 +746,14 @@
 			</File>
 			<File
 				RelativePath="..\..\src\moaicore\MOAIPartition.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAISurfaceSampler2D.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAISurfaceSampler2D.h"
 				>
 			</File>
 		</Filter>
@@ -829,19 +769,19 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAILog.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAILog.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\moaicore\MOAILogMessages.cpp"
 				>
 			</File>
 			<File
 				RelativePath="..\..\src\moaicore\MOAILogMessages.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAILogMgr.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAILogMgr.h"
 				>
 			</File>
 			<File
@@ -908,14 +848,6 @@
 		<Filter
 			Name="web"
 			>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIFileCache.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIFileCache.h"
-				>
-			</File>
 			<File
 				RelativePath="..\..\src\moaicore\MOAIHttpTask.cpp"
 				>

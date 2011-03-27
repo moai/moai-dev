@@ -20,12 +20,15 @@ private:
 	static int	_clearTileFlags		( lua_State* L );
 	static int	_getTile			( lua_State* L );
 	static int	_getTileFlags		( lua_State* L );
+	static int	_getTileLoc			( lua_State* L );
+	static int	_locToCoord			( lua_State* L );
 	static int	_setRow				( lua_State* L );
 	static int	_setSize			( lua_State* L );
 	static int	_setTile			( lua_State* L );
 	static int	_setTileFlags		( lua_State* L );
 	static int	_toggleTileFlags	( lua_State* L );
-	
+	static int	_wrapCoord			( lua_State* L );
+
 public:
 	
 	DECL_LUA_DATA ( MOAIGrid )

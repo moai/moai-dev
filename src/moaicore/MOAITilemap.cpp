@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moaicore/MOAIContentLibrary2D.h>
+#include <moaicore/MOAIDeck2D.h>
 #include <moaicore/MOAIDebugLines.h>
 #include <moaicore/MOAIGrid.h>
 #include <moaicore/MOAISurfaceSampler2D.h>
@@ -220,7 +220,7 @@ void MOAITilemap::ApplyAttrOp ( u32 attrID, USAttrOp& attrOp ) {
 //----------------------------------------------------------------//
 u32 MOAITilemap::CountAttributes () {
 
-	return MOAIGfxPrim2D::TOTAL_ATTR;
+	return MOAIGfxProp2D::TOTAL_ATTR;
 }
 
 //----------------------------------------------------------------//
@@ -234,14 +234,14 @@ void MOAITilemap::Draw () {
 		USTileCoord c1;
 		
 		this->GetBoundsInView ( c0, c1 );
-		this->mGfxSource->Draw ( *this, *this->mGrid, c0, c1 );
+		this->mDeck->Draw ( *this, *this->mGrid, c0, c1 );
 	}
 }
 
 //----------------------------------------------------------------//
 void MOAITilemap::DrawDebug () {
 	
-	if ( this->mGfxSource && this->mGrid ) {
+	if ( this->mDeck && this->mGrid ) {
 		
 		USTileCoord c0;
 		USTileCoord c1;
@@ -253,14 +253,14 @@ void MOAITilemap::DrawDebug () {
 		debugLines.SetPenColor ( 0x40ffffff );
 		debugLines.SetPenWidth ( 2 );
 		
-		this->mGfxSource->DrawDebug ( *this, *this->mGrid, c0, c1 );
+		this->mDeck->DrawDebug ( *this, *this->mGrid, c0, c1 );
 	}
 }
 
 //----------------------------------------------------------------//
 void MOAITilemap::GatherSurfaces ( MOAISurfaceSampler2D& sampler ) {
 
-	if ( this->mGfxSource && this->mGrid ) {
+	if ( this->mDeck && this->mGrid ) {
 		
 		sampler.SetSourcePrim ( this );
 		
@@ -279,7 +279,7 @@ void MOAITilemap::GatherSurfaces ( MOAISurfaceSampler2D& sampler ) {
 			this->mGrid->ClampY ( c1 );
 		}
 		
-		this->mGfxSource->GatherSurfaces ( *this->mGrid, c0, c1, sampler );
+		this->mDeck->GatherSurfaces ( *this->mGrid, c0, c1, sampler );
 	}	
 }
 
@@ -347,7 +347,7 @@ MOAITilemap::MOAITilemap () :
 	mRepeatY ( false ) {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIGfxPrim2D )
+		RTTI_EXTEND ( MOAIGfxProp2D )
 	RTTI_END
 	
 	this->mScale.Init ( 1.0f, -1.0f );
@@ -360,8 +360,8 @@ MOAITilemap::~MOAITilemap () {
 //----------------------------------------------------------------//
 void MOAITilemap::RegisterLuaClass ( USLuaState& state ) {
 	
-	MOAIPrim::RegisterLuaClass ( state );
-	MOAIGfxPrim2D::RegisterLuaClass ( state );
+	MOAIProp2D::RegisterLuaClass ( state );
+	MOAIGfxProp2D::RegisterLuaClass ( state );
 	
 	state.SetField ( -1, "TILE_LEFT_TOP", ( u32 )USGridSpace::TILE_LEFT_TOP );
 	state.SetField ( -1, "TILE_RIGHT_TOP", ( u32 )USGridSpace::TILE_RIGHT_TOP );
@@ -379,8 +379,8 @@ void MOAITilemap::RegisterLuaClass ( USLuaState& state ) {
 //----------------------------------------------------------------//
 void MOAITilemap::RegisterLuaFuncs ( USLuaState& state ) {
 	
-	MOAIPrim::RegisterLuaFuncs ( state );
-	MOAIGfxPrim2D::RegisterLuaFuncs ( state );
+	MOAIProp2D::RegisterLuaFuncs ( state );
+	MOAIGfxProp2D::RegisterLuaFuncs ( state );
 	
 	LuaReg regTable [] = {
 		{ "getGrid",			_getGrid },
@@ -400,14 +400,14 @@ void MOAITilemap::RegisterLuaFuncs ( USLuaState& state ) {
 //----------------------------------------------------------------//
 void MOAITilemap::SerializeIn ( USLuaState& state, USLuaSerializer& serializer ) {
 	
-	this->mGfxSource = serializer.GetRefField < MOAIContentLibrary2D >( state, -1, "mGfxSource" );
+	this->mDeck = serializer.GetRefField < MOAIDeck2D >( state, -1, "mDeck" );
 	this->mGrid = serializer.GetRefField < MOAIGrid >( state, -1, "mGrid" );
 }
 
 //----------------------------------------------------------------//
 void MOAITilemap::SerializeOut ( USLuaState& state, USLuaSerializer& serializer ) {
 	
-	serializer.SetRefField ( state, -1, "mGfxSource", this->mGfxSource );
+	serializer.SetRefField ( state, -1, "mDeck", this->mDeck );
 	serializer.SetRefField ( state, -1, "mGrid", this->mGrid );
 }
 
@@ -416,7 +416,7 @@ STLString MOAITilemap::ToString () {
 
 	STLString repr( MOAITransform2D::ToString () );
 
-	PRETTY_PRINT ( repr, mGfxSource )
+	PRETTY_PRINT ( repr, mDeck )
 
 	return repr;
 }

@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include <moaicore/MOAIAnimCurve.h>
-#include <moaicore/MOAIContentLibrary2D.h>
+#include <moaicore/MOAIDeck2D.h>
 #include <moaicore/MOAIDebugLines.h>
 #include <moaicore/MOAIFont.h>
 #include <moaicore/MOAITextBox.h>
@@ -405,11 +405,11 @@ MOAITextBox::MOAITextBox () :
 	mYFlip ( false ) {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIGfxPrim2D )
+		RTTI_EXTEND ( MOAIProp2D )
 	RTTI_END
 	
 	this->mFrame.Init ( 0.0f, 0.0f, 0.0f, 0.0f ); 
-	this->SetQueryMask ( MOAIContentLibrary2D::CAN_DRAW | MOAIContentLibrary2D::CAN_DRAW_DEBUG );
+	this->SetQueryMask ( MOAIDeck2D::CAN_DRAW | MOAIDeck2D::CAN_DRAW_DEBUG );
 }
 
 //----------------------------------------------------------------//
@@ -449,8 +449,7 @@ void MOAITextBox::NextPage ( bool reveal ) {
 //----------------------------------------------------------------//
 void MOAITextBox::RegisterLuaClass ( USLuaState& state ) {
 
-	MOAIPrim::RegisterLuaClass ( state );
-	MOAIGfxPrim2D::RegisterLuaClass ( state );
+	MOAIProp2D::RegisterLuaClass ( state );
 
 	state.SetField ( -1, "LEFT_JUSTIFY", ( u32 )USFont::LEFT_JUSTIFY );
 	state.SetField ( -1, "CENTER_JUSTIFY", ( u32 )USFont::CENTER_JUSTIFY );
@@ -460,8 +459,7 @@ void MOAITextBox::RegisterLuaClass ( USLuaState& state ) {
 //----------------------------------------------------------------//
 void MOAITextBox::RegisterLuaFuncs ( USLuaState& state ) {
 	
-	MOAIPrim::RegisterLuaFuncs ( state );
-	MOAIGfxPrim2D::RegisterLuaFuncs ( state );
+	MOAIProp2D::RegisterLuaFuncs ( state );
 	
 	LuaReg regTable [] = {
 		{ "clearCurves",		_clearCurves },

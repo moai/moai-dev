@@ -3,11 +3,11 @@
 
 #include "pch.h"
 #include <moaicore/MOAIBox2DWorld.h>
-#include <moaicore/MOAIContentLibrary2D.h>
+#include <moaicore/MOAIDeck2D.h>
 #include <moaicore/MOAICpSpace.h>
 #include <moaicore/MOAIDebugLines.h>
 #include <moaicore/MOAILayer2D.h>
-#include <moaicore/MOAIGfxPrim2D.h>
+#include <moaicore/MOAIProp2D.h>
 #include <moaicore/MOAITransform2D.h>
 
 #define MAX_RENDERABLES 512
@@ -79,7 +79,7 @@ int	MOAILayer2D::_getPartition ( lua_State* L ) {
 int	MOAILayer2D::_insertPrim ( lua_State* L ) {
 	LUA_SETUP ( MOAILayer2D, "UU" )
 
-	MOAIPrim* prim = state.GetLuaData < MOAIPrim >( 2 );
+	MOAIProp2D* prim = state.GetLuaData < MOAIProp2D >( 2 );
 	if ( !prim ) return 0;
 	if ( prim == self ) return 0;
 
@@ -99,7 +99,7 @@ int	MOAILayer2D::_insertPrim ( lua_State* L ) {
 int	MOAILayer2D::_removePrim ( lua_State* L ) {
 	LUA_SETUP ( MOAILayer2D, "UU" )
 
-	MOAIPrim* prim = state.GetLuaData < MOAIPrim >( 2 );
+	MOAIProp2D* prim = state.GetLuaData < MOAIProp2D >( 2 );
 	if ( !prim ) return 0;
 	if ( prim == self ) return 0;
 
@@ -345,17 +345,17 @@ void MOAILayer2D::Draw () {
 		USViewQuad viewQuad;
 		viewQuad.Init ();
 		
-		this->mPartition->GatherPrims ( viewQuad.mBounds, 0, MOAIContentLibrary2D::CAN_DRAW | MOAIContentLibrary2D::CAN_DRAW_DEBUG );
+		this->mPartition->GatherPrims ( viewQuad.mBounds, 0, MOAIDeck2D::CAN_DRAW | MOAIDeck2D::CAN_DRAW_DEBUG );
 		u32 totalResults = this->mPartition->GetTotalResults ();
 		if (( !totalResults ) || ( totalResults > MAX_RENDERABLES )) return;
 		
 		// initialize the sort buffer
-		USRadixKey16 < MOAIPrim* > key [ MAX_RENDERABLES ];
-		USRadixKey16 < MOAIPrim* > swap [ MAX_RENDERABLES ];
+		USRadixKey16 < MOAIProp2D* > key [ MAX_RENDERABLES ];
+		USRadixKey16 < MOAIProp2D* > swap [ MAX_RENDERABLES ];
 		
 		u32 count = 0;
 		for ( u32 i = 0; i < totalResults; ++i ) {
-			MOAIPrim* prim = this->mPartition->GetResult ( i );
+			MOAIProp2D* prim = this->mPartition->GetResult ( i );
 			if ( prim ) {
 				s16 priority = ( s16 )prim->GetPriority ();
 				key [ i ].mKey = (( priority ^ 0x8000 ) | ( priority & 0x7fff ));
@@ -365,11 +365,11 @@ void MOAILayer2D::Draw () {
 		}
 
 		// sort
-		USRadixKey16 < MOAIPrim* >* sort = RadixSort16 < MOAIPrim* >( key, swap, count );
+		USRadixKey16 < MOAIProp2D* >* sort = RadixSort16 < MOAIProp2D* >( key, swap, count );
 
 		// render the sorted list
 		for ( u32 i = 0; i < count; ++i ) {
-			MOAIPrim* prim = sort [ i ].mData;
+			MOAIProp2D* prim = sort [ i ].mData;
 			prim->Draw ();
 			prim->DrawDebug ();
 		}
@@ -448,10 +448,10 @@ MOAILayer2D::MOAILayer2D () :
 	mShowDebugLines ( true ) {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIPrim )
+		RTTI_EXTEND ( MOAIProp2D )
 	RTTI_END
 	
-	this->SetQueryMask ( MOAIContentLibrary2D::CAN_DRAW | MOAIContentLibrary2D::CAN_DRAW_DEBUG );
+	this->SetQueryMask ( MOAIDeck2D::CAN_DRAW | MOAIDeck2D::CAN_DRAW_DEBUG );
 }
 
 //----------------------------------------------------------------//
@@ -461,13 +461,13 @@ MOAILayer2D::~MOAILayer2D () {
 //----------------------------------------------------------------//
 void MOAILayer2D::RegisterLuaClass ( USLuaState& state ) {
 
-	MOAIPrim::RegisterLuaClass ( state );
+	MOAIProp2D::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAILayer2D::RegisterLuaFuncs ( USLuaState& state ) {
 	
-	MOAIPrim::RegisterLuaFuncs ( state );
+	MOAIProp2D::RegisterLuaFuncs ( state );
 	
 	LuaReg regTable [] = {
 		{ "getFitting",				_getFitting },
@@ -492,7 +492,7 @@ void MOAILayer2D::RegisterLuaFuncs ( USLuaState& state ) {
 //----------------------------------------------------------------//
 STLString MOAILayer2D::ToString () {
 
-	STLString repr( MOAIPrim::ToString () );
+	STLString repr( MOAIProp2D::ToString () );
 
 	PRETTY_PRINT ( repr, mCamera )
 	PRETTY_PRINT ( repr, mViewport )

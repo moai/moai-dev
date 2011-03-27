@@ -4,9 +4,9 @@
 #ifndef	MOAITILEMAP_H
 #define	MOAITILEMAP_H
 
-#include <moaicore/MOAIGfxPrim2D.h>
+#include <moaicore/MOAIGfxProp2D.h>
 
-class MOAIContentLibrary2D;
+class MOAIDeck2D;
 
 //================================================================//
 // MOAITilemap
@@ -14,7 +14,7 @@ class MOAIContentLibrary2D;
 /**	@brief Graphics primitive for rendering grid based tile maps.
 */
 class MOAITilemap :
-	public MOAIGfxPrim2D {
+	public MOAIGfxProp2D {
 private:
 	
 	USRef < MOAIGrid >	mGrid;
@@ -34,7 +34,7 @@ private:
 public:
 
 	enum {
-		TOTAL_ATTR = MOAIGfxPrim2D::TOTAL_ATTR,
+		TOTAL_ATTR = MOAIGfxProp2D::TOTAL_ATTR,
 	};
 	
 	DECL_LUA_DATA ( MOAITilemap )

@@ -4,9 +4,9 @@
 #ifndef	MOAISPRITE2D_H
 #define	MOAISPRITE2D_H
 
-#include <moaicore/MOAIGfxPrim2D.h>
+#include <moaicore/MOAIGfxProp2D.h>
 
-class MOAILayer2D;
+class MOAIGfxLayer2D;
 
 //================================================================//
 // MOAISprite2D
@@ -14,25 +14,17 @@ class MOAILayer2D;
 /**	@brief Graphics primitive for rendering 2D images.
 */
 class MOAISprite2D :
-	public MOAIGfxPrim2D {
+	public MOAIGfxProp2D {
 private:
-
-	USRef < MOAITransform2D >		mUVTransform;
-	
-	u32								mContentAddr;
 	
 	//----------------------------------------------------------------//
-	static int	_getContentAddr		( lua_State* L );
-	static int	_inside				( lua_State* L );
-	static int	_setContentAddr		( lua_State* L );
-	static int	_setUVTransform		( lua_State* L );
 
 public:
 
-	friend class MOAILayer2D;
+	friend class MOAIGfxLayer2D;
 	
 	enum {
-		ATTR_CONTENT_ADDR = MOAIGfxPrim2D::TOTAL_ATTR,
+		ATTR_CONTENT_ADDR = MOAIGfxProp2D::TOTAL_ATTR,
 		TOTAL_ATTR,
 	};
 	
@@ -46,7 +38,7 @@ public:
 	void			GatherSurfaces			( MOAISurfaceSampler2D& sampler );
 	u32				GetLocalFrame			( USRect& frame );
 	bool			Inside					( USVec2D vec );
-	bool			Inside					( USVec2D vec, MOAILayer2D& scene );
+	bool			Inside					( USVec2D vec, MOAIGfxLayer2D& scene );
 					MOAISprite2D			();
 					~MOAISprite2D			();
 	void			OnDepNodeUpdate			();

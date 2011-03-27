@@ -214,6 +214,20 @@ float MOAITimer::DoStep ( float step ) {
 }
 
 //----------------------------------------------------------------//
+bool MOAITimer::IsBusy () {
+
+	if ( this->mMode == NORMAL ) {
+		return (( this->mTime >= this->mStartTime ) && ( this->mTime < this->mEndTime ));
+	}
+	
+	if ( this->mMode == REVERSE ) {
+		return (( this->mTime > this->mStartTime ) && ( this->mTime <= this->mEndTime ));
+	}
+	
+	return this->IsActive ();
+}
+
+//----------------------------------------------------------------//
 MOAITimer::MOAITimer () :
 	mStartTime ( 0.0f ),
 	mEndTime ( 1.0f ),
@@ -231,20 +245,6 @@ MOAITimer::MOAITimer () :
 
 //----------------------------------------------------------------//
 MOAITimer::~MOAITimer () {
-}
-
-//----------------------------------------------------------------//
-bool MOAITimer::IsBusy () {
-
-	if ( this->mMode == NORMAL ) {
-		return (( this->mTime >= this->mStartTime ) && ( this->mTime < this->mEndTime ));
-	}
-	
-	if ( this->mMode == REVERSE ) {
-		return (( this->mTime > this->mStartTime ) && ( this->mTime <= this->mEndTime ));
-	}
-	
-	return this->IsActive ();
 }
 
 //----------------------------------------------------------------//

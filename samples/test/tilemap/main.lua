@@ -6,12 +6,13 @@ viewport:setSize ( 256, 256 )
 viewport:setScale ( 256, 256 )
 scene:setViewport ( viewport )
 
-camera = MOAICamera2D.new ()
+camera = MOAITransform2D.new ()
 scene:setCamera ( camera )
 
-tileset = MOAITileLibrary.new ()
+tileset = MOAITileDeck2D.new ()
 tileset:setTexture ( "numbers.png" )
 tileset:setSize ( 8, 8 )
+tileset:setFlip ( false, true )
 
 grid = MOAIGrid.new ()
 grid:setSize ( 8, 8, 32, 32 )
@@ -25,8 +26,8 @@ grid:setRow ( 5, 	0x28, 0x29, 0x2a, 0x2b, 0x2c, 0x2d, 0x2e, 0x2f )
 grid:setRow ( 6, 	0x30, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37 )
 grid:setRow ( 7, 	0x38, 0x39, 0x3a, 0x3b, 0x3c, 0x3d, 0x3e, 0x3f )
 
-tilemap = MOAITilemap.new ()
-tilemap:setGfxSource ( tileset )
+tilemap = MOAIProp2D.new ()
+tilemap:setDeck ( tileset )
 tilemap:setGrid ( grid )
 tilemap:setLoc ( -128, 128 )
 tilemap:setRepeat ( true ) -- wrap the tilemap when drawing

@@ -14,6 +14,9 @@ class MOAISerializer :
 private:
 
 	//----------------------------------------------------------------//
+	static int			_serializeToString		( lua_State* L );
+
+	//----------------------------------------------------------------//
 	cc8*				GetFileMagic			();
 
 public:

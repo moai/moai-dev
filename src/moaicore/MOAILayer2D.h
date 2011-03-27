@@ -4,9 +4,8 @@
 #ifndef	MOAILAYER2D_H
 #define	MOAILAYER2D_H
 
-#include <moaicore/MOAICamera2D.h>
 #include <moaicore/MOAIPartition.h>
-#include <moaicore/MOAIPrim.h>
+#include <moaicore/MOAIProp2D.h>
 #include <moaicore/MOAIViewport.h>
 
 class MOAICpSpace;
@@ -18,7 +17,7 @@ class MOAIBox2DWorld;
 /**	@brief 2D scene controls class.
 */
 class MOAILayer2D :
-	public virtual MOAIPrim {
+	public virtual MOAIProp2D {
 private:
 
 	USRef < MOAITransform2D >	mCamera;
@@ -70,7 +69,7 @@ public:
 	u32				GetLocalFrame			( USRect& frame );
 	void			GetWndToWorldMtx		( USAffine2D& wndToWorld );
 	void			GetWorldToWndMtx		( USAffine2D& worldToWnd );
-					MOAILayer2D				();
+					MOAILayer2D			();
 					~MOAILayer2D			();
 	void			RegisterLuaClass		( USLuaState& state );
 	void			RegisterLuaFuncs		( USLuaState& state );

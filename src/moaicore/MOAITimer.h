@@ -59,9 +59,9 @@ public:
 	//----------------------------------------------------------------//
 	void		ApplyAttrOp			( u32 attrID, USAttrOp& attrOp );
 	u32			CountAttributes		();
+	bool		IsBusy				();
 				MOAITimer			();
 				~MOAITimer			();
-	bool		IsBusy				();
 	void		OnDepNodeUpdate		();
 	void		OnStart				();
 	void		OnUpdate			( float step );

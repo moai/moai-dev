@@ -4,7 +4,7 @@
 #ifndef	MOAIPARTITION_H
 #define	MOAIPARTITION_H
 
-class MOAIPrim;
+class MOAIProp2D;
 
 //================================================================//
 // MOAIPartition
@@ -13,7 +13,7 @@ class MOAIPrim;
 */
 class MOAIPartition :
 	public virtual USLuaData,
-	public USPartition < MOAIPrim > {
+	public USPartition < MOAIProp2D > {
 private:
 
 	enum {
@@ -42,12 +42,12 @@ public:
 	//----------------------------------------------------------------//
 	
 	void			Clear					();
-	void			InsertPrim				( MOAIPrim& prim );
+	void			InsertPrim				( MOAIProp2D& prim );
 					MOAIPartition			();
 					~MOAIPartition			();
 	void			RegisterLuaClass		( USLuaState& state );
 	void			RegisterLuaFuncs		( USLuaState& state );
-	void			RemovePrim				( MOAIPrim& prim );
+	void			RemovePrim				( MOAIProp2D& prim );
 	STLString		ToString				();
 };
 

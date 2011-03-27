@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include <moaicore/MOAIPartition.h>
-#include <moaicore/MOAIPrim.h>
+#include <moaicore/MOAIProp2D.h>
 
 //================================================================//
 // local
@@ -19,7 +19,7 @@
 int MOAIPartition::_insertPrim ( lua_State* L ) {
 	LUA_SETUP ( MOAIPartition, "UU" )
 
-	MOAIPrim* prim = state.GetLuaData < MOAIPrim >( 2 );
+	MOAIProp2D* prim = state.GetLuaData < MOAIProp2D >( 2 );
 	if ( !prim ) return 0;
 
 	self->InsertPrim ( *prim );
@@ -46,9 +46,9 @@ int MOAIPartition::_primForPoint ( lua_State* L ) {
 	u32 total = self->GatherPrims ( vec, 0 );
 	if ( total ) {
 	
-		MOAIPrim* prim = self->GetResult ( 0 );
+		MOAIProp2D* prim = self->GetResult ( 0 );
 		for ( u32 i = 1; i < total; ++i ) {
-			MOAIPrim* test = self->GetResult ( i );
+			MOAIProp2D* test = self->GetResult ( i );
 			if ( test->GetPriority () > prim->GetPriority ()) {
 				prim = test;
 			}
@@ -122,7 +122,7 @@ int MOAIPartition::_primListForRect ( lua_State* L ) {
 int MOAIPartition::_removePrim ( lua_State* L ) {
 	LUA_SETUP ( MOAIPartition, "UU" )
 
-	MOAIPrim* prim = state.GetLuaData < MOAIPrim >( 2 );
+	MOAIProp2D* prim = state.GetLuaData < MOAIProp2D >( 2 );
 	if ( !prim ) return 0;
 
 	self->RemovePrim ( *prim );
@@ -233,15 +233,15 @@ void MOAIPartition::Clear () {
 	u32 total = this->GetTotalResults ();
 
 	for ( u32 i = 0; i < total; ++i ) {
-		MOAIPrim* prim = this->GetResult ( i );
+		MOAIProp2D* prim = this->GetResult ( i );
 		this->RemovePrim ( *prim );
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAIPartition::InsertPrim ( MOAIPrim& prim ) {
+void MOAIPartition::InsertPrim ( MOAIProp2D& prim ) {
 
-	USPartition < MOAIPrim >* partition = prim.GetPartition ();
+	USPartition < MOAIProp2D >* partition = prim.GetPartition ();
 	if ( partition != this ) {
 	
 		if ( partition ) {
@@ -251,7 +251,7 @@ void MOAIPartition::InsertPrim ( MOAIPrim& prim ) {
 			prim.Retain ();
 		}
 		
-		this->USPartition < MOAIPrim >::InsertPrim ( prim );
+		this->USPartition < MOAIProp2D >::InsertPrim ( prim );
 		prim.ScheduleUpdate ();
 	}
 }
@@ -281,7 +281,7 @@ void MOAIPartition::PushResultsList ( lua_State* L ) {
 	
 	for ( u32 i = 0; i < total; ++i ) {
 		
-		MOAIPrim* prim = this->GetResult ( i );
+		MOAIProp2D* prim = this->GetResult ( i );
 		lua_pushnumber ( state, i + 1 );
 		prim->PushLuaInstance ( state );
 		lua_settable ( state, -3 );
@@ -298,23 +298,23 @@ void MOAIPartition::PushSortedResultsList ( lua_State* L ) {
 	lua_createtable ( state, total, 0 );
 	
 	// initialize the sort buffer
-	USRadixKey16 < MOAIPrim* > key [ MAX_RESULTS ];
-	USRadixKey16 < MOAIPrim* > swap [ MAX_RESULTS ];
+	USRadixKey16 < MOAIProp2D* > key [ MAX_RESULTS ];
+	USRadixKey16 < MOAIProp2D* > swap [ MAX_RESULTS ];
 	
 	for ( u32 i = 0; i < total; ++i ) {
 	
-		MOAIPrim* prim = this->GetResult ( i );
+		MOAIProp2D* prim = this->GetResult ( i );
 		s16 priority = ( s16 )prim->GetPriority ();
 		key [ i ].mKey = ( s16 )(( priority ^ 0x80000000 ) | ( priority & 0x7fffffff ));
 		key [ i ].mData = prim;
 	}
 
 	// sort
-	USRadixKey16 < MOAIPrim* >* sort = RadixSort16 < MOAIPrim* >( key, swap, total );
+	USRadixKey16 < MOAIProp2D* >* sort = RadixSort16 < MOAIProp2D* >( key, swap, total );
 	
 	for ( u32 i = 0; i < total; ++i ) {
 	
-		MOAIPrim* prim = sort [ i ].mData;
+		MOAIProp2D* prim = sort [ i ].mData;
 		lua_pushnumber ( state, i + 1 );
 		prim->PushLuaInstance ( state );
 		lua_settable ( state, -3 );
@@ -346,12 +346,12 @@ void MOAIPartition::RegisterLuaFuncs ( USLuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIPartition::RemovePrim ( MOAIPrim& prim ) {
+void MOAIPartition::RemovePrim ( MOAIProp2D& prim ) {
 
-	USPartition < MOAIPrim >* partition = prim.GetPartition ();
+	USPartition < MOAIProp2D >* partition = prim.GetPartition ();
 	if ( partition == this ) {
 
-		this->USPartition < MOAIPrim >::RemovePrim ( prim );
+		this->USPartition < MOAIProp2D >::RemovePrim ( prim );
 		prim.Release ();
 	}
 }

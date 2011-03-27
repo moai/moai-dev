@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moaicore/MOAILog.h>
+#include <moaicore/MOAILogMgr.h>
 #include <moaicore/MOAILogMessages.h>
 
 #define REGISTER_LOG_MESSAGE(messageID) state.SetField ( -1, #messageID, ( u32 )messageID );

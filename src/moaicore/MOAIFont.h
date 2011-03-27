@@ -4,7 +4,7 @@
 #ifndef	MOAIFONT_H
 #define	MOAIFONT_H
 
-class MOAIData;
+class MOAIDataBuffer;
 
 //================================================================//
 // MOAIFont
@@ -31,7 +31,7 @@ public:
 	USFont*			Bind				();
 					MOAIFont			();
 					~MOAIFont			();
-	void			LoadFont			( MOAIData& fontImageData, cc8* charCodes );
+	void			LoadFont			( MOAIDataBuffer& fontImageData, cc8* charCodes );
 	void			LoadFont			( cc8* fontImageFileName, cc8* charCodes );
 	void			LoadFontFromTTF		( cc8* filename, cc8* charCodes, float points, u32 dpi );
 	void			RegisterLuaClass	( USLuaState& state );

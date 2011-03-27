@@ -7,7 +7,7 @@
 
 #include <moaicore/MOAIFmod.h>
 
-class MOAIData;
+class MOAIDataBuffer;
 
 //================================================================//
 // MOAIFmodSound
@@ -37,7 +37,7 @@ public:
 	//----------------------------------------------------------------//
 				MOAIFmodSound			();
 				~MOAIFmodSound			();
-	void		Load				( MOAIData& data, bool streaming );
+	void		Load				( MOAIDataBuffer& data, bool streaming );
 	void		Load				( cc8* filename, bool streaming, bool async );
 	void		RegisterLuaClass	( USLuaState& state );
 	void		RegisterLuaFuncs	( USLuaState& state );

@@ -5,7 +5,7 @@
 #include <moaicore/MOAIDebugLines.h>
 #include <moaicore/MOAIInputMgr.h>
 #include <moaicore/MOAINodeMgr.h>
-#include <moaicore/MOAIPrim.h>
+#include <moaicore/MOAIProp2D.h>
 #include <moaicore/MOAISim.h>
 #include <moaicore/MOAIFmod.h>
 #include <aku/AKU.h>
@@ -254,7 +254,7 @@ int MOAISim::_pushRenderPass ( lua_State* L ) {
 	USLuaState state ( L );
 	if ( !state.CheckParams ( 1, "U" )) return 0;
 	
-	MOAIPrim* prim = state.GetLuaData < MOAIPrim >( 1 );
+	MOAIProp2D* prim = state.GetLuaData < MOAIProp2D >( 1 );
 	if ( !prim ) return 0;
 	
 	MOAISim& device = MOAISim::Get ();
@@ -264,29 +264,7 @@ int MOAISim::_pushRenderPass ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>serializeToString ( data )</tt>\n
-\n
-	Converts a lua data type to a string.  Useful for sending script to a server.
-	@param data The data to be sent.  Can be a table.
-	@return The string of converted script.
-*/
-int MOAISim::_serializeToString ( lua_State* L ) {
-
-	USLuaState state ( L );
-	if ( !state.CheckParams ( 1, "U" )) return 0;
-	if ( !( state.IsType ( 1, LUA_TTABLE ) || state.IsType ( 1, LUA_TUSERDATA ))) return 0;
-
-	USLuaSerializer serializer;
-	serializer.Affirm ( state, 1 );
-	serializer.AddLuaReturn ( state, 1 );
-	STLString result = serializer.SerializeToString ();
-
-	lua_pushstring ( state, result );
-
-	return 1;
-}
-
-//----------------------------------------------------------------//
+// TODO: doxygen
 int MOAISim::_setClearColor ( lua_State* L ) {
 
 	USLuaState state ( L );
@@ -308,6 +286,7 @@ int MOAISim::_setClearColor ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
 int MOAISim::_setClearDepth ( lua_State* L ) {
 
 	USLuaState state ( L );
@@ -411,14 +390,14 @@ void MOAISim::PauseMOAI () {
 void MOAISim::PopRenderPass () {
 
 	if ( this->mRenderPasses.Count ()) {
-		MOAIPrim* prim = this->mRenderPasses.Back ();
+		MOAIProp2D* prim = this->mRenderPasses.Back ();
 		this->mRenderPasses.PopBack ();
 		prim->Release ();
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAISim::PushRenderPass ( MOAIPrim* prim ) {
+void MOAISim::PushRenderPass ( MOAIProp2D* prim ) {
 
 	if ( prim ) {
 		if ( !this->mRenderPasses.Contains ( prim )) {
@@ -446,7 +425,6 @@ void MOAISim::RegisterLuaClass ( USLuaState& state ) {
 		{ "pauseTimer",					_pauseTimer },
 		{ "popRenderPass",				_popRenderPass },
 		{ "pushRenderPass",				_pushRenderPass },
-		{ "serializeToString",			_serializeToString },
 		{ "setClearColor",				_setClearColor },
 		{ "setClearDepth",				_setClearDepth },
 		{ "setFrameSize",				_setFrameSize },
@@ -481,7 +459,7 @@ void MOAISim::Render () {
 
 	RenderPassIt passIt = this->mRenderPasses.Head ();
 	for ( ; passIt; passIt = passIt->Next ()) {
-		MOAIPrim* renderPass = passIt->Data ();
+		MOAIProp2D* renderPass = passIt->Data ();
 		USCanvas::BeginDrawing ();
 		renderPass->Draw ();
 	}

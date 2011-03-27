@@ -1,13 +1,13 @@
 print ( "hello, gsl!" )
 
-texture = MOAITexture.new ()
-texture:load ( "cathead.png" )
+texture = MOAIGfxQuad2D.new ()
+texture:setTexture ( "cathead.png" )
 texture:setRect ( -64, -64, 64, 64 )
 
 function addBtn ( scene, name, x, y, priority )
 
-	sprite = MOAISprite2D.new ()
-	sprite:setGfxSource ( texture )
+	sprite = MOAIProp2D.new ()
+	sprite:setDeck ( texture )
 	sprite:setPriority ( priority )
 	sprite:setLoc ( x, y )
 	
@@ -26,7 +26,7 @@ viewport:setSize ( 320, 480 )
 viewport:setScale ( 320, 0 )
 scene:setViewport ( viewport )
 
-camera = MOAICamera2D.new ()
+camera = MOAITransform2D.new ()
 scene:setCamera ( camera )
 
 addBtn ( scene, "btn1.png", -0, -0, 2 )

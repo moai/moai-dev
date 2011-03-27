@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moaicore/MOAIForceAction.h>
+#include <moaicore/MOAIEaseDriver.h>
 #include <moaicore/MOAINode.h>
 #include <moaicore/MOAINodeHarness.h>
 #include <moaicore/MOAINodeMgr.h>
@@ -104,7 +104,7 @@ int MOAINode::_getAttr ( lua_State* L ) {
 //----------------------------------------------------------------//
 /**	@brief <tt>( action ) moveAttr ( self, attributeID, value, delay, [mode])</tt>\n
 \n
-	Returns a MOAIForceAction configured to add a value to an attribute over a delay.
+	Returns a MOAIEaseDriver configured to add a value to an attribute over a delay.
 	@param self (in)
 	@param attributeID (in)
 	@param value (in)
@@ -115,7 +115,7 @@ int MOAINode::_getAttr ( lua_State* L ) {
 int MOAINode::_moveAttr ( lua_State* L ) {
 	LUA_SETUP ( MOAINode, "UNNN" )
 
-	MOAIForceAction* action = new MOAIForceAction ();
+	MOAIEaseDriver* action = new MOAIEaseDriver ();
 	action->ReserveForces ( 1 );
 	
 	u32 attrID		= state.GetValue < u32 >( 2, 0 );
@@ -149,7 +149,7 @@ int MOAINode::_scheduleUpdate ( lua_State* L ) {
 //----------------------------------------------------------------//
 /**	@brief <tt>( action ) moveAttr ( self, attributeID, value, delay, [mode])</tt>\n
 \n
-	Returns a MOAIForceAction configured to add a delta to an attribute over a delay to reach a value.
+	Returns a MOAIEaseDriver configured to add a delta to an attribute over a delay to reach a value.
 	@param self (in)
 	@param attributeID (in)
 	@param value (in)
@@ -160,7 +160,7 @@ int MOAINode::_scheduleUpdate ( lua_State* L ) {
 int MOAINode::_seekAttr ( lua_State* L ) {
 	LUA_SETUP ( MOAINode, "UNNN" )
 
-	MOAIForceAction* action = new MOAIForceAction ();
+	MOAIEaseDriver* action = new MOAIEaseDriver ();
 	action->ReserveForces ( 1 );
 	
 	u32 attrID		= state.GetValue < u32 >( 2, 0 );
@@ -215,7 +215,7 @@ int MOAINode::_setAttr ( lua_State* L ) {
 	\li \c ATTR_Z_ROT - Rotation of the object about its origin.
 	\li \c ATTR_X_SCL - Scaling of the object along its X-axis.
 	\li \c ATTR_Y_SCL - Scaling of the object along its Y-axis.
-	\li \c ATTR_BRUSH_ID - Index of a MOAIBrush in a MOAISpriteLibrary.
+	\li \c ATTR_BRUSH_ID - Index of a MOAIBrush in a MOAIGfxQuadListDeck2D.
 	@param sourceNode Object to link to.
 	@param sourceAttribute Attribute of the object you are linking to to connect to.
 	\li \c ATTR_TIME - The time of a MOAITimer object.
