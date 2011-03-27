@@ -24,7 +24,7 @@ textbox:setFont ( font )
 textbox:setTextSize ( font:getScale ())
 textbox:setRect ( -160, 0, 160, 200 )
 textbox:setYFlip ( true )
-layer:insertPrim ( textbox )
+layer:insertProp ( textbox )
 
 MOAISim.openWindow ( "textbox", 320, 480 )
 

@@ -41,7 +41,7 @@ grid:setTile ( 1, 1, 0x40000000 )
 tilemap = MOAIProp2D.new ()
 tilemap:setDeck ( spriteLib )
 tilemap:setGrid ( grid )
-partition:insertPrim ( tilemap )
+partition:insertProp ( tilemap )
 
 tilemap:moveRot ( 360, 1.5 )
 tilemap:moveLoc ( -320, 0, 3 )

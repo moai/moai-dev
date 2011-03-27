@@ -254,11 +254,11 @@ int MOAISim::_pushRenderPass ( lua_State* L ) {
 	USLuaState state ( L );
 	if ( !state.CheckParams ( 1, "U" )) return 0;
 	
-	MOAIProp2D* prim = state.GetLuaData < MOAIProp2D >( 1 );
-	if ( !prim ) return 0;
+	MOAIProp2D* prop = state.GetLuaData < MOAIProp2D >( 1 );
+	if ( !prop ) return 0;
 	
 	MOAISim& device = MOAISim::Get ();
-	device.PushRenderPass ( prim );
+	device.PushRenderPass ( prop );
 	
 	return 0;
 }
@@ -390,19 +390,19 @@ void MOAISim::PauseMOAI () {
 void MOAISim::PopRenderPass () {
 
 	if ( this->mRenderPasses.Count ()) {
-		MOAIProp2D* prim = this->mRenderPasses.Back ();
+		MOAIProp2D* prop = this->mRenderPasses.Back ();
 		this->mRenderPasses.PopBack ();
-		prim->Release ();
+		prop->Release ();
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAISim::PushRenderPass ( MOAIProp2D* prim ) {
+void MOAISim::PushRenderPass ( MOAIProp2D* prop ) {
 
-	if ( prim ) {
-		if ( !this->mRenderPasses.Contains ( prim )) {
-			prim->Retain ();
-			this->mRenderPasses.PushBack ( prim );
+	if ( prop ) {
+		if ( !this->mRenderPasses.Contains ( prop )) {
+			prop->Retain ();
+			this->mRenderPasses.PushBack ( prop );
 		}
 	}
 }

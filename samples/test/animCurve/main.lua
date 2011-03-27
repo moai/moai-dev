@@ -18,7 +18,7 @@ texture:setRect ( -64, -64, 64, 64 )
 
 sprite = MOAIProp2D.new ()
 sprite:setDeck ( texture )
-partition:insertPrim ( sprite )
+partition:insertProp ( sprite )
 
 curve = MOAIAnimCurve.new ()
 curve:reserveKeys ( 2 )

@@ -12,7 +12,7 @@ tileLib:setRect ( -16, -16, 16, 16 )
 
 sprite = MOAIProp2D.new ()
 sprite:setDeck ( tileLib )
-scene:insertPrim ( sprite )
+scene:insertProp ( sprite )
 
 curve = MOAIAnimCurve.new ()
 

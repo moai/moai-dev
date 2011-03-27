@@ -7,12 +7,12 @@ local timeline
 
 local function insertProps ( self, layer )
 
-	layer:insertPrim ( self.prop )
+	layer:insertProp ( self.prop )
 end
 
 local function removeProps ( self, layer )
 
-	layer:removePrim ( self.prop )
+	layer:removeProp ( self.prop )
 end
 
 local function newPlayer ( self )

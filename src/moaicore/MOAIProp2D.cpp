@@ -70,7 +70,7 @@ int	MOAIProp2D::_inside ( lua_State* L ) {
 //----------------------------------------------------------------//
 /**	@brief <tt>setGfxSource ( self, lib )</tt>\n
 	\n
-	Associates a library with the prim.
+	Associates a library with the prop.
 	@param self (in)
 	@param lib (in) Library to be used.
 */
@@ -92,7 +92,7 @@ int MOAIProp2D::_setDeck ( lua_State* L ) {
 //----------------------------------------------------------------//
 /**	@brief <tt>() setFrame ( self, left, top, right, bottom )</tt>\n
 \n
-	Directly sets prim's frame rectangle.
+	Directly sets prop's frame rectangle.
 	@param self (in)
 	@param left (in)
 	@param top (in)
@@ -507,7 +507,7 @@ void MOAIProp2D::OnDepNodeUpdate () {
 	// then, if *scaling* to frame, just compute the matrix and prepend
 	// if *stretching* to frame, compute the translation matrix and store the stretch factor
 	// not all prims can stretch, btw... but that is their problem
-	// the stretched/scaled prim should align with its parent frame only when using the identity transform
+	// the stretched/scaled prop should align with its parent frame only when using the identity transform
 	// any additional transforms are applied *after* the fit; better for animated widgets, etc.
 	
 	// this is sort of a pain in the butt, but should be worth it
@@ -553,7 +553,7 @@ void MOAIProp2D::OnDepNodeUpdate () {
 	// inherit parent and offset transforms (and compute the inverse)
 	this->BuildTransforms ( offset.mX, offset.mY, stretch.mX, stretch.mY );
 	
-	// update the prim location in the partition
+	// update the prop location in the partition
 	// use the local frame; world transform will match it to target frame
 	switch ( frameStatus ) {
 		case BOUNDS_EMPTY:

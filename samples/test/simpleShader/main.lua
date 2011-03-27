@@ -24,6 +24,6 @@ sprite:setDeck ( texture )
 sprite:setShader ( shader2 )
 sprite:moveRot ( 360, 1.5 )
 
-layer:insertPrim ( sprite )
+layer:insertProp ( sprite )
 MOAISim.pushRenderPass ( layer )
 MOAISim.openWindow ( "cathead", 320, 480 )

@@ -26,7 +26,7 @@ uvTransform:moveScl ( 1, 1, 3 )
 sprite = MOAIProp2D.new ()
 sprite:setDeck ( texture )
 sprite:setUVTransform ( uvTransform )
-partition:insertPrim ( sprite )
+partition:insertProp ( sprite )
 
 sprite:moveRot ( -360, 2 )
 sprite:moveScl ( 1.5, 1.5, 3 )

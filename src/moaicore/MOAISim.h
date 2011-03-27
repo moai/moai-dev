@@ -87,7 +87,7 @@ public:
 				~MOAISim					();
 	void		PauseMOAI					();
 	void		PopRenderPass				();
-	void		PushRenderPass				( MOAIProp2D* prim );
+	void		PushRenderPass				( MOAIProp2D* prop );
 	void		RegisterLuaClass			( USLuaState& state );
 	void		Render						();
 	void		ResumeMOAI					();

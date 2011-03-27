@@ -18,7 +18,7 @@
 	@param self (in)
 	@param prop (in)
 */
-int MOAIPartition::_insertPrim ( lua_State* L ) {
+int MOAIPartition::_insertProp ( lua_State* L ) {
 	LUA_SETUP ( MOAIPartition, "UU" )
 
 	MOAIProp* prop = state.GetLuaData < MOAIProp >( 2 );
@@ -38,7 +38,7 @@ int MOAIPartition::_insertPrim ( lua_State* L ) {
 	@param y (in)
 	@param prop (out) The primitive, or 'nil' if none found.
 */
-int MOAIPartition::_primForPoint ( lua_State* L ) {
+int MOAIPartition::_propForPoint ( lua_State* L ) {
 	LUA_SETUP ( MOAIPartition, "UNN" )
 
 	USVec2D vec;
@@ -69,7 +69,7 @@ int MOAIPartition::_primForPoint ( lua_State* L ) {
 	@param y (in)
 	@param prims (out) Found primitives, pushed onto stack. (TODO: change to list)
 */
-int MOAIPartition::_primListForPoint ( lua_State* L ) {
+int MOAIPartition::_propListForPoint ( lua_State* L ) {
 	LUA_SETUP ( MOAIPartition, "UNN" )
 
 	USVec2D vec;
@@ -95,7 +95,7 @@ int MOAIPartition::_primListForPoint ( lua_State* L ) {
 	@param yMax (in)
 	@param prims (out) Found primitives, pushed onto stack. (TODO: change to list)
 */
-int MOAIPartition::_primListForRect ( lua_State* L ) {
+int MOAIPartition::_propListForRect ( lua_State* L ) {
 	LUA_SETUP ( MOAIPartition, "UNNNN" )
 
 	USRect rect;
@@ -119,7 +119,7 @@ int MOAIPartition::_primListForRect ( lua_State* L ) {
 	@param self (in)
 	@param prop (in)
 */
-int MOAIPartition::_removePrim ( lua_State* L ) {
+int MOAIPartition::_removeProp ( lua_State* L ) {
 	LUA_SETUP ( MOAIPartition, "UU" )
 
 	MOAIProp* prop = state.GetLuaData < MOAIProp >( 2 );
@@ -179,7 +179,7 @@ int MOAIPartition::_setLayer ( lua_State* L ) {
 	@param y (in)
 	@param prims (out) Found primitives, pushed onto stack. (TODO: change to list)
 */
-int MOAIPartition::_sortedPrimListForPoint ( lua_State* L ) {
+int MOAIPartition::_sortedPropListForPoint ( lua_State* L ) {
 	LUA_SETUP ( MOAIPartition, "UNN" )
 
 	USVec2D vec;
@@ -205,7 +205,7 @@ int MOAIPartition::_sortedPrimListForPoint ( lua_State* L ) {
 	@param yMax (in)
 	@param prims (out) Found primitives, pushed onto stack. (TODO: change to list)
 */
-int MOAIPartition::_sortedPrimListForRect ( lua_State* L ) {
+int MOAIPartition::_sortedPropListForRect ( lua_State* L ) {
 	LUA_SETUP ( MOAIPartition, "UNNNN" )
 
 	USRect rect;
@@ -407,15 +407,15 @@ void MOAIPartition::RegisterLuaClass ( USLuaState& state ) {
 void MOAIPartition::RegisterLuaFuncs ( USLuaState& state ) {
 	
 	LuaReg regTable [] = {
-		{ "insertPrim",					_insertPrim },
-		{ "primForPoint",				_primForPoint },
-		{ "primListForPoint",			_primListForPoint },
-		{ "primListForRect",			_primListForRect },
-		{ "removePrim",					_removePrim },
+		{ "insertProp",					_insertProp },
+		{ "propForPoint",				_propForPoint },
+		{ "propListForPoint",			_propListForPoint },
+		{ "propListForRect",			_propListForRect },
+		{ "removePrio",					_removeProp },
 		{ "reserveLayers",				_reserveLayers },
 		{ "setLayer",					_setLayer },
-		{ "sortedPrimListForPoint",		_sortedPrimListForPoint },
-		{ "sortedPrimListForRect",		_sortedPrimListForRect },
+		{ "sortedPropListForPoint",		_sortedPropListForPoint },
+		{ "sortedPropListForRect",		_sortedPropListForRect },
 		{ NULL, NULL }
 	};
 	

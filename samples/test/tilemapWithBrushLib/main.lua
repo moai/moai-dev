@@ -32,7 +32,7 @@ tilemap = MOAIProp2D.new ()
 tilemap:setDeck ( brushlib )
 tilemap:setGrid ( grid )
 tilemap:setRepeat ( true )
-partition:insertPrim ( tilemap )
+partition:insertProp ( tilemap )
 
 tilemap:moveRot ( 360, 1.5 )
 tilemap:moveLoc ( -320, 0, 3 )

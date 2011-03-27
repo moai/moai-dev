@@ -20,7 +20,7 @@ class MOAILayer2D :
 	public virtual MOAIProp2D {
 private:
 
-	USRef < MOAITransform >	mCamera;
+	USRef < MOAITransform >		mCamera;
 	USRef < MOAIViewport >		mViewport;
 	USRef < MOAIPartition >		mPartition;
 
@@ -33,14 +33,13 @@ private:
 	#endif
 
 	USVec2D						mParallax;
-
 	bool						mShowDebugLines;
 
 	//----------------------------------------------------------------//
 	static int	_getFitting			( lua_State* L );
 	static int	_getPartition		( lua_State* L );
-	static int	_insertPrim			( lua_State* L );
-	static int	_removePrim			( lua_State* L );
+	static int	_insertProp			( lua_State* L );
+	static int	_removeProp			( lua_State* L );
 	static int	_setBox2DWorld		( lua_State* L );
 	static int	_setCamera			( lua_State* L );
 	static int	_setCpSpace			( lua_State* L );

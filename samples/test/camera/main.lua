@@ -18,7 +18,7 @@ texture:setRect ( -64, -64, 64, 64 )
 
 sprite = MOAIProp2D.new ()
 sprite:setDeck ( texture )
-scene:insertPrim ( sprite )
+scene:insertProp ( sprite )
 
 camera:moveLoc ( 128, 0, 3 )
 camera:moveRot ( 180, 3 )

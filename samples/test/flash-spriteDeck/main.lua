@@ -65,7 +65,7 @@ spriteLib = spriteLibs [ 1 ]
 sprite = MOAIProp2D.new ()
 sprite:setDeck ( spriteLib )
 
-layer:insertPrim ( sprite )
+layer:insertProp ( sprite )
 
 function onMouseLeftEvent ( down )
 	if MOAIInputMgr.device.mouseLeft:down () then

@@ -29,7 +29,7 @@ textbox:setFont ( verdana )
 textbox:setTextSize ( verdana:getScale ())
 textbox:setRect ( -150, 134, 150, 230 )
 textbox:setYFlip ( true )
-partition:insertPrim ( textbox )
+partition:insertProp ( textbox )
 
 textbox:spool ()
 textbox:setRect ( -150, -230, 150, 230 )

@@ -13,7 +13,7 @@
 //----------------------------------------------------------------//
 /**	@brief <tt>( priority ) getPriority ( self )</tt>\n
 \n
-	Returns current rendering priority of prim.
+	Returns current rendering priority of prop.
 	@param self (in)
 	@param priority (out)
 */

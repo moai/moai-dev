@@ -11,7 +11,7 @@ function addBtn ( scene, name, x, y, priority )
 	sprite:setPriority ( priority )
 	sprite:setLoc ( x, y )
 	
-	partition:insertPrim ( sprite )
+	partition:insertProp ( sprite )
 
 end
 

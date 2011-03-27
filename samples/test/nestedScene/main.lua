@@ -24,7 +24,7 @@ function makeScene ()
 	tilemap:setDeck ( tileset )
 	tilemap:setGrid ( grid )
 	tilemap:setRepeat ( true )
-	scene:insertPrim ( tilemap )
+	scene:insertProp ( tilemap )
 
 	tilemap:moveRot ( 360, 2 )
 	
@@ -55,10 +55,10 @@ viewport:setScale ( 256, 256 )
 scene:setViewport ( viewport )
 
 cathead = makeCathead ()
-scene:insertPrim ( cathead )
+scene:insertProp ( cathead )
 
 innerScene = makeScene ()
 innerScene:setParent ( cathead );
-scene:insertPrim ( innerScene )
+scene:insertProp ( innerScene )
 
 MOAISim.openWindow ( "tilemap", 256, 256 )

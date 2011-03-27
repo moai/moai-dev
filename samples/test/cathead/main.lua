@@ -14,7 +14,7 @@ gfxQuad:setRect ( -64, -64, 64, 64 )
 prop = MOAIProp2D.new ()
 prop:setDeck ( gfxQuad )
 prop:moveRot ( 360, 1.5 )
-layer:insertPrim ( prop )
+layer:insertProp ( prop )
 
 MOAISim.pushRenderPass ( layer )
 MOAISim.openWindow ( "cathead", 320, 480 )

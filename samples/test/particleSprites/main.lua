@@ -21,4 +21,4 @@ system:setDeck ( texture )
 
 system:pushSprite ( 0, 0 )
 
-layer:insertPrim ( system )
+layer:insertProp ( system )

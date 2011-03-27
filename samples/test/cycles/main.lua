@@ -11,8 +11,8 @@ layer = MOAILayer2D.new ()
 sprite = MOAIProp2D.new ()
 transform = MOAITransform2D.new ()
 
-layer:insertPrim ( sprite )
-layer:insertPrim ( sprite )
+layer:insertProp ( sprite )
+layer:insertProp ( sprite )
 sprite:setParent ( layer )
 sprite:setParent ( transform )
 

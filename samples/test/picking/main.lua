@@ -25,7 +25,7 @@ function addSprite ( x, y, xScl, yScl, name )
 	sprite:setScl ( xScl, yScl )
 	sprite.name = name
 	--table.insert ( sprites, sprite )
-	partition:insertPrim ( sprite )
+	partition:insertProp ( sprite )
 end
 
 addSprite ( -64, 64, 0.5, 0.5, "sprite1" )
@@ -37,7 +37,7 @@ addSprite ( -64, -64, 0.5, 0.5, "sprite5" )
 mouseX = 0
 mouseY = 0
 
-priority = 1
+priority = 5
 
 local function printf ( ... )
 	return io.stdout:write ( string.format ( ... ))
@@ -62,7 +62,7 @@ MOAIInputMgr.device.mouseLeft:setCallback (
 	
 		if down then
 			
-			pick = partition:primForPoint ( mouseX, mouseY )
+			pick = partition:propForPoint ( mouseX, mouseY )
 			
 			if pick then
 				print ( pick.name )

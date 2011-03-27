@@ -41,7 +41,7 @@ sprite:setParent ( frame )
 --sprite:setFrame ( -64, 64, 128, 128 )
 --sprite:setFrameSource ( MOAIProp2D.FRAME_FROM_DEFINE )
 
-scene:insertPrim ( sprite )
+scene:insertProp ( sprite )
 
 ----------------------------------------------------------------
 -- set us up the ninepatch
@@ -69,7 +69,7 @@ sprite:setDeck ( ninePatch )
 sprite:setParent ( frame )
 --sprite:setFrame ( -64, -64, 192, 64 )
 --sprite:setFrameSource ( MOAIProp2D.FRAME_FROM_DEFINE )
-scene:insertPrim ( sprite )
+scene:insertProp ( sprite )
 ]]--
 
 frame:layout ()

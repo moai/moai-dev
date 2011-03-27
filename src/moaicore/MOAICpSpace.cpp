@@ -284,7 +284,7 @@ int MOAICpSpace::_getStaticBody ( lua_State* L ) {
 	@param self (in)
 	@param y (out)
 */
-int MOAICpSpace::_insertPrim ( lua_State* L ) {
+int MOAICpSpace::_insertProp ( lua_State* L ) {
 	LUA_SETUP ( MOAICpSpace, "UU" )
 	
 	MOAICpPrim* prim = state.GetLuaData < MOAICpPrim >( 2 );
@@ -332,7 +332,7 @@ int MOAICpSpace::_rehashStatic ( lua_State* L ) {
 	@param self (in)
 	@param y (out)
 */
-int MOAICpSpace::_removePrim ( lua_State* L ) {
+int MOAICpSpace::_removeProp ( lua_State* L ) {
 	LUA_SETUP ( MOAICpSpace, "UU" )
 	
 	MOAICpPrim* prim = state.GetLuaData < MOAICpPrim >( 2 );
@@ -856,10 +856,10 @@ void MOAICpSpace::RegisterLuaFuncs ( USLuaState& state ) {
 		{ "getIterations",					_getIterations },
 		{ "getSleepTimeThreshold",			_getSleepTimeThreshold },
 		{ "getStaticBody",					_getStaticBody },
-		{ "insertPrim",						_insertPrim },
+		{ "insertPrim",						_insertProp },
 		{ "rehashShape",					_rehashShape },
 		{ "rehashStatic",					_rehashStatic },
-		{ "removePrim",						_removePrim },
+		{ "removePrim",						_removeProp },
 		{ "resizeActiveHash",				_resizeActiveHash },
 		{ "resizeStaticHash",				_resizeStaticHash },
 		{ "setCollisionHandler",			_setCollisionHandler },

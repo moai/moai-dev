@@ -18,7 +18,7 @@ texture:setRect ( -64, -64, 64, 64 )
 sprite:setDeck ( texture )
 
 partition = MOAIPartition.new ()
-partition:insertPrim ( sprite )
+partition:insertProp ( sprite )
 scene:setPartition ( partition )
 
 thread = MOAIThread.new ()

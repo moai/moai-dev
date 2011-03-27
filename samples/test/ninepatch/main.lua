@@ -37,7 +37,7 @@ sprite:setFrame ( -128, -128, 128, 128 )
 sprite:setFrameSource ( MOAIProp2D.FRAME_FROM_DEFINE )
 sprite:setIndex ( 2 )
 sprite:moveRot ( 360, 1.5 )
-scene:insertPrim ( sprite )
+scene:insertProp ( sprite )
 
 ----------------------------------------------------------------
 MOAISim.openWindow ( "ninepatch", 320, 480 )

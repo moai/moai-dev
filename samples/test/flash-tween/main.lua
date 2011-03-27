@@ -8,14 +8,14 @@ local timeline
 local function insertProps ( self, layer )
 
 	for i, v in ipairs ( self.props ) do
-		layer:insertPrim ( v )
+		layer:insertProp ( v )
 	end
 end
 
 local function removeProps ( self, layer )
 
 	for i, v in ipairs ( self.props ) do
-		layer:removePrim ( v )
+		layer:removeProp ( v )
 	end
 end
 
@@ -187,5 +187,5 @@ prop = MOAIProp2D.new ()
 prop:setGfxSource ( texture )
 prop:moveRot ( 360, 1.5 )
 
-layer:insertPrim ( prop )
+layer:insertProp ( prop )
 ]]--

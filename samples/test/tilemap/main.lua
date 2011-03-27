@@ -31,7 +31,7 @@ tilemap:setDeck ( tileset )
 tilemap:setGrid ( grid )
 tilemap:setLoc ( -128, 128 )
 tilemap:setRepeat ( true ) -- wrap the tilemap when drawing
-scene:insertPrim ( tilemap )
+scene:insertProp ( tilemap )
 
 tilemap:moveRot ( 360, 1.5 )
 tilemap:moveLoc ( -512, 0, 3 )

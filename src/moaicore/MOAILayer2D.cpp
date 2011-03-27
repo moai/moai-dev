@@ -76,7 +76,7 @@ int	MOAILayer2D::_getPartition ( lua_State* L ) {
 	@param self (in)
 	@param prim (in)
 */
-int	MOAILayer2D::_insertPrim ( lua_State* L ) {
+int	MOAILayer2D::_insertProp ( lua_State* L ) {
 	LUA_SETUP ( MOAILayer2D, "UU" )
 
 	MOAIProp2D* prop = state.GetLuaData < MOAIProp2D >( 2 );
@@ -96,7 +96,7 @@ int	MOAILayer2D::_insertPrim ( lua_State* L ) {
 	@param self (in)
 	@param prim (in)
 */
-int	MOAILayer2D::_removePrim ( lua_State* L ) {
+int	MOAILayer2D::_removeProp ( lua_State* L ) {
 	LUA_SETUP ( MOAILayer2D, "UU" )
 
 	MOAIProp2D* prop = state.GetLuaData < MOAIProp2D >( 2 );
@@ -354,10 +354,10 @@ void MOAILayer2D::Draw () {
 		USRadixKey16 < MOAIProp* > swap [ MAX_RENDERABLES ];
 		
 		u32 count = 0;
-		while ( MOAIProp* prim = this->mPartition->PopResult ()) {
-			s16 priority = ( s16 )prim->GetPriority ();
+		while ( MOAIProp* prop = this->mPartition->PopResult ()) {
+			s16 priority = ( s16 )prop->GetPriority ();
 			key [ count ].mKey = (( priority ^ 0x8000 ) | ( priority & 0x7fff ));
-			key [ count ].mData = prim;
+			key [ count ].mData = prop;
 			count++;
 		}
 
@@ -366,9 +366,9 @@ void MOAILayer2D::Draw () {
 
 		// render the sorted list
 		for ( u32 i = 0; i < count; ++i ) {
-			MOAIProp* prim = sort [ i ].mData;
-			prim->Draw ();
-			prim->DrawDebug ();
+			MOAIProp* prop = sort [ i ].mData;
+			prop->Draw ();
+			prop->DrawDebug ();
 		}
 	}
 	
@@ -469,8 +469,8 @@ void MOAILayer2D::RegisterLuaFuncs ( USLuaState& state ) {
 	LuaReg regTable [] = {
 		{ "getFitting",				_getFitting },
 		{ "getPartition",			_getPartition },
-		{ "insertPrim",				_insertPrim },
-		{ "removePrim",				_removePrim },
+		{ "insertProp",				_insertProp },
+		{ "removeProp",				_removeProp },
 		{ "setBox2DWorld",			_setBox2DWorld },
 		{ "setCamera",				_setCamera },
 		{ "setCpSpace",				_setCpSpace },

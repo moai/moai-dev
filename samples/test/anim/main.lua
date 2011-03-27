@@ -15,11 +15,11 @@ texture:setRect ( -64, -64, 64, 64 )
 
 prop1 = MOAIProp2D.new ()
 prop1:setDeck ( texture )
-layer:insertPrim ( prop1 )
+layer:insertProp ( prop1 )
 
 prop2 = MOAIProp2D.new ()
 prop2:setDeck ( texture )
-layer:insertPrim ( prop2 )
+layer:insertProp ( prop2 )
 
 curve1 = MOAIAnimCurve.new ()
 curve1:reserveKeys ( 2 )

@@ -35,15 +35,15 @@ private:
 	static const s32	PRIORITY_MASK = 0x7fffffff;
 
 	//----------------------------------------------------------------//
-	static int		_insertPrim					( lua_State* L );
-	static int		_primForPoint				( lua_State* L );
-	static int		_primListForPoint			( lua_State* L );
-	static int		_primListForRect			( lua_State* L );
-	static int		_removePrim					( lua_State* L );
+	static int		_insertProp					( lua_State* L );
+	static int		_propForPoint				( lua_State* L );
+	static int		_propListForPoint			( lua_State* L );
+	static int		_propListForRect			( lua_State* L );
+	static int		_removeProp					( lua_State* L );
 	static int		_reserveLayers				( lua_State* L );
 	static int		_setLayer					( lua_State* L );
-	static int		_sortedPrimListForPoint		( lua_State* L );
-	static int		_sortedPrimListForRect		( lua_State* L );
+	static int		_sortedPropListForPoint		( lua_State* L );
+	static int		_sortedPropListForRect		( lua_State* L );
 
 	//----------------------------------------------------------------//
 	void			AffirmPriority			( MOAIProp& prop );

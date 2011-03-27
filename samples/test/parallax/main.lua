@@ -26,11 +26,11 @@ texture:setRect ( -64, -64, 64, 64 )
 sprite = MOAIProp2D.new ()
 sprite:setDeck ( texture )
 sprite:setScl ( 0.75, 0.75 )
-layer1:insertPrim ( sprite )
+layer1:insertProp ( sprite )
 
 sprite = MOAIProp2D.new ()
 sprite:setDeck ( texture )
-layer2:insertPrim ( sprite )
+layer2:insertProp ( sprite )
 
 MOAISim.setClearColor ( 1, 0, 0, 1 )
 MOAISim.openWindow ( "cathead", 480, 480 )
