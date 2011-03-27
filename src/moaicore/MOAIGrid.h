@@ -10,7 +10,7 @@
 /**	@brief Grid data object.
 */
 class MOAIGrid :
-	public USLuaData,
+	public USLuaObject,
 	public USGridSpace {
 private:
 
@@ -31,7 +31,7 @@ private:
 
 public:
 	
-	DECL_LUA_DATA ( MOAIGrid )
+	DECL_LUA_FACTORY ( MOAIGrid )
 	
 	//----------------------------------------------------------------//
 	u32				GetTile				( int xTile, int yTile );

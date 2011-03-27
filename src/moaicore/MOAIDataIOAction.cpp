@@ -42,7 +42,7 @@ void MOAIDataIOAction::Finished ( USDataIOTask* task ) {
 		USLuaStateHandle state = USLuaRuntime::Get ().State ();
 		
 		this->mOnFinish.PushRef ( state );
-		this->mData->PushLuaInstance ( state );
+		this->mData->PushLuaUserdata ( state );
 		state.DebugCall ( 1, 0 );
 	}
 

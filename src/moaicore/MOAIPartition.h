@@ -13,7 +13,7 @@
 /**	@brief Class for optimizing spatial queries against sets of primitives.
 */
 class MOAIPartition :
-	public virtual USLuaData {
+	public virtual USLuaObject {
 private:
 
 	friend class MOAIPartitionCell;
@@ -56,7 +56,7 @@ private:
 
 public:
 	
-	DECL_LUA_DATA ( MOAIPartition )
+	DECL_LUA_FACTORY ( MOAIPartition )
 	
 	GET ( u32, TotalResults, mTotalResults )
 	

@@ -15,7 +15,7 @@ struct cpConstraint;
 /**	@brief Chipmunk Constraint.
 */
 class MOAICpConstraint :
-	public virtual USLuaData,
+	public virtual USLuaObject,
 	public MOAICpPrim {
 private:
 
@@ -47,7 +47,7 @@ public:
 	
 	friend class MOAICpSpace;
 	
-	DECL_LUA_DATA ( MOAICpConstraint )
+	DECL_LUA_FACTORY ( MOAICpConstraint )
 	
 	//----------------------------------------------------------------//
 					MOAICpConstraint		();

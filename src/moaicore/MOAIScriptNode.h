@@ -30,7 +30,7 @@ protected:
 
 public:
 	
-	DECL_LUA_DATA ( MOAIScriptNode )
+	DECL_LUA_FACTORY ( MOAIScriptNode )
 	
 	//----------------------------------------------------------------//
 	void			ApplyAttrOp				( u32 attrID, USAttrOp& attrOp );

@@ -62,7 +62,7 @@ int MOAIBox2DJoint::_getBodyA ( lua_State* L ) {
 	LUA_SETUP ( MOAIBox2DJoint, "U" )
 	
 	MOAIBox2DBody* body = ( MOAIBox2DBody* )self->mJoint->GetBodyA ()->GetUserData ();;
-	body->PushLuaInstance ( state );
+	body->PushLuaUserdata ( state );
 	
 	return 1;
 }
@@ -78,7 +78,7 @@ int MOAIBox2DJoint::_getBodyB ( lua_State* L ) {
 	LUA_SETUP ( MOAIBox2DJoint, "U" )
 	
 	MOAIBox2DBody* body = ( MOAIBox2DBody* )self->mJoint->GetBodyB ()->GetUserData ();;
-	body->PushLuaInstance ( state );
+	body->PushLuaUserdata ( state );
 	
 	return 1;
 }
@@ -195,7 +195,7 @@ MOAIBox2DJoint::MOAIBox2DJoint () :
 	mJoint ( 0 ) {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( USLuaData )
+		RTTI_EXTEND ( USLuaObject )
 	RTTI_END
 }
 

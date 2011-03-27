@@ -14,7 +14,7 @@ class MOAISurfaceSampler2D;
 /**	@brief Base class for content objects.
 */
 class MOAIDeck :
-	public virtual USLuaData {
+	public virtual USLuaObject {
 private:
 
 	USRef < MOAIShader >	mDefaultShader;

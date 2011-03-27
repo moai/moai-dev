@@ -14,7 +14,7 @@ class MOAIDataBuffer;
 /**	@brief Texture class.
 */
 class MOAITexture :
-	public virtual USLuaData,
+	public virtual USLuaObject,
 	public USTexture {
 private:
 
@@ -30,7 +30,7 @@ private:
 
 public:
 	
-	DECL_LUA_DATA ( MOAITexture )
+	DECL_LUA_FACTORY ( MOAITexture )
 	
 	//----------------------------------------------------------------//
 	static MOAITexture*		AffirmTexture			( USLuaState& state, int idx );

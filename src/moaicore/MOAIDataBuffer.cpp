@@ -146,7 +146,7 @@ int MOAIDataBuffer::_loadAsync ( lua_State* L ) {
 	MOAIDataIOAction* action = new MOAIDataIOAction ();
 	action->Init ( filename, self );
 	action->StartLoad ();
-	action->PushLuaInstance( state );
+	action->PushLuaUserdata( state );
 
 	return 1;
 }
@@ -180,7 +180,7 @@ int MOAIDataBuffer::_saveAsync ( lua_State* L ) {
 	MOAIDataIOAction* action = new MOAIDataIOAction ();
 	action->Init ( filename, self );
 	action->StartSave ();
-	action->PushLuaInstance( state );
+	action->PushLuaUserdata( state );
 
 	return 0;
 }
@@ -205,7 +205,7 @@ int MOAIDataBuffer::_setString ( lua_State* L ) {
 //----------------------------------------------------------------//
 MOAIDataBuffer::MOAIDataBuffer () {
 	
-	RTTI_SINGLE ( USLuaData )
+	RTTI_SINGLE ( USLuaObject )
 }
 
 //----------------------------------------------------------------//

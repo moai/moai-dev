@@ -10,7 +10,7 @@
 #include <uslscore/USLuaSerializer.h>
 #include <uslscore/USLuaState.h>
 #include <uslscore/USLuaStateHandle.h>
-#include <uslscore/USLuaData.h>
+#include <uslscore/USLuaObject.h>
 #include <uslscore/USLuaRuntime.h>
 #include <uslscore/USLuaRef.h>
 
@@ -43,7 +43,7 @@ int USLuaSerializer::_exportToString ( lua_State* L ) {
 int USLuaSerializer::_initInstance ( lua_State* L ) {
 	LUA_SETUP ( USLuaSerializer, "UUT" );
 
-	USLuaData* object = state.GetLuaData < USLuaData >( 2 );
+	USLuaObject* object = state.GetLuaData < USLuaObject >( 2 );
 	if ( !object ) return 0;
 
 	object->SerializeIn ( state, *self );
@@ -55,7 +55,7 @@ int USLuaSerializer::_initInstance ( lua_State* L ) {
 int USLuaSerializer::_register ( lua_State* L ) {
 	LUA_SETUP ( USLuaSerializer, "UUN" );
 
-	USLuaData* object = state.GetLuaData < USLuaData >( 2 );
+	USLuaObject* object = state.GetLuaData < USLuaObject >( 2 );
 	if ( !object ) return 0;
 
 	u32 id = state.GetValue < u32 >( 3, 0 );
@@ -70,7 +70,7 @@ int USLuaSerializer::_register ( lua_State* L ) {
 int USLuaSerializer::_serialize ( lua_State* L ) {
 	LUA_SETUP ( USLuaSerializer, "U" )
 
-	USLuaData* object = state.GetLuaData < USLuaData >( 2 );
+	USLuaObject* object = state.GetLuaData < USLuaObject >( 2 );
 	if ( object ) {
 		self->Affirm ( object );
 		self->AddLuaReturn ( object );
@@ -108,7 +108,7 @@ static STLString _escapeString ( cc8* str ) {
 }
 
 //----------------------------------------------------------------//
-void USLuaSerializer::AddLuaReturn ( USLuaData* object ) {
+void USLuaSerializer::AddLuaReturn ( USLuaObject* object ) {
 
 	u32 instanceID = this->GetID ( object );
 
@@ -128,7 +128,7 @@ void USLuaSerializer::AddLuaReturn ( USLuaState& state, int idx ) {
 }
 
 //----------------------------------------------------------------//
-u32 USLuaSerializer::Affirm ( USLuaData* object ) {
+u32 USLuaSerializer::Affirm ( USLuaObject* object ) {
 
 	u32 instanceID = this->GetID ( object );
 	this->Register ( object, instanceID );
@@ -140,7 +140,7 @@ u32 USLuaSerializer::Affirm ( USLuaState& state, int idx ) {
 
 	// if we're an object, affirm as such...
 	if ( state.IsType ( idx, LUA_TUSERDATA )) {
-		return this->Affirm ( state.GetLuaData < USLuaData >( -1 ));
+		return this->Affirm ( state.GetLuaData < USLuaObject >( -1 ));
 	}
 
 	// bail if we're not a table
@@ -174,7 +174,7 @@ void USLuaSerializer::Clear () {
 }
 
 //----------------------------------------------------------------//
-USLuaData* USLuaSerializer::Dereference ( USLuaState& state, int idx ) {
+USLuaObject* USLuaSerializer::Dereference ( USLuaState& state, int idx ) {
 
 	u32 id = state.GetValue ( idx, 0 );
 	
@@ -185,7 +185,7 @@ USLuaData* USLuaSerializer::Dereference ( USLuaState& state, int idx ) {
 }
 
 //----------------------------------------------------------------//
-USLuaData* USLuaSerializer::GetRefField ( USLuaState& state, int idx, cc8* name ) {
+USLuaObject* USLuaSerializer::GetRefField ( USLuaState& state, int idx, cc8* name ) {
 
 	if ( state.GetFieldWithType ( idx, name, LUA_TNUMBER )) {
 		return this->PopRef ( state );
@@ -199,7 +199,7 @@ cc8* USLuaSerializer::GetFileMagic () {
 }
 
 //----------------------------------------------------------------//
-u32 USLuaSerializer::GetID ( USLuaData* object ) {
+u32 USLuaSerializer::GetID ( USLuaObject* object ) {
 
 	return ( u32 )object;
 }
@@ -227,7 +227,7 @@ u32 USLuaSerializer::IsLuaFile ( cc8* filename ) {
 }
 
 //----------------------------------------------------------------//
-USLuaData* USLuaSerializer::PopRef ( USLuaState& state ) {
+USLuaObject* USLuaSerializer::PopRef ( USLuaState& state ) {
 
 	u32 id = state.GetValue < u32 >( -1, 0 );
 	state.Pop ( 1 );
@@ -239,14 +239,14 @@ USLuaData* USLuaSerializer::PopRef ( USLuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void USLuaSerializer::PushRef ( USLuaState& state, USLuaData* object ) {
+void USLuaSerializer::PushRef ( USLuaState& state, USLuaObject* object ) {
 
 	this->Affirm ( object );
 	lua_pushlightuserdata ( state, ( void* )this->GetID ( object ));
 }
 
 //----------------------------------------------------------------//
-void USLuaSerializer::Register ( USLuaData* object, u32 id ) {
+void USLuaSerializer::Register ( USLuaObject* object, u32 id ) {
 
 	if ( !this->mInstanceMap.contains ( id )) {
 	
@@ -289,7 +289,7 @@ u32 USLuaSerializer::SerializeFromFile ( cc8* filename ) {
 	if ( state.PrintErrors ( status )) return LOAD_ERROR;
 	
 	// load self as the func param
-	this->PushLuaInstance ( state );
+	this->PushLuaUserdata ( state );
 	
 	// call the chunk
 	if ( state.DebugCall ( 1, 0 )) return LUA_ERROR;
@@ -342,7 +342,7 @@ void USLuaSerializer::SerializeToStream ( USStream& stream ) {
 }
 
 //----------------------------------------------------------------//
-void USLuaSerializer::SetRefField ( USLuaState& state, int idx, cc8* name, USLuaData* object ) {
+void USLuaSerializer::SetRefField ( USLuaState& state, int idx, cc8* name, USLuaObject* object ) {
 
 	if ( state.IsType ( idx, LUA_TTABLE )) {
 		
@@ -387,12 +387,12 @@ void USLuaSerializer::WriteInstanceDecls ( USStream& stream ) {
 	instanceIt = this->mInstanceMap.begin ();
 	for ( ; instanceIt != this->mInstanceMap.end (); ++instanceIt ) {
 		
-		USLuaData* object = instanceIt->second;
+		USLuaObject* object = instanceIt->second;
 		if ( !object ) continue;
 		
 		u32 id = this->GetID ( object );
 		
-		USLuaDataType* type = object->GetLuaDataType ();
+		USLuaClass* type = object->GetLuaClass ();
 		if ( !type->IsSingleton ()) {
 			stream.Print ( "\t[ 0x%08X ] = serializer:register ( %s.new (), 0x%08X ),\n", id, object->TypeName (), id );
 		}
@@ -407,14 +407,14 @@ void USLuaSerializer::WriteInstanceInits ( USStream& stream ) {
 	
 	while ( this->mPending.size ()) {
 	
-		USLuaData* object = this->mPending.front ();
+		USLuaObject* object = this->mPending.front ();
 		assert ( object );
 		this->mPending.pop_front ();
 		
 		u32 id = this->GetID ( object );
 		stream.Print ( "\t--%s\n", object->TypeName ());
 		
-		USLuaDataType* type = object->GetLuaDataType ();
+		USLuaClass* type = object->GetLuaClass ();
 		if ( type->IsSingleton ()) {
 			stream.Print ( "\tserializer:initInstance ( %s.get (), {", object->TypeName ());
 		}
@@ -597,7 +597,7 @@ u32 USLuaSerializer::WriteTableInitializer ( USStream& stream, USLuaState& state
 				break;
 			}
 			case LUA_TUSERDATA: {
-				USLuaData* object = state.GetLuaData < USLuaData >( -1 );
+				USLuaObject* object = state.GetLuaData < USLuaObject >( -1 );
 				u32 instanceID = this->GetID ( object );
 				stream.Print ( "objects [ 0x%08X ]\n", instanceID );
 				break;

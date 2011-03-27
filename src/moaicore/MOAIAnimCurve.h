@@ -32,7 +32,7 @@ public:
 		TOTAL_ATTR,
 	};
 	
-	DECL_LUA_DATA ( MOAIAnimCurve )
+	DECL_LUA_FACTORY ( MOAIAnimCurve )
 	
 	//----------------------------------------------------------------//
 	void			ApplyAttrOp			( u32 attrID, USAttrOp& attrOp );

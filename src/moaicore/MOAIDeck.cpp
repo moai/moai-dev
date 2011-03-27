@@ -107,7 +107,7 @@ u32 MOAIDeck::GetContentAddr ( u32 idx, u32 total ) {
 //----------------------------------------------------------------//
 MOAIDeck::MOAIDeck () {
 	
-	RTTI_SINGLE ( USLuaData )
+	RTTI_SINGLE ( USLuaObject )
 }
 
 //----------------------------------------------------------------//

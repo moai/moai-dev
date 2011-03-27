@@ -1,45 +1,42 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	LUADATA_IMPL_H
-#define	LUADATA_IMPL_H
+#ifndef	USLUAOBJECT_IMPL_H
+#define	USLUAOBJECT_IMPL_H
 
 /** @addtogroup LuaLib */
 
 #include <uslscore/USGlobals.h>
 
-#define DECL_LUA_DATA(type) \
-	USLuaDataType* GetLuaDataType () { return &USLuaDataTypeImp < type >::Get (); } \
-	static void RegisterLuaType () { USLuaDataTypeImp < type >::Get ().Register (); } \
+#define DECL_LUA_FACTORY(type) \
+	USLuaClass* GetLuaClass () { return &USLuaFactoryClass < type >::Get (); } \
+	static void RegisterLuaType () { USLuaFactoryClass < type >::Get ().Register (); } \
 	cc8* TypeName () const { return #type; }
 
 #define DECL_LUA_SINGLETON(type) \
-	USLuaDataType* GetLuaDataType () { return &USLuaSingletonTypeImp < type >::Get (); } \
-	static void RegisterLuaType () { USLuaSingletonTypeImp < type >::Get ().Register (); } \
+	USLuaClass* GetLuaClass () { return &USLuaSingletonClass < type >::Get (); } \
+	static void RegisterLuaType () { USLuaSingletonClass < type >::Get ().Register (); } \
 	cc8* TypeName () const { return #type; }
 
-#define REGISTER_LUA_TYPE(type) \
+#define REGISTER_LUA_CLASS(type) \
 	type::RegisterLuaType ();
 
 //================================================================//
-// USLuaDataTypeImp
+// USLuaFactoryClass
 //================================================================//
-/**	@brief Convenience template class for implementing Lua data types. Spares
-	the class author the onerous chore of implementing _new ().
-*/
 template < typename TYPE >
-class USLuaDataTypeImp :
-	public USLuaDataType {
+class USLuaFactoryClass :
+	public USLuaClass {
 private:
 
 	//----------------------------------------------------------------//
 	static int _new ( lua_State* L ) {
 
 		USLuaState state ( L );
-		USLuaData* data = new TYPE ();
+		USLuaObject* data = new TYPE ();
 		
-		data->SetLuaInstance ( state, 1 );
-		data->PushLuaInstance ( state );
+		data->SetLuaInstanceTable ( state, 1 );
+		data->PushLuaUserdata ( state );
 
 		return 1;
 	}
@@ -58,8 +55,8 @@ private:
 public:
 
 	//----------------------------------------------------------------//
-	static USLuaDataTypeImp& Get () {
-		return *USGlobals::Get ()->GetGlobal < USLuaDataTypeImp >();
+	static USLuaFactoryClass& Get () {
+		return *USGlobals::Get ()->GetGlobal < USLuaFactoryClass >();
 	}
 
 	//----------------------------------------------------------------//
@@ -68,52 +65,32 @@ public:
 		USLuaStateHandle state = USLuaRuntime::Get ().State ();
 
 		TYPE type;
-		this->InitLuaData ( type, state );
+		this->InitLuaFactoryClass ( type, state );
 	}
 };
 
 //================================================================//
-// USLuaSingletonTypeImp
+// USLuaSingletonClass
 //================================================================//
-/**	@brief Convenience template class for implementing Lua data types for. 
-	singletons. Spares the class author the onerous chore of overloading GetInstance ().
-*/
 template < typename TYPE >
-class USLuaSingletonTypeImp :
-	public USLuaDataType {
+class USLuaSingletonClass :
+	public USLuaClass {
 private:
 
 	//----------------------------------------------------------------//
-	static int _get ( lua_State* L ) {
-		
-		USLuaState state ( L );
-		
-		USLuaData* object = USGlobals::Get ()->GetGlobal < TYPE >();
-		object->PushLuaInstance ( state );
-
-		return 1;
-	}
-
-	//----------------------------------------------------------------//
 	void RegisterLuaClass ( USLuaState& state ) {
-		
-		LuaReg regTable [] = {
-			{ "get",					_get },
-			{ NULL, NULL }
-		};
-
-		luaL_register ( state, 0, regTable );
+		UNUSED ( state );
 	}
 
 public:
 	
 	//----------------------------------------------------------------//
-	static USLuaSingletonTypeImp& Get () {
-		return *USGlobals::Get ()->GetGlobal < USLuaSingletonTypeImp >();
+	static USLuaSingletonClass& Get () {
+		return *USGlobals::Get ()->GetGlobal < USLuaSingletonClass >();
 	}
 
 	//----------------------------------------------------------------//
-	USLuaData* GetSingleton () {
+	USLuaObject* GetSingleton () {
 		return USGlobals::Get ()->GetGlobal < TYPE >();
 	}
 
@@ -122,8 +99,8 @@ public:
 
 		USLuaStateHandle state = USLuaRuntime::Get ().State ();
 		
-		USLuaData* type = this->GetSingleton ();
-		this->InitLuaSingleton ( *type, state );
+		USLuaObject* type = this->GetSingleton ();
+		this->InitLuaSingletonClass ( *type, state );
 	}
 };
 

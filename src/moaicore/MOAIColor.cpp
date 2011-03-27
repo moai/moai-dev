@@ -40,7 +40,7 @@ int MOAIColor::_moveColor ( lua_State* L ) {
 	
 	action->SetDelay ( delay );
 	action->Start ();
-	action->PushLuaInstance ( state );
+	action->PushLuaUserdata ( state );
 
 	return 1;
 }
@@ -76,7 +76,7 @@ int MOAIColor::_seekColor ( lua_State* L ) {
 	
 	action->SetDelay ( delay );
 	action->Start ();
-	action->PushLuaInstance ( state );
+	action->PushLuaUserdata ( state );
 
 	return 1;
 }

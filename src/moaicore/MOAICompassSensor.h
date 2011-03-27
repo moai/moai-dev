@@ -25,7 +25,7 @@ private:
 
 public:
 
-	DECL_LUA_DATA ( MOAICompassSensor )
+	DECL_LUA_FACTORY ( MOAICompassSensor )
 
 	//----------------------------------------------------------------//
 	void			HandleEvent				( USStream& eventStream );

@@ -12,7 +12,7 @@ class MOAIDataBuffer;
 /**	@brief Font class.
 */
 class MOAIFont :
-	public virtual USLuaData,
+	public virtual USLuaObject,
 	public USFont {
 private:
 
@@ -25,7 +25,7 @@ private:
 
 public:
 
-	DECL_LUA_DATA ( MOAIFont )
+	DECL_LUA_FACTORY ( MOAIFont )
 	
 	//----------------------------------------------------------------//
 	USFont*			Bind				();

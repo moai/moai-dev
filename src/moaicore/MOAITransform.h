@@ -72,7 +72,7 @@ public:
 	
 	static const u32 INHERIT_ALL = 0xffffffff;
 	
-	DECL_LUA_DATA ( MOAITransform )
+	DECL_LUA_FACTORY ( MOAITransform )
 	
 	GET_SET ( USVec2D, Loc, mLoc )
 	GET_SET ( USVec2D, Scl, mScale )

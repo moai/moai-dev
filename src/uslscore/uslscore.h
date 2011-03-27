@@ -16,7 +16,7 @@
 #include <uslscore/USLuaSerializer.h>
 #include <uslscore/USLuaState.h>
 #include <uslscore/USLuaStateHandle.h>
-#include <uslscore/USLuaData.h>
+#include <uslscore/USLuaObject.h>
 #include <uslscore/USLuaRuntime.h>
 #include <uslscore/USLuaRef.h>
 

@@ -50,7 +50,7 @@
 /**	@brief Singleton for managing debug log messages.
 */
 class MOAILogMgr :
-	public USGlobalClass < MOAILogMgr, USLuaData > {
+	public USGlobalClass < MOAILogMgr, USLuaObject > {
 private:
 
 	typedef STLMap < u32, STLString >::iterator MessageMapIt;

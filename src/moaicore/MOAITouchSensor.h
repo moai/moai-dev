@@ -72,7 +72,7 @@ public:
 		TOUCH_CANCEL,
 	};
 
-	DECL_LUA_DATA ( MOAITouchSensor )
+	DECL_LUA_FACTORY ( MOAITouchSensor )
 
 	//----------------------------------------------------------------//
 	void			HandleEvent				( USStream& eventStream );

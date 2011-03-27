@@ -151,7 +151,7 @@ MOAIHttpTask::MOAIHttpTask () :
 	mBuffer ( 0 ),
 	mSize ( 0 ) {
 
-	RTTI_SINGLE ( USLuaData )
+	RTTI_SINGLE ( USLuaObject )
 }
 
 //----------------------------------------------------------------//
@@ -188,7 +188,7 @@ void MOAIHttpTask::OnHttpFinish ( USHttpTask* task ) {
 		USLuaStateHandle state = USLuaRuntime::Get ().State ();
 		
 		this->mOnFinish.PushRef ( state );
-		this->PushLuaInstance ( state );
+		this->PushLuaUserdata ( state );
 		state.DebugCall ( 1, 0 );
 	}
 	

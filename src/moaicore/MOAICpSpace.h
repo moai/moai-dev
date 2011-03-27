@@ -18,7 +18,7 @@ class MOAICpCollisionHandler;
 // MOAICpPrim
 //================================================================//
 class MOAICpPrim :
-	public virtual USLuaData  {
+	public virtual USLuaObject  {
 protected:
 
 	USLeanLink < MOAICpPrim* > mLinkInSpace;
@@ -100,7 +100,7 @@ public:
 	friend class MOAICpConstraint;
 	friend class MOAICpShape;
 	
-	DECL_LUA_DATA ( MOAICpSpace )
+	DECL_LUA_FACTORY ( MOAICpSpace )
 	
 	//----------------------------------------------------------------//
 	void			DrawDebug				();

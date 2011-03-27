@@ -60,7 +60,7 @@ int	MOAILayer2D::_getPartition ( lua_State* L ) {
 	LUA_SETUP ( MOAILayer2D, "U" )
 
 	if ( self->mPartition ) {
-		self->mPartition->PushLuaInstance ( state );
+		self->mPartition->PushLuaUserdata ( state );
 		return 1;
 	}
 	return 0;

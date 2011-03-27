@@ -508,6 +508,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\moaicore\MOAIDebugLines.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIDebugLines.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\moaicore\MOAIIndexBuffer.cpp"
 				>
 			</File>
@@ -705,16 +713,8 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="system"
+			Name="sim"
 			>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIDebugLines.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIDebugLines.h"
-				>
-			</File>
 			<File
 				RelativePath="..\..\src\moaicore\MOAISim.cpp"
 				>

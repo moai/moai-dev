@@ -34,7 +34,7 @@ public:
 		TOTAL_ATTR,
 	};
 	
-	DECL_LUA_DATA ( MOAIColor )
+	DECL_LUA_FACTORY ( MOAIColor )
 	
 	//----------------------------------------------------------------//
 	void			ApplyAttrOp			( u32 attrID, USAttrOp& attrOp );

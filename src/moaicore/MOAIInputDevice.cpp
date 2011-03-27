@@ -42,7 +42,7 @@ void MOAIInputDevice::HandleEvent ( u8 sensorID, USStream& eventStream ) {
 MOAIInputDevice::MOAIInputDevice () :
 	mIsActive ( true ) {
 	
-	RTTI_SINGLE ( USLuaData )
+	RTTI_SINGLE ( USLuaObject )
 }
 
 //----------------------------------------------------------------//
@@ -123,10 +123,10 @@ void MOAIInputDevice::SetSensor ( u8 sensorID, cc8* name, u32 type ) {
 	this->mSensors [ sensorID ] = sensor;
 	
 	USLuaStateHandle state = USLuaRuntime::Get ().State ();
-	this->PushLuaInstance ( state );
+	this->PushLuaUserdata ( state );
 	
 	//if ( state.GetFieldWithType ( -1, LUAVAR_SENSORS, LUA_TTABLE )) {
-		sensor->PushLuaInstance ( state );
+		sensor->PushLuaUserdata ( state );
 		lua_setfield ( state, -2, name );
 	//}
 }

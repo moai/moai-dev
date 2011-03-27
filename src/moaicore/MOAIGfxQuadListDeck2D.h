@@ -84,7 +84,7 @@ private:
 	
 public:
 	
-	DECL_LUA_DATA ( MOAIGfxQuadListDeck2D )
+	DECL_LUA_FACTORY ( MOAIGfxQuadListDeck2D )
 	
 	enum {
 		UV_NONE,

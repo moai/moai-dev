@@ -9,7 +9,7 @@
 #include <uslscore/USLua.h>
 #include <uslscore/USRtti.h>
 
-class USLuaData;
+class USLuaObject;
 class USStream;
 
 //================================================================//
@@ -19,16 +19,16 @@ class USStream;
 	@ingroup LuaLib
 */
 class USLuaSerializer :
-	public virtual USLuaData {
+	public virtual USLuaObject {
 private:
 
 	// list of instances waiting to be processed
-	typedef STLList < USLuaData* >::iterator PendingIt;
-	STLList < USLuaData* > mPending;
+	typedef STLList < USLuaObject* >::iterator PendingIt;
+	STLList < USLuaObject* > mPending;
 
 	// maps IDs onto instances
-	typedef STLMap < u32, USLuaData* >::iterator InstanceMapIt;
-	STLMap < u32, USLuaData* > mInstanceMap;
+	typedef STLMap < u32, USLuaObject* >::iterator InstanceMapIt;
+	STLMap < u32, USLuaObject* > mInstanceMap;
 
 	// maps IDs onto tables
 	typedef STLMap < u32, USLuaRef >::iterator TableMapIt;
@@ -46,9 +46,9 @@ private:
 	static int		_serialize					( lua_State* L );
 
 	//----------------------------------------------------------------//
-	u32				GetID						( USLuaData* object );
+	u32				GetID						( USLuaObject* object );
 	u32				GetID						( USLuaState& state, int idx );
-	void			Register					( USLuaData* object, u32 id );
+	void			Register					( USLuaObject* object, u32 id );
 	void			WriteDecls					( USStream& stream );
 	void			WriteInstanceDecls			( USStream& stream );
 	void			WriteInstanceInits			( USStream& stream );
@@ -75,24 +75,24 @@ public:
 		LUA_ERROR,
 	};
 
-	DECL_LUA_DATA ( USLuaSerializer )
+	DECL_LUA_FACTORY ( USLuaSerializer )
 
 	//----------------------------------------------------------------//
-	u32				Affirm					( USLuaData* object );
+	u32				Affirm					( USLuaObject* object );
 	u32				Affirm					( USLuaState& state, int idx );
-	void			AddLuaReturn			( USLuaData* object );
+	void			AddLuaReturn			( USLuaObject* object );
 	void			AddLuaReturn			( USLuaState& state, int idx );
 	void			Clear					();
-	USLuaData*		Dereference				( USLuaState& state, int idx );
-	USLuaData*		GetRefField				( USLuaState& state, int idx, cc8* name );
+	USLuaObject*		Dereference				( USLuaState& state, int idx );
+	USLuaObject*		GetRefField				( USLuaState& state, int idx, cc8* name );
 	u32				IsLuaFile				( cc8* filename );
-	USLuaData*		PopRef					( USLuaState& state );
-	void			PushRef					( USLuaState& state, USLuaData* object );
+	USLuaObject*		PopRef					( USLuaState& state );
+	void			PushRef					( USLuaState& state, USLuaObject* object );
 	u32				SerializeFromFile		( cc8* filename );
 	STLString		SerializeToString		();
 	void			SerializeToFile			( cc8* filename );
 	void			SerializeToStream		( USStream& stream );
-	void			SetRefField				( USLuaState& state, int idx, cc8* name, USLuaData* object );
+	void			SetRefField				( USLuaState& state, int idx, cc8* name, USLuaObject* object );
 					USLuaSerializer			();
 	virtual			~USLuaSerializer		();
 	
@@ -100,7 +100,7 @@ public:
 	template < typename TYPE >
 	TYPE* Dereference ( USLuaState& state, int idx ) {
 	
-		USLuaData* object = this->Dereference ( state, idx );
+		USLuaObject* object = this->Dereference ( state, idx );
 		if ( object ) {
 			return object->AsType < TYPE >();
 		}
@@ -121,7 +121,7 @@ public:
 	template < typename TYPE >
 	TYPE* PopRef ( USLuaState& state ) {
 	
-		USLuaData* object = this->PopRef ( state );
+		USLuaObject* object = this->PopRef ( state );
 		if ( object ) {
 			return object->AsType < TYPE >();
 		}

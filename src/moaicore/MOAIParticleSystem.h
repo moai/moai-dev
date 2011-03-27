@@ -110,7 +110,7 @@ public:
 	
 	friend class MOAIParticleEngine;
 	
-	DECL_LUA_DATA ( MOAIParticleSystem )
+	DECL_LUA_FACTORY ( MOAIParticleSystem )
 
 	//----------------------------------------------------------------//
 	void			Draw					();

@@ -133,7 +133,7 @@ USVec2D MOAIParticleState::GetAcceleration ( const USVec2D& loc ) {
 MOAIParticleState::MOAIParticleState () {
 
 	RTTI_BEGIN
-		RTTI_EXTEND ( USLuaData )
+		RTTI_EXTEND ( USLuaObject )
 	RTTI_END
 }
 

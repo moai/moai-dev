@@ -78,7 +78,7 @@ public:
 	
 	GET_SET ( u32, Index, mIndex )
 	
-	DECL_LUA_DATA ( MOAIProp2D )
+	DECL_LUA_FACTORY ( MOAIProp2D )
 	
 	//----------------------------------------------------------------//
 	void							ApplyAttrOp				( u32 attrID, USAttrOp& attrOp );

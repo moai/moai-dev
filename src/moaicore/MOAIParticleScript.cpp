@@ -477,7 +477,7 @@ MOAIParticleScript::MOAIParticleScript () :
 	mCompiled ( false ) {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( USLuaData )
+		RTTI_EXTEND ( USLuaObject )
 	RTTI_END
 }
 

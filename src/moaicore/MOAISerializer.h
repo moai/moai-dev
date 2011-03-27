@@ -21,7 +21,7 @@ private:
 
 public:
 	
-	DECL_LUA_DATA ( MOAISerializer )
+	DECL_LUA_FACTORY ( MOAISerializer )
 	
 	//----------------------------------------------------------------//
 						MOAISerializer			();

@@ -29,7 +29,7 @@ private:
 /**	@brief Sychronization class for threads.
 */
 class MOAICheckpoint :
-	public virtual USLuaData {
+	public virtual USLuaObject {
 private:
 
 	static const u32 BLOCK_SIZE		= 4;
@@ -58,7 +58,7 @@ private:
 	
 public:
 	
-	DECL_LUA_DATA ( MOAICheckpoint )
+	DECL_LUA_FACTORY ( MOAICheckpoint )
 	
 	//----------------------------------------------------------------//						
 					MOAICheckpoint			();

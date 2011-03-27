@@ -56,7 +56,7 @@ private:
 
 public:
 	
-	DECL_LUA_DATA ( MOAILayer2D )
+	DECL_LUA_FACTORY ( MOAILayer2D )
 	
 	GET_SET ( MOAITransform*, Camera, mCamera )
 	GET_SET ( MOAIViewport*, Viewport, mViewport )

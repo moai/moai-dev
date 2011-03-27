@@ -37,7 +37,7 @@ int MOAIFmodChannel::_moveVolume ( lua_State* L ) {
 	action->SetMode ( state.GetValue < u32 >( 4, USInterpolate::kSmooth ));
 	
 	action->Start ();
-	action->PushLuaInstance ( state );
+	action->PushLuaUserdata ( state );
 
 	return 1;
 }
@@ -81,7 +81,7 @@ int MOAIFmodChannel::_seekVolume ( lua_State* L ) {
 	action->SetMode ( state.GetValue < u32 >( 4, USInterpolate::kSmooth ));
 	
 	action->Start ();
-	action->PushLuaInstance ( state );
+	action->PushLuaUserdata ( state );
 
 	return 1;
 }

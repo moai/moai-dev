@@ -100,7 +100,7 @@ int MOAICp::_setContactPersistence ( lua_State* L ) {
 //----------------------------------------------------------------//
 MOAICp::MOAICp () {
 
-	RTTI_SINGLE ( USLuaData )
+	RTTI_SINGLE ( USLuaObject )
 }
 
 //----------------------------------------------------------------//

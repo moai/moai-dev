@@ -8,7 +8,7 @@
 // MOAIBlocker
 //================================================================//
 class MOAIBlocker :
-	public virtual USLuaData {
+	public virtual USLuaObject {
 private:
 
 	MOAIBlocker*		mBlocker;

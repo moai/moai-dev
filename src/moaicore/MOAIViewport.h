@@ -10,7 +10,7 @@
 /**	@brief Viewport object.
 */
 class MOAIViewport :
-	public virtual USLuaData,
+	public virtual USLuaObject,
 	public USViewport {
 private:
 
@@ -23,7 +23,7 @@ private:
 
 public:
 	
-	DECL_LUA_DATA ( MOAIViewport )
+	DECL_LUA_FACTORY ( MOAIViewport )
 	
 	//----------------------------------------------------------------//
 					MOAIViewport			();

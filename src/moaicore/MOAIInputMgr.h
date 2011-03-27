@@ -13,7 +13,7 @@ class MOAISensor;
 /**	@brief Input device class.
 */
 class MOAIInputMgr :
-	public USGlobalClass < MOAIInputMgr, USLuaData > {
+	public USGlobalClass < MOAIInputMgr, USLuaObject > {
 private:
 
 	USMemStream	mInput;

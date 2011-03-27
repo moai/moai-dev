@@ -62,7 +62,7 @@ private:
 
 public:
 	
-	DECL_LUA_DATA ( MOAIStretchPatch2D )
+	DECL_LUA_FACTORY ( MOAIStretchPatch2D )
 	
 	//----------------------------------------------------------------//
 	bool				Bind					();

@@ -169,7 +169,7 @@ int MOAITransform::_move ( lua_State* L ) {
 	
 	action->SetDelay ( delay );
 	action->Start ();
-	action->PushLuaInstance ( state );
+	action->PushLuaUserdata ( state );
 
 	return 1;
 }
@@ -199,7 +199,7 @@ int MOAITransform::_moveLoc ( lua_State* L ) {
 	
 	action->SetDelay ( delay );
 	action->Start ();
-	action->PushLuaInstance ( state );
+	action->PushLuaUserdata ( state );
 
 	return 1;
 }
@@ -226,7 +226,7 @@ int MOAITransform::_moveRot ( lua_State* L ) {
 	
 	action->SetDelay ( delay );
 	action->Start ();
-	action->PushLuaInstance ( state );
+	action->PushLuaUserdata ( state );
 
 	return 1;
 }
@@ -256,7 +256,7 @@ int MOAITransform::_moveScl ( lua_State* L ) {
 	
 	action->SetDelay ( delay );
 	action->Start ();
-	action->PushLuaInstance ( state );
+	action->PushLuaUserdata ( state );
 
 	return 1;
 }
@@ -295,7 +295,7 @@ int MOAITransform::_seek ( lua_State* L ) {
 	
 	action->SetDelay ( delay );
 	action->Start ();
-	action->PushLuaInstance ( state );
+	action->PushLuaUserdata ( state );
 
 	return 1;
 }
@@ -325,7 +325,7 @@ int MOAITransform::_seekLoc ( lua_State* L ) {
 	
 	action->SetDelay ( delay );
 	action->Start ();
-	action->PushLuaInstance ( state );
+	action->PushLuaUserdata ( state );
 
 	return 1;
 }
@@ -352,7 +352,7 @@ int MOAITransform::_seekRot ( lua_State* L ) {
 	
 	action->SetDelay ( delay );
 	action->Start ();
-	action->PushLuaInstance ( state );
+	action->PushLuaUserdata ( state );
 
 	return 1;
 }
@@ -382,7 +382,7 @@ int MOAITransform::_seekScl ( lua_State* L ) {
 	
 	action->SetDelay ( delay );
 	action->Start ();
-	action->PushLuaInstance ( state );
+	action->PushLuaUserdata ( state );
 
 	return 1;
 }

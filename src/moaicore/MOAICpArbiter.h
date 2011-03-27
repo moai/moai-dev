@@ -14,7 +14,7 @@ class MOAICpSpace;
 /**	@brief Chipmunk Arbiter.
 */
 class MOAICpArbiter :
-	public virtual USLuaData {
+	public virtual USLuaObject {
 private:
 
 	cpArbiter*	mArbiter;
@@ -33,7 +33,7 @@ private:
 
 public:
 	
-	DECL_LUA_DATA ( MOAICpArbiter )
+	DECL_LUA_FACTORY ( MOAICpArbiter )
 	
 	GET_SET ( cpArbiter*, Arbiter, mArbiter )
 	

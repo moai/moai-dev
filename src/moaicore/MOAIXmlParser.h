@@ -12,7 +12,7 @@ class TiXmlNode;
 /**	@brief Parser for converting XML to Lua.
 */
 class MOAIXmlParser :
-	public USGlobalClass < MOAIXmlParser, USLuaData > {
+	public USGlobalClass < MOAIXmlParser, USLuaObject > {
 private:
 
 	int mUnits;

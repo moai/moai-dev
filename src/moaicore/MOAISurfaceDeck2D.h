@@ -42,7 +42,7 @@ private:
 
 public:
 	
-	DECL_LUA_DATA ( MOAISurfaceDeck2D )
+	DECL_LUA_FACTORY ( MOAISurfaceDeck2D )
 	
 	//----------------------------------------------------------------//
 	void					DrawDebug				( const USAffine2D& transform, u32 idx );

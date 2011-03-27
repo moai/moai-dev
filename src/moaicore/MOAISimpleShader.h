@@ -25,7 +25,7 @@ protected:
 
 public:
 	
-	DECL_LUA_DATA ( MOAISimpleShader )
+	DECL_LUA_FACTORY ( MOAISimpleShader )
 	
 	enum {
 		ATTR_PARENT,

@@ -144,7 +144,7 @@ void MOAILogMgr::Log ( u32 level, USLuaState& state, u32 messageID, ... ) {
 MOAILogMgr::MOAILogMgr () :
 	mLevel ( LOG_WARNING ) {
 
-	RTTI_SINGLE ( USLuaData )
+	RTTI_SINGLE ( USLuaObject )
 }
 
 //----------------------------------------------------------------//

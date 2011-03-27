@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <uslscore/USLuaData.h>
+#include <uslscore/USLuaObject.h>
 #include <uslscore/USLuaState.h>
 #include <uslscore/USLuaStateHandle.h>
 #include <uslscore/USLuaRuntime.h>

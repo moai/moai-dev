@@ -119,7 +119,7 @@ MOAIFmodSound::MOAIFmodSound () :
 	mSound ( 0 ),
 	mLoopCount ( 0 ) {
 
-	RTTI_SINGLE ( USLuaData )
+	RTTI_SINGLE ( USLuaObject )
 }
 
 //----------------------------------------------------------------//

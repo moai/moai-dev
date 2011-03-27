@@ -13,7 +13,7 @@ class MOAIParticleScript;
 /**	@brief Particle state.
 */
 class MOAIParticleState :
-	public virtual USLuaData {
+	public virtual USLuaObject {
 private:
 	friend class MOAIParticleSystem;
 
@@ -34,7 +34,7 @@ private:
 
 public:
 
-	DECL_LUA_DATA ( MOAIParticleState )
+	DECL_LUA_FACTORY ( MOAIParticleState )
 
 	//----------------------------------------------------------------//
 	void			ClearForces				();

@@ -91,7 +91,7 @@ int MOAICpConstraint::_newDampedRotarySpring ( lua_State* L ) {
 	constraint->mConstraint = cpDampedRotarySpringNew ( a->mBody, b->mBody, restAngle, stiffness, damping );
 	constraint->mConstraint->data = constraint;
 		
-	constraint->PushLuaInstance ( state );
+	constraint->PushLuaUserdata ( state );
 	return 1;
 }
 
@@ -130,7 +130,7 @@ int MOAICpConstraint::_newDampedSpring ( lua_State* L ) {
 	constraint->mConstraint = cpDampedSpringNew ( a->mBody, b->mBody, anchr1, anchr2, restLength, stiffness, damping );
 	constraint->mConstraint->data = constraint;
 		
-	constraint->PushLuaInstance ( state );
+	constraint->PushLuaUserdata ( state );
 	return 1;
 }
 
@@ -160,7 +160,7 @@ int MOAICpConstraint::_newGearJoint ( lua_State* L ) {
 	constraint->mConstraint = cpGearJointNew ( a->mBody, b->mBody, phase, ratio );
 	constraint->mConstraint->data = constraint;
 		
-	constraint->PushLuaInstance ( state );
+	constraint->PushLuaUserdata ( state );
 	return 1;
 }
 
@@ -199,7 +199,7 @@ int MOAICpConstraint::_newGrooveJoint ( lua_State* L ) {
 	constraint->mConstraint = cpGrooveJointNew ( a->mBody, b->mBody, groove_a, groove_b, anchr2 );
 	constraint->mConstraint->data = constraint;
 		
-	constraint->PushLuaInstance ( state );
+	constraint->PushLuaUserdata ( state );
 	return 1;
 }
 
@@ -234,7 +234,7 @@ int MOAICpConstraint::_newPinJoint ( lua_State* L ) {
 	constraint->mConstraint = cpPinJointNew ( a->mBody, b->mBody, anchr1, anchr2 );
 	constraint->mConstraint->data = constraint;
 		
-	constraint->PushLuaInstance ( state );
+	constraint->PushLuaUserdata ( state );
 	return 1;
 }
 
@@ -277,7 +277,7 @@ int MOAICpConstraint::_newPivotJoint ( lua_State* L ) {
 	}
 	
 	constraint->mConstraint->data = constraint;
-	constraint->PushLuaInstance ( state );
+	constraint->PushLuaUserdata ( state );
 	return 1;
 }
 
@@ -307,7 +307,7 @@ int MOAICpConstraint::_newRatchetJoint ( lua_State* L ) {
 	constraint->mConstraint = cpRatchetJointNew ( a->mBody, b->mBody, phase, ratchet );
 	constraint->mConstraint->data = constraint;
 		
-	constraint->PushLuaInstance ( state );
+	constraint->PushLuaUserdata ( state );
 	return 1;
 }
 
@@ -337,7 +337,7 @@ int MOAICpConstraint::_newRotaryLimitJoint ( lua_State* L ) {
 	constraint->mConstraint = cpRotaryLimitJointNew ( a->mBody, b->mBody, min, max );
 	constraint->mConstraint->data = constraint;
 		
-	constraint->PushLuaInstance ( state );
+	constraint->PushLuaUserdata ( state );
 	return 1;
 }
 
@@ -366,7 +366,7 @@ int MOAICpConstraint::_newSimpleMotor ( lua_State* L ) {
 	constraint->mConstraint = cpSimpleMotorNew ( a->mBody, b->mBody, rate );
 	constraint->mConstraint->data = constraint;
 		
-	constraint->PushLuaInstance ( state );
+	constraint->PushLuaUserdata ( state );
 	return 1;
 }
 
@@ -404,7 +404,7 @@ int MOAICpConstraint::_newSlideJoint ( lua_State* L ) {
 	constraint->mConstraint = cpSlideJointNew ( a->mBody, b->mBody, anchr1, anchr2, min, max );
 	constraint->mConstraint->data = constraint;
 		
-	constraint->PushLuaInstance ( state );
+	constraint->PushLuaUserdata ( state );
 	return 1;
 }
 

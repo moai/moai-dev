@@ -362,7 +362,7 @@ MOAISim::MOAISim () :
 	mClearColor ( 0xff000000 ),
 	mHasNetwork ( false ) {
 	
-	RTTI_SINGLE ( USLuaData )
+	RTTI_SINGLE ( USLuaObject )
 
 	this->mDeviceTime = USDeviceTime::GetTimeInSeconds ();
 	

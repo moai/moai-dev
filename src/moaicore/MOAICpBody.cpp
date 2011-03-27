@@ -50,7 +50,7 @@ int MOAICpBody::_addCircle ( lua_State* L ) {
 	shape->mShape->data = shape;
 	
 	self->AttachShape ( *shape );
-	shape->PushLuaInstance ( state );
+	shape->PushLuaUserdata ( state );
 	return 1;
 }
 
@@ -78,7 +78,7 @@ int MOAICpBody::_addPolygon ( lua_State* L ) {
 		shape->mShape->data = shape;
 		
 		self->AttachShape ( *shape );
-		shape->PushLuaInstance ( state );
+		shape->PushLuaUserdata ( state );
 		return 1;
 	}
 	return 0;
@@ -120,7 +120,7 @@ int MOAICpBody::_addRect ( lua_State* L ) {
 	shape->mShape->data = shape;
 	
 	self->AttachShape ( *shape );
-	shape->PushLuaInstance ( state );
+	shape->PushLuaUserdata ( state );
 	return 1;
 }
 
@@ -149,7 +149,7 @@ int MOAICpBody::_addSegment ( lua_State* L ) {
 	shape->mShape->data = shape;
 	
 	self->AttachShape ( *shape );
-	shape->PushLuaInstance ( state );
+	shape->PushLuaUserdata ( state );
 	return 1;
 }
 
@@ -433,7 +433,7 @@ int MOAICpBody::_new ( lua_State* L ) {
 	body->mBody = cpBodyNew ( m, i );
 	body->mBody->data = body;
 
-	body->PushLuaInstance ( state );
+	body->PushLuaUserdata ( state );
 	return 1;
 }
 
@@ -451,7 +451,7 @@ int MOAICpBody::_newStatic ( lua_State* L ) {
 	body->mBody = cpBodyNewStatic ();
 	body->mBody->data = body;
 
-	body->PushLuaInstance ( state );
+	body->PushLuaUserdata ( state );
 	return 1;
 }
 

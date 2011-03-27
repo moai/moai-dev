@@ -81,7 +81,7 @@ public:
 		TOTAL_ATTR = MOAIProp2D::TOTAL_ATTR,
 	};
 
-	DECL_LUA_DATA ( MOAITextBox )
+	DECL_LUA_FACTORY ( MOAITextBox )
 	
 	//----------------------------------------------------------------//
 	void			ApplyAttrOp				( u32 attrID, USAttrOp& attrOp );

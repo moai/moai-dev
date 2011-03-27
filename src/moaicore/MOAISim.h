@@ -14,7 +14,7 @@ class MOAIProp2D;
 /**	@brief Sim information and settings class.
 */
 class MOAISim :
-	public USGlobalClass < MOAISim, USLuaData > {
+	public USGlobalClass < MOAISim, USLuaObject > {
 private:
 
 	// timer state

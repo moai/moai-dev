@@ -10,7 +10,7 @@
 /**	@brief Particle script.
 */
 class MOAIParticleScript :
-	public virtual USLuaData {
+	public virtual USLuaObject {
 private:
 	
 	//----------------------------------------------------------------//
@@ -85,7 +85,7 @@ private:
 
 public:
 	
-	DECL_LUA_DATA ( MOAIParticleScript )
+	DECL_LUA_FACTORY ( MOAIParticleScript )
 	
 	//----------------------------------------------------------------//
 	u8*				Compile					();

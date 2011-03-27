@@ -45,7 +45,7 @@ private:
 
 public:
 
-	DECL_LUA_DATA ( MOAIEaseDriver )
+	DECL_LUA_FACTORY ( MOAIEaseDriver )
 
 	SET ( float, Delay, mDelay )
 	SET ( u32, Mode, mMode )

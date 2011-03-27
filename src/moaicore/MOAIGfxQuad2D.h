@@ -28,7 +28,7 @@ private:
 
 public:
 	
-	DECL_LUA_DATA ( MOAIGfxQuad2D )
+	DECL_LUA_FACTORY ( MOAIGfxQuad2D )
 	
 	//----------------------------------------------------------------//
 	bool					Bind					();

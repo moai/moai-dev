@@ -39,7 +39,7 @@ int MOAIBox2DBody::_addCircle ( lua_State* L ) {
 	fixture->SetWorld ( self->mWorld );
 	fixture->Retain ();
 
-	fixture->PushLuaInstance ( state );
+	fixture->PushLuaUserdata ( state );
 	return 1;
 }
 
@@ -88,7 +88,7 @@ int MOAIBox2DBody::_addRect ( lua_State* L ) {
 	fixture->SetWorld ( self->mWorld );
 	fixture->Retain ();
 
-	fixture->PushLuaInstance ( state );
+	fixture->PushLuaUserdata ( state );
 	return 1;
 }
 

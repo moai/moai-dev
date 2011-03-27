@@ -17,7 +17,7 @@ namespace FMOD {
 /**	@brief FMOD singleton.
 */
 class MOAIFmod :
-	public USGlobalClass < MOAIFmod, USLuaData > {
+	public USGlobalClass < MOAIFmod, USLuaObject > {
 private:
 
 	FMOD::System* mSoundSys;

@@ -78,7 +78,7 @@ public:
 	friend class MOAICpShape;
 	friend class MOAICpSpace;
 	
-	DECL_LUA_DATA ( MOAICpBody )
+	DECL_LUA_FACTORY ( MOAICpBody )
 	
 	enum {
 		NONE,

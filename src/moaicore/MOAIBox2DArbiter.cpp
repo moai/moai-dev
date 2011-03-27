@@ -202,7 +202,7 @@ MOAIBox2DArbiter::MOAIBox2DArbiter () :
 	mImpulse ( 0 ) {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( USLuaData )
+		RTTI_EXTEND ( USLuaObject )
 	RTTI_END
 }
 

@@ -72,7 +72,7 @@ int MOAIParticleSystem::_getState ( lua_State* L ) {
 	
 	MOAIParticleState* particleState = self->GetState ( idx );
 	if ( particleState ) {
-		particleState->PushLuaInstance ( state );
+		particleState->PushLuaUserdata ( state );
 		return 1;
 	}
 	return 0;

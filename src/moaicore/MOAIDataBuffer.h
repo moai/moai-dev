@@ -12,7 +12,7 @@ class MOAIDataIOAction;
 /**	@brief Buffer for loading and holding data.
 */
 class MOAIDataBuffer :
-	public virtual USLuaData,
+	public virtual USLuaObject,
 	public USData {
 private:
 	
@@ -31,7 +31,7 @@ private:
 
 public:
 	
-	DECL_LUA_DATA ( MOAIDataBuffer )
+	DECL_LUA_FACTORY ( MOAIDataBuffer )
 
 	//----------------------------------------------------------------//
 					MOAIDataBuffer			();

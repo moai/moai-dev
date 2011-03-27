@@ -41,7 +41,7 @@ private:
 	
 public:
 	
-	DECL_LUA_DATA ( MOAIAnim )
+	DECL_LUA_FACTORY ( MOAIAnim )
 	
 	GET ( float, Length, mLength )
 	

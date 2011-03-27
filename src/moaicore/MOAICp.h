@@ -11,7 +11,7 @@
 /**	@brief Singleton for Chipmunk globals.
 */
 class MOAICp :
-	public USGlobalClass < MOAICp, USLuaData > {
+	public USGlobalClass < MOAICp, USLuaObject > {
 private:
 
 	//----------------------------------------------------------------//

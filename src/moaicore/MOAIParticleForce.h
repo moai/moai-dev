@@ -40,7 +40,7 @@ public:
 		LINEAR,
 	};
 	
-	DECL_LUA_DATA ( MOAIParticleForce )
+	DECL_LUA_FACTORY ( MOAIParticleForce )
 
 	//----------------------------------------------------------------//
 	USVec2D			GetAcceleration			( const USVec2D& loc );

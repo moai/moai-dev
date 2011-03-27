@@ -145,9 +145,9 @@ void MOAIBox2DFixture::HandleCollision ( u32 eventType, MOAIBox2DFixture* other,
 		if ( this->mCollisionHandler.PushRef ( state )) {
 			
 			state.Push ( eventType );
-			this->PushLuaInstance ( state );
-			other->PushLuaInstance ( state );
-			arbiter->PushLuaInstance ( state );
+			this->PushLuaUserdata ( state );
+			other->PushLuaUserdata ( state );
+			arbiter->PushLuaUserdata ( state );
 			
 			state.DebugCall ( 4, 0 );
 		}
@@ -160,7 +160,7 @@ MOAIBox2DFixture::MOAIBox2DFixture () :
 	mCollisionMask ( 0 ) {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( USLuaData )
+		RTTI_EXTEND ( USLuaObject )
 	RTTI_END
 }
 

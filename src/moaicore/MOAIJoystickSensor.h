@@ -20,7 +20,7 @@ private:
 
 public:
 
-	DECL_LUA_DATA ( MOAIJoystickSensor )
+	DECL_LUA_FACTORY ( MOAIJoystickSensor )
 
 	//----------------------------------------------------------------//
 	void			HandleEvent				( USStream& eventStream );

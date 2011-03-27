@@ -25,7 +25,7 @@ int MOAIProp2D::_getGrid ( lua_State* L ) {
 	LUA_SETUP ( MOAIProp2D, "UU" )
 	
 	if ( self->mGrid ) {
-		self->mGrid->PushLuaInstance ( state );
+		self->mGrid->PushLuaUserdata ( state );
 		return 1;
 	}
 	return 0;

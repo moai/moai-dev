@@ -1016,26 +1016,6 @@
 				>
 			</File>
 		</Filter>
-		<Filter
-			Name="partition"
-			>
-			<File
-				RelativePath="..\..\src\uslsext\USAbstractPartition.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USGridPartition.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USGridPartition.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USPartition.h"
-				>
-			</File>
-		</Filter>
 		<File
 			RelativePath="..\..\src\uslsext\pch.cpp"
 			>

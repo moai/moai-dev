@@ -41,7 +41,7 @@ private:
 
 public:
 
-	DECL_LUA_DATA ( MOAIDataIOAction )
+	DECL_LUA_FACTORY ( MOAIDataIOAction )
 
 	//----------------------------------------------------------------//
 	void		Init				( cc8* filename, MOAIDataBuffer* data );

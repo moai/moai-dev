@@ -312,7 +312,7 @@ void MOAIGrid::Init ( u32 width, u32 height, float tileWidth, float tileHeight, 
 MOAIGrid::MOAIGrid () {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( USLuaData )
+		RTTI_EXTEND ( USLuaObject )
 	RTTI_END
 }
 

@@ -10,7 +10,7 @@
 /**	@brief Lua namespace to hold transition modes.
 */
 class MOAIEaseType :
-	public USLuaData {
+	public USLuaObject {
 public:
 	
 	DECL_LUA_SINGLETON ( MOAIEaseType )

@@ -68,7 +68,7 @@ public:
 	
 	friend class MOAIBox2DWorld;
 	
-	DECL_LUA_DATA ( MOAIBox2DBody )
+	DECL_LUA_FACTORY ( MOAIBox2DBody )
 	
 	//----------------------------------------------------------------//
 					MOAIBox2DBody			();

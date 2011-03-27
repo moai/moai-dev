@@ -77,7 +77,7 @@ private:
 
 public:
 	
-	DECL_LUA_DATA ( MOAILayoutFrame )
+	DECL_LUA_FACTORY ( MOAILayoutFrame )
 	
 	//----------------------------------------------------------------//
 	USRect			GetFrame				();

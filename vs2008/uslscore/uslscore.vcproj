@@ -452,15 +452,15 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\uslscore\USLuaData-impl.h"
+				RelativePath="..\..\src\uslscore\USLuaObject-impl.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\uslscore\USLuaData.cpp"
+				RelativePath="..\..\src\uslscore\USLuaObject.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\uslscore\USLuaData.h"
+				RelativePath="..\..\src\uslscore\USLuaObject.h"
 				>
 			</File>
 			<File

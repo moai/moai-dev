@@ -49,7 +49,7 @@ private:
 
 public:
 
-	DECL_LUA_DATA ( MOAIKeyboardSensor )
+	DECL_LUA_FACTORY ( MOAIKeyboardSensor )
 
 	//----------------------------------------------------------------//
 	void			HandleEvent				( USStream& eventStream );

@@ -95,7 +95,7 @@ bool MOAIDebugLines::IsVisible ( u32 styleID ) {
 //----------------------------------------------------------------//
 MOAIDebugLines::MOAIDebugLines () {
 
-	RTTI_SINGLE ( USLuaData )
+	RTTI_SINGLE ( USLuaObject )
 }
 
 //----------------------------------------------------------------//

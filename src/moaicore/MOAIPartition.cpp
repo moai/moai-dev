@@ -54,7 +54,7 @@ int MOAIPartition::_propForPoint ( lua_State* L ) {
 				prop = test;
 			}
 		}
-		prop->PushLuaInstance ( state );
+		prop->PushLuaUserdata ( state );
 		return 1;
 	}
 	return 0;
@@ -317,7 +317,7 @@ MOAIPartition::MOAIPartition () :
 	mPriorityCounter ( 0 ) {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( USLuaData )
+		RTTI_EXTEND ( USLuaObject )
 	RTTI_END
 }
 
@@ -360,7 +360,7 @@ void MOAIPartition::PushResultsList ( lua_State* L ) {
 	u32 i = 1;
 	while ( MOAIProp* prop = this->PopResult ()) {
 		lua_pushnumber ( state, i++ );
-		prop->PushLuaInstance ( state );
+		prop->PushLuaUserdata ( state );
 		lua_settable ( state, -3 );
 	}
 }
@@ -393,7 +393,7 @@ void MOAIPartition::PushSortedResultsList ( lua_State* L ) {
 	
 		MOAIProp* prop = sort [ i ].mData;
 		lua_pushnumber ( state, i + 1 );
-		prop->PushLuaInstance ( state );
+		prop->PushLuaUserdata ( state );
 		lua_settable ( state, -3 );
 	}
 }
@@ -457,7 +457,7 @@ void MOAIPartition::SetLayer ( int layerID, float cellSize, int width, int heigh
 //----------------------------------------------------------------//
 STLString MOAIPartition::ToString () {
 
-	STLString repr( USLuaData::ToString ());
+	STLString repr( USLuaObject::ToString ());
 
 	return repr;
 }

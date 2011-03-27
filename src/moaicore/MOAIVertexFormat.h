@@ -33,7 +33,7 @@ public:
 /**	@brief Vertex format class.
 */
 class MOAIVertexFormat :
-	public USLuaData {
+	public USLuaObject {
 private:
 
 	USLeanArray < MOAIVertexFormatElement > mFormat;
@@ -60,7 +60,7 @@ public:
 		VERTEX_TEXCOORD_1,
 	};
 	
-	DECL_LUA_DATA ( MOAIVertexFormat )
+	DECL_LUA_FACTORY ( MOAIVertexFormat )
 	
 	//----------------------------------------------------------------//
 	void		Bind					();

@@ -28,7 +28,7 @@ private:
 
 public:
 	
-	DECL_LUA_DATA ( MOAILayerBridge2D )
+	DECL_LUA_FACTORY ( MOAILayerBridge2D )
 	
 	//----------------------------------------------------------------//
 					MOAILayerBridge2D		();

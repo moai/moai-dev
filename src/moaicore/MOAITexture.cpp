@@ -173,7 +173,7 @@ void MOAITexture::Load ( cc8* filename ) {
 //----------------------------------------------------------------//
 MOAITexture::MOAITexture () {
 
-	RTTI_SINGLE ( USLuaData )
+	RTTI_SINGLE ( USLuaObject )
 }
 
 //----------------------------------------------------------------//

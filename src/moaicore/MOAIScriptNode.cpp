@@ -75,7 +75,7 @@ void MOAIScriptNode::OnDepNodeUpdate () {
 		USLuaStateHandle state = USLuaRuntime::Get ().State ();
 		
 		this->mOnUpdate.PushRef ( state );
-		this->PushLuaInstance ( state );
+		this->PushLuaUserdata ( state );
 
 		state.DebugCall ( 1, 0 );
 	}

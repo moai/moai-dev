@@ -15,7 +15,7 @@ class MOAIDataBuffer;
 /**	@brief FMOD sound.
 */
 class MOAIFmodSound :
-	public virtual USLuaData {
+	public virtual USLuaObject {
 private:
 
 	FMOD::Sound* mSound;
@@ -32,7 +32,7 @@ public:
 	friend class MOAIFmodChannel;
 	friend class MOAIFmod;
 
-	DECL_LUA_DATA ( MOAIFmodSound )
+	DECL_LUA_FACTORY ( MOAIFmodSound )
 
 	//----------------------------------------------------------------//
 				MOAIFmodSound			();

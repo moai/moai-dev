@@ -158,7 +158,7 @@ MOAICheckpoint::MOAICheckpoint () :
 	mActiveKeys ( NULL_ID ),
 	mFreeKeys ( NULL_ID ) {
 
-	RTTI_SINGLE ( USLuaData )
+	RTTI_SINGLE ( USLuaObject )
 }
 
 //----------------------------------------------------------------//

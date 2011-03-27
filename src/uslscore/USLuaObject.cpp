@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <uslscore/USLuaData.h>
+#include <uslscore/USLuaObject.h>
 #include <uslscore/USLuaRef.h>
 #include <uslscore/USLuaState.h>
 #include <uslscore/USLuaRuntime.h>
@@ -14,13 +14,13 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-int USLuaData::_delete ( lua_State* L ) {
+int USLuaObject::_delete ( lua_State* L ) {
 
 	USLuaState state ( L );
 
-	USLuaData* data = ( USLuaData* )state.GetPtrUserData ( 1 );
+	USLuaObject* data = ( USLuaObject* )state.GetPtrUserData ( 1 );
 
-	data->mSelf.Clear ();
+	data->mUserdata.Clear ();
 	data->Release ();
 
 	return 0;
@@ -28,12 +28,12 @@ int USLuaData::_delete ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 // TODO: restore lua dump methods
-//int USLuaData::_tostring ( lua_State* L ) {
+//int USLuaObject::_tostring ( lua_State* L ) {
 //
 //	USLuaState state ( L );
 //	if ( !state.CheckParams ( 1, "U" ) ) return 0;
 //
-//	USLuaData* data = ( USLuaData* )state.GetPtrUserData ( 1 );
+//	USLuaObject* data = ( USLuaObject* )state.GetPtrUserData ( 1 );
 //
 //	lua_pushstring( state, data->ToStringWithType ().c_str () );
 //	
@@ -41,24 +41,24 @@ int USLuaData::_delete ( lua_State* L ) {
 //}
 
 //================================================================//
-// USLuaData
+// USLuaObject
 //================================================================//
 
 //----------------------------------------------------------------//
-void USLuaData::DebugDump () {
+void USLuaObject::DebugDump () {
 
 	// TODO: fix for 64 bit
 	printf ( "0x%08X <%s> %s", ( uint )(( u32 )this ), this->TypeName (), this->ToString ().c_str ());
 }
 
 //----------------------------------------------------------------//
-STLString USLuaData::ToString () {
+STLString USLuaObject::ToString () {
 
 	return STLString ();
 }
 
 //----------------------------------------------------------------//
-STLString USLuaData::ToStringWithType () {
+STLString USLuaObject::ToStringWithType () {
 
 	STLString members = this->ToString();
 
@@ -69,7 +69,7 @@ STLString USLuaData::ToStringWithType () {
 }
 
 //----------------------------------------------------------------//
-USLuaDataType* USLuaData::GetLuaDataType () {
+USLuaClass* USLuaObject::GetLuaClass () {
 
 	// no implementation
 	assert ( false );
@@ -77,25 +77,25 @@ USLuaDataType* USLuaData::GetLuaDataType () {
 }
 
 //----------------------------------------------------------------//
-USLuaStateHandle USLuaData::GetSelf () {
+USLuaStateHandle USLuaObject::GetSelf () {
 
 	USLuaStateHandle state = USLuaRuntime::Get ().State ();
-	this->PushLuaInstance ( state );
+	this->PushLuaUserdata ( state );
 	return state;
 }
 
 //----------------------------------------------------------------//
-bool USLuaData::IsBound () {
+bool USLuaObject::IsBound () {
 
-	return ( this->mSelf != 0 );
+	return ( this->mUserdata != 0 );
 }
 
 //----------------------------------------------------------------//
-void USLuaData::LuaUnbind ( USLuaState& state ) {
+void USLuaObject::LuaUnbind ( USLuaState& state ) {
 	
-	if ( this->mSelf ) {
+	if ( this->mUserdata ) {
 		
-		this->mSelf.PushRef ( state );
+		this->mUserdata.PushRef ( state );
 		
 		// push tombstone
 		lua_newtable ( state );
@@ -109,49 +109,49 @@ void USLuaData::LuaUnbind ( USLuaState& state ) {
 		lua_setmetatable ( state, -2 );
 		lua_pop ( state, 1 );
 
-		this->mSelf.Clear ();
-		this->mInstance.Clear ();
+		this->mUserdata.Clear ();
+		this->mInstanceTable.Clear ();
 	}
 }
 
 //----------------------------------------------------------------//
-void USLuaData::PushLuaClass ( USLuaState& state ) {
+void USLuaObject::PushLuaClassTable ( USLuaState& state ) {
 
-	USLuaDataType* luaType = this->GetLuaDataType ();
+	USLuaClass* luaType = this->GetLuaClass ();
 	luaType->mClassTable.PushRef ( state );
 }
 
 //----------------------------------------------------------------//
-void USLuaData::PushLuaInstance ( USLuaState& state ) {
+void USLuaObject::PushLuaUserdata ( USLuaState& state ) {
 
 	// create an instance table if none exists
-	if ( this->mInstance.IsNil ()) {
+	if ( this->mInstanceTable.IsNil ()) {
 		
-		USLuaDataType* type = this->GetLuaDataType ();
+		USLuaClass* type = this->GetLuaClass ();
 		assert ( type );
 		
 		// set the instance table
 		lua_newtable ( state );
-		type->InitLuaInstance ( this, state, -1 );
+		type->InitLuaInstanceTable ( this, state, -1 );
 		
-		this->mInstance = state.GetStrongRef ( -1 );
+		this->mInstanceTable = state.GetStrongRef ( -1 );
 		state.Pop ( 1 );
 	}
 
 	// create the handle userdata for reference counting
-	if ( this->mSelf.IsNil ()) {
+	if ( this->mUserdata.IsNil ()) {
 		
 		// create and initialize the userdata
 		state.PushPtrUserData ( this );
 
 		// set the instance table
-		this->mInstance.PushRef ( state );
+		this->mInstanceTable.PushRef ( state );
 
 		// attach it to the handle
 		lua_setmetatable ( state, -2 );
 		
 		// and take a ref back to the handle
-		this->mSelf.SetRef ( state, -1, true );
+		this->mUserdata.SetRef ( state, -1, true );
 		
 		// and retain
 		this->Retain ();
@@ -159,77 +159,77 @@ void USLuaData::PushLuaInstance ( USLuaState& state ) {
 	else {
 		
 		// re-use the handle
-		this->mSelf.PushRef ( state );
+		this->mUserdata.PushRef ( state );
 	}
 }
 
 //----------------------------------------------------------------//
-void USLuaData::RegisterLuaClass ( USLuaState& state ) {
+void USLuaObject::RegisterLuaClass ( USLuaState& state ) {
 	UNUSED ( state );
 }
 
 //----------------------------------------------------------------//
-void USLuaData::RegisterLuaFuncs ( USLuaState& state ) {
+void USLuaObject::RegisterLuaFuncs ( USLuaState& state ) {
 	UNUSED ( state );
 }
 
 //----------------------------------------------------------------//
-void USLuaData::SerializeIn ( USLuaState& state, USLuaSerializer& serializer ) {
-	UNUSED ( state );
-	UNUSED ( serializer );
-}
-
-//----------------------------------------------------------------//
-void USLuaData::SerializeOut ( USLuaState& state, USLuaSerializer& serializer ) {
+void USLuaObject::SerializeIn ( USLuaState& state, USLuaSerializer& serializer ) {
 	UNUSED ( state );
 	UNUSED ( serializer );
 }
 
 //----------------------------------------------------------------//
-void USLuaData::SetLuaInstance ( USLuaState& state, int idx ) {
+void USLuaObject::SerializeOut ( USLuaState& state, USLuaSerializer& serializer ) {
+	UNUSED ( state );
+	UNUSED ( serializer );
+}
 
-	assert ( !this->mInstance );
+//----------------------------------------------------------------//
+void USLuaObject::SetLuaInstanceTable ( USLuaState& state, int idx ) {
+
+	assert ( !this->mInstanceTable );
 
 	if ( state.IsType ( idx, LUA_TTABLE )) {
 
 		idx = state.AbsIndex ( idx );
 
-		USLuaDataType* type = this->GetLuaDataType ();
+		USLuaClass* type = this->GetLuaClass ();
 		assert ( type );
 		
 		// set the instance table
-		type->InitLuaInstance ( this, state, idx );
+		type->InitLuaInstanceTable ( this, state, idx );
 		
-		this->mInstance = state.GetStrongRef ( idx );
+		this->mInstanceTable = state.GetStrongRef ( idx );
 	}
 }
 
 //----------------------------------------------------------------//
-USLuaData::USLuaData () {
+USLuaObject::USLuaObject () {
 	RTTI_SINGLE ( RTTIBase )
 }
 
 //----------------------------------------------------------------//
-USLuaData::~USLuaData () {
+USLuaObject::~USLuaObject () {
 
 	// TODO:
-	if (( !this->mSelf.IsNil ()) && USLuaRuntime::IsValid ()) {
+	if (( !this->mUserdata.IsNil ()) && USLuaRuntime::IsValid ()) {
 		USLuaStateHandle state = USLuaRuntime::Get ().State ();
 		this->LuaUnbind ( state );
 	}
 }
 
 //================================================================//
-// USLuaDataType
+// USLuaClass
 //================================================================//
 
 //----------------------------------------------------------------//
-USLuaData* USLuaDataType::GetSingleton () {
+USLuaObject* USLuaClass::GetSingleton () {
 	return 0;
 }
 
 //----------------------------------------------------------------//
-void USLuaDataType::InitLuaData ( USLuaData& data, USLuaState& state ) {
+void USLuaClass::InitLuaFactoryClass ( USLuaObject& data, USLuaState& state ) {
 
 	int top = lua_gettop ( state );
 
@@ -242,7 +242,7 @@ void USLuaDataType::InitLuaData ( USLuaData& data, USLuaState& state ) {
 	lua_pushnil ( state );
 	lua_setfield ( state, -2, "__newindex" );
 
-	this->mInstanceTable = state.GetStrongRef ( -1 );
+	this->mMemberTable = state.GetStrongRef ( -1 );
 	
 	lua_settop ( state, top );
 
@@ -257,7 +257,7 @@ void USLuaDataType::InitLuaData ( USLuaData& data, USLuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void USLuaDataType::InitLuaInstance ( USLuaData* data, USLuaState& state, int idx ) {
+void USLuaClass::InitLuaInstanceTable ( USLuaObject* data, USLuaState& state, int idx ) {
 
 	UNUSED ( data );
 	
@@ -269,18 +269,18 @@ void USLuaDataType::InitLuaInstance ( USLuaData* data, USLuaState& state, int id
 	lua_pushvalue ( state, idx );
 	lua_setfield ( state, idx, "__newindex" );
 	
-	lua_pushcfunction ( state, USLuaData::_delete );
+	lua_pushcfunction ( state, USLuaObject::_delete );
 	lua_setfield ( state, idx, "__gc" );
 
 	//lua_pushcfunction ( state, _tostring );
 	//lua_setfield ( state, idx, "__tostring" );
 	
-	state.Push ( this->mInstanceTable );
+	state.Push ( this->mMemberTable );
 	lua_setmetatable ( state, idx );
 }
 
 //----------------------------------------------------------------//
-void USLuaDataType::InitLuaSingleton ( USLuaData& data, USLuaState& state ) {
+void USLuaClass::InitLuaSingletonClass ( USLuaObject& data, USLuaState& state ) {
 
 	int top = lua_gettop ( state );
 
@@ -305,16 +305,16 @@ void USLuaDataType::InitLuaSingleton ( USLuaData& data, USLuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-bool USLuaDataType::IsSingleton () {
+bool USLuaClass::IsSingleton () {
 
 	return ( this->GetSingleton () != 0 );
 }
 
 //----------------------------------------------------------------//
-USLuaDataType::USLuaDataType () {
+USLuaClass::USLuaClass () {
 }
 
 //----------------------------------------------------------------//
-USLuaDataType::~USLuaDataType () {
+USLuaClass::~USLuaClass () {
 }
 

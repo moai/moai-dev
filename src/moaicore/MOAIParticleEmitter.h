@@ -67,7 +67,7 @@ public:
 		RECT,
 	};
 	
-	DECL_LUA_DATA ( MOAIParticleEmitter )
+	DECL_LUA_FACTORY ( MOAIParticleEmitter )
 
 	SET ( USRect, Rect, mRect )
 	SET ( u32, ShapeID, mShapeID )

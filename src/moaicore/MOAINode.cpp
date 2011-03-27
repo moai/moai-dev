@@ -126,7 +126,7 @@ int MOAINode::_moveAttr ( lua_State* L ) {
 	
 	action->SetDelay ( delay );
 	action->Start ();
-	action->PushLuaInstance ( state );
+	action->PushLuaUserdata ( state );
 
 	return 1;
 }
@@ -176,7 +176,7 @@ int MOAINode::_seekAttr ( lua_State* L ) {
 	
 	action->SetDelay ( delay );
 	action->Start ();
-	action->PushLuaInstance ( state );
+	action->PushLuaUserdata ( state );
 
 	return 1;
 }
@@ -482,7 +482,7 @@ MOAINode::MOAINode () :
 	mPrev ( 0 ),
 	mNext ( 0 ) {
 	
-	RTTI_SINGLE ( USLuaData )
+	RTTI_SINGLE ( USLuaObject )
 }
 
 //----------------------------------------------------------------//
