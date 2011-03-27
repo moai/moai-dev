@@ -6,7 +6,7 @@
 
 #include <moaicore/MOAINode.h>
 
-class MOAIDeck2D;
+class MOAIDeck;
 class MOAILayer2D;
 
 //================================================================//

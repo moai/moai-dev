@@ -1,28 +1,28 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAITRANSFORM2D_H
-#define	MOAITRANSFORM2D_H
+#ifndef	MOAITRANSFORM_H
+#define	MOAITRANSFORM_H
 
 #include <moaicore/MOAIEaseDriver.h>
 
-#include <moaicore/MOAITransformBase2D.h>
+#include <moaicore/MOAITransformBase.h>
 
 //================================================================//
-// MOAITransform2D
+// MOAITransform
 //================================================================//
 /**	@brief 2D transformations class.
 */
-class MOAITransform2D :
-	public MOAITransformBase2D {
+class MOAITransform :
+	public MOAITransformBase {
 protected:
 
 	USVec2D			mLoc;
 	USVec2D			mScale;
 	float			mDegrees;
 	
-	USWeak < MOAITransformBase2D >	mParent;
-	USWeak < MOAITransformBase2D >	mOffset;
+	USWeak < MOAITransformBase >	mParent;
+	USWeak < MOAITransformBase >	mOffset;
 	
 	u32 mFilter;
 
@@ -72,7 +72,7 @@ public:
 	
 	static const u32 INHERIT_ALL = 0xffffffff;
 	
-	DECL_LUA_DATA ( MOAITransform2D )
+	DECL_LUA_DATA ( MOAITransform )
 	
 	GET_SET ( USVec2D, Loc, mLoc )
 	GET_SET ( USVec2D, Scl, mScale )
@@ -83,13 +83,13 @@ public:
 	u32					CountAttributes					();
 	const USAffine2D&	GetLocalToWorldMtx				();
 	const USAffine2D&	GetWorldToLocalMtx				();
-						MOAITransform2D					();
-						~MOAITransform2D				();
+						MOAITransform					();
+						~MOAITransform				();
 	void				RegisterLuaClass				( USLuaState& state );
 	void				RegisterLuaFuncs				( USLuaState& state );
 	void				SetLoc							( float x, float y );
-	void				SetOffset						( MOAITransformBase2D* offset );
-	virtual void		SetParent						( MOAITransformBase2D* parent );
+	void				SetOffset						( MOAITransformBase* offset );
+	virtual void		SetParent						( MOAITransformBase* parent );
 	void				SetScl							( float x, float y );
 	STLString			ToString						();
 };

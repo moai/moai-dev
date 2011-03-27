@@ -7,7 +7,7 @@
 #include <moaicore/MOAIAction.h>
 #include <moaicore/MOAIProp2D.h>
 
-class MOAIDeck2D;
+class MOAIDeck;
 class MOAIParticleEngine;
 class MOAIParticleScript;
 class MOAIParticleState;

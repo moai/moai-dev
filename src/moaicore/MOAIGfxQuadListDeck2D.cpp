@@ -5,7 +5,7 @@
 #include <moaicore/MOAIGrid.h>
 #include <moaicore/MOAIGfxQuadListDeck2D.h>
 #include <moaicore/MOAITexture.h>
-#include <moaicore/MOAITransformBase2D.h>
+#include <moaicore/MOAITransformBase.h>
 
 //================================================================//
 // local
@@ -514,7 +514,7 @@ USRect MOAIGfxQuadListDeck2D::GetBounds ( u32 idx ) {
 //----------------------------------------------------------------//
 MOAIGfxQuadListDeck2D::MOAIGfxQuadListDeck2D () {
 	
-	RTTI_SINGLE ( MOAIDeck2D )
+	RTTI_SINGLE ( MOAIDeck )
 	this->SetContentMask ( CAN_DRAW );
 }
 

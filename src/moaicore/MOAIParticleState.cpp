@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moaicore/MOAIDeck2D.h>
+#include <moaicore/MOAIDeck.h>
 #include <moaicore/MOAIParticleEngine.h>
 #include <moaicore/MOAIParticleForce.h>
 #include <moaicore/MOAIParticleScript.h>

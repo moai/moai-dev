@@ -2,11 +2,11 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moaicore/MOAIDeck2D.h>
+#include <moaicore/MOAIDeck.h>
 #include <moaicore/MOAIGrid.h>
 #include <moaicore/MOAIShader.h>
 #include <moaicore/MOAISurfaceSampler2D.h>
-#include <moaicore/MOAITransform2D.h>
+#include <moaicore/MOAITransform.h>
 
 //================================================================//
 // local
@@ -19,8 +19,8 @@
 	@param self (in)
 	@param y (out)
 */
-int MOAIDeck2D::_setDefaultShader ( lua_State* L ) {
-	LUA_SETUP ( MOAIDeck2D, "UU" )
+int MOAIDeck::_setDefaultShader ( lua_State* L ) {
+	LUA_SETUP ( MOAIDeck, "UU" )
 	
 	self->mDefaultShader = state.GetLuaData < MOAIShader >( 2 );
 	
@@ -28,30 +28,30 @@ int MOAIDeck2D::_setDefaultShader ( lua_State* L ) {
 }
 
 //================================================================//
-// MOAIDeck2D
+// MOAIDeck
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIDeck2D::Bind () {
+bool MOAIDeck::Bind () {
 
 	return false;
 }
 
 //----------------------------------------------------------------//
-bool MOAIDeck2D::Contains ( u32 idx, const USVec2D& vec ) {
+bool MOAIDeck::Contains ( u32 idx, const USVec2D& vec ) {
 	
 	USRect bounds = this->GetBounds ( idx );
 	return bounds.Contains ( vec );
 }
 
 //----------------------------------------------------------------//
-void MOAIDeck2D::Draw ( const USAffine2D& transform, u32 idx ) {
+void MOAIDeck::Draw ( const USAffine2D& transform, u32 idx ) {
 	UNUSED ( transform );
 	UNUSED ( idx );
 }
 
 //----------------------------------------------------------------//
-void MOAIDeck2D::Draw ( const USAffine2D& transform, MOAIGrid& grid, USTileCoord& c0, USTileCoord& c1 ) {
+void MOAIDeck::Draw ( const USAffine2D& transform, MOAIGrid& grid, USTileCoord& c0, USTileCoord& c1 ) {
 	UNUSED ( transform );
 	UNUSED ( grid );
 	UNUSED ( c0 );
@@ -59,13 +59,13 @@ void MOAIDeck2D::Draw ( const USAffine2D& transform, MOAIGrid& grid, USTileCoord
 }
 
 //----------------------------------------------------------------//
-void MOAIDeck2D::DrawDebug ( const USAffine2D& transform, u32 idx ) {
+void MOAIDeck::DrawDebug ( const USAffine2D& transform, u32 idx ) {
 	UNUSED ( transform );
 	UNUSED ( idx );
 }
 
 //----------------------------------------------------------------//
-void MOAIDeck2D::DrawDebug ( const USAffine2D& transform, MOAIGrid& grid, USTileCoord& c0, USTileCoord& c1 ) {
+void MOAIDeck::DrawDebug ( const USAffine2D& transform, MOAIGrid& grid, USTileCoord& c0, USTileCoord& c1 ) {
 	UNUSED ( transform );
 	UNUSED ( grid );
 	UNUSED ( c0 );
@@ -73,13 +73,13 @@ void MOAIDeck2D::DrawDebug ( const USAffine2D& transform, MOAIGrid& grid, USTile
 }
 
 //----------------------------------------------------------------//
-void MOAIDeck2D::GatherSurfaces ( u32 idx, MOAISurfaceSampler2D& sampler ) {
+void MOAIDeck::GatherSurfaces ( u32 idx, MOAISurfaceSampler2D& sampler ) {
 	UNUSED ( idx );
 	UNUSED ( sampler );
 }
 
 //----------------------------------------------------------------//
-void MOAIDeck2D::GatherSurfaces ( MOAIGrid& grid, USTileCoord& c0, USTileCoord& c1, MOAISurfaceSampler2D& sampler ) {
+void MOAIDeck::GatherSurfaces ( MOAIGrid& grid, USTileCoord& c0, USTileCoord& c1, MOAISurfaceSampler2D& sampler ) {
 	UNUSED ( grid );
 	UNUSED ( c0 );
 	UNUSED ( c1 );
@@ -87,7 +87,7 @@ void MOAIDeck2D::GatherSurfaces ( MOAIGrid& grid, USTileCoord& c0, USTileCoord& 
 }
 
 //----------------------------------------------------------------//
-USRect MOAIDeck2D::GetBounds ( u32 idx ) {
+USRect MOAIDeck::GetBounds ( u32 idx ) {
 	UNUSED ( idx );
 
 	USRect rect;
@@ -96,7 +96,7 @@ USRect MOAIDeck2D::GetBounds ( u32 idx ) {
 }
 
 //----------------------------------------------------------------//
-u32 MOAIDeck2D::GetContentAddr ( u32 idx, u32 total ) {
+u32 MOAIDeck::GetContentAddr ( u32 idx, u32 total ) {
 
 	if ( total ) {
 		return idx % total;
@@ -105,22 +105,22 @@ u32 MOAIDeck2D::GetContentAddr ( u32 idx, u32 total ) {
 }
 
 //----------------------------------------------------------------//
-MOAIDeck2D::MOAIDeck2D () {
+MOAIDeck::MOAIDeck () {
 	
 	RTTI_SINGLE ( USLuaData )
 }
 
 //----------------------------------------------------------------//
-MOAIDeck2D::~MOAIDeck2D () {
+MOAIDeck::~MOAIDeck () {
 }
 
 //----------------------------------------------------------------//
-void MOAIDeck2D::RegisterLuaClass ( USLuaState& state ) {
+void MOAIDeck::RegisterLuaClass ( USLuaState& state ) {
 	UNUSED ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAIDeck2D::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAIDeck::RegisterLuaFuncs ( USLuaState& state ) {
 
 	LuaReg regTable [] = {
 		{ "setDefaultShader",		_setDefaultShader },

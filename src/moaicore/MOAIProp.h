@@ -4,7 +4,7 @@
 #ifndef	MOAIPROP_H
 #define	MOAIPROP_H
 
-#include <moaicore/MOAINode.h>
+#include <moaicore/MOAITransform.h>
 
 class MOAIPartition;
 class MOAIPartitionCell;
@@ -16,9 +16,9 @@ class MOAISurfaceSampler2D;
 // MOAIProp
 //================================================================//
 class MOAIProp :
-	public virtual MOAINode {
+	public MOAITransform {
 private:
-	
+
 	friend class MOAIPartition;
 	friend class MOAIPartitionCell;
 	friend class MOAIPartitionLayer;
@@ -33,7 +33,7 @@ private:
 	u32				mMask;
 	USRect			mBounds;
 	float			mCellSize;
-	int				mPriority;
+	s32				mPriority;
 	
 	//----------------------------------------------------------------//
 	static int		_getPriority		( lua_State* L );
@@ -45,6 +45,8 @@ private:
 
 public:
 
+	static const s32 UNKNOWN_PRIORITY = 0x80000000;
+
 	enum {
 		BOUNDS_EMPTY,
 		BOUNDS_GLOBAL,
@@ -52,7 +54,7 @@ public:
 	};
 
 	GET_SET ( u32, Mask, mMask )
-	GET_SET ( int, Priority, mPriority )
+	GET ( s32, Priority, mPriority )
 
 	//----------------------------------------------------------------//
 	virtual void	Draw				();

@@ -7,7 +7,7 @@
 #include <moaicore/MOAILogMgr.h>
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAITexture.h>
-#include <moaicore/MOAITransformBase2D.h>
+#include <moaicore/MOAITransformBase.h>
 
 //================================================================//
 // local
@@ -299,7 +299,7 @@ USGLQuad* MOAIGfxQuadDeck2D::GetGLQuad ( u32 idx ) {
 //----------------------------------------------------------------//
 MOAIGfxQuadDeck2D::MOAIGfxQuadDeck2D () {
 
-	RTTI_SINGLE ( MOAIDeck2D )
+	RTTI_SINGLE ( MOAIDeck )
 	this->SetContentMask ( CAN_DRAW );
 }
 
@@ -310,13 +310,13 @@ MOAIGfxQuadDeck2D::~MOAIGfxQuadDeck2D () {
 //----------------------------------------------------------------//
 void MOAIGfxQuadDeck2D::RegisterLuaClass ( USLuaState& state ) {
 
-	MOAIDeck2D::RegisterLuaClass ( state );
+	MOAIDeck::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxQuadDeck2D::RegisterLuaFuncs ( USLuaState& state ) {
 
-	MOAIDeck2D::RegisterLuaFuncs ( state );
+	MOAIDeck::RegisterLuaFuncs ( state );
 	
 	LuaReg regTable [] = {
 		{ "reserveBrushes",		_reserveBrushes },
@@ -354,7 +354,7 @@ void MOAIGfxQuadDeck2D::ScaleUVCoords ( float xScale, float yScale ) {
 //----------------------------------------------------------------//
 STLString MOAIGfxQuadDeck2D::ToString () {
 
-	STLString repr ( MOAIDeck2D::ToString () );
+	STLString repr ( MOAIDeck::ToString () );
 	PRETTY_PRINT ( repr, mTexture )
 	return repr;
 }

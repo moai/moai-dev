@@ -6,7 +6,7 @@
 #include <moaicore/MOAIGrid.h>
 #include <moaicore/MOAIGfxQuad2D.h>
 #include <moaicore/MOAITexture.h>
-#include <moaicore/MOAITransformBase2D.h>
+#include <moaicore/MOAITransformBase.h>
 
 //================================================================//
 // local
@@ -128,7 +128,7 @@ USRect MOAIGfxQuad2D::GetBounds ( u32 idx ) {
 //----------------------------------------------------------------//
 MOAIGfxQuad2D::MOAIGfxQuad2D () {
 
-	RTTI_SINGLE ( MOAIDeck2D )
+	RTTI_SINGLE ( MOAIDeck )
 	this->SetContentMask ( CAN_DRAW );
 	
 	this->mRect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
@@ -142,7 +142,7 @@ MOAIGfxQuad2D::~MOAIGfxQuad2D () {
 //----------------------------------------------------------------//
 void MOAIGfxQuad2D::RegisterLuaClass ( USLuaState& state ) {
 
-	this->MOAIDeck2D::RegisterLuaClass ( state );
+	this->MOAIDeck::RegisterLuaClass ( state );
 	
 	state.SetField ( -1, "FILTER_POINT", ( u32 )GL_NEAREST );
 	state.SetField ( -1, "FILTER_BILERP", ( u32 )GL_LINEAR );
@@ -151,7 +151,7 @@ void MOAIGfxQuad2D::RegisterLuaClass ( USLuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIGfxQuad2D::RegisterLuaFuncs ( USLuaState& state ) {
 
-	this->MOAIDeck2D::RegisterLuaFuncs ( state );
+	this->MOAIDeck::RegisterLuaFuncs ( state );
 
 	LuaReg regTable [] = {
 		{ "setRect",			_setRect },

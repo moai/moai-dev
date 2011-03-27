@@ -1,6 +1,6 @@
 #include "pch.h"
 #include <moaicore/MOAISurfaceSampler2D.h>
-#include <moaicore/MOAITransform2D.h>
+#include <moaicore/MOAITransform.h>
 
 //================================================================//
 // MOAISurfaceSampler2D
@@ -98,7 +98,7 @@ void MOAISurfaceSampler2D::SetObjectMtx ( const USAffine2D& localToWorld, const 
 }
 
 //----------------------------------------------------------------//
-void MOAISurfaceSampler2D::SetSourcePrim ( MOAITransform2D* sourcePrim ) {
+void MOAISurfaceSampler2D::SetSourcePrim ( MOAITransform* sourcePrim ) {
 
 	if ( sourcePrim ) {
 	

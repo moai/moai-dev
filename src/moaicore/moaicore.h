@@ -16,7 +16,7 @@
 #include <moaicore/MOAIDataBuffer.h>
 #include <moaicore/MOAIDataIOAction.h>
 #include <moaicore/MOAIDebugLines.h>
-#include <moaicore/MOAIDeck2D.h>
+#include <moaicore/MOAIDeck.h>
 #include <moaicore/MOAIEaseDriver.h>
 #include <moaicore/MOAIEaseType.h>
 #include <moaicore/MOAIFont.h>
@@ -65,8 +65,8 @@
 #include <moaicore/MOAITileDeck2D.h>
 #include <moaicore/MOAITimer.h>
 #include <moaicore/MOAITouchSensor.h>
-#include <moaicore/MOAITransform2D.h>
-#include <moaicore/MOAITransformBase2D.h>
+#include <moaicore/MOAITransform.h>
+#include <moaicore/MOAITransformBase.h>
 #include <moaicore/MOAIVertexBuffer.h>
 #include <moaicore/MOAIVertexFormat.h>
 #include <moaicore/MOAIViewport.h>

@@ -6,7 +6,7 @@
 #if USE_CHIPMUNK
 
 #include <moaicore/MOAICpSpace.h>
-#include <moaicore/MOAITransformBase2D.h>
+#include <moaicore/MOAITransformBase.h>
 
 struct cpBody;
 class MOAICpShape;
@@ -17,7 +17,7 @@ class MOAICpShape;
 /**	@brief Chipmunk Body.
 */
 class MOAICpBody :
-	public MOAITransformBase2D,
+	public MOAITransformBase,
 	public MOAICpPrim {
 private:
 

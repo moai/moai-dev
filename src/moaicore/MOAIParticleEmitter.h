@@ -5,7 +5,7 @@
 #define	MOAIPARTICLEEMITTER_H
 
 #include <moaicore/MOAIAction.h>
-#include <moaicore/MOAITransform2D.h>
+#include <moaicore/MOAITransform.h>
 
 class MOAIParticleSystem;
 
@@ -15,7 +15,7 @@ class MOAIParticleSystem;
 /**	@brief Particle emitter.
 */
 class MOAIParticleEmitter :
-	public MOAITransform2D,
+	public MOAITransform,
 	public MOAIAction {
 private:
 

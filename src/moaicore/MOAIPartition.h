@@ -16,6 +16,10 @@ class MOAIPartition :
 	public virtual USLuaData {
 private:
 
+	friend class MOAIPartitionCell;
+	friend class MOAIPartitionLayer;
+	friend class MOAIProp;
+
 	enum {
 		MAX_RESULTS	= 256,
 	};
@@ -24,8 +28,11 @@ private:
 	MOAIPartitionCell						mEmpties;
 	MOAIPartitionCell						mGlobals;
 
-	u32										mTotalResults;
-	MOAIProp*								mResults;
+	u32					mTotalResults;
+	MOAIProp*			mResults;
+
+	s32					mPriorityCounter;
+	static const s32	PRIORITY_MASK = 0x7fffffff;
 
 	//----------------------------------------------------------------//
 	static int		_insertPrim					( lua_State* L );
@@ -39,6 +46,7 @@ private:
 	static int		_sortedPrimListForRect		( lua_State* L );
 
 	//----------------------------------------------------------------//
+	void			AffirmPriority			( MOAIProp& prop );
 	void			PushResult				( MOAIProp& result );
 	void			PushResultsList			( lua_State* L );
 	void			PushSortedResultsList	( lua_State* L );
@@ -47,10 +55,6 @@ private:
 	void			UpdateProp				( MOAIProp& prop, const USRect& bounds, u32 status );
 
 public:
-	
-	friend class MOAIPartitionCell;
-	friend class MOAIPartitionLayer;
-	friend class MOAIProp;
 	
 	DECL_LUA_DATA ( MOAIPartition )
 	

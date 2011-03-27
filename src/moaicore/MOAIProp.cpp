@@ -20,9 +20,11 @@
 int MOAIProp::_getPriority ( lua_State* L ) {
 	LUA_SETUP ( MOAIProp, "U" )
 	
-	lua_pushnumber ( state, self->GetPriority ());
-
-	return 1;
+	if ( self->mPriority != UNKNOWN_PRIORITY ) {
+		lua_pushnumber ( state, self->mPriority );
+		return 1;
+	}
+	return 0;
 }
 
 //----------------------------------------------------------------//
@@ -33,11 +35,17 @@ int MOAIProp::_getPriority ( lua_State* L ) {
 	@param priority (in)
 */
 int MOAIProp::_setPriority ( lua_State* L ) {
-	LUA_SETUP ( MOAIProp, "UN" )
-
-	int priority = state.GetValue < int >( 2, 0 );
-	self->SetPriority ( priority );
-
+	LUA_SETUP ( MOAIProp, "U" )
+	
+	if ( state.IsType ( 2, LUA_TNUMBER )) {
+		self->mPriority = ( s32 )state.GetValue < int >( 2, 0 );
+	}
+	else {
+		self->mPriority = UNKNOWN_PRIORITY;
+		if ( self->mPartition ) {
+			self->mPartition->AffirmPriority ( *self );
+		}
+	}
 	return 0;
 }
 
@@ -102,13 +110,13 @@ USRect MOAIProp::GetBounds () {
 //----------------------------------------------------------------//
 void MOAIProp::RegisterLuaClass ( USLuaState& state ) {
 	
-	MOAINode::RegisterLuaClass ( state );
+	MOAITransform::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAIProp::RegisterLuaFuncs ( USLuaState& state ) {
 	
-	MOAINode::RegisterLuaFuncs ( state );
+	MOAITransform::RegisterLuaFuncs ( state );
 
 	LuaReg regTable [] = {
 		{ "getPriority",		_getPriority },
@@ -169,10 +177,10 @@ MOAIProp::MOAIProp () :
 	mNextResult ( 0 ),
 	mMask ( 0xffffffff ),
 	mCellSize ( 0.0f ),
-	mPriority ( 0 ) {
+	mPriority ( UNKNOWN_PRIORITY ) {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAINode )
+		RTTI_EXTEND ( MOAITransform )
 	RTTI_END
 	
 	this->mLinkInCell.Data ( this );

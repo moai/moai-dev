@@ -563,7 +563,7 @@ MOAIBox2DBody::MOAIBox2DBody () :
 	mBody ( 0 ) {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAITransformBase2D )
+		RTTI_EXTEND ( MOAITransformBase )
 	RTTI_END
 }
 
@@ -596,7 +596,7 @@ void MOAIBox2DBody::OnDepNodeUpdate () {
 //----------------------------------------------------------------//
 void MOAIBox2DBody::RegisterLuaClass ( USLuaState& state ) {
 
-	MOAITransformBase2D::RegisterLuaClass ( state );
+	MOAITransformBase::RegisterLuaClass ( state );
 	
 	state.SetField ( -1, "DYNAMIC",		( u32 )b2_dynamicBody );
 	state.SetField ( -1, "KINEMATIC",	( u32 )b2_kinematicBody );
@@ -606,7 +606,7 @@ void MOAIBox2DBody::RegisterLuaClass ( USLuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIBox2DBody::RegisterLuaFuncs ( USLuaState& state ) {
 	
-	MOAITransformBase2D::RegisterLuaFuncs ( state );
+	MOAITransformBase::RegisterLuaFuncs ( state );
 	
 	LuaReg regTable [] = {
 		{ "addCircle",				_addCircle },

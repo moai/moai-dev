@@ -4,7 +4,7 @@
 #ifndef	MOAISTRETCHPATCH2D_H
 #define	MOAISTRETCHPATCH2D_H
 
-#include <moaicore/MOAIDeck2D.h>
+#include <moaicore/MOAIDeck.h>
 
 class MOAITexture;
 
@@ -26,7 +26,7 @@ private:
 /**	@brief Stretchable image provider.
 */
 class MOAIStretchPatch2D :
-	virtual public MOAIDeck2D {
+	virtual public MOAIDeck {
 private:
 
 	USRef < MOAITexture >	mTexture; // source texture for patch

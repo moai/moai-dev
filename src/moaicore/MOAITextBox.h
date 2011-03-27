@@ -6,7 +6,7 @@
 
 #include <moaicore/MOAIAction.h>
 #include <moaicore/MOAIProp2D.h>
-#include <moaicore/MOAITransform2D.h>
+#include <moaicore/MOAITransform.h>
 
 class MOAIAnimCurve;
 class MOAIFont;

@@ -1,19 +1,19 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIDECK2D_H
-#define	MOAIDECK2D_H
+#ifndef	MOAIDECK_H
+#define	MOAIDECK_H
 
 class MOAIGrid;
 class MOAIShader;
 class MOAISurfaceSampler2D;
 
 //================================================================//
-// MOAIDeck2D
+// MOAIDeck
 //================================================================//
 /**	@brief Base class for content objects.
 */
-class MOAIDeck2D :
+class MOAIDeck :
 	public virtual USLuaData {
 private:
 
@@ -55,8 +55,8 @@ public:
 	virtual void		GatherSurfaces				( u32 idx, MOAISurfaceSampler2D& sampler );
 	virtual void		GatherSurfaces				( MOAIGrid& grid, USTileCoord& c0, USTileCoord& c1, MOAISurfaceSampler2D& sampler );
 	virtual USRect		GetBounds					( u32 idx );
-						MOAIDeck2D		();
-						~MOAIDeck2D		();
+						MOAIDeck					();
+						~MOAIDeck					();
 	void				RegisterLuaClass			( USLuaState& state );
 	void				RegisterLuaFuncs			( USLuaState& state );
 };

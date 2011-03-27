@@ -41,7 +41,7 @@ int MOAILayerBridge2D::_init ( lua_State* L ) {
 //----------------------------------------------------------------//
 MOAILayerBridge2D::MOAILayerBridge2D () {
 	
-	RTTI_SINGLE ( MOAITransform2D )
+	RTTI_SINGLE ( MOAITransform )
 }
 
 //----------------------------------------------------------------//
@@ -73,7 +73,7 @@ void MOAILayerBridge2D::RegisterLuaClass ( USLuaState& state ) {
 //----------------------------------------------------------------//
 void MOAILayerBridge2D::RegisterLuaFuncs ( USLuaState& state ) {
 	
-	MOAITransform2D::RegisterLuaFuncs ( state );
+	MOAITransform::RegisterLuaFuncs ( state );
 	
 	LuaReg regTable [] = {
 		{ "init",				_init },
@@ -86,7 +86,7 @@ void MOAILayerBridge2D::RegisterLuaFuncs ( USLuaState& state ) {
 //----------------------------------------------------------------//
 STLString MOAILayerBridge2D::ToString () {
 
-	STLString repr( MOAITransform2D::ToString () );
+	STLString repr( MOAITransform::ToString () );
 
 	PRETTY_PRINT ( repr, mSourceScene )
 	PRETTY_PRINT ( repr, mTargetScene )

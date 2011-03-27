@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include <float.h>
-#include <moaicore/MOAIDeck2D.h>
+#include <moaicore/MOAIDeck.h>
 #include <moaicore/MOAIParticleEngine.h>
 #include <moaicore/MOAIParticleScript.h>
 #include <moaicore/MOAIParticleState.h>

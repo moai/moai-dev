@@ -5,7 +5,7 @@
 #include <chipmunk/chipmunk.h>
 #include <moaicore/MOAICpBody.h>
 #include <moaicore/MOAICpShape.h>
-#include <moaicore/MOAITransform2D.h>
+#include <moaicore/MOAITransform.h>
 
 SUPPRESS_EMPTY_FILE_WARNING
 #if USE_CHIPMUNK
@@ -744,7 +744,7 @@ MOAICpBody::MOAICpBody () :
 	mRemoveFlag ( NONE ) {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAITransformBase2D )
+		RTTI_EXTEND ( MOAITransformBase )
 		RTTI_EXTEND ( MOAICpPrim )
 	RTTI_END
 }

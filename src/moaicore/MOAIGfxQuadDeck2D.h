@@ -4,7 +4,7 @@
 #ifndef	MOAIGFXQUADDECK2D_H
 #define	MOAIGFXQUADDECK2D_H
 
-#include <moaicore/MOAIDeck2D.h>
+#include <moaicore/MOAIDeck.h>
 
 class MOAITexture;
 
@@ -14,7 +14,7 @@ class MOAITexture;
 /**	@brief Brush library class.
 */
 class MOAIGfxQuadDeck2D :
-	public MOAIDeck2D {
+	public MOAIDeck {
 private:
 
 	USRef < MOAITexture >			mTexture;

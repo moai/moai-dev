@@ -4,7 +4,7 @@
 #ifndef	MOAIPARTICLEFORCE_H
 #define	MOAIPARTICLEFORCE_H
 
-#include <moaicore/MOAITransform2D.h>
+#include <moaicore/MOAITransform.h>
 
 class MOAIParticleSystem;
 
@@ -14,7 +14,7 @@ class MOAIParticleSystem;
 /**	@brief Particle force.
 */
 class MOAIParticleForce :
-	public MOAITransform2D {
+	public MOAITransform {
 private:
 
 	u32			mType;

@@ -6,7 +6,7 @@
 #include <moaicore/MOAIGrid.h>
 #include <moaicore/MOAISurfaceDeck2D.h>
 #include <moaicore/MOAISurfaceSampler2D.h>
-#include <moaicore/MOAITransformBase2D.h>
+#include <moaicore/MOAITransformBase.h>
 
 //================================================================//
 // local
@@ -252,7 +252,7 @@ USRect MOAISurfaceDeck2D::GetBounds ( u32 idx ) {
 //----------------------------------------------------------------//
 MOAISurfaceDeck2D::MOAISurfaceDeck2D () {
 
-	RTTI_SINGLE ( MOAIDeck2D )
+	RTTI_SINGLE ( MOAIDeck )
 	this->SetContentMask ( CAN_DRAW_DEBUG | CAN_GATHER_SURFACES );
 }
 
@@ -263,13 +263,13 @@ MOAISurfaceDeck2D::~MOAISurfaceDeck2D () {
 //----------------------------------------------------------------//
 void MOAISurfaceDeck2D::RegisterLuaClass ( USLuaState& state ) {
 
-	this->MOAIDeck2D::RegisterLuaClass ( state );
+	this->MOAIDeck::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAISurfaceDeck2D::RegisterLuaFuncs ( USLuaState& state ) {
 
-	this->MOAIDeck2D::RegisterLuaFuncs ( state );
+	this->MOAIDeck::RegisterLuaFuncs ( state );
 	
 	LuaReg regTable [] = {
 		{ "reserveBrushes",		_reserveBrushes },

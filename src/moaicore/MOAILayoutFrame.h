@@ -4,7 +4,7 @@
 #ifndef	MOAILAYOUTFRAME_H
 #define	MOAILAYOUTFRAME_H
 
-#include <moaicore/MOAITransform2D.h>
+#include <moaicore/MOAITransform.h>
 
 //================================================================//
 // MOAILayoutFrame
@@ -12,7 +12,7 @@
 /**	@brief Frame object for hierarchical, resizable layouts and auto-fitting.
 */
 class MOAILayoutFrame :
-	public MOAITransform2D {
+	public MOAITransform {
 private:
 	
 	enum {
@@ -86,7 +86,7 @@ public:
 					~MOAILayoutFrame				();
 	void			RegisterLuaClass		( USLuaState& state );
 	void			RegisterLuaFuncs		( USLuaState& state );
-	void			SetParent				( MOAITransformBase2D* parent );
+	void			SetParent				( MOAITransformBase* parent );
 	STLString		ToString				();
 };
 

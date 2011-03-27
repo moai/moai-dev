@@ -2,26 +2,26 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moaicore/MOAITransformBase2D.h>
+#include <moaicore/MOAITransformBase.h>
 
 //================================================================//
-// MOAITransformBase2D
+// MOAITransformBase
 //================================================================//
 
 //----------------------------------------------------------------//
-const USAffine2D& MOAITransformBase2D::GetLocalToWorldMtx () {
+const USAffine2D& MOAITransformBase::GetLocalToWorldMtx () {
 
 	return this->mLocalToWorldMtx;
 }
 
 //----------------------------------------------------------------//
-const USAffine2D& MOAITransformBase2D::GetWorldToLocalMtx () {
+const USAffine2D& MOAITransformBase::GetWorldToLocalMtx () {
 
 	return this->mWorldToLocalMtx;
 }
 
 //----------------------------------------------------------------//
-MOAITransformBase2D::MOAITransformBase2D () {
+MOAITransformBase::MOAITransformBase () {
 	
 	RTTI_SINGLE ( MOAINode )
 	
@@ -30,11 +30,11 @@ MOAITransformBase2D::MOAITransformBase2D () {
 }
 
 //----------------------------------------------------------------//
-MOAITransformBase2D::~MOAITransformBase2D () {
+MOAITransformBase::~MOAITransformBase () {
 }
 
 //----------------------------------------------------------------//
-STLString MOAITransformBase2D::ToString () {
+STLString MOAITransformBase::ToString () {
 
 	STLString repr;
 	return repr;

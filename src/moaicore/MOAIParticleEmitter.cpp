@@ -240,7 +240,7 @@ MOAIParticleEmitter::MOAIParticleEmitter () :
 	mMaxMagnitude ( 1.0f ) {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAITransform2D )
+		RTTI_EXTEND ( MOAITransform )
 		RTTI_EXTEND ( MOAIAction )
 	RTTI_END
 }
@@ -264,14 +264,14 @@ void MOAIParticleEmitter::OnUpdate ( float step ) {
 
 //----------------------------------------------------------------//
 void MOAIParticleEmitter::RegisterLuaClass ( USLuaState& state ) {
-	this->MOAITransform2D::RegisterLuaClass ( state );
+	this->MOAITransform::RegisterLuaClass ( state );
 	this->MOAIAction::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAIParticleEmitter::RegisterLuaFuncs ( USLuaState& state ) {
 	
-	this->MOAITransform2D::RegisterLuaFuncs ( state );
+	this->MOAITransform::RegisterLuaFuncs ( state );
 	this->MOAIAction::RegisterLuaFuncs ( state );
 	
 	LuaReg regTable [] = {

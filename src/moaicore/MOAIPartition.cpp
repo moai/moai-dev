@@ -227,6 +227,15 @@ int MOAIPartition::_sortedPrimListForRect ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIPartition::AffirmPriority ( MOAIProp& prop ) {
+
+	if ( prop.mPriority == MOAIProp::UNKNOWN_PRIORITY ) {
+		prop.mPriority = this->mPriorityCounter++;
+		this->mPriorityCounter = this->mPriorityCounter & PRIORITY_MASK;
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAIPartition::Clear () {
 
 	this->GatherProps ( 0, 0 );
@@ -289,7 +298,13 @@ void MOAIPartition::InsertProp ( MOAIProp& prop ) {
 		prop.mPartition->RemoveProp ( prop );
 	}
 	
+	if ( prop.mPriority == MOAIProp::UNKNOWN_PRIORITY ) {
+		prop.mPriority = this->mPriorityCounter++;
+		this->mPriorityCounter = this->mPriorityCounter & PRIORITY_MASK;
+	}
+	
 	this->mEmpties.InsertProp ( prop );
+	this->AffirmPriority ( prop );
 	
 	prop.mPartition = this;
 	prop.ScheduleUpdate ();
@@ -298,7 +313,8 @@ void MOAIPartition::InsertProp ( MOAIProp& prop ) {
 //----------------------------------------------------------------//
 MOAIPartition::MOAIPartition () :
 	mTotalResults ( 0 ),
-	mResults ( 0 ) {
+	mResults ( 0 ),
+	mPriorityCounter ( 0 ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( USLuaData )

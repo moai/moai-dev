@@ -4,11 +4,9 @@
 #ifndef	MOAIPROP2D_H
 #define	MOAIPROP2D_H
 
-#include <moaicore/MOAITransform2D.h>
-#include <moaicore/MOAIPartition.h>
 #include <moaicore/MOAIProp.h>
 
-class MOAIDeck2D;
+class MOAIDeck;
 class MOAIGrid;
 class MOAILayoutFrame;
 class MOAIOverlapPrim2D;
@@ -22,8 +20,7 @@ class MOAISurfaceSampler2D;
 /**	@brief Base class for primitives.
 */
 class MOAIProp2D :
-	public MOAIProp,
-	public MOAITransform2D {
+	public MOAIProp {
 protected:
 	
 	enum {
@@ -42,7 +39,7 @@ protected:
 		REPEAT_Y	= 0x00000002,
 	};
 	
-	USRef < MOAIDeck2D >	mDeck;
+	USRef < MOAIDeck >	mDeck;
 	u32						mIndex;
 	USRef < MOAIGrid >		mGrid;
 	u32						mRepeat;
@@ -51,7 +48,7 @@ protected:
 	USRect			mFrame;
 	
 	USRef < MOAIShader >		mShader;
-	USRef < MOAITransform2D >	mUVTransform;
+	USRef < MOAITransform >	mUVTransform;
 	
 	//----------------------------------------------------------------//
 	static int		_getGrid			( lua_State* L );
@@ -75,7 +72,7 @@ protected:
 public:
 	
 	enum {
-		ATTR_INDEX = MOAITransform2D::TOTAL_ATTR,
+		ATTR_INDEX = MOAITransform::TOTAL_ATTR,
 		TOTAL_ATTR,
 	};
 	

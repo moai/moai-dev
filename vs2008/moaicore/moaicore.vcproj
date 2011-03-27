@@ -412,11 +412,11 @@
 			Name="scene"
 			>
 			<File
-				RelativePath="..\..\src\moaicore\MOAIDeck2D.cpp"
+				RelativePath="..\..\src\moaicore\MOAIDeck.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAIDeck2D.h"
+				RelativePath="..\..\src\moaicore\MOAIDeck.h"
 				>
 			</File>
 			<File
@@ -1044,19 +1044,19 @@
 			Name="transform"
 			>
 			<File
-				RelativePath="..\..\src\moaicore\MOAITransform2D.cpp"
+				RelativePath="..\..\src\moaicore\MOAITransform.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAITransform2D.h"
+				RelativePath="..\..\src\moaicore\MOAITransform.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAITransformBase2D.cpp"
+				RelativePath="..\..\src\moaicore\MOAITransformBase.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAITransformBase2D.h"
+				RelativePath="..\..\src\moaicore\MOAITransformBase.h"
 				>
 			</File>
 		</Filter>

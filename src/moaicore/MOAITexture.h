@@ -4,7 +4,7 @@
 #ifndef	MOAITEXTURE2D_H
 #define	MOAITEXTURE2D_H
 
-#include <moaicore/MOAIDeck2D.h>
+#include <moaicore/MOAIDeck.h>
 
 class MOAIDataBuffer;
 

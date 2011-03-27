@@ -79,7 +79,7 @@ void moaicore::InitGlobals ( USGlobals* globals ) {
 	REGISTER_LUA_TYPE ( MOAITileDeck2D )
 	REGISTER_LUA_TYPE ( MOAITimer )
 	REGISTER_LUA_TYPE ( MOAITouchSensor )
-	REGISTER_LUA_TYPE ( MOAITransform2D )
+	REGISTER_LUA_TYPE ( MOAITransform )
 	REGISTER_LUA_TYPE ( MOAIVertexBuffer )
 	REGISTER_LUA_TYPE ( MOAIVertexFormat )
 	REGISTER_LUA_TYPE ( MOAIViewport )

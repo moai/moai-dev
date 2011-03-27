@@ -4,7 +4,7 @@
 #ifndef	MOAISURFACEDECK2D_H
 #define	MOAISURFACEDECK2D_H
 
-#include <moaicore/MOAIDeck2D.h>
+#include <moaicore/MOAIDeck.h>
 
 //================================================================//
 // MOAISurfaceBrush2D
@@ -26,7 +26,7 @@ private:
 /**	@brief Surface library class.
 */
 class MOAISurfaceDeck2D :
-	virtual public MOAIDeck2D {
+	virtual public MOAIDeck {
 private:
 
 	USLeanArray < MOAISurfaceBrush2D > mBrushes;

@@ -5,7 +5,7 @@
 #include <moaicore/MOAIGrid.h>
 #include <moaicore/MOAITileDeck2D.h>
 #include <moaicore/MOAITexture.h>
-#include <moaicore/MOAITransformBase2D.h>
+#include <moaicore/MOAITransformBase.h>
 
 //================================================================//
 // local
@@ -168,7 +168,7 @@ USRect MOAITileDeck2D::GetBounds ( u32 idx ) {
 MOAITileDeck2D::MOAITileDeck2D () :
 	mFlags ( 0 ) {
 	
-	RTTI_SINGLE ( MOAIDeck2D )
+	RTTI_SINGLE ( MOAIDeck )
 	this->SetContentMask ( CAN_DRAW );
 }
 
@@ -179,13 +179,13 @@ MOAITileDeck2D::~MOAITileDeck2D () {
 //----------------------------------------------------------------//
 void MOAITileDeck2D::RegisterLuaClass ( USLuaState& state ) {
 
-	this->MOAIDeck2D::RegisterLuaClass ( state );
+	this->MOAIDeck::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAITileDeck2D::RegisterLuaFuncs ( USLuaState& state ) {
 
-	this->MOAIDeck2D::RegisterLuaFuncs ( state );
+	this->MOAIDeck::RegisterLuaFuncs ( state );
 
 	LuaReg regTable [] = {
 		{ "setFlip",			_setFlip },

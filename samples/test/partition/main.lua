@@ -19,7 +19,7 @@ partition:setLayer ( 2, 128, 8, 8 )
 partition:setLayer ( 3, 96, 96, 12 )
 scene:setPartition ( partition )
 
-camera = MOAITransform2D.new ()
+camera = MOAITransform.new ()
 scene:setCamera ( camera )
 
 texture = MOAIGfxQuad2D.new ()

@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moaicore/MOAITransform2D.h>
+#include <moaicore/MOAITransform.h>
 
 //================================================================//
 // local
@@ -15,8 +15,8 @@
 	@param x Location's X coordinate.
 	@param y Location's Y coordinate.
 */
-int MOAITransform2D::_addLoc ( lua_State* L ) {
-	LUA_SETUP ( MOAITransform2D, "UNN" )
+int MOAITransform::_addLoc ( lua_State* L ) {
+	LUA_SETUP ( MOAITransform, "UNN" )
 	
 	USVec2D loc = self->GetLoc ();
 	
@@ -35,8 +35,8 @@ int MOAITransform2D::_addLoc ( lua_State* L ) {
 	Adds rotation value to the transform.
 	@param rotation Degrees of rotation.
 */
-int MOAITransform2D::_addRot ( lua_State* L ) {
-	LUA_SETUP ( MOAITransform2D, "UN" )
+int MOAITransform::_addRot ( lua_State* L ) {
+	LUA_SETUP ( MOAITransform, "UN" )
 	
 	float d = self->GetRot ();
 	d += state.GetValue < float >( 2, 0.0f );
@@ -54,8 +54,8 @@ int MOAITransform2D::_addRot ( lua_State* L ) {
 	@param sx Horizontal scaling value.
 	@param sy Vertical scaling value.
 */
-int MOAITransform2D::_addScl ( lua_State* L ) {
-	LUA_SETUP ( MOAITransform2D, "UNN" )
+int MOAITransform::_addScl ( lua_State* L ) {
+	LUA_SETUP ( MOAITransform, "UNN" )
 	
 	USVec2D scl = self->GetScl ();
 	
@@ -74,8 +74,8 @@ int MOAITransform2D::_addScl ( lua_State* L ) {
 	Returns the x and y coordinates of this object's location.
 	@return X and y coordinates in worldspace.
 */
-int	MOAITransform2D::_getLoc ( lua_State* L ) {
-	LUA_SETUP ( MOAITransform2D, "U" )
+int	MOAITransform::_getLoc ( lua_State* L ) {
+	LUA_SETUP ( MOAITransform, "U" )
 	
 	lua_pushnumber ( state, self->mLoc.mX );
 	lua_pushnumber ( state, self->mLoc.mY );
@@ -89,8 +89,8 @@ int	MOAITransform2D::_getLoc ( lua_State* L ) {
 	Returns the rotation angle of this object.
 	@return Rotation angle value.
 */
-int	MOAITransform2D::_getRot ( lua_State* L ) {
-	LUA_SETUP ( MOAITransform2D, "U" )
+int	MOAITransform::_getRot ( lua_State* L ) {
+	LUA_SETUP ( MOAITransform, "U" )
 	
 	lua_pushnumber ( state, self->mDegrees );
 
@@ -103,8 +103,8 @@ int	MOAITransform2D::_getRot ( lua_State* L ) {
 	Returns the x and y scaling values of this object.
 	@return X and y scaling values.
 */
-int	MOAITransform2D::_getScl ( lua_State* L ) {
-	LUA_SETUP ( MOAITransform2D, "U" )
+int	MOAITransform::_getScl ( lua_State* L ) {
+	LUA_SETUP ( MOAITransform, "U" )
 	
 	lua_pushnumber ( state, self->mScale.mX );
 	lua_pushnumber ( state, self->mScale.mY );
@@ -119,8 +119,8 @@ int	MOAITransform2D::_getScl ( lua_State* L ) {
 	@param self (in)
 	@param y (out)
 */
-int MOAITransform2D::_modelToWorld ( lua_State* L ) {
-	LUA_SETUP ( MOAITransform2D, "UNN" )
+int MOAITransform::_modelToWorld ( lua_State* L ) {
+	LUA_SETUP ( MOAITransform, "UNN" )
 
 	USVec2D loc;
 	loc.mX = state.GetValue < float >( 2, 0.0f );
@@ -147,8 +147,8 @@ int MOAITransform2D::_modelToWorld ( lua_State* L ) {
 	@param delay Time period for the transition.
 	@param mode (optional) Interpolation mode.  Default: SMOOTH 
 */
-int MOAITransform2D::_move ( lua_State* L ) {
-	LUA_SETUP ( MOAITransform2D, "UNNNNNN" )
+int MOAITransform::_move ( lua_State* L ) {
+	LUA_SETUP ( MOAITransform, "UNNNNNN" )
 
 	MOAIEaseDriver* action = new MOAIEaseDriver ();
 	action->ReserveForces ( 5 );
@@ -161,11 +161,11 @@ int MOAITransform2D::_move ( lua_State* L ) {
 	float delay		= state.GetValue < float >( 7, 0.0f );
 	u32 mode		= state.GetValue < u32 >( 8, USInterpolate::kSmooth );
 	
-	action->SetForce ( 0, self, MOAITransform2D::ATTR_X_LOC, xLoc, mode );
-	action->SetForce ( 1, self, MOAITransform2D::ATTR_Y_LOC, yLoc, mode );
-	action->SetForce ( 2, self, MOAITransform2D::ATTR_Z_ROT, zRot, mode );
-	action->SetForce ( 3, self, MOAITransform2D::ATTR_X_SCL, xScl, mode );
-	action->SetForce ( 4, self, MOAITransform2D::ATTR_Y_SCL, yScl, mode );
+	action->SetForce ( 0, self, MOAITransform::ATTR_X_LOC, xLoc, mode );
+	action->SetForce ( 1, self, MOAITransform::ATTR_Y_LOC, yLoc, mode );
+	action->SetForce ( 2, self, MOAITransform::ATTR_Z_ROT, zRot, mode );
+	action->SetForce ( 3, self, MOAITransform::ATTR_X_SCL, xScl, mode );
+	action->SetForce ( 4, self, MOAITransform::ATTR_Y_SCL, yScl, mode );
 	
 	action->SetDelay ( delay );
 	action->Start ();
@@ -183,8 +183,8 @@ int MOAITransform2D::_move ( lua_State* L ) {
 	@param delay Time period to move.
 	@param mode (optional) Interpolation mode.  Default: SMOOTH
 */
-int MOAITransform2D::_moveLoc ( lua_State* L ) {
-	LUA_SETUP ( MOAITransform2D, "UNNN" )
+int MOAITransform::_moveLoc ( lua_State* L ) {
+	LUA_SETUP ( MOAITransform, "UNNN" )
 
 	MOAIEaseDriver* action = new MOAIEaseDriver ();
 	action->ReserveForces ( 2 );
@@ -194,8 +194,8 @@ int MOAITransform2D::_moveLoc ( lua_State* L ) {
 	float delay		= state.GetValue < float >( 4, 0.0f );
 	u32 mode		= state.GetValue < u32 >( 5, USInterpolate::kSmooth );
 	
-	action->SetForce ( 0, self, MOAITransform2D::ATTR_X_LOC, xLoc, mode );
-	action->SetForce ( 1, self, MOAITransform2D::ATTR_Y_LOC, yLoc, mode );
+	action->SetForce ( 0, self, MOAITransform::ATTR_X_LOC, xLoc, mode );
+	action->SetForce ( 1, self, MOAITransform::ATTR_Y_LOC, yLoc, mode );
 	
 	action->SetDelay ( delay );
 	action->Start ();
@@ -212,8 +212,8 @@ int MOAITransform2D::_moveLoc ( lua_State* L ) {
 	@param delay Time to transition to new rotation value.
 	@param mode (optional) Interpolation mode.  Default: SMOOTH
 */
-int MOAITransform2D::_moveRot ( lua_State* L ) {
-	LUA_SETUP ( MOAITransform2D, "UNN" )
+int MOAITransform::_moveRot ( lua_State* L ) {
+	LUA_SETUP ( MOAITransform, "UNN" )
 
 	MOAIEaseDriver* action = new MOAIEaseDriver ();
 	action->ReserveForces ( 1 );
@@ -222,7 +222,7 @@ int MOAITransform2D::_moveRot ( lua_State* L ) {
 	float delay		= state.GetValue < float >( 3, 0.0f );
 	u32 mode		= state.GetValue < u32 >( 4, USInterpolate::kSmooth );
 	
-	action->SetForce ( 0, self, MOAITransform2D::ATTR_Z_ROT, zRot, mode );
+	action->SetForce ( 0, self, MOAITransform::ATTR_Z_ROT, zRot, mode );
 	
 	action->SetDelay ( delay );
 	action->Start ();
@@ -240,8 +240,8 @@ int MOAITransform2D::_moveRot ( lua_State* L ) {
 	@param delay Time to transition to new scaling values.
 	@param mode (optional) Interpolation mode.  Default: SMOOTH
 */
-int MOAITransform2D::_moveScl ( lua_State* L ) {
-	LUA_SETUP ( MOAITransform2D, "UNNN" )
+int MOAITransform::_moveScl ( lua_State* L ) {
+	LUA_SETUP ( MOAITransform, "UNNN" )
 
 	MOAIEaseDriver* action = new MOAIEaseDriver ();
 	action->ReserveForces ( 2 );
@@ -251,8 +251,8 @@ int MOAITransform2D::_moveScl ( lua_State* L ) {
 	float delay		= state.GetValue < float >( 4, 0.0f );
 	u32 mode		= state.GetValue < u32 >( 5, USInterpolate::kSmooth );
 	
-	action->SetForce ( 0, self, MOAITransform2D::ATTR_X_SCL, xScl, mode );
-	action->SetForce ( 1, self, MOAITransform2D::ATTR_Y_SCL, yScl, mode );
+	action->SetForce ( 0, self, MOAITransform::ATTR_X_SCL, xScl, mode );
+	action->SetForce ( 1, self, MOAITransform::ATTR_Y_SCL, yScl, mode );
 	
 	action->SetDelay ( delay );
 	action->Start ();
@@ -273,8 +273,8 @@ int MOAITransform2D::_moveScl ( lua_State* L ) {
 	@param delay Time to transition to new values.
 	@param mode (optional) Interpolation mode.  Default: SMOOTH
 */
-int MOAITransform2D::_seek ( lua_State* L ) {
-	LUA_SETUP ( MOAITransform2D, "UNNNNNN" )
+int MOAITransform::_seek ( lua_State* L ) {
+	LUA_SETUP ( MOAITransform, "UNNNNNN" )
 
 	MOAIEaseDriver* action = new MOAIEaseDriver ();
 	action->ReserveForces ( 5 );
@@ -287,11 +287,11 @@ int MOAITransform2D::_seek ( lua_State* L ) {
 	float delay		= state.GetValue < float >( 7, 0.0f );
 	u32 mode		= state.GetValue < u32 >( 8, USInterpolate::kSmooth );
 
-	action->SetForce ( 0, self, MOAITransform2D::ATTR_X_LOC, xLoc - self->mLoc.mX, mode );
-	action->SetForce ( 1, self, MOAITransform2D::ATTR_Y_LOC, yLoc - self->mLoc.mY, mode );
-	action->SetForce ( 2, self, MOAITransform2D::ATTR_Z_ROT, zRot - self->mDegrees, mode );
-	action->SetForce ( 3, self, MOAITransform2D::ATTR_X_SCL, xScl - self->mScale.mX, mode );
-	action->SetForce ( 4, self, MOAITransform2D::ATTR_Y_SCL, yScl - self->mScale.mY, mode );
+	action->SetForce ( 0, self, MOAITransform::ATTR_X_LOC, xLoc - self->mLoc.mX, mode );
+	action->SetForce ( 1, self, MOAITransform::ATTR_Y_LOC, yLoc - self->mLoc.mY, mode );
+	action->SetForce ( 2, self, MOAITransform::ATTR_Z_ROT, zRot - self->mDegrees, mode );
+	action->SetForce ( 3, self, MOAITransform::ATTR_X_SCL, xScl - self->mScale.mX, mode );
+	action->SetForce ( 4, self, MOAITransform::ATTR_Y_SCL, yScl - self->mScale.mY, mode );
 	
 	action->SetDelay ( delay );
 	action->Start ();
@@ -309,8 +309,8 @@ int MOAITransform2D::_seek ( lua_State* L ) {
 	@param delay Time to transition to new values.
 	@param mode (optional) Interpolation mode.  Default: SMOOTH
 */
-int MOAITransform2D::_seekLoc ( lua_State* L ) {
-	LUA_SETUP ( MOAITransform2D, "UNNN" )
+int MOAITransform::_seekLoc ( lua_State* L ) {
+	LUA_SETUP ( MOAITransform, "UNNN" )
 
 	MOAIEaseDriver* action = new MOAIEaseDriver ();
 	action->ReserveForces ( 2 );
@@ -320,8 +320,8 @@ int MOAITransform2D::_seekLoc ( lua_State* L ) {
 	float delay		= state.GetValue < float >( 4, 0.0f );
 	u32 mode		= state.GetValue < u32 >( 5, USInterpolate::kSmooth );
 
-	action->SetForce ( 0, self, MOAITransform2D::ATTR_X_LOC, xLoc - self->mLoc.mX, mode );
-	action->SetForce ( 1, self, MOAITransform2D::ATTR_Y_LOC, yLoc - self->mLoc.mY, mode );
+	action->SetForce ( 0, self, MOAITransform::ATTR_X_LOC, xLoc - self->mLoc.mX, mode );
+	action->SetForce ( 1, self, MOAITransform::ATTR_Y_LOC, yLoc - self->mLoc.mY, mode );
 	
 	action->SetDelay ( delay );
 	action->Start ();
@@ -338,8 +338,8 @@ int MOAITransform2D::_seekLoc ( lua_State* L ) {
 	@param delay Time to transition to new values.
 	@param mode (optional) Interpolation mode.  Default: SMOOTH
 */
-int MOAITransform2D::_seekRot ( lua_State* L ) {
-	LUA_SETUP ( MOAITransform2D, "UNN" )
+int MOAITransform::_seekRot ( lua_State* L ) {
+	LUA_SETUP ( MOAITransform, "UNN" )
 
 	MOAIEaseDriver* action = new MOAIEaseDriver ();
 	action->ReserveForces ( 1 );
@@ -348,7 +348,7 @@ int MOAITransform2D::_seekRot ( lua_State* L ) {
 	float delay		= state.GetValue < float >( 3, 0.0f );
 	u32 mode		= state.GetValue < u32 >( 4, USInterpolate::kSmooth );
 
-	action->SetForce ( 0, self, MOAITransform2D::ATTR_Z_ROT, zRot - self->mDegrees, mode );
+	action->SetForce ( 0, self, MOAITransform::ATTR_Z_ROT, zRot - self->mDegrees, mode );
 	
 	action->SetDelay ( delay );
 	action->Start ();
@@ -366,8 +366,8 @@ int MOAITransform2D::_seekRot ( lua_State* L ) {
 	@param delay Time to transition to new values.
 	@param mode (optional) Interpolation mode.  Default: SMOOTH
 */
-int MOAITransform2D::_seekScl ( lua_State* L ) {
-	LUA_SETUP ( MOAITransform2D, "UNNN" )
+int MOAITransform::_seekScl ( lua_State* L ) {
+	LUA_SETUP ( MOAITransform, "UNNN" )
 
 	MOAIEaseDriver* action = new MOAIEaseDriver ();
 	action->ReserveForces ( 2 );
@@ -377,8 +377,8 @@ int MOAITransform2D::_seekScl ( lua_State* L ) {
 	float delay		= state.GetValue < float >( 4, 0.0f );
 	u32 mode		= state.GetValue < u32 >( 5, USInterpolate::kSmooth );
 
-	action->SetForce ( 0, self, MOAITransform2D::ATTR_X_SCL, xScl - self->mScale.mX, mode );
-	action->SetForce ( 1, self, MOAITransform2D::ATTR_Y_SCL, yScl - self->mScale.mY, mode );
+	action->SetForce ( 0, self, MOAITransform::ATTR_X_SCL, xScl - self->mScale.mX, mode );
+	action->SetForce ( 1, self, MOAITransform::ATTR_Y_SCL, yScl - self->mScale.mY, mode );
 	
 	action->SetDelay ( delay );
 	action->Start ();
@@ -394,8 +394,8 @@ int MOAITransform2D::_seekScl ( lua_State* L ) {
 	@param x X coordinate of origin location.
 	@param y Y coordinate of origin location.
 */
-int MOAITransform2D::_setLoc ( lua_State* L ) {
-	LUA_SETUP ( MOAITransform2D, "UNN" )
+int MOAITransform::_setLoc ( lua_State* L ) {
+	LUA_SETUP ( MOAITransform, "UNN" )
 	
 	USVec2D loc;
 	
@@ -415,10 +415,10 @@ int MOAITransform2D::_setLoc ( lua_State* L ) {
 	@param self (in)
 	@param y (out)
 */
-int MOAITransform2D::_setOffset ( lua_State* L ) {
-	LUA_SETUP ( MOAITransform2D, "UU" );
+int MOAITransform::_setOffset ( lua_State* L ) {
+	LUA_SETUP ( MOAITransform, "UU" );
 	
-	MOAITransformBase2D* offset = state.GetLuaData < MOAITransformBase2D >( 2 );
+	MOAITransformBase* offset = state.GetLuaData < MOAITransformBase >( 2 );
 	if ( !offset ) return 0;
 	
 	self->SetOffset ( offset );
@@ -433,10 +433,10 @@ int MOAITransform2D::_setOffset ( lua_State* L ) {
 	Sets the parent of the transform in the hiearchy.
 	@param parent Transform to become parent.
 */
-int MOAITransform2D::_setParent ( lua_State* L ) {
-	LUA_SETUP ( MOAITransform2D, "U" )
+int MOAITransform::_setParent ( lua_State* L ) {
+	LUA_SETUP ( MOAITransform, "U" )
 	
-	MOAITransformBase2D* parent = state.GetLuaData < MOAITransformBase2D >( 2 );
+	MOAITransformBase* parent = state.GetLuaData < MOAITransformBase >( 2 );
 	self->SetParent ( parent );
 	
 	return 0;
@@ -448,8 +448,8 @@ int MOAITransform2D::_setParent ( lua_State* L ) {
 	Sets the rotation value of the transform.
 	@param rotation New rotation value in degrees.
 */
-int MOAITransform2D::_setRot ( lua_State* L ) {
-	LUA_SETUP ( MOAITransform2D, "UN" )
+int MOAITransform::_setRot ( lua_State* L ) {
+	LUA_SETUP ( MOAITransform, "UN" )
 	
 	float d = state.GetValue < float >( 2, 0.0f );
 	
@@ -466,8 +466,8 @@ int MOAITransform2D::_setRot ( lua_State* L ) {
 	@param sx New horizontal scaling value.
 	@param sy New vertical scaling value.
 */
-int MOAITransform2D::_setScl ( lua_State* L ) {
-	LUA_SETUP ( MOAITransform2D, "UNN" )
+int MOAITransform::_setScl ( lua_State* L ) {
+	LUA_SETUP ( MOAITransform, "UNN" )
 	
 	USVec2D scl;
 	
@@ -487,8 +487,8 @@ int MOAITransform2D::_setScl ( lua_State* L ) {
 	@param self (in)
 	@param y (out)
 */
-int MOAITransform2D::_worldToModel ( lua_State* L ) {
-	LUA_SETUP ( MOAITransform2D, "UNN" )
+int MOAITransform::_worldToModel ( lua_State* L ) {
+	LUA_SETUP ( MOAITransform, "UNN" )
 
 	USVec2D loc;
 	loc.mX = state.GetValue < float >( 2, 0.0f );
@@ -504,11 +504,11 @@ int MOAITransform2D::_worldToModel ( lua_State* L ) {
 }
 
 //================================================================//
-// MOAITransform2D
+// MOAITransform
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAITransform2D::ApplyAttrOp ( u32 attrID, USAttrOp& attrOp ) {
+void MOAITransform::ApplyAttrOp ( u32 attrID, USAttrOp& attrOp ) {
 
 	switch ( attrID ) {
 		case ATTR_X_LOC:
@@ -530,7 +530,7 @@ void MOAITransform2D::ApplyAttrOp ( u32 attrID, USAttrOp& attrOp ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITransform2D::BuildTransforms ( float xOff, float yOff, float xStretch, float yStretch ) {
+void MOAITransform::BuildTransforms ( float xOff, float yOff, float xStretch, float yStretch ) {
 	
 	this->mLocalToWorldMtx.ScRoTr (
 		this->mScale.mX * xStretch,
@@ -572,50 +572,50 @@ void MOAITransform2D::BuildTransforms ( float xOff, float yOff, float xStretch, 
 }
 
 //----------------------------------------------------------------//
-u32 MOAITransform2D::CountAttributes () {
+u32 MOAITransform::CountAttributes () {
 
-	return MOAITransform2D::TOTAL_ATTR;
+	return MOAITransform::TOTAL_ATTR;
 }
 
 //----------------------------------------------------------------//
-const USAffine2D& MOAITransform2D::GetLocalToWorldMtx () {
+const USAffine2D& MOAITransform::GetLocalToWorldMtx () {
 
 	return this->mLocalToWorldMtx;
 }
 
 //----------------------------------------------------------------//
-const USAffine2D& MOAITransform2D::GetWorldToLocalMtx () {
+const USAffine2D& MOAITransform::GetWorldToLocalMtx () {
 
 	return this->mWorldToLocalMtx;
 }
 
 //----------------------------------------------------------------//
-MOAITransform2D::MOAITransform2D () :
+MOAITransform::MOAITransform () :
 	mLoc ( 0.0f, 0.0f ),
 	mScale ( 1.0f, 1.0f ),
 	mDegrees ( 0.0f ),
 	mFilter ( INHERIT_ALL ) {
 	
-	RTTI_SINGLE ( MOAITransformBase2D )
+	RTTI_SINGLE ( MOAITransformBase )
 	
 	this->mLocalToWorldMtx.Ident ();
 	this->mWorldToLocalMtx.Ident ();
 }
 
 //----------------------------------------------------------------//
-MOAITransform2D::~MOAITransform2D () {
+MOAITransform::~MOAITransform () {
 
 	this->mParent = 0;
 }
 
 //----------------------------------------------------------------//
-void MOAITransform2D::OnDepNodeUpdate () {
+void MOAITransform::OnDepNodeUpdate () {
 	
 	this->BuildTransforms ( 0.0f, 0.0f, 1.0f, 1.0f );
 }
 
 //----------------------------------------------------------------//
-void MOAITransform2D::RegisterLuaClass ( USLuaState& state ) {
+void MOAITransform::RegisterLuaClass ( USLuaState& state ) {
 	
 	MOAINode::RegisterLuaClass ( state );
 	
@@ -627,7 +627,7 @@ void MOAITransform2D::RegisterLuaClass ( USLuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITransform2D::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAITransform::RegisterLuaFuncs ( USLuaState& state ) {
 	
 	MOAINode::RegisterLuaFuncs ( state );
 	
@@ -660,14 +660,14 @@ void MOAITransform2D::RegisterLuaFuncs ( USLuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITransform2D::SetLoc ( float x, float y ) {
+void MOAITransform::SetLoc ( float x, float y ) {
 
 	this->mLoc.mX = x;
 	this->mLoc.mY = y;
 }
 
 //----------------------------------------------------------------//
-void MOAITransform2D::SetOffset ( MOAITransformBase2D* offset ) {
+void MOAITransform::SetOffset ( MOAITransformBase* offset ) {
 
 	this->mOffset = offset;
 	this->SetAttrLink ( ATTR_OFFSET, offset, NULL_ATTR );
@@ -675,7 +675,7 @@ void MOAITransform2D::SetOffset ( MOAITransformBase2D* offset ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITransform2D::SetParent ( MOAITransformBase2D* parent ) {
+void MOAITransform::SetParent ( MOAITransformBase* parent ) {
 
 	this->mParent = parent;
 	this->SetAttrLink ( ATTR_PARENT, parent, NULL_ATTR );
@@ -683,14 +683,14 @@ void MOAITransform2D::SetParent ( MOAITransformBase2D* parent ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITransform2D::SetScl ( float x, float y ) {
+void MOAITransform::SetScl ( float x, float y ) {
 
 	this->mScale.mX = x;
 	this->mScale.mY = y;
 }
 
 //----------------------------------------------------------------//
-STLString MOAITransform2D::ToString () {
+STLString MOAITransform::ToString () {
 
 	STLString repr;
 

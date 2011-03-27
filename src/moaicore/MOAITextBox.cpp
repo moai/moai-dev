@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include <moaicore/MOAIAnimCurve.h>
-#include <moaicore/MOAIDeck2D.h>
+#include <moaicore/MOAIDeck.h>
 #include <moaicore/MOAIDebugLines.h>
 #include <moaicore/MOAIFont.h>
 #include <moaicore/MOAITextBox.h>
@@ -153,7 +153,7 @@ int MOAITextBox::_setFont ( lua_State* L ) {
 int MOAITextBox::_setParent ( lua_State* L ) {
 	LUA_SETUP ( MOAITextBox, "UU" )
 
-	MOAITransform2D* parent = state.GetLuaData < MOAITransform2D >( 2 );
+	MOAITransform* parent = state.GetLuaData < MOAITransform >( 2 );
 	if ( !parent ) return 0;
 	
 	self->SetParent ( parent );
@@ -314,7 +314,7 @@ const float MOAITextBox::DEFAULT_SPOOL_SPEED = 24.0f;
 //----------------------------------------------------------------//
 void MOAITextBox::ApplyAttrOp ( u32 attrID, USAttrOp& attrOp ) {
 
-	MOAITransform2D::ApplyAttrOp ( attrID, attrOp );
+	MOAITransform::ApplyAttrOp ( attrID, attrOp );
 }
 
 //----------------------------------------------------------------//
@@ -448,7 +448,7 @@ MOAITextBox::MOAITextBox () :
 	RTTI_END
 	
 	this->mFrame.Init ( 0.0f, 0.0f, 0.0f, 0.0f ); 
-	this->SetMask ( MOAIDeck2D::CAN_DRAW | MOAIDeck2D::CAN_DRAW_DEBUG );
+	this->SetMask ( MOAIDeck::CAN_DRAW | MOAIDeck::CAN_DRAW_DEBUG );
 }
 
 //----------------------------------------------------------------//

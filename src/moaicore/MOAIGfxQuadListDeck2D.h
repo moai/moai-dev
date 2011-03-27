@@ -4,7 +4,7 @@
 #ifndef	MOAIGFXQUADLISTDECK2D_H
 #define	MOAIGFXQUADLISTDECK2D_H
 
-#include <moaicore/MOAIDeck2D.h>
+#include <moaicore/MOAIDeck.h>
 
 class MOAITexture;
 
@@ -50,7 +50,7 @@ private:
 /**	@brief Sprite library class.
 */
 class MOAIGfxQuadListDeck2D :
-	public MOAIDeck2D {
+	public MOAIDeck {
 private:
 
 	USRef < MOAITexture >			mTexture;

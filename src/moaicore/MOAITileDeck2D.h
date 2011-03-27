@@ -4,7 +4,7 @@
 #ifndef	MOAITILEDECK2D_H
 #define	MOAITILEDECK2D_H
 
-#include <moaicore/MOAIDeck2D.h>
+#include <moaicore/MOAIDeck.h>
 
 class MOAITexture;
 
@@ -14,7 +14,7 @@ class MOAITexture;
 /**	@brief Tile library class.
 */
 class MOAITileDeck2D :
-	public MOAIDeck2D,
+	public MOAIDeck,
 	public USGridSpace {
 private:
 	

@@ -3,12 +3,12 @@
 
 #include "pch.h"
 #include <moaicore/MOAIBox2DWorld.h>
-#include <moaicore/MOAIDeck2D.h>
+#include <moaicore/MOAIDeck.h>
 #include <moaicore/MOAICpSpace.h>
 #include <moaicore/MOAIDebugLines.h>
 #include <moaicore/MOAILayer2D.h>
 #include <moaicore/MOAIProp2D.h>
-#include <moaicore/MOAITransform2D.h>
+#include <moaicore/MOAITransform.h>
 
 #define MAX_RENDERABLES 512
 
@@ -136,7 +136,7 @@ int MOAILayer2D::_setBox2DWorld ( lua_State* L ) {
 int MOAILayer2D::_setCamera ( lua_State* L ) {
 	LUA_SETUP ( MOAILayer2D, "UU" )
 
-	MOAITransform2D* camera = state.GetLuaData < MOAITransform2D >( 2 );
+	MOAITransform* camera = state.GetLuaData < MOAITransform >( 2 );
 	if ( !camera ) return 0;
 
 	self->SetCamera ( camera );
@@ -345,7 +345,7 @@ void MOAILayer2D::Draw () {
 		USViewQuad viewQuad;
 		viewQuad.Init ();
 		
-		this->mPartition->GatherProps ( viewQuad.mBounds, 0, MOAIDeck2D::CAN_DRAW | MOAIDeck2D::CAN_DRAW_DEBUG );
+		this->mPartition->GatherProps ( viewQuad.mBounds, 0, MOAIDeck::CAN_DRAW | MOAIDeck::CAN_DRAW_DEBUG );
 		u32 totalResults = this->mPartition->GetTotalResults ();
 		if (( !totalResults ) || ( totalResults > MAX_RENDERABLES )) return;
 		
@@ -448,7 +448,7 @@ MOAILayer2D::MOAILayer2D () :
 		RTTI_EXTEND ( MOAIProp2D )
 	RTTI_END
 	
-	this->SetMask ( MOAIDeck2D::CAN_DRAW | MOAIDeck2D::CAN_DRAW_DEBUG );
+	this->SetMask ( MOAIDeck::CAN_DRAW | MOAIDeck::CAN_DRAW_DEBUG );
 }
 
 //----------------------------------------------------------------//

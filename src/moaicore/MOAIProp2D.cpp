@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moaicore/MOAIDeck2D.h>
+#include <moaicore/MOAIDeck.h>
 #include <moaicore/MOAIDebugLines.h>
 #include <moaicore/MOAIGrid.h>
 #include <moaicore/MOAILayoutFrame.h>
@@ -77,7 +77,7 @@ int	MOAIProp2D::_inside ( lua_State* L ) {
 int MOAIProp2D::_setDeck ( lua_State* L ) {
 	LUA_SETUP ( MOAIProp2D, "UU" )
 
-	self->mDeck = state.GetLuaData < MOAIDeck2D >( 2 );
+	self->mDeck = state.GetLuaData < MOAIDeck >( 2 );
 
 	if ( self->mDeck ) {
 		self->SetMask ( self->mDeck->GetContentMask ());
@@ -219,7 +219,7 @@ int MOAIProp2D::_setShader ( lua_State* L ) {
 int MOAIProp2D::_setUVTransform ( lua_State* L ) {
 	LUA_SETUP ( MOAIProp2D, "UU" )
 	
-	MOAITransform2D* transform = state.GetLuaData < MOAITransform2D >( 2 );
+	MOAITransform* transform = state.GetLuaData < MOAITransform >( 2 );
 	if ( !transform ) return 0;
 
 	self->mUVTransform = transform;
@@ -239,7 +239,7 @@ void MOAIProp2D::ApplyAttrOp ( u32 attrID, USAttrOp& attrOp ) {
 			this->mIndex = attrOp.Op ( this->mIndex );
 			break;
 		default:
-			MOAITransform2D::ApplyAttrOp ( attrID, attrOp );
+			MOAITransform::ApplyAttrOp ( attrID, attrOp );
 	}
 }
 
@@ -480,7 +480,6 @@ MOAIProp2D::MOAIProp2D () :
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIProp )
-		RTTI_EXTEND ( MOAITransform2D )
 	RTTI_END
 	
 	this->SetMask ( 0 );
@@ -575,7 +574,6 @@ void MOAIProp2D::OnDepNodeUpdate () {
 void MOAIProp2D::RegisterLuaClass ( USLuaState& state ) {
 	
 	MOAIProp::RegisterLuaClass ( state );
-	MOAITransform2D::RegisterLuaClass ( state );
 	
 	state.SetField ( -1, "ATTR_INDEX", ( u32 )ATTR_INDEX );
 	
@@ -591,7 +589,6 @@ void MOAIProp2D::RegisterLuaClass ( USLuaState& state ) {
 void MOAIProp2D::RegisterLuaFuncs ( USLuaState& state ) {
 	
 	MOAIProp::RegisterLuaFuncs ( state );
-	MOAITransform2D::RegisterLuaFuncs ( state );
 
 	LuaReg regTable [] = {
 		{ "getGrid",			_getGrid },
@@ -614,7 +611,7 @@ void MOAIProp2D::RegisterLuaFuncs ( USLuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIProp2D::SerializeIn ( USLuaState& state, USLuaSerializer& serializer ) {
 	
-	this->mDeck = serializer.GetRefField < MOAIDeck2D >( state, -1, "mDeck" );
+	this->mDeck = serializer.GetRefField < MOAIDeck >( state, -1, "mDeck" );
 	this->mGrid = serializer.GetRefField < MOAIGrid >( state, -1, "mGrid" );
 }
 

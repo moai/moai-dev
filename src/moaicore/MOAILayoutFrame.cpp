@@ -3,7 +3,7 @@
 
 #include "pch.h"
 //#include <moaicore/MOAIColor.h>
-//#include <moaicore/MOAIDeck2D.h>
+//#include <moaicore/MOAIDeck.h>
 #include <moaicore/MOAIDebugLines.h>
 #include <moaicore/MOAILayoutFrame.h>
 //#include <moaicore/MOAILayer2D.h>
@@ -426,7 +426,7 @@ void MOAILayoutFrame::Layout ( u32 axis ) {
 MOAILayoutFrame::MOAILayoutFrame () {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAITransform2D )
+		RTTI_EXTEND ( MOAITransform )
 	RTTI_END
 	
 	this->mMargin [ X_AXIS ][ MIN ] = 0.0f;
@@ -458,7 +458,7 @@ MOAILayoutFrame::~MOAILayoutFrame () {
 //----------------------------------------------------------------//
 void MOAILayoutFrame::RegisterLuaClass ( USLuaState& state ) {
 	
-	MOAITransform2D::RegisterLuaClass ( state );
+	MOAITransform::RegisterLuaClass ( state );
 	
 	state.SetField ( -1, "LAYOUT_ALIGN_MIN", ( u32 )LAYOUT_ALIGN_MIN );
 	state.SetField ( -1, "LAYOUT_ALIGN_MAX", ( u32 )LAYOUT_ALIGN_MAX );
@@ -476,7 +476,7 @@ void MOAILayoutFrame::RegisterLuaClass ( USLuaState& state ) {
 //----------------------------------------------------------------//
 void MOAILayoutFrame::RegisterLuaFuncs ( USLuaState& state ) {
 	
-	MOAITransform2D::RegisterLuaFuncs ( state );
+	MOAITransform::RegisterLuaFuncs ( state );
 	
 	LuaReg regTable [] = {
 		{ "layout",				_layout },
@@ -514,11 +514,11 @@ void MOAILayoutFrame::SetLocByAxis ( u32 axis, float loc ) {
 }
 
 //----------------------------------------------------------------//
-void MOAILayoutFrame::SetParent ( MOAITransformBase2D* parent ) {
+void MOAILayoutFrame::SetParent ( MOAITransformBase* parent ) {
 
 	this->mLinkInChildren.Remove ();
 	
-	this->MOAITransform2D::SetParent ( parent );
+	this->MOAITransform::SetParent ( parent );
 	
 	if ( parent ) {
 		MOAILayoutFrame* parentWidget = parent->AsType < MOAILayoutFrame >();
@@ -531,7 +531,7 @@ void MOAILayoutFrame::SetParent ( MOAITransformBase2D* parent ) {
 //----------------------------------------------------------------//
 STLString MOAILayoutFrame::ToString () {
 
-	STLString repr ( MOAITransform2D::ToString ());
+	STLString repr ( MOAITransform::ToString ());
 
 	return repr;
 }

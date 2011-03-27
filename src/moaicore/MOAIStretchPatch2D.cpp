@@ -5,7 +5,7 @@
 #include <moaicore/MOAIGrid.h>
 #include <moaicore/MOAIStretchPatch2D.h>
 #include <moaicore/MOAITexture.h>
-#include <moaicore/MOAITransformBase2D.h>
+#include <moaicore/MOAITransformBase.h>
 
 //================================================================//
 // local
@@ -323,7 +323,7 @@ USRect MOAIStretchPatch2D::GetBounds ( u32 idx ) {
 MOAIStretchPatch2D::MOAIStretchPatch2D () :
 	mNeedsUpdate ( true ) {
 
-	RTTI_SINGLE ( MOAIDeck2D )
+	RTTI_SINGLE ( MOAIDeck )
 	this->SetContentMask ( CAN_DRAW );
 
 	this->mRect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
@@ -337,7 +337,7 @@ MOAIStretchPatch2D::~MOAIStretchPatch2D () {
 void MOAIStretchPatch2D::RegisterLuaClass ( USLuaState& state ) {
 	UNUSED ( state );
 
-//	this->MOAIDeck2D::RegisterLuaClass ( state );
+//	this->MOAIDeck::RegisterLuaClass ( state );
 //	
 //	state.SetField ( -1, "FILTER_POINT", ( u32 )GL_NEAREST );
 //	state.SetField ( -1, "FILTER_BILERP", ( u32 )GL_LINEAR );
@@ -346,7 +346,7 @@ void MOAIStretchPatch2D::RegisterLuaClass ( USLuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIStretchPatch2D::RegisterLuaFuncs ( USLuaState& state ) {
 
-	this->MOAIDeck2D::RegisterLuaFuncs ( state );
+	this->MOAIDeck::RegisterLuaFuncs ( state );
 
 	LuaReg regTable [] = {
 		{ "reserveColumns",		_reserveColumns },

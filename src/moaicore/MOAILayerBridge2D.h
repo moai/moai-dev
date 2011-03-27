@@ -4,7 +4,7 @@
 #ifndef	MOAILAYERBRIDGE2D_H
 #define	MOAILAYERBRIDGE2D_H
 
-#include <moaicore/MOAITransform2D.h>
+#include <moaicore/MOAITransform.h>
 
 class MOAILayer2D;
 
@@ -14,7 +14,7 @@ class MOAILayer2D;
 /**	@brief 2D transform for connecting transforms across scenes.
 */
 class MOAILayerBridge2D :
-	public MOAITransform2D {
+	public MOAITransform {
 private:
 
 	USWeak < MOAILayer2D > mSourceScene;
