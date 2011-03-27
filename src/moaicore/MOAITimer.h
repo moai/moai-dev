@@ -4,6 +4,7 @@
 #ifndef	MOAITIMER_H
 #define	MOAITIMER_H
 
+#include <moaicore/MOAIAction.h>
 #include <moaicore/MOAINode.h>
 
 //================================================================//

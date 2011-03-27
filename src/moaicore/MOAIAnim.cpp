@@ -152,7 +152,7 @@ void MOAIAnim::Clear () {
 MOAIAnim::MOAIAnim () :
 	mLength ( 0.0f ) {
 	
-	RTTI_SINGLE ( USLuaData )
+	RTTI_SINGLE ( MOAITimer )
 }
 
 //----------------------------------------------------------------//
@@ -162,12 +162,24 @@ MOAIAnim::~MOAIAnim () {
 }
 
 //----------------------------------------------------------------//
+void MOAIAnim::OnUpdate ( float step ) {
+
+	float t0 = this->mTime;
+	float t1 = t0 + this->DoStep ( step );
+	
+	this->Apply ( t0, t1 );
+}
+
+//----------------------------------------------------------------//
 void MOAIAnim::RegisterLuaClass ( USLuaState& state ) {
-	UNUSED ( state );
+
+	MOAITimer::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAIAnim::RegisterLuaFuncs ( USLuaState& state ) {
+
+	MOAITimer::RegisterLuaFuncs ( state );
 
 	LuaReg regTable [] = {
 		{ "apply",				_apply },
@@ -204,6 +216,7 @@ void MOAIAnim::SetLink ( u32 linkID, MOAIAnimCurve* curve, MOAINode* target, u32
 	if ( this->mLength < length ) {
 		this->mLength = length;
 	}
+	this->mEndTime = this->mLength;
 }
 
 //----------------------------------------------------------------//

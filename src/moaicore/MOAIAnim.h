@@ -4,8 +4,9 @@
 #ifndef	MOAIANIM_H
 #define	MOAIANIM_H
 
+#include <moaicore/MOAITimer.h>
+
 class MOAIAnimCurve;
-class MOAINode;
 
 //================================================================//
 // MOAIAnimLink
@@ -25,7 +26,7 @@ public:
 /**	@brief Basic animation class.
 */
 class MOAIAnim :
-	public virtual USLuaData {
+	public virtual MOAITimer {
 private:
 
 	float mLength;
@@ -40,8 +41,6 @@ private:
 	
 public:
 	
-	friend class MOAIAnimDriver;
-	
 	DECL_LUA_DATA ( MOAIAnim )
 	
 	GET ( float, Length, mLength )
@@ -52,6 +51,7 @@ public:
 	void			Clear				();
 					MOAIAnim			();
 					~MOAIAnim			();
+	void			OnUpdate			( float step );
 	void			RegisterLuaClass	( USLuaState& state );
 	void			RegisterLuaFuncs	( USLuaState& state );
 	void			ReserveLinks		( u32 totalLinks );

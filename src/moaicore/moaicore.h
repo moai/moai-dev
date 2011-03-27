@@ -9,7 +9,6 @@
 #include <moaicore/MOAIAction.h>
 #include <moaicore/MOAIAnim.h>
 #include <moaicore/MOAIAnimCurve.h>
-#include <moaicore/MOAIAnimDriver.h>
 #include <moaicore/MOAIButtonSensor.h>
 #include <moaicore/MOAICameraFitter.h>
 #include <moaicore/MOAICheckpoint.h>
