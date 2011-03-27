@@ -58,7 +58,6 @@
 #include <moaicore/MOAIStretchPatch2D.h>
 #include <moaicore/MOAISurfaceDeck2D.h>
 #include <moaicore/MOAITextBox.h>
-#include <moaicore/MOAITextSpoolAction.h>
 #include <moaicore/MOAITexture.h>
 #include <moaicore/MOAIThread.h>
 #include <moaicore/MOAITileDeck2D.h>

@@ -32,39 +32,42 @@ function main ()
 
 	-- start spooling the text
 	textbox:setString ( test )
-	local spool = textbox:spool ()
+	textbox:spool ()
 	
 	-- more will be true as long as there is any remaining text
-	while spool:more () do
+	while textbox:more () do
 		
 		-- wait until we're done spooling the page
-		while spool:isBusy () do coroutine.yield () end
+		while textbox:isBusy () do coroutine.yield () end
 		
 		-- if there's more to spool, show the next page
-		if spool:more () then
+		if textbox:more () then
 		
 			-- this shows the next page and restarts the spool action
-			spool:nextPage ()
+			textbox:nextPage ()
+			textbox:spool ()
 		end
 	end
-
+	
 	-- new text, new loop to test page resetting
 	textbox:setString ( test2 )
 	
 	-- restart the spool action
-	spool:start ()
+	textbox:spool ()
+
 	
 	-- more will be true as long as there is any remaining text
-	while spool:more () do
+	while textbox:more () do
 		
 		-- wait until we're done spooling the page
-		while spool:isBusy () do coroutine.yield () end
+		while textbox:isBusy () do coroutine.yield () end
 		
 		-- if there's more to spool, show the next page
-		if spool:more () then
+		if textbox:more () then
 			
 			-- this shows the next page and restarts the spool action
-			spool:nextPage ()
+			textbox:nextPage ()
+			textbox:spool ()
 		end
 	end
 end

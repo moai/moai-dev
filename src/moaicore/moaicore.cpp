@@ -73,7 +73,6 @@ void moaicore::InitGlobals ( USGlobals* globals ) {
 	REGISTER_LUA_TYPE ( MOAIStretchPatch2D )
 	REGISTER_LUA_TYPE ( MOAISurfaceDeck2D )
 	REGISTER_LUA_TYPE ( MOAITextBox )
-	REGISTER_LUA_TYPE ( MOAITextSpoolAction )
 	REGISTER_LUA_TYPE ( MOAITexture )
 	REGISTER_LUA_TYPE ( MOAIThread )
 	REGISTER_LUA_TYPE ( MOAITileDeck2D )

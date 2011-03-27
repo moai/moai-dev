@@ -7,7 +7,6 @@
 #include <moaicore/MOAIDebugLines.h>
 #include <moaicore/MOAIFont.h>
 #include <moaicore/MOAITextBox.h>
-#include <moaicore/MOAITextSpoolAction.h>
 
 //================================================================//
 // local
@@ -204,6 +203,21 @@ int MOAITextBox::_setReveal ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@brief <tt>() setSpeed ( speed )</tt>\n
+\n
+	Sets the base spool speed.
+	@param self (in)
+	@param speed (in)
+*/
+int MOAITextBox::_setSpeed ( lua_State* L ) {
+	LUA_SETUP ( MOAITextBox, "UN" )
+	
+	self->mSpeed = state.GetValue < float >( 2, self->mSpeed );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@brief <tt>() setString ( self, newStr )</tt>\n
 \n
 	Sets or changes the string.
@@ -263,8 +277,6 @@ int MOAITextBox::_setYFlip ( lua_State* L ) {
 	spool action that, when run, will increment the reveal count to animate
 	the text appearing letter by letter. Action is automatically added to
 	the root of the action tree, but may be reparented or stopped by user.
-	See MOAITextSpoolAction for instructions on how to page text and throttle
-	spool speed.
 	@param self (in)
 */
 int MOAITextBox::_spool ( lua_State* L ) {
@@ -273,17 +285,31 @@ int MOAITextBox::_spool ( lua_State* L ) {
 	self->mReveal = state.GetValue < u32 >( 2, 0 );
 	self->mSpool = ( float )self->mReveal;
 
-	MOAITextSpoolAction* action = new MOAITextSpoolAction ();
-	action->SetTextBox ( self );
-	action->Start ();
-	action->PushLuaInstance ( state );
+	self->Start ();
 
 	return 1;
+}
+
+//----------------------------------------------------------------//
+/**	@brief <tt>() throttle ( self, throttle )</tt>\n
+\n
+	Scales the spool speed.
+	@param self (in)
+	@param throttle (in)
+*/
+int MOAITextBox::_throttle ( lua_State* L ) {
+	LUA_SETUP ( MOAITextBox, "U" )
+
+	self->mThrottle = state.GetValue < float >( 2, self->mThrottle );
+	
+	return 0;
 }
 
 //================================================================//
 // MOAITextBox
 //================================================================//
+
+const float MOAITextBox::DEFAULT_SPOOL_SPEED = 24.0f;
 
 //----------------------------------------------------------------//
 void MOAITextBox::ApplyAttrOp ( u32 attrID, USAttrOp& attrOp ) {
@@ -369,6 +395,16 @@ u32 MOAITextBox::GetLocalFrame ( USRect& frame ) {
 }
 
 //----------------------------------------------------------------//
+bool MOAITextBox::IsBusy () {
+
+	if ( this->IsActive ()) {
+		this->Layout ();
+		return ( this->mReveal < this->mLayout.GetTop ());
+	}
+	return false;
+}
+
+//----------------------------------------------------------------//
 void MOAITextBox::Layout () {
 
 	if ( this->mPageSize ) return;
@@ -401,11 +437,14 @@ MOAITextBox::MOAITextBox () :
 	mPoints ( 0 ),
 	mPageSize ( 0 ),
 	mSpool ( 0.0f ),
+	mSpeed ( DEFAULT_SPOOL_SPEED ),
+	mThrottle ( 1.0f ),
 	mReveal ( REVEAL_ALL ),
 	mYFlip ( false ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIProp2D )
+		RTTI_EXTEND ( MOAIAction )
 	RTTI_END
 	
 	this->mFrame.Init ( 0.0f, 0.0f, 0.0f, 0.0f ); 
@@ -447,9 +486,17 @@ void MOAITextBox::NextPage ( bool reveal ) {
 }
 
 //----------------------------------------------------------------//
+void MOAITextBox::OnUpdate ( float step ) {
+	
+	this->mSpool += ( this->mSpeed * this->mThrottle * step );
+	this->mReveal = ( u32 )this->mSpool;
+}
+
+//----------------------------------------------------------------//
 void MOAITextBox::RegisterLuaClass ( USLuaState& state ) {
 
 	MOAIProp2D::RegisterLuaClass ( state );
+	MOAIAction::RegisterLuaClass ( state );
 
 	state.SetField ( -1, "LEFT_JUSTIFY", ( u32 )USFont::LEFT_JUSTIFY );
 	state.SetField ( -1, "CENTER_JUSTIFY", ( u32 )USFont::CENTER_JUSTIFY );
@@ -460,6 +507,7 @@ void MOAITextBox::RegisterLuaClass ( USLuaState& state ) {
 void MOAITextBox::RegisterLuaFuncs ( USLuaState& state ) {
 	
 	MOAIProp2D::RegisterLuaFuncs ( state );
+	MOAIAction::RegisterLuaFuncs ( state );
 	
 	LuaReg regTable [] = {
 		{ "clearCurves",		_clearCurves },
@@ -492,6 +540,20 @@ void MOAITextBox::ReserveCurves ( u32 total ) {
 	
 	this->mCurves.Init ( total );
 	this->mCurves.Fill ( 0 );
+}
+
+//----------------------------------------------------------------//
+void MOAITextBox::SerializeIn ( USLuaState& state, USLuaSerializer& serializer ) {
+
+	MOAIProp2D::SerializeIn ( state, serializer );
+	MOAIAction::SerializeIn ( state, serializer );
+}
+
+//----------------------------------------------------------------//
+void MOAITextBox::SerializeOut ( USLuaState& state, USLuaSerializer& serializer ) {
+
+	MOAIProp2D::SerializeOut ( state, serializer );
+	MOAIAction::SerializeOut ( state, serializer );
 }
 
 //----------------------------------------------------------------//
@@ -542,13 +604,6 @@ void MOAITextBox::SetTextSize( float newSize ) {
 
 	this->mPoints = newSize;
 	this->ClearPageInfo ();
-}
-
-//----------------------------------------------------------------//
-void MOAITextBox::Spool ( float step ) {
-	
-	this->mSpool += step;
-	this->mReveal = ( u32 )this->mSpool;
 }
 
 //----------------------------------------------------------------//

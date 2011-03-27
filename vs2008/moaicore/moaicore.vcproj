@@ -477,6 +477,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\moaicore\MOAISurfaceDeck2D.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAISurfaceDeck2D.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\moaicore\MOAITileDeck2D.cpp"
 				>
 			</File>
@@ -798,14 +806,6 @@
 			</File>
 			<File
 				RelativePath="..\..\src\moaicore\MOAITextBox.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAITextSpoolAction.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAITextSpoolAction.h"
 				>
 			</File>
 		</Filter>
