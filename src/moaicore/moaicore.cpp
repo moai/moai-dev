@@ -33,7 +33,6 @@ void moaicore::InitGlobals ( USGlobals* globals ) {
 	REGISTER_LUA_TYPE ( MOAIAnim )
 	REGISTER_LUA_TYPE ( MOAIAnimCurve )
 	REGISTER_LUA_TYPE ( MOAIButtonSensor )
-	REGISTER_LUA_TYPE ( MOAICameraFitter )
 	REGISTER_LUA_TYPE ( MOAICheckpoint )
 	REGISTER_LUA_TYPE ( MOAIColor )
 	REGISTER_LUA_TYPE ( MOAICompassSensor )
