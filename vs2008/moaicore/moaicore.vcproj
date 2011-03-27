@@ -502,7 +502,7 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="layout"
+			Name="widgets"
 			>
 			<File
 				RelativePath="..\..\src\moaicore\MOAILayoutFrame.cpp"
@@ -686,26 +686,6 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="io"
-			>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIDataBuffer.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIDataBuffer.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIDataIOAction.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIDataIOAction.h"
-				>
-			</File>
-		</Filter>
-		<Filter
 			Name="partition"
 			>
 			<File
@@ -748,6 +728,22 @@
 		<Filter
 			Name="util"
 			>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIDataBuffer.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIDataBuffer.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIDataIOAction.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIDataIOAction.h"
+				>
+			</File>
 			<File
 				RelativePath="..\..\src\moaicore\MOAISerializer.cpp"
 				>
