@@ -18,7 +18,7 @@
 
 //----------------------------------------------------------------//
 void USLog::Print ( cc8* format, ... ) {
-	UNUSED ( format )
+	UNUSED ( format );
 
 	#ifdef _DEBUG
 

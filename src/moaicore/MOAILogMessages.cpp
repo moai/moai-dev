@@ -13,7 +13,7 @@
 
 //----------------------------------------------------------------//
 void MOAILogMessages::RegisterLogMessages ( USLuaState& state ) {
-	UNUSED ( state )
+	UNUSED ( state );
 	
 	#ifdef _DEBUG
 		REGISTER_LOG_MESSAGE ( MOAI_IndexOutOfRange_DDD )
