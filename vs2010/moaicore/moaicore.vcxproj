@@ -236,7 +236,7 @@
     <ClCompile Include="..\..\src\moaicore\MOAICpDebugDraw.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIDataBuffer.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIDataIOAction.cpp" />
-    <ClCompile Include="..\..\src\moaicore\MOAIDeck2D.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAIDeck.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIEaseDriver.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIEaseType.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIFtFontRipper.cpp" />
@@ -253,6 +253,9 @@
     <ClCompile Include="..\..\src\moaicore\MOAIParticleScript.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIParticleState.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIParticleSystem.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAIPartitionCell.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAIPartitionLayer.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAIProp.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIProp2D.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIScriptNode.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIStretchPatch2D.cpp" />
@@ -267,13 +270,13 @@
     <ClCompile Include="..\..\src\moaicore\MOAIColor.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIShader.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAISimpleShader.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAITransform.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAITransformBase.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIVertexBuffer.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIVertexFormat.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIViewport.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAILayer2D.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAILayerBridge2D.cpp" />
-    <ClCompile Include="..\..\src\moaicore\MOAITransform2D.cpp" />
-    <ClCompile Include="..\..\src\moaicore\MOAITransformBase2D.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIGrid.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIButtonSensor.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAICompassSensor.cpp" />
@@ -290,7 +293,6 @@
     <ClCompile Include="..\..\src\moaicore\MOAICheckpoint.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIDebugLines.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAINode.cpp" />
-    <ClCompile Include="..\..\src\moaicore\MOAINodeHarness.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAINodeMgr.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAISerializer.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAISim.cpp" />
@@ -325,7 +327,7 @@
     <ClInclude Include="..\..\src\moaicore\MOAICpDebugDraw.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIDataBuffer.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIDataIOAction.h" />
-    <ClInclude Include="..\..\src\moaicore\MOAIDeck2D.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAIDeck.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIEaseDriver.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIEaseType.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIFtFontRipper.h" />
@@ -342,6 +344,9 @@
     <ClInclude Include="..\..\src\moaicore\MOAIParticleScript.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIParticleState.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIParticleSystem.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAIPartitionCell.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAIPartitionLayer.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAIProp.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIProp2D.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIScriptNode.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIStretchPatch2D.h" />
@@ -356,13 +361,13 @@
     <ClInclude Include="..\..\src\moaicore\MOAIColor.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIShader.h" />
     <ClInclude Include="..\..\src\moaicore\MOAISimpleShader.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAITransform.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAITransformBase.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIVertexBuffer.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIVertexFormat.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIViewport.h" />
     <ClInclude Include="..\..\src\moaicore\MOAILayer2D.h" />
     <ClInclude Include="..\..\src\moaicore\MOAILayerBridge2D.h" />
-    <ClInclude Include="..\..\src\moaicore\MOAITransform2D.h" />
-    <ClInclude Include="..\..\src\moaicore\MOAITransformBase2D.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIGrid.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIButtonSensor.h" />
     <ClInclude Include="..\..\src\moaicore\MOAICompassSensor.h" />
@@ -379,7 +384,6 @@
     <ClInclude Include="..\..\src\moaicore\MOAICheckpoint.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIDebugLines.h" />
     <ClInclude Include="..\..\src\moaicore\MOAINode.h" />
-    <ClInclude Include="..\..\src\moaicore\MOAINodeHarness.h" />
     <ClInclude Include="..\..\src\moaicore\MOAINodeMgr.h" />
     <ClInclude Include="..\..\src\moaicore\MOAISerializer.h" />
     <ClInclude Include="..\..\src\moaicore\MOAISim.h" />

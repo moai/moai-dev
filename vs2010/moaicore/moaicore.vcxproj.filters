@@ -58,6 +58,15 @@
     <Filter Include="src\widgets">
       <UniqueIdentifier>{73364076-e9bc-4393-8aee-beea558ec94d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\prop">
+      <UniqueIdentifier>{85b092cf-3d03-4716-b4f4-d594c353831c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\transform">
+      <UniqueIdentifier>{e68c44c2-3f95-4cd6-8655-493f5e14b679}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\sim">
+      <UniqueIdentifier>{eea3220d-50ab-40fc-9e8b-9908da5660e1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\moaicore\MOAIAction.cpp">
@@ -91,12 +100,6 @@
       <Filter>src\scene</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAILayerBridge2D.cpp">
-      <Filter>src\scene</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAITransform2D.cpp">
-      <Filter>src\scene</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAITransformBase2D.cpp">
       <Filter>src\scene</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAIGrid.cpp">
@@ -139,9 +142,6 @@
       <Filter>src\partition</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAIDebugLines.cpp">
-      <Filter>src\system</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAISim.cpp">
       <Filter>src\system</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAIXmlParser.cpp">
@@ -252,9 +252,6 @@
     <ClCompile Include="..\..\src\moaicore\MOAITexture.cpp">
       <Filter>src\gfx</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAIDeck2D.cpp">
-      <Filter>src\scene</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAIGfxQuad2D.cpp">
       <Filter>src\scene</Filter>
     </ClCompile>
@@ -262,9 +259,6 @@
       <Filter>src\scene</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAIGfxQuadListDeck2D.cpp">
-      <Filter>src\scene</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAIProp2D.cpp">
       <Filter>src\scene</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAIStretchPatch2D.cpp">
@@ -277,9 +271,6 @@
       <Filter>src\log</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAINode.cpp">
-      <Filter>src\node</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAINodeHarness.cpp">
       <Filter>src\node</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAINodeMgr.cpp">
@@ -310,6 +301,30 @@
       <Filter>src\log</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAITileDeck2D.cpp">
+      <Filter>src\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIPartitionCell.cpp">
+      <Filter>src\partition</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIPartitionLayer.cpp">
+      <Filter>src\partition</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIProp2D.cpp">
+      <Filter>src\prop</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIProp.cpp">
+      <Filter>src\prop</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAISim.cpp">
+      <Filter>src\sim</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAITransform.cpp">
+      <Filter>src\transform</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAITransformBase.cpp">
+      <Filter>src\transform</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIDeck.cpp">
       <Filter>src\scene</Filter>
     </ClCompile>
   </ItemGroup>
@@ -345,12 +360,6 @@
       <Filter>src\scene</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAILayerBridge2D.h">
-      <Filter>src\scene</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\MOAITransform2D.h">
-      <Filter>src\scene</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\MOAITransformBase2D.h">
       <Filter>src\scene</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIGrid.h">
@@ -393,9 +402,6 @@
       <Filter>src\partition</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIDebugLines.h">
-      <Filter>src\system</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\MOAISim.h">
       <Filter>src\system</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIXmlParser.h">
@@ -506,9 +512,6 @@
     <ClInclude Include="..\..\src\moaicore\MOAITexture.h">
       <Filter>src\gfx</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\MOAIDeck2D.h">
-      <Filter>src\scene</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIGfxQuad2D.h">
       <Filter>src\scene</Filter>
     </ClInclude>
@@ -516,9 +519,6 @@
       <Filter>src\scene</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIGfxQuadListDeck2D.h">
-      <Filter>src\scene</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\MOAIProp2D.h">
       <Filter>src\scene</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIStretchPatch2D.h">
@@ -531,9 +531,6 @@
       <Filter>src\log</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAINode.h">
-      <Filter>src\node</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\MOAINodeHarness.h">
       <Filter>src\node</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAINodeMgr.h">
@@ -567,6 +564,30 @@
       <Filter>src\log</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAITileDeck2D.h">
+      <Filter>src\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIPartitionCell.h">
+      <Filter>src\partition</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIPartitionLayer.h">
+      <Filter>src\partition</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIProp2D.h">
+      <Filter>src\prop</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIProp.h">
+      <Filter>src\prop</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAISim.h">
+      <Filter>src\sim</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAITransform.h">
+      <Filter>src\transform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAITransformBase.h">
+      <Filter>src\transform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIDeck.h">
       <Filter>src\scene</Filter>
     </ClInclude>
   </ItemGroup>

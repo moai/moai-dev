@@ -264,7 +264,6 @@
     <ClCompile Include="..\..\src\uslsext\USSlipMapTile.cpp" />
     <ClCompile Include="..\..\src\uslsext\USSlipMapTileSource.cpp" />
     <ClCompile Include="..\..\src\uslsext\USGrid.cpp" />
-    <ClCompile Include="..\..\src\uslsext\USPartition.cpp" />
     <ClCompile Include="..\..\src\uslsext\USQuadCoord.cpp" />
     <ClCompile Include="..\..\src\uslsext\USTile.cpp" />
     <ClCompile Include="..\..\src\uslsext\USSqlBinding.cpp" />
@@ -357,7 +356,6 @@
     <ClInclude Include="..\..\src\uslsext\USSlipMapTile.h" />
     <ClInclude Include="..\..\src\uslsext\USSlipMapTileSource.h" />
     <ClInclude Include="..\..\src\uslsext\USGrid.h" />
-    <ClInclude Include="..\..\src\uslsext\USPartition.h" />
     <ClInclude Include="..\..\src\uslsext\USQuadCoord.h" />
     <ClInclude Include="..\..\src\uslsext\USTile.h" />
     <ClInclude Include="..\..\src\uslsext\USSqlBinding.h" />

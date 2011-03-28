@@ -69,12 +69,6 @@
     <ClInclude Include="..\..\src\uslscore\USLua.h">
       <Filter>src\lua</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\uslscore\USLuaData-impl.h">
-      <Filter>src\lua</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\uslscore\USLuaData.h">
-      <Filter>src\lua</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\uslscore\USLuaRef.h">
       <Filter>src\lua</Filter>
     </ClInclude>
@@ -192,6 +186,12 @@
     <ClInclude Include="..\..\src\uslscore\USZip.h">
       <Filter>src\zip</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\uslscore\USLuaObject.h">
+      <Filter>src\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslscore\USLuaObject-impl.h">
+      <Filter>src\lua</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\uslscore\USDirectoryItr_posix.cpp">
@@ -217,9 +217,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\uslscore\USRtti.cpp">
       <Filter>src\lifecycle</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\uslscore\USLuaData.cpp">
-      <Filter>src\lua</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\uslscore\USLuaRef.cpp">
       <Filter>src\lua</Filter>
@@ -257,9 +254,6 @@
     <ClCompile Include="..\..\src\uslscore\USDeviceTime_win32.cpp">
       <Filter>src\time</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\uslscore\USFloat.cpp">
-      <Filter>src\math</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\uslscore\USBase64Cipher.cpp">
       <Filter>src\cipher</Filter>
     </ClCompile>
@@ -286,6 +280,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\uslscore\USZipFile.cpp">
       <Filter>src\zip</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslscore\USLuaObject.cpp">
+      <Filter>src\lua</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

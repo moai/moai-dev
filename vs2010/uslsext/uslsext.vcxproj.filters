@@ -31,9 +31,6 @@
     <Filter Include="src\slippymap">
       <UniqueIdentifier>{76d26779-9fe8-4164-99b8-5e70aea18e5c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\spatial">
-      <UniqueIdentifier>{1770a877-6dc5-4c52-b976-188ebcb595e0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\sql">
       <UniqueIdentifier>{ad2d1181-197b-4aa1-bec9-0526c71691c8}</UniqueIdentifier>
     </Filter>
@@ -48,6 +45,9 @@
     </Filter>
     <Filter Include="src\xml">
       <UniqueIdentifier>{bfb53393-2460-4e4b-963a-20554ec6ccc5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\grid">
+      <UniqueIdentifier>{1770a877-6dc5-4c52-b976-188ebcb595e0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -166,16 +166,13 @@
       <Filter>src\slippymap</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\uslsext\USGrid.cpp">
-      <Filter>src\spatial</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\uslsext\USPartition.cpp">
-      <Filter>src\spatial</Filter>
+      <Filter>src\grid</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\uslsext\USQuadCoord.cpp">
-      <Filter>src\spatial</Filter>
+      <Filter>src\grid</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\uslsext\USTile.cpp">
-      <Filter>src\spatial</Filter>
+      <Filter>src\grid</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\uslsext\USSqlBinding.cpp">
       <Filter>src\sql</Filter>
@@ -393,16 +390,13 @@
       <Filter>src\slippymap</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\uslsext\USGrid.h">
-      <Filter>src\spatial</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\uslsext\USPartition.h">
-      <Filter>src\spatial</Filter>
+      <Filter>src\grid</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\uslsext\USQuadCoord.h">
-      <Filter>src\spatial</Filter>
+      <Filter>src\grid</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\uslsext\USTile.h">
-      <Filter>src\spatial</Filter>
+      <Filter>src\grid</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\uslsext\USSqlBinding.h">
       <Filter>src\sql</Filter>

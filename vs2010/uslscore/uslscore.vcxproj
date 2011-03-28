@@ -228,6 +228,8 @@
     <ClInclude Include="..\..\src\uslscore\USFilename.h" />
     <ClInclude Include="..\..\src\uslscore\USFileSys.h" />
     <ClInclude Include="..\..\src\uslscore\USInflater.h" />
+    <ClInclude Include="..\..\src\uslscore\USLuaObject-impl.h" />
+    <ClInclude Include="..\..\src\uslscore\USLuaObject.h" />
     <ClInclude Include="..\..\src\uslscore\USTypeID.h" />
     <ClInclude Include="..\..\src\uslscore\USCanary.h" />
     <ClInclude Include="..\..\src\uslscore\USGlobals.h" />
@@ -235,8 +237,6 @@
     <ClInclude Include="..\..\src\uslscore\USRef.h" />
     <ClInclude Include="..\..\src\uslscore\USRtti.h" />
     <ClInclude Include="..\..\src\uslscore\USLua.h" />
-    <ClInclude Include="..\..\src\uslscore\USLuaData-impl.h" />
-    <ClInclude Include="..\..\src\uslscore\USLuaData.h" />
     <ClInclude Include="..\..\src\uslscore\USLuaRef.h" />
     <ClInclude Include="..\..\src\uslscore\USLuaRuntime.h" />
     <ClInclude Include="..\..\src\uslscore\USLuaSerializer.h" />
@@ -289,9 +289,9 @@
     <ClCompile Include="..\..\src\uslscore\USCanary.cpp" />
     <ClCompile Include="..\..\src\uslscore\USGlobals.cpp" />
     <ClCompile Include="..\..\src\uslscore\USInflater.cpp" />
+    <ClCompile Include="..\..\src\uslscore\USLuaObject.cpp" />
     <ClCompile Include="..\..\src\uslscore\USObject.cpp" />
     <ClCompile Include="..\..\src\uslscore\USRtti.cpp" />
-    <ClCompile Include="..\..\src\uslscore\USLuaData.cpp" />
     <ClCompile Include="..\..\src\uslscore\USLuaRef.cpp" />
     <ClCompile Include="..\..\src\uslscore\USLuaRuntime.cpp" />
     <ClCompile Include="..\..\src\uslscore\USLuaSerializer.cpp" />
@@ -304,7 +304,6 @@
     <ClCompile Include="..\..\src\uslscore\USStream.cpp" />
     <ClCompile Include="..\..\src\uslscore\USStreamFormatter.cpp" />
     <ClCompile Include="..\..\src\uslscore\USDeviceTime_win32.cpp" />
-    <ClCompile Include="..\..\src\uslscore\USFloat.cpp" />
     <ClCompile Include="..\..\src\uslscore\USBase64Cipher.cpp" />
     <ClCompile Include="..\..\src\uslscore\USCipher.cpp" />
     <ClCompile Include="..\..\src\uslscore\USCipherStream.cpp" />
