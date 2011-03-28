@@ -1,3 +1,4 @@
-CD html-lua
-FOR /R %%i IN (*.html) DO perl -p -i.bak -e "s/%~1/%~2/ms;" %%i
-CD ..
+pushd %~1
+for /R %%i in (%~2) do perl -p -i.bak -e "BEGIN {undef $/;} s/%~3/%~4/sgmi;" %%i
+del /s /q /f *.bak
+popd
