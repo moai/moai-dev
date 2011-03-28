@@ -20,10 +20,10 @@ int MOAIAction::_addChild ( lua_State* L ) {
 	USLuaState state ( L );
 	if ( !state.CheckParams ( 1, "UU" )) return 0;
 	
-	MOAIAction* self = state.GetLuaData < MOAIAction >( 1 );
+	MOAIAction* self = state.GetLuaObject < MOAIAction >( 1 );
 	if ( !self ) return 0;
 	
-	MOAIAction* action = state.GetLuaData < MOAIAction >( 2 );
+	MOAIAction* action = state.GetLuaObject < MOAIAction >( 2 );
 	if ( !action ) return 0;
 	
 	self->AddChild ( *action );
@@ -42,7 +42,7 @@ int MOAIAction::_clear ( lua_State* L ) {
 	USLuaState state ( L );
 	if ( !state.CheckParams ( 1, "U" )) return 0;
 	
-	MOAIAction* self = state.GetLuaData < MOAIAction >( 1 );
+	MOAIAction* self = state.GetLuaObject < MOAIAction >( 1 );
 	if ( !self ) return 0;
 
 	self->ClearChildren ();
@@ -62,7 +62,7 @@ int MOAIAction::_isBusy ( lua_State* L ) {
 	USLuaState state ( L );
 	if ( !state.CheckParams ( 1, "U" )) return 0;
 	
-	MOAIAction* self = state.GetLuaData < MOAIAction >( 1 );
+	MOAIAction* self = state.GetLuaObject < MOAIAction >( 1 );
 	if ( !self ) return 0;
 
 	lua_pushboolean ( state, self->IsBusy ());
@@ -80,7 +80,7 @@ int MOAIAction::_start ( lua_State* L ) {
 	USLuaState state ( L );
 	if ( !state.CheckParams ( 1, "U" )) return 0;
 	
-	MOAIAction* self = state.GetLuaData < MOAIAction >( 1 );
+	MOAIAction* self = state.GetLuaObject < MOAIAction >( 1 );
 	if ( !self ) return 0;
 
 	self->Start ();
@@ -101,7 +101,7 @@ int MOAIAction::_stop ( lua_State* L ) {
 	USLuaState state ( L );
 	if ( !state.CheckParams ( 1, "U" )) return 0;
 	
-	MOAIAction* self = state.GetLuaData < MOAIAction >( 1 );
+	MOAIAction* self = state.GetLuaObject < MOAIAction >( 1 );
 	if ( !self ) return 0;
 
 	self->Stop ();

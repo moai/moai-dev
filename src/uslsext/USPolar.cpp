@@ -140,26 +140,16 @@ double USPolar::GetMinutes ( double polar ) {
 
 	polar = USPolar::NormalizeAngle360 ( polar );
 
-	double integer = floor ( polar );
-	double decimal =polar - integer;
-	
-	return floor ( decimal * 60.0 );
+	return USFloat::Floor ( USFloat::Decimal ( polar ) * 60.0 );
 }
 
 //----------------------------------------------------------------//
 double USPolar::GetSeconds ( double polar ) {
 
 	polar = USPolar::NormalizeAngle360 ( polar );
-
-	double integer = floor ( polar );
-	double decimal = polar - integer;
 	
-	double minutes = decimal * 60.0;
-	
-	integer = floor ( minutes );
-	decimal = minutes - integer;
-	
-	return floor ( decimal * 60.0 );
+	double minutes = USFloat::Decimal ( polar ) * 60.0;
+	return USFloat::Floor ( USFloat::Decimal ( minutes ) * 60.0 );
 }
 
 //----------------------------------------------------------------//

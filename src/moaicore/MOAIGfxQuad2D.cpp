@@ -5,6 +5,7 @@
 #include <moaicore/MOAIDataBuffer.h>
 #include <moaicore/MOAIGrid.h>
 #include <moaicore/MOAIGfxQuad2D.h>
+#include <moaicore/MOAIProp.h>
 #include <moaicore/MOAITexture.h>
 #include <moaicore/MOAITransformBase.h>
 
@@ -129,7 +130,7 @@ USRect MOAIGfxQuad2D::GetBounds ( u32 idx ) {
 MOAIGfxQuad2D::MOAIGfxQuad2D () {
 
 	RTTI_SINGLE ( MOAIDeck )
-	this->SetContentMask ( CAN_DRAW );
+	this->SetContentMask ( MOAIProp::CAN_DRAW );
 	
 	this->mRect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
 	this->mUVRect.Init ( 0.0f, 1.0f, 1.0f, 0.0f );

@@ -72,7 +72,7 @@ int MOAIHttpTask::_httpPost ( lua_State* L ) {
 
 	if ( state.IsType (3, LUA_TUSERDATA) ) {
 		
-		self->mPostData = state.GetLuaData < MOAIDataBuffer >( 3 );
+		self->mPostData = state.GetLuaObject < MOAIDataBuffer >( 3 );
 		
 		void* bytes;
 		u32 size;

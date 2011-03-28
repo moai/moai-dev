@@ -21,7 +21,7 @@ int MOAIDataIOAction::_setCallback ( lua_State* L ) {
 	USLuaState state ( L );
 	if ( !state.CheckParams ( 1, "UF" )) return 0;
 	
-	MOAIDataIOAction* self = state.GetLuaData < MOAIDataIOAction >( 1 );
+	MOAIDataIOAction* self = state.GetLuaObject < MOAIDataIOAction >( 1 );
 	if ( !self ) return 0;
 
 	self->mOnFinish.SetRef ( state, 2, false );

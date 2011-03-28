@@ -39,7 +39,6 @@ public:
 	//----------------------------------------------------------------//
 	void			ApplyAttrOp			( u32 attrID, USAttrOp& attrOp );
 	void			Bind				();
-	u32				CountAttributes		();
 					MOAIColor			();
 					~MOAIColor			();
 	void			RegisterLuaClass	( USLuaState& state );

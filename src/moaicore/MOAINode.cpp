@@ -55,26 +55,12 @@ int MOAINode::_clearAttrLink ( lua_State* L ) {
 int MOAINode::_clearDependency ( lua_State* L ) {
 	LUA_SETUP ( MOAINode, "UU" );
 
-	MOAINode* srcNode = state.GetLuaData < MOAINode >( 2 );
+	MOAINode* srcNode = state.GetLuaObject < MOAINode >( 2 );
 	if ( !srcNode ) return 0;
 	
 	self->ClearDependency ( *srcNode );
 
 	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
-*/
-int MOAINode::_countAttrs ( lua_State* L ) {
-	LUA_SETUP ( MOAINode, "U" );
-
-	lua_pushnumber ( state, self->CountAttributes ());
-	return 1;
 }
 
 //----------------------------------------------------------------//
@@ -225,7 +211,7 @@ int MOAINode::_setAttrLink ( lua_State* L ) {
 	
 	u32 attrID = state.GetValue < u32 >( 2, 0 );
 	
-	MOAINode* srcNode = state.GetLuaData < MOAINode >( 3 );
+	MOAINode* srcNode = state.GetLuaObject < MOAINode >( 3 );
 	if ( !srcNode ) return 0;
 
 	u32 srcAttrID = state.GetValue < u32 >( 4, 0 );
@@ -245,7 +231,7 @@ int MOAINode::_setAttrLink ( lua_State* L ) {
 int MOAINode::_setDependency ( lua_State* L ) {
 	LUA_SETUP ( MOAINode, "UU" );
 	
-	MOAINode* srcNode = state.GetLuaData < MOAINode >( 2 );
+	MOAINode* srcNode = state.GetLuaObject < MOAINode >( 2 );
 	if ( !srcNode ) return 0;
 	
 	self->SetDependency ( *srcNode );

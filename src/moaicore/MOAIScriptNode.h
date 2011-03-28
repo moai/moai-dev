@@ -34,7 +34,6 @@ public:
 	
 	//----------------------------------------------------------------//
 	void			ApplyAttrOp				( u32 attrID, USAttrOp& attrOp );
-	u32				CountAttributes			();
 					MOAIScriptNode			();
 					~MOAIScriptNode			();
 	void			RegisterLuaClass		( USLuaState& state );

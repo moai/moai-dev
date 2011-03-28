@@ -182,7 +182,7 @@ int MOAIBox2DBody::_applyTorque ( lua_State* L ) {
 int MOAIBox2DBody::_destroyFixture ( lua_State* L ) {
 	LUA_SETUP ( MOAIBox2DBody, "U" )
 	
-	MOAIBox2DFixture* fixture = state.GetLuaData < MOAIBox2DFixture >( 2 );
+	MOAIBox2DFixture* fixture = state.GetLuaObject < MOAIBox2DFixture >( 2 );
 	
 	if ( self->mBody ) {
 		if ( fixture->mFixture ) {

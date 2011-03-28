@@ -39,9 +39,9 @@ int MOAIParticleState::_clearForces ( lua_State* L ) {
 int MOAIParticleState::_init ( lua_State* L ) {
 	LUA_SETUP ( MOAIParticleState, "UUUU" )
 	
-	MOAIParticleScript* init		= state.GetLuaData < MOAIParticleScript >( 2 );
-	MOAIParticleScript* update		= state.GetLuaData < MOAIParticleScript >( 3 );
-	MOAIParticleScript* render		= state.GetLuaData < MOAIParticleScript >( 4 );
+	MOAIParticleScript* init		= state.GetLuaObject < MOAIParticleScript >( 2 );
+	MOAIParticleScript* update		= state.GetLuaObject < MOAIParticleScript >( 3 );
+	MOAIParticleScript* render		= state.GetLuaObject < MOAIParticleScript >( 4 );
 
 	if ( init ) {
 		init->Compile ();
@@ -72,7 +72,7 @@ int MOAIParticleState::_init ( lua_State* L ) {
 int MOAIParticleState::_pushForce ( lua_State* L ) {
 	LUA_SETUP ( MOAIParticleState, "UU" )
 	
-	MOAIParticleForce* force = state.GetLuaData < MOAIParticleForce >( 2 );
+	MOAIParticleForce* force = state.GetLuaObject < MOAIParticleForce >( 2 );
 	if ( force ) {
 		self->PushForce ( *force );
 	}
@@ -89,7 +89,7 @@ int MOAIParticleState::_pushForce ( lua_State* L ) {
 int MOAIParticleState::_setNext ( lua_State* L ) {
 	LUA_SETUP ( MOAIParticleState, "UU" )
 	
-	self->mNext = state.GetLuaData < MOAIParticleState >( 2 );
+	self->mNext = state.GetLuaObject < MOAIParticleState >( 2 );
 	
 	return 0;
 }

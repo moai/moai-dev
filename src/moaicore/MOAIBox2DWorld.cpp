@@ -72,8 +72,8 @@ int MOAIBox2DWorld::_addBody ( lua_State* L ) {
 int	MOAIBox2DWorld::_addDistanceJoint ( lua_State* L ) {
 	LUA_SETUP ( MOAIBox2DWorld, "UUUNNNN" )
 	
-	MOAIBox2DBody* bodyA = state.GetLuaData < MOAIBox2DBody >( 2 );
-	MOAIBox2DBody* bodyB = state.GetLuaData < MOAIBox2DBody >( 3 );
+	MOAIBox2DBody* bodyA = state.GetLuaObject < MOAIBox2DBody >( 2 );
+	MOAIBox2DBody* bodyB = state.GetLuaObject < MOAIBox2DBody >( 3 );
 	
 	b2Vec2 anchorA;
 	anchorA.x	= state.GetValue < float >( 4, 0 ) * self->mUnitsToMeters;
@@ -108,8 +108,8 @@ int	MOAIBox2DWorld::_addDistanceJoint ( lua_State* L ) {
 int	MOAIBox2DWorld::_addFrictionJoint ( lua_State* L ) {
 	LUA_SETUP ( MOAIBox2DWorld, "UUUNNNN" )
 	
-	MOAIBox2DBody* bodyA = state.GetLuaData < MOAIBox2DBody >( 2 );
-	MOAIBox2DBody* bodyB = state.GetLuaData < MOAIBox2DBody >( 3 );
+	MOAIBox2DBody* bodyA = state.GetLuaObject < MOAIBox2DBody >( 2 );
+	MOAIBox2DBody* bodyB = state.GetLuaObject < MOAIBox2DBody >( 3 );
 	
 	b2Vec2 anchor;
 	anchor.x	= state.GetValue < float >( 4, 0 ) * self->mUnitsToMeters;
@@ -140,8 +140,8 @@ int	MOAIBox2DWorld::_addFrictionJoint ( lua_State* L ) {
 int	MOAIBox2DWorld::_addGearJoint ( lua_State* L ) {
 	LUA_SETUP ( MOAIBox2DWorld, "UUUN" )
 	
-	MOAIBox2DJoint* jointA = state.GetLuaData < MOAIBox2DJoint >( 2 );
-	MOAIBox2DJoint* jointB = state.GetLuaData < MOAIBox2DJoint >( 3 );
+	MOAIBox2DJoint* jointA = state.GetLuaObject < MOAIBox2DJoint >( 2 );
+	MOAIBox2DJoint* jointB = state.GetLuaObject < MOAIBox2DJoint >( 3 );
 	
 	b2GearJointDef jointDef;
 	
@@ -173,8 +173,8 @@ int	MOAIBox2DWorld::_addGearJoint ( lua_State* L ) {
 int	MOAIBox2DWorld::_addLineJoint ( lua_State* L ) {
 	LUA_SETUP ( MOAIBox2DWorld, "UUUNNNN" )
 	
-	MOAIBox2DBody* bodyA = state.GetLuaData < MOAIBox2DBody >( 2 );
-	MOAIBox2DBody* bodyB = state.GetLuaData < MOAIBox2DBody >( 3 );
+	MOAIBox2DBody* bodyA = state.GetLuaObject < MOAIBox2DBody >( 2 );
+	MOAIBox2DBody* bodyB = state.GetLuaObject < MOAIBox2DBody >( 3 );
 	
 	b2Vec2 anchor;
 	anchor.x	= state.GetValue < float >( 4, 0 ) * self->mUnitsToMeters;
@@ -236,8 +236,8 @@ int	MOAIBox2DWorld::_addMouseJoint ( lua_State* L ) {
 int	MOAIBox2DWorld::_addPrismaticJoint ( lua_State* L ) {
 	LUA_SETUP ( MOAIBox2DWorld, "UUUNNNN" )
 	
-	MOAIBox2DBody* bodyA = state.GetLuaData < MOAIBox2DBody >( 2 );
-	MOAIBox2DBody* bodyB = state.GetLuaData < MOAIBox2DBody >( 3 );
+	MOAIBox2DBody* bodyA = state.GetLuaObject < MOAIBox2DBody >( 2 );
+	MOAIBox2DBody* bodyB = state.GetLuaObject < MOAIBox2DBody >( 3 );
 	
 	b2Vec2 anchor;
 	anchor.x	= state.GetValue < float >( 4, 0 ) * self->mUnitsToMeters;
@@ -269,8 +269,8 @@ int	MOAIBox2DWorld::_addPrismaticJoint ( lua_State* L ) {
 int	MOAIBox2DWorld::_addPulleyJoint ( lua_State* L ) {
 	LUA_SETUP ( MOAIBox2DWorld, "UUUNNNNNNNNNNN" )
 	
-	MOAIBox2DBody* bodyA = state.GetLuaData < MOAIBox2DBody >( 2 );
-	MOAIBox2DBody* bodyB = state.GetLuaData < MOAIBox2DBody >( 3 );
+	MOAIBox2DBody* bodyA = state.GetLuaObject < MOAIBox2DBody >( 2 );
+	MOAIBox2DBody* bodyB = state.GetLuaObject < MOAIBox2DBody >( 3 );
 	
 	b2Vec2 groundAnchorA;
 	groundAnchorA.x		= state.GetValue < float >( 4, 0 ) * self->mUnitsToMeters;
@@ -315,8 +315,8 @@ int	MOAIBox2DWorld::_addPulleyJoint ( lua_State* L ) {
 int	MOAIBox2DWorld::_addRevoluteJoint ( lua_State* L ) {
 	LUA_SETUP ( MOAIBox2DWorld, "UUUNN" )
 	
-	MOAIBox2DBody* bodyA = state.GetLuaData < MOAIBox2DBody >( 2 );
-	MOAIBox2DBody* bodyB = state.GetLuaData < MOAIBox2DBody >( 3 );
+	MOAIBox2DBody* bodyA = state.GetLuaObject < MOAIBox2DBody >( 2 );
+	MOAIBox2DBody* bodyB = state.GetLuaObject < MOAIBox2DBody >( 3 );
 	
 	b2Vec2 anchor;
 	anchor.x	= state.GetValue < float >( 4, 0 ) * self->mUnitsToMeters;
@@ -344,8 +344,8 @@ int	MOAIBox2DWorld::_addRevoluteJoint ( lua_State* L ) {
 int	MOAIBox2DWorld::_addWeldJoint ( lua_State* L ) {
 	LUA_SETUP ( MOAIBox2DWorld, "UUUNN" )
 	
-	MOAIBox2DBody* bodyA = state.GetLuaData < MOAIBox2DBody >( 2 );
-	MOAIBox2DBody* bodyB = state.GetLuaData < MOAIBox2DBody >( 3 );
+	MOAIBox2DBody* bodyA = state.GetLuaObject < MOAIBox2DBody >( 2 );
+	MOAIBox2DBody* bodyB = state.GetLuaObject < MOAIBox2DBody >( 3 );
 	
 	b2Vec2 anchor;
 	anchor.x	= state.GetValue < float >( 4, 0 ) * self->mUnitsToMeters;
@@ -373,7 +373,7 @@ int	MOAIBox2DWorld::_addWeldJoint ( lua_State* L ) {
 int MOAIBox2DWorld::_destroyBody ( lua_State* L ) {
 	LUA_SETUP ( MOAIBox2DWorld, "UU" )
 	
-	MOAIBox2DBody* body = state.GetLuaData < MOAIBox2DBody >( 2 );
+	MOAIBox2DBody* body = state.GetLuaObject < MOAIBox2DBody >( 2 );
 	
 	if ( body->mBody ) {
 		self->mWorld->DestroyBody ( body->mBody );
@@ -392,7 +392,7 @@ int MOAIBox2DWorld::_destroyBody ( lua_State* L ) {
 int MOAIBox2DWorld::_destroyJoint ( lua_State* L ) {
 	LUA_SETUP ( MOAIBox2DWorld, "UU" )
 	
-	MOAIBox2DJoint* joint = state.GetLuaData < MOAIBox2DJoint >( 2 );
+	MOAIBox2DJoint* joint = state.GetLuaObject < MOAIBox2DJoint >( 2 );
 	
 	if ( joint->mJoint ) {
 		self->mWorld->DestroyJoint ( joint->mJoint );

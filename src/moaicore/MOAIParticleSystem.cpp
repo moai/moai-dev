@@ -281,7 +281,7 @@ int MOAIParticleSystem::_setState ( lua_State* L ) {
 
 	if ( idx < self->mStates.Size ()) {
 	
-		MOAIParticleState* particleState =  state.GetLuaData < MOAIParticleState >( 3 );
+		MOAIParticleState* particleState =  state.GetLuaObject < MOAIParticleState >( 3 );
 		if ( particleState ) {
 		
 			particleState->Retain ();

@@ -25,12 +25,6 @@ bool USAttributed::AttrExists ( u32 attrID ) {
 }
 
 //----------------------------------------------------------------//
-u32 USAttributed::CountAttributes () {
-
-	return 0;
-}
-
-//----------------------------------------------------------------//
 USAttributed::USAttributed ()  {
 }
 

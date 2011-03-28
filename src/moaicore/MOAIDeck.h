@@ -36,13 +36,6 @@ protected:
 	
 public:
 	
-	enum {
-		CAN_DRAW				= 1 << 0x00,
-		CAN_DRAW_DEBUG			= 1 << 0x01,
-		CAN_GATHER_SURFACES		= 1 << 0x02,
-		CAN_GET_OVERLAP_PRIM	= 1 << 0x03,
-	};
-	
 	GET ( u32, ContentMask, mContentMask )
 	
 	//----------------------------------------------------------------//

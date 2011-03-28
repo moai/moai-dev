@@ -79,7 +79,7 @@ int	MOAILayer2D::_getPartition ( lua_State* L ) {
 int	MOAILayer2D::_insertProp ( lua_State* L ) {
 	LUA_SETUP ( MOAILayer2D, "UU" )
 
-	MOAIProp2D* prop = state.GetLuaData < MOAIProp2D >( 2 );
+	MOAIProp2D* prop = state.GetLuaObject < MOAIProp2D >( 2 );
 	if ( !prop ) return 0;
 	if ( prop == self ) return 0;
 
@@ -99,7 +99,7 @@ int	MOAILayer2D::_insertProp ( lua_State* L ) {
 int	MOAILayer2D::_removeProp ( lua_State* L ) {
 	LUA_SETUP ( MOAILayer2D, "UU" )
 
-	MOAIProp2D* prop = state.GetLuaData < MOAIProp2D >( 2 );
+	MOAIProp2D* prop = state.GetLuaObject < MOAIProp2D >( 2 );
 	if ( !prop ) return 0;
 	if ( prop == self ) return 0;
 
@@ -121,7 +121,7 @@ int MOAILayer2D::_setBox2DWorld ( lua_State* L ) {
 	LUA_SETUP ( MOAILayer2D, "UU" )
 	
 	#if USE_BOX2D
-		self->mBox2DWorld = state.GetLuaData < MOAIBox2DWorld >( 2 );
+		self->mBox2DWorld = state.GetLuaObject < MOAIBox2DWorld >( 2 );
 	#endif
 	return 0;
 }
@@ -136,7 +136,7 @@ int MOAILayer2D::_setBox2DWorld ( lua_State* L ) {
 int MOAILayer2D::_setCamera ( lua_State* L ) {
 	LUA_SETUP ( MOAILayer2D, "UU" )
 
-	MOAITransform* camera = state.GetLuaData < MOAITransform >( 2 );
+	MOAITransform* camera = state.GetLuaObject < MOAITransform >( 2 );
 	if ( !camera ) return 0;
 
 	self->SetCamera ( camera );
@@ -155,7 +155,7 @@ int MOAILayer2D::_setCpSpace ( lua_State* L ) {
 	LUA_SETUP ( MOAILayer2D, "UU" )
 	
 	#if USE_CHIPMUNK
-		self->mCpSpace = state.GetLuaData < MOAICpSpace >( 2 );
+		self->mCpSpace = state.GetLuaObject < MOAICpSpace >( 2 );
 	#endif
 	return 0;
 }
@@ -188,7 +188,7 @@ int MOAILayer2D::_setParallax ( lua_State* L ) {
 int MOAILayer2D::_setPartition ( lua_State* L ) {
 	LUA_SETUP ( MOAILayer2D, "UU" )
 
-	MOAIPartition* partition = state.GetLuaData < MOAIPartition >( 2 );
+	MOAIPartition* partition = state.GetLuaObject < MOAIPartition >( 2 );
 	if ( !partition ) return 0;
 
 	self->SetPartition ( partition );
@@ -206,7 +206,7 @@ int MOAILayer2D::_setPartition ( lua_State* L ) {
 int MOAILayer2D::_setViewport ( lua_State* L ) {
 	LUA_SETUP ( MOAILayer2D, "UU" )
 
-	MOAIViewport* viewport = state.GetLuaData < MOAIViewport >( 2 );
+	MOAIViewport* viewport = state.GetLuaObject < MOAIViewport >( 2 );
 	if ( !viewport ) return 0;
 
 	self->SetViewport ( viewport );
@@ -345,7 +345,7 @@ void MOAILayer2D::Draw () {
 		USViewQuad viewQuad;
 		viewQuad.Init ();
 		
-		this->mPartition->GatherProps ( viewQuad.mBounds, 0, MOAIDeck::CAN_DRAW | MOAIDeck::CAN_DRAW_DEBUG );
+		this->mPartition->GatherProps ( viewQuad.mBounds, 0, MOAIProp::CAN_DRAW | MOAIProp::CAN_DRAW_DEBUG );
 		u32 totalResults = this->mPartition->GetTotalResults ();
 		if (( !totalResults ) || ( totalResults > MAX_RENDERABLES )) return;
 		
@@ -448,7 +448,7 @@ MOAILayer2D::MOAILayer2D () :
 		RTTI_EXTEND ( MOAIProp2D )
 	RTTI_END
 	
-	this->SetMask ( MOAIDeck::CAN_DRAW | MOAIDeck::CAN_DRAW_DEBUG );
+	this->SetMask ( MOAIProp::CAN_DRAW | MOAIProp::CAN_DRAW_DEBUG );
 }
 
 //----------------------------------------------------------------//

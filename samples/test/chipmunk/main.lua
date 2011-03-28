@@ -39,14 +39,14 @@ function makeThing ()
 	moment = MOAICpShape.momentForPolygon ( mass, poly )
 
 	body = MOAICpBody.new ( 1, moment )
-	space:insertProp ( body )
+	space:insertPrim ( body )
 
 	shape = body:addPolygon ( poly )
 	shape:setElasticity ( 0.8 )
 	shape:setFriction ( 0.8 )
 	shape:setType ( 1 )
 	shape.name = "thing"
-	space:insertProp ( shape )
+	space:insertPrim ( shape )
 
 	sprite = MOAIProp2D.new ()
 	sprite:setDeck ( texture )
@@ -71,7 +71,7 @@ function addSegment ( x0, y0, x1, y1 )
 	shape:setFriction ( 0.1 )
 	shape:setType ( 2 )
 	shape.name = "wall"
-	space:insertProp ( shape )
+	space:insertPrim ( shape )
 end
 
 addSegment ( -320, -240, 320, -240 )
@@ -131,12 +131,12 @@ MOAIInputMgr.device.mouseLeft:setCallback (
 				)
 				mouseJoint:setMaxForce ( 50000 )
 				mouseJoint:setBiasCoef ( 0.15 )
-				space:insertProp ( mouseJoint )
+				space:insertPrim ( mouseJoint )
 			end
 		else
 			
 			if mouseJoint then
-				space:removeProp ( mouseJoint )
+				space:removePrim ( mouseJoint )
 				mouseJoint = nil
 			end
 		end

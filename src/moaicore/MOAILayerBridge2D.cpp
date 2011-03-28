@@ -22,10 +22,10 @@
 int MOAILayerBridge2D::_init ( lua_State* L ) {
 	LUA_SETUP ( MOAILayerBridge2D, "UUU" );
 	
-	MOAILayer2D* sourceScene = state.GetLuaData < MOAILayer2D >( 2 );
+	MOAILayer2D* sourceScene = state.GetLuaObject < MOAILayer2D >( 2 );
 	if ( !sourceScene ) return 0;
 	
-	MOAILayer2D* targetScene = state.GetLuaData < MOAILayer2D >( 3 );
+	MOAILayer2D* targetScene = state.GetLuaObject < MOAILayer2D >( 3 );
 	if ( !targetScene ) return 0;
 	
 	self->mSourceScene = sourceScene;

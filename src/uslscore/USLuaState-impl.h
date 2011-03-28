@@ -32,7 +32,7 @@ TYPE USLuaState::GetField ( int idx, cc8* key, TYPE value ) {
 
 //----------------------------------------------------------------//
 template < typename TYPE >
-TYPE* USLuaState::GetLuaData ( int idx ) {
+TYPE* USLuaState::GetLuaObject ( int idx ) {
 	
 	if ( this->GetTop () < idx ) return 0;
 	if ( !this->IsType ( idx, LUA_TUSERDATA )) return 0;
@@ -44,7 +44,7 @@ TYPE* USLuaState::GetLuaData ( int idx ) {
 
 //----------------------------------------------------------------//
 template < typename TYPE >
-TYPE* USLuaState::GetLuaData ( int idx, cc8* name ) {
+TYPE* USLuaState::GetLuaObject ( int idx, cc8* name ) {
 	
 	if ( this->GetField ( idx, name, LUA_TUSERDATA )) {
 		
@@ -67,7 +67,7 @@ TYPE* USLuaState::GetLuaData ( int idx, cc8* name ) {
 //	this->PushTableItr ( idx );
 //	while ( this->TableItrNext ( idx )) {
 //		
-//		TYPE* type = this->GetLuaData < TYPE >( -1 );
+//		TYPE* type = this->GetLuaObject < TYPE >( -1 );
 //		if ( type ) {
 //			luaDataSet.Affirm ( type );
 //		}

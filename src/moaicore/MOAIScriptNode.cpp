@@ -52,12 +52,6 @@ void MOAIScriptNode::ApplyAttrOp ( u32 attrID, USAttrOp& attrOp ) {
 }
 
 //----------------------------------------------------------------//
-u32 MOAIScriptNode::CountAttributes () {
-
-	return this->mAttributes.Size ();
-}
-
-//----------------------------------------------------------------//
 MOAIScriptNode::MOAIScriptNode () {
 	
 	RTTI_SINGLE ( MOAINode )

@@ -19,7 +19,6 @@ public:
 	//----------------------------------------------------------------//
 	virtual void	ApplyAttrOp			( u32 attrID, USAttrOp& attrOp );
 	bool			AttrExists			( u32 attrID );
-	virtual u32		CountAttributes		();
 					USAttributed		();
 	virtual			~USAttributed		();
 	

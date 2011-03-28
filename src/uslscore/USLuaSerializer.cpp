@@ -43,7 +43,7 @@ int USLuaSerializer::_exportToString ( lua_State* L ) {
 int USLuaSerializer::_initInstance ( lua_State* L ) {
 	LUA_SETUP ( USLuaSerializer, "UUT" );
 
-	USLuaObject* object = state.GetLuaData < USLuaObject >( 2 );
+	USLuaObject* object = state.GetLuaObject < USLuaObject >( 2 );
 	if ( !object ) return 0;
 
 	object->SerializeIn ( state, *self );
@@ -55,7 +55,7 @@ int USLuaSerializer::_initInstance ( lua_State* L ) {
 int USLuaSerializer::_register ( lua_State* L ) {
 	LUA_SETUP ( USLuaSerializer, "UUN" );
 
-	USLuaObject* object = state.GetLuaData < USLuaObject >( 2 );
+	USLuaObject* object = state.GetLuaObject < USLuaObject >( 2 );
 	if ( !object ) return 0;
 
 	u32 id = state.GetValue < u32 >( 3, 0 );
@@ -70,7 +70,7 @@ int USLuaSerializer::_register ( lua_State* L ) {
 int USLuaSerializer::_serialize ( lua_State* L ) {
 	LUA_SETUP ( USLuaSerializer, "U" )
 
-	USLuaObject* object = state.GetLuaData < USLuaObject >( 2 );
+	USLuaObject* object = state.GetLuaObject < USLuaObject >( 2 );
 	if ( object ) {
 		self->Affirm ( object );
 		self->AddLuaReturn ( object );
@@ -140,7 +140,7 @@ u32 USLuaSerializer::Affirm ( USLuaState& state, int idx ) {
 
 	// if we're an object, affirm as such...
 	if ( state.IsType ( idx, LUA_TUSERDATA )) {
-		return this->Affirm ( state.GetLuaData < USLuaObject >( -1 ));
+		return this->Affirm ( state.GetLuaObject < USLuaObject >( -1 ));
 	}
 
 	// bail if we're not a table
@@ -597,7 +597,7 @@ u32 USLuaSerializer::WriteTableInitializer ( USStream& stream, USLuaState& state
 				break;
 			}
 			case LUA_TUSERDATA: {
-				USLuaObject* object = state.GetLuaData < USLuaObject >( -1 );
+				USLuaObject* object = state.GetLuaObject < USLuaObject >( -1 );
 				u32 instanceID = this->GetID ( object );
 				stream.Print ( "objects [ 0x%08X ]\n", instanceID );
 				break;

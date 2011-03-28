@@ -179,11 +179,11 @@ public:
 		assert ( this->mLeftEdges.mTotalEdges );
 		assert ( this->mRightEdges.mTotalEdges );
 		
-		this->mXMin = ( s32 )floorf ( xMin );
-		this->mXMax = ( s32 )floorf ( xMax );
+		this->mXMin = ( s32 )USFloat::ToInt ( xMin );
+		this->mXMax = ( s32 )USFloat::ToInt ( xMax );
 		
-		this->mYMin = ( s32 )floorf ( yMin );
-		this->mYMax = ( s32 )floorf ( yMax ) + 1;
+		this->mYMin = ( s32 )USFloat::ToInt ( yMin );
+		this->mYMax = ( s32 )USFloat::ToInt ( yMax ) + 1;
 	}
 	
 	//----------------------------------------------------------------//
@@ -217,17 +217,17 @@ public:
 		this->mRightEdges.FindExtents ( y0, y1 );
 		
 		if ( this->mLeftEdges.mLeft < this->mRightEdges.mLeft ) {
-			scan.mLeftCol = ( s32 )floor ( this->mLeftEdges.mLeft );
+			scan.mLeftCol = ( s32 )USFloat::ToInt ( this->mLeftEdges.mLeft );
 		}
 		else {
-			scan.mLeftCol = ( s32 )floor ( this->mRightEdges.mLeft );
+			scan.mLeftCol = ( s32 )USFloat::ToInt ( this->mRightEdges.mLeft );
 		}
 		
 		if ( this->mLeftEdges.mRight > this->mRightEdges.mRight ) {
-			scan.mRightCol = ( s32 )floor ( this->mLeftEdges.mRight );
+			scan.mRightCol = ( s32 )USFloat::ToInt ( this->mLeftEdges.mRight );
 		}
 		else {
-			scan.mRightCol = ( s32 )floor ( this->mRightEdges.mRight );
+			scan.mRightCol = ( s32 )USFloat::ToInt ( this->mRightEdges.mRight );
 		}
 		
 		if ( scan.mLeftCol < this->mXMin ) {

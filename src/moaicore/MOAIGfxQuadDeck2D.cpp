@@ -6,6 +6,7 @@
 #include <moaicore/MOAIGrid.h>
 #include <moaicore/MOAILogMgr.h>
 #include <moaicore/MOAILogMessages.h>
+#include <moaicore/MOAIProp.h>
 #include <moaicore/MOAITexture.h>
 #include <moaicore/MOAITransformBase.h>
 
@@ -300,7 +301,7 @@ USGLQuad* MOAIGfxQuadDeck2D::GetGLQuad ( u32 idx ) {
 MOAIGfxQuadDeck2D::MOAIGfxQuadDeck2D () {
 
 	RTTI_SINGLE ( MOAIDeck )
-	this->SetContentMask ( CAN_DRAW );
+	this->SetContentMask ( MOAIProp::CAN_DRAW );
 }
 
 //----------------------------------------------------------------//
