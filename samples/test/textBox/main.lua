@@ -11,7 +11,7 @@ viewport:setSize ( 320, 480 )
 viewport:setScale ( 320, 480 )
 scene:setViewport ( viewport )
 
-camera = MOAICamera2D.new ()
+camera = MOAITransform2D.new ()
 scene:setCamera ( camera )
 
 partition = MOAIPartition.new ()
@@ -29,7 +29,7 @@ textbox:setFont ( verdana )
 textbox:setTextSize ( verdana:getScale ())
 textbox:setRect ( -150, 134, 150, 230 )
 textbox:setYFlip ( true )
-partition:insertPrim ( textbox )
+partition:insertProp ( textbox )
 
 textbox:spool ()
 textbox:setRect ( -150, -230, 150, 230 )

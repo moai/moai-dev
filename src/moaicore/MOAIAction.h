@@ -47,7 +47,7 @@ public:
 	
 	friend class MOAIActionMgr;
 	
-	DECL_LUA_DATA ( MOAIAction )
+	DECL_LUA_FACTORY ( MOAIAction )
 	
 	//----------------------------------------------------------------//
 	void				AddChild				( MOAIAction& action );

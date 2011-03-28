@@ -2,14 +2,13 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moaicore/MOAIContentLibrary2D.h>
+#include <moaicore/MOAIDeck.h>
 #include <moaicore/MOAIParticleEngine.h>
 #include <moaicore/MOAIParticleForce.h>
 #include <moaicore/MOAIParticleScript.h>
 #include <moaicore/MOAIParticleState.h>
-#include <moaicore/MOAITexture.h>
 
-class MOAIData;
+class MOAIDataBuffer;
 
 //================================================================//
 // local
@@ -134,7 +133,7 @@ USVec2D MOAIParticleState::GetAcceleration ( const USVec2D& loc ) {
 MOAIParticleState::MOAIParticleState () {
 
 	RTTI_BEGIN
-		RTTI_EXTEND ( USLuaData )
+		RTTI_EXTEND ( USLuaObject )
 	RTTI_END
 }
 

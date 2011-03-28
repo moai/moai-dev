@@ -46,7 +46,7 @@ public:
 	
 	friend class MOAIBox2DWorld;
 	
-	DECL_LUA_DATA ( MOAIBox2DJoint )
+	DECL_LUA_FACTORY ( MOAIBox2DJoint )
 	
 	//----------------------------------------------------------------//
 					MOAIBox2DJoint			();

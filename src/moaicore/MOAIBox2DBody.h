@@ -6,7 +6,7 @@
 #if USE_BOX2D
 
 #include <moaicore/MOAIBox2DWorld.h>
-#include <moaicore/MOAITransformBase2D.h>
+#include <moaicore/MOAITransformBase.h>
 
 class b2Body;
 
@@ -17,7 +17,7 @@ class b2Body;
 */
 class MOAIBox2DBody :
 	public MOAIBox2DPrim,
-	public MOAITransformBase2D {
+	public MOAITransformBase {
 private:
 
 	b2Body*			mBody;
@@ -68,7 +68,7 @@ public:
 	
 	friend class MOAIBox2DWorld;
 	
-	DECL_LUA_DATA ( MOAIBox2DBody )
+	DECL_LUA_FACTORY ( MOAIBox2DBody )
 	
 	//----------------------------------------------------------------//
 					MOAIBox2DBody			();

@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <uslscore/USLuaData.h>
+#include <uslscore/USLuaObject.h>
 #include <uslscore/USLuaState.h>
 #include <uslscore/USLuaStateHandle.h>
 #include <uslscore/USLuaRuntime.h>
@@ -175,7 +175,7 @@ static int _deleteLuaData ( lua_State* L ) {
 
 	USLuaState state ( L );
 
-	USLuaData* self = state.GetLuaData < USLuaData >( 1 );
+	USLuaObject* self = state.GetLuaData < USLuaObject >( 1 );
 	delete self;
 
 	return 0;

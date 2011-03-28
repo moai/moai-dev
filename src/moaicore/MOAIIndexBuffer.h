@@ -10,7 +10,7 @@
 /**	@brief Index buffer class.
 */
 class MOAIIndexBuffer :
-	public USLuaData {
+	public USLuaObject {
 private:
 
 	u16*	mBuffer;
@@ -29,7 +29,7 @@ private:
 	
 public:
 	
-	DECL_LUA_DATA ( MOAIIndexBuffer )
+	DECL_LUA_FACTORY ( MOAIIndexBuffer )
 	
 	//----------------------------------------------------------------//
 	bool		Bind					();

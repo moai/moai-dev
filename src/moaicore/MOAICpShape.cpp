@@ -118,7 +118,7 @@ int MOAICpShape::_getBody ( lua_State* L ) {
 	LUA_SETUP ( MOAICpShape, "U" )
 	
 	if ( self->mShape && self->mShape->body ) {
-		(( MOAICpBody* )self->mShape->body->data )->PushLuaInstance ( state );
+		(( MOAICpBody* )self->mShape->body->data )->PushLuaUserdata ( state );
 		return 1;
 	}
 	return 0;

@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include <moaicore/MOAIColor.h>
-#include <moaicore/MOAIForceAction.h>
+#include <moaicore/MOAIEaseDriver.h>
 
 //================================================================//
 // local
@@ -23,7 +23,7 @@
 int MOAIColor::_moveColor ( lua_State* L ) {
 	LUA_SETUP ( MOAIColor, "UNNNNN" )
 
-	MOAIForceAction* action = new MOAIForceAction ();
+	MOAIEaseDriver* action = new MOAIEaseDriver ();
 	action->ReserveForces ( 4 );
 	
 	float r			= state.GetValue < float >( 2, 0.0f );
@@ -40,7 +40,7 @@ int MOAIColor::_moveColor ( lua_State* L ) {
 	
 	action->SetDelay ( delay );
 	action->Start ();
-	action->PushLuaInstance ( state );
+	action->PushLuaUserdata ( state );
 
 	return 1;
 }
@@ -59,7 +59,7 @@ int MOAIColor::_moveColor ( lua_State* L ) {
 int MOAIColor::_seekColor ( lua_State* L ) {
 	LUA_SETUP ( MOAIColor, "UNNNNN" )
 
-	MOAIForceAction* action = new MOAIForceAction ();
+	MOAIEaseDriver* action = new MOAIEaseDriver ();
 	action->ReserveForces ( 4 );
 	
 	float r			= state.GetValue < float >( 2, 0.0f );
@@ -76,7 +76,7 @@ int MOAIColor::_seekColor ( lua_State* L ) {
 	
 	action->SetDelay ( delay );
 	action->Start ();
-	action->PushLuaInstance ( state );
+	action->PushLuaUserdata ( state );
 
 	return 1;
 }

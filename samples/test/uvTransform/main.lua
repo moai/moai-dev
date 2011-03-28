@@ -1,7 +1,7 @@
 print ( "hello, moai!" )
 
-texture = MOAITexture.new ()
-texture:load ( "cathead.png" )
+texture = MOAIGfxQuad2D.new ()
+texture:setTexture ( "cathead.png" )
 texture:setRect ( -64, -64, 64, 64 )
 
 scene = MOAILayer2D.new ()
@@ -15,7 +15,7 @@ scene:setViewport ( viewport )
 partition = MOAIPartition.new ()
 scene:setPartition ( partition )
 
-camera = MOAICamera2D.new ()
+camera = MOAITransform2D.new ()
 scene:setCamera ( camera )
 
 uvTransform = MOAITransform2D.new ()
@@ -23,10 +23,10 @@ uvTransform:moveLoc ( 1, 0, 3 )
 uvTransform:moveRot ( 360, 3 )
 uvTransform:moveScl ( 1, 1, 3 )
 
-sprite = MOAISprite2D.new ()
-sprite:setGfxSource ( texture )
+sprite = MOAIProp2D.new ()
+sprite:setDeck ( texture )
 sprite:setUVTransform ( uvTransform )
-partition:insertPrim ( sprite )
+partition:insertProp ( sprite )
 
 sprite:moveRot ( -360, 2 )
 sprite:moveScl ( 1.5, 1.5, 3 )

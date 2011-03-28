@@ -27,7 +27,7 @@ private:
 
 public:
 
-	DECL_LUA_DATA ( MOAILevelSensor )
+	DECL_LUA_FACTORY ( MOAILevelSensor )
 
 	//----------------------------------------------------------------//
 	void			HandleEvent				( USStream& eventStream );

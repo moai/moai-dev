@@ -12,7 +12,7 @@ class MOAISensor;
 /**	@brief Manager class for input bindings.
 */
 class MOAIInputDevice :
-	public virtual USLuaData {
+	public virtual USLuaObject {
 private:
 
 	STLString	mName;
@@ -27,7 +27,7 @@ public:
 
 	friend class MOAIInputMgr;
 
-	DECL_LUA_DATA ( MOAIInputDevice )
+	DECL_LUA_FACTORY ( MOAIInputDevice )
 
 	GET_SET ( STLString, Name, mName );
 	GET_SET ( bool, Active, mIsActive );

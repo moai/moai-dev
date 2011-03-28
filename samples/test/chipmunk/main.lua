@@ -12,8 +12,8 @@ layer = MOAILayer2D.new ()
 layer:setViewport ( viewport )
 MOAISim.pushRenderPass ( layer )
 
-texture = MOAITexture.new ()
-texture:load ( "cathead.png" )
+texture = MOAIGfxQuad2D.new ()
+texture:setTexture ( "cathead.png" )
 texture:setRect ( -32, -32, 32, 32 )
 
 -- set up the space and start its simulation
@@ -39,19 +39,19 @@ function makeThing ()
 	moment = MOAICpShape.momentForPolygon ( mass, poly )
 
 	body = MOAICpBody.new ( 1, moment )
-	space:insertPrim ( body )
+	space:insertProp ( body )
 
 	shape = body:addPolygon ( poly )
 	shape:setElasticity ( 0.8 )
 	shape:setFriction ( 0.8 )
 	shape:setType ( 1 )
 	shape.name = "thing"
-	space:insertPrim ( shape )
+	space:insertProp ( shape )
 
-	sprite = MOAISprite2D.new ()
-	sprite:setGfxSource ( texture )
+	sprite = MOAIProp2D.new ()
+	sprite:setDeck ( texture )
 	sprite:setParent ( body )
-	layer:insertPrim ( sprite )
+	layer:insertProp ( sprite )
 end
 
 function makeThings ( n )
@@ -71,7 +71,7 @@ function addSegment ( x0, y0, x1, y1 )
 	shape:setFriction ( 0.1 )
 	shape:setType ( 2 )
 	shape.name = "wall"
-	space:insertPrim ( shape )
+	space:insertProp ( shape )
 end
 
 addSegment ( -320, -240, 320, -240 )
@@ -131,12 +131,12 @@ MOAIInputMgr.device.mouseLeft:setCallback (
 				)
 				mouseJoint:setMaxForce ( 50000 )
 				mouseJoint:setBiasCoef ( 0.15 )
-				space:insertPrim ( mouseJoint )
+				space:insertProp ( mouseJoint )
 			end
 		else
 			
 			if mouseJoint then
-				space:removePrim ( mouseJoint )
+				space:removeProp ( mouseJoint )
 				mouseJoint = nil
 			end
 		end

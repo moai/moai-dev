@@ -12,20 +12,20 @@ MOAISim.pushRenderPass ( scene )
 partition = MOAIPartition.new ()
 scene:setPartition ( partition )
 
-texture = MOAITexture.new ()
-texture:load ( "cathead.png" )
+texture = MOAIGfxQuad2D.new ()
+texture:setTexture ( "cathead.png" )
 texture:setRect ( -64, -64, 64, 64 )
 
-sprite = MOAISprite2D.new ()
-sprite:setGfxSource ( texture )
-partition:insertPrim ( sprite )
+sprite = MOAIProp2D.new ()
+sprite:setDeck ( texture )
+partition:insertProp ( sprite )
 
 curve = MOAIAnimCurve.new ()
 curve:reserveKeys ( 2 )
 curve:setKey ( 1, 0, 0 )
 curve:setKey ( 2, 1.5, 360 )
 
-sprite:setAttrLink ( MOAISprite2D.ATTR_Z_ROT, curve, MOAIAnimCurve.ATTR_VALUE )
+sprite:setAttrLink ( MOAIProp2D.ATTR_Z_ROT, curve, MOAIAnimCurve.ATTR_VALUE )
 
 timer = MOAITimer.new ()
 timer:setSpan ( 0, curve:getLength ())

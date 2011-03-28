@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moaicore/MOAIData.h>
+#include <moaicore/MOAIDataBuffer.h>
 #include <moaicore/MOAIFont.h>
 #include <moaicore/MOAIFtFontRipper.h>
 
@@ -35,7 +35,7 @@ int MOAIFont::_getScale ( lua_State* L ) {
 	Loads an image to use as a font.
 	@param self (in)
 	@param imagefile Imagefile to be loaded.  Must be a .bmp, .png, or .jpg.
-	@param data A MOAIData object containing image data.  Must be one of the filetypes above.
+	@param data A MOAIDataBuffer object containing image data.  Must be one of the filetypes above.
 	@param charCodes A string that sets the default character assignments of the font.  For example, if A and B are the first letters in the font image, the first characters of the string would be "AB" and so forth.
 */
 int MOAIFont::_load ( lua_State* L ) {
@@ -48,7 +48,7 @@ int MOAIFont::_load ( lua_State* L ) {
 
 	STLString charCodes = state.GetValue ( 3, "0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz.,?!" );
 
-	MOAIData *data = state.GetLuaData < MOAIData >( 2 );
+	MOAIDataBuffer *data = state.GetLuaData < MOAIDataBuffer >( 2 );
 	if ( data ) {
 
 		self->LoadFont ( *data, charCodes );
@@ -105,7 +105,7 @@ USFont* MOAIFont::Bind () {
 //----------------------------------------------------------------//
 MOAIFont::MOAIFont () {
 	
-	RTTI_SINGLE ( USLuaData )
+	RTTI_SINGLE ( USLuaObject )
 }
 
 //----------------------------------------------------------------//
@@ -113,7 +113,7 @@ MOAIFont::~MOAIFont () {
 }
 
 //----------------------------------------------------------------//
-void MOAIFont::LoadFont ( MOAIData& fontImageData, cc8* charCodes ) {
+void MOAIFont::LoadFont ( MOAIDataBuffer& fontImageData, cc8* charCodes ) {
 
 	USImage image;
 	USFontRipper ripper;

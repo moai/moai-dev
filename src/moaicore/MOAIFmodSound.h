@@ -7,7 +7,7 @@
 
 #include <moaicore/MOAIFmod.h>
 
-class MOAIData;
+class MOAIDataBuffer;
 
 //================================================================//
 // MOAIFmodSound
@@ -15,7 +15,7 @@ class MOAIData;
 /**	@brief FMOD sound.
 */
 class MOAIFmodSound :
-	public virtual USLuaData {
+	public virtual USLuaObject {
 private:
 
 	FMOD::Sound* mSound;
@@ -32,12 +32,12 @@ public:
 	friend class MOAIFmodChannel;
 	friend class MOAIFmod;
 
-	DECL_LUA_DATA ( MOAIFmodSound )
+	DECL_LUA_FACTORY ( MOAIFmodSound )
 
 	//----------------------------------------------------------------//
 				MOAIFmodSound			();
 				~MOAIFmodSound			();
-	void		Load				( MOAIData& data, bool streaming );
+	void		Load				( MOAIDataBuffer& data, bool streaming );
 	void		Load				( cc8* filename, bool streaming, bool async );
 	void		RegisterLuaClass	( USLuaState& state );
 	void		RegisterLuaFuncs	( USLuaState& state );

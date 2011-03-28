@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moaicore/MOAIForceAction.h>
+#include <moaicore/MOAIEaseDriver.h>
 #include <moaicore/MOAIShader.h>
 
 //================================================================//

@@ -4,9 +4,8 @@
 #ifndef	MOAILAYER2D_H
 #define	MOAILAYER2D_H
 
-#include <moaicore/MOAICamera2D.h>
 #include <moaicore/MOAIPartition.h>
-#include <moaicore/MOAIPrim.h>
+#include <moaicore/MOAIProp2D.h>
 #include <moaicore/MOAIViewport.h>
 
 class MOAICpSpace;
@@ -18,10 +17,10 @@ class MOAIBox2DWorld;
 /**	@brief 2D scene controls class.
 */
 class MOAILayer2D :
-	public virtual MOAIPrim {
+	public virtual MOAIProp2D {
 private:
 
-	USRef < MOAITransform2D >	mCamera;
+	USRef < MOAITransform >		mCamera;
 	USRef < MOAIViewport >		mViewport;
 	USRef < MOAIPartition >		mPartition;
 
@@ -34,14 +33,13 @@ private:
 	#endif
 
 	USVec2D						mParallax;
-
 	bool						mShowDebugLines;
 
 	//----------------------------------------------------------------//
 	static int	_getFitting			( lua_State* L );
 	static int	_getPartition		( lua_State* L );
-	static int	_insertPrim			( lua_State* L );
-	static int	_removePrim			( lua_State* L );
+	static int	_insertProp			( lua_State* L );
+	static int	_removeProp			( lua_State* L );
 	static int	_setBox2DWorld		( lua_State* L );
 	static int	_setCamera			( lua_State* L );
 	static int	_setCpSpace			( lua_State* L );
@@ -58,9 +56,9 @@ private:
 
 public:
 	
-	DECL_LUA_DATA ( MOAILayer2D )
+	DECL_LUA_FACTORY ( MOAILayer2D )
 	
-	GET_SET ( MOAITransform2D*, Camera, mCamera )
+	GET_SET ( MOAITransform*, Camera, mCamera )
 	GET_SET ( MOAIViewport*, Viewport, mViewport )
 	GET_SET ( MOAIPartition*, Partition, mPartition )
 	
@@ -70,7 +68,7 @@ public:
 	u32				GetLocalFrame			( USRect& frame );
 	void			GetWndToWorldMtx		( USAffine2D& wndToWorld );
 	void			GetWorldToWndMtx		( USAffine2D& worldToWnd );
-					MOAILayer2D				();
+					MOAILayer2D			();
 					~MOAILayer2D			();
 	void			RegisterLuaClass		( USLuaState& state );
 	void			RegisterLuaFuncs		( USLuaState& state );

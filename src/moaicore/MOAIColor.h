@@ -6,7 +6,7 @@
 
 #include <moaicore/MOAIShader.h>
 
-class MOAIContentLibrary2D;
+class MOAIDeck;
 class MOAILayer2D;
 
 //================================================================//
@@ -34,7 +34,7 @@ public:
 		TOTAL_ATTR,
 	};
 	
-	DECL_LUA_DATA ( MOAIColor )
+	DECL_LUA_FACTORY ( MOAIColor )
 	
 	//----------------------------------------------------------------//
 	void			ApplyAttrOp			( u32 attrID, USAttrOp& attrOp );

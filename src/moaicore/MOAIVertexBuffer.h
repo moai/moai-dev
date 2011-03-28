@@ -12,7 +12,7 @@
 /**	@brief Vertex buffer class.
 */
 class MOAIVertexBuffer :
-	public USLuaData {
+	public USLuaObject {
 private:
 
 	USRef < MOAIVertexFormat > mFormat;
@@ -44,7 +44,7 @@ public:
 		VERTEX_TEXCOORD_1,
 	};
 	
-	DECL_LUA_DATA ( MOAIVertexBuffer )
+	DECL_LUA_FACTORY ( MOAIVertexBuffer )
 	
 	//----------------------------------------------------------------//
 	bool		Bind					();

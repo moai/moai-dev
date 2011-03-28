@@ -34,7 +34,7 @@ private:
 
 public:
 
-	DECL_LUA_DATA ( MOAIButtonSensor )
+	DECL_LUA_FACTORY ( MOAIButtonSensor )
 
 	//----------------------------------------------------------------//
 	bool			ButtonDown				();

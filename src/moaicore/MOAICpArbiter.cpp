@@ -168,7 +168,7 @@ MOAICpArbiter::MOAICpArbiter () :
 	mArbiter ( 0 ) {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( USLuaData )
+		RTTI_EXTEND ( USLuaObject )
 	RTTI_END
 }
 

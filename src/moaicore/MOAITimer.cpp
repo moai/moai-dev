@@ -10,11 +10,12 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( n ) getTimesExecuted ( self )</tt>\n
-\n
+/**	@brief 
+	<tt>function getTimesExecuted ( self )</tt>\n
+	\n
 	Gets the number of times the timer has completed a cycle.
-	@param self (in)
-	@param n (out) Number of times the timer has executed.
+	@param self (userdata)
+	@return Number of times the timer has executed. (number)
 */
 int MOAITimer::_getTimesExecuted ( lua_State* L ) {
 	LUA_SETUP ( MOAITimer, "UN" )
@@ -24,11 +25,13 @@ int MOAITimer::_getTimesExecuted ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>() setCallback ( self, func )</tt>\n
-\n
+/**	@brief 
+	<tt>function setCallback ( self, func )</tt>\n
+	\n
 	Set a function to be called every time the timer finishes a cycle.
-	@param self (in)
-	@param func (in)
+	@param self (userdata)
+	@param func (function)
+	@return nil
 */
 int MOAITimer::_setCallback ( lua_State* L ) {
 	LUA_SETUP ( MOAITimer, "UF" )
@@ -38,11 +41,13 @@ int MOAITimer::_setCallback ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>setMode ( self, mode )</tt>\n
-\n
+/**	@brief 
+	<tt>function setMode ( self, mode )</tt>\n
+	\n
 	Sets the timer mode.
-	@param self (in)
-	@param mode (in) Timer mode that should be used. 
+	@param self (userdata)
+	@param mode (number) Timer mode that should be used.
+	@return nil
 */
 int MOAITimer::_setMode ( lua_State* L ) {
 	LUA_SETUP ( MOAITimer, "UN" )
@@ -60,12 +65,15 @@ int MOAITimer::_setMode ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>setSpan ( self, startTime, endTime )</tt>\n
-\n
+/**	@brief 
+	<tt>function setSpan ( self, endTime )</tt>\n
+	<tt>function setSpan ( self, startTime, endTime )</tt>\n
+	\n
 	Sets the span of the timer.
-	@param self (in)
-	@param startTime (in) Start time of the timer.
-	@param endTime (in) End time of the timer.
+	@param self (userdata)
+	@param endTime (number) End time of the timer.
+	@param startTime (number) Start time of the timer. <em>Optional (default = 0)</em>
+	@return nil
 */
 int MOAITimer::_setSpan ( lua_State* L ) {
 	LUA_SETUP ( MOAITimer, "UN" )
@@ -82,14 +90,16 @@ int MOAITimer::_setSpan ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>setSpeed ( self, speed )</tt>\n
-\n
+/**	@brief 
+	<tt>function setSpeed ( self, speed )</tt>\n
+	\n
 	Sets the speed of the timer.
-	@param self (in)
-	@param speed (in) Speed of the timer(?).
+	@param self (userdata)
+	@param speed (number) Speed of the timer(?).
+	@return nil
 */
 int MOAITimer::_setSpeed ( lua_State* L ) {
-	LUA_SETUP ( MOAITimer, "UNN" )
+	LUA_SETUP ( MOAITimer, "UN" )
 
 	self->mSpeed = state.GetValue < float >( 2, 1.0f );
 
@@ -214,6 +224,20 @@ float MOAITimer::DoStep ( float step ) {
 }
 
 //----------------------------------------------------------------//
+bool MOAITimer::IsBusy () {
+
+	if ( this->mMode == NORMAL ) {
+		return (( this->mTime >= this->mStartTime ) && ( this->mTime < this->mEndTime ));
+	}
+	
+	if ( this->mMode == REVERSE ) {
+		return (( this->mTime > this->mStartTime ) && ( this->mTime <= this->mEndTime ));
+	}
+	
+	return this->IsActive ();
+}
+
+//----------------------------------------------------------------//
 MOAITimer::MOAITimer () :
 	mStartTime ( 0.0f ),
 	mEndTime ( 1.0f ),
@@ -231,20 +255,6 @@ MOAITimer::MOAITimer () :
 
 //----------------------------------------------------------------//
 MOAITimer::~MOAITimer () {
-}
-
-//----------------------------------------------------------------//
-bool MOAITimer::IsBusy () {
-
-	if ( this->mMode == NORMAL ) {
-		return (( this->mTime >= this->mStartTime ) && ( this->mTime < this->mEndTime ));
-	}
-	
-	if ( this->mMode == REVERSE ) {
-		return (( this->mTime > this->mStartTime ) && ( this->mTime <= this->mEndTime ));
-	}
-	
-	return this->IsActive ();
 }
 
 //----------------------------------------------------------------//

@@ -42,7 +42,7 @@ public:
 		TOTAL_ATTR,
 	};
 
-	DECL_LUA_DATA ( MOAIFmodChannel )
+	DECL_LUA_FACTORY ( MOAIFmodChannel )
 
 	//----------------------------------------------------------------//
 	void		ApplyAttrOp			( u32 attrID, USAttrOp& attrOp );

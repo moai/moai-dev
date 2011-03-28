@@ -6,23 +6,19 @@ viewport = MOAIViewport.new ()
 viewport:setSize ( 320, 480 )
 viewport:setScale ( 320, 480 )
 
-camera = MOAICamera2D.new ()
+camera = MOAITransform2D.new ()
 
 scene:setViewport ( viewport )
 scene:setCamera ( camera )
 MOAISim.pushRenderPass ( scene )
 
-sprite = MOAISprite2D.new ()
-
-texture = MOAITexture.new ()
-texture:load ( "cathead.png" )
+texture = MOAIGfxQuad2D.new ()
+texture:setTexture ( "cathead.png" )
 texture:setRect ( -64, -64, 64, 64 )
 
-sprite:setGfxSource ( texture )
-
-partition = MOAIPartition.new ()
-partition:insertPrim ( sprite )
-scene:setPartition ( partition )
+sprite = MOAIProp2D.new ()
+sprite:setDeck ( texture )
+scene:insertProp ( sprite )
 
 camera:moveLoc ( 128, 0, 3 )
 camera:moveRot ( 180, 3 )

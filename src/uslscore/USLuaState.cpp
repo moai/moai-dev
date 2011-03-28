@@ -9,7 +9,7 @@
 #include <uslscore/USDeflater.h>
 #include <uslscore/USFileStream.h>
 #include <uslscore/USInflater.h>
-#include <uslscore/USLuaData.h>
+#include <uslscore/USLuaObject.h>
 #include <uslscore/USLuaRef.h>
 #include <uslscore/USLuaRuntime.h>
 #include <uslscore/USLuaState.h>

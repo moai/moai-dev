@@ -39,7 +39,7 @@ int MOAIThread::_currentThread ( lua_State* L ) {
 	MOAIAction* current = MOAIActionMgr::Get ().GetCurrentAction ();
 	if ( !current ) return 0;
 	
-	current->PushLuaInstance ( state );
+	current->PushLuaUserdata ( state );
 	return 1;
 }
 

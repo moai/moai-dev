@@ -4,9 +4,9 @@
 #ifndef	MOAISIM_H
 #define	MOAISIM_H
 
-#include <moaicore/MOAIForceAction.h>
+#include <moaicore/MOAIEaseDriver.h>
 
-class MOAIPrim;
+class MOAIProp2D;
 
 //================================================================//
 // MOAISim
@@ -14,7 +14,7 @@ class MOAIPrim;
 /**	@brief Sim information and settings class.
 */
 class MOAISim :
-	public USGlobalClass < MOAISim, USLuaData > {
+	public USGlobalClass < MOAISim, USLuaObject > {
 private:
 
 	// timer state
@@ -33,8 +33,8 @@ private:
 	USLuaRef		mOnTextEntry;
 	USLuaRef		mOnCancelTextEntry;
 
-	typedef USList < MOAIPrim* >::Iterator RenderPassIt;
-	USList < MOAIPrim* > mRenderPasses;
+	typedef USList < MOAIProp2D* >::Iterator RenderPassIt;
+	USList < MOAIProp2D* > mRenderPasses;
 	
 	USCallback < int > mLoadingScreenCallback;
 	USCallback < int > mTextInputCallback;
@@ -67,7 +67,6 @@ private:
 	static int		_pauseTimer					( lua_State* L );
 	static int		_popRenderPass				( lua_State* L );
 	static int		_pushRenderPass				( lua_State* L );
-	static int		_serializeToString			( lua_State* L );
 	static int		_setClearColor				( lua_State* L );
 	static int		_setClearDepth				( lua_State* L );
 	static int		_setFrameSize				( lua_State* L );
@@ -88,7 +87,7 @@ public:
 				~MOAISim					();
 	void		PauseMOAI					();
 	void		PopRenderPass				();
-	void		PushRenderPass				( MOAIPrim* prim );
+	void		PushRenderPass				( MOAIProp2D* prop );
 	void		RegisterLuaClass			( USLuaState& state );
 	void		Render						();
 	void		ResumeMOAI					();

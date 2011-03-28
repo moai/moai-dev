@@ -89,7 +89,7 @@ MOAIParticleForce::MOAIParticleForce () :
 	mType ( LINEAR ) {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAITransform2D )
+		RTTI_EXTEND ( MOAITransform )
 	RTTI_END
 	
 	this->mVec.Init ( 0.0f, 0.0f );
@@ -105,7 +105,7 @@ MOAIParticleForce::~MOAIParticleForce () {
 //----------------------------------------------------------------//
 void MOAIParticleForce::OnDepNodeUpdate () {
 
-	this->MOAITransform2D::OnDepNodeUpdate ();
+	this->MOAITransform::OnDepNodeUpdate ();
 	
 	const USAffine2D& localToWorldMtx = this->GetLocalToWorldMtx ();
 	
@@ -118,13 +118,13 @@ void MOAIParticleForce::OnDepNodeUpdate () {
 //----------------------------------------------------------------//
 void MOAIParticleForce::RegisterLuaClass ( USLuaState& state ) {
 
-	this->MOAITransform2D::RegisterLuaClass ( state );
+	this->MOAITransform::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAIParticleForce::RegisterLuaFuncs ( USLuaState& state ) {
 	
-	this->MOAITransform2D::RegisterLuaFuncs ( state );
+	this->MOAITransform::RegisterLuaFuncs ( state );
 
 	LuaReg regTable [] = {
 		{ "initAttractor",		_initAttractor },

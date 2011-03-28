@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include <moaicore/MOAISimpleShader.h>
-#include <moaicore/MOAIForceAction.h>
+#include <moaicore/MOAIEaseDriver.h>
 
 //================================================================//
 // local
@@ -14,7 +14,7 @@
 \n
 	Sets the blend mode for this primitive.
 	@param self (in)
-	@param mode (in) One of MOAIGfxPrim2D.BLEND_NORMAL, MOAIGfxPrim2D.BLEND_ADD, MOAIGfxPrim2D.BLEND_MULTIPLY.
+	@param mode (in) One of MOAIProp2D.BLEND_NORMAL, MOAIProp2D.BLEND_ADD, MOAIProp2D.BLEND_MULTIPLY.
 */
 int MOAISimpleShader::_setBlendMode ( lua_State* L ) {
 	LUA_SETUP ( MOAISimpleShader, "UN" )

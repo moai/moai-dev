@@ -5,9 +5,9 @@
 #define	MOAIPARTICLESYSTEM_H
 
 #include <moaicore/MOAIAction.h>
-#include <moaicore/MOAIGfxPrim2D.h>
+#include <moaicore/MOAIProp2D.h>
 
-class MOAIContentLibrary2D;
+class MOAIDeck;
 class MOAIParticleEngine;
 class MOAIParticleScript;
 class MOAIParticleState;
@@ -52,7 +52,7 @@ private:
 /**	@brief Particle system.
 */
 class MOAIParticleSystem :
-	public MOAIGfxPrim2D,
+	public MOAIProp2D,
 	public MOAIAction {
 private:
 
@@ -110,7 +110,7 @@ public:
 	
 	friend class MOAIParticleEngine;
 	
-	DECL_LUA_DATA ( MOAIParticleSystem )
+	DECL_LUA_FACTORY ( MOAIParticleSystem )
 
 	//----------------------------------------------------------------//
 	void			Draw					();
@@ -127,6 +127,8 @@ public:
 	void			ReserveRects			( u32 total );
 	void			ReserveSprites			( u32 maxSprites );
 	void			ReserveStates			( u32 total );
+	void			SerializeIn				( USLuaState& state, USLuaSerializer& serializer );
+	void			SerializeOut			( USLuaState& state, USLuaSerializer& serializer );
 	void			SetConstant				( u32 idx, float value );
 	void			SetRect					( u32 idx, USRect& rect );
 	STLString		ToString				();

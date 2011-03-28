@@ -1,632 +1,573 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="action">
+    <Filter Include="src">
+      <UniqueIdentifier>{c1d05c56-3a84-4892-bb3b-26fe267cba17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\action">
       <UniqueIdentifier>{e8720b4e-b6c3-48cf-9377-3d8b3e03ba10}</UniqueIdentifier>
     </Filter>
-    <Filter Include="anim">
+    <Filter Include="src\log">
+      <UniqueIdentifier>{adda5d01-2a00-46b5-bf26-f982d75fa0f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\anim">
       <UniqueIdentifier>{3a77cd0b-0e02-4c12-967c-7da643f5cbc5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="content">
-      <UniqueIdentifier>{c0cc453a-360d-4dde-bda7-ac3b02fbdf82}</UniqueIdentifier>
+    <Filter Include="src\box2D">
+      <UniqueIdentifier>{36626edd-bb32-4d8a-8c6a-251673d1cf01}</UniqueIdentifier>
     </Filter>
-    <Filter Include="feeler">
-      <UniqueIdentifier>{036275e8-a809-46aa-93fb-545195cee7ad}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="gfx">
-      <UniqueIdentifier>{3ddda724-4d7c-4cdc-a57e-e149950843a7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="gfx 2D">
-      <UniqueIdentifier>{499aed41-a0b5-48ab-98d1-0d5e71931fa5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="grid">
-      <UniqueIdentifier>{c28943eb-7275-49ac-a07b-db41e7d5c0e6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="input">
-      <UniqueIdentifier>{c6d535db-26bd-4374-87c9-6609cf17eee9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="io">
-      <UniqueIdentifier>{eff0884d-8d5c-47ef-89c8-f51bb0bc5c03}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="lua">
-      <UniqueIdentifier>{cd462fb5-b4db-4143-9ba0-dbed5e70f74f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="math">
-      <UniqueIdentifier>{500d7481-2f1c-4d18-826d-eb761af25e83}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="partition">
-      <UniqueIdentifier>{db16049c-1678-43f7-96f6-5f2660b56c75}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="system">
-      <UniqueIdentifier>{3ae3520b-6cb5-48b9-8fd3-e4b5b6c8de6b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="util">
-      <UniqueIdentifier>{f18f4d87-7e6b-4612-9ba3-b5d2ac26a0e7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="web">
-      <UniqueIdentifier>{53451be4-111a-4e1c-99f9-0fd0d0f37b8a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="text">
-      <UniqueIdentifier>{d0fa2f5e-c44a-45ed-90f6-6f5a21f80b00}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="chipmunk">
+    <Filter Include="src\chipmunk">
       <UniqueIdentifier>{b6b548a3-329c-4eb8-9fa1-346afc6eb313}</UniqueIdentifier>
     </Filter>
-    <Filter Include="fmod">
+    <Filter Include="src\fmod">
       <UniqueIdentifier>{aa3d8ec8-3438-4928-8d13-ff41d694e056}</UniqueIdentifier>
     </Filter>
-    <Filter Include="particles">
+    <Filter Include="src\gfx">
+      <UniqueIdentifier>{3ddda724-4d7c-4cdc-a57e-e149950843a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\grid">
+      <UniqueIdentifier>{c28943eb-7275-49ac-a07b-db41e7d5c0e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\input">
+      <UniqueIdentifier>{c6d535db-26bd-4374-87c9-6609cf17eee9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\node">
+      <UniqueIdentifier>{a1a777e9-cde8-44c0-bc8d-1c50fccb7617}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\particles">
       <UniqueIdentifier>{f2960568-099b-42f0-8b64-48c718741cb4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="box2D">
-      <UniqueIdentifier>{36626edd-bb32-4d8a-8c6a-251673d1cf01}</UniqueIdentifier>
+    <Filter Include="src\partition">
+      <UniqueIdentifier>{db16049c-1678-43f7-96f6-5f2660b56c75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\scene">
+      <UniqueIdentifier>{499aed41-a0b5-48ab-98d1-0d5e71931fa5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\system">
+      <UniqueIdentifier>{3ae3520b-6cb5-48b9-8fd3-e4b5b6c8de6b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\textbox">
+      <UniqueIdentifier>{d0fa2f5e-c44a-45ed-90f6-6f5a21f80b00}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\util">
+      <UniqueIdentifier>{f18f4d87-7e6b-4612-9ba3-b5d2ac26a0e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\web">
+      <UniqueIdentifier>{53451be4-111a-4e1c-99f9-0fd0d0f37b8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\widgets">
+      <UniqueIdentifier>{73364076-e9bc-4393-8aee-beea558ec94d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\moaicore\MOAIAction.cpp">
-      <Filter>action</Filter>
+      <Filter>src\action</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAIBlocker.cpp">
-      <Filter>action</Filter>
+      <Filter>src\action</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAIThread.cpp">
-      <Filter>action</Filter>
+      <Filter>src\action</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAIAnim.cpp">
-      <Filter>anim</Filter>
+      <Filter>src\anim</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAIAnimCurve.cpp">
-      <Filter>anim</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAIAnimPlayer.cpp">
-      <Filter>anim</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAIBrushLibrary.cpp">
-      <Filter>content</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAIContentLibrary2D.cpp">
-      <Filter>content</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAINinePatch.cpp">
-      <Filter>content</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAISpriteLibrary.cpp">
-      <Filter>content</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAISurfaceLibrary2D.cpp">
-      <Filter>content</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAITexture.cpp">
-      <Filter>content</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAITileLibrary.cpp">
-      <Filter>content</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAISurfaceSampler2D.cpp">
-      <Filter>feeler</Filter>
+      <Filter>src\anim</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAIColor.cpp">
-      <Filter>gfx</Filter>
+      <Filter>src\gfx</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAIShader.cpp">
-      <Filter>gfx</Filter>
+      <Filter>src\gfx</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAISimpleShader.cpp">
-      <Filter>gfx</Filter>
+      <Filter>src\gfx</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAIViewport.cpp">
-      <Filter>gfx</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAICamera2D.cpp">
-      <Filter>gfx 2D</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAICameraFitter.cpp">
-      <Filter>gfx 2D</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAIFrame.cpp">
-      <Filter>gfx 2D</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAIGfxPrim2D.cpp">
-      <Filter>gfx 2D</Filter>
+      <Filter>src\gfx</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAILayer2D.cpp">
-      <Filter>gfx 2D</Filter>
+      <Filter>src\scene</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAILayerBridge2D.cpp">
-      <Filter>gfx 2D</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAIPrim.cpp">
-      <Filter>gfx 2D</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAISlippyMap.cpp">
-      <Filter>gfx 2D</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAISprite2D.cpp">
-      <Filter>gfx 2D</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAITilemap.cpp">
-      <Filter>gfx 2D</Filter>
+      <Filter>src\scene</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAITransform2D.cpp">
-      <Filter>gfx 2D</Filter>
+      <Filter>src\scene</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAITransformBase2D.cpp">
-      <Filter>gfx 2D</Filter>
+      <Filter>src\scene</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAIGrid.cpp">
-      <Filter>grid</Filter>
+      <Filter>src\grid</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAIButtonSensor.cpp">
-      <Filter>input</Filter>
+      <Filter>src\input</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAICompassSensor.cpp">
-      <Filter>input</Filter>
+      <Filter>src\input</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAIInputDevice.cpp">
-      <Filter>input</Filter>
+      <Filter>src\input</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAIInputMgr.cpp">
-      <Filter>input</Filter>
+      <Filter>src\input</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAIJoystickSensor.cpp">
-      <Filter>input</Filter>
+      <Filter>src\input</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAIKeyboardSensor.cpp">
-      <Filter>input</Filter>
+      <Filter>src\input</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAILevelSensor.cpp">
-      <Filter>input</Filter>
+      <Filter>src\input</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAILocationSensor.cpp">
-      <Filter>input</Filter>
+      <Filter>src\input</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAIPointerSensor.cpp">
-      <Filter>input</Filter>
+      <Filter>src\input</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAISensor.cpp">
-      <Filter>input</Filter>
+      <Filter>src\input</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAITouchSensor.cpp">
-      <Filter>input</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAIData.cpp">
-      <Filter>io</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAIDataIOAction.cpp">
-      <Filter>io</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAILuaScript.cpp">
-      <Filter>lua</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAIPolar.cpp">
-      <Filter>math</Filter>
+      <Filter>src\input</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAIPartition.cpp">
-      <Filter>partition</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAICheckpoint.cpp">
-      <Filter>system</Filter>
+      <Filter>src\partition</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAIDebugLines.cpp">
-      <Filter>system</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAILog.cpp">
-      <Filter>system</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAINode.cpp">
-      <Filter>system</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAINodeHarness.cpp">
-      <Filter>system</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAINodeMgr.cpp">
-      <Filter>system</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAISerializer.cpp">
-      <Filter>system</Filter>
+      <Filter>src\system</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAISim.cpp">
-      <Filter>system</Filter>
+      <Filter>src\system</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAIXmlParser.cpp">
-      <Filter>util</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAIFileCache.cpp">
-      <Filter>web</Filter>
+      <Filter>src\util</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAIHttpTask.cpp">
-      <Filter>web</Filter>
+      <Filter>src\web</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAIFont.cpp">
-      <Filter>text</Filter>
+      <Filter>src\textbox</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAITextBox.cpp">
-      <Filter>text</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAITextSpoolAction.cpp">
-      <Filter>text</Filter>
+      <Filter>src\textbox</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAICp.cpp">
-      <Filter>chipmunk</Filter>
+      <Filter>src\chipmunk</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAICpBody.cpp">
-      <Filter>chipmunk</Filter>
+      <Filter>src\chipmunk</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAICpConstraint.cpp">
-      <Filter>chipmunk</Filter>
+      <Filter>src\chipmunk</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAICpShape.cpp">
-      <Filter>chipmunk</Filter>
+      <Filter>src\chipmunk</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAICpSpace.cpp">
-      <Filter>chipmunk</Filter>
+      <Filter>src\chipmunk</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAIFmod.cpp">
-      <Filter>fmod</Filter>
+      <Filter>src\fmod</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAIFmodChannel.cpp">
-      <Filter>fmod</Filter>
+      <Filter>src\fmod</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAIFmodSound.cpp">
-      <Filter>fmod</Filter>
+      <Filter>src\fmod</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\moaicore.cpp" />
-    <ClCompile Include="..\..\src\moaicore\pch.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAICpArbiter.cpp">
-      <Filter>chipmunk</Filter>
+      <Filter>src\chipmunk</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAIParticleEmitter.cpp">
-      <Filter>particles</Filter>
+      <Filter>src\particles</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAIParticleEngine.cpp">
-      <Filter>particles</Filter>
+      <Filter>src\particles</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAIParticleForce.cpp">
-      <Filter>particles</Filter>
+      <Filter>src\particles</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAIParticleScript.cpp">
-      <Filter>particles</Filter>
+      <Filter>src\particles</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAIParticleState.cpp">
-      <Filter>particles</Filter>
+      <Filter>src\particles</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAIParticleSystem.cpp">
-      <Filter>particles</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAIScriptNode.cpp">
-      <Filter>system</Filter>
+      <Filter>src\particles</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAIBox2DArbiter.cpp">
-      <Filter>box2D</Filter>
+      <Filter>src\box2D</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAIBox2DBody.cpp">
-      <Filter>box2D</Filter>
+      <Filter>src\box2D</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAIBox2DDebugDraw.cpp">
-      <Filter>box2D</Filter>
+      <Filter>src\box2D</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAIBox2DFixture.cpp">
-      <Filter>box2D</Filter>
+      <Filter>src\box2D</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAIBox2DJoint.cpp">
-      <Filter>box2D</Filter>
+      <Filter>src\box2D</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAIBox2DWorld.cpp">
-      <Filter>box2D</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAITransition.cpp">
-      <Filter>action</Filter>
+      <Filter>src\box2D</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAITimer.cpp">
-      <Filter>action</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAIOscillator.cpp">
-      <Filter>action</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAIForceAction.cpp">
-      <Filter>action</Filter>
+      <Filter>src\action</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAIIndexBuffer.cpp">
-      <Filter>gfx</Filter>
+      <Filter>src\gfx</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAIVertexBuffer.cpp">
-      <Filter>gfx</Filter>
+      <Filter>src\gfx</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAIVertexFormat.cpp">
-      <Filter>gfx</Filter>
+      <Filter>src\gfx</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAIFtFontRipper.cpp">
-      <Filter>text</Filter>
+      <Filter>src\textbox</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAICpDebugDraw.cpp">
-      <Filter>chipmunk</Filter>
+      <Filter>src\chipmunk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIEaseDriver.cpp">
+      <Filter>src\anim</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIEaseType.cpp">
+      <Filter>src\anim</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAICheckpoint.cpp">
+      <Filter>src\action</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAISurfaceSampler2D.cpp">
+      <Filter>src\partition</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAITexture.cpp">
+      <Filter>src\gfx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIDeck2D.cpp">
+      <Filter>src\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIGfxQuad2D.cpp">
+      <Filter>src\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIGfxQuadDeck2D.cpp">
+      <Filter>src\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIGfxQuadListDeck2D.cpp">
+      <Filter>src\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIProp2D.cpp">
+      <Filter>src\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIStretchPatch2D.cpp">
+      <Filter>src\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAISurfaceDeck2D.cpp">
+      <Filter>src\scene</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAILogMessages.cpp">
-      <Filter>system</Filter>
+      <Filter>src\log</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAINode.cpp">
+      <Filter>src\node</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAINodeHarness.cpp">
+      <Filter>src\node</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAINodeMgr.cpp">
+      <Filter>src\node</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIScriptNode.cpp">
+      <Filter>src\node</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAISerializer.cpp">
+      <Filter>src\util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIDataBuffer.cpp">
+      <Filter>src\util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIDataIOAction.cpp">
+      <Filter>src\util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAILayoutFrame.cpp">
+      <Filter>src\widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\moaicore.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\pch.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAILogMgr.cpp">
+      <Filter>src\log</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAITileDeck2D.cpp">
+      <Filter>src\scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\moaicore\MOAIAction.h">
-      <Filter>action</Filter>
+      <Filter>src\action</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIBlocker.h">
-      <Filter>action</Filter>
+      <Filter>src\action</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIThread.h">
-      <Filter>action</Filter>
+      <Filter>src\action</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIAnim.h">
-      <Filter>anim</Filter>
+      <Filter>src\anim</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIAnimCurve.h">
-      <Filter>anim</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\MOAIAnimPlayer.h">
-      <Filter>anim</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\MOAIBrushLibrary.h">
-      <Filter>content</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\MOAIContentLibrary2D.h">
-      <Filter>content</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\MOAINinePatch.h">
-      <Filter>content</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\MOAISpriteLibrary.h">
-      <Filter>content</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\MOAISurfaceLibrary2D.h">
-      <Filter>content</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\MOAITexture.h">
-      <Filter>content</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\MOAITileLibrary.h">
-      <Filter>content</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\MOAISurfaceSampler2D.h">
-      <Filter>feeler</Filter>
+      <Filter>src\anim</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIColor.h">
-      <Filter>gfx</Filter>
+      <Filter>src\gfx</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIShader.h">
-      <Filter>gfx</Filter>
+      <Filter>src\gfx</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAISimpleShader.h">
-      <Filter>gfx</Filter>
+      <Filter>src\gfx</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIViewport.h">
-      <Filter>gfx</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\MOAICamera2D.h">
-      <Filter>gfx 2D</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\MOAICameraFitter.h">
-      <Filter>gfx 2D</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\MOAIFrame.h">
-      <Filter>gfx 2D</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\MOAIGfxPrim2D.h">
-      <Filter>gfx 2D</Filter>
+      <Filter>src\gfx</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAILayer2D.h">
-      <Filter>gfx 2D</Filter>
+      <Filter>src\scene</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAILayerBridge2D.h">
-      <Filter>gfx 2D</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\MOAIPrim.h">
-      <Filter>gfx 2D</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\MOAISlippyMap.h">
-      <Filter>gfx 2D</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\MOAISprite2D.h">
-      <Filter>gfx 2D</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\MOAITilemap.h">
-      <Filter>gfx 2D</Filter>
+      <Filter>src\scene</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAITransform2D.h">
-      <Filter>gfx 2D</Filter>
+      <Filter>src\scene</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAITransformBase2D.h">
-      <Filter>gfx 2D</Filter>
+      <Filter>src\scene</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIGrid.h">
-      <Filter>grid</Filter>
+      <Filter>src\grid</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIButtonSensor.h">
-      <Filter>input</Filter>
+      <Filter>src\input</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAICompassSensor.h">
-      <Filter>input</Filter>
+      <Filter>src\input</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIInputDevice.h">
-      <Filter>input</Filter>
+      <Filter>src\input</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIInputMgr.h">
-      <Filter>input</Filter>
+      <Filter>src\input</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIJoystickSensor.h">
-      <Filter>input</Filter>
+      <Filter>src\input</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIKeyboardSensor.h">
-      <Filter>input</Filter>
+      <Filter>src\input</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAILevelSensor.h">
-      <Filter>input</Filter>
+      <Filter>src\input</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAILocationSensor.h">
-      <Filter>input</Filter>
+      <Filter>src\input</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIPointerSensor.h">
-      <Filter>input</Filter>
+      <Filter>src\input</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAISensor.h">
-      <Filter>input</Filter>
+      <Filter>src\input</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAITouchSensor.h">
-      <Filter>input</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\MOAIData.h">
-      <Filter>io</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\MOAIDataIOAction.h">
-      <Filter>io</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\MOAILuaScript.h">
-      <Filter>lua</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\MOAIPolar.h">
-      <Filter>math</Filter>
+      <Filter>src\input</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIPartition.h">
-      <Filter>partition</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\MOAICheckpoint.h">
-      <Filter>system</Filter>
+      <Filter>src\partition</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIDebugLines.h">
-      <Filter>system</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\MOAILog.h">
-      <Filter>system</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\MOAINode.h">
-      <Filter>system</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\MOAINodeHarness.h">
-      <Filter>system</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\MOAINodeMgr.h">
-      <Filter>system</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\MOAISerializer.h">
-      <Filter>system</Filter>
+      <Filter>src\system</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAISim.h">
-      <Filter>system</Filter>
+      <Filter>src\system</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIXmlParser.h">
-      <Filter>util</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\MOAIFileCache.h">
-      <Filter>web</Filter>
+      <Filter>src\util</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIHttpTask.h">
-      <Filter>web</Filter>
+      <Filter>src\web</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIFont.h">
-      <Filter>text</Filter>
+      <Filter>src\textbox</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAITextBox.h">
-      <Filter>text</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\MOAITextSpoolAction.h">
-      <Filter>text</Filter>
+      <Filter>src\textbox</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAICp.h">
-      <Filter>chipmunk</Filter>
+      <Filter>src\chipmunk</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAICpBody.h">
-      <Filter>chipmunk</Filter>
+      <Filter>src\chipmunk</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAICpConstraint.h">
-      <Filter>chipmunk</Filter>
+      <Filter>src\chipmunk</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAICpShape.h">
-      <Filter>chipmunk</Filter>
+      <Filter>src\chipmunk</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAICpSpace.h">
-      <Filter>chipmunk</Filter>
+      <Filter>src\chipmunk</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIFmod.h">
-      <Filter>fmod</Filter>
+      <Filter>src\fmod</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIFmodChannel.h">
-      <Filter>fmod</Filter>
+      <Filter>src\fmod</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIFmodSound.h">
-      <Filter>fmod</Filter>
+      <Filter>src\fmod</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\moaiconf.h" />
-    <ClInclude Include="..\..\src\moaicore\moaicore.h" />
-    <ClInclude Include="..\..\src\moaicore\pch.h" />
     <ClInclude Include="..\..\src\moaicore\MOAICpArbiter.h">
-      <Filter>chipmunk</Filter>
+      <Filter>src\chipmunk</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIParticleEmitter.h">
-      <Filter>particles</Filter>
+      <Filter>src\particles</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIParticleEngine.h">
-      <Filter>particles</Filter>
+      <Filter>src\particles</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIParticleForce.h">
-      <Filter>particles</Filter>
+      <Filter>src\particles</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIParticleScript.h">
-      <Filter>particles</Filter>
+      <Filter>src\particles</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIParticleState.h">
-      <Filter>particles</Filter>
+      <Filter>src\particles</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIParticleSystem.h">
-      <Filter>particles</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\MOAIScriptNode.h">
-      <Filter>system</Filter>
+      <Filter>src\particles</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIBox2DArbiter.h">
-      <Filter>box2D</Filter>
+      <Filter>src\box2D</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIBox2DBody.h">
-      <Filter>box2D</Filter>
+      <Filter>src\box2D</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIBox2DDebugDraw.h">
-      <Filter>box2D</Filter>
+      <Filter>src\box2D</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIBox2DFixture.h">
-      <Filter>box2D</Filter>
+      <Filter>src\box2D</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIBox2DJoint.h">
-      <Filter>box2D</Filter>
+      <Filter>src\box2D</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIBox2DWorld.h">
-      <Filter>box2D</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\MOAITransition.h">
-      <Filter>action</Filter>
+      <Filter>src\box2D</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAITimer.h">
-      <Filter>action</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\MOAIOscillator.h">
-      <Filter>action</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\MOAIForceAction.h">
-      <Filter>action</Filter>
+      <Filter>src\action</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIIndexBuffer.h">
-      <Filter>gfx</Filter>
+      <Filter>src\gfx</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIVertexBuffer.h">
-      <Filter>gfx</Filter>
+      <Filter>src\gfx</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIVertexFormat.h">
-      <Filter>gfx</Filter>
+      <Filter>src\gfx</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIFtFontRipper.h">
-      <Filter>text</Filter>
+      <Filter>src\textbox</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAICpDebugDraw.h">
-      <Filter>chipmunk</Filter>
+      <Filter>src\chipmunk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIEaseDriver.h">
+      <Filter>src\anim</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIEaseType.h">
+      <Filter>src\anim</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAICheckpoint.h">
+      <Filter>src\action</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAISurfaceSampler2D.h">
+      <Filter>src\partition</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAITexture.h">
+      <Filter>src\gfx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIDeck2D.h">
+      <Filter>src\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIGfxQuad2D.h">
+      <Filter>src\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIGfxQuadDeck2D.h">
+      <Filter>src\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIGfxQuadListDeck2D.h">
+      <Filter>src\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIProp2D.h">
+      <Filter>src\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIStretchPatch2D.h">
+      <Filter>src\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAISurfaceDeck2D.h">
+      <Filter>src\scene</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAILogMessages.h">
-      <Filter>system</Filter>
+      <Filter>src\log</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAINode.h">
+      <Filter>src\node</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAINodeHarness.h">
+      <Filter>src\node</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAINodeMgr.h">
+      <Filter>src\node</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIScriptNode.h">
+      <Filter>src\node</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAISerializer.h">
+      <Filter>src\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIDataBuffer.h">
+      <Filter>src\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIDataIOAction.h">
+      <Filter>src\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAILayoutFrame.h">
+      <Filter>src\widgets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\pch.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\moaiconf.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\moaicore.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAILogMgr.h">
+      <Filter>src\log</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAITileDeck2D.h">
+      <Filter>src\scene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -58,7 +58,7 @@ int MOAIBox2DWorld::_addBody ( lua_State* L ) {
 	body->SetWorld ( self );
 	body->Retain ();
 	
-	body->PushLuaInstance ( state );
+	body->PushLuaUserdata ( state );
 	return 1;
 }
 
@@ -94,7 +94,7 @@ int	MOAIBox2DWorld::_addDistanceJoint ( lua_State* L ) {
 	joint->SetWorld ( self );
 	joint->Retain ();
 	
-	joint->PushLuaInstance ( state );
+	joint->PushLuaUserdata ( state );
 	return 1;
 }
 
@@ -126,7 +126,7 @@ int	MOAIBox2DWorld::_addFrictionJoint ( lua_State* L ) {
 	joint->SetWorld ( self );
 	joint->Retain ();
 	
-	joint->PushLuaInstance ( state );
+	joint->PushLuaUserdata ( state );
 	return 1;
 }
 
@@ -159,7 +159,7 @@ int	MOAIBox2DWorld::_addGearJoint ( lua_State* L ) {
 	joint->mJointA = jointA;
 	joint->mJointB = jointB;
 	
-	joint->PushLuaInstance ( state );
+	joint->PushLuaUserdata ( state );
 	return 1;
 }
 
@@ -192,7 +192,7 @@ int	MOAIBox2DWorld::_addLineJoint ( lua_State* L ) {
 	joint->SetWorld ( self );
 	joint->Retain ();
 	
-	joint->PushLuaInstance ( state );
+	joint->PushLuaUserdata ( state );
 	return 1;
 }
 
@@ -222,7 +222,7 @@ int	MOAIBox2DWorld::_addMouseJoint ( lua_State* L ) {
 	joint->SetWorld ( self );
 	joint->Retain ();
 	
-	joint->PushLuaInstance ( state );
+	joint->PushLuaUserdata ( state );
 	return 1;
 }
 
@@ -255,7 +255,7 @@ int	MOAIBox2DWorld::_addPrismaticJoint ( lua_State* L ) {
 	joint->SetWorld ( self );
 	joint->Retain ();
 	
-	joint->PushLuaInstance ( state );
+	joint->PushLuaUserdata ( state );
 	return 1;
 }
 
@@ -301,7 +301,7 @@ int	MOAIBox2DWorld::_addPulleyJoint ( lua_State* L ) {
 	joint->SetWorld ( self );
 	joint->Retain ();
 	
-	joint->PushLuaInstance ( state );
+	joint->PushLuaUserdata ( state );
 	return 1;
 }
 
@@ -330,7 +330,7 @@ int	MOAIBox2DWorld::_addRevoluteJoint ( lua_State* L ) {
 	joint->SetWorld ( self );
 	joint->Retain ();
 	
-	joint->PushLuaInstance ( state );
+	joint->PushLuaUserdata ( state );
 	return 1;
 }
 
@@ -359,7 +359,7 @@ int	MOAIBox2DWorld::_addWeldJoint ( lua_State* L ) {
 	joint->SetWorld ( self );
 	joint->Retain ();
 	
-	joint->PushLuaInstance ( state );
+	joint->PushLuaUserdata ( state );
 	return 1;
 }
 

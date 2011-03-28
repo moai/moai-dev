@@ -17,7 +17,7 @@ class MOAIBox2DWorld;
 // MOAIBox2DPrim
 //================================================================//
 class MOAIBox2DPrim :
-	public virtual USLuaData  {
+	public virtual USLuaObject  {
 protected:
 
 	MOAIBox2DWorld* mWorld;
@@ -81,7 +81,7 @@ private:
 
 public:
 	
-	DECL_LUA_DATA ( MOAIBox2DWorld )
+	DECL_LUA_FACTORY ( MOAIBox2DWorld )
 	
 	GET_SET ( float, UnitsToMeters, mUnitsToMeters )
 	

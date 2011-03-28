@@ -24,7 +24,7 @@ textbox:setString ( test )
 textbox:setFont ( font )
 textbox:setTextSize ( font:getScale ())
 textbox:setRect ( 0, 0, 320, 480 )
-layer:insertPrim ( textbox )
+layer:insertProp ( textbox )
 
 curve = MOAIAnimCurve.new ()
 curve:reserveKeys ( 2 )

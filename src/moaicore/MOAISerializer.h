@@ -14,11 +14,14 @@ class MOAISerializer :
 private:
 
 	//----------------------------------------------------------------//
+	static int			_serializeToString		( lua_State* L );
+
+	//----------------------------------------------------------------//
 	cc8*				GetFileMagic			();
 
 public:
 	
-	DECL_LUA_DATA ( MOAISerializer )
+	DECL_LUA_FACTORY ( MOAISerializer )
 	
 	//----------------------------------------------------------------//
 						MOAISerializer			();

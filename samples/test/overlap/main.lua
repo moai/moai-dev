@@ -15,7 +15,7 @@ viewport:setSize ( 320, 480 )
 viewport:setScale ( 320, 0 )
 scene:setViewport ( viewport )
 
-camera = MOAICamera2D.new ()
+camera = MOAITransform2D.new ()
 scene:setCamera ( camera )
 
 partition = MOAIPartition.new ()
@@ -37,7 +37,7 @@ quad1:setQuad (
 	-64, -64
 )
 quad1:setCallback ( onOverlap1 )
-partition:insertPrim ( quad1 )
+partition:insertProp ( quad1 )
 
 function onOverlap2 ( code, begin, x, y )
 	if begin then
@@ -52,7 +52,7 @@ quad2:setRect ( -64, -64, 64, 64 )
 quad2:setLoc ( 96, 96 )
 quad2:setCallback ( onOverlap2 )
 quad2:setCacheOverlaps ( false )
-partition:insertPrim ( quad2 )
+partition:insertProp ( quad2 )
 
 --quad1:setRot ( 100 )
 --quad2:setRot ( 10 )

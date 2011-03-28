@@ -11,21 +11,21 @@ layer:setViewport ( viewport )
 partition = MOAIPartition.new ()
 layer:setPartition ( partition )
 
-texture = MOAITexture.new ()
-texture:load ( "cathead.png" )
+texture = MOAIGfxQuad2D.new ()
+texture:setTexture ( "cathead.png" )
 texture:setRect ( -64, -64, 64, 64 )
 
 --sprites = {}
 
 function addSprite ( x, y, xScl, yScl, name )
-	local sprite = MOAISprite2D.new ()
-	sprite:setGfxSource ( texture )
+	local sprite = MOAIProp2D.new ()
+	sprite:setDeck ( texture )
 	sprite:setPriority ( priority )
 	sprite:setLoc ( x, y )
 	sprite:setScl ( xScl, yScl )
 	sprite.name = name
 	--table.insert ( sprites, sprite )
-	partition:insertPrim ( sprite )
+	partition:insertProp ( sprite )
 end
 
 addSprite ( -64, 64, 0.5, 0.5, "sprite1" )
@@ -37,7 +37,7 @@ addSprite ( -64, -64, 0.5, 0.5, "sprite5" )
 mouseX = 0
 mouseY = 0
 
-priority = 1
+priority = 5
 
 local function printf ( ... )
 	return io.stdout:write ( string.format ( ... ))
@@ -62,17 +62,17 @@ MOAIInputMgr.device.mouseLeft:setCallback (
 	
 		if down then
 			
-			pick = partition:primForPoint ( mouseX, mouseY )
+			pick = partition:propForPoint ( mouseX, mouseY )
 			
 			if pick then
 				print ( pick.name )
 				pick:setPriority ( priority )
 				priority = priority + 1
-				pick:moveScl ( 0.25, 0.25, 0.125, MOAITransition.EASE_IN )
+				pick:moveScl ( 0.25, 0.25, 0.125, MOAIEaseType.EASE_IN )
 			end
 		else
 			if pick then
-				pick:moveScl ( -0.25, -0.25, 0.125, MOAITransition.EASE_IN )
+				pick:moveScl ( -0.25, -0.25, 0.125, MOAIEaseType.EASE_IN )
 				pick = nil
 			end
 		end

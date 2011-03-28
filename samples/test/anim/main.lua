@@ -9,42 +9,35 @@ viewport:setScale ( 1280, 480 )
 layer:setViewport ( viewport )
 MOAISim.pushRenderPass ( layer )
 
-texture = MOAITexture.new ()
-texture:load ( "cathead.png" )
+texture = MOAIGfxQuad2D.new ()
+texture:setTexture ( "cathead.png" )
 texture:setRect ( -64, -64, 64, 64 )
 
-sprite1 = MOAISprite2D.new ()
-sprite1:setGfxSource ( texture )
-layer:insertPrim ( sprite1 )
+prop1 = MOAIProp2D.new ()
+prop1:setDeck ( texture )
+layer:insertProp ( prop1 )
 
-sprite2 = MOAISprite2D.new ()
-sprite2:setGfxSource ( texture )
-layer:insertPrim ( sprite2 )
+prop2 = MOAIProp2D.new ()
+prop2:setDeck ( texture )
+layer:insertProp ( prop2 )
+
+curve1 = MOAIAnimCurve.new ()
+curve1:reserveKeys ( 2 )
+curve1:setKey ( 1, 0, 0 )
+curve1:setKey ( 2, 1.5, 64 )
+
+curve2 = MOAIAnimCurve.new ()
+curve2:reserveKeys ( 3 )
+curve2:setKey ( 1, 0, 0 )
+curve2:setKey ( 2, 0.75, 64 )
+curve2:setKey ( 3, 1.5, 0 )
 
 anim = MOAIAnim.new ()
-anim:reserveCurves ( 2 )
-
-curve = MOAIAnimCurve.new ()
-curve:reserveKeys ( 2 )
-curve:setKey ( 1, 0, 0 )
-curve:setKey ( 2, 1.5, 64 )
-anim:setCurve ( 1, curve )
-
-curve = MOAIAnimCurve.new ()
-curve:reserveKeys ( 2 )
-curve:setKey ( 1, 0, 0 )
-curve:setKey ( 2, 1.5, -64 )
-anim:setCurve ( 2, curve )
-
-animPlayer = MOAIAnimPlayer.new ()
-
-animPlayer:setAnim ( anim )
-animPlayer:reserveLinks ( 2 )
-
-animPlayer:setLink ( 1, 1, sprite1, MOAISprite2D.ATTR_X_LOC )
-animPlayer:setLink ( 2, 1, sprite2, MOAISprite2D.ATTR_X_LOC, true )
-
-animPlayer:setMode ( MOAITimer.LOOP )
-animPlayer:start ()
+anim:reserveLinks ( 3 )
+anim:setLink ( 1, curve1, prop1, MOAIProp2D.ATTR_X_LOC )
+anim:setLink ( 2, curve2, prop1, MOAIProp2D.ATTR_Y_LOC )
+anim:setLink ( 3, curve1, prop2, MOAIProp2D.ATTR_X_LOC, true )
+anim:setMode ( MOAITimer.LOOP )
+anim:start ()
 
 MOAISim.openWindow ( "cathead", 1280, 480 )

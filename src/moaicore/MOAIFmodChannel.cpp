@@ -6,7 +6,7 @@
 SUPPRESS_EMPTY_FILE_WARNING
 #if USE_FMOD
 
-#include <moaicore/MOAIForceAction.h>
+#include <moaicore/MOAIEaseDriver.h>
 #include <moaicore/MOAIFmodSound.h>
 #include <moaicore/MOAIFmodChannel.h>
 #include <moaicore/MOAIFmod.h>
@@ -28,7 +28,7 @@ SUPPRESS_EMPTY_FILE_WARNING
 int MOAIFmodChannel::_moveVolume ( lua_State* L ) {
 	LUA_SETUP ( MOAIFmodChannel, "UNN" )
 
-	MOAIForceAction* action = USSafeNew < MOAIForceAction >();
+	MOAIEaseDriver* action = USSafeNew < MOAIEaseDriver >();
 	action->Init ( self, 1, 0.0f );
 	
 	action->SetForce ( 0, MOAIFmodChannel::ATTR_VOLUME, state.GetValue < float >( 2, 0.0f ));
@@ -37,7 +37,7 @@ int MOAIFmodChannel::_moveVolume ( lua_State* L ) {
 	action->SetMode ( state.GetValue < u32 >( 4, USInterpolate::kSmooth ));
 	
 	action->Start ();
-	action->PushLuaInstance ( state );
+	action->PushLuaUserdata ( state );
 
 	return 1;
 }
@@ -72,7 +72,7 @@ int MOAIFmodChannel::_play ( lua_State* L ) {
 int MOAIFmodChannel::_seekVolume ( lua_State* L ) {
 	LUA_SETUP ( MOAIFmodChannel, "UNN" )
 
-	MOAIForceAction* action = USSafeNew < MOAIForceAction >();
+	MOAIEaseDriver* action = USSafeNew < MOAIEaseDriver >();
 	action->Init ( self, 1, 0.0f );
 	
 	action->SetForce ( 0, MOAIFmodChannel::ATTR_VOLUME, state.GetValue < float >( 2, 0.0f ) - self->mVolume );
@@ -81,7 +81,7 @@ int MOAIFmodChannel::_seekVolume ( lua_State* L ) {
 	action->SetMode ( state.GetValue < u32 >( 4, USInterpolate::kSmooth ));
 	
 	action->Start ();
-	action->PushLuaInstance ( state );
+	action->PushLuaUserdata ( state );
 
 	return 1;
 }

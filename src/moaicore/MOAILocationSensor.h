@@ -32,7 +32,7 @@ private:
 
 public:
 
-	DECL_LUA_DATA ( MOAILocationSensor )
+	DECL_LUA_FACTORY ( MOAILocationSensor )
 
 	//----------------------------------------------------------------//
 	void			HandleEvent				( USStream& eventStream );

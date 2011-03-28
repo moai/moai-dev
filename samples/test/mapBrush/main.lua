@@ -14,7 +14,7 @@ viewport:setSize ( 480, 480 )
 viewport:setScale ( 1, 0 )
 scene:setViewport ( viewport )
 
-camera = MOAICamera2D.new ()
+camera = MOAITransform2D.new ()
 scene:setCamera ( camera )
 
 partition = MOAIPartition.new ()
@@ -25,7 +25,7 @@ map:setLoadingTiles ( "map_spinner.png", "map_grid.png")
 map:setFrame ( -0.5, -0.5, 0.5, 0.5 )
 map:setTileURLCallback ( getTileURL )
 
-partition:insertPrim ( map )
+partition:insertProp ( map )
 
 map:moveRot ( 360, 15 )
 map:moveScl ( 32, 32, 15 )

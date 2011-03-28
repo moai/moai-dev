@@ -11,14 +11,14 @@ MOAISim.pushRenderPass ( layer )
 MOAISim.openWindow ( "cathead", 640, 480 )
 
 ----------------------------------------------------------------
-texture = MOAITexture.new ()
-texture:load ( "cathead.png" )
+texture = MOAIGfxQuad2D.new ()
+texture:setTexture ( "cathead.png" )
 texture:setRect ( -16, -16, 16, 16 )
 
 system = MOAIParticleSystem.new ()
 system:reserveSprites ( 256 )
-system:setGfxSource ( texture )
+system:setDeck ( texture )
 
 system:pushSprite ( 0, 0 )
 
-layer:insertPrim ( system )
+layer:insertProp ( system )

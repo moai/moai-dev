@@ -19,16 +19,16 @@ partition:setLayer ( 2, 128, 8, 8 )
 partition:setLayer ( 3, 96, 96, 12 )
 scene:setPartition ( partition )
 
-camera = MOAICamera2D.new ()
+camera = MOAITransform.new ()
 scene:setCamera ( camera )
 
-texture = MOAITexture.new ()
-texture:load ( "cathead.png" )
+texture = MOAIGfxQuad2D.new ()
+texture:setTexture ( "cathead.png" )
 texture:setRect ( -64, -64, 64, 64 )
 
-sprite = MOAISprite2D.new ()
-sprite:setGfxSource ( texture )
-partition:insertPrim ( sprite )
+sprite = MOAIProp2D.new ()
+sprite:setDeck ( texture )
+partition:insertProp ( sprite )
 
 sprite:setLoc ( -64, 64 )
 sprite:moveLoc ( 128, -128, 3 )

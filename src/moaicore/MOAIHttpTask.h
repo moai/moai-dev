@@ -5,7 +5,7 @@
 #define	MOAIHTTPTASK_H
 
 class USHttpTask;
-class MOAIData;
+class MOAIDataBuffer;
 
 //================================================================//
 // MOAIHttpTask
@@ -13,7 +13,7 @@ class MOAIData;
 /**	@brief HTTP task class.
 */
 class MOAIHttpTask :
-	public virtual USLuaData {
+	public virtual USLuaObject {
 private:
 
 	void*				mBuffer;
@@ -21,7 +21,7 @@ private:
 
 	USLuaRef			mOnFinish;
 	
-	USRef < MOAIData >	mPostData;
+	USRef < MOAIDataBuffer >	mPostData;
 	STLString			mPostString;
 
 	//----------------------------------------------------------------//
@@ -40,7 +40,7 @@ public:
 	GET ( void*, Buffer, mBuffer )
 	GET ( u32, Size, mSize )
 	
-	DECL_LUA_DATA ( MOAIHttpTask )
+	DECL_LUA_FACTORY ( MOAIHttpTask )
 	
 	//----------------------------------------------------------------//
 	void			Clear					();						

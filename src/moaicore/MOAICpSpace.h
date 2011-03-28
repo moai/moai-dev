@@ -18,7 +18,7 @@ class MOAICpCollisionHandler;
 // MOAICpPrim
 //================================================================//
 class MOAICpPrim :
-	public virtual USLuaData  {
+	public virtual USLuaObject  {
 protected:
 
 	USLeanLink < MOAICpPrim* > mLinkInSpace;
@@ -66,10 +66,10 @@ private:
 	static int	_getIterations					( lua_State* L );
 	static int	_getSleepTimeThreshold			( lua_State* L );
 	static int	_getStaticBody					( lua_State* L );
-	static int	_insertPrim						( lua_State* L );
+	static int	_insertProp						( lua_State* L );
 	static int	_rehashShape					( lua_State* L );
 	static int	_rehashStatic					( lua_State* L );
-	static int	_removePrim						( lua_State* L );
+	static int	_removeProp						( lua_State* L );
 	static int	_resizeActiveHash				( lua_State* L );
 	static int	_resizeStaticHash				( lua_State* L );
 	static int	_setCollisionHandler			( lua_State* L );
@@ -100,7 +100,7 @@ public:
 	friend class MOAICpConstraint;
 	friend class MOAICpShape;
 	
-	DECL_LUA_DATA ( MOAICpSpace )
+	DECL_LUA_FACTORY ( MOAICpSpace )
 	
 	//----------------------------------------------------------------//
 	void			DrawDebug				();

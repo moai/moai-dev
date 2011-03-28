@@ -10,7 +10,7 @@
 /**	@brief Base class for sensors.
 */
 class MOAISensor :
-	public USLuaData {
+	public USLuaObject {
 protected:
 
 	u32	mType;

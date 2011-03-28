@@ -28,7 +28,7 @@ private:
 	
 public:
 	
-	DECL_LUA_DATA ( MOAIThread )
+	DECL_LUA_FACTORY ( MOAIThread )
 	
 	//----------------------------------------------------------------//						
 					MOAIThread				();

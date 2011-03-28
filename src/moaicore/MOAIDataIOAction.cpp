@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moaicore/MOAIData.h>
+#include <moaicore/MOAIDataBuffer.h>
 #include <moaicore/MOAIDataIOAction.h>
 #include <moaicore/MOAISim.h>
 
@@ -14,7 +14,7 @@
 /**	@brief <tt>setCallback (callback)</tt>\n
 \n
 	Sets the function to be called when the asynchronous operation is completed.
-	@param callback The function to be called.  The MOAIData object is passed as the first parameter.
+	@param callback The function to be called.  The MOAIDataBuffer object is passed as the first parameter.
 */
 int MOAIDataIOAction::_setCallback ( lua_State* L ) {
 
@@ -42,7 +42,7 @@ void MOAIDataIOAction::Finished ( USDataIOTask* task ) {
 		USLuaStateHandle state = USLuaRuntime::Get ().State ();
 		
 		this->mOnFinish.PushRef ( state );
-		this->mData->PushLuaInstance ( state );
+		this->mData->PushLuaUserdata ( state );
 		state.DebugCall ( 1, 0 );
 	}
 
@@ -50,7 +50,7 @@ void MOAIDataIOAction::Finished ( USDataIOTask* task ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIDataIOAction::Init ( cc8* filename, MOAIData* data ) {
+void MOAIDataIOAction::Init ( cc8* filename, MOAIDataBuffer* data ) {
 
 	if ( this->mState != IDLE ) return;
 	

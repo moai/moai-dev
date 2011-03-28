@@ -13,7 +13,7 @@
 /**	@brief Box2D Arbiter.
 */
 class MOAIBox2DArbiter :
-	public virtual USLuaData,
+	public virtual USLuaObject,
 	public b2ContactListener {
 private:
 
@@ -38,7 +38,7 @@ private:
 
 public:
 	
-	DECL_LUA_DATA ( MOAIBox2DArbiter )
+	DECL_LUA_FACTORY ( MOAIBox2DArbiter )
 	
 	enum {
 		BEGIN			= 0x00000001,

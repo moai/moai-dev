@@ -80,6 +80,68 @@ int MOAIGrid::_getTileFlags ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@brief <tt>( x, y ) getTileLoc ( self, xTile, yTile, position )</tt>\n
+\n
+	Returns the world space coordinate of the tile with respect to the tilemap's
+	geometry and world transform.
+	The optional 'position' flag determines the location of the coordinate within the tile:
+	
+	MOAIGrid.TILE_LEFT_TOP
+	MOAIGrid.TILE_RIGHT_TOP
+	MOAIGrid.TILE_LEFT_BOTTOM
+	MOAIGrid.TILE_RIGHT_BOTTOM
+	MOAIGrid.TILE_LEFT_CENTER
+	MOAIGrid.TILE_RIGHT_CENTER
+	MOAIGrid.TILE_TOP_CENTER
+	MOAIGrid.TILE_BOTTOM_CENTER
+	MOAIGrid.TILE_CENTER
+	
+	@param self (in)
+	@param xTile (in)
+	@param yTile (in)
+	@param position (in)
+	@param x (out)
+	@param y (out)
+*/
+int MOAIGrid::_getTileLoc ( lua_State* L ) {
+	LUA_SETUP ( MOAIGrid, "UNN" )
+	
+	int xTile		= state.GetValue < int >( 2, 0 );
+	int yTile		= state.GetValue < int >( 3, 0 );
+	u32 position	= state.GetValue < u32 >( 4, USGridSpace::TILE_CENTER );
+	
+	USVec2D loc = self->GetTilePoint ( xTile, yTile, position );
+	state.Push ( loc.mX );
+	state.Push ( loc.mY );
+	return 2;
+}
+
+//----------------------------------------------------------------//
+/**	@brief <tt>( xTile, yTile ) worldToCoord ( self, x, y )</tt>\n
+\n
+	Transforms a world coordinate to a grid index.
+	@param self (in)
+	@param x (in)
+	@param y (in)
+	@param xTile (out)
+	@param yTile (out)
+*/
+int MOAIGrid::_locToCoord ( lua_State* L ) {
+	LUA_SETUP ( MOAIGrid, "UNN" )
+
+	USVec2D loc;
+	loc.mX = state.GetValue < float >( 2, 0 );
+	loc.mY = state.GetValue < float >( 3, 0 );
+	
+	USTileCoord coord;
+	coord = self->GetTileCoord ( loc );
+
+	state.Push ( coord.mX );
+	state.Push ( coord.mY );
+	return 2;
+}
+
+//----------------------------------------------------------------//
 /**	@brief <tt>setRow ( self, row, id )</tt>\n
 \n
 	Initializes dimensions of grid and reserves storage for tiles.
@@ -126,7 +188,7 @@ int MOAIGrid::_setSize ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>setTile ( self, xTile, yTile, tile, loSize, hiSize, base )</tt>\n
+/**	@brief <tt>setTile ( self, xTile, yTile, tile )</tt>\n
 \n
 	Sets the value of a given tile.
 	@param self (in)
@@ -196,6 +258,30 @@ int MOAIGrid::_toggleTileFlags ( lua_State* L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
+/**	@brief <tt>( xTile, yTile ) wrapCoord ( self, xTile, yTile )</tt>\n
+\n
+	Wraps a given tile index ot the extents of the tilemap's grid.
+	@param self (in)
+	@param xTile (in)
+	@param yTile (in)
+	@param xTile (out)
+	@param yTile (out)
+*/
+int MOAIGrid::_wrapCoord ( lua_State* L ) {
+	LUA_SETUP ( MOAIGrid, "UNN" )
+	
+	USTileCoord coord;
+	coord.mX = state.GetValue < int >( 2, 0 );
+	coord.mY = state.GetValue < int >( 3, 0 );
+
+	self->WrapCellCoord ( coord );
+	
+	state.Push ( coord.mX );
+	state.Push ( coord.mY );
+	return 2;
+}
+
 //================================================================//
 // MOAIGrid
 //================================================================//
@@ -226,7 +312,7 @@ void MOAIGrid::Init ( u32 width, u32 height, float tileWidth, float tileHeight, 
 MOAIGrid::MOAIGrid () {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( USLuaData )
+		RTTI_EXTEND ( USLuaObject )
 	RTTI_END
 }
 
@@ -241,6 +327,18 @@ void MOAIGrid::RegisterLuaClass ( USLuaState& state ) {
 	state.SetField ( -1, "TILE_Y_FLIP", ( u32 )USTile::YFLIP );
 	state.SetField ( -1, "TILE_XY_FLIP", ( u32 )USTile::FLIP_MASK );
 	state.SetField ( -1, "TILE_HIDE", ( u32 )USTile::HIDDEN );
+	
+	state.SetField ( -1, "TILE_LEFT_TOP", ( u32 )USGridSpace::TILE_LEFT_TOP );
+	state.SetField ( -1, "TILE_RIGHT_TOP", ( u32 )USGridSpace::TILE_RIGHT_TOP );
+	state.SetField ( -1, "TILE_LEFT_BOTTOM", ( u32 )USGridSpace::TILE_LEFT_BOTTOM );
+	state.SetField ( -1, "TILE_RIGHT_BOTTOM", ( u32 )USGridSpace::TILE_RIGHT_BOTTOM );
+	
+	state.SetField ( -1, "TILE_LEFT_CENTER", ( u32 )USGridSpace::TILE_LEFT_CENTER );
+	state.SetField ( -1, "TILE_RIGHT_CENTER", ( u32 )USGridSpace::TILE_RIGHT_CENTER );
+	state.SetField ( -1, "TILE_TOP_CENTER", ( u32 )USGridSpace::TILE_TOP_CENTER );
+	state.SetField ( -1, "TILE_BOTTOM_CENTER", ( u32 )USGridSpace::TILE_BOTTOM_CENTER );
+	
+	state.SetField ( -1, "TILE_CENTER", ( u32 )USGridSpace::TILE_CENTER );
 }
 
 //----------------------------------------------------------------//
@@ -250,11 +348,13 @@ void MOAIGrid::RegisterLuaFuncs ( USLuaState& state ) {
 		{ "clearTileFlags",		_clearTileFlags },
 		{ "getTile",			_getTile },
 		{ "getTileFlags",		_getTileFlags },
+		{ "locToCoord",			_locToCoord },
 		{ "setRow",				_setRow },
 		{ "setSize",			_setSize },
 		{ "setTile",			_setTile },
 		{ "setTileFlags",		_setTileFlags },
 		{ "toggleTileFlags",	_toggleTileFlags },
+		{ "wrapCoord",			_wrapCoord },
 		{ NULL, NULL }
 	};
 

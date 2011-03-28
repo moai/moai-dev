@@ -5,7 +5,7 @@
 #include <chipmunk/chipmunk.h>
 #include <moaicore/MOAICpBody.h>
 #include <moaicore/MOAICpShape.h>
-#include <moaicore/MOAITransform2D.h>
+#include <moaicore/MOAITransform.h>
 
 SUPPRESS_EMPTY_FILE_WARNING
 #if USE_CHIPMUNK
@@ -50,7 +50,7 @@ int MOAICpBody::_addCircle ( lua_State* L ) {
 	shape->mShape->data = shape;
 	
 	self->AttachShape ( *shape );
-	shape->PushLuaInstance ( state );
+	shape->PushLuaUserdata ( state );
 	return 1;
 }
 
@@ -78,7 +78,7 @@ int MOAICpBody::_addPolygon ( lua_State* L ) {
 		shape->mShape->data = shape;
 		
 		self->AttachShape ( *shape );
-		shape->PushLuaInstance ( state );
+		shape->PushLuaUserdata ( state );
 		return 1;
 	}
 	return 0;
@@ -120,7 +120,7 @@ int MOAICpBody::_addRect ( lua_State* L ) {
 	shape->mShape->data = shape;
 	
 	self->AttachShape ( *shape );
-	shape->PushLuaInstance ( state );
+	shape->PushLuaUserdata ( state );
 	return 1;
 }
 
@@ -149,7 +149,7 @@ int MOAICpBody::_addSegment ( lua_State* L ) {
 	shape->mShape->data = shape;
 	
 	self->AttachShape ( *shape );
-	shape->PushLuaInstance ( state );
+	shape->PushLuaUserdata ( state );
 	return 1;
 }
 
@@ -433,7 +433,7 @@ int MOAICpBody::_new ( lua_State* L ) {
 	body->mBody = cpBodyNew ( m, i );
 	body->mBody->data = body;
 
-	body->PushLuaInstance ( state );
+	body->PushLuaUserdata ( state );
 	return 1;
 }
 
@@ -451,7 +451,7 @@ int MOAICpBody::_newStatic ( lua_State* L ) {
 	body->mBody = cpBodyNewStatic ();
 	body->mBody->data = body;
 
-	body->PushLuaInstance ( state );
+	body->PushLuaUserdata ( state );
 	return 1;
 }
 
@@ -744,7 +744,7 @@ MOAICpBody::MOAICpBody () :
 	mRemoveFlag ( NONE ) {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAITransformBase2D )
+		RTTI_EXTEND ( MOAITransformBase )
 		RTTI_EXTEND ( MOAICpPrim )
 	RTTI_END
 }

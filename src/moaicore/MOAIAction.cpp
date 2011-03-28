@@ -157,7 +157,7 @@ MOAIAction::MOAIAction () :
 	this->mLink.Data ( this );
 
 	RTTI_BEGIN
-		RTTI_EXTEND ( USLuaData )
+		RTTI_EXTEND ( USLuaObject )
 	RTTI_END
 }
 

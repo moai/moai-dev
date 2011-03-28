@@ -5,7 +5,7 @@
 #include <tinyxml.h>
 #include <moaicore/MOAIHttpTask.h>
 #include <moaicore/MOAIXmlParser.h>
-#include <moaicore/MOAIData.h>
+#include <moaicore/MOAIDataBuffer.h>
 
 //================================================================//
 // local
@@ -63,7 +63,7 @@ int MOAIHttpTask::_httpGet ( lua_State* L ) {
 	Posts an API call to the server for uploading data.  The callback function (from setCallback) will run when the call is complete.
 	@param url A string containing the full url of the API call.
 	@param string A character string containing text to send as POST data.
-	@param data A MOAIData object to send as POST data.
+	@param data A MOAIDataBuffer object to send as POST data.
 */
 int MOAIHttpTask::_httpPost ( lua_State* L ) {
 	LUA_SETUP ( MOAIHttpTask, "US" )
@@ -72,7 +72,7 @@ int MOAIHttpTask::_httpPost ( lua_State* L ) {
 
 	if ( state.IsType (3, LUA_TUSERDATA) ) {
 		
-		self->mPostData = state.GetLuaData < MOAIData >( 3 );
+		self->mPostData = state.GetLuaData < MOAIDataBuffer >( 3 );
 		
 		void* bytes;
 		u32 size;
@@ -151,7 +151,7 @@ MOAIHttpTask::MOAIHttpTask () :
 	mBuffer ( 0 ),
 	mSize ( 0 ) {
 
-	RTTI_SINGLE ( USLuaData )
+	RTTI_SINGLE ( USLuaObject )
 }
 
 //----------------------------------------------------------------//
@@ -188,7 +188,7 @@ void MOAIHttpTask::OnHttpFinish ( USHttpTask* task ) {
 		USLuaStateHandle state = USLuaRuntime::Get ().State ();
 		
 		this->mOnFinish.PushRef ( state );
-		this->PushLuaInstance ( state );
+		this->PushLuaUserdata ( state );
 		state.DebugCall ( 1, 0 );
 	}
 	

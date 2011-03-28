@@ -15,7 +15,7 @@ struct cpShape;
 /**	@brief Chipmunk Shape.
 */
 class MOAICpShape :
-	public virtual USLuaData,
+	public virtual USLuaObject,
 	public MOAICpPrim {
 private:
 
@@ -63,7 +63,7 @@ public:
 	friend class MOAICpBody;
 	friend class MOAICpSpace;
 	
-	DECL_LUA_DATA ( MOAICpShape )
+	DECL_LUA_FACTORY ( MOAICpShape )
 	
 	//----------------------------------------------------------------//
 					MOAICpShape				();

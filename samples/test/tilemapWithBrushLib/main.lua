@@ -10,14 +10,11 @@ scene:setViewport ( viewport )
 partition = MOAIPartition.new ()
 scene:setPartition ( partition )
 
-camera = MOAICamera2D.new ()
+camera = MOAITransform2D.new ()
 scene:setCamera ( camera )
 
-texture = MOAITexture.new ()
-texture:load ( "cathead.png" )
-
-brushlib = MOAIBrushLibrary.new ()
-brushlib:setTexture ( texture )
+brushlib = MOAIGfxQuadDeck2D.new ()
+brushlib:setTexture ( "cathead.png" )
 
 brushlib:reserveBrushes ( 1 )
 brushlib:setRect ( 1, -32, 64, 16, -16 )
@@ -31,11 +28,11 @@ grid:setTile ( 1, 0, 0x20000000 )
 grid:setTile ( 0, 1, 0x60000000 )
 grid:setTile ( 1, 1, 0x40000000 )
 
-tilemap = MOAITilemap.new ()
-tilemap:setGfxSource ( brushlib )
+tilemap = MOAIProp2D.new ()
+tilemap:setDeck ( brushlib )
 tilemap:setGrid ( grid )
 tilemap:setRepeat ( true )
-partition:insertPrim ( tilemap )
+partition:insertProp ( tilemap )
 
 tilemap:moveRot ( 360, 1.5 )
 tilemap:moveLoc ( -320, 0, 3 )

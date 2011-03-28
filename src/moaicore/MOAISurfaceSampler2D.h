@@ -1,7 +1,7 @@
 #ifndef MOAISURFACESAMPLER2D_H
 #define MOAISURFACESAMPLER2D_H
 
-class MOAITransform2D;
+class MOAITransform;
 
 //================================================================//
 // MOAISurface2D
@@ -10,7 +10,7 @@ class MOAISurface2D :
 	public USSurface2D {
 public:
 
-	MOAITransform2D*	mSourcePrim;
+	MOAITransform*	mSourcePrim;
 };
 
 //================================================================//
@@ -25,7 +25,7 @@ private:
 	USAffine2D			mWorldToSampleMtx;
 	USAffine2D			mLocalToSampleMtx;
 
-	MOAITransform2D*	mSourcePrim;
+	MOAITransform*	mSourcePrim;
 
 public:
 
@@ -46,7 +46,7 @@ public:
 				~MOAISurfaceSampler2D		();
 	void		SetObjectMtx				();
 	void		SetObjectMtx				( const USAffine2D& localToWorld, const USAffine2D& worldToLocal );
-	void		SetSourcePrim				( MOAITransform2D* sourcePrim );
+	void		SetSourcePrim				( MOAITransform* sourcePrim );
 };
 
 #endif

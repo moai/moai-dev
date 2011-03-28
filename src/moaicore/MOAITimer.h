@@ -4,6 +4,7 @@
 #ifndef	MOAITIMER_H
 #define	MOAITIMER_H
 
+#include <moaicore/MOAIAction.h>
 #include <moaicore/MOAINode.h>
 
 //================================================================//
@@ -41,7 +42,7 @@ protected:
 
 public:
 	
-	DECL_LUA_DATA ( MOAITimer )
+	DECL_LUA_FACTORY ( MOAITimer )
 	
 	enum {
 		ATTR_TIME,
@@ -59,9 +60,9 @@ public:
 	//----------------------------------------------------------------//
 	void		ApplyAttrOp			( u32 attrID, USAttrOp& attrOp );
 	u32			CountAttributes		();
+	bool		IsBusy				();
 				MOAITimer			();
 				~MOAITimer			();
-	bool		IsBusy				();
 	void		OnDepNodeUpdate		();
 	void		OnStart				();
 	void		OnUpdate			( float step );

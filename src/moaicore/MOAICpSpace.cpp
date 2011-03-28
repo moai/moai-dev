@@ -43,7 +43,7 @@ MOAICpPrim::MOAICpPrim () :
 	mSpace ( 0 ) {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( USLuaData )
+		RTTI_EXTEND ( USLuaObject )
 	RTTI_END
 	
 	this->mLinkInSpace.Data ( this );
@@ -86,12 +86,12 @@ static int _cpCollisionFunc ( cpArbiter* arb, void* data, u32 eventType, bool ch
 				if ( a && b ) {
 					
 					state.Push ( eventType );
-					(( MOAICpShape* )a->data )->PushLuaInstance ( state );
-					(( MOAICpShape* )b->data )->PushLuaInstance ( state );
+					(( MOAICpShape* )a->data )->PushLuaUserdata ( state );
+					(( MOAICpShape* )b->data )->PushLuaUserdata ( state );
 					
 					MOAICpArbiter* arbiter = handler->mSpace->GetArbiter ();
 					arbiter->SetArbiter ( arb );
-					arbiter->PushLuaInstance ( state );
+					arbiter->PushLuaUserdata ( state );
 					
 					state.DebugCall ( 4, 1 );
 					
@@ -144,21 +144,21 @@ static void _cpCollisionSeparateFunc ( cpArbiter* arb, cpSpace* space, void *dat
 static void _shapeListForPointCallback ( cpShape *shape, void *data ) {
 
 	USLuaState& state = *( USLuaState* )data;
-	(( MOAICpShape* )shape->data )->PushLuaInstance ( state );
+	(( MOAICpShape* )shape->data )->PushLuaUserdata ( state );
 }
 
 //----------------------------------------------------------------//
 static void _shapeListForRectCallback ( cpShape *shape, void *data ) {
 
 	USLuaState& state = *( USLuaState* )data;
-	(( MOAICpShape* )shape->data )->PushLuaInstance ( state );
+	(( MOAICpShape* )shape->data )->PushLuaUserdata ( state );
 }
 
 //----------------------------------------------------------------//
 static void _shapeListForSegmentCallback ( cpShape *shape, cpFloat t, cpVect n, void *data ) {
 
 	USLuaState& state = *( USLuaState* )data;
-	(( MOAICpShape* )shape->data )->PushLuaInstance ( state );
+	(( MOAICpShape* )shape->data )->PushLuaUserdata ( state );
 	
 	lua_pushnumber ( state, t );
 	lua_pushnumber ( state, n.x );
@@ -273,7 +273,7 @@ int MOAICpSpace::_getStaticBody ( lua_State* L ) {
 		self->mStaticBody->mBody->data = self->mStaticBody;
 	}
 	
-	self->mStaticBody->PushLuaInstance ( state );
+	self->mStaticBody->PushLuaUserdata ( state );
 	return 1;
 }
 
@@ -284,7 +284,7 @@ int MOAICpSpace::_getStaticBody ( lua_State* L ) {
 	@param self (in)
 	@param y (out)
 */
-int MOAICpSpace::_insertPrim ( lua_State* L ) {
+int MOAICpSpace::_insertProp ( lua_State* L ) {
 	LUA_SETUP ( MOAICpSpace, "UU" )
 	
 	MOAICpPrim* prim = state.GetLuaData < MOAICpPrim >( 2 );
@@ -332,7 +332,7 @@ int MOAICpSpace::_rehashStatic ( lua_State* L ) {
 	@param self (in)
 	@param y (out)
 */
-int MOAICpSpace::_removePrim ( lua_State* L ) {
+int MOAICpSpace::_removeProp ( lua_State* L ) {
 	LUA_SETUP ( MOAICpSpace, "UU" )
 	
 	MOAICpPrim* prim = state.GetLuaData < MOAICpPrim >( 2 );
@@ -540,7 +540,7 @@ int MOAICpSpace::_shapeForPoint ( lua_State* L ) {
 	cpShape* shape = cpSpacePointQueryFirst ( self->mSpace, point, layers, group );
 	
 	if ( shape ) {
-		(( MOAICpShape* )shape->data )->PushLuaInstance ( state );
+		(( MOAICpShape* )shape->data )->PushLuaUserdata ( state );
 		return 1;
 	}
 	return 0;
@@ -579,7 +579,7 @@ int MOAICpSpace::_shapeForSegment ( lua_State* L ) {
 	);
 	
 	if ( shape ) {
-		(( MOAICpShape* )shape->data )->PushLuaInstance ( state );
+		(( MOAICpShape* )shape->data )->PushLuaUserdata ( state );
 		lua_pushnumber ( state, info.t );
 		lua_pushnumber ( state, info.n.x );
 		lua_pushnumber ( state, info.n.y );
@@ -856,10 +856,10 @@ void MOAICpSpace::RegisterLuaFuncs ( USLuaState& state ) {
 		{ "getIterations",					_getIterations },
 		{ "getSleepTimeThreshold",			_getSleepTimeThreshold },
 		{ "getStaticBody",					_getStaticBody },
-		{ "insertPrim",						_insertPrim },
+		{ "insertPrim",						_insertProp },
 		{ "rehashShape",					_rehashShape },
 		{ "rehashStatic",					_rehashStatic },
-		{ "removePrim",						_removePrim },
+		{ "removePrim",						_removeProp },
 		{ "resizeActiveHash",				_resizeActiveHash },
 		{ "resizeStaticHash",				_resizeStaticHash },
 		{ "setCollisionHandler",			_setCollisionHandler },

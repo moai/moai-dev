@@ -5,7 +5,6 @@
 #define	MOAINODE_H
 
 class MOAINode;
-class MOAINodeHarness;
 
 //================================================================//
 // MOAIAttrLink
@@ -41,7 +40,7 @@ public:
 /**	@brief Base for all attribute bearing Moai objects.
 */
 class MOAINode :
-	public virtual USLuaData,
+	public virtual USLuaObject,
 	public USAttributed {
 private:
 
@@ -94,15 +93,13 @@ public:
 	
 	friend class MOAINodeMgr;
 	
-	DECL_LUA_DATA ( MOAINode )
+	DECL_LUA_FACTORY ( MOAINode )
 	
 	static const u32 NULL_ATTR = 0xffffffff;
 	
 	//----------------------------------------------------------------//
-	virtual bool	CanHarness				();
 	void			ClearDependency			( MOAINode& srcNode );
 	void			ClearAttrLink			( int attrID );
-	virtual void	Harness					( MOAINodeHarness& harness );
 					MOAINode				();
 					~MOAINode				();
 	void			RegisterLuaClass		( USLuaState& state );

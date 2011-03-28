@@ -3,14 +3,14 @@
 
 #include "pch.h"
 #include <float.h>
-#include <moaicore/MOAIContentLibrary2D.h>
+#include <moaicore/MOAIDeck.h>
 #include <moaicore/MOAIParticleEngine.h>
 #include <moaicore/MOAIParticleScript.h>
 #include <moaicore/MOAIParticleState.h>
 #include <moaicore/MOAIParticleSystem.h>
 #include <moaicore/MOAITexture.h>
 
-class MOAIData;
+class MOAIDataBuffer;
 
 //================================================================//
 // local
@@ -72,7 +72,7 @@ int MOAIParticleSystem::_getState ( lua_State* L ) {
 	
 	MOAIParticleState* particleState = self->GetState ( idx );
 	if ( particleState ) {
-		particleState->PushLuaInstance ( state );
+		particleState->PushLuaUserdata ( state );
 		return 1;
 	}
 	return 0;
@@ -342,12 +342,12 @@ void MOAIParticleSystem::ClearQueue () {
 //----------------------------------------------------------------//
 void MOAIParticleSystem::Draw () {
 
-	if ( !this->BindGfxSource ()) return;
+	if ( !this->BindDeck ()) return;
 	this->LoadShader ();
 
 	USDrawBuffer& drawbuffer = USDrawBuffer::Get ();
 
-	MOAIDrawingMtx2D drawingMtx;
+	USAffine2D drawingMtx;
 	USAffine2D spriteMtx;
 	
 	u32 maxSprites = this->mSprites.Size ();
@@ -371,10 +371,10 @@ void MOAIParticleSystem::Draw () {
 		
 		spriteMtx.ScRoTr ( sprite.mScale, sprite.mRot * ( float )D2R, sprite.mLoc );
 		
-		drawingMtx.SetLocalToWorldMtx ( this->GetLocalToWorldMtx ());
+		drawingMtx = this->GetLocalToWorldMtx ();
 		drawingMtx.Append ( spriteMtx );
 		
-		this->mGfxSource->Draw ( drawingMtx, sprite.mGfxID );
+		this->mDeck->Draw ( drawingMtx, sprite.mGfxID );
 	}
 }
 
@@ -396,7 +396,7 @@ void MOAIParticleSystem::EnqueueParticle ( MOAIParticle& particle ) {
 u32 MOAIParticleSystem::GetLocalFrame ( USRect& frame ) {
 
 	frame.Init ( -32.0f, -32.0f, 32.0f, 32.0f );
-	return FRAME_GLOBAL;
+	return MOAIProp::BOUNDS_GLOBAL;
 }
 
 //----------------------------------------------------------------//
@@ -443,7 +443,7 @@ MOAIParticleSystem::MOAIParticleSystem () :
 	mSpriteTop ( 0 ) {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIGfxPrim2D )
+		RTTI_EXTEND ( MOAIProp2D )
 		RTTI_EXTEND ( MOAIAction )
 	RTTI_END
 }
@@ -625,17 +625,15 @@ bool MOAIParticleSystem::PushSprite ( const MOAIParticleSprite& sprite ) {
 //----------------------------------------------------------------//
 void MOAIParticleSystem::RegisterLuaClass ( USLuaState& state ) {
 
-	this->MOAIPrim::RegisterLuaClass ( state );
-	this->MOAIGfxPrim2D::RegisterLuaClass ( state );
-	this->MOAIAction::RegisterLuaClass ( state );
+	MOAIProp2D::RegisterLuaClass ( state );
+	MOAIAction::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAIParticleSystem::RegisterLuaFuncs ( USLuaState& state ) {
 	
-	this->MOAIPrim::RegisterLuaFuncs ( state );
-	this->MOAIGfxPrim2D::RegisterLuaFuncs ( state );
-	this->MOAIAction::RegisterLuaFuncs ( state );
+	MOAIProp2D::RegisterLuaFuncs ( state );
+	MOAIAction::RegisterLuaFuncs ( state );
 	
 	LuaReg regTable [] = {
 		{ "capParticles",		_capParticles },
@@ -698,6 +696,20 @@ void MOAIParticleSystem::ReserveStates ( u32 total ) {
 
 	this->mStates.Init ( total );
 	this->mStates.Fill ( 0 );
+}
+
+//----------------------------------------------------------------//
+void MOAIParticleSystem::SerializeIn ( USLuaState& state, USLuaSerializer& serializer ) {
+
+	MOAIProp2D::SerializeIn ( state, serializer );
+	MOAIAction::SerializeIn ( state, serializer );
+}
+
+//----------------------------------------------------------------//
+void MOAIParticleSystem::SerializeOut ( USLuaState& state, USLuaSerializer& serializer ) {
+
+	MOAIProp2D::SerializeOut ( state, serializer );
+	MOAIAction::SerializeOut ( state, serializer );
 }
 
 //----------------------------------------------------------------//

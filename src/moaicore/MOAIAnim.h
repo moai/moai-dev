@@ -4,7 +4,21 @@
 #ifndef	MOAIANIM_H
 #define	MOAIANIM_H
 
+#include <moaicore/MOAITimer.h>
+
 class MOAIAnimCurve;
+
+//================================================================//
+// MOAIAnimLink
+//================================================================//
+class MOAIAnimLink {
+public:
+
+	USRef < MOAIAnimCurve >		mCurve;
+	USRef < MOAINode >			mTarget;
+	u32							mAttrID;
+	bool						mRelative;
+};
 
 //================================================================//
 // MOAIAnim
@@ -12,36 +26,36 @@ class MOAIAnimCurve;
 /**	@brief Basic animation class.
 */
 class MOAIAnim :
-	public virtual USLuaData {
+	public virtual MOAITimer {
 private:
 
 	float mLength;
 
-	USLeanArray < MOAIAnimCurve* > mCurves;
+	USLeanArray < MOAIAnimLink > mLinks;
 
 	//----------------------------------------------------------------//
+	static int	_apply				( lua_State* L );
 	static int	_getLength			( lua_State* L );
-	static int	_reserveCurves		( lua_State* L );
-	static int	_setCurve			( lua_State* L );
+	static int	_reserveLinks		( lua_State* L );
+	static int	_setLink			( lua_State* L );
 	
 public:
 	
-	friend class MOAIAnimPlayer;
-	
-	DECL_LUA_DATA ( MOAIAnim )
+	DECL_LUA_FACTORY ( MOAIAnim )
 	
 	GET ( float, Length, mLength )
 	
 	//----------------------------------------------------------------//
+	void			Apply				( float t );
+	void			Apply				( float t0, float t1 );
 	void			Clear				();
-	float			Eval				( u32 curveID, float time );
-	float			EvalDelta			( u32 curveID, float t0, float t1 );
 					MOAIAnim			();
 					~MOAIAnim			();
+	void			OnUpdate			( float step );
 	void			RegisterLuaClass	( USLuaState& state );
 	void			RegisterLuaFuncs	( USLuaState& state );
-	void			ReserveCurves		( u32 totalCurves );
-	void			SetCurve			( u32 curveID, MOAIAnimCurve* curve ); 
+	void			ReserveLinks		( u32 totalLinks );
+	void			SetLink				( u32 linkID, MOAIAnimCurve* curve, MOAINode* target, u32 attrID, bool relative );
 	STLString		ToString			();
 };
 
