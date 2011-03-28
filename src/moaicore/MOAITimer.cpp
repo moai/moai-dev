@@ -10,11 +10,10 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@brief 
-	<tt>function getTimesExecuted ( self )</tt>\n
-	\n
-	Gets the number of times the timer has completed a cycle.
-	@param self (userdata)
+/**	@name getTimesExecuted
+	@param1 self @type userdata
+	@param2 test @type userdata
+	@text Gets the number of times the timer has completed a cycle.
 	@return Number of times the timer has executed. (number)
 */
 int MOAITimer::_getTimesExecuted ( lua_State* L ) {
