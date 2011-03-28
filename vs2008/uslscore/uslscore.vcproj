@@ -600,10 +600,6 @@
 			Name="math"
 			>
 			<File
-				RelativePath="..\..\src\uslscore\USFloat.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\uslscore\USFloat.h"
 				>
 			</File>
