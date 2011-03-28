@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <moaicore/MOAIGrid.h>
+#include <moaicore/MOAIProp.h>
 #include <moaicore/MOAIStretchPatch2D.h>
 #include <moaicore/MOAITexture.h>
 #include <moaicore/MOAITransformBase.h>
@@ -324,7 +325,7 @@ MOAIStretchPatch2D::MOAIStretchPatch2D () :
 	mNeedsUpdate ( true ) {
 
 	RTTI_SINGLE ( MOAIDeck )
-	this->SetContentMask ( CAN_DRAW );
+	this->SetContentMask ( MOAIProp::CAN_DRAW );
 
 	this->mRect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
 }

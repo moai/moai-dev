@@ -52,7 +52,7 @@ int MOAITexture::_getSize ( lua_State* L ) {
 int MOAITexture::_load ( lua_State* L ) {
 	LUA_SETUP ( MOAITexture, "U" )
 
-	MOAIDataBuffer* data = state.GetLuaData < MOAIDataBuffer >( 2 );
+	MOAIDataBuffer* data = state.GetLuaObject < MOAIDataBuffer >( 2 );
 
 	if ( data ) {
 
@@ -123,8 +123,8 @@ MOAITexture* MOAITexture::AffirmTexture ( USLuaState& state, int idx ) {
 
 	if ( state.IsType ( idx, LUA_TUSERDATA )) {
 		
-		texture = state.GetLuaData < MOAITexture >( idx );
-		MOAIDataBuffer* data = state.GetLuaData < MOAIDataBuffer >( idx );
+		texture = state.GetLuaObject < MOAITexture >( idx );
+		MOAIDataBuffer* data = state.GetLuaObject < MOAIDataBuffer >( idx );
 		
 		if ( data ) {
 			texture = new MOAITexture ();

@@ -75,8 +75,8 @@ int MOAICpConstraint::_newDampedRotarySpring ( lua_State* L ) {
 	USLuaState state ( L );
 	if ( !state.CheckParams ( 1, "UUNNN" )) return 0;
 	
-	MOAICpBody* a = state.GetLuaData < MOAICpBody >( 1 );
-	MOAICpBody* b = state.GetLuaData < MOAICpBody >( 2 );
+	MOAICpBody* a = state.GetLuaObject < MOAICpBody >( 1 );
+	MOAICpBody* b = state.GetLuaObject < MOAICpBody >( 2 );
 	
 	if ( !( a && b )) return 0;
 	
@@ -106,8 +106,8 @@ int MOAICpConstraint::_newDampedSpring ( lua_State* L ) {
 	USLuaState state ( L );
 	if ( !state.CheckParams ( 1, "UUNNNNNNN" )) return 0;
 	
-	MOAICpBody* a = state.GetLuaData < MOAICpBody >( 1 );
-	MOAICpBody* b = state.GetLuaData < MOAICpBody >( 2 );
+	MOAICpBody* a = state.GetLuaObject < MOAICpBody >( 1 );
+	MOAICpBody* b = state.GetLuaObject < MOAICpBody >( 2 );
 	
 	if ( !( a && b )) return 0;
 	
@@ -145,8 +145,8 @@ int MOAICpConstraint::_newGearJoint ( lua_State* L ) {
 	USLuaState state ( L );
 	if ( !state.CheckParams ( 1, "UUNN" )) return 0;
 	
-	MOAICpBody* a = state.GetLuaData < MOAICpBody >( 1 );
-	MOAICpBody* b = state.GetLuaData < MOAICpBody >( 2 );
+	MOAICpBody* a = state.GetLuaObject < MOAICpBody >( 1 );
+	MOAICpBody* b = state.GetLuaObject < MOAICpBody >( 2 );
 	
 	if ( !( a && b )) return 0;
 	
@@ -175,8 +175,8 @@ int MOAICpConstraint::_newGrooveJoint ( lua_State* L ) {
 	USLuaState state ( L );
 	if ( !state.CheckParams ( 1, "UUNNNNNN" )) return 0;
 	
-	MOAICpBody* a = state.GetLuaData < MOAICpBody >( 1 );
-	MOAICpBody* b = state.GetLuaData < MOAICpBody >( 2 );
+	MOAICpBody* a = state.GetLuaObject < MOAICpBody >( 1 );
+	MOAICpBody* b = state.GetLuaObject < MOAICpBody >( 2 );
 	
 	if ( !( a && b )) return 0;
 	
@@ -214,8 +214,8 @@ int MOAICpConstraint::_newPinJoint ( lua_State* L ) {
 	USLuaState state ( L );
 	if ( !state.CheckParams ( 1, "UUNNNN" )) return 0;
 	
-	MOAICpBody* a = state.GetLuaData < MOAICpBody >( 1 );
-	MOAICpBody* b = state.GetLuaData < MOAICpBody >( 2 );
+	MOAICpBody* a = state.GetLuaObject < MOAICpBody >( 1 );
+	MOAICpBody* b = state.GetLuaObject < MOAICpBody >( 2 );
 	
 	if ( !( a && b )) return 0;
 	
@@ -249,8 +249,8 @@ int MOAICpConstraint::_newPivotJoint ( lua_State* L ) {
 	USLuaState state ( L );
 	if ( !state.CheckParams ( 1, "UUNN" )) return 0;
 	
-	MOAICpBody* a = state.GetLuaData < MOAICpBody >( 1 );
-	MOAICpBody* b = state.GetLuaData < MOAICpBody >( 2 );
+	MOAICpBody* a = state.GetLuaObject < MOAICpBody >( 1 );
+	MOAICpBody* b = state.GetLuaObject < MOAICpBody >( 2 );
 	
 	if ( !( a && b )) return 0;
 	
@@ -292,8 +292,8 @@ int MOAICpConstraint::_newRatchetJoint ( lua_State* L ) {
 	USLuaState state ( L );
 	if ( !state.CheckParams ( 1, "UUNN" )) return 0;
 	
-	MOAICpBody* a = state.GetLuaData < MOAICpBody >( 1 );
-	MOAICpBody* b = state.GetLuaData < MOAICpBody >( 2 );
+	MOAICpBody* a = state.GetLuaObject < MOAICpBody >( 1 );
+	MOAICpBody* b = state.GetLuaObject < MOAICpBody >( 2 );
 	
 	if ( !( a && b )) return 0;
 	
@@ -322,8 +322,8 @@ int MOAICpConstraint::_newRotaryLimitJoint ( lua_State* L ) {
 	USLuaState state ( L );
 	if ( !state.CheckParams ( 1, "UUNN" )) return 0;
 	
-	MOAICpBody* a = state.GetLuaData < MOAICpBody >( 1 );
-	MOAICpBody* b = state.GetLuaData < MOAICpBody >( 2 );
+	MOAICpBody* a = state.GetLuaObject < MOAICpBody >( 1 );
+	MOAICpBody* b = state.GetLuaObject < MOAICpBody >( 2 );
 	
 	if ( !( a && b )) return 0;
 	
@@ -352,8 +352,8 @@ int MOAICpConstraint::_newSimpleMotor ( lua_State* L ) {
 	USLuaState state ( L );
 	if ( !state.CheckParams ( 1, "UUN" )) return 0;
 	
-	MOAICpBody* a = state.GetLuaData < MOAICpBody >( 1 );
-	MOAICpBody* b = state.GetLuaData < MOAICpBody >( 2 );
+	MOAICpBody* a = state.GetLuaObject < MOAICpBody >( 1 );
+	MOAICpBody* b = state.GetLuaObject < MOAICpBody >( 2 );
 	
 	if ( !( a && b )) return 0;
 	
@@ -381,8 +381,8 @@ int MOAICpConstraint::_newSlideJoint ( lua_State* L ) {
 	USLuaState state ( L );
 	if ( !state.CheckParams ( 1, "UUNNNNNN" )) return 0;
 	
-	MOAICpBody* a = state.GetLuaData < MOAICpBody >( 1 );
-	MOAICpBody* b = state.GetLuaData < MOAICpBody >( 2 );
+	MOAICpBody* a = state.GetLuaObject < MOAICpBody >( 1 );
+	MOAICpBody* b = state.GetLuaObject < MOAICpBody >( 2 );
 	
 	if ( !( a && b )) return 0;
 	

@@ -36,7 +36,7 @@ int MOAISimpleShader::_setBlendMode ( lua_State* L ) {
 int MOAISimpleShader::_setParent ( lua_State* L ) {
 	LUA_SETUP ( MOAISimpleShader, "U" )
 	
-	MOAISimpleShader* parent = state.GetLuaData < MOAISimpleShader >( 2 );
+	MOAISimpleShader* parent = state.GetLuaObject < MOAISimpleShader >( 2 );
 	self->SetParent ( parent );
 	
 	return 0;
@@ -59,12 +59,6 @@ void MOAISimpleShader::Bind () {
 
 	drawbuffer.SetPenColor ( this->mColor );
 	drawbuffer.SetBlendMode ( this->mBlendMode );
-}
-
-//----------------------------------------------------------------//
-u32 MOAISimpleShader::CountAttributes () {
-
-	return MOAISimpleShader::TOTAL_ATTR;
 }
 
 //----------------------------------------------------------------//

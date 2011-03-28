@@ -77,7 +77,7 @@ int	MOAIProp2D::_inside ( lua_State* L ) {
 int MOAIProp2D::_setDeck ( lua_State* L ) {
 	LUA_SETUP ( MOAIProp2D, "UU" )
 
-	self->mDeck = state.GetLuaData < MOAIDeck >( 2 );
+	self->mDeck = state.GetLuaObject < MOAIDeck >( 2 );
 
 	if ( self->mDeck ) {
 		self->SetMask ( self->mDeck->GetContentMask ());
@@ -141,7 +141,7 @@ int MOAIProp2D::_setFrameSource ( lua_State* L ) {
 int MOAIProp2D::_setGrid ( lua_State* L ) {
 	LUA_SETUP ( MOAIProp2D, "UU" )
 	
-	MOAIGrid* grid = state.GetLuaData < MOAIGrid >( 2 );
+	MOAIGrid* grid = state.GetLuaObject < MOAIGrid >( 2 );
 	if ( !grid ) return 0;
 	
 	self->mGrid = grid;
@@ -201,7 +201,7 @@ int MOAIProp2D::_setShader ( lua_State* L ) {
 		self->ClearDependency ( *self->mShader );
 	}
 
-	self->mShader = state.GetLuaData < MOAIShader >( 2 );
+	self->mShader = state.GetLuaObject < MOAIShader >( 2 );
 	self->SetDependency ( *self->mShader );
 	self->ScheduleUpdate ();
 	
@@ -219,7 +219,7 @@ int MOAIProp2D::_setShader ( lua_State* L ) {
 int MOAIProp2D::_setUVTransform ( lua_State* L ) {
 	LUA_SETUP ( MOAIProp2D, "UU" )
 	
-	MOAITransform* transform = state.GetLuaData < MOAITransform >( 2 );
+	MOAITransform* transform = state.GetLuaObject < MOAITransform >( 2 );
 	if ( !transform ) return 0;
 
 	self->mUVTransform = transform;
@@ -241,12 +241,6 @@ void MOAIProp2D::ApplyAttrOp ( u32 attrID, USAttrOp& attrOp ) {
 		default:
 			MOAITransform::ApplyAttrOp ( attrID, attrOp );
 	}
-}
-
-//----------------------------------------------------------------//
-u32 MOAIProp2D::CountAttributes () {
-
-	return MOAIProp2D::TOTAL_ATTR;
 }
 
 //----------------------------------------------------------------//
@@ -482,7 +476,6 @@ MOAIProp2D::MOAIProp2D () :
 		RTTI_EXTEND ( MOAIProp )
 	RTTI_END
 	
-	this->SetMask ( 0 );
 	this->mFrame.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
 }
 

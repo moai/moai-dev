@@ -22,7 +22,7 @@ int MOAIFont::_getScale ( lua_State* L ) {
 	USLuaState state ( L );
 	if ( !state.CheckParams ( 1, "U" )) return 0;
 	
-	MOAIFont* self = state.GetLuaData < MOAIFont >( 1 );
+	MOAIFont* self = state.GetLuaObject < MOAIFont >( 1 );
 	if ( !self ) return 0;
 	
 	lua_pushnumber ( state, self->GetScale ());
@@ -43,12 +43,12 @@ int MOAIFont::_load ( lua_State* L ) {
 	USLuaState state ( L );
 	if ( !state.CheckParams ( 1, "U" )) return 0;
 	
-	MOAIFont* self = state.GetLuaData < MOAIFont >( 1 );
+	MOAIFont* self = state.GetLuaObject < MOAIFont >( 1 );
 	if ( !self ) return 0;
 
 	STLString charCodes = state.GetValue ( 3, "0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz.,?!" );
 
-	MOAIDataBuffer *data = state.GetLuaData < MOAIDataBuffer >( 2 );
+	MOAIDataBuffer *data = state.GetLuaObject < MOAIDataBuffer >( 2 );
 	if ( data ) {
 
 		self->LoadFont ( *data, charCodes );

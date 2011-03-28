@@ -117,7 +117,7 @@ int MOAITextBox::_setCurve ( lua_State* L ) {
 	
 	u32 index = state.GetValue < u32 >( 2, 0 ) - 1;
 	
-	MOAIAnimCurve* curve = state.GetLuaData < MOAIAnimCurve >( 3 );
+	MOAIAnimCurve* curve = state.GetLuaObject < MOAIAnimCurve >( 3 );
 	if ( !curve ) return 0;
 
 	self->SetCurve ( index, curve );
@@ -135,7 +135,7 @@ int MOAITextBox::_setCurve ( lua_State* L ) {
 int MOAITextBox::_setFont ( lua_State* L ) {
 	LUA_SETUP ( MOAITextBox, "UU" )
 
-	MOAIFont* font = state.GetLuaData < MOAIFont >( 2 );
+	MOAIFont* font = state.GetLuaObject < MOAIFont >( 2 );
 	if ( !font ) return 0;
 	
 	self->SetFont ( font );
@@ -153,7 +153,7 @@ int MOAITextBox::_setFont ( lua_State* L ) {
 int MOAITextBox::_setParent ( lua_State* L ) {
 	LUA_SETUP ( MOAITextBox, "UU" )
 
-	MOAITransform* parent = state.GetLuaData < MOAITransform >( 2 );
+	MOAITransform* parent = state.GetLuaObject < MOAITransform >( 2 );
 	if ( !parent ) return 0;
 	
 	self->SetParent ( parent );
@@ -334,12 +334,6 @@ void MOAITextBox::ClearPageInfo () {
 }
 
 //----------------------------------------------------------------//
-u32 MOAITextBox::CountAttributes () {
-
-	return MOAITextBox::TOTAL_ATTR;
-}
-
-//----------------------------------------------------------------//
 void MOAITextBox::Draw () {
 	
 	if ( !this->mFont ) return;
@@ -448,7 +442,7 @@ MOAITextBox::MOAITextBox () :
 	RTTI_END
 	
 	this->mFrame.Init ( 0.0f, 0.0f, 0.0f, 0.0f ); 
-	this->SetMask ( MOAIDeck::CAN_DRAW | MOAIDeck::CAN_DRAW_DEBUG );
+	this->SetMask ( MOAIProp::CAN_DRAW | MOAIProp::CAN_DRAW_DEBUG );
 }
 
 //----------------------------------------------------------------//

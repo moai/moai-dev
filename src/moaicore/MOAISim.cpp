@@ -254,7 +254,7 @@ int MOAISim::_pushRenderPass ( lua_State* L ) {
 	USLuaState state ( L );
 	if ( !state.CheckParams ( 1, "U" )) return 0;
 	
-	MOAIProp2D* prop = state.GetLuaData < MOAIProp2D >( 1 );
+	MOAIProp2D* prop = state.GetLuaObject < MOAIProp2D >( 1 );
 	if ( !prop ) return 0;
 	
 	MOAISim& device = MOAISim::Get ();

@@ -60,7 +60,6 @@ private:
 	//----------------------------------------------------------------//
 	static int	_clearAttrLink		( lua_State* L );
 	static int	_clearDependency	( lua_State* L );
-	static int	_countAttrs			( lua_State* L );
 	static int	_getAttr			( lua_State* L );
 	static int	_moveAttr			( lua_State* L );
 	static int	_scheduleUpdate		( lua_State* L );

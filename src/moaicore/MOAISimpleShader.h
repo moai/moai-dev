@@ -35,7 +35,6 @@ public:
 	//----------------------------------------------------------------//
 	void			ApplyAttrOp				( u32 attrID, USAttrOp& attrOp );
 	void			Bind					();
-	u32				CountAttributes			();
 					MOAISimpleShader		();
 					~MOAISimpleShader		();
 	void			OnDepNodeUpdate			();

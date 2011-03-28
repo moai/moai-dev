@@ -22,7 +22,7 @@
 int MOAIDeck::_setDefaultShader ( lua_State* L ) {
 	LUA_SETUP ( MOAIDeck, "UU" )
 	
-	self->mDefaultShader = state.GetLuaData < MOAIShader >( 2 );
+	self->mDefaultShader = state.GetLuaObject < MOAIShader >( 2 );
 	
 	return 0;
 }
@@ -34,7 +34,7 @@ int MOAIDeck::_setDefaultShader ( lua_State* L ) {
 //----------------------------------------------------------------//
 bool MOAIDeck::Bind () {
 
-	return false;
+	return true;
 }
 
 //----------------------------------------------------------------//
@@ -105,7 +105,8 @@ u32 MOAIDeck::GetContentAddr ( u32 idx, u32 total ) {
 }
 
 //----------------------------------------------------------------//
-MOAIDeck::MOAIDeck () {
+MOAIDeck::MOAIDeck () :
+	mContentMask ( 0xffffffff ) {
 	
 	RTTI_SINGLE ( USLuaObject )
 }

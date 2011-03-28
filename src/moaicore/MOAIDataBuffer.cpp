@@ -18,7 +18,7 @@ int MOAIDataBuffer::_base64Decode ( lua_State* L ) {
 		return state.Base64Decode ( 1 ) ? 1 : 0;
 	}
 	
-	MOAIDataBuffer* self = state.GetLuaData < MOAIDataBuffer >( 1 );
+	MOAIDataBuffer* self = state.GetLuaObject < MOAIDataBuffer >( 1 );
 	if ( self ) {
 		self->Base64Decode ();
 	}
@@ -34,7 +34,7 @@ int MOAIDataBuffer::_base64Encode ( lua_State* L ) {
 		return state.Base64Encode ( 1 ) ? 1 : 0;
 	}
 	
-	MOAIDataBuffer* self = state.GetLuaData < MOAIDataBuffer >( 1 );
+	MOAIDataBuffer* self = state.GetLuaObject < MOAIDataBuffer >( 1 );
 	if ( self ) {
 		self->Base64Encode ();
 	}
@@ -53,7 +53,7 @@ int MOAIDataBuffer::_deflate ( lua_State* L ) {
 		return state.Deflate ( 1, level, windowBits ) ? 1 : 0;
 	}
 	
-	MOAIDataBuffer* self = state.GetLuaData < MOAIDataBuffer >( 1 );
+	MOAIDataBuffer* self = state.GetLuaObject < MOAIDataBuffer >( 1 );
 	if ( self ) {
 		self->Deflate ( level, windowBits );
 	}
@@ -105,7 +105,7 @@ int MOAIDataBuffer::_inflate ( lua_State* L ) {
 		return state.Inflate ( 1, windowBits ) ? 1 : 0;
 	}
 	
-	MOAIDataBuffer* self = state.GetLuaData < MOAIDataBuffer >( 1 );
+	MOAIDataBuffer* self = state.GetLuaObject < MOAIDataBuffer >( 1 );
 	if ( self ) {
 		self->Inflate ( windowBits );
 	}

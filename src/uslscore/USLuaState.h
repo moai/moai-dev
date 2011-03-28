@@ -16,7 +16,7 @@ class USStreamFormatter;
 #define LUA_SETUP(type,str) \
 	USLuaState state ( L );	\
 	if ( !state.CheckParams ( 1, str )) return 0; \
-	type* self = state.GetLuaData < type >( 1 ); \
+	type* self = state.GetLuaObject < type >( 1 ); \
 	if ( !self ) return 0;
 
 #define LUA_SETUP_STATIC(str) \
@@ -123,8 +123,8 @@ public:
 	//----------------------------------------------------------------//
 	template < typename TYPE > TYPE						GetField			( int idx, int key, TYPE value );
 	template < typename TYPE > TYPE						GetField			( int idx, cc8* key, TYPE value );
-	template < typename TYPE > TYPE*					GetLuaData			( int idx );
-	template < typename TYPE > TYPE*					GetLuaData			( int idx, cc8* name );
+	template < typename TYPE > TYPE*					GetLuaObject		( int idx );
+	template < typename TYPE > TYPE*					GetLuaObject		( int idx, cc8* name );
 	template < typename TYPE > USMetaRect < TYPE >		GetRect				( int idx );
 	template < typename TYPE > TYPE						GetValue			( int idx, TYPE value );
 	template < typename TYPE > USMetaVec2D < TYPE >		GetVec2D			( int idx );

@@ -175,7 +175,7 @@ static int _deleteLuaData ( lua_State* L ) {
 
 	USLuaState state ( L );
 
-	USLuaObject* self = state.GetLuaData < USLuaObject >( 1 );
+	USLuaObject* self = state.GetLuaObject < USLuaObject >( 1 );
 	delete self;
 
 	return 0;

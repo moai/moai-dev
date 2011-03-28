@@ -644,7 +644,7 @@ int MOAICpBody::_sleep ( lua_State* L ) {
 int MOAICpBody::_sleepWithGroup ( lua_State* L ) {
 	LUA_SETUP ( MOAICpBody, "UU" )
 	
-	MOAICpBody* group = state.GetLuaData < MOAICpBody >( 2 );
+	MOAICpBody* group = state.GetLuaObject < MOAICpBody >( 2 );
 	if ( group && group->mBody ) {
 		cpBodySleepWithGroup ( self->mBody, group->mBody );
 	}

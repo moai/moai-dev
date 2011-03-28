@@ -418,7 +418,7 @@ int MOAITransform::_setLoc ( lua_State* L ) {
 int MOAITransform::_setOffset ( lua_State* L ) {
 	LUA_SETUP ( MOAITransform, "UU" );
 	
-	MOAITransformBase* offset = state.GetLuaData < MOAITransformBase >( 2 );
+	MOAITransformBase* offset = state.GetLuaObject < MOAITransformBase >( 2 );
 	if ( !offset ) return 0;
 	
 	self->SetOffset ( offset );
@@ -436,7 +436,7 @@ int MOAITransform::_setOffset ( lua_State* L ) {
 int MOAITransform::_setParent ( lua_State* L ) {
 	LUA_SETUP ( MOAITransform, "U" )
 	
-	MOAITransformBase* parent = state.GetLuaData < MOAITransformBase >( 2 );
+	MOAITransformBase* parent = state.GetLuaObject < MOAITransformBase >( 2 );
 	self->SetParent ( parent );
 	
 	return 0;
@@ -569,12 +569,6 @@ void MOAITransform::BuildTransforms ( float xOff, float yOff, float xStretch, fl
 	}
 	
 	this->mWorldToLocalMtx.Inverse ( this->mLocalToWorldMtx );
-}
-
-//----------------------------------------------------------------//
-u32 MOAITransform::CountAttributes () {
-
-	return MOAITransform::TOTAL_ATTR;
 }
 
 //----------------------------------------------------------------//

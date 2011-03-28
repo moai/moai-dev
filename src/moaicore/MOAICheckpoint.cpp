@@ -16,7 +16,7 @@ int MOAICheckpoint::_newKey ( lua_State* L ) {
 	USLuaState state ( L );
 	if ( !state.CheckParams ( 1, "U" )) return 0;
 	
-	MOAICheckpoint* self = state.GetLuaData < MOAICheckpoint >( 1 );
+	MOAICheckpoint* self = state.GetLuaObject < MOAICheckpoint >( 1 );
 	if ( !self ) return 0;
 
 	u32 key = self->AddKey ();
@@ -37,7 +37,7 @@ int MOAICheckpoint::_releaseKey ( lua_State* L ) {
 	USLuaState state ( L );
 	if ( !state.CheckParams ( 1, "UN" )) return 0;
 	
-	MOAICheckpoint* self = state.GetLuaData < MOAICheckpoint >( 1 );
+	MOAICheckpoint* self = state.GetLuaObject < MOAICheckpoint >( 1 );
 	if ( !self ) return 0;
 
 	u32 key = state.GetValue < u32 >( 2, NULL_ID );
@@ -59,7 +59,7 @@ int MOAICheckpoint::_skip ( lua_State* L ) {
 	USLuaState state ( L );
 	if ( !state.CheckParams ( 1, "UN" )) return 0;
 	
-	MOAICheckpoint* self = state.GetLuaData < MOAICheckpoint >( 1 );
+	MOAICheckpoint* self = state.GetLuaObject < MOAICheckpoint >( 1 );
 	if ( !self ) return 0;
 
 	return 0;
@@ -77,7 +77,7 @@ int MOAICheckpoint::_sync ( lua_State* L ) {
 	USLuaState state ( L );
 	if ( !state.CheckParams ( 1, "UN" )) return 0;
 	
-	MOAICheckpoint* self = state.GetLuaData < MOAICheckpoint >( 1 );
+	MOAICheckpoint* self = state.GetLuaObject < MOAICheckpoint >( 1 );
 	if ( !self ) return 0;
 
 	u32 key = state.GetValue < u32 >( 2, NULL_ID );

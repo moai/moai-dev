@@ -43,7 +43,8 @@
 //================================================================//
 // USFloat
 //================================================================//
-namespace USFloat {
+class USFloat {
+public:
 
 	// TODO: per platform profiling and optimization
 	
@@ -52,55 +53,31 @@ namespace USFloat {
 	// after profiling on each platform. Right now these are just naive implementations and wrappers on the standard.
 
 	//----------------------------------------------------------------//
-	float		Abs				( float n );
-	float		Ceil			( float s );
-	double		Ceil			( double s );
-	float		Clamp			( float n, float l, float u );
-	float		Damp			( float v, float damp );
-	float		Decimal			( float n );
-	double		Decimal			( double n );
-	u32			FloatToIntKey	( float f );
-	float		Floor			( float n );
-	double		Floor			( double n );
-	float		IntKeyToFloat	( u32 i );
-	u32			IntRange		( float n, float fbase, float ftop, u32 base, u32 top );
-	u32			IntRangeNorm	( float n, u32 base, u32 top );
-	bool		IsClose			( float x0, float x1, float epsilon );
-	float		Max				( float x, float y );
-	float		Min				( float x, float y );
-	float		Mod				( float x, float m );
-	float		Rand			();
-	float		Rand			( float range );
-	float		Rand			( float lower, float upper );
-	float		Round			( float n );
-	int			ToInt			( float n );
-
-	//----------------------------------------------------------------//
-	inline float Abs ( float n ) {
+	static inline float Abs ( float n ) {
 		
 		return n < 0.0f ? -n : n;
 	}
 	
 	//----------------------------------------------------------------//
-	inline double Abs ( double n ) {
+	static inline double Abs ( double n ) {
 		
 		return n < 0.0f ? -n : n;
 	}
 
 	//----------------------------------------------------------------//
-	inline float Ceil ( float n ) {
+	static inline float Ceil ( float n ) {
 		
 		return ceilf ( n );
 	}
 	
 	//----------------------------------------------------------------//
-	inline double Ceil ( double n ) {
+	static inline double Ceil ( double n ) {
 		
 		return ceil ( n );
 	}
 
 	//----------------------------------------------------------------//
-	inline float Clamp ( float n, float l, float u ) {
+	static inline float Clamp ( float n, float l, float u ) {
 
 		if ( n < l ) {
 			return l;
@@ -113,7 +90,7 @@ namespace USFloat {
 	}
 
 	//----------------------------------------------------------------//
-	inline float Damp ( float v, float damp ) {
+	static inline float Damp ( float v, float damp ) {
 
 		damp = damp < 0.0f ? - damp : damp;
 
@@ -129,7 +106,7 @@ namespace USFloat {
 	}
 
 	//----------------------------------------------------------------//
-	inline float Decimal ( float n ) {
+	static inline float Decimal ( float n ) {
 
 		if ( n < 0.0f ) {
 			return n + ( float )(( int )n );
@@ -138,7 +115,7 @@ namespace USFloat {
 	}
 	
 	//----------------------------------------------------------------//
-	inline double Decimal ( double n ) {
+	static inline double Decimal ( double n ) {
 
 		if ( n < 0.0f ) {
 			return n + ( double )(( s64 )n );
@@ -147,7 +124,7 @@ namespace USFloat {
 	}
 
 	//----------------------------------------------------------------//
-	inline u32 FloatToIntKey ( float f ) {
+	static inline u32 FloatToIntKey ( float f ) {
 		
 		// Michael Herf says:
 		// 1. Always flip the sign bit.
@@ -162,19 +139,19 @@ namespace USFloat {
 	}
 
 	//----------------------------------------------------------------//
-	inline float Floor ( float n ) {
+	static inline float Floor ( float n ) {
 
 		return floorf ( n );
 	}
 	
 	//----------------------------------------------------------------//
-	inline double Floor ( double n ) {
+	static inline double Floor ( double n ) {
 
 		return floor ( n );
 	}
 
 	//----------------------------------------------------------------//
-	inline float IntKeyToFloat ( u32 i ) {
+	static inline float IntKeyToFloat ( u32 i ) {
 
 		// Michael Herf says:
 		// 1. Always flip the sign bit.
@@ -186,19 +163,19 @@ namespace USFloat {
 	}
 
 	//----------------------------------------------------------------//
-	inline u32 IntRange ( float n, float fbase, float ftop, u32 base, u32 top ) {
+	static inline u32 IntRange ( float n, float fbase, float ftop, u32 base, u32 top ) {
 
 		return ( u32 )Round (( float )base + ((( n - fbase ) / ftop ) * ( float )top ));
 	}
 
 	//----------------------------------------------------------------//
-	inline u32 IntRangeNorm ( float n, u32 base, u32 top ) {
+	static inline u32 IntRangeNorm ( float n, u32 base, u32 top ) {
 
 		return ( u32 )Round (( float )base + ( n * ( float )top ));
 	}
 
 	//----------------------------------------------------------------//
-	inline bool IsClose ( float x0, float x1, float epsilon ) {
+	static inline bool IsClose ( float x0, float x1, float epsilon ) {
 
 		float diff = x1 - x0;
 		diff = ( diff > 0.0f ) ? diff : -diff;
@@ -207,7 +184,7 @@ namespace USFloat {
 	}
 
 	//----------------------------------------------------------------//
-	inline float Max ( float x, float y ) {
+	static inline float Max ( float x, float y ) {
 
 		return ( x > y ) ? x : y;
 	}
@@ -219,7 +196,7 @@ namespace USFloat {
 	}
 
 	//----------------------------------------------------------------//
-	inline float Mod ( float x, float m ) {
+	static inline float Mod ( float x, float m ) {
 
 		float d = x / m;
 		d = Decimal ( d );
@@ -228,25 +205,25 @@ namespace USFloat {
 	}
 
 	//----------------------------------------------------------------//
-	inline float Rand () {
+	static inline float Rand () {
 
 		return ( float )rand () / ( float )RAND_MAX;
 	}
 
 	//----------------------------------------------------------------//
-	inline float Rand ( float range ) {
+	static inline float Rand ( float range ) {
 
 		return USFloat::Rand () * range;
 	}
 
 	//----------------------------------------------------------------//
-	inline float Rand ( float lower, float upper ) {
+	static inline float Rand ( float lower, float upper ) {
 
 		return lower + ( USFloat::Rand () * ( upper - lower ));
 	}
 
 	//----------------------------------------------------------------//
-	inline float Round ( float n ) {
+	static inline float Round ( float n ) {
 
 		float integer = ( float )(( u32 )n );
 		float decimal = n - integer;
@@ -256,10 +233,10 @@ namespace USFloat {
 	}
 	
 	//----------------------------------------------------------------//
-	inline int ToInt ( float n ) {
+	static inline int ToInt ( float n ) {
 		
 		return ( int )n;
 	}
-}
+};
 
 #endif

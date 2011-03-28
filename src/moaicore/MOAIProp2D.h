@@ -39,7 +39,7 @@ protected:
 		REPEAT_Y	= 0x00000002,
 	};
 	
-	USRef < MOAIDeck >	mDeck;
+	USRef < MOAIDeck >		mDeck;
 	u32						mIndex;
 	USRef < MOAIGrid >		mGrid;
 	u32						mRepeat;
@@ -82,7 +82,6 @@ public:
 	
 	//----------------------------------------------------------------//
 	void							ApplyAttrOp				( u32 attrID, USAttrOp& attrOp );
-	u32								CountAttributes			();
 	virtual void					Draw					();
 	virtual void					DrawDebug				();
 	virtual void					GatherSurfaces			( MOAISurfaceSampler2D& sampler );

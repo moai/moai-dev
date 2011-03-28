@@ -85,7 +85,6 @@ public:
 	
 	//----------------------------------------------------------------//
 	void			ApplyAttrOp				( u32 attrID, USAttrOp& attrOp );
-	u32				CountAttributes			();
 	void			ClearCurves				();
 	void			Draw					();
 	void			DrawDebug				();

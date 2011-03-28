@@ -52,7 +52,7 @@ int MOAIFmodChannel::_moveVolume ( lua_State* L ) {
 int MOAIFmodChannel::_play ( lua_State* L ) {
 	LUA_SETUP ( MOAIFmodChannel, "UU" )
 
-	MOAIFmodSound* sound = state.GetLuaData < MOAIFmodSound >( 2 );
+	MOAIFmodSound* sound = state.GetLuaObject < MOAIFmodSound >( 2 );
 	if ( !sound ) return 0;
 
 	int loopCount = state.GetValue < int >( 3, 0 );

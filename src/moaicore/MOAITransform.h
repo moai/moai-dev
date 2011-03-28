@@ -80,7 +80,6 @@ public:
 	
 	//----------------------------------------------------------------//
 	void				ApplyAttrOp						( u32 attrID, USAttrOp& attrOp );
-	u32					CountAttributes					();
 	const USAffine2D&	GetLocalToWorldMtx				();
 	const USAffine2D&	GetWorldToLocalMtx				();
 						MOAITransform					();

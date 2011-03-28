@@ -135,12 +135,6 @@ void MOAIColor::Bind () {
 }
 
 //----------------------------------------------------------------//
-u32 MOAIColor::CountAttributes () {
-
-	return TOTAL_ATTR;
-}
-
-//----------------------------------------------------------------//
 MOAIColor::MOAIColor () {
 	
 	RTTI_BEGIN

@@ -242,6 +242,9 @@ void USLuaClass::InitLuaFactoryClass ( USLuaObject& data, USLuaState& state ) {
 	lua_pushnil ( state );
 	lua_setfield ( state, -2, "__newindex" );
 
+	lua_pushcfunction ( state, USLuaObject::_delete );
+	lua_setfield ( state, -2, "__gc" );
+
 	this->mMemberTable = state.GetStrongRef ( -1 );
 	
 	lua_settop ( state, top );
@@ -268,9 +271,6 @@ void USLuaClass::InitLuaInstanceTable ( USLuaObject* data, USLuaState& state, in
 	
 	lua_pushvalue ( state, idx );
 	lua_setfield ( state, idx, "__newindex" );
-	
-	lua_pushcfunction ( state, USLuaObject::_delete );
-	lua_setfield ( state, idx, "__gc" );
 
 	//lua_pushcfunction ( state, _tostring );
 	//lua_setfield ( state, idx, "__tostring" );

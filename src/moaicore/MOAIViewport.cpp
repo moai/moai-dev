@@ -42,7 +42,7 @@ int MOAIViewport::_setRect ( lua_State* L ) {
 	USLuaState state ( L );
 	if ( !state.CheckParams ( 1, "UNNNN" )) return 0;
 	
-	MOAIViewport* self = state.GetLuaData < MOAIViewport >( 1 );
+	MOAIViewport* self = state.GetLuaObject < MOAIViewport >( 1 );
 	if ( !self ) return 0;
 
 	float left		= state.GetValue < float >( 2, 0.0f );
@@ -84,7 +84,7 @@ int MOAIViewport::_setScale ( lua_State* L ) {
 	USLuaState state ( L );
 	if ( !state.CheckParams ( 1, "UNN" )) return 0;
 	
-	MOAIViewport* self = state.GetLuaData < MOAIViewport >( 1 );
+	MOAIViewport* self = state.GetLuaObject < MOAIViewport >( 1 );
 	if ( !self ) return 0;
 
 	float xScale = state.GetValue < float >( 2, 0.0f );
@@ -108,7 +108,7 @@ int MOAIViewport::_setSize ( lua_State* L ) {
 	USLuaState state ( L );
 	if ( !state.CheckParams ( 1, "UNN" )) return 0;
 	
-	MOAIViewport* self = state.GetLuaData < MOAIViewport >( 1 );
+	MOAIViewport* self = state.GetLuaObject < MOAIViewport >( 1 );
 	if ( !self ) return 0;
 
 	float width = state.GetValue < float >( 2, 0.0f );

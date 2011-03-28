@@ -87,12 +87,6 @@ void MOAIAnimCurve::ApplyAttrOp ( u32 attrID, USAttrOp& attrOp ) {
 }
 
 //----------------------------------------------------------------//
-u32 MOAIAnimCurve::CountAttributes () {
-
-	return MOAIAnimCurve::TOTAL_ATTR;
-}
-
-//----------------------------------------------------------------//
 MOAIAnimCurve::MOAIAnimCurve () :
 	mTime ( 0.0f ),
 	mValue ( 0.0f ) {

@@ -55,7 +55,7 @@ int MOAIEaseDriver::_setDelay ( lua_State* L ) {
 int MOAIEaseDriver::_setForce ( lua_State* L ) {
 	LUA_SETUP ( MOAIEaseDriver, "UNUNN" );
 	
-	MOAINode* target = state.GetLuaData < MOAINode >( 3 );
+	MOAINode* target = state.GetLuaObject < MOAINode >( 3 );
 	if ( !target ) return 0;
 	
 	u32 idx				= state.GetValue < u32 >( 2, 1 ) - 1;

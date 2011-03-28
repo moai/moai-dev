@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <moaicore/MOAIGrid.h>
+#include <moaicore/MOAIProp.h>
 #include <moaicore/MOAITileDeck2D.h>
 #include <moaicore/MOAITexture.h>
 #include <moaicore/MOAITransformBase.h>
@@ -169,7 +170,7 @@ MOAITileDeck2D::MOAITileDeck2D () :
 	mFlags ( 0 ) {
 	
 	RTTI_SINGLE ( MOAIDeck )
-	this->SetContentMask ( CAN_DRAW );
+	this->SetContentMask ( MOAIProp::CAN_DRAW );
 }
 
 //----------------------------------------------------------------//

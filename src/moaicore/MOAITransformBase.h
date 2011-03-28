@@ -19,11 +19,11 @@ protected:
 public:
 	
 	//----------------------------------------------------------------//
-	const USAffine2D&	GetLocalToWorldMtx				();
-	const USAffine2D&	GetWorldToLocalMtx				();
-						MOAITransformBase				();
-						~MOAITransformBase			();
-	STLString			ToString						();
+	const USAffine2D&		GetLocalToWorldMtx			();
+	const USAffine2D&		GetWorldToLocalMtx			();
+							MOAITransformBase			();
+							~MOAITransformBase			();
+	STLString				ToString					();
 };
 
 #endif

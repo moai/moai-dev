@@ -130,12 +130,6 @@ void MOAITimer::Callback () {
 }
 
 //----------------------------------------------------------------//
-u32 MOAITimer::CountAttributes () {
-
-	return MOAITimer::TOTAL_ATTR;
-}
-
-//----------------------------------------------------------------//
 float MOAITimer::DoStep ( float step ) {
 
 	float length = this->mEndTime - this->mStartTime;

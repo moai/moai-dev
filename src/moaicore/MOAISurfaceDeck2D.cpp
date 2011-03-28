@@ -4,6 +4,7 @@
 #include "pch.h"
 #include <moaicore/MOAIDebugLines.h>
 #include <moaicore/MOAIGrid.h>
+#include <moaicore/MOAIProp.h>
 #include <moaicore/MOAISurfaceDeck2D.h>
 #include <moaicore/MOAISurfaceSampler2D.h>
 #include <moaicore/MOAITransformBase.h>
@@ -253,7 +254,7 @@ USRect MOAISurfaceDeck2D::GetBounds ( u32 idx ) {
 MOAISurfaceDeck2D::MOAISurfaceDeck2D () {
 
 	RTTI_SINGLE ( MOAIDeck )
-	this->SetContentMask ( CAN_DRAW_DEBUG | CAN_GATHER_SURFACES );
+	this->SetContentMask ( MOAIProp::CAN_DRAW_DEBUG | MOAIProp::CAN_GATHER_SURFACES );
 }
 
 //----------------------------------------------------------------//

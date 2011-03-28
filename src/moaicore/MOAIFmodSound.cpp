@@ -30,7 +30,7 @@ int MOAIFmodSound::_load ( lua_State* L ) {
 	bool streaming	= state.GetValue < bool >( 3, false );
 	bool async		= state.GetValue < bool >( 4, false );
 
-	MOAIDataBuffer* data = state.GetLuaData < MOAIDataBuffer >( 2 );
+	MOAIDataBuffer* data = state.GetLuaObject < MOAIDataBuffer >( 2 );
 
 	if ( data ) {
 
@@ -55,7 +55,7 @@ int MOAIFmodSound::_load ( lua_State* L ) {
 int	MOAIFmodSound::_loadBGM ( lua_State* L ) {
 	LUA_SETUP ( MOAIFmodSound, "U" )
 
-	MOAIDataBuffer* data = state.GetLuaData < MOAIDataBuffer >( 2 );
+	MOAIDataBuffer* data = state.GetLuaObject < MOAIDataBuffer >( 2 );
 
 	if ( data ) {
 
@@ -80,7 +80,7 @@ int	MOAIFmodSound::_loadBGM ( lua_State* L ) {
 int	MOAIFmodSound::_loadSFX ( lua_State* L ) {
 	LUA_SETUP ( MOAIFmodSound, "U" )
 
-	MOAIDataBuffer* data = state.GetLuaData < MOAIDataBuffer >( 2 );
+	MOAIDataBuffer* data = state.GetLuaObject < MOAIDataBuffer >( 2 );
 
 	if ( data ) {
 
