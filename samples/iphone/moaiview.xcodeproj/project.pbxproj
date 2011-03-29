@@ -18,6 +18,7 @@
 		039D13C21224384A00A033D2 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DEA05D05106075930018B9C8 /* AudioToolbox.framework */; };
 		039D13C9122438B500A033D2 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1484EE671159455800BBD784 /* OpenAL.framework */; };
 		039D13CA122438B500A033D2 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DEA05D13106075BD0018B9C8 /* CoreAudio.framework */; };
+		03EE21DB1342771700D35D83 /* libMoai.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03EE21DA1342771700D35D83 /* libMoai.a */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
@@ -33,6 +34,30 @@
 		CDE8273D12E2559000C2D1C9 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDE8273C12E2559000C2D1C9 /* CoreVideo.framework */; };
 		CDEB9B4912E3DB3100B14752 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CDEB9B4812E3DB3100B14752 /* libiconv.dylib */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		03EE21A6134263C700D35D83 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03EE21A1134263C600D35D83 /* moai-open.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 0379C5961333ECD800E89DDC;
+			remoteInfo = 3rdParty;
+		};
+		03EE21A8134263C700D35D83 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03EE21A1134263C600D35D83 /* moai-open.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 03C2F6F4104DE130009A2D5D;
+			remoteInfo = Moai;
+		};
+		03EE21D61342656C00D35D83 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03EE21A1134263C600D35D83 /* moai-open.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 03C2F6F3104DE130009A2D5D;
+			remoteInfo = Moai;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		0379C8DC13343D3C00E89DDC /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -51,13 +76,14 @@
 		0379C8F013343D4600E89DDC /* lua */ = {isa = PBXFileReference; lastKnownFileType = folder; path = lua; sourceTree = "<group>"; };
 		0379C8F213343D5D00E89DDC /* moaiview.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = moaiview.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0379C90713343F5000E89DDC /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
+		03EE21A1134263C600D35D83 /* moai-open.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "moai-open.xcodeproj"; path = "../../xcode/moai-open.xcodeproj"; sourceTree = "<group>"; };
+		03EE21DA1342771700D35D83 /* libMoai.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libMoai.a; sourceTree = SOURCE_ROOT; };
 		1484EE671159455800BBD784 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		288765FC0DF74451002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		ABDD06E810D31603004D70E9 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		CD10CA800FA9272300363C67 /* libz.1.2.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.3.dylib; path = usr/lib/libz.1.2.3.dylib; sourceTree = SDKROOT; };
-		CD43658412FA814500E1729C /* moai-open.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "moai-open.xcodeproj"; path = "../../xcode/moai-open.xcodeproj"; sourceTree = SOURCE_ROOT; };
 		CD4366B712FA8A7F00E1729C /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		CD4366D112FA8AB100E1729C /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 		CD96DE750F1581D50061FBD3 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -77,6 +103,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				03EE21DB1342771700D35D83 /* libMoai.a in Frameworks */,
 				039D13C21224384A00A033D2 /* AudioToolbox.framework in Frameworks */,
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
 				039D13C9122438B500A033D2 /* OpenAL.framework in Frameworks */,
@@ -126,6 +153,7 @@
 		038DB5EE101FAA4800ECA0BF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				03EE21DA1342771700D35D83 /* libMoai.a */,
 				CDEB9B4812E3DB3100B14752 /* libiconv.dylib */,
 				CD10CA800FA9272300363C67 /* libz.1.2.3.dylib */,
 				CD4366B712FA8A7F00E1729C /* AddressBook.framework */,
@@ -156,10 +184,19 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		03EE21A2134263C600D35D83 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				03EE21A7134263C700D35D83 /* lib3rdParty.a */,
+				03EE21A9134263C700D35D83 /* libMoai.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
-				CD43658412FA814500E1729C /* moai-open.xcodeproj */,
+				03EE21A1134263C600D35D83 /* moai-open.xcodeproj */,
 				038DB3DE101FA8B000ECA0BF /* src */,
 				038DB6D7101FAA6700ECA0BF /* Products */,
 				038DB5EE101FAA4800ECA0BF /* Frameworks */,
@@ -181,6 +218,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				03EE21D71342656C00D35D83 /* PBXTargetDependency */,
 			);
 			name = moaiview;
 			productName = Geocaching;
@@ -217,12 +255,35 @@
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 03EE21A2134263C600D35D83 /* Products */;
+					ProjectRef = 03EE21A1134263C600D35D83 /* moai-open.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				1D6058900D05DD3D006BFB54 /* moaiview */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		03EE21A7134263C700D35D83 /* lib3rdParty.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = lib3rdParty.a;
+			remoteRef = 03EE21A6134263C700D35D83 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		03EE21A9134263C700D35D83 /* libMoai.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libMoai.a;
+			remoteRef = 03EE21A8134263C700D35D83 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		1D60588D0D05DD3D006BFB54 /* Resources */ = {
@@ -250,6 +311,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		03EE21D71342656C00D35D83 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Moai;
+			targetProxy = 03EE21D61342656C00D35D83 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		03B080970F708135005CD8E5 /* Distribution */ = {
@@ -287,12 +356,20 @@
 		03B080980F708135005CD8E5 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
 			};
 			name = Distribution;
 		};
 		1D6058940D05DD3E006BFB54 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
 			};
 			name = Debug;
 		};
