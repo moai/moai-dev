@@ -120,6 +120,7 @@ int MOAIParticleSystem::_pushSprite ( lua_State* L ) {
 	sprite.mScale.mY	= state.GetValue < float >( 6, 1.0f );
 	
 	sprite.mColor		= 0xffffffff;
+	sprite.mGlow		= 0.0f;
 	sprite.mGfxID		= 0;
 	
 	bool result = self->PushSprite ( sprite );

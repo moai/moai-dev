@@ -432,6 +432,9 @@
 		CD7B3F4312FA484B00A90AA5 /* AKU.h in Headers */ = {isa = PBXBuildFile; fileRef = CD7B3F3F12FA484B00A90AA5 /* AKU.h */; };
 		CD7B3F4412FA484B00A90AA5 /* pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD7B3F4012FA484B00A90AA5 /* pch.cpp */; };
 		CD7B3F4512FA484B00A90AA5 /* pch.h in Headers */ = {isa = PBXBuildFile; fileRef = CD7B3F4112FA484B00A90AA5 /* pch.h */; };
+		CD885E401342722400FD15A1 /* USBinarySearch.h in Headers */ = {isa = PBXBuildFile; fileRef = CD885E3F1342722400FD15A1 /* USBinarySearch.h */; };
+		CD885E451342727C00FD15A1 /* utf8.c in Sources */ = {isa = PBXBuildFile; fileRef = CD885E431342727C00FD15A1 /* utf8.c */; };
+		CD885E461342727C00FD15A1 /* utf8.h in Headers */ = {isa = PBXBuildFile; fileRef = CD885E441342727C00FD15A1 /* utf8.h */; };
 		CDB71CA9134156C800633B13 /* MOAIAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDB71BFA134156C800633B13 /* MOAIAction.cpp */; };
 		CDB71CAA134156C800633B13 /* MOAIAction.h in Headers */ = {isa = PBXBuildFile; fileRef = CDB71BFB134156C800633B13 /* MOAIAction.h */; };
 		CDB71CAB134156C800633B13 /* MOAIAnim.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDB71BFC134156C800633B13 /* MOAIAnim.cpp */; };
@@ -1156,6 +1159,9 @@
 		CD7B3F3F12FA484B00A90AA5 /* AKU.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AKU.h; path = ../src/aku/AKU.h; sourceTree = SOURCE_ROOT; };
 		CD7B3F4012FA484B00A90AA5 /* pch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = pch.cpp; path = ../src/aku/pch.cpp; sourceTree = SOURCE_ROOT; };
 		CD7B3F4112FA484B00A90AA5 /* pch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pch.h; path = ../src/aku/pch.h; sourceTree = SOURCE_ROOT; };
+		CD885E3F1342722400FD15A1 /* USBinarySearch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = USBinarySearch.h; path = ../src/uslsext/USBinarySearch.h; sourceTree = "<group>"; };
+		CD885E431342727C00FD15A1 /* utf8.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = utf8.c; path = ../3rdparty/contrib/utf8.c; sourceTree = "<group>"; };
+		CD885E441342727C00FD15A1 /* utf8.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = utf8.h; path = ../3rdparty/contrib/utf8.h; sourceTree = "<group>"; };
 		CD96DE750F1581D50061FBD3 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		CD96DEB90F1583B00061FBD3 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		CD96DEBE0F1583C50061FBD3 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -1766,6 +1772,7 @@
 			children = (
 				CDE3B67513257CA00088A619 /* box2d */,
 				CDA468F81306692400F6E78D /* chipmunk */,
+				CD885E421342724000FD15A1 /* contrib */,
 				CD4325D11116822E006D6D3D /* curl */,
 				CD365A0A11C2BA0400EE5068 /* expat */,
 				CD75832812E1372B008759DC /* freetype */,
@@ -2180,6 +2187,15 @@
 			name = "Header Files";
 			sourceTree = "<group>";
 		};
+		CD885E421342724000FD15A1 /* contrib */ = {
+			isa = PBXGroup;
+			children = (
+				CD885E431342727C00FD15A1 /* utf8.c */,
+				CD885E441342727C00FD15A1 /* utf8.h */,
+			);
+			name = contrib;
+			sourceTree = "<group>";
+		};
 		CDA468F81306692400F6E78D /* chipmunk */ = {
 			isa = PBXGroup;
 			children = (
@@ -2496,6 +2512,7 @@
 				CDB71E0C134156FE00633B13 /* USAttrOp.cpp */,
 				CDB71E0D134156FE00633B13 /* USAttrOp.h */,
 				CDB71E0E134156FE00633B13 /* USAutoPtr.h */,
+				CD885E3F1342722400FD15A1 /* USBinarySearch.h */,
 				CDB71E0F134156FE00633B13 /* USBlendMode.cpp */,
 				CDB71E10134156FE00633B13 /* USBlendMode.h */,
 				CDB71E11134156FE00633B13 /* USBox.cpp */,
@@ -3011,6 +3028,8 @@
 				0379C7391333ED1400E89DDC /* sqlite3.h in Headers */,
 				0379C73A1333ED1400E89DDC /* sqlite3ext.h in Headers */,
 				0379C73C1333ED1400E89DDC /* tinyxml.h in Headers */,
+				CD885E401342722400FD15A1 /* USBinarySearch.h in Headers */,
+				CD885E461342727C00FD15A1 /* utf8.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3552,6 +3571,7 @@
 				0379C73B1333ED1400E89DDC /* tinyxml.cpp in Sources */,
 				0379C73D1333ED1400E89DDC /* tinyxmlerror.cpp in Sources */,
 				0379C73E1333ED1400E89DDC /* tinyxmlparser.cpp in Sources */,
+				CD885E451342727C00FD15A1 /* utf8.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3865,6 +3885,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
 					"\"../src\"",
+					"\"../3rdparty\"",
+					"\"../3rdparty/contrib\"",
 					"\"../3rdparty/tinyxml\"",
 					"\"../3rdparty/lua-5.1.3/src\"",
 					"\"../3rdparty/gsoap-2.7/gsoap\"",
@@ -3957,6 +3979,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
 					"\"../src\"",
+					"\"../3rdparty\"",
+					"\"../3rdparty/contrib\"",
 					"\"../3rdparty/tinyxml\"",
 					"\"../3rdparty/lua-5.1.3/src\"",
 					"\"../3rdparty/gsoap-2.7/gsoap\"",
