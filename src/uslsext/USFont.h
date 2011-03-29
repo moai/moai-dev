@@ -83,8 +83,7 @@ public:
 class USGlyph {
 private:
 
-	u32			mName;
-
+	u32			mCode;
 	USRect		mUVRect;
 
 	float		mWidth;
@@ -105,7 +104,7 @@ public:
 	SET ( float, AdvanceX, mAdvanceX )
 	SET ( float, BearingX, mBearingX )
 	
-	GET_SET ( u32, Name, mName )
+	GET_SET ( u32, Code, mCode )
 
 	//----------------------------------------------------------------//
 	void			Draw				( float points, float x, float y ) const;
@@ -150,17 +149,29 @@ public:
 class USFont {
 private:
 
-	USLeanArray < USGlyph >		mGlyphs;
-	USLeanArray < u32 >			mGlyphMap;
+	static const u32 WIDE_ID_BIT	= 0x80000000;
+	static const u32 WIDE_ID_MASK	= 0x7fffffff;
+	static const u32 INVALID_ID		= 0xffffffff;
+
+	USLeanArray < USGlyph >		mByteGlyphs;
+	USLeanArray < u8 >			mByteGlyphMap;
+	u8							mByteGlyphMapBase;
+
+	USLeanArray < USGlyph >		mWideGlyphs;
+	USLeanArray < u32 >			mWideGlyphMap;
 
 	float mScale;
 	float mLineSpacing;
+	
+	USGlyph mDummy;
 
 	//----------------------------------------------------------------//
 	void			DrawGlyph			( u32 c, float points, float x, float y );
 	u32				GetIDForChar		( u32 c );
+	USGlyph&		GetGlyphForID		( u32 id );
 	USTextLine		GetLine				( cc8* str, float points, float width );
 	USTextToken		GetToken		 	( cc8* str, float points, USTextToken* prevToken );
+	bool			IsWideChar			( u32 c );
 	void			LayoutLine			( USGlyphBuffer& glyphBuffer, cc8* str, float points, u32 size, float x, float y, USTextStyler& styler, USAnimCurve* curve, u32 width, u32 xOff );
 
 public:
@@ -178,10 +189,9 @@ public:
 	void			Draw				( const USGlyphBuffer& layout, u32 reveal );
 	const USGlyph&	GetGlyphForChar		( u32 c );
 	void			Init				( cc8* charCodes );
-	void			Init				( u32* charCodes, u32 total );
 	float			Justify				( float x, float width, float lineWidth, u32 justify );
 	u32				Layout				( USGlyphBuffer& glyphBuffer, cc8* str, float points, USRect frame, u32 justify, USTextStyler& styler, USAnimCurve** curves, u32 totalCurves );
-	void			SetGlyphForChar		( u32 c, const USGlyph& glyph );
+	void			SetGlyph			( const USGlyph& glyph );
 	u32				Size				();
 					USFont				();
 	virtual			~USFont				();

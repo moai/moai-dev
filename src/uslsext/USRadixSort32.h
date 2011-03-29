@@ -162,6 +162,8 @@ TYPE* RadixSort32 ( TYPE* keyBuffer, TYPE* swapBuffer, u32 total ) {
 template < typename TYPE >
 void RadixSort32 ( TYPE* keyBuffer, u32 total ) {
 
+	if ( !total ) return;
+
 	static const u32 STACK_BUFFER_SIZE = 1024;
 	TYPE stackBuffer [ STACK_BUFFER_SIZE ];
 	

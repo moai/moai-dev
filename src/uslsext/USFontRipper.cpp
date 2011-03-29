@@ -144,7 +144,9 @@ void USFontRipper::MakeFont ( USFont& font, cc8* charCodes ) {
 		if (( y + height ) > nextY ) nextY = y + height;
 
 		CopyGlyph ( glyph, x, y );
-
+		
+		glyph.mGlyph.SetCode ( c );
+		
 		glyph.mDestRect.mXMin = x;
 		glyph.mDestRect.mXMax = x + width - 1;
 		
@@ -152,7 +154,7 @@ void USFontRipper::MakeFont ( USFont& font, cc8* charCodes ) {
 		glyph.mDestRect.mYMax = y + height - 1;
 		
 		this->MakeGlyph ( glyph );
-		font.SetGlyphForChar ( c, glyph.mGlyph );
+		font.SetGlyph ( glyph.mGlyph );
 		
 		x += width;
 	}
@@ -213,12 +215,6 @@ void USFontRipper::RipAndReturn ( USFont& font, USImage& image, cc8* charCodes )
 	this->mOutBmp.ClearBitmap ();
 
 	this->Scan ();
-
-	// set us up the font
-	// TODO: font
-	//font.Init (( u32 )this->mGlyphList.size ());
-	//font.SetGlyphMap ( charCodes );
-	
 	this->MakeFont ( font, charCodes );
 
 	image = this->mOutBmp;
