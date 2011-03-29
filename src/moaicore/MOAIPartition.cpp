@@ -389,7 +389,7 @@ void MOAIPartition::PushSortedResultsList ( lua_State* L ) {
 	// sort
 	USRadixKey16 < MOAIProp* >* sort = RadixSort16 < MOAIProp* >( key, swap, total );
 	
-	for ( u32 i = 0; i < total; ++i ) {
+	for ( i = 0; i < total; ++i ) {
 	
 		MOAIProp* prop = sort [ i ].mData;
 		lua_pushnumber ( state, i + 1 );

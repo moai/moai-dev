@@ -14,7 +14,6 @@
 		0379C8EE13343D3C00E89DDC /* MoaiView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0379C8E513343D3C00E89DDC /* MoaiView.mm */; };
 		0379C8EF13343D3C00E89DDC /* OpenGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0379C8E713343D3C00E89DDC /* OpenGLView.mm */; };
 		0379C8F113343D4600E89DDC /* lua in Resources */ = {isa = PBXBuildFile; fileRef = 0379C8F013343D4600E89DDC /* lua */; };
-		0379C91813343FDF00E89DDC /* libMoai.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0379C8D513343CC900E89DDC /* libMoai.a */; };
 		039D13B51224380600A033D2 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABDD06E810D31603004D70E9 /* StoreKit.framework */; };
 		039D13C21224384A00A033D2 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DEA05D05106075930018B9C8 /* AudioToolbox.framework */; };
 		039D13C9122438B500A033D2 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1484EE671159455800BBD784 /* OpenAL.framework */; };
@@ -34,30 +33,6 @@
 		CDE8273D12E2559000C2D1C9 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDE8273C12E2559000C2D1C9 /* CoreVideo.framework */; };
 		CDEB9B4912E3DB3100B14752 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CDEB9B4812E3DB3100B14752 /* libiconv.dylib */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		0379C8D213343CC900E89DDC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = CD43658412FA814500E1729C /* moai-open.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 0379C5961333ECD800E89DDC;
-			remoteInfo = 3rdParty;
-		};
-		0379C8D413343CC900E89DDC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = CD43658412FA814500E1729C /* moai-open.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 03C2F6F4104DE130009A2D5D;
-			remoteInfo = Moai;
-		};
-		0379C91613343FD300E89DDC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = CD43658412FA814500E1729C /* moai-open.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 03C2F6F3104DE130009A2D5D;
-			remoteInfo = Moai;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		0379C8DC13343D3C00E89DDC /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -82,7 +57,7 @@
 		288765FC0DF74451002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		ABDD06E810D31603004D70E9 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		CD10CA800FA9272300363C67 /* libz.1.2.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.3.dylib; path = usr/lib/libz.1.2.3.dylib; sourceTree = SDKROOT; };
-		CD43658412FA814500E1729C /* moai-open.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "moai-open.xcodeproj"; path = "../../iphone/moai-open.xcodeproj"; sourceTree = SOURCE_ROOT; };
+		CD43658412FA814500E1729C /* moai-open.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "moai-open.xcodeproj"; path = "../../xcode/moai-open.xcodeproj"; sourceTree = SOURCE_ROOT; };
 		CD4366B712FA8A7F00E1729C /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		CD4366D112FA8AB100E1729C /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 		CD96DE750F1581D50061FBD3 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -113,7 +88,6 @@
 				CD96DEBF0F1583C50061FBD3 /* QuartzCore.framework in Frameworks */,
 				CD96DED20F1584170061FBD3 /* SystemConfiguration.framework in Frameworks */,
 				CD10CA810FA9272300363C67 /* libz.1.2.3.dylib in Frameworks */,
-				0379C91813343FDF00E89DDC /* libMoai.a in Frameworks */,
 				039D13B51224380600A033D2 /* StoreKit.framework in Frameworks */,
 				CDE8273912E2559000C2D1C9 /* AVFoundation.framework in Frameworks */,
 				CDE8273B12E2559000C2D1C9 /* CoreMedia.framework in Frameworks */,
@@ -127,15 +101,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0379C8CE13343CC900E89DDC /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				0379C8D313343CC900E89DDC /* lib3rdParty.a */,
-				0379C8D513343CC900E89DDC /* libMoai.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		038DB3DE101FA8B000ECA0BF /* src */ = {
 			isa = PBXGroup;
 			children = (
@@ -216,7 +181,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				0379C91713343FD300E89DDC /* PBXTargetDependency */,
 			);
 			name = moaiview;
 			productName = Geocaching;
@@ -253,35 +217,12 @@
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 0379C8CE13343CC900E89DDC /* Products */;
-					ProjectRef = CD43658412FA814500E1729C /* moai-open.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				1D6058900D05DD3D006BFB54 /* moaiview */,
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		0379C8D313343CC900E89DDC /* lib3rdParty.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = lib3rdParty.a;
-			remoteRef = 0379C8D213343CC900E89DDC /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		0379C8D513343CC900E89DDC /* libMoai.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libMoai.a;
-			remoteRef = 0379C8D413343CC900E89DDC /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		1D60588D0D05DD3D006BFB54 /* Resources */ = {
@@ -309,14 +250,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		0379C91713343FD300E89DDC /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = Moai;
-			targetProxy = 0379C91613343FD300E89DDC /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		03B080970F708135005CD8E5 /* Distribution */ = {
