@@ -88,7 +88,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\src;"..\..\3rdparty\lua-5.1.3\src";..\..\3rdparty\SOIL\src;"..\..\3rdparty\glew-1.5.6\include";"..\..\3rdparty\zlib-1.2.3";"..\..\3rdparty\sqlite-3.6.16";..\..\3rdparty\tinyxml;"..\..\3rdparty\curl-7.19.7\include";..\..\3rdparty\lpng140;"..\..\3rdparty\box2d-2.1.2\Box2D";"..\..\3rdparty\expat-2.0.1\lib"</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty;..\..\3rdparty\lua-5.1.3\src;..\..\3rdparty\SOIL\src;..\..\3rdparty\glew-1.5.6\include;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\sqlite-3.6.16;..\..\3rdparty\tinyxml;..\..\3rdparty\curl-7.19.7\include;..\..\3rdparty\lpng140;..\..\3rdparty\box2d-2.1.2\Box2D;..\..\3rdparty\expat-2.0.1\lib</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_CONSOLE;_DEBUG;_BOOL;AKU_EXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -169,7 +169,7 @@ xcopy /yr "$(OutDir)$(TargetName).pdb" "..\..\bin\$(Platform)\$(Configuration)\"
     <ClCompile>
       <Optimization>MinSpace</Optimization>
       <FavorSizeOrSpeed>Size</FavorSizeOrSpeed>
-      <AdditionalIncludeDirectories>..\..\src;"..\..\3rdparty\lua-5.1.3\src";..\..\3rdparty\SOIL\src;"..\..\3rdparty\glew-1.5.6\include";"..\..\3rdparty\zlib-1.2.3";"..\..\3rdparty\sqlite-3.6.16";..\..\3rdparty\tinyxml;"..\..\3rdparty\curl-7.19.7\include";..\..\3rdparty\lpng140;"..\..\3rdparty\box2d-2.1.2\Box2D";"..\..\3rdparty\expat-2.0.1\lib"</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty;..\..\3rdparty\lua-5.1.3\src;..\..\3rdparty\SOIL\src;..\..\3rdparty\glew-1.5.6\include;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\sqlite-3.6.16;..\..\3rdparty\tinyxml;..\..\3rdparty\curl-7.19.7\include;..\..\3rdparty\lpng140;..\..\3rdparty\box2d-2.1.2\Box2D;..\..\3rdparty\expat-2.0.1\lib</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_CONSOLE;_CRTDBG_MAP_ALLOC;_WINDOWS;_BOOL;TRUE_AND_FALSE_DEFINED;_USE_32BIT_TIME_T;_CRT_SECURE_NO_WARNINGS;AKU_EXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <BufferSecurityCheck>false</BufferSecurityCheck>
