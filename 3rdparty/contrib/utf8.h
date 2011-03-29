@@ -25,7 +25,11 @@
 	extern "C" {
 #endif
 
-typedef unsigned long u_int32_t;
+#ifdef _WIN32
+		typedef unsigned long u_int32_t;
+#else
+		#define _snprintf snprintf
+#endif
 
 /* is c the start of a utf8 sequence? */
 #define isutf(c) (((c)&0xC0)!=0x80)

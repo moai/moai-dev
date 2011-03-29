@@ -240,7 +240,7 @@ void MOAIFtFontRipper::RipFromTTF ( cc8* filename, USFont& font, USImage& image,
 	bool hasKerning = ( FT_HAS_KERNING ( face ) != 0 );
 	
 	GlyphIt glyphIt = glyphs.begin ();
-	for ( u32 i = 0; glyphIt != glyphs.end (); ++glyphIt, ++i ) {
+	for ( i = 0; glyphIt != glyphs.end (); ++glyphIt, ++i ) {
 		USGlyph& glyph = *glyphIt;
 		
 		if ( hasKerning ) {
