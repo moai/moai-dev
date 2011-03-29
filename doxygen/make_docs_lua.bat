@@ -5,17 +5,25 @@ rmdir /s /q src-copy
 xcopy /v /i /s /y "../src" "src-copy"
 
 ::modify copy of source files
-set PARAM_EXP_PREFIX=(\@name.*\()(.*)\s*\).*\@param
-set PARAM_EXP_SUFFIX=\s*(\w*)\s*\@type\s*(\w*)\n(.*?)\*\/
-set PARAM_EXP_REPLACE=$1 $2, $3 \)\n$5\t\@param $3 \($4\)\n\*\/
+set PARAM_EXP_PREFIX=(\@name.*?\()(.*?)\s*?\).*?\@param
+set PARAM_EXP_SUFFIX=\s*(\w*?)\s*?\@type\s*(\w*)(.*?)\n(.*?)\@return
+set PARAM_EXP_REPLACE=$1 $2, $3 \)\n$6\@param $3 \($4\) $5\n\t\@return
 
-call fr "src-copy" "*" "(\@name\s*(\w*))\n" "$1 \(\)\n"
+call fr "src-copy" "*" "(\@name\s*?(\w*?))\n" "$1 \(\)\n"
 call fr "src-copy" "*" "%PARAM_EXP_PREFIX%1%PARAM_EXP_SUFFIX%" "%PARAM_EXP_REPLACE%"
 call fr "src-copy" "*" "%PARAM_EXP_PREFIX%2%PARAM_EXP_SUFFIX%" "%PARAM_EXP_REPLACE%"
+call fr "src-copy" "*" "%PARAM_EXP_PREFIX%3%PARAM_EXP_SUFFIX%" "%PARAM_EXP_REPLACE%"
+call fr "src-copy" "*" "%PARAM_EXP_PREFIX%4%PARAM_EXP_SUFFIX%" "%PARAM_EXP_REPLACE%"
+call fr "src-copy" "*" "%PARAM_EXP_PREFIX%5%PARAM_EXP_SUFFIX%" "%PARAM_EXP_REPLACE%"
+call fr "src-copy" "*" "%PARAM_EXP_PREFIX%6%PARAM_EXP_SUFFIX%" "%PARAM_EXP_REPLACE%"
+call fr "src-copy" "*" "%PARAM_EXP_PREFIX%7%PARAM_EXP_SUFFIX%" "%PARAM_EXP_REPLACE%"
+call fr "src-copy" "*" "%PARAM_EXP_PREFIX%8%PARAM_EXP_SUFFIX%" "%PARAM_EXP_REPLACE%"
+call fr "src-copy" "*" "%PARAM_EXP_PREFIX%9%PARAM_EXP_SUFFIX%" "%PARAM_EXP_REPLACE%"
 call fr "src-copy" "*" " , " ", "
-call fr "src-copy" "*" "(\@name.*\() ,(.*)\)" "$1$2\)"
-call fr "src-copy" "*" "\@name\s*(\w*.*)\)" "\@brief\n\t\<tt\>function $1 \(\)\<\/tt\>\\n\n\t\\n\n"
-call fr "src-copy" "*" "\@text\s*(\w*.*)\n" "$1\n"
+call fr "src-copy" "*" "(\@name.*?\() ,(.*?)\)" "$1$2\)"
+call fr "src-copy" "*" "\@name\s*?(\w*?.*?)\)" "\@brief\n\t\<tt\>function$1\)\<\/tt\>\\n\n\t\\n"
+call fr "src-copy" "*" "\@text\s*(\w{1}.*?)\n" "$1\n"
+call fr "src-copy" "*" "(\@return.*?)(\w{1}.*?)\@type\s*?(\w*?)\n" "$1$2\($3\)\n"
 
 ::kill existing doxygen output folder, if any
 rmdir /s /q html-lua
@@ -36,5 +44,5 @@ call fr "html-lua" "*.html" "\<td class=\"paramtype\"\>\<\/td\>" ""
 call fr "html-lua" "*.html" "\<td class=\"paramname\"\>\<\/td\>" ""
 call fr "html-lua" "*.html" "\<td\>\(\<\/td\>" ""
 call fr "html-lua" "*.html" "\<td\>\)\<\/td\>" ""
-::call fr "html-lua" "*.html" "(\<code\>).*?\[.*?static.*?\].*?(\<\/code\>?)" "$1$2"
+call fr "html-lua" "*.html" "\[.*?static.*?\]" ""
 call fr "html-lua" "*.html" "(\>)_(.*?\(\))" "$1$2"
