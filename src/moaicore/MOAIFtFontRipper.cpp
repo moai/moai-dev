@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <moaicore/MOAIFtFontRipper.h>
+#include <contrib/utf8.h>
 
 SUPPRESS_EMPTY_FILE_WARNING
 #if USE_FREETYPE
@@ -119,8 +120,12 @@ static void _renderSpan ( const int y, const int count, const FT_Span* const spa
 //----------------------------------------------------------------//
 void MOAIFtFontRipper::RipFromTTF ( cc8* filename, USFont& font, USImage& image, cc8* chars, float points, u32 dpi ) {
 
-	char validChars [ 256 ];
-	u32 totalChars = 0;
+	u32 totalChars = u8_strlen ( chars );
+	if ( !totalChars ) return;
+
+	USLeanArray < u32 > validChars;
+	validChars.Init ( totalChars );
+	totalChars = 0;
 
 	typedef STLList < USGlyph >::iterator GlyphIt;
 	STLList < USGlyph > glyphs;
@@ -153,9 +158,10 @@ void MOAIFtFontRipper::RipFromTTF ( cc8* filename, USFont& font, USImage& image,
 	u32 x = 0;
 	u32 y = 0;
 	
-	for ( u32 i = 0; chars [ i ]; ++i ) {
+	int i = 0;
+	while ( chars [ i ]) {
 		
-		char c = chars [ i ];
+		u32 c = u8_nextchar( chars, &i );
 		
 		u32 index = FT_Get_Char_Index ( face, c );
 		FT_Load_Glyph ( face, index, FT_LOAD_NO_BITMAP );
@@ -179,7 +185,7 @@ void MOAIFtFontRipper::RipFromTTF ( cc8* filename, USFont& font, USImage& image,
 					glyph.SetName ( index );
 					glyph.SetAdvanceX (( float )advanceX * scale );
 					glyphs.push_back ( glyph );
-					validChars [ totalChars++ ] = c;
+					validChars [ totalChars++ ] = ( u8 )c;
 				}
 				continue;
 			}
@@ -217,25 +223,25 @@ void MOAIFtFontRipper::RipFromTTF ( cc8* filename, USFont& font, USImage& image,
 			validChars [ totalChars++ ] = c;
 		}
 	}
-	validChars [ totalChars++ ] = 0;
 	
-	font.Init ( glyphs.size ());
-	font.SetGlyphMap ( validChars );
+	if ( !totalChars ) return;
+	
+	font.Init ( validChars, totalChars );
 	font.SetScale ( pixelSize );
 	font.SetLineSpacing ( lineSpacing );
+	
+	USLeanArray < USKernVec > kernTable;
+	kernTable.Init ( totalChars );
 	
 	bool hasKerning = ( FT_HAS_KERNING ( face ) != 0 );
 	
 	GlyphIt glyphIt = glyphs.begin ();
 	for ( u32 i = 0; glyphIt != glyphs.end (); ++glyphIt, ++i ) {
-		
-		USGlyph& glyph = font.GetGlyph ( i );
-		glyph = *glyphIt;
+		USGlyph& glyph = *glyphIt;
 		
 		if ( hasKerning ) {
 			
 			u32 kernTableSize = 0;
-			USKernVec kernTable [ 256 ];
 			
 			GlyphIt glyphIt2 = glyphs.begin ();
 			for ( ; glyphIt2 != glyphs.end (); ++glyphIt2 ) {
@@ -270,6 +276,8 @@ void MOAIFtFontRipper::RipFromTTF ( cc8* filename, USFont& font, USImage& image,
 					glyph.SetKernVec ( j, kernTable [ j ]);
 				}
 			}
+			
+			font.SetGlyphForChar ( validChars [ i ], glyph );
 		}
 	}
 	

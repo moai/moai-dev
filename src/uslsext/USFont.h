@@ -39,7 +39,7 @@ public:
 		kWord,
 	};
 
-	USGlyph*	mLastGlyph;
+	const USGlyph*	mLastGlyph;
 
 	u32			mLength;
 	u32			mNonWhitespace;
@@ -108,8 +108,8 @@ public:
 	GET_SET ( u32, Name, mName )
 
 	//----------------------------------------------------------------//
-	void			Draw				( float points, float x, float y );
-	USKernVec		GetKerning			( u32 name );
+	void			Draw				( float points, float x, float y ) const;
+	USKernVec		GetKerning			( u32 name ) const;
 	void			ReserveKernTable	( u32 total );
 	void			SetKernVec			( u32 id, const USKernVec& kernVec );
 	void			SetScreenRect		( float width, float height, float yOff );
@@ -150,17 +150,17 @@ public:
 class USFont {
 private:
 
-	USLeanArray < USGlyph > mGlyphs;
-	u8 mGlyphMap [ 256 ];
+	USLeanArray < USGlyph >		mGlyphs;
+	USLeanArray < u32 >			mGlyphMap;
 
 	float mScale;
 	float mLineSpacing;
 
 	//----------------------------------------------------------------//
 	void			DrawGlyph			( u32 c, float points, float x, float y );
-	void			EndDrawing			();
+	u32				GetIDForChar		( u32 c );
 	USTextLine		GetLine				( cc8* str, float points, float width );
-	USTextToken		GetToken			( cc8* str, float points, USTextToken* prevToken );
+	USTextToken		GetToken		 	( cc8* str, float points, USTextToken* prevToken );
 	void			LayoutLine			( USGlyphBuffer& glyphBuffer, cc8* str, float points, u32 size, float x, float y, USTextStyler& styler, USAnimCurve* curve, u32 width, u32 xOff );
 
 public:
@@ -176,16 +176,15 @@ public:
 
 	//----------------------------------------------------------------//
 	void			Draw				( const USGlyphBuffer& layout, u32 reveal );
-	USGlyph&		GetGlyph			( u32 id );
-	USGlyph&		GetGlyphForChar		( u32 c );
-	void			Init				( u32 totalGlyphs );
+	const USGlyph&	GetGlyphForChar		( u32 c );
+	void			Init				( cc8* charCodes );
+	void			Init				( u32* charCodes, u32 total );
 	float			Justify				( float x, float width, float lineWidth, u32 justify );
 	u32				Layout				( USGlyphBuffer& glyphBuffer, cc8* str, float points, USRect frame, u32 justify, USTextStyler& styler, USAnimCurve** curves, u32 totalCurves );
-	void			SetCharGlyphID		( u32 c, u32 id );
-	void			SetGlyph			( u32 id, const USGlyph& glyph );
-	void			SetGlyphMap			( cc8* mapString );
+	void			SetGlyphForChar		( u32 c, const USGlyph& glyph );
+	u32				Size				();
 					USFont				();
-					~USFont				();
+	virtual			~USFont				();
 };
 
 #endif

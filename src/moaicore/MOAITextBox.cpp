@@ -227,7 +227,7 @@ int MOAITextBox::_setSpeed ( lua_State* L ) {
 int MOAITextBox::_setString ( lua_State* L ) {
 	LUA_SETUP ( MOAITextBox, "US" )
 
-	STLString text = state.GetValue ( 2, "" );
+	cc8* text = state.GetValue < cc8* >( 2, "" );
 	self->SetText ( text );
 
 	return 0;
@@ -580,7 +580,7 @@ void MOAITextBox::SetRect ( float left, float top, float right, float bottom ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITextBox::SetText ( STLString text ) {
+void MOAITextBox::SetText ( cc8* text ) {
 
 	this->mStyler.Reset ();
 

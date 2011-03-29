@@ -104,7 +104,7 @@ public:
 	void			SetCurve				( u32 idx, MOAIAnimCurve* curve );
 	void			SetFont					( MOAIFont* font );
 	void			SetRect					( float left, float top, float right, float bottom );
-	void			SetText					( STLString text );
+	void			SetText					( cc8* text );
 	void			SetTextSize				( float newSize );
 	STLString		ToString				();
 };

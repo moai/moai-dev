@@ -3,6 +3,7 @@
 
 #include "pch.h"
 
+#include <contrib/utf8.h>
 #include <uslsext/USFont.h>
 #include <uslsext/USFontRipper.h>
 
@@ -114,7 +115,7 @@ USIntRect USFontRipper::GetGlyphFrame ( u32 x, u32 y ) {
 }
 
 //----------------------------------------------------------------//
-void USFontRipper::MakeFont ( USFont& font ) {
+void USFontRipper::MakeFont ( USFont& font, cc8* charCodes ) {
 
 	int x = 1;
 	int y = 1;
@@ -123,11 +124,12 @@ void USFontRipper::MakeFont ( USFont& font ) {
 	int imgWidth = mOutBmp.GetWidth ();
 	int imgHeight = mOutBmp.GetHeight ();
 
-	u32 glyphID = 0;
-
+	int i = 0;
 	GlyphListIt glyphIt = mGlyphList.begin ();
-	for ( ; glyphIt != mGlyphList.end (); ++glyphIt, ++glyphID ) {
-	
+	for ( ; charCodes [ i ] && ( glyphIt != mGlyphList.end ()); ++glyphIt ) {
+		
+		u32 c = u8_nextchar ( charCodes, &i );
+		
 		USGlyphRipper& glyph = ( *glyphIt );
 		
 		int width = glyph.mSrcRect.Width () + 1;
@@ -150,7 +152,7 @@ void USFontRipper::MakeFont ( USFont& font ) {
 		glyph.mDestRect.mYMax = y + height - 1;
 		
 		this->MakeGlyph ( glyph );
-		font.SetGlyph ( glyphID, glyph.mGlyph );
+		font.SetGlyphForChar ( c, glyph.mGlyph );
 		
 		x += width;
 	}
@@ -186,13 +188,15 @@ void USFontRipper::MakeGlyph ( USGlyphRipper& glyph ) {
 		glyph.mGlyph.SetScreenRect ( width, height, yOff  );
 	}
 	
-	glyph.mGlyph.SetName ( 0xffffffff );
 	glyph.mGlyph.SetAdvanceX ( width );
 	glyph.mGlyph.SetBearingX ( 0.0f );
 }
 
 //----------------------------------------------------------------//
 void USFontRipper::RipAndReturn ( USFont& font, USImage& image, cc8* charCodes ) {
+
+	font.Init ( charCodes );
+	if ( !font.Size ()) return;
 
 	this->mFontHeight = 0;
 	this->mFontBase = 0;
@@ -210,11 +214,12 @@ void USFontRipper::RipAndReturn ( USFont& font, USImage& image, cc8* charCodes )
 
 	this->Scan ();
 
-	// set us up the font	
-	font.Init (( u32 )this->mGlyphList.size ());
-	font.SetGlyphMap ( charCodes );
+	// set us up the font
+	// TODO: font
+	//font.Init (( u32 )this->mGlyphList.size ());
+	//font.SetGlyphMap ( charCodes );
 	
-	this->MakeFont ( font );
+	this->MakeFont ( font, charCodes );
 
 	image = this->mOutBmp;
 	this->mOutBmp.Surrender();

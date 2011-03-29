@@ -13,6 +13,11 @@ public:
 
 	u32		mKey;
 	TYPE	mData;
+	
+	//----------------------------------------------------------------//
+	inline operator u32 () {
+		return mKey;
+	}
 };
 
 //================================================================//
@@ -21,11 +26,11 @@ public:
 
 //----------------------------------------------------------------//
 template < typename TYPE >
-USRadixKey32 < TYPE >* RadixSort32 ( USRadixKey32 < TYPE >* keyBuffer, USRadixKey32 < TYPE >* swapBuffer, u32 total ) {
+TYPE* RadixSort32 ( TYPE* keyBuffer, TYPE* swapBuffer, u32 total ) {
 
-	USRadixKey32 < TYPE >* bufferA = keyBuffer;
-	USRadixKey32 < TYPE >* bufferB = swapBuffer;
-	USRadixKey32 < TYPE >* bufferC = 0;
+	TYPE* bufferA = keyBuffer;
+	TYPE* bufferB = swapBuffer;
+	TYPE* bufferC = 0;
 
 	if ( !total ) return bufferA;
 
@@ -40,11 +45,11 @@ USRadixKey32 < TYPE >* RadixSort32 ( USRadixKey32 < TYPE >* keyBuffer, USRadixKe
 
 	// Build the histograms; check to see if sort is needed
 	bool sort = false;
-	u32 prevKey = bufferA [ 0 ].mKey;
+	u32 prevKey = bufferA [ 0 ];
 
 	for ( u32 i = 0; i < total; ++i ) {
 
-		u32 key = bufferA [ i ].mKey;
+		u32 key = bufferA [ i ];
 
 		++offsets0 [( key >> 0x00 ) & 0xff ];
 		++offsets1 [( key >> 0x08 ) & 0xff ];
@@ -58,7 +63,7 @@ USRadixKey32 < TYPE >* RadixSort32 ( USRadixKey32 < TYPE >* keyBuffer, USRadixKe
 	if ( sort == false ) return bufferA;
 
 	// Check to see which passes may be skipped
-	u32 anyKey = bufferA [ 0 ].mKey;
+	u32 anyKey = bufferA [ 0 ];
 	bool pass0 = offsets0 [( anyKey >> 0x00 ) & 0xff ] < total;
 	bool pass1 = offsets1 [( anyKey >> 0x08 ) & 0xff ] < total;
 	bool pass2 = offsets2 [( anyKey >> 0x10 ) & 0xff ] < total;
@@ -101,7 +106,7 @@ USRadixKey32 < TYPE >* RadixSort32 ( USRadixKey32 < TYPE >* keyBuffer, USRadixKe
 	if ( pass0 ) {
 		for ( u32 i = 0; i < total; ++i ) {
 
-			key = ((( bufferA [ i ].mKey ) >> 0x00 ) & 0xff );
+			key = (( bufferA [ i ] >> 0x00 ) & 0xff );
 			offset = offsets0 [ key ]++;
 			bufferB [ offset ] = bufferA [ i ];
 		}
@@ -114,7 +119,7 @@ USRadixKey32 < TYPE >* RadixSort32 ( USRadixKey32 < TYPE >* keyBuffer, USRadixKe
 	if ( pass1 ) {
 		for ( u32 i = 0; i < total; ++i ) {
 
-			key = ((( bufferA [ i ].mKey ) >> 0x08 ) & 0xff );
+			key = (( bufferA [ i ] >> 0x08 ) & 0xff );
 			offset = offsets1 [ key ]++;
 			bufferB [ offset ] = bufferA [ i ];
 		}
@@ -127,7 +132,7 @@ USRadixKey32 < TYPE >* RadixSort32 ( USRadixKey32 < TYPE >* keyBuffer, USRadixKe
 	if ( pass2 ) {
 		for ( u32 i = 0; i < total; ++i ) {
 
-			key = ((( bufferA [ i ].mKey ) >> 0x10 ) & 0xff );
+			key = (( bufferA [ i ] >> 0x10 ) & 0xff );
 			offset = offsets2 [ key ]++;
 			bufferB [ offset ] = bufferA [ i ];
 		}
@@ -140,7 +145,7 @@ USRadixKey32 < TYPE >* RadixSort32 ( USRadixKey32 < TYPE >* keyBuffer, USRadixKe
 	if ( pass3 ) {
 		for ( u32 i = 0; i < total; ++i ) {
 
-			key = ((( bufferA [ i ].mKey ) >> 0x18 ) & 0xff );
+			key = (( bufferA [ i ] >> 0x18 ) & 0xff );
 			offset = offsets3 [ key ]++;
 			bufferB [ offset ] = bufferA [ i ];
 		}
@@ -151,6 +156,34 @@ USRadixKey32 < TYPE >* RadixSort32 ( USRadixKey32 < TYPE >* keyBuffer, USRadixKe
 
 	// And magically... we're done!
 	return bufferA;
+}
+
+//----------------------------------------------------------------//
+template < typename TYPE >
+void RadixSort32 ( TYPE* keyBuffer, u32 total ) {
+
+	static const u32 STACK_BUFFER_SIZE = 1024;
+	TYPE stackBuffer [ STACK_BUFFER_SIZE ];
+	
+	TYPE* buffer = 0;
+	TYPE* swap = stackBuffer;
+	
+	if ( total > STACK_BUFFER_SIZE ) {
+		buffer = ( TYPE* )malloc ( total * sizeof ( TYPE ));
+		swap = buffer;
+	}
+
+	TYPE* result = RadixSort32 ( keyBuffer, swap, total );
+
+	if ( keyBuffer != result ) {
+		for ( u32 i = 0; i < total; ++i ) {
+			keyBuffer [ i ] = result [ i ];
+		}
+	}
+
+	if ( buffer ) {
+		free ( buffer );
+	}
 }
 
 #endif
