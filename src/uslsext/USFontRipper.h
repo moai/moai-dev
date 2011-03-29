@@ -52,7 +52,7 @@ private:
 	void		GetGlyphBounds	( USGlyphRipper& glyph, USIntRect& frame );
 	USIntRect	GetGlyphFrame	( u32 x, u32 y );
 	u32			GetPixel		( u32 x, u32 y, u32 mask = RGBA );
-	void		MakeFont		( USFont& font );
+	void		MakeFont		( USFont& font, cc8* charCodes );
 	void		MakeGlyph		( USGlyphRipper& glyph );
 	void		RipGlyph		( u32 x, u32 y );
 	void		Scan			();

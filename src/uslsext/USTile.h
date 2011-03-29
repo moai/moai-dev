@@ -14,15 +14,15 @@ public:
 	static const u32 TILE_STR_XFLIP		= 7;
 	static const u32 TILE_STR_YFLIP		= 8;
 	static const u32 TILE_STR_HIDE		= 10;
-
+	
 	static const u32 XFLIP				= 0x20000000;
 	static const u32 YFLIP				= 0x40000000;
 	static const u32 HIDDEN				= 0x80000000;
-		
+	
 	static const u32 FLIP_MASK			= 0x60000000;
 	static const u32 FLAGS_MASK			= 0xE0000000;
 	static const u32 CODE_MASK			= 0x1fffffff;
-		
+	
 	static const u32 NULL_MASK			= 0x00002000;
 	
 	//----------------------------------------------------------------//

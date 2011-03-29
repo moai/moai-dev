@@ -2,10 +2,12 @@
 // http://getmoai.com
 
 #include "pch.h"
-
 #include <uslsext/USAnimCurve.h>
+#include <uslsext/USBinarySearch.h>
 #include <uslsext/USFont.h>
 #include <uslsext/USGLQuad.h>
+#include <uslsext/USRadixSort32.h>
+#include <contrib/utf8.h>
 
 //================================================================//
 // local
@@ -51,10 +53,10 @@ private:
 	friend class USFont;
 	
 	cc8*	mStr;
-	u32		mIdx;
+	int		mIdx;
 
 	//----------------------------------------------------------------//
-	u32			DecodeChar			( u32 idx );
+	u32			DecodeChar			( int* i );
 	u32			GetNextChar			();
 	u32			GetNextChar			( USTextStyler& styler );
 	void		ParseStyles			();
@@ -63,36 +65,36 @@ private:
 };
 
 //----------------------------------------------------------------//
-u32 USFontStringParser::DecodeChar ( u32 idx ) {
+u32 USFontStringParser::DecodeChar ( int* i ) {
 
-	return this->mStr [ idx ];
+	return u8_nextchar ( this->mStr, i );
 }
 
 //----------------------------------------------------------------//
 u32 USFontStringParser::GetNextChar () {
 
 	this->ParseStyles ();
-	return this->DecodeChar ( this->mIdx++ );
+	return this->DecodeChar ( &this->mIdx );
 }
 
 //----------------------------------------------------------------//
 u32 USFontStringParser::GetNextChar ( USTextStyler& styler ) {
 
 	this->ParseStyles ( styler );
-	return this->DecodeChar ( this->mIdx++ );
+	return this->DecodeChar ( &this->mIdx );
 }
 
 //----------------------------------------------------------------//
 void USFontStringParser::ParseStyles () {
 
-	u32 cursor = this->mIdx;
+	int cursor = this->mIdx;
 	u32 c;
 
-	c = this->DecodeChar ( cursor++ );
+	c = this->DecodeChar ( &cursor );
 	if ( c != '<' ) return;
 	
 	while ( c != '>' ) {
-		c = this->DecodeChar ( cursor++ );
+		c = this->DecodeChar ( &cursor );
 	}
 	this->mIdx = cursor;
 }
@@ -100,10 +102,10 @@ void USFontStringParser::ParseStyles () {
 //----------------------------------------------------------------//
 void USFontStringParser::ParseStyles ( USTextStyler& styler ) {
 
-	u32 cursor = this->mIdx;
+	int cursor = this->mIdx;
 	u32 c;
 
-	c = this->DecodeChar ( cursor++ );
+	c = this->DecodeChar ( &cursor );
 	if ( c != '<' ) return;
 	
 	enum {
@@ -140,7 +142,7 @@ void USFontStringParser::ParseStyles ( USTextStyler& styler ) {
 		
 			case START: {
 				
-				c = this->DecodeChar ( cursor++ );
+				c = this->DecodeChar ( &cursor );
 				if ( _isWhitespace ( c )) continue;
 				
 				state = c == 'c' ? COLOR_START : ERROR;
@@ -148,7 +150,7 @@ void USFontStringParser::ParseStyles ( USTextStyler& styler ) {
 			}
 			
 			case ERROR: {
-				c = this->DecodeChar ( cursor++ );
+				c = this->DecodeChar ( &cursor );
 				if ( c == '>' ) {
 					state = STOP;
 				}
@@ -167,7 +169,7 @@ void USFontStringParser::ParseStyles ( USTextStyler& styler ) {
 			
 			case COLOR_START: {
 			
-				c = this->DecodeChar ( cursor++ );
+				c = this->DecodeChar ( &cursor );
 				if ( _isWhitespace ( c )) continue;
 				
 				if ( c == ':' ) {
@@ -187,7 +189,7 @@ void USFontStringParser::ParseStyles ( USTextStyler& styler ) {
 			
 			case COLOR_BODY: {
 				
-				c = this->DecodeChar ( cursor++ );
+				c = this->DecodeChar ( &cursor );
 				if ( _isWhitespace ( c )) continue;
 				
 				if ( c == '>' ) {
@@ -291,7 +293,7 @@ void USFontStringParser::SetString ( cc8* str ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void USGlyph::Draw ( float points, float x, float y ) {
+void USGlyph::Draw ( float points, float x, float y ) const {
 
 	if ( this->mWidth ) {
 
@@ -313,7 +315,7 @@ void USGlyph::Draw ( float points, float x, float y ) {
 }
 
 //----------------------------------------------------------------//
-USKernVec USGlyph::GetKerning ( u32 name ) {
+USKernVec USGlyph::GetKerning ( u32 name ) const {
 
 	u32 total = this->mKernTable.Size ();
 	for ( u32 i = 0; i < total; ++i ) {
@@ -354,8 +356,12 @@ void USGlyph::SetScreenRect ( float width, float height, float yOff ) {
 
 //----------------------------------------------------------------//
 USGlyph::USGlyph () :
-	mWidth ( 0 ),
-	mAdvanceX ( 0 ) {
+	mCode ( 0xffffffff ),
+	mWidth ( 0.0f ),
+	mHeight ( 0.0f ),
+	mYOff ( 0.0f ),
+	mAdvanceX ( 0.0f ),
+	mBearingX ( 0.0f ) {
 }
 
 //----------------------------------------------------------------//
@@ -405,7 +411,7 @@ void USFont::Draw ( const USGlyphBuffer& layout, u32 reveal ) {
 			blendColor.Modulate ( baseColor );
 			drawBuffer.SetPenColor ( blendColor );
 		}
-		USGlyph& glyph = this->mGlyphs [ sprite.mGlyphID ];
+		const USGlyph& glyph = this->GetGlyphForID ( sprite.mGlyphID );
 		glyph.Draw ( sprite.mPoints, sprite.mX, sprite.mY );
 	}
 }
@@ -413,36 +419,51 @@ void USFont::Draw ( const USGlyphBuffer& layout, u32 reveal ) {
 //----------------------------------------------------------------//
 void USFont::DrawGlyph ( u32 c, float points, float x, float y ) {
 
-	USGlyph& glyph = this->GetGlyphForChar ( c );
+	const USGlyph& glyph = this->GetGlyphForChar ( c );
 	glyph.Draw ( points, x, y );
 }
 
 //----------------------------------------------------------------//
-void USFont::EndDrawing () {
+const USGlyph& USFont::GetGlyphForChar ( u32 c ) {
+
+	u32 id = this->GetIDForChar ( c );
+	return this->GetGlyphForID ( id );
 }
 
 //----------------------------------------------------------------//
-USGlyph& USFont::GetGlyph ( u32 id ) {
+USGlyph& USFont::GetGlyphForID ( u32 id ) {
 
-	return this->mGlyphs [ id ];
-}
-
-//----------------------------------------------------------------//
-USGlyph& USFont::GetGlyphForChar ( u32 c ) {
-
-	u32 id = this->mGlyphMap [ c ];
-	
-	u32 totalGlyphs = this->mGlyphs.Size ();
-	if ( totalGlyphs ) {
-	
-		if ( id < totalGlyphs ) {
-			return this->mGlyphs [ id ];
-		}
-		return this->mGlyphs [ 0 ];
+	if ( id == INVALID_ID ) {
+		return this->mDummy;
 	}
-	
-	static USGlyph nullGlyph;
-	return nullGlyph;
+
+	if ( id & WIDE_ID_BIT ) {
+		return this->mWideGlyphs [ id & WIDE_ID_MASK ];
+	}
+	return this->mByteGlyphs [ id ];
+}
+
+//----------------------------------------------------------------//
+u32 USFont::GetIDForChar ( u32 c ) {
+
+	if ( this->IsWideChar ( c )) {
+		
+		// TODO: replace sorted lookup w/ AVL tree
+		u32 size = this->mWideGlyphMap.Size ();
+		u32 id = USBinarySearch < u32 >( this->mWideGlyphMap, c, size );
+		if ( id < size ) {
+			return id | WIDE_ID_BIT;
+		}
+	}
+	else {
+		if ( this->mByteGlyphMapBase <= c ) {
+			c -= this->mByteGlyphMapBase;
+			if ( c < this->mByteGlyphMap.Size ()) {
+				return this->mByteGlyphMap [ c ];
+			}
+		}
+	}
+	return INVALID_ID;
 }
 
 //----------------------------------------------------------------//
@@ -545,12 +566,12 @@ USTextToken USFont::GetToken ( cc8* str, float points, USTextToken* prevToken ) 
 	}
 	
 	// gotta handle the first glyph...
-	USGlyph& firstGlyph = this->GetGlyphForChar ( c );
-	token.mLastGlyph = &this->GetGlyphForChar ( c );
+	const USGlyph& firstGlyph = this->GetGlyphForChar ( c );
+	token.mLastGlyph = &firstGlyph;
 	
 	// figure kerning
 	if ( prevToken && prevToken->mLastGlyph ) {
-		USKernVec kernVec = prevToken->mLastGlyph->GetKerning ( firstGlyph.mName );
+		USKernVec kernVec = prevToken->mLastGlyph->GetKerning ( firstGlyph.mCode );
 		token.mKern = kernVec.mX * points;
 	}
 	
@@ -562,18 +583,18 @@ USTextToken USFont::GetToken ( cc8* str, float points, USTextToken* prevToken ) 
 	}
 	
 	float x = 0.0f;
-	USGlyph* prevGlyph = 0;
+	const USGlyph* prevGlyph = 0;
 	
 	// word
 	while ( !_isWhitespace ( c )) {
 		
 		token.mNonWhitespace++;
 		
-		USGlyph& glyph = this->GetGlyphForChar ( c );
+		const USGlyph& glyph = this->GetGlyphForChar ( c );
 		token.mLastGlyph = &glyph;
 		
 		if ( prevGlyph ) {
-			USKernVec kernVec = prevGlyph->GetKerning ( glyph.mName );
+			USKernVec kernVec = prevGlyph->GetKerning ( glyph.mCode );
 			x += kernVec.mX * points;
 		}
 		
@@ -592,9 +613,62 @@ USTextToken USFont::GetToken ( cc8* str, float points, USTextToken* prevToken ) 
 }
 
 //----------------------------------------------------------------//
-void USFont::Init ( u32 totalGlyphs ) {
+void USFont::Init ( cc8* charCodes ) {
 	
-	this->mGlyphs.Init ( totalGlyphs );
+	USGlyph dummy;
+	this->mDummy = dummy;
+	
+	u32 byteCharTop = 0;
+	u32 byteCharBase = 0x000000ff;
+	u32 totalWideChars = 0;
+	
+	for ( int i = 0; charCodes [ i ]; ) {
+		u32 c = u8_nextchar( charCodes, &i );
+		
+		if ( this->IsWideChar ( c )) {
+			totalWideChars++;
+		}
+		else {
+			
+			if ( c < byteCharBase ) {
+				byteCharBase = c;
+			}
+			if ( c > byteCharTop ) {
+				byteCharTop = c;
+			}
+		}
+	}
+	
+	byteCharTop += 1;
+	u32 totalByteChars = ( byteCharBase < byteCharTop ) ? byteCharTop - byteCharBase : 0;
+	
+	this->mByteGlyphs.Init ( totalByteChars );
+	this->mByteGlyphMap.Init ( totalByteChars );
+	this->mByteGlyphMapBase = ( u8 )byteCharBase;
+	
+	this->mWideGlyphs.Init ( totalWideChars );
+	this->mWideGlyphMap.Init ( totalWideChars );
+	
+	u32 b = 0;
+	u32 w = 0;
+	for ( int i = 0; charCodes [ i ]; ) {
+		
+		u32 c = u8_nextchar( charCodes, &i );
+		
+		if ( this->IsWideChar ( c )) {
+			this->mWideGlyphMap [ w++ ] = c;
+		}
+		else {
+			this->mByteGlyphMap [ c - this->mByteGlyphMapBase ] = ( u8 )b++;
+		}
+	}
+	RadixSort32 < u32 >( this->mWideGlyphMap, totalWideChars );
+}
+
+//----------------------------------------------------------------//
+bool USFont::IsWideChar ( u32 c ) {
+
+	return ( c & 0xffffff00 ) != 0;
 }
 
 //----------------------------------------------------------------//
@@ -613,33 +687,6 @@ float USFont::Justify ( float x, float width, float lineWidth, u32 justify ) {
 	
 	return x;
 }
-
-//----------------------------------------------------------------//
-//void USFont::LayoutLine ( USGlyphBuffer& glyphBuffer, cc8* str, float points, float x, float y ) {
-//	
-//	if ( !this->mGlyphs.Size ()) return;
-//	
-//	USGlyph* prevGlyph = 0;
-//	
-//	USFontStringParser parser;
-//	parser.SetString ( str );
-//	
-//	for ( u32 i = 0; str [ i ]; ++i ) {
-//		
-//		u32 c = parser.GetNextChar ();
-//		USGlyph& glyph = this->GetGlyphForChar ( c );
-//		
-//		if ( prevGlyph ) {
-//			USKernVec kernVec = prevGlyph->GetKerning ( glyph.mName );
-//			x += kernVec.mX * points;
-//		}
-//		
-//		glyph.Draw ( points, x, y );
-//		x += ( glyph.mAdvanceX * points );
-//		
-//		prevGlyph = &glyph;
-//	}
-//}
 
 //----------------------------------------------------------------//
 u32 USFont::Layout ( USGlyphBuffer& glyphBuffer, cc8* str, float points, USRect frame, u32 justify, USTextStyler& styler, USAnimCurve** curves, u32 totalCurves ) {
@@ -691,23 +738,23 @@ u32 USFont::Layout ( USGlyphBuffer& glyphBuffer, cc8* str, float points, USRect 
 //----------------------------------------------------------------//
 void USFont::LayoutLine ( USGlyphBuffer& glyphBuffer, cc8* str, float points, u32 size, float x, float y, USTextStyler& styler, USAnimCurve* curve, u32 width, u32 xOff ) {
 	
-	if ( !this->mGlyphs.Size ()) return;
+	if ( !this->Size ()) return;
 	
 	float penX = 0.0f;
-	USGlyph* prevGlyph = 0;
+	const USGlyph* prevGlyph = 0;
 	
 	USFontStringParser parser;
 	parser.SetString ( str );
 	
-	while ( parser.mIdx < size ) {
+	while ( parser.mIdx < ( int )size ) {
 		
 		u32 c = parser.GetNextChar ( styler );
 		
-		u32 id = this->mGlyphMap [ c ];
-		USGlyph& glyph = this->mGlyphs [ id ];
+		u32 id = this->GetIDForChar ( c );
+		const USGlyph& glyph = this->GetGlyphForID ( id );
 		
 		if ( prevGlyph ) {
-			USKernVec kernVec = prevGlyph->GetKerning ( glyph.mName );
+			USKernVec kernVec = prevGlyph->GetKerning ( glyph.mCode );
 			penX += kernVec.mX * points;
 		}
 		
@@ -726,29 +773,28 @@ void USFont::LayoutLine ( USGlyphBuffer& glyphBuffer, cc8* str, float points, u3
 }
 
 //----------------------------------------------------------------//
-void USFont::SetCharGlyphID ( u32 c, u32 id ) {
+void USFont::SetGlyph ( const USGlyph& glyph ) {
 
-	this->mGlyphMap [ c ] = ( u8 )id;
-}
-
-//----------------------------------------------------------------//
-void USFont::SetGlyph ( u32 id, const USGlyph& glyph ) {
-
-	this->mGlyphs [ id ] = glyph;
-}
-
-//----------------------------------------------------------------//
-void USFont::SetGlyphMap ( cc8* mapString ) {
-
-	for ( u32 i = 0; mapString [ i ]; ++i ) {
+	u32 id = this->GetIDForChar ( glyph.mCode );
+	if ( id != INVALID_ID ) {
 	
-		char c = mapString [ i ];
-		this->mGlyphMap [( u32 )c ] = ( u8 )i;
+		if ( glyph.mAdvanceX > this->mDummy.mAdvanceX ) {
+			this->mDummy.mAdvanceX = glyph.mAdvanceX;
+		}
+	
+		this->GetGlyphForID ( id ) = glyph;
 	}
 }
 
 //----------------------------------------------------------------//
+u32 USFont::Size () {
+
+	return this->mByteGlyphs.Size () + this->mWideGlyphs.Size ();
+}
+
+//----------------------------------------------------------------//
 USFont::USFont () :
+	mByteGlyphMapBase ( 0 ),
 	mScale ( 1.0f ),
 	mLineSpacing ( 1.0f ) {
 }

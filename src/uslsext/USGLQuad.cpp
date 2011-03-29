@@ -148,7 +148,7 @@ void USGLQuad::ScaleVerts ( float xScale, float yScale ) {
 }
 
 //----------------------------------------------------------------//
-void USGLQuad::SetUVs ( USRect& rect ) {
+void USGLQuad::SetUVs ( const USRect& rect ) {
 	
 	// left top
 	this->mUV [ 0 ].mX = rect.mXMin;
@@ -208,7 +208,7 @@ void USGLQuad::SetUVs ( float x0, float y0, float x1, float y1 ) {
 }
 
 //----------------------------------------------------------------//
-void USGLQuad::SetUVs ( USVec2D& v0, USVec2D& v1, USVec2D& v2, USVec2D& v3 ) {
+void USGLQuad::SetUVs ( const USVec2D& v0, const USVec2D& v1,const  USVec2D& v2, const USVec2D& v3 ) {
 
 	// left top
 	this->mUV [ 0 ] = v0;
@@ -244,7 +244,7 @@ void USGLQuad::SetUVs ( float x0, float y0, float x1, float y1, float x2, float 
 }
 
 //----------------------------------------------------------------//
-void USGLQuad::SetVerts ( USRect& rect ) {
+void USGLQuad::SetVerts ( const USRect& rect ) {
 	
 	// left top
 	this->mVtx [ 0 ].mX = rect.mXMin;
@@ -304,7 +304,7 @@ void USGLQuad::SetVerts ( float x0, float y0, float x1, float y1 ) {
 }
 
 //----------------------------------------------------------------//
-void USGLQuad::SetVerts ( USVec2D& v0, USVec2D& v1, USVec2D& v2, USVec2D& v3 ) {
+void USGLQuad::SetVerts ( const USVec2D& v0, const USVec2D& v1, const USVec2D& v2, const USVec2D& v3 ) {
 
 	// left top
 	this->mVtx [ 0 ] = v0;
@@ -340,7 +340,7 @@ void USGLQuad::SetVerts ( float x0, float y0, float x1, float y1, float x2, floa
 }
 
 //----------------------------------------------------------------//
-void USGLQuad::SetVerts ( USVec2D& v0, float radius ) {
+void USGLQuad::SetVerts ( const USVec2D& v0, float radius ) {
 
 	this->SetVerts (
 		v0.mX - radius,

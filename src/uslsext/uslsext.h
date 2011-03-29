@@ -13,6 +13,7 @@
 #include <uslsext/USAttrMap.h>
 #include <uslsext/USAttrOp.h>
 #include <uslsext/USAutoPtr.h>
+#include <uslsext/USBinarySearch.h>
 #include <uslsext/USBlendMode.h>
 #include <uslsext/USBox.h>
 #include <uslsext/USCamera2D.h>

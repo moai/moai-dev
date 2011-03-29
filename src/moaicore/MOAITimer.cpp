@@ -12,9 +12,8 @@
 //----------------------------------------------------------------//
 /**	@name getTimesExecuted
 	@param1 self @type userdata
-	@param2 test @type userdata
 	@text Gets the number of times the timer has completed a cycle.
-	@return Number of times the timer has executed. (number)
+	@return Number of times the timer has executed. @type number
 */
 int MOAITimer::_getTimesExecuted ( lua_State* L ) {
 	LUA_SETUP ( MOAITimer, "UN" )
@@ -24,12 +23,10 @@ int MOAITimer::_getTimesExecuted ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief 
-	<tt>function setCallback ( self, func )</tt>\n
-	\n
-	Set a function to be called every time the timer finishes a cycle.
-	@param self (userdata)
-	@param func (function)
+/**	@name setCallback
+	@param1 self @type userdata
+	@param2 func @type function
+	@text Set a function to be called every time the timer finishes a cycle.
 	@return nil
 */
 int MOAITimer::_setCallback ( lua_State* L ) {
@@ -40,12 +37,10 @@ int MOAITimer::_setCallback ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief 
-	<tt>function setMode ( self, mode )</tt>\n
-	\n
-	Sets the timer mode.
-	@param self (userdata)
-	@param mode (number) Timer mode that should be used.
+/**	@name setMode
+	@param1 self @type userdata
+	@param2 mode @type number @text Timer mode that should be used.
+	@text Sets the timer mode.
 	@return nil
 */
 int MOAITimer::_setMode ( lua_State* L ) {
@@ -71,7 +66,7 @@ int MOAITimer::_setMode ( lua_State* L ) {
 	Sets the span of the timer.
 	@param self (userdata)
 	@param endTime (number) End time of the timer.
-	@param startTime (number) Start time of the timer. <em>Optional (default = 0)</em>
+	@param startTime (number) Start time of the timer. Optional <em>(default = 0)</em>
 	@return nil
 */
 int MOAITimer::_setSpan ( lua_State* L ) {
@@ -89,12 +84,10 @@ int MOAITimer::_setSpan ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief 
-	<tt>function setSpeed ( self, speed )</tt>\n
-	\n
-	Sets the speed of the timer.
-	@param self (userdata)
-	@param speed (number) Speed of the timer(?).
+/**	@name setSpeed
+	@param1 self @type userdata
+	@param2 speed @type number @text Speed of the timer(?).
+	@text Sets the speed of the timer.
 	@return nil
 */
 int MOAITimer::_setSpeed ( lua_State* L ) {
