@@ -9,11 +9,11 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@brief <tt>addChild ( self, child )</tt>\n
-\n
-	Attaches a child action updating.
-	@param self (in)
-	@param child (in)
+/**	@name addChild
+	@param1 self @type userdata
+	@param2 child @type userdata
+	@text Attaches a child action updating.
+	@return nil
 */
 int MOAIAction::_addChild ( lua_State* L ) {
 	
@@ -32,10 +32,10 @@ int MOAIAction::_addChild ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>clear ( self )</tt>\n
-\n
-	Removes all child actions.
-	@param self (in)
+/**	@name clear
+	@param1 self @type userdata
+	@text Removes all child actions.
+	@return nil
 */
 int MOAIAction::_clear ( lua_State* L ) {
 
@@ -51,11 +51,10 @@ int MOAIAction::_clear ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( busy ) isBusy ( self )</tt>\n
-\n
-	Checks to see if action is currently active.
-	@param self (in)
-	@param busy (out)
+/**	@name isBusy
+	@param1 self @type userdata
+	@text Checks to see if an action is currently active.
+	@return Whether the action is active. @type boolean
 */
 int MOAIAction::_isBusy ( lua_State* L ) {
 
@@ -70,10 +69,10 @@ int MOAIAction::_isBusy ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>start ( self )</tt>\n
-\n
-	Starts processing the action.
-	@param self (in)
+/**	@name start
+	@param1 self @type userdata
+	@text Starts processing the action.
+	@return This object. @type userdata
 */
 int MOAIAction::_start ( lua_State* L ) {
 
@@ -91,10 +90,10 @@ int MOAIAction::_start ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>stop ( self )</tt>\n
-\n
-	Stops processing of the action.
-	@param self (in)
+/**	@name stop
+	@param1 self @type userdata
+	@text Stops processing of the action.
+	@return nil
 */
 int MOAIAction::_stop ( lua_State* L ) {
 

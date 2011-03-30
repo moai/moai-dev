@@ -9,10 +9,10 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( length ) getLength ()</tt>\n
-	\n
-	Return the duration of the curve.
-	@param length (out)
+/**	@name getLength
+	@param1 self @type userdata
+	@text Returns the length of the curve.
+	@return The length of the curve. @type number
 */
 int MOAIAnimCurve::_getLength ( lua_State* L ) {
 	LUA_SETUP ( MOAIAnimCurve, "U" );
@@ -23,11 +23,11 @@ int MOAIAnimCurve::_getLength ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>init ( self, numKeys )</tt>\n
-	\n
-	Initializes an animation curve object.
-	@param self (in)
-	@param numKeys (in) The number of keyframes in the curve.
+/**	@name init
+	@param1 self @type userdata
+	@param2 numKeys @type userdata @text The number of keyframes in the curve.
+	@text Initalizes the curve with a set number of keyframes.
+	@return nil
 */
 int MOAIAnimCurve::_reserveKeys ( lua_State* L ) {
 	LUA_SETUP ( MOAIAnimCurve, "UN" );
@@ -38,14 +38,12 @@ int MOAIAnimCurve::_reserveKeys ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>setKey ( self, index, time, value, modde )</tt>\n
-	\n
-	Sets the location and properties of keyframes in the curve.
-	@param self (in)
-	@param index (in) The index of this keyframe in the table (starts at 0).
-	@param time (in) The timestamp of the keyframe, or when it occurs.
-	@param value (in) The value of the keyframe.
-	@param mode (in) The mode of the keyframe.  Essentially the shape of the curve. (optional , default is SMOOTH)
+/**	@name setKey
+	@param1 self @type userdata
+	@param2 index @type integer @text The index of the keyframe in the table (starts at 0).
+	@param3 time @type float @text The timestamp of the keyframe; when it occurs in the curve.
+	@param4 value @type float @text The value of the keyframe; how much the attribute will be modified when the curve is at this keyframe.
+	@param5 mode @type enum @text The mode of the keyframe.  Essentially the shape of the curve.  Defaults to SMOOTH; can be one of:
 	\li \c EASEIN - Slows down as it approaches the next keyframe.
 	\li \c EASEOUT - Comes slowly out of the current keyframe.
 	\li \c FLAT - No curve.  Keeps the same value until another keyframe is reached (best for animation frames).
@@ -54,6 +52,8 @@ int MOAIAnimCurve::_reserveKeys ( lua_State* L ) {
 	\li \c SOFT_EASEIN - Like EASEIN, but with a less snappy curve.
 	\li \c SOFT_EASEOUT - Like EASEOUT, but with a less snappy curve.
 	\li \c SOFT_SMOOTH - Like SMOOTH, but with a less snappy curve.
+	@text Sets the properties of a key within the curve.
+	@return nil
 */
 int MOAIAnimCurve::_setKey ( lua_State* L ) {
 	LUA_SETUP ( MOAIAnimCurve, "UNNN" );

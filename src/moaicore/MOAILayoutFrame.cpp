@@ -14,10 +14,10 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@brief <tt>() layout ( self )</tt>\n
-\n
-	Perform layout algorithm to layout hierarchy.
-	@param self (in)
+/**	@name layout
+	@param1 self @type userdata
+	@text Perform the layout algorithm to layout hierarchy.
+	@return nil
 */
 int MOAILayoutFrame::_layout ( lua_State* L ) {
 	LUA_SETUP ( MOAILayoutFrame, "U" )
@@ -28,13 +28,12 @@ int MOAILayoutFrame::_layout ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) setFit ( self, xFit, yFit )</tt>\n
-\n
-	Sets the fitting mode for each access.
-	Can be MOAILayoutFrame.FIT_EXPAND, MOAILayoutFrame.FIT_CONTENT or MOAILayoutFrame.FIT_ABSOLUTE.
-	@param self (in)
-	@param xFit (in)
-	@param yFit (in)
+/**	@name setFit
+	@param1 self @type userdata
+	@param2 xFit @type enum @text The fitting mode for the X axis; can be FIT_EXPAND, FIT_CONTENT or FIT_ABSOLUTE.
+	@param3 yFit @type enum @text The fitting mode for the Y axis; can be FIT_EXPAND, FIT_CONTENT or FIT_ABSOLUTE.
+	@text Sets the fitting mode for each axis.
+	@return nil
 */
 int	MOAILayoutFrame::_setFit ( lua_State* L ) {
 	LUA_SETUP ( MOAILayoutFrame, "U" )
@@ -46,12 +45,12 @@ int	MOAILayoutFrame::_setFit ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>() setIdealSize ( self, xSize, ySize )</tt>\n
-\n
-	Sets the size hint used for fitting.
-	@param self (in)
-	@param xSize (in)
-	@param ySize (in)
+/**	@name setIdealSize
+	@param1 self @type userdata
+	@param2 xSize @type number @text The size hinting for the X axis.
+	@param3 ySize @type number @text The size hinting for the Y axis.
+	@text Sets the size hint used for fitting.
+	@return nil
 */
 int	MOAILayoutFrame::_setIdealSize ( lua_State* L ) {
 	LUA_SETUP ( MOAILayoutFrame, "U" )
@@ -63,15 +62,12 @@ int	MOAILayoutFrame::_setIdealSize ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>() setLayout ( self, xFit, yFit )</tt>\n
-\n
-	Sets the layout mode for each access.
-	Can be MOAILayoutFrame.LAYOUT_ALIGN_MIN, MOAILayoutFrame.LAYOUT_ALIGN_MAX or MOAILayoutFrame.LAYOUT_ALIGN_CENTER,
-	MOAILayoutFrame.LAYOUT_JUSTIFY_MIN, MOAILayoutFrame.LAYOUT_JUSTIFY_MAX or MOAILayoutFrame.LAYOUT_JUSTIFY_CENTER.
-	In this case, MIN, CENTER and MAX refer to the border along each axis. So on the x axis, MIN would
-	be left and MAX would be right.
-	@param self (in)
-	@param y (in)
+/**	@name setLayout
+	@param1 self @type userdata
+	@param2 xLayout @type enum @text The alignment and justification mode for the X axis.
+	@param3 yLayout @type enum @text The alignment and justification mode for the Y axis.
+	@text Sets the layout mode for each axis.  Each argument can be one of LAYOUT_ALIGN_{MIN,CENTER,MAX} combined with LAYOUT_JUSTIFY_{MIN,CENTER,MAX}.  In this case, MIN, CENTER and MAX refer to the border along each axis; for the X axis MIN would be left and MAX would be right.
+	@return nil
 */
 int	MOAILayoutFrame::_setLayout ( lua_State* L ) {
 	LUA_SETUP ( MOAILayoutFrame, "U" )
@@ -83,15 +79,14 @@ int	MOAILayoutFrame::_setLayout ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>() setMargin ( self, left, top, right, bottom )</tt>\n
-\n
-	Sets the interior margin of the layout. This is the space left between
-	the edge of the layout and the content.
-	@param self (in)
-	@param left (in)
-	@param top (in)
-	@param right (in)
-	@param bottom (in)
+/**	@name setMargin
+	@param1 self @type userdata
+	@param2 left @type number @text The margin between the left edge of the layout and the content.
+	@param3 top @type number @text The margin between the top edge of the layout and the content.
+	@param4 right @type number @text The margin between the right edge of the layout and the content.
+	@param5 bottom @type number @text The margin between the bottom edge of the layout and the content.
+	@text Sets the interior margins of the layout.  This is the space between the edge of the layout and the content.
+	@return nil
 */
 int MOAILayoutFrame::_setMargin ( lua_State* L ) {
 	LUA_SETUP ( MOAILayoutFrame, "U" )
@@ -105,15 +100,12 @@ int MOAILayoutFrame::_setMargin ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>() setWeight ( self, xWeight, yWeight )</tt>\n
-\n
-	Sets the stretch weight for stretchable layours (i.e. FIT_EXPAND). This is the
-	proportional stretch relative to all other stretchable layouts. Factors are
-	evaluated relative to each other, so any number space can be used: 1, 2, 5 is
-	equivalent to 0.5, 1, 2.5.
-	@param self (in)
-	@param xWeight (in)
-	@param yWeight (in)
+/**	@name setWeight
+	@param1 self @type userdata
+	@param2 xWeight @type number @text The weighting for the X axis.
+	@param3 yWeight @type number @text The weighting for the Y axis.
+	@text Sets the stretch weighting for stretchable layouts (i.e. FIT_EXPAND).  This is the proportional stretch relative to each other, so any number space can be used; 1, 2, 5 is the same as 0.5, 1, 2.5.
+	@return nil
 */
 int	MOAILayoutFrame::_setWeight ( lua_State* L ) {
 	LUA_SETUP ( MOAILayoutFrame, "U" )
