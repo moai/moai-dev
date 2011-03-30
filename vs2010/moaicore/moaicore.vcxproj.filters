@@ -327,6 +327,9 @@
     <ClCompile Include="..\..\src\moaicore\MOAIDeck.cpp">
       <Filter>src\scene</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIMesh.cpp">
+      <Filter>src\scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\moaicore\MOAIAction.h">
@@ -588,6 +591,9 @@
       <Filter>src\transform</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIDeck.h">
+      <Filter>src\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIMesh.h">
       <Filter>src\scene</Filter>
     </ClInclude>
   </ItemGroup>

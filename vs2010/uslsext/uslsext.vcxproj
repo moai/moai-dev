@@ -244,6 +244,8 @@
     <ClCompile Include="..\..\src\uslsext\USGLQuad.cpp" />
     <ClCompile Include="..\..\src\uslsext\USImage.cpp" />
     <ClCompile Include="..\..\src\uslsext\USTexture.cpp" />
+    <ClCompile Include="..\..\src\uslsext\USVertexFormat.cpp" />
+    <ClCompile Include="..\..\src\uslsext\USVertexFormatMgr.cpp" />
     <ClCompile Include="..\..\src\uslsext\USViewport.cpp" />
     <ClCompile Include="..\..\src\uslsext\USViewQuad.cpp" />
     <ClCompile Include="..\..\src\uslsext\USData.cpp" />
@@ -330,6 +332,8 @@
     <ClInclude Include="..\..\src\uslsext\USGLQuad.h" />
     <ClInclude Include="..\..\src\uslsext\USImage.h" />
     <ClInclude Include="..\..\src\uslsext\USTexture.h" />
+    <ClInclude Include="..\..\src\uslsext\USVertexFormat.h" />
+    <ClInclude Include="..\..\src\uslsext\USVertexFormatMgr.h" />
     <ClInclude Include="..\..\src\uslsext\USViewport.h" />
     <ClInclude Include="..\..\src\uslsext\USViewQuad.h" />
     <ClInclude Include="..\..\src\uslsext\USData.h" />

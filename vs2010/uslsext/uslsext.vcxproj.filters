@@ -252,6 +252,12 @@
     <ClCompile Include="..\..\src\uslsext\uslsext.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\USVertexFormat.cpp">
+      <Filter>src\gfxDevice</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\USVertexFormatMgr.cpp">
+      <Filter>src\gfxDevice</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\uslsext\USAnimCurve.h">
@@ -484,6 +490,12 @@
     </ClInclude>
     <ClInclude Include="..\..\src\uslsext\pch.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USVertexFormat.h">
+      <Filter>src\gfxDevice</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USVertexFormatMgr.h">
+      <Filter>src\gfxDevice</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
