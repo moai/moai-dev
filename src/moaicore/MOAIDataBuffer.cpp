@@ -10,7 +10,11 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name base64Decode
+	@param1 self|data @type userdata|string @text The string to decode, or a reference to the current object (self).
+	@text If a string is provided, decodes it as a base64 encoded string.  Otherwise, decodes the current data stored in this object as a base64 encoded sequence of characters.
+	@return If passed a string, returns either a string or nil depending on whether it could be decoded.  Otherwise the decoding occurs inline on the existing data buffer in this object, and nil is returned.
+*/
 int MOAIDataBuffer::_base64Decode ( lua_State* L ) {
 	USLuaState state ( L );
 	
@@ -26,7 +30,11 @@ int MOAIDataBuffer::_base64Decode ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name base64Encode
+	@param1 self|data @type userdata|string @text The string to encode, or a reference to the current object (self).
+	@text If a string is provided, encodes it in base64.  Otherwise, encodes the current data stored in this object as a base64 encoded sequence of characters.
+	@return If passed a string, returns either a string or nil depending on whether it could be encoded.  Otherwise the encoding occurs inline on the existing data buffer in this object, and nil is returned.
+*/
 int MOAIDataBuffer::_base64Encode ( lua_State* L ) {
 	USLuaState state ( L );
 	
@@ -42,7 +50,13 @@ int MOAIDataBuffer::_base64Encode ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name deflate
+	@param1 self|data @type userdata|string @text The string to deflate, or a reference to the current object (self).
+	@param2 level @type number @text The level used in the DEFLATE algorithm.  Pass nil to use the default value.
+	@param3 windowBits @type number @text The window bits used in the DEFLATE algorithm.  Pass nil to use the default value.
+	@text Compresses the string or the current data stored in this object using the DEFLATE algorithm.
+	@return If passed a string, returns either a string or nil depending on whether it could be compressed.  Otherwise the compression occurs inline on the existing data buffer in this object, and nil is returned.
+*/
 int MOAIDataBuffer::_deflate ( lua_State* L ) {
 	USLuaState state ( L );
 
@@ -61,9 +75,10 @@ int MOAIDataBuffer::_deflate ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>getSize ()</tt>\n
-\n
-	Returns the number of bytes in this object.
+/**	@name getSize
+	@param1 self @type userdata
+	@text Returns the number of bytes in this data buffer object.
+	@return The number of bytes in this data buffer object. @type number
 */
 int MOAIDataBuffer::_getSize ( lua_State* L ) {
 	LUA_SETUP ( MOAIDataBuffer, "U" );
@@ -80,7 +95,11 @@ int MOAIDataBuffer::_getSize ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name getString
+	@param1 self @type userdata
+	@text Returns the contents of the data buffer object as a string value.
+	@return The data buffer object as a string. @type string
+*/
 int MOAIDataBuffer::_getString ( lua_State* L ) {
 	LUA_SETUP ( MOAIDataBuffer, "U" );
 
@@ -95,7 +114,12 @@ int MOAIDataBuffer::_getString ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name inflate
+	@param1 self|data @type userdata|string @text The string to inflate, or a reference to the current object (self).
+	@param2 windowBits @type number @text The window bits used in the DEFLATE algorithm.  Pass nil to use the default value.
+	@text Decompresses the string or the current data stored in this object using the DEFLATE algorithm.
+	@return If passed a string, returns either a string or nil depending on whether it could be decompressed.  Otherwise the decompression occurs inline on the existing data buffer in this object, and nil is returned.
+*/
 int MOAIDataBuffer::_inflate ( lua_State* L ) {
 	USLuaState state ( L );
 
@@ -113,11 +137,11 @@ int MOAIDataBuffer::_inflate ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>load (filename)</tt>\n
-\n
-	Copies the data from the given file into this object.  Method call blocks until operation is complete.
-	@param filename source to read from
-	@return boolean value indicating success or failure
+/**	@name load
+	@param1 self @type userdata
+	@param2 filename @type string @text The path to the file that the data should be loaded from.
+	@text Copies the data from the given file into this object.  This method is a synchronous operation and will block until the file is loaded.
+	@return Whether the file could be loaded into the object. @type boolean
 */
 int MOAIDataBuffer::_load ( lua_State* L ) {
 	LUA_SETUP ( MOAIDataBuffer, "US" );
@@ -131,12 +155,11 @@ int MOAIDataBuffer::_load ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>loadAsync (filename)</tt>\n
-\n
-	Asynchronously copies the data from the given file into this object.  Method call returns immediately.
-	@see setCallback
-	@param filename source to read from
-	@return an action that determines state of the task.
+/**	@name loadAsync
+	@param1 self @type userdata
+	@param2 filename @type string @text The path to the file that the data should be loaded from.
+	@text Asynchronously copies the data from the given file into this object.  This method is an asynchronous operation and will return immediately; the callback for completion should be set using setCallback.
+	@return A new MOAIDataIOAction which indicates the status of the task. @type userdata
 */
 int MOAIDataBuffer::_loadAsync ( lua_State* L ) {
 	LUA_SETUP ( MOAIDataBuffer, "US" );
@@ -152,11 +175,11 @@ int MOAIDataBuffer::_loadAsync ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>save (filename)</tt>\n
-\n
-	Saves this object's data into the given file.  Method call blocks until operation is complete.
-	@param filename destination to write to
-	@return boolean value indicating success or failure
+/**	@name save
+	@param1 self @type userdata
+	@param2 filename @type string @text The path to the file that the data should be saved to.
+	@text Saves the data in this object to the given file.  This method is a synchronous operation and will block until the data is saved.
+	@return Whether the data could be saved to the file. @type boolean
 */
 int MOAIDataBuffer::_save ( lua_State* L ) {
 	LUA_SETUP ( MOAIDataBuffer, "US" );
@@ -171,7 +194,12 @@ int MOAIDataBuffer::_save ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name saveAsync
+	@param1 self @type userdata
+	@param2 filename @type string @text The path to the file that the data should be saved to.
+	@text Asynchronously saves the data in this object to the given file.  This method is an asynchronous operation and will return immediately; the callback for completion should be set using setCallback.
+	@return A new MOAIDataIOAction which indicates the status of the task. @type userdata
+*/
 int MOAIDataBuffer::_saveAsync ( lua_State* L ) {
 	LUA_SETUP ( MOAIDataBuffer, "US" );
 
@@ -186,7 +214,12 @@ int MOAIDataBuffer::_saveAsync ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name setString
+	@param1 self @type userdata
+	@param2 data @type string @text The string data to replace the contents of this object with.
+	@text Replaces the contents of this object with the string specified.
+	@return nil
+*/
 int MOAIDataBuffer::_setString ( lua_State* L ) {
 	LUA_SETUP ( MOAIDataBuffer, "US" );
 

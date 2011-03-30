@@ -10,12 +10,11 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( xml ) parseFile  ( self, filename )</tt>\n
-\n
-	Parses the contents of a file into an xml tree.
-	@param self (in)
-	@param filename (in) Name of file containing xml.
-	@param xml (out) Tree of tables parsed from xml.
+/**	@name parseFile
+	@param1 self @type userdata
+	@param2 filename @type string @text The path of the file to read the XML data from.
+	@text Parses the contents of the specified file as XML.
+	@return A tree of tables representing the XML. @type table
 */
 int MOAIXmlParser::_parseFile ( lua_State* L ) {
 
@@ -32,12 +31,11 @@ int MOAIXmlParser::_parseFile ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( xml ) parseString  ( self, string )</tt>\n
-\n
-	Parses the contents of a string into an xml tree.
-	@param self (in)
-	@param string (in) String to parse.
-	@param xml (out) Tree of tables parsed from xml.
+/**	@name parseString
+	@param1 self @type userdata
+	@param2 data @type string @text The XML data stored in a string.
+	@text Parses the contents of the specified string as XML.
+	@return A tree of tables representing the XML. @type table
 */
 int MOAIXmlParser::_parseString ( lua_State* L ) {
 
