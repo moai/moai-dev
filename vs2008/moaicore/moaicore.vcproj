@@ -409,40 +409,8 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="scene"
+			Name="layer"
 			>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIDeck.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIDeck.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIGfxQuad2D.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIGfxQuad2D.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIGfxQuadDeck2D.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIGfxQuadDeck2D.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIGfxQuadListDeck2D.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIGfxQuadListDeck2D.h"
-				>
-			</File>
 			<File
 				RelativePath="..\..\src\moaicore\MOAILayer2D.cpp"
 				>
@@ -457,38 +425,6 @@
 			</File>
 			<File
 				RelativePath="..\..\src\moaicore\MOAILayerBridge2D.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIMesh.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIMesh.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIStretchPatch2D.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIStretchPatch2D.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAISurfaceDeck2D.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAISurfaceDeck2D.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAITileDeck2D.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAITileDeck2D.h"
 				>
 			</File>
 		</Filter>
@@ -1085,6 +1021,74 @@
 			</File>
 			<File
 				RelativePath="..\..\src\moaicore\MOAIProp2D.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="deck"
+			>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIDeck.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIDeck.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIGfxQuad2D.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIGfxQuad2D.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIGfxQuadDeck2D.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIGfxQuadDeck2D.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIGfxQuadListDeck2D.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIGfxQuadListDeck2D.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIMesh.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIMesh.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIStretchPatch2D.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIStretchPatch2D.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAISurfaceDeck2D.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAISurfaceDeck2D.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAITileDeck2D.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAITileDeck2D.h"
 				>
 			</File>
 		</Filter>

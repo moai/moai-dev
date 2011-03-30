@@ -23,11 +23,7 @@ SUPPRESS_EMPTY_FILE_WARNING
 int MOAIBox2DArbiter::_countContacts ( lua_State* L ) {
 	LUA_SETUP ( MOAIBox2DArbiter, "U" )
 
-	//if ( self->mArbiter ) {
-	//	int count = cpArbiterGetCount ( self->mArbiter );
-	//	lua_pushnumber ( state, count );
-	//	return 1;
-	//}
+	// TODO: Box2D
 	return 0;
 }
 
@@ -41,12 +37,7 @@ int MOAIBox2DArbiter::_countContacts ( lua_State* L ) {
 int MOAIBox2DArbiter::_getContactDepth ( lua_State* L ) {
 	LUA_SETUP ( MOAIBox2DArbiter, "UN" )
 
-	//if ( self->mArbiter ) {
-	//	int i = state.GetValue < int >( 2, 0 );
-	//	cpFloat d = cpArbiteGetDepth ( self->mArbiter, i );
-	//	lua_pushnumber ( state, d );
-	//	return 1;	
-	//}
+	// TODO: Box2D
 	return 0;
 }
 
@@ -60,13 +51,7 @@ int MOAIBox2DArbiter::_getContactDepth ( lua_State* L ) {
 int MOAIBox2DArbiter::_getContactNormal ( lua_State* L ) {
 	LUA_SETUP ( MOAIBox2DArbiter, "UN" )
 
-	//if ( self->mArbiter ) {
-	//	int i = state.GetValue < int >( 2, 0 );
-	//	cpVect n = cpArbiterGetNormal ( self->mArbiter, i );
-	//	lua_pushnumber ( state, n.x );
-	//	lua_pushnumber ( state, n.y );
-	//	return 2;	
-	//}
+	// TODO: Box2D
 	return 0;
 }
 
@@ -80,13 +65,7 @@ int MOAIBox2DArbiter::_getContactNormal ( lua_State* L ) {
 int MOAIBox2DArbiter::_getContactPoint ( lua_State* L ) {
 	LUA_SETUP ( MOAIBox2DArbiter, "UN" )
 
-	//if ( self->mArbiter ) {
-	//	int i = state.GetValue < int >( 2, 0 );
-	//	cpVect p = cpArbiterGetPoint ( self->mArbiter, i );
-	//	lua_pushnumber ( state, p.x );
-	//	lua_pushnumber ( state, p.y );
-	//	return 2;	
-	//}
+	// TODO: Box2D
 	return 0;
 }
 
@@ -100,12 +79,7 @@ int MOAIBox2DArbiter::_getContactPoint ( lua_State* L ) {
 int MOAIBox2DArbiter::_getTotalImpulse ( lua_State* L ) {
 	LUA_SETUP ( MOAIBox2DArbiter, "U" )
 
-	//if ( self->mArbiter ) {
-	//	cpVect v = cpArbiterTotalImpulse ( self->mArbiter );
-	//	lua_pushnumber ( state, v.x );
-	//	lua_pushnumber ( state, v.y );
-	//	return 2;	
-	//}
+	// TODO: Box2D
 	return 0;
 }
 
@@ -119,12 +93,7 @@ int MOAIBox2DArbiter::_getTotalImpulse ( lua_State* L ) {
 int MOAIBox2DArbiter::_getTotalImpulseWithFriction ( lua_State* L ) {
 	LUA_SETUP ( MOAIBox2DArbiter, "U" )
 
-	//if ( self->mArbiter ) {
-	//	cpVect v = cpArbiterTotalImpulseWithFriction ( self->mArbiter );
-	//	lua_pushnumber ( state, v.x );
-	//	lua_pushnumber ( state, v.y );
-	//	return 2;		
-	//}
+	// TODO: Box2D
 	return 0;
 }
 
@@ -138,11 +107,7 @@ int MOAIBox2DArbiter::_getTotalImpulseWithFriction ( lua_State* L ) {
 int MOAIBox2DArbiter::_isFirstContact ( lua_State* L ) {
 	LUA_SETUP ( MOAIBox2DArbiter, "U" )
 
-	//if ( self->mArbiter ) {
-	//	bool b = cpArbiterIsFirstContact ( self->mArbiter ) == cpTrue;
-	//	lua_pushboolean ( state, b );
-	//	return 1;
-	//}
+	// TODO: Box2D
 	return 0;
 }
 
