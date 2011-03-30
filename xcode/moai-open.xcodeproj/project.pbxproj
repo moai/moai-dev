@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		033146EB1343C1BE00095C11 /* USVertexFormat.h in Headers */ = {isa = PBXBuildFile; fileRef = 033146E71343C1BE00095C11 /* USVertexFormat.h */; };
+		033146ED1343C1BE00095C11 /* USVertexFormatMgr.h in Headers */ = {isa = PBXBuildFile; fileRef = 033146E91343C1BE00095C11 /* USVertexFormatMgr.h */; };
+		033146F11343C1EE00095C11 /* MOAIMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 033146EF1343C1EE00095C11 /* MOAIMesh.cpp */; };
+		033146F21343C1EE00095C11 /* MOAIMesh.h in Headers */ = {isa = PBXBuildFile; fileRef = 033146F01343C1EE00095C11 /* MOAIMesh.h */; };
+		033146F31343C31400095C11 /* USVertexFormat.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 033146E61343C1BE00095C11 /* USVertexFormat.cpp */; };
+		033146F41343C31400095C11 /* USVertexFormatMgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 033146E81343C1BE00095C11 /* USVertexFormatMgr.cpp */; };
 		0379C59B1333ED1400E89DDC /* b2CircleShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDE3B69413257D270088A619 /* b2CircleShape.cpp */; };
 		0379C59C1333ED1400E89DDC /* b2CircleShape.h in Headers */ = {isa = PBXBuildFile; fileRef = CDE3B69513257D270088A619 /* b2CircleShape.h */; };
 		0379C59D1333ED1400E89DDC /* b2PolygonShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDE3B69613257D270088A619 /* b2PolygonShape.cpp */; };
@@ -853,6 +859,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		033146E61343C1BE00095C11 /* USVertexFormat.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = USVertexFormat.cpp; path = ../src/uslsext/USVertexFormat.cpp; sourceTree = "<group>"; };
+		033146E71343C1BE00095C11 /* USVertexFormat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = USVertexFormat.h; path = ../src/uslsext/USVertexFormat.h; sourceTree = "<group>"; };
+		033146E81343C1BE00095C11 /* USVertexFormatMgr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = USVertexFormatMgr.cpp; path = ../src/uslsext/USVertexFormatMgr.cpp; sourceTree = "<group>"; };
+		033146E91343C1BE00095C11 /* USVertexFormatMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = USVertexFormatMgr.h; path = ../src/uslsext/USVertexFormatMgr.h; sourceTree = "<group>"; };
+		033146EF1343C1EE00095C11 /* MOAIMesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIMesh.cpp; path = ../src/moaicore/MOAIMesh.cpp; sourceTree = "<group>"; };
+		033146F01343C1EE00095C11 /* MOAIMesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIMesh.h; path = ../src/moaicore/MOAIMesh.h; sourceTree = "<group>"; };
 		0379C5961333ECD800E89DDC /* lib3rdParty.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = lib3rdParty.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		03C2174B104DE581009A2D5D /* lapi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lapi.c; path = "../3rdparty/lua-5.1.3/src/lapi.c"; sourceTree = SOURCE_ROOT; };
 		03C2174C104DE581009A2D5D /* lapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lapi.h; path = "../3rdparty/lua-5.1.3/src/lapi.h"; sourceTree = SOURCE_ROOT; };
@@ -2640,6 +2652,10 @@
 				CDB71E8B134156FF00633B13 /* USTypedPtr.h */,
 				CDB71E8C134156FF00633B13 /* USUrlMgr.cpp */,
 				CDB71E8D134156FF00633B13 /* USUrlMgr.h */,
+				033146E61343C1BE00095C11 /* USVertexFormat.cpp */,
+				033146E71343C1BE00095C11 /* USVertexFormat.h */,
+				033146E81343C1BE00095C11 /* USVertexFormatMgr.cpp */,
+				033146E91343C1BE00095C11 /* USVertexFormatMgr.h */,
 				CDB71E8E134156FF00633B13 /* USViewport.cpp */,
 				CDB71E8F134156FF00633B13 /* USViewport.h */,
 				CDB71E90134156FF00633B13 /* USViewQuad.cpp */,
@@ -2754,6 +2770,8 @@
 				CDB71C5E134156C800633B13 /* MOAILogMessages.h */,
 				CDB71C5F134156C800633B13 /* MOAILogMgr.cpp */,
 				CDB71C60134156C800633B13 /* MOAILogMgr.h */,
+				033146EF1343C1EE00095C11 /* MOAIMesh.cpp */,
+				033146F01343C1EE00095C11 /* MOAIMesh.h */,
 				CDB71C61134156C800633B13 /* MOAINode.cpp */,
 				CDB71C62134156C800633B13 /* MOAINode.h */,
 				CDB71C63134156C800633B13 /* MOAINodeMgr.cpp */,
@@ -3030,6 +3048,8 @@
 				0379C73C1333ED1400E89DDC /* tinyxml.h in Headers */,
 				CD885E401342722400FD15A1 /* USBinarySearch.h in Headers */,
 				CD885E461342727C00FD15A1 /* utf8.h in Headers */,
+				033146EB1343C1BE00095C11 /* USVertexFormat.h in Headers */,
+				033146ED1343C1BE00095C11 /* USVertexFormatMgr.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3258,6 +3278,7 @@
 				CDB71F23134156FF00633B13 /* USViewport.h in Headers */,
 				CDB71F25134156FF00633B13 /* USViewQuad.h in Headers */,
 				CDB71F27134156FF00633B13 /* USXmlReader.h in Headers */,
+				033146F21343C1EE00095C11 /* MOAIMesh.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3579,6 +3600,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				033146F31343C31400095C11 /* USVertexFormat.cpp in Sources */,
+				033146F41343C31400095C11 /* USVertexFormatMgr.cpp in Sources */,
 				CD7B3F4212FA484B00A90AA5 /* AKU.cpp in Sources */,
 				CD7B3F4412FA484B00A90AA5 /* pch.cpp in Sources */,
 				CDB71CA9134156C800633B13 /* MOAIAction.cpp in Sources */,
@@ -3767,6 +3790,7 @@
 				CDB71F22134156FF00633B13 /* USViewport.cpp in Sources */,
 				CDB71F24134156FF00633B13 /* USViewQuad.cpp in Sources */,
 				CDB71F26134156FF00633B13 /* USXmlReader.cpp in Sources */,
+				033146F11343C1EE00095C11 /* MOAIMesh.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

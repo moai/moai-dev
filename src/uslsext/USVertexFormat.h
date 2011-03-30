@@ -32,8 +32,8 @@ private:
 	
 	GLint		mSize;
 	GLenum		mType;		// type of the element
-	GLenum		mUse;		// type of gl array (i.e. GL_COLOR_ARRAY, GL_NORMAL_ARRAY, etc.)
 	u32			mOffset;
+	GLenum		mUse;		// type of gl array (i.e. GL_COLOR_ARRAY, GL_NORMAL_ARRAY, etc.)
  	u32			mIsEnabled;
  	
 	//----------------------------------------------------------------//

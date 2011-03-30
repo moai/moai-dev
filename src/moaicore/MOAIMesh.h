@@ -32,7 +32,8 @@ public:
 	//----------------------------------------------------------------//
 	bool			Bind					();
 	void			Draw					( const USAffine2D& transform, u32 idx );
-	USRect			GetBounds				( u32 idx );
+    void            Draw					( const USAffine2D& transform, MOAIGrid& grid, USTileCoord& c0, USTileCoord& c1 );
+    USRect			GetBounds				( u32 idx );
 					MOAIMesh				();
 					~MOAIMesh				();
 	void			RegisterLuaClass		( USLuaState& state );

@@ -60,6 +60,14 @@ void MOAIMesh::Draw ( const USAffine2D& transform, u32 idx ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIMesh::Draw ( const USAffine2D& transform, MOAIGrid& grid, USTileCoord& c0, USTileCoord& c1 ) {
+	UNUSED ( transform );
+	UNUSED ( grid );
+	UNUSED ( c0 );
+	UNUSED ( c1 );
+}
+
+//----------------------------------------------------------------//
 USRect MOAIMesh::GetBounds ( u32 idx ) {
 	UNUSED ( idx );
 	
