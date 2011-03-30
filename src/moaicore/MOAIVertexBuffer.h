@@ -47,15 +47,15 @@ public:
 	DECL_LUA_FACTORY ( MOAIVertexBuffer )
 	
 	//----------------------------------------------------------------//
-	bool		Bind					();
-				MOAIVertexBuffer		();
-				~MOAIVertexBuffer		();
-	void		RegisterLuaClass		( USLuaState& state );
-	void		RegisterLuaFuncs		( USLuaState& state );
-	void		Release					();
-	void		Reserve					( u32 vertexCount );
-	void		SetVertexElement		( u32 vtx, u32 elemIdx, float* params );
-	STLString	ToString				();
+	bool			Bind					();
+					MOAIVertexBuffer		();
+					~MOAIVertexBuffer		();
+	void			RegisterLuaClass		( USLuaState& state );
+	void			RegisterLuaFuncs		( USLuaState& state );
+	void			Release					();
+	void			Reserve					( u32 vertexCount );
+	void			SetVertexElement		( u32 vtx, u32 elemIdx, float* params );
+	STLString		ToString				();
 };
 
 #endif

@@ -7,125 +7,15 @@
 #include <uslsext/USTexture.h>
 
 //================================================================//
-// USGfxArrayInfo
-//================================================================//
-
-//----------------------------------------------------------------//
-void USGfxArrayInfo::Bind ( USDrawBuffer& drawBuffer, u32 type, size_t base, u32 stride ) {
-
-	if (( this->mState == STAY_BOUND ) && ( this->mStride != stride )) {
-		this->mState = BIND;
-	}
-
-	if ( this->mState == UNBIND ) {
-		
-		drawBuffer.Flush ();
-		this->mStride = 0;
-		this->mState = STAY_UNBOUND;
-		
-		glDisableClientState ( type );
-	}	
-	else if ( this->mState == BIND ) {
-		
-		drawBuffer.Flush ();
-		this->mStride = stride;
-		this->mState = STAY_BOUND;
-		
-		void* buffer = ( void* )( base + this->mOffset );
-	
-		switch ( type ) {
-			case GL_COLOR_ARRAY:
-				glColorPointer ( this->mSize, this->mType, stride, buffer );
-				break;
-			case GL_NORMAL_ARRAY:
-				glNormalPointer ( this->mType, stride, buffer );
-				break;
-			case GL_TEXTURE_COORD_ARRAY:
-				glTexCoordPointer ( this->mSize, this->mType, stride, buffer );
-				break;
-			case GL_VERTEX_ARRAY:
-				glVertexPointer ( this->mSize, this->mType, stride, buffer );
-				break;
-			default:
-				break;
-		}
-		
-		glEnableClientState ( type );
-	}
-}
-
-//----------------------------------------------------------------//
-bool USGfxArrayInfo::Compare ( GLint size, GLenum type, u32 offset ) const {
-
-	return (
-		( this->mState != STAY_UNBOUND ) &&
-		( this->mSize == size ) &&
-		( this->mType == type ) &&
-		( this->mOffset == offset )
-	);
-}
-
-//----------------------------------------------------------------//
-USGfxArrayInfo::USGfxArrayInfo () :
-	mSize ( 0 ),
-	mType ( 0 ),
-	mOffset ( 0 ),
-	mState ( UNBIND ),
-	mStride ( 0 ) {
-}
-
-//----------------------------------------------------------------//
-void USGfxArrayInfo::Set () {
-
-	if ( this->mState == STAY_BOUND ) {
-		this->mState = UNBIND;
-	}
-}
-
-//----------------------------------------------------------------//
-void USGfxArrayInfo::Set ( GLint size, GLenum type, u32 offset ) {
-
-	if ( this->Compare ( size, type, offset )) {
-		this->mState = STAY_BOUND;
-	}
-	else {
-		this->mSize = size;
-		this->mType = type;
-		this->mOffset = offset;
-		this->mState = BIND;
-	}
-}
-
-//----------------------------------------------------------------//
-void USGfxArrayInfo::Unbind ( u32 type ) {
-
-	this->mStride = 0;
-	this->mState = STAY_UNBOUND;
-	
-	glDisableClientState ( type );
-}
-
-//================================================================//
 // USDrawBuffer
 //================================================================//
-
-//----------------------------------------------------------------//
-void USDrawBuffer::BeginFormat () {
-
-	this->mVertexSize = 0;
-	
-	this->mArrayInfo [ ARRAY_COLOR ].Set ();
-	this->mArrayInfo [ ARRAY_NORMAL ].Set ();
-	this->mArrayInfo [ ARRAY_TEX_COORD ].Set ();
-	this->mArrayInfo [ ARRAY_VERTEX ].Set ();
-}
 
 //----------------------------------------------------------------//
 void USDrawBuffer::BeginPrim () {
 
 	if ( this->mPrimSize ) {
 
-		u32 primBytes = this->mPrimSize * this->mVertexSize;
+		u32 primBytes = this->mPrimSize * this->mVertexFormat.GetVertexSize ();
 
 		this->mMaxPrims = ( u32 )( this->mSize / primBytes );
 		this->mPrimTop = this->mTop + primBytes;
@@ -137,57 +27,6 @@ void USDrawBuffer::BeginPrim ( u32 primType ) {
 
 	this->SetPrimType ( primType );
 	this->BeginPrim ();
-}
-
-//----------------------------------------------------------------//
-void USDrawBuffer::BindColorArray () {
-
-	USGfxArrayInfo& arrayInfo = this->mArrayInfo [ ARRAY_COLOR ];
-	arrayInfo.Set ();
-}
-
-//----------------------------------------------------------------//
-void USDrawBuffer::BindColorArray ( GLenum type ) {
-
-	USGfxArrayInfo& arrayInfo = this->mArrayInfo [ ARRAY_COLOR ];
-	
-	u32 offset = this->mVertexSize;
-	arrayInfo.Set ( COLOR_SIZE, type, offset );
-	this->mVertexSize += this->GetSize ( COLOR_SIZE, type );
-}
-
-//----------------------------------------------------------------//
-void USDrawBuffer::BindNormalArray () {
-
-	USGfxArrayInfo& arrayInfo = this->mArrayInfo [ ARRAY_NORMAL ];
-	arrayInfo.Set ();
-}
-
-//----------------------------------------------------------------//
-void USDrawBuffer::BindNormalArray ( GLenum type ) {
-
-	USGfxArrayInfo& arrayInfo = this->mArrayInfo [ ARRAY_NORMAL ];
-	
-	u32 offset = this->mVertexSize;
-	arrayInfo.Set ( NORMAL_SIZE, type, offset );
-	this->mVertexSize += this->GetSize ( NORMAL_SIZE, type );
-}
-
-//----------------------------------------------------------------//
-void USDrawBuffer::BindTexCoordArray () {
-
-	USGfxArrayInfo& arrayInfo = this->mArrayInfo [ ARRAY_TEX_COORD ];
-	arrayInfo.Set ();
-}
-
-//----------------------------------------------------------------//
-void USDrawBuffer::BindTexCoordArray ( GLint size, GLenum type ) {
-
-	USGfxArrayInfo& arrayInfo = this->mArrayInfo [ ARRAY_TEX_COORD ];
-	
-	u32 offset = this->mVertexSize;
-	arrayInfo.Set ( size, type, offset );
-	this->mVertexSize += this->GetSize ( size, type );
 }
 
 //----------------------------------------------------------------//
@@ -215,20 +54,35 @@ bool USDrawBuffer::BindTexture ( USTexture* texture ) {
 }
 
 //----------------------------------------------------------------//
-void USDrawBuffer::BindVertexArray () {
+void USDrawBuffer::BindVertexFormat ( const USVertexFormat& format ) {
 
-	USGfxArrayInfo& arrayInfo = this->mArrayInfo [ ARRAY_VERTEX ];
-	arrayInfo.Set ();
+	if ( !this->mVertexFormat.IsMatch ( format )) {
+
+		this->Flush ();
+		this->mVertexPreset = USVertexFormatMgr::CUSTOM_FORMAT;
+
+		this->mVertexFormat = format;
+
+		this->mVertexFormat.Bind ( this->mBuffer );
+		this->mVertexColorType = format.GetColorType ();
+	}
+	
 }
 
 //----------------------------------------------------------------//
-void USDrawBuffer::BindVertexArray ( GLint size, GLenum type ) {
+void USDrawBuffer::BindVertexPreset ( u32 presetID ) {
 
-	USGfxArrayInfo& arrayInfo = this->mArrayInfo [ ARRAY_VERTEX ];
-	
-	u32 offset = this->mVertexSize;
-	arrayInfo.Set ( size, type, offset );
-	this->mVertexSize += this->GetSize ( size, type );
+	if ( this->mVertexPreset != presetID ) {
+
+		this->Flush ();
+		this->mVertexPreset = presetID;
+		
+		const USVertexFormat& preset = USVertexFormatMgr::Get ().GetPreset ( presetID );
+		this->mVertexFormat = preset;
+
+		this->mVertexFormat.Bind ( this->mBuffer );
+		this->mVertexColorType = preset.GetColorType ();
+	}
 }
 
 //----------------------------------------------------------------//
@@ -245,23 +99,13 @@ void USDrawBuffer::Clear () {
 //----------------------------------------------------------------//
 void USDrawBuffer::DrawPrims () {
 
-	if ( this->mPrimCount && this->mVertexSize ) {
+	u32 vertexSize = this->mVertexFormat.GetVertexSize ();
+
+	if ( this->mPrimCount && vertexSize ) {
 	
-		u32 count = this->mPrimSize ? this->mPrimCount * this->mPrimSize : ( u32 )( this->mTop / this->mVertexSize );
+		u32 count = this->mPrimSize ? this->mPrimCount * this->mPrimSize : ( u32 )( this->mTop / vertexSize );
 		glDrawArrays ( this->mPrimType, 0, count );
 	}
-}
-
-//----------------------------------------------------------------//
-void USDrawBuffer::EndFormat () {
-
-	u32 stride = this->mVertexSize;
-	size_t base = ( size_t )this->mBuffer;
-	
-	this->mArrayInfo [ ARRAY_COLOR ].Bind ( *this, GL_COLOR_ARRAY, base, stride );
-	this->mArrayInfo [ ARRAY_NORMAL ].Bind ( *this, GL_NORMAL_ARRAY, base, stride );
-	this->mArrayInfo [ ARRAY_TEX_COORD ].Bind ( *this, GL_TEXTURE_COORD_ARRAY, base, stride );
-	this->mArrayInfo [ ARRAY_VERTEX ].Bind ( *this, GL_VERTEX_ARRAY, base, stride );
 }
 
 //----------------------------------------------------------------//
@@ -291,35 +135,6 @@ void USDrawBuffer::Flush () {
 const USColorVec& USDrawBuffer::GetPenColor () {
 
 	return this->mPenColor;
-}
-
-//----------------------------------------------------------------//
-u32 USDrawBuffer::GetSize ( GLint size, GLenum type ) {
-
-	u32 bytes;
-	switch ( type ) {
-	
-		case GL_BYTE:
-		case GL_UNSIGNED_BYTE:
-			bytes = 1;
-			break;
-		
-		case GL_SHORT:
-		case GL_UNSIGNED_SHORT:
-			bytes = 2;
-			break;
-		
-		case GL_FIXED:
-		case GL_FLOAT:
-			bytes = 4;
-			break;
-		
-		default:
-			bytes = 0;
-			break;		
-	}
-	
-	return size * bytes;
 }
 
 //----------------------------------------------------------------//
@@ -363,10 +178,7 @@ void USDrawBuffer::Reset () {
 	this->mBlendEnabled = false;
 	
 	// disable vertex arrays
-	this->mArrayInfo [ ARRAY_COLOR ].Unbind ( GL_COLOR_ARRAY );
-	this->mArrayInfo [ ARRAY_NORMAL ].Unbind ( GL_NORMAL_ARRAY );
-	this->mArrayInfo [ ARRAY_TEX_COORD ].Unbind ( GL_TEXTURE_COORD_ARRAY );
-	this->mArrayInfo [ ARRAY_VERTEX ].Unbind ( GL_VERTEX_ARRAY );
+	this->mVertexFormat.Bind ( this->mBuffer );
 
 	// load identity matrix
 	glMatrixMode ( GL_MODELVIEW );
@@ -544,6 +356,8 @@ void USDrawBuffer::SetVtxTransform ( const USAffine2D& vtxTransform ) {
 
 //----------------------------------------------------------------//
 USDrawBuffer::USDrawBuffer () :
+	mVertexPreset ( USVertexFormatMgr::CUSTOM_FORMAT ),
+	mVertexColorType ( 0 ),
 	mBuffer ( 0 ),
 	mSize ( 0 ),
 	mTop ( 0 ),
@@ -552,7 +366,6 @@ USDrawBuffer::USDrawBuffer () :
 	mPrimSize ( 0 ),
 	mPrimCount ( 0 ),
 	mMaxPrims ( 0 ),
-	mVertexSize ( 0 ),
 	mTexture ( 0 ),
 	mPackedColor ( 0xffffffff ),
 	mPenWidth ( 1.0f ),

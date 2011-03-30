@@ -81,6 +81,8 @@
 #include <uslsext/USTrig.h>
 #include <uslsext/USTypedPtr.h>
 #include <uslsext/USUrlMgr.h>
+#include <uslsext/USVertexFormat.h>
+#include <uslsext/USVertexFormatMgr.h>
 #include <uslsext/USViewport.h>
 #include <uslsext/USViewQuad.h>
 #include <uslsext/USXmlReader.h>

@@ -435,6 +435,22 @@
 				RelativePath="..\..\src\uslsext\USGfxDevice.h"
 				>
 			</File>
+			<File
+				RelativePath="..\..\src\uslsext\USVertexFormat.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\uslsext\USVertexFormat.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\uslsext\USVertexFormatMgr.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\uslsext\USVertexFormatMgr.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="gfxObjects"

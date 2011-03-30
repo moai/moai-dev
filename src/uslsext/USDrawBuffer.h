@@ -8,44 +8,12 @@
 #include <uslsext/USAffine2D.h>
 #include <uslsext/USBlendMode.h>
 #include <uslsext/USColor.h>
+#include <uslsext/USVertexFormat.h>
+#include <uslsext/USVertexFormatMgr.h>
 
 class USTexture;
 class USDrawBuffer;
-
-//================================================================//
-// USGfxArrayInfo
-//================================================================//
-class USGfxArrayInfo {
-private:
-
-	friend class USDrawBuffer;
-	
-	enum {
-		BIND			= 0x00000001,
-		STAY_BOUND		= 0x00000002,
-		UNBIND			= 0x00000004,
-		STAY_UNBOUND	= 0x00000008,
-		
-		
-		IS_BOUND		= 0x00000003,
-		US_UNBOUND		= 0x0000000C,
-	};
-	
-	GLint		mSize;
-	GLenum		mType;
-	u32			mOffset;
-	
- 	u32			mState;
- 	u32			mStride;
- 	
-	//----------------------------------------------------------------//
-	void	Bind				( USDrawBuffer& drawBuffer, u32 type, size_t base, u32 stride );
-	bool	Compare				( GLint size, GLenum type, u32 offset ) const;
-			USGfxArrayInfo		();
-	void	Set					();
-	void	Set					( GLint size, GLenum type, u32 offset );
-	void	Unbind				( u32 type );
-};
+class USVertexFormat;
 
 //================================================================//
 // USDrawBuffer
@@ -54,33 +22,23 @@ class USDrawBuffer :
 	public USGlobalClass < USDrawBuffer > {
 private:
 	
-	static const u32 COLOR_SIZE				= 4;
-	static const u32 NORMAL_SIZE			= 3;
 	static const u32 DEFAULT_BUFFER_SIZE	= 0x8000;
 	
-	enum {
-		ARRAY_COLOR,
-		ARRAY_NORMAL,
-		ARRAY_TEX_COORD,
-		ARRAY_VERTEX,
-		TOTAL_ARRAY_TYPES,
-	};
+	USVertexFormat	mVertexFormat;
+	u32				mVertexPreset;
+	GLenum			mVertexColorType;
 	
-	USGfxArrayInfo mArrayInfo [ TOTAL_ARRAY_TYPES ];
+	void*			mBuffer;
+	u32				mSize;
+	u32				mTop;
+	u32				mPrimTop;
 	
-	void*		mBuffer;
-	u32			mSize;
-	u32			mTop;
-	u32			mPrimTop;
+	GLenum			mPrimType;
+	u32				mPrimSize;
+	u32				mPrimCount;
+	u32				mMaxPrims;
 	
-	GLenum		mPrimType;
-	u32			mPrimSize;
-	u32			mPrimCount;
-	u32			mMaxPrims;
-	
-	u32			mVertexSize;
-	
-	USTexture*	mTexture;
+	USTexture*		mTexture;
 	
 	USAffine2D		mVtxTransform;
 	USAffine2D		mUVTransform;
@@ -96,28 +54,19 @@ private:
 	USRect			mScissorRect;
 
 	//----------------------------------------------------------------//
-	void		ClearBuffer				();
-	void		DrawPrims				();
-	u32			GetSize					( GLint size, GLenum type );
-	void		Rebind					();
+	void			ClearBuffer				();
+	void			DrawPrims				();
+	void			Rebind					();
 	
 public:
 	
 	//----------------------------------------------------------------//
-	void					BeginFormat				();
 	void					BeginPrim				();
 	void					BeginPrim				( u32 primType );
-	void					BindColorArray			();
-	void					BindColorArray			( GLenum type );
-	void					BindNormalArray			();
-	void					BindNormalArray			( GLenum type );
-	void					BindTexCoordArray		();
-	void					BindTexCoordArray		( GLint size, GLenum type );
 	bool					BindTexture				( USTexture* texture = 0 );
-	void					BindVertexArray			();
-	void					BindVertexArray			( GLint size, GLenum type );
+	void					BindVertexFormat		( const USVertexFormat& format );
+	void					BindVertexPreset		( u32 presetID );
 	void					Clear					();
-	void					EndFormat				();
 	void					EndPrim					();
 	void					Flush					();
 	const USColorVec&		GetPenColor				();
@@ -153,10 +102,8 @@ public:
 	
 	//----------------------------------------------------------------//
 	inline void WritePenColor () {
-	
-		USGfxArrayInfo& arrayInfo = this->mArrayInfo [ ARRAY_COLOR ];
 		
-		if ( arrayInfo.mType == GL_FLOAT ) {
+		if ( this->mVertexColorType == GL_FLOAT ) {
 			this->Write < USColorVec >( this->mPenColor );
 		}
 		else {

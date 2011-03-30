@@ -26,14 +26,17 @@ SUPPRESS_EMPTY_FILE_WARNING
 #include <cstdarg>
 #include <cstring>
 
+//================================================================//
+// MOAIBox2DDebugDraw
+//================================================================//
+
+//----------------------------------------------------------------//
 void MOAIBox2DDebugDraw::BindVertexFormat ( USDrawBuffer& drawBuffer ) {
 
-	drawBuffer.BeginFormat ();
-		drawBuffer.BindVertexArray ( 2, GL_FLOAT );
-		drawBuffer.BindColorArray ( GL_UNSIGNED_BYTE );
-	drawBuffer.EndFormat ();
+	drawBuffer.BindVertexPreset ( USVertexFormatMgr::VTX_FMT_XYC );
 }
 
+//----------------------------------------------------------------//
 void MOAIBox2DDebugDraw::DrawPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color)
 {
 	USDrawBuffer& drawBuffer = USDrawBuffer::Get ();
@@ -48,6 +51,7 @@ void MOAIBox2DDebugDraw::DrawPolygon(const b2Vec2* vertices, int32 vertexCount, 
 	drawBuffer.EndPrim ();
 }
 
+//----------------------------------------------------------------//
 void MOAIBox2DDebugDraw::DrawSolidPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color)
 {
 	USDrawBuffer& drawBuffer = USDrawBuffer::Get ();
@@ -72,6 +76,7 @@ void MOAIBox2DDebugDraw::DrawSolidPolygon(const b2Vec2* vertices, int32 vertexCo
 	drawBuffer.EndPrim ();
 }
 
+//----------------------------------------------------------------//
 void MOAIBox2DDebugDraw::DrawCircle(const b2Vec2& center, float32 radius, const b2Color& color)
 {
 	USDrawBuffer& drawBuffer = USDrawBuffer::Get ();
@@ -92,6 +97,7 @@ void MOAIBox2DDebugDraw::DrawCircle(const b2Vec2& center, float32 radius, const 
 	drawBuffer.EndPrim ();
 }
 
+//----------------------------------------------------------------//
 void MOAIBox2DDebugDraw::DrawSolidCircle(const b2Vec2& center, float32 radius, const b2Vec2& axis, const b2Color& color)
 {
 	USDrawBuffer& drawBuffer = USDrawBuffer::Get ();
@@ -132,6 +138,7 @@ void MOAIBox2DDebugDraw::DrawSolidCircle(const b2Vec2& center, float32 radius, c
 	drawBuffer.EndPrim ();
 }
 
+//----------------------------------------------------------------//
 void MOAIBox2DDebugDraw::DrawSegment(const b2Vec2& p1, const b2Vec2& p2, const b2Color& color)
 {
 	USDrawBuffer& drawBuffer = USDrawBuffer::Get ();
@@ -145,6 +152,7 @@ void MOAIBox2DDebugDraw::DrawSegment(const b2Vec2& p1, const b2Vec2& p2, const b
 	drawBuffer.EndPrim ();
 }
 
+//----------------------------------------------------------------//
 void MOAIBox2DDebugDraw::DrawTransform(const b2Transform& xf)
 {
 	USDrawBuffer& drawBuffer = USDrawBuffer::Get ();
@@ -174,6 +182,7 @@ void MOAIBox2DDebugDraw::DrawTransform(const b2Transform& xf)
 	drawBuffer.EndPrim();
 }
 
+//----------------------------------------------------------------//
 void MOAIBox2DDebugDraw::DrawPoint(const b2Vec2& p, float32 size, const b2Color& color)
 {
 	USDrawBuffer& drawBuffer = USDrawBuffer::Get ();
@@ -187,6 +196,7 @@ void MOAIBox2DDebugDraw::DrawPoint(const b2Vec2& p, float32 size, const b2Color&
 	drawBuffer.SetPointSize(1.0f);
 }
 
+//----------------------------------------------------------------//
 void MOAIBox2DDebugDraw::DrawAABB(b2AABB* aabb, const b2Color& c)
 {
 	USDrawBuffer& drawBuffer = USDrawBuffer::Get ();
@@ -201,6 +211,7 @@ void MOAIBox2DDebugDraw::DrawAABB(b2AABB* aabb, const b2Color& c)
 	drawBuffer.EndPrim();
 }
 
+//----------------------------------------------------------------//
 void MOAIBox2DDebugDraw::WriteVtx ( USDrawBuffer& drawBuffer, float x, float y ) {
 
 	USVec2D vtx;

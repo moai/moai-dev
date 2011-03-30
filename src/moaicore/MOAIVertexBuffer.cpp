@@ -9,12 +9,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
-*/
+// TODO: doxygen
 int	MOAIVertexBuffer::_release ( lua_State* L ) {
 	LUA_SETUP ( MOAIVertexBuffer, "U" )
 	
@@ -23,12 +18,7 @@ int	MOAIVertexBuffer::_release ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
-*/
+// TODO: doxygen
 int	MOAIVertexBuffer::_reserve ( lua_State* L ) {
 	LUA_SETUP ( MOAIVertexBuffer, "UN" )
 	
@@ -39,12 +29,7 @@ int	MOAIVertexBuffer::_reserve ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
-*/
+// TODO: doxygen
 int	MOAIVertexBuffer::_setFormat ( lua_State* L ) {
 	LUA_SETUP ( MOAIVertexBuffer, "UU" )
 	
