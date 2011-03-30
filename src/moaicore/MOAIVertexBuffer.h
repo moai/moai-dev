@@ -4,7 +4,7 @@
 #ifndef	MOAIVERTEXBUFFER_H
 #define	MOAIVERTEXBUFFER_H
 
-#include <moaicore/MOAIVertexFormat.h>
+class MOAIVertexFormat;
 
 //================================================================//
 // MOAIVertexBuffer
@@ -15,46 +15,50 @@ class MOAIVertexBuffer :
 	public USLuaObject {
 private:
 
+	USLeanArray < u8 > mBuffer;
+	USByteStream mStream;
+
 	USRef < MOAIVertexFormat > mFormat;
-
-	void*	mBuffer;
-	u32		mBufferSize;
+	u32 mPrimType;
 	
-	GLuint	mGLBufferID;
-	u32		mHint;
+	USRect mBounds;
+	u32 mPrimSize;
 	
 	//----------------------------------------------------------------//
-	static int	_release				( lua_State* L );
-	static int	_reserve				( lua_State* L );
-	static int	_setFormat				( lua_State* L );
+	static int		_bless					( lua_State* L );
+	static int		_release				( lua_State* L );
+	static int		_reserve				( lua_State* L );
+	static int		_reserveVerts			( lua_State* L );
+	static int		_reset					( lua_State* L );
+	static int		_seek					( lua_State* L );
+	static int		_setFormat				( lua_State* L );
+	static int		_setPrimType			( lua_State* L );
+	static int		_writeColor				( lua_State* L );
+	static int		_writeFloat				( lua_State* L );
+	static int		_writeInt8				( lua_State* L );
+	static int		_writeInt16				( lua_State* L );
+	static int		_writeInt32				( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void		ClearBuffer				();
+	void			ClearBuffer				();
 	
 public:
 	
-	enum {
-		NONE,
-		VERTEX_BONE_IDX,
-		VERTEX_BONE_WEIGHT,
-		VERTEX_COLOR,
-		VERTEX_COORD,
-		VERTEX_NORMAL,
-		VERTEX_TEXCOORD_0,
-		VERTEX_TEXCOORD_1,
-	};
-	
 	DECL_LUA_FACTORY ( MOAIVertexBuffer )
 	
+	GET ( const USRect&, Bounds, mBounds )
+	GET ( MOAIVertexFormat*, Format, mFormat )
+	
 	//----------------------------------------------------------------//
-	bool			Bind					();
+	void			Draw					();
+	bool			IsValid					();
 					MOAIVertexBuffer		();
 					~MOAIVertexBuffer		();
 	void			RegisterLuaClass		( USLuaState& state );
 	void			RegisterLuaFuncs		( USLuaState& state );
 	void			Release					();
-	void			Reserve					( u32 vertexCount );
-	void			SetVertexElement		( u32 vtx, u32 elemIdx, float* params );
+	void			Reserve					( u32 size );
+	void			SetPrimType				( u32 primType );
 	STLString		ToString				();
 };
 

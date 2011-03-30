@@ -460,6 +460,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\moaicore\MOAIMesh.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIMesh.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\moaicore\MOAIStretchPatch2D.cpp"
 				>
 			</File>

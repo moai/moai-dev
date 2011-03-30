@@ -37,6 +37,7 @@
 #include <moaicore/MOAILocationSensor.h>
 #include <moaicore/MOAILogMgr.h>
 #include <moaicore/MOAILogMessages.h>
+#include <moaicore/MOAIMesh.h>
 #include <moaicore/MOAINode.h>
 #include <moaicore/MOAINodeMgr.h>
 #include <moaicore/MOAIParticleEmitter.h>

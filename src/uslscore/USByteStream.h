@@ -22,10 +22,12 @@ private:
 	void*		mBuffer;
 	u32			mCursor;
 	u32			mLength;
+	u32			mCapacity;
 
 public:
 
 	//----------------------------------------------------------------//
+	u32			GetCapacity		();
 	u32			GetCursor		();
 	void*		GetBuffer		();
 	u32			GetLength		();

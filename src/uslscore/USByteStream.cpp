@@ -20,6 +20,12 @@ void* USByteStream::GetBuffer () {
 }
 
 //----------------------------------------------------------------//
+u32 USByteStream::GetCapacity () {
+
+	return this->mCapacity;
+}
+
+//----------------------------------------------------------------//
 u32 USByteStream::GetCursor () {
 
 	return this->mCursor;
@@ -73,7 +79,8 @@ void USByteStream::Seek ( long offset, int origin ) {
 void USByteStream::SetBuffer ( void* buffer, u32 size ) {
 
 	this->mCursor = 0;
-	this->mLength = size;
+	this->mLength = 0;
+	this->mCapacity = size;
 	this->mBuffer = buffer;
 }
 
@@ -81,7 +88,8 @@ void USByteStream::SetBuffer ( void* buffer, u32 size ) {
 USByteStream::USByteStream () :
 	mBuffer ( 0 ),
 	mCursor ( 0 ),
-	mLength ( 0 ) {
+	mLength ( 0 ),
+	mCapacity ( 0 ) {
 }
 
 //----------------------------------------------------------------//
@@ -91,13 +99,14 @@ USByteStream::~USByteStream () {
 //----------------------------------------------------------------//
 u32 USByteStream::WriteBytes ( const void* buffer, u32 size ) {
 
-	if (( this->mCursor + size ) > this->mLength ) {
-		size = this->mLength - this->mCursor;
+	if (( this->mCursor + size ) > this->mCapacity ) {
+		size = this->mCapacity - this->mCursor;
 	}
 
 	if ( size ) {
 		memcpy ( &(( u8* )this->mBuffer )[ this->mCursor ], buffer, size );
 		this->mCursor += size;
+		this->mLength += size;
 		return size;
 	}
 	

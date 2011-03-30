@@ -105,6 +105,31 @@ void USVertexFormat::Clear () {
 }
 
 //----------------------------------------------------------------//
+bool USVertexFormat::ComputeBounds ( void* buffer, u32 size, USRect& bounds ) {
+
+	u32 total = ( u32 )( size / this->mVertexSize );
+	if ( !total ) return false;
+
+	USVertexFormatElem& coordElem = this->mElements [ ARRAY_VERTEX ];
+	if ( coordElem.mType != GL_FLOAT ) return false; // TODO: handle other types
+	if ( coordElem.mSize < 2 ) return false;
+	
+	buffer = ( void* )(( size_t )buffer + coordElem.mOffset );
+	
+	USVec2D* coord = ( USVec2D* )buffer;
+	bounds.Init ( *coord );
+	
+	for ( u32 i = 1; i < total; ++i ) {
+		
+		buffer = ( void* )(( size_t )buffer + this->mVertexSize );
+		coord = ( USVec2D* )buffer;
+		bounds.Grow ( *coord );
+	}
+	
+	return true;
+}
+
+//----------------------------------------------------------------//
 void USVertexFormat::DeclareColorArray ( GLenum type ) {
 
 	USVertexFormatElem& elem = this->mElements [ ARRAY_COLOR ];
@@ -125,7 +150,7 @@ void USVertexFormat::DeclareNormalArray ( GLenum type ) {
 }
 
 //----------------------------------------------------------------//
-void USVertexFormat::DeclareTexCoordArray ( GLint size, GLenum type ) {
+void USVertexFormat::DeclareTexCoordArray ( GLenum type, GLint size ) {
 
 	USVertexFormatElem& elem = this->mElements [ ARRAY_TEX_COORD ];
 	
@@ -135,7 +160,7 @@ void USVertexFormat::DeclareTexCoordArray ( GLint size, GLenum type ) {
 }
 
 //----------------------------------------------------------------//
-void USVertexFormat::DeclareVertexArray ( GLint size, GLenum type ) {
+void USVertexFormat::DeclareVertexArray ( GLenum type, GLint size ) {
 
 	USVertexFormatElem& elem = this->mElements [ ARRAY_VERTEX ];
 	

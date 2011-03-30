@@ -23,14 +23,14 @@ USVertexFormatMgr::USVertexFormatMgr () {
 	format = &this->mFormats [ VTX_FMT_XYC ];
 	
 	format->Clear ();
-	format->DeclareVertexArray ( 2, GL_FLOAT );
+	format->DeclareVertexArray ( GL_FLOAT, 2 );
 	format->DeclareColorArray ( GL_UNSIGNED_BYTE );
 	
 	format = &this->mFormats [ VTX_FMT_XYUVC ];
 	
 	format->Clear ();
-	format->DeclareVertexArray ( 2, GL_FLOAT );
-	format->DeclareTexCoordArray ( 2, GL_FLOAT );
+	format->DeclareVertexArray ( GL_FLOAT, 2 );
+	format->DeclareTexCoordArray ( GL_FLOAT, 2 );
 	format->DeclareColorArray ( GL_UNSIGNED_BYTE );
 }
 

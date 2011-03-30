@@ -58,6 +58,7 @@ void moaicore::InitGlobals ( USGlobals* globals ) {
 	REGISTER_LUA_CLASS ( MOAILevelSensor )
 	REGISTER_LUA_CLASS ( MOAILocationSensor )
 	REGISTER_LUA_CLASS ( MOAILogMgr )
+	REGISTER_LUA_CLASS ( MOAIMesh )
 	REGISTER_LUA_CLASS ( MOAIParticleEmitter )
 	REGISTER_LUA_CLASS ( MOAIParticleForce )
 	REGISTER_LUA_CLASS ( MOAIParticleScript )

@@ -76,10 +76,11 @@ public:
 	//----------------------------------------------------------------//
 	void		Bind					( void* buffer ) const;
 	void		Clear					();
+	bool		ComputeBounds			( void* buffer, u32 size, USRect& bounds );
 	void		DeclareColorArray		( GLenum type );
 	void		DeclareNormalArray		( GLenum type );
-	void		DeclareTexCoordArray	( GLint size, GLenum type );
-	void		DeclareVertexArray		( GLint size, GLenum type );
+	void		DeclareTexCoordArray	( GLenum type, GLint size );
+	void		DeclareVertexArray		( GLenum type, GLint size );
 	GLenum		GetColorType			() const;
 	bool		IsMatch					( const USVertexFormat& format ) const;
 				USVertexFormat			();

@@ -54,9 +54,9 @@ private:
 	USRect			mScissorRect;
 
 	//----------------------------------------------------------------//
-	void			ClearBuffer				();
-	void			DrawPrims				();
-	void			Rebind					();
+	void					ClearBuffer				();
+	void					DrawPrims				();
+	void					Rebind					();
 	
 public:
 	
