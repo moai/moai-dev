@@ -1,2 +1,5 @@
 Debug/
 Release/
+*.vcproj.*.user
+*.ncb
+*.suo

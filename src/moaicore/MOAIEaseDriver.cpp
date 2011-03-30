@@ -10,11 +10,11 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@brief <tt>reserveForces ( self, total )</tt>\n
-\n
-	Reserve total forces.
-	@param self (in)
-	@param total (in)
+/**	@name reserveForces
+	@param1 self @type userdata
+	@param2 total @type integer
+	@text Reserve total forces.
+	@return nil
 */
 int MOAIEaseDriver::_reserveForces ( lua_State* L ) {
 	LUA_SETUP ( MOAIEaseDriver, "UN" );
@@ -26,11 +26,11 @@ int MOAIEaseDriver::_reserveForces ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>setDelay ( self, delay )</tt>\n
-\n
-	Sets the delay (total duration of action).
-	@param self (in)
-	@param delay (in)
+/**	@name setDelay
+	@param1 self @type userdata
+	@param2 delay @type integer
+	@text Sets the delay (total duration of action).
+	@return nil
 */
 int MOAIEaseDriver::_setDelay ( lua_State* L ) {
 	LUA_SETUP ( MOAIEaseDriver, "UN" );
@@ -42,15 +42,15 @@ int MOAIEaseDriver::_setDelay ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>setForce ( self, idx, target, attrID, force, mode )</tt>\n
-\n
-	Initializes a force to be applied to an attributue.
-	@param self (in)
-	@param idx (in)
-	@param target (in)
-	@param attrID (in)
-	@param force (in)
-	@param mode (in)
+/**	@name setForce
+	@param1 self @type userdata
+	@param2 idx @type integer
+	@param3 target @type userdata
+	@param4 attrID @type integer
+	@param5 force @type number
+	@param6 mode @type integer
+	@text Initializes a force to be applied to an attributue.
+	@return nil
 */
 int MOAIEaseDriver::_setForce ( lua_State* L ) {
 	LUA_SETUP ( MOAIEaseDriver, "UNUNN" );
@@ -69,11 +69,11 @@ int MOAIEaseDriver::_setForce ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>setMode ( self, mode )</tt>\n
-\n
-	Sets the interpolation mode.
-	@param self (in)
-	@param mode (in) Interpolation mode.
+/**	@name setMode
+	@param1 self @type userdata
+	@param2 mode @type number @text Interpolation mode. 
+	@text Sets the interpolation mode.
+	@return nil
 */
 int MOAIEaseDriver::_setMode ( lua_State* L ) {
 	LUA_SETUP ( MOAIEaseDriver, "UN" );

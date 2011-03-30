@@ -12,10 +12,10 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@brief <tt>getSize ( )</tt>\n
-\n
-	Returns the size of the string obtained from an httpPost or httpGet call.
-	@return String size.  If the call found nothing, this will return the value zero (not nil).
+/**	@name getSize
+	@param1 self @type userdata
+	@text Returns the size of the string obtained from a httpPost or httpGet call.
+	@return The string size.  If the call found nothing, this will return the value zero (not nil). @type number
 */
 int MOAIHttpTask::_getSize ( lua_State* L ) {
 	LUA_SETUP ( MOAIHttpTask, "U" )
@@ -26,10 +26,10 @@ int MOAIHttpTask::_getSize ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>getText ( )</tt>\n
-\n
-	Returns the text obtained from an httpPost or httpGet call.
-	@return The text string.
+/**	@name getText
+	@param1 self @type userdata
+	@text Returns the text obtained from a httpPost or httpGet call.
+	@return The text string. @type string
 */
 int MOAIHttpTask::_getString ( lua_State* L ) {
 	LUA_SETUP ( MOAIHttpTask, "U" )
@@ -40,10 +40,11 @@ int MOAIHttpTask::_getString ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>httpGet ( url )</tt>\n
-\n
-	Sends an API call to the server for downloading data.  The callback function (from setCallback) will run when the call is complete.
-	@param url A string containing the full url of the API call.
+/**	@name httpGet
+	@param1 self @type userdata
+	@param2 url @type string @text The URL on which to perform the GET request.
+	@text Sends an API call to the server for downloading data.  The callback function (from setCallback) will run when the call is complete, i.e. this action is asynchronous and returns almost instantly.
+	@return nil
 */
 int MOAIHttpTask::_httpGet ( lua_State* L ) {
 	LUA_SETUP ( MOAIHttpTask, "US" )
@@ -58,12 +59,12 @@ int MOAIHttpTask::_httpGet ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>httpPost ( url, string|data )</tt>\n
-\n
-	Posts an API call to the server for uploading data.  The callback function (from setCallback) will run when the call is complete.
-	@param url A string containing the full url of the API call.
-	@param string A character string containing text to send as POST data.
-	@param data A MOAIDataBuffer object to send as POST data.
+/**	@name httpPost
+	@param1 self @type userdata
+	@param2 url @type string @text The URL on which to perform the POST request.
+	@param3 data @type string|userdata @text The string containing text to send as POST data, or alternatively a MOAIDataBuffer object to send as POST data.
+	@text Sends an API call to the server for downloading data.  The callback function (from setCallback) will run when the call is complete, i.e. this action is asynchronous and returns almost instantly.
+	@return nil
 */
 int MOAIHttpTask::_httpPost ( lua_State* L ) {
 	LUA_SETUP ( MOAIHttpTask, "US" )
@@ -99,10 +100,10 @@ int MOAIHttpTask::_httpPost ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>parseXml ( url )</tt>\n
-\n
-	Parses an XML table obtained from httpGet.
-	@return Parsed XML code.
+/**	@name parseXml
+	@param1 self @type userdata
+	@text Parses the text data returned from a httpGet or httpPost operation as XML and then returns a MOAIXmlParser with the XML content initialized.
+	@return The MOAIXmlParser which has parsed the returned data. @type userdata
 */
 int MOAIHttpTask::_parseXml ( lua_State* L ) {
 	LUA_SETUP ( MOAIHttpTask, "U" )
@@ -119,10 +120,11 @@ int MOAIHttpTask::_parseXml ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>setCallback ( callback )</tt>\n
-\n
-	Sets the function to be called when an httpGet or httpPost is completed.
-	@param callback The function to be called.  The completed HTTPtask is passed into the function as the first argument.
+/**	@name setCallback
+	@param1 self @type userdata
+	@param2 callback @type function @text The function to execute when the HTTP request is complete.  The MOAIHttpTask is passed as the first argument.
+	@text Sets the callback function used when a request is complete.
+	@return nil
 */
 int MOAIHttpTask::_setCallback ( lua_State* L ) {
 	LUA_SETUP ( MOAIHttpTask, "UF" )

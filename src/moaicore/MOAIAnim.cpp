@@ -28,10 +28,10 @@ int MOAIAnim::_apply ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( length ) getLength ( self )</tt>\n
-\n
-	Returns the total length of the animation.
-	@param self (in)
+/**	@name getLength
+	@param1 self @type userdata
+	@text Returns the length of the animation.
+	@return The length of the animation. @type number
 */
 int	MOAIAnim::_getLength ( lua_State* L ) {
 	LUA_SETUP ( MOAIAnim, "U" )
@@ -42,11 +42,11 @@ int	MOAIAnim::_getLength ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>reserveLinks ( self, totalLinks )</tt>\n
-\n
-	Reserves links for the AnimPlayer.
-	@param self (in)
-	@param totalLinks (in) Total number of links to be reserved.
+/**	@name reserveLinks
+	@param1 self @type userdata
+	@param2 totalLinks @type number @text The total number of links in the animation.
+	@text Reserves a specified number of links for the animation.
+	@return nil
 */
 int	MOAIAnim::_reserveLinks ( lua_State* L ) {
 	LUA_SETUP ( MOAIAnim, "UN" );
@@ -58,14 +58,14 @@ int	MOAIAnim::_reserveLinks ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>setLink ( self, linkID, curveID, target, attrID )</tt>\n
-\n
-	Sets a link from a curve to an attribute (must be bound with the bind function).
-	@param self (in)
-	@param linkID (in) ID of the link index.
-	@param curveID (in) ID of the curve.
-	@param target (in) Target object to animate.
-	@param attrID (in) ID of the attribute.
+/**	@name setLink
+	@param1 self @type userdata
+	@param2 linkID @type number @text The ID of the link to set.
+	@param3 curveID @type userdata @text The ID of the curve.
+	@param4 target @type userdata @text The target object to animate.
+	@param5 attrID @type number @text The ID of the attribute to modify.
+	@text Sets a link from a curve to an attribute (must be bound with the bind function).
+	@return nil
 */
 int	MOAIAnim::_setLink ( lua_State* L ) {
 	LUA_SETUP ( MOAIAnim, "UNUUN" );

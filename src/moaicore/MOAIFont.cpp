@@ -11,11 +11,10 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( size )getPointSize ( self )</tt>\n
-	\n
-	Returns the default size of a font for use with the MOAITextbox:setTextSize function.
-	@param self (in)
-	@param size (out) The default point size of the font.
+/**	@name getPointSize
+	@param1 self @type userdata
+	@text Returns the default size of this font for use with the MOAITextbox:setTextSize function.
+	@return The default point size of the font. @type number
 */
 int MOAIFont::_getScale ( lua_State* L ) {
 
@@ -30,13 +29,12 @@ int MOAIFont::_getScale ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>load ( self, imagefile|data, charCodes )</tt>\n
-	\n
-	Loads an image to use as a font.
-	@param self (in)
-	@param imagefile Imagefile to be loaded.  Must be a .bmp, .png, or .jpg.
-	@param data A MOAIDataBuffer object containing image data.  Must be one of the filetypes above.
-	@param charCodes A string that sets the default character assignments of the font.  For example, if A and B are the first letters in the font image, the first characters of the string would be "AB" and so forth.
+/**	@name load
+	@param1 self @type userdata
+	@param2 imagefile|data @type string|userdata @text Either a string indicating the path to an image file, or a MOAIDataBuffer containing image data.
+	@param3 charCodes @type userdata @text A string which defines the characters found in the font.  For example if A and B are the first letters in the image, the first characters in the string would be "AB" and so forth.
+	@text Returns the default size of this font for use with the MOAITextbox:setTextSize function.
+	@return nil
 */
 int MOAIFont::_load ( lua_State* L ) {
 
@@ -63,15 +61,14 @@ int MOAIFont::_load ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>() loadFromTTF ( self, filename, charcodes, points, dpi )</tt>\n
-\n
-	Attempts to load glyphs contained in a TTF into a texture for use as a bitmap font.
-	Texture size is presently limited to 1024x1024. Unicode support coming Soon(tm).
-	@param self (in)
-	@param filename (in) Name of a .ttf font file.
-	@param charcodes (in) List of glyphs to be rendered to texture.
-	@param points (in) Point size to be rendered.
-	@param dpi (in) Device DPI (points per inch of device screen).
+/**	@name loadFromTTF
+	@param1 self @type userdata
+	@param2 filename @type string @text The path to the TTF file to load.
+	@param3 charCodes @type string @text A list of characters to be included in the font.
+	@param4 points @type number @text The point size to be rendered onto the internal texture.
+	@param5 dpi @type number @text The device DPI (dots per inch of device screen).
+	@text Attempts to load glyphs contained in a TTF font file into an internal texture for use as a bitmap font.  Texture size is currently limited to 1024x1024.  Unicode characters are not yet supported.
+	@return nil
 */
 int MOAIFont::_loadFromTTF ( lua_State* L ) {
 	LUA_SETUP ( MOAIFont, "USSN" )

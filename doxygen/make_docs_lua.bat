@@ -1,5 +1,5 @@
 ::kill existing copy of source files folder, if any
-rmdir /s /q src-copy
+if exist src-copy rmdir /s /q src-copy
 
 ::create copy of source files
 xcopy /v /i /s /y "../src" "src-copy"

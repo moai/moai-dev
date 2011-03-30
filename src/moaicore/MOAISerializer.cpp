@@ -9,11 +9,11 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@brief <tt>serializeToString ( data )</tt>\n
-\n
-	Converts a lua data type to a string.  Useful for sending script to a server.
-	@param data The data to be sent.  Can be a table.
-	@return The string of converted script.
+/**	@name serializeToString
+	@param1 self @type userdata
+	@param2 data @type table|userdata @text The table or userdata to serialize.
+	@text Serializes the specified table or userdata to a string.  Useful for sending data to a remote server.
+	@return The serialized string. @type string
 */
 int MOAISerializer::_serializeToString ( lua_State* L ) {
 
