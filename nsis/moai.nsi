@@ -45,25 +45,17 @@ InstallDirRegKey ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "InstallDir"
 
 Section "Moai"
 
-	SetOutPath "$INSTDIR\bin"
-	File /r /x ".svn" "${MOAI_BINARIES}\lua-5.1.3.dll"
-	File /r /x ".svn" "${MOAI_BINARIES}\lua-5.1.3.dll.exp"
-	File /r /x ".svn" "${MOAI_BINARIES}\lua-5.1.3.dll.lib"
-	File /r /x ".svn" "${MOAI_BINARIES}\moai-dll.dll"
-	File /r /x ".svn" "${MOAI_BINARIES}\moai-dll.exp"
-	File /r /x ".svn" "${MOAI_BINARIES}\moai-dll.lib"
-	File /r /x ".svn" "${MOAI_BINARIES}\moai.exe"
+	SetOutPath "$INSTDIR"
 
-	SetOutPath "$INSTDIR\include"
-	File /r /x ".svn" "${MOAI_SRC}\aku\AKU.h"
-	
-	SetOutPath "$INSTDIR\html"
-	File /r "..\doxygen\html-lua\html\*.*"
+	;installation files
+	!insertmacro UNINSTALL.LOG_OPEN_INSTALL
+	File /r /x ".gitignore" /x "*.ncb" /x "*.suo" /x "*.user" "release\*.*"
+	!insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 	
 	;start menu shortcuts
 	CreateDirectory "$SMPROGRAMS\${APP_NAME}"
-	CreateShortCut "$SMPROGRAMS\${APP_NAME}\Samples.lnk" "$INSTDIR\Samples"
-	CreateShortCut "$SMPROGRAMS\${APP_NAME}\Reference.lnk" "$INSTDIR\html\index.html"
+	CreateShortCut "$SMPROGRAMS\${APP_NAME}\Samples.lnk" "$INSTDIR\samples"
+	CreateShortCut "$SMPROGRAMS\${APP_NAME}\Reference.lnk" "$INSTDIR\docs\html\index.html"
 	CreateShortCut "$SMPROGRAMS\${APP_NAME}\Uninstall.lnk" "${UNINST_EXE}"
 	
 	;system add/remove programs setup
@@ -101,7 +93,6 @@ Section UnInstall
 	!insertmacro UNINSTALL.LOG_UNINSTALL "$INSTDIR"
 	!insertmacro UNINSTALL.LOG_END_UNINSTALL
 	
-	RMDir /r "$INSTDIR"
 	RMDir /r "$SMPROGRAMS\${APP_NAME}"
 
 	DeleteRegKey /ifempty ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}"
