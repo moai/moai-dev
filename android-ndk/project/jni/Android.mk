@@ -12,7 +12,6 @@ include libFreetype.mk
 # include libGlew.mk
 include libCurl.mk
 include libLua.mk
-# include libSoil.mk
 include libSqlite.mk
 include libTinyXml.mk
 include libPng.mk
@@ -20,6 +19,7 @@ include libUslsCore.mk
 include libUslsExt.mk
 include libMoaiCore.mk
 # include libAku.mk
+include libContrib.mk
 
 #================================================================#
 # Moai
@@ -86,10 +86,10 @@ LOCAL_STATIC_LIBRARIES += libExpat
 # LOCAL_STATIC_LIBRARIES += libGlew
 LOCAL_STATIC_LIBRARIES += libLua
 LOCAL_STATIC_LIBRARIES += libFreetype
-# LOCAL_STATIC_LIBRARIES += libSoil
 LOCAL_STATIC_LIBRARIES += libSqlite
 LOCAL_STATIC_LIBRARIES += libTinyXml
 LOCAL_STATIC_LIBRARIES += libPng
 LOCAL_STATIC_LIBRARIES += libCurl
+LOCAL_STATIC_LIBRARIES += libContrib
 
 include $(BUILD_SHARED_LIBRARY)
