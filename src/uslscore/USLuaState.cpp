@@ -211,6 +211,7 @@ bool USLuaState::Decode ( int idx, USCipher& cipher ) {
 	
 	USByteStream cryptStream;
 	cryptStream.SetBuffer ( buffer, len );
+	cryptStream.SetLength ( len );
 	
 	USCipherStream cipherStream;
 	cipherStream.OpenCipher ( cryptStream, cipher );

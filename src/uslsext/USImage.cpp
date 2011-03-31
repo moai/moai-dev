@@ -226,6 +226,7 @@ void USImage::Init ( const void* buffer, u32 size, u32 transform ) {
 	if ( isPng ) {
 		USByteStream stream;
 		stream.SetBuffer (( void* )buffer, size );
+		stream.SetLength ( size );
 		this->InitWithPng ( stream, transform );
 	}
 }

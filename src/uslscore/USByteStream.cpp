@@ -85,6 +85,12 @@ void USByteStream::SetBuffer ( void* buffer, u32 size ) {
 }
 
 //----------------------------------------------------------------//
+void USByteStream::SetLength ( u32 size ) {
+
+	this->mLength = size;
+}
+
+//----------------------------------------------------------------//
 USByteStream::USByteStream () :
 	mBuffer ( 0 ),
 	mCursor ( 0 ),

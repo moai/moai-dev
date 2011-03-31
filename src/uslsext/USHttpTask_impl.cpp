@@ -37,6 +37,7 @@ u32 USHttpTaskInfo::_writeHeader ( char* data, u32 n, u32 l, void* s ) {
 			
 			self->mData.Init ( length );
 			self->mByteStream.SetBuffer ( self->mData, length );
+			self->mByteStream.SetLength ( length );
 			self->mStream = &self->mByteStream;
 		}
 	}
