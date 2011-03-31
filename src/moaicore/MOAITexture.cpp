@@ -30,7 +30,7 @@ int MOAITexture::_bind ( lua_State* L ) {
 	Returns the width and height of the texture's source image.
 	@param self (in)
 	@param width (out)
-	@param height (out)
+	@param height (out)f
 */
 int MOAITexture::_getSize ( lua_State* L ) {
 	LUA_SETUP ( MOAITexture, "U" )

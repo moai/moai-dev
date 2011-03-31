@@ -37,6 +37,7 @@ bool USData::Decode ( USCipher& cipher ) {
 	
 	USByteStream cryptStream;
 	cryptStream.SetBuffer ( this->mBytes, this->mBytes.Size ());
+	cryptStream.SetLength ( this->mBytes.Size ());
 	
 	USCipherStream cipherStream;
 	cipherStream.OpenCipher ( cryptStream, cipher );

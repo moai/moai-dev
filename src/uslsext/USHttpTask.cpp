@@ -102,6 +102,7 @@ void USHttpTask::GetData ( void* buffer, u32 size ) {
 	USByteStream byteStream;
 	
 	byteStream.SetBuffer ( this->mBytes, this->mSize );
+	byteStream.SetLength ( this->mSize );
 	byteStream.ReadBytes ( buffer, size );
 }
 

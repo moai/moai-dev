@@ -283,26 +283,11 @@ int JNI_OnLoad(JavaVM* vm, void* reserved)
 	
 	return JNI_VERSION_1_4;
 }
+
 extern "C"
-void Java_com_moai_MoaiView_InitializeAku
-  (JNIEnv *env, jclass clazz, jobject thizz) 
+void Java_com_moai_MoaiView_RestartAku
+(JNIEnv *env, jclass clazz, jobject thizz) 
 {
-
-	importGLInit();
-	glEnable(GL_NORMALIZE);
-    glEnable(GL_DEPTH_TEST);
-    glDisable(GL_CULL_FACE);
-    glShadeModel(GL_FLAT);
-
-    glEnable(GL_LIGHTING);
-    glEnable(GL_LIGHT0);
-    glEnable(GL_LIGHT1);
-    glEnable(GL_LIGHT2);
-
-    glEnableClientState(GL_VERTEX_ARRAY);
-    glEnableClientState(GL_COLOR_ARRAY);
-
-	javaObject = (jobject)env->NewGlobalRef(thizz);
 	jclass classic = env->GetObjectClass(javaObject);
 
 	mAku = AKUCreateContext ();
@@ -332,8 +317,22 @@ void Java_com_moai_MoaiView_InitializeAku
 	m_AKUStartGameLoopFunc = env->GetMethodID(classic,"AKUStartGameLoopFunc", "()V");
 
 	__android_log_write(ANDROID_LOG_ERROR,"MoaiJNI","Aku Successfully Initialized");
+}
+extern "C"
+void Java_com_moai_MoaiView_InitializeAku
+  (JNIEnv *env, jclass clazz, jobject thizz) 
+{
+
+	importGLInit();
+
+    glDisable(GL_CULL_FACE);
+  
+	javaObject = (jobject)env->NewGlobalRef(thizz);
+	
+	Java_com_moai_MoaiView_RestartAku(env, clazz, thizz);
 	
 }
+
 extern "C"
 void Java_com_moai_MoaiView_Run
 	(JNIEnv *env, jclass clazz, jstring fileName)

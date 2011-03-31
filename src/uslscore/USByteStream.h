@@ -34,6 +34,7 @@ public:
 	u32			ReadBytes		( void* buffer, u32 size );
 	void		Seek			( long offset, int origin );
 	void		SetBuffer		( void* buffer, u32 size );
+	void		SetLength		( u32 size );
 				USByteStream	();
 				~USByteStream	();
 	u32			WriteBytes		( const void* buffer, u32 size );
