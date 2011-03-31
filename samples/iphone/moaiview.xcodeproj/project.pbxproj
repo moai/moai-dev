@@ -22,6 +22,7 @@
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
+		3EC0F89F1344610000B4530C /* iPhoneIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 3EC0F89E1344610000B4530C /* iPhoneIcon.png */; };
 		CD10CA810FA9272300363C67 /* libz.1.2.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CD10CA800FA9272300363C67 /* libz.1.2.3.dylib */; };
 		CD4366B812FA8A7F00E1729C /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD4366B712FA8A7F00E1729C /* AddressBook.framework */; };
 		CD4366D212FA8AB100E1729C /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD4366D112FA8AB100E1729C /* AddressBookUI.framework */; };
@@ -50,13 +51,6 @@
 			remoteGlobalIDString = 03C2F6F4104DE130009A2D5D;
 			remoteInfo = Moai;
 		};
-		03EE21D61342656C00D35D83 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 03EE21A1134263C600D35D83 /* moai-open.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 03C2F6F3104DE130009A2D5D;
-			remoteInfo = Moai;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -82,6 +76,7 @@
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		288765FC0DF74451002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		3EC0F89E1344610000B4530C /* iPhoneIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iPhoneIcon.png; sourceTree = "<group>"; };
 		ABDD06E810D31603004D70E9 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		CD10CA800FA9272300363C67 /* libz.1.2.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.3.dylib; path = usr/lib/libz.1.2.3.dylib; sourceTree = SDKROOT; };
 		CD4366B712FA8A7F00E1729C /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
@@ -136,6 +131,7 @@
 				0379C8DD13343D3C00E89DDC /* AppDelegate.mm */,
 				0379C90713343F5000E89DDC /* Entitlements.plist */,
 				0379C8DE13343D3C00E89DDC /* Info.plist */,
+				3EC0F89E1344610000B4530C /* iPhoneIcon.png */,
 				0379C8DF13343D3C00E89DDC /* LocationObserver.h */,
 				0379C8E013343D3C00E89DDC /* LocationObserver.mm */,
 				0379C8E113343D3C00E89DDC /* main.mm */,
@@ -218,7 +214,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				03EE21D71342656C00D35D83 /* PBXTargetDependency */,
 			);
 			name = moaiview;
 			productName = Geocaching;
@@ -292,6 +287,7 @@
 			files = (
 				0379C8ED13343D3C00E89DDC /* MainWindow.xib in Resources */,
 				0379C8F113343D4600E89DDC /* lua in Resources */,
+				3EC0F89F1344610000B4530C /* iPhoneIcon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -311,14 +307,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		03EE21D71342656C00D35D83 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = Moai;
-			targetProxy = 03EE21D61342656C00D35D83 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		03B080970F708135005CD8E5 /* Distribution */ = {
@@ -359,6 +347,17 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/../../3rdparty/chipmunk-5.3.4/msvc/glut/lib\"",
+					"\"$(SRCROOT)/../../3rdparty/chipmunk-5.3.4/Objective-Chipmunk/Objective-Chipmunk/Objective-Chipmunk-simulator\"",
+					"\"$(SRCROOT)/../../3rdparty/glut-3.7.6-bin\"",
+					"\"$(SRCROOT)/../../xcode/build/Debug-iphoneos\"",
+					"\"$(SRCROOT)/../../xcode/build/Debug-iphonesimulator\"",
+					"\"$(SRCROOT)/../../xcode/build/Distribution-iphoneos\"",
+					"\"$(SRCROOT)/../../xcode/build/Distribution-iphonesimulator\"",
+					"\"$(SRCROOT)/../../xcode/build/moai-open.build/Distribution-iphoneos/3rdParty.build/Objects-normal/armv6\"",
+					"\"$(SRCROOT)/../../xcode/build/moai-open.build/Distribution-iphoneos/3rdParty.build/Objects-normal/armv7\"",
+					"\"$(SRCROOT)/../../xcode/build/moai-open.build/Distribution-iphoneos/Moai.build/Objects-normal/armv6\"",
+					"\"$(SRCROOT)/../../xcode/build/moai-open.build/Distribution-iphoneos/Moai.build/Objects-normal/armv7\"",
 				);
 			};
 			name = Distribution;
@@ -369,6 +368,17 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/../../3rdparty/chipmunk-5.3.4/msvc/glut/lib\"",
+					"\"$(SRCROOT)/../../3rdparty/chipmunk-5.3.4/Objective-Chipmunk/Objective-Chipmunk/Objective-Chipmunk-simulator\"",
+					"\"$(SRCROOT)/../../3rdparty/glut-3.7.6-bin\"",
+					"\"$(SRCROOT)/../../xcode/build/Debug-iphoneos\"",
+					"\"$(SRCROOT)/../../xcode/build/Debug-iphonesimulator\"",
+					"\"$(SRCROOT)/../../xcode/build/Distribution-iphoneos\"",
+					"\"$(SRCROOT)/../../xcode/build/Distribution-iphonesimulator\"",
+					"\"$(SRCROOT)/../../xcode/build/moai-open.build/Distribution-iphoneos/3rdParty.build/Objects-normal/armv6\"",
+					"\"$(SRCROOT)/../../xcode/build/moai-open.build/Distribution-iphoneos/3rdParty.build/Objects-normal/armv7\"",
+					"\"$(SRCROOT)/../../xcode/build/moai-open.build/Distribution-iphoneos/Moai.build/Objects-normal/armv6\"",
+					"\"$(SRCROOT)/../../xcode/build/moai-open.build/Distribution-iphoneos/Moai.build/Objects-normal/armv7\"",
 				);
 			};
 			name = Debug;

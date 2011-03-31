@@ -8,15 +8,8 @@
 	<string>${PRODUCT_NAME}</string>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
-	<key>CFBundleIconFile</key>
-	<string>iPhoneIcon.png</string>
-	<key>CFBundleIconFiles</key>
-	<array>
-		<string>iPhoneIcon_72x72_326.png</string>
-		<string>iPhoneIcon.png</string>
-	</array>
 	<key>CFBundleIdentifier</key>
-	<string>com.agileisland.MoaiView</string>
+	<string>com.ziplinegames.ZiplinePlayer</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -46,5 +39,7 @@
 	<string>MainWindow</string>
 	<key>UIPrerenderedIcon</key>
 	<false/>
+	<key>CFBundleIconFile</key>
+	<string>iPhoneIcon.png</string>
 </dict>
 </plist>
