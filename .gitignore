@@ -1,0 +1,7 @@
+
+/nsis/release/bin
+/nsis/release/docs
+/nsis/release/include
+/nsis/release/3rdparty
+/nsis/release/samples/lua
+/nsis/release/samples/src
