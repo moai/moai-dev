@@ -11,7 +11,7 @@
 #include <errno.h>
 #include <dirent.h>
 #include <sys/stat.h>
-#include <sys/unistd.h>
+#include <unistd.h>
 
 //================================================================//
 // USDirectoryItr
