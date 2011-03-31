@@ -12,10 +12,10 @@ class USData;
 //================================================================//
 namespace USImageTransform {
 	enum Flags {
-		POW_TWO				= 1 << 0,
-		QUANTIZE			= 1 << 1,
-		TRUECOLOR			= 1 << 2,
-		PREMULTIPLY_ALPHA	= 1 << 3,
+		POW_TWO				= 0x01,
+		QUANTIZE			= 0x02,
+		TRUECOLOR			= 0x04,
+		PREMULTIPLY_ALPHA	= 0x08,
 	};
 }
 
