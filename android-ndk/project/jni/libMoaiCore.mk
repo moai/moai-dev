@@ -45,7 +45,6 @@ $(SRC_PATH)/3rdparty/box2d-2.1.2/Box2D/Box2D/Dynamics/Joints \
 # included files
 #----------------------------------------------------------------#
 LOCAL_SRC_FILES := $(SRC_PATH)/src/moaicore/pch.cpp \
-$(SRC_PATH)/3rdparty/contrib/utf8.c \
 $(SRC_PATH)/src/moaicore/MOAIAction.cpp \
 $(SRC_PATH)/src/moaicore/MOAIAnim.cpp \
 $(SRC_PATH)/src/moaicore/MOAIAnimCurve.cpp \
