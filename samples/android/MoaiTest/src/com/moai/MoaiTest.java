@@ -22,14 +22,10 @@ public class MoaiTest extends Activity {
 	
 	private File mAppRoot;
 
-	public void cool() {};
-	
     //----------------------------------------------------------------//
     @Override
     public void onCreate ( Bundle savedInstanceState ) {
 
-    	cool();
-    	
     	super.onCreate ( savedInstanceState );
 		Display display = (( WindowManager ) getSystemService ( Context.WINDOW_SERVICE )).getDefaultDisplay(); 
 
