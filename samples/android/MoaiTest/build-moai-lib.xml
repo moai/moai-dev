@@ -5,7 +5,10 @@
     <!-- build -->
     <!-- ================================================================ -->	
 	<target name="build">
-		<exec executable="bash" dir="../../../../android-ndk">
+		
+		<echo level="info" message="Builing Moai..."/>
+		
+		<exec executable="bash" dir="../../../android-ndk">
 			<arg line="build.sh"/>
 		</exec>
 	</target>
@@ -14,7 +17,12 @@
     <!-- clean -->
     <!-- ================================================================ -->	
 	<target name="clean">
-		<echo message="clean testing, 1, 2, 3!!!!"/>
+		
+		<echo level="info" message="Cleaning Moai..."/>
+		
+		<exec executable="bash" dir="../../../android-ndk">
+			<arg line="clean.sh"/>
+		</exec>
 	</target>
 	
 </project>

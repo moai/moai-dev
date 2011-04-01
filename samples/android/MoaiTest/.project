@@ -11,7 +11,7 @@
 			<arguments>
 				<dictionary>
 					<key>LaunchConfigHandle</key>
-					<value>&lt;project&gt;/.externalToolBuilders/Moai Lib Builder.launch</value>
+					<value>&lt;project&gt;/.externalToolBuilders/BuildMoai.launch</value>
 				</dictionary>
 			</arguments>
 		</buildCommand>
@@ -40,4 +40,11 @@
 		<nature>com.android.ide.eclipse.adt.AndroidNature</nature>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>libs</name>
+			<type>2</type>
+			<locationURI>PARENT-3-PROJECT_LOC/android-ndk/libs</locationURI>
+		</link>
+	</linkedResources>
 </projectDescription>
