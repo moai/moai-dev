@@ -5,7 +5,9 @@
     <!-- build -->
     <!-- ================================================================ -->	
 	<target name="build">
-		<echo level="info" message="build testing, 1, 2, 3!!!!"/>
+		<exec executable="bash" dir="../../../../android-ndk">
+			<arg line="build.sh"/>
+		</exec>
 	</target>
 
     <!-- ================================================================ -->
