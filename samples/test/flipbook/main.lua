@@ -26,11 +26,8 @@ curve:setKey ( 5, 1.00, 0, MOAIEaseType.FLAT )
 anim = MOAIAnim:new ()
 anim:reserveLinks ( 1 )
 anim:setLink ( 1, curve, sprite, MOAIProp2D.ATTR_INDEX )
-
-player = MOAIAnimDriver.new ()
-player:setAnim ( anim )
-player:setMode ( MOAITimer.LOOP )
-player:start ()
+anim:setMode ( MOAITimer.LOOP )
+anim:start ()
 
 MOAISim.pushRenderPass ( scene )
 MOAISim.openWindow ( "cathead", 320, 480 )

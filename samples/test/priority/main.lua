@@ -26,7 +26,7 @@ viewport:setSize ( 320, 480 )
 viewport:setScale ( 320, 0 )
 scene:setViewport ( viewport )
 
-camera = MOAITransform2D.new ()
+camera = MOAITransform.new ()
 scene:setCamera ( camera )
 
 addBtn ( scene, "btn1.png", -0, -0, -2 )

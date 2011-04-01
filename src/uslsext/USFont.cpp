@@ -614,10 +614,7 @@ USTextToken USFont::GetToken ( cc8* str, float points, USTextToken* prevToken ) 
 
 //----------------------------------------------------------------//
 void USFont::Init ( cc8* charCodes ) {
-	
-	USGlyph dummy;
-	this->mDummy = dummy;
-	
+
 	u32 byteCharTop = 0;
 	u32 byteCharBase = 0x000000ff;
 	u32 totalWideChars = 0;

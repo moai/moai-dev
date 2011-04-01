@@ -5,7 +5,7 @@ viewport:setSize ( 480, 480 )
 viewport:setScale ( 480, 480 )
 --viewport:setRotation ( 90 )
 
-camera = MOAITransform2D.new ()
+camera = MOAITransform.new ()
 camera:moveLoc ( 240, 0, 4 )
 
 layer1 = MOAILayer2D.new ()

@@ -6,7 +6,7 @@ viewport = MOAIViewport.new ()
 viewport:setSize ( 320, 480 )
 viewport:setScale ( 320, 480 )
 
-camera = MOAITransform2D.new ()
+camera = MOAITransform.new ()
 
 scene:setViewport ( viewport )
 scene:setCamera ( camera )
