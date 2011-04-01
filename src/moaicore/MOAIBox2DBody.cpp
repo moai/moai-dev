@@ -53,7 +53,26 @@ int MOAIBox2DBody::_addCircle ( lua_State* L ) {
 int MOAIBox2DBody::_addPolygon ( lua_State* L ) {
 	LUA_SETUP ( MOAIBox2DBody, "U" )
 
-	return 1;
+	b2Vec2 verts [ MOAIBox2DFixture::MAX_POLY_VERTS ];
+	int numVerts = MOAIBox2DFixture::LoadVerts ( state, 2, verts, MOAIBox2DFixture::MAX_POLY_VERTS );
+			
+	if ( numVerts ) {
+		
+		b2PolygonShape polyShape;
+		polyShape.Set ( verts, numVerts );
+		
+		b2FixtureDef fixtureDef;
+		fixtureDef.shape = &polyShape;
+		
+		MOAIBox2DFixture* fixture = new MOAIBox2DFixture ();
+		fixture->SetFixture ( self->mBody->CreateFixture ( &fixtureDef ));
+		fixture->SetWorld ( self->mWorld );
+		fixture->Retain ();
+
+		fixture->PushLuaUserdata ( state );
+		return 1;
+	}
+	return 0;
 }
 
 //----------------------------------------------------------------//

@@ -522,9 +522,7 @@ void MOAICpShape::CpRemoveFromSpace ( cpSpace* space ) {
 }
 
 //----------------------------------------------------------------//
-u32 MOAICpShape::LoadVerts ( USLuaState& state, int idx, void* buffer, u32 max  ) {
-	
-	cpVect* verts = ( cpVect* )buffer;
+u32 MOAICpShape::LoadVerts ( USLuaState& state, int idx, cpVect* verts, u32 max  ) {
 	
 	int itr = state.PushTableItr ( idx );
 	idx = 0;

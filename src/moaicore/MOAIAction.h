@@ -25,12 +25,15 @@ private:
 	typedef USLeanList < MOAIAction* >::Iterator ChildIt;
 	USLeanList < MOAIAction* > mChildren;
 	
+	float mThrottle;
+	
 	//----------------------------------------------------------------//
 	static int			_addChild				( lua_State* L );
 	static int			_clear					( lua_State* L );
 	static int			_isBusy					( lua_State* L );
 	static int			_start					( lua_State* L );
 	static int			_stop					( lua_State* L );
+	static int			_throttle				( lua_State* L );
 
 	//----------------------------------------------------------------//
 	void				OnUnblock				();

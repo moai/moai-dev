@@ -276,21 +276,6 @@ int MOAITextBox::_spool ( lua_State* L ) {
 	return 1;
 }
 
-//----------------------------------------------------------------//
-/**	@name throttle
-	@param1 self @type userdata
-	@param2 throttle @type number @text The spooling speed scale.
-	@text Scales the base spooling speed as needed (it can be changed while spooling to accelerate the speed at which the text is revealed, e.g. for when the user presses a skip key).
-	@return nil
-*/
-int MOAITextBox::_throttle ( lua_State* L ) {
-	LUA_SETUP ( MOAITextBox, "U" )
-
-	self->mThrottle = state.GetValue < float >( 2, self->mThrottle );
-	
-	return 0;
-}
-
 //================================================================//
 // MOAITextBox
 //================================================================//
@@ -418,7 +403,6 @@ MOAITextBox::MOAITextBox () :
 	mPageSize ( 0 ),
 	mSpool ( 0.0f ),
 	mSpeed ( DEFAULT_SPOOL_SPEED ),
-	mThrottle ( 1.0f ),
 	mReveal ( REVEAL_ALL ),
 	mYFlip ( false ) {
 	
@@ -468,7 +452,7 @@ void MOAITextBox::NextPage ( bool reveal ) {
 //----------------------------------------------------------------//
 void MOAITextBox::OnUpdate ( float step ) {
 	
-	this->mSpool += ( this->mSpeed * this->mThrottle * step );
+	this->mSpool += ( this->mSpeed * step );
 	this->mReveal = ( u32 )this->mSpool;
 }
 

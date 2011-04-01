@@ -9,6 +9,7 @@
 
 struct cpBody;
 struct cpSpace;
+
 class MOAICpArbiter;
 class MOAICpBody;
 class MOAICpSpace;
