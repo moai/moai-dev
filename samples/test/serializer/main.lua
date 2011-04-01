@@ -6,7 +6,7 @@ test = {
 	baz = 92,
 }
 
-transform = MOAITransform2D.new ()
+transform = MOAITransform.new ()
 
 serializer:serialize ( test )
 serializer:serialize ( transform )

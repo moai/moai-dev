@@ -5,14 +5,24 @@
     <!-- build -->
     <!-- ================================================================ -->	
 	<target name="build">
-		<echo level="info" message="build testing, 1, 2, 3!!!!"/>
+		
+		<echo level="info" message="Builing libMoai..."/>
+		
+		<exec executable="bash" dir="../../../android-ndk">
+			<arg line="build.sh"/>
+		</exec>
 	</target>
 
     <!-- ================================================================ -->
     <!-- clean -->
     <!-- ================================================================ -->	
 	<target name="clean">
-		<echo message="clean testing, 1, 2, 3!!!!"/>
+		
+		<echo level="info" message="Cleaning libMoai..."/>
+		
+		<exec executable="bash" dir="../../../android-ndk">
+			<arg line="clean.sh"/>
+		</exec>
 	</target>
 	
 </project>

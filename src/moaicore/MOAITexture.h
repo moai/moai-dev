@@ -18,6 +18,8 @@ class MOAITexture :
 	public USTexture {
 private:
 
+	static const u32 DEFAULT_TRANSFORM = USImageTransform::TRUECOLOR | USImageTransform::PREMULTIPLY_ALPHA;
+
 	STLString		mTexturePath;
 
 	//----------------------------------------------------------------//
@@ -35,8 +37,8 @@ public:
 	//----------------------------------------------------------------//
 	static MOAITexture*		AffirmTexture			( USLuaState& state, int idx );
 	bool					Bind					();
-	void					Load					( MOAIDataBuffer& data );
-	void					Load					( cc8* filename );
+	void					Load					( MOAIDataBuffer& data, u32 transform  );
+	void					Load					( cc8* filename, u32 transform  );
 							MOAITexture				();
 							~MOAITexture			();
 	void					SerializeIn				( USLuaState& state, USLuaSerializer& serializer );

@@ -29,16 +29,11 @@ protected:
 public:
 
 	//----------------------------------------------------------------//
-	void operator = ( TYPE* assign ) {
-		this->mData = assign;
-		this->mSize = 0;
-	};
-
-	//----------------------------------------------------------------//
-	void operator = ( const USLeanArray& assign ) {
-		this->Clear ();
-		this->mData = assign.mData;
-		this->mSize = 0;
+	USLeanArray < TYPE >& operator = ( const USLeanArray < TYPE >& assign ) {
+		if ( &assign != this ) {
+			this->CloneFrom ( assign );
+		}
+		return *this;
 	};
 
 	//----------------------------------------------------------------//
@@ -58,14 +53,14 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	void CloneFrom ( USLeanArray < TYPE >& src ) {
+	void CloneFrom ( const USLeanArray < TYPE >& src ) {
 
 		this->Init ( src.mSize );
 		this->CopyFrom ( src );
 	}
 
 	//----------------------------------------------------------------//
-	void CopyFrom ( USLeanArray < TYPE >& src ) {
+	void CopyFrom ( const USLeanArray < TYPE >& src ) {
 
 		u32 total = ( this->mSize < src.mSize ) ? this->mSize : src.mSize;
 

@@ -280,9 +280,8 @@ void MOAIFtFontRipper::RipFromTTF ( cc8* filename, USFont& font, USImage& image,
 					glyph.SetKernVec ( j, kernTable [ j ]);
 				}
 			}
-			
-			font.SetGlyph ( glyph );
 		}
+		font.SetGlyph ( glyph );
 	}
 	
 	FT_Done_Face ( face );

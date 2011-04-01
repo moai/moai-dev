@@ -10,7 +10,7 @@ scene:setViewport ( viewport )
 partition = MOAIPartition.new ()
 scene:setPartition ( partition )
 
-camera = MOAITransform2D.new ()
+camera = MOAITransform.new ()
 scene:setCamera ( camera )
 
 spriteLib = MOAIGfxQuadListDeck2D.new ()

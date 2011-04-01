@@ -451,6 +451,13 @@ drawSpatialHash(cpSpaceHash *hash)
 
 void MOAICpDebugDraw::DrawSpace(cpSpace *space, MOAICpDebugDrawOptions *options)
 {
+	glDisable ( GL_TEXTURE_2D );
+
+	glDisableClientState ( GL_COLOR_ARRAY );
+	glDisableClientState ( GL_NORMAL_ARRAY );
+	glDisableClientState ( GL_TEXTURE_COORD_ARRAY );
+	glEnableClientState ( GL_VERTEX_ARRAY );
+
 	if(options->drawHash){
 		glColorMask(GL_FALSE, GL_TRUE, GL_FALSE, GL_TRUE);
 		drawSpatialHash(space->activeShapes);

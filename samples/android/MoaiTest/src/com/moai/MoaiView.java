@@ -18,13 +18,16 @@ public class MoaiView extends GLSurfaceView {
 	boolean setDirectory = false;
 	String luaThread = null;
 	String appRoot = null;
+	
 	public MoaiView(Context context) {
+		
 		super(context);
 		_renderer = new MoaiRenderer();
-		setRenderer(_renderer);
+		setRenderer ( _renderer );
 		
-		if(_thread == null)
+		if ( _thread == null ) {
 			_thread = new MoaiThread();
+		}
 		
 		InitializeAku(this);
 	}

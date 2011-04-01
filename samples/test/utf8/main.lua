@@ -12,13 +12,13 @@ viewport:setScale ( 320, -480 )
 viewport:setOffset ( -1, 1 )
 layer:setViewport ( viewport )
 
-charcodes = 'abcdφωψ';
+charcodes = ' abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,?!:φωψ';
 
 font = MOAIFont.new ()
 font:loadFromTTF ( "times.ttf", charcodes, 12, 163 )
 
 textbox = MOAITextBox.new ()
-textbox:setString ( 'abcdφωψjklabc' )
+textbox:setString ( 'here are some unicode characters: φωψ' )
 textbox:setFont ( font )
 textbox:setTextSize ( font:getScale ())
 textbox:setRect ( 0, 0, 320, 480 )

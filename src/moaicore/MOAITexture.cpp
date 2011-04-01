@@ -53,15 +53,16 @@ int MOAITexture::_load ( lua_State* L ) {
 	LUA_SETUP ( MOAITexture, "U" )
 
 	MOAIDataBuffer* data = state.GetLuaObject < MOAIDataBuffer >( 2 );
+	u32 transform = state.GetValue < u32 >( 3, DEFAULT_TRANSFORM );
 
 	if ( data ) {
 
-		self->Load ( *data );
+		self->Load ( *data, transform );
 	}
 	else if ( state.IsType( 2, LUA_TSTRING ) ) {
 
 		cc8* filename = lua_tostring ( state, 2 );
-		self->Load ( filename );
+		self->Load ( filename, transform );
 	}
 
 	return 0;
@@ -121,6 +122,8 @@ MOAITexture* MOAITexture::AffirmTexture ( USLuaState& state, int idx ) {
 
 	MOAITexture* texture = 0;
 
+	u32 transform = state.GetValue < u32 >( idx + 1, DEFAULT_TRANSFORM );
+
 	if ( state.IsType ( idx, LUA_TUSERDATA )) {
 		
 		texture = state.GetLuaObject < MOAITexture >( idx );
@@ -128,14 +131,14 @@ MOAITexture* MOAITexture::AffirmTexture ( USLuaState& state, int idx ) {
 		
 		if ( data ) {
 			texture = new MOAITexture ();
-			texture->Load ( *data );
+			texture->Load ( *data, transform );
 		}
 	}
 	else if ( state.IsType ( idx, LUA_TSTRING )) {
 		
 		cc8* filename = lua_tostring ( state, idx );
 		texture = new MOAITexture ();
-		texture->Load ( filename );
+		texture->Load ( filename, transform );
 	}
 
 	return texture;
@@ -152,20 +155,20 @@ bool MOAITexture::Bind () {
 }
 
 //----------------------------------------------------------------//
-void MOAITexture::Load ( MOAIDataBuffer& data ) {
+void MOAITexture::Load ( MOAIDataBuffer& data, u32 transform ) {
 
-	this->Init ( data, USImageTransform::TRUECOLOR | USImageTransform::PREMULTIPLY_ALPHA );
+	this->Init ( data, transform );
 	this->SetFilter ( GL_LINEAR, GL_NEAREST );
 	this->SetWrap ( GL_REPEAT );
 }
 
 //----------------------------------------------------------------//
-void MOAITexture::Load ( cc8* filename ) {
+void MOAITexture::Load ( cc8* filename, u32 transform ) {
 
 	this->mTexturePath = USFileSys::Expand ( filename );
 
 	if ( !USFileSys::CheckFileExists ( this->mTexturePath )) return;
-	this->Init ( this->mTexturePath, USImageTransform::TRUECOLOR | USImageTransform::PREMULTIPLY_ALPHA );
+	this->Init ( this->mTexturePath, transform );
 	this->SetFilter ( GL_LINEAR, GL_NEAREST );
 	this->SetWrap ( GL_REPEAT );
 }
@@ -185,6 +188,11 @@ void MOAITexture::RegisterLuaClass ( USLuaState& state ) {
 	
 	state.SetField ( -1, "FILTER_POINT", ( u32 )GL_NEAREST );
 	state.SetField ( -1, "FILTER_BILERP", ( u32 )GL_LINEAR );
+	
+	//state.SetField ( -1, "POW_TWO", ( u32 )USImageTransform::POW_TWO ); // TODO: still not sold we should offet this 'feature'
+	state.SetField ( -1, "QUANTIZE", ( u32 )USImageTransform::QUANTIZE );
+	state.SetField ( -1, "TRUECOLOR", ( u32 )USImageTransform::TRUECOLOR );
+	state.SetField ( -1, "PREMULTIPLY_ALPHA", ( u32 )USImageTransform::PREMULTIPLY_ALPHA );
 }
 
 //----------------------------------------------------------------//
@@ -212,7 +220,7 @@ void MOAITexture::SerializeIn ( USLuaState& state, USLuaSerializer& serializer )
 	if ( path.size ()) {
 		USFilename filename;
 		filename.Bless ( path.str ());
-		this->Load ( filename.mBuffer );
+		this->Load ( filename.mBuffer, DEFAULT_TRANSFORM ); // TODO: serialization
 	}
 }
 

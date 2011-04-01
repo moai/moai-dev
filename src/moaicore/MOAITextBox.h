@@ -68,7 +68,6 @@ private:
 	static int	_setTextSize	( lua_State* L );
 	static int	_setYFlip		( lua_State* L );
 	static int	_spool			( lua_State* L );
-	static int	_throttle		( lua_State* L );
 	
 	//----------------------------------------------------------------//
 	void			ClearPageInfo			();

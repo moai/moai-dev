@@ -26,7 +26,7 @@ local function newPlayer ( self )
 	local player = MOAIAnim.new ()
 	player:reserveLinks ( #self.curves * layerSize )
 	
-	local root = MOAITransform2D.new ()
+	local root = MOAITransform.new ()
 	local props = {}
 	
 	for i, curveSet in pairs ( self.curves ) do
@@ -38,11 +38,11 @@ local function newPlayer ( self )
 		local c = ( i - 1 ) * layerSize
 		
 		player:setLink ( c + 1, curveSet.id, prop, MOAIProp2D.ATTR_INDEX )
-		player:setLink ( c + 2, curveSet.x, prop, MOAITransform2D.ATTR_X_LOC )
-		player:setLink ( c + 3, curveSet.y, prop, MOAITransform2D.ATTR_Y_LOC )
-		player:setLink ( c + 4, curveSet.r, prop, MOAITransform2D.ATTR_Z_ROT )
-		player:setLink ( c + 5, curveSet.xs, prop, MOAITransform2D.ATTR_X_SCL )
-		player:setLink ( c + 6, curveSet.ys, prop, MOAITransform2D.ATTR_Y_SCL )
+		player:setLink ( c + 2, curveSet.x, prop, MOAITransform.ATTR_X_LOC )
+		player:setLink ( c + 3, curveSet.y, prop, MOAITransform.ATTR_Y_LOC )
+		player:setLink ( c + 4, curveSet.r, prop, MOAITransform.ATTR_Z_ROT )
+		player:setLink ( c + 5, curveSet.xs, prop, MOAITransform.ATTR_X_SCL )
+		player:setLink ( c + 6, curveSet.ys, prop, MOAITransform.ATTR_Y_SCL )
 		
 		table.insert ( props, prop )
 	end

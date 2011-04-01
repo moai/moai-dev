@@ -6,7 +6,7 @@ viewport:setSize ( 256, 256 )
 viewport:setScale ( 256, 256 )
 scene:setViewport ( viewport )
 
-camera = MOAITransform2D.new ()
+camera = MOAITransform.new ()
 scene:setCamera ( camera )
 
 tileset = MOAITileDeck2D.new ()

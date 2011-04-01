@@ -15,10 +15,10 @@ scene:setViewport ( viewport )
 partition = MOAIPartition.new ()
 scene:setPartition ( partition )
 
-camera = MOAITransform2D.new ()
+camera = MOAITransform.new ()
 scene:setCamera ( camera )
 
-uvTransform = MOAITransform2D.new ()
+uvTransform = MOAITransform.new ()
 uvTransform:moveLoc ( 1, 0, 3 )
 uvTransform:moveRot ( 360, 3 )
 uvTransform:moveScl ( 1, 1, 3 )

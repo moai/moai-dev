@@ -155,6 +155,28 @@ void MOAIBox2DFixture::HandleCollision ( u32 eventType, MOAIBox2DFixture* other,
 }
 
 //----------------------------------------------------------------//
+u32 MOAIBox2DFixture::LoadVerts ( USLuaState& state, int idx, b2Vec2* verts, u32 max  ) {
+	
+	int itr = state.PushTableItr ( idx );
+	idx = 0;
+	
+	u32 total = 0;
+	for ( ; state.TableItrNext ( itr ) && ( total < max ); ++idx ) {
+		
+		float val = state.GetValue < float >( -1, 0 );
+		
+		if ( idx & 0x01 ) {
+			verts [ total ].y = val;
+			total++;
+		}
+		else {
+			verts [ total ].x = val;
+		}
+	}
+	return total;
+}
+
+//----------------------------------------------------------------//
 MOAIBox2DFixture::MOAIBox2DFixture () :
 	mFixture ( 0 ),
 	mCollisionMask ( 0 ) {

@@ -54,7 +54,7 @@ int MOAIVertexFormat::_declareNormal ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 // TODO: doxygen
-int MOAIVertexFormat::_declareTextureCoord ( lua_State* L ) {
+int MOAIVertexFormat::_declareUV ( lua_State* L ) {
 	LUA_SETUP ( MOAIVertexFormat, "UNN" )
 
 	u32 type = state.GetValue < u32 >( 2, 0 );
@@ -100,7 +100,7 @@ void MOAIVertexFormat::RegisterLuaFuncs ( USLuaState& state ) {
 		{ "declareColor",			_declareColor },
 		{ "declareCoord",			_declareCoord },
 		{ "declareNormal",			_declareNormal },
-		{ "declareTextureCoord",	_declareTextureCoord },
+		{ "declareUV",				_declareUV },
 		{ NULL, NULL }
 	};
 	luaL_register ( state, 0, regTable );
