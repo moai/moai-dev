@@ -108,6 +108,21 @@ int MOAIAction::_stop ( lua_State* L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
+/**	@name throttle
+	@param1 self @type userdata
+	@param2 throttle @type number @text The speed scale.
+	@text Scales the time step as needed
+	@return nil
+*/
+int MOAIAction::_throttle ( lua_State* L ) {
+	LUA_SETUP ( MOAIAction, "U" )
+
+	self->mThrottle = state.GetValue < float >( 2, 1.0f );
+	
+	return 0;
+}
+
 //================================================================//
 // MOAIAction
 //================================================================//
@@ -151,7 +166,8 @@ bool MOAIAction::IsBusy () {
 MOAIAction::MOAIAction () :
 	mNew ( true ),
 	mPass ( 0 ),
-	mParent ( 0 ) {
+	mParent ( 0 ),
+	mThrottle ( 1.0f ) {
 
 	this->mLink.Data ( this );
 
@@ -202,6 +218,7 @@ void MOAIAction::RegisterLuaFuncs ( USLuaState& state ) {
 		{ "isBusy",				_isBusy },
 		{ "start",				_start },
 		{ "stop",				_stop },
+		{ "throttle",			_throttle },
 		{ NULL, NULL }
 	};
 	
@@ -258,14 +275,15 @@ STLString MOAIAction::ToString () {
 void MOAIAction::Update ( float step, u32 pass, bool checkPass ) {
 
 	if ( this->IsBlocked ()) return;
-
 	if (( checkPass ) && ( pass < this->mPass )) return;
+	
+	step *= this->mThrottle;
 	
 	if ( this->mNew ) {
 		step = 0.0f;
 		checkPass = false;
 	}
-
+	
 	if (( checkPass == false ) || ( pass == this->mPass )) {
 		MOAIActionMgr::Get ().SetCurrentAction ( this );
 		this->OnUpdate ( step );
