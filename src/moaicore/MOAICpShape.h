@@ -8,6 +8,7 @@
 #include <moaicore/MOAICpSpace.h>
 
 struct cpShape;
+struct cpVect;
 
 //================================================================//
 // MOAICpShape
@@ -19,9 +20,7 @@ class MOAICpShape :
 	public MOAICpPrim {
 private:
 
-	enum {
-		MAX_POLY_VERTS = 1024,
-	};
+	static const u32 MAX_POLY_VERTS = 1024;
 
 	USLeanLink < MOAICpShape* > mLinkInBody;
 	cpShape* mShape;
@@ -56,7 +55,7 @@ private:
 	//----------------------------------------------------------------//
 	void			CpAddToSpace			( cpSpace* space );
 	void			CpRemoveFromSpace		( cpSpace* space );
-	static u32		LoadVerts				( USLuaState& state, int idx, void* buffer, u32 max  );
+	static u32		LoadVerts				( USLuaState& state, int idx, cpVect* verts, u32 max  );
 
 public:
 	
