@@ -8,7 +8,7 @@
 		
 		<echo level="info" message="Builing libMoai..."/>
 		
-		<exec executable="bash" dir="../../../android-ndk">
+		<exec executable="bash" dir="..">
 			<arg line="build.sh"/>
 		</exec>
 	</target>
@@ -20,7 +20,7 @@
 		
 		<echo level="info" message="Cleaning libMoai..."/>
 		
-		<exec executable="bash" dir="../../../android-ndk">
+		<exec executable="bash" dir="..">
 			<arg line="clean.sh"/>
 		</exec>
 	</target>
