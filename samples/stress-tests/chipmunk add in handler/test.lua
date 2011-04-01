@@ -30,8 +30,11 @@ shape2:setType ( 2 )
 space:insertPrim ( shape2 )
 
 function handleCollisions ( event, a, b, arb )
-	space:removePrim ( shape )
-	shape = nil
+	newshape = body:addRect ( -64, 128, 64, 192 )
+	newshape:setElasticity ( 0.3 )
+	newshape:setFriction ( 0.8 )
+	newshape:setType ( 1 )
+	space:insertPrim ( newshape )
 
 	return true
 end
