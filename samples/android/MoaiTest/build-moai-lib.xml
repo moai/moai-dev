@@ -6,7 +6,7 @@
     <!-- ================================================================ -->	
 	<target name="build">
 		
-		<echo level="info" message="Builing Moai..."/>
+		<echo level="info" message="Builing libMoai..."/>
 		
 		<exec executable="bash" dir="../../../android-ndk">
 			<arg line="build.sh"/>
@@ -18,7 +18,7 @@
     <!-- ================================================================ -->	
 	<target name="clean">
 		
-		<echo level="info" message="Cleaning Moai..."/>
+		<echo level="info" message="Cleaning libMoai..."/>
 		
 		<exec executable="bash" dir="../../../android-ndk">
 			<arg line="clean.sh"/>

@@ -6,8 +6,13 @@ Requires Android NDK, Make, and Bash (Cygwin is one way to get make & bash - htt
 
 1. Make sure that ndk-build is on your path.
 2. Make sure that bash is on your path.
-3. run build.bat
+3. run build.bat.
 
 ----------------------------------------------------------------
 -- MAC
 ----------------------------------------------------------------
+
+Requires Android NDK
+
+1. Make sure that ndk-build is on your path.
+2. run build.bat.
