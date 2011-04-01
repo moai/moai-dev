@@ -19,7 +19,7 @@ private:
 	static int	_declareColor			( lua_State* L );
 	static int	_declareCoord			( lua_State* L );
 	static int	_declareNormal			( lua_State* L );
-	static int	_declareTextureCoord	( lua_State* L );
+	static int	_declareUV				( lua_State* L );
 
 	//----------------------------------------------------------------//
 	

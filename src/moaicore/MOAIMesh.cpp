@@ -53,6 +53,10 @@ void MOAIMesh::Draw ( const USAffine2D& transform, u32 idx ) {
 	USDrawBuffer& drawBuffer = USDrawBuffer::Get ();
 	drawBuffer.Flush ();
 	
+	if ( this->mTexture ) {
+		USCanvas::SetTexture ( *this->mTexture );
+	}
+	
 	USCanvas::SetWorldMtx ( transform );
 	this->mVertexBuffer->Draw ();
 	
