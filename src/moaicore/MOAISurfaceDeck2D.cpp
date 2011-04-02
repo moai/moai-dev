@@ -257,7 +257,7 @@ USRect MOAISurfaceDeck2D::GetBounds ( u32 idx ) {
 //----------------------------------------------------------------//
 MOAISurfaceDeck2D::MOAISurfaceDeck2D () {
 
-	RTTI_SINGLE ( MOAIDeck )
+	RTTI_SINGLE ( MOAIDeck2D )
 	this->SetContentMask ( MOAIProp::CAN_DRAW_DEBUG | MOAIProp::CAN_GATHER_SURFACES );
 }
 

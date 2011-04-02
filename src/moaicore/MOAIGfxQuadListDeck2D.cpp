@@ -27,56 +27,6 @@ int MOAIGfxQuadListDeck2D::_bind ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>enumSprites ( self, id, basePrimID, uvRectID, screenRectID, total )</tt>\n
-\n
-	Enumerates brushes from a source texture to the brush library.
-	@param self (in)
-	@param id (in) The ID of the first(?) destination brush.
-	@param basePrimID (in) The base ID of the brushprim to be assigned.
-	@param uvRectID (in) The ID of the brush's source UVrect.
-	@param screenRectID (in) The ID of the screen rect to be assigned.
-	@param total (in) Number of brushes to be enumerated.
-*/
-int MOAIGfxQuadListDeck2D::_enumSprites ( lua_State* L ) {
-	LUA_SETUP ( MOAIGfxQuadListDeck2D, "UNNNNN" )
-
-	u32 idx				= state.GetValue < u32 >( 2, 1 ) - 1;
-	u32 basePrimID		= state.GetValue < u32 >( 3, 1 ) - 1;
-	u32 uvRectID		= state.GetValue < u32 >( 4, 1 ) - 1;
-	u32 screenRectID	= state.GetValue < u32 >( 5, 1 ) - 1;
-	u32 total			= state.GetValue < u32 >( 6, 0 );
-
-	self->EnumSprites ( idx, basePrimID, uvRectID, screenRectID, total );
-
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@brief <tt>enumUVTiles ( self, id, width, height, xStep, yStep )</tt>\n
-\n
-	Enumerates UV tiles off a source texture.
-	@param self (in)
-	@param id (in) ID of the first UV tile to be enumerated.
-	@param width (in) Width of the UV tile.
-	@param height (in) Height of the UV tile.
-	@param xStep (in) How far to step along the X axis to the next column of UV tiles.
-	@param yStep (in) How far to step along the Y axis to the next row of UV tiles.
-*/
-int MOAIGfxQuadListDeck2D::_enumUVTiles ( lua_State* L ) {
-	LUA_SETUP ( MOAIGfxQuadListDeck2D, "UNNNNNNN" )
-
-	u32 idx			= state.GetValue < u32 >( 2, 1 ) - 1;
-	u32 width		= state.GetValue < u32 >( 5, 0 );
-	u32 height		= state.GetValue < u32 >( 6, 0 );
-	float xStep		= state.GetValue < float >( 7, 0.0f );
-	float yStep		= state.GetValue < float >( 8, 0.0f );
-
-	self->EnumUVTiles ( idx, width, height, xStep, yStep );
-
-	return 0;
-}
-
-//----------------------------------------------------------------//
 /**	@brief <tt>releaseTexture ( self )</tt>\n
 \n
 	Releases the memory used for the brushlib's textures.  Will have to be reloaded if the brushlib is displayed again.
@@ -86,6 +36,22 @@ int MOAIGfxQuadListDeck2D::_releaseTexture ( lua_State* L ) {
 	LUA_SETUP ( MOAIGfxQuadListDeck2D, "U" )
 
 	self->ReleaseTexture ();
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@brief <tt>reserveSprites ( self, total )</tt>\n
+\n
+	Reserves brushes for a brush library.
+	@param self (in)
+	@param total (in) The number of brushes to reserve.
+*/
+int MOAIGfxQuadListDeck2D::_reserveLists ( lua_State* L ) {
+	LUA_SETUP ( MOAIGfxQuadListDeck2D, "UN" )
+
+	u32 total = state.GetValue < u32 >( 2, 0 );
+	self->ReserveLists ( total );
 
 	return 0;
 }
@@ -123,22 +89,6 @@ int MOAIGfxQuadListDeck2D::_reserveQuads ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>reserveSprites ( self, total )</tt>\n
-\n
-	Reserves brushes for a brush library.
-	@param self (in)
-	@param total (in) The number of brushes to reserve.
-*/
-int MOAIGfxQuadListDeck2D::_reserveSprites ( lua_State* L ) {
-	LUA_SETUP ( MOAIGfxQuadListDeck2D, "UN" )
-
-	u32 total = state.GetValue < u32 >( 2, 0 );
-	self->ReserveSprites ( total );
-
-	return 0;
-}
-
-//----------------------------------------------------------------//
 /**	@brief <tt>reserveUVRects ( self, total )</tt>\n
 \n
 	Reserves UV rects for a brush library.
@@ -155,39 +105,22 @@ int MOAIGfxQuadListDeck2D::_reserveUVRects ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>scaleCoords ( self, xScale, yScale )</tt>\n
+/**	@brief <tt>setSprite ( self, id, basePrimID, totalPrims )</tt>\n
 \n
-	Scales the coordinates.
+	Sets a brush in the brush library.
 	@param self (in)
-	@param xScale (in) The horizontal scaling value.
-	@param yScale (in) The vertical scaling value.
+	@param id (in) ID of this brush.
+	@param basePrimID (in) ID of the brushprim for this brush.
+	@param totalPrims (in) Total number of brushprims up to this declaration(?).
 */
-int MOAIGfxQuadListDeck2D::_scaleCoords ( lua_State* L ) {
-	LUA_SETUP ( MOAIGfxQuadListDeck2D, "UNN" )
+int MOAIGfxQuadListDeck2D::_setList ( lua_State* L ) {
+	LUA_SETUP ( MOAIGfxQuadListDeck2D, "UNNN" )
 
-	float xScale = state.GetValue < float >( 2, 1.0f );
-	float yScale = state.GetValue < float >( 3, 1.0f );
+	u32 idx = state.GetValue < u32 >( 2, 1 ) - 1;
+	u32 basePrimID = state.GetValue < u32 >( 3, 1 ) - 1;
+	u32 totalPrims = state.GetValue < u32 >( 4, 0 );
 
-	self->ScaleScreenCoords ( xScale, yScale );
-
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@brief <tt>scaleUVCoords ( self, xScale, yScale )</tt>\n
-\n
-	Scales the UV coordinates.
-	@param self (in)
-	@param xScale (in) The horizontal scaling value.
-	@param yScale (in) The vertical scaling value.
-*/
-int MOAIGfxQuadListDeck2D::_scaleUVCoords ( lua_State* L ) {
-	LUA_SETUP ( MOAIGfxQuadListDeck2D, "UNN" )
-
-	float xScale = state.GetValue < float >( 2, 1.0f );
-	float yScale = state.GetValue < float >( 3, 1.0f );
-
-	self->ScaleUVCoords ( xScale, yScale );
+	self->SetList ( idx, basePrimID, totalPrims );
 
 	return 0;
 }
@@ -249,7 +182,6 @@ int MOAIGfxQuadListDeck2D::_setQuad ( lua_State* L ) {
 	return 0;
 }
 
-
 //----------------------------------------------------------------//
 /**	@brief <tt>setRect ( self, id, xMin, yMin, xMax, yMax )</tt>\n
 \n
@@ -275,27 +207,6 @@ int MOAIGfxQuadListDeck2D::_setRect ( lua_State* L ) {
 
 	self->SetRect ( idx, rect );
 	
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@brief <tt>setSprite ( self, id, basePrimID, totalPrims )</tt>\n
-\n
-	Sets a brush in the brush library.
-	@param self (in)
-	@param id (in) ID of this brush.
-	@param basePrimID (in) ID of the brushprim for this brush.
-	@param totalPrims (in) Total number of brushprims up to this declaration(?).
-*/
-int MOAIGfxQuadListDeck2D::_setSprite ( lua_State* L ) {
-	LUA_SETUP ( MOAIGfxQuadListDeck2D, "UNNN" )
-
-	u32 idx = state.GetValue < u32 >( 2, 1 ) - 1;
-	u32 basePrimID = state.GetValue < u32 >( 3, 1 ) - 1;
-	u32 totalPrims = state.GetValue < u32 >( 4, 0 );
-
-	self->SetSprite ( idx, basePrimID, totalPrims );
-
 	return 0;
 }
 
@@ -392,93 +303,37 @@ bool MOAIGfxQuadListDeck2D::Contains ( u32 idx, const USVec2D& vec ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxQuadListDeck2D::Draw ( const USAffine2D& transform, u32 idx ) {
-
-	idx = idx - 1;
-
-	USDrawBuffer& drawBuffer = USDrawBuffer::Get ();
-	drawBuffer.SetVtxTransform ( transform );
-
-	this->Draw ( idx, 0.0f, 0.0f, 1.0f, 1.0f );
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxQuadListDeck2D::Draw ( const USAffine2D& transform, MOAIGrid& grid, USTileCoord& c0, USTileCoord& c1 ) {
-	
-	USDrawBuffer& drawBuffer = USDrawBuffer::Get ();
-	drawBuffer.SetVtxTransform ( transform );
-	
-	for ( int y = c0.mY; y <= c1.mY; ++y ) {
-		for ( int x = c0.mX; x <= c1.mX; ++x ) {
-			
-			u32 tile = grid.GetTile ( x, y );
-			if ( tile & USTile::HIDDEN ) continue;
-			
-			USVec2D loc = grid.GetTilePoint ( x, y, USGridSpace::TILE_CENTER );
-			
-			float xScale = ( tile & USTile::XFLIP ) ? -1.0f : 1.0f;
-			float yScale = ( tile & USTile::YFLIP ) ? -1.0f : 1.0f;
-			
-			this->Draw (( tile & USTile::CODE_MASK ) - 1, loc.mX, loc.mY, xScale, yScale );
-		}
-	}
-}
-
-//----------------------------------------------------------------//
 void MOAIGfxQuadListDeck2D::Draw ( u32 idx, float xOff, float yOff, float xScale, float yScale ) {
 
-	idx = idx % this->mSprites.Size ();
+	u32 size = this->mQuads.Size ();
+	if ( size ) {
 
-	USSprite& sprite = this->mSprites [ idx ];
-	USGLQuad glQuad;
-	
-	u32 base = sprite.mBasePrim;
-	u32 top = base + sprite.mTotalPrims;
-	
-	u32 totalSpritePrims = this->mPrims.Size ();
-	
-	for ( u32 i = base; i < top; ++i ) {
+		idx = ( idx - 1 ) % size;
+
+		USSprite& sprite = this->mSprites [ idx ];
+		USGLQuad glQuad;
 		
-		USSpritePrim spritePrim = this->mPrims [ i % totalSpritePrims ];
+		u32 base = sprite.mBasePrim;
+		u32 top = base + sprite.mTotalPrims;
 		
-		USSpriteUVRect& uvRect = this->mUVRects [ spritePrim.mUVRectID ]; 
-		USQuad& quad = this->mQuads [ spritePrim.mQuadID ];
+		u32 totalSpritePrims = this->mPrims.Size ();
 		
-		if ( uvRect.mTransform == UV_ROTATE_90 ) {
-			USRect& rect = uvRect.mRect;
-			glQuad.SetUVs ( rect.mXMax, rect.mYMax, rect.mXMax, rect.mYMin, rect.mXMin, rect.mYMin, rect.mXMin, rect.mYMax );
-		}
-		else {
-			glQuad.SetUVs ( uvRect.mRect );
-		}
-		glQuad.SetVerts ( quad.mV [ 0 ], quad.mV [ 1 ], quad.mV [ 2 ], quad.mV [ 3 ]);
-		glQuad.Draw ( xOff, yOff, xScale, yScale );
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxQuadListDeck2D::EnumSprites ( u32 idx, u32 basePrimID, u32 uvRectID, u32 screenRectID, u32 total ) {
-
-	for ( u32 i = 0; i < total; ++i ) {
-	
-		this->SetPrim ( basePrimID + i, uvRectID + i, screenRectID );
-		this->SetSprite ( idx + i, basePrimID + i, 1 );
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxQuadListDeck2D::EnumUVTiles ( u32 idx, u32 width, u32 height, float xStep, float yStep ) {
-
-	USSpriteUVRect& stamp = this->mUVRects [ idx ];
-
-	for ( u32 y = 0; y < height; ++y ) {
-		for ( u32 x = 0; x < width; ++x ) {
-		
-			u32 i = idx + ( x * y );
-			if ( i > this->mUVRects.Size ()) break;
+		for ( u32 i = base; i < top; ++i ) {
 			
-			this->mUVRects [ i ] = stamp;
-			this->mUVRects [ i ].mRect.Offset ( x * xStep, y * yStep );
+			USSpritePrim spritePrim = this->mPrims [ i % totalSpritePrims ];
+			
+			USSpriteUVRect& uvRect = this->mUVRects [ spritePrim.mUVRectID ]; 
+			USQuad& quad = this->mQuads [ spritePrim.mQuadID ];
+			
+			if ( uvRect.mTransform == UV_ROTATE_90 ) {
+				USRect& rect = uvRect.mRect;
+				glQuad.SetUVs ( rect.mXMax, rect.mYMax, rect.mXMax, rect.mYMin, rect.mXMin, rect.mYMin, rect.mXMin, rect.mYMax );
+			}
+			else {
+				glQuad.SetUVs ( uvRect.mRect );
+			}
+			glQuad.SetVerts ( quad.mV [ 0 ], quad.mV [ 1 ], quad.mV [ 2 ], quad.mV [ 3 ]);
+			glQuad.Draw ( xOff, yOff, xScale, yScale );
 		}
 	}
 }
@@ -519,7 +374,7 @@ USRect MOAIGfxQuadListDeck2D::GetBounds ( u32 idx ) {
 //----------------------------------------------------------------//
 MOAIGfxQuadListDeck2D::MOAIGfxQuadListDeck2D () {
 	
-	RTTI_SINGLE ( MOAIDeck )
+	RTTI_SINGLE ( MOAIDeck2D )
 	this->SetContentMask ( MOAIProp::CAN_DRAW );
 }
 
@@ -530,6 +385,8 @@ MOAIGfxQuadListDeck2D::~MOAIGfxQuadListDeck2D () {
 //----------------------------------------------------------------//
 void MOAIGfxQuadListDeck2D::RegisterLuaClass ( USLuaState& state ) {
 	
+	MOAIDeck2D::RegisterLuaClass ( state );
+	
 	state.SetField ( -1, "UV_NONE", ( u32 )UV_NONE );
 	state.SetField ( -1, "UV_ROTATE_90", ( u32 )UV_ROTATE_90 );
 }
@@ -537,21 +394,19 @@ void MOAIGfxQuadListDeck2D::RegisterLuaClass ( USLuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIGfxQuadListDeck2D::RegisterLuaFuncs ( USLuaState& state ) {
 
+	MOAIDeck2D::RegisterLuaFuncs ( state );
+
 	LuaReg regTable [] = {
 		{ "bind",					_bind },
-		{ "enumBrushes",			_enumSprites },
-		{ "enumUVTiles",			_enumUVTiles },
 		{ "releaseTexture",			_releaseTexture },
+		{ "reserveLists",			_reserveLists },
 		{ "reservePrims",			_reservePrims },
 		{ "reserveQuads",			_reserveQuads },
-		{ "reserveSprites",			_reserveSprites },
 		{ "reserveUVRects",			_reserveUVRects },
-		{ "scaleCoords",			_scaleCoords },
-		{ "scaleUVCoords",			_scaleUVCoords },
+		{ "setList",				_setList },
 		{ "setPrim",				_setPrim },
 		{ "setQuad",				_setQuad },
 		{ "setRect",				_setRect },
-		{ "setSprite",				_setSprite },
 		{ "setUVRect",				_setUVRect },
 		{ "setUVRectTransform",		_setUVRectTransform },
 		{ "setTexture",				_setTexture },
@@ -565,6 +420,12 @@ void MOAIGfxQuadListDeck2D::RegisterLuaFuncs ( USLuaState& state ) {
 void MOAIGfxQuadListDeck2D::ReleaseTexture () {
 
 	this->mTexture->USTexture::Release ();
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxQuadListDeck2D::ReserveLists ( u32 total ) {
+
+	this->mSprites.Init ( total );
 }
 
 //----------------------------------------------------------------//
@@ -586,32 +447,21 @@ void MOAIGfxQuadListDeck2D::ReserveQuads ( u32 total ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxQuadListDeck2D::ReserveSprites ( u32 total ) {
-
-	this->mSprites.Init ( total );
-}
-
-//----------------------------------------------------------------//
 void MOAIGfxQuadListDeck2D::ReserveUVRects ( u32 total ) {
 
 	this->mUVRects.Init ( total );
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxQuadListDeck2D::ScaleScreenCoords ( float xScale, float yScale ) {
+void MOAIGfxQuadListDeck2D::SetList ( u32 idx, u32 basePrimID, u32 totalPrims ) {
 
-	for ( u32 i = 0; i < this->mUVRects.Size (); ++i ) {
-		this->mQuads [ i ].Scale ( xScale, yScale );
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxQuadListDeck2D::ScaleUVCoords ( float xScale, float yScale ) {
-
-	for ( u32 i = 0; i < this->mUVRects.Size (); ++i ) {
-		USRect& uvRect = this->mUVRects [ i ].mRect;
-		uvRect.Scale ( xScale, yScale );
-	}
+	if ( !this->mSprites.Size ()) return;
+	if ( !this->mPrims.Size ()) return;
+	
+	USSprite& sprite = this->mSprites [ idx % this->mSprites.Size ()];
+	
+	sprite.mBasePrim = basePrimID % this->mPrims.Size ();
+	sprite.mTotalPrims = totalPrims;
 }
 
 //----------------------------------------------------------------//
@@ -639,18 +489,6 @@ void MOAIGfxQuadListDeck2D::SetRect ( u32 idx, USRect& rect ) {
 
 	if ( idx > this->mQuads.Size ()) return;
 	this->mQuads [ idx ].Init ( rect );
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxQuadListDeck2D::SetSprite ( u32 idx, u32 basePrimID, u32 totalPrims ) {
-
-	if ( !this->mSprites.Size ()) return;
-	if ( !this->mPrims.Size ()) return;
-	
-	USSprite& sprite = this->mSprites [ idx % this->mSprites.Size ()];
-	
-	sprite.mBasePrim = basePrimID % this->mPrims.Size ();
-	sprite.mTotalPrims = totalPrims;
 }
 
 //----------------------------------------------------------------//

@@ -338,10 +338,7 @@ MOAIStretchPatch2D::~MOAIStretchPatch2D () {
 void MOAIStretchPatch2D::RegisterLuaClass ( USLuaState& state ) {
 	UNUSED ( state );
 
-//	this->MOAIDeck::RegisterLuaClass ( state );
-//	
-//	state.SetField ( -1, "FILTER_POINT", ( u32 )GL_NEAREST );
-//	state.SetField ( -1, "FILTER_BILERP", ( u32 )GL_LINEAR );
+	this->MOAIDeck::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//

@@ -122,17 +122,21 @@ void USQuad::Init ( const USRect& rect ) {
 //----------------------------------------------------------------//
 void USQuad::Init ( float x0, float y0, float x1, float y1 ) {
 
+	// left top
 	this->mV [ 0 ].mX = x0;
-	this->mV [ 0 ].mY = y0;
+	this->mV [ 0 ].mY = y1;
 	
+	// right top
 	this->mV [ 1 ].mX = x1;
-	this->mV [ 1 ].mY = y0;
+	this->mV [ 1 ].mY = y1;
 	
+	// right bottom
 	this->mV [ 2 ].mX = x1;
-	this->mV [ 2 ].mY = y1;
+	this->mV [ 2 ].mY = y0;
 	
+	// left bottom
 	this->mV [ 3 ].mX = x0;
-	this->mV [ 3 ].mY = y1;
+	this->mV [ 3 ].mY = y0;
 }
 
 //----------------------------------------------------------------//

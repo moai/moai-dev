@@ -107,55 +107,17 @@ bool MOAITileDeck2D::Bind () {
 }
 
 //----------------------------------------------------------------//
-void MOAITileDeck2D::Draw ( const USAffine2D& transform, u32 idx ) {
-
-	if ( idx & USTile::HIDDEN ) return;
-	idx = USTile::ToggleYFlip ( idx );
+void MOAITileDeck2D::Draw ( u32 idx, float xOff, float yOff, float xScale, float yScale ) {
 	
-	USDrawBuffer& drawBuffer = USDrawBuffer::Get ();
-	drawBuffer.SetVtxTransform ( transform );
+	idx = idx - 1;		
 	
-	this->DrawTile ( idx, this->mRect );
-}
-
-//----------------------------------------------------------------//
-void MOAITileDeck2D::Draw ( const USAffine2D& transform, MOAIGrid& grid, USTileCoord& c0, USTileCoord& c1 ) {
-
-	USDrawBuffer& drawBuffer = USDrawBuffer::Get ();
-	drawBuffer.SetVtxTransform ( transform );
-
-	for ( int y = c0.mY; y <= c1.mY; ++y ) {
-		for ( int x = c0.mX; x <= c1.mX; ++x ) {
-			
-			u32 tile = grid.GetTile ( x, y );
-			if ( tile & USTile::HIDDEN ) continue;
-			
-			USRect tileRect = grid.GetTileRect ( x, y );
-			this->DrawTile ( tile, tileRect );
-		}
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAITileDeck2D::DrawTile ( u32 tile, USRect rect ) {
+	USRect uvRect = this->GetTileRect ( idx );
+	uvRect.FlipY ();
 	
-	USGLQuad glQuad;
-	glQuad.SetVerts ( rect.mXMin, rect.mYMin, rect.mXMax, rect.mYMax );
-	
-	USRect uvRect = this->GetTileRect (( tile & USTile::CODE_MASK ) - 1 );
-	
-	u32 flags = tile ^ this->mFlags;
-	
-	if ( flags & USTile::XFLIP ) {
-		uvRect.FlipX ();
-	}
-
-	if ( flags & USTile::YFLIP ) {
-		uvRect.FlipY ();
-	}
-	
-	glQuad.SetUVs ( uvRect );
-	glQuad.Draw ();
+	USGLQuad quad;
+	quad.SetVerts ( this->mRect );
+	quad.SetUVs ( uvRect );
+	quad.Draw ( xOff, yOff, xScale, yScale );
 }
 
 //----------------------------------------------------------------//
@@ -169,8 +131,10 @@ USRect MOAITileDeck2D::GetBounds ( u32 idx ) {
 MOAITileDeck2D::MOAITileDeck2D () :
 	mFlags ( 0 ) {
 	
-	RTTI_SINGLE ( MOAIDeck )
+	RTTI_SINGLE ( MOAIDeck2D )
 	this->SetContentMask ( MOAIProp::CAN_DRAW );
+	
+	this->mRect.Init ( -0.5f, -0.5f, 0.5f, 0.5f );
 }
 
 //----------------------------------------------------------------//
@@ -180,13 +144,13 @@ MOAITileDeck2D::~MOAITileDeck2D () {
 //----------------------------------------------------------------//
 void MOAITileDeck2D::RegisterLuaClass ( USLuaState& state ) {
 
-	this->MOAIDeck::RegisterLuaClass ( state );
+	this->MOAIDeck2D::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAITileDeck2D::RegisterLuaFuncs ( USLuaState& state ) {
 
-	this->MOAIDeck::RegisterLuaFuncs ( state );
+	this->MOAIDeck2D::RegisterLuaFuncs ( state );
 
 	LuaReg regTable [] = {
 		{ "setFlip",			_setFlip },

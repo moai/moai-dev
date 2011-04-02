@@ -468,7 +468,7 @@ void MOAIProp2D::LoadShader () {
 
 //----------------------------------------------------------------//
 MOAIProp2D::MOAIProp2D () :
-	mIndex( 0 ),
+	mIndex( 1 ),
 	mRepeat ( 0 ),
 	mFrameSource ( FRAME_FROM_PARENT ) {
 	

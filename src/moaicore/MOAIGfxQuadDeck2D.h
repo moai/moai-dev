@@ -4,7 +4,7 @@
 #ifndef	MOAIGFXQUADDECK2D_H
 #define	MOAIGFXQUADDECK2D_H
 
-#include <moaicore/MOAIDeck.h>
+#include <moaicore/MOAIDeck2D.h>
 
 class MOAITexture;
 
@@ -14,14 +14,14 @@ class MOAITexture;
 /**	@brief Brush library class.
 */
 class MOAIGfxQuadDeck2D :
-	public MOAIDeck {
+	public MOAIDeck2D {
 private:
 
 	USRef < MOAITexture >			mTexture;
 	USLeanArray < USGLQuad >		mQuads;
 	
 	//----------------------------------------------------------------//
-	static int	_reserveBrushes			( lua_State* L );
+	static int	_reserve				( lua_State* L );
 	static int	_scaleCoords			( lua_State* L );
 	static int	_scaleUVCoords			( lua_State* L );
 	static int	_setQuad				( lua_State* L );
@@ -39,8 +39,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	bool		Bind					();
-	void		Draw					( const USAffine2D& transform, u32 idx );
-	void		Draw					( const USAffine2D& transform, MOAIGrid& grid, USTileCoord& c0, USTileCoord& c1 );
+	void		Draw					( u32 idx, float xOff, float yOff, float xScale, float yScale );
 	USRect		GetBounds				( u32 idx );
 				MOAIGfxQuadDeck2D		();
 				~MOAIGfxQuadDeck2D		();

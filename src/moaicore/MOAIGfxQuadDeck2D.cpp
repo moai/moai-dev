@@ -21,11 +21,17 @@
 	@param self (in)
 	@param size (in)
 */
-int MOAIGfxQuadDeck2D::_reserveBrushes ( lua_State* L ) {
+int MOAIGfxQuadDeck2D::_reserve ( lua_State* L ) {
 	LUA_SETUP ( MOAIGfxQuadDeck2D, "UN" )
 	
 	u32 total = state.GetValue < u32 >( 2, 0 );
 	self->mQuads.Init ( total );
+	
+	for ( u32 i = 0; i < total; ++i ) {
+		USGLQuad& quad = self->mQuads [ i ];
+		quad.SetVerts ( -0.5f, -0.5f, 0.5f, 0.5f );
+		quad.SetUVs ( 0.0f, 1.0f, 1.0f, 0.0f );
+	}
 	
 	return 0;
 }
@@ -236,43 +242,12 @@ bool MOAIGfxQuadDeck2D::Bind () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxQuadDeck2D::Draw ( const USAffine2D& transform, u32 idx ) {
+void MOAIGfxQuadDeck2D::Draw ( u32 idx, float xOff, float yOff, float xScale, float yScale ) {
 
-	idx = idx - 1;
-	if ( idx >= this->mQuads.Size ()) return;
-
-	USGLQuad* quad = this->GetGLQuad ( idx );
-	if ( quad ) {
-		
-		USDrawBuffer& drawBuffer = USDrawBuffer::Get ();
-		drawBuffer.SetVtxTransform ( transform );
-			
-		quad->Draw ();
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxQuadDeck2D::Draw ( const USAffine2D& transform, MOAIGrid& grid, USTileCoord& c0, USTileCoord& c1 ) {
-	
-	USDrawBuffer& drawBuffer = USDrawBuffer::Get ();
-	drawBuffer.SetVtxTransform ( transform );
-	
-	for ( int y = c0.mY; y <= c1.mY; ++y ) {
-		for ( int x = c0.mX; x <= c1.mX; ++x ) {
-			
-			u32 tile = grid.GetTile ( x, y );
-			if ( tile & USTile::HIDDEN ) continue;
-			
-			USVec2D loc = grid.GetTilePoint ( x, y, USGridSpace::TILE_CENTER );
-			
-			float xScale = ( tile & USTile::XFLIP ) ? -1.0f : 1.0f;
-			float yScale = ( tile & USTile::YFLIP ) ? -1.0f : 1.0f;
-			
-			USGLQuad* quad = this->GetGLQuad (( tile & USTile::CODE_MASK ) - 1 );
-			if ( quad ) {
-				quad->Draw ( loc.mX, loc.mY, xScale, yScale );
-			}
-		}
+	u32 size = this->mQuads.Size ();
+	if ( size ) {
+		idx = ( idx - 1 ) % size;		
+		this->mQuads [ idx ].Draw ( xOff, yOff, xScale, yScale );
 	}
 }
 
@@ -303,7 +278,7 @@ USGLQuad* MOAIGfxQuadDeck2D::GetGLQuad ( u32 idx ) {
 //----------------------------------------------------------------//
 MOAIGfxQuadDeck2D::MOAIGfxQuadDeck2D () {
 
-	RTTI_SINGLE ( MOAIDeck )
+	RTTI_SINGLE ( MOAIDeck2D )
 	this->SetContentMask ( MOAIProp::CAN_DRAW );
 }
 
@@ -314,16 +289,16 @@ MOAIGfxQuadDeck2D::~MOAIGfxQuadDeck2D () {
 //----------------------------------------------------------------//
 void MOAIGfxQuadDeck2D::RegisterLuaClass ( USLuaState& state ) {
 
-	MOAIDeck::RegisterLuaClass ( state );
+	MOAIDeck2D::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxQuadDeck2D::RegisterLuaFuncs ( USLuaState& state ) {
 
-	MOAIDeck::RegisterLuaFuncs ( state );
+	MOAIDeck2D::RegisterLuaFuncs ( state );
 	
 	LuaReg regTable [] = {
-		{ "reserveBrushes",		_reserveBrushes },
+		{ "reserve",			_reserve },
 		{ "scaleCoords",		_scaleCoords },
 		{ "scaleUVCoords",		_scaleUVCoords },
 		{ "setQuad",			_setQuad },
