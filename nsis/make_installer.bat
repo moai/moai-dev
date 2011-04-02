@@ -9,6 +9,7 @@ xcopy /cery ..\vs2008\bin\Win32\release\moai-dll.lib release\bin\
 xcopy /cery ..\vs2008\bin\Win32\release\moai.exe release\bin\
 xcopy /cery ..\vs2008\bin\Win32\release\lua-5.1.3.dll release\bin\
 xcopy /cery ..\vs2008\bin\Win32\release\lua-5.1.3.dll.lib release\bin\
+xcopy /cery ..\vs2008\bin\Win32\release\glut32.dll release\bin\
 
 xcopy /cery ..\doxygen\html-lua\html release\docs\html\
 xcopy /cery ..\samples\test release\samples\lua\

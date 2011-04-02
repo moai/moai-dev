@@ -5,4 +5,4 @@ rd /s /q release\samples\lua
 rd /s /q release\samples\src
 rd /s /q release\include
 
-del MoaiInstaller.exe
+del moai-sdk-installer.exe

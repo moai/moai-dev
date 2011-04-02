@@ -4,7 +4,7 @@ SetCompressor /FINAL /SOLID lzma
 SetCompressorDictSize 64
 
 !define APP_NAME "Moai"
-!define INSTALLER_NAME "MoaiInstaller.exe"
+!define INSTALLER_NAME "moai-sdk-installer.exe"
 !define LICENSE_TEXT "license.txt"
 ;_______________________________________________________________________________________
 
