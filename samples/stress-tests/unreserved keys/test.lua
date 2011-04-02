@@ -15,7 +15,7 @@ prop:setDeck ( texture )
 layer:insertProp ( prop )
 
 curve = MOAIAnimCurve.new ()
-curve:reserveKeys ( 3 )
+--curve:reserveKeys ( 3 )
 curve:setKey ( 1, 0, 0 )
 curve:setKey ( 2, 0.5, 200 )
 curve:setKey ( 3, 1, 0 )
