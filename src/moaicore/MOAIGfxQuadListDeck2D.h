@@ -99,8 +99,8 @@ public:
 	void		EnumSprites				( u32 idx, u32 basePrimID, u32 uvRectID, u32 screenRectID, u32 total );
 	void		EnumUVTiles				( u32 idx, u32 width, u32 height, float xStep, float yStep );
 	USRect		GetBounds				( u32 idx );
-				MOAIGfxQuadListDeck2D		();
-				~MOAIGfxQuadListDeck2D		();
+				MOAIGfxQuadListDeck2D	();
+				~MOAIGfxQuadListDeck2D	();
 	void		RegisterLuaClass		( USLuaState& state );
 	void		RegisterLuaFuncs		( USLuaState& state );
 	void		ReleaseTexture			();

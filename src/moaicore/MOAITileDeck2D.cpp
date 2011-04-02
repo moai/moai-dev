@@ -142,7 +142,7 @@ void MOAITileDeck2D::DrawTile ( u32 tile, USRect rect ) {
 	USGLQuad glQuad;
 	glQuad.SetVerts ( rect.mXMin, rect.mYMin, rect.mXMax, rect.mYMax );
 	
-	USRect uvRect = this->GetTileRect ( tile & USTile::CODE_MASK );
+	USRect uvRect = this->GetTileRect (( tile & USTile::CODE_MASK ) - 1 );
 	
 	u32 flags = tile ^ this->mFlags;
 	

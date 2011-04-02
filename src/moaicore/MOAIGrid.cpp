@@ -20,8 +20,8 @@
 int MOAIGrid::_clearTileFlags ( lua_State* L ) {
 	LUA_SETUP ( MOAIGrid, "UNNN" )
 
-	int xTile	= state.GetValue < int >( 2, 0 );
-	int yTile	= state.GetValue < int >( 3, 0 );
+	int xTile	= state.GetValue < int >( 2, 1 ) - 1;
+	int yTile	= state.GetValue < int >( 3, 1 ) - 1;
 	u32 mask	= state.GetValue < u32 >( 4, 0 );
 	
 	u32 tile = self->GetTile ( xTile, yTile );
@@ -45,8 +45,8 @@ int MOAIGrid::_clearTileFlags ( lua_State* L ) {
 int MOAIGrid::_getTile ( lua_State* L ) {
 	LUA_SETUP ( MOAIGrid, "UNN" )
 
-	int xTile	= state.GetValue < int >( 2, 0 );
-	int yTile	= state.GetValue < int >( 3, 0 );
+	int xTile	= state.GetValue < int >( 2, 1 ) - 1;
+	int yTile	= state.GetValue < int >( 3, 1 ) - 1;
 	
 	u32 tile = self->GetTile ( xTile, yTile );
 	state.Push ( tile );
@@ -66,8 +66,8 @@ int MOAIGrid::_getTile ( lua_State* L ) {
 int MOAIGrid::_getTileFlags ( lua_State* L ) {
 	LUA_SETUP ( MOAIGrid, "UNNN" )
 
-	int xTile	= state.GetValue < int >( 2, 0 );
-	int yTile	= state.GetValue < int >( 3, 0 );
+	int xTile	= state.GetValue < int >( 2, 1 ) - 1;
+	int yTile	= state.GetValue < int >( 3, 1 ) - 1;
 	u32 mask	= state.GetValue < u32 >( 4, 0 );
 	
 	u32 tile = self->GetTile ( xTile, yTile );
@@ -106,8 +106,8 @@ int MOAIGrid::_getTileFlags ( lua_State* L ) {
 int MOAIGrid::_getTileLoc ( lua_State* L ) {
 	LUA_SETUP ( MOAIGrid, "UNN" )
 	
-	int xTile		= state.GetValue < int >( 2, 0 );
-	int yTile		= state.GetValue < int >( 3, 0 );
+	int xTile		= state.GetValue < int >( 2, 1 ) - 1;
+	int yTile		= state.GetValue < int >( 3, 1 ) - 1;
 	u32 position	= state.GetValue < u32 >( 4, USGridSpace::TILE_CENTER );
 	
 	USVec2D loc = self->GetTilePoint ( xTile, yTile, position );
@@ -136,8 +136,8 @@ int MOAIGrid::_locToCoord ( lua_State* L ) {
 	USTileCoord coord;
 	coord = self->GetTileCoord ( loc );
 
-	state.Push ( coord.mX );
-	state.Push ( coord.mY );
+	state.Push ( coord.mX + 1 );
+	state.Push ( coord.mY + 1);
 	return 2;
 }
 
@@ -152,7 +152,7 @@ int MOAIGrid::_locToCoord ( lua_State* L ) {
 int MOAIGrid::_setRow ( lua_State* L ) {
 	LUA_SETUP ( MOAIGrid, "UN" )
 
-	u32 row = state.GetValue < u32 >( 2, 0 );
+	u32 row = state.GetValue < u32 >( 2, 1 ) - 1;
 	u32 total = lua_gettop ( state ) - 2;
 	
 	for ( u32 i = 0; i < total; ++i ) {
@@ -199,8 +199,8 @@ int MOAIGrid::_setSize ( lua_State* L ) {
 int MOAIGrid::_setTile ( lua_State* L ) {
 	LUA_SETUP ( MOAIGrid, "UNNN" )
 
-	int xTile	= state.GetValue < int >( 2, 0 );
-	int yTile	= state.GetValue < int >( 3, 0 );
+	int xTile	= state.GetValue < int >( 2, 1 ) - 1;
+	int yTile	= state.GetValue < int >( 3, 1 ) - 1;
 	u32 tile	= state.GetValue < u32 >( 4, 0 );
 	
 	self->SetTile ( xTile, yTile, tile );
@@ -220,8 +220,8 @@ int MOAIGrid::_setTile ( lua_State* L ) {
 int MOAIGrid::_setTileFlags ( lua_State* L ) {
 	LUA_SETUP ( MOAIGrid, "UNNN" )
 
-	int xTile	= state.GetValue < int >( 2, 0 );
-	int yTile	= state.GetValue < int >( 3, 0 );
+	int xTile	= state.GetValue < int >( 2, 1 ) - 1;
+	int yTile	= state.GetValue < int >( 3, 1 ) - 1;
 	u32 mask	= state.GetValue < u32 >( 4, 0 );
 	
 	u32 tile = self->GetTile ( xTile, yTile );
@@ -245,8 +245,8 @@ int MOAIGrid::_setTileFlags ( lua_State* L ) {
 int MOAIGrid::_toggleTileFlags ( lua_State* L ) {
 	LUA_SETUP ( MOAIGrid, "UNNN" )
 
-	int xTile	= state.GetValue < int >( 2, 0 );
-	int yTile	= state.GetValue < int >( 3, 0 );
+	int xTile	= state.GetValue < int >( 2, 1 ) - 1;
+	int yTile	= state.GetValue < int >( 3, 1 ) - 1;
 	u32 mask	= state.GetValue < u32 >( 4, 0 );
 	
 	u32 tile = self->GetTile ( xTile, yTile );
@@ -272,13 +272,13 @@ int MOAIGrid::_wrapCoord ( lua_State* L ) {
 	LUA_SETUP ( MOAIGrid, "UNN" )
 	
 	USTileCoord coord;
-	coord.mX = state.GetValue < int >( 2, 0 );
-	coord.mY = state.GetValue < int >( 3, 0 );
+	coord.mX = state.GetValue < int >( 2, 1 ) - 1;
+	coord.mY = state.GetValue < int >( 3, 1 ) - 1;
 
 	self->WrapCellCoord ( coord );
 	
-	state.Push ( coord.mX );
-	state.Push ( coord.mY );
+	state.Push ( coord.mX + 1 );
+	state.Push ( coord.mY + 1 );
 	return 2;
 }
 

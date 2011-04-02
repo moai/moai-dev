@@ -44,7 +44,7 @@ public:
 	void			Draw					( const USAffine2D& transform, MOAIGrid& grid, USTileCoord& c0, USTileCoord& c1 );
 	USRect			GetBounds				( u32 idx );
 					MOAITileDeck2D			();
-					~MOAITileDeck2D		();
+					~MOAITileDeck2D			();
 	void			RegisterLuaClass		( USLuaState& state );
 	void			RegisterLuaFuncs		( USLuaState& state );
 	void			SerializeIn				( USLuaState& state, USLuaSerializer& serializer );

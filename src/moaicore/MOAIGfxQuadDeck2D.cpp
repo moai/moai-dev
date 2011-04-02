@@ -238,6 +238,7 @@ bool MOAIGfxQuadDeck2D::Bind () {
 //----------------------------------------------------------------//
 void MOAIGfxQuadDeck2D::Draw ( const USAffine2D& transform, u32 idx ) {
 
+	idx = idx - 1;
 	if ( idx >= this->mQuads.Size ()) return;
 
 	USGLQuad* quad = this->GetGLQuad ( idx );
@@ -267,7 +268,7 @@ void MOAIGfxQuadDeck2D::Draw ( const USAffine2D& transform, MOAIGrid& grid, USTi
 			float xScale = ( tile & USTile::XFLIP ) ? -1.0f : 1.0f;
 			float yScale = ( tile & USTile::YFLIP ) ? -1.0f : 1.0f;
 			
-			USGLQuad* quad = this->GetGLQuad ( tile & USTile::CODE_MASK );
+			USGLQuad* quad = this->GetGLQuad (( tile & USTile::CODE_MASK ) - 1 );
 			if ( quad ) {
 				quad->Draw ( loc.mX, loc.mY, xScale, yScale );
 			}
@@ -277,6 +278,8 @@ void MOAIGfxQuadDeck2D::Draw ( const USAffine2D& transform, MOAIGrid& grid, USTi
 
 //----------------------------------------------------------------//
 USRect MOAIGfxQuadDeck2D::GetBounds ( u32 idx ) {
+	
+	idx = idx - 1;
 	
 	USGLQuad* quad = this->GetGLQuad ( idx );
 	if ( quad ) {

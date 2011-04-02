@@ -394,6 +394,8 @@ bool MOAIGfxQuadListDeck2D::Contains ( u32 idx, const USVec2D& vec ) {
 //----------------------------------------------------------------//
 void MOAIGfxQuadListDeck2D::Draw ( const USAffine2D& transform, u32 idx ) {
 
+	idx = idx - 1;
+
 	USDrawBuffer& drawBuffer = USDrawBuffer::Get ();
 	drawBuffer.SetVtxTransform ( transform );
 
@@ -417,7 +419,7 @@ void MOAIGfxQuadListDeck2D::Draw ( const USAffine2D& transform, MOAIGrid& grid, 
 			float xScale = ( tile & USTile::XFLIP ) ? -1.0f : 1.0f;
 			float yScale = ( tile & USTile::YFLIP ) ? -1.0f : 1.0f;
 			
-			this->Draw ( tile & USTile::CODE_MASK, loc.mX, loc.mY, xScale, yScale );
+			this->Draw (( tile & USTile::CODE_MASK ) - 1, loc.mX, loc.mY, xScale, yScale );
 		}
 	}
 }
@@ -483,6 +485,8 @@ void MOAIGfxQuadListDeck2D::EnumUVTiles ( u32 idx, u32 width, u32 height, float 
 
 //----------------------------------------------------------------//
 USRect MOAIGfxQuadListDeck2D::GetBounds ( u32 idx ) {
+
+	idx = idx - 1;
 
 	USRect rect;
 	rect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );

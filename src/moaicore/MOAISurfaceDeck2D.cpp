@@ -105,6 +105,7 @@ void MOAISurfaceDeck2D::DrawDebug ( const USAffine2D& transform, u32 idx ) {
 //----------------------------------------------------------------//
 void MOAISurfaceDeck2D::DrawDebug ( u32 idx, float xOff, float yOff, bool xFlip, bool yFlip ) {
 
+	idx = idx - 1;
 	idx = idx % this->mBrushes.Size ();
 	
 	MOAIDebugLines& debugLines = MOAIDebugLines::Get ();
@@ -150,7 +151,7 @@ void MOAISurfaceDeck2D::DrawDebug ( const USAffine2D& transform, MOAIGrid& grid,
 			bool xFlip = (( tile & USTile::XFLIP ) != 0 );
 			bool yFlip = (( tile & USTile::YFLIP ) != 0 );
 			
-			this->DrawDebug ( tile & USTile::CODE_MASK, loc.mX, loc.mY, xFlip, yFlip );
+			this->DrawDebug (( tile & USTile::CODE_MASK ) - 1, loc.mX, loc.mY, xFlip, yFlip );
 		}
 	}
 }
@@ -158,6 +159,7 @@ void MOAISurfaceDeck2D::DrawDebug ( const USAffine2D& transform, MOAIGrid& grid,
 //----------------------------------------------------------------//
 void MOAISurfaceDeck2D::GatherSurfaces ( u32 idx, MOAISurfaceSampler2D& sampler ) {
 	
+	idx = idx - 1;
 	idx = idx % this->mBrushes.Size ();
 		
 	MOAISurfaceBrush2D& brush = this->mBrushes [ idx ];
@@ -240,6 +242,8 @@ void MOAISurfaceDeck2D::GatherSurfaces ( u32 idx, float xOff, float yOff, bool x
 
 //----------------------------------------------------------------//
 USRect MOAISurfaceDeck2D::GetBounds ( u32 idx ) {
+	
+	idx = idx - 1;
 	
 	if ( idx < this->mBrushes.Size ()) {
 		return this->mBrushes [ idx ].mBounds;
