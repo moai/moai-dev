@@ -86,7 +86,7 @@ int MOAITimer::_setSpan ( lua_State* L ) {
 //----------------------------------------------------------------//
 /**	@name setSpeed
 	@param1 self @type userdata
-	@param2 speed @type number @text Speed of the timer(?).
+	@param2 speed @type number @text Speed of the timer.
 	@text Sets the speed of the timer.
 	@return nil
 */
@@ -95,6 +95,22 @@ int MOAITimer::_setSpeed ( lua_State* L ) {
 
 	self->mSpeed = state.GetValue < float >( 2, 1.0f );
 
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name setTime
+	@param1 self @type userdata
+	@param2 time @type number @text Current time.
+	@text Sets the current time.
+	@return nil
+*/
+int MOAITimer::_setTime ( lua_State* L ) {
+	LUA_SETUP ( MOAITimer, "U" )
+	
+	float time = state.GetValue < float >( 2, 0.0f );
+	self->SetTime ( time );
+	
 	return 0;
 }
 
@@ -288,10 +304,22 @@ void MOAITimer::RegisterLuaFuncs ( USLuaState& state ) {
 		{ "setMode",			_setMode },
 		{ "setSpan",			_setSpan },
 		{ "setSpeed",			_setSpeed },
+		{ "setTime",			_setTime },
 		{ NULL, NULL }
 	};
 
 	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAITimer::SetTime ( float time ) {
+
+	float length = USFloat::Abs ( this->mEndTime - this->mStartTime );
+	while ( time >= this->mEndTime ) {
+		time -= length;
+	}
+	this->mTime = time;
+	this->ScheduleUpdate ();
 }
 
 //----------------------------------------------------------------//

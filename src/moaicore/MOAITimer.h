@@ -35,6 +35,7 @@ protected:
 	static int	_setMode			( lua_State* L );
 	static int	_setSpan			( lua_State* L );
 	static int	_setSpeed			( lua_State* L );
+	static int	_setTime			( lua_State* L );
 	
 	//----------------------------------------------------------------//
 	void		Callback			();
@@ -67,6 +68,7 @@ public:
 	void		OnUpdate			( float step );
 	void		RegisterLuaClass	( USLuaState& state );
 	void		RegisterLuaFuncs	( USLuaState& state );
+	void		SetTime				( float time );
 	STLString	ToString			();
 };
 
