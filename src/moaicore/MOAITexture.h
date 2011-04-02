@@ -11,7 +11,14 @@ class MOAIDataBuffer;
 //================================================================//
 // MOAITexture
 //================================================================//
-/**	@brief Texture class.
+/**	@brief	Texture class.
+
+	@const	FILTER_POINT
+	@const	FILTER_BILERP
+
+	@flag	QUANTIZE
+	@flag	TRUECOLOR
+	@flag	PREMULTIPLY_ALPHA
 */
 class MOAITexture :
 	public virtual USLuaObject,

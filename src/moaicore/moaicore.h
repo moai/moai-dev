@@ -10,7 +10,6 @@
 #include <moaicore/MOAIAnim.h>
 #include <moaicore/MOAIAnimCurve.h>
 #include <moaicore/MOAIButtonSensor.h>
-#include <moaicore/MOAICheckpoint.h>
 #include <moaicore/MOAIColor.h>
 #include <moaicore/MOAICompassSensor.h>
 #include <moaicore/MOAIDataBuffer.h>

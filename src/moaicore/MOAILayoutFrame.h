@@ -9,7 +9,7 @@
 //================================================================//
 // MOAILayoutFrame
 //================================================================//
-/**	@brief Frame object for hierarchical, resizable layouts and auto-fitting.
+/**	@brief	Frame object for hierarchical, resizable layouts and auto-fitting.
 */
 class MOAILayoutFrame :
 	public MOAITransform {
@@ -64,16 +64,16 @@ private:
 	static int		_setWeight				( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void			ComputeContentSize		( u32 axis );
-	void			Fit						( u32 axis );
-	float			GetInnerSize			( u32 axis );
-	MOAILayoutFrame*		GetParentWidget			();
-	u32				GetPerpAxis				( u32 axis );
-	float			GetSize					( u32 axis );
-	void			Layout					();
-	void			Layout					( u32 axis );
-	void			RemoveChildren			();
-	void			SetLocByAxis			( u32 axis, float loc );
+	void				ComputeContentSize		( u32 axis );
+	void				Fit						( u32 axis );
+	float				GetInnerSize			( u32 axis );
+	MOAILayoutFrame*	GetParentWidget			();
+	u32					GetPerpAxis				( u32 axis );
+	float				GetSize					( u32 axis );
+	void				Layout					();
+	void				Layout					( u32 axis );
+	void				RemoveChildren			();
+	void				SetLocByAxis			( u32 axis, float loc );
 
 public:
 	

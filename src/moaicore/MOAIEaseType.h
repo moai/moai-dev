@@ -7,7 +7,15 @@
 //================================================================//
 // MOAIEaseType
 //================================================================//
-/**	@brief Lua namespace to hold transition modes.
+/**	@brief	Namespace to hold ease modes.
+	@const EASE_IN
+	@const EASE_OUT
+	@const FLAT
+	@const LINEAR
+	@const SMOOTH
+	@const SOFT_EASE_IN
+	@const SOFT_EASE_OUT
+	@const SOFT_SMOOTH
 */
 class MOAIEaseType :
 	public USLuaObject {

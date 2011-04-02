@@ -11,10 +11,6 @@ using namespace std;
 //================================================================//
 // STLList
 //================================================================//
-/**	@brief Extends STL 'list' to add some helper functions.
-	
-	@tparam TYPE The type of element this list may hold.
-*/
 template < typename TYPE >
 class STLList :
 	public list < TYPE > {

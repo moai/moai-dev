@@ -9,7 +9,7 @@
 //================================================================//
 // MOAIAction
 //================================================================//
-/**	@brief Base class for actions.
+/**	@brief	Base class for actions.
 */
 class MOAIAction :
 	public MOAIBlocker {

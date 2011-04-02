@@ -47,7 +47,7 @@
 //================================================================//
 // MOAILogMgr
 //================================================================//
-/**	@brief Singleton for managing debug log messages.
+/**	@brief	Singleton for managing debug log messages and log level.
 */
 class MOAILogMgr :
 	public USGlobalClass < MOAILogMgr, USLuaObject > {

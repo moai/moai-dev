@@ -10,7 +10,7 @@ class MOAISensor;
 //================================================================//
 // MOAIInputMgr
 //================================================================//
-/**	@brief Input device class.
+/**	@brief	Input device class.
 */
 class MOAIInputMgr :
 	public USGlobalClass < MOAIInputMgr, USLuaObject > {

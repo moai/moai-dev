@@ -13,7 +13,7 @@ class MOAIFmodSound;
 //================================================================//
 // MOAIFmodChannel
 //================================================================//
-/**	@brief FMOD channel.
+/**	@brief	FMOD singleton. Unsupported, legacy.
 */
 class MOAIFmodChannel :
 	public virtual MOAINode {
@@ -46,7 +46,7 @@ public:
 
 	//----------------------------------------------------------------//
 	void		ApplyAttrOp			( u32 attrID, USAttrOp& attrOp );
-				MOAIFmodChannel	();
+				MOAIFmodChannel		();
 				~MOAIFmodChannel	();
 	void		Play				( MOAIFmodSound* sound, int loopCount );
 	void		RegisterLuaClass	( USLuaState& state );

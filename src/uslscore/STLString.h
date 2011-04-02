@@ -23,9 +23,6 @@ using namespace std;
 //================================================================//
 // STLString
 //================================================================//
-/**	@brief Extends STL 'string' to add some helper functions.  Seems
-	hardly worth the effort.
-*/
 class STLString :
 	public string {
 public:

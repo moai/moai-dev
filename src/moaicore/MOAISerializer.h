@@ -7,7 +7,7 @@
 //================================================================//
 // MOAISerializer
 //================================================================//
-/**	@brief Manages serialization state.
+/**	@brief	Manages serialization state of Lua tables and Moai objects.
 */
 class MOAISerializer :
 	public USLuaSerializer {

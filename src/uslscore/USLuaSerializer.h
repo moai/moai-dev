@@ -15,9 +15,6 @@ class USStream;
 //================================================================//
 // USLuaSerializer
 //================================================================//
-/**	@brief Manages a serialization session to and from Lua.
-	@ingroup LuaLib
-*/
 class USLuaSerializer :
 	public virtual USLuaObject {
 private:

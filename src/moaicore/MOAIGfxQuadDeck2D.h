@@ -11,7 +11,7 @@ class MOAITexture;
 //================================================================//
 // MOAIGfxQuadDeck2D
 //================================================================//
-/**	@brief Brush library class.
+/**	@brief	Deck of textured quads.
 */
 class MOAIGfxQuadDeck2D :
 	public MOAIDeck2D {

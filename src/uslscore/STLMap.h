@@ -11,11 +11,6 @@ using namespace std;
 //================================================================//
 // STLMap
 //================================================================//
-/**	@brief Extends STL 'map' to add some helper functions.
-	
-	@tparam KEY The type of key this map uses.
-	@tparam TYPE The type of value this map uses.
-*/
 template < typename KEY, typename TYPE >
 class STLMap :
 	public map < KEY, TYPE > {
@@ -42,11 +37,6 @@ public:
 //================================================================//
 // STLMap < TYPE* >
 //================================================================//
-/**	@brief Specializes STLMap for pointer value types.
-	
-	@tparam KEY The type of key this map uses.
-	@tparam TYPE The type of value this map uses.
-*/
 template < typename KEY, typename TYPE >
 class STLMap < KEY, TYPE* > :
 	public map < KEY, TYPE* > {

@@ -9,11 +9,12 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name addChild
-	@param1 self @type userdata
-	@param2 child @type userdata
-	@text Attaches a child action updating.
-	@return nil
+/**	@name	addChild
+	@text	Attaches a child action for updating.
+
+	@in		MOAIAction self
+	@in		MOAIAction child
+	@out	nil
 */
 int MOAIAction::_addChild ( lua_State* L ) {
 	
@@ -32,10 +33,11 @@ int MOAIAction::_addChild ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name clear
-	@param1 self @type userdata
-	@text Removes all child actions.
-	@return nil
+/**	@name	clear
+	@text	Removes all child actions.
+
+	@in		MOAIAction self
+	@out	nil
 */
 int MOAIAction::_clear ( lua_State* L ) {
 
@@ -51,10 +53,12 @@ int MOAIAction::_clear ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name isBusy
-	@param1 self @type userdata
-	@text Checks to see if an action is currently active.
-	@return Whether the action is active. @type boolean
+/**	@name	isBusy
+	@text	Checks to see if an action is currently busy. Meaning of 'busy' us up to
+			individual action types.
+
+	@in		MOAIAction self
+	@out	bool isBusy
 */
 int MOAIAction::_isBusy ( lua_State* L ) {
 
@@ -69,10 +73,11 @@ int MOAIAction::_isBusy ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name start
-	@param1 self @type userdata
-	@text Starts processing the action.
-	@return This object. @type userdata
+/**	@name	start
+	@text	Adds the action to the root of the action tree for updating.
+
+	@in		MOAIAction self
+	@out	MOAIAction self
 */
 int MOAIAction::_start ( lua_State* L ) {
 
@@ -90,10 +95,12 @@ int MOAIAction::_start ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name stop
-	@param1 self @type userdata
-	@text Stops processing of the action.
-	@return nil
+/**	@name	stop
+	@text	Removed the action from its parent action; action will
+			stop being updated.
+
+	@in		MOAIAction self
+	@out	nil
 */
 int MOAIAction::_stop ( lua_State* L ) {
 
@@ -109,11 +116,13 @@ int MOAIAction::_stop ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name throttle
-	@param1 self @type userdata
-	@param2 throttle @type number @text The speed scale.
-	@text Scales the time step as needed
-	@return nil
+/**	@name	throttle
+	@text	Sets the actions throttle. Throttle is a scalar on time.
+			Is is passed to the action's children.
+	
+	@in		MOAIAction self
+	@opt	number throttle - Default value is 1.
+	@out	nil
 */
 int MOAIAction::_throttle ( lua_State* L ) {
 	LUA_SETUP ( MOAIAction, "U" )

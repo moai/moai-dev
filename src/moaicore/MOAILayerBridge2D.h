@@ -11,7 +11,8 @@ class MOAILayer2D;
 //================================================================//
 // MOAILayerBridge2D
 //================================================================//
-/**	@brief 2D transform for connecting transforms across scenes.
+/**	@brief	2D transform for connecting transforms across scenes. Useful for
+			HUD overlay items and map pins.
 */
 class MOAILayerBridge2D :
 	public MOAITransform {
@@ -31,8 +32,8 @@ public:
 	DECL_LUA_FACTORY ( MOAILayerBridge2D )
 	
 	//----------------------------------------------------------------//
-					MOAILayerBridge2D		();
-					~MOAILayerBridge2D		();
+					MOAILayerBridge2D			();
+					~MOAILayerBridge2D			();
 	void			RegisterLuaClass			( USLuaState& state );
 	void			RegisterLuaFuncs			( USLuaState& state );
 	STLString		ToString					();

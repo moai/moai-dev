@@ -9,7 +9,7 @@
 //================================================================//
 // MOAISimpleShader
 //================================================================//
-/**	@brief Color modulation shader. Can inherit colors from other shaders.
+/**	@brief	Fixed function pipeline shader.
 */
 class MOAISimpleShader :
 	public virtual MOAIColor {

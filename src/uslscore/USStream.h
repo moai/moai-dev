@@ -4,16 +4,11 @@
 #ifndef STREAM_H
 #define STREAM_H
 
-/** @addtogroup StreamLib */
-
 #include <uslscore/STLString.h>
 
 //================================================================//
 // USStream
 //================================================================//
-/**	@brief Base class for USStream objects.
-	@ingroup StreamLib
-*/
 class USStream {
 protected:
 

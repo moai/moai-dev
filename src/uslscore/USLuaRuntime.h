@@ -4,8 +4,6 @@
 #ifndef LUARUNTIME_H
 #define LUARUNTIME_H
 
-/** @addtogroup LuaLib */
-
 #include <uslscore/USGlobals.h>
 #include <uslscore/USLuaRef.h>
 #include <uslscore/USLuaState.h>

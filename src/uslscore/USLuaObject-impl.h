@@ -4,8 +4,6 @@
 #ifndef	USLUAOBJECT_IMPL_H
 #define	USLUAOBJECT_IMPL_H
 
-/** @addtogroup LuaLib */
-
 #include <uslscore/USGlobals.h>
 
 #define DECL_LUA_FACTORY(type) \

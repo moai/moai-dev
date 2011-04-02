@@ -11,7 +11,7 @@ class MOAIParticleSystem;
 //================================================================//
 // MOAIParticleForce
 //================================================================//
-/**	@brief Particle force.
+/**	@brief	Particle force.
 */
 class MOAIParticleForce :
 	public MOAITransform {

@@ -11,9 +11,6 @@ class USCipher;
 //================================================================//
 // USCipherStream
 //================================================================//
-/**	@brief USStream implementation for encoding/decoding using a block cipher.
-	@ingroup CipherLib StreamLib
-*/
 class USCipherStream :
 	public USStream {
 private:

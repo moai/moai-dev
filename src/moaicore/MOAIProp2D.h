@@ -17,7 +17,8 @@ class MOAISurfaceSampler2D;
 //================================================================//
 // MOAIProp2D
 //================================================================//
-/**	@brief Base class for primitives.
+/**	@brief	Base class for props.
+	@attr	ATTR_INDEX
 */
 class MOAIProp2D :
 	public MOAIProp {
@@ -48,7 +49,7 @@ protected:
 	USRect			mFrame;
 	
 	USRef < MOAIShader >		mShader;
-	USRef < MOAITransform >	mUVTransform;
+	USRef < MOAITransform >		mUVTransform;
 	
 	//----------------------------------------------------------------//
 	static int		_getGrid			( lua_State* L );

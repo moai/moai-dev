@@ -11,7 +11,8 @@ class MOAITexture;
 //================================================================//
 // MOAITileDeck2D
 //================================================================//
-/**	@brief Tile library class.
+/**	@brief	Subdivides a single texture into uniform tiles enumerated
+			from the texture's left top to right bottom.
 */
 class MOAITileDeck2D :
 	public MOAIDeck2D,

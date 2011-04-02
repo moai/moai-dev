@@ -21,7 +21,7 @@ namespace MOAIKeyCodes {
 //================================================================//
 // MOAIKeyboardSensor
 //================================================================//
-/**	@brief Basic keyboard sensor.
+/**	@brief	Hardware keyboard sensor.
 */
 class MOAIKeyboardSensor :
 	public MOAISensor {

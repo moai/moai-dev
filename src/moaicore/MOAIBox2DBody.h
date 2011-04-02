@@ -13,7 +13,7 @@ class b2Body;
 //================================================================//
 // MOAIBox2DBody
 //================================================================//
-/**	@brief Box2D body.
+/**	@brief	Box2D body.
 */
 class MOAIBox2DBody :
 	public MOAIBox2DPrim,
@@ -58,13 +58,6 @@ private:
 	void			OnDepNodeUpdate			();
 
 public:
-	
-	enum {
-		BEGIN,
-		PRE_SOLVE,
-		POST_SOLVE,
-		SEPARATE,
-	};
 	
 	friend class MOAIBox2DWorld;
 	

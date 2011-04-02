@@ -9,9 +9,6 @@
 //================================================================//
 // USCipher
 //================================================================//
-/**	@brief Abstract base class for block ciphers.
-	@ingroup CipherLib
-*/
 class USCipher {
 protected:
 

@@ -4,17 +4,11 @@
 #ifndef LUASTATEHANDLE_H
 #define LUASTATEHANDLE_H
 
-/** @addtogroup LuaLib */
-
 #include <uslscore/USLuaState.h>
 
 //================================================================//
 // USLuaStateHandle
 //================================================================//
-/**	@brief Convenience class that extends USLuaState.  Stores Lua stack top when
-	constructed then automatically restores stack depth when destructed.
-	@ingroup LuaLib
-*/
 class USLuaStateHandle :
 	public USLuaState {
 private:

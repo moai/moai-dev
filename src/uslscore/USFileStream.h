@@ -4,16 +4,11 @@
 #ifndef FILESTREAM_H
 #define FILESTREAM_H
 
-/** @addtogroup StreamLib */
-
 #include <uslscore/USStream.h>
 
 //================================================================//
 // USFileStream
 //================================================================//
-/**	@brief File-based stream.
-	@ingroup StreamLib
-*/
 class USFileStream :
 	public USStream {
 private:

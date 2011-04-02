@@ -11,7 +11,7 @@ class MOAIDataBuffer;
 //================================================================//
 // MOAIDataIOAction
 //================================================================//
-/**	@brief Action for asynchronously loading data.
+/**	@brief	Action for asynchronously loading and saving data.
 */
 class MOAIDataIOAction :
 	public MOAIAction {
@@ -25,11 +25,10 @@ private:
 		DONE,
 	};
 
-	STLString				mFilename;
-	USRef < MOAIDataBuffer >		mData;
-	USLuaRef				mOnFinish;
-
-	u32						mState;
+	STLString					mFilename;
+	USRef < MOAIDataBuffer >	mData;
+	USLuaRef					mOnFinish;
+	u32							mState;
 
 	//----------------------------------------------------------------//
 	static int	_setCallback		( lua_State* L );

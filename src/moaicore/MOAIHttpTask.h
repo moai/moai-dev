@@ -10,7 +10,7 @@ class MOAIDataBuffer;
 //================================================================//
 // MOAIHttpTask
 //================================================================//
-/**	@brief HTTP task class.
+/**	@brief	Object for performing asynchronous http actions.
 */
 class MOAIHttpTask :
 	public virtual USLuaObject {
@@ -21,8 +21,8 @@ private:
 
 	USLuaRef			mOnFinish;
 	
-	USRef < MOAIDataBuffer >	mPostData;
-	STLString			mPostString;
+	USRef < MOAIDataBuffer > mPostData;
+	STLString mPostString;
 
 	//----------------------------------------------------------------//
 	static int		_getSize		( lua_State* L );

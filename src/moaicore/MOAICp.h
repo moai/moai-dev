@@ -8,7 +8,7 @@
 //================================================================//
 // MOAICp
 //================================================================//
-/**	@brief Singleton for Chipmunk globals.
+/**	@brief	Singleton for Chipmunk global configuration.
 */
 class MOAICp :
 	public USGlobalClass < MOAICp, USLuaObject > {

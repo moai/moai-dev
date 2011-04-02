@@ -37,7 +37,8 @@ public:
 //================================================================//
 // MOAINode
 //================================================================//
-/**	@brief Base for all attribute bearing Moai objects.
+/**	@brief	Base for all attribute bearing Moai objects and dependency
+			graph nodes.
 */
 class MOAINode :
 	public virtual USLuaObject,

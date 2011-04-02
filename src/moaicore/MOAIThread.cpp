@@ -5,11 +5,13 @@
 #include <moaicore/MOAIThread.h>
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	blockOnAction
+	@text	Skip updating current thread until the specified action is
+			no longer busy. A little more efficient that spinlocking from
+			Lua.
+
+	@in		MOAIAction blocker
+	@out	nil
 */
 int MOAIThread::_blockOnAction ( lua_State* L ) {
 	USLuaState state ( L );
@@ -27,11 +29,10 @@ int MOAIThread::_blockOnAction ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	currentThread
+	@text	Returns the currently running thread (if any).
+	
+	@out	MOAIThread currentThread - Current thread or nil.
 */
 int MOAIThread::_currentThread ( lua_State* L ) {
 	USLuaState state ( L );
@@ -49,6 +50,15 @@ int MOAIThread::_currentThread ( lua_State* L ) {
 	Sets the thread's function and starts it.
 	@param self (in)
 	@param func (in) Function for this thread to run.
+*/
+
+/**	@name	run
+	@text	Starts a thread with a function and passes parameters to it.
+	
+	@in		MOAIThread self
+	@in		function threadFunc
+	@in		...
+	@out	nil
 */
 int MOAIThread::_run ( lua_State* L ) {
 	LUA_SETUP ( MOAIThread, "UF" )

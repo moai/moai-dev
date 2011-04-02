@@ -65,8 +65,6 @@ public:
 //================================================================//
 // RTTIRecord
 //================================================================//
-/**	@brief Class to store run time type information for a single type.
-*/
 class RTTIRecord {
 private:
 
@@ -118,8 +116,6 @@ public:
 //================================================================//
 // RTTIBase
 //================================================================//
-/**	@brief RTTIBase class for any class hierarchy requiring RTTI.
-*/
 class RTTIBase {
 private:
 	
@@ -148,10 +144,6 @@ protected:
 	}
 	
 	//----------------------------------------------------------------//
-	/**	@brief Extends the RTTI class hierarchy.  This should be called by the constructor
-		of each class in the hierarchy.
-		@tparam TYPE Superclass of type being constructed.
-	*/
 	template < typename SUPER_TYPE, typename TYPE >
 	void SimpleRTTI ( TYPE* ptr ) {
 		this->BeginRTTI < TYPE >( ptr );
@@ -186,30 +178,22 @@ public:
 //================================================================//
 // RTTI
 //================================================================//
-/**	@brief Convenience template class for automatically extending the RTTI hierarchy.
-	To use, inherit it and pass in the current class (the class that you are defining) along
-	with its super class.  A 'shim' class will be created in the hierarchy (between the class
-	and its superclass) which will call RTTIBase::ExtendRTTI() automatically in its constructor.
-	Note that the shim class itself will be excluded from the RTTI hierarchy.
-	
-	@tparam TYPE Type of the leaf class (which should inherit from RTTI).
-	@tparam TYPE Type of the superclass.
-*/
+// Convenience template class for automatically extending the RTTI hierarchy.
+// To use, inherit it and pass in the current class (the class that you are defining) along
+// with its super class.  A 'shim' class will be created in the hierarchy (between the class
+// and its superclass) which will call RTTIBase::ExtendRTTI() automatically in its constructor.
+// Note that the shim class itself will be excluded from the RTTI hierarchy.
 template < typename TYPE, typename SUPER >
 class RTTI :
 	public virtual SUPER {
 public:
 	
 	//----------------------------------------------------------------//
-	/**	@brief Constructor.
-	*/
 	RTTI () {
 		this->template SimpleRTTI < SUPER >(( TYPE* )this );
 	}
 	
 	//----------------------------------------------------------------//
-	/**	@brief Destructor.
-	*/
 	~RTTI () {
 	}
 };

@@ -10,10 +10,11 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name getTimesExecuted
-	@param1 self @type userdata
-	@text Gets the number of times the timer has completed a cycle.
-	@return Number of times the timer has executed. @type number
+/**	@name	getTimesExecuted
+	@text	Gets the number of times the timer has completed a cycle.
+
+	@in		MOAITimer self
+	@out	number nTimes
 */
 int MOAITimer::_getTimesExecuted ( lua_State* L ) {
 	LUA_SETUP ( MOAITimer, "UN" )
@@ -23,11 +24,12 @@ int MOAITimer::_getTimesExecuted ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name setCallback
-	@param1 self @type userdata
-	@param2 func @type function
-	@text Set a function to be called every time the timer finishes a cycle.
-	@return nil
+/**	@name	setCallback
+	@text	Set a function to be called every time the timer finishes a cycle.
+
+	@in		MOAITimer self
+	@in		function onCycle
+	@out	nil
 */
 int MOAITimer::_setCallback ( lua_State* L ) {
 	LUA_SETUP ( MOAITimer, "UF" )
@@ -37,11 +39,12 @@ int MOAITimer::_setCallback ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name setMode
-	@param1 self @type userdata
-	@param2 mode @type number @text Timer mode that should be used.
-	@text Sets the timer mode.
-	@return nil
+/**	@name	setMode
+	@text	Sets the playback mode of the timer.
+
+	@in		MOAITimer self
+	@in		number mode - One of: MOAITimer.NORMAL, MOAITimer.REVERSE, MOAITimer.LOOP, MOAITimer.LOOP_REVERSE, MOAITimer.PING_PONG
+	@out	nil
 */
 int MOAITimer::_setMode ( lua_State* L ) {
 	LUA_SETUP ( MOAITimer, "UN" )
@@ -59,15 +62,21 @@ int MOAITimer::_setMode ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief 
-	<tt>function setSpan ( self, endTime )</tt>\n
-	<tt>function setSpan ( self, startTime, endTime )</tt>\n
-	\n
-	Sets the span of the timer.
-	@param self (userdata)
-	@param endTime (number) End time of the timer.
-	@param startTime (number) Start time of the timer. Optional <em>(default = 0)</em>
-	@return nil
+/**	@name	setSpan
+	@text	Sets the playback mode of the timer.
+
+	@overload	Span will be 0 to endTime
+
+		@in		MOAITimer self
+		@in		number endTime
+		@out	nil
+	
+	@overload	Span will be startTime to endTime
+	
+		@in		MOAITimer self
+		@in		number startTime
+		@in		number endTime
+		@out	nil
 */
 int MOAITimer::_setSpan ( lua_State* L ) {
 	LUA_SETUP ( MOAITimer, "UN" )
@@ -84,11 +93,13 @@ int MOAITimer::_setSpan ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name setSpeed
-	@param1 self @type userdata
-	@param2 speed @type number @text Speed of the timer.
-	@text Sets the speed of the timer.
-	@return nil
+/**	@name	setSpeed
+	@text	Sets the playback speed. This affects only the timer, not
+			its children in the action tree.
+
+	@in		MOAITimer self
+	@in		number speed
+	@out	nil
 */
 int MOAITimer::_setSpeed ( lua_State* L ) {
 	LUA_SETUP ( MOAITimer, "UN" )
@@ -99,11 +110,13 @@ int MOAITimer::_setSpeed ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name setTime
-	@param1 self @type userdata
-	@param2 time @type number @text Current time.
-	@text Sets the current time.
-	@return nil
+/**	@name	setTime
+	@text	Manually set the current time. This will be wrapped
+			into the current span.
+
+	@in		MOAITimer self
+	@opt	number time - Default value is 0.
+	@out	nil
 */
 int MOAITimer::_setTime ( lua_State* L ) {
 	LUA_SETUP ( MOAITimer, "U" )

@@ -7,7 +7,23 @@
 //================================================================//
 // MOAIGrid
 //================================================================//
-/**	@brief Grid data object.
+/**	@brief	Grid data object. Grid cells are indexed starting and (1,1).
+			Grid indices will wrap if out of range.
+
+	@flag	TILE_X_FLIP
+	@flag	TILE_Y_FLIP
+	@flag	TILE_XY_FLIP
+	@flag	TILE_HIDE
+
+	@const	TILE_BOTTOM_CENTER
+	@const	TILE_CENTER
+	@const	TILE_LEFT_BOTTOM
+	@const	TILE_LEFT_CENTER
+	@const	TILE_LEFT_TOP
+	@const	TILE_RIGHT_BOTTOM
+	@const	TILE_RIGHT_CENTER
+	@const	TILE_RIGHT_TOP
+	@const	TILE_TOP_CENTER
 */
 class MOAIGrid :
 	public USLuaObject,

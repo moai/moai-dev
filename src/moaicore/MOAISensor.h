@@ -7,7 +7,7 @@
 //================================================================//
 // MOAISensor
 //================================================================//
-/**	@brief Base class for sensors.
+/**	@brief	Base class for sensors.
 */
 class MOAISensor :
 	public USLuaObject {

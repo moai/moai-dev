@@ -11,7 +11,15 @@
 //================================================================//
 // MOAITransform
 //================================================================//
-/**	@brief 2D transformations class.
+/**	@brief	2D transformation hierarchy node.
+
+	@attr	ATTR_PARENT
+	@attr	ATTR_OFFSET
+	@attr	ATTR_X_LOC
+	@attr	ATTR_Y_LOC
+	@attr	ATTR_Z_ROT
+	@attr	ATTR_X_SCL
+	@attr	ATTR_Y_SCL
 */
 class MOAITransform :
 	public MOAITransformBase {

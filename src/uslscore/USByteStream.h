@@ -4,17 +4,11 @@
 #ifndef BYTESTREAM_H
 #define BYTESTREAM_H
 
-/** @addtogroup StreamLib */
-
 #include <uslscore/USStream.h>
 
 //================================================================//
 // USByteStream
 //================================================================//
-/**	@brief Memory stream.  Fixed size byte buffer must be allocated
-	in advance; will not grow to accomodate writing to stream.
-	@ingroup StreamLib
-*/
 class USByteStream :
 	public USStream {
 private:

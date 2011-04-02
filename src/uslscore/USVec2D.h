@@ -4,26 +4,19 @@
 #ifndef VEC2D_H
 #define	VEC2D_H
 
-//#include <uslscore/USTrig.h>
 #include <uslscore/USVec3D.h>
-
-/** @addtogroup MathLib */
 
 template < typename TYPE > class tVec3;
 
 //================================================================//
 // USMetaVec2D
 //================================================================//
-/**	@brief Template class for two-dimensional vector math.
-	@tparam TYPE Type of elements.  Must implement all built-in math operators.
-	@ingroup MathLib
-*/
 template < typename TYPE >
 class USMetaVec2D {
 public:
 
-	TYPE	mX;		/**< X component. */
-	TYPE	mY;		/**< Y component. */
+	TYPE	mX;
+	TYPE	mY;
 
 	//----------------------------------------------------------------//
 	void Abs () {
@@ -32,24 +25,21 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	/**	@brief V = V + point
-	*/
+	// V = V + point
 	void Add ( const USMetaVec2D < TYPE >& point ) {
 		mX += point.mX;
 		mY += point.mY;
 	}
 	
 	//----------------------------------------------------------------//
-	/**	@brief V = V + ( point * scale )
-	*/
+	// V = V + ( point * scale )
 	void Add ( const USMetaVec2D < TYPE >& point, TYPE scale ) {
 		mX += point.mX * scale;
 		mY += point.mY * scale;
 	}
 	
 	//----------------------------------------------------------------//
-	/**	@brief Clamps in positive and negative
-	*/
+	// Clamps in positive and negative
 	void Clamp ( const USMetaVec2D < TYPE >& clamp ) {
 		if ( mX > clamp.mX ) mX = clamp.mX;
 		else if ( mX < -clamp.mX ) mX = -clamp.mX;
@@ -58,16 +48,14 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	/**	@brief V = V x vec
-	*/
+	// V = V x vec
 	TYPE Cross ( const USMetaVec2D < TYPE >& vec ) {
 	
 		return ( mX * vec.mY ) - ( mY * vec.mX );
 	}
 	
 	//----------------------------------------------------------------//
-	/**	@brief Is V within res of point?
-	*/
+	// Is V within res of point?
 	bool Compare ( const USMetaVec2D < TYPE >& point, TYPE res ) {
 	
 		if ((( mX <= ( point.mX + res )) && ( mX >= ( point.mX - res ))) &&
@@ -77,8 +65,7 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	/**	@brief |V| -= damp
-	*/
+	// |V| -= damp
 	void Dampen ( const USMetaVec2D < TYPE >& damp ) {
 		if ( mX > ( TYPE )0 ) {
 			mX -= damp.mX;
@@ -118,8 +105,7 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	/**	@brief V . point
-	*/
+	// V . point
 	float Dot ( const USMetaVec2D < TYPE >& point ) const {
 		return ( mX * point.mX ) + ( mY * point.mY );
 	}
@@ -161,16 +147,14 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	/**	@brief V = -V
-	*/
+	// V = -V
 	void Invert () {
 		mX = -mX;
 		mY = -mY;
 	}
 	
 	//----------------------------------------------------------------//
-	/**	@brief |V|
-	*/
+	// |V|
 	float Length () {
 		return sqrtf (( mX * mX ) + ( mY * mY ));
 	}
@@ -181,8 +165,7 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	/**	@brief V = V + ( time * point )
-	*/
+	// V = V + ( time * point )
 	void Lerp ( const USMetaVec2D& point, TYPE time ) {
 
 		this->mX = this->mX + (( point.mX - this->mX ) * time );
@@ -190,16 +173,14 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	/**	@brief V *= point
-	*/
+	// V *= point
 	void Multiply ( const USMetaVec2D < TYPE >& point ) {
 		mX = mX * point.mX;
 		mY = mY * point.mY;
 	}
 	
 	//----------------------------------------------------------------//
-	/**	@brief |V|, V /= |V|
-	*/
+	// |V|, V /= |V|
 	TYPE Norm () {
 
 		TYPE length;
@@ -213,8 +194,7 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	/**	@brief Normalize vector; test for 0-length vector.
-	*/
+	// Normalize vector; test for 0-length vector.
 	TYPE NormSafe () {
 
 		TYPE length;
@@ -230,16 +210,14 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	/**	@brief V += point * d
-	*/
+	// V += point * d
 	void Offset ( const USMetaVec2D < TYPE >& point, TYPE d ) {
 		mX += point.mX * d;
 		mY += point.mY * d;
 	}
 	
 	//----------------------------------------------------------------//
-	/**	@brief Project V onto plane of norm along norm
-	*/
+	// Project V onto plane of norm along norm
 	void PerpProject ( const USMetaVec2D& norm ) {
 
 		TYPE dot;
@@ -251,8 +229,7 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	/**	@brief Project V onto plane of norm along axis
-	*/
+	// Project V onto plane of norm along axis
 	void PerpProject ( const USMetaVec2D& norm, const USMetaVec2D& axis ) {
 
 		TYPE project = norm.Dot ( axis ) / Dot ( norm );
@@ -262,8 +239,7 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	/**	@brief Project onto vec
-	*/
+	// Project onto vec
 	void Project ( const USMetaVec2D& vec ) {
 		
 		TYPE p = this->Dot ( vec ) / vec.LengthSquared ();
@@ -282,8 +258,7 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	/**	@brief Reflect V off of plane of norm
-	*/
+	// Reflect V off of plane of norm
 	void Reflect ( const USMetaVec2D& norm ) {
 
 		TYPE dot;
@@ -295,8 +270,7 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	/**	@brief Ceiling V components to nearest res
-	*/
+	// Ceiling V components to nearest res
 	void Res ( TYPE res ) {
 
 		this->mX = ((( s32 )( this->mX / res )) * res );
@@ -320,24 +294,21 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	/**	@brief V *= scale
-	*/
+	// V *= scale
 	void Scale ( TYPE scale ) {
 		mX *= scale;
 		mY *= scale;
 	}
 	
 	//----------------------------------------------------------------//
-	/**	@brief V *= scale
-	*/
+	// V *= scale
 	void Scale ( TYPE xSc, TYPE ySc ) {
 		mX *= xSc;
 		mY *= ySc;
 	}
 	
 	//----------------------------------------------------------------//
-	/**	@brief length, V / |V| * TYPE
-	*/
+	// length, V / |V| * TYPE
 	float SetLength ( float length ) {
 
 		TYPE scale;
@@ -350,16 +321,14 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	/**	@brief  V = V - point
-	*/
+	//  V = V - point
 	void Sub ( const USMetaVec2D < TYPE >& point ) { 
 		mX -= point.mX;
 		mY -= point.mY;
 	}
 
 	//----------------------------------------------------------------//
-	/**	@brief V = V - ( point * scale )
-	*/
+	// V = V - ( point * scale )
 	void Sub ( const USMetaVec2D < TYPE >& point, TYPE scale ) { 
 		mX -= point.mX * scale;
 		mY -= point.mY * scale;
@@ -380,80 +349,8 @@ public:
 	}
 };
 
-//================================================================//
-// USIntVec2D
-//================================================================//
-/**	@brief 2D integer vector.
-	@ingroup MathLib
-*/
-class USIntVec2D :
-	public USMetaVec2D < int > {
-public:
-
-	//----------------------------------------------------------------//
-	/**	@brief Constructor.
-	*/	
-	USIntVec2D () {
-	}
-
-	//----------------------------------------------------------------//
-	/**	@brief Constructor.
-	*/	
-	USIntVec2D ( int x, int y ) :
-		USMetaVec2D < int > ( x, y ) {
-	}
-};
-
+typedef USMetaVec2D < int > USIntVec2D;
 typedef USMetaVec2D < float > USVec2D;
 typedef USMetaVec2D < double > USVec2D64;
-
-//================================================================//
-// USVec2D
-//================================================================//
-/**	@brief 2D float vector.
-	@ingroup MathLib
-*/
-
-//class USVec2D :
-//	public USMetaVec2D < float > {
-//public:
-//
-//	//----------------------------------------------------------------//
-//	/**	@brief Constructor.
-//	*/	
-//	USVec2D () {
-//	}
-//
-//	//----------------------------------------------------------------//
-//	/**	@brief Constructor.
-//	*/	
-//	USVec2D ( float x, float y ) :
-//		USMetaVec2D < float > ( x, y ) {
-//	}
-//};
-
-//================================================================//
-// USVec2D64
-//================================================================//
-/**	@brief 2D double vector.
-	@ingroup MathLib
-*/
-//class USVec2D64 :
-//	public USMetaVec2D < double > {
-//public:
-//
-//	//----------------------------------------------------------------//
-//	/**	@brief Constructor.
-//	*/	
-//	USVec2D64 () {
-//	}
-//
-//	//----------------------------------------------------------------//
-//	/**	@brief Constructor.
-//	*/	
-//	USVec2D64 ( double x, double y ) :
-//		USMetaVec2D < double > ( x, y ) {
-//	}
-//};
 
 #endif

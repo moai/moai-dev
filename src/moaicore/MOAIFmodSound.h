@@ -12,7 +12,7 @@ class MOAIDataBuffer;
 //================================================================//
 // MOAIFmodSound
 //================================================================//
-/**	@brief FMOD sound.
+/**	@brief	FMOD singleton. Unsupported, legacy.
 */
 class MOAIFmodSound :
 	public virtual USLuaObject {
@@ -37,12 +37,12 @@ public:
 	//----------------------------------------------------------------//
 				MOAIFmodSound			();
 				~MOAIFmodSound			();
-	void		Load				( MOAIDataBuffer& data, bool streaming );
-	void		Load				( cc8* filename, bool streaming, bool async );
-	void		RegisterLuaClass	( USLuaState& state );
-	void		RegisterLuaFuncs	( USLuaState& state );
-	void		Release				();			
-	STLString	ToString			();
+	void		Load					( MOAIDataBuffer& data, bool streaming );
+	void		Load					( cc8* filename, bool streaming, bool async );
+	void		RegisterLuaClass		( USLuaState& state );
+	void		RegisterLuaFuncs		( USLuaState& state );
+	void		Release					();			
+	STLString	ToString				();
 };
 
 #endif

@@ -9,7 +9,14 @@ class MOAIVertexFormat;
 //================================================================//
 // MOAIVertexBuffer
 //================================================================//
-/**	@brief Vertex buffer class.
+/**	@brief	Vertex buffer class.
+
+	@const	GL_BYTE
+	@const	GL_FIXED
+	@const	GL_FLOAT
+	@const	GL_SHORT
+	@const	GL_UNSIGNED_BYTE
+	@const	GL_UNSIGNED_SHORT
 */
 class MOAIVertexBuffer :
 	public USLuaObject {

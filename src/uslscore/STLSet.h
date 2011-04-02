@@ -11,10 +11,6 @@ using namespace std;
 //================================================================//
 // STLSet
 //================================================================//
-/**	@brief Extends STL 'set' to add some helper functions.
-	
-	@tparam KEY The type of key this set uses.
-*/
 template < typename KEY >
 class STLSet :
 	public set < KEY > {

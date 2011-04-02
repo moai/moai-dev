@@ -7,7 +7,7 @@
 //================================================================//
 // MOAIParticleScript
 //================================================================//
-/**	@brief Particle script.
+/**	@brief	Particle script.
 */
 class MOAIParticleScript :
 	public virtual USLuaObject {

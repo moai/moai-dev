@@ -12,8 +12,6 @@ class MOAISurfaceSampler2D;
 //================================================================//
 // MOAIDeck2D
 //================================================================//
-/**	@brief Base class for content objects.
-*/
 class MOAIDeck2D :
 	public MOAIDeck {
 public:

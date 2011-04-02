@@ -23,7 +23,8 @@ private:
 //================================================================//
 // MOAIStretchPatch2D
 //================================================================//
-/**	@brief Stretchable image provider.
+/**	@brief	Moai implementation of a 9-patch. Textured quad with any number of
+			stretchable and non-stretchable 'bands.' Grid drawing not supported.
 */
 class MOAIStretchPatch2D :
 	virtual public MOAIDeck {

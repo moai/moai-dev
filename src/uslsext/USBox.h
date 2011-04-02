@@ -7,14 +7,9 @@
 #include <uslsext/USPlane.h>
 #include <uslsext/USMatrix3D.h>
 
-/** @addtogroup MathLib */
-
 //================================================================//
 // USBox
 //================================================================//
-/**	@brief Axis-aligned bounding box (AABB).
-	@ingroup MathLib
-*/
 class USBox {
 	public:
 
@@ -48,8 +43,6 @@ class USBox {
 //================================================================//
 // USRhombus
 //================================================================//
-/**	@brief 3D rhombus.
-*/
 class USRhombus {
 	public:
 
@@ -70,8 +63,6 @@ class USRhombus {
 //================================================================//
 // USPrism
 //================================================================//
-/**	@brief 3D prism.
-*/
 class USPrism {
 	public:
 

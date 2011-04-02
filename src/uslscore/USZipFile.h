@@ -12,8 +12,6 @@
 //================================================================//
 // USZipEntry
 //================================================================//
-/**	@brief GZipped entry in a PKZip file.
-*/
 class USZipEntry {
 private:
 
@@ -77,8 +75,6 @@ public:
 //================================================================//
 // USZipFile
 //================================================================//
-/**	@brief Formatter for a PKZip file.
-*/
 class USZipFile {
 private:
 
@@ -100,7 +96,7 @@ public:
 	u32			GetTotal		();
 	int			Inflate			();
 	void		Open			( USStream& stream );
-				USZipFile			();
+				USZipFile		();
 	virtual		~USZipFile		();
 };
 

@@ -9,7 +9,7 @@
 //================================================================//
 // MOAIPointerSensor
 //================================================================//
-/**	@brief Pointer sensor.
+/**	@brief	Pointer sensor.
 */
 class MOAIPointerSensor :
 	public MOAISensor {

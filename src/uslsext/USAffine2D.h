@@ -7,8 +7,6 @@
 #include <uslsext/USMatrix.h>
 #include <uslsext/USTrig.h>
 
-/** @addtogroup MathLib */
-
 //================================================================//
 // USMetaAffine2D
 //================================================================//

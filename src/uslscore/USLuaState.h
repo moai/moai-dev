@@ -26,9 +26,6 @@ class USStreamFormatter;
 //================================================================//
 // USLuaState
 //================================================================//
-/**	@brief C++ wrapper class for a Lua state.
-	@ingroup LuaLib
-*/
 class USLuaState {
 private:
 

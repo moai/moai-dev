@@ -13,7 +13,7 @@ struct cpVect;
 //================================================================//
 // MOAICpShape
 //================================================================//
-/**	@brief Chipmunk Shape.
+/**	@brief	Chipmunk Shape.
 */
 class MOAICpShape :
 	public virtual USLuaObject,

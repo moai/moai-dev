@@ -4,16 +4,11 @@
 #ifndef BASE64CIPHER_H
 #define BASE64CIPHER_H
 
-/** @addtogroup CipherLib */
-
 #include <uslscore/USCipher.h>
 
 //================================================================//
 // USBase64Cipher
 //================================================================//
-/**	@brief Block cipher for converting to and from Base64.
-	@ingroup CipherLib
-*/
 class USBase64Cipher :
 	public USCipher {
 private:

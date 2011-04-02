@@ -78,7 +78,7 @@ int MOAIStretchPatch2D::_reserveUVRects ( lua_State* L ) {
 int MOAIStretchPatch2D::_setColumn ( lua_State* L ) {
 	LUA_SETUP ( MOAIStretchPatch2D, "UNNB" )
 
-	u32 idx				= state.GetValue < u32 >( 2, 0 );
+	u32 idx				= state.GetValue < u32 >( 2, 1 ) - 1;
 	float percent		= state.GetValue < float >( 3, 0.0f );
 	bool canStretch		= state.GetValue < bool >( 4, false );
 
@@ -121,7 +121,7 @@ int MOAIStretchPatch2D::_setRect ( lua_State* L ) {
 int MOAIStretchPatch2D::_setRow ( lua_State* L ) {
 	LUA_SETUP ( MOAIStretchPatch2D, "UNNB" )
 
-	u32 idx				= state.GetValue < u32 >( 2, 0 );
+	u32 idx				= state.GetValue < u32 >( 2, 1 ) - 1;
 	float percent		= state.GetValue < float >( 3, 0.0f );
 	bool canStretch		= state.GetValue < bool >( 4, false );
 
@@ -163,7 +163,7 @@ int MOAIStretchPatch2D::_setTexture ( lua_State* L ) {
 int MOAIStretchPatch2D::_setUVRect ( lua_State* L ) {
 	LUA_SETUP ( MOAIStretchPatch2D, "UNNNNN" )
 	
-	u32 idx = state.GetValue < u32 >( 2, 0 );
+	u32 idx = state.GetValue < u32 >( 2, 1 ) - 1;
 	
 	if ( idx < self->mUVRects.Size ()) {
 		self->mUVRects [ idx ] = state.GetRect < float >( 3 );

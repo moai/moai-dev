@@ -7,7 +7,7 @@
 //================================================================//
 // MOAIVertexFormat
 //================================================================//
-/**	@brief Vertex format class.
+/**	@brief	Vertex format class.
 */
 class MOAIVertexFormat :
 	public virtual USLuaObject,

@@ -24,7 +24,7 @@ private:
 //================================================================//
 // MOAIDebugLines
 //================================================================//
-/**	@brief Singleton for managing rendering of world space debug vectors.
+/**	@brief	Singleton for managing rendering of world space debug vectors.
 */
 class MOAIDebugLines :
 	public USGlobalClass < MOAIDebugLines, USLuaObject >,

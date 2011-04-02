@@ -4,14 +4,9 @@
 #ifndef	INTERPOLATE_H
 #define	INTERPOLATE_H
 
-/** @addtogroup MathLib */
-
 //================================================================//
 // USInterpolate
 //================================================================//
-/**	@brief Collection of functions for interpolation.
-	@ingroup MathLib
-*/
 namespace USInterpolate {
 	
 	enum {

@@ -58,22 +58,6 @@ public:
 //================================================================//
 // USCallback
 //================================================================//
-/**
- * @brief	A handle to an implementation of USFunctor.
- *
- * To implement a callback mechanism between two classes, the 'caller'
- * class would have an initially un-set instance of USCallback as a 
- * member, and would provide a way for the 'callee' to access it.  
- * The callee class would be responsible for calling the templated
- * factory method Functor() on that USCallback (using the type USDelegate
- * if the callee is a C++ class, or GSDelegate if the callee is a Obj-C
- * class).  The callee can then initialize the created USFunctor subclass
- * to point to the desired member function of the callee.  Since the
- * USCallback allocated that USFunctor subclass instance, it maintains
- * ownership.  The caller is then free to invoke the Call() function
- * on its USCallback without having to know what implementation of
- * USFunctor is used under the hood.
- */
 template < typename PARAM >
 class USCallback {
 private:
@@ -121,10 +105,6 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	/** 
-	 * @brief	A convenience method for C++ classes, as an alternative
-	 *			to the boiler-plate code of calling Functor() and then Set().
-	 */
 	template < typename TYPE >
 	void Set ( TYPE* target, UNARY_SELECTOR_DECL ( TYPE, PARAM, selector )) {
 		

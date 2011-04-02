@@ -22,7 +22,7 @@ public:
 //================================================================//
 // MOAIEaseDriver
 //================================================================//
-/**	@brief Simple animation class.
+/**	@brief	Action that applies simple ease curves to node attributes.
 */
 class MOAIEaseDriver :
 	public MOAIAction {

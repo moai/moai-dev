@@ -10,7 +10,15 @@
 //================================================================//
 // MOAITimer
 //================================================================//
-/**	@brief Timer setting class.
+/**	@brief	Timer class for driving curves and animations.
+
+	@attr	ATTR_TIME
+	
+	@const	NORMAL
+	@const	REVERSE
+	@const	LOOP
+	@const	LOOP_REVERSE
+	@const	PING_PONG
 */
 class MOAITimer :
 	public virtual MOAINode,

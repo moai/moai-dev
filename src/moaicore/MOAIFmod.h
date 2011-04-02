@@ -14,7 +14,7 @@ namespace FMOD {
 //================================================================//
 // MOAIFmod
 //================================================================//
-/**	@brief FMOD singleton.
+/**	@brief	FMOD singleton. Unsupported, legacy.
 */
 class MOAIFmod :
 	public USGlobalClass < MOAIFmod, USLuaObject > {
@@ -32,14 +32,14 @@ public:
 	GET ( FMOD::System*, SoundSys, mSoundSys );
 
 	//----------------------------------------------------------------//
-	void		CloseSoundSystem	();
-				MOAIFmod		();
-				~MOAIFmod		();
-	void		OpenSoundSystem		();
-	void		RegisterLuaClass	( USLuaState& state );
-	void		RegisterLuaFuncs	( USLuaState& state );
-	void		Update				();
-	STLString	ToString			();
+	void			CloseSoundSystem	();
+					MOAIFmod			();
+					~MOAIFmod			();
+	void			OpenSoundSystem		();
+	void			RegisterLuaClass	( USLuaState& state );
+	void			RegisterLuaFuncs	( USLuaState& state );
+	void			Update				();
+	STLString		ToString			();
 };
 
 #endif

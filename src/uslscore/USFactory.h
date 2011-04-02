@@ -23,8 +23,6 @@ public:
 //================================================================//
 // USAbstractCreator
 //================================================================//
-/**	@brief Abstract base class for object creator.
-*/
 class USAbstractCreator :
 	public USDeallocator {
 public:
@@ -38,9 +36,6 @@ public:
 //================================================================//
 // USConcreteCreator
 //================================================================//
-/**	@brief Covenience implementation of a concrete creator for
-	TYPE.  Implements new, delete, placement new and sizeof.
-*/
 template < typename TYPE, typename CAST_TYPE >
 class USConcreteCreator :
 	public USAbstractCreator {
@@ -119,8 +114,6 @@ public:
 //================================================================//
 // USFactory
 //================================================================//
-/**	@brief Template factory pattern.  Associates a creator with a key.
-*/
 template < typename KEY_TYPE, typename PRODUCT_TYPE >
 class USFactory {
 private:

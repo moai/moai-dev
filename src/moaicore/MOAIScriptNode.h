@@ -9,7 +9,9 @@
 //================================================================//
 // MOAIScriptNode
 //================================================================//
-/**	@brief User scriptable dependency node.
+/**	@brief	User scriptable dependency node. User may specify Lua
+			callback to handle ndoe updating as well as custom floating
+			point attributes.
 */
 class MOAIScriptNode :
 	public MOAINode {

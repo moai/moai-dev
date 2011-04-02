@@ -11,7 +11,7 @@ class MOAITexture;
 //================================================================//
 // MOAIGfxQuad2D
 //================================================================//
-/**	@brief Texture class.
+/**	@brief	Single textured quad.
 */
 class MOAIGfxQuad2D :
 	public MOAIDeck2D {

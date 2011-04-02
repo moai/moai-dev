@@ -7,14 +7,9 @@
 #include <uslsext/USPlane.h>
 #include <uslsext/USBox.h>
 
-/** @addtogroup MathLib */
-
 //================================================================//
 // USFrustum
 //================================================================//
-/**	@brief Geometry class for performing frustum culling.
-	@ingroup MathLib
-*/
 class USFrustum {
 private:
 	
@@ -66,9 +61,6 @@ public:
 //================================================================//
 // USFrustShrinker
 //================================================================//
-/**	@brief Fits frustum to set of primitives.
-	@ingroup MathLib
-*/
 class USFrustShrinker {
 private:
 
@@ -94,9 +86,6 @@ public:
 //================================================================//
 // USFrustCone
 //================================================================//
-/**	@brief USFrustum with no front or back plane.
-	@ingroup MathLib
-*/
 class USFrustCone {
 public:
 
@@ -124,9 +113,6 @@ public:
 //================================================================//
 // USFrustboxum
 //================================================================//
-/**	@brief Culls by AABB then by frustum (cone).
-	@ingroup MathLib
-*/
 class USFrustboxum {
 public:
 

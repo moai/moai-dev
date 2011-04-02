@@ -9,8 +9,6 @@ class USStream;
 //================================================================//
 // USZip
 //================================================================//
-/**	@brief USZip utility functions (wrapper for zlib).
-*/
 namespace USZip {
 
 	static const u32 CHUNKSIZE = 16384;

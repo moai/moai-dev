@@ -9,10 +9,6 @@ template < typename TYPE > class tVec2;
 //================================================================//
 // USMetaVec3D
 //================================================================//
-/**	@brief Template class for two-dimensional vector math.
-	@tparam TYPE Type of elements.  Must implement all built-in math operators.
-	@ingroup MathLib
-*/
 template < typename TYPE >
 class USMetaVec3D {
 public:
@@ -344,77 +340,9 @@ public:
 	}
 };
 
-//================================================================//
-// USIntVec3D
-//================================================================//
-/**	@brief 3D integer vector.
-	@ingroup MathLib
-*/
-class USIntVec3D :
-	public USMetaVec3D < int > {
-public:
-
-	//----------------------------------------------------------------//
-	/**	@brief Constructor.
-	*/	
-	USIntVec3D () {
-	}
-
-	//----------------------------------------------------------------//
-	/**	@brief Constructor.
-	*/	
-	USIntVec3D ( int x, int y, int z ) :
-		USMetaVec3D < int > ( x, y, z ) {
-	}
-};
-
-//================================================================//
-// USVec3D
-//================================================================//
-/**	@brief 3D float vector.
-	@ingroup MathLib
-*/
-class USVec3D :
-	public USMetaVec3D < float > {
-public:
-
-	//----------------------------------------------------------------//
-	/**	@brief Constructor.
-	*/	
-	USVec3D () {
-	}
-
-	//----------------------------------------------------------------//
-	/**	@brief Constructor.
-	*/	
-	USVec3D ( float x, float y, float z ) :
-		USMetaVec3D < float > ( x, y, z ) {
-	}
-};
-
-//================================================================//
-// USVec3D64
-//================================================================//
-/**	@brief 3D double vector.
-	@ingroup MathLib
-*/
-class USVec3D64 :
-	public USMetaVec3D < double > {
-public:
-
-	//----------------------------------------------------------------//
-	/**	@brief Constructor.
-	*/	
-	USVec3D64 () {
-	}
-
-	//----------------------------------------------------------------//
-	/**	@brief Constructor.
-	*/	
-	USVec3D64 ( double x, double y, double z ) :
-		USMetaVec3D < double > ( x, y, z ) {
-	}
-};
+typedef USMetaVec3D < int > USIntVec3D;
+typedef USMetaVec3D < float > USVec3D;
+typedef USMetaVec3D < double > USVec3D64;
 
 
 #endif

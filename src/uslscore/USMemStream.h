@@ -10,10 +10,6 @@
 //================================================================//
 // USMemStream
 //================================================================//
-/**	@brief Memory stream.  Memory resident buffer that automatically
-	grows when writing to the stream.
-	@ingroup StreamLib
-*/
 class USMemStream :
 	public USStream {
 private:

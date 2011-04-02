@@ -4,8 +4,6 @@
 #ifndef LUAREF_H
 #define LUAREF_H
 
-/** @addtogroup LuaLib */
-
 class USLuaRuntime;
 class USLuaState;
 class USLuaStateHandle;
@@ -13,9 +11,6 @@ class USLuaStateHandle;
 //================================================================//
 // USLuaRef
 //================================================================//
-/**	@brief Maintains a reference to a Lua variable.  May be weak or strong.
-	@ingroup LuaLib
-*/
 class USLuaRef {
 protected:
 

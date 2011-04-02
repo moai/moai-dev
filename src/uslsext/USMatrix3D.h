@@ -10,10 +10,6 @@
 //================================================================//
 // USMetaMatrix3D
 //================================================================//
-/**	@brief Template class for three-dimensional matrix math (4x4 matrix).
-	@tparam TYPE Type of elements.  Must implement all built-in math operators.
-	@ingroup MathLib
-*/
 template < typename TYPE >
 class USMetaMatrix3D {
 public:
@@ -918,9 +914,6 @@ public:
 //================================================================//
 // USMatrix3D
 //================================================================//
-/**	@brief USMetaMatrix3D of type float.
-	@ingroup MathLib
-*/
 class USMatrix3D :
 	public USMetaMatrix3D < float > {
 };
@@ -928,9 +921,6 @@ class USMatrix3D :
 //================================================================//
 // USMatrix3D64
 //================================================================//
-/**	@brief USMetaMatrix3D of type double.
-	@ingroup MathLib
-*/
 class USMatrix3D64 :
 	public USMetaMatrix3D < double > {
 };

@@ -8,15 +8,9 @@
 #include <uslscore/USVec2D.h>
 #include <uslscore/USVec3D.h>
 
-/** @addtogroup MathLib */
-
 //================================================================//
 // USMetaRect
 //================================================================//
-/**	@brief Template class for operations on rectangles.
-	@tparam TYPE Type of elements.  Must implement all built-in math operators.
-	@ingroup MathLib
-*/
 template < typename TYPE = float >
 class USMetaRect {
 public:

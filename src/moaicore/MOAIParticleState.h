@@ -10,7 +10,7 @@ class MOAIParticleScript;
 //================================================================//
 // MOAIParticleState
 //================================================================//
-/**	@brief Particle state.
+/**	@brief	Particle state.
 */
 class MOAIParticleState :
 	public virtual USLuaObject {

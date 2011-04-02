@@ -7,15 +7,9 @@
 #include <uslsext/USMatrix.h>
 #include <uslsext/USTrig.h>
 
-/** @addtogroup MathLib */
-
 //================================================================//
 // USMetaMatrix2D
 //================================================================//
-/**	@brief Template class for two-dimensional matrix math (3x3 matrix).
-	@tparam TYPE Type of elements.  Must implement all built-in math operators.
-	@ingroup MathLib
-*/
 template < typename TYPE >
 class USMetaMatrix2D {
 public:

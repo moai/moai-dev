@@ -9,7 +9,7 @@ class MOAISensor;
 //================================================================//
 // MOAIInputDevice
 //================================================================//
-/**	@brief Manager class for input bindings.
+/**	@brief	Manager class for input bindings.
 */
 class MOAIInputDevice :
 	public virtual USLuaObject {

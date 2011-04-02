@@ -1,14 +1,7 @@
-/* zpipe.c: example of proper use of zlib's inflate() and deflate()
-   Not copyrighted -- provided to the public domain
-   Version 1.2  9 November 2004  Mark Adler */
+// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// http://getmoai.com
 
-/* Version history:
-   1.0  30 Oct 2004  First version
-   1.1   8 Nov 2004  Add void casting for unused return values
-                     Use switch statement for inflate() return values
-   1.2   9 Nov 2004  Add assertions to document zlib guarantees
-   1.3   6 Apr 2005  Remove incorrect assertion in inf()
-*/
+// based on zpipe.c Version 1.2 as provided to the public domain 9 November 2004 by Mark Adler
 
 #include "pch.h"
 #include <stdio.h>
@@ -20,14 +13,6 @@
 #include <uslscore/USZip.h>
 
 //----------------------------------------------------------------//
-/**	@brief Compresses contents of source stream and stores in dest
-	stream.  Continues until EOF is encountered.
-	
-	@param source The input stream.
-	@param dest The output stream.
-	@param level Compression level.  0 - archive only.  9 - best.
-	@return Z_OK on success.
-*/
 int USZip::Deflate ( USStream& source, USStream& dest, int level ) {
 
     int ret, flush;
@@ -82,11 +67,6 @@ int USZip::Deflate ( USStream& source, USStream& dest, int level ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief Reports a zlib error.
-	
-	@param code The return code to report.
-	@return Message string corresponding to the code.
-*/
 cc8* USZip::GetErrMsg ( int code ) {
 
 	fputs ( "zpipe: ", stderr );
@@ -113,13 +93,6 @@ cc8* USZip::GetErrMsg ( int code ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief Decompresses contents of source stream and stores in dest
-	stream.  Continues until EOF is encountered.
-	
-	@param source The input stream.
-	@param dest The output stream.
-	@return Z_OK on success.
-*/
 int USZip::Inflate ( USStream& source, USStream& dest ) {
 
 	int ret;

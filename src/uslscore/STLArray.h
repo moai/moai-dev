@@ -11,10 +11,7 @@ using namespace std;
 //================================================================//
 // STLArray
 //================================================================//
-/**	@brief Extends STL 'vector' to add... nothing so far.
-	
-	@tparam TYPE The type of element this vector will hold.
-*/
+// stub to match rest of stl extensions
 template < typename TYPE >
 class STLArray :
 	public vector < TYPE > {
