@@ -22,11 +22,10 @@ static int _deprecate ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	init
+	@text	Initializes the sound system.
+
+	@out	nil
 */
 int MOAIFmod::_init ( lua_State* L ) {
 

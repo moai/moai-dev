@@ -9,11 +9,13 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name serializeToString
-	@param1 self @type userdata
-	@param2 data @type table|userdata @text The table or userdata to serialize.
-	@text Serializes the specified table or userdata to a string.  Useful for sending data to a remote server.
-	@return The serialized string. @type string
+/**	@name	serializeToString
+	@text	Serializes the specified table or userdata to a string.  Useful for sending data to a remote server.
+
+	@in		MOAISerializer self
+	@opt	table data				The table data to serialize.
+	@opt	userdata data			The userdata (object) to serialize.  You must provide either a table or userdata, but not both.
+	@out	string serialized		The serialized string.
 */
 int MOAISerializer::_serializeToString ( lua_State* L ) {
 

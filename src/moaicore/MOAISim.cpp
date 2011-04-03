@@ -15,9 +15,10 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name clearRenderStack
-	@text Clears the render stack.
-	@return nil
+/**	@name	clearRenderStack
+	@text	Clears the render stack.
+
+	@out	nil
 */
 int MOAISim::_clearRenderStack ( lua_State* L ) {
 
@@ -30,9 +31,10 @@ int MOAISim::_clearRenderStack ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name enterFullscreenMode
-	@text Enters fullscreen mode on the device if possible.
-	@return nil
+/**	@name	enterFullscreenMode
+	@text	Enters fullscreen mode on the device if possible.
+
+	@out	nil
 */
 int MOAISim::_enterFullscreenMode ( lua_State* L ) {
 
@@ -47,9 +49,10 @@ int MOAISim::_enterFullscreenMode ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name exitFullscreenMode
-	@text Exits fullscreen mode on the device if possible.
-	@return nil
+/**	@name	exitFullscreenMode
+	@text	Exits fullscreen mode on the device if possible.
+
+	@out	nil
 */
 int MOAISim::_exitFullscreenMode ( lua_State* L ) {
 
@@ -64,10 +67,11 @@ int MOAISim::_exitFullscreenMode ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name framesToTime
-	@param1 frames @type number @text The number of frames.
-	@text Converts the number of frames to time passed in seconds.
-	@return The equivilant number of seconds for the specified number of frames. @type number
+/**	@name	framesToTime
+	@text	Converts the number of frames to time passed in seconds.
+
+	@in		number frames		The number of frames.
+	@out	number time			The equivilant number of seconds for the specified number of frames.
 */
 int MOAISim::_framesToTime ( lua_State* L ) {
 
@@ -83,9 +87,10 @@ int MOAISim::_framesToTime ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name getDeviceIDString
-	@text Gets a unique string that identifies the device.
-	@return The identifier string. @type string
+/**	@name	getDeviceIDString
+	@text	Gets a unique string that identifies the device.
+
+	@out	string id			The identifier string.	
 */
 int MOAISim::_getDeviceIDString ( lua_State* L ) {
 
@@ -111,9 +116,11 @@ int MOAISim::_getDeviceIDString ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name getDeviceSize
-	@text Gets the dimensions of the device screen as two return values (width, height).
-	@return The width and height of the device screen. @type (number,number)
+/**	@name	getDeviceSize
+	@text	Gets the dimensions of the device screen as two return values (width, height).
+
+	@out	number width		The width of the device screen.
+	@out	number height		The height of the device screen.
 */
 int MOAISim::_getDeviceSize ( lua_State* L ) {
 
@@ -126,9 +133,10 @@ int MOAISim::_getDeviceSize ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name getElapsedFrames
-	@text Gets the number of frames elapsed since the application was started.
-	@return The number of elapsed frames. @type number
+/**	@name	getElapsedFrames
+	@text	Gets the number of frames elapsed since the application was started.
+
+	@out	number frames		The number of elapsed frames.
 */
 int MOAISim::_getElapsedFrames ( lua_State* L ) {
 	
@@ -138,9 +146,10 @@ int MOAISim::_getElapsedFrames ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name getElapsedTime
-	@text Gets the number of seconds elapsed since the application was started.
-	@return The number of elapsed seconds. @type number
+/**	@name	getElapsedTime
+	@text	Gets the number of seconds elapsed since the application was started.
+
+	@out	number time			The number of elapsed seconds.
 */
 int MOAISim::_getElapsedTime ( lua_State* L ) {
 	
@@ -149,9 +158,10 @@ int MOAISim::_getElapsedTime ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name getFrameSize
-	@text Gets the amount of time (in seconds) that it takes for one frame to pass.  This often will be a decimal number between 0 and 1.
-	@return The size of the frame; the time it takes for one frame to pass. @type number
+/**	@name	getFrameSize
+	@text	Gets the amount of time (in seconds) that it takes for one frame to pass.  This often will be a decimal number between 0 and 1.
+
+	@out	number size			The size of the frame; the time it takes for one frame to pass.
 */
 int MOAISim::_getFrameSize ( lua_State* L ) {
 	
@@ -162,9 +172,10 @@ int MOAISim::_getFrameSize ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name getNetworkStatus
-	@text Returns whether this device is currently able to reach the internet.
-	@return Whether the device can reach the internet. @type boolean
+/**	@name	getNetworkStatus
+	@text	Returns whether this device is currently able to reach the internet.
+
+	@out	boolean status		Whether the device can reach the internet.
 */
 int	MOAISim::_getNetworkStatus ( lua_State* L ) {
 
@@ -175,12 +186,13 @@ int	MOAISim::_getNetworkStatus ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name openWindow
-	@param1 title @type string @text The title of the window.
-	@param2 width @type number @text The width of the window in pixels.
-	@param3 height @type number @text The height of the window in pixels.
-	@text Opens a new window for the application to render on.  This must be called before any rendering can be done, and it must only be called once.
-	@return nil
+/**	@name	openWindow
+	@text	Opens a new window for the application to render on.  This must be called before any rendering can be done, and it must only be called once.
+
+	@in		string title		The title of the window.
+	@in		number width		The width of the window in pixels.
+	@in		number height		The height of the window in pixels.
+	@out	nil
 */
 int MOAISim::_openWindow ( lua_State* L ) {
 	
@@ -202,10 +214,11 @@ int MOAISim::_openWindow ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name pauseTimer
-	@param1 pause @type boolean @text Whether the device timer should be paused.
-	@text Pauses or unpauses the device timer, preventing any visual updates (rendering) while paused.
-	@return nil
+/**	@name	pauseTimer
+	@text	Pauses or unpauses the device timer, preventing any visual updates (rendering) while paused.
+
+	@in		boolean pause		Whether the device timer should be paused.
+	@out	nil
 */
 int MOAISim::_pauseTimer ( lua_State* L ) {
 	
@@ -223,9 +236,10 @@ int MOAISim::_pauseTimer ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name popRenderPass
-	@text Pops the rendering prim off the stack?
-	@return nil
+/**	@name	popRenderPass
+	@text	Pops the rendering prim off the stack.
+
+	@out	nil
 */
 int MOAISim::_popRenderPass ( lua_State* L ) {
 	UNUSED ( L );
@@ -237,10 +251,11 @@ int MOAISim::_popRenderPass ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name pushRenderPass
-	@param1 prim @type userdata @text The viewport of the render prim?
-	@text Pushes the specified onto the render stack?
-	@return nil
+/**	@name	pushRenderPass
+	@text	Pushes the specified prim onto the render stack.
+
+	@in		MOAIProp2D prop		The viewport of the render prim.
+	@out	nil
 */
 int MOAISim::_pushRenderPass ( lua_State* L ) {
 
@@ -257,13 +272,14 @@ int MOAISim::_pushRenderPass ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name setClearColor
-	@param1 red @type number @text The red value of the color.
-	@param2 green @type number @text The green value of the color.
-	@param3 blue @type number @text The blue value of the color.
-	@param4 alpha @type number @text The alpha value of the color.
-	@text At the start of each frame the device will by default automatically render a background color.  Using this function you can set the background color that is drawn each frame.  If you specify no arguments to this function, then automatic redraw of the background color will be turned off (i.e. the previous render will be used as the background).
-	@return nil
+/**	@name	setClearColor
+	@text	At the start of each frame the device will by default automatically render a background color.  Using this function you can set the background color that is drawn each frame.  If you specify no arguments to this function, then automatic redraw of the background color will be turned off (i.e. the previous render will be used as the background).
+
+	@opt	number red			The red value of the color.
+	@opt	number green		The green value of the color.
+	@opt	number blue			The blue value of the color.
+	@opt	number alpha		The alpha value of the color.
+	@out	nil
 */
 int MOAISim::_setClearColor ( lua_State* L ) {
 
@@ -286,10 +302,11 @@ int MOAISim::_setClearColor ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name setClearDepth
-	@param1 clearDepth @type boolean @text Whether to clear the depth buffer each frame.
-	@text At the start of each frame the device will by default automatically clear the depth buffer.  This function sets whether or not the depth buffer should be cleared at the start of each frame.
-	@return nil
+/**	@name	setClearDepth
+	@text	At the start of each frame the device will by default automatically clear the depth buffer.  This function sets whether or not the depth buffer should be cleared at the start of each frame.
+
+	@in		boolean clearDepth	Whether to clear the depth buffer each frame.
+	@out	nil
 */
 int MOAISim::_setClearDepth ( lua_State* L ) {
 
@@ -308,10 +325,11 @@ int MOAISim::_setClearDepth ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name setFrameSize
-	@param1 size @type number @text The frame size (how long in seconds it takes for one frame to be rendered).
-	@text Sets the amount of time it takes for one frame to pass.  This in effect can be used to set the FPS limit of the application by passing (1 / FPS).
-	@return nil
+/**	@name	setFrameSize
+	@text	Sets the amount of time it takes for one frame to pass.  This in effect can be used to set the FPS limit of the application by passing (1 / FPS).
+
+	@in		number size			The frame size (how long in seconds it takes for one frame to be rendered).
+	@out	nil
 */
 int MOAISim::_setFrameSize ( lua_State* L ) {
 
@@ -325,10 +343,11 @@ int MOAISim::_setFrameSize ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name timeToFrames
-	@param1 time @type number @text The number of seconds.
-	@text Converts the number of time passed in seconds to frames.
-	@return The equivilant number of frames for the specified number of seconds. @type number
+/**	@name	timeToFrames
+	@text	Converts the number of time passed in seconds to frames.
+
+	@in		number time			The number of seconds.
+	@out	number frames		The equivilant number of frames for the specified number of seconds.
 */
 int MOAISim::_timeToFrames ( lua_State* L ) {
 
