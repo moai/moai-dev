@@ -18,3 +18,4 @@ xcopy /cery ..\src\aku\AKUGlut.* release\samples\src\aku\
 xcopy /cery ..\src\aku\AKU.h release\include\aku\
 
 makensis.exe "moai.nsi"
+pause

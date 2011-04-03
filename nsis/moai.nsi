@@ -12,6 +12,8 @@ SetCompressorDictSize 64
 !define INSTDIR_REG_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APP_NAME}"
 !define MOAI_BINARIES "..\vs2008\bin\Win32\Release"
 !define MOAI_SRC "..\src"
+!define MUI_HEADERIMAGE_BITMAP MUI_HEADERIMAGE_BITMAP.bmp
+!define MUI_WELCOMEFINISHPAGE_BITMAP MUI_WELCOMEFINISHPAGE_BITMAP.bmp
 
 !include MUI.nsh
 !include AdvUninstLog.nsh
