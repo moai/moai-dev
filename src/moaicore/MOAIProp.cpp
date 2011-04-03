@@ -11,11 +11,12 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( priority ) getPriority ( self )</tt>\n
-\n
-	Returns current rendering priority of prop.
-	@param self (in)
-	@param priority (out)
+/**	@name	getPriority
+	@text	Returns the current priority of the node or 'nil' if the
+			priority is uninitialized.
+	
+	@in		MOAIProp self
+	@out	number priority		The node's priority or nil.
 */
 int MOAIProp::_getPriority ( lua_State* L ) {
 	LUA_SETUP ( MOAIProp, "U" )
@@ -28,11 +29,14 @@ int MOAIProp::_getPriority ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>() setPriority ( self, priority )</tt>\n
-\n
-	Sets the primitive's render priority.
-	@param self (in)
-	@param priority (in)
+/**	@name	setPriority
+	@text	Sets or clears the node's priority. Clear the priority
+			to have MOAIPartition automatically assign a priority
+			to a node when it is added.
+	
+	@in		MOAIProp self
+	@opt	number priority		Default value is nil.
+	@out	nil
 */
 int MOAIProp::_setPriority ( lua_State* L ) {
 	LUA_SETUP ( MOAIProp, "U" )
