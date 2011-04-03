@@ -1,3 +1,9 @@
+//----------------------------------------------------------------//
+// Copyright (c) 2010-2011 Zipline Games, Inc. 
+// All Rights Reserved. 
+// http://getmoai.com
+//----------------------------------------------------------------//
+
 #import <UIKit/UIKit.h>
 
 #define PROPERTY(type,name) @property(nonatomic,assign) type name;
