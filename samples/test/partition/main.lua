@@ -1,3 +1,9 @@
+----------------------------------------------------------------
+-- Copyright (c) 2010-2011 Zipline Games, Inc. 
+-- All Rights Reserved. 
+-- http://getmoai.com
+----------------------------------------------------------------
+
 print ( "hello, moai!" )
 
 MOAIDebugLines.setStyle ( MOAIDebugLines.PARTITION_CELLS, 2, 1, 1, 1 )

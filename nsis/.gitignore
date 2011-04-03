@@ -1,2 +1,7 @@
-release/
+release/3rdparty/
+release/bin/
+release/docs/
+release/samples/lua/
+release/samples/src/
+release/include/
 *.exe

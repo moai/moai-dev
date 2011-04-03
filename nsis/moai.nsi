@@ -28,7 +28,7 @@ InstallDirRegKey ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "InstallDir"
 !insertmacro UNATTENDED_UNINSTALL ;!insertmacro INTERACTIVE_UNINSTALL
 
 !insertmacro MUI_PAGE_WELCOME
-!insertmacro MUI_PAGE_LICENSE "${LICENSE_TEXT}"
+;!insertmacro MUI_PAGE_LICENSE "${LICENSE_TEXT}"
 ;!insertmacro MUI_PAGE_COMPONENTS 
 !insertmacro MUI_PAGE_DIRECTORY
 !insertmacro MUI_PAGE_INSTFILES
