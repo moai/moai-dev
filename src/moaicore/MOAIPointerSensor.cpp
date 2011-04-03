@@ -9,10 +9,12 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@brief <tt>getLoc ( )</tt>\n
-\n
-	Returns the X and Y coordinates of the mouse pointer.
-	@return X and y coordinates of the mouse in screen coordinates.
+/**	@name	getLoc
+	@text	Returns the location of the pointer on the screen.
+
+	@in		MOAIPointerSensor self
+	@out	number x
+	@out	number y
 */
 int MOAIPointerSensor::_getLoc ( lua_State* L ) {
 	LUA_SETUP ( MOAIPointerSensor, "U" )
@@ -24,10 +26,12 @@ int MOAIPointerSensor::_getLoc ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>setCallback ( ref )</tt>\n
-\n
-	Sets the callback function for when the pointer moves.
-	@param ref Function to call.
+/**	@name	setCallback
+	@text	Sets the callback to be issued when the pointer location changes.
+
+	@in		MOAILevelSensor self
+	@in		function callback
+	@out	nil
 */
 int MOAIPointerSensor::_setCallback ( lua_State* L ) {
 	LUA_SETUP ( MOAIPointerSensor, "UF" )
