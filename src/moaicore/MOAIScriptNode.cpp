@@ -9,11 +9,12 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	reserveAttrs
+	@text	Reserve memory for custom attributes and initializes them to 0.
+	
+	@in		MOAIScriptNode self
+	@in		number nAttributes
+	@out	nil
 */
 int MOAIScriptNode::_reserveAttrs ( lua_State* L ) {
 	LUA_SETUP ( MOAIScriptNode, "UN" );
@@ -26,11 +27,12 @@ int MOAIScriptNode::_reserveAttrs ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	setCallback
+	@text	Sets a Lua function to be called whenever the node is updated.
+	
+	@in		MOAIScriptNode self
+	@in		function onUpdate
+	@out	nil
 */
 int MOAIScriptNode::_setCallback ( lua_State* L ) {
 	LUA_SETUP ( MOAIScriptNode, "UF" );
