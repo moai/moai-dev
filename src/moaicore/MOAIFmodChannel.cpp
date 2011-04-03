@@ -31,7 +31,7 @@ int MOAIFmodChannel::_moveVolume ( lua_State* L ) {
 	MOAIEaseDriver* action = USSafeNew < MOAIEaseDriver >();
 	action->Init ( self, 1, 0.0f );
 	
-	action->SetForce ( 0, MOAIFmodChannel::ATTR_VOLUME, state.GetValue < float >( 2, 0.0f ));
+	action->SetLink ( 0, MOAIFmodChannel::ATTR_VOLUME, state.GetValue < float >( 2, 0.0f ));
 	
 	action->SetDelay (state.GetValue < float >( 3, 0.0f ));
 	action->SetMode ( state.GetValue < u32 >( 4, USInterpolate::kSmooth ));
@@ -75,7 +75,7 @@ int MOAIFmodChannel::_seekVolume ( lua_State* L ) {
 	MOAIEaseDriver* action = USSafeNew < MOAIEaseDriver >();
 	action->Init ( self, 1, 0.0f );
 	
-	action->SetForce ( 0, MOAIFmodChannel::ATTR_VOLUME, state.GetValue < float >( 2, 0.0f ) - self->mVolume );
+	action->SetLink ( 0, MOAIFmodChannel::ATTR_VOLUME, state.GetValue < float >( 2, 0.0f ) - self->mVolume );
 	
 	action->SetDelay ( state.GetValue < float >( 3, 0.0f ));
 	action->SetMode ( state.GetValue < u32 >( 4, USInterpolate::kSmooth ));

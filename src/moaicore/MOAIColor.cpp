@@ -24,7 +24,7 @@ int MOAIColor::_moveColor ( lua_State* L ) {
 	LUA_SETUP ( MOAIColor, "UNNNNN" )
 
 	MOAIEaseDriver* action = new MOAIEaseDriver ();
-	action->ReserveForces ( 4 );
+	action->ReserveLinks ( 4 );
 	
 	float r			= state.GetValue < float >( 2, 0.0f );
 	float g			= state.GetValue < float >( 3, 0.0f );
@@ -33,12 +33,12 @@ int MOAIColor::_moveColor ( lua_State* L ) {
 	float delay		= state.GetValue < float >( 6, 0.0f );
 	u32 mode		= state.GetValue < u32 >( 7, USInterpolate::kSmooth );
 	
-	action->SetForce ( 0, self, MOAIColor::ATTR_R_COL, r, mode );
-	action->SetForce ( 1, self, MOAIColor::ATTR_G_COL, g, mode );
-	action->SetForce ( 2, self, MOAIColor::ATTR_B_COL, b, mode );
-	action->SetForce ( 3, self, MOAIColor::ATTR_A_COL, a, mode );
+	action->SetLink ( 0, self, MOAIColor::ATTR_R_COL, r, mode );
+	action->SetLink ( 1, self, MOAIColor::ATTR_G_COL, g, mode );
+	action->SetLink ( 2, self, MOAIColor::ATTR_B_COL, b, mode );
+	action->SetLink ( 3, self, MOAIColor::ATTR_A_COL, a, mode );
 	
-	action->SetDelay ( delay );
+	action->SetLength ( delay );
 	action->Start ();
 	action->PushLuaUserdata ( state );
 
@@ -60,7 +60,7 @@ int MOAIColor::_seekColor ( lua_State* L ) {
 	LUA_SETUP ( MOAIColor, "UNNNNN" )
 
 	MOAIEaseDriver* action = new MOAIEaseDriver ();
-	action->ReserveForces ( 4 );
+	action->ReserveLinks ( 4 );
 	
 	float r			= state.GetValue < float >( 2, 0.0f );
 	float g			= state.GetValue < float >( 3, 0.0f );
@@ -69,12 +69,12 @@ int MOAIColor::_seekColor ( lua_State* L ) {
 	float delay		= state.GetValue < float >( 6, 0.0f );
 	u32 mode		= state.GetValue < u32 >( 7, USInterpolate::kSmooth );
 	
-	action->SetForce ( 0, self, MOAIColor::ATTR_R_COL, r - self->mR, mode );
-	action->SetForce ( 1, self, MOAIColor::ATTR_G_COL, g - self->mG, mode );
-	action->SetForce ( 2, self, MOAIColor::ATTR_B_COL, b - self->mB, mode );
-	action->SetForce ( 3, self, MOAIColor::ATTR_A_COL, a - self->mA, mode );
+	action->SetLink ( 0, self, MOAIColor::ATTR_R_COL, r - self->mR, mode );
+	action->SetLink ( 1, self, MOAIColor::ATTR_G_COL, g - self->mG, mode );
+	action->SetLink ( 2, self, MOAIColor::ATTR_B_COL, b - self->mB, mode );
+	action->SetLink ( 3, self, MOAIColor::ATTR_A_COL, a - self->mA, mode );
 	
-	action->SetDelay ( delay );
+	action->SetLength ( delay );
 	action->Start ();
 	action->PushLuaUserdata ( state );
 

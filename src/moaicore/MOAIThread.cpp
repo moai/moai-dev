@@ -32,7 +32,7 @@ int MOAIThread::_blockOnAction ( lua_State* L ) {
 /**	@name	currentThread
 	@text	Returns the currently running thread (if any).
 	
-	@out	MOAIThread currentThread - Current thread or nil.
+	@out	MOAIThread currentThread	Current thread or nil.
 */
 int MOAIThread::_currentThread ( lua_State* L ) {
 	USLuaState state ( L );

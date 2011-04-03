@@ -14,6 +14,10 @@ class b2Body;
 // MOAIBox2DBody
 //================================================================//
 /**	@brief	Box2D body.
+
+	@const DYNAMIC
+	@const KINEMATIC
+	@const STATIC
 */
 class MOAIBox2DBody :
 	public MOAIBox2DPrim,

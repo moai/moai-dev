@@ -151,7 +151,7 @@ int MOAITransform::_move ( lua_State* L ) {
 	LUA_SETUP ( MOAITransform, "UNNNNNN" )
 
 	MOAIEaseDriver* action = new MOAIEaseDriver ();
-	action->ReserveForces ( 5 );
+	action->ReserveLinks ( 5 );
 	
 	float xLoc		= state.GetValue < float >( 2, 0.0f );
 	float yLoc		= state.GetValue < float >( 3, 0.0f );
@@ -161,13 +161,13 @@ int MOAITransform::_move ( lua_State* L ) {
 	float delay		= state.GetValue < float >( 7, 0.0f );
 	u32 mode		= state.GetValue < u32 >( 8, USInterpolate::kSmooth );
 	
-	action->SetForce ( 0, self, MOAITransform::ATTR_X_LOC, xLoc, mode );
-	action->SetForce ( 1, self, MOAITransform::ATTR_Y_LOC, yLoc, mode );
-	action->SetForce ( 2, self, MOAITransform::ATTR_Z_ROT, zRot, mode );
-	action->SetForce ( 3, self, MOAITransform::ATTR_X_SCL, xScl, mode );
-	action->SetForce ( 4, self, MOAITransform::ATTR_Y_SCL, yScl, mode );
+	action->SetLink ( 0, self, MOAITransform::ATTR_X_LOC, xLoc, mode );
+	action->SetLink ( 1, self, MOAITransform::ATTR_Y_LOC, yLoc, mode );
+	action->SetLink ( 2, self, MOAITransform::ATTR_Z_ROT, zRot, mode );
+	action->SetLink ( 3, self, MOAITransform::ATTR_X_SCL, xScl, mode );
+	action->SetLink ( 4, self, MOAITransform::ATTR_Y_SCL, yScl, mode );
 	
-	action->SetDelay ( delay );
+	action->SetLength ( delay );
 	action->Start ();
 	action->PushLuaUserdata ( state );
 
@@ -187,17 +187,17 @@ int MOAITransform::_moveLoc ( lua_State* L ) {
 	LUA_SETUP ( MOAITransform, "UNNN" )
 
 	MOAIEaseDriver* action = new MOAIEaseDriver ();
-	action->ReserveForces ( 2 );
+	action->ReserveLinks ( 2 );
 	
 	float xLoc		= state.GetValue < float >( 2, 0.0f );
 	float yLoc		= state.GetValue < float >( 3, 0.0f );
 	float delay		= state.GetValue < float >( 4, 0.0f );
 	u32 mode		= state.GetValue < u32 >( 5, USInterpolate::kSmooth );
 	
-	action->SetForce ( 0, self, MOAITransform::ATTR_X_LOC, xLoc, mode );
-	action->SetForce ( 1, self, MOAITransform::ATTR_Y_LOC, yLoc, mode );
+	action->SetLink ( 0, self, MOAITransform::ATTR_X_LOC, xLoc, mode );
+	action->SetLink ( 1, self, MOAITransform::ATTR_Y_LOC, yLoc, mode );
 	
-	action->SetDelay ( delay );
+	action->SetLength ( delay );
 	action->Start ();
 	action->PushLuaUserdata ( state );
 
@@ -216,15 +216,15 @@ int MOAITransform::_moveRot ( lua_State* L ) {
 	LUA_SETUP ( MOAITransform, "UNN" )
 
 	MOAIEaseDriver* action = new MOAIEaseDriver ();
-	action->ReserveForces ( 1 );
+	action->ReserveLinks ( 1 );
 	
 	float zRot		= state.GetValue < float >( 2, 0.0f );
 	float delay		= state.GetValue < float >( 3, 0.0f );
 	u32 mode		= state.GetValue < u32 >( 4, USInterpolate::kSmooth );
 	
-	action->SetForce ( 0, self, MOAITransform::ATTR_Z_ROT, zRot, mode );
+	action->SetLink ( 0, self, MOAITransform::ATTR_Z_ROT, zRot, mode );
 	
-	action->SetDelay ( delay );
+	action->SetLength ( delay );
 	action->Start ();
 	action->PushLuaUserdata ( state );
 
@@ -244,17 +244,17 @@ int MOAITransform::_moveScl ( lua_State* L ) {
 	LUA_SETUP ( MOAITransform, "UNNN" )
 
 	MOAIEaseDriver* action = new MOAIEaseDriver ();
-	action->ReserveForces ( 2 );
+	action->ReserveLinks ( 2 );
 	
 	float xScl		= state.GetValue < float >( 2, 0.0f );
 	float yScl		= state.GetValue < float >( 3, 0.0f );
 	float delay		= state.GetValue < float >( 4, 0.0f );
 	u32 mode		= state.GetValue < u32 >( 5, USInterpolate::kSmooth );
 	
-	action->SetForce ( 0, self, MOAITransform::ATTR_X_SCL, xScl, mode );
-	action->SetForce ( 1, self, MOAITransform::ATTR_Y_SCL, yScl, mode );
+	action->SetLink ( 0, self, MOAITransform::ATTR_X_SCL, xScl, mode );
+	action->SetLink ( 1, self, MOAITransform::ATTR_Y_SCL, yScl, mode );
 	
-	action->SetDelay ( delay );
+	action->SetLength ( delay );
 	action->Start ();
 	action->PushLuaUserdata ( state );
 
@@ -277,7 +277,7 @@ int MOAITransform::_seek ( lua_State* L ) {
 	LUA_SETUP ( MOAITransform, "UNNNNNN" )
 
 	MOAIEaseDriver* action = new MOAIEaseDriver ();
-	action->ReserveForces ( 5 );
+	action->ReserveLinks ( 5 );
 	
 	float xLoc		= state.GetValue < float >( 2, 0.0f );
 	float yLoc		= state.GetValue < float >( 3, 0.0f );
@@ -287,13 +287,13 @@ int MOAITransform::_seek ( lua_State* L ) {
 	float delay		= state.GetValue < float >( 7, 0.0f );
 	u32 mode		= state.GetValue < u32 >( 8, USInterpolate::kSmooth );
 
-	action->SetForce ( 0, self, MOAITransform::ATTR_X_LOC, xLoc - self->mLoc.mX, mode );
-	action->SetForce ( 1, self, MOAITransform::ATTR_Y_LOC, yLoc - self->mLoc.mY, mode );
-	action->SetForce ( 2, self, MOAITransform::ATTR_Z_ROT, zRot - self->mDegrees, mode );
-	action->SetForce ( 3, self, MOAITransform::ATTR_X_SCL, xScl - self->mScale.mX, mode );
-	action->SetForce ( 4, self, MOAITransform::ATTR_Y_SCL, yScl - self->mScale.mY, mode );
+	action->SetLink ( 0, self, MOAITransform::ATTR_X_LOC, xLoc - self->mLoc.mX, mode );
+	action->SetLink ( 1, self, MOAITransform::ATTR_Y_LOC, yLoc - self->mLoc.mY, mode );
+	action->SetLink ( 2, self, MOAITransform::ATTR_Z_ROT, zRot - self->mDegrees, mode );
+	action->SetLink ( 3, self, MOAITransform::ATTR_X_SCL, xScl - self->mScale.mX, mode );
+	action->SetLink ( 4, self, MOAITransform::ATTR_Y_SCL, yScl - self->mScale.mY, mode );
 	
-	action->SetDelay ( delay );
+	action->SetLength ( delay );
 	action->Start ();
 	action->PushLuaUserdata ( state );
 
@@ -313,17 +313,17 @@ int MOAITransform::_seekLoc ( lua_State* L ) {
 	LUA_SETUP ( MOAITransform, "UNNN" )
 
 	MOAIEaseDriver* action = new MOAIEaseDriver ();
-	action->ReserveForces ( 2 );
+	action->ReserveLinks ( 2 );
 	
 	float xLoc		= state.GetValue < float >( 2, 0.0f );
 	float yLoc		= state.GetValue < float >( 3, 0.0f );
 	float delay		= state.GetValue < float >( 4, 0.0f );
 	u32 mode		= state.GetValue < u32 >( 5, USInterpolate::kSmooth );
 
-	action->SetForce ( 0, self, MOAITransform::ATTR_X_LOC, xLoc - self->mLoc.mX, mode );
-	action->SetForce ( 1, self, MOAITransform::ATTR_Y_LOC, yLoc - self->mLoc.mY, mode );
+	action->SetLink ( 0, self, MOAITransform::ATTR_X_LOC, xLoc - self->mLoc.mX, mode );
+	action->SetLink ( 1, self, MOAITransform::ATTR_Y_LOC, yLoc - self->mLoc.mY, mode );
 	
-	action->SetDelay ( delay );
+	action->SetLength ( delay );
 	action->Start ();
 	action->PushLuaUserdata ( state );
 
@@ -342,15 +342,15 @@ int MOAITransform::_seekRot ( lua_State* L ) {
 	LUA_SETUP ( MOAITransform, "UNN" )
 
 	MOAIEaseDriver* action = new MOAIEaseDriver ();
-	action->ReserveForces ( 1 );
+	action->ReserveLinks ( 1 );
 	
 	float zRot		= state.GetValue < float >( 2, 0.0f );
 	float delay		= state.GetValue < float >( 3, 0.0f );
 	u32 mode		= state.GetValue < u32 >( 4, USInterpolate::kSmooth );
 
-	action->SetForce ( 0, self, MOAITransform::ATTR_Z_ROT, zRot - self->mDegrees, mode );
+	action->SetLink ( 0, self, MOAITransform::ATTR_Z_ROT, zRot - self->mDegrees, mode );
 	
-	action->SetDelay ( delay );
+	action->SetLength ( delay );
 	action->Start ();
 	action->PushLuaUserdata ( state );
 
@@ -370,17 +370,17 @@ int MOAITransform::_seekScl ( lua_State* L ) {
 	LUA_SETUP ( MOAITransform, "UNNN" )
 
 	MOAIEaseDriver* action = new MOAIEaseDriver ();
-	action->ReserveForces ( 2 );
+	action->ReserveLinks ( 2 );
 	
 	float xScl		= state.GetValue < float >( 2, 0.0f );
 	float yScl		= state.GetValue < float >( 3, 0.0f );
 	float delay		= state.GetValue < float >( 4, 0.0f );
 	u32 mode		= state.GetValue < u32 >( 5, USInterpolate::kSmooth );
 
-	action->SetForce ( 0, self, MOAITransform::ATTR_X_SCL, xScl - self->mScale.mX, mode );
-	action->SetForce ( 1, self, MOAITransform::ATTR_Y_SCL, yScl - self->mScale.mY, mode );
+	action->SetLink ( 0, self, MOAITransform::ATTR_X_SCL, xScl - self->mScale.mX, mode );
+	action->SetLink ( 1, self, MOAITransform::ATTR_Y_SCL, yScl - self->mScale.mY, mode );
 	
-	action->SetDelay ( delay );
+	action->SetLength ( delay );
 	action->Start ();
 	action->PushLuaUserdata ( state );
 

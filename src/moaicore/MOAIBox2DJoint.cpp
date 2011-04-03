@@ -16,11 +16,12 @@ SUPPRESS_EMPTY_FILE_WARNING
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	getAnchorA
+	@text	See Box2D documentation.
+	
+	@in		MOAIBox2DJoint self
+	@out	anchorX
+	@out	anchorY
 */
 int MOAIBox2DJoint::_getAnchorA ( lua_State* L ) {
 	LUA_SETUP ( MOAIBox2DJoint, "U" )
@@ -34,11 +35,12 @@ int MOAIBox2DJoint::_getAnchorA ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	getAnchorB
+	@text	See Box2D documentation.
+	
+	@in		MOAIBox2DJoint self
+	@out	anchorX
+	@out	anchorY
 */
 int MOAIBox2DJoint::_getAnchorB ( lua_State* L ) {
 	LUA_SETUP ( MOAIBox2DJoint, "U" )
@@ -52,11 +54,11 @@ int MOAIBox2DJoint::_getAnchorB ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	getBodyA
+	@text	See Box2D documentation.
+	
+	@in		MOAIBox2DJoint self
+	@out	MOAIBox2DBody body
 */
 int MOAIBox2DJoint::_getBodyA ( lua_State* L ) {
 	LUA_SETUP ( MOAIBox2DJoint, "U" )
@@ -68,11 +70,11 @@ int MOAIBox2DJoint::_getBodyA ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	getBodyB
+	@text	See Box2D documentation.
+	
+	@in		MOAIBox2DJoint self
+	@out	MOAIBox2DBody body
 */
 int MOAIBox2DJoint::_getBodyB ( lua_State* L ) {
 	LUA_SETUP ( MOAIBox2DJoint, "U" )
@@ -84,11 +86,12 @@ int MOAIBox2DJoint::_getBodyB ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	getReactionForce
+	@text	See Box2D documentation.
+	
+	@in		MOAIBox2DJoint self
+	@out	number forceX
+	@out	number forceY
 */
 int MOAIBox2DJoint::_getReactionForce ( lua_State* L ) {
 	LUA_SETUP ( MOAIBox2DJoint, "U" )
@@ -102,11 +105,11 @@ int MOAIBox2DJoint::_getReactionForce ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	getReactionForce
+	@text	See Box2D documentation.
+	
+	@in		MOAIBox2DJoint self
+	@out	number reactionTorque In degrees.
 */
 int MOAIBox2DJoint::_getReactionTorque ( lua_State* L ) {
 	LUA_SETUP ( MOAIBox2DJoint, "U" )
@@ -119,17 +122,19 @@ int MOAIBox2DJoint::_getReactionTorque ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	setLimit
+	@text	See Box2D documentation.
+	
+	@in		MOAIBox2DJoint self
+	@opt	number lower			Default value is 0.
+	@opt	number upper			Default value is 0.
+	@out	nil
 */
 int MOAIBox2DJoint::_setLimit ( lua_State* L ) {
-	LUA_SETUP ( MOAIBox2DJoint, "UNN" )
+	LUA_SETUP ( MOAIBox2DJoint, "U" )
 	
 	float lower	= state.GetValue < float >( 2, 0.0f );
-	float upper	= state.GetValue < float >( 2, 0.0f );
+	float upper	= state.GetValue < float >( 3, 0.0f );
 	
 	self->SetLimit ( lower, upper );
 	
@@ -137,33 +142,36 @@ int MOAIBox2DJoint::_setLimit ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	setLimitEnabled
+	@text	See Box2D documentation.
+	
+	@in		MOAIBox2DJoint self
+	@opt	boolean enabled			Default value is 'true'
+	@out	nil
 */
 int MOAIBox2DJoint::_setLimitEnabled ( lua_State* L ) {
 	LUA_SETUP ( MOAIBox2DJoint, "U" )
 	
-	bool enabled = state.GetValue < bool >( 2, false );
+	bool enabled = state.GetValue < bool >( 2, true );
 	self->SetLimitEnabled ( enabled );
 	
 	return 0;
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	setMotor
+	@text	See Box2D documentation.
+	
+	@in		MOAIBox2DJoint self
+	@opt	number speed			Default value is 0.
+	@opt	number max				Default value is 0.
+	@out	nil
 */
 int MOAIBox2DJoint::_setMotor ( lua_State* L ) {
 	LUA_SETUP ( MOAIBox2DJoint, "U" )
 	
 	float speed	= state.GetValue < float >( 2, 0.0f );
-	float max	= state.GetValue < float >( 2, 0.0f );
+	float max	= state.GetValue < float >( 3, 0.0f );
 	
 	self->SetMotor ( speed, max );
 	
@@ -171,16 +179,17 @@ int MOAIBox2DJoint::_setMotor ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	setMotorEnabled
+	@text	See Box2D documentation.
+	
+	@in		MOAIBox2DJoint self
+	@opt	boolean enabled			Default value is 'true'
+	@out	nil
 */
 int MOAIBox2DJoint::_setMotorEnabled ( lua_State* L ) {
 	LUA_SETUP ( MOAIBox2DJoint, "U" )
 	
-	bool enabled = state.GetValue < bool >( 2, false );
+	bool enabled = state.GetValue < bool >( 2, true );
 	self->SetMotorEnabled ( enabled );
 	
 	return 0;

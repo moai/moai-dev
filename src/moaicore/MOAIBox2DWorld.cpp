@@ -36,11 +36,14 @@ MOAIBox2DPrim::MOAIBox2DPrim () :
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	addBody
+	@text	Create and add a body to the world.
+	
+	@in		MOAIBox2DWorld self
+	@in		number type		One of MOAIBox2DBody.DYNAMIC, MOAIBox2DBody.KINEMATIC, MOAIBox2DBody.STATIC
+	@opt	number x
+	@opt	number y
+	@out	MOAIBox2DBody joint
 */
 int MOAIBox2DWorld::_addBody ( lua_State* L ) {
 	LUA_SETUP ( MOAIBox2DWorld, "UN" )
@@ -63,11 +66,19 @@ int MOAIBox2DWorld::_addBody ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	addDistanceJoint
+	@text	Create and add a joint to the world. See Box2D documentation.
+	
+	@in		MOAIBox2DWorld self
+	@in		MOAIBox2DBody bodyA
+	@in		MOAIBox2DBody bodyB
+	@in		number anchorA_X
+	@in		number anchorA_Y
+	@in		number anchorB_X
+	@in		number anchorB_Y
+	@opt	number frequencyHz
+	@opt	number dampingRatio
+	@out	MOAIBox2DJoint joint
 */
 int	MOAIBox2DWorld::_addDistanceJoint ( lua_State* L ) {
 	LUA_SETUP ( MOAIBox2DWorld, "UUUNNNN" )
@@ -99,14 +110,20 @@ int	MOAIBox2DWorld::_addDistanceJoint ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	addFrictionJoint
+	@text	Create and add a joint to the world. See Box2D documentation.
+	
+	@in		MOAIBox2DWorld self
+	@in		MOAIBox2DBody bodyA
+	@in		MOAIBox2DBody bodyB
+	@in		number anchorX
+	@in		number anchorY
+	@opt	number maxForce
+	@opt	number maxTorque
+	@out	MOAIBox2DJoint joint
 */
 int	MOAIBox2DWorld::_addFrictionJoint ( lua_State* L ) {
-	LUA_SETUP ( MOAIBox2DWorld, "UUUNNNN" )
+	LUA_SETUP ( MOAIBox2DWorld, "UUUNN" )
 	
 	MOAIBox2DBody* bodyA = state.GetLuaObject < MOAIBox2DBody >( 2 );
 	MOAIBox2DBody* bodyB = state.GetLuaObject < MOAIBox2DBody >( 3 );
@@ -118,8 +135,8 @@ int	MOAIBox2DWorld::_addFrictionJoint ( lua_State* L ) {
 	b2FrictionJointDef jointDef;
 	jointDef.Initialize ( bodyA->mBody, bodyB->mBody, anchor );
 	
-	jointDef.maxForce	= state.GetValue < float >( 6, 0.0f ) * self->mUnitsToMeters;
-	jointDef.maxTorque	= state.GetValue < float >( 7, 0.0f ) * ( float )D2R;
+	jointDef.maxForce	= state.GetValue < float >( 6, jointDef.maxForce / self->mUnitsToMeters ) * self->mUnitsToMeters;
+	jointDef.maxTorque	= state.GetValue < float >( 7, jointDef.maxTorque * ( float )R2D ) * ( float )D2R;
 	
 	MOAIBox2DJoint* joint = new MOAIBox2DJoint ();
 	joint->SetJoint ( self->mWorld->CreateJoint ( &jointDef ));
@@ -131,11 +148,14 @@ int	MOAIBox2DWorld::_addFrictionJoint ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	addGearJoint
+	@text	Create and add a joint to the world. See Box2D documentation.
+	
+	@in		MOAIBox2DWorld self
+	@in		MOAIBox2DJoint jointA
+	@in		MOAIBox2DJoint jointB
+	@in		float ratio
+	@out	MOAIBox2DJoint joint
 */
 int	MOAIBox2DWorld::_addGearJoint ( lua_State* L ) {
 	LUA_SETUP ( MOAIBox2DWorld, "UUUN" )
@@ -164,11 +184,17 @@ int	MOAIBox2DWorld::_addGearJoint ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	addLineJoint
+	@text	Create and add a joint to the world. See Box2D documentation.
+	
+	@in		MOAIBox2DWorld self
+	@in		MOAIBox2DBody bodyA
+	@in		MOAIBox2DBody bodyB
+	@in		number anchorX
+	@in		number anchorY
+	@in		number axisX
+	@in		number axisY
+	@out	MOAIBox2DJoint joint
 */
 int	MOAIBox2DWorld::_addLineJoint ( lua_State* L ) {
 	LUA_SETUP ( MOAIBox2DWorld, "UUUNNNN" )
@@ -197,11 +223,16 @@ int	MOAIBox2DWorld::_addLineJoint ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	addMouseJoint
+	@text	Create and add a joint to the world. See Box2D documentation.
+	
+	@in		MOAIBox2DWorld self
+	@in		number targetX
+	@in		number targetY
+	@in		number maxForce
+	@in		number frequencyHz
+	@in		number dampingRatio
+	@out	MOAIBox2DJoint joint
 */
 int	MOAIBox2DWorld::_addMouseJoint ( lua_State* L ) {
 	LUA_SETUP ( MOAIBox2DWorld, "UNNNNN" )
@@ -227,11 +258,17 @@ int	MOAIBox2DWorld::_addMouseJoint ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	addPrismaticJoint
+	@text	Create and add a joint to the world. See Box2D documentation.
+	
+	@in		MOAIBox2DWorld self
+	@in		MOAIBox2DBody bodyA
+	@in		MOAIBox2DBody bodyB
+	@in		number anchorA
+	@in		number anchorB
+	@in		number axisA
+	@in		number axisB
+	@out	MOAIBox2DJoint joint
 */
 int	MOAIBox2DWorld::_addPrismaticJoint ( lua_State* L ) {
 	LUA_SETUP ( MOAIBox2DWorld, "UUUNNNN" )
@@ -260,11 +297,24 @@ int	MOAIBox2DWorld::_addPrismaticJoint ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	addPulleyJoint
+	@text	Create and add a joint to the world. See Box2D documentation.
+	
+	@in		MOAIBox2DWorld self
+	@in		MOAIBox2DBody bodyA
+	@in		MOAIBox2DBody bodyB
+	@in		number groundAnchorA_X
+	@in		number groundAnchorA_Y
+	@in		number groundAnchorB_X
+	@in		number groundAnchorB_Y
+	@in		number anchorA_X
+	@in		number anchorA_Y
+	@in		number anchorB_X
+	@in		number anchorB_Y
+	@in		number ratio
+	@in		number maxLengthA
+	@in		number maxLengthB
+	@out	MOAIBox2DJoint joint
 */
 int	MOAIBox2DWorld::_addPulleyJoint ( lua_State* L ) {
 	LUA_SETUP ( MOAIBox2DWorld, "UUUNNNNNNNNNNN" )
@@ -306,11 +356,15 @@ int	MOAIBox2DWorld::_addPulleyJoint ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	addRevoluteJoint
+	@text	Create and add a joint to the world. See Box2D documentation.
+	
+	@in		MOAIBox2DWorld self
+	@in		MOAIBox2DBody bodyA
+	@in		MOAIBox2DBody bodyB
+	@in		number anchorX
+	@in		number anchorY
+	@out	MOAIBox2DJoint joint
 */
 int	MOAIBox2DWorld::_addRevoluteJoint ( lua_State* L ) {
 	LUA_SETUP ( MOAIBox2DWorld, "UUUNN" )
@@ -335,11 +389,15 @@ int	MOAIBox2DWorld::_addRevoluteJoint ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	addWeldJoint
+	@text	Create and add a joint to the world. See Box2D documentation.
+	
+	@in		MOAIBox2DWorld self
+	@in		MOAIBox2DBody bodyA
+	@in		MOAIBox2DBody bodyB
+	@in		number anchorX
+	@in		number anchorY
+	@out	MOAIBox2DJoint joint
 */
 int	MOAIBox2DWorld::_addWeldJoint ( lua_State* L ) {
 	LUA_SETUP ( MOAIBox2DWorld, "UUUNN" )
@@ -364,11 +422,12 @@ int	MOAIBox2DWorld::_addWeldJoint ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	destroyBody
+	@text	See Box2D documentation.
+	
+	@in		MOAIBox2DWorld self
+	@in		MOAIBox2DBody body
+	@out	nil
 */
 int MOAIBox2DWorld::_destroyBody ( lua_State* L ) {
 	LUA_SETUP ( MOAIBox2DWorld, "UU" )
@@ -383,11 +442,12 @@ int MOAIBox2DWorld::_destroyBody ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	destroyJoint
+	@text	See Box2D documentation.
+	
+	@in		MOAIBox2DWorld self
+	@in		MOAIBox2DJoint joint
+	@out	nil
 */
 int MOAIBox2DWorld::_destroyJoint ( lua_State* L ) {
 	LUA_SETUP ( MOAIBox2DWorld, "UU" )
@@ -402,28 +462,28 @@ int MOAIBox2DWorld::_destroyJoint ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	getAutoClearForces
+	@text	See Box2D documentation.
+	
+	@in		MOAIBox2DWorld self
+	@out	boolean autoClearForces
 */
 int MOAIBox2DWorld::_getAutoClearForces ( lua_State* L ) {
 	LUA_SETUP ( MOAIBox2DWorld, "U" )
 	
 	bool autoClearForces = self->mWorld->GetAutoClearForces ();
-	
 	lua_pushboolean ( L, autoClearForces );
 	
 	return 1;
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	getGravity
+	@text	See Box2D documentation.
+	
+	@in		MOAIBox2DWorld self
+	@out	number gravityX
+	@out	number gravityY
 */
 int MOAIBox2DWorld::_getGravity ( lua_State* L ) {
 	LUA_SETUP ( MOAIBox2DWorld, "U" )
@@ -437,14 +497,15 @@ int MOAIBox2DWorld::_getGravity ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	setAutoClearForces
+	@text	See Box2D documentation.
+	
+	@in		MOAIBox2DWorld self
+	@opt	boolean autoClearForces		Default value is 'true'
+	@out	nil
 */
 int MOAIBox2DWorld::_setAutoClearForces ( lua_State* L ) {
-	LUA_SETUP ( MOAIBox2DWorld, "UB" )
+	LUA_SETUP ( MOAIBox2DWorld, "U" )
 	
 	bool autoClearForces = state.GetValue < bool >( 2, true );
 	
@@ -454,14 +515,16 @@ int MOAIBox2DWorld::_setAutoClearForces ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	setGravity
+	@text	See Box2D documentation.
+	
+	@in		MOAIBox2DWorld self
+	@opt	number gravityX			Default value is 0.
+	@opt	number gravityY			Default value is 0.
+	@out	nil
 */
 int MOAIBox2DWorld::_setGravity ( lua_State* L ) {
-	LUA_SETUP ( MOAIBox2DWorld, "UNN" )
+	LUA_SETUP ( MOAIBox2DWorld, "U" )
 	
 	b2Vec2 gravity;
 	
@@ -474,14 +537,16 @@ int MOAIBox2DWorld::_setGravity ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	setIterations
+	@text	See Box2D documentation.
+	
+	@in		MOAIBox2DWorld self
+	@opt	number velocityIteratons			Default value is current value of velocity iterations.
+	@opt	number positionIterations			Default value is current value of positions iterations.
+	@out	nil
 */
 int MOAIBox2DWorld::_setIterations ( lua_State* L ) {
-	LUA_SETUP ( MOAIBox2DWorld, "UNN" )
+	LUA_SETUP ( MOAIBox2DWorld, "U" )
 	
 	self->mVelocityIterations = state.GetValue < u32 >( 2, self->mVelocityIterations );
 	self->mPositionIterations = state.GetValue < u32 >( 3, self->mPositionIterations );
@@ -490,14 +555,15 @@ int MOAIBox2DWorld::_setIterations ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	setUnitsToMeters
+	@text	Sets a scale factoryfor convering game world units to Box2D meters.
+	
+	@in		MOAIBox2DWorld self
+	@opt	number unitsToMeters			Default value is 1.
+	@out	nil
 */
 int MOAIBox2DWorld::_setUnitsToMeters ( lua_State* L ) {
-	LUA_SETUP ( MOAIBox2DWorld, "UN" )
+	LUA_SETUP ( MOAIBox2DWorld, "U" )
 	
 	self->mUnitsToMeters = state.GetValue ( 2, 1.0f );
 	

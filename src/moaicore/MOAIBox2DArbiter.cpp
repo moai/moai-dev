@@ -14,11 +14,8 @@ SUPPRESS_EMPTY_FILE_WARNING
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	countContacts
+	@text	Return the number of contacts in the current collision.
 */
 int MOAIBox2DArbiter::_countContacts ( lua_State* L ) {
 	LUA_SETUP ( MOAIBox2DArbiter, "U" )

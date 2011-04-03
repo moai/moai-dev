@@ -10,49 +10,53 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name reserveForces
-	@param1 self @type userdata
-	@param2 total @type integer
-	@text Reserve total forces.
-	@return nil
+/**	@name	reserveLinks
+	@text	Reserve links.
+
+	@in		MOAIEaseDriver self
+	@in		number nLinks
+	@out	nil
 */
-int MOAIEaseDriver::_reserveForces ( lua_State* L ) {
+int MOAIEaseDriver::_reserveLinks ( lua_State* L ) {
 	LUA_SETUP ( MOAIEaseDriver, "UN" );
 	
 	u32 total = state.GetValue < u32 >( 2, 0 );
-	self->ReserveForces ( total );
+	self->ReserveLinks ( total );
 	
 	return 0;
 }
 
 //----------------------------------------------------------------//
-/**	@name setDelay
-	@param1 self @type userdata
-	@param2 delay @type integer
-	@text Sets the delay (total duration of action).
-	@return nil
+/**	@name	setLength
+	@text	Sets the length (duration) of the ease.
+
+	@in		MOAIEaseDriver self
+	@in		number length
+	@out	nil
 */
-int MOAIEaseDriver::_setDelay ( lua_State* L ) {
+int MOAIEaseDriver::_setLength ( lua_State* L ) {
 	LUA_SETUP ( MOAIEaseDriver, "UN" );
 	
-	float delay = state.GetValue < float >( 2, 0.0f );
-	self->SetDelay ( delay );
+	float length = state.GetValue < float >( 2, 0.0f );
+	self->SetLength ( length );
 	
 	return 0;
 }
 
 //----------------------------------------------------------------//
-/**	@name setForce
-	@param1 self @type userdata
-	@param2 idx @type integer
-	@param3 target @type userdata
-	@param4 attrID @type integer
-	@param5 force @type number
-	@param6 mode @type integer
-	@text Initializes a force to be applied to an attributue.
-	@return nil
+/**	@name	setLink
+	@text	Set the ease for a target node attribute.
+
+	@in		MOAIEaseDriver self
+	@in		number idx				Index of the link;
+	@in		MOAINode target			Target node.
+	@in		number attrID			Index of the attribute to be driven.
+	@in		number value			Value for attribute at the end of the ease.
+	@in		number mode				The ease mode. One of MOAIEaseType.EASE_IN, MOAIEaseType.EASE_OUT, MOAIEaseType.FLAT MOAIEaseType.LINEAR,
+									MOAIEaseType.SMOOTH, MOAIEaseType.SOFT_EASE_IN, MOAIEaseType.SOFT_EASE_OUT, MOAIEaseType.SOFT_SMOOTH	
+	@out	nil
 */
-int MOAIEaseDriver::_setForce ( lua_State* L ) {
+int MOAIEaseDriver::_setLink ( lua_State* L ) {
 	LUA_SETUP ( MOAIEaseDriver, "UNUNN" );
 	
 	MOAINode* target = state.GetLuaObject < MOAINode >( 3 );
@@ -63,24 +67,7 @@ int MOAIEaseDriver::_setForce ( lua_State* L ) {
 	float force			= state.GetValue < float >( 5, 0.0f );
 	u32 mode			= state.GetValue < u32 >( 6, USInterpolate::kSmooth );
 	
-	self->SetForce ( idx, target, attrID, force, mode );
-	
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@name setMode
-	@param1 self @type userdata
-	@param2 mode @type number @text Interpolation mode. 
-	@text Sets the interpolation mode.
-	@return nil
-*/
-int MOAIEaseDriver::_setMode ( lua_State* L ) {
-	LUA_SETUP ( MOAIEaseDriver, "UN" );
-	
-	u32 mode = state.GetValue < u32 >( 2, USInterpolate::kSmooth );
-	
-	self->SetMode ( mode );
+	self->SetLink ( idx, target, attrID, force, mode );
 	
 	return 0;
 }
@@ -104,23 +91,23 @@ void MOAIEaseDriver::Apply ( float step ) {
 
 	USAttrAdder adder;
 
-	u32 total = this->mForces.Size ();
+	u32 total = this->mLinks.Size ();
 	for ( u32 i = 0; i < total; ++i ) {
 		
-		MOAIEaseAttr& forceAttr = this->mForces [ i ];
-		if ( forceAttr.mTarget ) {
+		MOAIEaseDriverLink& link = this->mLinks [ i ];
+		if ( link.mTarget ) {
 			
-			u32 mode = forceAttr.mMode;
+			u32 mode = link.mMode;
 			
 			float f0 = USInterpolate::Curve ( mode, t0 );
 			float f1 = USInterpolate::Curve ( mode, t1 );
 			
-			float delta = ( forceAttr.mForce * f1 ) - ( forceAttr.mForce * f0 );
+			float delta = ( link.mValue * f1 ) - ( link.mValue * f0 );
 			
 			if ( delta != 0.0f ) {
 				adder.Set ( delta );
-				forceAttr.mTarget->ApplyAttrOp ( forceAttr.mAttrID, adder );
-				forceAttr.mTarget->ScheduleUpdate ();
+				link.mTarget->ApplyAttrOp ( link.mAttrID, adder );
+				link.mTarget->ScheduleUpdate ();
 			}
 		}
 	}
@@ -137,8 +124,7 @@ bool MOAIEaseDriver::IsBusy () {
 //----------------------------------------------------------------//
 MOAIEaseDriver::MOAIEaseDriver () :
 	mTime ( 0.0f ),
-	mDelay ( 0.0f ),
-	mMode ( USInterpolate::kSmooth ) {
+	mLength ( 0.0f ) {
 	
 	RTTI_SINGLE ( MOAIAction )
 }
@@ -150,7 +136,7 @@ MOAIEaseDriver::~MOAIEaseDriver () {
 //----------------------------------------------------------------//
 void MOAIEaseDriver::OnUpdate ( float step ) {
 	
-	this->Apply ( step / this->mDelay );
+	this->Apply ( step / this->mLength );
 }
 
 //----------------------------------------------------------------//
@@ -165,10 +151,9 @@ void MOAIEaseDriver::RegisterLuaFuncs ( USLuaState& state ) {
 	MOAIAction::RegisterLuaFuncs ( state );
 	
 	LuaReg regTable [] = {
-		{ "reserveForces",			_reserveForces },
-		{ "setDelay",				_setDelay },
-		{ "setForce",				_setForce },
-		{ "setMode",				_setMode },
+		{ "reserveLinks",			_reserveLinks },
+		{ "setLength",				_setLength },
+		{ "setLink",				_setLink },
 		{ NULL, NULL }
 	};
 	
@@ -176,30 +161,22 @@ void MOAIEaseDriver::RegisterLuaFuncs ( USLuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIEaseDriver::ReserveForces ( u32 total ) {
+void MOAIEaseDriver::ReserveLinks ( u32 total ) {
 
-	this->mForces.Init ( total );
+	this->mLinks.Init ( total );
 }
 
 //----------------------------------------------------------------//
-void MOAIEaseDriver::SetForce ( u32 idx, MOAINode* target, u32 attrID, float force, u32 mode ) {
+void MOAIEaseDriver::SetLink ( u32 idx, MOAINode* target, u32 attrID, float value, u32 mode ) {
 
-	if ( idx < this->mForces.Size ()) {
+	if ( idx < this->mLinks.Size ()) {
 		
-		MOAIEaseAttr& forceAttr = this->mForces [ idx ];
+		MOAIEaseDriverLink& link = this->mLinks [ idx ];
 
-		forceAttr.mTarget = target;
-		forceAttr.mAttrID = attrID;
-		forceAttr.mForce = force;
-		forceAttr.mMode = mode;
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIEaseDriver::SetForce ( u32 mode ) {
-
-	for ( u32 i = 0; i < this->mForces.Size (); ++i ) {
-		this->mForces [ i ].mMode = mode;
+		link.mTarget = target;
+		link.mAttrID = attrID;
+		link.mValue = value;
+		link.mMode = mode;
 	}
 }
 
@@ -207,39 +184,5 @@ void MOAIEaseDriver::SetForce ( u32 mode ) {
 STLString MOAIEaseDriver::ToString () {
 
 	STLString repr( MOAIAction::ToString () );
-
-	const char *mode;
-
-	switch ( mMode ) {
-		case USInterpolate::kEaseIn:
-			mode = "EASE_IN";
-			break;
-		case USInterpolate::kEaseOut:
-			mode = "EASE_OUT";
-			break;
-		case USInterpolate::kFlat:
-			mode = "FLAT";
-			break;
-		case USInterpolate::kLinear:
-			mode = "LINEAR";
-			break;
-		case USInterpolate::kSmooth:
-			mode = "SMOOTH";
-			break;
-		case USInterpolate::kSoftEaseIn:
-			mode = "SOFT_EASE_IN";
-			break;
-		case USInterpolate::kSoftEaseOut:
-			mode = "SOFT_EASE_OUT";
-			break;
-		case USInterpolate::kSoftSmooth:
-			mode = "SOFT_SMOOTH";
-			break;
-		default:
-			mode = "INVALID";
-	}
-
-	PRETTY_PRINT ( repr, mDelay )
-
 	return repr;
 }

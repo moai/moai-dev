@@ -9,10 +9,11 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name getLength
-	@param1 self @type userdata
-	@text Returns the length of the curve.
-	@return The length of the curve. @type number
+/**	@name	getLength
+	@text	Return the largest key frame time value in the curve.
+	
+	@in		MOAIAnimCurve self
+	@out	number length
 */
 int MOAIAnimCurve::_getLength ( lua_State* L ) {
 	LUA_SETUP ( MOAIAnimCurve, "U" );
@@ -23,11 +24,12 @@ int MOAIAnimCurve::_getLength ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name init
-	@param1 self @type userdata
-	@param2 numKeys @type userdata @text The number of keyframes in the curve.
-	@text Initalizes the curve with a set number of keyframes.
-	@return nil
+/**	@name	reserveKeys
+	@text	Reserve key frames.
+	
+	@in		MOAIAnimCurve self
+	@in		number nKeys
+	@out	nil
 */
 int MOAIAnimCurve::_reserveKeys ( lua_State* L ) {
 	LUA_SETUP ( MOAIAnimCurve, "UN" );
@@ -38,22 +40,18 @@ int MOAIAnimCurve::_reserveKeys ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name setKey
-	@param1 self @type userdata
-	@param2 index @type integer @text The index of the keyframe in the table (starts at 0).
-	@param3 time @type float @text The timestamp of the keyframe; when it occurs in the curve.
-	@param4 value @type float @text The value of the keyframe; how much the attribute will be modified when the curve is at this keyframe.
-	@param5 mode @type enum @text The mode of the keyframe.  Essentially the shape of the curve.  Defaults to SMOOTH; can be one of:
-	\li \c EASEIN - Slows down as it approaches the next keyframe.
-	\li \c EASEOUT - Comes slowly out of the current keyframe.
-	\li \c FLAT - No curve.  Keeps the same value until another keyframe is reached (best for animation frames).
-	\li \c LINEAR - A generic straight line that maintains a steady speed to the next keyframe.
-	\li \c SMOOTH - Comes slowly out of the current keyframe and slows into the next one.
-	\li \c SOFT_EASEIN - Like EASEIN, but with a less snappy curve.
-	\li \c SOFT_EASEOUT - Like EASEOUT, but with a less snappy curve.
-	\li \c SOFT_SMOOTH - Like SMOOTH, but with a less snappy curve.
-	@text Sets the properties of a key within the curve.
-	@return nil
+/**	@name	setKey
+	@text	Initialize a key frame at a given time with a give value. Also set the transition type between
+			the specified key frame and the next key frame.
+	
+	@in		MOAIAnimCurve self
+	@in		number index			Index of the keyframe.
+	@in		number time				Location of the key frame along the curve.
+	@in		number value			Value of the curve at time.
+	@in		number mode				The ease mode. One of MOAIEaseType.EASE_IN, MOAIEaseType.EASE_OUT, MOAIEaseType.FLAT MOAIEaseType.LINEAR,
+									MOAIEaseType.SMOOTH, MOAIEaseType.SOFT_EASE_IN, MOAIEaseType.SOFT_EASE_OUT, MOAIEaseType.SOFT_SMOOTH	
+	@in		number weight			Blends between chosen ease type (of any) and a linear transition.
+	@out	nil
 */
 int MOAIAnimCurve::_setKey ( lua_State* L ) {
 	LUA_SETUP ( MOAIAnimCurve, "UNNN" );

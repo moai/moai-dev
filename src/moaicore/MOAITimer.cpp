@@ -43,7 +43,7 @@ int MOAITimer::_setCallback ( lua_State* L ) {
 	@text	Sets the playback mode of the timer.
 
 	@in		MOAITimer self
-	@in		number mode - One of: MOAITimer.NORMAL, MOAITimer.REVERSE, MOAITimer.LOOP, MOAITimer.LOOP_REVERSE, MOAITimer.PING_PONG
+	@in		number mode		One of: MOAITimer.NORMAL, MOAITimer.REVERSE, MOAITimer.LOOP, MOAITimer.LOOP_REVERSE, MOAITimer.PING_PONG
 	@out	nil
 */
 int MOAITimer::_setMode ( lua_State* L ) {
@@ -115,7 +115,7 @@ int MOAITimer::_setSpeed ( lua_State* L ) {
 			into the current span.
 
 	@in		MOAITimer self
-	@opt	number time - Default value is 0.
+	@opt	number time			Default value is 0.
 	@out	nil
 */
 int MOAITimer::_setTime ( lua_State* L ) {

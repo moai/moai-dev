@@ -101,16 +101,16 @@ int MOAINode::_moveAttr ( lua_State* L ) {
 	LUA_SETUP ( MOAINode, "UNNN" )
 
 	MOAIEaseDriver* action = new MOAIEaseDriver ();
-	action->ReserveForces ( 1 );
+	action->ReserveLinks ( 1 );
 	
 	u32 attrID		= state.GetValue < u32 >( 2, 0 );
 	float value		= state.GetValue < float >( 3, 0.0f );
 	float delay		= state.GetValue < float >( 4, 0.0f );
 	u32 mode		= state.GetValue < u32 >( 5, USInterpolate::kSmooth );
 	
-	action->SetForce ( 0, self, attrID, value, mode );
+	action->SetLink ( 0, self, attrID, value, mode );
 	
-	action->SetDelay ( delay );
+	action->SetLength ( delay );
 	action->Start ();
 	action->PushLuaUserdata ( state );
 
@@ -146,7 +146,7 @@ int MOAINode::_seekAttr ( lua_State* L ) {
 	LUA_SETUP ( MOAINode, "UNNN" )
 
 	MOAIEaseDriver* action = new MOAIEaseDriver ();
-	action->ReserveForces ( 1 );
+	action->ReserveLinks ( 1 );
 	
 	u32 attrID		= state.GetValue < u32 >( 2, 0 );
 	
@@ -158,9 +158,9 @@ int MOAINode::_seekAttr ( lua_State* L ) {
 	float delay		= state.GetValue < float >( 4, 0.0f );
 	u32 mode		= state.GetValue < u32 >( 5, USInterpolate::kSmooth );
 	
-	action->SetForce ( 0, self, attrID, value - getter.Get < float >(), mode );
+	action->SetLink ( 0, self, attrID, value - getter.Get < float >(), mode );
 	
-	action->SetDelay ( delay );
+	action->SetLength ( delay );
 	action->Start ();
 	action->PushLuaUserdata ( state );
 

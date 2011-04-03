@@ -10,12 +10,23 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	apply
+	@text	Apply the anim at a given time or time step.
+
+	@overload	Apply the anim at time t0.
+
+		@in		MOAIAnim self
+		@in		number t0 - Default value is 0.
+		@out	nil
+	
+	@overload	Apply the anim for the step t0 to t1.
+
+		@in		MOAIAnim self
+		@in		number t0 - Default value is 0.
+		@in		number t1 - Default value is 0.
+		@out	nil
 */
+
 int MOAIAnim::_apply ( lua_State* L ) {
 	LUA_SETUP ( MOAIAnim, "U" );
 
@@ -28,10 +39,11 @@ int MOAIAnim::_apply ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name getLength
-	@param1 self @type userdata
-	@text Returns the length of the animation.
-	@return The length of the animation. @type number
+/**	@name	getLength
+	@text	Return the length of the animation.
+	
+	@in		MOAIAnim self
+	@out	number length
 */
 int	MOAIAnim::_getLength ( lua_State* L ) {
 	LUA_SETUP ( MOAIAnim, "U" )
@@ -42,11 +54,12 @@ int	MOAIAnim::_getLength ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name reserveLinks
-	@param1 self @type userdata
-	@param2 totalLinks @type number @text The total number of links in the animation.
-	@text Reserves a specified number of links for the animation.
-	@return nil
+/**	@name	reserveLinks
+	@text	Reserves a specified number of links for the animation.
+	
+	@in		MOAIAnim self
+	@in		number nLinks
+	@out	nil
 */
 int	MOAIAnim::_reserveLinks ( lua_State* L ) {
 	LUA_SETUP ( MOAIAnim, "UN" );
@@ -58,14 +71,16 @@ int	MOAIAnim::_reserveLinks ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name setLink
-	@param1 self @type userdata
-	@param2 linkID @type number @text The ID of the link to set.
-	@param3 curveID @type userdata @text The ID of the curve.
-	@param4 target @type userdata @text The target object to animate.
-	@param5 attrID @type number @text The ID of the attribute to modify.
-	@text Sets a link from a curve to an attribute (must be bound with the bind function).
-	@return nil
+/**	@name	setLink
+	@text	Connect a curve to a given node attribute.
+	
+	@in		MOAIAnim self
+	@in		number linkID
+	@in		MOAIAnimCurve curve
+	@in		MOAINode target - Target node.
+	@in		number attrID - Attribute of the target node to be driven by the curve.
+	@in		boolean asDelta - 'true' to apply the curve as a delta instead of an absolute.
+	@out	nil
 */
 int	MOAIAnim::_setLink ( lua_State* L ) {
 	LUA_SETUP ( MOAIAnim, "UNUUN" );

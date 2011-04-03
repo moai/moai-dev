@@ -7,15 +7,15 @@
 //================================================================//
 // MOAIEaseType
 //================================================================//
-/**	@brief	Namespace to hold ease modes.
-	@const EASE_IN
-	@const EASE_OUT
-	@const FLAT
-	@const LINEAR
-	@const SMOOTH
-	@const SOFT_EASE_IN
-	@const SOFT_EASE_OUT
-	@const SOFT_SMOOTH
+/**	@brief	Namespace to hold ease modes. Moai ease in/out has opposite meaning of Flash ease in/out.
+	@const EASE_IN			Quartic ease in - Fast start then slow when approaching value; ease into position. 
+	@const EASE_OUT			Quarticease out - Slow start then fast when approaching value; ease out of position.
+	@const FLAT				Stepped change - Maintain original value until end of ease.
+	@const LINEAR			Linear interpolation.
+	@const SMOOTH			Quartic ease out then ease in.
+	@const SOFT_EASE_IN		Quadratic ease in.
+	@const SOFT_EASE_OUT	Quadratic ease out.
+	@const SOFT_SMOOTH		Quadratic smooth.
 */
 class MOAIEaseType :
 	public USLuaObject {

@@ -15,11 +15,15 @@ SUPPRESS_EMPTY_FILE_WARNING
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	setCollisionHandler
+	@text	Sets a Lua function to call when collisions occur.
+	
+	@in		MOAIBox2DFixture self
+	@in		function handler
+	@opt	number mask			Bitwise combination of MOAIBox2DArbiter.BEGIN, MOAIBox2DArbiter.END,
+								MOAIBox2DArbiter.POST_SOLVE, MOAIBox2DArbiter.PRE_SOLVE,
+								MOAIBox2DArbiter.ALL
+	@out	nil
 */
 int MOAIBox2DFixture::_setCollisionHandler ( lua_State* L ) {
 	LUA_SETUP ( MOAIBox2DFixture, "UF" )
@@ -31,11 +35,12 @@ int MOAIBox2DFixture::_setCollisionHandler ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	setDensity
+	@text	See Box2D documentation.
+	
+	@in		MOAIBox2DFixture self
+	@in		number density
+	@out	nil
 */
 int MOAIBox2DFixture::_setDensity ( lua_State* L ) {
 	LUA_SETUP ( MOAIBox2DFixture, "UN" )
@@ -47,11 +52,14 @@ int MOAIBox2DFixture::_setDensity ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	setFilter
+	@text	See Box2D documentation.
+	
+	@in		MOAIBox2DFixture self
+	@in		number categoryBits
+	@in		number maskBits
+	@opt	number groupIndex
+	@out	nil
 */
 int MOAIBox2DFixture::_setFilter ( lua_State* L ) {
 	LUA_SETUP ( MOAIBox2DFixture, "UNN" )
@@ -67,11 +75,12 @@ int MOAIBox2DFixture::_setFilter ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	setFriction
+	@text	See Box2D documentation.
+	
+	@in		MOAIBox2DFixture self
+	@in		number friction
+	@out	nil
 */
 int MOAIBox2DFixture::_setFriction ( lua_State* L ) {
 	LUA_SETUP ( MOAIBox2DFixture, "UN" )
@@ -83,11 +92,12 @@ int MOAIBox2DFixture::_setFriction ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	setRestitution
+	@text	See Box2D documentation.
+	
+	@in		MOAIBox2DFixture self
+	@in		number restitution
+	@out	nil
 */
 int MOAIBox2DFixture::_setRestitution ( lua_State* L ) {
 	LUA_SETUP ( MOAIBox2DFixture, "UN" )
@@ -99,16 +109,17 @@ int MOAIBox2DFixture::_setRestitution ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	setSensor
+	@text	See Box2D documentation.
+	
+	@in		MOAIBox2DFixture self
+	@opt	boolean isSensor		Default value is 'true'
+	@out	nil
 */
 int MOAIBox2DFixture::_setSensor ( lua_State* L ) {
-	LUA_SETUP ( MOAIBox2DFixture, "UB" )
+	LUA_SETUP ( MOAIBox2DFixture, "U" )
 	
-	bool isSensor = state.GetValue < bool >( 2, false );
+	bool isSensor = state.GetValue < bool >( 2, true );
 	self->mFixture->SetSensor ( isSensor );
 
 	return 0;

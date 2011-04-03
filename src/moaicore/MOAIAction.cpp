@@ -121,7 +121,7 @@ int MOAIAction::_stop ( lua_State* L ) {
 			Is is passed to the action's children.
 	
 	@in		MOAIAction self
-	@opt	number throttle - Default value is 1.
+	@opt	number throttle	Default value is 1.
 	@out	nil
 */
 int MOAIAction::_throttle ( lua_State* L ) {

@@ -15,11 +15,14 @@ SUPPRESS_EMPTY_FILE_WARNING
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	addCircle
+	@text	Create and add circle fixture to the body.
+	
+	@in		MOAIBox2DBody self
+	@in		number x
+	@in		number y
+	@in		number radius
+	@out	MOAIBox2DFixture fixture
 */
 int MOAIBox2DBody::_addCircle ( lua_State* L ) {
 	LUA_SETUP ( MOAIBox2DBody, "UNNN" )
@@ -44,11 +47,12 @@ int MOAIBox2DBody::_addCircle ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	addPolygon
+	@text	Create and add a polygon fixture to the body.
+	
+	@in		MOAIBox2DBody self
+	@in		table verts					Array containg vertex coordinate components ( t[1] = x0, t[2] = y0, t[3] = x1, t[4] = y1... )
+	@out	MOAIBox2DFixture fixture	Returns nil on failure.
 */
 int MOAIBox2DBody::_addPolygon ( lua_State* L ) {
 	LUA_SETUP ( MOAIBox2DBody, "U" )
@@ -76,11 +80,15 @@ int MOAIBox2DBody::_addPolygon ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	addRect
+	@text	Create and add a rect fixture to the body.
+	
+	@in		MOAIBox2DBody self
+	@in		number xMin
+	@in		number yMin
+	@in		number xMax
+	@in		number yMax
+	@out	MOAIBox2DFixture fixture
 */
 int MOAIBox2DBody::_addRect ( lua_State* L ) {
 	LUA_SETUP ( MOAIBox2DBody, "UNNNN" )
@@ -112,11 +120,12 @@ int MOAIBox2DBody::_addRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	applyAngularImpulse
+	@text	See Box2D documentation.
+	
+	@in		MOAIBox2DBody self
+	@in		number impulse	Angular impulse in degrees.
+	@out	nil
 */
 int MOAIBox2DBody::_applyAngularImpulse ( lua_State* L ) {
 	LUA_SETUP ( MOAIBox2DBody, "UN" )
@@ -128,11 +137,15 @@ int MOAIBox2DBody::_applyAngularImpulse ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	applyForce
+	@text	See Box2D documentation.
+	
+	@in		MOAIBox2DBody self
+	@in		number forceX
+	@in		number forceY
+	@opt	number pointX
+	@opt	number pointY
+	@out	nil
 */
 int MOAIBox2DBody::_applyForce ( lua_State* L ) {
 	LUA_SETUP ( MOAIBox2DBody, "UNN" )
@@ -152,11 +165,15 @@ int MOAIBox2DBody::_applyForce ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	applyLinearImpulse
+	@text	See Box2D documentation.
+	
+	@in		MOAIBox2DBody self
+	@in		number impulseX
+	@in		number impulseY
+	@opt	number pointX
+	@opt	number pointY
+	@out	nil
 */
 int MOAIBox2DBody::_applyLinearImpulse ( lua_State* L ) {
 	LUA_SETUP ( MOAIBox2DBody, "UNN" )
@@ -176,11 +193,12 @@ int MOAIBox2DBody::_applyLinearImpulse ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	applyTorque
+	@text	See Box2D documentation.
+	
+	@in		MOAIBox2DBody self
+	@in		number torque	Torque in degrees.
+	@out	nil
 */
 int MOAIBox2DBody::_applyTorque ( lua_State* L ) {
 	LUA_SETUP ( MOAIBox2DBody, "U" )
@@ -192,11 +210,12 @@ int MOAIBox2DBody::_applyTorque ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	destroyFixture
+	@text	See Box2D documentation.
+	
+	@in		MOAIBox2DBody self
+	@in		MOAIBox2DFixture fixture
+	@out	nil
 */
 int MOAIBox2DBody::_destroyFixture ( lua_State* L ) {
 	LUA_SETUP ( MOAIBox2DBody, "U" )
@@ -213,11 +232,11 @@ int MOAIBox2DBody::_destroyFixture ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	getAngle
+	@text	See Box2D documentation.
+	
+	@in		MOAIBox2DBody self
+	@out	number angle		Angle in degrees.
 */
 int MOAIBox2DBody::_getAngle ( lua_State* L ) {
 	LUA_SETUP ( MOAIBox2DBody, "U" )
@@ -229,11 +248,11 @@ int MOAIBox2DBody::_getAngle ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	getAngularVelocity
+	@text	See Box2D documentation.
+	
+	@in		MOAIBox2DBody self
+	@out	number omega		Anglular velocity in degrees.
 */
 int MOAIBox2DBody::_getAngularVelocity ( lua_State* L ) {
 	LUA_SETUP ( MOAIBox2DBody, "U" )
@@ -245,11 +264,12 @@ int MOAIBox2DBody::_getAngularVelocity ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	getLinearVelocity
+	@text	See Box2D documentation.
+	
+	@in		MOAIBox2DBody self
+	@out	number velocityX
+	@out	number velocityY
 */
 int MOAIBox2DBody::_getLinearVelocity ( lua_State* L ) {
 	LUA_SETUP ( MOAIBox2DBody, "U" )
@@ -263,11 +283,12 @@ int MOAIBox2DBody::_getLinearVelocity ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	getLocalCenter
+	@text	See Box2D documentation.
+	
+	@in		MOAIBox2DBody self
+	@out	number centerX
+	@out	number centerY
 */
 int MOAIBox2DBody::_getLocalCenter ( lua_State* L ) {
 	LUA_SETUP ( MOAIBox2DBody, "U" )
@@ -281,11 +302,12 @@ int MOAIBox2DBody::_getLocalCenter ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	getPostion
+	@text	See Box2D documentation.
+	
+	@in		MOAIBox2DBody self
+	@out	number positionX
+	@out	number positionY
 */
 int MOAIBox2DBody::_getPosition ( lua_State* L ) {
 	LUA_SETUP ( MOAIBox2DBody, "U" )
@@ -299,11 +321,12 @@ int MOAIBox2DBody::_getPosition ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	getWorldCenter
+	@text	See Box2D documentation.
+	
+	@in		MOAIBox2DBody self
+	@out	number worldX
+	@out	number worldY
 */
 int MOAIBox2DBody::_getWorldCenter ( lua_State* L ) {
 	LUA_SETUP ( MOAIBox2DBody, "U" )
@@ -317,11 +340,11 @@ int MOAIBox2DBody::_getWorldCenter ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	isActive
+	@text	See Box2D documentation.
+	
+	@in		MOAIBox2DBody self
+	@out	boolean isActive
 */
 int MOAIBox2DBody::_isActive ( lua_State* L ) {
 	LUA_SETUP ( MOAIBox2DBody, "U" )
@@ -333,11 +356,11 @@ int MOAIBox2DBody::_isActive ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	isAwake
+	@text	See Box2D documentation.
+	
+	@in		MOAIBox2DBody self
+	@out	boolean isAwake
 */
 int MOAIBox2DBody::_isAwake ( lua_State* L ) {
 	LUA_SETUP ( MOAIBox2DBody, "U" )
@@ -349,11 +372,11 @@ int MOAIBox2DBody::_isAwake ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	isBullet
+	@text	See Box2D documentation.
+	
+	@in		MOAIBox2DBody self
+	@out	boolean isBullet
 */
 int MOAIBox2DBody::_isBullet ( lua_State* L ) {
 	LUA_SETUP ( MOAIBox2DBody, "U" )
@@ -365,11 +388,11 @@ int MOAIBox2DBody::_isBullet ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	isFixedRotation
+	@text	See Box2D documentation.
+	
+	@in		MOAIBox2DBody self
+	@out	boolean isFixedRotation
 */
 int MOAIBox2DBody::_isFixedRotation ( lua_State* L ) {
 	LUA_SETUP ( MOAIBox2DBody, "U" )
@@ -381,26 +404,27 @@ int MOAIBox2DBody::_isFixedRotation ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	resetMassData
+	@text	See Box2D documentation.
+	
+	@in		MOAIBox2DBody self
+	@out	nil
 */
 int MOAIBox2DBody::_resetMassData ( lua_State* L ) {
 	LUA_SETUP ( MOAIBox2DBody, "U" )
 	
 	self->mBody->ResetMassData ();
 	
-	return 1;
+	return 0;
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	setActive
+	@text	See Box2D documentation.
+	
+	@in		MOAIBox2DBody self
+	@opt	boolean active			Defaule value is 'false'
+	@out	nil
 */
 int MOAIBox2DBody::_setActive ( lua_State* L ) {
 	LUA_SETUP ( MOAIBox2DBody, "U" )
@@ -412,11 +436,12 @@ int MOAIBox2DBody::_setActive ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	setAngularDamping
+	@text	See Box2D documentation.
+	
+	@in		MOAIBox2DBody self
+	@in		number damping
+	@out	nil
 */
 int MOAIBox2DBody::_setAngularDamping ( lua_State* L ) {
 	LUA_SETUP ( MOAIBox2DBody, "UN" )
@@ -428,28 +453,29 @@ int MOAIBox2DBody::_setAngularDamping ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	setAngularVelocity
+	@text	See Box2D documentation.
+	
+	@in		MOAIBox2DBody self
+	@opt	number omega		Angular velocity in degrees. Default value is 0.
+	@out	nil
 */
 int MOAIBox2DBody::_setAngularVelocity ( lua_State* L ) {
 	LUA_SETUP ( MOAIBox2DBody, "U" )
 	
 	float omega = state.GetValue < float >( 2, 0.0f ) * ( float )D2R;
-	
 	self->mBody->SetAngularVelocity ( omega );
 	
 	return 0;
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	setAwake
+	@text	See Box2D documentation.
+	
+	@in		MOAIBox2DBody self
+	@opt	boolean awake		Default value is 'true'
+	@out	nil
 */
 int MOAIBox2DBody::_setAwake ( lua_State* L ) {
 	LUA_SETUP ( MOAIBox2DBody, "U" )
@@ -461,11 +487,12 @@ int MOAIBox2DBody::_setAwake ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	setBullet
+	@text	See Box2D documentation.
+	
+	@in		MOAIBox2DBody self
+	@opt	boolean bullet		Default value is 'true'
+	@out	nil
 */
 int MOAIBox2DBody::_setBullet ( lua_State* L ) {
 	LUA_SETUP ( MOAIBox2DBody, "U" )
@@ -477,11 +504,12 @@ int MOAIBox2DBody::_setBullet ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	setFixedRotation
+	@text	See Box2D documentation.
+	
+	@in		MOAIBox2DBody self
+	@opt	boolean fixedRotation		Default value is 'true'
+	@out	nil
 */
 int MOAIBox2DBody::_setFixedRotation ( lua_State* L ) {
 	LUA_SETUP ( MOAIBox2DBody, "U" )
@@ -493,11 +521,12 @@ int MOAIBox2DBody::_setFixedRotation ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	setLinearDamping
+	@text	See Box2D documentation.
+	
+	@in		MOAIBox2DBody self
+	@opt	boolean damping
+	@out	nil
 */
 int MOAIBox2DBody::_setLinearDamping ( lua_State* L ) {
 	LUA_SETUP ( MOAIBox2DBody, "UN" )
@@ -509,11 +538,13 @@ int MOAIBox2DBody::_setLinearDamping ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	setLinearVelocity
+	@text	See Box2D documentation.
+	
+	@in		MOAIBox2DBody self
+	@opt	boolean velocityX	Default is 0.
+	@opt	boolean velocityY	Default is 0.
+	@out	nil
 */
 int MOAIBox2DBody::_setLinearVelocity ( lua_State* L ) {
 	LUA_SETUP ( MOAIBox2DBody, "U" )
@@ -529,11 +560,15 @@ int MOAIBox2DBody::_setLinearVelocity ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	setMassData
+	@text	See Box2D documentation.
+	
+	@in		MOAIBox2DBody self
+	@in		number mass
+	@opt	number I			Default is previous value for I.
+	@opt	number centerX		Default is previous value for centerX.
+	@opt	number centerY		Default is previous value for centerY.
+	@out	nil
 */
 int MOAIBox2DBody::_setMassData ( lua_State* L ) {
 	LUA_SETUP ( MOAIBox2DBody, "UN" )
@@ -553,11 +588,14 @@ int MOAIBox2DBody::_setMassData ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	setTransform
+	@text	See Box2D documentation.
+	
+	@in		MOAIBox2DBody self
+	@opt	number positionX		Default is 0.
+	@opt	number positionY		Default is 0.
+	@opt	number angle			In degrees. Default is 0.
+	@out	nil
 */
 int MOAIBox2DBody::_setTransform ( lua_State* L ) {
 	LUA_SETUP ( MOAIBox2DBody, "U" )

@@ -9,13 +9,13 @@
 class MOAINode;
 
 //================================================================//
-// MOAIEaseAttr
+// MOAIEaseDriverLink
 //================================================================//
-class MOAIEaseAttr {
+class MOAIEaseDriverLink {
 public:
 	USRef < MOAINode >	mTarget;
 	u32					mAttrID;
-	float				mForce;
+	float				mValue;
 	u32					mMode;
 };
 
@@ -28,17 +28,15 @@ class MOAIEaseDriver :
 	public MOAIAction {
 private:
 
-	USLeanArray < MOAIEaseAttr > mForces;
+	USLeanArray < MOAIEaseDriverLink > mLinks;
 	
 	float	mTime;
-	float	mDelay;
-	u32		mMode;
+	float	mLength;
 
 	//----------------------------------------------------------------//
-	static int		_reserveForces		( lua_State* L );
-	static int		_setDelay			( lua_State* L );
-	static int		_setForce			( lua_State* L );
-	static int		_setMode			( lua_State* L );
+	static int		_reserveLinks		( lua_State* L );
+	static int		_setLength			( lua_State* L );
+	static int		_setLink			( lua_State* L );
 
 	//----------------------------------------------------------------//
 	void			Apply				( float step );
@@ -47,8 +45,7 @@ public:
 
 	DECL_LUA_FACTORY ( MOAIEaseDriver )
 
-	SET ( float, Delay, mDelay )
-	SET ( u32, Mode, mMode )
+	SET ( float, Length, mLength )
 
 	//----------------------------------------------------------------//
 	bool			IsBusy				();
@@ -57,9 +54,9 @@ public:
 	void			OnUpdate			( float step );
 	void			RegisterLuaClass	( USLuaState& state );
 	void			RegisterLuaFuncs	( USLuaState& state );
-	void			ReserveForces		( u32 total );
-	void			SetForce			( u32 idx, MOAINode* target, u32 attrID, float force, u32 mode );
-	void			SetForce			( u32 mode );
+	void			ReserveLinks		( u32 total );
+	void			SetLink				( u32 idx, MOAINode* target, u32 attrID, float force, u32 mode );
+	void			SetLink				( u32 mode );
 	STLString		ToString			();
 };
 
