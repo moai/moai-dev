@@ -12,11 +12,13 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@brief <tt>insertPrim ( self, prop )</tt>\n
-\n
-	Adds a primitive to the parition.
-	@param self (in)
-	@param prop (in)
+/**	@name	insertProp
+	@text	Inserts a prop into the partition. A prop can only be
+			in one partition at a time.
+	
+	@in		MOAIPartition self
+	@in		MOAIProp prop
+	@out	nil
 */
 int MOAIPartition::_insertProp ( lua_State* L ) {
 	LUA_SETUP ( MOAIPartition, "UU" )
@@ -30,13 +32,14 @@ int MOAIPartition::_insertProp ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( prop ) primForPoint ( self, x, y )</tt>\n
-\n
-	Returns the hightest priority primitive (if any) under a given point.
-	@param self (in)
-	@param x (in)
-	@param y (in)
-	@param prop (out) The primitive, or 'nil' if none found.
+/**	@name	propForPoint
+	@text	Returns the prop with the highest priority underneath
+			the given world space point.
+	
+	@in		MOAIPartition self
+	@in		number x
+	@in		number y
+	@out	MOAIProp prop	The prop under the point or nil if no prop found.
 */
 int MOAIPartition::_propForPoint ( lua_State* L ) {
 	LUA_SETUP ( MOAIPartition, "UNN" )
@@ -61,13 +64,13 @@ int MOAIPartition::_propForPoint ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( prims ) primListForPoint ( self, x, y )</tt>\n
-\n
-	Returns all primitives under a given point.
-	@param self (in)
-	@param x (in)
-	@param y (in)
-	@param prims (out) Found primitives, pushed onto stack. (TODO: change to list)
+/**	@name	propListForPoint
+	@text	Returns all props under a given world space point.
+	
+	@in		MOAIPartition self
+	@in		number x
+	@in		number y
+	@out	...				The props under the point, all pushed onto the stack.
 */
 int MOAIPartition::_propListForPoint ( lua_State* L ) {
 	LUA_SETUP ( MOAIPartition, "UNN" )
@@ -85,15 +88,15 @@ int MOAIPartition::_propListForPoint ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( prims ) primListForRect ( self, xMin, yMin, xMax, yMax )</tt>\n
-\n
-	Returns all primitives under a given rectangle.
-	@param self (in)
-	@param xMin (in)
-	@param yMin (in)
-	@param xMax (in)
-	@param yMax (in)
-	@param prims (out) Found primitives, pushed onto stack. (TODO: change to list)
+/**	@name	propListForRect
+	@text	Returns all props under a given world space rect.
+	
+	@in		MOAIPartition self
+	@in		number xMin
+	@in		number yMin
+	@in		number xMax
+	@in		number yMax
+	@out	...				The props under the rect, all pushed onto the stack.
 */
 int MOAIPartition::_propListForRect ( lua_State* L ) {
 	LUA_SETUP ( MOAIPartition, "UNNNN" )
@@ -113,11 +116,12 @@ int MOAIPartition::_propListForRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>removePrim ( self, prop )</tt>\n
-\n
-	Removes a primitive from the partition.
-	@param self (in)
-	@param prop (in)
+/**	@name	removeProp
+	@text	Removes a prop from the partition.
+	
+	@in		MOAIPartition self
+	@in		MOAIProp prop
+	@out	nil
 */
 int MOAIPartition::_removeProp ( lua_State* L ) {
 	LUA_SETUP ( MOAIPartition, "UU" )
@@ -131,11 +135,13 @@ int MOAIPartition::_removeProp ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>reserveLayers ( self, total )</tt>\n
-\n
-	Reserves a stack of layers in the partition. Layers must be initialize with setLayer ().
-	@param self (in)
-	@param total (in)
+/**	@name	reserveLayers
+	@text	Reserves a stack of layers in the partition. Layers must be
+			initialize with setLayer ().
+	
+	@in		MOAIPartition self
+	@in		number nLayers
+	@out	nil
 */
 int MOAIPartition::_reserveLayers ( lua_State* L ) {
 	LUA_SETUP ( MOAIPartition, "UN" )
@@ -148,14 +154,22 @@ int MOAIPartition::_reserveLayers ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>setLayer ( self, layerID, cellSize, xCells, yCells )</tt>\n
-\n
-	Initializes a layer previously created by reserveLayers ().
-	@param self (in)
-	@param layerID (in)
-	@param cellSize (in) Dimentions of cell.
-	@param xCells (in) Width of layer in cells.
-	@param yCells (in) Height of layer in cells.
+/**	@name	setLayer
+	@text	Initializes a layer previously created by reserveLayers (). Each
+			layer is a loose grid. Props of a given size may be placed by
+			the system into any layer with cells large enough to accomodate them.
+			The dimensions of a layer control how many cells the layer contains.
+			If an object goes off of the edge of a layer, it will wrap around
+			to the other side. It is possible to model a quad tree by initalizing
+			layers correctly, but for some simulations better structures
+			may be possible.
+	
+	@in		MOAIPartition self
+	@in		number layerID
+	@in		number cellSize		Dimensions of the layer's cells.
+	@in		number xCells		Width of layer in cells.
+	@in		number yCells		Height of layer in cells.
+	@out	nil
 */
 int MOAIPartition::_setLayer ( lua_State* L ) {
 	LUA_SETUP ( MOAIPartition, "UNNNN" )
@@ -171,13 +185,14 @@ int MOAIPartition::_setLayer ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( prims ) sortedPrimListForPoint ( self, x, y )</tt>\n
-\n
-	Returns all primitives under a given point sorted by priority.
-	@param self (in)
-	@param x (in)
-	@param y (in)
-	@param prims (out) Found primitives, pushed onto stack. (TODO: change to list)
+/**	@name	propListForPoint
+	@text	Returns all props under a given world space point sorted
+			by priority.
+	
+	@in		MOAIPartition self
+	@in		number x
+	@in		number y
+	@out	...				The props under the point, sorted and pushed onto the stack.
 */
 int MOAIPartition::_sortedPropListForPoint ( lua_State* L ) {
 	LUA_SETUP ( MOAIPartition, "UNN" )
@@ -195,15 +210,16 @@ int MOAIPartition::_sortedPropListForPoint ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( prims ) sortedPrimListForRect ( self, xMin, yMin, xMax, yMax )</tt>\n
-\n
-	Returns all primitives under a given rectangle sorted by priority.
-	@param self (in)
-	@param xMin (in)
-	@param yMin (in)
-	@param xMax (in)
-	@param yMax (in)
-	@param prims (out) Found primitives, pushed onto stack. (TODO: change to list)
+/**	@name	propListForRect
+	@text	Returns all props under a given world space rect sorted
+			by priority.
+	
+	@in		MOAIPartition self
+	@in		number xMin
+	@in		number yMin
+	@in		number xMax
+	@in		number yMax
+	@out	...				The props under the rect, sorted and pushed onto the stack.
 */
 int MOAIPartition::_sortedPropListForRect ( lua_State* L ) {
 	LUA_SETUP ( MOAIPartition, "UNNNN" )
