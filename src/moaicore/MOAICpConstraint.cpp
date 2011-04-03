@@ -14,11 +14,11 @@ SUPPRESS_EMPTY_FILE_WARNING
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	getBiasCoefficient
+	@text	Returns the current bias coefficient.
+
+	@in		MOAICpShape self
+	@out	number bias			The bias coefficient.
 */
 int MOAICpConstraint::_getBiasCoef ( lua_State* L ) {
 	LUA_SETUP ( MOAICpConstraint, "U" )
@@ -31,11 +31,11 @@ int MOAICpConstraint::_getBiasCoef ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	getMaxBias
+	@text	Returns the maximum bias coefficient.
+
+	@in		MOAICpShape self
+	@out	number bias			The maximum bias coefficient.
 */
 int MOAICpConstraint::_getMaxBias ( lua_State* L ) {
 	LUA_SETUP ( MOAICpConstraint, "U" )
@@ -48,11 +48,11 @@ int MOAICpConstraint::_getMaxBias ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	getMaxForce
+	@text	Returns the maximum force allowed.
+
+	@in		MOAICpShape self
+	@out	number bias			The maximum force allowed.
 */
 int MOAICpConstraint::_getMaxForce ( lua_State* L ) {
 	LUA_SETUP ( MOAICpConstraint, "U" )
@@ -65,11 +65,15 @@ int MOAICpConstraint::_getMaxForce ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	newDampedRotarySpring
+	@text	Creates a new damped rotary string between the two specified bodies.
+
+	@in		MOAICpShape first
+	@in		MOAICpShape second
+	@in		number restAngle			The angle at which the spring is at rest.
+	@in		number stiffness			The stiffness of the spring.
+	@in		number damping				The damping applied to the spring.
+	@out	MOAICpConstraint spring		The new spring.
 */
 int MOAICpConstraint::_newDampedRotarySpring ( lua_State* L ) {
 	USLuaState state ( L );
@@ -96,11 +100,19 @@ int MOAICpConstraint::_newDampedRotarySpring ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	newDampedSpring
+	@text	Creates a new damped string between the two specified bodies.
+
+	@in		MOAICpShape first
+	@in		MOAICpShape second
+	@in		number x1					The X position of the first anchor.
+	@in		number y1					The Y position of the first anchor.
+	@in		number x2					The X position of the second anchor.
+	@in		number y2					The Y position of the second anchor.
+	@in		number restAngle			The angle at which the spring is at rest.
+	@in		number stiffness			The stiffness of the spring.
+	@in		number damping				The damping applied to the spring.
+	@out	MOAICpConstraint spring		The new spring.
 */
 int MOAICpConstraint::_newDampedSpring ( lua_State* L ) {
 	USLuaState state ( L );
@@ -135,11 +147,14 @@ int MOAICpConstraint::_newDampedSpring ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	newGearJoint
+	@text	Creates a new gear joint between the two specified bodies.
+
+	@in		MOAICpShape first
+	@in		MOAICpShape second
+	@in		number phase				The phase of the gear.
+	@in		number ratio				The gear ratio.
+	@out	MOAICpConstraint gear		The new gear joint.
 */
 int MOAICpConstraint::_newGearJoint ( lua_State* L ) {
 	USLuaState state ( L );
@@ -165,11 +180,18 @@ int MOAICpConstraint::_newGearJoint ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	newGrooveJoint
+	@text	Creates a new groove joint between the two specified bodies.
+
+	@in		MOAICpShape first
+	@in		MOAICpShape second
+	@in		number gx1
+	@in		number gy1
+	@in		number gx2
+	@in		number gy2
+	@in		number ax
+	@in		number ay
+	@out	MOAICpConstraint groove		The new groove joint.
 */
 int MOAICpConstraint::_newGrooveJoint ( lua_State* L ) {
 	USLuaState state ( L );
@@ -204,11 +226,16 @@ int MOAICpConstraint::_newGrooveJoint ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	newPinJoint
+	@text	Creates a new pin joint between the two specified bodies.
+
+	@in		MOAICpShape first
+	@in		MOAICpShape second
+	@in		number ax1
+	@in		number ay1
+	@in		number ax2
+	@in		number ay2
+	@out	MOAICpConstraint pin		The new pin joint.
 */
 int MOAICpConstraint::_newPinJoint ( lua_State* L ) {
 	USLuaState state ( L );
@@ -239,11 +266,16 @@ int MOAICpConstraint::_newPinJoint ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	newPivotJoint
+	@text	Creates a new pivot joint between the two specified bodies.
+
+	@in		MOAICpShape first
+	@in		MOAICpShape second
+	@in		number x
+	@in		number y
+	@opt	number ax
+	@opt	number ay
+	@out	MOAICpConstraint pivot		The new pivot joint.
 */
 int MOAICpConstraint::_newPivotJoint ( lua_State* L ) {
 	USLuaState state ( L );
@@ -282,11 +314,14 @@ int MOAICpConstraint::_newPivotJoint ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	newRatchetJoint
+	@text	Creates a new ratchet joint between the two specified bodies.
+
+	@in		MOAICpShape first
+	@in		MOAICpShape second
+	@in		number phase				The phase of the gear.
+	@in		number ratchet				The ratchet value.
+	@out	MOAICpConstraint ratchet	The new pivot joint.
 */
 int MOAICpConstraint::_newRatchetJoint ( lua_State* L ) {
 	USLuaState state ( L );
@@ -312,11 +347,14 @@ int MOAICpConstraint::_newRatchetJoint ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	newRotaryLimitJoint
+	@text	Creates a new rotary limit joint between the two specified bodies.
+
+	@in		MOAICpShape first
+	@in		MOAICpShape second
+	@in		number min					The minimum rotary value.
+	@in		number max					The maximum rotary value.
+	@out	MOAICpConstraint limit		The new rotary limit joint.
 */
 int MOAICpConstraint::_newRotaryLimitJoint ( lua_State* L ) {
 	USLuaState state ( L );
@@ -342,11 +380,13 @@ int MOAICpConstraint::_newRotaryLimitJoint ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	newSimpleMotor
+	@text	Creates a new simple motor joint between the two specified bodies.
+
+	@in		MOAICpShape first
+	@in		MOAICpShape second
+	@in		number rate					The rotation rate of the simple motor.
+	@out	MOAICpConstraint motor		The new simple motor joint.
 */
 int MOAICpConstraint::_newSimpleMotor ( lua_State* L ) {
 	USLuaState state ( L );
@@ -371,11 +411,18 @@ int MOAICpConstraint::_newSimpleMotor ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	newSlideJoint
+	@text	Creates a new slide joint between the two specified bodies.
+
+	@in		MOAICpShape first
+	@in		MOAICpShape second
+	@in		number ax1
+	@in		number ay1
+	@in		number ax2
+	@in		number ay2
+	@in		number min
+	@in		number max
+	@out	MOAICpConstraint motor		The new slide joint.
 */
 int MOAICpConstraint::_newSlideJoint ( lua_State* L ) {
 	USLuaState state ( L );
@@ -409,11 +456,12 @@ int MOAICpConstraint::_newSlideJoint ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	setBiasCoefficient
+	@text	Sets the current bias coefficient.
+
+	@in		MOAICpShape self
+	@in		number bias			The bias coefficient.
+	@out	nil
 */
 int MOAICpConstraint::_setBiasCoef ( lua_State* L ) {
 	LUA_SETUP ( MOAICpConstraint, "UN" )
@@ -425,11 +473,12 @@ int MOAICpConstraint::_setBiasCoef ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	setMaxBias
+	@text	Sets the maximum bias coefficient.
+
+	@in		MOAICpShape self
+	@in		number bias			The maximum bias coefficient.
+	@out	nil
 */
 int MOAICpConstraint::_setMaxBias ( lua_State* L ) {
 	LUA_SETUP ( MOAICpConstraint, "UN" )
@@ -441,11 +490,12 @@ int MOAICpConstraint::_setMaxBias ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	setMaxForce
+	@text	Sets the maximum force allowed.
+
+	@in		MOAICpShape self
+	@in		number bias			The maximum force allowed.
+	@out	nil
 */
 int MOAICpConstraint::_setMaxForce ( lua_State* L ) {
 	LUA_SETUP ( MOAICpConstraint, "UN" )
