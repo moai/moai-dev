@@ -9,11 +9,13 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@brief <tt>addLoc (x, y)</tt>\n
-\n
-	Adds location values to the transform's point of origin.
-	@param x Location's X coordinate.
-	@param y Location's Y coordinate.
+/**	@name	addLoc
+	@text	Adds a delta to the transform's location.
+	
+	@in		MOAITransform self
+	@in		number xDelta
+	@in		number yDelta
+	@out	nil
 */
 int MOAITransform::_addLoc ( lua_State* L ) {
 	LUA_SETUP ( MOAITransform, "UNN" )
@@ -30,10 +32,12 @@ int MOAITransform::_addLoc ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/** @brief <tt>addRot (rotation)</tt>\n
-\n
-	Adds rotation value to the transform.
-	@param rotation Degrees of rotation.
+/**	@name	addRot
+	@text	Adds a delta to the transform's rotation
+	
+	@in		MOAITransform self
+	@in		number rDelta		In degrees.
+	@out	nil
 */
 int MOAITransform::_addRot ( lua_State* L ) {
 	LUA_SETUP ( MOAITransform, "UN" )
@@ -48,11 +52,13 @@ int MOAITransform::_addRot ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>addScl (sx, sy)</tt>\n
-\n
-	Adds scaling values to the transform.
-	@param sx Horizontal scaling value.
-	@param sy Vertical scaling value.
+/**	@name	addScl
+	@text	Adds a delta to the transform's scale
+	
+	@in		MOAITransform self
+	@in		number xSclDelta
+	@in		number ySclDelta
+	@out	nil
 */
 int MOAITransform::_addScl ( lua_State* L ) {
 	LUA_SETUP ( MOAITransform, "UNN" )
@@ -69,10 +75,12 @@ int MOAITransform::_addScl ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>getLoc ( )</tt>\n
-\n
-	Returns the x and y coordinates of this object's location.
-	@return X and y coordinates in worldspace.
+/**	@name	getLoc
+	@text	Returns the transform's current location.
+	
+	@in		MOAITransform self
+	@out	number xLoc
+	@out	number yLoc
 */
 int	MOAITransform::_getLoc ( lua_State* L ) {
 	LUA_SETUP ( MOAITransform, "U" )
@@ -84,10 +92,11 @@ int	MOAITransform::_getLoc ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>getRot ( )</tt>\n
-\n
-	Returns the rotation angle of this object.
-	@return Rotation angle value.
+/**	@name	getRot
+	@text	Returns the transform's current rotation.
+	
+	@in		MOAITransform self
+	@out	number rot			Rotation in degrees.
 */
 int	MOAITransform::_getRot ( lua_State* L ) {
 	LUA_SETUP ( MOAITransform, "U" )
@@ -98,10 +107,12 @@ int	MOAITransform::_getRot ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>getScl ( )</tt>\n
-\n
-	Returns the x and y scaling values of this object.
-	@return X and y scaling values.
+/**	@name	getScl
+	@text	Returns the transform's current scale.
+	
+	@in		MOAITransform self
+	@out	number xScl
+	@out	number yScl
 */
 int	MOAITransform::_getScl ( lua_State* L ) {
 	LUA_SETUP ( MOAITransform, "U" )
@@ -113,11 +124,14 @@ int	MOAITransform::_getScl ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	modelToWorld
+	@text	Transform a point in model space to world space.
+	
+	@in		MOAITransform self
+	@in		x
+	@in		y
+	@out	x
+	@out	y
 */
 int MOAITransform::_modelToWorld ( lua_State* L ) {
 	LUA_SETUP ( MOAITransform, "UNN" )
@@ -136,16 +150,21 @@ int MOAITransform::_modelToWorld ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>move (x, y, rot, sx, sy, delay [, mode])</tt>\n
-\n
-	Transitions various values of the transform to other values within a certain time period.
-	@param x Horizontal distance to move.
-	@param y Vertical distance to move.
-	@param rot New rotation value.
-	@param sx New horizontal scaling value.
-	@param sy New vertical scaling value.
-	@param delay Time period for the transition.
-	@param mode (optional) Interpolation mode.  Default: SMOOTH 
+/**	@name	move
+	@text	Animate the transform by applying a delta. Creates and returns
+			a MOAIEaseDriver initialized to apply the delta.
+	
+	@in		MOAITransform self
+	@in		number xDelta		Delta to be added to x.
+	@in		number yDelta		Delta to be added to y.
+	@in		number rDelta		Delta to be added to r (in degrees).
+	@in		number xSclDelta	Delta to be added to x scale.
+	@in		number ySclDelta	Delta to be added to y scale.
+	@in		number length		Length of animation in seconds.
+	@opt	number mode			The ease mode. One of MOAIEaseType.EASE_IN, MOAIEaseType.EASE_OUT, MOAIEaseType.FLAT MOAIEaseType.LINEAR,
+								MOAIEaseType.SMOOTH, MOAIEaseType.SOFT_EASE_IN, MOAIEaseType.SOFT_EASE_OUT, MOAIEaseType.SOFT_SMOOTH
+
+	@out	MOAIEaseDriver easeDriver
 */
 int MOAITransform::_move ( lua_State* L ) {
 	LUA_SETUP ( MOAITransform, "UNNNNNN" )
@@ -175,13 +194,18 @@ int MOAITransform::_move ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>moveLoc (x, y, delay [, mode])</tt>\n
-\n
-	Moves only the transform origin within a certain time period.
-	@param x Horizontal distance.
-	@param y Vertical distance.
-	@param delay Time period to move.
-	@param mode (optional) Interpolation mode.  Default: SMOOTH
+/**	@name	moveLoc
+	@text	Animate the transform by applying a delta. Creates and returns
+			a MOAIEaseDriver initialized to apply the delta.
+	
+	@in		MOAITransform self
+	@in		number xDelta		Delta to be added to x.
+	@in		number yDelta		Delta to be added to y.
+	@in		number length		Length of animation in seconds.
+	@opt	number mode			The ease mode. One of MOAIEaseType.EASE_IN, MOAIEaseType.EASE_OUT, MOAIEaseType.FLAT MOAIEaseType.LINEAR,
+								MOAIEaseType.SMOOTH, MOAIEaseType.SOFT_EASE_IN, MOAIEaseType.SOFT_EASE_OUT, MOAIEaseType.SOFT_SMOOTH
+
+	@out	MOAIEaseDriver easeDriver
 */
 int MOAITransform::_moveLoc ( lua_State* L ) {
 	LUA_SETUP ( MOAITransform, "UNNN" )
@@ -205,12 +229,17 @@ int MOAITransform::_moveLoc ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>moveRot (rotation, delay [, mode])</tt>\n
-\n
-	Changes only the transform rotation value within a certain time period.
-	@param rotation New degree of rotation.
-	@param delay Time to transition to new rotation value.
-	@param mode (optional) Interpolation mode.  Default: SMOOTH
+/**	@name	moveRot
+	@text	Animate the transform by applying a delta. Creates and returns
+			a MOAIEaseDriver initialized to apply the delta.
+	
+	@in		MOAITransform self
+	@in		number rDelta		Delta to be added to r (in degrees).
+	@in		number length		Length of animation in seconds.
+	@opt	number mode			The ease mode. One of MOAIEaseType.EASE_IN, MOAIEaseType.EASE_OUT, MOAIEaseType.FLAT MOAIEaseType.LINEAR,
+								MOAIEaseType.SMOOTH, MOAIEaseType.SOFT_EASE_IN, MOAIEaseType.SOFT_EASE_OUT, MOAIEaseType.SOFT_SMOOTH
+
+	@out	MOAIEaseDriver easeDriver
 */
 int MOAITransform::_moveRot ( lua_State* L ) {
 	LUA_SETUP ( MOAITransform, "UNN" )
@@ -232,13 +261,18 @@ int MOAITransform::_moveRot ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>moveScl (sx, sy, delay [, mode])</tt>\n
-\n
-	Changes only the scaling values of the transform within a certain time period.
-	@param sx New horizontal scaling value.
-	@param sy New vertical scaling value.
-	@param delay Time to transition to new scaling values.
-	@param mode (optional) Interpolation mode.  Default: SMOOTH
+/**	@name	moveScl
+	@text	Animate the transform by applying a delta. Creates and returns
+			a MOAIEaseDriver initialized to apply the delta.
+	
+	@in		MOAITransform self
+	@in		number xSclDelta	Delta to be added to x scale.
+	@in		number ySclDelta	Delta to be added to y scale.
+	@in		number length		Length of animation in seconds.
+	@opt	number mode			The ease mode. One of MOAIEaseType.EASE_IN, MOAIEaseType.EASE_OUT, MOAIEaseType.FLAT MOAIEaseType.LINEAR,
+								MOAIEaseType.SMOOTH, MOAIEaseType.SOFT_EASE_IN, MOAIEaseType.SOFT_EASE_OUT, MOAIEaseType.SOFT_SMOOTH
+
+	@out	MOAIEaseDriver easeDriver
 */
 int MOAITransform::_moveScl ( lua_State* L ) {
 	LUA_SETUP ( MOAITransform, "UNNN" )
@@ -262,16 +296,22 @@ int MOAITransform::_moveScl ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>seek ( x, y, rot, sx, sy, delay [, mode] )</tt>\n
-\n
-	Seeks specifically to new values (like using set functions), but with a delay.
-	@param x New x-location.
-	@param y New y-location.
-	@param rot New rotation angle.
-	@param sx New horizontal scaling value.
-	@param sy New vertical scaling value.
-	@param delay Time to transition to new values.
-	@param mode (optional) Interpolation mode.  Default: SMOOTH
+/**	@name	seek
+	@text	Animate the transform by applying a delta. Delta is computed
+			given a target value. Creates and returns a MOAIEaseDriver
+			initialized to apply the delta.
+	
+	@in		MOAITransform self
+	@in		number xGoal		Desired resulting value for x.
+	@in		number yGoal		Desired resulting value for y.
+	@in		number rGoal		Desired resulting value for r (in degrees).
+	@in		number xSclGoal		Desired resulting value for x scale.
+	@in		number ySclGoal		Desired resulting value for y scale.
+	@in		number length		Length of animation in seconds.
+	@opt	number mode			The ease mode. One of MOAIEaseType.EASE_IN, MOAIEaseType.EASE_OUT, MOAIEaseType.FLAT MOAIEaseType.LINEAR,
+								MOAIEaseType.SMOOTH, MOAIEaseType.SOFT_EASE_IN, MOAIEaseType.SOFT_EASE_OUT, MOAIEaseType.SOFT_SMOOTH
+
+	@out	MOAIEaseDriver easeDriver
 */
 int MOAITransform::_seek ( lua_State* L ) {
 	LUA_SETUP ( MOAITransform, "UNNNNNN" )
@@ -301,13 +341,19 @@ int MOAITransform::_seek ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>seekLoc ( x, y, delay [, mode] )</tt>\n
-\n
-	Seeks specifically to a new location (like using set functions), but with a delay.
-	@param x New x-location.
-	@param y New y-location.
-	@param delay Time to transition to new values.
-	@param mode (optional) Interpolation mode.  Default: SMOOTH
+/**	@name	seekLoc
+	@text	Animate the transform by applying a delta. Delta is computed
+			given a target value. Creates and returns a MOAIEaseDriver
+			initialized to apply the delta.
+	
+	@in		MOAITransform self
+	@in		number xGoal		Desired resulting value for x.
+	@in		number yGoal		Desired resulting value for y.
+	@in		number length		Length of animation in seconds.
+	@opt	number mode			The ease mode. One of MOAIEaseType.EASE_IN, MOAIEaseType.EASE_OUT, MOAIEaseType.FLAT MOAIEaseType.LINEAR,
+								MOAIEaseType.SMOOTH, MOAIEaseType.SOFT_EASE_IN, MOAIEaseType.SOFT_EASE_OUT, MOAIEaseType.SOFT_SMOOTH
+
+	@out	MOAIEaseDriver easeDriver
 */
 int MOAITransform::_seekLoc ( lua_State* L ) {
 	LUA_SETUP ( MOAITransform, "UNNN" )
@@ -331,12 +377,18 @@ int MOAITransform::_seekLoc ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>seekRot ( rot, delay [, mode] )</tt>\n
-\n
-	Seeks specifically to a new rotation value (like using set functions), but with a delay.
-	@param rot New rotation angle.
-	@param delay Time to transition to new values.
-	@param mode (optional) Interpolation mode.  Default: SMOOTH
+/**	@name	seekRot
+	@text	Animate the transform by applying a delta. Delta is computed
+			given a target value. Creates and returns a MOAIEaseDriver
+			initialized to apply the delta.
+	
+	@in		MOAITransform self
+	@in		number rGoal		Desired resulting value for r (in degrees).
+	@in		number length		Length of animation in seconds.
+	@opt	number mode			The ease mode. One of MOAIEaseType.EASE_IN, MOAIEaseType.EASE_OUT, MOAIEaseType.FLAT MOAIEaseType.LINEAR,
+								MOAIEaseType.SMOOTH, MOAIEaseType.SOFT_EASE_IN, MOAIEaseType.SOFT_EASE_OUT, MOAIEaseType.SOFT_SMOOTH
+
+	@out	MOAIEaseDriver easeDriver
 */
 int MOAITransform::_seekRot ( lua_State* L ) {
 	LUA_SETUP ( MOAITransform, "UNN" )
@@ -358,13 +410,19 @@ int MOAITransform::_seekRot ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>seekScl ( sx, sy, delay [, mode] )</tt>\n
-\n
-	Seeks specifically to new scaling values (like using set functions), but with a delay.
-	@param sx New horizontal scaling value.
-	@param sy New vertical scaling value.
-	@param delay Time to transition to new values.
-	@param mode (optional) Interpolation mode.  Default: SMOOTH
+/**	@name	seekScl
+	@text	Animate the transform by applying a delta. Delta is computed
+			given a target value. Creates and returns a MOAIEaseDriver
+			initialized to apply the delta.
+	
+	@in		MOAITransform self
+	@in		number xSclGoal		Desired resulting value for x scale.
+	@in		number ySclGoal		Desired resulting value for y scale.
+	@in		number length		Length of animation in seconds.
+	@opt	number mode			The ease mode. One of MOAIEaseType.EASE_IN, MOAIEaseType.EASE_OUT, MOAIEaseType.FLAT MOAIEaseType.LINEAR,
+								MOAIEaseType.SMOOTH, MOAIEaseType.SOFT_EASE_IN, MOAIEaseType.SOFT_EASE_OUT, MOAIEaseType.SOFT_SMOOTH
+
+	@out	MOAIEaseDriver easeDriver
 */
 int MOAITransform::_seekScl ( lua_State* L ) {
 	LUA_SETUP ( MOAITransform, "UNNN" )
@@ -388,11 +446,13 @@ int MOAITransform::_seekScl ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>setLoc (x, y)</tt>\n
-\n
-	Sets the location for the transform origin.
-	@param x X coordinate of origin location.
-	@param y Y coordinate of origin location.
+/**	@name	setLoc
+	@text	Sets the transform's location.
+	
+	@in		MOAITransform self
+	@in		number x
+	@in		number y
+	@out	nil
 */
 int MOAITransform::_setLoc ( lua_State* L ) {
 	LUA_SETUP ( MOAITransform, "UNN" )
@@ -409,29 +469,12 @@ int MOAITransform::_setLoc ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
-*/
-int MOAITransform::_setOffset ( lua_State* L ) {
-	LUA_SETUP ( MOAITransform, "UU" );
+/**	@name	setParent
+	@text	Sets or clears the prop's parent transform.
 	
-	MOAITransformBase* offset = state.GetLuaObject < MOAITransformBase >( 2 );
-	if ( !offset ) return 0;
-	
-	self->SetOffset ( offset );
-	self->mFilter = INHERIT_LOC;
-	
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@brief <tt>setParent (parent)</tt>\n
-\n
-	Sets the parent of the transform in the hiearchy.
-	@param parent Transform to become parent.
+	@in		MOAIProp2D self
+	@opt	MOAIProp2D parent	Default value is nil.
+	@out	nil
 */
 int MOAITransform::_setParent ( lua_State* L ) {
 	LUA_SETUP ( MOAITransform, "U" )
@@ -443,10 +486,12 @@ int MOAITransform::_setParent ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>setRot (rotation)</tt>\n
-\n
-	Sets the rotation value of the transform.
-	@param rotation New rotation value in degrees.
+/**	@name	setRot
+	@text	Sets the transform's rotation.
+	
+	@in		MOAITransform self
+	@in		number rot			Rotation in degrees.
+	@out	nil
 */
 int MOAITransform::_setRot ( lua_State* L ) {
 	LUA_SETUP ( MOAITransform, "UN" )
@@ -460,11 +505,13 @@ int MOAITransform::_setRot ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>setScl (sx, sy)</tt>\n
-\n
-	Sets the scaling values of the transform.
-	@param sx New horizontal scaling value.
-	@param sy New vertical scaling value.
+/**	@name	setScl
+	@text	Sets the transform's scale.
+	
+	@in		MOAITransform self
+	@in		number xScl
+	@in		number yScl
+	@out	nil
 */
 int MOAITransform::_setScl ( lua_State* L ) {
 	LUA_SETUP ( MOAITransform, "UNN" )
@@ -481,11 +528,14 @@ int MOAITransform::_setScl ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	worldToModel
+	@text	Transform a point in world space to model space.
+	
+	@in		MOAITransform self
+	@in		x
+	@in		y
+	@out	x
+	@out	y
 */
 int MOAITransform::_worldToModel ( lua_State* L ) {
 	LUA_SETUP ( MOAITransform, "UNN" )
@@ -540,7 +590,7 @@ void MOAITransform::BuildTransforms ( float xOff, float yOff, float xStretch, fl
 		this->mLoc.mY + yOff
 	);
 	
-	if ( this->mParent || this->mOffset ) {
+	if ( this->mParent ) {
 	
 		USAffine2D inherit;
 		inherit.Ident ();
@@ -549,13 +599,10 @@ void MOAITransform::BuildTransforms ( float xOff, float yOff, float xStretch, fl
 			inherit.Append ( this->mParent->GetLocalToWorldMtx ());
 		}
 		
-		if ( this->mOffset ) {
-			inherit.Append ( this->mOffset->GetLocalToWorldMtx ());
-		}
-		
 		if ( this->mFilter == INHERIT_ALL ) {
 			this->mLocalToWorldMtx.Append ( inherit );
 		}
+		
 		else if ( this->mFilter == INHERIT_LOC ) {
 			
 			USVec2D loc ( 0.0f, 0.0f );
@@ -642,7 +689,6 @@ void MOAITransform::RegisterLuaFuncs ( USLuaState& state ) {
 		{ "seekRot",			_seekRot },
 		{ "seekScl",			_seekScl },
 		{ "setLoc",				_setLoc },
-		{ "setOffset",			_setOffset },
 		{ "setParent",			_setParent },
 		{ "setRot",				_setRot },
 		{ "setScl",				_setScl },
@@ -661,18 +707,20 @@ void MOAITransform::SetLoc ( float x, float y ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITransform::SetOffset ( MOAITransformBase* offset ) {
-
-	this->mOffset = offset;
-	this->SetAttrLink ( ATTR_OFFSET, offset, NULL_ATTR );
-	this->ScheduleUpdate ();
-}
-
-//----------------------------------------------------------------//
 void MOAITransform::SetParent ( MOAITransformBase* parent ) {
 
+	if ( this->mParent == parent ) return;
+	
+	if ( this->mParent ) {
+		this->ClearDependency ( *this->mParent );
+	}
+
 	this->mParent = parent;
-	this->SetAttrLink ( ATTR_PARENT, parent, NULL_ATTR );
+	
+	if ( parent ) {
+		this->SetDependency ( *parent );
+	}
+
 	this->ScheduleUpdate ();
 }
 

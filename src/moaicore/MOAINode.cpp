@@ -96,7 +96,7 @@ int MOAINode::_getAttr ( lua_State* L ) {
 	
 	@in		MOAINode self
 	@in		number attrID	ID of the attribute to animate.
-	@in		number value	Total change to be added to attribute.
+	@in		number delta	Total change to be added to attribute.
 	@in		number length	Length of animation in seconds.
 	@opt	number mode		The ease mode. One of MOAIEaseType.EASE_IN, MOAIEaseType.EASE_OUT, MOAIEaseType.FLAT MOAIEaseType.LINEAR,
 							MOAIEaseType.SMOOTH, MOAIEaseType.SOFT_EASE_IN, MOAIEaseType.SOFT_EASE_OUT, MOAIEaseType.SOFT_SMOOTH
@@ -146,7 +146,7 @@ int MOAINode::_scheduleUpdate ( lua_State* L ) {
 	
 	@in		MOAINode self
 	@in		number attrID	ID of the attribute to animate.
-	@in		number value	Desired resulting value for attribute.
+	@in		number goal		Desired resulting value for attribute.
 	@in		number length	Length of animation in seconds.
 	@opt	number mode		The ease mode. One of MOAIEaseType.EASE_IN, MOAIEaseType.EASE_OUT, MOAIEaseType.FLAT MOAIEaseType.LINEAR,
 							MOAIEaseType.SMOOTH, MOAIEaseType.SOFT_EASE_IN, MOAIEaseType.SOFT_EASE_OUT, MOAIEaseType.SOFT_SMOOTH

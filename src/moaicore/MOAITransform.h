@@ -13,8 +13,6 @@
 //================================================================//
 /**	@brief	2D transformation hierarchy node.
 
-	@attr	ATTR_PARENT
-	@attr	ATTR_OFFSET
 	@attr	ATTR_X_LOC
 	@attr	ATTR_Y_LOC
 	@attr	ATTR_Z_ROT
@@ -30,7 +28,6 @@ protected:
 	float			mDegrees;
 	
 	USWeak < MOAITransformBase >	mParent;
-	USWeak < MOAITransformBase >	mOffset;
 	
 	u32 mFilter;
 
@@ -51,7 +48,6 @@ protected:
 	static int	_seekRot		( lua_State* L );
 	static int	_seekScl		( lua_State* L );
 	static int	_setLoc			( lua_State* L );
-	static int	_setOffset		( lua_State* L );
 	static int	_setParent		( lua_State* L );
 	static int	_setRot			( lua_State* L );
 	static int	_setScl			( lua_State* L );
@@ -64,8 +60,6 @@ protected:
 public:
 
 	enum {
-		ATTR_PARENT,
-		ATTR_OFFSET,
 		ATTR_X_LOC,
 		ATTR_Y_LOC,
 		ATTR_Z_ROT,
@@ -95,7 +89,6 @@ public:
 	void				RegisterLuaClass				( USLuaState& state );
 	void				RegisterLuaFuncs				( USLuaState& state );
 	void				SetLoc							( float x, float y );
-	void				SetOffset						( MOAITransformBase* offset );
 	virtual void		SetParent						( MOAITransformBase* parent );
 	void				SetScl							( float x, float y );
 	STLString			ToString						();
