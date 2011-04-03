@@ -48,6 +48,11 @@
 // MOAILogMgr
 //================================================================//
 /**	@brief	Singleton for managing debug log messages and log level.
+
+	@const LOG_NONE
+	@const LOG_ERROR
+	@const LOG_WARNING
+	@const LOG_STATUS
 */
 class MOAILogMgr :
 	public USGlobalClass < MOAILogMgr, USLuaObject > {

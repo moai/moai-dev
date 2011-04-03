@@ -10,11 +10,11 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	isDebugBuild
+	@text	Returns a boolean value indicating whether Moai has been
+			compiles as a debug build or not.
+	
+	@out	boolean isDebugBuild
 */
 int MOAILogMgr::_isDebugBuild ( lua_State* L ) {
 
@@ -30,11 +30,11 @@ int MOAILogMgr::_isDebugBuild ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	log
+	@text	Alias for print.
+	
+	@in		string message
+	@out	nil
 */
 int MOAILogMgr::_log ( lua_State* L ) {
 
@@ -48,11 +48,13 @@ int MOAILogMgr::_log ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	registerLogMessage
+	@text	Register a format string to handle a log message. Register
+			an empty string to hide messages.
+	
+	@in		number messageID
+	@opt	string formatString		Default value is an empty string.
+	@out	nil
 */
 int MOAILogMgr::_registerLogMessage ( lua_State* L ) {
 	UNUSED ( L );
@@ -60,7 +62,7 @@ int MOAILogMgr::_registerLogMessage ( lua_State* L ) {
 	#ifdef _DEBUG
 
 		USLuaState state ( L );
-		if ( !state.CheckParams ( 1, "NS" )) return 0;
+		if ( !state.CheckParams ( 1, "N" )) return 0;
 
 		u32 messageID	= state.GetValue < u32 >( 1, 0 );
 		cc8* message	= state.GetValue < cc8* >( 2, "" );
@@ -73,11 +75,11 @@ int MOAILogMgr::_registerLogMessage ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	setLogLevel
+	@text	Set the logging level.
+	
+	@in		number logLevel		One of MOAILogMgr LOG_NONE, LOG_ERROR, LOG_WARNING, LOG_STATUS
+	@out	nil
 */
 int MOAILogMgr::_setLogLevel ( lua_State* L ) {
 

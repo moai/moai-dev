@@ -30,11 +30,13 @@ MOAIAttrLink::~MOAIAttrLink () {
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@brief <tt>clearAttrLink ( self, attributeID )</tt>\n
-\n
-	Clears an attribute link.
-	@param self (in)
-	@param attributeID (in)
+/**	@name	clearAttrLink
+	@text	Clears an attribute *pull* link - call this from the node
+			receiving the attribute value.
+	
+	@in		MOAINode self
+	@in		number attrID
+	@out	nil
 */
 int MOAINode::_clearAttrLink ( lua_State* L ) {
 	LUA_SETUP ( MOAINode, "UN" );
@@ -46,11 +48,12 @@ int MOAINode::_clearAttrLink ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	clearDependency
+	@text	Clears a dependency on a foreign node.
+	
+	@in		MOAINode self
+	@in		MOAINode sourceNode
+	@out	nil
 */
 int MOAINode::_clearDependency ( lua_State* L ) {
 	LUA_SETUP ( MOAINode, "UU" );
@@ -64,12 +67,12 @@ int MOAINode::_clearDependency ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( value ) getAttr ( self, attributeID )</tt>\n
-\n
-	Returns the value of the attribute if it exists or nil if it doesn't.
-	@param self (in)
-	@param attributeID (in)
-	@param value (out)
+/**	@name	getAttr
+	@text	Returns the value of the attribute if it exists or nil if it doesn't.
+	
+	@in		MOAINode self
+	@in		number attrID
+	@out	number value
 */
 int MOAINode::_getAttr ( lua_State* L ) {
 	LUA_SETUP ( MOAINode, "UN" );
@@ -87,15 +90,18 @@ int MOAINode::_getAttr ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( action ) moveAttr ( self, attributeID, value, delay, [mode])</tt>\n
-\n
-	Returns a MOAIEaseDriver configured to add a value to an attribute over a delay.
-	@param self (in)
-	@param attributeID (in)
-	@param value (in)
-	@param delay (in)
-	@param [mode] (in)
-	@param action (out)
+/**	@name	moveAttr
+	@text	Animate the attribute by applying a delta. Creates and returns
+			a MOAIEaseDriver initialized to apply the delta.
+	
+	@in		MOAINode self
+	@in		number attrID	ID of the attribute to animate.
+	@in		number value	Total change to be added to attribute.
+	@in		number length	Length of animation in seconds.
+	@opt	number mode		The ease mode. One of MOAIEaseType.EASE_IN, MOAIEaseType.EASE_OUT, MOAIEaseType.FLAT MOAIEaseType.LINEAR,
+							MOAIEaseType.SMOOTH, MOAIEaseType.SOFT_EASE_IN, MOAIEaseType.SOFT_EASE_OUT, MOAIEaseType.SOFT_SMOOTH
+
+	@out	MOAIEaseDriver easeDriver
 */
 int MOAINode::_moveAttr ( lua_State* L ) {
 	LUA_SETUP ( MOAINode, "UNNN" )
@@ -105,12 +111,12 @@ int MOAINode::_moveAttr ( lua_State* L ) {
 	
 	u32 attrID		= state.GetValue < u32 >( 2, 0 );
 	float value		= state.GetValue < float >( 3, 0.0f );
-	float delay		= state.GetValue < float >( 4, 0.0f );
+	float length	= state.GetValue < float >( 4, 0.0f );
 	u32 mode		= state.GetValue < u32 >( 5, USInterpolate::kSmooth );
 	
 	action->SetLink ( 0, self, attrID, value, mode );
 	
-	action->SetLength ( delay );
+	action->SetLength ( length );
 	action->Start ();
 	action->PushLuaUserdata ( state );
 
@@ -118,11 +124,12 @@ int MOAINode::_moveAttr ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	scheduleUpdate
+	@text	Schedule the node for an update next time the dependency graph
+			is processed. Any depdendent nodes will also be updated.
+	
+	@in		MOAINode self
+	@out	nil
 */
 int MOAINode::_scheduleUpdate ( lua_State* L ) {
 	LUA_SETUP ( MOAINode, "U" );
@@ -132,15 +139,19 @@ int MOAINode::_scheduleUpdate ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( action ) moveAttr ( self, attributeID, value, delay, [mode])</tt>\n
-\n
-	Returns a MOAIEaseDriver configured to add a delta to an attribute over a delay to reach a value.
-	@param self (in)
-	@param attributeID (in)
-	@param value (in)
-	@param delay (in)
-	@param [mode] (in)
-	@param action (out)
+/**	@name	seekAttr
+	@text	Animate the attribute by applying a delta. Delta is computed
+			given a target value. Creates and returns a MOAIEaseDriver
+			initialized to apply the delta.
+	
+	@in		MOAINode self
+	@in		number attrID	ID of the attribute to animate.
+	@in		number value	Desired resulting value for attribute.
+	@in		number length	Length of animation in seconds.
+	@opt	number mode		The ease mode. One of MOAIEaseType.EASE_IN, MOAIEaseType.EASE_OUT, MOAIEaseType.FLAT MOAIEaseType.LINEAR,
+							MOAIEaseType.SMOOTH, MOAIEaseType.SOFT_EASE_IN, MOAIEaseType.SOFT_EASE_OUT, MOAIEaseType.SOFT_SMOOTH
+
+	@out	MOAIEaseDriver easeDriver
 */
 int MOAINode::_seekAttr ( lua_State* L ) {
 	LUA_SETUP ( MOAINode, "UNNN" )
@@ -168,11 +179,13 @@ int MOAINode::_seekAttr ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>setAttr( attributeID, value )</tt>\n
-	\n
-	Sets an attribute of a Moai object.
-	@param attributeID Property of this object to set.
-	@param value Value to set to.
+/**	@name	setAttr
+	@text	Sets the value of an attribute.
+	
+	@in		MOAINode self
+	@in		number attrID
+	@in		number value
+	@out	nil
 */
 int MOAINode::_setAttr ( lua_State* L ) {
 	LUA_SETUP ( MOAINode, "UNN" );
@@ -191,20 +204,15 @@ int MOAINode::_setAttr ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>setAttrLink ( attributeID, sourceNode, sourceAttribute )</tt>\n
-	\n
-	Sets an attribute of a Moai object.
-	@param attributeID Property of this object to link to.
-	\li \c ATTR_X_LOC - Location of the object along its X-axis.
-	\li \c ATTR_Y_LOC - Location of the object along its Y-axis.
-	\li \c ATTR_Z_ROT - Rotation of the object about its origin.
-	\li \c ATTR_X_SCL - Scaling of the object along its X-axis.
-	\li \c ATTR_Y_SCL - Scaling of the object along its Y-axis.
-	\li \c ATTR_BRUSH_ID - Index of a MOAIBrush in a MOAIGfxQuadListDeck2D.
-	@param sourceNode Object to link to.
-	@param sourceAttribute Attribute of the object you are linking to to connect to.
-	\li \c ATTR_TIME - The time of a MOAITimer object.
-	\li \c ATTR_VALUE - The value parameter of a MOAIAnimCurve key.
+/**	@name	setAttrLink
+	@text	Sets a *pull* attribute connecting an attribute in the
+			note to an attribute in a foreign node.
+	
+	@in		MOAINode self
+	@in		number attrID			ID of attribute to become dependent of foreign node.
+	@in		MOAINode sourceNode		Foreign node.
+	@in		number sourceAttrID		Attribute in foreign node to control value of attribue.
+	@out	nil
 */
 int MOAINode::_setAttrLink ( lua_State* L ) {
 	LUA_SETUP ( MOAINode, "UNUN" );
@@ -222,11 +230,14 @@ int MOAINode::_setAttrLink ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	setDependency
+	@text	Creates a dependency between the node and a foreign node
+			without the use of attributes; if the foreign node is updated,
+			the dependent node will be updated after.
+	
+	@in		MOAINode self
+	@in		MOAINode sourceNode
+	@out	nil
 */
 int MOAINode::_setDependency ( lua_State* L ) {
 	LUA_SETUP ( MOAINode, "UU" );
