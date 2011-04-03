@@ -1,3 +1,9 @@
+----------------------------------------------------------------
+-- Copyright (c) 2010-2011 Zipline Games, Inc. 
+-- All Rights Reserved. 
+-- http://getmoai.com
+----------------------------------------------------------------
+
 print ( "hello, moai!" )
 
 scene = MOAILayer2D.new ()

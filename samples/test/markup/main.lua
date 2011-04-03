@@ -1,3 +1,9 @@
+----------------------------------------------------------------
+-- Copyright (c) 2010-2011 Zipline Games, Inc. 
+-- All Rights Reserved. 
+-- http://getmoai.com
+----------------------------------------------------------------
+
 print ("CAN I HAZ LUABURGER?")
 
 MOAIDebugLines.setStyle ( MOAIDebugLines.TEXT_BOX, 1, 1, 1, 1, 1 )
