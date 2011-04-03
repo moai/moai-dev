@@ -11,7 +11,7 @@
 //================================================================//
 class USFileStream :
 	public USStream {
-private:
+protected:
 
 	FILE*		mFile;
 	u32			mLength;

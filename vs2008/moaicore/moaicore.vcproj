@@ -680,6 +680,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\moaicore\MOAIParser.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIParser.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\moaicore\MOAISerializer.cpp"
 				>
 			</File>
