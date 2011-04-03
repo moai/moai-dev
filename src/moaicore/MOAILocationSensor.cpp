@@ -9,11 +9,16 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	getLocation
+	@text	Returns the current information about the physical location.
+
+	@in		MOAILevelSensor self
+	@out	number longitude
+	@out	number latitude
+	@out	number haccuracy		The horizontal (long/lat) accuracy.
+	@out	number altitude
+	@out	number vaccuracy		The vertical (altitude) accuracy.
+	@out	number speed
 */
 int MOAILocationSensor::_getLocation ( lua_State* L ) {
 	LUA_SETUP ( MOAILocationSensor, "U" )
@@ -29,11 +34,12 @@ int MOAILocationSensor::_getLocation ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	setCallback
+	@text	Sets the callback to be issued when the location changes.
+
+	@in		MOAILevelSensor self
+	@in		function callback
+	@out	nil
 */
 int MOAILocationSensor::_setCallback ( lua_State* L ) {
 	LUA_SETUP ( MOAILocationSensor, "U" )

@@ -9,11 +9,11 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	getHeading
+	@text	Returns the current heading according to the built-in compass.
+
+	@in		MOAICompassSensor self
+	@out	number heading
 */
 int MOAICompassSensor::_getHeading ( lua_State* L ) {
 	LUA_SETUP ( MOAICompassSensor, "U" )
@@ -24,11 +24,12 @@ int MOAICompassSensor::_getHeading ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	setCallback
+	@text	Sets the callback to be issued when the heading changes.
+
+	@in		MOAICompassSensor self
+	@in		function callback
+	@out	nil
 */
 int MOAICompassSensor::_setCallback ( lua_State* L ) {
 	LUA_SETUP ( MOAICompassSensor, "U" )

@@ -19,11 +19,12 @@ public:
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@brief <tt>keyDown ( str )</tt>\n
-\n
-	Determines if a key was JUST pressed.
-	@param str Keycode value(s) to be checked against the input table
-	@return True if the key was just pressed, false if not.
+/**	@name	down
+	@text	Checks to see if the button was pressed during the last iteration.
+
+	@in		MOAIButtonSensor self
+	@in		string key				Keycode value(s) to be checked against the input table.
+	@out	boolean wasPressed
 */
 int MOAIKeyboardSensor::_keyDown ( lua_State* L ) {
 	LUA_SETUP ( MOAIKeyboardSensor, "U" )
@@ -50,11 +51,12 @@ int MOAIKeyboardSensor::_keyDown ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>keyIsDown ( str )</tt>\n
-\n
-	Determines if a key is being held down.
-	@param str Keycode value(s) to be checked against the input table
-	@return True if the key is being depressed, false if not.
+/**	@name	keyIsDown
+	@text	Checks to see if the button is currently down.
+
+	@in		MOAIButtonSensor self
+	@in		string key				Keycode value(s) to be checked against the input table.
+	@out	boolean isDown
 */
 int MOAIKeyboardSensor::_keyIsDown ( lua_State* L ) {
 	LUA_SETUP ( MOAIKeyboardSensor, "U" )
@@ -81,11 +83,12 @@ int MOAIKeyboardSensor::_keyIsDown ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>keyIsUp ( str )</tt>\n
-\n
-	Determines if a key is not being held.
-	@param str Keycode value(s) to be checked against the input table
-	@return True if key is not being pressed at all, false if not.
+/**	@name	keyIsUp
+	@text	Checks to see if the specified key is currently up.
+
+	@in		MOAIButtonSensor self
+	@in		string key				Keycode value(s) to be checked against the input table.
+	@out	boolean wasReleased
 */
 int MOAIKeyboardSensor::_keyIsUp ( lua_State* L ) {
 	LUA_SETUP ( MOAIKeyboardSensor, "U" )
@@ -112,11 +115,12 @@ int MOAIKeyboardSensor::_keyIsUp ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>keyUp ( str )</tt>\n
-\n
-	Determines if a key was JUST released.
-	@param str Keycode value(s) to be checked against the input table
-	@return True if the key was just released, false if not.
+/**	@name	keyUp
+	@text	Checks to see if the specified key was released during the last iteration.
+
+	@in		MOAIButtonSensor self
+	@in		string key				Keycode value(s) to be checked against the input table.
+	@out	boolean wasReleased
 */
 int MOAIKeyboardSensor::_keyUp ( lua_State* L ) {
 	LUA_SETUP ( MOAIKeyboardSensor, "U" )
@@ -143,10 +147,12 @@ int MOAIKeyboardSensor::_keyUp ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>setCallback ( ref )</tt>\n
-\n
-	Sets the callback function for when a key is pressed.
-	@param ref Function to call.
+/**	@name	setCallback
+	@text	Sets the callback to be issued when a key is pressed.
+
+	@in		MOAIKeyboardSensor self
+	@in		function callback
+	@out	nil
 */
 int MOAIKeyboardSensor::_setCallback ( lua_State* L ) {
 	LUA_SETUP ( MOAIKeyboardSensor, "UF" )

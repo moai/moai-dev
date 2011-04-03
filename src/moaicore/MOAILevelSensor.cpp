@@ -9,11 +9,13 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	getLevel
+	@text	Description of method coming soon.
+
+	@in		MOAILevelSensor self
+	@out	number x
+	@out	number y
+	@out	number z
 */
 int MOAILevelSensor::_getLevel ( lua_State* L ) {
 	LUA_SETUP ( MOAILevelSensor, "U" )
@@ -26,11 +28,12 @@ int MOAILevelSensor::_getLevel ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	setCallback
+	@text	Sets the callback to be issued when the level changes.
+
+	@in		MOAILevelSensor self
+	@in		function callback
+	@out	nil
 */
 int MOAILevelSensor::_setCallback ( lua_State* L ) {
 	LUA_SETUP ( MOAILevelSensor, "U" )

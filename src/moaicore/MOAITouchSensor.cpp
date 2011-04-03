@@ -9,11 +9,11 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	down
+	@text	Checks to see if the screen was touched during the last iteration.
+
+	@in		MOAITouchSensor self
+	@out	boolean wasPressed
 */
 int MOAITouchSensor::_down ( lua_State* L ) {
 	LUA_SETUP ( MOAITouchSensor, "U" )
@@ -28,11 +28,13 @@ int MOAITouchSensor::_down ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	getActiveTouches
+	@text	Returns the IDs of all of the touches currently occurring (for use with getTouch).
+
+	@in		MOAITouchSensor self
+	@out	number id1
+	@out	...
+	@out	number idn
 */
 int MOAITouchSensor::_getActiveTouches ( lua_State* L ) {
 	LUA_SETUP ( MOAITouchSensor, "U" )
@@ -44,11 +46,14 @@ int MOAITouchSensor::_getActiveTouches ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	getTouch
+	@text	Checks to see if there are currently touches being made on the screen.
+
+	@in		MOAITouchSensor self
+	@in		number id				The ID of the touch.
+	@out	number x
+	@out	number y
+	@out	number tapCount
 */
 int MOAITouchSensor::_getTouch ( lua_State* L ) {
 	LUA_SETUP ( MOAITouchSensor, "U" )
@@ -69,11 +74,11 @@ int MOAITouchSensor::_getTouch ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	hasTouches
+	@text	Checks to see if there are currently touches being made on the screen.
+
+	@in		MOAITouchSensor self
+	@out	boolean hasTouches
 */
 int MOAITouchSensor::_hasTouches ( lua_State* L ) {
 	LUA_SETUP ( MOAITouchSensor, "U" )
@@ -83,11 +88,11 @@ int MOAITouchSensor::_hasTouches ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	isDown
+	@text	Checks to see if the touch status is currently down.
+
+	@in		MOAITouchSensor self
+	@out	boolean isDown
 */
 int MOAITouchSensor::_isDown ( lua_State* L ) {
 	LUA_SETUP ( MOAITouchSensor, "U" )
@@ -102,10 +107,12 @@ int MOAITouchSensor::_isDown ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>setCallback ( ref )</tt>\n
-\n
-	Sets the callback function for when the pointer moves.
-	@param ref Function to call.
+/**	@name	setCallback
+	@text	Sets the callback to be issued when the pointer location changes.
+
+	@in		MOAITouchSensor self
+	@in		function callback
+	@out	nil
 */
 int MOAITouchSensor::_setCallback ( lua_State* L ) {
 	LUA_SETUP ( MOAITouchSensor, "UF" )
@@ -116,11 +123,11 @@ int MOAITouchSensor::_setCallback ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	up
+	@text	Checks to see if the screen was untouched (is no longer being touched) during the last iteration.
+
+	@in		MOAITouchSensor self
+	@out	boolean wasPressed
 */
 int MOAITouchSensor::_up ( lua_State* L ) {
 	LUA_SETUP ( MOAITouchSensor, "U" )

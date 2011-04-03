@@ -18,11 +18,11 @@ public:
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( wasPressed ) down ( self )</tt>\n
-\n
-	Checks to see if the button was pressed during the last iteration.
-	@param self (in)
-	@param down (out)
+/**	@name	down
+	@text	Checks to see if the button was pressed during the last iteration.
+
+	@in		MOAIButtonSensor self
+	@out	boolean wasPressed
 */
 int MOAIButtonSensor::_down ( lua_State* L ) {
 	LUA_SETUP ( MOAIButtonSensor, "U" )
@@ -32,11 +32,11 @@ int MOAIButtonSensor::_down ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( isDown ) isDown ( self )</tt>\n
-\n
-	Checks to see if the button is currently down.
-	@param self (in)
-	@param isDown (out)
+/**	@name	isDown
+	@text	Checks to see if the button is currently down.
+
+	@in		MOAIButtonSensor self
+	@out	boolean isDown
 */
 int MOAIButtonSensor::_isDown ( lua_State* L ) {
 	LUA_SETUP ( MOAIButtonSensor, "U" )
@@ -46,11 +46,11 @@ int MOAIButtonSensor::_isDown ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( isUp ) isUp ( self )</tt>\n
-\n
-	Checks to see if the button is currently up.
-	@param self (in)
-	@param isUp (out)
+/**	@name	isUp
+	@text	Checks to see if the button is currently up.
+
+	@in		MOAIButtonSensor self
+	@out	boolean isUp
 */
 int MOAIButtonSensor::_isUp ( lua_State* L ) {
 	LUA_SETUP ( MOAIButtonSensor, "U" )
@@ -60,11 +60,11 @@ int MOAIButtonSensor::_isUp ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( wasReleased ) up ( params )</tt>\n
-\n
-	Checks to see if the button was released during the last iteration.
-	@param self (in)
-	@param up (out)
+/**	@name	up
+	@text	Checks to see if the button was released during the last iteration.
+
+	@in		MOAIButtonSensor self
+	@out	boolean wasReleased
 */
 int MOAIButtonSensor::_up ( lua_State* L ) {
 	LUA_SETUP ( MOAIButtonSensor, "U" )
@@ -74,11 +74,12 @@ int MOAIButtonSensor::_up ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) setCallback ( self, callback )</tt>\n
-\n
-	Sets the function to be called on button events.
-	@param self (in)
-	@param callback (in)
+/**	@name	setCallback
+	@text	Sets the callback to be issued when button events occur.
+
+	@in		MOAIButtonSensor self
+	@in		function callback
+	@out	nil
 */
 int MOAIButtonSensor::_setCallback ( lua_State* L ) {
 	LUA_SETUP ( MOAIButtonSensor, "UF" )
