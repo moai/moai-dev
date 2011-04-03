@@ -13,10 +13,11 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name clearCurves
-	@param1 self @type userdata
-	@text Removes all of the animation curves currently bound to this text object.
-	@return nil
+/**	@name	clearCurves
+	@text	Removes all of the animation curves currently bound to this text object.
+
+	@in		MOAITextBox self
+	@out	nil
 */
 int MOAITextBox::_clearCurves ( lua_State* L ) {
 	LUA_SETUP ( MOAITextBox, "U" )
@@ -27,10 +28,11 @@ int MOAITextBox::_clearCurves ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name more
-	@param1 self @type userdata
-	@text Returns whether there are additional pages of text below the cursor position that are not visible on the screen.
-	@return If there is additional text below the cursor that is not visible on the screen due to clipping.
+/**	@name	more
+	@text	Returns whether there are additional pages of text below the cursor position that are not visible on the screen.
+
+	@in		MOAITextBox self
+	@out	boolean isMore				If there is additional text below the cursor that is not visible on the screen due to clipping.
 */
 int MOAITextBox::_more ( lua_State* L ) {
 	LUA_SETUP ( MOAITextBox, "U" )
@@ -41,10 +43,11 @@ int MOAITextBox::_more ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name nextPage
-	@param1 self @type userdata
-	@text Advances to the next page of text (if any) or wraps to the start of the text (if at end).
-	@return nil
+/**	@name	nextPage
+	@text	Advances to the next page of text (if any) or wraps to the start of the text (if at end).
+
+	@in		MOAITextBox self
+	@out	nil
 */
 int MOAITextBox::_nextPage ( lua_State* L ) {
 	LUA_SETUP ( MOAITextBox, "U" )
@@ -56,11 +59,12 @@ int MOAITextBox::_nextPage ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name reserveCurves
-	@param1 self @type userdata
-	@param2 nCurves @type number
-	@text Reserves a set of IDs for animation curves to be binding to this text object.  See setCurves.
-	@return nil
+/**	@name	reserveCurves
+	@text	Reserves a set of IDs for animation curves to be binding to this text object.  See setCurves.
+
+	@in		MOAITextBox self
+	@in		number nCurves
+	@out	nil
 */
 int MOAITextBox::_reserveCurves ( lua_State* L ) {
 	LUA_SETUP ( MOAITextBox, "UN" )
@@ -72,10 +76,11 @@ int MOAITextBox::_reserveCurves ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name revealAll
-	@param1 self @type userdata
-	@text Displays as much text as will fit in the text box.
-	@return nil
+/**	@name	revealAll
+	@text	Displays as much text as will fit in the text box.
+
+	@in		MOAITextBox self
+	@out	nil
 */
 int MOAITextBox::_revealAll ( lua_State* L ) {
 	LUA_SETUP ( MOAITextBox, "U" )
@@ -86,11 +91,12 @@ int MOAITextBox::_revealAll ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name setAlignment
-	@param1 self @type userdata
-	@param2 mAlignment @type enum @text Can be one of LEFT_JUSTIFY, CENTER_JUSTIFY or RIGHT_JUSTIFY.
-	@text Sets the alignment of the text in the text box.
-	@return nil
+/**	@name	setAlignment
+	@text	Sets the alignment of the text in the text box.
+
+	@in		MOAITextBox self
+	@in		enum mAlignment				Can be one of LEFT_JUSTIFY, CENTER_JUSTIFY or RIGHT_JUSTIFY.
+	@out	nil
 */
 int MOAITextBox::_setAlignment ( lua_State* L ) {
 	LUA_SETUP ( MOAITextBox, "UN" )
@@ -102,12 +108,13 @@ int MOAITextBox::_setAlignment ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name setCurve
-	@param1 self @type userdata
-	@param2 curveID @type number @text The ID of the curve within this text object.
-	@param3 curve @type userdata @text The MOAIAnimCurve to bind to.
-	@text Binds an animation curve to the text, where the Y value of the curve indicates the text offset.
-	@return nil
+/**	@name	setCurve
+	@text	Binds an animation curve to the text, where the Y value of the curve indicates the text offset.
+
+	@in		MOAITextBox self
+	@in		number curveID				The ID of the curve within this text object.
+	@in		MOAIAnimCurve curve			The MOAIAnimCurve to bind to.
+	@out	nil
 */
 int MOAITextBox::_setCurve ( lua_State* L ) {
 	LUA_SETUP ( MOAITextBox, "UNU" )
@@ -123,11 +130,12 @@ int MOAITextBox::_setCurve ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name setFont
-	@param1 self @type userdata
-	@param2 font @type userdata @text The MOAIFont to be used as the font for this text object.
-	@text Sets the specified font to be used to render text within this text object.
-	@return nil
+/**	@name	setFont
+	@text	Sets the specified font to be used to render text within this text object.
+
+	@in		MOAITextBox self
+	@in		MOAIFont font				The MOAIFont to be used as the font for this text object.
+	@out	nil
 */
 int MOAITextBox::_setFont ( lua_State* L ) {
 	LUA_SETUP ( MOAITextBox, "UU" )
@@ -141,11 +149,12 @@ int MOAITextBox::_setFont ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name setParent
-	@param1 self @type userdata
-	@param2 parent @type userdata @text The MOAITransform that will be the parent of this text object.
-	@text Sets this text object as a child of the specified parent transform, prim or layout.
-	@return nil
+/**	@name	setParent
+	@text	Sets this text object as a child of the specified parent transform, prim or layout.
+
+	@in		MOAITextBox self
+	@in		MOAITransform parent		The MOAITransform that will be the parent of this text object.
+	@out	nil
 */
 int MOAITextBox::_setParent ( lua_State* L ) {
 	LUA_SETUP ( MOAITextBox, "UU" )
@@ -159,14 +168,15 @@ int MOAITextBox::_setParent ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name setRect
-	@param1 self @type userdata
-	@param2 left @type number @text The X coordinate of the rect's upper-left point.
-	@param3 top @type number @text The Y coordinate of the rect's upper-left point.
-	@param4 right @type number @text The X coordinate of the rect's lower-right point.
-	@param5 bottom @type number @text The Y coordinate of the rect's lower-right point.
-	@text Sets the rectangular area for this text box.  Does not affect the size of the text box?
-	@return nil
+/**	@name	setRect
+	@text	Sets the rectangular area for this text box.
+
+	@in		MOAITextBox self
+	@in		number x1					The X coordinate of the rect's upper-left point.
+	@in		number y1					The Y coordinate of the rect's upper-left point.
+	@in		number x2					The X coordinate of the rect's lower-right point.
+	@in		number y2					The Y coordinate of the rect's lower-right point.
+	@out	nil
 */
 int MOAITextBox::_setRect ( lua_State* L ) {
 	LUA_SETUP ( MOAITextBox, "UNNNN" )
@@ -182,11 +192,12 @@ int MOAITextBox::_setRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name setReveal
-	@param1 self @type userdata
-	@param2 reveal @type number @text The number of renderable characters (i.e. not whitespace) to be shown.
-	@text Sets the number of renderable characters to be shown.  Can range from 0 to any value; values greater than the number of renderable characters in the current text will be ignored.
-	@return nil
+/**	@name	setReveal
+	@text	Sets the number of renderable characters to be shown.  Can range from 0 to any value; values greater than the number of renderable characters in the current text will be ignored.
+
+	@in		MOAITextBox self
+	@in		number reveal				The number of renderable characters (i.e. not whitespace) to be shown.
+	@out	nil
 */
 int MOAITextBox::_setReveal ( lua_State* L ) {
 	LUA_SETUP ( MOAITextBox, "UN" )
@@ -198,11 +209,12 @@ int MOAITextBox::_setReveal ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name setSpeed
-	@param1 self @type userdata
-	@param2 speed @type number @text The base spooling speed.
-	@text Sets the base spool speed used when creating a spooling MOAIAction with the spool() function.
-	@return nil
+/**	@name	setSpeed
+	@text	Sets the base spool speed used when creating a spooling MOAIAction with the spool() function.
+
+	@in		MOAITextBox self
+	@in		number speed				The base spooling speed.
+	@out	nil
 */
 int MOAITextBox::_setSpeed ( lua_State* L ) {
 	LUA_SETUP ( MOAITextBox, "UN" )
@@ -213,11 +225,12 @@ int MOAITextBox::_setSpeed ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name setString
-	@param1 self @type userdata
-	@param2 newStr @type string @text The new text string to be displayed.
-	@text Sets the text string to be displayed by this textbox.
-	@return nil
+/**	@name	setString
+	@text	Sets the text string to be displayed by this textbox.
+
+	@in		MOAITextBox self
+	@in		string newStr				The new text string to be displayed.
+	@out	nil
 */
 int MOAITextBox::_setString ( lua_State* L ) {
 	LUA_SETUP ( MOAITextBox, "US" )
@@ -229,11 +242,12 @@ int MOAITextBox::_setString ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name setTextSize
-	@param1 self @type userdata
-	@param2 newTextSize @type string @text The new size of the text.
-	@text Sets the size of the text to be rendered.  To avoid sampling, this should be the same or smaller than the point size returned by the font (which is different to the size or scale specified when initalizing the font; they are not measured in the same units).
-	@return nil
+/**	@name	setTextSize
+	@text	Sets the size of the text to be rendered.  To avoid sampling, this should be the same or smaller than the point size returned by the font (which is different to the size or scale specified when initalizing the font; they are not measured in the same units).
+
+	@in		MOAITextBox self
+	@in		number newTextSize			The new size of the text.
+	@out	nil
 */
 int MOAITextBox::_setTextSize ( lua_State* L ) {
 	LUA_SETUP ( MOAITextBox, "UN" )
@@ -245,11 +259,12 @@ int MOAITextBox::_setTextSize ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name setYFlip
-	@param1 self @type userdata
-	@param2 yFlip @type boolean @text Whether the vertical rendering direction should be inverted.
-	@text Sets the rendering direction for the text.  Default assumes a window style screen space (positive Y moves down the screen).  Set to true to render text for world style coordinate systems (positive Y moves up the screen).
-	@return nil
+/**	@name	setYFlip
+	@text	Sets the rendering direction for the text.  Default assumes a window style screen space (positive Y moves down the screen).  Set to true to render text for world style coordinate systems (positive Y moves up the screen).
+
+	@in		MOAITextBox self
+	@in		number yFlip				Whether the vertical rendering direction should be inverted.
+	@out	nil
 */
 int MOAITextBox::_setYFlip ( lua_State* L ) {
 	LUA_SETUP ( MOAITextBox, "UB" )
@@ -260,10 +275,12 @@ int MOAITextBox::_setYFlip ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name spool
-	@param1 self @type userdata
-	@text Creates a new MOAIAction which when run has the effect of increasing the amount of characters revealed from 0 to the length of the string currently set.  The spool action is automatically added to the root of the action tree, but may be reparented or stopped by the developer.  This function also automatically sets the current number of revealed characters to 0 (i.e. MOAITextBox:setReveal(0)).
-	@return The new MOAIAction which spools the text when run.
+/**	@name	spool
+	@text	Creates a new MOAIAction which when run has the effect of increasing the amount of characters revealed from 0 to the length of the string currently set.  The spool action is automatically added to the root of the action tree, but may be reparented or stopped by the developer.  This function also automatically sets the current number of revealed characters to 0 (i.e. MOAITextBox:setReveal(0)).
+
+	@in		MOAITextBox self
+	@in		number yFlip				Whether the vertical rendering direction should be inverted.
+	@out	MOAIAction action			The new MOAIAction which spools the text when run.
 */
 int MOAITextBox::_spool ( lua_State* L ) {
 	LUA_SETUP ( MOAITextBox, "U" )

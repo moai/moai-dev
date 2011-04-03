@@ -11,11 +11,12 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name setCallback
-	@param1 self @type userdata
-	@param2 callback @type function @text The function to be called when the asynchronous operation is complete.  The MOAIDataBuffer object is passed as the first parameter.
-	@text Sets the callback to be used when the asynchronous data IO operation completes.
-	@return nil
+/**	@name	setCallback
+	@text	Sets the callback to be used when the asynchronous data IO operation completes.
+
+	@in		MOAIDataIOAction self
+	@in		function callback		The function to be called when the asynchronous operation is complete.  The MOAIDataBuffer object is passed as the first parameter.
+	@out	nil
 */
 int MOAIDataIOAction::_setCallback ( lua_State* L ) {
 
