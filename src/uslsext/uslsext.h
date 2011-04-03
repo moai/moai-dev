@@ -20,6 +20,7 @@
 #include <uslsext/USCamera3D.h>
 #include <uslsext/USCameraFitter.h>
 #include <uslsext/USCanvas.h>
+#include <uslsext/USCgt.h>
 #include <uslsext/USColor.h>
 #include <uslsext/USCurve.h>
 #include <uslsext/USCurveSampler.h>
@@ -44,6 +45,7 @@
 #include <uslsext/USImage.h>
 #include <uslsext/USInterpolate.h>
 #include <uslsext/USIntersect.h>
+#include <uslsext/USLexStream.h>
 #include <uslsext/USLog.h>
 #include <uslsext/USMathConsts.h>
 #include <uslsext/USMatrix.h>
@@ -53,6 +55,7 @@
 #include <uslsext/USMutex.h>
 #include <uslsext/USMutex_posix.h>
 #include <uslsext/USMutex_win32.h>
+#include <uslsext/USParser.h>
 #include <uslsext/USPlane.h>
 #include <uslsext/USPolar.h>
 #include <uslsext/USPolygon2D.h>
@@ -71,6 +74,8 @@
 #include <uslsext/USSqlStatement.h>
 #include <uslsext/USSqlValue.h>
 #include <uslsext/USSurface2D.h>
+#include <uslsext/USSyntaxNode.h>
+#include <uslsext/USSyntaxScanner.h>
 #include <uslsext/USTask.h>
 #include <uslsext/USTaskThread.h>
 #include <uslsext/USTexture.h>

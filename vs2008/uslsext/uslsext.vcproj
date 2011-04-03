@@ -1036,6 +1036,50 @@
 				>
 			</File>
 		</Filter>
+		<Filter
+			Name="gpb"
+			>
+			<File
+				RelativePath="..\..\src\uslsext\USCgt.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\uslsext\USCgt.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\uslsext\USLexStream.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\uslsext\USLexStream.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\uslsext\USParser.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\uslsext\USParser.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\uslsext\USSyntaxNode.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\uslsext\USSyntaxNode.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\uslsext\USSyntaxScanner.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\uslsext\USSyntaxScanner.h"
+				>
+			</File>
+		</Filter>
 		<File
 			RelativePath="..\..\src\uslsext\pch.cpp"
 			>
