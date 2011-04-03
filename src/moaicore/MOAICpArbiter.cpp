@@ -13,11 +13,11 @@ SUPPRESS_EMPTY_FILE_WARNING
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	countContacts
+	@text	Returns the number of contacts occurring with this arbiter.
+
+	@in		MOAICpArbiter self
+	@out	number count		The number of contacts occurring.
 */
 int MOAICpArbiter::_countContacts ( lua_State* L ) {
 	LUA_SETUP ( MOAICpArbiter, "U" )
@@ -31,11 +31,12 @@ int MOAICpArbiter::_countContacts ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	getContactDepth
+	@text	Returns the depth of a contact point between two objects.
+
+	@in		MOAICpArbiter self
+	@in		number id			The ID of the contact.
+	@out	number depth		The depth of the contact in pixels (i.e. how far it overlaps).
 */
 int MOAICpArbiter::_getContactDepth ( lua_State* L ) {
 	LUA_SETUP ( MOAICpArbiter, "UN" )
@@ -50,11 +51,13 @@ int MOAICpArbiter::_getContactDepth ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	getContactNormal
+	@text	Returns the normal of a contact point between two objects.
+
+	@in		MOAICpArbiter self
+	@in		number id			The ID of the contact.
+	@out	boolean x			The X component of the normal vector.
+	@out	boolean y			The Y component of the normal vector.
 */
 int MOAICpArbiter::_getContactNormal ( lua_State* L ) {
 	LUA_SETUP ( MOAICpArbiter, "UN" )
@@ -70,11 +73,13 @@ int MOAICpArbiter::_getContactNormal ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	getContactPoint
+	@text	Returns the position of a contact point between two objects.
+
+	@in		MOAICpArbiter self
+	@in		number id			The ID of the contact.
+	@out	boolean x			The X component of the position vector.
+	@out	boolean y			The Y component of the position vector.
 */
 int MOAICpArbiter::_getContactPoint ( lua_State* L ) {
 	LUA_SETUP ( MOAICpArbiter, "UN" )
@@ -90,11 +95,12 @@ int MOAICpArbiter::_getContactPoint ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	getTotalImpulse
+	@text	Returns the total impulse of a contact point between two objects.
+
+	@in		MOAICpArbiter self
+	@out	boolean x			The X component of the force involved in the contact.
+	@out	boolean y			The Y component of the force involved in the contact.
 */
 int MOAICpArbiter::_getTotalImpulse ( lua_State* L ) {
 	LUA_SETUP ( MOAICpArbiter, "U" )
@@ -109,11 +115,12 @@ int MOAICpArbiter::_getTotalImpulse ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	getTotalImpulseWithFriction
+	@text	Returns the total impulse of a contact point between two objects, also including frictional forces.
+
+	@in		MOAICpArbiter self
+	@out	boolean x			The X component of the force involved in the contact.
+	@out	boolean y			The Y component of the force involved in the contact.
 */
 int MOAICpArbiter::_getTotalImpulseWithFriction ( lua_State* L ) {
 	LUA_SETUP ( MOAICpArbiter, "U" )
@@ -128,11 +135,11 @@ int MOAICpArbiter::_getTotalImpulseWithFriction ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	isFirstContact
+	@text	Returns whether this is the first time that these two objects have contacted.
+
+	@in		MOAICpArbiter self
+	@out	boolean first		Whether this is the first instance of a collision.
 */
 int MOAICpArbiter::_isFirstContact ( lua_State* L ) {
 	LUA_SETUP ( MOAICpArbiter, "U" )
@@ -146,11 +153,8 @@ int MOAICpArbiter::_isFirstContact ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	new
+	@text	Creation of new instances is not supported on this class.
 */
 int MOAICpArbiter::_new ( lua_State* L ) {
 	UNUSED ( L );
