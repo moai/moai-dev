@@ -15,13 +15,13 @@
 			a MOAIEaseDriver initialized to apply the delta.
 	
 	@in		MOAIColor self
-	@in		number r		Total change to be added to r.
-	@in		number g		Total change to be added to g.
-	@in		number b		Total change to be added to b.
-	@in		number a		Total change to be added to a.
-	@in		number length	Length of animation in seconds.
-	@opt	number mode		The ease mode. One of MOAIEaseType.EASE_IN, MOAIEaseType.EASE_OUT, MOAIEaseType.FLAT MOAIEaseType.LINEAR,
-							MOAIEaseType.SMOOTH, MOAIEaseType.SOFT_EASE_IN, MOAIEaseType.SOFT_EASE_OUT, MOAIEaseType.SOFT_SMOOTH
+	@in		number rDelta		Delta to be added to r.
+	@in		number gDelta		Delta to be added to g.
+	@in		number bDelta		Delta to be added to b.
+	@in		number aDelta		Delta to be added to a.
+	@in		number length		Length of animation in seconds.
+	@opt	number mode			The ease mode. One of MOAIEaseType.EASE_IN, MOAIEaseType.EASE_OUT, MOAIEaseType.FLAT MOAIEaseType.LINEAR,
+								MOAIEaseType.SMOOTH, MOAIEaseType.SOFT_EASE_IN, MOAIEaseType.SOFT_EASE_OUT, MOAIEaseType.SOFT_SMOOTH
 
 	@out	MOAIEaseDriver easeDriver
 */
@@ -57,13 +57,13 @@ int MOAIColor::_moveColor ( lua_State* L ) {
 			initialized to apply the delta.
 	
 	@in		MOAIColor self
-	@in		number r		Desired resulting value for r.
-	@in		number g		Desired resulting value for g.
-	@in		number b		Desired resulting value for b.
-	@in		number a		Desired resulting value for a.
-	@in		number length	Length of animation in seconds.
-	@opt	number mode		The ease mode. One of MOAIEaseType.EASE_IN, MOAIEaseType.EASE_OUT, MOAIEaseType.FLAT MOAIEaseType.LINEAR,
-							MOAIEaseType.SMOOTH, MOAIEaseType.SOFT_EASE_IN, MOAIEaseType.SOFT_EASE_OUT, MOAIEaseType.SOFT_SMOOTH
+	@in		number rGoal		Desired resulting value for r.
+	@in		number gGoal		Desired resulting value for g.
+	@in		number bGoal		Desired resulting value for b.
+	@in		number aGoal		Desired resulting value for a.
+	@in		number length		Length of animation in seconds.
+	@opt	number mode			The ease mode. One of MOAIEaseType.EASE_IN, MOAIEaseType.EASE_OUT, MOAIEaseType.FLAT MOAIEaseType.LINEAR,
+								MOAIEaseType.SMOOTH, MOAIEaseType.SOFT_EASE_IN, MOAIEaseType.SOFT_EASE_OUT, MOAIEaseType.SOFT_SMOOTH
 
 	@out	MOAIEaseDriver easeDriver
 */
