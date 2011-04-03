@@ -36,8 +36,6 @@ static int sWinHeight;
 
 //----------------------------------------------------------------//
 static void _onKeyDown ( unsigned char key, int x, int y ) {
-	
-	int blarg;
 
 	//int mod = glutGetModifiers ();
 	//printf ( "mod: 0x%08x\n", mod );
