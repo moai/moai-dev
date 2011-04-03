@@ -17,11 +17,8 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) getFitting ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	getFitting
+	@text	Computes a camera fitting for a given world 
 */
 int MOAILayer2D::_getFitting ( lua_State* L ) {
 	LUA_SETUP ( MOAILayer2D, "UNNNN" )

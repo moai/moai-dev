@@ -9,13 +9,14 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@brief <tt>clearTileFlags ( self, xTile, yTile, mask )</tt>\n
-\n
-	Clears the tile code bits masked by 'mask.'
-	@param self (in)
-	@param xTile (in) Column containing tile.
-	@param yTile (in) Row containing tile.
-	@param mask (in)
+/**	@name	clearTileFlags
+	@text	Clears bits specified in mask.
+
+	@in		MOAIGrid self
+	@in		number xTile
+	@in		number yTile
+	@in		number mask
+	@out	nil
 */
 int MOAIGrid::_clearTileFlags ( lua_State* L ) {
 	LUA_SETUP ( MOAIGrid, "UNNN" )
@@ -34,13 +35,13 @@ int MOAIGrid::_clearTileFlags ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( tile ) getTile ( self, xTile, yTile, loSize, hiSize, base )</tt>\n
-\n
-	Returns the value of a given tile.
-	@param self (in)
-	@param xTile (in) Column containing tile.
-	@param yTile (in) Row containing tile.
-	@param tile (out) Tile code.
+/**	@name	getTile
+	@text	Returns the value of a given tile.
+
+	@in		MOAIGrid self
+	@in		number xTile
+	@in		number yTile
+	@out	number tile
 */
 int MOAIGrid::_getTile ( lua_State* L ) {
 	LUA_SETUP ( MOAIGrid, "UNN" )
@@ -54,14 +55,14 @@ int MOAIGrid::_getTile ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( flags ) getTileFlags ( self, xTile, yTile, mask )</tt>\n
-\n
-	Returns the tile code bits masked by 'mask.'
-	@param self (in)
-	@param xTile (in) Column containing tile.
-	@param yTile (in) Row containing tile.
-	@param mask (in)
-	@param flags (out)
+/**	@name	getTileFlags
+	@text	Returns the masked value of a given tile.
+
+	@in		MOAIGrid self
+	@in		number xTile
+	@in		number yTile
+	@in		number mask
+	@out	number tile
 */
 int MOAIGrid::_getTileFlags ( lua_State* L ) {
 	LUA_SETUP ( MOAIGrid, "UNNN" )
@@ -80,28 +81,16 @@ int MOAIGrid::_getTileFlags ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( x, y ) getTileLoc ( self, xTile, yTile, position )</tt>\n
-\n
-	Returns the world space coordinate of the tile with respect to the tilemap's
-	geometry and world transform.
-	The optional 'position' flag determines the location of the coordinate within the tile:
-	
-	MOAIGrid.TILE_LEFT_TOP
-	MOAIGrid.TILE_RIGHT_TOP
-	MOAIGrid.TILE_LEFT_BOTTOM
-	MOAIGrid.TILE_RIGHT_BOTTOM
-	MOAIGrid.TILE_LEFT_CENTER
-	MOAIGrid.TILE_RIGHT_CENTER
-	MOAIGrid.TILE_TOP_CENTER
-	MOAIGrid.TILE_BOTTOM_CENTER
-	MOAIGrid.TILE_CENTER
-	
-	@param self (in)
-	@param xTile (in)
-	@param yTile (in)
-	@param position (in)
-	@param x (out)
-	@param y (out)
+/**	@name	getTileLoc
+	@text	Returns the grid space coordinate of the tile. The optional 'position'
+			flag determines the location of the coordinate within the tile.
+
+	@in		MOAIGrid self
+	@in		number xTile
+	@in		number yTile
+	@opt	number position		See MOAIGrid for list of positions. Default it MOAIGrid.TILE_CENTER.
+	@out	number x
+	@out	number y
 */
 int MOAIGrid::_getTileLoc ( lua_State* L ) {
 	LUA_SETUP ( MOAIGrid, "UNN" )
@@ -117,14 +106,14 @@ int MOAIGrid::_getTileLoc ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( xTile, yTile ) worldToCoord ( self, x, y )</tt>\n
-\n
-	Transforms a world coordinate to a grid index.
-	@param self (in)
-	@param x (in)
-	@param y (in)
-	@param xTile (out)
-	@param yTile (out)
+/**	@name	locToCoord
+	@text	Transforms a coordinate in grid space into a tile index.
+
+	@in		MOAIGrid self
+	@in		number x
+	@in		number y
+	@out	number xTile
+	@out	number yTile
 */
 int MOAIGrid::_locToCoord ( lua_State* L ) {
 	LUA_SETUP ( MOAIGrid, "UNN" )
@@ -142,12 +131,13 @@ int MOAIGrid::_locToCoord ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>setRow ( self, row, id )</tt>\n
-\n
-	Initializes dimensions of grid and reserves storage for tiles.
-	@param self (in)
-	@param row (in)
-	@param ... (in)
+/**	@name	setRow
+	@text	Initializes a grid row given a variable argument list of values.
+
+	@in		MOAIGrid self
+	@in		number row
+	@in		...
+	@out	nil
 */
 int MOAIGrid::_setRow ( lua_State* L ) {
 	LUA_SETUP ( MOAIGrid, "UN" )
@@ -165,14 +155,15 @@ int MOAIGrid::_setRow ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>setSize ( self, width, height, tileWidth, tileHeight )</tt>\n
-\n
-	Initializes dimensions of grid and reserves storage for tiles.
-	@param self (in)
-	@param width (in) Width of grid in tiles.
-	@param height (in) Height of grid in tiles.
-	@param tileWidth (in) Width of cells in grid space.
-	@param tileHeight (in) Height of cells in grid space.
+/**	@name	setSize
+	@text	Initializes dimensions of grid and reserves storage for tiles.
+
+	@in		MOAIGrid self
+	@in		number width
+	@in		number height
+	@in		number tileWidth	Default value is 1.
+	@in		number tileHeight	Default value is 1.
+	@out	nil
 */
 int MOAIGrid::_setSize ( lua_State* L ) {
 	LUA_SETUP ( MOAIGrid, "UNN" )
@@ -188,13 +179,14 @@ int MOAIGrid::_setSize ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>setTile ( self, xTile, yTile, tile )</tt>\n
-\n
-	Sets the value of a given tile.
-	@param self (in)
-	@param xTile (in) Column containing tile.
-	@param yTile (in) Row containing tile.
-	@param tile (in) Value of tile.
+/**	@name	setTile
+	@text	Sets the value of a given tile
+
+	@in		MOAIGrid self
+	@in		number xTile
+	@in		number yTile
+	@in		number value
+	@out	nil
 */
 int MOAIGrid::_setTile ( lua_State* L ) {
 	LUA_SETUP ( MOAIGrid, "UNNN" )
@@ -209,13 +201,14 @@ int MOAIGrid::_setTile ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>setTileFlags ( self, xTile, yTile, mask )</tt>\n
-\n
-	Sets the tile code bits masked by 'mask.'
-	@param self (in)
-	@param xTile (in) Column containing tile.
-	@param yTile (in) Row containing tile.
-	@param mask (in)
+/**	@name	setTileFlags
+	@text	Sets a tile's flags given a mask.
+
+	@in		MOAIGrid self
+	@in		number xTile
+	@in		number yTile
+	@in		number mask
+	@out	nil
 */
 int MOAIGrid::_setTileFlags ( lua_State* L ) {
 	LUA_SETUP ( MOAIGrid, "UNNN" )
@@ -234,13 +227,14 @@ int MOAIGrid::_setTileFlags ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>toggleTileFlags ( self, xTile, yTile, mask )</tt>\n
-\n
-	Toggles the tile code bits masked by 'mask.'
-	@param self (in)
-	@param xTile (in) Column containing tile.
-	@param yTile (in) Row containing tile.
-	@param mask (in)
+/**	@name	toggleTileFlags
+	@text	Toggles a tile's flags given a mask.
+
+	@in		MOAIGrid self
+	@in		number xTile
+	@in		number yTile
+	@in		number mask
+	@out	nil
 */
 int MOAIGrid::_toggleTileFlags ( lua_State* L ) {
 	LUA_SETUP ( MOAIGrid, "UNNN" )
@@ -251,7 +245,7 @@ int MOAIGrid::_toggleTileFlags ( lua_State* L ) {
 	
 	u32 tile = self->GetTile ( xTile, yTile );
 	
-	tile = ( tile & ~mask ) | ( ~tile & mask );
+	tile = tile ^ mask;
 	
 	self->SetTile ( xTile, yTile, tile );
 	
@@ -259,14 +253,14 @@ int MOAIGrid::_toggleTileFlags ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( xTile, yTile ) wrapCoord ( self, xTile, yTile )</tt>\n
-\n
-	Wraps a given tile index ot the extents of the tilemap's grid.
-	@param self (in)
-	@param xTile (in)
-	@param yTile (in)
-	@param xTile (out)
-	@param yTile (out)
+/**	@name	wrapCoord
+	@text	Wraps a tile index to the range of the grid.
+
+	@in		MOAIGrid self
+	@in		number xTile
+	@in		number yTile
+	@out	number xTile
+	@out	number yTile
 */
 int MOAIGrid::_wrapCoord ( lua_State* L ) {
 	LUA_SETUP ( MOAIGrid, "UNN" )
