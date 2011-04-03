@@ -15,11 +15,11 @@ SUPPRESS_EMPTY_FILE_WARNING
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	activate
+	@text	Activates a body after it has been put to sleep (physics will now be processed for this body again).
+
+	@in		MOAICpBody self
+	@out	nil
 */
 int MOAICpBody::_activate ( lua_State* L ) {
 	LUA_SETUP ( MOAICpBody, "U" )
@@ -30,11 +30,14 @@ int MOAICpBody::_activate ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	addCircle
+	@text	Adds a circle to the body.
+
+	@in		MOAICpBody self
+	@in		number radius
+	@in		number x
+	@in		number y
+	@out	MOAICpShape circle
 */
 int MOAICpBody::_addCircle ( lua_State* L ) {
 	LUA_SETUP ( MOAICpBody, "UN" )
@@ -55,11 +58,12 @@ int MOAICpBody::_addCircle ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	addPolygon
+	@text	Adds a polygon to the body.
+
+	@in		MOAICpBody self
+	@in		table polygon
+	@out	MOAICpShape polygon
 */
 int MOAICpBody::_addPolygon ( lua_State* L ) {
 	LUA_SETUP ( MOAICpBody, "UT" )
@@ -85,11 +89,15 @@ int MOAICpBody::_addPolygon ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	addRect
+	@text	Adds a rectangle to the body.
+
+	@in		MOAICpBody self
+	@in		number x1
+	@in		number y1
+	@in		number x2
+	@in		number y2
+	@out	MOAICpShape rectangle
 */
 int MOAICpBody::_addRect ( lua_State* L ) {
 	LUA_SETUP ( MOAICpBody, "UNNNN" )
@@ -125,11 +133,16 @@ int MOAICpBody::_addRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	addSegment
+	@text	Adds a segment to the body.
+
+	@in		MOAICpBody self
+	@in		number x1
+	@in		number y1
+	@in		number x2
+	@in		number y2
+	@opt	number radius
+	@out	MOAICpShape segment
 */
 int MOAICpBody::_addSegment ( lua_State* L ) {
 	LUA_SETUP ( MOAICpBody, "UNNNN" )
@@ -154,11 +167,15 @@ int MOAICpBody::_addSegment ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	applyForce
+	@text	Applies force to the body, taking into account any existing forces being applied.
+
+	@in		MOAICpBody self
+	@in		number fx
+	@in		number fy
+	@in		number rx
+	@in		number ry
+	@out	nil
 */
 int MOAICpBody::_applyForce ( lua_State* L ) {
 	LUA_SETUP ( MOAICpBody, "UNN" )
@@ -177,11 +194,15 @@ int MOAICpBody::_applyForce ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	applyImpulse
+	@text	Applies impulse to the body, taking into account any existing impulses being applied.
+
+	@in		MOAICpBody self
+	@in		number jx
+	@in		number jy
+	@in		number rx
+	@in		number ry
+	@out	nil
 */
 int MOAICpBody::_applyImpulse ( lua_State* L ) {
 	LUA_SETUP ( MOAICpBody, "UNN" )
@@ -200,11 +221,11 @@ int MOAICpBody::_applyImpulse ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	getAngle
+	@text	Returns the angle of the body.
+
+	@in		MOAICpShape self
+	@out	number angle		The current angle.
 */
 int MOAICpBody::_getAngle ( lua_State* L ) {
 	LUA_SETUP ( MOAICpBody, "U" )
@@ -215,11 +236,11 @@ int MOAICpBody::_getAngle ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	getAngVel
+	@text	Returns the angular velocity of the body.
+
+	@in		MOAICpShape self
+	@out	number angle		The current angular velocity.
 */
 int MOAICpBody::_getAngVel ( lua_State* L ) {
 	LUA_SETUP ( MOAICpBody, "U" )
@@ -231,11 +252,12 @@ int MOAICpBody::_getAngVel ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	getForce
+	@text	Returns the force of the body.
+
+	@in		MOAICpShape self
+	@out	number x			The X component of the current force being applied.
+	@out	number y			The Y component of the current force being applied.
 */
 int MOAICpBody::_getForce ( lua_State* L ) {
 	LUA_SETUP ( MOAICpBody, "U" )
@@ -248,11 +270,11 @@ int MOAICpBody::_getForce ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	getMass
+	@text	Returns the mass of the body.
+
+	@in		MOAICpShape self
+	@out	number mass			The current mass.
 */
 int MOAICpBody::_getMass ( lua_State* L ) {
 	LUA_SETUP ( MOAICpBody, "U" )
@@ -264,11 +286,11 @@ int MOAICpBody::_getMass ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	getMoment
+	@text	Returns the moment of the body.
+
+	@in		MOAICpShape self
+	@out	number moment		The current moment.
 */
 int MOAICpBody::_getMoment ( lua_State* L ) {
 	LUA_SETUP ( MOAICpBody, "U" )
@@ -280,11 +302,12 @@ int MOAICpBody::_getMoment ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	getPos
+	@text	Returns the position of the body.
+
+	@in		MOAICpShape self
+	@out	number x			The X position.
+	@out	number y			The Y position.
 */
 int MOAICpBody::_getPos ( lua_State* L ) {
 	LUA_SETUP ( MOAICpBody, "U" )
@@ -297,11 +320,12 @@ int MOAICpBody::_getPos ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	getRot
+	@text	Returns the rotation of the body.
+
+	@in		MOAICpShape self
+	@out	number x			The X position.
+	@out	number y			The Y position.
 */
 int MOAICpBody::_getRot ( lua_State* L ) {
 	LUA_SETUP ( MOAICpBody, "U" )
@@ -314,11 +338,11 @@ int MOAICpBody::_getRot ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	getTorque
+	@text	Returns the torque of the body.
+
+	@in		MOAICpShape self
+	@out	number torque		The current torque.
 */
 int MOAICpBody::_getTorque ( lua_State* L ) {
 	LUA_SETUP ( MOAICpBody, "U" )
@@ -330,11 +354,12 @@ int MOAICpBody::_getTorque ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	getVel
+	@text	Returns the velocity of the body.
+
+	@in		MOAICpShape self
+	@out	number x			The X component of the current velocity.
+	@out	number y			The Y component of the current velocity.
 */
 int MOAICpBody::_getVel ( lua_State* L ) {
 	LUA_SETUP ( MOAICpBody, "U" )
@@ -347,11 +372,11 @@ int MOAICpBody::_getVel ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	isSleeping
+	@text	Returns whether the body is currently sleeping.
+
+	@in		MOAICpShape self
+	@out	boolean sleeping	Whether the body is sleeping.
 */
 int MOAICpBody::_isSleeping ( lua_State* L ) {
 	LUA_SETUP ( MOAICpBody, "U" )
@@ -363,11 +388,11 @@ int MOAICpBody::_isSleeping ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	isStatic
+	@text	Returns whether the body is static.
+
+	@in		MOAICpShape self
+	@out	boolean static		Whether the body static.
 */
 int MOAICpBody::_isStatic ( lua_State* L ) {
 	LUA_SETUP ( MOAICpBody, "U" )
@@ -379,11 +404,11 @@ int MOAICpBody::_isStatic ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	isRogue
+	@text	Returns whether the body is not yet currently associated with a space.
+
+	@in		MOAICpShape self
+	@out	boolean static		Whether the body is not associated with a space.
 */
 int MOAICpBody::_isRogue ( lua_State* L ) {
 	LUA_SETUP ( MOAICpBody, "U" )
@@ -395,11 +420,14 @@ int MOAICpBody::_isRogue ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	localToWorld
+	@text	Converts the relative position to an absolute position based on position of the object being (0, 0) for the relative position.
+
+	@in		MOAICpShape self
+	@in		number rx			The relative X position.
+	@in		number ry			The relative Y position.
+	@out	number ax			The absolute X position.
+	@out	number ay			The absolute Y position.
 */
 int MOAICpBody::_localToWorld ( lua_State* L ) {
 	LUA_SETUP ( MOAICpBody, "UNN" )
@@ -417,11 +445,12 @@ int MOAICpBody::_localToWorld ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	new
+	@text	Creates a new body with the specified mass and moment.
+
+	@in		number m			The mass of the new body.
+	@in		number i			The moment of the new body.
+	@out	MOAICpBody body		The new body.
 */
 int MOAICpBody::_new ( lua_State* L ) {
 	USLuaState state ( L );
@@ -438,11 +467,10 @@ int MOAICpBody::_new ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	new
+	@text	Creates a new static body.
+
+	@out	MOAICpBody body		The new static body.
 */
 int MOAICpBody::_newStatic ( lua_State* L ) {
 	USLuaState state ( L );
@@ -456,11 +484,10 @@ int MOAICpBody::_newStatic ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	resetForces
+	@text	Resets all forces on the body.
+
+	@in		MOAICpBody self
 */
 int MOAICpBody::_resetForces ( lua_State* L ) {
 	LUA_SETUP ( MOAICpBody, "U" )
@@ -471,11 +498,12 @@ int MOAICpBody::_resetForces ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	setAngle
+	@text	Sets the angle of the body.
+
+	@in		MOAICpBody self
+	@in		number angle		The angle of the body.
+	@out	nil
 */
 int MOAICpBody::_setAngle ( lua_State* L ) {
 	LUA_SETUP ( MOAICpBody, "UN" )
@@ -487,11 +515,12 @@ int MOAICpBody::_setAngle ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	setAngVel
+	@text	Sets the angular velocity of the body.
+
+	@in		MOAICpBody self
+	@in		number angvel		The angular velocity of the body.
+	@out	nil
 */
 int MOAICpBody::_setAngVel ( lua_State* L ) {
 	LUA_SETUP ( MOAICpBody, "UN" )
@@ -503,11 +532,13 @@ int MOAICpBody::_setAngVel ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	setForce
+	@text	Sets the force on the body.
+
+	@in		MOAICpBody self
+	@in		number forcex		The X force being applied to the body.
+	@in		number forcey		The Y force being applied to the body.
+	@out	nil
 */
 int MOAICpBody::_setForce ( lua_State* L ) {
 	LUA_SETUP ( MOAICpBody, "UNN" )
@@ -521,11 +552,12 @@ int MOAICpBody::_setForce ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	setMass
+	@text	Sets the mass of the body.
+
+	@in		MOAICpBody self
+	@in		number mass			The mass of the body.
+	@out	nil
 */
 int MOAICpBody::_setMass ( lua_State* L ) {
 	LUA_SETUP ( MOAICpBody, "UN" )
@@ -537,11 +569,12 @@ int MOAICpBody::_setMass ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	setMoment
+	@text	Sets the moment of the body.
+
+	@in		MOAICpBody self
+	@in		number moment		The moment of the body.
+	@out	nil
 */
 int MOAICpBody::_setMoment ( lua_State* L ) {
 	LUA_SETUP ( MOAICpBody, "UN" )
@@ -553,11 +586,13 @@ int MOAICpBody::_setMoment ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	setPos
+	@text	Sets the position of the body.
+
+	@in		MOAICpBody self
+	@in		number x			The X position of the body.
+	@in		number y			The Y position of the body.
+	@out	nil
 */
 int MOAICpBody::_setPos ( lua_State* L ) {
 	LUA_SETUP ( MOAICpBody, "UNN" )
@@ -571,11 +606,12 @@ int MOAICpBody::_setPos ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	setRemoveFlag
+	@text	Sets the removal flag on the body.
+
+	@in		MOAICpBody self
+	@in		number flag			The removal flag.
+	@out	nil
 */
 int MOAICpBody::_setRemoveFlag ( lua_State* L ) {
 	LUA_SETUP ( MOAICpBody, "UN" )
@@ -586,11 +622,12 @@ int MOAICpBody::_setRemoveFlag ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	setTorque
+	@text	Sets the torque of the body.
+
+	@in		MOAICpBody self
+	@in		number torque		The torque of the body.
+	@out	nil
 */
 int MOAICpBody::_setTorque ( lua_State* L ) {
 	LUA_SETUP ( MOAICpBody, "UN" )
@@ -602,11 +639,13 @@ int MOAICpBody::_setTorque ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	setVel
+	@text	Sets the velocity of the body.
+
+	@in		MOAICpBody self
+	@in		number x			The horizontal velocity.
+	@in		number y			The vertical velocity.
+	@out	nil
 */
 int MOAICpBody::_setVel ( lua_State* L ) {
 	LUA_SETUP ( MOAICpBody, "UNN" )
@@ -620,11 +659,11 @@ int MOAICpBody::_setVel ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	sleep
+	@text	Puts the body to sleep (physics will no longer be processed for it until it is activated).
+
+	@in		MOAICpBody self
+	@out	nil
 */
 int MOAICpBody::_sleep ( lua_State* L ) {
 	LUA_SETUP ( MOAICpBody, "U" )
@@ -635,11 +674,12 @@ int MOAICpBody::_sleep ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	sleepWithGroup
+	@text	Description of method coming soon.
+
+	@in		MOAICpBody self
+	@in		MOAICpBody group
+	@out	nil
 */
 int MOAICpBody::_sleepWithGroup ( lua_State* L ) {
 	LUA_SETUP ( MOAICpBody, "UU" )
@@ -652,11 +692,14 @@ int MOAICpBody::_sleepWithGroup ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	worldToLocal
+	@text	Converts the absolute position to a relative position based on position of the object being (0, 0) for the relative position.
+
+	@in		MOAICpShape self
+	@in		number ax			The absolute X position.
+	@in		number ay			The absolute Y position.
+	@out	number rx			The relative X position.
+	@out	number ry			The relative Y position.
 */
 int MOAICpBody::_worldToLocal ( lua_State* L ) {
 	LUA_SETUP ( MOAICpBody, "UNN" )
