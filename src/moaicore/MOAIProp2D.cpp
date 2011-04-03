@@ -15,14 +15,14 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( grid ) getGrid ( self )</tt>\n
-\n
-	Returns the grid object associated with this tilemap.
-	@param self (in)
-	@param grid (out)
+/**	@name	getGrid
+	@text	Get the grid currently connected to the prop.
+	
+	@in		MOAIProp2D self
+	@out	MOAIGrid grid		Current grid or nil.
 */
 int MOAIProp2D::_getGrid ( lua_State* L ) {
-	LUA_SETUP ( MOAIProp2D, "UU" )
+	LUA_SETUP ( MOAIProp2D, "U" )
 	
 	if ( self->mGrid ) {
 		self->mGrid->PushLuaUserdata ( state );
@@ -32,11 +32,11 @@ int MOAIProp2D::_getGrid ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( addr ) getContentAddr ( self )</tt>\n
-\n
-	Gets the current content address.
-	@param self (in)
-	@param addr (out)
+/**	@name	getIndex
+	@text	Gets the value of the deck indexer.
+	
+	@in		MOAIProp2D self
+	@out	number index
 */
 int MOAIProp2D::_getIndex ( lua_State* L ) {
 	LUA_SETUP ( MOAIProp2D, "U" )
@@ -47,12 +47,13 @@ int MOAIProp2D::_getIndex ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>inside (mX, mY)</tt>\n
-	\n
-	Returns true if a point is inside of this sprite.
-	@param mX The X coordinate of the point to be checked.
-	@param mY The Y coordinate of the point to be checked.
-	@return True if the point is inside, otherwise false.
+/**	@name	inside
+	@text	Returns true if this prop is under the given world space point.
+	
+	@in		MOAIProp2D self
+	@in		number x
+	@in		number y
+	@out	boolean isInside
 */
 int	MOAIProp2D::_inside ( lua_State* L ) {
 	LUA_SETUP ( MOAIProp2D, "UNN" )
@@ -68,11 +69,12 @@ int	MOAIProp2D::_inside ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>setGfxSource ( self, lib )</tt>\n
-	\n
-	Associates a library with the prop.
-	@param self (in)
-	@param lib (in) Library to be used.
+/**	@name	setDeck
+	@text	Sets or clears the deck to be indexed by the prop.
+	
+	@in		MOAIProp2D self
+	@opt	MOAIDeck deck		Default value is nil.
+	@out	nil
 */
 int MOAIProp2D::_setDeck ( lua_State* L ) {
 	LUA_SETUP ( MOAIProp2D, "UU" )
@@ -90,14 +92,15 @@ int MOAIProp2D::_setDeck ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>() setFrame ( self, left, top, right, bottom )</tt>\n
-\n
-	Directly sets prop's frame rectangle.
-	@param self (in)
-	@param left (in)
-	@param top (in)
-	@param right (in)
-	@param bottom (in)
+/**	@name	setFrame
+	@text	Sets the bounding frame of the prop.
+	
+	@in		MOAIProp2D self
+	@in		number xMin
+	@in		number yMin
+	@in		number xMax
+	@in		number yMax
+	@out	nil
 */
 int MOAIProp2D::_setFrame ( lua_State* L ) {
 	LUA_SETUP ( MOAIProp2D, "UNNNN" )
@@ -113,14 +116,18 @@ int MOAIProp2D::_setFrame ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>() setFrameSource ( self, source )</tt>\n
-\n
-	Sets source for frame rectangle.
-	MOAIProp2D.FRAME_FROM_SOURCE - Frame is taken from content source.
-	MOAIProp2D.FRAME_FROM_PARENT - Frame is taken from parent layout.
-	MOAIProp2D.FRAME_FROM_DEFINE - Frame is taken from self.
-	@param self (in)
-	@param source (in)
+/**	@name	setFrameSource
+	@text	Selects the frame rectangle to fit the prop to. When computing
+			the transform for a prop, the prop's frame rectangle is taken
+			into account. The default behavior is for the prop to use whatever
+			dimensions are specified by the deck it is attached to, but in
+			some cases to used may wish to override this behavior by setting
+			a new frame for the prop of by inheriting the frame of the prop's
+			parent transform.
+	
+	@in		MOAIProp2D self
+	@in		number frameSource		One of MOAIProp2D FRAME_FROM_DECK, FRAME_FROM_PARENT, FRAME_FROM_SELF
+	@out	nil
 */
 int MOAIProp2D::_setFrameSource ( lua_State* L ) {
 	LUA_SETUP ( MOAIProp2D, "UN" )
@@ -131,12 +138,13 @@ int MOAIProp2D::_setFrameSource ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>() setGrid ( self, grid )</tt>\n
-\n
-	Sets the grid for the tilemap. The grid provides the array of tilecodes
-	used by the tilemap for looking up content from the content source.
-	@param self (in)
-	@param self (grid)
+/**	@name	setGrid
+	@text	Sets or clears the prop's grid indexer. The grid indexer (if any)
+			will override the standard indexer.
+	
+	@in		MOAIProp2D self
+	@opt	MOAIGrid grid		Default value is nil.
+	@out	nil
 */
 int MOAIProp2D::_setGrid ( lua_State* L ) {
 	LUA_SETUP ( MOAIProp2D, "UU" )
@@ -150,34 +158,36 @@ int MOAIProp2D::_setGrid ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>setContentAddr ( self, addr )</tt>\n
-\n
-	Sets the index for the asset to display in the content library.
-	@param self (in)
-	@param addr (in)
+/**	@name	setIndex
+	@text	Set the prop's index into its deck.
+	
+	@in		MOAIProp2D self
+	@opt	number index		Default value is 1.
+	@out	nil
 */
 int MOAIProp2D::_setIndex ( lua_State* L ) {
-	LUA_SETUP ( MOAIProp2D, "UN" )
+	LUA_SETUP ( MOAIProp2D, "U" )
 
-	self->mIndex = state.GetValue < u32 >( 2, 0 );
+	self->mIndex = state.GetValue < u32 >( 2, 1 ) - 1;
 	self->ScheduleUpdate ();
 
 	return 0;
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>() setRepeat ( self, repeat )</tt>\n
-\n
-	Sets the tilemap to wrap (repeat continuously when rendered or queried against)
-	or clamp (render once, like a sprite).
-	@param self (in)
-	@param repeatX (in)
-	@param repeatY (in)
+/**	@name	setRepeat
+	@text	Repeats a grid indexer along X or Y. Only used when a grid
+			is attached.
+	
+	@in		MOAIProp2D self
+	@opt	boolean repeatX		Default value is true.
+	@opt	boolean repeatY		Default value is repeatX.
+	@out	nil
 */
 int MOAIProp2D::_setRepeat ( lua_State* L ) {
-	LUA_SETUP ( MOAIProp2D, "UB" )
+	LUA_SETUP ( MOAIProp2D, "U" )
 
-	bool repeatX = state.GetValue < bool >( 2, (( self->mRepeat & REPEAT_X ) == REPEAT_X ));
+	bool repeatX = state.GetValue < bool >( 2, true );
 	bool repeatY = state.GetValue < bool >( 3, repeatX );
 
 	self->mRepeat = 0;
@@ -188,41 +198,42 @@ int MOAIProp2D::_setRepeat ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>() setShader ( self, shader )</tt>\n
-\n
-	Sets the shader to use for this primitive.
-	@param self (in)
-	@param shader (in)
+/**	@name	setShader
+	@text	Sets or clears the prop's shader. The prop's shader takes
+			precedence over any shader specified by the deck or its
+			elements.
+	
+	@in		MOAIProp2D self
+	@opt	MOAIShader shader	Default value is nil.
+	@out	nil
 */
 int MOAIProp2D::_setShader ( lua_State* L ) {
-	LUA_SETUP ( MOAIProp2D, "UU" )
+	LUA_SETUP ( MOAIProp2D, "U" )
 
 	if ( self->mShader ) {
 		self->ClearDependency ( *self->mShader );
 	}
 
 	self->mShader = state.GetLuaObject < MOAIShader >( 2 );
-	self->SetDependency ( *self->mShader );
-	self->ScheduleUpdate ();
 	
+	if ( self->mShader ) {
+		self->SetDependency ( *self->mShader );
+	}
 	return 0;
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>() setUVTransform ( self, transform )</tt>\n
-\n
-	Sets a transform to be applied to the sprite source's UV coordinated
-	prior to rendering.
-	@param self (in)
-	@param transform (in)
+/**	@name	setUVTransform
+	@text	Sets or clears the prop's UV transform.
+	
+	@in		MOAIProp2D self
+	@opt	MOAITransform transform	Default value is nil.
+	@out	nil
 */
 int MOAIProp2D::_setUVTransform ( lua_State* L ) {
-	LUA_SETUP ( MOAIProp2D, "UU" )
+	LUA_SETUP ( MOAIProp2D, "U" )
 	
-	MOAITransform* transform = state.GetLuaObject < MOAITransform >( 2 );
-	if ( !transform ) return 0;
-
-	self->mUVTransform = transform;
+	self->mUVTransform = state.GetLuaObject < MOAITransform >( 2 );
 
 	return 0;
 }
@@ -521,7 +532,7 @@ void MOAIProp2D::OnDepNodeUpdate () {
 			targetFrame = parentFrame->GetFrame ();
 		}
 	}
-	else if ( this->mFrameSource == FRAME_FROM_DEFINE ) {
+	else if ( this->mFrameSource == FRAME_FROM_SELF ) {
 		targetFrame = this->mFrame;
 	}
 
@@ -570,12 +581,9 @@ void MOAIProp2D::RegisterLuaClass ( USLuaState& state ) {
 	
 	state.SetField ( -1, "ATTR_INDEX", ( u32 )ATTR_INDEX );
 	
-	state.SetField ( -1, "FRAME_FROM_SOURCE", ( u32 )FRAME_FROM_SOURCE );
+	state.SetField ( -1, "FRAME_FROM_DECK", ( u32 )FRAME_FROM_DECK );
 	state.SetField ( -1, "FRAME_FROM_PARENT", ( u32 )FRAME_FROM_PARENT );
-	state.SetField ( -1, "FRAME_FROM_DEFINE", ( u32 )FRAME_FROM_DEFINE );
-	
-	state.SetField ( -1, "SCALE_TO_FRAME", ( u32 )SCALE_TO_FRAME );
-	state.SetField ( -1, "STRETCH_TO_FRAME", ( u32 )STRETCH_TO_FRAME );
+	state.SetField ( -1, "FRAME_FROM_SELF", ( u32 )FRAME_FROM_SELF );
 }
 
 //----------------------------------------------------------------//

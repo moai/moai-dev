@@ -19,20 +19,19 @@ class MOAISurfaceSampler2D;
 //================================================================//
 /**	@brief	Base class for props.
 	@attr	ATTR_INDEX
+	
+	@const	FRAME_FROM_SOURCE
+	@const	FRAME_FROM_PARENT
+	@const	FRAME_FROM_DEFINE
 */
 class MOAIProp2D :
 	public MOAIProp {
 protected:
 	
 	enum {
-		FRAME_FROM_SOURCE,
+		FRAME_FROM_DECK,
 		FRAME_FROM_PARENT,
-		FRAME_FROM_DEFINE,
-	};
-	
-	enum {
-		SCALE_TO_FRAME,
-		STRETCH_TO_FRAME,
+		FRAME_FROM_SELF,
 	};
 	
 	enum {
