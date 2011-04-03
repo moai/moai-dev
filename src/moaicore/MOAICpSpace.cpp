@@ -170,11 +170,11 @@ static void _shapeListForSegmentCallback ( cpShape *shape, cpFloat t, cpVect n, 
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name activateShapesTouchingShape
+	@param1 self @type userdata
+	@param2 other @type userdata
+	@text Activates shapes that are currently touching the specified shape.
+	@return nil
 */
 int MOAICpSpace::_activateShapesTouchingShape ( lua_State* L ) {
 	LUA_SETUP ( MOAICpSpace, "UU" )
@@ -187,11 +187,10 @@ int MOAICpSpace::_activateShapesTouchingShape ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name getDamping
+	@param1 self @type userdata
+	@text Returns the current damping in the space.
+	@return The damping. @type number
 */
 int MOAICpSpace::_getDamping ( lua_State* L ) {
 	LUA_SETUP ( MOAICpSpace, "U" )
@@ -201,11 +200,10 @@ int MOAICpSpace::_getDamping ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name getGravity
+	@param1 self @type userdata
+	@text Returns the current gravity as two return values (x grav, y grav).
+	@return The gravity in the X and Y dimensions. @type (number,number)
 */
 int MOAICpSpace::_getGravity ( lua_State* L ) {
 	LUA_SETUP ( MOAICpSpace, "U" )
@@ -216,11 +214,10 @@ int MOAICpSpace::_getGravity ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name getIdleSpeedThreshold
+	@param1 self @type userdata
+	@text Returns the speed threshold which indicates whether a body is idle (less than or equal to threshold) or in motion (greater than threshold).
+	@return The idle speed threshold. @type number
 */
 int MOAICpSpace::_getIdleSpeedThreshold ( lua_State* L ) {
 	LUA_SETUP ( MOAICpSpace, "U" )
@@ -230,11 +227,10 @@ int MOAICpSpace::_getIdleSpeedThreshold ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name getIterations
+	@param1 self @type userdata
+	@text Description of method coming soon.
+	@return The iterations. @type number
 */
 int MOAICpSpace::_getIterations ( lua_State* L ) {
 	LUA_SETUP ( MOAICpSpace, "U" )
@@ -244,11 +240,10 @@ int MOAICpSpace::_getIterations ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name getSleepTimeThreshold
+	@param1 self @type userdata
+	@text Description of method coming soon.
+	@return The iterations. @type number
 */
 int MOAICpSpace::_getSleepTimeThreshold ( lua_State* L ) {
 	LUA_SETUP ( MOAICpSpace, "U" )
@@ -258,11 +253,10 @@ int MOAICpSpace::_getSleepTimeThreshold ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name getStaticBody
+	@param1 self @type userdata
+	@text Returns the static body representing this space.
+	@return The static body. @type number
 */
 int MOAICpSpace::_getStaticBody ( lua_State* L ) {
 	LUA_SETUP ( MOAICpSpace, "U" )
@@ -278,11 +272,10 @@ int MOAICpSpace::_getStaticBody ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name insertProp
+	@param1 self @type userdata
+	@text Inserts a new prop into the world (can be used as a body, joint, etc.)
+	@return The new prop. @type number
 */
 int MOAICpSpace::_insertProp ( lua_State* L ) {
 	LUA_SETUP ( MOAICpSpace, "UU" )
@@ -295,11 +288,11 @@ int MOAICpSpace::_insertProp ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name rehashShape
+	@param1 self @type userdata
+	@param1 other @type userdata
+	@text Description of method coming soon.
+	@return nil
 */
 int MOAICpSpace::_rehashShape ( lua_State* L ) {
 	LUA_SETUP ( MOAICpSpace, "UU" )
@@ -312,11 +305,10 @@ int MOAICpSpace::_rehashShape ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name rehashStatic
+	@param1 self @type userdata
+	@text Description of method coming soon.
+	@return nil
 */
 int MOAICpSpace::_rehashStatic ( lua_State* L ) {
 	LUA_SETUP ( MOAICpSpace, "U" )
@@ -326,11 +318,11 @@ int MOAICpSpace::_rehashStatic ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name removeProp
+	@param1 self @type userdata
+	@param2 prop @type userdata
+	@text Removes a prop (body, joint, etc.) from the space.
+	@return nil
 */
 int MOAICpSpace::_removeProp ( lua_State* L ) {
 	LUA_SETUP ( MOAICpSpace, "UU" )
@@ -343,11 +335,12 @@ int MOAICpSpace::_removeProp ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name resizeActiveHash
+	@param1 self @type userdata
+	@param2 dim @type number
+	@param3 count @type number
+	@text Description of method coming soon.
+	@return nil
 */
 int MOAICpSpace::_resizeActiveHash ( lua_State* L ) {
 	LUA_SETUP ( MOAICpSpace, "UNN" )
@@ -360,11 +353,12 @@ int MOAICpSpace::_resizeActiveHash ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name resizeStaticHash
+	@param1 self @type userdata
+	@param2 dim @type number
+	@param3 count @type number
+	@text Description of method coming soon.
+	@return nil
 */
 int MOAICpSpace::_resizeStaticHash ( lua_State* L ) {
 	LUA_SETUP ( MOAICpSpace, "UNN" )
@@ -377,11 +371,13 @@ int MOAICpSpace::_resizeStaticHash ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name setCollisionHandler
+	@param1 self @type userdata
+	@param2 type @type number
+	@param3 subtype @type number
+	@param4 handler @type function|nil
+	@text Sets a function to handle the specific collision type on this object.  If nil is passed as the handler, the collision handler is unset.
+	@return nil
 */
 int MOAICpSpace::_setCollisionHandler ( lua_State* L ) {
 	LUA_SETUP ( MOAICpSpace, "UNN" )
@@ -449,11 +445,11 @@ int MOAICpSpace::_setCollisionHandler ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name setDamping
+	@param1 self @type userdata
+	@param2 damping @type number
+	@text Sets the current damping in the space.
+	@return nil
 */
 int MOAICpSpace::_setDamping ( lua_State* L ) {
 	LUA_SETUP ( MOAICpSpace, "UN" )
@@ -463,11 +459,12 @@ int MOAICpSpace::_setDamping ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name setGravity
+	@param1 self @type userdata
+	@param2 xgrav @type number
+	@param3 ygrav @type number
+	@text Sets the current gravity in the space.
+	@return nil
 */
 int MOAICpSpace::_setGravity ( lua_State* L ) {
 	LUA_SETUP ( MOAICpSpace, "UNN" )
@@ -479,11 +476,11 @@ int MOAICpSpace::_setGravity ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name setIdleSpeedThreshold
+	@param1 self @type userdata
+	@param2 threshold @type number @text The idle speed threshold.
+	@text Sets the speed threshold which indicates whether a body is idle (less than or equal to threshold) or in motion (greater than threshold).
+	@return nil
 */
 int MOAICpSpace::_setIdleSpeedThreshold ( lua_State* L ) {
 	LUA_SETUP ( MOAICpSpace, "UN" )
@@ -493,11 +490,11 @@ int MOAICpSpace::_setIdleSpeedThreshold ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name setIterations
+	@param1 self @type userdata
+	@param2 iterations @type number
+	@text Description of method coming soon.
+	@return nil
 */
 int MOAICpSpace::_setIterations ( lua_State* L ) {
 	LUA_SETUP ( MOAICpSpace, "UN" )
@@ -507,11 +504,11 @@ int MOAICpSpace::_setIterations ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name setSleepTimeThreshold
+	@param1 self @type userdata
+	@param2 threshold @type number
+	@text Description of method coming soon.
+	@return nil
 */
 int MOAICpSpace::_setSleepTimeThreshold ( lua_State* L ) {
 	LUA_SETUP ( MOAICpSpace, "UN" )
@@ -521,11 +518,14 @@ int MOAICpSpace::_setSleepTimeThreshold ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name shapeForPoint
+	@param1 self @type userdata
+	@param2 x @type number @text The X position to check.
+	@param3 y @type number @text The Y position to check.
+	@param4 layers @type number|nil @text The layers to check (nil for all).
+	@param5 group @type number|nil @text The groups to check (nil for all).
+	@text Retrieves a shape located at the specified X and Y position, that exists on the specified layer (or any layer if nil) and is part of the specified group (or any group if nil).
+	@return The shape at the specified position, layer and within the specified group.  Returns nil if there is no shape that matches. @type userdata|nil
 */
 int MOAICpSpace::_shapeForPoint ( lua_State* L ) {
 	LUA_SETUP ( MOAICpSpace, "UNN" )
@@ -547,11 +547,16 @@ int MOAICpSpace::_shapeForPoint ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name shapeForSegment
+	@param1 self @type userdata
+	@param2 x1 @type number @text The start-point X position to check.
+	@param3 y1 @type number @text The start-point Y position to check.
+	@param3 x2 @type number @text The end-point X position to check.
+	@param4 y2 @type number @text The end-point Y position to check.
+	@param5 layers @type number|nil @text The layers to check (nil for all).
+	@param6 group @type number|nil @text The groups to check (nil for all).
+	@text Retrieves a shape that crosses the segment specified, that exists on the specified layer (or any layer if nil) and is part of the specified group (or any group if nil).
+	@return The shape within the specified rectangle, at the specified layer and within the specified group.  Returns nil if there is no shape that matches. @type (userdata,t,x,y)|nil
 */
 int MOAICpSpace::_shapeForSegment ( lua_State* L ) {
 	LUA_SETUP ( MOAICpSpace, "UNNNN" )
@@ -589,11 +594,14 @@ int MOAICpSpace::_shapeForSegment ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name shapeListForPoint
+	@param1 self @type userdata
+	@param2 x @type number @text The X position to check.
+	@param3 y @type number @text The Y position to check.
+	@param4 layers @type number|nil @text The layers to check (nil for all).
+	@param5 group @type number|nil @text The groups to check (nil for all).
+	@text Operates the same as shapeForPoint, except that it returns all shapes matched as return values rather than just the first match.
+	@return The shapes that were matched as multiple return values.  If 3 shapes match, there will be 3 return values.  If 0 shapes match, there will be 0 return values (effectively nil). @type (userdata,...)|nil
 */
 int MOAICpSpace::_shapeListForPoint ( lua_State* L ) {
 	LUA_SETUP ( MOAICpSpace, "UNN" )
@@ -621,11 +629,16 @@ int MOAICpSpace::_shapeListForPoint ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name shapeListForRect
+	@param1 self @type userdata
+	@param2 x1 @type userdata @text The top-left X position to check.
+	@param3 y1 @type number @text The top-left Y position to check.
+	@param3 x2 @type number @text The bottom-right X position to check.
+	@param4 y2 @type number @text The bottom-right Y position to check.
+	@param5 layers @type number|nil @text The layers to check (nil for all).
+	@param6 group @type number|nil @text The groups to check (nil for all).
+	@text Operates the same as shapeForSegment, except that it returns all shapes matched as return values rather than just the first match.
+	@return The shapes that were matched as multiple return values.  If 3 shapes match, there will be 3 return values.  If 0 shapes match, there will be 0 return values (effectively nil). @type (userdata,...)|nil
 */
 int MOAICpSpace::_shapeListForRect ( lua_State* L ) {
 	LUA_SETUP ( MOAICpSpace, "UNNNN" )
@@ -658,11 +671,16 @@ int MOAICpSpace::_shapeListForRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name shapeListForSegment
+	@param1 self @type userdata
+	@param2 x1 @type number @text The start-point X position to check.
+	@param3 y1 @type number @text The start-point Y position to check.
+	@param3 x2 @type number @text The end-point X position to check.
+	@param4 y2 @type number @text The end-point Y position to check.
+	@param5 layers @type number|nil @text The layers to check (nil for all).
+	@param6 group @type number|nil @text The groups to check (nil for all).
+	@text Operates the same as shapeForSegment, except that it returns all shapes matched as return values rather than just the first match.
+	@return The shapes that were matched as multiple return values.  If 3 shapes match, there will be 3 return values.  If 0 shapes match, there will be 0 return values (effectively nil). @type (userdata,...)|nil
 */
 int MOAICpSpace::_shapeListForSegment ( lua_State* L ) {
 	LUA_SETUP ( MOAICpSpace, "UNNNN" )

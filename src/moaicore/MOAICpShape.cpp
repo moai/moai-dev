@@ -14,11 +14,11 @@ SUPPRESS_EMPTY_FILE_WARNING
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name areaForCircle
+	@param1 r1 @type number @text The X radius.
+	@param2 r2 @type number @text The Y radius.  Nil indicates to use r1 for this value (i.e. a circle not an ellipse is being calculated).
+	@text Returns the area for the ellipse with the specified radii, or a circle with the specified radius if only one argument is provided.
+	@return The calculated area. @type number
 */
 int MOAICpShape::_areaForCircle ( lua_State* L ) {
 	USLuaState state ( L );
@@ -42,11 +42,10 @@ int MOAICpShape::_areaForCircle ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name areaForPolygon
+	@param1 polygon @type table @text Array containg vertex coordinate components ( t[1] = x0, t[2] = y0, t[3] = x1, t[4] = y1... )
+	@text Returns the area for the specified polygon.
+	@return The calculated area. @type number
 */
 int MOAICpShape::_areaForPolygon ( lua_State* L ) {
 	USLuaState state ( L );
@@ -65,11 +64,14 @@ int MOAICpShape::_areaForPolygon ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	areaForRect
+	@text	Returns the area for the specified rectangle.
+
+	@in		number x1
+	@in		number y1
+	@in		number x2
+	@in		number y2
+	@out	number area			The calculated area.
 */
 int MOAICpShape::_areaForRect ( lua_State* L ) {
 	USLuaState state ( L );
@@ -83,11 +85,15 @@ int MOAICpShape::_areaForRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	areaForSegment
+	@text	Returns the area for the specified segment.
+
+	@in		number x1
+	@in		number y1
+	@in		number x2
+	@in		number y2
+	@in		number r
+	@out	number area			The calculated area.
 */
 int MOAICpShape::_areaForSegment ( lua_State* L ) {
 	USLuaState state ( L );
@@ -108,11 +114,11 @@ int MOAICpShape::_areaForSegment ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	getBody
+	@text	Returns the current body for the shape.
+
+	@in		MOAICpShape self
+	@out	MOAICpBody body			The body.
 */
 int MOAICpShape::_getBody ( lua_State* L ) {
 	LUA_SETUP ( MOAICpShape, "U" )
@@ -125,11 +131,11 @@ int MOAICpShape::_getBody ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	getElasticity
+	@text	Returns the current elasticity.
+
+	@in		MOAICpShape self
+	@out	number elasticity			The elasticity.
 */
 int MOAICpShape::_getElasticity ( lua_State* L ) {
 	LUA_SETUP ( MOAICpShape, "U" )
@@ -142,11 +148,11 @@ int MOAICpShape::_getElasticity ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	getFriction
+	@text	Returns the current friction.
+
+	@in		MOAICpShape self
+	@out	number friction			The friction.
 */
 int MOAICpShape::_getFriction ( lua_State* L ) {
 	LUA_SETUP ( MOAICpShape, "U" )
@@ -159,11 +165,11 @@ int MOAICpShape::_getFriction ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	getGroup
+	@text	Returns the current group ID.
+
+	@in		MOAICpShape self
+	@out	number group			The group ID.
 */
 int MOAICpShape::_getGroup ( lua_State* L ) {
 	LUA_SETUP ( MOAICpShape, "U" )
@@ -176,11 +182,11 @@ int MOAICpShape::_getGroup ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	getLayers
+	@text	Returns the current layer ID.
+
+	@in		MOAICpShape self
+	@out	number layer			The layer ID.
 */
 int MOAICpShape::_getLayers ( lua_State* L ) {
 	LUA_SETUP ( MOAICpShape, "U" )
@@ -193,11 +199,12 @@ int MOAICpShape::_getLayers ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	getSurfaceVel
+	@text	Returns the current surface velocity?
+
+	@in		MOAICpShape self
+	@out	number x				The X component of the surface velocity.
+	@out	number y				The Y component of the surface velocity.
 */
 int MOAICpShape::_getSurfaceVel ( lua_State* L ) {
 	LUA_SETUP ( MOAICpShape, "UNN" )
@@ -211,11 +218,11 @@ int MOAICpShape::_getSurfaceVel ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	getType
+	@text	Returns the current collision type.
+
+	@in		MOAICpShape self
+	@out	number type				The collision type.
 */
 int MOAICpShape::_getType ( lua_State* L ) {
 	LUA_SETUP ( MOAICpShape, "U" )
@@ -228,11 +235,13 @@ int MOAICpShape::_getType ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	inside
+	@text	Returns whether the specified point is inside the shape.
+
+	@in		MOAICpShape self
+	@in		number x
+	@in		number y
+	@out	boolean inside			Whether the point is inside the shape.
 */
 int MOAICpShape::_inside ( lua_State* L ) {
 	LUA_SETUP ( MOAICpShape, "UNN" )
@@ -250,11 +259,11 @@ int MOAICpShape::_inside ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	isSensor
+	@text	Returns whether the current shape is a sensor.
+
+	@in		MOAICpShape self
+	@out	boolean sensor			Whether the shape is a sensor.
 */
 int MOAICpShape::_isSensor ( lua_State* L ) {
 	LUA_SETUP ( MOAICpShape, "U" )
@@ -267,11 +276,15 @@ int MOAICpShape::_isSensor ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	momentForCircle
+	@text	Description of method coming soon.
+
+	@in		number m
+	@opt	number r1
+	@in		number r2
+	@in		number ox
+	@in		number oy
+	@out	number moment
 */
 int MOAICpShape::_momentForCircle ( lua_State* L ) {
 	USLuaState state ( L );
@@ -300,11 +313,12 @@ int MOAICpShape::_momentForCircle ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	momentForPolygon
+	@text	Description of method coming soon.
+
+	@in		number m
+	@in		table polygon
+	@out	number moment
 */
 int MOAICpShape::_momentForPolygon ( lua_State* L ) {
 	USLuaState state ( L );
@@ -328,11 +342,15 @@ int MOAICpShape::_momentForPolygon ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	momentForRectangle
+	@text	Description of method coming soon.
+
+	@in		number m
+	@in		number x1
+	@in		number y1
+	@in		number x2
+	@in		number y2
+	@out	number moment
 */
 int MOAICpShape::_momentForRect ( lua_State* L ) {
 	USLuaState state ( L );
@@ -348,11 +366,15 @@ int MOAICpShape::_momentForRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	momentForSegment
+	@text	Description of method coming soon.
+
+	@in		number m
+	@in		number x1
+	@in		number y1
+	@in		number x2
+	@in		number y2
+	@out	number moment
 */
 int MOAICpShape::_momentForSegment ( lua_State* L ) {
 	USLuaState state ( L );
@@ -373,11 +395,8 @@ int MOAICpShape::_momentForSegment ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	new
+	@text	Creation of new instances is not supported on this class.
 */
 int	MOAICpShape::_new ( lua_State* L ) {
 	UNUSED ( L );
@@ -387,11 +406,12 @@ int	MOAICpShape::_new ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	setElasticity
+	@text	Sets the current elasticity.
+
+	@in		MOAICpShape self
+	@in		number elasticity			The elasticity.
+	@out	nil
 */
 int MOAICpShape::_setElasticity ( lua_State* L ) {
 	LUA_SETUP ( MOAICpShape, "UN" )
@@ -403,11 +423,12 @@ int MOAICpShape::_setElasticity ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	setFriction
+	@text	Sets the current friction.
+
+	@in		MOAICpShape self
+	@in		number friction			The friction.
+	@out	nil
 */
 int MOAICpShape::_setFriction ( lua_State* L ) {
 	LUA_SETUP ( MOAICpShape, "UN" )
@@ -419,11 +440,12 @@ int MOAICpShape::_setFriction ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	setGroup
+	@text	Sets the current group ID.
+
+	@in		MOAICpShape self
+	@in		number group			The group ID.
+	@out	nil
 */
 int MOAICpShape::_setGroup ( lua_State* L ) {
 	LUA_SETUP ( MOAICpShape, "UN" )
@@ -435,11 +457,12 @@ int MOAICpShape::_setGroup ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	setIsSensor
+	@text	Sets whether this shape is a sensor.
+
+	@in		MOAICpShape self
+	@in		boolean sensor			Whether this shape is a sensor.
+	@out	nil
 */
 int MOAICpShape::_setIsSensor ( lua_State* L ) {
 	LUA_SETUP ( MOAICpShape, "UB" )
@@ -451,11 +474,12 @@ int MOAICpShape::_setIsSensor ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	setLayers
+	@text	Sets the current layer ID.
+
+	@in		MOAICpShape self
+	@in		number layer			The layer ID.
+	@out	nil
 */
 int MOAICpShape::_setLayers ( lua_State* L ) {
 	LUA_SETUP ( MOAICpShape, "UN" )
@@ -467,11 +491,13 @@ int MOAICpShape::_setLayers ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	setSurfaceVel
+	@text	Sets the current surface velocity.
+
+	@in		MOAICpShape self
+	@in		number x				The X component of the surface velocity.
+	@in		number y				The Y component of the surface velocity.
+	@out	nil
 */
 int MOAICpShape::_setSurfaceVel ( lua_State* L ) {
 	LUA_SETUP ( MOAICpShape, "UNN" )
@@ -486,11 +512,12 @@ int MOAICpShape::_setSurfaceVel ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	setType
+	@text	Sets the current collision type.
+
+	@in		MOAICpShape self
+	@in		number type				The collision type.
+	@out	nil
 */
 int MOAICpShape::_setType ( lua_State* L ) {
 	LUA_SETUP ( MOAICpShape, "UN" )
