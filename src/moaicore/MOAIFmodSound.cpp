@@ -18,11 +18,15 @@ SUPPRESS_EMPTY_FILE_WARNING
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	load
+	@text	Loads the specified sound from file, or from a MOAIDataBuffer.
+
+	@in		MOAIFmodSound self
+	@opt	string filename			The path to the sound to load from file.
+	@opt	MOAIDataBuffer data		The MOAIDataBuffer that is storing sound data.  You must either provide a string or MOAIDataBuffer, but not both.
+	@in		boolean streaming		Whether the sound should be streamed from the data source, rather than preloaded.
+	@in		boolean	async			Whether the sound should be loaded asynchronously (only relevant for filename-based loading).
+	@out	nil
 */
 int MOAIFmodSound::_load ( lua_State* L ) {
 	LUA_SETUP ( MOAIFmodSound, "U" )
@@ -46,11 +50,13 @@ int MOAIFmodSound::_load ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	loadBGM
+	@text	Loads the specified BGM sound from file, or from a MOAIDataBuffer.
+
+	@in		MOAIFmodSound self
+	@opt	string filename			The path to the sound to load from file.
+	@opt	MOAIDataBuffer data		The MOAIDataBuffer that is storing sound data.  You must either provide a string or MOAIDataBuffer, but not both.
+	@out	nil
 */
 int	MOAIFmodSound::_loadBGM ( lua_State* L ) {
 	LUA_SETUP ( MOAIFmodSound, "U" )
@@ -71,11 +77,13 @@ int	MOAIFmodSound::_loadBGM ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	loadSFX
+	@text	Loads the specified SFX sound from file, or from a MOAIDataBuffer.
+
+	@in		MOAIFmodSound self
+	@opt	string filename			The path to the sound to load from file.
+	@opt	MOAIDataBuffer data		The MOAIDataBuffer that is storing sound data.  You must either provide a string or MOAIDataBuffer, but not both.
+	@out	nil
 */
 int	MOAIFmodSound::_loadSFX ( lua_State* L ) {
 	LUA_SETUP ( MOAIFmodSound, "U" )
@@ -96,11 +104,11 @@ int	MOAIFmodSound::_loadSFX ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	release
+	@text	Releases the sound data from memory.
+
+	@in		MOAIFmodSound self
+	@out	nil
 */
 int MOAIFmodSound::_release ( lua_State* L ) {
 	LUA_SETUP ( MOAIFmodSound, "U" )

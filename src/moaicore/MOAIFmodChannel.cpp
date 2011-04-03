@@ -19,11 +19,14 @@ SUPPRESS_EMPTY_FILE_WARNING
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	moveVolume
+	@text	Creates a new MOAIAction that will move the volume from it's current value to the value specified.
+
+	@in		MOAIFmodChannel self
+	@in		number target			The target volume.
+	@in		number delay			The delay until the action starts.
+	@in		number mode				The interpolation mode for the action.
+	@out	MOAIAction action		The new action.  It is automatically started by this function.
 */
 int MOAIFmodChannel::_moveVolume ( lua_State* L ) {
 	LUA_SETUP ( MOAIFmodChannel, "UNN" )
@@ -43,11 +46,13 @@ int MOAIFmodChannel::_moveVolume ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	play
+	@text	Plays the specified sound, looping it if desired.
+
+	@in		MOAIFmodChannel self
+	@in		MOAIFmodSound sound		The sound to play.
+	@in		boolean loop			Whether the sound should be looped.
+	@out	nil
 */
 int MOAIFmodChannel::_play ( lua_State* L ) {
 	LUA_SETUP ( MOAIFmodChannel, "UU" )
@@ -63,11 +68,14 @@ int MOAIFmodChannel::_play ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	seekVolume
+	@text	Creates a new MOAIAction that will move the volume from it's current value to the value specified.
+
+	@in		MOAIFmodChannel self
+	@in		number target			The target volume.
+	@in		number delay			The delay until the action starts.
+	@in		number mode				The interpolation mode for the action.
+	@out	MOAIAction action		The new action.  It is automatically started by this function.
 */
 int MOAIFmodChannel::_seekVolume ( lua_State* L ) {
 	LUA_SETUP ( MOAIFmodChannel, "UNN" )
@@ -87,11 +95,12 @@ int MOAIFmodChannel::_seekVolume ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	setPaused
+	@text	Sets whether this channel is paused and hence does not play any sounds.
+
+	@in		MOAIFmodChannel self
+	@in		boolean paused			Whether this channel is paused.
+	@out	nil
 */
 int MOAIFmodChannel::_setPaused ( lua_State* L ) {
 	LUA_SETUP ( MOAIFmodChannel, "UB" )
@@ -103,11 +112,12 @@ int MOAIFmodChannel::_setPaused ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	setVolume
+	@text	Immediately sets the volume of this channel.
+
+	@in		MOAIFmodChannel self
+	@in		number volume			The volume of this channel.
+	@out	nil
 */
 int MOAIFmodChannel::_setVolume ( lua_State* L ) {
 	LUA_SETUP ( MOAIFmodChannel, "UN" )
@@ -119,11 +129,11 @@ int MOAIFmodChannel::_setVolume ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	stop
+	@text	Stops playing the sound on this channel.
+
+	@in		MOAIFmodChannel self
+	@out	nil
 */
 int MOAIFmodChannel::_stop ( lua_State* L ) {
 	LUA_SETUP ( MOAIFmodChannel, "U" )
