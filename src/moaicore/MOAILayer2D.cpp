@@ -18,7 +18,22 @@
 
 //----------------------------------------------------------------//
 /**	@name	getFitting
-	@text	Computes a camera fitting for a given world 
+	@text	Computes a camera fitting for a given world rect along with
+			an optional screen space padding. To do a fitting, computer
+			the world rect based on whatever you are fitting to, use
+			this method to get the fitting, then animate the camera
+			to match.
+	
+	@in		MOAILayer2D self
+	@in		number xMin
+	@in		number yMin
+	@in		number xMax
+	@in		number yMax
+	@opt	number xPad
+	@opt	number yPad
+	@out	number x		X center of fitting (use for camera location).
+	@out	number y		Y center of fitting (use for camera location).
+	@out	number s		Scale of fitting (use for camera scale).
 */
 int MOAILayer2D::_getFitting ( lua_State* L ) {
 	LUA_SETUP ( MOAILayer2D, "UNNNN" )
@@ -47,11 +62,11 @@ int MOAILayer2D::_getFitting ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( partition ) getPartition ( self )</tt>\n
-\n
-	Return the partition currently associated with this layer.
-	@param self (in)
-	@param partition (out)
+/**	@name	getPartition
+	@text	Returns the partition (if any) currently attached to this layer.
+	
+	@in		MOAILayer2D self
+	@out	MOAIPartition partition
 */
 int	MOAILayer2D::_getPartition ( lua_State* L ) {
 	LUA_SETUP ( MOAILayer2D, "U" )
@@ -65,13 +80,12 @@ int	MOAILayer2D::_getPartition ( lua_State* L ) {
 
 
 //----------------------------------------------------------------//
-/**	@brief <tt>() insertPrim ( self, prim )</tt>\n
-\n
-	Inserts a prim into the layer's partition.  This function will automatically
-	create a new partition for the layer if none exists.
-	A prim should never be inserted into more than one partition.
-	@param self (in)
-	@param prim (in)
+/**	@name	insertProp
+	@text	Adds a prop to the layer's partition.
+	
+	@in		MOAILayer2D self
+	@in		MOAIProp prop
+	@out	nil
 */
 int	MOAILayer2D::_insertProp ( lua_State* L ) {
 	LUA_SETUP ( MOAILayer2D, "UU" )
@@ -87,11 +101,12 @@ int	MOAILayer2D::_insertProp ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>() removePrim ( self, prim )</tt>\n
-\n
-	Removes a prim from this layer's partition.
-	@param self (in)
-	@param prim (in)
+/**	@name	removeProp
+	@text	Removes a prop from the layer's partition.
+	
+	@in		MOAILayer2D self
+	@in		MOAIProp prop
+	@out	nil
 */
 int	MOAILayer2D::_removeProp ( lua_State* L ) {
 	LUA_SETUP ( MOAILayer2D, "UU" )
@@ -108,11 +123,12 @@ int	MOAILayer2D::_removeProp ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	setBox2DWorld
+	@text	Sets a Box2D world for debug drawing.
+	
+	@in		MOAILayer2D self
+	@in		MOAIBox2DWorld world
+	@out	nil
 */
 int MOAILayer2D::_setBox2DWorld ( lua_State* L ) {
 	LUA_SETUP ( MOAILayer2D, "UU" )
@@ -124,11 +140,15 @@ int MOAILayer2D::_setBox2DWorld ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>() setCamera ( self, camera )</tt>\n
-\n
-	Sets the layer's camera transform.
-	@param self (in)
-	@param camera (in) Camera to be set.
+/**	@name	setCamera
+	@text	Sets a camera transform. This is just a regular transform.
+			Its inverse is used as the view transform. If no camera
+			transform is set, the layer will render using the
+			identity transform.
+	
+	@in		MOAILayer2D self
+	@in		MOAITransform camera
+	@out	nil
 */
 int MOAILayer2D::_setCamera ( lua_State* L ) {
 	LUA_SETUP ( MOAILayer2D, "UU" )
@@ -142,11 +162,12 @@ int MOAILayer2D::_setCamera ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	setCpSpace
+	@text	Sets a Chipmunk space for debug drawing.
+	
+	@in		MOAILayer2D self
+	@in		MOAICpSpace space
+	@out	nil
 */
 int MOAILayer2D::_setCpSpace ( lua_State* L ) {
 	LUA_SETUP ( MOAILayer2D, "UU" )
@@ -158,13 +179,14 @@ int MOAILayer2D::_setCpSpace ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>() setParallax ( self, xScale, yScale )</tt>\n
-\n
-	Sets the parallax scale for this layer. This is simply a
-	scalar applied to the view transform before rendering.
-	@param self (in)
-	@param xScale (in)
-	@param yScale (in)
+/**	@name	setParallax
+	@text	Sets the parallax scale for this layer. This is simply a
+			scalar applied to the view transform before rendering.
+	
+	@in		MOAILayer2D self
+	@in		number xParallax
+	@in		number yParallax
+	@out	nil
 */
 int MOAILayer2D::_setParallax ( lua_State* L ) {
 	LUA_SETUP ( MOAILayer2D, "UNN" )
@@ -176,11 +198,14 @@ int MOAILayer2D::_setParallax ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>() setPartition ( self, partition )</tt>\n
-\n
-	Sets the layer's partition.
-	@param self (in)
-	@param partition (in)
+/**	@name	setPartition
+	@text	Sets a partition for the layer to use. The layer will automatically
+			create a partition when the first prop is added if no partition
+			has been set.
+	
+	@in		MOAILayer2D self
+	@in		MOAIPartition partition
+	@out	nil
 */
 int MOAILayer2D::_setPartition ( lua_State* L ) {
 	LUA_SETUP ( MOAILayer2D, "UU" )
@@ -194,11 +219,12 @@ int MOAILayer2D::_setPartition ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>() setViewport ( self, viewport )</tt>\n
-\n
-	Sets the layer's viewport.
-	@param self (in)
-	@param viewport (in)
+/**	@name	setViewport
+	@text	Set the layer's viewport.
+	
+	@in		MOAILayer2D self
+	@in		MOAIViewport viewport
+	@out	nil
 */
 int MOAILayer2D::_setViewport ( lua_State* L ) {
 	LUA_SETUP ( MOAILayer2D, "UU" )
@@ -212,12 +238,12 @@ int MOAILayer2D::_setViewport ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>() showDebugLines ( self, show )</tt>\n
-\n
-	Render debug lines for primitives in this layer.
-	(Not all primitives support debug rendering.)
-	@param self (in)
-	@param show (in)
+/**	@name	showDebugLines
+	@text	Display debug lines for props in this layer.
+	
+	@in		MOAILayer2D self
+	@opt	bool showDebugLines		Default value is 'true'.
+	@out	nil
 */
 int	MOAILayer2D::_showDebugLines ( lua_State* L ) {
 	LUA_SETUP ( MOAILayer2D, "U" )
@@ -228,11 +254,14 @@ int	MOAILayer2D::_showDebugLines ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>wndToWorld ( mX, mY )</tt>\n
-\n
-	Takes a window coordinate and returns (x, y) in world coordinates.
-	@param mX Windowed x coordinate to convert.
-	@param mY Windowed y coordinate to convert.
+/**	@name	wndToWorld
+	@text	Transform a point from window space to world space.
+	
+	@in		MOAILayer2D self
+	@in		number x
+	@in		number y
+	@out	number x
+	@out	number y
 */
 int MOAILayer2D::_wndToWorld ( lua_State* L ) {
 	LUA_SETUP ( MOAILayer2D, "UNN" )
@@ -252,11 +281,14 @@ int MOAILayer2D::_wndToWorld ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>worldToWnd ( mX, mY )</tt>\n
-\n
-	Takes a world coordinate and returns (x, y) in windowed coordinates.
-	@param mX World x coordinate to convert.
-	@param mY World y coordinate to convert.
+/**	@name	wndToWorld
+	@text	Transform a point from world space to window space.
+	
+	@in		MOAILayer2D self
+	@in		number x
+	@in		number y
+	@out	number x
+	@out	number y
 */
 int MOAILayer2D::_worldToWnd ( lua_State* L ) {
 	LUA_SETUP ( MOAILayer2D, "UNN" )
