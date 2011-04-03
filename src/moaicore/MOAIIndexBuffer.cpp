@@ -9,11 +9,11 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	release
+	@text	Release any memory held by this index buffer.
+	
+	@in		MOAIIndexBuffer self
+	@out	nil
 */
 int	MOAIIndexBuffer::_release ( lua_State* L ) {
 	LUA_SETUP ( MOAIIndexBuffer, "U" )
@@ -23,13 +23,14 @@ int	MOAIIndexBuffer::_release ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	reserve
+	@text	Set capacity of buffer.
+	
+	@in		MOAIIndexBuffer self
+	@in		number nIndices
+	@out	nil
 */
-int	MOAIIndexBuffer::_reserveIndices ( lua_State* L ) {
+int	MOAIIndexBuffer::_reserve ( lua_State* L ) {
 	LUA_SETUP ( MOAIIndexBuffer, "UN" )
 	
 	u32 indexCount = state.GetValue < u32 >( 2, 0 );
@@ -39,11 +40,13 @@ int	MOAIIndexBuffer::_reserveIndices ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	setIndex
+	@text	Initialize an index.
+	
+	@in		MOAIIndexBuffer self
+	@in		number idx
+	@in		number value
+	@out	nil
 */
 int	MOAIIndexBuffer::_setIndex ( lua_State* L ) {
 	LUA_SETUP ( MOAIIndexBuffer, "UNN" )
@@ -121,7 +124,7 @@ void MOAIIndexBuffer::RegisterLuaFuncs ( USLuaState& state ) {
 
 	LuaReg regTable [] = {
 		{ "release",			_release },
-		{ "reserveIndices",		_reserveIndices },
+		{ "reserve",			_reserve },
 		{ "setIndex",			_setIndex },
 		{ NULL, NULL }
 	};

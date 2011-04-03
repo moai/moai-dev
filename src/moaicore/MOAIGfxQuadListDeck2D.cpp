@@ -13,39 +13,12 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@brief <tt>bind ( self )</tt>\n
-\n
-	Forces the texture to load.
-	@param self (in)
-*/
-int MOAIGfxQuadListDeck2D::_bind ( lua_State* L ) {
-	LUA_SETUP ( MOAIGfxQuadListDeck2D, "U" )
-
-	self->Bind ();
+/**	@name	reserveLists
+	@text	Reserve quad lists.
 	
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@brief <tt>releaseTexture ( self )</tt>\n
-\n
-	Releases the memory used for the brushlib's textures.  Will have to be reloaded if the brushlib is displayed again.
-	@param self (in)
-*/
-int MOAIGfxQuadListDeck2D::_releaseTexture ( lua_State* L ) {
-	LUA_SETUP ( MOAIGfxQuadListDeck2D, "U" )
-
-	self->ReleaseTexture ();
-
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@brief <tt>reserveSprites ( self, total )</tt>\n
-\n
-	Reserves brushes for a brush library.
-	@param self (in)
-	@param total (in) The number of brushes to reserve.
+	@in		MOAIGfxQuadListDeck2D self
+	@in		number nLists
+	@out	nil
 */
 int MOAIGfxQuadListDeck2D::_reserveLists ( lua_State* L ) {
 	LUA_SETUP ( MOAIGfxQuadListDeck2D, "UN" )
@@ -57,27 +30,29 @@ int MOAIGfxQuadListDeck2D::_reserveLists ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>reservePrims ( self, total )</tt>\n
-\n
-	Reserves brush prims for a brush library.
-	@param self (in)
-	@param total (in) The number of brush prims to reserve.
+/**	@name	reservePairs
+	@text	Reserve pairs.
+	
+	@in		MOAIGfxQuadListDeck2D self
+	@in		number nPairs
+	@out	nil
 */
-int MOAIGfxQuadListDeck2D::_reservePrims ( lua_State* L ) {
+int MOAIGfxQuadListDeck2D::_reservePairs ( lua_State* L ) {
 	LUA_SETUP ( MOAIGfxQuadListDeck2D, "UN" )
 
 	u32 total = state.GetValue < u32 >( 2, 0 );
-	self->ReservePrims ( total );
+	self->ReservePairs ( total );
 
 	return 0;
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>reserveQuads ( self, total )</tt>\n
-\n
-	Reserves rects for a brush library.
-	@param self (in)
-	@param total (in) The number of screen rects to reserve.
+/**	@name	reserveQuads
+	@text	Reserve quads.
+	
+	@in		MOAIGfxQuadListDeck2D self
+	@in		number nQuads
+	@out	nil
 */
 int MOAIGfxQuadListDeck2D::_reserveQuads ( lua_State* L ) {
 	LUA_SETUP ( MOAIGfxQuadListDeck2D, "UN" )
@@ -89,11 +64,12 @@ int MOAIGfxQuadListDeck2D::_reserveQuads ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>reserveUVRects ( self, total )</tt>\n
-\n
-	Reserves UV rects for a brush library.
-	@param self (in)
-	@param total (in) The number of UV rects to reserve.
+/**	@name	reserveUVRects
+	@text	Reserve UV rects.
+	
+	@in		MOAIGfxQuadListDeck2D self
+	@in		number nUVRects
+	@out	nil
 */
 int MOAIGfxQuadListDeck2D::_reserveUVRects ( lua_State* L ) {
 	LUA_SETUP ( MOAIGfxQuadListDeck2D, "UN" )
@@ -105,61 +81,68 @@ int MOAIGfxQuadListDeck2D::_reserveUVRects ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>setSprite ( self, id, basePrimID, totalPrims )</tt>\n
-\n
-	Sets a brush in the brush library.
-	@param self (in)
-	@param id (in) ID of this brush.
-	@param basePrimID (in) ID of the brushprim for this brush.
-	@param totalPrims (in) Total number of brushprims up to this declaration(?).
+/**	@name	setList
+	@text	Initializes quad pair list at index. A list starts at the index
+			of a pair and then continues sequentially for n pairs after. So
+			a list with base 3 and a run of 4 would display pair 3, 4, 5,
+			and 6.
+	
+	@in		MOAIGfxQuadListDeck2D self
+	@in		number idx
+	@in		number basePairID	The base pair of the list.
+	@in		number totalPairs	The run of the list - total pairs to display (including base).
+	@out	nil
 */
 int MOAIGfxQuadListDeck2D::_setList ( lua_State* L ) {
 	LUA_SETUP ( MOAIGfxQuadListDeck2D, "UNNN" )
 
 	u32 idx = state.GetValue < u32 >( 2, 1 ) - 1;
-	u32 basePrimID = state.GetValue < u32 >( 3, 1 ) - 1;
-	u32 totalPrims = state.GetValue < u32 >( 4, 0 );
+	u32 basePairID = state.GetValue < u32 >( 3, 1 ) - 1;
+	u32 totalPairs = state.GetValue < u32 >( 4, 0 );
 
-	self->SetList ( idx, basePrimID, totalPrims );
+	self->SetList ( idx, basePairID, totalPairs );
 
 	return 0;
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>setPrim ( self, id, uvRectID, screenRectID )</tt>\n
-\n
-	Sets a prim in the sprite library.
-	@param self (in)
-	@param id (in) ID of this prim.
-	@param uvRectID (in) ID of the uvRect assigned to this prim.
-	@param screenRectID (in) ID of the quad assigned to this prim.
+/**	@name	setPair
+	@text	Associates a quad with its UV coordinates.
+	
+	@in		MOAIGfxQuadListDeck2D self
+	@in		number idx
+	@in		number uvRectID
+	@in		number quadID
+	@out	nil
 */
-int MOAIGfxQuadListDeck2D::_setPrim ( lua_State* L ) {
+int MOAIGfxQuadListDeck2D::_setPair ( lua_State* L ) {
 	LUA_SETUP ( MOAIGfxQuadListDeck2D, "UNNN" )
 
 	u32 idx = state.GetValue < u32 >( 2, 1 ) - 1;
 	u32 uvRectID = state.GetValue < u32 >( 3, 1 ) - 1;
 	u32 screenRectID = state.GetValue < u32 >( 4, 1 ) - 1;
 
-	self->SetPrim ( idx, uvRectID, screenRectID );
+	self->SetPair ( idx, uvRectID, screenRectID );
 
 	return 0;
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>setQuad ( self, id, x0, y0, x1, y1, x2, y2, x3, y3 )</tt>\n
-\n
-	Sets a screen rect in the brush library.
-	@param self (in)
-	@param id (in) ID of this quad.
-	@param x0 (in)
-	@param y0 (in)
-	@param x1 (in)
-	@param y1 (in)
-	@param x2 (in)
-	@param y2 (in)
-	@param x3 (in)
-	@param y3 (in)
+/**	@name	setQuad
+	@text	Set model space quad given a valid deck index. Vertex order is
+			clockwise from upper left (xMin, yMax)
+	
+	@in		MOAIGfxQuadListDeck2D self
+	@in		number idx	Index of the quad.
+	@in		number x0
+	@in		number y0
+	@in		number x1
+	@in		number y1
+	@in		number x2
+	@in		number y2
+	@in		number x3
+	@in		number y3
+	@out	nil
 */
 int MOAIGfxQuadListDeck2D::_setQuad ( lua_State* L ) {
 	LUA_SETUP ( MOAIGfxQuadListDeck2D, "UNNNNNNNNN" )
@@ -183,15 +166,16 @@ int MOAIGfxQuadListDeck2D::_setQuad ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>setRect ( self, id, xMin, yMin, xMax, yMax )</tt>\n
-\n
-	Sets a screen rect in the brush library.
-	@param self (in)
-	@param id (in) ID of this screen rect.
-	@param xMin (in) Upper-left X coordinate of screen rect.
-	@param yMin (in) Upper-left Y coordinate of screen rect.
-	@param xMax (in) Lower-right X coordinate of screen rect.
-	@param yMax (in) Lower-right Y coordinate of screen rect.
+/**	@name	setRect
+	@text	Set model space quad given a valid deck index and a rect.
+	
+	@in		MOAIGfxQuadListDeck2D self
+	@in		number idx	Index of the quad.
+	@in		number xMin
+	@in		number yMin
+	@in		number xMax
+	@in		number yMax
+	@out	nil
 */
 int MOAIGfxQuadListDeck2D::_setRect ( lua_State* L ) {
 	LUA_SETUP ( MOAIGfxQuadListDeck2D, "UNNNNN" )
@@ -211,31 +195,36 @@ int MOAIGfxQuadListDeck2D::_setRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>setTexture ( self, id, filename )</tt>\n
-\n
-	Sets a texture in the brush library.
-	@param self (in)
-	@param id (in) ID of this texture.
-	@param filename (in) Image filename to be loaded as a texture.
+/**	@name	setTexture
+	@text	Set or load a texture for this deck.
+	
+	@in		MOAIGfxQuadListDeck2D self
+	@in		variant texture			A MOAITexture, a MOAIDataBuffer or a path to a texture file
+	@opt	number transform		Any bitwise combination of MOAITexture.QUANTIZE, MOAITexture.TRUECOLOR, MOAITexture.PREMULTIPLY_ALPHA
+	@out	MOAITexture texture
 */
 int MOAIGfxQuadListDeck2D::_setTexture ( lua_State* L ) {
 	LUA_SETUP ( MOAIGfxQuadListDeck2D, "U" )
 
 	self->mTexture = MOAITexture::AffirmTexture ( state, 2 );
-	
+	if ( self->mTexture ) {
+		self->mTexture->PushLuaUserdata ( state );
+		return 1;
+	}
 	return 0;
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>setUVRect ( self, id, xMin, yMin, xMax, yMax, texID )</tt>\n
-\n
-	Sets a UV rect in the sprite library.
-	@param self (in)
-	@param id (in) ID of the uv rect.
-	@param xMin (in) First X coordinate of UV rect.
-	@param yMin (in) First Y coordinate of UV rect.
-	@param xMax (in) Second X coordinate of UV rect.
-	@param yMax (in) Second Y coordinate of UV rect.
+/**	@name	setUVRect
+	@text	Set UV space quad given a valid deck index and a rect.
+	
+	@in		MOAIGfxQuadListDeck2D self
+	@in		number idx	Index of the quad.
+	@in		number xMin
+	@in		number yMin
+	@in		number xMax
+	@in		number yMax
+	@out	nil
 */
 int MOAIGfxQuadListDeck2D::_setUVRect ( lua_State* L ) {
 	LUA_SETUP ( MOAIGfxQuadListDeck2D, "UNNNNN" )
@@ -292,8 +281,8 @@ bool MOAIGfxQuadListDeck2D::Contains ( u32 idx, const USVec2D& vec ) {
 	if ( idx < this->mSprites.Size ()) {
 		USSprite& brush = this->mSprites [ idx ];
 		
-		for ( u32 i = 0; i < brush.mTotalPrims; ++i ) {
-			USSpritePrim& prim = this->mPrims [ brush.mBasePrim + i ];
+		for ( u32 i = 0; i < brush.mTotalPairs; ++i ) {
+			USSpritePair& prim = this->mPairs [ brush.mBasePair + i ];
 			if ( this->mQuads [ prim.mQuadID ].Contains ( vec.mX, vec.mY )) {
 				return true;
 			} 
@@ -313,17 +302,17 @@ void MOAIGfxQuadListDeck2D::Draw ( u32 idx, float xOff, float yOff, float xScale
 		USSprite& sprite = this->mSprites [ idx ];
 		USGLQuad glQuad;
 		
-		u32 base = sprite.mBasePrim;
-		u32 top = base + sprite.mTotalPrims;
+		u32 base = sprite.mBasePair;
+		u32 top = base + sprite.mTotalPairs;
 		
-		u32 totalSpritePrims = this->mPrims.Size ();
+		u32 totalSpritePairs = this->mPairs.Size ();
 		
 		for ( u32 i = base; i < top; ++i ) {
 			
-			USSpritePrim spritePrim = this->mPrims [ i % totalSpritePrims ];
+			USSpritePair spritePair = this->mPairs [ i % totalSpritePairs ];
 			
-			USSpriteUVRect& uvRect = this->mUVRects [ spritePrim.mUVRectID ]; 
-			USQuad& quad = this->mQuads [ spritePrim.mQuadID ];
+			USSpriteUVRect& uvRect = this->mUVRects [ spritePair.mUVRectID ]; 
+			USQuad& quad = this->mQuads [ spritePair.mQuadID ];
 			
 			if ( uvRect.mTransform == UV_ROTATE_90 ) {
 				USRect& rect = uvRect.mRect;
@@ -349,16 +338,16 @@ USRect MOAIGfxQuadListDeck2D::GetBounds ( u32 idx ) {
 	if ( idx < this->mSprites.Size ()) {
 		USSprite& sprite = this->mSprites [ idx ];
 		
-		if ( sprite.mTotalPrims ) {
+		if ( sprite.mTotalPairs ) {
 			
-			USSpritePrim prim = this->mPrims [ sprite.mBasePrim ];
+			USSpritePair prim = this->mPairs [ sprite.mBasePair ];
 			USQuad& baseQuad = this->mQuads [ prim.mQuadID ];
 			
 			baseQuad.GetBounds ( rect );
 			
-			for ( u32 i = 1; i < sprite.mTotalPrims; ++i ) {
+			for ( u32 i = 1; i < sprite.mTotalPairs; ++i ) {
 				
-				prim = this->mPrims [ sprite.mBasePrim + i ];
+				prim = this->mPairs [ sprite.mBasePair + i ];
 				USQuad& quad = this->mQuads [ prim.mQuadID ];
 				
 				rect.Grow ( quad.mV [ 0 ]);
@@ -397,14 +386,12 @@ void MOAIGfxQuadListDeck2D::RegisterLuaFuncs ( USLuaState& state ) {
 	MOAIDeck2D::RegisterLuaFuncs ( state );
 
 	LuaReg regTable [] = {
-		{ "bind",					_bind },
-		{ "releaseTexture",			_releaseTexture },
 		{ "reserveLists",			_reserveLists },
-		{ "reservePrims",			_reservePrims },
+		{ "reservePairs",			_reservePairs },
 		{ "reserveQuads",			_reserveQuads },
 		{ "reserveUVRects",			_reserveUVRects },
 		{ "setList",				_setList },
-		{ "setPrim",				_setPrim },
+		{ "setPair",				_setPair },
 		{ "setQuad",				_setQuad },
 		{ "setRect",				_setRect },
 		{ "setUVRect",				_setUVRect },
@@ -429,15 +416,15 @@ void MOAIGfxQuadListDeck2D::ReserveLists ( u32 total ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxQuadListDeck2D::ReservePrims ( u32 total ) {
+void MOAIGfxQuadListDeck2D::ReservePairs ( u32 total ) {
 
-	this->mPrims.Init ( total );
+	this->mPairs.Init ( total );
 	
-	USSpritePrim zero;
+	USSpritePair zero;
 	zero.mQuadID		= 0;
 	zero.mUVRectID		= 0;
 	
-	this->mPrims.Fill ( zero );
+	this->mPairs.Fill ( zero );
 }
 
 //----------------------------------------------------------------//
@@ -453,28 +440,28 @@ void MOAIGfxQuadListDeck2D::ReserveUVRects ( u32 total ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxQuadListDeck2D::SetList ( u32 idx, u32 basePrimID, u32 totalPrims ) {
+void MOAIGfxQuadListDeck2D::SetList ( u32 idx, u32 basePairID, u32 totalPairs ) {
 
 	if ( !this->mSprites.Size ()) return;
-	if ( !this->mPrims.Size ()) return;
+	if ( !this->mPairs.Size ()) return;
 	
 	USSprite& sprite = this->mSprites [ idx % this->mSprites.Size ()];
 	
-	sprite.mBasePrim = basePrimID % this->mPrims.Size ();
-	sprite.mTotalPrims = totalPrims;
+	sprite.mBasePair = basePairID % this->mPairs.Size ();
+	sprite.mTotalPairs = totalPairs;
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxQuadListDeck2D::SetPrim ( u32 idx, u32 uvRectID, u32 screenRectID ) {
+void MOAIGfxQuadListDeck2D::SetPair ( u32 idx, u32 uvRectID, u32 screenRectID ) {
 	
-	if ( !this->mPrims.Size ()) return;
+	if ( !this->mPairs.Size ()) return;
 	if ( !this->mUVRects.Size ()) return;
 	if ( !this->mQuads.Size ()) return;
 	
-	USSpritePrim& spritePrim = this->mPrims [ idx % this->mPrims.Size ()];
+	USSpritePair& spritePair = this->mPairs [ idx % this->mPairs.Size ()];
 	
-	spritePrim.mUVRectID = uvRectID % this->mUVRects.Size ();
-	spritePrim.mQuadID = screenRectID % this->mQuads.Size ();
+	spritePair.mUVRectID = uvRectID % this->mUVRects.Size ();
+	spritePair.mQuadID = screenRectID % this->mQuads.Size ();
 }
 
 //----------------------------------------------------------------//
@@ -518,7 +505,7 @@ STLString MOAIGfxQuadListDeck2D::ToString () {
 	//PRETTY_PRINT ( repr, mTexture )
 	//PRETTY_PRINT ( repr, mUVRects )
 	//PRETTY_PRINT ( repr, mQuads )
-	//PRETTY_PRINT ( repr, mPrims )
+	//PRETTY_PRINT ( repr, mPairs )
 	//PRETTY_PRINT ( repr, mSprites )
 
 	return repr;

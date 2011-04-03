@@ -10,6 +10,10 @@
 // MOAISimpleShader
 //================================================================//
 /**	@brief	Fixed function pipeline shader.
+
+	@const	BLEND_NORMAL
+	@const	BLEND_ADD
+	@const	BLEND_MULTIPLY
 */
 class MOAISimpleShader :
 	public virtual MOAIColor {

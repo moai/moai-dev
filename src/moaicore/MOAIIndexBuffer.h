@@ -21,7 +21,7 @@ private:
 	
 	//----------------------------------------------------------------//
 	static int	_release				( lua_State* L );
-	static int	_reserveIndices			( lua_State* L );
+	static int	_reserve				( lua_State* L );
 	static int	_setIndex				( lua_State* L );
 
 	//----------------------------------------------------------------//

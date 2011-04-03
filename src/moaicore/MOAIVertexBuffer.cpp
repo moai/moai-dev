@@ -10,7 +10,13 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	bless
+	@text	Call this after initializing the buffer and settings it vertices
+			to prepare it for use.
+	
+	@in		MOAIVertexBuffer self
+	@out	nil
+*/
 int MOAIVertexBuffer::_bless ( lua_State* L ) {
 	LUA_SETUP ( MOAIVertexBuffer, "U" )
 	
@@ -24,7 +30,12 @@ int MOAIVertexBuffer::_bless ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	release
+	@text	Releases any memory associated with buffer.
+	
+	@in		MOAIVertexBuffer self
+	@out	nil
+*/
 int	MOAIVertexBuffer::_release ( lua_State* L ) {
 	LUA_SETUP ( MOAIVertexBuffer, "U" )
 	
@@ -33,7 +44,13 @@ int	MOAIVertexBuffer::_release ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	reserve
+	@text	Sets capacity of buffer in bytes.
+	
+	@in		MOAIVertexBuffer self
+	@in		number size
+	@out	nil
+*/
 int	MOAIVertexBuffer::_reserve ( lua_State* L ) {
 	LUA_SETUP ( MOAIVertexBuffer, "UN" )
 	
@@ -44,7 +61,15 @@ int	MOAIVertexBuffer::_reserve ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	reserveVerts
+	@text	Sets capacity of buffer in vertices. This function should
+			only be used after attaching a valid MOAIVertexFormat
+			to the buffer.
+	
+	@in		MOAIVertexBuffer self
+	@in		number size
+	@out	nil
+*/
 int	MOAIVertexBuffer::_reserveVerts ( lua_State* L ) {
 	LUA_SETUP ( MOAIVertexBuffer, "UN" )
 	
@@ -57,6 +82,12 @@ int	MOAIVertexBuffer::_reserveVerts ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	reset
+	@text	Resets the vertex stream writing to the head of the stream.
+	
+	@in		MOAIVertexBuffer self
+	@out	nil
+*/
 int MOAIVertexBuffer::_reset ( lua_State* L ) {
 	LUA_SETUP ( MOAIVertexBuffer, "U" )
 	
@@ -66,17 +97,13 @@ int MOAIVertexBuffer::_reset ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-int MOAIVertexBuffer::_seek ( lua_State* L ) {
-	LUA_SETUP ( MOAIVertexBuffer, "UN" )
+/**	@name	setFormat
+	@text	Sets the vertex format for the buffer.
 	
-	u32 pos = state.GetValue < u32 >( 2, 0 );
-	self->mStream.Seek ( pos, SEEK_SET );
-	
-	return 0;
-}
-
-//----------------------------------------------------------------//
-// TODO: doxygen
+	@in		MOAIVertexBuffer self
+	@in		MOAIVertexFormat format
+	@out	nil
+*/
 int MOAIVertexBuffer::_setFormat ( lua_State* L ) {
 	LUA_SETUP ( MOAIVertexBuffer, "U" )
 	
@@ -86,7 +113,14 @@ int MOAIVertexBuffer::_setFormat ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	setPrimType
+	@text	Sets the prim type the buffer represents.
+	
+	@in		MOAIVertexBuffer self
+	@in		number primType		One of MOAIVertexBuffer GL_POINTS, GL_LINES, GL_TRIANGLES, GL_LINE_LOOP,
+								GL_LINE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLE_STRIP
+	@out	nil
+*/
 int MOAIVertexBuffer::_setPrimType ( lua_State* L ) {
 	LUA_SETUP ( MOAIVertexBuffer, "UN" )
 	
@@ -97,7 +131,17 @@ int MOAIVertexBuffer::_setPrimType ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-int MOAIVertexBuffer::_writeColor ( lua_State* L ) {
+/**	@name	writeColor
+	@text	Write a packed 32-bit color to the vertex buffer.
+	
+	@in		MOAIVertexBuffer self
+	@opt	number r				Default value is 1.
+	@opt	number g				Default value is 1.
+	@opt	number b				Default value is 1.
+	@opt	number a				Default value is 1.
+	@out	nil
+*/
+int MOAIVertexBuffer::_writeColor32 ( lua_State* L ) {
 	LUA_SETUP ( MOAIVertexBuffer, "U" )
 	
 	float r = state.GetValue < float >( 2, 1.0f );
@@ -112,6 +156,13 @@ int MOAIVertexBuffer::_writeColor ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	writeFloat
+	@text	Write a 32-bit float to the vertex buffer.
+	
+	@in		MOAIVertexBuffer self
+	@opt	number f				Default value is 0.
+	@out	nil
+*/
 int MOAIVertexBuffer::_writeFloat ( lua_State* L ) {
 	LUA_SETUP ( MOAIVertexBuffer, "U" )
 	
@@ -124,6 +175,13 @@ int MOAIVertexBuffer::_writeFloat ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	writeInt8
+	@text	Write an 8-bit integer to the vertex buffer.
+	
+	@in		MOAIVertexBuffer self
+	@opt	number i				Default value is 0.
+	@out	nil
+*/
 int MOAIVertexBuffer::_writeInt8 ( lua_State* L ) {
 	LUA_SETUP ( MOAIVertexBuffer, "U" )
 	
@@ -136,6 +194,13 @@ int MOAIVertexBuffer::_writeInt8 ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	writeInt16
+	@text	Write an 16-bit integer to the vertex buffer.
+	
+	@in		MOAIVertexBuffer self
+	@opt	number i				Default value is 0.
+	@out	nil
+*/
 int MOAIVertexBuffer::_writeInt16 ( lua_State* L ) {
 	LUA_SETUP ( MOAIVertexBuffer, "U" )
 	
@@ -148,6 +213,13 @@ int MOAIVertexBuffer::_writeInt16 ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	writeInt32
+	@text	Write an 32-bit integer to the vertex buffer.
+	
+	@in		MOAIVertexBuffer self
+	@opt	number i				Default value is 0.
+	@out	nil
+*/
 int MOAIVertexBuffer::_writeInt32 ( lua_State* L ) {
 	LUA_SETUP ( MOAIVertexBuffer, "U" )
 	
@@ -218,10 +290,9 @@ void MOAIVertexBuffer::RegisterLuaFuncs ( USLuaState& state ) {
 		{ "reserve",				_reserve },
 		{ "reserveVerts",			_reserveVerts },
 		{ "reset",					_reset },
-		{ "seek",					_seek },
 		{ "setFormat",				_setFormat },
 		{ "setPrimType",			_setPrimType },
-		{ "writeColor",				_writeColor },
+		{ "writeColor32",			_writeColor32 },
 		{ "writeFloat",				_writeFloat },
 		{ "writeInt8",				_writeInt8 },
 		{ "writeInt16",				_writeInt16 },

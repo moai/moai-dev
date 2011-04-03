@@ -20,7 +20,7 @@ SUPPRESS_EMPTY_FILE_WARNING
 	
 	@in		MOAIBox2DFixture self
 	@in		function handler
-	@opt	number mask			Bitwise combination of MOAIBox2DArbiter.BEGIN, MOAIBox2DArbiter.END,
+	@opt	number mask			Any bitwise combination of MOAIBox2DArbiter.BEGIN, MOAIBox2DArbiter.END,
 								MOAIBox2DArbiter.POST_SOLVE, MOAIBox2DArbiter.PRE_SOLVE,
 								MOAIBox2DArbiter.ALL
 	@out	nil

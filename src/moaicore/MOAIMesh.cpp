@@ -14,17 +14,33 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	setTexture
+	@text	Set or load a texture for this deck.
+	
+	@in		MOAIMesh self
+	@in		variant texture		A MOAITexture, a MOAIDataBuffer or a path to a texture file
+	@opt	number transform	Any bitwise combination of MOAITexture.QUANTIZE, MOAITexture.TRUECOLOR, MOAITexture.PREMULTIPLY_ALPHA
+	@out	MOAITexture texture
+*/
 int MOAIMesh::_setTexture ( lua_State* L ) {
 	LUA_SETUP ( MOAIMesh, "U" )
 
 	self->mTexture = MOAITexture::AffirmTexture ( state, 2 );
-
+	if ( self->mTexture ) {
+		self->mTexture->PushLuaUserdata ( state );
+		return 1;
+	}
 	return 0;
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	setVertexBuffer
+	@text	Set the vertex buffer to render.
+	
+	@in		MOAIMesh self
+	@in		MOAIVertexBuffer vertexBuffer
+	@out	nil
+*/
 int MOAIMesh::_setVertexBuffer ( lua_State* L ) {
 	LUA_SETUP ( MOAIMesh, "U" )
 	

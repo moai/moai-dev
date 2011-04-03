@@ -11,10 +11,11 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@brief <tt>bind ( self )</tt>\n
-\n
-	Forces the texture to load.
-	@param self (in)
+/**	@name	bind
+	@text	Try to force the shader to perform its load.
+	
+	@in		MOAITexture self
+	@out	nil
 */
 int MOAITexture::_bind ( lua_State* L ) {
 	LUA_SETUP ( MOAITexture, "U" )
@@ -25,12 +26,15 @@ int MOAITexture::_bind ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( width, height ) bind ( self )</tt>\n
-\n
-	Returns the width and height of the texture's source image.
-	@param self (in)
-	@param width (out)
-	@param height (out)f
+/**	@name	getSize
+	@text	Returns the width and height of the texture's source image.
+			Avoid using the texture width and height to compute UV
+			coordinates from pixels, as this will prevent texture
+			resolution swapping.
+	
+	@in		MOAITexture self
+	@out	width
+	@out	height
 */
 int MOAITexture::_getSize ( lua_State* L ) {
 	LUA_SETUP ( MOAITexture, "U" )
@@ -42,12 +46,13 @@ int MOAITexture::_getSize ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>load ( self, filename|data )</tt>\n
-\n
-	Loads an image to associate with this texture.
-	@param self (in)
-	@param filename (in) The name of the image file to load.  Must be a .bmp, .jpg or .png.
-	@param data (in) A MOAIDataBuffer object containing image data.  Must be one of the filetypes above.
+/**	@name	load
+	@text	Loads a texture from a data buffer or a file.
+	
+	@in		MOAITexture self
+	@in		variant texture		Either a MOAIDataBuffer containing a binary texture or a path to a texture file.
+	@opt	number transform	Any bitwise combination of MOAITexture.QUANTIZE, MOAITexture.TRUECOLOR, MOAITexture.PREMULTIPLY_ALPHA
+	@out	nil
 */
 int MOAITexture::_load ( lua_State* L ) {
 	LUA_SETUP ( MOAITexture, "U" )
@@ -69,10 +74,11 @@ int MOAITexture::_load ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>release ( self )</tt>\n
-\n
-	Forces texture out of memory.
-	@param self (in)
+/**	@name	release
+	@text	Releases any memory associated with the texture.
+	
+	@in		MOAITexture self
+	@out	nil
 */
 int MOAITexture::_release ( lua_State* L ) {
 	LUA_SETUP ( MOAITexture, "U" )
@@ -83,11 +89,13 @@ int MOAITexture::_release ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>setFilter ( self, filter )</tt>\n
-\n
-	Sets the filter mode.
-	@param self (in)
-	@param filter (in) MOAITexture.GL_LINEAR or MOAITexture.GL_NEAREST.
+/**	@name	setFilter
+	@text	Set default filtering mode for texture.
+	
+	@in		MOAITexture self
+	@in		number min			One of MOAITexture.GL_LINEAR or MOAITexture.GL_NEAREST.
+	@opt	number mag			Defaults to value passed to 'min'.
+	@out	nil
 */
 int MOAITexture::_setFilter ( lua_State* L ) {
 	LUA_SETUP ( MOAITexture, "UN" )
@@ -101,7 +109,13 @@ int MOAITexture::_setFilter ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	setFilter
+	@text	Set wrapping mode for texture.
+	
+	@in		MOAITexture self
+	@in		boolean wrap		Texture will wrap if true, clamp if not.
+	@out	nil
+*/
 int MOAITexture::_setWrap ( lua_State* L ) {
 	LUA_SETUP ( MOAITexture, "UB" )
 	
@@ -120,27 +134,28 @@ int MOAITexture::_setWrap ( lua_State* L ) {
 //----------------------------------------------------------------//
 MOAITexture* MOAITexture::AffirmTexture ( USLuaState& state, int idx ) {
 
-	MOAITexture* texture = 0;
+	MOAITexture* texture = state.GetLuaObject < MOAITexture >( idx );
+	if ( !texture ) {
 
-	u32 transform = state.GetValue < u32 >( idx + 1, DEFAULT_TRANSFORM );
+		u32 transform = state.GetValue < u32 >( idx + 1, DEFAULT_TRANSFORM );
 
-	if ( state.IsType ( idx, LUA_TUSERDATA )) {
-		
-		texture = state.GetLuaObject < MOAITexture >( idx );
-		MOAIDataBuffer* data = state.GetLuaObject < MOAIDataBuffer >( idx );
-		
-		if ( data ) {
+		if ( state.IsType ( idx, LUA_TUSERDATA )) {
+			
+			texture = state.GetLuaObject < MOAITexture >( idx );
+			MOAIDataBuffer* data = state.GetLuaObject < MOAIDataBuffer >( idx );
+			
+			if ( data ) {
+				texture = new MOAITexture ();
+				texture->Load ( *data, transform );
+			}
+		}
+		else if ( state.IsType ( idx, LUA_TSTRING )) {
+			
+			cc8* filename = lua_tostring ( state, idx );
 			texture = new MOAITexture ();
-			texture->Load ( *data, transform );
+			texture->Load ( filename, transform );
 		}
 	}
-	else if ( state.IsType ( idx, LUA_TSTRING )) {
-		
-		cc8* filename = lua_tostring ( state, idx );
-		texture = new MOAITexture ();
-		texture->Load ( filename, transform );
-	}
-
 	return texture;
 }
 

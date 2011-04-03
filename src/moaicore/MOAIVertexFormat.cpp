@@ -9,7 +9,13 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	clear
+	@text	Removes all format information and returns the format to
+			an empty state.
+	
+	@in		MOAIVertexFormat self
+	@out	nil
+*/
 int	MOAIVertexFormat::_clear ( lua_State* L ) {
 	LUA_SETUP ( MOAIVertexFormat, "U" )
 
@@ -19,7 +25,13 @@ int	MOAIVertexFormat::_clear ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	declareColor
+	@text	Declare a vertex color.
+	
+	@in		MOAIVertexFormat self
+	@in		number type			Data type of component elements. See OpenGL ES documentation.
+	@out	nil
+*/
 int MOAIVertexFormat::_declareColor ( lua_State* L ) {
 	LUA_SETUP ( MOAIVertexFormat, "UN" )
 
@@ -30,7 +42,14 @@ int MOAIVertexFormat::_declareColor ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	declareCoord
+	@text	Declare a vertex coord.
+	
+	@in		MOAIVertexFormat self
+	@in		number type			Data type of coord elements. See OpenGL ES documentation.
+	@in		number size			Number of coord elements. See OpenGL ES documentation.
+	@out	nil
+*/
 int MOAIVertexFormat::_declareCoord ( lua_State* L ) {
 	LUA_SETUP ( MOAIVertexFormat, "UNN" )
 
@@ -42,7 +61,13 @@ int MOAIVertexFormat::_declareCoord ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	declareNormal
+	@text	Declare a vertex normal.
+	
+	@in		MOAIVertexFormat self
+	@in		number type			Data type of normal elements. See OpenGL ES documentation.
+	@out	nil
+*/
 int MOAIVertexFormat::_declareNormal ( lua_State* L ) {
 	LUA_SETUP ( MOAIVertexFormat, "UN" )
 
@@ -53,7 +78,14 @@ int MOAIVertexFormat::_declareNormal ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	declareUV
+	@text	Declare a vertex texture coord.
+	
+	@in		MOAIVertexFormat self
+	@in		number type			Data type of texture coord elements. See OpenGL ES documentation.
+	@in		number size			Number of texture coord elements. See OpenGL ES documentation.
+	@out	nil
+*/
 int MOAIVertexFormat::_declareUV ( lua_State* L ) {
 	LUA_SETUP ( MOAIVertexFormat, "UNN" )
 

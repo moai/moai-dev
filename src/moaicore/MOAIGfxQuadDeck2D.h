@@ -22,8 +22,6 @@ private:
 	
 	//----------------------------------------------------------------//
 	static int	_reserve				( lua_State* L );
-	static int	_scaleCoords			( lua_State* L );
-	static int	_scaleUVCoords			( lua_State* L );
 	static int	_setQuad				( lua_State* L );
 	static int	_setRect				( lua_State* L );
 	static int	_setTexture				( lua_State* L );

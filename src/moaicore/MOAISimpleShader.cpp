@@ -10,11 +10,12 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@brief <tt>setBlendMode ( self, mode )</tt>\n
-\n
-	Sets the blend mode for this primitive.
-	@param self (in)
-	@param mode (in) One of MOAIProp2D.BLEND_NORMAL, MOAIProp2D.BLEND_ADD, MOAIProp2D.BLEND_MULTIPLY.
+/** @name	setBlendMode
+	@text	Set the fixed function blend mode.
+
+	@in		MOAISimpleShader self
+	@in		number mode				One of MOAISimpleShader.BLEND_NORMAL, MOAISimpleShader.BLEND_ADD, MOAISimpleShader.BLEND_MULTIPLY.
+	@out	nil
 */
 int MOAISimpleShader::_setBlendMode ( lua_State* L ) {
 	LUA_SETUP ( MOAISimpleShader, "UN" )
@@ -27,11 +28,13 @@ int MOAISimpleShader::_setBlendMode ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>() setParent ( self, parent )</tt>\n
-\n
-	Set's parent shader. Shader's parent color will be modulated with this shader.
-	@param self (in)
-	@param parent (in)
+/**	@name	setParent
+	@text	Set the parent of this shader. Must be another MOAISimpleShader.
+			This shader will inherit the color of its parent.
+
+	@in		MOAISimpleShader self
+	@in		MOAISimpleShader parent
+	@out	nil
 */
 int MOAISimpleShader::_setParent ( lua_State* L ) {
 	LUA_SETUP ( MOAISimpleShader, "U" )

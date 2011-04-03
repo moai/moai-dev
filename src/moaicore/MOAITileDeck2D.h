@@ -19,12 +19,10 @@ class MOAITileDeck2D :
 	public USGridSpace {
 private:
 	
-	u32						mFlags;
 	USRect					mRect;
 	USRef < MOAITexture >	mTexture;
 	
 	//----------------------------------------------------------------//
-	static int		_setFlip				( lua_State* L );
 	static int		_setRect				( lua_State* L );
 	static int		_setSize				( lua_State* L );
 	static int		_setTexture				( lua_State* L );

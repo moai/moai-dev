@@ -24,16 +24,21 @@ MOAIDebugLineStyle::~MOAIDebugLineStyle () {
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	setStyle
+	@text	Sets the particulars of a given debug line style.
+	
+	@in		number styleID		See MOAIDebugLines class documentation for a list of styles.
+	@opt	number size			Pen size (in pixels) for the style. Default value is 1.
+	@opt	number r			Red component of line color. Default valye is 1.
+	@opt	number g			Green component of line color. Default valye is 1.
+	@opt	number b			Blue component of line color. Default valye is 1.
+	@opt	number a			Alpha component of line color. Default valye is 1.
+	@out	nil
 */
 int MOAIDebugLines::_setStyle ( lua_State* L ) {
 	
 	USLuaState state ( L );
-	if ( !state.CheckParams ( 1, "NNNNN" )) return 0;
+	if ( !state.CheckParams ( 1, "N" )) return 0;
 	
 	u32 styleID		= state.GetValue < u32 >( 1, 0 );
 	u32 size		= state.GetValue < u32 >( 2, 1 );
@@ -50,19 +55,20 @@ int MOAIDebugLines::_setStyle ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	showStyle
+	@text	Enables of disables drawing of a given debug line style.
+	
+	@in		number styleID		See MOAIDebugLines class documentation for a list of styles.
+	@opt	boolean show		Default value is 'true'
+	@out	nil
 */
 int MOAIDebugLines::_showStyle ( lua_State* L ) {
 
 	USLuaState state ( L );
-	if ( !state.CheckParams ( 1, "NB" )) return 0;
+	if ( !state.CheckParams ( 1, "N" )) return 0;
 	
 	u32 styleID		= state.GetValue < u32 >( 1, 0 );
-	bool show		= state.GetValue < bool >( 2, false );
+	bool show		= state.GetValue < bool >( 2, true );
 	
 	MOAIDebugLines::Get ().ShowStyle ( styleID, show );
 	

@@ -32,9 +32,9 @@ private:
 	USLeanArray < MOAISurfaceBrush2D > mBrushes;
 
 	//----------------------------------------------------------------//
-	static int				_reserveBrushes		( lua_State* L );
-	static int				_reserveSurfaces	( lua_State* L );
-	static int				_setSurface			( lua_State* L );
+	static int				_reserveSurfaceLists	( lua_State* L );
+	static int				_reserveSurfaces		( lua_State* L );
+	static int				_setSurface				( lua_State* L );
 
 	//----------------------------------------------------------------//
 	void					DrawDebug				( u32 idx, float xOff, float yOff, bool xFlip, bool yFlip );

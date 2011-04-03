@@ -21,9 +21,9 @@ private:
 };
 
 //================================================================//
-// USSpritePrim
+// USSpritePair
 //================================================================//
-class USSpritePrim {
+class USSpritePair {
 private:
 
 	friend class MOAIGfxQuadListDeck2D;
@@ -40,8 +40,8 @@ private:
 
 	friend class MOAIGfxQuadListDeck2D;
 
-	u32		mBasePrim;
-	u32		mTotalPrims;
+	u32		mBasePair;
+	u32		mTotalPairs;
 };
 
 //================================================================//
@@ -60,22 +60,16 @@ private:
 	
 	USLeanArray < USSpriteUVRect >	mUVRects;
 	USLeanArray < USQuad >			mQuads;
-	USLeanArray < USSpritePrim >	mPrims;
+	USLeanArray < USSpritePair >	mPairs;
 	USLeanArray < USSprite >		mSprites;
 	
 	//----------------------------------------------------------------//
-	static int	_bind					( lua_State* L );
-	static int	_enumSprites			( lua_State* L );
-	static int	_enumUVTiles			( lua_State* L );
-	static int	_releaseTexture			( lua_State* L );
 	static int	_reserveLists			( lua_State* L );
-	static int	_reservePrims			( lua_State* L );
+	static int	_reservePairs			( lua_State* L );
 	static int	_reserveQuads			( lua_State* L );
 	static int	_reserveUVRects			( lua_State* L );
-	static int	_scaleCoords			( lua_State* L );
-	static int	_scaleUVCoords			( lua_State* L );
 	static int	_setList				( lua_State* L );
-	static int	_setPrim				( lua_State* L );
+	static int	_setPair				( lua_State* L );
 	static int	_setQuad				( lua_State* L );
 	static int	_setRect				( lua_State* L );
 	static int	_setTexture				( lua_State* L );
@@ -102,11 +96,11 @@ public:
 	void			RegisterLuaFuncs		( USLuaState& state );
 	void			ReleaseTexture			();
 	void			ReserveLists			( u32 total );
-	void			ReservePrims			( u32 total );
+	void			ReservePairs			( u32 total );
 	void			ReserveQuads			( u32 total );
 	void			ReserveUVRects			( u32 total );
-	void			SetList					( u32 idx, u32 basePrimID, u32 totalPrims );
-	void			SetPrim					( u32 idx, u32 uvRectID, u32 screenRectID );
+	void			SetList					( u32 idx, u32 basePairID, u32 totalPairs );
+	void			SetPair					( u32 idx, u32 uvRectID, u32 screenRectID );
 	void			SetQuad					( u32 idx, USQuad& quad );
 	void			SetRect					( u32 idx, USRect& rect );
 	void			SetUVRect				( u32 idx, USRect& rect );

@@ -10,15 +10,20 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@brief <tt>moveColor ( self, red, green, blue, alpha, duration )</tt>\n
-	\n
-	Animate the color by adding a delta.
-	@param self (in)
-	@param red (in) Red color value.
-	@param green (in) Green color value.
-	@param blue (in) Blue color value.
-	@param alpha (in) Alpha transparency value.
-	@param delay (in) Time period to move.
+/**	@name	moveColor
+	@text	Animate the color by applying a delta. Creates and returns
+			a MOAIEaseDriver initialized to apply the delta.
+	
+	@in		MOAIColor self
+	@in		number r		Total change to be added to r.
+	@in		number g		Total change to be added to g.
+	@in		number b		Total change to be added to b.
+	@in		number a		Total change to be added to a.
+	@in		number length	Length of animation in seconds.
+	@opt	number mode		The ease mode. One of MOAIEaseType.EASE_IN, MOAIEaseType.EASE_OUT, MOAIEaseType.FLAT MOAIEaseType.LINEAR,
+							MOAIEaseType.SMOOTH, MOAIEaseType.SOFT_EASE_IN, MOAIEaseType.SOFT_EASE_OUT, MOAIEaseType.SOFT_SMOOTH
+
+	@out	MOAIEaseDriver easeDriver
 */
 int MOAIColor::_moveColor ( lua_State* L ) {
 	LUA_SETUP ( MOAIColor, "UNNNNN" )
@@ -46,15 +51,21 @@ int MOAIColor::_moveColor ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>_seekColor ( self, red, green, blue, alpha, duration )</tt>\n
-	\n
-	Animate the color by adding a delta.
-	@param self (in)
-	@param red (in) Red color value.
-	@param green (in) Green color value.
-	@param blue (in) Blue color value.
-	@param alpha (in) Alpha transparency value.
-	@param delay (in) Time period to move.
+/**	@name	seekColor
+	@text	Animate the color by applying a delta. Delta is computed
+			given a target value. Creates and returns a MOAIEaseDriver
+			initialized to apply the delta.
+	
+	@in		MOAIColor self
+	@in		number r		Desired resulting value for r.
+	@in		number g		Desired resulting value for g.
+	@in		number b		Desired resulting value for b.
+	@in		number a		Desired resulting value for a.
+	@in		number length	Length of animation in seconds.
+	@opt	number mode		The ease mode. One of MOAIEaseType.EASE_IN, MOAIEaseType.EASE_OUT, MOAIEaseType.FLAT MOAIEaseType.LINEAR,
+							MOAIEaseType.SMOOTH, MOAIEaseType.SOFT_EASE_IN, MOAIEaseType.SOFT_EASE_OUT, MOAIEaseType.SOFT_SMOOTH
+
+	@out	MOAIEaseDriver easeDriver
 */
 int MOAIColor::_seekColor ( lua_State* L ) {
 	LUA_SETUP ( MOAIColor, "UNNNNN" )
@@ -82,14 +93,15 @@ int MOAIColor::_seekColor ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>setColor ( self, red, green, blue, alpha )</tt>\n
-	\n
-	Initializes the color.
-	@param self (in)
-	@param red (in) Red color value.  Floating point.  Range between 0.0 and 1.0.
-	@param green (in) Green color value.  Floating point.  Range between 0.0 and 1.0.
-	@param blue (in) Blue color value.  Floating point.  Range between 0.0 and 1.0.
-	@param alpha (in) Alpha transparency value.  Floating point.  Range between 0.0 and 1.0.
+/**	@name	setColor
+	@text	Initialize the color.
+	
+	@in		MOAIColor self
+	@in		number r
+	@in		number g
+	@in		number b
+	@opt	number a	Default value is 1.
+	@out	nil
 */
 int MOAIColor::_setColor ( lua_State* L ) {
 	LUA_SETUP ( MOAIColor, "UNNN" )

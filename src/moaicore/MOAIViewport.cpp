@@ -9,12 +9,14 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@brief <tt>() setOffset ( self, xOff, yOff )</tt>\n
-\n
-	Offsets the center of the viewport. Range is -1 to 1 along each axis.
-	@param self (in)
-	@param xOff (in)
-	@param yOff (in)
+/**	@name	setOffset
+	@text	Sets the viewport offset in normalized view space (size of
+			viewport is -1 to 1 in both directions).
+	
+	@in		MOAIViewport self
+	@in		number xOff
+	@in		number yOff
+	@out	nil
 */
 int MOAIViewport::_setOffset ( lua_State* L ) {
 	LUA_SETUP ( MOAIViewport, "UNN" )
@@ -28,14 +30,15 @@ int MOAIViewport::_setOffset ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>setRect ( self, left, top, right, bottom )</tt>\n
-	\n
-	Set viewport rectangle in window space.
-	@param self (in)
-	@param left (in)
-	@param top (in)
-	@param right (in)
-	@param bottom (in)
+/**	@name	setRect
+	@text	Sets the viewport rectangle in screen space.
+	
+	@in		MOAIViewport self
+	@in		number left
+	@in		number top
+	@in		number right
+	@in		number bottom
+	@out	nil
 */
 int MOAIViewport::_setRect ( lua_State* L ) {
 
@@ -56,11 +59,12 @@ int MOAIViewport::_setRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	setRotation
+	@text	Sets global rotation to be added to camera transform.
+	
+	@in		MOAIViewport self
+	@in		number rotation
+	@out	nil
 */
 int MOAIViewport::_setRotation ( lua_State* L ) {
 	LUA_SETUP ( MOAIViewport, "U" )
@@ -72,12 +76,22 @@ int MOAIViewport::_setRotation ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>setScale ( self, xScale, yScale )</tt>\n
-	\n
-	Sets the number of world units visible of the viewport for one or both dimensions. Set '0' to use derived value.
-	@param self (in)
-	@param xScale (in) Total number of world units visible along width of viewport or 0.
-	@param yScale (in) Total number of world units visible along height of viewport or 0.
+/**	@name	setScale
+	@text	Sets the number of world units visible of the viewport for one or both
+			dimensions. Set 0 for one of the dimensions to use a derived value based on
+			the other dimension and the aspect ratio. Negative values are also OK.
+			
+			It is typical to set the scale to the number of pixels visible in the
+			viewport. This practice is neither endorsed nor condemned.
+			
+			Note that the while the contents of the viewport will appear to stretch
+			or shrink to match the dimensions of the viewport given by setRect, the
+			number of world units visible will remain constant.
+	
+	@in		MOAIViewport self
+	@in		number xScale
+	@in		number yScale
+	@out	nil
 */
 int MOAIViewport::_setScale ( lua_State* L ) {
 
@@ -96,12 +110,13 @@ int MOAIViewport::_setScale ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>setSize ( self, width, height )</tt>\n
-	\n
-	Set viewport rectangle from width and height. (Viewport will align to upper left corner of window.)
-	@param self (in)
-	@param width (in) Width of viewport in window space.
-	@param height (in) Height of viewport in window space.
+/**	@name	setSize
+	@text	Equivalent to setRect ( 0, 0, width, height )
+	
+	@in		MOAIViewport self
+	@in		number width
+	@in		number height
+	@out	nil
 */
 int MOAIViewport::_setSize ( lua_State* L ) {
 

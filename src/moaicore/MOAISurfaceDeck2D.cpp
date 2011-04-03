@@ -14,13 +14,14 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	reserveSurfaceLists
+	@text	Reserve surface lists for deck.
+	
+	@in		MOAISurfaceDeck2D self
+	@in		number nLists
+	@out	nil
 */
-int MOAISurfaceDeck2D::_reserveBrushes ( lua_State* L ) {
+int MOAISurfaceDeck2D::_reserveSurfaceLists ( lua_State* L ) {
 	LUA_SETUP ( MOAISurfaceDeck2D, "UN" )
 
 	u32 total = state.GetValue < u32 >( 2, 0 );
@@ -30,11 +31,13 @@ int MOAISurfaceDeck2D::_reserveBrushes ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	reserveSurfaceLists
+	@text	Reserve surfaces for a given list in deck.
+	
+	@in		MOAISurfaceDeck2D self
+	@in		number idx
+	@in		number nSurfaces
+	@out	nil
 */
 int MOAISurfaceDeck2D::_reserveSurfaces ( lua_State* L ) {
 	LUA_SETUP ( MOAISurfaceDeck2D, "UNN" )
@@ -45,16 +48,21 @@ int MOAISurfaceDeck2D::_reserveSurfaces ( lua_State* L ) {
 	if ( brushID < self->mBrushes.Size ()) {
 		self->mBrushes [ brushID ].mEdges.Init ( total );
 	}
-
 	return 0;
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	setSurface
+	@text	Set a surface in a surface list.
+	
+	@in		MOAISurfaceDeck2D self
+	@in		number idx
+	@in		number surfaceIdx
+	@in		number x0
+	@in		number y0
+	@in		number x1
+	@in		number y1
+	@out	nil
 */
 int MOAISurfaceDeck2D::_setSurface ( lua_State* L ) {
 	LUA_SETUP ( MOAISurfaceDeck2D, "UNNNNNN" )
@@ -84,7 +92,6 @@ int MOAISurfaceDeck2D::_setSurface ( lua_State* L ) {
 			}
 		}
 	}
-
 	return 0;
 }
 
@@ -277,9 +284,9 @@ void MOAISurfaceDeck2D::RegisterLuaFuncs ( USLuaState& state ) {
 	this->MOAIDeck::RegisterLuaFuncs ( state );
 	
 	LuaReg regTable [] = {
-		{ "reserveBrushes",		_reserveBrushes },
-		{ "reserveSurfaces",	_reserveSurfaces },
-		{ "setSurface",			_setSurface },
+		{ "reserveSurfaceLists",	_reserveSurfaceLists },
+		{ "reserveSurfaces",		_reserveSurfaces },
+		{ "setSurface",				_setSurface },
 		{ NULL, NULL }
 	};
 

@@ -11,12 +11,13 @@ class MOAIVertexFormat;
 //================================================================//
 /**	@brief	Vertex buffer class.
 
-	@const	GL_BYTE
-	@const	GL_FIXED
-	@const	GL_FLOAT
-	@const	GL_SHORT
-	@const	GL_UNSIGNED_BYTE
-	@const	GL_UNSIGNED_SHORT
+	@const GL_POINTS
+	@const GL_LINES
+	@const GL_TRIANGLES
+	@const GL_LINE_LOOP
+	@const GL_LINE_STRIP
+	@const GL_TRIANGLE_FAN
+	@const GL_TRIANGLE_STRIP
 */
 class MOAIVertexBuffer :
 	public USLuaObject {
@@ -37,10 +38,9 @@ private:
 	static int		_reserve				( lua_State* L );
 	static int		_reserveVerts			( lua_State* L );
 	static int		_reset					( lua_State* L );
-	static int		_seek					( lua_State* L );
 	static int		_setFormat				( lua_State* L );
 	static int		_setPrimType			( lua_State* L );
-	static int		_writeColor				( lua_State* L );
+	static int		_writeColor32			( lua_State* L );
 	static int		_writeFloat				( lua_State* L );
 	static int		_writeInt8				( lua_State* L );
 	static int		_writeInt16				( lua_State* L );

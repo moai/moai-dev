@@ -13,11 +13,12 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@brief <tt>() reserveColumns ( self, nCols )</tt>\n
-\n
-	Reserve the number of columns in the 9-patch. Should be 1 or more.
-	@param self (in)
-	@param nCols (in)
+/**	@name	reserveColumns
+	@text	Reserve total columns in patch.
+	
+	@in		MOAIStretchPatch2D self
+	@in		number nColumns
+	@out	nil
 */
 int MOAIStretchPatch2D::_reserveColumns ( lua_State* L ) {
 	LUA_SETUP ( MOAIStretchPatch2D, "UN" )
@@ -30,11 +31,12 @@ int MOAIStretchPatch2D::_reserveColumns ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>() reserveColumns ( self, nCols )</tt>\n
-\n
-	Reserve the number of rows in the 9-patch. Should be 1 or more.
-	@param self (in)
-	@param nCols (in)
+/**	@name	reserveRows
+	@text	Reserve total rows in patch.
+	
+	@in		MOAIStretchPatch2D self
+	@in		number nRows
+	@out	nil
 */
 int MOAIStretchPatch2D::_reserveRows ( lua_State* L ) {
 	LUA_SETUP ( MOAIStretchPatch2D, "UN" )
@@ -47,11 +49,13 @@ int MOAIStretchPatch2D::_reserveRows ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>() reserveUVRects ( self, nRects )</tt>\n
-\n
-	Reserve number of source rects in the nine patch (for flipbook animation).
-	@param self (in)
-	@param nRects (in)
+/**	@name	reserveUVRects
+	@text	Reserve total UV rects in patch. When a patch is indexed
+			it will change its UV rects.
+	
+	@in		MOAIStretchPatch2D self
+	@in		number nUVRects
+	@out	nil
 */
 int MOAIStretchPatch2D::_reserveUVRects ( lua_State* L ) {
 	LUA_SETUP ( MOAIStretchPatch2D, "UN" )
@@ -62,18 +66,18 @@ int MOAIStretchPatch2D::_reserveUVRects ( lua_State* L ) {
 	for ( u32 i = 0; i < total; ++i ) {
 		self->mUVRects [ i ].Init ( 0.0f, 1.0f, 1.0f, 0.0f );
 	}
-
 	return 0;
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>() setColumn ( self, idx, weight, canStretch )</tt>\n
-\n
-	Set properties of a column.
-	@param self (in)
-	@param idx (in)
-	@param weight (in)
-	@param canStretch (in)
+/**	@name	setColumn
+	@text	Set the stretch properties of a patch column.
+	
+	@in		MOAIStretchPatch2D self
+	@in		number idx
+	@in		number weight
+	@in		boolean conStretch
+	@out	nil
 */
 int MOAIStretchPatch2D::_setColumn ( lua_State* L ) {
 	LUA_SETUP ( MOAIStretchPatch2D, "UNNB" )
@@ -92,14 +96,15 @@ int MOAIStretchPatch2D::_setColumn ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>() setRect ( self, left, top, right, bottom )</tt>\n
-\n
-	Set the default geometry for the nine patch.
-	@param self (in)
-	@param left (in) Upper-left X coordinate.
-	@param top (in) Upper-left Y coordinate.
-	@param right (in) Lower-right X coordinate.
-	@param bottom (in) Lower-right Y coordinate.
+/**	@name	setRect
+	@text	Set the model space dimensions of the patch.
+	
+	@in		MOAIStretchPatch2D self
+	@in		number xMin
+	@in		number yMin
+	@in		number xMax
+	@in		number yMax
+	@out	nil
 */
 int MOAIStretchPatch2D::_setRect ( lua_State* L ) {
 	LUA_SETUP ( MOAIStretchPatch2D, "UNNNN" )
@@ -110,13 +115,14 @@ int MOAIStretchPatch2D::_setRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>() setRow ( self, idx, weight, canStretch )</tt>\n
-\n
-	Set properties of a row.
-	@param self (in)
-	@param idx (in)
-	@param weight (in)
-	@param canStretch (in)
+/**	@name	setRow
+	@text	Set the stretch properties of a patch row.
+	
+	@in		MOAIStretchPatch2D self
+	@in		number idx
+	@in		number weight
+	@in		boolean conStretch
+	@out	nil
 */
 int MOAIStretchPatch2D::_setRow ( lua_State* L ) {
 	LUA_SETUP ( MOAIStretchPatch2D, "UNNB" )
@@ -135,30 +141,36 @@ int MOAIStretchPatch2D::_setRow ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>() setTexture ( self, texture )</tt>\n
-\n
-	Set the source texture for the nine patch.
-	@param self (in)
-	@param texture (in) Can be a filename or a MOAIGfxQuad2D.
+/**	@name	setTexture
+	@text	Set or load a texture for this deck.
+	
+	@in		MOAIStretchPatch2D self
+	@in		variant texture		A MOAITexture, a MOAIDataBuffer or a path to a texture file
+	@opt	number transform	Any bitwise combination of MOAITexture.QUANTIZE, MOAITexture.TRUECOLOR, MOAITexture.PREMULTIPLY_ALPHA
+	@out	MOAITexture texture
 */
 int MOAIStretchPatch2D::_setTexture ( lua_State* L ) {
 	LUA_SETUP ( MOAIStretchPatch2D, "U" )
 
 	self->mTexture = MOAITexture::AffirmTexture ( state, 2 );
-
+	if ( self->mTexture ) {
+		self->mTexture->PushLuaUserdata ( state );
+		return 1;
+	}
 	return 0;
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>() setUVRect ( self, idx, left, top, right, bottom )</tt>\n
-\n
-	Set the source uv rect for the nine patch.
-	@param self (in)
-	@param idx (in)
-	@param left (in) Upper-left X coordinate.
-	@param top (in) Upper-left Y coordinate.
-	@param right (in) Lower-right X coordinate.
-	@param bottom (in) Lower-right Y coordinate.
+/**	@name	setUVRect
+	@text	Set the UV space dimensions of the patch.
+	
+	@in		MOAIStretchPatch2D self
+	@in		number idx
+	@in		number xMin
+	@in		number yMin
+	@in		number xMax
+	@in		number yMax
+	@out	nil
 */
 int MOAIStretchPatch2D::_setUVRect ( lua_State* L ) {
 	LUA_SETUP ( MOAIStretchPatch2D, "UNNNNN" )

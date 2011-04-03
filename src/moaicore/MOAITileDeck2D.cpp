@@ -13,37 +13,18 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@brief <tt>() setFlip ( self, xFlip, yFlip )</tt>\n
-\n
-	Set global flip flags for the tile library.
-	@param self (in)
-	@param xFlip (in)
-	@param yFlip (in)
-*/
-int MOAITileDeck2D::_setFlip ( lua_State* L ) {
-	LUA_SETUP ( MOAITileDeck2D, "UBB" )
+/**	@name	setRect
+	@text	Set the model space dimensions of a single tile. When grid drawing, this
+			should be a unit rect centered at the origin for tiles that fit each grid
+			cell. Growing or shrinking the rect will cause tiles to overlap or leave
+			gaps between them.
 	
-	bool xFlip = state.GetValue < bool >( 2, false );
-	bool yFlip = state.GetValue < bool >( 3, false );
-
-	// clear flip flags
-	self->mFlags = self->mFlags & ~USTile::FLIP_MASK;
-
-	self->mFlags |= xFlip ? USTile::XFLIP : 0;
-	self->mFlags |= yFlip ? USTile::YFLIP : 0;
-
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@brief <tt>setRect ( self, xMin, yMin, xMax, yMax )</tt>\n
-\n
-	Convenience method. Sets the default dimentions for non-grid primitives displaying this texture.
-	@param self (in)
-	@param xMin (in)
-	@param yMin (in)
-	@param xMax (in)
-	@param yMax (in)
+	@in		MOAITileDeck2D self
+	@in		number xMin
+	@in		number yMin
+	@in		number xMax
+	@in		number yMax
+	@out	nil
 */
 int MOAITileDeck2D::_setRect ( lua_State* L ) {
 	LUA_SETUP ( MOAITileDeck2D, "UNNNN" )
@@ -54,12 +35,21 @@ int MOAITileDeck2D::_setRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>setSize ( self, xTiles, yTiles )</tt>\n
-	\n
-	Subdivides an image into tiles for individual display.
-	@param self (in)
-	@param xTiles (in)
-	@param yTiles (in)
+/**	@name	setSize
+	@text	Controls how the texture is subdivided into tiles. Default
+			behavior is to subdivide the texture into N by M tiles,
+			but is tile dimensions are provided (in UV space) then the resulting
+			tile set will be N * tileWidth by M * tileHeight in UV
+			space. This means the tile set does not have to fill all of the
+			texture. The upper left hand corner of the tile set will always be
+			at UV 0, 0.
+	
+	@in		MOAITileDeck2D self
+	@in		number width			Width of the tile deck in tiles.
+	@in		number height			Height of the tile deck in tiles.
+	@opt	number tileWidth		Width of individual tile in UV space. Defaults to 1 / width.
+	@opt	number tileHeight		Height of individual tile in UV space. Defaults to 1 / height.
+	@out	nil
 */
 int	MOAITileDeck2D::_setSize ( lua_State* L ) {
 	LUA_SETUP ( MOAITileDeck2D, "UNN" )
@@ -78,17 +68,22 @@ int	MOAITileDeck2D::_setSize ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>setTexture ( self, texture )</tt>\n
-	\n
-	Assigns the texture to be used.
-	@param self (in)
-	@param texture (in)
+/**	@name	setTexture
+	@text	Set or load a texture for this deck.
+	
+	@in		MOAITileDeck2D self
+	@in		variant texture		A MOAITexture, a MOAIDataBuffer or a path to a texture file
+	@opt	number transform	Any bitwise combination of MOAITexture.QUANTIZE, MOAITexture.TRUECOLOR, MOAITexture.PREMULTIPLY_ALPHA
+	@out	MOAITexture texture
 */
 int	MOAITileDeck2D::_setTexture ( lua_State* L ) {
 	LUA_SETUP ( MOAITileDeck2D, "U" )
 	
 	self->mTexture = MOAITexture::AffirmTexture ( state, 2 );
-	
+	if ( self->mTexture ) {
+		self->mTexture->PushLuaUserdata ( state );
+		return 1;
+	}
 	return 0;
 }
 
@@ -128,8 +123,7 @@ USRect MOAITileDeck2D::GetBounds ( u32 idx ) {
 }
 
 //----------------------------------------------------------------//
-MOAITileDeck2D::MOAITileDeck2D () :
-	mFlags ( 0 ) {
+MOAITileDeck2D::MOAITileDeck2D () {
 	
 	RTTI_SINGLE ( MOAIDeck2D )
 	this->SetContentMask ( MOAIProp::CAN_DRAW );
@@ -153,7 +147,6 @@ void MOAITileDeck2D::RegisterLuaFuncs ( USLuaState& state ) {
 	this->MOAIDeck2D::RegisterLuaFuncs ( state );
 
 	LuaReg regTable [] = {
-		{ "setFlip",			_setFlip },
 		{ "setRect",			_setRect },
 		{ "setSize",			_setSize },
 		{ "setTexture",			_setTexture },

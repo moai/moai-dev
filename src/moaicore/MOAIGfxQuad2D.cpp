@@ -14,14 +14,15 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@brief <tt>setRect ( self, xMin, yMin, xMax, yMax )</tt>\n
-\n
-	Convenience method. Sets the default dimentions for primitives displaying this texture.
-	@param self (in)
-	@param xMin (in)
-	@param yMin (in)
-	@param xMax (in)
-	@param yMax (in)
+/**	@name	setRect
+	@text	Set the model space dimensions of the quad.
+	
+	@in		MOAIGfxQuad2D self
+	@in		number xMin
+	@in		number yMin
+	@in		number xMax
+	@in		number yMax
+	@out	nil
 */
 int MOAIGfxQuad2D::_setRect ( lua_State* L ) {
 	LUA_SETUP ( MOAIGfxQuad2D, "UNNNN" )
@@ -32,21 +33,35 @@ int MOAIGfxQuad2D::_setRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	setTexture
+	@text	Set or load a texture for this deck.
+	
+	@in		MOAIGfxQuad2D self
+	@in		variant texture			A MOAITexture, a MOAIDataBuffer or a path to a texture file
+	@opt	number transform	Any bitwise combination of MOAITexture.QUANTIZE, MOAITexture.TRUECOLOR, MOAITexture.PREMULTIPLY_ALPHA
+	@out	MOAITexture texture
+*/
 int MOAIGfxQuad2D::_setTexture ( lua_State* L ) {
 	LUA_SETUP ( MOAIGfxQuad2D, "U" )
 
 	self->mTexture = MOAITexture::AffirmTexture ( state, 2 );
-
+	if ( self->mTexture ) {
+		self->mTexture->PushLuaUserdata ( state );
+		return 1;
+	}
 	return 0;
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	setUVRect
+	@text	Set the UV space dimensions of the quad.
+	
+	@in		MOAIGfxQuad2D self
+	@in		number xMin
+	@in		number yMin
+	@in		number xMax
+	@in		number yMax
+	@out	nil
 */
 int MOAIGfxQuad2D::_setUVRect ( lua_State* L ) {
 	LUA_SETUP ( MOAIGfxQuad2D, "UNNNN" )

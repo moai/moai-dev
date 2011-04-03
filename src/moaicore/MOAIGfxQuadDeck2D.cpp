@@ -15,11 +15,12 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@brief <tt>reserve ( self, size )</tt>\n
-	\n
-	Set total capacity of brush library.
-	@param self (in)
-	@param size (in)
+/**	@name	reserve
+	@text	Set capacity of quad deck.
+	
+	@in		MOAIGfxQuadDeck2D self
+	@in		number nQuads
+	@out	nil
 */
 int MOAIGfxQuadDeck2D::_reserve ( lua_State* L ) {
 	LUA_SETUP ( MOAIGfxQuadDeck2D, "UN" )
@@ -37,57 +38,21 @@ int MOAIGfxQuadDeck2D::_reserve ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>() scaleCoords ( self, xScale, yScale )</tt>\n
-\n
-	Scales the screen coords in the library.
-	@param self (in)
-	@param xScale (in)
-	@param yScale (in)
-*/
-int	MOAIGfxQuadDeck2D::_scaleCoords ( lua_State* L ) {
-	LUA_SETUP ( MOAIGfxQuadDeck2D, "UNN" )
-
-	float xScale = state.GetValue < float >( 2, 1.0f );
-	float yScale = state.GetValue < float >( 3, 1.0f );
-
-	self->ScaleScreenCoords ( xScale, yScale );
-
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@brief <tt>() scaleUVCoords ( self, xScale, yScale )</tt>\n
-\n
-	Scales the uv coords in the library.
-	@param self (in)
-	@param xScale (in)
-	@param yScale (in)
-*/
-int	MOAIGfxQuadDeck2D::_scaleUVCoords ( lua_State* L ) {
-	LUA_SETUP ( MOAIGfxQuadDeck2D, "UNN" )
-
-	float xScale = state.GetValue < float >( 2, 1.0f );
-	float yScale = state.GetValue < float >( 3, 1.0f );
-
-	self->ScaleUVCoords ( xScale, yScale );
-
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@brief <tt>setQuad ( self, id, x0, y0, x1, y1, x2, y2, x3, y3 )</tt>\n
-\n
-	Sets a screen rect in the brush library.
-	@param self (in)
-	@param id (in) ID of this quad.
-	@param x0 (in)
-	@param y0 (in)
-	@param x1 (in)
-	@param y1 (in)
-	@param x2 (in)
-	@param y2 (in)
-	@param x3 (in)
-	@param y3 (in)
+/**	@name	setQuad
+	@text	Set model space quad given a valid deck index. Vertex order is
+			clockwise from upper left (xMin, yMax)
+	
+	@in		MOAIGfxQuadDeck2D self
+	@in		number idx	Index of the quad.
+	@in		number x0
+	@in		number y0
+	@in		number x1
+	@in		number y1
+	@in		number x2
+	@in		number y2
+	@in		number x3
+	@in		number y3
+	@out	nil
 */
 int MOAIGfxQuadDeck2D::_setQuad ( lua_State* L ) {
 	LUA_SETUP ( MOAIGfxQuadDeck2D, "UNNNNNNNNN" )
@@ -116,15 +81,16 @@ int MOAIGfxQuadDeck2D::_setQuad ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>setRect ( self, idx, left, top, right, bottom )</tt>\n
-	\n
-	Sets the rectangular area to display the brush relative to the origin.
-	@param self (in)
-	@param idx Index of brush.
-	@param left Upper-left X coordinate.
-	@param top Upper-left Y coordinate.
-	@param right Lower-right X coordinate.
-	@param bottom Lower-right Y coordinate.
+/**	@name	setRect
+	@text	Set model space quad given a valid deck index and a rect.
+	
+	@in		MOAIGfxQuadDeck2D self
+	@in		number idx	Index of the quad.
+	@in		number xMin
+	@in		number yMin
+	@in		number xMax
+	@in		number yMax
+	@out	nil
 */
 int MOAIGfxQuadDeck2D::_setRect ( lua_State* L ) {
 	LUA_SETUP ( MOAIGfxQuadDeck2D, "UNNNNN" )
@@ -146,29 +112,41 @@ int MOAIGfxQuadDeck2D::_setRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	setTexture
+	@text	Set or load a texture for this deck.
+	
+	@in		MOAIGfxQuadDeck2D self
+	@in		variant texture			A MOAITexture, a MOAIDataBuffer or a path to a texture file
+	@opt	number transform		Any bitwise combination of MOAITexture.QUANTIZE, MOAITexture.TRUECOLOR, MOAITexture.PREMULTIPLY_ALPHA
+	@out	MOAITexture texture
+*/
 int MOAIGfxQuadDeck2D::_setTexture ( lua_State* L ) {
 	LUA_SETUP ( MOAIGfxQuadDeck2D, "U" )
 
 	self->mTexture = MOAITexture::AffirmTexture ( state, 2 );
-
+	if ( self->mTexture ) {
+		self->mTexture->PushLuaUserdata ( state );
+		return 1;
+	}
 	return 0;
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>setQuad ( self, id, x0, y0, x1, y1, x2, y2, x3, y3 )</tt>\n
-\n
-	Sets a screen rect in the brush library.
-	@param self (in)
-	@param id (in) ID of this quad.
-	@param x0 (in)
-	@param y0 (in)
-	@param x1 (in)
-	@param y1 (in)
-	@param x2 (in)
-	@param y2 (in)
-	@param x3 (in)
-	@param y3 (in)
+/**	@name	setUVQuad
+	@text	Set UV space quad given a valid deck index. Vertex order is
+			clockwise from upper left (xMin, yMax)
+	
+	@in		MOAIGfxQuadDeck2D self
+	@in		number idx	Index of the quad.
+	@in		number x0
+	@in		number y0
+	@in		number x1
+	@in		number y1
+	@in		number x2
+	@in		number y2
+	@in		number x3
+	@in		number y3
+	@out	nil
 */
 int MOAIGfxQuadDeck2D::_setUVQuad ( lua_State* L ) {
 	LUA_SETUP ( MOAIGfxQuadDeck2D, "UNNNNNNNNN" )
@@ -197,15 +175,16 @@ int MOAIGfxQuadDeck2D::_setUVQuad ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>setUVs ( self, idx, u0, v0, u1, v1 )</tt>\n
-	\n
-	Set the UV coordinates in the brush's source image.
-	@param self (in)
-	@param idx Index of brush.
-	@param u0 Top-left U coordinate.
-	@param v0 Top-left V coordinate.
-	@param u1 Bottom-right U coordinate.
-	@param v1 Bottom-right V coordinate.
+/**	@name	setUVRect
+	@text	Set UV space quad given a valid deck index and a rect.
+	
+	@in		MOAIGfxQuadDeck2D self
+	@in		number idx	Index of the quad.
+	@in		number xMin
+	@in		number yMin
+	@in		number xMax
+	@in		number yMax
+	@out	nil
 */
 int MOAIGfxQuadDeck2D::_setUVRect ( lua_State* L ) {
 	LUA_SETUP ( MOAIGfxQuadDeck2D, "UNNNNN" )
@@ -299,8 +278,6 @@ void MOAIGfxQuadDeck2D::RegisterLuaFuncs ( USLuaState& state ) {
 	
 	LuaReg regTable [] = {
 		{ "reserve",			_reserve },
-		{ "scaleCoords",		_scaleCoords },
-		{ "scaleUVCoords",		_scaleUVCoords },
 		{ "setQuad",			_setQuad },
 		{ "setRect",			_setRect },
 		{ "setTexture",			_setTexture },
