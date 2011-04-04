@@ -26,8 +26,9 @@ private:
 	USLuaRef		mOnTerminal;
 
 	//----------------------------------------------------------------//
-	static int		_buildTree				( lua_State* L );
+	static int		_loadFile				( lua_State* L );
 	static int		_loadRules				( lua_State* L );
+	static int		_loadString				( lua_State* L );
 	static int		_setCallbacks			( lua_State* L );
 	static int		_traverse				( lua_State* L );
 

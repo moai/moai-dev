@@ -8,8 +8,10 @@
 // USLexStream
 //================================================================//
 class USLexStream :
-	public USFileStream {
+	public USStream {
 private:
+	
+	USStream* mStream;
 	
 	static const u32 DEFAULT_LINE_NO	= 1;
 	static const u32 DEFAULT_LINE_PAD	= 1;
@@ -26,11 +28,14 @@ public:
 	GET ( u32, Line, mLine )
 	
 	//----------------------------------------------------------------//
+	u32			GetCursor			();
+	u32			GetLength			();
 	u32			ReadBytes			( void* buffer, u32 size );
 	void		Seek				( long offset, int origin );
-	void		SetFormatting		( u32 linePad );
+	void		SetStream			( USStream* stream );
 				USLexStream			();
 				~USLexStream		();
+	u32			WriteBytes			( const void* buffer, u32 size );
 };
 
 #endif

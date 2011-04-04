@@ -9,7 +9,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	buildTree
+/**	@name	loadFile
 	@text	Parses the contents of a file and builds an abstract
 			syntax tree.
 
@@ -17,17 +17,20 @@
 	@in		string filename
 	@out	table ast
 */
-int MOAIParser::_buildTree ( lua_State* L ) {
+int MOAIParser::_loadFile ( lua_State* L ) {
 	LUA_SETUP ( MOAIParser, "US" )
 	
 	cc8* filename = state.GetValue < cc8* >( 2, "" );
 	
-	USParser parser;
-	parser.Init ( self->mCGT, 0 );
-	USSyntaxNode* ast = parser.Parse ( filename, true );
-	
-	self->SetAST ( ast );
-	
+	USFileStream stream;
+	if ( stream.OpenRead ( filename )) {
+		
+		USParser parser;
+		parser.Init ( self->mCGT, 0 );
+		USSyntaxNode* ast = parser.Parse ( stream );
+		
+		self->SetAST ( ast );
+	}
 	return 0;
 }
 
@@ -44,6 +47,34 @@ int MOAIParser::_loadRules ( lua_State* L ) {
 
 	cc8* filename = state.GetValue < cc8* >( 2, "" );
 	self->mCGT.Load ( filename );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	loadString
+	@text	Parses the contents of a string and builds an abstract
+			syntax tree.
+
+	@in		MOAIParser self
+	@in		string filename
+	@out	table ast
+*/
+int MOAIParser::_loadString ( lua_State* L ) {
+	LUA_SETUP ( MOAIParser, "US" )
+	
+	size_t len;
+	cc8* str = lua_tolstring ( state, 2, &len );
+	
+	USByteStream stream;
+	stream.SetBuffer (( void* )str, len );
+	stream.SetLength ( len );
+		
+	USParser parser;
+	parser.Init ( self->mCGT, 0 );
+	USSyntaxNode* ast = parser.Parse ( stream );
+	
+	self->SetAST ( ast );
 	
 	return 0;
 }
@@ -147,8 +178,9 @@ void MOAIParser::RegisterLuaClass ( USLuaState& state ) {
 void MOAIParser::RegisterLuaFuncs ( USLuaState& state ) {
 
 	LuaReg regTable[] = {
-		{ "buildTree",			_buildTree },
+		{ "loadFile",			_loadFile },
 		{ "loadRules",			_loadRules },
+		{ "loadString",			_loadString },
 		{ "setCallbacks",		_setCallbacks },
 		{ "traverse",			_traverse },
 		{ NULL, NULL }

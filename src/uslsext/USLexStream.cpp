@@ -9,12 +9,27 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+u32 USLexStream::GetCursor () {
+
+	assert ( this->mStream );
+	return this->mStream->GetCursor ();
+}
+
+//----------------------------------------------------------------//
+u32 USLexStream::GetLength () {
+
+	assert ( this->mStream );
+	return this->mStream->GetLength ();
+}
+
+//----------------------------------------------------------------//
 u32 USLexStream::ReadBytes ( void* buffer, u32 size ) {
 
 	u32 cursor = this->GetCursor ();
 
-	if (( cursor + size ) > this->mLength ) {
-		size = this->mLength - cursor;
+	u32 length = this->GetLength ();
+	if (( cursor + size ) > length ) {
+		size = length - cursor;
 	}
 
 	u8* bytes = ( u8* )buffer;
@@ -28,8 +43,8 @@ u32 USLexStream::ReadBytes ( void* buffer, u32 size ) {
 //----------------------------------------------------------------//
 u8 USLexStream::ReadByte () {
 
-	u8 value;
-	fread ( &value, sizeof ( u8 ), 1, this->mFile );
+	assert ( this->mStream );
+	u8 value = this->mStream->Read < u8 >();
 	
 	if ( value == '\n' ) {
 		this->mLine++;
@@ -48,7 +63,7 @@ void USLexStream::Seek ( long offset, int origin ) {
 			break;
 		}
 		case SEEK_END: {
-			offset = ( this->mLength - offset ) - cursor;
+			offset = ( this->GetLength () - offset ) - cursor;
 			break;
 		}
 		case SEEK_SET: {
@@ -71,18 +86,19 @@ void USLexStream::Seek ( long offset, int origin ) {
 }
 
 //----------------------------------------------------------------//
-void USLexStream::SetFormatting ( u32 linePad ) {
+void USLexStream::SetStream ( USStream* stream ) {
 
-	this->mLinePad = linePad;
+	this->mStream = stream;
 }
 
 //----------------------------------------------------------------//
 u8 USLexStream::UnreadByte () {
 
-	u8 value;
-	fseek ( this->mFile, -1, SEEK_CUR );
-	fread ( &value, sizeof ( u8 ), 1, this->mFile );
-	fseek ( this->mFile, -1, SEEK_CUR );
+	assert ( this->mStream );
+
+	this->mStream->Seek ( -1, SEEK_CUR );
+	u8 value = this->mStream->Read < u8 >();
+	this->mStream->Seek ( -1, SEEK_CUR );
 
 	if ( value == '\n' ) {
 		this->mLine--;
@@ -100,3 +116,11 @@ USLexStream::USLexStream () :
 USLexStream::~USLexStream () {
 }
 
+//----------------------------------------------------------------//
+u32 USLexStream::WriteBytes ( const void* buffer, u32 size ) {
+	UNUSED ( buffer );
+	UNUSED ( size );
+
+	assert ( false );
+	return 0;
+}
