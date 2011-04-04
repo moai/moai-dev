@@ -185,7 +185,7 @@ void MOAIFtFontRipper::RipFromTTF ( cc8* filename, USFont& font, USImage& image,
 					glyph.SetAdvanceX (( float )advanceX * scale );
 					glyphs.push_back ( glyph );
 					
-					memcpy ( validChars, &chars [ charBase ], charSize );
+					memcpy ( &validChars [ validLength ], &chars [ charBase ], charSize );
 					validLength += charSize;
 				}
 				continue;

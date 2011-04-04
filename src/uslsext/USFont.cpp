@@ -696,7 +696,7 @@ u32 USFont::Layout ( USGlyphBuffer& glyphBuffer, cc8* str, float points, USRect 
 	float lineSpacing = this->GetLineSpacing () * points;
 	float y = frame.mYMin;
 	
-	u32 totalLines = ( u32 )ceilf ( height / lineSpacing );
+	u32 totalLines = ( u32 )floorf ( height / lineSpacing );
 	u32 cursor = 0;
 	
 	for ( u32 i = 0; i < totalLines; ++i ) {

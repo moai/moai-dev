@@ -442,11 +442,16 @@ MOAITextBox::~MOAITextBox () {
 bool MOAITextBox::More () {
 	
 	this->Layout ();
-	u32 offset = this->mTextOffset + this->mPageSize;
-	if ( offset >= this->mTextLength ) {
-		return false;
+	
+	if ( this->mReveal < this->mLayout.GetTop ()) {
+		return true;
 	}
-	return true;
+	
+	u32 offset = this->mTextOffset + this->mPageSize;
+	if ( offset < this->mTextLength ) {
+		return true;
+	}
+	return false;
 }
 
 //----------------------------------------------------------------//
