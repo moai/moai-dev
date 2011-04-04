@@ -51,7 +51,7 @@ public:
 
 	//----------------------------------------------------------------//
 	void				Init				( USCgt& cgt, cc8* errorTerminal );
-	USSyntaxNode*		Parse				( cc8* filename, bool trimReductions );
+	USSyntaxNode*		Parse				( USStream& stream );
 						USParser			();
 						~USParser			();
 };

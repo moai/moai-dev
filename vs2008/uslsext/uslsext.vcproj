@@ -1037,7 +1037,7 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="gpb"
+			Name="parser"
 			>
 			<File
 				RelativePath="..\..\src\uslsext\USCgt.cpp"

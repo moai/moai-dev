@@ -35,6 +35,15 @@ void USParser::Init ( USCgt& cgt, cc8* errorTerminal ) {
 }
 
 //----------------------------------------------------------------//
+USSyntaxNode* USParser::Parse ( USStream& stream ) {
+
+	USLexStream scanner;
+	scanner.SetStream ( &stream );
+	
+	return this->Parse ( &scanner, false );
+}
+
+//----------------------------------------------------------------//
 USSyntaxNode* USParser::Parse ( USLexStream* scanner, bool trimReductions ) {
 
 	this->mLine = 0;
@@ -138,17 +147,6 @@ USSyntaxNode* USParser::Parse ( USLexStream* scanner, bool trimReductions ) {
 	}
 	this->mTokenStack.clear ();
 	return syntaxTree;
-}
-
-//----------------------------------------------------------------//
-USSyntaxNode* USParser::Parse ( cc8* filename, bool trimReductions ) {
-
-	USLexStream scanner;
-	scanner.OpenRead ( filename );
-	USSyntaxNode* syntaxNode = this->Parse ( &scanner, trimReductions );
-	scanner.Close ();
-	
-	return syntaxNode;
 }
 
 //----------------------------------------------------------------//
@@ -332,7 +330,7 @@ void USParser::RetrieveToken ( USDfaToken* token, USLexStream* scanner ) {
 	bool done = false;
 	
 	u32 startCursor = scanner->GetCursor ();
-	cu32 bufferSize = 256;
+	cu32 bufferSize = 1024;
 	char buffer [ bufferSize ];
 	
 	while ( !done ) {
@@ -378,15 +376,23 @@ void USParser::RetrieveToken ( USDfaToken* token, USLexStream* scanner ) {
 				}
 			}
 			
-			assert ( acceptLength < ( bufferSize - 1 ));
 			scanner->Seek ( startCursor, SEEK_SET );
-			
 			token->mLine = scanner->GetLine ();
 			
-			scanner->ReadBytes ( buffer, acceptLength );
-			buffer [ acceptLength ] = 0;
-			token->mData = buffer;
-			
+			if ( acceptLength < ( bufferSize - 1 )) {
+
+				scanner->ReadBytes ( buffer, acceptLength );
+				buffer [ acceptLength ] = 0;
+				token->mData = buffer;
+			}
+			else {
+				
+				USLeanArray < char > bigBuffer;
+				bigBuffer.Init ( acceptLength + 1 );
+				scanner->ReadBytes ( bigBuffer, acceptLength );
+				bigBuffer [ acceptLength ] = 0;
+				token->mData = bigBuffer;
+			}
 			return;
 		}
 	}
