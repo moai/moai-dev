@@ -60,6 +60,9 @@ function handleDoxygenBlock ()
 		end
 	end
 
+	local doxy = "@brief\n\t<tt>function " .. funcName .. "()</tt>\n\n\t\n"
+	doxy = doxy .. funcText .. "\n"
+	
 	-- output formatted doxygen stuff to file
 	io.write ( "DOXYGEN!!!!!!11111ONEone" )
 end
