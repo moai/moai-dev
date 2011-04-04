@@ -168,7 +168,7 @@ int MOAIProp2D::_setGrid ( lua_State* L ) {
 int MOAIProp2D::_setIndex ( lua_State* L ) {
 	LUA_SETUP ( MOAIProp2D, "U" )
 
-	self->mIndex = state.GetValue < u32 >( 2, 1 ) - 1;
+	self->mIndex = state.GetValue < u32 >( 2, 1 );
 	self->ScheduleUpdate ();
 
 	return 0;

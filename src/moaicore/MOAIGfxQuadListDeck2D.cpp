@@ -64,18 +64,18 @@ int MOAIGfxQuadListDeck2D::_reserveQuads ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	reserveUVRects
-	@text	Reserve UV rects.
+/**	@name	reserveUVQuads
+	@text	Reserve UV quads.
 	
 	@in		MOAIGfxQuadListDeck2D self
-	@in		number nUVRects
+	@in		number nUVQuads
 	@out	nil
 */
-int MOAIGfxQuadListDeck2D::_reserveUVRects ( lua_State* L ) {
+int MOAIGfxQuadListDeck2D::_reserveUVQuads ( lua_State* L ) {
 	LUA_SETUP ( MOAIGfxQuadListDeck2D, "UN" )
 
 	u32 total = state.GetValue < u32 >( 2, 0 );
-	self->ReserveUVRects ( total );
+	self->ReserveUVQuads ( total );
 
 	return 0;
 }
@@ -215,6 +215,44 @@ int MOAIGfxQuadListDeck2D::_setTexture ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	setUVQuad
+	@text	Set UV space quad given a valid deck index. Vertex order is
+			clockwise from upper left (xMin, yMax)
+	
+	@in		MOAIGfxQuadDeck2D self
+	@in		number idx	Index of the quad.
+	@in		number x0
+	@in		number y0
+	@in		number x1
+	@in		number y1
+	@in		number x2
+	@in		number y2
+	@in		number x3
+	@in		number y3
+	@out	nil
+*/
+int MOAIGfxQuadListDeck2D::_setUVQuad ( lua_State* L ) {
+	LUA_SETUP ( MOAIGfxQuadListDeck2D, "UNNNNNNNNN" )
+
+	u32 idx = state.GetValue < u32 >( 2, 1 ) - 1;
+	
+	USQuad quad;
+	
+	quad.mV [ 0 ].mX = state.GetValue < float >( 3, 0.0f );
+	quad.mV [ 0 ].mY = state.GetValue < float >( 4, 0.0f );
+	quad.mV [ 1 ].mX = state.GetValue < float >( 5, 0.0f );
+	quad.mV [ 1 ].mY = state.GetValue < float >( 6, 0.0f );
+	quad.mV [ 2 ].mX = state.GetValue < float >( 7, 0.0f );
+	quad.mV [ 2 ].mY = state.GetValue < float >( 8, 0.0f );
+	quad.mV [ 3 ].mX = state.GetValue < float >( 9, 0.0f );
+	quad.mV [ 3 ].mY = state.GetValue < float >( 10, 0.0f );
+
+	self->SetUVQuad ( idx, quad );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	setUVRect
 	@text	Set UV space quad given a valid deck index and a rect.
 	
@@ -239,24 +277,6 @@ int MOAIGfxQuadListDeck2D::_setUVRect ( lua_State* L ) {
 	rect.mYMax = state.GetValue < float >( 6, 0.0f );
 
 	self->SetUVRect ( idx, rect );
-
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
-*/
-int MOAIGfxQuadListDeck2D::_setUVRectTransform ( lua_State* L ) {
-	LUA_SETUP ( MOAIGfxQuadListDeck2D, "UN" )
-
-	u32 idx				= state.GetValue < u32 >( 2, 1 ) - 1;
-	u32 transform		= state.GetValue < u32 >( 3, UV_NONE );
-
-	self->SetUVRectTransform ( idx, transform );
 
 	return 0;
 }
@@ -294,7 +314,7 @@ bool MOAIGfxQuadListDeck2D::Contains ( u32 idx, const USVec2D& vec ) {
 //----------------------------------------------------------------//
 void MOAIGfxQuadListDeck2D::Draw ( u32 idx, float xOff, float yOff, float xScale, float yScale ) {
 
-	u32 size = this->mQuads.Size ();
+	u32 size = this->mSprites.Size ();
 	if ( size ) {
 
 		idx = ( idx - 1 ) % size;
@@ -311,16 +331,10 @@ void MOAIGfxQuadListDeck2D::Draw ( u32 idx, float xOff, float yOff, float xScale
 			
 			USSpritePair spritePair = this->mPairs [ i % totalSpritePairs ];
 			
-			USSpriteUVRect& uvRect = this->mUVRects [ spritePair.mUVRectID ]; 
+			USQuad& uvQuad = this->mUVQuads [ spritePair.mUVQuadID ]; 
 			USQuad& quad = this->mQuads [ spritePair.mQuadID ];
 			
-			if ( uvRect.mTransform == UV_ROTATE_90 ) {
-				USRect& rect = uvRect.mRect;
-				glQuad.SetUVs ( rect.mXMax, rect.mYMax, rect.mXMax, rect.mYMin, rect.mXMin, rect.mYMin, rect.mXMin, rect.mYMax );
-			}
-			else {
-				glQuad.SetUVs ( uvRect.mRect );
-			}
+			glQuad.SetUVs ( uvQuad.mV [ 0 ], uvQuad.mV [ 1 ], uvQuad.mV [ 2 ], uvQuad.mV [ 3 ] );
 			glQuad.SetVerts ( quad.mV [ 0 ], quad.mV [ 1 ], quad.mV [ 2 ], quad.mV [ 3 ]);
 			glQuad.Draw ( xOff, yOff, xScale, yScale );
 		}
@@ -330,12 +344,14 @@ void MOAIGfxQuadListDeck2D::Draw ( u32 idx, float xOff, float yOff, float xScale
 //----------------------------------------------------------------//
 USRect MOAIGfxQuadListDeck2D::GetBounds ( u32 idx ) {
 
-	idx = idx - 1;
-
 	USRect rect;
 	rect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
+
+	u32 size = this->mSprites.Size ();
+	if ( size ) {
+
+		idx = ( idx - 1 ) % size;
 	
-	if ( idx < this->mSprites.Size ()) {
 		USSprite& sprite = this->mSprites [ idx ];
 		
 		if ( sprite.mTotalPairs ) {
@@ -375,9 +391,6 @@ MOAIGfxQuadListDeck2D::~MOAIGfxQuadListDeck2D () {
 void MOAIGfxQuadListDeck2D::RegisterLuaClass ( USLuaState& state ) {
 	
 	MOAIDeck2D::RegisterLuaClass ( state );
-	
-	state.SetField ( -1, "UV_NONE", ( u32 )UV_NONE );
-	state.SetField ( -1, "UV_ROTATE_90", ( u32 )UV_ROTATE_90 );
 }
 
 //----------------------------------------------------------------//
@@ -389,13 +402,13 @@ void MOAIGfxQuadListDeck2D::RegisterLuaFuncs ( USLuaState& state ) {
 		{ "reserveLists",			_reserveLists },
 		{ "reservePairs",			_reservePairs },
 		{ "reserveQuads",			_reserveQuads },
-		{ "reserveUVRects",			_reserveUVRects },
+		{ "reserveUVQuads",			_reserveUVQuads },
 		{ "setList",				_setList },
 		{ "setPair",				_setPair },
 		{ "setQuad",				_setQuad },
 		{ "setRect",				_setRect },
+		{ "setUVQuad",				_setUVQuad },
 		{ "setUVRect",				_setUVRect },
-		{ "setUVRectTransform",		_setUVRectTransform },
 		{ "setTexture",				_setTexture },
 		{ NULL, NULL }
 	};
@@ -422,7 +435,7 @@ void MOAIGfxQuadListDeck2D::ReservePairs ( u32 total ) {
 	
 	USSpritePair zero;
 	zero.mQuadID		= 0;
-	zero.mUVRectID		= 0;
+	zero.mUVQuadID		= 0;
 	
 	this->mPairs.Fill ( zero );
 }
@@ -434,9 +447,9 @@ void MOAIGfxQuadListDeck2D::ReserveQuads ( u32 total ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxQuadListDeck2D::ReserveUVRects ( u32 total ) {
+void MOAIGfxQuadListDeck2D::ReserveUVQuads ( u32 total ) {
 
-	this->mUVRects.Init ( total );
+	this->mUVQuads.Init ( total );
 }
 
 //----------------------------------------------------------------//
@@ -455,12 +468,12 @@ void MOAIGfxQuadListDeck2D::SetList ( u32 idx, u32 basePairID, u32 totalPairs ) 
 void MOAIGfxQuadListDeck2D::SetPair ( u32 idx, u32 uvRectID, u32 screenRectID ) {
 	
 	if ( !this->mPairs.Size ()) return;
-	if ( !this->mUVRects.Size ()) return;
+	if ( !this->mUVQuads.Size ()) return;
 	if ( !this->mQuads.Size ()) return;
 	
 	USSpritePair& spritePair = this->mPairs [ idx % this->mPairs.Size ()];
 	
-	spritePair.mUVRectID = uvRectID % this->mUVRects.Size ();
+	spritePair.mUVQuadID = uvRectID % this->mUVQuads.Size ();
 	spritePair.mQuadID = screenRectID % this->mQuads.Size ();
 }
 
@@ -479,22 +492,17 @@ void MOAIGfxQuadListDeck2D::SetRect ( u32 idx, USRect& rect ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxQuadListDeck2D::SetUVRect ( u32 idx, USRect& rect ) {
+void MOAIGfxQuadListDeck2D::SetUVQuad ( u32 idx, USQuad& quad ) {
 
-	if ( !this->mUVRects.Size ()) return;
-	USSpriteUVRect& uvRect = this->mUVRects [ idx % this->mUVRects.Size ()];
-	
-	uvRect.mRect = rect;
-	uvRect.mTransform = UV_NONE;
+	if ( idx > this->mUVQuads.Size ()) return;
+	this->mUVQuads [ idx ] = quad;
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxQuadListDeck2D::SetUVRectTransform ( u32 idx, u32 transform ) {
+void MOAIGfxQuadListDeck2D::SetUVRect ( u32 idx, USRect& rect ) {
 
-	if ( !this->mUVRects.Size ()) return;
-	USSpriteUVRect& uvRect = this->mUVRects [ idx % this->mUVRects.Size ()];
-	
-	uvRect.mTransform = transform;
+	if ( idx > this->mUVQuads.Size ()) return;
+	this->mUVQuads [ idx ].Init ( rect );
 }
 
 //----------------------------------------------------------------//
@@ -503,7 +511,7 @@ STLString MOAIGfxQuadListDeck2D::ToString () {
 	STLString repr;
 
 	//PRETTY_PRINT ( repr, mTexture )
-	//PRETTY_PRINT ( repr, mUVRects )
+	//PRETTY_PRINT ( repr, mUVQuads )
 	//PRETTY_PRINT ( repr, mQuads )
 	//PRETTY_PRINT ( repr, mPairs )
 	//PRETTY_PRINT ( repr, mSprites )

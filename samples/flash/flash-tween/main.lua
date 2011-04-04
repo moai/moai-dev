@@ -72,7 +72,7 @@ function parseFlash ( flashAnim )
 	
 	local quadDeck = MOAIGfxQuadDeck2D.new ()
 	quadDeck:setTexture ( flashAnim.texture )
-	quadDeck:reserveBrushes ( #flashAnim.brushDeck )
+	quadDeck:reserve ( #flashAnim.brushDeck )
 	
 	for i, brush in pairs ( flashAnim.brushDeck ) do
 		

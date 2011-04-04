@@ -102,7 +102,7 @@ function getFrameLua ( atlas, frame, idx, startIdx ) {
 		var rect = atlas.map [ element.libraryItem.name ];
 		if ( !rect ) return;
 		
-		lua.set ( 'id', rect.idx );
+		lua.set ( 'id', rect.idx + 1 );
 		
 		var transform = lua.setTable ( 'transform' );
 	

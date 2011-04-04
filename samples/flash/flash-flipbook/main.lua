@@ -47,31 +47,43 @@ function loadQuadListDeck ( spec )
 		
 	local quadListDeck = MOAIGfxQuadListDeck2D.new ()
 	
-	quadListDeck:reserveUVRects ( #spec.uvRects )
-	for j, uvRect in ipairs ( spec.uvRects ) do
-		quadListDeck:setUVRect ( j, uvRect.x0, uvRect.y0, uvRect.x1, uvRect.y1 )
-		if uvRect.r then
-			quadListDeck:setUVRectTransform ( j, MOAIGfxQuadListDeck2D.UV_ROTATE_90 )
+	quadListDeck:reserveUVQuads ( #spec.uvRects )
+		for j, uvRect in ipairs ( spec.uvRects ) do
+			
+			if uvRect.r then
+				quadListDeck:setUVQuad ( j,
+					uvRect.x0, uvRect.y0,
+					uvRect.x0, uvRect.y1,
+					uvRect.x1, uvRect.y1,
+					uvRect.x1, uvRect.y0
+				)
+			else
+				quadListDeck:setUVRect ( j, uvRect.x0, uvRect.y0, uvRect.x1, uvRect.y1 )
+			end
 		end
-	end
 
-	quadListDeck:reserveQuads ( #spec.quads )
-	for j, quad in ipairs ( spec.quads ) do
-		if quad.x0 ~= nil then
-			quadListDeck:setRect ( j, quad.x0, quad.y0, quad.x1, quad.y1 )
-		else
-			quadListDeck:setQuad ( j, quad.v0.x, quad.v0.y, quad.v1.x, quad.v1.y, quad.v2.x, quad.v2.y, quad.v3.x, quad.v3.y )
+		quadListDeck:reserveQuads ( #spec.quads )
+		for j, quad in ipairs ( spec.quads ) do
+			if quad.x0 ~= nil then
+				quadListDeck:setRect ( j, quad.x0, quad.y0, quad.x1, quad.y1 )
+			else
+				quadListDeck:setQuad ( j,
+					quad.v0.x, quad.v0.y,
+					quad.v1.x, quad.v1.y,
+					quad.v2.x, quad.v2.y,
+					quad.v3.x, quad.v3.y
+				)
+			end
 		end
-	end
 	
-	quadListDeck:reservePrims ( #spec.prims )
+	quadListDeck:reservePairs ( #spec.prims )
 	for j, prim in ipairs ( spec.prims ) do
-		quadListDeck:setPrim ( j, prim.uv, prim.q )
+		quadListDeck:setPair ( j, prim.uv, prim.q )
 	end
 	
-	quadListDeck:reserveSprites ( #spec.sprites )
+	quadListDeck:reserveLists ( #spec.sprites )
 	for j, prop in ipairs ( spec.sprites ) do
-		quadListDeck:setSprite ( j, prop.base, prop.size )
+		quadListDeck:setList ( j, prop.base, prop.size )
 	end
 	
 	return quadListDeck

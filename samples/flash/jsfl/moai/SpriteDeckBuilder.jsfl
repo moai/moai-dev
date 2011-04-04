@@ -85,9 +85,9 @@ SpriteDeckBuilder.prototype.addSpritePrimsForFrame = function ( document, atlas,
 					
 					var uvRect = new LuaTable ();
 					uvRect.set ( 'x0', rect.uvRect.x0 );
-					uvRect.set ( 'y0', rect.uvRect.y1 );
+					uvRect.set ( 'y0', rect.uvRect.y0 );
 					uvRect.set ( 'x1', rect.uvRect.x1 );
-					uvRect.set ( 'y1', rect.uvRect.y0 );
+					uvRect.set ( 'y1', rect.uvRect.y1 );
 					
 					if ( rect.isRotated ) {
 						uvRect.set ( 'r', true );

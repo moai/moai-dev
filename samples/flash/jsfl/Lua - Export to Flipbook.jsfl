@@ -11,8 +11,6 @@ fl.runScript ( fl.configURI + 'Commands/moai/SpriteDeckBuilder.jsfl' );
 //----------------------------------------------------------------//
 function exportToLua () {
 	
-	fl.trace ( 'FOOO!' );
-	
 	var document = fl.getDocumentDOM ();
 	var folderPath = fl.browseForFolderURL ( 'Select a folder.' ) + '/';
 	
@@ -47,7 +45,7 @@ function exportToLua () {
 			
 			if ( keyframe.nElements ) {
 				var id = spriteDeckBuilder.addSpriteForFrameIdx ( document, timeline, atlas, keyframe.idx );
-				luaFrame.set ( 'id', id );
+				luaFrame.set ( 'id', id + 1 );
 			}
 			else {
 				luaFrame.set ( 'id', -1 );

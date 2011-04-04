@@ -28,7 +28,7 @@ private:
 
 	friend class MOAIGfxQuadListDeck2D;
 
-	u32		mUVRectID;
+	u32		mUVQuadID;
 	u32		mQuadID;
 };
 
@@ -58,7 +58,7 @@ private:
 
 	USRef < MOAITexture >			mTexture;
 	
-	USLeanArray < USSpriteUVRect >	mUVRects;
+	USLeanArray < USQuad >			mUVQuads;
 	USLeanArray < USQuad >			mQuads;
 	USLeanArray < USSpritePair >	mPairs;
 	USLeanArray < USSprite >		mSprites;
@@ -67,23 +67,18 @@ private:
 	static int	_reserveLists			( lua_State* L );
 	static int	_reservePairs			( lua_State* L );
 	static int	_reserveQuads			( lua_State* L );
-	static int	_reserveUVRects			( lua_State* L );
+	static int	_reserveUVQuads			( lua_State* L );
 	static int	_setList				( lua_State* L );
 	static int	_setPair				( lua_State* L );
 	static int	_setQuad				( lua_State* L );
 	static int	_setRect				( lua_State* L );
 	static int	_setTexture				( lua_State* L );
+	static int	_setUVQuad				( lua_State* L );
 	static int	_setUVRect				( lua_State* L );
-	static int	_setUVRectTransform		( lua_State* L );
 
 public:
 	
 	DECL_LUA_FACTORY ( MOAIGfxQuadListDeck2D )
-	
-	enum {
-		UV_NONE,
-		UV_ROTATE_90,
-	};
 	
 	//----------------------------------------------------------------//
 	bool			Bind					();
@@ -98,13 +93,13 @@ public:
 	void			ReserveLists			( u32 total );
 	void			ReservePairs			( u32 total );
 	void			ReserveQuads			( u32 total );
-	void			ReserveUVRects			( u32 total );
+	void			ReserveUVQuads			( u32 total );
 	void			SetList					( u32 idx, u32 basePairID, u32 totalPairs );
 	void			SetPair					( u32 idx, u32 uvRectID, u32 screenRectID );
 	void			SetQuad					( u32 idx, USQuad& quad );
 	void			SetRect					( u32 idx, USRect& rect );
+	void			SetUVQuad				( u32 idx, USQuad& quad );
 	void			SetUVRect				( u32 idx, USRect& rect );
-	void			SetUVRectTransform		( u32 idx, u32 transform );
 	STLString		ToString				();
 };
 
