@@ -16,7 +16,6 @@
 #include <uslsext/USBlendMode.h>
 #include <uslsext/USBox.h>
 #include <uslsext/USCamera2D.h>
-#include <uslsext/USCameraFitter.h>
 #include <uslsext/USCanvas.h>
 #include <uslsext/USCgt.h>
 #include <uslsext/USColor.h>
@@ -61,9 +60,6 @@
 #include <uslsext/USQuadCoord.h>
 #include <uslsext/USRadixSort16.h>
 #include <uslsext/USRadixSort32.h>
-#include <uslsext/USSlipMapBrush.h>
-#include <uslsext/USSlipMapTile.h>
-#include <uslsext/USSlipMapTileSource.h>
 #include <uslsext/USSqlBinding.h>
 #include <uslsext/USSqlColumn.h>
 #include <uslsext/USSqlRecord.h>

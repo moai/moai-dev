@@ -348,13 +348,6 @@ void AKUSetInputDeviceTouch ( int deviceID, int sensorID, char const* name ) {
 }
 
 //----------------------------------------------------------------//
-void AKUSetTextInput ( const char* input ) {
-	UNUSED ( input );
-
-	// TODO: deprecated; remove later
-}
-
-//----------------------------------------------------------------//
 void AKUUpdate () {
 
 	MOAISim::Get ().Update ();

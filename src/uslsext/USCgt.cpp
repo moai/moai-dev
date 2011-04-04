@@ -248,7 +248,8 @@ STLString USCgt::ReadStringEntry ( USStream& stream ) {
 //----------------------------------------------------------------//
 STLString USCgt::ReadUnicodeAsASCII ( USStream& stream ) {
 
-	// TODO: change this to convert to UTF-8!
+	// TODO: change this to convert to UTF8!
+	// Also: GOLD now has native UTF8 support. Look into it.
 
 	STLString result = "";
 

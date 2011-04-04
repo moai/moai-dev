@@ -146,27 +146,30 @@ u32 USSect::VecToCircle ( float& t0, float& t1, USVec2D& loc, USVec2D& vec, USVe
 }
 
 //----------------------------------------------------------------//
-float USSect::VecToPlane ( USVec3D& loc, USVec3D& vec, USPlane3D& p ) {
+bool USSect::VecToPlane ( USVec3D& loc, USVec3D& vec, USPlane3D& p, float& t ) {
 
 	float d;
 	d = vec.Dot ( p.mNorm );
-	if ( d == 0.0f ) return 10000.0f; // TODO: fix this hideous hack!
-	return ( loc.Dot ( p.mNorm ) + p.mDist ) / -d;
+	if ( d == 0.0f ) return false;
+	
+	t = ( loc.Dot ( p.mNorm ) + p.mDist ) / -d;
+	return true;
 }
 
 //----------------------------------------------------------------//
-float USSect::VecToPlane ( USVec3D& loc, USVec3D& vec, USPlane3D& p, USVec3D& result ) {
+bool USSect::VecToPlane ( USVec3D& loc, USVec3D& vec, USPlane3D& p, float& t, USVec3D& result ) {
 
 	float d;
 	d = vec.Dot ( p.mNorm );
-	if ( d == 0.0f ) return 10000.0f; // TODO: fix this hideous hack!
-	float t = ( loc.Dot ( p.mNorm ) + p.mDist ) / -d;
+	if ( d == 0.0f ) return false;
+	
+	t = ( loc.Dot ( p.mNorm ) + p.mDist ) / -d;
 
 	result = vec;
 	result.Scale ( t );
 	result.Add ( loc );
 
-	return t;
+	return true ;
 }
 
 //----------------------------------------------------------------//

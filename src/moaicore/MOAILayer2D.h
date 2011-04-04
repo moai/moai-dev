@@ -52,7 +52,6 @@ private:
 	
 	//----------------------------------------------------------------//
 	void			AffirmPartition			();
-	USAffine2D		GetViewProjMtx			();
 
 public:
 	

@@ -464,14 +464,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\uslsext\USCameraFitter.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USCameraFitter.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\uslsext\USCanvas.cpp"
 				>
 			</File>
@@ -673,34 +665,6 @@
 			</File>
 			<File
 				RelativePath="..\..\src\uslsext\USTrig.h"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="slippymap"
-			>
-			<File
-				RelativePath="..\..\src\uslsext\USSlipMapBrush.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USSlipMapBrush.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USSlipMapTile.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USSlipMapTile.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USSlipMapTileSource.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USSlipMapTileSource.h"
 				>
 			</File>
 		</Filter>
