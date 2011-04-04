@@ -50,7 +50,7 @@ Nonterminals
 Defined Sets
 ========================================
 
-{Text}     {HT}{LF}{VT}{FF}{Space}!"#$%&'()+,-.0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~{NBSP}
+{Text}     {HT}{LF}{FF}{CR}{Space}!"#$%&'()+,-.0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~{NBSP}
 
 
 ========================================
@@ -73,8 +73,8 @@ DFA States
 ========================================
 
 State 0
-        Goto 1       {CR}
-        Goto 2       {HT}{LF}{VT}{FF}{Space}!"#$%&'()+,-.0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~{NBSP}
+        Goto 1       {VT}
+        Goto 2       {HT}{LF}{FF}{CR}{Space}!"#$%&'()+,-.0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~{NBSP}
         Goto 3       *
         Goto 5       /
 
@@ -84,7 +84,7 @@ State 1
 
 
 State 2
-        Goto 2       {HT}{LF}{VT}{FF}{Space}!"#$%&'()+,-.0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~{NBSP}
+        Goto 2       {HT}{LF}{FF}{CR}{Space}!"#$%&'()+,-.0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~{NBSP}
         Accept Text
 
 

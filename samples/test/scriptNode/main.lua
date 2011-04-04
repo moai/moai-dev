@@ -29,18 +29,18 @@ function onUpdate ( self )
 	print ( self.name )
 end
 
-nodesly = MOAIScriptNode.new ()
-nodesly.name = "Nodesly"
-nodesly:setCallback ( onUpdate )
+node1 = MOAIScriptNode.new ()
+node1.name = "Node 1"
+node1:setCallback ( onUpdate )
 
-nodebert = MOAIScriptNode.new ()
-nodebert.name = "Nodebert"
-nodebert:setDependency ( nodesly )
-nodebert:setCallback ( onUpdate )
+node2 = MOAIScriptNode.new ()
+node2.name = "Node 2"
+node2:setDependency ( node1 )
+node2:setCallback ( onUpdate )
 
 function main ()
 	while true do
-		nodesly:scheduleUpdate ()
+		node1:scheduleUpdate ()
 		coroutine.yield ()
 	end
 end
