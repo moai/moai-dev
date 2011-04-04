@@ -15,7 +15,6 @@
 #include <uslsext/USBinarySearch.h>
 #include <uslsext/USBlendMode.h>
 #include <uslsext/USBox.h>
-#include <uslsext/USCamera2D.h>
 #include <uslsext/USCanvas.h>
 #include <uslsext/USCgt.h>
 #include <uslsext/USColor.h>

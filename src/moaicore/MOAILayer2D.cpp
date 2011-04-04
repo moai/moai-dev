@@ -335,20 +335,10 @@ void MOAILayer2D::Draw () {
 	mtx.Prepend ( this->mLocalToWorldMtx );
 	mtx.Transform ( viewport );
 	
-	USCamera2D camera;
-	USAffine2D preViewMtx;
+	USAffine2D camera;
+	this->GetCameraMtx ( camera );
 	
-	if ( this->mCamera ) {
-		preViewMtx = this->mCamera->GetWorldToLocalMtx ();
-		
-		preViewMtx.m [ USAffine2D::C2_R0 ] *= this->mParallax.mX;
-		preViewMtx.m [ USAffine2D::C2_R1 ] *= this->mParallax.mY;
-	}
-	else {
-		preViewMtx.Ident ();
-	}
-	
-	USCanvas::BeginDrawing ( viewport, camera, preViewMtx );
+	USCanvas::BeginDrawing ( viewport, camera );
 	
 	if ( this->mShowDebugLines ) {
 		
@@ -410,6 +400,20 @@ void MOAILayer2D::Draw () {
 }
 
 //----------------------------------------------------------------//
+void MOAILayer2D::GetCameraMtx ( USAffine2D& camera ) {
+
+	if ( this->mCamera ) {
+		camera = this->mCamera->GetLocalToWorldMtx ();
+		
+		camera.m [ USAffine2D::C2_R0 ] *= this->mParallax.mX;
+		camera.m [ USAffine2D::C2_R1 ] *= this->mParallax.mY;
+	}
+	else {
+		camera.Ident ();
+	}
+}
+
+//----------------------------------------------------------------//
 float MOAILayer2D::GetFitting ( USRect& worldRect, float hPad, float vPad ) {
 
 	if ( !( this->mCamera && this->mViewport )) return 1.0f;
@@ -437,13 +441,9 @@ void MOAILayer2D::GetWndToWorldMtx ( USAffine2D& wndToWorld ) {
 
 	if ( this->mViewport ) {
 		
-		USCamera2D camera;
+		USAffine2D camera;
+		this->GetCameraMtx ( camera );
 		USCanvas::GetWndToWorldMtx ( *this->mViewport, camera, wndToWorld );
-		
-		if ( this->mCamera ) {
-			USAffine2D preViewInv = this->mCamera->GetLocalToWorldMtx ();
-			wndToWorld.Append ( preViewInv );
-		}
 	}
 	else {
 		wndToWorld.Ident ();
@@ -455,13 +455,9 @@ void MOAILayer2D::GetWorldToWndMtx ( USAffine2D& worldToWnd ) {
 
 	if ( this->mCamera && this->mViewport ) {
 		
-		USCamera2D camera;
+		USAffine2D camera;
+		this->GetCameraMtx ( camera );
 		USCanvas::GetWorldToWndMtx ( *this->mViewport, camera, worldToWnd );
-		
-		if ( this->mCamera ) {
-			USAffine2D preViewInv = this->mCamera->GetWorldToLocalMtx ();
-			worldToWnd.Prepend ( preViewInv );
-		}
 	}
 	else {
 		worldToWnd.Ident ();

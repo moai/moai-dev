@@ -7,7 +7,6 @@
 #include <uslsext/USColor.h>
 #include <uslsext/USMatrix3D.h>
 #include <uslsext/USAffine2D.h>
-#include <uslsext/USCamera2D.h>
 #include <uslsext/USViewport.h>
 #include <uslsext/USViewQuad.h>
 
@@ -21,8 +20,8 @@ public:
 
 	//----------------------------------------------------------------//
 	static void			BeginDrawing			();
-	static void			BeginDrawing			( USViewport& viewport, USCamera2D& camera );
-	static void			BeginDrawing			( USViewport& viewport, USCamera2D& camera, USAffine2D& preViewMtx );
+	static void			BeginDrawing			( USViewport& viewport, USAffine2D& camera );
+	
 	static void			ClearColorBuffer		( u32 color );
 	static void			DrawAxisGrid			( USVec2D loc, USVec2D vec, float size );
 	static void			DrawEllipseFill			( USRect& rect, u32 steps );
@@ -49,18 +48,27 @@ public:
 	static void			GetNormToWndMtx			( USViewport& viewport, USAffine2D& normToWnd );
 	static USColorVec	GetPenColor				();
 	static void			GetProjMtx				( USViewport& viewport, USAffine2D& proj );
+	
+	static void			GetViewProjMtx			( USAffine2D& viewProj );
+	static void			GetViewProjMtx			( USViewport& viewport, USAffine2D& camera, USAffine2D& viewProj );
+	static void			GetViewProjMtxInv		( USViewport& viewport, USAffine2D& camera, USAffine2D& viewProjInv );
+	
+	static void			GetViewRect				( USRect& rect );
+	
 	static void			GetWndToModelMtx		( USAffine2D& wndToModel );
 	static void			GetWndToNormMtx			( USViewport& viewport, USAffine2D& wndToNorm );
 	static void			GetWndToWorldMtx		( USAffine2D& wndToWorld );
-	static void			GetWndToWorldMtx		( USViewport& viewport, USCamera2D& camera, USAffine2D& wndToWorld );
+	static void			GetWndToWorldMtx		( USViewport& viewport, USAffine2D& camera, USAffine2D& wndToWorld );
+	
+	
+	
 	static void			GetWorldToModelMtx		( USAffine2D& worldToModel );
 	static void			GetWorldToWndMtx		( USAffine2D& worldToWnd, float xScale = 1.0f, float yScale = -1.0f );
-	static void			GetWorldToWndMtx		( USViewport& viewport, USCamera2D& camera, USAffine2D& worldToWnd );
-	static void			GetViewMtx				( USViewport& viewport, USCamera2D& camera, USAffine2D& view );
-	static void			GetViewProjMtx			( USAffine2D& viewProj );
-	static void			GetViewProjMtx			( USViewport& viewport, USCamera2D& camera, USAffine2D& viewProj );
-	static void			GetViewProjMtxInv		( USViewport& viewport, USCamera2D& camera, USAffine2D& viewProjInv );
-	static void			GetViewRect				( USRect& rect );
+	static void			GetWorldToWndMtx		( USViewport& viewport, USAffine2D& camera, USAffine2D& worldToWnd );
+	
+	
+	
+	
 	static void			LoadMatrix				( const USMatrix3D& mtx );
 	static void			LoadMatrix				( const USAffine2D& mtx );
 	static void			MultMatrix				( const USMatrix3D& mtx );

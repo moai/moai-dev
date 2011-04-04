@@ -456,14 +456,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\uslsext\USCamera2D.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USCamera2D.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\uslsext\USCanvas.cpp"
 				>
 			</File>
