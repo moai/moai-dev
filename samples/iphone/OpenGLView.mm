@@ -1,3 +1,9 @@
+//----------------------------------------------------------------//
+// Copyright (c) 2010-2011 Zipline Games, Inc. 
+// All Rights Reserved. 
+// http://getmoai.com
+//----------------------------------------------------------------//
+
 #import <QuartzCore/QuartzCore.h>
 #import <OpenGLES/EAGLDrawable.h>
 #import <aku/aku.h>

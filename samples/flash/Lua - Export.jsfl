@@ -1,4 +1,10 @@
 ﻿//----------------------------------------------------------------//
+// Copyright (c) 2010-2011 Zipline Games, Inc. 
+// All Rights Reserved. 
+// http://getmoai.com
+//----------------------------------------------------------------//
+
+//----------------------------------------------------------------//
 /*
 function loadCommandScript ( script ) {
 	fl.runScript( fl.configURI + 'Commands/' + script ); 
