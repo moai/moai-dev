@@ -24,19 +24,19 @@ vbo:reserveVerts ( 4 )
 vbo:setPrimType ( MOAIVertexBuffer.GL_TRIANGLE_FAN )
 
 vbo:writeFloat ( -64, -64 )
-vbo:writeColor ( 1, 0, 0 )
+vbo:writeColor32 ( 1, 0, 0 )
 vbo:writeFloat ( 0, 1 )
 
 vbo:writeFloat ( 64, -64 )
-vbo:writeColor ( 1, 1, 0 )
+vbo:writeColor32 ( 1, 1, 0 )
 vbo:writeFloat ( 1, 1 )
 
 vbo:writeFloat ( 64, 64 )
-vbo:writeColor ( 0, 1, 0 )
+vbo:writeColor32 ( 0, 1, 0 )
 vbo:writeFloat ( 1, 0 )
 
 vbo:writeFloat ( -64, 64 )
-vbo:writeColor ( 0, 0, 1 )
+vbo:writeColor32 ( 0, 0, 1 )
 vbo:writeFloat ( 0, 0 )
 
 vbo:bless ()

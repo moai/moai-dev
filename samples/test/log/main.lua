@@ -14,7 +14,7 @@ MOAILogMgr.registerLogMessage ( MOAILogMgr.MOAI_IndexOutOfRange_DDD, 'Index %d i
 
 -- create an object to test the out of range message
 brushLib = MOAIGfxQuadDeck2D.new ()
-brushLib:reserveBrushes ( 2 )
+brushLib:reserve ( 2 )
 brushLib:setRect ( 0, 0, 0, 0, 0 ) -- error
 brushLib:setRect ( 1, 0, 0, 0, 0 )
 brushLib:setRect ( 2, 0, 0, 0, 0 )

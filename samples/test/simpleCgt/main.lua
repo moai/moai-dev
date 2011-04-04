@@ -40,7 +40,7 @@ parser = MOAIParser.new ()
 
 parser:setCallbacks ( onStartNT, onEndNT, onT )
 parser:loadRules ( 'simple.cgt' )
-parser:buildTree ( 'test.txt' )
+parser:loadFile ( 'test.txt' )
 parser:traverse ()
 
 

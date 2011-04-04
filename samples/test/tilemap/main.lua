@@ -18,6 +18,7 @@ scene:setCamera ( camera )
 tileset = MOAITileDeck2D.new ()
 tileset:setTexture ( "numbers.png" )
 tileset:setSize ( 8, 8 )
+tileset:setRect ( -0.5, 0.5, 0.5, -0.5 )
 
 grid = MOAIGrid.new ()
 grid:setSize ( 8, 8, 32, 32 )

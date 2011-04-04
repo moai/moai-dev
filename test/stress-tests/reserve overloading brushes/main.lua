@@ -15,7 +15,7 @@ MOAISim.pushRenderPass ( layer )
 brushlib = MOAIGfxQuadDeck2D.new ()
 brushlib:setTexture ( "../test.png" )
 
-brushlib:reserveBrushes ( 1 )
+brushlib:reserve ( 1 )
 brushlib:setRect ( 1, -32, -32, 32, 32 )
 brushlib:setUVRect ( 1, 0, .5, .5, 0 )
 brushlib:setRect ( 2, -64, -64, 64, 64 )
