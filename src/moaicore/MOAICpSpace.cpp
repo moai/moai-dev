@@ -866,7 +866,7 @@ void MOAICpSpace::RegisterLuaFuncs ( USLuaState& state ) {
 	
 	MOAIAction::RegisterLuaFuncs ( state );
 	
-	LuaReg regTable [] = {
+	luaL_Reg regTable [] = {
 		{ "activateShapesTouchingShape",	_activateShapesTouchingShape },
 		{ "getDamping",						_getDamping },
 		{ "getGravity",						_getGravity },

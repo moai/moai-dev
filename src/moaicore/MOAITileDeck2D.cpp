@@ -146,7 +146,7 @@ void MOAITileDeck2D::RegisterLuaFuncs ( USLuaState& state ) {
 
 	this->MOAIDeck2D::RegisterLuaFuncs ( state );
 
-	LuaReg regTable [] = {
+	luaL_Reg regTable [] = {
 		{ "setRect",			_setRect },
 		{ "setSize",			_setSize },
 		{ "setTexture",			_setTexture },

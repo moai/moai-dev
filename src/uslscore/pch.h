@@ -69,10 +69,10 @@ extern "C" {
 	#include <lualib.h>
 }
 
-typedef struct luaL_Reg LuaReg;
-
 //----------------------------------------------------------------//
 typedef unsigned int			uint;
+
+typedef const char				cc8;
 
 typedef unsigned char			u8;
 typedef unsigned short			u16;
@@ -85,22 +85,6 @@ typedef signed long				s32;
 typedef signed long long		s64;
 
 //----------------------------------------------------------------//
-typedef const char				cc8;
-
-typedef const unsigned char		cu8;
-typedef const unsigned short	cu16;
-typedef const unsigned long		cu32;
-
-typedef const signed char		cs8;
-typedef const signed short		cs16;
-typedef const signed long		cs32;
-
-//----------------------------------------------------------------//
-typedef float					f32;
-typedef double					f64;
-
-//----------------------------------------------------------------//
-typedef u32						addr;
 
 #define UNUSED(p) (( void )p)
 

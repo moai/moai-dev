@@ -638,7 +638,7 @@ STLString USFileCache::GetFilePath ( cc8* filename ) {
 }
 
 //-------------------------------------------------------------------//
-f32 USFileCache::GetNonReferencedSize () {
+float USFileCache::GetNonReferencedSize () {
 
 	u32 nonReferencedBytes = 0;
 
@@ -666,11 +666,11 @@ f32 USFileCache::GetNonReferencedSize () {
 
 	statement.Execute ( "COMMIT TRANSACTION" );
 
-	return (( f32 )nonReferencedBytes / MBYTE );
+	return (( float )nonReferencedBytes / MBYTE );
 }
 
 //-------------------------------------------------------------------//
-f32 USFileCache::GetPartitionMaxSize ( int priority ) {
+float USFileCache::GetPartitionMaxSize ( int priority ) {
 
 	// get parition
 	USSqlValue param;
@@ -681,11 +681,11 @@ f32 USFileCache::GetPartitionMaxSize ( int priority ) {
 	if ( success == false ) return 0;
 	
 	// otherwise, return partion's max size
-	return ( f32 )partition.mMaxSize;
+	return ( float )partition.mMaxSize;
 }
 
 //-------------------------------------------------------------------//
-f32 USFileCache::GetSizeUsedFor ( cc8* refKey ) {
+float USFileCache::GetSizeUsedFor ( cc8* refKey ) {
 	
 	if ( !refKey ) return 0;
 	
@@ -720,7 +720,7 @@ f32 USFileCache::GetSizeUsedFor ( cc8* refKey ) {
 	
 	statement.Execute ( "COMMIT TRANSACTION" );
 	
-	return (( f32 )bytes / MBYTE );
+	return (( float )bytes / MBYTE );
 }
 
 //-------------------------------------------------------------------//

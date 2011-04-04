@@ -205,7 +205,7 @@ void MOAIFmodChannel::RegisterLuaClass ( USLuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIFmodChannel::RegisterLuaFuncs ( USLuaState& state ) {
 
-	LuaReg regTable [] = {
+	luaL_Reg regTable [] = {
 		{ "moveVolume",		_moveVolume },
 		{ "play",			_play },
 		{ "seekVolume",		_seekVolume },

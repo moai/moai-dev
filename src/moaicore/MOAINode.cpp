@@ -535,7 +535,7 @@ void MOAINode::RegisterLuaClass ( USLuaState& state ) {
 //----------------------------------------------------------------//
 void MOAINode::RegisterLuaFuncs ( USLuaState& state ) {
 	
-	LuaReg regTable [] = {
+	luaL_Reg regTable [] = {
 		{ "clearAttrLink",			_clearAttrLink },
 		{ "clearDependency",		_clearDependency },
 		{ "getAttr",				_getAttr },

@@ -636,7 +636,7 @@ void MOAIParticleSystem::RegisterLuaFuncs ( USLuaState& state ) {
 	MOAIProp2D::RegisterLuaFuncs ( state );
 	MOAIAction::RegisterLuaFuncs ( state );
 	
-	LuaReg regTable [] = {
+	luaL_Reg regTable [] = {
 		{ "capParticles",		_capParticles },
 		{ "capSprites",			_capSprites },
 		{ "clearSprites",		_clearSprites },

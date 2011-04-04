@@ -84,7 +84,7 @@ void MOAILevelSensor::RegisterLuaClass ( USLuaState& state ) {
 //----------------------------------------------------------------//
 void MOAILevelSensor::RegisterLuaFuncs ( USLuaState& state ) {
 
-	LuaReg regTable [] = {
+	luaL_Reg regTable [] = {
 		{ "getLevel",			_getLevel },
 		{ "setCallback",		_setCallback },
 		{ NULL, NULL }

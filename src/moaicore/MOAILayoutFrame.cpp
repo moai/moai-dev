@@ -476,7 +476,7 @@ void MOAILayoutFrame::RegisterLuaFuncs ( USLuaState& state ) {
 	
 	MOAITransform::RegisterLuaFuncs ( state );
 	
-	LuaReg regTable [] = {
+	luaL_Reg regTable [] = {
 		{ "layout",				_layout },
 		{ "setFit",				_setFit },
 		{ "setIdealSize",		_setIdealSize },

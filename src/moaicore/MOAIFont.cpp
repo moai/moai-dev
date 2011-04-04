@@ -157,7 +157,7 @@ void MOAIFont::RegisterLuaClass ( USLuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIFont::RegisterLuaFuncs ( USLuaState& state ) {
 	
-	LuaReg regTable [] = {
+	luaL_Reg regTable [] = {
 		{ "getScale",			_getScale },
 		{ "load",				_load },
 		{ "loadFromTTF",		_loadFromTTF },

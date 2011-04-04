@@ -49,6 +49,9 @@
     <Filter Include="src\grid">
       <UniqueIdentifier>{1770a877-6dc5-4c52-b976-188ebcb595e0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\parser">
+      <UniqueIdentifier>{d0e9ed95-191f-40dd-b3b3-856f38b64bf7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\uslsext\USAnimCurve.cpp">
@@ -257,6 +260,21 @@
     </ClCompile>
     <ClCompile Include="..\..\src\uslsext\USVertexFormatMgr.cpp">
       <Filter>src\gfxDevice</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\USSyntaxNode.cpp">
+      <Filter>src\parser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\USSyntaxScanner.cpp">
+      <Filter>src\parser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\USCgt.cpp">
+      <Filter>src\parser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\USLexStream.cpp">
+      <Filter>src\parser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\USParser.cpp">
+      <Filter>src\parser</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -496,6 +514,21 @@
     </ClInclude>
     <ClInclude Include="..\..\src\uslsext\USVertexFormatMgr.h">
       <Filter>src\gfxDevice</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USSyntaxNode.h">
+      <Filter>src\parser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USSyntaxScanner.h">
+      <Filter>src\parser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USCgt.h">
+      <Filter>src\parser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USLexStream.h">
+      <Filter>src\parser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USParser.h">
+      <Filter>src\parser</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

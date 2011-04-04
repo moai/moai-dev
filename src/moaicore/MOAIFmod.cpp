@@ -79,7 +79,7 @@ void MOAIFmod::RegisterLuaClass ( USLuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIFmod::RegisterLuaFuncs ( USLuaState& state ) {
 
-	LuaReg regTable [] = {
+	luaL_Reg regTable [] = {
 		{ "init",			_init },
 		
 		{ "loadBGM",		_deprecate },

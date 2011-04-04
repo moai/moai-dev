@@ -314,7 +314,7 @@ void MOAITouchSensor::RegisterLuaClass ( USLuaState& state ) {
 //----------------------------------------------------------------//
 void MOAITouchSensor::RegisterLuaFuncs ( USLuaState& state ) {
 
-	LuaReg regTable [] = {
+	luaL_Reg regTable [] = {
 		{ "down",				_down },
 		{ "getActiveTouches",	_getActiveTouches },
 		{ "getTouch",			_getTouch },

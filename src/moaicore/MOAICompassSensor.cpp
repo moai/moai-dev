@@ -74,7 +74,7 @@ void MOAICompassSensor::RegisterLuaClass ( USLuaState& state ) {
 //----------------------------------------------------------------//
 void MOAICompassSensor::RegisterLuaFuncs ( USLuaState& state ) {
 
-	LuaReg regTable [] = {
+	luaL_Reg regTable [] = {
 		{ "getHeading",			_getHeading },
 		{ "setCallback",		_setCallback },
 		{ NULL, NULL }

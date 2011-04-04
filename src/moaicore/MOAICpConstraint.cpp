@@ -548,7 +548,7 @@ MOAICpConstraint::~MOAICpConstraint () {
 //----------------------------------------------------------------//
 void MOAICpConstraint::RegisterLuaClass ( USLuaState& state ) {
 
-	LuaReg regTable [] = {
+	luaL_Reg regTable [] = {
 		{ "newDampedRotarySpring",		_newDampedRotarySpring },
 		{ "newDampedSpring",			_newDampedSpring },
 		{ "newGearJoint",				_newGearJoint },
@@ -568,7 +568,7 @@ void MOAICpConstraint::RegisterLuaClass ( USLuaState& state ) {
 //----------------------------------------------------------------//
 void MOAICpConstraint::RegisterLuaFuncs ( USLuaState& state ) {
 	
-	LuaReg regTable [] = {
+	luaL_Reg regTable [] = {
 		{ "getBiasCoef",				_getBiasCoef },
 		{ "getMaxBias",					_getMaxBias },
 		{ "getMaxForce",				_getMaxForce },

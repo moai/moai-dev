@@ -311,7 +311,7 @@ void MOAITimer::RegisterLuaFuncs ( USLuaState& state ) {
 	MOAINode::RegisterLuaFuncs ( state );
 	MOAIAction::RegisterLuaFuncs ( state );
 
-	LuaReg regTable [] = {
+	luaL_Reg regTable [] = {
 		{ "getTimesExecuted",	_getTimesExecuted },
 		{ "setCallback",		_setCallback },
 		{ "setMode",			_setMode },

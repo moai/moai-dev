@@ -121,7 +121,7 @@ void MOAIMesh::RegisterLuaFuncs ( USLuaState& state ) {
 
 	this->MOAIDeck::RegisterLuaFuncs ( state );
 
-	LuaReg regTable [] = {
+	luaL_Reg regTable [] = {
 		{ "setTexture",				_setTexture },
 		{ "setVertexBuffer",		_setVertexBuffer },
 		{ NULL, NULL }

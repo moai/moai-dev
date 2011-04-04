@@ -672,7 +672,7 @@ void MOAITransform::RegisterLuaFuncs ( USLuaState& state ) {
 	
 	MOAINode::RegisterLuaFuncs ( state );
 	
-	LuaReg regTable [] = {
+	luaL_Reg regTable [] = {
 		{ "addLoc",				_addLoc },
 		{ "addRot",				_addRot },
 		{ "addScl",				_addScl },

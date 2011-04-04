@@ -283,7 +283,7 @@ void MOAISurfaceDeck2D::RegisterLuaFuncs ( USLuaState& state ) {
 
 	this->MOAIDeck::RegisterLuaFuncs ( state );
 	
-	LuaReg regTable [] = {
+	luaL_Reg regTable [] = {
 		{ "reserveSurfaceLists",	_reserveSurfaceLists },
 		{ "reserveSurfaces",		_reserveSurfaces },
 		{ "setSurface",				_setSurface },

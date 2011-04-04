@@ -114,7 +114,7 @@ void MOAIAnimCurve::RegisterLuaFuncs ( USLuaState& state ) {
 
 	MOAINode::RegisterLuaFuncs ( state );
 
-	LuaReg regTable [] = {
+	luaL_Reg regTable [] = {
 		{ "getLength",		_getLength },
 		{ "reserveKeys",	_reserveKeys },
 		{ "setKey",			_setKey },

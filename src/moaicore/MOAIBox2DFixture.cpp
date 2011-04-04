@@ -225,7 +225,7 @@ void MOAIBox2DFixture::RegisterLuaClass ( USLuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIBox2DFixture::RegisterLuaFuncs ( USLuaState& state ) {
 	
-	LuaReg regTable [] = {
+	luaL_Reg regTable [] = {
 		{ "setCollisionHandler",	_setCollisionHandler },
 		{ "setDensity",				_setDensity },
 		{ "setFilter",				_setFilter },

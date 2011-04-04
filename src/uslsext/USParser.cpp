@@ -330,7 +330,7 @@ void USParser::RetrieveToken ( USDfaToken* token, USLexStream* scanner ) {
 	bool done = false;
 	
 	u32 startCursor = scanner->GetCursor ();
-	cu32 bufferSize = 1024;
+	static const u32 bufferSize = 1024;
 	char buffer [ bufferSize ];
 	
 	while ( !done ) {

@@ -237,6 +237,7 @@
     <ClCompile Include="..\..\src\moaicore\MOAIDataBuffer.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIDataIOAction.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIDeck.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAIDeck2D.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIEaseDriver.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIEaseType.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIFtFontRipper.cpp" />
@@ -248,6 +249,7 @@
     <ClCompile Include="..\..\src\moaicore\MOAILogMessages.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAILogMgr.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIMesh.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAIParser.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIParticleEmitter.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIParticleEngine.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIParticleForce.cpp" />
@@ -291,7 +293,6 @@
     <ClCompile Include="..\..\src\moaicore\MOAISensor.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAITouchSensor.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIPartition.cpp" />
-    <ClCompile Include="..\..\src\moaicore\MOAICheckpoint.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIDebugLines.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAINode.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAINodeMgr.cpp" />
@@ -329,6 +330,7 @@
     <ClInclude Include="..\..\src\moaicore\MOAIDataBuffer.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIDataIOAction.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIDeck.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAIDeck2D.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIEaseDriver.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIEaseType.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIFtFontRipper.h" />
@@ -340,6 +342,7 @@
     <ClInclude Include="..\..\src\moaicore\MOAILogMessages.h" />
     <ClInclude Include="..\..\src\moaicore\MOAILogMgr.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIMesh.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAIParser.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIParticleEmitter.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIParticleEngine.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIParticleForce.h" />
@@ -383,7 +386,6 @@
     <ClInclude Include="..\..\src\moaicore\MOAISensor.h" />
     <ClInclude Include="..\..\src\moaicore\MOAITouchSensor.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIPartition.h" />
-    <ClInclude Include="..\..\src\moaicore\MOAICheckpoint.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIDebugLines.h" />
     <ClInclude Include="..\..\src\moaicore\MOAINode.h" />
     <ClInclude Include="..\..\src\moaicore\MOAINodeMgr.h" />

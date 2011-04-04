@@ -243,7 +243,7 @@ void MOAIKeyboardSensor::RegisterLuaClass ( USLuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIKeyboardSensor::RegisterLuaFuncs ( USLuaState& state ) {
 
-	LuaReg regTable [] = {
+	luaL_Reg regTable [] = {
 		{ "keyDown",				_keyDown },
 		{ "keyIsDown",				_keyIsDown },
 		{ "keyIsUp",				_keyIsUp },

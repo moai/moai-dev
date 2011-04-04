@@ -495,7 +495,7 @@ void MOAITextBox::RegisterLuaFuncs ( USLuaState& state ) {
 	MOAIProp2D::RegisterLuaFuncs ( state );
 	MOAIAction::RegisterLuaFuncs ( state );
 	
-	LuaReg regTable [] = {
+	luaL_Reg regTable [] = {
 		{ "clearCurves",		_clearCurves },
 		{ "more",				_more },
 		{ "nextPage",			_nextPage },

@@ -88,7 +88,7 @@ void MOAIScriptNode::RegisterLuaFuncs ( USLuaState& state ) {
 	
 	MOAINode::RegisterLuaFuncs ( state );
 	
-	LuaReg regTable [] = {
+	luaL_Reg regTable [] = {
 		{ "reserveAttrs",			_reserveAttrs },
 		{ "setCallback",			_setCallback },
 		{ NULL, NULL }

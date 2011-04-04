@@ -156,7 +156,7 @@ void MOAIViewport::RegisterLuaClass ( USLuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIViewport::RegisterLuaFuncs ( USLuaState& state ) {
 
-	LuaReg regTable [] = {
+	luaL_Reg regTable [] = {
 		{ "setOffset",		_setOffset },
 		{ "setRect",		_setRect },
 		{ "setRotation",	_setRotation },

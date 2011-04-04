@@ -42,7 +42,7 @@ private:
 	//----------------------------------------------------------------//
 	void RegisterLuaClass ( USLuaState& state ) {
 		
-		LuaReg regTable [] = {
+		luaL_Reg regTable [] = {
 			{ "new",					_new },
 			{ NULL, NULL }
 		};

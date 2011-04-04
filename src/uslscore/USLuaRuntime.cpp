@@ -235,7 +235,7 @@ static int _register ( lua_State* L ) {
 
 	STLString name = lua_tostring ( L, 1 );
 
-	LuaReg regTable [] = {
+	luaL_Reg regTable [] = {
 		{ "debugCall",		_debugCall },
 		{ "deleteLuaData",	_deleteLuaData },
 		{ "dump",			_dump },

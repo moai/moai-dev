@@ -274,7 +274,7 @@ void MOAIParticleEmitter::RegisterLuaFuncs ( USLuaState& state ) {
 	this->MOAITransform::RegisterLuaFuncs ( state );
 	this->MOAIAction::RegisterLuaFuncs ( state );
 	
-	LuaReg regTable [] = {
+	luaL_Reg regTable [] = {
 		{ "setAngle",			_setAngle },
 		{ "setEmission",		_setEmission },
 		{ "setFrequency",		_setFrequency },

@@ -111,7 +111,7 @@ void MOAISimpleShader::RegisterLuaFuncs ( USLuaState& state ) {
 	
 	MOAIColor::RegisterLuaFuncs ( state );
 	
-	LuaReg regTable [] = {
+	luaL_Reg regTable [] = {
 		{ "setBlendMode",	_setBlendMode },
 		{ "setParent",		_setParent },
 		{ NULL, NULL }

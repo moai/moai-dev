@@ -75,7 +75,7 @@ void MOAILayerBridge2D::RegisterLuaFuncs ( USLuaState& state ) {
 	
 	MOAITransform::RegisterLuaFuncs ( state );
 	
-	LuaReg regTable [] = {
+	luaL_Reg regTable [] = {
 		{ "init",				_init },
 		{ NULL, NULL }
 	};

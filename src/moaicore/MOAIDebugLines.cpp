@@ -111,7 +111,7 @@ MOAIDebugLines::~MOAIDebugLines () {
 //----------------------------------------------------------------//
 void MOAIDebugLines::RegisterLuaClass ( USLuaState& state ) {
 
-	LuaReg regTable[] = {
+	luaL_Reg regTable[] = {
 		{ "setStyle",			_setStyle },
 		{ "showStyle",			_showStyle },
 		{ NULL, NULL }

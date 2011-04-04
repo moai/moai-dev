@@ -156,7 +156,7 @@ void MOAIButtonSensor::RegisterLuaClass ( USLuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIButtonSensor::RegisterLuaFuncs ( USLuaState& state ) {
 
-	LuaReg regTable [] = {
+	luaL_Reg regTable [] = {
 		{ "down",				_down },
 		{ "isDown",				_isDown },
 		{ "isUp",				_isUp },

@@ -495,7 +495,7 @@ void MOAILayer2D::RegisterLuaFuncs ( USLuaState& state ) {
 	
 	MOAIProp2D::RegisterLuaFuncs ( state );
 	
-	LuaReg regTable [] = {
+	luaL_Reg regTable [] = {
 		{ "getFitting",				_getFitting },
 		{ "getPartition",			_getPartition },
 		{ "insertProp",				_insertProp },

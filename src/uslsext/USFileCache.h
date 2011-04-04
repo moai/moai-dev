@@ -53,9 +53,9 @@ public:
 	bool		GetFile						( cc8* name, USFileStream& stream );
 	STLString	GetFilePath					( cc8* filename );
 	STLString	GetFileName					( cc8* name );
-	f32			GetPartitionMaxSize			( int priority );
-	f32			GetNonReferencedSize		();
-	f32			GetSizeUsedFor				( cc8* refKey );
+	float			GetPartitionMaxSize			( int priority );
+	float			GetNonReferencedSize		();
+	float			GetSizeUsedFor				( cc8* refKey );
 	bool		IsConnected					();
 	bool		Open						();
 	void		ReleaseRef					( cc8* refKey );

@@ -183,7 +183,7 @@ MOAICpArbiter::~MOAICpArbiter () {
 //----------------------------------------------------------------//
 void MOAICpArbiter::RegisterLuaClass ( USLuaState& state ) {
 
-	LuaReg regTable [] = {
+	luaL_Reg regTable [] = {
 		{ "new",							_new },
 		{ NULL, NULL }
 	};
@@ -194,7 +194,7 @@ void MOAICpArbiter::RegisterLuaClass ( USLuaState& state ) {
 //----------------------------------------------------------------//
 void MOAICpArbiter::RegisterLuaFuncs ( USLuaState& state ) {
 
-	LuaReg regTable [] = {
+	luaL_Reg regTable [] = {
 		{ "countContacts",					_countContacts },
 		{ "getContactDepth",				_getContactDepth },
 		{ "getContactNormal",				_getContactNormal },

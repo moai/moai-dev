@@ -654,7 +654,7 @@ void MOAIBox2DWorld::RegisterLuaFuncs ( USLuaState& state ) {
 	
 	MOAIAction::RegisterLuaFuncs ( state );
 	
-	LuaReg regTable [] = {
+	luaL_Reg regTable [] = {
 		{ "addBody",				_addBody },
 		{ "addDistanceJoint",		_addDistanceJoint },
 		{ "addFrictionJoint",		_addFrictionJoint },

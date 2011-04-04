@@ -225,6 +225,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\uslsext\USAnimCurve.cpp" />
+    <ClCompile Include="..\..\src\uslsext\USCgt.cpp" />
     <ClCompile Include="..\..\src\uslsext\USCurveSampler.cpp" />
     <ClCompile Include="..\..\src\uslsext\USDrawBuffer.cpp" />
     <ClCompile Include="..\..\src\uslsext\USAttributed.cpp" />
@@ -243,6 +244,10 @@
     <ClCompile Include="..\..\src\uslsext\USGLLine.cpp" />
     <ClCompile Include="..\..\src\uslsext\USGLQuad.cpp" />
     <ClCompile Include="..\..\src\uslsext\USImage.cpp" />
+    <ClCompile Include="..\..\src\uslsext\USLexStream.cpp" />
+    <ClCompile Include="..\..\src\uslsext\USParser.cpp" />
+    <ClCompile Include="..\..\src\uslsext\USSyntaxNode.cpp" />
+    <ClCompile Include="..\..\src\uslsext\USSyntaxScanner.cpp" />
     <ClCompile Include="..\..\src\uslsext\USTexture.cpp" />
     <ClCompile Include="..\..\src\uslsext\USVertexFormat.cpp" />
     <ClCompile Include="..\..\src\uslsext\USVertexFormatMgr.cpp" />
@@ -311,6 +316,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\uslsext\USAnimCurve.h" />
+    <ClInclude Include="..\..\src\uslsext\USCgt.h" />
     <ClInclude Include="..\..\src\uslsext\USCurveSampler.h" />
     <ClInclude Include="..\..\src\uslsext\USDrawBuffer.h" />
     <ClInclude Include="..\..\src\uslsext\USAttributed.h" />
@@ -331,6 +337,10 @@
     <ClInclude Include="..\..\src\uslsext\USGLLine.h" />
     <ClInclude Include="..\..\src\uslsext\USGLQuad.h" />
     <ClInclude Include="..\..\src\uslsext\USImage.h" />
+    <ClInclude Include="..\..\src\uslsext\USLexStream.h" />
+    <ClInclude Include="..\..\src\uslsext\USParser.h" />
+    <ClInclude Include="..\..\src\uslsext\USSyntaxNode.h" />
+    <ClInclude Include="..\..\src\uslsext\USSyntaxScanner.h" />
     <ClInclude Include="..\..\src\uslsext\USTexture.h" />
     <ClInclude Include="..\..\src\uslsext\USVertexFormat.h" />
     <ClInclude Include="..\..\src\uslsext\USVertexFormatMgr.h" />

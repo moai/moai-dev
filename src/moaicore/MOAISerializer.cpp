@@ -60,7 +60,7 @@ void MOAISerializer::RegisterLuaClass ( USLuaState& state ) {
 
 	USLuaSerializer::RegisterLuaClass ( state );
 	
-	LuaReg regTable [] = {
+	luaL_Reg regTable [] = {
 		{ "serializeToString",			_serializeToString },
 		{ NULL, NULL }
 	};

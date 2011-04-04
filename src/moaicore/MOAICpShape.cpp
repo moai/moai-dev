@@ -592,7 +592,7 @@ MOAICpShape::~MOAICpShape () {
 //----------------------------------------------------------------//
 void MOAICpShape::RegisterLuaClass ( USLuaState& state ) {
 
-	LuaReg regTable [] = {
+	luaL_Reg regTable [] = {
 		{ "areaForCircle",		_areaForCircle },
 		{ "areaForPolygon",		_areaForPolygon },
 		{ "areaForRect",		_areaForRect },
@@ -611,7 +611,7 @@ void MOAICpShape::RegisterLuaClass ( USLuaState& state ) {
 //----------------------------------------------------------------//
 void MOAICpShape::RegisterLuaFuncs ( USLuaState& state ) {
 	
-	LuaReg regTable [] = {
+	luaL_Reg regTable [] = {
 		{ "getBody",			_getBody },
 		{ "getElasticity",		_getElasticity },
 		{ "getFriction",		_getFriction },

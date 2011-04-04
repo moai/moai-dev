@@ -263,7 +263,7 @@ MOAIDataBuffer::~MOAIDataBuffer () {
 //----------------------------------------------------------------//
 void MOAIDataBuffer::RegisterLuaClass ( USLuaState& state ) {
 
-	LuaReg regTable [] = {
+	luaL_Reg regTable [] = {
 		{ "base64Decode",	_base64Decode },
 		{ "base64Encode",	_base64Encode },
 		{ "deflate",		_deflate },
@@ -277,7 +277,7 @@ void MOAIDataBuffer::RegisterLuaClass ( USLuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIDataBuffer::RegisterLuaFuncs ( USLuaState& state ) {
 
-	LuaReg regTable [] = {
+	luaL_Reg regTable [] = {
 		{ "base64Decode",	_base64Decode },
 		{ "base64Encode",	_base64Encode },
 		{ "deflate",		_deflate },

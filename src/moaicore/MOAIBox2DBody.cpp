@@ -665,7 +665,7 @@ void MOAIBox2DBody::RegisterLuaFuncs ( USLuaState& state ) {
 	
 	MOAITransformBase::RegisterLuaFuncs ( state );
 	
-	LuaReg regTable [] = {
+	luaL_Reg regTable [] = {
 		{ "addCircle",				_addCircle },
 		{ "addPolygon",				_addPolygon },
 		{ "addRect",				_addRect },

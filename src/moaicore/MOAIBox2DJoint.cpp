@@ -226,7 +226,7 @@ void MOAIBox2DJoint::RegisterLuaClass ( USLuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIBox2DJoint::RegisterLuaFuncs ( USLuaState& state ) {
 	
-	LuaReg regTable [] = {
+	luaL_Reg regTable [] = {
 		{ "getAnchorA",				_getAnchorA },
 		{ "getAnchorB",				_getAnchorB },
 		{ "getBodyA",				_getBodyA },

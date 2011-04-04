@@ -127,7 +127,7 @@ void MOAIVertexFormat::RegisterLuaClass ( USLuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIVertexFormat::RegisterLuaFuncs ( USLuaState& state ) {
 
-	LuaReg regTable [] = {
+	luaL_Reg regTable [] = {
 		{ "clear",					_clear },
 		{ "declareColor",			_declareColor },
 		{ "declareCoord",			_declareCoord },

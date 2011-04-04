@@ -432,7 +432,7 @@ void MOAISim::PushRenderPass ( MOAIProp2D* prop ) {
 //----------------------------------------------------------------//
 void MOAISim::RegisterLuaClass ( USLuaState& state ) {
 
-	LuaReg regTable [] = {
+	luaL_Reg regTable [] = {
 		{ "clearRenderStack",			_clearRenderStack },
 		{ "enterFullscreenMode",		_enterFullscreenMode },
 		{ "exitFullscreenMode",			_exitFullscreenMode },

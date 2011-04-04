@@ -276,7 +276,7 @@ void MOAIGfxQuadDeck2D::RegisterLuaFuncs ( USLuaState& state ) {
 
 	MOAIDeck2D::RegisterLuaFuncs ( state );
 	
-	LuaReg regTable [] = {
+	luaL_Reg regTable [] = {
 		{ "reserve",			_reserve },
 		{ "setQuad",			_setQuad },
 		{ "setRect",			_setRect },

@@ -213,7 +213,7 @@ void MOAITexture::RegisterLuaClass ( USLuaState& state ) {
 //----------------------------------------------------------------//
 void MOAITexture::RegisterLuaFuncs ( USLuaState& state ) {
 
-	LuaReg regTable [] = {
+	luaL_Reg regTable [] = {
 		{ "bind",				_bind },
 		{ "getSize",			_getSize },
 		{ "load",				_load },

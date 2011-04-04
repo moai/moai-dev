@@ -284,7 +284,7 @@ void MOAIVertexBuffer::RegisterLuaClass ( USLuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIVertexBuffer::RegisterLuaFuncs ( USLuaState& state ) {
 
-	LuaReg regTable [] = {
+	luaL_Reg regTable [] = {
 		{ "bless",					_bless },
 		{ "release",				_release },
 		{ "reserve",				_reserve },

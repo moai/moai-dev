@@ -116,7 +116,7 @@ void MOAIDataIOAction::RegisterLuaFuncs ( USLuaState& state ) {
 
 	MOAIAction::RegisterLuaFuncs ( state );
 
-	LuaReg regTable [] = {
+	luaL_Reg regTable [] = {
 		{ "setCallback",	_setCallback },
 		{ NULL, NULL }
 	};

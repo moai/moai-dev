@@ -213,7 +213,7 @@ void MOAIHttpTask::RegisterLuaClass ( USLuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIHttpTask::RegisterLuaFuncs ( USLuaState& state ) {
 
-	LuaReg regTable [] = {
+	luaL_Reg regTable [] = {
 		{ "getSize",			_getSize },
 		{ "getString",			_getString },
 		{ "httpGet",			_httpGet },

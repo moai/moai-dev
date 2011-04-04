@@ -124,7 +124,7 @@ void MOAIDeck::RegisterLuaClass ( USLuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIDeck::RegisterLuaFuncs ( USLuaState& state ) {
 
-	LuaReg regTable [] = {
+	luaL_Reg regTable [] = {
 		{ "setDefaultShader",		_setDefaultShader },
 		{ NULL, NULL }
 	};

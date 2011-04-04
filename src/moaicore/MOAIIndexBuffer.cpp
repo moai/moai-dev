@@ -122,7 +122,7 @@ void MOAIIndexBuffer::RegisterLuaClass ( USLuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIIndexBuffer::RegisterLuaFuncs ( USLuaState& state ) {
 
-	LuaReg regTable [] = {
+	luaL_Reg regTable [] = {
 		{ "release",			_release },
 		{ "reserve",			_reserve },
 		{ "setIndex",			_setIndex },

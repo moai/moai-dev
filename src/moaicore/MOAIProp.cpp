@@ -122,7 +122,7 @@ void MOAIProp::RegisterLuaFuncs ( USLuaState& state ) {
 	
 	MOAITransform::RegisterLuaFuncs ( state );
 
-	LuaReg regTable [] = {
+	luaL_Reg regTable [] = {
 		{ "getPriority",		_getPriority },
 		{ "setPriority",		_setPriority },
 		{ NULL, NULL }

@@ -196,7 +196,7 @@ void MOAIAnim::RegisterLuaFuncs ( USLuaState& state ) {
 
 	MOAITimer::RegisterLuaFuncs ( state );
 
-	LuaReg regTable [] = {
+	luaL_Reg regTable [] = {
 		{ "apply",				_apply },
 		{ "getLength",			_getLength },
 		{ "reserveLinks",		_reserveLinks },

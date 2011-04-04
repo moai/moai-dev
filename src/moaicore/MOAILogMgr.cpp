@@ -163,7 +163,7 @@ void MOAILogMgr::RegisterLuaClass ( USLuaState& state ) {
 	
 	MOAILogMessages::RegisterLogMessages ( state );
 	
-	LuaReg regTable[] = {
+	luaL_Reg regTable[] = {
 		{ "log",					_log },
 		{ "isDebugBuild",			_isDebugBuild },
 		{ "registerLogMessage",		_registerLogMessage },

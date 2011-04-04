@@ -509,7 +509,7 @@ void MOAIParticleScript::RegisterLuaClass ( USLuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIParticleScript::RegisterLuaFuncs ( USLuaState& state ) {
 	
-	LuaReg regTable [] = {
+	luaL_Reg regTable [] = {
 		{ "abs",				_abs },
 		{ "accAttractor",		_accAttractor },
 		{ "accForces",			_accForces },

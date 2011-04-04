@@ -214,7 +214,7 @@ void MOAIBox2DArbiter::RegisterLuaClass ( USLuaState& state ) {
 	state.SetField ( -1, "PRE_SOLVE", ( u32 )PRE_SOLVE );
 	state.SetField ( -1, "POST_SOLVE", ( u32 )POST_SOLVE );
 	
-	LuaReg regTable [] = {
+	luaL_Reg regTable [] = {
 		{ "new",							_new },
 		{ NULL, NULL }
 	};
@@ -225,7 +225,7 @@ void MOAIBox2DArbiter::RegisterLuaClass ( USLuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIBox2DArbiter::RegisterLuaFuncs ( USLuaState& state ) {
 
-	LuaReg regTable [] = {
+	luaL_Reg regTable [] = {
 		{ "countContacts",					_countContacts },
 		{ "getContactDepth",				_getContactDepth },
 		{ "getContactNormal",				_getContactNormal },

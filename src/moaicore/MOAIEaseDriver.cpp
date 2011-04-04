@@ -150,7 +150,7 @@ void MOAIEaseDriver::RegisterLuaFuncs ( USLuaState& state ) {
 	
 	MOAIAction::RegisterLuaFuncs ( state );
 	
-	LuaReg regTable [] = {
+	luaL_Reg regTable [] = {
 		{ "reserveLinks",			_reserveLinks },
 		{ "setLength",				_setLength },
 		{ "setLink",				_setLink },

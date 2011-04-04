@@ -131,7 +131,7 @@ void MOAIXmlParser::Parse ( USLuaState& state, TiXmlNode* node ) {
 //----------------------------------------------------------------//
 void MOAIXmlParser::RegisterLuaClass ( USLuaState& state ) {
 
-	LuaReg regTable[] = {
+	luaL_Reg regTable[] = {
 		{ "parseFile",				_parseFile },
 		{ "parseString",			_parseString },
 		{ NULL, NULL }

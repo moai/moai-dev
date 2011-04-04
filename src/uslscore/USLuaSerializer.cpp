@@ -266,7 +266,7 @@ void USLuaSerializer::RegisterLuaClass ( USLuaState& state ) {
 //----------------------------------------------------------------//
 void USLuaSerializer::RegisterLuaFuncs ( USLuaState& state ) {
 
-	LuaReg regTable [] = {
+	luaL_Reg regTable [] = {
 		{ "exportToFile",		_exportToFile },
 		{ "exportToString",		_exportToString },
 		{ "initInstance",		_initInstance },

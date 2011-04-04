@@ -221,7 +221,7 @@ void MOAIAction::RegisterLuaClass ( USLuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIAction::RegisterLuaFuncs ( USLuaState& state ) {
 
-	LuaReg regTable [] = {
+	luaL_Reg regTable [] = {
 		{ "addChild",			_addChild },
 		{ "clear",				_clear },
 		{ "isBusy",				_isBusy },

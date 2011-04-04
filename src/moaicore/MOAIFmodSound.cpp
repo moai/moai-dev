@@ -210,7 +210,7 @@ void MOAIFmodSound::RegisterLuaClass ( USLuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIFmodSound::RegisterLuaFuncs ( USLuaState& state ) {
 
-	LuaReg regTable [] = {
+	luaL_Reg regTable [] = {
 		{ "load",			_load },
 		{ "loadBGM",		_loadBGM },
 		{ "loadSFX",		_loadSFX },

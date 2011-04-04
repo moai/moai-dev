@@ -162,7 +162,7 @@ void MOAIParticleState::RegisterLuaClass ( USLuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIParticleState::RegisterLuaFuncs ( USLuaState& state ) {
 
-	LuaReg regTable [] = {
+	luaL_Reg regTable [] = {
 		{ "clearForces",		_clearForces },
 		{ "init",				_init },
 		{ "pushForce",			_pushForce },

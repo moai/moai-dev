@@ -126,7 +126,7 @@ void MOAIParticleForce::RegisterLuaFuncs ( USLuaState& state ) {
 	
 	this->MOAITransform::RegisterLuaFuncs ( state );
 
-	LuaReg regTable [] = {
+	luaL_Reg regTable [] = {
 		{ "initAttractor",		_initAttractor },
 		{ "initLinear",			_initLinear },
 		{ NULL, NULL }

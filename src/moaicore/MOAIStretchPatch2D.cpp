@@ -358,7 +358,7 @@ void MOAIStretchPatch2D::RegisterLuaFuncs ( USLuaState& state ) {
 
 	this->MOAIDeck::RegisterLuaFuncs ( state );
 
-	LuaReg regTable [] = {
+	luaL_Reg regTable [] = {
 		{ "reserveColumns",		_reserveColumns },
 		{ "reserveRows",		_reserveRows },
 		{ "reserveUVRects",		_reserveUVRects },

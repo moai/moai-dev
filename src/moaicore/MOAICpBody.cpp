@@ -833,7 +833,7 @@ void MOAICpBody::RegisterLuaClass ( USLuaState& state ) {
 	state.SetField ( -1, "REMOVE_BODY", ( u32 )REMOVE_BODY );
 	state.SetField ( -1, "REMOVE_BODY_AND_SHAPES", ( u32 )REMOVE_BODY_AND_SHAPES );
 
-	LuaReg regTable [] = {
+	luaL_Reg regTable [] = {
 		{ "new",				_new },
 		{ "newStatic",			_newStatic },
 		{ NULL, NULL }
@@ -845,7 +845,7 @@ void MOAICpBody::RegisterLuaClass ( USLuaState& state ) {
 //----------------------------------------------------------------//
 void MOAICpBody::RegisterLuaFuncs ( USLuaState& state ) {
 	
-	LuaReg regTable [] = {
+	luaL_Reg regTable [] = {
 		{ "activate",			_activate },
 		{ "addCircle",			_addCircle },
 		{ "addPolygon",			_addPolygon },

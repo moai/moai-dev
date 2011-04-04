@@ -177,7 +177,7 @@ void MOAIParser::RegisterLuaClass ( USLuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIParser::RegisterLuaFuncs ( USLuaState& state ) {
 
-	LuaReg regTable[] = {
+	luaL_Reg regTable[] = {
 		{ "loadFile",			_loadFile },
 		{ "loadRules",			_loadRules },
 		{ "loadString",			_loadString },

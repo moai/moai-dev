@@ -109,7 +109,7 @@ void MOAICp::RegisterLuaClass ( USLuaState& state ) {
 
 	state.SetField ( -1, "INFINITY",	INFINITY );
 
-	LuaReg regTable[] = {
+	luaL_Reg regTable[] = {
 		{ "getBiasCoefficient",		_getBiasCoefficient },
 		{ "getCollisionSlop",		_getCollisionSlop },
 		{ "getContactPersistence",	_getContactPersistence },

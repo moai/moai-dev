@@ -176,7 +176,7 @@ void MOAIColor::RegisterLuaFuncs ( USLuaState& state ) {
 	
 	MOAIShader::RegisterLuaFuncs ( state );
 	
-	LuaReg regTable [] = {
+	luaL_Reg regTable [] = {
 		{ "moveColor",				_moveColor },
 		{ "seekColor",				_seekColor },
 		{ "setColor",				_setColor },

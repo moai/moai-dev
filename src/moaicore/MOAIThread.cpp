@@ -128,7 +128,7 @@ void MOAIThread::OnUpdate ( float step ) {
 //----------------------------------------------------------------//
 void MOAIThread::RegisterLuaClass ( USLuaState& state ) {
 
-	LuaReg regTable [] = {
+	luaL_Reg regTable [] = {
 		{ "blockOnAction",		_blockOnAction },
 		{ "currentThread",		_currentThread },
 		{ NULL, NULL }
@@ -142,7 +142,7 @@ void MOAIThread::RegisterLuaFuncs ( USLuaState& state ) {
 
 	MOAIAction::RegisterLuaFuncs ( state );
 
-	LuaReg regTable [] = {
+	luaL_Reg regTable [] = {
 		{ "run",			_run },
 		{ NULL, NULL }
 	};

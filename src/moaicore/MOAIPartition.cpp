@@ -422,7 +422,7 @@ void MOAIPartition::RegisterLuaClass ( USLuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIPartition::RegisterLuaFuncs ( USLuaState& state ) {
 	
-	LuaReg regTable [] = {
+	luaL_Reg regTable [] = {
 		{ "insertProp",					_insertProp },
 		{ "propForPoint",				_propForPoint },
 		{ "propListForPoint",			_propListForPoint },

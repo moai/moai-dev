@@ -240,9 +240,6 @@
     <ClCompile Include="..\..\src\moaicore\MOAIEaseType.cpp">
       <Filter>src\anim</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAICheckpoint.cpp">
-      <Filter>src\action</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAISurfaceSampler2D.cpp">
       <Filter>src\partition</Filter>
     </ClCompile>
@@ -332,6 +329,12 @@
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAILayerBridge2D.cpp">
       <Filter>src\layer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIParser.cpp">
+      <Filter>src\util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIDeck2D.cpp">
+      <Filter>src\deck</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -503,9 +506,6 @@
     <ClInclude Include="..\..\src\moaicore\MOAIEaseType.h">
       <Filter>src\anim</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\MOAICheckpoint.h">
-      <Filter>src\action</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAISurfaceSampler2D.h">
       <Filter>src\partition</Filter>
     </ClInclude>
@@ -598,6 +598,12 @@
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAILayerBridge2D.h">
       <Filter>src\layer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIParser.h">
+      <Filter>src\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIDeck2D.h">
+      <Filter>src\deck</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -591,7 +591,7 @@ void MOAIProp2D::RegisterLuaFuncs ( USLuaState& state ) {
 	
 	MOAIProp::RegisterLuaFuncs ( state );
 
-	LuaReg regTable [] = {
+	luaL_Reg regTable [] = {
 		{ "getGrid",			_getGrid },
 		{ "getIndex",			_getIndex },
 		{ "inside",				_inside },

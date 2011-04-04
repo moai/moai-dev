@@ -338,7 +338,7 @@ void MOAIGrid::RegisterLuaClass ( USLuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIGrid::RegisterLuaFuncs ( USLuaState& state ) {
 
-	LuaReg regTable [] = {
+	luaL_Reg regTable [] = {
 		{ "clearTileFlags",		_clearTileFlags },
 		{ "getTile",			_getTile },
 		{ "getTileFlags",		_getTileFlags },

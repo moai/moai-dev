@@ -99,7 +99,7 @@ void MOAILocationSensor::RegisterLuaClass ( USLuaState& state ) {
 //----------------------------------------------------------------//
 void MOAILocationSensor::RegisterLuaFuncs ( USLuaState& state ) {
 
-	LuaReg regTable [] = {
+	luaL_Reg regTable [] = {
 		{ "getLocation",		_getLocation },
 		{ "setCallback",		_setCallback },
 		{ NULL, NULL }
