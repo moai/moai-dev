@@ -131,10 +131,45 @@ void STLString::write ( cc8* format, ... ) {
 //----------------------------------------------------------------//
 void STLString::write_var ( cc8* format, va_list args ) {
 
-	// TODO: fix me
-	char buffer [ 4096 ];
-	vsprintf ( buffer, format, args );
+	static const u32 BUFFER_SIZE = 1024;
+	char stackBuffer [ BUFFER_SIZE ];
+	char* buffer = stackBuffer;
+	int size = BUFFER_SIZE;
+	
+	int result;
+	
+	for ( ;; ) {
+	
+		result = vsnprintf ( buffer, size, format, args );
+
+		// thanks to http://perfec.to/vsnprintf/ for a discussion of vsnprintf portability issues
+		if (( result == size ) || ( result == -1 ) || ( result == size - 1 ))  {
+			size = size << 1;
+		}
+		else if ( result > size ) {
+			size = result;
+		}
+		else {
+			break;
+		}
+		
+		if ( buffer == stackBuffer ) {
+			buffer = 0;
+		}
+		
+		if ( buffer ) {
+			buffer = ( char* )realloc ( buffer, size );
+		}
+		else {
+			buffer = ( char* )malloc ( size );
+		}
+	}
+	
 	this->append ( buffer );
+	
+	if ( buffer != stackBuffer ) {
+		free ( buffer );
+	}
 }
 
 //----------------------------------------------------------------//
