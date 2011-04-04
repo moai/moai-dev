@@ -83,10 +83,10 @@ predox.onStartRule = function ( id, line, name )
 	
 	if id == predox.DOXY_END then
 		predox.echo = false
-		--doxygenBlock = {}
-		--luadoxParser:loadString ( predox.text )
-		--luadoxParser:traverse ()
-		--handleDoxygenBlock ()
+		doxygenBlock = {}
+		luadoxParser:loadString ( predox.text )
+		luadoxParser:traverse ()
+		handleDoxygenBlock ()
 	end
 end
 
@@ -95,7 +95,7 @@ predox.onEndRule = function ( id )
 
 	if id == predox.DOXY_START then
 		predox.echo = true
-		--predox.text = ""
+		predox.text = ""
 	end
 end
 
@@ -103,11 +103,8 @@ end
 predox.onTerminal = function ( id, line, text )
 
 	if predox.echo then
-		--predox.text = predox.text .. text
-		print ( id )
-		io.write ( text )
+		predox.text = predox.text .. text
 	else
-		print ( id )
 		io.write ( text )
 	end
 end
