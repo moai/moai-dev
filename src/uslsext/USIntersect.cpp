@@ -146,7 +146,7 @@ u32 USSect::VecToCircle ( float& t0, float& t1, USVec2D& loc, USVec2D& vec, USVe
 }
 
 //----------------------------------------------------------------//
-float USSect::VecToPlane	( USVec3D& loc, USVec3D& vec, USPlane3D& p ) {
+float USSect::VecToPlane ( USVec3D& loc, USVec3D& vec, USPlane3D& p ) {
 
 	float d;
 	d = vec.Dot ( p.mNorm );
@@ -155,7 +155,7 @@ float USSect::VecToPlane	( USVec3D& loc, USVec3D& vec, USPlane3D& p ) {
 }
 
 //----------------------------------------------------------------//
-float USSect::VecToPlane	( USVec3D& loc, USVec3D& vec, USPlane3D& p, USVec3D& result ) {
+float USSect::VecToPlane ( USVec3D& loc, USVec3D& vec, USPlane3D& p, USVec3D& result ) {
 
 	float d;
 	d = vec.Dot ( p.mNorm );

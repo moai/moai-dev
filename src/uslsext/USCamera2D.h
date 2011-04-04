@@ -4,7 +4,6 @@
 #ifndef GFX_CAMERA2D_H
 #define GFX_CAMERA2D_H
 
-#include <uslsext/USFrustum.h>
 #include <uslsext/USMatrix2D.h>
 #include <uslsext/USViewport.h>
 

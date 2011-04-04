@@ -339,14 +339,6 @@
 				RelativePath="..\..\src\uslsext\USAnimCurve.h"
 				>
 			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USCurveSampler.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USCurveSampler.h"
-				>
-			</File>
 		</Filter>
 		<Filter
 			Name="attributed"
@@ -469,14 +461,6 @@
 			</File>
 			<File
 				RelativePath="..\..\src\uslsext\USCamera2D.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USCamera3D.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USCamera3D.h"
 				>
 			</File>
 			<File
@@ -605,14 +589,6 @@
 			</File>
 			<File
 				RelativePath="..\..\src\uslsext\USDistance.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USFrustum.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USFrustum.h"
 				>
 			</File>
 			<File

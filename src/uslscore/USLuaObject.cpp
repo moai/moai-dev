@@ -212,7 +212,7 @@ USLuaObject::USLuaObject () {
 //----------------------------------------------------------------//
 USLuaObject::~USLuaObject () {
 
-	// TODO:
+	// TODO: keep the tombstone idiom?
 	if (( !this->mUserdata.IsNil ()) && USLuaRuntime::IsValid ()) {
 		USLuaStateHandle state = USLuaRuntime::Get ().State ();
 		this->LuaUnbind ( state );

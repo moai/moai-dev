@@ -4,13 +4,10 @@
 #ifndef	CANVAS_H
 #define	CANVAS_H
 
-#include <uslsext/USBox.h>
 #include <uslsext/USColor.h>
 #include <uslsext/USMatrix3D.h>
 #include <uslsext/USAffine2D.h>
-
 #include <uslsext/USCamera2D.h>
-#include <uslsext/USCamera3D.h>
 #include <uslsext/USViewport.h>
 #include <uslsext/USViewQuad.h>
 
@@ -25,7 +22,6 @@ public:
 	//----------------------------------------------------------------//
 	static void			BeginDrawing			();
 	static void			BeginDrawing			( USViewport& viewport, USCamera2D& camera );
-	static void			BeginDrawing			( USViewport& viewport, USCamera3D& camera );
 	static void			BeginDrawing			( USViewport& viewport, USCamera2D& camera, USAffine2D& preViewMtx );
 	static void			ClearColorBuffer		( u32 color );
 	static void			DrawAxisGrid			( USVec2D loc, USVec2D vec, float size );

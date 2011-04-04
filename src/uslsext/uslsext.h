@@ -12,18 +12,15 @@
 #include <uslsext/USAttributed.h>
 #include <uslsext/USAttrMap.h>
 #include <uslsext/USAttrOp.h>
-#include <uslsext/USAutoPtr.h>
 #include <uslsext/USBinarySearch.h>
 #include <uslsext/USBlendMode.h>
 #include <uslsext/USBox.h>
 #include <uslsext/USCamera2D.h>
-#include <uslsext/USCamera3D.h>
 #include <uslsext/USCameraFitter.h>
 #include <uslsext/USCanvas.h>
 #include <uslsext/USCgt.h>
 #include <uslsext/USColor.h>
 #include <uslsext/USCurve.h>
-#include <uslsext/USCurveSampler.h>
 #include <uslsext/USData.h>
 #include <uslsext/USDataIOTask.h>
 #include <uslsext/USDebugLines.h>
@@ -33,7 +30,6 @@
 #include <uslsext/USFileCache.h>
 #include <uslsext/USFont.h>
 #include <uslsext/USFontRipper.h>
-#include <uslsext/USFrustum.h>
 #include <uslsext/USFsm.h>
 #include <uslsext/USFsmStateFactory.h>
 #include <uslsext/USGfxDevice.h>

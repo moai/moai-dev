@@ -75,7 +75,6 @@ public:
 		this->Clear ();
 		
 		// static creator
-		// TODO: should be OK, but verify
 		static USConcreteCreator < TYPE, BASE_TYPE > creator;
 
 		this->AffirmBuffer ( creator.SizeOf ());

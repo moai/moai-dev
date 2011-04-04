@@ -79,27 +79,6 @@ void USCanvas::BeginDrawing ( USViewport& viewport, USCamera2D& camera ) {
 }
 
 //----------------------------------------------------------------//
-void USCanvas::BeginDrawing ( USViewport& viewport, USCamera3D& camera ) {
-
-	// set us up the viewport
-	USRect rect = viewport.GetRect ();
-	glViewport (( GLint )rect.mXMin, ( GLint )rect.mYMin, ( GLsizei )rect.Width (), ( GLsizei )rect.Height ());
-
-	// load view/proj
-	glMatrixMode ( GL_PROJECTION );
-	glLoadIdentity ();
-	
-	USMatrix3D mtx;
-	
-	camera.GetViewProjMtx ( viewport, mtx );
-	USCanvas::LoadMatrix ( mtx );
-	
-	// load ident
-	glMatrixMode ( GL_MODELVIEW );
-	glLoadIdentity ();
-}
-
-//----------------------------------------------------------------//
 void USCanvas::BeginDrawing ( USViewport& viewport, USCamera2D& camera, USAffine2D& preViewMtx ) {
 
 	// set us up the viewport
