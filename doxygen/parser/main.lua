@@ -61,16 +61,14 @@ end
 ----------------------------------------------------------------
 doxygenBlock = {}
 
-funcName = ""
-funcText = ""
-inParams = {}
-optParams = {}
-outParams = {}
-
 function handleDoxygenBlock ()
 
+	funcName = ""
+	funcText = ""
 	inParams = {}
+	optParams = {}
 	outParams = {}
+	curDef = {}
 
 	for i,v in ipairs ( doxygenBlock ) do
 		
