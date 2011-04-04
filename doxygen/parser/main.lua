@@ -1,6 +1,55 @@
 ----------------------------------------------------------------
 function printf ( ... )
+
 	return io.stdout:write ( string.format ( ... ))
+end
+
+----------------------------------------------------------------
+function removeFormatting ( str )
+
+	local ret = ""
+	local func = string.gmatch ( str, "[^\t\n\r\f]" )
+	local s = func ()
+	if not s then return str end
+	
+	while s do
+		ret = ret .. s
+		s = func ()
+	end
+	
+	return ret
+end
+
+----------------------------------------------------------------
+function trim ( str )
+
+	local nonWhiteSpacePattern = "[^%s]"
+	local startIdx = string.find ( str, nonWhiteSpacePattern )
+	local endIdx = 1 + ( #str - string.find ( string.reverse ( str ), nonWhiteSpacePattern ))
+	return string.sub ( str, startIdx, endIdx )
+end
+
+----------------------------------------------------------------
+doxygenBlock = {}
+
+function handleDoxygenBlock ()
+
+	for i,v in ipairs ( doxygenBlock ) do
+		
+		if v.tag == "@name" then
+			print ( "name" )
+		elseif v.tag == "@text" then
+			print ( "text" )
+		elseif v.tag == "@in" then
+			print ( "in" )
+		elseif v.tag == "@out" then
+			print ( "out" )
+		elseif v.tag == "@opt" then
+			print ( "opt" )
+		elseif v.tag == "@overload" then
+			print ( "overload" )
+		end
+	end
 end
 
 ----------------------------------------------------------------
@@ -17,8 +66,10 @@ predox.onStartRule = function ( id, line, name )
 	
 	if id == predox.DOXY_END then
 		predox.echo = false
+		doxygenBlock = {}
 		luadoxParser:loadString ( predox.text )
 		luadoxParser:traverse ()
+		handleDoxygenBlock ()
 	end
 end
 
@@ -59,7 +110,7 @@ luadox.onEndRule = function ( id )
 	if id == luadox.COMMAND then
 	
 		if luadox.tag and luadox.text then
-			printf ( 'COMMAND %s: %s', luadox.tag, luadox.text )
+			table.insert ( doxygenBlock, { tag = trim ( luadox.tag ), text = removeFormatting ( trim ( luadox.text ))})
 		end
 		
 		luadox.tag = nil
