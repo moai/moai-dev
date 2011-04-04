@@ -6,6 +6,7 @@ SetCompressorDictSize 64
 !define APP_NAME "Moai"
 !define INSTALLER_NAME "moai-sdk-installer.exe"
 !define LICENSE_TEXT "license.txt"
+!define ALL_USERS
 ;_______________________________________________________________________________________
 
 !define INSTDIR_REG_ROOT "HKLM"
