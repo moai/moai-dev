@@ -125,7 +125,7 @@ function handleDoxygenBlock ()
 	doxy = doxy .. "\t" .. funcText .. "\n"
 	
 	for i,v in ipairs ( inParams ) do
-		doxy = doxy .. "\t@param " .. v.paramType .. " " .. v.paramName .. "\t" .. v.paramText .. "\n"
+		doxy = doxy .. "\t@param " .. v.paramType .. " " .. v.paramName .. "\t\t" .. v.paramText .. "\n"
 	end
 
 	for i,v in ipairs ( optParams ) do
