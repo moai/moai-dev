@@ -1,4 +1,19 @@
 ----------------------------------------------------------------
+function parseParam ( v )
+
+	local func = string.gmatch ( v.text, "[^%s]+" )
+	v.paramType = func ()
+	v.paramName = func ()
+	v.paramText = ""
+	
+	local s = func ()
+	while s do
+		v.paramText = v.paramText .. " " .. s
+		s = func ()
+	end
+end
+
+----------------------------------------------------------------
 function printf ( ... )
 
 	return io.stdout:write ( string.format ( ... ))
@@ -8,16 +23,30 @@ end
 function removeFormatting ( str )
 
 	local ret = ""
-	local func = string.gmatch ( str, "[^\t\n\r\f]" )
+	local func = string.gmatch ( str, "[^\n\r\f]" )
 	local s = func ()
-	if not s then return str end
 	
-	while s do
-		ret = ret .. s
-		s = func ()
+	if not s then 
+		ret = str
+	else
+		while s do
+			ret = ret .. s
+			s = func ()
+		end
 	end
 	
-	return ret
+	local ret2 = ""
+	for i = 1, #ret do
+	
+		s = string.sub ( ret, i, i )
+		if ( s == "\t" ) then
+			ret2 = ret2 .. " "
+		else
+			ret2 = ret2 .. s
+		end
+	end
+		
+	return ret2
 end
 
 ----------------------------------------------------------------
@@ -46,25 +75,73 @@ function handleDoxygenBlock ()
 	for i,v in ipairs ( doxygenBlock ) do
 		
 		if v.tag == "@name" then
+			
 			funcName = v.text
+		
 		elseif v.tag == "@text" then
+			
 			funcText = v.text
+		
 		elseif v.tag == "@in" then
+
+			parseParam ( v )
 			table.insert ( inParams, v )
+			
 		elseif v.tag == "@out" then
+
+			parseParam ( v )
+			if v.paramName == nil then v.paramName = "" end			
 			table.insert ( outParams, v )
+		
 		elseif v.tag == "@opt" then
+
+			parseParam ( v )
 			table.insert ( optParams, v )
+			
 		elseif v.tag == "@overload" then
 			print ( "overload" )
 		end
 	end
+	
+	local argList = ""
+	for i,v in ipairs ( inParams ) do
+		if i ~= 1 then argList = argList .. ", " end
+		argList = argList .. v.paramType .. " " .. v.paramName
+	end
+	
+	if #optParams > 0 then
+		
+		argList = argList .. " [, "
+		
+		for i,v in ipairs ( optParams ) do
+			if i ~= 1 then argList = argList .. ", " end
+			argList = argList .. v.paramType .. " " .. v.paramName
+		end
+		
+		argList = argList .. " ]"
+	end
+	
+	local doxy = "\t@brief\n\t<tt>function " .. funcName .. " ( " .. argList .. " )</tt>\n\n"
+	doxy = doxy .. "\t" .. funcText .. "\n"
+	
+	for i,v in ipairs ( inParams ) do
+		doxy = doxy .. "\t@param " .. v.paramType .. " " .. v.paramName .. "\t" .. v.paramText .. "\n"
+	end
 
-	local doxy = "@brief\n\t<tt>function " .. funcName .. "()</tt>\n\n\t\n"
-	doxy = doxy .. funcText .. "\n"
+	for i,v in ipairs ( optParams ) do
+		doxy = doxy .. "\t@param " .. v.paramType .. " " .. v.paramName .. "\t<em>Optional.</em> " .. v.paramText .. "\n"
+	end
+
+	local returnList = ""
+	for i,v in ipairs ( outParams ) do
+		if i ~= 1 then returnList = returnList .. ", " end
+		returnList = returnList .. v.paramType .. " " .. v.paramName
+	end
+	
+	doxy = doxy .. "\t@return " .. returnList .. "\n"
 	
 	-- output formatted doxygen stuff to file
-	io.write ( "DOXYGEN!!!!!!11111ONEone" )
+	io.write ( doxy )
 end
 
 ----------------------------------------------------------------
@@ -169,5 +246,3 @@ predoxParser:loadFile ( 'input.cpp' )
 predoxParser:traverse ()
 
 io.close ()
-
-
