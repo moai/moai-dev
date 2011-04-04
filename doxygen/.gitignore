@@ -1,2 +1,5 @@
 html-lua/
 src-copy/
+*.lnk
+input.cpp
+output.cpp
