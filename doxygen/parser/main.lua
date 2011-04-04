@@ -8,7 +8,7 @@ end
 function removeFormatting ( str )
 
 	local ret = ""
-	local func = string.gmatch ( str, "[^\t\n\r\f]" )
+	local func = string.gmatch ( str, "[^\t\n\r]" )
 	local s = func ()
 	if not s then return str end
 	
@@ -26,30 +26,44 @@ function trim ( str )
 	local nonWhiteSpacePattern = "[^%s]"
 	local startIdx = string.find ( str, nonWhiteSpacePattern )
 	local endIdx = 1 + ( #str - string.find ( string.reverse ( str ), nonWhiteSpacePattern ))
-	return string.sub ( str, startIdx, endIdx )
+	local ret = string.sub ( str, startIdx, endIdx )
+	
+	return ret
 end
 
 ----------------------------------------------------------------
 doxygenBlock = {}
 
+funcName = ""
+funcText = ""
+inParams = {}
+optParams = {}
+outParams = {}
+
 function handleDoxygenBlock ()
+
+	inParams = {}
+	outParams = {}
 
 	for i,v in ipairs ( doxygenBlock ) do
 		
 		if v.tag == "@name" then
-			print ( "name" )
+			funcName = v.text
 		elseif v.tag == "@text" then
-			print ( "text" )
+			funcText = v.text
 		elseif v.tag == "@in" then
-			print ( "in" )
+			table.insert ( inParams, v )
 		elseif v.tag == "@out" then
-			print ( "out" )
+			table.insert ( outParams, v )
 		elseif v.tag == "@opt" then
-			print ( "opt" )
+			table.insert ( optParams, v )
 		elseif v.tag == "@overload" then
 			print ( "overload" )
 		end
 	end
+	
+	-- output formatted doxygen stuff to file
+	io.write ( "DOXYGEN!!!!!!11111ONEone" )
 end
 
 ----------------------------------------------------------------
@@ -59,6 +73,7 @@ end
 predox = {}
 predox.DOXY_START = 4
 predox.DOXY_END = 5
+predox.TEXT = 7
 predox.echo = false
 
 ----------------------------------------------------------------
@@ -87,6 +102,8 @@ predox.onTerminal = function ( id, line, text )
 
 	if predox.echo then
 		predox.text = predox.text .. text
+	elseif text ~= "\r" then
+		io.write ( text )
 	end
 end
 
@@ -131,6 +148,11 @@ luadox.onTerminal = function ( id, line, text )
 end
 
 ----------------------------------------------------------------
+-- create the output file
+----------------------------------------------------------------
+io.output ( "output.cpp" )
+
+----------------------------------------------------------------
 -- do the parsing
 ----------------------------------------------------------------
 luadoxParser = MOAIParser.new ()
@@ -143,5 +165,6 @@ predoxParser:loadRules ( 'predox/predox.cgt' )
 
 predoxParser:loadFile ( 'input.cpp' )
 predoxParser:traverse ()
+io.close ()
 
 
