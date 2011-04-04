@@ -3,7 +3,7 @@
 SetCompressor /FINAL /SOLID lzma
 SetCompressorDictSize 64
 
-!define APP_NAME "Moai"
+!define APP_NAME "Moai SDK"
 !define INSTALLER_NAME "moai-sdk-installer.exe"
 !define LICENSE_TEXT "license.txt"
 !define ALL_USERS
@@ -57,7 +57,7 @@ Section "Moai"
 	
 	;start menu shortcuts
 	CreateDirectory "$SMPROGRAMS\${APP_NAME}"
-	CreateShortCut "$SMPROGRAMS\${APP_NAME}\Samples.lnk" "$INSTDIR\samples"
+	CreateShortCut "$SMPROGRAMS\${APP_NAME}\Samples.lnk" "$INSTDIR\samples\lua"
 	CreateShortCut "$SMPROGRAMS\${APP_NAME}\Reference.lnk" "$INSTDIR\docs\html\index.html"
 	CreateShortCut "$SMPROGRAMS\${APP_NAME}\Uninstall.lnk" "${UNINST_EXE}"
 	
