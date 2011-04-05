@@ -1,12 +1,90 @@
 ----------------------------------------------------------------
+function dumpDef ( def )
+
+	dumpFunctionDef ( def )
+	dumpFunctionText ( def )
+	
+	for i,v in ipairs ( def.inParams ) do
+		dumpParam ( v )
+	end
+
+	for i,v in ipairs ( def.optParams ) do
+		dumpOptParam ( v )
+	end
+
+	dumpReturn ( def )
+end
+
+----------------------------------------------------------------
+function dumpFunctionDef ( def )
+
+	local argList = ""
+	for i,v in ipairs ( def.inParams ) do
+		if i ~= 1 then argList = argList .. ", " end
+		argList = argList .. v.paramType .. " " .. v.paramName
+	end
+
+	if #def.optParams > 0 then
+		
+		argList = argList .. " [, "
+		
+		for i,v in ipairs ( def.optParams ) do
+			if i ~= 1 then argList = argList .. ", " end
+			argList = argList .. v.paramType .. " " .. v.paramName
+		end
+		
+		argList = argList .. " ]"
+	end
+	
+	doxy = doxy .. "<tt>function " .. def.funcName .. " ( " .. argList .. " )</tt>\n\n"
+end
+
+----------------------------------------------------------------
+function dumpFunctionText ( def )
+
+	doxy = doxy .. "\t" .. def.funcText .. "\n\n"
+end
+
+----------------------------------------------------------------
+function dumpOptParam ( v )
+
+	doxy = doxy .. "\t@param " .. v.paramName .. " (" .. v.paramType .. ") <em>Optional.</em> " .. v.paramText .. "\n"
+end
+
+----------------------------------------------------------------
+function dumpParam ( v )
+
+	doxy = doxy .. "\t@param " .. v.paramName .. " (" .. v.paramType .. ") " .. v.paramText .. "\n"
+end
+
+----------------------------------------------------------------
+function dumpReturn ( def )
+
+	local returnList = ""
+	for i,v in ipairs ( def.outParams ) do
+		if i ~= 1 then returnList = returnList .. ", " end
+		returnList = returnList .. v.paramName .. " (" .. v.paramType .. ")"
+	end
+	
+	doxy = doxy .. "\t@return " .. returnList .. "\n"
+end
+
+----------------------------------------------------------------
 function parseParam ( v )
 
 	local func = string.gmatch ( v.text, "[^%s]+" )
 	v.paramType = func ()
-	v.paramName = func ()
+	
+	if ( v.paramType == "nil" ) or ( v.paramType == "..." ) then
+		v.paramName = ""
+	else
+		v.paramName = func ()
+	end
+	
 	v.paramText = ""
 	
 	local s = func ()
+	
 	while s do
 		v.paramText = v.paramText .. " " .. s
 		s = func ()
@@ -17,6 +95,18 @@ end
 function printf ( ... )
 
 	return io.stdout:write ( string.format ( ... ))
+end
+
+----------------------------------------------------------------
+function pushDef ()
+
+	curDef = {}
+	curDef.funcName = ""
+	curDef.funcText = ""
+	curDef.inParams = {}
+	curDef.optParams = {}
+	curDef.outParams = {}
+	table.insert ( defs, curDef )
 end
 
 ----------------------------------------------------------------
@@ -63,80 +153,61 @@ doxygenBlock = {}
 
 function handleDoxygenBlock ()
 
-	funcName = ""
-	funcText = ""
-	inParams = {}
-	optParams = {}
-	outParams = {}
-	curDef = {}
-
+	curDef = nil
+	defs = nil
+	foundOverload = false
+	
+	defs = {}
+	pushDef ()
+	
 	for i,v in ipairs ( doxygenBlock ) do
 		
 		if v.tag == "@name" then
 			
-			funcName = v.text
+			curDef.funcName = v.text
 		
 		elseif v.tag == "@text" then
 			
-			funcText = v.text
+			curDef.funcText = v.text
 		
 		elseif v.tag == "@in" then
 
 			parseParam ( v )
-			table.insert ( inParams, v )
+			table.insert ( curDef.inParams, v )
 			
 		elseif v.tag == "@out" then
 
 			parseParam ( v )
 			if v.paramName == nil then v.paramName = "" end			
-			table.insert ( outParams, v )
+			table.insert ( curDef.outParams, v )
 		
 		elseif v.tag == "@opt" then
 
 			parseParam ( v )
-			table.insert ( optParams, v )
+			table.insert ( curDef.optParams, v )
 			
 		elseif v.tag == "@overload" then
-			print ( "overload" )
+			
+			if foundOverload then
+				pushDef ()
+			end
+			
+			foundOverload = true
 		end
 	end
 	
-	local argList = ""
-	for i,v in ipairs ( inParams ) do
-		if i ~= 1 then argList = argList .. ", " end
-		argList = argList .. v.paramType .. " " .. v.paramName
-	end
-	
-	if #optParams > 0 then
+	doxy = "\t@brief"
+
+	for i = 1, #defs do
 		
-		argList = argList .. " [, "
-		
-		for i,v in ipairs ( optParams ) do
-			if i ~= 1 then argList = argList .. ", " end
-			argList = argList .. v.paramType .. " " .. v.paramName
+		if i == 1 then
+			doxy = doxy .. "\n\n\t"
+		else
+			doxy = doxy .. "\n\n<hr>\t"
 		end
 		
-		argList = argList .. " ]"
+		dumpDef ( defs [ i ])
 	end
-	
-	local doxy = "\t@brief\n\t<tt>function " .. funcName .. " ( " .. argList .. " )</tt>\n\n"
-	doxy = doxy .. "\t" .. funcText .. "\n"
-	
-	for i,v in ipairs ( inParams ) do
-		doxy = doxy .. "\t@param " .. v.paramType .. " " .. v.paramName .. "\t\t" .. v.paramText .. "\n"
-	end
-
-	for i,v in ipairs ( optParams ) do
-		doxy = doxy .. "\t@param " .. v.paramType .. " " .. v.paramName .. "\t<em>Optional.</em> " .. v.paramText .. "\n"
-	end
-
-	local returnList = ""
-	for i,v in ipairs ( outParams ) do
-		if i ~= 1 then returnList = returnList .. ", " end
-		returnList = returnList .. v.paramType .. " " .. v.paramName
-	end
-	
-	doxy = doxy .. "\t@return " .. returnList .. "\n"
 	
 	-- output formatted doxygen stuff to file
 	io.write ( doxy )
