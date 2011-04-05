@@ -436,6 +436,7 @@ int MOAIBox2DWorld::_destroyBody ( lua_State* L ) {
 	
 	if ( body->mBody ) {
 		self->mWorld->DestroyBody ( body->mBody );
+		body->mBody = 0;
 		body->Release ();
 	}
 	return 0;
@@ -617,6 +618,8 @@ MOAIBox2DWorld::MOAIBox2DWorld () :
 
 //----------------------------------------------------------------//
 MOAIBox2DWorld::~MOAIBox2DWorld () {
+
+	this->mWorld->SetContactListener ( 0 );
 
 	while ( b2Body* body = this->mWorld->GetBodyList ()) {
 		MOAIBox2DBody* moaiBody = ( MOAIBox2DBody* )body->GetUserData ();

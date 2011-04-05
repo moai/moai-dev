@@ -225,6 +225,7 @@ int MOAIBox2DBody::_destroyFixture ( lua_State* L ) {
 	if ( self->mBody ) {
 		if ( fixture->mFixture ) {
 			self->mBody->DestroyFixture ( fixture->mFixture );
+			fixture->mFixture = 0;
 			fixture->Release ();
 		}
 	}
