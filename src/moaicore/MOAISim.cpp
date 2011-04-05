@@ -500,6 +500,8 @@ void MOAISim::ResumeMOAI() {
 //----------------------------------------------------------------//
 void MOAISim::RunFile ( cc8* filename ) {
 
+	if ( !USFileSys::CheckFileExists ( filename )) return;
+
 	int status;
 	USLuaStateHandle state = USLuaRuntime::Get ().State ();
 	
