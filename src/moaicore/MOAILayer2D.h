@@ -20,9 +20,9 @@ class MOAILayer2D :
 	public virtual MOAIProp2D {
 private:
 
-	USRef < MOAITransform >		mCamera;
-	USRef < MOAIViewport >		mViewport;
-	USRef < MOAIPartition >		mPartition;
+	USRef < MOAITransform >			mCamera;
+	USRef < MOAIViewport >			mViewport;
+	USRef < MOAIPartition >			mPartition;
 
 	#if USE_CHIPMUNK
 		USRef < MOAICpSpace >		mCpSpace;
@@ -32,8 +32,8 @@ private:
 		USRef < MOAIBox2DWorld >	mBox2DWorld;
 	#endif
 
-	USVec2D						mParallax;
-	bool						mShowDebugLines;
+	USVec2D							mParallax;
+	bool							mShowDebugLines;
 
 	//----------------------------------------------------------------//
 	static int	_getFitting			( lua_State* L );
@@ -52,7 +52,7 @@ private:
 	
 	//----------------------------------------------------------------//
 	void			AffirmPartition			();
-	USAffine2D		GetViewProjMtx			();
+	void			GetCameraMtx			( USAffine2D& camera );
 
 public:
 	

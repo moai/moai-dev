@@ -11,7 +11,7 @@ static void _cleanup () {
 }
 
 //----------------------------------------------------------------//
-// TODO: this should be part of unit tests
+// TODO: this should be part of the unit tests
 static void _typeCheck () {
 
 	// make sure our fixed size typedefs are what we think

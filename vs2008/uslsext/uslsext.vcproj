@@ -339,14 +339,6 @@
 				RelativePath="..\..\src\uslsext\USAnimCurve.h"
 				>
 			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USCurveSampler.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USCurveSampler.h"
-				>
-			</File>
 		</Filter>
 		<Filter
 			Name="attributed"
@@ -461,30 +453,6 @@
 			</File>
 			<File
 				RelativePath="..\..\src\uslsext\USBlendMode.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USCamera2D.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USCamera2D.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USCamera3D.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USCamera3D.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USCameraFitter.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USCameraFitter.h"
 				>
 			</File>
 			<File
@@ -608,14 +576,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\uslsext\USFrustum.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USFrustum.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\uslsext\USInterpolate.cpp"
 				>
 			</File>
@@ -697,34 +657,6 @@
 			</File>
 			<File
 				RelativePath="..\..\src\uslsext\USTrig.h"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="slippymap"
-			>
-			<File
-				RelativePath="..\..\src\uslsext\USSlipMapBrush.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USSlipMapBrush.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USSlipMapTile.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USSlipMapTile.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USSlipMapTileSource.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USSlipMapTileSource.h"
 				>
 			</File>
 		</Filter>

@@ -13,7 +13,7 @@ void RTTIRecord::AffirmCasts ( void* ptr ) {
 
 	if ( !this->mIsComplete ) {
 		this->Inherit ( *this, ptr, 0 );
-		// TODO: sort type set for binary search
+		// TODO: maybe sort for binary search? or by frequency of use?
 	}
 	this->mIsComplete = true;
 }

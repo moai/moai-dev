@@ -3,7 +3,6 @@
 
 #include "pch.h"
 #include <uslsext/USBlendMode.h>
-#include <uslsext/USCamera2D.h>
 #include <uslsext/USColor.h>
 #include <uslsext/USGfxDevice.h>
 #include <uslsext/USGLLine.h>
@@ -11,42 +10,6 @@
 #include <uslsext/USCanvas.h>
 #include <uslsext/USMathConsts.h>
 #include <uslsext/USTexture.h>
-
-//----------------------------------------------------------------//
-void getViewMtx ( USViewport& viewport, USCamera2D& camera, USAffine2D& view );
-void getViewMtx ( USViewport& viewport, USCamera2D& camera, USAffine2D& view ) {
-
-	USAffine2D mtx;
-	//USRect rect = viewport.GetRect ();
-
-	//float hWidth = rect.Width () * 0.5f;
-	//float hHeight = rect.Height () * 0.5f;
-
-	// translation
-	float x = camera.mLoc.mX;
-	float y = camera.mLoc.mY;
-
-	view.Translate ( -x, -y );
-	
-	// scale
-	USVec2D viewScale = viewport.GetScale ();
-	mtx.Scale (
-		camera.mScale * viewScale.mX,
-		camera.mScale * viewScale.mY
-	);
-	view.Append ( mtx );
-	
-	// roll
-	//mtx.Rotate ( camera.mRoll * D2R );
-	//view.Append ( mtx );
-	
-	// center
-	//float xViewOff = ( hWidth * camera.mXOffsetProj * camera.mXAxisProj ) + ( hWidth * viewport.mOffset.mX );
-	//float yViewOff = ( hHeight * camera.mYOffsetProj * camera.mYAxisProj ) + ( hHeight * viewport.mOffset.mY );
-	
-	//mtx.Translate ( xViewOff, yViewOff );
-	//view.Append ( mtx );
-}
 
 //================================================================//
 // USCanvas
@@ -65,42 +28,13 @@ void USCanvas::BeginDrawing () {
 	viewport.SetScale ( width, -height );
 	viewport.SetOffset ( -1.0f, 1.0f );
 	
-	USCamera2D camera;
+	USAffine2D camera;
+	camera.Ident ();
 	USCanvas::BeginDrawing ( viewport, camera );
 }
 
 //----------------------------------------------------------------//
-void USCanvas::BeginDrawing ( USViewport& viewport, USCamera2D& camera ) {
-
-	USAffine2D preViewMtx;
-	preViewMtx.Ident ();
-	
-	USCanvas::BeginDrawing ( viewport, camera, preViewMtx );
-}
-
-//----------------------------------------------------------------//
-void USCanvas::BeginDrawing ( USViewport& viewport, USCamera3D& camera ) {
-
-	// set us up the viewport
-	USRect rect = viewport.GetRect ();
-	glViewport (( GLint )rect.mXMin, ( GLint )rect.mYMin, ( GLsizei )rect.Width (), ( GLsizei )rect.Height ());
-
-	// load view/proj
-	glMatrixMode ( GL_PROJECTION );
-	glLoadIdentity ();
-	
-	USMatrix3D mtx;
-	
-	camera.GetViewProjMtx ( viewport, mtx );
-	USCanvas::LoadMatrix ( mtx );
-	
-	// load ident
-	glMatrixMode ( GL_MODELVIEW );
-	glLoadIdentity ();
-}
-
-//----------------------------------------------------------------//
-void USCanvas::BeginDrawing ( USViewport& viewport, USCamera2D& camera, USAffine2D& preViewMtx ) {
+void USCanvas::BeginDrawing ( USViewport& viewport, USAffine2D& camera ) {
 
 	// set us up the viewport
 	USRect rect = viewport.GetRect ();
@@ -119,7 +53,6 @@ void USCanvas::BeginDrawing ( USViewport& viewport, USCamera2D& camera, USAffine
 	
 	USAffine2D mtx;
 	USCanvas::GetViewProjMtx ( viewport, camera, mtx );
-	mtx.Prepend ( preViewMtx );
 	USCanvas::LoadMatrix ( mtx );
 	
 	// load ident
@@ -621,30 +554,6 @@ void USCanvas::GetProjMtx ( USViewport& viewport, USAffine2D& proj ) {
 }
 
 //----------------------------------------------------------------//
-void USCanvas::GetViewMtx ( USViewport& viewport, USCamera2D& camera, USAffine2D& view ) {
-
-	USAffine2D mtx;
-
-	// translation
-	float x = camera.mLoc.mX;
-	float y = camera.mLoc.mY;
-
-	view.Translate ( -x, -y );
-	
-	// roll
-	mtx.Rotate (( camera.mRoll - viewport.mRotation ) * ( float )D2R );
-	view.Append ( mtx );
-	
-	// scale
-	USVec2D viewScale = viewport.GetScale ();
-	mtx.Scale (
-		camera.mScale * viewScale.mX,
-		camera.mScale * viewScale.mY
-	);
-	view.Append ( mtx );
-}
-
-//----------------------------------------------------------------//
 void USCanvas::GetViewProjMtx ( USAffine2D& viewProj ) {
 
 	USMatrix3D mtx;
@@ -653,36 +562,24 @@ void USCanvas::GetViewProjMtx ( USAffine2D& viewProj ) {
 }
 
 //----------------------------------------------------------------//
-void USCanvas::GetViewProjMtx ( USViewport& viewport, USCamera2D& camera, USAffine2D& viewProj ) {
+void USCanvas::GetViewProjMtx ( USViewport& viewport, USAffine2D& camera, USAffine2D& viewProj ) {
 
 	USAffine2D mtx;
 	USRect rect = viewport.GetRect ();
 
 	// View
+	viewProj.Inverse ( camera );
 	
-	// translation
-	float x = camera.mLoc.mX;
-	float y = camera.mLoc.mY;
-	viewProj.Translate ( -x, -y );
-	
-	// roll
-	mtx.Rotate (( camera.mRoll - viewport.mRotation ) * ( float )D2R ); 
-	viewProj.Append ( mtx );
-	
-	// scale
-	USVec2D viewScale = viewport.GetScale ();
-	mtx.Scale (
-		camera.mScale * viewScale.mX,
-		camera.mScale * viewScale.mY
-	);
-	viewProj.Append ( mtx );
-
-	//mtx.Rotate ( 10.0f * ( float )D2R );
-	//viewProj.Append ( mtx );
-
 	// Project
-	float xScale = 2.0f / rect.Width ();
-	float yScale = 2.0f / rect.Height ();
+	
+	// rotate
+	mtx.Rotate ( -viewport.mRotation * ( float )D2R );
+	viewProj.Append ( mtx );
+
+	// project
+	USVec2D viewScale = viewport.GetScale ();
+	float xScale = ( 2.0f / rect.Width ()) * viewScale.mX;
+	float yScale = ( 2.0f / rect.Height ()) * viewScale.mY;
 	
 	mtx.Scale ( xScale, yScale );
 	viewProj.Append ( mtx );
@@ -693,7 +590,7 @@ void USCanvas::GetViewProjMtx ( USViewport& viewport, USCamera2D& camera, USAffi
 }
 
 //----------------------------------------------------------------//
-void USCanvas::GetViewProjMtxInv ( USViewport& viewport, USCamera2D& camera, USAffine2D& viewProjInv ) {
+void USCanvas::GetViewProjMtxInv ( USViewport& viewport, USAffine2D& camera, USAffine2D& viewProjInv ) {
 
 	USAffine2D mtx;
 	USRect rect = viewport.GetRect ();
@@ -704,31 +601,19 @@ void USCanvas::GetViewProjMtxInv ( USViewport& viewport, USCamera2D& camera, USA
 	viewProjInv.Translate ( -viewport.mOffset.mX, -viewport.mOffset.mY );
 	
 	// project
-	float invXScale = 1.0f / ( 2.0f / rect.Width ());
-	float invYScale = 1.0f / ( 2.0f / rect.Height ());
+	USVec2D viewScale = viewport.GetScale ();
+	float invXScale = 1.0f / (( 2.0f / rect.Width () * viewScale.mX ));
+	float invYScale = 1.0f / (( 2.0f / rect.Height () * viewScale.mY ));
 	
 	mtx.Scale ( invXScale, invYScale );
 	viewProjInv.Append ( mtx );
 	
+	// rotate
+	mtx.Rotate ( viewport.mRotation * ( float )D2R );
+	viewProjInv.Append ( mtx );
+	
 	// Inv View
-	
-	// scale
-	USVec2D viewScale = viewport.GetScale ();
-	mtx.Scale (
-		1.0f / ( camera.mScale * viewScale.mX ),
-		1.0f / ( camera.mScale * viewScale.mY )
-	);
-	viewProjInv.Append ( mtx );
-	
-	// roll
-	mtx.Rotate ( -( camera.mRoll - viewport.mRotation ) * ( float )D2R ); 
-	viewProjInv.Append ( mtx );
-	
-	// translate
-	float x = camera.mLoc.mX;
-	float y = camera.mLoc.mY;
-	mtx.Translate ( x, y );
-	viewProjInv.Append ( mtx );
+	viewProjInv.Append ( camera );
 }
 
 //----------------------------------------------------------------//
@@ -749,6 +634,22 @@ void USCanvas::GetWndToModelMtx ( USAffine2D& wndToModel ) {
 
 	USCanvas::GetModelToWndMtx ( wndToModel );
 	wndToModel.Inverse ();
+}
+
+//----------------------------------------------------------------//
+void USCanvas::GetWndToNormMtx ( USViewport& viewport, USAffine2D& wndToNorm ) {
+
+	USAffine2D mtx;
+	USRect rect = viewport.GetRect ();
+
+	float hWidth = rect.Width () * 0.5f;
+	float hHeight = rect.Height () * 0.5f;
+
+	// Inv Wnd
+	wndToNorm.Translate ( -hWidth - rect.mXMin, -hHeight - rect.mYMin );
+	
+	mtx.Scale (( 1.0f / hWidth ), -( 1.0f / hHeight ));
+	wndToNorm.Append ( mtx );
 }
 
 //----------------------------------------------------------------//
@@ -777,23 +678,7 @@ void USCanvas::GetWndToWorldMtx ( USAffine2D& wndToWorld ) {
 }
 
 //----------------------------------------------------------------//
-void USCanvas::GetWndToNormMtx ( USViewport& viewport, USAffine2D& wndToNorm ) {
-
-	USAffine2D mtx;
-	USRect rect = viewport.GetRect ();
-
-	float hWidth = rect.Width () * 0.5f;
-	float hHeight = rect.Height () * 0.5f;
-
-	// Inv Wnd
-	wndToNorm.Translate ( -hWidth - rect.mXMin, -hHeight - rect.mYMin );
-	
-	mtx.Scale (( 1.0f / hWidth ), -( 1.0f / hHeight ));
-	wndToNorm.Append ( mtx );
-}
-
-//----------------------------------------------------------------//
-void USCanvas::GetWndToWorldMtx ( USViewport& viewport, USCamera2D& camera, USAffine2D& wndToWorld ) {
+void USCanvas::GetWndToWorldMtx ( USViewport& viewport, USAffine2D& camera, USAffine2D& wndToWorld ) {
 
 	USAffine2D mtx;
 	USRect rect = viewport.GetRect ();
@@ -845,7 +730,7 @@ void USCanvas::GetWorldToWndMtx ( USAffine2D& worldToWnd, float xScale, float yS
 }
 
 //----------------------------------------------------------------//
-void USCanvas::GetWorldToWndMtx ( USViewport& viewport, USCamera2D& camera, USAffine2D& worldToWnd ) {
+void USCanvas::GetWorldToWndMtx ( USViewport& viewport, USAffine2D& camera, USAffine2D& worldToWnd ) {
 
 	USAffine2D mtx;
 	USRect rect		= viewport.GetRect ();

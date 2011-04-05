@@ -71,7 +71,6 @@ AKU_API void			AKURunScript		( const char* filename );
 AKU_API void			AKUSetKey			( unsigned char key, bool isDown );
 AKU_API void			AKUSetMouseButton	( bool left, bool middle, bool right, bool isDown );
 AKU_API void			AKUSetMouseLoc		( int x, int y );
-AKU_API void			AKUSetTextInput		( const char* input );
 AKU_API void			AKUUpdate			();
 
 // input device api

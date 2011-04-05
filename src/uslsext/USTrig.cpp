@@ -31,7 +31,7 @@ float ATan ( float t ) {
 //----------------------------------------------------------------//
 float Cos ( float radians ) {
 
-	// use local sin wrapper to account for range bug
+	// use local sin wrapper to account for range bug (see comment on Sin ())
 	return Sin ( radians + (( float )PI / 2.0f ));
 }
 

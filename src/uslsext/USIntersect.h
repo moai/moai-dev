@@ -21,8 +21,8 @@ namespace USSect {
 	s32		PrismToPlane		( USPrism& prism, USPlane3D& p );
 	s32		RhombusToPlane		( USRhombus& rhombus, USPlane3D& p );
 	u32		VecToCircle			( float& t0, float& t1, USVec2D& loc, USVec2D& vec, USVec2D& circleLoc, float radius );
-	float	VecToPlane			( USVec3D& loc, USVec3D& vec, USPlane3D& p );
-	float	VecToPlane			( USVec3D& loc, USVec3D& vec, USPlane3D& p, USVec3D& result );
+	bool	VecToPlane			( USVec3D& loc, USVec3D& vec, USPlane3D& p, float& t );
+	bool	VecToPlane			( USVec3D& loc, USVec3D& vec, USPlane3D& p, float& t, USVec3D& result );
 	float	VecToPlane2D		( USVec2D& loc, USVec2D& vec, USPlane2D& p );
 	float	VecToPlane2D		( USVec2D& loc, USVec2D& vec, USPlane2D& p, USVec2D& result );
 	u32		VecToSphere			( float& t0, float& t1, USVec3D& loc, USVec3D& vec, USVec3D& sphereLoc, float radius );
