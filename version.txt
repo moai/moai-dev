@@ -1,2 +1,2 @@
-Moai SDK 
+Moai SDK
 Version 0.1 Beta
