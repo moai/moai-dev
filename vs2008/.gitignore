@@ -1,6 +1,6 @@
 Debug/
 Release/
-*.vcproj.*.user
+*.user
 *.ncb
 *.suo
 *.cache
