@@ -52,7 +52,8 @@ InstallDirRegKey ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "InstallDir"
 
 ;_______________________________________________________________________________________
 Function launchHelloMoai
-	ExecShell "" "$INSTDIR\samples\hello-moai\run.bat"
+	SetOutPath "$INSTDIR\samples\hello-moai"
+	Exec "$INSTDIR\samples\hello-moai\run.bat"
 FunctionEnd
 
 ;_______________________________________________________________________________________
@@ -84,6 +85,11 @@ Section "Moai"
     Push "$INSTDIR\bin"
 	Call AddToPath
 	
+	;add config to path
+	Push "MOAI_CONFIG"
+	Push $INSTDIR\samples\config
+	Call AddToEnvVar
+	
 SectionEnd
 
 Function .onInit
@@ -100,6 +106,10 @@ Section UnInstall
 
  	Push "$INSTDIR\bin"
 	Call un.RemoveFromPath
+
+	Push "MOAI_CONFIG"
+	Push $INSTDIR\samples\config
+	Call un.RemoveFromEnvVar
 	
 	;${UnregisterExtension} ".moai" "Moai File"
 	
