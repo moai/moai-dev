@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <moaicore/MOAIIndexBuffer.h>
+#include <moaicore/MOAILogMessages.h>
 
 //================================================================//
 // local
@@ -16,7 +17,7 @@
 	@out	nil
 */
 int	MOAIIndexBuffer::_release ( lua_State* L ) {
-	LUA_SETUP ( MOAIIndexBuffer, "U" )
+	MOAI_LUA_SETUP ( MOAIIndexBuffer, "U" )
 	
 	self->Release ();
 	return 0;
@@ -31,7 +32,7 @@ int	MOAIIndexBuffer::_release ( lua_State* L ) {
 	@out	nil
 */
 int	MOAIIndexBuffer::_reserve ( lua_State* L ) {
-	LUA_SETUP ( MOAIIndexBuffer, "UN" )
+	MOAI_LUA_SETUP ( MOAIIndexBuffer, "UN" )
 	
 	u32 indexCount = state.GetValue < u32 >( 2, 0 );
 	self->ReserveIndices ( indexCount );
@@ -49,7 +50,7 @@ int	MOAIIndexBuffer::_reserve ( lua_State* L ) {
 	@out	nil
 */
 int	MOAIIndexBuffer::_setIndex ( lua_State* L ) {
-	LUA_SETUP ( MOAIIndexBuffer, "UNN" )
+	MOAI_LUA_SETUP ( MOAIIndexBuffer, "UNN" )
 	
 	u32 idx		= state.GetValue < u32 >( 2, 1 ) - 1;
 	u16 value	= state.GetValue < u16 >( 3, 0 );

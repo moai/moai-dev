@@ -9,6 +9,7 @@
 #include <moaicore/MOAIBox2DFixture.h>
 #include <moaicore/MOAIBox2DJoint.h>
 #include <moaicore/MOAIBox2DWorld.h>
+#include <moaicore/MOAILogMessages.h>
 
 SUPPRESS_EMPTY_FILE_WARNING
 #if USE_BOX2D
@@ -46,7 +47,7 @@ MOAIBox2DPrim::MOAIBox2DPrim () :
 	@out	MOAIBox2DBody joint
 */
 int MOAIBox2DWorld::_addBody ( lua_State* L ) {
-	LUA_SETUP ( MOAIBox2DWorld, "UN" )
+	MOAI_LUA_SETUP ( MOAIBox2DWorld, "UN" )
 	
 	u32 type	= state.GetValue < u32 >( 2, 0 );
 	float x		= state.GetValue < float >( 3, 0.0f ) * self->mUnitsToMeters;
@@ -81,7 +82,7 @@ int MOAIBox2DWorld::_addBody ( lua_State* L ) {
 	@out	MOAIBox2DJoint joint
 */
 int	MOAIBox2DWorld::_addDistanceJoint ( lua_State* L ) {
-	LUA_SETUP ( MOAIBox2DWorld, "UUUNNNN" )
+	MOAI_LUA_SETUP ( MOAIBox2DWorld, "UUUNNNN" )
 	
 	MOAIBox2DBody* bodyA = state.GetLuaObject < MOAIBox2DBody >( 2 );
 	MOAIBox2DBody* bodyB = state.GetLuaObject < MOAIBox2DBody >( 3 );
@@ -123,7 +124,7 @@ int	MOAIBox2DWorld::_addDistanceJoint ( lua_State* L ) {
 	@out	MOAIBox2DJoint joint
 */
 int	MOAIBox2DWorld::_addFrictionJoint ( lua_State* L ) {
-	LUA_SETUP ( MOAIBox2DWorld, "UUUNN" )
+	MOAI_LUA_SETUP ( MOAIBox2DWorld, "UUUNN" )
 	
 	MOAIBox2DBody* bodyA = state.GetLuaObject < MOAIBox2DBody >( 2 );
 	MOAIBox2DBody* bodyB = state.GetLuaObject < MOAIBox2DBody >( 3 );
@@ -158,7 +159,7 @@ int	MOAIBox2DWorld::_addFrictionJoint ( lua_State* L ) {
 	@out	MOAIBox2DJoint joint
 */
 int	MOAIBox2DWorld::_addGearJoint ( lua_State* L ) {
-	LUA_SETUP ( MOAIBox2DWorld, "UUUN" )
+	MOAI_LUA_SETUP ( MOAIBox2DWorld, "UUUN" )
 	
 	MOAIBox2DJoint* jointA = state.GetLuaObject < MOAIBox2DJoint >( 2 );
 	MOAIBox2DJoint* jointB = state.GetLuaObject < MOAIBox2DJoint >( 3 );
@@ -197,7 +198,7 @@ int	MOAIBox2DWorld::_addGearJoint ( lua_State* L ) {
 	@out	MOAIBox2DJoint joint
 */
 int	MOAIBox2DWorld::_addLineJoint ( lua_State* L ) {
-	LUA_SETUP ( MOAIBox2DWorld, "UUUNNNN" )
+	MOAI_LUA_SETUP ( MOAIBox2DWorld, "UUUNNNN" )
 	
 	MOAIBox2DBody* bodyA = state.GetLuaObject < MOAIBox2DBody >( 2 );
 	MOAIBox2DBody* bodyB = state.GetLuaObject < MOAIBox2DBody >( 3 );
@@ -235,7 +236,7 @@ int	MOAIBox2DWorld::_addLineJoint ( lua_State* L ) {
 	@out	MOAIBox2DJoint joint
 */
 int	MOAIBox2DWorld::_addMouseJoint ( lua_State* L ) {
-	LUA_SETUP ( MOAIBox2DWorld, "UNNNNN" )
+	MOAI_LUA_SETUP ( MOAIBox2DWorld, "UNNNNN" )
 	
 	b2Vec2 target;
 	target.x	= state.GetValue < float >( 2, 0 ) * self->mUnitsToMeters;
@@ -271,7 +272,7 @@ int	MOAIBox2DWorld::_addMouseJoint ( lua_State* L ) {
 	@out	MOAIBox2DJoint joint
 */
 int	MOAIBox2DWorld::_addPrismaticJoint ( lua_State* L ) {
-	LUA_SETUP ( MOAIBox2DWorld, "UUUNNNN" )
+	MOAI_LUA_SETUP ( MOAIBox2DWorld, "UUUNNNN" )
 	
 	MOAIBox2DBody* bodyA = state.GetLuaObject < MOAIBox2DBody >( 2 );
 	MOAIBox2DBody* bodyB = state.GetLuaObject < MOAIBox2DBody >( 3 );
@@ -317,7 +318,7 @@ int	MOAIBox2DWorld::_addPrismaticJoint ( lua_State* L ) {
 	@out	MOAIBox2DJoint joint
 */
 int	MOAIBox2DWorld::_addPulleyJoint ( lua_State* L ) {
-	LUA_SETUP ( MOAIBox2DWorld, "UUUNNNNNNNNNNN" )
+	MOAI_LUA_SETUP ( MOAIBox2DWorld, "UUUNNNNNNNNNNN" )
 	
 	MOAIBox2DBody* bodyA = state.GetLuaObject < MOAIBox2DBody >( 2 );
 	MOAIBox2DBody* bodyB = state.GetLuaObject < MOAIBox2DBody >( 3 );
@@ -367,7 +368,7 @@ int	MOAIBox2DWorld::_addPulleyJoint ( lua_State* L ) {
 	@out	MOAIBox2DJoint joint
 */
 int	MOAIBox2DWorld::_addRevoluteJoint ( lua_State* L ) {
-	LUA_SETUP ( MOAIBox2DWorld, "UUUNN" )
+	MOAI_LUA_SETUP ( MOAIBox2DWorld, "UUUNN" )
 	
 	MOAIBox2DBody* bodyA = state.GetLuaObject < MOAIBox2DBody >( 2 );
 	MOAIBox2DBody* bodyB = state.GetLuaObject < MOAIBox2DBody >( 3 );
@@ -400,7 +401,7 @@ int	MOAIBox2DWorld::_addRevoluteJoint ( lua_State* L ) {
 	@out	MOAIBox2DJoint joint
 */
 int	MOAIBox2DWorld::_addWeldJoint ( lua_State* L ) {
-	LUA_SETUP ( MOAIBox2DWorld, "UUUNN" )
+	MOAI_LUA_SETUP ( MOAIBox2DWorld, "UUUNN" )
 	
 	MOAIBox2DBody* bodyA = state.GetLuaObject < MOAIBox2DBody >( 2 );
 	MOAIBox2DBody* bodyB = state.GetLuaObject < MOAIBox2DBody >( 3 );
@@ -430,7 +431,7 @@ int	MOAIBox2DWorld::_addWeldJoint ( lua_State* L ) {
 	@out	nil
 */
 int MOAIBox2DWorld::_destroyBody ( lua_State* L ) {
-	LUA_SETUP ( MOAIBox2DWorld, "UU" )
+	MOAI_LUA_SETUP ( MOAIBox2DWorld, "UU" )
 	
 	MOAIBox2DBody* body = state.GetLuaObject < MOAIBox2DBody >( 2 );
 	
@@ -451,7 +452,7 @@ int MOAIBox2DWorld::_destroyBody ( lua_State* L ) {
 	@out	nil
 */
 int MOAIBox2DWorld::_destroyJoint ( lua_State* L ) {
-	LUA_SETUP ( MOAIBox2DWorld, "UU" )
+	MOAI_LUA_SETUP ( MOAIBox2DWorld, "UU" )
 	
 	MOAIBox2DJoint* joint = state.GetLuaObject < MOAIBox2DJoint >( 2 );
 	
@@ -470,7 +471,7 @@ int MOAIBox2DWorld::_destroyJoint ( lua_State* L ) {
 	@out	boolean autoClearForces
 */
 int MOAIBox2DWorld::_getAutoClearForces ( lua_State* L ) {
-	LUA_SETUP ( MOAIBox2DWorld, "U" )
+	MOAI_LUA_SETUP ( MOAIBox2DWorld, "U" )
 	
 	bool autoClearForces = self->mWorld->GetAutoClearForces ();
 	lua_pushboolean ( L, autoClearForces );
@@ -487,7 +488,7 @@ int MOAIBox2DWorld::_getAutoClearForces ( lua_State* L ) {
 	@out	number gravityY
 */
 int MOAIBox2DWorld::_getGravity ( lua_State* L ) {
-	LUA_SETUP ( MOAIBox2DWorld, "U" )
+	MOAI_LUA_SETUP ( MOAIBox2DWorld, "U" )
 	
 	b2Vec2 gravity = self->mWorld->GetGravity ();
 	
@@ -506,7 +507,7 @@ int MOAIBox2DWorld::_getGravity ( lua_State* L ) {
 	@out	nil
 */
 int MOAIBox2DWorld::_setAutoClearForces ( lua_State* L ) {
-	LUA_SETUP ( MOAIBox2DWorld, "U" )
+	MOAI_LUA_SETUP ( MOAIBox2DWorld, "U" )
 	
 	bool autoClearForces = state.GetValue < bool >( 2, true );
 	
@@ -525,7 +526,7 @@ int MOAIBox2DWorld::_setAutoClearForces ( lua_State* L ) {
 	@out	nil
 */
 int MOAIBox2DWorld::_setGravity ( lua_State* L ) {
-	LUA_SETUP ( MOAIBox2DWorld, "U" )
+	MOAI_LUA_SETUP ( MOAIBox2DWorld, "U" )
 	
 	b2Vec2 gravity;
 	
@@ -547,7 +548,7 @@ int MOAIBox2DWorld::_setGravity ( lua_State* L ) {
 	@out	nil
 */
 int MOAIBox2DWorld::_setIterations ( lua_State* L ) {
-	LUA_SETUP ( MOAIBox2DWorld, "U" )
+	MOAI_LUA_SETUP ( MOAIBox2DWorld, "U" )
 	
 	self->mVelocityIterations = state.GetValue < u32 >( 2, self->mVelocityIterations );
 	self->mPositionIterations = state.GetValue < u32 >( 3, self->mPositionIterations );
@@ -564,7 +565,7 @@ int MOAIBox2DWorld::_setIterations ( lua_State* L ) {
 	@out	nil
 */
 int MOAIBox2DWorld::_setUnitsToMeters ( lua_State* L ) {
-	LUA_SETUP ( MOAIBox2DWorld, "U" )
+	MOAI_LUA_SETUP ( MOAIBox2DWorld, "U" )
 	
 	self->mUnitsToMeters = state.GetValue ( 2, 1.0f );
 	

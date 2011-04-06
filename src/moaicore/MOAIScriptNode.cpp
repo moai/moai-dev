@@ -2,6 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIScriptNode.h>
 
 //================================================================//
@@ -17,7 +18,7 @@
 	@out	nil
 */
 int MOAIScriptNode::_reserveAttrs ( lua_State* L ) {
-	LUA_SETUP ( MOAIScriptNode, "UN" );
+	MOAI_LUA_SETUP ( MOAIScriptNode, "UN" );
 
 	u32 size = state.GetValue < u32 >( 2, 0 );
 	self->mAttributes.Init ( size );
@@ -35,7 +36,7 @@ int MOAIScriptNode::_reserveAttrs ( lua_State* L ) {
 	@out	nil
 */
 int MOAIScriptNode::_setCallback ( lua_State* L ) {
-	LUA_SETUP ( MOAIScriptNode, "UF" );
+	MOAI_LUA_SETUP ( MOAIScriptNode, "UF" );
 
 	self->mOnUpdate.SetRef ( state, -1, USLuaRef::STRONG_REF );
 	return 0;

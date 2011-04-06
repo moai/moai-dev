@@ -7,6 +7,7 @@
 #include <moaicore/MOAICpSpace.h>
 #include <moaicore/MOAIDebugLines.h>
 #include <moaicore/MOAILayer2D.h>
+#include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIProp2D.h>
 #include <moaicore/MOAITransform.h>
 
@@ -36,7 +37,7 @@
 	@out	number s		Scale of fitting (use for camera scale).
 */
 int MOAILayer2D::_getFitting ( lua_State* L ) {
-	LUA_SETUP ( MOAILayer2D, "UNNNN" )
+	MOAI_LUA_SETUP ( MOAILayer2D, "UNNNN" )
 
 	USRect worldRect;
 	worldRect.mXMin = state.GetValue < float >( 2, 0.0f );
@@ -69,7 +70,7 @@ int MOAILayer2D::_getFitting ( lua_State* L ) {
 	@out	MOAIPartition partition
 */
 int	MOAILayer2D::_getPartition ( lua_State* L ) {
-	LUA_SETUP ( MOAILayer2D, "U" )
+	MOAI_LUA_SETUP ( MOAILayer2D, "U" )
 
 	if ( self->mPartition ) {
 		self->mPartition->PushLuaUserdata ( state );
@@ -88,7 +89,7 @@ int	MOAILayer2D::_getPartition ( lua_State* L ) {
 	@out	nil
 */
 int	MOAILayer2D::_insertProp ( lua_State* L ) {
-	LUA_SETUP ( MOAILayer2D, "UU" )
+	MOAI_LUA_SETUP ( MOAILayer2D, "UU" )
 
 	MOAIProp2D* prop = state.GetLuaObject < MOAIProp2D >( 2 );
 	if ( !prop ) return 0;
@@ -109,7 +110,7 @@ int	MOAILayer2D::_insertProp ( lua_State* L ) {
 	@out	nil
 */
 int	MOAILayer2D::_removeProp ( lua_State* L ) {
-	LUA_SETUP ( MOAILayer2D, "UU" )
+	MOAI_LUA_SETUP ( MOAILayer2D, "UU" )
 
 	MOAIProp2D* prop = state.GetLuaObject < MOAIProp2D >( 2 );
 	if ( !prop ) return 0;
@@ -131,7 +132,7 @@ int	MOAILayer2D::_removeProp ( lua_State* L ) {
 	@out	nil
 */
 int MOAILayer2D::_setBox2DWorld ( lua_State* L ) {
-	LUA_SETUP ( MOAILayer2D, "UU" )
+	MOAI_LUA_SETUP ( MOAILayer2D, "UU" )
 	
 	#if USE_BOX2D
 		self->mBox2DWorld = state.GetLuaObject < MOAIBox2DWorld >( 2 );
@@ -151,7 +152,7 @@ int MOAILayer2D::_setBox2DWorld ( lua_State* L ) {
 	@out	nil
 */
 int MOAILayer2D::_setCamera ( lua_State* L ) {
-	LUA_SETUP ( MOAILayer2D, "UU" )
+	MOAI_LUA_SETUP ( MOAILayer2D, "UU" )
 
 	MOAITransform* camera = state.GetLuaObject < MOAITransform >( 2 );
 	if ( !camera ) return 0;
@@ -170,7 +171,7 @@ int MOAILayer2D::_setCamera ( lua_State* L ) {
 	@out	nil
 */
 int MOAILayer2D::_setCpSpace ( lua_State* L ) {
-	LUA_SETUP ( MOAILayer2D, "UU" )
+	MOAI_LUA_SETUP ( MOAILayer2D, "UU" )
 	
 	#if USE_CHIPMUNK
 		self->mCpSpace = state.GetLuaObject < MOAICpSpace >( 2 );
@@ -189,7 +190,7 @@ int MOAILayer2D::_setCpSpace ( lua_State* L ) {
 	@out	nil
 */
 int MOAILayer2D::_setParallax ( lua_State* L ) {
-	LUA_SETUP ( MOAILayer2D, "UNN" )
+	MOAI_LUA_SETUP ( MOAILayer2D, "UNN" )
 
 	self->mParallax.mX = state.GetValue < float >( 2, self->mParallax.mX );
 	self->mParallax.mY = state.GetValue < float >( 3, self->mParallax.mY );
@@ -208,7 +209,7 @@ int MOAILayer2D::_setParallax ( lua_State* L ) {
 	@out	nil
 */
 int MOAILayer2D::_setPartition ( lua_State* L ) {
-	LUA_SETUP ( MOAILayer2D, "UU" )
+	MOAI_LUA_SETUP ( MOAILayer2D, "UU" )
 
 	MOAIPartition* partition = state.GetLuaObject < MOAIPartition >( 2 );
 	if ( !partition ) return 0;
@@ -227,7 +228,7 @@ int MOAILayer2D::_setPartition ( lua_State* L ) {
 	@out	nil
 */
 int MOAILayer2D::_setViewport ( lua_State* L ) {
-	LUA_SETUP ( MOAILayer2D, "UU" )
+	MOAI_LUA_SETUP ( MOAILayer2D, "UU" )
 
 	MOAIViewport* viewport = state.GetLuaObject < MOAIViewport >( 2 );
 	if ( !viewport ) return 0;
@@ -246,7 +247,7 @@ int MOAILayer2D::_setViewport ( lua_State* L ) {
 	@out	nil
 */
 int	MOAILayer2D::_showDebugLines ( lua_State* L ) {
-	LUA_SETUP ( MOAILayer2D, "U" )
+	MOAI_LUA_SETUP ( MOAILayer2D, "U" )
 	
 	self->mShowDebugLines = state.GetValue < bool >( 2, true );
 	
@@ -264,7 +265,7 @@ int	MOAILayer2D::_showDebugLines ( lua_State* L ) {
 	@out	number y
 */
 int MOAILayer2D::_wndToWorld ( lua_State* L ) {
-	LUA_SETUP ( MOAILayer2D, "UNN" )
+	MOAI_LUA_SETUP ( MOAILayer2D, "UNN" )
 
 	USVec2D loc;
 	loc.mX = state.GetValue < float >( 2, 0.0f );
@@ -291,7 +292,7 @@ int MOAILayer2D::_wndToWorld ( lua_State* L ) {
 	@out	number y
 */
 int MOAILayer2D::_worldToWnd ( lua_State* L ) {
-	LUA_SETUP ( MOAILayer2D, "UNN" )
+	MOAI_LUA_SETUP ( MOAILayer2D, "UNN" )
 
 	USVec2D loc;
 	loc.mX = state.GetValue < float >( 2, 0.0f );

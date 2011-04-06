@@ -2,6 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAISim.h>
 #include <moaicore/MOAITimer.h>
 
@@ -17,7 +18,7 @@
 	@out	number nTimes
 */
 int MOAITimer::_getTimesExecuted ( lua_State* L ) {
-	LUA_SETUP ( MOAITimer, "UN" )
+	MOAI_LUA_SETUP ( MOAITimer, "UN" )
 
 	lua_pushnumber ( L, self->mTimesExecuted );
 	return 1;
@@ -32,7 +33,7 @@ int MOAITimer::_getTimesExecuted ( lua_State* L ) {
 	@out	nil
 */
 int MOAITimer::_setCallback ( lua_State* L ) {
-	LUA_SETUP ( MOAITimer, "UF" )
+	MOAI_LUA_SETUP ( MOAITimer, "UF" )
 
 	self->mCallback.SetRef ( state, 2, false );
 	return 0;
@@ -47,7 +48,7 @@ int MOAITimer::_setCallback ( lua_State* L ) {
 	@out	nil
 */
 int MOAITimer::_setMode ( lua_State* L ) {
-	LUA_SETUP ( MOAITimer, "UN" )
+	MOAI_LUA_SETUP ( MOAITimer, "UN" )
 
 	self->mMode = state.GetValue < int >( 2, NORMAL );
 	
@@ -79,7 +80,7 @@ int MOAITimer::_setMode ( lua_State* L ) {
 		@out	nil
 */
 int MOAITimer::_setSpan ( lua_State* L ) {
-	LUA_SETUP ( MOAITimer, "UN" )
+	MOAI_LUA_SETUP ( MOAITimer, "UN" )
 
 	if ( state.IsType ( 3, LUA_TNUMBER )) {
 		self->mStartTime = state.GetValue < float >( 2, 0.0f );
@@ -102,7 +103,7 @@ int MOAITimer::_setSpan ( lua_State* L ) {
 	@out	nil
 */
 int MOAITimer::_setSpeed ( lua_State* L ) {
-	LUA_SETUP ( MOAITimer, "UN" )
+	MOAI_LUA_SETUP ( MOAITimer, "UN" )
 
 	self->mSpeed = state.GetValue < float >( 2, 1.0f );
 
@@ -119,7 +120,7 @@ int MOAITimer::_setSpeed ( lua_State* L ) {
 	@out	nil
 */
 int MOAITimer::_setTime ( lua_State* L ) {
-	LUA_SETUP ( MOAITimer, "U" )
+	MOAI_LUA_SETUP ( MOAITimer, "U" )
 	
 	float time = state.GetValue < float >( 2, 0.0f );
 	self->SetTime ( time );

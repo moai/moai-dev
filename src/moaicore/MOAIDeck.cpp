@@ -4,6 +4,7 @@
 #include "pch.h"
 #include <moaicore/MOAIDeck.h>
 #include <moaicore/MOAIGrid.h>
+#include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIShader.h>
 #include <moaicore/MOAISurfaceSampler2D.h>
 #include <moaicore/MOAITransform.h>
@@ -21,7 +22,7 @@
 	@out	nil
 */
 int MOAIDeck::_setDefaultShader ( lua_State* L ) {
-	LUA_SETUP ( MOAIDeck, "UU" )
+	MOAI_LUA_SETUP ( MOAIDeck, "UU" )
 	
 	self->mDefaultShader = state.GetLuaObject < MOAIShader >( 2 );
 	

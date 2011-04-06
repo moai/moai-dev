@@ -11,6 +11,7 @@
 #include <moaicore/MOAIKeyboardSensor.h>
 #include <moaicore/MOAILevelSensor.h>
 #include <moaicore/MOAILocationSensor.h>
+#include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIPointerSensor.h>
 #include <moaicore/MOAISensor.h>
 #include <moaicore/MOAITouchSensor.h>

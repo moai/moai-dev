@@ -4,6 +4,7 @@
 #include "pch.h"
 #include <float.h>
 #include <moaicore/MOAIDeck.h>
+#include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIParticleEngine.h>
 #include <moaicore/MOAIParticleScript.h>
 #include <moaicore/MOAIParticleState.h>
@@ -24,7 +25,7 @@ class MOAIDataBuffer;
 	@param y (out)
 */
 int MOAIParticleSystem::_capParticles ( lua_State* L ) {
-	LUA_SETUP ( MOAIParticleSystem, "UB" )
+	MOAI_LUA_SETUP ( MOAIParticleSystem, "UB" )
 
 	self->mCapParticles = state.GetValue < bool >( 2, self->mCapParticles );
 	return 0;
@@ -38,7 +39,7 @@ int MOAIParticleSystem::_capParticles ( lua_State* L ) {
 	@param y (out)
 */
 int MOAIParticleSystem::_capSprites ( lua_State* L ) {
-	LUA_SETUP ( MOAIParticleSystem, "UB" )
+	MOAI_LUA_SETUP ( MOAIParticleSystem, "UB" )
 
 	self->mCapSprites = state.GetValue < bool >( 2, self->mCapSprites );
 	return 0;
@@ -52,7 +53,7 @@ int MOAIParticleSystem::_capSprites ( lua_State* L ) {
 	@param y (out)
 */
 int MOAIParticleSystem::_clearSprites ( lua_State* L ) {
-	LUA_SETUP ( MOAIParticleSystem, "U" )
+	MOAI_LUA_SETUP ( MOAIParticleSystem, "U" )
 
 	self->mSpriteTop = 0;
 	return 0;
@@ -66,7 +67,7 @@ int MOAIParticleSystem::_clearSprites ( lua_State* L ) {
 	@param y (out)
 */
 int MOAIParticleSystem::_getState ( lua_State* L ) {
-	LUA_SETUP ( MOAIParticleSystem, "UN" )
+	MOAI_LUA_SETUP ( MOAIParticleSystem, "UN" )
 
 	u32 idx = state.GetValue < u32 >( 2, 1 ) - 1;
 	
@@ -86,7 +87,7 @@ int MOAIParticleSystem::_getState ( lua_State* L ) {
 	@param y (out)
 */
 int MOAIParticleSystem::_pushParticle ( lua_State* L ) {
-	LUA_SETUP ( MOAIParticleSystem, "U" )
+	MOAI_LUA_SETUP ( MOAIParticleSystem, "U" )
 
 	float x = state.GetValue < float >( 2, 0.0f );
 	float y = state.GetValue < float >( 3, 0.0f );
@@ -107,7 +108,7 @@ int MOAIParticleSystem::_pushParticle ( lua_State* L ) {
 	@param y (out)
 */
 int MOAIParticleSystem::_pushSprite ( lua_State* L ) {
-	LUA_SETUP ( MOAIParticleSystem, "UNN" )
+	MOAI_LUA_SETUP ( MOAIParticleSystem, "UNN" )
 
 	MOAIParticleSprite sprite;
 
@@ -140,7 +141,7 @@ int MOAIParticleSystem::_pushSprite ( lua_State* L ) {
 	@param y (out)
 */
 int MOAIParticleSystem::_reserveConstants ( lua_State* L ) {
-	LUA_SETUP ( MOAIParticleSystem, "UN" )
+	MOAI_LUA_SETUP ( MOAIParticleSystem, "UN" )
 
 	self->ReserveConstants ( state.GetValue < u32 >( 2, 0 ));
 	return 0;
@@ -154,7 +155,7 @@ int MOAIParticleSystem::_reserveConstants ( lua_State* L ) {
 	@param y (out)
 */
 int MOAIParticleSystem::_reserveParticles ( lua_State* L ) {
-	LUA_SETUP ( MOAIParticleSystem, "UNN" )
+	MOAI_LUA_SETUP ( MOAIParticleSystem, "UNN" )
 
 	u32 total	= state.GetValue < u32 >( 2, 0 );
 	u32 size	= state.GetValue < u32 >( 3, 0 );
@@ -171,7 +172,7 @@ int MOAIParticleSystem::_reserveParticles ( lua_State* L ) {
 	@param y (out)
 */
 int MOAIParticleSystem::_reserveSprites ( lua_State* L ) {
-	LUA_SETUP ( MOAIParticleSystem, "UN" )
+	MOAI_LUA_SETUP ( MOAIParticleSystem, "UN" )
 
 	self->ReserveSprites ( state.GetValue < u32 >( 2, 0 ));
 	return 0;
@@ -185,7 +186,7 @@ int MOAIParticleSystem::_reserveSprites ( lua_State* L ) {
 	@param y (out)
 */
 int MOAIParticleSystem::_reserveStates ( lua_State* L ) {
-	LUA_SETUP ( MOAIParticleSystem, "UN" )
+	MOAI_LUA_SETUP ( MOAIParticleSystem, "UN" )
 
 	self->ClearStates ();
 	self->ReserveStates ( state.GetValue < u32 >( 2, 0 ));
@@ -200,7 +201,7 @@ int MOAIParticleSystem::_reserveStates ( lua_State* L ) {
 	@param y (out)
 */
 int MOAIParticleSystem::_setConstant ( lua_State* L ) {
-	LUA_SETUP ( MOAIParticleSystem, "U" )
+	MOAI_LUA_SETUP ( MOAIParticleSystem, "U" )
 
 	u32 idx			= state.GetValue < u32 >( 2, 0 );
 	float value		= state.GetValue < float >( 3, 0.0f );
@@ -218,7 +219,7 @@ int MOAIParticleSystem::_setConstant ( lua_State* L ) {
 	@param y (out)
 */
 int MOAIParticleSystem::_setSpriteColor ( lua_State* L ) {
-	LUA_SETUP ( MOAIParticleSystem, "UNNNN" )
+	MOAI_LUA_SETUP ( MOAIParticleSystem, "UNNNN" )
 
 	MOAIParticleSprite* sprite = self->GetTopSprite ();
 	if ( sprite ) {
@@ -241,7 +242,7 @@ int MOAIParticleSystem::_setSpriteColor ( lua_State* L ) {
 	@param y (out)
 */
 int MOAIParticleSystem::_setSpriteGfxID ( lua_State* L ) {
-	LUA_SETUP ( MOAIParticleSystem, "UN" )
+	MOAI_LUA_SETUP ( MOAIParticleSystem, "UN" )
 
 	MOAIParticleSprite* sprite = self->GetTopSprite ();
 	if ( sprite ) {
@@ -258,7 +259,7 @@ int MOAIParticleSystem::_setSpriteGfxID ( lua_State* L ) {
 	@param y (out)
 */
 int MOAIParticleSystem::_setSpriteGlow ( lua_State* L ) {
-	LUA_SETUP ( MOAIParticleSystem, "U" )
+	MOAI_LUA_SETUP ( MOAIParticleSystem, "U" )
 
 	MOAIParticleSprite* sprite = self->GetTopSprite ();
 	if ( sprite ) {
@@ -276,7 +277,7 @@ int MOAIParticleSystem::_setSpriteGlow ( lua_State* L ) {
 	@param y (out)
 */
 int MOAIParticleSystem::_setState ( lua_State* L ) {
-	LUA_SETUP ( MOAIParticleSystem, "UNU" )
+	MOAI_LUA_SETUP ( MOAIParticleSystem, "UNU" )
 
 	u32 idx = state.GetValue < u32 >( 2, 0 ) - 1;
 
@@ -303,7 +304,7 @@ int MOAIParticleSystem::_setState ( lua_State* L ) {
 	@param y (out)
 */
 int MOAIParticleSystem::_surge ( lua_State* L ) {
-	LUA_SETUP ( MOAIParticleSystem, "U" )
+	MOAI_LUA_SETUP ( MOAIParticleSystem, "U" )
 
 	u32 n		= state.GetValue < u32 >( 2, 0 );
 	float x		= state.GetValue < float >( 3, 0.0f );

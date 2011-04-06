@@ -4,6 +4,7 @@
 #include "pch.h"
 #include <chipmunk/chipmunk.h>
 #include <moaicore/MOAICpArbiter.h>
+#include <moaicore/MOAILogMessages.h>
 
 SUPPRESS_EMPTY_FILE_WARNING
 #if USE_CHIPMUNK
@@ -20,7 +21,7 @@ SUPPRESS_EMPTY_FILE_WARNING
 	@out	number count		The number of contacts occurring.
 */
 int MOAICpArbiter::_countContacts ( lua_State* L ) {
-	LUA_SETUP ( MOAICpArbiter, "U" )
+	MOAI_LUA_SETUP ( MOAICpArbiter, "U" )
 
 	if ( self->mArbiter ) {
 		int count = cpArbiterGetCount ( self->mArbiter );
@@ -39,7 +40,7 @@ int MOAICpArbiter::_countContacts ( lua_State* L ) {
 	@out	number depth		The depth of the contact in pixels (i.e. how far it overlaps).
 */
 int MOAICpArbiter::_getContactDepth ( lua_State* L ) {
-	LUA_SETUP ( MOAICpArbiter, "UN" )
+	MOAI_LUA_SETUP ( MOAICpArbiter, "UN" )
 
 	if ( self->mArbiter ) {
 		int i = state.GetValue < int >( 2, 0 );
@@ -60,7 +61,7 @@ int MOAICpArbiter::_getContactDepth ( lua_State* L ) {
 	@out	boolean y			The Y component of the normal vector.
 */
 int MOAICpArbiter::_getContactNormal ( lua_State* L ) {
-	LUA_SETUP ( MOAICpArbiter, "UN" )
+	MOAI_LUA_SETUP ( MOAICpArbiter, "UN" )
 
 	if ( self->mArbiter ) {
 		int i = state.GetValue < int >( 2, 0 );
@@ -82,7 +83,7 @@ int MOAICpArbiter::_getContactNormal ( lua_State* L ) {
 	@out	boolean y			The Y component of the position vector.
 */
 int MOAICpArbiter::_getContactPoint ( lua_State* L ) {
-	LUA_SETUP ( MOAICpArbiter, "UN" )
+	MOAI_LUA_SETUP ( MOAICpArbiter, "UN" )
 
 	if ( self->mArbiter ) {
 		int i = state.GetValue < int >( 2, 0 );
@@ -103,7 +104,7 @@ int MOAICpArbiter::_getContactPoint ( lua_State* L ) {
 	@out	boolean y			The Y component of the force involved in the contact.
 */
 int MOAICpArbiter::_getTotalImpulse ( lua_State* L ) {
-	LUA_SETUP ( MOAICpArbiter, "U" )
+	MOAI_LUA_SETUP ( MOAICpArbiter, "U" )
 
 	if ( self->mArbiter ) {
 		cpVect v = cpArbiterTotalImpulse ( self->mArbiter );
@@ -123,7 +124,7 @@ int MOAICpArbiter::_getTotalImpulse ( lua_State* L ) {
 	@out	boolean y			The Y component of the force involved in the contact.
 */
 int MOAICpArbiter::_getTotalImpulseWithFriction ( lua_State* L ) {
-	LUA_SETUP ( MOAICpArbiter, "U" )
+	MOAI_LUA_SETUP ( MOAICpArbiter, "U" )
 
 	if ( self->mArbiter ) {
 		cpVect v = cpArbiterTotalImpulseWithFriction ( self->mArbiter );
@@ -142,7 +143,7 @@ int MOAICpArbiter::_getTotalImpulseWithFriction ( lua_State* L ) {
 	@out	boolean first		Whether this is the first instance of a collision.
 */
 int MOAICpArbiter::_isFirstContact ( lua_State* L ) {
-	LUA_SETUP ( MOAICpArbiter, "U" )
+	MOAI_LUA_SETUP ( MOAICpArbiter, "U" )
 
 	if ( self->mArbiter ) {
 		bool b = cpArbiterIsFirstContact ( self->mArbiter ) == cpTrue;

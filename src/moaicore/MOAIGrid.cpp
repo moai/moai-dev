@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <moaicore/MOAIGrid.h>
+#include <moaicore/MOAILogMessages.h>
 
 //================================================================//
 // local
@@ -19,7 +20,7 @@
 	@out	nil
 */
 int MOAIGrid::_clearTileFlags ( lua_State* L ) {
-	LUA_SETUP ( MOAIGrid, "UNNN" )
+	MOAI_LUA_SETUP ( MOAIGrid, "UNNN" )
 
 	int xTile	= state.GetValue < int >( 2, 1 ) - 1;
 	int yTile	= state.GetValue < int >( 3, 1 ) - 1;
@@ -44,7 +45,7 @@ int MOAIGrid::_clearTileFlags ( lua_State* L ) {
 	@out	number tile
 */
 int MOAIGrid::_getTile ( lua_State* L ) {
-	LUA_SETUP ( MOAIGrid, "UNN" )
+	MOAI_LUA_SETUP ( MOAIGrid, "UNN" )
 
 	int xTile	= state.GetValue < int >( 2, 1 ) - 1;
 	int yTile	= state.GetValue < int >( 3, 1 ) - 1;
@@ -65,7 +66,7 @@ int MOAIGrid::_getTile ( lua_State* L ) {
 	@out	number tile
 */
 int MOAIGrid::_getTileFlags ( lua_State* L ) {
-	LUA_SETUP ( MOAIGrid, "UNNN" )
+	MOAI_LUA_SETUP ( MOAIGrid, "UNNN" )
 
 	int xTile	= state.GetValue < int >( 2, 1 ) - 1;
 	int yTile	= state.GetValue < int >( 3, 1 ) - 1;
@@ -93,7 +94,7 @@ int MOAIGrid::_getTileFlags ( lua_State* L ) {
 	@out	number y
 */
 int MOAIGrid::_getTileLoc ( lua_State* L ) {
-	LUA_SETUP ( MOAIGrid, "UNN" )
+	MOAI_LUA_SETUP ( MOAIGrid, "UNN" )
 	
 	int xTile		= state.GetValue < int >( 2, 1 ) - 1;
 	int yTile		= state.GetValue < int >( 3, 1 ) - 1;
@@ -116,7 +117,7 @@ int MOAIGrid::_getTileLoc ( lua_State* L ) {
 	@out	number yTile
 */
 int MOAIGrid::_locToCoord ( lua_State* L ) {
-	LUA_SETUP ( MOAIGrid, "UNN" )
+	MOAI_LUA_SETUP ( MOAIGrid, "UNN" )
 
 	USVec2D loc;
 	loc.mX = state.GetValue < float >( 2, 0 );
@@ -140,7 +141,7 @@ int MOAIGrid::_locToCoord ( lua_State* L ) {
 	@out	nil
 */
 int MOAIGrid::_setRow ( lua_State* L ) {
-	LUA_SETUP ( MOAIGrid, "UN" )
+	MOAI_LUA_SETUP ( MOAIGrid, "UN" )
 
 	u32 row = state.GetValue < u32 >( 2, 1 ) - 1;
 	u32 total = lua_gettop ( state ) - 2;
@@ -166,7 +167,7 @@ int MOAIGrid::_setRow ( lua_State* L ) {
 	@out	nil
 */
 int MOAIGrid::_setSize ( lua_State* L ) {
-	LUA_SETUP ( MOAIGrid, "UNN" )
+	MOAI_LUA_SETUP ( MOAIGrid, "UNN" )
 
 	u32 width = state.GetValue < u32 >( 2, 0 );
 	u32 height = state.GetValue < u32 >( 3, 0 );
@@ -189,7 +190,7 @@ int MOAIGrid::_setSize ( lua_State* L ) {
 	@out	nil
 */
 int MOAIGrid::_setTile ( lua_State* L ) {
-	LUA_SETUP ( MOAIGrid, "UNNN" )
+	MOAI_LUA_SETUP ( MOAIGrid, "UNNN" )
 
 	int xTile	= state.GetValue < int >( 2, 1 ) - 1;
 	int yTile	= state.GetValue < int >( 3, 1 ) - 1;
@@ -211,7 +212,7 @@ int MOAIGrid::_setTile ( lua_State* L ) {
 	@out	nil
 */
 int MOAIGrid::_setTileFlags ( lua_State* L ) {
-	LUA_SETUP ( MOAIGrid, "UNNN" )
+	MOAI_LUA_SETUP ( MOAIGrid, "UNNN" )
 
 	int xTile	= state.GetValue < int >( 2, 1 ) - 1;
 	int yTile	= state.GetValue < int >( 3, 1 ) - 1;
@@ -237,7 +238,7 @@ int MOAIGrid::_setTileFlags ( lua_State* L ) {
 	@out	nil
 */
 int MOAIGrid::_toggleTileFlags ( lua_State* L ) {
-	LUA_SETUP ( MOAIGrid, "UNNN" )
+	MOAI_LUA_SETUP ( MOAIGrid, "UNNN" )
 
 	int xTile	= state.GetValue < int >( 2, 1 ) - 1;
 	int yTile	= state.GetValue < int >( 3, 1 ) - 1;
@@ -263,7 +264,7 @@ int MOAIGrid::_toggleTileFlags ( lua_State* L ) {
 	@out	number yTile
 */
 int MOAIGrid::_wrapCoord ( lua_State* L ) {
-	LUA_SETUP ( MOAIGrid, "UNN" )
+	MOAI_LUA_SETUP ( MOAIGrid, "UNN" )
 	
 	USTileCoord coord;
 	coord.mX = state.GetValue < int >( 2, 1 ) - 1;

@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <moaicore/MOAIButtonSensor.h>
+#include <moaicore/MOAILogMessages.h>
 
 //================================================================//
 // MOAIButtonEvent
@@ -25,7 +26,7 @@ public:
 	@out	boolean wasPressed
 */
 int MOAIButtonSensor::_down ( lua_State* L ) {
-	LUA_SETUP ( MOAIButtonSensor, "U" )
+	MOAI_LUA_SETUP ( MOAIButtonSensor, "U" )
 	
 	lua_pushboolean ( state, self->ButtonDown ());
 	return 1;
@@ -39,7 +40,7 @@ int MOAIButtonSensor::_down ( lua_State* L ) {
 	@out	boolean isDown
 */
 int MOAIButtonSensor::_isDown ( lua_State* L ) {
-	LUA_SETUP ( MOAIButtonSensor, "U" )
+	MOAI_LUA_SETUP ( MOAIButtonSensor, "U" )
 	
 	lua_pushboolean ( state, self->ButtonIsDown ());
 	return 1;
@@ -53,7 +54,7 @@ int MOAIButtonSensor::_isDown ( lua_State* L ) {
 	@out	boolean isUp
 */
 int MOAIButtonSensor::_isUp ( lua_State* L ) {
-	LUA_SETUP ( MOAIButtonSensor, "U" )
+	MOAI_LUA_SETUP ( MOAIButtonSensor, "U" )
 	
 	lua_pushboolean ( state, self->ButtonIsUp ());
 	return 1;
@@ -67,7 +68,7 @@ int MOAIButtonSensor::_isUp ( lua_State* L ) {
 	@out	boolean wasReleased
 */
 int MOAIButtonSensor::_up ( lua_State* L ) {
-	LUA_SETUP ( MOAIButtonSensor, "U" )
+	MOAI_LUA_SETUP ( MOAIButtonSensor, "U" )
 	
 	lua_pushboolean ( state, self->ButtonUp ());
 	return 1;
@@ -82,7 +83,7 @@ int MOAIButtonSensor::_up ( lua_State* L ) {
 	@out	nil
 */
 int MOAIButtonSensor::_setCallback ( lua_State* L ) {
-	LUA_SETUP ( MOAIButtonSensor, "UF" )
+	MOAI_LUA_SETUP ( MOAIButtonSensor, "UF" )
 	
 	self->mOnButton.SetRef ( state, 2, false );
 	

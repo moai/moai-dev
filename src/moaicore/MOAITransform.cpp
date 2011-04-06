@@ -2,6 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAITransform.h>
 
 //================================================================//
@@ -18,7 +19,7 @@
 	@out	nil
 */
 int MOAITransform::_addLoc ( lua_State* L ) {
-	LUA_SETUP ( MOAITransform, "UNN" )
+	MOAI_LUA_SETUP ( MOAITransform, "UNN" )
 	
 	USVec2D loc = self->GetLoc ();
 	
@@ -40,7 +41,7 @@ int MOAITransform::_addLoc ( lua_State* L ) {
 	@out	nil
 */
 int MOAITransform::_addRot ( lua_State* L ) {
-	LUA_SETUP ( MOAITransform, "UN" )
+	MOAI_LUA_SETUP ( MOAITransform, "UN" )
 	
 	float d = self->GetRot ();
 	d += state.GetValue < float >( 2, 0.0f );
@@ -61,7 +62,7 @@ int MOAITransform::_addRot ( lua_State* L ) {
 	@out	nil
 */
 int MOAITransform::_addScl ( lua_State* L ) {
-	LUA_SETUP ( MOAITransform, "UNN" )
+	MOAI_LUA_SETUP ( MOAITransform, "UNN" )
 	
 	USVec2D scl = self->GetScl ();
 	
@@ -83,7 +84,7 @@ int MOAITransform::_addScl ( lua_State* L ) {
 	@out	number yLoc
 */
 int	MOAITransform::_getLoc ( lua_State* L ) {
-	LUA_SETUP ( MOAITransform, "U" )
+	MOAI_LUA_SETUP ( MOAITransform, "U" )
 	
 	lua_pushnumber ( state, self->mLoc.mX );
 	lua_pushnumber ( state, self->mLoc.mY );
@@ -99,7 +100,7 @@ int	MOAITransform::_getLoc ( lua_State* L ) {
 	@out	number rot			Rotation in degrees.
 */
 int	MOAITransform::_getRot ( lua_State* L ) {
-	LUA_SETUP ( MOAITransform, "U" )
+	MOAI_LUA_SETUP ( MOAITransform, "U" )
 	
 	lua_pushnumber ( state, self->mDegrees );
 
@@ -115,7 +116,7 @@ int	MOAITransform::_getRot ( lua_State* L ) {
 	@out	number yScl
 */
 int	MOAITransform::_getScl ( lua_State* L ) {
-	LUA_SETUP ( MOAITransform, "U" )
+	MOAI_LUA_SETUP ( MOAITransform, "U" )
 	
 	lua_pushnumber ( state, self->mScale.mX );
 	lua_pushnumber ( state, self->mScale.mY );
@@ -134,7 +135,7 @@ int	MOAITransform::_getScl ( lua_State* L ) {
 	@out	y
 */
 int MOAITransform::_modelToWorld ( lua_State* L ) {
-	LUA_SETUP ( MOAITransform, "UNN" )
+	MOAI_LUA_SETUP ( MOAITransform, "UNN" )
 
 	USVec2D loc;
 	loc.mX = state.GetValue < float >( 2, 0.0f );
@@ -167,7 +168,7 @@ int MOAITransform::_modelToWorld ( lua_State* L ) {
 	@out	MOAIEaseDriver easeDriver
 */
 int MOAITransform::_move ( lua_State* L ) {
-	LUA_SETUP ( MOAITransform, "UNNNNNN" )
+	MOAI_LUA_SETUP ( MOAITransform, "UNNNNNN" )
 
 	MOAIEaseDriver* action = new MOAIEaseDriver ();
 	action->ReserveLinks ( 5 );
@@ -208,7 +209,7 @@ int MOAITransform::_move ( lua_State* L ) {
 	@out	MOAIEaseDriver easeDriver
 */
 int MOAITransform::_moveLoc ( lua_State* L ) {
-	LUA_SETUP ( MOAITransform, "UNNN" )
+	MOAI_LUA_SETUP ( MOAITransform, "UNNN" )
 
 	MOAIEaseDriver* action = new MOAIEaseDriver ();
 	action->ReserveLinks ( 2 );
@@ -242,7 +243,7 @@ int MOAITransform::_moveLoc ( lua_State* L ) {
 	@out	MOAIEaseDriver easeDriver
 */
 int MOAITransform::_moveRot ( lua_State* L ) {
-	LUA_SETUP ( MOAITransform, "UNN" )
+	MOAI_LUA_SETUP ( MOAITransform, "UNN" )
 
 	MOAIEaseDriver* action = new MOAIEaseDriver ();
 	action->ReserveLinks ( 1 );
@@ -275,7 +276,7 @@ int MOAITransform::_moveRot ( lua_State* L ) {
 	@out	MOAIEaseDriver easeDriver
 */
 int MOAITransform::_moveScl ( lua_State* L ) {
-	LUA_SETUP ( MOAITransform, "UNNN" )
+	MOAI_LUA_SETUP ( MOAITransform, "UNNN" )
 
 	MOAIEaseDriver* action = new MOAIEaseDriver ();
 	action->ReserveLinks ( 2 );
@@ -314,7 +315,7 @@ int MOAITransform::_moveScl ( lua_State* L ) {
 	@out	MOAIEaseDriver easeDriver
 */
 int MOAITransform::_seek ( lua_State* L ) {
-	LUA_SETUP ( MOAITransform, "UNNNNNN" )
+	MOAI_LUA_SETUP ( MOAITransform, "UNNNNNN" )
 
 	MOAIEaseDriver* action = new MOAIEaseDriver ();
 	action->ReserveLinks ( 5 );
@@ -356,7 +357,7 @@ int MOAITransform::_seek ( lua_State* L ) {
 	@out	MOAIEaseDriver easeDriver
 */
 int MOAITransform::_seekLoc ( lua_State* L ) {
-	LUA_SETUP ( MOAITransform, "UNNN" )
+	MOAI_LUA_SETUP ( MOAITransform, "UNNN" )
 
 	MOAIEaseDriver* action = new MOAIEaseDriver ();
 	action->ReserveLinks ( 2 );
@@ -391,7 +392,7 @@ int MOAITransform::_seekLoc ( lua_State* L ) {
 	@out	MOAIEaseDriver easeDriver
 */
 int MOAITransform::_seekRot ( lua_State* L ) {
-	LUA_SETUP ( MOAITransform, "UNN" )
+	MOAI_LUA_SETUP ( MOAITransform, "UNN" )
 
 	MOAIEaseDriver* action = new MOAIEaseDriver ();
 	action->ReserveLinks ( 1 );
@@ -425,7 +426,7 @@ int MOAITransform::_seekRot ( lua_State* L ) {
 	@out	MOAIEaseDriver easeDriver
 */
 int MOAITransform::_seekScl ( lua_State* L ) {
-	LUA_SETUP ( MOAITransform, "UNNN" )
+	MOAI_LUA_SETUP ( MOAITransform, "UNNN" )
 
 	MOAIEaseDriver* action = new MOAIEaseDriver ();
 	action->ReserveLinks ( 2 );
@@ -455,7 +456,7 @@ int MOAITransform::_seekScl ( lua_State* L ) {
 	@out	nil
 */
 int MOAITransform::_setLoc ( lua_State* L ) {
-	LUA_SETUP ( MOAITransform, "UNN" )
+	MOAI_LUA_SETUP ( MOAITransform, "UNN" )
 	
 	USVec2D loc;
 	
@@ -477,7 +478,7 @@ int MOAITransform::_setLoc ( lua_State* L ) {
 	@out	nil
 */
 int MOAITransform::_setParent ( lua_State* L ) {
-	LUA_SETUP ( MOAITransform, "U" )
+	MOAI_LUA_SETUP ( MOAITransform, "U" )
 	
 	MOAITransformBase* parent = state.GetLuaObject < MOAITransformBase >( 2 );
 	self->SetParent ( parent );
@@ -494,7 +495,7 @@ int MOAITransform::_setParent ( lua_State* L ) {
 	@out	nil
 */
 int MOAITransform::_setRot ( lua_State* L ) {
-	LUA_SETUP ( MOAITransform, "UN" )
+	MOAI_LUA_SETUP ( MOAITransform, "UN" )
 	
 	float d = state.GetValue < float >( 2, 0.0f );
 	
@@ -514,7 +515,7 @@ int MOAITransform::_setRot ( lua_State* L ) {
 	@out	nil
 */
 int MOAITransform::_setScl ( lua_State* L ) {
-	LUA_SETUP ( MOAITransform, "UNN" )
+	MOAI_LUA_SETUP ( MOAITransform, "UNN" )
 	
 	USVec2D scl;
 	
@@ -538,7 +539,7 @@ int MOAITransform::_setScl ( lua_State* L ) {
 	@out	y
 */
 int MOAITransform::_worldToModel ( lua_State* L ) {
-	LUA_SETUP ( MOAITransform, "UNN" )
+	MOAI_LUA_SETUP ( MOAITransform, "UNN" )
 
 	USVec2D loc;
 	loc.mX = state.GetValue < float >( 2, 0.0f );

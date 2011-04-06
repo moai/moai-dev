@@ -1,4 +1,5 @@
 #include "pch.h"
+#include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAISurfaceSampler2D.h>
 #include <moaicore/MOAITransform.h>
 

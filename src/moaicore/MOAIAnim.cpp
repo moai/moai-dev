@@ -4,6 +4,7 @@
 #include "pch.h"
 #include <moaicore/MOAIAnim.h>
 #include <moaicore/MOAIAnimCurve.h>
+#include <moaicore/MOAILogMessages.h>
 
 //================================================================//
 // local
@@ -28,7 +29,7 @@
 */
 
 int MOAIAnim::_apply ( lua_State* L ) {
-	LUA_SETUP ( MOAIAnim, "U" );
+	MOAI_LUA_SETUP ( MOAIAnim, "U" );
 
 	float t0 = state.GetValue < float >( 2, 0.0f );
 	float t1 = state.GetValue < float >( 3, 0.0f );
@@ -46,7 +47,7 @@ int MOAIAnim::_apply ( lua_State* L ) {
 	@out	number length
 */
 int	MOAIAnim::_getLength ( lua_State* L ) {
-	LUA_SETUP ( MOAIAnim, "U" )
+	MOAI_LUA_SETUP ( MOAIAnim, "U" )
 	
 	lua_pushnumber ( state, self->GetLength ());
 	
@@ -62,7 +63,7 @@ int	MOAIAnim::_getLength ( lua_State* L ) {
 	@out	nil
 */
 int	MOAIAnim::_reserveLinks ( lua_State* L ) {
-	LUA_SETUP ( MOAIAnim, "UN" );
+	MOAI_LUA_SETUP ( MOAIAnim, "UN" );
 	
 	u32 totalLinks = state.GetValue < u32 >( 2, 0 );
 	self->ReserveLinks ( totalLinks );
@@ -83,7 +84,7 @@ int	MOAIAnim::_reserveLinks ( lua_State* L ) {
 	@out	nil
 */
 int	MOAIAnim::_setLink ( lua_State* L ) {
-	LUA_SETUP ( MOAIAnim, "UNUUN" );
+	MOAI_LUA_SETUP ( MOAIAnim, "UNUUN" );
 	
 	MOAINode* target = state.GetLuaObject < MOAINode >( 4 );
 	if ( !target ) return 0;

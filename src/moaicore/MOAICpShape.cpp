@@ -5,6 +5,7 @@
 #include <chipmunk/chipmunk.h>
 #include <moaicore/MOAICpBody.h>
 #include <moaicore/MOAICpShape.h>
+#include <moaicore/MOAILogMessages.h>
 
 SUPPRESS_EMPTY_FILE_WARNING
 #if USE_CHIPMUNK
@@ -121,7 +122,7 @@ int MOAICpShape::_areaForSegment ( lua_State* L ) {
 	@out	MOAICpBody body			The body.
 */
 int MOAICpShape::_getBody ( lua_State* L ) {
-	LUA_SETUP ( MOAICpShape, "U" )
+	MOAI_LUA_SETUP ( MOAICpShape, "U" )
 	
 	if ( self->mShape && self->mShape->body ) {
 		(( MOAICpBody* )self->mShape->body->data )->PushLuaUserdata ( state );
@@ -138,7 +139,7 @@ int MOAICpShape::_getBody ( lua_State* L ) {
 	@out	number elasticity			The elasticity.
 */
 int MOAICpShape::_getElasticity ( lua_State* L ) {
-	LUA_SETUP ( MOAICpShape, "U" )
+	MOAI_LUA_SETUP ( MOAICpShape, "U" )
 	
 	if ( self->mShape ) {
 		lua_pushnumber ( L, self->mShape->e );
@@ -155,7 +156,7 @@ int MOAICpShape::_getElasticity ( lua_State* L ) {
 	@out	number friction			The friction.
 */
 int MOAICpShape::_getFriction ( lua_State* L ) {
-	LUA_SETUP ( MOAICpShape, "U" )
+	MOAI_LUA_SETUP ( MOAICpShape, "U" )
 	
 	if ( self->mShape ) {
 		lua_pushnumber ( L, self->mShape->u );
@@ -172,7 +173,7 @@ int MOAICpShape::_getFriction ( lua_State* L ) {
 	@out	number group			The group ID.
 */
 int MOAICpShape::_getGroup ( lua_State* L ) {
-	LUA_SETUP ( MOAICpShape, "U" )
+	MOAI_LUA_SETUP ( MOAICpShape, "U" )
 	
 	if ( self->mShape ) {
 		lua_pushnumber ( L, self->mShape->group );
@@ -189,7 +190,7 @@ int MOAICpShape::_getGroup ( lua_State* L ) {
 	@out	number layer			The layer ID.
 */
 int MOAICpShape::_getLayers ( lua_State* L ) {
-	LUA_SETUP ( MOAICpShape, "U" )
+	MOAI_LUA_SETUP ( MOAICpShape, "U" )
 	
 	if ( self->mShape ) {
 		lua_pushnumber ( L, self->mShape->layers );
@@ -207,7 +208,7 @@ int MOAICpShape::_getLayers ( lua_State* L ) {
 	@out	number y				The Y component of the surface velocity.
 */
 int MOAICpShape::_getSurfaceVel ( lua_State* L ) {
-	LUA_SETUP ( MOAICpShape, "UNN" )
+	MOAI_LUA_SETUP ( MOAICpShape, "UNN" )
 	
 	if ( self->mShape ) {
 		lua_pushnumber ( L, self->mShape->surface_v.x );
@@ -225,7 +226,7 @@ int MOAICpShape::_getSurfaceVel ( lua_State* L ) {
 	@out	number type				The collision type.
 */
 int MOAICpShape::_getType ( lua_State* L ) {
-	LUA_SETUP ( MOAICpShape, "U" )
+	MOAI_LUA_SETUP ( MOAICpShape, "U" )
 	
 	if ( self->mShape ) {
 		lua_pushnumber ( L, self->mShape->collision_type );
@@ -244,7 +245,7 @@ int MOAICpShape::_getType ( lua_State* L ) {
 	@out	boolean inside			Whether the point is inside the shape.
 */
 int MOAICpShape::_inside ( lua_State* L ) {
-	LUA_SETUP ( MOAICpShape, "UNN" )
+	MOAI_LUA_SETUP ( MOAICpShape, "UNN" )
 	
 	if ( self->mShape ) {
 	
@@ -266,7 +267,7 @@ int MOAICpShape::_inside ( lua_State* L ) {
 	@out	boolean sensor			Whether the shape is a sensor.
 */
 int MOAICpShape::_isSensor ( lua_State* L ) {
-	LUA_SETUP ( MOAICpShape, "U" )
+	MOAI_LUA_SETUP ( MOAICpShape, "U" )
 	
 	if ( self->mShape ) {
 		lua_pushboolean ( state, ( self->mShape->sensor == cpTrue ));
@@ -414,7 +415,7 @@ int	MOAICpShape::_new ( lua_State* L ) {
 	@out	nil
 */
 int MOAICpShape::_setElasticity ( lua_State* L ) {
-	LUA_SETUP ( MOAICpShape, "UN" )
+	MOAI_LUA_SETUP ( MOAICpShape, "UN" )
 	
 	if ( self->mShape ) {
 		self->mShape->e = state.GetValue < cpFloat >( 2, self->mShape->e );
@@ -431,7 +432,7 @@ int MOAICpShape::_setElasticity ( lua_State* L ) {
 	@out	nil
 */
 int MOAICpShape::_setFriction ( lua_State* L ) {
-	LUA_SETUP ( MOAICpShape, "UN" )
+	MOAI_LUA_SETUP ( MOAICpShape, "UN" )
 	
 	if ( self->mShape ) {
 		self->mShape->u = state.GetValue < cpFloat >( 2, self->mShape->u );
@@ -448,7 +449,7 @@ int MOAICpShape::_setFriction ( lua_State* L ) {
 	@out	nil
 */
 int MOAICpShape::_setGroup ( lua_State* L ) {
-	LUA_SETUP ( MOAICpShape, "UN" )
+	MOAI_LUA_SETUP ( MOAICpShape, "UN" )
 	
 	if ( self->mShape ) {
 		self->mShape->group = state.GetValue < cpGroup >( 2, self->mShape->group );
@@ -465,7 +466,7 @@ int MOAICpShape::_setGroup ( lua_State* L ) {
 	@out	nil
 */
 int MOAICpShape::_setIsSensor ( lua_State* L ) {
-	LUA_SETUP ( MOAICpShape, "UB" )
+	MOAI_LUA_SETUP ( MOAICpShape, "UB" )
 	
 	if ( !self->mShape ) {
 		self->mShape->sensor = state.GetValue < bool >( 2, false ) ? cpTrue : cpFalse;
@@ -482,7 +483,7 @@ int MOAICpShape::_setIsSensor ( lua_State* L ) {
 	@out	nil
 */
 int MOAICpShape::_setLayers ( lua_State* L ) {
-	LUA_SETUP ( MOAICpShape, "UN" )
+	MOAI_LUA_SETUP ( MOAICpShape, "UN" )
 	
 	if ( self->mShape ) {
 		self->mShape->layers = state.GetValue < cpLayers >( 2, self->mShape->layers );
@@ -500,7 +501,7 @@ int MOAICpShape::_setLayers ( lua_State* L ) {
 	@out	nil
 */
 int MOAICpShape::_setSurfaceVel ( lua_State* L ) {
-	LUA_SETUP ( MOAICpShape, "UNN" )
+	MOAI_LUA_SETUP ( MOAICpShape, "UNN" )
 	
 	if ( !self->mShape ) {
 		cpVect surface_v;
@@ -520,7 +521,7 @@ int MOAICpShape::_setSurfaceVel ( lua_State* L ) {
 	@out	nil
 */
 int MOAICpShape::_setType ( lua_State* L ) {
-	LUA_SETUP ( MOAICpShape, "UN" )
+	MOAI_LUA_SETUP ( MOAICpShape, "UN" )
 	
 	if ( self->mShape ) {
 		self->mShape->collision_type = state.GetValue < cpCollisionType >( 2, self->mShape->collision_type );

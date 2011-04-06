@@ -5,6 +5,7 @@
 #include <chipmunk/chipmunk.h>
 #include <moaicore/MOAICpBody.h>
 #include <moaicore/MOAICpConstraint.h>
+#include <moaicore/MOAILogMessages.h>
 
 SUPPRESS_EMPTY_FILE_WARNING
 #if USE_CHIPMUNK
@@ -21,7 +22,7 @@ SUPPRESS_EMPTY_FILE_WARNING
 	@out	number bias			The bias coefficient.
 */
 int MOAICpConstraint::_getBiasCoef ( lua_State* L ) {
-	LUA_SETUP ( MOAICpConstraint, "U" )
+	MOAI_LUA_SETUP ( MOAICpConstraint, "U" )
 	
 	if ( self->mConstraint ) {
 		lua_pushnumber ( L, self->mConstraint->biasCoef );
@@ -38,7 +39,7 @@ int MOAICpConstraint::_getBiasCoef ( lua_State* L ) {
 	@out	number bias			The maximum bias coefficient.
 */
 int MOAICpConstraint::_getMaxBias ( lua_State* L ) {
-	LUA_SETUP ( MOAICpConstraint, "U" )
+	MOAI_LUA_SETUP ( MOAICpConstraint, "U" )
 	
 	if ( self->mConstraint ) {
 		lua_pushnumber ( L, self->mConstraint->maxBias );
@@ -55,7 +56,7 @@ int MOAICpConstraint::_getMaxBias ( lua_State* L ) {
 	@out	number bias			The maximum force allowed.
 */
 int MOAICpConstraint::_getMaxForce ( lua_State* L ) {
-	LUA_SETUP ( MOAICpConstraint, "U" )
+	MOAI_LUA_SETUP ( MOAICpConstraint, "U" )
 	
 	if ( self->mConstraint ) {
 		lua_pushnumber ( L, self->mConstraint->maxForce );
@@ -464,7 +465,7 @@ int MOAICpConstraint::_newSlideJoint ( lua_State* L ) {
 	@out	nil
 */
 int MOAICpConstraint::_setBiasCoef ( lua_State* L ) {
-	LUA_SETUP ( MOAICpConstraint, "UN" )
+	MOAI_LUA_SETUP ( MOAICpConstraint, "UN" )
 	
 	if ( self->mConstraint ) {
 		self->mConstraint->biasCoef = state.GetValue < cpFloat >( 2, self->mConstraint->biasCoef );
@@ -481,7 +482,7 @@ int MOAICpConstraint::_setBiasCoef ( lua_State* L ) {
 	@out	nil
 */
 int MOAICpConstraint::_setMaxBias ( lua_State* L ) {
-	LUA_SETUP ( MOAICpConstraint, "UN" )
+	MOAI_LUA_SETUP ( MOAICpConstraint, "UN" )
 	
 	if ( self->mConstraint ) {
 		self->mConstraint->maxBias = state.GetValue < cpFloat >( 2, self->mConstraint->maxBias );
@@ -498,7 +499,7 @@ int MOAICpConstraint::_setMaxBias ( lua_State* L ) {
 	@out	nil
 */
 int MOAICpConstraint::_setMaxForce ( lua_State* L ) {
-	LUA_SETUP ( MOAICpConstraint, "UN" )
+	MOAI_LUA_SETUP ( MOAICpConstraint, "UN" )
 	
 	if ( self->mConstraint ) {
 		self->mConstraint->maxForce = state.GetValue < cpFloat >( 2, self->mConstraint->maxForce );

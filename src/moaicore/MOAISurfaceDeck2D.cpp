@@ -4,6 +4,7 @@
 #include "pch.h"
 #include <moaicore/MOAIDebugLines.h>
 #include <moaicore/MOAIGrid.h>
+#include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIProp.h>
 #include <moaicore/MOAISurfaceDeck2D.h>
 #include <moaicore/MOAISurfaceSampler2D.h>
@@ -22,7 +23,7 @@
 	@out	nil
 */
 int MOAISurfaceDeck2D::_reserveSurfaceLists ( lua_State* L ) {
-	LUA_SETUP ( MOAISurfaceDeck2D, "UN" )
+	MOAI_LUA_SETUP ( MOAISurfaceDeck2D, "UN" )
 
 	u32 total = state.GetValue < u32 >( 2, 0 );
 	self->mBrushes.Init ( total );
@@ -40,7 +41,7 @@ int MOAISurfaceDeck2D::_reserveSurfaceLists ( lua_State* L ) {
 	@out	nil
 */
 int MOAISurfaceDeck2D::_reserveSurfaces ( lua_State* L ) {
-	LUA_SETUP ( MOAISurfaceDeck2D, "UNN" )
+	MOAI_LUA_SETUP ( MOAISurfaceDeck2D, "UNN" )
 
 	u32 brushID		= state.GetValue < u32 >( 2, 1 ) - 1;
 	u32 total		= state.GetValue < u32 >( 3, 0 );
@@ -65,7 +66,7 @@ int MOAISurfaceDeck2D::_reserveSurfaces ( lua_State* L ) {
 	@out	nil
 */
 int MOAISurfaceDeck2D::_setSurface ( lua_State* L ) {
-	LUA_SETUP ( MOAISurfaceDeck2D, "UNNNNNN" )
+	MOAI_LUA_SETUP ( MOAISurfaceDeck2D, "UNNNNNN" )
 
 	u32 brushID		= state.GetValue < u32 >( 2, 1 ) - 1;
 	u32 surfaceID	= state.GetValue < u32 >( 3, 1 ) - 1;

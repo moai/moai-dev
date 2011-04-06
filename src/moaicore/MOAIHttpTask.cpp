@@ -4,6 +4,7 @@
 #include "pch.h"
 #include <tinyxml.h>
 #include <moaicore/MOAIHttpTask.h>
+#include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIXmlParser.h>
 #include <moaicore/MOAIDataBuffer.h>
 
@@ -19,7 +20,7 @@
 	@out	number size				The string size.  If the call found nothing, this will return the value zero (not nil).
 */
 int MOAIHttpTask::_getSize ( lua_State* L ) {
-	LUA_SETUP ( MOAIHttpTask, "U" )
+	MOAI_LUA_SETUP ( MOAIHttpTask, "U" )
 
 	lua_pushnumber ( state, self->mSize );
 
@@ -34,7 +35,7 @@ int MOAIHttpTask::_getSize ( lua_State* L ) {
 	@out	string text				The text string.
 */
 int MOAIHttpTask::_getString ( lua_State* L ) {
-	LUA_SETUP ( MOAIHttpTask, "U" )
+	MOAI_LUA_SETUP ( MOAIHttpTask, "U" )
 
 	lua_pushlstring ( state, ( cc8* )self->mBuffer, self->mSize );
 
@@ -50,7 +51,7 @@ int MOAIHttpTask::_getString ( lua_State* L ) {
 	@out	nil
 */
 int MOAIHttpTask::_httpGet ( lua_State* L ) {
-	LUA_SETUP ( MOAIHttpTask, "US" )
+	MOAI_LUA_SETUP ( MOAIHttpTask, "US" )
 	
 	cc8* url = lua_tostring ( state, 2 );
 	
@@ -72,7 +73,7 @@ int MOAIHttpTask::_httpGet ( lua_State* L ) {
 	@out	nil
 */
 int MOAIHttpTask::_httpPost ( lua_State* L ) {
-	LUA_SETUP ( MOAIHttpTask, "US" )
+	MOAI_LUA_SETUP ( MOAIHttpTask, "US" )
 	
 	cc8* url = lua_tostring ( state, 2 );
 
@@ -112,7 +113,7 @@ int MOAIHttpTask::_httpPost ( lua_State* L ) {
 	@out	MOAIXmlParser parser	The MOAIXmlParser which has parsed the returned data.
 */
 int MOAIHttpTask::_parseXml ( lua_State* L ) {
-	LUA_SETUP ( MOAIHttpTask, "U" )
+	MOAI_LUA_SETUP ( MOAIHttpTask, "U" )
 
 	if ( !self->mSize ) return 0;
 	
@@ -134,7 +135,7 @@ int MOAIHttpTask::_parseXml ( lua_State* L ) {
 	@out	nil
 */
 int MOAIHttpTask::_setCallback ( lua_State* L ) {
-	LUA_SETUP ( MOAIHttpTask, "UF" )
+	MOAI_LUA_SETUP ( MOAIHttpTask, "UF" )
 
 	self->mOnFinish.SetRef ( state, 2, false );
 

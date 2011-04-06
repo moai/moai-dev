@@ -2,6 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIParticleEmitter.h>
 #include <moaicore/MOAIParticleSystem.h>
 
@@ -17,7 +18,7 @@
 	@param y (out)
 */
 int MOAIParticleEmitter::_setAngle ( lua_State* L ) {
-	LUA_SETUP ( MOAIParticleEmitter, "UNN" )
+	MOAI_LUA_SETUP ( MOAIParticleEmitter, "UNN" )
 
 	float min = state.GetValue < float >( 2, 0.0f );
 	float max = state.GetValue < float >( 3, 360.0f );
@@ -34,7 +35,7 @@ int MOAIParticleEmitter::_setAngle ( lua_State* L ) {
 	@param y (out)
 */
 int MOAIParticleEmitter::_setEmission ( lua_State* L ) {
-	LUA_SETUP ( MOAIParticleEmitter, "UN" )
+	MOAI_LUA_SETUP ( MOAIParticleEmitter, "UN" )
 
 	u32 min = state.GetValue < u32 >( 2, 1 );
 	u32 max = state.GetValue < u32 >( 3, min );
@@ -51,7 +52,7 @@ int MOAIParticleEmitter::_setEmission ( lua_State* L ) {
 	@param y (out)
 */
 int MOAIParticleEmitter::_setFrequency ( lua_State* L ) {
-	LUA_SETUP ( MOAIParticleEmitter, "UN" )
+	MOAI_LUA_SETUP ( MOAIParticleEmitter, "UN" )
 
 	float min = state.GetValue < float >( 2, 1.0f );
 	float max = state.GetValue < float >( 3, min );
@@ -68,7 +69,7 @@ int MOAIParticleEmitter::_setFrequency ( lua_State* L ) {
 	@param y (out)
 */
 int MOAIParticleEmitter::_setMagnitude ( lua_State* L ) {
-	LUA_SETUP ( MOAIParticleEmitter, "UN" )
+	MOAI_LUA_SETUP ( MOAIParticleEmitter, "UN" )
 
 	float min = state.GetValue < float >( 2, 1.0f );
 	float max = state.GetValue < float >( 3, min );
@@ -85,7 +86,7 @@ int MOAIParticleEmitter::_setMagnitude ( lua_State* L ) {
 	@param y (out)
 */
 int MOAIParticleEmitter::_setRadius ( lua_State* L ) {
-	LUA_SETUP ( MOAIParticleEmitter, "UN" )
+	MOAI_LUA_SETUP ( MOAIParticleEmitter, "UN" )
 	
 	self->mShapeID	= CIRCLE;
 
@@ -109,7 +110,7 @@ int MOAIParticleEmitter::_setRadius ( lua_State* L ) {
 	@param y (out)
 */
 int MOAIParticleEmitter::_setRect ( lua_State* L ) {
-	LUA_SETUP ( MOAIParticleEmitter, "UNNNN" )
+	MOAI_LUA_SETUP ( MOAIParticleEmitter, "UNNNN" )
 
 	USRect rect;
 	rect.mXMin = state.GetValue < float >( 2, 0.0f );
@@ -133,7 +134,7 @@ int MOAIParticleEmitter::_setRect ( lua_State* L ) {
 	@param y (out)
 */
 int MOAIParticleEmitter::_setSystem ( lua_State* L ) {
-	LUA_SETUP ( MOAIParticleEmitter, "UU" )
+	MOAI_LUA_SETUP ( MOAIParticleEmitter, "UU" )
 
 	MOAIParticleSystem* system = state.GetLuaObject < MOAIParticleSystem >( 2 );
 	self->SetSystem ( system );
@@ -149,7 +150,7 @@ int MOAIParticleEmitter::_setSystem ( lua_State* L ) {
 	@param y (out)
 */
 int MOAIParticleEmitter::_surge ( lua_State* L ) {
-	LUA_SETUP ( MOAIParticleEmitter, "U" )
+	MOAI_LUA_SETUP ( MOAIParticleEmitter, "U" )
 
 	u32 total = state.GetValue < u32 >( 2, 1 );
 

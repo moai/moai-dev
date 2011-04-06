@@ -7,6 +7,7 @@ SUPPRESS_EMPTY_FILE_WARNING
 #if USE_FMOD
 
 #include <moaicore/MOAIFmod.h>
+#include <moaicore/MOAILogMessages.h>
 
 #include <fmod.hpp>
 #include <fmod_errors.h>

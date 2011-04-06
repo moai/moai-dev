@@ -4,6 +4,7 @@
 #include "pch.h"
 #include <moaicore/MOAIDataBuffer.h>
 #include <moaicore/MOAIGrid.h>
+#include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAITexture.h>
 
 //================================================================//
@@ -18,7 +19,7 @@
 	@out	nil
 */
 int MOAITexture::_bind ( lua_State* L ) {
-	LUA_SETUP ( MOAITexture, "U" )
+	MOAI_LUA_SETUP ( MOAITexture, "U" )
 	
 	self->Bind ();
 	
@@ -37,7 +38,7 @@ int MOAITexture::_bind ( lua_State* L ) {
 	@out	height
 */
 int MOAITexture::_getSize ( lua_State* L ) {
-	LUA_SETUP ( MOAITexture, "U" )
+	MOAI_LUA_SETUP ( MOAITexture, "U" )
 	
 	lua_pushnumber ( state, self->mDevWidth );
 	lua_pushnumber ( state, self->mDevHeight );
@@ -55,7 +56,7 @@ int MOAITexture::_getSize ( lua_State* L ) {
 	@out	nil
 */
 int MOAITexture::_load ( lua_State* L ) {
-	LUA_SETUP ( MOAITexture, "U" )
+	MOAI_LUA_SETUP ( MOAITexture, "U" )
 
 	MOAIDataBuffer* data = state.GetLuaObject < MOAIDataBuffer >( 2 );
 	u32 transform = state.GetValue < u32 >( 3, DEFAULT_TRANSFORM );
@@ -81,7 +82,7 @@ int MOAITexture::_load ( lua_State* L ) {
 	@out	nil
 */
 int MOAITexture::_release ( lua_State* L ) {
-	LUA_SETUP ( MOAITexture, "U" )
+	MOAI_LUA_SETUP ( MOAITexture, "U" )
 	
 	self->USTexture::Release ();
 	
@@ -98,7 +99,7 @@ int MOAITexture::_release ( lua_State* L ) {
 	@out	nil
 */
 int MOAITexture::_setFilter ( lua_State* L ) {
-	LUA_SETUP ( MOAITexture, "UN" )
+	MOAI_LUA_SETUP ( MOAITexture, "UN" )
 
 	int min = state.GetValue < int >( 2, GL_LINEAR );
 	int mag = state.GetValue < int >( 3, min );
@@ -117,7 +118,7 @@ int MOAITexture::_setFilter ( lua_State* L ) {
 	@out	nil
 */
 int MOAITexture::_setWrap ( lua_State* L ) {
-	LUA_SETUP ( MOAITexture, "UB" )
+	MOAI_LUA_SETUP ( MOAITexture, "UB" )
 	
 	bool wrap = state.GetValue < bool >( 2, false );
 	

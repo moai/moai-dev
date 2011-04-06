@@ -2,6 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIVertexFormat.h>
 #include <moaicore/MOAIVertexBuffer.h>
 
@@ -18,7 +19,7 @@
 	@out	nil
 */
 int MOAIVertexBuffer::_bless ( lua_State* L ) {
-	LUA_SETUP ( MOAIVertexBuffer, "U" )
+	MOAI_LUA_SETUP ( MOAIVertexBuffer, "U" )
 	
 	self->mBounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
 	
@@ -37,7 +38,7 @@ int MOAIVertexBuffer::_bless ( lua_State* L ) {
 	@out	nil
 */
 int	MOAIVertexBuffer::_release ( lua_State* L ) {
-	LUA_SETUP ( MOAIVertexBuffer, "U" )
+	MOAI_LUA_SETUP ( MOAIVertexBuffer, "U" )
 	
 	self->Release ();
 	return 0;
@@ -52,7 +53,7 @@ int	MOAIVertexBuffer::_release ( lua_State* L ) {
 	@out	nil
 */
 int	MOAIVertexBuffer::_reserve ( lua_State* L ) {
-	LUA_SETUP ( MOAIVertexBuffer, "UN" )
+	MOAI_LUA_SETUP ( MOAIVertexBuffer, "UN" )
 	
 	u32 size = state.GetValue < u32 >( 2, 0 );
 	self->Reserve ( size );
@@ -71,7 +72,7 @@ int	MOAIVertexBuffer::_reserve ( lua_State* L ) {
 	@out	nil
 */
 int	MOAIVertexBuffer::_reserveVerts ( lua_State* L ) {
-	LUA_SETUP ( MOAIVertexBuffer, "UN" )
+	MOAI_LUA_SETUP ( MOAIVertexBuffer, "UN" )
 	
 	u32 total = state.GetValue < u32 >( 2, 0 );
 	
@@ -89,7 +90,7 @@ int	MOAIVertexBuffer::_reserveVerts ( lua_State* L ) {
 	@out	nil
 */
 int MOAIVertexBuffer::_reset ( lua_State* L ) {
-	LUA_SETUP ( MOAIVertexBuffer, "U" )
+	MOAI_LUA_SETUP ( MOAIVertexBuffer, "U" )
 	
 	self->mStream.SetBuffer ( self->mBuffer, self->mBuffer.Size ());
 	
@@ -105,7 +106,7 @@ int MOAIVertexBuffer::_reset ( lua_State* L ) {
 	@out	nil
 */
 int MOAIVertexBuffer::_setFormat ( lua_State* L ) {
-	LUA_SETUP ( MOAIVertexBuffer, "U" )
+	MOAI_LUA_SETUP ( MOAIVertexBuffer, "U" )
 	
 	self->mFormat = state.GetLuaObject < MOAIVertexFormat >( 2 );
 
@@ -122,7 +123,7 @@ int MOAIVertexBuffer::_setFormat ( lua_State* L ) {
 	@out	nil
 */
 int MOAIVertexBuffer::_setPrimType ( lua_State* L ) {
-	LUA_SETUP ( MOAIVertexBuffer, "UN" )
+	MOAI_LUA_SETUP ( MOAIVertexBuffer, "UN" )
 	
 	u32 primType = state.GetValue < u32 >( 2, 0 );
 	self->SetPrimType ( primType );
@@ -142,7 +143,7 @@ int MOAIVertexBuffer::_setPrimType ( lua_State* L ) {
 	@out	nil
 */
 int MOAIVertexBuffer::_writeColor32 ( lua_State* L ) {
-	LUA_SETUP ( MOAIVertexBuffer, "U" )
+	MOAI_LUA_SETUP ( MOAIVertexBuffer, "U" )
 	
 	float r = state.GetValue < float >( 2, 1.0f );
 	float g = state.GetValue < float >( 3, 1.0f );
@@ -164,7 +165,7 @@ int MOAIVertexBuffer::_writeColor32 ( lua_State* L ) {
 	@out	nil
 */
 int MOAIVertexBuffer::_writeFloat ( lua_State* L ) {
-	LUA_SETUP ( MOAIVertexBuffer, "U" )
+	MOAI_LUA_SETUP ( MOAIVertexBuffer, "U" )
 	
 	u32 top = state.GetTop ();
 	for ( u32 i = 2; i <= top; ++i ) {
@@ -183,7 +184,7 @@ int MOAIVertexBuffer::_writeFloat ( lua_State* L ) {
 	@out	nil
 */
 int MOAIVertexBuffer::_writeInt8 ( lua_State* L ) {
-	LUA_SETUP ( MOAIVertexBuffer, "U" )
+	MOAI_LUA_SETUP ( MOAIVertexBuffer, "U" )
 	
 	u32 top = state.GetTop ();
 	for ( u32 i = 2; i <= top; ++i ) {
@@ -202,7 +203,7 @@ int MOAIVertexBuffer::_writeInt8 ( lua_State* L ) {
 	@out	nil
 */
 int MOAIVertexBuffer::_writeInt16 ( lua_State* L ) {
-	LUA_SETUP ( MOAIVertexBuffer, "U" )
+	MOAI_LUA_SETUP ( MOAIVertexBuffer, "U" )
 	
 	u32 top = state.GetTop ();
 	for ( u32 i = 2; i <= top; ++i ) {
@@ -221,7 +222,7 @@ int MOAIVertexBuffer::_writeInt16 ( lua_State* L ) {
 	@out	nil
 */
 int MOAIVertexBuffer::_writeInt32 ( lua_State* L ) {
-	LUA_SETUP ( MOAIVertexBuffer, "U" )
+	MOAI_LUA_SETUP ( MOAIVertexBuffer, "U" )
 	
 	u32 top = state.GetTop ();
 	for ( u32 i = 2; i <= top; ++i ) {

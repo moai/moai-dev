@@ -28,7 +28,7 @@ gfxQuadListDeck:setRect ( 2, 0, 0, 0.5, 0.5 )
 gfxQuadListDeck:setRect ( 3, -0.5, -0.5, 0, 0 )
 gfxQuadListDeck:setRect ( 4, 0, -0.5, 0.5, 0 )
 
-gfxQuadListDeck:reserveUVRects ( 4 )
+gfxQuadListDeck:reserveUVQuads ( 4 )
 gfxQuadListDeck:setUVRect ( 1, 0.0, 0.5, 0.5, 0.0 )
 gfxQuadListDeck:setUVRect ( 2, 0.5, 0.5, 1.0, 0.0 )
 gfxQuadListDeck:setUVRect ( 3, 0.0, 1.0, 0.5, 0.5 )

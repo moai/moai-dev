@@ -2,6 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIViewport.h>
 
 //================================================================//
@@ -19,7 +20,7 @@
 	@out	nil
 */
 int MOAIViewport::_setOffset ( lua_State* L ) {
-	LUA_SETUP ( MOAIViewport, "UNN" )
+	MOAI_LUA_SETUP ( MOAIViewport, "UNN" )
 	
 	float xOffset = state.GetValue < float >( 2, 0.0f );
 	float yOffset = state.GetValue < float >( 3, 0.0f );
@@ -67,7 +68,7 @@ int MOAIViewport::_setRect ( lua_State* L ) {
 	@out	nil
 */
 int MOAIViewport::_setRotation ( lua_State* L ) {
-	LUA_SETUP ( MOAIViewport, "U" )
+	MOAI_LUA_SETUP ( MOAIViewport, "U" )
 	
 	float rotation = state.GetValue < float >( 2, 0.0f );
 	self->SetRotation ( rotation );

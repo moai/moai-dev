@@ -7,6 +7,7 @@
 #include <moaicore/MOAIBox2DBody.h>
 #include <moaicore/MOAIBox2DJoint.h>
 #include <moaicore/MOAIBox2DWorld.h>
+#include <moaicore/MOAILogMessages.h>
 
 SUPPRESS_EMPTY_FILE_WARNING
 #if USE_BOX2D
@@ -24,7 +25,7 @@ SUPPRESS_EMPTY_FILE_WARNING
 	@out	anchorY
 */
 int MOAIBox2DJoint::_getAnchorA ( lua_State* L ) {
-	LUA_SETUP ( MOAIBox2DJoint, "U" )
+	MOAI_LUA_SETUP ( MOAIBox2DJoint, "U" )
 	float unitsToMeters = self->GetUnitsToMeters ();
 	
 	b2Vec2 anchor = self->mJoint->GetAnchorA ();
@@ -43,7 +44,7 @@ int MOAIBox2DJoint::_getAnchorA ( lua_State* L ) {
 	@out	anchorY
 */
 int MOAIBox2DJoint::_getAnchorB ( lua_State* L ) {
-	LUA_SETUP ( MOAIBox2DJoint, "U" )
+	MOAI_LUA_SETUP ( MOAIBox2DJoint, "U" )
 	float unitsToMeters = self->GetUnitsToMeters ();
 	
 	b2Vec2 anchor = self->mJoint->GetAnchorB ();
@@ -61,7 +62,7 @@ int MOAIBox2DJoint::_getAnchorB ( lua_State* L ) {
 	@out	MOAIBox2DBody body
 */
 int MOAIBox2DJoint::_getBodyA ( lua_State* L ) {
-	LUA_SETUP ( MOAIBox2DJoint, "U" )
+	MOAI_LUA_SETUP ( MOAIBox2DJoint, "U" )
 	
 	MOAIBox2DBody* body = ( MOAIBox2DBody* )self->mJoint->GetBodyA ()->GetUserData ();;
 	body->PushLuaUserdata ( state );
@@ -77,7 +78,7 @@ int MOAIBox2DJoint::_getBodyA ( lua_State* L ) {
 	@out	MOAIBox2DBody body
 */
 int MOAIBox2DJoint::_getBodyB ( lua_State* L ) {
-	LUA_SETUP ( MOAIBox2DJoint, "U" )
+	MOAI_LUA_SETUP ( MOAIBox2DJoint, "U" )
 	
 	MOAIBox2DBody* body = ( MOAIBox2DBody* )self->mJoint->GetBodyB ()->GetUserData ();;
 	body->PushLuaUserdata ( state );
@@ -94,7 +95,7 @@ int MOAIBox2DJoint::_getBodyB ( lua_State* L ) {
 	@out	number forceY
 */
 int MOAIBox2DJoint::_getReactionForce ( lua_State* L ) {
-	LUA_SETUP ( MOAIBox2DJoint, "U" )
+	MOAI_LUA_SETUP ( MOAIBox2DJoint, "U" )
 	
 	// TODO
 	//b2Vec2 force = self->mJoint->GetReactionForce ();
@@ -112,7 +113,7 @@ int MOAIBox2DJoint::_getReactionForce ( lua_State* L ) {
 	@out	number reactionTorque In degrees.
 */
 int MOAIBox2DJoint::_getReactionTorque ( lua_State* L ) {
-	LUA_SETUP ( MOAIBox2DJoint, "U" )
+	MOAI_LUA_SETUP ( MOAIBox2DJoint, "U" )
 	
 	// TODO
 	//float torque = self->mJoint->GetReactionTorque ();
@@ -131,7 +132,7 @@ int MOAIBox2DJoint::_getReactionTorque ( lua_State* L ) {
 	@out	nil
 */
 int MOAIBox2DJoint::_setLimit ( lua_State* L ) {
-	LUA_SETUP ( MOAIBox2DJoint, "U" )
+	MOAI_LUA_SETUP ( MOAIBox2DJoint, "U" )
 	
 	float lower	= state.GetValue < float >( 2, 0.0f );
 	float upper	= state.GetValue < float >( 3, 0.0f );
@@ -150,7 +151,7 @@ int MOAIBox2DJoint::_setLimit ( lua_State* L ) {
 	@out	nil
 */
 int MOAIBox2DJoint::_setLimitEnabled ( lua_State* L ) {
-	LUA_SETUP ( MOAIBox2DJoint, "U" )
+	MOAI_LUA_SETUP ( MOAIBox2DJoint, "U" )
 	
 	bool enabled = state.GetValue < bool >( 2, true );
 	self->SetLimitEnabled ( enabled );
@@ -168,7 +169,7 @@ int MOAIBox2DJoint::_setLimitEnabled ( lua_State* L ) {
 	@out	nil
 */
 int MOAIBox2DJoint::_setMotor ( lua_State* L ) {
-	LUA_SETUP ( MOAIBox2DJoint, "U" )
+	MOAI_LUA_SETUP ( MOAIBox2DJoint, "U" )
 	
 	float speed	= state.GetValue < float >( 2, 0.0f );
 	float max	= state.GetValue < float >( 3, 0.0f );
@@ -187,7 +188,7 @@ int MOAIBox2DJoint::_setMotor ( lua_State* L ) {
 	@out	nil
 */
 int MOAIBox2DJoint::_setMotorEnabled ( lua_State* L ) {
-	LUA_SETUP ( MOAIBox2DJoint, "U" )
+	MOAI_LUA_SETUP ( MOAIBox2DJoint, "U" )
 	
 	bool enabled = state.GetValue < bool >( 2, true );
 	self->SetMotorEnabled ( enabled );

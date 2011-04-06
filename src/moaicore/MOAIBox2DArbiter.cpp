@@ -5,6 +5,7 @@
 #include <Box2D/Box2D.h>
 #include <moaicore/MOAIBox2DArbiter.h>
 #include <moaicore/MOAIBox2DFixture.h>
+#include <moaicore/MOAILogMessages.h>
 
 SUPPRESS_EMPTY_FILE_WARNING
 #if USE_BOX2D
@@ -18,7 +19,7 @@ SUPPRESS_EMPTY_FILE_WARNING
 	@text	Return the number of contacts in the current collision.
 */
 int MOAIBox2DArbiter::_countContacts ( lua_State* L ) {
-	LUA_SETUP ( MOAIBox2DArbiter, "U" )
+	MOAI_LUA_SETUP ( MOAIBox2DArbiter, "U" )
 
 	// TODO: Box2D
 	return 0;
@@ -32,7 +33,7 @@ int MOAIBox2DArbiter::_countContacts ( lua_State* L ) {
 	@param y (out)
 */
 int MOAIBox2DArbiter::_getContactDepth ( lua_State* L ) {
-	LUA_SETUP ( MOAIBox2DArbiter, "UN" )
+	MOAI_LUA_SETUP ( MOAIBox2DArbiter, "UN" )
 
 	// TODO: Box2D
 	return 0;
@@ -46,7 +47,7 @@ int MOAIBox2DArbiter::_getContactDepth ( lua_State* L ) {
 	@param y (out)
 */
 int MOAIBox2DArbiter::_getContactNormal ( lua_State* L ) {
-	LUA_SETUP ( MOAIBox2DArbiter, "UN" )
+	MOAI_LUA_SETUP ( MOAIBox2DArbiter, "UN" )
 
 	// TODO: Box2D
 	return 0;
@@ -60,7 +61,7 @@ int MOAIBox2DArbiter::_getContactNormal ( lua_State* L ) {
 	@param y (out)
 */
 int MOAIBox2DArbiter::_getContactPoint ( lua_State* L ) {
-	LUA_SETUP ( MOAIBox2DArbiter, "UN" )
+	MOAI_LUA_SETUP ( MOAIBox2DArbiter, "UN" )
 
 	// TODO: Box2D
 	return 0;
@@ -74,7 +75,7 @@ int MOAIBox2DArbiter::_getContactPoint ( lua_State* L ) {
 	@param y (out)
 */
 int MOAIBox2DArbiter::_getTotalImpulse ( lua_State* L ) {
-	LUA_SETUP ( MOAIBox2DArbiter, "U" )
+	MOAI_LUA_SETUP ( MOAIBox2DArbiter, "U" )
 
 	// TODO: Box2D
 	return 0;
@@ -88,7 +89,7 @@ int MOAIBox2DArbiter::_getTotalImpulse ( lua_State* L ) {
 	@param y (out)
 */
 int MOAIBox2DArbiter::_getTotalImpulseWithFriction ( lua_State* L ) {
-	LUA_SETUP ( MOAIBox2DArbiter, "U" )
+	MOAI_LUA_SETUP ( MOAIBox2DArbiter, "U" )
 
 	// TODO: Box2D
 	return 0;
@@ -102,7 +103,7 @@ int MOAIBox2DArbiter::_getTotalImpulseWithFriction ( lua_State* L ) {
 	@param y (out)
 */
 int MOAIBox2DArbiter::_isFirstContact ( lua_State* L ) {
-	LUA_SETUP ( MOAIBox2DArbiter, "U" )
+	MOAI_LUA_SETUP ( MOAIBox2DArbiter, "U" )
 
 	// TODO: Box2D
 	return 0;

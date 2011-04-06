@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <moaicore/MOAICompassSensor.h>
+#include <moaicore/MOAILogMessages.h>
 
 //================================================================//
 // lua
@@ -16,7 +17,7 @@
 	@out	number heading
 */
 int MOAICompassSensor::_getHeading ( lua_State* L ) {
-	LUA_SETUP ( MOAICompassSensor, "U" )
+	MOAI_LUA_SETUP ( MOAICompassSensor, "U" )
 	
 	lua_pushnumber ( state, self->mHeading );
 	
@@ -32,7 +33,7 @@ int MOAICompassSensor::_getHeading ( lua_State* L ) {
 	@out	nil
 */
 int MOAICompassSensor::_setCallback ( lua_State* L ) {
-	LUA_SETUP ( MOAICompassSensor, "U" )
+	MOAI_LUA_SETUP ( MOAICompassSensor, "U" )
 	
 	self->mCallback.SetRef ( state, 2, false );
 	

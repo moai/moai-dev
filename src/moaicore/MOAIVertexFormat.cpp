@@ -2,6 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIVertexFormat.h>
 
 //================================================================//
@@ -17,7 +18,7 @@
 	@out	nil
 */
 int	MOAIVertexFormat::_clear ( lua_State* L ) {
-	LUA_SETUP ( MOAIVertexFormat, "U" )
+	MOAI_LUA_SETUP ( MOAIVertexFormat, "U" )
 
 	self->Clear ();
 	
@@ -33,7 +34,7 @@ int	MOAIVertexFormat::_clear ( lua_State* L ) {
 	@out	nil
 */
 int MOAIVertexFormat::_declareColor ( lua_State* L ) {
-	LUA_SETUP ( MOAIVertexFormat, "UN" )
+	MOAI_LUA_SETUP ( MOAIVertexFormat, "UN" )
 
 	u32 type = state.GetValue < u32 >( 2, 0 );
 	self->DeclareColorArray ( type );
@@ -51,7 +52,7 @@ int MOAIVertexFormat::_declareColor ( lua_State* L ) {
 	@out	nil
 */
 int MOAIVertexFormat::_declareCoord ( lua_State* L ) {
-	LUA_SETUP ( MOAIVertexFormat, "UNN" )
+	MOAI_LUA_SETUP ( MOAIVertexFormat, "UNN" )
 
 	u32 type = state.GetValue < u32 >( 2, 0 );
 	u32 size = state.GetValue < u32 >( 3, 0 );
@@ -69,7 +70,7 @@ int MOAIVertexFormat::_declareCoord ( lua_State* L ) {
 	@out	nil
 */
 int MOAIVertexFormat::_declareNormal ( lua_State* L ) {
-	LUA_SETUP ( MOAIVertexFormat, "UN" )
+	MOAI_LUA_SETUP ( MOAIVertexFormat, "UN" )
 
 	u32 type = state.GetValue < u32 >( 2, 0 );
 	self->DeclareNormalArray ( type );
@@ -87,7 +88,7 @@ int MOAIVertexFormat::_declareNormal ( lua_State* L ) {
 	@out	nil
 */
 int MOAIVertexFormat::_declareUV ( lua_State* L ) {
-	LUA_SETUP ( MOAIVertexFormat, "UNN" )
+	MOAI_LUA_SETUP ( MOAIVertexFormat, "UNN" )
 
 	u32 type = state.GetValue < u32 >( 2, 0 );
 	u32 size = state.GetValue < u32 >( 3, 0 );

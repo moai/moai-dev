@@ -2,6 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIThread.h>
 
 //----------------------------------------------------------------//
@@ -61,7 +62,7 @@ int MOAIThread::_currentThread ( lua_State* L ) {
 	@out	nil
 */
 int MOAIThread::_run ( lua_State* L ) {
-	LUA_SETUP ( MOAIThread, "UF" )
+	MOAI_LUA_SETUP ( MOAIThread, "UF" )
 	
 	self->mNarg = lua_gettop ( state ) - 2;
 	self->mState = lua_newthread ( state );

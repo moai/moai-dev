@@ -4,6 +4,7 @@
 #include "pch.h"
 #include <moaicore/MOAIDataIOAction.h>
 #include <moaicore/MOAIDataBuffer.h>
+#include <moaicore/MOAILogMessages.h>
 
 //================================================================//
 // MOAIDataBuffer
@@ -88,7 +89,7 @@ int MOAIDataBuffer::_deflate ( lua_State* L ) {
 	@out	number size				The number of bytes in this data buffer object.
 */
 int MOAIDataBuffer::_getSize ( lua_State* L ) {
-	LUA_SETUP ( MOAIDataBuffer, "U" );
+	MOAI_LUA_SETUP ( MOAIDataBuffer, "U" );
 
 	void* bytes;
 	u32 size;
@@ -109,7 +110,7 @@ int MOAIDataBuffer::_getSize ( lua_State* L ) {
 	@out	string data				The data buffer object as a string.
 */
 int MOAIDataBuffer::_getString ( lua_State* L ) {
-	LUA_SETUP ( MOAIDataBuffer, "U" );
+	MOAI_LUA_SETUP ( MOAIDataBuffer, "U" );
 
 	u32 size;
 	void* buffer;
@@ -155,7 +156,7 @@ int MOAIDataBuffer::_inflate ( lua_State* L ) {
 	@out	boolean success			Whether the file could be loaded into the object.
 */
 int MOAIDataBuffer::_load ( lua_State* L ) {
-	LUA_SETUP ( MOAIDataBuffer, "US" );
+	MOAI_LUA_SETUP ( MOAIDataBuffer, "US" );
 
 	cc8* filename = lua_tostring ( state, 2 );
 
@@ -174,7 +175,7 @@ int MOAIDataBuffer::_load ( lua_State* L ) {
 	@out	MOAIDataIOAction task	A new MOAIDataIOAction which indicates the status of the task.
 */
 int MOAIDataBuffer::_loadAsync ( lua_State* L ) {
-	LUA_SETUP ( MOAIDataBuffer, "US" );
+	MOAI_LUA_SETUP ( MOAIDataBuffer, "US" );
 
 	cc8* filename = lua_tostring ( state, 2 );
 
@@ -195,7 +196,7 @@ int MOAIDataBuffer::_loadAsync ( lua_State* L ) {
 	@out	boolean success			Whether the data could be saved to the file.
 */
 int MOAIDataBuffer::_save ( lua_State* L ) {
-	LUA_SETUP ( MOAIDataBuffer, "US" );
+	MOAI_LUA_SETUP ( MOAIDataBuffer, "US" );
 
 	cc8* filename = lua_tostring ( state, 2 );
 	bool affirm_path = state.GetValue < bool >( 3, true );
@@ -215,7 +216,7 @@ int MOAIDataBuffer::_save ( lua_State* L ) {
 	@out	MOAIDataIOAction task	A new MOAIDataIOAction which indicates the status of the task.
 */
 int MOAIDataBuffer::_saveAsync ( lua_State* L ) {
-	LUA_SETUP ( MOAIDataBuffer, "US" );
+	MOAI_LUA_SETUP ( MOAIDataBuffer, "US" );
 
 	cc8* filename = lua_tostring ( state, 2 );
 
@@ -236,7 +237,7 @@ int MOAIDataBuffer::_saveAsync ( lua_State* L ) {
 	@out	nil
 */
 int MOAIDataBuffer::_setString ( lua_State* L ) {
-	LUA_SETUP ( MOAIDataBuffer, "US" );
+	MOAI_LUA_SETUP ( MOAIDataBuffer, "US" );
 
 	size_t len;
 	cc8* str = lua_tolstring ( state, 2, &len );

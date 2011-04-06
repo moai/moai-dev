@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <tinyxml.h>
+#include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIXmlParser.h>
 
 //================================================================//

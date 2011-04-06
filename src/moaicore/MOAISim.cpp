@@ -4,6 +4,7 @@
 #include "pch.h"
 #include <moaicore/MOAIDebugLines.h>
 #include <moaicore/MOAIInputMgr.h>
+#include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAINodeMgr.h>
 #include <moaicore/MOAIProp2D.h>
 #include <moaicore/MOAISim.h>

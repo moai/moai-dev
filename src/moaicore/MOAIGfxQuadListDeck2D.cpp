@@ -4,6 +4,7 @@
 #include "pch.h"
 #include <moaicore/MOAIGrid.h>
 #include <moaicore/MOAIGfxQuadListDeck2D.h>
+#include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIProp.h>
 #include <moaicore/MOAITexture.h>
 #include <moaicore/MOAITransformBase.h>
@@ -21,7 +22,7 @@
 	@out	nil
 */
 int MOAIGfxQuadListDeck2D::_reserveLists ( lua_State* L ) {
-	LUA_SETUP ( MOAIGfxQuadListDeck2D, "UN" )
+	MOAI_LUA_SETUP ( MOAIGfxQuadListDeck2D, "UN" )
 
 	u32 total = state.GetValue < u32 >( 2, 0 );
 	self->ReserveLists ( total );
@@ -38,7 +39,7 @@ int MOAIGfxQuadListDeck2D::_reserveLists ( lua_State* L ) {
 	@out	nil
 */
 int MOAIGfxQuadListDeck2D::_reservePairs ( lua_State* L ) {
-	LUA_SETUP ( MOAIGfxQuadListDeck2D, "UN" )
+	MOAI_LUA_SETUP ( MOAIGfxQuadListDeck2D, "UN" )
 
 	u32 total = state.GetValue < u32 >( 2, 0 );
 	self->ReservePairs ( total );
@@ -55,7 +56,7 @@ int MOAIGfxQuadListDeck2D::_reservePairs ( lua_State* L ) {
 	@out	nil
 */
 int MOAIGfxQuadListDeck2D::_reserveQuads ( lua_State* L ) {
-	LUA_SETUP ( MOAIGfxQuadListDeck2D, "UN" )
+	MOAI_LUA_SETUP ( MOAIGfxQuadListDeck2D, "UN" )
 
 	u32 total = state.GetValue < u32 >( 2, 0 );
 	self->ReserveQuads ( total );
@@ -72,7 +73,7 @@ int MOAIGfxQuadListDeck2D::_reserveQuads ( lua_State* L ) {
 	@out	nil
 */
 int MOAIGfxQuadListDeck2D::_reserveUVQuads ( lua_State* L ) {
-	LUA_SETUP ( MOAIGfxQuadListDeck2D, "UN" )
+	MOAI_LUA_SETUP ( MOAIGfxQuadListDeck2D, "UN" )
 
 	u32 total = state.GetValue < u32 >( 2, 0 );
 	self->ReserveUVQuads ( total );
@@ -94,7 +95,7 @@ int MOAIGfxQuadListDeck2D::_reserveUVQuads ( lua_State* L ) {
 	@out	nil
 */
 int MOAIGfxQuadListDeck2D::_setList ( lua_State* L ) {
-	LUA_SETUP ( MOAIGfxQuadListDeck2D, "UNNN" )
+	MOAI_LUA_SETUP ( MOAIGfxQuadListDeck2D, "UNNN" )
 
 	u32 idx = state.GetValue < u32 >( 2, 1 ) - 1;
 	u32 basePairID = state.GetValue < u32 >( 3, 1 ) - 1;
@@ -111,18 +112,23 @@ int MOAIGfxQuadListDeck2D::_setList ( lua_State* L ) {
 	
 	@in		MOAIGfxQuadListDeck2D self
 	@in		number idx
-	@in		number uvRectID
+	@in		number uvQuadID
 	@in		number quadID
 	@out	nil
 */
 int MOAIGfxQuadListDeck2D::_setPair ( lua_State* L ) {
-	LUA_SETUP ( MOAIGfxQuadListDeck2D, "UNNN" )
+	MOAI_LUA_SETUP ( MOAIGfxQuadListDeck2D, "UNNN" )
 
 	u32 idx = state.GetValue < u32 >( 2, 1 ) - 1;
-	u32 uvRectID = state.GetValue < u32 >( 3, 1 ) - 1;
-	u32 screenRectID = state.GetValue < u32 >( 4, 1 ) - 1;
+	MOAI_CHECK_INDEX ( idx, self->mPairs.Size ())
+	
+	u32 uvQuadID = state.GetValue < u32 >( 3, 1 ) - 1;
+	MOAI_CHECK_INDEX ( idx, self->mUVQuads.Size ())
+	
+	u32 quadID = state.GetValue < u32 >( 4, 1 ) - 1;
+	MOAI_CHECK_INDEX ( idx, self->mQuads.Size ())
 
-	self->SetPair ( idx, uvRectID, screenRectID );
+	self->SetPair ( idx, uvQuadID, quadID );
 
 	return 0;
 }
@@ -145,9 +151,10 @@ int MOAIGfxQuadListDeck2D::_setPair ( lua_State* L ) {
 	@out	nil
 */
 int MOAIGfxQuadListDeck2D::_setQuad ( lua_State* L ) {
-	LUA_SETUP ( MOAIGfxQuadListDeck2D, "UNNNNNNNNN" )
+	MOAI_LUA_SETUP ( MOAIGfxQuadListDeck2D, "UNNNNNNNNN" )
 
 	u32 idx = state.GetValue < u32 >( 2, 1 ) - 1;
+	MOAI_CHECK_INDEX ( idx, self->mQuads.Size ())
 	
 	USQuad quad;
 	
@@ -178,9 +185,10 @@ int MOAIGfxQuadListDeck2D::_setQuad ( lua_State* L ) {
 	@out	nil
 */
 int MOAIGfxQuadListDeck2D::_setRect ( lua_State* L ) {
-	LUA_SETUP ( MOAIGfxQuadListDeck2D, "UNNNNN" )
+	MOAI_LUA_SETUP ( MOAIGfxQuadListDeck2D, "UNNNNN" )
 
 	u32 idx = state.GetValue < u32 >( 2, 1 ) - 1;
+	MOAI_CHECK_INDEX ( idx, self->mQuads.Size ())
 	
 	USRect rect;
 	
@@ -204,7 +212,7 @@ int MOAIGfxQuadListDeck2D::_setRect ( lua_State* L ) {
 	@out	MOAITexture texture
 */
 int MOAIGfxQuadListDeck2D::_setTexture ( lua_State* L ) {
-	LUA_SETUP ( MOAIGfxQuadListDeck2D, "U" )
+	MOAI_LUA_SETUP ( MOAIGfxQuadListDeck2D, "U" )
 
 	self->mTexture = MOAITexture::AffirmTexture ( state, 2 );
 	if ( self->mTexture ) {
@@ -232,9 +240,10 @@ int MOAIGfxQuadListDeck2D::_setTexture ( lua_State* L ) {
 	@out	nil
 */
 int MOAIGfxQuadListDeck2D::_setUVQuad ( lua_State* L ) {
-	LUA_SETUP ( MOAIGfxQuadListDeck2D, "UNNNNNNNNN" )
+	MOAI_LUA_SETUP ( MOAIGfxQuadListDeck2D, "UNNNNNNNNN" )
 
 	u32 idx = state.GetValue < u32 >( 2, 1 ) - 1;
+	MOAI_CHECK_INDEX ( idx, self->mUVQuads.Size ())
 	
 	USQuad quad;
 	
@@ -265,9 +274,10 @@ int MOAIGfxQuadListDeck2D::_setUVQuad ( lua_State* L ) {
 	@out	nil
 */
 int MOAIGfxQuadListDeck2D::_setUVRect ( lua_State* L ) {
-	LUA_SETUP ( MOAIGfxQuadListDeck2D, "UNNNNN" )
+	MOAI_LUA_SETUP ( MOAIGfxQuadListDeck2D, "UNNNNN" )
 
 	u32 idx = state.GetValue < u32 >( 2, 1 ) - 1;
+	MOAI_CHECK_INDEX ( idx, self->mUVQuads.Size ())
 	
 	USRect rect;
 	
@@ -465,7 +475,7 @@ void MOAIGfxQuadListDeck2D::SetList ( u32 idx, u32 basePairID, u32 totalPairs ) 
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxQuadListDeck2D::SetPair ( u32 idx, u32 uvRectID, u32 screenRectID ) {
+void MOAIGfxQuadListDeck2D::SetPair ( u32 idx, u32 uvQuadID, u32 quadID ) {
 	
 	if ( !this->mPairs.Size ()) return;
 	if ( !this->mUVQuads.Size ()) return;
@@ -473,8 +483,8 @@ void MOAIGfxQuadListDeck2D::SetPair ( u32 idx, u32 uvRectID, u32 screenRectID ) 
 	
 	USSpritePair& spritePair = this->mPairs [ idx % this->mPairs.Size ()];
 	
-	spritePair.mUVQuadID = uvRectID % this->mUVQuads.Size ();
-	spritePair.mQuadID = screenRectID % this->mQuads.Size ();
+	spritePair.mUVQuadID = uvQuadID % this->mUVQuads.Size ();
+	spritePair.mQuadID = quadID % this->mQuads.Size ();
 }
 
 //----------------------------------------------------------------//

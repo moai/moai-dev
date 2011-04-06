@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <moaicore/MOAIAction.h>
+#include <moaicore/MOAILogMessages.h>
 
 //================================================================//
 // lua
@@ -125,7 +126,7 @@ int MOAIAction::_stop ( lua_State* L ) {
 	@out	nil
 */
 int MOAIAction::_throttle ( lua_State* L ) {
-	LUA_SETUP ( MOAIAction, "U" )
+	MOAI_LUA_SETUP ( MOAIAction, "U" )
 
 	self->mThrottle = state.GetValue < float >( 2, 1.0f );
 	

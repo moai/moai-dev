@@ -6,6 +6,7 @@
 #include <moaicore/MOAIDeck.h>
 #include <moaicore/MOAIDebugLines.h>
 #include <moaicore/MOAIFont.h>
+#include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAITextBox.h>
 
 //================================================================//
@@ -20,7 +21,7 @@
 	@out	nil
 */
 int MOAITextBox::_clearCurves ( lua_State* L ) {
-	LUA_SETUP ( MOAITextBox, "U" )
+	MOAI_LUA_SETUP ( MOAITextBox, "U" )
 
 	self->ClearCurves ();
 
@@ -35,7 +36,7 @@ int MOAITextBox::_clearCurves ( lua_State* L ) {
 	@out	boolean isMore				If there is additional text below the cursor that is not visible on the screen due to clipping.
 */
 int MOAITextBox::_more ( lua_State* L ) {
-	LUA_SETUP ( MOAITextBox, "U" )
+	MOAI_LUA_SETUP ( MOAITextBox, "U" )
 	
 	bool more = self->More ();
 	lua_pushboolean ( L, more );
@@ -50,7 +51,7 @@ int MOAITextBox::_more ( lua_State* L ) {
 	@out	nil
 */
 int MOAITextBox::_nextPage ( lua_State* L ) {
-	LUA_SETUP ( MOAITextBox, "U" )
+	MOAI_LUA_SETUP ( MOAITextBox, "U" )
 
 	bool reveal = state.GetValue < bool >( 2, true );
 	self->NextPage ( reveal );
@@ -67,7 +68,7 @@ int MOAITextBox::_nextPage ( lua_State* L ) {
 	@out	nil
 */
 int MOAITextBox::_reserveCurves ( lua_State* L ) {
-	LUA_SETUP ( MOAITextBox, "UN" )
+	MOAI_LUA_SETUP ( MOAITextBox, "UN" )
 
 	u32 total = state.GetValue < u32 >( 2, 0 );
 	self->ReserveCurves ( total );
@@ -83,7 +84,7 @@ int MOAITextBox::_reserveCurves ( lua_State* L ) {
 	@out	nil
 */
 int MOAITextBox::_revealAll ( lua_State* L ) {
-	LUA_SETUP ( MOAITextBox, "U" )
+	MOAI_LUA_SETUP ( MOAITextBox, "U" )
 	
 	self->mReveal = REVEAL_ALL;
 	
@@ -99,7 +100,7 @@ int MOAITextBox::_revealAll ( lua_State* L ) {
 	@out	nil
 */
 int MOAITextBox::_setAlignment ( lua_State* L ) {
-	LUA_SETUP ( MOAITextBox, "UN" )
+	MOAI_LUA_SETUP ( MOAITextBox, "UN" )
 
 	u32 alignment = state.GetValue < u32 >( 2, USFont::LEFT_JUSTIFY );
 	self->mJustify = alignment;
@@ -117,7 +118,7 @@ int MOAITextBox::_setAlignment ( lua_State* L ) {
 	@out	nil
 */
 int MOAITextBox::_setCurve ( lua_State* L ) {
-	LUA_SETUP ( MOAITextBox, "UNU" )
+	MOAI_LUA_SETUP ( MOAITextBox, "UNU" )
 	
 	u32 index = state.GetValue < u32 >( 2, 0 ) - 1;
 	
@@ -138,7 +139,7 @@ int MOAITextBox::_setCurve ( lua_State* L ) {
 	@out	nil
 */
 int MOAITextBox::_setFont ( lua_State* L ) {
-	LUA_SETUP ( MOAITextBox, "UU" )
+	MOAI_LUA_SETUP ( MOAITextBox, "UU" )
 
 	MOAIFont* font = state.GetLuaObject < MOAIFont >( 2 );
 	if ( !font ) return 0;
@@ -157,7 +158,7 @@ int MOAITextBox::_setFont ( lua_State* L ) {
 	@out	nil
 */
 int MOAITextBox::_setParent ( lua_State* L ) {
-	LUA_SETUP ( MOAITextBox, "UU" )
+	MOAI_LUA_SETUP ( MOAITextBox, "UU" )
 
 	MOAITransform* parent = state.GetLuaObject < MOAITransform >( 2 );
 	if ( !parent ) return 0;
@@ -179,7 +180,7 @@ int MOAITextBox::_setParent ( lua_State* L ) {
 	@out	nil
 */
 int MOAITextBox::_setRect ( lua_State* L ) {
-	LUA_SETUP ( MOAITextBox, "UNNNN" )
+	MOAI_LUA_SETUP ( MOAITextBox, "UNNNN" )
 
 	float left		= state.GetValue < float >( 2, 0.0f );
 	float top		= state.GetValue < float >( 3, 0.0f );
@@ -200,7 +201,7 @@ int MOAITextBox::_setRect ( lua_State* L ) {
 	@out	nil
 */
 int MOAITextBox::_setReveal ( lua_State* L ) {
-	LUA_SETUP ( MOAITextBox, "UN" )
+	MOAI_LUA_SETUP ( MOAITextBox, "UN" )
 
 	self->mReveal = state.GetValue < u32 >( 2, self->mReveal );
 	self->mSpool = ( float )self->mReveal;
@@ -217,7 +218,7 @@ int MOAITextBox::_setReveal ( lua_State* L ) {
 	@out	nil
 */
 int MOAITextBox::_setSpeed ( lua_State* L ) {
-	LUA_SETUP ( MOAITextBox, "UN" )
+	MOAI_LUA_SETUP ( MOAITextBox, "UN" )
 	
 	self->mSpeed = state.GetValue < float >( 2, self->mSpeed );
 	
@@ -233,7 +234,7 @@ int MOAITextBox::_setSpeed ( lua_State* L ) {
 	@out	nil
 */
 int MOAITextBox::_setString ( lua_State* L ) {
-	LUA_SETUP ( MOAITextBox, "US" )
+	MOAI_LUA_SETUP ( MOAITextBox, "US" )
 
 	cc8* text = state.GetValue < cc8* >( 2, "" );
 	self->SetText ( text );
@@ -250,7 +251,7 @@ int MOAITextBox::_setString ( lua_State* L ) {
 	@out	nil
 */
 int MOAITextBox::_setTextSize ( lua_State* L ) {
-	LUA_SETUP ( MOAITextBox, "UN" )
+	MOAI_LUA_SETUP ( MOAITextBox, "UN" )
 
 	float newTextSize = state.GetValue < float >( 2, 0.0f );
 	self->SetTextSize ( newTextSize );
@@ -267,7 +268,7 @@ int MOAITextBox::_setTextSize ( lua_State* L ) {
 	@out	nil
 */
 int MOAITextBox::_setYFlip ( lua_State* L ) {
-	LUA_SETUP ( MOAITextBox, "UB" )
+	MOAI_LUA_SETUP ( MOAITextBox, "UB" )
 
 	self->mYFlip = state.GetValue < bool >( 2, self->mYFlip );
 
@@ -283,7 +284,7 @@ int MOAITextBox::_setYFlip ( lua_State* L ) {
 	@out	MOAIAction action			The new MOAIAction which spools the text when run.
 */
 int MOAITextBox::_spool ( lua_State* L ) {
-	LUA_SETUP ( MOAITextBox, "U" )
+	MOAI_LUA_SETUP ( MOAITextBox, "U" )
 
 	self->mReveal = state.GetValue < u32 >( 2, 0 );
 	self->mSpool = ( float )self->mReveal;

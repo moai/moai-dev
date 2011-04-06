@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <moaicore/MOAIEaseDriver.h>
+#include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAINode.h>
 #include <moaicore/MOAINodeMgr.h>
 
@@ -39,10 +40,11 @@ MOAIAttrLink::~MOAIAttrLink () {
 	@out	nil
 */
 int MOAINode::_clearAttrLink ( lua_State* L ) {
-	LUA_SETUP ( MOAINode, "UN" );
+	MOAI_LUA_SETUP ( MOAINode, "UN" );
 
 	u32 attrID = state.GetValue < u32 >( 2, 0 );
 	self->ClearAttrLink ( attrID );
+	self->ScheduleUpdate ();
 
 	return 0;
 }
@@ -56,7 +58,7 @@ int MOAINode::_clearAttrLink ( lua_State* L ) {
 	@out	nil
 */
 int MOAINode::_clearDependency ( lua_State* L ) {
-	LUA_SETUP ( MOAINode, "UU" );
+	MOAI_LUA_SETUP ( MOAINode, "UU" );
 
 	MOAINode* srcNode = state.GetLuaObject < MOAINode >( 2 );
 	if ( !srcNode ) return 0;
@@ -75,9 +77,11 @@ int MOAINode::_clearDependency ( lua_State* L ) {
 	@out	number value
 */
 int MOAINode::_getAttr ( lua_State* L ) {
-	LUA_SETUP ( MOAINode, "UN" );
+	MOAI_LUA_SETUP ( MOAINode, "UN" );
 
 	u32 attrID = state.GetValue < u32 >( 2, 0 );
+
+	MOAI_ERROR_UNLESS ( self->AttrExists ( attrID ), state, MOAILogMessages::MOAINode_AttributeNotFound );
 
 	USAttrGetter getter;
 	self->ApplyAttrOp ( attrID, getter );
@@ -104,7 +108,7 @@ int MOAINode::_getAttr ( lua_State* L ) {
 	@out	MOAIEaseDriver easeDriver
 */
 int MOAINode::_moveAttr ( lua_State* L ) {
-	LUA_SETUP ( MOAINode, "UNNN" )
+	MOAI_LUA_SETUP ( MOAINode, "UNNN" )
 
 	MOAIEaseDriver* action = new MOAIEaseDriver ();
 	action->ReserveLinks ( 1 );
@@ -114,8 +118,9 @@ int MOAINode::_moveAttr ( lua_State* L ) {
 	float length	= state.GetValue < float >( 4, 0.0f );
 	u32 mode		= state.GetValue < u32 >( 5, USInterpolate::kSmooth );
 	
-	action->SetLink ( 0, self, attrID, value, mode );
+	MOAI_ERROR_UNLESS ( self->AttrExists ( attrID ), state, MOAILogMessages::MOAINode_AttributeNotFound );
 	
+	action->SetLink ( 0, self, attrID, value, mode );
 	action->SetLength ( length );
 	action->Start ();
 	action->PushLuaUserdata ( state );
@@ -132,7 +137,7 @@ int MOAINode::_moveAttr ( lua_State* L ) {
 	@out	nil
 */
 int MOAINode::_scheduleUpdate ( lua_State* L ) {
-	LUA_SETUP ( MOAINode, "U" );
+	MOAI_LUA_SETUP ( MOAINode, "U" );
 
 	self->ScheduleUpdate ();
 	return 0;
@@ -154,12 +159,13 @@ int MOAINode::_scheduleUpdate ( lua_State* L ) {
 	@out	MOAIEaseDriver easeDriver
 */
 int MOAINode::_seekAttr ( lua_State* L ) {
-	LUA_SETUP ( MOAINode, "UNNN" )
+	MOAI_LUA_SETUP ( MOAINode, "UNNN" )
 
 	MOAIEaseDriver* action = new MOAIEaseDriver ();
 	action->ReserveLinks ( 1 );
 	
-	u32 attrID		= state.GetValue < u32 >( 2, 0 );
+	u32 attrID = state.GetValue < u32 >( 2, 0 );
+	MOAI_ERROR_UNLESS ( self->AttrExists ( attrID ), state, MOAILogMessages::MOAINode_AttributeNotFound );
 	
 	USAttrGetter getter;
 	self->ApplyAttrOp ( attrID, getter );
@@ -188,10 +194,12 @@ int MOAINode::_seekAttr ( lua_State* L ) {
 	@out	nil
 */
 int MOAINode::_setAttr ( lua_State* L ) {
-	LUA_SETUP ( MOAINode, "UNN" );
+	MOAI_LUA_SETUP ( MOAINode, "UNN" );
 	
 	u32 attrID = state.GetValue < u32 >( 2, 0 );
 	float value = state.GetValue < float >( 3, 0.0f );
+
+	MOAI_ERROR_UNLESS ( self->AttrExists ( attrID ), state, MOAILogMessages::MOAINode_AttributeNotFound );
 
 	USAttrSetter setter;
 	setter.Set ( value );
@@ -215,17 +223,19 @@ int MOAINode::_setAttr ( lua_State* L ) {
 	@out	nil
 */
 int MOAINode::_setAttrLink ( lua_State* L ) {
-	LUA_SETUP ( MOAINode, "UNUN" );
+	MOAI_LUA_SETUP ( MOAINode, "UNUN" );
 	
 	u32 attrID = state.GetValue < u32 >( 2, 0 );
+	MOAI_ERROR_UNLESS ( self->AttrExists ( attrID ), state, MOAILogMessages::MOAINode_AttributeNotFound );
 	
 	MOAINode* srcNode = state.GetLuaObject < MOAINode >( 3 );
 	if ( !srcNode ) return 0;
 
 	u32 srcAttrID = state.GetValue < u32 >( 4, 0 );
+	MOAI_ERROR_UNLESS ( srcNode->AttrExists ( srcAttrID ), state, MOAILogMessages::MOAINode_AttributeNotFound );
 
 	self->SetAttrLink ( attrID, srcNode, srcAttrID );
-
+	self->ScheduleUpdate ();
 	return 0;
 }
 
@@ -240,7 +250,7 @@ int MOAINode::_setAttrLink ( lua_State* L ) {
 	@out	nil
 */
 int MOAINode::_setDependency ( lua_State* L ) {
-	LUA_SETUP ( MOAINode, "UU" );
+	MOAI_LUA_SETUP ( MOAINode, "UU" );
 	
 	MOAINode* srcNode = state.GetLuaObject < MOAINode >( 2 );
 	if ( !srcNode ) return 0;
@@ -501,6 +511,7 @@ MOAINode::~MOAINode () {
 		
 		if ( link->mDestNode ) {
 			link->mDestNode->ClearPullLink ( *link );
+			link->mDestNode->ScheduleUpdate ();
 		}
 		delete link;
 	}

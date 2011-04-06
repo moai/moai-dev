@@ -2,6 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIPartition.h>
 #include <moaicore/MOAIPartitionCell.h>
 #include <moaicore/MOAIPartitionLayer.h>
@@ -21,7 +22,7 @@
 	@out	nil
 */
 int MOAIPartition::_insertProp ( lua_State* L ) {
-	LUA_SETUP ( MOAIPartition, "UU" )
+	MOAI_LUA_SETUP ( MOAIPartition, "UU" )
 
 	MOAIProp* prop = state.GetLuaObject < MOAIProp >( 2 );
 	if ( !prop ) return 0;
@@ -42,7 +43,7 @@ int MOAIPartition::_insertProp ( lua_State* L ) {
 	@out	MOAIProp prop	The prop under the point or nil if no prop found.
 */
 int MOAIPartition::_propForPoint ( lua_State* L ) {
-	LUA_SETUP ( MOAIPartition, "UNN" )
+	MOAI_LUA_SETUP ( MOAIPartition, "UNN" )
 
 	USVec2D vec;
 	vec.mX = state.GetValue < float >( 2, 0.0f );
@@ -73,7 +74,7 @@ int MOAIPartition::_propForPoint ( lua_State* L ) {
 	@out	...				The props under the point, all pushed onto the stack.
 */
 int MOAIPartition::_propListForPoint ( lua_State* L ) {
-	LUA_SETUP ( MOAIPartition, "UNN" )
+	MOAI_LUA_SETUP ( MOAIPartition, "UNN" )
 
 	USVec2D vec;
 	vec.mX = state.GetValue < float >( 2, 0.0f );
@@ -99,7 +100,7 @@ int MOAIPartition::_propListForPoint ( lua_State* L ) {
 	@out	...				The props under the rect, all pushed onto the stack.
 */
 int MOAIPartition::_propListForRect ( lua_State* L ) {
-	LUA_SETUP ( MOAIPartition, "UNNNN" )
+	MOAI_LUA_SETUP ( MOAIPartition, "UNNNN" )
 
 	USRect rect;
 	rect.mXMin = state.GetValue < float >( 2, 0.0f );
@@ -124,7 +125,7 @@ int MOAIPartition::_propListForRect ( lua_State* L ) {
 	@out	nil
 */
 int MOAIPartition::_removeProp ( lua_State* L ) {
-	LUA_SETUP ( MOAIPartition, "UU" )
+	MOAI_LUA_SETUP ( MOAIPartition, "UU" )
 
 	MOAIProp* prop = state.GetLuaObject < MOAIProp >( 2 );
 	if ( !prop ) return 0;
@@ -144,7 +145,7 @@ int MOAIPartition::_removeProp ( lua_State* L ) {
 	@out	nil
 */
 int MOAIPartition::_reserveLayers ( lua_State* L ) {
-	LUA_SETUP ( MOAIPartition, "UN" )
+	MOAI_LUA_SETUP ( MOAIPartition, "UN" )
 
 	u32 totalLayers = state.GetValue < u32 >( 2, 0 );
 	
@@ -172,7 +173,7 @@ int MOAIPartition::_reserveLayers ( lua_State* L ) {
 	@out	nil
 */
 int MOAIPartition::_setLayer ( lua_State* L ) {
-	LUA_SETUP ( MOAIPartition, "UNNNN" )
+	MOAI_LUA_SETUP ( MOAIPartition, "UNNNN" )
 
 	u32 layerID		= state.GetValue < u32 >( 2, 1 ) - 1;
 	float cellSize	= state.GetValue < float >( 3, 1.0f );
@@ -195,7 +196,7 @@ int MOAIPartition::_setLayer ( lua_State* L ) {
 	@out	...				The props under the point, sorted and pushed onto the stack.
 */
 int MOAIPartition::_sortedPropListForPoint ( lua_State* L ) {
-	LUA_SETUP ( MOAIPartition, "UNN" )
+	MOAI_LUA_SETUP ( MOAIPartition, "UNN" )
 
 	USVec2D vec;
 	vec.mX = state.GetValue < float >( 2, 0.0f );
@@ -222,7 +223,7 @@ int MOAIPartition::_sortedPropListForPoint ( lua_State* L ) {
 	@out	...				The props under the rect, sorted and pushed onto the stack.
 */
 int MOAIPartition::_sortedPropListForRect ( lua_State* L ) {
-	LUA_SETUP ( MOAIPartition, "UNNNN" )
+	MOAI_LUA_SETUP ( MOAIPartition, "UNNNN" )
 
 	USRect rect;
 	rect.mXMin = state.GetValue < float >( 2, 0.0f );

@@ -5,6 +5,7 @@
 #include <moaicore/MOAIDataBuffer.h>
 #include <moaicore/MOAIGrid.h>
 #include <moaicore/MOAIGfxQuad2D.h>
+#include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIProp.h>
 #include <moaicore/MOAITexture.h>
 #include <moaicore/MOAITransformBase.h>
@@ -25,7 +26,7 @@
 	@out	nil
 */
 int MOAIGfxQuad2D::_setRect ( lua_State* L ) {
-	LUA_SETUP ( MOAIGfxQuad2D, "UNNNN" )
+	MOAI_LUA_SETUP ( MOAIGfxQuad2D, "UNNNN" )
 	
 	self->mRect = state.GetRect < float >( 2 );
 
@@ -42,7 +43,7 @@ int MOAIGfxQuad2D::_setRect ( lua_State* L ) {
 	@out	MOAITexture texture
 */
 int MOAIGfxQuad2D::_setTexture ( lua_State* L ) {
-	LUA_SETUP ( MOAIGfxQuad2D, "U" )
+	MOAI_LUA_SETUP ( MOAIGfxQuad2D, "U" )
 
 	self->mTexture = MOAITexture::AffirmTexture ( state, 2 );
 	if ( self->mTexture ) {
@@ -64,7 +65,7 @@ int MOAIGfxQuad2D::_setTexture ( lua_State* L ) {
 	@out	nil
 */
 int MOAIGfxQuad2D::_setUVRect ( lua_State* L ) {
-	LUA_SETUP ( MOAIGfxQuad2D, "UNNNN" )
+	MOAI_LUA_SETUP ( MOAIGfxQuad2D, "UNNNN" )
 	
 	self->mUVRect = state.GetRect < float >( 2 );
 

@@ -6,6 +6,7 @@
 #include <moaicore/MOAIDebugLines.h>
 #include <moaicore/MOAIGrid.h>
 #include <moaicore/MOAILayoutFrame.h>
+#include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIProp2D.h>
 #include <moaicore/MOAIShader.h>
 #include <moaicore/MOAISurfaceSampler2D.h>
@@ -22,7 +23,7 @@
 	@out	MOAIGrid grid		Current grid or nil.
 */
 int MOAIProp2D::_getGrid ( lua_State* L ) {
-	LUA_SETUP ( MOAIProp2D, "U" )
+	MOAI_LUA_SETUP ( MOAIProp2D, "U" )
 	
 	if ( self->mGrid ) {
 		self->mGrid->PushLuaUserdata ( state );
@@ -39,7 +40,7 @@ int MOAIProp2D::_getGrid ( lua_State* L ) {
 	@out	number index
 */
 int MOAIProp2D::_getIndex ( lua_State* L ) {
-	LUA_SETUP ( MOAIProp2D, "U" )
+	MOAI_LUA_SETUP ( MOAIProp2D, "U" )
 
 	lua_pushnumber ( state, self->mIndex );
 
@@ -56,7 +57,7 @@ int MOAIProp2D::_getIndex ( lua_State* L ) {
 	@out	boolean isInside
 */
 int	MOAIProp2D::_inside ( lua_State* L ) {
-	LUA_SETUP ( MOAIProp2D, "UNN" )
+	MOAI_LUA_SETUP ( MOAIProp2D, "UNN" )
 
 	USVec2D vec;
 	vec.mX	= state.GetValue < float >( 2, 0.0f );
@@ -77,7 +78,7 @@ int	MOAIProp2D::_inside ( lua_State* L ) {
 	@out	nil
 */
 int MOAIProp2D::_setDeck ( lua_State* L ) {
-	LUA_SETUP ( MOAIProp2D, "UU" )
+	MOAI_LUA_SETUP ( MOAIProp2D, "UU" )
 
 	self->mDeck = state.GetLuaObject < MOAIDeck >( 2 );
 
@@ -103,7 +104,7 @@ int MOAIProp2D::_setDeck ( lua_State* L ) {
 	@out	nil
 */
 int MOAIProp2D::_setFrame ( lua_State* L ) {
-	LUA_SETUP ( MOAIProp2D, "UNNNN" )
+	MOAI_LUA_SETUP ( MOAIProp2D, "UNNNN" )
 
 	float x0	= state.GetValue < float >( 2, 0.0f );
 	float y0	= state.GetValue < float >( 3, 0.0f );
@@ -130,7 +131,7 @@ int MOAIProp2D::_setFrame ( lua_State* L ) {
 	@out	nil
 */
 int MOAIProp2D::_setFrameSource ( lua_State* L ) {
-	LUA_SETUP ( MOAIProp2D, "UN" )
+	MOAI_LUA_SETUP ( MOAIProp2D, "UN" )
 
 	self->mFrameSource = state.GetValue < u32 >( 2, self->mFrameSource );
 
@@ -147,7 +148,7 @@ int MOAIProp2D::_setFrameSource ( lua_State* L ) {
 	@out	nil
 */
 int MOAIProp2D::_setGrid ( lua_State* L ) {
-	LUA_SETUP ( MOAIProp2D, "UU" )
+	MOAI_LUA_SETUP ( MOAIProp2D, "UU" )
 	
 	MOAIGrid* grid = state.GetLuaObject < MOAIGrid >( 2 );
 	if ( !grid ) return 0;
@@ -166,7 +167,7 @@ int MOAIProp2D::_setGrid ( lua_State* L ) {
 	@out	nil
 */
 int MOAIProp2D::_setIndex ( lua_State* L ) {
-	LUA_SETUP ( MOAIProp2D, "U" )
+	MOAI_LUA_SETUP ( MOAIProp2D, "U" )
 
 	self->mIndex = state.GetValue < u32 >( 2, 1 );
 	self->ScheduleUpdate ();
@@ -185,7 +186,7 @@ int MOAIProp2D::_setIndex ( lua_State* L ) {
 	@out	nil
 */
 int MOAIProp2D::_setRepeat ( lua_State* L ) {
-	LUA_SETUP ( MOAIProp2D, "U" )
+	MOAI_LUA_SETUP ( MOAIProp2D, "U" )
 
 	bool repeatX = state.GetValue < bool >( 2, true );
 	bool repeatY = state.GetValue < bool >( 3, repeatX );
@@ -208,7 +209,7 @@ int MOAIProp2D::_setRepeat ( lua_State* L ) {
 	@out	nil
 */
 int MOAIProp2D::_setShader ( lua_State* L ) {
-	LUA_SETUP ( MOAIProp2D, "U" )
+	MOAI_LUA_SETUP ( MOAIProp2D, "U" )
 
 	if ( self->mShader ) {
 		self->ClearDependency ( *self->mShader );
@@ -231,7 +232,7 @@ int MOAIProp2D::_setShader ( lua_State* L ) {
 	@out	nil
 */
 int MOAIProp2D::_setUVTransform ( lua_State* L ) {
-	LUA_SETUP ( MOAIProp2D, "U" )
+	MOAI_LUA_SETUP ( MOAIProp2D, "U" )
 	
 	self->mUVTransform = state.GetLuaObject < MOAITransform >( 2 );
 

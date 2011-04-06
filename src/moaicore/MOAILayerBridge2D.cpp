@@ -4,6 +4,7 @@
 #include "pch.h"
 #include <moaicore/MOAILayer2D.h>
 #include <moaicore/MOAILayerBridge2D.h>
+#include <moaicore/MOAILogMessages.h>
 
 //================================================================//
 // local
@@ -20,7 +21,7 @@
 	@param targetLayer (in)
 */
 int MOAILayerBridge2D::_init ( lua_State* L ) {
-	LUA_SETUP ( MOAILayerBridge2D, "UUU" );
+	MOAI_LUA_SETUP ( MOAILayerBridge2D, "UUU" );
 	
 	MOAILayer2D* sourceScene = state.GetLuaObject < MOAILayer2D >( 2 );
 	if ( !sourceScene ) return 0;

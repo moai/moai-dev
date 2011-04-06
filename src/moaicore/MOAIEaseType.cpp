@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <moaicore/MOAIEaseType.h>
+#include <moaicore/MOAILogMessages.h>
 
 //================================================================//
 // MOAIEaseType

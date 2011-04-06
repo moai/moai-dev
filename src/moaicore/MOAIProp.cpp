@@ -2,6 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIPartition.h>
 #include <moaicore/MOAIProp.h>
 #include <moaicore/MOAISurfaceSampler2D.h>
@@ -19,7 +20,7 @@
 	@out	number priority		The node's priority or nil.
 */
 int MOAIProp::_getPriority ( lua_State* L ) {
-	LUA_SETUP ( MOAIProp, "U" )
+	MOAI_LUA_SETUP ( MOAIProp, "U" )
 	
 	if ( self->mPriority != UNKNOWN_PRIORITY ) {
 		lua_pushnumber ( state, self->mPriority );
@@ -39,7 +40,7 @@ int MOAIProp::_getPriority ( lua_State* L ) {
 	@out	nil
 */
 int MOAIProp::_setPriority ( lua_State* L ) {
-	LUA_SETUP ( MOAIProp, "U" )
+	MOAI_LUA_SETUP ( MOAIProp, "U" )
 	
 	if ( state.IsType ( 2, LUA_TNUMBER )) {
 		self->mPriority = ( s32 )state.GetValue < int >( 2, 0 );

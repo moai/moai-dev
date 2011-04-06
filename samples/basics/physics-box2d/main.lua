@@ -72,5 +72,3 @@ sprite = MOAIProp2D.new ()
 sprite:setDeck ( texture )
 sprite:setParent ( body )
 layer:insertProp ( sprite )
-
-world:destroyBody ( body2 )

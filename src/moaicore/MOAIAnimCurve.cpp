@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <moaicore/MOAIAnimCurve.h>
+#include <moaicore/MOAILogMessages.h>
 
 //================================================================//
 // local
@@ -16,7 +17,7 @@
 	@out	number length
 */
 int MOAIAnimCurve::_getLength ( lua_State* L ) {
-	LUA_SETUP ( MOAIAnimCurve, "U" );
+	MOAI_LUA_SETUP ( MOAIAnimCurve, "U" );
 
 	lua_pushnumber ( state, self->GetLength ());
 
@@ -32,7 +33,7 @@ int MOAIAnimCurve::_getLength ( lua_State* L ) {
 	@out	nil
 */
 int MOAIAnimCurve::_reserveKeys ( lua_State* L ) {
-	LUA_SETUP ( MOAIAnimCurve, "UN" );
+	MOAI_LUA_SETUP ( MOAIAnimCurve, "UN" );
 
 	self->Init ( state.GetValue < u32 >( 2, 0 ));
 
@@ -54,13 +55,15 @@ int MOAIAnimCurve::_reserveKeys ( lua_State* L ) {
 	@out	nil
 */
 int MOAIAnimCurve::_setKey ( lua_State* L ) {
-	LUA_SETUP ( MOAIAnimCurve, "UNNN" );
+	MOAI_LUA_SETUP ( MOAIAnimCurve, "UNNN" );
 
 	u32 index		= state.GetValue < u32 >( 2, 1 ) - 1;
 	float time		= state.GetValue < float >( 3, 0.0f );
 	float value		= state.GetValue < float >( 4, 0.0f );
 	u32 mode		= state.GetValue < u32 >( 5, USInterpolate::kSmooth );
 	float weight	= state.GetValue < float >( 6, 1.0f );
+	
+	MOAI_CHECK_INDEX ( index, self->mKeys.Size ())
 	
 	self->SetKey ( index, time, value, mode, weight );
 

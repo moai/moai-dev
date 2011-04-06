@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <moaicore/MOAILevelSensor.h>
+#include <moaicore/MOAILogMessages.h>
 
 //================================================================//
 // lua
@@ -18,7 +19,7 @@
 	@out	number z
 */
 int MOAILevelSensor::_getLevel ( lua_State* L ) {
-	LUA_SETUP ( MOAILevelSensor, "U" )
+	MOAI_LUA_SETUP ( MOAILevelSensor, "U" )
 	
 	lua_pushnumber ( state, self->mX );
 	lua_pushnumber ( state, self->mY );
@@ -36,7 +37,7 @@ int MOAILevelSensor::_getLevel ( lua_State* L ) {
 	@out	nil
 */
 int MOAILevelSensor::_setCallback ( lua_State* L ) {
-	LUA_SETUP ( MOAILevelSensor, "U" )
+	MOAI_LUA_SETUP ( MOAILevelSensor, "U" )
 	
 	self->mCallback.SetRef ( state, 2, false );
 	

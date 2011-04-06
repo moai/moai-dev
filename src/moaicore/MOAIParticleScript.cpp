@@ -2,12 +2,13 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIParticleScript.h>
 #include <moaicore/MOAIParticleEngine.h>
 
 #define IMPL_LUA_PARTICLE_OP(name,opcode,rParams,vParams)										\
 	int MOAIParticleScript::name ( lua_State* L ) {												\
-		LUA_SETUP ( MOAIParticleScript, "U" )													\
+		MOAI_LUA_SETUP ( MOAIParticleScript, "U" )													\
 		self->ParseInstruction ( state, 2, MOAIParticleEngine::opcode, rParams, vParams );		\
 		return 0;																				\
 	}
@@ -398,7 +399,7 @@ IMPL_LUA_PARTICLE_OP ( _vec2Rand,			VEC2_RAND,			1, 2 )
 	@param y (out)
 */
 int MOAIParticleScript::_load ( lua_State* L ) {
-	LUA_SETUP ( MOAIParticleScript, "UNN" )
+	MOAI_LUA_SETUP ( MOAIParticleScript, "UNN" )
 	
 	int top = state.GetTop ();
 	u32 n = 1;

@@ -2,6 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAITouchSensor.h>
 
 //================================================================//
@@ -16,7 +17,7 @@
 	@out	boolean wasPressed
 */
 int MOAITouchSensor::_down ( lua_State* L ) {
-	LUA_SETUP ( MOAITouchSensor, "U" )
+	MOAI_LUA_SETUP ( MOAITouchSensor, "U" )
 	
 	u32 idx = state.GetValue < u32 >( 2, 0 );
 	
@@ -37,7 +38,7 @@ int MOAITouchSensor::_down ( lua_State* L ) {
 	@out	number idn
 */
 int MOAITouchSensor::_getActiveTouches ( lua_State* L ) {
-	LUA_SETUP ( MOAITouchSensor, "U" )
+	MOAI_LUA_SETUP ( MOAITouchSensor, "U" )
 	
 	for ( u32 i = 0; i < self->mTop; ++i ) {
 		lua_pushnumber ( state, self->mActiveStack [ i ]);
@@ -56,7 +57,7 @@ int MOAITouchSensor::_getActiveTouches ( lua_State* L ) {
 	@out	number tapCount
 */
 int MOAITouchSensor::_getTouch ( lua_State* L ) {
-	LUA_SETUP ( MOAITouchSensor, "U" )
+	MOAI_LUA_SETUP ( MOAITouchSensor, "U" )
 	
 	u32 idx = state.GetValue < u32 >( 2, 0 );
 	
@@ -81,7 +82,7 @@ int MOAITouchSensor::_getTouch ( lua_State* L ) {
 	@out	boolean hasTouches
 */
 int MOAITouchSensor::_hasTouches ( lua_State* L ) {
-	LUA_SETUP ( MOAITouchSensor, "U" )
+	MOAI_LUA_SETUP ( MOAITouchSensor, "U" )
 
 	lua_pushboolean ( state, ( self->mTop > 0 ));
 	return 1;
@@ -95,7 +96,7 @@ int MOAITouchSensor::_hasTouches ( lua_State* L ) {
 	@out	boolean isDown
 */
 int MOAITouchSensor::_isDown ( lua_State* L ) {
-	LUA_SETUP ( MOAITouchSensor, "U" )
+	MOAI_LUA_SETUP ( MOAITouchSensor, "U" )
 	
 	u32 idx = state.GetValue < u32 >( 2, 0 );
 	
@@ -115,7 +116,7 @@ int MOAITouchSensor::_isDown ( lua_State* L ) {
 	@out	nil
 */
 int MOAITouchSensor::_setCallback ( lua_State* L ) {
-	LUA_SETUP ( MOAITouchSensor, "UF" )
+	MOAI_LUA_SETUP ( MOAITouchSensor, "UF" )
 	
 	self->mCallback.SetRef ( state, 2, false );
 	
@@ -130,7 +131,7 @@ int MOAITouchSensor::_setCallback ( lua_State* L ) {
 	@out	boolean wasPressed
 */
 int MOAITouchSensor::_up ( lua_State* L ) {
-	LUA_SETUP ( MOAITouchSensor, "U" )
+	MOAI_LUA_SETUP ( MOAITouchSensor, "U" )
 	
 	u32 idx = state.GetValue < u32 >( 2, 0 );
 	

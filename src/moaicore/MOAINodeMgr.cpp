@@ -3,6 +3,7 @@
 
 #include "pch.h"
 
+#include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAINode.h>
 #include <moaicore/MOAINodeMgr.h>
 

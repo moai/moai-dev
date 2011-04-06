@@ -2,8 +2,9 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moaicore/MOAISimpleShader.h>
 #include <moaicore/MOAIEaseDriver.h>
+#include <moaicore/MOAILogMessages.h>
+#include <moaicore/MOAISimpleShader.h>
 
 //================================================================//
 // local
@@ -18,7 +19,7 @@
 	@out	nil
 */
 int MOAISimpleShader::_setBlendMode ( lua_State* L ) {
-	LUA_SETUP ( MOAISimpleShader, "UN" )
+	MOAI_LUA_SETUP ( MOAISimpleShader, "UN" )
 
 	u32 blendMode = state.GetValue < u32 >( 2, USBlendMode::BLEND_NORMAL );
 	self->mBlendMode.SetBlend ( blendMode );
@@ -37,7 +38,7 @@ int MOAISimpleShader::_setBlendMode ( lua_State* L ) {
 	@out	nil
 */
 int MOAISimpleShader::_setParent ( lua_State* L ) {
-	LUA_SETUP ( MOAISimpleShader, "U" )
+	MOAI_LUA_SETUP ( MOAISimpleShader, "U" )
 	
 	MOAISimpleShader* parent = state.GetLuaObject < MOAISimpleShader >( 2 );
 	self->SetParent ( parent );

@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <moaicore/MOAIDeck.h>
+#include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIParticleEngine.h>
 #include <moaicore/MOAIParticleForce.h>
 #include <moaicore/MOAIParticleScript.h>
@@ -22,7 +23,7 @@ class MOAIDataBuffer;
 	@param y (out)
 */
 int MOAIParticleState::_clearForces ( lua_State* L ) {
-	LUA_SETUP ( MOAIParticleState, "U" )
+	MOAI_LUA_SETUP ( MOAIParticleState, "U" )
 	
 	self->ClearForces ();
 	
@@ -37,7 +38,7 @@ int MOAIParticleState::_clearForces ( lua_State* L ) {
 	@param y (out)
 */
 int MOAIParticleState::_init ( lua_State* L ) {
-	LUA_SETUP ( MOAIParticleState, "UUUU" )
+	MOAI_LUA_SETUP ( MOAIParticleState, "UUUU" )
 	
 	MOAIParticleScript* init		= state.GetLuaObject < MOAIParticleScript >( 2 );
 	MOAIParticleScript* update		= state.GetLuaObject < MOAIParticleScript >( 3 );
@@ -70,7 +71,7 @@ int MOAIParticleState::_init ( lua_State* L ) {
 	@param y (out)
 */
 int MOAIParticleState::_pushForce ( lua_State* L ) {
-	LUA_SETUP ( MOAIParticleState, "UU" )
+	MOAI_LUA_SETUP ( MOAIParticleState, "UU" )
 	
 	MOAIParticleForce* force = state.GetLuaObject < MOAIParticleForce >( 2 );
 	if ( force ) {
@@ -87,7 +88,7 @@ int MOAIParticleState::_pushForce ( lua_State* L ) {
 	@param y (out)
 */
 int MOAIParticleState::_setNext ( lua_State* L ) {
-	LUA_SETUP ( MOAIParticleState, "UU" )
+	MOAI_LUA_SETUP ( MOAIParticleState, "UU" )
 	
 	self->mNext = state.GetLuaObject < MOAIParticleState >( 2 );
 	

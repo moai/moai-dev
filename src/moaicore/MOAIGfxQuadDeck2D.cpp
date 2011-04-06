@@ -4,7 +4,6 @@
 #include "pch.h"
 #include <moaicore/MOAIGfxQuadDeck2D.h>
 #include <moaicore/MOAIGrid.h>
-#include <moaicore/MOAILogMgr.h>
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIProp.h>
 #include <moaicore/MOAITexture.h>
@@ -23,7 +22,7 @@
 	@out	nil
 */
 int MOAIGfxQuadDeck2D::_reserve ( lua_State* L ) {
-	LUA_SETUP ( MOAIGfxQuadDeck2D, "UN" )
+	MOAI_LUA_SETUP ( MOAIGfxQuadDeck2D, "UN" )
 	
 	u32 total = state.GetValue < u32 >( 2, 0 );
 	self->mQuads.Init ( total );
@@ -33,7 +32,6 @@ int MOAIGfxQuadDeck2D::_reserve ( lua_State* L ) {
 		quad.SetVerts ( -0.5f, -0.5f, 0.5f, 0.5f );
 		quad.SetUVs ( 0.0f, 1.0f, 1.0f, 0.0f );
 	}
-	
 	return 0;
 }
 
@@ -55,10 +53,10 @@ int MOAIGfxQuadDeck2D::_reserve ( lua_State* L ) {
 	@out	nil
 */
 int MOAIGfxQuadDeck2D::_setQuad ( lua_State* L ) {
-	LUA_SETUP ( MOAIGfxQuadDeck2D, "UNNNNNNNNN" )
+	MOAI_LUA_SETUP ( MOAIGfxQuadDeck2D, "UNNNNNNNNN" )
 
 	u32 idx		= state.GetValue < u32 >( 2, 1 ) - 1;
-	MOAI_LUA_VALID_INDEX ( idx, self->mQuads.Size ())
+	MOAI_CHECK_INDEX ( idx, self->mQuads.Size ())
 	
 	USGLQuad* glQuad = self->GetGLQuad ( idx );
 	if ( glQuad ) {
@@ -93,10 +91,10 @@ int MOAIGfxQuadDeck2D::_setQuad ( lua_State* L ) {
 	@out	nil
 */
 int MOAIGfxQuadDeck2D::_setRect ( lua_State* L ) {
-	LUA_SETUP ( MOAIGfxQuadDeck2D, "UNNNNN" )
+	MOAI_LUA_SETUP ( MOAIGfxQuadDeck2D, "UNNNNN" )
 
 	u32 idx		= state.GetValue < u32 >( 2, 1 ) - 1;
-	MOAI_LUA_VALID_INDEX ( idx, self->mQuads.Size ())
+	MOAI_CHECK_INDEX ( idx, self->mQuads.Size ())
 	
 	float x0	= state.GetValue < float >( 3, 0.0f );
 	float y0	= state.GetValue < float >( 4, 0.0f );
@@ -121,7 +119,7 @@ int MOAIGfxQuadDeck2D::_setRect ( lua_State* L ) {
 	@out	MOAITexture texture
 */
 int MOAIGfxQuadDeck2D::_setTexture ( lua_State* L ) {
-	LUA_SETUP ( MOAIGfxQuadDeck2D, "U" )
+	MOAI_LUA_SETUP ( MOAIGfxQuadDeck2D, "U" )
 
 	self->mTexture = MOAITexture::AffirmTexture ( state, 2 );
 	if ( self->mTexture ) {
@@ -149,10 +147,10 @@ int MOAIGfxQuadDeck2D::_setTexture ( lua_State* L ) {
 	@out	nil
 */
 int MOAIGfxQuadDeck2D::_setUVQuad ( lua_State* L ) {
-	LUA_SETUP ( MOAIGfxQuadDeck2D, "UNNNNNNNNN" )
+	MOAI_LUA_SETUP ( MOAIGfxQuadDeck2D, "UNNNNNNNNN" )
 
 	u32 idx		= state.GetValue < u32 >( 2, 1 ) - 1;
-	MOAI_LUA_VALID_INDEX ( idx, self->mQuads.Size ())
+	MOAI_CHECK_INDEX ( idx, self->mQuads.Size ())
 	
 	USGLQuad* glQuad = self->GetGLQuad ( idx );
 	if ( glQuad ) {
@@ -187,11 +185,10 @@ int MOAIGfxQuadDeck2D::_setUVQuad ( lua_State* L ) {
 	@out	nil
 */
 int MOAIGfxQuadDeck2D::_setUVRect ( lua_State* L ) {
-	LUA_SETUP ( MOAIGfxQuadDeck2D, "UNNNNN" )
+	MOAI_LUA_SETUP ( MOAIGfxQuadDeck2D, "UNNNNN" )
 
 	u32 idx		= state.GetValue < u32 >( 2, 1 ) - 1;
-	
-	MOAI_LUA_VALID_INDEX ( idx, self->mQuads.Size ())
+	MOAI_CHECK_INDEX ( idx, self->mQuads.Size ())
 	
 	float u0	= state.GetValue < float >( 3, 0.0f );
 	float v0	= state.GetValue < float >( 4, 0.0f );

@@ -2,6 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIParser.h>
 
 //================================================================//
@@ -18,7 +19,7 @@
 	@out	table ast
 */
 int MOAIParser::_loadFile ( lua_State* L ) {
-	LUA_SETUP ( MOAIParser, "US" )
+	MOAI_LUA_SETUP ( MOAIParser, "US" )
 	
 	cc8* filename = state.GetValue < cc8* >( 2, "" );
 	
@@ -43,7 +44,7 @@ int MOAIParser::_loadFile ( lua_State* L ) {
 	@out	nil
 */
 int MOAIParser::_loadRules ( lua_State* L ) {
-	LUA_SETUP ( MOAIParser, "US" )
+	MOAI_LUA_SETUP ( MOAIParser, "US" )
 
 	cc8* filename = state.GetValue < cc8* >( 2, "" );
 	self->mCGT.Load ( filename );
@@ -61,7 +62,7 @@ int MOAIParser::_loadRules ( lua_State* L ) {
 	@out	table ast
 */
 int MOAIParser::_loadString ( lua_State* L ) {
-	LUA_SETUP ( MOAIParser, "US" )
+	MOAI_LUA_SETUP ( MOAIParser, "US" )
 	
 	size_t len;
 	cc8* str = lua_tolstring ( state, 2, &len );
@@ -90,7 +91,7 @@ int MOAIParser::_loadString ( lua_State* L ) {
 	@out	nil
 */
 int MOAIParser::_setCallbacks ( lua_State* L ) {
-	LUA_SETUP ( MOAIParser, "U" )
+	MOAI_LUA_SETUP ( MOAIParser, "U" )
 	
 	self->mOnStartNonterminal.SetRef ( state, 2, false );
 	self->mOnEndNonterminal.SetRef ( state, 3, false );
@@ -107,7 +108,7 @@ int MOAIParser::_setCallbacks ( lua_State* L ) {
 	@out	nil
 */
 int MOAIParser::_traverse ( lua_State* L ) {
-	LUA_SETUP ( MOAIParser, "U" )
+	MOAI_LUA_SETUP ( MOAIParser, "U" )
 	
 	self->Traverse ( self->mAST );
 	

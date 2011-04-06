@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <moaicore/MOAIGrid.h>
+#include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIMesh.h>
 #include <moaicore/MOAIProp.h>
 #include <moaicore/MOAITexture.h>
@@ -23,7 +24,7 @@
 	@out	MOAITexture texture
 */
 int MOAIMesh::_setTexture ( lua_State* L ) {
-	LUA_SETUP ( MOAIMesh, "U" )
+	MOAI_LUA_SETUP ( MOAIMesh, "U" )
 
 	self->mTexture = MOAITexture::AffirmTexture ( state, 2 );
 	if ( self->mTexture ) {
@@ -42,7 +43,7 @@ int MOAIMesh::_setTexture ( lua_State* L ) {
 	@out	nil
 */
 int MOAIMesh::_setVertexBuffer ( lua_State* L ) {
-	LUA_SETUP ( MOAIMesh, "U" )
+	MOAI_LUA_SETUP ( MOAIMesh, "U" )
 	
 	self->mVertexBuffer = state.GetLuaObject < MOAIVertexBuffer >( 2 );
 

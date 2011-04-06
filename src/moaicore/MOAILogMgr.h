@@ -8,25 +8,35 @@
 
 	#ifdef __GNUC__
 		
-		#define MOAI_LOG(messageID...) \
+		#define MOAI_LOG(messageID...)																\
 			MOAILogMgr::Get ().Log ( MOAILogMgr::LOG_STATUS, messageID );
 		
-		#define MOAI_WARN(state,messageID...) \
+		#define MOAI_WARN(state,messageID...)														\
 			MOAILogMgr::Get ().Log ( MOAILogMgr::LOG_WARNING, state, messageID );
 			
-		#define MOAI_ERROR(state,messageID...) \
+		#define MOAI_ERROR(state,messageID...)														\
 			MOAILogMgr::Get ().Log ( MOAILogMgr::LOG_ERROR, state, messageID );
+		
+		#define MOAI_ERROR_UNLESS(clause,state,messageID...)										\
+			if (( clause ) == false ) {																\
+				MOAILogMgr::Get ().Log ( MOAILogMgr::LOG_ERROR, state, messageID );					\
+			}
 		
 	#else
 	
-		#define MOAI_LOG(messageID,...) \
+		#define MOAI_LOG(messageID,...)																\
 			MOAILogMgr::Get ().Log ( MOAILogMgr::LOG_STATUS, messageID, __VA_ARGS__ );
 		
-		#define MOAI_WARN(state,messageID,...) \
+		#define MOAI_WARN(state,messageID,...)														\
 			MOAILogMgr::Get ().Log ( MOAILogMgr::LOG_WARNING, state, messageID, __VA_ARGS__ );
 			
-		#define MOAI_ERROR(state,messageID,...) \
+		#define MOAI_ERROR(state,messageID,...)														\
 			MOAILogMgr::Get ().Log ( MOAILogMgr::LOG_ERROR, state, messageID, __VA_ARGS__ );
+		
+		#define MOAI_ERROR_UNLESS(clause,state,messageID,...)										\
+			if (( clause ) == false ) {																\
+				MOAILogMgr::Get ().Log ( MOAILogMgr::LOG_ERROR, state, messageID, __VA_ARGS__ );	\
+			}
 		
 	#endif
 	
@@ -34,12 +44,14 @@
 	
 	#ifdef __GNUC__
 		#define MOAI_LOG(messageID...)
-		#define MOAI_WARN(clause,messageID...)
-		#define MOAI_ERROR(clause,messageID...)
+		#define MOAI_WARN(state,messageID...)
+		#define MOAI_ERROR(state,messageID...)
+		#define MOAI_ERROR_UNLESS(clause,state,messageID...)
 	#else
 		#define MOAI_LOG(messageID,...)
-		#define MOAI_WARN(clause,messageID,...)
-		#define MOAI_ERROR(clause,messageID,...)
+		#define MOAI_WARN(state,messageID,...)
+		#define MOAI_ERROR(state,messageID,...)
+		#define MOAI_ERROR_UNLESS(clause,state,messageID,...)
 	#endif
 
 #endif

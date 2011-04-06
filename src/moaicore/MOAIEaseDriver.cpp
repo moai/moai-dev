@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <moaicore/MOAIEaseDriver.h>
+#include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAINode.h>
 
 //================================================================//
@@ -18,7 +19,7 @@
 	@out	nil
 */
 int MOAIEaseDriver::_reserveLinks ( lua_State* L ) {
-	LUA_SETUP ( MOAIEaseDriver, "UN" );
+	MOAI_LUA_SETUP ( MOAIEaseDriver, "UN" );
 	
 	u32 total = state.GetValue < u32 >( 2, 0 );
 	self->ReserveLinks ( total );
@@ -35,7 +36,7 @@ int MOAIEaseDriver::_reserveLinks ( lua_State* L ) {
 	@out	nil
 */
 int MOAIEaseDriver::_setLength ( lua_State* L ) {
-	LUA_SETUP ( MOAIEaseDriver, "UN" );
+	MOAI_LUA_SETUP ( MOAIEaseDriver, "UN" );
 	
 	float length = state.GetValue < float >( 2, 0.0f );
 	self->SetLength ( length );
@@ -57,7 +58,7 @@ int MOAIEaseDriver::_setLength ( lua_State* L ) {
 	@out	nil
 */
 int MOAIEaseDriver::_setLink ( lua_State* L ) {
-	LUA_SETUP ( MOAIEaseDriver, "UNUNN" );
+	MOAI_LUA_SETUP ( MOAIEaseDriver, "UNUNN" );
 	
 	MOAINode* target = state.GetLuaObject < MOAINode >( 3 );
 	if ( !target ) return 0;

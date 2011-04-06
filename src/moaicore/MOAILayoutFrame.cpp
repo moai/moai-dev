@@ -2,12 +2,9 @@
 // http://getmoai.com
 
 #include "pch.h"
-//#include <moaicore/MOAIColor.h>
-//#include <moaicore/MOAIDeck.h>
 #include <moaicore/MOAIDebugLines.h>
 #include <moaicore/MOAILayoutFrame.h>
-//#include <moaicore/MOAILayer2D.h>
-//#include <moaicore/MOAISurfaceSampler2D.h>
+#include <moaicore/MOAILogMessages.h>
 
 //================================================================//
 // local
@@ -21,7 +18,7 @@
 	@out	nil
 */
 int MOAILayoutFrame::_layout ( lua_State* L ) {
-	LUA_SETUP ( MOAILayoutFrame, "U" )
+	MOAI_LUA_SETUP ( MOAILayoutFrame, "U" )
 
 	self->Layout ();
 
@@ -38,7 +35,7 @@ int MOAILayoutFrame::_layout ( lua_State* L ) {
 	@out	nil
 */
 int	MOAILayoutFrame::_setFit ( lua_State* L ) {
-	LUA_SETUP ( MOAILayoutFrame, "U" )
+	MOAI_LUA_SETUP ( MOAILayoutFrame, "U" )
 	
 	self->mFit [ X_AXIS ]	= state.GetValue < u32 >( 2, self->mFit [ X_AXIS ]);
 	self->mFit [ Y_AXIS ]	= state.GetValue < u32 >( 3, self->mFit [ Y_AXIS ]);
@@ -56,7 +53,7 @@ int	MOAILayoutFrame::_setFit ( lua_State* L ) {
 	@out	nil
 */
 int	MOAILayoutFrame::_setIdealSize ( lua_State* L ) {
-	LUA_SETUP ( MOAILayoutFrame, "U" )
+	MOAI_LUA_SETUP ( MOAILayoutFrame, "U" )
 
 	self->mIdealSize [ X_AXIS ]		= state.GetValue < float >( 2, self->mIdealSize [ X_AXIS ]);
 	self->mIdealSize [ Y_AXIS ]		= state.GetValue < float >( 3, self->mIdealSize [ Y_AXIS ]);
@@ -74,7 +71,7 @@ int	MOAILayoutFrame::_setIdealSize ( lua_State* L ) {
 	@out	nil
 */
 int	MOAILayoutFrame::_setLayout ( lua_State* L ) {
-	LUA_SETUP ( MOAILayoutFrame, "U" )
+	MOAI_LUA_SETUP ( MOAILayoutFrame, "U" )
 	
 	self->mLayout [ X_AXIS ]	= state.GetValue < u32 >( 2, self->mLayout [ X_AXIS ]);
 	self->mLayout [ Y_AXIS ]	= state.GetValue < u32 >( 3, self->mLayout [ Y_AXIS ]);
@@ -94,7 +91,7 @@ int	MOAILayoutFrame::_setLayout ( lua_State* L ) {
 	@out	nil
 */
 int MOAILayoutFrame::_setMargin ( lua_State* L ) {
-	LUA_SETUP ( MOAILayoutFrame, "U" )
+	MOAI_LUA_SETUP ( MOAILayoutFrame, "U" )
 
 	self->mMargin [ X_AXIS ][ MIN ]	= state.GetValue < float >( 2, self->mMargin [ X_AXIS ][ MIN ]);
 	self->mMargin [ Y_AXIS ][ MIN ]	= state.GetValue < float >( 3, self->mMargin [ Y_AXIS ][ MIN ]);
@@ -114,7 +111,7 @@ int MOAILayoutFrame::_setMargin ( lua_State* L ) {
 	@out	nil
 */
 int	MOAILayoutFrame::_setWeight ( lua_State* L ) {
-	LUA_SETUP ( MOAILayoutFrame, "U" )
+	MOAI_LUA_SETUP ( MOAILayoutFrame, "U" )
 	
 	self->mWeight [ X_AXIS ]	= state.GetValue < float >( 2, self->mWeight [ X_AXIS ]);
 	self->mWeight [ Y_AXIS ]	= state.GetValue < float >( 3, self->mWeight [ Y_AXIS ]);

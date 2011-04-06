@@ -6,6 +6,7 @@
 #include <moaicore/MOAIBox2DArbiter.h>
 #include <moaicore/MOAIBox2DFixture.h>
 #include <moaicore/MOAIBox2DWorld.h>
+#include <moaicore/MOAILogMessages.h>
 
 SUPPRESS_EMPTY_FILE_WARNING
 #if USE_BOX2D
@@ -26,7 +27,7 @@ SUPPRESS_EMPTY_FILE_WARNING
 	@out	nil
 */
 int MOAIBox2DFixture::_setCollisionHandler ( lua_State* L ) {
-	LUA_SETUP ( MOAIBox2DFixture, "UF" )
+	MOAI_LUA_SETUP ( MOAIBox2DFixture, "UF" )
 	
 	self->mCollisionHandler.SetRef ( state, 2, false );
 	self->mCollisionMask = state.GetValue < u32 >( 3, MOAIBox2DArbiter::ALL );
@@ -43,7 +44,7 @@ int MOAIBox2DFixture::_setCollisionHandler ( lua_State* L ) {
 	@out	nil
 */
 int MOAIBox2DFixture::_setDensity ( lua_State* L ) {
-	LUA_SETUP ( MOAIBox2DFixture, "UN" )
+	MOAI_LUA_SETUP ( MOAIBox2DFixture, "UN" )
 	
 	float density = state.GetValue < float >( 2, 0.0f );
 	self->mFixture->SetDensity ( density );
@@ -62,7 +63,7 @@ int MOAIBox2DFixture::_setDensity ( lua_State* L ) {
 	@out	nil
 */
 int MOAIBox2DFixture::_setFilter ( lua_State* L ) {
-	LUA_SETUP ( MOAIBox2DFixture, "UNN" )
+	MOAI_LUA_SETUP ( MOAIBox2DFixture, "UNN" )
 	
 	b2Filter filter = self->mFixture->GetFilterData ();
 	
@@ -83,7 +84,7 @@ int MOAIBox2DFixture::_setFilter ( lua_State* L ) {
 	@out	nil
 */
 int MOAIBox2DFixture::_setFriction ( lua_State* L ) {
-	LUA_SETUP ( MOAIBox2DFixture, "UN" )
+	MOAI_LUA_SETUP ( MOAIBox2DFixture, "UN" )
 	
 	float friction = state.GetValue < float >( 2, 0.0f );
 	self->mFixture->SetFriction ( friction );
@@ -100,7 +101,7 @@ int MOAIBox2DFixture::_setFriction ( lua_State* L ) {
 	@out	nil
 */
 int MOAIBox2DFixture::_setRestitution ( lua_State* L ) {
-	LUA_SETUP ( MOAIBox2DFixture, "UN" )
+	MOAI_LUA_SETUP ( MOAIBox2DFixture, "UN" )
 	
 	float restitution = state.GetValue < float >( 2, 0.0f );
 	self->mFixture->SetRestitution ( restitution );
@@ -117,7 +118,7 @@ int MOAIBox2DFixture::_setRestitution ( lua_State* L ) {
 	@out	nil
 */
 int MOAIBox2DFixture::_setSensor ( lua_State* L ) {
-	LUA_SETUP ( MOAIBox2DFixture, "U" )
+	MOAI_LUA_SETUP ( MOAIBox2DFixture, "U" )
 	
 	bool isSensor = state.GetValue < bool >( 2, true );
 	self->mFixture->SetSensor ( isSensor );

@@ -9,6 +9,7 @@
 #include <moaicore/MOAICpDebugDraw.h>
 #include <moaicore/MOAICpShape.h>
 #include <moaicore/MOAICpSpace.h>
+#include <moaicore/MOAILogMessages.h>
 
 SUPPRESS_EMPTY_FILE_WARNING
 #if USE_CHIPMUNK
@@ -177,7 +178,7 @@ static void _shapeListForSegmentCallback ( cpShape *shape, cpFloat t, cpVect n, 
 	@return nil
 */
 int MOAICpSpace::_activateShapesTouchingShape ( lua_State* L ) {
-	LUA_SETUP ( MOAICpSpace, "UU" )
+	MOAI_LUA_SETUP ( MOAICpSpace, "UU" )
 	
 	MOAICpShape* shape = state.GetLuaObject < MOAICpShape >( 2 );
 	if ( shape && shape->mShape ) {
@@ -193,7 +194,7 @@ int MOAICpSpace::_activateShapesTouchingShape ( lua_State* L ) {
 	@return The damping. @type number
 */
 int MOAICpSpace::_getDamping ( lua_State* L ) {
-	LUA_SETUP ( MOAICpSpace, "U" )
+	MOAI_LUA_SETUP ( MOAICpSpace, "U" )
 	
 	lua_pushnumber ( L, self->mSpace->damping );
 	return 1;
@@ -206,7 +207,7 @@ int MOAICpSpace::_getDamping ( lua_State* L ) {
 	@return The gravity in the X and Y dimensions. @type (number,number)
 */
 int MOAICpSpace::_getGravity ( lua_State* L ) {
-	LUA_SETUP ( MOAICpSpace, "U" )
+	MOAI_LUA_SETUP ( MOAICpSpace, "U" )
 	
 	lua_pushnumber ( L, self->mSpace->gravity.x );
 	lua_pushnumber ( L, self->mSpace->gravity.y );
@@ -220,7 +221,7 @@ int MOAICpSpace::_getGravity ( lua_State* L ) {
 	@return The idle speed threshold. @type number
 */
 int MOAICpSpace::_getIdleSpeedThreshold ( lua_State* L ) {
-	LUA_SETUP ( MOAICpSpace, "U" )
+	MOAI_LUA_SETUP ( MOAICpSpace, "U" )
 	
 	lua_pushnumber ( L, self->mSpace->idleSpeedThreshold );
 	return 1;
@@ -233,7 +234,7 @@ int MOAICpSpace::_getIdleSpeedThreshold ( lua_State* L ) {
 	@return The iterations. @type number
 */
 int MOAICpSpace::_getIterations ( lua_State* L ) {
-	LUA_SETUP ( MOAICpSpace, "U" )
+	MOAI_LUA_SETUP ( MOAICpSpace, "U" )
 	
 	lua_pushnumber ( L, self->mSpace->iterations );
 	return 1;
@@ -246,7 +247,7 @@ int MOAICpSpace::_getIterations ( lua_State* L ) {
 	@return The iterations. @type number
 */
 int MOAICpSpace::_getSleepTimeThreshold ( lua_State* L ) {
-	LUA_SETUP ( MOAICpSpace, "U" )
+	MOAI_LUA_SETUP ( MOAICpSpace, "U" )
 	
 	lua_pushnumber ( L, self->mSpace->sleepTimeThreshold );
 	return 1;
@@ -259,7 +260,7 @@ int MOAICpSpace::_getSleepTimeThreshold ( lua_State* L ) {
 	@return The static body. @type number
 */
 int MOAICpSpace::_getStaticBody ( lua_State* L ) {
-	LUA_SETUP ( MOAICpSpace, "U" )
+	MOAI_LUA_SETUP ( MOAICpSpace, "U" )
 	
 	if ( !self->mStaticBody ) {
 		self->mStaticBody = new MOAICpBody ();
@@ -278,7 +279,7 @@ int MOAICpSpace::_getStaticBody ( lua_State* L ) {
 	@return The new prop. @type number
 */
 int MOAICpSpace::_insertProp ( lua_State* L ) {
-	LUA_SETUP ( MOAICpSpace, "UU" )
+	MOAI_LUA_SETUP ( MOAICpSpace, "UU" )
 	
 	MOAICpPrim* prim = state.GetLuaObject < MOAICpPrim >( 2 );
 	if ( prim ) {
@@ -295,7 +296,7 @@ int MOAICpSpace::_insertProp ( lua_State* L ) {
 	@return nil
 */
 int MOAICpSpace::_rehashShape ( lua_State* L ) {
-	LUA_SETUP ( MOAICpSpace, "UU" )
+	MOAI_LUA_SETUP ( MOAICpSpace, "UU" )
 	
 	MOAICpShape* shape = state.GetLuaObject < MOAICpShape >( 2 );
 	if ( shape && shape->mShape ) {
@@ -311,7 +312,7 @@ int MOAICpSpace::_rehashShape ( lua_State* L ) {
 	@return nil
 */
 int MOAICpSpace::_rehashStatic ( lua_State* L ) {
-	LUA_SETUP ( MOAICpSpace, "U" )
+	MOAI_LUA_SETUP ( MOAICpSpace, "U" )
 	
 	cpSpaceRehashStatic ( self->mSpace );
 	return 0;
@@ -325,7 +326,7 @@ int MOAICpSpace::_rehashStatic ( lua_State* L ) {
 	@return nil
 */
 int MOAICpSpace::_removeProp ( lua_State* L ) {
-	LUA_SETUP ( MOAICpSpace, "UU" )
+	MOAI_LUA_SETUP ( MOAICpSpace, "UU" )
 	
 	MOAICpPrim* prim = state.GetLuaObject < MOAICpPrim >( 2 );
 	if ( prim ) {
@@ -343,7 +344,7 @@ int MOAICpSpace::_removeProp ( lua_State* L ) {
 	@return nil
 */
 int MOAICpSpace::_resizeActiveHash ( lua_State* L ) {
-	LUA_SETUP ( MOAICpSpace, "UNN" )
+	MOAI_LUA_SETUP ( MOAICpSpace, "UNN" )
 	
 	cpFloat dim = state.GetValue < cpFloat >( 2, 0 );
 	int count = state.GetValue < int >( 3, 0 );
@@ -361,7 +362,7 @@ int MOAICpSpace::_resizeActiveHash ( lua_State* L ) {
 	@return nil
 */
 int MOAICpSpace::_resizeStaticHash ( lua_State* L ) {
-	LUA_SETUP ( MOAICpSpace, "UNN" )
+	MOAI_LUA_SETUP ( MOAICpSpace, "UNN" )
 	
 	cpFloat dim = state.GetValue < cpFloat >( 2, 0 );
 	int count = state.GetValue < int >( 3, 0 );
@@ -380,7 +381,7 @@ int MOAICpSpace::_resizeStaticHash ( lua_State* L ) {
 	@return nil
 */
 int MOAICpSpace::_setCollisionHandler ( lua_State* L ) {
-	LUA_SETUP ( MOAICpSpace, "UNN" )
+	MOAI_LUA_SETUP ( MOAICpSpace, "UNN" )
 	
 	cpCollisionType typeA = state.GetValue < cpCollisionType >( 2, 0 );
 	cpCollisionType typeB = state.GetValue < cpCollisionType >( 3, 0 );
@@ -452,7 +453,7 @@ int MOAICpSpace::_setCollisionHandler ( lua_State* L ) {
 	@return nil
 */
 int MOAICpSpace::_setDamping ( lua_State* L ) {
-	LUA_SETUP ( MOAICpSpace, "UN" )
+	MOAI_LUA_SETUP ( MOAICpSpace, "UN" )
 	
 	self->mSpace->damping = state.GetValue < cpFloat >( 2, 0 );
 	return 0;
@@ -467,7 +468,7 @@ int MOAICpSpace::_setDamping ( lua_State* L ) {
 	@return nil
 */
 int MOAICpSpace::_setGravity ( lua_State* L ) {
-	LUA_SETUP ( MOAICpSpace, "UNN" )
+	MOAI_LUA_SETUP ( MOAICpSpace, "UNN" )
 	
 	self->mSpace->gravity.x = state.GetValue < cpFloat >( 2, 0 );
 	self->mSpace->gravity.y = state.GetValue < cpFloat >( 3, 0 );
@@ -483,7 +484,7 @@ int MOAICpSpace::_setGravity ( lua_State* L ) {
 	@return nil
 */
 int MOAICpSpace::_setIdleSpeedThreshold ( lua_State* L ) {
-	LUA_SETUP ( MOAICpSpace, "UN" )
+	MOAI_LUA_SETUP ( MOAICpSpace, "UN" )
 	
 	self->mSpace->idleSpeedThreshold = state.GetValue < cpFloat >( 2, 0 );
 	return 0;
@@ -497,7 +498,7 @@ int MOAICpSpace::_setIdleSpeedThreshold ( lua_State* L ) {
 	@return nil
 */
 int MOAICpSpace::_setIterations ( lua_State* L ) {
-	LUA_SETUP ( MOAICpSpace, "UN" )
+	MOAI_LUA_SETUP ( MOAICpSpace, "UN" )
 	
 	self->mSpace->iterations = state.GetValue < int >( 2, 0 );
 	return 0;
@@ -511,7 +512,7 @@ int MOAICpSpace::_setIterations ( lua_State* L ) {
 	@return nil
 */
 int MOAICpSpace::_setSleepTimeThreshold ( lua_State* L ) {
-	LUA_SETUP ( MOAICpSpace, "UN" )
+	MOAI_LUA_SETUP ( MOAICpSpace, "UN" )
 	
 	self->mSpace->sleepTimeThreshold = state.GetValue < cpFloat >( 2, 0 );
 	return 0;
@@ -528,7 +529,7 @@ int MOAICpSpace::_setSleepTimeThreshold ( lua_State* L ) {
 	@return The shape at the specified position, layer and within the specified group.  Returns nil if there is no shape that matches. @type userdata|nil
 */
 int MOAICpSpace::_shapeForPoint ( lua_State* L ) {
-	LUA_SETUP ( MOAICpSpace, "UNN" )
+	MOAI_LUA_SETUP ( MOAICpSpace, "UNN" )
 	
 	cpVect point;
 	point.x = state.GetValue < cpFloat >( 2, 0 );
@@ -559,7 +560,7 @@ int MOAICpSpace::_shapeForPoint ( lua_State* L ) {
 	@return The shape within the specified rectangle, at the specified layer and within the specified group.  Returns nil if there is no shape that matches. @type (userdata,t,x,y)|nil
 */
 int MOAICpSpace::_shapeForSegment ( lua_State* L ) {
-	LUA_SETUP ( MOAICpSpace, "UNNNN" )
+	MOAI_LUA_SETUP ( MOAICpSpace, "UNNNN" )
 	
 	cpVect start;
 	start.x = state.GetValue < cpFloat >( 2, 0 );
@@ -604,7 +605,7 @@ int MOAICpSpace::_shapeForSegment ( lua_State* L ) {
 	@return The shapes that were matched as multiple return values.  If 3 shapes match, there will be 3 return values.  If 0 shapes match, there will be 0 return values (effectively nil). @type (userdata,...)|nil
 */
 int MOAICpSpace::_shapeListForPoint ( lua_State* L ) {
-	LUA_SETUP ( MOAICpSpace, "UNN" )
+	MOAI_LUA_SETUP ( MOAICpSpace, "UNN" )
 	
 	cpVect point;
 	point.x = state.GetValue < cpFloat >( 2, 0 );
@@ -641,7 +642,7 @@ int MOAICpSpace::_shapeListForPoint ( lua_State* L ) {
 	@return The shapes that were matched as multiple return values.  If 3 shapes match, there will be 3 return values.  If 0 shapes match, there will be 0 return values (effectively nil). @type (userdata,...)|nil
 */
 int MOAICpSpace::_shapeListForRect ( lua_State* L ) {
-	LUA_SETUP ( MOAICpSpace, "UNNNN" )
+	MOAI_LUA_SETUP ( MOAICpSpace, "UNNNN" )
 	
 	USMetaRect < cpFloat > rect = state.GetRect < cpFloat >( 2 ); 
 	rect.Bless ();
@@ -683,7 +684,7 @@ int MOAICpSpace::_shapeListForRect ( lua_State* L ) {
 	@return The shapes that were matched as multiple return values.  If 3 shapes match, there will be 3 return values.  If 0 shapes match, there will be 0 return values (effectively nil). @type (userdata,...)|nil
 */
 int MOAICpSpace::_shapeListForSegment ( lua_State* L ) {
-	LUA_SETUP ( MOAICpSpace, "UNNNN" )
+	MOAI_LUA_SETUP ( MOAICpSpace, "UNNNN" )
 	
 	cpVect start;
 	start.x = state.GetValue < cpFloat >( 2, 0 );

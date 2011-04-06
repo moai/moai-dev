@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <moaicore/MOAIDebugLines.h>
+#include <moaicore/MOAILogMessages.h>
 
 //================================================================//
 // MOAIDebugLineStyle

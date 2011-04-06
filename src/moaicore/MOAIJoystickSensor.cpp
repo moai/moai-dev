@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <moaicore/MOAIJoystickSensor.h>
+#include <moaicore/MOAILogMessages.h>
 
 //================================================================//
 // MOAIJoystickEvent

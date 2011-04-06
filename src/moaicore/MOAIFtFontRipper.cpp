@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <moaicore/MOAIFtFontRipper.h>
+#include <moaicore/MOAILogMessages.h>
 #include <contrib/utf8.h>
 
 SUPPRESS_EMPTY_FILE_WARNING

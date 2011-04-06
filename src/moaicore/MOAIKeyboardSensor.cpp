@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <moaicore/MOAIKeyboardSensor.h>
+#include <moaicore/MOAILogMessages.h>
 
 //================================================================//
 // MOAIKeyboardEvent
@@ -27,7 +28,7 @@ public:
 	@out	boolean wasPressed
 */
 int MOAIKeyboardSensor::_keyDown ( lua_State* L ) {
-	LUA_SETUP ( MOAIKeyboardSensor, "U" )
+	MOAI_LUA_SETUP ( MOAIKeyboardSensor, "U" )
 	
 	if ( state.IsType ( 2, LUA_TSTRING )) {
 		
@@ -59,7 +60,7 @@ int MOAIKeyboardSensor::_keyDown ( lua_State* L ) {
 	@out	boolean isDown
 */
 int MOAIKeyboardSensor::_keyIsDown ( lua_State* L ) {
-	LUA_SETUP ( MOAIKeyboardSensor, "U" )
+	MOAI_LUA_SETUP ( MOAIKeyboardSensor, "U" )
 	
 	if ( state.IsType ( 2, LUA_TSTRING )) {
 		
@@ -91,7 +92,7 @@ int MOAIKeyboardSensor::_keyIsDown ( lua_State* L ) {
 	@out	boolean wasReleased
 */
 int MOAIKeyboardSensor::_keyIsUp ( lua_State* L ) {
-	LUA_SETUP ( MOAIKeyboardSensor, "U" )
+	MOAI_LUA_SETUP ( MOAIKeyboardSensor, "U" )
 	
 	if ( state.IsType ( 2, LUA_TSTRING )) {
 		
@@ -123,7 +124,7 @@ int MOAIKeyboardSensor::_keyIsUp ( lua_State* L ) {
 	@out	boolean wasReleased
 */
 int MOAIKeyboardSensor::_keyUp ( lua_State* L ) {
-	LUA_SETUP ( MOAIKeyboardSensor, "U" )
+	MOAI_LUA_SETUP ( MOAIKeyboardSensor, "U" )
 	
 	if ( state.IsType ( 2, LUA_TSTRING )) {
 		
@@ -155,7 +156,7 @@ int MOAIKeyboardSensor::_keyUp ( lua_State* L ) {
 	@out	nil
 */
 int MOAIKeyboardSensor::_setCallback ( lua_State* L ) {
-	LUA_SETUP ( MOAIKeyboardSensor, "UF" )
+	MOAI_LUA_SETUP ( MOAIKeyboardSensor, "UF" )
 	
 	self->mOnKey.SetRef ( state, 2, false );
 	

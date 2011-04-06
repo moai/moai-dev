@@ -10,6 +10,7 @@ SUPPRESS_EMPTY_FILE_WARNING
 #include <moaicore/MOAIFmodSound.h>
 #include <moaicore/MOAIFmodChannel.h>
 #include <moaicore/MOAIFmod.h>
+#include <moaicore/MOAILogMessages.h>
 
 #include <fmod.hpp>
 #include <fmod_errors.h>
@@ -29,7 +30,7 @@ SUPPRESS_EMPTY_FILE_WARNING
 	@out	MOAIAction action		The new action.  It is automatically started by this function.
 */
 int MOAIFmodChannel::_moveVolume ( lua_State* L ) {
-	LUA_SETUP ( MOAIFmodChannel, "UNN" )
+	MOAI_LUA_SETUP ( MOAIFmodChannel, "UNN" )
 
 	MOAIEaseDriver* action = USSafeNew < MOAIEaseDriver >();
 	action->Init ( self, 1, 0.0f );
@@ -55,7 +56,7 @@ int MOAIFmodChannel::_moveVolume ( lua_State* L ) {
 	@out	nil
 */
 int MOAIFmodChannel::_play ( lua_State* L ) {
-	LUA_SETUP ( MOAIFmodChannel, "UU" )
+	MOAI_LUA_SETUP ( MOAIFmodChannel, "UU" )
 
 	MOAIFmodSound* sound = state.GetLuaObject < MOAIFmodSound >( 2 );
 	if ( !sound ) return 0;
@@ -78,7 +79,7 @@ int MOAIFmodChannel::_play ( lua_State* L ) {
 	@out	MOAIAction action		The new action.  It is automatically started by this function.
 */
 int MOAIFmodChannel::_seekVolume ( lua_State* L ) {
-	LUA_SETUP ( MOAIFmodChannel, "UNN" )
+	MOAI_LUA_SETUP ( MOAIFmodChannel, "UNN" )
 
 	MOAIEaseDriver* action = USSafeNew < MOAIEaseDriver >();
 	action->Init ( self, 1, 0.0f );
@@ -103,7 +104,7 @@ int MOAIFmodChannel::_seekVolume ( lua_State* L ) {
 	@out	nil
 */
 int MOAIFmodChannel::_setPaused ( lua_State* L ) {
-	LUA_SETUP ( MOAIFmodChannel, "UB" )
+	MOAI_LUA_SETUP ( MOAIFmodChannel, "UB" )
 
 	bool paused = state.GetValue < bool >( 2, false );
 	self->SetPaused ( paused );
@@ -120,7 +121,7 @@ int MOAIFmodChannel::_setPaused ( lua_State* L ) {
 	@out	nil
 */
 int MOAIFmodChannel::_setVolume ( lua_State* L ) {
-	LUA_SETUP ( MOAIFmodChannel, "UN" )
+	MOAI_LUA_SETUP ( MOAIFmodChannel, "UN" )
 
 	float volume = state.GetValue < float >( 2, 0.0f );
 	self->SetVolume ( volume );
@@ -136,7 +137,7 @@ int MOAIFmodChannel::_setVolume ( lua_State* L ) {
 	@out	nil
 */
 int MOAIFmodChannel::_stop ( lua_State* L ) {
-	LUA_SETUP ( MOAIFmodChannel, "U" )
+	MOAI_LUA_SETUP ( MOAIFmodChannel, "U" )
 	
 	self->Stop ();
 

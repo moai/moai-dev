@@ -6,9 +6,10 @@
 SUPPRESS_EMPTY_FILE_WARNING
 #if USE_FMOD
 
+#include <moaicore/MOAIDataBuffer.h>
 #include <moaicore/MOAIFmodSound.h>
 #include <moaicore/MOAIFmod.h>
-#include <moaicore/MOAIDataBuffer.h>
+#include <moaicore/MOAILogMessages.h>
 
 #include <fmod.hpp>
 #include <fmod_errors.h>
@@ -29,7 +30,7 @@ SUPPRESS_EMPTY_FILE_WARNING
 	@out	nil
 */
 int MOAIFmodSound::_load ( lua_State* L ) {
-	LUA_SETUP ( MOAIFmodSound, "U" )
+	MOAI_LUA_SETUP ( MOAIFmodSound, "U" )
 
 	bool streaming	= state.GetValue < bool >( 3, false );
 	bool async		= state.GetValue < bool >( 4, false );
@@ -59,7 +60,7 @@ int MOAIFmodSound::_load ( lua_State* L ) {
 	@out	nil
 */
 int	MOAIFmodSound::_loadBGM ( lua_State* L ) {
-	LUA_SETUP ( MOAIFmodSound, "U" )
+	MOAI_LUA_SETUP ( MOAIFmodSound, "U" )
 
 	MOAIDataBuffer* data = state.GetLuaObject < MOAIDataBuffer >( 2 );
 
@@ -86,7 +87,7 @@ int	MOAIFmodSound::_loadBGM ( lua_State* L ) {
 	@out	nil
 */
 int	MOAIFmodSound::_loadSFX ( lua_State* L ) {
-	LUA_SETUP ( MOAIFmodSound, "U" )
+	MOAI_LUA_SETUP ( MOAIFmodSound, "U" )
 
 	MOAIDataBuffer* data = state.GetLuaObject < MOAIDataBuffer >( 2 );
 
@@ -111,7 +112,7 @@ int	MOAIFmodSound::_loadSFX ( lua_State* L ) {
 	@out	nil
 */
 int MOAIFmodSound::_release ( lua_State* L ) {
-	LUA_SETUP ( MOAIFmodSound, "U" )
+	MOAI_LUA_SETUP ( MOAIFmodSound, "U" )
 
 	self->Release ();
 

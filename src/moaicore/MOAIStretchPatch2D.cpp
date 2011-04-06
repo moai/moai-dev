@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <moaicore/MOAIGrid.h>
+#include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIProp.h>
 #include <moaicore/MOAIStretchPatch2D.h>
 #include <moaicore/MOAITexture.h>
@@ -21,7 +22,7 @@
 	@out	nil
 */
 int MOAIStretchPatch2D::_reserveColumns ( lua_State* L ) {
-	LUA_SETUP ( MOAIStretchPatch2D, "UN" )
+	MOAI_LUA_SETUP ( MOAIStretchPatch2D, "UN" )
 
 	u32 total = state.GetValue < u32 >( 2, 0 );
 	self->mCols.Init ( total );
@@ -39,7 +40,7 @@ int MOAIStretchPatch2D::_reserveColumns ( lua_State* L ) {
 	@out	nil
 */
 int MOAIStretchPatch2D::_reserveRows ( lua_State* L ) {
-	LUA_SETUP ( MOAIStretchPatch2D, "UN" )
+	MOAI_LUA_SETUP ( MOAIStretchPatch2D, "UN" )
 
 	u32 total = state.GetValue < u32 >( 2, 0 );
 	self->mRows.Init ( total );
@@ -58,7 +59,7 @@ int MOAIStretchPatch2D::_reserveRows ( lua_State* L ) {
 	@out	nil
 */
 int MOAIStretchPatch2D::_reserveUVRects ( lua_State* L ) {
-	LUA_SETUP ( MOAIStretchPatch2D, "UN" )
+	MOAI_LUA_SETUP ( MOAIStretchPatch2D, "UN" )
 
 	u32 total = state.GetValue < u32 >( 2, 0 );
 	self->mUVRects.Init ( total );
@@ -80,16 +81,15 @@ int MOAIStretchPatch2D::_reserveUVRects ( lua_State* L ) {
 	@out	nil
 */
 int MOAIStretchPatch2D::_setColumn ( lua_State* L ) {
-	LUA_SETUP ( MOAIStretchPatch2D, "UNNB" )
+	MOAI_LUA_SETUP ( MOAIStretchPatch2D, "UNNB" )
 
 	u32 idx				= state.GetValue < u32 >( 2, 1 ) - 1;
 	float percent		= state.GetValue < float >( 3, 0.0f );
 	bool canStretch		= state.GetValue < bool >( 4, false );
 
-	if ( idx < self->mCols.Size ()) {
-		self->mCols [ idx ].mPercent = percent;
-		self->mCols [ idx ].mCanStretch = canStretch;
-	}
+	MOAI_CHECK_INDEX ( idx, self->mCols.Size ())
+	self->mCols [ idx ].mPercent = percent;
+	self->mCols [ idx ].mCanStretch = canStretch;
 
 	self->mNeedsUpdate = true;
 	return 0;
@@ -107,7 +107,7 @@ int MOAIStretchPatch2D::_setColumn ( lua_State* L ) {
 	@out	nil
 */
 int MOAIStretchPatch2D::_setRect ( lua_State* L ) {
-	LUA_SETUP ( MOAIStretchPatch2D, "UNNNN" )
+	MOAI_LUA_SETUP ( MOAIStretchPatch2D, "UNNNN" )
 	
 	self->mRect = state.GetRect < float >( 2 );
 	
@@ -125,16 +125,15 @@ int MOAIStretchPatch2D::_setRect ( lua_State* L ) {
 	@out	nil
 */
 int MOAIStretchPatch2D::_setRow ( lua_State* L ) {
-	LUA_SETUP ( MOAIStretchPatch2D, "UNNB" )
+	MOAI_LUA_SETUP ( MOAIStretchPatch2D, "UNNB" )
 
 	u32 idx				= state.GetValue < u32 >( 2, 1 ) - 1;
 	float percent		= state.GetValue < float >( 3, 0.0f );
 	bool canStretch		= state.GetValue < bool >( 4, false );
 
-	if ( idx < self->mRows.Size ()) {
-		self->mRows [ idx ].mPercent = percent;
-		self->mRows [ idx ].mCanStretch = canStretch;
-	}
+	MOAI_CHECK_INDEX ( idx, self->mRows.Size ())
+	self->mRows [ idx ].mPercent = percent;
+	self->mRows [ idx ].mCanStretch = canStretch;
 
 	self->mNeedsUpdate = true;
 	return 0;
@@ -150,7 +149,7 @@ int MOAIStretchPatch2D::_setRow ( lua_State* L ) {
 	@out	MOAITexture texture
 */
 int MOAIStretchPatch2D::_setTexture ( lua_State* L ) {
-	LUA_SETUP ( MOAIStretchPatch2D, "U" )
+	MOAI_LUA_SETUP ( MOAIStretchPatch2D, "U" )
 
 	self->mTexture = MOAITexture::AffirmTexture ( state, 2 );
 	if ( self->mTexture ) {
@@ -173,13 +172,12 @@ int MOAIStretchPatch2D::_setTexture ( lua_State* L ) {
 	@out	nil
 */
 int MOAIStretchPatch2D::_setUVRect ( lua_State* L ) {
-	LUA_SETUP ( MOAIStretchPatch2D, "UNNNNN" )
+	MOAI_LUA_SETUP ( MOAIStretchPatch2D, "UNNNNN" )
 	
 	u32 idx = state.GetValue < u32 >( 2, 1 ) - 1;
 	
-	if ( idx < self->mUVRects.Size ()) {
-		self->mUVRects [ idx ] = state.GetRect < float >( 3 );
-	}
+	MOAI_CHECK_INDEX ( idx, self->mUVRects.Size ())
+	self->mUVRects [ idx ] = state.GetRect < float >( 3 );
 	return 0;
 }
 

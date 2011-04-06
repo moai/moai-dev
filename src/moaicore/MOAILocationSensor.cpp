@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <moaicore/MOAILocationSensor.h>
+#include <moaicore/MOAILogMessages.h>
 
 //================================================================//
 // lua
@@ -21,7 +22,7 @@
 	@out	number speed
 */
 int MOAILocationSensor::_getLocation ( lua_State* L ) {
-	LUA_SETUP ( MOAILocationSensor, "U" )
+	MOAI_LUA_SETUP ( MOAILocationSensor, "U" )
 	
 	lua_pushnumber ( state, self->mLongitude );
 	lua_pushnumber ( state, self->mLatitude );
@@ -42,7 +43,7 @@ int MOAILocationSensor::_getLocation ( lua_State* L ) {
 	@out	nil
 */
 int MOAILocationSensor::_setCallback ( lua_State* L ) {
-	LUA_SETUP ( MOAILocationSensor, "U" )
+	MOAI_LUA_SETUP ( MOAILocationSensor, "U" )
 	
 	self->mCallback.SetRef ( state, 2, false );
 	

@@ -20,7 +20,7 @@ public:
 // USAnimCurve
 //================================================================//
 class USAnimCurve {
-private:
+protected:
 
 	USLeanArray < USAnimKey >	mKeys;
 

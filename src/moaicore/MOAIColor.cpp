@@ -4,6 +4,7 @@
 #include "pch.h"
 #include <moaicore/MOAIColor.h>
 #include <moaicore/MOAIEaseDriver.h>
+#include <moaicore/MOAILogMessages.h>
 
 //================================================================//
 // local
@@ -26,7 +27,7 @@
 	@out	MOAIEaseDriver easeDriver
 */
 int MOAIColor::_moveColor ( lua_State* L ) {
-	LUA_SETUP ( MOAIColor, "UNNNNN" )
+	MOAI_LUA_SETUP ( MOAIColor, "UNNNNN" )
 
 	MOAIEaseDriver* action = new MOAIEaseDriver ();
 	action->ReserveLinks ( 4 );
@@ -68,7 +69,7 @@ int MOAIColor::_moveColor ( lua_State* L ) {
 	@out	MOAIEaseDriver easeDriver
 */
 int MOAIColor::_seekColor ( lua_State* L ) {
-	LUA_SETUP ( MOAIColor, "UNNNNN" )
+	MOAI_LUA_SETUP ( MOAIColor, "UNNNNN" )
 
 	MOAIEaseDriver* action = new MOAIEaseDriver ();
 	action->ReserveLinks ( 4 );
@@ -104,7 +105,7 @@ int MOAIColor::_seekColor ( lua_State* L ) {
 	@out	nil
 */
 int MOAIColor::_setColor ( lua_State* L ) {
-	LUA_SETUP ( MOAIColor, "UNNN" )
+	MOAI_LUA_SETUP ( MOAIColor, "UNNN" )
 
 	float r = state.GetValue < float >( 2, 0.0f );
 	float g = state.GetValue < float >( 3, 0.0f );

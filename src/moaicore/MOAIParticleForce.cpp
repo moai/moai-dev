@@ -2,6 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIParticleForce.h>
 
 //================================================================//
@@ -16,7 +17,7 @@
 	@param y (out)
 */
 int MOAIParticleForce::_initAttractor ( lua_State* L ) {
-	LUA_SETUP ( MOAIParticleForce, "UNN" )
+	MOAI_LUA_SETUP ( MOAIParticleForce, "UNN" )
 
 	self->mType		= ATTRACTOR;
 	self->mRadius	= state.GetValue < float >( 2, 0.0f );
@@ -35,7 +36,7 @@ int MOAIParticleForce::_initAttractor ( lua_State* L ) {
 	@param y (out)
 */
 int MOAIParticleForce::_initLinear ( lua_State* L ) {
-	LUA_SETUP ( MOAIParticleForce, "UNN" )
+	MOAI_LUA_SETUP ( MOAIParticleForce, "UNN" )
 
 	self->mType = LINEAR;
 	self->mVec.mX = state.GetValue < float >( 2, 0.0f );

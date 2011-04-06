@@ -5,6 +5,7 @@
 #include <chipmunk/chipmunk.h>
 #include <moaicore/MOAICpBody.h>
 #include <moaicore/MOAICpShape.h>
+#include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAITransform.h>
 
 SUPPRESS_EMPTY_FILE_WARNING
@@ -22,7 +23,7 @@ SUPPRESS_EMPTY_FILE_WARNING
 	@out	nil
 */
 int MOAICpBody::_activate ( lua_State* L ) {
-	LUA_SETUP ( MOAICpBody, "U" )
+	MOAI_LUA_SETUP ( MOAICpBody, "U" )
 	
 	cpBodyActivate ( self->mBody );
 	
@@ -40,7 +41,7 @@ int MOAICpBody::_activate ( lua_State* L ) {
 	@out	MOAICpShape circle
 */
 int MOAICpBody::_addCircle ( lua_State* L ) {
-	LUA_SETUP ( MOAICpBody, "UN" )
+	MOAI_LUA_SETUP ( MOAICpBody, "UN" )
 			
 	cpFloat radius	= state.GetValue < cpFloat >( 2, 0 );
 			
@@ -66,7 +67,7 @@ int MOAICpBody::_addCircle ( lua_State* L ) {
 	@out	MOAICpShape polygon
 */
 int MOAICpBody::_addPolygon ( lua_State* L ) {
-	LUA_SETUP ( MOAICpBody, "UT" )
+	MOAI_LUA_SETUP ( MOAICpBody, "UT" )
 	
 	cpVect verts [ MOAICpShape::MAX_POLY_VERTS ];
 	int numVerts = MOAICpShape::LoadVerts ( state, 2, verts, MOAICpShape::MAX_POLY_VERTS );
@@ -100,7 +101,7 @@ int MOAICpBody::_addPolygon ( lua_State* L ) {
 	@out	MOAICpShape rectangle
 */
 int MOAICpBody::_addRect ( lua_State* L ) {
-	LUA_SETUP ( MOAICpBody, "UNNNN" )
+	MOAI_LUA_SETUP ( MOAICpBody, "UNNNN" )
 		
 	USMetaRect < cpFloat > rect = state.GetRect < cpFloat >( 2 );
 	rect.Bless ();
@@ -145,7 +146,7 @@ int MOAICpBody::_addRect ( lua_State* L ) {
 	@out	MOAICpShape segment
 */
 int MOAICpBody::_addSegment ( lua_State* L ) {
-	LUA_SETUP ( MOAICpBody, "UNNNN" )
+	MOAI_LUA_SETUP ( MOAICpBody, "UNNNN" )
 	
 	cpVect a;
 	a.x = state.GetValue < cpFloat >( 2, 0 );
@@ -178,7 +179,7 @@ int MOAICpBody::_addSegment ( lua_State* L ) {
 	@out	nil
 */
 int MOAICpBody::_applyForce ( lua_State* L ) {
-	LUA_SETUP ( MOAICpBody, "UNN" )
+	MOAI_LUA_SETUP ( MOAICpBody, "UNN" )
 	
 	cpVect f;
 	f.x = state.GetValue < cpFloat >( 2, 0 );
@@ -205,7 +206,7 @@ int MOAICpBody::_applyForce ( lua_State* L ) {
 	@out	nil
 */
 int MOAICpBody::_applyImpulse ( lua_State* L ) {
-	LUA_SETUP ( MOAICpBody, "UNN" )
+	MOAI_LUA_SETUP ( MOAICpBody, "UNN" )
 	
 	cpVect j;
 	j.x = state.GetValue < cpFloat >( 2, 0 );
@@ -228,7 +229,7 @@ int MOAICpBody::_applyImpulse ( lua_State* L ) {
 	@out	number angle		The current angle.
 */
 int MOAICpBody::_getAngle ( lua_State* L ) {
-	LUA_SETUP ( MOAICpBody, "U" )
+	MOAI_LUA_SETUP ( MOAICpBody, "U" )
 	
 	cpFloat a = cpBodyGetAngle ( self->mBody );
 	lua_pushnumber ( state, a );
@@ -243,7 +244,7 @@ int MOAICpBody::_getAngle ( lua_State* L ) {
 	@out	number angle		The current angular velocity.
 */
 int MOAICpBody::_getAngVel ( lua_State* L ) {
-	LUA_SETUP ( MOAICpBody, "U" )
+	MOAI_LUA_SETUP ( MOAICpBody, "U" )
 	
 	cpFloat av = cpBodyGetAngVel ( self->mBody );
 	lua_pushnumber ( state, av );
@@ -260,7 +261,7 @@ int MOAICpBody::_getAngVel ( lua_State* L ) {
 	@out	number y			The Y component of the current force being applied.
 */
 int MOAICpBody::_getForce ( lua_State* L ) {
-	LUA_SETUP ( MOAICpBody, "U" )
+	MOAI_LUA_SETUP ( MOAICpBody, "U" )
 	
 	cpVect f = cpBodyGetForce ( self->mBody );
 	lua_pushnumber ( state, f.x );
@@ -277,7 +278,7 @@ int MOAICpBody::_getForce ( lua_State* L ) {
 	@out	number mass			The current mass.
 */
 int MOAICpBody::_getMass ( lua_State* L ) {
-	LUA_SETUP ( MOAICpBody, "U" )
+	MOAI_LUA_SETUP ( MOAICpBody, "U" )
 	
 	cpFloat m = cpBodyGetMass ( self->mBody );
 	lua_pushnumber ( state, m );
@@ -293,7 +294,7 @@ int MOAICpBody::_getMass ( lua_State* L ) {
 	@out	number moment		The current moment.
 */
 int MOAICpBody::_getMoment ( lua_State* L ) {
-	LUA_SETUP ( MOAICpBody, "U" )
+	MOAI_LUA_SETUP ( MOAICpBody, "U" )
 	
 	cpFloat m = cpBodyGetMoment ( self->mBody );
 	lua_pushnumber ( state, m );
@@ -310,7 +311,7 @@ int MOAICpBody::_getMoment ( lua_State* L ) {
 	@out	number y			The Y position.
 */
 int MOAICpBody::_getPos ( lua_State* L ) {
-	LUA_SETUP ( MOAICpBody, "U" )
+	MOAI_LUA_SETUP ( MOAICpBody, "U" )
 	
 	cpVect p = cpBodyGetPos ( self->mBody );
 	lua_pushnumber ( state, p.x );
@@ -328,7 +329,7 @@ int MOAICpBody::_getPos ( lua_State* L ) {
 	@out	number y			The Y position.
 */
 int MOAICpBody::_getRot ( lua_State* L ) {
-	LUA_SETUP ( MOAICpBody, "U" )
+	MOAI_LUA_SETUP ( MOAICpBody, "U" )
 	
 	cpVect r = cpBodyGetRot ( self->mBody );
 	lua_pushnumber ( state, r.x );
@@ -345,7 +346,7 @@ int MOAICpBody::_getRot ( lua_State* L ) {
 	@out	number torque		The current torque.
 */
 int MOAICpBody::_getTorque ( lua_State* L ) {
-	LUA_SETUP ( MOAICpBody, "U" )
+	MOAI_LUA_SETUP ( MOAICpBody, "U" )
 	
 	cpFloat t = cpBodyGetTorque ( self->mBody );
 	lua_pushnumber ( state, t );
@@ -362,7 +363,7 @@ int MOAICpBody::_getTorque ( lua_State* L ) {
 	@out	number y			The Y component of the current velocity.
 */
 int MOAICpBody::_getVel ( lua_State* L ) {
-	LUA_SETUP ( MOAICpBody, "U" )
+	MOAI_LUA_SETUP ( MOAICpBody, "U" )
 	
 	cpVect v = cpBodyGetVel ( self->mBody );
 	lua_pushnumber ( state, v.x );
@@ -379,7 +380,7 @@ int MOAICpBody::_getVel ( lua_State* L ) {
 	@out	boolean sleeping	Whether the body is sleeping.
 */
 int MOAICpBody::_isSleeping ( lua_State* L ) {
-	LUA_SETUP ( MOAICpBody, "U" )
+	MOAI_LUA_SETUP ( MOAICpBody, "U" )
 	
 	cpBool is = cpBodyIsSleeping( self->mBody );
 	lua_pushboolean ( state, ( is == cpTrue ));
@@ -395,7 +396,7 @@ int MOAICpBody::_isSleeping ( lua_State* L ) {
 	@out	boolean static		Whether the body static.
 */
 int MOAICpBody::_isStatic ( lua_State* L ) {
-	LUA_SETUP ( MOAICpBody, "U" )
+	MOAI_LUA_SETUP ( MOAICpBody, "U" )
 	
 	cpBool is = cpBodyIsStatic( self->mBody );
 	lua_pushboolean ( state, ( is == cpTrue ));
@@ -411,7 +412,7 @@ int MOAICpBody::_isStatic ( lua_State* L ) {
 	@out	boolean static		Whether the body is not associated with a space.
 */
 int MOAICpBody::_isRogue ( lua_State* L ) {
-	LUA_SETUP ( MOAICpBody, "U" )
+	MOAI_LUA_SETUP ( MOAICpBody, "U" )
 	
 	cpBool is = cpBodyIsRogue( self->mBody );
 	lua_pushboolean ( state, ( is == cpTrue ));
@@ -430,7 +431,7 @@ int MOAICpBody::_isRogue ( lua_State* L ) {
 	@out	number ay			The absolute Y position.
 */
 int MOAICpBody::_localToWorld ( lua_State* L ) {
-	LUA_SETUP ( MOAICpBody, "UNN" )
+	MOAI_LUA_SETUP ( MOAICpBody, "UNN" )
 	
 	cpVect v;
 	v.x = state.GetValue < cpFloat >( 2, 0 );
@@ -490,7 +491,7 @@ int MOAICpBody::_newStatic ( lua_State* L ) {
 	@in		MOAICpBody self
 */
 int MOAICpBody::_resetForces ( lua_State* L ) {
-	LUA_SETUP ( MOAICpBody, "U" )
+	MOAI_LUA_SETUP ( MOAICpBody, "U" )
 	
 	cpBodyResetForces( self->mBody );
 
@@ -506,7 +507,7 @@ int MOAICpBody::_resetForces ( lua_State* L ) {
 	@out	nil
 */
 int MOAICpBody::_setAngle ( lua_State* L ) {
-	LUA_SETUP ( MOAICpBody, "UN" )
+	MOAI_LUA_SETUP ( MOAICpBody, "UN" )
 	
 	cpFloat a = state.GetValue < cpFloat >( 2, 0 );
 	cpBodySetAngle( self->mBody, a );
@@ -523,7 +524,7 @@ int MOAICpBody::_setAngle ( lua_State* L ) {
 	@out	nil
 */
 int MOAICpBody::_setAngVel ( lua_State* L ) {
-	LUA_SETUP ( MOAICpBody, "UN" )
+	MOAI_LUA_SETUP ( MOAICpBody, "UN" )
 	
 	cpFloat av = state.GetValue < cpFloat >( 2, 0 );
 	cpBodySetAngVel( self->mBody, av );
@@ -541,7 +542,7 @@ int MOAICpBody::_setAngVel ( lua_State* L ) {
 	@out	nil
 */
 int MOAICpBody::_setForce ( lua_State* L ) {
-	LUA_SETUP ( MOAICpBody, "UNN" )
+	MOAI_LUA_SETUP ( MOAICpBody, "UNN" )
 	
 	cpVect f;
 	f.x = state.GetValue < cpFloat >( 2, 0 );
@@ -560,7 +561,7 @@ int MOAICpBody::_setForce ( lua_State* L ) {
 	@out	nil
 */
 int MOAICpBody::_setMass ( lua_State* L ) {
-	LUA_SETUP ( MOAICpBody, "UN" )
+	MOAI_LUA_SETUP ( MOAICpBody, "UN" )
 	
 	cpFloat m = state.GetValue < cpFloat >( 2, 0 );
 	cpBodySetMass ( self->mBody, m );
@@ -577,7 +578,7 @@ int MOAICpBody::_setMass ( lua_State* L ) {
 	@out	nil
 */
 int MOAICpBody::_setMoment ( lua_State* L ) {
-	LUA_SETUP ( MOAICpBody, "UN" )
+	MOAI_LUA_SETUP ( MOAICpBody, "UN" )
 	
 	cpFloat i = state.GetValue < cpFloat >( 2, 0 );
 	cpBodySetMoment ( self->mBody, i );
@@ -595,7 +596,7 @@ int MOAICpBody::_setMoment ( lua_State* L ) {
 	@out	nil
 */
 int MOAICpBody::_setPos ( lua_State* L ) {
-	LUA_SETUP ( MOAICpBody, "UNN" )
+	MOAI_LUA_SETUP ( MOAICpBody, "UNN" )
 	
 	cpVect p;
 	p.x = state.GetValue < cpFloat >( 2, 0 );
@@ -614,7 +615,7 @@ int MOAICpBody::_setPos ( lua_State* L ) {
 	@out	nil
 */
 int MOAICpBody::_setRemoveFlag ( lua_State* L ) {
-	LUA_SETUP ( MOAICpBody, "UN" )
+	MOAI_LUA_SETUP ( MOAICpBody, "UN" )
 	
 	self->mRemoveFlag = state.GetValue < u32 >( 2, NONE );
 	
@@ -630,7 +631,7 @@ int MOAICpBody::_setRemoveFlag ( lua_State* L ) {
 	@out	nil
 */
 int MOAICpBody::_setTorque ( lua_State* L ) {
-	LUA_SETUP ( MOAICpBody, "UN" )
+	MOAI_LUA_SETUP ( MOAICpBody, "UN" )
 	
 	cpFloat t = state.GetValue < cpFloat >( state, 2 );
 	cpBodySetTorque ( self->mBody, t );
@@ -648,7 +649,7 @@ int MOAICpBody::_setTorque ( lua_State* L ) {
 	@out	nil
 */
 int MOAICpBody::_setVel ( lua_State* L ) {
-	LUA_SETUP ( MOAICpBody, "UNN" )
+	MOAI_LUA_SETUP ( MOAICpBody, "UNN" )
 	
 	cpVect v;
 	v.x = state.GetValue < cpFloat >( 2, 0 );
@@ -666,7 +667,7 @@ int MOAICpBody::_setVel ( lua_State* L ) {
 	@out	nil
 */
 int MOAICpBody::_sleep ( lua_State* L ) {
-	LUA_SETUP ( MOAICpBody, "U" )
+	MOAI_LUA_SETUP ( MOAICpBody, "U" )
 	
 	cpBodySleep ( self->mBody );
 
@@ -682,7 +683,7 @@ int MOAICpBody::_sleep ( lua_State* L ) {
 	@out	nil
 */
 int MOAICpBody::_sleepWithGroup ( lua_State* L ) {
-	LUA_SETUP ( MOAICpBody, "UU" )
+	MOAI_LUA_SETUP ( MOAICpBody, "UU" )
 	
 	MOAICpBody* group = state.GetLuaObject < MOAICpBody >( 2 );
 	if ( group && group->mBody ) {
@@ -702,7 +703,7 @@ int MOAICpBody::_sleepWithGroup ( lua_State* L ) {
 	@out	number ry			The relative Y position.
 */
 int MOAICpBody::_worldToLocal ( lua_State* L ) {
-	LUA_SETUP ( MOAICpBody, "UNN" )
+	MOAI_LUA_SETUP ( MOAICpBody, "UNN" )
 	
 	cpVect v;
 	v.x = state.GetValue < cpFloat >( 2, 0 );

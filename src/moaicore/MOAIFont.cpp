@@ -3,8 +3,9 @@
 
 #include "pch.h"
 #include <moaicore/MOAIDataBuffer.h>
-#include <moaicore/MOAIFont.h>
 #include <moaicore/MOAIFtFontRipper.h>
+#include <moaicore/MOAIFont.h>
+#include <moaicore/MOAILogMessages.h>
 
 //================================================================//
 // local
@@ -75,7 +76,7 @@ int MOAIFont::_load ( lua_State* L ) {
 	@out	nil
 */
 int MOAIFont::_loadFromTTF ( lua_State* L ) {
-	LUA_SETUP ( MOAIFont, "USSN" )
+	MOAI_LUA_SETUP ( MOAIFont, "USSN" )
 
 	cc8* filename	= state.GetValue < cc8* >( 2, "" );
 	cc8* charCodes	= state.GetValue < cc8* >( 3, "" );

@@ -2,6 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIPointerSensor.h>
 
 //================================================================//
@@ -17,7 +18,7 @@
 	@out	number y
 */
 int MOAIPointerSensor::_getLoc ( lua_State* L ) {
-	LUA_SETUP ( MOAIPointerSensor, "U" )
+	MOAI_LUA_SETUP ( MOAIPointerSensor, "U" )
 
 	lua_pushnumber ( state, self->mX );
 	lua_pushnumber ( state, self->mY );
@@ -34,7 +35,7 @@ int MOAIPointerSensor::_getLoc ( lua_State* L ) {
 	@out	nil
 */
 int MOAIPointerSensor::_setCallback ( lua_State* L ) {
-	LUA_SETUP ( MOAIPointerSensor, "UF" )
+	MOAI_LUA_SETUP ( MOAIPointerSensor, "UF" )
 	
 	self->mOnMove.SetRef ( state, 2, false );
 	

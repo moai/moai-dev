@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <moaicore/MOAIGrid.h>
+#include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIProp.h>
 #include <moaicore/MOAITileDeck2D.h>
 #include <moaicore/MOAITexture.h>
@@ -27,7 +28,7 @@
 	@out	nil
 */
 int MOAITileDeck2D::_setRect ( lua_State* L ) {
-	LUA_SETUP ( MOAITileDeck2D, "UNNNN" )
+	MOAI_LUA_SETUP ( MOAITileDeck2D, "UNNNN" )
 	
 	self->mRect = state.GetRect < float >( 2 );
 
@@ -52,7 +53,7 @@ int MOAITileDeck2D::_setRect ( lua_State* L ) {
 	@out	nil
 */
 int	MOAITileDeck2D::_setSize ( lua_State* L ) {
-	LUA_SETUP ( MOAITileDeck2D, "UNN" )
+	MOAI_LUA_SETUP ( MOAITileDeck2D, "UNN" )
 	
 	u32 width = state.GetValue < u32 >( 2, 0 );
 	u32 height = state.GetValue < u32 >( 3, 0 );
@@ -77,7 +78,7 @@ int	MOAITileDeck2D::_setSize ( lua_State* L ) {
 	@out	MOAITexture texture
 */
 int	MOAITileDeck2D::_setTexture ( lua_State* L ) {
-	LUA_SETUP ( MOAITileDeck2D, "U" )
+	MOAI_LUA_SETUP ( MOAITileDeck2D, "U" )
 	
 	self->mTexture = MOAITexture::AffirmTexture ( state, 2 );
 	if ( self->mTexture ) {

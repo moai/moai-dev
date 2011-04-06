@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <moaicore/MOAIEaseDriver.h>
+#include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIShader.h>
 
 //================================================================//
