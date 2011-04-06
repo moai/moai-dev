@@ -3,14 +3,16 @@
 SetCompressor /FINAL /SOLID lzma
 SetCompressorDictSize 64
 
-!define APP_NAME "Moai SDK"
+!define DISPLAY_NAME "@@DISPLAY_NAME@@"
+!define VERSION_PATH "@@VERSION_PATH@@"
+!define PARENT_FOLDER_NAME "Moai SDK"
 !define INSTALLER_NAME "moai-sdk-installer.exe"
 !define LICENSE_TEXT "license.txt"
 !define ALL_USERS
 ;_______________________________________________________________________________________
 
 !define INSTDIR_REG_ROOT "HKLM"
-!define INSTDIR_REG_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APP_NAME}"
+!define INSTDIR_REG_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${DISPLAY_NAME}"
 !define MOAI_BINARIES "..\vs2008\bin\Win32\Release"
 !define MOAI_SRC "..\src"
 !define MUI_HEADERIMAGE_BITMAP MUI_HEADERIMAGE_BITMAP.bmp
@@ -21,11 +23,11 @@ SetCompressorDictSize 64
 !include RegisterExtension.nsh
 !include AddToPath.nsh
 
-Name "${APP_NAME}"
+Name "${DISPLAY_NAME}"
 OutFile "${INSTALLER_NAME}"
 ShowInstDetails show
 ShowUninstDetails show
-InstallDir "$PROGRAMFILES\${APP_NAME}"
+InstallDir "$PROGRAMFILES\${PARENT_FOLDER_NAME}\${VERSION_PATH}"
 InstallDirRegKey ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "InstallDir"
 
 !insertmacro UNATTENDED_UNINSTALL ;!insertmacro INTERACTIVE_UNINSTALL
@@ -35,6 +37,10 @@ InstallDirRegKey ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "InstallDir"
 ;!insertmacro MUI_PAGE_COMPONENTS 
 !insertmacro MUI_PAGE_DIRECTORY
 !insertmacro MUI_PAGE_INSTFILES
+
+!define MUI_FINISHPAGE_RUN
+!define MUI_FINISHPAGE_RUN_TEXT "Run Hello Moai!"
+!define MUI_FINISHPAGE_RUN_FUNCTION launchHelloMoai
 !insertmacro MUI_PAGE_FINISH
 
 !insertmacro MUI_UNPAGE_WELCOME
@@ -43,6 +49,11 @@ InstallDirRegKey ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "InstallDir"
 !insertmacro MUI_UNPAGE_FINISH
 
 !insertmacro MUI_LANGUAGE "English"
+
+;_______________________________________________________________________________________
+Function launchHelloMoai
+	ExecShell "" "$INSTDIR\samples\hello-moai\run.bat"
+FunctionEnd
 
 ;_______________________________________________________________________________________
 
@@ -56,14 +67,14 @@ Section "Moai"
 	!insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 	
 	;start menu shortcuts
-	CreateDirectory "$SMPROGRAMS\${APP_NAME}"
-	CreateShortCut "$SMPROGRAMS\${APP_NAME}\Samples.lnk" "$INSTDIR\samples\lua"
-	CreateShortCut "$SMPROGRAMS\${APP_NAME}\Reference.lnk" "$INSTDIR\docs\html\index.html"
-	CreateShortCut "$SMPROGRAMS\${APP_NAME}\Uninstall.lnk" "${UNINST_EXE}"
+	CreateDirectory "$SMPROGRAMS\${DISPLAY_NAME}"
+	CreateShortCut "$SMPROGRAMS\${DISPLAY_NAME}\Samples.lnk" "$INSTDIR\samples\lua"
+	CreateShortCut "$SMPROGRAMS\${DISPLAY_NAME}\Reference.lnk" "$INSTDIR\docs\html\index.html"
+	CreateShortCut "$SMPROGRAMS\${DISPLAY_NAME}\Uninstall.lnk" "${UNINST_EXE}"
 	
 	;system add/remove programs setup
 	WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "InstallDir" "$INSTDIR"
-	WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "DisplayName" "${APP_NAME}"
+	WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "DisplayName" "${DISPLAY_NAME}"
 	WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "UninstallString" "${UNINST_EXE}"
 
 	;register extensions
@@ -96,7 +107,7 @@ Section UnInstall
 	!insertmacro UNINSTALL.LOG_UNINSTALL "$INSTDIR"
 	!insertmacro UNINSTALL.LOG_END_UNINSTALL
 	
-	RMDir /r "$SMPROGRAMS\${APP_NAME}"
+	RMDir /r "$SMPROGRAMS\${DISPLAY_NAME}"
 
 	DeleteRegKey /ifempty ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}"
 
