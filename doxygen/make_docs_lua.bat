@@ -14,31 +14,17 @@ rmdir /s /q html-lua
 doxygen doxyfile-lua
 
 ::modify doxygen's output
-REM call parser\fr "html-lua" "*.html" "Static .*? Member Functions" "Function List"
-REM pause
-REM call parser\fr "html-lua" "*.html" "Member Function Documentation" "Function Documentation"
-REM pause
-REM call parser\fr "html-lua" "*.html" "SUPPRESS_EMPTY_FILE_WARNING" ""
-REM pause
-REM call parser\fr "html-lua" "*.html" "static int(.*?\>)_(.*?\<\/a\>)" "$1$2"
-REM pause
-REM call parser\fr "html-lua" "*.html" "\(lua_State \*L\)" ""
-REM pause
-REM call parser\fr "html-lua" "*.html" "int MOAI.*?::_(.*?\<\/td\>)" "$1"
-REM pause
-REM call parser\fr "html-lua" "*.html" "(\>)lua_State \*.*?(\<)" "$1$2"
-REM pause
-REM call parser\fr "html-lua" "*.html" "\<em\>L\<\/em\>" ""
-REM pause
-REM call parser\fr "html-lua" "*.html" "\<td class=\"paramtype\"\>\<\/td\>" ""
-REM pause
-REM call parser\fr "html-lua" "*.html" "\<td class=\"paramname\"\>\<\/td\>" ""
-REM pause
-REM call parser\fr "html-lua" "*.html" "\<td\>\(\<\/td\>" ""
-REM pause
-REM call parser\fr "html-lua" "*.html" "\<td\>\)\<\/td\>" ""
-REM pause
-REM call parser\fr "html-lua" "*.html" "\[.*?static.*?\]" ""
-REM pause
-REM call parser\fr "html-lua" "*.html" "(\>)_(.*?\(\))" "$1$2"
-REM pause
+call parser\fr "html-lua" "*.html" "Static .*? Member Functions" "Function List"
+call parser\fr "html-lua" "*.html" "Member Function Documentation" "Function Documentation"
+call parser\fr "html-lua" "*.html" "SUPPRESS_EMPTY_FILE_WARNING" ""
+call parser\fr "html-lua" "*.html" "static int(.*?\>)_(.*?\<\/a\>)" "$1$2"
+call parser\fr "html-lua" "*.html" "\(lua_State \*L\)" ""
+call parser\fr "html-lua" "*.html" "int MOAI.*?::_(.*?\<\/td\>)" "$1"
+call parser\fr "html-lua" "*.html" "(\>)lua_State \*.*?(\<)" "$1$2"
+call parser\fr "html-lua" "*.html" "\<em\>L\<\/em\>" ""
+call parser\fr "html-lua" "*.html" "\<td class=\"paramtype\"\>\<\/td\>" ""
+call parser\fr "html-lua" "*.html" "\<td class=\"paramname\"\>\<\/td\>" ""
+call parser\fr "html-lua" "*.html" "\<td\>\(\<\/td\>" ""
+call parser\fr "html-lua" "*.html" "\<td\>\)\<\/td\>" ""
+call parser\fr "html-lua" "*.html" "\[.*?static.*?\]" ""
+call parser\fr "html-lua" "*.html" "(\>)_(.*?\(\))" "$1$2"
