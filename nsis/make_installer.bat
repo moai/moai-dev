@@ -49,11 +49,25 @@ set revTagSuf="%revision%)"
 
 if "%tag%" == "" (
 	set displayName=Moai SDK %version%
-	set versionPath=v%version%.%revision%
+	REM set versionPath=v%version%.%revision%
 ) else (
 	set displayName=Moai SDK %version% %tag% %revTagPre% %revTagSuf%
-	set versionPath=v%version%.%revision% %tag%
+	REM set versionPath=v%version%.%revision% %tag%
 )
+
+:: create version file
+pushd release
+del /q version.txt
+echo Moai SDK>> version.txt
+
+if not "%tag%" == "" (
+	echo Version !version! !tag!>> version.txt
+) else (
+	echo Version !version!>> version.txt
+)
+
+echo Revision !revision!>> version.txt
+popd
 
 ::push version number into installer text
 copy moai.nsi moai-temp.nsi
@@ -61,8 +75,8 @@ copy moai.nsi moai-temp.nsi
 perl -p -i.bak -e "s/\@\@DISPLAY_NAME\@\@/%displayName%/sgi;" "moai-temp.nsi"
 del /q moai-temp.nsi.bak
 
-perl -p -i.bak -e "s/\@\@VERSION_PATH\@\@/%versionPath%/sgi;" "moai-temp.nsi"
-del /q moai-temp.nsi.bak
+REM perl -p -i.bak -e "s/\@\@VERSION_PATH\@\@/%versionPath%/sgi;" "moai-temp.nsi"
+REM del /q moai-temp.nsi.bak
 
 ::run NSIS script to create installer
 makensis.exe "moai-temp.nsi"

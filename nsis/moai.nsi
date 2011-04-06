@@ -5,8 +5,7 @@ SetCompressorDictSize 64
 RequestExecutionLevel user
 
 !define DISPLAY_NAME "@@DISPLAY_NAME@@"
-!define VERSION_PATH "@@VERSION_PATH@@"
-!define PARENT_FOLDER_NAME "Moai SDK"
+!define PROGRAM_FOLDER "Moai SDK"
 !define INSTALLER_NAME "moai-sdk-installer.exe"
 !define LICENSE_TEXT "license.txt"
 !define ALL_USERS
@@ -24,7 +23,6 @@ RequestExecutionLevel user
 !define MUI_HEADERIMAGE_BITMAP MUI_HEADERIMAGE_BITMAP.bmp
 !define MUI_WELCOMEFINISHPAGE_BITMAP MUI_WELCOMEFINISHPAGE_BITMAP.bmp
 
-!include LogicLib.nsh
 !include MUI.nsh
 !include AdvUninstLog.nsh
 !include RegisterExtension.nsh
@@ -34,7 +32,7 @@ Name "${DISPLAY_NAME}"
 OutFile "${INSTALLER_NAME}"
 ShowInstDetails show
 ShowUninstDetails show
-InstallDir "$PROGRAMFILES\${PARENT_FOLDER_NAME}\${VERSION_PATH}"
+InstallDir "$PROGRAMFILES\${PROGRAM_FOLDER}"
 InstallDirRegKey ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "InstallDir"
 
 !insertmacro UNATTENDED_UNINSTALL ;!insertmacro INTERACTIVE_UNINSTALL
@@ -58,19 +56,20 @@ InstallDirRegKey ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "InstallDir"
 
 !insertmacro MUI_LANGUAGE "English"
 
-Var Dialog
+; !include LogicLib.nsh
+; Var Dialog
 ;_______________________________________________________________________________________
-Function nsDialogsPage
+; Function nsDialogsPage
 
-	nsDialogs::Create 1018
-	Pop $Dialog
+	; nsDialogs::Create 1018
+	; Pop $Dialog
 
-	${If} $Dialog == error
-		Abort
-	${EndIf}
+	; ${If} $Dialog == error
+		; Abort
+	; ${EndIf}
 	
-	nsDialogs::Show
-FunctionEnd
+	; nsDialogs::Show
+; FunctionEnd
 
 ;_______________________________________________________________________________________
 Function launchHelloMoai
@@ -107,19 +106,16 @@ Section "Moai"
 	;register extensions
 	;${RegisterExtension} "$INSTDIR\moai.exe" ".moai" "Moai File"
 	
-	;add install dir to path environment variable
-    Push "$INSTDIR\bin"
-	Call AddToPath
-
-	ReadEnvStr $R0 "PATH"
-	StrCpy $R0 "$R0;$INSTDIR\bin"
-	System::Call 'Kernel32::SetEnvironmentVariableA(t, t) i("PATH", R0).r0'
-	
-	;add config to path
-	WriteRegExpandStr ${env_hklm} MOAI_CONFIG $INSTDIR\samples\config
+	;add MOAI_BIN variable
+	WriteRegExpandStr ${env_hklm} MOAI_BIN $INSTDIR\bin\
 	SendMessage ${HWND_BROADCAST} ${WM_WININICHANGE} 0 "STR:Environment" /TIMEOUT=5000
-
-	StrCpy $R0 "$INSTDIR\samples\config"
+	StrCpy $R0 "$INSTDIR\bin\"
+	System::Call 'Kernel32::SetEnvironmentVariableA(t, t) i("MOAI_BIN", R0).r0'
+	
+	;add MOAI_CONFIG variable
+	WriteRegExpandStr ${env_hklm} MOAI_CONFIG $INSTDIR\samples\config\
+	SendMessage ${HWND_BROADCAST} ${WM_WININICHANGE} 0 "STR:Environment" /TIMEOUT=5000
+	StrCpy $R0 "$INSTDIR\samples\config\"
 	System::Call 'Kernel32::SetEnvironmentVariableA(t, t) i("MOAI_CONFIG", R0).r0'
 	
 SectionEnd
@@ -136,11 +132,11 @@ FunctionEnd
 
 Section UnInstall
 
- 	Push "$INSTDIR\bin"
-	Call un.RemoveFromPath
+	; DeleteRegValue ${env_hklm} MOAI_BIN
+	; SendMessage ${HWND_BROADCAST} ${WM_WININICHANGE} 0 "STR:Environment" /TIMEOUT=5000
 
-	DeleteRegValue ${env_hklm} MOAI_CONFIG
-	SendMessage ${HWND_BROADCAST} ${WM_WININICHANGE} 0 "STR:Environment" /TIMEOUT=5000
+	; DeleteRegValue ${env_hklm} MOAI_CONFIG
+	; SendMessage ${HWND_BROADCAST} ${WM_WININICHANGE} 0 "STR:Environment" /TIMEOUT=5000
    
 	;${UnregisterExtension} ".moai" "Moai File"
 	
