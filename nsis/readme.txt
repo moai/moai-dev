@@ -1,5 +1,6 @@
 http://nsis.sourceforge.net
 
+- Install Perl (ActivePerl is available for Windows)
 - Install NSIS
 - Copy contents of nsis-includes to C:\Program Files\NSIS\Include
 - Build Moai

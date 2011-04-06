@@ -10,6 +10,11 @@ RequestExecutionLevel user
 !define INSTALLER_NAME "moai-sdk-installer.exe"
 !define LICENSE_TEXT "license.txt"
 !define ALL_USERS
+
+!include "winmessages.nsh"
+!define env_hklm 'HKLM "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"'
+!define env_hkcu 'HKCU "Environment"'
+
 ;_______________________________________________________________________________________
 
 !define INSTDIR_REG_ROOT "HKLM"
@@ -37,6 +42,7 @@ InstallDirRegKey ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "InstallDir"
 ;!insertmacro MUI_PAGE_LICENSE "${LICENSE_TEXT}"
 ;!insertmacro MUI_PAGE_COMPONENTS 
 !insertmacro MUI_PAGE_DIRECTORY
+Page custom nsDialogsPage
 !insertmacro MUI_PAGE_INSTFILES
 
 !define MUI_FINISHPAGE_RUN
@@ -50,6 +56,11 @@ InstallDirRegKey ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "InstallDir"
 !insertmacro MUI_UNPAGE_FINISH
 
 !insertmacro MUI_LANGUAGE "English"
+
+
+Function nsDialogsPage
+FunctionEnd
+
 
 ;_______________________________________________________________________________________
 Function launchHelloMoai
@@ -89,14 +100,17 @@ Section "Moai"
 	;add install dir to path environment variable
     Push "$INSTDIR\bin"
 	Call AddToPath
-	
-	;add config to path
-	; Push "MOAI_CONFIG"
-	; Push $INSTDIR\samples\config
-	; Call AddToEnvVar
+
 	ReadEnvStr $R0 "PATH"
 	StrCpy $R0 "$R0;$INSTDIR\bin"
 	System::Call 'Kernel32::SetEnvironmentVariableA(t, t) i("PATH", R0).r0'
+	
+	;add config to path
+	WriteRegExpandStr ${env_hklm} MOAI_CONFIG $INSTDIR\samples\config
+	SendMessage ${HWND_BROADCAST} ${WM_WININICHANGE} 0 "STR:Environment" /TIMEOUT=5000
+
+	StrCpy $R0 "$INSTDIR\samples\config"
+	System::Call 'Kernel32::SetEnvironmentVariableA(t, t) i("MOAI_CONFIG", R0).r0'
 	
 SectionEnd
 
@@ -115,10 +129,9 @@ Section UnInstall
  	Push "$INSTDIR\bin"
 	Call un.RemoveFromPath
 
-	Push "MOAI_CONFIG"
-	Push $INSTDIR\samples\config
-	Call un.RemoveFromEnvVar
-	
+	DeleteRegValue ${env_hklm} MOAI_CONFIG
+	SendMessage ${HWND_BROADCAST} ${WM_WININICHANGE} 0 "STR:Environment" /TIMEOUT=5000
+   
 	;${UnregisterExtension} ".moai" "Moai File"
 	
 	!insertmacro UNINSTALL.LOG_BEGIN_UNINSTALL
