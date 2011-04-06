@@ -3,3 +3,4 @@ Release/
 *.vcproj.*.user
 *.ncb
 *.suo
+*.cache
