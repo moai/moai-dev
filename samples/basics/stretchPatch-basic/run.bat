@@ -7,7 +7,7 @@
 @echo off
 
 :: verify paths
-if not exist %MOAI_BIN%\moai.exe (
+if not exist "%MOAI_BIN%\moai.exe" (
 	echo.
 	echo --------------------------------------------------------------------------------
 	echo ERROR: The MOAI_BIN environment variable is pointing to an invalid path.
@@ -17,7 +17,7 @@ if not exist %MOAI_BIN%\moai.exe (
 	goto end
 )
 
-if not exist %MOAI_CONFIG% (
+if not exist "%MOAI_CONFIG%" (
 	echo.
 	echo -------------------------------------------------------------------------------
 	echo WARNING: The MOAI_CONFIG environment variable is pointing to an invalid path.
@@ -27,7 +27,7 @@ if not exist %MOAI_CONFIG% (
 )
 
 :: run moai
-%MOAI_BIN%\moai "%MOAI_CONFIG%\config.lua" "main.lua"
+"%MOAI_BIN%\moai" "%MOAI_CONFIG%\config.lua" "main.lua"
 
 :end
 pause
