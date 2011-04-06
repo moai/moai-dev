@@ -4,5 +4,5 @@
 :: http://getmoai.com
 ::----------------------------------------------------------------::
 
-moai "main.lua"
+moai "%MOAI_CONFIG%\config.lua" "main.lua"
 @pause

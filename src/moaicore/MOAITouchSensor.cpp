@@ -331,8 +331,6 @@ void MOAITouchSensor::RegisterLuaFuncs ( USLuaState& state ) {
 //----------------------------------------------------------------//
 void MOAITouchSensor::Reset () {
 
-	//bool remove = false;
-
 	u32 top = this->mTop;
 	u32 j = 0;
 	for ( u32 i = 0; i < top; ++i ) {
@@ -344,7 +342,6 @@ void MOAITouchSensor::Reset () {
 			touch.mState = 0;
 			--this->mTop;
 			this->mAllocStack [ this->mTop ] = idx;
-			//remove = true;
 		}
 		else {
 			touch.mState &= ~( DOWN | UP );	
@@ -355,10 +352,6 @@ void MOAITouchSensor::Reset () {
 	if ( this->mTop == 0 ) {
 		this->Clear ();
 	}
-	
-	//if ( remove ) {
-	//	this->PrintStacks ();
-	//}
 }
 
 //----------------------------------------------------------------//

@@ -1,6 +1,7 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
+#include <stdio.h>
 #include <glut.h>
 #include <aku/AKUGlut.h>
 
@@ -36,9 +37,6 @@ static int sWinHeight;
 
 //----------------------------------------------------------------//
 static void _onKeyDown ( unsigned char key, int x, int y ) {
-
-	//int mod = glutGetModifiers ();
-	//printf ( "mod: 0x%08x\n", mod );
 	
 	AKUEnqueueKeyboardEvent ( GlutInputDeviceID::DEVICE, GlutInputDeviceSensorID::KEYBOARD, key, true );
 }
@@ -200,7 +198,7 @@ void _AKUStartGameLoopFunc () {
 //================================================================//
 
 //----------------------------------------------------------------//
-int AKUGlut ( const char* filename ) {
+int AKUGlut ( int argc, char** argv ) {
 
 	AKUCreateContext ();
 
@@ -221,7 +219,8 @@ int AKUGlut ( const char* filename ) {
 	AKUSetFunc_OpenWindow ( _AKUOpenWindowFunc );
 	AKUSetFunc_StartGameLoop ( _AKUStartGameLoopFunc );
 
-	AKURunScript ( filename );
-	
+	for ( int i = 1; i < argc; ++i ) {
+		AKURunScript ( argv [ i ]);
+	}
 	return 0;
 }

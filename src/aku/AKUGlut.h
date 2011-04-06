@@ -7,6 +7,6 @@
 #include <aku/AKU.h>
 
 //----------------------------------------------------------------//
-int AKUGlut ( const char* filename );
+int AKUGlut ( int argc, char** argv );
 
 #endif

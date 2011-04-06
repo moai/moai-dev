@@ -14,5 +14,5 @@ int main ( int argc, char** argv ) {
 		printf ( "MOAI-OPEN DEBUG\n" );
 	#endif
 
-	return AKUGlut ( argv [ 1 ]);
+	return AKUGlut ( argc, argv );
 }
