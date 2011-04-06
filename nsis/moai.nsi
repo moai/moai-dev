@@ -2,7 +2,7 @@
 
 SetCompressor /FINAL /SOLID lzma
 SetCompressorDictSize 64
-RequestExecutionLevel user
+;RequestExecutionLevel user
 
 !define DISPLAY_NAME "@@DISPLAY_NAME@@"
 !define PROGRAM_FOLDER "Moai SDK"
@@ -107,13 +107,13 @@ Section "Moai"
 	;${RegisterExtension} "$INSTDIR\moai.exe" ".moai" "Moai File"
 	
 	;add MOAI_BIN variable
-	WriteRegExpandStr ${env_hklm} MOAI_BIN $INSTDIR\bin\
+	WriteRegExpandStr ${env_hklm} MOAI_BIN "$INSTDIR\bin\"
 	SendMessage ${HWND_BROADCAST} ${WM_WININICHANGE} 0 "STR:Environment" /TIMEOUT=5000
 	StrCpy $R0 "$INSTDIR\bin\"
 	System::Call 'Kernel32::SetEnvironmentVariableA(t, t) i("MOAI_BIN", R0).r0'
 	
 	;add MOAI_CONFIG variable
-	WriteRegExpandStr ${env_hklm} MOAI_CONFIG $INSTDIR\samples\config\
+	WriteRegExpandStr ${env_hklm} MOAI_CONFIG "$INSTDIR\samples\config\"
 	SendMessage ${HWND_BROADCAST} ${WM_WININICHANGE} 0 "STR:Environment" /TIMEOUT=5000
 	StrCpy $R0 "$INSTDIR\samples\config\"
 	System::Call 'Kernel32::SetEnvironmentVariableA(t, t) i("MOAI_CONFIG", R0).r0'
