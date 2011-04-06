@@ -21,22 +21,41 @@ xcopy /cery ..\src\aku\AKUGlut.* release\samples\src\aku\
 
 xcopy /cery ..\src\aku\AKU.h release\include\aku\
 
-::push version number into installer text
 ::read version from text file
 pushd ..
+set /a count=0
+
+setlocal ENABLEDELAYEDEXPANSION
 for /F "skip=1 tokens=2*" %%i in (version.txt) do (
-	if "%%j" == "" (
-		set displayName=Moai SDK %%i
-		set versionPath=v%%i
-	) else (
-		set displayName=Moai SDK %%i %%j
-		set versionPath=v%%i-%%j
+
+	set /a count=count+1
+
+	if "!count!" == "1" (
+		set version=%%i
+		if not "%%j" == "" set tag=%%j
 	)
-	goto forDone
+	
+	if "!count!" == "2" (
+		set revision=%%i
+	)
+	
+	if "!count!" == "3" goto forDone
 )
 :forDone
 popd
 
+set revTagPre="(revision"
+set revTagSuf="%revision%)"
+
+if "%tag%" == "" (
+	set displayName=Moai SDK %version%
+	set versionPath=v%version%.%revision%
+) else (
+	set displayName=Moai SDK %version% %tag% %revTagPre% %revTagSuf%
+	set versionPath=v%version%.%revision% %tag%
+)
+
+::push version number into installer text
 copy moai.nsi moai-temp.nsi
 
 perl -p -i.bak -e "s/\@\@DISPLAY_NAME\@\@/%displayName%/sgi;" "moai-temp.nsi"
@@ -48,3 +67,5 @@ del /q moai-temp.nsi.bak
 ::run NSIS script to create installer
 makensis.exe "moai-temp.nsi"
 del /q moai-temp.nsi
+
+endlocal

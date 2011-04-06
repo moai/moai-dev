@@ -2,6 +2,7 @@
 
 SetCompressor /FINAL /SOLID lzma
 SetCompressorDictSize 64
+RequestExecutionLevel user
 
 !define DISPLAY_NAME "@@DISPLAY_NAME@@"
 !define VERSION_PATH "@@VERSION_PATH@@"
@@ -52,6 +53,7 @@ InstallDirRegKey ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "InstallDir"
 
 ;_______________________________________________________________________________________
 Function launchHelloMoai
+
 	SetOutPath "$INSTDIR\samples\hello-moai"
 	Exec "$INSTDIR\samples\hello-moai\run.bat"
 FunctionEnd
@@ -72,6 +74,9 @@ Section "Moai"
 	CreateShortCut "$SMPROGRAMS\${DISPLAY_NAME}\Samples.lnk" "$INSTDIR\samples\lua"
 	CreateShortCut "$SMPROGRAMS\${DISPLAY_NAME}\Reference.lnk" "$INSTDIR\docs\html\index.html"
 	CreateShortCut "$SMPROGRAMS\${DISPLAY_NAME}\Uninstall.lnk" "${UNINST_EXE}"
+
+	;desktop shortcut
+	CreateShortCut "$DESKTOP\Moai Samples.lnk" "$INSTDIR\samples\lua"
 	
 	;system add/remove programs setup
 	WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "InstallDir" "$INSTDIR"
@@ -86,9 +91,12 @@ Section "Moai"
 	Call AddToPath
 	
 	;add config to path
-	Push "MOAI_CONFIG"
-	Push $INSTDIR\samples\config
-	Call AddToEnvVar
+	; Push "MOAI_CONFIG"
+	; Push $INSTDIR\samples\config
+	; Call AddToEnvVar
+	ReadEnvStr $R0 "PATH"
+	StrCpy $R0 "$R0;$INSTDIR\bin"
+	System::Call 'Kernel32::SetEnvironmentVariableA(t, t) i("PATH", R0).r0'
 	
 SectionEnd
 
@@ -117,8 +125,13 @@ Section UnInstall
 	!insertmacro UNINSTALL.LOG_UNINSTALL "$INSTDIR"
 	!insertmacro UNINSTALL.LOG_END_UNINSTALL
 	
+	Delete "$SMPROGRAMS\${DISPLAY_NAME}\Samples.lnk"
+	Delete "$SMPROGRAMS\${DISPLAY_NAME}\Reference.lnk"
+	Delete "$SMPROGRAMS\${DISPLAY_NAME}\Uninstall.lnk"
 	RMDir /r "$SMPROGRAMS\${DISPLAY_NAME}"
 
+	Delete "$DESKTOP\Moai Samples.lnk"
+	
 	DeleteRegKey /ifempty ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}"
 
 SectionEnd
