@@ -3,5 +3,7 @@ release/bin/
 release/docs/
 release/samples/lua/
 release/samples/src/
+release/samples/hello-moai/
+release/samples/config/
 release/include/
 *.exe
