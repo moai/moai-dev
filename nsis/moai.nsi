@@ -24,6 +24,7 @@ RequestExecutionLevel user
 !define MUI_HEADERIMAGE_BITMAP MUI_HEADERIMAGE_BITMAP.bmp
 !define MUI_WELCOMEFINISHPAGE_BITMAP MUI_WELCOMEFINISHPAGE_BITMAP.bmp
 
+!include LogicLib.nsh
 !include MUI.nsh
 !include AdvUninstLog.nsh
 !include RegisterExtension.nsh
@@ -42,7 +43,7 @@ InstallDirRegKey ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "InstallDir"
 ;!insertmacro MUI_PAGE_LICENSE "${LICENSE_TEXT}"
 ;!insertmacro MUI_PAGE_COMPONENTS 
 !insertmacro MUI_PAGE_DIRECTORY
-Page custom nsDialogsPage
+;Page custom nsDialogsPage
 !insertmacro MUI_PAGE_INSTFILES
 
 !define MUI_FINISHPAGE_RUN
@@ -57,10 +58,19 @@ Page custom nsDialogsPage
 
 !insertmacro MUI_LANGUAGE "English"
 
-
+Var Dialog
+;_______________________________________________________________________________________
 Function nsDialogsPage
-FunctionEnd
 
+	nsDialogs::Create 1018
+	Pop $Dialog
+
+	${If} $Dialog == error
+		Abort
+	${EndIf}
+	
+	nsDialogs::Show
+FunctionEnd
 
 ;_______________________________________________________________________________________
 Function launchHelloMoai
