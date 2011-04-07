@@ -144,6 +144,11 @@ function trim ( str )
 
 	local nonWhiteSpacePattern = "[^%s]"
 	local startIdx = string.find ( str, nonWhiteSpacePattern )
+	
+	if not startIdx then
+		return ""
+	end
+	
 	local endIdx = 1 + ( #str - string.find ( string.reverse ( str ), nonWhiteSpacePattern ))
 	return string.sub ( str, startIdx, endIdx )
 end

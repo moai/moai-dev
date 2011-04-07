@@ -17,6 +17,7 @@ SUPPRESS_EMPTY_FILE_WARNING
 //----------------------------------------------------------------//
 /**	@name	countContacts
 	@text	Return the number of contacts in the current collision.
+	@out	nil
 */
 int MOAIBox2DArbiter::_countContacts ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DArbiter, "U" )
@@ -31,6 +32,7 @@ int MOAIBox2DArbiter::_countContacts ( lua_State* L ) {
 	Description of method Coming Soon(tm).
 	@param self (in)
 	@param y (out)
+	@out	nil
 */
 int MOAIBox2DArbiter::_getContactDepth ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DArbiter, "UN" )
@@ -45,6 +47,7 @@ int MOAIBox2DArbiter::_getContactDepth ( lua_State* L ) {
 	Description of method Coming Soon(tm).
 	@param self (in)
 	@param y (out)
+	@out	nil
 */
 int MOAIBox2DArbiter::_getContactNormal ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DArbiter, "UN" )
@@ -59,6 +62,7 @@ int MOAIBox2DArbiter::_getContactNormal ( lua_State* L ) {
 	Description of method Coming Soon(tm).
 	@param self (in)
 	@param y (out)
+	@out	nil
 */
 int MOAIBox2DArbiter::_getContactPoint ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DArbiter, "UN" )
@@ -73,6 +77,7 @@ int MOAIBox2DArbiter::_getContactPoint ( lua_State* L ) {
 	Description of method Coming Soon(tm).
 	@param self (in)
 	@param y (out)
+	@out	nil
 */
 int MOAIBox2DArbiter::_getTotalImpulse ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DArbiter, "U" )
@@ -87,6 +92,7 @@ int MOAIBox2DArbiter::_getTotalImpulse ( lua_State* L ) {
 	Description of method Coming Soon(tm).
 	@param self (in)
 	@param y (out)
+	@out	nil
 */
 int MOAIBox2DArbiter::_getTotalImpulseWithFriction ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DArbiter, "U" )
@@ -101,6 +107,7 @@ int MOAIBox2DArbiter::_getTotalImpulseWithFriction ( lua_State* L ) {
 	Description of method Coming Soon(tm).
 	@param self (in)
 	@param y (out)
+	@out	nil
 */
 int MOAIBox2DArbiter::_isFirstContact ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DArbiter, "U" )
@@ -115,6 +122,7 @@ int MOAIBox2DArbiter::_isFirstContact ( lua_State* L ) {
 	Description of method Coming Soon(tm).
 	@param self (in)
 	@param y (out)
+	@out	nil
 */
 int MOAIBox2DArbiter::_new ( lua_State* L ) {
 	UNUSED ( L );

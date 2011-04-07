@@ -44,6 +44,6 @@ call parser\fr "html-lua" "*.html" "\<td class=\"paramname\"\>\<\/td\>" ""
 call parser\fr "html-lua" "*.html" "\<td\>\(\<\/td\>" ""
 call parser\fr "html-lua" "*.html" "\<td\>\)\<\/td\>" ""
 call parser\fr "html-lua" "*.html" "\[.*?static.*?\]" ""
-call parser\fr "html-lua" "*.html" "(\>)_(.*?\(\))" "$1$2"
+call parser\fr "html-lua" "*.html" "(\>)_(.*?\<\/a\>)" "$1$2"
 
 endlocal
