@@ -505,7 +505,7 @@ http://getmoai.com/moailogo.png
 
 Attribution Copyright Notice: Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 
-An Alternative Image incorporating all four attributions is available at http://getmoai.com/madewithmoailogo.png
+An Alternative Image incorporating all four attributions is available at http://getmoai.com/madewithmoai
 
 This display should include, at a minimum, listing the Attribution Phrase, Attribution URL,
 Graphic Image and Attribution Copyright Notice in a credits screen, or alternatively

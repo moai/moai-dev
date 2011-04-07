@@ -21,12 +21,20 @@ SUPPRESS_EMPTY_FILE_WARNING
 /**	@name	load
 	@text	Loads the specified sound from file, or from a MOAIDataBuffer.
 
-	@in		MOAIFmodSound self
-	@opt	string filename			The path to the sound to load from file.
-	@opt	MOAIDataBuffer data		The MOAIDataBuffer that is storing sound data.  You must either provide a string or MOAIDataBuffer, but not both.
-	@in		boolean streaming		Whether the sound should be streamed from the data source, rather than preloaded.
-	@in		boolean	async			Whether the sound should be loaded asynchronously (only relevant for filename-based loading).
-	@out	nil
+	@overload
+	
+		@in		MOAIFmodSound self
+		@in		string filename			The path to the sound to load from file.
+		@in		boolean streaming		Whether the sound should be streamed from the data source, rather than preloaded.
+		@in		boolean	async			Whether the sound file should be loaded asynchronously.
+		@out	nil
+
+	@overload
+
+		@in		MOAIFmodSound self
+		@in		MOAIDataBuffer data		The MOAIDataBuffer that is storing sound data.  You must either provide a string or MOAIDataBuffer, but not both.
+		@in		boolean streaming		Whether the sound should be streamed from the data source, rather than preloaded.
+		@out	nil
 */
 int MOAIFmodSound::_load ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIFmodSound, "U" )
