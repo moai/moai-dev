@@ -90,6 +90,7 @@ Section "Moai"
 	!insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 	
 	;start menu shortcuts
+	SetShellVarContext all
 	CreateDirectory "$SMPROGRAMS\${DISPLAY_NAME}"
 	CreateShortCut "$SMPROGRAMS\${DISPLAY_NAME}\Samples.lnk" "$INSTDIR\samples\lua"
 	CreateShortCut "$SMPROGRAMS\${DISPLAY_NAME}\Reference.lnk" "$INSTDIR\docs\html\index.html"
@@ -121,7 +122,26 @@ Section "Moai"
 SectionEnd
 
 Function .onInit
+	
+	ClearErrors
+	ReadRegStr $0 ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "DisplayName"
+	IfErrors init.normal
+	MessageBox MB_YESNO|MB_ICONEXCLAMATION "There is an existing install of Moai SDK on your system.$\nYou must uninstall it before continuing. Run uninstaller now?" IDYES init.uninst
+	Quit
+
+init.uninst:
+	ClearErrors
+	ReadRegStr $0 ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "UninstallString"
+	IfErrors init.done
+	ExecWait '$0 _?=$INSTDIR'
+	Goto init.normal
+
+init.done:
+	Quit
+
+init.normal:
 	!insertmacro UNINSTALL.LOG_PREPARE_INSTALL
+	
 FunctionEnd
 
 Function .onInstSuccess
@@ -144,6 +164,7 @@ Section UnInstall
 	!insertmacro UNINSTALL.LOG_UNINSTALL "$INSTDIR"
 	!insertmacro UNINSTALL.LOG_END_UNINSTALL
 	
+	SetShellVarContext all
 	Delete "$SMPROGRAMS\${DISPLAY_NAME}\Samples.lnk"
 	Delete "$SMPROGRAMS\${DISPLAY_NAME}\Reference.lnk"
 	Delete "$SMPROGRAMS\${DISPLAY_NAME}\Uninstall.lnk"
