@@ -33,7 +33,7 @@ public:
 	//----------------------------------------------------------------//						
 					MOAIThread				();
 					~MOAIThread				();
-	bool			IsBusy					();
+	bool			IsDone					();
 	void			OnUpdate				( float step );
 	void			RegisterLuaClass		( USLuaState& state );
 	void			RegisterLuaFuncs		( USLuaState& state );

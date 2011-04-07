@@ -584,8 +584,9 @@ void MOAIBox2DWorld::DrawDebug () {
 }
 
 //----------------------------------------------------------------//
-bool MOAIBox2DWorld::IsBusy () {
-	return this->IsActive ();
+bool MOAIBox2DWorld::IsDone () {
+
+	return false;
 }
 
 //----------------------------------------------------------------//

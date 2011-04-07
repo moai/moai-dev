@@ -30,7 +30,9 @@ private:
 	//----------------------------------------------------------------//
 	static int			_addChild				( lua_State* L );
 	static int			_clear					( lua_State* L );
+	static int			_isActive				( lua_State* L );
 	static int			_isBusy					( lua_State* L );
+	static int			_isDone					( lua_State* L );
 	static int			_start					( lua_State* L );
 	static int			_stop					( lua_State* L );
 	static int			_throttle				( lua_State* L );
@@ -56,7 +58,8 @@ public:
 	void				AddChild				( MOAIAction& action );
 	void				ClearChildren			();
 	bool				IsActive				();
-	virtual bool		IsBusy					();
+	bool				IsBusy					();
+	virtual bool		IsDone					();
 						MOAIAction				();
 						~MOAIAction				();
 	void				RegisterLuaClass		( USLuaState& state );

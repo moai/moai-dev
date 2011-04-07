@@ -48,7 +48,7 @@ public:
 	SET ( float, Length, mLength )
 
 	//----------------------------------------------------------------//
-	bool			IsBusy				();
+	bool			IsDone				();
 					MOAIEaseDriver		();
 					~MOAIEaseDriver		();
 	void			OnUpdate			( float step );

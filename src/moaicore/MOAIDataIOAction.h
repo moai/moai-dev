@@ -44,7 +44,7 @@ public:
 
 	//----------------------------------------------------------------//
 	void		Init				( cc8* filename, MOAIDataBuffer* data );
-	bool		IsBusy				();
+	bool		IsDone				();
 				MOAIDataIOAction	();
 				~MOAIDataIOAction	();
 	void		OnUpdate			( float step );

@@ -74,7 +74,7 @@ public:
 	SET ( MOAIParticleSystem*, System, mSystem )
 
 	//----------------------------------------------------------------//
-	bool			IsBusy					();
+	bool			IsDone					();
 					MOAIParticleEmitter		();
 					~MOAIParticleEmitter	();
 	void			RegisterLuaClass		( USLuaState& state );

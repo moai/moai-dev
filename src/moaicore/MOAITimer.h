@@ -68,7 +68,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	void		ApplyAttrOp			( u32 attrID, USAttrOp& attrOp );
-	bool		IsBusy				();
+	bool		IsDone				();
 				MOAITimer			();
 				~MOAITimer			();
 	void		OnDepNodeUpdate		();

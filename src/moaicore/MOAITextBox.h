@@ -88,7 +88,7 @@ public:
 	void			Draw					();
 	void			DrawDebug				();
 	u32				GetLocalFrame			( USRect& frame );
-	bool			IsBusy					();
+	bool			IsDone					();
 					MOAITextBox				();
 					~MOAITextBox			();
 	bool			More					();

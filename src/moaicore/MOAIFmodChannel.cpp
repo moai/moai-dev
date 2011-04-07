@@ -13,7 +13,6 @@ SUPPRESS_EMPTY_FILE_WARNING
 #include <moaicore/MOAILogMessages.h>
 
 #include <fmod.hpp>
-#include <fmod_errors.h>
 
 //================================================================//
 // local
@@ -32,14 +31,16 @@ SUPPRESS_EMPTY_FILE_WARNING
 int MOAIFmodChannel::_moveVolume ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIFmodChannel, "UNN" )
 
-	MOAIEaseDriver* action = USSafeNew < MOAIEaseDriver >();
-	action->Init ( self, 1, 0.0f );
+	MOAIEaseDriver* action = new MOAIEaseDriver ();
+	action->ReserveLinks ( 1 );
 	
-	action->SetLink ( 0, MOAIFmodChannel::ATTR_VOLUME, state.GetValue < float >( 2, 0.0f ));
+	float delta		= state.GetValue < float >( 2, 0.0f );
+	float length	= state.GetValue < float >( 3, 0.0f );
+	u32 mode		= state.GetValue < u32 >( 4, USInterpolate::kSmooth );
 	
-	action->SetDelay (state.GetValue < float >( 3, 0.0f ));
-	action->SetMode ( state.GetValue < u32 >( 4, USInterpolate::kSmooth ));
-	
+	action->SetLink ( 0, self, MOAIFmodChannel::ATTR_VOLUME, delta, mode );
+
+	action->SetLength ( length );
 	action->Start ();
 	action->PushLuaUserdata ( state );
 
@@ -81,14 +82,16 @@ int MOAIFmodChannel::_play ( lua_State* L ) {
 int MOAIFmodChannel::_seekVolume ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIFmodChannel, "UNN" )
 
-	MOAIEaseDriver* action = USSafeNew < MOAIEaseDriver >();
-	action->Init ( self, 1, 0.0f );
+	MOAIEaseDriver* action = new MOAIEaseDriver ();
+	action->ReserveLinks ( 1 );
 	
-	action->SetLink ( 0, MOAIFmodChannel::ATTR_VOLUME, state.GetValue < float >( 2, 0.0f ) - self->mVolume );
+	float target	= state.GetValue < float >( 2, 0.0f );
+	float length	= state.GetValue < float >( 3, 0.0f );
+	u32 mode		= state.GetValue < u32 >( 4, USInterpolate::kSmooth );
 	
-	action->SetDelay ( state.GetValue < float >( 3, 0.0f ));
-	action->SetMode ( state.GetValue < u32 >( 4, USInterpolate::kSmooth ));
-	
+	action->SetLink ( 0, self, MOAIFmodChannel::ATTR_VOLUME, target - self->mVolume, mode );
+
+	action->SetLength ( length );
 	action->Start ();
 	action->PushLuaUserdata ( state );
 
@@ -201,6 +204,7 @@ void MOAIFmodChannel::Play ( MOAIFmodSound* sound, int loopCount ) {
 
 //----------------------------------------------------------------//
 void MOAIFmodChannel::RegisterLuaClass ( USLuaState& state ) {
+	UNUSED ( state );
 }
 
 //----------------------------------------------------------------//
