@@ -342,7 +342,7 @@ void MOAIAction::Update ( float step, u32 pass, bool checkPass ) {
 		child->Release ();
 	}
 	
-	if ( !this->IsDone ()) {
+	if ( this->IsDone ()) {
 		this->Stop ();
 	}
 }
