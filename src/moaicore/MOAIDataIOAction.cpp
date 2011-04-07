@@ -61,9 +61,9 @@ void MOAIDataIOAction::Init ( cc8* filename, MOAIDataBuffer* data ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIDataIOAction::IsBusy () {
+bool MOAIDataIOAction::IsDone () {
 
-	return ( this->mState != DONE );
+	return ( this->mState == DONE );
 }
 
 //----------------------------------------------------------------//

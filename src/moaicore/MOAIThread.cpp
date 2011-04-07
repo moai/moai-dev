@@ -93,9 +93,9 @@ MOAIThread::~MOAIThread () {
 }
 
 //----------------------------------------------------------------//
-bool MOAIThread::IsBusy () {
+bool MOAIThread::IsDone () {
 
-	return this->mRef;
+	return this->mRef.IsNil ();
 }
 
 //----------------------------------------------------------------//

@@ -764,8 +764,9 @@ void MOAICpSpace::InsertPrim ( MOAICpPrim& prim ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAICpSpace::IsBusy () {
-	return this->IsActive ();
+bool MOAICpSpace::IsDone () {
+
+	return false;
 }
 
 //----------------------------------------------------------------//

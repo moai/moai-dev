@@ -219,9 +219,9 @@ USVec2D MOAIParticleEmitter::GetRandomVec ( float minAngle, float maxAngle, floa
 }
 
 //----------------------------------------------------------------//
-bool MOAIParticleEmitter::IsBusy () {
+bool MOAIParticleEmitter::IsDone () {
 
-	return true;
+	return false;
 }
 
 //----------------------------------------------------------------//

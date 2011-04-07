@@ -10,17 +10,10 @@ SUPPRESS_EMPTY_FILE_WARNING
 #include <moaicore/MOAILogMessages.h>
 
 #include <fmod.hpp>
-#include <fmod_errors.h>
 
 //================================================================//
 // local
 //================================================================//
-
-//----------------------------------------------------------------//
-static int _deprecate ( lua_State* L ) {
-
-	return 0;
-}
 
 //----------------------------------------------------------------//
 /**	@name	init
@@ -75,6 +68,7 @@ void MOAIFmod::OpenSoundSystem () {
 
 //----------------------------------------------------------------//
 void MOAIFmod::RegisterLuaClass ( USLuaState& state ) {
+	UNUSED ( state );
 }
 
 //----------------------------------------------------------------//
@@ -82,16 +76,6 @@ void MOAIFmod::RegisterLuaFuncs ( USLuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "init",			_init },
-		
-		{ "loadBGM",		_deprecate },
-		{ "loadSFX",		_deprecate },
-		{ "openChannel",	_deprecate },
-		{ "playSound",		_deprecate },
-		{ "releaseSound",	_deprecate },
-		{ "selectChannel",	_deprecate },
-		{ "selectSound",	_deprecate },
-		{ "stopSound",		_deprecate },
-		
 		{ NULL, NULL }
 	};
 
