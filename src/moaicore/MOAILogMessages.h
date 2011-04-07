@@ -8,9 +8,10 @@
 
 #define REGISTER_LOG_MESSAGE(messageID) state.SetField ( -1, #messageID, ( u32 )messageID );
 
-#define MOAI_CHECK_RESERVE(size)														\
-	if ( !( idx < size )) {																\
-		MOAI_ERROR ( state, MOAILogMessages::MOAI_IndexNoReserved );					\
+#define MOAI_CHECK_FILE(filename)														\
+	if ( !USFileSys::CheckFileExists ( filename )) {									\
+		STLString expand = USFileSys::Expand ( filename );								\
+		MOAI_ERROR ( state, MOAILogMessages::MOAI_FileNotFound_S, expand.str ());		\
 		return 0;																		\
 	}
 
@@ -21,6 +22,12 @@
 	}																					\
 	else if ( !( idx < size )) {														\
 		MOAI_ERROR ( state, MOAILogMessages::MOAI_IndexOutOfRange_DDD, idx, 0, size );	\
+		return 0;																		\
+	}
+
+#define MOAI_CHECK_RESERVE(size)														\
+	if ( !( idx < size )) {																\
+		MOAI_ERROR ( state, MOAILogMessages::MOAI_IndexNoReserved );					\
 		return 0;																		\
 	}
 
@@ -40,6 +47,7 @@ class MOAILogMessages {
 public:
 
 	enum {
+		MOAI_FileNotFound_S,
 		MOAI_IndexNoReserved,
 		MOAI_IndexOutOfRange_DDD,
 		MOAI_ParamTypeMismatch,
@@ -52,6 +60,7 @@ public:
 		UNUSED ( state );
 		
 		#ifdef _DEBUG
+			REGISTER_LOG_MESSAGE ( MOAI_FileNotFound_S )
 			REGISTER_LOG_MESSAGE ( MOAI_IndexNoReserved )
 			REGISTER_LOG_MESSAGE ( MOAI_IndexOutOfRange_DDD )
 			REGISTER_LOG_MESSAGE ( MOAI_ParamTypeMismatch )

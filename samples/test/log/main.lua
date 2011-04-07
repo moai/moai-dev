@@ -10,6 +10,10 @@ print ( "hello, moai!" )
 gfxQuad = MOAIGfxQuad2D.new ()
 gfxQuad:setRect ( 1, 2, 'something' )
 
+-- missing file
+texture = MOAITexture.new ()
+texture:load ( 'foo.png' )
+
 -- create an object to test the out of range message
 brushLib = MOAIGfxQuadDeck2D.new ()
 brushLib:reserve ( 2 )
@@ -18,6 +22,7 @@ brushLib:setRect ( 1, 0, 0, 0, 0 )
 brushLib:setRect ( 2, 0, 0, 0, 0 )
 brushLib:setRect ( 3, 0, 0, 0, 0 ) -- error
 
--- atributes
+-- attributes
 transform = MOAITransform.new ()
 transform:getAttr ( 76 )
+

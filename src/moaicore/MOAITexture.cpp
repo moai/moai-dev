@@ -68,6 +68,7 @@ int MOAITexture::_load ( lua_State* L ) {
 	else if ( state.IsType( 2, LUA_TSTRING ) ) {
 
 		cc8* filename = lua_tostring ( state, 2 );
+		MOAI_CHECK_FILE ( filename );
 		self->Load ( filename, transform );
 	}
 

@@ -22,6 +22,7 @@ int MOAIParser::_loadFile ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIParser, "US" )
 	
 	cc8* filename = state.GetValue < cc8* >( 2, "" );
+	MOAI_CHECK_FILE ( filename );
 	
 	USFileStream stream;
 	if ( stream.OpenRead ( filename )) {
@@ -47,6 +48,8 @@ int MOAIParser::_loadRules ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIParser, "US" )
 
 	cc8* filename = state.GetValue < cc8* >( 2, "" );
+	MOAI_CHECK_FILE ( filename );
+	
 	self->mCGT.Load ( filename );
 	
 	return 0;
