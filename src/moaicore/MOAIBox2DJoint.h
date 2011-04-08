@@ -12,7 +12,8 @@ class b2Joint;
 //================================================================//
 // MOAIBox2DJoint
 //================================================================//
-/**	@brief	Box2D joint.
+/**	@name MOAIBox2DJoint
+	@text Box2D joint.
 */
 class MOAIBox2DJoint :
 	public MOAIBox2DPrim {

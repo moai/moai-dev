@@ -10,7 +10,8 @@ class MOAIDataBuffer;
 //================================================================//
 // MOAIHttpTask
 //================================================================//
-/**	@brief	Object for performing asynchronous http actions.
+/**	@name	MOAIHttpTask
+	@text	Object for performing asynchronous http actions.
 */
 class MOAIHttpTask :
 	public virtual USLuaObject {

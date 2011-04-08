@@ -9,7 +9,8 @@
 //================================================================//
 // MOAISimpleShader
 //================================================================//
-/**	@brief	Fixed function pipeline shader.
+/**	@name	MOAISimpleShader
+	@text	Fixed function pipeline shader.
 
 	@const	BLEND_NORMAL
 	@const	BLEND_ADD

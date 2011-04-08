@@ -24,16 +24,17 @@ private:
 //================================================================//
 // MOAIDebugLines
 //================================================================//
-/**	@brief	Singleton for managing rendering of world space debug vectors.
+/**	@name	MOAIDebugLines
+	@text	Singleton for managing rendering of world space debug vectors.
 
-	@const COLLISION_PRIMS
-	@const OVERLAPS
-	@const PARTITION_CELLS
-	@const PARTITION_PADDED_CELLS
-	@const SPRITE_MODEL_BOUNDS
-	@const SPRITE_WORLD_BOUNDS
-	@const SURFACES
-	@const TEXT_BOX
+	@const	COLLISION_PRIMS
+	@const	OVERLAPS
+	@const	PARTITION_CELLS
+	@const	PARTITION_PADDED_CELLS
+	@const	SPRITE_MODEL_BOUNDS
+	@const	SPRITE_WORLD_BOUNDS
+	@const	SURFACES
+	@const	TEXT_BOX
 */
 class MOAIDebugLines :
 	public USGlobalClass < MOAIDebugLines, USLuaObject >,

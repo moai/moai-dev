@@ -11,7 +11,8 @@ class MOAICpSpace;
 //================================================================//
 // MOAICpArbiter
 //================================================================//
-/**	@brief	Chipmunk Arbiter.
+/**	@name	MOAICpArbiter
+	@text	Chipmunk Arbiter.
 */
 class MOAICpArbiter :
 	public virtual USLuaObject {

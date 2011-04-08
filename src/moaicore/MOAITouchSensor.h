@@ -26,7 +26,8 @@ private:
 //================================================================//
 // MOAITouchSensor
 //================================================================//
-/**	@brief	Multitouch sensor. Tracks up to 16 simultaneous touches.
+/**	@name	MOAITouchSensor
+	@text	Multitouch sensor. Tracks up to 16 simultaneous touches.
 
 	@const	TOUCH_DOWN
 	@const	TOUCH_MOVE

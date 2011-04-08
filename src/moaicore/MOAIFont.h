@@ -9,7 +9,8 @@ class MOAIDataBuffer;
 //================================================================//
 // MOAIFont
 //================================================================//
-/**	@brief	Font class.
+/**	@name	MOAIFont
+	@text	Font class.
 */
 class MOAIFont :
 	public virtual USLuaObject,

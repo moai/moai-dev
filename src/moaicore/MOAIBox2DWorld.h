@@ -38,7 +38,8 @@ public:
 //================================================================//
 // MOAIBox2DWorld
 //================================================================//
-/**	@brief	Box2D world.
+/**	@name	MOAIBox2DWorld
+	@text	Box2D world.
 */
 class MOAIBox2DWorld :
 	public MOAIAction,

@@ -30,10 +30,10 @@ MOAIDebugLineStyle::~MOAIDebugLineStyle () {
 	
 	@in		number styleID		See MOAIDebugLines class documentation for a list of styles.
 	@opt	number size			Pen size (in pixels) for the style. Default value is 1.
-	@opt	number r			Red component of line color. Default valye is 1.
-	@opt	number g			Green component of line color. Default valye is 1.
-	@opt	number b			Blue component of line color. Default valye is 1.
-	@opt	number a			Alpha component of line color. Default valye is 1.
+	@opt	number r			Red component of line color. Default value is 1.
+	@opt	number g			Green component of line color. Default value is 1.
+	@opt	number b			Blue component of line color. Default value is 1.
+	@opt	number a			Alpha component of line color. Default value is 1.
 	@out	nil
 */
 int MOAIDebugLines::_setStyle ( lua_State* L ) {

@@ -82,7 +82,12 @@ function dumpReturn ( def )
 	local returnList = ""
 	for i,v in ipairs ( def.outParams ) do
 		if i ~= 1 then returnList = returnList .. ", " end
-		returnList = returnList .. v.paramName .. " ( " .. v.paramType .. " )"
+		
+		if v.paramName == "" then
+			returnList = returnList .. v.paramType
+		else
+			returnList = returnList .. v.paramName .. " ( " .. v.paramType .. " )"
+		end
 	end
 	
 	doxy = doxy .. "\t@return " .. returnList .. "\n"

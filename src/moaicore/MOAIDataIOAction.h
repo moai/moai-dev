@@ -11,7 +11,8 @@ class MOAIDataBuffer;
 //================================================================//
 // MOAIDataIOAction
 //================================================================//
-/**	@brief	Action for asynchronously loading and saving data.
+/**	@name	MOAIDataIOAction
+	@text	Action for asynchronously loading and saving data.
 */
 class MOAIDataIOAction :
 	public MOAIAction {

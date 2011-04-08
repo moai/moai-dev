@@ -7,7 +7,8 @@
 //================================================================//
 // MOAIViewport
 //================================================================//
-/**	@brief	Viewport object.
+/**	@name	MOAIViewport
+	@text	Viewport object.
 */
 class MOAIViewport :
 	public virtual USLuaObject,

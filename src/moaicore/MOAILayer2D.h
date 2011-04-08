@@ -14,7 +14,8 @@ class MOAIBox2DWorld;
 //================================================================//
 // MOAILayer2D
 //================================================================//
-/**	@brief	2D scene controls class.
+/**	@name	MOAILayer2D
+	@text	2D scene controls class.
 */
 class MOAILayer2D :
 	public virtual MOAIProp2D {

@@ -9,7 +9,8 @@
 //================================================================//
 // MOAILevelSensor
 //================================================================//
-/**	@brief	Gravity/acceleration sensor.
+/**	@name	MOAILevelSensor
+	@text	Gravity/acceleration sensor.
 */
 class MOAILevelSensor :
 	public MOAISensor {

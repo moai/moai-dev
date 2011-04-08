@@ -43,12 +43,14 @@ public:
 //================================================================//
 // MOAICpSpace
 //================================================================//
-/**	@brief	Chipmunk Space.
-	@flag BEGIN
-	@flag PRE_SOLVE
-	@flag POST_SOLVE
-	@flag SEPARATE
-	@flag ALL
+/**	@name	MOAICpSpace
+	@text	Chipmunk Space.
+	
+	@flag	BEGIN
+	@flag	PRE_SOLVE
+	@flag	POST_SOLVE
+	@flag	SEPARATE
+	@flag	ALL
 */
 class MOAICpSpace :
 	public MOAIAction {

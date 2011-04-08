@@ -13,7 +13,8 @@ class MOAIFmodSound;
 //================================================================//
 // MOAIFmodChannel
 //================================================================//
-/**	@brief	FMOD singleton. Unsupported, legacy.
+/**	@name	MOAIFmodChannel
+	@text	FMOD singleton. Unsupported, legacy.
 */
 class MOAIFmodChannel :
 	public virtual MOAINode {

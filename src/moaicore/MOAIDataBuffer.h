@@ -9,7 +9,8 @@ class MOAIDataIOAction;
 //================================================================//
 // MOAIDataBuffer
 //================================================================//
-/**	@brief	Buffer for loading and holding data. Data operations may be
+/**	@name	MOAIDataBuffer
+	@text	Buffer for loading and holding data. Data operations may be
 			performed without additional penalty of marshalling buffers
 			between Lua and C.
 */

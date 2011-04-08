@@ -7,7 +7,8 @@
 //================================================================//
 // MOAIGrid
 //================================================================//
-/**	@brief	Grid data object. Grid cells are indexed starting and (1,1).
+/**	@name	MOAIGrid
+	@text	Grid data object. Grid cells are indexed starting and (1,1).
 			Grid indices will wrap if out of range.
 
 	@flag	TILE_X_FLIP

@@ -9,7 +9,8 @@
 //================================================================//
 // MOAICompassSensor
 //================================================================//
-/**	@brief	Device heading sensor.
+/**	@name	MOAICompassSensor
+	@text	Device heading sensor.
 */
 class MOAICompassSensor :
 	public MOAISensor {

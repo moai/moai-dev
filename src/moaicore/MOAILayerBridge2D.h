@@ -11,7 +11,8 @@ class MOAILayer2D;
 //================================================================//
 // MOAILayerBridge2D
 //================================================================//
-/**	@brief	2D transform for connecting transforms across scenes. Useful for
+/**	@name	MOAILayerBridge2D
+	@text	2D transform for connecting transforms across scenes. Useful for
 			HUD overlay items and map pins.
 */
 class MOAILayerBridge2D :

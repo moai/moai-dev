@@ -9,9 +9,11 @@
 //================================================================//
 // MOAIAnimCurve
 //================================================================//
-/**	@brief	Piecewise animation function with one input (time) and one output (value).
-	@attr ATTR_TIME
-	@attr ATTR_VALUE
+/**	@name	MOAIAnimCurve
+	@text	Piecewise animation function with one input (time) and one output (value).
+	
+	@attr	ATTR_TIME
+	@attr	ATTR_VALUE
 */
 class MOAIAnimCurve :
 	public virtual MOAINode,

@@ -13,7 +13,8 @@ class MOAIBox2DArbiter;
 //================================================================//
 // MOAIBox2DFixture
 //================================================================//
-/**	@brief	Box2D fixture.
+/**	@name MOAIBox2DFixture
+	@text Box2D fixture.
 */
 class MOAIBox2DFixture :
 	public MOAIBox2DPrim {

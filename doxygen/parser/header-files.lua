@@ -1,4 +1,58 @@
 ----------------------------------------------------------------
+function dumpTable ( list, label )
+
+	-- create list before so we can check for tag text
+	local hasTagText = false
+	local listText = ""
+	
+	for i,v in ipairs ( list ) do
+		
+		listText = listText .. "\t\t<tr><td>" .. name .. "." .. v.tagName .. "</td>"
+		
+		if v.tagText ~= "" then
+			listText = listText .. "<td>" .. v.tagText .. "</td>"		
+			hasTagText = true
+		end
+		
+		listText = listText .. "</tr>\n"
+	end	
+
+	-- dump header
+	doxy = doxy .. "<td vertical-align=\"top\">\n"
+	doxy = doxy .. "\t\t<table border=\"1\" cellpadding=\"4\">\n"
+	doxy = doxy .. "\t\t<tr><td align=\"center\"><b>" .. label .. "</b></td>"
+	
+	if hasTagText then
+		doxy = doxy .. "<td align=\"center\"><b>Description</b></td>"
+	end
+	
+	doxy = doxy .. "</tr>\n"
+
+	-- dump list
+	doxy = doxy .. listText
+	
+	-- dump footer
+	doxy = doxy .. "\t\t</table>\n"
+	doxy = doxy .. "\t</td>"
+
+end
+
+----------------------------------------------------------------
+function parseTag ( v )
+
+	local func = string.gmatch ( v.text, "[^%s]+" )
+	v.tagName = func ()
+	v.tagText = ""
+	
+	local s = func ()
+	
+	while s do
+		v.tagText = v.tagText .. " " .. s
+		s = func ()
+	end
+end
+
+----------------------------------------------------------------
 function printf ( ... )
 
 	return io.stdout:write ( string.format ( ... ))
@@ -57,24 +111,23 @@ function handleDoxygenBlock ()
 	text = ""
 	constants = {}
 	attributes = {}
+	flags = {}
 	
 	for i,v in ipairs ( doxygenBlock ) do
 		
 		if v.tag == "@name" then
-			
 			name = v.text
-		
 		elseif v.tag == "@text" then
-			
 			text = v.text
-
 		elseif v.tag == "@attr" then
-			
-			table.insert ( attributes, v.text )
-			
+			parseTag ( v )
+			table.insert ( attributes, v )
 		elseif v.tag == "@const" then
-			
-			table.insert ( constants, v.text )
+			parseTag ( v )
+			table.insert ( constants, v )
+		elseif v.tag == "@flag" then
+			parseTag ( v )
+			table.insert ( flags, v )
 		end
 	end
 	
@@ -82,44 +135,29 @@ function handleDoxygenBlock ()
 
 	local hasConstants = #constants > 0
 	local hasAttributes = #attributes > 0
-	local hasBoth = hasConstants and hasAttributes
+	local hasFlags = #flags > 0
 	
-	if hasConstants or hasAttributes then
+	if hasConstants or hasAttributes or hasFlags then
 		
 		doxy = doxy .. "\t@htmlonly\n"
-
-		if hasBoth then
-			doxy = doxy .. "\t<table cellpadding=\"8\"><tr><td vertical-align=\"top\">\n"
-		end
+		doxy = doxy .. "\t<table cellpadding=\"8\"><tr>\n"
 		
 		-- output constants
 		if hasConstants then
-			doxy = doxy .. "\t\t<table border=\"1\" cellpadding=\"4\">\n"
-			doxy = doxy .. "\t\t<tr><td align=\"center\"><b>Constants</b></td></tr>\n"
-			for i,v in ipairs ( constants ) do
-				doxy = doxy .. "\t\t<tr><td>" .. name .. "." .. v .. "</td></tr>\n"
-			end
-			doxy = doxy .. "\t\t</table>\n"
-		end
-		
-		if hasBoth then
-			doxy = doxy .. "\t</td><td>\n"
+			dumpTable ( constants, "Constants" )
 		end
 
 		-- output attributes
 		if hasAttributes then
-			doxy = doxy .. "\t\t<table border=\"1\" cellpadding=\"4\">\n"
-			doxy = doxy .. "\t\t<tr><td align=\"center\"><b>Attributes</b></td></tr>\n"
-			for i,v in ipairs ( attributes ) do
-				doxy = doxy .. "\t\t<tr><td>" .. name .. "." .. v .. "</td></tr>\n"
-			end
-			doxy = doxy .. "\t\t</table>\n"
+			dumpTable ( attributes, "Attributes" )
 		end
 
-		if hasBoth then
-			doxy = doxy .. "\t</td></tr></table>\n"
+		-- output flags
+		if hasFlags then
+			dumpTable ( flags, "Flags" )
 		end
-
+		
+		doxy = doxy .. "</tr></table>\n"
 		doxy = doxy .. "\t@endhtmlonly\n"
 	end
 

@@ -7,7 +7,8 @@
 //================================================================//
 // MOAIVertexFormat
 //================================================================//
-/**	@brief	Vertex format class.
+/**	@name	MOAIVertexFormat
+	@text	Vertex format class.
 
 	@const	GL_BYTE
 	@const	GL_FIXED

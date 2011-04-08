@@ -12,7 +12,8 @@ struct cpConstraint;
 //================================================================//
 // MOAICpConstraint
 //================================================================//
-/**	@brief	Chipmunk Constraint.
+/**	@name	MOAICpConstraint
+	@text	Chipmunk Constraint.
 */
 class MOAICpConstraint :
 	public virtual USLuaObject,

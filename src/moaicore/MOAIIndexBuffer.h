@@ -7,7 +7,8 @@
 //================================================================//
 // MOAIIndexBuffer
 //================================================================//
-/**	@brief	Index buffer class. Unused at this time.
+/**	@name	MOAIIndexBuffer
+	@text	Index buffer class. Unused at this time.
 */
 class MOAIIndexBuffer :
 	public USLuaObject {

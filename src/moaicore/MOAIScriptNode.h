@@ -9,7 +9,8 @@
 //================================================================//
 // MOAIScriptNode
 //================================================================//
-/**	@brief	User scriptable dependency node. User may specify Lua
+/**	@name	MOAIScriptNode
+	@text	User scriptable dependency node. User may specify Lua
 			callback to handle node updating as well as custom floating
 			point attributes.
 */

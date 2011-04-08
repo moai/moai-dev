@@ -9,7 +9,8 @@
 //================================================================//
 // MOAILocationSensor
 //================================================================//
-/**	@brief	Location services sensor.
+/**	@name	MOAILocationSensor
+	@text	Location services sensor.
 */
 class MOAILocationSensor :
 	public MOAISensor {
