@@ -425,7 +425,7 @@ int MOAIBox2DBody::_resetMassData ( lua_State* L ) {
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DBody self
-	@opt	boolean active			Defaule value is 'false'
+	@opt	boolean active			Default value is false.
 	@out	nil
 */
 int MOAIBox2DBody::_setActive ( lua_State* L ) {
@@ -476,7 +476,7 @@ int MOAIBox2DBody::_setAngularVelocity ( lua_State* L ) {
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DBody self
-	@opt	boolean awake		Default value is 'true'
+	@opt	boolean awake		Default value is true.
 	@out	nil
 */
 int MOAIBox2DBody::_setAwake ( lua_State* L ) {
@@ -493,7 +493,7 @@ int MOAIBox2DBody::_setAwake ( lua_State* L ) {
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DBody self
-	@opt	boolean bullet		Default value is 'true'
+	@opt	boolean bullet		Default value is true.
 	@out	nil
 */
 int MOAIBox2DBody::_setBullet ( lua_State* L ) {
@@ -510,7 +510,7 @@ int MOAIBox2DBody::_setBullet ( lua_State* L ) {
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DBody self
-	@opt	boolean fixedRotation		Default value is 'true'
+	@opt	boolean fixedRotation		Default value is true.
 	@out	nil
 */
 int MOAIBox2DBody::_setFixedRotation ( lua_State* L ) {

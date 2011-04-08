@@ -43,13 +43,9 @@ $(SRC_PATH)/src/uslsext/USAttrMap.cpp \
 $(SRC_PATH)/src/uslsext/USAttrOp.cpp \
 $(SRC_PATH)/src/uslsext/USBlendMode.cpp \
 $(SRC_PATH)/src/uslsext/USBox.cpp \
-$(SRC_PATH)/src/uslsext/USCamera2D.cpp \
-$(SRC_PATH)/src/uslsext/USCamera3D.cpp \
-$(SRC_PATH)/src/uslsext/USCameraFitter.cpp \
 $(SRC_PATH)/src/uslsext/USCanvas.cpp \
 $(SRC_PATH)/src/uslsext/USColor.cpp \
 $(SRC_PATH)/src/uslsext/USCurve.cpp \
-$(SRC_PATH)/src/uslsext/USCurveSampler.cpp \
 $(SRC_PATH)/src/uslsext/USData.cpp \
 $(SRC_PATH)/src/uslsext/USDataIOTask.cpp \
 $(SRC_PATH)/src/uslsext/USDebugLines.cpp \
@@ -58,7 +54,6 @@ $(SRC_PATH)/src/uslsext/USDrawBuffer.cpp \
 $(SRC_PATH)/src/uslsext/USFileCache.cpp \
 $(SRC_PATH)/src/uslsext/USFont.cpp \
 $(SRC_PATH)/src/uslsext/USFontRipper.cpp \
-$(SRC_PATH)/src/uslsext/USFrustum.cpp \
 $(SRC_PATH)/src/uslsext/USGfxDevice.cpp \
 $(SRC_PATH)/src/uslsext/USGLLine.cpp \
 $(SRC_PATH)/src/uslsext/USGLQuad.cpp \
@@ -74,14 +69,12 @@ $(SRC_PATH)/src/uslsext/USMercator.cpp \
 $(SRC_PATH)/src/uslsext/USMutex.cpp \
 $(SRC_PATH)/src/uslsext/USMutex_posix.cpp \
 $(SRC_PATH)/src/uslsext/USMutex_win32.cpp \
+$(SRC_PATH)/src/uslsext/USParser.cpp \
 $(SRC_PATH)/src/uslsext/USPlane.cpp \
 $(SRC_PATH)/src/uslsext/USPolar.cpp \
 $(SRC_PATH)/src/uslsext/USPrettyPrint.cpp \
 $(SRC_PATH)/src/uslsext/USQuad.cpp \
 $(SRC_PATH)/src/uslsext/USQuadCoord.cpp \
-$(SRC_PATH)/src/uslsext/USSlipMapBrush.cpp \
-$(SRC_PATH)/src/uslsext/USSlipMapTile.cpp \
-$(SRC_PATH)/src/uslsext/USSlipMapTileSource.cpp \
 $(SRC_PATH)/src/uslsext/USSqlBinding.cpp \
 $(SRC_PATH)/src/uslsext/USSqlColumn.cpp \
 $(SRC_PATH)/src/uslsext/USSqlConnection.cpp \
@@ -89,6 +82,7 @@ $(SRC_PATH)/src/uslsext/USSqlRecord.cpp \
 $(SRC_PATH)/src/uslsext/USSqlStatement.cpp \
 $(SRC_PATH)/src/uslsext/USSqlValue.cpp \
 $(SRC_PATH)/src/uslsext/USSurface2D.cpp \
+$(SRC_PATH)/src/uslsext/USSyntaxNode.cpp \
 $(SRC_PATH)/src/uslsext/USTask.cpp \
 $(SRC_PATH)/src/uslsext/USTaskThread.cpp \
 $(SRC_PATH)/src/uslsext/USTexture.cpp \

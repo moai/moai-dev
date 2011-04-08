@@ -9,15 +9,16 @@ class MOAIVertexFormat;
 //================================================================//
 // MOAIVertexBuffer
 //================================================================//
-/**	@brief	Vertex buffer class.
+/**	@name	MOAIVertexBuffer
+	@text	Vertex buffer class.
 
-	@const GL_POINTS
-	@const GL_LINES
-	@const GL_TRIANGLES
-	@const GL_LINE_LOOP
-	@const GL_LINE_STRIP
-	@const GL_TRIANGLE_FAN
-	@const GL_TRIANGLE_STRIP
+	@const	GL_POINTS
+	@const	GL_LINES
+	@const	GL_TRIANGLES
+	@const	GL_LINE_LOOP
+	@const	GL_LINE_STRIP
+	@const	GL_TRIANGLE_FAN
+	@const	GL_TRIANGLE_STRIP
 */
 class MOAIVertexBuffer :
 	public USLuaObject {

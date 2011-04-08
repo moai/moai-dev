@@ -49,7 +49,8 @@ private:
 //================================================================//
 // MOAIParticleSystem
 //================================================================//
-/**	@brief	Particle system.
+/**	@name	MOAIParticleSystem
+	@text	Particle system.
 */
 class MOAIParticleSystem :
 	public MOAIProp2D,

@@ -12,7 +12,8 @@ class MOAILayer2D;
 //================================================================//
 // MOAIColor
 //================================================================//
-/**	@brief	Color vector with animation helper methods.
+/**	@name	MOAIColor
+	@text	Color vector with animation helper methods.
 */
 class MOAIColor :
 	public virtual MOAIShader,

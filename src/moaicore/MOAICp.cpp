@@ -13,9 +13,11 @@ SUPPRESS_EMPTY_FILE_WARNING
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	getBiasCoefficient
-	@text	Returns the current bias coefficient.
-	@out	number bias	
+/**	@name getBiasCoefficient
+	@param MOAICp self
+	@text Returns the current bias coefficient.
+
+	@out number	bias	The bias coefficient.
 */
 int MOAICp::_getBiasCoefficient ( lua_State* L ) {
 	

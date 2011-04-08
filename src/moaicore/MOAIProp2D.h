@@ -17,7 +17,9 @@ class MOAISurfaceSampler2D;
 //================================================================//
 // MOAIProp2D
 //================================================================//
-/**	@brief	Base class for props.
+/**	@name	MOAIProp2D
+	@text	Base class for props.
+	
 	@attr	ATTR_INDEX
 	
 	@const	FRAME_FROM_SOURCE

@@ -1,5 +1,14 @@
 ;_______________________________________________________________________________________
 
+!include LogicLib.nsh
+!include FileFunc.nsh
+!insertmacro Locate
+ 
+Var /GLOBAL switch_overwrite
+!include MoveFileFolder.nsh
+
+;_______________________________________________________________________________________
+
 SetCompressor /FINAL /SOLID lzma
 SetCompressorDictSize 64
 
@@ -27,7 +36,7 @@ SetCompressorDictSize 64
 !include AdvUninstLog.nsh
 !include RegisterExtension.nsh
 !include AddToPath.nsh
-!include LogicLib.nsh
+!include nsDialogs.nsh
 
 Name "${DISPLAY_NAME}"
 OutFile "${INSTALLER_NAME}"
@@ -47,7 +56,9 @@ InstallDirRegKey ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "InstallDir"
 
 !define MUI_FINISHPAGE_RUN
 !define MUI_FINISHPAGE_RUN_TEXT "Run Hello Moai!"
-!define MUI_FINISHPAGE_RUN_FUNCTION launchHelloMoai
+!define MUI_FINISHPAGE_RUN_FUNCTION launchHelloMoai 
+!define MUI_FINISHPAGE_SHOWREADME "www.cnn.com" ;"$INSTDIR\AboutMoai.pdf"
+!define MUI_FINISHPAGE_SHOWREADME_TEXT "View AboutMoai.pdf"
 !insertmacro MUI_PAGE_FINISH
 
 !insertmacro MUI_UNPAGE_WELCOME
@@ -74,11 +85,19 @@ InstallDirRegKey ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "InstallDir"
 ;_______________________________________________________________________________________
 Function launchHelloMoai
 
-	SetOutPath "$INSTDIR\samples\hello-moai"
-	Exec "$INSTDIR\samples\hello-moai\run.bat"
+	Call GetMyDocs
+	SetOutPath "$0\${PROGRAM_FOLDER}\samples\hello-moai"
+	Exec "$0\${PROGRAM_FOLDER}\samples\hello-moai\run.bat"
 FunctionEnd
 
 ;_______________________________________________________________________________________
+Function GetMyDocs
+	ReadRegStr $0 HKCU "SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders" Personal
+FunctionEnd
+
+Function un.GetMyDocs
+	ReadRegStr $0 HKCU "SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders" Personal
+FunctionEnd
 
 Section "Moai"
 
@@ -88,16 +107,37 @@ Section "Moai"
 	!insertmacro UNINSTALL.LOG_OPEN_INSTALL
 	File /r /x ".gitignore" /x "*.ncb" /x "*.suo" /x "*.user" "release\*.*"
 	!insertmacro UNINSTALL.LOG_CLOSE_INSTALL
+
+	; move samples to my documents path
+	StrCpy $switch_overwrite 0
+	Call GetMyDocs
+	!insertmacro MoveFolder "$INSTDIR\samples\" "$0\${PROGRAM_FOLDER}\samples\" "*.*"	
+	
+	; copy import text files too
+	StrCpy $3 "$INSTDIR\version.txt" ;Path of copy file from
+	StrCpy $4 "$0\${PROGRAM_FOLDER}\version.txt"   ;Path of copy file to
+	StrCpy $5 0 ; only 0 or 1, set 0 to overwrite file if it already exists
+	System::Call 'kernel32::CopyFile(t r3, t r4, b r5) ?e'
+
+	StrCpy $3 "$INSTDIR\legal.txt" ;Path of copy file from
+	StrCpy $4 "$0\${PROGRAM_FOLDER}\legal.txt"   ;Path of copy file to
+	StrCpy $5 0 ; only 0 or 1, set 0 to overwrite file if it already exists
+	System::Call 'kernel32::CopyFile(t r3, t r4, b r5) ?e'
+
+	StrCpy $3 "$INSTDIR\license.txt" ;Path of copy file from
+	StrCpy $4 "$0\${PROGRAM_FOLDER}\license.txt"   ;Path of copy file to
+	StrCpy $5 0 ; only 0 or 1, set 0 to overwrite file if it already exists
+	System::Call 'kernel32::CopyFile(t r3, t r4, b r5) ?e'
 	
 	; start menu shortcuts
 	SetShellVarContext all
 	CreateDirectory "$SMPROGRAMS\${DISPLAY_NAME}"
-	CreateShortCut "$SMPROGRAMS\${DISPLAY_NAME}\Samples.lnk" "$INSTDIR\samples\lua"
+	CreateShortCut "$SMPROGRAMS\${DISPLAY_NAME}\Samples.lnk" "$0\${PROGRAM_FOLDER}\samples\lua"
 	CreateShortCut "$SMPROGRAMS\${DISPLAY_NAME}\Reference.lnk" "$INSTDIR\docs\html\index.html"
 	CreateShortCut "$SMPROGRAMS\${DISPLAY_NAME}\Uninstall.lnk" "${UNINST_EXE}"
 
 	; desktop shortcut
-	CreateShortCut "$DESKTOP\Moai Samples.lnk" "$INSTDIR\samples\lua"
+	CreateShortCut "$DESKTOP\Moai Samples.lnk" "$0\${PROGRAM_FOLDER}\samples\lua"
 	
 	; system add/remove programs setup
 	WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "InstallDir" "$INSTDIR"
@@ -114,9 +154,10 @@ Section "Moai"
 	System::Call 'Kernel32::SetEnvironmentVariableA(t, t) i("MOAI_BIN", R0).r0'
 	
 	; add MOAI_CONFIG variable
-	WriteRegExpandStr ${env_hklm} MOAI_CONFIG "$INSTDIR\samples\config\"
+	Call GetMyDocs
+	WriteRegExpandStr ${env_hklm} MOAI_CONFIG "$0\${PROGRAM_FOLDER}\samples\config\"
 	SendMessage ${HWND_BROADCAST} ${WM_WININICHANGE} 0 "STR:Environment" /TIMEOUT=5000
-	StrCpy $R0 "$INSTDIR\samples\config\"
+	StrCpy $R0 "$0\${PROGRAM_FOLDER}\samples\config\"
 	System::Call 'Kernel32::SetEnvironmentVariableA(t, t) i("MOAI_CONFIG", R0).r0'
 	
 SectionEnd
@@ -185,6 +226,9 @@ Section UnInstall
 	!insertmacro UNINSTALL.LOG_BEGIN_UNINSTALL
 	!insertmacro UNINSTALL.LOG_UNINSTALL "$INSTDIR"
 	!insertmacro UNINSTALL.LOG_END_UNINSTALL
+
+	Call un.GetMyDocs
+	RMDir /r "$0\${PROGRAM_FOLDER}"
 	
 	SetShellVarContext all
 	Delete "$SMPROGRAMS\${DISPLAY_NAME}\Samples.lnk"

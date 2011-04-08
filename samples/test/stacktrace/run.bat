@@ -10,8 +10,8 @@
 if not exist "%MOAI_BIN%\moai.exe" (
 	echo.
 	echo --------------------------------------------------------------------------------
-	echo ERROR: The MOAI_BIN environment variable is pointing to an invalid path.
-	echo Please point it at a folder containing moai.exe.
+	echo ERROR: The MOAI_BIN environment variable either doesn't exist or it's pointing
+	echo to an invalid path. Please point it at a folder containing moai.exe.
 	echo --------------------------------------------------------------------------------
 	echo.
 	goto end
@@ -20,8 +20,8 @@ if not exist "%MOAI_BIN%\moai.exe" (
 if not exist "%MOAI_CONFIG%" (
 	echo.
 	echo -------------------------------------------------------------------------------
-	echo WARNING: The MOAI_CONFIG environment variable is pointing to an invalid path.
-	echo You should point it at a folder containing config.lua.
+	echo WARNING: The MOAI_CONFIG environment variable either doesn't exist or it's 
+	echo pointing to an invalid path. Please point it at a folder containing config.lua.
 	echo -------------------------------------------------------------------------------
 	echo.
 )

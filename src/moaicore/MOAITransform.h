@@ -11,7 +11,8 @@
 //================================================================//
 // MOAITransform
 //================================================================//
-/**	@brief	2D transformation hierarchy node.
+/**	@name	MOAITransform
+	@text	2D transformation hierarchy node.
 
 	@attr	ATTR_X_LOC
 	@attr	ATTR_Y_LOC

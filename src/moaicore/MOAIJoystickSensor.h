@@ -9,7 +9,8 @@
 //================================================================//
 // MOAIJoystickSensor
 //================================================================//
-/**	@brief	Analog and digital joystick sensor.
+/**	@name	MOAIJoystickSensor
+	@text	Analog and digital joystick sensor.
 */
 class MOAIJoystickSensor :
 	public MOAISensor {

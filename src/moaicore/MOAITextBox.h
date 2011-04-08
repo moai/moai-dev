@@ -14,7 +14,8 @@ class MOAIFont;
 //================================================================//
 // MOAITextBox
 //================================================================//
-/**	@brief	Text box class.
+/**	@name	MOAITextBox
+	@text	Text box class.
 */
 class MOAITextBox :
 	public MOAIProp2D,

@@ -48,7 +48,7 @@ set revTagPre="(revision"
 set revTagSuf="%revision%)"
 
 if "%tag%" == "" (
-	set displayName=Moai SDK %version%
+	set displayName=Moai SDK %version% %revTagPre% %revTagSuf%
 	REM set versionPath=v%version%.%revision%
 ) else (
 	set displayName=Moai SDK %version% %tag% %revTagPre% %revTagSuf%
@@ -83,3 +83,4 @@ makensis.exe "moai-temp.nsi"
 del /q moai-temp.nsi
 
 endlocal
+cd nsis

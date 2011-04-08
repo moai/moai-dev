@@ -9,7 +9,8 @@
 //================================================================//
 // MOAIButtonSensor
 //================================================================//
-/**	@brief	Button sensor.
+/**	@name	MOAIButtonSensor
+	@text	Button sensor.
 */
 class MOAIButtonSensor :
 	public MOAISensor {

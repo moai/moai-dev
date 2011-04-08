@@ -12,7 +12,8 @@ class MOAIParticleSystem;
 //================================================================//
 // MOAIParticleEmitter
 //================================================================//
-/**	@brief	Particle emitter.
+/**	@name	MOAIParticleEmitter
+	@text	Particle emitter.
 */
 class MOAIParticleEmitter :
 	public MOAITransform,

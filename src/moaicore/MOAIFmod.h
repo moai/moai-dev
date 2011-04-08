@@ -14,7 +14,8 @@ namespace FMOD {
 //================================================================//
 // MOAIFmod
 //================================================================//
-/**	@brief	FMOD singleton. Unsupported, legacy.
+/**	@name	MOAIFmod
+	@text	FMOD singleton. Unsupported, legacy.
 */
 class MOAIFmod :
 	public USGlobalClass < MOAIFmod, USLuaObject > {

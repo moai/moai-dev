@@ -14,10 +14,12 @@ class MOAICpShape;
 //================================================================//
 // MOAICpBody
 //================================================================//
-/**	@brief	Chipmunk Body.
-	@const NONE,
-	@const REMOVE_BODY
-	@const REMOVE_BODY_AND_SHAPES,
+/**	@name	MOAICpBody
+	@text	Chipmunk Body.
+	
+	@const	NONE
+	@const	REMOVE_BODY
+	@const	REMOVE_BODY_AND_SHAPES
 */
 class MOAICpBody :
 	public MOAITransformBase,

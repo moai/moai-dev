@@ -50,7 +50,7 @@ int MOAIAnimCurve::_reserveKeys ( lua_State* L ) {
 	@in		number time				Location of the key frame along the curve.
 	@in		number value			Value of the curve at time.
 	@in		number mode				The ease mode. One of MOAIEaseType.EASE_IN, MOAIEaseType.EASE_OUT, MOAIEaseType.FLAT MOAIEaseType.LINEAR,
-									MOAIEaseType.SMOOTH, MOAIEaseType.SOFT_EASE_IN, MOAIEaseType.SOFT_EASE_OUT, MOAIEaseType.SOFT_SMOOTH	
+									MOAIEaseType.SMOOTH, MOAIEaseType.SOFT_EASE_IN, MOAIEaseType.SOFT_EASE_OUT, MOAIEaseType.SOFT_SMOOTH. Defaults to MOAIEaseType.SMOOTH.
 	@in		number weight			Blends between chosen ease type (of any) and a linear transition.
 	@out	nil
 */

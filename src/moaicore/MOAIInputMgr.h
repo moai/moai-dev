@@ -10,7 +10,8 @@ class MOAISensor;
 //================================================================//
 // MOAIInputMgr
 //================================================================//
-/**	@brief	Input device class. Has no public methods.
+/**	@name	MOAIInputMgr
+	@text	Input device class. Has no public methods.
 */
 class MOAIInputMgr :
 	public USGlobalClass < MOAIInputMgr, USLuaObject > {

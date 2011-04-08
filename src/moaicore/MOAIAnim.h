@@ -23,7 +23,8 @@ public:
 //================================================================//
 // MOAIAnim
 //================================================================//
-/**	@brief	Bind anim curves to nodes and provides timer controls for anim playback.
+/**	@name MOAIAnim
+	@text Bind anim curves to nodes and provides timer controls for anim playback.
 */
 class MOAIAnim :
 	public virtual MOAITimer {

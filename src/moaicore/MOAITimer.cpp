@@ -66,13 +66,13 @@ int MOAITimer::_setMode ( lua_State* L ) {
 /**	@name	setSpan
 	@text	Sets the playback mode of the timer.
 
-	@overload	Span will be 0 to endTime
+	@overload	Span will be 0 to endTime.
 
 		@in		MOAITimer self
 		@in		number endTime
 		@out	nil
 	
-	@overload	Span will be startTime to endTime
+	@overload	Span will be startTime to endTime.
 	
 		@in		MOAITimer self
 		@in		number startTime

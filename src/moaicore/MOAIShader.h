@@ -12,7 +12,8 @@ class MOAILayer2D;
 //================================================================//
 // MOAIShader
 //================================================================//
-/**	@brief	Base class for fixed function (OpenGL ES 1.1) and programmable (OpenGL ES 2.0) shaders.
+/**	@name	MOAIShader
+	@text	Base class for fixed function (OpenGL ES 1.1) and programmable (OpenGL ES 2.0) shaders.
 			No public methods.
 */
 class MOAIShader :

@@ -12,7 +12,8 @@ class MOAIDataBuffer;
 //================================================================//
 // MOAIFmodSound
 //================================================================//
-/**	@brief	FMOD singleton. Unsupported, legacy.
+/**	@name	MOAIFmodSound
+	@text	FMOD singleton. Unsupported, legacy.
 */
 class MOAIFmodSound :
 	public virtual USLuaObject {

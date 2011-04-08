@@ -1,9 +1,9 @@
 pushd %~dp0
-del /q input.cpp
-del /q output.cpp
-copy /y %1 input.cpp 
-bin\moai main.lua
-copy /y output.cpp %1
-del /q input.cpp
-del /q output.cpp
+del /q input.%3
+del /q output.%3
+copy /y %1 input.%3 
+bin\moai %2
+copy /y output.%3 %1
+del /q input.%3
+del /q output.%3
 popd

@@ -37,7 +37,8 @@ public:
 //================================================================//
 // MOAINode
 //================================================================//
-/**	@brief	Base for all attribute bearing Moai objects and dependency
+/**	@name	MOAINode
+	@text	Base for all attribute bearing Moai objects and dependency
 			graph nodes.
 */
 class MOAINode :

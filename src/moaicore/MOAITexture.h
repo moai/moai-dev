@@ -11,7 +11,8 @@ class MOAIDataBuffer;
 //================================================================//
 // MOAITexture
 //================================================================//
-/**	@brief	Texture class.
+/**	@name	MOAITexture
+	@text	Texture class.
 
 	@const	FILTER_POINT
 	@const	FILTER_BILERP

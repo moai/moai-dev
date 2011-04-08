@@ -59,7 +59,8 @@
 //================================================================//
 // MOAILogMgr
 //================================================================//
-/**	@brief	Singleton for managing debug log messages and log level.
+/**	@name	MOAILogMgr
+	@text	Singleton for managing debug log messages and log level.
 
 	@const LOG_NONE
 	@const LOG_ERROR

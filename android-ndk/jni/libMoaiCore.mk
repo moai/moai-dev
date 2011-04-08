@@ -56,7 +56,6 @@ $(SRC_PATH)/src/moaicore/MOAIBox2DFixture.cpp \
 $(SRC_PATH)/src/moaicore/MOAIBox2DJoint.cpp \
 $(SRC_PATH)/src/moaicore/MOAIBox2DWorld.cpp \
 $(SRC_PATH)/src/moaicore/MOAIButtonSensor.cpp \
-$(SRC_PATH)/src/moaicore/MOAICheckpoint.cpp \
 $(SRC_PATH)/src/moaicore/MOAIColor.cpp \
 $(SRC_PATH)/src/moaicore/MOAICompassSensor.cpp \
 $(SRC_PATH)/src/moaicore/moaicore.cpp \
@@ -70,6 +69,7 @@ $(SRC_PATH)/src/moaicore/MOAICpSpace.cpp \
 $(SRC_PATH)/src/moaicore/MOAIDataBuffer.cpp \
 $(SRC_PATH)/src/moaicore/MOAIDataIOAction.cpp \
 $(SRC_PATH)/src/moaicore/MOAIDeck.cpp \
+$(SRC_PATH)/src/moaicore/MOAIDeck2D.cpp \
 $(SRC_PATH)/src/moaicore/MOAIDebugLines.cpp \
 $(SRC_PATH)/src/moaicore/MOAIEaseDriver.cpp \
 $(SRC_PATH)/src/moaicore/MOAIEaseType.cpp \
@@ -93,11 +93,11 @@ $(SRC_PATH)/src/moaicore/MOAILayerBridge2D.cpp \
 $(SRC_PATH)/src/moaicore/MOAILayoutFrame.cpp \
 $(SRC_PATH)/src/moaicore/MOAILevelSensor.cpp \
 $(SRC_PATH)/src/moaicore/MOAILocationSensor.cpp \
-$(SRC_PATH)/src/moaicore/MOAILogMessages.cpp \
 $(SRC_PATH)/src/moaicore/MOAILogMgr.cpp \
 $(SRC_PATH)/src/moaicore/MOAIMesh.cpp \
 $(SRC_PATH)/src/moaicore/MOAINode.cpp \
 $(SRC_PATH)/src/moaicore/MOAINodeMgr.cpp \
+$(SRC_PATH)/src/moaicore/MOAIParser.cpp \
 $(SRC_PATH)/src/moaicore/MOAIParticleEmitter.cpp \
 $(SRC_PATH)/src/moaicore/MOAIParticleEngine.cpp \
 $(SRC_PATH)/src/moaicore/MOAIParticleForce.cpp \

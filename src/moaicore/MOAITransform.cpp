@@ -163,7 +163,7 @@ int MOAITransform::_modelToWorld ( lua_State* L ) {
 	@in		number ySclDelta	Delta to be added to y scale.
 	@in		number length		Length of animation in seconds.
 	@opt	number mode			The ease mode. One of MOAIEaseType.EASE_IN, MOAIEaseType.EASE_OUT, MOAIEaseType.FLAT MOAIEaseType.LINEAR,
-								MOAIEaseType.SMOOTH, MOAIEaseType.SOFT_EASE_IN, MOAIEaseType.SOFT_EASE_OUT, MOAIEaseType.SOFT_SMOOTH
+								MOAIEaseType.SMOOTH, MOAIEaseType.SOFT_EASE_IN, MOAIEaseType.SOFT_EASE_OUT, MOAIEaseType.SOFT_SMOOTH. Defaults to MOAIEaseType.SMOOTH.
 
 	@out	MOAIEaseDriver easeDriver
 */
@@ -204,7 +204,7 @@ int MOAITransform::_move ( lua_State* L ) {
 	@in		number yDelta		Delta to be added to y.
 	@in		number length		Length of animation in seconds.
 	@opt	number mode			The ease mode. One of MOAIEaseType.EASE_IN, MOAIEaseType.EASE_OUT, MOAIEaseType.FLAT MOAIEaseType.LINEAR,
-								MOAIEaseType.SMOOTH, MOAIEaseType.SOFT_EASE_IN, MOAIEaseType.SOFT_EASE_OUT, MOAIEaseType.SOFT_SMOOTH
+								MOAIEaseType.SMOOTH, MOAIEaseType.SOFT_EASE_IN, MOAIEaseType.SOFT_EASE_OUT, MOAIEaseType.SOFT_SMOOTH. Defaults to MOAIEaseType.SMOOTH.
 
 	@out	MOAIEaseDriver easeDriver
 */
@@ -238,7 +238,7 @@ int MOAITransform::_moveLoc ( lua_State* L ) {
 	@in		number rDelta		Delta to be added to r (in degrees).
 	@in		number length		Length of animation in seconds.
 	@opt	number mode			The ease mode. One of MOAIEaseType.EASE_IN, MOAIEaseType.EASE_OUT, MOAIEaseType.FLAT MOAIEaseType.LINEAR,
-								MOAIEaseType.SMOOTH, MOAIEaseType.SOFT_EASE_IN, MOAIEaseType.SOFT_EASE_OUT, MOAIEaseType.SOFT_SMOOTH
+								MOAIEaseType.SMOOTH, MOAIEaseType.SOFT_EASE_IN, MOAIEaseType.SOFT_EASE_OUT, MOAIEaseType.SOFT_SMOOTH. Defaults to MOAIEaseType.SMOOTH.
 
 	@out	MOAIEaseDriver easeDriver
 */
@@ -271,7 +271,7 @@ int MOAITransform::_moveRot ( lua_State* L ) {
 	@in		number ySclDelta	Delta to be added to y scale.
 	@in		number length		Length of animation in seconds.
 	@opt	number mode			The ease mode. One of MOAIEaseType.EASE_IN, MOAIEaseType.EASE_OUT, MOAIEaseType.FLAT MOAIEaseType.LINEAR,
-								MOAIEaseType.SMOOTH, MOAIEaseType.SOFT_EASE_IN, MOAIEaseType.SOFT_EASE_OUT, MOAIEaseType.SOFT_SMOOTH
+								MOAIEaseType.SMOOTH, MOAIEaseType.SOFT_EASE_IN, MOAIEaseType.SOFT_EASE_OUT, MOAIEaseType.SOFT_SMOOTH. Defaults to MOAIEaseType.SMOOTH.
 
 	@out	MOAIEaseDriver easeDriver
 */
@@ -310,7 +310,7 @@ int MOAITransform::_moveScl ( lua_State* L ) {
 	@in		number ySclGoal		Desired resulting value for y scale.
 	@in		number length		Length of animation in seconds.
 	@opt	number mode			The ease mode. One of MOAIEaseType.EASE_IN, MOAIEaseType.EASE_OUT, MOAIEaseType.FLAT MOAIEaseType.LINEAR,
-								MOAIEaseType.SMOOTH, MOAIEaseType.SOFT_EASE_IN, MOAIEaseType.SOFT_EASE_OUT, MOAIEaseType.SOFT_SMOOTH
+								MOAIEaseType.SMOOTH, MOAIEaseType.SOFT_EASE_IN, MOAIEaseType.SOFT_EASE_OUT, MOAIEaseType.SOFT_SMOOTH. Defaults to MOAIEaseType.SMOOTH.
 
 	@out	MOAIEaseDriver easeDriver
 */
@@ -352,7 +352,7 @@ int MOAITransform::_seek ( lua_State* L ) {
 	@in		number yGoal		Desired resulting value for y.
 	@in		number length		Length of animation in seconds.
 	@opt	number mode			The ease mode. One of MOAIEaseType.EASE_IN, MOAIEaseType.EASE_OUT, MOAIEaseType.FLAT MOAIEaseType.LINEAR,
-								MOAIEaseType.SMOOTH, MOAIEaseType.SOFT_EASE_IN, MOAIEaseType.SOFT_EASE_OUT, MOAIEaseType.SOFT_SMOOTH
+								MOAIEaseType.SMOOTH, MOAIEaseType.SOFT_EASE_IN, MOAIEaseType.SOFT_EASE_OUT, MOAIEaseType.SOFT_SMOOTH. Defaults to MOAIEaseType.SMOOTH.
 
 	@out	MOAIEaseDriver easeDriver
 */
@@ -387,7 +387,7 @@ int MOAITransform::_seekLoc ( lua_State* L ) {
 	@in		number rGoal		Desired resulting value for r (in degrees).
 	@in		number length		Length of animation in seconds.
 	@opt	number mode			The ease mode. One of MOAIEaseType.EASE_IN, MOAIEaseType.EASE_OUT, MOAIEaseType.FLAT MOAIEaseType.LINEAR,
-								MOAIEaseType.SMOOTH, MOAIEaseType.SOFT_EASE_IN, MOAIEaseType.SOFT_EASE_OUT, MOAIEaseType.SOFT_SMOOTH
+								MOAIEaseType.SMOOTH, MOAIEaseType.SOFT_EASE_IN, MOAIEaseType.SOFT_EASE_OUT, MOAIEaseType.SOFT_SMOOTH. Defaults to MOAIEaseType.SMOOTH.
 
 	@out	MOAIEaseDriver easeDriver
 */
@@ -421,7 +421,7 @@ int MOAITransform::_seekRot ( lua_State* L ) {
 	@in		number ySclGoal		Desired resulting value for y scale.
 	@in		number length		Length of animation in seconds.
 	@opt	number mode			The ease mode. One of MOAIEaseType.EASE_IN, MOAIEaseType.EASE_OUT, MOAIEaseType.FLAT MOAIEaseType.LINEAR,
-								MOAIEaseType.SMOOTH, MOAIEaseType.SOFT_EASE_IN, MOAIEaseType.SOFT_EASE_OUT, MOAIEaseType.SOFT_SMOOTH
+								MOAIEaseType.SMOOTH, MOAIEaseType.SOFT_EASE_IN, MOAIEaseType.SOFT_EASE_OUT, MOAIEaseType.SOFT_SMOOTH. Defaults to MOAIEaseType.SMOOTH.
 
 	@out	MOAIEaseDriver easeDriver
 */

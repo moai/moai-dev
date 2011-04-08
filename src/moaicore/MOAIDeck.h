@@ -11,7 +11,8 @@ class MOAISurfaceSampler2D;
 //================================================================//
 // MOAIDeck
 //================================================================//
-/**	@brief	Base class for decks.
+/**	@name	MOAIDeck
+	@text	Base class for decks.
 */
 class MOAIDeck :
 	public virtual USLuaObject {

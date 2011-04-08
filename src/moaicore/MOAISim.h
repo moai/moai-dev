@@ -11,7 +11,8 @@ class MOAIProp2D;
 //================================================================//
 // MOAISim
 //================================================================//
-/**	@brief	Sim timing and settings class.
+/**	@name	MOAISim
+	@text	Sim timing and settings class.
 */
 class MOAISim :
 	public USGlobalClass < MOAISim, USLuaObject > {

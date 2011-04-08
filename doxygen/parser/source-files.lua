@@ -1,9 +1,11 @@
-----------------------------------------------------------------
-function dumpDef ( def )
+function dumpDef ( def, i )
+
+	if i == 1 then
+		dumpFunctionText ( def )
+	end
 
 	dumpFunctionDef ( def )
-	dumpFunctionText ( def )
-	
+
 	for i,v in ipairs ( def.inParams ) do
 		dumpParam ( v )
 	end
@@ -13,6 +15,12 @@ function dumpDef ( def )
 	end
 
 	dumpReturn ( def )
+	
+	if foundOverload then
+		if def.overloadText then
+			doxy = doxy .. "@note " .. def.overloadText .. "\n\n"
+		end
+	end
 end
 
 ----------------------------------------------------------------
@@ -26,7 +34,11 @@ function dumpFunctionDef ( def )
 
 	if #def.optParams > 0 then
 		
-		argList = argList .. " [, "
+		if #def.inParams == 0 then
+			argList = argList .. " [ " 
+		else
+			argList = argList .. " [, "
+		end
 		
 		for i,v in ipairs ( def.optParams ) do
 			if i ~= 1 then argList = argList .. ", " end
@@ -36,7 +48,14 @@ function dumpFunctionDef ( def )
 		argList = argList .. " ]"
 	end
 	
-	doxy = doxy .. "<tt>function " .. def.funcName .. " ( " .. argList .. " )</tt>\n\n"
+	local argText = " ( " .. argList .. " )"
+	
+	if argList == "" then
+		argText = " ()"
+	end
+	
+	doxy = doxy .. "\n\n<hr>\t"
+	doxy = doxy .. "<tt>function " .. def.funcName .. argText .. "</tt>\n\n"
 end
 
 ----------------------------------------------------------------
@@ -48,13 +67,13 @@ end
 ----------------------------------------------------------------
 function dumpOptParam ( v )
 
-	doxy = doxy .. "\t@param " .. v.paramName .. " (" .. v.paramType .. ") <em>Optional.</em> " .. v.paramText .. "\n"
+	doxy = doxy .. "\t@param " .. v.paramName .. " ( " .. v.paramType .. " ) <em>Optional.</em> " .. v.paramText .. "\n"
 end
 
 ----------------------------------------------------------------
 function dumpParam ( v )
 
-	doxy = doxy .. "\t@param " .. v.paramName .. " (" .. v.paramType .. ") " .. v.paramText .. "\n"
+	doxy = doxy .. "\t@param " .. v.paramName .. " ( " .. v.paramType .. " ) " .. v.paramText .. "\n"
 end
 
 ----------------------------------------------------------------
@@ -63,7 +82,12 @@ function dumpReturn ( def )
 	local returnList = ""
 	for i,v in ipairs ( def.outParams ) do
 		if i ~= 1 then returnList = returnList .. ", " end
-		returnList = returnList .. v.paramName .. " (" .. v.paramType .. ")"
+		
+		if v.paramName == "" then
+			returnList = returnList .. v.paramType
+		else
+			returnList = returnList .. v.paramName .. " ( " .. v.paramType .. " )"
+		end
 	end
 	
 	doxy = doxy .. "\t@return " .. returnList .. "\n"
@@ -194,9 +218,12 @@ function handleDoxygenBlock ()
 		elseif v.tag == "@overload" then
 			
 			if foundOverload then
+				local oldFuncName = curDef.funcName
 				pushDef ()
+				curDef.funcName = oldFuncName
 			end
-			
+
+			curDef.overloadText = v.text			
 			foundOverload = true
 		end
 	end
@@ -204,14 +231,7 @@ function handleDoxygenBlock ()
 	doxy = "\t@brief"
 
 	for i = 1, #defs do
-		
-		if i == 1 then
-			doxy = doxy .. "\n\n\t"
-		else
-			doxy = doxy .. "\n\n<hr>\t"
-		end
-		
-		dumpDef ( defs [ i ])
+		dumpDef ( defs [ i ], i )
 	end
 	
 	-- output formatted doxygen stuff to file

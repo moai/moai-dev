@@ -10,12 +10,14 @@
 //================================================================//
 // MOAIBox2DArbiter
 //================================================================//
-/**	@brief	Box2D Arbiter.
-	@flag BEGIN
-	@flag END
-	@flag POST_SOLVE
-	@flag PRE_SOLVE
-	@flag ALL
+/**	@name	MOAIBox2DArbiter
+	@text	Box2D Arbiter.
+	
+	@flag	BEGIN
+	@flag	END
+	@flag	POST_SOLVE
+	@flag	PRE_SOLVE
+	@flag	ALL
 */
 class MOAIBox2DArbiter :
 	public virtual USLuaObject,

@@ -7,3 +7,4 @@ rd /s /q release\samples\src
 rd /s /q release\include
 
 del moai-sdk-installer.exe
+del release\version.txt
