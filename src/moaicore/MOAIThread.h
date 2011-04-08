@@ -9,7 +9,8 @@
 //================================================================//
 // MOAIThread
 //================================================================//
-/**	@brief	Binds a Lua coroutine to a MOAIAction.
+/**	@name MOAIThread
+	@text Binds a Lua coroutine to a MOAIAction.
 */
 class MOAIThread :
 	public MOAIAction {

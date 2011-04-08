@@ -10,7 +10,8 @@
 //================================================================//
 // MOAITimer
 //================================================================//
-/**	@brief	Timer class for driving curves and animations.
+/**	@name	MOAITimer
+	@text	Timer class for driving curves and animations.
 
 	@attr	ATTR_TIME
 	

@@ -15,6 +15,12 @@ function dumpDef ( def, i )
 	end
 
 	dumpReturn ( def )
+	
+	if foundOverload then
+		if def.overloadText then
+			doxy = doxy .. "@note " .. def.overloadText .. "\n\n"
+		end
+	end
 end
 
 ----------------------------------------------------------------
@@ -61,13 +67,13 @@ end
 ----------------------------------------------------------------
 function dumpOptParam ( v )
 
-	doxy = doxy .. "\t@param " .. v.paramName .. " (" .. v.paramType .. ") <em>Optional.</em> " .. v.paramText .. "\n"
+	doxy = doxy .. "\t@param " .. v.paramName .. " ( " .. v.paramType .. " ) <em>Optional.</em> " .. v.paramText .. "\n"
 end
 
 ----------------------------------------------------------------
 function dumpParam ( v )
 
-	doxy = doxy .. "\t@param " .. v.paramName .. " (" .. v.paramType .. ") " .. v.paramText .. "\n"
+	doxy = doxy .. "\t@param " .. v.paramName .. " ( " .. v.paramType .. " ) " .. v.paramText .. "\n"
 end
 
 ----------------------------------------------------------------
@@ -76,7 +82,7 @@ function dumpReturn ( def )
 	local returnList = ""
 	for i,v in ipairs ( def.outParams ) do
 		if i ~= 1 then returnList = returnList .. ", " end
-		returnList = returnList .. v.paramName .. " (" .. v.paramType .. ")"
+		returnList = returnList .. v.paramName .. " ( " .. v.paramType .. " )"
 	end
 	
 	doxy = doxy .. "\t@return " .. returnList .. "\n"
@@ -211,7 +217,8 @@ function handleDoxygenBlock ()
 				pushDef ()
 				curDef.funcName = oldFuncName
 			end
-			
+
+			curDef.overloadText = v.text			
 			foundOverload = true
 		end
 	end

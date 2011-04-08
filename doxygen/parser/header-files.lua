@@ -56,6 +56,7 @@ function handleDoxygenBlock ()
 	name = ""
 	text = ""
 	constants = {}
+	attributes = {}
 	
 	for i,v in ipairs ( doxygenBlock ) do
 		
@@ -66,25 +67,61 @@ function handleDoxygenBlock ()
 		elseif v.tag == "@text" then
 			
 			text = v.text
-		
+
+		elseif v.tag == "@attr" then
+			
+			table.insert ( attributes, v.text )
+			
 		elseif v.tag == "@const" then
 			
 			table.insert ( constants, v.text )
 		end
 	end
 	
-	doxy = "\t@brief " .. name .. "\n"
-	doxy = doxy .. "\t" .. text .. "\n"
+	doxy = "\t@brief " .. text .. "\n"
 
-	doxy = doxy .. "\t@htmlonly\n"
-	doxy = doxy .. "\t\t<table border=\"1\">\n"
+	local hasConstants = #constants > 0
+	local hasAttributes = #attributes > 0
+	local hasBoth = hasConstants and hasAttributes
 	
-	for i,v in ipairs ( constants ) do
-		doxy = doxy .. "\t\t<tr><td align=\"center\" cellpadding=\"1\">" .. name .. "." .. v .. "</td></tr>\n"
-	end
+	if hasConstants or hasAttributes then
+		
+		doxy = doxy .. "\t@htmlonly\n"
 
-	doxy = doxy .. "\t\t</table>\n"
-	doxy = doxy .. "\t@endhtmlonly\n"
+		if hasBoth then
+			doxy = doxy .. "\t<table cellpadding=\"8\"><tr><td vertical-align=\"top\">\n"
+		end
+		
+		-- output constants
+		if hasConstants then
+			doxy = doxy .. "\t\t<table border=\"1\" cellpadding=\"4\">\n"
+			doxy = doxy .. "\t\t<tr><td align=\"center\"><b>Constants</b></td></tr>\n"
+			for i,v in ipairs ( constants ) do
+				doxy = doxy .. "\t\t<tr><td>" .. name .. "." .. v .. "</td></tr>\n"
+			end
+			doxy = doxy .. "\t\t</table>\n"
+		end
+		
+		if hasBoth then
+			doxy = doxy .. "\t</td><td>\n"
+		end
+
+		-- output attributes
+		if hasAttributes then
+			doxy = doxy .. "\t\t<table border=\"1\" cellpadding=\"4\">\n"
+			doxy = doxy .. "\t\t<tr><td align=\"center\"><b>Attributes</b></td></tr>\n"
+			for i,v in ipairs ( attributes ) do
+				doxy = doxy .. "\t\t<tr><td>" .. name .. "." .. v .. "</td></tr>\n"
+			end
+			doxy = doxy .. "\t\t</table>\n"
+		end
+
+		if hasBoth then
+			doxy = doxy .. "\t</td></tr></table>\n"
+		end
+
+		doxy = doxy .. "\t@endhtmlonly\n"
+	end
 
 	-- output formatted doxygen stuff to file
 	io.write ( doxy )

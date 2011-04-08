@@ -1,103 +1,84 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAICPBODY_H
-#define	MOAICPBODY_H
-#if USE_CHIPMUNK
+#ifndef	MOAITIMER_H
+#define	MOAITIMER_H
 
-#include <moaicore/MOAICpSpace.h>
-#include <moaicore/MOAITransformBase.h>
-
-struct cpBody;
-class MOAICpShape;
+#include <moaicore/MOAIAction.h>
+#include <moaicore/MOAINode.h>
 
 //================================================================//
-// MOAICpBody
+// MOAITimer
 //================================================================//
-/**	@name	MOAICpBody
-	@text	Chipmunk Body.
+/**	@name	MOAITimer
+	@text	Timer class for driving curves and animations.
+
+	@attr	ATTR_TIME
 	
-	@const NONE
-	@const REMOVE_BODY
-	@const REMOVE_BODY_AND_SHAPES
+	@const	NORMAL
+	@const	REVERSE
+	@const	LOOP
+	@const	LOOP_REVERSE
+	@const	PING_PONG
 */
-class MOAICpBody :
-	public MOAITransformBase,
-	public MOAICpPrim {
-private:
+class MOAITimer :
+	public virtual MOAINode,
+	public MOAIAction {
+protected:
 
-	cpBody* mBody;
-	u32		mRemoveFlag;
+	float	mStartTime;
+	float	mEndTime;
 
-	typedef USLeanList < MOAICpShape* >::Iterator ShapeIt;
-	USLeanList < MOAICpShape* > mShapes;
+	float	mTime;
+	float	mSpeed;
+	float	mDirection;
+
+	u32		mMode;
+	int		mTimesExecuted;
+
+	USLuaRef	mCallback;
 
 	//----------------------------------------------------------------//
-	static int	_activate			( lua_State* L );
-	static int	_addCircle			( lua_State* L );
-	static int	_addPolygon			( lua_State* L );
-	static int	_addRect			( lua_State* L );
-	static int	_addSegment			( lua_State* L );
-	static int	_applyForce			( lua_State* L );
-	static int	_applyImpulse		( lua_State* L );
-	static int	_getAngle			( lua_State* L );
-	static int	_getAngVel			( lua_State* L );
-	static int	_getForce			( lua_State* L );
-	static int	_getMass			( lua_State* L );
-	static int	_getMoment			( lua_State* L );
-	static int	_getPos				( lua_State* L );
-	static int	_getRot				( lua_State* L );
-	static int	_getTorque			( lua_State* L );
-	static int	_getVel				( lua_State* L );
-	static int	_isSleeping			( lua_State* L );
-	static int	_isStatic			( lua_State* L );
-	static int	_isRogue			( lua_State* L );
-	static int	_localToWorld		( lua_State* L );
-	static int	_new				( lua_State* L );
-	static int	_newStatic			( lua_State* L );
-	static int	_resetForces		( lua_State* L );
-	static int	_setAngle			( lua_State* L );
-	static int	_setAngVel			( lua_State* L );
-	static int	_setForce			( lua_State* L );
-	static int	_setMass			( lua_State* L );
-	static int	_setMoment			( lua_State* L );
-	static int	_setPos				( lua_State* L );
-	static int	_setRemoveFlag		( lua_State* L );
-	static int	_setTorque			( lua_State* L );
-	static int	_setVel				( lua_State* L );
-	static int	_sleep				( lua_State* L );
-	static int	_sleepWithGroup		( lua_State* L );
-	static int	_worldToLocal		( lua_State* L );
+	static int	_getTimesExecuted	( lua_State* L );
+	static int	_setCallback		( lua_State* L );
+	static int	_setMode			( lua_State* L );
+	static int	_setSpan			( lua_State* L );
+	static int	_setSpeed			( lua_State* L );
+	static int	_setTime			( lua_State* L );
 	
 	//----------------------------------------------------------------//
-	void			AttachShape				( MOAICpShape& shape );
-	void			ClearShapes				();
-	void			CpAddToSpace			( cpSpace* space );
-	void			CpRemoveFromSpace		( cpSpace* space );
-	void			DoRemove				();
-	void			OnDepNodeUpdate			();
+	void		Callback			();
+	float		DoStep				( float step );
 
 public:
 	
-	friend class MOAICpConstraint;
-	friend class MOAICpShape;
-	friend class MOAICpSpace;
-	
-	DECL_LUA_FACTORY ( MOAICpBody )
+	DECL_LUA_FACTORY ( MOAITimer )
 	
 	enum {
-		NONE,
-		REMOVE_BODY,
-		REMOVE_BODY_AND_SHAPES,
+		ATTR_TIME,
+		TOTAL_ATTR,
+	};
+	
+	enum TimerMode {
+		NORMAL,
+		REVERSE,
+		LOOP,
+		LOOP_REVERSE,
+		PING_PONG,
 	};
 	
 	//----------------------------------------------------------------//
-					MOAICpBody				();
-					~MOAICpBody				();
-	void			RegisterLuaClass		( USLuaState& state );
-	void			RegisterLuaFuncs		( USLuaState& state );
-	STLString		ToString				();
+	void		ApplyAttrOp			( u32 attrID, USAttrOp& attrOp );
+	bool		IsDone				();
+				MOAITimer			();
+				~MOAITimer			();
+	void		OnDepNodeUpdate		();
+	void		OnStart				();
+	void		OnUpdate			( float step );
+	void		RegisterLuaClass	( USLuaState& state );
+	void		RegisterLuaFuncs	( USLuaState& state );
+	void		SetTime				( float time );
+	STLString	ToString			();
 };
 
-#endif
 #endif
