@@ -123,10 +123,10 @@ int MOAIGfxQuadListDeck2D::_setPair ( lua_State* L ) {
 	MOAI_CHECK_INDEX ( idx, self->mPairs.Size ())
 	
 	u32 uvQuadID = state.GetValue < u32 >( 3, 1 ) - 1;
-	MOAI_CHECK_INDEX ( idx, self->mUVQuads.Size ())
+	MOAI_CHECK_INDEX ( uvQuadID, self->mUVQuads.Size ())
 	
 	u32 quadID = state.GetValue < u32 >( 4, 1 ) - 1;
-	MOAI_CHECK_INDEX ( idx, self->mQuads.Size ())
+	MOAI_CHECK_INDEX ( quadID, self->mQuads.Size ())
 
 	self->SetPair ( idx, uvQuadID, quadID );
 

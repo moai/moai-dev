@@ -174,7 +174,7 @@ function getTimelineLua ( atlas, timeline ) {
 	var layers = lua.setTable ( 'layers' );
 	
 	for ( var i = 0; i < timeline.layers.length; ++i ) {
-		layer = timeline.layers [ i ];
+		layer = timeline.layers [ timeline.layers.length - i - 1 ];
 		
 		if ( layer.layerType != 'normal' ) continue;
 		layers.push ( getLayerLua ( atlas, layer, i + 1 ));

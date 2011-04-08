@@ -40,9 +40,11 @@ SpriteDeckBuilder.prototype.addSpriteForFrameIdx = function ( document, timeline
 		
 		if ( frameIdx >= frames.length ) continue;
 		
+		var frame = layer.frames [ frameIdx ];
+		if ( !frame ) continue;
+		
 		var locked = layer.locked;
 		layer.locked = false
-		var frame = layer.frames [ frameIdx ];
 		
 		if ( frame.elements.length ) {
 			
@@ -99,7 +101,15 @@ SpriteDeckBuilder.prototype.addSpritePrimsForFrame = function ( document, atlas,
 				var quadID = this.quadLib [ quadKey ];
 				
 				if ( quadID == null ) {
-					var screenQuad = this.makeScreenQuad ( element, xOff, yOff );
+					
+					var screenQuad
+					
+					if ( rect.isRotated ) {
+						screenQuad = this.makeScreenQuad ( element.matrix, rect.height, rect.width, xOff, yOff );
+					}
+					else {
+						screenQuad = this.makeScreenQuad ( element.matrix, rect.width, rect.height, xOff, yOff );
+					}
 					quadID = this.quads.push ( screenQuad );
 					this.quadLib [ quadKey ] = quadID;
 				}
@@ -132,15 +142,14 @@ SpriteDeckBuilder.prototype.getQuadKey = function ( element ) {
 }
 
 //----------------------------------------------------------------//
-SpriteDeckBuilder.prototype.makeScreenQuad = function ( element, xOff, yOff ) {
-
-	var hWidth	= element.width * 0.5;
-	var hHeight	= element.height * 0.5;
-	var m		= element.matrix;
+SpriteDeckBuilder.prototype.makeScreenQuad = function ( m, width, height, xOff, yOff ) {
+	
+	var hWidth	= width * 0.5;
+	var hHeight	= height * 0.5;
 	
 	var screenQuad = new LuaTable ();
 	
-	if ( m.b && m.c ) {
+	if ( m.b && m.c ) {		
 		screenQuad.set ( 'v0', this.newLuaVert ( m, -hWidth, hHeight, xOff, yOff ));
 		screenQuad.set ( 'v1', this.newLuaVert ( m, hWidth, hHeight, xOff, yOff ));
 		screenQuad.set ( 'v2', this.newLuaVert ( m, hWidth, -hHeight, xOff, yOff ));
@@ -189,7 +198,7 @@ SpriteDeckBuilder.prototype.transformVertex = function ( matrix, vertex ) {
 	var x = vertex.x;
 	var y = vertex.y;
 	
-	vertex.x = ( x * matrix.a ) + ( y * matrix.b ) + matrix.tx;
-	vertex.y = ( x * matrix.c ) + ( y * matrix.d ) + matrix.ty;
+	vertex.x = ( x * matrix.a ) + ( y * matrix.c ) + matrix.tx;
+	vertex.y = ( x * matrix.b ) + ( y * matrix.d ) + matrix.ty;
 }
 

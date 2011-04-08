@@ -137,12 +137,10 @@ private:
 //================================================================//
 class USGlyphBuffer :
 	public USLeanStack < USGlyphSprite, 64 > {
-private:
-
 public:
 
 	//----------------------------------------------------------------//
-	void		PushGlyph		( u32 glyphID, float x, float y, float points, u32 rgba );
+	void		PushGlyph			( u32 glyphID, float x, float y, float points, u32 rgba );
 };
 
 //================================================================//

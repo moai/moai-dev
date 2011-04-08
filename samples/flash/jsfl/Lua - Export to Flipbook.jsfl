@@ -14,7 +14,7 @@ function exportToLua () {
 	var document = fl.getDocumentDOM ();
 	var folderPath = fl.browseForFolderURL ( 'Select a folder.' ) + '/';
 	
-	if ( folderPath &&  folderPath.length ) {
+	if ( folderPath &&  ( folderPath.length > 5 )) {
 		
 		var timeline = document.getTimeline ();
 		var keyframes = getKeyframeList ( timeline );
@@ -86,6 +86,8 @@ function getKeyframeList ( timeline ) {
 			var layer = layers [ j ];
 			
 			var frame = layer.frames [ i ];
+			if ( !frame ) continue;
+			
 			nElements += frame.elements.length;
 			
 			if ( frame.startFrame == i ) {
@@ -114,6 +116,8 @@ function isKeyframe ( timeline, frameIdx ) {
 		if ( frameIdx >= frames.length ) continue;
 		
 		var frame = layer.frames [ frameIdx ];
+		
+		if ( !frame ) continue;
 		if ( frame.startFrame != i ) continue;
 		
 		return true;
