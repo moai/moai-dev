@@ -13,10 +13,9 @@ SUPPRESS_EMPTY_FILE_WARNING
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name getBiasCoefficient
-	@param1 self @type userdata
-	@text Returns the current bias coefficient.
-	@return The bias coefficient. @type number
+/**	@name	getBiasCoefficient
+	@text	Returns the current bias coefficient.
+	@out	number bias	
 */
 int MOAICp::_getBiasCoefficient ( lua_State* L ) {
 	
@@ -25,10 +24,9 @@ int MOAICp::_getBiasCoefficient ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name getCollisionSlop
-	@param1 self @type userdata
-	@text Returns the current collision slop.
-	@return The collision slop. @type number
+/**	@name	getCollisionSlop
+	@text	Returns the current collision slop.
+	@out	number slop	
 */
 int MOAICp::_getCollisionSlop ( lua_State* L ) {
 	
@@ -37,10 +35,9 @@ int MOAICp::_getCollisionSlop ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name getContactPersistence
-	@param1 self @type userdata
-	@text Returns the current contact persistence.
-	@return The contact persistence. @type number
+/**	@name	getContactPersistence
+	@text	Returns the current contact persistence.
+	@out	number persistence	
 */
 int MOAICp::_getContactPersistence ( lua_State* L ) {
 
@@ -49,11 +46,10 @@ int MOAICp::_getContactPersistence ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name setBiasCoefficient
-	@param1 self @type userdata
-	@param2 bias @type number
-	@text Sets the bias coefficient.
-	@return nil
+/**	@name	setBiasCoefficient
+	@text	Sets the bias coefficient.
+	@in		number bias
+	@out	nil
 */
 int MOAICp::_setBiasCoefficient ( lua_State* L ) {
 	USLuaState state ( L );
@@ -63,11 +59,10 @@ int MOAICp::_setBiasCoefficient ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name setCollisionSlop
-	@param1 self @type userdata
-	@param2 slop @type number
-	@text Sets the collision slop.
-	@return nil
+/**	@name	setCollisionSlop
+	@text	Sets the collision slop.
+	@in		number slop
+	@out	nil
 */
 int MOAICp::_setCollisionSlop ( lua_State* L ) {
 	USLuaState state ( L );
@@ -77,11 +72,10 @@ int MOAICp::_setCollisionSlop ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name setCollisionSlop
-	@param1 self @type userdata
-	@param2 persistance @type number
-	@text Sets the contact persistance.
-	@return nil
+/**	@name	setContactPersistence
+	@text	Sets the contact persistance.
+	@in		number persistance
+	@out	nil
 */
 int MOAICp::_setContactPersistence ( lua_State* L ) {
 	USLuaState state ( L );

@@ -10,11 +10,13 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	initAttractor
+	@text	Initialized force as an attractor.
+	
+	@in		MOAIParticleForce self
+	@in		number radius Size of the attractor.
+	@opt	number pull Strength of the attractor.
+	@out	nil
 */
 int MOAIParticleForce::_initAttractor ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIParticleForce, "UNN" )
@@ -29,11 +31,13 @@ int MOAIParticleForce::_initAttractor ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	initAttractor
+	@text	Initialized force as a vector.
+	
+	@in		MOAIParticleForce self
+	@in		number x
+	@opt	number y
+	@out	nil
 */
 int MOAIParticleForce::_initLinear ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIParticleForce, "UNN" )

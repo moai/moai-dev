@@ -23,7 +23,7 @@ public:
 /**	@name	down
 	@text	Checks to see if the button was pressed during the last iteration.
 
-	@in		MOAIButtonSensor self
+	@in		MOAIKeyboardSensor self
 	@in		string key				Keycode value(s) to be checked against the input table.
 	@out	boolean wasPressed
 */
@@ -55,7 +55,7 @@ int MOAIKeyboardSensor::_keyDown ( lua_State* L ) {
 /**	@name	keyIsDown
 	@text	Checks to see if the button is currently down.
 
-	@in		MOAIButtonSensor self
+	@in		MOAIKeyboardSensor self
 	@in		string key				Keycode value(s) to be checked against the input table.
 	@out	boolean isDown
 */
@@ -87,7 +87,7 @@ int MOAIKeyboardSensor::_keyIsDown ( lua_State* L ) {
 /**	@name	keyIsUp
 	@text	Checks to see if the specified key is currently up.
 
-	@in		MOAIButtonSensor self
+	@in		MOAIKeyboardSensor self
 	@in		string key				Keycode value(s) to be checked against the input table.
 	@out	boolean wasReleased
 */
@@ -119,7 +119,7 @@ int MOAIKeyboardSensor::_keyIsUp ( lua_State* L ) {
 /**	@name	keyUp
 	@text	Checks to see if the specified key was released during the last iteration.
 
-	@in		MOAIButtonSensor self
+	@in		MOAIKeyboardSensor self
 	@in		string key				Keycode value(s) to be checked against the input table.
 	@out	boolean wasReleased
 */

@@ -16,7 +16,9 @@ SUPPRESS_EMPTY_FILE_WARNING
 
 //----------------------------------------------------------------//
 /**	@name	countContacts
-	@text	Return the number of contacts in the current collision.
+	@text	This method isn't supported yet.
+	
+	@in		MOAIBox2DArbiter self
 	@out	nil
 */
 int MOAIBox2DArbiter::_countContacts ( lua_State* L ) {
@@ -27,11 +29,10 @@ int MOAIBox2DArbiter::_countContacts ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	getContactDepth
+	@text	This method isn't supported yet.
+	
+	@in		MOAIBox2DArbiter self
 	@out	nil
 */
 int MOAIBox2DArbiter::_getContactDepth ( lua_State* L ) {
@@ -42,11 +43,10 @@ int MOAIBox2DArbiter::_getContactDepth ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	getContactNormal
+	@text	This method isn't supported yet.
+	
+	@in		MOAIBox2DArbiter self
 	@out	nil
 */
 int MOAIBox2DArbiter::_getContactNormal ( lua_State* L ) {
@@ -57,11 +57,10 @@ int MOAIBox2DArbiter::_getContactNormal ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	getContactPoint
+	@text	This method isn't supported yet.
+	
+	@in		MOAIBox2DArbiter self
 	@out	nil
 */
 int MOAIBox2DArbiter::_getContactPoint ( lua_State* L ) {
@@ -72,11 +71,10 @@ int MOAIBox2DArbiter::_getContactPoint ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	getTotalImpulse
+	@text	This method isn't supported yet.
+	
+	@in		MOAIBox2DArbiter self
 	@out	nil
 */
 int MOAIBox2DArbiter::_getTotalImpulse ( lua_State* L ) {
@@ -87,11 +85,10 @@ int MOAIBox2DArbiter::_getTotalImpulse ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	getTotalImpulseWithFriction
+	@text	This method isn't supported yet.
+	
+	@in		MOAIBox2DArbiter self
 	@out	nil
 */
 int MOAIBox2DArbiter::_getTotalImpulseWithFriction ( lua_State* L ) {
@@ -102,11 +99,10 @@ int MOAIBox2DArbiter::_getTotalImpulseWithFriction ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	isFirstContact
+	@text	This method isn't supported yet.
+	
+	@in		MOAIBox2DArbiter self
 	@out	nil
 */
 int MOAIBox2DArbiter::_isFirstContact ( lua_State* L ) {
@@ -117,11 +113,9 @@ int MOAIBox2DArbiter::_isFirstContact ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	new
+	@text	Overrides the default class new method.
+	
 	@out	nil
 */
 int MOAIBox2DArbiter::_new ( lua_State* L ) {

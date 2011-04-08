@@ -676,7 +676,8 @@ int MOAICpBody::_sleep ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	sleepWithGroup
-	@text	Description of method coming soon.
+	@text	Forces an object to sleep. Pass in another sleeping body
+			to add the object to the sleeping body's existing group.
 
 	@in		MOAICpBody self
 	@in		MOAICpBody group
@@ -694,7 +695,8 @@ int MOAICpBody::_sleepWithGroup ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	worldToLocal
-	@text	Converts the absolute position to a relative position based on position of the object being (0, 0) for the relative position.
+	@text	Converts the absolute position to a relative position based on
+			position of the object being (0, 0) for the relative position.
 
 	@in		MOAICpShape self
 	@in		number ax			The absolute X position.
