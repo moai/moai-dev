@@ -44,6 +44,7 @@ $(SRC_PATH)/src/uslsext/USAttrOp.cpp \
 $(SRC_PATH)/src/uslsext/USBlendMode.cpp \
 $(SRC_PATH)/src/uslsext/USBox.cpp \
 $(SRC_PATH)/src/uslsext/USCanvas.cpp \
+$(SRC_PATH)/src/uslsext/USCgt.cpp \
 $(SRC_PATH)/src/uslsext/USColor.cpp \
 $(SRC_PATH)/src/uslsext/USCurve.cpp \
 $(SRC_PATH)/src/uslsext/USData.cpp \
@@ -63,6 +64,7 @@ $(SRC_PATH)/src/uslsext/USHttpTask_impl.cpp \
 $(SRC_PATH)/src/uslsext/USImage.cpp \
 $(SRC_PATH)/src/uslsext/USInterpolate.cpp \
 $(SRC_PATH)/src/uslsext/USIntersect.cpp \
+$(SRC_PATH)/src/uslsext/USLexStream.cpp \
 $(SRC_PATH)/src/uslsext/USLog.cpp \
 $(SRC_PATH)/src/uslsext/uslsext.cpp \
 $(SRC_PATH)/src/uslsext/USMercator.cpp \
@@ -83,6 +85,7 @@ $(SRC_PATH)/src/uslsext/USSqlStatement.cpp \
 $(SRC_PATH)/src/uslsext/USSqlValue.cpp \
 $(SRC_PATH)/src/uslsext/USSurface2D.cpp \
 $(SRC_PATH)/src/uslsext/USSyntaxNode.cpp \
+$(SRC_PATH)/src/uslsext/USSyntaxScanner.cpp \
 $(SRC_PATH)/src/uslsext/USTask.cpp \
 $(SRC_PATH)/src/uslsext/USTaskThread.cpp \
 $(SRC_PATH)/src/uslsext/USTexture.cpp \
