@@ -5,10 +5,28 @@ if exist src-copy rmdir /s /q src-copy
 xcopy /v /i /s /y "../src" "src-copy"
 
 ::modify copy of source files
-call parser\process-files
+::call parser\process-files header-files.lua h
+call parser\process-files source-files.lua cpp
 
 ::kill existing doxygen output folder, if any
 rmdir /s /q html-lua
+
+::run doxygen on copy of source files
+doxygen doxyfile-lua
+
+::properly intro-page escape file
+copy /y intro-page.txt intro-page-temp.txt
+call parser\fr "." "intro-page-temp.txt" "([\<\>\"\"\&\/\\\;\.\'\'\:\@])" "\\$1"
+
+::load contents of intro page text file
+setlocal ENABLEDELAYEDEXPANSION
+set input=
+for /F "tokens=*" %%i in (intro-page-temp.txt) do (
+	set input=!input!\n%%i
+)
+del /q intro-page-temp.txt
+
+call parser\fr "html-lua" "index.html" "(\<div class=\"contents\"\>).*?(\<\/div\>)" "$1%input%$2"
 
 ::update doxygen's version text
 pushd ..
@@ -33,11 +51,8 @@ for /F "skip=1 tokens=2*" %%i in (version.txt) do (
 :forDone
 popd
 
-set revTagPre="(revision"
-set revTagSuf="%revision%)"
-
-echo %version% %tag% %revTagPre% %revTagSuf%
-pause
+set revTagPre=\(revision
+set revTagSuf=%revision%\)
 
 if "%tag%" == "" (
 	set versionText=%version% %revTagPre% %revTagSuf%
@@ -45,27 +60,7 @@ if "%tag%" == "" (
 	set versionText=%version% %tag% %revTagPre% %revTagSuf%
 )
 
-copy doxyfile-lua doxyfile-lua-temp
-perl -p -i.bak -e "s/\@\@VERSION\@\@/%versionText%/sgi;" "doxyfile-lua-temp"
-del /q doxyfile-lua-temp.bak
-
-::run doxygen on copy of source files
-doxygen doxyfile-lua-temp
-::del /q doxyfile-lua-temp
-
-::properly intro-page escape file
-copy /y intro-page.txt intro-page-temp.txt
-call parser\fr "." "intro-page-temp.txt" "([\<\>\"\"\&\/\\\;\.\'\'\:\@])" "\\$1"
-
-::load contents of intro page text file
-setlocal ENABLEDELAYEDEXPANSION
-set input=
-for /F "tokens=*" %%i in (intro-page-temp.txt) do (
-	set input=!input!\n%%i
-)
-del /q intro-page-temp.txt
-
-call parser\fr "html-lua" "index.html" "(\<div class=\"contents\"\>).*?(\<\/div\>)" "$1%input%$2"
+call parser\fr "html-lua" "*.html" "\@\@VERSION\@\@" "%versionText%"
 
 ::clean up doxygen docs
 call parser\fr "html-lua" "*.html" "Static .*? Member Functions" "Function List"
