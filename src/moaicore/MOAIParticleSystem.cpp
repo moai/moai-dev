@@ -421,9 +421,9 @@ MOAIParticleSprite* MOAIParticleSystem::GetTopSprite () {
 }
 
 //----------------------------------------------------------------//
-bool MOAIParticleSystem::IsBusy () {
+bool MOAIParticleSystem::IsDone () {
 
-	return true;
+	return false;
 }
 
 //----------------------------------------------------------------//

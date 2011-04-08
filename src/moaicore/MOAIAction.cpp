@@ -54,22 +54,46 @@ int MOAIAction::_clear ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	isActive
+	@text	Checks to see if an action is currently in the action tree.
+
+	@in		MOAIAction self
+	@out	bool isActive
+*/
+int MOAIAction::_isActive ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAction, "U" );
+
+	lua_pushboolean ( state, self->IsActive ());
+	return 1;
+}
+
+//----------------------------------------------------------------//
 /**	@name	isBusy
-	@text	Checks to see if an action is currently busy. Meaning of 'busy' us up to
-			individual action types.
+	@text	Checks to see if an action is currently busy. An action is
+			'busy' only if it is 'active' and not 'done.'
 
 	@in		MOAIAction self
 	@out	bool isBusy
 */
 int MOAIAction::_isBusy ( lua_State* L ) {
-
-	USLuaState state ( L );
-	if ( !state.CheckParams ( 1, "U" )) return 0;
-	
-	MOAIAction* self = state.GetLuaObject < MOAIAction >( 1 );
-	if ( !self ) return 0;
+	MOAI_LUA_SETUP ( MOAIAction, "U" );
 
 	lua_pushboolean ( state, self->IsBusy ());
+	return 1;
+}
+
+//----------------------------------------------------------------//
+/**	@name	isDone
+	@text	Checks to see if an action is 'done.' Definition of 'done'
+			is up to individual action implementations.
+
+	@in		MOAIAction self
+	@out	bool isDone
+*/
+int MOAIAction::_isDone ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAction, "U" );
+
+	lua_pushboolean ( state, self->IsDone ());
 	return 1;
 }
 
@@ -169,7 +193,13 @@ bool MOAIAction::IsActive () {
 //----------------------------------------------------------------//
 bool MOAIAction::IsBusy () {
 
-	return ( this->mChildren.Count () > 0 );
+	return ( this->IsActive () && ( !this->IsDone ()));
+}
+
+//----------------------------------------------------------------//
+bool MOAIAction::IsDone () {
+
+	return ( this->mChildren.Count () == 0 );
 }
 
 //----------------------------------------------------------------//
@@ -225,7 +255,9 @@ void MOAIAction::RegisterLuaFuncs ( USLuaState& state ) {
 	luaL_Reg regTable [] = {
 		{ "addChild",			_addChild },
 		{ "clear",				_clear },
+		{ "isActive",			_isActive },
 		{ "isBusy",				_isBusy },
+		{ "isDone",				_isDone },
 		{ "start",				_start },
 		{ "stop",				_stop },
 		{ "throttle",			_throttle },
@@ -275,9 +307,6 @@ void MOAIAction::Stop () {
 STLString MOAIAction::ToString () {
 
 	STLString repr;
-
-	PrettyPrint ( repr, "mBusy", this->IsBusy () );
-
 	return repr;
 }
 
@@ -313,7 +342,7 @@ void MOAIAction::Update ( float step, u32 pass, bool checkPass ) {
 		child->Release ();
 	}
 	
-	if ( !this->IsBusy ()) {
+	if ( this->IsDone ()) {
 		this->Stop ();
 	}
 }

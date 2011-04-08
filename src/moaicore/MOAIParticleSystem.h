@@ -115,7 +115,7 @@ public:
 	//----------------------------------------------------------------//
 	void			Draw					();
 	u32				GetLocalFrame			( USRect& frame );
-	bool			IsBusy					();
+	bool			IsDone					();
 					MOAIParticleSystem		();
 					~MOAIParticleSystem		();
 	bool			PushParticle			( float x, float y );

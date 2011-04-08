@@ -87,7 +87,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	void			DrawDebug				();
-	bool			IsBusy					();
+	bool			IsDone					();
 					MOAIBox2DWorld			();
 					~MOAIBox2DWorld			();
 	void			OnUpdate				( float step );

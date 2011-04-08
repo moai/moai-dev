@@ -117,9 +117,9 @@ void MOAIEaseDriver::Apply ( float step ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIEaseDriver::IsBusy () {
+bool MOAIEaseDriver::IsDone () {
 
-	return ( this->mTime < 1.0f );
+	return ( this->mTime >= 1.0f );
 }
 
 //----------------------------------------------------------------//

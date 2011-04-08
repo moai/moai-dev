@@ -378,13 +378,13 @@ u32 MOAITextBox::GetLocalFrame ( USRect& frame ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAITextBox::IsBusy () {
+bool MOAITextBox::IsDone () {
 
 	if ( this->IsActive ()) {
 		this->Layout ();
-		return ( this->mReveal < this->mLayout.GetTop ());
+		return ( this->mReveal >= this->mLayout.GetTop ());
 	}
-	return false;
+	return true;
 }
 
 //----------------------------------------------------------------//

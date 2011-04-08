@@ -94,6 +94,9 @@ void moaicore::InitGlobals ( USGlobals* globals ) {
 	#endif
 	
 	#if USE_CHIPMUNK
+	
+		MOAICp::Get ();
+	
 		REGISTER_LUA_CLASS ( MOAICp )
 		REGISTER_LUA_CLASS ( MOAICpArbiter )
 		REGISTER_LUA_CLASS ( MOAICpBody )
@@ -103,6 +106,9 @@ void moaicore::InitGlobals ( USGlobals* globals ) {
 	#endif
 	
 	#if USE_FMOD
+		
+		MOAIFmod::Get ();
+		
 		REGISTER_LUA_CLASS ( MOAIFmod )
 		REGISTER_LUA_CLASS ( MOAIFmodChannel )
 		REGISTER_LUA_CLASS ( MOAIFmodSound )

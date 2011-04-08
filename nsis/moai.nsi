@@ -2,7 +2,6 @@
 
 SetCompressor /FINAL /SOLID lzma
 SetCompressorDictSize 64
-;RequestExecutionLevel user
 
 !define DISPLAY_NAME "@@DISPLAY_NAME@@"
 !define PROGRAM_FOLDER "Moai SDK"
@@ -22,11 +21,13 @@ SetCompressorDictSize 64
 !define MOAI_SRC "..\src"
 !define MUI_HEADERIMAGE_BITMAP MUI_HEADERIMAGE_BITMAP.bmp
 !define MUI_WELCOMEFINISHPAGE_BITMAP MUI_WELCOMEFINISHPAGE_BITMAP.bmp
+!define REG_ENVIRONMENT "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"
 
 !include MUI.nsh
 !include AdvUninstLog.nsh
 !include RegisterExtension.nsh
 !include AddToPath.nsh
+!include LogicLib.nsh
 
 Name "${DISPLAY_NAME}"
 OutFile "${INSTALLER_NAME}"
@@ -56,7 +57,6 @@ InstallDirRegKey ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "InstallDir"
 
 !insertmacro MUI_LANGUAGE "English"
 
-; !include LogicLib.nsh
 ; Var Dialog
 ;_______________________________________________________________________________________
 ; Function nsDialogsPage
@@ -84,36 +84,36 @@ Section "Moai"
 
 	SetOutPath "$INSTDIR"
 
-	;installation files
+	; installation files
 	!insertmacro UNINSTALL.LOG_OPEN_INSTALL
 	File /r /x ".gitignore" /x "*.ncb" /x "*.suo" /x "*.user" "release\*.*"
 	!insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 	
-	;start menu shortcuts
+	; start menu shortcuts
 	SetShellVarContext all
 	CreateDirectory "$SMPROGRAMS\${DISPLAY_NAME}"
 	CreateShortCut "$SMPROGRAMS\${DISPLAY_NAME}\Samples.lnk" "$INSTDIR\samples\lua"
 	CreateShortCut "$SMPROGRAMS\${DISPLAY_NAME}\Reference.lnk" "$INSTDIR\docs\html\index.html"
 	CreateShortCut "$SMPROGRAMS\${DISPLAY_NAME}\Uninstall.lnk" "${UNINST_EXE}"
 
-	;desktop shortcut
+	; desktop shortcut
 	CreateShortCut "$DESKTOP\Moai Samples.lnk" "$INSTDIR\samples\lua"
 	
-	;system add/remove programs setup
+	; system add/remove programs setup
 	WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "InstallDir" "$INSTDIR"
 	WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "DisplayName" "${DISPLAY_NAME}"
 	WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "UninstallString" "${UNINST_EXE}"
 
-	;register extensions
+	; register extensions
 	;${RegisterExtension} "$INSTDIR\moai.exe" ".moai" "Moai File"
 	
-	;add MOAI_BIN variable
+	; add MOAI_BIN variable
 	WriteRegExpandStr ${env_hklm} MOAI_BIN "$INSTDIR\bin\"
 	SendMessage ${HWND_BROADCAST} ${WM_WININICHANGE} 0 "STR:Environment" /TIMEOUT=5000
 	StrCpy $R0 "$INSTDIR\bin\"
 	System::Call 'Kernel32::SetEnvironmentVariableA(t, t) i("MOAI_BIN", R0).r0'
 	
-	;add MOAI_CONFIG variable
+	; add MOAI_CONFIG variable
 	WriteRegExpandStr ${env_hklm} MOAI_CONFIG "$INSTDIR\samples\config\"
 	SendMessage ${HWND_BROADCAST} ${WM_WININICHANGE} 0 "STR:Environment" /TIMEOUT=5000
 	StrCpy $R0 "$INSTDIR\samples\config\"
@@ -126,7 +126,7 @@ Function .onInit
 	ClearErrors
 	ReadRegStr $0 ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "DisplayName"
 	IfErrors init.normal
-	MessageBox MB_YESNO|MB_ICONEXCLAMATION "There is an existing install of Moai SDK on your system.$\nYou must uninstall it before continuing. Run uninstaller now?" IDYES init.uninst
+	MessageBox MB_YESNO|MB_ICONQUESTION "Moai SDK has already been installed.$\nYou must uninstall it before installing a new version.$\nUninstall now?" IDYES init.uninst
 	Quit
 
 init.uninst:
@@ -142,6 +142,17 @@ init.done:
 init.normal:
 	!insertmacro UNINSTALL.LOG_PREPARE_INSTALL
 	
+	; save existing values of MOAI_BIN and MOAI_CONFIG environment variables
+	ReadRegStr $R0 HKLM "${REG_ENVIRONMENT}" "MOAI_BIN"
+	${If} "$R0" != ""
+		WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "OLD_MOAI_BIN" "$R0"
+	${EndIf}
+
+	ReadRegStr $R0 HKLM "${REG_ENVIRONMENT}" "MOAI_CONFIG"
+	${If} "$R0" != ""
+		WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "OLD_MOAI_CONFIG" "$R0"
+	${EndIf}
+	
 FunctionEnd
 
 Function .onInstSuccess
@@ -152,12 +163,23 @@ FunctionEnd
 
 Section UnInstall
 
-	; DeleteRegValue ${env_hklm} MOAI_BIN
-	; SendMessage ${HWND_BROADCAST} ${WM_WININICHANGE} 0 "STR:Environment" /TIMEOUT=5000
+	; restore old values of MOAI_BIN and MOAI_CONFIG environment variables
+	ReadRegStr $R0 ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "OLD_MOAI_BIN"
+	${If} $R0 != ""
+		WriteRegExpandStr ${env_hklm} MOAI_BIN "$R0"
+	${Else}
+		DeleteRegValue ${env_hklm} MOAI_BIN
+	${EndIf}
+	SendMessage ${HWND_BROADCAST} ${WM_WININICHANGE} 0 "STR:Environment" /TIMEOUT=5000
 
-	; DeleteRegValue ${env_hklm} MOAI_CONFIG
-	; SendMessage ${HWND_BROADCAST} ${WM_WININICHANGE} 0 "STR:Environment" /TIMEOUT=5000
-   
+	ReadRegStr $R0 ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "OLD_MOAI_CONFIG"
+	${If} $R0 != ""
+		WriteRegExpandStr ${env_hklm} MOAI_CONFIG "$R0"
+	${Else}
+		DeleteRegValue ${env_hklm} MOAI_CONFIG
+	${EndIf}
+	SendMessage ${HWND_BROADCAST} ${WM_WININICHANGE} 0 "STR:Environment" /TIMEOUT=5000
+	
 	;${UnregisterExtension} ".moai" "Moai File"
 	
 	!insertmacro UNINSTALL.LOG_BEGIN_UNINSTALL

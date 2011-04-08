@@ -112,7 +112,7 @@ public:
 	void			DrawDebug				();
 	MOAICpArbiter*	GetArbiter				();
 	void			InsertPrim				( MOAICpPrim& prim );
-	bool			IsBusy					();
+	bool			IsDone					();
 					MOAICpSpace				();
 					~MOAICpSpace			();
 	void			OnUpdate				( float step );

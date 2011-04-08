@@ -1,0 +1,47 @@
+<h2>Welcome to the Moai beta. &nbsp;</h2>
+<h3>Thanks for installing the SDK. &nbsp;Here's the scoop:</h3>
+<h4>Sample code:</h4>
+Samples are included in \samples. &nbsp;Go to \samples\lua and run
+run.bat to see them execute. &nbsp;One
+of our priorities is to build richer samples for Moai developers, so if
+you'd like to see a particular code sample, let us know by posting in
+the <a href="http://getmoai.com/forums/">Moai Forums</a>.<br>
+<h4>FAQ:</h4>
+<a href="http://getmoai.com/get-started/moai-faq/">The
+Moai FAQ</a> is available on getmoai.com.<br>
+<h4>Moai Cloud:</h4>
+You already have a Moai Cloud account and you can upload Lua scripts to
+be hosted and run as web services via the <a
+ href="http://dashboard.moaicloud.com/">Moai Cloud Dashboard</a>.
+&nbsp;&nbsp;If you're tackling something interesting with a
+cloud service, &nbsp;post about it in the <a
+ href="http://getmoai.com/forums/developing-cloud-systems-with-moai-cloud/">Developing
+Cloud Systems Forum</a>. &nbsp;If you have support questions,
+post them to the <a
+ href="http://getmoai.com/forums/moai-cloud-developer-support/">Moai
+Cloud Developer Support Forum</a>.<br>
+<h4>Moai SDK Updates:</h4>
+We'll email you about major new revisions during the beta period.
+&nbsp;Stay tuned.<br>
+<h4>License:</h4>
+This SDK uses the <a
+ href="http://www.opensource.org/licenses/cpal_1.0">CPAL
+license</a>. &nbsp;Refer to the <a
+ href="http://getmoai.com/get-started/moai-faq/madewithmoai/">Made
+With Moai page </a>for attribution screens to include with games
+made with moai.<br>
+<h4>Services Agreement:</h4>
+<a href="http://getmoai.com/get-started/moai-faq/services-agreement/">The
+Moai Services Agreement</a> is available on <a
+ href="http://getmoai.com">getmoai.com</a>. <br>
+<h4>Privacy Policy:</h4>
+<a href="http://getmoai.com/get-started/moai-faq/privacy/">The
+Moai Privacy Policy</a> is available on <a
+ href="http://getmoai.com">getmoai.com</a>.<br>
+<br>
+Happy game-making with Moai. &nbsp;Ping us through <a
+ href="http://getmoai.com/forums/">the forums</a> or at
+<a href="mailto:support@getmoai.com">support@getmoai.com</a>
+if you need help. &nbsp;The Moai team is here to help.  
+<br>
+<br>
