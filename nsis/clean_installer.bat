@@ -8,4 +8,3 @@ rd /s /q release\include
 
 del moai-sdk-installer.exe
 del release\version.txt
-del release\AboutMoai.pdf
