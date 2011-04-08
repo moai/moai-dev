@@ -434,6 +434,20 @@
 		0379C73D1333ED1400E89DDC /* tinyxmlerror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03C217D8104DE6E0009A2D5D /* tinyxmlerror.cpp */; };
 		0379C73E1333ED1400E89DDC /* tinyxmlparser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03C217D9104DE6E0009A2D5D /* tinyxmlparser.cpp */; };
 		0379C7411333ED7000E89DDC /* lib3rdParty.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0379C5961333ECD800E89DDC /* lib3rdParty.a */; };
+		03D325E0134FC59B0056EF14 /* MOAIDeck2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03D325DC134FC59B0056EF14 /* MOAIDeck2D.cpp */; };
+		03D325E1134FC59B0056EF14 /* MOAIDeck2D.h in Headers */ = {isa = PBXBuildFile; fileRef = 03D325DD134FC59B0056EF14 /* MOAIDeck2D.h */; };
+		03D325E2134FC59B0056EF14 /* MOAIParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03D325DE134FC59B0056EF14 /* MOAIParser.cpp */; };
+		03D325E3134FC59B0056EF14 /* MOAIParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 03D325DF134FC59B0056EF14 /* MOAIParser.h */; };
+		03D325F0134FC6530056EF14 /* USCgt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03D325E6134FC6530056EF14 /* USCgt.cpp */; };
+		03D325F1134FC6530056EF14 /* USCgt.h in Headers */ = {isa = PBXBuildFile; fileRef = 03D325E7134FC6530056EF14 /* USCgt.h */; };
+		03D325F2134FC6530056EF14 /* USLexStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03D325E8134FC6530056EF14 /* USLexStream.cpp */; };
+		03D325F3134FC6530056EF14 /* USLexStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 03D325E9134FC6530056EF14 /* USLexStream.h */; };
+		03D325F4134FC6530056EF14 /* USParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03D325EA134FC6530056EF14 /* USParser.cpp */; };
+		03D325F5134FC6530056EF14 /* USParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 03D325EB134FC6530056EF14 /* USParser.h */; };
+		03D325F6134FC6530056EF14 /* USSyntaxNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03D325EC134FC6530056EF14 /* USSyntaxNode.cpp */; };
+		03D325F7134FC6530056EF14 /* USSyntaxNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 03D325ED134FC6530056EF14 /* USSyntaxNode.h */; };
+		03D325F8134FC6530056EF14 /* USSyntaxScanner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03D325EE134FC6530056EF14 /* USSyntaxScanner.cpp */; };
+		03D325F9134FC6530056EF14 /* USSyntaxScanner.h in Headers */ = {isa = PBXBuildFile; fileRef = 03D325EF134FC6530056EF14 /* USSyntaxScanner.h */; };
 		CD7B3F4212FA484B00A90AA5 /* AKU.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD7B3F3E12FA484B00A90AA5 /* AKU.cpp */; };
 		CD7B3F4312FA484B00A90AA5 /* AKU.h in Headers */ = {isa = PBXBuildFile; fileRef = CD7B3F3F12FA484B00A90AA5 /* AKU.h */; };
 		CD7B3F4412FA484B00A90AA5 /* pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD7B3F4012FA484B00A90AA5 /* pch.cpp */; };
@@ -463,8 +477,6 @@
 		CDB71CBC134156C800633B13 /* MOAIBox2DWorld.h in Headers */ = {isa = PBXBuildFile; fileRef = CDB71C0D134156C800633B13 /* MOAIBox2DWorld.h */; };
 		CDB71CBD134156C800633B13 /* MOAIButtonSensor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDB71C0E134156C800633B13 /* MOAIButtonSensor.cpp */; };
 		CDB71CBE134156C800633B13 /* MOAIButtonSensor.h in Headers */ = {isa = PBXBuildFile; fileRef = CDB71C0F134156C800633B13 /* MOAIButtonSensor.h */; };
-		CDB71CBF134156C800633B13 /* MOAICheckpoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDB71C10134156C800633B13 /* MOAICheckpoint.cpp */; };
-		CDB71CC0134156C800633B13 /* MOAICheckpoint.h in Headers */ = {isa = PBXBuildFile; fileRef = CDB71C11134156C800633B13 /* MOAICheckpoint.h */; };
 		CDB71CC1134156C800633B13 /* MOAIColor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDB71C12134156C800633B13 /* MOAIColor.cpp */; };
 		CDB71CC2134156C800633B13 /* MOAIColor.h in Headers */ = {isa = PBXBuildFile; fileRef = CDB71C13134156C800633B13 /* MOAIColor.h */; };
 		CDB71CC3134156C800633B13 /* MOAICompassSensor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDB71C14134156C800633B13 /* MOAICompassSensor.cpp */; };
@@ -538,7 +550,6 @@
 		CDB71D09134156C800633B13 /* MOAILevelSensor.h in Headers */ = {isa = PBXBuildFile; fileRef = CDB71C5A134156C800633B13 /* MOAILevelSensor.h */; };
 		CDB71D0A134156C800633B13 /* MOAILocationSensor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDB71C5B134156C800633B13 /* MOAILocationSensor.cpp */; };
 		CDB71D0B134156C800633B13 /* MOAILocationSensor.h in Headers */ = {isa = PBXBuildFile; fileRef = CDB71C5C134156C800633B13 /* MOAILocationSensor.h */; };
-		CDB71D0C134156C800633B13 /* MOAILogMessages.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDB71C5D134156C800633B13 /* MOAILogMessages.cpp */; };
 		CDB71D0D134156C800633B13 /* MOAILogMessages.h in Headers */ = {isa = PBXBuildFile; fileRef = CDB71C5E134156C800633B13 /* MOAILogMessages.h */; };
 		CDB71D0E134156C800633B13 /* MOAILogMgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDB71C5F134156C800633B13 /* MOAILogMgr.cpp */; };
 		CDB71D0F134156C800633B13 /* MOAILogMgr.h in Headers */ = {isa = PBXBuildFile; fileRef = CDB71C60134156C800633B13 /* MOAILogMgr.h */; };
@@ -712,25 +723,16 @@
 		CDB71E9F134156FF00633B13 /* USAttrMap.h in Headers */ = {isa = PBXBuildFile; fileRef = CDB71E0B134156FE00633B13 /* USAttrMap.h */; };
 		CDB71EA0134156FF00633B13 /* USAttrOp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDB71E0C134156FE00633B13 /* USAttrOp.cpp */; };
 		CDB71EA1134156FF00633B13 /* USAttrOp.h in Headers */ = {isa = PBXBuildFile; fileRef = CDB71E0D134156FE00633B13 /* USAttrOp.h */; };
-		CDB71EA2134156FF00633B13 /* USAutoPtr.h in Headers */ = {isa = PBXBuildFile; fileRef = CDB71E0E134156FE00633B13 /* USAutoPtr.h */; };
 		CDB71EA3134156FF00633B13 /* USBlendMode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDB71E0F134156FE00633B13 /* USBlendMode.cpp */; };
 		CDB71EA4134156FF00633B13 /* USBlendMode.h in Headers */ = {isa = PBXBuildFile; fileRef = CDB71E10134156FE00633B13 /* USBlendMode.h */; };
 		CDB71EA5134156FF00633B13 /* USBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDB71E11134156FE00633B13 /* USBox.cpp */; };
 		CDB71EA6134156FF00633B13 /* USBox.h in Headers */ = {isa = PBXBuildFile; fileRef = CDB71E12134156FE00633B13 /* USBox.h */; };
-		CDB71EA7134156FF00633B13 /* USCamera2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDB71E13134156FE00633B13 /* USCamera2D.cpp */; };
-		CDB71EA8134156FF00633B13 /* USCamera2D.h in Headers */ = {isa = PBXBuildFile; fileRef = CDB71E14134156FE00633B13 /* USCamera2D.h */; };
-		CDB71EA9134156FF00633B13 /* USCamera3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDB71E15134156FE00633B13 /* USCamera3D.cpp */; };
-		CDB71EAA134156FF00633B13 /* USCamera3D.h in Headers */ = {isa = PBXBuildFile; fileRef = CDB71E16134156FE00633B13 /* USCamera3D.h */; };
-		CDB71EAB134156FF00633B13 /* USCameraFitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDB71E17134156FE00633B13 /* USCameraFitter.cpp */; };
-		CDB71EAC134156FF00633B13 /* USCameraFitter.h in Headers */ = {isa = PBXBuildFile; fileRef = CDB71E18134156FE00633B13 /* USCameraFitter.h */; };
 		CDB71EAD134156FF00633B13 /* USCanvas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDB71E19134156FE00633B13 /* USCanvas.cpp */; };
 		CDB71EAE134156FF00633B13 /* USCanvas.h in Headers */ = {isa = PBXBuildFile; fileRef = CDB71E1A134156FE00633B13 /* USCanvas.h */; };
 		CDB71EAF134156FF00633B13 /* USColor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDB71E1B134156FE00633B13 /* USColor.cpp */; };
 		CDB71EB0134156FF00633B13 /* USColor.h in Headers */ = {isa = PBXBuildFile; fileRef = CDB71E1C134156FE00633B13 /* USColor.h */; };
 		CDB71EB1134156FF00633B13 /* USCurve.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDB71E1D134156FE00633B13 /* USCurve.cpp */; };
 		CDB71EB2134156FF00633B13 /* USCurve.h in Headers */ = {isa = PBXBuildFile; fileRef = CDB71E1E134156FE00633B13 /* USCurve.h */; };
-		CDB71EB3134156FF00633B13 /* USCurveSampler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDB71E1F134156FE00633B13 /* USCurveSampler.cpp */; };
-		CDB71EB4134156FF00633B13 /* USCurveSampler.h in Headers */ = {isa = PBXBuildFile; fileRef = CDB71E20134156FE00633B13 /* USCurveSampler.h */; };
 		CDB71EB5134156FF00633B13 /* USData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDB71E21134156FE00633B13 /* USData.cpp */; };
 		CDB71EB6134156FF00633B13 /* USData.h in Headers */ = {isa = PBXBuildFile; fileRef = CDB71E22134156FE00633B13 /* USData.h */; };
 		CDB71EB7134156FF00633B13 /* USDataIOTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDB71E23134156FE00633B13 /* USDataIOTask.cpp */; };
@@ -748,8 +750,6 @@
 		CDB71EC3134156FF00633B13 /* USFont.h in Headers */ = {isa = PBXBuildFile; fileRef = CDB71E2F134156FE00633B13 /* USFont.h */; };
 		CDB71EC4134156FF00633B13 /* USFontRipper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDB71E30134156FE00633B13 /* USFontRipper.cpp */; };
 		CDB71EC5134156FF00633B13 /* USFontRipper.h in Headers */ = {isa = PBXBuildFile; fileRef = CDB71E31134156FE00633B13 /* USFontRipper.h */; };
-		CDB71EC6134156FF00633B13 /* USFrustum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDB71E32134156FE00633B13 /* USFrustum.cpp */; };
-		CDB71EC7134156FF00633B13 /* USFrustum.h in Headers */ = {isa = PBXBuildFile; fileRef = CDB71E33134156FE00633B13 /* USFrustum.h */; };
 		CDB71EC8134156FF00633B13 /* USFsm.h in Headers */ = {isa = PBXBuildFile; fileRef = CDB71E34134156FE00633B13 /* USFsm.h */; };
 		CDB71EC9134156FF00633B13 /* USFsmStateFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = CDB71E35134156FE00633B13 /* USFsmStateFactory.h */; };
 		CDB71ECA134156FF00633B13 /* USGfxDevice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDB71E36134156FE00633B13 /* USGfxDevice.cpp */; };
@@ -800,12 +800,6 @@
 		CDB71EF7134156FF00633B13 /* USQuadCoord.h in Headers */ = {isa = PBXBuildFile; fileRef = CDB71E63134156FF00633B13 /* USQuadCoord.h */; };
 		CDB71EF8134156FF00633B13 /* USRadixSort16.h in Headers */ = {isa = PBXBuildFile; fileRef = CDB71E64134156FF00633B13 /* USRadixSort16.h */; };
 		CDB71EF9134156FF00633B13 /* USRadixSort32.h in Headers */ = {isa = PBXBuildFile; fileRef = CDB71E65134156FF00633B13 /* USRadixSort32.h */; };
-		CDB71EFA134156FF00633B13 /* USSlipMapBrush.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDB71E66134156FF00633B13 /* USSlipMapBrush.cpp */; };
-		CDB71EFB134156FF00633B13 /* USSlipMapBrush.h in Headers */ = {isa = PBXBuildFile; fileRef = CDB71E67134156FF00633B13 /* USSlipMapBrush.h */; };
-		CDB71EFC134156FF00633B13 /* USSlipMapTile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDB71E68134156FF00633B13 /* USSlipMapTile.cpp */; };
-		CDB71EFD134156FF00633B13 /* USSlipMapTile.h in Headers */ = {isa = PBXBuildFile; fileRef = CDB71E69134156FF00633B13 /* USSlipMapTile.h */; };
-		CDB71EFE134156FF00633B13 /* USSlipMapTileSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDB71E6A134156FF00633B13 /* USSlipMapTileSource.cpp */; };
-		CDB71EFF134156FF00633B13 /* USSlipMapTileSource.h in Headers */ = {isa = PBXBuildFile; fileRef = CDB71E6B134156FF00633B13 /* USSlipMapTileSource.h */; };
 		CDB71F00134156FF00633B13 /* USSqlBinding.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDB71E6C134156FF00633B13 /* USSqlBinding.cpp */; };
 		CDB71F01134156FF00633B13 /* USSqlBinding.h in Headers */ = {isa = PBXBuildFile; fileRef = CDB71E6D134156FF00633B13 /* USSqlBinding.h */; };
 		CDB71F02134156FF00633B13 /* USSqlColumn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDB71E6E134156FF00633B13 /* USSqlColumn.cpp */; };
@@ -927,6 +921,20 @@
 		03C217D8104DE6E0009A2D5D /* tinyxmlerror.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = tinyxmlerror.cpp; path = ../3rdparty/tinyxml/tinyxmlerror.cpp; sourceTree = SOURCE_ROOT; };
 		03C217D9104DE6E0009A2D5D /* tinyxmlparser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = tinyxmlparser.cpp; path = ../3rdparty/tinyxml/tinyxmlparser.cpp; sourceTree = SOURCE_ROOT; };
 		03C2F6F4104DE130009A2D5D /* libMoai.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMoai.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		03D325DC134FC59B0056EF14 /* MOAIDeck2D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIDeck2D.cpp; path = ../src/moaicore/MOAIDeck2D.cpp; sourceTree = SOURCE_ROOT; };
+		03D325DD134FC59B0056EF14 /* MOAIDeck2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIDeck2D.h; path = ../src/moaicore/MOAIDeck2D.h; sourceTree = SOURCE_ROOT; };
+		03D325DE134FC59B0056EF14 /* MOAIParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIParser.cpp; path = ../src/moaicore/MOAIParser.cpp; sourceTree = SOURCE_ROOT; };
+		03D325DF134FC59B0056EF14 /* MOAIParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIParser.h; path = ../src/moaicore/MOAIParser.h; sourceTree = SOURCE_ROOT; };
+		03D325E6134FC6530056EF14 /* USCgt.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = USCgt.cpp; path = ../src/uslsext/USCgt.cpp; sourceTree = SOURCE_ROOT; };
+		03D325E7134FC6530056EF14 /* USCgt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = USCgt.h; path = ../src/uslsext/USCgt.h; sourceTree = SOURCE_ROOT; };
+		03D325E8134FC6530056EF14 /* USLexStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = USLexStream.cpp; path = ../src/uslsext/USLexStream.cpp; sourceTree = SOURCE_ROOT; };
+		03D325E9134FC6530056EF14 /* USLexStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = USLexStream.h; path = ../src/uslsext/USLexStream.h; sourceTree = SOURCE_ROOT; };
+		03D325EA134FC6530056EF14 /* USParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = USParser.cpp; path = ../src/uslsext/USParser.cpp; sourceTree = SOURCE_ROOT; };
+		03D325EB134FC6530056EF14 /* USParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = USParser.h; path = ../src/uslsext/USParser.h; sourceTree = SOURCE_ROOT; };
+		03D325EC134FC6530056EF14 /* USSyntaxNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = USSyntaxNode.cpp; path = ../src/uslsext/USSyntaxNode.cpp; sourceTree = SOURCE_ROOT; };
+		03D325ED134FC6530056EF14 /* USSyntaxNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = USSyntaxNode.h; path = ../src/uslsext/USSyntaxNode.h; sourceTree = SOURCE_ROOT; };
+		03D325EE134FC6530056EF14 /* USSyntaxScanner.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = USSyntaxScanner.cpp; path = ../src/uslsext/USSyntaxScanner.cpp; sourceTree = SOURCE_ROOT; };
+		03D325EF134FC6530056EF14 /* USSyntaxScanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = USSyntaxScanner.h; path = ../src/uslsext/USSyntaxScanner.h; sourceTree = SOURCE_ROOT; };
 		1484EE671159455800BBD784 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -1255,8 +1263,6 @@
 		CDB71C0D134156C800633B13 /* MOAIBox2DWorld.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIBox2DWorld.h; path = ../src/moaicore/MOAIBox2DWorld.h; sourceTree = "<group>"; };
 		CDB71C0E134156C800633B13 /* MOAIButtonSensor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIButtonSensor.cpp; path = ../src/moaicore/MOAIButtonSensor.cpp; sourceTree = "<group>"; };
 		CDB71C0F134156C800633B13 /* MOAIButtonSensor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIButtonSensor.h; path = ../src/moaicore/MOAIButtonSensor.h; sourceTree = "<group>"; };
-		CDB71C10134156C800633B13 /* MOAICheckpoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAICheckpoint.cpp; path = ../src/moaicore/MOAICheckpoint.cpp; sourceTree = "<group>"; };
-		CDB71C11134156C800633B13 /* MOAICheckpoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAICheckpoint.h; path = ../src/moaicore/MOAICheckpoint.h; sourceTree = "<group>"; };
 		CDB71C12134156C800633B13 /* MOAIColor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIColor.cpp; path = ../src/moaicore/MOAIColor.cpp; sourceTree = "<group>"; };
 		CDB71C13134156C800633B13 /* MOAIColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIColor.h; path = ../src/moaicore/MOAIColor.h; sourceTree = "<group>"; };
 		CDB71C14134156C800633B13 /* MOAICompassSensor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAICompassSensor.cpp; path = ../src/moaicore/MOAICompassSensor.cpp; sourceTree = "<group>"; };
@@ -1330,7 +1336,6 @@
 		CDB71C5A134156C800633B13 /* MOAILevelSensor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAILevelSensor.h; path = ../src/moaicore/MOAILevelSensor.h; sourceTree = "<group>"; };
 		CDB71C5B134156C800633B13 /* MOAILocationSensor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAILocationSensor.cpp; path = ../src/moaicore/MOAILocationSensor.cpp; sourceTree = "<group>"; };
 		CDB71C5C134156C800633B13 /* MOAILocationSensor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAILocationSensor.h; path = ../src/moaicore/MOAILocationSensor.h; sourceTree = "<group>"; };
-		CDB71C5D134156C800633B13 /* MOAILogMessages.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAILogMessages.cpp; path = ../src/moaicore/MOAILogMessages.cpp; sourceTree = "<group>"; };
 		CDB71C5E134156C800633B13 /* MOAILogMessages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAILogMessages.h; path = ../src/moaicore/MOAILogMessages.h; sourceTree = "<group>"; };
 		CDB71C5F134156C800633B13 /* MOAILogMgr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAILogMgr.cpp; path = ../src/moaicore/MOAILogMgr.cpp; sourceTree = "<group>"; };
 		CDB71C60134156C800633B13 /* MOAILogMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAILogMgr.h; path = ../src/moaicore/MOAILogMgr.h; sourceTree = "<group>"; };
@@ -1504,25 +1509,16 @@
 		CDB71E0B134156FE00633B13 /* USAttrMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = USAttrMap.h; path = ../src/uslsext/USAttrMap.h; sourceTree = "<group>"; };
 		CDB71E0C134156FE00633B13 /* USAttrOp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = USAttrOp.cpp; path = ../src/uslsext/USAttrOp.cpp; sourceTree = "<group>"; };
 		CDB71E0D134156FE00633B13 /* USAttrOp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = USAttrOp.h; path = ../src/uslsext/USAttrOp.h; sourceTree = "<group>"; };
-		CDB71E0E134156FE00633B13 /* USAutoPtr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = USAutoPtr.h; path = ../src/uslsext/USAutoPtr.h; sourceTree = "<group>"; };
 		CDB71E0F134156FE00633B13 /* USBlendMode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = USBlendMode.cpp; path = ../src/uslsext/USBlendMode.cpp; sourceTree = "<group>"; };
 		CDB71E10134156FE00633B13 /* USBlendMode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = USBlendMode.h; path = ../src/uslsext/USBlendMode.h; sourceTree = "<group>"; };
 		CDB71E11134156FE00633B13 /* USBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = USBox.cpp; path = ../src/uslsext/USBox.cpp; sourceTree = "<group>"; };
 		CDB71E12134156FE00633B13 /* USBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = USBox.h; path = ../src/uslsext/USBox.h; sourceTree = "<group>"; };
-		CDB71E13134156FE00633B13 /* USCamera2D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = USCamera2D.cpp; path = ../src/uslsext/USCamera2D.cpp; sourceTree = "<group>"; };
-		CDB71E14134156FE00633B13 /* USCamera2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = USCamera2D.h; path = ../src/uslsext/USCamera2D.h; sourceTree = "<group>"; };
-		CDB71E15134156FE00633B13 /* USCamera3D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = USCamera3D.cpp; path = ../src/uslsext/USCamera3D.cpp; sourceTree = "<group>"; };
-		CDB71E16134156FE00633B13 /* USCamera3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = USCamera3D.h; path = ../src/uslsext/USCamera3D.h; sourceTree = "<group>"; };
-		CDB71E17134156FE00633B13 /* USCameraFitter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = USCameraFitter.cpp; path = ../src/uslsext/USCameraFitter.cpp; sourceTree = "<group>"; };
-		CDB71E18134156FE00633B13 /* USCameraFitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = USCameraFitter.h; path = ../src/uslsext/USCameraFitter.h; sourceTree = "<group>"; };
 		CDB71E19134156FE00633B13 /* USCanvas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = USCanvas.cpp; path = ../src/uslsext/USCanvas.cpp; sourceTree = "<group>"; };
 		CDB71E1A134156FE00633B13 /* USCanvas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = USCanvas.h; path = ../src/uslsext/USCanvas.h; sourceTree = "<group>"; };
 		CDB71E1B134156FE00633B13 /* USColor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = USColor.cpp; path = ../src/uslsext/USColor.cpp; sourceTree = "<group>"; };
 		CDB71E1C134156FE00633B13 /* USColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = USColor.h; path = ../src/uslsext/USColor.h; sourceTree = "<group>"; };
 		CDB71E1D134156FE00633B13 /* USCurve.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = USCurve.cpp; path = ../src/uslsext/USCurve.cpp; sourceTree = "<group>"; };
 		CDB71E1E134156FE00633B13 /* USCurve.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = USCurve.h; path = ../src/uslsext/USCurve.h; sourceTree = "<group>"; };
-		CDB71E1F134156FE00633B13 /* USCurveSampler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = USCurveSampler.cpp; path = ../src/uslsext/USCurveSampler.cpp; sourceTree = "<group>"; };
-		CDB71E20134156FE00633B13 /* USCurveSampler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = USCurveSampler.h; path = ../src/uslsext/USCurveSampler.h; sourceTree = "<group>"; };
 		CDB71E21134156FE00633B13 /* USData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = USData.cpp; path = ../src/uslsext/USData.cpp; sourceTree = "<group>"; };
 		CDB71E22134156FE00633B13 /* USData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = USData.h; path = ../src/uslsext/USData.h; sourceTree = "<group>"; };
 		CDB71E23134156FE00633B13 /* USDataIOTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = USDataIOTask.cpp; path = ../src/uslsext/USDataIOTask.cpp; sourceTree = "<group>"; };
@@ -1540,8 +1536,6 @@
 		CDB71E2F134156FE00633B13 /* USFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = USFont.h; path = ../src/uslsext/USFont.h; sourceTree = "<group>"; };
 		CDB71E30134156FE00633B13 /* USFontRipper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = USFontRipper.cpp; path = ../src/uslsext/USFontRipper.cpp; sourceTree = "<group>"; };
 		CDB71E31134156FE00633B13 /* USFontRipper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = USFontRipper.h; path = ../src/uslsext/USFontRipper.h; sourceTree = "<group>"; };
-		CDB71E32134156FE00633B13 /* USFrustum.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = USFrustum.cpp; path = ../src/uslsext/USFrustum.cpp; sourceTree = "<group>"; };
-		CDB71E33134156FE00633B13 /* USFrustum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = USFrustum.h; path = ../src/uslsext/USFrustum.h; sourceTree = "<group>"; };
 		CDB71E34134156FE00633B13 /* USFsm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = USFsm.h; path = ../src/uslsext/USFsm.h; sourceTree = "<group>"; };
 		CDB71E35134156FE00633B13 /* USFsmStateFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = USFsmStateFactory.h; path = ../src/uslsext/USFsmStateFactory.h; sourceTree = "<group>"; };
 		CDB71E36134156FE00633B13 /* USGfxDevice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = USGfxDevice.cpp; path = ../src/uslsext/USGfxDevice.cpp; sourceTree = "<group>"; };
@@ -1592,12 +1586,6 @@
 		CDB71E63134156FF00633B13 /* USQuadCoord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = USQuadCoord.h; path = ../src/uslsext/USQuadCoord.h; sourceTree = "<group>"; };
 		CDB71E64134156FF00633B13 /* USRadixSort16.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = USRadixSort16.h; path = ../src/uslsext/USRadixSort16.h; sourceTree = "<group>"; };
 		CDB71E65134156FF00633B13 /* USRadixSort32.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = USRadixSort32.h; path = ../src/uslsext/USRadixSort32.h; sourceTree = "<group>"; };
-		CDB71E66134156FF00633B13 /* USSlipMapBrush.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = USSlipMapBrush.cpp; path = ../src/uslsext/USSlipMapBrush.cpp; sourceTree = "<group>"; };
-		CDB71E67134156FF00633B13 /* USSlipMapBrush.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = USSlipMapBrush.h; path = ../src/uslsext/USSlipMapBrush.h; sourceTree = "<group>"; };
-		CDB71E68134156FF00633B13 /* USSlipMapTile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = USSlipMapTile.cpp; path = ../src/uslsext/USSlipMapTile.cpp; sourceTree = "<group>"; };
-		CDB71E69134156FF00633B13 /* USSlipMapTile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = USSlipMapTile.h; path = ../src/uslsext/USSlipMapTile.h; sourceTree = "<group>"; };
-		CDB71E6A134156FF00633B13 /* USSlipMapTileSource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = USSlipMapTileSource.cpp; path = ../src/uslsext/USSlipMapTileSource.cpp; sourceTree = "<group>"; };
-		CDB71E6B134156FF00633B13 /* USSlipMapTileSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = USSlipMapTileSource.h; path = ../src/uslsext/USSlipMapTileSource.h; sourceTree = "<group>"; };
 		CDB71E6C134156FF00633B13 /* USSqlBinding.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = USSqlBinding.cpp; path = ../src/uslsext/USSqlBinding.cpp; sourceTree = "<group>"; };
 		CDB71E6D134156FF00633B13 /* USSqlBinding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = USSqlBinding.h; path = ../src/uslsext/USSqlBinding.h; sourceTree = "<group>"; };
 		CDB71E6E134156FF00633B13 /* USSqlColumn.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = USSqlColumn.cpp; path = ../src/uslsext/USSqlColumn.cpp; sourceTree = "<group>"; };
@@ -2523,26 +2511,19 @@
 				CDB71E0B134156FE00633B13 /* USAttrMap.h */,
 				CDB71E0C134156FE00633B13 /* USAttrOp.cpp */,
 				CDB71E0D134156FE00633B13 /* USAttrOp.h */,
-				CDB71E0E134156FE00633B13 /* USAutoPtr.h */,
 				CD885E3F1342722400FD15A1 /* USBinarySearch.h */,
 				CDB71E0F134156FE00633B13 /* USBlendMode.cpp */,
 				CDB71E10134156FE00633B13 /* USBlendMode.h */,
 				CDB71E11134156FE00633B13 /* USBox.cpp */,
 				CDB71E12134156FE00633B13 /* USBox.h */,
-				CDB71E13134156FE00633B13 /* USCamera2D.cpp */,
-				CDB71E14134156FE00633B13 /* USCamera2D.h */,
-				CDB71E15134156FE00633B13 /* USCamera3D.cpp */,
-				CDB71E16134156FE00633B13 /* USCamera3D.h */,
-				CDB71E17134156FE00633B13 /* USCameraFitter.cpp */,
-				CDB71E18134156FE00633B13 /* USCameraFitter.h */,
 				CDB71E19134156FE00633B13 /* USCanvas.cpp */,
 				CDB71E1A134156FE00633B13 /* USCanvas.h */,
+				03D325E6134FC6530056EF14 /* USCgt.cpp */,
+				03D325E7134FC6530056EF14 /* USCgt.h */,
 				CDB71E1B134156FE00633B13 /* USColor.cpp */,
 				CDB71E1C134156FE00633B13 /* USColor.h */,
 				CDB71E1D134156FE00633B13 /* USCurve.cpp */,
 				CDB71E1E134156FE00633B13 /* USCurve.h */,
-				CDB71E1F134156FE00633B13 /* USCurveSampler.cpp */,
-				CDB71E20134156FE00633B13 /* USCurveSampler.h */,
 				CDB71E21134156FE00633B13 /* USData.cpp */,
 				CDB71E22134156FE00633B13 /* USData.h */,
 				CDB71E23134156FE00633B13 /* USDataIOTask.cpp */,
@@ -2560,8 +2541,6 @@
 				CDB71E2F134156FE00633B13 /* USFont.h */,
 				CDB71E30134156FE00633B13 /* USFontRipper.cpp */,
 				CDB71E31134156FE00633B13 /* USFontRipper.h */,
-				CDB71E32134156FE00633B13 /* USFrustum.cpp */,
-				CDB71E33134156FE00633B13 /* USFrustum.h */,
 				CDB71E34134156FE00633B13 /* USFsm.h */,
 				CDB71E35134156FE00633B13 /* USFsmStateFactory.h */,
 				CDB71E36134156FE00633B13 /* USGfxDevice.cpp */,
@@ -2582,6 +2561,8 @@
 				CDB71E45134156FE00633B13 /* USInterpolate.h */,
 				CDB71E46134156FE00633B13 /* USIntersect.cpp */,
 				CDB71E47134156FE00633B13 /* USIntersect.h */,
+				03D325E8134FC6530056EF14 /* USLexStream.cpp */,
+				03D325E9134FC6530056EF14 /* USLexStream.h */,
 				CDB71E48134156FE00633B13 /* USLog.cpp */,
 				CDB71E49134156FE00633B13 /* USLog.h */,
 				CDB71E4A134156FE00633B13 /* uslsext.cpp */,
@@ -2598,6 +2579,8 @@
 				CDB71E55134156FE00633B13 /* USMutex_win32.h */,
 				CDB71E56134156FF00633B13 /* USMutex.cpp */,
 				CDB71E57134156FF00633B13 /* USMutex.h */,
+				03D325EA134FC6530056EF14 /* USParser.cpp */,
+				03D325EB134FC6530056EF14 /* USParser.h */,
 				CDB71E58134156FF00633B13 /* USPlane.cpp */,
 				CDB71E59134156FF00633B13 /* USPlane.h */,
 				CDB71E5A134156FF00633B13 /* USPolar.cpp */,
@@ -2612,12 +2595,6 @@
 				CDB71E63134156FF00633B13 /* USQuadCoord.h */,
 				CDB71E64134156FF00633B13 /* USRadixSort16.h */,
 				CDB71E65134156FF00633B13 /* USRadixSort32.h */,
-				CDB71E66134156FF00633B13 /* USSlipMapBrush.cpp */,
-				CDB71E67134156FF00633B13 /* USSlipMapBrush.h */,
-				CDB71E68134156FF00633B13 /* USSlipMapTile.cpp */,
-				CDB71E69134156FF00633B13 /* USSlipMapTile.h */,
-				CDB71E6A134156FF00633B13 /* USSlipMapTileSource.cpp */,
-				CDB71E6B134156FF00633B13 /* USSlipMapTileSource.h */,
 				CDB71E6C134156FF00633B13 /* USSqlBinding.cpp */,
 				CDB71E6D134156FF00633B13 /* USSqlBinding.h */,
 				CDB71E6E134156FF00633B13 /* USSqlColumn.cpp */,
@@ -2632,6 +2609,10 @@
 				CDB71E77134156FF00633B13 /* USSqlValue.h */,
 				CDB71E78134156FF00633B13 /* USSurface2D.cpp */,
 				CDB71E79134156FF00633B13 /* USSurface2D.h */,
+				03D325EC134FC6530056EF14 /* USSyntaxNode.cpp */,
+				03D325ED134FC6530056EF14 /* USSyntaxNode.h */,
+				03D325EE134FC6530056EF14 /* USSyntaxScanner.cpp */,
+				03D325EF134FC6530056EF14 /* USSyntaxScanner.h */,
 				CDB71E7A134156FF00633B13 /* USTask.cpp */,
 				CDB71E7B134156FF00633B13 /* USTask.h */,
 				CDB71E7C134156FF00633B13 /* USTaskThread.cpp */,
@@ -2691,8 +2672,6 @@
 				CDB71C0D134156C800633B13 /* MOAIBox2DWorld.h */,
 				CDB71C0E134156C800633B13 /* MOAIButtonSensor.cpp */,
 				CDB71C0F134156C800633B13 /* MOAIButtonSensor.h */,
-				CDB71C10134156C800633B13 /* MOAICheckpoint.cpp */,
-				CDB71C11134156C800633B13 /* MOAICheckpoint.h */,
 				CDB71C12134156C800633B13 /* MOAIColor.cpp */,
 				CDB71C13134156C800633B13 /* MOAIColor.h */,
 				CDB71C14134156C800633B13 /* MOAICompassSensor.cpp */,
@@ -2722,6 +2701,8 @@
 				CDB71C2C134156C800633B13 /* MOAIDebugLines.h */,
 				CDB71C2D134156C800633B13 /* MOAIDeck.cpp */,
 				CDB71C2E134156C800633B13 /* MOAIDeck.h */,
+				03D325DC134FC59B0056EF14 /* MOAIDeck2D.cpp */,
+				03D325DD134FC59B0056EF14 /* MOAIDeck2D.h */,
 				CDB71C2F134156C800633B13 /* MOAIEaseDriver.cpp */,
 				CDB71C30134156C800633B13 /* MOAIEaseDriver.h */,
 				CDB71C31134156C800633B13 /* MOAIEaseType.cpp */,
@@ -2766,7 +2747,6 @@
 				CDB71C5A134156C800633B13 /* MOAILevelSensor.h */,
 				CDB71C5B134156C800633B13 /* MOAILocationSensor.cpp */,
 				CDB71C5C134156C800633B13 /* MOAILocationSensor.h */,
-				CDB71C5D134156C800633B13 /* MOAILogMessages.cpp */,
 				CDB71C5E134156C800633B13 /* MOAILogMessages.h */,
 				CDB71C5F134156C800633B13 /* MOAILogMgr.cpp */,
 				CDB71C60134156C800633B13 /* MOAILogMgr.h */,
@@ -2776,6 +2756,8 @@
 				CDB71C62134156C800633B13 /* MOAINode.h */,
 				CDB71C63134156C800633B13 /* MOAINodeMgr.cpp */,
 				CDB71C64134156C800633B13 /* MOAINodeMgr.h */,
+				03D325DE134FC59B0056EF14 /* MOAIParser.cpp */,
+				03D325DF134FC59B0056EF14 /* MOAIParser.h */,
 				CDB71C65134156C800633B13 /* MOAIParticleEmitter.cpp */,
 				CDB71C66134156C800633B13 /* MOAIParticleEmitter.h */,
 				CDB71C67134156C800633B13 /* MOAIParticleEngine.cpp */,
@@ -3070,7 +3052,6 @@
 				CDB71CBA134156C800633B13 /* MOAIBox2DJoint.h in Headers */,
 				CDB71CBC134156C800633B13 /* MOAIBox2DWorld.h in Headers */,
 				CDB71CBE134156C800633B13 /* MOAIButtonSensor.h in Headers */,
-				CDB71CC0134156C800633B13 /* MOAICheckpoint.h in Headers */,
 				CDB71CC2134156C800633B13 /* MOAIColor.h in Headers */,
 				CDB71CC4134156C800633B13 /* MOAICompassSensor.h in Headers */,
 				CDB71CC5134156C800633B13 /* moaiconf.h in Headers */,
@@ -3205,16 +3186,11 @@
 				CDB71E9D134156FF00633B13 /* USAttributed.h in Headers */,
 				CDB71E9F134156FF00633B13 /* USAttrMap.h in Headers */,
 				CDB71EA1134156FF00633B13 /* USAttrOp.h in Headers */,
-				CDB71EA2134156FF00633B13 /* USAutoPtr.h in Headers */,
 				CDB71EA4134156FF00633B13 /* USBlendMode.h in Headers */,
 				CDB71EA6134156FF00633B13 /* USBox.h in Headers */,
-				CDB71EA8134156FF00633B13 /* USCamera2D.h in Headers */,
-				CDB71EAA134156FF00633B13 /* USCamera3D.h in Headers */,
-				CDB71EAC134156FF00633B13 /* USCameraFitter.h in Headers */,
 				CDB71EAE134156FF00633B13 /* USCanvas.h in Headers */,
 				CDB71EB0134156FF00633B13 /* USColor.h in Headers */,
 				CDB71EB2134156FF00633B13 /* USCurve.h in Headers */,
-				CDB71EB4134156FF00633B13 /* USCurveSampler.h in Headers */,
 				CDB71EB6134156FF00633B13 /* USData.h in Headers */,
 				CDB71EB8134156FF00633B13 /* USDataIOTask.h in Headers */,
 				CDB71EBA134156FF00633B13 /* USDebugLines.h in Headers */,
@@ -3224,7 +3200,6 @@
 				CDB71EC1134156FF00633B13 /* USFileCache.h in Headers */,
 				CDB71EC3134156FF00633B13 /* USFont.h in Headers */,
 				CDB71EC5134156FF00633B13 /* USFontRipper.h in Headers */,
-				CDB71EC7134156FF00633B13 /* USFrustum.h in Headers */,
 				CDB71EC8134156FF00633B13 /* USFsm.h in Headers */,
 				CDB71EC9134156FF00633B13 /* USFsmStateFactory.h in Headers */,
 				CDB71ECB134156FF00633B13 /* USGfxDevice.h in Headers */,
@@ -3255,9 +3230,6 @@
 				CDB71EF7134156FF00633B13 /* USQuadCoord.h in Headers */,
 				CDB71EF8134156FF00633B13 /* USRadixSort16.h in Headers */,
 				CDB71EF9134156FF00633B13 /* USRadixSort32.h in Headers */,
-				CDB71EFB134156FF00633B13 /* USSlipMapBrush.h in Headers */,
-				CDB71EFD134156FF00633B13 /* USSlipMapTile.h in Headers */,
-				CDB71EFF134156FF00633B13 /* USSlipMapTileSource.h in Headers */,
 				CDB71F01134156FF00633B13 /* USSqlBinding.h in Headers */,
 				CDB71F03134156FF00633B13 /* USSqlColumn.h in Headers */,
 				CDB71F05134156FF00633B13 /* USSqlConnection.h in Headers */,
@@ -3279,6 +3251,13 @@
 				CDB71F25134156FF00633B13 /* USViewQuad.h in Headers */,
 				CDB71F27134156FF00633B13 /* USXmlReader.h in Headers */,
 				033146F21343C1EE00095C11 /* MOAIMesh.h in Headers */,
+				03D325E1134FC59B0056EF14 /* MOAIDeck2D.h in Headers */,
+				03D325E3134FC59B0056EF14 /* MOAIParser.h in Headers */,
+				03D325F1134FC6530056EF14 /* USCgt.h in Headers */,
+				03D325F3134FC6530056EF14 /* USLexStream.h in Headers */,
+				03D325F5134FC6530056EF14 /* USParser.h in Headers */,
+				03D325F7134FC6530056EF14 /* USSyntaxNode.h in Headers */,
+				03D325F9134FC6530056EF14 /* USSyntaxScanner.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3615,7 +3594,6 @@
 				CDB71CB9134156C800633B13 /* MOAIBox2DJoint.cpp in Sources */,
 				CDB71CBB134156C800633B13 /* MOAIBox2DWorld.cpp in Sources */,
 				CDB71CBD134156C800633B13 /* MOAIButtonSensor.cpp in Sources */,
-				CDB71CBF134156C800633B13 /* MOAICheckpoint.cpp in Sources */,
 				CDB71CC1134156C800633B13 /* MOAIColor.cpp in Sources */,
 				CDB71CC3134156C800633B13 /* MOAICompassSensor.cpp in Sources */,
 				CDB71CC6134156C800633B13 /* moaicore.cpp in Sources */,
@@ -3652,7 +3630,6 @@
 				CDB71D06134156C800633B13 /* MOAILayoutFrame.cpp in Sources */,
 				CDB71D08134156C800633B13 /* MOAILevelSensor.cpp in Sources */,
 				CDB71D0A134156C800633B13 /* MOAILocationSensor.cpp in Sources */,
-				CDB71D0C134156C800633B13 /* MOAILogMessages.cpp in Sources */,
 				CDB71D0E134156C800633B13 /* MOAILogMgr.cpp in Sources */,
 				CDB71D10134156C800633B13 /* MOAINode.cpp in Sources */,
 				CDB71D12134156C800633B13 /* MOAINodeMgr.cpp in Sources */,
@@ -3731,13 +3708,9 @@
 				CDB71EA0134156FF00633B13 /* USAttrOp.cpp in Sources */,
 				CDB71EA3134156FF00633B13 /* USBlendMode.cpp in Sources */,
 				CDB71EA5134156FF00633B13 /* USBox.cpp in Sources */,
-				CDB71EA7134156FF00633B13 /* USCamera2D.cpp in Sources */,
-				CDB71EA9134156FF00633B13 /* USCamera3D.cpp in Sources */,
-				CDB71EAB134156FF00633B13 /* USCameraFitter.cpp in Sources */,
 				CDB71EAD134156FF00633B13 /* USCanvas.cpp in Sources */,
 				CDB71EAF134156FF00633B13 /* USColor.cpp in Sources */,
 				CDB71EB1134156FF00633B13 /* USCurve.cpp in Sources */,
-				CDB71EB3134156FF00633B13 /* USCurveSampler.cpp in Sources */,
 				CDB71EB5134156FF00633B13 /* USData.cpp in Sources */,
 				CDB71EB7134156FF00633B13 /* USDataIOTask.cpp in Sources */,
 				CDB71EB9134156FF00633B13 /* USDebugLines.cpp in Sources */,
@@ -3746,7 +3719,6 @@
 				CDB71EC0134156FF00633B13 /* USFileCache.cpp in Sources */,
 				CDB71EC2134156FF00633B13 /* USFont.cpp in Sources */,
 				CDB71EC4134156FF00633B13 /* USFontRipper.cpp in Sources */,
-				CDB71EC6134156FF00633B13 /* USFrustum.cpp in Sources */,
 				CDB71ECA134156FF00633B13 /* USGfxDevice.cpp in Sources */,
 				CDB71ECC134156FF00633B13 /* USGLLine.cpp in Sources */,
 				CDB71ECE134156FF00633B13 /* USGLQuad.cpp in Sources */,
@@ -3767,9 +3739,6 @@
 				CDB71EF2134156FF00633B13 /* USPrettyPrint.cpp in Sources */,
 				CDB71EF4134156FF00633B13 /* USQuad.cpp in Sources */,
 				CDB71EF6134156FF00633B13 /* USQuadCoord.cpp in Sources */,
-				CDB71EFA134156FF00633B13 /* USSlipMapBrush.cpp in Sources */,
-				CDB71EFC134156FF00633B13 /* USSlipMapTile.cpp in Sources */,
-				CDB71EFE134156FF00633B13 /* USSlipMapTileSource.cpp in Sources */,
 				CDB71F00134156FF00633B13 /* USSqlBinding.cpp in Sources */,
 				CDB71F02134156FF00633B13 /* USSqlColumn.cpp in Sources */,
 				CDB71F04134156FF00633B13 /* USSqlConnection.cpp in Sources */,
@@ -3791,6 +3760,13 @@
 				CDB71F24134156FF00633B13 /* USViewQuad.cpp in Sources */,
 				CDB71F26134156FF00633B13 /* USXmlReader.cpp in Sources */,
 				033146F11343C1EE00095C11 /* MOAIMesh.cpp in Sources */,
+				03D325E0134FC59B0056EF14 /* MOAIDeck2D.cpp in Sources */,
+				03D325E2134FC59B0056EF14 /* MOAIParser.cpp in Sources */,
+				03D325F0134FC6530056EF14 /* USCgt.cpp in Sources */,
+				03D325F2134FC6530056EF14 /* USLexStream.cpp in Sources */,
+				03D325F4134FC6530056EF14 /* USParser.cpp in Sources */,
+				03D325F6134FC6530056EF14 /* USSyntaxNode.cpp in Sources */,
+				03D325F8134FC6530056EF14 /* USSyntaxScanner.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
