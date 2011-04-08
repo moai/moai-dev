@@ -403,7 +403,7 @@ void USFont::Draw ( const USGlyphBuffer& layout, u32 reveal ) {
 	u32 size = layout.GetTop ();
 	for ( u32 i = 0; ( i < size ) && ( i < reveal ); ++i ) {
 		const USGlyphSprite& sprite = layout [ i ];
-		
+			
 		if ( sprite.mRGBA != rgba ) {
 			rgba = sprite.mRGBA;
 			
@@ -760,7 +760,7 @@ void USFont::LayoutLine ( USGlyphBuffer& glyphBuffer, cc8* str, float points, u3
 			yOffset = curve->GetFloatValue (( penX + xOff ) / width );
 		}
 		
-		if ( glyph.mWidth ) {
+		if ( glyph.mWidth > 0.0f ) {
 			glyphBuffer.PushGlyph ( id, x + penX, y + yOffset, points, styler.mRGBA );
 		}
 		penX += ( glyph.mAdvanceX * points );

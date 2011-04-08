@@ -16,9 +16,9 @@ layer = MOAILayer2D.new ()
 layer:setViewport ( viewport )
 
 MOAISim.pushRenderPass ( layer )
-MOAISim.openWindow ( "flash-spriteLib", 128, 128 )
+MOAISim.openWindow ( "flash-spriteDeck", 128, 128 )
 
-local spriteLibs = dofile ( 'ggk_angryletters_v2 - symbols.fla.lua' )
+local spriteLibs = dofile ( 'flash-spriteDeck.fla.lua' )
 
 function loadSpriteLibs ( specList )
 

@@ -167,7 +167,7 @@ function parseFlash ( flashAnim )
 	return flash
 end
 
-flash = parseFlash ( dofile ( 'Exporter_test.fla.lua' ))
+flash = parseFlash ( dofile ( 'flash-tween.fla.lua' ))
 
 viewport = MOAIViewport.new ()
 viewport:setSize ( flash.width, flash.height )
