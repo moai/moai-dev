@@ -154,9 +154,6 @@ int MOAICpArbiter::_isFirstContact ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	new
-	@text	Creation of new instances is not supported on this class.
-*/
 int MOAICpArbiter::_new ( lua_State* L ) {
 	UNUSED ( L );
 	

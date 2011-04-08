@@ -1,9 +1,12 @@
 ----------------------------------------------------------------
-function dumpDef ( def )
+function dumpDef ( def, i )
+
+	if i == 1 then
+		dumpFunctionText ( def )
+	end
 
 	dumpFunctionDef ( def )
-	dumpFunctionText ( def )
-	
+
 	for i,v in ipairs ( def.inParams ) do
 		dumpParam ( v )
 	end
@@ -26,7 +29,11 @@ function dumpFunctionDef ( def )
 
 	if #def.optParams > 0 then
 		
-		argList = argList .. " [, "
+		if #def.inParams == 0 then
+			argList = argList .. " [ " 
+		else
+			argList = argList .. " [, "
+		end
 		
 		for i,v in ipairs ( def.optParams ) do
 			if i ~= 1 then argList = argList .. ", " end
@@ -36,7 +43,14 @@ function dumpFunctionDef ( def )
 		argList = argList .. " ]"
 	end
 	
-	doxy = doxy .. "<tt>function " .. def.funcName .. " ( " .. argList .. " )</tt>\n\n"
+	local argText = " ( " .. argList .. " )"
+	
+	if argList == "" then
+		argText = " ()"
+	end
+	
+	doxy = doxy .. "\n\n<hr>\t"
+	doxy = doxy .. "<tt>function " .. def.funcName .. argText .. "</tt>\n\n"
 end
 
 ----------------------------------------------------------------
@@ -194,7 +208,9 @@ function handleDoxygenBlock ()
 		elseif v.tag == "@overload" then
 			
 			if foundOverload then
+				local oldFuncName = curDef.funcName
 				pushDef ()
+				curDef.funcName = oldFuncName
 			end
 			
 			foundOverload = true
@@ -205,13 +221,13 @@ function handleDoxygenBlock ()
 
 	for i = 1, #defs do
 		
-		if i == 1 then
-			doxy = doxy .. "\n\n\t"
-		else
-			doxy = doxy .. "\n\n<hr>\t"
-		end
+		-- if i == 1 then
+			-- doxy = doxy .. "\n\n\t"
+		-- else
+			-- doxy = doxy .. "\n\n<hr>\t"
+		-- end
 		
-		dumpDef ( defs [ i ])
+		dumpDef ( defs [ i ], i )
 	end
 	
 	-- output formatted doxygen stuff to file
