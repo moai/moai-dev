@@ -57,8 +57,8 @@ InstallDirRegKey ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "InstallDir"
 !define MUI_FINISHPAGE_RUN
 !define MUI_FINISHPAGE_RUN_TEXT "Run Hello Moai!"
 !define MUI_FINISHPAGE_RUN_FUNCTION launchHelloMoai 
-!define MUI_FINISHPAGE_SHOWREADME "www.cnn.com" ;"$INSTDIR\AboutMoai.pdf"
-!define MUI_FINISHPAGE_SHOWREADME_TEXT "View AboutMoai.pdf"
+!define MUI_FINISHPAGE_SHOWREADME "http://getmoai.com/GettingStartedWithMoai.pdf" ;"$INSTDIR\AboutMoai.pdf"
+!define MUI_FINISHPAGE_SHOWREADME_TEXT "View $\"Getting Started With Moai$\" Online"
 !insertmacro MUI_PAGE_FINISH
 
 !insertmacro MUI_UNPAGE_WELCOME
