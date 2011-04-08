@@ -15,7 +15,7 @@ pushd ..
 set /a count=0
 
 setlocal ENABLEDELAYEDEXPANSION
-for /F "skip=1 tokens=2*" %%i in (doxyfile-lua) do (
+for /F "skip=1 tokens=2*" %%i in (version.txt) do (
 
 	set /a count=count+1
 

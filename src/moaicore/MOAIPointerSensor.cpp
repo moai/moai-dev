@@ -30,7 +30,7 @@ int MOAIPointerSensor::_getLoc ( lua_State* L ) {
 /**	@name	setCallback
 	@text	Sets the callback to be issued when the pointer location changes.
 
-	@in		MOAILevelSensor self
+	@in		MOAIPointerSensor self
 	@in		function callback
 	@out	nil
 */

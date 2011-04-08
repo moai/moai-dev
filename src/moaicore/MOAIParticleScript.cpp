@@ -77,326 +77,290 @@ u8* MOAIParticleScript::Instruction::Write ( u8* cursor ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	abs
+	@text	Particle engine opcode. Pending refactor. New interface and description TBA.
+	@in		MOAIParticleScript self
+	@out	nil
 */
 IMPL_LUA_PARTICLE_OP ( _abs,				ABS,				1, 0 )
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	accAttractor
+	@text	Particle engine opcode. Pending refactor. New interface and description TBA.
+	@in		MOAIParticleScript self
+	@out	nil
 */
 IMPL_LUA_PARTICLE_OP ( _accAttractor,		ACC_ATTRACTOR,		3, 2 )
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	accForces
+	@text	Particle engine opcode. Pending refactor. New interface and description TBA.
+	@in		MOAIParticleScript self
+	@out	nil
 */
 IMPL_LUA_PARTICLE_OP ( _accForces,			ACC_FORCES,			2, 0 )
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	accLinear
+	@text	Particle engine opcode. Pending refactor. New interface and description TBA.
+	@in		MOAIParticleScript self
+	@out	nil
 */
 IMPL_LUA_PARTICLE_OP ( _accLinear,			ACC_LINEAR,			1, 2 )
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	add
+	@text	Particle engine opcode. Pending refactor. New interface and description TBA.
+	@in		MOAIParticleScript self
+	@out	nil
 */
 IMPL_LUA_PARTICLE_OP ( _add,				ADD,				2, 0 )
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	damp
+	@text	Particle engine opcode. Pending refactor. New interface and description TBA.
+	@in		MOAIParticleScript self
+	@out	nil
 */
 IMPL_LUA_PARTICLE_OP ( _damp,				DAMP,				2, 0 )
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	div
+	@text	Particle engine opcode. Pending refactor. New interface and description TBA.
+	@in		MOAIParticleScript self
+	@out	nil
 */
 IMPL_LUA_PARTICLE_OP ( _div,				DIV,				2, 0 )
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	ease
+	@text	Particle engine opcode. Pending refactor. New interface and description TBA.
+	@in		MOAIParticleScript self
+	@out	nil
 */
 IMPL_LUA_PARTICLE_OP ( _ease,				EASE,				2, 0 )
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	initLoc
+	@text	Particle engine opcode. Pending refactor. New interface and description TBA.
+	@in		MOAIParticleScript self
+	@out	nil
 */
 IMPL_LUA_PARTICLE_OP ( _initLoc,			INIT_LOC,			1, 0 )
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	initTime
+	@text	Particle engine opcode. Pending refactor. New interface and description TBA.
+	@in		MOAIParticleScript self
+	@out	nil
 */
 IMPL_LUA_PARTICLE_OP ( _initTime,			INIT_TIME,			1, 0 )
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	initVec
+	@text	Particle engine opcode. Pending refactor. New interface and description TBA.
+	@in		MOAIParticleScript self
+	@out	nil
 */
 IMPL_LUA_PARTICLE_OP ( _initVec,			INIT_VEC,			1, 0 )
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	loadAge
+	@text	Particle engine opcode. Pending refactor. New interface and description TBA.
+	@in		MOAIParticleScript self
+	@out	nil
 */
 IMPL_LUA_PARTICLE_OP ( _loadAge,			LOAD_AGE,			1, 0 )
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	loadDuration
+	@text	Particle engine opcode. Pending refactor. New interface and description TBA.
+	@in		MOAIParticleScript self
+	@out	nil
 */
 IMPL_LUA_PARTICLE_OP ( _loadDuration,		LOAD_DURATION,		1, 0 )
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	loadStep
+	@text	Particle engine opcode. Pending refactor. New interface and description TBA.
+	@in		MOAIParticleScript self
+	@out	nil
 */
 IMPL_LUA_PARTICLE_OP ( _loadStep,			LOAD_STEP,			1, 0 )
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	loadTime
+	@text	Particle engine opcode. Pending refactor. New interface and description TBA.
+	@in		MOAIParticleScript self
+	@out	nil
 */
 IMPL_LUA_PARTICLE_OP ( _loadTime,			LOAD_TIME,			1, 0 )
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	mac
+	@text	Particle engine opcode. Pending refactor. New interface and description TBA.
+	@in		MOAIParticleScript self
+	@out	nil
 */
 IMPL_LUA_PARTICLE_OP ( _mac,				MAC,				4, 0 )
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	mov
+	@text	Particle engine opcode. Pending refactor. New interface and description TBA.
+	@in		MOAIParticleScript self
+	@out	nil
 */
 IMPL_LUA_PARTICLE_OP ( _mov,				MOV,				2, 0 )
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	mul
+	@text	Particle engine opcode. Pending refactor. New interface and description TBA.
+	@in		MOAIParticleScript self
+	@out	nil
 */
 IMPL_LUA_PARTICLE_OP ( _mul,				MUL,				2, 0 )
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	rand
+	@text	Particle engine opcode. Pending refactor. New interface and description TBA.
+	@in		MOAIParticleScript self
+	@out	nil
 */
 IMPL_LUA_PARTICLE_OP ( _rand,				RAND,				1, 2 )
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	scale
+	@text	Particle engine opcode. Pending refactor. New interface and description TBA.
+	@in		MOAIParticleScript self
+	@out	nil
 */
 IMPL_LUA_PARTICLE_OP ( _scale,				SCALE,				2, 0 )
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	scaleAdd
+	@text	Particle engine opcode. Pending refactor. New interface and description TBA.
+	@in		MOAIParticleScript self
+	@out	nil
 */
 IMPL_LUA_PARTICLE_OP ( _scaleAdd,			SCALE_ADD,			2, 0 )
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	setDuration
+	@text	Particle engine opcode. Pending refactor. New interface and description TBA.
+	@in		MOAIParticleScript self
+	@out	nil
 */
 IMPL_LUA_PARTICLE_OP ( _setDuration,		SET_DURATION,		1, 0 )
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	sprite
+	@text	Particle engine opcode. Pending refactor. New interface and description TBA.
+	@in		MOAIParticleScript self
+	@out	nil
 */
 IMPL_LUA_PARTICLE_OP ( _sprite,				SPRITE,				0, 0 )
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	spriteAlpha
+	@text	Particle engine opcode. Pending refactor. New interface and description TBA.
+	@in		MOAIParticleScript self
+	@out	nil
 */
 IMPL_LUA_PARTICLE_OP ( _spriteAlpha,		SPRITE_ALPHA,		1, 0 )
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	spriteColor
+	@text	Particle engine opcode. Pending refactor. New interface and description TBA.
+	@in		MOAIParticleScript self
+	@out	nil
 */
 IMPL_LUA_PARTICLE_OP ( _spriteColor,		SPRITE_COLOR,		1, 0 )
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	spriteGlow
+	@text	Particle engine opcode. Pending refactor. New interface and description TBA.
+	@in		MOAIParticleScript self
+	@out	nil
 */
 IMPL_LUA_PARTICLE_OP ( _spriteGlow,			SPRITE_GLOW,		1, 0 )
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	spriteIdx
+	@text	Particle engine opcode. Pending refactor. New interface and description TBA.
+	@in		MOAIParticleScript self
+	@out	nil
 */
 IMPL_LUA_PARTICLE_OP ( _spriteIdx,			SPRITE_IDX,			1, 0 )
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	spriteLoc
+	@text	Particle engine opcode. Pending refactor. New interface and description TBA.
+	@in		MOAIParticleScript self
+	@out	nil
 */
 IMPL_LUA_PARTICLE_OP ( _spriteLoc,			SPRITE_LOC,			1, 0 )
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	spriteRot
+	@text	Particle engine opcode. Pending refactor. New interface and description TBA.
+	@in		MOAIParticleScript self
+	@out	nil
 */
 IMPL_LUA_PARTICLE_OP ( _spriteRot,			SPRITE_ROT,			1, 0 )
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	spriteScale
+	@text	Particle engine opcode. Pending refactor. New interface and description TBA.
+	@in		MOAIParticleScript self
+	@out	nil
 */
 IMPL_LUA_PARTICLE_OP ( _spriteScale,		SPRITE_SCALE,		1, 0 )
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	spriteSize
+	@text	Particle engine opcode. Pending refactor. New interface and description TBA.
+	@in		MOAIParticleScript self
+	@out	nil
 */
 IMPL_LUA_PARTICLE_OP ( _spriteSize,			SPRITE_SIZE,		1, 0 )
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	stepEuler
+	@text	Particle engine opcode. Pending refactor. New interface and description TBA.
+	@in		MOAIParticleScript self
+	@out	nil
 */
 IMPL_LUA_PARTICLE_OP ( _stepEuler,			STEP_EULER,			3, 0 )
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	sub
+	@text	Particle engine opcode. Pending refactor. New interface and description TBA.
+	@in		MOAIParticleScript self
+	@out	nil
 */
 IMPL_LUA_PARTICLE_OP ( _sub,				SUB,				2, 0 )
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	subFromOne
+	@text	Particle engine opcode. Pending refactor. New interface and description TBA.
+	@in		MOAIParticleScript self
+	@out	nil
 */
 IMPL_LUA_PARTICLE_OP ( _subFromOne,			SUB_FROM_ONE,		1, 0 )
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	vec2Rand
+	@text	Particle engine opcode. Pending refactor. New interface and description TBA.
+	@in		MOAIParticleScript self
+	@out	nil
 */
 IMPL_LUA_PARTICLE_OP ( _vec2Rand,			VEC2_RAND,			1, 2 )
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	load
+	@text	Particle engine opcode. Pending refactor. New interface and description TBA.
+	@in		MOAIParticleScript self
+	@out	nil
 */
 int MOAIParticleScript::_load ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIParticleScript, "UNN" )

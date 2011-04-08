@@ -11,7 +11,7 @@
 
 //----------------------------------------------------------------//
 /**	@name	getLevel
-	@text	Description of method coming soon.
+	@text	Polls the current status of the level sensor.
 
 	@in		MOAILevelSensor self
 	@out	number x

@@ -18,39 +18,43 @@ class MOAIDataBuffer;
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	capParticles
+	@text	Controls capping vs. wrapping of particles in overflow situation.
+			Capping will prevent emission of additional particles when system
+			is full. Wrapping will overwrite the oldest particles with new particles.
+	
+	@in		MOAIParticleSystem self
+	@opt	boolean cap Default value is true.
+	@out	nil
 */
 int MOAIParticleSystem::_capParticles ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIParticleSystem, "UB" )
+	MOAI_LUA_SETUP ( MOAIParticleSystem, "U" )
 
-	self->mCapParticles = state.GetValue < bool >( 2, self->mCapParticles );
+	self->mCapParticles = state.GetValue < bool >( 2, true );
 	return 0;
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	capSprites
+	@text	Controls capping vs. wrapping of sprites.
+	
+	@in		MOAIParticleSystem self
+	@opt	boolean cap Default value is true.
+	@out	nil
 */
 int MOAIParticleSystem::_capSprites ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIParticleSystem, "UB" )
+	MOAI_LUA_SETUP ( MOAIParticleSystem, "U" )
 
-	self->mCapSprites = state.GetValue < bool >( 2, self->mCapSprites );
+	self->mCapSprites = state.GetValue < bool >( 2, true );
 	return 0;
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	clearSprites
+	@text	Flushes any existing sprites in system.
+	
+	@in		MOAIParticleSystem self
+	@out	nil
 */
 int MOAIParticleSystem::_clearSprites ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIParticleSystem, "U" )
@@ -60,11 +64,11 @@ int MOAIParticleSystem::_clearSprites ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	getState
+	@text	Returns a particle state for an index or nil if none exists.
+	
+	@in		MOAIParticleSystem self
+	@out	MOAIParticleState state
 */
 int MOAIParticleSystem::_getState ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIParticleSystem, "UN" )
@@ -80,11 +84,15 @@ int MOAIParticleSystem::_getState ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	pushParticle
+	@text	Adds a particle to the system.
+	
+	@in		MOAIParticleSystem self
+	@opt	number x Default value is 0.
+	@opt	number y Default value is 0.
+	@opt	number dx Default value is 0.
+	@opt	number dy Default value is 0.
+	@out	boolean result 'true' is particle was added, 'false' if not.
 */
 int MOAIParticleSystem::_pushParticle ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIParticleSystem, "U" )
@@ -101,11 +109,17 @@ int MOAIParticleSystem::_pushParticle ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	pushSprite
+	@text	Adds a sprite to the system. Sprite will persist until
+			particle simulation is begun or 'clearSprites' is called.
+	
+	@in		MOAIParticleSystem self
+	@in		number x
+	@in		number y
+	@opt	number rot Rotation in degrees. Default value is 0.
+	@opt	number xScale Default value is 1.
+	@opt	number yScale Default value is 1.
+	@out	boolean result 'true' is sprite was added, 'false' if not.
 */
 int MOAIParticleSystem::_pushSprite ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIParticleSystem, "UNN" )
@@ -114,15 +128,13 @@ int MOAIParticleSystem::_pushSprite ( lua_State* L ) {
 
 	sprite.mLoc.mX		= state.GetValue < float >( 2, 0.0f );
 	sprite.mLoc.mY		= state.GetValue < float >( 3, 0.0f );
-	
 	sprite.mRot			= state.GetValue < float >( 4, 0.0f );
-
 	sprite.mScale.mX	= state.GetValue < float >( 5, 1.0f );
 	sprite.mScale.mY	= state.GetValue < float >( 6, 1.0f );
 	
 	sprite.mColor		= 0xffffffff;
 	sprite.mGlow		= 0.0f;
-	sprite.mGfxID		= 0;
+	sprite.mGfxID		= 1;
 	
 	bool result = self->PushSprite ( sprite );
 	
@@ -134,11 +146,12 @@ int MOAIParticleSystem::_pushSprite ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	reserveConstants
+	@text	Reserve particle engine constants for use in particle scripts.
+	
+	@in		MOAIParticleSystem self
+	@in		number nConstants
+	@out	nil
 */
 int MOAIParticleSystem::_reserveConstants ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIParticleSystem, "UN" )
@@ -148,11 +161,13 @@ int MOAIParticleSystem::_reserveConstants ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	reserveParticles
+	@text	Reserve particle capacity of system.
+	
+	@in		MOAIParticleSystem self
+	@in		number nParticles Total number of particle records.
+	@in		number particleSize Size of each particle record (in registers).
+	@out	nil
 */
 int MOAIParticleSystem::_reserveParticles ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIParticleSystem, "UNN" )
@@ -165,11 +180,12 @@ int MOAIParticleSystem::_reserveParticles ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	reserveSprites
+	@text	Reserve sprite capacity of system.
+	
+	@in		MOAIParticleSystem self
+	@in		number nSprites
+	@out	nil
 */
 int MOAIParticleSystem::_reserveSprites ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIParticleSystem, "UN" )
@@ -179,11 +195,12 @@ int MOAIParticleSystem::_reserveSprites ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	reserveStates
+	@text	Reserve total number of states for system.
+	
+	@in		MOAIParticleSystem self
+	@in		number nStates
+	@out	nil
 */
 int MOAIParticleSystem::_reserveStates ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIParticleSystem, "UN" )
@@ -194,16 +211,18 @@ int MOAIParticleSystem::_reserveStates ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	setConstant
+	@text	Set the value of a constant.
+	
+	@in		MOAIParticleSystem self
+	@in		number index
+	@in		number value
+	@out	nil
 */
 int MOAIParticleSystem::_setConstant ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIParticleSystem, "U" )
 
-	u32 idx			= state.GetValue < u32 >( 2, 0 );
+	u32 idx			= state.GetValue < u32 >( 2, 1 ) - 1;
 	float value		= state.GetValue < float >( 3, 0.0f );
 
 	self->SetConstant ( idx, value );
@@ -212,11 +231,15 @@ int MOAIParticleSystem::_setConstant ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	setSpriteColor
+	@text	Set the color of the most recently added sprite.
+	
+	@in		MOAIParticleSystem self
+	@in		number r
+	@in		number g
+	@in		number b
+	@in		number a
+	@out	nil
 */
 int MOAIParticleSystem::_setSpriteColor ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIParticleSystem, "UNNNN" )
@@ -235,13 +258,14 @@ int MOAIParticleSystem::_setSpriteColor ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	setSpriteDeckIdx
+	@text	Set the sprite's deck index.
+	
+	@in		MOAIParticleSystem self
+	@in		number index
+	@out	nil
 */
-int MOAIParticleSystem::_setSpriteGfxID ( lua_State* L ) {
+int MOAIParticleSystem::_setSpriteDeckIdx ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIParticleSystem, "UN" )
 
 	MOAIParticleSprite* sprite = self->GetTopSprite ();
@@ -252,11 +276,13 @@ int MOAIParticleSystem::_setSpriteGfxID ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	setSpriteGlow
+	@text	Set the sprite's glow coefficient. 0 is no glow, 1 is
+			full glow (alpha add).
+	
+	@in		MOAIParticleSystem self
+	@in		number glow
+	@out	nil
 */
 int MOAIParticleSystem::_setSpriteGlow ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIParticleSystem, "U" )
@@ -270,11 +296,13 @@ int MOAIParticleSystem::_setSpriteGlow ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	setState
+	@text	Set a particle state.
+	
+	@in		MOAIParticleSystem self
+	@in		number index
+	@in		MOAIParticleState state
+	@out	nil
 */
 int MOAIParticleSystem::_setState ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIParticleSystem, "UNU" )
@@ -297,16 +325,21 @@ int MOAIParticleSystem::_setState ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	surge
+	@text	Release a batch emission or particles into the system.
+	
+	@in		MOAIParticleSystem self
+	@opt	number total Default value is 1.
+	@opt	number x Default value is 0.
+	@opt	number y Default value is 0.
+	@opt	number dx Default value is 0.
+	@opt	number dy Default value is 0.
+	@out	nil
 */
 int MOAIParticleSystem::_surge ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIParticleSystem, "U" )
+	MOAI_LUA_SETUP ( MOAIParticleSystem, "UN" )
 
-	u32 n		= state.GetValue < u32 >( 2, 0 );
+	u32 n		= state.GetValue < u32 >( 2, 1 );
 	float x		= state.GetValue < float >( 3, 0.0f );
 	float y		= state.GetValue < float >( 4, 0.0f );
 	float dx	= state.GetValue < float >( 5, 0.0f );
@@ -650,7 +683,7 @@ void MOAIParticleSystem::RegisterLuaFuncs ( USLuaState& state ) {
 		{ "reserveStates",		_reserveStates },
 		{ "setConstant",		_setConstant },
 		{ "setSpriteColor",		_setSpriteColor },
-		{ "setSpriteGfxID",		_setSpriteGfxID },
+		{ "setSpriteDeckIdx",	_setSpriteDeckIdx },
 		{ "setSpriteGlow",		_setSpriteGlow },
 		{ "setState",			_setState },
 		{ "surge",				_surge },

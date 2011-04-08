@@ -11,11 +11,13 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	setAngle
+	@text	Set the size and angle of the emitter.
+	
+	@in		MOAIParticleEmitter self
+	@in		number min Minimum angle in degrees.
+	@in		number max Maximum angle in degrees.
+	@out	nil
 */
 int MOAIParticleEmitter::_setAngle ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIParticleEmitter, "UNN" )
@@ -28,11 +30,13 @@ int MOAIParticleEmitter::_setAngle ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	setEmission
+	@text	Set the size of each emission.
+	
+	@in		MOAIParticleEmitter self
+	@in		number min Minimum emission size.
+	@opt	number max Maximum emission size. Defaults to min.
+	@out	nil
 */
 int MOAIParticleEmitter::_setEmission ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIParticleEmitter, "UN" )
@@ -45,11 +49,13 @@ int MOAIParticleEmitter::_setEmission ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	setEmission
+	@text	Set the emission frequency (in seconds).
+	
+	@in		MOAIParticleEmitter self
+	@in		number min Minimum frequency.
+	@opt	number max Maximum frequency. Defaults to min.
+	@out	nil
 */
 int MOAIParticleEmitter::_setFrequency ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIParticleEmitter, "UN" )
@@ -62,11 +68,13 @@ int MOAIParticleEmitter::_setFrequency ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	setMagnitude
+	@text	Set the starting magnitude of particles deltas.
+	
+	@in		MOAIParticleEmitter self
+	@in		number min Minimum magnitude.
+	@opt	number max Maximum magnitude. Defaults to min.
+	@out	nil
 */
 int MOAIParticleEmitter::_setMagnitude ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIParticleEmitter, "UN" )
@@ -79,11 +87,21 @@ int MOAIParticleEmitter::_setMagnitude ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	setRadius
+	@text	Set the shape and radius of the emitter.
+	
+	@overload
+	
+		@in		MOAIParticleEmitter self
+		@in		number radius
+		@out	nil
+	
+	@overload
+	
+		@in		MOAIParticleEmitter self
+		@in		number innerRadius
+		@in		number outerRadius
+		@out	nil
 */
 int MOAIParticleEmitter::_setRadius ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIParticleEmitter, "UN" )
@@ -103,11 +121,15 @@ int MOAIParticleEmitter::_setRadius ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	setRect
+	@text	Set the shape and dimensions of the emitter.
+	
+	@in		MOAIParticleEmitter self
+	@in		number xMin
+	@in		number yMin
+	@in		number xMax
+	@in		number yMax
+	@out	nil
 */
 int MOAIParticleEmitter::_setRect ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIParticleEmitter, "UNNNN" )
@@ -127,11 +149,12 @@ int MOAIParticleEmitter::_setRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	setSystem
+	@text	Attaches the emitter to a particle system.
+	
+	@in		MOAIParticleEmitter self
+	@in		MOAIParticleSystem system
+	@out	nil
 */
 int MOAIParticleEmitter::_setSystem ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIParticleEmitter, "UU" )
@@ -143,11 +166,12 @@ int MOAIParticleEmitter::_setSystem ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	surge
+	@text	Forces the emission of one or more particles.
+	
+	@in		MOAIParticleEmitter self
+	@opt	number total Size of sure. Default value is 1.
+	@out	nil
 */
 int MOAIParticleEmitter::_surge ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIParticleEmitter, "U" )

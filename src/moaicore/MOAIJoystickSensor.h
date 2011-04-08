@@ -17,6 +17,12 @@ private:
 
 	float mX;
 	float mY;
+	
+	USLuaRef	mOnStick;
+
+	//----------------------------------------------------------------//
+	static int		_getVector				( lua_State* L );
+	static int		_setCallback			( lua_State* L );
 
 public:
 

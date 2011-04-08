@@ -15,12 +15,20 @@ SUPPRESS_EMPTY_FILE_WARNING
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name areaForCircle
-	@param1 r1 @type number @text The X radius.
-	@param2 r2 @type number @text The Y radius.  Nil indicates to use r1 for this value (i.e. a circle not an ellipse is being calculated).
-	@text Returns the area for the ellipse with the specified radii, or a circle with the specified radius if only one argument is provided.
-	@return The calculated area. @type number
-*/
+/**	@name	areaForCircle
+	@text	Returns the area for a ring or circle.
+	
+	@overload
+	
+		@in		number radius
+		@out	number area
+
+	@overload
+	
+		@in		number innerRadius
+		@in		number outerRadius
+		@out	number area
+*/ 
 int MOAICpShape::_areaForCircle ( lua_State* L ) {
 	USLuaState state ( L );
 	if ( !state.CheckParams ( 1, "N" )) return 0;
@@ -43,11 +51,12 @@ int MOAICpShape::_areaForCircle ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name areaForPolygon
-	@param1 polygon @type table @text Array containg vertex coordinate components ( t[1] = x0, t[2] = y0, t[3] = x1, t[4] = y1... )
-	@text Returns the area for the specified polygon.
-	@return The calculated area. @type number
-*/
+/**	@name	areaForCircle
+	@text	Returns the area for a polygon.
+	
+	@in		table vertices Array containg vertex coordinate components ( t[1] = x0, t[2] = y0, t[3] = x1, t[4] = y1... )
+	@out	number area
+*/ 
 int MOAICpShape::_areaForPolygon ( lua_State* L ) {
 	USLuaState state ( L );
 	if ( !state.CheckParams ( 1, "T" )) return 0;
@@ -278,7 +287,7 @@ int MOAICpShape::_isSensor ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	momentForCircle
-	@text	Description of method coming soon.
+	@text	Return the moment of inertia for the circle.
 
 	@in		number m
 	@opt	number r1
@@ -315,7 +324,7 @@ int MOAICpShape::_momentForCircle ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	momentForPolygon
-	@text	Description of method coming soon.
+	@text	Returns the moment of intertia for the polygon.
 
 	@in		number m
 	@in		table polygon
@@ -344,7 +353,7 @@ int MOAICpShape::_momentForPolygon ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	momentForRectangle
-	@text	Description of method coming soon.
+	@text	Returns the moment of intertia for the rect.
 
 	@in		number m
 	@in		number x1
@@ -368,7 +377,7 @@ int MOAICpShape::_momentForRect ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	momentForSegment
-	@text	Description of method coming soon.
+	@text	Returns the moment of intertia for the segment.
 
 	@in		number m
 	@in		number x1

@@ -89,7 +89,7 @@ private:
 	static int		_reserveStates		( lua_State* L );
 	static int		_setConstant		( lua_State* L );
 	static int		_setSpriteColor		( lua_State* L );
-	static int		_setSpriteGfxID		( lua_State* L );
+	static int		_setSpriteDeckIdx	( lua_State* L );
 	static int		_setSpriteGlow		( lua_State* L );
 	static int		_setState			( lua_State* L );
 	static int		_surge				( lua_State* L );

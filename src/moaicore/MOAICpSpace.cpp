@@ -171,11 +171,12 @@ static void _shapeListForSegmentCallback ( cpShape *shape, cpFloat t, cpVect n, 
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name activateShapesTouchingShape
-	@param1 self @type userdata
-	@param2 other @type userdata
-	@text Activates shapes that are currently touching the specified shape.
-	@return nil
+/**	@name	activateShapesTouchingShape
+	@text	Activates shapes that are currently touching the specified shape.
+	
+	@in		MOAICpSpace self
+	@in		MOAICpShape shape
+	@out	nil
 */
 int MOAICpSpace::_activateShapesTouchingShape ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICpSpace, "UU" )
@@ -188,10 +189,11 @@ int MOAICpSpace::_activateShapesTouchingShape ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name getDamping
-	@param1 self @type userdata
-	@text Returns the current damping in the space.
-	@return The damping. @type number
+/**	@name	getDamping
+	@text	Returns the current damping in the space.
+
+	@in		MOAICpSpace self
+	@out	number damping
 */
 int MOAICpSpace::_getDamping ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICpSpace, "U" )
@@ -201,10 +203,12 @@ int MOAICpSpace::_getDamping ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name getGravity
-	@param1 self @type userdata
-	@text Returns the current gravity as two return values (x grav, y grav).
-	@return The gravity in the X and Y dimensions. @type (number,number)
+/**	@name	getGravity
+	@text	Returns the current gravity as two return values (x grav, y grav).
+
+	@in		MOAICpSpace self
+	@out	number xGrav
+	@out	number yGrav
 */
 int MOAICpSpace::_getGravity ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICpSpace, "U" )
@@ -215,10 +219,12 @@ int MOAICpSpace::_getGravity ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name getIdleSpeedThreshold
-	@param1 self @type userdata
-	@text Returns the speed threshold which indicates whether a body is idle (less than or equal to threshold) or in motion (greater than threshold).
-	@return The idle speed threshold. @type number
+/**	@name	getIdleSpeedThreshold
+	@text	Returns the speed threshold which indicates whether a body
+			is idle (less than or equal to threshold) or in motion (greater than threshold).
+
+	@in		MOAICpSpace self
+	@out	number idleThreshold
 */
 int MOAICpSpace::_getIdleSpeedThreshold ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICpSpace, "U" )
@@ -228,10 +234,11 @@ int MOAICpSpace::_getIdleSpeedThreshold ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name getIterations
-	@param1 self @type userdata
-	@text Description of method coming soon.
-	@return The iterations. @type number
+/**	@name	getIterations
+	@text	Returns the number of iterations the space is configured to perform.
+	
+	@in		MOAICpSpace self
+	@out	number iterations
 */
 int MOAICpSpace::_getIterations ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICpSpace, "U" )
@@ -241,10 +248,11 @@ int MOAICpSpace::_getIterations ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name getSleepTimeThreshold
-	@param1 self @type userdata
-	@text Description of method coming soon.
-	@return The iterations. @type number
+/**	@name	getSleepTimeThreshold
+	@text	Returns the sleep time threshold.
+
+	@in		MOAICpSpace self
+	@out	number sleepTimeThreshold
 */
 int MOAICpSpace::_getSleepTimeThreshold ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICpSpace, "U" )
@@ -254,10 +262,11 @@ int MOAICpSpace::_getSleepTimeThreshold ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name getStaticBody
-	@param1 self @type userdata
-	@text Returns the static body representing this space.
-	@return The static body. @type number
+/**	@name	getStaticBody
+	@text	Returns the static body associated with this space.
+
+	@in		MOAICpSpace self
+	@out	MOAICpBody staticBody
 */
 int MOAICpSpace::_getStaticBody ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICpSpace, "U" )
@@ -273,10 +282,12 @@ int MOAICpSpace::_getStaticBody ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name insertProp
-	@param1 self @type userdata
-	@text Inserts a new prop into the world (can be used as a body, joint, etc.)
-	@return The new prop. @type number
+/**	@name	insertProp
+	@text	Inserts a new prop into the world (can be used as a body, joint, etc.)
+
+	@in		MOAICpSpace self
+	@in		MOAICpPrim prop
+	@out	nil
 */
 int MOAICpSpace::_insertProp ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICpSpace, "UU" )
@@ -289,11 +300,11 @@ int MOAICpSpace::_insertProp ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name rehashShape
-	@param1 self @type userdata
-	@param1 other @type userdata
-	@text Description of method coming soon.
-	@return nil
+/**	@name	rehashShape
+	@text	Updates the shape in the spatial hash.
+
+	@in		MOAICpSpace self
+	@out	nil
 */
 int MOAICpSpace::_rehashShape ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICpSpace, "UU" )
@@ -306,10 +317,11 @@ int MOAICpSpace::_rehashShape ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name rehashStatic
-	@param1 self @type userdata
-	@text Description of method coming soon.
-	@return nil
+/**	@name	rehashStatic
+	@text	Updates the static shapes in the spatial hash.
+
+	@in		MOAICpSpace self
+	@out	nil
 */
 int MOAICpSpace::_rehashStatic ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICpSpace, "U" )
@@ -319,11 +331,12 @@ int MOAICpSpace::_rehashStatic ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name removeProp
-	@param1 self @type userdata
-	@param2 prop @type userdata
-	@text Removes a prop (body, joint, etc.) from the space.
-	@return nil
+/**	@name	removeProp
+	@text	Removes a prop (body, joint, etc.) from the space.
+
+	@in		MOAICpSpace self
+	@in		MOAICpPrim prop
+	@out	nil
 */
 int MOAICpSpace::_removeProp ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICpSpace, "UU" )
@@ -336,12 +349,13 @@ int MOAICpSpace::_removeProp ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name resizeActiveHash
-	@param1 self @type userdata
-	@param2 dim @type number
-	@param3 count @type number
-	@text Description of method coming soon.
-	@return nil
+/**	@name	resizeActiveHash
+	@text	Sets the dimenstions of the active object hash.
+
+	@in		MOAICpSpace self
+	@in		number dim
+	@in		number count
+	@out	nil
 */
 int MOAICpSpace::_resizeActiveHash ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICpSpace, "UNN" )
@@ -354,12 +368,13 @@ int MOAICpSpace::_resizeActiveHash ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name resizeStaticHash
-	@param1 self @type userdata
-	@param2 dim @type number
-	@param3 count @type number
-	@text Description of method coming soon.
-	@return nil
+/**	@name	resizeActiveHash
+	@text	Sets the dimenstions of the static object hash.
+
+	@in		MOAICpSpace self
+	@in		number dim
+	@in		number count
+	@out	nil
 */
 int MOAICpSpace::_resizeStaticHash ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICpSpace, "UNN" )
@@ -372,13 +387,17 @@ int MOAICpSpace::_resizeStaticHash ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name setCollisionHandler
-	@param1 self @type userdata
-	@param2 type @type number
-	@param3 subtype @type number
-	@param4 handler @type function|nil
-	@text Sets a function to handle the specific collision type on this object.  If nil is passed as the handler, the collision handler is unset.
-	@return nil
+/**	@name	setCollisionHandler
+	@text	Sets a function to handle the specific collision type on
+			this object.  If nil is passed as the handler, the collision
+			handler is unset.
+
+	@in		MOAICpSpace self
+	@in		number collisionTypeA
+	@in		number collisionTypeB
+	@in		number mask
+	@in		function handler
+	@out	nil
 */
 int MOAICpSpace::_setCollisionHandler ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICpSpace, "UNN" )
@@ -446,11 +465,12 @@ int MOAICpSpace::_setCollisionHandler ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name setDamping
-	@param1 self @type userdata
-	@param2 damping @type number
-	@text Sets the current damping in the space.
-	@return nil
+/**	@name	setCollisionHandler
+	@text	Sets the current damping in the space.
+
+	@in		MOAICpSpace self
+	@in		number damping
+	@out	nil
 */
 int MOAICpSpace::_setDamping ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICpSpace, "UN" )
@@ -460,12 +480,13 @@ int MOAICpSpace::_setDamping ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name setGravity
-	@param1 self @type userdata
-	@param2 xgrav @type number
-	@param3 ygrav @type number
-	@text Sets the current gravity in the space.
-	@return nil
+/**	@name	setGravity
+	@text	Sets the current gravity in the space.
+
+	@in		MOAICpSpace self
+	@in		number xGrav
+	@in		number yGrav
+	@out	nil
 */
 int MOAICpSpace::_setGravity ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICpSpace, "UNN" )
@@ -477,11 +498,13 @@ int MOAICpSpace::_setGravity ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name setIdleSpeedThreshold
-	@param1 self @type userdata
-	@param2 threshold @type number @text The idle speed threshold.
-	@text Sets the speed threshold which indicates whether a body is idle (less than or equal to threshold) or in motion (greater than threshold).
-	@return nil
+/**	@name	setIdleSpeedThreshold
+	@text	Sets the speed threshold which indicates whether a body is
+			idle (less than or equal to threshold) or in motion (greater than threshold).
+
+	@in		MOAICpSpace self
+	@in		number threshold
+	@out	nil
 */
 int MOAICpSpace::_setIdleSpeedThreshold ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICpSpace, "UN" )
@@ -491,11 +514,12 @@ int MOAICpSpace::_setIdleSpeedThreshold ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name setIterations
-	@param1 self @type userdata
-	@param2 iterations @type number
-	@text Description of method coming soon.
-	@return nil
+/**	@name	setIterations
+	@text	Sets the number of iterations performed each simulation step.
+
+	@in		MOAICpSpace self
+	@in		number iterations
+	@out	nil
 */
 int MOAICpSpace::_setIterations ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICpSpace, "UN" )
@@ -505,11 +529,13 @@ int MOAICpSpace::_setIterations ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name setSleepTimeThreshold
-	@param1 self @type userdata
-	@param2 threshold @type number
-	@text Description of method coming soon.
-	@return nil
+/**	@name	setSleepTimeThreshold
+	@text	Sets the sleep time threshold. This is the amount of time
+			it takes bodies at rest to fall asleep.
+
+	@in		MOAICpSpace self
+	@in		number threshold
+	@out	nil
 */
 int MOAICpSpace::_setSleepTimeThreshold ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICpSpace, "UN" )
@@ -519,14 +545,17 @@ int MOAICpSpace::_setSleepTimeThreshold ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name shapeForPoint
-	@param1 self @type userdata
-	@param2 x @type number @text The X position to check.
-	@param3 y @type number @text The Y position to check.
-	@param4 layers @type number|nil @text The layers to check (nil for all).
-	@param5 group @type number|nil @text The groups to check (nil for all).
-	@text Retrieves a shape located at the specified X and Y position, that exists on the specified layer (or any layer if nil) and is part of the specified group (or any group if nil).
-	@return The shape at the specified position, layer and within the specified group.  Returns nil if there is no shape that matches. @type userdata|nil
+/**	@name	shapeForPoint
+	@text	Retrieves a shape located at the specified X and Y position,
+			that exists on the specified layer (or any layer if nil) and
+			is part of the specified group (or any group if nil).
+			
+	@in		MOAICpSpace self
+	@in		number x
+	@in		number y
+	@opt	number layers
+	@opt	number group
+	@out	MOAICpShape shape
 */
 int MOAICpSpace::_shapeForPoint ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICpSpace, "UNN" )
@@ -548,16 +577,19 @@ int MOAICpSpace::_shapeForPoint ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name shapeForSegment
-	@param1 self @type userdata
-	@param2 x1 @type number @text The start-point X position to check.
-	@param3 y1 @type number @text The start-point Y position to check.
-	@param3 x2 @type number @text The end-point X position to check.
-	@param4 y2 @type number @text The end-point Y position to check.
-	@param5 layers @type number|nil @text The layers to check (nil for all).
-	@param6 group @type number|nil @text The groups to check (nil for all).
-	@text Retrieves a shape that crosses the segment specified, that exists on the specified layer (or any layer if nil) and is part of the specified group (or any group if nil).
-	@return The shape within the specified rectangle, at the specified layer and within the specified group.  Returns nil if there is no shape that matches. @type (userdata,t,x,y)|nil
+/**	@name	shapeForSegment
+	@text	Retrieves a shape that crosses the segment specified, that exists
+			on the specified layer (or any layer if nil) and is part of the
+			specified group (or any group if nil).
+			
+	@in		MOAICpSpace self
+	@in		number x1
+	@in		number y1
+	@in		number x2
+	@in		number y2
+	@opt	number layers
+	@opt	number group
+	@out	MOAICpShape shape
 */
 int MOAICpSpace::_shapeForSegment ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICpSpace, "UNNNN" )
@@ -595,14 +627,17 @@ int MOAICpSpace::_shapeForSegment ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name shapeListForPoint
-	@param1 self @type userdata
-	@param2 x @type number @text The X position to check.
-	@param3 y @type number @text The Y position to check.
-	@param4 layers @type number|nil @text The layers to check (nil for all).
-	@param5 group @type number|nil @text The groups to check (nil for all).
-	@text Operates the same as shapeForPoint, except that it returns all shapes matched as return values rather than just the first match.
-	@return The shapes that were matched as multiple return values.  If 3 shapes match, there will be 3 return values.  If 0 shapes match, there will be 0 return values (effectively nil). @type (userdata,...)|nil
+/**	@name	shapeListForPoint
+	@text	Retrieves a list of shaps that overlap the point specified, that exists
+			on the specified layer (or any layer if nil) and is part of the
+			specified group (or any group if nil).
+			
+	@in		MOAICpSpace self
+	@in		number x
+	@in		number y
+	@opt	number layers
+	@opt	number group
+	@out	MOAICpShape shapes The shapes that were matched as multiple return values.
 */
 int MOAICpSpace::_shapeListForPoint ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICpSpace, "UNN" )
@@ -630,16 +665,19 @@ int MOAICpSpace::_shapeListForPoint ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name shapeListForRect
-	@param1 self @type userdata
-	@param2 x1 @type userdata @text The top-left X position to check.
-	@param3 y1 @type number @text The top-left Y position to check.
-	@param3 x2 @type number @text The bottom-right X position to check.
-	@param4 y2 @type number @text The bottom-right Y position to check.
-	@param5 layers @type number|nil @text The layers to check (nil for all).
-	@param6 group @type number|nil @text The groups to check (nil for all).
-	@text Operates the same as shapeForSegment, except that it returns all shapes matched as return values rather than just the first match.
-	@return The shapes that were matched as multiple return values.  If 3 shapes match, there will be 3 return values.  If 0 shapes match, there will be 0 return values (effectively nil). @type (userdata,...)|nil
+/**	@name	shapeListForPoint
+	@text	Retrieves a list of shaps that overlap the rect specified, that exists
+			on the specified layer (or any layer if nil) and is part of the
+			specified group (or any group if nil).
+			
+	@in		MOAICpSpace self
+	@in		number xMin
+	@in		number yMin
+	@in		number xMax
+	@in		number yMax
+	@opt	number layers
+	@opt	number group
+	@out	MOAICpShape shapes The shapes that were matched as multiple return values.
 */
 int MOAICpSpace::_shapeListForRect ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICpSpace, "UNNNN" )
@@ -672,16 +710,19 @@ int MOAICpSpace::_shapeListForRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name shapeListForSegment
-	@param1 self @type userdata
-	@param2 x1 @type number @text The start-point X position to check.
-	@param3 y1 @type number @text The start-point Y position to check.
-	@param3 x2 @type number @text The end-point X position to check.
-	@param4 y2 @type number @text The end-point Y position to check.
-	@param5 layers @type number|nil @text The layers to check (nil for all).
-	@param6 group @type number|nil @text The groups to check (nil for all).
-	@text Operates the same as shapeForSegment, except that it returns all shapes matched as return values rather than just the first match.
-	@return The shapes that were matched as multiple return values.  If 3 shapes match, there will be 3 return values.  If 0 shapes match, there will be 0 return values (effectively nil). @type (userdata,...)|nil
+/**	@name	shapeForSegment
+	@text	Retrieves a list of shaps that overlap the segment specified, that exists
+			on the specified layer (or any layer if nil) and is part of the
+			specified group (or any group if nil).
+			
+	@in		MOAICpSpace self
+	@in		number x1
+	@in		number y1
+	@in		number x2
+	@in		number y2
+	@opt	number layers
+	@opt	number group
+	@out	MOAICpShape shapes The shapes that were matched as multiple return values.
 */
 int MOAICpSpace::_shapeListForSegment ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICpSpace, "UNNNN" )

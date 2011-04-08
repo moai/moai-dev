@@ -16,11 +16,11 @@ class MOAIDataBuffer;
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	clearForces
+	@text	Removes all particle forces from the state.
+	
+	@in		MOAIParticleState self
+	@out	nil
 */
 int MOAIParticleState::_clearForces ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIParticleState, "U" )
@@ -31,11 +31,14 @@ int MOAIParticleState::_clearForces ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	init
+	@text	Sets the init, update and render scripts.
+	
+	@in		MOAIParticleState self
+	@in		MOAIParticleScript init
+	@in		MOAIParticleScript update
+	@in		MOAIParticleScript render
+	@out	nil
 */
 int MOAIParticleState::_init ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIParticleState, "UUUU" )
@@ -64,11 +67,12 @@ int MOAIParticleState::_init ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	pushForce
+	@text	Adds a force to the state.
+	
+	@in		MOAIParticleState self
+	@in		MOAIParticleForce force
+	@out	nil
 */
 int MOAIParticleState::_pushForce ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIParticleState, "UU" )
@@ -81,14 +85,15 @@ int MOAIParticleState::_pushForce ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>( returns ) func ( self )</tt>\n
-\n
-	Description of method Coming Soon(tm).
-	@param self (in)
-	@param y (out)
+/**	@name	setNext
+	@text	Sets the next state (if any).
+	
+	@in		MOAIParticleState self
+	@opt	MOAIParticleState next Default value is nil.
+	@out	nil
 */
 int MOAIParticleState::_setNext ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIParticleState, "UU" )
+	MOAI_LUA_SETUP ( MOAIParticleState, "U" )
 	
 	self->mNext = state.GetLuaObject < MOAIParticleState >( 2 );
 	
