@@ -21,6 +21,9 @@ xcopy /cery ..\src\aku\AKUGlut.* release\samples\src\aku\
 
 xcopy /cery ..\src\aku\AKU.h release\include\aku\
 
+::copy about PDF into release folder
+copy ..\AboutMoai.pdf release\AboutMoai.pdf
+
 ::read version from text file
 pushd ..
 set /a count=0
@@ -83,3 +86,4 @@ makensis.exe "moai-temp.nsi"
 del /q moai-temp.nsi
 
 endlocal
+cd nsis
