@@ -67,7 +67,11 @@ private:
 //----------------------------------------------------------------//
 u32 USFontStringParser::DecodeChar ( int* i ) {
 
-	return u8_nextchar ( this->mStr, i );
+	if ( this->mStr [ *i ]) {
+		return u8_nextchar ( this->mStr, i );
+	}
+	++( *i );
+	return 0;
 }
 
 //----------------------------------------------------------------//

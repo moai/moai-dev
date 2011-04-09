@@ -4,7 +4,7 @@ http://nsis.sourceforge.net
 - Install NSIS
 - Copy contents of nsis-includes to C:\Program Files\NSIS\Include
 - Make sure NSIS folder is on your path
-- Build Moai
+- Build vs2008 Moai Release for Win32
 - Run make_installer.bat
 
 Check make_installer.bat to see where Moai binaries are copied from.
