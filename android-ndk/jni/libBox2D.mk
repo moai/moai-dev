@@ -56,5 +56,6 @@ $(SRC_PATH)/3rdparty/box2d-2.1.2/Box2D/Box2D/Dynamics/b2ContactManager.cpp\
 $(SRC_PATH)/3rdparty/box2d-2.1.2/Box2D/Box2D/Dynamics/b2Fixture.cpp\
 $(SRC_PATH)/3rdparty/box2d-2.1.2/Box2D/Box2D/Dynamics/b2Island.cpp\
 $(SRC_PATH)/3rdparty/box2d-2.1.2/Box2D/Box2D/Dynamics/b2World.cpp\
+$(SRC_PATH)/3rdparty/box2d-2.1.2/Box2D/Box2D/Dynamics/b2WorldCallbacks.cpp\
 
 include $(BUILD_STATIC_LIBRARY)

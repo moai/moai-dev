@@ -30,18 +30,9 @@ license</a>. &nbsp;Refer to the <a
  href="http://getmoai.com/get-started/moai-faq/madewithmoai/">Made
 With Moai page </a>for attribution screens to include with games
 made with moai.<br>
-<h4>Services Agreement:</h4>
-<a href="http://getmoai.com/get-started/moai-faq/services-agreement/">The
-Moai Services Agreement</a> is available on <a
- href="http://getmoai.com">getmoai.com</a>. <br>
-<h4>Privacy Policy:</h4>
-<a href="http://getmoai.com/get-started/moai-faq/privacy/">The
-Moai Privacy Policy</a> is available on <a
- href="http://getmoai.com">getmoai.com</a>.<br>
-<br>
 Happy game-making with Moai. &nbsp;Ping us through <a
  href="http://getmoai.com/forums/">the forums</a> or at
 <a href="mailto:support@getmoai.com">support@getmoai.com</a>
-if you need help. &nbsp;The Moai team is here to help.  
+if you need help. The Moai team is here to help.  
 <br>
 <br>

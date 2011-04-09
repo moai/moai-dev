@@ -31,6 +31,7 @@ SetCompressorDictSize 64
 !define MUI_HEADERIMAGE_BITMAP MUI_HEADERIMAGE_BITMAP.bmp
 !define MUI_WELCOMEFINISHPAGE_BITMAP MUI_WELCOMEFINISHPAGE_BITMAP.bmp
 !define REG_ENVIRONMENT "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"
+!define GETTING_STARTED_URL "http://getmoai.com/GettingStartedWithMoai.pdf"
 
 !include MUI.nsh
 !include AdvUninstLog.nsh
@@ -57,8 +58,9 @@ InstallDirRegKey ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "InstallDir"
 !define MUI_FINISHPAGE_RUN
 !define MUI_FINISHPAGE_RUN_TEXT "Run Hello Moai!"
 !define MUI_FINISHPAGE_RUN_FUNCTION launchHelloMoai 
-!define MUI_FINISHPAGE_SHOWREADME "http://getmoai.com/GettingStartedWithMoai.pdf" ;"$INSTDIR\AboutMoai.pdf"
+!define MUI_FINISHPAGE_SHOWREADME ${GETTING_STARTED_URL}
 !define MUI_FINISHPAGE_SHOWREADME_TEXT "View $\"Getting Started With Moai$\" Online"
+!define MUI_FINISHPAGE_SHOWREADME_NOTCHECKED
 !insertmacro MUI_PAGE_FINISH
 
 !insertmacro MUI_UNPAGE_WELCOME
@@ -85,19 +87,21 @@ InstallDirRegKey ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "InstallDir"
 ;_______________________________________________________________________________________
 Function launchHelloMoai
 
-	Call GetMyDocs
-	SetOutPath "$0\${PROGRAM_FOLDER}\samples\hello-moai"
-	Exec "$0\${PROGRAM_FOLDER}\samples\hello-moai\run.bat"
+	;Call GetMyDocs
+	;SetOutPath "$0\${PROGRAM_FOLDER}\samples\hello-moai"
+	;Exec "$0\${PROGRAM_FOLDER}\samples\hello-moai\run.bat"	
+	SetOutPath "$INSTDIR\samples\hello-moai"
+	Exec "$INSTDIR\samples\hello-moai\run.bat"
 FunctionEnd
 
 ;_______________________________________________________________________________________
-Function GetMyDocs
-	ReadRegStr $0 HKCU "SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders" Personal
-FunctionEnd
+; Function GetMyDocs
+	; ReadRegStr $0 HKCU "SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders" Personal
+; FunctionEnd
 
-Function un.GetMyDocs
-	ReadRegStr $0 HKCU "SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders" Personal
-FunctionEnd
+; Function un.GetMyDocs
+	; ReadRegStr $0 HKCU "SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders" Personal
+; FunctionEnd
 
 Section "Moai"
 
@@ -109,36 +113,41 @@ Section "Moai"
 	!insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 
 	; move samples to my documents path
-	StrCpy $switch_overwrite 0
-	Call GetMyDocs
-	!insertmacro MoveFolder "$INSTDIR\samples\" "$0\${PROGRAM_FOLDER}\samples\" "*.*"	
+	;StrCpy $switch_overwrite 0
+	;Call GetMyDocs
+	;!insertmacro MoveFolder "$INSTDIR\samples\" "$0\${PROGRAM_FOLDER}\samples\" "*.*"	
 	
 	; copy import text files too
-	StrCpy $3 "$INSTDIR\version.txt" ;Path of copy file from
-	StrCpy $4 "$0\${PROGRAM_FOLDER}\version.txt"   ;Path of copy file to
-	StrCpy $5 0 ; only 0 or 1, set 0 to overwrite file if it already exists
-	System::Call 'kernel32::CopyFile(t r3, t r4, b r5) ?e'
+	; StrCpy $3 "$INSTDIR\version.txt" ;Path of copy file from
+	; StrCpy $4 "$0\${PROGRAM_FOLDER}\version.txt"   ;Path of copy file to
+	; StrCpy $5 0 ; only 0 or 1, set 0 to overwrite file if it already exists
+	; System::Call 'kernel32::CopyFile(t r3, t r4, b r5) ?e'
 
-	StrCpy $3 "$INSTDIR\legal.txt" ;Path of copy file from
-	StrCpy $4 "$0\${PROGRAM_FOLDER}\legal.txt"   ;Path of copy file to
-	StrCpy $5 0 ; only 0 or 1, set 0 to overwrite file if it already exists
-	System::Call 'kernel32::CopyFile(t r3, t r4, b r5) ?e'
+	; StrCpy $3 "$INSTDIR\legal.txt" ;Path of copy file from
+	; StrCpy $4 "$0\${PROGRAM_FOLDER}\legal.txt"   ;Path of copy file to
+	; StrCpy $5 0 ; only 0 or 1, set 0 to overwrite file if it already exists
+	; System::Call 'kernel32::CopyFile(t r3, t r4, b r5) ?e'
 
-	StrCpy $3 "$INSTDIR\license.txt" ;Path of copy file from
-	StrCpy $4 "$0\${PROGRAM_FOLDER}\license.txt"   ;Path of copy file to
-	StrCpy $5 0 ; only 0 or 1, set 0 to overwrite file if it already exists
-	System::Call 'kernel32::CopyFile(t r3, t r4, b r5) ?e'
+	; StrCpy $3 "$INSTDIR\license.txt" ;Path of copy file from
+	; StrCpy $4 "$0\${PROGRAM_FOLDER}\license.txt"   ;Path of copy file to
+	; StrCpy $5 0 ; only 0 or 1, set 0 to overwrite file if it already exists
+	; System::Call 'kernel32::CopyFile(t r3, t r4, b r5) ?e'
 	
 	; start menu shortcuts
 	SetShellVarContext all
 	CreateDirectory "$SMPROGRAMS\${DISPLAY_NAME}"
-	CreateShortCut "$SMPROGRAMS\${DISPLAY_NAME}\Samples.lnk" "$0\${PROGRAM_FOLDER}\samples\lua"
+	CreateShortCut "$SMPROGRAMS\${DISPLAY_NAME}\Getting Started.lnk" "${GETTING_STARTED_URL}"
+	CreateShortCut "$SMPROGRAMS\${DISPLAY_NAME}\Samples.lnk" "$INSTDIR\samples\lua" 	;CreateShortCut "$SMPROGRAMS\${DISPLAY_NAME}\Samples.lnk" "$0\${PROGRAM_FOLDER}\samples\lua"
 	CreateShortCut "$SMPROGRAMS\${DISPLAY_NAME}\Reference.lnk" "$INSTDIR\docs\html\index.html"
 	CreateShortCut "$SMPROGRAMS\${DISPLAY_NAME}\Uninstall.lnk" "${UNINST_EXE}"
 
 	; desktop shortcut
-	CreateShortCut "$DESKTOP\Moai Samples.lnk" "$0\${PROGRAM_FOLDER}\samples\lua"
+	;CreateShortCut "$DESKTOP\Moai Samples.lnk" "$0\${PROGRAM_FOLDER}\samples\lua"
+	CreateShortCut "$DESKTOP\Moai Samples.lnk" "$INSTDIR\samples\lua"
 	
+	; documentation shortcut
+	CreateShortCut "$INSTDIR\docs\Moai SDK Documentation.lnk" "$INSTDIR\docs\html\index.html"
+
 	; system add/remove programs setup
 	WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "InstallDir" "$INSTDIR"
 	WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "DisplayName" "${DISPLAY_NAME}"
@@ -154,10 +163,12 @@ Section "Moai"
 	System::Call 'Kernel32::SetEnvironmentVariableA(t, t) i("MOAI_BIN", R0).r0'
 	
 	; add MOAI_CONFIG variable
-	Call GetMyDocs
-	WriteRegExpandStr ${env_hklm} MOAI_CONFIG "$0\${PROGRAM_FOLDER}\samples\config\"
+	;Call GetMyDocs
+	;WriteRegExpandStr ${env_hklm} MOAI_CONFIG "$0\${PROGRAM_FOLDER}\samples\config\"
+	WriteRegExpandStr ${env_hklm} MOAI_CONFIG "$INSTDIR\samples\config\"
 	SendMessage ${HWND_BROADCAST} ${WM_WININICHANGE} 0 "STR:Environment" /TIMEOUT=5000
-	StrCpy $R0 "$0\${PROGRAM_FOLDER}\samples\config\"
+	;StrCpy $R0 "$0\${PROGRAM_FOLDER}\samples\config\"
+	StrCpy $R0 "$INSTDIR\samples\config\"
 	System::Call 'Kernel32::SetEnvironmentVariableA(t, t) i("MOAI_CONFIG", R0).r0'
 	
 SectionEnd
@@ -227,10 +238,12 @@ Section UnInstall
 	!insertmacro UNINSTALL.LOG_UNINSTALL "$INSTDIR"
 	!insertmacro UNINSTALL.LOG_END_UNINSTALL
 
-	Call un.GetMyDocs
-	RMDir /r "$0\${PROGRAM_FOLDER}"
+	;Call un.GetMyDocs
+	;RMDir /r "$0\${PROGRAM_FOLDER}"
 	
 	SetShellVarContext all
+	
+	Delete "$SMPROGRAMS\${DISPLAY_NAME}\Getting Started.lnk"
 	Delete "$SMPROGRAMS\${DISPLAY_NAME}\Samples.lnk"
 	Delete "$SMPROGRAMS\${DISPLAY_NAME}\Reference.lnk"
 	Delete "$SMPROGRAMS\${DISPLAY_NAME}\Uninstall.lnk"
