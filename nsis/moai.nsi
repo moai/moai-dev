@@ -25,7 +25,7 @@ SetCompressorDictSize 64
 ;_______________________________________________________________________________________
 
 !define INSTDIR_REG_ROOT "HKLM"
-!define INSTDIR_REG_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${DISPLAY_NAME}"
+!define INSTDIR_REG_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PROGRAM_FOLDER}"
 !define MOAI_BINARIES "..\vs2008\bin\Win32\Release"
 !define MOAI_SRC "..\src"
 !define MUI_HEADERIMAGE_BITMAP MUI_HEADERIMAGE_BITMAP.bmp
@@ -175,6 +175,7 @@ SectionEnd
 
 Function .onInit
 	
+	; check for exisiting install
 	ClearErrors
 	ReadRegStr $0 ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "DisplayName"
 	IfErrors init.normal
@@ -182,6 +183,7 @@ Function .onInit
 	Quit
 
 init.uninst:
+	; if existing version is there, run its uninstaller before running installer
 	ClearErrors
 	ReadRegStr $0 ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "UninstallString"
 	IfErrors init.done
