@@ -31,6 +31,7 @@ SetCompressorDictSize 64
 !define MUI_HEADERIMAGE_BITMAP MUI_HEADERIMAGE_BITMAP.bmp
 !define MUI_WELCOMEFINISHPAGE_BITMAP MUI_WELCOMEFINISHPAGE_BITMAP.bmp
 !define REG_ENVIRONMENT "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"
+!define GETTING_STARTED_URL "http://getmoai.com/GettingStartedWithMoai.pdf"
 
 !include MUI.nsh
 !include AdvUninstLog.nsh
@@ -57,8 +58,9 @@ InstallDirRegKey ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "InstallDir"
 !define MUI_FINISHPAGE_RUN
 !define MUI_FINISHPAGE_RUN_TEXT "Run Hello Moai!"
 !define MUI_FINISHPAGE_RUN_FUNCTION launchHelloMoai 
-!define MUI_FINISHPAGE_SHOWREADME "http://getmoai.com/GettingStartedWithMoai.pdf" ;"$INSTDIR\AboutMoai.pdf"
+!define MUI_FINISHPAGE_SHOWREADME ${GETTING_STARTED_URL}
 !define MUI_FINISHPAGE_SHOWREADME_TEXT "View $\"Getting Started With Moai$\" Online"
+!define MUI_FINISHPAGE_SHOWREADME_NOTCHECKED
 !insertmacro MUI_PAGE_FINISH
 
 !insertmacro MUI_UNPAGE_WELCOME
@@ -134,8 +136,8 @@ Section "Moai"
 	; start menu shortcuts
 	SetShellVarContext all
 	CreateDirectory "$SMPROGRAMS\${DISPLAY_NAME}"
-	;CreateShortCut "$SMPROGRAMS\${DISPLAY_NAME}\Samples.lnk" "$0\${PROGRAM_FOLDER}\samples\lua"
-	CreateShortCut "$SMPROGRAMS\${DISPLAY_NAME}\Samples.lnk" "$INSTDIR\samples\lua"
+	CreateShortCut "$SMPROGRAMS\${DISPLAY_NAME}\Getting Started.lnk" "${GETTING_STARTED_URL}"
+	CreateShortCut "$SMPROGRAMS\${DISPLAY_NAME}\Samples.lnk" "$INSTDIR\samples\lua" 	;CreateShortCut "$SMPROGRAMS\${DISPLAY_NAME}\Samples.lnk" "$0\${PROGRAM_FOLDER}\samples\lua"
 	CreateShortCut "$SMPROGRAMS\${DISPLAY_NAME}\Reference.lnk" "$INSTDIR\docs\html\index.html"
 	CreateShortCut "$SMPROGRAMS\${DISPLAY_NAME}\Uninstall.lnk" "${UNINST_EXE}"
 
@@ -143,6 +145,9 @@ Section "Moai"
 	;CreateShortCut "$DESKTOP\Moai Samples.lnk" "$0\${PROGRAM_FOLDER}\samples\lua"
 	CreateShortCut "$DESKTOP\Moai Samples.lnk" "$INSTDIR\samples\lua"
 	
+	; documentation shortcut
+	CreateShortCut "$INSTDIR\docs\Moai SDK Documentation.lnk" "$INSTDIR\docs\html\index.html"
+
 	; system add/remove programs setup
 	WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "InstallDir" "$INSTDIR"
 	WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "DisplayName" "${DISPLAY_NAME}"
@@ -237,6 +242,8 @@ Section UnInstall
 	;RMDir /r "$0\${PROGRAM_FOLDER}"
 	
 	SetShellVarContext all
+	
+	Delete "$SMPROGRAMS\${DISPLAY_NAME}\Getting Started.lnk"
 	Delete "$SMPROGRAMS\${DISPLAY_NAME}\Samples.lnk"
 	Delete "$SMPROGRAMS\${DISPLAY_NAME}\Reference.lnk"
 	Delete "$SMPROGRAMS\${DISPLAY_NAME}\Uninstall.lnk"
