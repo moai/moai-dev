@@ -246,7 +246,6 @@
     <ClCompile Include="..\..\src\moaicore\MOAIGfxQuadListDeck2D.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIIndexBuffer.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAILayoutFrame.cpp" />
-    <ClCompile Include="..\..\src\moaicore\MOAILogMessages.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAILogMgr.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIMesh.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIParser.cpp" />

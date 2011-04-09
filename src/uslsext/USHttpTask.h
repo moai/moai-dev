@@ -19,14 +19,9 @@ private:
 
 	u32					mTaskID;
 	USHttpTaskInfo*		mInfo;
-	USFileCache*		mFileCache;
-	int					mCachePriority;
-	STLString			mStoreKey;
 
 	void*				mBytes;
 	u32					mSize;
-
-	USData				mDataFromCache;
 
 	USCallback < USHttpTask* > mCallback;
 
@@ -49,9 +44,7 @@ public:
 	void		GetData				( void* buffer, u32 size );
 	u32			GetSize				();
 	void		HttpGet				( cc8* url );
-	void		HttpGet				( cc8* url, cc8* storeKey );
 	void		HttpPost			( cc8* url, const void* buffer, u32 size );
-	void		SetFileCache		( USFileCache* fileCache, int cachePriority );
 				USHttpTask			();
 				~USHttpTask			();
 	

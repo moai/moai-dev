@@ -25,7 +25,6 @@
 #include <uslsext/USDelegate.h>
 #include <uslsext/USDistance.h>
 #include <uslsext/USDrawBuffer.h>
-#include <uslsext/USFileCache.h>
 #include <uslsext/USFont.h>
 #include <uslsext/USFontRipper.h>
 #include <uslsext/USFsm.h>

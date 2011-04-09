@@ -924,14 +924,6 @@
 			Name="web"
 			>
 			<File
-				RelativePath="..\..\src\uslsext\USFileCache.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USFileCache.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\uslsext\USHttpTask.cpp"
 				>
 			</File>

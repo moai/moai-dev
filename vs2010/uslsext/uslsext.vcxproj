@@ -226,7 +226,6 @@
   <ItemGroup>
     <ClCompile Include="..\..\src\uslsext\USAnimCurve.cpp" />
     <ClCompile Include="..\..\src\uslsext\USCgt.cpp" />
-    <ClCompile Include="..\..\src\uslsext\USCurveSampler.cpp" />
     <ClCompile Include="..\..\src\uslsext\USDrawBuffer.cpp" />
     <ClCompile Include="..\..\src\uslsext\USAttributed.cpp" />
     <ClCompile Include="..\..\src\uslsext\USAttrMap.cpp" />
@@ -236,9 +235,6 @@
     <ClCompile Include="..\..\src\uslsext\USDebugLines.cpp" />
     <ClCompile Include="..\..\src\uslsext\USGfxDevice.cpp" />
     <ClCompile Include="..\..\src\uslsext\USBlendMode.cpp" />
-    <ClCompile Include="..\..\src\uslsext\USCamera2D.cpp" />
-    <ClCompile Include="..\..\src\uslsext\USCamera3D.cpp" />
-    <ClCompile Include="..\..\src\uslsext\USCameraFitter.cpp" />
     <ClCompile Include="..\..\src\uslsext\USCanvas.cpp" />
     <ClCompile Include="..\..\src\uslsext\USColor.cpp" />
     <ClCompile Include="..\..\src\uslsext\USGLLine.cpp" />
@@ -258,7 +254,6 @@
     <ClCompile Include="..\..\src\uslsext\USBox.cpp" />
     <ClCompile Include="..\..\src\uslsext\USCurve.cpp" />
     <ClCompile Include="..\..\src\uslsext\USDistance.cpp" />
-    <ClCompile Include="..\..\src\uslsext\USFrustum.cpp" />
     <ClCompile Include="..\..\src\uslsext\USInterpolate.cpp" />
     <ClCompile Include="..\..\src\uslsext\USIntersect.cpp" />
     <ClCompile Include="..\..\src\uslsext\USMercator.cpp" />
@@ -267,9 +262,6 @@
     <ClCompile Include="..\..\src\uslsext\USQuad.cpp" />
     <ClCompile Include="..\..\src\uslsext\USSurface2D.cpp" />
     <ClCompile Include="..\..\src\uslsext\USTrig.cpp" />
-    <ClCompile Include="..\..\src\uslsext\USSlipMapBrush.cpp" />
-    <ClCompile Include="..\..\src\uslsext\USSlipMapTile.cpp" />
-    <ClCompile Include="..\..\src\uslsext\USSlipMapTileSource.cpp" />
     <ClCompile Include="..\..\src\uslsext\USGrid.cpp" />
     <ClCompile Include="..\..\src\uslsext\USQuadCoord.cpp" />
     <ClCompile Include="..\..\src\uslsext\USTile.cpp" />
@@ -301,7 +293,6 @@
     <ClCompile Include="..\..\src\uslsext\USLog.cpp" />
     <ClCompile Include="..\..\src\uslsext\USPrettyPrint.cpp" />
     <ClCompile Include="..\..\src\uslsext\USTypedPtr.cpp" />
-    <ClCompile Include="..\..\src\uslsext\USFileCache.cpp" />
     <ClCompile Include="..\..\src\uslsext\USHttpTask.cpp" />
     <ClCompile Include="..\..\src\uslsext\USHttpTask_impl.cpp" />
     <ClCompile Include="..\..\src\uslsext\USUrlMgr.cpp" />
@@ -315,9 +306,10 @@
     <ClCompile Include="..\..\src\uslsext\uslsext.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\src\uslsext\USAffine2D.h" />
     <ClInclude Include="..\..\src\uslsext\USAnimCurve.h" />
+    <ClInclude Include="..\..\src\uslsext\USBinarySearch.h" />
     <ClInclude Include="..\..\src\uslsext\USCgt.h" />
-    <ClInclude Include="..\..\src\uslsext\USCurveSampler.h" />
     <ClInclude Include="..\..\src\uslsext\USDrawBuffer.h" />
     <ClInclude Include="..\..\src\uslsext\USAttributed.h" />
     <ClInclude Include="..\..\src\uslsext\USAttrMap.h" />
@@ -329,9 +321,6 @@
     <ClInclude Include="..\..\src\uslsext\USDebugLines.h" />
     <ClInclude Include="..\..\src\uslsext\USGfxDevice.h" />
     <ClInclude Include="..\..\src\uslsext\USBlendMode.h" />
-    <ClInclude Include="..\..\src\uslsext\USCamera2D.h" />
-    <ClInclude Include="..\..\src\uslsext\USCamera3D.h" />
-    <ClInclude Include="..\..\src\uslsext\USCameraFitter.h" />
     <ClInclude Include="..\..\src\uslsext\USCanvas.h" />
     <ClInclude Include="..\..\src\uslsext\USColor.h" />
     <ClInclude Include="..\..\src\uslsext\USGLLine.h" />
@@ -351,7 +340,6 @@
     <ClInclude Include="..\..\src\uslsext\USBox.h" />
     <ClInclude Include="..\..\src\uslsext\USCurve.h" />
     <ClInclude Include="..\..\src\uslsext\USDistance.h" />
-    <ClInclude Include="..\..\src\uslsext\USFrustum.h" />
     <ClInclude Include="..\..\src\uslsext\USInterpolate.h" />
     <ClInclude Include="..\..\src\uslsext\USIntersect.h" />
     <ClInclude Include="..\..\src\uslsext\USMathConsts.h" />
@@ -366,9 +354,6 @@
     <ClInclude Include="..\..\src\uslsext\USSurface2D.h" />
     <ClInclude Include="..\..\src\uslsext\USTrig.h" />
     <ClInclude Include="..\..\src\uslsext\USPolyScanner.h" />
-    <ClInclude Include="..\..\src\uslsext\USSlipMapBrush.h" />
-    <ClInclude Include="..\..\src\uslsext\USSlipMapTile.h" />
-    <ClInclude Include="..\..\src\uslsext\USSlipMapTileSource.h" />
     <ClInclude Include="..\..\src\uslsext\USGrid.h" />
     <ClInclude Include="..\..\src\uslsext\USQuadCoord.h" />
     <ClInclude Include="..\..\src\uslsext\USTile.h" />
@@ -392,7 +377,6 @@
     <ClInclude Include="..\..\src\uslsext\USRadixSort16.h" />
     <ClInclude Include="..\..\src\uslsext\USRadixSort32.h" />
     <ClInclude Include="..\..\src\uslsext\USTypedPtr.h" />
-    <ClInclude Include="..\..\src\uslsext\USFileCache.h" />
     <ClInclude Include="..\..\src\uslsext\USHttpTask.h" />
     <ClInclude Include="..\..\src\uslsext\USHttpTask_impl.h" />
     <ClInclude Include="..\..\src\uslsext\USUrlMgr.h" />

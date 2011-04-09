@@ -28,9 +28,6 @@
     <Filter Include="src\io">
       <UniqueIdentifier>{42e1beb0-23b3-4964-9a76-fb94425fc598}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\slippymap">
-      <UniqueIdentifier>{76d26779-9fe8-4164-99b8-5e70aea18e5c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\sql">
       <UniqueIdentifier>{ad2d1181-197b-4aa1-bec9-0526c71691c8}</UniqueIdentifier>
     </Filter>
@@ -57,9 +54,6 @@
     <ClCompile Include="..\..\src\uslsext\USAnimCurve.cpp">
       <Filter>src\animCurve</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\uslsext\USCurveSampler.cpp">
-      <Filter>src\animCurve</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\uslsext\USAttributed.cpp">
       <Filter>src\attributed</Filter>
     </ClCompile>
@@ -82,15 +76,6 @@
       <Filter>src\gfxDevice</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\uslsext\USBlendMode.cpp">
-      <Filter>src\gfxObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\uslsext\USCamera2D.cpp">
-      <Filter>src\gfxObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\uslsext\USCamera3D.cpp">
-      <Filter>src\gfxObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\uslsext\USCameraFitter.cpp">
       <Filter>src\gfxObjects</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\uslsext\USCanvas.cpp">
@@ -132,9 +117,6 @@
     <ClCompile Include="..\..\src\uslsext\USDistance.cpp">
       <Filter>src\math</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\uslsext\USFrustum.cpp">
-      <Filter>src\math</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\uslsext\USInterpolate.cpp">
       <Filter>src\math</Filter>
     </ClCompile>
@@ -158,15 +140,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\uslsext\USTrig.cpp">
       <Filter>src\math</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\uslsext\USSlipMapBrush.cpp">
-      <Filter>src\slippymap</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\uslsext\USSlipMapTile.cpp">
-      <Filter>src\slippymap</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\uslsext\USSlipMapTileSource.cpp">
-      <Filter>src\slippymap</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\uslsext\USGrid.cpp">
       <Filter>src\grid</Filter>
@@ -231,9 +204,6 @@
     <ClCompile Include="..\..\src\uslsext\USTypedPtr.cpp">
       <Filter>src\util</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\uslsext\USFileCache.cpp">
-      <Filter>src\web</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\uslsext\USHttpTask.cpp">
       <Filter>src\web</Filter>
     </ClCompile>
@@ -281,9 +251,6 @@
     <ClInclude Include="..\..\src\uslsext\USAnimCurve.h">
       <Filter>src\animCurve</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\uslsext\USCurveSampler.h">
-      <Filter>src\animCurve</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\uslsext\USAttributed.h">
       <Filter>src\attributed</Filter>
     </ClInclude>
@@ -312,15 +279,6 @@
       <Filter>src\gfxDevice</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\uslsext\USBlendMode.h">
-      <Filter>src\gfxObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\uslsext\USCamera2D.h">
-      <Filter>src\gfxObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\uslsext\USCamera3D.h">
-      <Filter>src\gfxObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\uslsext\USCameraFitter.h">
       <Filter>src\gfxObjects</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\uslsext\USCanvas.h">
@@ -362,9 +320,6 @@
     <ClInclude Include="..\..\src\uslsext\USDistance.h">
       <Filter>src\math</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\uslsext\USFrustum.h">
-      <Filter>src\math</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\uslsext\USInterpolate.h">
       <Filter>src\math</Filter>
     </ClInclude>
@@ -403,15 +358,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\uslsext\USTrig.h">
       <Filter>src\math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\uslsext\USSlipMapBrush.h">
-      <Filter>src\slippymap</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\uslsext\USSlipMapTile.h">
-      <Filter>src\slippymap</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\uslsext\USSlipMapTileSource.h">
-      <Filter>src\slippymap</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\uslsext\USGrid.h">
       <Filter>src\grid</Filter>
@@ -482,9 +428,6 @@
     <ClInclude Include="..\..\src\uslsext\USTypedPtr.h">
       <Filter>src\util</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\uslsext\USFileCache.h">
-      <Filter>src\web</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\uslsext\USHttpTask.h">
       <Filter>src\web</Filter>
     </ClInclude>
@@ -529,6 +472,12 @@
     </ClInclude>
     <ClInclude Include="..\..\src\uslsext\USParser.h">
       <Filter>src\parser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USAffine2D.h">
+      <Filter>src\math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USBinarySearch.h">
+      <Filter>src\util</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

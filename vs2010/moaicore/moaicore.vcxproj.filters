@@ -40,9 +40,6 @@
     <Filter Include="src\partition">
       <UniqueIdentifier>{db16049c-1678-43f7-96f6-5f2660b56c75}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\system">
-      <UniqueIdentifier>{3ae3520b-6cb5-48b9-8fd3-e4b5b6c8de6b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\textbox">
       <UniqueIdentifier>{d0fa2f5e-c44a-45ed-90f6-6f5a21f80b00}</UniqueIdentifier>
     </Filter>
@@ -137,9 +134,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAIPartition.cpp">
       <Filter>src\partition</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAIDebugLines.cpp">
-      <Filter>src\system</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAIXmlParser.cpp">
       <Filter>src\util</Filter>
@@ -261,9 +255,6 @@
     <ClCompile Include="..\..\src\moaicore\MOAISurfaceDeck2D.cpp">
       <Filter>src\deck</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAILogMessages.cpp">
-      <Filter>src\log</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAINode.cpp">
       <Filter>src\node</Filter>
     </ClCompile>
@@ -336,6 +327,9 @@
     <ClCompile Include="..\..\src\moaicore\MOAIDeck2D.cpp">
       <Filter>src\deck</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIDebugLines.cpp">
+      <Filter>src\gfx</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\moaicore\MOAIAction.h">
@@ -403,9 +397,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIPartition.h">
       <Filter>src\partition</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\MOAIDebugLines.h">
-      <Filter>src\system</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIXmlParser.h">
       <Filter>src\util</Filter>
@@ -604,6 +595,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIDeck2D.h">
       <Filter>src\deck</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIDebugLines.h">
+      <Filter>src\gfx</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
