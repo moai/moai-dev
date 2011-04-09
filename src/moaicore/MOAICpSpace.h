@@ -5,10 +5,8 @@
 #define	MOAICPSPACE_H
 #if USE_CHIPMUNK
 
+#include <chipmunk/chipmunk.h>
 #include <moaicore/MOAIAction.h>
-
-struct cpBody;
-struct cpSpace;
 
 class MOAICpArbiter;
 class MOAICpBody;

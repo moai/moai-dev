@@ -5,7 +5,8 @@
 #define	MOAICPARBITER_H
 #if USE_CHIPMUNK
 
-struct cpArbiter;
+#include <chipmunk/chipmunk.h>
+
 class MOAICpSpace;
 
 //================================================================//

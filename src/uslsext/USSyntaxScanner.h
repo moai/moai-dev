@@ -32,6 +32,8 @@ public:
 
 	//----------------------------------------------------------------//
 	void			ScanSyntax			( USSyntaxNode* ast );
+					USSyntaxScanner		();
+	virtual			~USSyntaxScanner	();
 };
 
 #endif

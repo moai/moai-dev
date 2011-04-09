@@ -37,6 +37,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		03B0D49F134FE5A900694EE3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03EE21A1134263C600D35D83 /* moai-open.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 03C2F6F3104DE130009A2D5D /* Moai */;
+			remoteInfo = Moai;
+		};
 		03EE21A6134263C700D35D83 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 03EE21A1134263C600D35D83 /* moai-open.xcodeproj */;
@@ -214,6 +221,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				03B0D4A0134FE5A900694EE3 /* PBXTargetDependency */,
 			);
 			name = moaiview;
 			productName = Geocaching;
@@ -307,6 +315,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		03B0D4A0134FE5A900694EE3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Moai;
+			targetProxy = 03B0D49F134FE5A900694EE3 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		03B080970F708135005CD8E5 /* Distribution */ = {

@@ -28,9 +28,6 @@ private:
 	static int		_setSize				( lua_State* L );
 	static int		_setTexture				( lua_State* L );
 	
-	//----------------------------------------------------------------//
-	void			DrawTile				( u32 tile, USRect rect );
-	
 public:
 	
 	GET_SET ( MOAITexture*, Texture, mTexture )
@@ -39,7 +36,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	bool			Bind					();
-	void			Draw					( u32 idx, float xOff, float yOff, float xScale, float yScale );
+	void			DrawPatch				( u32 idx, float xOff, float yOff, float xScale, float yScale );
 	USRect			GetBounds				( u32 idx );
 					MOAITileDeck2D			();
 					~MOAITileDeck2D			();

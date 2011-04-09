@@ -23,8 +23,7 @@
 #define MOAICPDEBUGDRAW_H
 #if USE_CHIPMUNK
 
-struct cpSpace;
-struct cpDrawSpaceOptions;
+#include <chipmunk/chipmunk.h>
 
 //================================================================//
 // MOAICpDebugDrawOptions

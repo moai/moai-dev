@@ -238,8 +238,8 @@ u32 USParser::ParseToken ( USDfaToken* token, bool trimReductions ) {
 						if ( handleSize ) {
 						
 							head.mSyntaxNode->mChildren.Init ( handleSize );
-							for ( u32 i = 0; i < rule.mRuleSymbols.Size (); ++i ) {
-								head.mSyntaxNode->mChildren [ handleSize - ( i + 1 )] = this->mTokenStack.back ().mSyntaxNode;
+							for ( u32 j = 0; j < rule.mRuleSymbols.Size (); ++j ) {
+								head.mSyntaxNode->mChildren [ handleSize - ( j + 1 )] = this->mTokenStack.back ().mSyntaxNode;
 								prevStateID = this->mTokenStack.back ().mLALRStateID;
 								this->mTokenStack.pop_back ();
 							}
@@ -284,12 +284,12 @@ u32 USParser::ParseToken ( USDfaToken* token, bool trimReductions ) {
 			while ( this->mTokenStack.size () > 1 ) {
 		
 				this->mCurrentLALRStateID = this->mTokenStack.back ().mLALRStateID;
-				USLalrState& state = this->mCGT->mLALRStateTable [ this->mCurrentLALRStateID ];
+				USLalrState& state2 = this->mCGT->mLALRStateTable [ this->mCurrentLALRStateID ];
 				
 				this->mTokenStack.pop_back ();
 				
-				for ( u32 i = 0; i < state.mActions.Size (); ++i ) {
-					USLalrAction& action = state.mActions [ i ];
+				for ( u32 i = 0; i < state2.mActions.Size (); ++i ) {
+					USLalrAction& action = state2.mActions [ i ];
 					if ( action.mInputSymbolID == token->mSymbol.mID ) {
 						return USLalrAction::REDUCE;
 					}

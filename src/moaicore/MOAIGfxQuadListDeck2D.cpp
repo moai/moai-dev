@@ -322,7 +322,7 @@ bool MOAIGfxQuadListDeck2D::Contains ( u32 idx, const USVec2D& vec ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxQuadListDeck2D::Draw ( u32 idx, float xOff, float yOff, float xScale, float yScale ) {
+void MOAIGfxQuadListDeck2D::DrawPatch ( u32 idx, float xOff, float yOff, float xScale, float yScale ) {
 
 	u32 size = this->mSprites.Size ();
 	if ( size ) {

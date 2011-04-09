@@ -28,11 +28,11 @@ void MOAIDeck2D::Draw ( const USAffine2D& transform, u32 idx ) {
 	float xScale = ( idx & USTile::XFLIP ) ? -1.0f : 1.0f;
 	float yScale = ( idx & USTile::YFLIP ) ? -1.0f : 1.0f;
 	
-	this->Draw ( idx & USTile::CODE_MASK, 0.0f, 0.0, xScale, yScale );
+	this->DrawPatch ( idx & USTile::CODE_MASK, 0.0f, 0.0f, xScale, yScale );
 }
 
 //----------------------------------------------------------------//
-void MOAIDeck2D::Draw ( u32 idx, float xOff, float yOff, float xScale, float yScale ) {
+void MOAIDeck2D::DrawPatch ( u32 idx, float xOff, float yOff, float xScale, float yScale ) {
 	UNUSED ( idx );
 	UNUSED ( xOff );
 	UNUSED ( yOff );
@@ -60,7 +60,7 @@ void MOAIDeck2D::Draw ( const USAffine2D& transform, MOAIGrid& grid, USTileCoord
 			float xScale = ( idx & USTile::XFLIP ) ? -width : width;
 			float yScale = ( idx & USTile::YFLIP ) ? -height : height;
 			
-			this->Draw ( idx & USTile::CODE_MASK, loc.mX, loc.mY, xScale, yScale );
+			this->DrawPatch ( idx & USTile::CODE_MASK, loc.mX, loc.mY, xScale, yScale );
 		}
 	}
 }

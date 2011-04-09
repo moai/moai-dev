@@ -27,3 +27,11 @@ void USSyntaxScanner::ScanSyntax ( USSyntaxNode* node ) {
 		this->OnTerminal ( node->GetID (), *node );
 	}
 }
+
+//----------------------------------------------------------------//
+USSyntaxScanner::USSyntaxScanner () {
+}
+
+//----------------------------------------------------------------//
+USSyntaxScanner::~USSyntaxScanner () {
+}

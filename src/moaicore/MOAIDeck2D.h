@@ -18,7 +18,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	void			Draw				( const USAffine2D& transform, u32 idx );
-	virtual void	Draw				( u32 idx, float xOff, float yOff, float xScale, float yScale );
+	virtual void	DrawPatch			( u32 idx, float xOff, float yOff, float xScale, float yScale );
 	void			Draw				( const USAffine2D& transform, MOAIGrid& grid, USTileCoord& c0, USTileCoord& c1 );
 	void			DrawDebug			( const USAffine2D& transform, u32 idx );
 	void			DrawDebug			( const USAffine2D& transform, MOAIGrid& grid, USTileCoord& c0, USTileCoord& c1 );

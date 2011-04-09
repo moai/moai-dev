@@ -218,7 +218,7 @@ bool MOAIGfxQuadDeck2D::Bind () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxQuadDeck2D::Draw ( u32 idx, float xOff, float yOff, float xScale, float yScale ) {
+void MOAIGfxQuadDeck2D::DrawPatch ( u32 idx, float xOff, float yOff, float xScale, float yScale ) {
 
 	u32 size = this->mQuads.Size ();
 	if ( size ) {

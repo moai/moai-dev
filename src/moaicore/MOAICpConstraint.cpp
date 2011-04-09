@@ -2,7 +2,6 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <chipmunk/chipmunk.h>
 #include <moaicore/MOAICpBody.h>
 #include <moaicore/MOAICpConstraint.h>
 #include <moaicore/MOAILogMessages.h>

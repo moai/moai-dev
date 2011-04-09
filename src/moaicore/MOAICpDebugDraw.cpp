@@ -21,7 +21,6 @@
 
 #include "pch.h"
 #include <moaicore/MOAICpDebugDraw.h>
-#include <chipmunk/chipmunk.h>
 #include <chipmunk/chipmunk_private.h>
 
 SUPPRESS_EMPTY_FILE_WARNING

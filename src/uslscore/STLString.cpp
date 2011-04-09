@@ -134,20 +134,20 @@ void STLString::write_var ( cc8* format, va_list args ) {
 	static const u32 BUFFER_SIZE = 1024;
 	char stackBuffer [ BUFFER_SIZE ];
 	char* buffer = stackBuffer;
-	int size = BUFFER_SIZE;
+	int buffSize = BUFFER_SIZE;
 	
 	int result;
 	
 	for ( ;; ) {
 	
-		result = vsnprintf ( buffer, size, format, args );
+		result = vsnprintf ( buffer, buffSize, format, args );
 
 		// thanks to http://perfec.to/vsnprintf/ for a discussion of vsnprintf portability issues
-		if (( result == size ) || ( result == -1 ) || ( result == size - 1 ))  {
-			size = size << 1;
+		if (( result == buffSize ) || ( result == -1 ) || ( result == buffSize - 1 ))  {
+			buffSize = buffSize << 1;
 		}
-		else if ( result > size ) {
-			size = result;
+		else if ( result > buffSize ) {
+			buffSize = result;
 		}
 		else {
 			break;
@@ -158,10 +158,10 @@ void STLString::write_var ( cc8* format, va_list args ) {
 		}
 		
 		if ( buffer ) {
-			buffer = ( char* )realloc ( buffer, size );
+			buffer = ( char* )realloc ( buffer, buffSize );
 		}
 		else {
-			buffer = ( char* )malloc ( size );
+			buffer = ( char* )malloc ( buffSize );
 		}
 	}
 	

@@ -91,7 +91,7 @@ bool MOAIGfxQuad2D::Bind () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxQuad2D::Draw ( u32 idx, float xOff, float yOff, float xScale, float yScale ) {
+void MOAIGfxQuad2D::DrawPatch ( u32 idx, float xOff, float yOff, float xScale, float yScale ) {
 	UNUSED ( idx );
 	
 	USGLQuad quad;

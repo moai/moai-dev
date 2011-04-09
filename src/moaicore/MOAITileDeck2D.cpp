@@ -103,7 +103,7 @@ bool MOAITileDeck2D::Bind () {
 }
 
 //----------------------------------------------------------------//
-void MOAITileDeck2D::Draw ( u32 idx, float xOff, float yOff, float xScale, float yScale ) {
+void MOAITileDeck2D::DrawPatch ( u32 idx, float xOff, float yOff, float xScale, float yScale ) {
 	
 	idx = idx - 1;		
 	

@@ -33,7 +33,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	bool					Bind					();
-	void					Draw					( u32 idx, float xOff, float yOff, float xScale, float yScale );
+	void					DrawPatch				( u32 idx, float xOff, float yOff, float xScale, float yScale );
 	USRect					GetBounds				( u32 idx );
 							MOAIGfxQuad2D			();
 							~MOAIGfxQuad2D			();

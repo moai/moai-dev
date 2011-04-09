@@ -5,10 +5,8 @@
 #define	MOAICPSHAPE_H
 #if USE_CHIPMUNK
 
+#include <chipmunk/chipmunk.h>
 #include <moaicore/MOAICpSpace.h>
-
-struct cpShape;
-struct cpVect;
 
 //================================================================//
 // MOAICpShape

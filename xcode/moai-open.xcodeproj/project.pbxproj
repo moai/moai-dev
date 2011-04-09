@@ -744,8 +744,6 @@
 		CDB71EBD134156FF00633B13 /* USDistance.h in Headers */ = {isa = PBXBuildFile; fileRef = CDB71E29134156FE00633B13 /* USDistance.h */; };
 		CDB71EBE134156FF00633B13 /* USDrawBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDB71E2A134156FE00633B13 /* USDrawBuffer.cpp */; };
 		CDB71EBF134156FF00633B13 /* USDrawBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = CDB71E2B134156FE00633B13 /* USDrawBuffer.h */; };
-		CDB71EC0134156FF00633B13 /* USFileCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDB71E2C134156FE00633B13 /* USFileCache.cpp */; };
-		CDB71EC1134156FF00633B13 /* USFileCache.h in Headers */ = {isa = PBXBuildFile; fileRef = CDB71E2D134156FE00633B13 /* USFileCache.h */; };
 		CDB71EC2134156FF00633B13 /* USFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDB71E2E134156FE00633B13 /* USFont.cpp */; };
 		CDB71EC3134156FF00633B13 /* USFont.h in Headers */ = {isa = PBXBuildFile; fileRef = CDB71E2F134156FE00633B13 /* USFont.h */; };
 		CDB71EC4134156FF00633B13 /* USFontRipper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDB71E30134156FE00633B13 /* USFontRipper.cpp */; };
@@ -1530,8 +1528,6 @@
 		CDB71E29134156FE00633B13 /* USDistance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = USDistance.h; path = ../src/uslsext/USDistance.h; sourceTree = "<group>"; };
 		CDB71E2A134156FE00633B13 /* USDrawBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = USDrawBuffer.cpp; path = ../src/uslsext/USDrawBuffer.cpp; sourceTree = "<group>"; };
 		CDB71E2B134156FE00633B13 /* USDrawBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = USDrawBuffer.h; path = ../src/uslsext/USDrawBuffer.h; sourceTree = "<group>"; };
-		CDB71E2C134156FE00633B13 /* USFileCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = USFileCache.cpp; path = ../src/uslsext/USFileCache.cpp; sourceTree = "<group>"; };
-		CDB71E2D134156FE00633B13 /* USFileCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = USFileCache.h; path = ../src/uslsext/USFileCache.h; sourceTree = "<group>"; };
 		CDB71E2E134156FE00633B13 /* USFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = USFont.cpp; path = ../src/uslsext/USFont.cpp; sourceTree = "<group>"; };
 		CDB71E2F134156FE00633B13 /* USFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = USFont.h; path = ../src/uslsext/USFont.h; sourceTree = "<group>"; };
 		CDB71E30134156FE00633B13 /* USFontRipper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = USFontRipper.cpp; path = ../src/uslsext/USFontRipper.cpp; sourceTree = "<group>"; };
@@ -2535,8 +2531,6 @@
 				CDB71E29134156FE00633B13 /* USDistance.h */,
 				CDB71E2A134156FE00633B13 /* USDrawBuffer.cpp */,
 				CDB71E2B134156FE00633B13 /* USDrawBuffer.h */,
-				CDB71E2C134156FE00633B13 /* USFileCache.cpp */,
-				CDB71E2D134156FE00633B13 /* USFileCache.h */,
 				CDB71E2E134156FE00633B13 /* USFont.cpp */,
 				CDB71E2F134156FE00633B13 /* USFont.h */,
 				CDB71E30134156FE00633B13 /* USFontRipper.cpp */,
@@ -3197,7 +3191,6 @@
 				CDB71EBB134156FF00633B13 /* USDelegate.h in Headers */,
 				CDB71EBD134156FF00633B13 /* USDistance.h in Headers */,
 				CDB71EBF134156FF00633B13 /* USDrawBuffer.h in Headers */,
-				CDB71EC1134156FF00633B13 /* USFileCache.h in Headers */,
 				CDB71EC3134156FF00633B13 /* USFont.h in Headers */,
 				CDB71EC5134156FF00633B13 /* USFontRipper.h in Headers */,
 				CDB71EC8134156FF00633B13 /* USFsm.h in Headers */,
@@ -3716,7 +3709,6 @@
 				CDB71EB9134156FF00633B13 /* USDebugLines.cpp in Sources */,
 				CDB71EBC134156FF00633B13 /* USDistance.cpp in Sources */,
 				CDB71EBE134156FF00633B13 /* USDrawBuffer.cpp in Sources */,
-				CDB71EC0134156FF00633B13 /* USFileCache.cpp in Sources */,
 				CDB71EC2134156FF00633B13 /* USFont.cpp in Sources */,
 				CDB71EC4134156FF00633B13 /* USFontRipper.cpp in Sources */,
 				CDB71ECA134156FF00633B13 /* USGfxDevice.cpp in Sources */,

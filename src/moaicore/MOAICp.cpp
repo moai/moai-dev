@@ -2,7 +2,6 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <chipmunk/chipmunk.h>
 #include <moaicore/MOAICp.h>
 
 SUPPRESS_EMPTY_FILE_WARNING
