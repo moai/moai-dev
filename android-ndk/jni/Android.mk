@@ -42,6 +42,7 @@ $(SRC_PATH)/3rdparty/box2d-2.1.2/Box2D/Box2D/Common \
 $(SRC_PATH)/3rdparty/box2d-2.1.2/Box2D/Box2D/Dynamics \
 $(SRC_PATH)/3rdparty/box2d-2.1.2/Box2D/Box2D/Dynamics/Contacts \
 $(SRC_PATH)/3rdparty/box2d-2.1.2/Box2D/Box2D/Dynamics/Joints \
+$(SRC_PATH)/3rdparty/chipmunk-5.3.4/include \
 $(SRC_PATH)/3rdparty/chipmunk-5.3.4/include/chipmunk \
 $(SRC_PATH)/3rdparty/chipmunk-5.3.4/include/chipmunk/constraints \
 $(SRC_PATH)/src \

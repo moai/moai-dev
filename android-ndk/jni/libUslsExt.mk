@@ -52,7 +52,6 @@ $(SRC_PATH)/src/uslsext/USDataIOTask.cpp \
 $(SRC_PATH)/src/uslsext/USDebugLines.cpp \
 $(SRC_PATH)/src/uslsext/USDistance.cpp \
 $(SRC_PATH)/src/uslsext/USDrawBuffer.cpp \
-$(SRC_PATH)/src/uslsext/USFileCache.cpp \
 $(SRC_PATH)/src/uslsext/USFont.cpp \
 $(SRC_PATH)/src/uslsext/USFontRipper.cpp \
 $(SRC_PATH)/src/uslsext/USGfxDevice.cpp \
