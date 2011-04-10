@@ -141,7 +141,7 @@ void MOAIFont::LoadFontFromTTF ( cc8* filename, cc8* charCodes, float points, u3
 		USImage image;
 		MOAIFtFontRipper::RipFromTTF ( filename, *this, image, charCodes, points, dpi );
 		this->mTexture.Init ( image );
-		this->mTexture.SetFilter ( GL_NEAREST, GL_NEAREST );
+		this->mTexture.SetFilter ( GL_LINEAR, GL_LINEAR );
 	#else
 		UNUSED ( filename );
 		UNUSED ( charCodes );

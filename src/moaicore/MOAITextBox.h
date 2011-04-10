@@ -31,12 +31,9 @@ private:
 
 	STLString			mText;
 	u32					mTextLength;
-	u32					mTextOffset;
 
 	u32					mJustify;
 	float				mPoints;
-	
-	u32					mPageSize;		// size of page in input stream, including markup and whitespace
 	
 	float				mSpool;
 	float				mSpeed;
@@ -45,34 +42,36 @@ private:
 	
 	bool				mYFlip;
 	
-	USTextStyler		mStyler;
-	USTextStyler		mNextStyler;
-	USGlyphBuffer		mLayout;
+	bool				mNeedsLayout;
+	USTextCursor		mCurrentPage;
+	USTextCursor		mNextPage;
+	USTextLayout		mLayout;
 	
 	USLeanArray < MOAIAnimCurve* >	mMOAICurves;
 	USLeanArray < USAnimCurve* >	mCurves;
 	
 	//----------------------------------------------------------------//
-	static int	_clearCurves	( lua_State* L );
-	static int	_more			( lua_State* L );
-	static int	_nextPage		( lua_State* L );
-	static int	_revealAll		( lua_State* L );
-	static int	_reserveCurves	( lua_State* L );
-	static int	_setAlignment	( lua_State* L );
-	static int	_setCurve		( lua_State* L );
-	static int	_setFont		( lua_State* L );
-	static int	_setParent		( lua_State* L );
-	static int	_setRect		( lua_State* L );
-	static int	_setReveal		( lua_State* L );
-	static int	_setSpeed		( lua_State* L );
-	static int	_setString		( lua_State* L );
-	static int	_setTextSize	( lua_State* L );
-	static int	_setYFlip		( lua_State* L );
-	static int	_spool			( lua_State* L );
+	static int	_clearCurves		( lua_State* L );
+	static int	_getStringBounds	( lua_State* L );
+	static int	_more				( lua_State* L );
+	static int	_nextPage			( lua_State* L );
+	static int	_revealAll			( lua_State* L );
+	static int	_reserveCurves		( lua_State* L );
+	static int	_setAlignment		( lua_State* L );
+	static int	_setCurve			( lua_State* L );
+	static int	_setFont			( lua_State* L );
+	static int	_setParent			( lua_State* L );
+	static int	_setRect			( lua_State* L );
+	static int	_setReveal			( lua_State* L );
+	static int	_setSpeed			( lua_State* L );
+	static int	_setString			( lua_State* L );
+	static int	_setTextSize		( lua_State* L );
+	static int	_setYFlip			( lua_State* L );
+	static int	_spool				( lua_State* L );
 	
 	//----------------------------------------------------------------//
-	void			ClearPageInfo			();
 	void			Layout					();
+	void			OnDepNodeUpdate			();
 	void			Spool					( float step );
 	
 public:

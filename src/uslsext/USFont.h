@@ -1,71 +1,13 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	FONT_H
-#define	FONT_H
+#ifndef	USFONT_H
+#define	USFONT_H
 
 #include <uslsext/USTexture.h>
 
 class USAnimCurve;
 class USGlyph;
-
-//================================================================//
-// USTextStyler
-//================================================================//
-class USTextStyler {
-private:
-
-	u32 mRGBA;
-
-public:
-
-	friend class USFontStringParser;
-	friend class USFont;
-
-	//----------------------------------------------------------------//
-	void	Reset			();
-};
-
-//================================================================//
-// USTextToken
-//================================================================//
-class USTextToken {
-public:
-	
-	enum {
-		kEOF,
-		kNewline,
-		kWhitespace,
-		kWord,
-	};
-
-	const USGlyph*	mLastGlyph;
-
-	u32			mLength;
-	u32			mNonWhitespace;
-	u32			mType;
-		
-	float		mAdvance;
-	float		mWidth;
-	float		mKern;
-};
-
-//================================================================//
-// USTextLine
-//================================================================//
-class USTextLine {
-public:
-
-	bool	mIsFinal;		// last string parsed from input
-	
-	u32		mLength;		// total characters in line (including whitespace and markup)
-	u32		mVisibleLength;	// total length to draw (including whitespace and markup)
-	
-	u32		mNonWhitespace;	// total renderable characters in visible length (no whitespace or markup)
-	
-	float	mAdvance;
-	float	mWidth;
-};
 
 //================================================================//
 // USKernVec
@@ -98,6 +40,8 @@ private:
 public:
 
 	friend class USFont;
+	friend class USTextFrame;
+	friend class USTextLayout;
 
 	SET ( const USRect&, UVRect, mUVRect )
 	
@@ -109,38 +53,12 @@ public:
 	//----------------------------------------------------------------//
 	void			Draw				( float points, float x, float y ) const;
 	USKernVec		GetKerning			( u32 name ) const;
+	USRect			GetRect				( float points, float x, float y ) const;
 	void			ReserveKernTable	( u32 total );
 	void			SetKernVec			( u32 id, const USKernVec& kernVec );
 	void			SetScreenRect		( float width, float height, float yOff );
 					USGlyph				();
 					~USGlyph			();
-};
-
-//================================================================//
-// USGlyphSprite
-//================================================================//
-class USGlyphSprite {
-private:
-
-	friend class USGlyphBuffer;
-	friend class USFont;
-	
-	float		mX;
-	float		mY;
-	u32			mRGBA;
-	u32			mGlyphID;
-	float		mPoints;
-};
-
-//================================================================//
-// USGlyphBuffer
-//================================================================//
-class USGlyphBuffer :
-	public USLeanStack < USGlyphSprite, 64 > {
-public:
-
-	//----------------------------------------------------------------//
-	void		PushGlyph			( u32 glyphID, float x, float y, float points, u32 rgba );
 };
 
 //================================================================//
@@ -169,12 +87,11 @@ private:
 	void			DrawGlyph			( u32 c, float points, float x, float y );
 	u32				GetIDForChar		( u32 c );
 	USGlyph&		GetGlyphForID		( u32 id );
-	USTextLine		GetLine				( cc8* str, float points, float width );
-	USTextToken		GetToken		 	( cc8* str, float points, USTextToken* prevToken );
 	bool			IsWideChar			( u32 c );
-	void			LayoutLine			( USGlyphBuffer& glyphBuffer, cc8* str, float points, u32 size, float x, float y, USTextStyler& styler, USAnimCurve* curve, u32 width, u32 xOff );
 
 public:
+
+	friend class USTextFrame;
 
 	enum {
 		LEFT_JUSTIFY,
@@ -186,11 +103,8 @@ public:
 	GET_SET ( float, LineSpacing, mLineSpacing )
 
 	//----------------------------------------------------------------//
-	void			Draw				( const USGlyphBuffer& layout, u32 reveal );
-	const USGlyph&	GetGlyphForChar		( u32 c );
+	USGlyph&		GetGlyphForChar		( u32 c );
 	void			Init				( cc8* charCodes );
-	float			Justify				( float x, float width, float lineWidth, u32 justify );
-	u32				Layout				( USGlyphBuffer& glyphBuffer, cc8* str, float points, USRect frame, u32 justify, USTextStyler& styler, USAnimCurve** curves, u32 totalCurves );
 	void			SetGlyph			( const USGlyph& glyph );
 	u32				Size				();
 					USFont				();

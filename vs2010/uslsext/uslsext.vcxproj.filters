@@ -246,6 +246,12 @@
     <ClCompile Include="..\..\src\uslsext\USParser.cpp">
       <Filter>src\parser</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\USTextFrame.cpp">
+      <Filter>src\font</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\USTextLayout.cpp">
+      <Filter>src\font</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\uslsext\USAnimCurve.h">
@@ -478,6 +484,12 @@
     </ClInclude>
     <ClInclude Include="..\..\src\uslsext\USBinarySearch.h">
       <Filter>src\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USTextFrame.h">
+      <Filter>src\font</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USTextLayout.h">
+      <Filter>src\font</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

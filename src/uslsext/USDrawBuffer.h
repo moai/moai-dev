@@ -121,7 +121,7 @@ public:
 	//----------------------------------------------------------------//
 	inline void WriteVtx ( USVec2D vtx ) {
 	
-		this->mVtxTransform.Transform ( vtx );
+		this->mVtxTransform.Transform ( vtx );		
 		this->Write ( vtx );
 	}
 	

@@ -244,6 +244,8 @@
     <ClCompile Include="..\..\src\uslsext\USParser.cpp" />
     <ClCompile Include="..\..\src\uslsext\USSyntaxNode.cpp" />
     <ClCompile Include="..\..\src\uslsext\USSyntaxScanner.cpp" />
+    <ClCompile Include="..\..\src\uslsext\USTextFrame.cpp" />
+    <ClCompile Include="..\..\src\uslsext\USTextLayout.cpp" />
     <ClCompile Include="..\..\src\uslsext\USTexture.cpp" />
     <ClCompile Include="..\..\src\uslsext\USVertexFormat.cpp" />
     <ClCompile Include="..\..\src\uslsext\USVertexFormatMgr.cpp" />
@@ -330,6 +332,8 @@
     <ClInclude Include="..\..\src\uslsext\USParser.h" />
     <ClInclude Include="..\..\src\uslsext\USSyntaxNode.h" />
     <ClInclude Include="..\..\src\uslsext\USSyntaxScanner.h" />
+    <ClInclude Include="..\..\src\uslsext\USTextFrame.h" />
+    <ClInclude Include="..\..\src\uslsext\USTextLayout.h" />
     <ClInclude Include="..\..\src\uslsext\USTexture.h" />
     <ClInclude Include="..\..\src\uslsext\USVertexFormat.h" />
     <ClInclude Include="..\..\src\uslsext\USVertexFormatMgr.h" />

@@ -68,6 +68,8 @@
 #include <uslsext/USSyntaxScanner.h>
 #include <uslsext/USTask.h>
 #include <uslsext/USTaskThread.h>
+#include <uslsext/USTextFrame.h>
+#include <uslsext/USTextLayout.h>
 #include <uslsext/USTexture.h>
 #include <uslsext/USThread.h>
 #include <uslsext/USThread_posix.h>

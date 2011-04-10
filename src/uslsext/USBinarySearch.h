@@ -19,7 +19,7 @@ u32 USBinarySearch ( const TYPE* buffer, const TYPE& key, u32 total ) {
 	u32 s = j;
 	
 	if ( key < buffer [ i ]) return NO_MATCH;
-	if ( key > buffer [ j ]) return NO_MATCH;
+	if ( buffer [ j ] < key ) return NO_MATCH;
 	
 	while ( s ) {
 		
@@ -38,7 +38,7 @@ u32 USBinarySearch ( const TYPE* buffer, const TYPE& key, u32 total ) {
 		s = j - i;
 	}
 	
-	if ( key == buffer [ i ]) return i;
+	if ( !(( key < buffer [ i ]) || ( buffer [ i ] < key )))  return i;
 	
 	return NO_MATCH;
 }

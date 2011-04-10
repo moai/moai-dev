@@ -14,8 +14,8 @@ layer = MOAILayer2D.new ()
 layer:setViewport ( viewport )
 
 charcodes = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 .,:;!?()&/-'
-text1 = "a b c d e f g h i j k l m n o p q r s t u v w x y z A B C D E F G H I J K L M N O P Q R S T U V W X Y Z"
-text2 = "1 2 3 4 5 6 7 8 9 0 a i e o u sa shi se su so ma mi me mu mo ta chi te tsu to ka ki ke ku ko ra ri re ru ro"
+text1 = "a b c d e f g h i j k l m n o p q r s t u v w x y z <c:fc0>A B C D E F G H I J K L M N O P Q R <c:0cf>S T U V W X Y Z"
+text2 = "<c:0f0>1 2 3 4 5 6 7 8 9 0 <c:f00>a i e o u <c:00f>sa shi se su so ma mi me mu mo <c:0f0>ta chi te tsu to ka ki ke ku ko <c:fc0>ra ri re ru ro"
 
 font = MOAIFont.new ()
 font:loadFromTTF ( 'EBOLA-KI.TTF', charcodes, 16, 163 )

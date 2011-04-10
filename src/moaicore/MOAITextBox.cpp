@@ -7,6 +7,7 @@
 #include <moaicore/MOAIDebugLines.h>
 #include <moaicore/MOAIFont.h>
 #include <moaicore/MOAILogMessages.h>
+#include <moaicore/MOAINodeMgr.h>
 #include <moaicore/MOAITextBox.h>
 
 //================================================================//
@@ -25,6 +26,45 @@ int MOAITextBox::_clearCurves ( lua_State* L ) {
 
 	self->ClearCurves ();
 
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	getStringBounds
+	@text	Returns the bounding rectange of a given substring on a
+			single line in the local space of the text box.
+
+	@in		MOAITextBox self
+	@in		number index		Index of the first character in the substring.
+	@in		number size			Length of the substring.
+	@out	number xMin			Edge of rect or 'nil' is no match found.
+	@out	number yMin			Edge of rect or 'nil' is no match found.
+	@out	number xMax			Edge of rect or 'nil' is no match found.
+	@out	number yMax			Edge of rect or 'nil' is no match found.
+*/
+int MOAITextBox::_getStringBounds ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextBox, "UNN" )
+	
+	u32 index	= state.GetValue < u32 >( 2, 0 );
+	u32 size	= state.GetValue < u32 >( 3, 0 );
+	
+	if ( size ) {
+		self->Layout ();
+		
+		
+		USRect rect;
+		if ( self->mLayout.GetBoundsForRange ( index, size, rect )) {
+			
+			rect.Bless ();
+			
+			lua_pushnumber ( state, rect.mXMin );
+			lua_pushnumber ( state, rect.mYMin );
+			lua_pushnumber ( state, rect.mXMax );
+			lua_pushnumber ( state, rect.mYMax );
+			
+			return 4;
+		}
+	}
 	return 0;
 }
 
@@ -314,12 +354,8 @@ void MOAITextBox::ClearCurves () {
 	}
 	this->mMOAICurves.Clear ();
 	this->mCurves.Clear ();
-}
-
-//----------------------------------------------------------------//
-void MOAITextBox::ClearPageInfo () {
-
-	this->mPageSize = 0;
+	
+	this->mNeedsLayout = true;
 }
 
 //----------------------------------------------------------------//
@@ -334,25 +370,14 @@ void MOAITextBox::Draw () {
 		USDrawBuffer& drawbuffer = USDrawBuffer::Get ();
 		USAffine2D localToWorldMtx = this->GetLocalToWorldMtx ();
 		
-		if ( this->mYFlip ) {
-			
-			USAffine2D mtx;
-			
-			mtx.Scale ( 1.0f, -1.0f );
-			localToWorldMtx.Append ( mtx );
-			
-			mtx.Translate ( 0.0f, ( this->mFrame.mYMin + this->mFrame.mYMax ));
-			localToWorldMtx.Append ( mtx );
-		}
-		
 		drawbuffer.SetVtxTransform ( localToWorldMtx );
 		
 		this->LoadShader ();
 		drawbuffer.SetBlendMode ( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
 		
-		if ( this->mReveal && ( this->mTextOffset <= this->mTextLength )) {
+		if ( this->mReveal ) {
 			this->Layout ();
-			this->mFont->Draw ( this->mLayout, this->mReveal );
+			this->mLayout.Draw ( this->mReveal );
 		}
 	}
 }
@@ -382,7 +407,7 @@ bool MOAITextBox::IsDone () {
 
 	if ( this->IsActive ()) {
 		this->Layout ();
-		return ( this->mReveal >= this->mLayout.GetTop ());
+		return ( this->mReveal > this->mLayout.GetTop ());
 	}
 	return true;
 }
@@ -390,39 +415,42 @@ bool MOAITextBox::IsDone () {
 //----------------------------------------------------------------//
 void MOAITextBox::Layout () {
 
-	if ( this->mPageSize ) return;
-	if ( this->mTextOffset > this->mTextLength ) return;
 	if ( !this->mFont ) return;
+	if ( !this->mTextLength ) return;
+	if ( !this->mNeedsLayout ) return;
 	
 	this->mLayout.Reset ();
 	
-	USTextStyler styler = this->mStyler;
-	this->mPageSize = this->mFont->Layout (
+	USTextFrame textFrame;
+	
+	textFrame.SetAlignment ( this->mJustify );
+	textFrame.SetPoints ( this->mPoints );
+	textFrame.SetFrame ( this->mFrame );
+	textFrame.SetFont ( this->mFont );
+	
+	textFrame.SetCurves ( this->mCurves, this->mCurves.Size ());
+	
+	this->mNextPage = this->mCurrentPage;
+	textFrame.Layout (
 		this->mLayout,
-		&this->mText [ this->mTextOffset ],
-		this->mPoints,
-		this->mFrame,
-		this->mJustify,
-		styler,
-		this->mCurves,
-		this->mCurves.Size ()
+		this->mText,
+		this->mNextPage
 	);
 	
-	this->mNextStyler = styler;
+	this->mNeedsLayout = false;
 }
 
 //----------------------------------------------------------------//
 MOAITextBox::MOAITextBox () :
 	mText ( "" ),
 	mTextLength ( 0 ),
-	mTextOffset ( 0 ),
 	mJustify ( USFont::LEFT_JUSTIFY ),
 	mPoints ( 0 ),
-	mPageSize ( 0 ),
 	mSpool ( 0.0f ),
 	mSpeed ( DEFAULT_SPOOL_SPEED ),
 	mReveal ( REVEAL_ALL ),
-	mYFlip ( false ) {
+	mYFlip ( false ),
+	mNeedsLayout ( false ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIProp2D )
@@ -444,12 +472,11 @@ bool MOAITextBox::More () {
 	
 	this->Layout ();
 	
-	if ( this->mReveal < this->mLayout.GetTop ()) {
+	if ( this->mReveal <= this->mLayout.GetTop ()) {
 		return true;
 	}
 	
-	u32 offset = this->mTextOffset + this->mPageSize;
-	if ( offset < this->mTextLength ) {
+	if ( this->mNextPage.GetIndex () < this->mTextLength ) {
 		return true;
 	}
 	return false;
@@ -460,16 +487,35 @@ void MOAITextBox::NextPage ( bool reveal ) {
 	
 	this->Layout ();
 	
-	u32 offset = this->mTextOffset + this->mPageSize;
-	if ( offset >= this->mTextLength ) {
-		offset = 0;
+	if ( this->mNextPage.GetIndex () < this->mTextLength ) {
+		this->mCurrentPage = this->mNextPage;
 	}
-	this->mTextOffset = offset;
-	this->mStyler = this->mNextStyler;
+	else {
+		this->mCurrentPage.Reset ();
+	}
 	
-	this->ClearPageInfo ();
+	this->mNeedsLayout = true;
 	this->mReveal = reveal ? REVEAL_ALL : 0;
 	this->mSpool = 0.0f;
+}
+
+//----------------------------------------------------------------//
+void MOAITextBox::OnDepNodeUpdate () {
+
+	MOAIProp2D::OnDepNodeUpdate ();
+
+	if ( this->mYFlip ) {
+			
+		USAffine2D mtx;
+		
+		mtx.Scale ( 1.0f, -1.0f );
+		this->mLocalToWorldMtx.Append ( mtx );
+			
+		mtx.Translate ( 0.0f, ( this->mFrame.mYMin + this->mFrame.mYMax ));
+		this->mLocalToWorldMtx.Append ( mtx );
+		
+		this->mWorldToLocalMtx.Inverse ( this->mLocalToWorldMtx );
+	}
 }
 
 //----------------------------------------------------------------//
@@ -498,6 +544,7 @@ void MOAITextBox::RegisterLuaFuncs ( USLuaState& state ) {
 	
 	luaL_Reg regTable [] = {
 		{ "clearCurves",		_clearCurves },
+		{ "getStringBounds",	_getStringBounds },
 		{ "more",				_more },
 		{ "nextPage",			_nextPage },
 		{ "reserveCurves",		_reserveCurves },
@@ -527,6 +574,8 @@ void MOAITextBox::ReserveCurves ( u32 total ) {
 	
 	this->mCurves.Init ( total );
 	this->mCurves.Fill ( 0 );
+	
+	this->mNeedsLayout = true;
 }
 
 //----------------------------------------------------------------//
@@ -556,41 +605,42 @@ void MOAITextBox::SetCurve ( u32 idx, MOAIAnimCurve* curve ) {
 	
 	this->mMOAICurves [ idx ] = curve;
 	this->mCurves [ idx ] = curve;
+	
+	this->mNeedsLayout = true;
 }
 
 //----------------------------------------------------------------//
 void MOAITextBox::SetFont ( MOAIFont* font ) {
 
 	this->mFont = font;
-	this->ClearPageInfo ();
+	this->mNeedsLayout = true;
 }
 
 //----------------------------------------------------------------//
 void MOAITextBox::SetRect ( float left, float top, float right, float bottom ) {
 
 	this->mFrame.Init ( left, top, right, bottom );
-	this->ClearPageInfo ();
+	this->mNeedsLayout = true;
 }
 
 //----------------------------------------------------------------//
 void MOAITextBox::SetText ( cc8* text ) {
 
-	this->mStyler.Reset ();
-
 	this->mText = text;
 	this->mTextLength = ( u32 )this->mText.length ();
-	this->mTextOffset = 0;
 	
-	this->ClearPageInfo ();
 	this->mReveal = REVEAL_ALL;
 	this->mSpool = 0.0f;
+
+	this->mCurrentPage.Reset ();
+	this->mNeedsLayout = true;
 }
 
 //----------------------------------------------------------------//
 void MOAITextBox::SetTextSize( float newSize ) {
 
 	this->mPoints = newSize;
-	this->ClearPageInfo ();
+	this->mNeedsLayout = true;
 }
 
 //----------------------------------------------------------------//
