@@ -416,10 +416,11 @@ bool MOAITextBox::IsDone () {
 void MOAITextBox::Layout () {
 
 	if ( !this->mFont ) return;
-	if ( !this->mTextLength ) return;
 	if ( !this->mNeedsLayout ) return;
 	
 	this->mLayout.Reset ();
+	
+	if ( !this->mTextLength ) return;
 	
 	USTextFrame textFrame;
 	
