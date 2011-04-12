@@ -8,6 +8,7 @@
 
 class USAnimCurve;
 class USGlyph;
+class USTextLayout;
 
 //================================================================//
 // USTextCursor

@@ -448,6 +448,38 @@
 		03D325F7134FC6530056EF14 /* USSyntaxNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 03D325ED134FC6530056EF14 /* USSyntaxNode.h */; };
 		03D325F8134FC6530056EF14 /* USSyntaxScanner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03D325EE134FC6530056EF14 /* USSyntaxScanner.cpp */; };
 		03D325F9134FC6530056EF14 /* USSyntaxScanner.h in Headers */ = {isa = PBXBuildFile; fileRef = 03D325EF134FC6530056EF14 /* USSyntaxScanner.h */; };
+		CD2FDECB13542F1400B814DF /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD2FDEBB13542F1400B814DF /* AddressBook.framework */; };
+		CD2FDECC13542F1400B814DF /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD2FDEBC13542F1400B814DF /* AddressBookUI.framework */; };
+		CD2FDECD13542F1400B814DF /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD2FDEBD13542F1400B814DF /* AudioToolbox.framework */; };
+		CD2FDECE13542F1400B814DF /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD2FDEBE13542F1400B814DF /* AVFoundation.framework */; };
+		CD2FDECF13542F1400B814DF /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD2FDEBF13542F1400B814DF /* CoreAudio.framework */; };
+		CD2FDED013542F1400B814DF /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD2FDEC013542F1400B814DF /* CoreGraphics.framework */; };
+		CD2FDED113542F1400B814DF /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD2FDEC113542F1400B814DF /* CoreLocation.framework */; };
+		CD2FDED213542F1400B814DF /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD2FDEC213542F1400B814DF /* CoreMedia.framework */; };
+		CD2FDED313542F1400B814DF /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD2FDEC313542F1400B814DF /* CoreVideo.framework */; };
+		CD2FDED413542F1400B814DF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD2FDEC413542F1400B814DF /* Foundation.framework */; };
+		CD2FDED513542F1400B814DF /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD2FDEC513542F1400B814DF /* OpenAL.framework */; };
+		CD2FDED613542F1400B814DF /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD2FDEC613542F1400B814DF /* OpenGLES.framework */; };
+		CD2FDED713542F1400B814DF /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD2FDEC713542F1400B814DF /* QuartzCore.framework */; };
+		CD2FDED813542F1400B814DF /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD2FDEC813542F1400B814DF /* StoreKit.framework */; };
+		CD2FDED913542F1400B814DF /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD2FDEC913542F1400B814DF /* SystemConfiguration.framework */; };
+		CD2FDEDA13542F1400B814DF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD2FDECA13542F1400B814DF /* UIKit.framework */; };
+		CD2FDEDD13542F3600B814DF /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CD2FDEDB13542F3600B814DF /* libiconv.dylib */; };
+		CD2FDEDE13542F3600B814DF /* libz.1.2.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CD2FDEDC13542F3600B814DF /* libz.1.2.3.dylib */; };
+		CD2FDEEE13542FEA00B814DF /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD2FDEE013542FEA00B814DF /* AppDelegate.mm */; };
+		CD2FDEEF13542FEA00B814DF /* Entitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = CD2FDEE113542FEA00B814DF /* Entitlements.plist */; };
+		CD2FDEF113542FEA00B814DF /* iPhoneIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = CD2FDEE313542FEA00B814DF /* iPhoneIcon.png */; };
+		CD2FDEF213542FEA00B814DF /* LocationObserver.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD2FDEE513542FEA00B814DF /* LocationObserver.mm */; };
+		CD2FDEF313542FEA00B814DF /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD2FDEE613542FEA00B814DF /* main.mm */; };
+		CD2FDEF413542FEA00B814DF /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD2FDEE713542FEA00B814DF /* MainWindow.xib */; };
+		CD2FDEF513542FEA00B814DF /* MoaiView.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD2FDEEA13542FEA00B814DF /* MoaiView.mm */; };
+		CD2FDEF613542FEA00B814DF /* OpenGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD2FDEEC13542FEA00B814DF /* OpenGLView.mm */; };
+		CD2FDEF9135430B800B814DF /* libMoai.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03C2F6F4104DE130009A2D5D /* libMoai.a */; };
+		CD3153691354280E0061C0FF /* USTextFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD3153601354279F0061C0FF /* USTextFrame.cpp */; };
+		CD31536A1354280E0061C0FF /* USTextFrame.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3153611354279F0061C0FF /* USTextFrame.h */; };
+		CD31536B1354280E0061C0FF /* USTextLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD3153621354279F0061C0FF /* USTextLayout.cpp */; };
+		CD31536C1354280E0061C0FF /* USTextLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3153631354279F0061C0FF /* USTextLayout.h */; };
+		CD6325D513543515005F5741 /* lua in Resources */ = {isa = PBXBuildFile; fileRef = CD6325D413543515005F5741 /* lua */; };
 		CD7B3F4212FA484B00A90AA5 /* AKU.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD7B3F3E12FA484B00A90AA5 /* AKU.cpp */; };
 		CD7B3F4312FA484B00A90AA5 /* AKU.h in Headers */ = {isa = PBXBuildFile; fileRef = CD7B3F3F12FA484B00A90AA5 /* AKU.h */; };
 		CD7B3F4412FA484B00A90AA5 /* pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD7B3F4012FA484B00A90AA5 /* pch.cpp */; };
@@ -933,12 +965,44 @@
 		03D325ED134FC6530056EF14 /* USSyntaxNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = USSyntaxNode.h; path = ../src/uslsext/USSyntaxNode.h; sourceTree = SOURCE_ROOT; };
 		03D325EE134FC6530056EF14 /* USSyntaxScanner.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = USSyntaxScanner.cpp; path = ../src/uslsext/USSyntaxScanner.cpp; sourceTree = SOURCE_ROOT; };
 		03D325EF134FC6530056EF14 /* USSyntaxScanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = USSyntaxScanner.h; path = ../src/uslsext/USSyntaxScanner.h; sourceTree = SOURCE_ROOT; };
-		1484EE671159455800BBD784 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
-		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		288765FC0DF74451002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		ABDD06E810D31603004D70E9 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
-		CD10CA800FA9272300363C67 /* libz.1.2.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.3.dylib; path = usr/lib/libz.1.2.3.dylib; sourceTree = SDKROOT; };
+		CD2FDE8413542E9F00B814DF /* moaiview.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = moaiview.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD2FDEBB13542F1400B814DF /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/System/Library/Frameworks/AddressBook.framework; sourceTree = DEVELOPER_DIR; };
+		CD2FDEBC13542F1400B814DF /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/System/Library/Frameworks/AddressBookUI.framework; sourceTree = DEVELOPER_DIR; };
+		CD2FDEBD13542F1400B814DF /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/System/Library/Frameworks/AudioToolbox.framework; sourceTree = DEVELOPER_DIR; };
+		CD2FDEBE13542F1400B814DF /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/System/Library/Frameworks/AVFoundation.framework; sourceTree = DEVELOPER_DIR; };
+		CD2FDEBF13542F1400B814DF /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/System/Library/Frameworks/CoreAudio.framework; sourceTree = DEVELOPER_DIR; };
+		CD2FDEC013542F1400B814DF /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
+		CD2FDEC113542F1400B814DF /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/System/Library/Frameworks/CoreLocation.framework; sourceTree = DEVELOPER_DIR; };
+		CD2FDEC213542F1400B814DF /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/System/Library/Frameworks/CoreMedia.framework; sourceTree = DEVELOPER_DIR; };
+		CD2FDEC313542F1400B814DF /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/System/Library/Frameworks/CoreVideo.framework; sourceTree = DEVELOPER_DIR; };
+		CD2FDEC413542F1400B814DF /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		CD2FDEC513542F1400B814DF /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/System/Library/Frameworks/OpenAL.framework; sourceTree = DEVELOPER_DIR; };
+		CD2FDEC613542F1400B814DF /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/System/Library/Frameworks/OpenGLES.framework; sourceTree = DEVELOPER_DIR; };
+		CD2FDEC713542F1400B814DF /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
+		CD2FDEC813542F1400B814DF /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/System/Library/Frameworks/StoreKit.framework; sourceTree = DEVELOPER_DIR; };
+		CD2FDEC913542F1400B814DF /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/System/Library/Frameworks/SystemConfiguration.framework; sourceTree = DEVELOPER_DIR; };
+		CD2FDECA13542F1400B814DF /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		CD2FDEDB13542F3600B814DF /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/usr/lib/libiconv.dylib; sourceTree = DEVELOPER_DIR; };
+		CD2FDEDC13542F3600B814DF /* libz.1.2.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.3.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/usr/lib/libz.1.2.3.dylib; sourceTree = DEVELOPER_DIR; };
+		CD2FDEDF13542FEA00B814DF /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		CD2FDEE013542FEA00B814DF /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
+		CD2FDEE113542FEA00B814DF /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
+		CD2FDEE213542FEA00B814DF /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CD2FDEE313542FEA00B814DF /* iPhoneIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iPhoneIcon.png; sourceTree = "<group>"; };
+		CD2FDEE413542FEA00B814DF /* LocationObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationObserver.h; sourceTree = "<group>"; };
+		CD2FDEE513542FEA00B814DF /* LocationObserver.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LocationObserver.mm; sourceTree = "<group>"; };
+		CD2FDEE613542FEA00B814DF /* main.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
+		CD2FDEE713542FEA00B814DF /* MainWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
+		CD2FDEE813542FEA00B814DF /* moaiview-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "moaiview-Prefix.pch"; sourceTree = "<group>"; };
+		CD2FDEE913542FEA00B814DF /* MoaiView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoaiView.h; sourceTree = "<group>"; };
+		CD2FDEEA13542FEA00B814DF /* MoaiView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MoaiView.mm; sourceTree = "<group>"; };
+		CD2FDEEB13542FEA00B814DF /* OpenGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGLView.h; sourceTree = "<group>"; };
+		CD2FDEEC13542FEA00B814DF /* OpenGLView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = OpenGLView.mm; sourceTree = "<group>"; };
+		CD2FDEED13542FEA00B814DF /* RefPtr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RefPtr.h; sourceTree = "<group>"; };
+		CD3153601354279F0061C0FF /* USTextFrame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = USTextFrame.cpp; path = ../src/uslsext/USTextFrame.cpp; sourceTree = "<group>"; };
+		CD3153611354279F0061C0FF /* USTextFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = USTextFrame.h; path = ../src/uslsext/USTextFrame.h; sourceTree = "<group>"; };
+		CD3153621354279F0061C0FF /* USTextLayout.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = USTextLayout.cpp; path = ../src/uslsext/USTextLayout.cpp; sourceTree = "<group>"; };
+		CD3153631354279F0061C0FF /* USTextLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = USTextLayout.h; path = ../src/uslsext/USTextLayout.h; sourceTree = "<group>"; };
 		CD365A0B11C2BAAD00EE5068 /* ascii.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ascii.h; path = "../3rdparty/expat-2.0.1/lib/ascii.h"; sourceTree = SOURCE_ROOT; };
 		CD365A0C11C2BAAD00EE5068 /* asciitab.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = asciitab.h; path = "../3rdparty/expat-2.0.1/lib/asciitab.h"; sourceTree = SOURCE_ROOT; };
 		CD365A0E11C2BAAD00EE5068 /* expat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = expat.h; path = "../3rdparty/expat-2.0.1/lib/expat.h"; sourceTree = SOURCE_ROOT; };
@@ -1128,6 +1192,7 @@
 		CD4327F41116A0ED006D6D3D /* typecheck-gcc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "typecheck-gcc.h"; path = "../3rdparty/curl-7.19.7/include-iphone/curl/typecheck-gcc.h"; sourceTree = SOURCE_ROOT; };
 		CD4327F51116A0ED006D6D3D /* types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = types.h; path = "../3rdparty/curl-7.19.7/include-iphone/curl/types.h"; sourceTree = SOURCE_ROOT; };
 		CD43280D1116A2BE006D6D3D /* setup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = setup.h; path = "../3rdparty/curl-7.19.7/lib/setup.h"; sourceTree = SOURCE_ROOT; };
+		CD6325D413543515005F5741 /* lua */ = {isa = PBXFileReference; lastKnownFileType = folder; path = lua; sourceTree = "<group>"; };
 		CD75832912E1393F008759DC /* autofit.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = autofit.c; path = "../3rdparty/freetype-2.4.4/src/autofit/autofit.c"; sourceTree = SOURCE_ROOT; };
 		CD75832B12E13961008759DC /* bdf.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = bdf.c; path = "../3rdparty/freetype-2.4.4/src/bdf/bdf.c"; sourceTree = SOURCE_ROOT; };
 		CD75832D12E13985008759DC /* cff.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = cff.c; path = "../3rdparty/freetype-2.4.4/src/cff/cff.c"; sourceTree = SOURCE_ROOT; };
@@ -1180,10 +1245,6 @@
 		CD885E3F1342722400FD15A1 /* USBinarySearch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = USBinarySearch.h; path = ../src/uslsext/USBinarySearch.h; sourceTree = "<group>"; };
 		CD885E431342727C00FD15A1 /* utf8.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = utf8.c; path = ../3rdparty/contrib/utf8.c; sourceTree = "<group>"; };
 		CD885E441342727C00FD15A1 /* utf8.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = utf8.h; path = ../3rdparty/contrib/utf8.h; sourceTree = "<group>"; };
-		CD96DE750F1581D50061FBD3 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
-		CD96DEB90F1583B00061FBD3 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		CD96DEBE0F1583C50061FBD3 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		CD96DED10F1584170061FBD3 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		CDA468F91306694200F6E78D /* chipmunk.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = chipmunk.c; path = "../3rdparty/chipmunk-5.3.4/src/chipmunk.c"; sourceTree = SOURCE_ROOT; };
 		CDA468FA1306694200F6E78D /* cpArbiter.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = cpArbiter.c; path = "../3rdparty/chipmunk-5.3.4/src/cpArbiter.c"; sourceTree = SOURCE_ROOT; };
 		CDA468FB1306694200F6E78D /* cpArray.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = cpArray.c; path = "../3rdparty/chipmunk-5.3.4/src/cpArray.c"; sourceTree = SOURCE_ROOT; };
@@ -1693,12 +1754,6 @@
 		CDE3B6FB13257D8A0088A619 /* b2PolygonContact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = b2PolygonContact.h; path = "../3rdparty/box2d-2.1.2/Box2D/Box2D/Dynamics/Contacts/b2PolygonContact.h"; sourceTree = SOURCE_ROOT; };
 		CDE3B6FC13257D8A0088A619 /* b2TOISolver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = b2TOISolver.cpp; path = "../3rdparty/box2d-2.1.2/Box2D/Box2D/Dynamics/Contacts/b2TOISolver.cpp"; sourceTree = SOURCE_ROOT; };
 		CDE3B6FD13257D8A0088A619 /* b2TOISolver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = b2TOISolver.h; path = "../3rdparty/box2d-2.1.2/Box2D/Box2D/Dynamics/Contacts/b2TOISolver.h"; sourceTree = SOURCE_ROOT; };
-		CDE8273812E2559000C2D1C9 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
-		CDE8273A12E2559000C2D1C9 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
-		CDE8273C12E2559000C2D1C9 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
-		CDEB9B4812E3DB3100B14752 /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
-		DEA05D05106075930018B9C8 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
-		DEA05D13106075BD0018B9C8 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1717,6 +1772,32 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CD2FDE8113542E9F00B814DF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CD2FDECB13542F1400B814DF /* AddressBook.framework in Frameworks */,
+				CD2FDECC13542F1400B814DF /* AddressBookUI.framework in Frameworks */,
+				CD2FDECD13542F1400B814DF /* AudioToolbox.framework in Frameworks */,
+				CD2FDECE13542F1400B814DF /* AVFoundation.framework in Frameworks */,
+				CD2FDECF13542F1400B814DF /* CoreAudio.framework in Frameworks */,
+				CD2FDED013542F1400B814DF /* CoreGraphics.framework in Frameworks */,
+				CD2FDED113542F1400B814DF /* CoreLocation.framework in Frameworks */,
+				CD2FDED213542F1400B814DF /* CoreMedia.framework in Frameworks */,
+				CD2FDED313542F1400B814DF /* CoreVideo.framework in Frameworks */,
+				CD2FDED413542F1400B814DF /* Foundation.framework in Frameworks */,
+				CD2FDED513542F1400B814DF /* OpenAL.framework in Frameworks */,
+				CD2FDED613542F1400B814DF /* OpenGLES.framework in Frameworks */,
+				CD2FDED713542F1400B814DF /* QuartzCore.framework in Frameworks */,
+				CD2FDED813542F1400B814DF /* StoreKit.framework in Frameworks */,
+				CD2FDED913542F1400B814DF /* SystemConfiguration.framework in Frameworks */,
+				CD2FDEDA13542F1400B814DF /* UIKit.framework in Frameworks */,
+				CD2FDEDD13542F3600B814DF /* libiconv.dylib in Frameworks */,
+				CD2FDEDE13542F3600B814DF /* libz.1.2.3.dylib in Frameworks */,
+				CD2FDEF9135430B800B814DF /* libMoai.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -1731,34 +1812,12 @@
 			name = src;
 			sourceTree = "<group>";
 		};
-		038DB5EE101FAA4800ECA0BF /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				CDEB9B4812E3DB3100B14752 /* libiconv.dylib */,
-				CD10CA800FA9272300363C67 /* libz.1.2.3.dylib */,
-				DEA05D05106075930018B9C8 /* AudioToolbox.framework */,
-				CDE8273812E2559000C2D1C9 /* AVFoundation.framework */,
-				DEA05D13106075BD0018B9C8 /* CoreAudio.framework */,
-				288765FC0DF74451002DB57D /* CoreGraphics.framework */,
-				CD96DEB90F1583B00061FBD3 /* CoreLocation.framework */,
-				CDE8273A12E2559000C2D1C9 /* CoreMedia.framework */,
-				CDE8273C12E2559000C2D1C9 /* CoreVideo.framework */,
-				1D30AB110D05D00D00671497 /* Foundation.framework */,
-				1484EE671159455800BBD784 /* OpenAL.framework */,
-				CD96DE750F1581D50061FBD3 /* OpenGLES.framework */,
-				CD96DEBE0F1583C50061FBD3 /* QuartzCore.framework */,
-				ABDD06E810D31603004D70E9 /* StoreKit.framework */,
-				CD96DED10F1584170061FBD3 /* SystemConfiguration.framework */,
-				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		038DB6D7101FAA6700ECA0BF /* Products */ = {
 			isa = PBXGroup;
 			children = (
 				0379C5961333ECD800E89DDC /* lib3rdParty.a */,
 				03C2F6F4104DE130009A2D5D /* libMoai.a */,
+				CD2FDE8413542E9F00B814DF /* moaiview.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1874,12 +1933,61 @@
 			isa = PBXGroup;
 			children = (
 				03C2F8A2104DE214009A2D5D /* moai */,
+				CD2FDE9113542E9F00B814DF /* moaiview */,
+				CD2FDE8613542E9F00B814DF /* Frameworks */,
 				038DB6D7101FAA6700ECA0BF /* Products */,
-				038DB5EE101FAA4800ECA0BF /* Frameworks */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
 			usesTabs = 1;
+		};
+		CD2FDE8613542E9F00B814DF /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				CD2FDEDB13542F3600B814DF /* libiconv.dylib */,
+				CD2FDEDC13542F3600B814DF /* libz.1.2.3.dylib */,
+				CD2FDEBB13542F1400B814DF /* AddressBook.framework */,
+				CD2FDEBC13542F1400B814DF /* AddressBookUI.framework */,
+				CD2FDEBD13542F1400B814DF /* AudioToolbox.framework */,
+				CD2FDEBE13542F1400B814DF /* AVFoundation.framework */,
+				CD2FDEBF13542F1400B814DF /* CoreAudio.framework */,
+				CD2FDEC013542F1400B814DF /* CoreGraphics.framework */,
+				CD2FDEC113542F1400B814DF /* CoreLocation.framework */,
+				CD2FDEC213542F1400B814DF /* CoreMedia.framework */,
+				CD2FDEC313542F1400B814DF /* CoreVideo.framework */,
+				CD2FDEC413542F1400B814DF /* Foundation.framework */,
+				CD2FDEC513542F1400B814DF /* OpenAL.framework */,
+				CD2FDEC613542F1400B814DF /* OpenGLES.framework */,
+				CD2FDEC713542F1400B814DF /* QuartzCore.framework */,
+				CD2FDEC813542F1400B814DF /* StoreKit.framework */,
+				CD2FDEC913542F1400B814DF /* SystemConfiguration.framework */,
+				CD2FDECA13542F1400B814DF /* UIKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		CD2FDE9113542E9F00B814DF /* moaiview */ = {
+			isa = PBXGroup;
+			children = (
+				CD6325D413543515005F5741 /* lua */,
+				CD2FDEDF13542FEA00B814DF /* AppDelegate.h */,
+				CD2FDEE013542FEA00B814DF /* AppDelegate.mm */,
+				CD2FDEE113542FEA00B814DF /* Entitlements.plist */,
+				CD2FDEE213542FEA00B814DF /* Info.plist */,
+				CD2FDEE313542FEA00B814DF /* iPhoneIcon.png */,
+				CD2FDEE413542FEA00B814DF /* LocationObserver.h */,
+				CD2FDEE513542FEA00B814DF /* LocationObserver.mm */,
+				CD2FDEE613542FEA00B814DF /* main.mm */,
+				CD2FDEE713542FEA00B814DF /* MainWindow.xib */,
+				CD2FDEE813542FEA00B814DF /* moaiview-Prefix.pch */,
+				CD2FDEE913542FEA00B814DF /* MoaiView.h */,
+				CD2FDEEA13542FEA00B814DF /* MoaiView.mm */,
+				CD2FDEEB13542FEA00B814DF /* OpenGLView.h */,
+				CD2FDEEC13542FEA00B814DF /* OpenGLView.mm */,
+				CD2FDEED13542FEA00B814DF /* RefPtr.h */,
+			);
+			path = moaiview;
+			sourceTree = "<group>";
 		};
 		CD365A0A11C2BA0400EE5068 /* expat */ = {
 			isa = PBXGroup;
@@ -2611,6 +2719,10 @@
 				CDB71E7B134156FF00633B13 /* USTask.h */,
 				CDB71E7C134156FF00633B13 /* USTaskThread.cpp */,
 				CDB71E7D134156FF00633B13 /* USTaskThread.h */,
+				CD3153601354279F0061C0FF /* USTextFrame.cpp */,
+				CD3153611354279F0061C0FF /* USTextFrame.h */,
+				CD3153621354279F0061C0FF /* USTextLayout.cpp */,
+				CD3153631354279F0061C0FF /* USTextLayout.h */,
 				CDB71E7E134156FF00633B13 /* USTexture.cpp */,
 				CDB71E7F134156FF00633B13 /* USTexture.h */,
 				CDB71E80134156FF00633B13 /* USThread_posix.cpp */,
@@ -3251,6 +3363,8 @@
 				03D325F5134FC6530056EF14 /* USParser.h in Headers */,
 				03D325F7134FC6530056EF14 /* USSyntaxNode.h in Headers */,
 				03D325F9134FC6530056EF14 /* USSyntaxScanner.h in Headers */,
+				CD31536A1354280E0061C0FF /* USTextFrame.h in Headers */,
+				CD31536C1354280E0061C0FF /* USTextLayout.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3292,6 +3406,23 @@
 			productReference = 03C2F6F4104DE130009A2D5D /* libMoai.a */;
 			productType = "com.apple.product-type.library.static";
 		};
+		CD2FDE8313542E9F00B814DF /* moaiview */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CD2FDEAF13542EA000B814DF /* Build configuration list for PBXNativeTarget "moaiview" */;
+			buildPhases = (
+				CD2FDE8013542E9F00B814DF /* Sources */,
+				CD2FDE8113542E9F00B814DF /* Frameworks */,
+				CD2FDE8213542E9F00B814DF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = moaiview;
+			productName = moaiview;
+			productReference = CD2FDE8413542E9F00B814DF /* moaiview.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -3326,9 +3457,24 @@
 			targets = (
 				0379C3D51333ECD800E89DDC /* 3rdParty */,
 				03C2F6F3104DE130009A2D5D /* Moai */,
+				CD2FDE8313542E9F00B814DF /* moaiview */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		CD2FDE8213542E9F00B814DF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CD2FDEEF13542FEA00B814DF /* Entitlements.plist in Resources */,
+				CD2FDEF113542FEA00B814DF /* iPhoneIcon.png in Resources */,
+				CD2FDEF413542FEA00B814DF /* MainWindow.xib in Resources */,
+				CD6325D513543515005F5741 /* lua in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		0379C4C31333ECD800E89DDC /* Sources */ = {
@@ -3759,6 +3905,20 @@
 				03D325F4134FC6530056EF14 /* USParser.cpp in Sources */,
 				03D325F6134FC6530056EF14 /* USSyntaxNode.cpp in Sources */,
 				03D325F8134FC6530056EF14 /* USSyntaxScanner.cpp in Sources */,
+				CD3153691354280E0061C0FF /* USTextFrame.cpp in Sources */,
+				CD31536B1354280E0061C0FF /* USTextLayout.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CD2FDE8013542E9F00B814DF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CD2FDEEE13542FEA00B814DF /* AppDelegate.mm in Sources */,
+				CD2FDEF213542FEA00B814DF /* LocationObserver.mm in Sources */,
+				CD2FDEF313542FEA00B814DF /* main.mm in Sources */,
+				CD2FDEF513542FEA00B814DF /* MoaiView.mm in Sources */,
+				CD2FDEF613542FEA00B814DF /* OpenGLView.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3835,14 +3995,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				APPLY_RULES_IN_COPY_FILES = YES;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_ENTITLEMENTS = "$(PRODUCT_NAME)/Entitlements.plist";
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				FRAMEWORK_SEARCH_PATHS = "\"$(SDKROOT)$(DEVELOPER_FRAMEWORKS_DIR)\"";
+				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
-				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_OBJC_CALL_CXX_CDTORS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					SQLITE_ENABLE_COLUMN_METADATA,
@@ -3853,7 +4008,6 @@
 					FT2_BUILD_LIBRARY,
 					DARWIN_NO_CARBON,
 				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_THUMB_SUPPORT = NO;
 				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -3891,14 +4045,10 @@
 					"\"../3rdparty/chipmunk-5.3.4/include\"",
 					"\"../3rdparty/chipmunk-5.3.4/include/chipmunk\"",
 				);
-				INFOPLIST_FILE = "$(PRODUCT_NAME)/Info.plist";
-				IPHONE_OPTIMIZE_OPTIONS = "-skip-PNGs";
-				LIBRARY_SEARCH_PATHS = "\"../3rdparty/opencv-2.2.0/lib/iphone/Release$(EFFECTIVE_PLATFORM_NAME)\"";
-				OTHER_LDFLAGS = "";
-				PREBINDING = NO;
-				PROVISIONING_PROFILE = "";
-				SDKROOT = iphoneos;
-				VALIDATE_PRODUCT = YES;
+				SKIP_INSTALL = YES;
+				STRIP_INSTALLED_PRODUCT = YES;
+				SUPPORTED_PLATFORMS = "iphonesimulator macosx iphoneos";
+				VALID_ARCHS = "i386 ppc ppc64 ppc7400 ppc970 x86_64 armv6 armv7";
 				WARNING_CFLAGS = "-Wall";
 			};
 			name = Distribution;
@@ -3921,20 +4071,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				APPLY_RULES_IN_COPY_FILES = YES;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "iPhone Developer:";
 				COPY_PHASE_STRIP = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
-					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
-					"\"$(SDKROOT)$(DEVELOPER_FRAMEWORKS_DIR)\"",
-					"\"$(SRCROOT)\"",
-				);
 				GCC_C_LANGUAGE_STANDARD = c99;
-				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_OBJC_CALL_CXX_CDTORS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					_DEBUG,
 					SQLITE_ENABLE_COLUMN_METADATA,
@@ -3948,7 +4087,7 @@
 					FT2_BUILD_LIBRARY,
 					DARWIN_NO_CARBON,
 				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_THUMB_SUPPORT = NO;
 				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = YES;
@@ -3985,15 +4124,63 @@
 					"\"../3rdparty/chipmunk-5.3.4/include\"",
 					"\"../3rdparty/chipmunk-5.3.4/include/chipmunk\"",
 				);
-				INFOPLIST_FILE = "$(PRODUCT_NAME)/Info.plist";
-				IPHONE_OPTIMIZE_OPTIONS = "-skip-PNGs";
-				LIBRARY_SEARCH_PATHS = "\"../3rdparty/opencv-2.2.0/lib/iphone/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"";
-				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = NO;
+				SUPPORTED_PLATFORMS = "iphonesimulator macosx iphoneos";
+				VALID_ARCHS = "i386 ppc ppc64 ppc7400 ppc970 x86_64 armv6 armv7";
 				WARNING_CFLAGS = "-Wall";
 			};
 			name = Debug;
+		};
+		CD2FDEAD13542EA000B814DF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "moaiview/moaiview-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				"GCC_THUMB_SUPPORT[arch=armv6]" = "";
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				INFOPLIST_FILE = moaiview/Info.plist;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+				VALID_ARCHS = "i386 armv6 armv7";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		CD2FDEAE13542EA000B814DF /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "moaiview/moaiview-Prefix.pch";
+				"GCC_THUMB_SUPPORT[arch=armv6]" = "";
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = moaiview/Info.plist;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = "i386 armv6 armv7";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Distribution;
 		};
 /* End XCBuildConfiguration section */
 
@@ -4021,6 +4208,15 @@
 			buildConfigurations = (
 				C01FCF4F08A954540054247B /* Debug */,
 				03B080970F708135005CD8E5 /* Distribution */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		CD2FDEAF13542EA000B814DF /* Build configuration list for PBXNativeTarget "moaiview" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CD2FDEAD13542EA000B814DF /* Debug */,
+				CD2FDEAE13542EA000B814DF /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;

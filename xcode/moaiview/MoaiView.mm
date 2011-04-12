@@ -47,6 +47,14 @@ namespace MoaiInputDeviceSensorID {
 // AKU callbacks
 //================================================================//
 
+void	_AKUEnterFullscreenModeFunc		();
+void	_AKUExitFullscreenModeFunc		();
+void	_AKUHideLoadingScreenFunc		();
+void	_AKUOpenWindowFunc				( const char* title, int width, int height );
+void	_AKUShowLoadingScreenFunc		();
+void	_AKUShowSoftwareKeyboardFunc	();
+void	_AKUStartGameLoopFunc			();
+
 //----------------------------------------------------------------//
 void _AKUEnterFullscreenModeFunc () {
 }
@@ -61,6 +69,10 @@ void _AKUHideLoadingScreenFunc () {
 
 //----------------------------------------------------------------//
 void _AKUOpenWindowFunc ( const char* title, int width, int height ) {
+	( void )title;
+	( void )width;
+	( void )height;
+	
 }
 
 //----------------------------------------------------------------//
@@ -85,6 +97,7 @@ void _AKUStartGameLoopFunc () {
 
 	//----------------------------------------------------------------//
 	-( void ) accelerometer:( UIAccelerometer* )acel didAccelerate:( UIAcceleration* )acceleration {
+		( void )acel;
 		
 		AKUEnqueueLevelEvent (
 			MoaiInputDeviceID::DEVICE,
@@ -214,7 +227,7 @@ void _AKUStartGameLoopFunc () {
 		AKUEnqueueCompassEvent (
 			MoaiInputDeviceID::DEVICE,
 			MoaiInputDeviceSensorID::COMPASS,
-			[ observer heading ]
+			( float )[ observer heading ]
 		);
 	}
 	
@@ -270,24 +283,29 @@ void _AKUStartGameLoopFunc () {
 	
 	//----------------------------------------------------------------//
 	-( void )touchesBegan:( NSSet* )touches withEvent:( UIEvent* )event {
+		( void )event;
 		
 		[ self handleTouches :touches :YES ];
 	}
 	
 	//----------------------------------------------------------------//
 	-( void )touchesCancelled:( NSSet* )touches withEvent:( UIEvent* )event {
+		( void )touches;
+		( void )event;
 		
 		AKUEnqueueTouchEventCancel ( MoaiInputDeviceID::DEVICE, MoaiInputDeviceSensorID::TOUCH );
 	}
 	
 	//----------------------------------------------------------------//
 	-( void )touchesEnded:( NSSet* )touches withEvent:( UIEvent* )event {
+		( void )event;
 		
 		[ self handleTouches :touches :NO ];
 	}
 
 	//----------------------------------------------------------------//
 	-( void )touchesMoved:( NSSet* )touches withEvent:( UIEvent* )event {
+		( void )event;
 		
 		[ self handleTouches :touches :YES ];
 	}

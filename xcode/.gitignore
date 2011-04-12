@@ -1,5 +1,5 @@
 build/
-project.xcworkspace/
-xcuserdata/
+moai-open.xcodeproj/project.xcworkspace
+moai-open.xcodeproj/xcuserdata/
 *.pbxuser
 *.perspectivev3

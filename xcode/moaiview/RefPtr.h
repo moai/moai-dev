@@ -77,7 +77,7 @@ public:
 
 	//----------------------------------------------------------------//
 	inline void operator = ( TYPE* assign ) {
-		this->Set ( assign );
+		this->Set (( id )assign );
 	};
 	
 	//----------------------------------------------------------------//
@@ -139,17 +139,21 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	inline void Set ( TYPE* assign ) {
-		[ assign retain ];
-		[ this->mRef release ];
-		this->mRef = assign;
+	inline void Set ( id assign ) {
+		if ( this->mRef != assign ) {
+			[ assign retain ];
+			[ this->mRef release ];
+			this->mRef = assign;
+		}
 	}
 	
 	//----------------------------------------------------------------//
-	inline void SetCopy ( TYPE* assign ) {
-		id copy = [ assign copy ];
-		[ this->mRef release ];
-		this->mRef = copy;
+	inline void SetCopy ( id assign ) {
+		if ( this->mRef != assign ) {
+			id copy = [ assign copy ];
+			[ this->mRef release ];
+			this->mRef = copy;
+		}
 	}
 };
 
