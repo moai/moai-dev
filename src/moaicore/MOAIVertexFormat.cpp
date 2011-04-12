@@ -118,7 +118,7 @@ void MOAIVertexFormat::RegisterLuaClass ( USLuaState& state ) {
 	UNUSED ( state );
 	
 	state.SetField ( -1, "GL_BYTE", ( u32 )GL_BYTE );
-	state.SetField ( -1, "GL_FIXED", ( u32 )GL_FIXED );
+	//state.SetField ( -1, "GL_FIXED", ( u32 )GL_FIXED );
 	state.SetField ( -1, "GL_FLOAT", ( u32 )GL_FLOAT );
 	state.SetField ( -1, "GL_SHORT", ( u32 )GL_SHORT );
 	state.SetField ( -1, "GL_UNSIGNED_BYTE", ( u32 )GL_UNSIGNED_BYTE );

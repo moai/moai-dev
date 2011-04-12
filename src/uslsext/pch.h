@@ -7,44 +7,26 @@
 	#define TIXML_USE_STL
 #endif
 
-// glew
-#ifdef _WIN32
+#ifdef MOAI_OS_WINDOWS
 	#define GLEW_STATIC
 	#include <gl/glew.h>
+	#include <GLES/ES1/gl.h>
+	#include <GLES/ES1/glext.h>
 #endif
 
-// FIXME The following doesn't distinguish between Mac OS X and iPhone builds.
-//	 We'll explicitly set MAC_OS_X in compiler options for now.
+#ifdef MOAI_OS_OSX
+	//#include <GL/glew.h>
+	#include <OpenGL/gl.h>
+	#include <OpenGL/glext.h>
+#endif
 
-//#if defined( __APPLE__ ) && defined( __MACH__ )
-//	#define MAC_OS_X
-//#endif
+#ifdef MOAI_OS_IPHONE
+	#include <OpenGLES/ES1/gl.h>
+	#include <OpenGLES/ES1/glext.h>
+#endif
 
-#ifdef MAC_OS_X
+#ifdef MOAI_OS_LINUX
 	#include <GL/glew.h>
-#endif
-
-#ifdef __linux
-	#ifndef ANDROID
-		#include <GL/glew.h>
-	#endif
-#endif
-
-#if defined( _WIN32 ) || defined( MAC_OS_X ) || defined( __linux )
-	#ifndef ANDROID
-		#define USING_GLUT
-	#endif
-#endif
-
-#if !defined( USING_GLUT )
-	//#import <OpenGLES/EAGL.h>
-	#ifndef ANDROID
-		#include <OpenGLES/ES1/gl.h>
-		#include <OpenGLES/ES1/glext.h>
-	#else
-		#include <GLES/gl.h>
-		#include <GLES/glext.h>
-	#endif
 #endif
 
 #endif

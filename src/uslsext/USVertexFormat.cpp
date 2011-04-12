@@ -185,7 +185,7 @@ u32 USVertexFormat::GetSize ( GLint size, GLenum type ) {
 			bytes = 2;
 			break;
 		
-		case GL_FIXED:
+		//case GL_FIXED:
 		case GL_FLOAT:
 			bytes = 4;
 			break;

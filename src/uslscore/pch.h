@@ -1,7 +1,48 @@
 #ifndef USLSCORE_PCH_H
 #define	USLSCORE_PCH_H
 
-#ifdef _WIN32
+//http://predef.sourceforge.net/preos.html#sec19
+
+#if defined( __APPLE__ ) && defined( __MACH__ )
+
+	#include "TargetConditionals.h"
+
+	#if TARGET_OS_IPHONE
+	
+		#define MOAI_OS_IPHONE
+
+		#if TARGET_IPHONE_SIMULATOR
+			#define MOAI_OS_IPHONE_SIMULATOR
+		#else
+			#define MOAI_OS_IPHONE_DEVICE
+		#endif
+
+	#else
+		#define MOAI_OS_OSX
+	#endif
+
+#elif defined( _WIN32 )
+	#define MOAI_OS_WINDOWS
+
+#elif defined( __ANDROID__ )
+	#define MOAI_OS_ANDROID
+
+#elif defined( __linux )
+	#define MOAI_OS_LINUX
+
+#else
+	#define MOAI_OS_UNKNOWN
+#endif
+
+#ifdef _MSC_VER
+	#define MOAI_COMPILER_MSVC
+
+#else
+	#define MOAI_COMPILER_GCC
+
+#endif
+
+#ifdef MOAI_OS_WINDOWS
 
 	#pragma warning ( disable : 4995 )
 	#pragma warning ( disable : 4996 )
@@ -29,9 +70,15 @@
 
 #endif
 
-#ifdef __linux
+#ifdef MOAI_OS_LINUX
 	#include <cstdlib>
 	#include <cstring>
+#endif
+
+#ifdef MOAI_COMPILER_MSVC
+	#define SUPPRESS_EMPTY_FILE_WARNING namespace { char gDummy##__LINE__; }
+#else
+	#define SUPPRESS_EMPTY_FILE_WARNING
 #endif
 
 #include <assert.h>
@@ -87,11 +134,5 @@ typedef signed long long		s64;
 //----------------------------------------------------------------//
 
 #define UNUSED(p) (( void )p)
-
-#ifdef _WIN32
-	#define SUPPRESS_EMPTY_FILE_WARNING namespace { char gDummy##__LINE__; }
-#else
-	#define SUPPRESS_EMPTY_FILE_WARNING
-#endif
 
 #endif

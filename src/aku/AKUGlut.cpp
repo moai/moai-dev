@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include <stdio.h>
-#include <glut.h>
+#include <GLUT/glut.h>
 #include <aku/AKUGlut.h>
 
 namespace GlutInputDeviceID {

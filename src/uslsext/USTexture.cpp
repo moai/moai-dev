@@ -224,49 +224,50 @@ void USTexture::CreateTexture ( USImage& image ) {
 		// GL_PALETTE8_RGBA4_OES
 		// GL_PALETTE8_RGB5_A1_OES
 		// GL_PALETTE8_RGBA8_OES
-	
-		this->mGLPixelType = 0;
-	
-		if ( pixelFormat == USPixel::INDEX_4 ) {
-		
-			switch ( colorFormat ) {
-			
-				case USColor::RGB_888:
-					this->mGLInternalFormat = GL_PALETTE4_RGB8_OES;
-					break;
-				
-				case USColor::RGBA_8888:
-					this->mGLInternalFormat = GL_PALETTE4_RGBA8_OES;
-					break;
-					
-				default: return;
-			}
-		}
-		else {
-			switch ( colorFormat ) {
-			
-				case USColor::RGB_888:
-					this->mGLInternalFormat = GL_PALETTE8_RGB8_OES;
-					break;
-				
-				case USColor::RGBA_8888:
-					this->mGLInternalFormat = GL_PALETTE8_RGBA8_OES;
-					break;
-					
-				default: return;
-			}
-		}
-		
-		glCompressedTexImage2D (
-			GL_TEXTURE_2D,
-			0,  
-			this->mGLInternalFormat,
-			this->mDevWidth,
-			this->mDevHeight,
-			0,  
-			image.GetDataSize (),
-			image.GetData ()
-		);
+
+// TODO: check opengl version
+//		this->mGLPixelType = 0;
+//	
+//		if ( pixelFormat == USPixel::INDEX_4 ) {
+//		
+//			switch ( colorFormat ) {
+//			
+//				case USColor::RGB_888:
+//					this->mGLInternalFormat = GL_PALETTE4_RGB8_OES;
+//					break;
+//				
+//				case USColor::RGBA_8888:
+//					this->mGLInternalFormat = GL_PALETTE4_RGBA8_OES;
+//					break;
+//					
+//				default: return;
+//			}
+//		}
+//		else {
+//			switch ( colorFormat ) {
+//			
+//				case USColor::RGB_888:
+//					this->mGLInternalFormat = GL_PALETTE8_RGB8_OES;
+//					break;
+//				
+//				case USColor::RGBA_8888:
+//					this->mGLInternalFormat = GL_PALETTE8_RGBA8_OES;
+//					break;
+//					
+//				default: return;
+//			}
+//		}
+//		
+//		glCompressedTexImage2D (
+//			GL_TEXTURE_2D,
+//			0,  
+//			this->mGLInternalFormat,
+//			this->mDevWidth,
+//			this->mDevHeight,
+//			0,  
+//			image.GetDataSize (),
+//			image.GetData ()
+//		);
 	}
 }
 
