@@ -2,8 +2,13 @@
 // http://getmoai.com
 
 #include <stdio.h>
-#include <GLUT/glut.h>
 #include <aku/AKUGlut.h>
+
+#ifdef _WIN32
+	#include <glut.h>
+#else
+	#include <GLUT/glut.h>
+#endif
 
 namespace GlutInputDeviceID {
 	enum {

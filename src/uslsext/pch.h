@@ -10,8 +10,6 @@
 #ifdef MOAI_OS_WINDOWS
 	#define GLEW_STATIC
 	#include <gl/glew.h>
-	#include <GLES/ES1/gl.h>
-	#include <GLES/ES1/glext.h>
 #endif
 
 #ifdef MOAI_OS_OSX
