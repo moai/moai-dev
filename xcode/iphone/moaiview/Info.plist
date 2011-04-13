@@ -40,6 +40,6 @@
 	<key>NSMainNibFile</key>
 	<string>MainWindow</string>
 	<key>UIPrerenderedIcon</key>
-	<false/>
+	<true/>
 </dict>
 </plist>
