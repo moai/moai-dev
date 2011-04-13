@@ -23,8 +23,15 @@
 	#include <OpenGLES/ES1/glext.h>
 #endif
 
+#ifdef MOAI_OS_ANDROID
+	#include <GLES/gl.h>
+	#include <GLES/glext.h>
+#endif
+
 #ifdef MOAI_OS_LINUX
-	#include <GL/glew.h>
+	#ifndef ANDROID
+		#include <GL/glew.h>
+	#endif
 #endif
 
 #endif

@@ -2,7 +2,6 @@
 #define	USLSCORE_PCH_H
 
 //http://predef.sourceforge.net/preos.html#sec19
-
 #if defined( __APPLE__ ) && defined( __MACH__ )
 
 	#include "TargetConditionals.h"
@@ -24,14 +23,17 @@
 #elif defined( _WIN32 )
 	#define MOAI_OS_WINDOWS
 
-#elif defined( __ANDROID__ )
-	#define MOAI_OS_ANDROID
-
 #elif defined( __linux )
+
 	#define MOAI_OS_LINUX
+
+	#ifdef ANDROID
+		#define MOAI_OS_ANDROID
+	#endif
 
 #else
 	#define MOAI_OS_UNKNOWN
+
 #endif
 
 #ifdef _MSC_VER

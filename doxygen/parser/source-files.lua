@@ -29,6 +29,10 @@ function dumpFunctionDef ( def )
 	local argList = ""
 	for i,v in ipairs ( def.inParams ) do
 		if i ~= 1 then argList = argList .. ", " end
+
+		if not v.paramType then v.paramType = "" end
+		if not v.paramName then v.paramName = "" end
+		
 		argList = argList .. v.paramType .. " " .. v.paramName
 	end
 

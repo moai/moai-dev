@@ -87,6 +87,8 @@ $(SRC_PATH)/src/uslsext/USSyntaxNode.cpp \
 $(SRC_PATH)/src/uslsext/USSyntaxScanner.cpp \
 $(SRC_PATH)/src/uslsext/USTask.cpp \
 $(SRC_PATH)/src/uslsext/USTaskThread.cpp \
+$(SRC_PATH)/src/uslsext/USTextFrame.cpp \
+$(SRC_PATH)/src/uslsext/USTextLayout.cpp \
 $(SRC_PATH)/src/uslsext/USTexture.cpp \
 $(SRC_PATH)/src/uslsext/USThread.cpp \
 $(SRC_PATH)/src/uslsext/USThread_posix.cpp \
