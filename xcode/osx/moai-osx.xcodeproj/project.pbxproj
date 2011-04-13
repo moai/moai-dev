@@ -7,13 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		032410EB13565FF6000ADC60 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDEE22E413543D6600C2E04C /* GLUT.framework */; };
+		032410EE13565FFD000ADC60 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDEE22E613543D8600C2E04C /* OpenGL.framework */; };
 		0324CC64135643FD000ADC60 /* libSystem.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0324CC63135643FD000ADC60 /* libSystem.dylib */; };
 		0324CC6613564411000ADC60 /* libz.1.2.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0324CC6513564411000ADC60 /* libz.1.2.3.dylib */; };
 		0324E2EF135649A9000ADC60 /* libmoai-osx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0324E2C21356485F000ADC60 /* libmoai-osx.a */; };
 		CD9A43F31354742F00632781 /* AKUGlut.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD9A43F11354742F00632781 /* AKUGlut.cpp */; };
 		CDEE231F1354504E00C2E04C /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDEE231E1354504E00C2E04C /* main.cpp */; };
-		CDEE23201354506300C2E04C /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDEE22E613543D8600C2E04C /* OpenGL.framework */; };
-		CDEE23211354506300C2E04C /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDEE22E413543D6600C2E04C /* GLUT.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -84,8 +84,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CDEE23201354506300C2E04C /* OpenGL.framework in Frameworks */,
-				CDEE23211354506300C2E04C /* GLUT.framework in Frameworks */,
+				032410EE13565FFD000ADC60 /* OpenGL.framework in Frameworks */,
+				032410EB13565FF6000ADC60 /* GLUT.framework in Frameworks */,
 				0324CC64135643FD000ADC60 /* libSystem.dylib in Frameworks */,
 				0324CC6613564411000ADC60 /* libz.1.2.3.dylib in Frameworks */,
 				0324E2EF135649A9000ADC60 /* libmoai-osx.a in Frameworks */,
@@ -382,6 +382,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(DEVELOPER_DIR)/SDKs/MacOSX10.6.sdk/System/Library/Frameworks\"",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -394,6 +398,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(DEVELOPER_DIR)/SDKs/MacOSX10.6.sdk/System/Library/Frameworks\"",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";

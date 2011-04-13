@@ -216,6 +216,8 @@ void _AKUStartGameLoopFunc () {
 //----------------------------------------------------------------//
 int AKUGlut ( int argc, char** argv ) {
 
+	glutInit ( &argc, argv );
+
 	AKUCreateContext ();
 
 	AKUSetInputConfigurationName ( "AKUGlut" );
