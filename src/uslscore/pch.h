@@ -8,6 +8,7 @@
 
 	#if TARGET_OS_IPHONE
 	
+		#define MOAI_PHONE
 		#define MOAI_OS_IPHONE
 
 		#if TARGET_IPHONE_SIMULATOR
@@ -28,6 +29,7 @@
 	#define MOAI_OS_LINUX
 
 	#ifdef ANDROID
+		#define MOAI_PHONE
 		#define MOAI_OS_ANDROID
 	#endif
 

@@ -113,6 +113,8 @@ static void _onUpdate () {
 // glut setup
 //================================================================//
 
+void	InitGlutDisplay	();
+
 //----------------------------------------------------------------//
 void InitGlutDisplay () {
 
@@ -135,6 +137,15 @@ void InitGlutDisplay () {
 //================================================================//
 // AKU callbacks
 //================================================================//
+
+void	_AKUEnterFullscreenModeFunc		();
+void	_AKUExitFullscreenModeFunc		();
+void	_AKUHideLoadingScreenFunc		();
+void	_AKUHideLoadingScreenFunc		();
+void	_AKUOpenWindowFunc				( const char* title, int width, int height );
+void	_AKUShowLoadingScreenFunc		();
+void	_AKUShowSoftwareKeyboardFunc	();
+void	_AKUStartGameLoopFunc			();
 
 //----------------------------------------------------------------//
 void _AKUEnterFullscreenModeFunc () {
@@ -229,3 +240,4 @@ int AKUGlut ( int argc, char** argv ) {
 	}
 	return 0;
 }
+
