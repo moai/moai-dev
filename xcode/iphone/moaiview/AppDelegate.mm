@@ -34,9 +34,7 @@
 		
 		[ mWindow makeKeyAndVisible ];
 		
-		NSString* projectPath = [ NSString stringWithFormat:@"%@/%@", [[ NSBundle mainBundle ] resourcePath ], @"lua" ];
-		[[ NSFileManager defaultManager ] changeCurrentDirectoryPath:projectPath ];
-		
+		[[ NSFileManager defaultManager ] changeCurrentDirectoryPath:[[ NSBundle mainBundle ] resourcePath ] ];
 		[ mMoaiView run:@"main.lua" ];
 
 		return YES;

@@ -433,7 +433,35 @@
 		0379C73C1333ED1400E89DDC /* tinyxml.h in Headers */ = {isa = PBXBuildFile; fileRef = 03C217D7104DE6E0009A2D5D /* tinyxml.h */; };
 		0379C73D1333ED1400E89DDC /* tinyxmlerror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03C217D8104DE6E0009A2D5D /* tinyxmlerror.cpp */; };
 		0379C73E1333ED1400E89DDC /* tinyxmlparser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03C217D9104DE6E0009A2D5D /* tinyxmlparser.cpp */; };
-		0379C7411333ED7000E89DDC /* lib3rdParty.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0379C5961333ECD800E89DDC /* lib3rdParty.a */; };
+		0379C7411333ED7000E89DDC /* libmoai-3rdparty.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0379C5961333ECD800E89DDC /* libmoai-3rdparty.a */; };
+		03836508135520FC002C10D8 /* cathead.png in Resources */ = {isa = PBXBuildFile; fileRef = 03B4CCA613550954001E768D /* cathead.png */; };
+		03836509135520FC002C10D8 /* main.lua in Resources */ = {isa = PBXBuildFile; fileRef = 03B4CCA713550954001E768D /* main.lua */; };
+		03B4CCAD13550985001E768D /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD2FDEE013542FEA00B814DF /* AppDelegate.mm */; };
+		03B4CCAE13550985001E768D /* LocationObserver.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD2FDEE513542FEA00B814DF /* LocationObserver.mm */; };
+		03B4CCAF13550985001E768D /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD2FDEE613542FEA00B814DF /* main.mm */; };
+		03B4CCB013550985001E768D /* MoaiView.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD2FDEEA13542FEA00B814DF /* MoaiView.mm */; };
+		03B4CCB113550985001E768D /* OpenGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD2FDEEC13542FEA00B814DF /* OpenGLView.mm */; };
+		03B4CCB313550985001E768D /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD2FDEBB13542F1400B814DF /* AddressBook.framework */; };
+		03B4CCB413550985001E768D /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD2FDEBC13542F1400B814DF /* AddressBookUI.framework */; };
+		03B4CCB513550985001E768D /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD2FDEBD13542F1400B814DF /* AudioToolbox.framework */; };
+		03B4CCB613550985001E768D /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD2FDEBE13542F1400B814DF /* AVFoundation.framework */; };
+		03B4CCB713550985001E768D /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD2FDEBF13542F1400B814DF /* CoreAudio.framework */; };
+		03B4CCB813550985001E768D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD2FDEC013542F1400B814DF /* CoreGraphics.framework */; };
+		03B4CCB913550985001E768D /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD2FDEC113542F1400B814DF /* CoreLocation.framework */; };
+		03B4CCBA13550985001E768D /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD2FDEC213542F1400B814DF /* CoreMedia.framework */; };
+		03B4CCBB13550985001E768D /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD2FDEC313542F1400B814DF /* CoreVideo.framework */; };
+		03B4CCBC13550985001E768D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD2FDEC413542F1400B814DF /* Foundation.framework */; };
+		03B4CCBD13550985001E768D /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD2FDEC513542F1400B814DF /* OpenAL.framework */; };
+		03B4CCBE13550985001E768D /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD2FDEC613542F1400B814DF /* OpenGLES.framework */; };
+		03B4CCBF13550985001E768D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD2FDEC713542F1400B814DF /* QuartzCore.framework */; };
+		03B4CCC013550985001E768D /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD2FDEC813542F1400B814DF /* StoreKit.framework */; };
+		03B4CCC113550985001E768D /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD2FDEC913542F1400B814DF /* SystemConfiguration.framework */; };
+		03B4CCC213550985001E768D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD2FDECA13542F1400B814DF /* UIKit.framework */; };
+		03B4CCC313550985001E768D /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CD2FDEDB13542F3600B814DF /* libiconv.dylib */; };
+		03B4CCC413550985001E768D /* libz.1.2.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CD2FDEDC13542F3600B814DF /* libz.1.2.3.dylib */; };
+		03B4CCC513550985001E768D /* libmoai.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03C2F6F4104DE130009A2D5D /* libmoai.a */; };
+		03B4CCC813550985001E768D /* iPhoneIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = CD2FDEE313542FEA00B814DF /* iPhoneIcon.png */; };
+		03B4CCC913550985001E768D /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD2FDEE713542FEA00B814DF /* MainWindow.xib */; };
 		03D325E0134FC59B0056EF14 /* MOAIDeck2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03D325DC134FC59B0056EF14 /* MOAIDeck2D.cpp */; };
 		03D325E1134FC59B0056EF14 /* MOAIDeck2D.h in Headers */ = {isa = PBXBuildFile; fileRef = 03D325DD134FC59B0056EF14 /* MOAIDeck2D.h */; };
 		03D325E2134FC59B0056EF14 /* MOAIParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03D325DE134FC59B0056EF14 /* MOAIParser.cpp */; };
@@ -448,38 +476,10 @@
 		03D325F7134FC6530056EF14 /* USSyntaxNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 03D325ED134FC6530056EF14 /* USSyntaxNode.h */; };
 		03D325F8134FC6530056EF14 /* USSyntaxScanner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03D325EE134FC6530056EF14 /* USSyntaxScanner.cpp */; };
 		03D325F9134FC6530056EF14 /* USSyntaxScanner.h in Headers */ = {isa = PBXBuildFile; fileRef = 03D325EF134FC6530056EF14 /* USSyntaxScanner.h */; };
-		CD2FDECB13542F1400B814DF /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD2FDEBB13542F1400B814DF /* AddressBook.framework */; };
-		CD2FDECC13542F1400B814DF /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD2FDEBC13542F1400B814DF /* AddressBookUI.framework */; };
-		CD2FDECD13542F1400B814DF /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD2FDEBD13542F1400B814DF /* AudioToolbox.framework */; };
-		CD2FDECE13542F1400B814DF /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD2FDEBE13542F1400B814DF /* AVFoundation.framework */; };
-		CD2FDECF13542F1400B814DF /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD2FDEBF13542F1400B814DF /* CoreAudio.framework */; };
-		CD2FDED013542F1400B814DF /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD2FDEC013542F1400B814DF /* CoreGraphics.framework */; };
-		CD2FDED113542F1400B814DF /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD2FDEC113542F1400B814DF /* CoreLocation.framework */; };
-		CD2FDED213542F1400B814DF /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD2FDEC213542F1400B814DF /* CoreMedia.framework */; };
-		CD2FDED313542F1400B814DF /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD2FDEC313542F1400B814DF /* CoreVideo.framework */; };
-		CD2FDED413542F1400B814DF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD2FDEC413542F1400B814DF /* Foundation.framework */; };
-		CD2FDED513542F1400B814DF /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD2FDEC513542F1400B814DF /* OpenAL.framework */; };
-		CD2FDED613542F1400B814DF /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD2FDEC613542F1400B814DF /* OpenGLES.framework */; };
-		CD2FDED713542F1400B814DF /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD2FDEC713542F1400B814DF /* QuartzCore.framework */; };
-		CD2FDED813542F1400B814DF /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD2FDEC813542F1400B814DF /* StoreKit.framework */; };
-		CD2FDED913542F1400B814DF /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD2FDEC913542F1400B814DF /* SystemConfiguration.framework */; };
-		CD2FDEDA13542F1400B814DF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD2FDECA13542F1400B814DF /* UIKit.framework */; };
-		CD2FDEDD13542F3600B814DF /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CD2FDEDB13542F3600B814DF /* libiconv.dylib */; };
-		CD2FDEDE13542F3600B814DF /* libz.1.2.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CD2FDEDC13542F3600B814DF /* libz.1.2.3.dylib */; };
-		CD2FDEEE13542FEA00B814DF /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD2FDEE013542FEA00B814DF /* AppDelegate.mm */; };
-		CD2FDEEF13542FEA00B814DF /* Entitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = CD2FDEE113542FEA00B814DF /* Entitlements.plist */; };
-		CD2FDEF113542FEA00B814DF /* iPhoneIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = CD2FDEE313542FEA00B814DF /* iPhoneIcon.png */; };
-		CD2FDEF213542FEA00B814DF /* LocationObserver.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD2FDEE513542FEA00B814DF /* LocationObserver.mm */; };
-		CD2FDEF313542FEA00B814DF /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD2FDEE613542FEA00B814DF /* main.mm */; };
-		CD2FDEF413542FEA00B814DF /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD2FDEE713542FEA00B814DF /* MainWindow.xib */; };
-		CD2FDEF513542FEA00B814DF /* MoaiView.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD2FDEEA13542FEA00B814DF /* MoaiView.mm */; };
-		CD2FDEF613542FEA00B814DF /* OpenGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD2FDEEC13542FEA00B814DF /* OpenGLView.mm */; };
-		CD2FDEF9135430B800B814DF /* libmoai.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03C2F6F4104DE130009A2D5D /* libmoai.a */; };
 		CD3153691354280E0061C0FF /* USTextFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD3153601354279F0061C0FF /* USTextFrame.cpp */; };
 		CD31536A1354280E0061C0FF /* USTextFrame.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3153611354279F0061C0FF /* USTextFrame.h */; };
 		CD31536B1354280E0061C0FF /* USTextLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD3153621354279F0061C0FF /* USTextLayout.cpp */; };
 		CD31536C1354280E0061C0FF /* USTextLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3153631354279F0061C0FF /* USTextLayout.h */; };
-		CD6325D513543515005F5741 /* lua in Resources */ = {isa = PBXBuildFile; fileRef = CD6325D413543515005F5741 /* lua */; };
 		CD7B3F4212FA484B00A90AA5 /* AKU.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD7B3F3E12FA484B00A90AA5 /* AKU.cpp */; };
 		CD7B3F4312FA484B00A90AA5 /* AKU.h in Headers */ = {isa = PBXBuildFile; fileRef = CD7B3F3F12FA484B00A90AA5 /* AKU.h */; };
 		CD7B3F4412FA484B00A90AA5 /* pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD7B3F4012FA484B00A90AA5 /* pch.cpp */; };
@@ -880,6 +880,13 @@
 			remoteGlobalIDString = 0379C3D51333ECD800E89DDC;
 			remoteInfo = "3rd-party";
 		};
+		038364D013550DCF002C10D8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 03C2F6F3104DE130009A2D5D;
+			remoteInfo = libmoai;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -889,7 +896,10 @@
 		033146E91343C1BE00095C11 /* USVertexFormatMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = USVertexFormatMgr.h; path = ../../src/uslsext/USVertexFormatMgr.h; sourceTree = "<group>"; };
 		033146EF1343C1EE00095C11 /* MOAIMesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIMesh.cpp; path = ../../src/moaicore/MOAIMesh.cpp; sourceTree = "<group>"; };
 		033146F01343C1EE00095C11 /* MOAIMesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIMesh.h; path = ../../src/moaicore/MOAIMesh.h; sourceTree = "<group>"; };
-		0379C5961333ECD800E89DDC /* lib3rdParty.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = lib3rdParty.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		0379C5961333ECD800E89DDC /* libmoai-3rdparty.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-3rdparty.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		03B4CCA613550954001E768D /* cathead.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cathead.png; path = "../../samples/basics/anim-basic/cathead.png"; sourceTree = SOURCE_ROOT; };
+		03B4CCA713550954001E768D /* main.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = main.lua; path = "../../samples/basics/anim-basic/main.lua"; sourceTree = SOURCE_ROOT; };
+		03B4CCCE13550985001E768D /* sample-anim-basic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "sample-anim-basic.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		03C2174B104DE581009A2D5D /* lapi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lapi.c; path = "../../3rdparty/lua-5.1.3/src/lapi.c"; sourceTree = SOURCE_ROOT; };
 		03C2174C104DE581009A2D5D /* lapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lapi.h; path = "../../3rdparty/lua-5.1.3/src/lapi.h"; sourceTree = SOURCE_ROOT; };
 		03C2174D104DE581009A2D5D /* lauxlib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lauxlib.c; path = "../../3rdparty/lua-5.1.3/src/lauxlib.c"; sourceTree = SOURCE_ROOT; };
@@ -965,7 +975,6 @@
 		03D325ED134FC6530056EF14 /* USSyntaxNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = USSyntaxNode.h; path = ../../src/uslsext/USSyntaxNode.h; sourceTree = SOURCE_ROOT; };
 		03D325EE134FC6530056EF14 /* USSyntaxScanner.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = USSyntaxScanner.cpp; path = ../../src/uslsext/USSyntaxScanner.cpp; sourceTree = SOURCE_ROOT; };
 		03D325EF134FC6530056EF14 /* USSyntaxScanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = USSyntaxScanner.h; path = ../../src/uslsext/USSyntaxScanner.h; sourceTree = SOURCE_ROOT; };
-		CD2FDE8413542E9F00B814DF /* moaiview.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = moaiview.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD2FDEBB13542F1400B814DF /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/System/Library/Frameworks/AddressBook.framework; sourceTree = DEVELOPER_DIR; };
 		CD2FDEBC13542F1400B814DF /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/System/Library/Frameworks/AddressBookUI.framework; sourceTree = DEVELOPER_DIR; };
 		CD2FDEBD13542F1400B814DF /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/System/Library/Frameworks/AudioToolbox.framework; sourceTree = DEVELOPER_DIR; };
@@ -1192,7 +1201,6 @@
 		CD4327F41116A0ED006D6D3D /* typecheck-gcc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "typecheck-gcc.h"; path = "../../3rdparty/curl-7.19.7/include-iphone/curl/typecheck-gcc.h"; sourceTree = SOURCE_ROOT; };
 		CD4327F51116A0ED006D6D3D /* types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = types.h; path = "../../3rdparty/curl-7.19.7/include-iphone/curl/types.h"; sourceTree = SOURCE_ROOT; };
 		CD43280D1116A2BE006D6D3D /* setup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = setup.h; path = "../../3rdparty/curl-7.19.7/lib/setup.h"; sourceTree = SOURCE_ROOT; };
-		CD6325D413543515005F5741 /* lua */ = {isa = PBXFileReference; lastKnownFileType = folder; path = lua; sourceTree = "<group>"; };
 		CD75832912E1393F008759DC /* autofit.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = autofit.c; path = "../../3rdparty/freetype-2.4.4/src/autofit/autofit.c"; sourceTree = SOURCE_ROOT; };
 		CD75832B12E13961008759DC /* bdf.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = bdf.c; path = "../../3rdparty/freetype-2.4.4/src/bdf/bdf.c"; sourceTree = SOURCE_ROOT; };
 		CD75832D12E13985008759DC /* cff.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = cff.c; path = "../../3rdparty/freetype-2.4.4/src/cff/cff.c"; sourceTree = SOURCE_ROOT; };
@@ -1764,37 +1772,37 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		03B4CCB213550985001E768D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				03B4CCB313550985001E768D /* AddressBook.framework in Frameworks */,
+				03B4CCB413550985001E768D /* AddressBookUI.framework in Frameworks */,
+				03B4CCB513550985001E768D /* AudioToolbox.framework in Frameworks */,
+				03B4CCB613550985001E768D /* AVFoundation.framework in Frameworks */,
+				03B4CCB713550985001E768D /* CoreAudio.framework in Frameworks */,
+				03B4CCB813550985001E768D /* CoreGraphics.framework in Frameworks */,
+				03B4CCB913550985001E768D /* CoreLocation.framework in Frameworks */,
+				03B4CCBA13550985001E768D /* CoreMedia.framework in Frameworks */,
+				03B4CCBB13550985001E768D /* CoreVideo.framework in Frameworks */,
+				03B4CCBC13550985001E768D /* Foundation.framework in Frameworks */,
+				03B4CCBD13550985001E768D /* OpenAL.framework in Frameworks */,
+				03B4CCBE13550985001E768D /* OpenGLES.framework in Frameworks */,
+				03B4CCBF13550985001E768D /* QuartzCore.framework in Frameworks */,
+				03B4CCC013550985001E768D /* StoreKit.framework in Frameworks */,
+				03B4CCC113550985001E768D /* SystemConfiguration.framework in Frameworks */,
+				03B4CCC213550985001E768D /* UIKit.framework in Frameworks */,
+				03B4CCC313550985001E768D /* libiconv.dylib in Frameworks */,
+				03B4CCC413550985001E768D /* libz.1.2.3.dylib in Frameworks */,
+				03B4CCC513550985001E768D /* libmoai.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		03C2F6F2104DE130009A2D5D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0379C7411333ED7000E89DDC /* lib3rdParty.a in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		CD2FDE8113542E9F00B814DF /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				CD2FDECB13542F1400B814DF /* AddressBook.framework in Frameworks */,
-				CD2FDECC13542F1400B814DF /* AddressBookUI.framework in Frameworks */,
-				CD2FDECD13542F1400B814DF /* AudioToolbox.framework in Frameworks */,
-				CD2FDECE13542F1400B814DF /* AVFoundation.framework in Frameworks */,
-				CD2FDECF13542F1400B814DF /* CoreAudio.framework in Frameworks */,
-				CD2FDED013542F1400B814DF /* CoreGraphics.framework in Frameworks */,
-				CD2FDED113542F1400B814DF /* CoreLocation.framework in Frameworks */,
-				CD2FDED213542F1400B814DF /* CoreMedia.framework in Frameworks */,
-				CD2FDED313542F1400B814DF /* CoreVideo.framework in Frameworks */,
-				CD2FDED413542F1400B814DF /* Foundation.framework in Frameworks */,
-				CD2FDED513542F1400B814DF /* OpenAL.framework in Frameworks */,
-				CD2FDED613542F1400B814DF /* OpenGLES.framework in Frameworks */,
-				CD2FDED713542F1400B814DF /* QuartzCore.framework in Frameworks */,
-				CD2FDED813542F1400B814DF /* StoreKit.framework in Frameworks */,
-				CD2FDED913542F1400B814DF /* SystemConfiguration.framework in Frameworks */,
-				CD2FDEDA13542F1400B814DF /* UIKit.framework in Frameworks */,
-				CD2FDEDD13542F3600B814DF /* libiconv.dylib in Frameworks */,
-				CD2FDEDE13542F3600B814DF /* libz.1.2.3.dylib in Frameworks */,
-				CD2FDEF9135430B800B814DF /* libmoai.a in Frameworks */,
+				0379C7411333ED7000E89DDC /* libmoai-3rdparty.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1815,11 +1823,28 @@
 		038DB6D7101FAA6700ECA0BF /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				0379C5961333ECD800E89DDC /* lib3rdParty.a */,
+				0379C5961333ECD800E89DDC /* libmoai-3rdparty.a */,
 				03C2F6F4104DE130009A2D5D /* libmoai.a */,
-				CD2FDE8413542E9F00B814DF /* moaiview.app */,
+				03B4CCCE13550985001E768D /* sample-anim-basic.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		03B4CC9E1355087E001E768D /* samples */ = {
+			isa = PBXGroup;
+			children = (
+				03B4CC9F135508BF001E768D /* anim-basic */,
+			);
+			name = samples;
+			sourceTree = "<group>";
+		};
+		03B4CC9F135508BF001E768D /* anim-basic */ = {
+			isa = PBXGroup;
+			children = (
+				03B4CCA613550954001E768D /* cathead.png */,
+				03B4CCA713550954001E768D /* main.lua */,
+			);
+			name = "anim-basic";
 			sourceTree = "<group>";
 		};
 		03C2148B104DE3BE009A2D5D /* 3rd party */ = {
@@ -1920,20 +1945,21 @@
 			name = tinyxml;
 			sourceTree = "<group>";
 		};
-		03C2F8A2104DE214009A2D5D /* moai */ = {
+		03C2F8A2104DE214009A2D5D /* libmoai */ = {
 			isa = PBXGroup;
 			children = (
 				03C2148B104DE3BE009A2D5D /* 3rd party */,
 				037CFB4610586B4700364948 /* src */,
 			);
-			name = moai;
+			name = libmoai;
 			sourceTree = "<group>";
 		};
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
-				03C2F8A2104DE214009A2D5D /* moai */,
+				03C2F8A2104DE214009A2D5D /* libmoai */,
 				CD2FDE9113542E9F00B814DF /* moaiview */,
+				03B4CC9E1355087E001E768D /* samples */,
 				CD2FDE8613542E9F00B814DF /* Frameworks */,
 				038DB6D7101FAA6700ECA0BF /* Products */,
 			);
@@ -1969,7 +1995,6 @@
 		CD2FDE9113542E9F00B814DF /* moaiview */ = {
 			isa = PBXGroup;
 			children = (
-				CD6325D413543515005F5741 /* lua */,
 				CD2FDEDF13542FEA00B814DF /* AppDelegate.h */,
 				CD2FDEE013542FEA00B814DF /* AppDelegate.mm */,
 				CD2FDEE113542FEA00B814DF /* Entitlements.plist */,
@@ -3371,9 +3396,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		0379C3D51333ECD800E89DDC /* 3rdParty */ = {
+		0379C3D51333ECD800E89DDC /* libmoai-3rdparty */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 0379C5931333ECD800E89DDC /* Build configuration list for PBXNativeTarget "3rdParty" */;
+			buildConfigurationList = 0379C5931333ECD800E89DDC /* Build configuration list for PBXNativeTarget "libmoai-3rdparty" */;
 			buildPhases = (
 				0379C3D61333ECD800E89DDC /* Headers */,
 				0379C4C31333ECD800E89DDC /* Sources */,
@@ -3383,10 +3408,28 @@
 			);
 			dependencies = (
 			);
-			name = 3rdParty;
+			name = "libmoai-3rdparty";
 			productName = OpenUSLS;
-			productReference = 0379C5961333ECD800E89DDC /* lib3rdParty.a */;
+			productReference = 0379C5961333ECD800E89DDC /* libmoai-3rdparty.a */;
 			productType = "com.apple.product-type.library.static";
+		};
+		03B4CCAB13550985001E768D /* sample-anim-basic */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 03B4CCCB13550985001E768D /* Build configuration list for PBXNativeTarget "sample-anim-basic" */;
+			buildPhases = (
+				03B4CCAC13550985001E768D /* Sources */,
+				03B4CCB213550985001E768D /* Frameworks */,
+				03B4CCC613550985001E768D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				038364D113550DCF002C10D8 /* PBXTargetDependency */,
+			);
+			name = "sample-anim-basic";
+			productName = moaiview;
+			productReference = 03B4CCCE13550985001E768D /* sample-anim-basic.app */;
+			productType = "com.apple.product-type.application";
 		};
 		03C2F6F3104DE130009A2D5D /* libmoai */ = {
 			isa = PBXNativeTarget;
@@ -3405,23 +3448,6 @@
 			productName = OpenUSLS;
 			productReference = 03C2F6F4104DE130009A2D5D /* libmoai.a */;
 			productType = "com.apple.product-type.library.static";
-		};
-		CD2FDE8313542E9F00B814DF /* moaiview */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = CD2FDEAF13542EA000B814DF /* Build configuration list for PBXNativeTarget "moaiview" */;
-			buildPhases = (
-				CD2FDE8013542E9F00B814DF /* Sources */,
-				CD2FDE8113542E9F00B814DF /* Frameworks */,
-				CD2FDE8213542E9F00B814DF /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = moaiview;
-			productName = moaiview;
-			productReference = CD2FDE8413542E9F00B814DF /* moaiview.app */;
-			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
@@ -3455,22 +3481,22 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				0379C3D51333ECD800E89DDC /* 3rdParty */,
+				0379C3D51333ECD800E89DDC /* libmoai-3rdparty */,
 				03C2F6F3104DE130009A2D5D /* libmoai */,
-				CD2FDE8313542E9F00B814DF /* moaiview */,
+				03B4CCAB13550985001E768D /* sample-anim-basic */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		CD2FDE8213542E9F00B814DF /* Resources */ = {
+		03B4CCC613550985001E768D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CD2FDEEF13542FEA00B814DF /* Entitlements.plist in Resources */,
-				CD2FDEF113542FEA00B814DF /* iPhoneIcon.png in Resources */,
-				CD2FDEF413542FEA00B814DF /* MainWindow.xib in Resources */,
-				CD6325D513543515005F5741 /* lua in Resources */,
+				03B4CCC813550985001E768D /* iPhoneIcon.png in Resources */,
+				03B4CCC913550985001E768D /* MainWindow.xib in Resources */,
+				03836508135520FC002C10D8 /* cathead.png in Resources */,
+				03836509135520FC002C10D8 /* main.lua in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3714,6 +3740,18 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		03B4CCAC13550985001E768D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				03B4CCAD13550985001E768D /* AppDelegate.mm in Sources */,
+				03B4CCAE13550985001E768D /* LocationObserver.mm in Sources */,
+				03B4CCAF13550985001E768D /* main.mm in Sources */,
+				03B4CCB013550985001E768D /* MoaiView.mm in Sources */,
+				03B4CCB113550985001E768D /* OpenGLView.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		03C2F6F1104DE130009A2D5D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -3910,25 +3948,18 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		CD2FDE8013542E9F00B814DF /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				CD2FDEEE13542FEA00B814DF /* AppDelegate.mm in Sources */,
-				CD2FDEF213542FEA00B814DF /* LocationObserver.mm in Sources */,
-				CD2FDEF313542FEA00B814DF /* main.mm in Sources */,
-				CD2FDEF513542FEA00B814DF /* MoaiView.mm in Sources */,
-				CD2FDEF613542FEA00B814DF /* OpenGLView.mm in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
 		0379C7401333ED3500E89DDC /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 0379C3D51333ECD800E89DDC /* 3rdParty */;
+			target = 0379C3D51333ECD800E89DDC /* libmoai-3rdparty */;
 			targetProxy = 0379C73F1333ED3500E89DDC /* PBXContainerItemProxy */;
+		};
+		038364D113550DCF002C10D8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 03C2F6F3104DE130009A2D5D /* libmoai */;
+			targetProxy = 038364D013550DCF002C10D8 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -3957,8 +3988,10 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = 3rdParty;
+				INFOPLIST_FILE = "";
+				PRODUCT_NAME = "moai-3rdparty";
 				WARNING_CFLAGS = "";
+				WRAPPER_EXTENSION = "";
 			};
 			name = Debug;
 		};
@@ -3986,8 +4019,10 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = 3rdParty;
+				INFOPLIST_FILE = "";
+				PRODUCT_NAME = "moai-3rdparty";
 				WARNING_CFLAGS = "";
+				WRAPPER_EXTENSION = "";
 			};
 			name = Distribution;
 		};
@@ -3996,6 +4031,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_ENTITLEMENTS = moaiview/Entitlements.plist;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
@@ -4046,26 +4083,48 @@
 					"\"../../3rdparty/chipmunk-5.3.4/include\"",
 					"\"../../3rdparty/chipmunk-5.3.4/include/chipmunk\"",
 				);
+				INFOPLIST_FILE = moaiview/Info.plist;
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = YES;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+				VALIDATE_PRODUCT = YES;
 				VALID_ARCHS = "i386 armv6 armv7";
 				WARNING_CFLAGS = "-Wall";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Distribution;
+		};
+		03B4CCCC13550985001E768D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		03B4CCCD13550985001E768D /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Distribution;
 		};
 		03C2F6F6104DE131009A2D5D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				INFOPLIST_FILE = "";
 				PRODUCT_NAME = moai;
+				WRAPPER_EXTENSION = "";
 			};
 			name = Debug;
 		};
 		03C2F6F7104DE131009A2D5D /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				INFOPLIST_FILE = "";
 				PRODUCT_NAME = moai;
+				WRAPPER_EXTENSION = "";
 			};
 			name = Distribution;
 		};
@@ -4074,6 +4133,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_ENTITLEMENTS = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_OBJC_CALL_CXX_CDTORS = YES;
@@ -4127,65 +4188,36 @@
 					"\"../../3rdparty/chipmunk-5.3.4/include\"",
 					"\"../../3rdparty/chipmunk-5.3.4/include/chipmunk\"",
 				);
+				INFOPLIST_FILE = moaiview/Info.plist;
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = NO;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+				VALIDATE_PRODUCT = YES;
 				VALID_ARCHS = "i386 armv6 armv7";
 				WARNING_CFLAGS = "-Wall";
-			};
-			name = Debug;
-		};
-		CD2FDEAD13542EA000B814DF /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				COPY_PHASE_STRIP = NO;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "moaiview/moaiview-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				"GCC_THUMB_SUPPORT[arch=armv6]" = "";
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
-				INFOPLIST_FILE = moaiview/Info.plist;
-				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
-		};
-		CD2FDEAE13542EA000B814DF /* Distribution */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				COPY_PHASE_STRIP = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "moaiview/moaiview-Prefix.pch";
-				"GCC_THUMB_SUPPORT[arch=armv6]" = "";
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = moaiview/Info.plist;
-				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				VALIDATE_PRODUCT = YES;
-				WRAPPER_EXTENSION = app;
-			};
-			name = Distribution;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		0379C5931333ECD800E89DDC /* Build configuration list for PBXNativeTarget "3rdParty" */ = {
+		0379C5931333ECD800E89DDC /* Build configuration list for PBXNativeTarget "libmoai-3rdparty" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0379C5941333ECD800E89DDC /* Debug */,
 				0379C5951333ECD800E89DDC /* Distribution */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		03B4CCCB13550985001E768D /* Build configuration list for PBXNativeTarget "sample-anim-basic" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				03B4CCCC13550985001E768D /* Debug */,
+				03B4CCCD13550985001E768D /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
@@ -4204,15 +4236,6 @@
 			buildConfigurations = (
 				C01FCF4F08A954540054247B /* Debug */,
 				03B080970F708135005CD8E5 /* Distribution */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
-		};
-		CD2FDEAF13542EA000B814DF /* Build configuration list for PBXNativeTarget "moaiview" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				CD2FDEAD13542EA000B814DF /* Debug */,
-				CD2FDEAE13542EA000B814DF /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
