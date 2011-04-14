@@ -4,7 +4,7 @@
 -- http://getmoai.com
 ----------------------------------------------------------------
 
-print ( "hello, moai!" )
+MOAISim.openWindow ( "test", 320, 480 )
 
 viewport = MOAIViewport.new ()
 viewport:setSize ( 320, 480 )
@@ -12,6 +12,7 @@ viewport:setScale ( 320, 480 )
 
 layer = MOAILayer2D.new ()
 layer:setViewport ( viewport )
+MOAISim.pushRenderPass ( layer )
 
 gfxQuadDeck = MOAIGfxQuadDeck2D.new ()
 gfxQuadDeck:setTexture ( "cathead.png" )
@@ -22,5 +23,3 @@ prop = MOAIProp2D.new ()
 prop:setDeck ( gfxQuadDeck )
 layer:insertProp ( prop )
 
-MOAISim.pushRenderPass ( layer )
-MOAISim.openWindow ( "test", 320, 480 )

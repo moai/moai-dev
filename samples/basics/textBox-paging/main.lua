@@ -4,6 +4,7 @@
 -- http://getmoai.com
 ----------------------------------------------------------------
 
+MOAISim.openWindow ( "test", 320, 480 )
 MOAIDebugLines.setStyle ( MOAIDebugLines.TEXT_BOX, 1, 1, 1, 1, 1 )
 
 viewport = MOAIViewport.new ()
@@ -12,6 +13,7 @@ viewport:setScale ( 320, 480 )
 
 layer = MOAILayer2D.new ()
 layer:setViewport ( viewport )
+MOAISim.pushRenderPass ( layer )
 
 charcodes = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 .,:;!?()&/-'
 text1 = "a b c d e f g h i j k l m n o p q r s t u v w x y z <c:fc0>A B C D E F G H I J K L M N O P Q R <c:0cf>S T U V W X Y Z"
@@ -58,5 +60,3 @@ end
 thread = MOAIThread.new ()
 thread:run ( main )
 
-MOAISim.pushRenderPass ( layer )
-MOAISim.openWindow ( 'test', 320, 480 )

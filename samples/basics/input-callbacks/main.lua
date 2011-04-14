@@ -4,7 +4,7 @@
 -- http://getmoai.com
 ----------------------------------------------------------------
 
-print ( "hello, moai!" )
+MOAISim.openWindow ( "test", 320, 480 )
 
 local function printf ( ... )
 	return io.stdout:write ( string.format ( ... ))
@@ -77,4 +77,3 @@ end
 
 MOAIInputMgr.device.mouseRight:setCallback ( onMouseRightEvent )
 
-MOAISim.openWindow ( "test", 320, 480 )

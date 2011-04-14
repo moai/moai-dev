@@ -4,7 +4,7 @@
 -- http://getmoai.com
 ----------------------------------------------------------------
 
-print ( "hello, moai!" )
+MOAISim.openWindow ( "test", 320, 480 )
 
 viewport = MOAIViewport.new ()
 viewport:setSize ( 320, 480 )
@@ -12,6 +12,7 @@ viewport:setScale ( 320, 480 )
 
 layer = MOAILayer2D.new ()
 layer:setViewport ( viewport )
+MOAISim.pushRenderPass ( layer )
 
 grid = MOAIGrid.new ()
 grid:setSize ( 2, 2, 64, 64 )
@@ -27,6 +28,3 @@ prop = MOAIProp2D.new ()
 prop:setDeck ( tileDeck )
 prop:setGrid ( grid )
 layer:insertProp ( prop )
-
-MOAISim.pushRenderPass ( layer )
-MOAISim.openWindow ( "test", 320, 480 )

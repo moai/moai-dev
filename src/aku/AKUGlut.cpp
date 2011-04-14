@@ -42,18 +42,24 @@ static int sWinHeight;
 
 //----------------------------------------------------------------//
 static void _onKeyDown ( unsigned char key, int x, int y ) {
+	( void )x;
+	( void )y;
 	
 	AKUEnqueueKeyboardEvent ( GlutInputDeviceID::DEVICE, GlutInputDeviceSensorID::KEYBOARD, key, true );
 }
 
 //----------------------------------------------------------------//
 static void _onKeyUp ( unsigned char key, int x, int y ) {
+	( void )x;
+	( void )y;
 	
 	AKUEnqueueKeyboardEvent ( GlutInputDeviceID::DEVICE, GlutInputDeviceSensorID::KEYBOARD, key, false );
 }
 
 //----------------------------------------------------------------//
 static void _onMouseButton ( int button, int state, int x, int y ) {
+	( void )x;
+	( void )y;
 	
 	switch ( button ) {
 		case GLUT_LEFT_BUTTON:
@@ -107,31 +113,6 @@ static void _onUpdate () {
 
 	AKUUpdate ();
 	glutPostRedisplay ();
-}
-
-//================================================================//
-// glut setup
-//================================================================//
-
-void	InitGlutDisplay	();
-
-//----------------------------------------------------------------//
-void InitGlutDisplay () {
-
-	//glewInit ();
-	
-	glutIgnoreKeyRepeat ( 1 );
-
-	glutKeyboardFunc ( _onKeyDown );
-	glutKeyboardUpFunc ( _onKeyUp );
-	
-	glutMouseFunc ( _onMouseButton );
-	glutMotionFunc ( _onMouseDrag );
-	glutPassiveMotionFunc ( _onMouseMove );
-	
-	glutDisplayFunc ( _onPaint );
-	glutReshapeFunc ( _onReshape );
-	glutIdleFunc ( _onUpdate );
 }
 
 //================================================================//
@@ -190,7 +171,18 @@ void _AKUOpenWindowFunc ( const char* title, int width, int height ) {
 	glutInitWindowPosition ( sWinX, sWinY );
 	glutCreateWindow ( title );
 
-	InitGlutDisplay ();
+	glutIgnoreKeyRepeat ( 1 );
+
+	glutKeyboardFunc ( _onKeyDown );
+	glutKeyboardUpFunc ( _onKeyUp );
+	
+	glutMouseFunc ( _onMouseButton );
+	glutMotionFunc ( _onMouseDrag );
+	glutPassiveMotionFunc ( _onMouseMove );
+	
+	glutDisplayFunc ( _onPaint );
+	glutReshapeFunc ( _onReshape );
+	glutIdleFunc ( _onUpdate );
 }
 
 //----------------------------------------------------------------//

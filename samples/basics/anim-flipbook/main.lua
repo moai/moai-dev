@@ -4,12 +4,15 @@
 -- http://getmoai.com
 ----------------------------------------------------------------
 
+MOAISim.openWindow ( "test", 320, 480 )
+
 viewport = MOAIViewport.new ()
 viewport:setSize ( 320, 480 )
 viewport:setScale ( 320, 480 )
 
 layer = MOAILayer2D.new ()
 layer:setViewport ( viewport )
+MOAISim.pushRenderPass ( layer )
 
 tileLib = MOAITileDeck2D:new ()
 tileLib:setTexture ( "numbers.png" )
@@ -35,5 +38,3 @@ anim:setLink ( 1, curve, prop, MOAIProp2D.ATTR_INDEX )
 anim:setMode ( MOAITimer.LOOP )
 anim:start ()
 
-MOAISim.pushRenderPass ( layer )
-MOAISim.openWindow ( "test", 320, 480 )
