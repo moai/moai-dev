@@ -136,7 +136,7 @@ Section "Moai"
 	; start menu shortcuts
 	SetShellVarContext all
 	CreateDirectory "$SMPROGRAMS\${DISPLAY_NAME}"
-	CreateShortCut "$SMPROGRAMS\${DISPLAY_NAME}\Getting Started.lnk" "${GETTING_STARTED_URL}"
+	;CreateShortCut "$SMPROGRAMS\${DISPLAY_NAME}\Getting Started.lnk" "${GETTING_STARTED_URL}"
 	CreateShortCut "$SMPROGRAMS\${DISPLAY_NAME}\Samples.lnk" "$INSTDIR\samples\lua" 	;CreateShortCut "$SMPROGRAMS\${DISPLAY_NAME}\Samples.lnk" "$0\${PROGRAM_FOLDER}\samples\lua"
 	CreateShortCut "$SMPROGRAMS\${DISPLAY_NAME}\Reference.lnk" "$INSTDIR\docs\html\index.html"
 	CreateShortCut "$SMPROGRAMS\${DISPLAY_NAME}\Uninstall.lnk" "${UNINST_EXE}"
@@ -245,7 +245,7 @@ Section UnInstall
 	
 	SetShellVarContext all
 	
-	Delete "$SMPROGRAMS\${DISPLAY_NAME}\Getting Started.lnk"
+	;Delete "$SMPROGRAMS\${DISPLAY_NAME}\Getting Started.lnk"
 	Delete "$SMPROGRAMS\${DISPLAY_NAME}\Samples.lnk"
 	Delete "$SMPROGRAMS\${DISPLAY_NAME}\Reference.lnk"
 	Delete "$SMPROGRAMS\${DISPLAY_NAME}\Uninstall.lnk"
