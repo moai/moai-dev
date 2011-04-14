@@ -9,6 +9,9 @@
 //================================================================//
 // MOAITransformBase
 //================================================================//
+/**	@name	MOAITransformBase
+	@text	Base class for 2D affine transforms.
+*/
 class MOAITransformBase :
 	public virtual MOAINode {
 protected:

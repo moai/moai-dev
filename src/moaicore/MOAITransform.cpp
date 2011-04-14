@@ -473,8 +473,8 @@ int MOAITransform::_setLoc ( lua_State* L ) {
 /**	@name	setParent
 	@text	Sets or clears the prop's parent transform.
 	
-	@in		MOAIProp2D self
-	@opt	MOAIProp2D parent	Default value is nil.
+	@in		MOAITransform self
+	@opt	MOAITransformBase parent	Default value is nil.
 	@out	nil
 */
 int MOAITransform::_setParent ( lua_State* L ) {

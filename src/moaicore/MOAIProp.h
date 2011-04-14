@@ -15,6 +15,9 @@ class MOAISurfaceSampler2D;
 //================================================================//
 // MOAIProp
 //================================================================//
+/**	@name	MOAIProp
+	@text	Base class for Props.
+*/
 class MOAIProp :
 	public MOAITransform {
 private:

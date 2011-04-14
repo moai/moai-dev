@@ -167,31 +167,22 @@ function parseFlash ( flashAnim )
 	return flash
 end
 
-flash = parseFlash ( dofile ( 'flash-tween.fla.lua' ))
+fla = dofile ( 'flash-tween.fla.lua' )
 
 viewport = MOAIViewport.new ()
-viewport:setSize ( flash.width, flash.height )
-viewport:setScale ( flash.width, -flash.height )
+viewport:setSize ( fla.width, fla.height )
+viewport:setScale ( fla.width, -fla.height )
 viewport:setOffset ( -1, 1 )
 
 layer = MOAILayer2D.new ()
 layer:setViewport ( viewport )
 
 MOAISim.pushRenderPass ( layer )
-MOAISim.openWindow ( "flash", flash.width, flash.height )
+MOAISim.openWindow ( "flash", fla.width, fla.height )
+
+flash = parseFlash ( fla )
 
 player = flash:newPlayer ()
 player:insertProps ( layer )
 player:start ()
 
---[[
-texture = MOAIGfxQuad2D.new ()
-texture:setTexture ( "cathead.png" )
-texture:setRect ( -64, -64, 64, 64 )
-
-prop = MOAIProp2D.new ()
-prop:setGfxSource ( texture )
-prop:moveRot ( 360, 1.5 )
-
-layer:insertProp ( prop )
-]]--
