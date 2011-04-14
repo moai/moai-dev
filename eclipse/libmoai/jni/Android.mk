@@ -27,6 +27,7 @@ include $(CLEAR_VARS)
 LOCAL_MODULE := libmoai
 LOCAL_LDLIBS := -lm -llog -ljnigraphics -lGLESv1_CM -ldl -lz
 LOCAL_CFLAGS := -DANDROID_NDK -DDISABLE_IMPORTGL
+APP_STL := gnustl_static
 
 #----------------------------------------------------------------#
 # header search paths
