@@ -30,7 +30,7 @@ To try out the samples, configure Xcode's debug working directory and command li
 
 config.lua sets up some richer error messages; it's a good idea to always pass it to Moai. main.lua runs the sample.
 
-In Xcode 3, right click the product and choose 'Get Info.' In Xcode 4, select 'Edit Scheme' from the Schemes drop down. You will find the settings on the 'Info' and 'Arguments' tab the scheme editor.
+In Xcode 3, right click the executable and choose 'Get Info.' In Xcode 4, select 'Edit Scheme' from the Schemes drop down. You will find the settings on the 'Info' and 'Arguments' tab the scheme editor.
 
 Developing for iPhone:
 
