@@ -29,7 +29,7 @@ del /q intro-page-temp.txt
 call parser\fr "html-lua" "index.html" "(\<div class=\"contents\"\>).*?(\<\/div\>)" "$1%input%$2"
 
 ::update doxygen's version text
-pushd ..
+pushd ..\..
 set /a count=0
 
 setlocal ENABLEDELAYEDEXPANSION
