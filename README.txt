@@ -36,3 +36,4 @@ Developing for iPhone:
 Use xcode/iphone/moai-iphone.xcodeproj. This sample project includes the Lua and image found in samples/basics/anim-basic. The Moai runtime is implemented in an OpenGL view. Look at AppDelegate to see how it is used.
 
 As Moai is written in C++, we've generally preferred Objective-C++ for our work. To make dealing with Apple's reference counting easier, we use a smart pointer called RefPtr <>. If you're planning to extend MoaiView and don't mind using Objective-C++, try it out for yourself.
+
