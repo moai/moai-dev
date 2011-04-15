@@ -14,7 +14,7 @@ SetCompressorDictSize 64
 
 !define DISPLAY_NAME "@@DISPLAY_NAME@@"
 !define PROGRAM_FOLDER "Moai SDK"
-!define INSTALLER_NAME "moai-sdk-installer.exe"
+!define INSTALLER_NAME "moai-sdk-windows.exe"
 !define LICENSE_TEXT "license.txt"
 !define ALL_USERS
 

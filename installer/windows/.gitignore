@@ -7,5 +7,4 @@ release/samples/hello-moai/
 release/samples/config/
 release/include/
 release/version.txt
-release/AboutMoai.pdf
 *.exe

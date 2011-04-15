@@ -2,7 +2,7 @@
 if exist src-copy rmdir /s /q src-copy
 
 ::create copy of source files
-xcopy /v /i /s /y "../src" "src-copy"
+xcopy /v /i /s /y "../../src" "src-copy"
 
 ::modify copy of source files
 call parser\process-files header-files.lua h
