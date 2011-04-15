@@ -28,6 +28,10 @@ struct b2AABB;
 // inside b2World::Step.
 class MOAIBox2DDebugDraw : public b2DebugDraw {
 
+	friend class MOAIBox2DWorld;
+
+	float mScale;
+
 	void BindVertexFormat ( USDrawBuffer& drawBuffer );
 	void WriteVtx ( USDrawBuffer& drawBuffer, float x, float y );
 

@@ -215,8 +215,8 @@ void MOAIBox2DDebugDraw::DrawAABB(b2AABB* aabb, const b2Color& c)
 void MOAIBox2DDebugDraw::WriteVtx ( USDrawBuffer& drawBuffer, float x, float y ) {
 
 	USVec2D vtx;
-	vtx.mX = x;
-	vtx.mY = y;
+	vtx.mX = x * this->mScale;
+	vtx.mY = y * this->mScale;
 	drawBuffer.WriteVtx ( vtx );
 	drawBuffer.WritePenColor ();
 }
