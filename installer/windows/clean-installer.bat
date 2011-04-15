@@ -4,7 +4,8 @@ rd /s /q release\docs
 rd /s /q release\samples\hello-moai
 rd /s /q release\samples\lua
 rd /s /q release\samples\src
+rd /s /q release\samples\config
 rd /s /q release\include
 
-del moai-sdk-installer.exe
+del moai-sdk-windows.exe
 del release\version.txt
