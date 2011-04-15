@@ -5,10 +5,11 @@
 ----------------------------------------------------------------
 
 print ( "hello, moai!" )
+MOAISim.openWindow ( "cathead", 320, 480 )
 
 MOAIDebugLines.setStyle ( MOAIDebugLines.PARTITION_CELLS, 2, 1, 1, 1 )
 MOAIDebugLines.setStyle ( MOAIDebugLines.PARTITION_PADDED_CELLS, 1, 0.5, 0.5, 0.5 )
-MOAIDebugLines.setStyle ( MOAIDebugLines.SPRITE_WORLD_BOUNDS, 2, 0.75, 0.75, 0.75 )
+MOAIDebugLines.setStyle ( MOAIDebugLines.PROP_WORLD_BOUNDS, 2, 0.75, 0.75, 0.75 )
 
 scene = MOAILayer2D.new ()
 scene:showDebugLines ()
@@ -42,4 +43,3 @@ sprite:moveScl ( -0.5, -0.5, 3 )
 --sprite:moveRot ( 360, 3 )
 
 MOAISim.pushRenderPass ( scene )
-MOAISim.openWindow ( "cathead", 320, 480 )
