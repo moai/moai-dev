@@ -20,7 +20,7 @@ class MOAISimpleShader :
 	public virtual MOAIColor {
 protected:
 	
-	USRef < MOAISimpleShader > mParent;
+	USWeak < MOAISimpleShader > mParent;
 	USBlendMode mBlendMode;
 	USColorVec mColor;
 	
