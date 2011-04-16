@@ -1,3 +1,4 @@
+Windows
 - Install Perl (ActivePerl is available for Windows)
 - Install Doxygen
 - Make sure Doxygen and Perl are on your path
