@@ -58,8 +58,10 @@ int MOAIBox2DBody::_addCircle ( lua_State* L ) {
 int MOAIBox2DBody::_addPolygon ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DBody, "U" )
 
+	float unitsToMeters = self->GetUnitsToMeters ();
+
 	b2Vec2 verts [ MOAIBox2DFixture::MAX_POLY_VERTS ];
-	int numVerts = MOAIBox2DFixture::LoadVerts ( state, 2, verts, MOAIBox2DFixture::MAX_POLY_VERTS );
+	int numVerts = MOAIBox2DFixture::LoadVerts ( state, 2, verts, MOAIBox2DFixture::MAX_POLY_VERTS, unitsToMeters );
 			
 	if ( numVerts ) {
 		
@@ -636,6 +638,7 @@ void MOAIBox2DBody::OnDepNodeUpdate () {
 	if ( this->mBody ) {
 		
 		b2Transform transform = this->mBody->GetTransform ();
+		float scale = 1.0f / this->GetUnitsToMeters ();
 		
 		float* m = this->mLocalToWorldMtx.m;
 		
@@ -645,8 +648,8 @@ void MOAIBox2DBody::OnDepNodeUpdate () {
 		m [ USAffine2D::C1_R0 ] = ( float )transform.R.col2.x;
 		m [ USAffine2D::C1_R1 ] = ( float )transform.R.col2.y;
 
-		m [ USAffine2D::C2_R0 ] = ( float )transform.position.x;
-		m [ USAffine2D::C2_R1 ] = ( float )transform.position.y;
+		m [ USAffine2D::C2_R0 ] = ( float )transform.position.x * scale;
+		m [ USAffine2D::C2_R1 ] = ( float )transform.position.y * scale;
 		
 		this->mWorldToLocalMtx.Inverse ( this->mLocalToWorldMtx );
 	}

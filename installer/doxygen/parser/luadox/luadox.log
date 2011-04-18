@@ -1,0 +1,172 @@
+============================================================
+GOLD Parser Builder
+Version 3.2.3
+============================================================
+
+
+========================================
+Log
+========================================
+
+Grammar        Details           The grammar contains a total of 2 formal terminals.
+Grammar        Success           The grammar was successfully analyzed
+LALR States    Details           The temporary First and Nullable tables were successfully created
+LALR States    Details           LALR computation took: 0 Hours 0 Minutes 0 Seconds
+LALR States    Success           The LALR Table was succesfully created
+LALR States    Details           Total actions: 5 Shifts, 14 Reduces, 4 Gotos, 1 Accepts.
+DFA States     Details           The terminal 'Tag' is variable length.
+DFA States     Details           The terminal 'Text' is variable length.
+DFA States     Details           The initial Nondeterministic Finite Automata has 15 states
+DFA States     Success           The DFA State Table was successfully created
+DFA States     Details           DFA computation took: 0 Hours 0 Minutes 0 Seconds
+System         Complete          The grammar was successfully analyzed and the CGT file was created.
+
+
+========================================
+Terminals
+========================================
+
+0       (EOF)
+1       (Error)
+2       (Whitespace)
+3       Tag
+4       Text
+
+
+========================================
+Nonterminals
+========================================
+
+5       <Block>
+6       <BlockSeq>
+7       <File>
+
+
+========================================
+Defined Sets
+========================================
+
+{Text}     {HT}{LF}{FF}{CR}{Space}!"#$%&'()*+,-./0123456789:;<=>?ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~{NBSP}
+
+
+========================================
+Rules
+========================================
+
+0       <File> ::= <BlockSeq>
+1       <File> ::= 
+2       <BlockSeq> ::= <BlockSeq> <Block>
+3       <BlockSeq> ::= <Block>
+4       <Block> ::= Tag Text
+5       <Block> ::= Text
+
+
+========================================
+DFA States
+========================================
+
+State 0
+        Goto 1       {VT}
+        Goto 2       @
+        Goto 4       {HT}{LF}{FF}{CR}{Space}!"#$%&'()*+,-./0123456789:;<=>?ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~{NBSP}
+
+
+State 1
+        Accept (Whitespace)
+
+
+State 2
+        Goto 3       0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz
+
+
+State 3
+        Goto 3       0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz
+        Accept Tag
+
+
+State 4
+        Goto 4       {HT}{LF}{FF}{CR}{Space}!"#$%&'()*+,-./0123456789:;<=>?ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~{NBSP}
+        Accept Text
+
+
+
+
+========================================
+LALR States
+========================================
+
+State 0
+        <S'> ::= . <File> (EOF)                    
+        <File> ::= . <BlockSeq>                    EOF
+        <File> ::= .                               EOF
+        <BlockSeq> ::= . <BlockSeq> <Block>        EOF  Tag  Text
+        <BlockSeq> ::= . <Block>                   EOF  Tag  Text
+        <Block> ::= . Tag Text                     EOF  Tag  Text
+        <Block> ::= . Text                         EOF  Tag  Text
+
+        Tag Shift 1
+        Text Shift 2
+        <Block> Goto 3
+        <BlockSeq> Goto 4
+        <File> Goto 5
+        (EOF) Reduce Rule 1
+
+
+State 1
+        <Block> ::= Tag . Text                     EOF  Tag  Text
+
+        Text Shift 6
+
+
+State 2
+        <Block> ::= Text .                         EOF  Tag  Text
+
+        (EOF) Reduce Rule 5
+        Tag Reduce Rule 5
+        Text Reduce Rule 5
+
+
+State 3
+        <BlockSeq> ::= <Block> .                   EOF  Tag  Text
+
+        (EOF) Reduce Rule 3
+        Tag Reduce Rule 3
+        Text Reduce Rule 3
+
+
+State 4
+        <File> ::= <BlockSeq> .                    EOF
+        <BlockSeq> ::= <BlockSeq> . <Block>        EOF  Tag  Text
+        <Block> ::= . Tag Text                     EOF  Tag  Text
+        <Block> ::= . Text                         EOF  Tag  Text
+
+        Tag Shift 1
+        Text Shift 2
+        <Block> Goto 7
+        (EOF) Reduce Rule 0
+
+
+State 5
+        <S'> ::= <File> . (EOF)                    
+
+        (EOF) Accept
+
+
+State 6
+        <Block> ::= Tag Text .                     EOF  Tag  Text
+
+        (EOF) Reduce Rule 4
+        Tag Reduce Rule 4
+        Text Reduce Rule 4
+
+
+State 7
+        <BlockSeq> ::= <BlockSeq> <Block> .        EOF  Tag  Text
+
+        (EOF) Reduce Rule 2
+        Tag Reduce Rule 2
+        Text Reduce Rule 2
+
+
+
+

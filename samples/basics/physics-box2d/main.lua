@@ -40,6 +40,7 @@ end
 -- set up the world and start its simulation
 world = MOAIBox2DWorld.new ()
 world:setGravity ( 0, -10 )
+world:setUnitsToMeters ( 2 )
 world:start ()
 layer:setBox2DWorld ( world )
 

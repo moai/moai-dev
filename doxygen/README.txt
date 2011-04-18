@@ -1,4 +1,0 @@
-- Install Perl (ActivePerl is available for Windows)
-- Install Doxygen
-- Make sure Doxygen and Perl are on your path
-- Run make_docs_lua.bat (make_docs_full.bat is not supported yet)

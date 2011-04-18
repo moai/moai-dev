@@ -302,7 +302,7 @@ void MOAIProp2D::DrawDebug () {
 	MOAIDebugLines& debugLines = MOAIDebugLines::Get ();
 	
 	if ( this->mDeck ) {
-		if ( debugLines.Bind ( MOAIDebugLines::SPRITE_MODEL_BOUNDS )) {
+		if ( debugLines.Bind ( MOAIDebugLines::PROP_MODEL_BOUNDS )) {
 			
 			debugLines.SetWorldMtx ( this->GetLocalToWorldMtx ());
 			debugLines.SetPenSpace ( MOAIDebugLines::MODEL_SPACE );
@@ -324,9 +324,9 @@ void MOAIProp2D::DrawDebug () {
 		}
 	}
 	
-	if ( debugLines.Bind ( MOAIDebugLines::SPRITE_WORLD_BOUNDS )) {
+	if ( debugLines.Bind ( MOAIDebugLines::PROP_WORLD_BOUNDS )) {
 		debugLines.SetPenSpace ( MOAIDebugLines::WORLD_SPACE );
-		debugLines.DrawRect ( this->GetBounds ( ));
+		debugLines.DrawRect ( this->GetBounds ());
 	}
 	
 	debugLines.SetPenColor ( 0x40ffffff );
@@ -337,6 +337,8 @@ void MOAIProp2D::DrawDebug () {
 	}
 	
 	if ( debugLines.IsVisible ( MOAIDebugLines::PARTITION_CELLS ) || debugLines.IsVisible ( MOAIDebugLines::PARTITION_PADDED_CELLS )) {
+		
+		debugLines.SetWorldMtx ();
 		
 		USRect cellRect;
 		USRect paddedRect;

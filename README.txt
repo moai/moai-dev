@@ -1,9 +1,8 @@
 Project structure:
 
 3rdparty - All of the 3rd party libraries we use.
-doxygen - Scripts to build Moai docs using doxygen, perl and a custom parser.
 eclipse - The android-ndk/eclipse reference projects.
-nsis - NSIS installer project (builds the windows binary installer).
+installer - The files and set up used to create the SDK installers
 samples - Lua and tools samples as well as some development test/experiment scripts.
 src - Moai source code and headers.
 test - Lua stress tests for Moai. These were written to crash Moai. We'll be fixing Moai to handle more user errors gracefully (instead of crash) as the project develops.
@@ -37,3 +36,4 @@ Developing for iPhone:
 Use xcode/iphone/moai-iphone.xcodeproj. This sample project includes the Lua and image found in samples/basics/anim-basic. The Moai runtime is implemented in an OpenGL view. Look at AppDelegate to see how it is used.
 
 As Moai is written in C++, we've generally preferred Objective-C++ for our work. To make dealing with Apple's reference counting easier, we use a smart pointer called RefPtr <>. If you're planning to extend MoaiView and don't mind using Objective-C++, try it out for yourself.
+

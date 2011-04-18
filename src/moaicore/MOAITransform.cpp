@@ -129,10 +129,10 @@ int	MOAITransform::_getScl ( lua_State* L ) {
 	@text	Transform a point in model space to world space.
 	
 	@in		MOAITransform self
-	@in		x
-	@in		y
-	@out	x
-	@out	y
+	@in		number x
+	@in		number y
+	@out	number x
+	@out	number y
 */
 int MOAITransform::_modelToWorld ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITransform, "UNN" )
@@ -533,10 +533,10 @@ int MOAITransform::_setScl ( lua_State* L ) {
 	@text	Transform a point in world space to model space.
 	
 	@in		MOAITransform self
-	@in		x
-	@in		y
-	@out	x
-	@out	y
+	@in		number x
+	@in		number y
+	@out	number x
+	@out	number y
 */
 int MOAITransform::_worldToModel ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITransform, "UNN" )

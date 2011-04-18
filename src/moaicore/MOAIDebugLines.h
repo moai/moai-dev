@@ -27,13 +27,10 @@ private:
 /**	@name	MOAIDebugLines
 	@text	Singleton for managing rendering of world space debug vectors.
 
-	@const	COLLISION_PRIMS
-	@const	OVERLAPS
 	@const	PARTITION_CELLS
 	@const	PARTITION_PADDED_CELLS
-	@const	SPRITE_MODEL_BOUNDS
-	@const	SPRITE_WORLD_BOUNDS
-	@const	SURFACES
+	@const	PROP_MODEL_BOUNDS
+	@const	PROP_WORLD_BOUNDS
 	@const	TEXT_BOX
 */
 class MOAIDebugLines :
@@ -42,13 +39,10 @@ class MOAIDebugLines :
 public:
 
 	enum {
-		COLLISION_PRIMS,
-		OVERLAPS,
 		PARTITION_CELLS,
 		PARTITION_PADDED_CELLS,
-		SPRITE_MODEL_BOUNDS,
-		SPRITE_WORLD_BOUNDS,
-		SURFACES,
+		PROP_MODEL_BOUNDS,
+		PROP_WORLD_BOUNDS,
 		TEXT_BOX,
 		TOTAL_STYLES,
 	};
