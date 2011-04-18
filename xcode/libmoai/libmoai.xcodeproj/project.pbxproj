@@ -1678,6 +1678,31 @@
 		0324E9CE13564BC9000ADC60 /* USXmlReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E69213564BC8000ADC60 /* USXmlReader.cpp */; };
 		0324E9CF13564BC9000ADC60 /* USXmlReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E69313564BC8000ADC60 /* USXmlReader.h */; };
 		0379C7411333ED7000E89DDC /* libmoai-iphone-3rdparty.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0379C5961333ECD800E89DDC /* libmoai-iphone-3rdparty.a */; };
+		CD1D0BA413599FD200802A3C /* AKU-iphone.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1D0BA213599FD200802A3C /* AKU-iphone.h */; };
+		CD1D0BA513599FD200802A3C /* AKU-iphone.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD1D0BA313599FD200802A3C /* AKU-iphone.mm */; };
+		CD7F4DFB135BBD8600E83096 /* NSDate+MOAILib.h in Headers */ = {isa = PBXBuildFile; fileRef = CD7F4DF9135BBD8600E83096 /* NSDate+MOAILib.h */; };
+		CD7F4DFC135BBD8600E83096 /* NSDate+MOAILib.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD7F4DFA135BBD8600E83096 /* NSDate+MOAILib.mm */; };
+		CD80F620135BA048006B0683 /* moai-iphone.h in Headers */ = {isa = PBXBuildFile; fileRef = CD80F60F135BA048006B0683 /* moai-iphone.h */; };
+		CD80F621135BA048006B0683 /* MOAIApp.h in Headers */ = {isa = PBXBuildFile; fileRef = CD80F610135BA048006B0683 /* MOAIApp.h */; };
+		CD80F622135BA048006B0683 /* MOAIApp.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD80F611135BA048006B0683 /* MOAIApp.mm */; };
+		CD80F623135BA048006B0683 /* NSArray+MOAILib.h in Headers */ = {isa = PBXBuildFile; fileRef = CD80F612135BA048006B0683 /* NSArray+MOAILib.h */; };
+		CD80F624135BA048006B0683 /* NSArray+MOAILib.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD80F613135BA048006B0683 /* NSArray+MOAILib.mm */; };
+		CD80F627135BA048006B0683 /* NSDictionary+MOAILib.h in Headers */ = {isa = PBXBuildFile; fileRef = CD80F616135BA048006B0683 /* NSDictionary+MOAILib.h */; };
+		CD80F628135BA048006B0683 /* NSDictionary+MOAILib.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD80F617135BA048006B0683 /* NSDictionary+MOAILib.mm */; };
+		CD80F62D135BA048006B0683 /* NSObject+MOAILib.h in Headers */ = {isa = PBXBuildFile; fileRef = CD80F61C135BA048006B0683 /* NSObject+MOAILib.h */; };
+		CD80F62E135BA048006B0683 /* NSObject+MOAILib.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD80F61D135BA048006B0683 /* NSObject+MOAILib.mm */; };
+		CD80F62F135BA048006B0683 /* NSString+MOAILib.h in Headers */ = {isa = PBXBuildFile; fileRef = CD80F61E135BA048006B0683 /* NSString+MOAILib.h */; };
+		CD80F630135BA048006B0683 /* NSString+MOAILib.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD80F61F135BA048006B0683 /* NSString+MOAILib.mm */; };
+		CD80F633135BA79B006B0683 /* NSNumber+MOAILib.h in Headers */ = {isa = PBXBuildFile; fileRef = CD80F631135BA79A006B0683 /* NSNumber+MOAILib.h */; };
+		CD80F634135BA79B006B0683 /* NSNumber+MOAILib.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD80F632135BA79B006B0683 /* NSNumber+MOAILib.mm */; };
+		CD80F639135BAB67006B0683 /* NSData+MOAILib.h in Headers */ = {isa = PBXBuildFile; fileRef = CD80F635135BAB63006B0683 /* NSData+MOAILib.h */; };
+		CD80F63A135BAB67006B0683 /* NSData+MOAILib.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD80F636135BAB63006B0683 /* NSData+MOAILib.mm */; };
+		CD80F63B135BAB67006B0683 /* NSError+MOAILib.h in Headers */ = {isa = PBXBuildFile; fileRef = CD80F637135BAB64006B0683 /* NSError+MOAILib.h */; };
+		CD80F63C135BAB67006B0683 /* NSError+MOAILib.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD80F638135BAB65006B0683 /* NSError+MOAILib.mm */; };
+		CD80F63F135BBCFF006B0683 /* ISO8601DateFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = CD80F63D135BBCFF006B0683 /* ISO8601DateFormatter.h */; };
+		CD80F640135BBCFF006B0683 /* ISO8601DateFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = CD80F63D135BBCFF006B0683 /* ISO8601DateFormatter.h */; };
+		CD80F641135BBCFF006B0683 /* ISO8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = CD80F63E135BBCFF006B0683 /* ISO8601DateFormatter.m */; };
+		CD80F642135BBCFF006B0683 /* ISO8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = CD80F63E135BBCFF006B0683 /* ISO8601DateFormatter.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -2537,6 +2562,8 @@
 		0324E69313564BC8000ADC60 /* USXmlReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USXmlReader.h; sourceTree = "<group>"; };
 		0379C5961333ECD800E89DDC /* libmoai-iphone-3rdparty.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-iphone-3rdparty.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		03C2F6F4104DE130009A2D5D /* libmoai-iphone.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-iphone.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD1D0BA213599FD200802A3C /* AKU-iphone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AKU-iphone.h"; sourceTree = "<group>"; };
+		CD1D0BA313599FD200802A3C /* AKU-iphone.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "AKU-iphone.mm"; sourceTree = "<group>"; };
 		CD2FDEBB13542F1400B814DF /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/System/Library/Frameworks/AddressBook.framework; sourceTree = DEVELOPER_DIR; };
 		CD2FDEBC13542F1400B814DF /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/System/Library/Frameworks/AddressBookUI.framework; sourceTree = DEVELOPER_DIR; };
 		CD2FDEBD13542F1400B814DF /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/System/Library/Frameworks/AudioToolbox.framework; sourceTree = DEVELOPER_DIR; };
@@ -2555,6 +2582,27 @@
 		CD2FDECA13542F1400B814DF /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		CD2FDEDB13542F3600B814DF /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/usr/lib/libiconv.dylib; sourceTree = DEVELOPER_DIR; };
 		CD2FDEDC13542F3600B814DF /* libz.1.2.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.3.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/usr/lib/libz.1.2.3.dylib; sourceTree = DEVELOPER_DIR; };
+		CD7F4DF9135BBD8600E83096 /* NSDate+MOAILib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDate+MOAILib.h"; path = "moai-iphone/NSDate+MOAILib.h"; sourceTree = "<group>"; };
+		CD7F4DFA135BBD8600E83096 /* NSDate+MOAILib.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "NSDate+MOAILib.mm"; path = "moai-iphone/NSDate+MOAILib.mm"; sourceTree = "<group>"; };
+		CD80F60F135BA048006B0683 /* moai-iphone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "moai-iphone.h"; path = "moai-iphone/moai-iphone.h"; sourceTree = "<group>"; };
+		CD80F610135BA048006B0683 /* MOAIApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIApp.h; path = "moai-iphone/MOAIApp.h"; sourceTree = "<group>"; };
+		CD80F611135BA048006B0683 /* MOAIApp.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIApp.mm; path = "moai-iphone/MOAIApp.mm"; sourceTree = "<group>"; };
+		CD80F612135BA048006B0683 /* NSArray+MOAILib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSArray+MOAILib.h"; path = "moai-iphone/NSArray+MOAILib.h"; sourceTree = "<group>"; };
+		CD80F613135BA048006B0683 /* NSArray+MOAILib.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "NSArray+MOAILib.mm"; path = "moai-iphone/NSArray+MOAILib.mm"; sourceTree = "<group>"; };
+		CD80F616135BA048006B0683 /* NSDictionary+MOAILib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDictionary+MOAILib.h"; path = "moai-iphone/NSDictionary+MOAILib.h"; sourceTree = "<group>"; };
+		CD80F617135BA048006B0683 /* NSDictionary+MOAILib.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "NSDictionary+MOAILib.mm"; path = "moai-iphone/NSDictionary+MOAILib.mm"; sourceTree = "<group>"; };
+		CD80F61C135BA048006B0683 /* NSObject+MOAILib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSObject+MOAILib.h"; path = "moai-iphone/NSObject+MOAILib.h"; sourceTree = "<group>"; };
+		CD80F61D135BA048006B0683 /* NSObject+MOAILib.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "NSObject+MOAILib.mm"; path = "moai-iphone/NSObject+MOAILib.mm"; sourceTree = "<group>"; };
+		CD80F61E135BA048006B0683 /* NSString+MOAILib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+MOAILib.h"; path = "moai-iphone/NSString+MOAILib.h"; sourceTree = "<group>"; };
+		CD80F61F135BA048006B0683 /* NSString+MOAILib.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "NSString+MOAILib.mm"; path = "moai-iphone/NSString+MOAILib.mm"; sourceTree = "<group>"; };
+		CD80F631135BA79A006B0683 /* NSNumber+MOAILib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSNumber+MOAILib.h"; path = "moai-iphone/NSNumber+MOAILib.h"; sourceTree = "<group>"; };
+		CD80F632135BA79B006B0683 /* NSNumber+MOAILib.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "NSNumber+MOAILib.mm"; path = "moai-iphone/NSNumber+MOAILib.mm"; sourceTree = "<group>"; };
+		CD80F635135BAB63006B0683 /* NSData+MOAILib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+MOAILib.h"; path = "moai-iphone/NSData+MOAILib.h"; sourceTree = "<group>"; };
+		CD80F636135BAB63006B0683 /* NSData+MOAILib.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "NSData+MOAILib.mm"; path = "moai-iphone/NSData+MOAILib.mm"; sourceTree = "<group>"; };
+		CD80F637135BAB64006B0683 /* NSError+MOAILib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSError+MOAILib.h"; path = "moai-iphone/NSError+MOAILib.h"; sourceTree = "<group>"; };
+		CD80F638135BAB65006B0683 /* NSError+MOAILib.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "NSError+MOAILib.mm"; path = "moai-iphone/NSError+MOAILib.mm"; sourceTree = "<group>"; };
+		CD80F63D135BBCFF006B0683 /* ISO8601DateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ISO8601DateFormatter.h; path = ../../3rdparty/contrib/ISO8601DateFormatter.h; sourceTree = "<group>"; };
+		CD80F63E135BBCFF006B0683 /* ISO8601DateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ISO8601DateFormatter.m; path = ../../3rdparty/contrib/ISO8601DateFormatter.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2808,6 +2856,8 @@
 		03240A7613564CAF000ADC60 /* contrib */ = {
 			isa = PBXGroup;
 			children = (
+				CD80F63D135BBCFF006B0683 /* ISO8601DateFormatter.h */,
+				CD80F63E135BBCFF006B0683 /* ISO8601DateFormatter.m */,
 				03240A7713564CAF000ADC60 /* utf8.c */,
 				03240A7813564CAF000ADC60 /* utf8.h */,
 			);
@@ -3202,6 +3252,7 @@
 			children = (
 				0324E4F213564BC7000ADC60 /* aku */,
 				0324E4F913564BC7000ADC60 /* moaicore */,
+				CD524476135982480086DA15 /* moai-iphone */,
 				0324E5AA13564BC8000ADC60 /* uslscore */,
 				0324E5FF13564BC8000ADC60 /* uslsext */,
 			);
@@ -3212,6 +3263,8 @@
 		0324E4F213564BC7000ADC60 /* aku */ = {
 			isa = PBXGroup;
 			children = (
+				CD1D0BA213599FD200802A3C /* AKU-iphone.h */,
+				CD1D0BA313599FD200802A3C /* AKU-iphone.mm */,
 				0324E4F313564BC7000ADC60 /* AKU.cpp */,
 				0324E4F413564BC7000ADC60 /* AKU.h */,
 				0324E4F713564BC7000ADC60 /* pch.cpp */,
@@ -3698,6 +3751,32 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		CD524476135982480086DA15 /* moai-iphone */ = {
+			isa = PBXGroup;
+			children = (
+				CD80F60F135BA048006B0683 /* moai-iphone.h */,
+				CD80F610135BA048006B0683 /* MOAIApp.h */,
+				CD80F611135BA048006B0683 /* MOAIApp.mm */,
+				CD80F612135BA048006B0683 /* NSArray+MOAILib.h */,
+				CD80F613135BA048006B0683 /* NSArray+MOAILib.mm */,
+				CD80F635135BAB63006B0683 /* NSData+MOAILib.h */,
+				CD80F636135BAB63006B0683 /* NSData+MOAILib.mm */,
+				CD7F4DF9135BBD8600E83096 /* NSDate+MOAILib.h */,
+				CD7F4DFA135BBD8600E83096 /* NSDate+MOAILib.mm */,
+				CD80F616135BA048006B0683 /* NSDictionary+MOAILib.h */,
+				CD80F617135BA048006B0683 /* NSDictionary+MOAILib.mm */,
+				CD80F637135BAB64006B0683 /* NSError+MOAILib.h */,
+				CD80F638135BAB65006B0683 /* NSError+MOAILib.mm */,
+				CD80F631135BA79A006B0683 /* NSNumber+MOAILib.h */,
+				CD80F632135BA79B006B0683 /* NSNumber+MOAILib.mm */,
+				CD80F61C135BA048006B0683 /* NSObject+MOAILib.h */,
+				CD80F61D135BA048006B0683 /* NSObject+MOAILib.mm */,
+				CD80F61E135BA048006B0683 /* NSString+MOAILib.h */,
+				CD80F61F135BA048006B0683 /* NSString+MOAILib.mm */,
+			);
+			name = "moai-iphone";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -3897,6 +3976,7 @@
 				03240D4B13564CB0000ADC60 /* sqlite3.h in Headers */,
 				03240D4C13564CB0000ADC60 /* sqlite3ext.h in Headers */,
 				03240D4E13564CB0000ADC60 /* tinyxml.h in Headers */,
+				CD80F640135BBCFF006B0683 /* ISO8601DateFormatter.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4326,6 +4406,7 @@
 				03240EF113564CB0000ADC60 /* sqlite3.h in Headers */,
 				03240EF213564CB0000ADC60 /* sqlite3ext.h in Headers */,
 				03240EF413564CB0000ADC60 /* tinyxml.h in Headers */,
+				CD80F63F135BBCFF006B0683 /* ISO8601DateFormatter.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4556,6 +4637,17 @@
 				0324E82D13564BC8000ADC60 /* USViewport.h in Headers */,
 				0324E82F13564BC8000ADC60 /* USViewQuad.h in Headers */,
 				0324E83113564BC8000ADC60 /* USXmlReader.h in Headers */,
+				CD1D0BA413599FD200802A3C /* AKU-iphone.h in Headers */,
+				CD80F620135BA048006B0683 /* moai-iphone.h in Headers */,
+				CD80F621135BA048006B0683 /* MOAIApp.h in Headers */,
+				CD80F623135BA048006B0683 /* NSArray+MOAILib.h in Headers */,
+				CD80F627135BA048006B0683 /* NSDictionary+MOAILib.h in Headers */,
+				CD80F62D135BA048006B0683 /* NSObject+MOAILib.h in Headers */,
+				CD80F62F135BA048006B0683 /* NSString+MOAILib.h in Headers */,
+				CD80F633135BA79B006B0683 /* NSNumber+MOAILib.h in Headers */,
+				CD80F639135BAB67006B0683 /* NSData+MOAILib.h in Headers */,
+				CD80F63B135BAB67006B0683 /* NSError+MOAILib.h in Headers */,
+				CD7F4DFB135BBD8600E83096 /* NSDate+MOAILib.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4907,6 +4999,7 @@
 				03240D4D13564CB0000ADC60 /* tinyxml.cpp in Sources */,
 				03240D4F13564CB0000ADC60 /* tinyxmlerror.cpp in Sources */,
 				03240D5013564CB0000ADC60 /* tinyxmlparser.cpp in Sources */,
+				CD80F642135BBCFF006B0683 /* ISO8601DateFormatter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5340,6 +5433,7 @@
 				03240EF313564CB0000ADC60 /* tinyxml.cpp in Sources */,
 				03240EF513564CB0000ADC60 /* tinyxmlerror.cpp in Sources */,
 				03240EF613564CB0000ADC60 /* tinyxmlparser.cpp in Sources */,
+				CD80F641135BBCFF006B0683 /* ISO8601DateFormatter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5536,6 +5630,16 @@
 				0324E82C13564BC8000ADC60 /* USViewport.cpp in Sources */,
 				0324E82E13564BC8000ADC60 /* USViewQuad.cpp in Sources */,
 				0324E83013564BC8000ADC60 /* USXmlReader.cpp in Sources */,
+				CD1D0BA513599FD200802A3C /* AKU-iphone.mm in Sources */,
+				CD80F622135BA048006B0683 /* MOAIApp.mm in Sources */,
+				CD80F624135BA048006B0683 /* NSArray+MOAILib.mm in Sources */,
+				CD80F628135BA048006B0683 /* NSDictionary+MOAILib.mm in Sources */,
+				CD80F62E135BA048006B0683 /* NSObject+MOAILib.mm in Sources */,
+				CD80F630135BA048006B0683 /* NSString+MOAILib.mm in Sources */,
+				CD80F634135BA79B006B0683 /* NSNumber+MOAILib.mm in Sources */,
+				CD80F63A135BAB67006B0683 /* NSData+MOAILib.mm in Sources */,
+				CD80F63C135BAB67006B0683 /* NSError+MOAILib.mm in Sources */,
+				CD7F4DFC135BBD8600E83096 /* NSDate+MOAILib.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

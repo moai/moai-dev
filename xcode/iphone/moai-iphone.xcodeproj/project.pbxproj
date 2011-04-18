@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		0324CC001356407A000ADC60 /* libmoai-iphone.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0324CBFD1356404F000ADC60 /* libmoai-iphone.a */; };
-		03836508135520FC002C10D8 /* cathead.png in Resources */ = {isa = PBXBuildFile; fileRef = 03B4CCA613550954001E768D /* cathead.png */; };
-		03836509135520FC002C10D8 /* main.lua in Resources */ = {isa = PBXBuildFile; fileRef = 03B4CCA713550954001E768D /* main.lua */; };
 		03B4CCAD13550985001E768D /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD2FDEE013542FEA00B814DF /* AppDelegate.mm */; };
 		03B4CCAE13550985001E768D /* LocationObserver.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD2FDEE513542FEA00B814DF /* LocationObserver.mm */; };
 		03B4CCAF13550985001E768D /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD2FDEE613542FEA00B814DF /* main.mm */; };
@@ -35,6 +33,9 @@
 		03B4CCC413550985001E768D /* libz.1.2.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CD2FDEDC13542F3600B814DF /* libz.1.2.3.dylib */; };
 		03B4CCC813550985001E768D /* iPhoneIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = CD2FDEE313542FEA00B814DF /* iPhoneIcon.png */; };
 		03B4CCC913550985001E768D /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD2FDEE713542FEA00B814DF /* MainWindow.xib */; };
+		CD5CDEF8135BE9EF00FDF38C /* cathead.png in Resources */ = {isa = PBXBuildFile; fileRef = CD5CDEF5135BE9EE00FDF38C /* cathead.png */; };
+		CD5CDEF9135BE9EF00FDF38C /* iphone.lua in Resources */ = {isa = PBXBuildFile; fileRef = CD5CDEF6135BE9EE00FDF38C /* iphone.lua */; };
+		CD5CDEFA135BE9EF00FDF38C /* main.lua in Resources */ = {isa = PBXBuildFile; fileRef = CD5CDEF7135BE9EE00FDF38C /* main.lua */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,8 +78,6 @@
 
 /* Begin PBXFileReference section */
 		0324CBF21356404F000ADC60 /* libmoai.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = libmoai.xcodeproj; path = ../libmoai/libmoai.xcodeproj; sourceTree = SOURCE_ROOT; };
-		03B4CCA613550954001E768D /* cathead.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cathead.png; path = "../../samples/basics/anim-basic/cathead.png"; sourceTree = SOURCE_ROOT; };
-		03B4CCA713550954001E768D /* main.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = main.lua; path = "../../samples/basics/anim-basic/main.lua"; sourceTree = SOURCE_ROOT; };
 		03B4CCCE13550985001E768D /* sample-anim-basic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "sample-anim-basic.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD2FDEBB13542F1400B814DF /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/System/Library/Frameworks/AddressBook.framework; sourceTree = DEVELOPER_DIR; };
 		CD2FDEBC13542F1400B814DF /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/System/Library/Frameworks/AddressBookUI.framework; sourceTree = DEVELOPER_DIR; };
@@ -113,6 +112,9 @@
 		CD2FDEEB13542FEA00B814DF /* OpenGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGLView.h; sourceTree = "<group>"; };
 		CD2FDEEC13542FEA00B814DF /* OpenGLView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = OpenGLView.mm; sourceTree = "<group>"; };
 		CD2FDEED13542FEA00B814DF /* RefPtr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RefPtr.h; sourceTree = "<group>"; };
+		CD5CDEF5135BE9EE00FDF38C /* cathead.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cathead.png; path = "../../samples/iphone/app-push/cathead.png"; sourceTree = "<group>"; };
+		CD5CDEF6135BE9EE00FDF38C /* iphone.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = iphone.lua; path = "../../samples/iphone/app-push/iphone.lua"; sourceTree = "<group>"; };
+		CD5CDEF7135BE9EE00FDF38C /* main.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = main.lua; path = "../../samples/iphone/app-push/main.lua"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -167,18 +169,19 @@
 		03B4CC9E1355087E001E768D /* samples */ = {
 			isa = PBXGroup;
 			children = (
-				03B4CC9F135508BF001E768D /* anim-basic */,
+				03B4CC9F135508BF001E768D /* app-push */,
 			);
 			name = samples;
 			sourceTree = "<group>";
 		};
-		03B4CC9F135508BF001E768D /* anim-basic */ = {
+		03B4CC9F135508BF001E768D /* app-push */ = {
 			isa = PBXGroup;
 			children = (
-				03B4CCA613550954001E768D /* cathead.png */,
-				03B4CCA713550954001E768D /* main.lua */,
+				CD5CDEF5135BE9EE00FDF38C /* cathead.png */,
+				CD5CDEF6135BE9EE00FDF38C /* iphone.lua */,
+				CD5CDEF7135BE9EE00FDF38C /* main.lua */,
 			);
-			name = "anim-basic";
+			name = "app-push";
 			sourceTree = "<group>";
 		};
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
@@ -343,8 +346,9 @@
 			files = (
 				03B4CCC813550985001E768D /* iPhoneIcon.png in Resources */,
 				03B4CCC913550985001E768D /* MainWindow.xib in Resources */,
-				03836508135520FC002C10D8 /* cathead.png in Resources */,
-				03836509135520FC002C10D8 /* main.lua in Resources */,
+				CD5CDEF8135BE9EF00FDF38C /* cathead.png in Resources */,
+				CD5CDEF9135BE9EF00FDF38C /* iphone.lua in Resources */,
+				CD5CDEFA135BE9EF00FDF38C /* main.lua in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -433,6 +437,7 @@
 				);
 				INFOPLIST_FILE = moaiview/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				ONLY_ACTIVE_ARCH = NO;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -447,14 +452,26 @@
 		03B4CCCC13550985001E768D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				WARNING_CFLAGS = "";
 			};
 			name = Debug;
 		};
 		03B4CCCD13550985001E768D /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				WARNING_CFLAGS = "";
 			};
 			name = Distribution;
 		};
@@ -522,11 +539,12 @@
 				);
 				INFOPLIST_FILE = moaiview/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				ONLY_ACTIVE_ARCH = YES;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = NO;
-				VALIDATE_PRODUCT = YES;
+				VALIDATE_PRODUCT = NO;
 				VALID_ARCHS = "i386 armv6 armv7";
 				WARNING_CFLAGS = "-Wall";
 				WRAPPER_EXTENSION = app;

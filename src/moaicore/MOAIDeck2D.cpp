@@ -20,7 +20,7 @@
 //----------------------------------------------------------------//
 void MOAIDeck2D::Draw ( const USAffine2D& transform, u32 idx ) {
 	
-	if ( idx & USTile::HIDDEN ) return;
+	if ( !idx || ( idx & USTile::HIDDEN )) return;
 	
 	USDrawBuffer& drawbuffer = USDrawBuffer::Get ();
 	drawbuffer.SetVtxTransform ( transform );
@@ -53,7 +53,7 @@ void MOAIDeck2D::Draw ( const USAffine2D& transform, MOAIGrid& grid, USTileCoord
 		for ( int x = c0.mX; x <= c1.mX; ++x ) {
 			
 			u32 idx = grid.GetTile ( x, y );
-			if ( idx & USTile::HIDDEN ) continue;
+			if ( !idx || ( idx & USTile::HIDDEN )) continue;
 			
 			USVec2D loc = grid.GetTilePoint ( x, y, USGridSpace::TILE_CENTER );
 			
