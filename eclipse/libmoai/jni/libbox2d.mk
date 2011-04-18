@@ -23,6 +23,7 @@ $(SRC_PATH)/3rdparty/box2d-2.1.2/Box2D/Box2D/Dynamics/Joints \
 # included files
 #----------------------------------------------------------------#
 LOCAL_SRC_FILES := $(SRC_PATH)/3rdparty/box2d-2.1.2/Box2D/Box2D/Collision/Shapes/b2CircleShape.cpp \
+$(SRC_PATH)/3rdparty/box2d-2.1.2/Box2D/Box2D/Collision/Shapes/intentional-error.cpp \
 $(SRC_PATH)/3rdparty/box2d-2.1.2/Box2D/Box2D/Collision/Shapes/b2PolygonShape.cpp \
 $(SRC_PATH)/3rdparty/box2d-2.1.2/Box2D/Box2D/Collision/b2BroadPhase.cpp \
 $(SRC_PATH)/3rdparty/box2d-2.1.2/Box2D/Box2D/Collision/b2CollideCircle.cpp \
