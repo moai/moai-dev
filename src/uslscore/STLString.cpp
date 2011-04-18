@@ -57,6 +57,8 @@ void STLString::hex_encode ( const void* buffer, u32 len ) {
 	( *this ) = "";
 	if ( !len ) return;
 
+	this->reserve (( len * 2 ) + 1 );
+
 	u8* digits = ( u8* )buffer;
 
 	for ( u32 i = 0; i < len; ++i ) {
