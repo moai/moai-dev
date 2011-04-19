@@ -78,7 +78,7 @@
 
 /* Begin PBXFileReference section */
 		0324CBF21356404F000ADC60 /* libmoai.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = libmoai.xcodeproj; path = ../libmoai/libmoai.xcodeproj; sourceTree = SOURCE_ROOT; };
-		03B4CCCE13550985001E768D /* sample-anim-basic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "sample-anim-basic.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		03B4CCCE13550985001E768D /* moai-iphone-sample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "moai-iphone-sample.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD2FDEBB13542F1400B814DF /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/System/Library/Frameworks/AddressBook.framework; sourceTree = DEVELOPER_DIR; };
 		CD2FDEBC13542F1400B814DF /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/System/Library/Frameworks/AddressBookUI.framework; sourceTree = DEVELOPER_DIR; };
 		CD2FDEBD13542F1400B814DF /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/System/Library/Frameworks/AudioToolbox.framework; sourceTree = DEVELOPER_DIR; };
@@ -161,7 +161,7 @@
 		038DB6D7101FAA6700ECA0BF /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				03B4CCCE13550985001E768D /* sample-anim-basic.app */,
+				03B4CCCE13550985001E768D /* moai-iphone-sample.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -169,19 +169,19 @@
 		03B4CC9E1355087E001E768D /* samples */ = {
 			isa = PBXGroup;
 			children = (
-				03B4CC9F135508BF001E768D /* app-push */,
+				03B4CC9F135508BF001E768D /* lua */,
 			);
 			name = samples;
 			sourceTree = "<group>";
 		};
-		03B4CC9F135508BF001E768D /* app-push */ = {
+		03B4CC9F135508BF001E768D /* lua */ = {
 			isa = PBXGroup;
 			children = (
 				CD5CDEF5135BE9EE00FDF38C /* cathead.png */,
 				CD5CDEF6135BE9EE00FDF38C /* iphone.lua */,
 				CD5CDEF7135BE9EE00FDF38C /* main.lua */,
 			);
-			name = "app-push";
+			name = lua;
 			sourceTree = "<group>";
 		};
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
@@ -247,9 +247,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		03B4CCAB13550985001E768D /* sample-anim-basic */ = {
+		03B4CCAB13550985001E768D /* moai-iphone-sample */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 03B4CCCB13550985001E768D /* Build configuration list for PBXNativeTarget "sample-anim-basic" */;
+			buildConfigurationList = 03B4CCCB13550985001E768D /* Build configuration list for PBXNativeTarget "moai-iphone-sample" */;
 			buildPhases = (
 				03B4CCAC13550985001E768D /* Sources */,
 				03B4CCB213550985001E768D /* Frameworks */,
@@ -260,9 +260,9 @@
 			dependencies = (
 				0324CBFF13564060000ADC60 /* PBXTargetDependency */,
 			);
-			name = "sample-anim-basic";
+			name = "moai-iphone-sample";
 			productName = moaiview;
-			productReference = 03B4CCCE13550985001E768D /* sample-anim-basic.app */;
+			productReference = 03B4CCCE13550985001E768D /* moai-iphone-sample.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -303,7 +303,7 @@
 			);
 			projectRoot = "";
 			targets = (
-				03B4CCAB13550985001E768D /* sample-anim-basic */,
+				03B4CCAB13550985001E768D /* moai-iphone-sample */,
 			);
 		};
 /* End PBXProject section */
@@ -556,7 +556,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		03B4CCCB13550985001E768D /* Build configuration list for PBXNativeTarget "sample-anim-basic" */ = {
+		03B4CCCB13550985001E768D /* Build configuration list for PBXNativeTarget "moai-iphone-sample" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				03B4CCCC13550985001E768D /* Debug */,

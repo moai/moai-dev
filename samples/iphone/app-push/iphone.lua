@@ -18,12 +18,6 @@ function onRegister ( token )
 	print ( token )
 end
 
-function onLocalNotification ( userInfoStr )
-
-	print ( 'onLocalNotification' )
-	print ( userInfoStr )
-end
-
 function onRemoteNotification ( userInfoTable )
 
 	print ( 'onRemoteNotification' )
@@ -32,7 +26,6 @@ end
 
 MOAIApp.setListener ( MOAIApp.ERROR, onError )
 MOAIApp.setListener ( MOAIApp.DID_REGISTER, onRegister )
-MOAIApp.setListener ( MOAIApp.LOCAL_NOTIFICATION, onLocalNotification )
 MOAIApp.setListener ( MOAIApp.REMOTE_NOTIFICATION, onRemoteNotification )
 
 MOAIApp.setAppIconBadgeNumber ( 0 )

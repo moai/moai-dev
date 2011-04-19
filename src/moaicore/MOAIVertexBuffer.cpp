@@ -125,7 +125,7 @@ int MOAIVertexBuffer::_setFormat ( lua_State* L ) {
 int MOAIVertexBuffer::_setPenWidth ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVertexBuffer, "UN" )
 	
-	self->mPenWidth = state.GetValue < float >( 2, 1.0 );
+	self->mPenWidth = state.GetValue < float >( 2, 1.0f );
 
 	return 0;
 }
@@ -142,7 +142,7 @@ int MOAIVertexBuffer::_setPenWidth ( lua_State* L ) {
 int MOAIVertexBuffer::_setPointSize ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVertexBuffer, "UN" )
 	
-	self->mPointSize = state.GetValue < float >( 2, 1.0 );
+	self->mPointSize = state.GetValue < float >( 2, 1.0f );
 
 	return 0;
 }
