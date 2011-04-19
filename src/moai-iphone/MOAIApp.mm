@@ -15,6 +15,12 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+/**	@name	getAppIconBadgeNumber
+	@text	Return the value of the counter shown on the app icon badge.
+	
+	@in		MOAIApp self
+	@out	number badgeNumber
+*/
 int MOAIApp::_getAppIconBadgeNumber ( lua_State* L ) {
 	USLuaState state ( L );
 	
@@ -25,6 +31,15 @@ int MOAIApp::_getAppIconBadgeNumber ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	registerForRemoteNotifications
+	@text	Return the app for remote notifications.
+	
+	@in		MOAIApp self
+	@opt	number notificationTypes	Combination of MOAIApp.REMOTE_NOTIFICATION_BADGE,
+										MOAIApp.REMOTE_NOTIFICATION_SOUND, MOAIApp.REMOTE_NOTIFICATION_ALERT.
+										Default value is MOAIApp.REMOTE_NOTIFICATION_NONE.
+	@out	nil
+*/
 int MOAIApp::_registerForRemoteNotifications ( lua_State* L ) {
 	USLuaState state ( L );
 	
@@ -37,6 +52,7 @@ int MOAIApp::_registerForRemoteNotifications ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: test me
 int MOAIApp::_scheduleLocalNotification ( lua_State* L ) {
 	USLuaState state ( L );
 	
@@ -76,6 +92,13 @@ int MOAIApp::_scheduleLocalNotification ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	setAppIconBadgeNumber
+	@text	Set (or clears) the value of the counter shown on the app icon badge.
+	
+	@in		MOAIApp self
+	@opt	number badgeNumber		Default value is 0.
+	@out	nil
+*/
 int MOAIApp::_setAppIconBadgeNumber ( lua_State* L ) {
 	USLuaState state ( L );
 	
@@ -86,6 +109,14 @@ int MOAIApp::_setAppIconBadgeNumber ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	setListener
+	@text	Set a callback to handle events of a type.
+	
+	@in		MOAIApp self
+	@in		number event		One of MOAIApp.ERROR, MOAIApp.DID_REGISTER or MOAIApp.REMOTE_NOTIFICATION.
+	@opt	function handler
+	@out	nil
+*/
 int MOAIApp::_setListener ( lua_State* L ) {
 	USLuaState state ( L );
 	
@@ -160,8 +191,6 @@ void MOAIApp::DidRegisterForRemoteNotificationsWithDeviceToken	( NSData* deviceT
 		
 		STLString tokenStr;
 		tokenStr.hex_encode ([ deviceToken bytes ], [ deviceToken length ]);
-		
-		printf ( "Token String: %s\n", tokenStr.str ());
 			
 		USLuaStateHandle state = callback.GetSelf ();
 		lua_pushstring ( state, tokenStr );
@@ -193,13 +222,13 @@ void MOAIApp::RegisterLuaClass ( USLuaState& state ) {
 	
 	state.SetField ( -1, "ERROR",				( u32 )ERROR );
 	state.SetField ( -1, "DID_REGISTER",		( u32 )DID_REGISTER );
-	state.SetField ( -1, "LOCAL_NOTIFICATION",	( u32 )LOCAL_NOTIFICATION );
+	//state.SetField ( -1, "LOCAL_NOTIFICATION",	( u32 )LOCAL_NOTIFICATION );
 	state.SetField ( -1, "REMOTE_NOTIFICATION",	( u32 )REMOTE_NOTIFICATION );
 
 	luaL_Reg regTable[] = {
 		{ "getAppIconBadgeNumber",				_getAppIconBadgeNumber },
 		{ "registerForRemoteNotifications",		_registerForRemoteNotifications },
-		{ "scheduleLocalNotification",			_scheduleLocalNotification },
+		//{ "scheduleLocalNotification",			_scheduleLocalNotification },
 		{ "setAppIconBadgeNumber",				_setAppIconBadgeNumber },
 		{ "setListener",						_setListener },
 		{ NULL, NULL }

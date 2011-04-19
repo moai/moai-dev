@@ -11,6 +11,18 @@
 //================================================================//
 // MOAIApp
 //================================================================//
+/**	@name	MOAIApp
+	@text	Wrapper for iPhone app delegate.
+
+	@const	ERROR						Event code for errors.
+	@const	DID_REGISTER				Event code for registration.
+	@const	REMOTE_NOTIFICATION			Event code for notification.
+	
+	@const	REMOTE_NOTIFICATION_NONE	Alias for 0.
+	@const	REMOTE_NOTIFICATION_BADGE	Bitmask for badge notification.
+	@const	REMOTE_NOTIFICATION_SOUND	Bitmask for sound notification.
+	@const	REMOTE_NOTIFICATION_ALERT	Bitmask for alert notification.
+*/
 class MOAIApp :
 	public USGlobalClass < MOAIApp, USLuaObject > {
 private:
