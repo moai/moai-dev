@@ -86,10 +86,14 @@ int MOAIApp::_setAppIconBadgeNumber ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-int MOAIApp::_setRemoteNotificationCallback ( lua_State* L ) {
+int MOAIApp::_setListener ( lua_State* L ) {
 	USLuaState state ( L );
 	
-	MOAIApp::Get ().mOnRemoteNotification.SetRef ( state, 1, false );
+	u32 idx = state.GetValue < u32 >( 1, TOTAL );
+	
+	if ( idx < TOTAL ) {
+		MOAIApp::Get ().mListeners [ idx ].SetRef ( state, 2, false );
+	}
 	
 	return 0;
 }
@@ -101,25 +105,24 @@ int MOAIApp::_setRemoteNotificationCallback ( lua_State* L ) {
 //----------------------------------------------------------------//
 void MOAIApp::DidFailToRegisterForRemoteNotificationsWithError ( NSError* error ) {
 	
-	if ( this->mOnRemoteNotification ) {
+	USLuaRef& callback = this->mListeners [ ERROR ];
+	
+	if ( callback ) {
+		USLuaStateHandle state = callback.GetSelf ();
 		
-		USLuaStateHandle state = this->mOnRemoteNotification.GetSelf ();
-		
-		lua_pushnumber ( state, ( u32 )ERROR );
 		[ error toLua:state ];
 		
-		state.DebugCall ( 2, 0 );
+		state.DebugCall ( 1, 0 );
 	}
 }
 
 //----------------------------------------------------------------//
 void MOAIApp::DidReceiveLocalNotification ( UILocalNotification* notification ) {
 
-	if ( this->mOnRemoteNotification ) {
-		
-		USLuaStateHandle state = this->mOnRemoteNotification.GetSelf ();
-		
-		lua_pushnumber ( state, ( u32 )LOCAL_NOTIFICATION );
+	USLuaRef& callback = this->mListeners [ LOCAL_NOTIFICATION ];
+	
+	if ( callback ) {
+		USLuaStateHandle state = callback.GetSelf ();
 		
 		NSDictionary* userInfo = notification.userInfo;
 		if ( userInfo ) {
@@ -130,38 +133,39 @@ void MOAIApp::DidReceiveLocalNotification ( UILocalNotification* notification ) 
 			}
 		}
 		
-		state.DebugCall ( 2, 0 );
+		state.DebugCall ( 1, 0 );
 	}
 }
 
 //----------------------------------------------------------------//
 void MOAIApp::DidReceiveRemoteNotification ( NSDictionary* userInfo ) {
 
-	if ( this->mOnRemoteNotification ) {
+	USLuaRef& callback = this->mListeners [ REMOTE_NOTIFICATION ];
+	
+	if ( callback ) {
+		USLuaStateHandle state = callback.GetSelf ();
 		
-		USLuaStateHandle state = this->mOnRemoteNotification.GetSelf ();
-		
-		lua_pushnumber ( state, ( u32 )REMOTE_NOTIFICATION );
 		[ userInfo toLua:state ];
 		
-		state.DebugCall ( 2, 0 );
+		state.DebugCall ( 1, 0 );
 	}
 }
 
 //----------------------------------------------------------------//
 void MOAIApp::DidRegisterForRemoteNotificationsWithDeviceToken	( NSData* deviceToken ) {
 	
-	if ( this->mOnRemoteNotification ) {
+	USLuaRef& callback = this->mListeners [ DID_REGISTER ];
 	
+	if ( callback ) {
+		
 		STLString tokenStr;
 		tokenStr.hex_encode ([ deviceToken bytes ], [ deviceToken length ]);
 		
 		printf ( "Token String: %s\n", tokenStr.str ());
 			
-		USLuaStateHandle state = this->mOnRemoteNotification.GetSelf ();
-		lua_pushnumber ( state, ( u32 )DID_REGISTER );
+		USLuaStateHandle state = callback.GetSelf ();
 		lua_pushstring ( state, tokenStr );
-		state.DebugCall ( 2, 0 );
+		state.DebugCall ( 1, 0 );
 	}
 }
 
@@ -197,7 +201,7 @@ void MOAIApp::RegisterLuaClass ( USLuaState& state ) {
 		{ "registerForRemoteNotifications",		_registerForRemoteNotifications },
 		{ "scheduleLocalNotification",			_scheduleLocalNotification },
 		{ "setAppIconBadgeNumber",				_setAppIconBadgeNumber },
-		{ "setRemoteNotificationCallback",		_setRemoteNotificationCallback },
+		{ "setListener",						_setListener },
 		{ NULL, NULL }
 	};
 
