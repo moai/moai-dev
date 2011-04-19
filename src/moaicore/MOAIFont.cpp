@@ -98,7 +98,7 @@ USFont* MOAIFont::Bind () {
 	
 	USDrawBuffer& drawbuffer = USDrawBuffer::Get ();
 	
-	if ( drawbuffer.BindTexture ( &this->mTexture )) {
+	if ( drawbuffer.SetTexture ( &this->mTexture )) {
 		return this;
 	}
 	return 0;

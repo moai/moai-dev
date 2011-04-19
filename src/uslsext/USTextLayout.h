@@ -43,6 +43,7 @@ public:
 	void		Draw				( u32 reveal );
 	bool		GetBoundsForRange	( u32 idx, u32 size, USRect& rect );
 	void		PushGlyph			( const USGlyph* glyph, u32 idx, float x, float y, float points, u32 rgba );
+	void		SetColorForRange	( u32 idx, u32 size, u32 rgba );
 };
 
 #endif

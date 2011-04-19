@@ -45,12 +45,11 @@ int MOAITextBox::_clearCurves ( lua_State* L ) {
 int MOAITextBox::_getStringBounds ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextBox, "UNN" )
 	
-	u32 index	= state.GetValue < u32 >( 2, 0 );
+	u32 index	= state.GetValue < u32 >( 2, 1 ) - 1;
 	u32 size	= state.GetValue < u32 >( 3, 0 );
 	
 	if ( size ) {
 		self->Layout ();
-		
 		
 		USRect rect;
 		if ( self->mLayout.GetBoundsForRange ( index, size, rect )) {
@@ -279,6 +278,39 @@ int MOAITextBox::_setString ( lua_State* L ) {
 	cc8* text = state.GetValue < cc8* >( 2, "" );
 	self->SetText ( text );
 
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	getStringBounds
+	@text	Sets the color of a sub string in the text. Only affects
+			text displayed on the current page.
+
+	@in		MOAITextBox self
+	@in		number index		Index of the first character in the substring.
+	@in		number size			Length of the substring.
+	@in		number r
+	@in		number g
+	@in		number b
+	@opt	number a			Default value is 1.
+*/
+int MOAITextBox::_setStringColor ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextBox, "UNNNNN" )
+	
+	u32 index	= state.GetValue < u32 >( 2, 1 ) - 1;
+	u32 size	= state.GetValue < u32 >( 3, 0 );
+	
+	if ( size ) {
+		self->Layout ();
+	
+		float r		= state.GetValue < float >( 4, 1.0f );
+		float g		= state.GetValue < float >( 5, 1.0f );
+		float b		= state.GetValue < float >( 6, 1.0f );
+		float a		= state.GetValue < float >( 7, 1.0f );
+		
+		u32 rgba = USColor::PackRGBA ( r, g, b, a );
+		self->mLayout.SetColorForRange ( index, size, rgba );
+	}
 	return 0;
 }
 
@@ -551,6 +583,7 @@ void MOAITextBox::RegisterLuaFuncs ( USLuaState& state ) {
 		{ "reserveCurves",		_reserveCurves },
 		{ "revealAll",			_revealAll },
 		{ "setAlignment",		_setAlignment },
+		{ "setStringColor",		_setStringColor },
 		{ "setCurve",			_setCurve },
 		{ "setFont",			_setFont },
 		{ "setRect",			_setRect },

@@ -63,10 +63,8 @@ public:
 	//----------------------------------------------------------------//
 	void					BeginPrim				();
 	void					BeginPrim				( u32 primType );
-	bool					BindTexture				( USTexture* texture = 0 );
-	void					BindVertexFormat		( const USVertexFormat& format );
-	void					BindVertexPreset		( u32 presetID );
 	void					Clear					();
+	void					DrawPrims				( const USVertexFormat& format, GLenum primType, void* buffer, u32 size ); 
 	void					EndPrim					();
 	void					Flush					();
 	const USColorVec&		GetPenColor				();
@@ -85,8 +83,12 @@ public:
 	void					SetPrimType				( u32 primType );
 	void					SetScissorRect			();
 	void					SetScissorRect			( const USRect& rect );
+	bool					SetTexture				( USTexture* texture = 0 );
 	void					SetUVTransform			();
 	void					SetUVTransform			( const USAffine2D& uvTransform );
+	void					SetVertexFormat			();
+	void					SetVertexFormat			( const USVertexFormat& format );
+	void					SetVertexPreset			( u32 presetID );
 	void					SetVtxTransform			();
 	void					SetVtxTransform			( const USAffine2D& vtxTransform );
 							USDrawBuffer			();

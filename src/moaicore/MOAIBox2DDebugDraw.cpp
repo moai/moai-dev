@@ -33,7 +33,7 @@ SUPPRESS_EMPTY_FILE_WARNING
 //----------------------------------------------------------------//
 void MOAIBox2DDebugDraw::BindVertexFormat ( USDrawBuffer& drawBuffer ) {
 
-	drawBuffer.BindVertexPreset ( USVertexFormatMgr::VTX_FMT_XYC );
+	drawBuffer.SetVertexPreset ( USVertexFormatMgr::VTX_FMT_XYC );
 }
 
 //----------------------------------------------------------------//

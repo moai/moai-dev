@@ -71,7 +71,7 @@ private:
 	
 public:
 	
-	GET ( u32, VertexSize, mVertexSize )
+	GET_CONST ( u32, VertexSize, mVertexSize )
 	
 	//----------------------------------------------------------------//
 	void		Bind					( void* buffer ) const;

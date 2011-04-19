@@ -165,8 +165,7 @@ MOAITexture* MOAITexture::AffirmTexture ( USLuaState& state, int idx ) {
 bool MOAITexture::Bind () {
 
 	USDrawBuffer& drawBuffer = USDrawBuffer::Get ();
-	if ( !drawBuffer.BindTexture ( this )) return false;
-	USGLQuad::BindVertexFormat ( drawBuffer );
+	if ( !drawBuffer.SetTexture ( this )) return false;
 
 	return true;
 }

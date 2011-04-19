@@ -189,7 +189,7 @@ int MOAIStretchPatch2D::_setUVRect ( lua_State* L ) {
 bool MOAIStretchPatch2D::Bind () {
 
 	USDrawBuffer& drawBuffer = USDrawBuffer::Get ();
-	if ( !drawBuffer.BindTexture ( this->mTexture )) return false;
+	if ( !drawBuffer.SetTexture ( this->mTexture )) return false;
 	USGLQuad::BindVertexFormat ( drawBuffer );
 
 	return true;

@@ -53,11 +53,11 @@ void USDebugLines::Draw () {
 	
 	USDrawBuffer& drawBuffer = USDrawBuffer::Get ();
 	
-	drawBuffer.BindTexture ();
+	drawBuffer.SetTexture ();
 	drawBuffer.SetBlendMode ( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
 	
 	drawBuffer.SetPrimType ( GL_LINES );
-	drawBuffer.BindVertexPreset ( USVertexFormatMgr::VTX_FMT_XYC );
+	drawBuffer.SetVertexPreset ( USVertexFormatMgr::VTX_FMT_XYC );
 	
 	drawBuffer.SetVtxTransform ();
 	

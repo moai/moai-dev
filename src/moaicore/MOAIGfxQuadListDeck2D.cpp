@@ -299,7 +299,7 @@ int MOAIGfxQuadListDeck2D::_setUVRect ( lua_State* L ) {
 bool MOAIGfxQuadListDeck2D::Bind () {
 
 	USDrawBuffer& drawBuffer = USDrawBuffer::Get ();
-	if ( !drawBuffer.BindTexture ( this->mTexture )) return false;
+	if ( !drawBuffer.SetTexture ( this->mTexture )) return false;
 	USGLQuad::BindVertexFormat ( drawBuffer );
 
 	return true;

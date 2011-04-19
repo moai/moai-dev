@@ -12,7 +12,7 @@
 //----------------------------------------------------------------//
 void USGLQuad::BindVertexFormat ( USDrawBuffer& drawBuffer ) {
 	
-	drawBuffer.BindVertexPreset ( USVertexFormatMgr::VTX_FMT_XYUVC );
+	drawBuffer.SetVertexPreset ( USVertexFormatMgr::VTX_FMT_XYUVC );
 	drawBuffer.SetPrimType ( GL_TRIANGLES );
 }
 

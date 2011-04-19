@@ -96,7 +96,7 @@ int	MOAITileDeck2D::_setTexture ( lua_State* L ) {
 bool MOAITileDeck2D::Bind () {
 
 	USDrawBuffer& drawBuffer = USDrawBuffer::Get ();
-	if ( !drawBuffer.BindTexture ( this->mTexture )) return false;
+	if ( !drawBuffer.SetTexture ( this->mTexture )) return false;
 	USGLQuad::BindVertexFormat ( drawBuffer );
 
 	return true;
