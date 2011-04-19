@@ -1,4 +1,5 @@
 #import <moai-iphone/NSString+MOAILib.h>
+#import <moai-iphone/NSObject+MOAILib.h>
 
 //================================================================//
 // NSString ( MOAILib )

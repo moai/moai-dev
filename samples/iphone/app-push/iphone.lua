@@ -6,9 +6,34 @@
 
 print ( "hello, iPhone!" )
 
-function onNotification ()
+function onError ( error )
+	
+	print ( 'onError' )
+	print ( error )
 end
 
+function onRegister ( token )
+
+	print ( 'onRegister' )
+	print ( token )
+end
+
+function onLocalNotification ( userInfoStr )
+
+	print ( 'onLocalNotification' )
+	print ( userInfoStr )
+end
+
+function onRemoteNotification ( userInfoTable )
+
+	print ( 'onRemoteNotification' )
+	print ( userInfoTable )
+end
+
+MOAIApp.setListener ( MOAIApp.ERROR, onError )
+MOAIApp.setListener ( MOAIApp.DID_REGISTER, onRegister )
+MOAIApp.setListener ( MOAIApp.LOCAL_NOTIFICATION, onLocalNotification )
+MOAIApp.setListener ( MOAIApp.REMOTE_NOTIFICATION, onRemoteNotification )
+
 MOAIApp.setAppIconBadgeNumber ( 0 )
-MOAIApp.setRemoteNotificationCallback ( onNotification )
 MOAIApp.registerForRemoteNotifications ( MOAIApp.REMOTE_NOTIFICATION_BADGE + MOAIApp.REMOTE_NOTIFICATION_ALERT )

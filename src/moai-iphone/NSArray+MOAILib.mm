@@ -16,7 +16,7 @@
 		
 			lua_pushnumber ( state, idx++ );
 			[ object toLua:state ];
-			lua_settable ( state, -2 );
+			lua_settable ( state, -3 );
 		}
 	}
 

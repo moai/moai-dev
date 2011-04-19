@@ -15,27 +15,27 @@ class MOAIApp :
 	public USGlobalClass < MOAIApp, USLuaObject > {
 private:
 
-	UIApplication*	mApplication;
+	enum {
+		ERROR,
+		DID_REGISTER,
+		LOCAL_NOTIFICATION,
+		REMOTE_NOTIFICATION,
+		TOTAL,
+	};
 
-	USLuaRef	mOnRemoteNotification;
+	UIApplication*	mApplication;
+	USLuaRef		mListeners [ TOTAL ];
 
 	//----------------------------------------------------------------//
 	static int		_getAppIconBadgeNumber					( lua_State* L );
 	static int		_registerForRemoteNotifications			( lua_State* L );
 	static int		_scheduleLocalNotification				( lua_State* L );
 	static int		_setAppIconBadgeNumber					( lua_State* L );
-	static int		_setRemoteNotificationCallback			( lua_State* L );
+	static int		_setListener							( lua_State* L );
 
 public:
 	
 	DECL_LUA_SINGLETON ( MOAIApp )
-	
-	enum {
-		ERROR,
-		DID_REGISTER,
-		LOCAL_NOTIFICATION,
-		REMOTE_NOTIFICATION,
-	};
 	
 	SET ( UIApplication*, Application, mApplication )
 	
