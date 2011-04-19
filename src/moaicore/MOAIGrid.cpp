@@ -391,20 +391,35 @@ void MOAIGrid::SerializeIn ( USLuaState& state, USLuaSerializer& serializer ) {
 	UNUSED ( serializer );
 
 	this->USGridSpace::SerializeIn ( state );
+	this->mTiles.Init ( this->USGridSpace::GetTotalTiles ());
 
-	this->mTiles.Init ( this->GetTotalTiles ());
+	state.GetField ( -1, "mData" );
 
-	state.GetField ( -1, "mRows" );
+	if ( state.IsType ( -1, LUA_TSTRING )) {
 
-	for ( int i = 0; i < this->GetHeight (); ++i ) {
+		size_t len;
+		cc8* luaString = lua_tolstring ( state, -1, &len ); 
 		
-		state.GetField ( -1, i + 1 );
-		STLString rowStr = state.GetValue ( -1, "" );
-		this->RowFromString ( i, rowStr );
-		state.Pop ( 1 );
+		void* buffer = malloc ( len );
+		memcpy ( buffer, luaString, len );
+
+		USByteStream inStream;
+		inStream.SetBuffer ( buffer, ( u32 )len );
+		inStream.SetLength (( u32 )len );
+
+		USBase64Cipher base64cipher;
+		USCipherStream cipherStream;
+		cipherStream.OpenCipher ( inStream, base64cipher );
+		
+		USByteStream outStream;
+		outStream.SetBuffer ( this->mTiles, this->mTiles.Size () * sizeof ( u32 ));
+		
+		USZip::Inflate ( cipherStream, outStream );
+		
+		free ( buffer );
 	}
 	
-	state.Pop ( 1 );
+	lua_pop ( state, 1 );
 }
 
 //----------------------------------------------------------------//
@@ -413,16 +428,31 @@ void MOAIGrid::SerializeOut ( USLuaState& state, USLuaSerializer& serializer ) {
 
 	this->USGridSpace::SerializeOut ( state );
 
-	lua_newtable ( state );
+	void* buffer = this->mTiles;
+	u32 size = this->mTiles.Size () * sizeof ( u32 );
 
-	for ( int i = 0; i < this->GetHeight (); ++i ) {
-		lua_pushnumber ( state, i + 1 );
-		STLString rowStr = this->RowToString ( i );
-		lua_pushstring ( state, rowStr );
-		lua_settable ( state, -3 );
-	}
+	USByteStream inStream;
+	inStream.SetBuffer ( buffer, size );
+	inStream.SetLength ( size );
+
+	USMemStream outStream;
+	outStream.Reserve ( size );
+
+	USBase64Cipher base64cipher;
+	USCipherStream cipherStream;
+	cipherStream.OpenCipher ( outStream, base64cipher );
 	
-	lua_setfield ( state, -2, "mRows" );
+	USZip::Deflate ( inStream, cipherStream, USDeflater::DEFAULT_LEVEL );
+	
+	size = outStream.GetLength ();
+	buffer = malloc ( size );
+	outStream.Seek ( 0, SEEK_SET );
+	outStream.ReadBytes ( buffer, size );
+	
+	lua_pushlstring ( state, ( cc8* )buffer, size );
+	lua_setfield ( state, -2, "mData" );
+	
+	free ( buffer );
 }
 
 //----------------------------------------------------------------//
