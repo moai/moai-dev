@@ -511,7 +511,11 @@ MOAINode::~MOAINode () {
 		
 		if ( link->mDestNode ) {
 			link->mDestNode->ClearPullLink ( *link );
-			link->mDestNode->ScheduleUpdate ();
+			
+			// only schedule dependent nodes if the node manager is still valid
+			if ( MOAINodeMgr::IsValid ()) {
+				link->mDestNode->ScheduleUpdate ();
+			}
 		}
 		delete link;
 	}

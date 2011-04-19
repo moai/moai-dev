@@ -636,6 +636,7 @@ MOAITransform::MOAITransform () :
 	mLoc ( 0.0f, 0.0f ),
 	mScale ( 1.0f, 1.0f ),
 	mDegrees ( 0.0f ),
+	mParent ( 0 ),
 	mFilter ( INHERIT_ALL ) {
 	
 	RTTI_SINGLE ( MOAITransformBase )
