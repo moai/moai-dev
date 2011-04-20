@@ -1,0 +1,199 @@
+body
+{
+	margin:0px;
+	padding:20px;
+	background-color: #3A3A3A;
+	background-image: url(bg.png);
+	background-repeat: no-repeat;
+	background-position: top right;
+	font-size: 12px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+h1.title
+{
+	background-image: url(./title.png);
+	background-repeat: no-repeat;
+	background-position: top left;
+	height: 120px;
+	margin: 0px;
+	padding: 0px;
+}
+
+.section { position:relative; width: 100%; }
+.section .top div  { background: url(./stl.png) no-repeat top left; width:27px; height:57px; }
+.section .top      { background: url(./str.png) no-repeat top right; }
+.section .bot div  { background: url(./sbl.png) no-repeat bottom left; width:17px; height:17px; }
+.section .bot      { background: url(./sbr.png) no-repeat bottom right; }
+.section .top div, .section .top
+{
+	width: 100%;
+	height: 57px;
+	font-size: 1px;
+}
+.section .bot div, .section .bot
+{
+	width: 100%;
+	height: 17px;
+	font-size: 1px;
+}
+.section .content
+{
+	background-color:#FFFFFF;
+	color:#000000;
+	font-style:normal;
+	margin:0px;
+	padding:0px;
+	padding-left: 17px;
+	padding-right: 17px;
+}
+.section .top .bar
+{
+	background-color:none;
+	background-image:url(./stc.png);
+	background-repeat:repeat-x;
+	width: auto;
+	margin-right: 27px;
+	margin-left: 27px;
+	height:57px;
+	
+	color: white;
+	font-size: 12px;
+	padding-top: 17px;
+	text-align: center;
+}
+.section .bot .bar
+{
+	background-color:#FFFFFF;
+	background-image:none;
+	width: auto;
+	margin-right: 17px;
+	margin-left: 17px;
+	height:17px;
+}
+.section .top .corner
+{
+	width: 27px;
+	float: left;
+	height:57px;
+}
+.section .bot .corner
+{
+	width: 17px;
+	float: left;
+	height:17px;
+}
+
+/* List colours */
+ul
+{
+	margin: 0px;
+	padding: 0px;
+	padding-left: 4px;
+}
+
+ul a
+{
+	display: list-item;
+	list-style:none outside none;
+	margin-left: 0px;
+	padding-left: 0px;
+	margin-bottom: 5px;
+	text-decoration: none;
+	color: #000000;
+}
+
+ul a:hover
+{
+	font-weight: bold;
+}
+
+ul a div
+{
+	background-image: url(./bullet_blue.png);
+	width: 16px;
+	height: 16px;
+	line-height: 16px;
+	display: block;
+	float: left;
+	margin-right: 5px;
+}
+
+ul.green a div
+{
+	background-image: url(./bullet_green.png);
+}
+
+ul.orange a div
+{
+	background-image: url(./bullet_orange.png);
+}
+
+ul.red a div
+{
+	background-image: url(./bullet_red.png);
+}
+
+ul.purple a
+{
+	font-weight: bold;
+}
+
+ul.purple a div
+{
+	background-image: url(./bullet_purple.png);
+}
+
+/* Positioning */
+.solutions
+{
+	position: absolute;
+	top: 140px;
+	left: 20px;
+	width: 276px;
+}
+
+.solutions .content
+{
+	height: 190px;
+}
+
+.solutions .content div.recent
+{
+	height: 16px;
+	text-align: center;
+	border-top: dotted 1px black;
+	border-bottom: dotted 1px black;
+	padding: 10px;
+	margin-top: 17px;
+	margin-bottom: 17px;
+}
+
+.helpcenter
+{
+	position: absolute;
+	top: 424px;
+	left: 20px;
+	width: 276px;
+}
+
+.helpcenter .content
+{
+	height: 111px;
+}
+
+.latest
+{
+	margin-left: 300px;
+	width: auto;
+}
+
+.latest .content
+{
+	height: 395px;
+}
+
+.latest .content p
+{
+	margin-left: 26px;
+}

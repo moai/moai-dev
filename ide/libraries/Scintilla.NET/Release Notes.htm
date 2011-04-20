@@ -1,0 +1,259 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+	<title></title>
+	<style>
+		html, body, table
+		{
+			font: normal 10pt Verdana;
+		}
+		
+		li
+		{
+			margin-bottom:7px;
+		}
+		
+		h1
+		{
+			font-size:18pt;
+		}
+		
+		h2
+		{
+			font-size:14pt;
+		}
+	</style>
+</head>
+<body>
+	<h1>ScintillaNet 2.2 Release</h1>
+	<p>
+		2009-10-21 Chris Rickard<br />
+		Built against changeset 60365
+	</p>
+	<p>
+		Primarily this is a bugfix release. Only a couple new features are included and they are there becuase they fix/workaround an existing issue.	
+	</p>
+	<h2>Breaking Changes</h2>
+	<ul>
+		<li>
+		All members and strings containing White<b>S</b>pace have been changed to White<b>s</b>pace. White<b>s</b>pace
+		is the accepted spelling and is the spelling used by the .NET framework. (Ignore System.Xml.Schema.XmlSchemaWhiteSpace :)
+		Along the same lines INativeScintilla.GetViewWS() changed to INativeScintilla.GetViewWs()
+		</li>
+		<li>
+		Various members' access changed from public to private or internal. In these cases it didn't make much sense to expose them
+		publicly so in theory noone should be using them thus this won't break anyones code.
+		</li>
+		<li>
+		Most of the EventArg classes changed their properties to be read-only. This is consistent with the style used by the .NET framework. This
+		may potentially break code, initialize all the variables in the constructor where appropriate. If there is a legitimate need to set an
+		EventArg property after construction I'll add it back in.
+		</li>
+		<li>
+		Markers and Lines.VisibleLines implementations were buggy and have been fixed. If you were using them before and made workarounds to
+		compensate for the buggy behavior this will most likely break it.
+		</li>
+		<li>DwellEnd event changed from EventHandler to EventHandler&lt;ScintillaMouseEventArgs&gt; </li>
+		<li>In the static Utilities class PtrToStringUtf8 and MarshalStr have been removed and replaced IntPtrToString</li>
+	</ul>
+	<h2>New Features</h2>
+	<ul>
+	<li>
+	New property Caption sets the Win32 Window Text/Caption. This was introduced to make an elegant workaround. The Control.Text property is usually
+	used but has proven to be problematic because of ScintillaNet's Text implementation. Also we don't want to load a 100mb file in the document then
+	have Windows try to echo this property, it adds a ton of unneeded overhead. Caption now controls this completely, it defaults to the Scintilla
+	control's Type Name (ScintillaNet.Scintilla unless subclassed) but can be changed.
+	</li>
+	<li>
+	UseWhitespaceForeColor/UseWhitespaceBackColor control wether or not the corresponding Whitespace colors are used or inherit from the default style.
+	</li>
+	<li>
+	Style class now has an indexer overload that takes a string. The style names are specific to each lexer and can be found in the ScintillaNet project
+	under Configuration/BuiltIn/LexerStyleNames
+	</li>
+	<li>
+	SelectionForeColor/SelectionBackColor now supports the Transparent color. When Transparent selection colors don't override styled text colors. While 
+	this is inconsistent with other properties like WhitespaceForeColor that have a corresponding UseXXX property I think it's more intuitive and I may
+	change the others in the future. Note that only Transparent is supported, alpha values in any other color are ignored.
+	</li>
+	</ul>
+	<h2>Issues fixed with this release</h2>
+		<table cellpadding="2">
+		<thead style="background-color:ThreeDFace;">
+		<tr>
+		<th>Issue #</th>
+		<th>Title</th>
+		</tr>
+		</thead>
+			<tr>
+				<td>
+					11811
+				</td>
+				<td>
+					<a href="http://scintillanet.codeplex.com/WorkItem/View.aspx?WorkItemId=11811">ScintillaNet
+						in MDIChild destroys after Hide() - WM_DESTROY</a>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					21730
+				</td>
+				<td>
+					<a href="http://scintillanet.codeplex.com/WorkItem/View.aspx?WorkItemId=21730">InsertSnippet</a>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					24622
+				</td>
+				<td>
+					<a href="http://scintillanet.codeplex.com/WorkItem/View.aspx?WorkItemId=24622">Some
+						Fixes</a>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					20491
+				</td>
+				<td>
+					<a href="http://scintillanet.codeplex.com/WorkItem/View.aspx?WorkItemId=20491">Scintilla.Encoding
+						Can Be Out-Of-Sync With Internal Scintilla Code Page</a>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					20097
+				</td>
+				<td>
+					<a href="http://scintillanet.codeplex.com/WorkItem/View.aspx?WorkItemId=20097">Dispose
+						method throws Win32Exception</a>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					10105
+				</td>
+				<td>
+					<a href="http://scintillanet.codeplex.com/WorkItem/View.aspx?WorkItemId=10105">Drag
+						Drop events are never fired</a>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					18351
+				</td>
+				<td>
+					<a href="http://scintillanet.codeplex.com/WorkItem/View.aspx?WorkItemId=18351">Possible
+						bug on japanese OS</a>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					18281
+				</td>
+				<td>
+					<a href="http://scintillanet.codeplex.com/WorkItem/View.aspx?WorkItemId=18281">Throw
+						OutOfMemoryException when open large file</a>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					21053
+				</td>
+				<td>
+					<a href="http://scintillanet.codeplex.com/WorkItem/View.aspx?WorkItemId=21053">TextChanged
+						Event Should Behave Like Other Controls</a>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					18445
+				</td>
+				<td>
+					<a href="http://scintillanet.codeplex.com/WorkItem/View.aspx?WorkItemId=18445">Reset
+						of &#39;transparency&#39; for selection fore color</a>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					18554
+				</td>
+				<td>
+					<a href="http://scintillanet.codeplex.com/WorkItem/View.aspx?WorkItemId=18554">BindableCommand.WordPartLeft
+						not mapped to keystroke</a>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					20397
+				</td>
+				<td>
+					<a href="http://scintillanet.codeplex.com/WorkItem/View.aspx?WorkItemId=20397">ConfigurationManager
+						:: getCustomConfigPath uses wrong variable</a>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					21678
+				</td>
+				<td>
+					<a href="http://scintillanet.codeplex.com/WorkItem/View.aspx?WorkItemId=21678">VisibleLines
+						broken</a>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					24777
+				</td>
+				<td>
+					<a href="http://scintillanet.codeplex.com/WorkItem/View.aspx?WorkItemId=24777">Default
+						font &quot;Arial&quot; throws exception from PageInformation</a>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					21729
+				</td>
+				<td>
+					<a href="http://scintillanet.codeplex.com/WorkItem/View.aspx?WorkItemId=21729">PreviousActiveSnippetLink</a>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					24911
+				</td>
+				<td>
+					<a href="http://scintillanet.codeplex.com/WorkItem/View.aspx?WorkItemId=24911">Problems
+						with Markers</a>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					17869
+				</td>
+				<td>
+					<a href="http://scintillanet.codeplex.com/WorkItem/View.aspx?WorkItemId=17869">SearchFlags
+						ignored</a>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					18028
+				</td>
+				<td>
+					<a href="http://scintillanet.codeplex.com/WorkItem/View.aspx?WorkItemId=18028">DwellEnd
+						event</a>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					18297
+				</td>
+				<td>
+					<a href="http://scintillanet.codeplex.com/WorkItem/View.aspx?WorkItemId=18297">NullReferenceException</a>
+				</td>
+			</tr>
+		</table>
+	
+</body>
+</html>
