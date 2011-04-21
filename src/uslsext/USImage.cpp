@@ -42,7 +42,7 @@ void USImage::Alloc () {
 	
 	if ( paletteSize ) {
 		this->mPalette = this->mData;
-		memset ( this->mPalette, 0xff, paletteSize );
+		memset ( this->mPalette, 0, paletteSize );
 	}
 	else {
 		this->mPalette = 0;
@@ -53,7 +53,7 @@ void USImage::Alloc () {
 void USImage::ClearBitmap () {
 
 	if ( this->mBitmap ) {
-		memset ( this->mBitmap, 0xff, this->GetBitmapSize ());
+		memset ( this->mBitmap, 0, this->GetBitmapSize ());
 	}
 }
 
@@ -228,6 +228,7 @@ void USImage::Init ( u32 width, u32 height, USColor::Format colorFmt, USPixel::F
 	this->mHeight = height;
 	
 	this->Alloc ();
+	this->ClearBitmap ();
 }
 
 //----------------------------------------------------------------//
@@ -580,12 +581,12 @@ void USImage::ResizeCanvas ( const USImage& image, USIntRect rect ) {
 		void* row = this->GetRow ( y );
 	
 		if (( y < srcRect.mYMin ) || ( y >= srcRect.mYMax )) {
-			memset ( row, 0xff, rowSize );
+			memset ( row, 0, rowSize );
 		}
 		else {
 		
 			if ( leftSize ) {
-				memset ( row, 0xff, leftSize );
+				memset ( row, 0, leftSize );
 				row = ( void* )(( u32 )row + leftSize );
 			}
 			
@@ -598,7 +599,7 @@ void USImage::ResizeCanvas ( const USImage& image, USIntRect rect ) {
 			}
 			
 			if ( rightSize ) {
-				memset ( row, 0xff, rightSize );
+				memset ( row, 0, rightSize );
 			}
 		}
 	}

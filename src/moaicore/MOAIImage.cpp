@@ -71,6 +71,37 @@ int MOAIImage::_getColor32 ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	getRGBA
+	@text	Returns an RGBA color as four floating point values.
+
+	@in		MOAIImage self
+	@in		number x
+	@in		number y
+	@out	number r
+	@out	number g
+	@out	number b
+	@out	number a
+*/
+int MOAIImage::_getRGBA ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIImage, "UNN" )
+	
+	u32 x		= state.GetValue < u32 >( 2, 0 );
+	u32 y		= state.GetValue < u32 >( 3, 0 );
+
+	u32 color = self->GetColor ( x, y );
+	
+	USColorVec colorVec;
+	colorVec.SetRGBA ( color );
+	
+	lua_pushnumber ( state, colorVec.mR );
+	lua_pushnumber ( state, colorVec.mG );
+	lua_pushnumber ( state, colorVec.mB );
+	lua_pushnumber ( state, colorVec.mA );
+	
+	return 4;
+}
+
+//----------------------------------------------------------------//
 /**	@name	getSize
 	@text	Returns the width and height of the image.
 
@@ -226,6 +257,35 @@ int MOAIImage::_setColor32 ( lua_State* L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
+/**	@name	setRGBA
+	@text	Sets a color using RGBA floating point values.
+
+	@in		MOAIImage self
+	@in		number x
+	@in		number y
+	@in		number r
+	@in		number g
+	@in		number b
+	@opt	number a	Default value is 1.
+	@out	nil
+*/
+int MOAIImage::_setRGBA ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIImage, "UNNNNN" )
+
+	u32 x		= state.GetValue < u32 >( 2, 0 );
+	u32 y		= state.GetValue < u32 >( 3, 0 );
+	
+	float r		= state.GetValue < float >( 4, 0.0f );
+	float g		= state.GetValue < float >( 5, 0.0f );
+	float b		= state.GetValue < float >( 6, 0.0f );
+	float a		= state.GetValue < float >( 7, 1.0f );
+
+	self->SetColor ( x, y, USColor::PackRGBA ( r, g, b, a ));
+
+	return 0;
+}
+
 //================================================================//
 // MOAIImage
 //================================================================//
@@ -268,12 +328,14 @@ void MOAIImage::RegisterLuaFuncs ( USLuaState& state ) {
 		{ "convertColors",		_convertColors },
 		{ "copy",				_copy },
 		{ "getColor32",			_getColor32 },
+		{ "getRGBA",			_getRGBA },
 		{ "getSize",			_getSize },
 		{ "init",				_init },
 		{ "load",				_load },
 		{ "padToPow2",			_padToPow2 },
 		{ "resizeCanvas",		_resizeCanvas },
 		{ "setColor32",			_setColor32 },
+		{ "setRGBA",			_setRGBA },
 		{ NULL, NULL }
 	};
 

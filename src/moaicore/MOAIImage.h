@@ -35,12 +35,14 @@ private:
 	static int		_convertColors		( lua_State* L );
 	static int		_copy				( lua_State* L );
 	static int		_getColor32			( lua_State* L );
+	static int		_getRGBA			( lua_State* L );
 	static int		_getSize			( lua_State* L );
 	static int		_init				( lua_State* L );
 	static int		_load				( lua_State* L );
 	static int		_padToPow2			( lua_State* L );
 	static int		_resizeCanvas		( lua_State* L );
 	static int		_setColor32			( lua_State* L );
+	static int		_setRGBA			( lua_State* L );
 
 public:
 	
