@@ -13,7 +13,7 @@
 /**	@name MOAIAction
 	@text Base class for actions.
 	
-	@event	EVENT_STOP
+	@const	EVENT_STOP		ID of event stop callback. Signature is: nil onStop ()
 */
 class MOAIAction :
 	public MOAIBlocker,
