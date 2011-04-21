@@ -1703,6 +1703,14 @@
 		CD80F640135BBCFF006B0683 /* ISO8601DateFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = CD80F63D135BBCFF006B0683 /* ISO8601DateFormatter.h */; };
 		CD80F641135BBCFF006B0683 /* ISO8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = CD80F63E135BBCFF006B0683 /* ISO8601DateFormatter.m */; };
 		CD80F642135BBCFF006B0683 /* ISO8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = CD80F63E135BBCFF006B0683 /* ISO8601DateFormatter.m */; };
+		CDEB91461360A78800AAC558 /* MOAIEventSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDEB91421360A78800AAC558 /* MOAIEventSource.cpp */; };
+		CDEB91471360A78800AAC558 /* MOAIEventSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDEB91421360A78800AAC558 /* MOAIEventSource.cpp */; };
+		CDEB91481360A78800AAC558 /* MOAIEventSource.h in Headers */ = {isa = PBXBuildFile; fileRef = CDEB91431360A78800AAC558 /* MOAIEventSource.h */; };
+		CDEB91491360A78800AAC558 /* MOAIEventSource.h in Headers */ = {isa = PBXBuildFile; fileRef = CDEB91431360A78800AAC558 /* MOAIEventSource.h */; };
+		CDEB914A1360A78800AAC558 /* MOAIImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDEB91441360A78800AAC558 /* MOAIImage.cpp */; };
+		CDEB914B1360A78800AAC558 /* MOAIImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDEB91441360A78800AAC558 /* MOAIImage.cpp */; };
+		CDEB914C1360A78800AAC558 /* MOAIImage.h in Headers */ = {isa = PBXBuildFile; fileRef = CDEB91451360A78800AAC558 /* MOAIImage.h */; };
+		CDEB914D1360A78800AAC558 /* MOAIImage.h in Headers */ = {isa = PBXBuildFile; fileRef = CDEB91451360A78800AAC558 /* MOAIImage.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -2603,6 +2611,10 @@
 		CD80F638135BAB65006B0683 /* NSError+MOAILib.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "NSError+MOAILib.mm"; path = "moai-iphone/NSError+MOAILib.mm"; sourceTree = "<group>"; };
 		CD80F63D135BBCFF006B0683 /* ISO8601DateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ISO8601DateFormatter.h; path = ../../3rdparty/contrib/ISO8601DateFormatter.h; sourceTree = "<group>"; };
 		CD80F63E135BBCFF006B0683 /* ISO8601DateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ISO8601DateFormatter.m; path = ../../3rdparty/contrib/ISO8601DateFormatter.m; sourceTree = "<group>"; };
+		CDEB91421360A78800AAC558 /* MOAIEventSource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIEventSource.cpp; sourceTree = "<group>"; };
+		CDEB91431360A78800AAC558 /* MOAIEventSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIEventSource.h; sourceTree = "<group>"; };
+		CDEB91441360A78800AAC558 /* MOAIImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIImage.cpp; sourceTree = "<group>"; };
+		CDEB91451360A78800AAC558 /* MOAIImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIImage.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -3333,6 +3345,8 @@
 				0324E53013564BC7000ADC60 /* MOAIEaseDriver.h */,
 				0324E53113564BC7000ADC60 /* MOAIEaseType.cpp */,
 				0324E53213564BC7000ADC60 /* MOAIEaseType.h */,
+				CDEB91421360A78800AAC558 /* MOAIEventSource.cpp */,
+				CDEB91431360A78800AAC558 /* MOAIEventSource.h */,
 				0324E53313564BC7000ADC60 /* MOAIFmod.cpp */,
 				0324E53413564BC7000ADC60 /* MOAIFmod.h */,
 				0324E53513564BC7000ADC60 /* MOAIFmodChannel.cpp */,
@@ -3353,6 +3367,8 @@
 				0324E54413564BC7000ADC60 /* MOAIGrid.h */,
 				0324E54513564BC7000ADC60 /* MOAIHttpTask.cpp */,
 				0324E54613564BC7000ADC60 /* MOAIHttpTask.h */,
+				CDEB91441360A78800AAC558 /* MOAIImage.cpp */,
+				CDEB91451360A78800AAC558 /* MOAIImage.h */,
 				0324E54713564BC7000ADC60 /* MOAIIndexBuffer.cpp */,
 				0324E54813564BC7000ADC60 /* MOAIIndexBuffer.h */,
 				0324E54913564BC7000ADC60 /* MOAIInputDevice.cpp */,
@@ -4207,6 +4223,8 @@
 				0324E9CB13564BC9000ADC60 /* USViewport.h in Headers */,
 				0324E9CD13564BC9000ADC60 /* USViewQuad.h in Headers */,
 				0324E9CF13564BC9000ADC60 /* USXmlReader.h in Headers */,
+				CDEB91491360A78800AAC558 /* MOAIEventSource.h in Headers */,
+				CDEB914D1360A78800AAC558 /* MOAIImage.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4648,6 +4666,8 @@
 				CD80F639135BAB67006B0683 /* NSData+MOAILib.h in Headers */,
 				CD80F63B135BAB67006B0683 /* NSError+MOAILib.h in Headers */,
 				CD7F4DFB135BBD8600E83096 /* NSDate+MOAILib.h in Headers */,
+				CDEB91481360A78800AAC558 /* MOAIEventSource.h in Headers */,
+				CDEB914C1360A78800AAC558 /* MOAIImage.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5196,6 +5216,8 @@
 				0324E9CA13564BC9000ADC60 /* USViewport.cpp in Sources */,
 				0324E9CC13564BC9000ADC60 /* USViewQuad.cpp in Sources */,
 				0324E9CE13564BC9000ADC60 /* USXmlReader.cpp in Sources */,
+				CDEB91471360A78800AAC558 /* MOAIEventSource.cpp in Sources */,
+				CDEB914B1360A78800AAC558 /* MOAIImage.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5640,6 +5662,8 @@
 				CD80F63A135BAB67006B0683 /* NSData+MOAILib.mm in Sources */,
 				CD80F63C135BAB67006B0683 /* NSError+MOAILib.mm in Sources */,
 				CD7F4DFC135BBD8600E83096 /* NSDate+MOAILib.mm in Sources */,
+				CDEB91461360A78800AAC558 /* MOAIEventSource.cpp in Sources */,
+				CDEB914A1360A78800AAC558 /* MOAIImage.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
