@@ -213,6 +213,7 @@ MOAIAction::MOAIAction () :
 
 	RTTI_BEGIN
 		RTTI_EXTEND ( USLuaObject )
+		RTTI_EXTEND ( MOAIEventSource )
 	RTTI_END
 }
 
@@ -228,6 +229,11 @@ void MOAIAction::OnStart () {
 
 //----------------------------------------------------------------//
 void MOAIAction::OnStop () {
+
+	USLuaStateHandle state = USLuaRuntime::Get ().State ();
+	if ( this->PushListener ( EVENT_STOP, state )) {
+		state.DebugCall ( 0, 0 );
+	}
 }
 
 //----------------------------------------------------------------//
@@ -246,11 +252,16 @@ void MOAIAction::OnUpdate ( float step ) {
 
 //----------------------------------------------------------------//
 void MOAIAction::RegisterLuaClass ( USLuaState& state ) {
-	UNUSED ( state );
+
+	MOAIEventSource::RegisterLuaClass ( state );
+
+	state.SetField ( -1, "EVENT_STOP", ( u32 )EVENT_STOP );
 }
 
 //----------------------------------------------------------------//
 void MOAIAction::RegisterLuaFuncs ( USLuaState& state ) {
+
+	MOAIEventSource::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
 		{ "addChild",			_addChild },

@@ -17,7 +17,6 @@ private:
 
 	//----------------------------------------------------------------//
 	static int		_setOffset		( lua_State* L );
-	static int		_setRect		( lua_State* L );
 	static int		_setRotation	( lua_State* L );
 	static int		_setScale		( lua_State* L );
 	static int		_setSize		( lua_State* L );

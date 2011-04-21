@@ -7,6 +7,7 @@
 #include <moaicore/MOAIDeck.h>
 
 class MOAIDataBuffer;
+class MOAIImage;
 
 //================================================================//
 // MOAITexture
@@ -16,10 +17,6 @@ class MOAIDataBuffer;
 
 	@const	FILTER_POINT
 	@const	FILTER_BILERP
-
-	@flag	QUANTIZE
-	@flag	TRUECOLOR
-	@flag	PREMULTIPLY_ALPHA
 */
 class MOAITexture :
 	public virtual USLuaObject,
@@ -45,6 +42,7 @@ public:
 	//----------------------------------------------------------------//
 	static MOAITexture*		AffirmTexture			( USLuaState& state, int idx );
 	bool					Bind					();
+	void					Load					( MOAIImage& image );
 	void					Load					( MOAIDataBuffer& data, u32 transform  );
 	void					Load					( cc8* filename, u32 transform  );
 							MOAITexture				();

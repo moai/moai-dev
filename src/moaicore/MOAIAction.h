@@ -5,15 +5,19 @@
 #define	MOAIACTION_H
 
 #include <moaicore/MOAIBlocker.h>
+#include <moaicore/MOAIEventSource.h>
 
 //================================================================//
 // MOAIAction
 //================================================================//
 /**	@name MOAIAction
 	@text Base class for actions.
+	
+	@const	EVENT_STOP		ID of event stop callback. Signature is: nil onStop ()
 */
 class MOAIAction :
-	public MOAIBlocker {
+	public MOAIBlocker,
+	public MOAIEventSource {
 private:
 	
 	bool	mNew;
@@ -54,6 +58,11 @@ public:
 	friend class MOAIActionMgr;
 	
 	DECL_LUA_FACTORY ( MOAIAction )
+	
+	enum {
+		EVENT_STOP,
+		TOTAL_EVENTS,
+	};
 	
 	//----------------------------------------------------------------//
 	void				AddChild				( MOAIAction& action );

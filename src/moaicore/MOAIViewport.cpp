@@ -31,35 +31,6 @@ int MOAIViewport::_setOffset ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setRect
-	@text	Sets the viewport rectangle in screen space.
-	
-	@in		MOAIViewport self
-	@in		number left
-	@in		number top
-	@in		number right
-	@in		number bottom
-	@out	nil
-*/
-int MOAIViewport::_setRect ( lua_State* L ) {
-
-	USLuaState state ( L );
-	if ( !state.CheckParams ( 1, "UNNNN" )) return 0;
-	
-	MOAIViewport* self = state.GetLuaObject < MOAIViewport >( 1 );
-	if ( !self ) return 0;
-
-	float left		= state.GetValue < float >( 2, 0.0f );
-	float top		= state.GetValue < float >( 3, 0.0f );
-	float right		= state.GetValue < float >( 4, 0.0f );
-	float bottom	= state.GetValue < float >( 5, 0.0f );
-	
-	self->Init ( left, top, right, bottom );
-
-	return 0;
-}
-
-//----------------------------------------------------------------//
 /**	@name	setRotation
 	@text	Sets global rotation to be added to camera transform.
 	
@@ -112,12 +83,24 @@ int MOAIViewport::_setScale ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	setSize
-	@text	Equivalent to setRect ( 0, 0, width, height )
+	@text	Sets the dimensions of the viewport.
 	
-	@in		MOAIViewport self
-	@in		number width
-	@in		number height
-	@out	nil
+	
+	@overload
+	
+		@in		MOAIViewport self
+		@in		number width
+		@in		number height
+		@out	nil
+		
+	@overload
+	
+		@in		MOAIViewport self
+		@in		number left
+		@in		number top
+		@in		number right
+		@in		number bottom
+		@out	nil
 */
 int MOAIViewport::_setSize ( lua_State* L ) {
 
@@ -127,10 +110,19 @@ int MOAIViewport::_setSize ( lua_State* L ) {
 	MOAIViewport* self = state.GetLuaObject < MOAIViewport >( 1 );
 	if ( !self ) return 0;
 
-	float width = state.GetValue < float >( 2, 0.0f );
-	float height = state.GetValue < float >( 3, 0.0f );
+	float x0 = state.GetValue < float >( 2, 0.0f );
+	float y0 = state.GetValue < float >( 3, 0.0f );
+
+	if ( state.CheckParams ( 4, "NN" )) {
 	
-	self->Init ( 0.0f, 0.0f, width, height );
+		float x1 = state.GetValue < float >( 4, 0.0f );
+		float y1 = state.GetValue < float >( 5, 0.0f );
+		
+		self->Init ( x0, y0, x1, y1 );
+	}
+	else {
+		self->Init ( 0.0f, 0.0f, x0, y0 );
+	}
 
 	return 0;
 }
@@ -159,7 +151,6 @@ void MOAIViewport::RegisterLuaFuncs ( USLuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "setOffset",		_setOffset },
-		{ "setRect",		_setRect },
 		{ "setRotation",	_setRotation },
 		{ "setScale",		_setScale },
 		{ "setSize",		_setSize },

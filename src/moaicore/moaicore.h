@@ -18,12 +18,14 @@
 #include <moaicore/MOAIDeck.h>
 #include <moaicore/MOAIEaseDriver.h>
 #include <moaicore/MOAIEaseType.h>
+#include <moaicore/MOAIEventSource.h>
 #include <moaicore/MOAIFont.h>
 #include <moaicore/MOAIGfxQuad2D.h>
 #include <moaicore/MOAIGfxQuadDeck2D.h>
 #include <moaicore/MOAIGfxQuadListDeck2D.h>
 #include <moaicore/MOAIGrid.h>
 #include <moaicore/MOAIHttpTask.h>
+#include <moaicore/MOAIImage.h>
 #include <moaicore/MOAIIndexBuffer.h>
 #include <moaicore/MOAIInputDevice.h>
 #include <moaicore/MOAIInputMgr.h>
