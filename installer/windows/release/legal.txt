@@ -2,6 +2,8 @@ LEGAL INFORMATION
 
 This LEGAL.txt file accompanies the Moai SDK. It includes notices required by the licenses as well as general legal notices.
 
+Software in the '3rdparty' folder is covered under separate licenses as provided in that folder.
+
 =========================================
  COPYRIGHT AND ATTRIBUTION NOTICES
 =========================================
@@ -10,7 +12,7 @@ Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 
 Made with Moai
 
-http://getmoai.com
+www.getmoai.com
 
 Logo at http://getmoai.com/moailogo.png
 
