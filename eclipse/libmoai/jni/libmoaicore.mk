@@ -73,6 +73,7 @@ $(SRC_PATH)/src/moaicore/MOAIDeck2D.cpp \
 $(SRC_PATH)/src/moaicore/MOAIDebugLines.cpp \
 $(SRC_PATH)/src/moaicore/MOAIEaseDriver.cpp \
 $(SRC_PATH)/src/moaicore/MOAIEaseType.cpp \
+$(SRC_PATH)/src/moaicore/MOAIEventSource.cpp \
 $(SRC_PATH)/src/moaicore/MOAIFmod.cpp \
 $(SRC_PATH)/src/moaicore/MOAIFmodChannel.cpp \
 $(SRC_PATH)/src/moaicore/MOAIFmodSound.cpp \
@@ -83,6 +84,7 @@ $(SRC_PATH)/src/moaicore/MOAIGfxQuadDeck2D.cpp \
 $(SRC_PATH)/src/moaicore/MOAIGfxQuadListDeck2D.cpp \
 $(SRC_PATH)/src/moaicore/MOAIGrid.cpp \
 $(SRC_PATH)/src/moaicore/MOAIHttpTask.cpp \
+$(SRC_PATH)/src/moaicore/MOAIImage.cpp \
 $(SRC_PATH)/src/moaicore/MOAIIndexBuffer.cpp \
 $(SRC_PATH)/src/moaicore/MOAIInputDevice.cpp \
 $(SRC_PATH)/src/moaicore/MOAIInputMgr.cpp \

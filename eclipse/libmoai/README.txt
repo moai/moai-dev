@@ -18,4 +18,4 @@ Requires Android NDK
 
 1. Make sure that ndk-build is on your path. You can accomplish this by adding the path to your environment.plist file.
 2. Run Eclipse from the exec shortcut in the eclipse folder. For some reason, adding the ndk path to the PATH breaks eclipse's launcher. It can launch fine from the command line though. We will figure out a better solution for this soon.
-3. run build.bat.
+3. run build.sh.
