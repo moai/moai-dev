@@ -67,6 +67,9 @@
     <Filter Include="src\layer">
       <UniqueIdentifier>{bb2fa7f4-87f5-4eeb-9a6c-a22b4ec9c42f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\events">
+      <UniqueIdentifier>{4b84cfcb-3dbc-4f5f-8e2d-2594796255ac}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\moaicore\MOAIAction.cpp">
@@ -329,6 +332,12 @@
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAIDebugLines.cpp">
       <Filter>src\gfx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIImage.cpp">
+      <Filter>src\gfx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIEventSource.cpp">
+      <Filter>src\events</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -598,6 +607,12 @@
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIDebugLines.h">
       <Filter>src\gfx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIImage.h">
+      <Filter>src\gfx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIEventSource.h">
+      <Filter>src\events</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
