@@ -4,6 +4,7 @@
 #include "pch.h"
 #include <moaicore/MOAIDataBuffer.h>
 #include <moaicore/MOAIGrid.h>
+#include <moaicore/MOAIImage.h>
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAITexture.h>
 
@@ -40,8 +41,8 @@ int MOAITexture::_bind ( lua_State* L ) {
 int MOAITexture::_getSize ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITexture, "U" )
 	
-	lua_pushnumber ( state, self->mDevWidth );
-	lua_pushnumber ( state, self->mDevHeight );
+	lua_pushnumber ( state, self->mWidth );
+	lua_pushnumber ( state, self->mHeight );
 	
 	return 2;
 }
@@ -144,11 +145,20 @@ MOAITexture* MOAITexture::AffirmTexture ( USLuaState& state, int idx ) {
 		if ( state.IsType ( idx, LUA_TUSERDATA )) {
 			
 			texture = state.GetLuaObject < MOAITexture >( idx );
-			MOAIDataBuffer* data = state.GetLuaObject < MOAIDataBuffer >( idx );
+			MOAIImage* image = state.GetLuaObject < MOAIImage >( idx );
 			
-			if ( data ) {
+			if ( image ) {
 				texture = new MOAITexture ();
-				texture->Load ( *data, transform );
+				texture->Load ( *image );
+			}
+			else {
+			
+				MOAIDataBuffer* data = state.GetLuaObject < MOAIDataBuffer >( idx );
+				
+				if ( data ) {
+					texture = new MOAITexture ();
+					texture->Load ( *data, transform );
+				}
 			}
 		}
 		else if ( state.IsType ( idx, LUA_TSTRING )) {
@@ -168,6 +178,14 @@ bool MOAITexture::Bind () {
 	if ( !drawBuffer.SetTexture ( this )) return false;
 
 	return true;
+}
+
+//----------------------------------------------------------------//
+void MOAITexture::Load ( MOAIImage& image ) {
+
+	this->Init ( image );
+	this->SetFilter ( GL_LINEAR, GL_NEAREST );
+	this->SetWrap ( GL_REPEAT );
 }
 
 //----------------------------------------------------------------//
@@ -204,11 +222,6 @@ void MOAITexture::RegisterLuaClass ( USLuaState& state ) {
 	
 	state.SetField ( -1, "FILTER_POINT", ( u32 )GL_NEAREST );
 	state.SetField ( -1, "FILTER_BILERP", ( u32 )GL_LINEAR );
-	
-	//state.SetField ( -1, "POW_TWO", ( u32 )USImageTransform::POW_TWO ); // TODO: still not sold we should offet this 'feature'
-	state.SetField ( -1, "QUANTIZE", ( u32 )USImageTransform::QUANTIZE );
-	state.SetField ( -1, "TRUECOLOR", ( u32 )USImageTransform::TRUECOLOR );
-	state.SetField ( -1, "PREMULTIPLY_ALPHA", ( u32 )USImageTransform::PREMULTIPLY_ALPHA );
 }
 
 //----------------------------------------------------------------//

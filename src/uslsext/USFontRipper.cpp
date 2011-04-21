@@ -228,14 +228,14 @@ void USFontRipper::RipAndReturn ( USFont& font, USImage& image, cc8* charCodes )
 //----------------------------------------------------------------//
 void USFontRipper::RipAndReturn ( USData& inData, USFont& font, USImage& image, cc8* charCodes ) {
 
-	this->mInBmp.Init ( inData );
+	this->mInBmp.Load ( inData );
 	this->RipAndReturn ( font, image, charCodes );
 }
 
 //----------------------------------------------------------------//
 void USFontRipper::RipAndReturn ( cc8* inFile, USFont& font, USImage& image, cc8* charCodes ) {
 
-	this->mInBmp.Init ( inFile );
+	this->mInBmp.Load ( inFile );
 	this->RipAndReturn ( font, image, charCodes );
 }
 

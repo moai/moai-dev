@@ -32,20 +32,18 @@ public:
 		this->mDone = true;
 		this->mTransform |= transform;
 	
-		if ( this->mImage.IsOK ()) {
-			
-			this->mImage.Transform ( this->mTransform );
-		}
-		else {
+		if ( !this->mImage.IsOK ()) {
 	
 			if ( this->mFileData ) {
-				this->mImage.Init ( this->mFileData, this->mFileDataSize, this->mTransform );
+				this->mImage.Load ( this->mFileData, this->mFileDataSize, this->mTransform );
 				free ( this->mFileData );
 				this->mFileData = 0;
 			}
 			else if ( mFilename.size ()) {
-				this->mImage.Init ( this->mFilename, this->mTransform );
+				this->mImage.Load ( this->mFilename, this->mTransform );
 			}
+			
+			
 		}
 		
 		if ( this->mImage.IsOK ()) {
@@ -145,9 +143,6 @@ void USTexture::CreateTexture ( USImage& image ) {
 	this->mWidth = image.GetWidth ();
 	this->mHeight = image.GetHeight ();
 
-	this->mDevWidth = image.GetPaddedWidth ();
-	this->mDevHeight = image.GetPaddedHeight ();
-
 	glGenTextures ( 1, &this->mGLTexID );
 	if ( !this->mGLTexID ) return;
 
@@ -203,8 +198,8 @@ void USTexture::CreateTexture ( USImage& image ) {
 			GL_TEXTURE_2D,
 			0,  
 			this->mGLInternalFormat,
-			this->mDevWidth,  
-			this->mDevHeight,  
+			this->mWidth,  
+			this->mHeight,  
 			0,  
 			this->mGLInternalFormat,
 			this->mGLPixelType,  
@@ -277,20 +272,8 @@ u32 USTexture::GetHeight () {
 }
 
 //----------------------------------------------------------------//
-float USTexture::GetU () {
-
-	return ( float )this->mWidth / ( float )this->mDevWidth;
-}
-
-//----------------------------------------------------------------//
 u32 USTexture::GetWidth () {
 	return this->mWidth;
-}
-
-//----------------------------------------------------------------//
-float USTexture::GetV () {
-
-	return ( float )this->mHeight / ( float )this->mDevHeight;
 }
 
 //----------------------------------------------------------------//
@@ -334,14 +317,13 @@ void USTexture::Init ( const void* data, u32 size, u32 transform ) {
 }
 
 //----------------------------------------------------------------//
-void USTexture::Init ( USImage& image, u32 transform ) {
+void USTexture::Init ( USImage& image ) {
 
 	this->Release ();
 	this->mLoader = new USTextureLoader ();
 	
-	this->mLoader->mTransform = transform;
-	this->mLoader->mImage = image;
-	image.Surrender ();
+	this->mLoader->mTransform = 0;
+	this->mLoader->mImage.Copy ( image );
 	
 	this->Bind ();
 }
@@ -362,9 +344,6 @@ void USTexture::Release () {
 	
 	this->mWidth = 0;
 	this->mHeight = 0;
-	
-	this->mDevWidth = 0;
-	this->mDevHeight = 0;
 	
 	if ( this->mLoader ) {
 		delete this->mLoader;
@@ -396,8 +375,6 @@ USTexture::USTexture () :
 	mGLTexID ( 0 ),
 	mWidth ( 0 ),
 	mHeight ( 0 ),
-	mDevWidth ( 0 ),
-	mDevHeight ( 0 ),
 	mMinFilter ( GL_NEAREST ),
 	mMagFilter ( GL_NEAREST ),
 	mWrap ( GL_CLAMP_TO_EDGE ),
