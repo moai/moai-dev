@@ -98,15 +98,6 @@ USRect MOAIDeck::GetBounds ( u32 idx ) {
 }
 
 //----------------------------------------------------------------//
-u32 MOAIDeck::GetContentAddr ( u32 idx, u32 total ) {
-
-	if ( total ) {
-		return idx % total;
-	}
-	return ( u32 )NO_CONTENT;
-}
-
-//----------------------------------------------------------------//
 MOAIDeck::MOAIDeck () :
 	mContentMask ( 0xffffffff ) {
 	

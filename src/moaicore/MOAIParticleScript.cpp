@@ -3,14 +3,23 @@
 
 #include "pch.h"
 #include <moaicore/MOAILogMessages.h>
+#include <moaicore/MOAIParticle.h>
 #include <moaicore/MOAIParticleScript.h>
-#include <moaicore/MOAIParticleEngine.h>
+#include <moaicore/MOAIParticleSystem.h>
 
-#define IMPL_LUA_PARTICLE_OP(name,opcode,rParams,vParams)										\
-	int MOAIParticleScript::name ( lua_State* L ) {												\
-		MOAI_LUA_SETUP ( MOAIParticleScript, "U" )													\
-		self->ParseInstruction ( state, 2, MOAIParticleEngine::opcode, rParams, vParams );		\
-		return 0;																				\
+#define READ_BYTE(var,bytecode) \
+	var = *( bytecode++ );
+
+#define READ_FLOAT(var,bytecode) \
+	*(( u32* )&var ) = *(( u32* )bytecode ); \
+	bytecode += sizeof ( u32 );
+
+#define IMPL_LUA_PARTICLE_OP(name,opcode,format)								\
+	int MOAIParticleScript::name ( lua_State* L ) {								\
+		MOAI_LUA_SETUP ( MOAIParticleScript, "U" )								\
+		Instruction& instruction = self->PushInstruction ( opcode, format );	\
+		instruction.Parse ( state, 2 );											\
+		return 0;																\
 	}
 
 //================================================================//
@@ -20,55 +29,91 @@
 //----------------------------------------------------------------//
 u32 MOAIParticleScript::Instruction::GetSize () {
 
-	return 2 + this->mTotalRegisters + ( this->mTotalValues * sizeof ( float ));
+	return this->mSize;
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleScript::Instruction::Init ( u32 opcode, u32 nRegisters, u32 nValues ) {
-	this->mOpCode = opcode;
-	this->mTotalRegisters = nRegisters;
-	this->mTotalValues = nValues;
+void MOAIParticleScript::Instruction::Init ( u32 opcode, cc8* format ) {
+	this->mOpcode = opcode;
+	this->mFormat = format;
 }
 
 //----------------------------------------------------------------//
 MOAIParticleScript::Instruction::Instruction () :
-	mOpCount ( 0 ) {
-
-	this->SetRegisters ( 0, 0, 0, 0 );
-	this->SetValues ( 0.0f, 0.0f, 0.0f, 0.0f );
+	mOpcode ( MOAIParticleScript::END ),
+	mFormat ( 0 ),
+	mSize ( 1 ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleScript::Instruction::SetRegisters ( u8 r0, u8 r1, u8 r2, u8 r3 ) {
-	this->mRegisters [ 0 ] = r0;
-	this->mRegisters [ 1 ] = r1;
-	this->mRegisters [ 2 ] = r2;
-	this->mRegisters [ 3 ] = r3;
-}
+void MOAIParticleScript::Instruction::Parse ( USLuaState& state, u32 idx ) {
 
-//----------------------------------------------------------------//
-void MOAIParticleScript::Instruction::SetValues ( float v0, float v1, float v2, float v3 ) {
-	this->mValues [ 0 ] = v0;
-	this->mValues [ 1 ] = v1;
-	this->mValues [ 2 ] = v2;
-	this->mValues [ 3 ] = v3;
+	float v;
+
+	if ( this->mFormat ) {
+		for ( u32 i = 0; this->mFormat [ i ]; ++i ) {
+		
+			cc8 c = this->mFormat [ i ];
+			
+			switch ( c ) {
+
+				case 'P':
+					this->mParams [ i ] = state.GetValue < u32 >( idx++, 1 ) - 1;
+					break;
+				
+				case 'C':
+				case 'R':
+					this->mParams [ i ] = state.GetValue < u32 >( idx++, 0 );
+					break;
+				
+				case 'V':
+					v = state.GetValue < float >( idx++, 0.0f );
+					this->mParams [ i ] = *(( u32* )&v );
+					break;
+			}
+			
+			switch ( c ) {
+				
+				case 'P':
+				case 'R':
+					this->mSize++;
+					break;
+				
+				case 'C':
+				case 'V':
+					this->mSize += sizeof ( u32 );
+					break;
+			}
+		}
+	}
 }
 
 //----------------------------------------------------------------//
 u8* MOAIParticleScript::Instruction::Write ( u8* cursor ) {
 
-	*( cursor++ ) = ( u8 )this->mOpCode;
-	*( cursor++ ) = ( u8 )this->mOpCount;
-	
-	for ( u32 i = 0; i < this->mTotalRegisters; ++i ) {
-		*( cursor++ ) = this->mRegisters [ i ];
-	}
-	
-	for ( u32 i = 0; i < this->mTotalValues; ++i ) {
-		*(( u32* )cursor ) = *(( u32* )&this->mValues [ i ]);
-		cursor += sizeof ( u32 );
-	}
+	*( cursor++ ) = ( u8 )this->mOpcode;
 
+	if ( this->mFormat ) {
+	
+		for ( u32 i = 0; this->mFormat [ i ]; ++i ) {
+				
+			cc8 c = this->mFormat [ i ];
+			
+			switch ( c ) {
+			
+				case 'P':
+				case 'R':
+					*( cursor++ ) = ( u8 )this->mParams [ i ];
+					break;
+				
+				case 'C':
+				case 'V':
+					*(( u32* )cursor ) = this->mParams [ i ];
+					cursor += sizeof ( u32 );
+					break;
+			}
+		}
+	}
 	return cursor;
 }
 
@@ -77,328 +122,32 @@ u8* MOAIParticleScript::Instruction::Write ( u8* cursor ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	abs
-	@text	Particle engine opcode. Pending refactor. New interface and description TBA.
-	@in		MOAIParticleScript self
-	@out	nil
-*/
-IMPL_LUA_PARTICLE_OP ( _abs,				ABS,				1, 0 )
+IMPL_LUA_PARTICLE_OP ( _easeConst, EASE_CONST, "RVVR" )
 
 //----------------------------------------------------------------//
-/**	@name	accAttractor
-	@text	Particle engine opcode. Pending refactor. New interface and description TBA.
-	@in		MOAIParticleScript self
-	@out	nil
-*/
-IMPL_LUA_PARTICLE_OP ( _accAttractor,		ACC_ATTRACTOR,		3, 2 )
+IMPL_LUA_PARTICLE_OP ( _easeVar, EASE_VAR, "RPPRVV" )
 
 //----------------------------------------------------------------//
-/**	@name	accForces
-	@text	Particle engine opcode. Pending refactor. New interface and description TBA.
-	@in		MOAIParticleScript self
-	@out	nil
-*/
-IMPL_LUA_PARTICLE_OP ( _accForces,			ACC_FORCES,			2, 0 )
+IMPL_LUA_PARTICLE_OP ( _initConst, INIT_CONST, "PV" )
 
 //----------------------------------------------------------------//
-/**	@name	accLinear
-	@text	Particle engine opcode. Pending refactor. New interface and description TBA.
-	@in		MOAIParticleScript self
-	@out	nil
-*/
-IMPL_LUA_PARTICLE_OP ( _accLinear,			ACC_LINEAR,			1, 2 )
+IMPL_LUA_PARTICLE_OP ( _initRand, INIT_RAND, "PVV" )
 
 //----------------------------------------------------------------//
-/**	@name	add
-	@text	Particle engine opcode. Pending refactor. New interface and description TBA.
-	@in		MOAIParticleScript self
-	@out	nil
-*/
-IMPL_LUA_PARTICLE_OP ( _add,				ADD,				2, 0 )
+IMPL_LUA_PARTICLE_OP ( _initRandVec, INIT_RAND_VEC, "PPVV" )
 
 //----------------------------------------------------------------//
-/**	@name	damp
-	@text	Particle engine opcode. Pending refactor. New interface and description TBA.
-	@in		MOAIParticleScript self
-	@out	nil
-*/
-IMPL_LUA_PARTICLE_OP ( _damp,				DAMP,				2, 0 )
+IMPL_LUA_PARTICLE_OP ( _randConst, RAND_CONST, "RVV" )
 
 //----------------------------------------------------------------//
-/**	@name	div
-	@text	Particle engine opcode. Pending refactor. New interface and description TBA.
-	@in		MOAIParticleScript self
-	@out	nil
-*/
-IMPL_LUA_PARTICLE_OP ( _div,				DIV,				2, 0 )
+IMPL_LUA_PARTICLE_OP ( _randVar, RAND_VAR, "RPPVV" )
 
 //----------------------------------------------------------------//
-/**	@name	ease
-	@text	Particle engine opcode. Pending refactor. New interface and description TBA.
-	@in		MOAIParticleScript self
-	@out	nil
-*/
-IMPL_LUA_PARTICLE_OP ( _ease,				EASE,				2, 0 )
+IMPL_LUA_PARTICLE_OP ( _setConst, SET_CONST, "RV" )
 
 //----------------------------------------------------------------//
-/**	@name	initLoc
-	@text	Particle engine opcode. Pending refactor. New interface and description TBA.
-	@in		MOAIParticleScript self
-	@out	nil
-*/
-IMPL_LUA_PARTICLE_OP ( _initLoc,			INIT_LOC,			1, 0 )
+IMPL_LUA_PARTICLE_OP ( _sprite, SPRITE, "" )
 
-//----------------------------------------------------------------//
-/**	@name	initTime
-	@text	Particle engine opcode. Pending refactor. New interface and description TBA.
-	@in		MOAIParticleScript self
-	@out	nil
-*/
-IMPL_LUA_PARTICLE_OP ( _initTime,			INIT_TIME,			1, 0 )
-
-//----------------------------------------------------------------//
-/**	@name	initVec
-	@text	Particle engine opcode. Pending refactor. New interface and description TBA.
-	@in		MOAIParticleScript self
-	@out	nil
-*/
-IMPL_LUA_PARTICLE_OP ( _initVec,			INIT_VEC,			1, 0 )
-
-//----------------------------------------------------------------//
-/**	@name	loadAge
-	@text	Particle engine opcode. Pending refactor. New interface and description TBA.
-	@in		MOAIParticleScript self
-	@out	nil
-*/
-IMPL_LUA_PARTICLE_OP ( _loadAge,			LOAD_AGE,			1, 0 )
-
-//----------------------------------------------------------------//
-/**	@name	loadDuration
-	@text	Particle engine opcode. Pending refactor. New interface and description TBA.
-	@in		MOAIParticleScript self
-	@out	nil
-*/
-IMPL_LUA_PARTICLE_OP ( _loadDuration,		LOAD_DURATION,		1, 0 )
-
-//----------------------------------------------------------------//
-/**	@name	loadStep
-	@text	Particle engine opcode. Pending refactor. New interface and description TBA.
-	@in		MOAIParticleScript self
-	@out	nil
-*/
-IMPL_LUA_PARTICLE_OP ( _loadStep,			LOAD_STEP,			1, 0 )
-
-//----------------------------------------------------------------//
-/**	@name	loadTime
-	@text	Particle engine opcode. Pending refactor. New interface and description TBA.
-	@in		MOAIParticleScript self
-	@out	nil
-*/
-IMPL_LUA_PARTICLE_OP ( _loadTime,			LOAD_TIME,			1, 0 )
-
-//----------------------------------------------------------------//
-/**	@name	mac
-	@text	Particle engine opcode. Pending refactor. New interface and description TBA.
-	@in		MOAIParticleScript self
-	@out	nil
-*/
-IMPL_LUA_PARTICLE_OP ( _mac,				MAC,				4, 0 )
-
-//----------------------------------------------------------------//
-/**	@name	mov
-	@text	Particle engine opcode. Pending refactor. New interface and description TBA.
-	@in		MOAIParticleScript self
-	@out	nil
-*/
-IMPL_LUA_PARTICLE_OP ( _mov,				MOV,				2, 0 )
-
-//----------------------------------------------------------------//
-/**	@name	mul
-	@text	Particle engine opcode. Pending refactor. New interface and description TBA.
-	@in		MOAIParticleScript self
-	@out	nil
-*/
-IMPL_LUA_PARTICLE_OP ( _mul,				MUL,				2, 0 )
-
-//----------------------------------------------------------------//
-/**	@name	rand
-	@text	Particle engine opcode. Pending refactor. New interface and description TBA.
-	@in		MOAIParticleScript self
-	@out	nil
-*/
-IMPL_LUA_PARTICLE_OP ( _rand,				RAND,				1, 2 )
-
-//----------------------------------------------------------------//
-/**	@name	scale
-	@text	Particle engine opcode. Pending refactor. New interface and description TBA.
-	@in		MOAIParticleScript self
-	@out	nil
-*/
-IMPL_LUA_PARTICLE_OP ( _scale,				SCALE,				2, 0 )
-
-//----------------------------------------------------------------//
-/**	@name	scaleAdd
-	@text	Particle engine opcode. Pending refactor. New interface and description TBA.
-	@in		MOAIParticleScript self
-	@out	nil
-*/
-IMPL_LUA_PARTICLE_OP ( _scaleAdd,			SCALE_ADD,			2, 0 )
-
-//----------------------------------------------------------------//
-/**	@name	setDuration
-	@text	Particle engine opcode. Pending refactor. New interface and description TBA.
-	@in		MOAIParticleScript self
-	@out	nil
-*/
-IMPL_LUA_PARTICLE_OP ( _setDuration,		SET_DURATION,		1, 0 )
-
-//----------------------------------------------------------------//
-/**	@name	sprite
-	@text	Particle engine opcode. Pending refactor. New interface and description TBA.
-	@in		MOAIParticleScript self
-	@out	nil
-*/
-IMPL_LUA_PARTICLE_OP ( _sprite,				SPRITE,				0, 0 )
-
-//----------------------------------------------------------------//
-/**	@name	spriteAlpha
-	@text	Particle engine opcode. Pending refactor. New interface and description TBA.
-	@in		MOAIParticleScript self
-	@out	nil
-*/
-IMPL_LUA_PARTICLE_OP ( _spriteAlpha,		SPRITE_ALPHA,		1, 0 )
-
-//----------------------------------------------------------------//
-/**	@name	spriteColor
-	@text	Particle engine opcode. Pending refactor. New interface and description TBA.
-	@in		MOAIParticleScript self
-	@out	nil
-*/
-IMPL_LUA_PARTICLE_OP ( _spriteColor,		SPRITE_COLOR,		1, 0 )
-
-//----------------------------------------------------------------//
-/**	@name	spriteGlow
-	@text	Particle engine opcode. Pending refactor. New interface and description TBA.
-	@in		MOAIParticleScript self
-	@out	nil
-*/
-IMPL_LUA_PARTICLE_OP ( _spriteGlow,			SPRITE_GLOW,		1, 0 )
-
-//----------------------------------------------------------------//
-/**	@name	spriteIdx
-	@text	Particle engine opcode. Pending refactor. New interface and description TBA.
-	@in		MOAIParticleScript self
-	@out	nil
-*/
-IMPL_LUA_PARTICLE_OP ( _spriteIdx,			SPRITE_IDX,			1, 0 )
-
-//----------------------------------------------------------------//
-/**	@name	spriteLoc
-	@text	Particle engine opcode. Pending refactor. New interface and description TBA.
-	@in		MOAIParticleScript self
-	@out	nil
-*/
-IMPL_LUA_PARTICLE_OP ( _spriteLoc,			SPRITE_LOC,			1, 0 )
-
-//----------------------------------------------------------------//
-/**	@name	spriteRot
-	@text	Particle engine opcode. Pending refactor. New interface and description TBA.
-	@in		MOAIParticleScript self
-	@out	nil
-*/
-IMPL_LUA_PARTICLE_OP ( _spriteRot,			SPRITE_ROT,			1, 0 )
-
-//----------------------------------------------------------------//
-/**	@name	spriteScale
-	@text	Particle engine opcode. Pending refactor. New interface and description TBA.
-	@in		MOAIParticleScript self
-	@out	nil
-*/
-IMPL_LUA_PARTICLE_OP ( _spriteScale,		SPRITE_SCALE,		1, 0 )
-
-//----------------------------------------------------------------//
-/**	@name	spriteSize
-	@text	Particle engine opcode. Pending refactor. New interface and description TBA.
-	@in		MOAIParticleScript self
-	@out	nil
-*/
-IMPL_LUA_PARTICLE_OP ( _spriteSize,			SPRITE_SIZE,		1, 0 )
-
-//----------------------------------------------------------------//
-/**	@name	stepEuler
-	@text	Particle engine opcode. Pending refactor. New interface and description TBA.
-	@in		MOAIParticleScript self
-	@out	nil
-*/
-IMPL_LUA_PARTICLE_OP ( _stepEuler,			STEP_EULER,			3, 0 )
-
-//----------------------------------------------------------------//
-/**	@name	sub
-	@text	Particle engine opcode. Pending refactor. New interface and description TBA.
-	@in		MOAIParticleScript self
-	@out	nil
-*/
-IMPL_LUA_PARTICLE_OP ( _sub,				SUB,				2, 0 )
-
-//----------------------------------------------------------------//
-/**	@name	subFromOne
-	@text	Particle engine opcode. Pending refactor. New interface and description TBA.
-	@in		MOAIParticleScript self
-	@out	nil
-*/
-IMPL_LUA_PARTICLE_OP ( _subFromOne,			SUB_FROM_ONE,		1, 0 )
-
-//----------------------------------------------------------------//
-/**	@name	vec2Rand
-	@text	Particle engine opcode. Pending refactor. New interface and description TBA.
-	@in		MOAIParticleScript self
-	@out	nil
-*/
-IMPL_LUA_PARTICLE_OP ( _vec2Rand,			VEC2_RAND,			1, 2 )
-
-//----------------------------------------------------------------//
-/**	@name	load
-	@text	Particle engine opcode. Pending refactor. New interface and description TBA.
-	@in		MOAIParticleScript self
-	@out	nil
-*/
-int MOAIParticleScript::_load ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIParticleScript, "UNN" )
-	
-	int top = state.GetTop ();
-	u32 n = 1;
-	
-	if ( top >= 4 ) {
-		n++;
-	}
-	
-	if ( top >= 5 ) {
-		n++;
-	}
-	
-	if ( top >= 6 ) {
-		n++;
-	}
-	
-	Instruction& instruction = self->WriteOp ( MOAIParticleEngine::LOAD, 1, n );
-	instruction.mOpCount = n;
-	
-	instruction.SetRegisters (
-		( u8 )state.GetValue < u32 >( 2, 0 ),
-		0,
-		0,
-		0
-	);
-	
-	instruction.SetValues (
-		( float )state.GetValue < float >( 3, 0.0f ),
-		( float )state.GetValue < float >( 4, 0.0f ),
-		( float )state.GetValue < float >( 5, 0.0f ),
-		( float )state.GetValue < float >( 6, 0.0f )
-	);
-	
-	return 0;
-}
 //================================================================//
 // MOAIParticleScript
 //================================================================//
@@ -407,10 +156,10 @@ int MOAIParticleScript::_load ( lua_State* L ) {
 u8* MOAIParticleScript::Compile () {
 
 	if ( this->mCompiled ) return this->mBytecode;
-	this->mCompiled = true;
+	
 
 	Instruction end;
-	end.Init ( MOAIParticleEngine::END, 0, 0 );
+	end.Init ( END, "" );
 
 	u32 size = 0;
 	FOREACH ( InstructionIt, instructionIt, this->mInstructions ) {
@@ -429,11 +178,7 @@ u8* MOAIParticleScript::Compile () {
 	end.Write ( cursor );
 	
 	this->mInstructions.clear ();
-	return this->mBytecode;
-}
-
-//----------------------------------------------------------------//
-u8* MOAIParticleScript::GetBytecode () {
+	this->mCompiled = true;
 	return this->mBytecode;
 }
 
@@ -447,70 +192,80 @@ MOAIParticleScript::MOAIParticleScript () :
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleScript::ParseInstruction ( USLuaState& state, u32 idx, u32 op, u32 rParams, u32 vParams ) {
-
-	Instruction& instruction = this->WriteOp ( op, rParams, vParams );
-
-	for ( u32 i = 0; i < rParams; ++i ) {
-		instruction.mRegisters [ i ] = ( u8 )state.GetValue < u32 >( idx++, 0 );
-	}
-	
-	for ( u32 i = 0; i < vParams; ++i ) {
-		instruction.mValues [ i ] = state.GetValue < float >( idx++, 0 );
-	}
-	
-	instruction.mOpCount = state.GetValue < u32 >( idx++, 1 );
-}
-
-//----------------------------------------------------------------//
 MOAIParticleScript::~MOAIParticleScript () {
 }
 
 //----------------------------------------------------------------//
+MOAIParticleScript::Instruction& MOAIParticleScript::PushInstruction ( u32 op, cc8* format ) {
+
+	Instruction instruction;
+	instruction.Init ( op, format );
+	
+	this->mInstructions.push_back ( instruction );
+	return this->mInstructions.back ();
+}
+
+//----------------------------------------------------------------//
+void MOAIParticleScript::PushSprite ( MOAIParticleSystem& system, MOAIParticle& particle, float* registers ) {
+
+	MOAIParticleSprite sprite;
+
+	particle.mOffset.mX	= registers [ X_OFF ];
+	particle.mOffset.mY	= registers [ Y_OFF ];
+
+	sprite.mLoc.mX		= particle.mLoc.mX + registers [ X_OFF ];
+	sprite.mLoc.mY		= particle.mLoc.mY + registers [ Y_OFF ];
+	
+	sprite.mRot			= registers [ ROT ];
+	
+	sprite.mScl.mX		= registers [ X_SCL ];
+	sprite.mScl.mY		= registers [ Y_SCL ];
+	
+	float fade			= registers [ OPACITY ];
+	float glow			= 1.0f - registers [ GLOW ];
+	
+	sprite.mColor.Set (
+		registers [ R ] * fade,
+		registers [ G ] * fade,
+		registers [ B ] * fade,
+		registers [ A ] * fade * glow
+	);
+	
+	sprite.mGfxID = USFloat::ToInt ( registers [ IDX ]);
+	
+	system.PushSprite ( sprite );
+}
+
+//----------------------------------------------------------------//
 void MOAIParticleScript::RegisterLuaClass ( USLuaState& state ) {
-	UNUSED ( state );
+
+	state.SetField ( -1, "SPRITE_X_OFF",	( u32 )X_OFF );
+	state.SetField ( -1, "SPRITE_Y_OFF",	( u32 )Y_OFF );
+	state.SetField ( -1, "SPRITE_ROT",		( u32 )ROT );
+	state.SetField ( -1, "SPRITE_X_SCL",	( u32 )X_SCL );
+	state.SetField ( -1, "SPRITE_Y_SCL",	( u32 )Y_SCL );
+	state.SetField ( -1, "SPRITE_RED",		( u32 )R );
+	state.SetField ( -1, "SPRITE_GREEN",	( u32 )G );
+	state.SetField ( -1, "SPRITE_BLUE",		( u32 )B );
+	state.SetField ( -1, "SPRITE_ALPHA",	( u32 )A );
+	state.SetField ( -1, "SPRITE_OPACITY",	( u32 )OPACITY );
+	state.SetField ( -1, "SPRITE_GLOW",		( u32 )GLOW );
+	state.SetField ( -1, "SPRITE_IDX",		( u32 )IDX );
 }
 
 //----------------------------------------------------------------//
 void MOAIParticleScript::RegisterLuaFuncs ( USLuaState& state ) {
 	
 	luaL_Reg regTable [] = {
-		{ "abs",				_abs },
-		{ "accAttractor",		_accAttractor },
-		{ "accForces",			_accForces },
-		{ "accLinear",			_accLinear },
-		{ "add",				_add },
-		{ "damp",				_damp },
-		{ "div",				_div },
-		{ "ease",				_ease },
-		{ "initLoc",			_initLoc },
-		{ "initTime",			_initTime },
-		{ "initVec",			_initVec },
-		{ "load",				_load },
-		{ "loadAge",			_loadAge },
-		{ "loadDuration",		_loadDuration },
-		{ "loadStep",			_loadStep },
-		{ "loadTime",			_loadTime },
-		{ "mac",				_mac },
-		{ "mov",				_mov },
-		{ "mul",				_mul },
-		{ "rand",				_rand },
-		{ "scale",				_scale },
-		{ "scaleAdd",			_scaleAdd },
-		{ "setDuration",		_setDuration },
+		{ "easeConst",			_easeConst },
+		{ "easeVar",			_easeVar },
+		{ "initConst",			_initConst },
+		{ "initRand",			_initRand },
+		{ "initRandVec",		_initRandVec },
+		{ "randConst",			_randConst },
+		{ "randVar",			_randVar },
+		{ "setConst",			_setConst },
 		{ "sprite",				_sprite },
-		{ "spriteAlpha",		_spriteAlpha },
-		{ "spriteColor",		_spriteColor },
-		{ "spriteGlow",			_spriteGlow },
-		{ "spriteIdx",			_spriteIdx },
-		{ "spriteLoc",			_spriteLoc },
-		{ "spriteRot",			_spriteRot },
-		{ "spriteScale",		_spriteScale },
-		{ "spriteSize",			_spriteSize },
-		{ "stepEuler",			_stepEuler },
-		{ "sub",				_sub },
-		{ "subFromOne",			_subFromOne },
-		{ "vec2Rand",			_vec2Rand },
 		{ NULL, NULL }
 	};
 	
@@ -518,37 +273,173 @@ void MOAIParticleScript::RegisterLuaFuncs ( USLuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleScript::WriteBinaryRegOp ( u32 op, u32 r0, u32 r1 ) {
+void MOAIParticleScript::ResetRegisters ( float* registers ) {
 
-	Instruction instruction;
-	instruction.Init ( op, 2, 0 );
-	
-	instruction.SetRegisters (( u8 )r0, ( u8 )r1, 0, 0 );
-	instruction.SetValues ( 0.0f, 0.0f, 0.0f, 0.0f );
-	
-	this->mInstructions.push_back ( instruction );
+	registers [ X_OFF ]		= 0.0f;
+	registers [ Y_OFF ]		= 0.0f;
+	registers [ ROT ]		= 0.0f;
+	registers [ X_SCL ]		= 1.0f;
+	registers [ Y_SCL ]		= 1.0f;
+	registers [ R ]			= 1.0f;
+	registers [ G ]			= 1.0f;
+	registers [ B ]			= 1.0f;
+	registers [ A ]			= 1.0f;
+	registers [ OPACITY ]	= 1.0f;
+	registers [ GLOW ]		= 0.0f;
+	registers [ IDX ]		= 1.0f;
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleScript::WriteBinaryValOp ( u32 op, u32 r0, float v0 ) {
+void MOAIParticleScript::Run ( MOAIParticleSystem& system, MOAIParticle& particle ) {
 
-	Instruction instruction;
-	instruction.Init ( op, 1, 1 );
-	
-	instruction.SetRegisters (( u8 )r0, 0, 0, 0 );
-	instruction.SetValues ( v0, 0.0f, 0.0f, 0.0f );
-	
-	this->mInstructions.push_back ( instruction );
-}
+	u8* bytecode = this->mBytecode;
+	if ( !bytecode ) return;
 
-//----------------------------------------------------------------//
-MOAIParticleScript::Instruction& MOAIParticleScript::WriteOp ( u32 op, u32 nRegisters, u32 nValues ) {
-
-	Instruction instruction;
-	instruction.Init ( op, nRegisters, nValues );
+	float t = particle.mAge / particle.mTerm;
+	u8 r0, r1, r2, r3;
+	float v0, v1, v2, v3;
+	float p0, p1;
 	
-	this->mInstructions.push_back ( instruction );
-	return this->mInstructions.back ();
+	u32 nParams = system.mParticleSize;
+	float* params = particle.mData;
+	
+	MOAIParticleSprite sprite;
+	float r [ TOTAL ];
+
+	bool push = false;
+	
+	for ( u8 opcode = *( bytecode++ ); opcode != END; opcode = *( bytecode++ )) {
+		
+		switch ( opcode ) {
+			
+			case EASE_CONST: // RVVR
+			
+				READ_BYTE ( r0, bytecode ); // register
+				READ_FLOAT ( v0, bytecode ); // v0
+				READ_FLOAT ( v1, bytecode ); // v1
+				READ_BYTE ( r1, bytecode ); // ease type
+				
+				if ( r0 < TOTAL ) {
+					r [ r0 ] = USInterpolate::Interpolate ( r1, v0, v1, t );
+				}
+				break;
+			
+			case EASE_VAR: // RPPRVV
+			
+				READ_BYTE ( r0, bytecode ); // register
+				READ_BYTE ( r1, bytecode ); // r0
+				READ_BYTE ( r2, bytecode ); // r1
+				READ_BYTE ( r3, bytecode ); // ease type
+				
+				READ_FLOAT ( v0, bytecode ); // add
+				READ_FLOAT ( v1, bytecode ); // scale
+				
+				if ( r0 < TOTAL ) {
+				
+					p0 = r1 < nParams ? params [ r1 ] : 0.0f;
+					p1 = r2 < nParams ? params [ r2 ] : 0.0f;
+				
+					r [ r0 ] = v0 + ( USInterpolate::Interpolate ( r3, p0, p1, t ) * v1 );
+				}
+				break;
+			
+			case INIT_CONST: // PVV
+			
+				READ_BYTE ( r0, bytecode ); // param
+				
+				READ_FLOAT ( v0, bytecode );
+				
+				if ( r0 < nParams ) {
+					params [ r0 ] = v0;
+				}
+				break;
+			
+			case INIT_RAND: // PVV
+			
+				READ_BYTE ( r0, bytecode ); // param
+				
+				READ_FLOAT ( v0, bytecode );
+				READ_FLOAT ( v1, bytecode );
+				
+				if ( r0 < nParams ) {
+					params [ r0 ] = USFloat::Rand ( v0, v1 );
+				}
+				break;
+			
+			case INIT_RAND_VEC: // PPVV
+			
+				READ_BYTE ( r0, bytecode ); // param1
+				READ_BYTE ( r1, bytecode ); // param2
+				
+				READ_FLOAT ( v0, bytecode );
+				READ_FLOAT ( v1, bytecode );
+				
+				v2 = USFloat::Rand ( 360.0f ) * ( float )D2R;
+				v3 = USFloat::Rand ( v0, v1 );
+				
+				if ( r0 < nParams ) {
+					params [ r0 ] = Cos ( v2 ) * v3;
+				}
+				
+				if ( r1 < nParams ) {
+					params [ r1 ] = -Sin ( v2 ) * v3;
+				}
+				break;
+			
+			case RAND_CONST: // RVV
+			
+				READ_BYTE ( r0, bytecode ); // register
+				
+				READ_FLOAT ( v0, bytecode ); // v0
+				READ_FLOAT ( v1, bytecode ); // v1
+				
+				if ( r0 < TOTAL ) {
+					r [ r0 ] = USFloat::Rand ( v0, v1 );
+				}
+				break;
+			
+			case RAND_VAR: // RPPVV
+			
+				READ_BYTE ( r0, bytecode ); // register
+				READ_BYTE ( r1, bytecode );
+				READ_BYTE ( r2, bytecode );
+				
+				READ_FLOAT ( v0, bytecode ); // add
+				READ_FLOAT ( v1, bytecode ); // scale
+				
+				if ( r0 < TOTAL ) {
+					
+					p0 = r1 < nParams ? params [ r1 ] : 0.0f;
+					p1 = r2 < nParams ? params [ r2 ] : 0.0f;
+				
+					r [ r0 ] = v0 + ( USFloat::Rand ( p0, p1 ) * v1 );
+				}
+				break;
+			
+			case SET_CONST: // RV
+			
+				READ_BYTE ( r0, bytecode ); // register
+				READ_FLOAT ( v0, bytecode ); // v0
+				
+				if ( r0 < TOTAL ) {
+					r [ r0 ] = v0;
+				}
+				break;
+			
+			case SPRITE: //
+			
+				if ( push ) {
+					this->PushSprite ( system, particle, r );
+				}
+				this->ResetRegisters ( r );
+				push = true;
+				break;
+		}
+	}
+	
+	if ( push ) {
+		this->PushSprite ( system, particle, r );
+	}
 }
 
 //----------------------------------------------------------------//

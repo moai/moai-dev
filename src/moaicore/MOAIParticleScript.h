@@ -4,6 +4,9 @@
 #ifndef	MOAIPARTICLESCRIPT_H
 #define	MOAIPARTICLESCRIPT_H
 
+class MOAIParticle;
+class MOAIParticleSystem;
+
 //================================================================//
 // MOAIParticleScript
 //================================================================//
@@ -14,23 +17,53 @@ class MOAIParticleScript :
 	public virtual USLuaObject {
 private:
 	
+	friend class MOAIParticleState;
+	
+	enum {
+		X_OFF,
+		Y_OFF,
+		ROT,
+		X_SCL,
+		Y_SCL,
+		R,
+		G,
+		B,
+		A,
+		OPACITY,
+		GLOW,
+		IDX,
+		TOTAL,
+	};
+	
+	enum {
+		END = 0,
+		EASE_CONST,
+		EASE_VAR,
+		INIT_CONST,
+		INIT_RAND,
+		INIT_RAND_VEC,
+		RAND_CONST,
+		RAND_VAR,
+		SET_CONST,
+		SPRITE,
+	};
+	
 	//----------------------------------------------------------------//
 	class Instruction {
 	public:
-	
-		u32		mOpCode;
-		u32		mOpCount;
-		u8		mRegisters [ 4 ];
-		float	mValues [ 4 ];
-		u32		mTotalRegisters;
-		u32		mTotalValues;
+		
+		static const u32 MAX_PARAMS = 8;
+		
+		u32		mOpcode;
+		u32		mParams [ MAX_PARAMS ];
+		cc8*	mFormat;
+		u32		mSize;
 		
 		//----------------------------------------------------------------//
 		u32		GetSize			();
-		void	Init			( u32 opcode, u32 nRegisters, u32 nValues );
+		void	Init			( u32 opcode, cc8* format );
 				Instruction		();
-		void	SetRegisters	( u8 r0, u8 r1, u8 r2, u8 r3 );
-		void	SetValues		( float v0, float v1, float v2, float v3 );
+		void	Parse			( USLuaState& state, u32 idx );
 		u8*		Write			( u8* cursor );
 	};
 
@@ -41,48 +74,20 @@ private:
 	bool mCompiled;
 
 	//----------------------------------------------------------------//
-	static int		_abs				( lua_State* L );
-	static int		_accAttractor		( lua_State* L );
-	static int		_accForces			( lua_State* L );
-	static int		_accLinear			( lua_State* L );
-	static int		_add				( lua_State* L );
-	static int		_damp				( lua_State* L );
-	static int		_div				( lua_State* L );
-	static int		_ease				( lua_State* L );
-	static int		_initLoc			( lua_State* L );
-	static int		_initTime			( lua_State* L );
-	static int		_initVec			( lua_State* L );
-	static int		_load				( lua_State* L );
-	static int		_loadAge			( lua_State* L );
-	static int		_loadDuration		( lua_State* L );
-	static int		_loadStep			( lua_State* L );
-	static int		_loadTime			( lua_State* L );
-	static int		_mac				( lua_State* L );
-	static int		_mov				( lua_State* L );
-	static int		_mul				( lua_State* L );
-	static int		_rand				( lua_State* L );
-	static int		_scale				( lua_State* L );
-	static int		_scaleAdd			( lua_State* L );
-	static int		_setDuration		( lua_State* L );
+	static int		_easeConst			( lua_State* L );
+	static int		_easeVar			( lua_State* L );
+	static int		_initConst			( lua_State* L );
+	static int		_initRand			( lua_State* L );
+	static int		_initRandVec		( lua_State* L );
+	static int		_randConst			( lua_State* L );
+	static int		_randVar			( lua_State* L );
+	static int		_setConst			( lua_State* L );
 	static int		_sprite				( lua_State* L );
-	static int		_spriteAlpha		( lua_State* L );
-	static int		_spriteColor		( lua_State* L );
-	static int		_spriteGlow			( lua_State* L );
-	static int		_spriteIdx			( lua_State* L );
-	static int		_spriteLoc			( lua_State* L );
-	static int		_spriteRot			( lua_State* L );
-	static int		_spriteScale		( lua_State* L );
-	static int		_spriteSize			( lua_State* L );
-	static int		_stepEuler			( lua_State* L );
-	static int		_sub				( lua_State* L );
-	static int		_subFromOne			( lua_State* L );
-	static int		_vec2Rand			( lua_State* L );
 	
 	//----------------------------------------------------------------//
-	void			ParseInstruction		( USLuaState& state, u32 idx, u32 op, u32 rParams, u32 vParams );
-	void			WriteBinaryRegOp		( u32 op, u32 r0, u32 r1 );
-	void			WriteBinaryValOp		( u32 op, u32 r0, float v0 );
-	Instruction&	WriteOp					( u32 op, u32 nRegisters, u32 nValues );
+	Instruction&	PushInstruction			( u32 op, cc8* format );
+	void			PushSprite				( MOAIParticleSystem& system, MOAIParticle& particle, float* registers );
+	void			ResetRegisters			( float* registers );
 
 public:
 	
@@ -90,11 +95,11 @@ public:
 	
 	//----------------------------------------------------------------//
 	u8*				Compile					();
-	u8*				GetBytecode				();
 					MOAIParticleScript		();
 					~MOAIParticleScript		();
 	void			RegisterLuaClass		( USLuaState& state );
 	void			RegisterLuaFuncs		( USLuaState& state );
+	void			Run						( MOAIParticleSystem& system, MOAIParticle& particle );
 	STLString		ToString				();
 };
 

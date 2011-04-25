@@ -4,10 +4,10 @@
 #include "pch.h"
 #include <moaicore/MOAIDeck.h>
 #include <moaicore/MOAILogMessages.h>
-#include <moaicore/MOAIParticleEngine.h>
 #include <moaicore/MOAIParticleForce.h>
 #include <moaicore/MOAIParticleScript.h>
 #include <moaicore/MOAIParticleState.h>
+#include <moaicore/MOAIParticleSystem.h>
 
 class MOAIDataBuffer;
 
@@ -31,42 +31,6 @@ int MOAIParticleState::_clearForces ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	init
-	@text	Sets the init, update and render scripts.
-	
-	@in		MOAIParticleState self
-	@in		MOAIParticleScript init
-	@in		MOAIParticleScript update
-	@in		MOAIParticleScript render
-	@out	nil
-*/
-int MOAIParticleState::_init ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIParticleState, "UUUU" )
-	
-	MOAIParticleScript* init		= state.GetLuaObject < MOAIParticleScript >( 2 );
-	MOAIParticleScript* update		= state.GetLuaObject < MOAIParticleScript >( 3 );
-	MOAIParticleScript* render		= state.GetLuaObject < MOAIParticleScript >( 4 );
-
-	if ( init ) {
-		init->Compile ();
-	}
-
-	if ( update ) {
-		update->Compile ();
-	}
-	
-	if ( render ) {
-		render->Compile ();
-	}
-
-	self->mInit		= init;
-	self->mUpdate	= update;
-	self->mRender	= render;
-
-	return 0;
-}
-
-//----------------------------------------------------------------//
 /**	@name	pushForce
 	@text	Adds a force to the state.
 	
@@ -85,6 +49,40 @@ int MOAIParticleState::_pushForce ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+int MOAIParticleState::_setDamping ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIParticleState, "UN" )
+
+	self->mDamping = state.GetValue < float >( 2, 0.0f );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+int MOAIParticleState::_setInitScript ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIParticleState, "U" )
+
+	MOAIParticleScript* init = state.GetLuaObject < MOAIParticleScript >( 2 );
+
+	init->Compile ();
+	self->mInit = init;
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+int MOAIParticleState::_setMass ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIParticleState, "UN" )
+
+	float m0 = state.GetValue < float >( 2, 0.0f );
+	float m1 = state.GetValue < float >( 3, m0 );
+
+	self->mMassRange [ 0 ] = m0;
+	self->mMassRange [ 1 ] = m1;
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	setNext
 	@text	Sets the next state (if any).
 	
@@ -97,6 +95,31 @@ int MOAIParticleState::_setNext ( lua_State* L ) {
 	
 	self->mNext = state.GetLuaObject < MOAIParticleState >( 2 );
 	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+int MOAIParticleState::_setRenderScript ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIParticleState, "U" )
+
+	MOAIParticleScript* render = state.GetLuaObject < MOAIParticleScript >( 2 );
+
+	render->Compile ();
+	self->mRender = render;
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+int MOAIParticleState::_setTerm ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIParticleState, "UN" )
+
+	float t0 = state.GetValue < float >( 2, 0.0f );
+	float t1 = state.GetValue < float >( 3, t0 );
+
+	self->mTermRange [ 0 ] = t0;
+	self->mTermRange [ 1 ] = t1;
+
 	return 0;
 }
 
@@ -118,29 +141,34 @@ void MOAIParticleState::ClearForces () {
 }
 
 //----------------------------------------------------------------//
-USVec2D MOAIParticleState::GetAcceleration ( const USVec2D& loc ) {
+void MOAIParticleState::InitParticle ( MOAIParticleSystem& system, MOAIParticle& particle ) {
 
-	USVec2D acceleration;
-	USVec2D forceAcceleration;
-	
-	acceleration.Init ( 0.0f, 0.0f );
-	
-	ForceNode* forceNode = this->mForces.Head ();
-	for ( ; forceNode; forceNode = forceNode->Next ()) {
-		MOAIParticleForce* force = forceNode->Data ();
-		
-		forceAcceleration = force->GetAcceleration ( loc );
-		acceleration.Add ( forceAcceleration );
+	if ( this->mInit ) {
+		this->mInit->Run ( system, particle );
 	}
-	return acceleration;
+	
+	particle.mAge = 0.0f;
+	particle.mTerm = USFloat::Rand ( this->mTermRange [ 0 ], this->mTermRange [ 1 ]);
+	particle.mMass = USFloat::Rand ( this->mMassRange [ 0 ], this->mMassRange [ 1 ]);
+	particle.mState = this;
+	
+	particle.mLoc.Add ( particle.mOffset );
+	particle.mOffset.Init ( 0.0f, 0.0f );
 }
 
 //----------------------------------------------------------------//
-MOAIParticleState::MOAIParticleState () {
+MOAIParticleState::MOAIParticleState () :
+	mDamping ( 0.0f ) {
 
 	RTTI_BEGIN
 		RTTI_EXTEND ( USLuaObject )
 	RTTI_END
+	
+	this->mMassRange [ 0 ] = 1.0f;
+	this->mMassRange [ 1 ] = 1.0f;
+	
+	this->mTermRange [ 0 ] = 1.0f;
+	this->mTermRange [ 1 ] = 1.0f;
 }
 
 //----------------------------------------------------------------//
@@ -169,12 +197,66 @@ void MOAIParticleState::RegisterLuaClass ( USLuaState& state ) {
 void MOAIParticleState::RegisterLuaFuncs ( USLuaState& state ) {
 
 	luaL_Reg regTable [] = {
-		{ "clearForces",		_clearForces },
-		{ "init",				_init },
-		{ "pushForce",			_pushForce },
-		{ "setNext",			_setNext },
+		{ "clearForces",			_clearForces },
+		{ "pushForce",				_pushForce },
+		{ "setDamping",				_setDamping },
+		{ "setInitScript",			_setInitScript },
+		{ "setMass",				_setMass },
+		{ "setNext",				_setNext },
+		{ "setRenderScript",		_setRenderScript },
+		{ "setTerm",				_setTerm },
 		{ NULL, NULL }
 	};
 	
 	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAIParticleState::ProcessParticle ( MOAIParticleSystem& system, MOAIParticle& particle, float step ) {
+
+	USVec2D acceleration ( 0.0f, 0.0f );
+	USVec2D offset ( 0.0f, 0.0f );
+
+	particle.mAge += step;
+	if ( particle.mAge >= particle.mTerm ) {
+		
+		if ( this->mNext ) {
+			this->mNext->InitParticle ( system, particle );
+		}
+		else {
+			particle.mState = 0;
+		}
+	}
+	else {
+		
+		ForceNode* forceNode = this->mForces.Head ();
+		for ( ; forceNode; forceNode = forceNode->Next ()) {
+			MOAIParticleForce* particleForce = forceNode->Data ();
+			particleForce->Eval ( particle, acceleration, offset );
+		}
+	}
+	
+	particle.mVelocity.mX += acceleration.mX * step;
+	particle.mVelocity.mY += acceleration.mY * step;
+	
+	particle.mVelocity.Scale ( USFloat::Clamp ( 1.0f - ( this->mDamping * step ), 0.0f, 1.0f ));
+	
+	particle.mLoc.mX += ( particle.mVelocity.mX + offset.mX ) * step;
+	particle.mLoc.mY += ( particle.mVelocity.mY + offset.mY ) * step;
+	
+	if ( this->mRender ) {
+		this->mRender->Run ( system, particle );
+	}
+	else {
+	
+		MOAIParticleSprite sprite;
+		
+		sprite.mLoc.Init ( 0.0f, 0.0f );
+		sprite.mRot = 0.0f;
+		sprite.mScl.Init ( 1.0f, 1.0f );
+		sprite.mColor.Set ( 1.0f, 1.0f, 1.0f, 1.0f );
+		sprite.mGfxID = 1;
+		
+		system.PushSprite ( sprite );
+	}
 }

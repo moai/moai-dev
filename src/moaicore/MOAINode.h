@@ -62,6 +62,7 @@ private:
 	//----------------------------------------------------------------//
 	static int	_clearAttrLink		( lua_State* L );
 	static int	_clearDependency	( lua_State* L );
+	static int	_forceUpdate		( lua_State* L );
 	static int	_getAttr			( lua_State* L );
 	static int	_moveAttr			( lua_State* L );
 	static int	_scheduleUpdate		( lua_State* L );
@@ -101,6 +102,7 @@ public:
 	//----------------------------------------------------------------//
 	void			ClearDependency			( MOAINode& srcNode );
 	void			ClearAttrLink			( int attrID );
+	void			ForceUpdate				();
 					MOAINode				();
 					~MOAINode				();
 	void			RegisterLuaClass		( USLuaState& state );

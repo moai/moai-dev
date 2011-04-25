@@ -230,11 +230,13 @@ void MOAIGfxQuadDeck2D::DrawPatch ( u32 idx, float xOff, float yOff, float xScal
 //----------------------------------------------------------------//
 USRect MOAIGfxQuadDeck2D::GetBounds ( u32 idx ) {
 	
-	idx = idx - 1;
+	u32 size = this->mQuads.Size ();
+	if ( size ) {
+
+		idx = ( idx - 1 ) % size;
 	
-	USGLQuad* quad = this->GetGLQuad ( idx );
-	if ( quad ) {
-		return quad->GetVtxBounds ();
+		USGLQuad& quad = this->mQuads [ idx ];
+		return quad.GetVtxBounds ();
 	}
 	USRect rect;
 	rect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
@@ -244,8 +246,9 @@ USRect MOAIGfxQuadDeck2D::GetBounds ( u32 idx ) {
 //----------------------------------------------------------------//
 USGLQuad* MOAIGfxQuadDeck2D::GetGLQuad ( u32 idx ) {
 
-	idx = this->GetContentAddr ( idx, this->mQuads.Size ());
-	if ( idx != NO_CONTENT ) {
+	u32 size = this->mQuads.Size ();
+	if ( size ) {
+		idx = ( idx - 1 ) % size;
 		return &this->mQuads [ idx ];
 	}
 	return 0;

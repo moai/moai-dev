@@ -69,6 +69,15 @@ int MOAINode::_clearDependency ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+int MOAINode::_forceUpdate ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAINode, "U" );
+
+	self->ForceUpdate ();
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	getAttr
 	@text	Returns the value of the attribute if it exists or nil if it doesn't.
 	
@@ -472,6 +481,12 @@ void MOAINode::ExtendUpdate () {
 }
 
 //----------------------------------------------------------------//
+void MOAINode::ForceUpdate () {
+
+	this->DepNodeUpdate ();
+}
+
+//----------------------------------------------------------------//
 bool MOAINode::IsNodeUpstream ( MOAINode* node ) {
 
 	MOAINode* cursor = this->mPrev;
@@ -529,6 +544,10 @@ void MOAINode::PullAttributes () {
 	MOAIAttrLink* link = this->mPullAttrLinks;	
 	for ( ; link ; link = link->mNextInDest ) {
 		
+		if ( link->mSourceNode->STATE_SCHEDULED ) {
+			link->mSourceNode->DepNodeUpdate ();
+		}
+		
 		if ( link->mDestAttrExists && ( link->mSourceAttrID != NULL_ATTR )) {
 			link->mSourceNode->ApplyAttrOp ( link->mSourceAttrID, getter );
 			setter.Copy ( getter );
@@ -548,6 +567,7 @@ void MOAINode::RegisterLuaFuncs ( USLuaState& state ) {
 	luaL_Reg regTable [] = {
 		{ "clearAttrLink",			_clearAttrLink },
 		{ "clearDependency",		_clearDependency },
+		{ "forceUpdate",			_forceUpdate },
 		{ "getAttr",				_getAttr },
 		{ "moveAttr",				_moveAttr },
 		{ "scheduleUpdate",			_scheduleUpdate },

@@ -42,8 +42,8 @@
 #include <moaicore/MOAINode.h>
 #include <moaicore/MOAINodeMgr.h>
 #include <moaicore/MOAIParser.h>
+#include <moaicore/MOAIParticle.h>
 #include <moaicore/MOAIParticleEmitter.h>
-#include <moaicore/MOAIParticleEngine.h>
 #include <moaicore/MOAIParticleForce.h>
 #include <moaicore/MOAIParticleScript.h>
 #include <moaicore/MOAIParticleState.h>

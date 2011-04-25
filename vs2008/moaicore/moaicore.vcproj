@@ -844,19 +844,15 @@
 			Name="particles"
 			>
 			<File
+				RelativePath="..\..\src\moaicore\MOAIParticle.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\moaicore\MOAIParticleEmitter.cpp"
 				>
 			</File>
 			<File
 				RelativePath="..\..\src\moaicore\MOAIParticleEmitter.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIParticleEngine.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIParticleEngine.h"
 				>
 			</File>
 			<File

@@ -308,7 +308,10 @@ bool MOAIGfxQuadListDeck2D::Bind () {
 //----------------------------------------------------------------//
 bool MOAIGfxQuadListDeck2D::Contains ( u32 idx, const USVec2D& vec ) {
 	
-	if ( idx < this->mSprites.Size ()) {
+	u32 size = this->mSprites.Size ();
+	if ( size ) {
+		
+		idx = ( idx - 1 ) % size;
 		USSprite& brush = this->mSprites [ idx ];
 		
 		for ( u32 i = 0; i < brush.mTotalPairs; ++i ) {

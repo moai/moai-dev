@@ -5,46 +5,13 @@
 #define	MOAIPARTICLESYSTEM_H
 
 #include <moaicore/MOAIAction.h>
+#include <moaicore/MOAIParticle.h>
 #include <moaicore/MOAIProp2D.h>
 
 class MOAIDeck;
 class MOAIParticleEngine;
 class MOAIParticleScript;
 class MOAIParticleState;
-class MOAITexture;
-
-//================================================================//
-// MOAIParticle
-//================================================================//
-class MOAIParticle {
-private:
-	friend class MOAIParticleSystem;
-	friend class MOAIParticleEngine;
-
-	float					mAge;
-	float					mDuration;
-	MOAIParticleState*		mState;
-	u32						mID;
-
-	MOAIParticle*	mNext;
-};
-
-//================================================================//
-// MOAIParticleSprite
-//================================================================//
-class MOAIParticleSprite {
-private:
-	friend class MOAIParticleSystem;
-	friend class MOAIParticleEngine;
-
-	USVec2D		mLoc;
-	float		mRot;
-	USVec2D		mScale;
-	u32			mColor;
-	float		mGlow;
-	
-	u32			mGfxID;
-};
 
 //================================================================//
 // MOAIParticleSystem
@@ -58,21 +25,17 @@ class MOAIParticleSystem :
 private:
 
 	USLeanArray < MOAIParticleState* >	mStates;
-
 	USLeanArray < MOAIParticle >		mParticles;
 	USLeanArray < float >				mParticleData;
 	u32									mParticleSize;
 	
-	MOAIParticle*						mParticle;
 	bool								mCapParticles;
 	bool								mCapSprites;
-	bool								mKill;
 	
 	MOAIParticle*						mHead;
 	MOAIParticle*						mTail;
 	MOAIParticle*						mFree;
 	
-	USLeanArray < float >				mConsts;
 	USLeanArray < MOAIParticleSprite >	mSprites;
 	u32									mSpriteTop;
 	
@@ -83,15 +46,12 @@ private:
 	static int		_getState			( lua_State* L );
 	static int		_pushParticle		( lua_State* L );
 	static int		_pushSprite			( lua_State* L );
-	static int		_reserveConstants	( lua_State* L );
 	static int		_reserveParticles	( lua_State* L );
 	static int		_reserveRects		( lua_State* L );
 	static int		_reserveSprites		( lua_State* L );
 	static int		_reserveStates		( lua_State* L );
-	static int		_setConstant		( lua_State* L );
 	static int		_setSpriteColor		( lua_State* L );
 	static int		_setSpriteDeckIdx	( lua_State* L );
-	static int		_setSpriteGlow		( lua_State* L );
 	static int		_setState			( lua_State* L );
 	static int		_surge				( lua_State* L );
 	
@@ -104,12 +64,13 @@ private:
 	void					LoadParticle			( u32 particleID, float registers []);
 	void					OnUpdate				( float step );
 	u32						PackRegisterIDs			( u8 r0, u8 r1, u8 r2, u8 r3 );
-	bool					PushSprite				( const MOAIParticleSprite& sprite );
 	void					StoreParticle			( u32 particleID, float registers []);
 
 public:
 	
 	friend class MOAIParticleEngine;
+	friend class MOAIParticleScript;
+	friend class MOAIParticleState;
 	
 	DECL_LUA_FACTORY ( MOAIParticleSystem )
 
@@ -121,7 +82,7 @@ public:
 					~MOAIParticleSystem		();
 	bool			PushParticle			( float x, float y );
 	bool			PushParticle			( float x, float y, float dx, float dy );
-	void			ReserveConstants		( u32 total );
+	bool			PushSprite				( const MOAIParticleSprite& sprite );
 	void			RegisterLuaClass		( USLuaState& state );
 	void			RegisterLuaFuncs		( USLuaState& state );
 	void			ReserveParticles		( u32 maxParticles, u32 particleSize );

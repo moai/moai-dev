@@ -4,6 +4,8 @@
 #ifndef	MOAIPARTICLESTATE_H
 #define	MOAIPARTICLESTATE_H
 
+#include <moaicore/MOAIParticle.h>
+
 class MOAIParticleForce;
 class MOAIParticleScript;
 
@@ -21,17 +23,29 @@ private:
 	typedef USLeanLink < MOAIParticleForce* > ForceNode;
 	USLeanList < MOAIParticleForce* > mForces;
 
-	USRef < MOAIParticleScript >	mInit;
-	USRef < MOAIParticleScript >	mUpdate;
-	USRef < MOAIParticleScript >	mRender;
+	float mMassRange [ 2 ];
+	float mTermRange [ 2 ];
 
+	float mDamping;
+
+	USRef < MOAIParticleScript > mInit;
+	USRef < MOAIParticleScript > mRender;
+	
 	USWeak < MOAIParticleState > mNext;
 
 	//----------------------------------------------------------------//
 	static int		_clearForces			( lua_State* L );
-	static int		_init					( lua_State* L );
 	static int		_pushForce				( lua_State* L );
+	static int		_setDamping				( lua_State* L );
+	static int		_setInitScript			( lua_State* L );
+	static int		_setMass				( lua_State* L );
 	static int		_setNext				( lua_State* L );
+	static int		_setRenderScript		( lua_State* L );
+	static int		_setTerm				( lua_State* L );
+
+	//----------------------------------------------------------------//
+	void			InitParticle			( MOAIParticleSystem& system, MOAIParticle& particle );
+	void			ProcessParticle			( MOAIParticleSystem& system, MOAIParticle& particle, float step );
 
 public:
 
@@ -39,7 +53,6 @@ public:
 
 	//----------------------------------------------------------------//
 	void			ClearForces				();
-	USVec2D			GetAcceleration			( const USVec2D& loc );
 					MOAIParticleState		();
 					~MOAIParticleState		();
 	void			PushForce				( MOAIParticleForce& force );
