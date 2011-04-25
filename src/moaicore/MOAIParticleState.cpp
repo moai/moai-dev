@@ -49,6 +49,13 @@ int MOAIParticleState::_pushForce ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	setDamping
+	@text	Sets damping for particle physics model.
+	
+	@in		MOAIParticleState self
+	@in		number damping
+	@out	nil
+*/
 int MOAIParticleState::_setDamping ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIParticleState, "UN" )
 
@@ -58,6 +65,13 @@ int MOAIParticleState::_setDamping ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	setRenderScript
+	@text	Sets the particle script to use for initializing new particles.
+	
+	@in		MOAIParticleState self
+	@opt	MOAIParticleScript script
+	@out	nil
+*/
 int MOAIParticleState::_setInitScript ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIParticleState, "U" )
 
@@ -70,6 +84,15 @@ int MOAIParticleState::_setInitScript ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	setMass
+	@text	Sets range of masses (chosen randomly) for particles
+			initialized by the state.
+	
+	@in		MOAIParticleState self
+	@in		number minMass
+	@opt	number maxMass			Default value is minMass.
+	@out	nil
+*/
 int MOAIParticleState::_setMass ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIParticleState, "UN" )
 
@@ -99,6 +122,13 @@ int MOAIParticleState::_setNext ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	setRenderScript
+	@text	Sets the particle script to use for rendering particles.
+	
+	@in		MOAIParticleState self
+	@opt	MOAIParticleScript script
+	@out	nil
+*/
 int MOAIParticleState::_setRenderScript ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIParticleState, "U" )
 
@@ -111,6 +141,15 @@ int MOAIParticleState::_setRenderScript ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	setTerm
+	@text	Sets range of terms (chosen randomly) for particles
+			initialized by the state.
+	
+	@in		MOAIParticleState self
+	@in		number minTerm
+	@opt	number maxTerm			Default value is minTerm.
+	@out	nil
+*/
 int MOAIParticleState::_setTerm ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIParticleState, "UN" )
 

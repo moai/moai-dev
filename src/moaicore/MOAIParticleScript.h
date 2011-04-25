@@ -12,6 +12,19 @@ class MOAIParticleSystem;
 //================================================================//
 /**	@name	MOAIParticleScript
 	@text	Particle script.
+
+	@const	X_OFF
+	@const	Y_OFF
+	@const	ROT
+	@const	X_SCL
+	@const	Y_SCL
+	@const	R
+	@const	G
+	@const	B
+	@const	A
+	@const	OPACITY
+	@const	GLOW
+	@const	IDX
 */
 class MOAIParticleScript :
 	public virtual USLuaObject {

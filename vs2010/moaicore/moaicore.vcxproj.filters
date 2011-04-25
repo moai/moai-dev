@@ -180,9 +180,6 @@
     <ClCompile Include="..\..\src\moaicore\MOAIParticleEmitter.cpp">
       <Filter>src\particles</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAIParticleEngine.cpp">
-      <Filter>src\particles</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAIParticleForce.cpp">
       <Filter>src\particles</Filter>
     </ClCompile>
@@ -449,9 +446,6 @@
     <ClInclude Include="..\..\src\moaicore\MOAIParticleEmitter.h">
       <Filter>src\particles</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\MOAIParticleEngine.h">
-      <Filter>src\particles</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIParticleForce.h">
       <Filter>src\particles</Filter>
     </ClInclude>
@@ -613,6 +607,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIEventSource.h">
       <Filter>src\events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIParticle.h">
+      <Filter>src\particles</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

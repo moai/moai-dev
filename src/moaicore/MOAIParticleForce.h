@@ -14,6 +14,10 @@ class MOAIParticleSystem;
 //================================================================//
 /**	@name	MOAIParticleForce
 	@text	Particle force.
+
+	@const	FORCE
+	@const	GRAVITY
+	@const	OFFSET
 */
 class MOAIParticleForce :
 	public MOAITransform {

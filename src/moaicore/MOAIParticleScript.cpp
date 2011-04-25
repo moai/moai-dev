@@ -122,30 +122,114 @@ u8* MOAIParticleScript::Instruction::Write ( u8* cursor ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+/**	@name	easeConst
+	@text	Load a sprite register with an ease value derived from two constants.
+	
+	@in		MOAIParticleScript self
+	@in		number register		See MOAIParticleScript documentation for a list of sprite registers.
+	@in		number c0			Starting value of the ease.
+	@in		number c1			Ending value of the ease.
+	@in		number easeType		See MOAIEaseType for a list of ease types.
+	@out	nil
+*/
 IMPL_LUA_PARTICLE_OP ( _easeConst, EASE_CONST, "RVVR" )
 
 //----------------------------------------------------------------//
+/**	@name	easeVar
+	@text	Load a sprite register with an ease value derived from two variables.
+	
+	@in		MOAIParticleScript self
+	@in		number register		See MOAIParticleScript documentation for a list of sprite registers.
+	@in		number v0			Index of the variable; starting value of the ease.
+	@in		number v1			Index of the variable; ending value of the ease.
+	@in		number easeType		See MOAIEaseType for a list of ease types.
+	@out	nil
+*/
 IMPL_LUA_PARTICLE_OP ( _easeVar, EASE_VAR, "RPPRVV" )
 
 //----------------------------------------------------------------//
+/**	@name	initConst
+	@text	Load a variable with a const.
+	
+	@in		MOAIParticleScript self
+	@in		number v0			Index of the variable
+	@in		number c0			Value to load into variable.
+	@out	nil
+*/
 IMPL_LUA_PARTICLE_OP ( _initConst, INIT_CONST, "PV" )
 
 //----------------------------------------------------------------//
+/**	@name	initRand
+	@text	Load a variable with a random number derived from a range.
+	
+	@in		MOAIParticleScript self
+	@in		number v0			Index of the variable
+	@in		number min			Minimum value within random range.
+	@in		number max			Maximum value within random range.
+	@out	nil
+*/
 IMPL_LUA_PARTICLE_OP ( _initRand, INIT_RAND, "PVV" )
 
 //----------------------------------------------------------------//
+/**	@name	initRandVec
+	@text	Load two variables with the X and Y components of a vector
+			with randomly chosen direction and length.
+	
+	@in		MOAIParticleScript self
+	@in		number v0			Index of the variable
+	@in		number min			Minimum length of vector.
+	@in		number max			Maximum length of vector.
+	@out	nil
+*/
 IMPL_LUA_PARTICLE_OP ( _initRandVec, INIT_RAND_VEC, "PPVV" )
 
 //----------------------------------------------------------------//
+/**	@name	randConst
+	@text	Load a variable with a random number derived from a
+			constant range.
+	
+	@in		MOAIParticleScript self
+	@in		number register		See MOAIParticleScript documentation for a list of sprite registers.
+	@in		number min			Range minimum.
+	@in		number max			Range maximum.
+	@out	nil
+*/
 IMPL_LUA_PARTICLE_OP ( _randConst, RAND_CONST, "RVV" )
 
 //----------------------------------------------------------------//
+/**	@name	randConst
+	@text	Load a variable with a random number derived from a
+			range held in two variables.
+	
+	@in		MOAIParticleScript self
+	@in		number register		See MOAIParticleScript documentation for a list of sprite registers.
+	@in		number v0			Index of variable containing range minimum.
+	@in		number v1			Index of variable containing range maximum.
+	@out	nil
+*/
 IMPL_LUA_PARTICLE_OP ( _randVar, RAND_VAR, "RPPVV" )
 
 //----------------------------------------------------------------//
+/**	@name	setConst
+	@text	Load a const into a sprite register.
+	
+	@in		MOAIParticleScript self
+	@in		number register		See MOAIParticleScript documentation for a list of sprite registers.
+	@in		number c0			Const value to load.
+	@out	nil
+*/
 IMPL_LUA_PARTICLE_OP ( _setConst, SET_CONST, "RV" )
 
 //----------------------------------------------------------------//
+/**	@name	sprite
+	@text	Push a new sprite for rendering. To render a particle, first
+			call 'sprite' to create a new sprite at the particle's location.
+			Then modify the sprite's registers to create animated effects
+			based on the age of the particle (normalized to its term).
+	
+	@in		MOAIParticleScript self
+	@out	nil
+*/
 IMPL_LUA_PARTICLE_OP ( _sprite, SPRITE, "" )
 
 //================================================================//

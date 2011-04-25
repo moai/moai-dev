@@ -252,7 +252,6 @@
     <ClCompile Include="..\..\src\moaicore\MOAIMesh.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIParser.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIParticleEmitter.cpp" />
-    <ClCompile Include="..\..\src\moaicore\MOAIParticleEngine.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIParticleForce.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIParticleScript.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIParticleState.cpp" />
@@ -346,8 +345,8 @@
     <ClInclude Include="..\..\src\moaicore\MOAILogMgr.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIMesh.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIParser.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAIParticle.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIParticleEmitter.h" />
-    <ClInclude Include="..\..\src\moaicore\MOAIParticleEngine.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIParticleForce.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIParticleScript.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIParticleState.h" />

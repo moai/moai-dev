@@ -69,6 +69,16 @@ int MOAINode::_clearDependency ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	forceUpdate
+	@text	Evaluates the dependency graph for this node. Typically,
+			the entire active dependency graph is evaluated once per
+			frame, but in some cases it may be desirable to force
+			evaluation of a node to make sure source dependencies
+			are propagated to it immediately.
+	
+	@in		MOAINode self
+	@out	nil
+*/
 int MOAINode::_forceUpdate ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAINode, "U" );
 

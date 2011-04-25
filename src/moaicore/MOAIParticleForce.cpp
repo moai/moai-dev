@@ -12,11 +12,12 @@
 
 //----------------------------------------------------------------//
 /**	@name	initAttractor
-	@text	Initialized force as an attractor.
+	@text	Greater force is exerted on particles as they approach
+			attractor.
 	
 	@in		MOAIParticleForce self
 	@in		number radius Size of the attractor.
-	@opt	number pull Strength of the attractor.
+	@opt	number magnitude Strength of the attractor.
 	@out	nil
 */
 int MOAIParticleForce::_initAttractor ( lua_State* L ) {
@@ -32,6 +33,15 @@ int MOAIParticleForce::_initAttractor ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	initBasin
+	@text	Greater force is exerted on particles as they leave
+			attractor.
+	
+	@in		MOAIParticleForce self
+	@in		number radius Size of the attractor.
+	@opt	number magnitude Strength of the attractor.
+	@out	nil
+*/
 int MOAIParticleForce::_initBasin ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIParticleForce, "UNN" )
 
@@ -45,8 +55,8 @@ int MOAIParticleForce::_initBasin ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	initAttractor
-	@text	Initialized force as a vector.
+/**	@name	initLinear
+	@text	A constant linear force will be applied to the particles.
 	
 	@in		MOAIParticleForce self
 	@in		number x
@@ -66,6 +76,13 @@ int MOAIParticleForce::_initLinear ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	initRadial
+	@text	A constant radial force will be applied to the particles.
+	
+	@in		MOAIParticleForce self
+	@in		number magnitude
+	@out	nil
+*/
 int MOAIParticleForce::_initRadial ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIParticleForce, "UN" )
 
@@ -78,6 +95,14 @@ int MOAIParticleForce::_initRadial ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	setType
+	@text	Set the type of force. FORCE will factor in the particle's mass. GRAVITY
+			will ignore the particle's mass. OFFSET will ignore both mass and damping.
+	
+	@in		MOAIParticleForce self
+	@in		number type				One of MOAIParticleForce.FORCE, MOAIParticleForce.GRAVITY, MOAIParticleForce.OFFSET
+	@out	nil
+*/
 int MOAIParticleForce::_setType ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIParticleForce, "UN" )
 
