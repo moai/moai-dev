@@ -29,9 +29,6 @@ private:
 	static int	_setUVQuad				( lua_State* L );
 	static int	_setUVRect				( lua_State* L );
 	
-	//----------------------------------------------------------------//
-	USGLQuad*	GetGLQuad				( u32 idx );
-	
 public:
 	
 	DECL_LUA_FACTORY ( MOAIGfxQuadDeck2D )

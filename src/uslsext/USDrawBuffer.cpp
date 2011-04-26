@@ -79,6 +79,7 @@ void USDrawBuffer::DrawPrims ( const USVertexFormat& format, GLenum primType, vo
 	
 	// reset
 	this->mVertexFormat.Clear ();
+	this->mVertexPreset = USVertexFormatMgr::CUSTOM_FORMAT;
 	
 	glColor4f ( 1.0f, 1.0f, 1.0f, 1.0f );
 	
