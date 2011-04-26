@@ -8,6 +8,7 @@
 
 class MOAIParticleForce;
 class MOAIParticleScript;
+class MOAIParticleSystem;
 
 //================================================================//
 // MOAIParticleState

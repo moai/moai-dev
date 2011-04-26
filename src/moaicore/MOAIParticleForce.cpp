@@ -226,9 +226,9 @@ void MOAIParticleForce::RegisterLuaClass ( USLuaState& state ) {
 
 	this->MOAITransform::RegisterLuaClass ( state );
 	
-	state.SetField ( -1, "FORCE", FORCE );
-	state.SetField ( -1, "GRAVITY", GRAVITY );
-	state.SetField ( -1, "OFFSET", OFFSET );
+	state.SetField ( -1, "FORCE", ( u32 )FORCE );
+	state.SetField ( -1, "GRAVITY", ( u32 )GRAVITY );
+	state.SetField ( -1, "OFFSET", ( u32 )OFFSET );
 }
 
 //----------------------------------------------------------------//
