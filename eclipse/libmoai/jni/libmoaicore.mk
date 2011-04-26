@@ -101,7 +101,6 @@ $(SRC_PATH)/src/moaicore/MOAINode.cpp \
 $(SRC_PATH)/src/moaicore/MOAINodeMgr.cpp \
 $(SRC_PATH)/src/moaicore/MOAIParser.cpp \
 $(SRC_PATH)/src/moaicore/MOAIParticleEmitter.cpp \
-$(SRC_PATH)/src/moaicore/MOAIParticleEngine.cpp \
 $(SRC_PATH)/src/moaicore/MOAIParticleForce.cpp \
 $(SRC_PATH)/src/moaicore/MOAIParticleScript.cpp \
 $(SRC_PATH)/src/moaicore/MOAIParticleState.cpp \
