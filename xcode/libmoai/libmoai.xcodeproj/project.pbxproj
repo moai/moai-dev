@@ -967,8 +967,6 @@
 		0324E70513564BC8000ADC60 /* MOAIParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E56513564BC7000ADC60 /* MOAIParser.h */; };
 		0324E70613564BC8000ADC60 /* MOAIParticleEmitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E56613564BC7000ADC60 /* MOAIParticleEmitter.cpp */; };
 		0324E70713564BC8000ADC60 /* MOAIParticleEmitter.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E56713564BC7000ADC60 /* MOAIParticleEmitter.h */; };
-		0324E70813564BC8000ADC60 /* MOAIParticleEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E56813564BC7000ADC60 /* MOAIParticleEngine.cpp */; };
-		0324E70913564BC8000ADC60 /* MOAIParticleEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E56913564BC7000ADC60 /* MOAIParticleEngine.h */; };
 		0324E70A13564BC8000ADC60 /* MOAIParticleForce.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E56A13564BC7000ADC60 /* MOAIParticleForce.cpp */; };
 		0324E70B13564BC8000ADC60 /* MOAIParticleForce.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E56B13564BC7000ADC60 /* MOAIParticleForce.h */; };
 		0324E70C13564BC8000ADC60 /* MOAIParticleScript.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E56C13564BC7000ADC60 /* MOAIParticleScript.cpp */; };
@@ -1379,8 +1377,6 @@
 		0324E8A313564BC8000ADC60 /* MOAIParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E56513564BC7000ADC60 /* MOAIParser.h */; };
 		0324E8A413564BC8000ADC60 /* MOAIParticleEmitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E56613564BC7000ADC60 /* MOAIParticleEmitter.cpp */; };
 		0324E8A513564BC8000ADC60 /* MOAIParticleEmitter.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E56713564BC7000ADC60 /* MOAIParticleEmitter.h */; };
-		0324E8A613564BC8000ADC60 /* MOAIParticleEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E56813564BC7000ADC60 /* MOAIParticleEngine.cpp */; };
-		0324E8A713564BC8000ADC60 /* MOAIParticleEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E56913564BC7000ADC60 /* MOAIParticleEngine.h */; };
 		0324E8A813564BC8000ADC60 /* MOAIParticleForce.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E56A13564BC7000ADC60 /* MOAIParticleForce.cpp */; };
 		0324E8A913564BC8000ADC60 /* MOAIParticleForce.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E56B13564BC7000ADC60 /* MOAIParticleForce.h */; };
 		0324E8AA13564BC8000ADC60 /* MOAIParticleScript.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E56C13564BC7000ADC60 /* MOAIParticleScript.cpp */; };
@@ -1678,6 +1674,8 @@
 		0324E9CE13564BC9000ADC60 /* USXmlReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E69213564BC8000ADC60 /* USXmlReader.cpp */; };
 		0324E9CF13564BC9000ADC60 /* USXmlReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E69313564BC8000ADC60 /* USXmlReader.h */; };
 		0379C7411333ED7000E89DDC /* libmoai-iphone-3rdparty.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0379C5961333ECD800E89DDC /* libmoai-iphone-3rdparty.a */; };
+		03E4E94113664F7C008D079B /* MOAIParticle.h in Headers */ = {isa = PBXBuildFile; fileRef = 03E4E94013664F7C008D079B /* MOAIParticle.h */; };
+		03E4E94213664F7C008D079B /* MOAIParticle.h in Headers */ = {isa = PBXBuildFile; fileRef = 03E4E94013664F7C008D079B /* MOAIParticle.h */; };
 		CD1D0BA413599FD200802A3C /* AKU-iphone.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1D0BA213599FD200802A3C /* AKU-iphone.h */; };
 		CD1D0BA513599FD200802A3C /* AKU-iphone.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD1D0BA313599FD200802A3C /* AKU-iphone.mm */; };
 		CD7F4DFB135BBD8600E83096 /* NSDate+MOAILib.h in Headers */ = {isa = PBXBuildFile; fileRef = CD7F4DF9135BBD8600E83096 /* NSDate+MOAILib.h */; };
@@ -2270,8 +2268,6 @@
 		0324E56513564BC7000ADC60 /* MOAIParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIParser.h; sourceTree = "<group>"; };
 		0324E56613564BC7000ADC60 /* MOAIParticleEmitter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIParticleEmitter.cpp; sourceTree = "<group>"; };
 		0324E56713564BC7000ADC60 /* MOAIParticleEmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIParticleEmitter.h; sourceTree = "<group>"; };
-		0324E56813564BC7000ADC60 /* MOAIParticleEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIParticleEngine.cpp; sourceTree = "<group>"; };
-		0324E56913564BC7000ADC60 /* MOAIParticleEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIParticleEngine.h; sourceTree = "<group>"; };
 		0324E56A13564BC7000ADC60 /* MOAIParticleForce.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIParticleForce.cpp; sourceTree = "<group>"; };
 		0324E56B13564BC7000ADC60 /* MOAIParticleForce.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIParticleForce.h; sourceTree = "<group>"; };
 		0324E56C13564BC7000ADC60 /* MOAIParticleScript.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIParticleScript.cpp; sourceTree = "<group>"; };
@@ -2570,6 +2566,7 @@
 		0324E69313564BC8000ADC60 /* USXmlReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USXmlReader.h; sourceTree = "<group>"; };
 		0379C5961333ECD800E89DDC /* libmoai-iphone-3rdparty.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-iphone-3rdparty.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		03C2F6F4104DE130009A2D5D /* libmoai-iphone.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-iphone.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		03E4E94013664F7C008D079B /* MOAIParticle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIParticle.h; sourceTree = "<group>"; };
 		CD1D0BA213599FD200802A3C /* AKU-iphone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AKU-iphone.h"; sourceTree = "<group>"; };
 		CD1D0BA313599FD200802A3C /* AKU-iphone.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "AKU-iphone.mm"; sourceTree = "<group>"; };
 		CD2FDEBB13542F1400B814DF /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/System/Library/Frameworks/AddressBook.framework; sourceTree = DEVELOPER_DIR; };
@@ -3400,10 +3397,9 @@
 				0324E56313564BC7000ADC60 /* MOAINodeMgr.h */,
 				0324E56413564BC7000ADC60 /* MOAIParser.cpp */,
 				0324E56513564BC7000ADC60 /* MOAIParser.h */,
+				03E4E94013664F7C008D079B /* MOAIParticle.h */,
 				0324E56613564BC7000ADC60 /* MOAIParticleEmitter.cpp */,
 				0324E56713564BC7000ADC60 /* MOAIParticleEmitter.h */,
-				0324E56813564BC7000ADC60 /* MOAIParticleEngine.cpp */,
-				0324E56913564BC7000ADC60 /* MOAIParticleEngine.h */,
 				0324E56A13564BC7000ADC60 /* MOAIParticleForce.cpp */,
 				0324E56B13564BC7000ADC60 /* MOAIParticleForce.h */,
 				0324E56C13564BC7000ADC60 /* MOAIParticleScript.cpp */,
@@ -4058,7 +4054,6 @@
 				0324E8A113564BC8000ADC60 /* MOAINodeMgr.h in Headers */,
 				0324E8A313564BC8000ADC60 /* MOAIParser.h in Headers */,
 				0324E8A513564BC8000ADC60 /* MOAIParticleEmitter.h in Headers */,
-				0324E8A713564BC8000ADC60 /* MOAIParticleEngine.h in Headers */,
 				0324E8A913564BC8000ADC60 /* MOAIParticleForce.h in Headers */,
 				0324E8AB13564BC8000ADC60 /* MOAIParticleScript.h in Headers */,
 				0324E8AD13564BC8000ADC60 /* MOAIParticleState.h in Headers */,
@@ -4225,6 +4220,7 @@
 				0324E9CF13564BC9000ADC60 /* USXmlReader.h in Headers */,
 				CDEB91491360A78800AAC558 /* MOAIEventSource.h in Headers */,
 				CDEB914D1360A78800AAC558 /* MOAIImage.h in Headers */,
+				03E4E94213664F7C008D079B /* MOAIParticle.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4490,7 +4486,6 @@
 				0324E70313564BC8000ADC60 /* MOAINodeMgr.h in Headers */,
 				0324E70513564BC8000ADC60 /* MOAIParser.h in Headers */,
 				0324E70713564BC8000ADC60 /* MOAIParticleEmitter.h in Headers */,
-				0324E70913564BC8000ADC60 /* MOAIParticleEngine.h in Headers */,
 				0324E70B13564BC8000ADC60 /* MOAIParticleForce.h in Headers */,
 				0324E70D13564BC8000ADC60 /* MOAIParticleScript.h in Headers */,
 				0324E70F13564BC8000ADC60 /* MOAIParticleState.h in Headers */,
@@ -4668,6 +4663,7 @@
 				CD7F4DFB135BBD8600E83096 /* NSDate+MOAILib.h in Headers */,
 				CDEB91481360A78800AAC558 /* MOAIEventSource.h in Headers */,
 				CDEB914C1360A78800AAC558 /* MOAIImage.h in Headers */,
+				03E4E94113664F7C008D079B /* MOAIParticle.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5083,7 +5079,6 @@
 				0324E8A013564BC8000ADC60 /* MOAINodeMgr.cpp in Sources */,
 				0324E8A213564BC8000ADC60 /* MOAIParser.cpp in Sources */,
 				0324E8A413564BC8000ADC60 /* MOAIParticleEmitter.cpp in Sources */,
-				0324E8A613564BC8000ADC60 /* MOAIParticleEngine.cpp in Sources */,
 				0324E8A813564BC8000ADC60 /* MOAIParticleForce.cpp in Sources */,
 				0324E8AA13564BC8000ADC60 /* MOAIParticleScript.cpp in Sources */,
 				0324E8AC13564BC8000ADC60 /* MOAIParticleState.cpp in Sources */,
@@ -5519,7 +5514,6 @@
 				0324E70213564BC8000ADC60 /* MOAINodeMgr.cpp in Sources */,
 				0324E70413564BC8000ADC60 /* MOAIParser.cpp in Sources */,
 				0324E70613564BC8000ADC60 /* MOAIParticleEmitter.cpp in Sources */,
-				0324E70813564BC8000ADC60 /* MOAIParticleEngine.cpp in Sources */,
 				0324E70A13564BC8000ADC60 /* MOAIParticleForce.cpp in Sources */,
 				0324E70C13564BC8000ADC60 /* MOAIParticleScript.cpp in Sources */,
 				0324E70E13564BC8000ADC60 /* MOAIParticleState.cpp in Sources */,
