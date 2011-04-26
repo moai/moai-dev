@@ -1,5 +1,10 @@
 #import <moai-iphone/NSData+MOAILib.h>
 
+//----------------------------------------------------------------//
+void loadMoaiLib_NSData () {
+	// do nothing; force linker to load obj-c categories w/o needing linker flags
+}
+
 //================================================================//
 // NSData ( MOAILib )
 //================================================================//

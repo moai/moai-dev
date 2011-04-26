@@ -1,4 +1,9 @@
-#import <moai-iphone/NSString+MOAILib.h>
+#import <moai-iphone/NSNumber+MOAILib.h>
+
+//----------------------------------------------------------------//
+void loadMoaiLib_NSNumber () {
+	// do nothing; force linker to load obj-c categories w/o needing linker flags
+}
 
 //================================================================//
 // NSNumber ( MOAILib )

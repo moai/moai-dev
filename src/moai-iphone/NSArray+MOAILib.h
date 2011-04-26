@@ -10,3 +10,6 @@
 	-( void	)			toLua				:( lua_State* )luaState;
 
 @end
+
+//----------------------------------------------------------------//
+extern void loadMoaiLib_NSArray ();

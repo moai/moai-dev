@@ -2,6 +2,11 @@
 #import <moai-iphone/NSString+MOAILib.h>
 #import <contrib/ISO8601DateFormatter.h>
 
+//----------------------------------------------------------------//
+void loadMoaiLib_NSDate () {
+	// do nothing; force linker to load obj-c categories w/o needing linker flags
+}
+
 //================================================================//
 // NSDate ( MOAILib )
 //================================================================//

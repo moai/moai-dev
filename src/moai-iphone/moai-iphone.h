@@ -2,12 +2,12 @@
 // http://getmoai.com
 
 #import <moai-iphone/MOAIApp.h>
-#import <moai-iphone/MOAILuaSerialization.h>
 
-#import <moai-iphone/NSArray+Moai.h>
-#import <moai-iphone/NSDate+Moai.h>
-#import <moai-iphone/NSDictionary+Moai.h>
-#import <moai-iphone/NSMutableArray+Moai.h>
-#import <moai-iphone/NSMutableDictionary+Moai.h>
-#import <moai-iphone/NSObject+Moai.h>
-#import <moai-iphone/NSString+Moai.h>
+#import <moai-iphone/NSArray+MOAILib.h>
+#import <moai-iphone/NSData+MOAILib.h>
+#import <moai-iphone/NSDate+MOAILib.h>
+#import <moai-iphone/NSDictionary+MOAILib.h>
+#import <moai-iphone/NSError+MOAILib.h>
+#import <moai-iphone/NSNumber+MOAILib.h>
+#import <moai-iphone/NSObject+MOAILib.h>
+#import <moai-iphone/NSString+MOAILib.h>

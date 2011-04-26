@@ -1,5 +1,10 @@
 #import <moai-iphone/NSError+MOAILib.h>
 
+//----------------------------------------------------------------//
+void loadMoaiLib_NSError () {
+	// do nothing; force linker to load obj-c categories w/o needing linker flags
+}
+
 //================================================================//
 // NSError ( MOAILib )
 //================================================================//

@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include <aku/AKU-iphone.h>
-#include <moai-iphone/MOAIApp.h>
+#include <moai-iphone/moai-iphone.h>
 
 //----------------------------------------------------------------//
 void AKUAppDidFailToRegisterForRemoteNotificationsWithError ( NSError* error ) {
@@ -30,6 +30,15 @@ void AKUAppDidRegisterForRemoteNotificationsWithDeviceToken ( NSData* deviceToke
 
 //----------------------------------------------------------------//
 void AKUIphoneInit ( UIApplication* application ) {
+
+	loadMoaiLib_NSArray ();
+	loadMoaiLib_NSData ();
+	loadMoaiLib_NSDate ();
+	loadMoaiLib_NSDictionary ();
+	loadMoaiLib_NSError ();
+	loadMoaiLib_NSNumber ();
+	loadMoaiLib_NSObject ();
+	loadMoaiLib_NSString ();
 
 	MOAIApp::Get ().SetApplication ( application );
 	
