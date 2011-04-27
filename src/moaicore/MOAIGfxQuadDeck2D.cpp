@@ -58,8 +58,7 @@ int MOAIGfxQuadDeck2D::_setQuad ( lua_State* L ) {
 	u32 idx		= state.GetValue < u32 >( 2, 1 ) - 1;
 	MOAI_CHECK_INDEX ( idx, self->mQuads.Size ())
 	
-	USGLQuad* glQuad = self->GetGLQuad ( idx );
-	if ( glQuad ) {
+	if ( idx < self->mQuads.Size ()) {
 	
 		USQuad quad;
 		
@@ -72,7 +71,7 @@ int MOAIGfxQuadDeck2D::_setQuad ( lua_State* L ) {
 		quad.mV [ 3 ].mX = state.GetValue < float >( 9, 0.0f );
 		quad.mV [ 3 ].mY = state.GetValue < float >( 10, 0.0f );
 
-		glQuad->SetVerts ( quad.mV [ 0 ], quad.mV [ 1 ], quad.mV [ 2 ], quad.mV [ 3 ]);
+		self->mQuads [ idx ].SetVerts ( quad.mV [ 0 ], quad.mV [ 1 ], quad.mV [ 2 ], quad.mV [ 3 ]);
 	}
 	
 	return 0;
@@ -101,9 +100,8 @@ int MOAIGfxQuadDeck2D::_setRect ( lua_State* L ) {
 	float x1	= state.GetValue < float >( 5, 0.0f );
 	float y1	= state.GetValue < float >( 6, 0.0f );
 	
-	USGLQuad* quad = self->GetGLQuad ( idx );
-	if ( quad ) {
-		quad->SetVerts ( x0, y0, x1, y1 );
+	if ( idx < self->mQuads.Size ()) {
+		self->mQuads [ idx ].SetVerts ( x0, y0, x1, y1 );
 	}
 
 	return 0;
@@ -152,8 +150,7 @@ int MOAIGfxQuadDeck2D::_setUVQuad ( lua_State* L ) {
 	u32 idx		= state.GetValue < u32 >( 2, 1 ) - 1;
 	MOAI_CHECK_INDEX ( idx, self->mQuads.Size ())
 	
-	USGLQuad* glQuad = self->GetGLQuad ( idx );
-	if ( glQuad ) {
+	if ( idx < self->mQuads.Size ()) {
 	
 		USQuad quad;
 		
@@ -166,7 +163,7 @@ int MOAIGfxQuadDeck2D::_setUVQuad ( lua_State* L ) {
 		quad.mV [ 3 ].mX = state.GetValue < float >( 9, 0.0f );
 		quad.mV [ 3 ].mY = state.GetValue < float >( 10, 0.0f );
 
-		glQuad->SetUVs ( quad.mV [ 0 ], quad.mV [ 1 ], quad.mV [ 2 ], quad.mV [ 3 ]);
+		self->mQuads [ idx ].SetUVs ( quad.mV [ 0 ], quad.mV [ 1 ], quad.mV [ 2 ], quad.mV [ 3 ]);
 	}
 	
 	return 0;
@@ -195,9 +192,8 @@ int MOAIGfxQuadDeck2D::_setUVRect ( lua_State* L ) {
 	float u1	= state.GetValue < float >( 5, 0.0f );
 	float v1	= state.GetValue < float >( 6, 0.0f );
 
-	USGLQuad* quad = self->GetGLQuad ( idx );
-	if ( quad ) {
-		quad->SetUVs ( u0, v0, u1, v1 );
+	if ( idx < self->mQuads.Size ()) {
+		self->mQuads [ idx ].SetUVs ( u0, v0, u1, v1 );
 	}
 
 	return 0;
@@ -211,7 +207,7 @@ int MOAIGfxQuadDeck2D::_setUVRect ( lua_State* L ) {
 bool MOAIGfxQuadDeck2D::Bind () {
 
 	USDrawBuffer& drawBuffer = USDrawBuffer::Get ();
-	if ( !drawBuffer.BindTexture ( this->mTexture )) return false;
+	if ( !drawBuffer.SetTexture ( this->mTexture )) return false;
 	USGLQuad::BindVertexFormat ( drawBuffer );
 
 	return true;
@@ -230,25 +226,17 @@ void MOAIGfxQuadDeck2D::DrawPatch ( u32 idx, float xOff, float yOff, float xScal
 //----------------------------------------------------------------//
 USRect MOAIGfxQuadDeck2D::GetBounds ( u32 idx ) {
 	
-	idx = idx - 1;
+	u32 size = this->mQuads.Size ();
+	if ( size ) {
+
+		idx = ( idx - 1 ) % size;
 	
-	USGLQuad* quad = this->GetGLQuad ( idx );
-	if ( quad ) {
-		return quad->GetVtxBounds ();
+		USGLQuad& quad = this->mQuads [ idx ];
+		return quad.GetVtxBounds ();
 	}
 	USRect rect;
 	rect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
 	return rect;
-}
-
-//----------------------------------------------------------------//
-USGLQuad* MOAIGfxQuadDeck2D::GetGLQuad ( u32 idx ) {
-
-	idx = this->GetContentAddr ( idx, this->mQuads.Size ());
-	if ( idx != NO_CONTENT ) {
-		return &this->mQuads [ idx ];
-	}
-	return 0;
 }
 
 //----------------------------------------------------------------//

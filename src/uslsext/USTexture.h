@@ -22,11 +22,7 @@ protected:
 	// size of the original texture
 	u32				mWidth;
 	u32				mHeight;
-	
-	// size on the device (padded to nearest powers of two)
-	u32				mDevWidth;
-	u32				mDevHeight;
-	
+
 	// GL_LINEAR
 	// GL_NEAREST
 	int				mMinFilter;
@@ -52,13 +48,11 @@ public:
 	//----------------------------------------------------------------//
 	bool			Bind				();
 	u32				GetHeight			();
-	float			GetU				();
 	u32				GetWidth			();
-	float			GetV				();
 	void			Init				( USData& data, u32 transform = ( USImageTransform::TRUECOLOR | USImageTransform::QUANTIZE ));
 	void			Init				( cc8* filename, u32 transform = ( USImageTransform::TRUECOLOR | USImageTransform::QUANTIZE ));
 	void			Init				( const void* data, u32 size, u32 transform = ( USImageTransform::TRUECOLOR | USImageTransform::QUANTIZE ));
-	void			Init				( USImage& image, u32 transform = 0 );
+	void			Init				( USImage& image );
 	bool			IsOK				();
 	void			Release				();
 	void			SetFilter			( int filter );

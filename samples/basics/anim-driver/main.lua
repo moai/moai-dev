@@ -4,12 +4,15 @@
 -- http://getmoai.com
 ----------------------------------------------------------------
 
+MOAISim.openWindow ( "test", 640, 320 )
+
 viewport = MOAIViewport.new ()
 viewport:setSize ( 640, 320 )
 viewport:setScale ( 640, 320 )
 
 layer = MOAILayer2D.new ()
 layer:setViewport ( viewport )
+MOAISim.pushRenderPass ( layer )
 
 gfxQuad = MOAIGfxQuad2D.new ()
 gfxQuad:setTexture ( "cathead.png" )
@@ -41,6 +44,3 @@ anim:setLink ( 2, curve2, prop1, MOAIProp2D.ATTR_Y_LOC )
 anim:setLink ( 3, curve1, prop2, MOAIProp2D.ATTR_X_LOC, true )
 anim:setMode ( MOAITimer.LOOP )
 anim:start ()
-
-MOAISim.pushRenderPass ( layer )
-MOAISim.openWindow ( "test", 640, 320 )

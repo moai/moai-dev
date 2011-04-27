@@ -2,8 +2,13 @@
 // http://getmoai.com
 
 #include <stdio.h>
-#include <GLUT/glut.h>
 #include <aku/AKUGlut.h>
+
+#ifdef _WIN32
+	#include <glut.h>
+#else
+	#include <GLUT/glut.h>
+#endif
 
 namespace GlutInputDeviceID {
 	enum {
@@ -37,18 +42,24 @@ static int sWinHeight;
 
 //----------------------------------------------------------------//
 static void _onKeyDown ( unsigned char key, int x, int y ) {
+	( void )x;
+	( void )y;
 	
 	AKUEnqueueKeyboardEvent ( GlutInputDeviceID::DEVICE, GlutInputDeviceSensorID::KEYBOARD, key, true );
 }
 
 //----------------------------------------------------------------//
 static void _onKeyUp ( unsigned char key, int x, int y ) {
+	( void )x;
+	( void )y;
 	
 	AKUEnqueueKeyboardEvent ( GlutInputDeviceID::DEVICE, GlutInputDeviceSensorID::KEYBOARD, key, false );
 }
 
 //----------------------------------------------------------------//
 static void _onMouseButton ( int button, int state, int x, int y ) {
+	( void )x;
+	( void )y;
 	
 	switch ( button ) {
 		case GLUT_LEFT_BUTTON:
@@ -105,31 +116,17 @@ static void _onUpdate () {
 }
 
 //================================================================//
-// glut setup
-//================================================================//
-
-//----------------------------------------------------------------//
-void InitGlutDisplay () {
-
-	//glewInit ();
-	
-	glutIgnoreKeyRepeat ( 1 );
-
-	glutKeyboardFunc ( _onKeyDown );
-	glutKeyboardUpFunc ( _onKeyUp );
-	
-	glutMouseFunc ( _onMouseButton );
-	glutMotionFunc ( _onMouseDrag );
-	glutPassiveMotionFunc ( _onMouseMove );
-	
-	glutDisplayFunc ( _onPaint );
-	glutReshapeFunc ( _onReshape );
-	glutIdleFunc ( _onUpdate );
-}
-
-//================================================================//
 // AKU callbacks
 //================================================================//
+
+void	_AKUEnterFullscreenModeFunc		();
+void	_AKUExitFullscreenModeFunc		();
+void	_AKUHideLoadingScreenFunc		();
+void	_AKUHideLoadingScreenFunc		();
+void	_AKUOpenWindowFunc				( const char* title, int width, int height );
+void	_AKUShowLoadingScreenFunc		();
+void	_AKUShowSoftwareKeyboardFunc	();
+void	_AKUStartGameLoopFunc			();
 
 //----------------------------------------------------------------//
 void _AKUEnterFullscreenModeFunc () {
@@ -174,7 +171,18 @@ void _AKUOpenWindowFunc ( const char* title, int width, int height ) {
 	glutInitWindowPosition ( sWinX, sWinY );
 	glutCreateWindow ( title );
 
-	InitGlutDisplay ();
+	glutIgnoreKeyRepeat ( 1 );
+
+	glutKeyboardFunc ( _onKeyDown );
+	glutKeyboardUpFunc ( _onKeyUp );
+	
+	glutMouseFunc ( _onMouseButton );
+	glutMotionFunc ( _onMouseDrag );
+	glutPassiveMotionFunc ( _onMouseMove );
+	
+	glutDisplayFunc ( _onPaint );
+	glutReshapeFunc ( _onReshape );
+	glutIdleFunc ( _onUpdate );
 }
 
 //----------------------------------------------------------------//
@@ -200,6 +208,8 @@ void _AKUStartGameLoopFunc () {
 //----------------------------------------------------------------//
 int AKUGlut ( int argc, char** argv ) {
 
+	glutInit ( &argc, argv );
+
 	AKUCreateContext ();
 
 	AKUSetInputConfigurationName ( "AKUGlut" );
@@ -224,3 +234,4 @@ int AKUGlut ( int argc, char** argv ) {
 	}
 	return 0;
 }
+

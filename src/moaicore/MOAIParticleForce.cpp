@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <moaicore/MOAILogMessages.h>
+#include <moaicore/MOAIParticle.h>
 #include <moaicore/MOAIParticleForce.h>
 
 //================================================================//
@@ -11,17 +12,18 @@
 
 //----------------------------------------------------------------//
 /**	@name	initAttractor
-	@text	Initialized force as an attractor.
+	@text	Greater force is exerted on particles as they approach
+			attractor.
 	
 	@in		MOAIParticleForce self
 	@in		number radius Size of the attractor.
-	@opt	number pull Strength of the attractor.
+	@opt	number magnitude Strength of the attractor.
 	@out	nil
 */
 int MOAIParticleForce::_initAttractor ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIParticleForce, "UNN" )
 
-	self->mType		= ATTRACTOR;
+	self->mShape	= ATTRACTOR;
 	self->mRadius	= state.GetValue < float >( 2, 0.0f );
 	self->mPull		= state.GetValue < float >( 3, 0.0f );
 	
@@ -31,8 +33,30 @@ int MOAIParticleForce::_initAttractor ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	initAttractor
-	@text	Initialized force as a vector.
+/**	@name	initBasin
+	@text	Greater force is exerted on particles as they leave
+			attractor.
+	
+	@in		MOAIParticleForce self
+	@in		number radius Size of the attractor.
+	@opt	number magnitude Strength of the attractor.
+	@out	nil
+*/
+int MOAIParticleForce::_initBasin ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIParticleForce, "UNN" )
+
+	self->mShape	= BASIN;
+	self->mRadius	= state.GetValue < float >( 2, 0.0f );
+	self->mPull		= state.GetValue < float >( 3, 0.0f );
+
+	self->ScheduleUpdate ();
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	initLinear
+	@text	A constant linear force will be applied to the particles.
 	
 	@in		MOAIParticleForce self
 	@in		number x
@@ -42,11 +66,47 @@ int MOAIParticleForce::_initAttractor ( lua_State* L ) {
 int MOAIParticleForce::_initLinear ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIParticleForce, "UNN" )
 
-	self->mType = LINEAR;
+	self->mShape = LINEAR;
 	self->mVec.mX = state.GetValue < float >( 2, 0.0f );
 	self->mVec.mY = state.GetValue < float >( 3, 0.0f );
 
 	self->ScheduleUpdate ();
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	initRadial
+	@text	A constant radial force will be applied to the particles.
+	
+	@in		MOAIParticleForce self
+	@in		number magnitude
+	@out	nil
+*/
+int MOAIParticleForce::_initRadial ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIParticleForce, "UN" )
+
+	self->mShape = RADIAL;
+	self->mPull = state.GetValue < float >( 2, 0.0f );
+
+	self->ScheduleUpdate ();
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	setType
+	@text	Set the type of force. FORCE will factor in the particle's mass. GRAVITY
+			will ignore the particle's mass. OFFSET will ignore both mass and damping.
+	
+	@in		MOAIParticleForce self
+	@in		number type				One of MOAIParticleForce.FORCE, MOAIParticleForce.GRAVITY, MOAIParticleForce.OFFSET
+	@out	nil
+*/
+int MOAIParticleForce::_setType ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIParticleForce, "UN" )
+
+	self->mType = state.GetValue < u32 >( 2, self->mType );
 
 	return 0;
 }
@@ -56,13 +116,15 @@ int MOAIParticleForce::_initLinear ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-USVec2D MOAIParticleForce::GetAcceleration ( const USVec2D& loc ) {
+void MOAIParticleForce::Eval ( const MOAIParticle& particle, USVec2D& acceleration, USVec2D& offset ) {
 
-	USVec2D acceleration ( 0.0f, 0.0f );
+	USVec2D loc = particle.mLoc;
+	loc.Add ( particle.mOffset );
 
+	USVec2D force;
 	USVec2D origin = this->mLocalToWorldMtx.GetTranslation ();
 
-	switch ( this->mType ) {
+	switch ( this->mShape ) {
 		
 		case ATTRACTOR: {
 		
@@ -75,23 +137,62 @@ USVec2D MOAIParticleForce::GetAcceleration ( const USVec2D& loc ) {
 				dist = 1.0f - dist;
 				dist = dist * dist * this->mPull;
 				
-				acceleration.mX = vec.mX * dist;
-				acceleration.mY = vec.mY * dist;
+				force.mX = vec.mX * dist;
+				force.mY = vec.mY * dist;
 			}
 			break;
 		}
+		case BASIN: {
+			
+			USVec2D vec = origin;
+			vec.Sub ( loc );
+			
+			float dist = vec.NormSafe () / this->mRadius;
+			
+			dist = dist * dist * this->mPull;
+			
+			force.mX = vec.mX * dist;
+			force.mY = vec.mY * dist;
+			
+			break;
+		}
 		case LINEAR: {
-			acceleration = this->mWorldVec;
+			force = this->mWorldVec;
+			break;
+		}
+		case RADIAL: {
+			
+			force = origin;
+			force.Sub ( loc );
+			force.NormSafe ();
+			force.Scale ( this->mPull );
+			
 			break;
 		}
 	}
 	
-	return acceleration;
+	switch ( this->mType ) {
+	
+		case FORCE:
+			force.Scale ( 1.0f / particle.mMass );
+			acceleration.Add ( force );
+			break;
+	
+		case GRAVITY:
+			acceleration.Add ( force );
+			break;
+		
+		case OFFSET:
+			offset.Add ( force );
+			break;
+	}
 }
 
 //----------------------------------------------------------------//
 MOAIParticleForce::MOAIParticleForce () :
-	mType ( LINEAR ) {
+	mShape ( LINEAR ),
+	mType ( GRAVITY ),
+	mUseMass ( false ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAITransform )
@@ -124,6 +225,10 @@ void MOAIParticleForce::OnDepNodeUpdate () {
 void MOAIParticleForce::RegisterLuaClass ( USLuaState& state ) {
 
 	this->MOAITransform::RegisterLuaClass ( state );
+	
+	state.SetField ( -1, "FORCE", ( u32 )FORCE );
+	state.SetField ( -1, "GRAVITY", ( u32 )GRAVITY );
+	state.SetField ( -1, "OFFSET", ( u32 )OFFSET );
 }
 
 //----------------------------------------------------------------//
@@ -133,7 +238,10 @@ void MOAIParticleForce::RegisterLuaFuncs ( USLuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "initAttractor",		_initAttractor },
+		{ "initBasin",			_initBasin },
 		{ "initLinear",			_initLinear },
+		{ "initRadial",			_initRadial },
+		{ "setType",			_setType },
 		{ NULL, NULL }
 	};
 	

@@ -299,7 +299,7 @@ int MOAIGfxQuadListDeck2D::_setUVRect ( lua_State* L ) {
 bool MOAIGfxQuadListDeck2D::Bind () {
 
 	USDrawBuffer& drawBuffer = USDrawBuffer::Get ();
-	if ( !drawBuffer.BindTexture ( this->mTexture )) return false;
+	if ( !drawBuffer.SetTexture ( this->mTexture )) return false;
 	USGLQuad::BindVertexFormat ( drawBuffer );
 
 	return true;
@@ -308,7 +308,10 @@ bool MOAIGfxQuadListDeck2D::Bind () {
 //----------------------------------------------------------------//
 bool MOAIGfxQuadListDeck2D::Contains ( u32 idx, const USVec2D& vec ) {
 	
-	if ( idx < this->mSprites.Size ()) {
+	u32 size = this->mSprites.Size ();
+	if ( size ) {
+		
+		idx = ( idx - 1 ) % size;
 		USSprite& brush = this->mSprites [ idx ];
 		
 		for ( u32 i = 0; i < brush.mTotalPairs; ++i ) {

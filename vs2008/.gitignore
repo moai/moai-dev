@@ -1,5 +1,6 @@
 Debug/
 Release/
+CodeAnalyst/
 *.user
 *.ncb
 *.suo

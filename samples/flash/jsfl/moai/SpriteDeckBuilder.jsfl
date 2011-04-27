@@ -97,7 +97,15 @@ SpriteDeckBuilder.prototype.addSpritePrimsForFrame = function ( document, atlas,
 					rect.id = this.uvRects.push ( uvRect );
 				}
 				
-				var quadKey = this.getQuadKey ( element );
+				var quadKey;
+				
+				if ( rect.isRotated ) {
+					quadKey = this.getQuadKey ( element.matrix, rect.height, rect.width, xOff, yOff );
+				}
+				else {
+					quadKey = this.getQuadKey ( element.matrix, rect.width, rect.height, xOff, yOff );
+				}
+					
 				var quadID = this.quadLib [ quadKey ];
 				
 				if ( quadID == null ) {
@@ -124,19 +132,18 @@ SpriteDeckBuilder.prototype.addSpritePrimsForFrame = function ( document, atlas,
 }
 
 //----------------------------------------------------------------//
-SpriteDeckBuilder.prototype.getQuadKey = function ( element ) {
-
-	var key = '';
-	var m = element.matrix;
+SpriteDeckBuilder.prototype.getQuadKey = function ( m, width, height, xOff, yOff ) {
 	
+	var key = '';
+	
+	key += this.round ( width, 3 );
+	key += this.round ( height, 3 );
 	key += this.round ( m.a, 3 );
 	key += this.round ( m.b, 3 );
 	key += this.round ( m.c, 3 );
 	key += this.round ( m.d, 3 );
-	key += this.round ( m.tx, 3 );
-	key += this.round ( m.ty, 3 );
-	key += this.round ( m.width, 3 );
-	key += this.round ( m.height, 3 );
+	key += this.round ( m.tx + xOff, 3 );
+	key += this.round ( m.ty + yOff, 3 );
 	
 	return key;
 }

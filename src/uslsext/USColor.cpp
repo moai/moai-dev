@@ -19,136 +19,176 @@
 //----------------------------------------------------------------//
 void USColor::Convert ( void* dest, Format destFmt, const void* src, Format srcFmt, u32 nColors ) {
 
-	u32 buffer [ 1024 ];
+	static const u32 MAX_COLORS = 1024;
+
+	u32 buffer [ MAX_COLORS ];
 	u32* bufferPtr = buffer;
 	u32 color;
 	
-	switch ( srcFmt ) {
-		
-		case A_8:
-		
-			for ( u32 i = 0; i < nColors; ++i ) {
-				buffer [ i ] = *( u8* )src;
-				src = ( void* )(( u32 )src + 1 );
-			}
-			break;
-		
-		case RGB_888:
-			
-			for ( u32 i = 0; i < nColors; ++i ) {
-				buffer [ i ] = ( *( u32* )src ) & 0x00FFFFFF;
-				src = ( void* )(( u32 )src + 3 );
-			}
-			break;
-			
-		case RGB_565:
-			
-			for ( u32 i = 0; i < nColors; ++i ) {
-				color = *( u16* )src;
-				buffer [ i ] =	((( color >> 0x00 ) & 0x1F ) << 0x03 ) +
-								((( color >> 0x05 ) & 0x3F ) << 0x02 ) +
-								((( color >> 0x0B ) & 0x1F ) << 0x03 ) +
-								0xff000000;
-				src = ( void* )(( u32 )src + 2 );
-			}
-			break;
-		
-		case RGBA_5551: 
-			
-			for ( u32 i = 0; i < nColors; ++i ) {
-				color = *( u16* )src;
-				buffer [ i ] =	((( color >> 0x00 ) & 0x1F ) << 0x03 ) +
-								((( color >> 0x05 ) & 0x1F ) << 0x0B ) +
-								((( color >> 0x0A ) & 0x1F ) << 0x13 ) +
-								(((( color >> 0x0F ) & 0xff ) ? 0xff : 0x00 ) << 0x18 );
-				src = ( void* )(( u32 )src + 2 );
-			}
-			break;
-
-		case RGBA_4444:
-		
-			for ( u32 i = 0; i < nColors; ++i ) {
-				color = *( u32* )src;
-				buffer [ i ] =	((( color >> 0x00 ) & 0x0F ) << 0x04 ) +
-								((( color >> 0x04 ) & 0x0F ) << 0x0C ) +
-								((( color >> 0x08 ) & 0x0F ) << 0x14 ) +
-								((( color >> 0x0C ) & 0x0F ) << 0x1C );
-				src = ( void* )(( u32 )src + 2 );
-			}
-			break;
-
-		case RGBA_8888:
-			bufferPtr = ( u32* )src;
-			break;
-		
-		default:
-			return;
-	}
+	while ( nColors ) {
 	
-	switch ( destFmt ) {
+		u32 copy = nColors;
+		if ( copy > MAX_COLORS ) {
+			copy = MAX_COLORS;
+		}
+		nColors -= copy;
 	
-		case A_8:
+		switch ( srcFmt ) {
 			
-			for ( u32 i = 0; i < nColors; ++i ) {
-				color = bufferPtr [ i ];
-				(( u8* )dest )[ 0 ] = color & 0xFF;
-				dest = ( void* )(( u32 )dest + 1 );
-			}
-			break;
-	
-		case RGB_888:
-		
-			for ( u32 i = 0; i < nColors; ++i ) {
-				color = bufferPtr [ i ];
-				(( u8* )dest )[ 0 ] = color & 0xFF;
-				(( u8* )dest )[ 1 ] = ( color >> 8 ) & 0xFF;
-				(( u8* )dest )[ 2 ] = ( color >> 16 ) & 0xFF;
-				dest = ( void* )(( u32 )dest + 3 );
-			}
-			break;
+			case A_8:
 			
-		case RGB_565:
-		
-			for ( u32 i = 0; i < nColors; ++i ) {
-				color = bufferPtr [ i ];
-				*( u16* )dest =	((( color >> 0x03 ) & 0x1F ) << 0x0B ) +
-								((( color >> 0x0A ) & 0x3F ) << 0x05 ) +
-								((( color >> 0x13 ) & 0x1F ) << 0x00 );
-				dest = ( void* )(( u32 )dest + 2 );
-			}
-			break;
+				for ( u32 i = 0; i < copy; ++i ) {
+				
+					color = *( u8* )src;
+					src = ( void* )(( u32 )src + 1 );
 					
-		case RGBA_5551: 
+					buffer [ i ] = color << 0x18;
+				}
+				bufferPtr = buffer;
+				break;
 			
-			for ( u32 i = 0; i < nColors; ++i ) {
-				color = bufferPtr [ i ];
-				*( u16* )dest =		((( color >> 0x03 ) & 0x1F ) << 0x00 ) +
-									((( color >> 0x0B ) & 0x1F ) << 0x05 ) +
-									((( color >> 0x13 ) & 0x1F ) << 0x0A ) +
-									(((( color >> 0x1C ) & 0x0F ) ? 0x01 : 0x00 ) << 0x0F );
-				dest = ( void* )(( u32 )dest + 2 );
-			}
-			break;
+			case RGB_888:
+				
+				for ( u32 i = 0; i < copy; ++i ) {
+					
+					color = *( u32* )src;
+					src = ( void* )(( u32 )src + 3 );
+					
+					buffer [ i ]= color | 0xff000000;
+				}
+				bufferPtr = buffer;
+				break;
+				
+			case RGB_565:
+				
+				for ( u32 i = 0; i < copy; ++i ) {
+					
+					color = *( u16* )src;
+					src = ( void* )(( u32 )src + 2 );
+					
+					buffer [ i ] =	((( color >> 0x00 ) & 0x1F ) << 0x03 ) +
+									((( color >> 0x05 ) & 0x3F ) << 0x02 ) +
+									((( color >> 0x0B ) & 0x1F ) << 0x03 ) +
+									0xff000000;
+					
+				}
+				bufferPtr = buffer;
+				break;
+			
+			case RGBA_5551: 
+				
+				for ( u32 i = 0; i < copy; ++i ) {
+				
+					color = *( u16* )src;
+					src = ( void* )(( u32 )src + 2 );
+					
+					buffer [ i ] =	((( color >> 0x00 ) & 0x1F ) << 0x03 ) +
+									((( color >> 0x05 ) & 0x1F ) << 0x0B ) +
+									((( color >> 0x0A ) & 0x1F ) << 0x13 ) +
+									(((( color >> 0x0F ) & 0xff ) ? 0xff : 0x00 ) << 0x18 );
+				}
+				bufferPtr = buffer;
+				break;
 
-		case RGBA_4444:
+			case RGBA_4444:
 			
-			for ( u32 i = 0; i < nColors; ++i ) {
-				color = bufferPtr [ i ];
-				*( u16* )dest =		((( color >> 0x04 ) & 0x0F ) << 0x0C ) +
-									((( color >> 0x0C ) & 0x0F ) << 0x08 ) +
-									((( color >> 0x14 ) & 0x0F ) << 0x04 ) +
-									((( color >> 0x1C ) & 0x0F ) << 0x00 );
-				dest = ( void* )(( u32 )dest + 2 );
-			}
-			break;
+				for ( u32 i = 0; i < copy; ++i ) {
+				
+					color = *( u32* )src;
+					src = ( void* )(( u32 )src + 2 );
+					
+					buffer [ i ] =	((( color >> 0x00 ) & 0x0F ) << 0x04 ) +
+									((( color >> 0x04 ) & 0x0F ) << 0x0C ) +
+									((( color >> 0x08 ) & 0x0F ) << 0x14 ) +
+									((( color >> 0x0C ) & 0x0F ) << 0x1C );
+				}
+				bufferPtr = buffer;
+				break;
 
-		case RGBA_8888:
+			case RGBA_8888:
+				bufferPtr = ( u32* )src;
+				break;
 			
-			memcpy ( dest, bufferPtr, nColors * sizeof ( u32 ));
-			break;
+			default:
+				return;
+		}
 		
-		default:
-			break;
+		switch ( destFmt ) {
+		
+			case A_8:
+				
+				for ( u32 i = 0; i < copy; ++i ) {
+				
+					color = bufferPtr [ i ];
+					
+					(( u8* )dest )[ 0 ] = ( color >> 0x18 ) & 0xFF;
+					dest = ( void* )(( u32 )dest + 1 );
+				}
+				break;
+		
+			case RGB_888:
+			
+				for ( u32 i = 0; i < copy; ++i ) {
+				
+					color = bufferPtr [ i ];
+					
+					(( u8* )dest )[ 0 ] = color & 0xFF;
+					(( u8* )dest )[ 1 ] = ( color >> 8 ) & 0xFF;
+					(( u8* )dest )[ 2 ] = ( color >> 16 ) & 0xFF;
+					dest = ( void* )(( u32 )dest + 3 );
+				}
+				break;
+				
+			case RGB_565:
+			
+				for ( u32 i = 0; i < copy; ++i ) {
+				
+					color = bufferPtr [ i ];
+					
+					*( u16* )dest =	((( color >> 0x03 ) & 0x1F ) << 0x0B ) +
+									((( color >> 0x0A ) & 0x3F ) << 0x05 ) +
+									((( color >> 0x13 ) & 0x1F ) << 0x00 );
+					dest = ( void* )(( u32 )dest + 2 );
+				}
+				break;
+						
+			case RGBA_5551: 
+				
+				for ( u32 i = 0; i < copy; ++i ) {
+				
+					color = bufferPtr [ i ];
+					
+					*( u16* )dest =		((( color >> 0x03 ) & 0x1F ) << 0x00 ) +
+										((( color >> 0x0B ) & 0x1F ) << 0x05 ) +
+										((( color >> 0x13 ) & 0x1F ) << 0x0A ) +
+										(((( color >> 0x1C ) & 0x0F ) ? 0x01 : 0x00 ) << 0x0F );
+					dest = ( void* )(( u32 )dest + 2 );
+				}
+				break;
+
+			case RGBA_4444:
+				
+				for ( u32 i = 0; i < copy; ++i ) {
+				
+					color = bufferPtr [ i ];
+					
+					*( u16* )dest =		((( color >> 0x04 ) & 0x0F ) << 0x0C ) +
+										((( color >> 0x0C ) & 0x0F ) << 0x08 ) +
+										((( color >> 0x14 ) & 0x0F ) << 0x04 ) +
+										((( color >> 0x1C ) & 0x0F ) << 0x00 );
+					dest = ( void* )(( u32 )dest + 2 );
+				}
+				break;
+
+			case RGBA_8888:
+				
+				memcpy ( dest, bufferPtr, copy * sizeof ( u32 ));
+				dest = ( void* )(( u32 )dest + ( copy * sizeof ( u32 )));
+				break;
+			
+			default:
+				break;
+		}
 	}
 }
 

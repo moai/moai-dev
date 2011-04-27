@@ -118,6 +118,7 @@ TextureAtlas.prototype.createTextureAtlasDoc = function () {
 		
 		if ( rect.isRotated ) {
 			var element = atlasDoc.selection [ 0 ];
+			element.setTransformationPoint ({ x:0, y:0 });
 			element.rotation = 90;
 		}
 	}

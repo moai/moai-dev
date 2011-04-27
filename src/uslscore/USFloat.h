@@ -219,7 +219,7 @@ public:
 	//----------------------------------------------------------------//
 	static inline float Rand ( float lower, float upper ) {
 
-		return lower + ( USFloat::Rand () * ( upper - lower ));
+		return ( lower != upper ) ? lower + ( USFloat::Rand () * ( upper - lower )) : lower;
 	}
 
 	//----------------------------------------------------------------//

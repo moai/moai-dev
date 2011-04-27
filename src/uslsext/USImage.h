@@ -31,32 +31,24 @@ private:
 	u32		mWidth;
 	u32		mHeight;
 	
-	u32		mPadWidth;
-	u32		mPadHeight;
-	
 	void*	mData;
 	void*	mPalette;
 	void*	mBitmap;
 
 	//----------------------------------------------------------------//
-	void		Alloc				();
-	u32			GetMinPowerOfTwo	( u32 size ); // gets the smallest power of two greater than size
-	void		InitWithBitmap		( const void* bitmap, u32 width, u32 height, USColor::Format colorFmt, bool copy );
-	void		InitWithPng			( USStream& stream, u32 transform );
-	void		InitWithPng			( void* pngParam, void* pngInfoParam, u32 transform );
-	bool		IsPadded			();
-	void		SetDimensions		( u32 width, u32 height, bool padToPow2 = false );
+	void			Alloc				();
+	static u32		GetMinPowerOfTwo	( u32 size ); // gets the smallest power of two greater than size
+	void			Init				( const void* bitmap, u32 width, u32 height, USColor::Format colorFmt, bool copy );
+	void			LoadPng				( USStream& stream, u32 transform );
+	void			LoadPng				( void* pngParam, void* pngInfoParam, u32 transform );
 
 public:
 
-	GET ( USPixel::Format, PixelFormat, mPixelFormat )
-	GET ( USColor::Format, ColorFormat, mColorFormat )
+	GET_CONST ( USPixel::Format, PixelFormat, mPixelFormat )
+	GET_CONST ( USColor::Format, ColorFormat, mColorFormat )
 
-	GET ( u32, Width, mWidth )
-	GET ( u32, Height, mHeight )
-
-	GET ( u32, PaddedWidth, mPadWidth )
-	GET ( u32, PaddedHeight, mPadHeight )
+	GET_CONST ( u32, Width, mWidth )
+	GET_CONST ( u32, Height, mHeight )
 
 	GET ( void*, Data, mData )
 	GET ( void*, Palette, mPalette )
@@ -64,23 +56,30 @@ public:
 
 	//----------------------------------------------------------------//
 	void			ClearBitmap			();
-	u32				GetBitmapSize		();
-	u32				GetColor			( u32 i );
-	u32				GetColor			( u32 x, u32 y );
-	u32				GetDataSize			();
-	u32				GetPaletteCount		();
-	u32				GetPaletteSize		();
-	u32				GetPixel			( u32 x, u32 y );
+	void			ConvertColors		( const USImage& image, USColor::Format colorFmt );
+	void			Copy				( const USImage& image );
+	u32				GetBitmapSize		() const;
+	u32				GetColor			( u32 i ) const;
+	u32				GetColor			( u32 x, u32 y ) const;
+	u32				GetDataSize			() const;
+	u32				GetPaletteCount		() const;
+	u32				GetPaletteColor		( u32 idx ) const;
+	u32				GetPaletteSize		() const;
+	u32				GetPixel			( u32 x, u32 y ) const;
 	void*			GetRow				( u32 y );
-	u32				GetRowSize			();
+	const void*		GetRow				( u32 y ) const;
+	u32				GetRowSize			() const;
 	void			Init				( u32 width, u32 height, USColor::Format colorFmt, USPixel::Format pixelFmt );
-	void			Init				( USData& data, u32 transform = 0 );
-	void			Init				( cc8* filename, u32 transform = 0 );
-	void			Init				( const void* buffer, u32 size, u32 transform = 0 );
-	void			InitWithBitmap		( const void* bitmap, u32 width, u32 height, USColor::Format colorFmt );
+	void			Init				( const void* bitmap, u32 width, u32 height, USColor::Format colorFmt );
+	void			Load				( USData& data, u32 transform = 0 );
+	void			Load				( cc8* filename, u32 transform = 0 );
+	void			Load				( const void* buffer, u32 size, u32 transform = 0 );
 	bool			IsOK				();
+	void			PadToPow2			( const USImage& image );
 	void			Release				();
+	void			ResizeCanvas		( const USImage& image, USIntRect rect );
 	void			SetColor			( u32 x, u32 y, u32 color );
+	void			SetPaletteColor		( u32 idx, u32 rgba );
 	void			SetPixel			( u32 x, u32 y, u32 pixel );
 	void			Surrender			();
 	void			Transform			( u32 transform );

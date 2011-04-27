@@ -596,8 +596,6 @@ void MOAISim::Update () {
 	#endif
 	
 	this->mDataIOThread.Publish ();
-	
-	lua_gc ( state, LUA_GCCOLLECT, 0 );
 }
 
 //----------------------------------------------------------------//

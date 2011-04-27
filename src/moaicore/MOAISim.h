@@ -27,9 +27,9 @@ private:
 
 	u32				mTimerState;
 
-	double			mDeviceTime; // elapsed device time since last update
-	double			mStep; // simulation step size
-	double			mTime; // elapsed simulation running time (in steps)
+	double			mDeviceTime;	// elapsed device time since last update
+	double			mStep;			// simulation step size
+	double			mTime;			// elapsed simulation running time (in steps)
 	
 	USLuaRef		mOnTextEntry;
 	USLuaRef		mOnCancelTextEntry;

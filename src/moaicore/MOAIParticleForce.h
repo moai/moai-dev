@@ -6,6 +6,7 @@
 
 #include <moaicore/MOAITransform.h>
 
+class MOAIParticle;
 class MOAIParticleSystem;
 
 //================================================================//
@@ -13,16 +14,23 @@ class MOAIParticleSystem;
 //================================================================//
 /**	@name	MOAIParticleForce
 	@text	Particle force.
+
+	@const	FORCE
+	@const	GRAVITY
+	@const	OFFSET
 */
 class MOAIParticleForce :
 	public MOAITransform {
 private:
 
+	u32			mShape;
 	u32			mType;
 	USVec2D		mVec;
 
 	USVec2D		mWorldLoc;	
 	USVec2D		mWorldVec;
+
+	bool		mUseMass;
 
 	// attractor coefficients
 	float		mRadius;
@@ -30,7 +38,10 @@ private:
 
 	//----------------------------------------------------------------//
 	static int		_initAttractor			( lua_State* L );
+	static int		_initBasin				( lua_State* L );
 	static int		_initLinear				( lua_State* L );
+	static int		_initRadial				( lua_State* L );
+	static int		_setType				( lua_State* L );
 	
 	//----------------------------------------------------------------//
 
@@ -38,13 +49,21 @@ public:
 	
 	enum {
 		ATTRACTOR,
+		BASIN,
 		LINEAR,
+		RADIAL,
+	};
+	
+	enum {
+		FORCE,
+		GRAVITY,
+		OFFSET,
 	};
 	
 	DECL_LUA_FACTORY ( MOAIParticleForce )
 
 	//----------------------------------------------------------------//
-	USVec2D			GetAcceleration			( const USVec2D& loc );
+	void			Eval					( const MOAIParticle& particle, USVec2D& acceleration, USVec2D& offset );
 					MOAIParticleForce		();
 					~MOAIParticleForce		();
 	void			OnDepNodeUpdate			();

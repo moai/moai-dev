@@ -1,0 +1,2 @@
+*.sh 						eol=lf
+3rdparty/curl-7.19.7/		eol=lf

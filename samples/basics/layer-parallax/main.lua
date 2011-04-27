@@ -4,6 +4,8 @@
 -- http://getmoai.com
 ----------------------------------------------------------------
 
+MOAISim.openWindow ( "test", 480, 320 )
+
 viewport = MOAIViewport.new ()
 viewport:setSize ( 480, 320 )
 viewport:setScale ( 480, 320 )
@@ -35,5 +37,3 @@ prop = MOAIProp2D.new ()
 prop:setDeck ( gfxQuad )
 layer2:insertProp ( prop )
 
-MOAISim.pushRenderPass ( layer )
-MOAISim.openWindow ( "test", 480, 320 )

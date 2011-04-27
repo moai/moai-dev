@@ -4,6 +4,8 @@
 -- http://getmoai.com
 ----------------------------------------------------------------
 
+MOAISim.openWindow ( "test", 32, 32 )
+
 function onFinish ( task )
 
 	print ( "onFinish" )
@@ -18,6 +20,5 @@ end
 task = MOAIHttpTask.new ( "GSLHttpTask" )
 
 task:setCallback ( onFinish )
-task:httpGet ( "http://www.w3schools.com/XML/note.xml" )
+task:httpGet ( "www.cnn.com" )
 
-MOAISim.openWindow ( "httpTask", 32, 32 )

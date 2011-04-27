@@ -579,8 +579,11 @@ int MOAIBox2DWorld::_setUnitsToMeters ( lua_State* L ) {
 //----------------------------------------------------------------//
 void MOAIBox2DWorld::DrawDebug () {
 
-	USCanvas::SetTexture ();
-	this->mWorld->DrawDebugData ();
+	if ( this->mDebugDraw ) {
+		USCanvas::SetTexture ();
+		this->mDebugDraw->mScale = 1.0f / this->mUnitsToMeters;
+		this->mWorld->DrawDebugData ();
+	}
 }
 
 //----------------------------------------------------------------//

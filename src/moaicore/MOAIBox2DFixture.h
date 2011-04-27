@@ -39,7 +39,7 @@ private:
 	void			BeginContact		( MOAIBox2DFixture* other, MOAIBox2DArbiter* arbiter );
 	void			EndContact			( MOAIBox2DFixture* other, MOAIBox2DArbiter* arbiter );
 	void			HandleCollision		( u32 eventType, MOAIBox2DFixture* other, MOAIBox2DArbiter* arbiter );
-	static u32		LoadVerts			( USLuaState& state, int idx, b2Vec2* verts, u32 max  );
+	static u32		LoadVerts			( USLuaState& state, int idx, b2Vec2* verts, u32 max, float unitsToMeters  );
 	void			PostSolve			( MOAIBox2DFixture* other, MOAIBox2DArbiter* arbiter );
 	void			PreSolve			( MOAIBox2DFixture* other, MOAIBox2DArbiter* arbiter );
 	void			SetFixture			( b2Fixture* fixture );

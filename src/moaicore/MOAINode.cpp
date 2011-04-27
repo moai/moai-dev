@@ -69,6 +69,25 @@ int MOAINode::_clearDependency ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	forceUpdate
+	@text	Evaluates the dependency graph for this node. Typically,
+			the entire active dependency graph is evaluated once per
+			frame, but in some cases it may be desirable to force
+			evaluation of a node to make sure source dependencies
+			are propagated to it immediately.
+	
+	@in		MOAINode self
+	@out	nil
+*/
+int MOAINode::_forceUpdate ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAINode, "U" );
+
+	self->ForceUpdate ();
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	getAttr
 	@text	Returns the value of the attribute if it exists or nil if it doesn't.
 	
@@ -472,6 +491,12 @@ void MOAINode::ExtendUpdate () {
 }
 
 //----------------------------------------------------------------//
+void MOAINode::ForceUpdate () {
+
+	this->DepNodeUpdate ();
+}
+
+//----------------------------------------------------------------//
 bool MOAINode::IsNodeUpstream ( MOAINode* node ) {
 
 	MOAINode* cursor = this->mPrev;
@@ -511,7 +536,6 @@ MOAINode::~MOAINode () {
 		
 		if ( link->mDestNode ) {
 			link->mDestNode->ClearPullLink ( *link );
-			link->mDestNode->ScheduleUpdate ();
 		}
 		delete link;
 	}
@@ -529,6 +553,10 @@ void MOAINode::PullAttributes () {
 
 	MOAIAttrLink* link = this->mPullAttrLinks;	
 	for ( ; link ; link = link->mNextInDest ) {
+		
+		if ( link->mSourceNode->STATE_SCHEDULED ) {
+			link->mSourceNode->DepNodeUpdate ();
+		}
 		
 		if ( link->mDestAttrExists && ( link->mSourceAttrID != NULL_ATTR )) {
 			link->mSourceNode->ApplyAttrOp ( link->mSourceAttrID, getter );
@@ -549,6 +577,7 @@ void MOAINode::RegisterLuaFuncs ( USLuaState& state ) {
 	luaL_Reg regTable [] = {
 		{ "clearAttrLink",			_clearAttrLink },
 		{ "clearDependency",		_clearDependency },
+		{ "forceUpdate",			_forceUpdate },
 		{ "getAttr",				_getAttr },
 		{ "moveAttr",				_moveAttr },
 		{ "scheduleUpdate",			_scheduleUpdate },

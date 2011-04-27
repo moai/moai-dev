@@ -32,9 +32,6 @@ protected:
 
 	SET ( u32, ContentMask, mContentMask )
 
-	//----------------------------------------------------------------//
-	u32					GetContentAddr				( u32 idx, u32 total );
-	
 public:
 	
 	GET ( u32, ContentMask, mContentMask )

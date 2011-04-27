@@ -452,6 +452,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\moaicore\MOAIImage.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIImage.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\moaicore\MOAIIndexBuffer.cpp"
 				>
 			</File>
@@ -836,19 +844,15 @@
 			Name="particles"
 			>
 			<File
+				RelativePath="..\..\src\moaicore\MOAIParticle.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\moaicore\MOAIParticleEmitter.cpp"
 				>
 			</File>
 			<File
 				RelativePath="..\..\src\moaicore\MOAIParticleEmitter.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIParticleEngine.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIParticleEngine.h"
 				>
 			</File>
 			<File
@@ -1093,6 +1097,18 @@
 			</File>
 			<File
 				RelativePath="..\..\src\moaicore\MOAITileDeck2D.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="events"
+			>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIEventSource.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIEventSource.h"
 				>
 			</File>
 		</Filter>

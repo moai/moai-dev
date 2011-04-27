@@ -12,6 +12,9 @@ class MOAISurfaceSampler2D;
 //================================================================//
 // MOAIDeck2D
 //================================================================//
+/**	@name MOAIDeck2D
+	@text Base class for 2D decks.
+*/
 class MOAIDeck2D :
 	public MOAIDeck {
 public:

@@ -129,10 +129,10 @@ int	MOAITransform::_getScl ( lua_State* L ) {
 	@text	Transform a point in model space to world space.
 	
 	@in		MOAITransform self
-	@in		x
-	@in		y
-	@out	x
-	@out	y
+	@in		number x
+	@in		number y
+	@out	number x
+	@out	number y
 */
 int MOAITransform::_modelToWorld ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITransform, "UNN" )
@@ -473,8 +473,8 @@ int MOAITransform::_setLoc ( lua_State* L ) {
 /**	@name	setParent
 	@text	Sets or clears the prop's parent transform.
 	
-	@in		MOAIProp2D self
-	@opt	MOAIProp2D parent	Default value is nil.
+	@in		MOAITransform self
+	@opt	MOAITransformBase parent	Default value is nil.
 	@out	nil
 */
 int MOAITransform::_setParent ( lua_State* L ) {
@@ -533,10 +533,10 @@ int MOAITransform::_setScl ( lua_State* L ) {
 	@text	Transform a point in world space to model space.
 	
 	@in		MOAITransform self
-	@in		x
-	@in		y
-	@out	x
-	@out	y
+	@in		number x
+	@in		number y
+	@out	number x
+	@out	number y
 */
 int MOAITransform::_worldToModel ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITransform, "UNN" )
@@ -636,6 +636,7 @@ MOAITransform::MOAITransform () :
 	mLoc ( 0.0f, 0.0f ),
 	mScale ( 1.0f, 1.0f ),
 	mDegrees ( 0.0f ),
+	mParent ( 0 ),
 	mFilter ( INHERIT_ALL ) {
 	
 	RTTI_SINGLE ( MOAITransformBase )

@@ -114,6 +114,40 @@ int MOAIVertexBuffer::_setFormat ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	setPenWidth
+	@text	Sets the pen with for drawing prims in this vertex buffer.
+			Only valid with prim types GL_LINES, GL_LINE_LOOP, GL_LINE_STRIP.
+	
+	@in		MOAIVertexBuffer self
+	@in		number penWidth
+	@out	nil
+*/
+int MOAIVertexBuffer::_setPenWidth ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIVertexBuffer, "UN" )
+	
+	self->mPenWidth = state.GetValue < float >( 2, 1.0f );
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	setPointSize
+	@text	Sets the point size for drawing prims in this vertex buffer.
+			Only valid with prim types GL_POINTS.
+	
+	@in		MOAIVertexBuffer self
+	@in		number pointSize
+	@out	nil
+*/
+int MOAIVertexBuffer::_setPointSize ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIVertexBuffer, "UN" )
+	
+	self->mPointSize = state.GetValue < float >( 2, 1.0f );
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	setPrimType
 	@text	Sets the prim type the buffer represents.
 	
@@ -239,13 +273,14 @@ int MOAIVertexBuffer::_writeInt32 ( lua_State* L ) {
 //----------------------------------------------------------------//
 void MOAIVertexBuffer::Draw () {
 
-	if ( !this->mFormat ) return;
-	
-	u32 nVerts = ( u32 )( this->mStream.GetLength () / this->mFormat->GetVertexSize ());
-	if ( nVerts ) {
-	
-		this->mFormat->Bind ( this->mBuffer );
-		glDrawArrays ( this->mPrimType, 0, nVerts );
+	if ( this->mFormat ) {
+		
+		USDrawBuffer& drawBuffer = USDrawBuffer::Get ();
+		
+		drawBuffer.SetPenWidth ( this->mPenWidth );
+		drawBuffer.SetPointSize ( this->mPointSize );
+		
+		drawBuffer.DrawPrims ( *this->mFormat, this->mPrimType, this->mBuffer, this->mStream.GetLength ());
 	}
 }
 
@@ -257,6 +292,8 @@ bool MOAIVertexBuffer::IsValid () {
 
 //----------------------------------------------------------------//
 MOAIVertexBuffer::MOAIVertexBuffer () :
+	mPenWidth ( 1.0f ),
+	mPointSize ( 1.0f ),
 	mPrimSize ( 0 ) {
 	
 	RTTI_SINGLE ( MOAIVertexBuffer )
@@ -292,6 +329,8 @@ void MOAIVertexBuffer::RegisterLuaFuncs ( USLuaState& state ) {
 		{ "reserveVerts",			_reserveVerts },
 		{ "reset",					_reset },
 		{ "setFormat",				_setFormat },
+		{ "setPenWidth",			_setPenWidth },
+		{ "setPointSize",			_setPointSize },
 		{ "setPrimType",			_setPrimType },
 		{ "writeColor32",			_writeColor32 },
 		{ "writeFloat",				_writeFloat },

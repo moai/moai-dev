@@ -1,5 +1,9 @@
 build/
-moai-open.xcodeproj/project.xcworkspace
-moai-open.xcodeproj/xcuserdata/
+iphone/moai-iphone.xcodeproj/project.xcworkspace
+iphone/moai-iphone.xcodeproj/xcuserdata/
+libmoai/libmoai.xcodeproj/project.xcworkspace
+libmoai/libmoai.xcodeproj/xcuserdata/
+osx/moai-osx.xcodeproj/project.xcworkspace
+osx/moai-osx.xcodeproj/xcuserdata/
 *.pbxuser
 *.perspectivev3

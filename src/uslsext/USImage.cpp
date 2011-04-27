@@ -40,13 +40,9 @@ void USImage::Alloc () {
 	this->mData = malloc ( paletteSize + bitmapSize );
 	this->mBitmap = ( void* )(( u32 )this->mData + paletteSize );
 	
-	if ( this->IsPadded ()) {
-		memset ( this->mBitmap, 0x00, bitmapSize );
-	}
-	
 	if ( paletteSize ) {
 		this->mPalette = this->mData;
-		memset ( this->mPalette, 0xff, paletteSize );
+		memset ( this->mPalette, 0, paletteSize );
 	}
 	else {
 		this->mPalette = 0;
@@ -62,13 +58,42 @@ void USImage::ClearBitmap () {
 }
 
 //----------------------------------------------------------------//
-u32 USImage::GetBitmapSize () {
-
-	return this->GetRowSize () * this->mPadHeight;
+void USImage::ConvertColors ( const USImage& image, USColor::Format colorFmt ) {
+	
+	if ( colorFmt == image.mColorFormat ) {
+		this->Copy ( image );
+	}
+	else {
+	
+		this->Init ( image.mWidth, image.mHeight, colorFmt, image.mPixelFormat );
+		
+		if ( this->mPixelFormat == USPixel::TRUECOLOR ) {
+			u32 total = this->mWidth * this->mHeight;
+			USColor::Convert ( this->mBitmap, this->mColorFormat, image.mBitmap, image.mColorFormat, total );
+		}
+		else {
+			u32 total = this->GetPaletteCount ();
+			USColor::Convert ( this->mPalette, this->mColorFormat, image.mPalette, image.mColorFormat, total );
+		}
+	}
 }
 
 //----------------------------------------------------------------//
-u32 USImage::GetColor ( u32 i ) {
+void USImage::Copy ( const USImage& image ) {
+
+	this->Init ( image.mWidth, image.mHeight, image.mColorFormat, image.mPixelFormat );
+	
+	memcpy ( this->mData, image.mData, this->GetBitmapSize () + this->GetPaletteSize ());
+}
+
+//----------------------------------------------------------------//
+u32 USImage::GetBitmapSize () const {
+
+	return this->GetRowSize () * this->mHeight;
+}
+
+//----------------------------------------------------------------//
+u32 USImage::GetColor ( u32 i ) const {
 
 	u32 colorDepth = USColor::GetDepth ( this->mColorFormat );
 
@@ -82,7 +107,7 @@ u32 USImage::GetColor ( u32 i ) {
 }
 
 //----------------------------------------------------------------//
-u32 USImage::GetColor ( u32 x, u32 y ) {
+u32 USImage::GetColor ( u32 x, u32 y ) const {
 
 	if ( !this->mBitmap ) return 0;
 
@@ -106,7 +131,7 @@ u32 USImage::GetColor ( u32 x, u32 y ) {
 }
 
 //----------------------------------------------------------------//
-u32 USImage::GetDataSize () {
+u32 USImage::GetDataSize () const {
 
 	return this->GetPaletteSize () + this->GetBitmapSize ();
 }
@@ -114,30 +139,48 @@ u32 USImage::GetDataSize () {
 //----------------------------------------------------------------//
 u32 USImage::GetMinPowerOfTwo ( u32 size ) {
 
-	u32 pow2 = 0x01;
-	while (( pow2 < size ) && ( pow2 != 0x10000000 )) pow2 = pow2 << 0x01;
+	u32 pow2 = 1;
+	while ( pow2 < size ) pow2 = pow2 << 0x01;
 	return pow2;
 }
 
 //----------------------------------------------------------------//
-u32 USImage::GetPaletteCount () {
+u32 USImage::GetPaletteCount () const {
 
 	return USPixel::GetPaletteCount ( this->mPixelFormat );
 }
 
 //----------------------------------------------------------------//
-u32 USImage::GetPaletteSize () {
+u32 USImage::GetPaletteColor ( u32 idx ) const {
+
+	u32 rgba = 0;
+	u32 total = this->GetPaletteCount ();
+	if ( idx < total ) {
+		
+		u32 colorDepth = USColor::GetDepth ( this->mColorFormat );
+		
+		u32 size = ( colorDepth >> 3 );
+		u8* stream = ( u8* )(( u32 )this->mPalette + ( idx * size ));
+		u32 color = USPixel::ReadPixel ( stream, size );
+		
+		rgba = USColor::ConvertToRGBA ( color, this->mColorFormat );
+	}
+	return rgba;
+}
+
+//----------------------------------------------------------------//
+u32 USImage::GetPaletteSize () const {
 
 	return USPixel::GetPaletteSize ( this->mPixelFormat, this->mColorFormat );
 }
 
 //----------------------------------------------------------------//
-u32 USImage::GetPixel ( u32 x, u32 y ) {
+u32 USImage::GetPixel ( u32 x, u32 y ) const {
 
 	if ( y > this->mHeight ) return 0;
 	if ( x > this->mWidth ) return 0;
 
-	void* row = this->GetRow ( y );
+	const void* row = this->GetRow ( y );
 
 	float pixelSize = USPixel::GetSize ( this->mPixelFormat, this->mColorFormat );
 	u32 pixel;
@@ -163,9 +206,15 @@ void* USImage::GetRow ( u32 y ) {
 }
 
 //----------------------------------------------------------------//
-u32 USImage::GetRowSize () {
+const void* USImage::GetRow ( u32 y ) const {
 
-	u32 rowSize = ( u32 )(( float )this->mPadWidth * USPixel::GetSize ( this->mPixelFormat, this->mColorFormat ));
+	return ( void* )(( u32 )this->mBitmap + ( this->GetRowSize () * y ));
+}
+
+//----------------------------------------------------------------//
+u32 USImage::GetRowSize () const {
+
+	u32 rowSize = ( this->mWidth * USPixel::GetDepth ( this->mPixelFormat, this->mColorFormat )) >> 3;
 	return ( rowSize + ( rowSize & 0x01 ));
 }
 
@@ -178,67 +227,18 @@ void USImage::Init ( u32 width, u32 height, USColor::Format colorFmt, USPixel::F
 	this->mWidth = width;
 	this->mHeight = height;
 	
-	this->mPadWidth = width;
-	this->mPadHeight = height;
-	
 	this->Alloc ();
+	this->ClearBitmap ();
 }
 
 //----------------------------------------------------------------//
-void USImage::Init ( USData& data , u32 transform ) {
+void USImage::Init ( const void* bitmap, u32 width, u32 height, USColor::Format colorFmt ) {
 
-	void* bytes;
-	u32 size;
-	data.Lock ( &bytes, &size );
-
-	this->Init ( bytes, size, transform );
-	
-	data.Unlock ();
+	this->Init ( bitmap, width, height, colorFmt, true );
 }
 
 //----------------------------------------------------------------//
-void USImage::Init ( cc8* filename, u32 transform ) {
-
-	this->Release ();
-	if ( !USFileSys::CheckFileExists ( filename )) return;
-	
-	USFileStream stream;
-	stream.OpenRead ( filename );
-	
-	u32 size = stream.GetLength ();
-	void* buffer = malloc ( size );
-	stream.ReadBytes ( buffer, size );
-	
-	stream.Close ();
-	
-	this->Init ( buffer, size, transform );
-	free ( buffer );
-}
-
-//----------------------------------------------------------------//
-void USImage::Init ( const void* buffer, u32 size, u32 transform ) {
-
-	this->Release ();
-	if ( size < 8 ) return;
-	
-	int isPng = ( png_sig_cmp (( png_bytep )buffer, 0, 8 ) == 0 );
-	
-	if ( isPng ) {
-		USByteStream stream;
-		stream.SetBuffer (( void* )buffer, size );
-		stream.SetLength ( size );
-		this->InitWithPng ( stream, transform );
-	}
-}
-
-//----------------------------------------------------------------//
-void USImage::InitWithBitmap ( const void* bitmap, u32 width, u32 height, USColor::Format colorFmt ) {
-
-	this->InitWithBitmap ( bitmap, width, height, colorFmt, true );
-}
-
-//----------------------------------------------------------------//
-void USImage::InitWithBitmap ( const void* bitmap, u32 width, u32 height, USColor::Format colorFmt, bool copy ) {
+void USImage::Init ( const void* bitmap, u32 width, u32 height, USColor::Format colorFmt, bool copy ) {
 
 	this->Release ();
 
@@ -247,7 +247,8 @@ void USImage::InitWithBitmap ( const void* bitmap, u32 width, u32 height, USColo
 	this->mPixelFormat = USPixel::TRUECOLOR;
 	this->mColorFormat = colorFmt;
 
-	this->SetDimensions ( width, height, false );
+	this->mWidth = width;
+	this->mHeight = height;
 	
 	if ( copy ) {
 		this->Alloc ();
@@ -262,7 +263,54 @@ void USImage::InitWithBitmap ( const void* bitmap, u32 width, u32 height, USColo
 }
 
 //----------------------------------------------------------------//
-void USImage::InitWithPng ( USStream& stream, u32 transform ) {
+void USImage::Load ( USData& data, u32 transform ) {
+
+	void* bytes;
+	u32 size;
+	data.Lock ( &bytes, &size );
+
+	this->Load ( bytes, size, transform );
+	
+	data.Unlock ();
+}
+
+//----------------------------------------------------------------//
+void USImage::Load ( cc8* filename, u32 transform ) {
+
+	this->Release ();
+	if ( !USFileSys::CheckFileExists ( filename )) return;
+	
+	USFileStream stream;
+	stream.OpenRead ( filename );
+	
+	u32 size = stream.GetLength ();
+	void* buffer = malloc ( size );
+	stream.ReadBytes ( buffer, size );
+	
+	stream.Close ();
+	
+	this->Load ( buffer, size, transform );
+	free ( buffer );
+}
+
+//----------------------------------------------------------------//
+void USImage::Load ( const void* buffer, u32 size, u32 transform ) {
+
+	this->Release ();
+	if ( size < 8 ) return;
+	
+	int isPng = ( png_sig_cmp (( png_bytep )buffer, 0, 8 ) == 0 );
+	
+	if ( isPng ) {
+		USByteStream stream;
+		stream.SetBuffer (( void* )buffer, size );
+		stream.SetLength ( size );
+		this->LoadPng ( stream, transform );
+	}
+}
+
+//----------------------------------------------------------------//
+void USImage::LoadPng ( USStream& stream, u32 transform ) {
 
 	png_structp png = png_create_read_struct ( PNG_LIBPNG_VER_STRING, 0, _pngError, 0 );
 	if ( !png ) return;
@@ -270,14 +318,14 @@ void USImage::InitWithPng ( USStream& stream, u32 transform ) {
 	png_infop pngInfo = png_create_info_struct ( png );
 	if ( pngInfo ) {
 		png_set_read_fn ( png, &stream, _pngRead );
-		this->InitWithPng ( png, pngInfo, transform );
+		this->LoadPng ( png, pngInfo, transform );
 	}
 
 	png_destroy_read_struct ( &png, &pngInfo, NULL );
 }
 
 //----------------------------------------------------------------//
-void USImage::InitWithPng ( void* pngParam, void* pngInfoParam, u32 transform ) {
+void USImage::LoadPng ( void* pngParam, void* pngInfoParam, u32 transform ) {
 	
 	png_structp png = ( png_structp )pngParam;
 	png_infop pngInfo = ( png_infop )pngInfoParam;
@@ -308,40 +356,48 @@ void USImage::InitWithPng ( void* pngParam, void* pngInfoParam, u32 transform ) 
 	if ( paletteSize > 256 ) return;
 	
 	// set the dimensions, and padding (if any )
-	this->SetDimensions ( width, height, ( transform & USImageTransform::POW_TWO ));
+	bool isPadded = false;
+	if ( transform & USImageTransform::POW_TWO ) {
+		this->mWidth = this->GetMinPowerOfTwo ( width );
+		this->mHeight = this->GetMinPowerOfTwo ( height );
+		isPadded = true;
+	}
+	else {
+		this->mWidth = width;
+		this->mHeight = height;
+	}
 	
 	// now guess the format and color type, according to the png
-	USPixel::Format pixelFormat;
-	USColor::Format colorFormat;	
+	USPixel::Format pngPixelFormat;
+	USColor::Format pngColorFormat;
 	
 	switch ( pngColorType ) {
 		
 		case PNG_COLOR_TYPE_PALETTE:
-			pixelFormat = ( paletteSize > 16 ) ? USPixel::INDEX_8 : USPixel::INDEX_4;
-			colorFormat = ( transSize ) ? USColor::RGBA_8888 : USColor::RGB_888;
+			pngPixelFormat = ( paletteSize > 16 ) ? USPixel::INDEX_8 : USPixel::INDEX_4;
+			pngColorFormat = ( transSize ) ? USColor::RGBA_8888 : USColor::RGB_888;
 			break;
 		
 		case PNG_COLOR_TYPE_RGB:
-			pixelFormat = USPixel::TRUECOLOR;
-			colorFormat = USColor::RGB_888;
+			pngPixelFormat = USPixel::TRUECOLOR;
+			pngColorFormat = USColor::RGB_888;
 			break;
 		
 		case PNG_COLOR_TYPE_RGB_ALPHA:
-			pixelFormat = USPixel::TRUECOLOR;
-			colorFormat = USColor::RGBA_8888;
+			pngPixelFormat = USPixel::TRUECOLOR;
+			pngColorFormat = USColor::RGBA_8888;
 			break;
 		
 		default: return; // unsupported format
 	}
 	
 	// override the image settings
-	this->mPixelFormat = ( transform & USImageTransform::TRUECOLOR ) ? USPixel::TRUECOLOR : pixelFormat;
+	this->mPixelFormat = ( transform & USImageTransform::TRUECOLOR ) ? USPixel::TRUECOLOR : pngPixelFormat;
+	this->mColorFormat = pngColorFormat;
 	
-	this->mColorFormat = colorFormat;
-	
-	if (( transform & USImageTransform::QUANTIZE ) && ( USColor::GetDepth ( colorFormat ) > 16 )) {
+	if (( transform & USImageTransform::QUANTIZE ) && ( USColor::GetDepth ( pngColorFormat ) > 16 )) {
 		
-		switch ( colorFormat ) {
+		switch ( pngColorFormat ) {
 			case USColor::RGB_888:
 				this->mColorFormat = USColor::RGB_565;
 				break;
@@ -373,8 +429,11 @@ void USImage::InitWithPng ( void* pngParam, void* pngInfoParam, u32 transform ) 
 		png_read_update_info ( png, pngInfo );
 		
 		this->Alloc ();
+		if ( isPadded ) {
+			this->ClearBitmap ();
+		}
 		
-		if ( this->mColorFormat == colorFormat ) {
+		if ( this->mColorFormat == pngColorFormat ) {
 			
 			if ( this->GetRowSize () < png_get_rowbytes ( png, pngInfo )) return;
 			
@@ -399,7 +458,7 @@ void USImage::InitWithPng ( void* pngParam, void* pngInfoParam, u32 transform ) 
 			for ( u32 y = 0; y < height; ++y ) {
 				png_read_row ( png, ( png_bytep )srcRow, 0 );
 				void* destRow = this->GetRow ( y );
-				USColor::Convert ( destRow, this->mColorFormat, srcRow, colorFormat, width );
+				USColor::Convert ( destRow, this->mColorFormat, srcRow, pngColorFormat, width );
 				
 				if ( transform & USImageTransform::PREMULTIPLY_ALPHA ) {
 					USColor::PremultiplyAlpha ( destRow, this->mColorFormat, width );
@@ -411,22 +470,21 @@ void USImage::InitWithPng ( void* pngParam, void* pngInfoParam, u32 transform ) 
 	
 		u32 rowsize = this->GetRowSize ();
 		if ( rowsize < png_get_rowbytes ( png, pngInfo )) return;
+		
 		this->Alloc ();
-		
-		u32 colorSize = USColor::GetSize ( this->mColorFormat );
-		
+		if ( isPadded ) {
+			this->ClearBitmap ();
+		}
+
 		// copy the color values
 		for ( int i = 0; i < paletteSize; ++i ) {
-			u8* color = ( u8* )(( u32 )this->mPalette + ( i * colorSize ));
-			color [ 0 ] = palette [ i ].red;
-			color [ 1 ] = palette [ i ].green;
-			color [ 2 ] = palette [ i ].blue;
-		}
 		
-		// copy the trans values
-		for ( int i = 0; i < transSize; ++i ) {
-			u8* color = ( u8* )(( u32 )this->mPalette + ( i * colorSize ));
-			color [ 3 ] = trans [ i ];
+			int r = palette [ i ].red;
+			int g = palette [ i ].green;
+			int b = palette [ i ].blue;
+			int a = i < transSize ? trans [ i ] : 0xff;
+			
+			this->SetPaletteColor ( i, USColor::PackRGBA ( r, g, b, a ));
 		}
 		
 		// copy the rows
@@ -444,9 +502,15 @@ bool USImage::IsOK () {
 }
 
 //----------------------------------------------------------------//
-bool USImage::IsPadded () {
+void USImage::PadToPow2 ( const USImage& image ) {
 
-	return (( this->mWidth != this->mPadWidth ) || ( this->mHeight != this->mPadHeight ));
+	USIntRect canvas;
+	canvas.mXMin = 0;
+	canvas.mYMin = 0;
+	canvas.mXMax = this->GetMinPowerOfTwo ( image.GetWidth ());
+	canvas.mYMax = this->GetMinPowerOfTwo ( image.GetHeight ());
+	
+	this->ResizeCanvas ( image, canvas );
 }
 
 //----------------------------------------------------------------//
@@ -457,6 +521,88 @@ void USImage::Release () {
 	}
 	
 	this->Surrender ();
+}
+
+//----------------------------------------------------------------//
+void USImage::ResizeCanvas ( const USImage& image, USIntRect rect ) {
+
+	assert ( image.mPixelFormat != USPixel::INDEX_4 ); // TODO: handle this edge case
+
+	rect.Bless ();
+	
+	int width = rect.Width ();
+	int height = rect.Height ();
+	
+	this->Init (( u32 )width, ( u32 )height, image.mColorFormat, image.mPixelFormat );
+	
+	USIntRect srcRect;
+	srcRect.mXMin = -rect.mXMin;
+	srcRect.mYMin = -rect.mYMin;
+	srcRect.mXMax = ( int )image.GetWidth () + srcRect.mXMin;
+	srcRect.mYMax = ( int )image.GetHeight () + srcRect.mYMin;
+	
+	rect.Offset ( -rect.mXMin, -rect.mYMin );
+	
+	if ( !srcRect.Overlap ( rect )) {
+		this->ClearBitmap ();
+		return;
+	}
+	
+	u32 beginSpan = 0;
+	u32 leftSize = 0;
+	
+	if ( srcRect.mXMin > 0 ) {
+		beginSpan = srcRect.mXMin;
+		leftSize = beginSpan;
+	}
+	
+	u32 endSpan = width;
+	u32 rightSize = 0;
+	
+	if ( srcRect.mXMax < width ) {
+		endSpan = srcRect.mXMax;
+		rightSize = width - endSpan;
+	}
+	
+	u32 spanSize = endSpan - beginSpan;
+	
+	u32 pixSize = USPixel::GetDepth ( this->mPixelFormat, this->mColorFormat ) >> 3;
+	u32 rowSize = this->GetRowSize ();
+	
+	leftSize *= pixSize;
+	spanSize *= pixSize;
+	rightSize *= pixSize;
+	
+	u32 srcRowSize = image.GetRowSize ();
+	u32 srcRowXOff = srcRect.mXMin < 0 ? -srcRect.mXMin * pixSize : 0;
+	
+	for ( int y = 0; y < height; ++y ) {
+	
+		void* row = this->GetRow ( y );
+	
+		if (( y < srcRect.mYMin ) || ( y >= srcRect.mYMax )) {
+			memset ( row, 0, rowSize );
+		}
+		else {
+		
+			if ( leftSize ) {
+				memset ( row, 0, leftSize );
+				row = ( void* )(( u32 )row + leftSize );
+			}
+			
+			if ( spanSize ) {
+			
+				void* srcRow = ( void* )(( u32 )image.mBitmap + ( srcRowSize * ( y - srcRect.mYMin )) + srcRowXOff );
+				
+				memcpy ( row, srcRow, spanSize );
+				row = ( void* )(( u32 )row + spanSize );
+			}
+			
+			if ( rightSize ) {
+				memset ( row, 0, rightSize );
+			}
+		}
+	}
 }
 
 //----------------------------------------------------------------//
@@ -472,18 +618,17 @@ void USImage::SetColor ( u32 x, u32 y, u32 color ) {
 }
 
 //----------------------------------------------------------------//
-void USImage::SetDimensions ( u32 width, u32 height, bool padToPow2 ) {
+void USImage::SetPaletteColor ( u32 idx, u32 rgba ) {
 
-	this->mWidth = width;
-	this->mHeight = height;
-	
-	if ( padToPow2 ) {
-		this->mPadWidth = this->GetMinPowerOfTwo ( width );
-		this->mPadHeight = this->GetMinPowerOfTwo ( height );
-	}
-	else {
-		this->mPadWidth = width;
-		this->mPadHeight = height;
+	u32 total = this->GetPaletteCount ();
+	if ( idx < total ) {
+		
+		u32 color = USColor::ConvertFromRGBA ( rgba, this->mColorFormat );
+		u32 colorDepth = USColor::GetDepth ( this->mColorFormat );
+		
+		u32 size = ( colorDepth >> 3 );
+		u8* stream = ( u8* )(( u32 )this->mPalette + ( idx * size ));
+		USPixel::WritePixel ( stream, color, size );
 	}
 }
 
@@ -517,9 +662,6 @@ void USImage::Surrender () {
 
 	this->mWidth = 0;
 	this->mHeight = 0;
-	
-	this->mPadWidth = 0;
-	this->mPadHeight = 0;
 	
 	this->mData = 0;
 	this->mBitmap = 0;

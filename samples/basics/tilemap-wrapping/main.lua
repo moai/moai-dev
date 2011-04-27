@@ -4,16 +4,18 @@
 -- http://getmoai.com
 ----------------------------------------------------------------
 
-scene = MOAILayer2D.new ()
-MOAISim.pushRenderPass ( scene )
+MOAISim.openWindow ( "test", 256, 256 )
+
+layer = MOAILayer2D.new ()
+MOAISim.pushRenderPass ( layer )
 
 viewport = MOAIViewport.new ()
 viewport:setSize ( 256, 256 )
 viewport:setScale ( 256, 256 )
-scene:setViewport ( viewport )
+layer:setViewport ( viewport )
 
 camera = MOAITransform.new ()
-scene:setCamera ( camera )
+layer:setCamera ( camera )
 
 tileDeck = MOAITileDeck2D.new ()
 tileDeck:setTexture ( "numbers.png" )
@@ -38,9 +40,7 @@ prop:setGrid ( grid )
 prop:setLoc ( -128, 128 )
 prop:setScl ( 1, -1 )
 prop:setRepeat ( true ) -- wrap the tilemap when drawing
-scene:insertProp ( prop )
+layer:insertProp ( prop )
 
 prop:moveRot ( 360, 1.5 )
 prop:moveLoc ( -512, 0, 3 )
-
-MOAISim.openWindow ( "test", 256, 256 )

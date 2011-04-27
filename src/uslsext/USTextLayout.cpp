@@ -88,3 +88,21 @@ void USTextLayout::PushGlyph ( const USGlyph* glyph, u32 idx, float x, float y, 
 
 	this->Push ( textSprite );
 }
+
+//----------------------------------------------------------------//
+void USTextLayout::SetColorForRange ( u32 idx, u32 size, u32 rgba ) {
+
+	u32 end = idx + size;
+
+	// TODO: replace w/ binary search
+	u32 top = this->GetTop ();
+	for ( u32 i = 0; i < top; ++i ) {
+		USTextSprite& sprite = ( *this )[ i ];
+		
+		if ( sprite.mIdx >= end ) break;
+
+		if ( sprite.mIdx >= idx ) {
+			sprite.mRGBA = rgba;
+		}
+	}
+}

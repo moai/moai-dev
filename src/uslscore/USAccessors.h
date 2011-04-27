@@ -7,6 +7,9 @@
 #define GET(type,name,member) \
 	inline type Get##name () { return member; }
 
+#define GET_CONST(type,name,member) \
+	inline const type Get##name () const { return member; }
+
 #define SET(type,name,member) \
 	inline void Set##name ( type value ) { member = value; }
 

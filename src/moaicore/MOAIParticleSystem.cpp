@@ -5,8 +5,6 @@
 #include <float.h>
 #include <moaicore/MOAIDeck.h>
 #include <moaicore/MOAILogMessages.h>
-#include <moaicore/MOAIParticleEngine.h>
-#include <moaicore/MOAIParticleScript.h>
 #include <moaicore/MOAIParticleState.h>
 #include <moaicore/MOAIParticleSystem.h>
 #include <moaicore/MOAITexture.h>
@@ -129,12 +127,11 @@ int MOAIParticleSystem::_pushSprite ( lua_State* L ) {
 	sprite.mLoc.mX		= state.GetValue < float >( 2, 0.0f );
 	sprite.mLoc.mY		= state.GetValue < float >( 3, 0.0f );
 	sprite.mRot			= state.GetValue < float >( 4, 0.0f );
-	sprite.mScale.mX	= state.GetValue < float >( 5, 1.0f );
-	sprite.mScale.mY	= state.GetValue < float >( 6, 1.0f );
+	sprite.mScl.mX		= state.GetValue < float >( 5, 1.0f );
+	sprite.mScl.mY		= state.GetValue < float >( 6, 1.0f );
 	
-	sprite.mColor		= 0xffffffff;
-	sprite.mGlow		= 0.0f;
-	sprite.mGfxID		= 1;
+	sprite.mColor.Set ( 1.0f, 1.0f, 1.0f, 1.0f );
+	sprite.mGfxID = 1;
 	
 	bool result = self->PushSprite ( sprite );
 	
@@ -146,31 +143,16 @@ int MOAIParticleSystem::_pushSprite ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	reserveConstants
-	@text	Reserve particle engine constants for use in particle scripts.
-	
-	@in		MOAIParticleSystem self
-	@in		number nConstants
-	@out	nil
-*/
-int MOAIParticleSystem::_reserveConstants ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIParticleSystem, "UN" )
-
-	self->ReserveConstants ( state.GetValue < u32 >( 2, 0 ));
-	return 0;
-}
-
-//----------------------------------------------------------------//
 /**	@name	reserveParticles
 	@text	Reserve particle capacity of system.
 	
 	@in		MOAIParticleSystem self
-	@in		number nParticles Total number of particle records.
-	@in		number particleSize Size of each particle record (in registers).
+	@in		number nParticles		Total number of particle records.
+	@in		number particleSize		Number of params reserved for the particle.
 	@out	nil
 */
 int MOAIParticleSystem::_reserveParticles ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIParticleSystem, "UNN" )
+	MOAI_LUA_SETUP ( MOAIParticleSystem, "UN" )
 
 	u32 total	= state.GetValue < u32 >( 2, 0 );
 	u32 size	= state.GetValue < u32 >( 3, 0 );
@@ -211,26 +193,6 @@ int MOAIParticleSystem::_reserveStates ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setConstant
-	@text	Set the value of a constant.
-	
-	@in		MOAIParticleSystem self
-	@in		number index
-	@in		number value
-	@out	nil
-*/
-int MOAIParticleSystem::_setConstant ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIParticleSystem, "U" )
-
-	u32 idx			= state.GetValue < u32 >( 2, 1 ) - 1;
-	float value		= state.GetValue < float >( 3, 0.0f );
-
-	self->SetConstant ( idx, value );
-
-	return 0;
-}
-
-//----------------------------------------------------------------//
 /**	@name	setSpriteColor
 	@text	Set the color of the most recently added sprite.
 	
@@ -251,8 +213,8 @@ int MOAIParticleSystem::_setSpriteColor ( lua_State* L ) {
 		float g = state.GetValue < float >( 3, 1.0f );
 		float b = state.GetValue < float >( 4, 1.0f );
 		float a = state.GetValue < float >( 5, 1.0f );
-	
-		sprite->mColor = USColor::PackRGBA ( r, g, b, a );
+		
+		sprite->mColor.Set ( r, g, b, a );
 	}
 	return 0;
 }
@@ -271,26 +233,6 @@ int MOAIParticleSystem::_setSpriteDeckIdx ( lua_State* L ) {
 	MOAIParticleSprite* sprite = self->GetTopSprite ();
 	if ( sprite ) {
 		sprite->mGfxID = state.GetValue < u32 >( 2, sprite->mGfxID );
-	}
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@name	setSpriteGlow
-	@text	Set the sprite's glow coefficient. 0 is no glow, 1 is
-			full glow (alpha add).
-	
-	@in		MOAIParticleSystem self
-	@in		number glow
-	@out	nil
-*/
-int MOAIParticleSystem::_setSpriteGlow ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIParticleSystem, "U" )
-
-	MOAIParticleSprite* sprite = self->GetTopSprite ();
-	if ( sprite ) {
-	
-		sprite->mGlow = state.GetValue < float >( 2, 0.0f );
 	}
 	return 0;
 }
@@ -393,23 +335,19 @@ void MOAIParticleSystem::Draw () {
 		total = maxSprites;
 	}
 	
-	USColorVec spriteColor;
-	
 	for ( u32 i = 0; i < total; ++i ) {
 		
 		u32 idx = ( base + i ) % maxSprites;
 	
 		MOAIParticleSprite& sprite = this->mSprites [ idx ];
-		spriteColor.SetRGBA ( sprite.mColor );
-		spriteColor.mA *= ( 1.0f - sprite.mGlow );
-		drawbuffer.SetPenColor ( spriteColor );
+		drawbuffer.SetPenColor ( sprite.mColor );
 		
-		spriteMtx.ScRoTr ( sprite.mScale, sprite.mRot * ( float )D2R, sprite.mLoc );
+		spriteMtx.ScRoTr ( sprite.mScl, sprite.mRot * ( float )D2R, sprite.mLoc );
 		
 		drawingMtx = this->GetLocalToWorldMtx ();
 		drawingMtx.Append ( spriteMtx );
 		
-		this->mDeck->Draw ( drawingMtx, sprite.mGfxID );
+		this->mDeck->Draw ( drawingMtx, ( u32 )sprite.mGfxID );
 	}
 }
 
@@ -460,14 +398,6 @@ bool MOAIParticleSystem::IsDone () {
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleSystem::LoadParticle ( u32 particleID, float registers []) {
-
-	u32 idx = particleID * this->mParticleSize;
-	size_t size = this->mParticleSize * sizeof ( float );
-	memmove ( registers, &this->mParticleData [ idx ], size );
-}
-
-//----------------------------------------------------------------//
 MOAIParticleSystem::MOAIParticleSystem () :
 	mParticleSize ( 0 ),
 	mCapParticles ( false ),
@@ -495,9 +425,6 @@ void MOAIParticleSystem::OnUpdate ( float step ) {
 	// bail if no particles
 	if ( !this->mHead ) return;
 
-	// registers for particle machine
-	float registers [ 256 ];
-
 	// clear out the sprites
 	this->mSpriteTop = 0;
 
@@ -510,66 +437,17 @@ void MOAIParticleSystem::OnUpdate ( float step ) {
 		MOAIParticle* particle = cursor;
 		cursor = cursor->mNext;
 		
-		// set up the current particle
-		this->mParticle = particle;
-		this->mKill = true;
-		
-		// do the timestep
-		particle->mAge += step;
-		if ( particle->mAge > particle->mDuration ) {
-			particle->mAge = particle->mDuration;
-		}
-		
-		// get the particle state handler
-		MOAIParticleState* state = particle->mState;
-		if ( state ) {
-		
-			this->mKill = false;
-			
-			// load the particle into the registers
-			this->LoadParticle ( particle->mID, registers );
-			
-			// update the particle
-			u8* update = state->mUpdate->GetBytecode ();
-			MOAIParticleEngine::RunBytecode ( *this, update, state, step, registers );
-			
-			// kill the particle if it's finished
-			if ( particle->mAge >= particle->mDuration ) {
-				this->mKill = true;
-			}
-		}
-		
-		// if flagged for killing, first try to move the particle on to the next state
-		if ( this->mKill && state && state->mNext ) {
-		
-			this->mKill = false;
-		
-			particle->mAge = 0.0f;
-			particle->mDuration = FLT_MAX;
-			particle->mState = state->mNext;
-			state = particle->mState;
-			
-			u8* init = state->mInit->GetBytecode ();
-			MOAIParticleEngine::RunBytecode ( *this, init, registers );
-			
-			u8* update = state->mUpdate->GetBytecode ();
-			MOAIParticleEngine::RunBytecode ( *this, update, state, 0.0f, registers );
+		// update the particle
+		if ( particle->mState ) {
+			particle->mState->ProcessParticle ( *this, *particle, step );
 		}
 		
 		// if is still to be killed, move it to the free list, else put it back in the queue
-		if ( this->mKill ) {
+		if ( !particle->mState ) {
 			particle->mNext = this->mFree;
 			this->mFree = particle;
 		}
 		else {
-			
-			// store the updated particle
-			this->StoreParticle ( particle->mID, registers );
-			
-			// render the particle
-			u8* render = state->mRender->GetBytecode ();
-			MOAIParticleEngine::RunBytecode ( *this, render, state, registers );
-		
 			// and put it back in the queue
 			this->EnqueueParticle ( *particle );
 		}
@@ -584,57 +462,35 @@ bool MOAIParticleSystem::PushParticle ( float x, float y ) {
 
 //----------------------------------------------------------------//
 bool MOAIParticleSystem::PushParticle ( float x, float y, float dx, float dy ) {
-
+	
 	if (( !this->mFree ) && this->mCapParticles ) {
 		return false;
 	}
-
+	
 	MOAIParticleState* state = this->GetState ( 0 );
 	if ( !state ) return false;
-
-	MOAIParticle temp;
-	temp.mAge = 0.0f;
-	temp.mDuration = FLT_MAX;
-	temp.mState = state;
 	
-	this->mParticle = &temp;
-	this->mKill = false;
+	MOAIParticle* particle = 0;
 	
-	float registers [ 256 ];
-	memset ( registers, 0, ( this->mParticleSize * sizeof ( float )));
+	if ( this->mFree ) {
+		particle = this->mFree;
+		this->mFree = particle->mNext;
+	}
+	else if ( this->mHead ) {
+		particle = this->mHead;
+		this->mHead = particle->mNext;
+	}
 	
-	registers [ 0 ] = x;
-	registers [ 1 ] = y;
-	registers [ 2 ] = dx;
-	registers [ 3 ] = dy;
-	
-	u8* init = state->mInit->GetBytecode ();
-	MOAIParticleEngine::RunBytecode ( *this, init, registers );
-	
-	if ( !this->mKill ) {
+	if ( particle ) {
 		
-		MOAIParticle* particle = 0;
+		particle->mLoc.Init ( x, y );
+		particle->mVelocity.Init ( dx, dy );
+		particle->mOffset.Init ( 0.0f, 0.0f );
 		
-		if ( this->mFree ) {
-			particle = this->mFree;
-			this->mFree = particle->mNext;
-		}
-		else if ( this->mHead ) {
-			particle = this->mHead;
-			this->mHead = particle->mNext;
-		}
+		state->InitParticle ( *this, *particle );
+		this->EnqueueParticle ( *particle );
 		
-		if ( particle ) {
-			
-			particle->mAge = temp.mAge;
-			particle->mDuration = temp.mDuration;
-			particle->mState = temp.mState;
-			
-			this->StoreParticle ( particle->mID, registers );
-			this->EnqueueParticle ( *particle );
-			
-			return true;
-		}
+		return true;
 	}
 	return false;
 }
@@ -677,14 +533,11 @@ void MOAIParticleSystem::RegisterLuaFuncs ( USLuaState& state ) {
 		{ "getState",			_getState },
 		{ "pushParticle",		_pushParticle },
 		{ "pushSprite",			_pushSprite },
-		{ "reserveConstants",	_reserveConstants },
 		{ "reserveParticles",	_reserveParticles },
 		{ "reserveSprites",		_reserveSprites },
 		{ "reserveStates",		_reserveStates },
-		{ "setConstant",		_setConstant },
 		{ "setSpriteColor",		_setSpriteColor },
 		{ "setSpriteDeckIdx",	_setSpriteDeckIdx },
-		{ "setSpriteGlow",		_setSpriteGlow },
 		{ "setState",			_setState },
 		{ "surge",				_surge },
 		{ NULL, NULL }
@@ -694,29 +547,28 @@ void MOAIParticleSystem::RegisterLuaFuncs ( USLuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleSystem::ReserveConstants ( u32 total ) {
-
-	this->mConsts.Init ( total );
-}
-
-//----------------------------------------------------------------//
 void MOAIParticleSystem::ReserveParticles ( u32 maxParticles, u32 particleSize ) {
-
+	
 	this->mHead = 0;
 	this->mTail = 0;
 	this->mFree = 0;
-
+	
 	this->mParticleSize = particleSize;
-
+	
 	this->mParticles.Init ( maxParticles );
 	this->mParticleData.Init ( maxParticles * particleSize );
-	this->mParticleData.Fill ( 0.0f );
 	
 	for ( u32 i = 0; i < maxParticles; ++i ) {
 		MOAIParticle& particle = this->mParticles [ i ];
-		particle.mID = i;
 		particle.mNext = this->mFree;
 		this->mFree = &particle;
+		
+		if ( particleSize ) {
+			particle.mData = &this->mParticleData [ i * particleSize ];
+		}
+		else {
+			particle.mData = 0;
+		}
 	}
 }
 
@@ -745,20 +597,6 @@ void MOAIParticleSystem::SerializeOut ( USLuaState& state, USLuaSerializer& seri
 
 	MOAIProp2D::SerializeOut ( state, serializer );
 	MOAIAction::SerializeOut ( state, serializer );
-}
-
-//----------------------------------------------------------------//
-void MOAIParticleSystem::SetConstant ( u32 idx, float value ) {
-
-	this->mConsts [ idx ] = value;
-}
-
-//----------------------------------------------------------------//
-void MOAIParticleSystem::StoreParticle ( u32 particleID, float registers []) {
-	
-	u32 idx = particleID * this->mParticleSize;
-	size_t size = this->mParticleSize * sizeof ( float );
-	memmove ( &this->mParticleData [ idx ], registers, size );
 }
 
 //----------------------------------------------------------------//
