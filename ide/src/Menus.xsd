@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="menus">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="menubar">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element maxOccurs="unbounded" name="menuitem">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:choice maxOccurs="unbounded">
+                      <xs:element maxOccurs="unbounded" name="menuitem">
+                        <xs:complexType>
+                          <xs:sequence minOccurs="0">
+                            <xs:element minOccurs="0" maxOccurs="unbounded" name="menuitem">
+                              <xs:complexType>
+                                <xs:attribute name="text" type="xs:string" use="required" />
+                                <xs:attribute name="action" type="xs:string" use="required" />
+                              </xs:complexType>
+                            </xs:element>
+                            <xs:element minOccurs="0" name="dynamic">
+                              <xs:complexType>
+                                <xs:attribute name="type" type="xs:string" use="required" />
+                              </xs:complexType>
+                            </xs:element>
+                          </xs:sequence>
+                          <xs:attribute name="text" type="xs:string" use="required" />
+                          <xs:attribute name="action" type="xs:string" use="optional" />
+                        </xs:complexType>
+                      </xs:element>
+                      <xs:element name="menuseperator" />
+                      <xs:element name="dynamic">
+                        <xs:complexType>
+                          <xs:attribute name="type" type="xs:string" use="required" />
+                        </xs:complexType>
+                      </xs:element>
+                    </xs:choice>
+                  </xs:sequence>
+                  <xs:attribute name="text" type="xs:string" use="required" />
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="toolbar">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:choice maxOccurs="unbounded">
+                <xs:element maxOccurs="unbounded" name="toolitem">
+                  <xs:complexType>
+                    <xs:sequence minOccurs="0">
+                      <xs:choice maxOccurs="unbounded">
+                        <xs:element maxOccurs="unbounded" name="menuitem">
+                          <xs:complexType>
+                            <xs:attribute name="text" type="xs:string" use="required" />
+                            <xs:attribute name="action" type="xs:string" use="required" />
+                          </xs:complexType>
+                        </xs:element>
+                        <xs:element name="menuseperator" />
+                        <xs:element name="dynamic" />
+                      </xs:choice>
+                    </xs:sequence>
+                    <xs:attribute name="text" type="xs:string" use="required" />
+                    <xs:attribute name="action" type="xs:string" use="required" />
+                    <xs:attribute name="type" type="xs:string" use="optional" />
+                  </xs:complexType>
+                </xs:element>
+                <xs:element name="toolseperator" />
+                <xs:element name="toolcombo">
+                  <xs:complexType>
+                    <xs:sequence>
+                      <xs:element minOccurs="0" name="dynamic" />
+                      <xs:element minOccurs="0" maxOccurs="unbounded" name="text">
+                        <xs:complexType>
+                          <xs:simpleContent>
+                            <xs:extension base="xs:string">
+                              <xs:attribute name="type" type="xs:string" use="required" />
+                              <xs:attribute name="value" type="xs:string" use="required" />
+                            </xs:extension>
+                          </xs:simpleContent>
+                        </xs:complexType>
+                      </xs:element>
+                    </xs:sequence>
+                    <xs:attribute name="text" type="xs:string" use="required" />
+                    <xs:attribute name="action" type="xs:string" use="required" />
+                    <xs:attribute name="editable" type="xs:boolean" use="optional" />
+                  </xs:complexType>
+                </xs:element>
+              </xs:choice>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

@@ -1,0 +1,214 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<menus>
+  <menubar>
+    <menuitem text="File">
+      <menuitem text="New Solution" action="Solution.New" />
+      <menuitem text="Open Solution" action="Solution.Open" />
+      <menuitem text="Open File" action="Actions.Open" />
+      <menuseperator />
+      <menuitem text="Close" action="Actions.Close" />
+      <menuitem text="Close Solution" action="Solution.Close" />
+      <menuseperator />
+      <menuitem text="Save document.lua" action="Actions.Save" />
+      <menuitem text="Save document.lua as..." action="Actions.SaveAs" />
+      <menuitem text="Save All" action="Actions.SaveAll" />
+      <menuseperator />
+      <menuitem text="Recent Files">
+        <dynamic type="Actions.RecentFiles" />
+      </menuitem>
+      <menuitem text="Recent Projects">
+        <dynamic type="Actions.RecentProjects" />
+      </menuitem>
+      <menuseperator />
+      <menuitem text="Exit" action="Actions.Exit" />
+    </menuitem>
+    <menuitem text="Edit">
+      <menuitem text="Undo" action="Actions.Undo" />
+      <menuitem text="Redo" action="Actions.Redo" />
+      <menuseperator />
+      <menuitem text="Cut" action="Actions.Cut" />
+      <menuitem text="Copy" action="Actions.Copy" />
+      <menuitem text="Paste" action="Actions.Paste" />
+      <menuitem text="Delete" action="Actions.Delete" />
+      <menuseperator />
+      <menuitem text="Select All" action="Actions.SelectAll" />
+      <menuseperator />
+      <menuitem text="Find and Replace">
+        <menuitem text="Quick Find" action="Actions.QuickFind" />
+        <menuitem text="Quick Replace" action="Actions.QuickReplace" />
+        <menuitem text="Find in Files" action="Actions.FindInFiles" />
+        <menuitem text="Replace in Files" action="Actions.ReplaceInFiles" />
+      </menuitem>
+      <menuitem text="Go To..." action="Actions.GoTo" />
+    </menuitem>
+    <menuitem text="View">
+      <menuitem text="Code" action="Views.Code" />
+      <menuitem text="Designer" action="Views.Designer" />
+      <menuseperator />
+      <menuitem text="Build Output" action="Tools.BuildOutput" />
+      <menuitem text="Error List" action="Tools.ErrorList" />
+      <menuitem text="Properties Window" action="Tools.PropertiesWindow" />
+      <menuitem text="Solution Explorer" action="Tools.SolutionExplorer" />
+      <menuitem text="Object Browser" action="Tools.ObjectBrowser" />
+      <menuitem text="Toolbox" action="Tools.Toolbox" />
+      <menuseperator />
+      <menuitem text="Lua Console" action="Tools.LuaConsole" />
+    </menuitem>
+    <menuitem text="Project">
+      <menuitem text="Add Model..." action="Project.AddModel" />
+      <menuitem text="Add Image..." action="Project.AddImage" />
+      <menuitem text="Add Audio..." action="Project.AddAudio" />
+      <menuitem text="Add Template..." action="Project.AddTemplate" />
+      <menuitem text="Add Area..." action="Project.AddArea" />
+      <menuitem text="Add World..." action="Project.AddWorld" />
+      <menuseperator />
+      <menuitem text="Add Class..." action="Project.AddClass" />
+      <menuitem text="Add Script..." action="Project.AddScript" />
+      <menuseperator />
+      <menuitem text="Add New Item" action="Project.AddNewItem" />
+      <menuitem text="Add Existing Item" action="Project.AddExistingItem" />
+      <menuseperator />
+      <menuitem text="Add Reference..." action="Project.AddReference" />
+      <menuseperator />
+      <menuitem text="Project Properties" action="Project.ProjProperties" />
+    </menuitem>
+    <menuitem text="Build">
+      <menuitem text="Build Solution" action="Solution.Build" />
+      <menuitem text="Rebuild Solution" action="Solution.Rebuild" />
+      <menuitem text="Clean Solution" action="Solution.Clean" />
+      <menuseperator />
+      <menuitem text="Build MyProject" action="Project.Build" />
+      <menuitem text="Rebuild MyProject" action="Project.Rebuild" />
+      <menuitem text="Clean MyProject" action="Project.Clean" />
+      <menuseperator />
+      <menuitem text="Publish..." action="Solution.Publish" />
+    </menuitem>
+    <menuitem text="Debug">
+      <menuitem text="Start Debugging" action="Solution.StartWithDebug" />
+      <menuitem text="Start Without Debugging" action="Solution.StartWithoutDebug" />
+    </menuitem>
+    <menuitem text="Tools">
+      <menuitem text="Manage Tools" action="Tools.Manage" />
+      <menuseperator />
+      <dynamic type="Tools.ToolsList" />
+      <menuseperator />
+      <menuitem text="Preferences" action="Actions.Preferences" />
+    </menuitem>
+    <menuitem text="Window">
+      <menuitem text="New Window" action="Window.NewWindow" />
+      <menuitem text="Split" action="Window.Split" />
+      <menuseperator />
+      <menuitem text="Floating" action="Window.SetFloating" />
+      <menuitem text="Dockable" action="Window.SetDockable" />
+      <menuitem text="Tabbed Document" action="Window.SetTabbedDocument" />
+      <menuitem text="Auto Hide" action="Window.SetAutoHide" />
+      <menuitem text="Hide" action="Window.Hide" />
+      <menuseperator />
+      <menuitem text="Auto Hide All" action="Window.AutoHideAll" />
+      <menuitem text="New Horizontal Tab Group" action="Window.NewHorizontalTabGroup" />
+      <menuitem text="New Vertical Tab Group" action="Window.NewVerticalTabGroup" />
+      <menuitem text="Close All Documents" action="Window.CloseAll" />
+      <menuitem text="Reset Window Layout" action="Window.Reset" />
+      <menuseperator />
+      <dynamic type="Window.Windows" />
+      <menuitem text="Windows..." action="Window.Windows" />
+    </menuitem>
+    <menuitem text="Help">
+      <menuitem text="How Do I" action="Help.HowDoI" />
+      <menuitem text="Search" action="Help.Search" />
+      <menuitem text="Contents" action="Help.Contents" />
+      <menuitem text="Index" action="Help.Index" />
+      <menuseperator />
+      <menuitem text="MOAI Forums" action="Help.Forums" />
+      <menuitem text="Report a Bug" action="Help.ReportBug" />
+      <menuseperator />
+      <menuitem text="Register Product" action="Help.Register" />
+      <menuitem text="Check for Updates" action="Help.CheckUpdates" />
+      <menuitem text="Technical Support" action="Help.TechnicalSupport" />
+      <menuseperator />
+      <menuitem text="About MOAI IDE" action="Help.About" />
+    </menuitem>
+  </menubar>
+  <toolbar>
+    <toolitem text="New Project" action="Project.New" />
+    <toolitem text="Add New Item" action="Project.AddFile" type="dropdown">
+      <menuitem text="Add Model..." action="Project.AddModel" />
+      <menuitem text="Add Image..." action="Project.AddImage" />
+      <menuitem text="Add Audio..." action="Project.AddAudio" />
+      <menuitem text="Add Template..." action="Project.AddTemplate" />
+      <menuitem text="Add Area..." action="Project.AddArea" />
+      <menuitem text="Add World..." action="Project.AddWorld" />
+      <menuseperator />
+      <menuitem text="Add Class..." action="Project.AddClass" />
+      <menuitem text="Add Script..." action="Project.AddScript" />
+      <menuseperator />
+      <menuitem text="Add New Item" action="Project.AddNewItem" />
+      <menuitem text="Add Existing Item" action="Project.AddExistingItem" />
+    </toolitem>
+    <toolitem text="Open File" action="Actions.Open" />
+    <toolitem text="Save File" action="Actions.Save" />
+    <toolitem text="Save All Files" action="Actions.SaveAll" />
+    <toolseperator />
+    <toolitem text="Cut" action="Actions.Cut" />
+    <toolitem text="Copy" action="Actions.Copy" />
+    <toolitem text="Paste" action="Actions.Paste" />
+    <toolseperator />
+    <toolitem text="Undo" action="Actions.Undo" type="dropdown">
+      <dynamic />
+    </toolitem>
+    <toolitem text="Redo" action="Actions.Redo" type="dropdown">
+      <dynamic />
+    </toolitem>
+    <toolseperator />
+    <toolitem text="Debug" action="Solution.StartWithDebug" />
+    <toolcombo text="Build Mode" action="Selection.BuildMode" editable="false">
+      <text type="MOAI.Compilation.BuildMode" value="MOAI.Compilation.BuildMode.DEBUG">Debug</text>
+      <text type="MOAI.Compilation.BuildMode" value="MOAI.Compilation.BuildMode.RELEASE">Release</text>
+    </toolcombo>
+    <toolseperator />
+    <toolitem text="Find In Files" action="Actions.FindInFiles" />
+    <toolcombo text="Find" action="Selection.FindRecent">
+      <dynamic />
+    </toolcombo>
+    <toolseperator />
+    <toolitem text="Solution Explorer" action="Tools.SolutionExplorer" />
+    <toolitem text="Properties Window" action="Tools.PropertiesWindow" />
+    <toolitem text="Object Browser" action="Tools.ObjectBrowser" />
+    <toolitem text="Toolbox" action="Tools.Toolbox" />
+  </toolbar>
+  <!--
+  <contextmenu for="SolutionExplorer" nodetype="Project">
+    <menuitem text="Project Properties" action="Project.ProjProperties" />
+  </contextmenu>
+  <contextmenu for="SolutionExplorer" nodetype="Folder">
+    <menuitem text="Add Model..." action="Project.AddModel" />
+    <menuitem text="Add Image..." action="Project.AddImage" />
+    <menuitem text="Add Audio..." action="Project.AddAudio" />
+    <menuitem text="Add Template..." action="Project.AddTemplate" />
+    <menuitem text="Add Area..." action="Project.AddArea" />
+    <menuitem text="Add World..." action="Project.AddWorld" />
+    <menuseperator />
+    <menuitem text="Add Class..." action="Project.AddClass" />
+    <menuitem text="Add Script..." action="Project.AddScript" />
+    <menuseperator />
+    <menuitem text="Add New Item" action="Project.AddNewItem" />
+    <menuitem text="Add Existing Item" action="Project.AddExistingItem" />
+  </contextmenu>
+  <contextmenu for="SolutionExplorer" nodetype="File">
+    <menuitem text="Open" action="Actions.Open" />
+    <menuitem text="Open With..." action="Actions.OpenWith" />
+    <menuseperator />
+    <menuitem text="View Code" action="File.OpenCode" />
+    <menuitem text="View Designer" action="File.OpenDesigner" />
+    <menuseperator />
+    <menuitem text="Exclude From Project" action="File.Exclude" />
+    <menuseperator />
+    <toolitem text="Cut" action="Actions.Cut" />
+    <toolitem text="Copy" action="Actions.Copy" />
+    <toolitem text="Paste" action="Actions.Paste" />
+    <toolitem text="Delete" action="Actions.Delete" />
+    <menuseperator />
+    <menuitem text="Project Properties" action="Project.FileProperties" />
+  </contextmenu>
+  -->
+</menus>

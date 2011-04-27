@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<cache>
+  <namespace>Audio</namespace>
+  <namespace>Core</namespace>
+  <namespace>GUI</namespace>
+  <namespace>Net</namespace>
+  <namespace>Physics</namespace>
+  <namespace>Scene</namespace>
+  <namespace>Video</namespace>
+</cache>

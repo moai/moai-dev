@@ -1,0 +1,598 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{5BA158DE-7E14-42BD-8ABE-2FFBCD1CC268}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MOAI</RootNamespace>
+    <AssemblyName>MOAI</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetZone>LocalIntranet</TargetZone>
+    <GenerateManifests>false</GenerateManifests>
+    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
+    <TargetFrameworkSubset>Full</TargetFrameworkSubset>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
+    <OutputPath>..\bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <OutputPath>..\bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="LuaInterface, Version=2.0.0.16708, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\libraries\LuaInterface\LuaInterface.dll</HintPath>
+    </Reference>
+    <Reference Include="ScintillaNet, Version=2.2.3581.19319, Culture=neutral, PublicKeyToken=948d6c9751444115, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\libraries\Scintilla.NET\ScintillaNet.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Build\CodeGenerator.cs" />
+    <Compile Include="Build\Manager.cs" />
+    <Compile Include="Cache\Manager.cs" />
+    <Compile Include="Cache\Scintilla.cs" />
+    <Compile Include="Collections\Node.cs" />
+    <Compile Include="Collections\Tree.cs" />
+    <Compile Include="Debug\Breakpoint.cs" />
+    <Compile Include="Debug\Manager.cs" />
+    <Compile Include="Dependencies\FloatingWindow.cs" />
+    <Compile Include="Designers\Code\Designer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Designers\Code\Designer.Designer.cs">
+      <DependentUpon>Designer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Designers\Code\SyntaxChecker.cs" />
+    <Compile Include="Designers\Designer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Designers\Manager.cs" />
+    <Compile Include="IDE.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="IDE.Designer.cs">
+      <DependentUpon>IDE.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Management\File.cs" />
+    <Compile Include="Management\Folder.cs" />
+    <Compile Include="Management\NewImageForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Management\NewImageForm.designer.cs">
+      <DependentUpon>NewImageForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Management\NewSolutionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Management\NewSolutionForm.designer.cs">
+      <DependentUpon>NewSolutionForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Management\Project.cs" />
+    <Compile Include="Management\Solution.cs" />
+    <Compile Include="Manager.cs" />
+    <Compile Include="Menus\Action.cs" />
+    <Compile Include="Menus\Definitions\Actions.cs" />
+    <Compile Include="Menus\Definitions\Project.cs" />
+    <Compile Include="Menus\Definitions\Solution.cs" />
+    <Compile Include="Menus\Manager.cs" />
+    <Compile Include="Menus\ToolBarRenderer.cs" />
+    <Compile Include="Menus\Definitions\Tools.cs" />
+    <Compile Include="Menus\Definitions\Views.cs" />
+    <Compile Include="Menus\Definitions\Window.cs" />
+    <Compile Include="Menus\EnumWrapper.cs" />
+    <Compile Include="Menus\MenuLoader.cs" />
+    <Compile Include="Menus\MenuRenderer.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Designers\Code\Designer.resx">
+      <DependentUpon>Designer.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Designers\Start\Designer.resx">
+      <DependentUpon>Designer.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IDE.resx">
+      <DependentUpon>IDE.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Management\NewImageForm.resx">
+      <DependentUpon>NewImageForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Management\NewSolutionForm.resx">
+      <DependentUpon>NewSolutionForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tools\ConsoleTool.resx">
+      <DependentUpon>ConsoleTool.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tools\ErrorListTool.resx">
+      <DependentUpon>ErrorListTool.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tools\OutputTool.resx">
+      <DependentUpon>OutputTool.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tools\SolutionExplorerTool.resx">
+      <DependentUpon>SolutionExplorerTool.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="SplashScreen.cs" />
+    <Compile Include="Tools\ConsoleTool.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tools\ConsoleTool.Designer.cs">
+      <DependentUpon>ConsoleTool.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\ErrorListTool.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tools\ErrorListTool.Designer.cs">
+      <DependentUpon>ErrorListTool.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\OutputTool.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tools\OutputTool.Designer.cs">
+      <DependentUpon>OutputTool.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\Manager.cs" />
+    <Compile Include="Tools\SolutionExplorerTool.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tools\SolutionExplorerTool.Designer.cs">
+      <DependentUpon>SolutionExplorerTool.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\table_multiple.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\application_view_tile.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\folder_page.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\page.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\disk.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\disk_multiple.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\page_paste.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cut.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\page_copy.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrow_undo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\resultset_next.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\folder_find.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\package.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\application.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\object_browser.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\properties_window.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\solution_explorer.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\toolbox.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\new_solution.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\open_solution.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\save_solution.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\application_view_list.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\application_xp_terminal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\error_list.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\world_add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\database_add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\image_add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\map_add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\plugin_add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\script_add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sound_add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\new_class.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\debug_without.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\brick_link.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\application_add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\application_side_contract.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\application_split.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\application_tile_horizontal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\application_tile_vertical.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\telephone_go.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bug.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\keyboard_magnify.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\lightning.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\magnifier.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\page_white_world.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\report.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\telephone.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\help.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\book_open.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\book_key.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\drive_web.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\app.manifest" />
+    <None Include="Resources\information.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\libraries\DockPanelSuite\DockPanelSuite.csproj">
+      <Project>{B2886585-F158-4870-95A5-564007987F45}</Project>
+      <Name>DockPanelSuite</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Deployment\Completion Cache\Engine.Collections.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Deployment\Completion Cache\Engine.Unmanaged.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Deployment\Completion Cache\Engine.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Deployment\Completion Cache\root.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Deployment\Menus.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Deployment\Start Page\bg.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Deployment\Start Page\bullet_blue.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Deployment\Start Page\bullet_green.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Deployment\Start Page\bullet_orange.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Deployment\Start Page\bullet_purple.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Deployment\Start Page\bullet_red.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Deployment\Start Page\index.htm">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Deployment\Start Page\sbl.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Deployment\Start Page\sbr.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Deployment\Start Page\stc.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Deployment\Start Page\stl.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Deployment\Start Page\str.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Deployment\Start Page\stylesheet.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Deployment\Start Page\title.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="icon.ico" />
+    <Compile Include="Management\Path.cs" />
+    <None Include="Deployment\Framework\Engine\Area.rs" />
+    <None Include="Deployment\Framework\Engine\Audio.rs" />
+    <None Include="Deployment\Framework\Engine\Image.rs" />
+    <None Include="Deployment\Framework\Engine\Model.rs" />
+    <None Include="Deployment\Framework\Engine\Template.rs" />
+    <None Include="Deployment\Framework\Engine\World.rs" />
+    <None Include="Deployment\Framework\main.rks" />
+    <None Include="Deployment\Framework\test.lua" />
+    <None Include="Deployment\Framework\_UnmanagedExt\Bootstrap.lua" />
+    <None Include="Deployment\Framework\_UnmanagedExt\ModuleLoader.lua" />
+    <None Include="Resources\box.png" />
+    <None Include="Resources\bricks.png" />
+    <None Include="Resources\image_new.png" />
+    <None Include="Resources\image_import.png" />
+    <None Include="Resources\error.png" />
+    <None Include="Resources\add.png" />
+    <None Include="Resources\bullet_delete.png" />
+    <None Include="Resources\building_error.png" />
+    <None Include="Resources\color_palette.png" />
+    <None Include="Resources\cancel.png" />
+    <None Include="Resources\application_link.png" />
+    <None Include="Resources\pencil_per_pixel.png" />
+    <None Include="Resources\pencil_continous.png" />
+    <None Include="Resources\draw_overwrite.png" />
+    <None Include="Resources\draw_interpolate.png" />
+    <None Include="Resources\draw_below.png" />
+    <None Include="Resources\draw_above.png" />
+    <None Include="Resources\paintbrush.png" />
+    <None Include="Resources\pencil.png" />
+    <None Include="Resources\paintcan.png" />
+    <None Include="Resources\image_transparency_tile.png" />
+    <None Include="Resources\irrlicht_font.png" />
+    <None Include="Resources\folder_error.png" />
+    <None Include="Resources\page_white_error.png" />
+    <None Include="Resources\back.png" />
+    <None Include="Resources\progress_inside.png" />
+    <None Include="Resources\progress_outside.png" />
+    <None Include="Resources\world.png" />
+    <None Include="Resources\page_white_code.png" />
+    <None Include="Resources\map.png" />
+    <None Include="Resources\image.png" />
+    <None Include="Resources\folder.png" />
+    <None Include="Resources\database.png" />
+    <None Include="Resources\sound.png" />
+    <None Include="Resources\plugin_link.png" />
+    <None Include="Resources\plugin.png" />
+    <None Include="Resources\page_white_h.png" />
+    <None Include="Resources\page_white_cplusplus.png" />
+    <None Include="Resources\arrow_redo.png" />
+    <None Include="Resources\application_double.png" />
+    <Compile Include="Cache\AutoComplete.cs" />
+    <Compile Include="Designers\Code\CodeEditor.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Designers\Start\Designer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Designers\Start\Designer.Designer.cs">
+      <DependentUpon>Designer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Management\Associations.cs" />
+    <Compile Include="Templates\BaseTemplate.cs" />
+    <Compile Include="Templates\SolutionCreationData.cs" />
+    <Compile Include="Templates\StandardTemplate.cs" />
+    <Compile Include="Tools\Tool.cs">
+      <SubType>Form</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Deployment\Engines\Win32\Debug\" />
+    <Folder Include="Deployment\Engines\Win32\Release\" />
+    <Folder Include="Deployment\Engines\Win64\Debug\" />
+    <Folder Include="Deployment\Engines\Win64\Release\" />
+    <Folder Include="Designers\Image\" />
+    <Folder Include="Designers\Model\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+</Project>
