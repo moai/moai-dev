@@ -22,9 +22,9 @@ class MOAISurfaceSampler2D;
 	
 	@attr	ATTR_INDEX
 	
-	@const	FRAME_FROM_SOURCE
+	@const	FRAME_FROM_DECK
 	@const	FRAME_FROM_PARENT
-	@const	FRAME_FROM_DEFINE
+	@const	FRAME_FROM_SELF
 */
 class MOAIProp2D :
 	public MOAIProp {
