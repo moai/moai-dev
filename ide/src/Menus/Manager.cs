@@ -4,17 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace Roket3D.Menus
+namespace MOAI.Menus
 {
     public class Manager
     {
-        private Roket3D.Manager p_Parent = null;
+        private MOAI.Manager p_Parent = null;
         private MenuLoader m_Loader = null;
 
         /// <summary>
         /// Creates a new menu manager.
         /// </summary>
-        public Manager(Roket3D.Manager parent)
+        public Manager(MOAI.Manager parent)
         {
             this.p_Parent = parent;
             this.m_Loader = new MenuLoader(this);
@@ -48,7 +48,7 @@ namespace Roket3D.Menus
                 {
                     action.OnSolutionUnloaded();
                 });
-            this.p_Parent.DesignersManager.DesignerOpened += new Roket3D.Designers.Manager.DesignerEventHandler((sender, e) =>
+            this.p_Parent.DesignersManager.DesignerOpened += new MOAI.Designers.Manager.DesignerEventHandler((sender, e) =>
                 {
                     if (this.p_Parent.IDEWindow.ActiveTab is Designers.Designer)
                         action.OnTabChanged(this.p_Parent.IDEWindow.ActiveTab as Designers.Designer);
@@ -61,9 +61,9 @@ namespace Roket3D.Menus
         }
 
         /// <summary>
-        /// The main Roket3D manager that owns this menu manager.
+        /// The main MOAI manager that owns this menu manager.
         /// </summary>
-        public Roket3D.Manager Parent
+        public MOAI.Manager Parent
         {
             get
             {

@@ -6,11 +6,11 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using Roket3D.Management;
+using MOAI.Management;
 
-namespace Roket3D.Designers.Code
+namespace MOAI.Designers.Code
 {
-    public partial class Designer : Roket3D.Designers.Designer
+    public partial class Designer : MOAI.Designers.Designer
     {
         private List<LuaError> m_Errors = new List<LuaError>();
         private CodeEditor c_CodeEditor = null;
@@ -20,9 +20,9 @@ namespace Roket3D.Designers.Code
         /// <summary>
         /// Creates a new code editor.
         /// </summary>
-        /// <param name="manager">The main Roket3D manager.</param>
+        /// <param name="manager">The main MOAI manager.</param>
         /// <param name="file">The associated file.</param>
-        public Designer(Roket3D.Manager manager, File file)
+        public Designer(MOAI.Manager manager, File file)
             : base(manager, file)
         {
             InitializeComponent();

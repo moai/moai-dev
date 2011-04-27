@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Roket3D.Management;
+using MOAI.Management;
 using System.Windows.Forms;
 
-namespace Roket3D.Designers
+namespace MOAI.Designers
 {
     public class Manager
     {
-        private Roket3D.Manager p_Parent = null;
+        private MOAI.Manager p_Parent = null;
         private List<Designer> m_Designers = new List<Designer>();
 
         public delegate void DesignerEventHandler(object sender, DesignerEventArgs e);
@@ -39,7 +39,7 @@ namespace Roket3D.Designers
         /// <summary>
         /// Creates a new designer manager.
         /// </summary>
-        public Manager(Roket3D.Manager parent)
+        public Manager(MOAI.Manager parent)
         {
             this.p_Parent = parent;
         }
@@ -78,7 +78,7 @@ namespace Roket3D.Designers
             }
 
             // Invoke the constructor.
-            Designer ds = t.GetConstructor(new Type[] { typeof(Roket3D.Manager), typeof(File) }).Invoke(new object[] { this.p_Parent as object, file as object }) as Designer;
+            Designer ds = t.GetConstructor(new Type[] { typeof(MOAI.Manager), typeof(File) }).Invoke(new object[] { this.p_Parent as object, file as object }) as Designer;
             ds.FormClosed += (sender, e) =>
                 {
                     if (this.DesignerClosed != null)
@@ -98,9 +98,9 @@ namespace Roket3D.Designers
         }
 
         /// <summary>
-        /// The main Roket3D manager that owns this designer manager.
+        /// The main MOAI manager that owns this designer manager.
         /// </summary>
-        public Roket3D.Manager Parent
+        public MOAI.Manager Parent
         {
             get
             {

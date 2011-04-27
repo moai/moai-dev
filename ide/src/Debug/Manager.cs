@@ -5,21 +5,21 @@ using System.Text;
 using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
-using Roket3D.Tools;
+using MOAI.Tools;
 
-namespace Roket3D.Debug
+namespace MOAI.Debug
 {
     public class Manager
     {
-        private Roket3D.Manager p_Parent = null;
+        private MOAI.Manager p_Parent = null;
         private OutputTool m_OutputTool = null;
         private bool m_Running = false;
 
         /// <summary>
         /// Creates a new Manager class for managing debugging.
         /// </summary>
-        /// <param name="parent">The main Roket3D manager which owns this debugging manager.</param>
-        public Manager(Roket3D.Manager parent)
+        /// <param name="parent">The main MOAI manager which owns this debugging manager.</param>
+        public Manager(MOAI.Manager parent)
         {
             this.p_Parent = parent;
         }
@@ -28,7 +28,7 @@ namespace Roket3D.Debug
         /// Runs the specified project with debugging.
         /// </summary>
         /// <param name="project">The project to run under the debugger.</param>
-        public bool Run(Roket3D.Management.Project project)
+        public bool Run(MOAI.Management.Project project)
         {
             if (this.m_Running)
             {
@@ -82,7 +82,7 @@ namespace Roket3D.Debug
         {
             if (this.m_OutputTool != null && e.Data != null)
             {
-                Roket3D.Manager.VoidLambda lambda = () =>
+                MOAI.Manager.VoidLambda lambda = () =>
                     {
                         this.m_OutputTool.AddLogEntry(e.Data);
                     };
@@ -91,9 +91,9 @@ namespace Roket3D.Debug
         }
 
         /// <summary>
-        /// The main Roket3D manager that owns this debugging manager.
+        /// The main MOAI manager that owns this debugging manager.
         /// </summary>
-        public Roket3D.Manager Parent
+        public MOAI.Manager Parent
         {
             get
             {

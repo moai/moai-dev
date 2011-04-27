@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Drawing;
-using Roket3D.Tools;
+using MOAI.Tools;
 
-namespace Roket3D.Menus.Definitions.Solution
+namespace MOAI.Menus.Definitions.Solution
 {
     class New : Action
     {
@@ -34,7 +34,9 @@ namespace Roket3D.Menus.Definitions.Solution
             NewSolutionForm nsf = new NewSolutionForm();
             if (nsf.ShowDialog() == DialogResult.OK)
             {
-                NewSolutionForm.HandleNewProjectCreation(nsf);
+                // Request that the template create itself with the data provided.
+                Management.Solution s = nsf.Result.Template.Create(nsf.Result);
+                Program.Manager.LoadSolution(s.SolutionInfo.FullName);
             }
         }
     }
@@ -66,7 +68,7 @@ namespace Roket3D.Menus.Definitions.Solution
             ofd.CheckFileExists = true;
             ofd.CheckPathExists = true;
             ofd.RestoreDirectory = true;
-            ofd.Filter = "Roket3D Solutions|*.rsln|Roket3D Projects|*.rproj";
+            ofd.Filter = "MOAI Solutions|*.msln|MOAI Projects|*.mproj";
             if (ofd.ShowDialog() == DialogResult.OK)
             {
                 String filename = ofd.FileName;

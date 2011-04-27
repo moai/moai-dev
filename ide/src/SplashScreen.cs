@@ -7,7 +7,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
 
-namespace Roket3D
+namespace MOAI
 {
     public partial class SplashScreen : FloatingWindow
     {
@@ -17,7 +17,7 @@ namespace Roket3D
         private Image m_ProgressOutsideBrush;
         private Image m_ProgressInsideBrush;
         private Int32 m_Progress = 0;
-        private String m_Message = "Initalizing Roket3D...";
+        private String m_Message = "Initalizing MOAI IDE...";
 
         public SplashScreen()
         {
@@ -77,8 +77,8 @@ namespace Roket3D
 
                 // Draw message
                 g.DrawString(this.m_Message, this.m_TextFont, this.m_TextBrush, 9, 163);
-                g.DrawString(@"Roket3D is an open source project, available under an MIT license.  The MIT license
-only pertains to the IDE and engine.  Games created with Roket3D may be licensed", this.m_TextFont, this.m_TextBrush, 9, 202);
+                g.DrawString(@"MOAI IDE is an open source project, available under an MIT license.  The MIT license
+only pertains to the IDE and engine.  Games created with MOAI may be licensed", this.m_TextFont, this.m_TextBrush, 9, 202);
                 g.DrawString(@"
 
 as the author wishes.  See the About box for more information.", this.m_TextFont, this.m_TextBrush, 9, 203);

@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Roket3D.Collections;
+using MOAI.Collections;
 using System.IO;
 using System.Drawing;
 
-namespace Roket3D.Management
+namespace MOAI.Management
 {
     public class File : System.Windows.Forms.TreeNode
     {

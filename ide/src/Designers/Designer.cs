@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using DockPanelSuite;
-using Roket3D.Management;
+using MOAI.Management;
 
-namespace Roket3D.Designers
+namespace MOAI.Designers
 {
     public class Designer : DockContent
     {
-        private Roket3D.Manager p_Manager = null;
+        private MOAI.Manager p_Manager = null;
         private string p_Path = null;
-        private Roket3D.Management.File p_File = null;
+        private MOAI.Management.File p_File = null;
         private bool p_CanSave = false;
 
         public Designer()
@@ -21,9 +21,9 @@ namespace Roket3D.Designers
         /// <summary>
         /// Creates a new Designer base object.
         /// </summary>
-        /// <param name="manager">The main Roket3D manager object.</param>
+        /// <param name="manager">The main MOAI manager object.</param>
         /// <param name="file">The associated file.</param>
-        public Designer(Roket3D.Manager manager, File file)
+        public Designer(MOAI.Manager manager, File file)
         {
             this.p_Manager = manager;
             this.p_File = file;
@@ -74,7 +74,7 @@ namespace Roket3D.Designers
         /// The File object that represents the file that this editor is currently editing.
         /// Only valid if the Path points to a file that is currently in the project.
         /// </summary>
-        public Roket3D.Management.File File
+        public MOAI.Management.File File
         {
             get
             {

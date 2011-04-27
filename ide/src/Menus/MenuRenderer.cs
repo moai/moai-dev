@@ -6,7 +6,7 @@ using System.Windows.Forms;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 
-namespace Roket3D.Menus
+namespace MOAI.Menus
 {
     class MenuRenderer : ToolStripRenderer
     {

@@ -8,7 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using DockPanelSuite;
 
-namespace Roket3D.Tools
+namespace MOAI.Tools
 {
     public partial class ConsoleTool : Tool
     {

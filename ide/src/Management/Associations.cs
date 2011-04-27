@@ -5,9 +5,9 @@ using System.Text;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
-using Roket3D.Properties;
+using MOAI.Properties;
 
-namespace Roket3D.Management
+namespace MOAI.Management
 {
     public static class Associations
     {
@@ -80,7 +80,7 @@ namespace Roket3D.Management
         /// </summary>
         /// <param name="manager"></param>
         /// <param name="path"></param>
-        public static void ImageHandler(Roket3D.Manager manager, string path)
+        public static void ImageHandler(MOAI.Manager manager, string path)
         {
 
         }

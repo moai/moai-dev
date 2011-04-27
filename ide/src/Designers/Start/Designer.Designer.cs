@@ -1,4 +1,4 @@
-﻿namespace Roket3D.Designers.Start
+﻿namespace MOAI.Designers.Start
 {
     partial class Designer
     {

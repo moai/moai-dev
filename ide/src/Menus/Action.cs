@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Drawing;
 using System.Windows.Forms;
-using Roket3D.Designers;
+using MOAI.Designers;
 
-namespace Roket3D.Menus
+namespace MOAI.Menus
 {
     public abstract class Action
     {

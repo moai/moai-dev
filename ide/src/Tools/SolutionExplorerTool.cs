@@ -7,11 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using DockPanelSuite;
-using Roket3D.Properties;
-using Roket3D.Menus.Definitions.Project;
-using Roket3D.Management;
+using MOAI.Properties;
+using MOAI.Menus.Definitions.Project;
+using MOAI.Management;
 
-namespace Roket3D.Tools
+namespace MOAI.Tools
 {
     public partial class SolutionExplorerTool : Tool
     {

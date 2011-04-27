@@ -1,4 +1,4 @@
-﻿namespace Roket3D
+﻿namespace MOAI
 {
     partial class NewSolutionForm
     {
@@ -29,9 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.ListViewGroup listViewGroup2 = new System.Windows.Forms.ListViewGroup("Roket3D Templates", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("Managed Lua", "LuaManaged");
-            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("Unmanaged Lua", "LuaUnmanaged");
+            System.Windows.Forms.ListViewGroup listViewGroup1 = new System.Windows.Forms.ListViewGroup("MOAI Templates", System.Windows.Forms.HorizontalAlignment.Left);
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NewSolutionForm));
             this.c_ProjectTypeListView = new System.Windows.Forms.ListView();
             this.c_ImageList = new System.Windows.Forms.ImageList(this.components);
@@ -65,16 +63,11 @@
             this.c_ProjectTypeListView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            listViewGroup2.Header = "Roket3D Templates";
-            listViewGroup2.Name = "lvgTemplates";
+            listViewGroup1.Header = "MOAI Templates";
+            listViewGroup1.Name = "lvgTemplates";
             this.c_ProjectTypeListView.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
-            listViewGroup2});
+            listViewGroup1});
             this.c_ProjectTypeListView.HideSelection = false;
-            listViewItem3.Group = listViewGroup2;
-            listViewItem4.Group = listViewGroup2;
-            this.c_ProjectTypeListView.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem3,
-            listViewItem4});
             this.c_ProjectTypeListView.LargeImageList = this.c_ImageList;
             this.c_ProjectTypeListView.Location = new System.Drawing.Point(12, 12);
             this.c_ProjectTypeListView.MultiSelect = false;
@@ -82,7 +75,7 @@
             this.c_ProjectTypeListView.Size = new System.Drawing.Size(592, 138);
             this.c_ProjectTypeListView.TabIndex = 0;
             this.c_ProjectTypeListView.UseCompatibleStateImageBehavior = false;
-            this.c_ProjectTypeListView.SelectedIndexChanged += new System.EventHandler(this.ProjectTypeListView_SelectedIndexChanged);
+            this.c_ProjectTypeListView.SelectedIndexChanged += new System.EventHandler(this.c_ProjectTypeListView_SelectedIndexChanged);
             // 
             // c_ImageList
             // 
@@ -100,8 +93,6 @@
             this.c_TemplateDescriptionTextBox.ReadOnly = true;
             this.c_TemplateDescriptionTextBox.Size = new System.Drawing.Size(591, 20);
             this.c_TemplateDescriptionTextBox.TabIndex = 1;
-            this.c_TemplateDescriptionTextBox.Text = "Creates an IDE managed, Roket3D project with Lua as the primary scripting languag" +
-                "e.";
             // 
             // c_NameLabel
             // 
@@ -122,7 +113,7 @@
             this.c_ProjectNameTextBox.Size = new System.Drawing.Size(353, 20);
             this.c_ProjectNameTextBox.TabIndex = 3;
             this.c_ProjectNameTextBox.Text = "ManagedGame";
-            this.c_ProjectNameTextBox.TextChanged += new System.EventHandler(this.ProjectNameTextBox_TextChanged);
+            this.c_ProjectNameTextBox.TextChanged += new System.EventHandler(this.c_ProjectNameTextBox_TextChanged);
             // 
             // c_FlowLayoutPanel
             // 
@@ -144,7 +135,7 @@
             this.c_CancelButton.TabIndex = 1;
             this.c_CancelButton.Text = "Cancel";
             this.c_CancelButton.UseVisualStyleBackColor = true;
-            this.c_CancelButton.Click += new System.EventHandler(this.CancelButton_Click);
+            this.c_CancelButton.Click += new System.EventHandler(this.c_CancelButton_Click);
             // 
             // c_OKButton
             // 
@@ -154,7 +145,7 @@
             this.c_OKButton.TabIndex = 0;
             this.c_OKButton.Text = "OK";
             this.c_OKButton.UseVisualStyleBackColor = true;
-            this.c_OKButton.Click += new System.EventHandler(this.OKButton_Click);
+            this.c_OKButton.Click += new System.EventHandler(this.c_OKButton_Click);
             // 
             // c_GroupBox
             // 
@@ -174,8 +165,8 @@
             this.c_SolutionLocationTextBox.Name = "c_SolutionLocationTextBox";
             this.c_SolutionLocationTextBox.Size = new System.Drawing.Size(353, 20);
             this.c_SolutionLocationTextBox.TabIndex = 7;
-            this.c_SolutionLocationTextBox.Text = "Z:\\My Documents\\Roket3D Projects\\";
-            this.c_SolutionLocationTextBox.TextChanged += new System.EventHandler(this.SolutionLocationTextBox_TextChanged);
+            this.c_SolutionLocationTextBox.Text = "Z:\\My Documents\\MOAI Projects\\";
+            this.c_SolutionLocationTextBox.TextChanged += new System.EventHandler(this.c_SolutionLocationTextBox_TextChanged);
             // 
             // c_FolderLabel
             // 
@@ -198,7 +189,7 @@
             this.c_SolutionFolderTextBox.Size = new System.Drawing.Size(353, 20);
             this.c_SolutionFolderTextBox.TabIndex = 9;
             this.c_SolutionFolderTextBox.Text = "ManagedSolution";
-            this.c_SolutionFolderTextBox.TextChanged += new System.EventHandler(this.SolutionFolderTextBox_TextChanged);
+            this.c_SolutionFolderTextBox.TextChanged += new System.EventHandler(this.c_SolutionFolderTextBox_TextChanged);
             // 
             // c_UseSolutionFolderCheckBox
             // 
@@ -211,7 +202,7 @@
             this.c_UseSolutionFolderCheckBox.TabIndex = 10;
             this.c_UseSolutionFolderCheckBox.Text = "Use Solution Folder:";
             this.c_UseSolutionFolderCheckBox.UseVisualStyleBackColor = true;
-            this.c_UseSolutionFolderCheckBox.CheckedChanged += new System.EventHandler(this.UseSolutionFolderCheckBox_CheckedChanged);
+            this.c_UseSolutionFolderCheckBox.CheckedChanged += new System.EventHandler(this.c_UseSolutionFolderCheckBox_CheckedChanged);
             // 
             // c_SolutionLocationLabel
             // 
@@ -222,13 +213,13 @@
             this.c_SolutionLocationLabel.Name = "c_SolutionLocationLabel";
             this.c_SolutionLocationLabel.Size = new System.Drawing.Size(400, 41);
             this.c_SolutionLocationLabel.TabIndex = 11;
-            this.c_SolutionLocationLabel.Text = "Z:\\My Documents\\Roket3D Projects\\ManagedGame";
+            this.c_SolutionLocationLabel.Text = "Z:\\My Documents\\MOAI Projects\\ManagedGame";
             this.c_SolutionLocationLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // c_SolutionFolderInvalidPictureBox
             // 
             this.c_SolutionFolderInvalidPictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.c_SolutionFolderInvalidPictureBox.Image = global::Roket3D.Properties.Resources.icon_invalid;
+            this.c_SolutionFolderInvalidPictureBox.Image = global::MOAI.Properties.Resources.icon_invalid;
             this.c_SolutionFolderInvalidPictureBox.Location = new System.Drawing.Point(513, 235);
             this.c_SolutionFolderInvalidPictureBox.Name = "c_SolutionFolderInvalidPictureBox";
             this.c_SolutionFolderInvalidPictureBox.Size = new System.Drawing.Size(20, 20);
@@ -240,7 +231,7 @@
             // c_SolutionLocationInvalidPictureBox
             // 
             this.c_SolutionLocationInvalidPictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.c_SolutionLocationInvalidPictureBox.Image = global::Roket3D.Properties.Resources.icon_invalid;
+            this.c_SolutionLocationInvalidPictureBox.Image = global::MOAI.Properties.Resources.icon_invalid;
             this.c_SolutionLocationInvalidPictureBox.Location = new System.Drawing.Point(545, 209);
             this.c_SolutionLocationInvalidPictureBox.Name = "c_SolutionLocationInvalidPictureBox";
             this.c_SolutionLocationInvalidPictureBox.Size = new System.Drawing.Size(20, 20);
@@ -252,7 +243,7 @@
             // c_ProjectNameInvalidPictureBox
             // 
             this.c_ProjectNameInvalidPictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.c_ProjectNameInvalidPictureBox.Image = global::Roket3D.Properties.Resources.icon_invalid;
+            this.c_ProjectNameInvalidPictureBox.Image = global::MOAI.Properties.Resources.icon_invalid;
             this.c_ProjectNameInvalidPictureBox.Location = new System.Drawing.Point(513, 183);
             this.c_ProjectNameInvalidPictureBox.Name = "c_ProjectNameInvalidPictureBox";
             this.c_ProjectNameInvalidPictureBox.Size = new System.Drawing.Size(20, 20);
@@ -270,13 +261,13 @@
             this.c_BrowseSolutionLocationButton.TabIndex = 15;
             this.c_BrowseSolutionLocationButton.Text = "...";
             this.c_BrowseSolutionLocationButton.UseVisualStyleBackColor = true;
-            this.c_BrowseSolutionLocationButton.Click += new System.EventHandler(this.BrowseSolutionLocationButton_Click);
+            this.c_BrowseSolutionLocationButton.Click += new System.EventHandler(this.c_BrowseSolutionLocationButton_Click);
             // 
             // c_ProjectTypeInvalidPictureBox
             // 
             this.c_ProjectTypeInvalidPictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.c_ProjectTypeInvalidPictureBox.BackColor = System.Drawing.Color.White;
-            this.c_ProjectTypeInvalidPictureBox.Image = global::Roket3D.Properties.Resources.icon_invalid;
+            this.c_ProjectTypeInvalidPictureBox.Image = global::MOAI.Properties.Resources.icon_invalid;
             this.c_ProjectTypeInvalidPictureBox.Location = new System.Drawing.Point(581, 16);
             this.c_ProjectTypeInvalidPictureBox.Name = "c_ProjectTypeInvalidPictureBox";
             this.c_ProjectTypeInvalidPictureBox.Size = new System.Drawing.Size(20, 20);

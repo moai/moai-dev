@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Roket3D.Collections;
+using MOAI.Collections;
 using System.Xml;
-using Roket3D.Management;
-using Roket3D.Tools;
+using MOAI.Management;
+using MOAI.Tools;
 using System.IO;
+using System.Diagnostics;
 
-namespace Roket3D
+namespace MOAI
 {
     public class Manager
     {
@@ -36,7 +37,12 @@ namespace Roket3D
             this.p_Settings = new Dictionary<string, string>();
             this.p_Settings["RootPath"] = Environment.CurrentDirectory;
             this.p_Settings["DefaultProjectArea"] = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
-                                                + "\\Roket3D Projects";
+                                                + "\\MOAI Projects";
+
+            // This is a special check that detects whether we're running underneath a debugger, and adjusts the working directory
+            // if required.
+            if (Debugger.IsAttached || Directory.Exists("Deployment"))
+                this.p_Settings["RootPath"] = Environment.CurrentDirectory + "\\Deployment";
         }
 
         /// <summary>
@@ -211,7 +217,7 @@ namespace Roket3D
         }
 
         /// <summary>
-        /// Starts the Roket3D IDE.NET.
+        /// Starts the MOAI IDE.
         /// </summary>
         public void Start()
         {

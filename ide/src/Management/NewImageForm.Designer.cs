@@ -1,4 +1,4 @@
-﻿namespace Roket3D.ManagementOld
+﻿namespace MOAI.ManagementOld
 {
     partial class NewImageForm
     {
@@ -108,7 +108,7 @@
             // sizeInconsistentWarningPictureBox
             // 
             this.sizeInconsistentWarningPictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.sizeInconsistentWarningPictureBox.Image = global::Roket3D.Properties.Resources.error;
+            this.sizeInconsistentWarningPictureBox.Image = global::MOAI.Properties.Resources.error;
             this.sizeInconsistentWarningPictureBox.Location = new System.Drawing.Point(15, 90);
             this.sizeInconsistentWarningPictureBox.Name = "sizeInconsistentWarningPictureBox";
             this.sizeInconsistentWarningPictureBox.Size = new System.Drawing.Size(20, 20);
@@ -120,7 +120,7 @@
             // heightInvalidPictureBox
             // 
             this.heightInvalidPictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.heightInvalidPictureBox.Image = global::Roket3D.Properties.Resources.icon_invalid;
+            this.heightInvalidPictureBox.Image = global::MOAI.Properties.Resources.icon_invalid;
             this.heightInvalidPictureBox.Location = new System.Drawing.Point(126, 65);
             this.heightInvalidPictureBox.Name = "heightInvalidPictureBox";
             this.heightInvalidPictureBox.Size = new System.Drawing.Size(20, 20);
@@ -132,7 +132,7 @@
             // widthInvalidPictureBox
             // 
             this.widthInvalidPictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.widthInvalidPictureBox.Image = global::Roket3D.Properties.Resources.icon_invalid;
+            this.widthInvalidPictureBox.Image = global::MOAI.Properties.Resources.icon_invalid;
             this.widthInvalidPictureBox.Location = new System.Drawing.Point(126, 39);
             this.widthInvalidPictureBox.Name = "widthInvalidPictureBox";
             this.widthInvalidPictureBox.Size = new System.Drawing.Size(20, 20);

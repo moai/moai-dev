@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
-using Roket3D.Designers;
+using MOAI.Designers;
 
-namespace Roket3D.Menus.Definitions.Actions
+namespace MOAI.Menus.Definitions.Actions
 {
     class Open : Action
     {

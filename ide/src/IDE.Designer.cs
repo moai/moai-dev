@@ -1,4 +1,4 @@
-﻿namespace Roket3D
+﻿namespace MOAI
 {
     partial class IDE
     {
@@ -96,7 +96,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.IsMdiContainer = true;
             this.Name = "IDE";
-            this.Text = "No Solution Loaded - Roket3D";
+            this.Text = "No Solution Loaded - MOAI";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.StyleChanged += new System.EventHandler(this.IDE_StyleChanged);
             this.Load += new System.EventHandler(this.IDE_Load);

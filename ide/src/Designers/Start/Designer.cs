@@ -6,19 +6,19 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using Roket3D.Management;
-using Roket3D.Tools;
+using MOAI.Management;
+using MOAI.Tools;
 
-namespace Roket3D.Designers.Start
+namespace MOAI.Designers.Start
 {
-    public partial class Designer : Roket3D.Designers.Designer
+    public partial class Designer : MOAI.Designers.Designer
     {
         /// <summary>
         /// Creates a new start page.
         /// </summary>
-        /// <param name="manager">The main Roket3D manager.</param>
+        /// <param name="manager">The main MOAI manager.</param>
         /// <param name="file">The associated file.</param>
-        public Designer(Roket3D.Manager manager, File file)
+        public Designer(MOAI.Manager manager, File file)
             : base(manager, file)
         {
             InitializeComponent();
@@ -86,7 +86,8 @@ namespace Roket3D.Designers.Start
                             NewSolutionForm nsf = new NewSolutionForm();
                             if (nsf.ShowDialog() == DialogResult.OK)
                             {
-                                NewSolutionForm.HandleNewProjectCreation(nsf);
+                                // Request that the template create itself with the data provided.
+                                nsf.Result.Template.Create(nsf.Result);
                             }
 
                             return;
@@ -126,7 +127,7 @@ namespace Roket3D.Designers.Start
                                 ofd.CheckFileExists = true;
                                 ofd.CheckPathExists = true;
                                 ofd.RestoreDirectory = true;
-                                ofd.Filter = "Roket3D Solutions|*.rsln|Roket3D Projects|*.rproj";
+                                ofd.Filter = "MOAI Solutions|*.rsln|MOAI Projects|*.rproj";
                                 if (ofd.ShowDialog() == DialogResult.OK)
                                 {
                                     string filename = ofd.FileName;

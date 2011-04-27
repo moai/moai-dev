@@ -1,4 +1,4 @@
-﻿namespace Roket3D.Tools
+﻿namespace MOAI.Tools
 {
     partial class ErrorListTool
     {

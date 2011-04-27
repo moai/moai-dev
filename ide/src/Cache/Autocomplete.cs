@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml;
-using Roket3D.Collections;
+using MOAI.Collections;
 using System.IO;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace Roket3D.Cache
+namespace MOAI.Cache
 {
     public class AutoComplete
     {

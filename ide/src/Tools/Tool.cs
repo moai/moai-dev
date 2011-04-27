@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using DockPanelSuite;
 
-namespace Roket3D.Tools
+namespace MOAI.Tools
 {
     public class Tool : DockContent
 	{

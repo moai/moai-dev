@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Roket3D.Management;
+using MOAI.Management;
 
-namespace Roket3D.Menus.Definitions.Project
+namespace MOAI.Menus.Definitions.Project
 {
     class New : Action
     {

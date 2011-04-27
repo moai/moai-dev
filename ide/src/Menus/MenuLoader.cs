@@ -7,7 +7,7 @@ using System.IO;
 using System.Windows.Forms;
 using System.Reflection;
 
-namespace Roket3D.Menus
+namespace MOAI.Menus
 {
     class MenuLoader
     {
@@ -155,7 +155,7 @@ namespace Roket3D.Menus
                                                 //       using classes instead of enums, but oh well..
                                                 switch (this.m_Reader.GetAttribute("type"))
                                                 {
-                                                    case "Roket3D.Compilation.BuildMode":
+                                                    case "MOAI.Compilation.BuildMode":
                                                         c_ActiveComboBox.Items.Add(
                                                             new EnumWrapper(
                                                                 (Int32)o,
@@ -282,7 +282,7 @@ namespace Roket3D.Menus
             {
                 // Use reflection to associate the menu item with a defined
                 // action.
-                Type actionType = m_CurrentAssembly.GetType("Roket3D.Menus.Definitions." + actionName);
+                Type actionType = m_CurrentAssembly.GetType("MOAI.Menus.Definitions." + actionName);
                 if (actionType != null)
                 {
                     object actionObj = Activator.CreateInstance(actionType);

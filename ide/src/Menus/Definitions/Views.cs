@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Roket3D.Menus.Definitions.Views
+namespace MOAI.Menus.Definitions.Views
 {
     class Code : Action
     {

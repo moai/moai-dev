@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Roket3D.Debug
+namespace MOAI.Debug
 {
     public class Breakpoint
     {

@@ -5,7 +5,7 @@ using System.Text;
 using System.Xml;
 using System.Collections;
 
-namespace Roket3D.Collections
+namespace MOAI.Collections
 {
     class Tree : Node
     {

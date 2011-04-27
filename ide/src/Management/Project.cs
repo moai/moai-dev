@@ -3,16 +3,92 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
-using Roket3D.Collections;
+using MOAI.Collections;
 using System.Xml;
 
-namespace Roket3D.Management
+namespace MOAI.Management
 {
     public class Project
     {
         private bool p_Initalized = false;
         private FileInfo p_ProjectInfo = null;
         private List<File> p_Files = null;
+
+        /// <summary>
+        /// Creates a new instance of the Project class that is not associated
+        /// with any on-disk solution.
+        /// </summary>
+        public Project()
+        {
+            this.p_ProjectInfo = null;
+        }
+
+        /// <summary>
+        /// Loads a new instance of the Project class from a file on disk.
+        /// </summary>
+        /// <param name="file">The solution file to be loaded.</param>
+        public Project(FileInfo file)
+        {
+            this.p_ProjectInfo = file;
+
+            // Read the project data from the file.
+            this.LoadFromXml(this.p_ProjectInfo);
+        }
+
+        #region Disk Operations
+
+        /// <summary>
+        /// Creates a new project on disk with the specified name in the
+        /// specified directory.  The resulting location of the file will
+        /// be path\name.mproj
+        /// </summary>
+        /// <param name="name">The name of the solution.</param>
+        /// <param name="path">The path to the solution.</param>
+        public static Project Create(string name, string path)
+        {
+            // Create the directory if it does not exist.
+            if (!Directory.Exists(path))
+                Directory.CreateDirectory(path);
+
+            // Create a new empty instance.
+            Project p = new Project();
+
+            // Associate a FileInfo instance with it.
+            p.p_ProjectInfo = new FileInfo(Path.Combine(path, name + ".mproj"));
+
+            // Request that the project be saved.
+            p.Save();
+
+            // Return the new project.
+            return p;
+        }
+
+        /// <summary>
+        /// Saves the project file to disk; this project must have a
+        /// project file associated with it in order to save it to disk.
+        /// </summary>
+        public void Save()
+        {
+            if (this.p_ProjectInfo == null)
+                throw new InvalidOperationException();
+
+            // Configure the settings for the XmlWriter.
+            XmlWriterSettings settings = new XmlWriterSettings();
+            settings.Encoding = Encoding.UTF8;
+            settings.Indent = true;
+
+            // Create the new XmlWriter.
+            XmlWriter writer = XmlWriter.Create(this.p_ProjectInfo.FullName, settings);
+
+            // Generate the XML from the project data.
+            writer.WriteStartElement("Project");
+            writer.WriteAttributeString("ToolsVersion", "1.0");
+            writer.WriteString(""); // Force the root element to not be self-closing.
+            writer.WriteEndElement();
+            writer.Close();
+        }
+
+        #endregion
 
         /// <summary>
         /// Creates a new Project object that represents a Roket3D project.  The
@@ -70,62 +146,69 @@ namespace Roket3D.Management
             }
 
             Node p = t.GetChildElement("project");
-            foreach (Node f in p.GetChildElements("file"))
+            if (p == null)
+                return;
+
+            List<Node> childs = p.GetChildElements("file");
+            if (childs != null)
             {
-                List<string> sf = f.Attributes["Include"].Split(new char[] { '\\', '/' }).ToList();
-                string fn = sf[sf.Count - 1];
-                sf.RemoveAt(sf.Count - 1);
-                Folder ff = null;
-                
-                // Loop through until we get the parent directory
-                // if needed.
-                string path = "";
-                foreach (string s in sf)
+                foreach (Node f in childs)
                 {
-                    path += s + "\\";
-                    bool handled = false;
+                    List<string> sf = f.Attributes["Include"].Split(new char[] { '\\', '/' }).ToList();
+                    string fn = sf[sf.Count - 1];
+                    sf.RemoveAt(sf.Count - 1);
+                    Folder ff = null;
+
+                    // Loop through until we get the parent directory
+                    // if needed.
+                    string path = "";
+                    foreach (string s in sf)
+                    {
+                        path += s + "\\";
+                        bool handled = false;
+                        if (ff == null)
+                        {
+                            foreach (File f2 in this.p_Files)
+                                if (f2 is Folder && (f2 as Folder).FolderInfo.Name == s)
+                                {
+                                    ff = f2 as Folder;
+                                    handled = true;
+                                    break;
+                                }
+
+                            if (!handled)
+                            {
+                                Folder newf = new Folder(this, file.Directory.FullName, path.Substring(0, path.Length - 1));
+                                this.p_Files.Add(newf);
+                                ff = newf;
+                            }
+                        }
+                        else
+                        {
+                            foreach (File f2 in ff.Files)
+                                if (f2 is Folder && (f2 as Folder).FolderInfo.Name == s)
+                                {
+                                    ff = f2 as Folder;
+                                    handled = true;
+                                    break;
+                                }
+
+                            if (!handled)
+                            {
+                                Folder newf = new Folder(this, file.Directory.FullName, path.Substring(0, path.Length - 1));
+                                ff.Add(newf);
+                                ff = newf;
+                            }
+                        }
+                    }
+
+                    // Now associate the file with the directory or project,
+                    // depending on whether or not we have a parent directory.
                     if (ff == null)
-                    {
-                        foreach (File f2 in this.p_Files)
-                            if (f2 is Folder && (f2 as Folder).FolderInfo.Name == s)
-                            {
-                                ff = f2 as Folder;
-                                handled = true;
-                                break;
-                            }
-
-                        if (!handled)
-                        {
-                            Folder newf = new Folder(this, file.Directory.FullName, path.Substring(0, path.Length - 1));
-                            this.p_Files.Add(newf);
-                            ff = newf;
-                        }
-                    }
+                        this.p_Files.Add(new File(this, file.Directory.FullName, f.Attributes["Include"]));
                     else
-                    {
-                        foreach (File f2 in ff.Files)
-                            if (f2 is Folder && (f2 as Folder).FolderInfo.Name == s)
-                            {
-                                ff = f2 as Folder;
-                                handled = true;
-                                break;
-                            }
-
-                        if (!handled)
-                        {
-                            Folder newf = new Folder(this, file.Directory.FullName, path.Substring(0, path.Length - 1));
-                            ff.Add(newf);
-                            ff = newf;
-                        }
-                    }
+                        ff.Add(new File(this, file.Directory.FullName, f.Attributes["Include"]));
                 }
-
-                // Now associate the file with the directory or project,
-                // depending on whether or not we have a parent directory.
-                if (ff == null)
-                    this.p_Files.Add(new File(this, file.Directory.FullName, f.Attributes["Include"]));
-                else
-                    ff.Add(new File(this, file.Directory.FullName, f.Attributes["Include"]));
             }
         }
 

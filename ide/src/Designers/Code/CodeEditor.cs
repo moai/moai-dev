@@ -6,9 +6,9 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using Roket3D.Management;
+using MOAI.Management;
 
-namespace Roket3D.Designers.Code
+namespace MOAI.Designers.Code
 {
     public class CodeEditor : ScintillaNet.Scintilla
     {
@@ -152,7 +152,7 @@ namespace Roket3D.Designers.Code
             this.SetStyle(LexerStyleConstants.SCE_LUA_WORD_BASIC_FUNCTIONS, Color.FromArgb(21, 24, 255));
             this.SetStyle(LexerStyleConstants.SCE_LUA_WORD_BASIC_CLASSES, Color.FromArgb(0, 128, 128));
             this.SetStyle(LexerStyleConstants.SCE_LUA_WORD_UNUSED, Color.FromArgb(21, 24, 255));
-            this.SetStyle(LexerStyleConstants.SCE_LUA_WORD_ROKET3D_CLASSES, Color.FromArgb(0, 128, 128));
+            this.SetStyle(LexerStyleConstants.SCE_LUA_WORD_MOAI_CLASSES, Color.FromArgb(0, 128, 128));
             this.SetStyle(LexerStyleConstants.SCE_LUA_WORD_CLASS_KEYWORDS, Color.FromArgb(160, 0, 200));
 
             // Not yet configured.

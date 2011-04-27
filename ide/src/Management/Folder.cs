@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 
-namespace Roket3D.Management
+namespace MOAI.Management
 {
     public class Folder : File
     {

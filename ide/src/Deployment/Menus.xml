@@ -119,14 +119,14 @@
       <menuitem text="Contents" action="Help.Contents" />
       <menuitem text="Index" action="Help.Index" />
       <menuseperator />
-      <menuitem text="Roket3D Forums" action="Help.Forums" />
+      <menuitem text="MOAI Forums" action="Help.Forums" />
       <menuitem text="Report a Bug" action="Help.ReportBug" />
       <menuseperator />
       <menuitem text="Register Product" action="Help.Register" />
       <menuitem text="Check for Updates" action="Help.CheckUpdates" />
       <menuitem text="Technical Support" action="Help.TechnicalSupport" />
       <menuseperator />
-      <menuitem text="About Roket3D IDE.NET" action="Help.About" />
+      <menuitem text="About MOAI IDE" action="Help.About" />
     </menuitem>
   </menubar>
   <toolbar>
@@ -162,8 +162,8 @@
     <toolseperator />
     <toolitem text="Debug" action="Solution.StartWithDebug" />
     <toolcombo text="Build Mode" action="Selection.BuildMode" editable="false">
-      <text type="Roket3D.Compilation.BuildMode" value="Roket3D.Compilation.BuildMode.DEBUG">Debug</text>
-      <text type="Roket3D.Compilation.BuildMode" value="Roket3D.Compilation.BuildMode.RELEASE">Release</text>
+      <text type="MOAI.Compilation.BuildMode" value="MOAI.Compilation.BuildMode.DEBUG">Debug</text>
+      <text type="MOAI.Compilation.BuildMode" value="MOAI.Compilation.BuildMode.RELEASE">Release</text>
     </toolcombo>
     <toolseperator />
     <toolitem text="Find In Files" action="Actions.FindInFiles" />
@@ -176,4 +176,39 @@
     <toolitem text="Object Browser" action="Tools.ObjectBrowser" />
     <toolitem text="Toolbox" action="Tools.Toolbox" />
   </toolbar>
+  <!--
+  <contextmenu for="SolutionExplorer" nodetype="Project">
+    <menuitem text="Project Properties" action="Project.ProjProperties" />
+  </contextmenu>
+  <contextmenu for="SolutionExplorer" nodetype="Folder">
+    <menuitem text="Add Model..." action="Project.AddModel" />
+    <menuitem text="Add Image..." action="Project.AddImage" />
+    <menuitem text="Add Audio..." action="Project.AddAudio" />
+    <menuitem text="Add Template..." action="Project.AddTemplate" />
+    <menuitem text="Add Area..." action="Project.AddArea" />
+    <menuitem text="Add World..." action="Project.AddWorld" />
+    <menuseperator />
+    <menuitem text="Add Class..." action="Project.AddClass" />
+    <menuitem text="Add Script..." action="Project.AddScript" />
+    <menuseperator />
+    <menuitem text="Add New Item" action="Project.AddNewItem" />
+    <menuitem text="Add Existing Item" action="Project.AddExistingItem" />
+  </contextmenu>
+  <contextmenu for="SolutionExplorer" nodetype="File">
+    <menuitem text="Open" action="Actions.Open" />
+    <menuitem text="Open With..." action="Actions.OpenWith" />
+    <menuseperator />
+    <menuitem text="View Code" action="File.OpenCode" />
+    <menuitem text="View Designer" action="File.OpenDesigner" />
+    <menuseperator />
+    <menuitem text="Exclude From Project" action="File.Exclude" />
+    <menuseperator />
+    <toolitem text="Cut" action="Actions.Cut" />
+    <toolitem text="Copy" action="Actions.Copy" />
+    <toolitem text="Paste" action="Actions.Paste" />
+    <toolitem text="Delete" action="Actions.Delete" />
+    <menuseperator />
+    <menuitem text="Project Properties" action="Project.FileProperties" />
+  </contextmenu>
+  -->
 </menus>

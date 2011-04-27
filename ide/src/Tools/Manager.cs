@@ -4,19 +4,19 @@ using System.Linq;
 using System.Text;
 using DockPanelSuite;
 
-namespace Roket3D.Tools
+namespace MOAI.Tools
 {
     public class Manager
     {
         List<Tool> m_Windows;
-        Roket3D.Manager p_Parent = null;
+        MOAI.Manager p_Parent = null;
 
         /// <summary>
         /// Creates a new Manager class for managing the tool windows which
         /// are shown on the screen.
         /// </summary>
-        /// <param name="parent">The main Roket3D manager which owns this tool manager.</param>
-        public Manager(Roket3D.Manager parent)
+        /// <param name="parent">The main MOAI manager which owns this tool manager.</param>
+        public Manager(MOAI.Manager parent)
         {
             this.m_Windows = new List<Tool>();
             this.p_Parent = parent;
@@ -83,9 +83,9 @@ namespace Roket3D.Tools
         }
 
         /// <summary>
-        /// The main Roket3D manager that owns this tool manager.
+        /// The main MOAI manager that owns this tool manager.
         /// </summary>
-        public Roket3D.Manager Parent
+        public MOAI.Manager Parent
         {
             get
             {

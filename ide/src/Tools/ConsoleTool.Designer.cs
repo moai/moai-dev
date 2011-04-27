@@ -1,4 +1,4 @@
-﻿namespace Roket3D.Tools
+﻿namespace MOAI.Tools
 {
     partial class ConsoleTool
     {
@@ -51,7 +51,7 @@
             this.c_ConsoleTextBox.ReadOnly = true;
             this.c_ConsoleTextBox.Size = new System.Drawing.Size(533, 236);
             this.c_ConsoleTextBox.TabIndex = 0;
-            this.c_ConsoleTextBox.Text = "Welcome to the Roket3D Lua Console.\r\nType Lua statements to execute them.\r\nReturn" +
+            this.c_ConsoleTextBox.Text = "Welcome to the MOAI Lua Console.\r\nType Lua statements to execute them.\r\nReturn" +
                 " Lua values to have them outputted.\r\n\r\n-----------------------------";
             // 
             // c_InputPanel

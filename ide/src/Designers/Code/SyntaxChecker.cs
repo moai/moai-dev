@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using ScintillaNet;
 
-namespace Roket3D.Designers.Code
+namespace MOAI.Designers.Code
 {
     public class SyntaxChecker
     {
@@ -208,7 +208,7 @@ namespace Roket3D.Designers.Code
         SCE_LUA_WORD_BASIC_FUNCTIONS = 13,
         SCE_LUA_WORD_BASIC_CLASSES = 14,
         SCE_LUA_WORD_UNUSED = 15,
-        SCE_LUA_WORD_ROKET3D_CLASSES = 16,
+        SCE_LUA_WORD_MOAI_CLASSES = 16,
         SCE_LUA_WORD_CLASS_KEYWORDS = 17,
         SCE_LUA_WORD7 = 18,
         SCE_LUA_WORD8 = 19

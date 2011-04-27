@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Web;
 
-namespace Roket3D.Collections
+namespace MOAI.Collections
 {
     public class Node
     {

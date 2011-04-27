@@ -3,13 +3,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{5BA158DE-7E14-42BD-8ABE-2FFBCD1CC268}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Roket3D</RootNamespace>
-    <AssemblyName>Roket3D</AssemblyName>
+    <RootNamespace>MOAI</RootNamespace>
+    <AssemblyName>MOAI</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetZone>LocalIntranet</TargetZone>
@@ -32,12 +32,13 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -46,28 +47,53 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <UseVSHostingProcess>true</UseVSHostingProcess>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
+    <OutputPath>..\bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <OutputPath>..\bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Irrlicht.Extensions, Version=0.8.3596.21982, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependencies\Irrlicht.NET CP\Irrlicht.Extensions.dll</HintPath>
-    </Reference>
-    <Reference Include="Irrlicht.NET, Version=0.9.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependencies\Irrlicht.NET CP\Irrlicht.NET.dll</HintPath>
-    </Reference>
     <Reference Include="LuaInterface, Version=2.0.0.16708, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependencies\LuaInterface\LuaInterface.dll</HintPath>
+      <HintPath>..\libraries\LuaInterface\LuaInterface.dll</HintPath>
     </Reference>
     <Reference Include="ScintillaNet, Version=2.2.3581.19319, Culture=neutral, PublicKeyToken=948d6c9751444115, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependencies\Scintilla.NET\ScintillaNet.dll</HintPath>
+      <HintPath>..\libraries\Scintilla.NET\ScintillaNet.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -146,9 +172,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Designers\Code\Designer.resx">
       <DependentUpon>Designer.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Designers\Start\Designer.resx">
       <DependentUpon>Designer.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="IDE.resx">
       <DependentUpon>IDE.cs</DependentUpon>
@@ -156,9 +184,11 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Management\NewImageForm.resx">
       <DependentUpon>NewImageForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Management\NewSolutionForm.resx">
       <DependentUpon>NewSolutionForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -380,30 +410,81 @@
     <None Include="Resources\information.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Dependencies\DockPanelSuite\DockPanelSuite.csproj">
+    <ProjectReference Include="..\libraries\DockPanelSuite\DockPanelSuite.csproj">
       <Project>{B2886585-F158-4870-95A5-564007987F45}</Project>
       <Name>DockPanelSuite</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Irrlicht.dll">
+    <Content Include="Deployment\Completion Cache\Engine.Collections.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Irrlicht.Extensions.dll">
+    <Content Include="Deployment\Completion Cache\Engine.Unmanaged.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Irrlicht.NET.dll">
+    <Content Include="Deployment\Completion Cache\Engine.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="IrrlichtWd.dll">
+    <Content Include="Deployment\Completion Cache\root.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="lua51.dll">
+    <Content Include="Deployment\Menus.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Menus.xml">
+    <Content Include="Deployment\Start Page\bg.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Deployment\Start Page\bullet_blue.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Deployment\Start Page\bullet_green.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Deployment\Start Page\bullet_orange.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Deployment\Start Page\bullet_purple.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Deployment\Start Page\bullet_red.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Deployment\Start Page\index.htm">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Deployment\Start Page\sbl.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Deployment\Start Page\sbr.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Deployment\Start Page\stc.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Deployment\Start Page\stl.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Deployment\Start Page\str.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Deployment\Start Page\stylesheet.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Deployment\Start Page\title.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="icon.ico" />
+    <Compile Include="Management\Path.cs" />
+    <None Include="Deployment\Framework\Engine\Area.rs" />
+    <None Include="Deployment\Framework\Engine\Audio.rs" />
+    <None Include="Deployment\Framework\Engine\Image.rs" />
+    <None Include="Deployment\Framework\Engine\Model.rs" />
+    <None Include="Deployment\Framework\Engine\Template.rs" />
+    <None Include="Deployment\Framework\Engine\World.rs" />
+    <None Include="Deployment\Framework\main.rks" />
+    <None Include="Deployment\Framework\test.lua" />
+    <None Include="Deployment\Framework\_UnmanagedExt\Bootstrap.lua" />
+    <None Include="Deployment\Framework\_UnmanagedExt\ModuleLoader.lua" />
     <None Include="Resources\box.png" />
     <None Include="Resources\bricks.png" />
     <None Include="Resources\image_new.png" />
@@ -455,6 +536,9 @@
       <DependentUpon>Designer.cs</DependentUpon>
     </Compile>
     <Compile Include="Management\Associations.cs" />
+    <Compile Include="Templates\BaseTemplate.cs" />
+    <Compile Include="Templates\SolutionCreationData.cs" />
+    <Compile Include="Templates\StandardTemplate.cs" />
     <Compile Include="Tools\Tool.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -492,6 +576,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Deployment\Engines\Win32\Debug\" />
+    <Folder Include="Deployment\Engines\Win32\Release\" />
+    <Folder Include="Deployment\Engines\Win64\Debug\" />
+    <Folder Include="Deployment\Engines\Win64\Release\" />
     <Folder Include="Designers\Image\" />
     <Folder Include="Designers\Model\" />
   </ItemGroup>

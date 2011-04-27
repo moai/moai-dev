@@ -9,9 +9,9 @@ using System.Windows.Forms;
 using DockPanelSuite;
 using LuaInterface;
 using System.IO;
-using Roket3D.Designers;
+using MOAI.Designers;
 
-namespace Roket3D
+namespace MOAI
 {
     public partial class IDE : Form
     {
