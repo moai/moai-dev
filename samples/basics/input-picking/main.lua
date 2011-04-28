@@ -46,38 +46,49 @@ local function printf ( ... )
 	return io.stdout:write ( string.format ( ... ))
 end 
 
-MOAIInputMgr.device.pointer:setCallback (
-	function ( x, y )
+function pointerCallback ( x, y )
+	
+	local oldX = mouseX
+	local oldY = mouseY
+	
+	mouseX, mouseY = layer:wndToWorld ( x, y )
+	
+	if pick then
+		pick:addLoc ( mouseX - oldX, mouseY - oldY )
+	end
+end
 		
-		local oldX = mouseX
-		local oldY = mouseY
+function clickCallback ( down )
+	if down then
 		
-		mouseX, mouseY = layer:wndToWorld ( x, y )
+		pick = partition:propForPoint ( mouseX, mouseY )
 		
 		if pick then
-			pick:addLoc ( mouseX - oldX, mouseY - oldY )
+			print ( pick.name )
+			pick:setPriority ( priority )
+			priority = priority + 1
+			pick:moveScl ( 0.25, 0.25, 0.125, MOAIEaseType.EASE_IN )
+		end
+	else
+		if pick then
+			pick:moveScl ( -0.25, -0.25, 0.125, MOAIEaseType.EASE_IN )
+			pick = nil
 		end
 	end
-)
+end
 
-MOAIInputMgr.device.mouseLeft:setCallback (
-	function ( down )
+if MOAIInputMgr.device.pointer then
 	
-		if down then
-			
-			pick = partition:propForPoint ( mouseX, mouseY )
-			
-			if pick then
-				print ( pick.name )
-				pick:setPriority ( priority )
-				priority = priority + 1
-				pick:moveScl ( 0.25, 0.25, 0.125, MOAIEaseType.EASE_IN )
-			end
-		else
-			if pick then
-				pick:moveScl ( -0.25, -0.25, 0.125, MOAIEaseType.EASE_IN )
-				pick = nil
-			end
+	MOAIInputMgr.device.pointer:setCallback ( pointerCallback )
+	MOAIInputMgr.device.mouseLeft:setCallback ( clickCallback )
+else
+
+	MOAIInputMgr.device.touch:setCallback ( 
+		function ( eventType, idx, x, y, tapCount )
+		
+			pointerCallback ( x, y )
+			clickCallback ( eventType == MOAITouchSensor.TOUCH_DOWN )
 		end
-	end
-)
+	)
+end
+
