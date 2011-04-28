@@ -59,6 +59,7 @@ function pointerCallback ( x, y )
 end
 		
 function clickCallback ( down )
+	
 	if down then
 		
 		pick = partition:propForPoint ( mouseX, mouseY )
@@ -79,15 +80,23 @@ end
 
 if MOAIInputMgr.device.pointer then
 	
+	-- mouse input
 	MOAIInputMgr.device.pointer:setCallback ( pointerCallback )
 	MOAIInputMgr.device.mouseLeft:setCallback ( clickCallback )
 else
 
+	-- touch input
 	MOAIInputMgr.device.touch:setCallback ( 
+	
 		function ( eventType, idx, x, y, tapCount )
-		
+
 			pointerCallback ( x, y )
-			clickCallback ( eventType == MOAITouchSensor.TOUCH_DOWN )
+		
+			if eventType == MOAITouchSensor.TOUCH_DOWN then
+				clickCallback ( true )
+			elseif eventType == MOAITouchSensor.TOUCH_UP then
+				clickCallback ( false )
+			end
 		end
 	)
 end
