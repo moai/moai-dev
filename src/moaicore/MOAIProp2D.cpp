@@ -444,11 +444,12 @@ u32 MOAIProp2D::GetLocalFrame ( USRect& frame ) {
 //----------------------------------------------------------------//
 bool MOAIProp2D::Inside ( USVec2D vec ) {
 
-	if ( !this->mDeck ) return false;
-	
 	const USAffine2D& worldToLocal = this->GetWorldToLocalMtx ();
 	worldToLocal.Transform ( vec );
-	
+
+	if ( !this->mDeck ) {
+		return this->mFrameSource == FRAME_FROM_SELF ? this->mFrame.Contains ( vec ) : false; 
+	}
 	return this->mDeck->Contains ( this->mIndex, vec );
 }
 
@@ -507,18 +508,6 @@ void MOAIProp2D::OnDepNodeUpdate () {
 	if ( localFrame.Area () == 0.0f ) {
 		frameStatus = BOUNDS_EMPTY;
 	}
-	
-	// this here is where we do the logic to fit to the target frame
-	// simply... we have our local frame
-	// target frame is selected from parent (MOAIProp2D or MOAILayoutFrame)
-	// then, if *scaling* to frame, just compute the matrix and prepend
-	// if *stretching* to frame, compute the translation matrix and store the stretch factor
-	// not all prims can stretch, btw... but that is their problem
-	// the stretched/scaled prop should align with its parent frame only when using the identity transform
-	// any additional transforms are applied *after* the fit; better for animated widgets, etc.
-	
-	// this is sort of a pain in the butt, but should be worth it
-	// well, I hope it's worth it...
 	
 	USVec2D offset ( 0.0f, 0.0f );
 	USVec2D stretch ( 1.0f, 1.0f );
