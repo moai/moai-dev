@@ -296,7 +296,7 @@ void MOAITimer::GenerateCallbacks ( float t0, float t1, bool end ) {
 			}
 			else {
 			
-				for ( ; keyID != -1; --keyID ) {
+				for ( ; ( int )keyID >= -1; --keyID ) {
 					USAnimKey& key = ( *this->mCurve )[ keyID ];
 				
 					if (( end && ( key.mTime <= t1 )) || (( key.mTime <= t0 ) && ( key.mTime > t1 ))) {
