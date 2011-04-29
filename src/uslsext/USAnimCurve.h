@@ -19,24 +19,18 @@ public:
 //================================================================//
 // USAnimCurve
 //================================================================//
-class USAnimCurve {
-protected:
-
-	USLeanArray < USAnimKey >	mKeys;
-
-	//----------------------------------------------------------------//
-	u32				FindKeyID			( float time );
-
+class USAnimCurve :
+	public USLeanArray < USAnimKey > {
 public:
 
 	//----------------------------------------------------------------//
+	u32				FindKeyID			( float time );
 	bool			GetBoolValue		( float time );
 	float			GetFloatDelta		( float t0, float t1 );
 	float			GetFloatValue		( float time );
 	u32				GetIndexValue		( float time );
 	int				GetIntValue			( float time );
 	float			GetLength			();
-	void			Init				( u32 numKeys );
 	void			SetKey				( u32 id, float time, float value, u32 mode, float weight = 1.0f );
 					USAnimCurve			();
 					~USAnimCurve		();

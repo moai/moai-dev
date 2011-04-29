@@ -149,7 +149,7 @@ void MOAIAnim::Apply ( float t0, float t1 ) {
 				target->ApplyAttrOp ( link.mAttrID, adder );
 			}
 			else {
-				float value = curve->GetFloatValue ( t0 );
+				float value = curve->GetFloatValue ( t1 );
 				target->SetAttributeValue < float >( link.mAttrID, value );
 			}
 			target->ScheduleUpdate ();

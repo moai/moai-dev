@@ -13,8 +13,8 @@
 u32 USAnimCurve::FindKeyID ( float time ) {
 
 	u32 keyID = 0;
-	for ( u32 i = 0; i < this->mKeys.Size (); ++i ) {
-		if ( this->mKeys [ i ].mTime > time ) break;
+	for ( u32 i = 0; i < this->Size (); ++i ) {
+		if (( *this )[ i ].mTime > time ) break;
 		keyID = i;
 	}
 	return keyID;
@@ -30,7 +30,7 @@ bool USAnimCurve::GetBoolValue ( float time ) {
 //----------------------------------------------------------------//
 float USAnimCurve::GetFloatDelta ( float t0, float t1 ) {
 
-	u32 total = this->mKeys.Size ();
+	u32 total = this->Size ();
 	if ( total < 2 ) return 0.0f;
 	if ( t0 == t1 ) return 0.0f;
 
@@ -52,8 +52,8 @@ float USAnimCurve::GetFloatDelta ( float t0, float t1 ) {
 				t1 -= length;
 			}
 			
-			USAnimKey k0 = this->mKeys [ keyID ];
-			USAnimKey k1 = this->mKeys [ keyID + 1 ];
+			USAnimKey k0 = ( *this )[ keyID ];
+			USAnimKey k1 = ( *this )[ keyID + 1 ];
 			
 			float v0 = k0.mValue;
 			float v1 = k1.mValue;
@@ -99,8 +99,8 @@ float USAnimCurve::GetFloatDelta ( float t0, float t1 ) {
 				t1 += length;
 			}
 			
-			USAnimKey k0 = this->mKeys [ keyID - 1 ];
-			USAnimKey k1 = this->mKeys [ keyID ];
+			USAnimKey k0 = ( *this )[ keyID - 1 ];
+			USAnimKey k1 = ( *this )[ keyID ];
 			
 			float v0 = k0.mValue;
 			float v1 = k1.mValue;
@@ -134,12 +134,12 @@ float USAnimCurve::GetFloatDelta ( float t0, float t1 ) {
 //----------------------------------------------------------------//
 float USAnimCurve::GetFloatValue ( float time ) {
 
-	u32 total = this->mKeys.Size ();
+	u32 total = this->Size ();
 	if ( total == 0 ) return 0.0f;
 	u32 endID = total - 1;
 	
 	u32 keyID = this->FindKeyID ( time );
-	USAnimKey k0 = this->mKeys [ keyID ];
+	USAnimKey k0 = ( *this )[ keyID ];
 	
 	if ( keyID == endID ) {
 		return k0.mValue;
@@ -153,7 +153,7 @@ float USAnimCurve::GetFloatValue ( float time ) {
 		return k0.mValue;
 	}
 
-	USAnimKey k1 = this->mKeys [ keyID + 1 ];
+	USAnimKey k1 = ( *this )[ keyID + 1 ];
 
 	float v0 = k0.mValue;
 	float v1 = k1.mValue;
@@ -189,25 +189,19 @@ int USAnimCurve::GetIntValue ( float time ) {
 //----------------------------------------------------------------//
 float USAnimCurve::GetLength () {
 
-	u32 total = this->mKeys.Size ();
+	u32 total = this->Size ();
 	if ( total == 0 ) return 0.0f;
-	return this->mKeys [ total - 1 ].mTime - this->mKeys [ 0 ].mTime;
-}
-
-//----------------------------------------------------------------//
-void USAnimCurve::Init ( u32 numKeys ) {
-
-	this->mKeys.Init ( numKeys );
+	return ( *this )[ total - 1 ].mTime - ( *this )[ 0 ].mTime;
 }
 
 //----------------------------------------------------------------//
 void USAnimCurve::SetKey ( u32 id, float time, float value, u32 mode, float weight ) {
 
-	if ( id < this->mKeys.Size ()) {
-		this->mKeys [ id ].mTime = time;
-		this->mKeys [ id ].mValue = value;
-		this->mKeys [ id ].mMode = mode;
-		this->mKeys [ id ].mWeight = weight;
+	if ( id < this->Size ()) {
+		( *this )[ id ].mTime = time;
+		( *this )[ id ].mValue = value;
+		( *this )[ id ].mMode = mode;
+		( *this )[ id ].mWeight = weight;
 	}
 }
 

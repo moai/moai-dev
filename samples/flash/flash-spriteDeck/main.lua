@@ -18,7 +18,7 @@ layer:setViewport ( viewport )
 MOAISim.pushRenderPass ( layer )
 MOAISim.openWindow ( "flash-spriteDeck", 128, 128 )
 
-local spriteLibs = dofile ( 'pivot.fla.lua' )
+local spriteLibs = dofile ( 'flash-spriteDeck.fla.lua' )
 
 function loadSpriteLibs ( specList )
 

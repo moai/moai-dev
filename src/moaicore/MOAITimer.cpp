@@ -2,6 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <moaicore/MOAIAnimCurve.h>
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAISim.h>
 #include <moaicore/MOAITimer.h>
@@ -25,17 +26,19 @@ int MOAITimer::_getTimesExecuted ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setCallback
-	@text	Set a function to be called every time the timer finishes a cycle.
-
-	@in		MOAITimer self
-	@in		function onCycle
+/**	@name	setCurve
+	@text	Set or clear the curve to use for event generation.
+	
+	@in		MOAIAnimCurveListener self
+	@opt	MOAIAnimCurveListener curve		Default value is nil.
 	@out	nil
 */
-int MOAITimer::_setCallback ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITimer, "UF" )
+int MOAITimer::_setCurve ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITimer, "U" );
 
-	self->mCallback.SetRef ( state, 2, false );
+	self->mCurve = state.GetLuaObject < MOAIAnimCurve >( 2 );
+	self->ScheduleUpdate ();
+
 	return 0;
 }
 
@@ -143,22 +146,12 @@ void MOAITimer::ApplyAttrOp ( u32 attrID, USAttrOp& attrOp ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITimer::Callback () {
-
-	if ( this->mCallback ) {
-		USLuaStateHandle state = this->mCallback.GetSelf ();
-		state.DebugCall ( 0, 0 );
-	}
-}
-
-//----------------------------------------------------------------//
 float MOAITimer::DoStep ( float step ) {
 
 	float length = this->mEndTime - this->mStartTime;
 
 	if ( length == 0.0f ) {
 		this->Stop ();
-		this->Callback ();
 		this->ScheduleUpdate ();
 		return 0.0f;
 	}
@@ -175,29 +168,48 @@ float MOAITimer::DoStep ( float step ) {
 			
 			if ( this->mTime >= this->mEndTime ) {
 				this->mTime = this->mEndTime;
+				this->GenerateCallbacks ( t0, this->mTime, true );
+				this->OnLoop ();
 				this->Stop ();
-				this->Callback ();
+			}
+			else {
+				this->GenerateCallbacks ( t0, this->mTime, false );
 			}
 			result = this->mTime - t0;
 			break;
 		}
 		
 		case LOOP: {
-		
-			while ( this->mTime >= this->mEndTime ) {
-				this->mTime -= length;
-				this->mTimesExecuted++;
-				this->Callback ();
+			
+			if ( this->mTime >= this->mEndTime ) {
+				
+				this->GenerateCallbacks ( t0, this->mEndTime, true );
+				
+				while ( this->mTime >= this->mEndTime ) {
+					this->mTime -= length;
+					this->OnLoop ();
+					
+					float end = this->mTime < this->mEndTime ? this->mTime : this->mEndTime;
+					this->GenerateCallbacks ( this->mStartTime, end, end == this->mEndTime );
+				}
+			}
+			else {
+				this->GenerateCallbacks ( t0, this->mTime, false );
 			}
 			result = t1 - t0;
 			break;
 		}
+		
 		case REVERSE: {
 		
 			if ( this->mTime < this->mStartTime ) {
 				this->mTime = this->mStartTime ;
+				this->GenerateCallbacks ( t0, this->mTime, true );
+				this->OnLoop ();
 				this->Stop ();
-				this->Callback ();
+			}
+			else {
+				this->GenerateCallbacks ( t0, this->mTime, false );
 			}
 			result = this->mTime - t0;
 			break;
@@ -205,10 +217,20 @@ float MOAITimer::DoStep ( float step ) {
 		
 		case LOOP_REVERSE: {
 		
-			while ( this->mTime < this->mStartTime ) {
-				this->mTime += length;
-				this->mTimesExecuted++;
-				this->Callback ();
+			if ( this->mTime <= this->mStartTime ) {
+				
+				this->GenerateCallbacks ( t0, this->mStartTime, true );
+				
+				while ( this->mTime <= this->mStartTime ) {
+					this->mTime += length;
+					this->OnLoop ();
+					
+					float end = this->mTime > this->mStartTime ? this->mTime : this->mStartTime;
+					this->GenerateCallbacks ( this->mEndTime, end, end == this->mStartTime );
+				}
+			}
+			else {
+				this->GenerateCallbacks ( t0, this->mTime, false );
 			}
 			result = t1 - t0;
 			break;
@@ -216,19 +238,29 @@ float MOAITimer::DoStep ( float step ) {
 		
 		case PING_PONG: {
 			
-			while (( this->mTime < this->mStartTime ) || ( this->mTime >= this->mEndTime )) {
+			if (( this->mTime < this->mStartTime ) || ( this->mTime >= this->mEndTime )) {
 			
-			
-				if ( this->mTime < this->mStartTime ) {
-					this->mTime = this->mStartTime + ( this->mStartTime - this->mTime );
+				while (( this->mTime < this->mStartTime ) || ( this->mTime >= this->mEndTime )) {
+					
+					if ( this->mTime < this->mStartTime ) {
+						this->mTime = this->mStartTime + ( this->mStartTime - this->mTime );
+						
+						float end = this->mTime < this->mEndTime ? this->mTime : this->mEndTime;
+						this->GenerateCallbacks ( this->mStartTime, end, end == this->mEndTime );
+					}
+					else {
+						this->mTime = this->mEndTime - ( this->mTime - this->mEndTime );
+						
+						float end = this->mTime > this->mStartTime ? this->mTime : this->mStartTime;
+						this->GenerateCallbacks ( this->mEndTime, end, end == this->mStartTime );
+					}
+					
+					this->mDirection *= -1.0f;
+					this->OnLoop ();
 				}
-				else {
-					this->mTime = this->mEndTime - ( this->mTime - this->mEndTime );
-				}
-				
-				this->mSpeed *= -1.0f;
-				this->mTimesExecuted++;
-				this->Callback ();
+			}
+			else {
+				this->GenerateCallbacks ( t0, this->mTime, false );
 			}
 			result = this->mTime - t0;
 			break;
@@ -237,6 +269,45 @@ float MOAITimer::DoStep ( float step ) {
 	
 	this->ScheduleUpdate ();
 	return result;
+}
+
+//----------------------------------------------------------------//
+void MOAITimer::GenerateCallbacks ( float t0, float t1, bool end ) {
+
+	u32 size = this->mCurve ? this->mCurve->Size () : 0;
+	
+	if ( size ) {
+		
+		if ( t0 != t1 ) {
+			
+			u32 keyID = ( int )this->mCurve->FindKeyID ( t0 );
+			
+			if ( t0 < t1 ) {
+			
+				for ( ; keyID < size; ++keyID ) {
+					USAnimKey& key = ( *this->mCurve )[ keyID ];
+					
+					if (( end && ( key.mTime >= t1 )) || (( key.mTime >= t0 ) && ( key.mTime < t1 ))) {
+						this->OnKeyframe ( keyID, key.mTime, key.mValue );
+					}
+					
+					if ( key.mTime >= t1 ) break;
+				}
+			}
+			else {
+			
+				for ( ; keyID != -1; --keyID ) {
+					USAnimKey& key = ( *this->mCurve )[ keyID ];
+				
+					if (( end && ( key.mTime <= t1 )) || (( key.mTime <= t0 ) && ( key.mTime > t1 ))) {
+						this->OnKeyframe ( keyID, key.mTime, key.mValue );
+					}
+					
+					if ( key.mTime <= t1 ) break;
+				}
+			}
+		}
+	}
 }
 
 //----------------------------------------------------------------//
@@ -278,6 +349,30 @@ void MOAITimer::OnDepNodeUpdate () {
 }
 
 //----------------------------------------------------------------//
+void MOAITimer::OnKeyframe ( u32 idx, float time, float value ) {
+
+	USLuaStateHandle state = USLuaRuntime::Get ().State ();
+	if ( this->PushListener ( EVENT_TIMER_KEYFRAME, state )) {
+		state.Push ( idx + 1 );
+		state.Push ( time );
+		state.Push ( value );
+		state.DebugCall ( 3, 0 );
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAITimer::OnLoop () {
+	
+	this->mTimesExecuted++;
+	
+	USLuaStateHandle state = USLuaRuntime::Get ().State ();
+	if ( this->PushListener ( EVENT_TIMER_LOOP, state )) {
+		state.Push ( this->mTimesExecuted );
+		state.DebugCall ( 1, 0 );
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAITimer::OnStart () {
 
 	if( this->mDirection > 0.0f ) {
@@ -297,7 +392,13 @@ void MOAITimer::OnUpdate ( float step ) {
 //----------------------------------------------------------------//
 void MOAITimer::RegisterLuaClass ( USLuaState& state ) {
 
+	MOAINode::RegisterLuaClass ( state );
+	MOAIAction::RegisterLuaClass ( state );
+
 	state.SetField ( -1, "ATTR_TIME", ( u32 )ATTR_TIME );
+	
+	state.SetField ( -1, "EVENT_TIMER_KEYFRAME", ( u32 )EVENT_TIMER_KEYFRAME );
+	state.SetField ( -1, "EVENT_TIMER_LOOP", ( u32 )EVENT_TIMER_LOOP );
 	
 	state.SetField ( -1, "NORMAL", ( u32 )NORMAL );
 	state.SetField ( -1, "REVERSE", ( u32 )REVERSE );
@@ -314,7 +415,7 @@ void MOAITimer::RegisterLuaFuncs ( USLuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "getTimesExecuted",	_getTimesExecuted },
-		{ "setCallback",		_setCallback },
+		{ "setCurve",			_setCurve },
 		{ "setMode",			_setMode },
 		{ "setSpan",			_setSpan },
 		{ "setSpeed",			_setSpeed },
@@ -333,6 +434,7 @@ void MOAITimer::SetTime ( float time ) {
 		time -= length;
 	}
 	this->mTime = time;
+	this->mTimesExecuted = 0;
 	this->ScheduleUpdate ();
 }
 
