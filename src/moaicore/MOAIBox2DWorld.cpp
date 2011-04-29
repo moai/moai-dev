@@ -558,7 +558,7 @@ int MOAIBox2DWorld::_setIterations ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	setUnitsToMeters
-	@text	Sets a scale factoryfor convering game world units to Box2D meters.
+	@text	Sets a scale factor for converting game world units to Box2D meters.
 	
 	@in		MOAIBox2DWorld self
 	@opt	number unitsToMeters			Default value is 1.
