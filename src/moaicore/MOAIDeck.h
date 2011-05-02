@@ -40,9 +40,9 @@ public:
 	virtual bool		Bind						();
 	virtual bool		Contains					( u32 idx, const USVec2D& vec );
 	virtual void		Draw						( const USAffine2D& transform, u32 idx );
-	virtual void		Draw						( const USAffine2D& transform, MOAIGrid& grid, USTileCoord& c0, USTileCoord& c1 );
+	virtual void		Draw						( const USAffine2D& transform, MOAIGrid& grid, USVec2D& gridScale, USTileCoord& c0, USTileCoord& c1 );
 	virtual void		DrawDebug					( const USAffine2D& transform, u32 idx );
-	virtual void		DrawDebug					( const USAffine2D& transform, MOAIGrid& grid, USTileCoord& c0, USTileCoord& c1 );
+	virtual void		DrawDebug					( const USAffine2D& transform, MOAIGrid& grid, USVec2D& gridScale, USTileCoord& c0, USTileCoord& c1 );
 	virtual void		GatherSurfaces				( u32 idx, MOAISurfaceSampler2D& sampler );
 	virtual void		GatherSurfaces				( MOAIGrid& grid, USTileCoord& c0, USTileCoord& c1, MOAISurfaceSampler2D& sampler );
 	virtual USRect		GetBounds					( u32 idx );

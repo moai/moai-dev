@@ -159,6 +159,24 @@ int MOAIProp2D::_setGrid ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	setGridScale
+	@text	Scale applied to deck items before rendering to grid cell.
+	
+	@in		MOAIProp2D self
+	@opt	number xScale		Default value is 1.
+	@opt	number yScale		Default value is 1.
+	@out	nil
+*/
+int MOAIProp2D::_setGridScale ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIProp2D, "U" )
+
+	self->mGridScale.mX = state.GetValue < float >( 2, 1.0f );
+	self->mGridScale.mY = state.GetValue < float >( 3, 1.0f );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	setIndex
 	@text	Set the prop's index into its deck.
 	
@@ -284,7 +302,7 @@ void MOAIProp2D::Draw () {
 		USTileCoord c1;
 		
 		this->GetBoundsInView ( c0, c1 );
-		this->mDeck->Draw ( this->GetLocalToWorldMtx (), *this->mGrid, c0, c1 );
+		this->mDeck->Draw ( this->GetLocalToWorldMtx (), *this->mGrid, this->mGridScale, c0, c1 );
 	}
 	else {
 		this->mDeck->Draw ( this->GetLocalToWorldMtx (), this->mIndex );
@@ -319,7 +337,7 @@ void MOAIProp2D::DrawDebug () {
 				USTileCoord c1;
 				
 				this->GetBoundsInView ( c0, c1 );
-				this->mDeck->DrawDebug ( this->GetLocalToWorldMtx (), *this->mGrid, c0, c1 );
+				this->mDeck->DrawDebug ( this->GetLocalToWorldMtx (), *this->mGrid, this->mGridScale, c0, c1 );
 			}
 		}
 	}
@@ -485,6 +503,7 @@ void MOAIProp2D::LoadShader () {
 MOAIProp2D::MOAIProp2D () :
 	mIndex( 1 ),
 	mRepeat ( 0 ),
+	mGridScale ( 1.0f, 1.0f ),
 	mFrameSource ( FRAME_FROM_PARENT ) {
 	
 	RTTI_BEGIN
@@ -591,6 +610,7 @@ void MOAIProp2D::RegisterLuaFuncs ( USLuaState& state ) {
 		{ "setFrame",			_setFrame },
 		{ "setFrameSource",		_setFrameSource },
 		{ "setGrid",			_setGrid },
+		{ "setGridScale",		_setGridScale },
 		{ "setIndex",			_setIndex },
 		{ "setRepeat",			_setRepeat },
 		{ "setShader",			_setShader },

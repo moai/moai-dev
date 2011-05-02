@@ -43,8 +43,10 @@ protected:
 	
 	USRef < MOAIDeck >		mDeck;
 	u32						mIndex;
+	
 	USRef < MOAIGrid >		mGrid;
 	u32						mRepeat;
+	USVec2D					mGridScale;
 	
 	u32				mFrameSource;
 	USRect			mFrame;
@@ -60,6 +62,7 @@ protected:
 	static int		_setFrame			( lua_State* L );
 	static int		_setFrameSource		( lua_State* L );
 	static int		_setGrid			( lua_State* L );
+	static int		_setGridScale		( lua_State* L );
 	static int		_setIndex			( lua_State* L );
 	static int		_setRepeat			( lua_State* L );
 	static int		_setShader			( lua_State* L );

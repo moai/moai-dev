@@ -142,7 +142,8 @@ void MOAISurfaceDeck2D::DrawDebug ( u32 idx, float xOff, float yOff, bool xFlip,
 }
 
 //----------------------------------------------------------------//
-void MOAISurfaceDeck2D::DrawDebug ( const USAffine2D& transform, MOAIGrid& grid, USTileCoord& c0, USTileCoord& c1 ) {
+void MOAISurfaceDeck2D::DrawDebug ( const USAffine2D& transform, MOAIGrid& grid, USVec2D& gridScale, USTileCoord& c0, USTileCoord& c1 ) {
+	UNUSED ( gridScale ); // TODO
 	
 	MOAIDebugLines& debugLines = MOAIDebugLines::Get ();
 	debugLines.SetWorldMtx ( transform );
@@ -184,7 +185,8 @@ void MOAISurfaceDeck2D::GatherSurfaces ( u32 idx, MOAISurfaceSampler2D& sampler 
 }
 
 //----------------------------------------------------------------//
-void MOAISurfaceDeck2D::GatherSurfaces ( MOAIGrid& grid, USTileCoord& c0, USTileCoord& c1, MOAISurfaceSampler2D& sampler ) {
+void MOAISurfaceDeck2D::GatherSurfaces ( MOAIGrid& grid, USVec2D& gridScale, USTileCoord& c0, USTileCoord& c1, MOAISurfaceSampler2D& sampler ) {
+	UNUSED ( gridScale ); // TODO
 
 	for ( int y = c0.mY; y <= c1.mY; ++y ) {
 		for ( int x = c0.mX; x <= c1.mX; ++x ) {

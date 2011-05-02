@@ -47,9 +47,9 @@ public:
 	
 	//----------------------------------------------------------------//
 	void					DrawDebug				( const USAffine2D& transform, u32 idx );
-	void					DrawDebug				( const USAffine2D& transform, MOAIGrid& grid, USTileCoord& c0, USTileCoord& c1 );
+	void					DrawDebug				( const USAffine2D& transform, MOAIGrid& grid, USVec2D& gridScale, USTileCoord& c0, USTileCoord& c1 );
 	void					GatherSurfaces			( u32 idx, MOAISurfaceSampler2D& sampler );
-	void					GatherSurfaces			( MOAIGrid& grid, USTileCoord& c0, USTileCoord& c1, MOAISurfaceSampler2D& sampler );
+	void					GatherSurfaces			( MOAIGrid& grid, USVec2D& gridScale, USTileCoord& c0, USTileCoord& c1, MOAISurfaceSampler2D& sampler );
 	USRect					GetBounds				( u32 idx );
 							MOAISurfaceDeck2D	();
 							~MOAISurfaceDeck2D	();

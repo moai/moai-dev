@@ -53,9 +53,10 @@ void MOAIDeck::Draw ( const USAffine2D& transform, u32 idx ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIDeck::Draw ( const USAffine2D& transform, MOAIGrid& grid, USTileCoord& c0, USTileCoord& c1 ) {
+void MOAIDeck::Draw ( const USAffine2D& transform, MOAIGrid& grid, USVec2D& gridScale, USTileCoord& c0, USTileCoord& c1 ) {
 	UNUSED ( transform );
 	UNUSED ( grid );
+	UNUSED ( gridScale );
 	UNUSED ( c0 );
 	UNUSED ( c1 );
 }
@@ -67,9 +68,10 @@ void MOAIDeck::DrawDebug ( const USAffine2D& transform, u32 idx ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIDeck::DrawDebug ( const USAffine2D& transform, MOAIGrid& grid, USTileCoord& c0, USTileCoord& c1 ) {
+void MOAIDeck::DrawDebug ( const USAffine2D& transform, MOAIGrid& grid, USVec2D& gridScale, USTileCoord& c0, USTileCoord& c1 ) {
 	UNUSED ( transform );
 	UNUSED ( grid );
+	UNUSED ( gridScale );
 	UNUSED ( c0 );
 	UNUSED ( c1 );
 }

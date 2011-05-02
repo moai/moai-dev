@@ -41,13 +41,13 @@ void MOAIDeck2D::DrawPatch ( u32 idx, float xOff, float yOff, float xScale, floa
 }
 
 //----------------------------------------------------------------//
-void MOAIDeck2D::Draw ( const USAffine2D& transform, MOAIGrid& grid, USTileCoord& c0, USTileCoord& c1 ) {
+void MOAIDeck2D::Draw ( const USAffine2D& transform, MOAIGrid& grid, USVec2D& gridScale, USTileCoord& c0, USTileCoord& c1 ) {
 	
 	USDrawBuffer& drawbuffer = USDrawBuffer::Get ();
 	drawbuffer.SetVtxTransform ( transform );
 
-	float width = grid.GetTileWidth ();
-	float height = grid.GetTileHeight ();
+	float width = grid.GetTileWidth () * gridScale.mX;
+	float height = grid.GetTileHeight () * gridScale.mY;
 
 	for ( int y = c0.mY; y <= c1.mY; ++y ) {
 		for ( int x = c0.mX; x <= c1.mX; ++x ) {
@@ -72,9 +72,10 @@ void MOAIDeck2D::DrawDebug ( const USAffine2D& transform, u32 idx ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIDeck2D::DrawDebug ( const USAffine2D& transform, MOAIGrid& grid, USTileCoord& c0, USTileCoord& c1 ) {
+void MOAIDeck2D::DrawDebug ( const USAffine2D& transform, MOAIGrid& grid, USVec2D& gridScale, USTileCoord& c0, USTileCoord& c1 ) {
 	UNUSED ( transform );
 	UNUSED ( grid );
+	UNUSED ( gridScale );
 	UNUSED ( c0 );
 	UNUSED ( c1 );
 }
