@@ -173,8 +173,8 @@ TextureAtlas.prototype.getPackListForLibrary = function () {
 		var frame = layer.frames [ 0 ];
 		var element = frame.elements [ 0 ];
 		
-		var width = Math.ceil ( element.width );
-		var height = Math.ceil ( element.height );
+		var width = element.width;
+		var height = element.height;
 		
 		this.addRect ( list, item.name, width + 2, height + 2 );
 		
@@ -184,7 +184,18 @@ TextureAtlas.prototype.getPackListForLibrary = function () {
 	
 	fl.closeDocument ( scratchDoc, false );
 	
-	return this.packRects ( list );
+	// pack the rects
+	list = this.packRects ( list );
+	
+	// remove the padding
+	for ( var i = 0; i < list.length; i++ ) {
+		var rect = list [ i ];
+		rect.width -= 2;
+		rect.height -= 2;
+		rect.x1 -= 2;
+		rect.y1 -= 2;
+	}
+	return list;
 }
 
 //----------------------------------------------------------------//
@@ -257,7 +268,7 @@ TextureAtlas.prototype.packRects = function ( list ) {
 			if ( !this.placeRect ( skyline, rect, size )) {
 				packed = new Array ();
 				break;
-			}			
+			}
 			skyline = this.rebuildTextureAtlas ( skyline, rect );
 			packed.push ( rect );
 		}
