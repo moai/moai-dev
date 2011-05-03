@@ -611,6 +611,7 @@ int MOAIBox2DBody::_setTransform ( lua_State* L ) {
 	float angle		= state.GetValue < float >( 4, 0.0f ) * ( float )D2R;
 	
 	self->mBody->SetTransform ( position, angle );
+	self->ScheduleUpdate ();
 	
 	return 0;
 }
