@@ -27,15 +27,13 @@ private:
 	b2Contact*					mContact;
 	const b2ContactImpulse*		mImpulse;
 
+	float	mNormalImpulse;
+	float	mTangentImpulse;
+
 	//----------------------------------------------------------------//
-	static int		_countContacts					( lua_State* L );
-	static int		_getContactDepth				( lua_State* L );
-	static int		_getContactNormal				( lua_State* L );
-	static int		_getContactPoint				( lua_State* L );
-	static int		_getTotalImpulse				( lua_State* L );
-	static int		_getTotalImpulseWithFriction	( lua_State* L );
-	static int		_isFirstContact					( lua_State* L );
-	static int		_new							( lua_State* L );
+	static int		_getNormalImpulse		( lua_State* L );
+	static int		_getTangentImpulse		( lua_State* L );
+	static int		_new					( lua_State* L );
 	
 	//----------------------------------------------------------------//
 	void	BeginContact	( b2Contact* contact );
