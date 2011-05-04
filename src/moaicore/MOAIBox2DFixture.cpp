@@ -148,8 +148,6 @@ void MOAIBox2DFixture::EndContact ( MOAIBox2DFixture* other, MOAIBox2DArbiter* a
 
 //----------------------------------------------------------------//
 void MOAIBox2DFixture::HandleCollision ( u32 eventType, MOAIBox2DFixture* other, MOAIBox2DArbiter* arbiter ) {
-	UNUSED ( other );
-	UNUSED ( arbiter );
 	
 	if ( this->mCollisionHandler ) {
 	

@@ -320,8 +320,14 @@ bool USGridSpace::IsValidCoord ( USCellCoord cellCoord ) const {
 //----------------------------------------------------------------//
 void USGridSpace::SerializeIn ( USLuaState& state ) {
 	
+	this->mXOff			= state.GetField ( -1, "mXOff", this->mXOff );
+	this->mYOff			= state.GetField ( -1, "mYOff", this->mYOff );
+	
 	this->mCellWidth	= state.GetField ( -1, "mCellWidth", this->mCellWidth );
 	this->mCellHeight	= state.GetField ( -1, "mCellHeight", this->mCellHeight );
+	
+	this->mTileWidth	= state.GetField ( -1, "mTileWidth", this->mTileWidth );
+	this->mTileHeight	= state.GetField ( -1, "mTileHeight", this->mTileHeight );
 	
 	this->mWidth		= state.GetField ( -1, "mWidth", this->mWidth );
 	this->mHeight		= state.GetField ( -1, "mHeight", this->mHeight );
@@ -330,8 +336,14 @@ void USGridSpace::SerializeIn ( USLuaState& state ) {
 //----------------------------------------------------------------//
 void USGridSpace::SerializeOut ( USLuaState& state ) {
 	
+	state.SetField ( -1, "mXOff", this->mXOff );
+	state.SetField ( -1, "mYOff", this->mYOff );
+	
 	state.SetField ( -1, "mCellWidth", this->mCellWidth );
 	state.SetField ( -1, "mCellHeight", this->mCellHeight );
+	
+	state.SetField ( -1, "mTileWidth", this->mTileWidth );
+	state.SetField ( -1, "mTileHeight", this->mTileHeight );
 	
 	state.SetField ( -1, "mWidth", this->mWidth );
 	state.SetField ( -1, "mHeight", this->mHeight );

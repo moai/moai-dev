@@ -37,6 +37,7 @@ private:
 	static int		_copy				( lua_State* L );
 	static int		_copyBits			( lua_State* L );
 	static int		_getColor32			( lua_State* L );
+	static int		_getFormat			( lua_State* L );
 	static int		_getRGBA			( lua_State* L );
 	static int		_getSize			( lua_State* L );
 	static int		_init				( lua_State* L );

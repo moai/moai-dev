@@ -131,6 +131,21 @@ int MOAIImage::_getColor32 ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	getFormat
+	@text	Returns the color format of the image.
+
+	@in		MOAIImage self
+	@out	number colorFormat
+*/
+int MOAIImage::_getFormat ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIImage, "U" )
+	
+	lua_pushnumber ( state, self->GetColorFormat ());
+	
+	return 1;
+}
+
+//----------------------------------------------------------------//
 /**	@name	getRGBA
 	@text	Returns an RGBA color as four floating point values.
 
@@ -410,6 +425,7 @@ void MOAIImage::RegisterLuaFuncs ( USLuaState& state ) {
 		{ "copy",				_copy },
 		{ "copyBits",			_copyBits },
 		{ "getColor32",			_getColor32 },
+		{ "getFormat",			_getFormat },
 		{ "getRGBA",			_getRGBA },
 		{ "getSize",			_getSize },
 		{ "init",				_init },
