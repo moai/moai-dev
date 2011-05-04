@@ -164,8 +164,12 @@ int MOAIGrid::_setRow ( lua_State* L ) {
 	@in		MOAIGrid self
 	@in		number width
 	@in		number height
-	@in		number tileWidth	Default value is 1.
-	@in		number tileHeight	Default value is 1.
+	@in		number cellWidth	Default value is 1.
+	@in		number cellHeight	Default value is 1.
+	@opt	number xOff			X offset of the tile from the cell.
+	@opt	number yOff			Y offset of the tile from the cell.
+	@opt	number tileWidth	Default value is cellWidth.
+	@opt	number tileHeight	Default value is cellHeight.
 	@out	nil
 */
 int MOAIGrid::_setSize ( lua_State* L ) {
