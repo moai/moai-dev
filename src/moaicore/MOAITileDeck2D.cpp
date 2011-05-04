@@ -55,13 +55,27 @@ int MOAITileDeck2D::_setRect ( lua_State* L ) {
 int	MOAITileDeck2D::_setSize ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITileDeck2D, "UNN" )
 	
-	u32 width = state.GetValue < u32 >( 2, 0 );
-	u32 height = state.GetValue < u32 >( 3, 0 );
-	float tileWidth = state.GetValue < float >( 4, 1.0f / ( float )width );
-	float tileHeight = state.GetValue < float >( 5, 1.0f / ( float )height );
+	u32 width			= state.GetValue < u32 >( 2, 0 );
+	u32 height			= state.GetValue < u32 >( 3, 0 );
+	
+	float cellWidth		= state.GetValue < float >( 4, 1.0f / ( float )width );
+	float cellHeight	= state.GetValue < float >( 5, 1.0f / ( float )height );
+	
+	float xOff			= state.GetValue < float >( 6, 0.0f );
+	float yOff			= state.GetValue < float >( 7, 0.0f );
+	
+	float tileWidth		= state.GetValue < float >( 8, cellWidth );
+	float tileHeight	= state.GetValue < float >( 9, cellHeight );
 	
 	self->SetWidth ( width );
 	self->SetHeight ( height );
+	
+	self->SetCellWidth ( cellWidth );
+	self->SetCellHeight ( cellHeight );
+	
+	self->SetXOff ( xOff );
+	self->SetYOff ( yOff );
+	
 	self->SetTileWidth ( tileWidth );
 	self->SetTileHeight ( tileHeight );
 	
@@ -107,7 +121,8 @@ void MOAITileDeck2D::DrawPatch ( u32 idx, float xOff, float yOff, float xScale, 
 	
 	idx = idx - 1;		
 	
-	USRect uvRect = this->GetTileRect ( idx );
+	USCellCoord coord = this->GetCellCoord ( idx );
+	USRect uvRect = this->GetTileRect ( coord );
 	uvRect.FlipY ();
 	
 	USGLQuad quad;

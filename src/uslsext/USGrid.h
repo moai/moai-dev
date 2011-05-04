@@ -7,30 +7,54 @@
 #include <uslsext/USMatrix2D.h>
 
 //================================================================//
-// USTileCoord
+// USCellCoord
 //================================================================//
-class USTileCoord :
+class USCellCoord :
 	public USIntVec2D {
 public:
 	
 	//----------------------------------------------------------------//
 	u32			GetID			();
-	bool		IsEqual			( USTileCoord& tileCoord );
-				USTileCoord		();
-				~USTileCoord	();
+	bool		IsEqual			( USCellCoord cellCoord );
+				USCellCoord		();
+				~USCellCoord	();
+	
+	//----------------------------------------------------------------//
+	inline USCellCoord ( int x, int y ) :
+		USIntVec2D ( x, y ) {
+	}
+	
+	//----------------------------------------------------------------//
+	inline USCellCoord MakeOffset ( int x, int y ) {
+		
+		USCellCoord result;
+		result.mX = this->mX + x;
+		result.mY = this->mY + y;
+		
+		return result;
+	}
 };
 
 //================================================================//
 // USGridSpace
 //================================================================//
 class USGridSpace {
-private:
+protected:
 
-	float			mTileWidth;
-	float			mTileHeight;
+	float		mXOff;
+	float		mYOff;
 
-	int				mWidth;
-	int				mHeight;
+	float		mCellWidth;
+	float		mCellHeight;
+	
+	float		mTileWidth;
+	float		mTileHeight;
+
+	int			mWidth;
+	int			mHeight;
+
+	//----------------------------------------------------------------//
+	USVec2D			GetRectPoint		( float x, float y, float width, float height, u32 position ) const;
 
 public:
 	
@@ -55,6 +79,12 @@ public:
 		GRID_HEX,
 	};
 	
+	GET_SET ( float, XOff, mXOff )
+	GET_SET ( float, YOff, mYOff )
+	
+	GET_SET ( float, CellWidth, mCellWidth )
+	GET_SET ( float, CellHeight, mCellHeight )
+	
 	GET_SET ( float, TileWidth, mTileWidth )
 	GET_SET ( float, TileHeight, mTileHeight )
 	
@@ -62,46 +92,42 @@ public:
 	GET_SET ( int, Height, mHeight )
 	
 	//----------------------------------------------------------------//
-	void				Clamp					( USTileCoord& tileCoord );
-	void				ClampX					( USTileCoord& tileCoord );
-	void				ClampY					( USTileCoord& tileCoord );
-	USRect				GetBounds				();
-	USRect				GetBounds				( USTileCoord& c0, USTileCoord& c1 );
+	USVec2D				CellToWorld				( USCellCoord cellCoord, USVec2D loc ) const;
 	
-	USMatrix2D			GetGridToWorldMtx		();
+	USCellCoord			Clamp					( USCellCoord cellCoord ) const;
+	USCellCoord			ClampX					( USCellCoord cellCoord ) const;
+	USCellCoord			ClampY					( USCellCoord cellCoord ) const;
+	USRect				GetBounds				() const;
+	USRect				GetBounds				( USCellCoord c0, USCellCoord c1 ) const;
 	
-	int					GetTileAddr				( USVec2D& loc );
-	int					GetTileAddr				( int xTile, int yTile );
-	int					GetTileAddr				( USTileCoord& tileCoord );
-	int					GetTileAddr				( USTileCoord tileCoord, int xOff, int yOff );
-	USTileCoord			GetTileCoord			( int tileAddr );
-	USTileCoord			GetTileCoord			( USVec2D& loc );
-	USTileCoord			GetTileCoord			( float x, float y );
-	USTileCoord			GetTileCoord			( int xTile, int yTile );
-	USVec2D				GetTilePoint			( int tileAddr, u32 position );
-	USVec2D				GetTilePoint			( int xTile, int yTile, u32 position );
-	USVec2D				GetTilePoint			( USTileCoord& tileCoord, u32 position );
-	USRect				GetTileRect				( int tileAddr );
-	USRect				GetTileRect				( int xTile, int yTile );
-	USRect				GetTileRect				( USTileCoord& tileCoord );
-	int					GetTotalTiles			();
+	USMatrix2D			GetGridToWorldMtx		() const;
 	
-	USMatrix2D			GetWorldToGridMtx		();
+	int					GetCellAddr				( USCellCoord cellCoord ) const;
+	USCellCoord			GetCellCoord			( int cellAddr ) const;
+	USCellCoord			GetCellCoord			( USVec2D loc ) const;
+	USCellCoord			GetCellCoord			( float x, float y ) const;
+	USCellCoord			GetCellCoord			( int xCell, int yCell ) const;
 	
-	USVec2D				GridToWorld				( USVec2D loc );
-	void				Init					( int width, int height );
-	bool				IsValidCoord			( int xTile, int yTile );
-	bool				IsValidCoord			( USTileCoord& tileCoord );
-	bool				IsValidCoord			( USVec2D& loc );
+	USVec2D				GetCellPoint			( USCellCoord cellCoord, u32 position ) const;
+	USRect				GetCellRect				( USCellCoord cellCoord ) const;
+	
+	USVec2D				GetTilePoint			( USCellCoord cellCoord, u32 position ) const;
+	USRect				GetTileRect				( USCellCoord cellCoord ) const;
+	
+	int					GetTotalCells			() const;
+	
+	USMatrix2D			GetWorldToGridMtx		() const;
+	
+	USVec2D				GridToWorld				( USVec2D loc ) const;
+	bool				IsValidCoord			( USCellCoord cellCoord ) const;
 	void				SerializeIn				( USLuaState& state );
 	void				SerializeOut			( USLuaState& state );
-	void				Snap					( USVec2D& loc );
-	USVec2D				TileToWorld				( USTileCoord& tileCoord, USVec2D& loc );
+	
 						USGridSpace				();
 						~USGridSpace			();
-	USTileCoord			WrapCellCoord			( const USTileCoord& coord );
-	USVec2D				WorldToTile				( USTileCoord& tileCoord, USVec2D& loc );
-	USVec2D				WorldToGrid				( USVec2D loc );
+	USCellCoord			WrapCellCoord			( USCellCoord coord ) const;
+	USVec2D				WorldToCell				( USCellCoord cellCoord, USVec2D loc ) const;
+	USVec2D				WorldToGrid				( USVec2D loc ) const;
 };
 
 #endif

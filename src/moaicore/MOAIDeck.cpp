@@ -53,7 +53,7 @@ void MOAIDeck::Draw ( const USAffine2D& transform, u32 idx ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIDeck::Draw ( const USAffine2D& transform, MOAIGrid& grid, USVec2D& gridScale, USTileCoord& c0, USTileCoord& c1 ) {
+void MOAIDeck::Draw ( const USAffine2D& transform, MOAIGrid& grid, USVec2D& gridScale, USCellCoord& c0, USCellCoord& c1 ) {
 	UNUSED ( transform );
 	UNUSED ( grid );
 	UNUSED ( gridScale );
@@ -68,7 +68,7 @@ void MOAIDeck::DrawDebug ( const USAffine2D& transform, u32 idx ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIDeck::DrawDebug ( const USAffine2D& transform, MOAIGrid& grid, USVec2D& gridScale, USTileCoord& c0, USTileCoord& c1 ) {
+void MOAIDeck::DrawDebug ( const USAffine2D& transform, MOAIGrid& grid, USVec2D& gridScale, USCellCoord& c0, USCellCoord& c1 ) {
 	UNUSED ( transform );
 	UNUSED ( grid );
 	UNUSED ( gridScale );
@@ -83,7 +83,7 @@ void MOAIDeck::GatherSurfaces ( u32 idx, MOAISurfaceSampler2D& sampler ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIDeck::GatherSurfaces ( MOAIGrid& grid, USTileCoord& c0, USTileCoord& c1, MOAISurfaceSampler2D& sampler ) {
+void MOAIDeck::GatherSurfaces ( MOAIGrid& grid, USCellCoord& c0, USCellCoord& c1, MOAISurfaceSampler2D& sampler ) {
 	UNUSED ( grid );
 	UNUSED ( c0 );
 	UNUSED ( c1 );

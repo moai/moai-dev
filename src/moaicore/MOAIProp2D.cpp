@@ -298,8 +298,8 @@ void MOAIProp2D::Draw () {
 	
 	if ( this->mGrid ) {
 	
-		USTileCoord c0;
-		USTileCoord c1;
+		USCellCoord c0;
+		USCellCoord c1;
 		
 		this->GetBoundsInView ( c0, c1 );
 		this->mDeck->Draw ( this->GetLocalToWorldMtx (), *this->mGrid, this->mGridScale, c0, c1 );
@@ -333,8 +333,8 @@ void MOAIProp2D::DrawDebug () {
 				debugLines.SetPenColor ( 0x40ffffff );
 				debugLines.SetPenWidth ( 2 );
 		
-				USTileCoord c0;
-				USTileCoord c1;
+				USCellCoord c0;
+				USCellCoord c1;
 				
 				this->GetBoundsInView ( c0, c1 );
 				this->mDeck->DrawDebug ( this->GetLocalToWorldMtx (), *this->mGrid, this->mGridScale, c0, c1 );
@@ -390,8 +390,8 @@ void MOAIProp2D::GatherSurfaces ( MOAISurfaceSampler2D& sampler ) {
 		
 		USRect localRect = sampler.GetLocalRect ();
 		
-		USTileCoord c0;
-		USTileCoord c1;
+		USCellCoord c0;
+		USCellCoord c1;
 		
 		this->GetBoundsInRect ( localRect, c0, c1 );
 		this->mDeck->GatherSurfaces ( *this->mGrid, c0, c1, sampler );
@@ -402,21 +402,21 @@ void MOAIProp2D::GatherSurfaces ( MOAISurfaceSampler2D& sampler ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIProp2D::GetBoundsInRect ( const USRect& rect, USTileCoord& c0, USTileCoord& c1 ) {
+void MOAIProp2D::GetBoundsInRect ( const USRect& rect, USCellCoord& c0, USCellCoord& c1 ) {
 
 	if ( this->mGrid ) {
 
-		c0 = this->mGrid->GetTileCoord ( rect.mXMin, rect.mYMin );
-		c1 = this->mGrid->GetTileCoord ( rect.mXMax, rect.mYMax );
+		c0 = this->mGrid->GetCellCoord ( rect.mXMin, rect.mYMin );
+		c1 = this->mGrid->GetCellCoord ( rect.mXMax, rect.mYMax );
 		
 		if ( !( this->mRepeat & REPEAT_X )) {
-			this->mGrid->ClampX ( c0 );
-			this->mGrid->ClampX ( c1 );
+			c0 = this->mGrid->ClampX ( c0 );
+			c1 = this->mGrid->ClampX ( c1 );
 		}
 		
 		if ( !( this->mRepeat & REPEAT_Y )) {
-			this->mGrid->ClampY ( c0 );
-			this->mGrid->ClampY ( c1 );
+			c0 = this->mGrid->ClampY ( c0 );
+			c1 = this->mGrid->ClampY ( c1 );
 		}
 	}
 	else {
@@ -427,7 +427,7 @@ void MOAIProp2D::GetBoundsInRect ( const USRect& rect, USTileCoord& c0, USTileCo
 }
 
 //----------------------------------------------------------------//
-void MOAIProp2D::GetBoundsInView ( USTileCoord& c0, USTileCoord& c1 ) {
+void MOAIProp2D::GetBoundsInView ( USCellCoord& c0, USCellCoord& c1 ) {
 
 	const USAffine2D& invWorldMtx = this->GetWorldToLocalMtx ();
 

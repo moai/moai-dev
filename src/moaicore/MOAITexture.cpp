@@ -184,7 +184,7 @@ bool MOAITexture::Bind () {
 void MOAITexture::Load ( MOAIImage& image ) {
 
 	this->Init ( image );
-	this->SetFilter ( GL_LINEAR, GL_NEAREST );
+	this->SetFilter ( GL_LINEAR, GL_LINEAR );
 	this->SetWrap ( GL_REPEAT );
 }
 
@@ -192,7 +192,7 @@ void MOAITexture::Load ( MOAIImage& image ) {
 void MOAITexture::Load ( MOAIDataBuffer& data, u32 transform ) {
 
 	this->Init ( data, transform );
-	this->SetFilter ( GL_LINEAR, GL_NEAREST );
+	this->SetFilter ( GL_LINEAR, GL_LINEAR );
 	this->SetWrap ( GL_REPEAT );
 }
 
@@ -203,7 +203,7 @@ void MOAITexture::Load ( cc8* filename, u32 transform ) {
 
 	if ( !USFileSys::CheckFileExists ( this->mTexturePath )) return;
 	this->Init ( this->mTexturePath, transform );
-	this->SetFilter ( GL_LINEAR, GL_NEAREST );
+	this->SetFilter ( GL_LINEAR, GL_LINEAR );
 	this->SetWrap ( GL_REPEAT );
 }
 

@@ -27,7 +27,7 @@ void MOAIPartitionLayer::GatherProps ( MOAIPartition& partition, MOAIProp* ignor
 	point.mX = point.mX - halfSize;
 	point.mY = point.mY - halfSize;
 
-	USTileCoord coord = this->mGridSpace.GetTileCoord ( point );
+	USCellCoord coord = this->mGridSpace.GetCellCoord ( point );
 	
 	int width = this->mGridSpace.GetWidth ();
 	int height = this->mGridSpace.GetWidth ();
@@ -37,7 +37,9 @@ void MOAIPartitionLayer::GatherProps ( MOAIPartition& partition, MOAIProp* ignor
 	
 	for ( int y = 0; y < yTotal; ++y ) {
 		for ( int x = 0; x < xTotal; ++x ) {
-			int addr = this->mGridSpace.GetTileAddr ( coord, x, y );
+		
+			USCellCoord offset = coord.MakeOffset ( x, y );
+			int addr = this->mGridSpace.GetCellAddr ( offset );
 			this->mCells [ addr ].GatherProps ( partition, ignore, point, mask );
 		}
 	}
@@ -49,10 +51,10 @@ void MOAIPartitionLayer::GatherProps ( MOAIPartition& partition, MOAIProp* ignor
 	float halfSize = this->mCellSize * 0.5f;
 
 	rect.Bless ();
-	USTileCoord coord = this->mGridSpace.GetTileCoord ( rect.mXMin - halfSize, rect.mYMax + halfSize );
+	USCellCoord coord = this->mGridSpace.GetCellCoord ( rect.mXMin - halfSize, rect.mYMax + halfSize );
 
-	int xTotal = ( int )( rect.Width () / this->mGridSpace.GetTileWidth ()) + 2;
-	int yTotal = ( int )( rect.Height () / this->mGridSpace.GetTileHeight ()) + 2;
+	int xTotal = ( int )( rect.Width () / this->mGridSpace.GetCellWidth ()) + 2;
+	int yTotal = ( int )( rect.Height () / this->mGridSpace.GetCellHeight ()) + 2;
 	
 	int width = this->mGridSpace.GetWidth ();
 	int height = this->mGridSpace.GetHeight ();
@@ -62,7 +64,9 @@ void MOAIPartitionLayer::GatherProps ( MOAIPartition& partition, MOAIProp* ignor
 
 	for ( int y = 0; y < yTotal; ++y ) {
 		for ( int x = 0; x < xTotal; ++x ) {
-			u32 addr = this->mGridSpace.GetTileAddr ( coord, x, -y );
+		
+			USCellCoord offset = coord.MakeOffset ( x, -y );
+			u32 addr = this->mGridSpace.GetCellAddr ( offset );
 			this->mCells [ addr ].GatherProps ( partition, ignore, rect, mask );
 		}
 	}
@@ -75,10 +79,10 @@ void MOAIPartitionLayer::Init ( float cellSize, u32 width, u32 height ) {
 
 	this->mGridSpace.SetWidth ( width );
 	this->mGridSpace.SetHeight ( height );
-	this->mGridSpace.SetTileWidth ( cellSize );
-	this->mGridSpace.SetTileHeight ( cellSize );
+	this->mGridSpace.SetCellWidth ( cellSize );
+	this->mGridSpace.SetCellHeight ( cellSize );
 	
-	this->mCells.Init ( this->mGridSpace.GetTotalTiles ());
+	this->mCells.Init ( this->mGridSpace.GetTotalCells ());
 }
 
 //----------------------------------------------------------------//
@@ -87,7 +91,8 @@ MOAIPartitionCell* MOAIPartitionLayer::GetCell ( MOAIProp& prop ) {
 	USVec2D loc;
 	prop.mBounds.GetCenter ( loc );
 	
-	u32 cellAddr = this->mGridSpace.GetTileAddr ( loc );
+	USCellCoord coord = this->mGridSpace.GetCellCoord ( loc );
+	u32 cellAddr = this->mGridSpace.GetCellAddr ( coord );
 	return &this->mCells [ cellAddr ];
 }
 
@@ -96,7 +101,7 @@ void MOAIPartitionLayer::PlaceProp ( MOAIProp& prop ) {
 
 	USVec2D loc;
 	prop.mBounds.GetCenter ( loc );
-	USTileCoord coord = this->mGridSpace.GetTileCoord ( loc );
+	USCellCoord coord = this->mGridSpace.GetCellCoord ( loc );
 
 	//printf ( "cell %d ( %d, %d )\n", this->mGridSpace.GetTileAddr ( coord ), coord.mX, coord.mY );
 

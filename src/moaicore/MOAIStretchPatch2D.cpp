@@ -314,7 +314,7 @@ void MOAIStretchPatch2D::Draw ( u32 idx, float xStretch, float yStretch ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIStretchPatch2D::Draw ( const USAffine2D& transform, MOAIGrid& grid, USTileCoord& c0, USTileCoord& c1 ) {
+void MOAIStretchPatch2D::Draw ( const USAffine2D& transform, MOAIGrid& grid, USCellCoord& c0, USCellCoord& c1 ) {
 	UNUSED ( transform );
 	UNUSED ( grid );
 	UNUSED ( c0 );

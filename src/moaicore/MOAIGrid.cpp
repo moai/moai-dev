@@ -96,11 +96,13 @@ int MOAIGrid::_getTileFlags ( lua_State* L ) {
 int MOAIGrid::_getTileLoc ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGrid, "UNN" )
 	
-	int xTile		= state.GetValue < int >( 2, 1 ) - 1;
-	int yTile		= state.GetValue < int >( 3, 1 ) - 1;
+	USCellCoord coord;
+	
+	coord.mX		= state.GetValue < int >( 2, 1 ) - 1;
+	coord.mY		= state.GetValue < int >( 3, 1 ) - 1;
 	u32 position	= state.GetValue < u32 >( 4, USGridSpace::TILE_CENTER );
 	
-	USVec2D loc = self->GetTilePoint ( xTile, yTile, position );
+	USVec2D loc = self->GetTilePoint ( coord, position );
 	state.Push ( loc.mX );
 	state.Push ( loc.mY );
 	return 2;
@@ -123,8 +125,8 @@ int MOAIGrid::_locToCoord ( lua_State* L ) {
 	loc.mX = state.GetValue < float >( 2, 0 );
 	loc.mY = state.GetValue < float >( 3, 0 );
 	
-	USTileCoord coord;
-	coord = self->GetTileCoord ( loc );
+	USCellCoord coord;
+	coord = self->GetCellCoord ( loc );
 
 	state.Push ( coord.mX + 1 );
 	state.Push ( coord.mY + 1);
@@ -169,12 +171,32 @@ int MOAIGrid::_setRow ( lua_State* L ) {
 int MOAIGrid::_setSize ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGrid, "UNN" )
 
-	u32 width = state.GetValue < u32 >( 2, 0 );
-	u32 height = state.GetValue < u32 >( 3, 0 );
-	float tileWidth = state.GetValue < float >( 4, 1.0f );
-	float tileHeight = state.GetValue < float >( 5, 1.0f );
+	u32 width			= state.GetValue < u32 >( 2, 0 );
+	u32 height			= state.GetValue < u32 >( 3, 0 );
+	
+	float cellWidth		= state.GetValue < float >( 4, 1.0f );
+	float cellHeight	= state.GetValue < float >( 5, 1.0f );
 
-	self->Init ( width, height, tileWidth, tileHeight, USTile::HIDDEN );
+	float xOff			= state.GetValue < float >( 6, 0.0f );
+	float yOff			= state.GetValue < float >( 7, 0.0f );
+	
+	float tileWidth		= state.GetValue < float >( 8, cellWidth );
+	float tileHeight	= state.GetValue < float >( 9, cellHeight );
+	
+	self->SetWidth ( width );
+	self->SetHeight ( height );
+	
+	self->SetCellWidth ( cellWidth );
+	self->SetCellHeight ( cellHeight );
+	
+	self->SetXOff ( xOff );
+	self->SetYOff ( yOff );
+	
+	self->SetTileWidth ( tileWidth );
+	self->SetTileHeight ( tileHeight );
+	
+	self->mTiles.Init ( self->GetTotalCells ());
+	self->mTiles.Fill ( USTile::HIDDEN );
 	
 	return 0;
 }
@@ -266,7 +288,7 @@ int MOAIGrid::_toggleTileFlags ( lua_State* L ) {
 int MOAIGrid::_wrapCoord ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGrid, "UNN" )
 	
-	USTileCoord coord;
+	USCellCoord coord;
 	coord.mX = state.GetValue < int >( 2, 1 ) - 1;
 	coord.mY = state.GetValue < int >( 3, 1 ) - 1;
 
@@ -284,23 +306,12 @@ int MOAIGrid::_wrapCoord ( lua_State* L ) {
 //----------------------------------------------------------------//
 u32 MOAIGrid::GetTile ( int xTile, int yTile ) {
 
-	u32 addr = this->GetTileAddr ( xTile, yTile );
+	USCellCoord coord ( xTile, yTile );
+	u32 addr = this->GetCellAddr ( coord );
 	if ( addr < this->mTiles.Size ()) {
 		return this->mTiles [ addr ];
 	}
 	return 0;
-}
-
-//----------------------------------------------------------------//
-void MOAIGrid::Init ( u32 width, u32 height, float tileWidth, float tileHeight, u32 fill ) {
-
-	this->SetWidth ( width );
-	this->SetHeight ( height );
-	this->SetTileWidth ( tileWidth );
-	this->SetTileHeight ( tileHeight );
-	
-	this->mTiles.Init ( this->GetTotalTiles ());
-	this->mTiles.Fill ( fill );
 }
 
 //----------------------------------------------------------------//
@@ -391,7 +402,7 @@ void MOAIGrid::SerializeIn ( USLuaState& state, USLuaSerializer& serializer ) {
 	UNUSED ( serializer );
 
 	this->USGridSpace::SerializeIn ( state );
-	this->mTiles.Init ( this->USGridSpace::GetTotalTiles ());
+	this->mTiles.Init ( this->USGridSpace::GetTotalCells ());
 
 	state.GetField ( -1, "mData" );
 
@@ -465,7 +476,8 @@ void MOAIGrid::SetTile ( u32 addr, u32 tile ) {
 //----------------------------------------------------------------//
 void MOAIGrid::SetTile ( int xTile, int yTile, u32 tile ) {
 
-	u32 addr = this->GetTileAddr ( xTile, yTile );
+	USCellCoord coord ( xTile, yTile );
+	u32 addr = this->GetCellAddr ( coord );
 	if ( addr < this->mTiles.Size ()) {
 		this->mTiles [ addr ] = tile;
 	}

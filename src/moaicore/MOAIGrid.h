@@ -52,7 +52,6 @@ public:
 	
 	//----------------------------------------------------------------//
 	u32				GetTile				( int xTile, int yTile );
-	void			Init				( u32 width, u32 height, float tileWidth, float tileHeight, u32 fill );
 					MOAIGrid			();
 					~MOAIGrid			();
 	void			RegisterLuaClass	( USLuaState& state );
