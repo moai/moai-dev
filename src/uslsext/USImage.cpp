@@ -17,10 +17,24 @@ static void _pngError ( png_structp png, png_const_charp err ) {
 }
 
 //----------------------------------------------------------------//
+static void _pngFlush ( png_structp png ) {
+
+	USStream* stream = ( USStream* )png_get_io_ptr ( png );
+	stream->Flush ();
+}
+
+//----------------------------------------------------------------//
 static void _pngRead ( png_structp png, png_bytep buffer, png_size_t size ) {
 
 	USStream* stream = ( USStream* )png_get_io_ptr ( png );
 	stream->ReadBytes ( buffer, ( u32 )size );
+}
+
+//----------------------------------------------------------------//
+static void _pngWrite ( png_structp png, png_bytep buffer, png_size_t size ) {
+
+	USStream* stream = ( USStream* )png_get_io_ptr ( png );
+	stream->WriteBytes ( buffer, ( u32 )size );
 }
 
 //================================================================//
@@ -46,6 +60,64 @@ void USImage::Alloc () {
 	}
 	else {
 		this->mPalette = 0;
+	}
+}
+
+//----------------------------------------------------------------//
+void USImage::BleedRect ( int xMin, int yMin, int xMax, int yMax ) {
+
+	float pixelSize = USPixel::GetSize ( this->mPixelFormat, this->mColorFormat );
+	if ( pixelSize == 0.5f ) {
+		return; // TODO
+	}
+
+	int width = ( int )this->mWidth;
+	int height = ( int )this->mHeight;
+
+	xMin = ( xMin < 0 ) ? 0 : xMin;
+	yMin = ( yMin < 0 ) ? 0 : yMin;
+	
+	xMax = ( xMax > width ) ? width : xMax;
+	yMax = ( yMax > height ) ? height : yMax;
+
+	if ( xMax <= xMin ) return;
+	if ( yMax <= yMin ) return;
+
+	if ( xMin >= width ) return;
+	if ( yMin >= height ) return;
+	
+	if ( xMax <= 0 ) return;
+	if ( yMax <= 0 ) return;
+	
+	if (( xMin > 0 ) || ( xMax < width )) {
+		for ( int y = yMin; y < yMax; ++y ) {
+			if ( xMin > 0 ) {
+				this->SetPixel ( xMin - 1, y, this->GetPixel ( xMin, y ));
+			}
+			
+			if ( xMax < width ) {
+				this->SetPixel ( xMax, y, this->GetPixel ( xMax - 1, y ));
+			}
+		}
+	}
+	
+	xMin = ( xMin > 1 ) ? xMin - 1 : 0;
+	xMax = ( xMax < width ) ? xMax + 1 : width;
+	
+	u32 pixSize = ( u32 )pixelSize;
+	u32 rowSize = this->GetRowSize ();
+	u32 copySize = ( u32 )(( xMax - xMin ) * pixelSize );
+	
+	if ( yMin > 0 ) {
+		void* srcRow = ( void* )(( u32 )this->mBitmap + ( rowSize * yMin ) + ( xMin * pixSize ));
+		void* destRow = ( void* )(( u32 )this->mBitmap + ( rowSize * ( yMin - 1 )) + ( xMin * pixSize ));
+		memcpy ( destRow, srcRow, copySize );
+	}
+	
+	if ( yMax < height ) {
+		void* srcRow = ( void* )(( u32 )this->mBitmap + ( rowSize * ( yMax - 1 )) + ( xMin * pixSize ));
+		void* destRow = ( void* )(( u32 )this->mBitmap + ( rowSize * yMax ) + ( xMin * pixSize ));
+		memcpy ( destRow, srcRow, copySize );
 	}
 }
 
@@ -84,6 +156,91 @@ void USImage::Copy ( const USImage& image ) {
 	this->Init ( image.mWidth, image.mHeight, image.mColorFormat, image.mPixelFormat );
 	
 	memcpy ( this->mData, image.mData, this->GetBitmapSize () + this->GetPaletteSize ());
+}
+
+//----------------------------------------------------------------//
+void USImage::CopyBits ( const USImage& image, int srcX, int srcY, int destX, int destY, int width, int height ) {
+
+	if ( !(( this->mPixelFormat == image.mPixelFormat ) && ( this->mColorFormat == image.mColorFormat ))) {
+		return; // TODO
+	}
+
+	int srcXMax = srcX + width;
+	int srcYMax = srcY + height;
+
+	if ( srcX < 0 ) {
+		destX -= srcX;
+		width += srcX;
+		srcX = 0;
+	}
+	
+	if ( srcY < 0 ) {
+		destY -= srcY;
+		height += srcY;
+		srcY = 0;
+	}
+	
+	if ( srcXMax > ( int )image.mWidth ) {
+		width -= srcXMax - ( int )image.mWidth;
+	}
+	
+	if ( srcYMax > ( int )image.mHeight ) {
+		height -= srcYMax - ( int )image.mHeight;
+	}
+	
+	int destXMax = destX + width;
+	int destYMax = destY + height;
+	
+	if ( destX < 0 ) {
+		srcX -= destX;
+		width += destX;
+		destX = 0;
+	}
+	
+	if ( destY < 0 ) {
+		srcY -= destY;
+		height += destY;
+		destY = 0;
+	}
+	
+	if ( destXMax > ( int )this->mWidth ) {
+		width -= destXMax - ( int )this->mWidth;
+	}
+	
+	if ( destYMax > ( int )this->mHeight ) {
+		height -= destYMax - ( int )this->mHeight;
+	}
+	
+	if ( width <= 0 ) return;
+	if ( height <= 0 ) return;
+	
+	if ( srcX >= ( int )image.mWidth ) return;
+	if ( srcY >= ( int )image.mHeight ) return;
+	
+	if ( destX >= ( int )this->mWidth ) return;
+	if ( destY >= ( int )this->mHeight ) return;
+	
+	float pixelSize = USPixel::GetSize ( this->mPixelFormat, this->mColorFormat );
+	
+	if ( pixelSize == 0.5f ) {
+		return; // TODO
+	}
+	else {
+		
+		u32 size = ( u32 )pixelSize;
+		u32 srcRowSize = image.GetRowSize ();
+		u32 destRowSize = this->GetRowSize ();
+		
+		width *= size;
+		
+		for ( int y = 0; y < height; ++y ) {
+		
+			const void* srcRow = ( const void* )(( u32 )image.mBitmap + ( srcRowSize * ( y + srcY )) + ( srcX * size ));
+			void* destRow = ( void* )(( u32 )this->mBitmap + ( destRowSize * ( y + destY )) + ( destX * size ));
+			
+			memcpy ( destRow, srcRow, width );
+		}
+	}
 }
 
 //----------------------------------------------------------------//
@@ -180,7 +337,7 @@ u32 USImage::GetPixel ( u32 x, u32 y ) const {
 	if ( y > this->mHeight ) return 0;
 	if ( x > this->mWidth ) return 0;
 
-	const void* row = this->GetRow ( y );
+	const void* row = this->GetRowAddr ( y );
 
 	float pixelSize = USPixel::GetSize ( this->mPixelFormat, this->mColorFormat );
 	u32 pixel;
@@ -200,13 +357,13 @@ u32 USImage::GetPixel ( u32 x, u32 y ) const {
 }
 
 //----------------------------------------------------------------//
-void* USImage::GetRow ( u32 y ) {
+void* USImage::GetRowAddr ( u32 y ) {
 
 	return ( void* )(( u32 )this->mBitmap + ( this->GetRowSize () * y ));
 }
 
 //----------------------------------------------------------------//
-const void* USImage::GetRow ( u32 y ) const {
+const void* USImage::GetRowAddr ( u32 y ) const {
 
 	return ( void* )(( u32 )this->mBitmap + ( this->GetRowSize () * y ));
 }
@@ -438,7 +595,7 @@ void USImage::LoadPng ( void* pngParam, void* pngInfoParam, u32 transform ) {
 			if ( this->GetRowSize () < png_get_rowbytes ( png, pngInfo )) return;
 			
 			for ( u32 y = 0; y < height; ++y ) {
-				void* row = this->GetRow ( y );
+				void* row = this->GetRowAddr ( y );
 				png_read_row ( png, ( png_bytep )row, 0 );
 				
 				if ( transform & USImageTransform::PREMULTIPLY_ALPHA ) {
@@ -457,7 +614,7 @@ void USImage::LoadPng ( void* pngParam, void* pngInfoParam, u32 transform ) {
 			
 			for ( u32 y = 0; y < height; ++y ) {
 				png_read_row ( png, ( png_bytep )srcRow, 0 );
-				void* destRow = this->GetRow ( y );
+				void* destRow = this->GetRowAddr ( y );
 				USColor::Convert ( destRow, this->mColorFormat, srcRow, pngColorFormat, width );
 				
 				if ( transform & USImageTransform::PREMULTIPLY_ALPHA ) {
@@ -578,7 +735,7 @@ void USImage::ResizeCanvas ( const USImage& image, USIntRect rect ) {
 	
 	for ( int y = 0; y < height; ++y ) {
 	
-		void* row = this->GetRow ( y );
+		void* row = this->GetRowAddr ( y );
 	
 		if (( y < srcRect.mYMin ) || ( y >= srcRect.mYMax )) {
 			memset ( row, 0, rowSize );
@@ -638,7 +795,7 @@ void USImage::SetPixel ( u32 x, u32 y, u32 pixel ) {
 	if ( y > this->mHeight ) return;
 	if ( x > this->mWidth ) return;
 	
-	void* row = this->GetRow ( y );
+	void* row = this->GetRowAddr ( y );
 
 	u32 pixelDepth = USPixel::GetDepth ( this->mPixelFormat, this->mColorFormat );
 	u32 pixelMask = USPixel::GetMask ( this->mPixelFormat, this->mColorFormat );
@@ -690,3 +847,104 @@ USImage::~USImage	() {
 	this->Release ();
 }
 
+//----------------------------------------------------------------//
+bool USImage::WritePNG ( USStream& stream ) {
+
+	png_structp png_ptr;
+	png_infop info_ptr;
+	
+	png_ptr = png_create_write_struct ( PNG_LIBPNG_VER_STRING, 0, _pngError, 0 );
+	assert ( png_ptr ); // TODO
+
+	info_ptr = png_create_info_struct ( png_ptr );
+	assert ( png_ptr ); // TODO
+
+	png_set_write_fn ( png_ptr, &stream, _pngWrite, _pngFlush );
+
+	int bitDepth = 0;
+	int colorType = 0;
+	
+	switch ( this->mColorFormat ) {
+		
+		case USColor::A_8:
+			
+			bitDepth = 8;
+			colorType = PNG_COLOR_TYPE_GRAY;
+			break;
+		
+		case USColor::RGB_888:
+		
+			bitDepth = 8;
+			colorType = PNG_COLOR_TYPE_RGB;
+			break;
+		
+		case USColor::RGBA_4444:
+		
+			bitDepth = 4;
+			colorType = PNG_COLOR_TYPE_RGB_ALPHA;
+			break;
+		
+		case USColor::RGBA_8888:
+		
+			bitDepth = 8;
+			colorType = PNG_COLOR_TYPE_RGB_ALPHA;
+			break;
+		
+		// TODO: support these formats
+		case USColor::RGB_565:
+		case USColor::RGBA_5551:
+		default:
+			assert ( false ); // TODO
+	};
+	
+	// Set the image information here.  Width and height are up to 2^31,
+	// bit_depth is one of 1, 2, 4, 8, or 16, but valid values also depend on
+	// the color_type selected. color_type is one of PNG_COLOR_TYPE_GRAY,
+	// PNG_COLOR_TYPE_GRAY_ALPHA, PNG_COLOR_TYPE_PALETTE, PNG_COLOR_TYPE_RGB,
+	// or PNG_COLOR_TYPE_RGB_ALPHA.  interlace is either PNG_INTERLACE_NONE or
+	// PNG_INTERLACE_ADAM7, and the compression_type and filter_type MUST
+	// currently be PNG_COMPRESSION_TYPE_BASE and PNG_FILTER_TYPE_BASE. REQUIRED
+	png_set_IHDR (
+		png_ptr,
+		info_ptr,
+		this->mWidth,
+		this->mHeight,
+		bitDepth,
+		colorType,
+		PNG_INTERLACE_NONE,
+		PNG_COMPRESSION_TYPE_BASE,
+		PNG_FILTER_TYPE_BASE
+	);
+
+	// Set the palette if there is one.  REQUIRED for indexed-color images
+	//png_colorp palette;
+	//palette = ( png_colorp )png_malloc ( png_ptr, PNG_MAX_PALETTE_LENGTH * png_sizeof ( png_color ));
+	
+	// ... Set palette colors...
+	//png_set_PLTE ( png_ptr, info_ptr, palette, PNG_MAX_PALETTE_LENGTH );
+
+	// Write the file header information.
+	png_write_info(png_ptr, info_ptr);
+
+	// Flip BGR pixels to RGB
+	//png_set_bgr(png_ptr);
+
+	for ( u32 y = 0; y < this->mHeight; y++ ) {
+		png_bytep row = ( png_bytep )this->GetRowAddr ( y );
+		png_write_row ( png_ptr, row );
+	}
+
+	png_write_end(png_ptr, info_ptr);
+
+	//if ( palette ) {
+	//	png_free ( png_ptr, palette );
+	//}
+
+	//if ( trans ) {
+	//	png_free ( png_ptr, trans );
+	//}
+
+	png_destroy_write_struct ( &png_ptr, &info_ptr );
+	
+	return true;
+}

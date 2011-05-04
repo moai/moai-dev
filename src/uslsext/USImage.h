@@ -55,9 +55,11 @@ public:
 	GET ( void*, Bitmap, mBitmap )
 
 	//----------------------------------------------------------------//
+	void			BleedRect			( int xMin, int yMin, int xMax, int yMax );
 	void			ClearBitmap			();
 	void			ConvertColors		( const USImage& image, USColor::Format colorFmt );
 	void			Copy				( const USImage& image );
+	void			CopyBits			( const USImage& image, int srcX, int srcY, int destX, int destY, int width, int height );
 	u32				GetBitmapSize		() const;
 	u32				GetColor			( u32 i ) const;
 	u32				GetColor			( u32 x, u32 y ) const;
@@ -66,8 +68,8 @@ public:
 	u32				GetPaletteColor		( u32 idx ) const;
 	u32				GetPaletteSize		() const;
 	u32				GetPixel			( u32 x, u32 y ) const;
-	void*			GetRow				( u32 y );
-	const void*		GetRow				( u32 y ) const;
+	void*			GetRowAddr			( u32 y );
+	const void*		GetRowAddr			( u32 y ) const;
 	u32				GetRowSize			() const;
 	void			Init				( u32 width, u32 height, USColor::Format colorFmt, USPixel::Format pixelFmt );
 	void			Init				( const void* bitmap, u32 width, u32 height, USColor::Format colorFmt );
@@ -85,6 +87,7 @@ public:
 	void			Transform			( u32 transform );
 					USImage				();
 					~USImage			();
+	bool			WritePNG			( USStream& stream );
 };
 
 #endif

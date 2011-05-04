@@ -10,6 +10,30 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+/**	@name	bleedRect
+	@text	'Bleeds' the interior of the rectangle out by one pixel.
+
+	@in		MOAIImage self
+	@in		number xMin
+	@in		number yMin
+	@in		number xMax
+	@in		number yMax
+	@out	nil
+*/
+int MOAIImage::_bleedRect ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIImage, "U" )
+	
+	int xMin	= state.GetValue < int >( 2, 0 );
+	int yMin	= state.GetValue < int >( 3, 0 );
+	int xMax	= state.GetValue < int >( 4, 0 );
+	int yMax	= state.GetValue < int >( 5, 0 );
+	
+	self->BleedRect ( xMin, yMin, xMax, yMax );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	convertColors
 	@text	Return a copy of the image with a new color format. Not
 			all provided formats are supported by OpenGL.
@@ -46,6 +70,42 @@ int MOAIImage::_copy ( lua_State* L ) {
 	image->PushLuaUserdata ( state );
 	
 	return 1;
+}
+
+//----------------------------------------------------------------//
+/**	@name	copyBits
+	@text	Copy a section of one image to another.
+
+	@in		MOAIImage self
+	@in		MOAIImage source	Source image.
+	@in		number srcX			X location in source image.
+	@in		number srcY			Y location in source image.
+	@in		number destX		X location in destination image.
+	@in		number destY		Y location in destination image.
+	@in		number width		Width of section to copy.
+	@in		number height		Height of section to copy.
+	@out	nil
+*/
+int MOAIImage::_copyBits ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIImage, "UUNNNNNN" )
+	
+	MOAIImage* image = state.GetLuaObject < MOAIImage >( 2 );
+	if ( !image ) {
+		return 0;
+	}
+	
+	int srcX	= state.GetValue < int >( 3, 0 );
+	int srcY	= state.GetValue < int >( 4, 0 );
+	
+	int destX	= state.GetValue < int >( 5, 0 );
+	int destY	= state.GetValue < int >( 6, 0 );
+	
+	int width	= state.GetValue < int >( 7, 0 );
+	int height	= state.GetValue < int >( 8, 0 );
+	
+	self->CopyBits ( *image, srcX, srcY, destX, destY, width, height );
+	
+	return 0;
 }
 
 //----------------------------------------------------------------//
@@ -286,6 +346,26 @@ int MOAIImage::_setRGBA ( lua_State* L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
+/**	@name	writePNG
+	@text	Write image to a PNG file.
+
+	@in		MOAIImage self
+	@in		string filename
+	@out	nil
+*/
+int MOAIImage::_writePNG ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIImage, "US" )
+	
+	cc8* filename = state.GetValue < cc8* >( 2, "" );
+	
+	USFileStream stream;
+	stream.OpenWrite ( filename );
+	self->WritePNG ( stream );
+	
+	return 0;
+}
+
 //================================================================//
 // MOAIImage
 //================================================================//
@@ -325,8 +405,10 @@ void MOAIImage::RegisterLuaFuncs ( USLuaState& state ) {
 	UNUSED ( state );
 
 	luaL_Reg regTable [] = {
+		{ "bleedRect",			_bleedRect },
 		{ "convertColors",		_convertColors },
 		{ "copy",				_copy },
+		{ "copyBits",			_copyBits },
 		{ "getColor32",			_getColor32 },
 		{ "getRGBA",			_getRGBA },
 		{ "getSize",			_getSize },
@@ -336,6 +418,7 @@ void MOAIImage::RegisterLuaFuncs ( USLuaState& state ) {
 		{ "resizeCanvas",		_resizeCanvas },
 		{ "setColor32",			_setColor32 },
 		{ "setRGBA",			_setRGBA },
+		{ "writePNG",			_writePNG },
 		{ NULL, NULL }
 	};
 

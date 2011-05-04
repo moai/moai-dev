@@ -19,7 +19,7 @@
 //----------------------------------------------------------------//
 void USColor::Convert ( void* dest, Format destFmt, const void* src, Format srcFmt, u32 nColors ) {
 
-	static const u32 MAX_COLORS = 1024;
+	static const u32 MAX_COLORS = 2048;
 
 	u32 buffer [ MAX_COLORS ];
 	u32* bufferPtr = buffer;
