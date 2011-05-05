@@ -25,6 +25,7 @@ private:
 	USRef < MOAIBox2DJoint >	mJointB;
 
 	//----------------------------------------------------------------//
+	static int		_destroy			( lua_State* L );
 	static int		_getAnchorA			( lua_State* L );
 	static int		_getAnchorB			( lua_State* L );
 	static int		_getBodyA			( lua_State* L );
@@ -50,6 +51,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIBox2DJoint )
 	
 	//----------------------------------------------------------------//
+	void			Destroy					();
 					MOAIBox2DJoint			();
 					~MOAIBox2DJoint			();
 	void			RegisterLuaClass		( USLuaState& state );

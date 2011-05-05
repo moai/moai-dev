@@ -213,25 +213,18 @@ int MOAIBox2DBody::_applyTorque ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	destroyFixture
-	@text	See Box2D documentation.
+/**	@name	destroy
+	@text	Schedule body for destruction.
 	
 	@in		MOAIBox2DBody self
-	@in		MOAIBox2DFixture fixture
 	@out	nil
 */
-int MOAIBox2DBody::_destroyFixture ( lua_State* L ) {
+int MOAIBox2DBody::_destroy ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DBody, "U" )
 	
-	MOAIBox2DFixture* fixture = state.GetLuaObject < MOAIBox2DFixture >( 2 );
+	assert ( self->mWorld );
+	self->mWorld->ScheduleDestruction ( *self );
 	
-	if ( self->mBody ) {
-		if ( fixture->mFixture ) {
-			self->mBody->DestroyFixture ( fixture->mFixture );
-			fixture->mFixture = 0;
-			fixture->Release ();
-		}
-	}
 	return 0;
 }
 
@@ -621,6 +614,17 @@ int MOAIBox2DBody::_setTransform ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIBox2DBody::Destroy () {
+
+	if ( this->mBody ) {
+		b2World* world = this->mWorld->mWorld;
+		world->DestroyBody ( this->mBody );
+		this->mBody = 0;
+		this->Release ();
+	}
+}
+
+//----------------------------------------------------------------//
 MOAIBox2DBody::MOAIBox2DBody () :
 	mBody ( 0 ) {
 	
@@ -679,7 +683,7 @@ void MOAIBox2DBody::RegisterLuaFuncs ( USLuaState& state ) {
 		{ "applyForce",				_applyForce },
 		{ "applyLinearImpulse",		_applyLinearImpulse },
 		{ "applyTorque",			_applyTorque },
-		{ "destroyFixture",			_destroyFixture },
+		{ "destroy",				_destroy },
 		{ "getAngle",				_getAngle },
 		{ "getAngularVelocity",		_getAngularVelocity },
 		{ "getLinearVelocity",		_getLinearVelocity },

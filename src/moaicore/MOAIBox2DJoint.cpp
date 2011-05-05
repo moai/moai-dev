@@ -17,6 +17,22 @@ SUPPRESS_EMPTY_FILE_WARNING
 //================================================================//
 
 //----------------------------------------------------------------//
+/**	@name	destroy
+	@text	Schedule joint for destruction.
+	
+	@in		MOAIBox2DBody self
+	@out	nil
+*/
+int MOAIBox2DJoint::_destroy ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIBox2DJoint, "U" )
+	
+	assert ( self->mWorld );
+	self->mWorld->ScheduleDestruction ( *self );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	getAnchorA
 	@text	See Box2D documentation.
 	
@@ -201,6 +217,17 @@ int MOAIBox2DJoint::_setMotorEnabled ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIBox2DJoint::Destroy () {
+
+	if ( this->mJoint ) {
+		b2World* world = this->mWorld->mWorld;
+		world->DestroyJoint ( this->mJoint );
+		this->mJoint = 0;
+		this->Release ();
+	}
+}
+
+//----------------------------------------------------------------//
 MOAIBox2DJoint::MOAIBox2DJoint () :
 	mJoint ( 0 ) {
 	
@@ -228,6 +255,7 @@ void MOAIBox2DJoint::RegisterLuaClass ( USLuaState& state ) {
 void MOAIBox2DJoint::RegisterLuaFuncs ( USLuaState& state ) {
 	
 	luaL_Reg regTable [] = {
+		{ "destroy",				_destroy },
 		{ "getAnchorA",				_getAnchorA },
 		{ "getAnchorB",				_getAnchorB },
 		{ "getBodyA",				_getBodyA },

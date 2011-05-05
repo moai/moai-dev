@@ -28,6 +28,7 @@ private:
 	u32			mCollisionMask;
 
 	//----------------------------------------------------------------//
+	static int	_destroy				( lua_State* L );
 	static int	_setCollisionHandler	( lua_State* L );
 	static int	_setDensity				( lua_State* L );
 	static int	_setFilter				( lua_State* L );
@@ -53,6 +54,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIBox2DFixture )
 	
 	//----------------------------------------------------------------//
+	void			Destroy					();
 					MOAIBox2DFixture		();
 					~MOAIBox2DFixture		();
 	void			RegisterLuaClass		( USLuaState& state );

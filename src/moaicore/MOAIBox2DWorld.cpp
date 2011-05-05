@@ -29,7 +29,9 @@ float MOAIBox2DPrim::GetUnitsToMeters () {
 
 //----------------------------------------------------------------//
 MOAIBox2DPrim::MOAIBox2DPrim () :
-	mWorld ( 0 ) {
+	mWorld ( 0 ),
+	mDestroy ( false ),
+	mDestroyNext ( 0 ) {
 }
 
 //================================================================//
@@ -423,47 +425,6 @@ int	MOAIBox2DWorld::_addWeldJoint ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	destroyBody
-	@text	See Box2D documentation.
-	
-	@in		MOAIBox2DWorld self
-	@in		MOAIBox2DBody body
-	@out	nil
-*/
-int MOAIBox2DWorld::_destroyBody ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIBox2DWorld, "UU" )
-	
-	MOAIBox2DBody* body = state.GetLuaObject < MOAIBox2DBody >( 2 );
-	
-	if ( body->mBody ) {
-		self->mWorld->DestroyBody ( body->mBody );
-		body->mBody = 0;
-		body->Release ();
-	}
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@name	destroyJoint
-	@text	See Box2D documentation.
-	
-	@in		MOAIBox2DWorld self
-	@in		MOAIBox2DJoint joint
-	@out	nil
-*/
-int MOAIBox2DWorld::_destroyJoint ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIBox2DWorld, "UU" )
-	
-	MOAIBox2DJoint* joint = state.GetLuaObject < MOAIBox2DJoint >( 2 );
-	
-	if ( joint->mJoint ) {
-		self->mWorld->DestroyJoint ( joint->mJoint );
-		joint->Release ();
-	}
-	return 0;
-}
-
-//----------------------------------------------------------------//
 /**	@name	getAutoClearForces
 	@text	See Box2D documentation.
 	
@@ -577,6 +538,28 @@ int MOAIBox2DWorld::_setUnitsToMeters ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIBox2DWorld::Destroy () {
+
+	while ( this->mDestroyFixtures ) {
+		MOAIBox2DPrim* prim = this->mDestroyFixtures;
+		this->mDestroyFixtures = this->mDestroyFixtures->mDestroyNext;
+		prim->Destroy ();
+	}
+	
+	while ( this->mDestroyJoints ) {
+		MOAIBox2DPrim* prim = this->mDestroyJoints;
+		this->mDestroyJoints = this->mDestroyJoints->mDestroyNext;
+		prim->Destroy ();
+	}
+	
+	while ( this->mDestroyBodies ) {
+		MOAIBox2DPrim* prim = this->mDestroyBodies;
+		this->mDestroyBodies = this->mDestroyBodies->mDestroyNext;
+		prim->Destroy ();
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAIBox2DWorld::DrawDebug () {
 
 	if ( this->mDebugDraw ) {
@@ -596,7 +579,10 @@ bool MOAIBox2DWorld::IsDone () {
 MOAIBox2DWorld::MOAIBox2DWorld () :
 	mVelocityIterations ( 10 ),
 	mPositionIterations ( 10 ),
-	mUnitsToMeters ( 1.0f ) {
+	mUnitsToMeters ( 1.0f ),
+	mDestroyBodies ( 0 ),
+	mDestroyFixtures ( 0 ),
+	mDestroyJoints ( 0 ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIAction )
@@ -642,6 +628,8 @@ void MOAIBox2DWorld::OnUpdate ( float step ) {
 	
 	this->mWorld->Step ( step, this->mVelocityIterations, this->mPositionIterations );
 	
+	this->Destroy ();
+	
 	b2Body* body = this->mWorld->GetBodyList ();
 	for ( ; body; body = body->GetNext ()) {
 		if ( body->IsActive () && body->IsAwake ()) {
@@ -673,8 +661,6 @@ void MOAIBox2DWorld::RegisterLuaFuncs ( USLuaState& state ) {
 		{ "addPulleyJoint",			_addPulleyJoint },
 		{ "addRevoluteJoint",		_addRevoluteJoint },
 		{ "addWeldJoint",			_addWeldJoint },
-		{ "destroyBody",			_destroyBody },
-		{ "destroyJoint",			_destroyJoint },
 		{ "getAutoClearForces",		_getAutoClearForces },
 		{ "getGravity",				_getGravity },
 		{ "setAutoClearForces",		_setAutoClearForces },
@@ -701,6 +687,36 @@ void MOAIBox2DWorld::SayGoodbye ( b2Joint* joint ) {
 	MOAIBox2DJoint* moaiJoint = ( MOAIBox2DJoint* )joint->GetUserData ();
 	moaiJoint->mJoint = 0;
 	moaiJoint->Release ();
+}
+
+//----------------------------------------------------------------//
+void MOAIBox2DWorld::ScheduleDestruction ( MOAIBox2DBody& body ) {
+
+	if ( !body.mDestroy ) {
+		body.mDestroyNext = this->mDestroyBodies;
+		this->mDestroyBodies = &body;
+		body.mDestroy = true;
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIBox2DWorld::ScheduleDestruction ( MOAIBox2DFixture& fixture ) {
+
+	if ( !fixture.mDestroy ) {
+		fixture.mDestroyNext = this->mDestroyFixtures;
+		this->mDestroyFixtures = &fixture;
+		fixture.mDestroy = true;
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIBox2DWorld::ScheduleDestruction ( MOAIBox2DJoint& joint ) {
+
+	if ( !joint.mDestroy ) {
+		joint.mDestroyNext = this->mDestroyJoints;
+		this->mDestroyJoints = &joint;
+		joint.mDestroy = true;
+	}
 }
 
 //----------------------------------------------------------------//

@@ -16,6 +16,22 @@ SUPPRESS_EMPTY_FILE_WARNING
 //================================================================//
 
 //----------------------------------------------------------------//
+/**	@name	destroy
+	@text	Schedule fixture for destruction.
+	
+	@in		MOAIBox2DBody self
+	@out	nil
+*/
+int MOAIBox2DFixture::_destroy ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIBox2DFixture, "U" )
+	
+	assert ( self->mWorld );
+	self->mWorld->ScheduleDestruction ( *self );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	setCollisionHandler
 	@text	Sets a Lua function to call when collisions occur.
 	
@@ -139,6 +155,17 @@ void MOAIBox2DFixture::BeginContact ( MOAIBox2DFixture* other, MOAIBox2DArbiter*
 }
 
 //----------------------------------------------------------------//
+void MOAIBox2DFixture::Destroy () {
+
+	if ( this->mFixture ) {
+		b2Body* body = this->mFixture->GetBody ();
+		body->DestroyFixture ( this->mFixture );
+		this->mFixture = 0;
+		this->Release ();
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAIBox2DFixture::EndContact ( MOAIBox2DFixture* other, MOAIBox2DArbiter* arbiter ) {
 	
 	if ( this->mCollisionMask & MOAIBox2DArbiter::END ) {
@@ -225,6 +252,7 @@ void MOAIBox2DFixture::RegisterLuaClass ( USLuaState& state ) {
 void MOAIBox2DFixture::RegisterLuaFuncs ( USLuaState& state ) {
 	
 	luaL_Reg regTable [] = {
+		{ "destroy",				_destroy },
 		{ "setCollisionHandler",	_setCollisionHandler },
 		{ "setDensity",				_setDensity },
 		{ "setFilter",				_setFilter },

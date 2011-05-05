@@ -35,7 +35,7 @@ private:
 	static int		_applyForce				( lua_State* L );
 	static int		_applyLinearImpulse		( lua_State* L );
 	static int		_applyTorque			( lua_State* L );
-	static int		_destroyFixture			( lua_State* L );
+	static int		_destroy				( lua_State* L );
 	static int		_getAngle				( lua_State* L );
 	static int		_getAngularVelocity		( lua_State* L );
 	static int		_getLinearVelocity		( lua_State* L );
@@ -69,6 +69,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIBox2DBody )
 	
 	//----------------------------------------------------------------//
+	void			Destroy					();
 					MOAIBox2DBody			();
 					~MOAIBox2DBody			();
 	void			RegisterLuaClass		( USLuaState& state );

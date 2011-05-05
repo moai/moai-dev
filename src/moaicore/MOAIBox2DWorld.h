@@ -10,7 +10,10 @@
 
 class b2World;
 class MOAIBox2DArbiter;
+class MOAIBox2DBody;
 class MOAIBox2DDebugDraw;
+class MOAIBox2DFixture;
+class MOAIBox2DJoint;
 class MOAIBox2DWorld;
 
 //================================================================//
@@ -21,6 +24,9 @@ class MOAIBox2DPrim :
 protected:
 
 	MOAIBox2DWorld* mWorld;
+	
+	bool			mDestroy;
+	MOAIBox2DPrim*	mDestroyNext;
 
 	//----------------------------------------------------------------//
 	
@@ -31,6 +37,7 @@ public:
 	GET_SET ( MOAIBox2DWorld*, World, mWorld )
 
 	//----------------------------------------------------------------//
+	virtual void	Destroy					() = 0;
 	float			GetUnitsToMeters		();
 					MOAIBox2DPrim			();
 };
@@ -56,31 +63,41 @@ private:
 	
 	float	mUnitsToMeters; // maps world space units to meters
 
+	MOAIBox2DPrim*		mDestroyBodies;
+	MOAIBox2DPrim*		mDestroyFixtures;
+	MOAIBox2DPrim*		mDestroyJoints;
+
 	//----------------------------------------------------------------//
-	static int	_addBody						( lua_State* L );
-	static int	_addDistanceJoint				( lua_State* L );
-	static int	_addFrictionJoint				( lua_State* L );
-	static int	_addGearJoint					( lua_State* L );
-	static int	_addLineJoint					( lua_State* L );
-	static int	_addMouseJoint					( lua_State* L );
-	static int	_addPrismaticJoint				( lua_State* L );
-	static int	_addPulleyJoint					( lua_State* L );
-	static int	_addRevoluteJoint				( lua_State* L );
-	static int	_addWeldJoint					( lua_State* L );
-	static int	_destroyBody					( lua_State* L );
-	static int	_destroyJoint					( lua_State* L );
-	static int	_getAutoClearForces				( lua_State* L );
-	static int	_getGravity						( lua_State* L );
-	static int	_setAutoClearForces				( lua_State* L );
-	static int	_setGravity						( lua_State* L );
-	static int	_setIterations					( lua_State* L );
-	static int	_setUnitsToMeters				( lua_State* L );
+	static int		_addBody				( lua_State* L );
+	static int		_addDistanceJoint		( lua_State* L );
+	static int		_addFrictionJoint		( lua_State* L );
+	static int		_addGearJoint			( lua_State* L );
+	static int		_addLineJoint			( lua_State* L );
+	static int		_addMouseJoint			( lua_State* L );
+	static int		_addPrismaticJoint		( lua_State* L );
+	static int		_addPulleyJoint			( lua_State* L );
+	static int		_addRevoluteJoint		( lua_State* L );
+	static int		_addWeldJoint			( lua_State* L );
+	static int		_getAutoClearForces		( lua_State* L );
+	static int		_getGravity				( lua_State* L );
+	static int		_setAutoClearForces		( lua_State* L );
+	static int		_setGravity				( lua_State* L );
+	static int		_setIterations			( lua_State* L );
+	static int		_setUnitsToMeters		( lua_State* L );
 	
 	//----------------------------------------------------------------//
-	void		SayGoodbye		( b2Fixture* fixture ); 
-	void		SayGoodbye		( b2Joint* joint ); 
+	void			Destroy					();
+	void			SayGoodbye				( b2Fixture* fixture ); 
+	void			SayGoodbye				( b2Joint* joint );
+	void			ScheduleDestruction		( MOAIBox2DBody& body );
+	void			ScheduleDestruction		( MOAIBox2DFixture& fixture );
+	void			ScheduleDestruction		( MOAIBox2DJoint& joint );
 
 public:
+	
+	friend class MOAIBox2DBody;
+	friend class MOAIBox2DFixture;
+	friend class MOAIBox2DJoint;
 	
 	DECL_LUA_FACTORY ( MOAIBox2DWorld )
 	
