@@ -30,3 +30,6 @@ prop:setDeck ( tileDeck )
 prop:setGrid ( grid )
 prop:setLoc ( -960 * SCREEN_SCALE, -320 * SCREEN_SCALE )
 layer:insertProp ( prop )
+
+--WHAT TO LOOK FOR: This tilemap is meant to be the corner segment of a building.
+--The missing tile is the one on the upper-right corner of the segment.
