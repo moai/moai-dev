@@ -139,7 +139,9 @@ void USLuaObject::PushLuaUserdata ( USLuaState& state ) {
 	}
 
 	// create the handle userdata for reference counting
-	if ( this->mUserdata.IsNil ()) {
+	if ( !this->mUserdata.PushRef ( state )) {
+		
+		state.Pop ( 1 );
 		
 		// create and initialize the userdata
 		state.PushPtrUserData ( this );
@@ -155,11 +157,6 @@ void USLuaObject::PushLuaUserdata ( USLuaState& state ) {
 		
 		// and retain
 		this->Retain ();
-	}
-	else {
-		
-		// re-use the handle
-		this->mUserdata.PushRef ( state );
 	}
 }
 

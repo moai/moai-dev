@@ -150,7 +150,8 @@ bool USLuaRef::PushRef ( USLuaState& state ) {
 
 	}
 
-	return true;
+	// make sure
+	return !lua_isnil ( state, -1 );
 }
 
 //----------------------------------------------------------------//

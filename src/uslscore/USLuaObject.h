@@ -18,7 +18,7 @@ class USLuaStateHandle;
 //================================================================//
 class USLuaObject :
 	public virtual USObject {
-private:
+protected:
 
 	USLuaRef		mInstanceTable;		// strong ref to instance table stack
 	USLuaRef		mUserdata;			// weak ref to handle userdata 
