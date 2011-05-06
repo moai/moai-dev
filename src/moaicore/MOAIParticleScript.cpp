@@ -4,6 +4,7 @@
 #include "pch.h"
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIParticle.h>
+#include <moaicore/MOAIParticleState.h>
 #include <moaicore/MOAIParticleScript.h>
 #include <moaicore/MOAIParticleSystem.h>
 
@@ -14,6 +15,10 @@
 	*(( u32* )&var ) = *(( u32* )bytecode ); \
 	bytecode += sizeof ( u32 );
 
+#define READ_INT(var,bytecode) \
+	*(( u32* )&var ) = *(( u32* )bytecode ); \
+	bytecode += sizeof ( u32 );
+
 #define IMPL_LUA_PARTICLE_OP(name,opcode,format)								\
 	int MOAIParticleScript::name ( lua_State* L ) {								\
 		MOAI_LUA_SETUP ( MOAIParticleScript, "U" )								\
@@ -21,6 +26,12 @@
 		instruction.Parse ( state, 2 );											\
 		return 0;																\
 	}
+
+#define REG_VALUE(reg) \
+	(( reg & SPRITE_REG_BIT ) ? spriteRegisters [ reg & REG_MASK ] : (( reg < nRegs ) ? particleRegisters [ reg ] : 0.0f ))
+
+#define REG_ADDR(reg) \
+	(( reg & SPRITE_REG_BIT ) ? &spriteRegisters [ reg & REG_MASK ] : (( reg < nRegs ) ? &particleRegisters [ reg ] : 0 ))
 
 //================================================================//
 // MOAIParticleScript
@@ -57,16 +68,12 @@ void MOAIParticleScript::Instruction::Parse ( USLuaState& state, u32 idx ) {
 			
 			switch ( c ) {
 
-				case 'P':
-					this->mParams [ i ] = state.GetValue < u32 >( idx++, 1 ) - 1;
-					break;
-				
-				case 'C':
+				case 'I':
 				case 'R':
 					this->mParams [ i ] = state.GetValue < u32 >( idx++, 0 );
 					break;
 				
-				case 'V':
+				case 'F':
 					v = state.GetValue < float >( idx++, 0.0f );
 					this->mParams [ i ] = *(( u32* )&v );
 					break;
@@ -74,13 +81,12 @@ void MOAIParticleScript::Instruction::Parse ( USLuaState& state, u32 idx ) {
 			
 			switch ( c ) {
 				
-				case 'P':
 				case 'R':
 					this->mSize++;
 					break;
 				
-				case 'C':
-				case 'V':
+				case 'I':
+				case 'F':
 					this->mSize += sizeof ( u32 );
 					break;
 			}
@@ -92,6 +98,7 @@ void MOAIParticleScript::Instruction::Parse ( USLuaState& state, u32 idx ) {
 u8* MOAIParticleScript::Instruction::Write ( u8* cursor ) {
 
 	*( cursor++ ) = ( u8 )this->mOpcode;
+	u8 r = 0;
 
 	if ( this->mFormat ) {
 	
@@ -100,14 +107,23 @@ u8* MOAIParticleScript::Instruction::Write ( u8* cursor ) {
 			cc8 c = this->mFormat [ i ];
 			
 			switch ( c ) {
-			
-				case 'P':
+				
 				case 'R':
-					*( cursor++ ) = ( u8 )this->mParams [ i ];
+					r = ( u8 )this->mParams [ i ];
+					
+					if (( r & SPRITE_REG_BIT ) == 0 ) {
+						// register belongs to particle
+						// if not reserved, offset or set equal to reg mask if 0
+						if (( r & PARTICLE_REG_BIT ) == 0 ) {
+							r = r ? r + MOAIParticle::TOTAL_PARTICLE_REG - 1 : REG_MASK ;
+						}
+						r = r & REG_MASK;
+					}
+					*( cursor++ ) = r;
 					break;
 				
-				case 'C':
-				case 'V':
+				case 'I':
+				case 'F':
 					*(( u32* )cursor ) = this->mParams [ i ];
 					cursor += sizeof ( u32 );
 					break;
@@ -123,102 +139,139 @@ u8* MOAIParticleScript::Instruction::Write ( u8* cursor ) {
 
 //----------------------------------------------------------------//
 /**	@name	easeConst
-	@text	Load a sprite register with an ease value derived from two constants.
+	@text	Load a register with a value interpolated between two numbers
+			using an ease curve.
 	
 	@in		MOAIParticleScript self
-	@in		number register		See MOAIParticleScript documentation for a list of sprite registers.
-	@in		number c0			Starting value of the ease.
-	@in		number c1			Ending value of the ease.
+	@in		number r0			Register to store result.
+	@in		number start		Starting value of the ease (from const).
+	@in		number end			ESnding value of the ease (from const).
 	@in		number easeType		See MOAIEaseType for a list of ease types.
 	@out	nil
 */
-IMPL_LUA_PARTICLE_OP ( _easeConst, EASE_CONST, "RVVR" )
+IMPL_LUA_PARTICLE_OP ( _easeConst, EASE_CONST, "RFFI" )
+
+//----------------------------------------------------------------//
+/**	@name	easeConstDelta
+	@text	Load a register with a value interpolated between two numbers
+			using an ease curve. Apply as a delta.
+	
+	@in		MOAIParticleScript self
+	@in		number r0			Register to store result.
+	@in		number start		Starting value of the ease (from const).
+	@in		number end			ESnding value of the ease (from const).
+	@in		number easeType		See MOAIEaseType for a list of ease types.
+	@out	nil
+*/
+IMPL_LUA_PARTICLE_OP ( _easeConstDelta, EASE_CONST_DELTA, "RFFI" )
 
 //----------------------------------------------------------------//
 /**	@name	easeVar
-	@text	Load a sprite register with an ease value derived from two variables.
+	@text	Load a register with a value interpolated between two numbers
+			using an ease curve.
 	
 	@in		MOAIParticleScript self
-	@in		number register		See MOAIParticleScript documentation for a list of sprite registers.
-	@in		number v0			Index of the variable; starting value of the ease.
-	@in		number v1			Index of the variable; ending value of the ease.
+	@in		number r0			Register to store result.
+	@in		number r1			Starting value of the ease (from register).
+	@in		number r2			Ending value of the ease (from register).
+	@in		number add			Value to add to result (from const).
+	@in		number scale		Value to scale result (from const).
 	@in		number easeType		See MOAIEaseType for a list of ease types.
 	@out	nil
 */
-IMPL_LUA_PARTICLE_OP ( _easeVar, EASE_VAR, "RPPRVV" )
+IMPL_LUA_PARTICLE_OP ( _easeVar, EASE_VAR, "RRRIFF" )
 
 //----------------------------------------------------------------//
-/**	@name	initConst
-	@text	Load a variable with a const.
+/**	@name	easeVarDelta
+	@text	Load a register with a value interpolated between two numbers
+			using an ease curve. Apply as a delta.
 	
 	@in		MOAIParticleScript self
-	@in		number v0			Index of the variable
-	@in		number c0			Value to load into variable.
+	@in		number r0			Register to store result.
+	@in		number r1			Starting value of the ease (from register).
+	@in		number r2			Ending value of the ease (from register).
+	@in		number add			Value to add to result (from const).
+	@in		number scale		Value to scale result (from const).
+	@in		number easeType		See MOAIEaseType for a list of ease types.
 	@out	nil
 */
-IMPL_LUA_PARTICLE_OP ( _initConst, INIT_CONST, "PV" )
+IMPL_LUA_PARTICLE_OP ( _easeVarDelta, EASE_VAR_DELTA, "RRRIFF" )
 
 //----------------------------------------------------------------//
-/**	@name	initRand
-	@text	Load a variable with a random number derived from a range.
+/**	@name	randConst
+	@text	Load a register with a random number from a range.
 	
 	@in		MOAIParticleScript self
-	@in		number v0			Index of the variable
-	@in		number min			Minimum value within random range.
-	@in		number max			Maximum value within random range.
+	@in		number r0			Register to store result.
+	@in		number min			Index of variable containing range minimum (from const).
+	@in		number max			Index of variable containing range maximum (from const).
 	@out	nil
 */
-IMPL_LUA_PARTICLE_OP ( _initRand, INIT_RAND, "PVV" )
+IMPL_LUA_PARTICLE_OP ( _randConst, RAND_CONST, "RFF" )
 
 //----------------------------------------------------------------//
-/**	@name	initRandVec
-	@text	Load two variables with the X and Y components of a vector
+/**	@name	randVar
+	@text	Load a register with a random number from a range.
+	
+	@in		MOAIParticleScript self
+	@in		number r0			Register to store result.
+	@in		number r1			Index of variable containing range minimum (from register).
+	@in		number r2			Index of variable containing range maximum (from register).
+	@in		number add			Value to add to result (from const).
+	@in		number scale		Value to scale result (from const).
+	@out	nil
+*/
+IMPL_LUA_PARTICLE_OP ( _randVar, RAND_VAR, "RRRFF" )
+
+//----------------------------------------------------------------//
+/**	@name	randVec
+	@text	Load two registers with the X and Y components of a vector
 			with randomly chosen direction and length.
 	
 	@in		MOAIParticleScript self
-	@in		number v0			Index of the variable
-	@in		number min			Minimum length of vector.
-	@in		number max			Maximum length of vector.
+	@in		number r0			Register to store result X.
+	@in		number r1			Register to store result Y.
+	@in		number r2			Minimum length of vector (from register).
+	@in		number r3			Maximum length of vector (from register).
 	@out	nil
 */
-IMPL_LUA_PARTICLE_OP ( _initRandVec, INIT_RAND_VEC, "PPVV" )
+IMPL_LUA_PARTICLE_OP ( _randVec, RAND_VEC, "RRRR" )
 
 //----------------------------------------------------------------//
-/**	@name	randConst
-	@text	Load a variable with a random number derived from a
-			constant range.
+/**	@name	initRandVec
+	@text	Load two registers with the X and Y components of a vector
+			with randomly chosen direction and length.
 	
 	@in		MOAIParticleScript self
-	@in		number register		See MOAIParticleScript documentation for a list of sprite registers.
-	@in		number min			Range minimum.
-	@in		number max			Range maximum.
+	@in		number r0			Register to store result X.
+	@in		number r1			Register to store result Y.
+	@in		number min			Minimum length of vector (from const).
+	@in		number max			Maximum length of vector (from const).
 	@out	nil
 */
-IMPL_LUA_PARTICLE_OP ( _randConst, RAND_CONST, "RVV" )
-
-//----------------------------------------------------------------//
-/**	@name	randConst
-	@text	Load a variable with a random number derived from a
-			range held in two variables.
-	
-	@in		MOAIParticleScript self
-	@in		number register		See MOAIParticleScript documentation for a list of sprite registers.
-	@in		number v0			Index of variable containing range minimum.
-	@in		number v1			Index of variable containing range maximum.
-	@out	nil
-*/
-IMPL_LUA_PARTICLE_OP ( _randVar, RAND_VAR, "RPPVV" )
+IMPL_LUA_PARTICLE_OP ( _randVecConst, RAND_VEC_CONST, "RRFF" )
 
 //----------------------------------------------------------------//
 /**	@name	setConst
-	@text	Load a const into a sprite register.
+	@text	Load a value into a register.
 	
 	@in		MOAIParticleScript self
-	@in		number register		See MOAIParticleScript documentation for a list of sprite registers.
-	@in		number c0			Const value to load.
+	@in		number r0			Register to store result.
+	@in		number value		Value to load (from const).
 	@out	nil
 */
-IMPL_LUA_PARTICLE_OP ( _setConst, SET_CONST, "RV" )
+IMPL_LUA_PARTICLE_OP ( _setConst, SET_CONST, "RF" )
+
+//----------------------------------------------------------------//
+/**	@name	setVar
+	@text	Load a value into a register.
+	
+	@in		MOAIParticleScript self
+	@in		number r0			Register to store result.
+	@in		number r1			Value to load (from register).
+	@out	nil
+*/
+IMPL_LUA_PARTICLE_OP ( _setVar, SET_VAR, "RR" )
 
 //----------------------------------------------------------------//
 /**	@name	sprite
@@ -290,32 +343,29 @@ MOAIParticleScript::Instruction& MOAIParticleScript::PushInstruction ( u32 op, c
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleScript::PushSprite ( MOAIParticleSystem& system, MOAIParticle& particle, float* registers ) {
+void MOAIParticleScript::PushSprite ( MOAIParticleSystem& system, float* registers ) {
 
 	MOAIParticleSprite sprite;
 
-	particle.mOffset.mX	= registers [ X_OFF ];
-	particle.mOffset.mY	= registers [ Y_OFF ];
-
-	sprite.mLoc.mX		= particle.mLoc.mX + registers [ X_OFF ];
-	sprite.mLoc.mY		= particle.mLoc.mY + registers [ Y_OFF ];
+	sprite.mLoc.mX		= registers [ SPRITE_X_LOC ];
+	sprite.mLoc.mY		= registers [ SPRITE_Y_LOC ];
 	
-	sprite.mRot			= registers [ ROT ];
+	sprite.mRot			= registers [ SPRITE_ROT ];
 	
-	sprite.mScl.mX		= registers [ X_SCL ];
-	sprite.mScl.mY		= registers [ Y_SCL ];
+	sprite.mScl.mX		= registers [ SPRITE_X_SCL ];
+	sprite.mScl.mY		= registers [ SPRITE_Y_SCL ];
 	
-	float fade			= registers [ OPACITY ];
-	float glow			= 1.0f - registers [ GLOW ];
+	float opacity		= registers [ SPRITE_OPACITY ];
+	float glow			= 1.0f - registers [ SPRITE_GLOW ];
 	
 	sprite.mColor.Set (
-		registers [ R ] * fade,
-		registers [ G ] * fade,
-		registers [ B ] * fade,
-		registers [ A ] * fade * glow
+		registers [ SPRITE_RED ] * opacity,
+		registers [ SPRITE_GREEN ] * opacity,
+		registers [ SPRITE_BLUE ] * opacity,
+		opacity * glow
 	);
 	
-	sprite.mGfxID = USFloat::ToInt ( registers [ IDX ]);
+	sprite.mGfxID = USFloat::ToInt ( registers [ SPRITE_IDX ]);
 	
 	system.PushSprite ( sprite );
 }
@@ -323,18 +373,22 @@ void MOAIParticleScript::PushSprite ( MOAIParticleSystem& system, MOAIParticle& 
 //----------------------------------------------------------------//
 void MOAIParticleScript::RegisterLuaClass ( USLuaState& state ) {
 
-	state.SetField ( -1, "SPRITE_X_OFF",	( u32 )X_OFF );
-	state.SetField ( -1, "SPRITE_Y_OFF",	( u32 )Y_OFF );
-	state.SetField ( -1, "SPRITE_ROT",		( u32 )ROT );
-	state.SetField ( -1, "SPRITE_X_SCL",	( u32 )X_SCL );
-	state.SetField ( -1, "SPRITE_Y_SCL",	( u32 )Y_SCL );
-	state.SetField ( -1, "SPRITE_RED",		( u32 )R );
-	state.SetField ( -1, "SPRITE_GREEN",	( u32 )G );
-	state.SetField ( -1, "SPRITE_BLUE",		( u32 )B );
-	state.SetField ( -1, "SPRITE_ALPHA",	( u32 )A );
-	state.SetField ( -1, "SPRITE_OPACITY",	( u32 )OPACITY );
-	state.SetField ( -1, "SPRITE_GLOW",		( u32 )GLOW );
-	state.SetField ( -1, "SPRITE_IDX",		( u32 )IDX );
+	state.SetField ( -1, "PARTICLE_X",		( s32 )( MOAIParticle::PARTICLE_X | PARTICLE_REG_BIT ));
+	state.SetField ( -1, "PARTICLE_Y",		( s32 )( MOAIParticle::PARTICLE_Y | PARTICLE_REG_BIT ));
+	state.SetField ( -1, "PARTICLE_DX",		( s32 )( MOAIParticle::PARTICLE_DX | PARTICLE_REG_BIT ));
+	state.SetField ( -1, "PARTICLE_DY",		( s32 )( MOAIParticle::PARTICLE_DY | PARTICLE_REG_BIT ));
+
+	state.SetField ( -1, "SPRITE_X_LOC",	( u32 )( SPRITE_X_LOC | SPRITE_REG_BIT ));
+	state.SetField ( -1, "SPRITE_Y_LOC",	( u32 )( SPRITE_Y_LOC | SPRITE_REG_BIT ));
+	state.SetField ( -1, "SPRITE_ROT",		( u32 )( SPRITE_ROT | SPRITE_REG_BIT ));
+	state.SetField ( -1, "SPRITE_X_SCL",	( u32 )( SPRITE_X_SCL | SPRITE_REG_BIT ));
+	state.SetField ( -1, "SPRITE_Y_SCL",	( u32 )( SPRITE_Y_SCL | SPRITE_REG_BIT ));
+	state.SetField ( -1, "SPRITE_RED",		( u32 )( SPRITE_RED | SPRITE_REG_BIT ));
+	state.SetField ( -1, "SPRITE_GREEN",	( u32 )( SPRITE_GREEN | SPRITE_REG_BIT ));
+	state.SetField ( -1, "SPRITE_BLUE",		( u32 )( SPRITE_BLUE | SPRITE_REG_BIT ));
+	state.SetField ( -1, "SPRITE_OPACITY",	( u32 )( SPRITE_OPACITY | SPRITE_REG_BIT ));
+	state.SetField ( -1, "SPRITE_GLOW",		( u32 )( SPRITE_GLOW | SPRITE_REG_BIT ));
+	state.SetField ( -1, "SPRITE_IDX",		( u32 )( SPRITE_IDX | SPRITE_REG_BIT ));
 }
 
 //----------------------------------------------------------------//
@@ -342,13 +396,15 @@ void MOAIParticleScript::RegisterLuaFuncs ( USLuaState& state ) {
 	
 	luaL_Reg regTable [] = {
 		{ "easeConst",			_easeConst },
+		{ "easeConstDelta",		_easeConstDelta },
 		{ "easeVar",			_easeVar },
-		{ "initConst",			_initConst },
-		{ "initRand",			_initRand },
-		{ "initRandVec",		_initRandVec },
+		{ "easeVarDelta",		_easeVarDelta },
 		{ "randConst",			_randConst },
 		{ "randVar",			_randVar },
+		{ "randVec",			_randVec },
+		{ "randVecConst",		_randVecConst },
 		{ "setConst",			_setConst },
+		{ "setVar",				_setVar },
 		{ "sprite",				_sprite },
 		{ NULL, NULL }
 	};
@@ -357,38 +413,47 @@ void MOAIParticleScript::RegisterLuaFuncs ( USLuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleScript::ResetRegisters ( float* registers ) {
+void MOAIParticleScript::ResetRegisters ( float* spriteRegisters, float* particleRegisters ) {
 
-	registers [ X_OFF ]		= 0.0f;
-	registers [ Y_OFF ]		= 0.0f;
-	registers [ ROT ]		= 0.0f;
-	registers [ X_SCL ]		= 1.0f;
-	registers [ Y_SCL ]		= 1.0f;
-	registers [ R ]			= 1.0f;
-	registers [ G ]			= 1.0f;
-	registers [ B ]			= 1.0f;
-	registers [ A ]			= 1.0f;
-	registers [ OPACITY ]	= 1.0f;
-	registers [ GLOW ]		= 0.0f;
-	registers [ IDX ]		= 1.0f;
+	spriteRegisters [ SPRITE_X_LOC ]		= particleRegisters [ MOAIParticle::PARTICLE_X ];
+	spriteRegisters [ SPRITE_Y_LOC ]		= particleRegisters [ MOAIParticle::PARTICLE_Y ];
+	spriteRegisters [ SPRITE_ROT ]			= 0.0f;
+	spriteRegisters [ SPRITE_X_SCL ]		= 1.0f;
+	spriteRegisters [ SPRITE_Y_SCL ]		= 1.0f;
+	spriteRegisters [ SPRITE_RED ]			= 1.0f;
+	spriteRegisters [ SPRITE_GREEN ]		= 1.0f;
+	spriteRegisters [ SPRITE_BLUE ]			= 1.0f;
+	spriteRegisters [ SPRITE_OPACITY ]		= 1.0f;
+	spriteRegisters [ SPRITE_GLOW ]			= 0.0f;
+	spriteRegisters [ SPRITE_IDX ]			= 1.0f;
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleScript::Run ( MOAIParticleSystem& system, MOAIParticle& particle ) {
+void MOAIParticleScript::Run ( MOAIParticleSystem& system, MOAIParticle& particle, float step ) {
 
 	u8* bytecode = this->mBytecode;
 	if ( !bytecode ) return;
 
-	float t = particle.mAge / particle.mTerm;
-	u8 r0, r1, r2, r3;
-	float v0, v1, v2, v3;
-	float p0, p1;
+	float t0 = particle.mAge / particle.mTerm;
 	
-	u32 nParams = system.mParticleSize;
-	float* params = particle.mData;
+	particle.mAge += step;
+	float t1 = particle.mAge / particle.mTerm;
+	
+	u8 r0, r1, r2, r3;
+	float f0, f1, f2, f3;
+	float v0, v1;
+	u32 i0;
+	
+	USVec2D loc;
+	USVec2D vel;
+	
+	u32 nRegs = system.mParticleSize;
+	float* particleRegisters = particle.mData;
 	
 	MOAIParticleSprite sprite;
-	float r [ TOTAL ];
+	float spriteRegisters [ TOTAL_SPRITE_REG ];
+	
+	float* r = 0;
 
 	bool push = false;
 	
@@ -396,133 +461,180 @@ void MOAIParticleScript::Run ( MOAIParticleSystem& system, MOAIParticle& particl
 		
 		switch ( opcode ) {
 			
-			case EASE_CONST: // RVVR
-			
-				READ_BYTE ( r0, bytecode ); // register
-				READ_FLOAT ( v0, bytecode ); // v0
-				READ_FLOAT ( v1, bytecode ); // v1
-				READ_BYTE ( r1, bytecode ); // ease type
+			case EASE_CONST: // RFFI
 				
-				if ( r0 < TOTAL ) {
-					r [ r0 ] = USInterpolate::Interpolate ( r1, v0, v1, t );
+				READ_BYTE	( r0, bytecode );
+				READ_FLOAT	( f0, bytecode );
+				READ_FLOAT	( f1, bytecode );
+				READ_INT	( i0, bytecode );
+				
+				r = REG_ADDR ( r0 );
+				if ( r ) {
+					*r = USInterpolate::Interpolate ( i0, f0, f1, t1 );
 				}
 				break;
 			
-			case EASE_VAR: // RPPRVV
-			
-				READ_BYTE ( r0, bytecode ); // register
-				READ_BYTE ( r1, bytecode ); // r0
-				READ_BYTE ( r2, bytecode ); // r1
-				READ_BYTE ( r3, bytecode ); // ease type
+			case EASE_CONST_DELTA: // RFFI
 				
-				READ_FLOAT ( v0, bytecode ); // add
-				READ_FLOAT ( v1, bytecode ); // scale
+				READ_BYTE	( r0, bytecode );
+				READ_FLOAT	( f0, bytecode );
+				READ_FLOAT	( f1, bytecode );
+				READ_INT	( i0, bytecode );
 				
-				if ( r0 < TOTAL ) {
-				
-					p0 = r1 < nParams ? params [ r1 ] : 0.0f;
-					p1 = r2 < nParams ? params [ r2 ] : 0.0f;
-				
-					r [ r0 ] = v0 + ( USInterpolate::Interpolate ( r3, p0, p1, t ) * v1 );
-				}
-				break;
-			
-			case INIT_CONST: // PVV
-			
-				READ_BYTE ( r0, bytecode ); // param
-				
-				READ_FLOAT ( v0, bytecode );
-				
-				if ( r0 < nParams ) {
-					params [ r0 ] = v0;
-				}
-				break;
-			
-			case INIT_RAND: // PVV
-			
-				READ_BYTE ( r0, bytecode ); // param
-				
-				READ_FLOAT ( v0, bytecode );
-				READ_FLOAT ( v1, bytecode );
-				
-				if ( r0 < nParams ) {
-					params [ r0 ] = USFloat::Rand ( v0, v1 );
-				}
-				break;
-			
-			case INIT_RAND_VEC: // PPVV
-			
-				READ_BYTE ( r0, bytecode ); // param1
-				READ_BYTE ( r1, bytecode ); // param2
-				
-				READ_FLOAT ( v0, bytecode );
-				READ_FLOAT ( v1, bytecode );
-				
-				v2 = USFloat::Rand ( 360.0f ) * ( float )D2R;
-				v3 = USFloat::Rand ( v0, v1 );
-				
-				if ( r0 < nParams ) {
-					params [ r0 ] = Cos ( v2 ) * v3;
-				}
-				
-				if ( r1 < nParams ) {
-					params [ r1 ] = -Sin ( v2 ) * v3;
-				}
-				break;
-			
-			case RAND_CONST: // RVV
-			
-				READ_BYTE ( r0, bytecode ); // register
-				
-				READ_FLOAT ( v0, bytecode ); // v0
-				READ_FLOAT ( v1, bytecode ); // v1
-				
-				if ( r0 < TOTAL ) {
-					r [ r0 ] = USFloat::Rand ( v0, v1 );
-				}
-				break;
-			
-			case RAND_VAR: // RPPVV
-			
-				READ_BYTE ( r0, bytecode ); // register
-				READ_BYTE ( r1, bytecode );
-				READ_BYTE ( r2, bytecode );
-				
-				READ_FLOAT ( v0, bytecode ); // add
-				READ_FLOAT ( v1, bytecode ); // scale
-				
-				if ( r0 < TOTAL ) {
+				r = REG_ADDR ( r0 );
+				if ( r ) {
 					
-					p0 = r1 < nParams ? params [ r1 ] : 0.0f;
-					p1 = r2 < nParams ? params [ r2 ] : 0.0f;
-				
-					r [ r0 ] = v0 + ( USFloat::Rand ( p0, p1 ) * v1 );
+					v0 = USInterpolate::Interpolate ( i0, f0, f1, t0 );
+					v1 = USInterpolate::Interpolate ( i0, f0, f1, t1 );
+					
+					*r += ( v1 - v0 );
 				}
 				break;
 			
-			case SET_CONST: // RV
-			
-				READ_BYTE ( r0, bytecode ); // register
-				READ_FLOAT ( v0, bytecode ); // v0
+			case EASE_VAR: // RRRIFF
 				
-				if ( r0 < TOTAL ) {
-					r [ r0 ] = v0;
+				READ_BYTE	( r0, bytecode );
+				READ_BYTE	( r1, bytecode );
+				READ_BYTE	( r2, bytecode );
+				READ_INT	( i0, bytecode );
+				READ_FLOAT	( f0, bytecode );
+				READ_FLOAT	( f1, bytecode );
+				
+				r = REG_ADDR ( r0 );
+				if ( r ) {
+					
+					f2 = REG_VALUE ( r1 );
+					f3 = REG_VALUE ( r2 );
+					
+					*r = f0 + ( USInterpolate::Interpolate ( i0, f2, f3, t1 ) * f1 );
 				}
 				break;
 			
+			case EASE_VAR_DELTA: // RRRIFF
+				
+				READ_BYTE	( r0, bytecode );
+				READ_BYTE	( r1, bytecode );
+				READ_BYTE	( r2, bytecode );
+				READ_INT	( i0, bytecode );
+				READ_FLOAT	( f0, bytecode );
+				READ_FLOAT	( f1, bytecode );
+				
+				r = REG_ADDR ( r0 );
+				if ( r ) {
+				
+					f2 = REG_VALUE ( r1 );
+					f3 = REG_VALUE ( r2 );
+					
+					v0 = f0 + ( USInterpolate::Interpolate ( i0, f2, f3, t0 ) * f1 );
+					v1 = f0 + ( USInterpolate::Interpolate ( i0, f2, f3, t1 ) * f1 );
+					
+					*r += ( v1 - v0 );
+				}
+				break;
+				
+			case RAND_CONST: // RFF
+				
+				READ_BYTE	( r0, bytecode ); // register
+				READ_FLOAT	( f0, bytecode ); // f0
+				READ_FLOAT	( f1, bytecode ); // f1
+				
+				r = REG_ADDR ( r0 );
+				if ( r ) {
+					*r = USFloat::Rand ( f0, f1 );
+				}
+				break;
+				
+			case RAND_VAR: // RRRFF
+				
+				READ_BYTE	( r0, bytecode );
+				READ_BYTE	( r1, bytecode );
+				READ_BYTE	( r2, bytecode );
+				READ_FLOAT	( f0, bytecode );
+				READ_FLOAT	( f1, bytecode );
+				
+				r = REG_ADDR ( r0 );
+				if ( r ) {
+					*r = f0 + ( USFloat::Rand ( REG_VALUE ( r1 ), REG_VALUE ( r2 )) * f1 );
+				}
+				break;
+				
+			case RAND_VEC: // RRRR
+				
+				READ_BYTE	( r0, bytecode );
+				READ_BYTE	( r1, bytecode );
+				READ_BYTE	( r2, bytecode );
+				READ_BYTE	( r3, bytecode );
+				
+				f0 = USFloat::Rand ( 360.0f ) * ( float )D2R;
+				f1 = USFloat::Rand ( REG_VALUE ( r2 ),  REG_VALUE ( r3 ));
+				
+				r = REG_ADDR ( r0 );
+				if ( r ) {
+					*r = Cos ( f0 ) * f1;
+				}
+				
+				r = REG_ADDR ( r1 );
+				if ( r ) {
+					*r = -Sin ( f0 ) * f1;
+				}
+				break;
+				
+			case RAND_VEC_CONST: // RRFF
+				
+				READ_BYTE	( r0, bytecode );
+				READ_BYTE	( r1, bytecode );
+				READ_FLOAT	( f0, bytecode );
+				READ_FLOAT	( f1, bytecode );
+				
+				f2 = USFloat::Rand ( 360.0f ) * ( float )D2R;
+				f3 = USFloat::Rand ( f0, f1 );
+				
+				r = REG_ADDR ( r0 );
+				if ( r ) {
+					*r = Cos ( f2 ) * f3;
+				}
+				
+				r = REG_ADDR ( r1 );
+				if ( r ) {
+					*r = -Sin ( f2 ) * f3;
+				}
+				break;
+				
+			case SET_CONST: // RF
+				
+				READ_BYTE	( r0, bytecode );
+				READ_FLOAT	( f0, bytecode );
+				
+				r = REG_ADDR ( r0 );
+				if ( r ) {
+					*r = f0;
+				}
+				break;
+				
+			case SET_VAR: // RR
+				
+				READ_BYTE	( r0, bytecode );
+				READ_BYTE	( r1, bytecode );
+				
+				r = REG_ADDR ( r0 );
+				if ( r ) {
+					*r = REG_VALUE ( r1 );
+				}
+				break;
+				
 			case SPRITE: //
-			
+				
 				if ( push ) {
-					this->PushSprite ( system, particle, r );
+					this->PushSprite ( system, spriteRegisters );
 				}
-				this->ResetRegisters ( r );
+				this->ResetRegisters ( spriteRegisters, particleRegisters );
 				push = true;
 				break;
 		}
 	}
 	
 	if ( push ) {
-		this->PushSprite ( system, particle, r );
+		this->PushSprite ( system, spriteRegisters );
 	}
 }
 

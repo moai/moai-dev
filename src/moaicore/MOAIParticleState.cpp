@@ -180,19 +180,39 @@ void MOAIParticleState::ClearForces () {
 }
 
 //----------------------------------------------------------------//
+void MOAIParticleState::GatherForces ( USVec2D& loc, USVec2D& velocity, float mass, float step ) {
+
+	USVec2D result;
+
+	USVec2D acceleration ( 0.0f, 0.0f );
+	USVec2D offset ( 0.0f, 0.0f );
+		
+	ForceNode* forceNode = this->mForces.Head ();
+	for ( ; forceNode; forceNode = forceNode->Next ()) {
+		MOAIParticleForce* particleForce = forceNode->Data ();
+		particleForce->Eval ( loc, mass, acceleration, offset );
+	}
+	
+	velocity.mX += acceleration.mX * step;
+	velocity.mY += acceleration.mY * step;
+	
+	velocity.Scale ( USFloat::Clamp ( 1.0f - ( this->mDamping * step ), 0.0f, 1.0f ));
+	
+	loc.mX += ( velocity.mX + offset.mX ) * step;
+	loc.mY += ( velocity.mY + offset.mY ) * step;
+}
+
+//----------------------------------------------------------------//
 void MOAIParticleState::InitParticle ( MOAIParticleSystem& system, MOAIParticle& particle ) {
 
 	if ( this->mInit ) {
-		this->mInit->Run ( system, particle );
+		this->mInit->Run ( system, particle, 0.0f );
 	}
 	
 	particle.mAge = 0.0f;
 	particle.mTerm = USFloat::Rand ( this->mTermRange [ 0 ], this->mTermRange [ 1 ]);
 	particle.mMass = USFloat::Rand ( this->mMassRange [ 0 ], this->mMassRange [ 1 ]);
 	particle.mState = this;
-	
-	particle.mLoc.Add ( particle.mOffset );
-	particle.mOffset.Init ( 0.0f, 0.0f );
 }
 
 //----------------------------------------------------------------//
@@ -253,10 +273,32 @@ void MOAIParticleState::RegisterLuaFuncs ( USLuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIParticleState::ProcessParticle ( MOAIParticleSystem& system, MOAIParticle& particle, float step ) {
 
-	USVec2D acceleration ( 0.0f, 0.0f );
-	USVec2D offset ( 0.0f, 0.0f );
+	if (( particle.mAge + step ) > particle.mTerm ) {
+		particle.mAge = particle.mTerm;
+	}
 
-	particle.mAge += step;
+	if ( this->mRender ) {
+	
+		float* r = particle.mData;
+	
+		USVec2D loc;
+		USVec2D vel;
+		
+		loc.mX = r [ MOAIParticle::PARTICLE_X ];
+		loc.mY = r [ MOAIParticle::PARTICLE_Y ];
+		vel.mX = r [ MOAIParticle::PARTICLE_DX ];
+		vel.mY = r [ MOAIParticle::PARTICLE_DY ];
+		
+		this->GatherForces ( loc, vel, particle.mMass, step );
+		
+		r [ MOAIParticle::PARTICLE_X ]	= loc.mX;
+		r [ MOAIParticle::PARTICLE_Y ]	= loc.mY;
+		r [ MOAIParticle::PARTICLE_DX ]	= vel.mX;
+		r [ MOAIParticle::PARTICLE_DY ]	= vel.mY;
+		
+		this->mRender->Run ( system, particle, step );
+	}
+
 	if ( particle.mAge >= particle.mTerm ) {
 		
 		if ( this->mNext ) {
@@ -265,37 +307,5 @@ void MOAIParticleState::ProcessParticle ( MOAIParticleSystem& system, MOAIPartic
 		else {
 			particle.mState = 0;
 		}
-	}
-	else {
-		
-		ForceNode* forceNode = this->mForces.Head ();
-		for ( ; forceNode; forceNode = forceNode->Next ()) {
-			MOAIParticleForce* particleForce = forceNode->Data ();
-			particleForce->Eval ( particle, acceleration, offset );
-		}
-	}
-	
-	particle.mVelocity.mX += acceleration.mX * step;
-	particle.mVelocity.mY += acceleration.mY * step;
-	
-	particle.mVelocity.Scale ( USFloat::Clamp ( 1.0f - ( this->mDamping * step ), 0.0f, 1.0f ));
-	
-	particle.mLoc.mX += ( particle.mVelocity.mX + offset.mX ) * step;
-	particle.mLoc.mY += ( particle.mVelocity.mY + offset.mY ) * step;
-	
-	if ( this->mRender ) {
-		this->mRender->Run ( system, particle );
-	}
-	else {
-	
-		MOAIParticleSprite sprite;
-		
-		sprite.mLoc.Init ( 0.0f, 0.0f );
-		sprite.mRot = 0.0f;
-		sprite.mScl.Init ( 1.0f, 1.0f );
-		sprite.mColor.Set ( 1.0f, 1.0f, 1.0f, 1.0f );
-		sprite.mGfxID = 1;
-		
-		system.PushSprite ( sprite );
 	}
 }

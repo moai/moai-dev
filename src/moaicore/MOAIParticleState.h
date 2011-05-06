@@ -19,6 +19,7 @@ class MOAIParticleSystem;
 class MOAIParticleState :
 	public virtual USLuaObject {
 private:
+	friend class MOAIParticleScript;
 	friend class MOAIParticleSystem;
 
 	typedef USLeanLink < MOAIParticleForce* > ForceNode;
@@ -45,6 +46,7 @@ private:
 	static int		_setTerm				( lua_State* L );
 
 	//----------------------------------------------------------------//
+	void			GatherForces			( USVec2D& loc, USVec2D& velocity, float mass, float step );
 	void			InitParticle			( MOAIParticleSystem& system, MOAIParticle& particle );
 	void			ProcessParticle			( MOAIParticleSystem& system, MOAIParticle& particle, float step );
 

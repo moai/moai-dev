@@ -48,8 +48,8 @@ protected:
 	u32						mRepeat;
 	USVec2D					mGridScale;
 	
-	u32				mFrameSource;
-	USRect			mFrame;
+	u32						mFrameSource;
+	USRect					mFrame;
 	
 	USRef < MOAIShader >		mShader;
 	USRef < MOAITransform >		mUVTransform;

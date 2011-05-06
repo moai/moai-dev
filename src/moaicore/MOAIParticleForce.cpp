@@ -116,10 +116,7 @@ int MOAIParticleForce::_setType ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIParticleForce::Eval ( const MOAIParticle& particle, USVec2D& acceleration, USVec2D& offset ) {
-
-	USVec2D loc = particle.mLoc;
-	loc.Add ( particle.mOffset );
+void MOAIParticleForce::Eval ( const USVec2D& loc, float mass, USVec2D& acceleration, USVec2D& offset ) {
 
 	USVec2D force;
 	USVec2D origin = this->mLocalToWorldMtx.GetTranslation ();
@@ -174,7 +171,7 @@ void MOAIParticleForce::Eval ( const MOAIParticle& particle, USVec2D& accelerati
 	switch ( this->mType ) {
 	
 		case FORCE:
-			force.Scale ( 1.0f / particle.mMass );
+			force.Scale ( 1.0f / mass );
 			acceleration.Add ( force );
 			break;
 	

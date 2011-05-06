@@ -5,6 +5,7 @@
 #define	MOAIPARTICLESCRIPT_H
 
 class MOAIParticle;
+class MOAIParticleState;
 class MOAIParticleSystem;
 
 //================================================================//
@@ -13,18 +14,17 @@ class MOAIParticleSystem;
 /**	@name	MOAIParticleScript
 	@text	Particle script.
 
-	@const	X_OFF
-	@const	Y_OFF
-	@const	ROT
-	@const	X_SCL
-	@const	Y_SCL
-	@const	R
-	@const	G
-	@const	B
-	@const	A
-	@const	OPACITY
-	@const	GLOW
-	@const	IDX
+	@const	SPRITE_X_OFF
+	@const	SPRITE_Y_OFF
+	@const	SPRITE_ROT
+	@const	SPRITE_X_SCL
+	@const	SPRITE_Y_SCL
+	@const	SPRITE_RED
+	@const	SPRITE_GREEN
+	@const	SPRITE_BLUE
+	@const	SPRITE_OPACITY
+	@const	SPRITE_GLOW
+	@const	SPRITE_IDX
 */
 class MOAIParticleScript :
 	public virtual USLuaObject {
@@ -33,31 +33,43 @@ private:
 	friend class MOAIParticleState;
 	
 	enum {
-		X_OFF,
-		Y_OFF,
-		ROT,
-		X_SCL,
-		Y_SCL,
-		R,
-		G,
-		B,
-		A,
-		OPACITY,
-		GLOW,
-		IDX,
-		TOTAL,
+		SPRITE_X_LOC,
+		SPRITE_Y_LOC,
+		SPRITE_ROT,
+		SPRITE_X_SCL,
+		SPRITE_Y_SCL,
+		SPRITE_RED,
+		SPRITE_GREEN,
+		SPRITE_BLUE,
+		SPRITE_OPACITY,
+		SPRITE_GLOW,
+		SPRITE_IDX,
+		TOTAL_SPRITE_REG,
+	};
+	
+	enum {
+		REG_MASK			= 0x3f, // mask for register lookups - up to 64 registers
+		PARTICLE_REG_BIT	= 0x40, // flag default particle registers - resolved when parsing commands
+		SPRITE_REG_BIT		= 0x80, // select sprite registers vs. particle registers
 	};
 	
 	enum {
 		END = 0,
+		
 		EASE_CONST,
+		EASE_CONST_DELTA,
 		EASE_VAR,
-		INIT_CONST,
-		INIT_RAND,
-		INIT_RAND_VEC,
+		EASE_VAR_DELTA,
+		
 		RAND_CONST,
 		RAND_VAR,
+		
+		RAND_VEC,
+		RAND_VEC_CONST,
+		
 		SET_CONST,
+		SET_VAR,
+		
 		SPRITE,
 	};
 	
@@ -88,19 +100,21 @@ private:
 
 	//----------------------------------------------------------------//
 	static int		_easeConst			( lua_State* L );
+	static int		_easeConstDelta		( lua_State* L );
 	static int		_easeVar			( lua_State* L );
-	static int		_initConst			( lua_State* L );
-	static int		_initRand			( lua_State* L );
-	static int		_initRandVec		( lua_State* L );
+	static int		_easeVarDelta		( lua_State* L );
 	static int		_randConst			( lua_State* L );
 	static int		_randVar			( lua_State* L );
+	static int		_randVec			( lua_State* L );
+	static int		_randVecConst		( lua_State* L );
 	static int		_setConst			( lua_State* L );
+	static int		_setVar				( lua_State* L );
 	static int		_sprite				( lua_State* L );
 	
 	//----------------------------------------------------------------//
 	Instruction&	PushInstruction			( u32 op, cc8* format );
-	void			PushSprite				( MOAIParticleSystem& system, MOAIParticle& particle, float* registers );
-	void			ResetRegisters			( float* registers );
+	void			PushSprite				( MOAIParticleSystem& system, float* registers );
+	void			ResetRegisters			( float* spriteRegisters, float* particleRegisters );
 
 public:
 	
@@ -112,7 +126,7 @@ public:
 					~MOAIParticleScript		();
 	void			RegisterLuaClass		( USLuaState& state );
 	void			RegisterLuaFuncs		( USLuaState& state );
-	void			Run						( MOAIParticleSystem& system, MOAIParticle& particle );
+	void			Run						( MOAIParticleSystem& system, MOAIParticle& particle, float step );
 	STLString		ToString				();
 };
 

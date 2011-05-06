@@ -118,6 +118,7 @@ bool USVertexFormat::ComputeBounds ( void* buffer, u32 size, USRect& bounds ) {
 	
 	USVec2D* coord = ( USVec2D* )buffer;
 	bounds.Init ( *coord );
+	bounds.Inflate ( 0.0000001f ); // prevent 'empty' bounds on cardinal direction lines or single vertex objects
 	
 	for ( u32 i = 1; i < total; ++i ) {
 		

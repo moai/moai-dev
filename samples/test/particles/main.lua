@@ -19,27 +19,29 @@ MOAISim.openWindow ( "cathead", 640, 480 )
 ----------------------------------------------------------------
 
 local init = MOAIParticleScript.new ()
-init:initRandVec		( 1, 2, 64, 128 )
+init:randVecConst		( 1, 2, 64, 128 )
 
 local render = MOAIParticleScript.new ()
+render:easeVarDelta		( MOAIParticleScript.PARTICLE_X, 0, 1, MOAIEaseType.EASE_IN, 0, 1 )
+render:easeVarDelta		( MOAIParticleScript.PARTICLE_Y, 0, 2, MOAIEaseType.EASE_IN, 0, 1 )
+
 render:sprite			()
-render:easeVar			( MOAIParticleScript.SPRITE_X_OFF, 0, 1, MOAIEaseType.EASE_IN, 0, 1 )
-render:easeVar			( MOAIParticleScript.SPRITE_Y_OFF, 0, 2, MOAIEaseType.EASE_IN, 0, 1 )
 render:setConst			( MOAIParticleScript.SPRITE_RED, 0 )
-render:randConst		( MOAIParticleScript.SPRITE_GREEN, 0, 1 )
-render:randConst		( MOAIParticleScript.SPRITE_BLUE, 0, 1 )
+render:randConst		( MOAIParticleScript.SPRITE_GREEN, 0.5, 1 )
+render:randConst		( MOAIParticleScript.SPRITE_BLUE, 0.5, 1 )
 
 ----------------------------------------------------------------
 
 local init2 = MOAIParticleScript.new ()
-init2:initConst			( 1, 0 )
-init2:initRand			( 2, -360, 360 )
+init2:setConst			( 1, 0 )
+init2:randConst			( 2, -360, 360 )
 
 local render2 = MOAIParticleScript.new ()
+
 render2:sprite			()
 render2:easeVar			( MOAIParticleScript.SPRITE_ROT, 1, 2, MOAIEaseType.EASE_IN, 0, 1 )
-render2:randConst		( MOAIParticleScript.SPRITE_RED, 0, 1 )
-render2:randConst		( MOAIParticleScript.SPRITE_GREEN, 0, 1 )
+render2:randConst		( MOAIParticleScript.SPRITE_RED, 0.5, 1 )
+render2:randConst		( MOAIParticleScript.SPRITE_GREEN, 0.5, 1 )
 render2:setConst		( MOAIParticleScript.SPRITE_BLUE, 0 )
 
 ----------------------------------------------------------------
@@ -77,16 +79,8 @@ system:setState ( 2, state2 )
 
 state2:pushForce ( magnet )
 
---force = MOAIParticleForce.new ()
---force:initLinear ( 0, -400 )
---state2:pushForce ( force )
-
 state1:setNext ( state2 )
 state2:setNext ( state1 )
-
---force = MOAIParticleForce.new ()
---force:initAttractor ( 128, -20000 )
---state:pushForce ( force )
 
 --[[
 emitter = MOAIParticleEmitter.new ()

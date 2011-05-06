@@ -63,7 +63,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIParticleForce )
 
 	//----------------------------------------------------------------//
-	void			Eval					( const MOAIParticle& particle, USVec2D& acceleration, USVec2D& offset );
+	void			Eval					( const USVec2D& loc, float mass, USVec2D& acceleration, USVec2D& offset );
 					MOAIParticleForce		();
 					~MOAIParticleForce		();
 	void			OnDepNodeUpdate			();

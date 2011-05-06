@@ -12,15 +12,19 @@ class MOAIParticleState;
 class MOAIParticle {
 public:
 
+	enum {
+		PARTICLE_X,
+		PARTICLE_Y,
+		PARTICLE_DX,
+		PARTICLE_DY,
+		TOTAL_PARTICLE_REG,
+	};
+
 	float					mAge;
 	float					mTerm;
 	float					mMass;
 	MOAIParticleState*		mState;
 	float*					mData;
-	
-	USVec2D					mLoc;
-	USVec2D					mVelocity;
-	USVec2D					mOffset;
 
 	MOAIParticle*			mNext;
 };
