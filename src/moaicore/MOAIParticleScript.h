@@ -48,29 +48,18 @@ private:
 	};
 	
 	enum {
-		REG_MASK			= 0x3f, // mask for register lookups - up to 64 registers
-		PARTICLE_REG_BIT	= 0x40, // flag default particle registers - resolved when parsing commands
-		SPRITE_REG_BIT		= 0x80, // select sprite registers vs. particle registers
-	};
-	
-	enum {
 		END = 0,
-		
-		EASE_CONST,
-		EASE_CONST_DELTA,
-		EASE_VAR,
-		EASE_VAR_DELTA,
-		
-		RAND_CONST,
-		RAND_VAR,
-		
+		ADD,
+		DIV,
+		EASE,
+		EASE_DELTA,
+		MUL,
+		RAND,
 		RAND_VEC,
-		RAND_VEC_CONST,
-		
-		SET_CONST,
-		SET_VAR,
-		
+		SET,
 		SPRITE,
+		SUB,
+		TIME,
 	};
 	
 	//----------------------------------------------------------------//
@@ -81,6 +70,7 @@ private:
 		
 		u32		mOpcode;
 		u32		mParams [ MAX_PARAMS ];
+		u8		mTypes [ MAX_PARAMS ];
 		cc8*	mFormat;
 		u32		mSize;
 		
@@ -99,19 +89,22 @@ private:
 	bool mCompiled;
 
 	//----------------------------------------------------------------//
-	static int		_easeConst			( lua_State* L );
-	static int		_easeConstDelta		( lua_State* L );
-	static int		_easeVar			( lua_State* L );
-	static int		_easeVarDelta		( lua_State* L );
-	static int		_randConst			( lua_State* L );
-	static int		_randVar			( lua_State* L );
+	static int		_add				( lua_State* L );
+	static int		_div				( lua_State* L );
+	static int		_ease				( lua_State* L );
+	static int		_easeDelta			( lua_State* L );
+	static int		_mul				( lua_State* L );
+	static int		_packConst			( lua_State* L );
+	static int		_packReg			( lua_State* L );
+	static int		_rand				( lua_State* L );
 	static int		_randVec			( lua_State* L );
-	static int		_randVecConst		( lua_State* L );
-	static int		_setConst			( lua_State* L );
-	static int		_setVar				( lua_State* L );
+	static int		_set				( lua_State* L );
 	static int		_sprite				( lua_State* L );
+	static int		_sub				( lua_State* L );
+	static int		_time				( lua_State* L );
 	
 	//----------------------------------------------------------------//
+	static u64		Pack64					( u32 low, u32 hi );
 	Instruction&	PushInstruction			( u32 op, cc8* format );
 	void			PushSprite				( MOAIParticleSystem& system, float* registers );
 	void			ResetRegisters			( float* spriteRegisters, float* particleRegisters );
@@ -119,6 +112,16 @@ private:
 public:
 	
 	DECL_LUA_FACTORY ( MOAIParticleScript )
+	
+	enum {
+		PARAM_TYPE_FLAG				= 0x00,
+		PARAM_TYPE_CONST			= 0x01,
+		PARAM_TYPE_PARTICLE_REG		= 0x02,
+		PARAM_TYPE_SPRITE_REG		= 0x04,
+		
+		PARAM_TYPE_REG_MASK			= 0x06,
+		PARAM_TYPE_MASK				= 0x07,
+	};
 	
 	//----------------------------------------------------------------//
 	u8*				Compile					();

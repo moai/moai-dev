@@ -488,7 +488,7 @@ bool MOAIParticleSystem::PushParticle ( float x, float y, float dx, float dy ) {
 		r [ MOAIParticle::PARTICLE_X ] = x;
 		r [ MOAIParticle::PARTICLE_Y ] = y;
 		r [ MOAIParticle::PARTICLE_DX ] = dx;
-		r [ MOAIParticle::PARTICLE_DX ] = dy;
+		r [ MOAIParticle::PARTICLE_DY ] = dy;
 		
 		for ( u32 i = MOAIParticle::TOTAL_PARTICLE_REG; i < this->mParticleSize; ++i ) {
 			r [ i ] = 0.0f;
