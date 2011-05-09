@@ -14,8 +14,13 @@ class MOAIParticleSystem;
 /**	@name	MOAIParticleScript
 	@text	Particle script.
 
-	@const	SPRITE_X_OFF
-	@const	SPRITE_Y_OFF
+	@const	PARTICLE_X
+	@const	PARTICLE_Y
+	@const	PARTICLE_DX
+	@const	PARTICLE_DY
+
+	@const	SPRITE_X_LOC
+	@const	SPRITE_Y_LOC
 	@const	SPRITE_ROT
 	@const	SPRITE_X_SCL
 	@const	SPRITE_Y_SCL
