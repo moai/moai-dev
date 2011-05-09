@@ -26,7 +26,7 @@ public:
 	void			DrawDebug			( const USAffine2D& transform, u32 idx );
 	void			DrawDebug			( const USAffine2D& transform, MOAIGrid& grid, USVec2D& gridScale, USCellCoord& c0, USCellCoord& c1 );
 	void			GatherSurfaces		( u32 idx, MOAISurfaceSampler2D& sampler );
-	void			GatherSurfaces		( MOAIGrid& grid, USCellCoord& c0, USCellCoord& c1, MOAISurfaceSampler2D& sampler );
+	void			GatherSurfaces		( MOAIGrid& grid, USVec2D& gridScale, USCellCoord& c0, USCellCoord& c1, MOAISurfaceSampler2D& sampler );
 					MOAIDeck2D			();
 					~MOAIDeck2D			();
 	void			RegisterLuaClass	( USLuaState& state );
