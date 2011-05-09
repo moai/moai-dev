@@ -200,7 +200,7 @@ int MOAIGrid::_setSize ( lua_State* L ) {
 	self->SetTileHeight ( tileHeight );
 	
 	self->mTiles.Init ( self->GetTotalCells ());
-	self->mTiles.Fill ( USTile::HIDDEN );
+	self->mTiles.Fill ( 0 );
 	
 	return 0;
 }
