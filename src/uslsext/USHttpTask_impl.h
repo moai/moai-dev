@@ -27,6 +27,7 @@ private:
 	friend class USUrlMgr;
 
 	//----------------------------------------------------------------//
+	static void		_printError				( CURLcode error );
 	static u32		_writeData				( char* data, u32 n, u32 l, void* s );
 	static u32		_writeHeader			( char* data, u32 n, u32 l, void* s );
 

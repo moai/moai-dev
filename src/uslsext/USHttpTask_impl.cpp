@@ -9,6 +9,14 @@
 #include <uslsext/USUrlMgr.h>
 
 //----------------------------------------------------------------//
+void USHttpTaskInfo::_printError ( CURLcode error ) {
+
+	if ( error ) {
+		printf ( "%s\n", curl_easy_strerror ( error ));
+	}
+}
+
+//----------------------------------------------------------------//
 u32 USHttpTaskInfo::_writeData ( char* data, u32 n, u32 l, void* s ) {
 	
 	USHttpTaskInfo* self = ( USHttpTaskInfo* )s;
@@ -77,18 +85,35 @@ void USHttpTaskInfo::InitForGet ( cc8* url ) {
 
 	this->Clear ();
 	
+	CURLcode result;
 	CURL* easyHandle = curl_easy_init ();
 
-	curl_easy_setopt ( easyHandle, CURLOPT_URL, url );
+	result = curl_easy_setopt ( easyHandle, CURLOPT_URL, url );
+	_printError ( result );
 
-	curl_easy_setopt ( easyHandle, CURLOPT_HEADERFUNCTION, _writeHeader );
-	curl_easy_setopt ( easyHandle, CURLOPT_HEADERDATA, this );
-
-	curl_easy_setopt ( easyHandle, CURLOPT_WRITEFUNCTION, _writeData );
-	curl_easy_setopt ( easyHandle, CURLOPT_WRITEDATA, this );
+	result = curl_easy_setopt ( easyHandle, CURLOPT_HEADERFUNCTION, _writeHeader );
+	_printError ( result );
 	
-	curl_easy_setopt ( easyHandle, CURLOPT_FAILONERROR, 1 );
-	curl_easy_setopt ( easyHandle, CURLOPT_NOPROGRESS, 1 );
+	result = curl_easy_setopt ( easyHandle, CURLOPT_HEADERDATA, this );
+	_printError ( result );
+
+	result = curl_easy_setopt ( easyHandle, CURLOPT_WRITEFUNCTION, _writeData );
+	_printError ( result );
+	
+	result = curl_easy_setopt ( easyHandle, CURLOPT_WRITEDATA, this );
+	_printError ( result );
+	
+	result = curl_easy_setopt ( easyHandle, CURLOPT_FAILONERROR, 1 );
+	_printError ( result );
+	
+	result = curl_easy_setopt ( easyHandle, CURLOPT_NOPROGRESS, 1 );
+	_printError ( result );
+	
+	result = curl_easy_setopt ( easyHandle, CURLOPT_SSL_VERIFYPEER, 0 );
+	_printError ( result );
+	
+	result = curl_easy_setopt ( easyHandle, CURLOPT_SSL_VERIFYHOST, 0 );
+	_printError ( result );
 	
 	this->mEasyHandle = easyHandle;
 	this->mUrl = url;
@@ -99,11 +124,17 @@ void USHttpTaskInfo::InitForPost ( cc8* url, const void* buffer, u32 size ) {
 
 	this->Clear ();
 	
+	CURLcode result;
 	CURL* easyHandle = curl_easy_init ();
 
-	curl_easy_setopt ( easyHandle, CURLOPT_URL, url );
-	curl_easy_setopt ( easyHandle, CURLOPT_POSTFIELDS, buffer );
-    curl_easy_setopt ( easyHandle, CURLOPT_POSTFIELDSIZE, ( long )size );
+	result = curl_easy_setopt ( easyHandle, CURLOPT_URL, url );
+	_printError ( result );
+	
+	result = curl_easy_setopt ( easyHandle, CURLOPT_POSTFIELDS, buffer );
+	_printError ( result );
+	
+    result = curl_easy_setopt ( easyHandle, CURLOPT_POSTFIELDSIZE, ( long )size );
+    _printError ( result );
 
 	/*
 	curl_httppost* formpost = 0;
@@ -124,11 +155,23 @@ void USHttpTaskInfo::InitForPost ( cc8* url, const void* buffer, u32 size ) {
 	curl_easy_setopt ( easyHandle, CURLOPT_HTTPPOST, formpost );
 	*/
 
-	curl_easy_setopt ( easyHandle, CURLOPT_WRITEFUNCTION, _writeData );
-	curl_easy_setopt ( easyHandle, CURLOPT_WRITEDATA, this );
+	result = curl_easy_setopt ( easyHandle, CURLOPT_WRITEFUNCTION, _writeData );
+	_printError ( result );
 	
-	curl_easy_setopt ( easyHandle, CURLOPT_FAILONERROR, 1 );
-	curl_easy_setopt ( easyHandle, CURLOPT_NOPROGRESS, 1 );
+	result = curl_easy_setopt ( easyHandle, CURLOPT_WRITEDATA, this );
+	_printError ( result );
+	
+	result = curl_easy_setopt ( easyHandle, CURLOPT_FAILONERROR, 1 );
+	_printError ( result );
+	
+	result = curl_easy_setopt ( easyHandle, CURLOPT_NOPROGRESS, 1 );
+	_printError ( result );
+	
+	result = curl_easy_setopt ( easyHandle, CURLOPT_SSL_VERIFYPEER, 0 );
+	_printError ( result );
+	
+	result = curl_easy_setopt ( easyHandle, CURLOPT_SSL_VERIFYHOST, 0 );
+	_printError ( result );
 	
 	this->mEasyHandle = easyHandle;
 	this->mUrl = url;

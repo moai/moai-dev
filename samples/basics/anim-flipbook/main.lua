@@ -14,7 +14,7 @@ layer = MOAILayer2D.new ()
 layer:setViewport ( viewport )
 MOAISim.pushRenderPass ( layer )
 
-tileLib = MOAITileDeck2D:new ()
+tileLib = MOAITileDeck2D.new ()
 tileLib:setTexture ( "numbers.png" )
 tileLib:setSize ( 8, 8 )
 tileLib:setRect ( -16, -16, 16, 16 )

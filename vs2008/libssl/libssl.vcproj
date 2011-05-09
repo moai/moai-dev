@@ -44,7 +44,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;..\..\3rdparty\openssl-1.0.0d\crypto&quot;;&quot;..\..\3rdparty\openssl-1.0.0d\ssl&quot;;&quot;..\..\3rdparty\openssl-1.0.0d\include&quot;;&quot;..\..\3rdparty\openssl-1.0.0d\&quot;"
+				AdditionalIncludeDirectories="&quot;..\..\3rdparty\openssl-1.0.0d\include-win32&quot;"
 				PreprocessorDefinitions="WIN32;WIN32_LEAN_AND_MEAN;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;OPENSSL_SYSNAME_WIN32"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -180,7 +180,7 @@
 				EnableIntrinsicFunctions="true"
 				FavorSizeOrSpeed="2"
 				OmitFramePointers="true"
-				AdditionalIncludeDirectories="&quot;..\..\3rdparty\openssl-1.0.0d\crypto&quot;;&quot;..\..\3rdparty\openssl-1.0.0d\ssl&quot;;&quot;..\..\3rdparty\openssl-1.0.0d\include&quot;;&quot;..\..\3rdparty\openssl-1.0.0d\&quot;"
+				AdditionalIncludeDirectories="&quot;..\..\3rdparty\openssl-1.0.0d\include-win32&quot;"
 				PreprocessorDefinitions="WIN32;WIN32_LEAN_AND_MEAN;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;OPENSSL_SYSNAME_WIN32"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"

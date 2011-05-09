@@ -16,10 +16,10 @@
 #define HAVE_ASSERT_H 1
 
 /* Define if you have the <crypto.h> header file.  */
-/* #define HAVE_CRYPTO_H 1 */
+#define HAVE_CRYPTO_H 1
 
 /* Define if you have the <err.h> header file.  */
-/* #define HAVE_ERR_H 1 */
+#define HAVE_ERR_H 1
 
 /* Define if you have the <fcntl.h> header file.  */
 #define HAVE_FCNTL_H 1
@@ -56,7 +56,7 @@
 /* #define HAVE_SGTTY_H 1 */
 
 /* Define if you have the <ssl.h> header file.  */
-/* #define HAVE_SSL_H 1 */
+#define HAVE_SSL_H 1
 
 /* Define if you have the <stdlib.h> header file.  */
 #define HAVE_STDLIB_H 1
