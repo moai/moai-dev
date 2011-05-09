@@ -12,6 +12,8 @@
 		0324CC64135643FD000ADC60 /* libSystem.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0324CC63135643FD000ADC60 /* libSystem.dylib */; };
 		0324CC6613564411000ADC60 /* libz.1.2.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0324CC6513564411000ADC60 /* libz.1.2.3.dylib */; };
 		0324E2EF135649A9000ADC60 /* libmoai-osx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0324E2C21356485F000ADC60 /* libmoai-osx.a */; };
+		CD74EA2C137807E40093EE68 /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CD74EA2B137807E40093EE68 /* libcrypto.dylib */; };
+		CD74EA321378080E0093EE68 /* libssl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CD74EA311378080E0093EE68 /* libssl.dylib */; };
 		CD9A43F31354742F00632781 /* AKUGlut.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD9A43F11354742F00632781 /* AKUGlut.cpp */; };
 		CDEE231F1354504E00C2E04C /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDEE231E1354504E00C2E04C /* main.cpp */; };
 /* End PBXBuildFile section */
@@ -71,6 +73,8 @@
 		0324CC6513564411000ADC60 /* libz.1.2.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.3.dylib; path = /usr/lib/libz.1.2.3.dylib; sourceTree = "<absolute>"; };
 		0324CC6913564429000ADC60 /* libmoai.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = libmoai.xcodeproj; path = ../libmoai/libmoai.xcodeproj; sourceTree = SOURCE_ROOT; };
 		CD2FDEBB13542F1400B814DF /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/System/Library/Frameworks/AddressBook.framework; sourceTree = DEVELOPER_DIR; };
+		CD74EA2B137807E40093EE68 /* libcrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.dylib; path = /usr/lib/libcrypto.dylib; sourceTree = "<absolute>"; };
+		CD74EA311378080E0093EE68 /* libssl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libssl.dylib; path = /usr/lib/libssl.dylib; sourceTree = "<absolute>"; };
 		CD9A43F11354742F00632781 /* AKUGlut.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AKUGlut.cpp; path = ../../src/aku/AKUGlut.cpp; sourceTree = SOURCE_ROOT; };
 		CD9A43F21354742F00632781 /* AKUGlut.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AKUGlut.h; path = ../../src/aku/AKUGlut.h; sourceTree = SOURCE_ROOT; };
 		CDEE22E413543D6600C2E04C /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = SDKs/MacOSX10.6.sdk/System/Library/Frameworks/GLUT.framework; sourceTree = DEVELOPER_DIR; };
@@ -88,6 +92,8 @@
 				032410EB13565FF6000ADC60 /* GLUT.framework in Frameworks */,
 				0324CC64135643FD000ADC60 /* libSystem.dylib in Frameworks */,
 				0324CC6613564411000ADC60 /* libz.1.2.3.dylib in Frameworks */,
+				CD74EA2C137807E40093EE68 /* libcrypto.dylib in Frameworks */,
+				CD74EA321378080E0093EE68 /* libssl.dylib in Frameworks */,
 				0324E2EF135649A9000ADC60 /* libmoai-osx.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -132,6 +138,8 @@
 				CDEE22E613543D8600C2E04C /* OpenGL.framework */,
 				CDEE22E413543D6600C2E04C /* GLUT.framework */,
 				CD2FDEBB13542F1400B814DF /* AddressBook.framework */,
+				CD74EA2B137807E40093EE68 /* libcrypto.dylib */,
+				CD74EA311378080E0093EE68 /* libssl.dylib */,
 				0324CC63135643FD000ADC60 /* libSystem.dylib */,
 				0324CC6513564411000ADC60 /* libz.1.2.3.dylib */,
 			);

@@ -83,8 +83,9 @@ void MOAIDeck::GatherSurfaces ( u32 idx, MOAISurfaceSampler2D& sampler ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIDeck::GatherSurfaces ( MOAIGrid& grid, USCellCoord& c0, USCellCoord& c1, MOAISurfaceSampler2D& sampler ) {
+void MOAIDeck::GatherSurfaces ( MOAIGrid& grid, USVec2D& gridScale, USCellCoord& c0, USCellCoord& c1, MOAISurfaceSampler2D& sampler ) {
 	UNUSED ( grid );
+	UNUSED ( gridScale );
 	UNUSED ( c0 );
 	UNUSED ( c1 );
 	UNUSED ( sampler );
