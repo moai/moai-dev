@@ -83,6 +83,7 @@ public:
 	void			Push					( int value );
 	void			Push					( u16 value );
 	void			Push					( u32 value );
+	void			Push					( u64 value );
 	void			Push					( lua_CFunction value );
 	void			Push					( USLuaRef& ref );
 	void			PushPtrUserData			( void* ptr );
@@ -142,5 +143,6 @@ template <> uint	USLuaState::GetValue < uint >	( int idx, uint value );
 template <> u8		USLuaState::GetValue < u8 >		( int idx, u8 value );
 template <> u16		USLuaState::GetValue < u16 >	( int idx, u16 value );
 template <> u32		USLuaState::GetValue < u32 >	( int idx, u32 value );
+template <> u64		USLuaState::GetValue < u64 >	( int idx, u64 value );
 
 #endif

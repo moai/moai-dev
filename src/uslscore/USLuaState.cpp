@@ -487,6 +487,16 @@ u32 USLuaState::GetValue < u32 >( int idx, u32 value ) {
 }
 
 //----------------------------------------------------------------//
+template <>
+u64 USLuaState::GetValue < u64 >( int idx, u64 value ) {
+
+	if ( this->IsType ( idx, LUA_TNUMBER )) {
+		return ( u64 )lua_tonumber ( this->mState, idx );
+	}
+	return value;
+}
+
+//----------------------------------------------------------------//
 USLuaRef USLuaState::GetWeakRef ( int idx ) {
 
 	USLuaRef ref;
@@ -662,6 +672,12 @@ void USLuaState::Push ( u16 value ) {
 void USLuaState::Push ( u32 value ) {
 
 	lua_pushnumber ( this->mState, value );
+}
+
+//----------------------------------------------------------------//
+void USLuaState::Push ( u64 value ) {
+
+	lua_pushnumber ( this->mState, ( double )value );
 }
 
 //----------------------------------------------------------------//

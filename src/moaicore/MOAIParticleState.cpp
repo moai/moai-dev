@@ -77,7 +77,9 @@ int MOAIParticleState::_setInitScript ( lua_State* L ) {
 
 	MOAIParticleScript* init = state.GetLuaObject < MOAIParticleScript >( 2 );
 
-	init->Compile ();
+	if ( init ) {
+		init->Compile ();
+	}
 	self->mInit = init;
 	
 	return 0;
@@ -134,7 +136,9 @@ int MOAIParticleState::_setRenderScript ( lua_State* L ) {
 
 	MOAIParticleScript* render = state.GetLuaObject < MOAIParticleScript >( 2 );
 
-	render->Compile ();
+	if ( render ) {
+		render->Compile ();
+	}
 	self->mRender = render;
 	
 	return 0;

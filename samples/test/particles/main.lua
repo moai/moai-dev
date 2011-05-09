@@ -16,33 +16,37 @@ MOAISim.pushRenderPass ( layer )
 
 MOAISim.openWindow ( "cathead", 640, 480 )
 
+CONST = MOAIParticleScript.packConst
+
+local r1 = MOAIParticleScript.packReg ( 1 )
+local r2 = MOAIParticleScript.packReg ( 2 )
+
 ----------------------------------------------------------------
 
 local init = MOAIParticleScript.new ()
-init:randVecConst		( 1, 2, 64, 128 )
+init:randVec			( r1, r2, CONST ( 64 ), CONST ( 128 ))
 
 local render = MOAIParticleScript.new ()
-render:easeVarDelta		( MOAIParticleScript.PARTICLE_X, 0, 1, MOAIEaseType.EASE_IN, 0, 1 )
-render:easeVarDelta		( MOAIParticleScript.PARTICLE_Y, 0, 2, MOAIEaseType.EASE_IN, 0, 1 )
+render:easeDelta		( MOAIParticleScript.PARTICLE_X, 0, r1, MOAIEaseType.EASE_IN )
+render:easeDelta		( MOAIParticleScript.PARTICLE_Y, 0, r2, MOAIEaseType.EASE_IN )
 
 render:sprite			()
-render:setConst			( MOAIParticleScript.SPRITE_RED, 0 )
-render:randConst		( MOAIParticleScript.SPRITE_GREEN, 0.5, 1 )
-render:randConst		( MOAIParticleScript.SPRITE_BLUE, 0.5, 1 )
+render:set				( MOAIParticleScript.SPRITE_RED, CONST ( 0.0 ))
+render:rand				( MOAIParticleScript.SPRITE_GREEN, CONST ( 0.5 ), CONST ( 1 ))
+render:rand				( MOAIParticleScript.SPRITE_BLUE, CONST ( 0.5 ), CONST ( 1 ))
 
 ----------------------------------------------------------------
 
 local init2 = MOAIParticleScript.new ()
-init2:setConst			( 1, 0 )
-init2:randConst			( 2, -360, 360 )
+init2:rand				( r1, CONST ( -360 ), CONST ( 360 ))
 
 local render2 = MOAIParticleScript.new ()
 
 render2:sprite			()
-render2:easeVar			( MOAIParticleScript.SPRITE_ROT, 1, 2, MOAIEaseType.EASE_IN, 0, 1 )
-render2:randConst		( MOAIParticleScript.SPRITE_RED, 0.5, 1 )
-render2:randConst		( MOAIParticleScript.SPRITE_GREEN, 0.5, 1 )
-render2:setConst		( MOAIParticleScript.SPRITE_BLUE, 0 )
+render2:ease			( MOAIParticleScript.SPRITE_ROT, 0, r1, MOAIEaseType.EASE_IN )
+render2:rand			( MOAIParticleScript.SPRITE_RED, CONST ( 0.5 ), CONST ( 1 ))
+render2:rand			( MOAIParticleScript.SPRITE_GREEN, CONST ( 0.5 ), CONST ( 1 ))
+render2:set				( MOAIParticleScript.SPRITE_BLUE, 0 )
 
 ----------------------------------------------------------------
 texture = MOAIGfxQuad2D.new ()

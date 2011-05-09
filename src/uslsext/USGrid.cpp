@@ -351,12 +351,12 @@ void USGridSpace::SerializeOut ( USLuaState& state ) {
 
 //----------------------------------------------------------------//
 USGridSpace::USGridSpace () :
+	mXOff ( 0.0f ),
+	mYOff ( 0.0f ),
 	mCellWidth ( 1.0f ),
 	mCellHeight ( 1.0f ),
 	mTileWidth ( 0.0f ),
 	mTileHeight ( 0.0f ),
-	mXOff ( 0.0f ),
-	mYOff ( 0.0f ),
 	mWidth ( 0 ),
 	mHeight ( 0 ) {
 }

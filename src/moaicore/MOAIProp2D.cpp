@@ -394,7 +394,7 @@ void MOAIProp2D::GatherSurfaces ( MOAISurfaceSampler2D& sampler ) {
 		USCellCoord c1;
 		
 		this->GetBoundsInRect ( localRect, c0, c1 );
-		this->mDeck->GatherSurfaces ( *this->mGrid, c0, c1, sampler );
+		this->mDeck->GatherSurfaces ( *this->mGrid, this->mGridScale, c0, c1, sampler );
 	}
 	else {
 		this->mDeck->GatherSurfaces ( this->mIndex, sampler );
