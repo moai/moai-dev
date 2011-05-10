@@ -635,7 +635,7 @@ void MOAIParticleScript::Run ( MOAIParticleSystem& system, MOAIParticle& particl
 					v2 = USInterpolate::Interpolate ( i0, v0, v1, t0 );
 					v3 = USInterpolate::Interpolate ( i0, v0, v1, t1 );
 					
-					*r0 += ( v2 - v3 );
+					*r0 += ( v3 - v2 );
 				}
 				break;
 			
