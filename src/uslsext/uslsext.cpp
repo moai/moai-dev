@@ -6,6 +6,7 @@
 #include <openssl/conf.h>
 #include <openssl/crypto.h>
 #include <openssl/engine.h>
+#include <openssl/err.h>
 #include <openssl/ssl.h>
 
 //----------------------------------------------------------------//
@@ -13,7 +14,6 @@ static void _cleanup () {
 
 	curl_global_cleanup ();
 	
-	ERR_remove_state ( 0 );
 	ENGINE_cleanup ();
 	CONF_modules_unload ( 1 );
 	ERR_free_strings ();
