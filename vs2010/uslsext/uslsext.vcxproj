@@ -83,7 +83,7 @@
     <ClCompile>
       <AdditionalOptions>/vmg %(AdditionalOptions)</AdditionalOptions>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty;..\..\3rdparty\lua-5.1.3\src;..\..\3rdparty\glew-1.5.6\include;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\sqlite-3.6.16;..\..\3rdparty\tinyxml;..\..\3rdparty\curl-7.19.7\include;..\..\3rdparty\lpng140;..\..\3rdparty\expat-2.0.1\lib</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty;..\..\3rdparty\lua-5.1.3\src;..\..\3rdparty\glew-1.5.6\include;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\sqlite-3.6.16;..\..\3rdparty\tinyxml;..\..\3rdparty\curl-7.19.7\include;..\..\3rdparty\lpng140;..\..\3rdparty\expat-2.0.1\lib;..\..\3rdparty\openssl-1.0.0d\include-win32</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;AKU_STATIC;XML_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>true</MinimalRebuild>
@@ -154,7 +154,7 @@
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>false</OmitFramePointers>
       <WholeProgramOptimization>true</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty;..\..\3rdparty\lua-5.1.3\src;..\..\3rdparty\glew-1.5.6\include;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\sqlite-3.6.16;..\..\3rdparty\tinyxml;..\..\3rdparty\curl-7.19.7\include;..\..\3rdparty\lpng140;..\..\3rdparty\expat-2.0.1\lib</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty;..\..\3rdparty\lua-5.1.3\src;..\..\3rdparty\glew-1.5.6\include;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\sqlite-3.6.16;..\..\3rdparty\tinyxml;..\..\3rdparty\curl-7.19.7\include;..\..\3rdparty\lpng140;..\..\3rdparty\expat-2.0.1\lib;..\..\3rdparty\openssl-1.0.0d\include-win32</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_LIB;_USE_32BIT_TIME_T;_CRT_SECURE_NO_WARNINGS;AKU_STATIC;XML_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <ExceptionHandling>Sync</ExceptionHandling>
@@ -409,6 +409,9 @@
       <Project>{48580411-0a48-46f9-87a6-cf5c9b81d146}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
+    <ProjectReference Include="..\libcrypto\libcrypto.vcxproj">
+      <Project>{7a77895d-638a-4494-b60d-51b74efc386f}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\libcurl\libcurl.vcxproj">
       <Project>{41beb1cb-88c0-4c0f-b24e-f5871cf9ee49}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
@@ -416,6 +419,9 @@
     <ProjectReference Include="..\libpng\libpng.vcxproj">
       <Project>{e4bfd291-b8cf-4d71-9e86-658cd227428d}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\libssl\libssl.vcxproj">
+      <Project>{573ed7f9-1c21-42ef-b5b2-f4137272c480}</Project>
     </ProjectReference>
     <ProjectReference Include="..\sqlite\sqlite.vcxproj">
       <Project>{a9935050-2e54-4674-80f8-cfc45a2c106a}</Project>
