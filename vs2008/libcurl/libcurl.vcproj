@@ -55,7 +55,7 @@
 				Optimization="2"
 				InlineFunctionExpansion="1"
 				AdditionalIncludeDirectories="&quot;..\..\3rdparty\curl-7.19.7\lib&quot;;&quot;..\..\3rdparty\curl-7.19.7\include&quot;;&quot;..\..\3rdparty\openssl-1.0.0d\include&quot;"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;BUILDING_LIBCURL;CURL_STATICLIB;CURL_DISABLE_LDAP;USE_SSL"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;BUILDING_LIBCURL;CURL_STATICLIB;USE_SSL;USE_SSLEAY;USE_OPENSSL"
 				StringPooling="true"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
