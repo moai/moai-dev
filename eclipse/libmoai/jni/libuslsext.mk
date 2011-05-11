@@ -30,6 +30,7 @@ $(SRC_PATH)/3rdparty/curl-7.19.7/include-android \
 $(SRC_PATH)/3rdparty/curl-7.19.7/include-android/curl \
 $(SRC_PATH)/3rdparty/sqlite-3.6.16 \
 $(SRC_PATH)/3rdparty/tinyxml \
+$(SRC_PATH)/3rdparty/openssl-1.0.0d/include-android \
 
 #----------------------------------------------------------------#
 # included files

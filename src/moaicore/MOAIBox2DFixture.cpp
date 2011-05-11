@@ -225,6 +225,8 @@ MOAIBox2DFixture::MOAIBox2DFixture () :
 
 //----------------------------------------------------------------//
 MOAIBox2DFixture::~MOAIBox2DFixture () {
+
+	printf ( "MOAIBox2DFixture DEATH!\n" );
 }
 
 //----------------------------------------------------------------//

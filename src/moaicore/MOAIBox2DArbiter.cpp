@@ -43,6 +43,22 @@ int MOAIBox2DArbiter::_getTangentImpulse ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	setContactEnabled
+	@text	Enabled or disable the contact.
+	
+	@in		MOAIBox2DArbiter self
+	@out	number impulse
+*/
+int MOAIBox2DArbiter::_setContactEnabled ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIBox2DArbiter, "U" )
+	
+	bool enabled = state.GetValue < bool >( 2, false );
+	self->mContact->SetEnabled ( enabled );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	new
 	@text	Overrides the default class new method.
 	
@@ -175,6 +191,7 @@ void MOAIBox2DArbiter::RegisterLuaFuncs ( USLuaState& state ) {
 	luaL_Reg regTable [] = {
 		{ "getNormalImpulse",			_getNormalImpulse },
 		{ "getTangentImpulse",			_getTangentImpulse },
+		{ "setContactEnabled",			_setContactEnabled },
 		{ "new",						_new },
 		{ NULL, NULL }
 	};

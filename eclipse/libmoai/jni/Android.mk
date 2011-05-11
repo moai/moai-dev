@@ -10,6 +10,10 @@ include libchipmunk.mk
 include libexpat.mk
 include libfreetype.mk
 include libcurl.mk
+include libcrypto_1.mk
+include libcrypto_2.mk
+include libcrypto_3.mk
+include libcrypto_4.mk
 include liblua.mk
 include libsqlite.mk
 include libtinyxml.mk
@@ -65,6 +69,7 @@ $(SRC_PATH)/3rdparty/lpng140 \
 $(SRC_PATH)/3rdparty/curl-7.19.7/include-android\
 $(SRC_PATH)/3rdparty/sqlite-3.6.16 \
 $(SRC_PATH)/3rdparty/tinyxml \
+$(SRC_PATH)/3rdparty/openssl-1.0.0d/include-android \
 
 #----------------------------------------------------------------#
 # included files
@@ -80,6 +85,10 @@ LOCAL_STATIC_LIBRARIES += libmoaicore
 LOCAL_STATIC_LIBRARIES += libuslsext
 LOCAL_STATIC_LIBRARIES += libuslscore
 LOCAL_STATIC_LIBRARIES += libchipmunk
+LOCAL_STATIC_LIBRARIES += libcrypto_1
+LOCAL_STATIC_LIBRARIES += libcrypto_2
+LOCAL_STATIC_LIBRARIES += libcrypto_3
+LOCAL_STATIC_LIBRARIES += libcrypto_4
 LOCAL_STATIC_LIBRARIES += libbox2D
 LOCAL_STATIC_LIBRARIES += libexpat
 LOCAL_STATIC_LIBRARIES += liblua

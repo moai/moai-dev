@@ -33,6 +33,7 @@ private:
 	//----------------------------------------------------------------//
 	static int		_getNormalImpulse		( lua_State* L );
 	static int		_getTangentImpulse		( lua_State* L );
+	static int		_setContactEnabled		( lua_State* L );
 	static int		_new					( lua_State* L );
 	
 	//----------------------------------------------------------------//
