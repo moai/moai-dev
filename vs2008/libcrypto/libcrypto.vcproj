@@ -2274,10 +2274,6 @@
 				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\dsa\dsa_vrf.c"
 				>
 			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\dsa\dsagen.c"
-				>
-			</File>
 		</Filter>
 		<Filter
 			Name="dh"

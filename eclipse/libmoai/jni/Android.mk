@@ -10,10 +10,6 @@ include libchipmunk.mk
 include libexpat.mk
 include libfreetype.mk
 include libcurl.mk
-include libcrypto_1.mk
-include libcrypto_2.mk
-include libcrypto_3.mk
-include libcrypto_4.mk
 include liblua.mk
 include libsqlite.mk
 include libtinyxml.mk
@@ -21,6 +17,7 @@ include libpng.mk
 include libuslscore.mk
 include libuslsext.mk
 include libmoaicore.mk
+include libssl.mk
 include libcontrib.mk
 
 #================================================================#
@@ -29,7 +26,7 @@ include libcontrib.mk
 include $(CLEAR_VARS)
 
 LOCAL_MODULE := libmoai
-LOCAL_LDLIBS := -lm -llog -ljnigraphics -lGLESv1_CM -ldl -lz
+LOCAL_LDLIBS := -lm -llog -ljnigraphics -lGLESv1_CM -ldl -lz libcrypto.a
 LOCAL_CFLAGS := -DANDROID_NDK -DDISABLE_IMPORTGL
 APP_STL := gnustl_static
 
@@ -85,10 +82,6 @@ LOCAL_STATIC_LIBRARIES += libmoaicore
 LOCAL_STATIC_LIBRARIES += libuslsext
 LOCAL_STATIC_LIBRARIES += libuslscore
 LOCAL_STATIC_LIBRARIES += libchipmunk
-LOCAL_STATIC_LIBRARIES += libcrypto_1
-LOCAL_STATIC_LIBRARIES += libcrypto_2
-LOCAL_STATIC_LIBRARIES += libcrypto_3
-LOCAL_STATIC_LIBRARIES += libcrypto_4
 LOCAL_STATIC_LIBRARIES += libbox2D
 LOCAL_STATIC_LIBRARIES += libexpat
 LOCAL_STATIC_LIBRARIES += liblua
@@ -97,6 +90,7 @@ LOCAL_STATIC_LIBRARIES += libsqlite
 LOCAL_STATIC_LIBRARIES += libtinyxml
 LOCAL_STATIC_LIBRARIES += libpng
 LOCAL_STATIC_LIBRARIES += libcurl
+LOCAL_STATIC_LIBRARIES += libssl
 LOCAL_STATIC_LIBRARIES += libcontrib
 
 include $(BUILD_SHARED_LIBRARY)

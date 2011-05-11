@@ -1,7 +1,7 @@
 #================================================================#
 # libcurl
 #================================================================#
-common_CFLAGS := -DHAVE_CONFIG_H 
+common_CFLAGS := -DHAVE_CONFIG_H -DUSE_SSLEAY -DUSE_OPENSSL
 include $(CLEAR_VARS) 
 include $(SRC_PATH)/3rdparty/curl-7.19.7/src/Makefile.inc 
 MY_SRCS := file.c timeval.c base64.c hostip.c progress.c formdata.c \
@@ -39,6 +39,7 @@ LOCAL_MODULE:= libcurl
 LOCAL_C_INCLUDES += $(SRC_PATH)/3rdparty/curl-7.19.7/include-android
 LOCAL_C_INCLUDES += $(SRC_PATH)/3rdparty/curl-7.19.7/include-android/curl
 LOCAL_C_INCLUDES += $(SRC_PATH)/3rdparty/curl-7.19.7/lib
+LOCAL_C_INCLUDES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/include-android
 
 # included files
 LOCAL_SRC_FILES := $(addprefix $(SRC_PATH)/3rdparty/curl-7.19.7/lib/,$(MY_SRCS))
