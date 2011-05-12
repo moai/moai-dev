@@ -7,9 +7,38 @@
 #endif
 #ifndef OPENSSL_DOING_MAKEDEPEND
 
-
+#ifndef OPENSSL_NO_BF
+# define OPENSSL_NO_BF
+#endif
+#ifndef OPENSSL_NO_CAMELLIA
+# define OPENSSL_NO_CAMELLIA
+#endif
+#ifndef OPENSSL_NO_CAST
+# define OPENSSL_NO_CAST
+#endif
+#ifndef OPENSSL_NO_CMS
+# define OPENSSL_NO_CMS
+#endif
+#ifndef OPENSSL_NO_EC
+# define OPENSSL_NO_EC
+#endif
+#ifndef OPENSSL_NO_ECDH
+# define OPENSSL_NO_ECDH
+#endif
+#ifndef OPENSSL_NO_ECDSA
+# define OPENSSL_NO_ECDSA
+#endif
+#ifndef OPENSSL_NO_ENGINE
+# define OPENSSL_NO_ENGINE
+#endif
+#ifndef OPENSSL_NO_ERR
+# define OPENSSL_NO_ERR
+#endif
 #ifndef OPENSSL_NO_GMP
 # define OPENSSL_NO_GMP
+#endif
+#ifndef OPENSSL_NO_IDEA
+# define OPENSSL_NO_IDEA
 #endif
 #ifndef OPENSSL_NO_JPAKE
 # define OPENSSL_NO_JPAKE
@@ -20,14 +49,26 @@
 #ifndef OPENSSL_NO_MD2
 # define OPENSSL_NO_MD2
 #endif
+#ifndef OPENSSL_NO_MDC2
+# define OPENSSL_NO_MDC2
+#endif
 #ifndef OPENSSL_NO_RC5
 # define OPENSSL_NO_RC5
 #endif
 #ifndef OPENSSL_NO_RFC3779
 # define OPENSSL_NO_RFC3779
 #endif
+#ifndef OPENSSL_NO_RIPEMD
+# define OPENSSL_NO_RIPEMD
+#endif
+#ifndef OPENSSL_NO_SEED
+# define OPENSSL_NO_SEED
+#endif
 #ifndef OPENSSL_NO_STORE
 # define OPENSSL_NO_STORE
+#endif
+#ifndef OPENSSL_NO_WHIRLPOOL
+# define OPENSSL_NO_WHIRLPOOL
 #endif
 
 #endif /* OPENSSL_DOING_MAKEDEPEND */
@@ -37,6 +78,9 @@
 #endif
 #ifndef OPENSSL_NO_ASM
 # define OPENSSL_NO_ASM
+#endif
+#ifndef OPENSSL_NO_STATIC_ENGINE
+# define OPENSSL_NO_STATIC_ENGINE
 #endif
 
 /* The OPENSSL_NO_* macros are also defined as NO_* if the application

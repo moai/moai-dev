@@ -46,23 +46,23 @@ LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/bn/bn_word.c
 
 #Name="ec"
 
-LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/ec/ec2_mult.c
-LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/ec/ec2_smpl.c
-LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/ec/ec_ameth.c
-LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/ec/ec_asn1.c
-LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/ec/ec_check.c
-LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/ec/ec_curve.c
-LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/ec/ec_cvt.c
-LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/ec/ec_err.c
-LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/ec/ec_key.c
-LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/ec/ec_lib.c
-LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/ec/ec_mult.c
-LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/ec/ec_pmeth.c
-LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/ec/ec_print.c
-LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/ec/eck_prn.c
-LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/ec/ecp_mont.c
-LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/ec/ecp_nist.c
-LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/ec/ecp_smpl.c
+#LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/ec/ec2_mult.c
+#LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/ec/ec2_smpl.c
+#LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/ec/ec_ameth.c
+#LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/ec/ec_asn1.c
+#LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/ec/ec_check.c
+#LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/ec/ec_curve.c
+#LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/ec/ec_cvt.c
+#LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/ec/ec_err.c
+#LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/ec/ec_key.c
+#LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/ec/ec_lib.c
+#LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/ec/ec_mult.c
+#LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/ec/ec_pmeth.c
+#LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/ec/ec_print.c
+#LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/ec/eck_prn.c
+#LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/ec/ecp_mont.c
+#LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/ec/ecp_nist.c
+#LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/ec/ecp_smpl.c
 
 #Name="hmac"
 
@@ -99,7 +99,6 @@ LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/dsa/dsa_pmeth.c
 LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/dsa/dsa_prn.c
 LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/dsa/dsa_sign.c
 LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/dsa/dsa_vrf.c
-LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/dsa/dsagen.c
 
 #Name="dh"
 
@@ -116,34 +115,34 @@ LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/dh/dh_prn.c
 
 #Name="bf"
 
-LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/bf/bf_cfb64.c
-LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/bf/bf_ecb.c
-LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/bf/bf_enc.c
-LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/bf/bf_ofb64.c
-LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/bf/bf_skey.c
+#LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/bf/bf_cfb64.c
+#LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/bf/bf_ecb.c
+#LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/bf/bf_enc.c
+#LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/bf/bf_ofb64.c
+#LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/bf/bf_skey.c
 
 #Name="cast"
 
-LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/cast/c_cfb64.c
-LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/cast/c_ecb.c
-LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/cast/c_enc.c
-LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/cast/c_ofb64.c
-LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/cast/c_skey.c
+#LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/cast/c_cfb64.c
+#LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/cast/c_ecb.c
+#LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/cast/c_enc.c
+#LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/cast/c_ofb64.c
+#LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/cast/c_skey.c
 
 #Name="mdc2"
 
-LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/mdc2/mdc2_one.c
-LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/mdc2/mdc2dgst.c
+#LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/mdc2/mdc2_one.c
+#LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/mdc2/mdc2dgst.c
 
 #Name="ripemd"
 
-LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/ripemd/rmd_dgst.c
-LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/ripemd/rmd_one.c
+#LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/ripemd/rmd_dgst.c
+#LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/ripemd/rmd_one.c
 
 #Name="whirlpool"
 
-LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/whrlpool/wp_block.c
-LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/whrlpool/wp_dgst.c
+#LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/whrlpool/wp_block.c
+#LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/whrlpool/wp_dgst.c
 
 #Name="modes"
 
@@ -155,10 +154,10 @@ LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/modes/ofb128.c
 
 #Name="ecdh"
 
-LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/ecdh/ech_err.c
-LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/ecdh/ech_key.c
-LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/ecdh/ech_lib.c
-LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/ecdh/ech_ossl.c
+#LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/ecdh/ech_err.c
+#LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/ecdh/ech_key.c
+#LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/ecdh/ech_lib.c
+#LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/ecdh/ech_ossl.c
 
 #Name="pkcs7"
 
@@ -202,18 +201,18 @@ LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/dso/dso_vms.c
 LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/dso/dso_win32.c
 
 #Name="cms"
-LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/cms/cms_asn1.c
-LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/cms/cms_att.c
-LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/cms/cms_cd.c
-LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/cms/cms_dd.c
-LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/cms/cms_enc.c
-LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/cms/cms_env.c
-LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/cms/cms_err.c
-LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/cms/cms_ess.c
-LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/cms/cms_io.c
-LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/cms/cms_lib.c
-LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/cms/cms_sd.c
-LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/cms/cms_smime.c
+#LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/cms/cms_asn1.c
+#LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/cms/cms_att.c
+#LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/cms/cms_cd.c
+#LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/cms/cms_dd.c
+#LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/cms/cms_enc.c
+#LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/cms/cms_env.c
+#LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/cms/cms_err.c
+#LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/cms/cms_ess.c
+#LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/cms/cms_io.c
+#LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/cms/cms_lib.c
+#LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/cms/cms_sd.c
+#LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/cms/cms_smime.c
 
 #Name="ts"
 LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/ts/ts_asn1.c

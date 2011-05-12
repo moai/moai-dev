@@ -4,20 +4,11 @@
     <Filter Include="aes">
       <UniqueIdentifier>{a91409ad-6774-476f-bcd2-9cd97d6b5299}</UniqueIdentifier>
     </Filter>
-    <Filter Include="camellia">
-      <UniqueIdentifier>{7be941c6-7503-4a8d-963a-eb3f4bb77ad0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="des">
       <UniqueIdentifier>{5ecc0084-058f-442f-b3ea-00bbf13d07a0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ecdsa">
-      <UniqueIdentifier>{e212d4f1-55fd-4b7a-856e-0117277344e3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="comp">
       <UniqueIdentifier>{f2c35ce0-4fe3-4673-a0a5-f6c7de94eae2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="idea">
-      <UniqueIdentifier>{00b07981-fe8c-4fd8-a605-ebf4f55a44c2}</UniqueIdentifier>
     </Filter>
     <Filter Include="rc2">
       <UniqueIdentifier>{0ab0cb79-ae92-49b5-85d9-be3faba12e33}</UniqueIdentifier>
@@ -30,9 +21,6 @@
     </Filter>
     <Filter Include="sha">
       <UniqueIdentifier>{7ff3ecb9-cd05-4c01-95f8-c1e72a647bd3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="seed">
-      <UniqueIdentifier>{6445c8b5-7dee-4167-af73-bdf90e0cc508}</UniqueIdentifier>
     </Filter>
     <Filter Include="md4">
       <UniqueIdentifier>{f891dede-0db2-444d-8058-cd3674254c52}</UniqueIdentifier>
@@ -67,17 +55,11 @@
     <Filter Include="bn">
       <UniqueIdentifier>{ebc15944-6a15-4ec2-9cb9-32d50cde0e41}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ec">
-      <UniqueIdentifier>{cda5c063-3b00-44b8-a138-4bbd34b7b0f9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="lhash">
       <UniqueIdentifier>{1cc5c944-48ed-4bf2-a96a-b4ed7e4d53d2}</UniqueIdentifier>
     </Filter>
     <Filter Include="objects">
       <UniqueIdentifier>{38f1fa05-44f2-40c9-9ea7-2246a790c70c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="engine">
-      <UniqueIdentifier>{fb8bc393-650c-4f21-88b5-c0af48cf72df}</UniqueIdentifier>
     </Filter>
     <Filter Include="buffer">
       <UniqueIdentifier>{1b6c690f-8cbf-457e-976d-106bdedffe3a}</UniqueIdentifier>
@@ -97,21 +79,6 @@
     <Filter Include="dh">
       <UniqueIdentifier>{caca9584-a58a-4f5d-94a3-9f7b895b6278}</UniqueIdentifier>
     </Filter>
-    <Filter Include="bf">
-      <UniqueIdentifier>{f58c6d70-a263-4479-bdcf-39c3029b93b0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="cast">
-      <UniqueIdentifier>{78665657-6c12-47f3-8efb-70678d45f328}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="mdc2">
-      <UniqueIdentifier>{7de0735f-e6b4-4e59-8f5e-d3b01a16e24b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ripemd">
-      <UniqueIdentifier>{aeb78e40-f494-4ddf-b595-55faea9a3687}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="whirlpool">
-      <UniqueIdentifier>{ad8432a5-7422-49a5-8b98-dad442b06395}</UniqueIdentifier>
-    </Filter>
     <Filter Include="pkcs7">
       <UniqueIdentifier>{b32ada68-c0a0-472b-968c-e5b6310ad51a}</UniqueIdentifier>
     </Filter>
@@ -121,9 +88,6 @@
     <Filter Include="x509v3">
       <UniqueIdentifier>{ee14e6bd-0af1-49a7-86e9-1da8661f1121}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ecdh">
-      <UniqueIdentifier>{de315e22-9f18-4bff-9e55-ec1a87edaef6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="conf">
       <UniqueIdentifier>{4dda55ad-0483-4bf2-b239-382b6c17a751}</UniqueIdentifier>
     </Filter>
@@ -132,9 +96,6 @@
     </Filter>
     <Filter Include="dso">
       <UniqueIdentifier>{621e43e9-27d2-4f57-a1da-18963ff4f0bb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="cms">
-      <UniqueIdentifier>{62f591ce-0b14-4776-9b3d-a3cc85364f52}</UniqueIdentifier>
     </Filter>
     <Filter Include="ts">
       <UniqueIdentifier>{850c1bed-e4b2-41a4-a76b-5097da28d7aa}</UniqueIdentifier>
@@ -153,12 +114,6 @@
     <ClInclude Include="..\..\3rdparty\openssl-1.0.0d\crypto\aes\aes_locl.h">
       <Filter>aes</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\3rdparty\openssl-1.0.0d\crypto\camellia\camellia.h">
-      <Filter>camellia</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\3rdparty\openssl-1.0.0d\crypto\camellia\cmll_locl.h">
-      <Filter>camellia</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\3rdparty\openssl-1.0.0d\crypto\des\des.h">
       <Filter>des</Filter>
     </ClInclude>
@@ -174,20 +129,8 @@
     <ClInclude Include="..\..\3rdparty\openssl-1.0.0d\crypto\des\spr.h">
       <Filter>des</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\3rdparty\openssl-1.0.0d\crypto\ecdsa\ecdsa.h">
-      <Filter>ecdsa</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\3rdparty\openssl-1.0.0d\crypto\ecdsa\ecs_locl.h">
-      <Filter>ecdsa</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\3rdparty\openssl-1.0.0d\crypto\comp\comp.h">
       <Filter>comp</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\3rdparty\openssl-1.0.0d\crypto\idea\idea.h">
-      <Filter>idea</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\3rdparty\openssl-1.0.0d\crypto\idea\idea_lcl.h">
-      <Filter>idea</Filter>
     </ClInclude>
     <ClInclude Include="..\..\3rdparty\openssl-1.0.0d\crypto\rc2\rc2.h">
       <Filter>rc2</Filter>
@@ -212,12 +155,6 @@
     </ClInclude>
     <ClInclude Include="..\..\3rdparty\openssl-1.0.0d\crypto\sha\sha_locl.h">
       <Filter>sha</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\3rdparty\openssl-1.0.0d\crypto\seed\seed.h">
-      <Filter>seed</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\3rdparty\openssl-1.0.0d\crypto\seed\seed_locl.h">
-      <Filter>seed</Filter>
     </ClInclude>
     <ClInclude Include="..\..\3rdparty\openssl-1.0.0d\crypto\md4\md4.h">
       <Filter>md4</Filter>
@@ -285,12 +222,6 @@
     <ClInclude Include="..\..\3rdparty\openssl-1.0.0d\crypto\bn\bn_prime.h">
       <Filter>bn</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\3rdparty\openssl-1.0.0d\crypto\ec\ec.h">
-      <Filter>ec</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\3rdparty\openssl-1.0.0d\crypto\ec\ec_lcl.h">
-      <Filter>ec</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\3rdparty\openssl-1.0.0d\crypto\lhash\lhash.h">
       <Filter>lhash</Filter>
     </ClInclude>
@@ -305,12 +236,6 @@
     </ClInclude>
     <ClInclude Include="..\..\3rdparty\openssl-1.0.0d\crypto\objects\objects.h">
       <Filter>objects</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\3rdparty\openssl-1.0.0d\crypto\engine\eng_int.h">
-      <Filter>engine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\3rdparty\openssl-1.0.0d\crypto\engine\engine.h">
-      <Filter>engine</Filter>
     </ClInclude>
     <ClInclude Include="..\..\3rdparty\openssl-1.0.0d\crypto\buffer\buffer.h">
       <Filter>buffer</Filter>
@@ -339,42 +264,6 @@
     <ClInclude Include="..\..\3rdparty\openssl-1.0.0d\crypto\dh\dh.h">
       <Filter>dh</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\3rdparty\openssl-1.0.0d\crypto\bf\bf_locl.h">
-      <Filter>bf</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\3rdparty\openssl-1.0.0d\crypto\bf\bf_pi.h">
-      <Filter>bf</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\3rdparty\openssl-1.0.0d\crypto\bf\blowfish.h">
-      <Filter>bf</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\3rdparty\openssl-1.0.0d\crypto\cast\cast.h">
-      <Filter>cast</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\3rdparty\openssl-1.0.0d\crypto\cast\cast_lcl.h">
-      <Filter>cast</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\3rdparty\openssl-1.0.0d\crypto\cast\cast_s.h">
-      <Filter>cast</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\3rdparty\openssl-1.0.0d\crypto\mdc2\mdc2.h">
-      <Filter>mdc2</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\3rdparty\openssl-1.0.0d\crypto\ripemd\ripemd.h">
-      <Filter>ripemd</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\3rdparty\openssl-1.0.0d\crypto\ripemd\rmd_locl.h">
-      <Filter>ripemd</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\3rdparty\openssl-1.0.0d\crypto\ripemd\rmdconst.h">
-      <Filter>ripemd</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\3rdparty\openssl-1.0.0d\crypto\whrlpool\whrlpool.h">
-      <Filter>whirlpool</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\3rdparty\openssl-1.0.0d\crypto\whrlpool\wp_locl.h">
-      <Filter>whirlpool</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\3rdparty\openssl-1.0.0d\crypto\pkcs7\pkcs7.h">
       <Filter>pkcs7</Filter>
     </ClInclude>
@@ -386,12 +275,6 @@
     </ClInclude>
     <ClInclude Include="..\..\3rdparty\openssl-1.0.0d\crypto\x509v3\x509v3.h">
       <Filter>x509v3</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\3rdparty\openssl-1.0.0d\crypto\ecdh\ecdh.h">
-      <Filter>ecdh</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\3rdparty\openssl-1.0.0d\crypto\ecdh\ech_locl.h">
-      <Filter>ecdh</Filter>
     </ClInclude>
     <ClInclude Include="..\..\3rdparty\openssl-1.0.0d\crypto\conf\conf.h">
       <Filter>conf</Filter>
@@ -407,12 +290,6 @@
     </ClInclude>
     <ClInclude Include="..\..\3rdparty\openssl-1.0.0d\crypto\dso\dso.h">
       <Filter>dso</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\3rdparty\openssl-1.0.0d\crypto\cms\cms.h">
-      <Filter>cms</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\3rdparty\openssl-1.0.0d\crypto\cms\cms_lcl.h">
-      <Filter>cms</Filter>
     </ClInclude>
     <ClInclude Include="..\..\3rdparty\openssl-1.0.0d\crypto\ts\ts.h">
       <Filter>ts</Filter>
@@ -454,27 +331,6 @@
     </ClCompile>
     <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\aes\aes_wrap.c">
       <Filter>aes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\camellia\camellia.c">
-      <Filter>camellia</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\camellia\cmll_cbc.c">
-      <Filter>camellia</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\camellia\cmll_cfb.c">
-      <Filter>camellia</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\camellia\cmll_ctr.c">
-      <Filter>camellia</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\camellia\cmll_ecb.c">
-      <Filter>camellia</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\camellia\cmll_misc.c">
-      <Filter>camellia</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\camellia\cmll_ofb.c">
-      <Filter>camellia</Filter>
     </ClCompile>
     <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\des\cbc_cksm.c">
       <Filter>des</Filter>
@@ -545,24 +401,6 @@
     <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\des\xcbc_enc.c">
       <Filter>des</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\ecdsa\ecs_asn1.c">
-      <Filter>ecdsa</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\ecdsa\ecs_err.c">
-      <Filter>ecdsa</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\ecdsa\ecs_lib.c">
-      <Filter>ecdsa</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\ecdsa\ecs_ossl.c">
-      <Filter>ecdsa</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\ecdsa\ecs_sign.c">
-      <Filter>ecdsa</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\ecdsa\ecs_vrf.c">
-      <Filter>ecdsa</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\comp\c_rle.c">
       <Filter>comp</Filter>
     </ClCompile>
@@ -574,21 +412,6 @@
     </ClCompile>
     <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\comp\comp_lib.c">
       <Filter>comp</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\idea\i_cbc.c">
-      <Filter>idea</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\idea\i_cfb64.c">
-      <Filter>idea</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\idea\i_ecb.c">
-      <Filter>idea</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\idea\i_ofb64.c">
-      <Filter>idea</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\idea\i_skey.c">
-      <Filter>idea</Filter>
     </ClCompile>
     <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\rc2\rc2_cbc.c">
       <Filter>rc2</Filter>
@@ -634,21 +457,6 @@
     </ClCompile>
     <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\sha\sha_one.c">
       <Filter>sha</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\seed\seed.c">
-      <Filter>seed</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\seed\seed_cbc.c">
-      <Filter>seed</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\seed\seed_cfb.c">
-      <Filter>seed</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\seed\seed_ecb.c">
-      <Filter>seed</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\seed\seed_ofb.c">
-      <Filter>seed</Filter>
     </ClCompile>
     <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\md4\md4_dgst.c">
       <Filter>md4</Filter>
@@ -1346,57 +1154,6 @@
     <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\bn\bn_word.c">
       <Filter>bn</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\ec\ec2_mult.c">
-      <Filter>ec</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\ec\ec2_smpl.c">
-      <Filter>ec</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\ec\ec_ameth.c">
-      <Filter>ec</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\ec\ec_asn1.c">
-      <Filter>ec</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\ec\ec_check.c">
-      <Filter>ec</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\ec\ec_curve.c">
-      <Filter>ec</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\ec\ec_cvt.c">
-      <Filter>ec</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\ec\ec_err.c">
-      <Filter>ec</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\ec\ec_key.c">
-      <Filter>ec</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\ec\ec_lib.c">
-      <Filter>ec</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\ec\ec_mult.c">
-      <Filter>ec</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\ec\ec_pmeth.c">
-      <Filter>ec</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\ec\ec_print.c">
-      <Filter>ec</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\ec\eck_prn.c">
-      <Filter>ec</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\ec\ecp_mont.c">
-      <Filter>ec</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\ec\ecp_nist.c">
-      <Filter>ec</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\ec\ecp_smpl.c">
-      <Filter>ec</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\lhash\lh_stats.c">
       <Filter>lhash</Filter>
     </ClCompile>
@@ -1417,78 +1174,6 @@
     </ClCompile>
     <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\objects\obj_xref.c">
       <Filter>objects</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\engine\eng_all.c">
-      <Filter>engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\engine\eng_cnf.c">
-      <Filter>engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\engine\eng_cryptodev.c">
-      <Filter>engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\engine\eng_ctrl.c">
-      <Filter>engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\engine\eng_dyn.c">
-      <Filter>engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\engine\eng_err.c">
-      <Filter>engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\engine\eng_fat.c">
-      <Filter>engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\engine\eng_init.c">
-      <Filter>engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\engine\eng_lib.c">
-      <Filter>engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\engine\eng_list.c">
-      <Filter>engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\engine\eng_openssl.c">
-      <Filter>engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\engine\eng_pkey.c">
-      <Filter>engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\engine\eng_table.c">
-      <Filter>engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\engine\tb_asnmth.c">
-      <Filter>engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\engine\tb_cipher.c">
-      <Filter>engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\engine\tb_dh.c">
-      <Filter>engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\engine\tb_digest.c">
-      <Filter>engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\engine\tb_dsa.c">
-      <Filter>engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\engine\tb_ecdh.c">
-      <Filter>engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\engine\tb_ecdsa.c">
-      <Filter>engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\engine\tb_pkmeth.c">
-      <Filter>engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\engine\tb_rand.c">
-      <Filter>engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\engine\tb_rsa.c">
-      <Filter>engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\engine\tb_store.c">
-      <Filter>engine</Filter>
     </ClCompile>
     <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\buffer\buf_err.c">
       <Filter>buffer</Filter>
@@ -1634,9 +1319,6 @@
     <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\dsa\dsa_vrf.c">
       <Filter>dsa</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\dsa\dsagen.c">
-      <Filter>dsa</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\dh\dh_ameth.c">
       <Filter>dh</Filter>
     </ClCompile>
@@ -1666,54 +1348,6 @@
     </ClCompile>
     <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\dh\dh_prn.c">
       <Filter>dh</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\bf\bf_cfb64.c">
-      <Filter>bf</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\bf\bf_ecb.c">
-      <Filter>bf</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\bf\bf_enc.c">
-      <Filter>bf</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\bf\bf_ofb64.c">
-      <Filter>bf</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\bf\bf_skey.c">
-      <Filter>bf</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\cast\c_cfb64.c">
-      <Filter>cast</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\cast\c_ecb.c">
-      <Filter>cast</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\cast\c_enc.c">
-      <Filter>cast</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\cast\c_ofb64.c">
-      <Filter>cast</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\cast\c_skey.c">
-      <Filter>cast</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\mdc2\mdc2_one.c">
-      <Filter>mdc2</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\mdc2\mdc2dgst.c">
-      <Filter>mdc2</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\ripemd\rmd_dgst.c">
-      <Filter>ripemd</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\ripemd\rmd_one.c">
-      <Filter>ripemd</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\whrlpool\wp_block.c">
-      <Filter>whirlpool</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\whrlpool\wp_dgst.c">
-      <Filter>whirlpool</Filter>
     </ClCompile>
     <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\pkcs7\bio_pk7.c">
       <Filter>pkcs7</Filter>
@@ -1865,18 +1499,6 @@
     <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\x509v3\v3err.c">
       <Filter>x509v3</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\ecdh\ech_err.c">
-      <Filter>ecdh</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\ecdh\ech_key.c">
-      <Filter>ecdh</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\ecdh\ech_lib.c">
-      <Filter>ecdh</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\ecdh\ech_ossl.c">
-      <Filter>ecdh</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\conf\conf_api.c">
       <Filter>conf</Filter>
     </ClCompile>
@@ -1969,42 +1591,6 @@
     </ClCompile>
     <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\dso\dso_win32.c">
       <Filter>dso</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\cms\cms_asn1.c">
-      <Filter>cms</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\cms\cms_att.c">
-      <Filter>cms</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\cms\cms_cd.c">
-      <Filter>cms</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\cms\cms_dd.c">
-      <Filter>cms</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\cms\cms_enc.c">
-      <Filter>cms</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\cms\cms_env.c">
-      <Filter>cms</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\cms\cms_err.c">
-      <Filter>cms</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\cms\cms_ess.c">
-      <Filter>cms</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\cms\cms_io.c">
-      <Filter>cms</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\cms\cms_lib.c">
-      <Filter>cms</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\cms\cms_sd.c">
-      <Filter>cms</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\cms\cms_smime.c">
-      <Filter>cms</Filter>
     </ClCompile>
     <ClCompile Include="..\..\3rdparty\openssl-1.0.0d\crypto\ts\ts_asn1.c">
       <Filter>ts</Filter>

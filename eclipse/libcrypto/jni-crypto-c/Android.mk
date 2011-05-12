@@ -56,13 +56,13 @@ LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/buffer/buffer.c
 
 #Name="camellia"
 
-LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/camellia/camellia.c
-LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/camellia/cmll_cbc.c
-LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/camellia/cmll_cfb.c
-LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/camellia/cmll_ctr.c
-LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/camellia/cmll_ecb.c
-LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/camellia/cmll_misc.c
-LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/camellia/cmll_ofb.c
+#LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/camellia/camellia.c
+#LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/camellia/cmll_cbc.c
+#LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/camellia/cmll_cfb.c
+#LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/camellia/cmll_ctr.c
+#LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/camellia/cmll_ecb.c
+#LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/camellia/cmll_misc.c
+#LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/camellia/cmll_ofb.c
 
 #Name="des"
 
@@ -92,12 +92,12 @@ LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/des/xcbc_enc.c
 
 #Name="ecdsa"
 
-LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/ecdsa/ecs_asn1.c
-LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/ecdsa/ecs_err.c
-LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/ecdsa/ecs_lib.c
-LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/ecdsa/ecs_ossl.c
-LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/ecdsa/ecs_sign.c
-LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/ecdsa/ecs_vrf.c
+#LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/ecdsa/ecs_asn1.c
+#LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/ecdsa/ecs_err.c
+#LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/ecdsa/ecs_lib.c
+#LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/ecdsa/ecs_ossl.c
+#LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/ecdsa/ecs_sign.c
+#LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/ecdsa/ecs_vrf.c
 
 #Name="err"
 
@@ -114,11 +114,11 @@ LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/comp/comp_lib.c
 
 #Name="idea"
 
-LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/idea/i_cbc.c
-LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/idea/i_cfb64.c
-LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/idea/i_ecb.c
-LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/idea/i_ofb64.c
-LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/idea/i_skey.c
+#LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/idea/i_cbc.c
+#LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/idea/i_cfb64.c
+#LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/idea/i_ecb.c
+#LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/idea/i_ofb64.c
+#LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/idea/i_skey.c
 
 #Name="objects"
 
@@ -157,11 +157,11 @@ LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/sha/sha_one.c
 
 #Name="seed"
 
-LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/seed/seed.c
-LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/seed/seed_cbc.c
-LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/seed/seed_cfb.c
-LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/seed/seed_ecb.c
-LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/seed/seed_ofb.c
+#LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/seed/seed.c
+#LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/seed/seed_cbc.c
+#LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/seed/seed_cfb.c
+#LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/seed/seed_ecb.c
+#LOCAL_SRC_FILES += $(SRC_PATH)/3rdparty/openssl-1.0.0d/crypto/seed/seed_ofb.c
 
 #Name="md4"
 

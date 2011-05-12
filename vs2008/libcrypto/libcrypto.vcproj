@@ -45,7 +45,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="&quot;..\..\3rdparty\openssl-1.0.0d\include-win32&quot;"
-				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;DSO_WIN32;OPENSSL_SYSNAME_WIN32;WIN32_LEAN_AND_MEAN;L_ENDIAN;OPENSSL_NO_RC5;OPENSSL_NO_MD2;OPENSSL_NO_KRB5;OPENSSL_NO_JPAKE;OPENSSL_NO_STATIC_ENGINE;MK1MF_BUILD;MK1MF_PLATFORM_VC_WIN32"
+				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;DSO_WIN32;OPENSSL_SYSNAME_WIN32;WIN32_LEAN_AND_MEAN;L_ENDIAN;MK1MF_BUILD;MK1MF_PLATFORM_VC_WIN32"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -181,7 +181,7 @@
 				FavorSizeOrSpeed="2"
 				OmitFramePointers="true"
 				AdditionalIncludeDirectories="&quot;..\..\3rdparty\openssl-1.0.0d\include-win32&quot;"
-				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;DSO_WIN32;OPENSSL_SYSNAME_WIN32;WIN32_LEAN_AND_MEAN;L_ENDIAN;OPENSSL_NO_RC5;OPENSSL_NO_MD2;OPENSSL_NO_KRB5;OPENSSL_NO_JPAKE;OPENSSL_NO_STATIC_ENGINE;MK1MF_BUILD;MK1MF_PLATFORM_VC_WIN32"
+				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;DSO_WIN32;OPENSSL_SYSNAME_WIN32;WIN32_LEAN_AND_MEAN;L_ENDIAN;MK1MF_BUILD;MK1MF_PLATFORM_VC_WIN32"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
 				WarningLevel="0"
@@ -340,46 +340,6 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="camellia"
-			>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\camellia\camellia.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\camellia\camellia.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\camellia\cmll_cbc.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\camellia\cmll_cfb.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\camellia\cmll_ctr.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\camellia\cmll_ecb.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\camellia\cmll_locl.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\camellia\cmll_misc.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\camellia\cmll_ofb.c"
-				>
-			</File>
-		</Filter>
-		<Filter
 			Name="des"
 			>
 			<File
@@ -496,42 +456,6 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="ecdsa"
-			>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\ecdsa\ecdsa.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\ecdsa\ecs_asn1.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\ecdsa\ecs_err.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\ecdsa\ecs_lib.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\ecdsa\ecs_locl.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\ecdsa\ecs_ossl.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\ecdsa\ecs_sign.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\ecdsa\ecs_vrf.c"
-				>
-			</File>
-		</Filter>
-		<Filter
 			Name="comp"
 			>
 			<File
@@ -552,38 +476,6 @@
 			</File>
 			<File
 				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\comp\comp_lib.c"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="idea"
-			>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\idea\i_cbc.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\idea\i_cfb64.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\idea\i_ecb.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\idea\i_ofb64.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\idea\i_skey.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\idea\idea.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\idea\idea_lcl.h"
 				>
 			</File>
 		</Filter>
@@ -692,38 +584,6 @@
 			</File>
 			<File
 				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\sha\sha_one.c"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="seed"
-			>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\seed\seed.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\seed\seed.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\seed\seed_cbc.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\seed\seed_cfb.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\seed\seed_ecb.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\seed\seed_locl.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\seed\seed_ofb.c"
 				>
 			</File>
 		</Filter>
@@ -909,90 +769,398 @@
 			<File
 				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\bio\b_dump.c"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\bio\b_print.c"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\bio\b_sock.c"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\bio\bf_buff.c"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\bio\bf_lbuf.c"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\bio\bf_nbio.c"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\bio\bf_null.c"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\bio\bio.h"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\bio\bio_cb.c"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\bio\bio_err.c"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\bio\bio_lcl.h"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\bio\bio_lib.c"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\bio\bss_acpt.c"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\bio\bss_bio.c"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\bio\bss_conn.c"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\bio\bss_dgram.c"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\bio\bss_fd.c"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\bio\bss_file.c"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\bio\bss_log.c"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\bio\bss_mem.c"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\bio\bss_null.c"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\bio\bss_sock.c"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
 			</File>
 		</Filter>
 		<Filter
@@ -1237,18 +1405,74 @@
 			<File
 				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\err\err.c"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\err\err.h"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\err\err_all.c"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\err\err_prn.c"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
 			</File>
 		</Filter>
 		<Filter
@@ -1788,86 +2012,6 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="ec"
-			>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\ec\ec.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\ec\ec2_mult.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\ec\ec2_smpl.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\ec\ec_ameth.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\ec\ec_asn1.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\ec\ec_check.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\ec\ec_curve.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\ec\ec_cvt.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\ec\ec_err.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\ec\ec_key.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\ec\ec_lcl.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\ec\ec_lib.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\ec\ec_mult.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\ec\ec_pmeth.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\ec\ec_print.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\ec\eck_prn.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\ec\ecp_mont.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\ec\ecp_nist.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\ec\ecp_smpl.c"
-				>
-			</File>
-		</Filter>
-		<Filter
 			Name="lhash"
 			>
 			<File
@@ -1920,114 +2064,6 @@
 			</File>
 			<File
 				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\objects\objects.h"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="engine"
-			>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\engine\eng_all.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\engine\eng_cnf.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\engine\eng_cryptodev.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\engine\eng_ctrl.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\engine\eng_dyn.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\engine\eng_err.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\engine\eng_fat.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\engine\eng_init.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\engine\eng_int.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\engine\eng_lib.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\engine\eng_list.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\engine\eng_openssl.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\engine\eng_pkey.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\engine\eng_table.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\engine\engine.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\engine\tb_asnmth.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\engine\tb_cipher.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\engine\tb_dh.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\engine\tb_digest.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\engine\tb_dsa.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\engine\tb_ecdh.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\engine\tb_ecdsa.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\engine\tb_pkmeth.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\engine\tb_rand.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\engine\tb_rsa.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\engine\tb_store.c"
 				>
 			</File>
 		</Filter>
@@ -2324,138 +2360,6 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="bf"
-			>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\bf\bf_cfb64.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\bf\bf_ecb.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\bf\bf_enc.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\bf\bf_locl.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\bf\bf_ofb64.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\bf\bf_pi.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\bf\bf_skey.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\bf\blowfish.h"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="cast"
-			>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\cast\c_cfb64.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\cast\c_ecb.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\cast\c_enc.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\cast\c_ofb64.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\cast\c_skey.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\cast\cast.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\cast\cast_lcl.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\cast\cast_s.h"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="mdc2"
-			>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\mdc2\mdc2.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\mdc2\mdc2_one.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\mdc2\mdc2dgst.c"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="ripemd"
-			>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\ripemd\ripemd.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\ripemd\rmd_dgst.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\ripemd\rmd_locl.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\ripemd\rmd_one.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\ripemd\rmdconst.h"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="whirlpool"
-			>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\whrlpool\whrlpool.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\whrlpool\wp_block.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\whrlpool\wp_dgst.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\whrlpool\wp_locl.h"
-				>
-			</File>
-		</Filter>
-		<Filter
 			Name="pkcs7"
 			>
 			<File
@@ -2684,34 +2588,6 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="ecdh"
-			>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\ecdh\ecdh.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\ecdh\ech_err.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\ecdh\ech_key.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\ecdh\ech_lib.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\ecdh\ech_locl.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\ecdh\ech_ossl.c"
-				>
-			</File>
-		</Filter>
-		<Filter
 			Name="conf"
 			>
 			<File
@@ -2829,102 +2705,182 @@
 			<File
 				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\dso\dso.h"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\dso\dso_beos.c"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\dso\dso_dl.c"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\dso\dso_dlfcn.c"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\dso\dso_err.c"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\dso\dso_lib.c"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\dso\dso_null.c"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\dso\dso_openssl.c"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\dso\dso_vms.c"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\dso\dso_win32.c"
 				>
-			</File>
-		</Filter>
-		<Filter
-			Name="cms"
-			>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\cms\cms.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\cms\cms_asn1.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\cms\cms_att.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\cms\cms_cd.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\cms\cms_dd.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\cms\cms_enc.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\cms\cms_env.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\cms\cms_err.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\cms\cms_ess.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\cms\cms_io.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\cms\cms_lcl.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\cms\cms_lib.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\cms\cms_sd.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\3rdparty\openssl-1.0.0d\crypto\cms\cms_smime.c"
-				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
 			</File>
 		</Filter>
 		<Filter

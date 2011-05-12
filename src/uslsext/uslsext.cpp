@@ -5,8 +5,15 @@
 #include <uslsext/uslsext.h>
 #include <openssl/conf.h>
 #include <openssl/crypto.h>
-#include <openssl/engine.h>
-#include <openssl/err.h>
+
+#ifndef OPENSSL_NO_ENGINE
+	#include <openssl/engine.h>
+#endif
+
+#ifndef OPENSSL_NO_ERR
+	#include <openssl/err.h>
+#endif
+
 #include <openssl/ssl.h>
 
 //----------------------------------------------------------------//
@@ -14,9 +21,16 @@ static void _cleanup () {
 
 	curl_global_cleanup ();
 	
-	ENGINE_cleanup ();
+	#ifndef OPENSSL_NO_ENGINE
+		ENGINE_cleanup ();
+	#endif
+	
 	CONF_modules_unload ( 1 );
-	ERR_free_strings ();
+	
+	#ifndef OPENSSL_NO_ERR
+		ERR_free_strings ();
+	#endif
+	
 	EVP_cleanup ();
 	CRYPTO_cleanup_all_ex_data ();
 }
