@@ -141,9 +141,10 @@ void USLuaObject::PushLuaUserdata ( USLuaState& state ) {
 	// create the handle userdata for reference counting
 	if ( !this->mUserdata.PushRef ( state )) {
 		
+		// pop the 'nil' pushed by PushRef
 		state.Pop ( 1 );
 		
-		// create and initialize the userdata
+		// create and initialize a new userdata
 		state.PushPtrUserData ( this );
 
 		// set the instance table
