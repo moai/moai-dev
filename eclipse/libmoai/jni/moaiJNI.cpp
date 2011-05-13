@@ -360,13 +360,13 @@ void Java_com_moai_MoaiView_FinalizeAku
 	(JNIEnv *env, jclass clazz)
 {
 	AKUFinalize();
+	//importGLDeinit();
 }
 extern "C"
 void Java_com_moai_MoaiView_DeinitializeAku
 (JNIEnv *env, jclass clazz)
 {
 	AKUDeleteContext ( mAku );
-	importGLDeinit();
 }
 extern "C"
 void Java_com_moai_MoaiView_onDraw
