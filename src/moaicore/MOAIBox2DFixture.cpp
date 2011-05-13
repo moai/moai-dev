@@ -76,18 +76,18 @@ int MOAIBox2DFixture::_setDensity ( lua_State* L ) {
 	
 	@in		MOAIBox2DFixture self
 	@in		number categoryBits
-	@in		number maskBits
+	@opt	number maskBits
 	@opt	number groupIndex
 	@out	nil
 */
 int MOAIBox2DFixture::_setFilter ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIBox2DFixture, "UNN" )
+	MOAI_LUA_SETUP ( MOAIBox2DFixture, "UN" )
 	
 	b2Filter filter = self->mFixture->GetFilterData ();
 	
 	filter.categoryBits		= ( uint16 )state.GetValue < u32 >( 2, 0 );
-	filter.maskBits			= ( uint16 )state.GetValue < u32 >( 3, 0 );
-	filter.groupIndex		= ( uint16 )state.GetValue < u32 >( 4, ( u32 )filter.groupIndex );
+	filter.maskBits			= ( uint16 )state.GetValue < u32 >( 3, 0xffffffff );
+	filter.groupIndex		= ( int16 )state.GetValue < int >( 4, ( int )filter.groupIndex );
 	
 	self->mFixture->SetFilterData ( filter );
 	return 0;

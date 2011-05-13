@@ -56,14 +56,16 @@ poly = {
 fixture = body:addPolygon ( poly )
 fixture:setDensity ( 1 )
 fixture:setFriction ( 0.3 )
-fixture:setCollisionHandler ( onCollide, MOAIBox2DArbiter.BEGIN )
+fixture:setFilter ( 0x01 )
+fixture:setCollisionHandler ( onCollide, MOAIBox2DArbiter.BEGIN, 0x02 )
 
 body:resetMassData ()
 body:applyAngularImpulse ( 2 )
 
 body2 = world:addBody ( MOAIBox2DBody.STATIC )
 fixture2 = body2:addRect ( -5, -5, 5, -3 )
-fixture2:setCollisionHandler ( onCollide, MOAIBox2DArbiter.BEGIN )
+fixture2:setFilter ( 0x02 )
+fixture2:setCollisionHandler ( onCollide, MOAIBox2DArbiter.BEGIN, 0x00 )
 
 texture = MOAIGfxQuad2D.new ()
 texture:setTexture ( 'cathead.png' )
