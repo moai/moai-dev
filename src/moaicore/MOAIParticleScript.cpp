@@ -31,8 +31,11 @@
 #define READ_VALUE(var,bytecode)								\
 	type = *( bytecode++ );										\
 	if ( type == PARAM_TYPE_CONST ) {							\
-		*(( u32* )&var ) = *(( u32* )bytecode );				\
-		bytecode += sizeof ( u32 );								\
+		dst = ( u8* )&var;										\
+		*( dst++ ) = *( bytecode++ );							\
+		*( dst++ ) = *( bytecode++ );							\
+		*( dst++ ) = *( bytecode++ );							\
+		*( dst++ ) = *( bytecode++ );							\
 	}															\
 	else {														\
 		regIdx = *( bytecode++ );								\
@@ -49,8 +52,11 @@
 	}
 
 #define READ_INT(var,bytecode)									\
-	*(( u32* )&var ) = *(( u32* )bytecode );					\
-	bytecode += sizeof ( u32 );
+		dst = ( u8* )&var;										\
+		*( dst++ ) = *( bytecode++ );							\
+		*( dst++ ) = *( bytecode++ );							\
+		*( dst++ ) = *( bytecode++ );							\
+		*( dst++ ) = *( bytecode++ );
 
 //================================================================//
 // MOAIParticleScript
@@ -153,6 +159,7 @@ void MOAIParticleScript::Instruction::Parse ( USLuaState& state, u32 idx ) {
 u8* MOAIParticleScript::Instruction::Write ( u8* cursor ) {
 
 	*( cursor++ ) = ( u8 )this->mOpcode;
+	u8* src;
 
 	if ( this->mFormat ) {
 	
@@ -164,35 +171,34 @@ u8* MOAIParticleScript::Instruction::Write ( u8* cursor ) {
 				
 				case 'I':
 					
-					*(( u32* )cursor ) = this->mParams [ i ];
-					cursor += sizeof ( u32 );
-					
+					src = ( u8* )&this->mParams [ i ];
+					*( cursor++ ) = *( src++ );
+					*( cursor++ ) = *( src++ );
+					*( cursor++ ) = *( src++ );
+					*( cursor++ ) = *( src++ );
 					break;
 				
 				case 'R':
 					
-					*(( u8* )cursor ) = this->mTypes [ i ];
-					cursor += sizeof ( u8 );
-					
-					*(( u8* )cursor ) = ( u8 )this->mParams [ i ];
-					cursor += sizeof ( u8 );
-					
+					*( cursor++ ) = this->mTypes [ i ];
+					*( cursor++ ) = ( u8 )this->mParams [ i ];
 					break;
 				
 				case 'V':
 					
-					*(( u8* )cursor ) = this->mTypes [ i ];
-					cursor += sizeof ( u8 );
+					*( cursor++ ) = this->mTypes [ i ];
 					
 					if ( this->mTypes [ i ] == PARAM_TYPE_CONST ) {
 					
-						*(( u32* )cursor ) = this->mParams [ i ];
-						cursor += sizeof ( u32 );
+						src = ( u8* )&this->mParams [ i ];
+						*( cursor++ ) = *( src++ );
+						*( cursor++ ) = *( src++ );
+						*( cursor++ ) = *( src++ );
+						*( cursor++ ) = *( src++ );
 					}
 					else {
-					
-						*(( u8* )cursor ) = ( u8 )this->mParams [ i ];
-						cursor += sizeof ( u8 );
+						
+						*( cursor++ ) = ( u8 )this->mParams [ i ];
 					}
 					break;
 			}
@@ -419,11 +425,16 @@ u8* MOAIParticleScript::Compile () {
 	this->mBytecode.Init ( size );
 	
 	u8* cursor = this->mBytecode;
+	
+	u8* top = ( u8* )(( u32 )cursor + size );
+	
 	FOREACH ( InstructionIt, instructionIt, this->mInstructions ) {
 		Instruction& instruction = *instructionIt;
 		cursor = instruction.Write ( cursor );
 	}
-	end.Write ( cursor );
+	cursor = end.Write ( cursor );
+	
+	assert ( cursor == top );
 	
 	this->mInstructions.clear ();
 	this->mCompiled = true;
@@ -562,6 +573,7 @@ void MOAIParticleScript::ResetRegisters ( float* spriteRegisters, float* particl
 //----------------------------------------------------------------//
 void MOAIParticleScript::Run ( MOAIParticleSystem& system, MOAIParticle& particle, float step ) {
 
+	u8* dst;
 	u8* bytecode = this->mBytecode;
 	if ( !bytecode ) return;
 
