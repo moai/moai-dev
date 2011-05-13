@@ -2,6 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <uslsext/USLog.h>
 #include <uslsext/USTask.h>
 #include <uslsext/USTaskThread.h>
 
@@ -49,7 +50,7 @@ void USTaskThread::Process () {
 //----------------------------------------------------------------//
 void USTaskThread::Publish () {
 
-	USLeanLink< USTaskBase* >* i = this->mCompletedTasks.Head ();
+	USLeanLink < USTaskBase* >* i = this->mCompletedTasks.Head ();
 	while ( i ) {
 
 		this->mMutex.Lock ();

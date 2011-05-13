@@ -4,6 +4,7 @@
 #include "pch.h"
 #ifndef _WIN32
 
+#include <uslsext/USLog.h>
 #include <uslsext/USThread_posix.h>
 
 //================================================================//

@@ -4,6 +4,7 @@
 #include "pch.h"
 
 #include <uslsext/USData.h>
+#include <uslsext/USLog.h>
 #include <uslsext/USHttpTask.h>
 #include <uslsext/USHttpTask_impl.h>
 #include <uslsext/USUrlMgr.h>
@@ -71,11 +72,12 @@ void USHttpTaskInfo::Finish () {
 	if ( this->mStream == &this->mMemStream ) {
 	
 		u32 size = this->mMemStream.GetLength ();
-		this->mData.Init ( size );
-	
-		this->mStream->Seek ( 0, SEEK_SET );
-		this->mStream->ReadBytes ( this->mData, size );
 		
+		if ( size ) {
+			this->mData.Init ( size );
+			this->mStream->Seek ( 0, SEEK_SET );
+			this->mStream->ReadBytes ( this->mData, size );
+		}
 		this->mMemStream.Clear ();
 	}
 }

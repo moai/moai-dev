@@ -2,6 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <uslsext/USLog.h>
 #include <uslsext/USThread.h>
 #include <uslsext/USThread_posix.h>
 #include <uslsext/USThread_win32.h>

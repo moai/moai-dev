@@ -37,9 +37,11 @@ int MOAIHttpTask::_getSize ( lua_State* L ) {
 int MOAIHttpTask::_getString ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIHttpTask, "U" )
 
-	lua_pushlstring ( state, ( cc8* )self->mBuffer, self->mSize );
-
-	return 1;
+	if ( self->mSize ) {
+		lua_pushlstring ( state, ( cc8* )self->mBuffer, self->mSize );
+		return 1;
+	}
+	return 0;
 }
 
 //----------------------------------------------------------------//
@@ -151,9 +153,9 @@ void MOAIHttpTask::Clear () {
 
 	if ( this->mBuffer ) {
 		free ( this->mBuffer );
-		this->mBuffer = 0;
-		this->mSize = 0;
 	}
+	this->mBuffer = 0;
+	this->mSize = 0;
 }
 
 //----------------------------------------------------------------//
@@ -195,11 +197,10 @@ void MOAIHttpTask::OnHttpFinish ( USHttpTask* task ) {
 	
 	if ( this->mOnFinish ) {
 	
-		USLuaStateHandle state = USLuaRuntime::Get ().State ();
-		
-		this->mOnFinish.PushRef ( state );
+		USLuaStateHandle state = this->mOnFinish.GetSelf ();
 		this->PushLuaUserdata ( state );
 		state.DebugCall ( 1, 0 );
+		
 	}
 	
 	this->mPostData = 0;
