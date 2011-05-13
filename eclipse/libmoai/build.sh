@@ -7,7 +7,7 @@ cd libcrypto
 ./build.sh
 
 cd ../
-mv libcrypto/bin/libcrypto.a jni
+mv libcrypto/obj/local/armeabi/libcrypto.a jni
 
 cd jni
 ndk-build

@@ -14,6 +14,3 @@ ar -x libcrypto-c.a
 
 ar rcs libcrypto.a *.o
 ranlib libcrypto.a
-
-cd ../../../
-mv obj/local/armeabi/libcrypto.a bin/

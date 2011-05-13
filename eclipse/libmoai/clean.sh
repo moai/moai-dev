@@ -5,4 +5,4 @@ rm -rf obj
 cd libcrypto
 ./clean.sh
 
-echo Build cleaned.
+echo libmoai cleaned.
