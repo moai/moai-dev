@@ -20,7 +20,7 @@
 void USLog::Print ( cc8* format, ... ) {
 	UNUSED ( format );
 
-	#ifdef _DEBUG
+	//#ifdef _DEBUG
 
 		va_list args;
 
@@ -34,5 +34,5 @@ void USLog::Print ( cc8* format, ... ) {
 		#endif
 		va_end ( args );
 
-	#endif
+	//#endif
 }
