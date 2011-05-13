@@ -25,7 +25,8 @@ private:
 	b2Fixture*	mFixture;
 
 	USLuaRef	mCollisionHandler;
-	u32			mCollisionMask;
+	u32			mCollisionPhaseMask;
+	u32			mCollisionCategoryMask;
 
 	//----------------------------------------------------------------//
 	static int	_destroy				( lua_State* L );
@@ -37,13 +38,10 @@ private:
 	static int	_setSensor				( lua_State* L );
 	
 	//----------------------------------------------------------------//
-	void			BeginContact		( MOAIBox2DFixture* other, MOAIBox2DArbiter* arbiter );
-	void			EndContact			( MOAIBox2DFixture* other, MOAIBox2DArbiter* arbiter );
 	void			HandleCollision		( u32 eventType, MOAIBox2DFixture* other, MOAIBox2DArbiter* arbiter );
 	static u32		LoadVerts			( USLuaState& state, int idx, b2Vec2* verts, u32 max, float unitsToMeters  );
-	void			PostSolve			( MOAIBox2DFixture* other, MOAIBox2DArbiter* arbiter );
-	void			PreSolve			( MOAIBox2DFixture* other, MOAIBox2DArbiter* arbiter );
 	void			SetFixture			( b2Fixture* fixture );
+
 
 public:
 	

@@ -37,16 +37,18 @@ int MOAIBox2DFixture::_destroy ( lua_State* L ) {
 	
 	@in		MOAIBox2DFixture self
 	@in		function handler
-	@opt	number mask			Any bitwise combination of MOAIBox2DArbiter.BEGIN, MOAIBox2DArbiter.END,
-								MOAIBox2DArbiter.POST_SOLVE, MOAIBox2DArbiter.PRE_SOLVE,
-								MOAIBox2DArbiter.ALL
+	@opt	number phaseMask		Any bitwise combination of MOAIBox2DArbiter.BEGIN, MOAIBox2DArbiter.END,
+									MOAIBox2DArbiter.POST_SOLVE, MOAIBox2DArbiter.PRE_SOLVE,
+									MOAIBox2DArbiter.ALL
+	@opt	number categoryMask		Check against opposing fixture's category bits and generate collision events if match.
 	@out	nil
 */
 int MOAIBox2DFixture::_setCollisionHandler ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DFixture, "UF" )
 	
 	self->mCollisionHandler.SetRef ( state, 2, false );
-	self->mCollisionMask = state.GetValue < u32 >( 3, MOAIBox2DArbiter::ALL );
+	self->mCollisionPhaseMask = state.GetValue < u32 >( 3, MOAIBox2DArbiter::ALL );
+	self->mCollisionCategoryMask = state.GetValue < u32 >( 4, 0xffffffff );
 	
 	return 0;
 }
@@ -147,14 +149,6 @@ int MOAIBox2DFixture::_setSensor ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIBox2DFixture::BeginContact ( MOAIBox2DFixture* other, MOAIBox2DArbiter* arbiter ) {
-	
-	if ( this->mCollisionMask & MOAIBox2DArbiter::BEGIN ) {
-		this->HandleCollision ( MOAIBox2DArbiter::BEGIN, other, arbiter );
-	}
-}
-
-//----------------------------------------------------------------//
 void MOAIBox2DFixture::Destroy () {
 
 	if ( this->mFixture ) {
@@ -166,27 +160,27 @@ void MOAIBox2DFixture::Destroy () {
 }
 
 //----------------------------------------------------------------//
-void MOAIBox2DFixture::EndContact ( MOAIBox2DFixture* other, MOAIBox2DArbiter* arbiter ) {
-	
-	if ( this->mCollisionMask & MOAIBox2DArbiter::END ) {
-		this->HandleCollision ( MOAIBox2DArbiter::END, other, arbiter );
-	}
-}
-
-//----------------------------------------------------------------//
 void MOAIBox2DFixture::HandleCollision ( u32 eventType, MOAIBox2DFixture* other, MOAIBox2DArbiter* arbiter ) {
 	
-	if ( this->mCollisionHandler ) {
-	
-		USLuaStateHandle state = USLuaRuntime::Get ().State ();
-		if ( this->mCollisionHandler.PushRef ( state )) {
+	if ( this->mCollisionPhaseMask & eventType ) {
+		
+		const b2Filter& otherFilter = other->mFixture->GetFilterData ();
+		
+		if ( this->mCollisionCategoryMask & otherFilter.categoryBits ) {
+		
+			if ( this->mCollisionHandler ) {
 			
-			state.Push ( eventType );
-			this->PushLuaUserdata ( state );
-			other->PushLuaUserdata ( state );
-			arbiter->PushLuaUserdata ( state );
-			
-			state.DebugCall ( 4, 0 );
+				USLuaStateHandle state = USLuaRuntime::Get ().State ();
+				if ( this->mCollisionHandler.PushRef ( state )) {
+					
+					state.Push ( eventType );
+					this->PushLuaUserdata ( state );
+					other->PushLuaUserdata ( state );
+					arbiter->PushLuaUserdata ( state );
+					
+					state.DebugCall ( 4, 0 );
+				}
+			}
 		}
 	}
 }
@@ -216,7 +210,8 @@ u32 MOAIBox2DFixture::LoadVerts ( USLuaState& state, int idx, b2Vec2* verts, u32
 //----------------------------------------------------------------//
 MOAIBox2DFixture::MOAIBox2DFixture () :
 	mFixture ( 0 ),
-	mCollisionMask ( 0 ) {
+	mCollisionPhaseMask ( 0 ),
+	mCollisionCategoryMask ( 0 ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( USLuaObject )
@@ -225,22 +220,6 @@ MOAIBox2DFixture::MOAIBox2DFixture () :
 
 //----------------------------------------------------------------//
 MOAIBox2DFixture::~MOAIBox2DFixture () {
-}
-
-//----------------------------------------------------------------//
-void MOAIBox2DFixture::PostSolve ( MOAIBox2DFixture* other, MOAIBox2DArbiter* arbiter ) {
-	
-	if ( this->mCollisionMask & MOAIBox2DArbiter::POST_SOLVE ) {
-		this->HandleCollision ( MOAIBox2DArbiter::POST_SOLVE, other, arbiter );
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIBox2DFixture::PreSolve ( MOAIBox2DFixture* other, MOAIBox2DArbiter* arbiter ) {
-	
-	if ( this->mCollisionMask & MOAIBox2DArbiter::PRE_SOLVE ) {
-		this->HandleCollision ( MOAIBox2DArbiter::PRE_SOLVE, other, arbiter );
-	}
 }
 
 //----------------------------------------------------------------//

@@ -90,8 +90,8 @@ void MOAIBox2DArbiter::BeginContact ( b2Contact* contact ) {
 	MOAIBox2DFixture* moaiFixtureA = ( MOAIBox2DFixture* )fixtureA->GetUserData ();
 	MOAIBox2DFixture* moaiFixtureB = ( MOAIBox2DFixture* )fixtureB->GetUserData ();
 	
-	moaiFixtureA->BeginContact ( moaiFixtureB, this );
-	moaiFixtureB->BeginContact ( moaiFixtureA, this );
+	moaiFixtureA->HandleCollision ( BEGIN, moaiFixtureB, this );
+	moaiFixtureB->HandleCollision ( BEGIN, moaiFixtureA, this );
 }
 
 //----------------------------------------------------------------//
@@ -106,8 +106,8 @@ void MOAIBox2DArbiter::EndContact ( b2Contact* contact ) {
 	MOAIBox2DFixture* moaiFixtureA = ( MOAIBox2DFixture* )fixtureA->GetUserData ();
 	MOAIBox2DFixture* moaiFixtureB = ( MOAIBox2DFixture* )fixtureB->GetUserData ();
 	
-	moaiFixtureA->EndContact ( moaiFixtureB, this );
-	moaiFixtureB->EndContact ( moaiFixtureA, this );
+	moaiFixtureA->HandleCollision ( END, moaiFixtureB, this );
+	moaiFixtureB->HandleCollision ( END, moaiFixtureA, this );
 }
 
 //----------------------------------------------------------------//
@@ -147,8 +147,8 @@ void MOAIBox2DArbiter::PostSolve ( b2Contact* contact, const b2ContactImpulse* i
 		this->mTangentImpulse += impulse->tangentImpulses [ i ];
 	}
 	
-	moaiFixtureA->PostSolve ( moaiFixtureB, this );
-	moaiFixtureB->PostSolve ( moaiFixtureA, this );
+	moaiFixtureA->HandleCollision ( POST_SOLVE, moaiFixtureB, this );
+	moaiFixtureB->HandleCollision ( POST_SOLVE, moaiFixtureA, this );
 }
 
 //----------------------------------------------------------------//
@@ -164,8 +164,8 @@ void MOAIBox2DArbiter::PreSolve ( b2Contact* contact, const b2Manifold* oldManif
 	MOAIBox2DFixture* moaiFixtureA = ( MOAIBox2DFixture* )fixtureA->GetUserData ();
 	MOAIBox2DFixture* moaiFixtureB = ( MOAIBox2DFixture* )fixtureB->GetUserData ();
 	
-	moaiFixtureA->PreSolve ( moaiFixtureB, this );
-	moaiFixtureB->PreSolve ( moaiFixtureA, this );
+	moaiFixtureA->HandleCollision ( PRE_SOLVE, moaiFixtureB, this );
+	moaiFixtureB->HandleCollision ( PRE_SOLVE, moaiFixtureA, this );
 }
 
 //----------------------------------------------------------------//
