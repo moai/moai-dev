@@ -3,11 +3,11 @@
 #----------------------------------------------------------------
 # build
 #----------------------------------------------------------------
-cd ../libcrypto
+cd libcrypto
 ./build.sh
 
 cd ../
-mv libcrypto/bin/libcrypto.a libmoai/jni
+mv libcrypto/bin/libcrypto.a jni
 
-cd libmoai/jni
+cd jni
 ndk-build
