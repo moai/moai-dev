@@ -86,10 +86,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "freetype", "freetype\freety
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "moaicore", "moaicore\moaicore.vcproj", "{4A578B4D-01AF-46BD-81CE-A775B0553526}"
 	ProjectSection(ProjectDependencies) = postProject
-		{AB0DD232-1AF9-4B16-A0F2-5EBF32250F6B} = {AB0DD232-1AF9-4B16-A0F2-5EBF32250F6B}
-		{2C12AE60-0D24-4200-99BB-CB49CBA3003F} = {2C12AE60-0D24-4200-99BB-CB49CBA3003F}
-		{562B9EEF-2A2E-46E1-8A28-550C86CDF9F6} = {562B9EEF-2A2E-46E1-8A28-550C86CDF9F6}
-		{97D147F3-4DBC-45CD-87EB-6C90EB6EFE21} = {97D147F3-4DBC-45CD-87EB-6C90EB6EFE21}
 		{97FD97F4-5C0F-411E-9F3A-6549D4263664} = {97FD97F4-5C0F-411E-9F3A-6549D4263664}
 	EndProjectSection
 EndProject
@@ -360,8 +356,8 @@ Global
 		{875A4CBB-1CC9-41CB-95FA-5511142520BC} = {52721DAB-82A8-4C3D-B351-CAE9748EB9F8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		AMDCaPersistentConfig = Debug|Win32
-		AMDCaPersistentStartup = moai (Utilities\moai)
 		AMDCaProjectFile = C:\Documents and Settings\Patrick\My Documents\git\moai\vs2008\CodeAnalyst\moai-open.caw
+		AMDCaPersistentStartup = moai (Utilities\moai)
+		AMDCaPersistentConfig = Debug|Win32
 	EndGlobalSection
 EndGlobal

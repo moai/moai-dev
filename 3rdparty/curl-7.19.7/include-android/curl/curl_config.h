@@ -749,7 +749,7 @@
 /* #undef NEED_REENTRANT */
 
 /* cpu-machine-OS */
-#define OS "arm-apple-darwin"
+#define OS "arm-unknown-linux-gnu"
 
 /* Name of package */
 #define PACKAGE "curl"
@@ -863,7 +863,7 @@
 #define SIZEOF_LONG 4
 
 /* The size of `off_t', as computed by sizeof. */
-#define SIZEOF_OFF_T 8
+#define SIZEOF_OFF_T 4
 
 /* The size of `size_t', as computed by sizeof. */
 #define SIZEOF_SIZE_T 4

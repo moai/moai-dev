@@ -11,6 +11,12 @@
 #include <moaicore/MOAIFmod.h>
 #include <aku/AKU.h>
 
+#if USE_LUA_SOCKET
+	//extern "C" {
+		#include <luasocket.h>
+	//}
+#endif
+
 //================================================================//
 // local
 //================================================================//
@@ -394,12 +400,16 @@ MOAISim::MOAISim () :
 
 	luaRuntime.Open ();
 	luaRuntime.LoadLibs ( "moai" );
+	
+	#if USE_LUA_SOCKET
+		USLuaStateHandle state = luaRuntime.State ();
+		luaopen_socket_core ( state );
+	#endif
 }
 
 //----------------------------------------------------------------//
 MOAISim::~MOAISim () {
 
-	//this->mDataIOThread.Stop ();
 	this->Clear ();
 }
 
