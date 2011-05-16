@@ -29,7 +29,15 @@ private:
 
 	double			mDeviceTime;	// elapsed device time since last update
 	double			mStep;			// simulation step size
-	double			mTime;			// elapsed simulation running time (in steps)
+	double			mTime;			// elapsed simulation running time (in seconds)
+
+	double			mFrameTime;		// time last frame was rendered (in seconds)
+	
+	
+	static const u32 FPS_BUFFER_SIZE = 30;
+	float			mFrameRate;
+	float			mFrameRateBuffer [ FPS_BUFFER_SIZE ];
+	u32				mFrameRateIdx;
 	
 	USLuaRef		mOnTextEntry;
 	USLuaRef		mOnCancelTextEntry;
@@ -64,6 +72,7 @@ private:
 	static int		_getElapsedTime				( lua_State* L );
 	static int		_getFrameSize				( lua_State* L );
 	static int		_getNetworkStatus			( lua_State* L );
+	static int		_getPerformance				( lua_State* L );
 	static int		_openWindow					( lua_State* L );
 	static int		_pauseTimer					( lua_State* L );
 	static int		_popRenderPass				( lua_State* L );
@@ -74,6 +83,7 @@ private:
 	static int		_timeToFrames				( lua_State* L );
 
 	//----------------------------------------------------------------//
+	void			MeasureFrameRate		();
 
 public:
 	

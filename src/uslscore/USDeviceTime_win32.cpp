@@ -27,7 +27,10 @@ double _getTimerFrequency () {
 
 	//----------------------------------------------------------------//
 	double USDeviceTime::GetTimeInSeconds () {
-	
+		
+		// TODO: check accuracy of timeGetTime vs. QueryPerformanceCounter
+		//return ( double )timeGetTime () * 0.001f;
+
 		static double sFrequency = _getTimerFrequency ();
 	
 		if ( sFrequency > 0.0 ) {
