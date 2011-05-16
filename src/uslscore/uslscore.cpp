@@ -41,9 +41,9 @@ void uslscore::InitGlobals ( USGlobals* globals ) {
 
 		_typeCheck ();
 
-		#ifdef _WIN32
-			_CrtSetDbgFlag ( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF | _CRTDBG_CHECK_ALWAYS_DF );
-		#endif
+		//#ifdef _WIN32
+		//	_CrtSetDbgFlag ( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF | _CRTDBG_CHECK_ALWAYS_DF );
+		//#endif
 		
 		srand (( u32 )time ( 0 ));
 		atexit ( _cleanup );

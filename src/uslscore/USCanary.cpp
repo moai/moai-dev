@@ -37,11 +37,14 @@ bool USCanary::IsValid () {
 //----------------------------------------------------------------//
 void USCanary::Release ( bool strong ) {
 
-	if ( strong && this->mStrongRefs ) {
-		--this->mStrongRefs;
+	if ( strong ) {
+	
+		if ( this->mStrongRefs ) {
+			--this->mStrongRefs;
+		}
 		
-		if (( this->mObject ) && ( this->mStrongRefs == 0 )) {
-			delete this->mObject;
+		if ( this->mObject ) {
+			this->mObject->OnRelease ( this->mStrongRefs );
 		}
 	}
 	
@@ -60,6 +63,10 @@ void USCanary::Retain ( bool strong ) {
 	++this->mRefCount;
 	if ( strong ) {
 		++this->mStrongRefs;
+		
+		if ( this->mObject ) {
+			this->mObject->OnRetain ( this->mStrongRefs );
+		}
 	}
 }
 

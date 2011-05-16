@@ -16,13 +16,13 @@ class USLuaRuntime :
 	public USGlobalClass < USLuaRuntime > {
 private:
 
+	USLuaRefTable		mWeakRefTable;
+	USLuaRefTable		mStrongRefTable;
+
 	USLuaRef			mTraceback;
-	USLuaRef			mWeakRefTable;
 	USLuaState			mMainState;
 
 	//----------------------------------------------------------------//
-	void				InitWeakRefTable		();
-	void				WeakRefTable			( USLuaState& state );
 
 public:
 

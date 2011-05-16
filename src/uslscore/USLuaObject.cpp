@@ -20,9 +20,12 @@ int USLuaObject::_delete ( lua_State* L ) {
 
 	USLuaObject* data = ( USLuaObject* )state.GetPtrUserData ( 1 );
 
-	data->mUserdata.Clear ();
-	data->Release ();
-
+	if ( data->mUserdata.IsWeak ()) {
+		delete data;
+	}
+	else {
+		data->mUserdata.Clear ();
+	}
 	return 0;
 }
 
@@ -115,6 +118,28 @@ void USLuaObject::LuaUnbind ( USLuaState& state ) {
 }
 
 //----------------------------------------------------------------//
+void USLuaObject::OnRelease ( u32 refCount ) {
+
+	if ( refCount == 0 ) {
+	
+		if ( this->mUserdata ) {
+			assert ( !this->mUserdata.IsWeak ());
+			this->mUserdata.MakeWeak ();
+		}
+		else {
+			delete this;
+		}
+	}
+}
+
+//----------------------------------------------------------------//
+void USLuaObject::OnRetain ( u32 refCount ) {
+	UNUSED ( refCount );
+
+	this->mUserdata.MakeStrong ();
+}
+
+//----------------------------------------------------------------//
 void USLuaObject::PushLuaClassTable ( USLuaState& state ) {
 
 	USLuaClass* luaType = this->GetLuaClass ();
@@ -154,10 +179,8 @@ void USLuaObject::PushLuaUserdata ( USLuaState& state ) {
 		lua_setmetatable ( state, -2 );
 		
 		// and take a ref back to the handle
-		this->mUserdata.SetRef ( state, -1, true );
-		
-		// and retain
-		this->Retain ();
+		bool weak = ( this->GetRefCount () == 0 );
+		this->mUserdata.SetRef ( state, -1, weak );
 	}
 }
 

@@ -38,6 +38,19 @@ bool USObject::IsInScope () {
 }
 
 //----------------------------------------------------------------//
+void USObject::OnRelease ( u32 refCount ) {
+
+	if ( refCount == 0 ) {
+		delete this;
+	}
+}
+
+//----------------------------------------------------------------//
+void USObject::OnRetain ( u32 refCount ) {
+	UNUSED ( refCount );
+}
+
+//----------------------------------------------------------------//
 void USObject::Release () {
 
 	if ( this->mCanary ) {

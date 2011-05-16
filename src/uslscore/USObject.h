@@ -18,6 +18,8 @@ private:
 	USCanary*		mCanary;
 
 	//----------------------------------------------------------------//
+	void			OnRelease			( u32 refCount );
+	void			OnRetain			( u32 refCount );
 			
 public:
 

@@ -263,31 +263,6 @@ void USLuaRuntime::Close () {
 }
 
 //----------------------------------------------------------------//
-void USLuaRuntime::InitWeakRefTable () {
-
-	assert ( !this->mWeakRefTable );
-
-	// create the table
-	lua_newtable ( this->mMainState );
-
-	// create the metatable
-	lua_newtable ( this->mMainState );
-
-	// make it weak
-	lua_pushstring ( this->mMainState, "kv" );
-	lua_setfield ( this->mMainState, -2, "__mode" );
-
-	//set the metatable
-	lua_setmetatable ( this->mMainState, -2 );
-
-	// and grab the table
-	this->mWeakRefTable = this->mMainState.GetStrongRef ( -1 );
-
-	// done!
-	lua_pop ( this->mMainState, 1 );
-}
-
-//----------------------------------------------------------------//
 bool USLuaRuntime::IsOpen () {
 
 	return ( this->mMainState != 0 );
@@ -316,8 +291,9 @@ USLuaStateHandle USLuaRuntime::Open () {
 	// open the main state
 	this->mMainState = lua_open ();
 
-	// set up the weak ref table
-	this->InitWeakRefTable ();
+	// set up the ref tables
+	this->mWeakRefTable.InitWeak ();
+	this->mStrongRefTable.InitStrong ();
 	
 	return USLuaStateHandle ( this->mMainState );
 }
@@ -360,11 +336,4 @@ USLuaRuntime::~USLuaRuntime () {
 		lua_close ( this->mMainState );
 	}
 	this->mMainState = 0;
-}
-
-
-//----------------------------------------------------------------//
-void USLuaRuntime::WeakRefTable ( USLuaState& state ) {
-
-	state.Push ( this->mWeakRefTable );
 }

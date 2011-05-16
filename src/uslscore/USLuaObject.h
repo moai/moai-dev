@@ -28,6 +28,10 @@ protected:
 	static int		_delete		( lua_State* L );
 	//static int		_tostring	( lua_State* L );
 
+	//----------------------------------------------------------------//
+	void					OnRelease				( u32 refCount );
+	void					OnRetain				( u32 refCount );
+
 public:
 
 	friend class USLuaClass;

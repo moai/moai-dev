@@ -6,6 +6,137 @@
 #include <uslscore/USLuaRuntime.h>
 
 //================================================================//
+// USLuaRefTable
+//================================================================//
+
+//----------------------------------------------------------------//
+void USLuaRefTable::Clear () {
+
+	if ( this->mTableID != LUA_NOREF ) {
+		
+		USLuaStateHandle state = USLuaRuntime::Get ().State ();
+		
+		luaL_unref ( state, LUA_REGISTRYINDEX, this->mTableID );
+		this->mTableID = LUA_NOREF;
+	}
+	
+	this->mRefIDStack.Clear ();
+	this->mRefIDStackTop = 0;
+}
+
+//----------------------------------------------------------------//
+void USLuaRefTable::InitWeak () {
+
+	USLuaStateHandle state = USLuaRuntime::Get ().State ();
+
+	// create the table
+	lua_newtable ( state );
+
+	// create the metatable
+	lua_newtable ( state );
+
+	// make it weak
+	lua_pushstring ( state, "kv" );
+	lua_setfield ( state, -2, "__mode" );
+
+	//set the metatable
+	lua_setmetatable ( state, -2 );
+
+	// and grab the table ref
+	this->mTableID = luaL_ref ( state, LUA_REGISTRYINDEX );
+}
+
+//----------------------------------------------------------------//
+void USLuaRefTable::InitStrong () {
+
+	USLuaStateHandle state = USLuaRuntime::Get ().State ();
+
+	// create the table
+	lua_newtable ( state );
+
+	// and grab the table ref
+	this->mTableID = luaL_ref ( state, LUA_REGISTRYINDEX );
+}
+
+//----------------------------------------------------------------//
+void USLuaRefTable::PushRef ( USLuaState& state, int refID ) {
+
+	assert ( this->mTableID != LUA_NOREF );
+	
+	lua_rawgeti ( state, LUA_REGISTRYINDEX, this->mTableID );
+	lua_rawgeti ( state, -1, refID );
+	lua_replace ( state, -2 );
+}
+
+//----------------------------------------------------------------//
+int USLuaRefTable::Ref ( USLuaState& state, int idx ) {
+
+	assert ( this->mTableID != LUA_NOREF );
+
+	idx = state.AbsIndex ( idx );
+	int refID = this->ReserveRefID ();
+
+	lua_rawgeti ( state, LUA_REGISTRYINDEX, this->mTableID );
+	lua_pushnumber ( state, refID );
+	lua_pushvalue ( state, idx );
+	lua_settable ( state, -3 );
+	
+	lua_pop ( state, 1 );
+	
+	return refID;
+}
+
+//----------------------------------------------------------------//
+void USLuaRefTable::ReleaseRefID ( int refID ) {
+
+	this->mRefIDStack [ this->mRefIDStackTop++ ] = ( u16 )refID;
+}
+
+//----------------------------------------------------------------//
+int USLuaRefTable::ReserveRefID () {
+
+	if ( !this->mRefIDStackTop ) {
+	
+		u32 size = this->mRefIDStack.Size () + REFID_CHUNK_SIZE;
+		this->mRefIDStack.Init ( size );
+		
+		for ( u32 i = 0; i < REFID_CHUNK_SIZE; ++i ) {
+			this->mRefIDStack [ i ] = ( u16 )size--;
+		}
+		this->mRefIDStackTop = REFID_CHUNK_SIZE;
+	}
+	
+	assert ( this->mRefIDStackTop );
+	
+	return this->mRefIDStack [ --this->mRefIDStackTop ];
+}
+
+//----------------------------------------------------------------//
+void USLuaRefTable::Unref ( USLuaState& state, int refID ) {
+
+	assert ( this->mTableID != LUA_NOREF );
+
+	lua_rawgeti ( state, LUA_REGISTRYINDEX, this->mTableID );
+	lua_pushnumber ( state, refID );
+	lua_pushnil ( state );
+	lua_settable ( state, -3 );
+	
+	lua_pop ( state, 1 );
+	
+	this->ReleaseRefID ( refID );
+}
+
+//----------------------------------------------------------------//
+USLuaRefTable::USLuaRefTable () :
+	mTableID ( LUA_NOREF ),
+	mRefIDStackTop ( 0 ) {
+}
+
+//----------------------------------------------------------------//
+USLuaRefTable::~USLuaRefTable () {
+}
+
+//================================================================//
 // USLuaRef
 //================================================================//
 
@@ -14,25 +145,16 @@ void USLuaRef::Clear () {
 
 	if ( USLuaRuntime::IsValid ()) {
 
-		USLuaRuntime& luaRuntime = USLuaRuntime::Get ();
-
 		if (( this->mRef != LUA_NOREF ) && this->mOwnsRef ) {
 
+			USLuaRuntime& luaRuntime = USLuaRuntime::Get ();
 			USLuaStateHandle state = luaRuntime.State ();
 
 			if ( this->mWeak ) {
-
-				luaRuntime.WeakRefTable ( state );
-				luaL_unref ( state, this->mRef, -1 );
+				luaRuntime.mWeakRefTable.Unref ( state, this->mRef );
 			}
 			else {
-				
-				luaL_unref ( state, this->mRef, LUA_REGISTRYINDEX );
-				
-				// explicitely set to nil...
-				lua_pushnumber ( state, this->mRef );
-				lua_pushnil ( state );
-				lua_settable ( state, LUA_REGISTRYINDEX );
+				luaRuntime.mStrongRefTable.Unref ( state, this->mRef );
 			}
 		}
 	}
@@ -64,35 +186,30 @@ bool USLuaRef::IsNil () {
 }
 
 //----------------------------------------------------------------//
+bool USLuaRef::IsWeak () {
+
+	return this->mWeak;
+}
+
+//----------------------------------------------------------------//
 void USLuaRef::MakeStrong () {
 
 	if ( !this->mWeak ) return;
 	if ( this->mRef == LUA_NOREF ) return;
-	if ( !USLuaRuntime::IsValid ()) return;
-
-	USLuaRuntime& luaRuntime = USLuaRuntime::Get ();
-	USLuaStateHandle state = luaRuntime.State ();
-
-	// preserve the top
-	int top = lua_gettop ( state );
-
-	// push the original ref
-	this->PushRef ( state );
-		
-	// get a strong ref to it
-	int ref = luaL_ref ( state, LUA_REGISTRYINDEX );
-
-	// push the weak ref table
-	luaRuntime.WeakRefTable ( state );
 	
-	// release the weak ref
-	luaL_unref ( state, this->mRef, -1 );
-
-	// restore the top
-	lua_settop ( state, top );
-
-	this->mRef = ref;
 	this->mWeak = false;
+	
+	if ( USLuaRuntime::IsValid ()) {
+
+		USLuaRuntime& luaRuntime = USLuaRuntime::Get ();
+		USLuaStateHandle state = luaRuntime.State ();
+
+		luaRuntime.mWeakRefTable.PushRef ( state, this->mRef );
+		luaRuntime.mWeakRefTable.Unref ( state, this->mRef );
+		
+		this->mRef = luaRuntime.mStrongRefTable.Ref ( state, -1 );
+		state.Pop ( 1 );
+	}
 }
 
 //----------------------------------------------------------------//
@@ -100,35 +217,20 @@ void USLuaRef::MakeWeak () {
 
 	if ( this->mWeak ) return;
 	if ( this->mRef == LUA_NOREF ) return;
-	if ( !USLuaRuntime::IsValid ()) return;
-
-	USLuaRuntime& luaRuntime = USLuaRuntime::Get ();
-	USLuaStateHandle state = luaRuntime.State ();
-
-	// preserve the top
-	int top = lua_gettop ( state );
-
-	// push the original ref
-	this->PushRef ( state );
-		
-	// get a weak ref to it
-	USLuaRuntime::Get ().WeakRefTable ( state );
-	lua_pushvalue ( state, -2 );
-
-	int ref = luaL_ref ( state, -2 );
 	
-	// release the strong ref
-	luaL_unref ( state, this->mRef, LUA_REGISTRYINDEX );
-				
-	lua_pushnumber ( state, this->mRef );
-	lua_pushnil ( state );
-	lua_settable ( state, LUA_REGISTRYINDEX );
-
-	// restore the top
-	lua_settop ( state, top );
-
-	this->mRef = ref;
 	this->mWeak = true;
+	
+	if ( USLuaRuntime::IsValid ()) {
+
+		USLuaRuntime& luaRuntime = USLuaRuntime::Get ();
+		USLuaStateHandle state = luaRuntime.State ();
+
+		luaRuntime.mStrongRefTable.PushRef ( state, this->mRef );
+		luaRuntime.mStrongRefTable.Unref ( state, this->mRef );
+		
+		this->mRef = luaRuntime.mWeakRefTable.Ref ( state, -1 );
+		state.Pop ( 1 );
+	}
 }
 
 //----------------------------------------------------------------//
@@ -139,15 +241,13 @@ bool USLuaRef::PushRef ( USLuaState& state ) {
 		return false;
 	}
 
-	if ( this->mWeak ) {
+	USLuaRuntime& luaRuntime = USLuaRuntime::Get ();
 
-		USLuaRuntime::Get ().WeakRefTable ( state );
-		lua_rawgeti ( state, -1, this->mRef );
-		lua_replace ( state, -2 );
+	if ( this->mWeak ) {
+		luaRuntime.mWeakRefTable.PushRef ( state, this->mRef );
 	}
 	else {
-		lua_rawgeti ( state, LUA_REGISTRYINDEX, this->mRef );
-
+		luaRuntime.mStrongRefTable.PushRef ( state, this->mRef );
 	}
 
 	// make sure
@@ -158,29 +258,25 @@ bool USLuaRef::PushRef ( USLuaState& state ) {
 void USLuaRef::SetRef ( USLuaState& state, int idx, bool weak ) {
 
 	this->Clear ();
-
 	this->mWeak = weak;
 
-	int top = lua_gettop ( state );
+	int top = state.GetTop ();
 
-	if ( weak ) {
+	if ( lua_isnil ( state, idx ) == false ) {
 
-		idx = state.AbsIndex ( idx );
+		USLuaRuntime& luaRuntime = USLuaRuntime::Get ();
 
-		USLuaRuntime::Get ().WeakRefTable ( state );
-		lua_pushvalue ( state, idx );
-
-		this->mRef = luaL_ref ( state, -2 );
+		if ( weak ) {
+			this->mRef = luaRuntime.mWeakRefTable.Ref ( state, idx );
+		}
+		else {
+			this->mRef = luaRuntime.mStrongRefTable.Ref ( state, idx );	
+		}
+		
 		this->mOwnsRef = true;
 	}
-	else {
-
-		lua_pushvalue ( state, idx );
-		this->mRef = luaL_ref ( state, LUA_REGISTRYINDEX );
-		this->mOwnsRef = true;
-	}
-
-	lua_settop ( state, top );
+	
+	assert ( top == state.GetTop ());
 }
 
 //----------------------------------------------------------------//

@@ -4,14 +4,48 @@
 #ifndef LUAREF_H
 #define LUAREF_H
 
+#include <uslscore/USLeanArray.h>
+
 class USLuaRuntime;
 class USLuaState;
 class USLuaStateHandle;
 
 //================================================================//
+// USLuaRefTable
+//================================================================//
+class USLuaRefTable {
+private:
+
+	friend class USLuaRef;
+
+	int		mTableID;
+	
+	static const u32	REFID_CHUNK_SIZE = 256;
+	USLeanArray < u16 >	mRefIDStack;
+	u32					mRefIDStackTop;
+
+	//----------------------------------------------------------------//
+	void		ReleaseRefID		( int refID );
+	int			ReserveRefID		();
+
+public:
+
+	//----------------------------------------------------------------//
+	void		Clear				();
+	void		InitWeak			();
+	void		InitStrong			();
+	void		PushRef				( USLuaState& state, int refID );
+	int			Ref					( USLuaState& state, int idx );
+	void		Unref				( USLuaState& state, int refID );
+				USLuaRefTable		();
+				~USLuaRefTable		();
+};
+
+//================================================================//
 // USLuaRef
 //================================================================//
 class USLuaRef {
+private:
 protected:
 
 	int			mRef;
