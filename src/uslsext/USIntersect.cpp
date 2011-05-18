@@ -158,30 +158,14 @@ u32 USSect::VecToPlane ( USVec2D& loc, USVec2D& vec, USPlane2D& p, float& t ) {
 }
 
 //----------------------------------------------------------------//
-bool USSect::VecToPlane ( USVec3D& loc, USVec3D& vec, USPlane3D& p, float& t ) {
+u32 USSect::VecToPlane ( USVec3D& loc, USVec3D& vec, USPlane3D& p, float& t ) {
 
 	float d;
 	d = vec.Dot ( p.mNorm );
-	if ( d == 0.0f ) return false;
+	if ( d == 0.0f ) return SECT_TANGENT; // ray is parallel
 	
 	t = ( loc.Dot ( p.mNorm ) + p.mDist ) / -d;
-	return true;
-}
-
-//----------------------------------------------------------------//
-bool USSect::VecToPlane ( USVec3D& loc, USVec3D& vec, USPlane3D& p, float& t, USVec3D& result ) {
-
-	float d;
-	d = vec.Dot ( p.mNorm );
-	if ( d == 0.0f ) return false;
-	
-	t = ( loc.Dot ( p.mNorm ) + p.mDist ) / -d;
-
-	result = vec;
-	result.Scale ( t );
-	result.Add ( loc );
-
-	return true ;
+	return SECT_HIT;
 }
 
 //----------------------------------------------------------------//
