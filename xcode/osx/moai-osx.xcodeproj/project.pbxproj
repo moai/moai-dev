@@ -272,7 +272,7 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		03B080970F708135005CD8E5 /* Distribution */ = {
+		03B080970F708135005CD8E5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -325,7 +325,7 @@
 				SKIP_INSTALL = YES;
 				WARNING_CFLAGS = "-Wall";
 			};
-			name = Distribution;
+			name = Release;
 		};
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -402,7 +402,7 @@
 			};
 			name = Debug;
 		};
-		CDEE231B1354502100C2E04C /* Distribution */ = {
+		CDEE231B1354502100C2E04C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -414,7 +414,7 @@
 				GCC_ENABLE_OBJC_EXCEPTIONS = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
-			name = Distribution;
+			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
@@ -423,7 +423,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C01FCF4F08A954540054247B /* Debug */,
-				03B080970F708135005CD8E5 /* Distribution */,
+				03B080970F708135005CD8E5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
@@ -432,7 +432,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CDEE231A1354502100C2E04C /* Debug */,
-				CDEE231B1354502100C2E04C /* Distribution */,
+				CDEE231B1354502100C2E04C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;

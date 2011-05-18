@@ -8943,7 +8943,7 @@
 			};
 			name = Debug;
 		};
-		0324E2AE1356485F000ADC60 /* Distribution */ = {
+		0324E2AE1356485F000ADC60 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
@@ -8979,7 +8979,7 @@
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "";
 			};
-			name = Distribution;
+			name = Release;
 		};
 		0324E2B91356485F000ADC60 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -8991,7 +8991,7 @@
 			};
 			name = Debug;
 		};
-		0324E2BA1356485F000ADC60 /* Distribution */ = {
+		0324E2BA1356485F000ADC60 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
@@ -8999,7 +8999,7 @@
 				SDKROOT = "";
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 			};
-			name = Distribution;
+			name = Release;
 		};
 		0379C5941333ECD800E89DDC /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -9039,7 +9039,7 @@
 			};
 			name = Debug;
 		};
-		0379C5951333ECD800E89DDC /* Distribution */ = {
+		0379C5951333ECD800E89DDC /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
@@ -9075,9 +9075,9 @@
 				VALID_ARCHS = "i386 armv6 armv7";
 				WARNING_CFLAGS = "";
 			};
-			name = Distribution;
+			name = Release;
 		};
-		03B080970F708135005CD8E5 /* Distribution */ = {
+		03B080970F708135005CD8E5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -9146,7 +9146,7 @@
 				VALIDATE_PRODUCT = YES;
 				WARNING_CFLAGS = "-Wall";
 			};
-			name = Distribution;
+			name = Release;
 		};
 		03C2F6F6104DE131009A2D5D /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -9158,7 +9158,7 @@
 			};
 			name = Debug;
 		};
-		03C2F6F7104DE131009A2D5D /* Distribution */ = {
+		03C2F6F7104DE131009A2D5D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
@@ -9166,7 +9166,7 @@
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv6 armv7";
 			};
-			name = Distribution;
+			name = Release;
 		};
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -9251,7 +9251,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0324E2AD1356485F000ADC60 /* Debug */,
-				0324E2AE1356485F000ADC60 /* Distribution */,
+				0324E2AE1356485F000ADC60 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
@@ -9260,7 +9260,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0324E2B91356485F000ADC60 /* Debug */,
-				0324E2BA1356485F000ADC60 /* Distribution */,
+				0324E2BA1356485F000ADC60 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
@@ -9269,7 +9269,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0379C5941333ECD800E89DDC /* Debug */,
-				0379C5951333ECD800E89DDC /* Distribution */,
+				0379C5951333ECD800E89DDC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
@@ -9278,7 +9278,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				03C2F6F6104DE131009A2D5D /* Debug */,
-				03C2F6F7104DE131009A2D5D /* Distribution */,
+				03C2F6F7104DE131009A2D5D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
@@ -9287,7 +9287,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C01FCF4F08A954540054247B /* Debug */,
-				03B080970F708135005CD8E5 /* Distribution */,
+				03B080970F708135005CD8E5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
