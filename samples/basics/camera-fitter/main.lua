@@ -17,6 +17,7 @@ MOAISim.pushRenderPass ( layer )
 fitter = MOAICameraFitter2D.new ()
 fitter:setViewport ( viewport )
 fitter:setBounds ( -1000, -64, 1000, 10000 )
+fitter:setMin ( 256 )
 fitter:start ()
 layer:setCamera ( fitter )
 
@@ -26,7 +27,7 @@ gfxQuad:setRect ( -64, -64, 64, 64 )
 
 prop = MOAIProp2D.new ()
 prop:setDeck ( gfxQuad )
---prop:moveLoc ( 256, 0, 1.5 )
+prop:moveLoc ( 256, 0, 3 )
 layer:insertProp ( prop )
 
 anchor = MOAICameraAnchor2D.new ()
@@ -37,7 +38,7 @@ fitter:insertAnchor ( anchor )
 
 prop = MOAIProp2D.new ()
 prop:setDeck ( gfxQuad )
---prop:moveLoc ( -256, 0, 1.5 )
+prop:moveLoc ( -256, 0, 3 )
 layer:insertProp ( prop )
 
 anchor = MOAICameraAnchor2D.new ()
@@ -51,7 +52,7 @@ function spin ()
 	local r = 0
 
 	while true do
-		viewport:setRotation ( r )
+		viewport:setRotation ( 0 )
 		r = r + 1
 		coroutine:yield ()
 	end

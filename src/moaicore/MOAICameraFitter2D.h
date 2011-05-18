@@ -29,12 +29,15 @@ private:
 	float		mTargetScale;
 
 	USRect		mBounds;
+	float		mMin;
+	float		mMax;
 
 	//----------------------------------------------------------------//
 	static int		_clear					( lua_State* L );
 	static int		_insertAnchor			( lua_State* L );
 	static int		_removeAnchor			( lua_State* L );
 	static int		_setBounds				( lua_State* L );
+	static int		_setMin					( lua_State* L );
 	static int		_setViewport			( lua_State* L );
 
 	//----------------------------------------------------------------//
@@ -43,8 +46,6 @@ private:
 	void			GetCamera				( USAffine2D& camera );
 	USRect			GetScreenRect			( const USAffine2D& worldToWnd );
 	USRect			GetWorldRect			();
-	void			NudgeLine				( const USPlane2D& plane, float step, USVec2D& v0, USVec2D& v1 );
-	void			NudgeRect				( const USPlane2D& plane, float step, USRect& rect );
 	void			OnDepNodeUpdate			();
 	void			OnUpdate				( float step );
 	void			SetTarget				( const USAffine2D& camera, const USRect& screenRect );
