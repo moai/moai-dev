@@ -187,8 +187,19 @@ int USLuaState::DebugCall ( int nArgs, int nResults ) {
 	
 	#ifdef _DEBUG
 	
+		int errIdx = this->AbsIndex ( -( nArgs + 1 ));
+		
 		this->Push ( USLuaRuntime::Get ().mTraceback );
-		int status = lua_pcall ( this->mState, nArgs + 1, nResults, -1 );
+		lua_insert ( this->mState, errIdx );
+
+		int status = lua_pcall ( this->mState, nArgs, nResults, errIdx );
+
+		if ( status ) {
+			lua_settop ( this->mState, errIdx - 1 );
+		}
+		else {
+			lua_remove ( this->mState, errIdx );
+		}
 	
 	#else
 	
