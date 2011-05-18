@@ -48,7 +48,6 @@ end
 
 function onKeyframe ( i, t, v )
 	printf ( "keyframe %d: %f, %f\n", i, t, v )
-	groink ()
 end
 
 anim:setCurve ( curve )
