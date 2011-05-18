@@ -21,7 +21,7 @@ class MOAILayer2D :
 	public virtual MOAIProp2D {
 private:
 
-	USRef < MOAITransform >			mCamera;
+	USRef < MOAITransformBase >		mCamera;
 	USRef < MOAIViewport >			mViewport;
 	USRef < MOAIPartition >			mPartition;
 
@@ -59,7 +59,7 @@ public:
 	
 	DECL_LUA_FACTORY ( MOAILayer2D )
 	
-	GET_SET ( MOAITransform*, Camera, mCamera )
+	GET_SET ( MOAITransformBase*, Camera, mCamera )
 	GET_SET ( MOAIViewport*, Viewport, mViewport )
 	GET_SET ( MOAIPartition*, Partition, mPartition )
 	

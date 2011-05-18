@@ -146,6 +146,18 @@ u32 USSect::VecToCircle ( float& t0, float& t1, USVec2D& loc, USVec2D& vec, USVe
 }
 
 //----------------------------------------------------------------//
+u32 USSect::VecToPlane ( USVec2D& loc, USVec2D& vec, USPlane2D& p, float& t ) {
+
+	float d;
+	d = vec.Dot ( p.mNorm );
+	if ( d == 0.0f ) return SECT_TANGENT; // ray is parallel
+	
+	t = ( loc.Dot ( p.mNorm ) + p.mDist ) / -d;
+	
+	return SECT_HIT;
+}
+
+//----------------------------------------------------------------//
 bool USSect::VecToPlane ( USVec3D& loc, USVec3D& vec, USPlane3D& p, float& t ) {
 
 	float d;
@@ -286,4 +298,28 @@ u32 USSect::VecToUnitSphere ( float& t0, float& t1, USVec3D& loc, USVec3D& vec )
 	}
 
 	return SECT_PARALLEL;
+}
+
+//----------------------------------------------------------------//
+u32 USSect::XAxisToPlane ( float y, USPlane2D& p, float& t ) {
+
+	float d;
+	d = p.mNorm.mX;
+	if ( d == 0.0f ) return SECT_TANGENT; // ray is parallel
+	
+	t = (( p.mNorm.mY * y ) + p.mDist ) / -d;
+	
+	return SECT_HIT;
+}
+
+//----------------------------------------------------------------//
+u32 USSect::YAxisToPlane ( float x, USPlane2D& p, float& t ) {
+
+	float d;
+	d = p.mNorm.mY;
+	if ( d == 0.0f ) return SECT_TANGENT; // ray is parallel
+	
+	t = (( p.mNorm.mX * x ) + p.mDist ) / -d;
+	
+	return SECT_HIT;
 }

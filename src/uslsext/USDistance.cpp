@@ -13,14 +13,14 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-float USDist::PointToPlane2D ( USVec2D& p, USPlane2D& plane ) {
+float USDist::PointToPlane2D ( const USVec2D& p, const USPlane2D& plane ) {
 
 	float d = p.Dot ( plane.mNorm ) + plane.mDist;
 	return (( d < FP_NEAR ) && ( d > -FP_NEAR )) ? 0.0f : d;
 }
 
 //----------------------------------------------------------------//
-float USDist::PointToPoint ( USVec2D& p1, USVec2D& p2 ) {
+float USDist::PointToPoint ( const USVec2D& p1, const USVec2D& p2 ) {
 
 	float x = p2.mX - p1.mX;
 	float y = p2.mY - p1.mY;
@@ -31,7 +31,7 @@ float USDist::PointToPoint ( USVec2D& p1, USVec2D& p2 ) {
 }
 
 //----------------------------------------------------------------//
-float USDist::PointToPointSqrd ( USVec2D& p1, USVec2D& p2 ) {
+float USDist::PointToPointSqrd ( const USVec2D& p1, const USVec2D& p2 ) {
 
 	float x = p2.mX - p1.mX;
 	float y = p2.mY - p1.mY;
@@ -40,7 +40,7 @@ float USDist::PointToPointSqrd ( USVec2D& p1, USVec2D& p2 ) {
 }
 
 //----------------------------------------------------------------//
-float USDist::SnapToPlane ( USVec3D& p, USPlane3D& plane ) {
+float USDist::SnapToPlane ( USVec3D& p, const USPlane3D& plane ) {
 
 	float dist = USDist::VecToPlane ( p, plane );
 
@@ -52,7 +52,7 @@ float USDist::SnapToPlane ( USVec3D& p, USPlane3D& plane ) {
 }
 
 //----------------------------------------------------------------//
-float USDist::SnapToPlane2D ( USVec2D& p, USPlane2D& plane ) {
+float USDist::SnapToPlane2D ( USVec2D& p, const USPlane2D& plane ) {
 
 	float dist = USDist::PointToPlane2D ( p, plane );
 
@@ -63,14 +63,14 @@ float USDist::SnapToPlane2D ( USVec2D& p, USPlane2D& plane ) {
 }
 
 //----------------------------------------------------------------//
-float USDist::VecToPlane ( USVec3D& v, USPlane3D& p ) {
+float USDist::VecToPlane ( const USVec3D& v, const USPlane3D& p ) {
 
 	float d = v.Dot ( p.mNorm ) + p.mDist;
 	return (( d < FP_NEAR ) && ( d > -FP_NEAR )) ? 0.0f : d;
 }
 
 //----------------------------------------------------------------//
-float USDist::VecToVec ( USVec3D& v1, USVec3D& v2 ) {
+float USDist::VecToVec ( const USVec3D& v1, const USVec3D& v2 ) {
 
 	float x = v2.mX - v1.mX;
 	float y = v2.mY - v1.mY;
@@ -82,7 +82,7 @@ float USDist::VecToVec ( USVec3D& v1, USVec3D& v2 ) {
 }
 
 //----------------------------------------------------------------//
-float USDist::VecToVecSqrd ( USVec3D& v1, USVec3D& v2 ) {
+float USDist::VecToVecSqrd ( const USVec3D& v1, const USVec3D& v2 ) {
 
 	float x = v2.mX - v1.mX;
 	float y = v2.mY - v1.mY;

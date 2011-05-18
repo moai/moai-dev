@@ -12,16 +12,16 @@
 //================================================================//
 namespace USDist {
 	
-	float	PointToPlane2D		( USVec2D& p, USPlane2D& plane );
-	float	PointToPoint		( USVec2D& p1, USVec2D& p2 );
-	float	PointToPointSqrd	( USVec2D& p1, USVec2D& p2 );
+	float	PointToPlane2D		( const USVec2D& p, const USPlane2D& plane );
+	float	PointToPoint		( const USVec2D& p1, const USVec2D& p2 );
+	float	PointToPointSqrd	( const USVec2D& p1, const USVec2D& p2 );
 	
-	float	SnapToPlane			( USVec3D& p, USPlane3D& plane );
-	float	SnapToPlane2D		( USVec2D& p, USPlane2D& plane );
+	float	SnapToPlane			( USVec3D& p, const USPlane3D& plane );
+	float	SnapToPlane2D		( USVec2D& p, const USPlane2D& plane );
 	
-	float	VecToPlane		( USVec3D& v, USPlane3D& p );
-	float	VecToVec		( USVec3D& v1, USVec3D& v2 );
-	float	VecToVecSqrd	( USVec3D& v1, USVec3D& v2 );
+	float	VecToPlane		( const USVec3D& v, const USPlane3D& p );
+	float	VecToVec		( const USVec3D& v1, const USVec3D& v2 );
+	float	VecToVecSqrd	( const USVec3D& v1, const USVec3D& v2 );
 	
 } // namespace USDist
 

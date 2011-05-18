@@ -4,7 +4,9 @@
 #ifndef USQUAD_H
 #define	USQUAD_H
 
+#include <uslsext/USAffine2D.h>
 #include <uslsext/USMatrix2D.h>
+#include <uslsext/USPlane.h>
 
 //================================================================//
 // USQuad
@@ -21,16 +23,20 @@ public:
 	USVec2D mV [ 4 ];
 
 	//----------------------------------------------------------------//
-	bool	Contains			( float x, float y ) const;
-	void	GetBounds			( USRect& rect ) const;
-	void	Init				( const USRect& rect );
-	void	Init				( float x0, float y0, float x1, float y1 );
-	bool	Intersect			( const USQuad& quad, USRect& result ) const;
-	bool	Intersect			( const USRect& rect, USRect& result ) const;
-	bool	Overlap				( const USQuad& quad ) const;
-	bool	Overlap				( const USRect& rect ) const;
-	void	Scale				( float xScale, float yScale );
-	void	Transform			( const USMatrix2D& transform );
+	bool		Contains			( float x, float y ) const;
+	void		GetBounds			( USRect& rect ) const;
+	USPlane2D	GetPlane			( u32 id );
+	USVec2D		GetVert				( u32 id );
+	void		Init				( const USRect& rect );
+	void		Init				( float x0, float y0, float x1, float y1 );
+	bool		Intersect			( const USQuad& quad, USRect& result ) const;
+	bool		Intersect			( const USRect& rect, USRect& result ) const;
+	bool		Overlap				( const USQuad& quad ) const;
+	bool		Overlap				( const USRect& rect ) const;
+	void		ReverseWinding		();
+	void		Scale				( float xScale, float yScale );
+	void		Transform			( const USAffine2D& transform );
+	void		Transform			( const USMatrix2D& transform );
 };
 
 #endif

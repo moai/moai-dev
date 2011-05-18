@@ -1112,6 +1112,26 @@
 				>
 			</File>
 		</Filter>
+		<Filter
+			Name="camera"
+			>
+			<File
+				RelativePath="..\..\src\moaicore\MOAICameraAnchor2D.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAICameraAnchor2D.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAICameraFitter2D.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAICameraFitter2D.h"
+				>
+			</File>
+		</Filter>
 		<File
 			RelativePath="..\..\src\moaicore\moaiconf.h"
 			>

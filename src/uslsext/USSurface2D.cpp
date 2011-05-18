@@ -202,11 +202,6 @@ bool USSurface2D::GetRayHit ( USVec2D& loc, USVec2D& ray, float& time ) {
 	
 	time = ( loc.Dot ( this->mNorm ) + this->mDist ) / -d;
 	
-	// get the point of impact
-	//USVec2D sect = ray;
-	//sect.Scale ( time );
-	//sect.Add ( loc );
-	
 	return true;
 }
 

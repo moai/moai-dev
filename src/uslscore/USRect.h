@@ -35,7 +35,13 @@ public:
 
 	//----------------------------------------------------------------//
 	TYPE Aspect () const {
-		return ( TYPE )( this->Width () / this->Height ());
+	
+		float height = this->Height ();
+		if ( height == 0.0 ) {
+			return 0.0;
+		}
+	
+		return ( TYPE )( this->Width () / height );
 	}
 
 	//----------------------------------------------------------------//
@@ -64,23 +70,23 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	void ClipTo ( USMetaRect < TYPE >& rect ) {
+	void Clip ( USMetaRect < TYPE >& rect ) const {
 
 		// Clamp XMin
-		if ( this->mXMin < rect.mXMin ) this->mXMin = rect.mXMin;
-		if ( this->mXMin > rect.mXMax ) this->mXMin = rect.mXMax;
+		if ( rect.mXMin < this->mXMin ) rect.mXMin = this->mXMin;
+		if ( rect.mXMin > this->mXMax ) rect.mXMin = this->mXMax;
 		
 		// Clamp XMax
-		if ( this->mXMax < rect.mXMin ) this->mXMax = rect.mXMin;
-		if ( this->mXMax > rect.mXMax ) this->mXMax = rect.mXMax;
+		if ( rect.mXMax < this->mXMin ) rect.mXMax = this->mXMin;
+		if ( rect.mXMax > this->mXMax ) rect.mXMax = this->mXMax;
 		
 		// Clamp YMin
-		if ( this->mYMin < rect.mYMin ) this->mYMin = rect.mYMin;
-		if ( this->mYMin > rect.mYMax ) this->mYMin = rect.mYMax;
+		if ( rect.mYMin < this->mYMin ) rect.mYMin = this->mYMin;
+		if ( rect.mYMin > this->mYMax ) rect.mYMin = this->mYMax;
 		
 		// Clamp YMax
-		if ( this->mYMax < rect.mYMin ) this->mYMax = rect.mYMin;
-		if ( this->mYMax > rect.mYMax ) this->mYMax = rect.mYMax;
+		if ( rect.mYMax < this->mYMin ) rect.mYMax = this->mYMin;
+		if ( rect.mYMax > this->mYMax ) rect.mYMax = this->mYMax;
 	}
 
 	//----------------------------------------------------------------//
@@ -183,35 +189,90 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	void FitAspectRect ( USMetaRect < TYPE >& fitRect ) {
+	// Centers and fits rect while preserving its aspect ratio
+	void FitInside ( USMetaRect < TYPE >& rect ) const {
 		
-		float fitAspect = fitRect.Aspect ();
+		TYPE fitAspect = rect.Aspect ();
 		
-		float width = ( float )this->Width ();
-		float height = ( float )this->Height ();
+		TYPE width = this->Width ();
+		TYPE height = this->Height ();
 		
-		float aspect = width / height;
+		if (( width == 0.0 ) || ( height == 0.0 )) {
+			rect.Init ( 0.0, 0.0, 0.0, 0.0 );
+			return;
+		}
 		
-		float fitWidth;
-		float fitHeight;
+		TYPE aspect = width / height;
+		
+		TYPE fitWidth;
+		TYPE fitHeight;
 		
 		if ( fitAspect >= aspect ) {
-			// fitRect is fatter
+			// rect is fatter
 			fitWidth = width;
 			fitHeight = ( width / fitAspect );
 			
 		}
 		else {
-			// fitRect is thinner
+			// rect is thinner
 			fitWidth = ( height * fitAspect );
 			fitHeight = height;
 		}
 		
-		fitRect.mXMin = (( this->mXMin + ( width  * 0.5f )) - ( fitWidth * 0.5f ));
-		fitRect.mYMin = (( this->mYMin + ( height  * 0.5f )) - ( fitHeight * 0.5f ));
+		rect.mXMin = (( this->mXMin + ( width * ( TYPE )0.5 )) - ( fitWidth * ( TYPE )0.5 ));
+		rect.mYMin = (( this->mYMin + ( height * ( TYPE )0.5 )) - ( fitHeight * ( TYPE )0.5 ));
 		
-		fitRect.mXMax = fitRect.mXMin + fitWidth;
-		fitRect.mYMax = fitRect.mYMin + fitHeight;
+		rect.mXMax = rect.mXMin + fitWidth;
+		rect.mYMax = rect.mYMin + fitHeight;
+	}
+
+	//----------------------------------------------------------------//
+	// Centers and fits rect while preserving its aspect ratio
+	void FitOutside ( USMetaRect < TYPE >& rect ) const {
+		
+		TYPE fitAspect = rect.Aspect ();
+		
+		TYPE width = this->Width ();
+		TYPE height = this->Height ();
+		
+		TYPE fitWidth = 0.0;
+		TYPE fitHeight = 0.0;
+		
+		if (( width == 0.0 ) || ( height == 0.0 )) {
+			if ( width > 0.0 ) {
+				fitWidth = width;
+				fitHeight = ( width / fitAspect );
+			}
+			else if ( height > 0.0 ) {
+				fitWidth = ( height * fitAspect );
+				fitHeight = height;
+			}
+			else {
+				rect.Init ( 0.0, 0.0, 0.0, 0.0 );
+				return;
+			}
+		}
+		else {
+		
+			TYPE aspect = width / height;
+			
+			if ( fitAspect >= aspect ) {
+				// rect is fatter
+				fitWidth = ( height * fitAspect );
+				fitHeight = height;
+			}
+			else {
+				// rect is thinner
+				fitWidth = width;
+				fitHeight = ( width / fitAspect );
+			}
+		}
+		
+		rect.mXMin = (( this->mXMin + ( width * ( TYPE )0.5 )) - ( fitWidth * ( TYPE )0.5 ));
+		rect.mYMin = (( this->mYMin + ( height * ( TYPE )0.5 )) - ( fitHeight * ( TYPE )0.5 ));
+		
+		rect.mXMax = rect.mXMin + fitWidth;
+		rect.mYMax = rect.mYMin + fitHeight;
 	}
 
 	//----------------------------------------------------------------//
@@ -505,7 +566,7 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	void TransformLocalToWorld ( USMetaRect < TYPE >& rect ) {
+	void TransformLocalToWorld ( USMetaRect < TYPE >& rect ) const {
 		
 		float width = this->Width ();
 		float height = this->Height ();
@@ -518,7 +579,7 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	void TransformWorldToLocal ( USMetaRect < TYPE >& rect ) {
+	void TransformWorldToLocal ( USMetaRect < TYPE >& rect ) const {
 		
 		float invWidth = 1.0f / this->Width ();
 		float invHeight = 1.0f / this->Height ();

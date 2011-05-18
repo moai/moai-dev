@@ -596,9 +596,7 @@ void MOAITransform::BuildTransforms ( float xOff, float yOff, float xStretch, fl
 		USAffine2D inherit;
 		inherit.Ident ();
 		
-		if ( this->mParent ) {
-			inherit.Append ( this->mParent->GetLocalToWorldMtx ());
-		}
+		inherit.Append ( this->mParent->GetLocalToWorldMtx ());
 		
 		if ( this->mFilter == INHERIT_ALL ) {
 			this->mLocalToWorldMtx.Append ( inherit );

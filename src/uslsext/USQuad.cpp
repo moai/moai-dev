@@ -114,6 +114,28 @@ void USQuad::GetBounds ( USRect& rect ) const {
 }
 
 //----------------------------------------------------------------//
+USPlane2D USQuad::GetPlane ( u32 id ) {
+
+	id = id % 4;
+	
+	USVec2D v0;
+	USVec2D v1;
+	
+	v0 = this->mV [ id++ ];
+	v1 = this->mV [ id % 4 ];
+	
+	USPlane2D plane;
+	plane.Init ( v1, v0 );
+	return plane;
+}
+
+//----------------------------------------------------------------//
+USVec2D USQuad::GetVert ( u32 id ) {
+
+	return this->mV [ id % 4 ];
+}
+
+//----------------------------------------------------------------//
 void USQuad::Init ( const USRect& rect ) {
 
 	this->Init ( rect.mXMin, rect.mYMin, rect.mXMax, rect.mYMax );
@@ -240,6 +262,52 @@ void USQuad::Scale ( float xScale, float yScale ) {
 	this->mV [ 1 ].Scale ( xScale, yScale );
 	this->mV [ 2 ].Scale ( xScale, yScale );
 	this->mV [ 3 ].Scale ( xScale, yScale );
+}
+
+//----------------------------------------------------------------//
+void USQuad::ReverseWinding () {
+
+	USVec2D v [ 4 ];
+	
+	v [ 0 ] = this->mV [ 3 ];
+	v [ 1 ] = this->mV [ 2 ];
+	v [ 2 ] = this->mV [ 1 ];
+	v [ 3 ] = this->mV [ 0 ];
+	
+	memcpy ( this->mV, v, sizeof ( v ));
+}
+
+//----------------------------------------------------------------//
+void USQuad::Transform ( const USAffine2D& transform ) {
+	
+	float x;
+	float y;
+	
+	const float* m = transform.m;
+	
+	x =	( m[ USAffine2D::C0_R0 ] * this->mV [ 0 ].mX ) + ( m[ USAffine2D::C1_R0 ] * this->mV [ 0 ].mY ) + ( m[ USAffine2D::C2_R0 ]);
+	y =	( m[ USAffine2D::C0_R1 ] * this->mV [ 0 ].mX ) + ( m[ USAffine2D::C1_R1 ] * this->mV [ 0 ].mY ) + ( m[ USAffine2D::C2_R1 ]);
+	
+	this->mV [ 0 ].mX = x;
+	this->mV [ 0 ].mY = y;
+	
+	x =	( m[ USAffine2D::C0_R0 ] * this->mV [ 1 ].mX ) + ( m[ USAffine2D::C1_R0 ] * this->mV [ 1 ].mY ) + ( m[ USAffine2D::C2_R0 ]);
+	y =	( m[ USAffine2D::C0_R1 ] * this->mV [ 1 ].mX ) + ( m[ USAffine2D::C1_R1 ] * this->mV [ 1 ].mY ) + ( m[ USAffine2D::C2_R1 ]);
+	
+	this->mV [ 1 ].mX = x;
+	this->mV [ 1 ].mY = y;
+	
+	x =	( m[ USAffine2D::C0_R0 ] * this->mV [ 2 ].mX ) + ( m[ USAffine2D::C1_R0 ] * this->mV [ 2 ].mY ) + ( m[ USAffine2D::C2_R0 ]);
+	y =	( m[ USAffine2D::C0_R1 ] * this->mV [ 2 ].mX ) + ( m[ USAffine2D::C1_R1 ] * this->mV [ 2 ].mY ) + ( m[ USAffine2D::C2_R1 ]);
+	
+	this->mV [ 2 ].mX = x;
+	this->mV [ 2 ].mY = y;
+	
+	x =	( m[ USAffine2D::C0_R0 ] * this->mV [ 3 ].mX ) + ( m[ USAffine2D::C1_R0 ] * this->mV [ 3 ].mY ) + ( m[ USAffine2D::C2_R0 ]);
+	y =	( m[ USAffine2D::C0_R1 ] * this->mV [ 3 ].mX ) + ( m[ USAffine2D::C1_R1 ] * this->mV [ 3 ].mY ) + ( m[ USAffine2D::C2_R1 ]);
+	
+	this->mV [ 3 ].mX = x;
+	this->mV [ 3 ].mY = y;
 }
 
 //----------------------------------------------------------------//

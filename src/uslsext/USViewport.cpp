@@ -11,23 +11,23 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-float USViewport::GetAspect () {
+float USViewport::GetAspect () const {
 	return this->Width () / this->Height ();
 }
 
 //----------------------------------------------------------------//
-float USViewport::GetInvAspect () {
+float USViewport::GetInvAspect () const {
 	return this->Height () / this->Width ();
 }
 
 //----------------------------------------------------------------//
-USRect USViewport::GetRect () {
+USRect USViewport::GetRect () const {
 
 	return *this;
 }
 
 //----------------------------------------------------------------//
-USVec2D USViewport::GetScale () {
+USVec2D USViewport::GetScale () const {
 
 	USVec2D scale ( 1.0f, 1.0f );
 	
@@ -45,6 +45,34 @@ USVec2D USViewport::GetScale () {
 		
 		if ( this->mYScale ) {
 			result = (( float )this->Height ()) / this->mScale.mY;
+		}
+		
+		scale.mX = result;
+		scale.mY = result;
+	}
+	
+	return scale;
+}
+
+//----------------------------------------------------------------//
+USVec2D USViewport::GetUnits () const {
+
+	USVec2D scale ( 1.0f, 1.0f );
+	
+	if ( this->mXScale && this->mYScale ) {
+		scale.mX = this->mScale.mX;
+		scale.mY = this->mScale.mY;
+	}
+	else {
+		
+		float result = 1.0f;
+		
+		if ( this->mXScale ) {
+			result = this->mScale.mX;
+		}
+		
+		if ( this->mYScale ) {
+			result = this->mScale.mY;
 		}
 		
 		scale.mX = result;

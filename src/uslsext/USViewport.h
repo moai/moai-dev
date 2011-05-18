@@ -26,10 +26,11 @@ public:
 	friend class USCanvas;
 	
 	//----------------------------------------------------------------//
-	float				GetAspect			();
-	float				GetInvAspect		();
-	USRect				GetRect				();
-	USVec2D				GetScale			();
+	float				GetAspect			() const;
+	float				GetInvAspect		() const;
+	USRect				GetRect				() const;
+	USVec2D				GetScale			() const;
+	USVec2D				GetUnits			() const;
 	void				SetOffset			( float xOffset, float yOffset );
 	void				SetRotation			( float degrees );
 	void				SetScale			( float xScale, float yScale );

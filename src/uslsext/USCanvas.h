@@ -45,26 +45,26 @@ public:
 	static void			DrawRectOutline			( float left, float top, float right, float bottom );
 	static void			GetModelToWndMtx		( USAffine2D& modelToWnd );
 	static void			GetModelToWorldMtx		( USAffine2D& modelToWorld );
-	static void			GetNormToWndMtx			( USViewport& viewport, USAffine2D& normToWnd );
+	static void			GetNormToWndMtx			( const USViewport& viewport, USAffine2D& normToWnd );
 	static USColorVec	GetPenColor				();
-	static void			GetProjMtx				( USViewport& viewport, USAffine2D& proj );
+	static void			GetProjMtx				( const USViewport& viewport, USAffine2D& proj );
 	
 	static void			GetViewProjMtx			( USAffine2D& viewProj );
-	static void			GetViewProjMtx			( USViewport& viewport, USAffine2D& camera, USAffine2D& viewProj );
-	static void			GetViewProjMtxInv		( USViewport& viewport, USAffine2D& camera, USAffine2D& viewProjInv );
+	static void			GetViewProjMtx			( const USViewport& viewport, const USAffine2D& camera, USAffine2D& viewProj );
+	static void			GetViewProjMtxInv		( const USViewport& viewport, const USAffine2D& camera, USAffine2D& viewProjInv );
 	
 	static void			GetViewRect				( USRect& rect );
 	
 	static void			GetWndToModelMtx		( USAffine2D& wndToModel );
-	static void			GetWndToNormMtx			( USViewport& viewport, USAffine2D& wndToNorm );
+	static void			GetWndToNormMtx			( const USViewport& viewport, USAffine2D& wndToNorm );
 	static void			GetWndToWorldMtx		( USAffine2D& wndToWorld );
-	static void			GetWndToWorldMtx		( USViewport& viewport, USAffine2D& camera, USAffine2D& wndToWorld );
+	static void			GetWndToWorldMtx		( const USViewport& viewport, const USAffine2D& camera, USAffine2D& wndToWorld );
 	
 	
 	
 	static void			GetWorldToModelMtx		( USAffine2D& worldToModel );
 	static void			GetWorldToWndMtx		( USAffine2D& worldToWnd, float xScale = 1.0f, float yScale = -1.0f );
-	static void			GetWorldToWndMtx		( USViewport& viewport, USAffine2D& camera, USAffine2D& worldToWnd );
+	static void			GetWorldToWndMtx		( const USViewport& viewport, const USAffine2D& camera, USAffine2D& worldToWnd );
 	
 	
 	

@@ -114,7 +114,7 @@ public:
 
 	//----------------------------------------------------------------//
 	// V . vec
-	float Dot ( const USMetaVec3D < TYPE >& vec ) {
+	float Dot ( const USMetaVec3D < TYPE >& vec ) const {
 		return ( mX * vec.mX ) + ( mY * vec.mY ) + ( mZ * vec.mZ );
 	}
 

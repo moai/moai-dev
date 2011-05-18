@@ -14,6 +14,7 @@ class USPlane2D {
 	float	mDist;
 
 	//----------------------------------------------------------------//
+	void	Flip			();
 	void	Init			( const USVec2D& p1, const USVec2D& p2 );	// From a line segment
 			USPlane2D		() {};
 			~USPlane2D		() {};

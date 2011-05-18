@@ -72,7 +72,6 @@ private:
 	static int	_setDependency		( lua_State* L );
 	
 	//----------------------------------------------------------------//
-	void			Activate				( MOAINode& activator );
 	void			ActivateOnLink			( MOAINode& srcNode );
 	MOAIAttrLink*	AffirmAttrLink			( int attrID, MOAINode* srcNode, int srcAttrID );
 	MOAIAttrLink*	AffirmDependency		( MOAINode& srcNode );
@@ -100,6 +99,7 @@ public:
 	static const u32 NULL_ATTR = 0xffffffff;
 	
 	//----------------------------------------------------------------//
+	void			Activate				( MOAINode& activator );
 	void			ClearDependency			( MOAINode& srcNode );
 	void			ClearAttrLink			( int attrID );
 	void			ForceUpdate				();

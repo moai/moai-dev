@@ -511,7 +511,7 @@ void USCanvas::GetModelToWndMtx ( USAffine2D& modelToWnd ) {
 }
 
 //----------------------------------------------------------------//
-void USCanvas::GetNormToWndMtx ( USViewport& viewport, USAffine2D& normToWnd ) {
+void USCanvas::GetNormToWndMtx ( const USViewport& viewport, USAffine2D& normToWnd ) {
 
 	USAffine2D mtx;
 	USRect rect = viewport.GetRect ();
@@ -538,7 +538,7 @@ USColorVec USCanvas::GetPenColor () {
 }
 
 //----------------------------------------------------------------//
-void USCanvas::GetProjMtx ( USViewport& viewport, USAffine2D& proj ) {
+void USCanvas::GetProjMtx ( const USViewport& viewport, USAffine2D& proj ) {
 	
 	USAffine2D mtx;
 	USRect rect = viewport.GetRect ();
@@ -562,7 +562,7 @@ void USCanvas::GetViewProjMtx ( USAffine2D& viewProj ) {
 }
 
 //----------------------------------------------------------------//
-void USCanvas::GetViewProjMtx ( USViewport& viewport, USAffine2D& camera, USAffine2D& viewProj ) {
+void USCanvas::GetViewProjMtx ( const USViewport& viewport, const USAffine2D& camera, USAffine2D& viewProj ) {
 
 	USAffine2D mtx;
 	USRect rect = viewport.GetRect ();
@@ -590,7 +590,7 @@ void USCanvas::GetViewProjMtx ( USViewport& viewport, USAffine2D& camera, USAffi
 }
 
 //----------------------------------------------------------------//
-void USCanvas::GetViewProjMtxInv ( USViewport& viewport, USAffine2D& camera, USAffine2D& viewProjInv ) {
+void USCanvas::GetViewProjMtxInv ( const USViewport& viewport, const USAffine2D& camera, USAffine2D& viewProjInv ) {
 
 	USAffine2D mtx;
 	USRect rect = viewport.GetRect ();
@@ -637,7 +637,7 @@ void USCanvas::GetWndToModelMtx ( USAffine2D& wndToModel ) {
 }
 
 //----------------------------------------------------------------//
-void USCanvas::GetWndToNormMtx ( USViewport& viewport, USAffine2D& wndToNorm ) {
+void USCanvas::GetWndToNormMtx ( const USViewport& viewport, USAffine2D& wndToNorm ) {
 
 	USAffine2D mtx;
 	USRect rect = viewport.GetRect ();
@@ -678,7 +678,7 @@ void USCanvas::GetWndToWorldMtx ( USAffine2D& wndToWorld ) {
 }
 
 //----------------------------------------------------------------//
-void USCanvas::GetWndToWorldMtx ( USViewport& viewport, USAffine2D& camera, USAffine2D& wndToWorld ) {
+void USCanvas::GetWndToWorldMtx ( const USViewport& viewport, const USAffine2D& camera, USAffine2D& wndToWorld ) {
 
 	USAffine2D mtx;
 	USRect rect = viewport.GetRect ();
@@ -730,7 +730,7 @@ void USCanvas::GetWorldToWndMtx ( USAffine2D& worldToWnd, float xScale, float yS
 }
 
 //----------------------------------------------------------------//
-void USCanvas::GetWorldToWndMtx ( USViewport& viewport, USAffine2D& camera, USAffine2D& worldToWnd ) {
+void USCanvas::GetWorldToWndMtx ( const USViewport& viewport, const USAffine2D& camera, USAffine2D& worldToWnd ) {
 
 	USAffine2D mtx;
 	USRect rect		= viewport.GetRect ();
