@@ -6,6 +6,7 @@
 #include <moaicore/MOAICameraAnchor2D.h>
 #include <moaicore/MOAICameraFitter2D.h>
 #include <moaicore/MOAILogMessages.h>
+#include <moaicore/MOAITransform.h>
 #include <moaicore/MOAIViewport.h>
 
 //----------------------------------------------------------------//
@@ -54,6 +55,17 @@ int MOAICameraFitter2D::_setBounds ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+int MOAICameraFitter2D::_setCamera ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAICameraFitter2D, "UU" )
+	
+	MOAITransform* camera = state.GetLuaObject < MOAITransform >( 2 );
+	if ( camera ) {
+		self->mCamera = camera;
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
 int MOAICameraFitter2D::_setMin ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICameraFitter2D, "U" )
 	
@@ -85,57 +97,6 @@ void MOAICameraFitter2D::AddAnchor ( MOAICameraAnchor2D& anchor ) {
 		anchor.Retain ();
 		this->mAnchors.insert ( &anchor );
 	}
-}
-
-//----------------------------------------------------------------//
-void MOAICameraFitter2D::Center () {
-
-	//this->mTargetLoc = camera.mLoc;
-	//this->mTargetScale = camera.mScale;
-
-	//if ( !this->mIsReady ) return;
-	//
-	//USCamera2D fitCam = camera;
-	//
-	//USAffine2D worldToWndMtx;
-	//USCanvas::GetWorldToWndMtx ( viewport, fitCam, worldToWndMtx );
-	//
-	//USAffine2D wndToWorldMtx;
-	//USCanvas::GetWndToWorldMtx ( viewport, fitCam, wndToWorldMtx );
-	//
-	//USRect worldRect = this->mWorldRect;
-	//
-	//if ( this->mFitRects.size ()) {
-	//
-	//	bool initFrame = true;
-	//	USRect frameRect;
-	//	
-	//	FitRectIt fitRectIt = this->mFitRects.begin ();
-	//	for ( ; fitRectIt != this->mFitRects.end (); ++fitRectIt ) {
-	//		
-	//		USFitRect& fitRect = *fitRectIt;
-	//		
-	//		USVec2D loc = fitRect.mWorldLoc;
-	//		worldToWndMtx.Transform ( loc );
-	//		
-	//		USRect rect = fitRect.mScreenRect;
-	//		rect.Offset ( loc.mX, loc.mY );
-	//		
-	//		if ( initFrame ) {
-	//			frameRect = rect;
-	//			initFrame = false;
-	//		}
-	//		else {
-	//			frameRect.Grow ( rect );
-	//		}
-	//	}
-	//	
-	//	wndToWorldMtx.Transform ( frameRect );
-	//	frameRect.Bless ();
-	//	worldRect.Grow ( frameRect );
-	//}
-	//
-	//worldRect.GetCenter ( this->mTargetLoc );
 }
 
 //----------------------------------------------------------------//
@@ -183,32 +144,19 @@ void MOAICameraFitter2D::GetCamera ( USAffine2D& camera ) {
 }
 
 //----------------------------------------------------------------//
-USRect MOAICameraFitter2D::GetScreenRect ( const USAffine2D& worldToWnd ) {
-
-	// build the world rect
-	AnchorIt anchorIt = this->mAnchors.begin ();
-	USRect screenRect = ( *anchorIt )->GetScreenRect ( worldToWnd );
-	++anchorIt;
-	
-	for ( ; anchorIt != this->mAnchors.end (); ++anchorIt ) {
-		MOAICameraAnchor2D* anchor = *anchorIt;
-		screenRect.Grow ( anchor->GetScreenRect ( worldToWnd ));
-	}
-	return screenRect;
-}
-
-//----------------------------------------------------------------//
 USRect MOAICameraFitter2D::GetWorldRect () {
 
 	// build the world rect
 	AnchorIt anchorIt = this->mAnchors.begin ();
-	USRect worldRect = ( *anchorIt )->GetWorldRect ();
+	USRect worldRect = ( *anchorIt )->GetRect ();
 	++anchorIt;
 	
 	for ( ; anchorIt != this->mAnchors.end (); ++anchorIt ) {
 		MOAICameraAnchor2D* anchor = *anchorIt;
-		worldRect.Grow ( anchor->GetWorldRect ());
+		worldRect.Grow ( anchor->GetRect ());
 	}
+	
+	this->mBounds.Clip ( worldRect );
 	
 	float width = worldRect.Width ();
 	float height = worldRect.Height ();
@@ -258,8 +206,8 @@ MOAICameraFitter2D::MOAICameraFitter2D () :
 	mMin ( 0.0f ) {
 
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAITransformBase )
 		RTTI_EXTEND ( MOAIAction )
+		RTTI_EXTEND ( MOAINode )
 	RTTI_END
 	
 	this->mViewRect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
@@ -277,9 +225,15 @@ MOAICameraFitter2D::~MOAICameraFitter2D () {
 void MOAICameraFitter2D::OnDepNodeUpdate () {
 
 	this->Fit ();
-
-	this->mLocalToWorldMtx.ScRoTr ( this->mTargetScale, this->mTargetScale, 0.0f, this->mTargetLoc.mX, this->mTargetLoc.mY );
-	this->mWorldToLocalMtx.Inverse ( this->mLocalToWorldMtx );
+	if ( this->mCamera ) {
+		this->mCamera->SetLoc ( this->mTargetLoc );
+		
+		USVec2D scale;
+		scale.Init ( this->mTargetScale, this->mTargetScale );
+		this->mCamera->SetScl ( scale );
+		
+		this->mCamera->ScheduleUpdate ();
+	}
 }
 
 //----------------------------------------------------------------//
@@ -336,20 +290,21 @@ void MOAICameraFitter2D::SetTarget ( const USAffine2D& camera, const USRect& scr
 void MOAICameraFitter2D::RegisterLuaClass ( USLuaState& state ) {
 
 	MOAIAction::RegisterLuaClass ( state );
-	MOAITransformBase::RegisterLuaClass ( state );
+	MOAINode::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAICameraFitter2D::RegisterLuaFuncs ( USLuaState& state ) {
 
 	MOAIAction::RegisterLuaFuncs ( state );
-	MOAITransformBase::RegisterLuaFuncs ( state );
+	MOAINode::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
 		{ "clear",				_clear },
 		{ "insertAnchor",		_insertAnchor },
 		{ "removeAnchor",		_removeAnchor },
 		{ "setBounds",			_setBounds },
+		{ "setCamera",			_setCamera },
 		{ "setMin",				_setMin },
 		{ "setViewport",		_setViewport },
 		{ NULL, NULL }

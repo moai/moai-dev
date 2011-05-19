@@ -5,9 +5,10 @@
 #define MOAICAMERAFITTER2D_H
 
 #include <moaicore/MOAIAction.h>
-#include <moaicore/MOAITransformBase.h>
+#include <moaicore/MOAINode.h>
 
 class MOAICameraAnchor2D;
+class MOAITransform;
 class MOAIViewport;
 
 //================================================================//
@@ -15,12 +16,13 @@ class MOAIViewport;
 //================================================================//
 class MOAICameraFitter2D :
 	public MOAIAction,
-	public MOAITransformBase {
+	public MOAINode {
 private:
 
 	USRect mViewRect;
 
-	USRef < MOAIViewport > mViewport;
+	USRef < MOAITransform >		mCamera;
+	USRef < MOAIViewport >		mViewport;
 
 	typedef STLSet < MOAICameraAnchor2D* >::iterator AnchorIt;
 	STLSet < MOAICameraAnchor2D* > mAnchors;
@@ -37,14 +39,13 @@ private:
 	static int		_insertAnchor			( lua_State* L );
 	static int		_removeAnchor			( lua_State* L );
 	static int		_setBounds				( lua_State* L );
+	static int		_setCamera				( lua_State* L );
 	static int		_setMin					( lua_State* L );
 	static int		_setViewport			( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void			Center					();
 	void			Fit						();
 	void			GetCamera				( USAffine2D& camera );
-	USRect			GetScreenRect			( const USAffine2D& worldToWnd );
 	USRect			GetWorldRect			();
 	void			OnDepNodeUpdate			();
 	void			OnUpdate				( float step );

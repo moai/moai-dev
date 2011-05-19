@@ -19,18 +19,15 @@ class MOAICameraAnchor2D :
 private:
 
 	USWeak < MOAITransformBase >	mParent;
-	USRect							mScreenRect;
-	USRect							mWorldRect;
-	USVec2D							mWorldLoc;
+	USRect							mRect;
+	USVec2D							mLoc;
 	
 	//----------------------------------------------------------------//
 	static int		_setParent				( lua_State* L );
-	static int		_setScreenRect			( lua_State* L );
-	static int		_setWorldRect			( lua_State* L );
+	static int		_setRect				( lua_State* L );
 
 	//----------------------------------------------------------------//
-	USRect			GetScreenRect			( const USAffine2D& worldToWnd );
-	USRect			GetWorldRect			();
+	USRect			GetRect					();
 	void			OnDepNodeUpdate			();
 
 public:

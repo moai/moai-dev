@@ -21,7 +21,7 @@ int MOAICameraAnchor2D::_setParent ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-int MOAICameraAnchor2D::_setScreenRect ( lua_State* L ) {
+int MOAICameraAnchor2D::_setRect ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICameraAnchor2D, "UNNNN" )
 
 	float x0	= state.GetValue < float >( 2, 0.0f );
@@ -29,21 +29,7 @@ int MOAICameraAnchor2D::_setScreenRect ( lua_State* L ) {
 	float x1	= state.GetValue < float >( 4, 0.0f );
 	float y1	= state.GetValue < float >( 5, 0.0f );
 	
-	self->mScreenRect.Init ( x0, y0, x1, y1 );
-	
-	return 0;
-}
-
-//----------------------------------------------------------------//
-int MOAICameraAnchor2D::_setWorldRect ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAICameraAnchor2D, "UNNNN" )
-
-	float x0	= state.GetValue < float >( 2, 0.0f );
-	float y0	= state.GetValue < float >( 3, 0.0f );
-	float x1	= state.GetValue < float >( 4, 0.0f );
-	float y1	= state.GetValue < float >( 5, 0.0f );
-	
-	self->mWorldRect.Init ( x0, y0, x1, y1 );
+	self->mRect.Init ( x0, y0, x1, y1 );
 	
 	return 0;
 }
@@ -53,23 +39,10 @@ int MOAICameraAnchor2D::_setWorldRect ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-USRect MOAICameraAnchor2D::GetScreenRect ( const USAffine2D& worldToWnd ) {
+USRect MOAICameraAnchor2D::GetRect () {
 
-	USVec2D screenLoc = this->mWorldLoc;
-	worldToWnd.Transform ( screenLoc );
-	
-	USRect rect = this->mScreenRect;
-	rect.Offset ( screenLoc.mX, screenLoc.mY );
-	rect.Bless ();
-	
-	return rect;
-}
-
-//----------------------------------------------------------------//
-USRect MOAICameraAnchor2D::GetWorldRect () {
-
-	USRect rect = this->mWorldRect;
-	rect.Offset ( this->mWorldLoc.mX, this->mWorldLoc.mY );
+	USRect rect = this->mRect;
+	rect.Offset ( this->mLoc.mX, this->mLoc.mY );
 	rect.Bless ();
 	
 	return rect;
@@ -82,9 +55,8 @@ MOAICameraAnchor2D::MOAICameraAnchor2D () {
 		RTTI_EXTEND ( MOAINode )
 	RTTI_END
 	
-	this->mScreenRect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
-	this->mWorldRect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
-	this->mWorldLoc.Init ( 0.0f, 0.0f );
+	this->mRect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
+	this->mLoc.Init ( 0.0f, 0.0f );
 }
 
 //----------------------------------------------------------------//
@@ -97,7 +69,7 @@ void MOAICameraAnchor2D::OnDepNodeUpdate () {
 	if ( this->mParent ) {
 	
 		const USAffine2D& worldMtx = this->mParent->GetLocalToWorldMtx ();
-		this->mWorldLoc = worldMtx.GetTranslation ();
+		this->mLoc = worldMtx.GetTranslation ();
 	}
 }
 
@@ -114,8 +86,7 @@ void MOAICameraAnchor2D::RegisterLuaFuncs ( USLuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "setParent",			_setParent },
-		{ "setScreenRect",		_setScreenRect },
-		{ "setWorldRect",		_setWorldRect },
+		{ "setRect",			_setRect },
 		{ NULL, NULL }
 	};
 	

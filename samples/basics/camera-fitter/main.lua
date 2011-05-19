@@ -10,16 +10,19 @@ viewport = MOAIViewport.new ()
 viewport:setSize ( 320, 480 )
 viewport:setScale ( 320, 480 )
 
+camera = MOAITransform.new ()
+
 layer = MOAILayer2D.new ()
 layer:setViewport ( viewport )
+layer:setCamera ( camera )
 MOAISim.pushRenderPass ( layer )
 
 fitter = MOAICameraFitter2D.new ()
 fitter:setViewport ( viewport )
+fitter:setCamera ( camera )
 fitter:setBounds ( -1000, -64, 1000, 10000 )
 fitter:setMin ( 256 )
 fitter:start ()
-layer:setCamera ( fitter )
 
 gfxQuad = MOAIGfxQuad2D.new ()
 gfxQuad:setTexture ( "cathead.png" )
@@ -32,8 +35,7 @@ layer:insertProp ( prop )
 
 anchor = MOAICameraAnchor2D.new ()
 anchor:setParent ( prop )
-anchor:setWorldRect ( -64, -64, 64, 64 )
-anchor:setScreenRect ( -64, -64, 64, 64 )
+anchor:setRect ( -64, -64, 64, 64 )
 fitter:insertAnchor ( anchor )
 
 prop = MOAIProp2D.new ()
@@ -43,8 +45,7 @@ layer:insertProp ( prop )
 
 anchor = MOAICameraAnchor2D.new ()
 anchor:setParent ( prop )
-anchor:setWorldRect ( -64, -64, 64, 64 )
-anchor:setScreenRect ( -64, -64, 64, 64 )
+anchor:setRect ( -64, -64, 64, 64 )
 fitter:insertAnchor ( anchor )
 
 function spin ()
