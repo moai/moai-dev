@@ -422,11 +422,11 @@ MOAIParticleSystem::~MOAIParticleSystem () {
 //----------------------------------------------------------------//
 void MOAIParticleSystem::OnUpdate ( float step ) {
 
-	// bail if no particles
-	if ( !this->mHead ) return;
-
 	// clear out the sprites
 	this->mSpriteTop = 0;
+
+	// bail if no particles
+	if ( !this->mHead ) return;
 
 	// grab the head then clear out the queue
 	MOAIParticle* cursor = this->mHead;

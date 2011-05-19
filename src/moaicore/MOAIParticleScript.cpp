@@ -400,7 +400,7 @@ int MOAIParticleScript::_sub ( lua_State* L ) {
 	@out	nil
 */
 int MOAIParticleScript::_time ( lua_State* L ) {
-	IMPL_LUA_PARTICLE_OP ( TIME, "RVV" )
+	IMPL_LUA_PARTICLE_OP ( TIME, "R" )
 }
 
 //================================================================//
@@ -580,6 +580,7 @@ void MOAIParticleScript::Run ( MOAIParticleSystem& system, MOAIParticle& particl
 	float t0 = particle.mAge / particle.mTerm;
 	particle.mAge += step;
 	float t1 = particle.mAge / particle.mTerm;
+	t1 = ( t1 > 1.0f ) ? 1.0f : t1;
 	
 	float particleRegisters [ MAX_PARTICLE_REGISTERS ];
 	memcpy ( particleRegisters, particle.mData, sizeof ( float ) * system.mParticleSize );
