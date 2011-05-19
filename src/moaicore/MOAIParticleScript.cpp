@@ -23,7 +23,7 @@
 		if ( type == PARAM_TYPE_SPRITE_REG ) {					\
 			reg = &spriteRegisters [ regIdx ];					\
 		}														\
-		else if ( regIdx < nRegs ) {							\
+		else {													\
 			reg = &particleRegisters [ regIdx ];				\
 		}														\
 	}
@@ -45,7 +45,7 @@
 			if ( type == PARAM_TYPE_SPRITE_REG ) {				\
 				var = spriteRegisters [ regIdx ];				\
 			}													\
-			else if ( regIdx < nRegs ) {						\
+			else {												\
 				var = particleRegisters [ regIdx ];				\
 			}													\
 		}														\
@@ -189,7 +189,7 @@ u8* MOAIParticleScript::Instruction::Write ( u8* cursor ) {
 					*( cursor++ ) = this->mTypes [ i ];
 					
 					if ( this->mTypes [ i ] == PARAM_TYPE_CONST ) {
-					
+						
 						src = ( u8* )&this->mParams [ i ];
 						*( cursor++ ) = *( src++ );
 						*( cursor++ ) = *( src++ );
@@ -581,8 +581,8 @@ void MOAIParticleScript::Run ( MOAIParticleSystem& system, MOAIParticle& particl
 	particle.mAge += step;
 	float t1 = particle.mAge / particle.mTerm;
 	
-	u32 nRegs = system.mParticleSize;
-	float* particleRegisters = particle.mData;
+	float particleRegisters [ MAX_PARTICLE_REGISTERS ];
+	memcpy ( particleRegisters, particle.mData, sizeof ( float ) * system.mParticleSize );
 	
 	MOAIParticleSprite sprite;
 	float spriteRegisters [ TOTAL_SPRITE_REG ];
@@ -732,6 +732,8 @@ void MOAIParticleScript::Run ( MOAIParticleSystem& system, MOAIParticle& particl
 				break;
 		}
 	}
+	
+	memcpy ( particle.mData, particleRegisters, sizeof ( float ) * system.mParticleSize );
 	
 	if ( push ) {
 		this->PushSprite ( system, spriteRegisters );

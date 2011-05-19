@@ -37,6 +37,9 @@ private:
 	
 	friend class MOAIParticleState;
 	
+	static const u32 MAX_PARTICLE_REGISTERS = 256;
+	static const u32 PARTICLE_REGISTER_MASK = 0x000000ff;
+	
 	enum {
 		SPRITE_X_LOC,
 		SPRITE_Y_LOC,
