@@ -33,6 +33,8 @@ private:
 	USRect		mBounds;
 	float		mMin;
 	float		mMax;
+	
+	float		mDamper;
 
 	//----------------------------------------------------------------//
 	static int		_clear					( lua_State* L );
@@ -40,8 +42,10 @@ private:
 	static int		_removeAnchor			( lua_State* L );
 	static int		_setBounds				( lua_State* L );
 	static int		_setCamera				( lua_State* L );
+	static int		_setDamper				( lua_State* L );
 	static int		_setMin					( lua_State* L );
 	static int		_setViewport			( lua_State* L );
+	static int		_snapToTarget			( lua_State* L );
 
 	//----------------------------------------------------------------//
 	void			Fit						();
@@ -50,6 +54,7 @@ private:
 	void			OnDepNodeUpdate			();
 	void			OnUpdate				( float step );
 	void			SetTarget				( const USAffine2D& camera, const USRect& screenRect );
+	void			SnapToTarget			( MOAITransform& camera );
 
 public:
 

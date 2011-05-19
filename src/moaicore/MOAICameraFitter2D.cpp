@@ -56,12 +56,20 @@ int MOAICameraFitter2D::_setBounds ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 int MOAICameraFitter2D::_setCamera ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAICameraFitter2D, "UU" )
+	MOAI_LUA_SETUP ( MOAICameraFitter2D, "U" )
 	
 	MOAITransform* camera = state.GetLuaObject < MOAITransform >( 2 );
-	if ( camera ) {
-		self->mCamera = camera;
-	}
+	self->mCamera = camera;
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
+int MOAICameraFitter2D::_setDamper ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAICameraFitter2D, "U" )
+	
+	self->mDamper = state.GetValue < float >( 2, 0.0f );
+	
 	return 0;
 }
 
@@ -82,6 +90,22 @@ int MOAICameraFitter2D::_setViewport ( lua_State* L ) {
 	if ( viewport ) {
 		self->mViewport = viewport;
 		self->mViewRect = viewport->GetRect ();
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+int MOAICameraFitter2D::_snapToTarget ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAICameraFitter2D, "U" )
+	
+	MOAITransform* camera = state.GetLuaObject < MOAITransform >( 2 );
+	if ( camera ) {
+		self->SnapToTarget ( *camera );
+	}
+	else {
+		if ( self->mCamera ) {
+			self->SnapToTarget ( *self->mCamera );
+		}
 	}
 	return 0;
 }
@@ -203,7 +227,8 @@ bool MOAICameraFitter2D::IsDone () {
 
 //----------------------------------------------------------------//
 MOAICameraFitter2D::MOAICameraFitter2D () :
-	mMin ( 0.0f ) {
+	mMin ( 0.0f ),
+	mDamper ( 0.0f ) {
 
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIAction )
@@ -226,12 +251,20 @@ void MOAICameraFitter2D::OnDepNodeUpdate () {
 
 	this->Fit ();
 	if ( this->mCamera ) {
-		this->mCamera->SetLoc ( this->mTargetLoc );
 		
-		USVec2D scale;
-		scale.Init ( this->mTargetScale, this->mTargetScale );
-		this->mCamera->SetScl ( scale );
+		float d = 1.0f - USFloat::Clamp ( this->mDamper, 0.0f, 1.0f );
 		
+		USVec2D loc = this->mCamera->GetLoc ();
+		float scale = this->mCamera->GetScl ().mX;
+		
+		loc.mX += ( this->mTargetLoc.mX - loc.mX ) * d;
+		loc.mY += ( this->mTargetLoc.mY - loc.mY ) * d;
+		scale += ( this->mTargetScale - scale ) * d;
+		
+		USVec2D scaleVec;
+		scaleVec.Init ( scale, scale );
+		this->mCamera->SetScl ( scaleVec );
+		this->mCamera->SetLoc ( loc );
 		this->mCamera->ScheduleUpdate ();
 	}
 }
@@ -287,6 +320,18 @@ void MOAICameraFitter2D::SetTarget ( const USAffine2D& camera, const USRect& scr
 }
 
 //----------------------------------------------------------------//
+void MOAICameraFitter2D::SnapToTarget ( MOAITransform& camera ) {
+	
+	camera.SetLoc ( this->mTargetLoc );
+	
+	USVec2D scaleVec;
+	scaleVec.Init ( this->mTargetScale, this->mTargetScale );
+	camera.SetScl ( scaleVec );
+	
+	camera.ScheduleUpdate ();
+}
+
+//----------------------------------------------------------------//
 void MOAICameraFitter2D::RegisterLuaClass ( USLuaState& state ) {
 
 	MOAIAction::RegisterLuaClass ( state );
@@ -305,8 +350,10 @@ void MOAICameraFitter2D::RegisterLuaFuncs ( USLuaState& state ) {
 		{ "removeAnchor",		_removeAnchor },
 		{ "setBounds",			_setBounds },
 		{ "setCamera",			_setCamera },
+		{ "setDamper",			_setDamper },
 		{ "setMin",				_setMin },
 		{ "setViewport",		_setViewport },
+		{ "snapToTarget",		_snapToTarget },
 		{ NULL, NULL }
 	};
 	
