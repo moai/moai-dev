@@ -56,6 +56,8 @@ $(SRC_PATH)/src/moaicore/MOAIBox2DFixture.cpp \
 $(SRC_PATH)/src/moaicore/MOAIBox2DJoint.cpp \
 $(SRC_PATH)/src/moaicore/MOAIBox2DWorld.cpp \
 $(SRC_PATH)/src/moaicore/MOAIButtonSensor.cpp \
+$(SRC_PATH)/src/moaicore/MOAICameraAnchor2D.cpp \
+$(SRC_PATH)/src/moaicore/MOAICameraFitter2D.cpp \
 $(SRC_PATH)/src/moaicore/MOAIColor.cpp \
 $(SRC_PATH)/src/moaicore/MOAICompassSensor.cpp \
 $(SRC_PATH)/src/moaicore/moaicore.cpp \
