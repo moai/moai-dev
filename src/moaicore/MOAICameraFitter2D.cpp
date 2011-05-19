@@ -164,23 +164,16 @@ void MOAICameraFitter2D::Fit () {
 
 	USAffine2D camera;
 	USRect screenRect;
+		
+	this->GetCamera ( camera );
 	
-	// chase down the screen rect fit
-	//for ( u32 i = 0; i < 8; ++i ) {
-		
-		this->GetCamera ( camera );
-		
-		USAffine2D worldToWnd;
-		USCanvas::GetWorldToWndMtx ( *this->mViewport, camera, worldToWnd );
-		
-		screenRect = worldRect;
-		worldToWnd.Transform ( screenRect );
-		
-		//USRect padRect = this->GetScreenRect ( worldToWnd );
-		
-		//screenRect.Grow ( padRect );
-		this->SetTarget ( camera, screenRect );
-	//}
+	USAffine2D worldToWnd;
+	USCanvas::GetWorldToWndMtx ( *this->mViewport, camera, worldToWnd );
+	
+	screenRect = worldRect;
+	worldToWnd.Transform ( screenRect );
+
+	this->SetTarget ( camera, screenRect );
 }
 
 //----------------------------------------------------------------//
