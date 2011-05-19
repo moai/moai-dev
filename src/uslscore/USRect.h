@@ -37,8 +37,8 @@ public:
 	TYPE Aspect () const {
 	
 		float height = this->Height ();
-		if ( height == 0.0 ) {
-			return 0.0;
+		if ( height == 0 ) {
+			return 0;
 		}
 	
 		return ( TYPE )( this->Width () / height );
@@ -235,20 +235,20 @@ public:
 		TYPE width = this->Width ();
 		TYPE height = this->Height ();
 		
-		TYPE fitWidth = 0.0;
-		TYPE fitHeight = 0.0;
+		TYPE fitWidth = 0;
+		TYPE fitHeight = 0;
 		
-		if (( width == 0.0 ) || ( height == 0.0 )) {
-			if ( width > 0.0 ) {
+		if (( width == 0 ) || ( height == 0 )) {
+			if ( width > 0 ) {
 				fitWidth = width;
 				fitHeight = ( width / fitAspect );
 			}
-			else if ( height > 0.0 ) {
+			else if ( height > 0 ) {
 				fitWidth = ( height * fitAspect );
 				fitHeight = height;
 			}
 			else {
-				rect.Init ( 0.0, 0.0, 0.0, 0.0 );
+				rect.Init ( 0, 0, 0, 0 );
 				return;
 			}
 		}
