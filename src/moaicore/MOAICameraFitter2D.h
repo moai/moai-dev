@@ -32,8 +32,6 @@ private:
 
 	USRect		mBounds;
 	float		mMin;
-	float		mMax;
-	
 	float		mDamper;
 
 	//----------------------------------------------------------------//

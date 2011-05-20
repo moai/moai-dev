@@ -147,18 +147,34 @@ void MOAICameraFitter2D::Fit () {
 	// build the world rect
 	USRect worldRect = this->GetWorldRect ();
 
-	USAffine2D camera;
-	USRect screenRect;
-		
-	this->GetCamera ( camera );
+	USAffine2D ident;
+	ident.Ident ();
 	
 	USAffine2D worldToWnd;
-	USCanvas::GetWorldToWndMtx ( *this->mViewport, camera, worldToWnd );
+	USCanvas::GetWorldToWndMtx ( *this->mViewport, ident, worldToWnd );
 	
-	screenRect = worldRect;
+	USAffine2D wndToWorld;
+	USCanvas::GetWndToWorldMtx ( *this->mViewport, ident, wndToWorld );
+	
+	USRect screenRect = worldRect;
 	worldToWnd.Transform ( screenRect );
+	
+	// fit the viewport rect to the target rect
+	USRect viewport = this->mViewport->GetRect ();
+	screenRect.FitOutside ( viewport );
+	
+	// since aspect stayed constant, can use either width or height to fit
+	this->mTargetScale *= viewport.Width () / this->mViewport->Width ();
 
-	this->SetTarget ( camera, screenRect );
+	// TODO: take viewport offset into account
+	
+	// take the viewport back into world space
+	wndToWorld.Transform ( viewport );
+	
+	viewport.Bless ();
+	this->mBounds.Constrain ( viewport );
+	
+	viewport.GetCenter ( this->mTargetLoc );
 }
 
 //----------------------------------------------------------------//
@@ -201,21 +217,6 @@ USRect MOAICameraFitter2D::GetWorldRect () {
 		}
 	}
 	
-	if ( this->mMax > 0.0f ) {
-	
-		if ( width > this->mMax ) {
-			pad = ( this->mMax - width ) * 0.5f;
-			worldRect.mXMin -= pad;
-			worldRect.mXMax += pad;
-		}
-		
-		if ( height > this->mMax ) {
-			pad = ( this->mMax - height ) * 0.5f;
-			worldRect.mYMin -= pad;
-			worldRect.mYMax += pad;
-		}
-	}
-	
 	return worldRect;
 }
 
@@ -250,6 +251,7 @@ MOAICameraFitter2D::~MOAICameraFitter2D () {
 void MOAICameraFitter2D::OnDepNodeUpdate () {
 
 	this->Fit ();
+	
 	if ( this->mCamera ) {
 		
 		float d = 1.0f - USFloat::Clamp ( this->mDamper, 0.0f, 1.0f );
@@ -290,33 +292,6 @@ void MOAICameraFitter2D::RemoveAnchor ( MOAICameraAnchor2D& anchor ) {
 		this->mAnchors.erase ( &anchor );
 		anchor.Release ();
 	}
-}
-
-//----------------------------------------------------------------//
-void MOAICameraFitter2D::SetTarget ( const USAffine2D& camera, const USRect& screenRect ) {
-	
-	USAffine2D worldToWnd;
-	USCanvas::GetWorldToWndMtx ( *this->mViewport, camera, worldToWnd );
-	
-	USAffine2D wndToWorld;
-	USCanvas::GetWndToWorldMtx ( *this->mViewport, camera, wndToWorld );
-	
-	// fit the viewport rect to the target rect
-	USRect viewport = this->mViewport->GetRect ();
-	screenRect.FitOutside ( viewport );
-	
-	// since aspect stayed constant, can use either width or height to fit
-	this->mTargetScale *= viewport.Width () / this->mViewport->Width ();
-
-	// TODO: take viewport offset into account
-	
-	// take the viewport back into world space
-	wndToWorld.Transform ( viewport );
-	
-	viewport.Bless ();
-	this->mBounds.Constrain ( viewport );
-	
-	viewport.GetCenter ( this->mTargetLoc );
 }
 
 //----------------------------------------------------------------//
