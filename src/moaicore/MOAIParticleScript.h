@@ -58,6 +58,7 @@ private:
 	enum {
 		END = 0,
 		ADD,
+		CYCLE,
 		DIV,
 		EASE,
 		EASE_DELTA,
@@ -68,6 +69,7 @@ private:
 		SPRITE,
 		SUB,
 		TIME,
+		WRAP,
 	};
 	
 	//----------------------------------------------------------------//
@@ -98,6 +100,7 @@ private:
 
 	//----------------------------------------------------------------//
 	static int		_add				( lua_State* L );
+	static int		_cycle				( lua_State* L );
 	static int		_div				( lua_State* L );
 	static int		_ease				( lua_State* L );
 	static int		_easeDelta			( lua_State* L );
@@ -110,6 +113,7 @@ private:
 	static int		_sprite				( lua_State* L );
 	static int		_sub				( lua_State* L );
 	static int		_time				( lua_State* L );
+	static int		_wrap				( lua_State* L );
 	
 	//----------------------------------------------------------------//
 	static u64		Pack64					( u32 low, u32 hi );

@@ -14,6 +14,9 @@ namespace USInterpolate {
 		kEaseOut,
 		kFlat,
 		kLinear,
+		kSharpEaseIn,
+		kSharpEaseOut,
+		kSharpSmooth,
 		kSmooth,
 		kSoftEaseIn,
 		kSoftEaseOut,
@@ -22,24 +25,8 @@ namespace USInterpolate {
 	
 	//----------------------------------------------------------------//
 	float	Curve			( u32 mode, float t );
-	float	EaseIn			( float t );
-	float	EaseIn			( float x0, float x1, float t );
-	float	EaseOut			( float t );
-	float	EaseOut			( float x0, float x1, float t );
-	float	Flat			( float t );
-	float	Flat			( float x0, float x1, float t );
 	float	Interpolate		( u32 mode, float x0, float x1, float t );
 	float	Interpolate		( u32 mode, float x0, float x1, float t, float w );
-	float	Linear			( float t );
-	float	Linear			( float x0, float x1, float t );
-	float	Smooth			( float t );
-	float	Smooth			( float x0, float x1, float t );
-	float	SoftEaseIn		( float t );
-	float	SoftEaseIn		( float x0, float x1, float t );
-	float	SoftEaseOut		( float t );
-	float	SoftEaseOut		( float x0, float x1, float t );
-	float	SoftSmooth		( float t );
-	float	SoftSmooth		( float x0, float x1, float t );
 	
 } // namespace USDist
 

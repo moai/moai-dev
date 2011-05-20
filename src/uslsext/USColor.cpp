@@ -539,10 +539,10 @@ float USColorVec::GetLuma () {
 //----------------------------------------------------------------//
 void USColorVec::Lerp ( const USColorVec& v0, const USColorVec& v1, float t ) {
 
-	this->mR = USInterpolate::Linear ( v0.mR, v1.mR, t );
-	this->mG = USInterpolate::Linear ( v0.mG, v1.mG, t );
-	this->mB = USInterpolate::Linear ( v0.mB, v1.mB, t );
-	this->mA = USInterpolate::Linear ( v0.mA, v1.mA, t );
+	this->mR = v0.mR + (( v1.mR - v0.mR ) * t );
+	this->mG = v0.mG + (( v1.mG - v0.mG ) * t );
+	this->mB = v0.mB + (( v1.mB - v0.mB ) * t );
+	this->mA = v0.mA + (( v1.mA - v0.mA ) * t );
 }
 
 //----------------------------------------------------------------//

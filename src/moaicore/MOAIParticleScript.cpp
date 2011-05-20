@@ -226,6 +226,21 @@ int MOAIParticleScript::_add ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	cycle
+	@text	Cycle v0 between v1 and v2.
+	
+	@in		MOAIParticleScript self
+	@in		number r0
+	@in		number v0
+	@in		number v1
+	@in		number v2
+	@out	nil
+*/
+int MOAIParticleScript::_cycle ( lua_State* L ) {
+	IMPL_LUA_PARTICLE_OP ( CYCLE, "RVVV" )
+}
+
+//----------------------------------------------------------------//
 /**	@name	div
 	@text	r0 = v0 / v1
 	
@@ -403,6 +418,21 @@ int MOAIParticleScript::_time ( lua_State* L ) {
 	IMPL_LUA_PARTICLE_OP ( TIME, "R" )
 }
 
+//----------------------------------------------------------------//
+/**	@name	wrap
+	@text	Wrap v0 between v1 and v2.
+	
+	@in		MOAIParticleScript self
+	@in		number r0
+	@in		number v0
+	@in		number v1
+	@in		number v2
+	@out	nil
+*/
+int MOAIParticleScript::_wrap ( lua_State* L ) {
+	IMPL_LUA_PARTICLE_OP ( WRAP, "RVVV" )
+}
+
 //================================================================//
 // MOAIParticleScript
 //================================================================//
@@ -538,6 +568,7 @@ void MOAIParticleScript::RegisterLuaFuncs ( USLuaState& state ) {
 	
 	luaL_Reg regTable [] = {
 		{ "add",				_add },
+		{ "cycle",				_cycle },
 		{ "div",				_div },
 		{ "ease",				_ease },
 		{ "easeDelta",			_easeDelta },
@@ -548,6 +579,7 @@ void MOAIParticleScript::RegisterLuaFuncs ( USLuaState& state ) {
 		{ "sprite",				_sprite },
 		{ "sub",				_sub },
 		{ "time",				_time },
+		{ "wrap",				_wrap },
 		{ NULL, NULL }
 	};
 	
@@ -610,6 +642,31 @@ void MOAIParticleScript::Run ( MOAIParticleSystem& system, MOAIParticle& particl
 				
 				if ( r0 ) {
 					*r0 = v0 + v1;
+				}
+				break;
+			
+			case CYCLE: // RVVV
+				
+				READ_ADDR	( r0, bytecode );
+				READ_VALUE	( v0, bytecode );
+				READ_VALUE	( v1, bytecode );
+				READ_VALUE	( v2, bytecode );
+				
+				if ( r0 ) {
+					v3 = v2 - v1;
+					v3 = ( v3 < 0.0f ) ? -v3 : v3;
+					
+					float cycle = ( v0 - v1 ) / v3;
+					int cycleIdx = USFloat::ToInt ( USFloat::Floor ( cycle ));
+					float cycleDec = cycle - ( float )cycleIdx;
+					
+					if ( cycleIdx & 0x01 ) {
+						cycleDec = 1.0f - cycleDec;
+					}
+					
+					v0 = v1 + ( cycleDec * v3 );
+					
+					*r0 = v0;
 				}
 				break;
 			
@@ -729,6 +786,28 @@ void MOAIParticleScript::Run ( MOAIParticleSystem& system, MOAIParticle& particl
 				
 				if ( r0 ) {
 					*r0 = t1;
+				}
+				break;
+			
+			case WRAP: // RVVV
+				
+				READ_ADDR	( r0, bytecode );
+				READ_VALUE	( v0, bytecode );
+				READ_VALUE	( v1, bytecode );
+				READ_VALUE	( v2, bytecode );
+				
+				if ( r0 ) {
+					v3 = v2 - v1;
+					
+					while ( v0 < v1 ) {
+						v0 += v3;
+					}
+					
+					while ( v0 >= v2 ) {
+						v0 -= v3;
+					}
+					
+					*r0 = v0;
 				}
 				break;
 		}
