@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		031FA4CF138589C4007FD20C /* MOAICameraAnchor2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 031FA4CB138589C4007FD20C /* MOAICameraAnchor2D.cpp */; };
+		031FA4D0138589C4007FD20C /* MOAICameraAnchor2D.h in Headers */ = {isa = PBXBuildFile; fileRef = 031FA4CC138589C4007FD20C /* MOAICameraAnchor2D.h */; };
+		031FA4D1138589C4007FD20C /* MOAICameraFitter2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 031FA4CD138589C4007FD20C /* MOAICameraFitter2D.cpp */; };
+		031FA4D2138589C4007FD20C /* MOAICameraFitter2D.h in Headers */ = {isa = PBXBuildFile; fileRef = 031FA4CE138589C4007FD20C /* MOAICameraFitter2D.h */; };
+		031FA4D3138589C4007FD20C /* MOAICameraAnchor2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 031FA4CB138589C4007FD20C /* MOAICameraAnchor2D.cpp */; };
+		031FA4D4138589C4007FD20C /* MOAICameraAnchor2D.h in Headers */ = {isa = PBXBuildFile; fileRef = 031FA4CC138589C4007FD20C /* MOAICameraAnchor2D.h */; };
+		031FA4D5138589C4007FD20C /* MOAICameraFitter2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 031FA4CD138589C4007FD20C /* MOAICameraFitter2D.cpp */; };
+		031FA4D6138589C4007FD20C /* MOAICameraFitter2D.h in Headers */ = {isa = PBXBuildFile; fileRef = 031FA4CE138589C4007FD20C /* MOAICameraFitter2D.h */; };
 		03240BAB13564CB0000ADC60 /* b2CircleShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 032409F213564CAF000ADC60 /* b2CircleShape.cpp */; };
 		03240BAC13564CB0000ADC60 /* b2CircleShape.h in Headers */ = {isa = PBXBuildFile; fileRef = 032409F313564CAF000ADC60 /* b2CircleShape.h */; };
 		03240BAD13564CB0000ADC60 /* b2PolygonShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 032409F413564CAF000ADC60 /* b2PolygonShape.cpp */; };
@@ -2424,6 +2432,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		031FA4CB138589C4007FD20C /* MOAICameraAnchor2D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAICameraAnchor2D.cpp; sourceTree = "<group>"; };
+		031FA4CC138589C4007FD20C /* MOAICameraAnchor2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAICameraAnchor2D.h; sourceTree = "<group>"; };
+		031FA4CD138589C4007FD20C /* MOAICameraFitter2D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAICameraFitter2D.cpp; sourceTree = "<group>"; };
+		031FA4CE138589C4007FD20C /* MOAICameraFitter2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAICameraFitter2D.h; sourceTree = "<group>"; };
 		032409F213564CAF000ADC60 /* b2CircleShape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = b2CircleShape.cpp; path = "../../3rdparty/box2d-2.1.2/Box2D/Box2D/Collision/Shapes/b2CircleShape.cpp"; sourceTree = SOURCE_ROOT; };
 		032409F313564CAF000ADC60 /* b2CircleShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = b2CircleShape.h; path = "../../3rdparty/box2d-2.1.2/Box2D/Box2D/Collision/Shapes/b2CircleShape.h"; sourceTree = SOURCE_ROOT; };
 		032409F413564CAF000ADC60 /* b2PolygonShape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = b2PolygonShape.cpp; path = "../../3rdparty/box2d-2.1.2/Box2D/Box2D/Collision/Shapes/b2PolygonShape.cpp"; sourceTree = SOURCE_ROOT; };
@@ -4699,6 +4711,10 @@
 				0324E50D13564BC7000ADC60 /* MOAIBox2DWorld.h */,
 				0324E50E13564BC7000ADC60 /* MOAIButtonSensor.cpp */,
 				0324E50F13564BC7000ADC60 /* MOAIButtonSensor.h */,
+				031FA4CB138589C4007FD20C /* MOAICameraAnchor2D.cpp */,
+				031FA4CC138589C4007FD20C /* MOAICameraAnchor2D.h */,
+				031FA4CD138589C4007FD20C /* MOAICameraFitter2D.cpp */,
+				031FA4CE138589C4007FD20C /* MOAICameraFitter2D.h */,
 				0324E51013564BC7000ADC60 /* MOAIColor.cpp */,
 				0324E51113564BC7000ADC60 /* MOAIColor.h */,
 				0324E51213564BC7000ADC60 /* MOAICompassSensor.cpp */,
@@ -6754,6 +6770,8 @@
 				CDEB91491360A78800AAC558 /* MOAIEventSource.h in Headers */,
 				CDEB914D1360A78800AAC558 /* MOAIImage.h in Headers */,
 				03E4E94213664F7C008D079B /* MOAIParticle.h in Headers */,
+				031FA4D4138589C4007FD20C /* MOAICameraAnchor2D.h in Headers */,
+				031FA4D6138589C4007FD20C /* MOAICameraFitter2D.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7298,6 +7316,8 @@
 				CDEB91481360A78800AAC558 /* MOAIEventSource.h in Headers */,
 				CDEB914C1360A78800AAC558 /* MOAIImage.h in Headers */,
 				03E4E94113664F7C008D079B /* MOAIParticle.h in Headers */,
+				031FA4D0138589C4007FD20C /* MOAICameraAnchor2D.h in Headers */,
+				031FA4D2138589C4007FD20C /* MOAICameraFitter2D.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7847,6 +7867,8 @@
 				0324E9CE13564BC9000ADC60 /* USXmlReader.cpp in Sources */,
 				CDEB91471360A78800AAC558 /* MOAIEventSource.cpp in Sources */,
 				CDEB914B1360A78800AAC558 /* MOAIImage.cpp in Sources */,
+				031FA4D3138589C4007FD20C /* MOAICameraAnchor2D.cpp in Sources */,
+				031FA4D5138589C4007FD20C /* MOAICameraFitter2D.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8886,6 +8908,8 @@
 				CD7F4DFC135BBD8600E83096 /* NSDate+MOAILib.mm in Sources */,
 				CDEB91461360A78800AAC558 /* MOAIEventSource.cpp in Sources */,
 				CDEB914A1360A78800AAC558 /* MOAIImage.cpp in Sources */,
+				031FA4CF138589C4007FD20C /* MOAICameraAnchor2D.cpp in Sources */,
+				031FA4D1138589C4007FD20C /* MOAICameraFitter2D.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

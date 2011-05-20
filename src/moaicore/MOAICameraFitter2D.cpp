@@ -126,10 +126,10 @@ void MOAICameraFitter2D::AddAnchor ( MOAICameraAnchor2D& anchor ) {
 //----------------------------------------------------------------//
 void MOAICameraFitter2D::Clear () {
 
-	AnchorIt anchorIt = this->mAnchors.begin ();
-	while ( anchorIt != this->mAnchors.end ()) {
+	while ( this->mAnchors.size ()) {
+		AnchorIt anchorIt = this->mAnchors.begin ();
 		MOAICameraAnchor2D* anchor = *anchorIt;
-		anchorIt = this->mAnchors.erase ( anchorIt );
+		this->mAnchors.erase ( anchorIt );
 		anchor->Release ();
 	} 
 }
