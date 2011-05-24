@@ -5,8 +5,11 @@
 #define	MOAIAPP_H
 
 #import <Foundation/Foundation.h>
+#import <StoreKit/StoreKit.h>
 #import <UIKit/UIKit.h>
 #import <moaicore/moaicore.h>
+
+@class MOAIStoreKitListener;
 
 //================================================================//
 // MOAIApp
@@ -32,18 +35,33 @@ private:
 		DID_REGISTER,
 		LOCAL_NOTIFICATION,
 		REMOTE_NOTIFICATION,
+		PAYMENT_QUEUE_TRANSACTION,
+		PRODUCT_REQUEST_RESPONSE,
 		TOTAL,
 	};
-
-	UIApplication*	mApplication;
-	USLuaRef		mListeners [ TOTAL ];
+	
+	enum {
+		TRANSACTION_STATE_PURCHASED,
+		TRANSACTION_STATE_FAILED,
+		TRANSACTION_STATE_RESTORED,
+	};
+	
+	UIApplication*			mApplication;
+	USLuaRef				mListeners [ TOTAL ];
+	MOAIStoreKitListener*	mStoreKitListener;
 
 	//----------------------------------------------------------------//
+	static int		_canMakePayments						( lua_State* L );
 	static int		_getAppIconBadgeNumber					( lua_State* L );
 	static int		_registerForRemoteNotifications			( lua_State* L );
+	static int		_requestPaymentForProduct				( lua_State* L );
+	static int		_requestProductIdentifiers				( lua_State* L );
 	static int		_scheduleLocalNotification				( lua_State* L );
 	static int		_setAppIconBadgeNumber					( lua_State* L );
 	static int		_setListener							( lua_State* L );
+
+	//----------------------------------------------------------------//
+	void			PushPaymentTransaction					( lua_State* L, SKPaymentTransaction* transaction );
 
 public:
 	
@@ -52,14 +70,17 @@ public:
 	SET ( UIApplication*, Application, mApplication )
 	
 	//----------------------------------------------------------------//
-	void		DidFailToRegisterForRemoteNotificationsWithError	( NSError* error );
-	void		DidReceiveLocalNotification							( UILocalNotification* notification );
-	void		DidReceiveRemoteNotification						( NSDictionary* userInfo );
-	void		DidRegisterForRemoteNotificationsWithDeviceToken	( NSData* deviceToken );
-				MOAIApp												();
-				~MOAIApp											();
-	void		OnInit												();
-	void		RegisterLuaClass									( USLuaState& state );
+	void		DidFailToRegisterForRemoteNotificationsWithError			( NSError* error );
+	void		DidReceiveLocalNotification									( UILocalNotification* notification );
+	void		DidReceiveRemoteNotification								( NSDictionary* userInfo );
+	void		DidRegisterForRemoteNotificationsWithDeviceToken			( NSData* deviceToken );
+	void		InitStoreKit												();
+				MOAIApp														();
+				~MOAIApp													();
+	void		OnInit														();
+	void		PaymentQueueUpdatedTransactions								( SKPaymentQueue* queue, NSArray* transactions );
+	void		ProductsRequestDidReceiveResponse							( SKProductsRequest* request, SKProductsResponse* response );
+	void		RegisterLuaClass											( USLuaState& state );
 };
 
 #endif

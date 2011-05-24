@@ -2404,6 +2404,8 @@
 		CD80F640135BBCFF006B0683 /* ISO8601DateFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = CD80F63D135BBCFF006B0683 /* ISO8601DateFormatter.h */; };
 		CD80F641135BBCFF006B0683 /* ISO8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = CD80F63E135BBCFF006B0683 /* ISO8601DateFormatter.m */; };
 		CD80F642135BBCFF006B0683 /* ISO8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = CD80F63E135BBCFF006B0683 /* ISO8601DateFormatter.m */; };
+		CDD1171B138B7C9300AAF115 /* MOAIStoreKitListener.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD11719138B7C9300AAF115 /* MOAIStoreKitListener.h */; };
+		CDD1171C138B7C9300AAF115 /* MOAIStoreKitListener.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDD1171A138B7C9300AAF115 /* MOAIStoreKitListener.mm */; };
 		CDEB91461360A78800AAC558 /* MOAIEventSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDEB91421360A78800AAC558 /* MOAIEventSource.cpp */; };
 		CDEB91471360A78800AAC558 /* MOAIEventSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDEB91421360A78800AAC558 /* MOAIEventSource.cpp */; };
 		CDEB91481360A78800AAC558 /* MOAIEventSource.h in Headers */ = {isa = PBXBuildFile; fileRef = CDEB91431360A78800AAC558 /* MOAIEventSource.h */; };
@@ -4010,6 +4012,8 @@
 		CD80F638135BAB65006B0683 /* NSError+MOAILib.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "NSError+MOAILib.mm"; path = "moai-iphone/NSError+MOAILib.mm"; sourceTree = "<group>"; };
 		CD80F63D135BBCFF006B0683 /* ISO8601DateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ISO8601DateFormatter.h; path = ../../3rdparty/contrib/ISO8601DateFormatter.h; sourceTree = "<group>"; };
 		CD80F63E135BBCFF006B0683 /* ISO8601DateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ISO8601DateFormatter.m; path = ../../3rdparty/contrib/ISO8601DateFormatter.m; sourceTree = "<group>"; };
+		CDD11719138B7C9300AAF115 /* MOAIStoreKitListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIStoreKitListener.h; path = "moai-iphone/MOAIStoreKitListener.h"; sourceTree = "<group>"; };
+		CDD1171A138B7C9300AAF115 /* MOAIStoreKitListener.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIStoreKitListener.mm; path = "moai-iphone/MOAIStoreKitListener.mm"; sourceTree = "<group>"; };
 		CDEB91421360A78800AAC558 /* MOAIEventSource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIEventSource.cpp; sourceTree = "<group>"; };
 		CDEB91431360A78800AAC558 /* MOAIEventSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIEventSource.h; sourceTree = "<group>"; };
 		CDEB91441360A78800AAC558 /* MOAIImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIImage.cpp; sourceTree = "<group>"; };
@@ -5177,6 +5181,8 @@
 				CD80F60F135BA048006B0683 /* moai-iphone.h */,
 				CD80F610135BA048006B0683 /* MOAIApp.h */,
 				CD80F611135BA048006B0683 /* MOAIApp.mm */,
+				CDD11719138B7C9300AAF115 /* MOAIStoreKitListener.h */,
+				CDD1171A138B7C9300AAF115 /* MOAIStoreKitListener.mm */,
 				CD80F612135BA048006B0683 /* NSArray+MOAILib.h */,
 				CD80F613135BA048006B0683 /* NSArray+MOAILib.mm */,
 				CD80F635135BAB63006B0683 /* NSData+MOAILib.h */,
@@ -7318,6 +7324,7 @@
 				03E4E94113664F7C008D079B /* MOAIParticle.h in Headers */,
 				031FA4D0138589C4007FD20C /* MOAICameraAnchor2D.h in Headers */,
 				031FA4D2138589C4007FD20C /* MOAICameraFitter2D.h in Headers */,
+				CDD1171B138B7C9300AAF115 /* MOAIStoreKitListener.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8910,6 +8917,7 @@
 				CDEB914A1360A78800AAC558 /* MOAIImage.cpp in Sources */,
 				031FA4CF138589C4007FD20C /* MOAICameraAnchor2D.cpp in Sources */,
 				031FA4D1138589C4007FD20C /* MOAICameraFitter2D.cpp in Sources */,
+				CDD1171C138B7C9300AAF115 /* MOAIStoreKitListener.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

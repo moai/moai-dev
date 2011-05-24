@@ -8,6 +8,7 @@
 #define AKU_IPHONE_H
 
 #import <Foundation/Foundation.h>
+#import <StoreKit/StoreKit.h>
 #import <UIKit/UIKit.h>
 
 void		AKUAppDidFailToRegisterForRemoteNotificationsWithError	( NSError* error );
