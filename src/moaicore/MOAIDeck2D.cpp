@@ -22,7 +22,6 @@
 void MOAIDeck2D::Draw ( const USAffine2D& transform, u32 idx, MOAIDeckRemapper* remapper ) {
 	
 	idx = remapper ? remapper->Remap ( idx ) : idx;
-	
 	if ( !idx || ( idx & USTile::HIDDEN )) return;
 	
 	USDrawBuffer& drawbuffer = USDrawBuffer::Get ();
