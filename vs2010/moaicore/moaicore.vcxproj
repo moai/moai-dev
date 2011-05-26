@@ -232,6 +232,8 @@
     <ClCompile Include="..\..\src\moaicore\MOAIBox2DFixture.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIBox2DJoint.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIBox2DWorld.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAICameraAnchor2D.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAICameraFitter2D.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAICpArbiter.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAICpDebugDraw.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIDataBuffer.cpp" />
@@ -326,6 +328,8 @@
     <ClInclude Include="..\..\src\moaicore\MOAIBox2DFixture.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIBox2DJoint.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIBox2DWorld.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAICameraAnchor2D.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAICameraFitter2D.h" />
     <ClInclude Include="..\..\src\moaicore\MOAICpArbiter.h" />
     <ClInclude Include="..\..\src\moaicore\MOAICpDebugDraw.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIDataBuffer.h" />
