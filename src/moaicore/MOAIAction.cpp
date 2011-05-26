@@ -343,13 +343,29 @@ void MOAIAction::Update ( float step, u32 pass, bool checkPass ) {
 	this->mNew = false;
 	
 	ChildIt childIt = this->mChildren.Head ();
+	
+	if ( childIt ) {
+		childIt->Data ()->Retain ();
+	}
+	
+	MOAIAction* child = 0;
 	while ( childIt ) {
 		
-		MOAIAction* child = childIt->Data ();
-		childIt = childIt->Next ();
+		if ( child ) {
+			child->Release ();
+		}
 		
-		child->Retain ();
+		child = childIt->Data ();
+		
+		childIt = childIt->Next ();
+		if ( childIt ) {
+			childIt->Data ()->Retain ();
+		}
+		
 		child->Update ( step, pass, checkPass );
+	}
+	
+	if ( child ) {
 		child->Release ();
 	}
 	
