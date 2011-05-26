@@ -113,6 +113,7 @@ int MOAIProp2D::_setFrame ( lua_State* L ) {
 	float y1	= state.GetValue < float >( 5, 0.0f );
 	
 	self->mFrame.Init ( x0, y0, x1, y1 );
+	self->ScheduleUpdate ();
 	
 	return 0;
 }
@@ -135,6 +136,7 @@ int MOAIProp2D::_setFrameSource ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIProp2D, "UN" )
 
 	self->mFrameSource = state.GetValue < u32 >( 2, self->mFrameSource );
+	self->ScheduleUpdate ();
 
 	return 0;
 }

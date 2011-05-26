@@ -2,6 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <moaicore/MOAIDeckRemapper.h>
 #include <moaicore/MOAIGrid.h>
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIProp.h>
@@ -123,7 +124,7 @@ bool MOAITileDeck2D::Bind () {
 //----------------------------------------------------------------//
 void MOAITileDeck2D::DrawPatch ( u32 idx, float xOff, float yOff, float xScale, float yScale ) {
 	
-	idx = idx - 1;		
+	idx = idx - 1;
 	
 	USCellCoord coord = this->GetCellCoord ( idx );
 	USRect uvRect = this->GetTileRect ( coord );
@@ -138,6 +139,7 @@ void MOAITileDeck2D::DrawPatch ( u32 idx, float xOff, float yOff, float xScale, 
 //----------------------------------------------------------------//
 USRect MOAITileDeck2D::GetBounds ( u32 idx, MOAIDeckRemapper* remapper ) {
 	UNUSED ( idx );
+	UNUSED ( remapper );
 
 	return this->mRect;
 }
