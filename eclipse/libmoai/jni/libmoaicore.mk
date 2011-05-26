@@ -72,6 +72,7 @@ $(SRC_PATH)/src/moaicore/MOAIDataBuffer.cpp \
 $(SRC_PATH)/src/moaicore/MOAIDataIOAction.cpp \
 $(SRC_PATH)/src/moaicore/MOAIDeck.cpp \
 $(SRC_PATH)/src/moaicore/MOAIDeck2D.cpp \
+$(SRC_PATH)/src/moaicore/MOAIDeckRemapper.cpp \
 $(SRC_PATH)/src/moaicore/MOAIDebugLines.cpp \
 $(SRC_PATH)/src/moaicore/MOAIEaseDriver.cpp \
 $(SRC_PATH)/src/moaicore/MOAIEaseType.cpp \
