@@ -2,6 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <moaicore/MOAIDeckRemapper.h>
 #include <moaicore/MOAIGfxQuadDeck2D.h>
 #include <moaicore/MOAIGrid.h>
 #include <moaicore/MOAILogMessages.h>
@@ -224,11 +225,12 @@ void MOAIGfxQuadDeck2D::DrawPatch ( u32 idx, float xOff, float yOff, float xScal
 }
 
 //----------------------------------------------------------------//
-USRect MOAIGfxQuadDeck2D::GetBounds ( u32 idx ) {
+USRect MOAIGfxQuadDeck2D::GetBounds ( u32 idx, MOAIDeckRemapper* remapper ) {
 	
 	u32 size = this->mQuads.Size ();
 	if ( size ) {
 
+		idx = remapper ? remapper->Remap ( idx ) : idx;
 		idx = ( idx - 1 ) % size;
 	
 		USGLQuad& quad = this->mQuads [ idx ];

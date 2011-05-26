@@ -88,6 +88,44 @@ private:
 protected:
 
 	//----------------------------------------------------------------//
+	template < typename TYPE >
+	void SetDependentMember ( USRef < TYPE >& member, TYPE* ref ) {
+		
+		if ( member == ref ) return;
+	
+		if ( member ) {
+			this->ClearDependency ( *member );
+		}
+		
+		member = ref;
+		
+		if ( ref ) {
+			this->SetDependency ( *ref );
+		}
+		
+		this->ScheduleUpdate ();
+	}
+
+	//----------------------------------------------------------------//
+	template < typename TYPE >
+	void SetDependentMember ( USWeak < TYPE >& member, TYPE* ref ) {
+		
+		if ( member == ref ) return;
+	
+		if ( member ) {
+			this->ClearDependency ( *member );
+		}
+		
+		member = ref;
+		
+		if ( ref ) {
+			this->SetDependency ( *ref );
+		}
+		
+		this->ScheduleUpdate ();
+	}
+
+	//----------------------------------------------------------------//
 	virtual void	OnDepNodeUpdate		();
 
 public:

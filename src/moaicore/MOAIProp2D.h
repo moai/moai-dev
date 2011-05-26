@@ -7,6 +7,7 @@
 #include <moaicore/MOAIProp.h>
 
 class MOAIDeck;
+class MOAIDeckRemapper;
 class MOAIGrid;
 class MOAILayoutFrame;
 class MOAIOverlapPrim2D;
@@ -41,18 +42,19 @@ protected:
 		REPEAT_Y	= 0x00000002,
 	};
 	
-	USRef < MOAIDeck >		mDeck;
-	u32						mIndex;
+	USRef < MOAIDeck >			mDeck;
+	USRef < MOAIDeckRemapper >	mRemapper;
+	u32							mIndex;
 	
-	USRef < MOAIGrid >		mGrid;
-	u32						mRepeat;
-	USVec2D					mGridScale;
+	USRef < MOAIGrid >			mGrid;
+	u32							mRepeat;
+	USVec2D						mGridScale;
 	
-	u32						mFrameSource;
-	USRect					mFrame;
+	u32							mFrameSource;
+	USRect						mFrame;
 	
 	USRef < MOAIShader >		mShader;
-	USRef < MOAITransform >		mUVTransform;
+	USRef < MOAITransformBase >	mUVTransform;
 	
 	//----------------------------------------------------------------//
 	static int		_getGrid			( lua_State* L );
@@ -64,6 +66,7 @@ protected:
 	static int		_setGrid			( lua_State* L );
 	static int		_setGridScale		( lua_State* L );
 	static int		_setIndex			( lua_State* L );
+	static int		_setRemapper		( lua_State* L );
 	static int		_setRepeat			( lua_State* L );
 	static int		_setShader			( lua_State* L );
 	static int		_setUVTransform		( lua_State* L );

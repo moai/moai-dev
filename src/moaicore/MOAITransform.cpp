@@ -709,19 +709,7 @@ void MOAITransform::SetLoc ( float x, float y ) {
 //----------------------------------------------------------------//
 void MOAITransform::SetParent ( MOAITransformBase* parent ) {
 
-	if ( this->mParent == parent ) return;
-	
-	if ( this->mParent ) {
-		this->ClearDependency ( *this->mParent );
-	}
-
-	this->mParent = parent;
-	
-	if ( parent ) {
-		this->SetDependency ( *parent );
-	}
-
-	this->ScheduleUpdate ();
+	this->SetDependentMember < MOAITransformBase >( this->mParent, parent );
 }
 
 //----------------------------------------------------------------//

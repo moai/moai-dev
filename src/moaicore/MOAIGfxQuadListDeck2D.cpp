@@ -2,6 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <moaicore/MOAIDeckRemapper.h>
 #include <moaicore/MOAIGrid.h>
 #include <moaicore/MOAIGfxQuadListDeck2D.h>
 #include <moaicore/MOAILogMessages.h>
@@ -355,7 +356,7 @@ void MOAIGfxQuadListDeck2D::DrawPatch ( u32 idx, float xOff, float yOff, float x
 }
 
 //----------------------------------------------------------------//
-USRect MOAIGfxQuadListDeck2D::GetBounds ( u32 idx ) {
+USRect MOAIGfxQuadListDeck2D::GetBounds ( u32 idx, MOAIDeckRemapper* remapper ) {
 
 	USRect rect;
 	rect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
@@ -363,6 +364,7 @@ USRect MOAIGfxQuadListDeck2D::GetBounds ( u32 idx ) {
 	u32 size = this->mSprites.Size ();
 	if ( size ) {
 
+		idx = remapper ? remapper->Remap ( idx ) : idx;
 		idx = ( idx - 1 ) % size;
 	
 		USSprite& sprite = this->mSprites [ idx ];

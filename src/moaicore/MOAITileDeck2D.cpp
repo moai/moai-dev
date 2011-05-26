@@ -136,7 +136,7 @@ void MOAITileDeck2D::DrawPatch ( u32 idx, float xOff, float yOff, float xScale, 
 }
 
 //----------------------------------------------------------------//
-USRect MOAITileDeck2D::GetBounds ( u32 idx ) {
+USRect MOAITileDeck2D::GetBounds ( u32 idx, MOAIDeckRemapper* remapper ) {
 	UNUSED ( idx );
 
 	return this->mRect;

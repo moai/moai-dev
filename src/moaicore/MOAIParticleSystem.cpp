@@ -347,7 +347,7 @@ void MOAIParticleSystem::Draw () {
 		drawingMtx = this->GetLocalToWorldMtx ();
 		drawingMtx.Append ( spriteMtx );
 		
-		this->mDeck->Draw ( drawingMtx, ( u32 )sprite.mGfxID );
+		this->mDeck->Draw ( drawingMtx, ( u32 )sprite.mGfxID, this->mRemapper );
 	}
 }
 

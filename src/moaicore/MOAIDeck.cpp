@@ -40,51 +40,57 @@ bool MOAIDeck::Bind () {
 }
 
 //----------------------------------------------------------------//
-bool MOAIDeck::Contains ( u32 idx, const USVec2D& vec ) {
+bool MOAIDeck::Contains ( u32 idx, MOAIDeckRemapper* remapper, const USVec2D& vec ) {
 	
-	USRect bounds = this->GetBounds ( idx );
+	USRect bounds = this->GetBounds ( idx, remapper );
 	return bounds.Contains ( vec );
 }
 
 //----------------------------------------------------------------//
-void MOAIDeck::Draw ( const USAffine2D& transform, u32 idx ) {
+void MOAIDeck::Draw ( const USAffine2D& transform, u32 idx, MOAIDeckRemapper* remapper ) {
 	UNUSED ( transform );
 	UNUSED ( idx );
+	UNUSED ( remapper );
 }
 
 //----------------------------------------------------------------//
-void MOAIDeck::Draw ( const USAffine2D& transform, MOAIGrid& grid, USVec2D& gridScale, USCellCoord& c0, USCellCoord& c1 ) {
+void MOAIDeck::Draw ( const USAffine2D& transform, MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, USCellCoord& c0, USCellCoord& c1 ) {
 	UNUSED ( transform );
 	UNUSED ( grid );
+	UNUSED ( remapper );
 	UNUSED ( gridScale );
 	UNUSED ( c0 );
 	UNUSED ( c1 );
 }
 
 //----------------------------------------------------------------//
-void MOAIDeck::DrawDebug ( const USAffine2D& transform, u32 idx ) {
+void MOAIDeck::DrawDebug ( const USAffine2D& transform, u32 idx, MOAIDeckRemapper* remapper ) {
 	UNUSED ( transform );
 	UNUSED ( idx );
+	UNUSED ( remapper );
 }
 
 //----------------------------------------------------------------//
-void MOAIDeck::DrawDebug ( const USAffine2D& transform, MOAIGrid& grid, USVec2D& gridScale, USCellCoord& c0, USCellCoord& c1 ) {
+void MOAIDeck::DrawDebug ( const USAffine2D& transform, MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, USCellCoord& c0, USCellCoord& c1 ) {
 	UNUSED ( transform );
 	UNUSED ( grid );
+	UNUSED ( remapper );
 	UNUSED ( gridScale );
 	UNUSED ( c0 );
 	UNUSED ( c1 );
 }
 
 //----------------------------------------------------------------//
-void MOAIDeck::GatherSurfaces ( u32 idx, MOAISurfaceSampler2D& sampler ) {
+void MOAIDeck::GatherSurfaces ( u32 idx, MOAIDeckRemapper* remapper, MOAISurfaceSampler2D& sampler ) {
 	UNUSED ( idx );
+	UNUSED ( remapper );
 	UNUSED ( sampler );
 }
 
 //----------------------------------------------------------------//
-void MOAIDeck::GatherSurfaces ( MOAIGrid& grid, USVec2D& gridScale, USCellCoord& c0, USCellCoord& c1, MOAISurfaceSampler2D& sampler ) {
+void MOAIDeck::GatherSurfaces ( MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, USCellCoord& c0, USCellCoord& c1, MOAISurfaceSampler2D& sampler ) {
 	UNUSED ( grid );
+	UNUSED ( remapper );
 	UNUSED ( gridScale );
 	UNUSED ( c0 );
 	UNUSED ( c1 );
@@ -92,8 +98,9 @@ void MOAIDeck::GatherSurfaces ( MOAIGrid& grid, USVec2D& gridScale, USCellCoord&
 }
 
 //----------------------------------------------------------------//
-USRect MOAIDeck::GetBounds ( u32 idx ) {
+USRect MOAIDeck::GetBounds ( u32 idx, MOAIDeckRemapper* remapper ) {
 	UNUSED ( idx );
+	UNUSED ( remapper );
 
 	USRect rect;
 	rect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
