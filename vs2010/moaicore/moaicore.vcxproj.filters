@@ -336,6 +336,9 @@
     <ClCompile Include="..\..\src\moaicore\MOAIEventSource.cpp">
       <Filter>src\events</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIDeckRemapper.cpp">
+      <Filter>src\deck</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\moaicore\MOAIAction.h">
@@ -610,6 +613,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIParticle.h">
       <Filter>src\particles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIDeckRemapper.h">
+      <Filter>src\deck</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
