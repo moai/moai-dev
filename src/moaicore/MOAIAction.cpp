@@ -286,8 +286,8 @@ void MOAIAction::RemoveChild ( MOAIAction& action ) {
 		
 		action.UnblockSelf ();
 		action.UnblockAll ();
-		action.OnStop ();
 		action.mParent = 0;
+		action.OnStop ();
 		action.Release ();
 	}
 }
