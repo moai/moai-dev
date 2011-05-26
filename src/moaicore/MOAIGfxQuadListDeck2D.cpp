@@ -307,11 +307,12 @@ bool MOAIGfxQuadListDeck2D::Bind () {
 }
 
 //----------------------------------------------------------------//
-bool MOAIGfxQuadListDeck2D::Contains ( u32 idx, const USVec2D& vec ) {
+bool MOAIGfxQuadListDeck2D::Contains ( u32 idx, MOAIDeckRemapper* remapper, const USVec2D& vec ) {
 	
 	u32 size = this->mSprites.Size ();
 	if ( size ) {
 		
+		idx = remapper ? remapper->Remap ( idx ) : idx;
 		idx = ( idx - 1 ) % size;
 		USSprite& brush = this->mSprites [ idx ];
 		
