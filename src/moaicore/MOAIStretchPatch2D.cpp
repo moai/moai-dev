@@ -2,6 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <moaicore/MOAIDeckRemapper.h>
 #include <moaicore/MOAIGrid.h>
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIProp.h>
@@ -196,7 +197,7 @@ bool MOAIStretchPatch2D::Bind () {
 }
 
 //----------------------------------------------------------------//
-void MOAIStretchPatch2D::Draw ( const USAffine2D& transform, u32 idx ) {
+void MOAIStretchPatch2D::Draw ( const USAffine2D& transform, u32 idx, MOAIDeckRemapper* remapper ) {
 	
 	USVec2D stretch = transform.GetStretch ();
 	
@@ -208,20 +209,23 @@ void MOAIStretchPatch2D::Draw ( const USAffine2D& transform, u32 idx ) {
 	drawBuffer.SetVtxTransform ( noStretch );
 	
 	this->UpdateParams ();
-	this->Draw ( idx, stretch.mX, stretch.mY );
+	this->Draw ( idx, remapper, stretch.mX, stretch.mY );
 }
 
 //----------------------------------------------------------------//
-void MOAIStretchPatch2D::Draw ( u32 idx, float xStretch, float yStretch ) {
+void MOAIStretchPatch2D::Draw ( u32 idx, MOAIDeckRemapper* remapper, float xStretch, float yStretch ) {
 
 	USRect uvRect;
-
 	u32 totalUVRects = this->mUVRects.Size ();
+
+	idx = remapper ? remapper->Remap ( idx ) : idx;
+	idx = ( idx - 1 ) % totalUVRects;
+
 	if ( totalUVRects == 0 ) {
 		uvRect.Init ( 0.0f, 1.0f, 1.0f, 0.0f );
 	}
 	else {
-		uvRect = this->mUVRects [ idx % totalUVRects ];
+		uvRect = this->mUVRects [ idx ];
 	}
 
 	float nativeWidth = this->mRect.Width ();
@@ -314,9 +318,10 @@ void MOAIStretchPatch2D::Draw ( u32 idx, float xStretch, float yStretch ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIStretchPatch2D::Draw ( const USAffine2D& transform, MOAIGrid& grid, USVec2D& gridScale, USCellCoord& c0, USCellCoord& c1 ) {
+void MOAIStretchPatch2D::Draw ( const USAffine2D& transform, MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, USCellCoord& c0, USCellCoord& c1 ) {
 	UNUSED ( transform );
 	UNUSED ( grid );
+	UNUSED ( remapper );
 	UNUSED ( gridScale );
 	UNUSED ( c0 );
 	UNUSED ( c1 );
@@ -325,8 +330,9 @@ void MOAIStretchPatch2D::Draw ( const USAffine2D& transform, MOAIGrid& grid, USV
 }
 
 //----------------------------------------------------------------//
-USRect MOAIStretchPatch2D::GetBounds ( u32 idx ) {
+USRect MOAIStretchPatch2D::GetBounds ( u32 idx, MOAIDeckRemapper* remapper ) {
 	UNUSED ( idx );
+	UNUSED ( remapper );
 	
 	return this->mRect;
 }

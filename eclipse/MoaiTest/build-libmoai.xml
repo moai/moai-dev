@@ -9,7 +9,7 @@
 		<echo level="info" message="Builing libmoai..."/>
 		
 		<exec executable="bash" dir="../libmoai">
-			<arg line="build.sh"/>
+			<arg line="build-osx.sh"/>
 		</exec>
 	</target>
 

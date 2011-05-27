@@ -1044,6 +1044,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\moaicore\MOAIDeckRemapper.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIDeckRemapper.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\moaicore\MOAIGfxQuad2D.cpp"
 				>
 			</File>

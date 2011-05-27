@@ -59,7 +59,7 @@ private:
 	static int			_setUVRect				( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void				Draw					( u32 idx, float xStretch, float yStretch );
+	void				Draw					( u32 idx, MOAIDeckRemapper* remapper, float xStretch, float yStretch );
 	void				UpdateParams			();
 
 public:
@@ -68,9 +68,9 @@ public:
 	
 	//----------------------------------------------------------------//
 	bool				Bind					();
-	void				Draw					( const USAffine2D& transform, u32 idx );
-	void				Draw					( const USAffine2D& transform, MOAIGrid& grid, USVec2D& gridScale, USCellCoord& c0, USCellCoord& c1 );
-	USRect				GetBounds				( u32 idx );
+	void				Draw					( const USAffine2D& transform, u32 idx, MOAIDeckRemapper* remapper );
+	void				Draw					( const USAffine2D& transform, MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, USCellCoord& c0, USCellCoord& c1 );
+	USRect				GetBounds				( u32 idx, MOAIDeckRemapper* remapper );
 						MOAIStretchPatch2D		();
 						~MOAIStretchPatch2D		();
 	void				SerializeIn				( USLuaState& state, USLuaSerializer& serializer );

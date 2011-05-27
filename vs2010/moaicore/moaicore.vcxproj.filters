@@ -70,6 +70,9 @@
     <Filter Include="src\events">
       <UniqueIdentifier>{4b84cfcb-3dbc-4f5f-8e2d-2594796255ac}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\camera">
+      <UniqueIdentifier>{9acdb11e-3d7c-4894-b6a0-f0328e270421}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\moaicore\MOAIAction.cpp">
@@ -335,6 +338,15 @@
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAIEventSource.cpp">
       <Filter>src\events</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIDeckRemapper.cpp">
+      <Filter>src\deck</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAICameraAnchor2D.cpp">
+      <Filter>src\camera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAICameraFitter2D.cpp">
+      <Filter>src\camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -610,6 +622,15 @@
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIParticle.h">
       <Filter>src\particles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIDeckRemapper.h">
+      <Filter>src\deck</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAICameraAnchor2D.h">
+      <Filter>src\camera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAICameraFitter2D.h">
+      <Filter>src\camera</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -83,9 +83,9 @@ public:
 	
 	//----------------------------------------------------------------//
 	bool			Bind					();
-	bool			Contains				( u32 idx, const USVec2D& vec );
+	bool			Contains				( u32 idx, MOAIDeckRemapper* remapper, const USVec2D& vec );
 	void			DrawPatch				( u32 idx, float xOff, float yOff, float xScale, float yScale );
-	USRect			GetBounds				( u32 idx );
+	USRect			GetBounds				( u32 idx, MOAIDeckRemapper* remapper );
 					MOAIGfxQuadListDeck2D	();
 					~MOAIGfxQuadListDeck2D	();
 	void			RegisterLuaClass		( USLuaState& state );

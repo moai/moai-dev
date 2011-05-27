@@ -428,7 +428,7 @@ void MOAIPartition::RegisterLuaFuncs ( USLuaState& state ) {
 		{ "propForPoint",				_propForPoint },
 		{ "propListForPoint",			_propListForPoint },
 		{ "propListForRect",			_propListForRect },
-		{ "removePrio",					_removeProp },
+		{ "removeProp",					_removeProp },
 		{ "reserveLayers",				_reserveLayers },
 		{ "setLayer",					_setLayer },
 		{ "sortedPropListForPoint",		_sortedPropListForPoint },

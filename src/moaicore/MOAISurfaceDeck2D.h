@@ -46,13 +46,13 @@ public:
 	DECL_LUA_FACTORY ( MOAISurfaceDeck2D )
 	
 	//----------------------------------------------------------------//
-	void					DrawDebug				( const USAffine2D& transform, u32 idx );
-	void					DrawDebug				( const USAffine2D& transform, MOAIGrid& grid, USVec2D& gridScale, USCellCoord& c0, USCellCoord& c1 );
-	void					GatherSurfaces			( u32 idx, MOAISurfaceSampler2D& sampler );
-	void					GatherSurfaces			( MOAIGrid& grid, USVec2D& gridScale, USCellCoord& c0, USCellCoord& c1, MOAISurfaceSampler2D& sampler );
-	USRect					GetBounds				( u32 idx );
-							MOAISurfaceDeck2D	();
-							~MOAISurfaceDeck2D	();
+	void					DrawDebug				( const USAffine2D& transform, u32 idx, MOAIDeckRemapper* remapper );
+	void					DrawDebug				( const USAffine2D& transform, MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, USCellCoord& c0, USCellCoord& c1 );
+	void					GatherSurfaces			( u32 idx, MOAIDeckRemapper* remapper, MOAISurfaceSampler2D& sampler );
+	void					GatherSurfaces			( MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, USCellCoord& c0, USCellCoord& c1, MOAISurfaceSampler2D& sampler );
+	USRect					GetBounds				( u32 idx, MOAIDeckRemapper* remapper );
+							MOAISurfaceDeck2D		();
+							~MOAISurfaceDeck2D		();
 	void					RegisterLuaClass		( USLuaState& state );
 	void					RegisterLuaFuncs		( USLuaState& state );
 	STLString				ToString				();
