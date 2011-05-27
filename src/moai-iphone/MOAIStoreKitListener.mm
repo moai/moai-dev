@@ -52,5 +52,18 @@
 		
 		MOAIApp::Get ().ProductsRequestDidReceiveResponse ( request, response );
 	}
+	
+	
+	//================================================================//
+	#pragma mark -
+	#pragma mark Protocol SKRequestDelegate
+	//================================================================//
+	
+	//----------------------------------------------------------------//
+	-( void ) request:( SKRequest* )request didFailWithError:( NSError* )error {
+		
+		NSLog ( @"%@\n", [ error localizedDescription ]);
+		[ request release ];
+	}
 
 @end

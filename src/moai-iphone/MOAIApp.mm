@@ -413,6 +413,9 @@ void MOAIApp::RegisterLuaClass ( USLuaState& state ) {
 	state.SetField ( -1, "DID_REGISTER",		( u32 )DID_REGISTER );
 	//state.SetField ( -1, "LOCAL_NOTIFICATION",	( u32 )LOCAL_NOTIFICATION );
 	state.SetField ( -1, "REMOTE_NOTIFICATION",	( u32 )REMOTE_NOTIFICATION );
+	
+	state.SetField ( -1, "PAYMENT_QUEUE_TRANSACTION",	( u32 )PAYMENT_QUEUE_TRANSACTION );
+	state.SetField ( -1, "PRODUCT_REQUEST_RESPONSE",	( u32 )PRODUCT_REQUEST_RESPONSE );
 
 	luaL_Reg regTable[] = {
 		{ "canMakePayments",					_canMakePayments },

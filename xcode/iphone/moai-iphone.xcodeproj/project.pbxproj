@@ -18,13 +18,14 @@
 		03BBC94E138052220084FBE1 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 03BBC94D138052220084FBE1 /* libiconv.dylib */; };
 		03BBC9521380523D0084FBE1 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03BBC9511380523D0084FBE1 /* CoreLocation.framework */; };
 		03BBC9561380525D0084FBE1 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03BBC9551380525D0084FBE1 /* QuartzCore.framework */; };
-		03BBCA3F138069A30084FBE1 /* cathead.png in Resources */ = {isa = PBXBuildFile; fileRef = 03BBCA3D138069A30084FBE1 /* cathead.png */; };
 		03BBCABE13806DD10084FBE1 /* libmoai-iphone.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03BBCA4D138069D60084FBE1 /* libmoai-iphone.a */; };
-		03BBCAFB1380700B0084FBE1 /* main.lua in Resources */ = {isa = PBXBuildFile; fileRef = 03BBCAC513806E3D0084FBE1 /* main.lua */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		2892E4100DC94CBA00A64D0F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2892E40F0DC94CBA00A64D0F /* CoreGraphics.framework */; };
 		28AD73600D9D9599002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD735F0D9D9599002E5188 /* MainWindow.xib */; };
+		CDC1BEAA138C8041009BF6F0 /* cathead.png in Resources */ = {isa = PBXBuildFile; fileRef = CDC1BEA7138C8041009BF6F0 /* cathead.png */; };
+		CDC1BEAC138C8041009BF6F0 /* main.lua in Resources */ = {isa = PBXBuildFile; fileRef = CDC1BEA9138C8041009BF6F0 /* main.lua */; };
+		CDC1BEAE138C8375009BF6F0 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDC1BEAD138C8375009BF6F0 /* StoreKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,14 +86,15 @@
 		03BBC94D138052220084FBE1 /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
 		03BBC9511380523D0084FBE1 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		03BBC9551380525D0084FBE1 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		03BBCA3D138069A30084FBE1 /* cathead.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cathead.png; path = "../../samples/basics/anim-basic/cathead.png"; sourceTree = SOURCE_ROOT; };
-		03BBCAC513806E3D0084FBE1 /* main.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = main.lua; path = "../../samples/basics/anim-basic/main.lua"; sourceTree = SOURCE_ROOT; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D6058910D05DD3D006BFB54 /* MoaiSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MoaiSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		2892E40F0DC94CBA00A64D0F /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		28AD735F0D9D9599002E5188 /* MainWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
+		CDC1BEA7138C8041009BF6F0 /* cathead.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cathead.png; path = "../../samples/iphone/app-storekit/cathead.png"; sourceTree = "<group>"; };
+		CDC1BEA9138C8041009BF6F0 /* main.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = main.lua; path = "../../samples/iphone/app-storekit/main.lua"; sourceTree = "<group>"; };
+		CDC1BEAD138C8375009BF6F0 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +102,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CDC1BEAE138C8375009BF6F0 /* StoreKit.framework in Frameworks */,
 				03BBCABE13806DD10084FBE1 /* libmoai-iphone.a in Frameworks */,
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
@@ -118,8 +121,8 @@
 		03BBCA3C138069510084FBE1 /* lua */ = {
 			isa = PBXGroup;
 			children = (
-				03BBCA3D138069A30084FBE1 /* cathead.png */,
-				03BBCAC513806E3D0084FBE1 /* main.lua */,
+				CDC1BEA7138C8041009BF6F0 /* cathead.png */,
+				CDC1BEA9138C8041009BF6F0 /* main.lua */,
 			);
 			name = lua;
 			sourceTree = "<group>";
@@ -204,6 +207,7 @@
 				03BBC9491380520D0084FBE1 /* libz.1.2.3.dylib */,
 				03BBC94D138052220084FBE1 /* libiconv.dylib */,
 				03BBC9511380523D0084FBE1 /* CoreLocation.framework */,
+				CDC1BEAD138C8375009BF6F0 /* StoreKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -298,8 +302,8 @@
 			files = (
 				28AD73600D9D9599002E5188 /* MainWindow.xib in Resources */,
 				03BBC80F13804B660084FBE1 /* Icon.png in Resources */,
-				03BBCA3F138069A30084FBE1 /* cathead.png in Resources */,
-				03BBCAFB1380700B0084FBE1 /* main.lua in Resources */,
+				CDC1BEAA138C8041009BF6F0 /* cathead.png in Resources */,
+				CDC1BEAC138C8041009BF6F0 /* main.lua in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
