@@ -17,8 +17,17 @@ function onProductRequestResponse ( products )
 	
 	for k, v in pairs ( products ) do
 	
-		print ( k )
-		print ( v )
+		print ( 'product:' )
+		
+		print ( v.localizedTitle )
+		print ( v.localizedDescription )
+		print ( v.price )
+		print ( v.priceLocale )
+		print ( v.productIdentifier )
+		
+		print ( '\n' )
+		
+		MOAIApp.requestPaymentForProduct ( v.productIdentifier )
 	end
 end
 
@@ -29,9 +38,10 @@ if MOAIApp.canMakePayments () then
 	MOAIApp.setListener ( MOAIApp.PAYMENT_QUEUE_TRANSACTION, onPaymentQueueTransaction )
 	MOAIApp.setListener ( MOAIApp.PRODUCT_REQUEST_RESPONSE, onProductRequestResponse )
 
-	MOAIApp.requestProductIdentifiers ( 'test_consumable_01' )
-	
-	--MOAIApp.requestPaymentForProduct ()
+	products = {}
+	table.insert ( products, 'test_consumable_01' )
+
+	MOAIApp.requestProductIdentifiers ( products )
 end
 
 
