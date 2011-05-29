@@ -24,7 +24,11 @@ protected:
 	u32				mHeight;
 
 	// GL_LINEAR
+	// GL_LINEAR_MIPMAP_LINEAR
+	// GL_LINEAR_MIPMAP_NEAREST
 	// GL_NEAREST
+	// GL_NEAREST_MIPMAP_LINEAR
+	// GL_NEAREST_MIPMAP_NEAREST
 	int				mMinFilter;
 	int				mMagFilter;
 	

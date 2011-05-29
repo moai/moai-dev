@@ -151,6 +151,15 @@ void USTexture::CreateTexture ( USImage& image ) {
 	USPixel::Format pixelFormat = image.GetPixelFormat ();
 	USColor::Format colorFormat = image.GetColorFormat ();
 
+	// generate mipmaps if set up to use them
+	if (	( this->mMinFilter == GL_LINEAR_MIPMAP_LINEAR ) ||
+			( this->mMinFilter == GL_LINEAR_MIPMAP_NEAREST ) ||
+			( this->mMinFilter == GL_NEAREST_MIPMAP_LINEAR ) ||
+			( this->mMinFilter == GL_NEAREST_MIPMAP_NEAREST )) {
+		
+		glTexParameteri ( GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE );
+	}
+
 	if ( pixelFormat == USPixel::TRUECOLOR ) {
 
 		// GL_ALPHA
@@ -375,9 +384,9 @@ USTexture::USTexture () :
 	mGLTexID ( 0 ),
 	mWidth ( 0 ),
 	mHeight ( 0 ),
-	mMinFilter ( GL_NEAREST ),
+	mMinFilter ( GL_LINEAR ),
 	mMagFilter ( GL_NEAREST ),
-	mWrap ( GL_CLAMP_TO_EDGE ),
+	mWrap ( GL_CLAMP ),
 	mLoader ( 0 ) {
 }
 

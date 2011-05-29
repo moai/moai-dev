@@ -184,16 +184,12 @@ bool MOAITexture::Bind () {
 void MOAITexture::Load ( MOAIImage& image ) {
 
 	this->Init ( image );
-	this->SetFilter ( GL_LINEAR, GL_NEAREST );
-	this->SetWrap ( GL_REPEAT );
 }
 
 //----------------------------------------------------------------//
 void MOAITexture::Load ( MOAIDataBuffer& data, u32 transform ) {
 
 	this->Init ( data, transform );
-	this->SetFilter ( GL_LINEAR, GL_NEAREST );
-	this->SetWrap ( GL_REPEAT );
 }
 
 //----------------------------------------------------------------//
@@ -203,8 +199,6 @@ void MOAITexture::Load ( cc8* filename, u32 transform ) {
 
 	if ( !USFileSys::CheckFileExists ( this->mTexturePath )) return;
 	this->Init ( this->mTexturePath, transform );
-	this->SetFilter ( GL_LINEAR, GL_NEAREST );
-	this->SetWrap ( GL_REPEAT );
 }
 
 //----------------------------------------------------------------//
@@ -220,8 +214,13 @@ MOAITexture::~MOAITexture () {
 //----------------------------------------------------------------//
 void MOAITexture::RegisterLuaClass ( USLuaState& state ) {
 	
-	state.SetField ( -1, "FILTER_POINT", ( u32 )GL_NEAREST );
-	state.SetField ( -1, "FILTER_BILERP", ( u32 )GL_LINEAR );
+	state.SetField ( -1, "GL_LINEAR", ( u32 )GL_LINEAR );
+	state.SetField ( -1, "GL_LINEAR_MIPMAP_LINEAR", ( u32 )GL_LINEAR_MIPMAP_LINEAR );
+	state.SetField ( -1, "GL_LINEAR_MIPMAP_NEAREST", ( u32 )GL_LINEAR_MIPMAP_NEAREST );
+	
+	state.SetField ( -1, "GL_NEAREST", ( u32 )GL_NEAREST );
+	state.SetField ( -1, "GL_NEAREST_MIPMAP_LINEAR", ( u32 )GL_NEAREST_MIPMAP_LINEAR );
+	state.SetField ( -1, "GL_NEAREST_MIPMAP_NEAREST", ( u32 )GL_NEAREST_MIPMAP_NEAREST );
 }
 
 //----------------------------------------------------------------//
