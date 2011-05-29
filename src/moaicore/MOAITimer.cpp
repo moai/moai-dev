@@ -352,11 +352,11 @@ void MOAITimer::OnDepNodeUpdate () {
 void MOAITimer::OnKeyframe ( u32 idx, float time, float value ) {
 
 	USLuaStateHandle state = USLuaRuntime::Get ().State ();
-	if ( this->PushListener ( EVENT_TIMER_KEYFRAME, state )) {
+	if ( this->PushListenerAndSelf ( EVENT_TIMER_KEYFRAME, state )) {
 		state.Push ( idx + 1 );
 		state.Push ( time );
 		state.Push ( value );
-		state.DebugCall ( 3, 0 );
+		state.DebugCall ( 4, 0 );
 	}
 }
 
@@ -366,9 +366,9 @@ void MOAITimer::OnLoop () {
 	this->mTimesExecuted++;
 	
 	USLuaStateHandle state = USLuaRuntime::Get ().State ();
-	if ( this->PushListener ( EVENT_TIMER_LOOP, state )) {
+	if ( this->PushListenerAndSelf ( EVENT_TIMER_LOOP, state )) {
 		state.Push ( this->mTimesExecuted );
-		state.DebugCall ( 1, 0 );
+		state.DebugCall ( 2, 0 );
 	}
 }
 

@@ -42,14 +42,20 @@ local function printf ( ... )
 	return io.stdout:write ( string.format ( ... ))
 end 
 
-function onLoop ( i )
-	printf ( "LOOP %d\n", i )
-end
-
-function onKeyframe ( i, t, v )
+function onKeyframe ( self, i, t, v )
 	printf ( "keyframe %d: %f, %f\n", i, t, v )
 end
 
+function onLoop ( self, i )
+	printf ( "LOOP %d\n", i )
+end
+
+function onStop ( self )
+	printf ( "STOP\n" )
+end
+
 anim:setCurve ( curve )
-anim:setListener ( MOAITimer.EVENT_TIMER_LOOP, onLoop )
 anim:setListener ( MOAITimer.EVENT_TIMER_KEYFRAME, onKeyframe )
+anim:setListener ( MOAITimer.EVENT_TIMER_LOOP, onLoop )
+anim:setListener ( MOAIAction.EVENT_STOP, onStop )
+

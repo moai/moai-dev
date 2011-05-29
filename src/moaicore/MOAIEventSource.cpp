@@ -60,7 +60,7 @@ MOAIEventSource::~MOAIEventSource () {
 }
 
 //----------------------------------------------------------------//
-bool MOAIEventSource::PushListener ( u32 eventID, USLuaState& state ) {
+bool MOAIEventSource::PushListenerAndSelf ( u32 eventID, USLuaState& state ) {
 
 	if ( this->mListenerTable ) {
 	
@@ -68,6 +68,7 @@ bool MOAIEventSource::PushListener ( u32 eventID, USLuaState& state ) {
 		if ( state.GetFieldWithType ( -1, eventID, LUA_TFUNCTION )) {
 			
 			lua_replace ( state, -2 );
+			this->PushLuaUserdata ( state );
 			return true;
 		}
 		state.Pop ( 1 );

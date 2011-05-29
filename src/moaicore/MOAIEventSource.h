@@ -28,7 +28,7 @@ public:
 	void				AffirmListenerTable		( USLuaState& state );
 						MOAIEventSource			();
 	virtual				~MOAIEventSource		();
-	bool				PushListener			( u32 eventID, USLuaState& state );
+	bool				PushListenerAndSelf		( u32 eventID, USLuaState& state );
 	void				RegisterLuaClass		( USLuaState& state );
 	void				RegisterLuaFuncs		( USLuaState& state );
 };

@@ -231,8 +231,8 @@ void MOAIAction::OnStart () {
 void MOAIAction::OnStop () {
 
 	USLuaStateHandle state = USLuaRuntime::Get ().State ();
-	if ( this->PushListener ( EVENT_STOP, state )) {
-		state.DebugCall ( 0, 0 );
+	if ( this->PushListenerAndSelf ( EVENT_STOP, state )) {
+		state.DebugCall ( 1, 0 );
 	}
 }
 
