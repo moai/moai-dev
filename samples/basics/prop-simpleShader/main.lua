@@ -19,6 +19,7 @@ gfxQuad:setTexture ( "cathead.png" )
 gfxQuad:setRect ( -64, -64, 64, 64 )
 
 shader = MOAISimpleShader.new ()
+shader:setBlendMode ( MOAISimpleShader.GL_ONE, MOAISimpleShader.GL_ONE_MINUS_SRC_ALPHA )
 shader:setColor ( 0, 0, 0, 0 )
 shader:seekColor ( 1, 0, 0, 1, 1.5 )
 

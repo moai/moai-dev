@@ -15,6 +15,18 @@
 	@const	BLEND_NORMAL
 	@const	BLEND_ADD
 	@const	BLEND_MULTIPLY
+	
+	@const	GL_ONE
+	@const	GL_ZERO
+	@const	GL_DST_ALPHA
+	@const	GL_DST_COLOR
+	@const	GL_SRC_COLOR
+	@const	GL_ONE_MINUS_DST_ALPHA
+	@const	GL_ONE_MINUS_DST_COLOR
+	@const	GL_ONE_MINUS_SRC_ALPHA
+	@const	GL_ONE_MINUS_SRC_COLOR
+	@const	GL_SRC_ALPHA
+	@const	GL_SRC_ALPHA_SATURATE
 */
 class MOAISimpleShader :
 	public virtual MOAIColor {

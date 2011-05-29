@@ -14,17 +14,47 @@
 /** @name	setBlendMode
 	@text	Set the fixed function blend mode.
 
-	@in		MOAISimpleShader self
-	@in		number mode				One of MOAISimpleShader.BLEND_NORMAL, MOAISimpleShader.BLEND_ADD, MOAISimpleShader.BLEND_MULTIPLY.
-	@out	nil
+	@overload	Reset the blend mode to MOAISimpleShader.BLEND_NORMAL (equivalent to src = GL_ONE, dst = GL_ONE_MINUS_SRC_ALPHA)
+
+		@in		MOAISimpleShader self
+		@out	nil
+
+	@overload	Set blend mode using one of the Moai presets.
+
+		@in		MOAISimpleShader self
+		@in		number mode					One of MOAISimpleShader.BLEND_NORMAL, MOAISimpleShader.BLEND_ADD, MOAISimpleShader.BLEND_MULTIPLY.
+		@out	nil
+	
+	@overload	Set blend mode using OpenGL source and dest factors. OpenGl blend factor constants are exposed as members of MOAISimpleShader.
+				See the OpenGL documentation for an explanation of blending constants.
+
+		@in		MOAISimpleShader self
+		@in		number srcFactor
+		@in		number dstFactor
+		@out	nil
 */
 int MOAISimpleShader::_setBlendMode ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAISimpleShader, "UN" )
+	MOAI_LUA_SETUP ( MOAISimpleShader, "U" )
 
-	u32 blendMode = state.GetValue < u32 >( 2, USBlendMode::BLEND_NORMAL );
-	self->mBlendMode.SetBlend ( blendMode );
+	if ( state.IsType ( 2, LUA_TNUMBER )) {
+		if ( state.IsType ( 3, LUA_TNUMBER )) {
+		
+			u32 srcFactor = state.GetValue < u32 >( 2, 0 );
+			u32 dstFactor = state.GetValue < u32 >( 3, 0 );
+			self->mBlendMode.SetBlend ( srcFactor, dstFactor );
+		}
+		else {
+			
+			u32 blendMode = state.GetValue < u32 >( 2, USBlendMode::BLEND_NORMAL );
+			self->mBlendMode.SetBlend ( blendMode );
+		}
+	}
+	else {
+		self->mBlendMode.SetBlend ( USBlendMode::BLEND_NORMAL );
+	}
+	
 	self->ScheduleUpdate ();
-
+	
 	return 0;
 }
 
@@ -102,9 +132,21 @@ void MOAISimpleShader::RegisterLuaClass ( USLuaState& state ) {
 	
 	MOAIColor::RegisterLuaClass ( state );
 	
-	state.SetField ( -1, "BLEND_NORMAL", ( u32 )USBlendMode::BLEND_NORMAL );
 	state.SetField ( -1, "BLEND_ADD", ( u32 )USBlendMode::BLEND_ADD );
 	state.SetField ( -1, "BLEND_MULTIPLY", ( u32 )USBlendMode::BLEND_MULTIPLY );
+	state.SetField ( -1, "BLEND_NORMAL", ( u32 )USBlendMode::BLEND_NORMAL );
+	
+	state.SetField ( -1, "GL_ONE", ( u32 )GL_ONE );
+	state.SetField ( -1, "GL_ZERO", ( u32 )GL_ZERO );
+	state.SetField ( -1, "GL_DST_ALPHA", ( u32 )GL_DST_ALPHA );
+	state.SetField ( -1, "GL_DST_COLOR", ( u32 )GL_DST_COLOR );
+	state.SetField ( -1, "GL_SRC_COLOR", ( u32 )GL_SRC_COLOR );
+	state.SetField ( -1, "GL_ONE_MINUS_DST_ALPHA", ( u32 )GL_ONE_MINUS_DST_ALPHA );
+	state.SetField ( -1, "GL_ONE_MINUS_DST_COLOR", ( u32 )GL_ONE_MINUS_DST_COLOR );
+	state.SetField ( -1, "GL_ONE_MINUS_SRC_ALPHA", ( u32 )GL_ONE_MINUS_SRC_ALPHA );
+	state.SetField ( -1, "GL_ONE_MINUS_SRC_COLOR", ( u32 )GL_ONE_MINUS_SRC_COLOR );
+	state.SetField ( -1, "GL_SRC_ALPHA", ( u32 )GL_SRC_ALPHA );
+	state.SetField ( -1, "GL_SRC_ALPHA_SATURATE", ( u32 )GL_SRC_ALPHA_SATURATE );
 }
 
 //----------------------------------------------------------------//
