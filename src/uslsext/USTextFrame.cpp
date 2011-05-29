@@ -102,6 +102,7 @@ void USTextFrame::FlushLine () {
 		sprite.mX -= this->mTokenXMin;
 	}
 
+	//this->mPen.mX -= this->mTokenXMin;
 	this->mPen.mX -= this->mTokenXMin;
 	this->mTokenXMax -= this->mTokenXMin;
 	this->mTokenXMin = 0.0f;
@@ -245,6 +246,12 @@ void USTextFrame::Parse () {
 					this->mCursor->mRGBA  = this->mRGBA;
 					
 					this->FlushLine ();
+					
+					this->mPen.mX = 0.0f;
+					this->mTokenXMax = 0.0f;
+					this->mTokenXMin = 0.0f;
+					this->mGlyph = 0;
+					
 					TRANSITION ( META_START );
 				}
 				

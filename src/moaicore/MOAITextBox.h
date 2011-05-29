@@ -16,6 +16,10 @@ class MOAIFont;
 //================================================================//
 /**	@name	MOAITextBox
 	@text	Text box class.
+	
+	@const	LEFT_JUSTIFY
+	@const	CENTER_JUSTIFY
+	@const	RIGHT_JUSTIFY
 */
 class MOAITextBox :
 	public MOAIProp2D,
