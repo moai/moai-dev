@@ -39,7 +39,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIAnimCurve )
 	
 	//----------------------------------------------------------------//
-	void			ApplyAttrOp			( u32 attrID, USAttrOp& attrOp );
+	bool			ApplyAttrOp			( u32 attrID, USAttrOp& attrOp );
 					MOAIAnimCurve		();
 					~MOAIAnimCurve		();
 	void			OnDepNodeUpdate		();

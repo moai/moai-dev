@@ -136,13 +136,14 @@ int MOAITimer::_setTime ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAITimer::ApplyAttrOp ( u32 attrID, USAttrOp& attrOp ) {
+bool MOAITimer::ApplyAttrOp ( u32 attrID, USAttrOp& attrOp ) {
 
 	switch ( attrID ) {
 		case ATTR_TIME:
 			this->mTime = attrOp.Op ( this->mTime );
-			return;
+			return true;
 	};
+	return false;
 }
 
 //----------------------------------------------------------------//

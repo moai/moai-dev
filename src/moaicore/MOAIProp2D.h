@@ -89,7 +89,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIProp2D )
 	
 	//----------------------------------------------------------------//
-	void							ApplyAttrOp				( u32 attrID, USAttrOp& attrOp );
+	bool							ApplyAttrOp				( u32 attrID, USAttrOp& attrOp );
 	virtual void					Draw					();
 	virtual void					DrawDebug				();
 	virtual void					GatherSurfaces			( MOAISurfaceSampler2D& sampler );

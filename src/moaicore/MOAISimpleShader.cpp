@@ -81,9 +81,9 @@ int MOAISimpleShader::_setParent ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAISimpleShader::ApplyAttrOp ( u32 attrID, USAttrOp& attrOp ) {
+bool MOAISimpleShader::ApplyAttrOp ( u32 attrID, USAttrOp& attrOp ) {
 
-	MOAIColor::ApplyAttrOp ( attrID, attrOp );
+	return MOAIColor::ApplyAttrOp ( attrID, attrOp );
 }
 
 //----------------------------------------------------------------//

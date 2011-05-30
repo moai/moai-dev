@@ -46,7 +46,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIFmodChannel )
 
 	//----------------------------------------------------------------//
-	void		ApplyAttrOp			( u32 attrID, USAttrOp& attrOp );
+	bool		ApplyAttrOp			( u32 attrID, USAttrOp& attrOp );
 				MOAIFmodChannel		();
 				~MOAIFmodChannel	();
 	void		Play				( MOAIFmodSound* sound, int loopCount );

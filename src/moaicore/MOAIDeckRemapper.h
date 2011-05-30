@@ -29,7 +29,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIDeckRemapper )
 	
 	//----------------------------------------------------------------//
-	void			ApplyAttrOp				( u32 attrID, USAttrOp& attrOp );
+	bool			ApplyAttrOp				( u32 attrID, USAttrOp& attrOp );
 					MOAIDeckRemapper		();
 					~MOAIDeckRemapper		();
 	STLString		ToString				();

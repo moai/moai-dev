@@ -559,25 +559,26 @@ int MOAITransform::_worldToModel ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAITransform::ApplyAttrOp ( u32 attrID, USAttrOp& attrOp ) {
+bool MOAITransform::ApplyAttrOp ( u32 attrID, USAttrOp& attrOp ) {
 
 	switch ( attrID ) {
 		case ATTR_X_LOC:
 			this->mLoc.mX = attrOp.Op ( this->mLoc.mX );
-			return;
+			return true;
 		case ATTR_Y_LOC:
 			this->mLoc.mY = attrOp.Op ( this->mLoc.mY );
-			return;
+			return true;
 		case ATTR_Z_ROT:
 			this->mDegrees = attrOp.Op ( this->mDegrees );
-			return;
+			return true;
 		case ATTR_X_SCL:
 			this->mScale.mX = attrOp.Op ( this->mScale.mX );
-			return;
+			return true;
 		case ATTR_Y_SCL:
 			this->mScale.mY = attrOp.Op ( this->mScale.mY );
-			return;
+			return true;
 	}
+	return false;
 }
 
 //----------------------------------------------------------------//

@@ -36,7 +36,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIScriptNode )
 	
 	//----------------------------------------------------------------//
-	void			ApplyAttrOp				( u32 attrID, USAttrOp& attrOp );
+	bool			ApplyAttrOp				( u32 attrID, USAttrOp& attrOp );
 					MOAIScriptNode			();
 					~MOAIScriptNode			();
 	void			RegisterLuaClass		( USLuaState& state );

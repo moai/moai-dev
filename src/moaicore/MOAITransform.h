@@ -82,7 +82,7 @@ public:
 	GET_SET ( float, Rot, mDegrees )
 	
 	//----------------------------------------------------------------//
-	void				ApplyAttrOp						( u32 attrID, USAttrOp& attrOp );
+	bool				ApplyAttrOp						( u32 attrID, USAttrOp& attrOp );
 	const USAffine2D&	GetLocalToWorldMtx				();
 	const USAffine2D&	GetWorldToLocalMtx				();
 						MOAITransform					();

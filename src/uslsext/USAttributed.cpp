@@ -9,9 +9,11 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void USAttributed::ApplyAttrOp ( u32 attrID, USAttrOp& attrOp ) {
+bool USAttributed::ApplyAttrOp ( u32 attrID, USAttrOp& attrOp ) {
 	UNUSED ( attrID );
 	UNUSED ( attrOp );
+	
+	return false;
 }
 
 //----------------------------------------------------------------//

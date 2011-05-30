@@ -38,7 +38,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIColor )
 	
 	//----------------------------------------------------------------//
-	void			ApplyAttrOp			( u32 attrID, USAttrOp& attrOp );
+	bool			ApplyAttrOp			( u32 attrID, USAttrOp& attrOp );
 	void			Bind				();
 					MOAIColor			();
 					~MOAIColor			();

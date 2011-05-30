@@ -88,7 +88,7 @@ public:
 	DECL_LUA_FACTORY ( MOAITextBox )
 	
 	//----------------------------------------------------------------//
-	void			ApplyAttrOp				( u32 attrID, USAttrOp& attrOp );
+	bool			ApplyAttrOp				( u32 attrID, USAttrOp& attrOp );
 	void			ClearCurves				();
 	void			Draw					();
 	void			DrawDebug				();

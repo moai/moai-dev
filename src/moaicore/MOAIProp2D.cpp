@@ -271,15 +271,14 @@ int MOAIProp2D::_setUVTransform ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIProp2D::ApplyAttrOp ( u32 attrID, USAttrOp& attrOp ) {
+bool MOAIProp2D::ApplyAttrOp ( u32 attrID, USAttrOp& attrOp ) {
 
 	switch( attrID ) {
 		case ATTR_INDEX:
 			this->mIndex = attrOp.Op ( this->mIndex );
-			break;
-		default:
-			MOAITransform::ApplyAttrOp ( attrID, attrOp );
+			return true;
 	}
+	return MOAITransform::ApplyAttrOp ( attrID, attrOp );
 }
 
 //----------------------------------------------------------------//

@@ -373,9 +373,9 @@ int MOAITextBox::_spool ( lua_State* L ) {
 const float MOAITextBox::DEFAULT_SPOOL_SPEED = 24.0f;
 
 //----------------------------------------------------------------//
-void MOAITextBox::ApplyAttrOp ( u32 attrID, USAttrOp& attrOp ) {
+bool MOAITextBox::ApplyAttrOp ( u32 attrID, USAttrOp& attrOp ) {
 
-	MOAITransform::ApplyAttrOp ( attrID, attrOp );
+	return MOAITransform::ApplyAttrOp ( attrID, attrOp );
 }
 
 //----------------------------------------------------------------//
