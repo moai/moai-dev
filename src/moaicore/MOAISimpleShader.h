@@ -5,6 +5,7 @@
 #define	MOAISIMPLESHADER_H
 
 #include <moaicore/MOAIColor.h>
+#include <moaicore/MOAIShader.h>
 
 //================================================================//
 // MOAISimpleShader
@@ -29,6 +30,7 @@
 	@const	GL_SRC_ALPHA_SATURATE
 */
 class MOAISimpleShader :
+	public virtual MOAIShader,
 	public virtual MOAIColor {
 protected:
 	

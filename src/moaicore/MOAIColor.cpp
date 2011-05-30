@@ -143,16 +143,10 @@ bool MOAIColor::ApplyAttrOp ( u32 attrID, USAttrOp& attrOp ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIColor::Bind () {
-
-	this->LoadGfxState ();
-}
-
-//----------------------------------------------------------------//
 MOAIColor::MOAIColor () {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIShader )
+		RTTI_EXTEND ( MOAINode )
 	RTTI_END
 	
 	this->Set ( 1.0f, 1.0f, 1.0f, 1.0f );
@@ -165,7 +159,7 @@ MOAIColor::~MOAIColor () {
 //----------------------------------------------------------------//
 void MOAIColor::RegisterLuaClass ( USLuaState& state ) {
 	
-	MOAIShader::RegisterLuaClass ( state );
+	MOAINode::RegisterLuaClass ( state );
 	
 	state.SetField ( -1, "ATTR_R_COL", ( u32 )ATTR_R_COL );
 	state.SetField ( -1, "ATTR_G_COL", ( u32 )ATTR_G_COL );
@@ -176,7 +170,7 @@ void MOAIColor::RegisterLuaClass ( USLuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIColor::RegisterLuaFuncs ( USLuaState& state ) {
 	
-	MOAIShader::RegisterLuaFuncs ( state );
+	MOAINode::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
 		{ "moveColor",				_moveColor },

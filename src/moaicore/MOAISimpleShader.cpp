@@ -99,6 +99,7 @@ void MOAISimpleShader::Bind () {
 MOAISimpleShader::MOAISimpleShader () {
 	
 	RTTI_BEGIN
+		RTTI_EXTEND ( MOAIShader )
 		RTTI_EXTEND ( MOAIColor )
 	RTTI_END
 	
@@ -112,6 +113,7 @@ MOAISimpleShader::~MOAISimpleShader () {
 //----------------------------------------------------------------//
 void MOAISimpleShader::OnDepNodeUpdate () {
 
+	MOAIShader::OnDepNodeUpdate ();
 	MOAIColor::OnDepNodeUpdate ();
 	
 	this->mColor = *this;
@@ -130,6 +132,7 @@ void MOAISimpleShader::OnDepNodeUpdate () {
 //----------------------------------------------------------------//
 void MOAISimpleShader::RegisterLuaClass ( USLuaState& state ) {
 	
+	MOAIShader::RegisterLuaClass ( state );
 	MOAIColor::RegisterLuaClass ( state );
 	
 	state.SetField ( -1, "BLEND_ADD", ( u32 )USBlendMode::BLEND_ADD );
@@ -152,6 +155,7 @@ void MOAISimpleShader::RegisterLuaClass ( USLuaState& state ) {
 //----------------------------------------------------------------//
 void MOAISimpleShader::RegisterLuaFuncs ( USLuaState& state ) {
 	
+	MOAIShader::RegisterLuaFuncs ( state );
 	MOAIColor::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
