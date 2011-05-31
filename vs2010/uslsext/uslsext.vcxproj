@@ -330,6 +330,7 @@
     <ClInclude Include="..\..\src\uslsext\USImage.h" />
     <ClInclude Include="..\..\src\uslsext\USLexStream.h" />
     <ClInclude Include="..\..\src\uslsext\USParser.h" />
+    <ClInclude Include="..\..\src\uslsext\USPvrHeader.h" />
     <ClInclude Include="..\..\src\uslsext\USSyntaxNode.h" />
     <ClInclude Include="..\..\src\uslsext\USSyntaxScanner.h" />
     <ClInclude Include="..\..\src\uslsext\USTextFrame.h" />

@@ -491,5 +491,8 @@
     <ClInclude Include="..\..\src\uslsext\USTextLayout.h">
       <Filter>src\font</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USPvrHeader.h">
+      <Filter>src\gfxObjects</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

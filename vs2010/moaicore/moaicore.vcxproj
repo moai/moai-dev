@@ -276,6 +276,7 @@
     <ClCompile Include="..\..\src\moaicore\MOAIColor.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIShader.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAISimpleShader.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAITraits.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAITransform.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAITransformBase.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIVertexBuffer.cpp" />
@@ -374,6 +375,7 @@
     <ClInclude Include="..\..\src\moaicore\MOAIColor.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIShader.h" />
     <ClInclude Include="..\..\src\moaicore\MOAISimpleShader.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAITraits.h" />
     <ClInclude Include="..\..\src\moaicore\MOAITransform.h" />
     <ClInclude Include="..\..\src\moaicore\MOAITransformBase.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIVertexBuffer.h" />
