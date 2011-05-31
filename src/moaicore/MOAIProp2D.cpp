@@ -96,50 +96,40 @@ int MOAIProp2D::_setDeck ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	setFrame
-	@text	Sets the bounding frame of the prop.
+	@text	Sets the fitting frame of the prop.
 	
-	@in		MOAIProp2D self
-	@in		number xMin
-	@in		number yMin
-	@in		number xMax
-	@in		number yMax
-	@out	nil
+	@overload	Clear the fitting frame.
+	
+		@in		MOAIProp2D self
+		@out	nil
+	
+	@overload	Set the fitting frame.
+	
+		@in		MOAIProp2D self
+		@in		number xMin
+		@in		number yMin
+		@in		number xMax
+		@in		number yMax
+		@out	nil
 */
 int MOAIProp2D::_setFrame ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIProp2D, "UNNNN" )
 
-	float x0	= state.GetValue < float >( 2, 0.0f );
-	float y0	= state.GetValue < float >( 3, 0.0f );
-	float x1	= state.GetValue < float >( 4, 0.0f );
-	float y1	= state.GetValue < float >( 5, 0.0f );
+	if ( state.CheckParams ( 2, "NNNN" )) {
+
+		float x0	= state.GetValue < float >( 2, 0.0f );
+		float y0	= state.GetValue < float >( 3, 0.0f );
+		float x1	= state.GetValue < float >( 4, 0.0f );
+		float y1	= state.GetValue < float >( 5, 0.0f );
+		
+		self->mFrame.Init ( x0, y0, x1, y1 );
+		self->mFitToFrame = true;
+	}
+	else {
+		self->mFitToFrame = false;
+	}
 	
-	self->mFrame.Init ( x0, y0, x1, y1 );
-	self->mFrameSource = FRAME_FROM_SELF;
 	self->ScheduleUpdate ();
-	
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@name	setFrameSource
-	@text	Selects the frame rectangle to fit the prop to. When computing
-			the transform for a prop, the prop's frame rectangle is taken
-			into account. The default behavior is for the prop to use whatever
-			dimensions are specified by the deck it is attached to, but in
-			some cases to used may wish to override this behavior by setting
-			a new frame for the prop of by inheriting the frame of the prop's
-			parent transform.
-	
-	@in		MOAIProp2D self
-	@in		number frameSource		One of MOAIProp2D FRAME_FROM_DECK, FRAME_FROM_PARENT, FRAME_FROM_SELF
-	@out	nil
-*/
-int MOAIProp2D::_setFrameSource ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIProp2D, "UN" )
-
-	self->mFrameSource = state.GetValue < u32 >( 2, self->mFrameSource );
-	self->ScheduleUpdate ();
-
 	return 0;
 }
 
@@ -480,10 +470,17 @@ bool MOAIProp2D::Inside ( USVec2D vec ) {
 	const USAffine2D& worldToLocal = this->GetWorldToLocalMtx ();
 	worldToLocal.Transform ( vec );
 
-	if ( !this->mDeck ) {
-		return this->mFrameSource == FRAME_FROM_SELF ? this->mFrame.Contains ( vec ) : false; 
+	if ( this->mFitToFrame ) {
+		return this->mFrame.Contains ( vec ); 
 	}
-	return this->mDeck->Contains ( this->mIndex, this->mRemapper, vec );
+	
+	USRect rect;
+	u32 status = this->GetLocalFrame ( rect );
+	
+	if ( status == BOUNDS_GLOBAL ) return true;
+	if ( status == BOUNDS_EMPTY ) return false;
+	
+	return rect.Contains ( vec );
 }
 
 //----------------------------------------------------------------//
@@ -523,7 +520,7 @@ MOAIProp2D::MOAIProp2D () :
 	mIndex( 1 ),
 	mRepeat ( 0 ),
 	mGridScale ( 1.0f, 1.0f ),
-	mFrameSource ( FRAME_FROM_PARENT ) {
+	mFitToFrame ( false ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIProp )
@@ -567,49 +564,37 @@ void MOAIProp2D::OnDepNodeUpdate () {
 		}
 	}
 	
-	USRect localFrame;
-	localFrame.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
-	u32 frameStatus = this->GetLocalFrame ( localFrame );
+	USRect rect;
+	rect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
+	u32 frameStatus = this->GetLocalFrame ( rect );
 	
-	if ( localFrame.Area () == 0.0f ) {
+	if ( rect.Area () == 0.0f ) {
 		frameStatus = BOUNDS_EMPTY;
 	}
 	
 	USVec2D offset ( 0.0f, 0.0f );
 	USVec2D stretch ( 1.0f, 1.0f );
 	
-	// default to match the local frame from source
-	USRect targetFrame = localFrame;
-	
 	// select the frame
-	if (( this->mFrameSource == FRAME_FROM_PARENT ) && this->mParent ) {
+	if (( this->mParentMask & INHERIT_FRAME ) || this->mFitToFrame ) {
 		
 		MOAILayoutFrame* parentFrame = USCast < MOAILayoutFrame >( this->mParent );
-		
-		if ( parentFrame ) {
-			targetFrame = parentFrame->GetFrame ();
+		USRect frame = parentFrame ? parentFrame->GetFrame () : this->mFrame;
+
+		// and check if the target frame is empty, too
+		if ( frame.Area () == 0.0f ) {
+			frameStatus = BOUNDS_EMPTY;
 		}
-	}
-	else if ( this->mFrameSource == FRAME_FROM_SELF ) {
-		targetFrame = this->mFrame;
-	}
 
-	// and check if the target frame is empty, too
-	if ( targetFrame.Area () == 0.0f ) {
-		frameStatus = BOUNDS_EMPTY;
-	}
-
-	// compute the scale and offset (if any)
-	if ( frameStatus != BOUNDS_EMPTY ) {
-	
-		float targetWidth = targetFrame.Width ();
-		float targetHeight = targetFrame.Height ();
-		
-		stretch.mX = targetWidth / localFrame.Width ();
-		stretch.mY = targetHeight / localFrame.Height ();
-		
-		offset.mX = targetFrame.mXMin - ( localFrame.mXMin * stretch.mX );
-		offset.mY = targetFrame.mYMin - ( localFrame.mYMin * stretch.mY );
+		// compute the scale and offset (if any)
+		if ( frameStatus != BOUNDS_EMPTY ) {
+			
+			stretch.mX = frame.Width () / rect.Width ();
+			stretch.mY = frame.Height () / rect.Height ();
+			
+			offset.mX = frame.mXMin - ( rect.mXMin * stretch.mX );
+			offset.mY = frame.mYMin - ( rect.mYMin * stretch.mY );
+		}
 	}
 	
 	// inherit parent and offset transforms (and compute the inverse)
@@ -624,9 +609,8 @@ void MOAIProp2D::OnDepNodeUpdate () {
 			break;
 		}
 		case BOUNDS_OK: {
-			USRect bounds = localFrame;
-			this->mLocalToWorldMtx.Transform ( bounds );
-			this->UpdateBounds ( bounds, frameStatus );
+			this->mLocalToWorldMtx.Transform ( rect );
+			this->UpdateBounds ( rect, frameStatus );
 			break;
 		}
 	}
@@ -638,14 +622,11 @@ void MOAIProp2D::RegisterLuaClass ( USLuaState& state ) {
 	MOAIProp::RegisterLuaClass ( state );
 	MOAIColor::RegisterLuaClass ( state );
 	
-	state.SetField ( -1, "INHERIT_PARTITION", ( u32 )INHERIT_PARTITION );
 	state.SetField ( -1, "INHERIT_COLOR", ( u32 )INHERIT_COLOR );
+	state.SetField ( -1, "INHERIT_FRAME", ( u32 )INHERIT_FRAME );
+	state.SetField ( -1, "INHERIT_PARTITION", ( u32 )INHERIT_PARTITION );
 	
 	state.SetField ( -1, "ATTR_INDEX", MOAIProp2DAttr::Pack ( ATTR_INDEX ));
-	
-	state.SetField ( -1, "FRAME_FROM_DECK", ( u32 )FRAME_FROM_DECK );
-	state.SetField ( -1, "FRAME_FROM_PARENT", ( u32 )FRAME_FROM_PARENT );
-	state.SetField ( -1, "FRAME_FROM_SELF", ( u32 )FRAME_FROM_SELF );
 }
 
 //----------------------------------------------------------------//
@@ -660,7 +641,6 @@ void MOAIProp2D::RegisterLuaFuncs ( USLuaState& state ) {
 		{ "inside",				_inside },
 		{ "setDeck",			_setDeck },
 		{ "setFrame",			_setFrame },
-		{ "setFrameSource",		_setFrameSource },
 		{ "setGrid",			_setGrid },
 		{ "setGridScale",		_setGridScale },
 		{ "setIndex",			_setIndex },
