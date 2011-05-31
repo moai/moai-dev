@@ -18,6 +18,17 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAILayer2D::_clear ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAILayer2D, "U" )
+
+	if ( self->mPartition ) {
+		self->mPartition->Clear ();
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	getFitting
 	@text	Computes a camera fitting for a given world rect along with
 			an optional screen space padding. To do a fitting, computer
@@ -493,6 +504,7 @@ void MOAILayer2D::RegisterLuaFuncs ( USLuaState& state ) {
 	MOAIProp2D::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
+		{ "clear",					_clear },
 		{ "getFitting",				_getFitting },
 		{ "getPartition",			_getPartition },
 		{ "insertProp",				_insertProp },

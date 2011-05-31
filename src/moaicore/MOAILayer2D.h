@@ -37,6 +37,7 @@ private:
 	bool							mShowDebugLines;
 
 	//----------------------------------------------------------------//
+	static int	_clear				( lua_State* L );
 	static int	_getFitting			( lua_State* L );
 	static int	_getPartition		( lua_State* L );
 	static int	_insertProp			( lua_State* L );

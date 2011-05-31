@@ -37,6 +37,7 @@ private:
 	static const s32	PRIORITY_MASK = 0x7fffffff;
 
 	//----------------------------------------------------------------//
+	static int		_clear						( lua_State* L );
 	static int		_insertProp					( lua_State* L );
 	static int		_propForPoint				( lua_State* L );
 	static int		_propListForPoint			( lua_State* L );

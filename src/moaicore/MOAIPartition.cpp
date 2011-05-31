@@ -13,6 +13,16 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIPartition::_clear ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIPartition, "U" )
+
+	self->Clear ();
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	insertProp
 	@text	Inserts a prop into the partition. A prop can only be
 			in one partition at a time.
@@ -424,6 +434,7 @@ void MOAIPartition::RegisterLuaClass ( USLuaState& state ) {
 void MOAIPartition::RegisterLuaFuncs ( USLuaState& state ) {
 	
 	luaL_Reg regTable [] = {
+		{ "clear",						_clear },
 		{ "insertProp",					_insertProp },
 		{ "propForPoint",				_propForPoint },
 		{ "propListForPoint",			_propListForPoint },
