@@ -65,12 +65,12 @@ public:
 
 	GET_SET ( u32, Mask, mMask )
 	GET ( s32, Priority, mPriority )
-	GET ( MOAIPartition*, Partition, mPartition )
 
 	//----------------------------------------------------------------//
 	virtual void	Draw				();
 	virtual void	DrawDebug			();
 	virtual void	GatherSurfaces		( MOAISurfaceSampler2D& sampler );
+	MOAIPartition*	GetPartitionTrait	();
 	USRect			GetBounds			();
 	bool			GetCellRect			( USRect* cellRect, USRect* paddedRect = 0 );
 					MOAIProp			();

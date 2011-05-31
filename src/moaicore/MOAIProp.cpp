@@ -113,6 +113,12 @@ USRect MOAIProp::GetBounds () {
 }
 
 //----------------------------------------------------------------//
+MOAIPartition* MOAIProp::GetPartitionTrait () {
+
+	return this->mPartition;
+}
+
+//----------------------------------------------------------------//
 void MOAIProp::RegisterLuaClass ( USLuaState& state ) {
 	
 	MOAITransform::RegisterLuaClass ( state );

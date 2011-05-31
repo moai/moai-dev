@@ -15,6 +15,12 @@ const USAffine2D& MOAITransformBase::GetLocalToWorldMtx () {
 }
 
 //----------------------------------------------------------------//
+const USAffine2D* MOAITransformBase::GetTransformTrait () {
+
+	return &this->mLocalToWorldMtx;
+}
+
+//----------------------------------------------------------------//
 const USAffine2D& MOAITransformBase::GetWorldToLocalMtx () {
 
 	return this->mWorldToLocalMtx;
@@ -23,7 +29,7 @@ const USAffine2D& MOAITransformBase::GetWorldToLocalMtx () {
 //----------------------------------------------------------------//
 MOAITransformBase::MOAITransformBase () {
 	
-	RTTI_SINGLE ( MOAINode )
+	RTTI_SINGLE ( MOAITraits )
 	
 	this->mLocalToWorldMtx.Ident ();
 	this->mWorldToLocalMtx.Ident ();

@@ -278,8 +278,8 @@ float MOAILayoutFrame::GetInnerSize ( u32 axis ) {
 //----------------------------------------------------------------//
 MOAILayoutFrame* MOAILayoutFrame::GetParentWidget () {
 
-	if ( this->mParent ) {
-		return this->mParent->AsType <  MOAILayoutFrame >();
+	if ( this->mTraitSource ) {
+		return this->mTraitSource->AsType < MOAILayoutFrame >();
 	}
 	return 0;
 }

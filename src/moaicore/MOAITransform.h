@@ -5,7 +5,6 @@
 #define	MOAITRANSFORM_H
 
 #include <moaicore/MOAIEaseDriver.h>
-
 #include <moaicore/MOAITransformBase.h>
 
 //================================================================//
@@ -27,10 +26,6 @@ protected:
 	USVec2D			mLoc;
 	USVec2D			mScale;
 	float			mDegrees;
-	
-	USWeak < MOAITransformBase >	mParent;
-	
-	u32 mParentMask;
 
 	//----------------------------------------------------------------//
 	static int	_addLoc			( lua_State* L );
@@ -50,7 +45,6 @@ protected:
 	static int	_seekScl		( lua_State* L );
 	static int	_setLoc			( lua_State* L );
 	static int	_setParent		( lua_State* L );
-	static int	_setParentMask	( lua_State* L );
 	static int	_setRot			( lua_State* L );
 	static int	_setScl			( lua_State* L );
 	static int	_worldToModel	( lua_State* L );
@@ -72,13 +66,6 @@ public:
 		ATTR_Y_SCL,
 		TOTAL_ATTR,
 	};
-	
-	enum {
-		INHERIT_LOC				= 0x00000001,
-		INHERIT_TRANSFORM		= 0x00000002,
-	};
-	
-	static const u32 INHERIT_ALL = 0xffffffff;
 	
 	GET_SET ( USVec2D, Loc, mLoc )
 	GET_SET ( USVec2D, Scl, mScale )

@@ -286,7 +286,7 @@ int MOAINode::_setDependency ( lua_State* L ) {
 //----------------------------------------------------------------//
 void MOAINode::Activate ( MOAINode& activator ) {
 
-	// bail if we're already active
+	// bail if we're already in the list
 	if ( this->mState != STATE_IDLE ) return;
 
 	// insert before activator
@@ -479,6 +479,8 @@ void MOAINode::DepNodeUpdate () {
 		this->OnDepNodeUpdate ();
 		this->ExtendUpdate ();
 	}
+	// now we are done
+	this->mState = STATE_ACTIVE;
 }
 
 //----------------------------------------------------------------//
@@ -554,7 +556,7 @@ void MOAINode::PullAttributes () {
 	MOAIAttrLink* link = this->mPullAttrLinks;	
 	for ( ; link ; link = link->mNextInDest ) {
 		
-		if ( link->mSourceNode->STATE_SCHEDULED ) {
+		if ( link->mSourceNode->mState == STATE_SCHEDULED ) {
 			link->mSourceNode->DepNodeUpdate ();
 		}
 		
@@ -594,7 +596,7 @@ void MOAINode::RegisterLuaFuncs ( USLuaState& state ) {
 //----------------------------------------------------------------//
 void MOAINode::ScheduleUpdate () {
 	
-	// bail if we're already active or scheduled
+	// add to the list if not already in it
 	if ( this->mState == STATE_IDLE ) {
 
 		// push us at the end of the list
@@ -606,7 +608,6 @@ void MOAINode::ScheduleUpdate () {
 			link->mSourceNode->Activate ( *this );
 		}
 	}
-	
 	this->mState = STATE_SCHEDULED;
 }
 

@@ -4,7 +4,7 @@
 #ifndef	MOAITRANSFORMBASE_H
 #define	MOAITRANSFORMBASE_H
 
-#include <moaicore/MOAINode.h>
+#include <moaicore/MOAITraits.h>
 
 //================================================================//
 // MOAITransformBase
@@ -13,7 +13,7 @@
 	@text	Base class for 2D affine transforms.
 */
 class MOAITransformBase :
-	public virtual MOAINode {
+	public virtual MOAITraits {
 protected:
 	
 	USAffine2D		mLocalToWorldMtx;
@@ -23,6 +23,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	const USAffine2D&		GetLocalToWorldMtx			();
+	const USAffine2D*		GetTransformTrait			();
 	const USAffine2D&		GetWorldToLocalMtx			();
 							MOAITransformBase			();
 							~MOAITransformBase			();

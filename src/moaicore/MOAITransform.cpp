@@ -487,16 +487,6 @@ int MOAITransform::_setParent ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
-int MOAITransform::_setParentMask ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITransform, "U" )
-	
-	self->mParentMask = state.GetValue < u32 >( 2, INHERIT_ALL );
-	
-	return 0;
-}
-
-//----------------------------------------------------------------//
 /**	@name	setRot
 	@text	Sets the transform's rotation.
 	
@@ -605,20 +595,23 @@ void MOAITransform::BuildTransforms ( float xOff, float yOff, float xStretch, fl
 		this->mLoc.mY + yOff
 	);
 	
-	if ( this->mParent ) {
+	if ( this->mTraitSource ) {
 		
-		const USAffine2D& inherit = this->mParent->GetLocalToWorldMtx ();
+		const USAffine2D* inherit = this->mTraitSource->GetTransformTrait ();
 		
-		if ( this->mParentMask & INHERIT_TRANSFORM ) {
-			this->mLocalToWorldMtx.Append ( inherit );
-		}
-		else if ( this->mParentMask & INHERIT_LOC ) {
-			
-			USVec2D loc = this->mLoc;
-			inherit.Transform ( loc );
-			
-			this->mLocalToWorldMtx.m [ USAffine2D::C2_R0 ] = loc.mX;
-			this->mLocalToWorldMtx.m [ USAffine2D::C2_R1 ] = loc.mY;
+		if ( inherit ) {
+		
+			if ( this->mTraitMask & INHERIT_TRANSFORM ) {
+				this->mLocalToWorldMtx.Append ( *inherit );
+			}
+			else if ( this->mTraitMask & INHERIT_LOC ) {
+				
+				USVec2D loc = this->mLoc;
+				inherit->Transform ( loc );
+				
+				this->mLocalToWorldMtx.m [ USAffine2D::C2_R0 ] = loc.mX;
+				this->mLocalToWorldMtx.m [ USAffine2D::C2_R1 ] = loc.mY;
+			}
 		}
 	}
 	
@@ -641,11 +634,12 @@ const USAffine2D& MOAITransform::GetWorldToLocalMtx () {
 MOAITransform::MOAITransform () :
 	mLoc ( 0.0f, 0.0f ),
 	mScale ( 1.0f, 1.0f ),
-	mDegrees ( 0.0f ),
-	mParent ( 0 ),
-	mParentMask ( INHERIT_TRANSFORM ) {
+	mDegrees ( 0.0f ) {
 	
-	RTTI_SINGLE ( MOAITransformBase )
+	RTTI_BEGIN
+		RTTI_EXTEND ( MOAITraits )
+		RTTI_EXTEND ( MOAITransformBase )
+	RTTI_END
 	
 	this->mLocalToWorldMtx.Ident ();
 	this->mWorldToLocalMtx.Ident ();
@@ -653,8 +647,6 @@ MOAITransform::MOAITransform () :
 
 //----------------------------------------------------------------//
 MOAITransform::~MOAITransform () {
-
-	this->mParent = 0;
 }
 
 //----------------------------------------------------------------//
@@ -666,10 +658,7 @@ void MOAITransform::OnDepNodeUpdate () {
 //----------------------------------------------------------------//
 void MOAITransform::RegisterLuaClass ( USLuaState& state ) {
 	
-	MOAINode::RegisterLuaClass ( state );
-	
-	state.SetField ( -1, "INHERIT_LOC", ( u32 )INHERIT_LOC );
-	state.SetField ( -1, "INHERIT_TRANSFORM", ( u32 )INHERIT_TRANSFORM );
+	MOAITraits::RegisterLuaClass ( state );
 	
 	state.SetField ( -1, "ATTR_X_LOC", MOAITransformAttr::Pack ( ATTR_X_LOC ));
 	state.SetField ( -1, "ATTR_Y_LOC", MOAITransformAttr::Pack ( ATTR_Y_LOC ));
@@ -681,7 +670,7 @@ void MOAITransform::RegisterLuaClass ( USLuaState& state ) {
 //----------------------------------------------------------------//
 void MOAITransform::RegisterLuaFuncs ( USLuaState& state ) {
 	
-	MOAINode::RegisterLuaFuncs ( state );
+	MOAITraits::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
 		{ "addLoc",				_addLoc },
@@ -701,7 +690,6 @@ void MOAITransform::RegisterLuaFuncs ( USLuaState& state ) {
 		{ "seekScl",			_seekScl },
 		{ "setLoc",				_setLoc },
 		{ "setParent",			_setParent },
-		{ "setParentMask",		_setParentMask },
 		{ "setRot",				_setRot },
 		{ "setScl",				_setScl },
 		{ "worldToModel",		_worldToModel },
@@ -721,7 +709,7 @@ void MOAITransform::SetLoc ( float x, float y ) {
 //----------------------------------------------------------------//
 void MOAITransform::SetParent ( MOAITransformBase* parent ) {
 
-	this->SetDependentMember < MOAITransformBase >( this->mParent, parent );
+	this->SetTraitSource ( parent );
 }
 
 //----------------------------------------------------------------//

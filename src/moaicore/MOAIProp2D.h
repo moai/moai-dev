@@ -72,6 +72,9 @@ protected:
 	bool			BindDeck				();
 	void			GetBoundsInRect			( const USRect& rect, USCellCoord& c0, USCellCoord& c1 );
 	void			GetBoundsInView			( USCellCoord& c0, USCellCoord& c1 );
+	USColorVec		GetColorTrait			();
+	USRect*			GetFrameTrait			();
+	MOAIShader*		GetShaderTrait			();
 	void			LoadShader				();
 
 public:

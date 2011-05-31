@@ -313,10 +313,11 @@ void MOAIProp2D::Draw () {
 		this->mDeck->Draw ( this->GetLocalToWorldMtx (), this->mIndex, this->mRemapper );
 	}
 	
-	MOAILayoutFrame* parentFrame = USCast < MOAILayoutFrame >( this->mParent );
-	if ( parentFrame ) {
-		drawbuffer.SetScissorRect ();
-	}
+	// TODO
+	//MOAILayoutFrame* parentFrame = USCast < MOAILayoutFrame >( this->mParent );
+	//if ( parentFrame ) {
+	//	drawbuffer.SetScissorRect ();
+	//}
 }
 
 //----------------------------------------------------------------//
@@ -448,6 +449,24 @@ void MOAIProp2D::GetBoundsInView ( USCellCoord& c0, USCellCoord& c1 ) {
 }
 
 //----------------------------------------------------------------//
+USColorVec MOAIProp2D::GetColorTrait () {
+
+	return this->mColor;
+}
+
+//----------------------------------------------------------------//
+USRect* MOAIProp2D::GetFrameTrait () {
+
+	return &this->mFrame;
+}
+
+//----------------------------------------------------------------//
+MOAIShader* MOAIProp2D::GetShaderTrait () {
+
+	return this->mShader;
+}
+
+//----------------------------------------------------------------//
 u32 MOAIProp2D::GetLocalFrame ( USRect& frame ) {
 	
 	if ( this->mGrid ) {
@@ -505,14 +524,15 @@ void MOAIProp2D::LoadShader () {
 		drawbuffer.SetBlendMode ( GL_ONE, GL_ONE_MINUS_SRC_ALPHA );
 	}
 	
-	MOAILayoutFrame* parent = USCast < MOAILayoutFrame >( this->mParent );
-	if ( parent ) {
-		USRect scissorRect = parent->GetScissorRect ();			
-		drawbuffer.SetScissorRect ( scissorRect );
-	}
-	else {
+	// TODO
+	//MOAILayoutFrame* parent = USCast < MOAILayoutFrame >( this->mParent );
+	//if ( parent ) {
+	//	USRect scissorRect = parent->GetScissorRect ();			
+	//	drawbuffer.SetScissorRect ( scissorRect );
+	//}
+	//else {
 		drawbuffer.SetScissorRect ();
-	}
+	//}
 }
 
 //----------------------------------------------------------------//
@@ -540,30 +560,6 @@ void MOAIProp2D::OnDepNodeUpdate () {
 	
 	this->mColor = *this;
 	
-	if (( this->mParentMask & INHERIT_PARTITION ) || ( this->mParentMask & INHERIT_COLOR )) {
-		
-		MOAIProp2D* parentProp = USCast < MOAIProp2D >( this->mParent );
-		if ( parentProp ) {
-			
-			if ( this->mParentMask & INHERIT_PARTITION ) {
-			
-				MOAIPartition* parentPartition = parentProp->GetPartition ();
-				
-				if ( parentPartition ) {
-					parentPartition->InsertProp ( *this );
-				}
-				else {
-					MOAIPartition* partition = this->GetPartition ();
-					partition->RemoveProp ( *this );
-				}
-			}
-			
-			if ( this->mParentMask & INHERIT_COLOR ) {
-				this->mColor.Modulate ( parentProp->mColor );
-			}
-		}
-	}
-	
 	USRect rect;
 	rect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
 	u32 frameStatus = this->GetLocalFrame ( rect );
@@ -576,10 +572,35 @@ void MOAIProp2D::OnDepNodeUpdate () {
 	USVec2D stretch ( 1.0f, 1.0f );
 	
 	// select the frame
-	if (( this->mParentMask & INHERIT_FRAME ) || this->mFitToFrame ) {
+	USRect frame = this->mFrame;
+	
+	if ( this->mTraitSource ) {
+	
+		if ( this->mTraitMask & INHERIT_COLOR ) {
+			this->mColor.Modulate ( this->mTraitSource->GetColorTrait ());
+		}
 		
-		MOAILayoutFrame* parentFrame = USCast < MOAILayoutFrame >( this->mParent );
-		USRect frame = parentFrame ? parentFrame->GetFrame () : this->mFrame;
+		if ( this->mTraitMask & INHERIT_FRAME ) {
+			
+			USRect* frameTrait = this->mTraitSource->GetFrameTrait ();
+			if ( frameTrait ) {
+				frame = *frameTrait;
+			}
+		}
+		
+		if ( this->mTraitMask & INHERIT_PARTITION ) {
+			MOAIPartition* partition = this->mTraitSource->GetPartitionTrait ();
+			if ( partition ) {
+				partition->InsertProp ( *this );
+			}
+		}
+		
+		if ( this->mTraitMask & INHERIT_SHADER ) {
+			this->mShader = this->mTraitSource->GetShaderTrait ();
+		}
+	}
+	
+	if (( this->mTraitMask & INHERIT_FRAME ) || this->mFitToFrame ) {
 
 		// and check if the target frame is empty, too
 		if ( frame.Area () == 0.0f ) {

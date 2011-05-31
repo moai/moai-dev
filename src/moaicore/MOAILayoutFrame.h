@@ -10,6 +10,7 @@
 // MOAILayoutFrame
 //================================================================//
 /**	@brief	Frame object for hierarchical, resizable layouts and auto-fitting.
+			(Temporarily disabled).
 */
 class MOAILayoutFrame :
 	public MOAITransform {
