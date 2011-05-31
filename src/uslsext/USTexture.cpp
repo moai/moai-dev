@@ -469,7 +469,7 @@ USTexture::USTexture () :
 	mHeight ( 0 ),
 	mMinFilter ( GL_LINEAR ),
 	mMagFilter ( GL_NEAREST ),
-	mWrap ( GL_CLAMP ),
+	mWrap ( GL_CLAMP_TO_EDGE ),
 	mLoader ( 0 ) {
 }
 
