@@ -43,9 +43,10 @@ protected:
 	USTextureLoader*	mLoader;
 	
 	//----------------------------------------------------------------//
-	void			AffirmTexture		();
-	void			CreateTexture		( USImage& image );
-	void			ReleaseLoader		();
+	void			AffirmTexture				();
+	void			CreateTextureFromImage		( USImage& image );
+	void			CreateTextureFromPVR		( void* data, size_t size );
+	void			ReleaseLoader				();
 
 public:
 

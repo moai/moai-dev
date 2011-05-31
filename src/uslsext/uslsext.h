@@ -54,6 +54,7 @@
 #include <uslsext/USPolygon2D.h>
 #include <uslsext/USPolyScanner.h>
 #include <uslsext/USPrettyPrint.h>
+#include <uslsext/USPvrHeader.h>
 #include <uslsext/USQuad.h>
 #include <uslsext/USQuadCoord.h>
 #include <uslsext/USRadixSort16.h>

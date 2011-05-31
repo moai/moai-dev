@@ -516,6 +516,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\uslsext\USPvrHeader.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\uslsext\USTexture.cpp"
 				>
 			</File>
