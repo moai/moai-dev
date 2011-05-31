@@ -82,8 +82,8 @@ public:
 	//----------------------------------------------------------------//
 	USRect			GetFrame				();
 	USRect			GetScissorRect			();
-					MOAILayoutFrame				();
-					~MOAILayoutFrame				();
+					MOAILayoutFrame			();
+					~MOAILayoutFrame		();
 	void			RegisterLuaClass		( USLuaState& state );
 	void			RegisterLuaFuncs		( USLuaState& state );
 	void			SetParent				( MOAITransformBase* parent );

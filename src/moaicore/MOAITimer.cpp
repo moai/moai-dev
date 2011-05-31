@@ -138,11 +138,14 @@ int MOAITimer::_setTime ( lua_State* L ) {
 //----------------------------------------------------------------//
 bool MOAITimer::ApplyAttrOp ( u32 attrID, USAttrOp& attrOp ) {
 
-	switch ( attrID ) {
-		case ATTR_TIME:
+	if ( MOAITimerAttr::Check ( attrID )) {
+		attrID = UNPACK_ATTR ( attrID );
+		
+		if ( attrID == ATTR_TIME ) {
 			this->mTime = attrOp.Op ( this->mTime );
 			return true;
-	};
+		}
+	}
 	return false;
 }
 
@@ -396,7 +399,7 @@ void MOAITimer::RegisterLuaClass ( USLuaState& state ) {
 	MOAINode::RegisterLuaClass ( state );
 	MOAIAction::RegisterLuaClass ( state );
 
-	state.SetField ( -1, "ATTR_TIME", ( u32 )ATTR_TIME );
+	state.SetField ( -1, "ATTR_TIME", MOAITimerAttr::Pack ( ATTR_TIME ));
 	
 	state.SetField ( -1, "EVENT_TIMER_KEYFRAME", ( u32 )EVENT_TIMER_KEYFRAME );
 	state.SetField ( -1, "EVENT_TIMER_LOOP", ( u32 )EVENT_TIMER_LOOP );

@@ -39,10 +39,10 @@ int MOAIColor::_moveColor ( lua_State* L ) {
 	float delay		= state.GetValue < float >( 6, 0.0f );
 	u32 mode		= state.GetValue < u32 >( 7, USInterpolate::kSmooth );
 	
-	action->SetLink ( 0, self, MOAIColor::ATTR_R_COL, r, mode );
-	action->SetLink ( 1, self, MOAIColor::ATTR_G_COL, g, mode );
-	action->SetLink ( 2, self, MOAIColor::ATTR_B_COL, b, mode );
-	action->SetLink ( 3, self, MOAIColor::ATTR_A_COL, a, mode );
+	action->SetLink ( 0, self, MOAIColorAttr::Pack ( ATTR_R_COL ), r, mode );
+	action->SetLink ( 1, self, MOAIColorAttr::Pack ( ATTR_G_COL ), g, mode );
+	action->SetLink ( 2, self, MOAIColorAttr::Pack ( ATTR_B_COL ), b, mode );
+	action->SetLink ( 3, self, MOAIColorAttr::Pack ( ATTR_A_COL ), a, mode );
 	
 	action->SetLength ( delay );
 	action->Start ();
@@ -81,10 +81,10 @@ int MOAIColor::_seekColor ( lua_State* L ) {
 	float delay		= state.GetValue < float >( 6, 0.0f );
 	u32 mode		= state.GetValue < u32 >( 7, USInterpolate::kSmooth );
 	
-	action->SetLink ( 0, self, MOAIColor::ATTR_R_COL, r - self->mR, mode );
-	action->SetLink ( 1, self, MOAIColor::ATTR_G_COL, g - self->mG, mode );
-	action->SetLink ( 2, self, MOAIColor::ATTR_B_COL, b - self->mB, mode );
-	action->SetLink ( 3, self, MOAIColor::ATTR_A_COL, a - self->mA, mode );
+	action->SetLink ( 0, self, MOAIColorAttr::Pack ( ATTR_R_COL ), r - self->mR, mode );
+	action->SetLink ( 1, self, MOAIColorAttr::Pack ( ATTR_G_COL ), g - self->mG, mode );
+	action->SetLink ( 2, self, MOAIColorAttr::Pack ( ATTR_B_COL ), b - self->mB, mode );
+	action->SetLink ( 3, self, MOAIColorAttr::Pack ( ATTR_A_COL ), a - self->mA, mode );
 	
 	action->SetLength ( delay );
 	action->Start ();
@@ -125,19 +125,22 @@ int MOAIColor::_setColor ( lua_State* L ) {
 //----------------------------------------------------------------//
 bool MOAIColor::ApplyAttrOp ( u32 attrID, USAttrOp& attrOp ) {
 
-	switch( attrID ) {
-		case ATTR_R_COL:
-			this->mR = USFloat::Clamp ( attrOp.Op ( this->mR ), 0.0f, 1.0f );
-			return true;
-		case ATTR_G_COL:
-			this->mG = USFloat::Clamp ( attrOp.Op ( this->mG ), 0.0f, 1.0f );
-			return true;
-		case ATTR_B_COL:
-			this->mB = USFloat::Clamp ( attrOp.Op ( this->mB ), 0.0f, 1.0f );
-			return true;
-		case ATTR_A_COL:
-			this->mA = USFloat::Clamp ( attrOp.Op ( this->mA ), 0.0f, 1.0f );
-			return true;
+	if ( MOAIColorAttr::Check ( attrID )) {
+
+		switch ( UNPACK_ATTR ( attrID )) {
+			case ATTR_R_COL:
+				this->mR = USFloat::Clamp ( attrOp.Op ( this->mR ), 0.0f, 1.0f );
+				return true;
+			case ATTR_G_COL:
+				this->mG = USFloat::Clamp ( attrOp.Op ( this->mG ), 0.0f, 1.0f );
+				return true;
+			case ATTR_B_COL:
+				this->mB = USFloat::Clamp ( attrOp.Op ( this->mB ), 0.0f, 1.0f );
+				return true;
+			case ATTR_A_COL:
+				this->mA = USFloat::Clamp ( attrOp.Op ( this->mA ), 0.0f, 1.0f );
+				return true;
+		}
 	}
 	return false;
 }
@@ -161,10 +164,10 @@ void MOAIColor::RegisterLuaClass ( USLuaState& state ) {
 	
 	MOAINode::RegisterLuaClass ( state );
 	
-	state.SetField ( -1, "ATTR_R_COL", ( u32 )ATTR_R_COL );
-	state.SetField ( -1, "ATTR_G_COL", ( u32 )ATTR_G_COL );
-	state.SetField ( -1, "ATTR_B_COL", ( u32 )ATTR_B_COL );
-	state.SetField ( -1, "ATTR_A_COL", ( u32 )ATTR_A_COL );
+	state.SetField ( -1, "ATTR_R_COL", MOAIColorAttr::Pack ( ATTR_R_COL ));
+	state.SetField ( -1, "ATTR_G_COL", MOAIColorAttr::Pack ( ATTR_G_COL ));
+	state.SetField ( -1, "ATTR_B_COL", MOAIColorAttr::Pack ( ATTR_B_COL ));
+	state.SetField ( -1, "ATTR_A_COL", MOAIColorAttr::Pack ( ATTR_A_COL ));
 }
 
 //----------------------------------------------------------------//

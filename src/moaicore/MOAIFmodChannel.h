@@ -38,12 +38,13 @@ public:
 
 	friend class MOAIFmod;
 
+	DECL_LUA_FACTORY ( MOAIFmodChannel )
+	DECL_ATTR_HELPER ( MOAIFmodChannel )
+
 	enum {
 		ATTR_VOLUME,
 		TOTAL_ATTR,
 	};
-
-	DECL_LUA_FACTORY ( MOAIFmodChannel )
 
 	//----------------------------------------------------------------//
 	bool		ApplyAttrOp			( u32 attrID, USAttrOp& attrOp );

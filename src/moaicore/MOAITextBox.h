@@ -81,14 +81,9 @@ private:
 	
 public:
 
-	enum {
-		TOTAL_ATTR = MOAIProp2D::TOTAL_ATTR,
-	};
-
 	DECL_LUA_FACTORY ( MOAITextBox )
 	
 	//----------------------------------------------------------------//
-	bool			ApplyAttrOp				( u32 attrID, USAttrOp& attrOp );
 	void			ClearCurves				();
 	void			Draw					();
 	void			DrawDebug				();

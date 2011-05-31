@@ -30,13 +30,14 @@ private:
 
 public:
 	
+	DECL_LUA_FACTORY ( MOAIAnimCurve )
+	DECL_ATTR_HELPER ( MOAIAnimCurve )
+	
 	enum {
 		ATTR_TIME,
 		ATTR_VALUE,
 		TOTAL_ATTR,
 	};
-	
-	DECL_LUA_FACTORY ( MOAIAnimCurve )
 	
 	//----------------------------------------------------------------//
 	bool			ApplyAttrOp			( u32 attrID, USAttrOp& attrOp );

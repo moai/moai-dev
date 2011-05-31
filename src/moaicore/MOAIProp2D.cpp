@@ -8,6 +8,7 @@
 #include <moaicore/MOAIGrid.h>
 #include <moaicore/MOAILayoutFrame.h>
 #include <moaicore/MOAILogMessages.h>
+#include <moaicore/MOAIPartition.h>
 #include <moaicore/MOAIProp2D.h>
 #include <moaicore/MOAIShader.h>
 #include <moaicore/MOAISurfaceSampler2D.h>
@@ -113,6 +114,7 @@ int MOAIProp2D::_setFrame ( lua_State* L ) {
 	float y1	= state.GetValue < float >( 5, 0.0f );
 	
 	self->mFrame.Init ( x0, y0, x1, y1 );
+	self->mFrameSource = FRAME_FROM_SELF;
 	self->ScheduleUpdate ();
 	
 	return 0;
@@ -273,11 +275,16 @@ int MOAIProp2D::_setUVTransform ( lua_State* L ) {
 //----------------------------------------------------------------//
 bool MOAIProp2D::ApplyAttrOp ( u32 attrID, USAttrOp& attrOp ) {
 
-	switch( attrID ) {
-		case ATTR_INDEX:
+	if ( MOAIProp2DAttr::Check ( attrID )) {
+		attrID = UNPACK_ATTR ( attrID );
+
+		if ( attrID == ATTR_INDEX ) {
 			this->mIndex = attrOp.Op ( this->mIndex );
 			return true;
+		}
 	}
+	
+	if ( MOAIColor::ApplyAttrOp ( attrID, attrOp )) return true;
 	return MOAITransform::ApplyAttrOp ( attrID, attrOp );
 }
 
@@ -491,9 +498,13 @@ void MOAIProp2D::LoadShader () {
 
 	if ( this->mShader ) {
 		this->mShader->Bind ();
+		
+		USColorVec color = drawbuffer.GetPenColor ();
+		color.Modulate ( this->mColor );
+		drawbuffer.SetPenColor ( color );
 	}
 	else {
-		drawbuffer.SetPenColor ( 1.0f, 1.0f, 1.0f, 1.0f );
+		drawbuffer.SetPenColor ( this->mColor );
 		drawbuffer.SetBlendMode ( GL_ONE, GL_ONE_MINUS_SRC_ALPHA );
 	}
 	
@@ -516,8 +527,10 @@ MOAIProp2D::MOAIProp2D () :
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIProp )
+		RTTI_EXTEND ( MOAIColor )
 	RTTI_END
 	
+	this->mColor.Set ( 1.0f, 1.0f, 1.0f, 1.0f );
 	this->mFrame.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
 }
 
@@ -527,6 +540,32 @@ MOAIProp2D::~MOAIProp2D () {
 
 //----------------------------------------------------------------//
 void MOAIProp2D::OnDepNodeUpdate () {
+	
+	this->mColor = *this;
+	
+	if (( this->mParentMask & INHERIT_PARTITION ) || ( this->mParentMask & INHERIT_COLOR )) {
+		
+		MOAIProp2D* parentProp = USCast < MOAIProp2D >( this->mParent );
+		if ( parentProp ) {
+			
+			if ( this->mParentMask & INHERIT_PARTITION ) {
+			
+				MOAIPartition* parentPartition = parentProp->GetPartition ();
+				
+				if ( parentPartition ) {
+					parentPartition->InsertProp ( *this );
+				}
+				else {
+					MOAIPartition* partition = this->GetPartition ();
+					partition->RemoveProp ( *this );
+				}
+			}
+			
+			if ( this->mParentMask & INHERIT_COLOR ) {
+				this->mColor.Modulate ( parentProp->mColor );
+			}
+		}
+	}
 	
 	USRect localFrame;
 	localFrame.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
@@ -597,8 +636,12 @@ void MOAIProp2D::OnDepNodeUpdate () {
 void MOAIProp2D::RegisterLuaClass ( USLuaState& state ) {
 	
 	MOAIProp::RegisterLuaClass ( state );
+	MOAIColor::RegisterLuaClass ( state );
 	
-	state.SetField ( -1, "ATTR_INDEX", ( u32 )ATTR_INDEX );
+	state.SetField ( -1, "INHERIT_PARTITION", ( u32 )INHERIT_PARTITION );
+	state.SetField ( -1, "INHERIT_COLOR", ( u32 )INHERIT_COLOR );
+	
+	state.SetField ( -1, "ATTR_INDEX", MOAIProp2DAttr::Pack ( ATTR_INDEX ));
 	
 	state.SetField ( -1, "FRAME_FROM_DECK", ( u32 )FRAME_FROM_DECK );
 	state.SetField ( -1, "FRAME_FROM_PARENT", ( u32 )FRAME_FROM_PARENT );
@@ -609,6 +652,7 @@ void MOAIProp2D::RegisterLuaClass ( USLuaState& state ) {
 void MOAIProp2D::RegisterLuaFuncs ( USLuaState& state ) {
 	
 	MOAIProp::RegisterLuaFuncs ( state );
+	MOAIColor::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
 		{ "getGrid",			_getGrid },

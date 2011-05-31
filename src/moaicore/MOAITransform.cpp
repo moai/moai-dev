@@ -181,11 +181,11 @@ int MOAITransform::_move ( lua_State* L ) {
 	float delay		= state.GetValue < float >( 7, 0.0f );
 	u32 mode		= state.GetValue < u32 >( 8, USInterpolate::kSmooth );
 	
-	action->SetLink ( 0, self, MOAITransform::ATTR_X_LOC, xLoc, mode );
-	action->SetLink ( 1, self, MOAITransform::ATTR_Y_LOC, yLoc, mode );
-	action->SetLink ( 2, self, MOAITransform::ATTR_Z_ROT, zRot, mode );
-	action->SetLink ( 3, self, MOAITransform::ATTR_X_SCL, xScl, mode );
-	action->SetLink ( 4, self, MOAITransform::ATTR_Y_SCL, yScl, mode );
+	action->SetLink ( 0, self, MOAITransformAttr::Pack ( ATTR_X_LOC ), xLoc, mode );
+	action->SetLink ( 1, self, MOAITransformAttr::Pack ( ATTR_Y_LOC ), yLoc, mode );
+	action->SetLink ( 2, self, MOAITransformAttr::Pack ( ATTR_Z_ROT ), zRot, mode );
+	action->SetLink ( 3, self, MOAITransformAttr::Pack ( ATTR_X_SCL ), xScl, mode );
+	action->SetLink ( 4, self, MOAITransformAttr::Pack ( ATTR_Y_SCL ), yScl, mode );
 	
 	action->SetLength ( delay );
 	action->Start ();
@@ -219,8 +219,8 @@ int MOAITransform::_moveLoc ( lua_State* L ) {
 	float delay		= state.GetValue < float >( 4, 0.0f );
 	u32 mode		= state.GetValue < u32 >( 5, USInterpolate::kSmooth );
 	
-	action->SetLink ( 0, self, MOAITransform::ATTR_X_LOC, xLoc, mode );
-	action->SetLink ( 1, self, MOAITransform::ATTR_Y_LOC, yLoc, mode );
+	action->SetLink ( 0, self, MOAITransformAttr::Pack ( ATTR_X_LOC ), xLoc, mode );
+	action->SetLink ( 1, self, MOAITransformAttr::Pack ( ATTR_Y_LOC ), yLoc, mode );
 	
 	action->SetLength ( delay );
 	action->Start ();
@@ -252,7 +252,7 @@ int MOAITransform::_moveRot ( lua_State* L ) {
 	float delay		= state.GetValue < float >( 3, 0.0f );
 	u32 mode		= state.GetValue < u32 >( 4, USInterpolate::kSmooth );
 	
-	action->SetLink ( 0, self, MOAITransform::ATTR_Z_ROT, zRot, mode );
+	action->SetLink ( 0, self, MOAITransformAttr::Pack ( ATTR_Z_ROT ), zRot, mode );
 	
 	action->SetLength ( delay );
 	action->Start ();
@@ -286,8 +286,8 @@ int MOAITransform::_moveScl ( lua_State* L ) {
 	float delay		= state.GetValue < float >( 4, 0.0f );
 	u32 mode		= state.GetValue < u32 >( 5, USInterpolate::kSmooth );
 	
-	action->SetLink ( 0, self, MOAITransform::ATTR_X_SCL, xScl, mode );
-	action->SetLink ( 1, self, MOAITransform::ATTR_Y_SCL, yScl, mode );
+	action->SetLink ( 0, self, MOAITransformAttr::Pack ( ATTR_X_SCL ), xScl, mode );
+	action->SetLink ( 1, self, MOAITransformAttr::Pack ( ATTR_Y_SCL ), yScl, mode );
 	
 	action->SetLength ( delay );
 	action->Start ();
@@ -328,11 +328,11 @@ int MOAITransform::_seek ( lua_State* L ) {
 	float delay		= state.GetValue < float >( 7, 0.0f );
 	u32 mode		= state.GetValue < u32 >( 8, USInterpolate::kSmooth );
 
-	action->SetLink ( 0, self, MOAITransform::ATTR_X_LOC, xLoc - self->mLoc.mX, mode );
-	action->SetLink ( 1, self, MOAITransform::ATTR_Y_LOC, yLoc - self->mLoc.mY, mode );
-	action->SetLink ( 2, self, MOAITransform::ATTR_Z_ROT, zRot - self->mDegrees, mode );
-	action->SetLink ( 3, self, MOAITransform::ATTR_X_SCL, xScl - self->mScale.mX, mode );
-	action->SetLink ( 4, self, MOAITransform::ATTR_Y_SCL, yScl - self->mScale.mY, mode );
+	action->SetLink ( 0, self, MOAITransformAttr::Pack ( ATTR_X_LOC ), xLoc - self->mLoc.mX, mode );
+	action->SetLink ( 1, self, MOAITransformAttr::Pack ( ATTR_Y_LOC ), yLoc - self->mLoc.mY, mode );
+	action->SetLink ( 2, self, MOAITransformAttr::Pack ( ATTR_Z_ROT ), zRot - self->mDegrees, mode );
+	action->SetLink ( 3, self, MOAITransformAttr::Pack ( ATTR_X_SCL ), xScl - self->mScale.mX, mode );
+	action->SetLink ( 4, self, MOAITransformAttr::Pack ( ATTR_Y_SCL ), yScl - self->mScale.mY, mode );
 	
 	action->SetLength ( delay );
 	action->Start ();
@@ -367,8 +367,8 @@ int MOAITransform::_seekLoc ( lua_State* L ) {
 	float delay		= state.GetValue < float >( 4, 0.0f );
 	u32 mode		= state.GetValue < u32 >( 5, USInterpolate::kSmooth );
 
-	action->SetLink ( 0, self, MOAITransform::ATTR_X_LOC, xLoc - self->mLoc.mX, mode );
-	action->SetLink ( 1, self, MOAITransform::ATTR_Y_LOC, yLoc - self->mLoc.mY, mode );
+	action->SetLink ( 0, self, MOAITransformAttr::Pack ( ATTR_X_LOC ), xLoc - self->mLoc.mX, mode );
+	action->SetLink ( 1, self, MOAITransformAttr::Pack ( ATTR_Y_LOC ), yLoc - self->mLoc.mY, mode );
 	
 	action->SetLength ( delay );
 	action->Start ();
@@ -401,7 +401,7 @@ int MOAITransform::_seekRot ( lua_State* L ) {
 	float delay		= state.GetValue < float >( 3, 0.0f );
 	u32 mode		= state.GetValue < u32 >( 4, USInterpolate::kSmooth );
 
-	action->SetLink ( 0, self, MOAITransform::ATTR_Z_ROT, zRot - self->mDegrees, mode );
+	action->SetLink ( 0, self, MOAITransformAttr::Pack ( ATTR_Z_ROT ), zRot - self->mDegrees, mode );
 	
 	action->SetLength ( delay );
 	action->Start ();
@@ -436,8 +436,8 @@ int MOAITransform::_seekScl ( lua_State* L ) {
 	float delay		= state.GetValue < float >( 4, 0.0f );
 	u32 mode		= state.GetValue < u32 >( 5, USInterpolate::kSmooth );
 
-	action->SetLink ( 0, self, MOAITransform::ATTR_X_SCL, xScl - self->mScale.mX, mode );
-	action->SetLink ( 1, self, MOAITransform::ATTR_Y_SCL, yScl - self->mScale.mY, mode );
+	action->SetLink ( 0, self, MOAITransformAttr::Pack ( ATTR_X_SCL ), xScl - self->mScale.mX, mode );
+	action->SetLink ( 1, self, MOAITransformAttr::Pack ( ATTR_Y_SCL ), yScl - self->mScale.mY, mode );
 	
 	action->SetLength ( delay );
 	action->Start ();
@@ -482,6 +482,16 @@ int MOAITransform::_setParent ( lua_State* L ) {
 	
 	MOAITransformBase* parent = state.GetLuaObject < MOAITransformBase >( 2 );
 	self->SetParent ( parent );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAITransform::_setParentMask ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITransform, "U" )
+	
+	self->mParentMask = state.GetValue < u32 >( 2, INHERIT_ALL );
 	
 	return 0;
 }
@@ -561,22 +571,25 @@ int MOAITransform::_worldToModel ( lua_State* L ) {
 //----------------------------------------------------------------//
 bool MOAITransform::ApplyAttrOp ( u32 attrID, USAttrOp& attrOp ) {
 
-	switch ( attrID ) {
-		case ATTR_X_LOC:
-			this->mLoc.mX = attrOp.Op ( this->mLoc.mX );
-			return true;
-		case ATTR_Y_LOC:
-			this->mLoc.mY = attrOp.Op ( this->mLoc.mY );
-			return true;
-		case ATTR_Z_ROT:
-			this->mDegrees = attrOp.Op ( this->mDegrees );
-			return true;
-		case ATTR_X_SCL:
-			this->mScale.mX = attrOp.Op ( this->mScale.mX );
-			return true;
-		case ATTR_Y_SCL:
-			this->mScale.mY = attrOp.Op ( this->mScale.mY );
-			return true;
+	if ( MOAITransformAttr::Check ( attrID )) {
+
+		switch ( UNPACK_ATTR ( attrID )) {
+			case ATTR_X_LOC:
+				this->mLoc.mX = attrOp.Op ( this->mLoc.mX );
+				return true;
+			case ATTR_Y_LOC:
+				this->mLoc.mY = attrOp.Op ( this->mLoc.mY );
+				return true;
+			case ATTR_Z_ROT:
+				this->mDegrees = attrOp.Op ( this->mDegrees );
+				return true;
+			case ATTR_X_SCL:
+				this->mScale.mX = attrOp.Op ( this->mScale.mX );
+				return true;
+			case ATTR_Y_SCL:
+				this->mScale.mY = attrOp.Op ( this->mScale.mY );
+				return true;
+		}
 	}
 	return false;
 }
@@ -593,25 +606,19 @@ void MOAITransform::BuildTransforms ( float xOff, float yOff, float xStretch, fl
 	);
 	
 	if ( this->mParent ) {
-	
-		USAffine2D inherit;
-		inherit.Ident ();
 		
-		inherit.Append ( this->mParent->GetLocalToWorldMtx ());
+		const USAffine2D& inherit = this->mParent->GetLocalToWorldMtx ();
 		
-		if ( this->mFilter == INHERIT_ALL ) {
+		if ( this->mParentMask & INHERIT_TRANSFORM ) {
 			this->mLocalToWorldMtx.Append ( inherit );
 		}
-		
-		else if ( this->mFilter == INHERIT_LOC ) {
+		else if ( this->mParentMask & INHERIT_LOC ) {
 			
-			USVec2D loc ( 0.0f, 0.0f );
+			USVec2D loc = this->mLoc;
 			inherit.Transform ( loc );
 			
-			USAffine2D mtx;
-			mtx.Translate ( loc );
-			
-			this->mLocalToWorldMtx.Append ( mtx );
+			this->mLocalToWorldMtx.m [ USAffine2D::C2_R0 ] = loc.mX;
+			this->mLocalToWorldMtx.m [ USAffine2D::C2_R1 ] = loc.mY;
 		}
 	}
 	
@@ -636,7 +643,7 @@ MOAITransform::MOAITransform () :
 	mScale ( 1.0f, 1.0f ),
 	mDegrees ( 0.0f ),
 	mParent ( 0 ),
-	mFilter ( INHERIT_ALL ) {
+	mParentMask ( INHERIT_TRANSFORM ) {
 	
 	RTTI_SINGLE ( MOAITransformBase )
 	
@@ -661,11 +668,14 @@ void MOAITransform::RegisterLuaClass ( USLuaState& state ) {
 	
 	MOAINode::RegisterLuaClass ( state );
 	
-	state.SetField ( -1, "ATTR_X_LOC", ( u32 )ATTR_X_LOC );
-	state.SetField ( -1, "ATTR_Y_LOC", ( u32 )ATTR_Y_LOC );
-	state.SetField ( -1, "ATTR_Z_ROT", ( u32 )ATTR_Z_ROT );
-	state.SetField ( -1, "ATTR_X_SCL", ( u32 )ATTR_X_SCL );
-	state.SetField ( -1, "ATTR_Y_SCL", ( u32 )ATTR_Y_SCL );
+	state.SetField ( -1, "INHERIT_LOC", ( u32 )INHERIT_LOC );
+	state.SetField ( -1, "INHERIT_TRANSFORM", ( u32 )INHERIT_TRANSFORM );
+	
+	state.SetField ( -1, "ATTR_X_LOC", MOAITransformAttr::Pack ( ATTR_X_LOC ));
+	state.SetField ( -1, "ATTR_Y_LOC", MOAITransformAttr::Pack ( ATTR_Y_LOC ));
+	state.SetField ( -1, "ATTR_Z_ROT", MOAITransformAttr::Pack ( ATTR_Z_ROT ));
+	state.SetField ( -1, "ATTR_X_SCL", MOAITransformAttr::Pack ( ATTR_X_SCL ));
+	state.SetField ( -1, "ATTR_Y_SCL", MOAITransformAttr::Pack ( ATTR_Y_SCL ));
 }
 
 //----------------------------------------------------------------//
@@ -691,6 +701,7 @@ void MOAITransform::RegisterLuaFuncs ( USLuaState& state ) {
 		{ "seekScl",			_seekScl },
 		{ "setLoc",				_setLoc },
 		{ "setParent",			_setParent },
+		{ "setParentMask",		_setParentMask },
 		{ "setRot",				_setRot },
 		{ "setScl",				_setScl },
 		{ "worldToModel",		_worldToModel },

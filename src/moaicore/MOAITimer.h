@@ -60,6 +60,7 @@ protected:
 public:
 	
 	DECL_LUA_FACTORY ( MOAITimer )
+	DECL_ATTR_HELPER ( MOAITimer )
 	
 	enum {
 		ATTR_TIME,

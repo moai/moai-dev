@@ -27,6 +27,9 @@ protected:
 
 public:
 	
+	DECL_LUA_FACTORY ( MOAIColor )
+	DECL_ATTR_HELPER ( MOAIColor )
+	
 	enum {
 		ATTR_R_COL,
 		ATTR_G_COL,
@@ -34,8 +37,6 @@ public:
 		ATTR_A_COL,
 		TOTAL_ATTR,
 	};
-	
-	DECL_LUA_FACTORY ( MOAIColor )
 	
 	//----------------------------------------------------------------//
 	bool			ApplyAttrOp			( u32 attrID, USAttrOp& attrOp );

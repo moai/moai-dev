@@ -4,6 +4,7 @@
 #ifndef	MOAIPROP2D_H
 #define	MOAIPROP2D_H
 
+#include <moaicore/MOAIColor.h>
 #include <moaicore/MOAIProp.h>
 
 class MOAIDeck;
@@ -28,7 +29,8 @@ class MOAISurfaceSampler2D;
 	@const	FRAME_FROM_SELF
 */
 class MOAIProp2D :
-	public MOAIProp {
+	public MOAIProp,
+	public MOAIColor {
 protected:
 	
 	enum {
@@ -56,6 +58,8 @@ protected:
 	USRef < MOAIShader >		mShader;
 	USRef < MOAITransformBase >	mUVTransform;
 	
+	USColorVec					mColor;
+	
 	//----------------------------------------------------------------//
 	static int		_getGrid			( lua_State* L );
 	static int		_getIndex			( lua_State* L );
@@ -79,14 +83,21 @@ protected:
 
 public:
 	
+	DECL_LUA_FACTORY ( MOAIProp2D )
+	DECL_ATTR_HELPER ( MOAIProp2D )
+	
 	enum {
-		ATTR_INDEX = MOAITransform::TOTAL_ATTR,
+		ATTR_INDEX,
 		TOTAL_ATTR,
 	};
 	
-	GET_SET ( u32, Index, mIndex )
+	enum {
+		INHERIT_COLOR		= 0x00000004,
+		INHERIT_PARTITION	= 0x00000008,
+	};
 	
-	DECL_LUA_FACTORY ( MOAIProp2D )
+	
+	GET_SET ( u32, Index, mIndex )
 	
 	//----------------------------------------------------------------//
 	bool							ApplyAttrOp				( u32 attrID, USAttrOp& attrOp );

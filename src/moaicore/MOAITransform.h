@@ -30,7 +30,7 @@ protected:
 	
 	USWeak < MOAITransformBase >	mParent;
 	
-	u32 mFilter;
+	u32 mParentMask;
 
 	//----------------------------------------------------------------//
 	static int	_addLoc			( lua_State* L );
@@ -50,6 +50,7 @@ protected:
 	static int	_seekScl		( lua_State* L );
 	static int	_setLoc			( lua_State* L );
 	static int	_setParent		( lua_State* L );
+	static int	_setParentMask	( lua_State* L );
 	static int	_setRot			( lua_State* L );
 	static int	_setScl			( lua_State* L );
 	static int	_worldToModel	( lua_State* L );
@@ -59,6 +60,9 @@ protected:
 	void	OnDepNodeUpdate			();
 
 public:
+
+	DECL_LUA_FACTORY ( MOAITransform )
+	DECL_ATTR_HELPER ( MOAITransform )
 
 	enum {
 		ATTR_X_LOC,
@@ -70,12 +74,11 @@ public:
 	};
 	
 	enum {
-		INHERIT_LOC,
+		INHERIT_LOC				= 0x00000001,
+		INHERIT_TRANSFORM		= 0x00000002,
 	};
 	
 	static const u32 INHERIT_ALL = 0xffffffff;
-	
-	DECL_LUA_FACTORY ( MOAITransform )
 	
 	GET_SET ( USVec2D, Loc, mLoc )
 	GET_SET ( USVec2D, Scl, mScale )
@@ -86,7 +89,7 @@ public:
 	const USAffine2D&	GetLocalToWorldMtx				();
 	const USAffine2D&	GetWorldToLocalMtx				();
 						MOAITransform					();
-						~MOAITransform				();
+						~MOAITransform					();
 	void				RegisterLuaClass				( USLuaState& state );
 	void				RegisterLuaFuncs				( USLuaState& state );
 	void				SetLoc							( float x, float y );

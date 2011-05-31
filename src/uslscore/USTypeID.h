@@ -13,7 +13,7 @@ protected:
 
 	//----------------------------------------------------------------//
 	static u32 GetUniqueID ()	{
-		static u32 counter = 0;	
+		static u32 counter = 1;	
 		return counter++;
 	};
 };

@@ -170,9 +170,7 @@ void MOAISimpleShader::RegisterLuaFuncs ( USLuaState& state ) {
 //----------------------------------------------------------------//
 void MOAISimpleShader::SetParent ( MOAISimpleShader* parent ) {
 
-	this->mParent = parent;
-	this->SetAttrLink ( ATTR_PARENT, parent, NULL_ATTR );
-	this->ScheduleUpdate ();
+	this->SetDependentMember < MOAISimpleShader >( this->mParent, parent );
 }
 
 //----------------------------------------------------------------//

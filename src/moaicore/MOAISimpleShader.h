@@ -46,11 +46,6 @@ public:
 	
 	DECL_LUA_FACTORY ( MOAISimpleShader )
 	
-	enum {
-		ATTR_PARENT,
-		TOTAL_ATTR,
-	};
-	
 	//----------------------------------------------------------------//
 	bool			ApplyAttrOp				( u32 attrID, USAttrOp& attrOp );
 	void			Bind					();
