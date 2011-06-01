@@ -13,7 +13,12 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	clear
+	@text	Remove all props from the partition.
+	
+	@in		MOAILayer2D self
+	@out	nil
+*/
 int MOAIPartition::_clear ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIPartition, "U" )
 

@@ -10,6 +10,12 @@
 #include <moaicore/MOAIViewport.h>
 
 //----------------------------------------------------------------//
+/**	@name	clear
+	@text	Remove all camera anchors from the fitter.
+	
+	@in		MOAICameraFitter2D self
+	@out	nil
+*/
 int MOAICameraFitter2D::_clear ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICameraFitter2D, "U" )
 	
@@ -19,6 +25,13 @@ int MOAICameraFitter2D::_clear ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	insertAnchor
+	@text	Add an anchor to the fitter.
+	
+	@in		MOAICameraFitter2D self
+	@in		MOAICameraAnchor2D anchor
+	@out	nil
+*/
 int MOAICameraFitter2D::_insertAnchor ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICameraFitter2D, "UU" )
 	
@@ -30,6 +43,13 @@ int MOAICameraFitter2D::_insertAnchor ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	removeAnchor
+	@text	Remove an anchor from the fitter.
+	
+	@in		MOAICameraFitter2D self
+	@in		MOAICameraAnchor2D anchor
+	@out	nil
+*/
 int MOAICameraFitter2D::_removeAnchor ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICameraFitter2D, "UU" )
 	
@@ -41,6 +61,17 @@ int MOAICameraFitter2D::_removeAnchor ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	setBounds
+	@text	Set the world bounds of the fitter. The camera will not
+			move outside of the fitter's bounds.
+	
+	@in		MOAICameraFitter2D self
+	@in		number xMin
+	@in		number yMin
+	@in		number xMax
+	@in		number yMax
+	@out	nil
+*/
 int MOAICameraFitter2D::_setBounds ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICameraFitter2D, "UNNNN" )
 
@@ -55,6 +86,16 @@ int MOAICameraFitter2D::_setBounds ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	setCamera
+	@text	Set a MOAITransform for the fitter to use as a camera.
+			The fitter will dynamically change the location and
+			scale of the camera to keep all of the anchors on the
+			screen.
+	
+	@in		MOAICameraFitter2D self
+	@in		MOAITransform camera		Default value is nil.
+	@out	nil
+*/
 int MOAICameraFitter2D::_setCamera ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICameraFitter2D, "U" )
 	
@@ -65,6 +106,18 @@ int MOAICameraFitter2D::_setCamera ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	setDamper
+	@text	Set's the fitter's damper coefficient. This is a scalar
+			applied to the difference between the camera transform's
+			location and the fitter's target location every frame.
+			The smaller the coefficient, the tighter the fit will be.
+			A value of '0' will not dampen at all; a value of '1' will
+			never move the camera.
+	
+	@in		MOAICameraFitter2D self
+	@opt	number damper		Default value is 0.
+	@out	nil
+*/
 int MOAICameraFitter2D::_setDamper ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICameraFitter2D, "U" )
 	
@@ -74,6 +127,14 @@ int MOAICameraFitter2D::_setDamper ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	setMin
+	@text	Set the minimum number of world units to be displayed by
+			the camera along either axis.
+	
+	@in		MOAICameraFitter2D self
+	@opt	number min					Default value is 0.
+	@out	nil
+*/
 int MOAICameraFitter2D::_setMin ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICameraFitter2D, "U" )
 	
@@ -83,18 +144,38 @@ int MOAICameraFitter2D::_setMin ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-int MOAICameraFitter2D::_setViewport ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAICameraFitter2D, "UU" )
+/**	@name	setViewport
+	@text	Set the viewport to be used for fitting.
 	
-	MOAIViewport* viewport = state.GetLuaObject < MOAIViewport >( 2 );
-	if ( viewport ) {
-		self->mViewport = viewport;
-		self->mViewRect = viewport->GetRect ();
+	@in		MOAICameraFitter2D self
+	@opt	MOAIViewport viewport			Default value is nil.
+	@out	nil
+*/
+int MOAICameraFitter2D::_setViewport ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAICameraFitter2D, "U" )
+	
+	self->mViewport = state.GetLuaObject < MOAIViewport >( 2 );
+	if ( self->mViewport ) {
+		self->mViewRect = self->mViewport->GetRect ();
 	}
 	return 0;
 }
 
 //----------------------------------------------------------------//
+/**	@name	snapToTarget
+	@text	Snap the camera to the target fitting.
+	
+	@overload	Snap the fitter's camera transform to the target.
+	
+		@in		MOAICameraFitter2D self
+		@out	nil
+	
+	@overload	Snap a passed in transform to the target.
+	
+		@in		MOAICameraFitter2D self
+		@in		MOAITransform
+		@out	nil
+*/
 int MOAICameraFitter2D::_snapToTarget ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICameraFitter2D, "U" )
 	

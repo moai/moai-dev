@@ -10,7 +10,14 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	setTraitMask
+	@text	Mask which traits will be inherited. See class documentation
+			for a list of trait bitmasks.
+	
+	@in		MOAITraits self
+	@opt	MOAITransformBase mask	Default value is MOAITraits.INHERIT_TRANSFORM + MOAITraits.INHERIT_COLOR.
+	@out	nil
+*/
 int MOAITraits::_setTraitMask ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITraits, "U" )
 	

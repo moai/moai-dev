@@ -11,6 +11,13 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+/**	@name	setParent
+	@text	Attach the anchor to a transform.
+	
+	@in		MOAICameraAnchor2D self
+	@opt	MOAITransformBase parent
+	@out	nil
+*/
 int MOAICameraAnchor2D::_setParent ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICameraAnchor2D, "U" )
 	
@@ -21,6 +28,16 @@ int MOAICameraAnchor2D::_setParent ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	setRect
+	@text	Set the dinemsions (in world units) of the anchor.
+	
+	@in		MOAICameraAnchor2D self
+	@in		number xMin
+	@in		number yMin
+	@in		number xMax
+	@in		number yMax
+	@out	nil
+*/
 int MOAICameraAnchor2D::_setRect ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICameraAnchor2D, "UNNNN" )
 

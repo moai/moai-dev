@@ -13,7 +13,14 @@ class MOAIShader;
 // MOAITraits
 //================================================================//
 /**	@name	MOAITraits
-	@text	Base class for traits and trait inheritance.
+	@text	Abstracts heritable prop traits.
+	
+	@const INHERIT_LOC
+	@const INHERIT_TRANSFORM
+	@const INHERIT_COLOR
+	@const INHERIT_FRAME
+	@const INHERIT_PARTITION
+	@const INHERIT_SHADER	
 */
 class MOAITraits :
 	public virtual MOAINode {

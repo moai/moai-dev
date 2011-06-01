@@ -10,6 +10,14 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+/**	@name	reserve
+	@text	The total number of indices to remap. Index remaps will be
+			initialized from 1 to N.
+	
+	@in		MOAIDeckRemapper self
+	@opt	number size		Default value is 0.
+	@out	nil
+*/
 int MOAIDeckRemapper::_reserve ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIDeckRemapper, "U" )
 
@@ -23,6 +31,15 @@ int MOAIDeckRemapper::_reserve ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	setBase
+	@text	Set the base offset for the range of indices to remap.
+			Used when remapping only a portion of the indices in
+			the original deck.
+	
+	@in		MOAIDeckRemapper self
+	@opt	number base		Default value is 0.
+	@out	nil
+*/
 int MOAIDeckRemapper::_setBase ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIDeckRemapper, "U" )
 	
@@ -32,6 +49,14 @@ int MOAIDeckRemapper::_setBase ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	setRemap
+	@text	Remap a single index to a new value.
+	
+	@in		MOAIDeckRemapper self
+	@in		number index		Index to remap.
+	@opt	number remap		New value for index. Default value is index (i.e. remove the remap).
+	@out	nil
+*/
 int MOAIDeckRemapper::_setRemap ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIDeckRemapper, "UN" )
 

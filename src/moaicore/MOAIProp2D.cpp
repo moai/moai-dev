@@ -189,7 +189,13 @@ int MOAIProp2D::_setIndex ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	setRemapper
+	@text	Set a remapper for this prop to use when drawing deck members.
+	
+	@in		MOAIProp2D self
+	@opt	MOAIDeckRemapper remapper		Default value is nil.
+	@out	nil
+*/
 int MOAIProp2D::_setRemapper ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIProp2D, "U" )
 

@@ -12,7 +12,8 @@ class MOAITransformBase;
 // MOAIProp
 //================================================================//
 /**	@name	MOAICameraAnchor2D
-	@text	Used by MOAICameraFitter
+	@text	Attaches fitting information to a transform. Used by
+			MOAICameraFitter2D.
 */
 class MOAICameraAnchor2D :
 	public MOAINode {

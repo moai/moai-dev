@@ -14,6 +14,10 @@ class MOAIViewport;
 //================================================================//
 // MOAICameraFitter2D
 //================================================================//
+/**	@name	MOAICameraFitter2D
+	@text	Action to dynamically fit a camera transform to a set of targets
+			given a viewport and world space constraints.
+*/
 class MOAICameraFitter2D :
 	public MOAIAction,
 	public MOAINode {
