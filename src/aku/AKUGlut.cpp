@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <aku/AKUGlut.h>
+#include <aku/AKU-luasocket.h>
 
 #ifdef _WIN32
 	#include <glut.h>
@@ -211,7 +212,11 @@ int AKUGlut ( int argc, char** argv ) {
 	glutInit ( &argc, argv );
 
 	AKUCreateContext ();
-
+	
+	#ifdef USE_LUASOCKET
+		AKULoadLuasocket ();
+	#endif
+	
 	AKUSetInputConfigurationName ( "AKUGlut" );
 
 	AKUReserveInputDevices			( GlutInputDeviceID::TOTAL );

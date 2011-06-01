@@ -45,7 +45,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="&quot;..\..\src&quot;;&quot;..\..\3rdparty\glut-3.7.6-bin&quot;"
-				PreprocessorDefinitions="WIN32;_CONSOLE;_DEBUG;_BOOL;AKU_DLL"
+				PreprocessorDefinitions="WIN32;_CONSOLE;_DEBUG;AKU_DLL;USE_LUASOCKET"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -212,7 +212,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalIncludeDirectories="&quot;..\..\src&quot;;&quot;..\..\3rdparty\glut-3.7.6-bin&quot;"
-				PreprocessorDefinitions="WIN32;_CONSOLE;_CRTDBG_MAP_ALLOC;_WINDOWS;_BOOL;TRUE_AND_FALSE_DEFINED;_USE_32BIT_TIME_T;_CRT_SECURE_NO_WARNINGS;AKU_DLL"
+				PreprocessorDefinitions="WIN32;_CONSOLE;AKU_DLL;USE_LUASOCKET"
 				RuntimeLibrary="2"
 				TreatWChar_tAsBuiltInType="false"
 				ForceConformanceInForLoopScope="false"

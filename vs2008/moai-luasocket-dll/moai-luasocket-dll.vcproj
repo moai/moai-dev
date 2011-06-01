@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="moai-LIB"
-	ProjectGUID="{875A4CBB-1CC9-41CB-95FA-5511142520BC}"
-	RootNamespace="moai-LIB"
+	Name="moai-luasocket-DLL"
+	ProjectGUID="{135C9CAC-605B-44B7-B364-F10C598702A9}"
+	RootNamespace="moai-luasocket-DLL"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="131072"
 	>
@@ -23,7 +23,7 @@
 			Name="Debug|Win32"
 			OutputDirectory="..\bin\$(PlatformName)\$(ConfigurationName)\"
 			IntermediateDirectory="$(ConfigurationName)"
-			ConfigurationType="4"
+			ConfigurationType="2"
 			CharacterSet="1"
 			>
 			<Tool
@@ -44,16 +44,14 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\src;&quot;..\..\3rdparty\lua-5.1.3\src&quot;;&quot;..\..\3rdparty\glew-1.5.6\include&quot;;&quot;..\..\3rdparty\zlib-1.2.3&quot;;&quot;..\..\3rdparty\sqlite-3.6.16&quot;;..\..\3rdparty\tinyxml;&quot;..\..\3rdparty\curl-7.19.7\include&quot;;..\..\3rdparty\lpng140;&quot;..\..\3rdparty\box2d-2.1.2\Box2D&quot;;&quot;..\..\3rdparty\expat-2.0.1\lib&quot;;&quot;..\..\3rdparty\chipmunk-5.3.4\include&quot;"
-				PreprocessorDefinitions="WIN32;_CONSOLE;_DEBUG;_BOOL;AKU_STATIC"
+				AdditionalIncludeDirectories="..\..\src;&quot;..\..\3rdparty\lua-5.1.3\src&quot;;&quot;..\..\3rdparty\glew-1.5.6\include&quot;;&quot;..\..\3rdparty\zlib-1.2.3&quot;;&quot;..\..\3rdparty\sqlite-3.6.16&quot;;..\..\3rdparty\tinyxml;&quot;..\..\3rdparty\curl-7.19.7\include&quot;;..\..\3rdparty\lpng140;&quot;..\..\3rdparty\box2d-2.1.2\Box2D&quot;;&quot;..\..\3rdparty\expat-2.0.1\lib&quot;;&quot;..\..\3rdparty\chipmunk-5.3.4\include&quot;;&quot;..\..\3rdparty\luasocket-2.0.2\src&quot;"
+				PreprocessorDefinitions="WIN32;_CONSOLE;_DEBUG;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_BOOL;AKU_EXPORT"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				TreatWChar_tAsBuiltInType="false"
 				ForceConformanceInForLoopScope="false"
 				RuntimeTypeInfo="false"
-				UsePrecompiledHeader="2"
-				PrecompiledHeaderThrough="pch.h"
 				WarningLevel="3"
 				DebugInformationFormat="3"
 				ShowIncludes="false"
@@ -68,10 +66,24 @@
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
-				Name="VCLibrarianTool"
+				Name="VCLinkerTool"
+				AdditionalDependencies="opengl32.lib glu32.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib"
+				ShowProgress="0"
+				LinkIncremental="2"
+				AdditionalLibraryDirectories="$(FMOD_API)\lib"
+				IgnoreAllDefaultLibraries="false"
+				GenerateDebugInformation="true"
+				SubSystem="1"
+				EntryPointSymbol=""
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
+				TargetMachine="1"
 			/>
 			<Tool
 				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -83,6 +95,9 @@
 				Name="VCFxCopTool"
 			/>
 			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
 				Name="VCPostBuildEventTool"
 				CommandLine=""
 			/>
@@ -91,7 +106,7 @@
 			Name="Debug|x64"
 			OutputDirectory="$(PlatformName)\$(ConfigurationName)"
 			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
-			ConfigurationType="4"
+			ConfigurationType="2"
 			CharacterSet="1"
 			>
 			<Tool
@@ -114,7 +129,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="&quot;..\..\src&quot;;&quot;..\..\3rdparty\lua-5.1.3\src&quot;;&quot;..\..\3rdparty\SOIL\src&quot;;&quot;..\..\3rdparty\openGL\include&quot;;&quot;..\..\3rdparty\zlib-1.2.3&quot;;&quot;..\..\3rdparty\sqlite-3.6.16&quot;;&quot;..\..\3rdparty\tinyxml&quot;;&quot;..\..\3rdparty\gsoap-2.7\gsoap&quot;;&quot;..\..\3rdparty\FMOD\inc&quot;;&quot;..\..\3rdparty\curl-7.19.7\include&quot;;&quot;..\..\3rdparty\lpng140&quot;;&quot;..\..\3rdparty\expat-2.0.1\lib&quot;"
-				PreprocessorDefinitions="WIN32;_CONSOLE;_DEBUG;_BOOL;AKU_STATIC"
+				PreprocessorDefinitions="WIN32;_CONSOLE;_DEBUG;_BOOL;AKU_EXPORT"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -125,6 +140,7 @@
 				PrecompiledHeaderThrough="pch.h"
 				WarningLevel="3"
 				DebugInformationFormat="3"
+				CallingConvention="0"
 				ShowIncludes="false"
 			/>
 			<Tool
@@ -137,10 +153,25 @@
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
-				Name="VCLibrarianTool"
+				Name="VCLinkerTool"
+				AdditionalDependencies="opengl32.lib glu32.lib glut32.lib glew32.lib fmodex_vc.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib"
+				ShowProgress="0"
+				LinkIncremental="2"
+				AdditionalLibraryDirectories="&quot;$(VCInstallDir)lib&quot;;&quot;$(VCInstallDir)PlatformSDK\lib&quot;;&quot;..\..\3rdparty\openGL\lib&quot;;&quot;..\..\3rdparty\FMOD\lib&quot;"
+				IgnoreAllDefaultLibraries="false"
+				ModuleDefinitionFile="$(ProjectDir)exports.def"
+				GenerateDebugInformation="true"
+				SubSystem="1"
+				EntryPointSymbol=""
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
+				TargetMachine="17"
 			/>
 			<Tool
 				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -152,15 +183,18 @@
 				Name="VCFxCopTool"
 			/>
 			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="xcopy /yr &quot;$(OutDir)\$(TargetFileName)&quot; &quot;..\..\bin\$(PlatformName)\$(ConfigurationName)\&quot;"
+				CommandLine="xcopy /yr &quot;$(OutDir)\$(TargetFileName)&quot; &quot;..\..\bin\$(PlatformName)\$(ConfigurationName)\&quot;&#x0D;&#x0A;xcopy /yr &quot;$(OutDir)\$(TargetName).lib&quot; &quot;..\..\bin\$(PlatformName)\$(ConfigurationName)\&quot;&#x0D;&#x0A;xcopy /yr &quot;$(OutDir)\$(TargetName).pdb&quot; &quot;..\..\bin\$(PlatformName)\$(ConfigurationName)\&quot;&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
 			OutputDirectory="..\bin\$(PlatformName)\$(ConfigurationName)\"
 			IntermediateDirectory="$(ConfigurationName)"
-			ConfigurationType="4"
+			ConfigurationType="2"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
 			>
@@ -181,14 +215,15 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\..\src;&quot;..\..\3rdparty\lua-5.1.3\src&quot;;&quot;..\..\3rdparty\glew-1.5.6\include&quot;;&quot;..\..\3rdparty\zlib-1.2.3&quot;;&quot;..\..\3rdparty\sqlite-3.6.16&quot;;..\..\3rdparty\tinyxml;&quot;..\..\3rdparty\curl-7.19.7\include&quot;;..\..\3rdparty\lpng140;&quot;..\..\3rdparty\box2d-2.1.2\Box2D&quot;;&quot;..\..\3rdparty\expat-2.0.1\lib&quot;;&quot;..\..\3rdparty\chipmunk-5.3.4\include&quot;"
-				PreprocessorDefinitions="WIN32;_CONSOLE;_CRTDBG_MAP_ALLOC;_WINDOWS;_BOOL;TRUE_AND_FALSE_DEFINED;_USE_32BIT_TIME_T;_CRT_SECURE_NO_WARNINGS;AKU_STATIC"
+				Optimization="1"
+				FavorSizeOrSpeed="2"
+				AdditionalIncludeDirectories="..\..\src;&quot;..\..\3rdparty\lua-5.1.3\src&quot;;&quot;..\..\3rdparty\glew-1.5.6\include&quot;;&quot;..\..\3rdparty\zlib-1.2.3&quot;;&quot;..\..\3rdparty\sqlite-3.6.16&quot;;..\..\3rdparty\tinyxml;&quot;..\..\3rdparty\curl-7.19.7\include&quot;;..\..\3rdparty\lpng140;&quot;..\..\3rdparty\box2d-2.1.2\Box2D&quot;;&quot;..\..\3rdparty\expat-2.0.1\lib&quot;;&quot;..\..\3rdparty\chipmunk-5.3.4\include&quot;;&quot;..\..\3rdparty\luasocket-2.0.2\src&quot;"
+				PreprocessorDefinitions="WIN32;_CONSOLE;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_BOOL;AKU_EXPORT"
 				RuntimeLibrary="2"
+				BufferSecurityCheck="false"
 				TreatWChar_tAsBuiltInType="false"
 				ForceConformanceInForLoopScope="false"
 				RuntimeTypeInfo="false"
-				UsePrecompiledHeader="2"
-				PrecompiledHeaderThrough="pch.h"
 				WarningLevel="3"
 				DebugInformationFormat="0"
 			/>
@@ -202,10 +237,24 @@
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
-				Name="VCLibrarianTool"
+				Name="VCLinkerTool"
+				AdditionalDependencies="opengl32.lib glu32.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib"
+				LinkIncremental="1"
+				AdditionalLibraryDirectories="$(FMOD_API)\lib"
+				IgnoreAllDefaultLibraries="false"
+				GenerateDebugInformation="true"
+				SubSystem="1"
+				OptimizeReferences="2"
+				EnableCOMDATFolding="2"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
+				TargetMachine="1"
 			/>
 			<Tool
 				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -215,6 +264,9 @@
 			/>
 			<Tool
 				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -248,7 +300,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalIncludeDirectories="&quot;..\..\src&quot;;&quot;..\..\3rdparty\lua-5.1.3\src&quot;;&quot;..\..\3rdparty\SOIL\src&quot;;&quot;..\..\3rdparty\openGL\include&quot;;&quot;..\..\3rdparty\zlib-1.2.3&quot;;&quot;..\..\3rdparty\sqlite-3.6.16&quot;;&quot;..\..\3rdparty\tinyxml&quot;;&quot;..\..\3rdparty\gsoap-2.7\gsoap&quot;;&quot;..\..\3rdparty\FMOD\inc&quot;;&quot;..\..\3rdparty\curl-7.19.7\include&quot;;&quot;..\..\3rdparty\lpng140&quot;;&quot;..\..\3rdparty\expat-2.0.1\lib&quot;"
-				PreprocessorDefinitions="WIN32;_CONSOLE;_CRTDBG_MAP_ALLOC;_WINDOWS;_BOOL;TRUE_AND_FALSE_DEFINED;_USE_32BIT_TIME_T;_CRT_SECURE_NO_WARNINGS;AKU_STATIC"
+				PreprocessorDefinitions="WIN32;_CONSOLE;_CRTDBG_MAP_ALLOC;_WINDOWS;_BOOL;TRUE_AND_FALSE_DEFINED;_USE_32BIT_TIME_T;_CRT_SECURE_NO_WARNINGS;AKU_EXPORT"
 				RuntimeLibrary="2"
 				TreatWChar_tAsBuiltInType="false"
 				ForceConformanceInForLoopScope="false"
@@ -257,6 +309,7 @@
 				PrecompiledHeaderThrough="pch.h"
 				WarningLevel="3"
 				DebugInformationFormat="3"
+				CallingConvention="0"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -273,6 +326,7 @@
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="&quot;$(VCInstallDir)lib&quot;;&quot;$(VCInstallDir)PlatformSDK\lib&quot;;&quot;..\..\3rdparty\openGL\lib&quot;;&quot;..\..\3rdparty\FMOD\lib&quot;"
 				IgnoreAllDefaultLibraries="false"
+				ModuleDefinitionFile="$(ProjectDir)exports.def"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				OptimizeReferences="2"
@@ -301,7 +355,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="xcopy /yr &quot;$(OutDir)\$(TargetFileName)&quot; &quot;..\..\bin\$(PlatformName)\$(ConfigurationName)\&quot;"
+				CommandLine="xcopy /yr &quot;$(OutDir)\$(TargetFileName)&quot; &quot;..\..\bin\win32\$(ConfigurationName)\&quot;&#x0D;&#x0A;xcopy /yr &quot;$(OutDir)\$(TargetName).lib&quot; &quot;..\..\bin\win32\$(ConfigurationName)\&quot;&#x0D;&#x0A;"
 			/>
 		</Configuration>
 	</Configurations>
@@ -309,51 +363,119 @@
 	</References>
 	<Files>
 		<File
-			RelativePath="..\..\src\aku\AKU.cpp"
+			RelativePath="..\..\src\aku\AKU-luasocket.cpp"
 			>
 		</File>
 		<File
-			RelativePath="..\..\src\aku\AKU.h"
+			RelativePath="..\..\src\aku\AKU-luasocket.h"
 			>
 		</File>
 		<File
-			RelativePath="..\..\src\aku\pch.cpp"
+			RelativePath="..\..\3rdparty\luasocket-2.0.2\src\auxiliar.c"
 			>
-			<FileConfiguration
-				Name="Debug|Win32"
-				>
-				<Tool
-					Name="VCCLCompilerTool"
-					UsePrecompiledHeader="1"
-				/>
-			</FileConfiguration>
-			<FileConfiguration
-				Name="Debug|x64"
-				>
-				<Tool
-					Name="VCCLCompilerTool"
-					UsePrecompiledHeader="1"
-				/>
-			</FileConfiguration>
-			<FileConfiguration
-				Name="Release|Win32"
-				>
-				<Tool
-					Name="VCCLCompilerTool"
-					UsePrecompiledHeader="1"
-				/>
-			</FileConfiguration>
-			<FileConfiguration
-				Name="Release|x64"
-				>
-				<Tool
-					Name="VCCLCompilerTool"
-					UsePrecompiledHeader="1"
-				/>
-			</FileConfiguration>
 		</File>
 		<File
-			RelativePath="..\..\src\aku\pch.h"
+			RelativePath="..\..\3rdparty\luasocket-2.0.2\src\auxiliar.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\luasocket-2.0.2\src\buffer.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\luasocket-2.0.2\src\buffer.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\luasocket-2.0.2\src\except.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\luasocket-2.0.2\src\except.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\luasocket-2.0.2\src\inet.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\luasocket-2.0.2\src\inet.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\luasocket-2.0.2\src\io.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\luasocket-2.0.2\src\io.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\luasocket-2.0.2\src\luasocket.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\luasocket-2.0.2\src\luasocket.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\luasocket-2.0.2\src\mime.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\luasocket-2.0.2\src\mime.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\luasocket-2.0.2\src\options.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\luasocket-2.0.2\src\options.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\luasocket-2.0.2\src\select.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\luasocket-2.0.2\src\select.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\luasocket-2.0.2\src\socket.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\luasocket-2.0.2\src\tcp.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\luasocket-2.0.2\src\tcp.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\luasocket-2.0.2\src\timeout.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\luasocket-2.0.2\src\timeout.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\luasocket-2.0.2\src\udp.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\luasocket-2.0.2\src\udp.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\luasocket-2.0.2\src\wsocket.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\luasocket-2.0.2\src\wsocket.h"
 			>
 		</File>
 	</Files>

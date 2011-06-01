@@ -5,7 +5,6 @@
 #include <aku/AKU.h>
 
 #include <cassert>
-
 #include <moaicore/moaicore.h>
 
 #define AKU_DEFINE_FUNC_CONTEXT(funcname) \
