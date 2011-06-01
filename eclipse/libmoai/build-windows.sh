@@ -1,13 +1,12 @@
 #!/bin/bash
 
 #----------------------------------------------------------------
-# build
+# move libcrypto to libmoai folder
 #----------------------------------------------------------------
-cd libcrypto
-./build.sh
+mv libcrypto-windows/obj/local/armeabi/libcrypto.a jni
 
-cd ../
-mv libcrypto/obj/local/armeabi/libcrypto.a jni
-
+#----------------------------------------------------------------
+# build libmoai
+#----------------------------------------------------------------
 cd jni
 ndk-build

@@ -2,7 +2,7 @@
 rm -rf libs
 rm -rf obj
 
-cd libcrypto
+cd libcrypto-windows
 ./clean.sh
 
 echo libmoai cleaned.
