@@ -129,6 +129,7 @@ $(SRC_PATH)/src/moaicore/MOAITileDeck2D.cpp \
 $(SRC_PATH)/src/moaicore/MOAIThread.cpp \
 $(SRC_PATH)/src/moaicore/MOAITimer.cpp \
 $(SRC_PATH)/src/moaicore/MOAITouchSensor.cpp \
+$(SRC_PATH)/src/moaicore/MOAITraits.cpp \
 $(SRC_PATH)/src/moaicore/MOAITransform.cpp \
 $(SRC_PATH)/src/moaicore/MOAITransformBase.cpp \
 $(SRC_PATH)/src/moaicore/MOAIVertexBuffer.cpp \
