@@ -1,5 +1,5 @@
 Moai SDK
-Version 0.2 Beta
-Revision 4
+Version 0.3 Beta
+Revision 1
  
 --file is generated automatically; do not edit--
