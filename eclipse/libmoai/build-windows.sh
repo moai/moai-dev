@@ -3,7 +3,7 @@
 #----------------------------------------------------------------
 # move libcrypto to libmoai folder
 #----------------------------------------------------------------
-mv libcrypto/obj/local/armeabi/libcrypto.a jni
+mv libcrypto-windows/obj/local/armeabi/libcrypto.a jni
 
 #----------------------------------------------------------------
 # build libmoai

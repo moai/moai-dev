@@ -1,6 +1,6 @@
 @echo off
 
-pushd libcrypto
+pushd libcrypto-windows
 call build.bat false
 popd
 
