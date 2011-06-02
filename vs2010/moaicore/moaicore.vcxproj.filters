@@ -19,9 +19,6 @@
     <Filter Include="src\chipmunk">
       <UniqueIdentifier>{b6b548a3-329c-4eb8-9fa1-346afc6eb313}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\fmod">
-      <UniqueIdentifier>{aa3d8ec8-3438-4928-8d13-ff41d694e056}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\gfx">
       <UniqueIdentifier>{3ddda724-4d7c-4cdc-a57e-e149950843a7}</UniqueIdentifier>
     </Filter>
@@ -75,6 +72,9 @@
     </Filter>
     <Filter Include="src\traits">
       <UniqueIdentifier>{ec27eb1a-e73d-4f9e-92ca-e6ca544f87db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\aku">
+      <UniqueIdentifier>{e69e8559-adbe-447a-80a1-93a23dc7b196}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -170,15 +170,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAICpSpace.cpp">
       <Filter>src\chipmunk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAIFmod.cpp">
-      <Filter>src\fmod</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAIFmodChannel.cpp">
-      <Filter>src\fmod</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAIFmodSound.cpp">
-      <Filter>src\fmod</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAICpArbiter.cpp">
       <Filter>src\chipmunk</Filter>
@@ -354,6 +345,9 @@
     <ClCompile Include="..\..\src\moaicore\MOAITraits.cpp">
       <Filter>src\traits</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\aku\AKU.cpp">
+      <Filter>src\aku</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\moaicore\MOAIAction.h">
@@ -448,15 +442,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAICpSpace.h">
       <Filter>src\chipmunk</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\MOAIFmod.h">
-      <Filter>src\fmod</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\MOAIFmodChannel.h">
-      <Filter>src\fmod</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\MOAIFmodSound.h">
-      <Filter>src\fmod</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAICpArbiter.h">
       <Filter>src\chipmunk</Filter>
@@ -640,6 +625,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAITraits.h">
       <Filter>src\traits</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\aku\AKU.h">
+      <Filter>src\aku</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

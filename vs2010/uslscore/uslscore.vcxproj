@@ -317,12 +317,6 @@
     <ClCompile Include="..\..\src\uslscore\USZip.cpp" />
     <ClCompile Include="..\..\src\uslscore\USZipFile.cpp" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\lua-dll\lua-dll.vcxproj">
-      <Project>{61855fd6-02f9-4996-b437-32f8af3681be}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

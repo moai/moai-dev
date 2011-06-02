@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="fmod">
+      <UniqueIdentifier>{55dadc83-8016-43ea-b1a0-58cec30daa3b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\moaiext-fmod\MOAIFmod.cpp">
+      <Filter>fmod</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaiext-fmod\MOAIFmodChannel.cpp">
+      <Filter>fmod</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaiext-fmod\MOAIFmodSound.cpp">
+      <Filter>fmod</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\aku\AKU-fmod.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\moaiext-fmod\MOAIFmod.h">
+      <Filter>fmod</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaiext-fmod\MOAIFmodChannel.h">
+      <Filter>fmod</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaiext-fmod\MOAIFmodSound.h">
+      <Filter>fmod</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\aku\AKU-fmod.h" />
+  </ItemGroup>
+</Project>

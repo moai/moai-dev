@@ -87,7 +87,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>"..\..\src";"..\..\3rdparty\glut-3.7.6-bin"</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_CONSOLE;_DEBUG;_BOOL;AKU_DLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_CONSOLE;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -101,9 +101,9 @@
       <ShowIncludes>false</ShowIncludes>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>glut32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>fmodex_vc.lib;opengl32.lib;glu32.lib;glut32.lib;advapi32.lib;comctl32.lib;oleaut32.lib;rpcrt4.lib;winmm.lib;wldap32.lib;ws2_32.lib;wsock32.lib;iphlpapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ShowProgress>NotSet</ShowProgress>
-      <AdditionalLibraryDirectories>..\..\3rdparty\glut-3.7.6-bin;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>"$(FMOD_API)\lib";"..\..\3rdparty\glut-3.7.6-bin";%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
@@ -161,7 +161,7 @@ xcopy /yr "$(OutDir)$(TargetName).pdb" "..\..\bin\$(Platform)\$(Configuration)\"
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <AdditionalIncludeDirectories>"..\..\src";"..\..\3rdparty\glut-3.7.6-bin"</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_CONSOLE;_CRTDBG_MAP_ALLOC;_WINDOWS;_BOOL;TRUE_AND_FALSE_DEFINED;_USE_32BIT_TIME_T;_CRT_SECURE_NO_WARNINGS;AKU_DLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
       <ForceConformanceInForLoopScope>false</ForceConformanceInForLoopScope>
@@ -173,8 +173,8 @@ xcopy /yr "$(OutDir)$(TargetName).pdb" "..\..\bin\$(Platform)\$(Configuration)\"
       </DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>glut32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\..\3rdparty\glut-3.7.6-bin;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>fmodex_vc.lib;opengl32.lib;glu32.lib;glut32.lib;advapi32.lib;comctl32.lib;oleaut32.lib;rpcrt4.lib;winmm.lib;wldap32.lib;ws2_32.lib;wsock32.lib;iphlpapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>"$(FMOD_API)\lib";"..\..\3rdparty\glut-3.7.6-bin";%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
@@ -229,9 +229,65 @@ xcopy /yr "$(OutDir)$(TargetName).pdb" "..\..\bin\$(Platform)\$(Configuration)\"
     <ClInclude Include="..\..\src\aku\AKUGlut.h" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\moai-DLL\moai-DLL.vcxproj">
-      <Project>{a5031a86-8c4e-4f3e-9ff4-15253abf621a}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    <ProjectReference Include="..\box2d\box2d.vcxproj">
+      <Project>{ab0dd232-1af9-4b16-a0f2-5ebf32250f6b}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\chipmunk\chipmunk.vcxproj">
+      <Project>{2c12ae60-0d24-4200-99bb-cb49cba3003f}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\contrib\contrib.vcxproj">
+      <Project>{99205e3d-39d0-4a0e-991d-8f573966f165}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\expat\expat.vcxproj">
+      <Project>{860d46bc-ec6b-43c3-b335-3479f096fb1b}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\freetype\freetype.vcxproj">
+      <Project>{97d147f3-4dbc-45cd-87eb-6c90eb6efe21}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\glew\glew.vcxproj">
+      <Project>{48580411-0a48-46f9-87a6-cf5c9b81d146}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\libcrypto\libcrypto.vcxproj">
+      <Project>{7a77895d-638a-4494-b60d-51b74efc386f}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\libcurl\libcurl.vcxproj">
+      <Project>{41beb1cb-88c0-4c0f-b24e-f5871cf9ee49}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\libpng\libpng.vcxproj">
+      <Project>{e4bfd291-b8cf-4d71-9e86-658cd227428d}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\libssl\libssl.vcxproj">
+      <Project>{573ed7f9-1c21-42ef-b5b2-f4137272c480}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\lua-lib\lua-lib.vcxproj">
+      <Project>{e8571557-09c8-4176-b89b-d69da3028faf}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\luasocket\luasocket.vcxproj">
+      <Project>{dcbdccf7-4ec1-4431-86a6-d2c1084d37ce}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\moaicore\moaicore.vcxproj">
+      <Project>{4a578b4d-01af-46bd-81ce-a775b0553526}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\moaiext-fmod\moaiext-fmod.vcxproj">
+      <Project>{e91c1ec3-9421-41f1-95c8-77e4f796f6e9}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\moaiext-luaext\moaiext-luaext.vcxproj">
+      <Project>{30d318c3-18a8-40b4-adac-3360cdcb4dd4}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\sqlite\sqlite.vcxproj">
+      <Project>{a9935050-2e54-4674-80f8-cfc45a2c106a}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\tinyxml\tinyxml.vcxproj">
+      <Project>{991ebc54-28ff-44a1-863e-e70617782825}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\uslscore\uslscore.vcxproj">
+      <Project>{86e29f0a-83d1-4001-9e1a-b20c6aece6f7}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\uslsext\uslsext.vcxproj">
+      <Project>{97fd97f4-5c0f-411e-9f3a-6549d4263664}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\zlib\zlib.vcxproj">
+      <Project>{e6c55a0c-b5b7-4963-8f77-19f1624b9f47}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
