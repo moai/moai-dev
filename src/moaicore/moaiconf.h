@@ -9,10 +9,6 @@
 	#define USE_CHIPMUNK 1
 #endif
 
-#ifndef USE_FMOD
-	#define USE_FMOD 0
-#endif
-
 #ifndef USE_FREETYPE
 	#define USE_FREETYPE 1
 #endif

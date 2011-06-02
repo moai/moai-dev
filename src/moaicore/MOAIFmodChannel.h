@@ -3,7 +3,6 @@
 
 #ifndef	MOAIFMODCHANNEL_H
 #define	MOAIFMODCHANNEL_H
-#if USE_FMOD
 
 #include <moaicore/MOAINode.h>
 #include <moaicore/MOAIFmod.h>
@@ -59,5 +58,4 @@ public:
 	STLString	ToString			();
 };
 
-#endif
 #endif

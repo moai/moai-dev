@@ -3,9 +3,6 @@
 
 #include "pch.h"
 
-SUPPRESS_EMPTY_FILE_WARNING
-#if USE_FMOD
-
 #include <moaicore/MOAIFmod.h>
 #include <moaicore/MOAILogMessages.h>
 
@@ -100,4 +97,3 @@ STLString MOAIFmod::ToString () {
 	return repr;
 }
 
-#endif

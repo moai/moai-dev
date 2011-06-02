@@ -110,13 +110,4 @@ void moaicore::InitGlobals ( USGlobals* globals ) {
 		REGISTER_LUA_CLASS ( MOAICpShape )
 		REGISTER_LUA_CLASS ( MOAICpSpace )
 	#endif
-	
-	#if USE_FMOD
-		
-		MOAIFmod::Get ();
-		
-		REGISTER_LUA_CLASS ( MOAIFmod )
-		REGISTER_LUA_CLASS ( MOAIFmodChannel )
-		REGISTER_LUA_CLASS ( MOAIFmodSound )
-	#endif
 }

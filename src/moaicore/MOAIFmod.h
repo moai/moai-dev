@@ -3,7 +3,6 @@
 
 #ifndef	MOAIFMOD_H
 #define	MOAIFMOD_H
-#if USE_FMOD
 
 namespace FMOD {
 	class System;
@@ -43,5 +42,4 @@ public:
 	STLString		ToString			();
 };
 
-#endif
 #endif

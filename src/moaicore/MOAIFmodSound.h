@@ -3,7 +3,6 @@
 
 #ifndef	MOAIFMODSOUND_H
 #define	MOAIFMODSOUND_H
-#if USE_FMOD
 
 #include <moaicore/MOAIFmod.h>
 
@@ -46,5 +45,4 @@ public:
 	STLString	ToString				();
 };
 
-#endif
 #endif

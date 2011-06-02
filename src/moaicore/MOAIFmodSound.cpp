@@ -3,9 +3,6 @@
 
 #include "pch.h"
 
-SUPPRESS_EMPTY_FILE_WARNING
-#if USE_FMOD
-
 #include <moaicore/MOAIDataBuffer.h>
 #include <moaicore/MOAIFmodSound.h>
 #include <moaicore/MOAIFmod.h>
@@ -237,5 +234,3 @@ STLString MOAIFmodSound::ToString () {
 
 	return repr;
 }
-
-#endif

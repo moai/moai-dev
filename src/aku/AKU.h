@@ -15,9 +15,7 @@
 
 	#ifdef AKU_DLL
 		#define AKU_API __declspec(dllimport)
-	#endif
-
-	#ifdef AKU_STATIC
+	#else
 		#define AKU_API
 	#endif
 
