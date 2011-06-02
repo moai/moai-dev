@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="moai-fmod-DLL"
-	ProjectGUID="{2A707E46-711F-497D-AE42-A4CE0AA50F05}"
-	RootNamespace="moai-fmod-DLL"
+	Name="luasocket"
+	ProjectGUID="{DCBDCCF7-4EC1-4431-86A6-D2C1084D37CE}"
+	RootNamespace="luasocket"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="131072"
 	>
@@ -44,7 +44,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\src;&quot;..\..\3rdparty\lua-5.1.3\src&quot;;&quot;..\..\3rdparty\glew-1.5.6\include&quot;;&quot;..\..\3rdparty\zlib-1.2.3&quot;;&quot;..\..\3rdparty\sqlite-3.6.16&quot;;..\..\3rdparty\tinyxml;&quot;..\..\3rdparty\curl-7.19.7\include&quot;;..\..\3rdparty\lpng140;&quot;..\..\3rdparty\box2d-2.1.2\Box2D&quot;;&quot;..\..\3rdparty\expat-2.0.1\lib&quot;;&quot;..\..\3rdparty\chipmunk-5.3.4\include&quot;;&quot;..\..\3rdparty\luasocket-2.0.2\src&quot;;&quot;$(FMOD_API)\inc&quot;"
+				AdditionalIncludeDirectories="..\..\src;&quot;..\..\3rdparty\lua-5.1.3\src&quot;;&quot;..\..\3rdparty\glew-1.5.6\include&quot;;&quot;..\..\3rdparty\zlib-1.2.3&quot;;&quot;..\..\3rdparty\sqlite-3.6.16&quot;;..\..\3rdparty\tinyxml;&quot;..\..\3rdparty\curl-7.19.7\include&quot;;..\..\3rdparty\lpng140;&quot;..\..\3rdparty\box2d-2.1.2\Box2D&quot;;&quot;..\..\3rdparty\expat-2.0.1\lib&quot;;&quot;..\..\3rdparty\chipmunk-5.3.4\include&quot;;&quot;..\..\3rdparty\luasocket-2.0.2\src&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;AKU_STATIC"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -54,73 +54,8 @@
 				RuntimeTypeInfo="false"
 				WarningLevel="3"
 				DebugInformationFormat="3"
+				CompileAs="1"
 				ShowIncludes="false"
-			/>
-			<Tool
-				Name="VCManagedResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCPreLinkEventTool"
-			/>
-			<Tool
-				Name="VCLibrarianTool"
-			/>
-			<Tool
-				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCXDCMakeTool"
-			/>
-			<Tool
-				Name="VCBscMakeTool"
-			/>
-			<Tool
-				Name="VCFxCopTool"
-			/>
-			<Tool
-				Name="VCPostBuildEventTool"
-				CommandLine=""
-			/>
-		</Configuration>
-		<Configuration
-			Name="Release|Win32"
-			OutputDirectory="..\bin\$(PlatformName)\$(ConfigurationName)\"
-			IntermediateDirectory="$(ConfigurationName)"
-			ConfigurationType="4"
-			CharacterSet="1"
-			WholeProgramOptimization="1"
-			>
-			<Tool
-				Name="VCPreBuildEventTool"
-			/>
-			<Tool
-				Name="VCCustomBuildTool"
-			/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"
-			/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"
-			/>
-			<Tool
-				Name="VCMIDLTool"
-			/>
-			<Tool
-				Name="VCCLCompilerTool"
-				Optimization="1"
-				FavorSizeOrSpeed="2"
-				AdditionalIncludeDirectories="..\..\src;&quot;..\..\3rdparty\lua-5.1.3\src&quot;;&quot;..\..\3rdparty\glew-1.5.6\include&quot;;&quot;..\..\3rdparty\zlib-1.2.3&quot;;&quot;..\..\3rdparty\sqlite-3.6.16&quot;;..\..\3rdparty\tinyxml;&quot;..\..\3rdparty\curl-7.19.7\include&quot;;..\..\3rdparty\lpng140;&quot;..\..\3rdparty\box2d-2.1.2\Box2D&quot;;&quot;..\..\3rdparty\expat-2.0.1\lib&quot;;&quot;..\..\3rdparty\chipmunk-5.3.4\include&quot;;&quot;..\..\3rdparty\luasocket-2.0.2\src&quot;;&quot;$(FMOD_API)\inc&quot;"
-				PreprocessorDefinitions="WIN32;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;AKU_STATIC"
-				RuntimeLibrary="2"
-				BufferSecurityCheck="false"
-				TreatWChar_tAsBuiltInType="false"
-				ForceConformanceInForLoopScope="false"
-				RuntimeTypeInfo="false"
-				WarningLevel="3"
-				DebugInformationFormat="0"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -240,6 +175,73 @@
 			/>
 		</Configuration>
 		<Configuration
+			Name="Release|Win32"
+			OutputDirectory="..\bin\$(PlatformName)\$(ConfigurationName)\"
+			IntermediateDirectory="$(ConfigurationName)"
+			ConfigurationType="4"
+			CharacterSet="1"
+			WholeProgramOptimization="1"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				Optimization="1"
+				FavorSizeOrSpeed="2"
+				AdditionalIncludeDirectories="..\..\src;&quot;..\..\3rdparty\lua-5.1.3\src&quot;;&quot;..\..\3rdparty\glew-1.5.6\include&quot;;&quot;..\..\3rdparty\zlib-1.2.3&quot;;&quot;..\..\3rdparty\sqlite-3.6.16&quot;;..\..\3rdparty\tinyxml;&quot;..\..\3rdparty\curl-7.19.7\include&quot;;..\..\3rdparty\lpng140;&quot;..\..\3rdparty\box2d-2.1.2\Box2D&quot;;&quot;..\..\3rdparty\expat-2.0.1\lib&quot;;&quot;..\..\3rdparty\chipmunk-5.3.4\include&quot;;&quot;..\..\3rdparty\luasocket-2.0.2\src&quot;"
+				PreprocessorDefinitions="WIN32;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;AKU_STATIC"
+				RuntimeLibrary="2"
+				BufferSecurityCheck="false"
+				TreatWChar_tAsBuiltInType="false"
+				ForceConformanceInForLoopScope="false"
+				RuntimeTypeInfo="false"
+				WarningLevel="3"
+				DebugInformationFormat="0"
+				CompileAs="1"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLibrarianTool"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+				CommandLine=""
+			/>
+		</Configuration>
+		<Configuration
 			Name="Release|x64"
 			OutputDirectory="$(PlatformName)\$(ConfigurationName)"
 			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
@@ -329,35 +331,111 @@
 	</References>
 	<Files>
 		<File
-			RelativePath="..\..\src\aku\AKU-fmod.cpp"
+			RelativePath="..\..\3rdparty\luasocket-2.0.2\src\auxiliar.c"
 			>
 		</File>
 		<File
-			RelativePath="..\..\src\aku\AKU-fmod.h"
+			RelativePath="..\..\3rdparty\luasocket-2.0.2\src\auxiliar.h"
 			>
 		</File>
 		<File
-			RelativePath="..\..\src\moaicore\MOAIFmod.cpp"
+			RelativePath="..\..\3rdparty\luasocket-2.0.2\src\buffer.c"
 			>
 		</File>
 		<File
-			RelativePath="..\..\src\moaicore\MOAIFmod.h"
+			RelativePath="..\..\3rdparty\luasocket-2.0.2\src\buffer.h"
 			>
 		</File>
 		<File
-			RelativePath="..\..\src\moaicore\MOAIFmodChannel.cpp"
+			RelativePath="..\..\3rdparty\luasocket-2.0.2\src\except.c"
 			>
 		</File>
 		<File
-			RelativePath="..\..\src\moaicore\MOAIFmodChannel.h"
+			RelativePath="..\..\3rdparty\luasocket-2.0.2\src\except.h"
 			>
 		</File>
 		<File
-			RelativePath="..\..\src\moaicore\MOAIFmodSound.cpp"
+			RelativePath="..\..\3rdparty\luasocket-2.0.2\src\inet.c"
 			>
 		</File>
 		<File
-			RelativePath="..\..\src\moaicore\MOAIFmodSound.h"
+			RelativePath="..\..\3rdparty\luasocket-2.0.2\src\inet.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\luasocket-2.0.2\src\io.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\luasocket-2.0.2\src\io.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\luasocket-2.0.2\src\luasocket.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\luasocket-2.0.2\src\luasocket.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\luasocket-2.0.2\src\mime.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\luasocket-2.0.2\src\mime.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\luasocket-2.0.2\src\options.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\luasocket-2.0.2\src\options.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\luasocket-2.0.2\src\select.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\luasocket-2.0.2\src\select.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\luasocket-2.0.2\src\socket.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\luasocket-2.0.2\src\tcp.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\luasocket-2.0.2\src\tcp.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\luasocket-2.0.2\src\timeout.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\luasocket-2.0.2\src\timeout.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\luasocket-2.0.2\src\udp.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\luasocket-2.0.2\src\udp.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\luasocket-2.0.2\src\wsocket.c"
+			>
+		</File>
+		<File
+			RelativePath="..\..\3rdparty\luasocket-2.0.2\src\wsocket.h"
 			>
 		</File>
 	</Files>

@@ -1,0 +1,16 @@
+#ifndef AKU_MOAIEXT_CONFIG_H
+#define AKU_MOAIEXT_CONFIG_H
+
+#ifndef MOAIEXT_USE_FMOD
+	#define MOAIEXT_USE_FMOD 0
+#endif
+
+#ifndef MOAIEXT_USE_LUACRYPTO
+	#define MOAIEXT_USE_LUACRYPTO 1
+#endif
+
+#ifndef MOAIEXT_USE_LUASOCKET
+	#define MOAIEXT_USE_LUASOCKET 1
+#endif
+
+#endif

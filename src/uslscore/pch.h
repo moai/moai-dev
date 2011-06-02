@@ -65,7 +65,6 @@
 
 	#include <stdlib.h>
 	#include <crtdbg.h>
-	#include <io.h>
 	#include <direct.h>
 
 	#ifndef PATH_MAX

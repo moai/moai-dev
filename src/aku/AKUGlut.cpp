@@ -3,7 +3,7 @@
 
 #include <stdio.h>
 #include <aku/AKUGlut.h>
-#include <aku/AKU-luasocket.h>
+#include <aku/AKU-moaiext.h>
 
 #ifdef _WIN32
 	#include <glut.h>
@@ -213,9 +213,9 @@ int AKUGlut ( int argc, char** argv ) {
 
 	AKUCreateContext ();
 	
-	#ifdef USE_LUASOCKET
-		AKULoadLuasocket ();
-	#endif
+	AKUExtLoadFmod ();
+	AKUExtLoadLuacrypto ();
+	AKUExtLoadLuasocket ();
 	
 	AKUSetInputConfigurationName ( "AKUGlut" );
 
