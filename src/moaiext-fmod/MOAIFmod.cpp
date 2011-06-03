@@ -1,12 +1,7 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#include <moaicore/moaicore.h>
-
-SUPPRESS_EMPTY_FILE_WARNING
-#if MOAIEXT_USE_FMOD
-
-#include <moaiext/MOAIFmod.h>
+#include <moaiext-fmod/MOAIFmod.h>
 #include <fmod.hpp>
 
 //================================================================//
@@ -97,5 +92,3 @@ STLString MOAIFmod::ToString () {
 
 	return repr;
 }
-
-#endif

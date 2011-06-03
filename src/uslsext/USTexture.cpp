@@ -52,8 +52,25 @@ public:
 			this->mType = TYPE_MOAI_IMAGE;
 		}
 		#ifdef MOAI_TEST_PVR
-			else if ( USPvrHeader::GetHeader ( this->mFileData, this->mFileDataSize )) {
-				this->mType = TYPE_PVR;
+			else {
+				// get file data, check if PVR
+				USFileStream stream;
+				stream.OpenRead ( this->mFilename );
+	
+				if ( this->mFileData ) {
+					free ( this->mFileData );
+					this->mFileData = 0;
+				}
+				
+				this->mFileDataSize = stream.GetLength ();
+				this->mFileData = malloc ( this->mFileDataSize );
+				stream.ReadBytes ( this->mFileData, this->mFileDataSize );
+	
+				stream.Close ();
+				
+				if ( USPvrHeader::GetHeader( this->mFileData, this->mFileDataSize )) {				
+					this->mType = TYPE_PVR;
+				}
 			}
 		#endif
 		
@@ -312,48 +329,103 @@ void USTexture::CreateTextureFromPVR ( void* data, size_t size ) {
 		USPvrHeader* header = USPvrHeader::GetHeader ( data, size );
 		if ( !header ) return;
 		
+		bool compressed;
 		bool hasAlpha = header->mAlphaBitMask ? true : false;
 		
 		switch ( header->mPFFlags & USPvrHeader::PF_MASK ) {
 			
 			case USPvrHeader::OGL_RGBA_4444:
+				compressed = false;
+				this->mGLInternalFormat = GL_RGBA;
+				this->mGLPixelType = GL_UNSIGNED_SHORT_4_4_4_4;
 				break;
 		
 			case USPvrHeader::OGL_RGBA_5551:
+				compressed = false;
+				this->mGLInternalFormat = GL_RGBA;
+				this->mGLPixelType = GL_UNSIGNED_SHORT_5_5_5_1;
 				break;
 			
 			case USPvrHeader::OGL_RGBA_8888:
+				compressed = false;
+				this->mGLInternalFormat = GL_RGBA;
+				this->mGLPixelType = GL_UNSIGNED_BYTE;
 				break;
 			
 			case USPvrHeader::OGL_RGB_565:
+				compressed = false;
+				this->mGLInternalFormat = GL_RGB;
+				this->mGLPixelType = GL_UNSIGNED_SHORT_5_6_5;
 				break;
 			
-			case USPvrHeader::OGL_RGB_555:
-				break;
+			// NO IMAGE FOR THIS
+//			case USPvrHeader::OGL_RGB_555:
+//				break;
 			
 			case USPvrHeader::OGL_RGB_888:
+				compressed = false;
+				this->mGLInternalFormat = GL_RGB;
+				this->mGLPixelType = GL_UNSIGNED_BYTE;
 				break;
 			
 			case USPvrHeader::OGL_I_8:
+				compressed = false;
+				this->mGLInternalFormat = GL_LUMINANCE;
+				this->mGLPixelType = GL_UNSIGNED_BYTE;
 				break;
 			
 			case USPvrHeader::OGL_AI_88:
+				compressed = false;
+				this->mGLInternalFormat = GL_LUMINANCE_ALPHA;
+				this->mGLPixelType = GL_UNSIGNED_BYTE;
 				break;
 			
 			case USPvrHeader::OGL_PVRTC2:
+				compressed = true;
 				this->mGLInternalFormat = hasAlpha ? GL_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG : GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG;
 				break;
 			
 			case USPvrHeader::OGL_PVRTC4:
+				compressed = true;
 				this->mGLInternalFormat = hasAlpha ? GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG : GL_COMPRESSED_RGB_PVRTC_4BPPV1_IMG;
 				break;
 			
 			case USPvrHeader::OGL_BGRA_8888:
+				compressed = false;
+				this->mGLInternalFormat = GL_BGRA;
+				this->mGLPixelType = GL_UNSIGNED_BYTE;
 				break;
 			
 			case USPvrHeader::OGL_A_8:
+				compressed = false;
+				this->mGLInternalFormat = GL_ALPHA;
+				this->mGLPixelType = GL_UNSIGNED_BYTE;
 				break;
 		}
+		
+		
+		glGenTextures ( 1, &this->mGLTexID );
+		if ( !this->mGLTexID ) return;
+
+		glBindTexture ( GL_TEXTURE_2D, this->mGLTexID );
+		
+		int width = header->mWidth;
+		int height = header->mHeight;		
+		char* imageData = (char*)(header->GetFileData ( data, size));
+		for ( int level = 0; width > 0 && height > 0; ++level ) {
+			GLsizei currentSize = (GLsizei) USFloat::Max ( (float)(32), (float)(width * height * header->mBitCount / 8) );
+			
+			if ( compressed ) {
+				glCompressedTexImage2D ( GL_TEXTURE_2D, level, this->mGLInternalFormat, width, height, 0, currentSize, imageData );
+			}
+			else {
+				glTexImage2D( GL_TEXTURE_2D, level, this->mGLInternalFormat, width, height, 0, this->mGLInternalFormat, this->mGLPixelType, imageData);
+			}
+			
+			imageData += currentSize;
+			width >>= 1;
+			height >>= 1;
+		}				
 
 	#endif
 }

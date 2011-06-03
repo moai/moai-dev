@@ -1,14 +1,9 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#include "pch.h"
-
-#include <moaicore/MOAIEaseDriver.h>
-#include <moaicore/MOAIFmodSound.h>
-#include <moaicore/MOAIFmodChannel.h>
-#include <moaicore/MOAIFmod.h>
-#include <moaicore/MOAILogMessages.h>
-
+#include <moaiext-fmod/MOAIFmod.h>
+#include <moaiext-fmod/MOAIFmodChannel.h>
+#include <moaiext-fmod/MOAIFmodSound.h>
 #include <fmod.hpp>
 
 //================================================================//
@@ -205,7 +200,6 @@ void MOAIFmodChannel::Play ( MOAIFmodSound* sound, int loopCount ) {
 
 //----------------------------------------------------------------//
 void MOAIFmodChannel::RegisterLuaClass ( USLuaState& state ) {
-	UNUSED ( state );
 	
 	state.SetField ( -1, "ATTR_VOLUME", MOAIFmodChannelAttr::Pack ( ATTR_VOLUME ));
 }

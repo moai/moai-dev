@@ -2379,6 +2379,7 @@
 		CD74EA06137805920093EE68 /* t1_reneg.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9CF137805910093EE68 /* t1_reneg.c */; };
 		CD74EA07137805920093EE68 /* t1_srvr.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E9D0137805910093EE68 /* t1_srvr.c */; };
 		CD74EA08137805920093EE68 /* tls1.h in Headers */ = {isa = PBXBuildFile; fileRef = CD74E9D1137805910093EE68 /* tls1.h */; };
+<<<<<<< HEAD
 		CD7F4DFB135BBD8600E83096 /* NSDate+MOAILib.h in Headers */ = {isa = PBXBuildFile; fileRef = CD7F4DF9135BBD8600E83096 /* NSDate+MOAILib.h */; };
 		CD7F4DFC135BBD8600E83096 /* NSDate+MOAILib.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD7F4DFA135BBD8600E83096 /* NSDate+MOAILib.mm */; };
 		CD80F620135BA048006B0683 /* moai-iphone.h in Headers */ = {isa = PBXBuildFile; fileRef = CD80F60F135BA048006B0683 /* moai-iphone.h */; };
@@ -2398,12 +2399,125 @@
 		CD80F63A135BAB67006B0683 /* NSData+MOAILib.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD80F636135BAB63006B0683 /* NSData+MOAILib.mm */; };
 		CD80F63B135BAB67006B0683 /* NSError+MOAILib.h in Headers */ = {isa = PBXBuildFile; fileRef = CD80F637135BAB64006B0683 /* NSError+MOAILib.h */; };
 		CD80F63C135BAB67006B0683 /* NSError+MOAILib.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD80F638135BAB65006B0683 /* NSError+MOAILib.mm */; };
+=======
+>>>>>>> dfe01567846cf8f035ab05d906da290385ab77c7
 		CD80F63F135BBCFF006B0683 /* ISO8601DateFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = CD80F63D135BBCFF006B0683 /* ISO8601DateFormatter.h */; };
 		CD80F640135BBCFF006B0683 /* ISO8601DateFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = CD80F63D135BBCFF006B0683 /* ISO8601DateFormatter.h */; };
 		CD80F641135BBCFF006B0683 /* ISO8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = CD80F63E135BBCFF006B0683 /* ISO8601DateFormatter.m */; };
 		CD80F642135BBCFF006B0683 /* ISO8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = CD80F63E135BBCFF006B0683 /* ISO8601DateFormatter.m */; };
+<<<<<<< HEAD
 		CDD1171B138B7C9300AAF115 /* MOAIStoreKitListener.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD11719138B7C9300AAF115 /* MOAIStoreKitListener.h */; };
 		CDD1171C138B7C9300AAF115 /* MOAIStoreKitListener.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDD1171A138B7C9300AAF115 /* MOAIStoreKitListener.mm */; };
+=======
+		CDD06D8A1398832300AB0420 /* lcrypto.c in Sources */ = {isa = PBXBuildFile; fileRef = CDD06D881398832300AB0420 /* lcrypto.c */; };
+		CDD06D8B1398832300AB0420 /* lcrypto.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06D891398832300AB0420 /* lcrypto.h */; };
+		CDD06D8C1398832300AB0420 /* lcrypto.c in Sources */ = {isa = PBXBuildFile; fileRef = CDD06D881398832300AB0420 /* lcrypto.c */; };
+		CDD06D8D1398832300AB0420 /* lcrypto.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06D891398832300AB0420 /* lcrypto.h */; };
+		CDD06DB01398838D00AB0420 /* auxiliar.c in Sources */ = {isa = PBXBuildFile; fileRef = CDD06D8E1398838D00AB0420 /* auxiliar.c */; };
+		CDD06DB11398838D00AB0420 /* auxiliar.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06D8F1398838D00AB0420 /* auxiliar.h */; };
+		CDD06DB21398838D00AB0420 /* buffer.c in Sources */ = {isa = PBXBuildFile; fileRef = CDD06D901398838D00AB0420 /* buffer.c */; };
+		CDD06DB31398838D00AB0420 /* buffer.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06D911398838D00AB0420 /* buffer.h */; };
+		CDD06DB41398838D00AB0420 /* except.c in Sources */ = {isa = PBXBuildFile; fileRef = CDD06D921398838D00AB0420 /* except.c */; };
+		CDD06DB51398838D00AB0420 /* except.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06D931398838D00AB0420 /* except.h */; };
+		CDD06DB61398838D00AB0420 /* inet.c in Sources */ = {isa = PBXBuildFile; fileRef = CDD06D941398838D00AB0420 /* inet.c */; };
+		CDD06DB71398838D00AB0420 /* inet.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06D951398838D00AB0420 /* inet.h */; };
+		CDD06DB81398838D00AB0420 /* io.c in Sources */ = {isa = PBXBuildFile; fileRef = CDD06D961398838D00AB0420 /* io.c */; };
+		CDD06DB91398838D00AB0420 /* io.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06D971398838D00AB0420 /* io.h */; };
+		CDD06DBA1398838D00AB0420 /* luasocket.c in Sources */ = {isa = PBXBuildFile; fileRef = CDD06D981398838D00AB0420 /* luasocket.c */; };
+		CDD06DBB1398838D00AB0420 /* luasocket.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06D991398838D00AB0420 /* luasocket.h */; };
+		CDD06DBD1398838D00AB0420 /* mime.c in Sources */ = {isa = PBXBuildFile; fileRef = CDD06D9B1398838D00AB0420 /* mime.c */; };
+		CDD06DBE1398838D00AB0420 /* mime.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06D9C1398838D00AB0420 /* mime.h */; };
+		CDD06DBF1398838D00AB0420 /* options.c in Sources */ = {isa = PBXBuildFile; fileRef = CDD06D9D1398838D00AB0420 /* options.c */; };
+		CDD06DC01398838D00AB0420 /* options.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06D9E1398838D00AB0420 /* options.h */; };
+		CDD06DC11398838D00AB0420 /* select.c in Sources */ = {isa = PBXBuildFile; fileRef = CDD06D9F1398838D00AB0420 /* select.c */; };
+		CDD06DC21398838D00AB0420 /* select.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06DA01398838D00AB0420 /* select.h */; };
+		CDD06DC31398838D00AB0420 /* socket.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06DA11398838D00AB0420 /* socket.h */; };
+		CDD06DC41398838D00AB0420 /* tcp.c in Sources */ = {isa = PBXBuildFile; fileRef = CDD06DA21398838D00AB0420 /* tcp.c */; };
+		CDD06DC51398838D00AB0420 /* tcp.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06DA31398838D00AB0420 /* tcp.h */; };
+		CDD06DC61398838D00AB0420 /* timeout.c in Sources */ = {isa = PBXBuildFile; fileRef = CDD06DA41398838D00AB0420 /* timeout.c */; };
+		CDD06DC71398838D00AB0420 /* timeout.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06DA51398838D00AB0420 /* timeout.h */; };
+		CDD06DC81398838D00AB0420 /* udp.c in Sources */ = {isa = PBXBuildFile; fileRef = CDD06DA71398838D00AB0420 /* udp.c */; };
+		CDD06DC91398838D00AB0420 /* udp.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06DA81398838D00AB0420 /* udp.h */; };
+		CDD06DCA1398838D00AB0420 /* unix.c in Sources */ = {isa = PBXBuildFile; fileRef = CDD06DA91398838D00AB0420 /* unix.c */; };
+		CDD06DCB1398838D00AB0420 /* unix.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06DAA1398838D00AB0420 /* unix.h */; };
+		CDD06DCC1398838D00AB0420 /* usocket.c in Sources */ = {isa = PBXBuildFile; fileRef = CDD06DAC1398838D00AB0420 /* usocket.c */; };
+		CDD06DCD1398838D00AB0420 /* usocket.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06DAD1398838D00AB0420 /* usocket.h */; };
+		CDD06DD01398838D00AB0420 /* auxiliar.c in Sources */ = {isa = PBXBuildFile; fileRef = CDD06D8E1398838D00AB0420 /* auxiliar.c */; };
+		CDD06DD11398838D00AB0420 /* auxiliar.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06D8F1398838D00AB0420 /* auxiliar.h */; };
+		CDD06DD21398838D00AB0420 /* buffer.c in Sources */ = {isa = PBXBuildFile; fileRef = CDD06D901398838D00AB0420 /* buffer.c */; };
+		CDD06DD31398838D00AB0420 /* buffer.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06D911398838D00AB0420 /* buffer.h */; };
+		CDD06DD41398838D00AB0420 /* except.c in Sources */ = {isa = PBXBuildFile; fileRef = CDD06D921398838D00AB0420 /* except.c */; };
+		CDD06DD51398838D00AB0420 /* except.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06D931398838D00AB0420 /* except.h */; };
+		CDD06DD61398838D00AB0420 /* inet.c in Sources */ = {isa = PBXBuildFile; fileRef = CDD06D941398838D00AB0420 /* inet.c */; };
+		CDD06DD71398838D00AB0420 /* inet.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06D951398838D00AB0420 /* inet.h */; };
+		CDD06DD81398838D00AB0420 /* io.c in Sources */ = {isa = PBXBuildFile; fileRef = CDD06D961398838D00AB0420 /* io.c */; };
+		CDD06DD91398838D00AB0420 /* io.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06D971398838D00AB0420 /* io.h */; };
+		CDD06DDA1398838D00AB0420 /* luasocket.c in Sources */ = {isa = PBXBuildFile; fileRef = CDD06D981398838D00AB0420 /* luasocket.c */; };
+		CDD06DDB1398838D00AB0420 /* luasocket.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06D991398838D00AB0420 /* luasocket.h */; };
+		CDD06DDD1398838D00AB0420 /* mime.c in Sources */ = {isa = PBXBuildFile; fileRef = CDD06D9B1398838D00AB0420 /* mime.c */; };
+		CDD06DDE1398838D00AB0420 /* mime.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06D9C1398838D00AB0420 /* mime.h */; };
+		CDD06DDF1398838D00AB0420 /* options.c in Sources */ = {isa = PBXBuildFile; fileRef = CDD06D9D1398838D00AB0420 /* options.c */; };
+		CDD06DE01398838D00AB0420 /* options.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06D9E1398838D00AB0420 /* options.h */; };
+		CDD06DE11398838D00AB0420 /* select.c in Sources */ = {isa = PBXBuildFile; fileRef = CDD06D9F1398838D00AB0420 /* select.c */; };
+		CDD06DE21398838D00AB0420 /* select.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06DA01398838D00AB0420 /* select.h */; };
+		CDD06DE31398838D00AB0420 /* socket.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06DA11398838D00AB0420 /* socket.h */; };
+		CDD06DE41398838D00AB0420 /* tcp.c in Sources */ = {isa = PBXBuildFile; fileRef = CDD06DA21398838D00AB0420 /* tcp.c */; };
+		CDD06DE51398838D00AB0420 /* tcp.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06DA31398838D00AB0420 /* tcp.h */; };
+		CDD06DE61398838D00AB0420 /* timeout.c in Sources */ = {isa = PBXBuildFile; fileRef = CDD06DA41398838D00AB0420 /* timeout.c */; };
+		CDD06DE71398838D00AB0420 /* timeout.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06DA51398838D00AB0420 /* timeout.h */; };
+		CDD06DE81398838D00AB0420 /* udp.c in Sources */ = {isa = PBXBuildFile; fileRef = CDD06DA71398838D00AB0420 /* udp.c */; };
+		CDD06DE91398838D00AB0420 /* udp.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06DA81398838D00AB0420 /* udp.h */; };
+		CDD06DEA1398838D00AB0420 /* unix.c in Sources */ = {isa = PBXBuildFile; fileRef = CDD06DA91398838D00AB0420 /* unix.c */; };
+		CDD06DEB1398838D00AB0420 /* unix.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06DAA1398838D00AB0420 /* unix.h */; };
+		CDD06DEC1398838D00AB0420 /* usocket.c in Sources */ = {isa = PBXBuildFile; fileRef = CDD06DAC1398838D00AB0420 /* usocket.c */; };
+		CDD06DED1398838D00AB0420 /* usocket.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06DAD1398838D00AB0420 /* usocket.h */; };
+		CDD06E541398B5A500AB0420 /* AKU-luaext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD06E521398B5A500AB0420 /* AKU-luaext.cpp */; };
+		CDD06E551398B5A500AB0420 /* AKU-luaext.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06E531398B5A500AB0420 /* AKU-luaext.h */; };
+		CDD06E561398B5A500AB0420 /* AKU-luaext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD06E521398B5A500AB0420 /* AKU-luaext.cpp */; };
+		CDD06E571398B5A500AB0420 /* AKU-luaext.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06E531398B5A500AB0420 /* AKU-luaext.h */; };
+		CDD06EDD1398BA6300AB0420 /* MOAIApp.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06EC81398BA6200AB0420 /* MOAIApp.h */; };
+		CDD06EDE1398BA6300AB0420 /* MOAIApp.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDD06EC91398BA6200AB0420 /* MOAIApp.mm */; };
+		CDD06EDF1398BA6300AB0420 /* moaiext-iphone.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06ECA1398BA6200AB0420 /* moaiext-iphone.h */; };
+		CDD06EE01398BA6300AB0420 /* MOAIStoreKitListener.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06ECB1398BA6200AB0420 /* MOAIStoreKitListener.h */; };
+		CDD06EE11398BA6300AB0420 /* MOAIStoreKitListener.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDD06ECC1398BA6200AB0420 /* MOAIStoreKitListener.mm */; };
+		CDD06EE21398BA6300AB0420 /* NSArray+MOAILib.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06ECD1398BA6200AB0420 /* NSArray+MOAILib.h */; };
+		CDD06EE31398BA6300AB0420 /* NSArray+MOAILib.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDD06ECE1398BA6200AB0420 /* NSArray+MOAILib.mm */; };
+		CDD06EE41398BA6300AB0420 /* NSData+MOAILib.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06ECF1398BA6200AB0420 /* NSData+MOAILib.h */; };
+		CDD06EE51398BA6300AB0420 /* NSData+MOAILib.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDD06ED01398BA6200AB0420 /* NSData+MOAILib.mm */; };
+		CDD06EE61398BA6300AB0420 /* NSDate+MOAILib.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06ED11398BA6200AB0420 /* NSDate+MOAILib.h */; };
+		CDD06EE71398BA6300AB0420 /* NSDate+MOAILib.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDD06ED21398BA6200AB0420 /* NSDate+MOAILib.mm */; };
+		CDD06EE81398BA6300AB0420 /* NSDictionary+MOAILib.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06ED31398BA6200AB0420 /* NSDictionary+MOAILib.h */; };
+		CDD06EE91398BA6300AB0420 /* NSDictionary+MOAILib.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDD06ED41398BA6200AB0420 /* NSDictionary+MOAILib.mm */; };
+		CDD06EEA1398BA6300AB0420 /* NSError+MOAILib.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06ED51398BA6200AB0420 /* NSError+MOAILib.h */; };
+		CDD06EEB1398BA6300AB0420 /* NSError+MOAILib.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDD06ED61398BA6200AB0420 /* NSError+MOAILib.mm */; };
+		CDD06EEC1398BA6300AB0420 /* NSNumber+MOAILib.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06ED71398BA6200AB0420 /* NSNumber+MOAILib.h */; };
+		CDD06EED1398BA6300AB0420 /* NSNumber+MOAILib.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDD06ED81398BA6200AB0420 /* NSNumber+MOAILib.mm */; };
+		CDD06EEE1398BA6300AB0420 /* NSObject+MOAILib.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06ED91398BA6200AB0420 /* NSObject+MOAILib.h */; };
+		CDD06EEF1398BA6300AB0420 /* NSObject+MOAILib.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDD06EDA1398BA6200AB0420 /* NSObject+MOAILib.mm */; };
+		CDD06EF01398BA6300AB0420 /* NSString+MOAILib.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06EDB1398BA6200AB0420 /* NSString+MOAILib.h */; };
+		CDD06EF11398BA6300AB0420 /* NSString+MOAILib.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDD06EDC1398BA6200AB0420 /* NSString+MOAILib.mm */; };
+		CDD06EF21398BA6300AB0420 /* MOAIApp.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06EC81398BA6200AB0420 /* MOAIApp.h */; };
+		CDD06EF31398BA6300AB0420 /* MOAIApp.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDD06EC91398BA6200AB0420 /* MOAIApp.mm */; };
+		CDD06EF41398BA6300AB0420 /* moaiext-iphone.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06ECA1398BA6200AB0420 /* moaiext-iphone.h */; };
+		CDD06EF51398BA6300AB0420 /* MOAIStoreKitListener.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06ECB1398BA6200AB0420 /* MOAIStoreKitListener.h */; };
+		CDD06EF61398BA6300AB0420 /* MOAIStoreKitListener.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDD06ECC1398BA6200AB0420 /* MOAIStoreKitListener.mm */; };
+		CDD06EF71398BA6300AB0420 /* NSArray+MOAILib.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06ECD1398BA6200AB0420 /* NSArray+MOAILib.h */; };
+		CDD06EF81398BA6300AB0420 /* NSArray+MOAILib.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDD06ECE1398BA6200AB0420 /* NSArray+MOAILib.mm */; };
+		CDD06EF91398BA6300AB0420 /* NSData+MOAILib.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06ECF1398BA6200AB0420 /* NSData+MOAILib.h */; };
+		CDD06EFA1398BA6300AB0420 /* NSData+MOAILib.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDD06ED01398BA6200AB0420 /* NSData+MOAILib.mm */; };
+		CDD06EFB1398BA6300AB0420 /* NSDate+MOAILib.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06ED11398BA6200AB0420 /* NSDate+MOAILib.h */; };
+		CDD06EFC1398BA6300AB0420 /* NSDate+MOAILib.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDD06ED21398BA6200AB0420 /* NSDate+MOAILib.mm */; };
+		CDD06EFD1398BA6300AB0420 /* NSDictionary+MOAILib.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06ED31398BA6200AB0420 /* NSDictionary+MOAILib.h */; };
+		CDD06EFE1398BA6300AB0420 /* NSDictionary+MOAILib.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDD06ED41398BA6200AB0420 /* NSDictionary+MOAILib.mm */; };
+		CDD06EFF1398BA6300AB0420 /* NSError+MOAILib.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06ED51398BA6200AB0420 /* NSError+MOAILib.h */; };
+		CDD06F001398BA6300AB0420 /* NSError+MOAILib.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDD06ED61398BA6200AB0420 /* NSError+MOAILib.mm */; };
+		CDD06F011398BA6300AB0420 /* NSNumber+MOAILib.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06ED71398BA6200AB0420 /* NSNumber+MOAILib.h */; };
+		CDD06F021398BA6300AB0420 /* NSNumber+MOAILib.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDD06ED81398BA6200AB0420 /* NSNumber+MOAILib.mm */; };
+		CDD06F031398BA6300AB0420 /* NSObject+MOAILib.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06ED91398BA6200AB0420 /* NSObject+MOAILib.h */; };
+		CDD06F041398BA6300AB0420 /* NSObject+MOAILib.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDD06EDA1398BA6200AB0420 /* NSObject+MOAILib.mm */; };
+		CDD06F051398BA6300AB0420 /* NSString+MOAILib.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06EDB1398BA6200AB0420 /* NSString+MOAILib.h */; };
+		CDD06F061398BA6300AB0420 /* NSString+MOAILib.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDD06EDC1398BA6200AB0420 /* NSString+MOAILib.mm */; };
+>>>>>>> dfe01567846cf8f035ab05d906da290385ab77c7
 		CDEB91461360A78800AAC558 /* MOAIEventSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDEB91421360A78800AAC558 /* MOAIEventSource.cpp */; };
 		CDEB91471360A78800AAC558 /* MOAIEventSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDEB91421360A78800AAC558 /* MOAIEventSource.cpp */; };
 		CDEB91481360A78800AAC558 /* MOAIEventSource.h in Headers */ = {isa = PBXBuildFile; fileRef = CDEB91431360A78800AAC558 /* MOAIEventSource.h */; };
@@ -2429,6 +2543,16 @@
 			remoteGlobalIDString = 0379C3D51333ECD800E89DDC;
 			remoteInfo = "3rd-party";
 		};
+<<<<<<< HEAD
+=======
+		CDD06BD3139882CF00AB0420 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CDD06A061398822500AB0420;
+			remoteInfo = "libmoai-iphone-luaext";
+		};
+>>>>>>> dfe01567846cf8f035ab05d906da290385ab77c7
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -3988,6 +4112,7 @@
 		CD74E9CF137805910093EE68 /* t1_reneg.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = t1_reneg.c; path = "../../3rdparty/openssl-1.0.0d/ssl/t1_reneg.c"; sourceTree = "<group>"; };
 		CD74E9D0137805910093EE68 /* t1_srvr.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = t1_srvr.c; path = "../../3rdparty/openssl-1.0.0d/ssl/t1_srvr.c"; sourceTree = "<group>"; };
 		CD74E9D1137805910093EE68 /* tls1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tls1.h; path = "../../3rdparty/openssl-1.0.0d/ssl/tls1.h"; sourceTree = "<group>"; };
+<<<<<<< HEAD
 		CD7F4DF9135BBD8600E83096 /* NSDate+MOAILib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDate+MOAILib.h"; path = "moai-iphone/NSDate+MOAILib.h"; sourceTree = "<group>"; };
 		CD7F4DFA135BBD8600E83096 /* NSDate+MOAILib.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "NSDate+MOAILib.mm"; path = "moai-iphone/NSDate+MOAILib.mm"; sourceTree = "<group>"; };
 		CD80F60F135BA048006B0683 /* moai-iphone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "moai-iphone.h"; path = "moai-iphone/moai-iphone.h"; sourceTree = "<group>"; };
@@ -4011,6 +4136,66 @@
 		CD80F63E135BBCFF006B0683 /* ISO8601DateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ISO8601DateFormatter.m; path = ../../3rdparty/contrib/ISO8601DateFormatter.m; sourceTree = "<group>"; };
 		CDD11719138B7C9300AAF115 /* MOAIStoreKitListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIStoreKitListener.h; path = "moai-iphone/MOAIStoreKitListener.h"; sourceTree = "<group>"; };
 		CDD1171A138B7C9300AAF115 /* MOAIStoreKitListener.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIStoreKitListener.mm; path = "moai-iphone/MOAIStoreKitListener.mm"; sourceTree = "<group>"; };
+=======
+		CD80F63D135BBCFF006B0683 /* ISO8601DateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ISO8601DateFormatter.h; path = ../../3rdparty/contrib/ISO8601DateFormatter.h; sourceTree = "<group>"; };
+		CD80F63E135BBCFF006B0683 /* ISO8601DateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ISO8601DateFormatter.m; path = ../../3rdparty/contrib/ISO8601DateFormatter.m; sourceTree = "<group>"; };
+		CDD06BD01398822500AB0420 /* libmoai-iphone.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-iphone.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CDD06D87139882D900AB0420 /* libmoai-osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CDD06D881398832300AB0420 /* lcrypto.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lcrypto.c; path = "../../3rdparty/luacrypto-0.2.0/src/lcrypto.c"; sourceTree = SOURCE_ROOT; };
+		CDD06D891398832300AB0420 /* lcrypto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lcrypto.h; path = "../../3rdparty/luacrypto-0.2.0/src/lcrypto.h"; sourceTree = SOURCE_ROOT; };
+		CDD06D8E1398838D00AB0420 /* auxiliar.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = auxiliar.c; path = "../../3rdparty/luasocket-2.0.2/src/auxiliar.c"; sourceTree = SOURCE_ROOT; };
+		CDD06D8F1398838D00AB0420 /* auxiliar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = auxiliar.h; path = "../../3rdparty/luasocket-2.0.2/src/auxiliar.h"; sourceTree = SOURCE_ROOT; };
+		CDD06D901398838D00AB0420 /* buffer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = buffer.c; path = "../../3rdparty/luasocket-2.0.2/src/buffer.c"; sourceTree = SOURCE_ROOT; };
+		CDD06D911398838D00AB0420 /* buffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = buffer.h; path = "../../3rdparty/luasocket-2.0.2/src/buffer.h"; sourceTree = SOURCE_ROOT; };
+		CDD06D921398838D00AB0420 /* except.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = except.c; path = "../../3rdparty/luasocket-2.0.2/src/except.c"; sourceTree = SOURCE_ROOT; };
+		CDD06D931398838D00AB0420 /* except.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = except.h; path = "../../3rdparty/luasocket-2.0.2/src/except.h"; sourceTree = SOURCE_ROOT; };
+		CDD06D941398838D00AB0420 /* inet.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = inet.c; path = "../../3rdparty/luasocket-2.0.2/src/inet.c"; sourceTree = SOURCE_ROOT; };
+		CDD06D951398838D00AB0420 /* inet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = inet.h; path = "../../3rdparty/luasocket-2.0.2/src/inet.h"; sourceTree = SOURCE_ROOT; };
+		CDD06D961398838D00AB0420 /* io.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = io.c; path = "../../3rdparty/luasocket-2.0.2/src/io.c"; sourceTree = SOURCE_ROOT; };
+		CDD06D971398838D00AB0420 /* io.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = io.h; path = "../../3rdparty/luasocket-2.0.2/src/io.h"; sourceTree = SOURCE_ROOT; };
+		CDD06D981398838D00AB0420 /* luasocket.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = luasocket.c; path = "../../3rdparty/luasocket-2.0.2/src/luasocket.c"; sourceTree = SOURCE_ROOT; };
+		CDD06D991398838D00AB0420 /* luasocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = luasocket.h; path = "../../3rdparty/luasocket-2.0.2/src/luasocket.h"; sourceTree = SOURCE_ROOT; };
+		CDD06D9B1398838D00AB0420 /* mime.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = mime.c; path = "../../3rdparty/luasocket-2.0.2/src/mime.c"; sourceTree = SOURCE_ROOT; };
+		CDD06D9C1398838D00AB0420 /* mime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = mime.h; path = "../../3rdparty/luasocket-2.0.2/src/mime.h"; sourceTree = SOURCE_ROOT; };
+		CDD06D9D1398838D00AB0420 /* options.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = options.c; path = "../../3rdparty/luasocket-2.0.2/src/options.c"; sourceTree = SOURCE_ROOT; };
+		CDD06D9E1398838D00AB0420 /* options.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = options.h; path = "../../3rdparty/luasocket-2.0.2/src/options.h"; sourceTree = SOURCE_ROOT; };
+		CDD06D9F1398838D00AB0420 /* select.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = select.c; path = "../../3rdparty/luasocket-2.0.2/src/select.c"; sourceTree = SOURCE_ROOT; };
+		CDD06DA01398838D00AB0420 /* select.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = select.h; path = "../../3rdparty/luasocket-2.0.2/src/select.h"; sourceTree = SOURCE_ROOT; };
+		CDD06DA11398838D00AB0420 /* socket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = socket.h; path = "../../3rdparty/luasocket-2.0.2/src/socket.h"; sourceTree = SOURCE_ROOT; };
+		CDD06DA21398838D00AB0420 /* tcp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = tcp.c; path = "../../3rdparty/luasocket-2.0.2/src/tcp.c"; sourceTree = SOURCE_ROOT; };
+		CDD06DA31398838D00AB0420 /* tcp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tcp.h; path = "../../3rdparty/luasocket-2.0.2/src/tcp.h"; sourceTree = SOURCE_ROOT; };
+		CDD06DA41398838D00AB0420 /* timeout.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = timeout.c; path = "../../3rdparty/luasocket-2.0.2/src/timeout.c"; sourceTree = SOURCE_ROOT; };
+		CDD06DA51398838D00AB0420 /* timeout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = timeout.h; path = "../../3rdparty/luasocket-2.0.2/src/timeout.h"; sourceTree = SOURCE_ROOT; };
+		CDD06DA71398838D00AB0420 /* udp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = udp.c; path = "../../3rdparty/luasocket-2.0.2/src/udp.c"; sourceTree = SOURCE_ROOT; };
+		CDD06DA81398838D00AB0420 /* udp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = udp.h; path = "../../3rdparty/luasocket-2.0.2/src/udp.h"; sourceTree = SOURCE_ROOT; };
+		CDD06DA91398838D00AB0420 /* unix.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = unix.c; path = "../../3rdparty/luasocket-2.0.2/src/unix.c"; sourceTree = SOURCE_ROOT; };
+		CDD06DAA1398838D00AB0420 /* unix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = unix.h; path = "../../3rdparty/luasocket-2.0.2/src/unix.h"; sourceTree = SOURCE_ROOT; };
+		CDD06DAC1398838D00AB0420 /* usocket.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = usocket.c; path = "../../3rdparty/luasocket-2.0.2/src/usocket.c"; sourceTree = SOURCE_ROOT; };
+		CDD06DAD1398838D00AB0420 /* usocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = usocket.h; path = "../../3rdparty/luasocket-2.0.2/src/usocket.h"; sourceTree = SOURCE_ROOT; };
+		CDD06E521398B5A500AB0420 /* AKU-luaext.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "AKU-luaext.cpp"; path = "../../src/aku/AKU-luaext.cpp"; sourceTree = SOURCE_ROOT; };
+		CDD06E531398B5A500AB0420 /* AKU-luaext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "AKU-luaext.h"; path = "../../src/aku/AKU-luaext.h"; sourceTree = SOURCE_ROOT; };
+		CDD06EC81398BA6200AB0420 /* MOAIApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIApp.h; path = "../../src/moaiext-iphone/MOAIApp.h"; sourceTree = SOURCE_ROOT; };
+		CDD06EC91398BA6200AB0420 /* MOAIApp.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIApp.mm; path = "../../src/moaiext-iphone/MOAIApp.mm"; sourceTree = SOURCE_ROOT; };
+		CDD06ECA1398BA6200AB0420 /* moaiext-iphone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "moaiext-iphone.h"; path = "../../src/moaiext-iphone/moaiext-iphone.h"; sourceTree = SOURCE_ROOT; };
+		CDD06ECB1398BA6200AB0420 /* MOAIStoreKitListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIStoreKitListener.h; path = "../../src/moaiext-iphone/MOAIStoreKitListener.h"; sourceTree = SOURCE_ROOT; };
+		CDD06ECC1398BA6200AB0420 /* MOAIStoreKitListener.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIStoreKitListener.mm; path = "../../src/moaiext-iphone/MOAIStoreKitListener.mm"; sourceTree = SOURCE_ROOT; };
+		CDD06ECD1398BA6200AB0420 /* NSArray+MOAILib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSArray+MOAILib.h"; path = "../../src/moaiext-iphone/NSArray+MOAILib.h"; sourceTree = SOURCE_ROOT; };
+		CDD06ECE1398BA6200AB0420 /* NSArray+MOAILib.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "NSArray+MOAILib.mm"; path = "../../src/moaiext-iphone/NSArray+MOAILib.mm"; sourceTree = SOURCE_ROOT; };
+		CDD06ECF1398BA6200AB0420 /* NSData+MOAILib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+MOAILib.h"; path = "../../src/moaiext-iphone/NSData+MOAILib.h"; sourceTree = SOURCE_ROOT; };
+		CDD06ED01398BA6200AB0420 /* NSData+MOAILib.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "NSData+MOAILib.mm"; path = "../../src/moaiext-iphone/NSData+MOAILib.mm"; sourceTree = SOURCE_ROOT; };
+		CDD06ED11398BA6200AB0420 /* NSDate+MOAILib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDate+MOAILib.h"; path = "../../src/moaiext-iphone/NSDate+MOAILib.h"; sourceTree = SOURCE_ROOT; };
+		CDD06ED21398BA6200AB0420 /* NSDate+MOAILib.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "NSDate+MOAILib.mm"; path = "../../src/moaiext-iphone/NSDate+MOAILib.mm"; sourceTree = SOURCE_ROOT; };
+		CDD06ED31398BA6200AB0420 /* NSDictionary+MOAILib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDictionary+MOAILib.h"; path = "../../src/moaiext-iphone/NSDictionary+MOAILib.h"; sourceTree = SOURCE_ROOT; };
+		CDD06ED41398BA6200AB0420 /* NSDictionary+MOAILib.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "NSDictionary+MOAILib.mm"; path = "../../src/moaiext-iphone/NSDictionary+MOAILib.mm"; sourceTree = SOURCE_ROOT; };
+		CDD06ED51398BA6200AB0420 /* NSError+MOAILib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSError+MOAILib.h"; path = "../../src/moaiext-iphone/NSError+MOAILib.h"; sourceTree = SOURCE_ROOT; };
+		CDD06ED61398BA6200AB0420 /* NSError+MOAILib.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "NSError+MOAILib.mm"; path = "../../src/moaiext-iphone/NSError+MOAILib.mm"; sourceTree = SOURCE_ROOT; };
+		CDD06ED71398BA6200AB0420 /* NSNumber+MOAILib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSNumber+MOAILib.h"; path = "../../src/moaiext-iphone/NSNumber+MOAILib.h"; sourceTree = SOURCE_ROOT; };
+		CDD06ED81398BA6200AB0420 /* NSNumber+MOAILib.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "NSNumber+MOAILib.mm"; path = "../../src/moaiext-iphone/NSNumber+MOAILib.mm"; sourceTree = SOURCE_ROOT; };
+		CDD06ED91398BA6200AB0420 /* NSObject+MOAILib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSObject+MOAILib.h"; path = "../../src/moaiext-iphone/NSObject+MOAILib.h"; sourceTree = SOURCE_ROOT; };
+		CDD06EDA1398BA6200AB0420 /* NSObject+MOAILib.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "NSObject+MOAILib.mm"; path = "../../src/moaiext-iphone/NSObject+MOAILib.mm"; sourceTree = SOURCE_ROOT; };
+		CDD06EDB1398BA6200AB0420 /* NSString+MOAILib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+MOAILib.h"; path = "../../src/moaiext-iphone/NSString+MOAILib.h"; sourceTree = SOURCE_ROOT; };
+		CDD06EDC1398BA6200AB0420 /* NSString+MOAILib.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "NSString+MOAILib.mm"; path = "../../src/moaiext-iphone/NSString+MOAILib.mm"; sourceTree = SOURCE_ROOT; };
+>>>>>>> dfe01567846cf8f035ab05d906da290385ab77c7
 		CDEB91421360A78800AAC558 /* MOAIEventSource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIEventSource.cpp; sourceTree = "<group>"; };
 		CDEB91431360A78800AAC558 /* MOAIEventSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIEventSource.h; sourceTree = "<group>"; };
 		CDEB91441360A78800AAC558 /* MOAIImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIImage.cpp; sourceTree = "<group>"; };
@@ -4049,6 +4234,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+<<<<<<< HEAD
+=======
+		CDD06BCA1398822500AB0420 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CDD06D82139882D900AB0420 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+>>>>>>> dfe01567846cf8f035ab05d906da290385ab77c7
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -4065,6 +4267,11 @@
 				03240B5813564CB0000ADC60 /* libpng */,
 				CD74E44A1377D6780093EE68 /* libssl */,
 				03240B6C13564CB0000ADC60 /* lua */,
+<<<<<<< HEAD
+=======
+				CDD06BD21398824F00AB0420 /* luacrypto */,
+				CDD06BD11398824600AB0420 /* luasocket */,
+>>>>>>> dfe01567846cf8f035ab05d906da290385ab77c7
 				03240BA213564CB0000ADC60 /* sqlite */,
 				03240BA613564CB0000ADC60 /* tinyxml */,
 			);
@@ -4677,10 +4884,19 @@
 		0324E4F213564BC7000ADC60 /* aku */ = {
 			isa = PBXGroup;
 			children = (
+<<<<<<< HEAD
 				CD1D0BA213599FD200802A3C /* AKU-iphone.h */,
 				CD1D0BA313599FD200802A3C /* AKU-iphone.mm */,
 				0324E4F313564BC7000ADC60 /* AKU.cpp */,
 				0324E4F413564BC7000ADC60 /* AKU.h */,
+=======
+				0324E4F313564BC7000ADC60 /* AKU.cpp */,
+				0324E4F413564BC7000ADC60 /* AKU.h */,
+				CD1D0BA213599FD200802A3C /* AKU-iphone.h */,
+				CD1D0BA313599FD200802A3C /* AKU-iphone.mm */,
+				CDD06E521398B5A500AB0420 /* AKU-luaext.cpp */,
+				CDD06E531398B5A500AB0420 /* AKU-luaext.h */,
+>>>>>>> dfe01567846cf8f035ab05d906da290385ab77c7
 				0324E4F713564BC7000ADC60 /* pch.cpp */,
 				0324E4F813564BC7000ADC60 /* pch.h */,
 			);
@@ -4776,6 +4992,11 @@
 				03C2F6F4104DE130009A2D5D /* libmoai-iphone.a */,
 				0324E2AF1356485F000ADC60 /* libmoai-osx-3rdparty.a */,
 				0324E2BB1356485F000ADC60 /* libmoai-osx.a */,
+<<<<<<< HEAD
+=======
+				CDD06BD01398822500AB0420 /* libmoai-iphone.a */,
+				CDD06D87139882D900AB0420 /* libmoai-osx.a */,
+>>>>>>> dfe01567846cf8f035ab05d906da290385ab77c7
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -5558,6 +5779,7 @@
 		CD524476135982480086DA15 /* moai-iphone */ = {
 			isa = PBXGroup;
 			children = (
+<<<<<<< HEAD
 				CD80F60F135BA048006B0683 /* moai-iphone.h */,
 				CD80F610135BA048006B0683 /* MOAIApp.h */,
 				CD80F611135BA048006B0683 /* MOAIApp.mm */,
@@ -5579,6 +5801,29 @@
 				CD80F61D135BA048006B0683 /* NSObject+MOAILib.mm */,
 				CD80F61E135BA048006B0683 /* NSString+MOAILib.h */,
 				CD80F61F135BA048006B0683 /* NSString+MOAILib.mm */,
+=======
+				CDD06EC81398BA6200AB0420 /* MOAIApp.h */,
+				CDD06EC91398BA6200AB0420 /* MOAIApp.mm */,
+				CDD06ECA1398BA6200AB0420 /* moaiext-iphone.h */,
+				CDD06ECB1398BA6200AB0420 /* MOAIStoreKitListener.h */,
+				CDD06ECC1398BA6200AB0420 /* MOAIStoreKitListener.mm */,
+				CDD06ECD1398BA6200AB0420 /* NSArray+MOAILib.h */,
+				CDD06ECE1398BA6200AB0420 /* NSArray+MOAILib.mm */,
+				CDD06ECF1398BA6200AB0420 /* NSData+MOAILib.h */,
+				CDD06ED01398BA6200AB0420 /* NSData+MOAILib.mm */,
+				CDD06ED11398BA6200AB0420 /* NSDate+MOAILib.h */,
+				CDD06ED21398BA6200AB0420 /* NSDate+MOAILib.mm */,
+				CDD06ED31398BA6200AB0420 /* NSDictionary+MOAILib.h */,
+				CDD06ED41398BA6200AB0420 /* NSDictionary+MOAILib.mm */,
+				CDD06ED51398BA6200AB0420 /* NSError+MOAILib.h */,
+				CDD06ED61398BA6200AB0420 /* NSError+MOAILib.mm */,
+				CDD06ED71398BA6200AB0420 /* NSNumber+MOAILib.h */,
+				CDD06ED81398BA6200AB0420 /* NSNumber+MOAILib.mm */,
+				CDD06ED91398BA6200AB0420 /* NSObject+MOAILib.h */,
+				CDD06EDA1398BA6200AB0420 /* NSObject+MOAILib.mm */,
+				CDD06EDB1398BA6200AB0420 /* NSString+MOAILib.h */,
+				CDD06EDC1398BA6200AB0420 /* NSString+MOAILib.mm */,
+>>>>>>> dfe01567846cf8f035ab05d906da290385ab77c7
 			);
 			name = "moai-iphone";
 			sourceTree = "<group>";
@@ -6724,6 +6969,54 @@
 			path = "../../3rdparty/openssl-1.0.0d/crypto/pqueue";
 			sourceTree = "<group>";
 		};
+<<<<<<< HEAD
+=======
+		CDD06BD11398824600AB0420 /* luasocket */ = {
+			isa = PBXGroup;
+			children = (
+				CDD06D8E1398838D00AB0420 /* auxiliar.c */,
+				CDD06D8F1398838D00AB0420 /* auxiliar.h */,
+				CDD06D901398838D00AB0420 /* buffer.c */,
+				CDD06D911398838D00AB0420 /* buffer.h */,
+				CDD06D921398838D00AB0420 /* except.c */,
+				CDD06D931398838D00AB0420 /* except.h */,
+				CDD06D941398838D00AB0420 /* inet.c */,
+				CDD06D951398838D00AB0420 /* inet.h */,
+				CDD06D961398838D00AB0420 /* io.c */,
+				CDD06D971398838D00AB0420 /* io.h */,
+				CDD06D981398838D00AB0420 /* luasocket.c */,
+				CDD06D991398838D00AB0420 /* luasocket.h */,
+				CDD06D9B1398838D00AB0420 /* mime.c */,
+				CDD06D9C1398838D00AB0420 /* mime.h */,
+				CDD06D9D1398838D00AB0420 /* options.c */,
+				CDD06D9E1398838D00AB0420 /* options.h */,
+				CDD06D9F1398838D00AB0420 /* select.c */,
+				CDD06DA01398838D00AB0420 /* select.h */,
+				CDD06DA11398838D00AB0420 /* socket.h */,
+				CDD06DA21398838D00AB0420 /* tcp.c */,
+				CDD06DA31398838D00AB0420 /* tcp.h */,
+				CDD06DA41398838D00AB0420 /* timeout.c */,
+				CDD06DA51398838D00AB0420 /* timeout.h */,
+				CDD06DA71398838D00AB0420 /* udp.c */,
+				CDD06DA81398838D00AB0420 /* udp.h */,
+				CDD06DA91398838D00AB0420 /* unix.c */,
+				CDD06DAA1398838D00AB0420 /* unix.h */,
+				CDD06DAC1398838D00AB0420 /* usocket.c */,
+				CDD06DAD1398838D00AB0420 /* usocket.h */,
+			);
+			name = luasocket;
+			sourceTree = "<group>";
+		};
+		CDD06BD21398824F00AB0420 /* luacrypto */ = {
+			isa = PBXGroup;
+			children = (
+				CDD06D881398832300AB0420 /* lcrypto.c */,
+				CDD06D891398832300AB0420 /* lcrypto.h */,
+			);
+			name = luacrypto;
+			sourceTree = "<group>";
+		};
+>>>>>>> dfe01567846cf8f035ab05d906da290385ab77c7
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -7686,6 +7979,7 @@
 				0324E82F13564BC8000ADC60 /* USViewQuad.h in Headers */,
 				0324E83113564BC8000ADC60 /* USXmlReader.h in Headers */,
 				CD1D0BA413599FD200802A3C /* AKU-iphone.h in Headers */,
+<<<<<<< HEAD
 				CD80F620135BA048006B0683 /* moai-iphone.h in Headers */,
 				CD80F621135BA048006B0683 /* MOAIApp.h in Headers */,
 				CD80F623135BA048006B0683 /* NSArray+MOAILib.h in Headers */,
@@ -7696,15 +7990,93 @@
 				CD80F639135BAB67006B0683 /* NSData+MOAILib.h in Headers */,
 				CD80F63B135BAB67006B0683 /* NSError+MOAILib.h in Headers */,
 				CD7F4DFB135BBD8600E83096 /* NSDate+MOAILib.h in Headers */,
+=======
+>>>>>>> dfe01567846cf8f035ab05d906da290385ab77c7
 				CDEB91481360A78800AAC558 /* MOAIEventSource.h in Headers */,
 				CDEB914C1360A78800AAC558 /* MOAIImage.h in Headers */,
 				03E4E94113664F7C008D079B /* MOAIParticle.h in Headers */,
 				031FA4D0138589C4007FD20C /* MOAICameraAnchor2D.h in Headers */,
 				031FA4D2138589C4007FD20C /* MOAICameraFitter2D.h in Headers */,
+<<<<<<< HEAD
 				CDD1171B138B7C9300AAF115 /* MOAIStoreKitListener.h in Headers */,
 				039C283E138EDAB300A3A780 /* MOAIDeckRemapper.h in Headers */,
 				CD148EE01395ADBD00A3F501 /* MOAITraits.h in Headers */,
 				CD148EE41395ADED00A3F501 /* USPvrHeader.h in Headers */,
+=======
+				039C283E138EDAB300A3A780 /* MOAIDeckRemapper.h in Headers */,
+				CD148EE01395ADBD00A3F501 /* MOAITraits.h in Headers */,
+				CD148EE41395ADED00A3F501 /* USPvrHeader.h in Headers */,
+				CDD06EF21398BA6300AB0420 /* MOAIApp.h in Headers */,
+				CDD06EF41398BA6300AB0420 /* moaiext-iphone.h in Headers */,
+				CDD06EF51398BA6300AB0420 /* MOAIStoreKitListener.h in Headers */,
+				CDD06EF71398BA6300AB0420 /* NSArray+MOAILib.h in Headers */,
+				CDD06EF91398BA6300AB0420 /* NSData+MOAILib.h in Headers */,
+				CDD06EFB1398BA6300AB0420 /* NSDate+MOAILib.h in Headers */,
+				CDD06EFD1398BA6300AB0420 /* NSDictionary+MOAILib.h in Headers */,
+				CDD06EFF1398BA6300AB0420 /* NSError+MOAILib.h in Headers */,
+				CDD06F011398BA6300AB0420 /* NSNumber+MOAILib.h in Headers */,
+				CDD06F031398BA6300AB0420 /* NSObject+MOAILib.h in Headers */,
+				CDD06F051398BA6300AB0420 /* NSString+MOAILib.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CDD06A091398822500AB0420 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CDD06D8B1398832300AB0420 /* lcrypto.h in Headers */,
+				CDD06DB11398838D00AB0420 /* auxiliar.h in Headers */,
+				CDD06DB31398838D00AB0420 /* buffer.h in Headers */,
+				CDD06DB51398838D00AB0420 /* except.h in Headers */,
+				CDD06DB71398838D00AB0420 /* inet.h in Headers */,
+				CDD06DB91398838D00AB0420 /* io.h in Headers */,
+				CDD06DBB1398838D00AB0420 /* luasocket.h in Headers */,
+				CDD06DBE1398838D00AB0420 /* mime.h in Headers */,
+				CDD06DC01398838D00AB0420 /* options.h in Headers */,
+				CDD06DC21398838D00AB0420 /* select.h in Headers */,
+				CDD06DC31398838D00AB0420 /* socket.h in Headers */,
+				CDD06DC51398838D00AB0420 /* tcp.h in Headers */,
+				CDD06DC71398838D00AB0420 /* timeout.h in Headers */,
+				CDD06DC91398838D00AB0420 /* udp.h in Headers */,
+				CDD06DCB1398838D00AB0420 /* unix.h in Headers */,
+				CDD06DCD1398838D00AB0420 /* usocket.h in Headers */,
+				CDD06E551398B5A500AB0420 /* AKU-luaext.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CDD06BD8139882D900AB0420 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CDD06D8D1398832300AB0420 /* lcrypto.h in Headers */,
+				CDD06DD11398838D00AB0420 /* auxiliar.h in Headers */,
+				CDD06DD31398838D00AB0420 /* buffer.h in Headers */,
+				CDD06DD51398838D00AB0420 /* except.h in Headers */,
+				CDD06DD71398838D00AB0420 /* inet.h in Headers */,
+				CDD06DD91398838D00AB0420 /* io.h in Headers */,
+				CDD06DDB1398838D00AB0420 /* luasocket.h in Headers */,
+				CDD06DDE1398838D00AB0420 /* mime.h in Headers */,
+				CDD06DE01398838D00AB0420 /* options.h in Headers */,
+				CDD06DE21398838D00AB0420 /* select.h in Headers */,
+				CDD06DE31398838D00AB0420 /* socket.h in Headers */,
+				CDD06DE51398838D00AB0420 /* tcp.h in Headers */,
+				CDD06DE71398838D00AB0420 /* timeout.h in Headers */,
+				CDD06DE91398838D00AB0420 /* udp.h in Headers */,
+				CDD06DEB1398838D00AB0420 /* unix.h in Headers */,
+				CDD06DED1398838D00AB0420 /* usocket.h in Headers */,
+				CDD06E571398B5A500AB0420 /* AKU-luaext.h in Headers */,
+				CDD06EDD1398BA6300AB0420 /* MOAIApp.h in Headers */,
+				CDD06EDF1398BA6300AB0420 /* moaiext-iphone.h in Headers */,
+				CDD06EE01398BA6300AB0420 /* MOAIStoreKitListener.h in Headers */,
+				CDD06EE21398BA6300AB0420 /* NSArray+MOAILib.h in Headers */,
+				CDD06EE41398BA6300AB0420 /* NSData+MOAILib.h in Headers */,
+				CDD06EE61398BA6300AB0420 /* NSDate+MOAILib.h in Headers */,
+				CDD06EE81398BA6300AB0420 /* NSDictionary+MOAILib.h in Headers */,
+				CDD06EEA1398BA6300AB0420 /* NSError+MOAILib.h in Headers */,
+				CDD06EEC1398BA6300AB0420 /* NSNumber+MOAILib.h in Headers */,
+				CDD06EEE1398BA6300AB0420 /* NSObject+MOAILib.h in Headers */,
+				CDD06EF01398BA6300AB0420 /* NSString+MOAILib.h in Headers */,
+>>>>>>> dfe01567846cf8f035ab05d906da290385ab77c7
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7774,6 +8146,10 @@
 			buildRules = (
 			);
 			dependencies = (
+<<<<<<< HEAD
+=======
+				CDD06BD4139882CF00AB0420 /* PBXTargetDependency */,
+>>>>>>> dfe01567846cf8f035ab05d906da290385ab77c7
 				0379C7401333ED3500E89DDC /* PBXTargetDependency */,
 			);
 			name = "libmoai-iphone";
@@ -7781,6 +8157,43 @@
 			productReference = 03C2F6F4104DE130009A2D5D /* libmoai-iphone.a */;
 			productType = "com.apple.product-type.library.static";
 		};
+<<<<<<< HEAD
+=======
+		CDD06A061398822500AB0420 /* libmoai-iphone-luaext */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CDD06BCD1398822500AB0420 /* Build configuration list for PBXNativeTarget "libmoai-iphone-luaext" */;
+			buildPhases = (
+				CDD06A091398822500AB0420 /* Headers */,
+				CDD06AFC1398822500AB0420 /* Sources */,
+				CDD06BCA1398822500AB0420 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "libmoai-iphone-luaext";
+			productName = OpenUSLS;
+			productReference = CDD06BD01398822500AB0420 /* libmoai-iphone.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		CDD06BD5139882D900AB0420 /* libmoai-osx-luaext */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CDD06D84139882D900AB0420 /* Build configuration list for PBXNativeTarget "libmoai-osx-luaext" */;
+			buildPhases = (
+				CDD06BD8139882D900AB0420 /* Headers */,
+				CDD06CBF139882D900AB0420 /* Sources */,
+				CDD06D82139882D900AB0420 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "libmoai-osx-luaext";
+			productName = OpenUSLS;
+			productReference = CDD06D87139882D900AB0420 /* libmoai-osx.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+>>>>>>> dfe01567846cf8f035ab05d906da290385ab77c7
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -7815,8 +8228,15 @@
 			targets = (
 				0379C3D51333ECD800E89DDC /* libmoai-iphone-3rdparty */,
 				03C2F6F3104DE130009A2D5D /* libmoai-iphone */,
+<<<<<<< HEAD
 				0324E2A81356485F000ADC60 /* libmoai-osx-3rdparty */,
 				0324E2B11356485F000ADC60 /* libmoai-osx */,
+=======
+				CDD06A061398822500AB0420 /* libmoai-iphone-luaext */,
+				0324E2A81356485F000ADC60 /* libmoai-osx-3rdparty */,
+				0324E2B11356485F000ADC60 /* libmoai-osx */,
+				CDD06BD5139882D900AB0420 /* libmoai-osx-luaext */,
+>>>>>>> dfe01567846cf8f035ab05d906da290385ab77c7
 			);
 		};
 /* End PBXProject section */
@@ -9280,6 +9700,7 @@
 				0324E82E13564BC8000ADC60 /* USViewQuad.cpp in Sources */,
 				0324E83013564BC8000ADC60 /* USXmlReader.cpp in Sources */,
 				CD1D0BA513599FD200802A3C /* AKU-iphone.mm in Sources */,
+<<<<<<< HEAD
 				CD80F622135BA048006B0683 /* MOAIApp.mm in Sources */,
 				CD80F624135BA048006B0683 /* NSArray+MOAILib.mm in Sources */,
 				CD80F628135BA048006B0683 /* NSDictionary+MOAILib.mm in Sources */,
@@ -9289,13 +9710,86 @@
 				CD80F63A135BAB67006B0683 /* NSData+MOAILib.mm in Sources */,
 				CD80F63C135BAB67006B0683 /* NSError+MOAILib.mm in Sources */,
 				CD7F4DFC135BBD8600E83096 /* NSDate+MOAILib.mm in Sources */,
+=======
+>>>>>>> dfe01567846cf8f035ab05d906da290385ab77c7
 				CDEB91461360A78800AAC558 /* MOAIEventSource.cpp in Sources */,
 				CDEB914A1360A78800AAC558 /* MOAIImage.cpp in Sources */,
 				031FA4CF138589C4007FD20C /* MOAICameraAnchor2D.cpp in Sources */,
 				031FA4D1138589C4007FD20C /* MOAICameraFitter2D.cpp in Sources */,
+<<<<<<< HEAD
 				CDD1171C138B7C9300AAF115 /* MOAIStoreKitListener.mm in Sources */,
 				039C283D138EDAB300A3A780 /* MOAIDeckRemapper.cpp in Sources */,
 				CD148EDF1395ADBD00A3F501 /* MOAITraits.cpp in Sources */,
+=======
+				039C283D138EDAB300A3A780 /* MOAIDeckRemapper.cpp in Sources */,
+				CD148EDF1395ADBD00A3F501 /* MOAITraits.cpp in Sources */,
+				CDD06EF31398BA6300AB0420 /* MOAIApp.mm in Sources */,
+				CDD06EF61398BA6300AB0420 /* MOAIStoreKitListener.mm in Sources */,
+				CDD06EF81398BA6300AB0420 /* NSArray+MOAILib.mm in Sources */,
+				CDD06EFA1398BA6300AB0420 /* NSData+MOAILib.mm in Sources */,
+				CDD06EFC1398BA6300AB0420 /* NSDate+MOAILib.mm in Sources */,
+				CDD06EFE1398BA6300AB0420 /* NSDictionary+MOAILib.mm in Sources */,
+				CDD06F001398BA6300AB0420 /* NSError+MOAILib.mm in Sources */,
+				CDD06F021398BA6300AB0420 /* NSNumber+MOAILib.mm in Sources */,
+				CDD06F041398BA6300AB0420 /* NSObject+MOAILib.mm in Sources */,
+				CDD06F061398BA6300AB0420 /* NSString+MOAILib.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CDD06AFC1398822500AB0420 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CDD06D8A1398832300AB0420 /* lcrypto.c in Sources */,
+				CDD06DB01398838D00AB0420 /* auxiliar.c in Sources */,
+				CDD06DB21398838D00AB0420 /* buffer.c in Sources */,
+				CDD06DB41398838D00AB0420 /* except.c in Sources */,
+				CDD06DB61398838D00AB0420 /* inet.c in Sources */,
+				CDD06DB81398838D00AB0420 /* io.c in Sources */,
+				CDD06DBA1398838D00AB0420 /* luasocket.c in Sources */,
+				CDD06DBD1398838D00AB0420 /* mime.c in Sources */,
+				CDD06DBF1398838D00AB0420 /* options.c in Sources */,
+				CDD06DC11398838D00AB0420 /* select.c in Sources */,
+				CDD06DC41398838D00AB0420 /* tcp.c in Sources */,
+				CDD06DC61398838D00AB0420 /* timeout.c in Sources */,
+				CDD06DC81398838D00AB0420 /* udp.c in Sources */,
+				CDD06DCA1398838D00AB0420 /* unix.c in Sources */,
+				CDD06DCC1398838D00AB0420 /* usocket.c in Sources */,
+				CDD06E541398B5A500AB0420 /* AKU-luaext.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CDD06CBF139882D900AB0420 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CDD06D8C1398832300AB0420 /* lcrypto.c in Sources */,
+				CDD06DD01398838D00AB0420 /* auxiliar.c in Sources */,
+				CDD06DD21398838D00AB0420 /* buffer.c in Sources */,
+				CDD06DD41398838D00AB0420 /* except.c in Sources */,
+				CDD06DD61398838D00AB0420 /* inet.c in Sources */,
+				CDD06DD81398838D00AB0420 /* io.c in Sources */,
+				CDD06DDA1398838D00AB0420 /* luasocket.c in Sources */,
+				CDD06DDD1398838D00AB0420 /* mime.c in Sources */,
+				CDD06DDF1398838D00AB0420 /* options.c in Sources */,
+				CDD06DE11398838D00AB0420 /* select.c in Sources */,
+				CDD06DE41398838D00AB0420 /* tcp.c in Sources */,
+				CDD06DE61398838D00AB0420 /* timeout.c in Sources */,
+				CDD06DE81398838D00AB0420 /* udp.c in Sources */,
+				CDD06DEA1398838D00AB0420 /* unix.c in Sources */,
+				CDD06DEC1398838D00AB0420 /* usocket.c in Sources */,
+				CDD06E561398B5A500AB0420 /* AKU-luaext.cpp in Sources */,
+				CDD06EDE1398BA6300AB0420 /* MOAIApp.mm in Sources */,
+				CDD06EE11398BA6300AB0420 /* MOAIStoreKitListener.mm in Sources */,
+				CDD06EE31398BA6300AB0420 /* NSArray+MOAILib.mm in Sources */,
+				CDD06EE51398BA6300AB0420 /* NSData+MOAILib.mm in Sources */,
+				CDD06EE71398BA6300AB0420 /* NSDate+MOAILib.mm in Sources */,
+				CDD06EE91398BA6300AB0420 /* NSDictionary+MOAILib.mm in Sources */,
+				CDD06EEB1398BA6300AB0420 /* NSError+MOAILib.mm in Sources */,
+				CDD06EED1398BA6300AB0420 /* NSNumber+MOAILib.mm in Sources */,
+				CDD06EEF1398BA6300AB0420 /* NSObject+MOAILib.mm in Sources */,
+				CDD06EF11398BA6300AB0420 /* NSString+MOAILib.mm in Sources */,
+>>>>>>> dfe01567846cf8f035ab05d906da290385ab77c7
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9312,6 +9806,14 @@
 			target = 0379C3D51333ECD800E89DDC /* libmoai-iphone-3rdparty */;
 			targetProxy = 0379C73F1333ED3500E89DDC /* PBXContainerItemProxy */;
 		};
+<<<<<<< HEAD
+=======
+		CDD06BD4139882CF00AB0420 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CDD06A061398822500AB0420 /* libmoai-iphone-luaext */;
+			targetProxy = CDD06BD3139882CF00AB0420 /* PBXContainerItemProxy */;
+		};
+>>>>>>> dfe01567846cf8f035ab05d906da290385ab77c7
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
@@ -9548,6 +10050,11 @@
 					"\"../../3rdparty/box2d-2.1.2/Box2D\"",
 					"\"../../3rdparty/chipmunk-5.3.4/include\"",
 					"\"../../3rdparty/chipmunk-5.3.4/include/chipmunk\"",
+<<<<<<< HEAD
+=======
+					"\"../../3rdparty/luacrypto-0.2.0/src\"",
+					"\"../../3rdparty/luasocket-2.0.2/src\"",
+>>>>>>> dfe01567846cf8f035ab05d906da290385ab77c7
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PROVISIONING_PROFILE = "";
@@ -9644,6 +10151,11 @@
 					"\"../../3rdparty/box2d-2.1.2/Box2D\"",
 					"\"../../3rdparty/chipmunk-5.3.4/include\"",
 					"\"../../3rdparty/chipmunk-5.3.4/include/chipmunk\"",
+<<<<<<< HEAD
+=======
+					"\"../../3rdparty/luacrypto-0.2.0/src\"",
+					"\"../../3rdparty/luasocket-2.0.2/src\"",
+>>>>>>> dfe01567846cf8f035ab05d906da290385ab77c7
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PROVISIONING_PROFILE = "";
@@ -9654,6 +10166,137 @@
 			};
 			name = Debug;
 		};
+<<<<<<< HEAD
+=======
+		CDD06BCE1398822500AB0420 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				PRODUCT_NAME = "moai-iphone";
+				SDKROOT = iphoneos;
+				VALID_ARCHS = "i386 armv6 armv7";
+				WARNING_CFLAGS = "";
+			};
+			name = Debug;
+		};
+		CDD06BCF1398822500AB0420 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				PRODUCT_NAME = "moai-iphone";
+				SDKROOT = iphoneos;
+				VALID_ARCHS = "i386 armv6 armv7";
+				WARNING_CFLAGS = "";
+			};
+			name = Release;
+		};
+		CDD06D85139882D900AB0420 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				PRODUCT_NAME = "moai-osx";
+				SDKROOT = "";
+				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+				WARNING_CFLAGS = "";
+			};
+			name = Debug;
+		};
+		CDD06D86139882D900AB0420 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				PRODUCT_NAME = "moai-osx";
+				SDKROOT = "";
+				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+				WARNING_CFLAGS = "";
+			};
+			name = Release;
+		};
+>>>>>>> dfe01567846cf8f035ab05d906da290385ab77c7
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -9702,6 +10345,27 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
+<<<<<<< HEAD
+=======
+		CDD06BCD1398822500AB0420 /* Build configuration list for PBXNativeTarget "libmoai-iphone-luaext" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CDD06BCE1398822500AB0420 /* Debug */,
+				CDD06BCF1398822500AB0420 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		CDD06D84139882D900AB0420 /* Build configuration list for PBXNativeTarget "libmoai-osx-luaext" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CDD06D85139882D900AB0420 /* Debug */,
+				CDD06D86139882D900AB0420 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+>>>>>>> dfe01567846cf8f035ab05d906da290385ab77c7
 /* End XCConfigurationList section */
 	};
 	rootObject = 29B97313FDCFA39411CA2CEA /* Project object */;

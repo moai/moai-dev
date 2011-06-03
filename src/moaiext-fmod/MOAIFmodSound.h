@@ -4,7 +4,8 @@
 #ifndef	MOAIFMODSOUND_H
 #define	MOAIFMODSOUND_H
 
-#include <moaicore/MOAIFmod.h>
+#include <moaicore/moaicore.h>
+#include <moaiext-fmod/MOAIFmod.h>
 
 class MOAIDataBuffer;
 

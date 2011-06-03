@@ -4,14 +4,11 @@
 // http://getmoai.com
 //----------------------------------------------------------------//
 
-#ifndef AKU_MOAIEXT_H
-#define AKU_MOAIEXT_H
+#ifndef AKU_MOAIEXT_FMOD_H
+#define AKU_MOAIEXT_FMOD_H
 
 #include <aku/AKU.h>
-#include <aku/AKU-moaiext-config.h>
 
 AKU_API void	AKUExtLoadFmod			();
-AKU_API void	AKUExtLoadLuacrypto		();
-AKU_API void	AKUExtLoadLuasocket		();
 
 #endif

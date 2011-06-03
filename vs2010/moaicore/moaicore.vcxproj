@@ -224,6 +224,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\aku\AKU.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIAction.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIBlocker.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIBox2DArbiter.cpp" />
@@ -244,6 +245,7 @@
     <ClCompile Include="..\..\src\moaicore\MOAIEaseDriver.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIEaseType.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIEventSource.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAIFileSystem.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIFtFontRipper.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIGfxQuad2D.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIGfxQuadDeck2D.cpp" />
@@ -311,9 +313,6 @@
     <ClCompile Include="..\..\src\moaicore\MOAICpConstraint.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAICpShape.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAICpSpace.cpp" />
-    <ClCompile Include="..\..\src\moaicore\MOAIFmod.cpp" />
-    <ClCompile Include="..\..\src\moaicore\MOAIFmodChannel.cpp" />
-    <ClCompile Include="..\..\src\moaicore\MOAIFmodSound.cpp" />
     <ClCompile Include="..\..\src\moaicore\moaicore.cpp" />
     <ClCompile Include="..\..\src\moaicore\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -321,6 +320,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\src\aku\AKU.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIAction.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIBlocker.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIBox2DArbiter.h" />
@@ -341,6 +341,7 @@
     <ClInclude Include="..\..\src\moaicore\MOAIEaseDriver.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIEaseType.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIEventSource.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAIFileSystem.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIFtFontRipper.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIGfxQuad2D.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIGfxQuadDeck2D.h" />
@@ -410,30 +411,9 @@
     <ClInclude Include="..\..\src\moaicore\MOAICpConstraint.h" />
     <ClInclude Include="..\..\src\moaicore\MOAICpShape.h" />
     <ClInclude Include="..\..\src\moaicore\MOAICpSpace.h" />
-    <ClInclude Include="..\..\src\moaicore\MOAIFmod.h" />
-    <ClInclude Include="..\..\src\moaicore\MOAIFmodChannel.h" />
-    <ClInclude Include="..\..\src\moaicore\MOAIFmodSound.h" />
     <ClInclude Include="..\..\src\moaicore\moaiconf.h" />
     <ClInclude Include="..\..\src\moaicore\moaicore.h" />
     <ClInclude Include="..\..\src\moaicore\pch.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\box2d\box2d.vcxproj">
-      <Project>{ab0dd232-1af9-4b16-a0f2-5ebf32250f6b}</Project>
-      <Private>true</Private>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
-      <LinkLibraryDependencies>false</LinkLibraryDependencies>
-      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
-    </ProjectReference>
-    <ProjectReference Include="..\chipmunk\chipmunk.vcxproj">
-      <Project>{2c12ae60-0d24-4200-99bb-cb49cba3003f}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-    <ProjectReference Include="..\uslsext\uslsext.vcxproj">
-      <Project>{97fd97f4-5c0f-411e-9f3a-6549d4263664}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

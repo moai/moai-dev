@@ -3,7 +3,6 @@
 
 #ifndef	MOAIFMOD_H
 #define	MOAIFMOD_H
-#if MOAIEXT_USE_FMOD
 
 #include <moaicore/moaicore.h>
 
@@ -45,5 +44,4 @@ public:
 	STLString		ToString			();
 };
 
-#endif
 #endif
