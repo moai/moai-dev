@@ -7,6 +7,10 @@
 #import <QuartzCore/QuartzCore.h>
 #import <OpenGLES/EAGLDrawable.h>
 
+#ifdef AKU_IPHONE_USE_LUAEXT
+	#include <aku/AKU-luaext.h>
+#endif
+
 #import "LocationObserver.h"
 #import "MoaiView.h"
 
@@ -157,7 +161,7 @@ void _AKUStartGameLoopFunc () {
 	}
 
 	//----------------------------------------------------------------//
-	-( id )initWithCoder:( NSCoder* )encoder {
+	-( id ) initWithCoder:( NSCoder* )encoder {
 	
 		self = [ super initWithCoder:encoder ];
 		if ( self ) {
@@ -182,6 +186,11 @@ void _AKUStartGameLoopFunc () {
 	-( void ) moaiInit {
 	
 		mAku = AKUCreateContext ( self );
+		
+		#ifdef AKU_IPHONE_USE_LUAEXT
+			AKUExtLoadLuacrypto ();
+			AKUExtLoadLuasocket ();
+		#endif
 		
 		AKUSetInputConfigurationName ( "iPhone" );
 
