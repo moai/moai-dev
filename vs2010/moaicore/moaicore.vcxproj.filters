@@ -348,6 +348,9 @@
     <ClCompile Include="..\..\src\aku\AKU.cpp">
       <Filter>src\aku</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIFileSystem.cpp">
+      <Filter>src\util</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\moaicore\MOAIAction.h">
@@ -628,6 +631,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\aku\AKU.h">
       <Filter>src\aku</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIFileSystem.h">
+      <Filter>src\util</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -23,6 +23,7 @@
 #include <moaicore/MOAIEaseDriver.h>
 #include <moaicore/MOAIEaseType.h>
 #include <moaicore/MOAIEventSource.h>
+#include <moaicore/MOAIFileSystem.h>
 #include <moaicore/MOAIFont.h>
 #include <moaicore/MOAIGfxQuad2D.h>
 #include <moaicore/MOAIGfxQuadDeck2D.h>

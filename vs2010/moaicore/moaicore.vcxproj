@@ -245,6 +245,7 @@
     <ClCompile Include="..\..\src\moaicore\MOAIEaseDriver.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIEaseType.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIEventSource.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAIFileSystem.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIFtFontRipper.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIGfxQuad2D.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIGfxQuadDeck2D.cpp" />
@@ -340,6 +341,7 @@
     <ClInclude Include="..\..\src\moaicore\MOAIEaseDriver.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIEaseType.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIEventSource.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAIFileSystem.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIFtFontRipper.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIGfxQuad2D.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIGfxQuadDeck2D.h" />
