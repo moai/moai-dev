@@ -922,12 +922,6 @@
 		0324E6D013564BC8000ADC60 /* MOAIEaseDriver.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E53013564BC7000ADC60 /* MOAIEaseDriver.h */; };
 		0324E6D113564BC8000ADC60 /* MOAIEaseType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E53113564BC7000ADC60 /* MOAIEaseType.cpp */; };
 		0324E6D213564BC8000ADC60 /* MOAIEaseType.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E53213564BC7000ADC60 /* MOAIEaseType.h */; };
-		0324E6D313564BC8000ADC60 /* MOAIFmod.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E53313564BC7000ADC60 /* MOAIFmod.cpp */; };
-		0324E6D413564BC8000ADC60 /* MOAIFmod.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E53413564BC7000ADC60 /* MOAIFmod.h */; };
-		0324E6D513564BC8000ADC60 /* MOAIFmodChannel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E53513564BC7000ADC60 /* MOAIFmodChannel.cpp */; };
-		0324E6D613564BC8000ADC60 /* MOAIFmodChannel.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E53613564BC7000ADC60 /* MOAIFmodChannel.h */; };
-		0324E6D713564BC8000ADC60 /* MOAIFmodSound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E53713564BC7000ADC60 /* MOAIFmodSound.cpp */; };
-		0324E6D813564BC8000ADC60 /* MOAIFmodSound.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E53813564BC7000ADC60 /* MOAIFmodSound.h */; };
 		0324E6D913564BC8000ADC60 /* MOAIFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E53913564BC7000ADC60 /* MOAIFont.cpp */; };
 		0324E6DA13564BC8000ADC60 /* MOAIFont.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E53A13564BC7000ADC60 /* MOAIFont.h */; };
 		0324E6DB13564BC8000ADC60 /* MOAIFtFontRipper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E53B13564BC7000ADC60 /* MOAIFtFontRipper.cpp */; };
@@ -1332,12 +1326,6 @@
 		0324E86E13564BC8000ADC60 /* MOAIEaseDriver.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E53013564BC7000ADC60 /* MOAIEaseDriver.h */; };
 		0324E86F13564BC8000ADC60 /* MOAIEaseType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E53113564BC7000ADC60 /* MOAIEaseType.cpp */; };
 		0324E87013564BC8000ADC60 /* MOAIEaseType.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E53213564BC7000ADC60 /* MOAIEaseType.h */; };
-		0324E87113564BC8000ADC60 /* MOAIFmod.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E53313564BC7000ADC60 /* MOAIFmod.cpp */; };
-		0324E87213564BC8000ADC60 /* MOAIFmod.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E53413564BC7000ADC60 /* MOAIFmod.h */; };
-		0324E87313564BC8000ADC60 /* MOAIFmodChannel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E53513564BC7000ADC60 /* MOAIFmodChannel.cpp */; };
-		0324E87413564BC8000ADC60 /* MOAIFmodChannel.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E53613564BC7000ADC60 /* MOAIFmodChannel.h */; };
-		0324E87513564BC8000ADC60 /* MOAIFmodSound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E53713564BC7000ADC60 /* MOAIFmodSound.cpp */; };
-		0324E87613564BC8000ADC60 /* MOAIFmodSound.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E53813564BC7000ADC60 /* MOAIFmodSound.h */; };
 		0324E87713564BC8000ADC60 /* MOAIFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E53913564BC7000ADC60 /* MOAIFont.cpp */; };
 		0324E87813564BC8000ADC60 /* MOAIFont.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E53A13564BC7000ADC60 /* MOAIFont.h */; };
 		0324E87913564BC8000ADC60 /* MOAIFtFontRipper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E53B13564BC7000ADC60 /* MOAIFtFontRipper.cpp */; };
@@ -2934,12 +2922,6 @@
 		0324E53013564BC7000ADC60 /* MOAIEaseDriver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIEaseDriver.h; sourceTree = "<group>"; };
 		0324E53113564BC7000ADC60 /* MOAIEaseType.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIEaseType.cpp; sourceTree = "<group>"; };
 		0324E53213564BC7000ADC60 /* MOAIEaseType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIEaseType.h; sourceTree = "<group>"; };
-		0324E53313564BC7000ADC60 /* MOAIFmod.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIFmod.cpp; sourceTree = "<group>"; };
-		0324E53413564BC7000ADC60 /* MOAIFmod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIFmod.h; sourceTree = "<group>"; };
-		0324E53513564BC7000ADC60 /* MOAIFmodChannel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIFmodChannel.cpp; sourceTree = "<group>"; };
-		0324E53613564BC7000ADC60 /* MOAIFmodChannel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIFmodChannel.h; sourceTree = "<group>"; };
-		0324E53713564BC7000ADC60 /* MOAIFmodSound.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIFmodSound.cpp; sourceTree = "<group>"; };
-		0324E53813564BC7000ADC60 /* MOAIFmodSound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIFmodSound.h; sourceTree = "<group>"; };
 		0324E53913564BC7000ADC60 /* MOAIFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIFont.cpp; sourceTree = "<group>"; };
 		0324E53A13564BC7000ADC60 /* MOAIFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIFont.h; sourceTree = "<group>"; };
 		0324E53B13564BC7000ADC60 /* MOAIFtFontRipper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIFtFontRipper.cpp; sourceTree = "<group>"; };
@@ -4715,7 +4697,6 @@
 				CD148EF91395AEC900A3F501 /* chipmunk */,
 				CD148EF81395AEC100A3F501 /* deck */,
 				CD148EF71395AEBA00A3F501 /* events */,
-				CD148EF61395AEAE00A3F501 /* fmod */,
 				CD148EF51395AEA300A3F501 /* gfx */,
 				CD148EF41395AE9A00A3F501 /* grid */,
 				CD148EF31395AE9200A3F501 /* input */,
@@ -5029,19 +5010,6 @@
 				0324E5A513564BC8000ADC60 /* MOAIViewport.h */,
 			);
 			name = gfx;
-			sourceTree = "<group>";
-		};
-		CD148EF61395AEAE00A3F501 /* fmod */ = {
-			isa = PBXGroup;
-			children = (
-				0324E53313564BC7000ADC60 /* MOAIFmod.cpp */,
-				0324E53413564BC7000ADC60 /* MOAIFmod.h */,
-				0324E53513564BC7000ADC60 /* MOAIFmodChannel.cpp */,
-				0324E53613564BC7000ADC60 /* MOAIFmodChannel.h */,
-				0324E53713564BC7000ADC60 /* MOAIFmodSound.cpp */,
-				0324E53813564BC7000ADC60 /* MOAIFmodSound.h */,
-			);
-			name = fmod;
 			sourceTree = "<group>";
 		};
 		CD148EF71395AEBA00A3F501 /* events */ = {
@@ -6994,9 +6962,6 @@
 				0324E86C13564BC8000ADC60 /* MOAIDeck2D.h in Headers */,
 				0324E86E13564BC8000ADC60 /* MOAIEaseDriver.h in Headers */,
 				0324E87013564BC8000ADC60 /* MOAIEaseType.h in Headers */,
-				0324E87213564BC8000ADC60 /* MOAIFmod.h in Headers */,
-				0324E87413564BC8000ADC60 /* MOAIFmodChannel.h in Headers */,
-				0324E87613564BC8000ADC60 /* MOAIFmodSound.h in Headers */,
 				0324E87813564BC8000ADC60 /* MOAIFont.h in Headers */,
 				0324E87A13564BC8000ADC60 /* MOAIFtFontRipper.h in Headers */,
 				0324E87C13564BC8000ADC60 /* MOAIGfxQuad2D.h in Headers */,
@@ -7532,9 +7497,6 @@
 				0324E6CE13564BC8000ADC60 /* MOAIDeck2D.h in Headers */,
 				0324E6D013564BC8000ADC60 /* MOAIEaseDriver.h in Headers */,
 				0324E6D213564BC8000ADC60 /* MOAIEaseType.h in Headers */,
-				0324E6D413564BC8000ADC60 /* MOAIFmod.h in Headers */,
-				0324E6D613564BC8000ADC60 /* MOAIFmodChannel.h in Headers */,
-				0324E6D813564BC8000ADC60 /* MOAIFmodSound.h in Headers */,
 				0324E6DA13564BC8000ADC60 /* MOAIFont.h in Headers */,
 				0324E6DC13564BC8000ADC60 /* MOAIFtFontRipper.h in Headers */,
 				0324E6DE13564BC8000ADC60 /* MOAIGfxQuad2D.h in Headers */,
@@ -8132,9 +8094,6 @@
 				0324E86B13564BC8000ADC60 /* MOAIDeck2D.cpp in Sources */,
 				0324E86D13564BC8000ADC60 /* MOAIEaseDriver.cpp in Sources */,
 				0324E86F13564BC8000ADC60 /* MOAIEaseType.cpp in Sources */,
-				0324E87113564BC8000ADC60 /* MOAIFmod.cpp in Sources */,
-				0324E87313564BC8000ADC60 /* MOAIFmodChannel.cpp in Sources */,
-				0324E87513564BC8000ADC60 /* MOAIFmodSound.cpp in Sources */,
 				0324E87713564BC8000ADC60 /* MOAIFont.cpp in Sources */,
 				0324E87913564BC8000ADC60 /* MOAIFtFontRipper.cpp in Sources */,
 				0324E87B13564BC8000ADC60 /* MOAIGfxQuad2D.cpp in Sources */,
@@ -9165,9 +9124,6 @@
 				0324E6CD13564BC8000ADC60 /* MOAIDeck2D.cpp in Sources */,
 				0324E6CF13564BC8000ADC60 /* MOAIEaseDriver.cpp in Sources */,
 				0324E6D113564BC8000ADC60 /* MOAIEaseType.cpp in Sources */,
-				0324E6D313564BC8000ADC60 /* MOAIFmod.cpp in Sources */,
-				0324E6D513564BC8000ADC60 /* MOAIFmodChannel.cpp in Sources */,
-				0324E6D713564BC8000ADC60 /* MOAIFmodSound.cpp in Sources */,
 				0324E6D913564BC8000ADC60 /* MOAIFont.cpp in Sources */,
 				0324E6DB13564BC8000ADC60 /* MOAIFtFontRipper.cpp in Sources */,
 				0324E6DD13564BC8000ADC60 /* MOAIGfxQuad2D.cpp in Sources */,
