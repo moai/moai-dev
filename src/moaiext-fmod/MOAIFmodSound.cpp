@@ -1,16 +1,8 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#include "pch.h"
-
-SUPPRESS_EMPTY_FILE_WARNING
-#if USE_FMOD
-
-#include <moaicore/MOAIDataBuffer.h>
-#include <moaicore/MOAIFmodSound.h>
-#include <moaicore/MOAIFmod.h>
-#include <moaicore/MOAILogMessages.h>
-
+#include <moaiext-fmod/MOAIFmod.h>
+#include <moaiext-fmod/MOAIFmodSound.h>
 #include <fmod.hpp>
 
 //================================================================//
@@ -237,5 +229,3 @@ STLString MOAIFmodSound::ToString () {
 
 	return repr;
 }
-
-#endif

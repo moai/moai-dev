@@ -98,12 +98,6 @@
 	#include <moaicore/MOAICpSpace.h>
 #endif
 
-#if USE_FMOD
-	#include <moaicore/MOAIFmod.h>
-	#include <moaicore/MOAIFmodChannel.h>
-	#include <moaicore/MOAIFmodSound.h>
-#endif
-
 //================================================================//
 // moaicore
 //================================================================//

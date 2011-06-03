@@ -8,7 +8,6 @@
 #include <moaicore/MOAINodeMgr.h>
 #include <moaicore/MOAIProp2D.h>
 #include <moaicore/MOAISim.h>
-#include <moaicore/MOAIFmod.h>
 #include <aku/AKU.h>
 
 //================================================================//

@@ -1,17 +1,9 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#include "pch.h"
-
-SUPPRESS_EMPTY_FILE_WARNING
-#if USE_FMOD
-
-#include <moaicore/MOAIEaseDriver.h>
-#include <moaicore/MOAIFmodSound.h>
-#include <moaicore/MOAIFmodChannel.h>
-#include <moaicore/MOAIFmod.h>
-#include <moaicore/MOAILogMessages.h>
-
+#include <moaiext-fmod/MOAIFmod.h>
+#include <moaiext-fmod/MOAIFmodChannel.h>
+#include <moaiext-fmod/MOAIFmodSound.h>
 #include <fmod.hpp>
 
 //================================================================//
@@ -38,7 +30,7 @@ int MOAIFmodChannel::_moveVolume ( lua_State* L ) {
 	float length	= state.GetValue < float >( 3, 0.0f );
 	u32 mode		= state.GetValue < u32 >( 4, USInterpolate::kSmooth );
 	
-	action->SetLink ( 0, self, MOAIFmodChannel::Pack ( ATTR_VOLUME ), delta, mode );
+	action->SetLink ( 0, self, MOAIFmodChannelAttr::Pack ( ATTR_VOLUME ), delta, mode );
 
 	action->SetLength ( length );
 	action->Start ();
@@ -89,7 +81,7 @@ int MOAIFmodChannel::_seekVolume ( lua_State* L ) {
 	float length	= state.GetValue < float >( 3, 0.0f );
 	u32 mode		= state.GetValue < u32 >( 4, USInterpolate::kSmooth );
 	
-	action->SetLink ( 0, self, MOAIFmodChannel::Pack ( ATTR_VOLUME ), target - self->mVolume, mode );
+	action->SetLink ( 0, self, MOAIFmodChannelAttr::Pack ( ATTR_VOLUME ), target - self->mVolume, mode );
 
 	action->SetLength ( length );
 	action->Start ();
@@ -152,7 +144,7 @@ int MOAIFmodChannel::_stop ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIFmodChannel::ApplyAttrOp ( u32 attrID, USAttrOp& attrOp ) {
+bool MOAIFmodChannel::ApplyAttrOp ( u32 attrID, USAttrOp& attrOp ) {
 
 	if ( MOAIFmodChannelAttr::Check ( attrID )) {
 		attrID = UNPACK_ATTR ( attrID );
@@ -160,9 +152,10 @@ void MOAIFmodChannel::ApplyAttrOp ( u32 attrID, USAttrOp& attrOp ) {
 		if ( attrID == ATTR_VOLUME ) {
 			this->mVolume = attrOp.Op ( this->mVolume );
 			this->SetVolume ( this->mVolume );
-			return;
+			return true;
 		}
 	}
+	return false;
 }
 
 //----------------------------------------------------------------//
@@ -207,9 +200,8 @@ void MOAIFmodChannel::Play ( MOAIFmodSound* sound, int loopCount ) {
 
 //----------------------------------------------------------------//
 void MOAIFmodChannel::RegisterLuaClass ( USLuaState& state ) {
-	UNUSED ( state );
 	
-	state.SetField ( -1, "ATTR_VOLUME", MOAIFmodChannel::Pack ( ATTR_VOLUME ));
+	state.SetField ( -1, "ATTR_VOLUME", MOAIFmodChannelAttr::Pack ( ATTR_VOLUME ));
 }
 
 //----------------------------------------------------------------//
@@ -263,5 +255,3 @@ STLString MOAIFmodChannel::ToString () {
 
 	return repr;
 }
-
-#endif

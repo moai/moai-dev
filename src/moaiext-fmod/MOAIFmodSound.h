@@ -3,9 +3,9 @@
 
 #ifndef	MOAIFMODSOUND_H
 #define	MOAIFMODSOUND_H
-#if USE_FMOD
 
-#include <moaicore/MOAIFmod.h>
+#include <moaicore/moaicore.h>
+#include <moaiext-fmod/MOAIFmod.h>
 
 class MOAIDataBuffer;
 
@@ -46,5 +46,4 @@ public:
 	STLString	ToString				();
 };
 
-#endif
 #endif
