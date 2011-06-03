@@ -15,7 +15,7 @@ layer:setViewport ( viewport )
 MOAISim.pushRenderPass ( layer )
 
 gfxQuad = MOAIGfxQuad2D.new ()
-gfxQuad:setTexture ( "cathead.png" )
+gfxQuad:setTexture ( "zipline-ogl-a-8.pvr" )
 gfxQuad:setRect ( -64, -64, 64, 64 )
 gfxQuad:setUVRect ( 0, 0, 1, 1 )
 
@@ -24,3 +24,5 @@ prop:setDeck ( gfxQuad )
 layer:insertProp ( prop )
 
 prop:moveRot ( 360, 1.5 )
+
+print("finish")
