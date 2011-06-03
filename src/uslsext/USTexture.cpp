@@ -329,7 +329,7 @@ void USTexture::CreateTextureFromPVR ( void* data, size_t size ) {
 		USPvrHeader* header = USPvrHeader::GetHeader ( data, size );
 		if ( !header ) return;
 		
-		bool compressed;
+		bool compressed = false;
 		bool hasAlpha = header->mAlphaBitMask ? true : false;
 		
 		switch ( header->mPFFlags & USPvrHeader::PF_MASK ) {
