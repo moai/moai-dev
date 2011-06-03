@@ -7,6 +7,12 @@
 #import <QuartzCore/QuartzCore.h>
 #import <OpenGLES/EAGLDrawable.h>
 
+extern "C" {
+	#include <lua.h>
+	#include <lauxlib.h>
+	#include <lualib.h>
+}
+
 #ifdef AKU_IPHONE_USE_LUAEXT
 	#include <aku/AKU-luaext.h>
 #endif
@@ -42,6 +48,7 @@ namespace MoaiInputDeviceSensorID {
 	-( void )	onUpdateAnim;
 	-( void )	onUpdateHeading		:( LocationObserver* )observer;
 	-( void )	onUpdateLocation	:( LocationObserver* )observer;
+	-( void )	setGlobalPaths;
 	-( void )	startAnimation;
 	-( void )	stopAnimation;
 
@@ -208,6 +215,8 @@ void _AKUStartGameLoopFunc () {
 		AKUSetFunc_OpenWindow			( _AKUOpenWindowFunc );
 		AKUSetFunc_StartGameLoop		( _AKUStartGameLoopFunc );
 		
+		[ self setGlobalPaths ];
+		
 		mAnimInterval = 1.0f / 60.0f;
 		
 		mLocationObserver = [[[ LocationObserver alloc ] init ] autorelease ];
@@ -259,6 +268,35 @@ void _AKUStartGameLoopFunc () {
 	
 		AKUSetContext ( mAku );
 		AKURunScript ([ filename UTF8String ]);
+	}
+	
+	//----------------------------------------------------------------//
+	-( void ) setGlobalPaths {
+	
+		lua_State* L = AKUGetLuaState ();
+		lua_newtable ( L );
+		
+		NSString* path;
+		NSArray* paths;
+		
+		paths = NSSearchPathForDirectoriesInDomains ( NSDocumentDirectory, NSUserDomainMask, YES );
+		path = [ paths objectAtIndex :0 ];
+		NSLog ( @"%@", path );
+		lua_pushstring ( L, [ path UTF8String ]);
+		lua_setfield ( L, -2, "documents" );
+		
+		paths = NSSearchPathForDirectoriesInDomains ( NSCachesDirectory, NSUserDomainMask, YES );
+		path = [ paths objectAtIndex:0 ];
+		NSLog ( @"%@", path );
+		lua_pushstring ( L, [ path UTF8String ]);
+		lua_setfield ( L, -2, "caches" );
+		
+		path = [[ NSBundle mainBundle ] resourcePath ];
+		NSLog ( @"%@", path );
+		lua_pushstring ( L, [ path UTF8String ]);
+		lua_setfield ( L, -2, "resources" );
+		
+		lua_setglobal ( L, "appPaths" );
 	}
 	
 	//----------------------------------------------------------------//

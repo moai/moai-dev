@@ -116,8 +116,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CDC1BEAE138C8375009BF6F0 /* StoreKit.framework in Frameworks */,
 				03BBCABE13806DD10084FBE1 /* libmoai-iphone.a in Frameworks */,
+				CDC1BEAE138C8375009BF6F0 /* StoreKit.framework in Frameworks */,
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
 				2892E4100DC94CBA00A64D0F /* CoreGraphics.framework in Frameworks */,
@@ -144,12 +144,12 @@
 		03BBCA44138069D60084FBE1 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				03BBCA4B138069D60084FBE1 /* libmoai-iphone-3rdparty.a */,
 				03BBCA4D138069D60084FBE1 /* libmoai-iphone.a */,
-				CDD06EB21398B88000AB0420 /* libmoai-iphone.a */,
-				03BBCA4F138069D60084FBE1 /* libmoai-osx-3rdparty.a */,
+				03BBCA4B138069D60084FBE1 /* libmoai-iphone-3rdparty.a */,
+				CDD06EB21398B88000AB0420 /* libmoai-iphone-luaext.a */,
 				03BBCA51138069D60084FBE1 /* libmoai-osx.a */,
-				CDD06EB41398B88000AB0420 /* libmoai-osx.a */,
+				03BBCA4F138069D60084FBE1 /* libmoai-osx-3rdparty.a */,
+				CDD06EB41398B88000AB0420 /* libmoai-osx-luaext.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -187,7 +187,6 @@
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
-				03BBC9551380525D0084FBE1 /* QuartzCore.framework */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
@@ -216,6 +215,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				03BBC9551380525D0084FBE1 /* QuartzCore.framework */,
 				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
 				1D30AB110D05D00D00671497 /* Foundation.framework */,
 				2892E40F0DC94CBA00A64D0F /* CoreGraphics.framework */,
@@ -309,17 +309,17 @@
 			remoteRef = 03BBCA50138069D60084FBE1 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		CDD06EB21398B88000AB0420 /* libmoai-iphone.a */ = {
+		CDD06EB21398B88000AB0420 /* libmoai-iphone-luaext.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = "libmoai-iphone.a";
+			path = "libmoai-iphone-luaext.a";
 			remoteRef = CDD06EB11398B88000AB0420 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		CDD06EB41398B88000AB0420 /* libmoai-osx.a */ = {
+		CDD06EB41398B88000AB0420 /* libmoai-osx-luaext.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = "libmoai-osx.a";
+			path = "libmoai-osx-luaext.a";
 			remoteRef = CDD06EB31398B88000AB0420 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
