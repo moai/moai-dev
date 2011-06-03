@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include <aku/AKU-iphone.h>
-#include <moai-iphone/moai-iphone.h>
+#include <moaiext-iphone/moaiext-iphone.h>
 
 //----------------------------------------------------------------//
 void AKUAppDidFailToRegisterForRemoteNotificationsWithError ( NSError* error ) {
