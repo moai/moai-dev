@@ -296,7 +296,7 @@ void _AKUStartGameLoopFunc () {
 		lua_pushstring ( L, [ path UTF8String ]);
 		lua_setfield ( L, -2, "resources" );
 		
-		lua_setglobal ( L, "appPaths" );
+		lua_setglobal ( L, "iphone" );
 	}
 	
 	//----------------------------------------------------------------//
