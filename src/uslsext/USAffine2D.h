@@ -4,6 +4,7 @@
 #ifndef USAFFINE2D_H
 #define USAFFINE2D_H
 
+#include <uslsext/USMathConsts.h>
 #include <uslsext/USMatrix.h>
 #include <uslsext/USTrig.h>
 
@@ -52,6 +53,32 @@ public:
 	}
 
 	//----------------------------------------------------------------//
+	TYPE GetElement ( int c, int r ) const {
+
+		return m [ ( c * 3 ) + r ];
+	}
+
+	//----------------------------------------------------------------//
+	USMetaVec2D < TYPE > GetHeading () const {
+
+		USVec2D heading;
+	
+		heading.mX = m [ USAffine2D::C0_R0 ];
+		heading.mY = m [ USAffine2D::C0_R1 ];
+
+		heading.NormSafe ();
+		
+		return heading;
+	}
+
+	//----------------------------------------------------------------//
+	TYPE GetRot () const {
+
+		float rot = ( TYPE )( atan2 ( m [ USAffine2D::C0_R0 ], m [ USAffine2D::C0_R1 ]) * R2D );
+		return rot;
+	}
+
+	//----------------------------------------------------------------//
 	USMetaVec2D < TYPE > GetStretch () const {
 
 		USMetaVec2D < TYPE > stretch;
@@ -70,12 +97,6 @@ public:
 		stretch.mY = axis.Length ();
 		
 		return stretch;
-	}
-
-	//----------------------------------------------------------------//
-	TYPE GetElement ( int c, int r ) const {
-
-		return m [ ( c * 3 ) + r ];
 	}
 
 	//----------------------------------------------------------------//
@@ -225,7 +246,7 @@ public:
 		m [ C0_R0 ]	= Cos (	radians	);
 		m [ C0_R1 ]	= Sin (	radians	);
 		
-		m [ C1_R0 ]	= -m [ C0_R1 ];	// -sin
+		m [ C1_R0 ]	= -m [ C0_R1 ];		// -sin
 		m [ C1_R1 ]	= m [ C0_R0 ];		// cos
 		
 		m [ C2_R0 ]	= 0;

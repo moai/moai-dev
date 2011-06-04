@@ -637,12 +637,8 @@ MOAITransform::MOAITransform () :
 	mDegrees ( 0.0f ) {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAITraits )
 		RTTI_EXTEND ( MOAITransformBase )
 	RTTI_END
-	
-	this->mLocalToWorldMtx.Ident ();
-	this->mWorldToLocalMtx.Ident ();
 }
 
 //----------------------------------------------------------------//
@@ -658,7 +654,7 @@ void MOAITransform::OnDepNodeUpdate () {
 //----------------------------------------------------------------//
 void MOAITransform::RegisterLuaClass ( USLuaState& state ) {
 	
-	MOAITraits::RegisterLuaClass ( state );
+	MOAITransformBase::RegisterLuaClass ( state );
 	
 	state.SetField ( -1, "ATTR_X_LOC", MOAITransformAttr::Pack ( ATTR_X_LOC ));
 	state.SetField ( -1, "ATTR_Y_LOC", MOAITransformAttr::Pack ( ATTR_Y_LOC ));
@@ -670,7 +666,7 @@ void MOAITransform::RegisterLuaClass ( USLuaState& state ) {
 //----------------------------------------------------------------//
 void MOAITransform::RegisterLuaFuncs ( USLuaState& state ) {
 	
-	MOAITraits::RegisterLuaFuncs ( state );
+	MOAITransformBase::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
 		{ "addLoc",				_addLoc },

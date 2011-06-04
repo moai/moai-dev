@@ -31,14 +31,21 @@
 		return 0;																		\
 	}
 
-#define MOAI_LUA_SETUP(type,str)														\
-	USLuaState state ( L );																\
-	if ( !state.CheckParams ( 1, str )) {												\
-		MOAI_ERROR ( state, MOAILogMessages::MOAI_ParamTypeMismatch );					\
-		return 0;																		\
-	}																					\
-	type* self = state.GetLuaObject < type >( 1 );										\
-	if ( !self ) return 0;
+#ifdef _DEBUG
+	#define MOAI_LUA_SETUP(type,str)														\
+		USLuaState state ( L );																\
+		if ( !state.CheckParams ( 1, str )) {												\
+			MOAI_ERROR ( state, MOAILogMessages::MOAI_ParamTypeMismatch );					\
+			return 0;																		\
+		}																					\
+		type* self = state.GetLuaObject < type >( 1 );										\
+		if ( !self ) return 0;
+#else
+	#define MOAI_LUA_SETUP(type,str)														\
+		USLuaState state ( L );																\
+		type* self = state.GetLuaObject < type >( 1 );										\
+		if ( !self ) return 0;
+#endif
 
 //================================================================//
 // MOAILogMessages
