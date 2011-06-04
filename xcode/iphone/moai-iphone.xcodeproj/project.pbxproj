@@ -64,6 +64,20 @@
 			remoteGlobalIDString = 03C2F6F3104DE130009A2D5D;
 			remoteInfo = "libmoai-iphone";
 		};
+		CDD06EB11398B88000AB0420 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03BBC8FD1380504D0084FBE1 /* libmoai.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = CDD06BD01398822500AB0420;
+			remoteInfo = "libmoai-iphone-luaext";
+		};
+		CDD06EB31398B88000AB0420 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03BBC8FD1380504D0084FBE1 /* libmoai.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = CDD06D87139882D900AB0420;
+			remoteInfo = "libmoai-osx-luaext";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -102,8 +116,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CDC1BEAE138C8375009BF6F0 /* StoreKit.framework in Frameworks */,
 				03BBCABE13806DD10084FBE1 /* libmoai-iphone.a in Frameworks */,
+				CDC1BEAE138C8375009BF6F0 /* StoreKit.framework in Frameworks */,
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
 				2892E4100DC94CBA00A64D0F /* CoreGraphics.framework in Frameworks */,
@@ -130,10 +144,12 @@
 		03BBCA44138069D60084FBE1 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				03BBCA4B138069D60084FBE1 /* libmoai-iphone-3rdparty.a */,
 				03BBCA4D138069D60084FBE1 /* libmoai-iphone.a */,
-				03BBCA4F138069D60084FBE1 /* libmoai-osx-3rdparty.a */,
+				03BBCA4B138069D60084FBE1 /* libmoai-iphone-3rdparty.a */,
+				CDD06EB21398B88000AB0420 /* libmoai-iphone-luaext.a */,
 				03BBCA51138069D60084FBE1 /* libmoai-osx.a */,
+				03BBCA4F138069D60084FBE1 /* libmoai-osx-3rdparty.a */,
+				CDD06EB41398B88000AB0420 /* libmoai-osx-luaext.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -171,7 +187,6 @@
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
-				03BBC9551380525D0084FBE1 /* QuartzCore.framework */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
@@ -200,6 +215,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				03BBC9551380525D0084FBE1 /* QuartzCore.framework */,
 				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
 				1D30AB110D05D00D00671497 /* Foundation.framework */,
 				2892E40F0DC94CBA00A64D0F /* CoreGraphics.framework */,
@@ -291,6 +307,20 @@
 			fileType = archive.ar;
 			path = "libmoai-osx.a";
 			remoteRef = 03BBCA50138069D60084FBE1 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		CDD06EB21398B88000AB0420 /* libmoai-iphone-luaext.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libmoai-iphone-luaext.a";
+			remoteRef = CDD06EB11398B88000AB0420 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		CDD06EB41398B88000AB0420 /* libmoai-osx-luaext.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libmoai-osx-luaext.a";
+			remoteRef = CDD06EB31398B88000AB0420 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */

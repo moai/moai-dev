@@ -389,58 +389,6 @@
     <ClInclude Include="..\..\src\uslsext\pch.h" />
     <ClInclude Include="..\..\src\uslsext\uslsext.h" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\contrib\contrib.vcxproj">
-      <Project>{99205e3d-39d0-4a0e-991d-8f573966f165}</Project>
-      <Private>true</Private>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
-      <LinkLibraryDependencies>false</LinkLibraryDependencies>
-      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
-    </ProjectReference>
-    <ProjectReference Include="..\expat\expat.vcxproj">
-      <Project>{860d46bc-ec6b-43c3-b335-3479f096fb1b}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-    <ProjectReference Include="..\freetype\freetype.vcxproj">
-      <Project>{97d147f3-4dbc-45cd-87eb-6c90eb6efe21}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-    <ProjectReference Include="..\glew\glew.vcxproj">
-      <Project>{48580411-0a48-46f9-87a6-cf5c9b81d146}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-    <ProjectReference Include="..\libcrypto\libcrypto.vcxproj">
-      <Project>{7a77895d-638a-4494-b60d-51b74efc386f}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\libcurl\libcurl.vcxproj">
-      <Project>{41beb1cb-88c0-4c0f-b24e-f5871cf9ee49}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-    <ProjectReference Include="..\libpng\libpng.vcxproj">
-      <Project>{e4bfd291-b8cf-4d71-9e86-658cd227428d}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-    <ProjectReference Include="..\libssl\libssl.vcxproj">
-      <Project>{573ed7f9-1c21-42ef-b5b2-f4137272c480}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\sqlite\sqlite.vcxproj">
-      <Project>{a9935050-2e54-4674-80f8-cfc45a2c106a}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-    <ProjectReference Include="..\tinyxml\TinyXML.vcxproj">
-      <Project>{991ebc54-28ff-44a1-863e-e70617782825}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-    <ProjectReference Include="..\uslscore\uslscore.vcxproj">
-      <Project>{86e29f0a-83d1-4001-9e1a-b20c6aece6f7}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-    <ProjectReference Include="..\zlib\zlib.vcxproj">
-      <Project>{e6c55a0c-b5b7-4963-8f77-19f1624b9f47}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
