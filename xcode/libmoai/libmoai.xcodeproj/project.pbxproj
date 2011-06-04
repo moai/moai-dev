@@ -2516,14 +2516,14 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 03C2F6F3104DE130009A2D5D /* libmoai-iphone */;
+			remoteGlobalIDString = 03C2F6F3104DE130009A2D5D;
 			remoteInfo = "libmoai-iphone";
 		};
 		CD3A549013995F650034C103 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 0324E2B11356485F000ADC60 /* libmoai-osx */;
+			remoteGlobalIDString = 0324E2B11356485F000ADC60;
 			remoteInfo = "libmoai-osx";
 		};
 		CDFCFE3513995A9A00E43A41 /* PBXContainerItemProxy */ = {
