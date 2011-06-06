@@ -9,8 +9,29 @@
 #include <assert.h>
 #include <zlib.h>
 
+#include <uslscore/USByteStream.h>
+#include <uslscore/USMemStream.h>
 #include <uslscore/USStream.h>
 #include <uslscore/USZip.h>
+
+//----------------------------------------------------------------//
+int USZip::Deflate ( const void* buffer, size_t size, USLeanArray < u8 >& result, int level ) {
+
+	USMemStream outStream;
+	
+	USByteStream inStream;
+	inStream.SetBuffer (( void* )buffer, size );
+	inStream.SetLength ( size );
+	
+	int r = USZip::Deflate ( inStream, outStream, level );
+	
+	if ( r == Z_OK ) {
+		result.Init ( outStream.GetLength ());
+		outStream.Seek ( 0, SEEK_SET );
+		outStream.ReadBytes ( result.Data (), result.Size () );
+	}
+	return r;
+}
 
 //----------------------------------------------------------------//
 int USZip::Deflate ( USStream& source, USStream& dest, int level ) {
@@ -90,6 +111,25 @@ cc8* USZip::GetErrMsg ( int code ) {
 			return "zpipe: zlib version mismatch!";
 	}
 	return "zpipe: ok";
+}
+
+//----------------------------------------------------------------//
+int USZip::Inflate ( const void* buffer, size_t size, USLeanArray < u8 >& result ) {
+
+	USMemStream outStream;
+	
+	USByteStream inStream;
+	inStream.SetBuffer (( void* )buffer, size );
+	inStream.SetLength ( size );
+	
+	int r = USZip::Inflate ( inStream, outStream );
+	
+	if ( r == Z_OK ) {
+		result.Init ( outStream.GetLength ());
+		outStream.Seek ( 0, SEEK_SET );
+		outStream.ReadBytes ( result.Data (), result.Size () );
+	}
+	return r;
 }
 
 //----------------------------------------------------------------//

@@ -8,12 +8,28 @@
 #include <iostream>
 
 #include <uslscore/USBase64Cipher.h>
+#include <uslscore/USByteStream.h>
 #include <uslscore/USCipherStream.h>
 #include <uslscore/USMemStream.h>
 
 //================================================================//
 // STLString
 //================================================================//
+
+//----------------------------------------------------------------//
+void STLString::base_64_decode ( void* buffer, u32 len ) {
+
+	USCipherStream cipherStream;
+	USByteStream byteStream;
+	USBase64Cipher base64;
+	
+	byteStream.SetBuffer (( void* )this->str (), this->size ());
+	byteStream.SetLength ( this->size ());
+	
+	cipherStream.OpenCipher ( byteStream, base64 );
+	cipherStream.ReadBytes ( buffer, len );
+	cipherStream.CloseCipher ();
+}
 
 //----------------------------------------------------------------//
 void STLString::base_64_encode ( const void* buffer, u32 len ) {

@@ -87,7 +87,7 @@ void USCipherStream::OpenCipher ( USStream& stream, USCipher& cipher ) {
 	this->mIsDirty = false;
 	
 	this->mPlainCursor = 0;
-	this->mBlockID = 0xff;
+	this->mBlockID = 0xffffffff;
 	this->SyncBlock ( true );
 }
 

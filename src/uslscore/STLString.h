@@ -28,6 +28,7 @@ class STLString :
 public:
 
 	//----------------------------------------------------------------//
+	void		base_64_decode		( void* buffer, u32 len );
 	void		base_64_encode		( const void* buffer, u32 len );
 	STLString	clip				( u32 first, u32 last );
 	STLString	clip_to_back		( u32 first );

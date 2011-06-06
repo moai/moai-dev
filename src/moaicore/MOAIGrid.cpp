@@ -411,27 +411,21 @@ void MOAIGrid::SerializeIn ( USLuaState& state, USLuaSerializer& serializer ) {
 	state.GetField ( -1, "mData" );
 
 	if ( state.IsType ( -1, LUA_TSTRING )) {
-
-		size_t len;
-		cc8* luaString = lua_tolstring ( state, -1, &len ); 
 		
-		void* buffer = malloc ( len );
-		memcpy ( buffer, luaString, len );
-
-		USByteStream inStream;
-		inStream.SetBuffer ( buffer, ( u32 )len );
-		inStream.SetLength (( u32 )len );
-
-		USBase64Cipher base64cipher;
-		USCipherStream cipherStream;
-		cipherStream.OpenCipher ( inStream, base64cipher );
+		void* tiles = this->mTiles;
+		size_t tilesSize = this->mTiles.Size () * sizeof ( u32 );
 		
-		USByteStream outStream;
-		outStream.SetBuffer ( this->mTiles, this->mTiles.Size () * sizeof ( u32 ));
+		STLString base64 = lua_tostring ( state, -1 ); 
+		base64.base_64_decode ( tiles, tilesSize );
 		
-		USZip::Inflate ( cipherStream, outStream );
+		USLeanArray < u8 > unzip;
+		USZip::Inflate ( this->mTiles, this->mTiles.Size () * sizeof ( u32 ), unzip );
 		
-		free ( buffer );
+		tiles = unzip.Data ();
+		if ( unzip.Size () < tilesSize ) {
+			tilesSize = unzip.Size ();
+		}
+		memcpy ( this->mTiles, tiles, tilesSize );
 	}
 	
 	lua_pop ( state, 1 );
@@ -443,31 +437,14 @@ void MOAIGrid::SerializeOut ( USLuaState& state, USLuaSerializer& serializer ) {
 
 	this->USGridSpace::SerializeOut ( state );
 
-	void* buffer = this->mTiles;
-	u32 size = this->mTiles.Size () * sizeof ( u32 );
+	USLeanArray < u8 > zip;
+	USZip::Deflate ( this->mTiles, this->mTiles.Size () * sizeof ( u32 ), zip );
 
-	USByteStream inStream;
-	inStream.SetBuffer ( buffer, size );
-	inStream.SetLength ( size );
-
-	USMemStream outStream;
-	outStream.Reserve ( size );
-
-	USBase64Cipher base64cipher;
-	USCipherStream cipherStream;
-	cipherStream.OpenCipher ( outStream, base64cipher );
+	STLString base64;
+	base64.base_64_encode ( zip.Data (), zip.Size ());
 	
-	USZip::Deflate ( inStream, cipherStream, USDeflater::DEFAULT_LEVEL );
-	
-	size = outStream.GetLength ();
-	buffer = malloc ( size );
-	outStream.Seek ( 0, SEEK_SET );
-	outStream.ReadBytes ( buffer, size );
-	
-	lua_pushlstring ( state, ( cc8* )buffer, size );
+	lua_pushstring ( state, base64.str ());
 	lua_setfield ( state, -2, "mData" );
-	
-	free ( buffer );
 }
 
 //----------------------------------------------------------------//
