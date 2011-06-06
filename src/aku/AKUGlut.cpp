@@ -8,6 +8,10 @@
 	#include <aku/AKU-fmod.h>
 #endif
 
+#ifdef AKUGLUT_USE_HARNESS
+	#include <aku/AKU-harness.h>
+#endif
+
 #ifdef AKUGLUT_USE_LUAEXT
 	#include <aku/AKU-luaext.h>
 #endif
@@ -222,6 +226,10 @@ int AKUGlut ( int argc, char** argv ) {
 	
 	#ifdef AKUGLUT_USE_FMOD
 		AKUExtLoadFmod ();
+	#endif
+	
+	#ifdef AKUGLUT_USE_HARNESS
+		AKUExtLoadHarness ();
 	#endif
 	
 	#ifdef AKUGLUT_USE_LUAEXT

@@ -4,13 +4,12 @@
 // http://getmoai.com
 //----------------------------------------------------------------//
 
-#ifndef AKU_MOAIEXT_LUAEXT_H
-#define AKU_MOAIEXT_LUAEXT_H
+#ifndef AKU_MOAIEXT_HARNESS_H
+#define AKU_MOAIEXT_HARNESS_H
 
 #include <aku/AKU.h>
 
-AKU_API void	AKUExtLoadLuacrypto		();
-AKU_API void	AKUExtLoadLuasocket		();
+AKU_API void	AKUExtLoadHarness		();
 
 #endif
 
