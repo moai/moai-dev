@@ -195,7 +195,7 @@ u32 MOAIParticleEmitter::GetEmission () {
 //----------------------------------------------------------------//
 float MOAIParticleEmitter::GetFrequency () {
 
-	return 1.0f / USFloat::Rand ( this->mMinFrequency, this->mMaxFrequency );
+	return USFloat::Rand ( this->mMinFrequency, this->mMaxFrequency );
 }
 
 //----------------------------------------------------------------//

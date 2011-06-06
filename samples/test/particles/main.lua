@@ -86,14 +86,12 @@ state2:pushForce ( magnet )
 state1:setNext ( state2 )
 state2:setNext ( state1 )
 
---[[
 emitter = MOAIParticleEmitter.new ()
-emitter:setLoc ( 0, 256 )
+emitter:setLoc ( 0, 0 )
 emitter:setSystem ( system )
-emitter:setMagnitude ( 500, 1000 )
-emitter:setFrequency ( 10, 20 )
+emitter:setMagnitude ( 50, 100 )
+emitter:setFrequency ( 0.2, 1 )
 emitter:setRadius ( 8, 8 )
-emitter:surge ( 128 )
---emitter:start ()
-]]--
-system:surge ( 128 )
+emitter:start ()
+
+--system:surge ( 128 )
