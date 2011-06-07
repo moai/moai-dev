@@ -107,6 +107,14 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "moaiext-luaext", "moaiext-l
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "moaiext-harness", "moaiext-harness\moaiext-harness.vcproj", "{15E2C158-6E83-4E52-903B-8C7421F46124}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libogg", "libogg\libogg.vcproj", "{3986E679-6E11-4B7A-A00D-9669DEDBBC1E}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libvorbis", "libvorbis\libvorbis.vcproj", "{CBD64DDC-70CE-470B-B5ED-E12B59196EE7}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libvorbisfile", "libvorbisfile\libvorbisfile.vcproj", "{49641214-A90C-4004-8720-D2B70346E556}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "rtaudio", "rtaudio\rtaudio.vcproj", "{A43CE92F-5AB7-4632-968C-E741EE5F6557}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -337,6 +345,30 @@ Global
 		{15E2C158-6E83-4E52-903B-8C7421F46124}.Release|Win32.Build.0 = Release|Win32
 		{15E2C158-6E83-4E52-903B-8C7421F46124}.Release|x64.ActiveCfg = Release|x64
 		{15E2C158-6E83-4E52-903B-8C7421F46124}.Release|x64.Build.0 = Release|x64
+		{3986E679-6E11-4B7A-A00D-9669DEDBBC1E}.Debug|Win32.ActiveCfg = Debug|Win32
+		{3986E679-6E11-4B7A-A00D-9669DEDBBC1E}.Debug|Win32.Build.0 = Debug|Win32
+		{3986E679-6E11-4B7A-A00D-9669DEDBBC1E}.Debug|x64.ActiveCfg = Debug|Win32
+		{3986E679-6E11-4B7A-A00D-9669DEDBBC1E}.Release|Win32.ActiveCfg = Release|Win32
+		{3986E679-6E11-4B7A-A00D-9669DEDBBC1E}.Release|Win32.Build.0 = Release|Win32
+		{3986E679-6E11-4B7A-A00D-9669DEDBBC1E}.Release|x64.ActiveCfg = Release|Win32
+		{CBD64DDC-70CE-470B-B5ED-E12B59196EE7}.Debug|Win32.ActiveCfg = Debug|Win32
+		{CBD64DDC-70CE-470B-B5ED-E12B59196EE7}.Debug|Win32.Build.0 = Debug|Win32
+		{CBD64DDC-70CE-470B-B5ED-E12B59196EE7}.Debug|x64.ActiveCfg = Debug|Win32
+		{CBD64DDC-70CE-470B-B5ED-E12B59196EE7}.Release|Win32.ActiveCfg = Release|Win32
+		{CBD64DDC-70CE-470B-B5ED-E12B59196EE7}.Release|Win32.Build.0 = Release|Win32
+		{CBD64DDC-70CE-470B-B5ED-E12B59196EE7}.Release|x64.ActiveCfg = Release|Win32
+		{49641214-A90C-4004-8720-D2B70346E556}.Debug|Win32.ActiveCfg = Debug|Win32
+		{49641214-A90C-4004-8720-D2B70346E556}.Debug|Win32.Build.0 = Debug|Win32
+		{49641214-A90C-4004-8720-D2B70346E556}.Debug|x64.ActiveCfg = Debug|Win32
+		{49641214-A90C-4004-8720-D2B70346E556}.Release|Win32.ActiveCfg = Release|Win32
+		{49641214-A90C-4004-8720-D2B70346E556}.Release|Win32.Build.0 = Release|Win32
+		{49641214-A90C-4004-8720-D2B70346E556}.Release|x64.ActiveCfg = Release|Win32
+		{A43CE92F-5AB7-4632-968C-E741EE5F6557}.Debug|Win32.ActiveCfg = Debug|Win32
+		{A43CE92F-5AB7-4632-968C-E741EE5F6557}.Debug|Win32.Build.0 = Debug|Win32
+		{A43CE92F-5AB7-4632-968C-E741EE5F6557}.Debug|x64.ActiveCfg = Debug|Win32
+		{A43CE92F-5AB7-4632-968C-E741EE5F6557}.Release|Win32.ActiveCfg = Release|Win32
+		{A43CE92F-5AB7-4632-968C-E741EE5F6557}.Release|Win32.Build.0 = Release|Win32
+		{A43CE92F-5AB7-4632-968C-E741EE5F6557}.Release|x64.ActiveCfg = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -370,10 +402,14 @@ Global
 		{D0F1C892-57F4-4758-A2EE-BFB58DB20987} = {9F8AD78A-95B2-4E97-8070-087F82AA848D}
 		{E1320267-CB3C-485E-AFD3-FE7B2662F43D} = {9F8AD78A-95B2-4E97-8070-087F82AA848D}
 		{DCBDCCF7-4EC1-4431-86A6-D2C1084D37CE} = {9F8AD78A-95B2-4E97-8070-087F82AA848D}
+		{3986E679-6E11-4B7A-A00D-9669DEDBBC1E} = {9F8AD78A-95B2-4E97-8070-087F82AA848D}
+		{CBD64DDC-70CE-470B-B5ED-E12B59196EE7} = {9F8AD78A-95B2-4E97-8070-087F82AA848D}
+		{49641214-A90C-4004-8720-D2B70346E556} = {9F8AD78A-95B2-4E97-8070-087F82AA848D}
+		{A43CE92F-5AB7-4632-968C-E741EE5F6557} = {9F8AD78A-95B2-4E97-8070-087F82AA848D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		AMDCaPersistentConfig = Debug|Win32
-		AMDCaPersistentStartup = moai (Utilities\moai)
 		AMDCaProjectFile = C:\Documents and Settings\Patrick\My Documents\git\moai\vs2008\CodeAnalyst\moai-open.caw
+		AMDCaPersistentStartup = moai (Utilities\moai)
+		AMDCaPersistentConfig = Debug|Win32
 	EndGlobalSection
 EndGlobal
