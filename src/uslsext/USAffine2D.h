@@ -63,8 +63,8 @@ public:
 
 		USVec2D heading;
 	
-		heading.mX = m [ USAffine2D::C0_R0 ];
-		heading.mY = m [ USAffine2D::C0_R1 ];
+		heading.mX = m [ C0_R0 ];
+		heading.mY = m [ C0_R1 ];
 
 		heading.NormSafe ();
 		
@@ -74,7 +74,7 @@ public:
 	//----------------------------------------------------------------//
 	TYPE GetRot () const {
 
-		float rot = ( TYPE )( atan2 ( m [ USAffine2D::C0_R0 ], m [ USAffine2D::C0_R1 ]) * R2D );
+		float rot = ( TYPE )( atan2 ( m [ C0_R0 ], m [ C0_R1 ]) * R2D );
 		return rot;
 	}
 
