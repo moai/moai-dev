@@ -48,6 +48,7 @@ namespace MoaiInputDeviceSensorID {
 	-( void )	onUpdateAnim;
 	-( void )	onUpdateHeading		:( LocationObserver* )observer;
 	-( void )	onUpdateLocation	:( LocationObserver* )observer;
+	-( void )	openContext;
 	-( void )	setGlobalPaths;
 	-( void )	startAnimation;
 	-( void )	stopAnimation;
@@ -232,6 +233,7 @@ void _AKUStartGameLoopFunc () {
 	//----------------------------------------------------------------//
 	-( void ) onUpdateAnim {
 		
+		[ self openContext ];
 		AKUSetContext ( mAku );
 		AKUUpdate ();
 		
@@ -261,6 +263,14 @@ void _AKUStartGameLoopFunc () {
 			( float )[ observer vAccuracy ],
 			( float )[ observer speed ]
 		);
+	}
+	
+	//----------------------------------------------------------------//
+	-( void ) openContext {
+		
+		if ([ EAGLContext currentContext ] != mContext ) {
+			[ EAGLContext setCurrentContext:mContext ];
+		}
 	}
 	
 	//----------------------------------------------------------------//
