@@ -124,6 +124,11 @@ static void _onReshape( int w, int h ) {
 static void _onUpdate () {
 
 	AKUUpdate ();
+	
+	#ifdef AKUGLUT_USE_FMOD
+		AKUFmodUpdate ();
+	#endif
+	
 	glutPostRedisplay ();
 }
 
@@ -225,7 +230,7 @@ int AKUGlut ( int argc, char** argv ) {
 	AKUCreateContext ();
 	
 	#ifdef AKUGLUT_USE_FMOD
-		AKUExtLoadFmod ();
+		AKUFmodLoad ();
 	#endif
 	
 	#ifdef AKUGLUT_USE_HARNESS

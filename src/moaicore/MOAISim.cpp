@@ -635,10 +635,6 @@ void MOAISim::Update () {
 	
 	USUrlMgr::Get ().Process ();
 	
-	#if USE_FMOD
-		MOAIFmod::Get ().Update ();
-	#endif
-	
 	this->mDataIOThread.Publish ();
 }
 
