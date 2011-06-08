@@ -16,6 +16,10 @@
 	#include <aku/AKU-luaext.h>
 #endif
 
+#ifdef AKUGLUT_USE_UNTZ
+	#include <aku/AKU-untz.h>
+#endif
+
 #ifdef _WIN32
 	#include <glut.h>
 #else
@@ -240,6 +244,10 @@ int AKUGlut ( int argc, char** argv ) {
 	#ifdef AKUGLUT_USE_LUAEXT
 		AKUExtLoadLuacrypto ();
 		AKUExtLoadLuasocket ();
+	#endif
+	
+	#ifdef AKUGLUT_USE_UNTZ
+		AKUUntzInit ();
 	#endif
 	
 	AKUSetInputConfigurationName ( "AKUGlut" );
