@@ -23,8 +23,13 @@
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		2892E4100DC94CBA00A64D0F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2892E40F0DC94CBA00A64D0F /* CoreGraphics.framework */; };
 		28AD73600D9D9599002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD735F0D9D9599002E5188 /* MainWindow.xib */; };
-		CDC1BEAA138C8041009BF6F0 /* cathead.png in Resources */ = {isa = PBXBuildFile; fileRef = CDC1BEA7138C8041009BF6F0 /* cathead.png */; };
-		CDC1BEAC138C8041009BF6F0 /* main.lua in Resources */ = {isa = PBXBuildFile; fileRef = CDC1BEA9138C8041009BF6F0 /* main.lua */; };
+		CD07C34413A17F5000C9386C /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD07C34313A17F5000C9386C /* AudioToolbox.framework */; };
+		CD07C34613A17F5000C9386C /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD07C34513A17F5000C9386C /* CoreAudio.framework */; };
+		CD07C35913A1807C00C9386C /* libmoai-iphone-luaext.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDD06EB21398B88000AB0420 /* libmoai-iphone-luaext.a */; };
+		CD07C3A013A1823000C9386C /* cathead.png in Resources */ = {isa = PBXBuildFile; fileRef = CD07C39E13A1822F00C9386C /* cathead.png */; };
+		CD07C3A113A1823000C9386C /* main.lua in Resources */ = {isa = PBXBuildFile; fileRef = CD07C39F13A1823000C9386C /* main.lua */; };
+		CD07C3E813A1841B00C9386C /* libmoai-iphone-3rdparty.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03BBCA4B138069D60084FBE1 /* libmoai-iphone-3rdparty.a */; };
+		CD07C3F113A1849800C9386C /* libmoai-iphone-luaext.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD07C3D513A182CB00C9386C /* libmoai-iphone-luaext.a */; };
 		CDC1BEAE138C8375009BF6F0 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDC1BEAD138C8375009BF6F0 /* StoreKit.framework */; };
 /* End PBXBuildFile section */
 
@@ -63,6 +68,34 @@
 			proxyType = 1;
 			remoteGlobalIDString = 03C2F6F3104DE130009A2D5D;
 			remoteInfo = "libmoai-iphone";
+		};
+		CD07C35713A1806100C9386C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03BBC8FD1380504D0084FBE1 /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = CDD06A061398822500AB0420 /* libmoai-iphone-luaext */;
+			remoteInfo = "libmoai-iphone-luaext";
+		};
+		CD07C3D413A182CB00C9386C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03BBC8FD1380504D0084FBE1 /* libmoai.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = CD07C3CD13A182AA00C9386C /* libmoai-iphone-luaext.a */;
+			remoteInfo = "libmoai-iphone-untz";
+		};
+		CD07C3E413A1840500C9386C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03BBC8FD1380504D0084FBE1 /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 0379C3D51333ECD800E89DDC /* libmoai-iphone-3rdparty */;
+			remoteInfo = "libmoai-iphone-3rdparty";
+		};
+		CD07C3E613A1840E00C9386C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03BBC8FD1380504D0084FBE1 /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = CD07C3A313A182AA00C9386C /* libmoai-iphone-untz */;
+			remoteInfo = "libmoai-iphone-untz";
 		};
 		CDD06EB11398B88000AB0420 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -106,8 +139,10 @@
 		2892E40F0DC94CBA00A64D0F /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		28AD735F0D9D9599002E5188 /* MainWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
-		CDC1BEA7138C8041009BF6F0 /* cathead.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cathead.png; path = "../../samples/iphone/app-storekit/cathead.png"; sourceTree = "<group>"; };
-		CDC1BEA9138C8041009BF6F0 /* main.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = main.lua; path = "../../samples/iphone/app-storekit/main.lua"; sourceTree = "<group>"; };
+		CD07C34313A17F5000C9386C /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		CD07C34513A17F5000C9386C /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
+		CD07C39E13A1822F00C9386C /* cathead.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cathead.png; path = "../../samples/iphone/app-storekit/cathead.png"; sourceTree = SOURCE_ROOT; };
+		CD07C39F13A1823000C9386C /* main.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = main.lua; path = "../../samples/iphone/app-storekit/main.lua"; sourceTree = SOURCE_ROOT; };
 		CDC1BEAD138C8375009BF6F0 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -117,6 +152,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				03BBCABE13806DD10084FBE1 /* libmoai-iphone.a in Frameworks */,
+				CD07C3E813A1841B00C9386C /* libmoai-iphone-3rdparty.a in Frameworks */,
+				CD07C35913A1807C00C9386C /* libmoai-iphone-luaext.a in Frameworks */,
+				CD07C3F113A1849800C9386C /* libmoai-iphone-luaext.a in Frameworks */,
 				CDC1BEAE138C8375009BF6F0 /* StoreKit.framework in Frameworks */,
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
@@ -126,6 +164,8 @@
 				03BBC94E138052220084FBE1 /* libiconv.dylib in Frameworks */,
 				03BBC9521380523D0084FBE1 /* CoreLocation.framework in Frameworks */,
 				03BBC9561380525D0084FBE1 /* QuartzCore.framework in Frameworks */,
+				CD07C34413A17F5000C9386C /* AudioToolbox.framework in Frameworks */,
+				CD07C34613A17F5000C9386C /* CoreAudio.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -135,8 +175,8 @@
 		03BBCA3C138069510084FBE1 /* lua */ = {
 			isa = PBXGroup;
 			children = (
-				CDC1BEA7138C8041009BF6F0 /* cathead.png */,
-				CDC1BEA9138C8041009BF6F0 /* main.lua */,
+				CD07C39E13A1822F00C9386C /* cathead.png */,
+				CD07C39F13A1823000C9386C /* main.lua */,
 			);
 			name = lua;
 			sourceTree = "<group>";
@@ -147,6 +187,7 @@
 				03BBCA4D138069D60084FBE1 /* libmoai-iphone.a */,
 				03BBCA4B138069D60084FBE1 /* libmoai-iphone-3rdparty.a */,
 				CDD06EB21398B88000AB0420 /* libmoai-iphone-luaext.a */,
+				CD07C3D513A182CB00C9386C /* libmoai-iphone-luaext.a */,
 				03BBCA51138069D60084FBE1 /* libmoai-osx.a */,
 				03BBCA4F138069D60084FBE1 /* libmoai-osx-3rdparty.a */,
 				CDD06EB41398B88000AB0420 /* libmoai-osx-luaext.a */,
@@ -215,6 +256,8 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CD07C34313A17F5000C9386C /* AudioToolbox.framework */,
+				CD07C34513A17F5000C9386C /* CoreAudio.framework */,
 				03BBC9551380525D0084FBE1 /* QuartzCore.framework */,
 				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
 				1D30AB110D05D00D00671497 /* Foundation.framework */,
@@ -243,6 +286,9 @@
 			);
 			dependencies = (
 				03BBCA9D13806CE50084FBE1 /* PBXTargetDependency */,
+				CD07C3E513A1840500C9386C /* PBXTargetDependency */,
+				CD07C35813A1806100C9386C /* PBXTargetDependency */,
+				CD07C3E713A1840E00C9386C /* PBXTargetDependency */,
 			);
 			name = MoaiSample;
 			productName = TEST;
@@ -309,6 +355,13 @@
 			remoteRef = 03BBCA50138069D60084FBE1 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		CD07C3D513A182CB00C9386C /* libmoai-iphone-luaext.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libmoai-iphone-luaext.a";
+			remoteRef = CD07C3D413A182CB00C9386C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		CDD06EB21398B88000AB0420 /* libmoai-iphone-luaext.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -332,8 +385,8 @@
 			files = (
 				28AD73600D9D9599002E5188 /* MainWindow.xib in Resources */,
 				03BBC80F13804B660084FBE1 /* Icon.png in Resources */,
-				CDC1BEAA138C8041009BF6F0 /* cathead.png in Resources */,
-				CDC1BEAC138C8041009BF6F0 /* main.lua in Resources */,
+				CD07C3A013A1823000C9386C /* cathead.png in Resources */,
+				CD07C3A113A1823000C9386C /* main.lua in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -359,6 +412,21 @@
 			isa = PBXTargetDependency;
 			name = "libmoai-iphone";
 			targetProxy = 03BBCA9C13806CE50084FBE1 /* PBXContainerItemProxy */;
+		};
+		CD07C35813A1806100C9386C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-iphone-luaext";
+			targetProxy = CD07C35713A1806100C9386C /* PBXContainerItemProxy */;
+		};
+		CD07C3E513A1840500C9386C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-iphone-3rdparty";
+			targetProxy = CD07C3E413A1840500C9386C /* PBXContainerItemProxy */;
+		};
+		CD07C3E713A1840E00C9386C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-iphone-untz";
+			targetProxy = CD07C3E613A1840E00C9386C /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
