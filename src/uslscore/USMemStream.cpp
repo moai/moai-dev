@@ -62,7 +62,7 @@ u32 USMemStream::ReadBytes ( void* buffer, u32 size ) {
 	u32 offset0 = cursor0 - ( chunk0 * this->mChunkSize );
 	u32 offset1 = cursor1 - ( chunk1 * this->mChunkSize );
 
-	void* src = ( void* )(( u32 )this->mChunks [ chunk0 ] + offset0 );
+	void* src = ( void* )(( uintptr )this->mChunks [ chunk0 ] + offset0 );
 	void* dest = buffer;
 
 	if ( chunk0 == chunk1 ) {
@@ -72,11 +72,11 @@ u32 USMemStream::ReadBytes ( void* buffer, u32 size ) {
 	else {
 		
 		memcpy ( dest, src, this->mChunkSize - offset0 );
-		dest = ( void* )(( u32 )dest + this->mChunkSize - offset0 );
+		dest = ( void* )(( uintptr )dest + this->mChunkSize - offset0 );
 		
 		for ( u32 i = ( chunk0 + 1 ); i < chunk1; ++i ) {
 			memcpy ( dest, this->mChunks [ i ], this->mChunkSize );
-			dest = ( void* )(( u32 )dest + this->mChunkSize );
+			dest = ( void* )(( uintptr )dest + this->mChunkSize );
 		}
 		
 		memcpy ( dest, this->mChunks [ chunk1 ], offset1 );
@@ -196,7 +196,7 @@ u32 USMemStream::WriteBytes ( const void* buffer, u32 size ) {
 	u32 offset0 = cursor0 - ( chunk0 * this->mChunkSize );
 	u32 offset1 = cursor1 - ( chunk1 * this->mChunkSize );
 
-	void* dest = ( void* )(( u32 )this->mChunks [ chunk0 ] + offset0 );
+	void* dest = ( void* )(( uintptr )this->mChunks [ chunk0 ] + offset0 );
 	const void* src = buffer;
 
 	if ( chunk0 == chunk1 ) {
@@ -206,11 +206,11 @@ u32 USMemStream::WriteBytes ( const void* buffer, u32 size ) {
 	else {
 		
 		memcpy ( dest, src, this->mChunkSize - offset0 );
-		src = ( void* )(( u32 )src + this->mChunkSize - offset0 );
+		src = ( void* )(( uintptr )src + this->mChunkSize - offset0 );
 		
 		for ( u32 i = ( chunk0 + 1 ); i < chunk1; ++i ) {
 			memcpy ( this->mChunks [ i ], src, this->mChunkSize );
-			src = ( void* )(( u32 )src + this->mChunkSize );
+			src = ( void* )(( uintptr )src + this->mChunkSize );
 		}
 		
 		memcpy ( this->mChunks [ chunk1 ], src, offset1 );

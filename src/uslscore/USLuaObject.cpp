@@ -50,8 +50,7 @@ int USLuaObject::_delete ( lua_State* L ) {
 //----------------------------------------------------------------//
 void USLuaObject::DebugDump () {
 
-	// TODO: fix for 64 bit
-	printf ( "0x%08X <%s> %s", ( uint )(( u32 )this ), this->TypeName (), this->ToString ().c_str ());
+	printf ( "%p <%s> %s", this, this->TypeName (), this->ToString ().c_str ());
 }
 
 //----------------------------------------------------------------//

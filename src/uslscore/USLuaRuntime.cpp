@@ -18,7 +18,7 @@
 // local
 //================================================================//
 
-#define DUMP_FORMAT "0x%08X <%s> %s"
+#define DUMP_FORMAT "%p <%s> %s"
 typedef STLSet < struct Table* > TableSet;
 
 //----------------------------------------------------------------//
@@ -79,8 +79,7 @@ static void dumpType ( lua_State* L, int idx, const char *name, bool verbose, Ta
 
 			if ( foundTables.contains ( htable )) {
 
-				// TODO: fix for 64 bit
-				printf ( DUMP_FORMAT " (see above)", ( uint )(( u32 )htable ), "table", name );
+				printf ( DUMP_FORMAT " (see above)", htable, "table", name );
 				break;
 			}
 			else {

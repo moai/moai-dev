@@ -58,7 +58,7 @@ int USLuaSerializer::_register ( lua_State* L ) {
 	USLuaObject* object = state.GetLuaObject < USLuaObject >( 2 );
 	if ( !object ) return 0;
 
-	u32 id = state.GetValue < u32 >( 3, 0 );
+	uintptr id = state.GetValue < uintptr >( 3, 0 );
 	self->Register ( object, id );
 
 	lua_pushvalue ( state, 2 );
@@ -110,7 +110,7 @@ static STLString _escapeString ( cc8* str ) {
 //----------------------------------------------------------------//
 void USLuaSerializer::AddLuaReturn ( USLuaObject* object ) {
 
-	u32 instanceID = this->GetID ( object );
+	uintptr instanceID = this->GetID ( object );
 
 	if ( this->mInstanceMap.contains ( instanceID )) {
 		this->mReturnList.push_back ( instanceID );
@@ -120,7 +120,7 @@ void USLuaSerializer::AddLuaReturn ( USLuaObject* object ) {
 //----------------------------------------------------------------//
 void USLuaSerializer::AddLuaReturn ( USLuaState& state, int idx ) {
 
-	u32 tableID = this->GetID ( state, idx );
+	uintptr tableID = this->GetID ( state, idx );
 
 	if ( this->mTableMap.contains ( tableID )) {
 		this->mReturnList.push_back ( tableID );
@@ -128,15 +128,15 @@ void USLuaSerializer::AddLuaReturn ( USLuaState& state, int idx ) {
 }
 
 //----------------------------------------------------------------//
-u32 USLuaSerializer::Affirm ( USLuaObject* object ) {
+uintptr USLuaSerializer::Affirm ( USLuaObject* object ) {
 
-	u32 instanceID = this->GetID ( object );
+	uintptr instanceID = this->GetID ( object );
 	this->Register ( object, instanceID );
 	return instanceID;
 }
 
 //----------------------------------------------------------------//
-u32 USLuaSerializer::Affirm ( USLuaState& state, int idx ) {
+uintptr USLuaSerializer::Affirm ( USLuaState& state, int idx ) {
 
 	// if we're an object, affirm as such...
 	if ( state.IsType ( idx, LUA_TUSERDATA )) {
@@ -147,7 +147,7 @@ u32 USLuaSerializer::Affirm ( USLuaState& state, int idx ) {
 	if ( !state.IsType ( idx, LUA_TTABLE )) return 0;
 
 	// get the table's address
-	u32 tableID = ( u32 )lua_topointer ( state, idx );
+	uintptr tableID = ( uintptr )lua_topointer ( state, idx );
 	
 	// bail if the table's already been added
 	if ( this->mTableMap.contains ( tableID )) return tableID;
@@ -176,7 +176,7 @@ void USLuaSerializer::Clear () {
 //----------------------------------------------------------------//
 USLuaObject* USLuaSerializer::Dereference ( USLuaState& state, int idx ) {
 
-	u32 id = state.GetValue ( idx, 0 );
+	uintptr id = state.GetValue ( idx, 0 );
 	
 	if ( this->mInstanceMap.contains ( id )) {
 		return this->mInstanceMap [ id ];
@@ -199,15 +199,15 @@ cc8* USLuaSerializer::GetFileMagic () {
 }
 
 //----------------------------------------------------------------//
-u32 USLuaSerializer::GetID ( USLuaObject* object ) {
+uintptr USLuaSerializer::GetID ( USLuaObject* object ) {
 
-	return ( u32 )object;
+	return ( uintptr )object;
 }
 
 //----------------------------------------------------------------//
-u32 USLuaSerializer::GetID ( USLuaState& state, int idx ) {
+uintptr USLuaSerializer::GetID ( USLuaState& state, int idx ) {
 
-	return ( u32 )lua_topointer ( state, idx );
+	return ( uintptr )lua_topointer ( state, idx );
 }
 
 //----------------------------------------------------------------//
@@ -229,7 +229,7 @@ u32 USLuaSerializer::IsLuaFile ( cc8* filename ) {
 //----------------------------------------------------------------//
 USLuaObject* USLuaSerializer::PopRef ( USLuaState& state ) {
 
-	u32 id = state.GetValue < u32 >( -1, 0 );
+	uintptr id = state.GetValue < uintptr >( -1, 0 );
 	state.Pop ( 1 );
 	
 	if ( this->mInstanceMap.contains ( id )) {
@@ -246,7 +246,7 @@ void USLuaSerializer::PushRef ( USLuaState& state, USLuaObject* object ) {
 }
 
 //----------------------------------------------------------------//
-void USLuaSerializer::Register ( USLuaObject* object, u32 id ) {
+void USLuaSerializer::Register ( USLuaObject* object, uintptr id ) {
 
 	if ( !this->mInstanceMap.contains ( id )) {
 	
@@ -390,7 +390,7 @@ void USLuaSerializer::WriteInstanceDecls ( USStream& stream ) {
 		USLuaObject* object = instanceIt->second;
 		if ( !object ) continue;
 		
-		u32 id = this->GetID ( object );
+		uintptr id = this->GetID ( object );
 		
 		USLuaClass* type = object->GetLuaClass ();
 		if ( !type->IsSingleton ()) {
@@ -501,7 +501,7 @@ u32 USLuaSerializer::WriteTable ( USStream& stream, USLuaState& state, int idx, 
 			}
 			case LUA_TTABLE: {
 				
-				u32 tableID = ( u32 )lua_topointer ( state, -1 );
+				uintptr tableID = ( uintptr )lua_topointer ( state, -1 );
 				if ( this->mTableMap.contains ( tableID )) {
 					stream.Print ( "objects [ 0x%08X ],\n", tableID );
 				}
@@ -526,7 +526,7 @@ u32 USLuaSerializer::WriteTable ( USStream& stream, USLuaState& state, int idx, 
 				break;
 			}
 			case LUA_TLIGHTUSERDATA: {
-				stream.Print ( "0x%08X,\n", ( u32 )lua_touserdata ( state, -1 ));
+				stream.Print ( "%p,\n", lua_touserdata ( state, -1 ));
 				break;
 			}
 		};
@@ -546,7 +546,7 @@ void USLuaSerializer::WriteTableDecls ( USStream& stream ) {
 
 	TableMapIt tableIt = this->mTableMap.begin ();
 	for ( ; tableIt != this->mTableMap.end (); ++tableIt ) {
-		u32 tableID = tableIt->first;
+		uintptr tableID = tableIt->first;
 		stream.Print ( "\t[ 0x%08X ] = {},\n", tableID );
 	}
 	
@@ -581,7 +581,7 @@ u32 USLuaSerializer::WriteTableInitializer ( USStream& stream, USLuaState& state
 				break;
 			}
 			case LUA_TTABLE: {
-				u32 tableID = ( u32 )lua_topointer ( state, -1 );
+				uintptr tableID = ( uintptr )lua_topointer ( state, -1 );
 				if ( this->mTableMap.contains ( tableID )) {
 					stream.Print ( "objects [ 0x%08X ]\n", tableID );
 				}
@@ -603,7 +603,7 @@ u32 USLuaSerializer::WriteTableInitializer ( USStream& stream, USLuaState& state
 				break;
 			}
 			case LUA_TLIGHTUSERDATA: {
-				stream.Print ( "0x%08X,\n", ( u32 )lua_touserdata ( state, -1 ));
+				stream.Print ( "%p,\n", lua_touserdata ( state, -1 ));
 				break;
 			}
 		};
@@ -627,7 +627,7 @@ void USLuaSerializer::WriteTableInits ( USStream& stream ) {
 	TableMapIt tableIt = this->mTableMap.begin ();
 	for ( ; tableIt != this->mTableMap.end (); ++tableIt ) {
 		
-		u32 tableID = tableIt->first;
+		uintptr tableID = tableIt->first;
 		stream.Print ( "\ttable = objects [ 0x%08X ]\n", tableID );
 		
 		USLuaRef& tableRef = tableIt->second;
