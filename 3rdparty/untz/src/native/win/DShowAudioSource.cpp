@@ -2,8 +2,6 @@
 #include "SystemData.h"
 #include "SoundData.h"
 
-#define MIN(a,b) a < b ? b : a
-
 HRESULT FindUnconnectedPin(CComPtr<IBaseFilter> pFilter, PIN_DIRECTION PinDir, IPin **ppPin)
 {
     CComPtr<IEnumPins> pEnum = 0;
@@ -235,7 +233,7 @@ void DShowAudioSource::putData(BYTE *data, long length)
 	mCriticalSection.unlock();
 
 	// Stop decoding once we have 2 seconds of data
-	if(mBuffer.size() > UNTZ::System::get()->getSampleRate()*2)
+	if(mBuffer.size() > UNTZ::System::get()->getSampleRate() * mpWaveFormatEx->nChannels * 2)
 		mpMediaControl->Pause();
 }
 

@@ -119,7 +119,7 @@ UInt32 OggAudioSource::readFrames(float* data, UInt32 numChannels, UInt32 numFra
 	}
 */
 	mCurrentPosition += framesRead;
-	printf("current position = %d\n", mCurrentPosition);
+	//printf("current position = %d\n", mCurrentPosition);
 
 	// Check if we need to decode more data
 	if(mBuffer.size() < numFrames * mpOggInfo->channels * 2)

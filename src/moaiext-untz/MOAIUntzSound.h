@@ -20,22 +20,33 @@ class MOAIUntzSound :
 	public virtual USLuaObject {
 private:
 
+	UNTZ::Sound* mSound;
+
 	//----------------------------------------------------------------//
-	//static int	_load				( lua_State* L );
-	//static int	_loadBGM			( lua_State* L );
-	//static int	_loadSFX			( lua_State* L );
-	//static int	_release			( lua_State* L );
+	static int		_getLength			( lua_State* L );
+	static int		_getLooping			( lua_State* L );
+	static int		_getPosition		( lua_State* L );
+	static int		_getVolume			( lua_State* L );
+	static int		_isPaused			( lua_State* L );
+	static int		_isPlaying			( lua_State* L );
+	static int		_load				( lua_State* L );
+	static int		_pause				( lua_State* L );
+	static int		_play				( lua_State* L );
+	static int		_setLooping			( lua_State* L );
+	static int		_setPosition		( lua_State* L );
+	static int		_setVolume			( lua_State* L );
+	static int		_stop				( lua_State* L );
 
 public:
 
 	DECL_LUA_FACTORY ( MOAIUntzSound )
 
 	//----------------------------------------------------------------//
-				MOAIUntzSound			();
-				~MOAIUntzSound			();
-	void		RegisterLuaClass		( USLuaState& state );
-	void		RegisterLuaFuncs		( USLuaState& state );		
-	STLString	ToString				();
+					MOAIUntzSound		();
+					~MOAIUntzSound		();
+	void			RegisterLuaClass	( USLuaState& state );
+	void			RegisterLuaFuncs	( USLuaState& state );		
+	STLString		ToString			();
 };
 
 #endif

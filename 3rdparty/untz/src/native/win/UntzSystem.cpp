@@ -54,7 +54,8 @@ System::System(UInt32 sampleRate, UInt32 numFrames, UInt32 options)
 	outParams.deviceId = wsd->audioIO.getDefaultOutputDevice();
 	RtAudio::StreamOptions streamOptions;
 	streamOptions.flags = 0 | RTAUDIO_MINIMIZE_LATENCY | RTAUDIO_NONINTERLEAVED;
-	try {
+	try 
+	{
 		wsd->audioIO.openStream( &outParams, NULL, RTAUDIO_FLOAT32, sampleRate, &numFrames, &RtInOut, (void *)&mpData->mMixer, &streamOptions );
 		wsd->audioIO.startStream();
 	}

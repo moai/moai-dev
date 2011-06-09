@@ -44,8 +44,8 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;..\..\3rdparty\libogg-1.2.2\include&quot;;&quot;..\..\3rdparty\libvorbis-1.3.2\include&quot;;&quot;..\..\3rdparty\rtaudio-4.0.8&quot;;..\..\3rdparty\untz\src;..\..\3rdparty\untz\include"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS"
+				AdditionalIncludeDirectories="..\..\3rdparty\untz\src;..\..\3rdparty\untz\src\native\win;..\..\3rdparty\untz\include;&quot;..\..\3rdparty\libogg-1.2.2\include&quot;;&quot;..\..\3rdparty\libvorbis-1.3.2\include&quot;;&quot;..\..\3rdparty\rtaudio-4.0.8&quot;"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;__WINDOWS_DS__"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -113,8 +113,8 @@
 				EnableIntrinsicFunctions="true"
 				FavorSizeOrSpeed="2"
 				OmitFramePointers="true"
-				AdditionalIncludeDirectories="&quot;..\..\3rdparty\libogg-1.2.2\include&quot;;&quot;..\..\3rdparty\libvorbis-1.3.2\include&quot;;&quot;..\..\3rdparty\rtaudio-4.0.8&quot;;..\..\3rdparty\untz\src;..\..\3rdparty\untz\include"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS"
+				AdditionalIncludeDirectories="..\..\3rdparty\untz\src;..\..\3rdparty\untz\src\native\win;..\..\3rdparty\untz\include;&quot;..\..\3rdparty\libogg-1.2.2\include&quot;;&quot;..\..\3rdparty\libvorbis-1.3.2\include&quot;;&quot;..\..\3rdparty\rtaudio-4.0.8&quot;"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;__WINDOWS_DS__"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
 				WarningLevel="0"
@@ -396,6 +396,78 @@
 					>
 				</File>
 			</Filter>
+		</Filter>
+		<Filter
+			Name="RTAudio"
+			>
+			<File
+				RelativePath="..\..\3rdparty\rtaudio-4.0.8\include\asio.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\3rdparty\rtaudio-4.0.8\include\asio.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\3rdparty\rtaudio-4.0.8\include\asiodrivers.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\3rdparty\rtaudio-4.0.8\include\asiodrivers.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\3rdparty\rtaudio-4.0.8\include\asiodrvr.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\3rdparty\rtaudio-4.0.8\include\asiolist.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\3rdparty\rtaudio-4.0.8\include\asiolist.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\3rdparty\rtaudio-4.0.8\include\asiosys.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\3rdparty\rtaudio-4.0.8\include\dsound.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\3rdparty\rtaudio-4.0.8\include\ginclude.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\3rdparty\rtaudio-4.0.8\include\iasiodrv.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\3rdparty\rtaudio-4.0.8\include\iasiothiscallresolver.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\3rdparty\rtaudio-4.0.8\include\iasiothiscallresolver.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\3rdparty\rtaudio-4.0.8\RtAudio.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\3rdparty\rtaudio-4.0.8\RtAudio.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\3rdparty\rtaudio-4.0.8\RtError.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\3rdparty\rtaudio-4.0.8\include\soundcard.h"
+				>
+			</File>
 		</Filter>
 	</Files>
 	<Globals>
