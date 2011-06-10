@@ -1568,6 +1568,10 @@
 		039C2840138EDAB300A3A780 /* MOAIDeckRemapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 039C283C138EDAB300A3A780 /* MOAIDeckRemapper.h */; };
 		03E4E94113664F7C008D079B /* MOAIParticle.h in Headers */ = {isa = PBXBuildFile; fileRef = 03E4E94013664F7C008D079B /* MOAIParticle.h */; };
 		03E4E94213664F7C008D079B /* MOAIParticle.h in Headers */ = {isa = PBXBuildFile; fileRef = 03E4E94013664F7C008D079B /* MOAIParticle.h */; };
+		0796E27213A0295700F827B5 /* MoaiUiWebView.h in Headers */ = {isa = PBXBuildFile; fileRef = 0796E26E13A0295700F827B5 /* MoaiUiWebView.h */; };
+		0796E27313A0295700F827B5 /* MoaiUiWebView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0796E26F13A0295700F827B5 /* MoaiUiWebView.mm */; };
+		0796E27413A0295700F827B5 /* MOAIWebView.h in Headers */ = {isa = PBXBuildFile; fileRef = 0796E27013A0295700F827B5 /* MOAIWebView.h */; };
+		0796E27513A0295700F827B5 /* MOAIWebView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0796E27113A0295700F827B5 /* MOAIWebView.mm */; };
 		CD148EDF1395ADBD00A3F501 /* MOAITraits.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD148EDD1395ADBD00A3F501 /* MOAITraits.cpp */; };
 		CD148EE01395ADBD00A3F501 /* MOAITraits.h in Headers */ = {isa = PBXBuildFile; fileRef = CD148EDE1395ADBD00A3F501 /* MOAITraits.h */; };
 		CD148EE11395ADBD00A3F501 /* MOAITraits.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD148EDD1395ADBD00A3F501 /* MOAITraits.cpp */; };
@@ -3374,6 +3378,10 @@
 		039C283C138EDAB300A3A780 /* MOAIDeckRemapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIDeckRemapper.h; sourceTree = "<group>"; };
 		03C2F6F4104DE130009A2D5D /* libmoai-iphone.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-iphone.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		03E4E94013664F7C008D079B /* MOAIParticle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIParticle.h; sourceTree = "<group>"; };
+		0796E26E13A0295700F827B5 /* MoaiUiWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MoaiUiWebView.h; path = "moaiext-iphone/MoaiUiWebView.h"; sourceTree = "<group>"; };
+		0796E26F13A0295700F827B5 /* MoaiUiWebView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MoaiUiWebView.mm; path = "moaiext-iphone/MoaiUiWebView.mm"; sourceTree = "<group>"; };
+		0796E27013A0295700F827B5 /* MOAIWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIWebView.h; path = "moaiext-iphone/MOAIWebView.h"; sourceTree = "<group>"; };
+		0796E27113A0295700F827B5 /* MOAIWebView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIWebView.mm; path = "moaiext-iphone/MOAIWebView.mm"; sourceTree = "<group>"; };
 		CD148EDD1395ADBD00A3F501 /* MOAITraits.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAITraits.cpp; sourceTree = "<group>"; };
 		CD148EDE1395ADBD00A3F501 /* MOAITraits.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAITraits.h; sourceTree = "<group>"; };
 		CD148EE31395ADED00A3F501 /* USPvrHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USPvrHeader.h; sourceTree = "<group>"; };
@@ -5720,6 +5728,10 @@
 		CD524476135982480086DA15 /* moai-iphone */ = {
 			isa = PBXGroup;
 			children = (
+				0796E26E13A0295700F827B5 /* MoaiUiWebView.h */,
+				0796E26F13A0295700F827B5 /* MoaiUiWebView.mm */,
+				0796E27013A0295700F827B5 /* MOAIWebView.h */,
+				0796E27113A0295700F827B5 /* MOAIWebView.mm */,
 				CDD06EC81398BA6200AB0420 /* MOAIApp.h */,
 				CDD06EC91398BA6200AB0420 /* MOAIApp.mm */,
 				CDD06ECA1398BA6200AB0420 /* moaiext-iphone.h */,
@@ -7914,6 +7926,8 @@
 				CDD06F031398BA6300AB0420 /* NSObject+MOAILib.h in Headers */,
 				CDD06F051398BA6300AB0420 /* NSString+MOAILib.h in Headers */,
 				CDBC71191398C6E50016F98A /* MOAIFileSystem.h in Headers */,
+				0796E27213A0295700F827B5 /* MoaiUiWebView.h in Headers */,
+				0796E27413A0295700F827B5 /* MOAIWebView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9604,6 +9618,8 @@
 				CDD06F041398BA6300AB0420 /* NSObject+MOAILib.mm in Sources */,
 				CDD06F061398BA6300AB0420 /* NSString+MOAILib.mm in Sources */,
 				CDBC71181398C6E50016F98A /* MOAIFileSystem.cpp in Sources */,
+				0796E27313A0295700F827B5 /* MoaiUiWebView.mm in Sources */,
+				0796E27513A0295700F827B5 /* MOAIWebView.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
