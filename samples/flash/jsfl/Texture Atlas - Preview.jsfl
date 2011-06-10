@@ -6,7 +6,7 @@
 
 fl.runScript ( fl.configURI + 'Commands/moai/TextureAtlas.jsfl' );
 
-var atlas = new TextureAtlas ();
+var atlas = new TextureAtlas ( 1, false );
 
 atlas.createTextureAtlas ();
 atlas.createTextureAtlasDoc ();
