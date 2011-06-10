@@ -132,7 +132,11 @@ void MOAIFtFontRipper::RipFromTTF ( cc8* filename, USFont& font, USImage& image,
 	FT_Init_FreeType( &library );
 
 	FT_Face face;
-	FT_New_Face( library, filename, 0, &face );
+	if (FT_New_Face( library, filename, 0, &face )) {
+		FT_Done_FreeType ( library );
+		fprintf(stderr, "Error loading font: %s\n", filename);
+		return;
+	}
 	
 	FT_Set_Char_Size ( face, 0, ( u32 )( points * 64.0f ), dpi, dpi );
 	float pixelSize = face->size->metrics.y_ppem;
