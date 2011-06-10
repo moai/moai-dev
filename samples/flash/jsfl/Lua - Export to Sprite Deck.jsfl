@@ -51,4 +51,4 @@ function exportSpriteLibrary ( padding, forceSquare ) {
 	fl.closeDocument ( atlasDoc, false );
 }
 	
-exportSpriteLibrary ( 1, false );
+exportSpriteLibrary ( 0, true );

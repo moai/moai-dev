@@ -125,4 +125,4 @@ function isKeyframe ( timeline, frameIdx ) {
 	return false;
 }
 
-exportToLua ( 1, false );
+exportToLua ( 0, true );

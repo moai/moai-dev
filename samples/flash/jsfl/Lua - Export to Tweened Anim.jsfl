@@ -193,4 +193,4 @@ function reflect ( objName, obj ) {
 	fl.trace ( '\n' );
 }
 
-exportToLua ( 1, false );
+exportToLua ( 0, true );
