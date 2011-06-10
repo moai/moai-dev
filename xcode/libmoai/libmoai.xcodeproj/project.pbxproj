@@ -3614,7 +3614,7 @@
 		CD07C32013A1756300C9386C /* MOAIUntzSystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIUntzSystem.cpp; path = "../../src/moaiext-untz/MOAIUntzSystem.cpp"; sourceTree = SOURCE_ROOT; };
 		CD07C32113A1756300C9386C /* MOAIUntzSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIUntzSystem.h; path = "../../src/moaiext-untz/MOAIUntzSystem.h"; sourceTree = SOURCE_ROOT; };
 		CD07C3CD13A182AA00C9386C /* libmoai-iphone-untz.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-iphone-untz.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		CD07C4E513A1918600C9386C /* libmoai-osx-luaext.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-luaext.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD07C4E513A1918600C9386C /* libmoai-osx-untz.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-untz.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD07C52113A1942900C9386C /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		CD07C53013A1954600C9386C /* Untz-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Untz-Prefix.pch"; path = "../../3rdparty/untz/src/native/ios/Untz-Prefix.pch"; sourceTree = SOURCE_ROOT; };
 		CD148EDD1395ADBD00A3F501 /* MOAITraits.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAITraits.cpp; sourceTree = "<group>"; };
@@ -5193,7 +5193,7 @@
 				CDD06BD01398822500AB0420 /* libmoai-iphone-luaext.a */,
 				CDD06D87139882D900AB0420 /* libmoai-osx-luaext.a */,
 				CD07C3CD13A182AA00C9386C /* libmoai-iphone-untz.a */,
-				CD07C4E513A1918600C9386C /* libmoai-osx-luaext.a */,
+				CD07C4E513A1918600C9386C /* libmoai-osx-untz.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -8649,7 +8649,7 @@
 			);
 			name = "libmoai-osx-untz";
 			productName = OpenUSLS;
-			productReference = CD07C4E513A1918600C9386C /* libmoai-osx-luaext.a */;
+			productReference = CD07C4E513A1918600C9386C /* libmoai-osx-untz.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		CDD06A061398822500AB0420 /* libmoai-iphone-luaext */ = {
@@ -10868,7 +10868,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "moai-osx-luaext";
+				PRODUCT_NAME = "moai-osx-untz";
 				SDKROOT = "";
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
@@ -10900,7 +10900,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "moai-osx-luaext";
+				PRODUCT_NAME = "moai-osx-untz";
 				SDKROOT = "";
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
