@@ -13,9 +13,8 @@ extern "C" {
 	#include <lualib.h>
 }
 
-#ifdef AKU_IPHONE_USE_LUAEXT
-	#include <aku/AKU-luaext.h>
-#endif
+#include <aku/AKU-luaext.h>
+#include <aku/AKU-untz.h>
 
 #import "LocationObserver.h"
 #import "MoaiView.h"
@@ -195,10 +194,10 @@ void _AKUStartGameLoopFunc () {
 	
 		mAku = AKUCreateContext ( self );
 		
-		#ifdef AKU_IPHONE_USE_LUAEXT
-			AKUExtLoadLuacrypto ();
-			AKUExtLoadLuasocket ();
-		#endif
+		AKUExtLoadLuacrypto ();
+		AKUExtLoadLuasocket ();
+		
+		AKUUntzInit ();
 		
 		AKUSetInputConfigurationName ( "iPhone" );
 

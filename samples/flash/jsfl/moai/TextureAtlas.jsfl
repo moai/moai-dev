@@ -7,7 +7,10 @@
 //================================================================//
 // TextureAtlas
 //================================================================//
-function TextureAtlas () {
+function TextureAtlas ( padding, forceSquare ) {
+
+	this.padding = padding;
+	this.forceSquare = forceSquare;
 }
 
 //----------------------------------------------------------------//
@@ -156,6 +159,9 @@ TextureAtlas.prototype.getBaseHeight = function ( skyline, i, width ) {
 // The rects represent the library items as laid out into a pow2 image.
 TextureAtlas.prototype.getPackListForLibrary = function () {
 
+	var padding = this.padding;
+	var gutter = padding * 2;
+
 	var list = new Array ();
 	
 	var document = fl.getDocumentDOM ();
@@ -197,8 +203,8 @@ TextureAtlas.prototype.getPackListForLibrary = function () {
 		rect.originalHeight = rect.height;
 		
 		// pad the width and height to a pixel boundary
-		rect.width = Math.ceil ( rect.width ) + 2;
-		rect.height = Math.ceil ( rect.height ) + 2;
+		rect.width = Math.ceil ( rect.width ) + gutter;
+		rect.height = Math.ceil ( rect.height ) + gutter;
 		
 		list.push ( rect );
 		
@@ -224,8 +230,8 @@ TextureAtlas.prototype.getPackListForLibrary = function () {
 		rect.originalHeight = null;
 		
 		// offset the rect
-		rect.x0 += 1;
-		rect.y0 += 1;
+		rect.x0 += padding;
+		rect.y0 += padding;
 		
 		// set up the max dimensions
 		rect.x1 = rect.x0 + rect.width;
@@ -261,6 +267,17 @@ TextureAtlas.prototype.getTextureSize = function ( list ) {
 	
 	while ( pow2Height < height ) {
 		pow2Height = pow2Height * 2;
+	}
+	
+	if ( this.forceSquare ) {
+	
+		if ( pow2Height < pow2Width ) {
+			pow2Height = pow2Width;
+		}
+	
+		if ( pow2Width < pow2Height ) {
+			pow2Width = pow2Height;
+		}
 	}
 	
 	var size = {};

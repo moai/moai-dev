@@ -11,11 +11,17 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void AKUExtLoadFmod () {
+void AKUFmodInit () {
 
 	MOAIFmod::Get ();
 	
 	REGISTER_LUA_CLASS ( MOAIFmod )
 	REGISTER_LUA_CLASS ( MOAIFmodChannel )
 	REGISTER_LUA_CLASS ( MOAIFmodSound )
+}
+
+//----------------------------------------------------------------//
+void AKUFmodUpdate () {
+
+	MOAIFmod::Get ().Update ();
 }

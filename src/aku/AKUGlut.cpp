@@ -16,6 +16,10 @@
 	#include <aku/AKU-luaext.h>
 #endif
 
+#ifdef AKUGLUT_USE_UNTZ
+	#include <aku/AKU-untz.h>
+#endif
+
 #ifdef _WIN32
 	#include <glut.h>
 #else
@@ -124,6 +128,11 @@ static void _onReshape( int w, int h ) {
 static void _onUpdate () {
 
 	AKUUpdate ();
+	
+	#ifdef AKUGLUT_USE_FMOD
+		AKUFmodUpdate ();
+	#endif
+	
 	glutPostRedisplay ();
 }
 
@@ -225,7 +234,7 @@ int AKUGlut ( int argc, char** argv ) {
 	AKUCreateContext ();
 	
 	#ifdef AKUGLUT_USE_FMOD
-		AKUExtLoadFmod ();
+		AKUFmodLoad ();
 	#endif
 	
 	#ifdef AKUGLUT_USE_HARNESS
@@ -235,6 +244,10 @@ int AKUGlut ( int argc, char** argv ) {
 	#ifdef AKUGLUT_USE_LUAEXT
 		AKUExtLoadLuacrypto ();
 		AKUExtLoadLuasocket ();
+	#endif
+	
+	#ifdef AKUGLUT_USE_UNTZ
+		AKUUntzInit ();
 	#endif
 	
 	AKUSetInputConfigurationName ( "AKUGlut" );

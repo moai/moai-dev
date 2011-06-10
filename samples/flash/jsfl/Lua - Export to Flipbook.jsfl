@@ -9,7 +9,7 @@ fl.runScript ( fl.configURI + 'Commands/moai/TextureAtlas.jsfl' );
 fl.runScript ( fl.configURI + 'Commands/moai/SpriteDeckBuilder.jsfl' );
 
 //----------------------------------------------------------------//
-function exportToLua () {
+function exportToLua ( padding, forceSquare ) {
 	
 	var document = fl.getDocumentDOM ();
 	var folderPath = fl.browseForFolderURL ( 'Select a folder.' ) + '/';
@@ -19,7 +19,7 @@ function exportToLua () {
 		var timeline = document.getTimeline ();
 		var keyframes = getKeyframeList ( timeline );
 		
-		var atlas = new TextureAtlas ();
+		var atlas = new TextureAtlas ( padding, forceSquare );
 		atlas.createTextureAtlas ();
 		
 		var spriteDeckBuilder = new SpriteDeckBuilder ();
@@ -125,4 +125,4 @@ function isKeyframe ( timeline, frameIdx ) {
 	return false;
 }
 
-exportToLua ();
+exportToLua ( 0, true );
