@@ -30,6 +30,7 @@
 		CD07C3A113A1823000C9386C /* main.lua in Resources */ = {isa = PBXBuildFile; fileRef = CD07C39F13A1823000C9386C /* main.lua */; };
 		CD07C3E813A1841B00C9386C /* libmoai-iphone-3rdparty.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03BBCA4B138069D60084FBE1 /* libmoai-iphone-3rdparty.a */; };
 		CDC1BEAE138C8375009BF6F0 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDC1BEAD138C8375009BF6F0 /* StoreKit.framework */; };
+		CDF1BFF613A31121006DB9B7 /* libmoai-iphone-untz.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDF1BF7613A30F15006DB9B7 /* libmoai-iphone-untz.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -96,6 +97,27 @@
 			remoteGlobalIDString = CDD06D87139882D900AB0420;
 			remoteInfo = "libmoai-osx-luaext";
 		};
+		CDF1BF7513A30F15006DB9B7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03BBC8FD1380504D0084FBE1 /* libmoai.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = CD07C3CD13A182AA00C9386C /* libmoai-iphone-untz.a */;
+			remoteInfo = "libmoai-iphone-untz";
+		};
+		CDF1BF7713A30F15006DB9B7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03BBC8FD1380504D0084FBE1 /* libmoai.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = CD07C4E513A1918600C9386C /* libmoai-osx-untz.a */;
+			remoteInfo = "libmoai-osx-untz";
+		};
+		CDF1BF9C13A31113006DB9B7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03BBC8FD1380504D0084FBE1 /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = CD07C3A313A182AA00C9386C /* libmoai-iphone-untz */;
+			remoteInfo = "libmoai-iphone-untz";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -139,6 +161,7 @@
 				03BBCABE13806DD10084FBE1 /* libmoai-iphone.a in Frameworks */,
 				CD07C3E813A1841B00C9386C /* libmoai-iphone-3rdparty.a in Frameworks */,
 				CD07C35913A1807C00C9386C /* libmoai-iphone-luaext.a in Frameworks */,
+				CDF1BFF613A31121006DB9B7 /* libmoai-iphone-untz.a in Frameworks */,
 				CDC1BEAE138C8375009BF6F0 /* StoreKit.framework in Frameworks */,
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
@@ -171,9 +194,11 @@
 				03BBCA4D138069D60084FBE1 /* libmoai-iphone.a */,
 				03BBCA4B138069D60084FBE1 /* libmoai-iphone-3rdparty.a */,
 				CDD06EB21398B88000AB0420 /* libmoai-iphone-luaext.a */,
+				CDF1BF7613A30F15006DB9B7 /* libmoai-iphone-untz.a */,
 				03BBCA51138069D60084FBE1 /* libmoai-osx.a */,
 				03BBCA4F138069D60084FBE1 /* libmoai-osx-3rdparty.a */,
 				CDD06EB41398B88000AB0420 /* libmoai-osx-luaext.a */,
+				CDF1BF7813A30F15006DB9B7 /* libmoai-osx-untz.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -271,6 +296,7 @@
 				03BBCA9D13806CE50084FBE1 /* PBXTargetDependency */,
 				CD07C3E513A1840500C9386C /* PBXTargetDependency */,
 				CD07C35813A1806100C9386C /* PBXTargetDependency */,
+				CDF1BF9D13A31113006DB9B7 /* PBXTargetDependency */,
 			);
 			name = MoaiSample;
 			productName = TEST;
@@ -351,6 +377,20 @@
 			remoteRef = CDD06EB31398B88000AB0420 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		CDF1BF7613A30F15006DB9B7 /* libmoai-iphone-untz.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libmoai-iphone-untz.a";
+			remoteRef = CDF1BF7513A30F15006DB9B7 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		CDF1BF7813A30F15006DB9B7 /* libmoai-osx-untz.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libmoai-osx-untz.a";
+			remoteRef = CDF1BF7713A30F15006DB9B7 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -397,6 +437,11 @@
 			isa = PBXTargetDependency;
 			name = "libmoai-iphone-3rdparty";
 			targetProxy = CD07C3E413A1840500C9386C /* PBXContainerItemProxy */;
+		};
+		CDF1BF9D13A31113006DB9B7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-iphone-untz";
+			targetProxy = CDF1BF9C13A31113006DB9B7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
