@@ -2,6 +2,7 @@
 // http://getmoai.com
 
 #import <moai-iphone/MOAIApp.h>
+#import <moai-iphone/MOAIWebView.h>
 
 #import <moai-iphone/NSArray+MOAILib.h>
 #import <moai-iphone/NSData+MOAILib.h>

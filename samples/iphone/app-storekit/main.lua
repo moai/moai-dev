@@ -4,53 +4,6 @@
 -- http://getmoai.com
 ----------------------------------------------------------------
 
-print ( "hello, iPhone!" )
-
-print ( iphone.documents )
-print ( iphone.caches )
-print ( iphone.resources )
-
-function onPaymentQueueTransaction ( transaction )
-
-	print ( 'onPaymentQueueTransaction' )
-end
-
-function onProductRequestResponse ( products )
-
-	print ( 'onProductRequestResponse' )
-	
-	for k, v in pairs ( products ) do
-	
-		print ( 'product:' )
-		
-		print ( v.localizedTitle )
-		print ( v.localizedDescription )
-		print ( v.price )
-		print ( v.priceLocale )
-		print ( v.productIdentifier )
-		
-		print ( '\n' )
-		
-		MOAIApp.requestPaymentForProduct ( v.productIdentifier )
-	end
-end
-
-if MOAIApp.canMakePayments () then
-
-	print ( "can make payments" )
-
-	MOAIApp.setListener ( MOAIApp.PAYMENT_QUEUE_TRANSACTION, onPaymentQueueTransaction )
-	MOAIApp.setListener ( MOAIApp.PRODUCT_REQUEST_RESPONSE, onProductRequestResponse )
-
-	products = {}
-	table.insert ( products, 'test_consumable_01' )
-
-	MOAIApp.requestProductIdentifiers ( products )
-end
-
-
-----------------------------------------------------------------
-
 MOAIApp.setAppIconBadgeNumber ( 0 )
 MOAIApp.registerForRemoteNotifications ( MOAIApp.REMOTE_NOTIFICATION_BADGE + MOAIApp.REMOTE_NOTIFICATION_ALERT )
 
@@ -73,3 +26,47 @@ prop:setDeck ( gfxQuad )
 layer:insertProp ( prop )
 
 prop:moveRot ( 360, 1.5 )
+
+------------CALLBACKS-------------
+initLoad = false;
+
+function startLoad ()
+
+	print ( "lua - startLoad" ) 
+end
+
+function finishLoad ()
+		
+	print ( "lua - finishLoad" )
+end
+
+function loadError ( error )
+	
+	print ( "lua - loadError" )
+	print ( error )
+end
+
+function shouldLoad ( requestURL, navType )
+	
+	print ( "lua - shouldLoad" )
+	print ( requestURL )
+	if requestURL == "https://google.com" then 
+		return false
+	end
+	if navType == MOAIWebView.NAVIGATION_LINK_CLICKED then 
+		return false
+	end
+	return true
+end
+
+webView = MOAIWebView.new ()
+webView:setListener ( MOAIWebView.WEB_VIEW_DID_START_LOAD, startLoad )
+webView:setListener ( MOAIWebView.WEB_VIEW_DID_FINISH_LOAD, finishLoad )
+webView:setListener ( MOAIWebView.DID_FAIL_LOAD_WITH_ERROR, loadError )
+webView:setListener ( MOAIWebView.SHOULD_START_LOAD_WITH_REQUEST, shouldLoad )
+
+webView:loadRequest ( "https://google.com" )
+
+
+
+

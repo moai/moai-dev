@@ -9,7 +9,7 @@ fl.runScript ( fl.configURI + 'Commands/moai/TextureAtlas.jsfl' );
 fl.runScript ( fl.configURI + 'Commands/moai/SpriteDeckBuilder.jsfl' );
 
 //----------------------------------------------------------------//
-function exportSpriteLibrary () {
+function exportSpriteLibrary ( padding, forceSquare ) {
 	
 	var document = fl.getDocumentDOM ();
 	var folderPath = fl.browseForFolderURL ( 'Select a folder.' ) + '/';
@@ -18,7 +18,7 @@ function exportSpriteLibrary () {
 	var luaFilePath = folderPath + document.name + '.lua';
 	var pngFilePath = folderPath + document.name + '.png';
 	
-	var atlas = new TextureAtlas ();
+	var atlas = new TextureAtlas ( padding, forceSquare );
 	atlas.createTextureAtlas ();
 	
 	var spriteLibs = new LuaTable ();
@@ -51,4 +51,4 @@ function exportSpriteLibrary () {
 	fl.closeDocument ( atlasDoc, false );
 }
 	
-exportSpriteLibrary ();
+exportSpriteLibrary ( 0, true );

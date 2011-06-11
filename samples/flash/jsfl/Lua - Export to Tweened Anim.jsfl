@@ -9,14 +9,14 @@ fl.runScript ( fl.configURI + 'Commands/moai/TextureAtlas.jsfl' );
 fl.runScript ( fl.configURI + 'Commands/moai/SpriteDeckBuilder.jsfl' );
 
 //----------------------------------------------------------------//
-function exportToLua () {
+function exportToLua ( padding, forceSquare ) {
 	
 	var document = fl.getDocumentDOM ();
 	var folderPath = fl.browseForFolderURL ( 'Select a folder.' ) + '/';
 	
 	if ( folderPath &&  folderPath.length ) {
 		
-		var atlas = new TextureAtlas ();
+		var atlas = new TextureAtlas ( padding, forceSquare );
 		atlas.createTextureAtlas ();
 		
 		var lua = new LuaTable ();
@@ -193,4 +193,4 @@ function reflect ( objName, obj ) {
 	fl.trace ( '\n' );
 }
 
-exportToLua ();
+exportToLua ( 0, true );
