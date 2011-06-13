@@ -44,5 +44,5 @@ void AKUIphoneInit ( UIApplication* application ) {
 	
 	// MOAI
 	REGISTER_LUA_CLASS ( MOAIApp )
-	//REGISTER_LUA_CLASS ( MOAIWebView )
+	REGISTER_LUA_CLASS ( MOAIWebView )
 }

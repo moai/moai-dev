@@ -7,12 +7,10 @@
 #import <UIKit/UIKit.h>
 #import <moai-iphone/MOAIWebView.h>
 
-@interface MoaiUiWebView : UIViewController < UIWebViewDelegate > {
+@interface MoaiUiWebViewDelegate : NSObject < UIWebViewDelegate > {
 @private
 								MOAIWebView*			mMOAIWebView;
-								UIWebView*              mWebView;	
 }	
-@property ( readwrite, assign ) MOAIWebView*			mMOAIWebView;
-@property ( readwrite, assign ) UIWebView*              mWebView;		
+@property ( readwrite, assign ) MOAIWebView*			mMOAIWebView;	
 
 @end

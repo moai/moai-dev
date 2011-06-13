@@ -8,13 +8,14 @@
 #import <UIKit/UIKit.h>
 #import <moaicore/moaicore.h>
 
-@class MoaiUiWebView;
+@class MoaiUiWebViewDelegate;
 
 class MOAIWebView :
 	public MOAIEventSource {
 private:
 	
-	MoaiUiWebView*		mUiWebView;
+	UIWebView*					mWebView;
+	MoaiUiWebViewDelegate*		mWebViewDelegate;
 	
 	//----------------------------------------------------------------//
 	static int			_canGoBack						( lua_State* L );	
@@ -24,9 +25,11 @@ private:
 	static int			_clickRefresh					( lua_State* L );
 	static int			_clickStop						( lua_State* L );
 	static int			_getAllowsInlineMediaPlayback	( lua_State* L );
-	static int			_getCurrentRequest				( lua_State* L ); //TODO
+	static int			_getCurrentRequest				( lua_State* L );
 	static int			_getMediaPlaybackRequiresAction	( lua_State* L );
 	static int			_getScalesPageToFit				( lua_State* L );
+	static int			_hideWebView					( lua_State* L );
+	static int			_isHidden						( lua_State* L );
 	static int			_isLoading						( lua_State* L );
 	static int			_loadData						( lua_State* L ); //TODO
 	static int			_loadHTML						( lua_State* L );
@@ -36,7 +39,6 @@ private:
 	static int			_setMediaPlaybackRequiresAction	( lua_State* L );
 	static int			_setScalesPageToFit				( lua_State* L );
 	static int			_showWebView					( lua_State* L ); 
-	static int			_viewInSafari					( lua_State* L ); //TODO
 	
 public:
 	DECL_LUA_FACTORY ( MOAIWebView )
@@ -49,12 +51,12 @@ public:
 	};
 	
 	enum {
-		NAVIGATION_BACK_FORWARD = UIWebViewNavigationTypeBackForward,
-		NAVIGATION_FORM_RESUBMIT = UIWebViewNavigationTypeFormResubmitted,
-		NAVIGATION_FORM_SUBMIT = UIWebViewNavigationTypeFormSubmitted,
-		NAVIGATION_LINK_CLICKED = UIWebViewNavigationTypeLinkClicked,
-		NAVIGATION_OTHER = UIWebViewNavigationTypeOther,
-		NAVIGATION_RELOAD = UIWebViewNavigationTypeReload
+		NAVIGATION_LINK_CLICKED,
+		NAVIGATION_FORM_SUBMIT,
+		NAVIGATION_BACK_FORWARD,
+		NAVIGATION_RELOAD,
+		NAVIGATION_FORM_RESUBMIT,
+		NAVIGATION_OTHER
 	};
 	
 	//----------------------------------------------------------------//

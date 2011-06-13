@@ -6,8 +6,9 @@
 
 #import <moai-iphone/MoaiUiWebView.h>
 
-@implementation MoaiUiWebView
-@synthesize mMOAIWebView, mWebView;
+@implementation MoaiUiWebViewDelegate
+@synthesize mMOAIWebView;
+
 
 	//================================================================//
 	#pragma mark -
@@ -16,32 +17,34 @@
 	
 	//----------------------------------------------------------------//
 	- ( void )webView:( UIWebView* )webView webViewDidFailLoadWithError:( NSError * )error {
-		
-		printf("load fail delegate\n");
-		mMOAIWebView->RaiseDidFailLoadWithErrorEvent ( error );
+	
+		if ( mMOAIWebView ) {
+			mMOAIWebView->RaiseDidFailLoadWithErrorEvent ( error );
+		}
 	}
 	
 	//----------------------------------------------------------------//
 	- ( void ) webViewDidFinishLoad:( UIWebView * )webView {
-	
-	
-		printf("load done delegate\n");
-		mMOAIWebView->RaiseWebViewDidFinishLoadEvent ();
+		
+		if ( mMOAIWebView ) {
+			mMOAIWebView->RaiseWebViewDidFinishLoadEvent ();
+		}
 	}
 	
 	//----------------------------------------------------------------//
 	- ( void ) webViewDidStartLoad:( UIWebView * )webView {
 	
-	
-		printf("load start delegate\n");
-		mMOAIWebView->RaiseWebViewDidStartLoadEvent ();
+		if ( mMOAIWebView ) {
+			mMOAIWebView->RaiseWebViewDidStartLoadEvent ();
+		}
 	}
 
 	//----------------------------------------------------------------//
 	- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
 	
-		printf("should start delegate\n");
-		//mMOAIWebView.RaiseShouldStartLoadWithRequestEvent();
+		if ( mMOAIWebView ) {
+			return mMOAIWebView->RaiseShouldStartLoadWithRequestEvent ( request, navigationType );
+		}
 		return true;
 	}
 	
