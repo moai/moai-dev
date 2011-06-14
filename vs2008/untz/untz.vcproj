@@ -293,70 +293,70 @@
 			Name="API"
 			>
 			<File
-				RelativePath="..\..\..\..\svn\untz\trunk\include\Untz.h"
+				RelativePath="..\..\3rdparty\untz\include\Untz.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\..\svn\untz\trunk\include\UntzSound.h"
+				RelativePath="..\..\3rdparty\untz\include\UntzSound.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\..\svn\untz\trunk\include\UntzSystem.h"
+				RelativePath="..\..\3rdparty\untz\include\UntzSystem.h"
 				>
 			</File>
 		</Filter>
 		<Filter
 			Name="Source"
 			>
+			<File
+				RelativePath="..\..\3rdparty\untz\src\AudioMixer.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\3rdparty\untz\src\AudioMixer.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\3rdparty\untz\src\SoundData.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\3rdparty\untz\src\SystemData.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\3rdparty\untz\src\UntzSound.cpp"
+				>
+			</File>
 			<Filter
 				Name="Audio Sources"
 				>
 				<File
-					RelativePath="..\..\..\..\svn\untz\trunk\src\AudioMixer.cpp"
+					RelativePath="..\..\3rdparty\untz\src\AudioSource.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\svn\untz\trunk\src\AudioMixer.h"
+					RelativePath="..\..\3rdparty\untz\src\MemoryAudioSource.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\svn\untz\trunk\src\AudioSource.h"
+					RelativePath="..\..\3rdparty\untz\src\MemoryAudioSource.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\svn\untz\trunk\src\MemoryAudioSource.cpp"
+					RelativePath="..\..\3rdparty\untz\src\OggAudioSource.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\svn\untz\trunk\src\MemoryAudioSource.h"
+					RelativePath="..\..\3rdparty\untz\src\OggAudioSource.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\svn\untz\trunk\src\OggAudioSource.cpp"
+					RelativePath="..\..\3rdparty\untz\src\UserAudioSource.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\svn\untz\trunk\src\OggAudioSource.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\svn\untz\trunk\src\SoundData.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\svn\untz\trunk\src\SystemData.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\svn\untz\trunk\src\UntzSound.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\svn\untz\trunk\src\UserAudioSource.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\svn\untz\trunk\src\UserAudioSource.h"
+					RelativePath="..\..\3rdparty\untz\src\UserAudioSource.h"
 					>
 				</File>
 			</Filter>
@@ -364,19 +364,19 @@
 				Name="Native"
 				>
 				<File
-					RelativePath="..\..\..\..\svn\untz\trunk\src\native\win\DShowAudioSource.cpp"
+					RelativePath="..\..\3rdparty\untz\src\native\win\DShowAudioSource.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\svn\untz\trunk\src\native\win\DShowAudioSource.h"
+					RelativePath="..\..\3rdparty\untz\src\native\win\DShowAudioSource.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\svn\untz\trunk\src\native\win\dxtrans.h"
+					RelativePath="..\..\3rdparty\untz\src\native\win\dxtrans.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\svn\untz\trunk\src\native\win\UntzSystem.cpp"
+					RelativePath="..\..\3rdparty\untz\src\native\win\UntzSystem.cpp"
 					>
 				</File>
 			</Filter>
@@ -384,15 +384,15 @@
 				Name="Threading"
 				>
 				<File
-					RelativePath="..\..\..\..\svn\untz\trunk\src\threading\RCriticalSection.h"
+					RelativePath="..\..\3rdparty\untz\src\threading\RCriticalSection.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\svn\untz\trunk\src\threading\RThread.h"
+					RelativePath="..\..\3rdparty\untz\src\threading\RThread.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\..\svn\untz\trunk\src\threading\RWaitableEvent.h"
+					RelativePath="..\..\3rdparty\untz\src\threading\RWaitableEvent.h"
 					>
 				</File>
 			</Filter>
