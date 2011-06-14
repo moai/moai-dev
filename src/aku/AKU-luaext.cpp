@@ -8,7 +8,9 @@ extern "C" {
 	#include <lcrypto.h>
 	#include <luasocket.h>
 	
-	extern int luaopen_crypto ( lua_State *L );
+	extern int luaopen_crypto			( lua_State *L );
+	extern int luaopen_luacurl			( lua_State *L );
+	extern int luaopen_luasql_sqlite3	( lua_State *L );
 }
 
 //================================================================//
@@ -23,8 +25,22 @@ void AKUExtLoadLuacrypto () {
 }
 
 //----------------------------------------------------------------//
+void AKUExtLoadLuacurl () {
+
+	lua_State* state = AKUGetLuaState ();
+	luaopen_luacurl ( state );
+}
+
+//----------------------------------------------------------------//
 void AKUExtLoadLuasocket () {
 
 	lua_State* state = AKUGetLuaState ();
 	luaopen_socket_core ( state );
+}
+
+//----------------------------------------------------------------//
+void AKUExtLoadLuasql () {
+
+	lua_State* state = AKUGetLuaState ();
+	luaopen_luasql_sqlite3 ( state );
 }

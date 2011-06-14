@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ======================================================================= -->
+<!-- Build file                                                              -->
+<!-- ======================================================================= -->
+<project name="LuaSQL" default="jar" basedir=".">
+	<!-- =================================================================== -->
+	<!-- Initializes some variables                                          -->
+	<!-- =================================================================== -->
+	<property name="src.java.lib" value="../../../luajava"/>
+	<property name="src.java.dir" value="./src/java"/>
+	<property name="build.dir" value="./bin"/>
+	<property name="debug" value="on"/>
+	<property name="optimize" value="on"/>
+	<property name="deprecation" value="off"/>
+	<!-- ================================================================== -->
+	<!-- Prints useful build environment values                             -->
+	<!-- ================================================================== -->
+	<target name="env">
+		<echo message="build.compiler = ${build.compiler}"/>
+		<echo message="java.home = ${java.home}"/>
+		<echo message="user.home = ${user.home}"/>
+		<echo message="java.class.path = ${java.class.path}"/>
+		<echo message=""/>
+	</target>
+	<!-- =================================================================== -->
+	<!-- Prepare to compile                                                  -->
+	<!-- =================================================================== -->
+	<target name="prepare" depends="env">
+		<mkdir dir="${build.dir}"/>
+	</target>
+	<!-- =================================================================== -->
+	<!-- Compile the java files                                              -->
+	<!-- =================================================================== -->
+	<target name="compile" depends="prepare">
+		<javac srcdir="${src.java.dir}" destdir="${build.dir}" debug="${debug}" deprecation="${deprecation}" optimize="${optimize}">
+			<classpath>
+				<fileset dir="${src.java.lib}" casesensitive="yes">
+					<patternset>
+						<include name="**/*.jar"/>
+					</patternset>
+				</fileset>
+			</classpath>
+		</javac>
+	</target>
+	<!-- =================================================================== -->
+	<!-- Generate the JAR                                                    -->
+	<!-- =================================================================== -->
+	<target name="jar" depends="compile">
+		<jar jarfile="./luasql.jar" update="yes">
+			<fileset dir="${build.dir}" includes="**/luasql/*.class"/>
+		</jar>
+	</target>
+	<target name="delete">
+		<delete file="./luasql.jar"/>
+	</target>
+</project>

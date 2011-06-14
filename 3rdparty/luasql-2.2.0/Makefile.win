@@ -1,0 +1,18 @@
+
+OBJS= src\luasql.obj src\ls_$T.obj
+
+SRCS= src\luasql.h src\luasql.c src\ls_$T.c
+
+LIBNAME= $T.dll
+
+all: src\$(LIBNAME)
+
+.c.obj:
+	cl /c /Fo$@ /O2 $(CFLAGS) /DWIN32 /D_CRT_SECURE_NO_DEPRECATE $<
+
+src\$(LIBNAME): $(OBJS)
+	link /dll /def:src\$T.def /out:$@ $(LIB_OPTION) $(OBJS)
+
+install:
+	IF NOT EXIST "$(LUA_LIBDIR)\luasql" mkdir "$(LUA_LIBDIR)\luasql"
+	cp src\$(LIBNAME) "$(LUA_LIBDIR)\luasql"

@@ -1,0 +1,4 @@
+LIBRARY		mysql.dll
+DESCRIPTION "LuaSQL driver for mysql"
+EXPORTS
+luaopen_luasqlmysql

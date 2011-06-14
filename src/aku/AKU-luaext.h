@@ -10,7 +10,8 @@
 #include <aku/AKU.h>
 
 AKU_API void	AKUExtLoadLuacrypto		();
+AKU_API void	AKUExtLoadLuacurl		();
 AKU_API void	AKUExtLoadLuasocket		();
+AKU_API void	AKUExtLoadLuasql		();
 
 #endif
-

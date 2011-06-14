@@ -1,0 +1,403 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+    <title>LuaSQL: Conectividade de banco de dados para a linguagem de programa&ccedil;&atilde;o Lua</title>
+    <link rel="stylesheet" href="http://www.keplerproject.org/doc.css" type="text/css"/>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+
+<body>
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"><a href="http://www.keplerproject.org">
+		<img alt="LuaSQL logo" src="luasql.png"/>
+	</a></div>
+	<div id="product_name"><big><strong>LuaSQL</strong></big></div>
+	<div id="product_description">Conectividade de banco de dados para a linguagem de programa&ccedil;&atilde;o Lua</div>
+</div> <!-- id="product" -->
+
+<div id="main">
+
+<div id="navigation">
+<h1>LuaSQL</h1>
+	<ul>
+		<li><a href="index.html">Home</a>
+			<ul>
+				<li><a href="index.html#overview">Vis&atilde;o Geral</a></li>
+				<li><a href="index.html#status">Status</a></li>
+				<li><a href="index.html#download">Download</a></li>
+				<li><a href="index.html#credits">Cr&eacute;ditos</a></li>
+				<li><a href="index.html#contact">Contato</a></li>
+			</ul>
+		</li>
+		<li><strong>Manual</strong>
+			<ul>
+				<li><a href="manual.html#introduction">Introdu&ccedil;&atilde;o</a></li>
+				<li><a href="manual.html#compiling">Compilando</a></li>
+				<li><a href="manual.html#installation">Instala&ccedil;&atilde;o</a></li>
+				<li><a href="manual.html#errors">Tratamento de erros</a></li>
+				<li><a href="manual.html#drivers">Drivers</a></li>
+				<li><a href="manual.html#environment_object">Ambiente</a></li>
+				<li><a href="manual.html#connection_object">Conex&atilde;o</a></li>
+				<li><a href="manual.html#cursor_object">Cursor</a></li>
+				<li><a href="manual.html#postgres_extensions">PostgreSQL</a></li>
+				<li><a href="manual.html#mysql_extensions">MySQL</a></li>
+				<li><a href="manual.html#oracle_extensions">Oracle</a></li>
+				<li><a href="manual.html#sqlite3_extensions">SQLite3</a></li>
+			</ul>
+		</li>
+		<li><a href="examples.html">Exemplos</a></li>
+		<li><a href="history.html">Hist&oacute;rico</a></li>
+        <li><a href="http://luaforge.net/projects/luasql/">Projeto</a>
+            <ul>
+                <li><a href="http://luaforge.net/tracker/?group_id=12">Bug Tracker</a></li>
+                <li><a href="http://luaforge.net/scm/?group_id=12">CVS</a></li>
+            </ul>
+        </li>
+		<li><a href="license.html">Licen&ccedil;a</a></li>
+	</ul>
+</div> <!-- id="navigation" -->
+
+<div id="content">
+
+<h2><a name="introduction"></a>Introdu&ccedil;&atilde;o</h2>
+<p>LuaSQL &eacute; uma interface simples entre Lua e diversos sistemas gerenciadores de bancos de dados (DBMS) populares
+(atualmente PostgreSQL, ODBC, JDBC, MySQL, SQLite, Oracle e ADO; Interbase e Sybase est&atilde;o nos nossos planos).
+LuaSQL define uma API orientada a objetos. Todos os drivers devem implementar essa API comum,
+mas cada um &eacute; livre para oferecer extens&otilde;es.</p>
+
+<p>LuaSQL define uma &uacute;nica vari&aacute;vel global: uma tabela chamada  <code>luasql</code>.
+Essa tabela &eacute; usada para armazenar os m&eacute;todos de inicializa&ccedil;&atilde;o dos drivers instalados.
+Esses m&eacute;todos s&atilde;o usados para criar um
+<a href="#environment_object">ambiente</a>,
+o qual &eacute; usado para criar uma
+<a href="#connection_object">conex&atilde;o</a>.
+A conex&atilde;o pode executar comandos SQL e, eventualmente, criar um
+<a href="#cursor_object">cursor</a>, utilizado para recuperar dados.</p>
+
+<p>LuaSQL &eacute; um software livre e usa a mesma <a href="license.html">licen&ccedil;a</a> do Lua 5.0.</p>
+
+<h2><a name="compiling"></a>Compilando</h2>
+
+<p>LuaSQL &eacute; distribu&iacute;do como um conjunto de arquivos fonte C &ndash;
+um arquivo fonte e um arquivo cabe&ccedil;alho comuns a todos os drivers
+(<code>luasql.h</code> e <code>luasql.c</code>) &ndash; e um arquivo fonte para cada driver.
+Cada driver deve ser compilado juntamente com o arquivo <code>luasql.c</code>
+para gerar uma biblioteca. Essa biblioteca pode ser linkada &agrave; aplica&ccedil;&atilde;o  
+ou carregada dinamicamente. A fun&ccedil;&atilde;o de inicializa&ccedil;&atilde;o &eacute;
+<code>luaopen_luasql<em>nomedriver</em></code> e &eacute; compat&iacute;vel com o formato 
+<a href="http://www.lua.org/manual/5.1/manual.html#pdf-require"><code>open-library</code></a> de Lua.</p>
+
+<h2><a name="installation"></a>Instala&ccedil;&atilde;o</h2>
+
+<p>Todos os drivers LuaSQL seguem a 
+<a href="http://www.keplerproject.org/compat">proposta de pacotes</a>
+para Lua 5.1. Logo, esse pacote deve ser "instalado". Consulte a se&ccedil;&atilde;o de 
+<a href="http://www.keplerproject.org/compat/manual.html#configuration">
+configura&ccedil;&atilde;o do Compat-5.1</a> para saber como instalar os pacotes bin&aacute;rios
+da maneira correta.
+As bibliotecas compiladas devem ser instaladas em um diret&oacute;rio chamado
+<code>luasql</code> no seu LUA_CPATH.</p>
+
+<p>Usu&aacute;rios Windows podem utilizar os pacotes compilados do LuaSQL dispon&iacute;veis na
+p&aacute;gina do 
+<a href="http://luaforge.net/projects/luasql/files">LuaForge</a></p>
+
+<p>Para usar LuaSQL com o JDBC, certifique-se que:</p>
+<ul>
+  <li> Lua est&aacute; rodando com <a href="http://www.keplerproject.org/luajava/">LuaJava</a></li>
+  <li> O jar do LuaSQL est&aacute; na classpath da m&aacute;quina virtual do Java</li>
+  <li> O driver JDBC do banco de dados desejado tamb&eacute;m  est&aacute; na classpath
+       da m&aacute;quina virtual</li>
+</ul>
+
+<p>Para usar LuaSQL com ADO, certifique-se que Lua est&aacute; rodando com
+ <a href="http://www.tecgraf.puc-rio.br/~rcerq/luacom">LuaCOM 1.3</a></p>
+
+<h2><a name="errors"></a>Tratamento de erros</h2>
+
+<p>LuaSQL &eacute; apenas uma camada abstrata de comunica&ccedil;&atilde;o entre Lua
+e um sistema de banco de dados. Portanto, erros podem ocorrem em ambos os n&iacute;veis:
+no cliente do banco de dados ou no driver LuaSQL.</p>
+
+<p>Erros como comandos SQL mal formados, nomes de tabela desconhecidos etc., chamados
+<em>erros de banco de dados</em>, ser&atilde;o reportados pelo retorno de <code>nil</code>
+pela fun&ccedil;&atilde;o/m&eacute;todo, seguido de uma mensagem de erro enviada pelo
+sistema de banco de dados. Erros como par&acirc;metros inv&aacute;lidos, aus&ecirc;ncia
+de conex&atilde;o, objetos inv&aacute;lidos etc., chamados <em>erros de API</em>,
+s&atilde;o usualmente erros de programa&ccedil;&atilde;o e geram erros Lua.</p>
+
+<p>Esse comportamento vale para todas as fun&ccedil;&otilde;es/m&eacute;todos descritos
+neste documento, a menos que seja especificado de outra forma.</p>
+
+<h2><a name="drivers"></a>Drivers</h2>
+
+<p>
+Um driver LuaSQL permite o uso da API LuaSQL com um determinado banco de dados. Para usar
+um driver, este deve ser carregado na tabela <code>luasql</code>. O exemplo abaixo
+</p>
+
+<pre class="example">
+require "luasql.odbc"
+</pre>
+
+<p>
+carrega o driver ODBC na tabela <code>luasql</code>. Note que pode-se ter mais de um driver
+carregado usando-se algo como:
+</p>
+
+<pre class="example">
+require "luasql.odbc"
+require "luasql.oci8"
+</pre>
+
+<p>
+Este exemplo tamb&eacute;m mostra que o nome do driver nem sempre corresponde ao
+nome do banco de dados, mas sim ao nome do driver no sistema de arquivos. Dado que
+o driver Oracle se refere &agrave; API OCI8, ele recebe o nome de <code>oci8</code>
+ao inv&eacute;s de <code>oracle</code>.
+</p>
+
+<p>
+Alguns drivers, tais como o MySQL, tem bibliotecas para vers&otilde;es diferentes
+do banco de dados MySQL mas utilizam o mesmo nome de arquivo (<code>mysql</code>).
+Neste caso n&atilde;o &eacute; poss&iacute;vel carregar mais de uma vers&atilde;o
+do driver MySQL na tabela <code>luasql</code>.
+</p>
+
+<h2><a name="environment_object"></a>Ambiente</h2>
+
+<p>Um ambiente &eacute; criado chamando a fun&ccedil;&atilde;o de inicializa&ccedil;&atilde;o
+do driver que est&aacute; armazenada na tabela <code>luasql</code> com o mesmo nome do driver
+(odbc, postgres etc). Por exemplo,</p>
+
+<pre class="example">
+env = luasql.odbc()
+</pre>
+
+<p>tentar&aacute; criar um ambiente usando o driver ODBC. A &uacute;nica exce&ccedil;&atilde;o
+&eacute; o driver JDBC, que precisa saber que driver interno utilizar.
+Logo, quando se cria um ambiente, deve-se passar o nome da classe do driver como primeiro
+par&acirc;metro para a fun&ccedil;&atilde;o <code>luasql.jdbc</code>. Por exemplo:</p>
+
+<pre class="example">
+env = luasql.jdbc ("com.mysql.jdbc.Driver")
+</pre>
+
+<h4>M&eacute;todos</h4>
+
+<dl class="reference">
+    <dt><a name="env_close"></a><strong><code>env:close()</code></strong></dt>
+    <dd>Fecha o ambiente <code>env</code>. S&oacute; &eacute; bem sucedido se todas as suas
+        conex&otilde;es j&aacute; tiverem sido fechadas anteriormente.<br/>
+        Retorna: <code>true</code>, em caso de sucesso; <code>false</code>, quando o ambiente
+        j&aacute; estiver fechado.
+    </dd>
+
+    <dt><a name="env_connect"></a><strong><code>env:connect(sourcename[,username[,password]])</code></strong></dt>
+    <dd>Conecta &agrave; fonte de dados especificada em <code>sourcename</code> usando 
+        <code>username</code> e <code>password</code> se eles s&atilde;o fornecidos.<br/>
+        O <code>sourcename</code> pode variar de acordo com cada driver.
+        Alguns usam simplesmente o nome do banco de dados, como PostgreSQL, MySQL e SQLite;
+        o driver ODBC recebe o nome de DSN; o driver Oracle recebe o nome do servi&ccedil;o; e
+        o driver JDBC recebe um comando como
+        <code>"jdbc:&lt;database system&gt;://&lt;database name&gt;"</code>, o qual &eacute;
+        espec&iacute;fico para cada driver.<br/>
+        Veja tamb&eacute;m: <a href="#postgres_extensions">PostgreSQL</a> e
+        <a href="#mysql_extensions">MySQL</a>.<br/>
+        Retorna: uma <a href="#connection_object">conex&atilde;o</a>.
+    </dd>
+</dl>
+
+
+<h2><a name="connection_object"></a>Conex&atilde;o</h2>
+
+<p>Uma conex&atilde;o cont&eacute;m atributos e par&acirc;metros espec&iacute;ficos de uma 
+&uacute;nica conex&atilde;o de base de dados. Uma conex&atilde;o &eacute; criada chamando
+o m&eacute;todo <code><a href="#env_connect">environment:connect</a></code>.</p>
+
+<h4>M&eacute;todos</h4>
+
+<dl class="reference">
+    <dt><a name="conn_close"></a><strong><code>conn:close()</code></strong></dt>
+    <dd>Fecha a conex&atilde;o <code>conn</code>. S&oacute; &eacute; bem sucedido se todos
+        os seus cursores tiverem sido fechados anteriormente e se a conex&atilde;o ainda estiver aberta.<br/>
+        Retorna: <code>true</code>, em caso de sucesso; <code>false</code> em caso de fracasso.
+    </dd>
+
+    <dt><a name="conn_commit"></a><strong><code>conn:commit()</code></strong></dt>
+    <dd>Efetua a transa&ccedil;&atilde;o corrente. Esse atributo pode n&atilde;o funcionar
+        em sistemas de banco de dados que n&atilde;o implementam transa&ccedil;&otilde;es.<br/>
+        Retorna: <code>true</code>, em caso de sucesso; <code>false</code>, quando
+        a opera&ccedil;&atilde;o n&atilde;o pode ser realizada ou n&atilde;o est&aacute; implementada.
+    </dd>
+
+    <dt><a name="conn_execute"></a><strong><code>conn:execute(statement)</code></strong></dt>
+    <dd>Executa o <code>statement</code> SQL dado.<br/>
+        Retorna: o <a href="#cursor_object">cursor</a>, se houver resultados, ou o n&uacute;mero
+        de registros alterados pelo comando.
+    </dd>
+
+    <dt><a name="conn_rollback"></a><strong><code>conn:rollback()</code></strong></dt>
+    <dd>Desfaz a transa&ccedil;&atilde;o corrente. Esse atributo pode n&atilde;o funcionar
+        em sistemas de banco de dados que n&atilde;o implementam transa&ccedil;&otilde;es.<br/>
+        Retorna: <code>true</code>, em caso de sucesso; <code>false</code>, quando
+        a opera&ccedil;&atilde;o n&atilde;o pode ser realizada ou n&atilde;o est&aacute; implementada.
+    </dd>
+
+    <dt><a name="conn_setautocommit"></a><strong><code>conn:setautocommit(boolean)</code></strong></dt>
+    <dd>Ativa ou desativa o modo "auto commit". Esse atributo pode n&atilde;o funcionar em sistemas
+        de banco de dados que n&atilde;o implementam transa&ccedil;&otilde;es. Em sistemas de banco
+        de dados que n&atilde;o trabalham com o conceito de "modo auto commit", mas que implementam
+        transa&ccedil;&otilde;es, esse mecanismo &eacute; implementado pelo driver.<br/>
+        Retorna: <code>true</code>, em caso de sucesso; <code>false</code>, quando
+        a opera&ccedil;&atilde;o n&atilde;o pode ser realizada ou n&atilde;o est&aacute; implementada.
+    </dd>
+</dl>
+
+
+<h2><a name="cursor_object"></a>Cursores</h2>
+
+<p>Um cursor cont&eacute;m m&eacute;todos para recuperar dados resultantes de um comando executado.
+Um cursor &eacute; criado por meio de uma fun&ccedil;&atilde;o
+<code><a href="#conn_execute">connection:execute</a></code>.
+Veja tamb&eacute;m: <a href="#postgres_extensions">PostgreSQL</a>
+e <a href="#oracle_extensions">Oracle</a>.</p>
+
+<h4>M&eacute;todos</h4>
+
+<dl class="reference">
+    <dt><a name="cur_close"></a><strong><code>cur:close()</code></strong></dt>
+    <dd>Fecha esse cursor.<br/>
+        Retorna: <code>true</code>, em caso de sucesso; <code>false</code>, quando o cursor
+        j&aacute; est&aacute; fechado.
+    </dd>
+
+    <dt><a name="cur_fetch"></a><strong><code>cur:fetch([table[,modestring]])</code></strong></dt>
+    <dd>Recupera o pr&oacute;ximo registro do resultado.<br/>
+        Se <code>fetch</code> &eacute; chamado sem par&acirc;metros, os resultados
+        consistem em uma lista de valores. Se <code>fetch</code> &eacute;
+        chamado com uma tabela, os resultados s&atilde;o copiados para a tabela e a tabela
+        &eacute; retornada. Neste caso, pode ser usado um
+        par&acirc;metro opcional de modo (<code>modestring</code>): uma seq&uuml;&ecirc;ncia
+        de caracteres indicando como deve ser constru&iacute;da a tabela de resultados. 
+        A seq&uuml;&ecirc;ncia de caracteres do modo pode conter:
+        <dl>
+            <dt><strong>"n"</strong></dt><dd>a tabela resultante ter&aacute; &iacute;ndices num&eacute;ricos (padr&atilde;o)</dd>
+            <dt><strong>"a"</strong></dt><dd>a tabela resultante ter&aacute; &iacute;ndices alfanum&eacute;ricos</dd>
+        </dl>
+        <br/>
+        Os <em>&iacute;ndices num&eacute;ricos</em> representam as posi&ccedil;&otilde;es dos
+        campos no comando SELECT; os <em>&iacute;ndices alfanum&eacute;ricos</em> representam
+        os nomes dos campos.<br/>
+        A tabela opcional (<code>table</code>) ser&aacute; usada para armazenar o pr&oacute;ximo
+        registro. Isso permite o uso de uma &uacute;nica tabela para v&aacute;rias chamadas, o que
+        pode melhorar o desempenho geral.<br/>
+        N&atilde;o existe garantia sobre os tipos dos resultados: eles podem ou n&atilde;o ser convertidos pelo driver
+        para os tipos Lua adequados. Na implementa&ccedil;&atilde;o atual, os drivers PostgreSQL e MySQL
+        retornam todos os valores como strings, enquanto os drivers ODBC e Oracle convertem esses valores
+        em tipos Lua.<br/>
+        Retorna: dados, como descrito acima, ou <code>nil</code> se n&atilde;o existem mais registros.
+        Note que esse m&eacute;todo pode retornar <code>nil</code> como um resultado v&aacute;lido.
+    </dd>
+
+    <dt><a name="cur_colnames"></a><strong><code>cur:getcolnames()</code></strong></dt>
+    <dd>Retorna: uma tabela com os nomes das colunas.
+    </dd>
+
+    <dt><a name="cur_coltypes"></a><strong><code>cur:getcoltypes()</code></strong></dt>
+    <dd>Retorna: uma tabela com os tipos das colunas.
+    </dd>
+</dl>
+
+<p><a name="extensions"></a></p>
+
+<h2><a name="postgres_extensions"></a>PostgreSQL</h2>
+
+<p>Al&eacute;m das funcionalidades b&aacute;sicas oferecidas por todos os drivers,
+o driver Postgres oferece as seguintes funcionalidades adicionais:</p>
+
+<dl class="reference">
+    <dt><strong><code>env:connect(sourcename[,username[,password[,hostname[,port]]]])</code></strong></dt>
+    <dd>No driver PostgreSQL este m&eacute;todo tem mais dois par&acirc;metros opcionais que indicam
+        o <code>hostname</code> e a <code>port</code> a serem utilizados na conex&atilde;o.
+        Al&eacute;m disso, o primeiro par&acirc;metro tamb&eacute;m pode conter todas as informa&ccedil;&otilde;es
+        de conex&atilde;o, como &eacute; dito na documenta&ccedil;&atilde;o 
+        para a fun&ccedil;&atilde;o <code>PQconnectdb</code> no manual do PostgreSQL
+        (ex. <small><code>environment:connect("dbname=&lt;<em>name</em>&gt; user=&lt;<em>username</em>&gt;")</code></small>)<br/>
+        Veja tamb&eacute;m: <a href="#environment_object">ambiente</a><br/>
+        Retorna: uma <a href="#connection_object">conex&atilde;o</a>
+    </dd>
+
+    <dt><strong><code>cur:numrows()</code></strong></dt>
+    <dd>Veja tamb&eacute;m: <a href="#cursor_object">cursores</a><br/>
+        Retorna: o n&uacute;mero de registros no resultado da busca.
+    </dd>
+</dl>
+
+
+<h2><a name="mysql_extensions"></a>MySQL</h2>
+
+<p>Al&eacute;m das funcionalidades b&aacute;sicas oferecidas por todos os drivers,
+o driver MySQL ainda oferece as seguintes funcionalidades adicionais:</p>
+
+<dl class="reference">
+    <dt><strong><code>env:connect(sourcename[,username[,password[,hostname[,port]]]])</code></strong></dt>
+    <dd>No driver MySQL, esse m&eacute;todo tem mais dois par&acirc;metros opcionais que indicam o
+        <code>hostname</code> e a <code>port</code> a serem utilizados na conex&atilde;o.
+        Veja tamb&eacute;m: <a href="#environment_object">ambiente</a><br/>
+        Retorna: uma <a href="#connection_object">conex&atilde;o</a>
+    </dd>
+
+    <dt><strong><code>cur:numrows()</code></strong></dt>
+    <dd>Veja tamb&eacute;m: <a href="#cursor_object">cursores</a><br/>
+        Retorna: o n&uacute;mero de registros no resultado da busca.
+    </dd>
+</dl>
+
+<p>Nota: Este driver &eacute; compat&iacute;vel com as vers&otilde;es 4.0, 4.1 e 5.0 da
+API MySQL. Apenas as vers&otilde;es a partir de 4.1 oferecem suporte para transa&ccedil;&otilde;es, atrav&eacute;s de tabelas
+BDB ou INNODB. Com a vers&atilde;o 4.0 ou sem um desses tipos de tabelas, os m&eacute;todos
+<code>commit</code>, <code>rollback</code> e <code>setautocommit</code> n&atilde;o funcionam.</p>
+
+<h2><a name="oracle_extensions"></a>Oracle</h2>
+
+<p>Al&eacute;m das funcionalidades b&aacute;sicas oferecidas por todos os drivers,
+o driver Oracle ainda oferece uma funcionalidade adicional:</p>
+
+<dl class="reference">
+    <dt><strong><code>cur:numrows()</code></strong></dt>
+    <dd>Veja tamb&eacute;m: <a href="#cursor_object">cursores</a><br/>
+        Retorna: o n&uacute;mero de registros no resultado da pesquisa.
+    </dd>
+</dl>
+
+<h2><a name="sqlite3_extensions"></a>SQLite3</h2>
+
+<p>Al&eacute;m das funcionalidades b&aacute;sicas oferecidas por todos os drivers,
+o driver para SQLite3 ainda oferece uma funcionalidade adicional:</p>
+
+<dt><strong><code>env:connect(sourcename[,locktimeout])</code></strong></dt>
+  <dd>No driver para SQLite3, este método tem mais um parâmetro opcional que indica
+    a quantidade de milissegundos para esperar por uma trava de escrita no banco de dados, se ela não for obtida de imediato.<br/>
+    Veja tamb&eacute;m: <a href="#environment_object">ambiente</a><br/>
+    Retorna: uma <a href="#connection_object">conex&atilde;o</a></dd>
+
+
+</div> <!-- id="content" -->
+
+</div> <!-- id="main" -->
+
+<div id="about">
+	<p><a href="http://validator.w3.org/check?uri=referer"><img src="http://www.w3.org/Icons/valid-xhtml10" alt="Valid XHTML 1.0!" height="31" width="88" /></a></p>
+	<p><small>
+	$Id: manual.html,v 1.11 2008/06/11 00:26:13 jasonsantos Exp $
+	</small></p>
+</div> <!-- id="about" -->
+
+</div> <!-- id="container" -->
+
+</body>
+</html> 

@@ -6,7 +6,10 @@
 
 #define  CURL_STATICLIB
 #define  CURL_DISABLE_LDAP
-#include <curl/curl.h>
+
+extern "C" {
+	#include <curl/curl.h>
+}
 
 //================================================================//
 // USHttpTaskInfo

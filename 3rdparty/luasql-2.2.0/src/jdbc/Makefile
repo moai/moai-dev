@@ -1,0 +1,35 @@
+# JDBC
+JDK= $(JAVA_HOME)
+#source dir
+JDBC_SRC= src/java
+#lib dir
+JDBC_LIB= lib
+#build dir
+JDBC_BUILD= bin
+#java compiler
+JAVAC= $(JAVA_HOME)/bin/javac
+JAR= $(JAVA_HOME)/bin/jar
+#luajava jar name
+LUAJAVA_JAR= luajava-1.0b4.jar
+#compilation options
+COMPILEOPT= -d $(JDBC_BUILD) -classpath $(JDBC_LIB)/$(LUAJAVA_JAR)
+#package name
+ALLPACKAGES= org/keplerproject/luasql/jdbc
+SUBDIRS= addprefix $(JDBC_SRC), $(ALLPACKAGES)
+SOURCEDIRS= $(JDBC_SRC)/$(ALLPACKAGES)
+SOURCEFILES = $(addsuffix /*.java, $(SOURCEDIRS))
+JARSDIR= .
+PACKAGENAME= luasql
+
+
+jdbc_driver:
+	rm -rf $(JDBC_BUILD)
+	mkdir $(JDBC_BUILD)
+	for i in $(SUBDIRS);  \
+	do ( $(JAVAC) $(COMPILEOPT) $(SOURCEFILES) ) done
+	$(JAR) -cvf $(JARSDIR)/$(PACKAGENAME).jar -C $(JDBC_BUILD) .
+	
+clean:
+	rm -rf $(JDBC_BUILD)
+	rm -f $(JARSDIR)/$(PACKAGENAME).jar
+

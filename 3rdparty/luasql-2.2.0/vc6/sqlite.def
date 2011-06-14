@@ -1,0 +1,4 @@
+LIBRARY		sqlite.dll
+DESCRIPTION "LuaSQL driver for sqlite"
+EXPORTS
+luaopen_luasqlsqlite

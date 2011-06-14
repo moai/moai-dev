@@ -243,7 +243,9 @@ int AKUGlut ( int argc, char** argv ) {
 	
 	#ifdef AKUGLUT_USE_LUAEXT
 		AKUExtLoadLuacrypto ();
+		AKUExtLoadLuacurl ();
 		AKUExtLoadLuasocket ();
+		AKUExtLoadLuasql ();
 	#endif
 	
 	#ifdef AKUGLUT_USE_UNTZ

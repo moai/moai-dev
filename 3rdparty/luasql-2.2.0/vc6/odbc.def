@@ -1,0 +1,4 @@
+LIBRARY		odbc.dll
+DESCRIPTION "LuaSQL driver for odbc"
+EXPORTS
+luaopen_luasqlodbc

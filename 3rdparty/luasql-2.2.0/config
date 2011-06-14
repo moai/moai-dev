@@ -1,0 +1,65 @@
+# $Id: config,v 1.10 2008/05/30 17:21:18 tomas Exp $
+
+# Driver (leave uncommented ONLY the line with the name of the driver)
+#T= mysql
+#T= oci8
+#T= odbc
+T= postgres
+#T= sqlite
+#T=sqlite3
+#T=firebird
+
+# Installation directories
+
+# Default prefix
+PREFIX = /usr/local
+
+# System's libraries directory (where binary libraries are installed)
+LUA_LIBDIR= $(PREFIX)/lib/lua/5.1
+
+# System's lua directory (where Lua libraries are installed)
+LUA_DIR= $(PREFIX)/share/lua/5.1
+
+# Lua includes directory
+LUA_INC= $(PREFIX)/include
+
+# Lua version number (first and second digits of target version)
+LUA_VERSION_NUM= 501
+
+# OS dependent
+LIB_OPTION= -shared #for Linux
+#LIB_OPTION= -bundle -undefined dynamic_lookup #for MacOS X
+
+LIBNAME= $T.so
+COMPAT_DIR= ../compat/src
+
+# Compilation parameters
+# Driver specific
+######## MySQL
+#DRIVER_LIBS= -L/usr/local/mysql/lib -lmysqlclient -lz
+#DRIVER_INCS= -I/usr/local/mysql/include
+######## Oracle OCI8
+#DRIVER_LIBS= -L/home/oracle/OraHome1/lib -lz -lclntsh
+#DRIVER_INCS= -I/home/oracle/OraHome1/rdbms/demo -I/home/oracle/OraHome1/rdbms/public
+######## PostgreSQL
+DRIVER_LIBS= -L/usr/local/pgsql/lib -lpq
+DRIVER_INCS= -I/usr/local/pgsql/include/
+######## SQLite
+#DRIVER_LIBS= -lsqlite
+#DRIVER_INCS=
+######## SQLite3 
+#DRIVER_LIBS= -L/opt/local/lib -lsqlite3
+#DRIVER_INCS= -I/opt/local/include
+######## ODBC
+#DRIVER_LIBS= -L/usr/local/lib -lodbc
+#DRIVER_INCS= -DUNIXODBC -I/usr/local/include
+######## Firebird
+#DRIVER_LIBS= -L/usr/local/firebird -lfbclient
+#DRIVER_INCS=
+
+WARN= -Wall -Wmissing-prototypes -Wmissing-declarations -ansi -pedantic
+INCS= -I$(LUA_INC)
+CFLAGS= -O2 $(WARN) -I$(COMPAT_DIR) $(DRIVER_INCS) $(INCS) -DLUASQL_VERSION_NUMBER='"$V"' $(DEFS)
+CC= gcc
+
+# $Id: config,v 1.10 2008/05/30 17:21:18 tomas Exp $

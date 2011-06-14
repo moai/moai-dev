@@ -1,0 +1,4 @@
+LIBRARY		postgres.dll
+DESCRIPTION "LuaSQL driver for postgres"
+EXPORTS
+luaopen_luasqlpostgres
