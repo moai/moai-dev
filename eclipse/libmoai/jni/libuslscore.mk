@@ -34,6 +34,7 @@ $(SRC_PATH)/src/uslscore/USFileStream.cpp \
 $(SRC_PATH)/src/uslscore/USFileSys.cpp \
 $(SRC_PATH)/src/uslscore/USGlobals.cpp \
 $(SRC_PATH)/src/uslscore/USInflater.cpp \
+$(SRC_PATH)/src/uslscore/USLog.cpp \
 $(SRC_PATH)/src/uslscore/uslscore.cpp \
 $(SRC_PATH)/src/uslscore/USLuaObject.cpp \
 $(SRC_PATH)/src/uslscore/USLuaRef.cpp \

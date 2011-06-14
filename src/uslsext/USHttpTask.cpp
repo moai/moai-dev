@@ -6,7 +6,6 @@
 #include <uslsext/USDataIOTask.h>
 #include <uslsext/USHttpTask.h>
 #include <uslsext/USHttpTask_impl.h>
-#include <uslsext/USLog.h>
 #include <uslsext/USUrlMgr.h>
 
 //================================================================//

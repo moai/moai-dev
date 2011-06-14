@@ -228,6 +228,7 @@
     <ClInclude Include="..\..\src\uslscore\USFilename.h" />
     <ClInclude Include="..\..\src\uslscore\USFileSys.h" />
     <ClInclude Include="..\..\src\uslscore\USInflater.h" />
+    <ClInclude Include="..\..\src\uslscore\USLog.h" />
     <ClInclude Include="..\..\src\uslscore\USLuaObject-impl.h" />
     <ClInclude Include="..\..\src\uslscore\USLuaObject.h" />
     <ClInclude Include="..\..\src\uslscore\USTypeID.h" />
@@ -289,6 +290,7 @@
     <ClCompile Include="..\..\src\uslscore\USCanary.cpp" />
     <ClCompile Include="..\..\src\uslscore\USGlobals.cpp" />
     <ClCompile Include="..\..\src\uslscore\USInflater.cpp" />
+    <ClCompile Include="..\..\src\uslscore\USLog.cpp" />
     <ClCompile Include="..\..\src\uslscore\USLuaObject.cpp" />
     <ClCompile Include="..\..\src\uslscore\USObject.cpp" />
     <ClCompile Include="..\..\src\uslscore\USRtti.cpp" />

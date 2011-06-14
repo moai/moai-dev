@@ -2,7 +2,6 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <uslsext/USLog.h>
 #include <uslsext/USTask.h>
 #include <uslsext/USTaskThread.h>
 

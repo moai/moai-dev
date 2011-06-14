@@ -39,7 +39,6 @@
 #include <uslsext/USInterpolate.h>
 #include <uslsext/USIntersect.h>
 #include <uslsext/USLexStream.h>
-#include <uslsext/USLog.h>
 #include <uslsext/USMathConsts.h>
 #include <uslsext/USMatrix.h>
 #include <uslsext/USMatrix2D.h>

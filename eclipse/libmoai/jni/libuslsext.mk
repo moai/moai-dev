@@ -65,7 +65,6 @@ $(SRC_PATH)/src/uslsext/USImage.cpp \
 $(SRC_PATH)/src/uslsext/USInterpolate.cpp \
 $(SRC_PATH)/src/uslsext/USIntersect.cpp \
 $(SRC_PATH)/src/uslsext/USLexStream.cpp \
-$(SRC_PATH)/src/uslsext/USLog.cpp \
 $(SRC_PATH)/src/uslsext/uslsext.cpp \
 $(SRC_PATH)/src/uslsext/USMercator.cpp \
 $(SRC_PATH)/src/uslsext/USMutex.cpp \

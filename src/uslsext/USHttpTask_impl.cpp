@@ -4,7 +4,6 @@
 #include "pch.h"
 
 #include <uslsext/USData.h>
-#include <uslsext/USLog.h>
 #include <uslsext/USHttpTask.h>
 #include <uslsext/USHttpTask_impl.h>
 #include <uslsext/USUrlMgr.h>

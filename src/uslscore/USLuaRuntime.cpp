@@ -7,6 +7,7 @@
 #include <uslscore/USLuaStateHandle.h>
 #include <uslscore/USLuaRuntime.h>
 #include <uslscore/USLuaRef.h>
+#include <uslscore/USLog.h>
 #include <uslscore/USRtti.h>
 
 #include <uslscore/USLuaState-impl.h>
@@ -35,26 +36,26 @@ static void dumpType ( lua_State* L, int idx, const char *name, bool verbose, Ta
 
 		case LUA_TBOOLEAN:
 
-			printf ( format, tvalue, "bool", name );
-			printf ( " = %s", lua_toboolean ( state, idx ) ? "true" : "false" );
+			USLog::Print ( format, tvalue, "bool", name );
+			USLog::Print ( " = %s", lua_toboolean ( state, idx ) ? "true" : "false" );
 			break;
 
 		case LUA_TFUNCTION: {
 
 			const char *funcType = iscfunction ( tvalue ) ? "C function" : "Lua function";
 
-			printf ( format, clvalue ( tvalue ), funcType, name );
+			USLog::Print ( format, clvalue ( tvalue ), funcType, name );
 			break;
 		}
 
 		case LUA_TLIGHTUSERDATA:
 
-			printf ( format, pvalue ( tvalue ), "pointer", name );
+			USLog::Print ( format, pvalue ( tvalue ), "pointer", name );
 			break;
 
 		case LUA_TNIL:
 
-			printf ( format, tvalue, "nil", name );
+			USLog::Print ( format, tvalue, "nil", name );
 			break;
 
 		case LUA_TNONE:
@@ -63,14 +64,14 @@ static void dumpType ( lua_State* L, int idx, const char *name, bool verbose, Ta
 
 		case LUA_TNUMBER:
 
-			printf ( format, tvalue, "number", name );
-			printf ( " = %f", lua_tonumber ( state, idx ));
+			USLog::Print ( format, tvalue, "number", name );
+			USLog::Print ( " = %f", lua_tonumber ( state, idx ));
 			break;
 
 		case LUA_TSTRING:
 
-			printf ( format, rawtsvalue( tvalue ), "string", name );
-			printf ( " = \"%s\"", lua_tostring ( state, idx ));
+			USLog::Print ( format, rawtsvalue( tvalue ), "string", name );
+			USLog::Print ( " = \"%s\"", lua_tostring ( state, idx ));
 			break;
 
 		case LUA_TTABLE: {
@@ -80,18 +81,18 @@ static void dumpType ( lua_State* L, int idx, const char *name, bool verbose, Ta
 			if ( foundTables.contains ( htable )) {
 
 				// TODO: fix for 64 bit
-				printf ( DUMP_FORMAT " (see above)", ( uint )(( u32 )htable ), "table", name );
+				USLog::Print ( DUMP_FORMAT " (see above)", ( uint )(( u32 )htable ), "table", name );
 				break;
 			}
 			else {
 
 				foundTables.insert ( htable );
 
-				printf ( format, htable, "table", name );
+				USLog::Print ( format, htable, "table", name );
 
 				if ( verbose ) {
 
-					printf ( "\n" );
+					USLog::Print ( "\n" );
 					lua_pushnil ( state );
 
 					while ( lua_next ( state, idx ) ) {
@@ -109,18 +110,18 @@ static void dumpType ( lua_State* L, int idx, const char *name, bool verbose, Ta
 
 		case LUA_TTHREAD:
 
-			printf ( format, thvalue( tvalue ), "thread", name );
+			USLog::Print ( format, thvalue( tvalue ), "thread", name );
 			break;
 
 		case LUA_TUSERDATA:
 
 			if ( lua_islightuserdata ( state, idx ) ) {
 				
-				printf ( format, lua_topointer ( state, idx ) , "light userdata", name );
+				USLog::Print ( format, lua_topointer ( state, idx ) , "light userdata", name );
 			}
 			else {
 
-				printf ( format, lua_topointer( state, idx ), "userdata", name );
+				USLog::Print ( format, lua_topointer( state, idx ), "userdata", name );
 
 				if ( verbose ) {
 
@@ -129,17 +130,17 @@ static void dumpType ( lua_State* L, int idx, const char *name, bool verbose, Ta
 					
 					lua_pcall ( state, 1, 1, 0 );
 
-					printf( "\n\t%s", lua_tostring ( state, -1 ));
+					USLog::Print ( "\n\t%s", lua_tostring ( state, -1 ));
 					state.Pop ( 1 );
 				}
 			}
 			break;
 
 		default:
-			printf ( "*** Unexpected type: %d ***", lua_type ( state, idx ));
+			USLog::Print ( "*** Unexpected type: %d ***", lua_type ( state, idx ));
 	}
 
-	printf ( "\n" );
+	USLog::Print ( "\n" );
 }
 
 //----------------------------------------------------------------//
@@ -208,7 +209,7 @@ static int _dumpStack ( lua_State* L ) {
 	TableSet foundTables;
 	for ( TValue* tvalue = state->stack; tvalue < state->top; ++tvalue ) {
 
-		printf ( "stack [ %d ] ", idx++ );
+		USLog::Print ( "stack [ %d ] ", idx++ );
 		dumpTypeByAddress ( state, tvalue, "", verbose, foundTables );
 	}
 
@@ -221,7 +222,7 @@ static int _traceback ( lua_State *L ) {
 	if ( lua_isstring ( L, 1 )) {  // 'message' a string?
 	
 		cc8* msg = lua_tostring ( L, 1 );
-		printf ( "%s\n", msg );
+		USLog::Print ( "%s\n", msg );
 	}
 	
 	USLuaState state ( L );

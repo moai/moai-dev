@@ -192,6 +192,9 @@
     <ClInclude Include="..\..\src\uslscore\USLuaObject-impl.h">
       <Filter>src\lua</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\uslscore\USLog.h">
+      <Filter>src\util</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\uslscore\USDirectoryItr_posix.cpp">
@@ -283,6 +286,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\uslscore\USLuaObject.cpp">
       <Filter>src\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslscore\USLog.cpp">
+      <Filter>src\util</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -195,9 +195,6 @@
     <ClCompile Include="..\..\src\uslsext\USAdapterInfo_win32.cpp">
       <Filter>src\util</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\uslsext\USLog.cpp">
-      <Filter>src\util</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\uslsext\USPrettyPrint.cpp">
       <Filter>src\util</Filter>
     </ClCompile>
@@ -417,9 +414,6 @@
       <Filter>src\thread</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\uslsext\USDelegate.h">
-      <Filter>src\util</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\uslsext\USLog.h">
       <Filter>src\util</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\uslsext\USPrettyPrint.h">

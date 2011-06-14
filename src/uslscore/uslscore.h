@@ -40,6 +40,7 @@
 #include <uslscore/USLeanPool.h>
 #include <uslscore/USLeanStack.h>
 #include <uslscore/USList.h>
+#include <uslscore/USLog.h>
 #include <uslscore/USMemStream.h>
 #include <uslscore/USRect.h>
 #include <uslscore/USRef.h>

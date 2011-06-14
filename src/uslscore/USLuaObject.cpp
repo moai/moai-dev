@@ -2,6 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <uslscore/USLog.h>
 #include <uslscore/USLuaObject.h>
 #include <uslscore/USLuaRef.h>
 #include <uslscore/USLuaState.h>
@@ -51,7 +52,7 @@ int USLuaObject::_delete ( lua_State* L ) {
 void USLuaObject::DebugDump () {
 
 	// TODO: fix for 64 bit
-	printf ( "0x%08X <%s> %s", ( uint )(( u32 )this ), this->TypeName (), this->ToString ().c_str ());
+	USLog::Print ( "0x%08X <%s> %s", ( uint )(( u32 )this ), this->TypeName (), this->ToString ().c_str ());
 }
 
 //----------------------------------------------------------------//

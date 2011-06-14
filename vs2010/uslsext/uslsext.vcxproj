@@ -292,7 +292,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\uslsext\USThread_win32.cpp" />
     <ClCompile Include="..\..\src\uslsext\USAdapterInfo_win32.cpp" />
-    <ClCompile Include="..\..\src\uslsext\USLog.cpp" />
     <ClCompile Include="..\..\src\uslsext\USPrettyPrint.cpp" />
     <ClCompile Include="..\..\src\uslsext\USTypedPtr.cpp" />
     <ClCompile Include="..\..\src\uslsext\USHttpTask.cpp" />
@@ -377,7 +376,6 @@
     <ClInclude Include="..\..\src\uslsext\USThread_posix.h" />
     <ClInclude Include="..\..\src\uslsext\USThread_win32.h" />
     <ClInclude Include="..\..\src\uslsext\USDelegate.h" />
-    <ClInclude Include="..\..\src\uslsext\USLog.h" />
     <ClInclude Include="..\..\src\uslsext\USPrettyPrint.h" />
     <ClInclude Include="..\..\src\uslsext\USRadixSort16.h" />
     <ClInclude Include="..\..\src\uslsext\USRadixSort32.h" />

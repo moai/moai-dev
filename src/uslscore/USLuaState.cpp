@@ -9,6 +9,7 @@
 #include <uslscore/USDeflater.h>
 #include <uslscore/USFileStream.h>
 #include <uslscore/USInflater.h>
+#include <uslscore/USLog.h>
 #include <uslscore/USLuaObject.h>
 #include <uslscore/USLuaRef.h>
 #include <uslscore/USLuaRuntime.h>
@@ -29,7 +30,7 @@ static void _printStackTrace ( lua_State *L, int level ) {
 	int firstpart = 1;  /* still before eventual `...' */
 	lua_Debug ar;
 
-	printf ( "stack traceback:" );
+	USLog::Print ( "stack traceback:" );
   
 	while ( lua_getstack ( L, level++, &ar )) {
 	
@@ -40,7 +41,7 @@ static void _printStackTrace ( lua_State *L, int level ) {
 			}
 			else {
 				// too many levels
-				printf ( "\n\t..." );  /* too many levels */
+				USLog::Print ( "\n\t..." );  /* too many levels */
 				
 				// find last levels */
 				while ( lua_getstack ( L, level + LEVELS2, &ar ))  
@@ -50,33 +51,33 @@ static void _printStackTrace ( lua_State *L, int level ) {
 			continue;
 		}
 	
-		printf ( "\n\t" );
+		USLog::Print ( "\n\t" );
 		
 		lua_getinfo ( L, "Snl", &ar );
 		
-		printf ( "%s:", ar.short_src );
+		USLog::Print ( "%s:", ar.short_src );
 		
 		if ( ar.currentline > 0 ) {
-			printf ( "%d:", ar.currentline );
+			USLog::Print ( "%d:", ar.currentline );
 		}
 		
 		if (*ar.namewhat != '\0' ) {
-			printf ( " in function " LUA_QS, ar.name );
+			USLog::Print ( " in function " LUA_QS, ar.name );
 		}
 		else {
 			if ( *ar.what == 'm' ) {
-				printf ( " in main chunk" );
+				USLog::Print ( " in main chunk" );
 			}
 			else if ( *ar.what == 'C' || *ar.what == 't' ) {
-				printf ( " ?" );
+				USLog::Print ( " ?" );
 			}
 			else {
-				printf ( " in function <%s:%d>", ar.short_src, ar.linedefined );
+				USLog::Print ( " in function <%s:%d>", ar.short_src, ar.linedefined );
 			}
 		}
 	}
 	
-	printf ( "\n" );
+	USLog::Print ( "\n" );
 }
 
 //================================================================//
@@ -629,7 +630,7 @@ bool USLuaState::PrintErrors ( int status ) {
 		cc8* error = lua_tostring ( this->mState, -1 );
 		if ( error ) {
 			STLString msg = lua_tostring ( this->mState, -1 );
-			printf ( "-- %s\n", msg.c_str ());
+			USLog::Print ( "-- %s\n", msg.c_str ());
 		}
 		lua_pop ( this->mState, 1 ); // pop error message
 		return true;
