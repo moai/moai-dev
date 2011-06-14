@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="luasocket">
+      <UniqueIdentifier>{91323c39-50a8-42d5-a4df-4cdc5adba4ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="luacrypto">
+      <UniqueIdentifier>{8a325b99-913d-4a6e-ae54-9c263386f64e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="luacurl">
+      <UniqueIdentifier>{c8410445-fea9-4821-9425-f94f64d0162b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="luasql">
+      <UniqueIdentifier>{831ab354-08f9-40a1-abf6-99cfa9ab722c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\3rdparty\luasocket-2.0.2\src\auxiliar.c">
+      <Filter>luasocket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\luasocket-2.0.2\src\buffer.c">
+      <Filter>luasocket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\luasocket-2.0.2\src\except.c">
+      <Filter>luasocket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\luasocket-2.0.2\src\inet.c">
+      <Filter>luasocket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\luasocket-2.0.2\src\io.c">
+      <Filter>luasocket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\luasocket-2.0.2\src\luasocket.c">
+      <Filter>luasocket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\luasocket-2.0.2\src\mime.c">
+      <Filter>luasocket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\luasocket-2.0.2\src\options.c">
+      <Filter>luasocket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\luasocket-2.0.2\src\select.c">
+      <Filter>luasocket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\luasocket-2.0.2\src\tcp.c">
+      <Filter>luasocket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\luasocket-2.0.2\src\timeout.c">
+      <Filter>luasocket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\luasocket-2.0.2\src\udp.c">
+      <Filter>luasocket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\luasocket-2.0.2\src\wsocket.c">
+      <Filter>luasocket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\luacrypto-0.2.0\src\lcrypto.c">
+      <Filter>luacrypto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\luacurl-1.2.1\luacurl.c">
+      <Filter>luacurl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\luasql-2.2.0\src\ls_sqlite3.c">
+      <Filter>luasql</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\luasql-2.2.0\src\luasql.c">
+      <Filter>luasql</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\3rdparty\luasocket-2.0.2\src\auxiliar.h">
+      <Filter>luasocket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\luasocket-2.0.2\src\buffer.h">
+      <Filter>luasocket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\luasocket-2.0.2\src\except.h">
+      <Filter>luasocket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\luasocket-2.0.2\src\inet.h">
+      <Filter>luasocket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\luasocket-2.0.2\src\io.h">
+      <Filter>luasocket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\luasocket-2.0.2\src\luasocket.h">
+      <Filter>luasocket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\luasocket-2.0.2\src\mime.h">
+      <Filter>luasocket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\luasocket-2.0.2\src\options.h">
+      <Filter>luasocket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\luasocket-2.0.2\src\select.h">
+      <Filter>luasocket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\luasocket-2.0.2\src\socket.h">
+      <Filter>luasocket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\luasocket-2.0.2\src\tcp.h">
+      <Filter>luasocket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\luasocket-2.0.2\src\timeout.h">
+      <Filter>luasocket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\luasocket-2.0.2\src\udp.h">
+      <Filter>luasocket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\luasocket-2.0.2\src\wsocket.h">
+      <Filter>luasocket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\luacrypto-0.2.0\src\lcrypto.h">
+      <Filter>luacrypto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\luasql-2.2.0\src\luasql.h">
+      <Filter>luasql</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

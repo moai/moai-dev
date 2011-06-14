@@ -19,8 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{DCBDCCF7-4EC1-4431-86A6-D2C1084D37CE}</ProjectGuid>
-    <RootNamespace>luasocket</RootNamespace>
+    <ProjectGuid>{51007BE8-C720-4A9F-A1BF-C2AA31179E02}</ProjectGuid>
+    <RootNamespace>luaext</RootNamespace>
     <Keyword>Win32Proj</Keyword>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -86,15 +86,15 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\lua-5.1.3\src;..\..\3rdparty\glew-1.5.6\include;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\sqlite-3.6.16;..\..\3rdparty\tinyxml;..\..\3rdparty\curl-7.19.7\include;..\..\3rdparty\lpng140;..\..\3rdparty\box2d-2.1.2\Box2D;..\..\3rdparty\expat-2.0.1\lib;..\..\3rdparty\chipmunk-5.3.4\include;..\..\3rdparty\luasocket-2.0.2\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;AKU_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\3rdparty\lua-5.1.3\src;..\..\3rdparty\sqlite-3.6.16;..\..\3rdparty\curl-7.19.7\include;..\..\3rdparty\openssl-1.0.0d\include-win32;..\..\3rdparty\luasql-2.2.0\src;..\..\3rdparty\luasocket-2.0.2\src;..\..\3rdparty\luacrypto-0.2.0\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;CURL_STATICLIB;AKU_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
       <ForceConformanceInForLoopScope>false</ForceConformanceInForLoopScope>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>TurnOffAllWarnings</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <CompileAs>CompileAsC</CompileAs>
       <ShowIncludes>false</ShowIncludes>
@@ -151,14 +151,14 @@ xcopy /yr "$(OutDir)$(TargetName).pdb" "..\..\bin\$(Platform)\$(Configuration)\"
     <ClCompile>
       <Optimization>MinSpace</Optimization>
       <FavorSizeOrSpeed>Size</FavorSizeOrSpeed>
-      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\lua-5.1.3\src;..\..\3rdparty\glew-1.5.6\include;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\sqlite-3.6.16;..\..\3rdparty\tinyxml;..\..\3rdparty\curl-7.19.7\include;..\..\3rdparty\lpng140;..\..\3rdparty\box2d-2.1.2\Box2D;..\..\3rdparty\expat-2.0.1\lib;..\..\3rdparty\chipmunk-5.3.4\include;..\..\3rdparty\luasocket-2.0.2\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;AKU_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\3rdparty\lua-5.1.3\src;..\..\3rdparty\sqlite-3.6.16;..\..\3rdparty\curl-7.19.7\include;..\..\3rdparty\openssl-1.0.0d\include-win32;..\..\3rdparty\luasql-2.2.0\src;..\..\3rdparty\luasocket-2.0.2\src;..\..\3rdparty\luacrypto-0.2.0\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;CURL_STATICLIB;AKU_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
       <ForceConformanceInForLoopScope>false</ForceConformanceInForLoopScope>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>TurnOffAllWarnings</WarningLevel>
       <DebugInformationFormat>
       </DebugInformationFormat>
       <CompileAs>CompileAsC</CompileAs>
@@ -219,6 +219,10 @@ xcopy /yr "$(OutDir)$(TargetName).lib" "..\..\bin\win32\$(Configuration)\"
     <ClCompile Include="..\..\3rdparty\luasocket-2.0.2\src\timeout.c" />
     <ClCompile Include="..\..\3rdparty\luasocket-2.0.2\src\udp.c" />
     <ClCompile Include="..\..\3rdparty\luasocket-2.0.2\src\wsocket.c" />
+    <ClCompile Include="..\..\3rdparty\luacrypto-0.2.0\src\lcrypto.c" />
+    <ClCompile Include="..\..\3rdparty\luacurl-1.2.1\luacurl.c" />
+    <ClCompile Include="..\..\3rdparty\luasql-2.2.0\src\ls_sqlite3.c" />
+    <ClCompile Include="..\..\3rdparty\luasql-2.2.0\src\luasql.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\3rdparty\luasocket-2.0.2\src\auxiliar.h" />
@@ -235,6 +239,8 @@ xcopy /yr "$(OutDir)$(TargetName).lib" "..\..\bin\win32\$(Configuration)\"
     <ClInclude Include="..\..\3rdparty\luasocket-2.0.2\src\timeout.h" />
     <ClInclude Include="..\..\3rdparty\luasocket-2.0.2\src\udp.h" />
     <ClInclude Include="..\..\3rdparty\luasocket-2.0.2\src\wsocket.h" />
+    <ClInclude Include="..\..\3rdparty\luacrypto-0.2.0\src\lcrypto.h" />
+    <ClInclude Include="..\..\3rdparty\luasql-2.2.0\src\luasql.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
