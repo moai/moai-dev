@@ -101,21 +101,21 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 03BBC8FD1380504D0084FBE1 /* libmoai.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = CD07C3CD13A182AA00C9386C /* libmoai-iphone-untz.a */;
+			remoteGlobalIDString = CD07C3CD13A182AA00C9386C;
 			remoteInfo = "libmoai-iphone-untz";
 		};
 		CDF1BF7713A30F15006DB9B7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 03BBC8FD1380504D0084FBE1 /* libmoai.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = CD07C4E513A1918600C9386C /* libmoai-osx-untz.a */;
+			remoteGlobalIDString = CD07C4E513A1918600C9386C;
 			remoteInfo = "libmoai-osx-untz";
 		};
 		CDF1BF9C13A31113006DB9B7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 03BBC8FD1380504D0084FBE1 /* libmoai.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = CD07C3A313A182AA00C9386C /* libmoai-iphone-untz */;
+			remoteGlobalIDString = CD07C3A313A182AA00C9386C;
 			remoteInfo = "libmoai-iphone-untz";
 		};
 /* End PBXContainerItemProxy section */

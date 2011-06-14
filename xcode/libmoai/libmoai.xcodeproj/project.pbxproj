@@ -1073,8 +1073,6 @@
 		0324E7DB13564BC8000ADC60 /* USIntersect.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E63D13564BC8000ADC60 /* USIntersect.h */; };
 		0324E7DC13564BC8000ADC60 /* USLexStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E63E13564BC8000ADC60 /* USLexStream.cpp */; };
 		0324E7DD13564BC8000ADC60 /* USLexStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E63F13564BC8000ADC60 /* USLexStream.h */; };
-		0324E7DE13564BC8000ADC60 /* USLog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E64013564BC8000ADC60 /* USLog.cpp */; };
-		0324E7DF13564BC8000ADC60 /* USLog.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E64113564BC8000ADC60 /* USLog.h */; };
 		0324E7E013564BC8000ADC60 /* uslsext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E64213564BC8000ADC60 /* uslsext.cpp */; };
 		0324E7E113564BC8000ADC60 /* uslsext.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E64313564BC8000ADC60 /* uslsext.h */; };
 		0324E7E213564BC8000ADC60 /* USMathConsts.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E64413564BC8000ADC60 /* USMathConsts.h */; };
@@ -1477,8 +1475,6 @@
 		0324E97913564BC9000ADC60 /* USIntersect.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E63D13564BC8000ADC60 /* USIntersect.h */; };
 		0324E97A13564BC9000ADC60 /* USLexStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E63E13564BC8000ADC60 /* USLexStream.cpp */; };
 		0324E97B13564BC9000ADC60 /* USLexStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E63F13564BC8000ADC60 /* USLexStream.h */; };
-		0324E97C13564BC9000ADC60 /* USLog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E64013564BC8000ADC60 /* USLog.cpp */; };
-		0324E97D13564BC9000ADC60 /* USLog.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E64113564BC8000ADC60 /* USLog.h */; };
 		0324E97E13564BC9000ADC60 /* uslsext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E64213564BC8000ADC60 /* uslsext.cpp */; };
 		0324E97F13564BC9000ADC60 /* uslsext.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E64313564BC8000ADC60 /* uslsext.h */; };
 		0324E98013564BC9000ADC60 /* USMathConsts.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E64413564BC8000ADC60 /* USMathConsts.h */; };
@@ -1705,6 +1701,46 @@
 		CD148EE51395ADED00A3F501 /* USPvrHeader.h in Headers */ = {isa = PBXBuildFile; fileRef = CD148EE31395ADED00A3F501 /* USPvrHeader.h */; };
 		CD1D0BA413599FD200802A3C /* AKU-iphone.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1D0BA213599FD200802A3C /* AKU-iphone.h */; };
 		CD1D0BA513599FD200802A3C /* AKU-iphone.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD1D0BA313599FD200802A3C /* AKU-iphone.mm */; };
+		CD218F7213A7FC79008337E7 /* USLog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD218F7013A7FC79008337E7 /* USLog.cpp */; };
+		CD218F7313A7FC79008337E7 /* USLog.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F7113A7FC79008337E7 /* USLog.h */; };
+		CD218F8713A7FD6E008337E7 /* ls_sqlite3.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F8413A7FD6E008337E7 /* ls_sqlite3.c */; };
+		CD218F8813A7FD6E008337E7 /* luasql.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F8513A7FD6E008337E7 /* luasql.c */; };
+		CD218F8913A7FD6E008337E7 /* luasql.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F8613A7FD6E008337E7 /* luasql.h */; };
+		CD218F8A13A7FD6E008337E7 /* ls_sqlite3.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F8413A7FD6E008337E7 /* ls_sqlite3.c */; };
+		CD218F8B13A7FD6E008337E7 /* luasql.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F8513A7FD6E008337E7 /* luasql.c */; };
+		CD218F8C13A7FD6E008337E7 /* luasql.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F8613A7FD6E008337E7 /* luasql.h */; };
+		CD218F8E13A7FD89008337E7 /* luacurl.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F8D13A7FD89008337E7 /* luacurl.c */; };
+		CD218F8F13A7FD89008337E7 /* luacurl.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F8D13A7FD89008337E7 /* luacurl.c */; };
+		CD218FA013A7FDBA008337E7 /* dump.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9113A7FDBA008337E7 /* dump.c */; };
+		CD218FA113A7FDBA008337E7 /* error.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9213A7FDBA008337E7 /* error.c */; };
+		CD218FA213A7FDBA008337E7 /* hashtable.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9313A7FDBA008337E7 /* hashtable.c */; };
+		CD218FA313A7FDBA008337E7 /* hashtable.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F9413A7FDBA008337E7 /* hashtable.h */; };
+		CD218FA413A7FDBA008337E7 /* jansson_config.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F9513A7FDBA008337E7 /* jansson_config.h */; };
+		CD218FA513A7FDBA008337E7 /* jansson_private.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F9613A7FDBA008337E7 /* jansson_private.h */; };
+		CD218FA613A7FDBA008337E7 /* jansson.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F9713A7FDBA008337E7 /* jansson.h */; };
+		CD218FA713A7FDBA008337E7 /* load.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9813A7FDBA008337E7 /* load.c */; };
+		CD218FA813A7FDBA008337E7 /* memory.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9913A7FDBA008337E7 /* memory.c */; };
+		CD218FA913A7FDBA008337E7 /* pack_unpack.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9A13A7FDBA008337E7 /* pack_unpack.c */; };
+		CD218FAA13A7FDBA008337E7 /* strbuffer.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9B13A7FDBA008337E7 /* strbuffer.c */; };
+		CD218FAB13A7FDBA008337E7 /* strbuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F9C13A7FDBA008337E7 /* strbuffer.h */; };
+		CD218FAC13A7FDBA008337E7 /* utf.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9D13A7FDBA008337E7 /* utf.c */; };
+		CD218FAD13A7FDBA008337E7 /* utf.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F9E13A7FDBA008337E7 /* utf.h */; };
+		CD218FAE13A7FDBA008337E7 /* value.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9F13A7FDBA008337E7 /* value.c */; };
+		CD218FAF13A7FDBA008337E7 /* dump.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9113A7FDBA008337E7 /* dump.c */; };
+		CD218FB013A7FDBA008337E7 /* error.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9213A7FDBA008337E7 /* error.c */; };
+		CD218FB113A7FDBA008337E7 /* hashtable.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9313A7FDBA008337E7 /* hashtable.c */; };
+		CD218FB213A7FDBA008337E7 /* hashtable.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F9413A7FDBA008337E7 /* hashtable.h */; };
+		CD218FB313A7FDBA008337E7 /* jansson_config.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F9513A7FDBA008337E7 /* jansson_config.h */; };
+		CD218FB413A7FDBA008337E7 /* jansson_private.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F9613A7FDBA008337E7 /* jansson_private.h */; };
+		CD218FB513A7FDBA008337E7 /* jansson.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F9713A7FDBA008337E7 /* jansson.h */; };
+		CD218FB613A7FDBA008337E7 /* load.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9813A7FDBA008337E7 /* load.c */; };
+		CD218FB713A7FDBA008337E7 /* memory.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9913A7FDBA008337E7 /* memory.c */; };
+		CD218FB813A7FDBA008337E7 /* pack_unpack.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9A13A7FDBA008337E7 /* pack_unpack.c */; };
+		CD218FB913A7FDBA008337E7 /* strbuffer.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9B13A7FDBA008337E7 /* strbuffer.c */; };
+		CD218FBA13A7FDBA008337E7 /* strbuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F9C13A7FDBA008337E7 /* strbuffer.h */; };
+		CD218FBB13A7FDBA008337E7 /* utf.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9D13A7FDBA008337E7 /* utf.c */; };
+		CD218FBC13A7FDBA008337E7 /* utf.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F9E13A7FDBA008337E7 /* utf.h */; };
+		CD218FBD13A7FDBA008337E7 /* value.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9F13A7FDBA008337E7 /* value.c */; };
 		CD74E4861377D9C10093EE68 /* aes_cbc.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E47B1377D9C10093EE68 /* aes_cbc.c */; };
 		CD74E4871377D9C10093EE68 /* aes_cfb.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E47C1377D9C10093EE68 /* aes_cfb.c */; };
 		CD74E4881377D9C10093EE68 /* aes_core.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E47D1377D9C10093EE68 /* aes_core.c */; };
@@ -3432,8 +3468,6 @@
 		0324E63D13564BC8000ADC60 /* USIntersect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USIntersect.h; sourceTree = "<group>"; };
 		0324E63E13564BC8000ADC60 /* USLexStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USLexStream.cpp; sourceTree = "<group>"; };
 		0324E63F13564BC8000ADC60 /* USLexStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USLexStream.h; sourceTree = "<group>"; };
-		0324E64013564BC8000ADC60 /* USLog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USLog.cpp; sourceTree = "<group>"; };
-		0324E64113564BC8000ADC60 /* USLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USLog.h; sourceTree = "<group>"; };
 		0324E64213564BC8000ADC60 /* uslsext.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = uslsext.cpp; sourceTree = "<group>"; };
 		0324E64313564BC8000ADC60 /* uslsext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = uslsext.h; sourceTree = "<group>"; };
 		0324E64413564BC8000ADC60 /* USMathConsts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USMathConsts.h; sourceTree = "<group>"; };
@@ -3629,6 +3663,27 @@
 		CD148EE31395ADED00A3F501 /* USPvrHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USPvrHeader.h; sourceTree = "<group>"; };
 		CD1D0BA213599FD200802A3C /* AKU-iphone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "AKU-iphone.h"; path = "aku/AKU-iphone.h"; sourceTree = "<group>"; };
 		CD1D0BA313599FD200802A3C /* AKU-iphone.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "AKU-iphone.mm"; path = "aku/AKU-iphone.mm"; sourceTree = "<group>"; };
+		CD218F7013A7FC79008337E7 /* USLog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = USLog.cpp; path = ../../src/uslscore/USLog.cpp; sourceTree = SOURCE_ROOT; };
+		CD218F7113A7FC79008337E7 /* USLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = USLog.h; path = ../../src/uslscore/USLog.h; sourceTree = SOURCE_ROOT; };
+		CD218F8413A7FD6E008337E7 /* ls_sqlite3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ls_sqlite3.c; path = "../../3rdparty/luasql-2.2.0/src/ls_sqlite3.c"; sourceTree = SOURCE_ROOT; };
+		CD218F8513A7FD6E008337E7 /* luasql.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = luasql.c; path = "../../3rdparty/luasql-2.2.0/src/luasql.c"; sourceTree = SOURCE_ROOT; };
+		CD218F8613A7FD6E008337E7 /* luasql.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = luasql.h; path = "../../3rdparty/luasql-2.2.0/src/luasql.h"; sourceTree = SOURCE_ROOT; };
+		CD218F8D13A7FD89008337E7 /* luacurl.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = luacurl.c; path = "../../3rdparty/luacurl-1.2.1/luacurl.c"; sourceTree = SOURCE_ROOT; };
+		CD218F9113A7FDBA008337E7 /* dump.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = dump.c; path = "../../3rdparty/jansson-2.1/src/dump.c"; sourceTree = SOURCE_ROOT; };
+		CD218F9213A7FDBA008337E7 /* error.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = error.c; path = "../../3rdparty/jansson-2.1/src/error.c"; sourceTree = SOURCE_ROOT; };
+		CD218F9313A7FDBA008337E7 /* hashtable.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = hashtable.c; path = "../../3rdparty/jansson-2.1/src/hashtable.c"; sourceTree = SOURCE_ROOT; };
+		CD218F9413A7FDBA008337E7 /* hashtable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = hashtable.h; path = "../../3rdparty/jansson-2.1/src/hashtable.h"; sourceTree = SOURCE_ROOT; };
+		CD218F9513A7FDBA008337E7 /* jansson_config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jansson_config.h; path = "../../3rdparty/jansson-2.1/src/jansson_config.h"; sourceTree = SOURCE_ROOT; };
+		CD218F9613A7FDBA008337E7 /* jansson_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jansson_private.h; path = "../../3rdparty/jansson-2.1/src/jansson_private.h"; sourceTree = SOURCE_ROOT; };
+		CD218F9713A7FDBA008337E7 /* jansson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jansson.h; path = "../../3rdparty/jansson-2.1/src/jansson.h"; sourceTree = SOURCE_ROOT; };
+		CD218F9813A7FDBA008337E7 /* load.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = load.c; path = "../../3rdparty/jansson-2.1/src/load.c"; sourceTree = SOURCE_ROOT; };
+		CD218F9913A7FDBA008337E7 /* memory.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = memory.c; path = "../../3rdparty/jansson-2.1/src/memory.c"; sourceTree = SOURCE_ROOT; };
+		CD218F9A13A7FDBA008337E7 /* pack_unpack.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = pack_unpack.c; path = "../../3rdparty/jansson-2.1/src/pack_unpack.c"; sourceTree = SOURCE_ROOT; };
+		CD218F9B13A7FDBA008337E7 /* strbuffer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = strbuffer.c; path = "../../3rdparty/jansson-2.1/src/strbuffer.c"; sourceTree = SOURCE_ROOT; };
+		CD218F9C13A7FDBA008337E7 /* strbuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = strbuffer.h; path = "../../3rdparty/jansson-2.1/src/strbuffer.h"; sourceTree = SOURCE_ROOT; };
+		CD218F9D13A7FDBA008337E7 /* utf.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = utf.c; path = "../../3rdparty/jansson-2.1/src/utf.c"; sourceTree = SOURCE_ROOT; };
+		CD218F9E13A7FDBA008337E7 /* utf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = utf.h; path = "../../3rdparty/jansson-2.1/src/utf.h"; sourceTree = SOURCE_ROOT; };
+		CD218F9F13A7FDBA008337E7 /* value.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = value.c; path = "../../3rdparty/jansson-2.1/src/value.c"; sourceTree = SOURCE_ROOT; };
 		CD2FDEBB13542F1400B814DF /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/System/Library/Frameworks/AddressBook.framework; sourceTree = DEVELOPER_DIR; };
 		CD2FDEBC13542F1400B814DF /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/System/Library/Frameworks/AddressBookUI.framework; sourceTree = DEVELOPER_DIR; };
 		CD2FDEBD13542F1400B814DF /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/System/Library/Frameworks/AudioToolbox.framework; sourceTree = DEVELOPER_DIR; };
@@ -4477,6 +4532,7 @@
 				03240A7913564CAF000ADC60 /* curl */,
 				03240B1313564CB0000ADC60 /* expat */,
 				03240B2713564CB0000ADC60 /* freetype */,
+				CD218F9013A7FD8F008337E7 /* jansson */,
 				CD74E4481377D6610093EE68 /* libcrypto */,
 				CD07C0FE13A14B2900C9386C /* libogg */,
 				03240B5813564CB0000ADC60 /* libpng */,
@@ -4484,7 +4540,9 @@
 				CD07C0FF13A14B3A00C9386C /* libvorbis */,
 				03240B6C13564CB0000ADC60 /* lua */,
 				CDD06BD21398824F00AB0420 /* luacrypto */,
+				CD218F8213A7FD18008337E7 /* luacurl */,
 				CDD06BD11398824600AB0420 /* luasocket */,
+				CD218F8313A7FD34008337E7 /* luasql */,
 				03240BA213564CB0000ADC60 /* sqlite */,
 				03240BA613564CB0000ADC60 /* tinyxml */,
 				CD07C10013A14B5100C9386C /* untz */,
@@ -5804,6 +5862,8 @@
 				0324E5CA13564BC8000ADC60 /* USFilename.h */,
 				0324E5CD13564BC8000ADC60 /* USFileSys.cpp */,
 				0324E5CE13564BC8000ADC60 /* USFileSys.h */,
+				CD218F7013A7FC79008337E7 /* USLog.cpp */,
+				CD218F7113A7FC79008337E7 /* USLog.h */,
 				0324E5F613564BC8000ADC60 /* USTypeID.h */,
 			);
 			name = util;
@@ -5958,8 +6018,6 @@
 				0324E60413564BC8000ADC60 /* USAdapterInfo_win32.cpp */,
 				0324E60E13564BC8000ADC60 /* USBinarySearch.h */,
 				0324E62113564BC8000ADC60 /* USDelegate.h */,
-				0324E64013564BC8000ADC60 /* USLog.cpp */,
-				0324E64113564BC8000ADC60 /* USLog.h */,
 				0324E65813564BC8000ADC60 /* USPrettyPrint.cpp */,
 				0324E65913564BC8000ADC60 /* USPrettyPrint.h */,
 				0324E65E13564BC8000ADC60 /* USRadixSort16.h */,
@@ -6176,6 +6234,46 @@
 				0324E60713564BC8000ADC60 /* USAnimCurve.h */,
 			);
 			name = animCurve;
+			sourceTree = "<group>";
+		};
+		CD218F8213A7FD18008337E7 /* luacurl */ = {
+			isa = PBXGroup;
+			children = (
+				CD218F8D13A7FD89008337E7 /* luacurl.c */,
+			);
+			name = luacurl;
+			sourceTree = "<group>";
+		};
+		CD218F8313A7FD34008337E7 /* luasql */ = {
+			isa = PBXGroup;
+			children = (
+				CD218F8413A7FD6E008337E7 /* ls_sqlite3.c */,
+				CD218F8513A7FD6E008337E7 /* luasql.c */,
+				CD218F8613A7FD6E008337E7 /* luasql.h */,
+			);
+			name = luasql;
+			sourceTree = "<group>";
+		};
+		CD218F9013A7FD8F008337E7 /* jansson */ = {
+			isa = PBXGroup;
+			children = (
+				CD218F9113A7FDBA008337E7 /* dump.c */,
+				CD218F9213A7FDBA008337E7 /* error.c */,
+				CD218F9313A7FDBA008337E7 /* hashtable.c */,
+				CD218F9413A7FDBA008337E7 /* hashtable.h */,
+				CD218F9513A7FDBA008337E7 /* jansson_config.h */,
+				CD218F9613A7FDBA008337E7 /* jansson_private.h */,
+				CD218F9713A7FDBA008337E7 /* jansson.h */,
+				CD218F9813A7FDBA008337E7 /* load.c */,
+				CD218F9913A7FDBA008337E7 /* memory.c */,
+				CD218F9A13A7FDBA008337E7 /* pack_unpack.c */,
+				CD218F9B13A7FDBA008337E7 /* strbuffer.c */,
+				CD218F9C13A7FDBA008337E7 /* strbuffer.h */,
+				CD218F9D13A7FDBA008337E7 /* utf.c */,
+				CD218F9E13A7FDBA008337E7 /* utf.h */,
+				CD218F9F13A7FDBA008337E7 /* value.c */,
+			);
+			name = jansson;
 			sourceTree = "<group>";
 		};
 		CD2FDE8613542E9F00B814DF /* Frameworks */ = {
@@ -7638,6 +7736,13 @@
 				CD07C4FA13A191C200C9386C /* RCriticalSection.h in Headers */,
 				CD07C4FB13A191C200C9386C /* RThread.h in Headers */,
 				CD07C4FC13A191C200C9386C /* RWaitableEvent.h in Headers */,
+				CD218F8C13A7FD6E008337E7 /* luasql.h in Headers */,
+				CD218FB213A7FDBA008337E7 /* hashtable.h in Headers */,
+				CD218FB313A7FDBA008337E7 /* jansson_config.h in Headers */,
+				CD218FB413A7FDBA008337E7 /* jansson_private.h in Headers */,
+				CD218FB513A7FDBA008337E7 /* jansson.h in Headers */,
+				CD218FBA13A7FDBA008337E7 /* strbuffer.h in Headers */,
+				CD218FBC13A7FDBA008337E7 /* utf.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7818,7 +7923,6 @@
 				0324E97713564BC9000ADC60 /* USInterpolate.h in Headers */,
 				0324E97913564BC9000ADC60 /* USIntersect.h in Headers */,
 				0324E97B13564BC9000ADC60 /* USLexStream.h in Headers */,
-				0324E97D13564BC9000ADC60 /* USLog.h in Headers */,
 				0324E97F13564BC9000ADC60 /* uslsext.h in Headers */,
 				0324E98013564BC9000ADC60 /* USMathConsts.h in Headers */,
 				0324E98113564BC9000ADC60 /* USMatrix.h in Headers */,
@@ -8233,6 +8337,13 @@
 				CD07C2AE13A172B900C9386C /* RWaitableEvent.h in Headers */,
 				CD07C2BA13A172D800C9386C /* ExtAudioFileAudioSource.h in Headers */,
 				CD07C2BD13A172D800C9386C /* vector_util.h in Headers */,
+				CD218F8913A7FD6E008337E7 /* luasql.h in Headers */,
+				CD218FA313A7FDBA008337E7 /* hashtable.h in Headers */,
+				CD218FA413A7FDBA008337E7 /* jansson_config.h in Headers */,
+				CD218FA513A7FDBA008337E7 /* jansson_private.h in Headers */,
+				CD218FA613A7FDBA008337E7 /* jansson.h in Headers */,
+				CD218FAB13A7FDBA008337E7 /* strbuffer.h in Headers */,
+				CD218FAD13A7FDBA008337E7 /* utf.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8413,7 +8524,6 @@
 				0324E7D913564BC8000ADC60 /* USInterpolate.h in Headers */,
 				0324E7DB13564BC8000ADC60 /* USIntersect.h in Headers */,
 				0324E7DD13564BC8000ADC60 /* USLexStream.h in Headers */,
-				0324E7DF13564BC8000ADC60 /* USLog.h in Headers */,
 				0324E7E113564BC8000ADC60 /* uslsext.h in Headers */,
 				0324E7E213564BC8000ADC60 /* USMathConsts.h in Headers */,
 				0324E7E313564BC8000ADC60 /* USMatrix.h in Headers */,
@@ -8482,6 +8592,7 @@
 				CDBC71191398C6E50016F98A /* MOAIFileSystem.h in Headers */,
 				03F135DA13A2EFC000044AE8 /* MoaiUiWebView.h in Headers */,
 				03F135DC13A2EFC000044AE8 /* MOAIWebView.h in Headers */,
+				CD218F7313A7FC79008337E7 /* USLog.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8989,6 +9100,18 @@
 				CD07C4F513A191C200C9386C /* ExtAudioFileAudioSource.cpp in Sources */,
 				CD07C4F713A191C200C9386C /* UntzSystem.cpp in Sources */,
 				CD07C4F813A191C200C9386C /* vector_util.cpp in Sources */,
+				CD218F8A13A7FD6E008337E7 /* ls_sqlite3.c in Sources */,
+				CD218F8B13A7FD6E008337E7 /* luasql.c in Sources */,
+				CD218F8F13A7FD89008337E7 /* luacurl.c in Sources */,
+				CD218FAF13A7FDBA008337E7 /* dump.c in Sources */,
+				CD218FB013A7FDBA008337E7 /* error.c in Sources */,
+				CD218FB113A7FDBA008337E7 /* hashtable.c in Sources */,
+				CD218FB613A7FDBA008337E7 /* load.c in Sources */,
+				CD218FB713A7FDBA008337E7 /* memory.c in Sources */,
+				CD218FB813A7FDBA008337E7 /* pack_unpack.c in Sources */,
+				CD218FB913A7FDBA008337E7 /* strbuffer.c in Sources */,
+				CD218FBB13A7FDBA008337E7 /* utf.c in Sources */,
+				CD218FBD13A7FDBA008337E7 /* value.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9143,7 +9266,6 @@
 				0324E97613564BC9000ADC60 /* USInterpolate.cpp in Sources */,
 				0324E97813564BC9000ADC60 /* USIntersect.cpp in Sources */,
 				0324E97A13564BC9000ADC60 /* USLexStream.cpp in Sources */,
-				0324E97C13564BC9000ADC60 /* USLog.cpp in Sources */,
 				0324E97E13564BC9000ADC60 /* uslsext.cpp in Sources */,
 				0324E98413564BC9000ADC60 /* USMercator.cpp in Sources */,
 				0324E98613564BC9000ADC60 /* USMutex.cpp in Sources */,
@@ -10052,6 +10174,18 @@
 				CD07C2B913A172D800C9386C /* ExtAudioFileAudioSource.cpp in Sources */,
 				CD07C2BB13A172D800C9386C /* UntzSystem.cpp in Sources */,
 				CD07C2BC13A172D800C9386C /* vector_util.cpp in Sources */,
+				CD218F8713A7FD6E008337E7 /* ls_sqlite3.c in Sources */,
+				CD218F8813A7FD6E008337E7 /* luasql.c in Sources */,
+				CD218F8E13A7FD89008337E7 /* luacurl.c in Sources */,
+				CD218FA013A7FDBA008337E7 /* dump.c in Sources */,
+				CD218FA113A7FDBA008337E7 /* error.c in Sources */,
+				CD218FA213A7FDBA008337E7 /* hashtable.c in Sources */,
+				CD218FA713A7FDBA008337E7 /* load.c in Sources */,
+				CD218FA813A7FDBA008337E7 /* memory.c in Sources */,
+				CD218FA913A7FDBA008337E7 /* pack_unpack.c in Sources */,
+				CD218FAA13A7FDBA008337E7 /* strbuffer.c in Sources */,
+				CD218FAC13A7FDBA008337E7 /* utf.c in Sources */,
+				CD218FAE13A7FDBA008337E7 /* value.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10206,7 +10340,6 @@
 				0324E7D813564BC8000ADC60 /* USInterpolate.cpp in Sources */,
 				0324E7DA13564BC8000ADC60 /* USIntersect.cpp in Sources */,
 				0324E7DC13564BC8000ADC60 /* USLexStream.cpp in Sources */,
-				0324E7DE13564BC8000ADC60 /* USLog.cpp in Sources */,
 				0324E7E013564BC8000ADC60 /* uslsext.cpp in Sources */,
 				0324E7E613564BC8000ADC60 /* USMercator.cpp in Sources */,
 				0324E7E813564BC8000ADC60 /* USMutex.cpp in Sources */,
@@ -10264,6 +10397,7 @@
 				CDBC71181398C6E50016F98A /* MOAIFileSystem.cpp in Sources */,
 				03F135DB13A2EFC000044AE8 /* MoaiUiWebView.mm in Sources */,
 				03F135DD13A2EFC000044AE8 /* MOAIWebView.mm in Sources */,
+				CD218F7213A7FC79008337E7 /* USLog.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10722,8 +10856,11 @@
 					"\"../../3rdparty/chipmunk-5.3.4/include\"",
 					"\"../../3rdparty/chipmunk-5.3.4/include/chipmunk\"",
 					"\"../../3rdparty/luacrypto-0.2.0/src\"",
+					"\"../../3rdparty/luacurl-1.2.1/src\"",
 					"\"../../3rdparty/luasocket-2.0.2/src\"",
+					"\"../../3rdparty/luasql-2.2.0/src\"",
 					"\"../../3rdparty/libogg-1.2.2/include\"",
+					"\"../../3rdparty/jansson-2.1/src\"",
 					"\"../../3rdparty/untz/include\"",
 					"\"../../3rdparty/untz/src\"",
 					"\"../../3rdparty/libvorbis-1.3.2/lib\"",
@@ -10827,8 +10964,11 @@
 					"\"../../3rdparty/chipmunk-5.3.4/include\"",
 					"\"../../3rdparty/chipmunk-5.3.4/include/chipmunk\"",
 					"\"../../3rdparty/luacrypto-0.2.0/src\"",
+					"\"../../3rdparty/luacurl-1.2.1/src\"",
 					"\"../../3rdparty/luasocket-2.0.2/src\"",
+					"\"../../3rdparty/luasql-2.2.0/src\"",
 					"\"../../3rdparty/libogg-1.2.2/include\"",
+					"\"../../3rdparty/jansson-2.1/src\"",
 					"\"../../3rdparty/untz/include\"",
 					"\"../../3rdparty/untz/src\"",
 					"\"../../3rdparty/libvorbis-1.3.2/lib\"",
