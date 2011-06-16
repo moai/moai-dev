@@ -20,5 +20,5 @@ end
 task = MOAIHttpTask.new ( "GSLHttpTask" )
 
 task:setCallback ( onFinish )
-task:httpGet ( "www.cnn.com" )
+task:httpGet ( "www.cnn.com", true )
 

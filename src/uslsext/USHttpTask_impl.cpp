@@ -12,7 +12,7 @@
 void USHttpTaskInfo::_printError ( CURLcode error ) {
 
 	if ( error ) {
-		printf ( "%s\n", curl_easy_strerror ( error ));
+		USLog::Print ( "%s\n", curl_easy_strerror ( error ));
 	}
 }
 
@@ -82,7 +82,7 @@ void USHttpTaskInfo::Finish () {
 }
 
 //----------------------------------------------------------------//
-void USHttpTaskInfo::InitForGet ( cc8* url ) {
+void USHttpTaskInfo::InitForGet ( cc8* url, bool verbose ) {
 
 	this->Clear ();
 	
@@ -116,12 +116,17 @@ void USHttpTaskInfo::InitForGet ( cc8* url ) {
 	result = curl_easy_setopt ( easyHandle, CURLOPT_SSL_VERIFYHOST, 0 );
 	_printError ( result );
 	
+	if ( verbose ) {
+		result = curl_easy_setopt ( easyHandle, CURLOPT_VERBOSE, 1 );
+		_printError ( result );
+	}
+	
 	this->mEasyHandle = easyHandle;
 	this->mUrl = url;
 }
 
 //----------------------------------------------------------------//
-void USHttpTaskInfo::InitForPost ( cc8* url, const void* buffer, u32 size ) {
+void USHttpTaskInfo::InitForPost ( cc8* url, const void* buffer, u32 size, bool verbose ) {
 
 	this->Clear ();
 	
@@ -173,6 +178,11 @@ void USHttpTaskInfo::InitForPost ( cc8* url, const void* buffer, u32 size ) {
 	
 	result = curl_easy_setopt ( easyHandle, CURLOPT_SSL_VERIFYHOST, 0 );
 	_printError ( result );
+	
+	if ( verbose ) {
+		result = curl_easy_setopt ( easyHandle, CURLOPT_VERBOSE, 1 );
+		_printError ( result );
+	}
 	
 	this->mEasyHandle = easyHandle;
 	this->mUrl = url;

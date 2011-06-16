@@ -23,6 +23,8 @@ private:
 	void*				mBytes;
 	u32					mSize;
 
+	bool				mVerbose;
+
 	USCallback < USHttpTask* > mCallback;
 
 	//----------------------------------------------------------------//
@@ -43,8 +45,8 @@ public:
 	void*		GetData				();
 	void		GetData				( void* buffer, u32 size );
 	u32			GetSize				();
-	void		HttpGet				( cc8* url );
-	void		HttpPost			( cc8* url, const void* buffer, u32 size );
+	void		HttpGet				( cc8* url, bool verbose );
+	void		HttpPost			( cc8* url, const void* buffer, u32 size, bool verbose );
 				USHttpTask			();
 				~USHttpTask			();
 	
