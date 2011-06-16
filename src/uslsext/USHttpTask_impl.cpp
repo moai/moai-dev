@@ -82,7 +82,7 @@ void USHttpTaskInfo::Finish () {
 }
 
 //----------------------------------------------------------------//
-void USHttpTaskInfo::InitForGet ( cc8* url, bool verbose ) {
+void USHttpTaskInfo::InitForGet ( cc8* url, cc8* userAgent, bool verbose ) {
 
 	this->Clear ();
 	
@@ -126,7 +126,7 @@ void USHttpTaskInfo::InitForGet ( cc8* url, bool verbose ) {
 }
 
 //----------------------------------------------------------------//
-void USHttpTaskInfo::InitForPost ( cc8* url, const void* buffer, u32 size, bool verbose ) {
+void USHttpTaskInfo::InitForPost ( cc8* url, cc8* userAgent, const void* buffer, u32 size, bool verbose ) {
 
 	this->Clear ();
 	

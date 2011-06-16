@@ -106,9 +106,7 @@ int MOAIHttpTask::_httpPost ( lua_State* L ) {
 		
 		self->mPostData->Unlock ();
 	}
-	else {
-		
-		if ( !state.IsType (3, LUA_TSTRING ) ) return 0;
+	else if ( state.IsType (3, LUA_TSTRING )) {
 		
 		self->mPostString = lua_tostring ( state, 3 );
 		
