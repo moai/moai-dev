@@ -82,7 +82,7 @@ void USHttpTaskInfo::Finish () {
 }
 
 //----------------------------------------------------------------//
-void USHttpTaskInfo::InitForGet ( cc8* url, cc8* userAgent, bool verbose ) {
+void USHttpTaskInfo::InitForGet ( cc8* url, cc8* useragent, bool verbose ) {
 
 	this->Clear ();
 	
@@ -116,10 +116,10 @@ void USHttpTaskInfo::InitForGet ( cc8* url, cc8* userAgent, bool verbose ) {
 	result = curl_easy_setopt ( easyHandle, CURLOPT_SSL_VERIFYHOST, 0 );
 	_printError ( result );
 
-	result = curl_easy_setopt ( easyHandle, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.100 Safari/534.30" );
-	_printError ( result );
-
-	
+	if ( useragent ) {
+		result = curl_easy_setopt ( easyHandle, CURLOPT_USERAGENT, useragent );
+		_printError ( result );
+	}
 	
 	if ( verbose ) {
 		result = curl_easy_setopt ( easyHandle, CURLOPT_VERBOSE, 1 );
@@ -131,7 +131,7 @@ void USHttpTaskInfo::InitForGet ( cc8* url, cc8* userAgent, bool verbose ) {
 }
 
 //----------------------------------------------------------------//
-void USHttpTaskInfo::InitForPost ( cc8* url, cc8* userAgent, const void* buffer, u32 size, bool verbose ) {
+void USHttpTaskInfo::InitForPost ( cc8* url, cc8* useragent, const void* buffer, u32 size, bool verbose ) {
 
 	this->Clear ();
 	
@@ -183,6 +183,11 @@ void USHttpTaskInfo::InitForPost ( cc8* url, cc8* userAgent, const void* buffer,
 	
 	result = curl_easy_setopt ( easyHandle, CURLOPT_SSL_VERIFYHOST, 0 );
 	_printError ( result );
+	
+	if ( useragent ) {
+		result = curl_easy_setopt ( easyHandle, CURLOPT_USERAGENT, useragent );
+		_printError ( result );
+	}
 	
 	if ( verbose ) {
 		result = curl_easy_setopt ( easyHandle, CURLOPT_VERBOSE, 1 );

@@ -45,8 +45,8 @@ public:
 	void*		GetData				();
 	void		GetData				( void* buffer, u32 size );
 	u32			GetSize				();
-	void		HttpGet				( cc8* url, cc8* userAgent, bool verbose );
-	void		HttpPost			( cc8* url, cc8* userAgent, const void* buffer, u32 size, bool verbose );
+	void		HttpGet				( cc8* url, cc8* useragent, bool verbose );
+	void		HttpPost			( cc8* url, cc8* useragent, const void* buffer, u32 size, bool verbose );
 				USHttpTask			();
 				~USHttpTask			();
 	

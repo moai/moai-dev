@@ -68,22 +68,22 @@ u32 USHttpTask::GetSize () {
 }
 
 //----------------------------------------------------------------//
-void USHttpTask::HttpGet ( cc8* url, cc8* userAgent, bool verbose ) {
+void USHttpTask::HttpGet ( cc8* url, cc8* useragent, bool verbose ) {
 
 	this->Clear ();
 	this->mInfo = new USHttpTaskInfo ();
-	this->mInfo->InitForGet ( url, userAgent, verbose );
+	this->mInfo->InitForGet ( url, useragent, verbose );
 	
 	this->Retain ();
 	USUrlMgr::Get ().AddHandle ( *this );
 }
 
 //----------------------------------------------------------------//
-void USHttpTask::HttpPost ( cc8* url, cc8* userAgent, const void* buffer, u32 size, bool verbose ) {
+void USHttpTask::HttpPost ( cc8* url, cc8* useragent, const void* buffer, u32 size, bool verbose ) {
 
 	this->Clear ();
 	this->mInfo = new USHttpTaskInfo ();
-	this->mInfo->InitForPost ( url, userAgent, buffer, size, verbose );
+	this->mInfo->InitForPost ( url, useragent, buffer, size, verbose );
 	
 	this->Retain ();
 	USUrlMgr::Get ().AddHandle ( *this );

@@ -8,6 +8,8 @@
 #include <moaicore/MOAIXmlParser.h>
 #include <moaicore/MOAIDataBuffer.h>
 
+#define DEFAULT_MOAI_HTTP_USERAGENT "Moai SDK beta; support@getmoai.com"
+
 //================================================================//
 // local
 //================================================================//
@@ -50,6 +52,7 @@ int MOAIHttpTask::_getString ( lua_State* L ) {
 
 	@in		MOAIHttpTask self
 	@in		string url				The URL on which to perform the GET request.
+	@opt	string useragent
 	@opt	boolean verbose
 	@out	nil
 */
@@ -57,11 +60,12 @@ int MOAIHttpTask::_httpGet ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIHttpTask, "US" )
 	
 	cc8* url		= state.GetValue < cc8* >( 2, "" );
-	bool verbose	= state.GetValue < bool >( 3, false );
+	cc8* useragent	= state.GetValue < cc8* >( 3, DEFAULT_MOAI_HTTP_USERAGENT );
+	bool verbose	= state.GetValue < bool >( 4, false );
 	
 	USHttpTask* task = new USHttpTask ();
 	task->SetDelegate < MOAIHttpTask >( self, &MOAIHttpTask::OnHttpFinish );
-	task->HttpGet ( url, verbose );
+	task->HttpGet ( url, useragent, verbose );
 
 	return 0;
 }
@@ -75,6 +79,7 @@ int MOAIHttpTask::_httpGet ( lua_State* L ) {
 		@in		MOAIHttpTask self
 		@in		string url				The URL on which to perform the GET request.
 		@opt	string data				The string containing text to send as POST data.
+		@opt	string useragent
 		@opt	boolean verbose
 		@out	nil
 	
@@ -83,6 +88,7 @@ int MOAIHttpTask::_httpGet ( lua_State* L ) {
 		@in		MOAIHttpTask self
 		@in		string url				The URL on which to perform the GET request.
 		@opt	MOAIDataBuffer data		A MOAIDataBuffer object to send as POST data.
+		@opt	string useragent
 		@opt	boolean verbose
 		@out	nil
 */
@@ -90,7 +96,8 @@ int MOAIHttpTask::_httpPost ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIHttpTask, "US" )
 	
 	cc8* url		= state.GetValue < cc8* >( 2, "" );
-	bool verbose	= state.GetValue < bool >( 3, false );
+	cc8* useragent	= state.GetValue < cc8* >( 4, DEFAULT_MOAI_HTTP_USERAGENT );
+	bool verbose	= state.GetValue < bool >( 5, false );
 
 	if ( state.IsType (3, LUA_TUSERDATA) ) {
 		
@@ -102,7 +109,7 @@ int MOAIHttpTask::_httpPost ( lua_State* L ) {
 		
 		USHttpTask* task = new USHttpTask ();
 		task->SetDelegate < MOAIHttpTask >( self, &MOAIHttpTask::OnHttpFinish );
-		task->HttpPost ( url, bytes, size, verbose );
+		task->HttpPost ( url, useragent, bytes, size, verbose );
 		
 		self->mPostData->Unlock ();
 	}
@@ -112,7 +119,7 @@ int MOAIHttpTask::_httpPost ( lua_State* L ) {
 		
 		USHttpTask* task = new USHttpTask ();
 		task->SetDelegate < MOAIHttpTask >( self, &MOAIHttpTask::OnHttpFinish );
-		task->HttpPost ( url, self->mPostString.str (), ( u32 )self->mPostString.size (), verbose );
+		task->HttpPost ( url, useragent, self->mPostString.str (), ( u32 )self->mPostString.size (), verbose );
 	}
 
 	return 0;

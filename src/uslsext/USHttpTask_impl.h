@@ -37,8 +37,8 @@ private:
 	//----------------------------------------------------------------//
 	void			Clear					();
 	void			Finish					();
-	void			InitForGet				( cc8* url, cc8* userAgent, bool verbose );
-	void			InitForPost				( cc8* url, cc8* userAgent, const void* buffer, u32 size, bool verbose );
+	void			InitForGet				( cc8* url, cc8* useragent, bool verbose );
+	void			InitForPost				( cc8* url, cc8* useragent, const void* buffer, u32 size, bool verbose );
 					USHttpTaskInfo			();
 					~USHttpTaskInfo			();
 };
