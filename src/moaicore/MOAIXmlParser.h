@@ -18,9 +18,6 @@ class MOAIXmlParser :
 	public USGlobalClass < MOAIXmlParser, USLuaObject > {
 private:
 
-	int mUnits;
-	float mMetersToUnits;
-
 	//----------------------------------------------------------------//
 	static int	_parseFile					( lua_State* L );
 	static int	_parseString				( lua_State* L );

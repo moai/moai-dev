@@ -1743,6 +1743,10 @@
 		CD218FBB13A7FDBA008337E7 /* utf.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9D13A7FDBA008337E7 /* utf.c */; };
 		CD218FBC13A7FDBA008337E7 /* utf.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F9E13A7FDBA008337E7 /* utf.h */; };
 		CD218FBD13A7FDBA008337E7 /* value.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9F13A7FDBA008337E7 /* value.c */; };
+		CD62D6CC13A991BA002286EB /* MOAIJsonParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD62D6CA13A991BA002286EB /* MOAIJsonParser.cpp */; };
+		CD62D6CD13A991BA002286EB /* MOAIJsonParser.h in Headers */ = {isa = PBXBuildFile; fileRef = CD62D6CB13A991BA002286EB /* MOAIJsonParser.h */; };
+		CD62D6CE13A991BA002286EB /* MOAIJsonParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD62D6CA13A991BA002286EB /* MOAIJsonParser.cpp */; };
+		CD62D6CF13A991BA002286EB /* MOAIJsonParser.h in Headers */ = {isa = PBXBuildFile; fileRef = CD62D6CB13A991BA002286EB /* MOAIJsonParser.h */; };
 		CD74E4861377D9C10093EE68 /* aes_cbc.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E47B1377D9C10093EE68 /* aes_cbc.c */; };
 		CD74E4871377D9C10093EE68 /* aes_cfb.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E47C1377D9C10093EE68 /* aes_cfb.c */; };
 		CD74E4881377D9C10093EE68 /* aes_core.c in Sources */ = {isa = PBXBuildFile; fileRef = CD74E47D1377D9C10093EE68 /* aes_core.c */; };
@@ -3706,6 +3710,8 @@
 		CD2FDECA13542F1400B814DF /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		CD2FDEDB13542F3600B814DF /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/usr/lib/libiconv.dylib; sourceTree = DEVELOPER_DIR; };
 		CD2FDEDC13542F3600B814DF /* libz.1.2.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.3.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/usr/lib/libz.1.2.3.dylib; sourceTree = DEVELOPER_DIR; };
+		CD62D6CA13A991BA002286EB /* MOAIJsonParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIJsonParser.cpp; path = ../../src/moaicore/MOAIJsonParser.cpp; sourceTree = SOURCE_ROOT; };
+		CD62D6CB13A991BA002286EB /* MOAIJsonParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIJsonParser.h; path = ../../src/moaicore/MOAIJsonParser.h; sourceTree = SOURCE_ROOT; };
 		CD74E47B1377D9C10093EE68 /* aes_cbc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = aes_cbc.c; sourceTree = "<group>"; };
 		CD74E47C1377D9C10093EE68 /* aes_cfb.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = aes_cfb.c; sourceTree = "<group>"; };
 		CD74E47D1377D9C10093EE68 /* aes_core.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = aes_core.c; sourceTree = "<group>"; };
@@ -5528,6 +5534,8 @@
 				0324E52813564BC7000ADC60 /* MOAIDataIOAction.h */,
 				CDBC71161398C6E50016F98A /* MOAIFileSystem.cpp */,
 				CDBC71171398C6E50016F98A /* MOAIFileSystem.h */,
+				CD62D6CA13A991BA002286EB /* MOAIJsonParser.cpp */,
+				CD62D6CB13A991BA002286EB /* MOAIJsonParser.h */,
 				0324E56413564BC7000ADC60 /* MOAIParser.cpp */,
 				0324E56513564BC7000ADC60 /* MOAIParser.h */,
 				0324E58213564BC7000ADC60 /* MOAISerializer.cpp */,
@@ -7984,6 +7992,7 @@
 				CD148EE51395ADED00A3F501 /* USPvrHeader.h in Headers */,
 				CDBC711B1398C6E50016F98A /* MOAIFileSystem.h in Headers */,
 				CD07C53113A1954600C9386C /* Untz-Prefix.pch in Headers */,
+				CD62D6CF13A991BA002286EB /* MOAIJsonParser.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8600,6 +8609,7 @@
 				03F135DC13A2EFC000044AE8 /* MOAIWebView.h in Headers */,
 				CD218F7313A7FC79008337E7 /* USLog.h in Headers */,
 				07CDCFB213AA7C5D009674C7 /* Reachability.h in Headers */,
+				CD62D6CD13A991BA002286EB /* MOAIJsonParser.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9317,6 +9327,7 @@
 				039C283F138EDAB300A3A780 /* MOAIDeckRemapper.cpp in Sources */,
 				CD148EE11395ADBD00A3F501 /* MOAITraits.cpp in Sources */,
 				CDBC711A1398C6E50016F98A /* MOAIFileSystem.cpp in Sources */,
+				CD62D6CE13A991BA002286EB /* MOAIJsonParser.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10406,7 +10417,7 @@
 				03F135DD13A2EFC000044AE8 /* MOAIWebView.mm in Sources */,
 				CD218F7213A7FC79008337E7 /* USLog.cpp in Sources */,
 				07CDCFB313AA7C5D009674C7 /* Reachability.m in Sources */,
-			);
+				CD62D6CC13A991BA002286EB /* MOAIJsonParser.cpp in Sources */,			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		CD07C3B813A182AA00C9386C /* Sources */ = {

@@ -56,6 +56,7 @@ void moaicore::InitGlobals ( USGlobals* globals ) {
 	REGISTER_LUA_CLASS ( MOAIInputDevice )
 	REGISTER_LUA_CLASS ( MOAIInputMgr )
 	REGISTER_LUA_CLASS ( MOAIJoystickSensor )
+	REGISTER_LUA_CLASS ( MOAIJsonParser )
 	REGISTER_LUA_CLASS ( MOAIKeyboardSensor )
 	REGISTER_LUA_CLASS ( MOAILayer2D )
 	REGISTER_LUA_CLASS ( MOAILayerBridge2D )

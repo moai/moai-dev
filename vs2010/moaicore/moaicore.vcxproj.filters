@@ -351,6 +351,9 @@
     <ClCompile Include="..\..\src\moaicore\MOAIFileSystem.cpp">
       <Filter>src\util</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIJsonParser.cpp">
+      <Filter>src\util</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\moaicore\MOAIAction.h">
@@ -633,6 +636,9 @@
       <Filter>src\aku</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIFileSystem.h">
+      <Filter>src\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIJsonParser.h">
       <Filter>src\util</Filter>
     </ClInclude>
   </ItemGroup>

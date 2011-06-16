@@ -83,7 +83,7 @@
     <ClCompile>
       <AdditionalOptions>/vmg %(AdditionalOptions)</AdditionalOptions>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty;..\..\3rdparty\lua-5.1.3\src;..\..\3rdparty\glew-1.5.6\include;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\sqlite-3.6.16;..\..\3rdparty\tinyxml;..\..\3rdparty\curl-7.19.7\include;..\..\3rdparty\lpng140;..\..\3rdparty\expat-2.0.1\lib;..\..\3rdparty\freetype-2.4.4\include;..\..\3rdparty\box2d-2.1.2\Box2D;..\..\3rdparty\chipmunk-5.3.4\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty;..\..\3rdparty\lua-5.1.3\src;..\..\3rdparty\glew-1.5.6\include;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\sqlite-3.6.16;..\..\3rdparty\tinyxml;..\..\3rdparty\curl-7.19.7\include;..\..\3rdparty\lpng140;..\..\3rdparty\expat-2.0.1\lib;..\..\3rdparty\jansson-2.1\src;..\..\3rdparty\freetype-2.4.4\include;..\..\3rdparty\box2d-2.1.2\Box2D;..\..\3rdparty\chipmunk-5.3.4\include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;AKU_STATIC;XML_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>true</MinimalRebuild>
@@ -154,7 +154,7 @@
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>false</OmitFramePointers>
       <WholeProgramOptimization>true</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty;..\..\3rdparty\lua-5.1.3\src;..\..\3rdparty\glew-1.5.6\include;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\sqlite-3.6.16;..\..\3rdparty\tinyxml;..\..\3rdparty\curl-7.19.7\include;..\..\3rdparty\lpng140;..\..\3rdparty\expat-2.0.1\lib;..\..\3rdparty\freetype-2.4.4\include;..\..\3rdparty\box2d-2.1.2\Box2D;..\..\3rdparty\chipmunk-5.3.4\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty;..\..\3rdparty\lua-5.1.3\src;..\..\3rdparty\glew-1.5.6\include;..\..\3rdparty\zlib-1.2.3;..\..\3rdparty\sqlite-3.6.16;..\..\3rdparty\tinyxml;..\..\3rdparty\curl-7.19.7\include;..\..\3rdparty\lpng140;..\..\3rdparty\expat-2.0.1\lib;..\..\3rdparty\jansson-2.1\src;..\..\3rdparty\freetype-2.4.4\include;..\..\3rdparty\box2d-2.1.2\Box2D;..\..\3rdparty\chipmunk-5.3.4\include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_LIB;_USE_32BIT_TIME_T;_CRT_SECURE_NO_WARNINGS;AKU_STATIC;XML_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <ExceptionHandling>Sync</ExceptionHandling>
@@ -252,6 +252,7 @@
     <ClCompile Include="..\..\src\moaicore\MOAIGfxQuadListDeck2D.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIImage.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIIndexBuffer.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAIJsonParser.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAILayoutFrame.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAILogMgr.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIMesh.cpp" />
@@ -348,6 +349,7 @@
     <ClInclude Include="..\..\src\moaicore\MOAIGfxQuadListDeck2D.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIImage.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIIndexBuffer.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAIJsonParser.h" />
     <ClInclude Include="..\..\src\moaicore\MOAILayoutFrame.h" />
     <ClInclude Include="..\..\src\moaicore\MOAILogMessages.h" />
     <ClInclude Include="..\..\src\moaicore\MOAILogMgr.h" />
