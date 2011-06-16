@@ -1567,6 +1567,8 @@
 		03F135DB13A2EFC000044AE8 /* MoaiUiWebView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 03F135D713A2EFC000044AE8 /* MoaiUiWebView.mm */; };
 		03F135DC13A2EFC000044AE8 /* MOAIWebView.h in Headers */ = {isa = PBXBuildFile; fileRef = 03F135D813A2EFC000044AE8 /* MOAIWebView.h */; };
 		03F135DD13A2EFC000044AE8 /* MOAIWebView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 03F135D913A2EFC000044AE8 /* MOAIWebView.mm */; };
+		07CDCFB213AA7C5D009674C7 /* Reachability.h in Headers */ = {isa = PBXBuildFile; fileRef = 07CDCFB013AA7C5D009674C7 /* Reachability.h */; };
+		07CDCFB313AA7C5D009674C7 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 07CDCFB113AA7C5D009674C7 /* Reachability.m */; };
 		CD07C10513A14BC400C9386C /* bitwise.c in Sources */ = {isa = PBXBuildFile; fileRef = CD07C10113A14BC400C9386C /* bitwise.c */; };
 		CD07C10613A14BC400C9386C /* framing.c in Sources */ = {isa = PBXBuildFile; fileRef = CD07C10213A14BC400C9386C /* framing.c */; };
 		CD07C10B13A14DAE00C9386C /* ogg.h in Headers */ = {isa = PBXBuildFile; fileRef = CD07C10713A14DAE00C9386C /* ogg.h */; };
@@ -3559,6 +3561,8 @@
 		03F135D713A2EFC000044AE8 /* MoaiUiWebView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MoaiUiWebView.mm; path = "moaiext-iphone/MoaiUiWebView.mm"; sourceTree = "<group>"; };
 		03F135D813A2EFC000044AE8 /* MOAIWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIWebView.h; path = "moaiext-iphone/MOAIWebView.h"; sourceTree = "<group>"; };
 		03F135D913A2EFC000044AE8 /* MOAIWebView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIWebView.mm; path = "moaiext-iphone/MOAIWebView.mm"; sourceTree = "<group>"; };
+		07CDCFB013AA7C5D009674C7 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Reachability.h; path = "moaiext-iphone/Reachability.h"; sourceTree = "<group>"; };
+		07CDCFB113AA7C5D009674C7 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Reachability.m; path = "moaiext-iphone/Reachability.m"; sourceTree = "<group>"; };
 		CD07C10113A14BC400C9386C /* bitwise.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = bitwise.c; path = "../../3rdparty/libogg-1.2.2/src/bitwise.c"; sourceTree = SOURCE_ROOT; };
 		CD07C10213A14BC400C9386C /* framing.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = framing.c; path = "../../3rdparty/libogg-1.2.2/src/framing.c"; sourceTree = SOURCE_ROOT; };
 		CD07C10713A14DAE00C9386C /* ogg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ogg.h; path = "../../3rdparty/libogg-1.2.2/include/ogg/ogg.h"; sourceTree = SOURCE_ROOT; };
@@ -6332,6 +6336,8 @@
 				CDD06EDA1398BA6200AB0420 /* NSObject+MOAILib.mm */,
 				CDD06EDB1398BA6200AB0420 /* NSString+MOAILib.h */,
 				CDD06EDC1398BA6200AB0420 /* NSString+MOAILib.mm */,
+				07CDCFB013AA7C5D009674C7 /* Reachability.h */,
+				07CDCFB113AA7C5D009674C7 /* Reachability.m */,
 			);
 			name = "moaiext-iphone";
 			sourceTree = "<group>";
@@ -8593,6 +8599,7 @@
 				03F135DA13A2EFC000044AE8 /* MoaiUiWebView.h in Headers */,
 				03F135DC13A2EFC000044AE8 /* MOAIWebView.h in Headers */,
 				CD218F7313A7FC79008337E7 /* USLog.h in Headers */,
+				07CDCFB213AA7C5D009674C7 /* Reachability.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10398,6 +10405,7 @@
 				03F135DB13A2EFC000044AE8 /* MoaiUiWebView.mm in Sources */,
 				03F135DD13A2EFC000044AE8 /* MOAIWebView.mm in Sources */,
 				CD218F7213A7FC79008337E7 /* USLog.cpp in Sources */,
+				07CDCFB313AA7C5D009674C7 /* Reachability.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
