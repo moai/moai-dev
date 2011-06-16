@@ -59,6 +59,8 @@ void USHttpTaskInfo::Clear () {
 	this->mUrl.clear ();
 	this->mData.Clear ();
 	
+	this->mResponseCode = 0;
+	
 	if ( this->mEasyHandle ) {
 		curl_easy_cleanup ( this->mEasyHandle );
 		this->mEasyHandle = 0;
@@ -67,6 +69,12 @@ void USHttpTaskInfo::Clear () {
 
 //----------------------------------------------------------------//
 void USHttpTaskInfo::Finish () {
+
+	if ( this->mEasyHandle ) {
+		long response;
+		curl_easy_getinfo ( this->mEasyHandle, CURLINFO_RESPONSE_CODE, &response );
+		this->mResponseCode = ( u32 )response;
+	}
 
 	if ( this->mStream == &this->mMemStream ) {
 	

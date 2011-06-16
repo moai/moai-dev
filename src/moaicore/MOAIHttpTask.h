@@ -26,12 +26,12 @@ private:
 	STLString mPostString;
 
 	//----------------------------------------------------------------//
-	static int		_getSize		( lua_State* L );
-	static int		_getString		( lua_State* L );
-	static int		_httpGet		( lua_State* L );
-	static int		_httpPost		( lua_State* L );
-	static int		_parseXml		( lua_State* L );
-	static int		_setCallback	( lua_State* L );
+	static int		_getSize			( lua_State* L );
+	static int		_getString			( lua_State* L );
+	static int		_httpGet			( lua_State* L );
+	static int		_httpPost			( lua_State* L );
+	static int		_parseXml			( lua_State* L );
+	static int		_setCallback		( lua_State* L );
 	
 	//----------------------------------------------------------------//
 	void			OnHttpFinish	( USHttpTask* fetcher );

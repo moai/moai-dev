@@ -38,6 +38,7 @@ void USHttpTask::Finish () {
 	
 	this->mBytes = this->mInfo->mData;
 	this->mSize = this->mInfo->mData.Size ();
+	this->mResponseCode = this->mInfo->mResponseCode;
 
 	this->mCallback.Call ( this );
 
@@ -94,7 +95,8 @@ USHttpTask::USHttpTask () :
 	mInfo ( 0 ),
 	mBytes ( 0 ),
 	mSize ( 0 ),
-	mVerbose ( false ) {
+	mVerbose ( false ),
+	mResponseCode ( 0 ) {
 }
 
 //----------------------------------------------------------------//

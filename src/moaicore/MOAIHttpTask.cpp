@@ -63,6 +63,8 @@ int MOAIHttpTask::_httpGet ( lua_State* L ) {
 	cc8* useragent	= state.GetValue < cc8* >( 3, DEFAULT_MOAI_HTTP_USERAGENT );
 	bool verbose	= state.GetValue < bool >( 4, false );
 	
+	self->Retain ();
+	
 	USHttpTask* task = new USHttpTask ();
 	task->SetDelegate < MOAIHttpTask >( self, &MOAIHttpTask::OnHttpFinish );
 	task->HttpGet ( url, useragent, verbose );
@@ -101,6 +103,8 @@ int MOAIHttpTask::_httpPost ( lua_State* L ) {
 
 	if ( state.IsType (3, LUA_TUSERDATA) ) {
 		
+		self->Retain ();
+		
 		self->mPostData = state.GetLuaObject < MOAIDataBuffer >( 3 );
 		
 		void* bytes;
@@ -114,6 +118,8 @@ int MOAIHttpTask::_httpPost ( lua_State* L ) {
 		self->mPostData->Unlock ();
 	}
 	else if ( state.IsType (3, LUA_TSTRING )) {
+		
+		self->Retain ();
 		
 		self->mPostString = lua_tostring ( state, 3 );
 		
@@ -217,12 +223,14 @@ void MOAIHttpTask::OnHttpFinish ( USHttpTask* task ) {
 	
 		USLuaStateHandle state = this->mOnFinish.GetSelf ();
 		this->PushLuaUserdata ( state );
-		state.DebugCall ( 1, 0 );
-		
+		state.Push ( task->GetResponseCode ());
+		state.DebugCall ( 2, 0 );
 	}
 	
 	this->mPostData = 0;
 	this->mPostString.clear ();
+	
+	this->Release ();
 }
 
 //----------------------------------------------------------------//

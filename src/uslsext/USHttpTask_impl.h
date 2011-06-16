@@ -26,6 +26,8 @@ private:
 	
 	USStream*			mStream;
 
+	u32					mResponseCode;
+
 	friend class USHttpTask;
 	friend class USUrlMgr;
 

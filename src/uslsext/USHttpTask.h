@@ -24,6 +24,7 @@ private:
 	u32					mSize;
 
 	bool				mVerbose;
+	u32					mResponseCode;
 
 	USCallback < USHttpTask* > mCallback;
 
@@ -39,6 +40,8 @@ private:
 public:
 
 	friend class USUrlMgr;
+	
+	GET ( u32, ResponseCode, mResponseCode )
 	
 	//----------------------------------------------------------------//
 	void		Cancel				();
