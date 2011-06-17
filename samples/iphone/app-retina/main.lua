@@ -5,7 +5,7 @@
 ----------------------------------------------------------------
 
 viewport = MOAIViewport.new ()
-viewport:setSize ( 320, 480 )
+viewport:setSize ( 640, 960 )
 viewport:setScale ( 320, 480 )
 
 layer = MOAILayer2D.new ()
