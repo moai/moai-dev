@@ -10417,7 +10417,8 @@
 				03F135DD13A2EFC000044AE8 /* MOAIWebView.mm in Sources */,
 				CD218F7213A7FC79008337E7 /* USLog.cpp in Sources */,
 				07CDCFB313AA7C5D009674C7 /* Reachability.m in Sources */,
-				CD62D6CC13A991BA002286EB /* MOAIJsonParser.cpp in Sources */,			);
+				CD62D6CC13A991BA002286EB /* MOAIJsonParser.cpp in Sources */,
+			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		CD07C3B813A182AA00C9386C /* Sources */ = {
