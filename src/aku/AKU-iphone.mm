@@ -46,13 +46,13 @@ void AKUIphoneInit ( UIApplication* application ) {
 	USLuaStateHandle state = USLuaRuntime ().Get (). State ();
 	MOAISim::Get ().PushLuaClassTable ( state );
 	
-	state.SetField ( -1, "DEVICE_UDID", [[ UIDevice currentDevice ].uniqueIdentifier UTF8String ] );
+	state.SetField ( -1, "DEVICE_UDID", [[ UIDevice currentDevice ].uniqueIdentifier UTF8String ]);
 	state.SetField ( -1, "DEVICE_OS_BRAND", "iOS" );
-	state.SetField ( -1, "DEVICE_OS_VERSION", [[ UIDevice currentDevice ].systemVersion UTF8String ] );
-	state.SetField ( -1, "DEVICE_CONNECTION_TYPE", [ AKUGetIphoneNetworkReachability () UTF8String ] );
-	state.SetField ( -1, "APPLICATION_VERSION", [[[[ NSBundle mainBundle ] infoDictionary ] objectForKey:@"CFBundleVersion" ] UTF8String ] );
-	state.SetField ( -1, "APPLICATION_ID", [[[[ NSBundle mainBundle ] infoDictionary ] objectForKey:@"CFBundleIdentifier" ] UTF8String ] );
-	state.SetField ( -1, "APPLICATION_NAME", [[[[NSBundle mainBundle ] infoDictionary ] objectForKey:@"CFBundleDisplayName" ] UTF8String ] );
+	state.SetField ( -1, "DEVICE_OS_VERSION", [[ UIDevice currentDevice ].systemVersion UTF8String ]);
+	state.SetField ( -1, "DEVICE_CONNECTION_TYPE", [ AKUGetIphoneNetworkReachability () UTF8String ]);
+	state.SetField ( -1, "APPLICATION_VERSION", [[[[ NSBundle mainBundle ] infoDictionary ] objectForKey:@"CFBundleVersion" ] UTF8String ]);
+	state.SetField ( -1, "APPLICATION_ID", [[[[ NSBundle mainBundle ] infoDictionary ] objectForKey:@"CFBundleIdentifier" ] UTF8String ]);
+	state.SetField ( -1, "APPLICATION_DISPLAY_NAME", [[[[ NSBundle mainBundle ] infoDictionary ] objectForKey:@"CFBundleDisplayName" ] UTF8String ]);
 	
 	lua_pop ( state, 1 );
 	
