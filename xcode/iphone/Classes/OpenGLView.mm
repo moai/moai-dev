@@ -94,6 +94,14 @@
 			nil
 		];
 		
+		if ([[ UIScreen mainScreen ] respondsToSelector: @selector ( scale )]) {
+			CGFloat appContentScaleFactor = [[ UIScreen mainScreen ] scale ];
+			
+			if ([ glLayer respondsToSelector: @selector ( setContentsScale: )]) {
+				glLayer.contentsScale = appContentScaleFactor;
+			}
+		}
+		
 		mContext = [[[ EAGLContext alloc ] initWithAPI:kEAGLRenderingAPIOpenGLES1 ] autorelease ];
 	}
 

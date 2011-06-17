@@ -20,7 +20,7 @@ import android.util.Log;
 import android.view.Display;
 import android.view.Window;
 import android.view.WindowManager;
-
+ 
 //================================================================//
 // MoaiTest
 //================================================================//

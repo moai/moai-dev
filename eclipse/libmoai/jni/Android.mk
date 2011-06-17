@@ -16,6 +16,7 @@ include libtinyxml.mk
 include libpng.mk
 include libuslscore.mk
 include libuslsext.mk
+include libjson.mk
 include libmoaicore.mk
 include libssl.mk
 include libcontrib.mk
@@ -61,6 +62,7 @@ $(SRC_PATH)/3rdparty/freetype-2.4.4/include/freetype2 \
 $(SRC_PATH)/3rdparty/freetype-2.4.4/builds \
 $(SRC_PATH)/3rdparty/freetype-2.4.4/src \
 $(SRC_PATH)/3rdparty/freetype-2.4.4/config \
+$(SRC_PATH)/3rdparty/jansson-2.1/src \
 $(SRC_PATH)/3rdparty/lua-5.1.3/src \
 $(SRC_PATH)/3rdparty/lpng140 \
 $(SRC_PATH)/3rdparty/curl-7.19.7/include-android\
@@ -92,5 +94,6 @@ LOCAL_STATIC_LIBRARIES += libpng
 LOCAL_STATIC_LIBRARIES += libcurl
 LOCAL_STATIC_LIBRARIES += libssl
 LOCAL_STATIC_LIBRARIES += libcontrib
+LOCAL_STATIC_LIBRARIES += libjson
 
 include $(BUILD_SHARED_LIBRARY)

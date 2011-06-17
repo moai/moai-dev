@@ -142,11 +142,7 @@ static void _onUpdate () {
 
 void	_AKUEnterFullscreenModeFunc		();
 void	_AKUExitFullscreenModeFunc		();
-void	_AKUHideLoadingScreenFunc		();
-void	_AKUHideLoadingScreenFunc		();
 void	_AKUOpenWindowFunc				( const char* title, int width, int height );
-void	_AKUShowLoadingScreenFunc		();
-void	_AKUShowSoftwareKeyboardFunc	();
 void	_AKUStartGameLoopFunc			();
 
 //----------------------------------------------------------------//
@@ -168,10 +164,6 @@ void _AKUExitFullscreenModeFunc () {
 		glutPositionWindow ( sWinX, sWinY );
 		glutReshapeWindow ( sWinWidth, sWinHeight );
 	}
-}
-
-//----------------------------------------------------------------//
-void _AKUHideLoadingScreenFunc () {
 }
 
 //----------------------------------------------------------------//

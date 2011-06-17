@@ -32,10 +32,7 @@ struct AKUContext {
 	//----------------------------------------------------------------//
 	AKU_DEFINE_FUNC_CONTEXT ( EnterFullscreenMode );
 	AKU_DEFINE_FUNC_CONTEXT ( ExitFullscreenMode );
-	AKU_DEFINE_FUNC_CONTEXT ( HideLoadingScreen );
 	AKU_DEFINE_FUNC_CONTEXT ( OpenWindow );
-	AKU_DEFINE_FUNC_CONTEXT ( ShowLoadingScreen );
-	AKU_DEFINE_FUNC_CONTEXT ( ShowSoftwareKeyboard );
 	AKU_DEFINE_FUNC_CONTEXT ( StartGameLoop );
 	
 	USGlobals*	mGlobals;
@@ -59,24 +56,12 @@ static void _ExitFullscreenMode () {}
 AKU_DEFINE_FUNC_ACCESSORS ( ExitFullscreenMode, _ExitFullscreenMode )
 
 //----------------------------------------------------------------//
-static void _HideLoadingScreen () {}
-AKU_DEFINE_FUNC_ACCESSORS ( HideLoadingScreen, _HideLoadingScreen )
-
-//----------------------------------------------------------------//
 static void _OpenWindow ( const char* title, int width, int height ) {
 	UNUSED ( title );
 	UNUSED ( width );
 	UNUSED ( height );
 }
 AKU_DEFINE_FUNC_ACCESSORS ( OpenWindow, _OpenWindow )
-
-//----------------------------------------------------------------//
-static void _ShowLoadingScreen () {}
-AKU_DEFINE_FUNC_ACCESSORS ( ShowLoadingScreen, _ShowLoadingScreen )
-
-//----------------------------------------------------------------//
-static void _ShowSoftwareKeyboard () {}
-AKU_DEFINE_FUNC_ACCESSORS ( ShowSoftwareKeyboard, _ShowSoftwareKeyboard )
 
 //----------------------------------------------------------------//
 static void _StartGameLoop () {}

@@ -33,18 +33,12 @@
 // Callback management
 typedef void ( *AKUEnterFullscreenModeFunc )	();
 typedef void ( *AKUExitFullscreenModeFunc )		();
-typedef void ( *AKUHideLoadingScreenFunc )		();
-typedef void ( *AKUShowLoadingScreenFunc )		();
 typedef void ( *AKUOpenWindowFunc )				( const char* title, int width, int height );
-typedef void ( *AKUShowSoftwareKeyboardFunc )	();
 typedef void ( *AKUStartGameLoopFunc )			();
 
 AKU_DECLARE_FUNC_ACCESSORS ( EnterFullscreenMode )
 AKU_DECLARE_FUNC_ACCESSORS ( ExitFullscreenMode )
-AKU_DECLARE_FUNC_ACCESSORS ( HideLoadingScreen )
 AKU_DECLARE_FUNC_ACCESSORS ( OpenWindow )
-AKU_DECLARE_FUNC_ACCESSORS ( ShowLoadingScreen )
-AKU_DECLARE_FUNC_ACCESSORS ( ShowSoftwareKeyboard )
 AKU_DECLARE_FUNC_ACCESSORS ( StartGameLoop )
 
 struct lua_State;
@@ -66,9 +60,6 @@ AKU_API void			AKUPause			( bool pause );
 AKU_API void			AKURender			();
 AKU_API void			AKUResize			( int width, int height );
 AKU_API void			AKURunScript		( const char* filename );
-AKU_API void			AKUSetKey			( unsigned char key, bool isDown );
-AKU_API void			AKUSetMouseButton	( bool left, bool middle, bool right, bool isDown );
-AKU_API void			AKUSetMouseLoc		( int x, int y );
 AKU_API void			AKUUpdate			();
 
 // input device api
