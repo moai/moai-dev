@@ -8,10 +8,8 @@
 #include <math.h>
 #include <string.h>
 
-#include "chipmunk.h"
+#include <moaicore/moaicore.h>
 #include <aku/AKU.h>
-#include "USLog.cpp"
-
 
 JavaVM *jvm;
 jobject javaObject;
@@ -324,8 +322,6 @@ void Java_com_moai_MoaiView_InitializeAku
 {
 
 	importGLInit();
-
-    glDisable(GL_CULL_FACE);
   
 	javaObject = (jobject)env->NewGlobalRef(thizz);
 	
