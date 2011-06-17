@@ -171,21 +171,21 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\svn\untz\trunk\include\Untz.h" />
-    <ClInclude Include="..\..\..\..\svn\untz\trunk\include\UntzSound.h" />
-    <ClInclude Include="..\..\..\..\svn\untz\trunk\include\UntzSystem.h" />
-    <ClInclude Include="..\..\..\..\svn\untz\trunk\src\AudioMixer.h" />
-    <ClInclude Include="..\..\..\..\svn\untz\trunk\src\AudioSource.h" />
-    <ClInclude Include="..\..\..\..\svn\untz\trunk\src\MemoryAudioSource.h" />
-    <ClInclude Include="..\..\..\..\svn\untz\trunk\src\OggAudioSource.h" />
-    <ClInclude Include="..\..\..\..\svn\untz\trunk\src\SoundData.h" />
-    <ClInclude Include="..\..\..\..\svn\untz\trunk\src\SystemData.h" />
-    <ClInclude Include="..\..\..\..\svn\untz\trunk\src\UserAudioSource.h" />
-    <ClInclude Include="..\..\..\..\svn\untz\trunk\src\native\win\DShowAudioSource.h" />
-    <ClInclude Include="..\..\..\..\svn\untz\trunk\src\native\win\dxtrans.h" />
-    <ClInclude Include="..\..\..\..\svn\untz\trunk\src\threading\RCriticalSection.h" />
-    <ClInclude Include="..\..\..\..\svn\untz\trunk\src\threading\RThread.h" />
-    <ClInclude Include="..\..\..\..\svn\untz\trunk\src\threading\RWaitableEvent.h" />
+    <ClInclude Include="..\..\3rdparty\untz\include\Untz.h" />
+    <ClInclude Include="..\..\3rdparty\untz\include\UntzSound.h" />
+    <ClInclude Include="..\..\3rdparty\untz\include\UntzSystem.h" />
+    <ClInclude Include="..\..\3rdparty\untz\src\AudioMixer.h" />
+    <ClInclude Include="..\..\3rdparty\untz\src\AudioSource.h" />
+    <ClInclude Include="..\..\3rdparty\untz\src\MemoryAudioSource.h" />
+    <ClInclude Include="..\..\3rdparty\untz\src\OggAudioSource.h" />
+    <ClInclude Include="..\..\3rdparty\untz\src\SoundData.h" />
+    <ClInclude Include="..\..\3rdparty\untz\src\SystemData.h" />
+    <ClInclude Include="..\..\3rdparty\untz\src\UserAudioSource.h" />
+    <ClInclude Include="..\..\3rdparty\untz\src\native\win\DShowAudioSource.h" />
+    <ClInclude Include="..\..\3rdparty\untz\src\native\win\dxtrans.h" />
+    <ClInclude Include="..\..\3rdparty\untz\src\threading\RCriticalSection.h" />
+    <ClInclude Include="..\..\3rdparty\untz\src\threading\RThread.h" />
+    <ClInclude Include="..\..\3rdparty\untz\src\threading\RWaitableEvent.h" />
     <ClInclude Include="..\..\3rdparty\rtaudio-4.0.8\include\asio.h" />
     <ClInclude Include="..\..\3rdparty\rtaudio-4.0.8\include\asiodrivers.h" />
     <ClInclude Include="..\..\3rdparty\rtaudio-4.0.8\include\asiodrvr.h" />
@@ -200,13 +200,13 @@
     <ClInclude Include="..\..\3rdparty\rtaudio-4.0.8\include\soundcard.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\svn\untz\trunk\src\AudioMixer.cpp" />
-    <ClCompile Include="..\..\..\..\svn\untz\trunk\src\MemoryAudioSource.cpp" />
-    <ClCompile Include="..\..\..\..\svn\untz\trunk\src\OggAudioSource.cpp" />
-    <ClCompile Include="..\..\..\..\svn\untz\trunk\src\UntzSound.cpp" />
-    <ClCompile Include="..\..\..\..\svn\untz\trunk\src\UserAudioSource.cpp" />
-    <ClCompile Include="..\..\..\..\svn\untz\trunk\src\native\win\DShowAudioSource.cpp" />
-    <ClCompile Include="..\..\..\..\svn\untz\trunk\src\native\win\UntzSystem.cpp" />
+    <ClCompile Include="..\..\3rdparty\untz\src\AudioMixer.cpp" />
+    <ClCompile Include="..\..\3rdparty\untz\src\MemoryAudioSource.cpp" />
+    <ClCompile Include="..\..\3rdparty\untz\src\OggAudioSource.cpp" />
+    <ClCompile Include="..\..\3rdparty\untz\src\UntzSound.cpp" />
+    <ClCompile Include="..\..\3rdparty\untz\src\UserAudioSource.cpp" />
+    <ClCompile Include="..\..\3rdparty\untz\src\native\win\DShowAudioSource.cpp" />
+    <ClCompile Include="..\..\3rdparty\untz\src\native\win\UntzSystem.cpp" />
     <ClCompile Include="..\..\3rdparty\rtaudio-4.0.8\include\asio.cpp" />
     <ClCompile Include="..\..\3rdparty\rtaudio-4.0.8\include\asiodrivers.cpp" />
     <ClCompile Include="..\..\3rdparty\rtaudio-4.0.8\include\asiolist.cpp" />
