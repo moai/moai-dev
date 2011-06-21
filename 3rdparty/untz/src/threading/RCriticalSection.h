@@ -1,6 +1,4 @@
-#ifndef RCriticalSection_H
-#define RCriticalSection_H
-
+#pragma once
 
 // Use Window or Posix
 #ifdef WIN32
@@ -112,5 +110,3 @@ private:
 		_locked = false;
 	}
 };
-
-#endif	// RCriticalSection_H
