@@ -1,12 +1,26 @@
+#----------------------------------------------------------------#
+# Copyright (c) 2010-2011 Zipline Games, Inc.
+# All Rights Reserved.
+# http://getmoai.com
+#----------------------------------------------------------------#
+
+LUA_FOLDER=samples/basics/anim-basic
+
+#----------------------------------------------------------------#
 cd ..
 
-rm -rf host-android/lua-prep
+rm -rf eclipse/lua-prep
 
-find "lua" ! -name "/.svn/" | cpio -admvp "host-android/lua-prep"
+cp -r "$LUA_FOLDER" "eclipse/lua-prep"
 
-cd host-android/lua-prep/lua
-rm -f ../../android-project/res/raw/lua
-zip -9 -r ../../android-project/res/raw/lua . *.*
+# adapt your project to use the below command, and it will filter out svn directories
+#find "$LUA_FOLDER" ! -name "/.svn/" | cpio -admvp "eclipse/lua-prep"
 
-cd ../../../host-android/android-project/res/raw
+cd eclipse/lua-prep
+rm -f ../android-project/res/raw/lua
+zip -9 -r ../android-project/res/raw/lua . *.*
+
+cd ../../eclipse/android-project/res/raw
 mv lua.zip lua
+
+#rm -rf eclipse/lua-prep
