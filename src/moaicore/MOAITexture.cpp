@@ -49,11 +49,12 @@ int MOAITexture::_getSize ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	load
-	@text	Loads a texture from a data buffer or a file.
+	@text	Loads a texture from a data buffer or a file. Optionally pass
+			in an image transform (affects .png images only).
 	
 	@in		MOAITexture self
 	@in		variant texture		Either a MOAIDataBuffer containing a binary texture or a path to a texture file.
-	@opt	number transform	Any bitwise combination of MOAITexture.QUANTIZE, MOAITexture.TRUECOLOR, MOAITexture.PREMULTIPLY_ALPHA
+	@opt	number transform	Any bitwise combination of MOAIImage.QUANTIZE, MOAIImage.TRUECOLOR, MOAIImage.PREMULTIPLY_ALPHA
 	@out	nil
 */
 int MOAITexture::_load ( lua_State* L ) {
