@@ -85,7 +85,7 @@ public class MoaiSample extends Activity {
 			
 			zis = new ZipInputStream ( new BufferedInputStream ( is ));
 			
-			ZipEntry ze;
+			ZipEntry ze; 
 			byte [] buffer = new byte [ 4096 ];
 			
 			while (( ze = zis.getNextEntry ()) != null ) {
