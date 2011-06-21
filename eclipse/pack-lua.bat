@@ -25,7 +25,7 @@ pushd ..
 	echo ----------------------------------------------------------------
 	
 	pushd eclipse\lua-prep
-		del /Q ..\android-project\res\raw\lua
+		if exist ..\android-project\res\raw\lua del /Q ..\android-project\res\raw\lua
 		zip -9 -r ../android-project/res/raw/lua . *.*
 	popd
 
