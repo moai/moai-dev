@@ -26,7 +26,7 @@ MemoryAudioSource::MemoryAudioSource(UInt32 sampleRate, UInt32 numChannels, UInt
     mCurrentPos = 0;
 }
 
-UInt32 MemoryAudioSource::readFrames(float *buffers, UInt32 numChannels, UInt32 numSamples)
+Int64 MemoryAudioSource::readFrames(float *buffers, UInt32 numChannels, UInt32 numSamples)
 {
     UInt32 readCount = (UInt32)fmin(mData[0].size() - mCurrentPos, numSamples);
 
@@ -40,7 +40,7 @@ UInt32 MemoryAudioSource::readFrames(float *buffers, UInt32 numChannels, UInt32 
     {
         mCurrentPos = 0;
         if(!mLooping)
-            mpSound->stop();
+			return -1;
     }
     
 	return readCount;

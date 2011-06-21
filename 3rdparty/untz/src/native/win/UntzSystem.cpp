@@ -12,6 +12,8 @@ using namespace UNTZ;
 int RtInOut( void* outputBuffer, void* inputBuffer, unsigned int framesPerBuffer, 
 			double streamTime, RtAudioStreamStatus status, void *userdata )
 {
+	if(status)
+		std::cout << "Stream underflow detected!" << std::endl;	
 	AudioMixer *mixer = (AudioMixer*)userdata;
 	mixer->process(0, NULL, UNTZ::System::get()->getData()->getNumOutputChannels(), (float*)outputBuffer, framesPerBuffer);
 	return 0;

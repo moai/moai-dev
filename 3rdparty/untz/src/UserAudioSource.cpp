@@ -10,7 +10,7 @@ UserAudioSource::UserAudioSource(UInt32 sampleRate, UInt32 numChannels, StreamCa
 	mUserdata = userdata;
 }
 
-UInt32 UserAudioSource::readFrames(float* buffers, UInt32 numChannels, UInt32 numSamples)
+Int64 UserAudioSource::readFrames(float* buffers, UInt32 numChannels, UInt32 numSamples)
 {
 	return mCallback(buffers, mNumChannels, numSamples, mUserdata);
 }

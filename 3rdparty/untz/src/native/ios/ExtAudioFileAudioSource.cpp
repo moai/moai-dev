@@ -1,10 +1,3 @@
-//
-//  ExtAudioFileAudioSrc.cpp
-//  MOAIAudio
-//
-//  Created by Zach Saul on 5/9/11.
-//  Copyright 2011 __MyCompanyName__. All rights reserved.
-//
 
 #include "ExtAudioFileAudioSource.h"
 #include <CoreFoundation/CFURL.h>
@@ -23,7 +16,32 @@ void printCode(const char *tag, OSStatus s)
     
 }
 
-ExtAudioFileAudioSource::ExtAudioFileAudioSource(const RString& path)
+ExtAudioFileAudioSource::ExtAudioFileAudioSource()
+{
+}
+
+ExtAudioFileAudioSource::~ExtAudioFileAudioSource()
+{
+    ExtAudioFileDispose(mAudioFile);
+    free (mpBufferList);
+}
+
+double ExtAudioFileAudioSource::getLength() 
+{ 
+    return (double)mTotalFrames / mClientFormat.mSampleRate;
+}
+
+double ExtAudioFileAudioSource::getSampleRate() 
+{
+    return UNTZ::System::get()->getSampleRate();
+}
+
+UInt32 ExtAudioFileAudioSource::getNumChannels()
+{
+    return mClientFormat.mChannelsPerFrame;
+}
+
+bool ExtAudioFileAudioSource::open(const RString& path, bool loadIntoMemory)
 {
     // FIXME: query the file to find out how many channels instead of hardcoding.
     
@@ -32,22 +50,77 @@ ExtAudioFileAudioSource::ExtAudioFileAudioSource(const RString& path)
                                                                  path.length(),
                                                                  false
                                                                  );
-    OSStatus s = ExtAudioFileOpenURL(path_url, &mAudioFile);
     
-    printCode("ExtAudioFileOpenURL: ", s);
-
-    // 44.1, NUM_CHANNELS, 32 bit float, little endian, non-interleaved 
-    FillOutASBDForLPCM(mFormat, 44100.0, NUM_CHANNELS, 32, 32, true, false,true);
+    OSStatus err = ExtAudioFileOpenURL(path_url, &mAudioFile);
+    if(err)
+    {
+        printCode("ExtAudioFileOpenURL: ", err);        
+        return false;
+    }
     
-    s= ExtAudioFileSetProperty(mAudioFile, kExtAudioFileProperty_ClientDataFormat, sizeof(mFormat), &mFormat);
-    printCode("ExtAudioFileSetProperty: ", s);
+    UInt32 propSize = sizeof(mClientFormat);
+    err = ExtAudioFileGetProperty(mAudioFile, kExtAudioFileProperty_FileDataFormat, &propSize, &mClientFormat);    
 
+    propSize = sizeof(mTotalFrames);
+    err = ExtAudioFileGetProperty(mAudioFile, kExtAudioFileProperty_FileLengthFrames, &propSize, &mTotalFrames);    
+    
+    // Setup output format
+    FillOutASBDForLPCM(mFormat, getSampleRate(), getNumChannels(), 32, 32, true, false,true);
+    
+    err = ExtAudioFileSetProperty(mAudioFile, kExtAudioFileProperty_ClientDataFormat, sizeof(mFormat), &mFormat);
+    if(err)
+    {
+        printCode("ExtAudioFileSetProperty: ", err);
+        return false;
+    }
     
     // Allocate our buffer list with NUM_CHANNELS buffers in it.
-    mpBufferList = (AudioBufferList *)malloc(sizeof(AudioBufferList)+(NUM_CHANNELS-1)*sizeof(AudioBuffer));
-    mpBufferList->mNumberBuffers = NUM_CHANNELS;
+    mpBufferList = (AudioBufferList *)malloc(sizeof(AudioBufferList) + (getNumChannels() - 1) * sizeof(AudioBuffer));
+    mpBufferList->mNumberBuffers = getNumChannels();    
+
+    return BufferedAudioSource::open(path, loadIntoMemory);
+}
+ 
+void ExtAudioFileAudioSource::setDecoderPosition(Int64 startFrame)
+{
+    ExtAudioFileSeek(mAudioFile, startFrame);  
+	if(startFrame < getLength() * getSampleRate())
+		mEOF = false;
 }
 
+Int64 ExtAudioFileAudioSource::decodeData(float* buffer, UInt32 numFrames)
+{
+    UInt32 numChannels = getNumChannels();
+    OSStatus err = noErr;
+    
+    mReadBuffer.resize(numChannels * numFrames);
+    
+    // Set up the buffers
+    setUpBuffers(&mReadBuffer[0], numChannels, numFrames);
+    
+    // Read the data out of our file, filling our output buffer
+    UInt32 framesRead = numFrames;
+    err = ExtAudioFileRead (mAudioFile, &framesRead, mpBufferList);
+    if(err || framesRead == 0)
+    {
+        mEOF = true;
+        return 0;
+    }
+    
+    // The data is expected to be interlaced
+    for(UInt32 j = 0; j < numChannels; ++j)
+    {
+        float *pTemp = &mReadBuffer[j * numFrames];
+        float *pOut = &buffer[j];
+        for(UInt32 i = j; i < framesRead; i++)
+        {
+            *pOut = *pTemp++;
+            pOut += numChannels;
+        }
+    }
+    
+    return framesRead;    
+}
 
 void ExtAudioFileAudioSource::setUpBuffers(float *buffer, UInt32 numChannels, UInt32 numFrames)
 {
@@ -55,52 +128,6 @@ void ExtAudioFileAudioSource::setUpBuffers(float *buffer, UInt32 numChannels, UI
     {
         mpBufferList->mBuffers[i].mNumberChannels = 1;
         mpBufferList->mBuffers[i].mDataByteSize = numFrames*sizeof(float);
-        mpBufferList->mBuffers[i].mData = buffer+i*512;
+        mpBufferList->mBuffers[i].mData = buffer + i*numFrames;
     }
-}
-UInt32 ExtAudioFileAudioSource::readFrames(float* buffer, UInt32 numChannels, UInt32 numFrames)
-{
-    // Set up the buffers
-    setUpBuffers(buffer, numChannels, numFrames);
-    
-    // Read the data out of our file, filling our output buffer
-    UInt32 framesRead = numFrames;
-    OSStatus s = ExtAudioFileRead (mAudioFile, &framesRead, mpBufferList);
-
-    // If there was an error, stop playing and return 0 frames read.
-    if(s != noErr)
-    {
-        mpSound->stop();
-        return 0;        
-    }
-    
-    // If we didn't read any frames, rewind the file and either read the next buffer or stop.
-    if(framesRead == 0)
-    {
-        ExtAudioFileSeek(mAudioFile, 0);
-        if(mLooping)
-        {
-            framesRead = numFrames;
-            setUpBuffers(buffer, numChannels, numFrames);
-            s = ExtAudioFileRead (mAudioFile, &framesRead, mpBufferList);            
-            // If there was an error, stop playing and return 0 frames read.
-            if(s != noErr)
-            {    printCode("ExtAudioFileRead on loop: ", s);
-                mpSound->stop();
-                return 0;        
-            }
-        }
-        else
-        {
-            mpSound->stop();
-        }
-    }
-    
-    return framesRead;
-}
-
-ExtAudioFileAudioSource::~ExtAudioFileAudioSource()
-{
-    ExtAudioFileDispose(mAudioFile);
-    free (mpBufferList);
 }

@@ -1,11 +1,3 @@
-//
-//  UntzAudioSystem.cpp
-//  UntzAudio
-//
-//  Created by Zach Saul on 4/8/11.
-//  Copyright 2011 The Retronyms. All rights reserved.
-//
-
 
 #include "UntzSystem.h"
 #include "SystemData.h"
