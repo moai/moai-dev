@@ -1,5 +1,5 @@
 bin/
 gen/
-raw/lua
+lua
 lua-prep/
 .settings
