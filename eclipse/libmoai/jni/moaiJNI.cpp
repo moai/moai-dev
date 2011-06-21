@@ -283,7 +283,7 @@ int JNI_OnLoad(JavaVM* vm, void* reserved)
 }
 
 extern "C"
-void Java_com_moai_MoaiView_RestartAku
+void Java_com_getmoai_samples_MoaiView_RestartAku
 (JNIEnv *env, jclass clazz, jobject thizz) 
 {
 	jclass classic = env->GetObjectClass(javaObject);
@@ -317,7 +317,7 @@ void Java_com_moai_MoaiView_RestartAku
 	__android_log_write(ANDROID_LOG_ERROR,"MoaiJNI","Aku Successfully Initialized");
 }
 extern "C"
-void Java_com_moai_MoaiView_InitializeAku
+void Java_com_getmoai_samples_MoaiView_InitializeAku
   (JNIEnv *env, jclass clazz, jobject thizz) 
 {
 
@@ -325,12 +325,12 @@ void Java_com_moai_MoaiView_InitializeAku
   
 	javaObject = (jobject)env->NewGlobalRef(thizz);
 	
-	Java_com_moai_MoaiView_RestartAku(env, clazz, thizz);
+	Java_com_getmoai_samples_MoaiView_RestartAku(env, clazz, thizz);
 	
 }
 
 extern "C"
-void Java_com_moai_MoaiView_Run
+void Java_com_getmoai_samples_MoaiView_Run
 	(JNIEnv *env, jclass clazz, jstring fileName, jint width, jint height)
 {
 	__android_log_write(ANDROID_LOG_ERROR,"MoaiJNI","Entering Run Func");
@@ -352,20 +352,20 @@ void Java_com_moai_MoaiView_Run
 	
 }
 extern "C"
-void Java_com_moai_MoaiView_FinalizeAku
+void Java_com_getmoai_samples_MoaiView_FinalizeAku
 	(JNIEnv *env, jclass clazz)
 {
 	AKUFinalize();
 	//importGLDeinit();
 }
 extern "C"
-void Java_com_moai_MoaiView_DeinitializeAku
+void Java_com_getmoai_samples_MoaiView_DeinitializeAku
 (JNIEnv *env, jclass clazz)
 {
 	AKUDeleteContext ( mAku );
 }
 extern "C"
-void Java_com_moai_MoaiView_onDraw
+void Java_com_getmoai_samples_MoaiView_onDraw
 	(JNIEnv *env, jclass clazz,
 	 jint width, jint height)
 {
@@ -374,7 +374,7 @@ void Java_com_moai_MoaiView_onDraw
 	AKURender();
 }
 extern "C"
-void Java_com_moai_MoaiView_onUpdateAnim
+void Java_com_getmoai_samples_MoaiView_onUpdateAnim
 	(JNIEnv *env, jclass clazz)
 {
 	
@@ -383,7 +383,7 @@ void Java_com_moai_MoaiView_onUpdateAnim
 	//_DrawView();
 }
 extern "C"
-void Java_com_moai_MoaiView_onUpdateHeading
+void Java_com_getmoai_samples_MoaiView_onUpdateHeading
 (JNIEnv *env, jclass clazz, jint heading)
 {
 	
@@ -394,7 +394,7 @@ void Java_com_moai_MoaiView_onUpdateHeading
 		);
 }
 extern "C"	
-void Java_com_moai_MoaiView_onUpdateLocation
+void Java_com_getmoai_samples_MoaiView_onUpdateLocation
 (JNIEnv *env, jclass clazz, jint longitude, jint latitude, jint altitude,
 jfloat hAccuracy, jfloat vAccuracy, jfloat speed )
 {
@@ -411,7 +411,7 @@ jfloat hAccuracy, jfloat vAccuracy, jfloat speed )
 		);
 }
 extern "C"
-void Java_com_moai_MoaiView_handleTouches
+void Java_com_getmoai_samples_MoaiView_handleTouches
 (JNIEnv *env, jclass clazz, jint touch, jboolean down, jint locX, jint locY, jint tapCount)
 {
 			AKUEnqueueTouchEvent (
@@ -427,7 +427,7 @@ void Java_com_moai_MoaiView_handleTouches
 }
 
 extern "C"
-void Java_com_moai_MoaiView_setWorkingDirectory
+void Java_com_getmoai_samples_MoaiView_setWorkingDirectory
 (JNIEnv *env, jclass clazz, jstring path)
 {
 	char buf[512];

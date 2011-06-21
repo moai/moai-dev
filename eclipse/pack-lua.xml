@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="pack-lua" default="os-selector">
+
+	<taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
+
+    <!-- ================================================================ -->
+    <!-- os-selector -->
+    <!-- ================================================================ -->	
+	<target name="os-selector">
+		
+		<echo level="info" message="${os.name}"/>
+		
+		<condition property="isWindows">
+			<os family="windows"/>
+		</condition>
+		
+		<condition property="isOsx">
+			<os family="unix"/>
+		</condition>
+		
+		<antcall target="pack-osx"/>
+		<antcall target="pack-windows"/>
+	</target>
+	
+    <!-- ================================================================ -->
+    <!-- pack-osx -->
+    <!-- ================================================================ -->	
+	<target name="pack-osx" if="isOsx">
+		
+		<echo level="info" message="Packing Lua Resources For OSX"/>
+		
+		<exec executable="bash">
+			<arg line="pack-lua.sh"/>
+		</exec>
+	</target>
+
+    <!-- ================================================================ -->
+    <!-- pack-windows -->
+    <!-- ================================================================ -->	
+	<target name="pack-windows" if="isWindows">
+
+		<echo level="info" message="Packing Lua Resources For Windows"/>
+		
+		<exec executable="cmd" dir="..">
+		    <arg value="/c"/>
+		    <arg value="pack-lua.bat"/>
+		    <arg value="-p"/>
+		</exec>
+	</target>
+	
+</project>
