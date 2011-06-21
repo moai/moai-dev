@@ -7,7 +7,7 @@
 LUA_FOLDER=samples/basics/anim-basic
 
 #----------------------------------------------------------------#
-cd ..
+cd ../..
 
 rm -rf eclipse/lua-prep
 
