@@ -20,6 +20,7 @@
 #include <moaicore/MOAIDeck.h>
 #include <moaicore/MOAIDeck2D.h>
 #include <moaicore/MOAIDeckRemapper.h>
+#include <moaicore/MOAIDeviceInfo.h>
 #include <moaicore/MOAIEaseDriver.h>
 #include <moaicore/MOAIEaseType.h>
 #include <moaicore/MOAIEventSource.h>

@@ -14,12 +14,15 @@ import android.opengl.GLSurfaceView;
 import android.os.SystemClock;
 import android.view.MotionEvent; 
 
+import android.os.Build;
+import android.provider.Settings.Secure;
+
 //================================================================//
 // MoaiView
 //================================================================//
 public class MoaiView extends GLSurfaceView {
 
-	int mWidth;  
+	int mWidth;   
 	int mHeight;
 	private MoaiRenderer mRenderer;
 	private MoaiThread mThread = null; 
@@ -28,6 +31,8 @@ public class MoaiView extends GLSurfaceView {
 	String mLuaThread = null;
 	String mAppRoot = null;
 	private boolean mIsValid = false;
+	String mPackageName = null;
+	String mUDID = null;
 	
 	//----------------------------------------------------------------//
 	public void cleanup () {
@@ -78,6 +83,9 @@ public class MoaiView extends GLSurfaceView {
 		mForRen = this;
 		mWidth = w;
 		mHeight = h;
+
+		mPackageName = context.getPackageName ();
+		mUDID = Secure.getString ( context.getContentResolver (), Secure.ANDROID_ID );
 	}
 	
 	//================================================================//
@@ -122,6 +130,62 @@ public class MoaiView extends GLSurfaceView {
 		mAppRoot = path;
 	}
 
+
+	private void GetDeviceProperties ( ) {
+				
+		// App name
+		String appName;
+		if ( mPackageName != null ) {
+			String[] packNameParts = mPackageName. split ( "." );
+			if ( packNameParts.length > 1 ) {
+				appName = packNameParts[ packNameParts.length - 1 ];
+			}
+			else {
+				appName = mPackageName;
+			}
+		}
+		else {
+			appName = "UNKNOWN";
+		}
+		
+		// ARM EABI
+		String abi = Build.CPU_ABI;
+		
+		// Device Brand
+		String devBrand = Build.BRAND;
+		
+		// Device Design Name
+		String devDes = Build.DEVICE;
+		
+		// Device Manufacturer
+		String ma;
+		try {
+			ma = Build.class.getDeclaredField ( "MANUFACTURER" ). get ( Build.class ). toString ();
+		} catch ( Throwable e ) {
+			ma = "UNKNOWN";
+		}		
+		
+		// Device Model
+		String devModel = Build.MODEL;
+		
+		// Device Product
+		String devProduct = Build.PRODUCT;
+		
+		// OS name
+		String osName = "Android";
+		
+		// OS Version
+		String osVersion = Build.VERSION.RELEASE;
+		
+		// UDID
+		if ( mUDID == null ) {
+			mUDID = "UNKNOWN";
+		}
+		
+		setDeviceProperties ( appName, abi, devBrand, devDes, ma, devModel, 
+			devProduct, osName, osVersion, mUDID );
+	}
+	
 	//================================================================//
 	// MoaiRenderer
 	//================================================================//
@@ -151,7 +215,8 @@ public class MoaiView extends GLSurfaceView {
 		public void onSurfaceCreated ( GL10 gl, EGLConfig config ) {
    
 			InitializeAku ( mForRen ); 
-	
+			GetDeviceProperties ();
+			
 			mSurfaceCreated = true;
 			mIsValid = true;
 			
@@ -198,4 +263,8 @@ public class MoaiView extends GLSurfaceView {
 	public static native void onUpdateLocation ( int longitude, int latitude, int altitude, float hAccuracy, float vAccuracy, float speed );
 	public static native void handleTouches (int touch, boolean down, int locX, int locY, int tapCount );
 	public static native void setWorkingDirectory ( String path );
+	
+	//Device properties
+	public static native void setDeviceProperties ( String appName, String abi, String devBrand, String devDes, String ma, String devModel, 
+			String devProduct, String osName, String osVersion, String UDID );
 }
