@@ -87,15 +87,19 @@
     <!-- ================================================================ -->
 	<target name="clean-libmoai-osx" if="isOsx">
 		
-		<echo level="info" message="NOTE: libmoai was not cleaned. To clean it, run the clean-osx.sh script file in the eclipse/libmoai folder." />
-	</target>
+		<echo message="----------------------------------------------------------------"/>
+        <echo message="NOTE: libmoai was not cleaned. To clean it, run the clean-osx.sh script file in the eclipse/libmoai folder." />
+		<echo message="----------------------------------------------------------------"/>
+    </target>
 
     <!-- ================================================================ -->
     <!-- clean-libmoai-windows -->
     <!-- ================================================================ -->
 	<target name="clean-libmoai-windows" if="isWindows">
 
-		<echo level="info" message="NOTE: libmoai was not cleaned. To clean it, run the clean-windows.bat file in the eclipse/libmoai folder." />
-	</target>
+		<echo message="----------------------------------------------------------------"/>
+        <echo message="NOTE: libmoai was not cleaned. To clean it, run the clean-windows.bat file in the eclipse/libmoai folder." />
+		<echo message="----------------------------------------------------------------"/>
+    </target>
     
 </project>
