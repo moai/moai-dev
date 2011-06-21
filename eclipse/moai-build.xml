@@ -62,7 +62,7 @@
 
 		<exec executable="cmd">
 		    <arg value="/c"/>
-		    <arg value="moai-build.bat"/>
+		    <arg value="pack-lua.bat"/>
 		    <arg value="-p"/>
 		</exec>
 	</target>
