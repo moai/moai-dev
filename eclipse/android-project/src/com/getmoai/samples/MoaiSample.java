@@ -27,7 +27,7 @@ import android.view.WindowManager;
 //================================================================//
 public class MoaiSample extends Activity { 
 	
-	private File		mAppRoot;
+	private File		mAppRoot; 
 	private MoaiView	mView;
     
     //----------------------------------------------------------------//
