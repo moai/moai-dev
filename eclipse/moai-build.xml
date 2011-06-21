@@ -15,9 +15,34 @@
 		<condition property="isOsx">
 			<os family="unix"/>
 		</condition>
-		
+
+		<antcall target="build-libmoai-osx"/>
+		<antcall target="build-libmoai-windows"/>
+
 		<antcall target="pack-osx"/>
 		<antcall target="pack-windows"/>
+	</target>
+
+    <!-- ================================================================ -->
+    <!-- build-libmoai-osx -->
+    <!-- ================================================================ -->
+	<target name="build-libmoai-osx" if="isOsx">
+		
+		<exec executable="bash" dir="libmoai">
+			<arg line="build-osx.sh"/>
+		</exec>
+	</target>
+	
+    <!-- ================================================================ -->
+    <!-- build-libmoai-windows -->
+    <!-- ================================================================ -->
+	<target name="build-libmoai-windows" if="isWindows">
+
+		<exec executable="cmd" dir="libmoai">
+		    <arg value="/c"/>
+		    <arg value="build-windows.bat false"/>
+		    <arg value="-p"/>
+		</exec>
 	</target>
 	
     <!-- ================================================================ -->
@@ -37,7 +62,7 @@
 
 		<exec executable="cmd">
 		    <arg value="/c"/>
-		    <arg value="pack-lua.bat"/>
+		    <arg value="moai-build.bat"/>
 		    <arg value="-p"/>
 		</exec>
 	</target>
