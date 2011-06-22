@@ -38,13 +38,13 @@
 	//----------------------------------------------------------------//
 	-( BOOL ) application:( UIApplication* )application didFinishLaunchingWithOptions:( NSDictionary* )launchOptions {
 	
-		// init aku
-		AKUIphoneInit ( application );
-		
 		// configure window
 		[ application setStatusBarHidden:true ];
 		[ mWindow addSubview:mMoaiView ];
 		[ mWindow makeKeyAndVisible ];
+
+		// init aku
+		AKUIphoneInit ( application );
 		
 		// run scripts
 		[[ NSFileManager defaultManager ] changeCurrentDirectoryPath:[[ NSBundle mainBundle ] resourcePath ]];
