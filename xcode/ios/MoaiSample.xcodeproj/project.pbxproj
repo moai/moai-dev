@@ -16,7 +16,6 @@
 		031BBB2D13B183FC0005ECE0 /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = 031BBB2813B183FC0005ECE0 /* Icon-Small.png */; };
 		031BBB2E13B183FC0005ECE0 /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 031BBB2913B183FC0005ECE0 /* Icon-Small@2x.png */; };
 		031BBB2F13B183FC0005ECE0 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 031BBB2A13B183FC0005ECE0 /* Icon@2x.png */; };
-		031BBBF413B18CA80005ECE0 /* MoaiVC.mm in Sources */ = {isa = PBXBuildFile; fileRef = 031BBBF313B18CA80005ECE0 /* MoaiVC.mm */; };
 		03BBC80F13804B660084FBE1 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 03BBC80E13804B660084FBE1 /* Icon.png */; };
 		03BBC8D313804E3A0084FBE1 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 03BBC8CA13804E3A0084FBE1 /* AppDelegate.mm */; };
 		03BBC8D413804E3A0084FBE1 /* LocationObserver.mm in Sources */ = {isa = PBXBuildFile; fileRef = 03BBC8CC13804E3A0084FBE1 /* LocationObserver.mm */; };
@@ -138,8 +137,6 @@
 		031BBB2813B183FC0005ECE0 /* Icon-Small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small.png"; sourceTree = "<group>"; };
 		031BBB2913B183FC0005ECE0 /* Icon-Small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small@2x.png"; sourceTree = "<group>"; };
 		031BBB2A13B183FC0005ECE0 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
-		031BBBF213B18CA80005ECE0 /* MoaiVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoaiVC.h; sourceTree = "<group>"; };
-		031BBBF313B18CA80005ECE0 /* MoaiVC.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MoaiVC.mm; sourceTree = "<group>"; };
 		03BBC80E13804B660084FBE1 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		03BBC8C913804E3A0084FBE1 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		03BBC8CA13804E3A0084FBE1 /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
@@ -228,8 +225,6 @@
 				03BBC8CA13804E3A0084FBE1 /* AppDelegate.mm */,
 				03BBC8CB13804E3A0084FBE1 /* LocationObserver.h */,
 				03BBC8CC13804E3A0084FBE1 /* LocationObserver.mm */,
-				031BBBF213B18CA80005ECE0 /* MoaiVC.h */,
-				031BBBF313B18CA80005ECE0 /* MoaiVC.mm */,
 				03BBC8CE13804E3A0084FBE1 /* MoaiView.h */,
 				03BBC8CF13804E3A0084FBE1 /* MoaiView.mm */,
 				03BBC8D013804E3A0084FBE1 /* OpenGLView.h */,
@@ -450,7 +445,6 @@
 				03BBC8D613804E3A0084FBE1 /* MoaiView.mm in Sources */,
 				03BBC8D713804E3A0084FBE1 /* OpenGLView.mm in Sources */,
 				03BBC8DA13804EE60084FBE1 /* main.mm in Sources */,
-				031BBBF413B18CA80005ECE0 /* MoaiVC.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

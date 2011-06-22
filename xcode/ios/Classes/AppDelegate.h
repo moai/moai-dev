@@ -9,7 +9,7 @@
 
 #import "RefPtr.h"
 
-@class MoaiView;
+@class MoaiView;
 
 //================================================================//
 // AppDelegate

@@ -43,6 +43,7 @@
 		
 		// configure window
 		[ application setStatusBarHidden:true ];
+		[ mWindow addSubview:mMoaiView ];
 		[ mWindow makeKeyAndVisible ];
 		
 		// run scripts
