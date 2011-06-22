@@ -21,7 +21,7 @@ pushd ..\..
 	echo ----------------------------------------------------------------
 	echo Copying Resources
 	echo ----------------------------------------------------------------
-	xcopy "%LUA_FOLDER%" "eclipse\lua-prep" /E /C /I /K /Y /EXCLUDE:eclipse\scripts\excludes.txt
+	xcopy "%LUA_FOLDER%" "eclipse\lua-prep" /E /C /I /K /Y /EXCLUDE:eclipse\packager\excludes.txt
 
 	echo ----------------------------------------------------------------
 	echo Copying Android Config File
