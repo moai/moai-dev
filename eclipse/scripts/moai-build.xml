@@ -34,7 +34,7 @@
     <!-- ================================================================ -->
 	<target name="build-libmoai-osx" if="isOsx">
 		
-		<exec executable="bash" dir="libmoai">
+		<exec executable="bash" dir="../libmoai">
 			<arg line="build-osx.sh"/>
 		</exec>
 	</target>
@@ -44,7 +44,7 @@
     <!-- ================================================================ -->
 	<target name="build-libmoai-windows" if="isWindows">
 
-		<exec executable="cmd" dir="libmoai">
+		<exec executable="cmd" dir="../libmoai">
 		    <arg value="/c"/>
 		    <arg value="build-windows.bat false"/>
 		    <arg value="-p"/>

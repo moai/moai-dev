@@ -5,10 +5,10 @@
 ::----------------------------------------------------------------::
 
 @echo off
-set LUA_FOLDER=samples\basics\anim-basic
+set LUA_FOLDER=device-info
 
 ::----------------------------------------------------------------::
-pushd ..
+pushd ..\..
 
 	if exist eclipse\lua-prep (
 		del /Q /S eclipse\lua-prep\*.*
@@ -18,7 +18,7 @@ pushd ..
 	echo ----------------------------------------------------------------
 	echo Copying Resources
 	echo ----------------------------------------------------------------
-	xcopy "%LUA_FOLDER%" "eclipse\lua-prep" /E /C /I /K /Y /EXCLUDE:eclipse\excludes.txt
+	xcopy "%LUA_FOLDER%" "eclipse\lua-prep" /E /C /I /K /Y /EXCLUDE:eclipse\scripts\excludes.txt
 
 	echo ----------------------------------------------------------------
 	echo Packaging Resources

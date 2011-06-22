@@ -443,3 +443,115 @@ void Java_com_getmoai_samples_MoaiView_setWorkingDirectory
 }
 
 
+//Device properties
+
+extern "C"
+void Java_com_getmoai_samples_MoaiView_setDeviceProperties
+(JNIEnv *env, jclass clazz, 
+	jstring appName, 
+	jstring abi,
+	jstring devBrand,
+	jstring devDes, 
+	jstring ma,
+	jstring devModel,
+	jstring devProduct,
+	jstring osName,
+	jstring osVersion,
+	jstring UDID )
+{
+	__android_log_write(ANDROID_LOG_ERROR,"MoaiJNI-Props","Setting Properties...");
+	
+	MOAIDeviceInfo& devInfo = MOAIDeviceInfo::Get ();	
+	char buf[512];
+    const char *str;
+	
+	//App name
+    str = env->GetStringUTFChars( appName, NULL );
+    if ( str == NULL ) {
+        return; /* OutOfMemoryError already thrown */
+    }	
+	strcpy ( buf, str);
+	env->ReleaseStringUTFChars( appName, str );
+	devInfo.SetAppDisplayName ( buf );
+	
+	//abi
+	str = env->GetStringUTFChars( abi, NULL );
+    if ( str == NULL ) {
+        return; /* OutOfMemoryError already thrown */
+    }	
+	strcpy ( buf, str);
+	env->ReleaseStringUTFChars( abi, str );
+	devInfo.SetCPUABI ( buf );
+	
+	//devBrand
+	str = env->GetStringUTFChars( devBrand, NULL );
+    if ( str == NULL ) {
+        return; /* OutOfMemoryError already thrown */
+    }	
+	strcpy ( buf, str);
+	env->ReleaseStringUTFChars( devBrand, str );
+	devInfo.SetDevBrand ( buf );
+		
+	//devDes
+	str = env->GetStringUTFChars( devDes, NULL );
+    if ( str == NULL ) {
+        return; /* OutOfMemoryError already thrown */
+    }	
+	strcpy ( buf, str);
+	env->ReleaseStringUTFChars( devDes, str );
+	devInfo.SetDevName ( buf );
+		
+	//ma
+	str = env->GetStringUTFChars( ma, NULL );
+    if ( str == NULL ) {
+        return; /* OutOfMemoryError already thrown */
+    }	
+	strcpy ( buf, str);
+	env->ReleaseStringUTFChars( ma, str );
+	devInfo.SetDevManufacturer ( buf );
+		
+	//devModel
+	str = env->GetStringUTFChars( devModel, NULL );
+    if ( str == NULL ) {
+        return; /* OutOfMemoryError already thrown */
+    }	
+	strcpy ( buf, str);
+	env->ReleaseStringUTFChars( devModel, str );	
+	devInfo.SetDevModel ( buf );
+		
+	//devProduct
+	str = env->GetStringUTFChars( devProduct, NULL );
+    if ( str == NULL ) {
+        return; /* OutOfMemoryError already thrown */
+    }	
+	strcpy ( buf, str);
+	env->ReleaseStringUTFChars( devProduct, str );	
+	devInfo.SetDevProduct ( buf );
+		
+	//osName
+	str = env->GetStringUTFChars( osName, NULL );
+    if ( str == NULL ) {
+        return; /* OutOfMemoryError already thrown */
+    }	
+	strcpy ( buf, str);
+	env->ReleaseStringUTFChars( osName, str );	
+	devInfo.SetOSBrand ( buf );
+		
+	//osVersion
+	str = env->GetStringUTFChars( osVersion, NULL );
+    if ( str == NULL ) {
+        return; /* OutOfMemoryError already thrown */
+    }	
+	strcpy ( buf, str);
+	env->ReleaseStringUTFChars( osVersion, str );	
+	devInfo.SetOSVersion ( buf );
+	
+	//UDID
+	str = env->GetStringUTFChars( UDID, NULL );
+    if ( str == NULL ) {
+        return; /* OutOfMemoryError already thrown */
+    }	
+	strcpy ( buf, str);
+	env->ReleaseStringUTFChars( UDID, str );	
+	devInfo.SetUDID ( buf );	
+}
