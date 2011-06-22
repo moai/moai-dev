@@ -5,7 +5,10 @@
 ::----------------------------------------------------------------::
 
 @echo off
-set LUA_FOLDER=samples\basics\anim-basic
+
+pushd ..\android-project
+	set	/p LUA_FOLDER= <moai-target
+popd
 
 ::----------------------------------------------------------------::
 pushd ..\..
