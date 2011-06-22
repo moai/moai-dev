@@ -9,6 +9,13 @@
 //================================================================//
 /**	@name	MOAIEnvironment
 	@text	Holds info about the device.
+	
+	@const CONNECTION_TYPE_NONE		Signifies that there is no active connection
+	@const CONNECTION_TYPE_WIFI		Signifies that the current connection is via WiFi
+	@const CONNECTION_TYPE_WWAN		Signifies that the current connection is via WWAN
+	
+	@const OS_BRAND_ANDROID			Signifies that Moai is currently running on Android
+	@const OS_BRAND_IOS				Signifies that Moai is currently running on iOS
 */
 class MOAIEnvironment :
 	public USGlobalClass < MOAIEnvironment, USLuaObject > {
@@ -48,6 +55,16 @@ private:
 	static int			_getOSVersion			( lua_State* L );
 	static int			_getUDID				( lua_State* L );
 	static int			_getViewSize			( lua_State* L );
+	
+	
+	//----------------------------------------------------------------//
+	enum {
+		CONNECTION_TYPE_NONE,
+		CONNECTION_TYPE_WIFI,
+		CONNECTION_TYPE_WWAN,
+		OS_BRAND_ANDROID,
+		OS_BRAND_IOS
+	};
 
 public:
 	

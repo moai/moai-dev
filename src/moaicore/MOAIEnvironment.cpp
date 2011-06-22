@@ -186,8 +186,11 @@ int MOAIEnvironment::_getUDID ( lua_State* L  ) {
 */
 int MOAIEnvironment::_getViewSize ( lua_State* L  ) {
 
-	lua_pushinteger ( L, MOAIEnvironment::Get ().getWidthFunc ());
-	lua_pushinteger ( L, MOAIEnvironment::Get ().getHeightFunc ());
+	USGfxDevice& gfxDevice = USGfxDevice::Get ();
+	
+	lua_pushnumber ( L, gfxDevice.GetWidth ());
+	lua_pushnumber ( L, gfxDevice.GetHeight ());
+	
 	return 2;
 }
 
@@ -219,6 +222,13 @@ MOAIEnvironment::~MOAIEnvironment () {
 
 //----------------------------------------------------------------//
 void MOAIEnvironment::RegisterLuaClass ( USLuaState& state ) {
+
+	state.SetField ( -1, "CONNECTION_TYPE_NONE", ( u32 )CONNECTION_TYPE_NONE );
+	state.SetField ( -1, "CONNECTION_TYPE_WIFI", ( u32 )CONNECTION_TYPE_WIFI );
+	state.SetField ( -1, "CONNECTION_TYPE_WWAN", ( u32 )CONNECTION_TYPE_WWAN );
+	
+	state.SetField ( -1, "OS_BRAND_ANDROID", ( u32 )OS_BRAND_ANDROID );
+	state.SetField ( -1, "OS_BRAND_IOS", ( u32 )OS_BRAND_IOS );
 
 	luaL_Reg regTable [] = {
 		{ "generateGUID",			_generateGUID		 },
