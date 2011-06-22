@@ -376,15 +376,13 @@ MOAIWebView::MOAIWebView () :
 	
 	mWebViewDelegate = [ MoaiUiWebViewDelegate alloc ];
 	
-	UIWindow* window = [[ UIApplication sharedApplication ] keyWindow ];
+	//UIWindow* window = [[ UIApplication sharedApplication ] keyWindow ];
 	
-	if ( window ) {
-		mWebView = [[[ UIWebView alloc ] initWithFrame:CGRectMake( 0, 0, window.bounds.size.width, window.bounds.size.height )] autorelease ];
-		[ mWebView setDelegate:mWebViewDelegate ];
-		[ mWebView setScalesPageToFit:YES ];
-		[ mWebView setMultipleTouchEnabled:YES ];
-		[ window addSubview:mWebView ];
-	}
+	//mWebView = [[[ UIWebView alloc ] initWithFrame:CGRectMake( 0, 0, window.bounds.size.width, window.bounds.size.height )] autorelease ];
+	//[ mWebView setDelegate:mWebViewDelegate ];
+	//[ mWebView setScalesPageToFit:YES ];
+	//[ mWebView setMultipleTouchEnabled:YES ];
+	//[ window addSubview:mWebView ];
 }
 
 //----------------------------------------------------------------//

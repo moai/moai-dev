@@ -4,8 +4,6 @@
 -- http://getmoai.com
 ----------------------------------------------------------------
 
-print ( "hello, moai!" )
-
 MOAISim.openWindow ( "test", 320, 480 )
 
 viewport = MOAIViewport.new ()
