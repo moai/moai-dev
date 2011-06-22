@@ -1,17 +1,17 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIDEVICEINFO_H
-#define	MOAIDEVICEINFO_H
+#ifndef	MOAIENVIRONMENT_H
+#define	MOAIENVIRONMENT_H
 
 //================================================================//
-// MOAIDeviceInfo
+// MOAIEnvironment
 //================================================================//
-/**	@name	MOAIDeviceInfo
+/**	@name	MOAIEnvironment
 	@text	Holds info about the device.
 */
-class MOAIDeviceInfo :
-	public USGlobalClass < MOAIDeviceInfo, USLuaObject > {
+class MOAIEnvironment :
+	public USGlobalClass < MOAIEnvironment, USLuaObject > {
 private:
 	STLString			mAppDisplayName;
 	STLString			mAppID;
@@ -26,9 +26,12 @@ private:
 	STLString			mOSVersion;
 	STLString			mUDID;
 	
+	cc8* ( *getConnectivityFunc )( void );
+	cc8* ( *getGUIDfunc ) ( void );
+	
 
 	//----------------------------------------------------------------//
-	static int			_generateUUID			( lua_State* L );
+	static int			_generateGUID			( lua_State* L );
 	static int			_getAppDisplayName		( lua_State* L );
 	static int			_getAppID				( lua_State* L );
 	static int			_getAppVersion			( lua_State* L );
@@ -45,21 +48,23 @@ private:
 
 public:
 	
-	DECL_LUA_SINGLETON ( MOAIDeviceInfo )
+	DECL_LUA_SINGLETON ( MOAIEnvironment )
 
 	//----------------------------------------------------------------//
-						MOAIDeviceInfo				( );
-						~MOAIDeviceInfo				( );
+						MOAIEnvironment				( );
+						~MOAIEnvironment				( );
 	void				RegisterLuaClass			( USLuaState& state );
 	void				SetAppDisplayName			( cc8* displayName );
 	void				SetAppID					( cc8* appID );
-	void				SetAppVersion				( cc8* appVersion );
+	void				SetAppVersion				( cc8* appVersion );	
+	void				SetConnectivityFunc			( cc8* (*connFunc) () );
 	void				SetCPUABI					( cc8* abi );
 	void				SetDevBrand					( cc8* devBrand );
 	void				SetDevName					( cc8* devName );
 	void				SetDevManufacturer			( cc8* devMan );
 	void				SetDevModel					( cc8* devModel );
 	void				SetDevProduct				( cc8* devProduct );
+	void				SetGUIDFunc					( cc8* (*guidFunc) () );
 	void				SetOSBrand					( cc8* osBrand );
 	void				SetOSVersion				( cc8* osVersion );
 	void				SetUDID						( cc8* udid );
