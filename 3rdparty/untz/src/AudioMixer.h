@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Untz.h"
-#include <Threading/RCriticalSection.h>
+#include <Threading/Threading.h>
 #include <vector>
 
 class AudioMixer
@@ -18,7 +18,7 @@ public:
 		UInt32 numOutputChannels, float* outputChannelData, UInt32 numFrames);
 private:
 	int mNumChannels;
-	RCriticalSection mCriticalSection;
+	RCriticalSection mLock;
 	std::vector<UNTZ::Sound*> mSounds;
 	std::vector<float> mBuffer;
 };

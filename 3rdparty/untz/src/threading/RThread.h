@@ -1,5 +1,4 @@
-#ifndef RThread_H
-#define RThread_H
+#pragma once
 
 // Use Win or Posix
 #ifdef WIN32
@@ -119,5 +118,3 @@ private:
 #endif
 
 };
-
-#endif	// RThread_H

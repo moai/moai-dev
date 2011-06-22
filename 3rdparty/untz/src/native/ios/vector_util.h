@@ -1,11 +1,5 @@
-/*
- *  vector_util.h
- *  dopplerpad
- *
- *  Created by dan walton on 5/3/09.
- *  Copyright 2009 Retronyms. All rights reserved.
- *
- */
+
+#pragma once
 
 void vector_fmul_vfp(float *dst, const float *src, int len);
 void vector_fmul1_vfp(float *dst, const float *src, float *mult, int len);

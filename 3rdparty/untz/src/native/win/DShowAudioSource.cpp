@@ -289,7 +289,7 @@ UInt32 DShowAudioSource::readFrames(float* data, UInt32 numChannels, UInt32 numF
 	// Check if we need to decode more data
 	if(mBuffer.size() < numFrames * mpWaveFormatEx->nChannels * 2)
 	{
-		if(mEOF && getLooping())
+		if(mEOF && isLooping())
 		{
 //			printf("looping...\n");
 			setDecoderPosition(0);
@@ -298,10 +298,11 @@ UInt32 DShowAudioSource::readFrames(float* data, UInt32 numChannels, UInt32 numF
 
 	mCriticalSection.unlock();
 
-	if(mEOF && framesRead < numFrames)
+	if(mEOF && framesRead == 0)
 	{
+		return -1;
 //		printf("stopping.\n");
-		mpSound->stop();
+//		mpSound->stop();
 	}
 
 	return framesRead;
@@ -339,10 +340,10 @@ UInt32 DShowAudioSource::getBitsPerSample()
 	return 0; 
 }
 
-UInt32 DShowAudioSource::getSampleRate() 
+double DShowAudioSource::getSampleRate() 
 { 
 	if(mpWaveFormatEx)
-		return mpWaveFormatEx->nSamplesPerSec;
+		return (double)mpWaveFormatEx->nSamplesPerSec;
 	return 0; 
 }
 

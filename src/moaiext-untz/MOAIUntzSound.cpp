@@ -10,23 +10,11 @@
 
 //----------------------------------------------------------------//
 // TODO: doxygen
-int MOAIUntzSound::_getLength ( lua_State* L ) {
+int MOAIUntzSound::_isLooping ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIUntzSound, "U" )
 	
 	if ( self->mSound ) {
-		lua_pushnumber ( state, self->mSound->getLength ());
-		return 1; 
-	}
-	return 0;
-}
-
-//----------------------------------------------------------------//
-// TODO: doxygen
-int MOAIUntzSound::_getLooping ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIUntzSound, "U" )
-	
-	if ( self->mSound ) {
-		lua_pushboolean ( state, self->mSound->getLooping ());
+		lua_pushboolean ( state, self->mSound->isLooping ());
 		return 1; 
 	}
 	return 0;
@@ -191,8 +179,7 @@ void MOAIUntzSound::RegisterLuaClass ( USLuaState& state ) {
 void MOAIUntzSound::RegisterLuaFuncs ( USLuaState& state ) {
 
 	luaL_Reg regTable [] = {
-		{ "getLength",			_getLength },
-		{ "getLooping",			_getLooping },
+		{ "isLooping",			_isLooping },
 		{ "getPosition",		_getPosition },
 		{ "getVolume",			_getVolume },
 		{ "isPaused",			_isPaused },

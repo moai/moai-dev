@@ -1,47 +1,35 @@
 #pragma once
 
-#include "AudioSource.h"
-#include <Threading/RThread.h>
-#include <Threading/RCriticalSection.h>
-#include <Threading/RWaitableEvent.h>
+#include "BufferedAudioSource.h"
+#include <Threading/Threading.h>
 #include <vorbis/codec.h>
 #include <vorbis/vorbisfile.h>
 #include <vector>
 #include <cstdio>
 #include <iostream>
 
-class OggAudioSource : public AudioSource,
-					   public RThread
+class OggAudioSource : public BufferedAudioSource
 {
 public:
 	OggAudioSource();
 	~OggAudioSource();
 
-	bool load(const RString& path);
-
 	// AudioSource
-	virtual UInt32 readFrames(float* buffer, UInt32 numChannels, UInt32 numFrames);
-	virtual void start();
-	virtual void stop();
-	UInt32 getSampleRate();
-	void setPosition(double position);
-	double getPosition();
+	double getSampleRate();
 	double getLength();
+	UInt32 getNumChannels();
 
-	// RThread
-	void run();
-
+	// BufferedAudioSource
+	virtual bool open(const RString& path, bool loadIntoMemory);
+	virtual Int64 decodeData(float* buffer, UInt32 size);
+	virtual void setDecoderPosition(Int64 startFrame);
+	
 private:
 	void setDecoderPosition(double position);
 
 	RString mPath;
 	FILE* mInFile;
-    UInt32 mCurrentPosition;
 	vorbis_info* mpOggInfo;
 	OggVorbis_File mOggFile;
-	bool mEOF;
 	std::vector<float> mBuffer;
-	RCriticalSection mCriticalSection;
-	RWaitableEvent mLoadMoreDataEvent;
-
 };

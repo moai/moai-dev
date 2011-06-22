@@ -2,7 +2,7 @@
 
 #include "Untz.h"
 #include "AudioSource.h"
-#include <Threading/RCriticalSection.h>
+#include <Threading/Threading.h>
 #include <tchar.h>
 #include <dshow.h>
 #include <qedit.h>
@@ -28,7 +28,7 @@ public:
 	virtual void setPosition(double position);
 	virtual double getPosition();
 	virtual UInt32 getBitsPerSample();
-	virtual UInt32 getSampleRate();
+	virtual double getSampleRate();
 	virtual UInt32 getNumChannels();
 	virtual double getLength();
 
