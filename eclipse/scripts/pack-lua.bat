@@ -5,7 +5,7 @@
 ::----------------------------------------------------------------::
 
 @echo off
-set LUA_FOLDER=device-info
+set LUA_FOLDER=samples\basics\anim-basic
 
 ::----------------------------------------------------------------::
 pushd ..\..
@@ -20,6 +20,11 @@ pushd ..\..
 	echo ----------------------------------------------------------------
 	xcopy "%LUA_FOLDER%" "eclipse\lua-prep" /E /C /I /K /Y /EXCLUDE:eclipse\scripts\excludes.txt
 
+	echo ----------------------------------------------------------------
+	echo Copying Android Config File
+	echo ----------------------------------------------------------------
+	copy "samples\config\config-android.lua" "eclipse\lua-prep\config-android.lua" /Y
+	
 	echo ----------------------------------------------------------------
 	echo Packaging Resources
 	echo ----------------------------------------------------------------

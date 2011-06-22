@@ -219,9 +219,9 @@ public class MoaiView extends GLSurfaceView {
 			
 			mSurfaceCreated = true;
 			mIsValid = true;
-			
+
 			setWorkingDirectory ( mAppRoot );
-			
+			Run ( "config-android.lua", mWidth, mHeight );
 			Run ( "main.lua", mWidth, mHeight );
 		}
 	}
