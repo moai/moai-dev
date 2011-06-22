@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moaicore/MOAIDeviceInfo.h>
+#include <moaicore/MOAIEnvironment.h>
 #include <moaicore/MOAILogMgr.h>
 #include <aku/AKU.h>
 
@@ -11,35 +11,50 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	_generateUUID
-	@text	Generates a uninversally unique identifier
+/**	@name	generateGUID
+	@text	Generates a globally unique identifier
 
-	@out	string UUID
+	@out	string GUID
 */
-int MOAIDeviceInfo::_generateUUID ( lua_State* L ) {
+int MOAIEnvironment::_generateGUID ( lua_State* L ) {
 
-	lua_pushstring ( L, /*Get UUID */ "");
+	lua_pushstring ( L, MOAIEnvironment::Get ().getGUIDfunc ());
 	return 1;
 }
 
 //----------------------------------------------------------------//
-int MOAIDeviceInfo::_getAppDisplayName ( lua_State* L  ) {
+/**	@name	getAppDisplayName
+	@text	Returns the app display name
 
-	lua_pushstring ( L, MOAIDeviceInfo::Get ().mAppDisplayName.c_str ());
+	@out	string diaplyName
+*/
+int MOAIEnvironment::_getAppDisplayName ( lua_State* L  ) {
+
+	lua_pushstring ( L, MOAIEnvironment::Get ().mAppDisplayName.c_str ());
 	return 1;
 }
 
 //----------------------------------------------------------------//
-int MOAIDeviceInfo::_getAppID ( lua_State* L  ) {
+/**	@name	getAppID
+	@text	Returns the app ID
 
-	lua_pushstring ( L, MOAIDeviceInfo::Get ().mAppID.c_str ());
+	@out	string appID
+*/
+int MOAIEnvironment::_getAppID ( lua_State* L  ) {
+
+	lua_pushstring ( L, MOAIEnvironment::Get ().mAppID.c_str ());
 	return 1;
 }
 
 //----------------------------------------------------------------//
-int MOAIDeviceInfo::_getAppVersion ( lua_State* L  ) {
+/**	@name	getAppVersion
+	@text	Returns the app version
 
-	lua_pushstring ( L, MOAIDeviceInfo::Get ().mAppVersion.c_str ());
+	@out	string appVersion
+*/
+int MOAIEnvironment::_getAppVersion ( lua_State* L  ) {
+
+	lua_pushstring ( L, MOAIEnvironment::Get ().mAppVersion.c_str ());
 	return 1;
 }
 
@@ -49,81 +64,126 @@ int MOAIDeviceInfo::_getAppVersion ( lua_State* L  ) {
 
 	@out	string connectionType
 */
-int MOAIDeviceInfo::_getConnectionType ( lua_State* L ) {
+int MOAIEnvironment::_getConnectionType ( lua_State* L ) {
 
-	lua_pushstring ( L, /*Get connection type */ "");
+	lua_pushstring ( L, MOAIEnvironment::Get ().getConnectivityFunc ());
 	return 1;
 }
 
 //----------------------------------------------------------------//
-int MOAIDeviceInfo::_getCPUABI ( lua_State* L  ) {
+/**	@name	getCPUABI
+	@text	Returns the CPU ABI
 
-	lua_pushstring ( L, MOAIDeviceInfo::Get ().mCPUABI.c_str ());
+	@out	string ABI
+*/
+int MOAIEnvironment::_getCPUABI ( lua_State* L  ) {
+
+	lua_pushstring ( L, MOAIEnvironment::Get ().mCPUABI.c_str ());
 	return 1;
 }
 
 //----------------------------------------------------------------//
-int MOAIDeviceInfo::_getDevBrand ( lua_State* L  ) {
+/**	@name	getDevBrand
+	@text	Returns the device brand
 
-	lua_pushstring ( L, MOAIDeviceInfo::Get ().mDevBrand.c_str ());
+	@out	string brand
+*/
+int MOAIEnvironment::_getDevBrand ( lua_State* L  ) {
+
+	lua_pushstring ( L, MOAIEnvironment::Get ().mDevBrand.c_str ());
 	return 1;
 }
 
 //----------------------------------------------------------------//
-int MOAIDeviceInfo::_getDevName ( lua_State* L  ) {
+/**	@name	getDevName
+	@text	Returns the device name
 
-	lua_pushstring ( L, MOAIDeviceInfo::Get ().mDevName.c_str ());
+	@out	string name
+*/
+int MOAIEnvironment::_getDevName ( lua_State* L  ) {
+
+	lua_pushstring ( L, MOAIEnvironment::Get ().mDevName.c_str ());
 	return 1;
 }
 
 //----------------------------------------------------------------//
-int MOAIDeviceInfo::_getDevManufacturer ( lua_State* L  ) {
+/**	@name	getDevManufacturer
+	@text	Returns the device manufacturer
 
-	lua_pushstring ( L, MOAIDeviceInfo::Get ().mDevManufacturer.c_str ());
+	@out	string manufacturer
+*/
+int MOAIEnvironment::_getDevManufacturer ( lua_State* L  ) {
+
+	lua_pushstring ( L, MOAIEnvironment::Get ().mDevManufacturer.c_str ());
 	return 1;
 }
 
 //----------------------------------------------------------------//
-int MOAIDeviceInfo::_getDevModel ( lua_State* L  ) {
+/**	@name	getDevModel
+	@text	Returns the device model
 
-	lua_pushstring ( L, MOAIDeviceInfo::Get ().mDevModel.c_str ());
+	@out	string model
+*/
+int MOAIEnvironment::_getDevModel ( lua_State* L  ) {
+
+	lua_pushstring ( L, MOAIEnvironment::Get ().mDevModel.c_str ());
 	return 1;
 }
 
 //----------------------------------------------------------------//
-int MOAIDeviceInfo::_getDevProduct ( lua_State* L  ) {
+/**	@name	getDevProduct
+	@text	Returns the device design name
 
-	lua_pushstring ( L, MOAIDeviceInfo::Get ().mDevProduct.c_str ());
+	@out	string product
+*/
+int MOAIEnvironment::_getDevProduct ( lua_State* L  ) {
+
+	lua_pushstring ( L, MOAIEnvironment::Get ().mDevProduct.c_str ());
 	return 1;
 }
 
 //----------------------------------------------------------------//
-int MOAIDeviceInfo::_getOSBrand ( lua_State* L  ) {
+/**	@name	getOSBrand
+	@text	Returns the operating system brand
 
-	lua_pushstring ( L, MOAIDeviceInfo::Get ().mOSBrand.c_str ());
+	@out	string brand
+*/
+int MOAIEnvironment::_getOSBrand ( lua_State* L  ) {
+
+	lua_pushstring ( L, MOAIEnvironment::Get ().mOSBrand.c_str ());
 	return 1;
 }
 
 //----------------------------------------------------------------//
-int MOAIDeviceInfo::_getOSVersion ( lua_State* L  ) {
+/**	@name	getOSVersion
+	@text	Returns the operating system version
 
-	lua_pushstring ( L, MOAIDeviceInfo::Get ().mOSVersion.c_str ());
+	@out	string version
+*/
+int MOAIEnvironment::_getOSVersion ( lua_State* L  ) {
+
+	lua_pushstring ( L, MOAIEnvironment::Get ().mOSVersion.c_str ());
 	return 1;
 }
 
 //----------------------------------------------------------------//
-int MOAIDeviceInfo::_getUDID ( lua_State* L  ) {
+/**	@name	_getUDID
+	@text	Returns the device unique identifier
 
-	lua_pushstring ( L, MOAIDeviceInfo::Get ().mUDID.c_str ());
+	@out	string UDID
+*/
+int MOAIEnvironment::_getUDID ( lua_State* L  ) {
+
+	lua_pushstring ( L, MOAIEnvironment::Get ().mUDID.c_str ());
 	return 1;
 }
 
 //================================================================//
-// MOAIDeviceInfo
+// MOAIEnvironment
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIDeviceInfo::MOAIDeviceInfo () :
+MOAIEnvironment::MOAIEnvironment () :
 	mAppDisplayName ( "UNKNOWN" ),
 	mAppID ( "UNKNOWN" ),
 	mAppVersion ( "UNKNOWN" ),
@@ -141,14 +201,14 @@ MOAIDeviceInfo::MOAIDeviceInfo () :
 }
 
 //----------------------------------------------------------------//
-MOAIDeviceInfo::~MOAIDeviceInfo () {
+MOAIEnvironment::~MOAIEnvironment () {
 }
 
 //----------------------------------------------------------------//
-void MOAIDeviceInfo::RegisterLuaClass ( USLuaState& state ) {
+void MOAIEnvironment::RegisterLuaClass ( USLuaState& state ) {
 
 	luaL_Reg regTable [] = {
-		{ "generateUUID",			_generateUUID		 },
+		{ "generateGUID",			_generateGUID		 },
 		{ "getAppDisplayName",		_getAppDisplayName	 },
 		{ "getAppID",				_getAppID			 },
 		{ "getAppVersion",			_getAppVersion		 },
@@ -169,67 +229,77 @@ void MOAIDeviceInfo::RegisterLuaClass ( USLuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIDeviceInfo::SetAppDisplayName ( cc8* appName ) {
+void MOAIEnvironment::SetAppDisplayName ( cc8* appName ) {
 	mAppDisplayName = appName;
 }
 
 //----------------------------------------------------------------//
-void MOAIDeviceInfo::SetAppID ( cc8* appID ) {
+void MOAIEnvironment::SetAppID ( cc8* appID ) {
 	mAppID = appID;
 }
 
 //----------------------------------------------------------------//
-void MOAIDeviceInfo::SetAppVersion ( cc8* appVer ) {
+void MOAIEnvironment::SetAppVersion ( cc8* appVer ) {
 	mAppVersion = appVer;
 }
 
 //----------------------------------------------------------------//
-void MOAIDeviceInfo::SetCPUABI ( cc8* abi ) {
+void MOAIEnvironment::SetConnectivityFunc ( cc8* (*connFunc)(void) ) {
+	getConnectivityFunc = connFunc;
+}
+
+//----------------------------------------------------------------//
+void MOAIEnvironment::SetCPUABI ( cc8* abi ) {
 	mCPUABI = abi;
 }
 
 //----------------------------------------------------------------//
-void MOAIDeviceInfo::SetDevBrand( cc8* devBrand ) {
+void MOAIEnvironment::SetDevBrand( cc8* devBrand ) {
 	mDevBrand = devBrand;
 }
 
 //----------------------------------------------------------------//
-void MOAIDeviceInfo::SetDevName ( cc8* devName ) {
+void MOAIEnvironment::SetDevName ( cc8* devName ) {
 	mDevName = devName;
 }
 
 //----------------------------------------------------------------//
-void MOAIDeviceInfo::SetDevManufacturer ( cc8* devMan ) {
+void MOAIEnvironment::SetDevManufacturer ( cc8* devMan ) {
 	mDevManufacturer = devMan;
 }
 
 //----------------------------------------------------------------//
-void MOAIDeviceInfo::SetDevModel ( cc8* devModel ) {
+void MOAIEnvironment::SetDevModel ( cc8* devModel ) {
 	mDevModel = devModel;
 }
 
 //----------------------------------------------------------------//
-void MOAIDeviceInfo::SetDevProduct ( cc8* devProduct ) {
+void MOAIEnvironment::SetDevProduct ( cc8* devProduct ) {
 	mDevProduct = devProduct;
 }
 
 //----------------------------------------------------------------//
-void MOAIDeviceInfo::SetOSBrand ( cc8* osBrand ) {
+void MOAIEnvironment::SetGUIDFunc ( cc8* (*guidFunc)(void) ) {
+	getGUIDfunc = guidFunc;
+}
+
+//----------------------------------------------------------------//
+void MOAIEnvironment::SetOSBrand ( cc8* osBrand ) {
 	mOSBrand = osBrand;
 }
 
 //----------------------------------------------------------------//
-void MOAIDeviceInfo::SetOSVersion ( cc8* osVer ) {
+void MOAIEnvironment::SetOSVersion ( cc8* osVer ) {
 	mOSVersion = osVer;
 }
 
 //----------------------------------------------------------------//
-void MOAIDeviceInfo::SetUDID ( cc8* udid ) {
+void MOAIEnvironment::SetUDID ( cc8* udid ) {
 	mUDID = udid;
 }
 
 //----------------------------------------------------------------//
-STLString MOAIDeviceInfo::ToString () {
+STLString MOAIEnvironment::ToString () {
 
 	STLString info = "";
 	info += mAppDisplayName += "\n";

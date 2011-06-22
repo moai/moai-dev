@@ -7,10 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		031BBA5C13B17BD80005ECE0 /* MOAIDeviceInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 031BBA5A13B17BD80005ECE0 /* MOAIDeviceInfo.cpp */; };
-		031BBA5D13B17BD80005ECE0 /* MOAIDeviceInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 031BBA5B13B17BD80005ECE0 /* MOAIDeviceInfo.h */; };
-		031BBA5E13B17BD80005ECE0 /* MOAIDeviceInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 031BBA5A13B17BD80005ECE0 /* MOAIDeviceInfo.cpp */; };
-		031BBA5F13B17BD80005ECE0 /* MOAIDeviceInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 031BBA5B13B17BD80005ECE0 /* MOAIDeviceInfo.h */; };
+		031BBA5C13B17BD80005ECE0 /* MOAIEnvironment.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 031BBA5A13B17BD80005ECE0 /* MOAIEnvironment.cpp */; };
+		031BBA5D13B17BD80005ECE0 /* MOAIEnvironment.h in Headers */ = {isa = PBXBuildFile; fileRef = 031BBA5B13B17BD80005ECE0 /* MOAIEnvironment.h */; };
+		031BBA5E13B17BD80005ECE0 /* MOAIEnvironment.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 031BBA5A13B17BD80005ECE0 /* MOAIEnvironment.cpp */; };
+		031BBA5F13B17BD80005ECE0 /* MOAIEnvironment.h in Headers */ = {isa = PBXBuildFile; fileRef = 031BBA5B13B17BD80005ECE0 /* MOAIEnvironment.h */; };
 		031BBB6713B189830005ECE0 /* BufferedAudioSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C37D421D13B1692F009600BB /* BufferedAudioSource.cpp */; };
 		031BBB8413B189B30005ECE0 /* BufferedAudioSourceThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C37D421F13B1692F009600BB /* BufferedAudioSourceThread.cpp */; };
 		031BBB8513B189B30005ECE0 /* AudioMixer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD07C27F13A1725400C9386C /* AudioMixer.cpp */; };
@@ -2760,8 +2760,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		031BBA5A13B17BD80005ECE0 /* MOAIDeviceInfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIDeviceInfo.cpp; sourceTree = "<group>"; };
-		031BBA5B13B17BD80005ECE0 /* MOAIDeviceInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIDeviceInfo.h; sourceTree = "<group>"; };
+		031BBA5A13B17BD80005ECE0 /* MOAIEnvironment.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIEnvironment.cpp; sourceTree = "<group>"; };
+		031BBA5B13B17BD80005ECE0 /* MOAIEnvironment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIEnvironment.h; sourceTree = "<group>"; };
 		031FA4CB138589C4007FD20C /* MOAICameraAnchor2D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAICameraAnchor2D.cpp; sourceTree = "<group>"; };
 		031FA4CC138589C4007FD20C /* MOAICameraAnchor2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAICameraAnchor2D.h; sourceTree = "<group>"; };
 		031FA4CD138589C4007FD20C /* MOAICameraFitter2D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAICameraFitter2D.cpp; sourceTree = "<group>"; };
@@ -5581,8 +5581,8 @@
 				0324E52613564BC7000ADC60 /* MOAIDataBuffer.h */,
 				0324E52713564BC7000ADC60 /* MOAIDataIOAction.cpp */,
 				0324E52813564BC7000ADC60 /* MOAIDataIOAction.h */,
-				031BBA5A13B17BD80005ECE0 /* MOAIDeviceInfo.cpp */,
-				031BBA5B13B17BD80005ECE0 /* MOAIDeviceInfo.h */,
+				031BBA5A13B17BD80005ECE0 /* MOAIEnvironment.cpp */,
+				031BBA5B13B17BD80005ECE0 /* MOAIEnvironment.h */,
 				CDBC71161398C6E50016F98A /* MOAIFileSystem.cpp */,
 				CDBC71171398C6E50016F98A /* MOAIFileSystem.h */,
 				CD62D6CA13A991BA002286EB /* MOAIJsonParser.cpp */,
@@ -8043,7 +8043,7 @@
 				CDBC711B1398C6E50016F98A /* MOAIFileSystem.h in Headers */,
 				CD07C53113A1954600C9386C /* Untz-Prefix.pch in Headers */,
 				CD62D6CF13A991BA002286EB /* MOAIJsonParser.h in Headers */,
-				031BBA5F13B17BD80005ECE0 /* MOAIDeviceInfo.h in Headers */,
+				031BBA5F13B17BD80005ECE0 /* MOAIEnvironment.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8665,7 +8665,7 @@
 				C37D422813B16955009600BB /* RScopedLock.h in Headers */,
 				C37D422913B16955009600BB /* RSyncEvent.h in Headers */,
 				C37D422A13B16955009600BB /* Threading.h in Headers */,
-				031BBA5D13B17BD80005ECE0 /* MOAIDeviceInfo.h in Headers */,
+				031BBA5D13B17BD80005ECE0 /* MOAIEnvironment.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9376,7 +9376,7 @@
 				CD148EE11395ADBD00A3F501 /* MOAITraits.cpp in Sources */,
 				CDBC711A1398C6E50016F98A /* MOAIFileSystem.cpp in Sources */,
 				CD62D6CE13A991BA002286EB /* MOAIJsonParser.cpp in Sources */,
-				031BBA5E13B17BD80005ECE0 /* MOAIDeviceInfo.cpp in Sources */,
+				031BBA5E13B17BD80005ECE0 /* MOAIEnvironment.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10435,7 +10435,7 @@
 				CD218F7213A7FC79008337E7 /* USLog.cpp in Sources */,
 				07CDCFB313AA7C5D009674C7 /* Reachability.m in Sources */,
 				CD62D6CC13A991BA002286EB /* MOAIJsonParser.cpp in Sources */,
-				031BBA5C13B17BD80005ECE0 /* MOAIDeviceInfo.cpp in Sources */,
+				031BBA5C13B17BD80005ECE0 /* MOAIEnvironment.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

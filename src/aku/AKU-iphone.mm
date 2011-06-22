@@ -3,6 +3,7 @@
 
 #include <aku/AKU-iphone.h>
 #include <moaiext-iphone/moaiext-iphone.h>
+#include <moaicore/MOAIEnvironment.h>
 
 //----------------------------------------------------------------//
 void AKUAppDidFailToRegisterForRemoteNotificationsWithError ( NSError* error ) {
@@ -42,19 +43,16 @@ void AKUIphoneInit ( UIApplication* application ) {
 	
 	MOAIApp::Get ().SetApplication ( application );
 	
-	// Device properties
-	USLuaStateHandle state = USLuaRuntime ().Get (). State ();
-	MOAISim::Get ().PushLuaClassTable ( state );
+	// Device properties	
+	MOAIEnvironment::Get ().SetAppVersion ( [[[[ NSBundle mainBundle ] infoDictionary ] objectForKey:@"CFBundleVersion" ] UTF8String ] );
+	MOAIEnvironment::Get ().SetAppID ( [[[[ NSBundle mainBundle ] infoDictionary ] objectForKey:@"CFBundleIdentifier" ] UTF8String ] );
+	MOAIEnvironment::Get ().SetAppDisplayName ( [[[[ NSBundle mainBundle ] infoDictionary ] objectForKey:@"CFBundleDisplayName" ] UTF8String ] );
+	MOAIEnvironment::Get ().SetConnectivityFunc ( &AKUGetIphoneNetworkReachability );
+	MOAIEnvironment::Get ().SetGUIDFunc ( &AKUGetGUID );
+	MOAIEnvironment::Get ().SetOSBrand ( "iOS" );
+	MOAIEnvironment::Get ().SetOSVersion ( [[ UIDevice currentDevice ].systemVersion UTF8String ] );
+	MOAIEnvironment::Get ().SetUDID ( [[ UIDevice currentDevice ].uniqueIdentifier UTF8String ] );
 	
-	state.SetField ( -1, "DEVICE_UDID", [[ UIDevice currentDevice ].uniqueIdentifier UTF8String ]);
-	state.SetField ( -1, "DEVICE_OS_BRAND", "iOS" );
-	state.SetField ( -1, "DEVICE_OS_VERSION", [[ UIDevice currentDevice ].systemVersion UTF8String ]);
-	state.SetField ( -1, "DEVICE_CONNECTION_TYPE", [ AKUGetIphoneNetworkReachability () UTF8String ]);
-	state.SetField ( -1, "APPLICATION_VERSION", [[[[ NSBundle mainBundle ] infoDictionary ] objectForKey:@"CFBundleVersion" ] UTF8String ]);
-	state.SetField ( -1, "APPLICATION_ID", [[[[ NSBundle mainBundle ] infoDictionary ] objectForKey:@"CFBundleIdentifier" ] UTF8String ]);
-	state.SetField ( -1, "APPLICATION_DISPLAY_NAME", [[[[ NSBundle mainBundle ] infoDictionary ] objectForKey:@"CFBundleDisplayName" ] UTF8String ]);
-	
-	lua_pop ( state, 1 );
 	
 	// MOAI
 	REGISTER_LUA_CLASS ( MOAIApp )
@@ -62,19 +60,28 @@ void AKUIphoneInit ( UIApplication* application ) {
 }
 
 //-----------------------------------------------------------------//
-NSString* AKUGetIphoneNetworkReachability ( ) {
+const char* AKUGetIphoneNetworkReachability ( ) {
 
 	Reachability *reach = [ Reachability reachabilityForInternetConnection ];
 	NetworkStatus status = [ reach currentReachabilityStatus ];
 		
 	if ( status == NotReachable ) {
-		return @"NO_CONNECTION";
+		return [ @"NO_CONNECTION" UTF8String ];
 	} else if ( status == ReachableViaWWAN ) {
-		return @"WWAN_CONNECTION";
+		return [ @"WWAN_CONNECTION" UTF8String ];
 	} else if ( status == ReachableViaWiFi ) {
-		return @"WIFI_CONNECTION";
+		return [ @"WIFI_CONNECTION" UTF8String ];
 	}
 	
-	return @"NO_CONNECTION";
+	return [ @"NO_CONNECTION" UTF8String ];
+}
+
+//-----------------------------------------------------------------//
+const char* AKUGetGUID ( ) {
+
+	CFUUIDRef uuid = CFUUIDCreate( NULL );
+	NSString* session_uuid = ( NSString * ) CFUUIDCreateString( NULL, uuid );
+	CFRelease( uuid );
+	return [ session_uuid UTF8String ];
 }
 

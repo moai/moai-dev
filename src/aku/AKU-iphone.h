@@ -18,6 +18,7 @@ void		AKUAppDidReceiveRemoteNotification						( NSDictionary* userInfo );
 void		AKUAppDidRegisterForRemoteNotificationsWithDeviceToken	( NSData* deviceToken );
 void		AKUIphoneInit											( UIApplication* application );
 
-NSString*    AKUGetIphoneNetworkReachability					    	( );
+const char* AKUGetIphoneNetworkReachability					    	( );
+const char* AKUGetGUID												( );
 
 #endif

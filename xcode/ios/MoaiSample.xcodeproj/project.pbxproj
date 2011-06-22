@@ -129,7 +129,7 @@
 
 /* Begin PBXFileReference section */
 		031BBA8413B17E0E0005ECE0 /* cathead.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cathead.png; path = "../../samples/basics/anim-basic/cathead.png"; sourceTree = SOURCE_ROOT; };
-		031BBA8513B17E0E0005ECE0 /* main.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.lua; name = main.lua; path = "../../samples/basics/anim-basic/main.lua"; sourceTree = SOURCE_ROOT; };
+		031BBA8513B17E0E0005ECE0 /* main.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = main.lua; path = "../../samples/basics/anim-basic/main.lua"; sourceTree = SOURCE_ROOT; };
 		031BBB1A13B17FB80005ECE0 /* MainWindow-iPad.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = "MainWindow-iPad.xib"; sourceTree = "<group>"; };
 		031BBB1B13B17FB80005ECE0 /* MainWindow-iPhone.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = "MainWindow-iPhone.xib"; sourceTree = "<group>"; };
 		031BBB2613B183FC0005ECE0 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
