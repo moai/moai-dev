@@ -66,7 +66,16 @@ int MOAIEnvironment::_getAppVersion ( lua_State* L  ) {
 */
 int MOAIEnvironment::_getConnectionType ( lua_State* L ) {
 
-	lua_pushstring ( L, MOAIEnvironment::Get ().getConnectivityFunc ());
+	cc8* typeStr = MOAIEnvironment::Get ().getConnectivityFunc ();
+	u32 type;
+	if ( typeStr == "WIFI" )
+		type = CONNECTION_TYPE_WIFI;
+	else if ( typeStr == "MOBILE" )
+		type = CONNECTION_TYPE_WWAN;
+	else
+		type = CONNECTION_TYPE_NONE;
+
+	lua_pushinteger ( L, type );
 	return 1;
 }
 
@@ -150,7 +159,16 @@ int MOAIEnvironment::_getDevProduct ( lua_State* L  ) {
 */
 int MOAIEnvironment::_getOSBrand ( lua_State* L  ) {
 
-	lua_pushstring ( L, MOAIEnvironment::Get ().mOSBrand.c_str ());
+	cc8* brandStr = MOAIEnvironment::Get ().mOSBrand.c_str ();
+	u32 brand;
+	if ( brandStr == "Android" )
+		brand = OS_BRAND_ANDROID;
+	else if ( brandStr == "iOS" )
+		brand = OS_BRAND_IOS;
+	else
+		brand = OS_BRAND_UNAVAILABLE;
+
+	lua_pushinteger ( L, brand );
 	return 1;
 }
 
@@ -176,6 +194,22 @@ int MOAIEnvironment::_getUDID ( lua_State* L  ) {
 
 	lua_pushstring ( L, MOAIEnvironment::Get ().mUDID.c_str ());
 	return 1;
+}
+
+//----------------------------------------------------------------//
+/**	@name	_getViewSize
+	@text	Returns the width and height of the view
+	@out	int width
+	@out	int height
+*/
+int MOAIEnvironment::_getViewSize ( lua_State* L  ) {
+
+	USGfxDevice& gfxDevice = USGfxDevice::Get ();
+	
+	lua_pushnumber ( L, gfxDevice.GetWidth ());
+	lua_pushnumber ( L, gfxDevice.GetHeight ());
+	
+	return 2;
 }
 
 //================================================================//
@@ -207,6 +241,14 @@ MOAIEnvironment::~MOAIEnvironment () {
 //----------------------------------------------------------------//
 void MOAIEnvironment::RegisterLuaClass ( USLuaState& state ) {
 
+	state.SetField ( -1, "CONNECTION_TYPE_NONE", ( u32 )CONNECTION_TYPE_NONE );
+	state.SetField ( -1, "CONNECTION_TYPE_WIFI", ( u32 )CONNECTION_TYPE_WIFI );
+	state.SetField ( -1, "CONNECTION_TYPE_WWAN", ( u32 )CONNECTION_TYPE_WWAN );
+	
+	state.SetField ( -1, "OS_BRAND_ANDROID", ( u32 )OS_BRAND_ANDROID );
+	state.SetField ( -1, "OS_BRAND_IOS", ( u32 )OS_BRAND_IOS );
+	state.SetField ( -1, "OS_BRAND_UNAVAILABLE", ( u32 )OS_BRAND_UNAVAILABLE );
+
 	luaL_Reg regTable [] = {
 		{ "generateGUID",			_generateGUID		 },
 		{ "getAppDisplayName",		_getAppDisplayName	 },
@@ -222,6 +264,7 @@ void MOAIEnvironment::RegisterLuaClass ( USLuaState& state ) {
 		{ "getOSBrand",				_getOSBrand			 },
 		{ "getOSVersion",			_getOSVersion		 },
 		{ "getUDID",				_getUDID			 },
+		{ "getViewSize",			_getViewSize		 },
 		{ NULL, NULL }
 	};
 
@@ -284,6 +327,11 @@ void MOAIEnvironment::SetGUIDFunc ( cc8* (*guidFunc)(void) ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIEnvironment::SetHeightFunc ( int (*heightFunc)(void) ) {
+	getHeightFunc = heightFunc;
+}
+
+//----------------------------------------------------------------//
 void MOAIEnvironment::SetOSBrand ( cc8* osBrand ) {
 	mOSBrand = osBrand;
 }
@@ -296,6 +344,11 @@ void MOAIEnvironment::SetOSVersion ( cc8* osVer ) {
 //----------------------------------------------------------------//
 void MOAIEnvironment::SetUDID ( cc8* udid ) {
 	mUDID = udid;
+}
+
+//----------------------------------------------------------------//
+void MOAIEnvironment::SetWidthFunc ( int (*widthFunc)(void) ) {
+	getWidthFunc = widthFunc;
 }
 
 //----------------------------------------------------------------//

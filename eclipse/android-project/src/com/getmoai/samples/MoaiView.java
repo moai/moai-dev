@@ -10,6 +10,8 @@ import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
   
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.opengl.GLSurfaceView; 
 import android.os.SystemClock;
 import android.view.MotionEvent; 
@@ -33,6 +35,7 @@ public class MoaiView extends GLSurfaceView {
 	private boolean mIsValid = false;
 	String mPackageName = null;
 	String mUDID = null;
+	ConnectivityManager mConMan = null;
 	
 	//----------------------------------------------------------------//
 	public void cleanup () {
@@ -86,6 +89,7 @@ public class MoaiView extends GLSurfaceView {
 
 		mPackageName = context.getPackageName ();
 		mUDID = Secure.getString ( context.getContentResolver (), Secure.ANDROID_ID );
+		mConMan = ( ConnectivityManager )context.getSystemService ( Context.CONNECTIVITY_SERVICE );
 	}
 	
 	//================================================================//
@@ -122,6 +126,26 @@ public class MoaiView extends GLSurfaceView {
 		if ( !mThread.isAlive () ) {
 			mThread.start ();
 		}
+	}
+	
+	//================================================================//
+	// Device properties callbacks
+	//================================================================//
+	
+	//----------------------------------------------------------------//
+	public String GetConnectivity () {
+		
+		NetworkInfo ni = mConMan.getActiveNetworkInfo ();
+		if ( ni != null )
+			return ni.getTypeName ();
+		else
+			return "NOT CONNECTED";
+	}		
+	
+	//----------------------------------------------------------------//
+	public String GenerateGUID () {
+	
+		return java.util.UUID.randomUUID().toString();
 	}
 	
     //----------------------------------------------------------------//

@@ -68,9 +68,9 @@ const char* AKUGetIphoneNetworkReachability ( ) {
 	if ( status == NotReachable ) {
 		return [ @"NO_CONNECTION" UTF8String ];
 	} else if ( status == ReachableViaWWAN ) {
-		return [ @"WWAN_CONNECTION" UTF8String ];
+		return [ @"MOBILE" UTF8String ];
 	} else if ( status == ReachableViaWiFi ) {
-		return [ @"WIFI_CONNECTION" UTF8String ];
+		return [ @"WIFI" UTF8String ];
 	}
 	
 	return [ @"NO_CONNECTION" UTF8String ];
