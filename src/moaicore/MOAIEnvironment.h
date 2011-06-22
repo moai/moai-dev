@@ -28,6 +28,8 @@ private:
 	
 	cc8* ( *getConnectivityFunc )( void );
 	cc8* ( *getGUIDfunc ) ( void );
+	int ( *getHeightFunc ) ( void );
+	int ( *getWidthFunc ) ( void );
 	
 
 	//----------------------------------------------------------------//
@@ -45,6 +47,7 @@ private:
 	static int			_getOSBrand				( lua_State* L );
 	static int			_getOSVersion			( lua_State* L );
 	static int			_getUDID				( lua_State* L );
+	static int			_getViewSize			( lua_State* L );
 
 public:
 	
@@ -65,9 +68,11 @@ public:
 	void				SetDevModel					( cc8* devModel );
 	void				SetDevProduct				( cc8* devProduct );
 	void				SetGUIDFunc					( cc8* (*guidFunc) () );
+	void				SetHeightFunc				( int (*heightFunc) () );
 	void				SetOSBrand					( cc8* osBrand );
 	void				SetOSVersion				( cc8* osVersion );
 	void				SetUDID						( cc8* udid );
+	void				SetWidthFunc				( int (*widthFunc) () );
 	STLString			ToString					();
 };
 

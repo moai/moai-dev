@@ -178,6 +178,19 @@ int MOAIEnvironment::_getUDID ( lua_State* L  ) {
 	return 1;
 }
 
+//----------------------------------------------------------------//
+/**	@name	_getViewSize
+	@text	Returns the width and height of the view
+	@out	int width
+	@out	int height
+*/
+int MOAIEnvironment::_getViewSize ( lua_State* L  ) {
+
+	lua_pushinteger ( L, MOAIEnvironment::Get ().getWidthFunc ());
+	lua_pushinteger ( L, MOAIEnvironment::Get ().getHeightFunc ());
+	return 2;
+}
+
 //================================================================//
 // MOAIEnvironment
 //================================================================//
@@ -222,6 +235,7 @@ void MOAIEnvironment::RegisterLuaClass ( USLuaState& state ) {
 		{ "getOSBrand",				_getOSBrand			 },
 		{ "getOSVersion",			_getOSVersion		 },
 		{ "getUDID",				_getUDID			 },
+		{ "getViewSize",			_getViewSize		 },
 		{ NULL, NULL }
 	};
 
@@ -284,6 +298,11 @@ void MOAIEnvironment::SetGUIDFunc ( cc8* (*guidFunc)(void) ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIEnvironment::SetHeightFunc ( int (*heightFunc)(void) ) {
+	getHeightFunc = heightFunc;
+}
+
+//----------------------------------------------------------------//
 void MOAIEnvironment::SetOSBrand ( cc8* osBrand ) {
 	mOSBrand = osBrand;
 }
@@ -296,6 +315,11 @@ void MOAIEnvironment::SetOSVersion ( cc8* osVer ) {
 //----------------------------------------------------------------//
 void MOAIEnvironment::SetUDID ( cc8* udid ) {
 	mUDID = udid;
+}
+
+//----------------------------------------------------------------//
+void MOAIEnvironment::SetWidthFunc ( int (*widthFunc)(void) ) {
+	getWidthFunc = widthFunc;
 }
 
 //----------------------------------------------------------------//
