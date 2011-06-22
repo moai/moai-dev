@@ -24,8 +24,6 @@ jmethodID m_AKUShowSoftwareKeyboardFunc;
 jmethodID m_AKUStartGameLoopFunc;
 
 //Device properties
-jmethodID m_GetViewWidthFunc;
-jmethodID m_GetViewHeightFunc;
 jmethodID m_GetConnectivityFunc;
 jmethodID m_GenerateGuidFunc;
 
@@ -278,44 +276,6 @@ void _AKUStartGameLoopFunc () {
 }
 
 // -------------------------------------------------------------//
-int _GetViewWidth () {
-
-	JNIEnv *env;
-	if(jvm == NULL)
-		return 0;
-	
-	jvm->GetEnv((void**)&env, JNI_VERSION_1_4);
-	if(env == NULL)
-		return 0;
-
-	if(m_AKUStartGameLoopFunc == NULL)
-	{
-		__android_log_write(ANDROID_LOG_ERROR,"MoaiJNI","Get view width Callback FAILURE.");
-	}
-
-    return (jint)env->CallObjectMethod(javaObject, m_GetViewWidthFunc);
-}
-
-// -------------------------------------------------------------//
-int _GetViewHeight () {
-
-	JNIEnv *env;
-	if(jvm == NULL)
-		return 0;
-	
-	jvm->GetEnv((void**)&env, JNI_VERSION_1_4);
-	if(env == NULL)
-		return 0;
-
-	if(m_AKUStartGameLoopFunc == NULL)
-	{
-		__android_log_write(ANDROID_LOG_ERROR,"MoaiJNI","get view height Callback FAILURE.");
-	}
-
-    return (jint)env->CallObjectMethod(javaObject, m_GetViewHeightFunc);
-}
-
-// -------------------------------------------------------------//
 const char* _GetConnectivity () {
 
 	JNIEnv *env;
@@ -419,8 +379,6 @@ void Java_com_getmoai_samples_MoaiView_RestartAku
 	m_AKUStartGameLoopFunc = env->GetMethodID(classic,"AKUStartGameLoopFunc", "()V");
 	
 	//Device properties
-	m_GetViewWidthFunc = env->GetMethodID(classic,"GetViewWidth","()I");
-	m_GetViewHeightFunc = env->GetMethodID(classic,"GetViewHeight","()I");
 	m_GetConnectivityFunc = env->GetMethodID(classic,"GetConnectivity","()Ljava/lang/String;");
 	m_GenerateGuidFunc = env->GetMethodID(classic,"GenerateGUID","()Ljava/lang/String;");
 
@@ -576,8 +534,6 @@ void Java_com_getmoai_samples_MoaiView_setDeviceProperties
 	//Set callbacks
 	devInfo.SetGUIDFunc ( &_GenerateGUID );
 	devInfo.SetConnectivityFunc ( &_GetConnectivity );
-	devInfo.SetWidthFunc ( &_GetViewWidth );
-	devInfo.SetHeightFunc ( &_GetViewHeight );
 	
 	char buf[512];
     const char *str;

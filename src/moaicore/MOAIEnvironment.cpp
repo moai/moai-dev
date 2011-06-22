@@ -66,7 +66,16 @@ int MOAIEnvironment::_getAppVersion ( lua_State* L  ) {
 */
 int MOAIEnvironment::_getConnectionType ( lua_State* L ) {
 
-	lua_pushstring ( L, MOAIEnvironment::Get ().getConnectivityFunc ());
+	cc8* typeStr = MOAIEnvironment::Get ().getConnectivityFunc ();
+	u32 type;
+	if ( typeStr == "WIFI" )
+		type = CONNECTION_TYPE_WIFI;
+	else if ( typeStr == "MOBILE" )
+		type = CONNECTION_TYPE_WWAN;
+	else
+		type = CONNECTION_TYPE_NONE;
+
+	lua_pushinteger ( L, type );
 	return 1;
 }
 
@@ -150,7 +159,16 @@ int MOAIEnvironment::_getDevProduct ( lua_State* L  ) {
 */
 int MOAIEnvironment::_getOSBrand ( lua_State* L  ) {
 
-	lua_pushstring ( L, MOAIEnvironment::Get ().mOSBrand.c_str ());
+	cc8* brandStr = MOAIEnvironment::Get ().mOSBrand.c_str ();
+	u32 brand;
+	if ( brandStr == "Android" )
+		brand = OS_BRAND_ANDROID;
+	else if ( brandStr == "iOS" )
+		brand = OS_BRAND_IOS;
+	else
+		brand = OS_BRAND_UNAVAILABLE;
+
+	lua_pushinteger ( L, brand );
 	return 1;
 }
 
@@ -229,6 +247,7 @@ void MOAIEnvironment::RegisterLuaClass ( USLuaState& state ) {
 	
 	state.SetField ( -1, "OS_BRAND_ANDROID", ( u32 )OS_BRAND_ANDROID );
 	state.SetField ( -1, "OS_BRAND_IOS", ( u32 )OS_BRAND_IOS );
+	state.SetField ( -1, "OS_BRAND_UNAVAILABLE", ( u32 )OS_BRAND_UNAVAILABLE );
 
 	luaL_Reg regTable [] = {
 		{ "generateGUID",			_generateGUID		 },

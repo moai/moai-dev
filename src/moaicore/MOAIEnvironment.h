@@ -16,6 +16,7 @@
 	
 	@const OS_BRAND_ANDROID			Signifies that Moai is currently running on Android
 	@const OS_BRAND_IOS				Signifies that Moai is currently running on iOS
+	@const OS_BRAND_UNAVAILABLE		Signifies that the operating system cannot be determined
 */
 class MOAIEnvironment :
 	public USGlobalClass < MOAIEnvironment, USLuaObject > {
@@ -63,7 +64,8 @@ private:
 		CONNECTION_TYPE_WIFI,
 		CONNECTION_TYPE_WWAN,
 		OS_BRAND_ANDROID,
-		OS_BRAND_IOS
+		OS_BRAND_IOS,
+		OS_BRAND_UNAVAILABLE
 	};
 
 public:
