@@ -197,7 +197,7 @@ public class MoaiView extends GLSurfaceView {
 
 			if ( mIsValid ) {
 				onDraw ( mWidth, mHeight );
-				gl.glFlush ();
+				gl.glFlush (); 
 			}
 		}
 
