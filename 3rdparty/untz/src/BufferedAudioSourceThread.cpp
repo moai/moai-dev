@@ -142,8 +142,9 @@ void BufferedAudioSourceThread::run()
                 }
 			}
 
-			mLock.unlock();
 		}
+
+        mLock.unlock();
 	}
 }
 

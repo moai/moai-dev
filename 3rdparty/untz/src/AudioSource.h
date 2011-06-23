@@ -8,7 +8,8 @@ protected:
 	AudioSource() :  mLooping(false) {};
 public:
 	virtual ~AudioSource() {};
-	
+
+    virtual void play() {};
 	virtual Int64 readFrames(float* buffer, UInt32 numChannels, UInt32 numFrames) = 0;
 	virtual void setPosition(double position) {};
 	virtual double getPosition() { return 0; }
@@ -16,9 +17,9 @@ public:
 	virtual double getSampleRate() { return 0; }
 	virtual UInt32 getNumChannels() { return 0; }
 	virtual double getLength() { return 0; }
-	virtual void setLooping(bool loop) { mLooping = loop; };
-	virtual bool isLooping() const { return mLooping; };
-
+    
+    void setLooping(bool loop) { mLooping = loop; };
+    bool isLooping() const { return mLooping; };
 	double convertSamplesToSeconds(Int64 samples) 
 	{
 		double time = (double)samples;
