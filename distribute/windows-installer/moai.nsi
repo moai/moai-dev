@@ -90,8 +90,8 @@ Function launchHelloMoai
 	;Call GetMyDocs
 	;SetOutPath "$0\${PROGRAM_FOLDER}\samples\hello-moai"
 	;Exec "$0\${PROGRAM_FOLDER}\samples\hello-moai\run.bat"	
-	SetOutPath "$INSTDIR\samples\hello-moai"
-	Exec "$INSTDIR\samples\hello-moai\run.bat"
+	SetOutPath "$INSTDIR\samples\lua\hello-moai"
+	Exec "$INSTDIR\samples\lua\hello-moai\run.bat"
 FunctionEnd
 
 ;_______________________________________________________________________________________
@@ -109,7 +109,7 @@ Section "Moai"
 
 	; installation files
 	!insertmacro UNINSTALL.LOG_OPEN_INSTALL
-	File /r /x ".gitignore" /x "*.ncb" /x "*.suo" /x "*.user" "release\*.*"
+	File /r /x ".gitignore" /x "*.ncb" /x "*.suo" /x "*.user" "..\sdk\*.*"
 	!insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 
 	; move samples to my documents path
@@ -164,11 +164,11 @@ Section "Moai"
 	
 	; add MOAI_CONFIG variable
 	;Call GetMyDocs
-	;WriteRegExpandStr ${env_hklm} MOAI_CONFIG "$0\${PROGRAM_FOLDER}\samples\config\"
-	WriteRegExpandStr ${env_hklm} MOAI_CONFIG "$INSTDIR\samples\config\"
+	;WriteRegExpandStr ${env_hklm} MOAI_CONFIG "$0\${PROGRAM_FOLDER}\samples\lua\config\"
+	WriteRegExpandStr ${env_hklm} MOAI_CONFIG "$INSTDIR\samples\lua\config\"
 	SendMessage ${HWND_BROADCAST} ${WM_WININICHANGE} 0 "STR:Environment" /TIMEOUT=5000
-	;StrCpy $R0 "$0\${PROGRAM_FOLDER}\samples\config\"
-	StrCpy $R0 "$INSTDIR\samples\config\"
+	;StrCpy $R0 "$0\${PROGRAM_FOLDER}\samples\lua\config\"
+	StrCpy $R0 "$INSTDIR\samples\lua\config\"
 	System::Call 'Kernel32::SetEnvironmentVariableA(t, t) i("MOAI_CONFIG", R0).r0'
 	
 SectionEnd

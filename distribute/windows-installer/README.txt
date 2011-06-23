@@ -6,6 +6,6 @@ http://nsis.sourceforge.net
 - Make sure NSIS folder is on your path
 - Build vs2008 Moai Release for Win32
 - Make the doxygen docs (go to the doxygen folder to see how)
-- Run make_installer.bat
+- Run make-installer.bat
 
-Check make_installer.bat to see where Moai binaries are copied from.
+Check make-installer.bat to see where Moai binaries are copied from.

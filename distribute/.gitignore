@@ -1,0 +1,8 @@
+sdk/3rdparty/
+sdk/bin/
+sdk/docs/
+sdk/samples/lua/
+sdk/samples/hosts/
+sdk/include/
+sdk/version.txt
+*.exe
