@@ -1,25 +1,27 @@
+set SDK_PATH=..\sdk
+
 ::clean away the existing installer (if any)
 call clean-installer
 
 ::copy all needed files into the installer folder
-xcopy /cery ..\..\3rdparty\glut-3.7.6-bin release\3rdparty\glut-3.7.6\
+xcopy /cery ..\..\3rdparty\glut-3.7.6-bin %SDK_PATH%\3rdparty\glut-3.7.6\
 
-xcopy /cery ..\..\vs2008\bin\Win32\release\lua.exe release\bin\
-xcopy /cery ..\..\vs2008\bin\Win32\release\luac.exe release\bin\
-xcopy /cery ..\..\vs2008\bin\Win32\release\moai-dll.dll release\bin\
-xcopy /cery ..\..\vs2008\bin\Win32\release\moai-dll.lib release\bin\
-xcopy /cery ..\..\vs2008\bin\Win32\release\moai.exe release\bin\
-xcopy /cery ..\..\vs2008\bin\Win32\release\lua-5.1.3.dll release\bin\
-xcopy /cery ..\..\vs2008\bin\Win32\release\lua-5.1.3.dll.lib release\bin\
-xcopy /cery ..\..\vs2008\bin\Win32\release\glut32.dll release\bin\
+xcopy /cery ..\..\vs2008\bin\Win32\release\lua.exe %SDK_PATH%\bin\
+xcopy /cery ..\..\vs2008\bin\Win32\release\luac.exe %SDK_PATH%\bin\
+xcopy /cery ..\..\vs2008\bin\Win32\release\moai-dll.dll %SDK_PATH%\bin\
+xcopy /cery ..\..\vs2008\bin\Win32\release\moai-dll.lib %SDK_PATH%\bin\
+xcopy /cery ..\..\vs2008\bin\Win32\release\moai.exe %SDK_PATH%\bin\
+xcopy /cery ..\..\vs2008\bin\Win32\release\lua-5.1.3.dll %SDK_PATH%\bin\
+xcopy /cery ..\..\vs2008\bin\Win32\release\lua-5.1.3.dll.lib %SDK_PATH%\bin\
+xcopy /cery ..\..\vs2008\bin\Win32\release\glut32.dll %SDK_PATH%\bin\
 
-xcopy /cery ..\doxygen\html-lua\html release\docs\html\
-xcopy /cery ..\..\samples\basics release\samples\lua\
-xcopy /cery ..\..\samples\hello-moai release\samples\hello-moai\
-xcopy /cery ..\..\samples\config release\samples\config\
-xcopy /cery ..\..\src\aku\AKUGlut.* release\samples\src\aku\
+xcopy /cery ..\doxygen\html-lua\html %SDK_PATH%\docs\html\
+xcopy /cery ..\..\samples\basics %SDK_PATH%\samples\lua\
+xcopy /cery ..\..\samples\hello-moai %SDK_PATH%\samples\hello-moai\
+xcopy /cery ..\..\samples\config %SDK_PATH%\samples\config\
+xcopy /cery ..\..\src\aku\AKUGlut.* %SDK_PATH%\samples\src\aku\
 
-xcopy /cery ..\..\src\aku\AKU.h release\include\aku\
+xcopy /cery ..\..\src\aku\AKU.h %SDK_PATH%\include\aku\
  
 ::read version from text file
 pushd ..\..
@@ -54,7 +56,7 @@ if "%tag%" == "" (
 )
 
 :: create version file
-pushd release
+pushd %SDK_PATH%
 del /q version.txt
 echo Moai SDK>> version.txt
 
@@ -78,4 +80,4 @@ makensis.exe "moai-temp.nsi"
 del /q moai-temp.nsi
 
 endlocal
-cd installer\windows
+cd distribute\windows-installer

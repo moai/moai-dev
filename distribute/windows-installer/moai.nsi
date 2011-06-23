@@ -109,7 +109,7 @@ Section "Moai"
 
 	; installation files
 	!insertmacro UNINSTALL.LOG_OPEN_INSTALL
-	File /r /x ".gitignore" /x "*.ncb" /x "*.suo" /x "*.user" "release\*.*"
+	File /r /x ".gitignore" /x "*.ncb" /x "*.suo" /x "*.user" "..\sdk\*.*"
 	!insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 
 	; move samples to my documents path
