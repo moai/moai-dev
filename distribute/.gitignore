@@ -6,4 +6,10 @@ sdk/samples/hosts/src
 sdk/samples/hosts/eclipse/android-project/
 sdk/include/
 sdk/version.txt
+Debug/
+Release/
 *.exe
+*.ncb
+*.suo
+*.sdf
+*.opensdf

@@ -44,7 +44,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\src;..\..\..\include;&quot;..\..\..\3rdparty\glut-3.7.6&quot;"
+				AdditionalIncludeDirectories="..\..\src;..\..\..\..\include;&quot;..\..\..\..\3rdparty\glut-3.7.6&quot;"
 				PreprocessorDefinitions="WIN32;_CONSOLE;_DEBUG;_BOOL;AKU_DLL"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -68,9 +68,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="glut32.lib moai-DLL.lib"
+				AdditionalDependencies="opengl32.lib glu32.lib glut32.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib i"
 				ShowProgress="0"
-				AdditionalLibraryDirectories="&quot;..\..\..\bin&quot;;&quot;..\..\..\3rdparty\glut-3.7.6&quot;"
+				AdditionalLibraryDirectories="&quot;..\..\..\..\bin\win32&quot;;&quot;..\..\..\..\3rdparty\glut-3.7.6&quot;"
 				IgnoreAllDefaultLibraries="false"
 				GenerateDebugInformation="true"
 				SubSystem="1"
@@ -211,7 +211,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\..\src;..\..\..\include;&quot;..\..\..\3rdparty\glut-3.7.6&quot;"
+				AdditionalIncludeDirectories="..\..\src;..\..\..\..\include;&quot;..\..\..\..\3rdparty\glut-3.7.6&quot;"
 				PreprocessorDefinitions="WIN32;_CONSOLE;_CRTDBG_MAP_ALLOC;_WINDOWS;_BOOL;TRUE_AND_FALSE_DEFINED;_USE_32BIT_TIME_T;_CRT_SECURE_NO_WARNINGS;AKU_DLL"
 				RuntimeLibrary="2"
 				TreatWChar_tAsBuiltInType="false"
@@ -232,8 +232,8 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="glut32.lib moai-DLL.lib"
-				AdditionalLibraryDirectories="&quot;..\..\..\bin&quot;;&quot;..\..\..\3rdparty\glut-3.7.6&quot;"
+				AdditionalDependencies="glut32.lib"
+				AdditionalLibraryDirectories="&quot;..\..\..\..\bin\win32&quot;;&quot;..\..\..\..\3rdparty\glut-3.7.6&quot;"
 				IgnoreAllDefaultLibraries="false"
 				GenerateDebugInformation="true"
 				SubSystem="1"
