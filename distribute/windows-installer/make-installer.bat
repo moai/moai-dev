@@ -1,5 +1,4 @@
-:: remove existing installer file
-if exist moai-sdk-windows.exe del moai-sdk-windows.exe
+call clean-installer.bat
 
 ::read version from text file
 pushd ..\..
