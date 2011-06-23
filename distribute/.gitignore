@@ -3,16 +3,7 @@ sdk/bin/
 sdk/docs/
 sdk/samples/lua/
 sdk/samples/hosts/src
-sdk/samples/hosts/eclipse/android-project/.externalToolBuilders
-sdk/samples/hosts/eclipse/android-project/bin
-sdk/samples/hosts/eclipse/android-project/gen
-sdk/samples/hosts/eclipse/android-project/res
-sdk/samples/hosts/eclipse/android-project/src
-sdk/samples/hosts/eclipse/android-project/.classpath
-sdk/samples/hosts/eclipse/android-project/.project
-sdk/samples/hosts/eclipse/android-project/AndroidManifest.xml
-sdk/samples/hosts/eclipse/android-project/default.properties
-sdk/samples/hosts/eclipse/android-project/proguard.cfg
+sdk/samples/hosts/eclipse/android-project/
 sdk/include/
 sdk/version.txt
 *.exe
