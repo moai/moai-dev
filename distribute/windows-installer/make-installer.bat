@@ -17,9 +17,9 @@ xcopy /cery ..\..\vs2008\bin\Win32\release\glut32.dll %SDK_PATH%\bin\
 
 xcopy /cery ..\doxygen\html-lua\html %SDK_PATH%\docs\html\
 xcopy /cery ..\..\samples\basics %SDK_PATH%\samples\lua\
-xcopy /cery ..\..\samples\hello-moai %SDK_PATH%\samples\hello-moai\
-xcopy /cery ..\..\samples\config %SDK_PATH%\samples\config\
-xcopy /cery ..\..\src\aku\AKUGlut.* %SDK_PATH%\samples\src\aku\
+xcopy /cery ..\..\samples\hello-moai %SDK_PATH%\samples\lua\hello-moai\
+xcopy /cery ..\..\samples\config %SDK_PATH%\samples\lua\config\
+xcopy /cery ..\..\src\aku\AKUGlut.* %SDK_PATH%\samples\hosts\src\aku\
 
 xcopy /cery ..\..\src\aku\AKU.h %SDK_PATH%\include\aku\
  
