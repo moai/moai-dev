@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0394E90913B3CDDB00CA9F83 /* cathead.png in Resources */ = {isa = PBXBuildFile; fileRef = 0394E90713B3CDDB00CA9F83 /* cathead.png */; };
+		0394E90A13B3CDDB00CA9F83 /* main.lua in Resources */ = {isa = PBXBuildFile; fileRef = 0394E90813B3CDDB00CA9F83 /* main.lua */; };
 		03CC905813B3C1B700B2724C /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 03CC904F13B3C1B700B2724C /* Icon-72.png */; };
 		03CC905913B3C1B700B2724C /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 03CC905013B3C1B700B2724C /* Icon-Small-50.png */; };
 		03CC905A13B3C1B700B2724C /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = 03CC905113B3C1B700B2724C /* Icon-Small.png */; };
@@ -125,6 +127,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0394E90713B3CDDB00CA9F83 /* cathead.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cathead.png; path = "../../samples/basics/anim-basic/cathead.png"; sourceTree = SOURCE_ROOT; };
+		0394E90813B3CDDB00CA9F83 /* main.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.lua; name = main.lua; path = "../../samples/basics/anim-basic/main.lua"; sourceTree = SOURCE_ROOT; };
 		03CC904F13B3C1B700B2724C /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
 		03CC905013B3C1B700B2724C /* Icon-Small-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small-50.png"; sourceTree = "<group>"; };
 		03CC905113B3C1B700B2724C /* Icon-Small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small.png"; sourceTree = "<group>"; };
@@ -187,6 +191,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0394E90613B3CDBF00CA9F83 /* lua */ = {
+			isa = PBXGroup;
+			children = (
+				0394E90713B3CDDB00CA9F83 /* cathead.png */,
+				0394E90813B3CDDB00CA9F83 /* main.lua */,
+			);
+			name = lua;
+			sourceTree = "<group>";
+		};
 		03CC90AF13B3C39D00B2724C /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -251,6 +264,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				0394E90613B3CDBF00CA9F83 /* lua */,
 				03CC90AA13B3C38800B2724C /* Entitlements.plist */,
 				03CC904F13B3C1B700B2724C /* Icon-72.png */,
 				03CC905013B3C1B700B2724C /* Icon-Small-50.png */,
@@ -401,6 +415,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0394E90A13B3CDDB00CA9F83 /* main.lua in Resources */,
 				03CC905813B3C1B700B2724C /* Icon-72.png in Resources */,
 				03CC905913B3C1B700B2724C /* Icon-Small-50.png in Resources */,
 				03CC905A13B3C1B700B2724C /* Icon-Small.png in Resources */,
@@ -409,6 +424,7 @@
 				03CC905D13B3C1B700B2724C /* Icon@2x.png in Resources */,
 				03CC905F13B3C1B700B2724C /* MainWindow-iPad.xib in Resources */,
 				03CC906013B3C1B700B2724C /* MainWindow-iPhone.xib in Resources */,
+				0394E90913B3CDDB00CA9F83 /* cathead.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

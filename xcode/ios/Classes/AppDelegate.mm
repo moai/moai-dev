@@ -47,7 +47,7 @@
 		AKUIphoneInit ( application );
 
 		// select product folder
-		[[ NSFileManager defaultManager ] changeCurrentDirectoryPath:[[[ NSBundle mainBundle ] resourcePath ] stringByAppendingString:@"/lua" ]];
+		[[ NSFileManager defaultManager ] changeCurrentDirectoryPath:[[ NSBundle mainBundle ] resourcePath ]];
 		
 		// run scripts
 		[ mMoaiView run:@"main.lua" ];
