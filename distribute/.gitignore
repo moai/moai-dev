@@ -8,6 +8,9 @@ sdk/include/
 sdk/version.txt
 Debug/
 Release/
+build/
+*.pbxuser
+*.perspectivev3
 *.exe
 *.ncb
 *.suo
