@@ -47,9 +47,7 @@
 		AKUIphoneInit ( application );
 
 		// select product folder
-		NSString* bundleName = [[[ NSBundle mainBundle ] infoDictionary ] objectForKey:@"CFBundleDisplayName" ];
-		NSString* productPath = [ NSString stringWithFormat:@"%@/%@", [[ NSBundle mainBundle ] resourcePath ], bundleName ];
-		[[ NSFileManager defaultManager ] changeCurrentDirectoryPath:productPath ];
+		[[ NSFileManager defaultManager ] changeCurrentDirectoryPath:[[ NSBundle mainBundle ] resourcePath ]];
 		
 		// run scripts
 		[ mMoaiView run:@"main.lua" ];
