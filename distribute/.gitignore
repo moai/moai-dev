@@ -2,9 +2,7 @@ sdk/3rdparty/
 sdk/bin/
 sdk/docs/
 sdk/samples/lua/
-sdk/samples/src/
-sdk/samples/hello-moai/
-sdk/samples/config/
+sdk/samples/hosts/
 sdk/include/
 sdk/version.txt
 *.exe
