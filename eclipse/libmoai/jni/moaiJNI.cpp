@@ -276,7 +276,7 @@ void _AKUStartGameLoopFunc () {
 }
 
 // -------------------------------------------------------------//
-const char* _GetConnectivity () {
+long _GetConnectivity () {
 
 	JNIEnv *env;
 	if(jvm == NULL)
