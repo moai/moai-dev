@@ -489,17 +489,17 @@ void MOAIWebView::RaiseDidFailLoadWithErrorEvent ( NSError* error ) {
 BOOL MOAIWebView::RaiseShouldStartLoadWithRequestEvent ( NSURLRequest* request, UIWebViewNavigationType navType ) {
 
 	cc8* urlString = [[ request.URL absoluteString ] UTF8String ];
-	printf("%s", urlString);	
 	int nav = navType;
+	bool result = true;
 
 	USLuaStateHandle state = USLuaRuntime::Get ().State ();
 		if ( this->PushListenerAndSelf ( SHOULD_START_LOAD_WITH_REQUEST, state )) {
 			lua_pushstring ( state, urlString );
 			lua_pushinteger ( state, nav );			
 			state.DebugCall ( 3, 1 );
+			result = lua_toboolean ( state, -1 );
 		}
 	
-	BOOL result = lua_toboolean ( state, 1 );
 	return result;
 }
 
