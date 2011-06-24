@@ -9,10 +9,6 @@ BufferedAudioSource::BufferedAudioSource()
 
 BufferedAudioSource::~BufferedAudioSource()
 {
-	if(!isLoadedInMemory())
-	{
-		BufferedAudioSourceThread::getInstance()->removeSource(this);        
-    }
 }
 
 bool BufferedAudioSource::init(float* interleavedData, Int64 numSamples)
@@ -48,12 +44,21 @@ bool BufferedAudioSource::init(const RString& path, bool loadIntoMemory)
 	}
 	else
 	{
+        RScopedLock l(&mLock);
 		BufferedAudioSourceThread::getInstance()->addSource(this);
 	}
 
 	mCurrentFrame = 0;
     
 	return true;
+}
+
+void BufferedAudioSource::close()
+{
+	if(!isLoadedInMemory())
+	{
+		BufferedAudioSourceThread::getInstance()->removeSource(this);        
+    }
 }
 
 void BufferedAudioSource::play()

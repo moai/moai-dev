@@ -10,6 +10,7 @@ public:
 	virtual ~AudioSource() {};
 
     virtual void play() {};
+    virtual void close() {};
 	virtual Int64 readFrames(float* buffer, UInt32 numChannels, UInt32 numFrames) = 0;
 	virtual void setPosition(double position) {};
 	virtual double getPosition() { return 0; }

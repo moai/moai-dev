@@ -22,8 +22,6 @@ ExtAudioFileAudioSource::ExtAudioFileAudioSource()
 
 ExtAudioFileAudioSource::~ExtAudioFileAudioSource()
 {
-    ExtAudioFileDispose(mAudioFile);
-    free (mpBufferList);
 }
 
 double ExtAudioFileAudioSource::getLength() 
@@ -79,6 +77,14 @@ bool ExtAudioFileAudioSource::init(const RString& path, bool loadIntoMemory)
     mpBufferList->mNumberBuffers = getNumChannels();    
 
     return BufferedAudioSource::init(path, loadIntoMemory);
+}
+
+void ExtAudioFileAudioSource::close()
+{
+    BufferedAudioSource::close();
+    
+    ExtAudioFileDispose(mAudioFile);
+    free (mpBufferList);    
 }
  
 void ExtAudioFileAudioSource::setDecoderPosition(Int64 startFrame)

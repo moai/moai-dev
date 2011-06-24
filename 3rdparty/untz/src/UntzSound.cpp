@@ -104,6 +104,7 @@ Sound::~Sound()
 	{
 		if(mpData->mpSource)
 		{
+            mpData->mpSource->close();
 			delete mpData->mpSource;
 		}
 
