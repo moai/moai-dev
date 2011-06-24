@@ -75,9 +75,9 @@ $(SRC_PATH)/src/moaicore/MOAIDeck.cpp \
 $(SRC_PATH)/src/moaicore/MOAIDeck2D.cpp \
 $(SRC_PATH)/src/moaicore/MOAIDeckRemapper.cpp \
 $(SRC_PATH)/src/moaicore/MOAIDebugLines.cpp \
-$(SRC_PATH)/src/moaicore/MOAIDeviceInfo.cpp \
 $(SRC_PATH)/src/moaicore/MOAIEaseDriver.cpp \
 $(SRC_PATH)/src/moaicore/MOAIEaseType.cpp \
+$(SRC_PATH)/src/moaicore/MOAIEnvironment.cpp \
 $(SRC_PATH)/src/moaicore/MOAIEventSource.cpp \
 $(SRC_PATH)/src/moaicore/MOAIFileSystem.cpp \
 $(SRC_PATH)/src/moaicore/MOAIFont.cpp \

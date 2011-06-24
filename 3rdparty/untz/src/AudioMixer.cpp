@@ -88,7 +88,11 @@ int AudioMixer::process(UInt32 numInputChannels, float* inputBuffer, UInt32 numO
 				framesRead >= 0);
             
 			if(framesRead < 0)
+            {
+                mLock.unlock();
 				s->stop();
+                mLock.lock();
+            }
 		}
 	}
 

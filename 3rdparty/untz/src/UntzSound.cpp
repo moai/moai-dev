@@ -23,7 +23,7 @@ Sound* Sound::create(const RString& path, bool loadIntoMemory)
 	if (path.find(OGG_FILE_EXT) != RString::npos)
 	{
 		OggAudioSource* source = new OggAudioSource();
-		if(source->open(path, loadIntoMemory))
+		if(source->init(path, loadIntoMemory))
 		{
 			newSound->mpData = new UNTZ::SoundData();
 			newSound->mpData->mpSource = source;
@@ -54,7 +54,7 @@ Sound* Sound::create(const RString& path, bool loadIntoMemory)
 		}
 #else
 		ExtAudioFileAudioSource *source = new ExtAudioFileAudioSource();
-		if(source->open(path, loadIntoMemory))
+		if(source->init(path, loadIntoMemory))
         {
             newSound->mpData = new UNTZ::SoundData();
             newSound->mpData->mpSource = source;
@@ -150,8 +150,12 @@ void Sound::play()
 		mpData->mPlayState = kPlayStatePlaying;
 	    System::get()->getData()->mMixer.addSound(this);
 	}
+    else if(mpData->mPlayState == kPlayStatePlaying)
+        mpData->getSource()->setPosition(0);
 	else if(mpData->mPlayState == kPlayStatePaused)
 		mpData->mPlayState = kPlayStatePaused;
+        
+    mpData->getSource()->play();
 }
 
 void Sound::pause()
@@ -161,7 +165,6 @@ void Sound::pause()
 
 void Sound::stop()
 {	
-    printf("stopped sound.\n");
 	mpData->mPlayState = kPlayStateStopped;
 	UNTZ::System::get()->getData()->mMixer.removeSound(this);
 }

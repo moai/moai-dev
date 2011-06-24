@@ -3,45 +3,52 @@
 
 using namespace UNTZ;
 
-#define fmin(a,b) (a < b) ? a : b
-#define fmax(a,b) (b < a) ? a : b
 
-MemoryAudioSource::MemoryAudioSource(UInt32 sampleRate, UInt32 numChannels, UInt32 numSamples, Int16* buffers)
+MemoryAudioSource::MemoryAudioSource(UInt32 sampleRate, UInt32 numChannels, UInt32 numSamples, Int16* buffer)
 {
-	mSampleRate = sampleRate;
+	mSampleRate = (double)sampleRate;
 	mNumChannels = numChannels;
-
-    // Allocate non-interleaved storage for the audio.
-    mData.resize(numChannels);
-    for(UInt32 i = 0; i < mData.size(); i++)
-        mData[i].resize(numSamples);
+    mNumFrames = numSamples / numChannels;
     
-    //Copy into non-interleaved storage and convert to float.
+    std::vector<float> data(numSamples, 0);    
     for(UInt32 i = 0; i < numSamples; i++)
-        for(UInt32 j = 0; j < numChannels; j++)
-        {
-            mData[j][i] = *(buffers++)/32767.0;
-        }
-    
-    mCurrentPos = 0;
+    {
+        data[i] = *(buffer++)/32767.0;
+    }
+
+    init(&data[0], numSamples);
 }
 
-Int64 MemoryAudioSource::readFrames(float *buffers, UInt32 numChannels, UInt32 numSamples)
+bool MemoryAudioSource::init(const RString& path, bool loadIntoMemory)
 {
-    UInt32 readCount = (UInt32)fmin(mData[0].size() - mCurrentPos, numSamples);
+    return false;
+}
 
-    for(UInt32 channel = 0; channel < mData.size(); channel++)
-    {
-        memcpy(buffers+channel*numSamples, &mData[channel][0]+mCurrentPos, readCount*sizeof(float));
-    }
-    mCurrentPos+=readCount;
-    
-    if(mCurrentPos >= mData[0].size())
-    {
-        mCurrentPos = 0;
-        if(!mLooping)
-			return -1;
-    }
-    
-	return readCount;
+bool MemoryAudioSource::init(float* interleavedData, Int64 numSamples)
+{
+    return BufferedAudioSource::init(interleavedData, numSamples);
+}
+
+Int64 MemoryAudioSource::decodeData(float* buffer, UInt32 numFrames)
+{
+    return 0;
+}
+
+void MemoryAudioSource::setDecoderPosition(Int64 startFrame)
+{
+}
+
+double MemoryAudioSource::getSampleRate()
+{
+    return mSampleRate;
+}
+
+double MemoryAudioSource::getLength()
+{
+    return (double)mNumFrames / getSampleRate();
+}
+
+UInt32 MemoryAudioSource::getNumChannels()
+{
+    return mNumChannels;
 }

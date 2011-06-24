@@ -16,7 +16,7 @@ public:
 	UInt32 getNumChannels();
     
     // BufferedAudioSource
-	virtual bool open(const RString& path, bool loadIntoMemory);
+	virtual bool init(const RString& path, bool loadIntoMemory);
 	virtual Int64 decodeData(float* buffer, UInt32 size);
 	virtual void setDecoderPosition(Int64 startFrame);
     

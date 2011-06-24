@@ -685,11 +685,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAIDeviceInfo.cpp"
+				RelativePath="..\..\src\moaicore\MOAIEnvironment.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAIDeviceInfo.h"
+				RelativePath="..\..\src\moaicore\MOAIEnvironment.h"
 				>
 			</File>
 			<File
