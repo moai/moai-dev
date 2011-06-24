@@ -154,9 +154,7 @@ void Sound::play()
     else if(mpData->mPlayState == kPlayStatePlaying)
         mpData->getSource()->setPosition(0);
 	else if(mpData->mPlayState == kPlayStatePaused)
-		mpData->mPlayState = kPlayStatePaused;
-        
-    mpData->getSource()->play();
+		mpData->mPlayState = kPlayStatePaused;        
 }
 
 void Sound::pause()
