@@ -53,27 +53,27 @@ void AKUIphoneInit ( UIApplication* application ) {
 	MOAIEnvironment::Get ().SetOSVersion ( [[ UIDevice currentDevice ].systemVersion UTF8String ] );
 	MOAIEnvironment::Get ().SetUDID ( [[ UIDevice currentDevice ].uniqueIdentifier UTF8String ] );
 	
-	
 	// MOAI
 	REGISTER_LUA_CLASS ( MOAIApp )
 	REGISTER_LUA_CLASS ( MOAIWebView )
 }
 
 //-----------------------------------------------------------------//
-const char* AKUGetIphoneNetworkReachability ( ) {
+long AKUGetIphoneNetworkReachability ( ) {
+
 
 	Reachability *reach = [ Reachability reachabilityForInternetConnection ];
 	NetworkStatus status = [ reach currentReachabilityStatus ];
 		
 	if ( status == NotReachable ) {
-		return [ @"NO_CONNECTION" UTF8String ];
+		return ( long )CONNECTION_TYPE_NONE;
 	} else if ( status == ReachableViaWWAN ) {
-		return [ @"MOBILE" UTF8String ];
+		return ( long )CONNECTION_TYPE_WWAN;
 	} else if ( status == ReachableViaWiFi ) {
-		return [ @"WIFI" UTF8String ];
+		return ( long )CONNECTION_TYPE_WIFI;
 	}
 	
-	return [ @"NO_CONNECTION" UTF8String ];
+	return ( long )CONNECTION_TYPE_NONE;
 }
 
 //-----------------------------------------------------------------//

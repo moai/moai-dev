@@ -34,7 +34,7 @@ private:
 	STLString			mOSVersion;
 	STLString			mUDID;
 	
-	cc8* ( *getConnectivityFunc )( void );
+	long ( *getConnectivityFunc )( void );
 	cc8* ( *getGUIDfunc ) ( void );
 	int ( *getHeightFunc ) ( void );
 	int ( *getWidthFunc ) ( void );
@@ -63,6 +63,9 @@ private:
 		CONNECTION_TYPE_NONE,
 		CONNECTION_TYPE_WIFI,
 		CONNECTION_TYPE_WWAN,
+	};
+	
+	enum {	
 		OS_BRAND_ANDROID,
 		OS_BRAND_IOS,
 		OS_BRAND_UNAVAILABLE
@@ -79,7 +82,7 @@ public:
 	void				SetAppDisplayName			( cc8* displayName );
 	void				SetAppID					( cc8* appID );
 	void				SetAppVersion				( cc8* appVersion );	
-	void				SetConnectivityFunc			( cc8* (*connFunc) () );
+	void				SetConnectivityFunc			( long (*connFunc) () );
 	void				SetCPUABI					( cc8* abi );
 	void				SetDevBrand					( cc8* devBrand );
 	void				SetDevName					( cc8* devName );

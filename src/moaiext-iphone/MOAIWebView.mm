@@ -99,6 +99,24 @@ int MOAIWebView::_clickStop ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	closeWebView
+	@text	Closes the current webview
+
+	@in		MOAIWebView self
+	@out	nil
+*/
+int MOAIWebView::_closeWebView ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIWebView, "U" );
+		
+	if ( self->mWebView ) {
+		self->mWebView.delegate = nil;
+		[ self->mWebView stopLoading ];
+		[ self->mWebView removeFromSuperview ];
+	}	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	getAllowsInlineMediaPlayback
 	@text	Returns whether or not the UIWebView allows inline media
 			playback.
@@ -171,6 +189,42 @@ int MOAIWebView::_hideWebView ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIWebView, "U" );
 			
 	self->mWebView.hidden = true;	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	initWebView
+	@text	Kills current UIWebView (if one exists) and creates a
+			new one with desired dimensions.
+			
+	@in		MOAIWebView self
+	@out	bool scalesPageToFit
+*/
+int MOAIWebView::_initWebView ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIWebView, "U" );
+	
+	int left = lua_tointeger ( state, 2 );
+	int top = lua_tointeger ( state, 3 );
+	int width = lua_tointeger ( state, 4 );
+	int height = lua_tointeger ( state, 5 );
+	bool hidden = lua_toboolean ( state, 6 );
+			
+	if ( self->mWebView ) {
+		self->mWebView.delegate = nil;
+		[ self->mWebView stopLoading ];
+		[ self->mWebView removeFromSuperview ];
+	}	
+	
+	UIWindow* window = [[ UIApplication sharedApplication ] keyWindow ];		
+	self->mWebView = [[[ UIWebView alloc ] initWithFrame:CGRectMake( left, top, width, height )] autorelease ];
+	[ self->mWebView setDelegate:self->mWebViewDelegate ];
+	[ self->mWebView setScalesPageToFit:YES ];
+	[ self->mWebView setMultipleTouchEnabled:YES ];
+	[ window addSubview:self->mWebView ];
+	
+	if ( hidden )
+		self->mWebView.hidden = true;
+	
 	return 0;
 }
 
@@ -258,7 +312,7 @@ int MOAIWebView::_loadHTML ( lua_State* L ) {
 	@text	Sets the main page content and base URL
 
 	@in		MOAIWebView self
-	@in		TODO:type request
+	@in		string request
 	@out	nil
 */
 int MOAIWebView::_loadRequest ( lua_State* L ) {
@@ -273,6 +327,27 @@ int MOAIWebView::_loadRequest ( lua_State* L ) {
 		[ self->mWebView setDelegate:self->mWebViewDelegate ];
 		
 	[ self->mWebView loadRequest:request ];
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	openUrlInSafari
+	@text	Opens the url in Safari
+
+	@in		string url
+	@out	nil
+*/
+int MOAIWebView::_openUrlInSafari ( lua_State* L ) {
+	
+	USLuaState state ( L );
+	if ( !state.CheckParams ( 1, "S" )) return 0;
+	
+	cc8* urlStr = lua_tostring ( state, 1 );
+	NSString* urlString = [[ NSString alloc ] initWithCString:urlStr encoding:[NSString defaultCStringEncoding] ];
+	NSURL* url = [ NSURL URLWithString:urlString ];
+	
+	[[UIApplication sharedApplication] openURL:url];
 	
 	return 0;
 }
@@ -367,7 +442,7 @@ int MOAIWebView::_showWebView ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIWebView::MOAIWebView () :
+MOAIWebView::MOAIWebView ( ) :
 	mWebView ( 0 ) {
 
 	RTTI_BEGIN
@@ -375,9 +450,9 @@ MOAIWebView::MOAIWebView () :
 	RTTI_END
 	
 	mWebViewDelegate = [ MoaiUiWebViewDelegate alloc ];
+	mWebViewDelegate.mMOAIWebView = this;
 	
-	//UIWindow* window = [[ UIApplication sharedApplication ] keyWindow ];
-	
+	//UIWindow* window = [[ UIApplication sharedApplication ] keyWindow ];		
 	//mWebView = [[[ UIWebView alloc ] initWithFrame:CGRectMake( 0, 0, window.bounds.size.width, window.bounds.size.height )] autorelease ];
 	//[ mWebView setDelegate:mWebViewDelegate ];
 	//[ mWebView setScalesPageToFit:YES ];
@@ -413,7 +488,8 @@ void MOAIWebView::RaiseDidFailLoadWithErrorEvent ( NSError* error ) {
 //----------------------------------------------------------------//
 BOOL MOAIWebView::RaiseShouldStartLoadWithRequestEvent ( NSURLRequest* request, UIWebViewNavigationType navType ) {
 
-	cc8* urlString = [[ request.URL absoluteString ] UTF8String ];	
+	cc8* urlString = [[ request.URL absoluteString ] UTF8String ];
+	printf("%s", urlString);	
 	int nav = navType;
 
 	USLuaStateHandle state = USLuaRuntime::Get ().State ();
@@ -463,6 +539,13 @@ void MOAIWebView::RegisterLuaClass ( USLuaState& state ) {
 	state.SetField( -1, "NAVIGATION_RELOAD", ( u32 )NAVIGATION_RELOAD );
 	state.SetField( -1, "NAVIGATION_FORM_RESUBMIT", ( u32 )NAVIGATION_FORM_RESUBMIT );
 	state.SetField( -1, "NAVIGATION_OTHER", ( u32 )NAVIGATION_OTHER );
+	
+	luaL_Reg regTable [] = {
+		{ "openUrlInSafari",						_openUrlInSafari },
+		{ NULL, NULL }
+	};
+	
+	luaL_register ( state, 0, regTable );
 }
 
 //----------------------------------------------------------------//
@@ -477,11 +560,13 @@ void MOAIWebView::RegisterLuaFuncs ( USLuaState& state ) {
 		{ "clickForward",					_clickForward },
 		{ "clickRefresh",					_clickRefresh },
 		{ "clickStop",						_clickStop },
+		{ "closeWebView",					_closeWebView },
 		{ "getAllowsInlineMediaPlayback",	_getAllowsInlineMediaPlayback },
 		{ "getCurrentRequest",				_getCurrentRequest },	
 		{ "getMediaPlaybackRequiresAction", _getMediaPlaybackRequiresAction },
 		{ "getScalesPageToFit",				_getScalesPageToFit },
 		{ "hideWebView",					_hideWebView },
+		{ "initWebView",					_initWebView },
 		{ "isHidden",						_isHidden },
 		{ "isLoading",						_isLoading },
 		{ "loadData",						_loadData },

@@ -66,14 +66,7 @@ int MOAIEnvironment::_getAppVersion ( lua_State* L  ) {
 */
 int MOAIEnvironment::_getConnectionType ( lua_State* L ) {
 
-	cc8* typeStr = MOAIEnvironment::Get ().getConnectivityFunc ();
-	u32 type;
-	if ( typeStr == "WIFI" )
-		type = CONNECTION_TYPE_WIFI;
-	else if ( typeStr == "MOBILE" )
-		type = CONNECTION_TYPE_WWAN;
-	else
-		type = CONNECTION_TYPE_NONE;
+	u32 type = ( u32) MOAIEnvironment::Get ().getConnectivityFunc ();
 
 	lua_pushinteger ( L, type );
 	return 1;
@@ -161,9 +154,9 @@ int MOAIEnvironment::_getOSBrand ( lua_State* L  ) {
 
 	cc8* brandStr = MOAIEnvironment::Get ().mOSBrand.c_str ();
 	u32 brand;
-	if ( brandStr == "Android" )
+	if ( strcmp ( brandStr, "Android" ))
 		brand = OS_BRAND_ANDROID;
-	else if ( brandStr == "iOS" )
+	else if ( strcmp ( brandStr, "iOS" ))
 		brand = OS_BRAND_IOS;
 	else
 		brand = OS_BRAND_UNAVAILABLE;
@@ -199,6 +192,7 @@ int MOAIEnvironment::_getUDID ( lua_State* L  ) {
 //----------------------------------------------------------------//
 /**	@name	_getViewSize
 	@text	Returns the width and height of the view
+	
 	@out	int width
 	@out	int height
 */
@@ -287,7 +281,7 @@ void MOAIEnvironment::SetAppVersion ( cc8* appVer ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIEnvironment::SetConnectivityFunc ( cc8* (*connFunc)(void) ) {
+void MOAIEnvironment::SetConnectivityFunc ( long (*connFunc)(void) ) {
 	getConnectivityFunc = connFunc;
 }
 
