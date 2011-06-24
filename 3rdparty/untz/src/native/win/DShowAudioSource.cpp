@@ -237,7 +237,7 @@ void DShowAudioSource::putData(BYTE *data, long length)
 		mpMediaControl->Pause();
 }
 
-UInt32 DShowAudioSource::readFrames(float* data, UInt32 numChannels, UInt32 numFrames)
+Int64 DShowAudioSource::readFrames(float* data, UInt32 numChannels, UInt32 numFrames)
 {
 	memset(data, 0, sizeof(float) * numChannels * numFrames);
 

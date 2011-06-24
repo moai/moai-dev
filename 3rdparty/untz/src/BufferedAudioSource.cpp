@@ -61,10 +61,6 @@ void BufferedAudioSource::close()
     }
 }
 
-void BufferedAudioSource::play()
-{
-}
-
 void BufferedAudioSource::setPosition(double seconds)
 {
     RScopedLock l(&mLock);
