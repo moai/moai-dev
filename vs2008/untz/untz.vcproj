@@ -85,72 +85,6 @@
 			/>
 		</Configuration>
 		<Configuration
-			Name="Release|Win32"
-			OutputDirectory="..\bin\$(PlatformName)\$(ConfigurationName)\"
-			IntermediateDirectory="$(ConfigurationName)"
-			ConfigurationType="4"
-			CharacterSet="0"
-			WholeProgramOptimization="1"
-			>
-			<Tool
-				Name="VCPreBuildEventTool"
-			/>
-			<Tool
-				Name="VCCustomBuildTool"
-			/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"
-			/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"
-			/>
-			<Tool
-				Name="VCMIDLTool"
-			/>
-			<Tool
-				Name="VCCLCompilerTool"
-				Optimization="3"
-				EnableIntrinsicFunctions="true"
-				FavorSizeOrSpeed="2"
-				OmitFramePointers="true"
-				AdditionalIncludeDirectories="..\..\3rdparty\untz\src;..\..\3rdparty\untz\src\native\win;..\..\3rdparty\untz\include;&quot;..\..\3rdparty\libogg-1.2.2\include&quot;;&quot;..\..\3rdparty\libvorbis-1.3.2\include&quot;;&quot;..\..\3rdparty\rtaudio-4.0.8&quot;"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;__WINDOWS_DS__"
-				RuntimeLibrary="2"
-				UsePrecompiledHeader="0"
-				WarningLevel="0"
-				DebugInformationFormat="0"
-				CompileAs="2"
-			/>
-			<Tool
-				Name="VCManagedResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCPreLinkEventTool"
-			/>
-			<Tool
-				Name="VCLibrarianTool"
-			/>
-			<Tool
-				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCXDCMakeTool"
-			/>
-			<Tool
-				Name="VCBscMakeTool"
-			/>
-			<Tool
-				Name="VCFxCopTool"
-			/>
-			<Tool
-				Name="VCPostBuildEventTool"
-				CommandLine="&#x0D;&#x0A;"
-			/>
-		</Configuration>
-		<Configuration
 			Name="Debug|x64"
 			OutputDirectory="$(PlatformName)\$(ConfigurationName)"
 			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
@@ -187,6 +121,72 @@
 				DebugInformationFormat="3"
 				CallingConvention="0"
 				CompileAs="1"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLibrarianTool"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+				CommandLine="&#x0D;&#x0A;"
+			/>
+		</Configuration>
+		<Configuration
+			Name="Release|Win32"
+			OutputDirectory="..\bin\$(PlatformName)\$(ConfigurationName)\"
+			IntermediateDirectory="$(ConfigurationName)"
+			ConfigurationType="4"
+			CharacterSet="0"
+			WholeProgramOptimization="1"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				Optimization="3"
+				EnableIntrinsicFunctions="true"
+				FavorSizeOrSpeed="2"
+				OmitFramePointers="true"
+				AdditionalIncludeDirectories="..\..\3rdparty\untz\src;..\..\3rdparty\untz\src\native\win;..\..\3rdparty\untz\include;&quot;..\..\3rdparty\libogg-1.2.2\include&quot;;&quot;..\..\3rdparty\libvorbis-1.3.2\include&quot;;&quot;..\..\3rdparty\rtaudio-4.0.8&quot;"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;__WINDOWS_DS__"
+				RuntimeLibrary="2"
+				UsePrecompiledHeader="0"
+				WarningLevel="0"
+				DebugInformationFormat="0"
+				CompileAs="2"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -336,6 +336,22 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\3rdparty\untz\src\BufferedAudioSource.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\3rdparty\untz\src\BufferedAudioSource.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\3rdparty\untz\src\BufferedAudioSourceThread.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\3rdparty\untz\src\BufferedAudioSourceThread.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\3rdparty\untz\src\MemoryAudioSource.cpp"
 					>
 				</File>
@@ -388,11 +404,23 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\3rdparty\untz\src\threading\RScopedLock.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\3rdparty\untz\src\threading\RSyncEvent.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\3rdparty\untz\src\threading\RThread.h"
 					>
 				</File>
 				<File
 					RelativePath="..\..\3rdparty\untz\src\threading\RWaitableEvent.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\3rdparty\untz\src\threading\Threading.h"
 					>
 				</File>
 			</Filter>
