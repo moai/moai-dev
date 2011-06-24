@@ -302,6 +302,9 @@ void MOAIParticleState::ProcessParticle ( MOAIParticleSystem& system, MOAIPartic
 		
 		this->mRender->Run ( system, particle, step );
 	}
+	else {
+		MOAIParticleScript::RunPreset ( system, particle, step );
+	}
 
 	if ( particle.mAge >= particle.mTerm ) {
 		

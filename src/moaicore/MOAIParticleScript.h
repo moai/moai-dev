@@ -142,6 +142,7 @@ public:
 	void			RegisterLuaClass		( USLuaState& state );
 	void			RegisterLuaFuncs		( USLuaState& state );
 	void			Run						( MOAIParticleSystem& system, MOAIParticle& particle, float step );
+	static void		RunPreset				( MOAIParticleSystem& system, MOAIParticle& particle, float step );
 	STLString		ToString				();
 };
 

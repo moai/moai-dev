@@ -1,28 +1,5 @@
-set SDK_PATH=..\sdk
+call clean-installer.bat
 
-::clean away the existing installer (if any)
-call clean-installer
-
-::copy all needed files into the installer folder
-xcopy /cery ..\..\3rdparty\glut-3.7.6-bin %SDK_PATH%\3rdparty\glut-3.7.6\
-
-xcopy /cery ..\..\vs2008\bin\Win32\release\lua.exe %SDK_PATH%\bin\
-xcopy /cery ..\..\vs2008\bin\Win32\release\luac.exe %SDK_PATH%\bin\
-xcopy /cery ..\..\vs2008\bin\Win32\release\moai-dll.dll %SDK_PATH%\bin\
-xcopy /cery ..\..\vs2008\bin\Win32\release\moai-dll.lib %SDK_PATH%\bin\
-xcopy /cery ..\..\vs2008\bin\Win32\release\moai.exe %SDK_PATH%\bin\
-xcopy /cery ..\..\vs2008\bin\Win32\release\lua-5.1.3.dll %SDK_PATH%\bin\
-xcopy /cery ..\..\vs2008\bin\Win32\release\lua-5.1.3.dll.lib %SDK_PATH%\bin\
-xcopy /cery ..\..\vs2008\bin\Win32\release\glut32.dll %SDK_PATH%\bin\
-
-xcopy /cery ..\doxygen\html-lua\html %SDK_PATH%\docs\html\
-xcopy /cery ..\..\samples\basics %SDK_PATH%\samples\lua\
-xcopy /cery ..\..\samples\hello-moai %SDK_PATH%\samples\lua\hello-moai\
-xcopy /cery ..\..\samples\config %SDK_PATH%\samples\lua\config\
-xcopy /cery ..\..\src\aku\AKUGlut.* %SDK_PATH%\samples\hosts\src\aku\
-
-xcopy /cery ..\..\src\aku\AKU.h %SDK_PATH%\include\aku\
- 
 ::read version from text file
 pushd ..\..
 set /a count=0
@@ -56,7 +33,7 @@ if "%tag%" == "" (
 )
 
 :: create version file
-pushd %SDK_PATH%
+pushd ..\sdk
 del /q version.txt
 echo Moai SDK>> version.txt
 

@@ -1,13 +1,11 @@
-set SDK_PATH=..\sdk
+del /q /y sdk\3rdparty
+del /q /y sdk\bin
+del /q /y sdk\docs
+del /q /y sdk\samples\hello-moai
+del /q /y sdk\samples\lua
+del /q /y sdk\samples\src
+del /q /y sdk\samples\config
+del /q /y sdk\include
 
-rd /s /q %SDK_PATH%\3rdparty
-rd /s /q %SDK_PATH%\bin
-rd /s /q %SDK_PATH%\docs
-rd /s /q %SDK_PATH%\samples\hello-moai
-rd /s /q %SDK_PATH%\samples\lua
-rd /s /q %SDK_PATH%\samples\src
-rd /s /q %SDK_PATH%\samples\config
-rd /s /q %SDK_PATH%\include
-
+del /q /y  sdk\version.txt
 del moai-sdk-windows.exe
-del %SDK_PATH%\version.txt
