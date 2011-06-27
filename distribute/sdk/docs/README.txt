@@ -1,0 +1,1 @@
+For convenience, create a shortcut in this folder to the file index.html in the html folder.
