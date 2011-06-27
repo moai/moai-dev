@@ -4,10 +4,15 @@
 // http://getmoai.com
 //----------------------------------------------------------------//
 
-#include <aku/AKUGlut.h>
+#include <GlutHost.h>
+#include <stdio.h>
 
 //----------------------------------------------------------------//
 int main ( int argc, char** argv ) {
 
-	return AKUGlut ( argc, argv );
+	#ifdef _DEBUG
+		printf ( "MOAI-OPEN DEBUG\n" );
+	#endif
+
+	return GlutHost ( argc, argv );
 }

@@ -23,39 +23,42 @@ void AudioMixer::init()
 
 void AudioMixer::addSound(UNTZ::Sound* sound)
 {
-	mCriticalSection.lock();
+	RScopedLock l(&mLock);
+
 	for(UInt32 i = 0; i < mSounds.size(); ++i)
 	{
 		if(mSounds[i] == sound)
 			return;
 	}
 	mSounds.push_back(sound);
-	mCriticalSection.unlock();
 }
 
 void AudioMixer::removeSound(UNTZ::Sound *sound)
 {
-	mCriticalSection.lock();
-	int index = 0;
+	RScopedLock l(&mLock);
+
+	int index = -1;
 	for(UInt32 i = 0; i < mSounds.size(); ++i)
 	{
 		if(sound == mSounds[i])
+        {
 			index = i;	
+            break;
+        }
 	}
-	mSounds.erase(mSounds.begin() + index);
-	mCriticalSection.unlock();
+    if(index >= 0)
+       mSounds.erase(mSounds.begin() + index);
 }
 
 void AudioMixer::removeSound(int index)
 {
-	mCriticalSection.lock();
+	RScopedLock l(&mLock);
 	mSounds.erase(mSounds.begin() + index);
-	mCriticalSection.unlock();
 }
 
 int AudioMixer::process(UInt32 numInputChannels, float* inputBuffer, UInt32 numOutputChannels, float *outputBuffer, UInt32 numFrames)
 {
-	mCriticalSection.lock();
+    mLock.lock();
 
     memset(outputBuffer, 0, sizeof(float) * numFrames * numOutputChannels);  
 	for(UInt32 i = 0; i < mSounds.size(); ++i)
@@ -63,28 +66,38 @@ int AudioMixer::process(UInt32 numInputChannels, float* inputBuffer, UInt32 numO
 		UNTZ::Sound *s = mSounds[i];
 		if(s->getData()->getState() == kPlayStatePlaying)
 		{
-			UInt32 totalFramesRead = 0;
-			UInt32 framesRead = 0;
+			Int64 totalFramesRead = 0;
+			Int64 framesRead = 0;
 			do
 			{
 				framesRead = s->getData()->getSource()->readFrames((float*)&mBuffer[0], numOutputChannels, numFrames - totalFramesRead);
-				for(UInt32 k = 0; k < numOutputChannels; ++k)
-				{
-					float *out = &outputBuffer[k*numFrames + totalFramesRead];
-					float *in = &mBuffer[k*numFrames + totalFramesRead]; 
-					for(UInt32 j = 0; j < framesRead; j++)
-						*(out++) += *(in++) * s->getData()->mVolume;
-				}
-				totalFramesRead += framesRead;
+				if(framesRead > 0)
+                {
+                    for(UInt32 k = 0; k < numOutputChannels; ++k)
+                    {
+                        float *out = &outputBuffer[k*numFrames + totalFramesRead];
+                        float *in = &mBuffer[k*numFrames + totalFramesRead]; 
+                        for(UInt32 j = 0; j < framesRead; j++)
+                            *(out++) += *(in++) * s->getData()->mVolume;
+                    }
+                    totalFramesRead += framesRead;
+                }
 			}
 			while(totalFramesRead > 0 && 
 				totalFramesRead < numFrames && 
-				s->getData()->getState() != kPlayStateStopped);
+				framesRead >= 0);
+            
+			if(framesRead < 0)
+            {
+                mLock.unlock();
+				s->stop();
+                mLock.lock();
+            }
 		}
 	}
 
-	mCriticalSection.unlock();
-
+    mLock.unlock();
+    
 	return 0;
 }
 

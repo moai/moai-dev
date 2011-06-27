@@ -1,25 +1,33 @@
-//
-//  ExtAudioFileAudioSrc.h
-//  MOAIAudio
-//
-//  Created by Zach Saul on 5/9/11.
-//  Copyright 2011 Retronyms. All rights reserved.
-//
 
 #pragma once
-#include "AudioSource.h"
+
+#include "BufferedAudioSource.h"
 #include <AudioToolbox/AudioToolbox.h>
 
-class ExtAudioFileAudioSource : public AudioSource
+class ExtAudioFileAudioSource : public BufferedAudioSource
 {
 public:
-	ExtAudioFileAudioSource(const RString& path);
+	ExtAudioFileAudioSource();
     ~ExtAudioFileAudioSource();
-	virtual UInt32 readFrames(float* buffer, UInt32 numChannels, UInt32 numFrames);
-private:
+
+	// AudioSource
+	double getSampleRate();
+	double getLength();
+	UInt32 getNumChannels();
+    
+    // BufferedAudioSource
+	virtual bool init(const RString& path, bool loadIntoMemory);
+    virtual void close();
+	virtual Int64 decodeData(float* buffer, UInt32 size);
+	virtual void setDecoderPosition(Int64 startFrame);
+    
+protected:
     void setUpBuffers(float *buffer, UInt32 numChannels, UInt32 numFrames);
 
     ExtAudioFileRef mAudioFile;
+    AudioStreamBasicDescription mClientFormat;
     AudioStreamBasicDescription mFormat;
     AudioBufferList *mpBufferList;
+    SInt64 mTotalFrames;
+    std::vector<float>mReadBuffer;
 };

@@ -23,6 +23,15 @@ jmethodID m_AKUShowLoadingScreenFunc;
 jmethodID m_AKUShowSoftwareKeyboardFunc;
 jmethodID m_AKUStartGameLoopFunc;
 
+//Device properties
+enum {
+	CONNECTION_TYPE_NONE,
+	CONNECTION_TYPE_WIFI,
+	CONNECTION_TYPE_WWAN
+};
+jmethodID m_GetConnectivityFunc;
+jmethodID m_GenerateGuidFunc;
+
 #define IMPORTGL_NO_FNPTR_DEFS
 #define IMPORTGL_API
 #define IMPORTGL_FNPTRINIT = NULL
@@ -270,6 +279,72 @@ void _AKUStartGameLoopFunc () {
 
 
 }
+
+// -------------------------------------------------------------//
+long _GetConnectivity () {
+
+	JNIEnv *env;
+	if(jvm == NULL)
+		return NULL;
+	
+	jvm->GetEnv((void**)&env, JNI_VERSION_1_4);
+	if(env == NULL)
+		return NULL;
+
+	if(m_AKUStartGameLoopFunc == NULL)
+	{
+		__android_log_write(ANDROID_LOG_ERROR,"MoaiJNI","Get connection Callback FAILURE.");
+	}
+
+    jstring conn = (jstring)env->CallObjectMethod(javaObject, m_GetConnectivityFunc);
+	char buf[512];
+    const char *str, *ret;
+    str = env->GetStringUTFChars(conn, NULL);
+    if (str == NULL) {
+        return NULL; /* OutOfMemoryError already thrown */
+    }
+	strcpy(buf, str);
+	ret = buf;
+    env->ReleaseStringUTFChars(conn, str);
+    
+    if ( strcmp ( buf, "WIFI" ))
+    	return ( long )CONNECTION_TYPE_WIFI;
+    else if (strcmp ( buf, "MOBILE" ))
+    	return ( long )CONNECTION_TYPE_WWAN;
+	else
+		return ( long )CONNECTION_TYPE_NONE;
+}
+
+// -------------------------------------------------------------//
+const char* _GenerateGUID () {
+
+	JNIEnv *env;
+	if(jvm == NULL)
+		return NULL;
+	
+	jvm->GetEnv((void**)&env, JNI_VERSION_1_4);
+	if(env == NULL)
+		return NULL;
+
+	if(m_AKUStartGameLoopFunc == NULL)
+	{
+		__android_log_write(ANDROID_LOG_ERROR,"MoaiJNI","Generate GUID Callback FAILURE.");
+	}
+
+    jstring guid = (jstring)env->CallObjectMethod(javaObject, m_GenerateGuidFunc);
+	char buf[512];
+    const char *str, *ret;
+    str = env->GetStringUTFChars(guid, NULL);
+    if (str == NULL) {
+        return NULL; /* OutOfMemoryError already thrown */
+    }
+	strcpy(buf, str);
+	ret = buf;
+    env->ReleaseStringUTFChars(guid, str);
+	return ret;
+}
+
+
 // -------------------------------------------------------------//
 void _DrawView()
 {
@@ -283,7 +358,7 @@ int JNI_OnLoad(JavaVM* vm, void* reserved)
 }
 
 extern "C"
-void Java_com_moai_MoaiView_RestartAku
+void Java_com_getmoai_samples_MoaiView_RestartAku
 (JNIEnv *env, jclass clazz, jobject thizz) 
 {
 	jclass classic = env->GetObjectClass(javaObject);
@@ -313,11 +388,15 @@ void Java_com_moai_MoaiView_RestartAku
 	m_AKUShowLoadingScreenFunc  = env->GetMethodID(classic,"AKUShowLoadingScreenFunc", "()V");
 	m_AKUShowSoftwareKeyboardFunc  = env->GetMethodID(classic,"AKUShowSoftwareKeyboardFunc", "()V");
 	m_AKUStartGameLoopFunc = env->GetMethodID(classic,"AKUStartGameLoopFunc", "()V");
+	
+	//Device properties
+	m_GetConnectivityFunc = env->GetMethodID(classic,"GetConnectivity","()Ljava/lang/String;");
+	m_GenerateGuidFunc = env->GetMethodID(classic,"GenerateGUID","()Ljava/lang/String;");
 
 	__android_log_write(ANDROID_LOG_ERROR,"MoaiJNI","Aku Successfully Initialized");
 }
 extern "C"
-void Java_com_moai_MoaiView_InitializeAku
+void Java_com_getmoai_samples_MoaiView_InitializeAku
   (JNIEnv *env, jclass clazz, jobject thizz) 
 {
 
@@ -325,12 +404,12 @@ void Java_com_moai_MoaiView_InitializeAku
   
 	javaObject = (jobject)env->NewGlobalRef(thizz);
 	
-	Java_com_moai_MoaiView_RestartAku(env, clazz, thizz);
+	Java_com_getmoai_samples_MoaiView_RestartAku(env, clazz, thizz);
 	
 }
 
 extern "C"
-void Java_com_moai_MoaiView_Run
+void Java_com_getmoai_samples_MoaiView_Run
 	(JNIEnv *env, jclass clazz, jstring fileName, jint width, jint height)
 {
 	__android_log_write(ANDROID_LOG_ERROR,"MoaiJNI","Entering Run Func");
@@ -352,20 +431,20 @@ void Java_com_moai_MoaiView_Run
 	
 }
 extern "C"
-void Java_com_moai_MoaiView_FinalizeAku
+void Java_com_getmoai_samples_MoaiView_FinalizeAku
 	(JNIEnv *env, jclass clazz)
 {
 	AKUFinalize();
 	//importGLDeinit();
 }
 extern "C"
-void Java_com_moai_MoaiView_DeinitializeAku
+void Java_com_getmoai_samples_MoaiView_DeinitializeAku
 (JNIEnv *env, jclass clazz)
 {
 	AKUDeleteContext ( mAku );
 }
 extern "C"
-void Java_com_moai_MoaiView_onDraw
+void Java_com_getmoai_samples_MoaiView_onDraw
 	(JNIEnv *env, jclass clazz,
 	 jint width, jint height)
 {
@@ -374,7 +453,7 @@ void Java_com_moai_MoaiView_onDraw
 	AKURender();
 }
 extern "C"
-void Java_com_moai_MoaiView_onUpdateAnim
+void Java_com_getmoai_samples_MoaiView_onUpdateAnim
 	(JNIEnv *env, jclass clazz)
 {
 	
@@ -383,7 +462,7 @@ void Java_com_moai_MoaiView_onUpdateAnim
 	//_DrawView();
 }
 extern "C"
-void Java_com_moai_MoaiView_onUpdateHeading
+void Java_com_getmoai_samples_MoaiView_onUpdateHeading
 (JNIEnv *env, jclass clazz, jint heading)
 {
 	
@@ -394,7 +473,7 @@ void Java_com_moai_MoaiView_onUpdateHeading
 		);
 }
 extern "C"	
-void Java_com_moai_MoaiView_onUpdateLocation
+void Java_com_getmoai_samples_MoaiView_onUpdateLocation
 (JNIEnv *env, jclass clazz, jint longitude, jint latitude, jint altitude,
 jfloat hAccuracy, jfloat vAccuracy, jfloat speed )
 {
@@ -411,7 +490,7 @@ jfloat hAccuracy, jfloat vAccuracy, jfloat speed )
 		);
 }
 extern "C"
-void Java_com_moai_MoaiView_handleTouches
+void Java_com_getmoai_samples_MoaiView_handleTouches
 (JNIEnv *env, jclass clazz, jint touch, jboolean down, jint locX, jint locY, jint tapCount)
 {
 			AKUEnqueueTouchEvent (
@@ -427,7 +506,7 @@ void Java_com_moai_MoaiView_handleTouches
 }
 
 extern "C"
-void Java_com_moai_MoaiView_setWorkingDirectory
+void Java_com_getmoai_samples_MoaiView_setWorkingDirectory
 (JNIEnv *env, jclass clazz, jstring path)
 {
 	char buf[512];
@@ -443,3 +522,120 @@ void Java_com_moai_MoaiView_setWorkingDirectory
 }
 
 
+//Device properties
+
+extern "C"
+void Java_com_getmoai_samples_MoaiView_setDeviceProperties
+(JNIEnv *env, jclass clazz, 
+	jstring appName, 
+	jstring abi,
+	jstring devBrand,
+	jstring devDes, 
+	jstring ma,
+	jstring devModel,
+	jstring devProduct,
+	jstring osName,
+	jstring osVersion,
+	jstring UDID )
+{
+	__android_log_write(ANDROID_LOG_ERROR,"MoaiJNI-Props","Setting Properties...");
+	
+	MOAIEnvironment& devInfo = MOAIEnvironment::Get ();	
+	
+	//Set callbacks
+	devInfo.SetGUIDFunc ( &_GenerateGUID );
+	devInfo.SetConnectivityFunc ( &_GetConnectivity );
+	
+	char buf[512];
+    const char *str;
+	
+	//App name
+    str = env->GetStringUTFChars( appName, NULL );
+    if ( str == NULL ) {
+        return; /* OutOfMemoryError already thrown */
+    }	
+	strcpy ( buf, str);
+	env->ReleaseStringUTFChars( appName, str );
+	devInfo.SetAppDisplayName ( buf );
+	
+	//abi
+	str = env->GetStringUTFChars( abi, NULL );
+    if ( str == NULL ) {
+        return; /* OutOfMemoryError already thrown */
+    }	
+	strcpy ( buf, str);
+	env->ReleaseStringUTFChars( abi, str );
+	devInfo.SetCPUABI ( buf );
+	
+	//devBrand
+	str = env->GetStringUTFChars( devBrand, NULL );
+    if ( str == NULL ) {
+        return; /* OutOfMemoryError already thrown */
+    }	
+	strcpy ( buf, str);
+	env->ReleaseStringUTFChars( devBrand, str );
+	devInfo.SetDevBrand ( buf );
+		
+	//devDes
+	str = env->GetStringUTFChars( devDes, NULL );
+    if ( str == NULL ) {
+        return; /* OutOfMemoryError already thrown */
+    }	
+	strcpy ( buf, str);
+	env->ReleaseStringUTFChars( devDes, str );
+	devInfo.SetDevName ( buf );
+		
+	//ma
+	str = env->GetStringUTFChars( ma, NULL );
+    if ( str == NULL ) {
+        return; /* OutOfMemoryError already thrown */
+    }	
+	strcpy ( buf, str);
+	env->ReleaseStringUTFChars( ma, str );
+	devInfo.SetDevManufacturer ( buf );
+		
+	//devModel
+	str = env->GetStringUTFChars( devModel, NULL );
+    if ( str == NULL ) {
+        return; /* OutOfMemoryError already thrown */
+    }	
+	strcpy ( buf, str);
+	env->ReleaseStringUTFChars( devModel, str );	
+	devInfo.SetDevModel ( buf );
+		
+	//devProduct
+	str = env->GetStringUTFChars( devProduct, NULL );
+    if ( str == NULL ) {
+        return; /* OutOfMemoryError already thrown */
+    }	
+	strcpy ( buf, str);
+	env->ReleaseStringUTFChars( devProduct, str );	
+	devInfo.SetDevProduct ( buf );
+		
+	//osName
+	str = env->GetStringUTFChars( osName, NULL );
+    if ( str == NULL ) {
+        return; /* OutOfMemoryError already thrown */
+    }	
+	strcpy ( buf, str);
+	env->ReleaseStringUTFChars( osName, str );	
+	devInfo.SetOSBrand ( buf );
+		
+	//osVersion
+	str = env->GetStringUTFChars( osVersion, NULL );
+    if ( str == NULL ) {
+        return; /* OutOfMemoryError already thrown */
+    }	
+	strcpy ( buf, str);
+	env->ReleaseStringUTFChars( osVersion, str );	
+	devInfo.SetOSVersion ( buf );
+	
+	//UDID
+	str = env->GetStringUTFChars( UDID, NULL );
+    if ( str == NULL ) {
+        return; /* OutOfMemoryError already thrown */
+    }	
+	strcpy ( buf, str);
+	env->ReleaseStringUTFChars( UDID, str );	
+	devInfo.SetUDID ( buf );	
+}

@@ -216,9 +216,6 @@
     <ClCompile Include="..\..\src\uslsext\USDrawBuffer.cpp">
       <Filter>src\gfxDevice</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\uslsext\pch.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\uslsext\uslsext.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -248,6 +245,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\uslsext\USTextLayout.cpp">
       <Filter>src\font</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\uslsext-pch.cpp">
+      <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

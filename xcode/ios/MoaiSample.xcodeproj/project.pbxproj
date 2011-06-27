@@ -1,0 +1,584 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		03CC905813B3C1B700B2724C /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 03CC904F13B3C1B700B2724C /* Icon-72.png */; };
+		03CC905913B3C1B700B2724C /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 03CC905013B3C1B700B2724C /* Icon-Small-50.png */; };
+		03CC905A13B3C1B700B2724C /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = 03CC905113B3C1B700B2724C /* Icon-Small.png */; };
+		03CC905B13B3C1B700B2724C /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 03CC905213B3C1B700B2724C /* Icon-Small@2x.png */; };
+		03CC905C13B3C1B700B2724C /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 03CC905313B3C1B700B2724C /* Icon.png */; };
+		03CC905D13B3C1B700B2724C /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 03CC905413B3C1B700B2724C /* Icon@2x.png */; };
+		03CC905F13B3C1B700B2724C /* MainWindow-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 03CC905613B3C1B700B2724C /* MainWindow-iPad.xib */; };
+		03CC906013B3C1B700B2724C /* MainWindow-iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 03CC905713B3C1B700B2724C /* MainWindow-iPhone.xib */; };
+		03CC90A413B3C37200B2724C /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 03CC909C13B3C37200B2724C /* AppDelegate.mm */; };
+		03CC90A513B3C37200B2724C /* LocationObserver.mm in Sources */ = {isa = PBXBuildFile; fileRef = 03CC909E13B3C37200B2724C /* LocationObserver.mm */; };
+		03CC90A613B3C37200B2724C /* MoaiView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 03CC90A013B3C37200B2724C /* MoaiView.mm */; };
+		03CC90A713B3C37200B2724C /* OpenGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 03CC90A213B3C37200B2724C /* OpenGLView.mm */; };
+		03CC90A913B3C37C00B2724C /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 03CC90A813B3C37C00B2724C /* main.mm */; };
+		03CC90F813B3C45A00B2724C /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CC90F713B3C45A00B2724C /* OpenGLES.framework */; };
+		03CC90FE13B3C46A00B2724C /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CC90FD13B3C46A00B2724C /* CoreLocation.framework */; };
+		03CC910413B3C47600B2724C /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CC910313B3C47600B2724C /* CoreAudio.framework */; };
+		03CC910C13B3C48400B2724C /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CC910B13B3C48400B2724C /* AudioToolbox.framework */; };
+		03CC911C13B3C49400B2724C /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CC911B13B3C49400B2724C /* SystemConfiguration.framework */; };
+		03CC912213B3C4A400B2724C /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CC912113B3C4A400B2724C /* QuartzCore.framework */; };
+		03CC912813B3C4B100B2724C /* libz.1.2.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CC912713B3C4B100B2724C /* libz.1.2.3.dylib */; };
+		03CC912C13B3C4C000B2724C /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CC912B13B3C4C000B2724C /* StoreKit.framework */; };
+		03EB1AB713B5188100E1A6C2 /* cathead.png in Resources */ = {isa = PBXBuildFile; fileRef = 03EB1AB513B5188100E1A6C2 /* cathead.png */; };
+		03EB1AB813B5188100E1A6C2 /* main.lua in Resources */ = {isa = PBXBuildFile; fileRef = 03EB1AB613B5188100E1A6C2 /* main.lua */; };
+		07E9F73E13B50582006396F3 /* libmoai-iphone.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CC90BD13B3C39D00B2724C /* libmoai-iphone.a */; };
+		07E9F73F13B50582006396F3 /* libmoai-iphone-3rdparty.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CC90BF13B3C39D00B2724C /* libmoai-iphone-3rdparty.a */; };
+		07E9F74013B50582006396F3 /* libmoai-iphone-luaext.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CC90C113B3C39D00B2724C /* libmoai-iphone-luaext.a */; };
+		07E9F74113B50582006396F3 /* libmoai-iphone-untz.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CC90C313B3C39D00B2724C /* libmoai-iphone-untz.a */; };
+		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
+		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
+		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		03CC90BC13B3C39D00B2724C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 03C2F6F4104DE130009A2D5D;
+			remoteInfo = "libmoai-iphone";
+		};
+		03CC90BE13B3C39D00B2724C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 0379C5961333ECD800E89DDC;
+			remoteInfo = "libmoai-iphone-3rdparty";
+		};
+		03CC90C013B3C39D00B2724C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = CDD06BD01398822500AB0420;
+			remoteInfo = "libmoai-iphone-luaext";
+		};
+		03CC90C213B3C39D00B2724C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = CD07C3CD13A182AA00C9386C;
+			remoteInfo = "libmoai-iphone-untz";
+		};
+		03CC90C413B3C39D00B2724C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 0324E2BB1356485F000ADC60;
+			remoteInfo = "libmoai-osx";
+		};
+		03CC90C613B3C39D00B2724C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 0324E2AF1356485F000ADC60;
+			remoteInfo = "libmoai-osx-3rdparty";
+		};
+		03CC90C813B3C39D00B2724C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = CDD06D87139882D900AB0420;
+			remoteInfo = "libmoai-osx-luaext";
+		};
+		03CC90CA13B3C39D00B2724C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = CD07C4E513A1918600C9386C;
+			remoteInfo = "libmoai-osx-untz";
+		};
+		07E9F73613B50574006396F3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 03C2F6F3104DE130009A2D5D;
+			remoteInfo = "libmoai-iphone";
+		};
+		07E9F73813B50574006396F3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 0379C3D51333ECD800E89DDC;
+			remoteInfo = "libmoai-iphone-3rdparty";
+		};
+		07E9F73A13B50574006396F3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = CDD06A061398822500AB0420;
+			remoteInfo = "libmoai-iphone-luaext";
+		};
+		07E9F73C13B50574006396F3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = CD07C3A313A182AA00C9386C;
+			remoteInfo = "libmoai-iphone-untz";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		03CC904F13B3C1B700B2724C /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
+		03CC905013B3C1B700B2724C /* Icon-Small-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small-50.png"; sourceTree = "<group>"; };
+		03CC905113B3C1B700B2724C /* Icon-Small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small.png"; sourceTree = "<group>"; };
+		03CC905213B3C1B700B2724C /* Icon-Small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small@2x.png"; sourceTree = "<group>"; };
+		03CC905313B3C1B700B2724C /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		03CC905413B3C1B700B2724C /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
+		03CC905513B3C1B700B2724C /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		03CC905613B3C1B700B2724C /* MainWindow-iPad.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = "MainWindow-iPad.xib"; sourceTree = "<group>"; };
+		03CC905713B3C1B700B2724C /* MainWindow-iPhone.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = "MainWindow-iPhone.xib"; sourceTree = "<group>"; };
+		03CC909B13B3C37200B2724C /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		03CC909C13B3C37200B2724C /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
+		03CC909D13B3C37200B2724C /* LocationObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationObserver.h; sourceTree = "<group>"; };
+		03CC909E13B3C37200B2724C /* LocationObserver.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LocationObserver.mm; sourceTree = "<group>"; };
+		03CC909F13B3C37200B2724C /* MoaiView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoaiView.h; sourceTree = "<group>"; };
+		03CC90A013B3C37200B2724C /* MoaiView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MoaiView.mm; sourceTree = "<group>"; };
+		03CC90A113B3C37200B2724C /* OpenGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGLView.h; sourceTree = "<group>"; };
+		03CC90A213B3C37200B2724C /* OpenGLView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = OpenGLView.mm; sourceTree = "<group>"; };
+		03CC90A313B3C37200B2724C /* RefPtr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RefPtr.h; sourceTree = "<group>"; };
+		03CC90A813B3C37C00B2724C /* main.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
+		03CC90AA13B3C38800B2724C /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
+		03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = libmoai.xcodeproj; path = ../libmoai/libmoai.xcodeproj; sourceTree = SOURCE_ROOT; };
+		03CC90F713B3C45A00B2724C /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		03CC90FD13B3C46A00B2724C /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		03CC910313B3C47600B2724C /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
+		03CC910B13B3C48400B2724C /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		03CC911B13B3C49400B2724C /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		03CC912113B3C4A400B2724C /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		03CC912713B3C4B100B2724C /* libz.1.2.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.3.dylib; path = usr/lib/libz.1.2.3.dylib; sourceTree = SDKROOT; };
+		03CC912B13B3C4C000B2724C /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		03EB1AB513B5188100E1A6C2 /* cathead.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cathead.png; path = "../../samples/basics/anim-basic/cathead.png"; sourceTree = SOURCE_ROOT; };
+		03EB1AB613B5188100E1A6C2 /* main.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = main.lua; path = "../../samples/basics/anim-basic/main.lua"; sourceTree = SOURCE_ROOT; };
+		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		1D6058910D05DD3D006BFB54 /* MoaiSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MoaiSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		32CA4F630368D1EE00C91783 /* MoaiSample_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoaiSample_Prefix.pch; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1D60588F0D05DD3D006BFB54 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				07E9F73E13B50582006396F3 /* libmoai-iphone.a in Frameworks */,
+				07E9F73F13B50582006396F3 /* libmoai-iphone-3rdparty.a in Frameworks */,
+				07E9F74013B50582006396F3 /* libmoai-iphone-luaext.a in Frameworks */,
+				07E9F74113B50582006396F3 /* libmoai-iphone-untz.a in Frameworks */,
+				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
+				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
+				288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */,
+				03CC90F813B3C45A00B2724C /* OpenGLES.framework in Frameworks */,
+				03CC90FE13B3C46A00B2724C /* CoreLocation.framework in Frameworks */,
+				03CC910413B3C47600B2724C /* CoreAudio.framework in Frameworks */,
+				03CC910C13B3C48400B2724C /* AudioToolbox.framework in Frameworks */,
+				03CC911C13B3C49400B2724C /* SystemConfiguration.framework in Frameworks */,
+				03CC912213B3C4A400B2724C /* QuartzCore.framework in Frameworks */,
+				03CC912813B3C4B100B2724C /* libz.1.2.3.dylib in Frameworks */,
+				03CC912C13B3C4C000B2724C /* StoreKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0394E90613B3CDBF00CA9F83 /* lua */ = {
+			isa = PBXGroup;
+			children = (
+				03EB1AB513B5188100E1A6C2 /* cathead.png */,
+				03EB1AB613B5188100E1A6C2 /* main.lua */,
+			);
+			name = lua;
+			sourceTree = "<group>";
+		};
+		03CC90AF13B3C39D00B2724C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				03CC90BD13B3C39D00B2724C /* libmoai-iphone.a */,
+				03CC90BF13B3C39D00B2724C /* libmoai-iphone-3rdparty.a */,
+				03CC90C113B3C39D00B2724C /* libmoai-iphone-luaext.a */,
+				03CC90C313B3C39D00B2724C /* libmoai-iphone-untz.a */,
+				03CC90C513B3C39D00B2724C /* libmoai-osx.a */,
+				03CC90C713B3C39D00B2724C /* libmoai-osx-3rdparty.a */,
+				03CC90C913B3C39D00B2724C /* libmoai-osx-luaext.a */,
+				03CC90CB13B3C39D00B2724C /* libmoai-osx-untz.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		080E96DDFE201D6D7F000001 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				03CC909B13B3C37200B2724C /* AppDelegate.h */,
+				03CC909C13B3C37200B2724C /* AppDelegate.mm */,
+				03CC909D13B3C37200B2724C /* LocationObserver.h */,
+				03CC909E13B3C37200B2724C /* LocationObserver.mm */,
+				03CC909F13B3C37200B2724C /* MoaiView.h */,
+				03CC90A013B3C37200B2724C /* MoaiView.mm */,
+				03CC90A113B3C37200B2724C /* OpenGLView.h */,
+				03CC90A213B3C37200B2724C /* OpenGLView.mm */,
+				03CC90A313B3C37200B2724C /* RefPtr.h */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		19C28FACFE9D520D11CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1D6058910D05DD3D006BFB54 /* MoaiSample.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
+			isa = PBXGroup;
+			children = (
+				03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */,
+				080E96DDFE201D6D7F000001 /* Classes */,
+				29B97315FDCFA39411CA2CEA /* Other Sources */,
+				29B97317FDCFA39411CA2CEA /* Resources */,
+				29B97323FDCFA39411CA2CEA /* Frameworks */,
+				19C28FACFE9D520D11CA2CBB /* Products */,
+			);
+			name = CustomTemplate;
+			sourceTree = "<group>";
+		};
+		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+				32CA4F630368D1EE00C91783 /* MoaiSample_Prefix.pch */,
+				03CC90A813B3C37C00B2724C /* main.mm */,
+			);
+			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		29B97317FDCFA39411CA2CEA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				0394E90613B3CDBF00CA9F83 /* lua */,
+				03CC90AA13B3C38800B2724C /* Entitlements.plist */,
+				03CC904F13B3C1B700B2724C /* Icon-72.png */,
+				03CC905013B3C1B700B2724C /* Icon-Small-50.png */,
+				03CC905113B3C1B700B2724C /* Icon-Small.png */,
+				03CC905213B3C1B700B2724C /* Icon-Small@2x.png */,
+				03CC905313B3C1B700B2724C /* Icon.png */,
+				03CC905413B3C1B700B2724C /* Icon@2x.png */,
+				03CC905513B3C1B700B2724C /* Info.plist */,
+				03CC905613B3C1B700B2724C /* MainWindow-iPad.xib */,
+				03CC905713B3C1B700B2724C /* MainWindow-iPhone.xib */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				03CC910B13B3C48400B2724C /* AudioToolbox.framework */,
+				03CC910313B3C47600B2724C /* CoreAudio.framework */,
+				288765A40DF7441C002DB57D /* CoreGraphics.framework */,
+				03CC90FD13B3C46A00B2724C /* CoreLocation.framework */,
+				1D30AB110D05D00D00671497 /* Foundation.framework */,
+				03CC912713B3C4B100B2724C /* libz.1.2.3.dylib */,
+				03CC90F713B3C45A00B2724C /* OpenGLES.framework */,
+				03CC912113B3C4A400B2724C /* QuartzCore.framework */,
+				03CC912B13B3C4C000B2724C /* StoreKit.framework */,
+				03CC911B13B3C49400B2724C /* SystemConfiguration.framework */,
+				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		1D6058900D05DD3D006BFB54 /* MoaiSample */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "MoaiSample" */;
+			buildPhases = (
+				1D60588D0D05DD3D006BFB54 /* Resources */,
+				1D60588E0D05DD3D006BFB54 /* Sources */,
+				1D60588F0D05DD3D006BFB54 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				07E9F73713B50574006396F3 /* PBXTargetDependency */,
+				07E9F73913B50574006396F3 /* PBXTargetDependency */,
+				07E9F73B13B50574006396F3 /* PBXTargetDependency */,
+				07E9F73D13B50574006396F3 /* PBXTargetDependency */,
+			);
+			name = MoaiSample;
+			productName = MoaiSample;
+			productReference = 1D6058910D05DD3D006BFB54 /* MoaiSample.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		29B97313FDCFA39411CA2CEA /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "MoaiSample" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
+			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 03CC90AF13B3C39D00B2724C /* Products */;
+					ProjectRef = 03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				1D6058900D05DD3D006BFB54 /* MoaiSample */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		03CC90BD13B3C39D00B2724C /* libmoai-iphone.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libmoai-iphone.a";
+			remoteRef = 03CC90BC13B3C39D00B2724C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		03CC90BF13B3C39D00B2724C /* libmoai-iphone-3rdparty.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libmoai-iphone-3rdparty.a";
+			remoteRef = 03CC90BE13B3C39D00B2724C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		03CC90C113B3C39D00B2724C /* libmoai-iphone-luaext.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libmoai-iphone-luaext.a";
+			remoteRef = 03CC90C013B3C39D00B2724C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		03CC90C313B3C39D00B2724C /* libmoai-iphone-untz.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libmoai-iphone-untz.a";
+			remoteRef = 03CC90C213B3C39D00B2724C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		03CC90C513B3C39D00B2724C /* libmoai-osx.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libmoai-osx.a";
+			remoteRef = 03CC90C413B3C39D00B2724C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		03CC90C713B3C39D00B2724C /* libmoai-osx-3rdparty.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libmoai-osx-3rdparty.a";
+			remoteRef = 03CC90C613B3C39D00B2724C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		03CC90C913B3C39D00B2724C /* libmoai-osx-luaext.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libmoai-osx-luaext.a";
+			remoteRef = 03CC90C813B3C39D00B2724C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		03CC90CB13B3C39D00B2724C /* libmoai-osx-untz.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libmoai-osx-untz.a";
+			remoteRef = 03CC90CA13B3C39D00B2724C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1D60588D0D05DD3D006BFB54 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				03EB1AB813B5188100E1A6C2 /* main.lua in Resources */,
+				03CC905813B3C1B700B2724C /* Icon-72.png in Resources */,
+				03CC905913B3C1B700B2724C /* Icon-Small-50.png in Resources */,
+				03CC905A13B3C1B700B2724C /* Icon-Small.png in Resources */,
+				03CC905B13B3C1B700B2724C /* Icon-Small@2x.png in Resources */,
+				03CC905C13B3C1B700B2724C /* Icon.png in Resources */,
+				03CC905D13B3C1B700B2724C /* Icon@2x.png in Resources */,
+				03CC905F13B3C1B700B2724C /* MainWindow-iPad.xib in Resources */,
+				03CC906013B3C1B700B2724C /* MainWindow-iPhone.xib in Resources */,
+				03EB1AB713B5188100E1A6C2 /* cathead.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1D60588E0D05DD3D006BFB54 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				03CC90A413B3C37200B2724C /* AppDelegate.mm in Sources */,
+				03CC90A513B3C37200B2724C /* LocationObserver.mm in Sources */,
+				03CC90A613B3C37200B2724C /* MoaiView.mm in Sources */,
+				03CC90A713B3C37200B2724C /* OpenGLView.mm in Sources */,
+				03CC90A913B3C37C00B2724C /* main.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		07E9F73713B50574006396F3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-iphone";
+			targetProxy = 07E9F73613B50574006396F3 /* PBXContainerItemProxy */;
+		};
+		07E9F73913B50574006396F3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-iphone-3rdparty";
+			targetProxy = 07E9F73813B50574006396F3 /* PBXContainerItemProxy */;
+		};
+		07E9F73B13B50574006396F3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-iphone-luaext";
+			targetProxy = 07E9F73A13B50574006396F3 /* PBXContainerItemProxy */;
+		};
+		07E9F73D13B50574006396F3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-iphone-untz";
+			targetProxy = 07E9F73C13B50574006396F3 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		1D6058940D05DD3E006BFB54 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_THUMB_SUPPORT = YES;
+				PRODUCT_NAME = MoaiSample;
+			};
+			name = Debug;
+		};
+		1D6058950D05DD3E006BFB54 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_THUMB_SUPPORT = YES;
+				PRODUCT_NAME = MoaiSample;
+			};
+			name = Release;
+		};
+		C01FCF4F08A954540054247B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COMPRESS_PNG_FILES = NO;
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_THUMB_SUPPORT = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"\"$(SRC_PATH)/src\"",
+					"\"$(SRC_PATH)/3rdparty\"",
+					"\"$(SRC_PATH)/3rdparty/contrib\"",
+					"\"$(SRC_PATH)/3rdparty/tinyxml\"",
+					"\"$(SRC_PATH)/3rdparty/lua-5.1.3/src\"",
+					"\"$(SRC_PATH)/3rdparty/gsoap-2.7/gsoap\"",
+					"\"$(SRC_PATH)/3rdparty/lpng140\"",
+					"\"$(SRC_PATH)/3rdparty/curl-7.19.7/include-iphone\"",
+					"\"$(SRC_PATH)/3rdparty/curl-7.19.7/lib\"",
+					"\"$(SRC_PATH)/3rdparty/expat-2.0.1/lib\"",
+					"\"$(SRC_PATH)/3rdparty/freetype-2.4.4/include\"",
+					"\"$(SRC_PATH)/3rdparty/box2d-2.1.2/Box2D\"",
+					"\"$(SRC_PATH)/3rdparty/chipmunk-5.3.4/include\"",
+					"\"$(SRC_PATH)/3rdparty/chipmunk-5.3.4/include/chipmunk\"",
+				);
+				INFOPLIST_FILE = Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				PREBINDING = NO;
+				SDKROOT = iphoneos;
+				SRC_PATH = ../..;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		C01FCF5008A954540054247B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COMPRESS_PNG_FILES = NO;
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_THUMB_SUPPORT = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"\"$(SRC_PATH)/src\"",
+					"\"$(SRC_PATH)/3rdparty\"",
+					"\"$(SRC_PATH)/3rdparty/contrib\"",
+					"\"$(SRC_PATH)/3rdparty/tinyxml\"",
+					"\"$(SRC_PATH)/3rdparty/lua-5.1.3/src\"",
+					"\"$(SRC_PATH)/3rdparty/gsoap-2.7/gsoap\"",
+					"\"$(SRC_PATH)/3rdparty/lpng140\"",
+					"\"$(SRC_PATH)/3rdparty/curl-7.19.7/include-iphone\"",
+					"\"$(SRC_PATH)/3rdparty/curl-7.19.7/lib\"",
+					"\"$(SRC_PATH)/3rdparty/expat-2.0.1/lib\"",
+					"\"$(SRC_PATH)/3rdparty/freetype-2.4.4/include\"",
+					"\"$(SRC_PATH)/3rdparty/box2d-2.1.2/Box2D\"",
+					"\"$(SRC_PATH)/3rdparty/chipmunk-5.3.4/include\"",
+					"\"$(SRC_PATH)/3rdparty/chipmunk-5.3.4/include/chipmunk\"",
+				);
+				INFOPLIST_FILE = Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PREBINDING = NO;
+				SDKROOT = iphoneos;
+				SRC_PATH = ../..;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "MoaiSample" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1D6058940D05DD3E006BFB54 /* Debug */,
+				1D6058950D05DD3E006BFB54 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "MoaiSample" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01FCF4F08A954540054247B /* Debug */,
+				C01FCF5008A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 29B97313FDCFA39411CA2CEA /* Project object */;
+}

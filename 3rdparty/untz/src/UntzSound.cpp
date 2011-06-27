@@ -16,16 +16,15 @@ using namespace UNTZ;
 
 #define	OGG_FILE_EXT ".ogg"
 
-Sound* Sound::create(const RString& path)
+Sound* Sound::create(const RString& path, bool loadIntoMemory)
 {
 	Sound* newSound = new Sound();
 
 	if (path.find(OGG_FILE_EXT) != RString::npos)
 	{
 		OggAudioSource* source = new OggAudioSource();
-		if(source->load(path))
+		if(source->init(path, loadIntoMemory))
 		{
-			source->setSound(newSound);
 			newSound->mpData = new UNTZ::SoundData();
 			newSound->mpData->mpSource = source;
 		}
@@ -40,7 +39,7 @@ Sound* Sound::create(const RString& path)
 	{
 #if defined(WIN32)
 		DShowAudioSource* source = new DShowAudioSource();
-		source->setSound(newSound);
+//FIXME:		source->setSound(newSound);
 		if(source->load(path))
 		{
 			newSound->mpData = new UNTZ::SoundData();
@@ -54,10 +53,18 @@ Sound* Sound::create(const RString& path)
 			return 0;
 		}
 #else
-		ExtAudioFileAudioSource *source = new ExtAudioFileAudioSource(path);
-		newSound->mpData = new UNTZ::SoundData();
-		source->setSound(newSound);
-		newSound->mpData->mpSource = source;
+		ExtAudioFileAudioSource *source = new ExtAudioFileAudioSource();
+		if(source->init(path, loadIntoMemory))
+        {
+            newSound->mpData = new UNTZ::SoundData();
+            newSound->mpData->mpSource = source;
+        }
+        else
+        {
+            delete source;
+            delete newSound;
+            return 0;
+        }
 #endif
 	}
 
@@ -69,7 +76,6 @@ Sound* Sound::create(UInt32 sampleRate, UInt32 channels, UInt32 samples, Int16* 
 	Sound* newSound = new Sound();
 
 	MemoryAudioSource* source = new MemoryAudioSource(sampleRate, channels, samples, interleavedData);
-	source->setSound(newSound);
     newSound->mpData = new UNTZ::SoundData();
 	newSound->mpData->mpSource = source;
 
@@ -81,7 +87,6 @@ Sound* Sound::create(UInt32 sampleRate, UInt32 channels, StreamCallback* proc, v
 	Sound* newSound = new Sound();
 
 	UserAudioSource* source = new UserAudioSource(sampleRate, channels, proc, userdata);
-	source->setSound(newSound);
 	newSound->mpData = new UNTZ::SoundData();
 	newSound->mpData->mpSource = source;
 
@@ -98,7 +103,10 @@ Sound::~Sound()
 	if(mpData)
 	{
 		if(mpData->mpSource)
+		{
+            mpData->mpSource->close();
 			delete mpData->mpSource;
+		}
 
 		delete mpData;
 	}
@@ -121,9 +129,9 @@ void Sound::setLooping(bool loop)
 	mpData->mpSource->setLooping(loop);
 }
 
-bool Sound::getLooping() const
+bool Sound::isLooping() const
 {
-	return mpData->mpSource->getLooping();
+	return mpData->mpSource->isLooping();
 }
 
 void Sound::setPosition(double seconds)
@@ -136,21 +144,17 @@ double Sound::getPosition()
 	return mpData->mpSource->getPosition();
 }
 
-double Sound::getLength()
-{
-	return mpData->mpSource->getLength();
-}
-
 void Sound::play()
 {
 	if(mpData->mPlayState == kPlayStateStopped)
 	{
-		mpData->getSource()->start();
 		mpData->mPlayState = kPlayStatePlaying;
 	    System::get()->getData()->mMixer.addSound(this);
 	}
+    else if(mpData->mPlayState == kPlayStatePlaying)
+        mpData->getSource()->setPosition(0);
 	else if(mpData->mPlayState == kPlayStatePaused)
-		mpData->mPlayState = kPlayStatePaused;
+		mpData->mPlayState = kPlayStatePaused;        
 }
 
 void Sound::pause()
@@ -160,7 +164,6 @@ void Sound::pause()
 
 void Sound::stop()
 {	
-	mpData->getSource()->stop();
 	mpData->mPlayState = kPlayStateStopped;
 	UNTZ::System::get()->getData()->mMixer.removeSound(this);
 }
@@ -173,4 +176,17 @@ bool Sound::isPlaying()
 bool Sound::isPaused()
 {
 	return mpData->mPlayState == kPlayStatePaused;
+}
+
+SoundInfo Sound::getInfo()
+{
+	SoundInfo info;
+	if(mpData->getSource())
+	{
+		info.mBitsPerSample = mpData->getSource()->getBitsPerSample();
+		info.mChannels = mpData->getSource()->getNumChannels();
+		info.mSampleRate = mpData->getSource()->getSampleRate();
+		info.mLength = mpData->getSource()->getLength();
+	}
+	return info;
 }

@@ -1,12 +1,3 @@
-/*
- *  vector_util.c
- *  dopplerpad
- *
- *  Created by dan walton on 5/3/09.
- *  Copyright 2009 Retronyms. All rights reserved.
- *
- */ 
-
 #include "vector_util.h"
 #include "TargetConditionals.h"
 

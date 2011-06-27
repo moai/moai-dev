@@ -1,6 +1,4 @@
-#ifndef RCriticalSection_H
-#define RCriticalSection_H
-
+#pragma once
 
 // Use Window or Posix
 #ifdef WIN32
@@ -105,12 +103,10 @@ private:
 #else
 		pthread_mutexattr_t attr;
 		pthread_mutexattr_init(&attr);
-		pthread_mutexattr_settype(&attr,PTHREAD_MUTEX_RECURSIVE);
+        pthread_mutexattr_setprotocol (&attr, PTHREAD_PRIO_INHERIT);
 		pthread_mutex_init(&mMutex,&attr);
 		pthread_mutexattr_destroy(&attr);
 #endif
 		_locked = false;
 	}
 };
-
-#endif	// RCriticalSection_H

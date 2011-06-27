@@ -9,8 +9,9 @@ namespace UNTZ
 
 	typedef struct {
 		UInt32 mBitsPerSample;
-		UInt32 mSampleRate;
 		UInt32 mChannels;
+		double mSampleRate;
+		double mLength;
 	} SoundInfo;
 
 	class SoundData;
@@ -18,21 +19,22 @@ namespace UNTZ
     class Sound
     {         
     public:
+		~Sound();
+		
 		// Create a sound object from a file path
-		static Sound* create(const RString& path);
+		static Sound* create(const RString& path, bool loadIntoMemory = false);
 		// Create a sound object from a memory buffer
 		static Sound* create(UInt32 sampleRate, UInt32 channels, UInt32 samples, Int16* inverleavedData);
 		// Create a sound object that streams audio data via a callback
 		static Sound* create(UInt32 sampleRate, UInt32 channels, StreamCallback* proc, void* userdata);
 
 		void setLooping(bool loop);
-		bool getLooping() const;
+		bool isLooping() const;
         void setVolume(float volume);
 		float getVolume() const;
-
 		void setPosition(double seconds);
 		double getPosition();
-		double getLength();
+		SoundInfo getInfo();
 		
 		void play();
 		void pause();
@@ -43,7 +45,6 @@ namespace UNTZ
 		SoundData* getData() const { return mpData; }
 	private:
 		Sound();
-		~Sound();
 		SoundData* mpData;
     };
 };

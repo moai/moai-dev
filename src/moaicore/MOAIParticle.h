@@ -29,17 +29,4 @@ public:
 	MOAIParticle*			mNext;
 };
 
-//================================================================//
-// MOAIParticleSprite
-//================================================================//
-class MOAIParticleSprite {
-public:
-	
-	USVec2D		mLoc;
-	float		mRot;
-	USVec2D		mScl;
-	USColorVec	mColor;
-	u32			mGfxID;
-};
-
 #endif

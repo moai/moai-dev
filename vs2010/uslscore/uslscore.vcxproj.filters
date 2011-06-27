@@ -42,9 +42,6 @@
     <ClInclude Include="..\..\src\uslscore\USDirectoryItr.h">
       <Filter>src\util</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\uslscore\USFilename.h">
-      <Filter>src\util</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\uslscore\USFileSys.h">
       <Filter>src\util</Filter>
     </ClInclude>
@@ -195,15 +192,15 @@
     <ClInclude Include="..\..\src\uslscore\USLog.h">
       <Filter>src\util</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\uslscore\USFilename.h">
+      <Filter>src\util</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\uslscore\USDirectoryItr_posix.cpp">
       <Filter>src\util</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\uslscore\USDirectoryItr_win32.cpp">
-      <Filter>src\util</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\uslscore\USFilename.cpp">
       <Filter>src\util</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\uslscore\USFileSys.cpp">
@@ -266,9 +263,6 @@
     <ClCompile Include="..\..\src\uslscore\USCipherStream.cpp">
       <Filter>src\cipher</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\uslscore\pch.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\uslscore\uslscore.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -289,6 +283,12 @@
     </ClCompile>
     <ClCompile Include="..\..\src\uslscore\USLog.cpp">
       <Filter>src\util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslscore\USFilename.cpp">
+      <Filter>src\util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslscore\uslscore-pch.cpp">
+      <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

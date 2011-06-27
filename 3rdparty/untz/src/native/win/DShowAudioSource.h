@@ -2,7 +2,7 @@
 
 #include "Untz.h"
 #include "AudioSource.h"
-#include <Threading/RCriticalSection.h>
+#include <Threading/Threading.h>
 #include <tchar.h>
 #include <dshow.h>
 #include <qedit.h>
@@ -22,13 +22,13 @@ public:
 	bool load(const RString& path);
 
 	// AudioSource
-	virtual UInt32 readFrames(float* buffer, UInt32 numChannels, UInt32 numSamples);
+	virtual Int64 readFrames(float* buffer, UInt32 numChannels, UInt32 numSamples);
 	virtual void start();
 	virtual void stop();
 	virtual void setPosition(double position);
 	virtual double getPosition();
 	virtual UInt32 getBitsPerSample();
-	virtual UInt32 getSampleRate();
+	virtual double getSampleRate();
 	virtual UInt32 getNumChannels();
 	virtual double getLength();
 

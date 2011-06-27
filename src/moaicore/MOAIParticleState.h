@@ -7,6 +7,7 @@
 #include <moaicore/MOAIParticle.h>
 
 class MOAIParticleForce;
+class MOAIParticlePlugin;
 class MOAIParticleScript;
 class MOAIParticleSystem;
 
@@ -32,6 +33,7 @@ private:
 
 	USRef < MOAIParticleScript > mInit;
 	USRef < MOAIParticleScript > mRender;
+	USRef < MOAIParticlePlugin > mPlugin;
 	
 	USWeak < MOAIParticleState > mNext;
 
@@ -42,6 +44,7 @@ private:
 	static int		_setInitScript			( lua_State* L );
 	static int		_setMass				( lua_State* L );
 	static int		_setNext				( lua_State* L );
+	static int		_setPlugin				( lua_State* L );
 	static int		_setRenderScript		( lua_State* L );
 	static int		_setTerm				( lua_State* L );
 

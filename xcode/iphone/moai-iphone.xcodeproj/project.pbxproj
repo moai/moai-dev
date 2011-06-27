@@ -19,6 +19,7 @@
 		03BBC9521380523D0084FBE1 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03BBC9511380523D0084FBE1 /* CoreLocation.framework */; };
 		03BBC9561380525D0084FBE1 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03BBC9551380525D0084FBE1 /* QuartzCore.framework */; };
 		03BBCABE13806DD10084FBE1 /* libmoai-iphone.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03BBCA4D138069D60084FBE1 /* libmoai-iphone.a */; };
+		072B2F9113AFA70200829A5A /* tapjoy.lua in Resources */ = {isa = PBXBuildFile; fileRef = 072B2F9013AFA70200829A5A /* tapjoy.lua */; };
 		07CDCFE613AA8332009674C7 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07CDCFE513AA8332009674C7 /* SystemConfiguration.framework */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
@@ -142,6 +143,7 @@
 		03BBC94D138052220084FBE1 /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
 		03BBC9511380523D0084FBE1 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		03BBC9551380525D0084FBE1 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		072B2F9013AFA70200829A5A /* tapjoy.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = tapjoy.lua; path = ../../../../../Desktop/tapjoy.lua; sourceTree = SOURCE_ROOT; };
 		07CDCFE513AA8332009674C7 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D6058910D05DD3D006BFB54 /* MoaiSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MoaiSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -187,6 +189,7 @@
 		03BBCA3C138069510084FBE1 /* lua */ = {
 			isa = PBXGroup;
 			children = (
+				072B2F9013AFA70200829A5A /* tapjoy.lua */,
 				CD5B292E13ABC7A800B3F263 /* main.lua */,
 				CDA0D48213ABE001003B91F0 /* testimage.png */,
 				CD5B292F13ABC7A800B3F263 /* testpattern.png */,
@@ -410,6 +413,7 @@
 				CD5B293013ABC7A800B3F263 /* main.lua in Resources */,
 				CD5B293113ABC7A800B3F263 /* testpattern.png in Resources */,
 				CDA0D48313ABE001003B91F0 /* testimage.png in Resources */,
+				072B2F9113AFA70200829A5A /* tapjoy.lua in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

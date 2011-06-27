@@ -509,27 +509,25 @@ u64 MOAIParticleScript::Pack64 ( u32 low, u32 hi ) {
 //----------------------------------------------------------------//
 void MOAIParticleScript::PushSprite ( MOAIParticleSystem& system, float* registers ) {
 
-	MOAIParticleSprite sprite;
+	AKUParticleSprite sprite;
 
-	sprite.mLoc.mX		= registers [ SPRITE_X_LOC ];
-	sprite.mLoc.mY		= registers [ SPRITE_Y_LOC ];
+	sprite.mXLoc		= registers [ SPRITE_X_LOC ];
+	sprite.mYLoc		= registers [ SPRITE_Y_LOC ];
 	
-	sprite.mRot			= registers [ SPRITE_ROT ];
+	sprite.mZRot		= registers [ SPRITE_ROT ];
 	
-	sprite.mScl.mX		= registers [ SPRITE_X_SCL ];
-	sprite.mScl.mY		= registers [ SPRITE_Y_SCL ];
+	sprite.mXScl		= registers [ SPRITE_X_SCL ];
+	sprite.mYScl		= registers [ SPRITE_Y_SCL ];
 	
 	float opacity		= registers [ SPRITE_OPACITY ];
 	float glow			= 1.0f - registers [ SPRITE_GLOW ];
 	
-	sprite.mColor.Set (
-		registers [ SPRITE_RED ] * opacity,
-		registers [ SPRITE_GREEN ] * opacity,
-		registers [ SPRITE_BLUE ] * opacity,
-		opacity * glow
-	);
+	sprite.mRed			= registers [ SPRITE_RED ] * opacity;
+	sprite.mGreen		= registers [ SPRITE_GREEN ] * opacity;
+	sprite.mBlue		= registers [ SPRITE_BLUE ] * opacity;
+	sprite.mAlpha		= opacity * glow;
 	
-	sprite.mGfxID = USFloat::ToInt ( registers [ SPRITE_IDX ]);
+	sprite.mGfxID		= USFloat::ToInt ( registers [ SPRITE_IDX ]);
 	
 	system.PushSprite ( sprite );
 }
@@ -603,21 +601,15 @@ void MOAIParticleScript::ResetRegisters ( float* spriteRegisters, float* particl
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleScript::Run ( MOAIParticleSystem& system, MOAIParticle& particle, float step ) {
+void MOAIParticleScript::Run ( MOAIParticleSystem& system, MOAIParticle& particle, float t0, float t1 ) {
 
 	u8* dst;
 	u8* bytecode = this->mBytecode;
 	if ( !bytecode ) return;
-
-	float t0 = particle.mAge / particle.mTerm;
-	particle.mAge += step;
-	float t1 = particle.mAge / particle.mTerm;
-	t1 = ( t1 > 1.0f ) ? 1.0f : t1;
 	
 	float particleRegisters [ MAX_PARTICLE_REGISTERS ];
 	memcpy ( particleRegisters, particle.mData, sizeof ( float ) * system.mParticleSize );
 	
-	MOAIParticleSprite sprite;
 	float spriteRegisters [ TOTAL_SPRITE_REG ];
 	
 	float* r0;
