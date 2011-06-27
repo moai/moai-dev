@@ -31,5 +31,6 @@ typedef void	( *AKUParticleInitFunc )		( float* particle, float* registers );
 typedef void	( *AKUParticleRenderFunc )		( float* particle, float* registers, AKUParticleSprite* sprite, float t0, float t1 );
 
 AKU_API void	AKUNewParticlePlugin			( lua_State* L, AKUParticleInitFunc initFunc, AKUParticleRenderFunc renderFunc, int size );
+AKU_API void	AKUSetParticlePreset			( const char* presetTable, AKUParticleInitFunc initFunc, AKUParticleRenderFunc renderFunc, int size );
 
 #endif

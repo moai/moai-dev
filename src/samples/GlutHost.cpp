@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include <stdio.h>
-#include <samples/GlutHost.h>
+#include <GlutHost.h>
 
 
 #ifdef GLUTHOST_USE_FMOD
@@ -22,7 +22,7 @@
 #endif
 
 #ifdef GLUTHOST_USE_PARTICLE_PRESETS
-	#include <samples/ParticlePresets.h>
+	#include <ParticlePresets.h>
 #endif
 
 #ifdef _WIN32

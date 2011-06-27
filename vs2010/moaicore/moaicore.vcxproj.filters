@@ -276,9 +276,6 @@
     <ClCompile Include="..\..\src\moaicore\moaicore.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\pch.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAILogMgr.cpp">
       <Filter>src\log</Filter>
     </ClCompile>
@@ -353,6 +350,18 @@
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAIJsonParser.cpp">
       <Filter>src\util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\aku\AKU-particles.cpp">
+      <Filter>src\aku</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIParticlePlugin.cpp">
+      <Filter>src\particles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIEnvironment.cpp">
+      <Filter>src\util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\moaicore-pch.cpp">
+      <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -639,6 +648,15 @@
       <Filter>src\util</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIJsonParser.h">
+      <Filter>src\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\aku\AKU-particles.h">
+      <Filter>src\aku</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIParticlePlugin.h">
+      <Filter>src\particles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIEnvironment.h">
       <Filter>src\util</Filter>
     </ClInclude>
   </ItemGroup>

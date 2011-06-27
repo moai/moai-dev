@@ -2,6 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <aku/AKU.h>
 #include <aku/AKU-particles.h>
 
 #include <cassert>
@@ -23,4 +24,24 @@ void AKUNewParticlePlugin ( lua_State* L, AKUParticleInitFunc initFunc, AKUParti
 	MOAIParticlePlugin* plugin = new MOAIParticlePlugin ();
 	plugin->Init ( initFunc, renderFunc, size );
 	plugin->PushLuaUserdata ( state );
+}
+
+//----------------------------------------------------------------//
+void AKUSetParticlePreset ( const char* presetTable, AKUParticleInitFunc initFunc, AKUParticleRenderFunc renderFunc, int size ) {
+
+	lua_State* L = AKUGetLuaState ();
+	
+	lua_getglobal ( L, presetTable );
+	
+	if ( lua_isnil ( L, -1 )) {
+		lua_newtable ( L );
+		lua_setglobal ( L, presetTable );
+	}
+	
+	lua_getglobal ( L, presetTable );
+	assert ( lua_isnil ( L, -1 ) == false );
+	
+	AKUNewParticlePlugin ( L, initFunc, renderFunc, size );
+	
+	lua_pop ( L, 1 );
 }

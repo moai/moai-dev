@@ -2,11 +2,7 @@
 // http://getmoai.com
 
 #include <aku/AKU-particles.h>
-#include <samples/ParticlePresets.h>
-
-extern "C" {
-	#include <lua.h>
-}
+#include <ParticlePresets.h>
 
 //----------------------------------------------------------------//
 static float	_lerp					( float x0, float x1, float t );
@@ -47,13 +43,6 @@ void _linearRender ( float* particle, float* registers, AKUParticleSprite* sprit
 
 //----------------------------------------------------------------//
 void ParticlePresets () {
-
-	lua_State* L = AKUGetLuaState ();
 	
-	lua_newtable ( L );
-	
-	AKUNewParticlePlugin ( L, 0, _linearRender, 6 );
-	lua_setfield ( L, -2, "linear" );
-	
-	lua_setglobal ( L, "AKUParticlePresets" );
+	AKUSetParticlePreset ( "ParticlePresets", 0, _linearRender, 6 );
 }
