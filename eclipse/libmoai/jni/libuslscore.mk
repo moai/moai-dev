@@ -16,7 +16,7 @@ $(SRC_PATH)/3rdparty/lua-5.1.3/src_android
 #----------------------------------------------------------------#
 # included files
 #----------------------------------------------------------------#
-LOCAL_SRC_FILES := $(SRC_PATH)/src/uslscore/pch.cpp \
+LOCAL_SRC_FILES := $(SRC_PATH)/src/uslscore/uslscore-pch.cpp \
 $(SRC_PATH)/src/uslscore/STLString.cpp \
 $(SRC_PATH)/src/uslscore/USBase64Cipher.cpp \
 $(SRC_PATH)/src/uslscore/USByteStream.cpp \

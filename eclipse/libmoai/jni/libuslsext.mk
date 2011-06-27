@@ -35,7 +35,7 @@ $(SRC_PATH)/3rdparty/openssl-1.0.0d/include-android \
 #----------------------------------------------------------------#
 # included files
 #----------------------------------------------------------------#
-LOCAL_SRC_FILES := $(SRC_PATH)/src/uslsext/pch.cpp \
+LOCAL_SRC_FILES := $(SRC_PATH)/src/uslsext/uslsext-pch.cpp \
 $(SRC_PATH)/src/uslsext/USAdapterInfo_posix.cpp \
 $(SRC_PATH)/src/uslsext/USAdapterInfo_win32.cpp \
 $(SRC_PATH)/src/uslsext/USAnimCurve.cpp \
