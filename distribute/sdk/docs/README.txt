@@ -1,1 +1,2 @@
-For convenience, create a shortcut in this folder to the file index.html in the html folder.
+To open the Moai Documentation, find index.html in the html folder.
+For convenience, consider creating a shortcut to this file.
