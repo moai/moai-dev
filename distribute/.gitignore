@@ -16,7 +16,7 @@ build/
 *.suo
 *.sdf
 *.opensdf
-
+*.user
 sdk/samples/hosts/xcode/ios/Classes/
 sdk/samples/hosts/xcode/ios/Entitlements.plist
 sdk/samples/hosts/xcode/ios/Icon.png
