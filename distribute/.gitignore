@@ -1,6 +1,6 @@
 sdk/3rdparty/
 sdk/bin/
-sdk/docs/
+sdk/docs/html
 sdk/samples/lua/
 sdk/samples/hosts/src
 sdk/samples/hosts/eclipse/android-project/
