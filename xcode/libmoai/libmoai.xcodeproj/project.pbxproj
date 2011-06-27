@@ -995,9 +995,7 @@
 		0324E74513564BC8000ADC60 /* MOAIViewport.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5A513564BC8000ADC60 /* MOAIViewport.h */; };
 		0324E74613564BC8000ADC60 /* MOAIXmlParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5A613564BC8000ADC60 /* MOAIXmlParser.cpp */; };
 		0324E74713564BC8000ADC60 /* MOAIXmlParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5A713564BC8000ADC60 /* MOAIXmlParser.h */; };
-		0324E74813564BC8000ADC60 /* pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5A813564BC8000ADC60 /* pch.cpp */; };
 		0324E74913564BC8000ADC60 /* pch.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5A913564BC8000ADC60 /* pch.h */; };
-		0324E74A13564BC8000ADC60 /* pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5AB13564BC8000ADC60 /* pch.cpp */; };
 		0324E74B13564BC8000ADC60 /* pch.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5AC13564BC8000ADC60 /* pch.h */; };
 		0324E74C13564BC8000ADC60 /* STLArray.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5AD13564BC8000ADC60 /* STLArray.h */; };
 		0324E74D13564BC8000ADC60 /* STLIteration.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5AE13564BC8000ADC60 /* STLIteration.h */; };
@@ -1081,7 +1079,6 @@
 		0324E79B13564BC8000ADC60 /* USZip.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5FC13564BC8000ADC60 /* USZip.h */; };
 		0324E79C13564BC8000ADC60 /* USZipFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5FD13564BC8000ADC60 /* USZipFile.cpp */; };
 		0324E79D13564BC8000ADC60 /* USZipFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5FE13564BC8000ADC60 /* USZipFile.h */; };
-		0324E79E13564BC8000ADC60 /* pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E60013564BC8000ADC60 /* pch.cpp */; };
 		0324E79F13564BC8000ADC60 /* pch.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E60113564BC8000ADC60 /* pch.h */; };
 		0324E7A013564BC8000ADC60 /* USAdapterInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E60213564BC8000ADC60 /* USAdapterInfo.h */; };
 		0324E7A113564BC8000ADC60 /* USAdapterInfo_posix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E60313564BC8000ADC60 /* USAdapterInfo_posix.cpp */; };
@@ -1397,9 +1394,7 @@
 		0324E8E313564BC8000ADC60 /* MOAIViewport.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5A513564BC8000ADC60 /* MOAIViewport.h */; };
 		0324E8E413564BC8000ADC60 /* MOAIXmlParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5A613564BC8000ADC60 /* MOAIXmlParser.cpp */; };
 		0324E8E513564BC8000ADC60 /* MOAIXmlParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5A713564BC8000ADC60 /* MOAIXmlParser.h */; };
-		0324E8E613564BC8000ADC60 /* pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5A813564BC8000ADC60 /* pch.cpp */; };
 		0324E8E713564BC8000ADC60 /* pch.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5A913564BC8000ADC60 /* pch.h */; };
-		0324E8E813564BC8000ADC60 /* pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5AB13564BC8000ADC60 /* pch.cpp */; };
 		0324E8E913564BC8000ADC60 /* pch.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5AC13564BC8000ADC60 /* pch.h */; };
 		0324E8EA13564BC9000ADC60 /* STLArray.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5AD13564BC8000ADC60 /* STLArray.h */; };
 		0324E8EB13564BC9000ADC60 /* STLIteration.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5AE13564BC8000ADC60 /* STLIteration.h */; };
@@ -1483,7 +1478,6 @@
 		0324E93913564BC9000ADC60 /* USZip.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5FC13564BC8000ADC60 /* USZip.h */; };
 		0324E93A13564BC9000ADC60 /* USZipFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5FD13564BC8000ADC60 /* USZipFile.cpp */; };
 		0324E93B13564BC9000ADC60 /* USZipFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5FE13564BC8000ADC60 /* USZipFile.h */; };
-		0324E93C13564BC9000ADC60 /* pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E60013564BC8000ADC60 /* pch.cpp */; };
 		0324E93D13564BC9000ADC60 /* pch.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E60113564BC8000ADC60 /* pch.h */; };
 		0324E93E13564BC9000ADC60 /* USAdapterInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E60213564BC8000ADC60 /* USAdapterInfo.h */; };
 		0324E93F13564BC9000ADC60 /* USAdapterInfo_posix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E60313564BC8000ADC60 /* USAdapterInfo_posix.cpp */; };
@@ -1641,6 +1635,9 @@
 		03F135DD13A2EFC000044AE8 /* MOAIWebView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 03F135D913A2EFC000044AE8 /* MOAIWebView.mm */; };
 		07CDCFB213AA7C5D009674C7 /* Reachability.h in Headers */ = {isa = PBXBuildFile; fileRef = 07CDCFB013AA7C5D009674C7 /* Reachability.h */; };
 		07CDCFB313AA7C5D009674C7 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 07CDCFB113AA7C5D009674C7 /* Reachability.m */; };
+		07FAC91613B8F1CA00AFD0B3 /* moaicore-pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07FAC91513B8F1CA00AFD0B3 /* moaicore-pch.cpp */; };
+		07FAC91813B8F1E000AFD0B3 /* uslscore-pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07FAC91713B8F1E000AFD0B3 /* uslscore-pch.cpp */; };
+		07FAC91A13B8F1F000AFD0B3 /* uslsext-pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07FAC91913B8F1F000AFD0B3 /* uslsext-pch.cpp */; };
 		C37D422213B16930009600BB /* BufferedAudioSource.h in Headers */ = {isa = PBXBuildFile; fileRef = C37D421E13B1692F009600BB /* BufferedAudioSource.h */; };
 		C37D422413B16930009600BB /* BufferedAudioSourceThread.h in Headers */ = {isa = PBXBuildFile; fileRef = C37D422013B16930009600BB /* BufferedAudioSourceThread.h */; };
 		C37D422813B16955009600BB /* RScopedLock.h in Headers */ = {isa = PBXBuildFile; fileRef = C37D422513B16955009600BB /* RScopedLock.h */; };
@@ -3361,9 +3358,7 @@
 		0324E5A513564BC8000ADC60 /* MOAIViewport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIViewport.h; sourceTree = "<group>"; };
 		0324E5A613564BC8000ADC60 /* MOAIXmlParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIXmlParser.cpp; sourceTree = "<group>"; };
 		0324E5A713564BC8000ADC60 /* MOAIXmlParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIXmlParser.h; sourceTree = "<group>"; };
-		0324E5A813564BC8000ADC60 /* pch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pch.cpp; sourceTree = "<group>"; };
 		0324E5A913564BC8000ADC60 /* pch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pch.h; sourceTree = "<group>"; };
-		0324E5AB13564BC8000ADC60 /* pch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pch.cpp; sourceTree = "<group>"; };
 		0324E5AC13564BC8000ADC60 /* pch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pch.h; sourceTree = "<group>"; };
 		0324E5AD13564BC8000ADC60 /* STLArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STLArray.h; sourceTree = "<group>"; };
 		0324E5AE13564BC8000ADC60 /* STLIteration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STLIteration.h; sourceTree = "<group>"; };
@@ -3447,7 +3442,6 @@
 		0324E5FC13564BC8000ADC60 /* USZip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USZip.h; sourceTree = "<group>"; };
 		0324E5FD13564BC8000ADC60 /* USZipFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USZipFile.cpp; sourceTree = "<group>"; };
 		0324E5FE13564BC8000ADC60 /* USZipFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USZipFile.h; sourceTree = "<group>"; };
-		0324E60013564BC8000ADC60 /* pch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pch.cpp; sourceTree = "<group>"; };
 		0324E60113564BC8000ADC60 /* pch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pch.h; sourceTree = "<group>"; };
 		0324E60213564BC8000ADC60 /* USAdapterInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USAdapterInfo.h; sourceTree = "<group>"; };
 		0324E60313564BC8000ADC60 /* USAdapterInfo_posix.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USAdapterInfo_posix.cpp; sourceTree = "<group>"; };
@@ -3604,6 +3598,9 @@
 		03F135D913A2EFC000044AE8 /* MOAIWebView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIWebView.mm; path = "moaiext-iphone/MOAIWebView.mm"; sourceTree = "<group>"; };
 		07CDCFB013AA7C5D009674C7 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Reachability.h; path = "moaiext-iphone/Reachability.h"; sourceTree = "<group>"; };
 		07CDCFB113AA7C5D009674C7 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Reachability.m; path = "moaiext-iphone/Reachability.m"; sourceTree = "<group>"; };
+		07FAC91513B8F1CA00AFD0B3 /* moaicore-pch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "moaicore-pch.cpp"; sourceTree = "<group>"; };
+		07FAC91713B8F1E000AFD0B3 /* uslscore-pch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "uslscore-pch.cpp"; sourceTree = "<group>"; };
+		07FAC91913B8F1F000AFD0B3 /* uslsext-pch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "uslsext-pch.cpp"; sourceTree = "<group>"; };
 		C37D421D13B1692F009600BB /* BufferedAudioSource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BufferedAudioSource.cpp; path = ../../3rdparty/untz/src/BufferedAudioSource.cpp; sourceTree = "<group>"; };
 		C37D421E13B1692F009600BB /* BufferedAudioSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BufferedAudioSource.h; path = ../../3rdparty/untz/src/BufferedAudioSource.h; sourceTree = "<group>"; };
 		C37D421F13B1692F009600BB /* BufferedAudioSourceThread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BufferedAudioSourceThread.cpp; path = ../../3rdparty/untz/src/BufferedAudioSourceThread.cpp; sourceTree = "<group>"; };
@@ -5222,6 +5219,7 @@
 		0324E4F913564BC7000ADC60 /* moaicore */ = {
 			isa = PBXGroup;
 			children = (
+				07FAC91513B8F1CA00AFD0B3 /* moaicore-pch.cpp */,
 				CD148EFD1395AF4400A3F501 /* action */,
 				CD148EFC1395AF3900A3F501 /* anim */,
 				CD148EFB1395AF2600A3F501 /* box2d */,
@@ -5248,7 +5246,6 @@
 				0324E51413564BC7000ADC60 /* moaiconf.h */,
 				0324E51513564BC7000ADC60 /* moaicore.cpp */,
 				0324E51613564BC7000ADC60 /* moaicore.h */,
-				0324E5A813564BC8000ADC60 /* pch.cpp */,
 				0324E5A913564BC8000ADC60 /* pch.h */,
 			);
 			path = moaicore;
@@ -5257,6 +5254,7 @@
 		0324E5AA13564BC8000ADC60 /* uslscore */ = {
 			isa = PBXGroup;
 			children = (
+				07FAC91713B8F1E000AFD0B3 /* uslscore-pch.cpp */,
 				CD148F071395B2B100A3F501 /* cipher */,
 				CD148F061395B2AA00A3F501 /* lifecycle */,
 				CD148F051395B2A400A3F501 /* lua */,
@@ -5267,7 +5265,6 @@
 				CD148F001395B26100A3F501 /* time */,
 				CD148EFF1395B25700A3F501 /* util */,
 				CD148EFE1395B25000A3F501 /* zip */,
-				0324E5AB13564BC8000ADC60 /* pch.cpp */,
 				0324E5AC13564BC8000ADC60 /* pch.h */,
 				0324E5D913564BC8000ADC60 /* uslscore.cpp */,
 				0324E5DA13564BC8000ADC60 /* uslscore.h */,
@@ -5278,6 +5275,7 @@
 		0324E5FF13564BC8000ADC60 /* uslsext */ = {
 			isa = PBXGroup;
 			children = (
+				07FAC91913B8F1F000AFD0B3 /* uslsext-pch.cpp */,
 				CD148F161395B40700A3F501 /* animCurve */,
 				CD148F151395B3FE00A3F501 /* attributed */,
 				CD148F141395B3F800A3F501 /* font */,
@@ -5293,7 +5291,6 @@
 				CD148F0A1395B3C300A3F501 /* util */,
 				CD148F091395B3BD00A3F501 /* web */,
 				CD148F081395B3B900A3F501 /* xml */,
-				0324E60013564BC8000ADC60 /* pch.cpp */,
 				0324E60113564BC8000ADC60 /* pch.h */,
 				0324E64213564BC8000ADC60 /* uslsext.cpp */,
 				0324E64313564BC8000ADC60 /* uslsext.h */,
@@ -9268,8 +9265,6 @@
 				0324E8E013564BC8000ADC60 /* MOAIVertexFormat.cpp in Sources */,
 				0324E8E213564BC8000ADC60 /* MOAIViewport.cpp in Sources */,
 				0324E8E413564BC8000ADC60 /* MOAIXmlParser.cpp in Sources */,
-				0324E8E613564BC8000ADC60 /* pch.cpp in Sources */,
-				0324E8E813564BC8000ADC60 /* pch.cpp in Sources */,
 				0324E8EF13564BC9000ADC60 /* STLString.cpp in Sources */,
 				0324E8F213564BC9000ADC60 /* USBase64Cipher.cpp in Sources */,
 				0324E8F413564BC9000ADC60 /* USByteStream.cpp in Sources */,
@@ -9301,7 +9296,6 @@
 				0324E93113564BC9000ADC60 /* USStreamFormatter.cpp in Sources */,
 				0324E93813564BC9000ADC60 /* USZip.cpp in Sources */,
 				0324E93A13564BC9000ADC60 /* USZipFile.cpp in Sources */,
-				0324E93C13564BC9000ADC60 /* pch.cpp in Sources */,
 				0324E93F13564BC9000ADC60 /* USAdapterInfo_posix.cpp in Sources */,
 				0324E94013564BC9000ADC60 /* USAdapterInfo_win32.cpp in Sources */,
 				0324E94213564BC9000ADC60 /* USAnimCurve.cpp in Sources */,
@@ -10312,8 +10306,6 @@
 				0324E74213564BC8000ADC60 /* MOAIVertexFormat.cpp in Sources */,
 				0324E74413564BC8000ADC60 /* MOAIViewport.cpp in Sources */,
 				0324E74613564BC8000ADC60 /* MOAIXmlParser.cpp in Sources */,
-				0324E74813564BC8000ADC60 /* pch.cpp in Sources */,
-				0324E74A13564BC8000ADC60 /* pch.cpp in Sources */,
 				0324E75113564BC8000ADC60 /* STLString.cpp in Sources */,
 				0324E75413564BC8000ADC60 /* USBase64Cipher.cpp in Sources */,
 				0324E75613564BC8000ADC60 /* USByteStream.cpp in Sources */,
@@ -10345,7 +10337,6 @@
 				0324E79313564BC8000ADC60 /* USStreamFormatter.cpp in Sources */,
 				0324E79A13564BC8000ADC60 /* USZip.cpp in Sources */,
 				0324E79C13564BC8000ADC60 /* USZipFile.cpp in Sources */,
-				0324E79E13564BC8000ADC60 /* pch.cpp in Sources */,
 				0324E7A113564BC8000ADC60 /* USAdapterInfo_posix.cpp in Sources */,
 				0324E7A213564BC8000ADC60 /* USAdapterInfo_win32.cpp in Sources */,
 				0324E7A413564BC8000ADC60 /* USAnimCurve.cpp in Sources */,
@@ -10436,6 +10427,9 @@
 				07CDCFB313AA7C5D009674C7 /* Reachability.m in Sources */,
 				CD62D6CC13A991BA002286EB /* MOAIJsonParser.cpp in Sources */,
 				031BBA5C13B17BD80005ECE0 /* MOAIEnvironment.cpp in Sources */,
+				07FAC91613B8F1CA00AFD0B3 /* moaicore-pch.cpp in Sources */,
+				07FAC91813B8F1E000AFD0B3 /* uslscore-pch.cpp in Sources */,
+				07FAC91A13B8F1F000AFD0B3 /* uslsext-pch.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
