@@ -24,6 +24,11 @@ jmethodID m_AKUShowSoftwareKeyboardFunc;
 jmethodID m_AKUStartGameLoopFunc;
 
 //Device properties
+enum {
+	CONNECTION_TYPE_NONE,
+	CONNECTION_TYPE_WIFI,
+	CONNECTION_TYPE_WWAN
+};
 jmethodID m_GetConnectivityFunc;
 jmethodID m_GenerateGuidFunc;
 
@@ -276,7 +281,7 @@ void _AKUStartGameLoopFunc () {
 }
 
 // -------------------------------------------------------------//
-const char* _GetConnectivity () {
+long _GetConnectivity () {
 
 	JNIEnv *env;
 	if(jvm == NULL)
@@ -301,7 +306,13 @@ const char* _GetConnectivity () {
 	strcpy(buf, str);
 	ret = buf;
     env->ReleaseStringUTFChars(conn, str);
-	return ret;
+    
+    if ( strcmp ( buf, "WIFI" ))
+    	return ( long )CONNECTION_TYPE_WIFI;
+    else if (strcmp ( buf, "MOBILE" ))
+    	return ( long )CONNECTION_TYPE_WWAN;
+	else
+		return ( long )CONNECTION_TYPE_NONE;
 }
 
 // -------------------------------------------------------------//

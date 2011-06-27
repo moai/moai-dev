@@ -11,10 +11,6 @@ OggAudioSource::OggAudioSource()
 
 OggAudioSource::~OggAudioSource()
 {
-	ov_clear(&mOggFile);
-
-	if(mInFile)
-		fclose(mInFile);
 }
 
 bool OggAudioSource::init(const RString& path, bool loadIntoMemory)
@@ -39,6 +35,16 @@ bool OggAudioSource::init(const RString& path, bool loadIntoMemory)
 	mpOggInfo = ov_info(&mOggFile, -1);
 
 	return BufferedAudioSource::init(path, loadIntoMemory);
+}
+
+void OggAudioSource::close()
+{
+    BufferedAudioSource::close();
+    
+	ov_clear(&mOggFile);
+    
+	if(mInFile)
+		fclose(mInFile);    
 }
 
 void OggAudioSource::setDecoderPosition(Int64 startFrame)

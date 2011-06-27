@@ -43,7 +43,9 @@
 	- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
 	
 		if ( mMOAIWebView ) {
-			return mMOAIWebView->RaiseShouldStartLoadWithRequestEvent ( request, navigationType );
+		
+			bool result = mMOAIWebView->RaiseShouldStartLoadWithRequestEvent ( request, navigationType );
+			return result;
 		}
 		return true;
 	}

@@ -39,6 +39,14 @@ bool BufferedAudioSourceThread::addSource(BufferedAudioSource *source)
 {
 	RScopedLock l(&mLock);
 
+	for(UInt32 i = 0; i < mSources.size(); ++i)
+	{
+		if(source == mSources[i])
+		{
+            return false; // Already added
+		}
+	}
+    
 	mSources.push_back(source);
 	if(mSources.size() == 1)
 	{
@@ -94,8 +102,6 @@ void BufferedAudioSourceThread::run()
 		for(UInt32 i = 0; i < mSources.size(); ++i)
 		{
 			BufferedAudioSource *pSource = mSources[i];
-
-//			RScopedLock l(&pSource->mLock);
             
             pSource->mLock.lock();
 
