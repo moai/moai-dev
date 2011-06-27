@@ -45,6 +45,6 @@ private:
 	CComQIPtr<IMediaEventEx > mpMediaEvent;
 	CComQIPtr<IMediaSeeking> mpMediaSeeking;
 	WAVEFORMATEX* mpWaveFormatEx;
-	RCriticalSection mCriticalSection;
+	RCriticalSection mLock;
 	bool mEOF;
 };
