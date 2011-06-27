@@ -509,27 +509,25 @@ u64 MOAIParticleScript::Pack64 ( u32 low, u32 hi ) {
 //----------------------------------------------------------------//
 void MOAIParticleScript::PushSprite ( MOAIParticleSystem& system, float* registers ) {
 
-	MOAIParticleSprite sprite;
+	AKUParticleSprite sprite;
 
-	sprite.mLoc.mX		= registers [ SPRITE_X_LOC ];
-	sprite.mLoc.mY		= registers [ SPRITE_Y_LOC ];
+	sprite.mXLoc		= registers [ SPRITE_X_LOC ];
+	sprite.mYLoc		= registers [ SPRITE_Y_LOC ];
 	
-	sprite.mRot			= registers [ SPRITE_ROT ];
+	sprite.mZRot		= registers [ SPRITE_ROT ];
 	
-	sprite.mScl.mX		= registers [ SPRITE_X_SCL ];
-	sprite.mScl.mY		= registers [ SPRITE_Y_SCL ];
+	sprite.mXScl		= registers [ SPRITE_X_SCL ];
+	sprite.mYScl		= registers [ SPRITE_Y_SCL ];
 	
 	float opacity		= registers [ SPRITE_OPACITY ];
 	float glow			= 1.0f - registers [ SPRITE_GLOW ];
 	
-	sprite.mColor.Set (
-		registers [ SPRITE_RED ] * opacity,
-		registers [ SPRITE_GREEN ] * opacity,
-		registers [ SPRITE_BLUE ] * opacity,
-		opacity * glow
-	);
+	sprite.mRed			= registers [ SPRITE_RED ] * opacity;
+	sprite.mGreen		= registers [ SPRITE_GREEN ] * opacity;
+	sprite.mBlue		= registers [ SPRITE_BLUE ] * opacity;
+	sprite.mAlpha		= opacity * glow;
 	
-	sprite.mGfxID = USFloat::ToInt ( registers [ SPRITE_IDX ]);
+	sprite.mGfxID		= USFloat::ToInt ( registers [ SPRITE_IDX ]);
 	
 	system.PushSprite ( sprite );
 }
@@ -541,15 +539,6 @@ void MOAIParticleScript::RegisterLuaClass ( USLuaState& state ) {
 	state.SetField ( -1, "PARTICLE_Y",			Pack64 ( MOAIParticle::PARTICLE_Y, PARAM_TYPE_PARTICLE_REG ));
 	state.SetField ( -1, "PARTICLE_DX",			Pack64 ( MOAIParticle::PARTICLE_DX, PARAM_TYPE_PARTICLE_REG ));
 	state.SetField ( -1, "PARTICLE_DY",			Pack64 ( MOAIParticle::PARTICLE_DY, PARAM_TYPE_PARTICLE_REG ));
-
-	state.SetField ( -1, "PARTICLE_X0",			Pack64 ( MOAIParticle::PARTICLE_X0, PARAM_TYPE_PARTICLE_REG ));
-	state.SetField ( -1, "PARTICLE_Y0",			Pack64 ( MOAIParticle::PARTICLE_Y0, PARAM_TYPE_PARTICLE_REG ));
-	state.SetField ( -1, "PARTICLE_X1",			Pack64 ( MOAIParticle::PARTICLE_X1, PARAM_TYPE_PARTICLE_REG ));
-	state.SetField ( -1, "PARTICLE_Y1",			Pack64 ( MOAIParticle::PARTICLE_Y1, PARAM_TYPE_PARTICLE_REG ));
-	state.SetField ( -1, "PARTICLE_R0",			Pack64 ( MOAIParticle::PARTICLE_R0, PARAM_TYPE_PARTICLE_REG ));
-	state.SetField ( -1, "PARTICLE_R1",			Pack64 ( MOAIParticle::PARTICLE_R1, PARAM_TYPE_PARTICLE_REG ));
-	state.SetField ( -1, "PARTICLE_S0",			Pack64 ( MOAIParticle::PARTICLE_S0, PARAM_TYPE_PARTICLE_REG ));
-	state.SetField ( -1, "PARTICLE_S1",			Pack64 ( MOAIParticle::PARTICLE_S1, PARAM_TYPE_PARTICLE_REG ));
 
 	state.SetField ( -1, "SPRITE_X_LOC",		Pack64 ( SPRITE_X_LOC, PARAM_TYPE_SPRITE_REG ));
 	state.SetField ( -1, "SPRITE_Y_LOC",		Pack64 ( SPRITE_Y_LOC, PARAM_TYPE_SPRITE_REG ));
@@ -612,21 +601,15 @@ void MOAIParticleScript::ResetRegisters ( float* spriteRegisters, float* particl
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleScript::Run ( MOAIParticleSystem& system, MOAIParticle& particle, float step ) {
+void MOAIParticleScript::Run ( MOAIParticleSystem& system, MOAIParticle& particle, float t0, float t1 ) {
 
 	u8* dst;
 	u8* bytecode = this->mBytecode;
 	if ( !bytecode ) return;
-
-	float t0 = particle.mAge / particle.mTerm;
-	particle.mAge += step;
-	float t1 = particle.mAge / particle.mTerm;
-	t1 = ( t1 > 1.0f ) ? 1.0f : t1;
 	
 	float particleRegisters [ MAX_PARTICLE_REGISTERS ];
 	memcpy ( particleRegisters, particle.mData, sizeof ( float ) * system.mParticleSize );
 	
-	MOAIParticleSprite sprite;
 	float spriteRegisters [ TOTAL_SPRITE_REG ];
 	
 	float* r0;
@@ -827,32 +810,6 @@ void MOAIParticleScript::Run ( MOAIParticleSystem& system, MOAIParticle& particl
 	if ( push ) {
 		this->PushSprite ( system, spriteRegisters );
 	}
-}
-
-//----------------------------------------------------------------//
-void MOAIParticleScript::RunPreset ( MOAIParticleSystem& system, MOAIParticle& particle, float step ) {
-
-	if ( system.mParticleSize < MOAIParticle::TOTAL_PARTICLE_PRESET_REG ) return;
-
-	float t = particle.mAge / particle.mTerm;
-	particle.mAge += step;
-	
-	float* data = particle.mData;
-	
-	MOAIParticleSprite sprite;
-	
-	sprite.mLoc.mX		= USInterpolate::Interpolate ( USInterpolate::kLinear, data [ MOAIParticle::PARTICLE_X0 ], data [ MOAIParticle::PARTICLE_X1 ], t );
-	sprite.mLoc.mY		= USInterpolate::Interpolate ( USInterpolate::kLinear, data [ MOAIParticle::PARTICLE_Y0 ], data [ MOAIParticle::PARTICLE_Y1 ], t );
-	sprite.mRot			= USInterpolate::Interpolate ( USInterpolate::kLinear, data [ MOAIParticle::PARTICLE_R0 ], data [ MOAIParticle::PARTICLE_R1 ], t );
-	sprite.mScl.mX		= USInterpolate::Interpolate ( USInterpolate::kLinear, data [ MOAIParticle::PARTICLE_S0 ], data [ MOAIParticle::PARTICLE_S1 ], t );
-	sprite.mScl.mY		= sprite.mScl.mX;
-	
-	float opacity = 1.0f - t;
-	sprite.mColor.Set ( opacity, opacity, opacity, opacity );
-	
-	sprite.mGfxID = 1;
-	
-	system.PushSprite ( sprite );
 }
 
 //----------------------------------------------------------------//

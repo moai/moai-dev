@@ -44,8 +44,8 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;..\..\src&quot;;&quot;..\..\3rdparty\glut-3.7.6-bin&quot;"
-				PreprocessorDefinitions="WIN32;_CONSOLE;_DEBUG;AKUGLUT_USE_LUAEXT"
+				AdditionalIncludeDirectories="..\..\src;&quot;..\..\3rdparty\lua-5.1.3\src&quot;;&quot;..\..\3rdparty\glut-3.7.6-bin&quot;"
+				PreprocessorDefinitions="WIN32;_CONSOLE;_DEBUG;GLUTHOST_USE_LUAEXT;GLUTHOST_USE_PARTICLE_PRESETS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -211,8 +211,8 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="&quot;..\..\src&quot;;&quot;..\..\3rdparty\glut-3.7.6-bin&quot;"
-				PreprocessorDefinitions="WIN32;_CONSOLE;AKUGLUT_USE_LUAEXT"
+				AdditionalIncludeDirectories="..\..\src;&quot;..\..\3rdparty\lua-5.1.3\src&quot;;&quot;..\..\3rdparty\glut-3.7.6-bin&quot;"
+				PreprocessorDefinitions="WIN32;_CONSOLE;GLUTHOST_USE_LUAEXT;GLUTHOST_USE_PARTICLE_PRESETS"
 				RuntimeLibrary="2"
 				TreatWChar_tAsBuiltInType="false"
 				ForceConformanceInForLoopScope="false"
@@ -352,15 +352,23 @@
 	</References>
 	<Files>
 		<File
-			RelativePath="..\..\src\aku\AKUGlut.cpp"
+			RelativePath="..\..\src\samples\GlutHost.cpp"
 			>
 		</File>
 		<File
-			RelativePath="..\..\src\aku\AKUGlut.h"
+			RelativePath="..\..\src\samples\GlutHost.h"
 			>
 		</File>
 		<File
 			RelativePath=".\main.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\samples\ParticlePresets.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\samples\ParticlePresets.h"
 			>
 		</File>
 	</Files>

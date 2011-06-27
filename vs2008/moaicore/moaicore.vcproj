@@ -857,6 +857,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\moaicore\MOAIParticlePlugin.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIParticlePlugin.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\moaicore\MOAIParticleScript.cpp"
 				>
 			</File>
@@ -1148,6 +1156,14 @@
 		<Filter
 			Name="aku"
 			>
+			<File
+				RelativePath="..\..\src\aku\AKU-particles.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\aku\AKU-particles.h"
+				>
+			</File>
 			<File
 				RelativePath="..\..\src\aku\AKU.cpp"
 				>

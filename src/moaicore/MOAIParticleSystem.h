@@ -4,12 +4,12 @@
 #ifndef	MOAIPARTICLESYSTEM_H
 #define	MOAIPARTICLESYSTEM_H
 
+#include <aku/AKU-particles.h>
 #include <moaicore/MOAIAction.h>
 #include <moaicore/MOAIParticle.h>
 #include <moaicore/MOAIProp2D.h>
 
 class MOAIDeck;
-class MOAIParticleEngine;
 class MOAIParticleScript;
 class MOAIParticleState;
 
@@ -36,7 +36,7 @@ private:
 	MOAIParticle*						mTail;
 	MOAIParticle*						mFree;
 	
-	USLeanArray < MOAIParticleSprite >	mSprites;
+	USLeanArray < AKUParticleSprite >	mSprites;
 	u32									mSpriteTop;
 	
 	//----------------------------------------------------------------//
@@ -59,7 +59,7 @@ private:
 	void					ClearStates				();
 	void					ClearQueue				();
 	void					EnqueueParticle			( MOAIParticle& particle );
-	MOAIParticleSprite*		GetTopSprite			();
+	AKUParticleSprite*		GetTopSprite			();
 	MOAIParticleState*		GetState				( u32 id );
 	void					OnUpdate				( float step );
 
@@ -79,7 +79,7 @@ public:
 					~MOAIParticleSystem		();
 	bool			PushParticle			( float x, float y );
 	bool			PushParticle			( float x, float y, float dx, float dy );
-	bool			PushSprite				( const MOAIParticleSprite& sprite );
+	bool			PushSprite				( const AKUParticleSprite& sprite );
 	void			RegisterLuaClass		( USLuaState& state );
 	void			RegisterLuaFuncs		( USLuaState& state );
 	void			ReserveParticles		( u32 maxParticles, u32 particleSize );

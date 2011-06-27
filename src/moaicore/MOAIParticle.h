@@ -20,18 +20,6 @@ public:
 		TOTAL_PARTICLE_REG,
 	};
 
-	enum {
-		PARTICLE_X0,
-		PARTICLE_Y0,
-		PARTICLE_X1,
-		PARTICLE_Y1,
-		PARTICLE_R0,
-		PARTICLE_R1,
-		PARTICLE_S0,
-		PARTICLE_S1,
-		TOTAL_PARTICLE_PRESET_REG,
-	};
-
 	float					mAge;
 	float					mTerm;
 	float					mMass;
@@ -39,19 +27,6 @@ public:
 	float*					mData;
 
 	MOAIParticle*			mNext;
-};
-
-//================================================================//
-// MOAIParticleSprite
-//================================================================//
-class MOAIParticleSprite {
-public:
-	
-	USVec2D		mLoc;
-	float		mRot;
-	USVec2D		mScl;
-	USColorVec	mColor;
-	u32			mGfxID;
 };
 
 #endif

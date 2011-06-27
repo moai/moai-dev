@@ -5,6 +5,7 @@
 #include <moaicore/MOAIDeck.h>
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIParticleForce.h>
+#include <moaicore/MOAIParticlePlugin.h>
 #include <moaicore/MOAIParticleScript.h>
 #include <moaicore/MOAIParticleState.h>
 #include <moaicore/MOAIParticleSystem.h>
@@ -124,6 +125,24 @@ int MOAIParticleState::_setNext ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	setPlugin
+	@text	Sets the particle plugin to use for initializing and updating particles.
+	
+	@in		MOAIParticleState self
+	@opt	MOAIParticlePlugin plugin
+	@out	nil
+*/
+int MOAIParticleState::_setPlugin ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIParticleState, "U" )
+
+	MOAIParticlePlugin* plugin = state.GetLuaObject < MOAIParticlePlugin >( 2 );
+
+	self->mPlugin = plugin;
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	setRenderScript
 	@text	Sets the particle script to use for rendering particles.
 	
@@ -210,7 +229,12 @@ void MOAIParticleState::GatherForces ( USVec2D& loc, USVec2D& velocity, float ma
 void MOAIParticleState::InitParticle ( MOAIParticleSystem& system, MOAIParticle& particle ) {
 
 	if ( this->mInit ) {
-		this->mInit->Run ( system, particle, 0.0f );
+		this->mInit->Run ( system, particle, 0.0f, 0.0f );
+	}
+	
+	MOAIParticlePlugin* plugin = this->mPlugin;
+	if ( plugin->mInitFunc ) {
+		plugin->mInitFunc ( particle.mData, &particle.mData [ MOAIParticle::TOTAL_PARTICLE_REG ]);
 	}
 	
 	particle.mAge = 0.0f;
@@ -265,6 +289,7 @@ void MOAIParticleState::RegisterLuaFuncs ( USLuaState& state ) {
 		{ "setDamping",				_setDamping },
 		{ "setInitScript",			_setInitScript },
 		{ "setMass",				_setMass },
+		{ "setPlugin",				_setPlugin },
 		{ "setNext",				_setNext },
 		{ "setRenderScript",		_setRenderScript },
 		{ "setTerm",				_setTerm },
@@ -277,14 +302,19 @@ void MOAIParticleState::RegisterLuaFuncs ( USLuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIParticleState::ProcessParticle ( MOAIParticleSystem& system, MOAIParticle& particle, float step ) {
 
-	if (( particle.mAge + step ) > particle.mTerm ) {
+	float t0 = particle.mAge / particle.mTerm;
+	particle.mAge += step;
+	
+	if ( particle.mAge > particle.mTerm ) {
 		particle.mAge = particle.mTerm;
 	}
+	
+	float t1 = particle.mAge / particle.mTerm;
 
-	if ( this->mRender ) {
+	if ( this->mForces.Count ()) {
 	
 		float* r = particle.mData;
-	
+		
 		USVec2D loc;
 		USVec2D vel;
 		
@@ -299,11 +329,20 @@ void MOAIParticleState::ProcessParticle ( MOAIParticleSystem& system, MOAIPartic
 		r [ MOAIParticle::PARTICLE_Y ]	= loc.mY;
 		r [ MOAIParticle::PARTICLE_DX ]	= vel.mX;
 		r [ MOAIParticle::PARTICLE_DY ]	= vel.mY;
-		
-		this->mRender->Run ( system, particle, step );
+	}
+
+	if ( this->mRender ) {
+		this->mRender->Run ( system, particle, t0, t1 );
 	}
 	else {
-		MOAIParticleScript::RunPreset ( system, particle, step );
+	
+		MOAIParticlePlugin* plugin = this->mPlugin;
+		if ( plugin->mRenderFunc ) {
+			
+			AKUParticleSprite sprite;
+			plugin->mRenderFunc ( particle.mData, &particle.mData [ MOAIParticle::TOTAL_PARTICLE_REG ], &sprite, t0, t1 );
+			system.PushSprite ( sprite );
+		}
 	}
 
 	if ( particle.mAge >= particle.mTerm ) {

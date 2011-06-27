@@ -122,15 +122,19 @@ int MOAIParticleSystem::_pushParticle ( lua_State* L ) {
 int MOAIParticleSystem::_pushSprite ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIParticleSystem, "UNN" )
 
-	MOAIParticleSprite sprite;
+	AKUParticleSprite sprite;
 
-	sprite.mLoc.mX		= state.GetValue < float >( 2, 0.0f );
-	sprite.mLoc.mY		= state.GetValue < float >( 3, 0.0f );
-	sprite.mRot			= state.GetValue < float >( 4, 0.0f );
-	sprite.mScl.mX		= state.GetValue < float >( 5, 1.0f );
-	sprite.mScl.mY		= state.GetValue < float >( 6, 1.0f );
+	sprite.mXLoc		= state.GetValue < float >( 2, 0.0f );
+	sprite.mYLoc		= state.GetValue < float >( 3, 0.0f );
+	sprite.mZRot		= state.GetValue < float >( 4, 0.0f );
+	sprite.mXScl		= state.GetValue < float >( 5, 1.0f );
+	sprite.mYScl		= state.GetValue < float >( 6, 1.0f );
 	
-	sprite.mColor.Set ( 1.0f, 1.0f, 1.0f, 1.0f );
+	sprite.mRed			= 1.0f;
+	sprite.mGreen		= 1.0f;
+	sprite.mBlue		= 1.0f;
+	sprite.mAlpha		= 1.0f;
+	
 	sprite.mGfxID = 1;
 	
 	bool result = self->PushSprite ( sprite );
@@ -206,15 +210,13 @@ int MOAIParticleSystem::_reserveStates ( lua_State* L ) {
 int MOAIParticleSystem::_setSpriteColor ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIParticleSystem, "UNNNN" )
 
-	MOAIParticleSprite* sprite = self->GetTopSprite ();
+	AKUParticleSprite* sprite = self->GetTopSprite ();
 	if ( sprite ) {
 	
-		float r = state.GetValue < float >( 2, 1.0f );
-		float g = state.GetValue < float >( 3, 1.0f );
-		float b = state.GetValue < float >( 4, 1.0f );
-		float a = state.GetValue < float >( 5, 1.0f );
-		
-		sprite->mColor.Set ( r, g, b, a );
+		sprite->mRed	= state.GetValue < float >( 2, 1.0f );
+		sprite->mGreen	= state.GetValue < float >( 3, 1.0f );
+		sprite->mBlue	= state.GetValue < float >( 4, 1.0f );
+		sprite->mAlpha	= state.GetValue < float >( 5, 1.0f );
 	}
 	return 0;
 }
@@ -230,7 +232,7 @@ int MOAIParticleSystem::_setSpriteColor ( lua_State* L ) {
 int MOAIParticleSystem::_setSpriteDeckIdx ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIParticleSystem, "UN" )
 
-	MOAIParticleSprite* sprite = self->GetTopSprite ();
+	AKUParticleSprite* sprite = self->GetTopSprite ();
 	if ( sprite ) {
 		sprite->mGfxID = state.GetValue < u32 >( 2, sprite->mGfxID );
 	}
@@ -339,10 +341,10 @@ void MOAIParticleSystem::Draw () {
 		
 		u32 idx = ( base + i ) % maxSprites;
 	
-		MOAIParticleSprite& sprite = this->mSprites [ idx ];
-		drawbuffer.SetPenColor ( sprite.mColor );
+		AKUParticleSprite& sprite = this->mSprites [ idx ];
+		drawbuffer.SetPenColor ( sprite.mRed, sprite.mGreen, sprite.mBlue, sprite.mAlpha );
 		
-		spriteMtx.ScRoTr ( sprite.mScl, sprite.mRot * ( float )D2R, sprite.mLoc );
+		spriteMtx.ScRoTr ( sprite.mXScl, sprite.mYScl, sprite.mZRot * ( float )D2R, sprite.mXLoc, sprite.mYLoc );
 		
 		drawingMtx = this->GetLocalToWorldMtx ();
 		drawingMtx.Append ( spriteMtx );
@@ -382,7 +384,7 @@ MOAIParticleState* MOAIParticleSystem::GetState ( u32 id ) {
 }
 
 //----------------------------------------------------------------//
-MOAIParticleSprite* MOAIParticleSystem::GetTopSprite () {
+AKUParticleSprite* MOAIParticleSystem::GetTopSprite () {
 
 	if ( this->mSpriteTop ) {
 		u32 idx = this->mSpriteTop - 1;
@@ -503,7 +505,7 @@ bool MOAIParticleSystem::PushParticle ( float x, float y, float dx, float dy ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIParticleSystem::PushSprite ( const MOAIParticleSprite& sprite ) {
+bool MOAIParticleSystem::PushSprite ( const AKUParticleSprite& sprite ) {
 
 	u32 size = this->mSprites.Size ();
 	
