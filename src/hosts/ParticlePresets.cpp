@@ -17,7 +17,7 @@ float _lerp ( float x0, float x1, float t ) {
 //----------------------------------------------------------------//
 void _linearRender ( float* particle, float* registers, AKUParticleSprite* sprite, float t0, float t1 ) {
 
-	float linear	= t1;
+	//float linear	= t1;
 
 	sprite->mXLoc	= registers [ 0 ] * t1;
 	sprite->mYLoc	= registers [ 1 ] * t1;

@@ -204,14 +204,6 @@ void _AKUOpenWindowFunc ( const char* title, int width, int height ) {
 }
 
 //----------------------------------------------------------------//
-void _AKUShowLoadingScreenFunc () {
-}
-
-//----------------------------------------------------------------//
-void _AKUShowSoftwareKeyboardFunc () {
-}
-
-//----------------------------------------------------------------//
 void _AKUStartGameLoopFunc () {
 
 	if ( sHasWindow ) {
