@@ -25,6 +25,7 @@
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="1"
 			CharacterSet="1"
+			WholeProgramOptimization="0"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -44,7 +45,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\..\..\include;..\..\src;..\..\..\..\3rdparty\glut-3.7.6;"
+				AdditionalIncludeDirectories="..\..\..\include;..\..\src;&quot;..\..\..\3rdparty\glut-3.7.6&quot;"
 				PreprocessorDefinitions="WIN32;_CONSOLE;_DEBUG;GLUTHOST_USE_LUAEXT;GLUTHOST_USE_PARTICLE_PRESETS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -70,7 +71,7 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="moaicore.lib moaiext-luaext.lib opengl32.lib glu32.lib glut32.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib"
 				ShowProgress="0"
-				AdditionalLibraryDirectories="&quot;..\..\..\..\bin\win32&quot;;&quot;..\..\..\..\3rdparty\glut-3.7.6&quot;"
+				AdditionalLibraryDirectories="..\..\..\bin\win32\vs2008;&quot;..\..\..\3rdparty\glut-3.7.6&quot;"
 				IgnoreAllDefaultLibraries="false"
 				GenerateDebugInformation="true"
 				SubSystem="1"
@@ -99,7 +100,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="xcopy /yr &quot;..\..\..\..\3rdparty\glut-3.7.6\glut32.dll&quot;"
+				CommandLine="xcopy /yr &quot;..\..\..\3rdparty\glut-3.7.6\glut32.dll&quot;"
 			/>
 		</Configuration>
 		<Configuration
@@ -192,7 +193,7 @@
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="1"
 			CharacterSet="1"
-			WholeProgramOptimization="1"
+			WholeProgramOptimization="0"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -211,7 +212,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\..\..\..\include;..\..\src;..\..\..\..\3rdparty\glut-3.7.6;"
+				AdditionalIncludeDirectories="..\..\..\include;..\..\src;&quot;..\..\..\3rdparty\glut-3.7.6&quot;"
 				PreprocessorDefinitions="WIN32;_CONSOLE;GLUTHOST_USE_LUAEXT;GLUTHOST_USE_PARTICLE_PRESETS"
 				RuntimeLibrary="2"
 				TreatWChar_tAsBuiltInType="false"
@@ -233,7 +234,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="moaicore.lib moaiext-luaext.lib opengl32.lib glu32.lib glut32.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib"
-				AdditionalLibraryDirectories="..\..\..\..\bin\win32\vs2008;..\..\..\..\3rdparty\glut-3.7.6"
+				AdditionalLibraryDirectories="..\..\..\bin\win32\vs2008;&quot;..\..\..\3rdparty\glut-3.7.6&quot;"
 				IgnoreAllDefaultLibraries="false"
 				GenerateDebugInformation="true"
 				SubSystem="1"
@@ -263,7 +264,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="xcopy /yr &quot;..\..\..\..\3rdparty\glut-3.7.6\glut32.dll&quot;"
+				CommandLine="xcopy /yr &quot;..\..\..\3rdparty\glut-3.7.6\glut32.dll&quot;"
 			/>
 		</Configuration>
 		<Configuration

@@ -506,7 +506,7 @@ extern "C"{
 /* interface __MIDL_itf_qedit_0000_0000 */
 /* [local] */ 
 
-#pragma message("To compile qedit.h you must install the DirectX 9 SDK, to obtain the dxtrans.h header.")
+//#pragma message("To compile qedit.h you must install the DirectX 9 SDK, to obtain the dxtrans.h header.")
 
 
 
