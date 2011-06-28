@@ -294,10 +294,10 @@
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = ../../../include/;
+				HEADER_SEARCH_PATHS = ../../include/;
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
-				LIBRARY_SEARCH_PATHS = ../../../bin/ios/;
+				LIBRARY_SEARCH_PATHS = ../../bin/ios/;
 				PREBINDING = NO;
 				SDKROOT = iphoneos;
 				SRC_PATH = "../../../../bin/ios/$(CONFIGURATION_BUILD_DIR)";
@@ -315,10 +315,10 @@
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = ../../../include/;
+				HEADER_SEARCH_PATHS = ../../include/;
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
-				LIBRARY_SEARCH_PATHS = ../../../bin/ios/;
+				LIBRARY_SEARCH_PATHS = ../../bin/ios/;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PREBINDING = NO;
 				SDKROOT = iphoneos;

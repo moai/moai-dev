@@ -237,9 +237,9 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
 					"\"../src/\"",
-					"\"../../../include/\"",
+					"\"../../include/\"",
 				);
-				LIBRARY_SEARCH_PATHS = "\"../../../bin/osx/\"";
+				LIBRARY_SEARCH_PATHS = "\"../../bin/osx/\"";
 				SKIP_INSTALL = YES;
 				WARNING_CFLAGS = "-Wall";
 			};
@@ -292,9 +292,9 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
 					"\"../src/\"",
-					"\"../../../include/\"",
+					"\"../../include/\"",
 				);
-				LIBRARY_SEARCH_PATHS = "\"../../../bin/osx/\"";
+				LIBRARY_SEARCH_PATHS = "\"../../bin/osx/\"";
 				SKIP_INSTALL = YES;
 				WARNING_CFLAGS = "-Wall";
 			};

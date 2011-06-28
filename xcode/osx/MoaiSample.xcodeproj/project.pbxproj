@@ -17,8 +17,8 @@
 		CD07C42813A1865200C9386C /* libmoai-osx-luaext.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD07C41713A185E200C9386C /* libmoai-osx-luaext.a */; };
 		CD74EA2C137807E40093EE68 /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CD74EA2B137807E40093EE68 /* libcrypto.dylib */; };
 		CD74EA321378080E0093EE68 /* libssl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CD74EA311378080E0093EE68 /* libssl.dylib */; };
-		CD7C722B13B9435E006CFA19 /* GlutHost.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD7C722713B9435E006CFA19 /* GlutHost.cpp */; };
-		CD7C722C13B9435E006CFA19 /* ParticlePresets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD7C722913B9435E006CFA19 /* ParticlePresets.cpp */; };
+		CD7C736B13B95413006CFA19 /* GlutHost.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD7C736713B95413006CFA19 /* GlutHost.cpp */; };
+		CD7C736C13B95413006CFA19 /* ParticlePresets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD7C736913B95413006CFA19 /* ParticlePresets.cpp */; };
 		CDEE231F1354504E00C2E04C /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDEE231E1354504E00C2E04C /* main.cpp */; };
 /* End PBXBuildFile section */
 
@@ -128,10 +128,10 @@
 		CD2FDEBB13542F1400B814DF /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/System/Library/Frameworks/AddressBook.framework; sourceTree = DEVELOPER_DIR; };
 		CD74EA2B137807E40093EE68 /* libcrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.dylib; path = /usr/lib/libcrypto.dylib; sourceTree = "<absolute>"; };
 		CD74EA311378080E0093EE68 /* libssl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libssl.dylib; path = /usr/lib/libssl.dylib; sourceTree = "<absolute>"; };
-		CD7C722713B9435E006CFA19 /* GlutHost.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GlutHost.cpp; path = ../../src/samples/GlutHost.cpp; sourceTree = SOURCE_ROOT; };
-		CD7C722813B9435E006CFA19 /* GlutHost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GlutHost.h; path = ../../src/samples/GlutHost.h; sourceTree = SOURCE_ROOT; };
-		CD7C722913B9435E006CFA19 /* ParticlePresets.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ParticlePresets.cpp; path = ../../src/samples/ParticlePresets.cpp; sourceTree = SOURCE_ROOT; };
-		CD7C722A13B9435E006CFA19 /* ParticlePresets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ParticlePresets.h; path = ../../src/samples/ParticlePresets.h; sourceTree = SOURCE_ROOT; };
+		CD7C736713B95413006CFA19 /* GlutHost.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GlutHost.cpp; path = ../../src/hosts/GlutHost.cpp; sourceTree = SOURCE_ROOT; };
+		CD7C736813B95413006CFA19 /* GlutHost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GlutHost.h; path = ../../src/hosts/GlutHost.h; sourceTree = SOURCE_ROOT; };
+		CD7C736913B95413006CFA19 /* ParticlePresets.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ParticlePresets.cpp; path = ../../src/hosts/ParticlePresets.cpp; sourceTree = SOURCE_ROOT; };
+		CD7C736A13B95413006CFA19 /* ParticlePresets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ParticlePresets.h; path = ../../src/hosts/ParticlePresets.h; sourceTree = SOURCE_ROOT; };
 		CDEE22E413543D6600C2E04C /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = SDKs/MacOSX10.6.sdk/System/Library/Frameworks/GLUT.framework; sourceTree = DEVELOPER_DIR; };
 		CDEE22E613543D8600C2E04C /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = SDKs/MacOSX10.6.sdk/System/Library/Frameworks/OpenGL.framework; sourceTree = DEVELOPER_DIR; };
 		CDEE23141354502100C2E04C /* moai */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = moai; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -211,11 +211,11 @@
 		CDEE23161354502100C2E04C /* moai */ = {
 			isa = PBXGroup;
 			children = (
-				CD7C722713B9435E006CFA19 /* GlutHost.cpp */,
-				CD7C722813B9435E006CFA19 /* GlutHost.h */,
+				CD7C736713B95413006CFA19 /* GlutHost.cpp */,
+				CD7C736813B95413006CFA19 /* GlutHost.h */,
 				CDEE231E1354504E00C2E04C /* main.cpp */,
-				CD7C722913B9435E006CFA19 /* ParticlePresets.cpp */,
-				CD7C722A13B9435E006CFA19 /* ParticlePresets.h */,
+				CD7C736913B95413006CFA19 /* ParticlePresets.cpp */,
+				CD7C736A13B95413006CFA19 /* ParticlePresets.h */,
 			);
 			path = moai;
 			sourceTree = "<group>";
@@ -352,8 +352,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				CDEE231F1354504E00C2E04C /* main.cpp in Sources */,
-				CD7C722B13B9435E006CFA19 /* GlutHost.cpp in Sources */,
-				CD7C722C13B9435E006CFA19 /* ParticlePresets.cpp in Sources */,
+				CD7C736B13B95413006CFA19 /* GlutHost.cpp in Sources */,
+				CD7C736C13B95413006CFA19 /* ParticlePresets.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -386,7 +386,6 @@
 		03B080970F708135005CD8E5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_OBJC_CALL_CXX_CDTORS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -421,7 +420,7 @@
 				GCC_WARN_UNUSED_VALUE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
-					"\"../../src/samples\"",
+					"\"../../src/hosts\"",
 					"\"../../src\"",
 				);
 				SKIP_INSTALL = YES;
@@ -432,7 +431,6 @@
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_OBJC_CALL_CXX_CDTORS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -472,7 +470,7 @@
 				GCC_WARN_UNUSED_VALUE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
-					"\"../../src/samples\"",
+					"\"../../src/hosts\"",
 					"\"../../src\"",
 				);
 				SKIP_INSTALL = YES;
