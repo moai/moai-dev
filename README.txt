@@ -17,7 +17,7 @@ Start with the vs2008 or 2010 reference solutions. Make sure a 32-bit architectu
 Lua samples are located in samples/basics. To run, build moai.exe. Add the MOAI_BIN and MOAI_CONFIG environment variables:
 
 MOAI_BIN = <path to Moai>/vs20XX/bin/Win32/<Debug|Release>/
-MOAI_CONFIG = <path to Moai>/config/ 
+MOAI_CONFIG = <path to Moai>/config/
 
 If these two environment variables are set up correctly, you can run each sample simply by double clicking the run.bat file found in each folder.
 
