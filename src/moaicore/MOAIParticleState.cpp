@@ -233,7 +233,7 @@ void MOAIParticleState::InitParticle ( MOAIParticleSystem& system, MOAIParticle&
 	}
 	
 	MOAIParticlePlugin* plugin = this->mPlugin;
-	if ( plugin->mInitFunc ) {
+	if ( plugin && plugin->mInitFunc ) {
 		plugin->mInitFunc ( particle.mData, &particle.mData [ MOAIParticle::TOTAL_PARTICLE_REG ]);
 	}
 	
@@ -337,7 +337,7 @@ void MOAIParticleState::ProcessParticle ( MOAIParticleSystem& system, MOAIPartic
 	else {
 	
 		MOAIParticlePlugin* plugin = this->mPlugin;
-		if ( plugin->mRenderFunc ) {
+		if ( plugin && plugin->mRenderFunc ) {
 			
 			AKUParticleSprite sprite;
 			plugin->mRenderFunc ( particle.mData, &particle.mData [ MOAIParticle::TOTAL_PARTICLE_REG ], &sprite, t0, t1 );
