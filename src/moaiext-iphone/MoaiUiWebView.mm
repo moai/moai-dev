@@ -4,7 +4,7 @@
 // http://getmoai.com
 //----------------------------------------------------------------//
 
-#import <moai-iphone/MoaiUiWebView.h>
+#import <moaiext-iphone/MoaiUiWebView.h>
 
 @implementation MoaiUiWebViewDelegate
 @synthesize mMOAIWebView;
