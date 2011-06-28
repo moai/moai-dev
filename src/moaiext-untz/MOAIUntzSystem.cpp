@@ -8,7 +8,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+// placeholder
 int MOAIUntzSystem::_getDeviceCount ( lua_State* L ) {
 	
 	//UInt32 deviceCount = UNTZ::System::get ()->getDeviceCount ();
@@ -18,7 +18,7 @@ int MOAIUntzSystem::_getDeviceCount ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+// placeholder
 int MOAIUntzSystem::_getDeviceInfo ( lua_State* L ) {
 	USLuaState state ( L );
 	
@@ -33,7 +33,7 @@ int MOAIUntzSystem::_getDeviceInfo ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+// placeholder
 int MOAIUntzSystem::_getOptions ( lua_State* L ) {
 
 	//UInt32 options = UNTZ::System::get ()->getOptions ();
@@ -43,7 +43,12 @@ int MOAIUntzSystem::_getOptions ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	getSampleRate
+	@text	Return the system's current sample rate.
+	
+	@in		MOAIUntzSystem self
+	@out	number sampleRate
+*/
 int MOAIUntzSystem::_getSampleRate ( lua_State* L ) {
 	USLuaState state ( L );
 	
@@ -54,7 +59,7 @@ int MOAIUntzSystem::_getSampleRate ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+// placeholder
 int MOAIUntzSystem::_getSupportedFormats ( lua_State* L ) {
 	USLuaState state ( L );
 	
@@ -69,7 +74,14 @@ int MOAIUntzSystem::_getSupportedFormats ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	initialize
+	@text	Inititalize the sound system.
+	
+	@in		MOAIUntzSystem self
+	@opt	number sampleRate		Default value is 44100.
+	@opt	number numFrames		Default value is 4096.
+	@out	nil
+*/
 int MOAIUntzSystem::_initialize ( lua_State* L ) {
 	USLuaState state ( L );
 	
@@ -83,7 +95,7 @@ int MOAIUntzSystem::_initialize ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+// placeholder
 int MOAIUntzSystem::_setInputDevice ( lua_State* L ) {
 	USLuaState state ( L );
 	
@@ -94,7 +106,7 @@ int MOAIUntzSystem::_setInputDevice ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+// placeholder
 int MOAIUntzSystem::_setOptions ( lua_State* L ) {
 	USLuaState state ( L );
 	
@@ -105,7 +117,7 @@ int MOAIUntzSystem::_setOptions ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+// placeholder
 int MOAIUntzSystem::_setOutputDevice ( lua_State* L ) {
 	USLuaState state ( L );
 	
@@ -116,7 +128,13 @@ int MOAIUntzSystem::_setOutputDevice ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	setSampleRate
+	@text	Set the system sample rate.
+	
+	@in		MOAIUntzSystem self
+	@opt	number sampleRate		Default value is 44100.
+	@out	nil
+*/
 int MOAIUntzSystem::_setSampleRate ( lua_State* L ) {
 	USLuaState state ( L );
 	
@@ -144,15 +162,15 @@ MOAIUntzSystem::~MOAIUntzSystem () {
 void MOAIUntzSystem::RegisterLuaClass ( USLuaState& state ) {
 	
 	luaL_Reg regTable [] = {
-		{ "getDeviceCount",			_getDeviceCount },
-		{ "getDeviceInfo",			_getDeviceInfo },
-		{ "getOptions",				_getOptions },
+		//{ "getDeviceCount",			_getDeviceCount },
+		//{ "getDeviceInfo",			_getDeviceInfo },
+		//{ "getOptions",				_getOptions },
 		{ "getSampleRate",			_getSampleRate },
-		{ "getSupportedFormats",	_getSupportedFormats },
+		//{ "getSupportedFormats",	_getSupportedFormats },
 		{ "initialize",				_initialize },
-		{ "setInputDevice",			_setInputDevice },
-		{ "setOptions",				_setOptions },
-		{ "setOutputDevice",		_setOutputDevice },
+		//{ "setInputDevice",			_setInputDevice },
+		//{ "setOptions",				_setOptions },
+		//{ "setOutputDevice",		_setOutputDevice },
 		{ "setSampleRate",			_setSampleRate },
 		{ NULL, NULL }
 	};

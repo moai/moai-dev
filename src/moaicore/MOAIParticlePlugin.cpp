@@ -10,7 +10,12 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	getSize
+	@text	Return the particle size expected by the plugin.
+	
+	@in		MOAIParticlePlugin self
+	@out	number size
+*/
 int MOAIParticlePlugin::_getSize ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIParticlePlugin, "U" )
 	
