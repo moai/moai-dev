@@ -3597,10 +3597,10 @@
 		0324E69113564BC8000ADC60 /* USViewQuad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USViewQuad.h; sourceTree = "<group>"; };
 		0324E69213564BC8000ADC60 /* USXmlReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USXmlReader.cpp; sourceTree = "<group>"; };
 		0324E69313564BC8000ADC60 /* USXmlReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USXmlReader.h; sourceTree = "<group>"; };
-		0379C5961333ECD800E89DDC /* libmoai-iphone-3rdparty.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-iphone-3rdparty.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		0379C5961333ECD800E89DDC /* libmoai-ios-3rdparty.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-3rdparty.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		039C283B138EDAB300A3A780 /* MOAIDeckRemapper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIDeckRemapper.cpp; sourceTree = "<group>"; };
 		039C283C138EDAB300A3A780 /* MOAIDeckRemapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIDeckRemapper.h; sourceTree = "<group>"; };
-		03C2F6F4104DE130009A2D5D /* libmoai-iphone.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-iphone.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		03C2F6F4104DE130009A2D5D /* libmoai-ios.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		03E4E94013664F7C008D079B /* MOAIParticle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIParticle.h; sourceTree = "<group>"; };
 		03F135D613A2EFC000044AE8 /* MoaiUiWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MoaiUiWebView.h; path = "moaiext-iphone/MoaiUiWebView.h"; sourceTree = "<group>"; };
 		03F135D713A2EFC000044AE8 /* MoaiUiWebView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MoaiUiWebView.mm; path = "moaiext-iphone/MoaiUiWebView.mm"; sourceTree = "<group>"; };
@@ -3713,7 +3713,7 @@
 		CD07C31F13A1756300C9386C /* MOAIUntzSound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIUntzSound.h; path = "../../src/moaiext-untz/MOAIUntzSound.h"; sourceTree = SOURCE_ROOT; };
 		CD07C32013A1756300C9386C /* MOAIUntzSystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIUntzSystem.cpp; path = "../../src/moaiext-untz/MOAIUntzSystem.cpp"; sourceTree = SOURCE_ROOT; };
 		CD07C32113A1756300C9386C /* MOAIUntzSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIUntzSystem.h; path = "../../src/moaiext-untz/MOAIUntzSystem.h"; sourceTree = SOURCE_ROOT; };
-		CD07C3CD13A182AA00C9386C /* libmoai-iphone-untz.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-iphone-untz.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD07C3CD13A182AA00C9386C /* libmoai-ios-untz.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-untz.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD07C4E513A1918600C9386C /* libmoai-osx-untz.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-untz.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD07C53013A1954600C9386C /* Untz-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Untz-Prefix.pch"; path = "../../3rdparty/untz/src/native/ios/Untz-Prefix.pch"; sourceTree = SOURCE_ROOT; };
 		CD148EDD1395ADBD00A3F501 /* MOAITraits.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAITraits.cpp; sourceTree = "<group>"; };
@@ -4465,7 +4465,7 @@
 		CD80F63E135BBCFF006B0683 /* ISO8601DateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ISO8601DateFormatter.m; path = ../../3rdparty/contrib/ISO8601DateFormatter.m; sourceTree = "<group>"; };
 		CDBC71161398C6E50016F98A /* MOAIFileSystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIFileSystem.cpp; path = ../../src/moaicore/MOAIFileSystem.cpp; sourceTree = SOURCE_ROOT; };
 		CDBC71171398C6E50016F98A /* MOAIFileSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIFileSystem.h; path = ../../src/moaicore/MOAIFileSystem.h; sourceTree = SOURCE_ROOT; };
-		CDD06BD01398822500AB0420 /* libmoai-iphone-luaext.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-iphone-luaext.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CDD06BD01398822500AB0420 /* libmoai-ios-luaext.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-luaext.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDD06D87139882D900AB0420 /* libmoai-osx-luaext.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-luaext.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDD06D881398832300AB0420 /* lcrypto.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lcrypto.c; path = "../../3rdparty/luacrypto-0.2.0/src/lcrypto.c"; sourceTree = SOURCE_ROOT; };
 		CDD06D891398832300AB0420 /* lcrypto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lcrypto.h; path = "../../3rdparty/luacrypto-0.2.0/src/lcrypto.h"; sourceTree = SOURCE_ROOT; };
@@ -5317,13 +5317,13 @@
 		038DB6D7101FAA6700ECA0BF /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				0379C5961333ECD800E89DDC /* libmoai-iphone-3rdparty.a */,
-				03C2F6F4104DE130009A2D5D /* libmoai-iphone.a */,
+				0379C5961333ECD800E89DDC /* libmoai-ios-3rdparty.a */,
+				03C2F6F4104DE130009A2D5D /* libmoai-ios.a */,
 				0324E2AF1356485F000ADC60 /* libmoai-osx-3rdparty.a */,
 				0324E2BB1356485F000ADC60 /* libmoai-osx.a */,
-				CDD06BD01398822500AB0420 /* libmoai-iphone-luaext.a */,
+				CDD06BD01398822500AB0420 /* libmoai-ios-luaext.a */,
 				CDD06D87139882D900AB0420 /* libmoai-osx-luaext.a */,
-				CD07C3CD13A182AA00C9386C /* libmoai-iphone-untz.a */,
+				CD07C3CD13A182AA00C9386C /* libmoai-ios-untz.a */,
 				CD07C4E513A1918600C9386C /* libmoai-osx-untz.a */,
 			);
 			name = Products;
@@ -8795,9 +8795,9 @@
 			productReference = 0324E2BB1356485F000ADC60 /* libmoai-osx.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		0379C3D51333ECD800E89DDC /* libmoai-iphone-3rdparty */ = {
+		0379C3D51333ECD800E89DDC /* libmoai-ios-3rdparty */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 0379C5931333ECD800E89DDC /* Build configuration list for PBXNativeTarget "libmoai-iphone-3rdparty" */;
+			buildConfigurationList = 0379C5931333ECD800E89DDC /* Build configuration list for PBXNativeTarget "libmoai-ios-3rdparty" */;
 			buildPhases = (
 				0379C3D61333ECD800E89DDC /* Headers */,
 				0379C4C31333ECD800E89DDC /* Sources */,
@@ -8807,14 +8807,14 @@
 			);
 			dependencies = (
 			);
-			name = "libmoai-iphone-3rdparty";
+			name = "libmoai-ios-3rdparty";
 			productName = OpenUSLS;
-			productReference = 0379C5961333ECD800E89DDC /* libmoai-iphone-3rdparty.a */;
+			productReference = 0379C5961333ECD800E89DDC /* libmoai-ios-3rdparty.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		03C2F6F3104DE130009A2D5D /* libmoai-iphone */ = {
+		03C2F6F3104DE130009A2D5D /* libmoai-ios */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 03C2F6F8104DE131009A2D5D /* Build configuration list for PBXNativeTarget "libmoai-iphone" */;
+			buildConfigurationList = 03C2F6F8104DE131009A2D5D /* Build configuration list for PBXNativeTarget "libmoai-ios" */;
 			buildPhases = (
 				03C2F6F0104DE130009A2D5D /* Headers */,
 				03C2F6F1104DE130009A2D5D /* Sources */,
@@ -8825,14 +8825,14 @@
 			dependencies = (
 				CDFCFE3613995A9A00E43A41 /* PBXTargetDependency */,
 			);
-			name = "libmoai-iphone";
+			name = "libmoai-ios";
 			productName = OpenUSLS;
-			productReference = 03C2F6F4104DE130009A2D5D /* libmoai-iphone.a */;
+			productReference = 03C2F6F4104DE130009A2D5D /* libmoai-ios.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		CD07C3A313A182AA00C9386C /* libmoai-iphone-untz */ = {
+		CD07C3A313A182AA00C9386C /* libmoai-ios-untz */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CD07C3CA13A182AA00C9386C /* Build configuration list for PBXNativeTarget "libmoai-iphone-untz" */;
+			buildConfigurationList = CD07C3CA13A182AA00C9386C /* Build configuration list for PBXNativeTarget "libmoai-ios-untz" */;
 			buildPhases = (
 				CD07C3A613A182AA00C9386C /* Headers */,
 				CD07C3B813A182AA00C9386C /* Sources */,
@@ -8844,9 +8844,9 @@
 				CD07C3A413A182AA00C9386C /* PBXTargetDependency */,
 				CD07C3EC13A1847000C9386C /* PBXTargetDependency */,
 			);
-			name = "libmoai-iphone-untz";
+			name = "libmoai-ios-untz";
 			productName = OpenUSLS;
-			productReference = CD07C3CD13A182AA00C9386C /* libmoai-iphone-untz.a */;
+			productReference = CD07C3CD13A182AA00C9386C /* libmoai-ios-untz.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		CD07C4B913A1918600C9386C /* libmoai-osx-untz */ = {
@@ -8868,9 +8868,9 @@
 			productReference = CD07C4E513A1918600C9386C /* libmoai-osx-untz.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		CDD06A061398822500AB0420 /* libmoai-iphone-luaext */ = {
+		CDD06A061398822500AB0420 /* libmoai-ios-luaext */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CDD06BCD1398822500AB0420 /* Build configuration list for PBXNativeTarget "libmoai-iphone-luaext" */;
+			buildConfigurationList = CDD06BCD1398822500AB0420 /* Build configuration list for PBXNativeTarget "libmoai-ios-luaext" */;
 			buildPhases = (
 				CDD06A091398822500AB0420 /* Headers */,
 				CDD06AFC1398822500AB0420 /* Sources */,
@@ -8882,9 +8882,9 @@
 				CD3A548F13995F570034C103 /* PBXTargetDependency */,
 				CD07C3EE13A1847D00C9386C /* PBXTargetDependency */,
 			);
-			name = "libmoai-iphone-luaext";
+			name = "libmoai-ios-luaext";
 			productName = OpenUSLS;
-			productReference = CDD06BD01398822500AB0420 /* libmoai-iphone-luaext.a */;
+			productReference = CDD06BD01398822500AB0420 /* libmoai-ios-luaext.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		CDD06BD5139882D900AB0420 /* libmoai-osx-luaext */ = {
@@ -8938,10 +8938,10 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				03C2F6F3104DE130009A2D5D /* libmoai-iphone */,
-				0379C3D51333ECD800E89DDC /* libmoai-iphone-3rdparty */,
-				CDD06A061398822500AB0420 /* libmoai-iphone-luaext */,
-				CD07C3A313A182AA00C9386C /* libmoai-iphone-untz */,
+				03C2F6F3104DE130009A2D5D /* libmoai-ios */,
+				0379C3D51333ECD800E89DDC /* libmoai-ios-3rdparty */,
+				CDD06A061398822500AB0420 /* libmoai-ios-luaext */,
+				CD07C3A313A182AA00C9386C /* libmoai-ios-untz */,
 				0324E2B11356485F000ADC60 /* libmoai-osx */,
 				0324E2A81356485F000ADC60 /* libmoai-osx-3rdparty */,
 				CDD06BD5139882D900AB0420 /* libmoai-osx-luaext */,
@@ -10605,17 +10605,17 @@
 		};
 		CD07C3A413A182AA00C9386C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 03C2F6F3104DE130009A2D5D /* libmoai-iphone */;
+			target = 03C2F6F3104DE130009A2D5D /* libmoai-ios */;
 			targetProxy = CD07C3A513A182AA00C9386C /* PBXContainerItemProxy */;
 		};
 		CD07C3EC13A1847000C9386C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 0379C3D51333ECD800E89DDC /* libmoai-iphone-3rdparty */;
+			target = 0379C3D51333ECD800E89DDC /* libmoai-ios-3rdparty */;
 			targetProxy = CD07C3EB13A1847000C9386C /* PBXContainerItemProxy */;
 		};
 		CD07C3EE13A1847D00C9386C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 0379C3D51333ECD800E89DDC /* libmoai-iphone-3rdparty */;
+			target = 0379C3D51333ECD800E89DDC /* libmoai-ios-3rdparty */;
 			targetProxy = CD07C3ED13A1847D00C9386C /* PBXContainerItemProxy */;
 		};
 		CD07C3F013A1848800C9386C /* PBXTargetDependency */ = {
@@ -10635,7 +10635,7 @@
 		};
 		CD3A548F13995F570034C103 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 03C2F6F3104DE130009A2D5D /* libmoai-iphone */;
+			target = 03C2F6F3104DE130009A2D5D /* libmoai-ios */;
 			targetProxy = CD3A548E13995F570034C103 /* PBXContainerItemProxy */;
 		};
 		CD3A549113995F650034C103 /* PBXTargetDependency */ = {
@@ -10645,7 +10645,7 @@
 		};
 		CDFCFE3613995A9A00E43A41 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 0379C3D51333ECD800E89DDC /* libmoai-iphone-3rdparty */;
+			target = 0379C3D51333ECD800E89DDC /* libmoai-ios-3rdparty */;
 			targetProxy = CDFCFE3513995A9A00E43A41 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -10876,7 +10876,7 @@
 					"\"$(SRCROOT)/../../3rdparty/chipmunk-5.3.4/Objective-Chipmunk/Objective-Chipmunk/Objective-Chipmunk-simulator\"",
 					"\"$(SRCROOT)/../../3rdparty/glut-3.7.6-bin\"",
 				);
-				PRODUCT_NAME = "moai-iphone-3rdparty";
+				PRODUCT_NAME = "moai-ios-3rdparty";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv6 armv7";
 				WARNING_CFLAGS = "-w";
@@ -10914,7 +10914,7 @@
 					"\"$(SRCROOT)/../../3rdparty/chipmunk-5.3.4/Objective-Chipmunk/Objective-Chipmunk/Objective-Chipmunk-simulator\"",
 					"\"$(SRCROOT)/../../3rdparty/glut-3.7.6-bin\"",
 				);
-				PRODUCT_NAME = "moai-iphone-3rdparty";
+				PRODUCT_NAME = "moai-ios-3rdparty";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv6 armv7";
 				WARNING_CFLAGS = "-w";
@@ -11010,7 +11010,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				PRODUCT_NAME = "moai-iphone";
+				PRODUCT_NAME = "moai-ios";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv6 armv7";
 			};
@@ -11020,7 +11020,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				PRODUCT_NAME = "moai-iphone";
+				PRODUCT_NAME = "moai-ios";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv6 armv7";
 			};
@@ -11142,7 +11142,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "moai-iphone-untz";
+				PRODUCT_NAME = "moai-ios-untz";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv6 armv7";
 				WARNING_CFLAGS = "-w";
@@ -11174,7 +11174,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "moai-iphone-untz";
+				PRODUCT_NAME = "moai-ios-untz";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv6 armv7";
 				WARNING_CFLAGS = "-w";
@@ -11312,7 +11312,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "moai-iphone-luaext";
+				PRODUCT_NAME = "moai-ios-luaext";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv6 armv7";
 				WARNING_CFLAGS = "-w";
@@ -11344,7 +11344,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "moai-iphone-luaext";
+				PRODUCT_NAME = "moai-ios-luaext";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv6 armv7";
 				WARNING_CFLAGS = "-w";
@@ -11478,7 +11478,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		0379C5931333ECD800E89DDC /* Build configuration list for PBXNativeTarget "libmoai-iphone-3rdparty" */ = {
+		0379C5931333ECD800E89DDC /* Build configuration list for PBXNativeTarget "libmoai-ios-3rdparty" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0379C5941333ECD800E89DDC /* Debug */,
@@ -11487,7 +11487,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		03C2F6F8104DE131009A2D5D /* Build configuration list for PBXNativeTarget "libmoai-iphone" */ = {
+		03C2F6F8104DE131009A2D5D /* Build configuration list for PBXNativeTarget "libmoai-ios" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				03C2F6F6104DE131009A2D5D /* Debug */,
@@ -11505,7 +11505,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		CD07C3CA13A182AA00C9386C /* Build configuration list for PBXNativeTarget "libmoai-iphone-untz" */ = {
+		CD07C3CA13A182AA00C9386C /* Build configuration list for PBXNativeTarget "libmoai-ios-untz" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CD07C3CB13A182AA00C9386C /* Debug */,
@@ -11523,7 +11523,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		CDD06BCD1398822500AB0420 /* Build configuration list for PBXNativeTarget "libmoai-iphone-luaext" */ = {
+		CDD06BCD1398822500AB0420 /* Build configuration list for PBXNativeTarget "libmoai-ios-luaext" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CDD06BCE1398822500AB0420 /* Debug */,
