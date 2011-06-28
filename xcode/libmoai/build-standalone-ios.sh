@@ -16,11 +16,6 @@ xcodebuild -configuration Release -target libmoai-ios -sdk iphoneos4.3 build
 xcodebuild -configuration Release -target libmoai-ios-luaext -sdk iphoneos4.3 build
 xcodebuild -configuration Release -target libmoai-ios-untz -sdk iphoneos4.3 build
 
-xcodebuild -configuration Release -target libmoai-osx-3rdparty -sdk macosx10.6 build
-xcodebuild -configuration Release -target libmoai-osx -sdk macosx10.6 build
-xcodebuild -configuration Release -target libmoai-osx-luaext -sdk macosx10.6 build
-xcodebuild -configuration Release -target libmoai-osx-untz -sdk macosx10.6 build
-
 cd build
 
 lipo -create -output ./Release/libmoai-ios-3rdparty.a ./Release-iphoneos/libmoai-ios-3rdparty.a ./Release-iphonesimulator/libmoai-ios-3rdparty.a
