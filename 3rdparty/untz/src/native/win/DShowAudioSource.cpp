@@ -215,8 +215,7 @@ void DShowAudioSource::stop()
 
 void DShowAudioSource::putData(BYTE *data, long length)
 {
-	mCriticalSection.lock();
-//	printf("total frames = %d, time = %f\n", (int)(getLength() * mpWaveFormatEx->nSamplesPerSec), getLength());
+	RScopedLock l(&mLock);
 
 	// Read samples and convert from short to float
 	Int16* p = (Int16*)data;
@@ -226,11 +225,6 @@ void DShowAudioSource::putData(BYTE *data, long length)
 		float temp = *(p++) / 32767.0f;
 		mBuffer.push_back(temp);
 	}
-
-//	printf("put %d frames\n", samples / mpWaveFormatEx->nChannels);
-//	printf("%d frames in buffer\n", mBuffer.size() / mpWaveFormatEx->nChannels);
-
-	mCriticalSection.unlock();
 
 	// Stop decoding once we have 2 seconds of data
 	if(mBuffer.size() > UNTZ::System::get()->getSampleRate() * mpWaveFormatEx->nChannels * 2)
@@ -247,15 +241,12 @@ Int64 DShowAudioSource::readFrames(float* data, UInt32 numChannels, UInt32 numFr
 	HRESULT hr = mpMediaEvent->WaitForCompletion(0, &evCode);
 	if(evCode == EC_COMPLETE)
 	{
-//		printf("done decoding...");
 		mEOF = true;
 	}
 
-	mCriticalSection.lock();
+	RScopedLock l(&mLock);
 
-//	printf("read frames: %d frames in buffer\n", mBuffer.size() / mpWaveFormatEx->nChannels);
-
-	UInt32 framesRead = numFrames;
+	Int64 framesRead = numFrames;
 	if(mBuffer.size() > 0)
 	{
 		if(mBuffer.size() / mpWaveFormatEx->nChannels < framesRead)
@@ -280,29 +271,21 @@ Int64 DShowAudioSource::readFrames(float* data, UInt32 numChannels, UInt32 numFr
 
 		mBuffer.erase(mBuffer.begin(), mBuffer.begin()+(framesRead * mpWaveFormatEx->nChannels));
 	}
-	else
-//		printf("no data in buffer.\n");
 
 	mCurrentPosition += framesRead;
-//	printf("current position = %d\n", mCurrentPosition);
 
 	// Check if we need to decode more data
 	if(mBuffer.size() < numFrames * mpWaveFormatEx->nChannels * 2)
 	{
 		if(mEOF && isLooping())
 		{
-//			printf("looping...\n");
 			setDecoderPosition(0);
 		}
 	}	
 
-	mCriticalSection.unlock();
-
 	if(mEOF && framesRead == 0)
 	{
 		return -1;
-//		printf("stopping.\n");
-//		mpSound->stop();
 	}
 
 	return framesRead;
@@ -321,11 +304,11 @@ void DShowAudioSource::setPosition(double position)
 {
 	setDecoderPosition(position);
 
-	mCriticalSection.lock();
+	RScopedLock l(&mLock);
+
 	mBuffer.clear();
 	mCurrentPosition = (Int64)(position * getSampleRate());
 	mpMediaControl->Run();
-	mCriticalSection.unlock();
 }
 
 double DShowAudioSource::getPosition()
