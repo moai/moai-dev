@@ -7,14 +7,15 @@
 #import <QuartzCore/QuartzCore.h>
 #import <OpenGLES/EAGLDrawable.h>
 
-extern "C" {
-	#include <lua.h>
-	#include <lauxlib.h>
-	#include <lualib.h>
-}
+//extern "C" {
+//	#include <lua.h>
+//	#include <lauxlib.h>
+//	#include <lualib.h>
+//}
 
 #include <aku/AKU-luaext.h>
 #include <aku/AKU-untz.h>
+#import <ParticlePresets.h>
 
 #import "LocationObserver.h"
 #import "MoaiView.h"
@@ -215,6 +216,8 @@ void _AKUStartGameLoopFunc () {
 		AKUSetFunc_OpenWindow			( _AKUOpenWindowFunc );
 		AKUSetFunc_StartGameLoop		( _AKUStartGameLoopFunc );
 		
+		ParticlePresets ();
+		
 		[ self setGlobalPaths ];
 		
 		mAnimInterval = 1.0f / 60.0f;
@@ -282,30 +285,30 @@ void _AKUStartGameLoopFunc () {
 	//----------------------------------------------------------------//
 	-( void ) setGlobalPaths {
 	
-		lua_State* L = AKUGetLuaState ();
-		lua_newtable ( L );
-		
-		NSString* path;
-		NSArray* paths;
-		
-		paths = NSSearchPathForDirectoriesInDomains ( NSDocumentDirectory, NSUserDomainMask, YES );
-		path = [ paths objectAtIndex :0 ];
-		NSLog ( @"%@", path );
-		lua_pushstring ( L, [ path UTF8String ]);
-		lua_setfield ( L, -2, "documents" );
-		
-		paths = NSSearchPathForDirectoriesInDomains ( NSCachesDirectory, NSUserDomainMask, YES );
-		path = [ paths objectAtIndex:0 ];
-		NSLog ( @"%@", path );
-		lua_pushstring ( L, [ path UTF8String ]);
-		lua_setfield ( L, -2, "caches" );
-		
-		path = [[ NSBundle mainBundle ] resourcePath ];
-		NSLog ( @"%@", path );
-		lua_pushstring ( L, [ path UTF8String ]);
-		lua_setfield ( L, -2, "resources" );
-		
-		lua_setglobal ( L, "iphone" );
+//		lua_State* L = AKUGetLuaState ();
+//		lua_newtable ( L );
+//		
+//		NSString* path;
+//		NSArray* paths;
+//		
+//		paths = NSSearchPathForDirectoriesInDomains ( NSDocumentDirectory, NSUserDomainMask, YES );
+//		path = [ paths objectAtIndex :0 ];
+//		NSLog ( @"%@", path );
+//		lua_pushstring ( L, [ path UTF8String ]);
+//		lua_setfield ( L, -2, "documents" );
+//		
+//		paths = NSSearchPathForDirectoriesInDomains ( NSCachesDirectory, NSUserDomainMask, YES );
+//		path = [ paths objectAtIndex:0 ];
+//		NSLog ( @"%@", path );
+//		lua_pushstring ( L, [ path UTF8String ]);
+//		lua_setfield ( L, -2, "caches" );
+//		
+//		path = [[ NSBundle mainBundle ] resourcePath ];
+//		NSLog ( @"%@", path );
+//		lua_pushstring ( L, [ path UTF8String ]);
+//		lua_setfield ( L, -2, "resources" );
+//		
+//		lua_setglobal ( L, "iphone" );
 	}
 	
 	//----------------------------------------------------------------//
