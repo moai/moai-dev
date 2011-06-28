@@ -6,8 +6,6 @@
 
 #!/bin/bash
 
-cd libmoai
-
 xcodebuild -nodistribute -configuration Release -target libmoai-iphone-3rdparty -sdk iphonesimulator4.3 build
 xcodebuild -nodistribute -configuration Release -target libmoai-iphone -sdk iphonesimulator4.3 build
 xcodebuild -nodistribute -configuration Release -target libmoai-iphone-luaext -sdk iphonesimulator4.3 build
