@@ -6,8 +6,8 @@
 
 #import <aku/aku.h>
 #import <aku/aku-iphone.h>
-#import <moai-iphone/MOAIApp.h>
-#import <moai-iphone/MOAIStoreKitListener.h>
+#import <moaiext-iphone/MOAIApp.h>
+#import <moaiext-iphone/MOAIStoreKitListener.h>
 
 //================================================================//
 // MOAIStoreKitListener

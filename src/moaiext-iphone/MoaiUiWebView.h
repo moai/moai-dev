@@ -5,7 +5,7 @@
 //----------------------------------------------------------------//
 
 #import <UIKit/UIKit.h>
-#import <moai-iphone/MOAIWebView.h>
+#import <moaiext-iphone/MOAIWebView.h>
 
 @interface MoaiUiWebViewDelegate : NSObject < UIWebViewDelegate > {
 @private
