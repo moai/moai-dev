@@ -11,13 +11,13 @@
 		032410EE13565FFD000ADC60 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDEE22E613543D8600C2E04C /* OpenGL.framework */; };
 		0324CC64135643FD000ADC60 /* libSystem.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0324CC63135643FD000ADC60 /* libSystem.dylib */; };
 		0324CC6613564411000ADC60 /* libz.1.2.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0324CC6513564411000ADC60 /* libz.1.2.3.dylib */; };
-		CD0BA88413B93D39007ECCD9 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD0BA88313B93D39007ECCD9 /* main.cpp */; };
 		CD0BA88913B93D79007ECCD9 /* GlutHost.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD0BA88513B93D79007ECCD9 /* GlutHost.cpp */; };
 		CD0BA88A13B93D79007ECCD9 /* ParticlePresets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD0BA88713B93D79007ECCD9 /* ParticlePresets.cpp */; };
 		CD0BA88C13B93DA0007ECCD9 /* libmoai-osx-3rdparty.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD0BA88B13B93DA0007ECCD9 /* libmoai-osx-3rdparty.a */; };
 		CD0BA88E13B93DA0007ECCD9 /* libmoai-osx-luaext.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD0BA88D13B93DA0007ECCD9 /* libmoai-osx-luaext.a */; };
 		CD0BA89013B93DA0007ECCD9 /* libmoai-osx-untz.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD0BA88F13B93DA0007ECCD9 /* libmoai-osx-untz.a */; };
 		CD0BA89213B93DA0007ECCD9 /* libmoai-osx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD0BA89113B93DA0007ECCD9 /* libmoai-osx.a */; };
+		CD2D877513B9ADC300AF7809 /* GlutHostMain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD2D877413B9ADC300AF7809 /* GlutHostMain.cpp */; };
 		CD74EA2C137807E40093EE68 /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CD74EA2B137807E40093EE68 /* libcrypto.dylib */; };
 		CD74EA321378080E0093EE68 /* libssl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CD74EA311378080E0093EE68 /* libssl.dylib */; };
 /* End PBXBuildFile section */
@@ -37,7 +37,6 @@
 /* Begin PBXFileReference section */
 		0324CC63135643FD000ADC60 /* libSystem.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libSystem.dylib; path = /usr/lib/libSystem.dylib; sourceTree = "<absolute>"; };
 		0324CC6513564411000ADC60 /* libz.1.2.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.3.dylib; path = /usr/lib/libz.1.2.3.dylib; sourceTree = "<absolute>"; };
-		CD0BA88313B93D39007ECCD9 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = SOURCE_ROOT; };
 		CD0BA88513B93D79007ECCD9 /* GlutHost.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GlutHost.cpp; path = ../src/GlutHost.cpp; sourceTree = SOURCE_ROOT; };
 		CD0BA88613B93D79007ECCD9 /* GlutHost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GlutHost.h; path = ../src/GlutHost.h; sourceTree = SOURCE_ROOT; };
 		CD0BA88713B93D79007ECCD9 /* ParticlePresets.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ParticlePresets.cpp; path = ../src/ParticlePresets.cpp; sourceTree = SOURCE_ROOT; };
@@ -46,6 +45,7 @@
 		CD0BA88D13B93DA0007ECCD9 /* libmoai-osx-luaext.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-osx-luaext.a"; path = "/Users/patrick/git/moai-dev/distribute/sdk/bin/osx/libmoai-osx-luaext.a"; sourceTree = "<absolute>"; };
 		CD0BA88F13B93DA0007ECCD9 /* libmoai-osx-untz.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-osx-untz.a"; path = "/Users/patrick/git/moai-dev/distribute/sdk/bin/osx/libmoai-osx-untz.a"; sourceTree = "<absolute>"; };
 		CD0BA89113B93DA0007ECCD9 /* libmoai-osx.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-osx.a"; path = "/Users/patrick/git/moai-dev/distribute/sdk/bin/osx/libmoai-osx.a"; sourceTree = "<absolute>"; };
+		CD2D877413B9ADC300AF7809 /* GlutHostMain.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GlutHostMain.cpp; path = ../../../../src/hosts/GlutHostMain.cpp; sourceTree = SOURCE_ROOT; };
 		CD2FDEBB13542F1400B814DF /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/System/Library/Frameworks/AddressBook.framework; sourceTree = DEVELOPER_DIR; };
 		CD74EA2B137807E40093EE68 /* libcrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.dylib; path = /usr/lib/libcrypto.dylib; sourceTree = "<absolute>"; };
 		CD74EA311378080E0093EE68 /* libssl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libssl.dylib; path = /usr/lib/libssl.dylib; sourceTree = "<absolute>"; };
@@ -99,7 +99,7 @@
 			children = (
 				CD0BA88513B93D79007ECCD9 /* GlutHost.cpp */,
 				CD0BA88613B93D79007ECCD9 /* GlutHost.h */,
-				CD0BA88313B93D39007ECCD9 /* main.cpp */,
+				CD2D877413B9ADC300AF7809 /* GlutHostMain.cpp */,
 				CD0BA88713B93D79007ECCD9 /* ParticlePresets.cpp */,
 				CD0BA88813B93D79007ECCD9 /* ParticlePresets.h */,
 			);
@@ -186,9 +186,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CD0BA88413B93D39007ECCD9 /* main.cpp in Sources */,
 				CD0BA88913B93D79007ECCD9 /* GlutHost.cpp in Sources */,
 				CD0BA88A13B93D79007ECCD9 /* ParticlePresets.cpp in Sources */,
+				CD2D877513B9ADC300AF7809 /* GlutHostMain.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
