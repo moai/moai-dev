@@ -359,7 +359,7 @@
 			>
 		</File>
 		<File
-			RelativePath=".\main.cpp"
+			RelativePath="..\..\src\GlutHostMain.cpp"
 			>
 		</File>
 		<File

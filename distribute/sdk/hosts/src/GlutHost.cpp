@@ -9,10 +9,6 @@
 	#include <aku/AKU-fmod.h>
 #endif
 
-#ifdef GLUTHOST_USE_HARNESS
-	#include <aku/AKU-harness.h>
-#endif
-
 #ifdef GLUTHOST_USE_LUAEXT
 	#include <aku/AKU-luaext.h>
 #endif
@@ -224,10 +220,6 @@ int GlutHost ( int argc, char** argv ) {
 	
 	#ifdef GLUTHOST_USE_FMOD
 		AKUFmodLoad ();
-	#endif
-	
-	#ifdef GLUTHOST_USE_HARNESS
-		AKUExtLoadHarness ();
 	#endif
 	
 	#ifdef GLUTHOST_USE_LUAEXT

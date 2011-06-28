@@ -223,15 +223,12 @@ xcopy /yr "$(OutDir)$(TargetName).pdb" "..\..\bin\$(Platform)\$(Configuration)\"
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\hosts\GlutHost.cpp" />
+    <ClCompile Include="..\..\src\hosts\GlutHostMain.cpp" />
     <ClCompile Include="..\..\src\hosts\ParticlePresets.cpp" />
-    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\moaicore\moaicore.vcxproj">
       <Project>{4a578b4d-01af-46bd-81ce-a775b0553526}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\moaiext-harness\moaiext-harness.vcxproj">
-      <Project>{15e2c158-6e83-4e52-903b-8c7421f46124}</Project>
     </ProjectReference>
     <ProjectReference Include="..\moaiext-luaext\moaiext-luaext.vcxproj">
       <Project>{30d318c3-18a8-40b4-adac-3360cdcb4dd4}</Project>

@@ -222,7 +222,7 @@ xcopy /yr "$(OutDir)$(TargetName).pdb" "..\..\bin\$(Platform)\$(Configuration)\"
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\GlutHost.cpp" />
-    <ClCompile Include="main.cpp" />
+    <ClCompile Include="..\..\src\GlutHostMain.cpp" />
     <ClCompile Include="..\..\src\ParticlePresets.cpp" />
   </ItemGroup>
   <ItemGroup>
