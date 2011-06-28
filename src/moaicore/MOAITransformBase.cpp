@@ -31,7 +31,13 @@ int MOAITransformBase::_getWorldDir ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	getWorldLoc
+	@text	Get the transform's location in world space.
+	
+	@in		MOAITransformBase self
+	@out	number xLoc
+	@out	number yLoc
+*/
 int MOAITransformBase::_getWorldLoc ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITransformBase, "U" )
 
@@ -44,7 +50,12 @@ int MOAITransformBase::_getWorldLoc ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	getWorldRot
+	@text	Get the transform's rotation in world space.
+	
+	@in		MOAITransformBase self
+	@out	number degrees
+*/
 int MOAITransformBase::_getWorldRot ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITransformBase, "U" )
 
@@ -56,7 +67,13 @@ int MOAITransformBase::_getWorldRot ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	getWorldScl
+	@text	Get the transform's scale in world space.
+	
+	@in		MOAITransformBase self
+	@out	number xScale
+	@out	number yScale
+*/
 int MOAITransformBase::_getWorldScl ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITransformBase, "U" )
 

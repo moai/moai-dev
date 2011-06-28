@@ -27,7 +27,6 @@
 		@in		number t1 - Default value is 0.
 		@out	nil
 */
-
 int MOAIAnim::_apply ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAnim, "U" );
 
