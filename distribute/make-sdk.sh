@@ -27,21 +27,21 @@ mkdir -p moai-sdk/hosts/src
 cp ../version.txt moai-sdk/version.txt
 
 cd ../src/hosts
-cp -R * moai-sdk/hosts/src
+cp -R * ../../distribute/moai-sdk/hosts/src
 cd ../../distribute
 
 # android host
 mkdir -p moai-sdk/hosts/eclipse
 
 cd ../eclipse/android-project
-cp -R * moai-sdk/hosts/eclipse/android-project
+cp -R * ../../distribute/moai-sdk/hosts/eclipse/android-project
 cd ../../distribute
 
 # ios host
 mkdir -p moai-sdk/hosts/xcode-ios/Classes
 
 cd ../xcode/ios/Classes
-cp -R * moai-sdk/hosts/xcode-ios/Classes
+cp -R * ../../distribute/moai-sdk/hosts/xcode-ios/Classes
 cd ../../../distribute
 
 cp ../xcode/ios/Entitlements.plist moai-sdk/hosts/xcode-ios/Entitlements.plist
