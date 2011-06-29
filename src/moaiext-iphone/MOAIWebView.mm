@@ -1,10 +1,10 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#import <moai-iphone/MOAIWebView.h>
-#import <moai-iphone/MoaiUiWebView.h>
-#import <moai-iphone/NSError+MOAILib.h>
-#import <moai-iphone/NSString+MOAILib.h>
+#import <moaiext-iphone/MOAIWebView.h>
+#import <moaiext-iphone/MoaiUiWebView.h>
+#import <moaiext-iphone/NSError+MOAILib.h>
+#import <moaiext-iphone/NSString+MOAILib.h>
 
 //================================================================//
 // lua

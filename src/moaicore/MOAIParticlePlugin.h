@@ -10,7 +10,7 @@
 // MOAIParticlePlugin
 //================================================================//
 /**	@name	MOAIParticlePlugin
-	@text	Particle processing extension.
+	@text	Allows custom particle processing via C language callbacks.
 */
 class MOAIParticlePlugin :
 	public virtual USLuaObject {

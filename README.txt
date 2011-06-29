@@ -12,12 +12,12 @@ xcode - Mac OSX and iPhone projects.
 
 Developing on Windows:
 
-Start with the vs2008 or 2010 reference solutions. The 'moai' project builds moai.exe, a command line Moai host based on GLUT.
+Start with the vs2008 or 2010 reference solutions. Make sure a 32-bit architecture is selected (64-bit not yet officially supported). The 'moai' project builds moai.exe, a command line Moai host based on GLUT.
 
 Lua samples are located in samples/basics. To run, build moai.exe. Add the MOAI_BIN and MOAI_CONFIG environment variables:
 
 MOAI_BIN = <path to Moai>/vs20XX/bin/Win32/<Debug|Release>/
-MOAI_CONFIG = <path to Moai>/config/
+MOAI_CONFIG = <path to Moai>/config/ 
 
 If these two environment variables are set up correctly, you can run each sample simply by double clicking the run.bat file found in each folder.
 

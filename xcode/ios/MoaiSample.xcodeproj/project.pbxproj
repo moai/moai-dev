@@ -38,6 +38,7 @@
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
+		CD7C73AE13B95516006CFA19 /* ParticlePresets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD7C73AC13B95516006CFA19 /* ParticlePresets.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -166,6 +167,8 @@
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		32CA4F630368D1EE00C91783 /* MoaiSample_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoaiSample_Prefix.pch; sourceTree = "<group>"; };
+		CD7C73AC13B95516006CFA19 /* ParticlePresets.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ParticlePresets.cpp; path = ../../src/hosts/ParticlePresets.cpp; sourceTree = SOURCE_ROOT; };
+		CD7C73AD13B95516006CFA19 /* ParticlePresets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ParticlePresets.h; path = ../../src/hosts/ParticlePresets.h; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -231,6 +234,8 @@
 				03CC90A013B3C37200B2724C /* MoaiView.mm */,
 				03CC90A113B3C37200B2724C /* OpenGLView.h */,
 				03CC90A213B3C37200B2724C /* OpenGLView.mm */,
+				CD7C73AC13B95516006CFA19 /* ParticlePresets.cpp */,
+				CD7C73AD13B95516006CFA19 /* ParticlePresets.h */,
 				03CC90A313B3C37200B2724C /* RefPtr.h */,
 			);
 			path = Classes;
@@ -446,6 +451,7 @@
 				03CC90A713B3C37200B2724C /* OpenGLView.mm in Sources */,
 				03CC90A913B3C37C00B2724C /* main.mm in Sources */,
 				078D630113BA9EA30072F273 /* MoaiVC.mm in Sources */,
+				CD7C73AE13B95516006CFA19 /* ParticlePresets.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -501,20 +507,8 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
+					"\"$(SRC_PATH)/src/hosts\"",
 					"\"$(SRC_PATH)/src\"",
-					"\"$(SRC_PATH)/3rdparty\"",
-					"\"$(SRC_PATH)/3rdparty/contrib\"",
-					"\"$(SRC_PATH)/3rdparty/tinyxml\"",
-					"\"$(SRC_PATH)/3rdparty/lua-5.1.3/src\"",
-					"\"$(SRC_PATH)/3rdparty/gsoap-2.7/gsoap\"",
-					"\"$(SRC_PATH)/3rdparty/lpng140\"",
-					"\"$(SRC_PATH)/3rdparty/curl-7.19.7/include-iphone\"",
-					"\"$(SRC_PATH)/3rdparty/curl-7.19.7/lib\"",
-					"\"$(SRC_PATH)/3rdparty/expat-2.0.1/lib\"",
-					"\"$(SRC_PATH)/3rdparty/freetype-2.4.4/include\"",
-					"\"$(SRC_PATH)/3rdparty/box2d-2.1.2/Box2D\"",
-					"\"$(SRC_PATH)/3rdparty/chipmunk-5.3.4/include\"",
-					"\"$(SRC_PATH)/3rdparty/chipmunk-5.3.4/include/chipmunk\"",
 				);
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
@@ -539,20 +533,8 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
+					"\"$(SRC_PATH)/src/hosts\"",
 					"\"$(SRC_PATH)/src\"",
-					"\"$(SRC_PATH)/3rdparty\"",
-					"\"$(SRC_PATH)/3rdparty/contrib\"",
-					"\"$(SRC_PATH)/3rdparty/tinyxml\"",
-					"\"$(SRC_PATH)/3rdparty/lua-5.1.3/src\"",
-					"\"$(SRC_PATH)/3rdparty/gsoap-2.7/gsoap\"",
-					"\"$(SRC_PATH)/3rdparty/lpng140\"",
-					"\"$(SRC_PATH)/3rdparty/curl-7.19.7/include-iphone\"",
-					"\"$(SRC_PATH)/3rdparty/curl-7.19.7/lib\"",
-					"\"$(SRC_PATH)/3rdparty/expat-2.0.1/lib\"",
-					"\"$(SRC_PATH)/3rdparty/freetype-2.4.4/include\"",
-					"\"$(SRC_PATH)/3rdparty/box2d-2.1.2/Box2D\"",
-					"\"$(SRC_PATH)/3rdparty/chipmunk-5.3.4/include\"",
-					"\"$(SRC_PATH)/3rdparty/chipmunk-5.3.4/include/chipmunk\"",
 				);
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;

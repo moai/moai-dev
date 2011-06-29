@@ -1,4 +1,4 @@
-#import <moai-iphone/NSError+MOAILib.h>
+#import <moaiext-iphone/NSError+MOAILib.h>
 
 //----------------------------------------------------------------//
 void loadMoaiLib_NSError () {

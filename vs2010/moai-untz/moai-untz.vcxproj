@@ -27,11 +27,11 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -86,7 +86,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\src\samples;..\..\src;..\..\3rdparty\glut-3.7.6-bin;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\src\hosts;..\..\src;..\..\3rdparty\glut-3.7.6-bin;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_CONSOLE;_DEBUG;GLUTHOST_USE_LUAEXT;GLUTHOST_USE_PARTICLE_PRESETS;GLUTHOST_USE_UNTZ;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -160,7 +160,7 @@ xcopy /yr "$(OutDir)$(TargetName).pdb" "..\..\bin\$(Platform)\$(Configuration)\"
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>..\..\src\samples;..\..\src;..\..\3rdparty\glut-3.7.6-bin;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\src\hosts;..\..\src;..\..\3rdparty\glut-3.7.6-bin;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_CONSOLE;GLUTHOST_USE_LUAEXT;GLUTHOST_USE_PARTICLE_PRESETS;GLUTHOST_USE_UNTZ;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
@@ -222,16 +222,13 @@ xcopy /yr "$(OutDir)$(TargetName).pdb" "..\..\bin\$(Platform)\$(Configuration)\"
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\samples\GlutHost.cpp" />
-    <ClCompile Include="..\..\src\samples\ParticlePresets.cpp" />
-    <ClCompile Include="main.cpp" />
+    <ClCompile Include="..\..\src\hosts\GlutHost.cpp" />
+    <ClCompile Include="..\..\src\hosts\GlutHostMain.cpp" />
+    <ClCompile Include="..\..\src\hosts\ParticlePresets.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\moaicore\moaicore.vcxproj">
       <Project>{4a578b4d-01af-46bd-81ce-a775b0553526}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\moaiext-harness\moaiext-harness.vcxproj">
-      <Project>{15e2c158-6e83-4e52-903b-8c7421f46124}</Project>
     </ProjectReference>
     <ProjectReference Include="..\moaiext-luaext\moaiext-luaext.vcxproj">
       <Project>{30d318c3-18a8-40b4-adac-3360cdcb4dd4}</Project>
@@ -241,8 +238,8 @@ xcopy /yr "$(OutDir)$(TargetName).pdb" "..\..\bin\$(Platform)\$(Configuration)\"
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\src\samples\GlutHost.h" />
-    <ClInclude Include="..\..\src\samples\ParticlePresets.h" />
+    <ClInclude Include="..\..\src\hosts\GlutHost.h" />
+    <ClInclude Include="..\..\src\hosts\ParticlePresets.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

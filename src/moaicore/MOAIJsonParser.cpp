@@ -180,7 +180,12 @@ json_t* _luaToJSONObject ( lua_State* L, int idx ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	decode
+	@text	Decode a JSON string into a hierarchy of Lua tables.
+	
+	@in		string input
+	@out	table result
+*/
 int MOAIJsonParser::_decode ( lua_State* L ) {
 	UNUSED ( L );
 
@@ -203,7 +208,12 @@ int MOAIJsonParser::_decode ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	encode
+	@text	Encode a hierarchy of Lua tables into a JSON string.
+	
+	@in		table input
+	@out	string result
+*/
 int MOAIJsonParser::_encode ( lua_State* L ) {
 
 	USLuaState state ( L );

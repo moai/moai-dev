@@ -9,7 +9,12 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	isLooping
+	@text	Return the looping status if the sound.
+	
+	@in		MOAIUntzSound self
+	@out	boolean looping
+*/
 int MOAIUntzSound::_isLooping ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIUntzSound, "U" )
 	
@@ -21,7 +26,12 @@ int MOAIUntzSound::_isLooping ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	getPosition
+	@text	Return the position of the cursor in the sound.
+	
+	@in		MOAIUntzSound self
+	@out	number position
+*/
 int MOAIUntzSound::_getPosition ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIUntzSound, "U" )
 	
@@ -33,7 +43,12 @@ int MOAIUntzSound::_getPosition ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	getVolume
+	@text	Return the volume of the sound.
+	
+	@in		MOAIUntzSound self
+	@out	number volume
+*/
 int MOAIUntzSound::_getVolume ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIUntzSound, "U" )
 	
@@ -45,7 +60,12 @@ int MOAIUntzSound::_getVolume ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	isPaused
+	@text	Return the pause status of the sound.
+	
+	@in		MOAIUntzSound self
+	@out	boolean paused
+*/
 int MOAIUntzSound::_isPaused ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIUntzSound, "U" )
 	
@@ -57,7 +77,12 @@ int MOAIUntzSound::_isPaused ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	isPlaying
+	@text	Return the playing status of the sound.
+	
+	@in		MOAIUntzSound self
+	@out	boolean playing
+*/
 int MOAIUntzSound::_isPlaying ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIUntzSound, "U" )
 	
@@ -69,7 +94,13 @@ int MOAIUntzSound::_isPlaying ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	load
+	@text	Loads a sound from disk.
+	
+	@in		MOAIUntzSound self
+	@in		string filename
+	@out	nil
+*/
 int MOAIUntzSound::_load ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIUntzSound, "US" )
 	
@@ -85,7 +116,12 @@ int MOAIUntzSound::_load ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	pause
+	@text	Pause the sound.
+	
+	@in		MOAIUntzSound self
+	@out	nil
+*/
 int MOAIUntzSound::_pause ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIUntzSound, "U" )
 	
@@ -96,7 +132,12 @@ int MOAIUntzSound::_pause ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	play
+	@text	Play the sound.
+	
+	@in		MOAIUntzSound self
+	@out	nil
+*/
 int MOAIUntzSound::_play ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIUntzSound, "U" )
 	
@@ -107,7 +148,13 @@ int MOAIUntzSound::_play ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	setLooping
+	@text	Set or clear the looping status of the sound.
+	
+	@in		MOAIUntzSound self
+	@opt	boolean looping		Default value is 'false.'
+	@out	nil
+*/
 int MOAIUntzSound::_setLooping ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIUntzSound, "U" )
 	
@@ -119,7 +166,13 @@ int MOAIUntzSound::_setLooping ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	setPosition
+	@text	Sets the position of the sound cursor.
+	
+	@in		MOAIUntzSound self
+	@opt	boolean position		Default value is 0.
+	@out	nil
+*/
 int MOAIUntzSound::_setPosition ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIUntzSound, "U" )
 	
@@ -131,7 +184,13 @@ int MOAIUntzSound::_setPosition ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	setVolume
+	@text	Sets the volume of the sound.
+	
+	@in		MOAIUntzSound self
+	@opt	boolean volume			Default value is 0.
+	@out	nil
+*/
 int MOAIUntzSound::_setVolume ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIUntzSound, "U" )
 	
@@ -143,7 +202,12 @@ int MOAIUntzSound::_setVolume ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	stop
+	@text	Stops the sound from playing.
+	
+	@in		MOAIUntzSound self
+	@out	nil
+*/
 int MOAIUntzSound::_stop ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIUntzSound, "U" )
 	
