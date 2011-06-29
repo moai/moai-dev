@@ -10,7 +10,7 @@ vs2008 - Visual Studio 2008 reference projects.
 vs2010 - Visual Studio 2010 reference projects.
 xcode - Mac OSX and iPhone projects.
 
-Developing on Windows: 
+Developing on Windows:
 
 Start with the vs2008 or 2010 reference solutions. Make sure a 32-bit architecture is selected (64-bit not yet officially supported). The 'moai' project builds moai.exe, a command line Moai host based on GLUT.
 
