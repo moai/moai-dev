@@ -31,7 +31,7 @@ cp -R * ../../distribute/moai-sdk/hosts/src
 cd ../../distribute
 
 # android host
-mkdir -p moai-sdk/hosts/eclipse
+mkdir -p moai-sdk/hosts/eclipse/android-project
 
 cd ../eclipse/android-project
 cp -R * ../../distribute/moai-sdk/hosts/eclipse/android-project
@@ -41,7 +41,7 @@ cd ../../distribute
 mkdir -p moai-sdk/hosts/xcode-ios/Classes
 
 cd ../xcode/ios/Classes
-cp -R * ../../distribute/moai-sdk/hosts/xcode-ios/Classes
+cp -R * ../../../distribute/moai-sdk/hosts/xcode-ios/Classes
 cd ../../../distribute
 
 cp ../xcode/ios/Entitlements.plist moai-sdk/hosts/xcode-ios/Entitlements.plist
