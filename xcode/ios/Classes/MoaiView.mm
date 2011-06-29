@@ -219,8 +219,7 @@ void _AKUStartGameLoopFunc () {
 		
 		[ self setGlobalPaths ];
 		
-		//mAnimInterval = 1.0f / 60.0f;
-		mAnimInterval = 1;
+		mAnimInterval = 1; // run at device refresh rate (60fps)
 		
 		mLocationObserver = [[[ LocationObserver alloc ] init ] autorelease ];
 		

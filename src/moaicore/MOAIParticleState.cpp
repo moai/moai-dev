@@ -334,15 +334,13 @@ void MOAIParticleState::ProcessParticle ( MOAIParticleSystem& system, MOAIPartic
 	if ( this->mRender ) {
 		this->mRender->Run ( system, particle, t0, t1 );
 	}
-	else {
 	
-		MOAIParticlePlugin* plugin = this->mPlugin;
-		if ( plugin && plugin->mRenderFunc ) {
-			
-			AKUParticleSprite sprite;
-			plugin->mRenderFunc ( particle.mData, &particle.mData [ MOAIParticle::TOTAL_PARTICLE_REG ], &sprite, t0, t1 );
-			system.PushSprite ( sprite );
-		}
+	MOAIParticlePlugin* plugin = this->mPlugin;
+	if ( plugin && plugin->mRenderFunc ) {
+		
+		AKUParticleSprite sprite;
+		plugin->mRenderFunc ( particle.mData, &particle.mData [ MOAIParticle::TOTAL_PARTICLE_REG ], &sprite, t0, t1 );
+		system.PushSprite ( sprite );
 	}
 
 	if ( particle.mAge >= particle.mTerm ) {
