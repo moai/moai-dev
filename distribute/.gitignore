@@ -17,15 +17,15 @@ build/
 *.sdf
 *.opensdf
 *.user
-moai-sdk/hosts/xcode/ios/Classes/
-moai-sdk/hosts/xcode/ios/Entitlements.plist
-moai-sdk/hosts/xcode/ios/Icon.png
-moai-sdk/hosts/xcode/ios/Icon@2x.png
-moai-sdk/hosts/xcode/ios/Icon-72.png
-moai-sdk/hosts/xcode/ios/Icon-Small.png
-moai-sdk/hosts/xcode/ios/Icon-Small@2x.png
-moai-sdk/hosts/xcode/ios/Icon-Small-50.png
-moai-sdk/hosts/xcode/ios/Info.plist
-moai-sdk/hosts/xcode/ios/MainWindow-iPad.xib
-moai-sdk/hosts/xcode/ios/MainWindow-iPhone.xib
+moai-sdk/hosts/xcode-ios/Classes/
+moai-sdk/hosts/xcode-ios/Entitlements.plist
+moai-sdk/hosts/xcode-ios/Icon.png
+moai-sdk/hosts/xcode-ios/Icon@2x.png
+moai-sdk/hosts/xcode-ios/Icon-72.png
+moai-sdk/hosts/xcode-ios/Icon-Small.png
+moai-sdk/hosts/xcode-ios/Icon-Small@2x.png
+moai-sdk/hosts/xcode-ios/Icon-Small-50.png
+moai-sdk/hosts/xcode-ios/Info.plist
+moai-sdk/hosts/xcode-ios/MainWindow-iPad.xib
+moai-sdk/hosts/xcode-ios/MainWindow-iPhone.xib
 
