@@ -7,39 +7,38 @@
 #----------------------------------------------------------------#
 # clean main folders
 #----------------------------------------------------------------#
-rm -rf sdk/3rdparty
-rm -rf sdk/bin
-rm -rf sdk/docs
-rm -rf sdk/include
-rm -rf sdk/samples
-rm -rf sdk/include
+rm -rf moai-sdk/3rdparty
+rm -rf moai-sdk/docs
+rm -rf moai-sdk/include
+rm -rf moai-sdk/samples
+rm -rf moai-sdk/include
 
 #----------------------------------------------------------------#
 # clean version text file
 #----------------------------------------------------------------#
-rm -f sdk/version.txt
+rm -f moai-sdk/version.txt
 
 #----------------------------------------------------------------#
 # clean host shared src
 #----------------------------------------------------------------#
-rm -rf sdk/hosts/src
+rm -rf moai-sdk/hosts/src
 
 #----------------------------------------------------------------#
 # clean eclipse host
 #----------------------------------------------------------------#
-rm -rf sdk/hosts/eclipse/android-project
+rm -rf moai-sdk/hosts/eclipse/android-project
 
 #----------------------------------------------------------------#
 # clean xcode host
 #----------------------------------------------------------------#
-rm -rf sdk/hosts/xcode/ios/Classes
-rm -f sdk/hosts/xcode/ios/Entitlements.plist
-rm -f sdk/hosts/xcode/ios/Icon.png
-rm -f sdk/hosts/xcode/ios/Icon@2x.png
-rm -f sdk/hosts/xcode/ios/Icon-72.png
-rm -f sdk/hosts/xcode/ios/Icon-Small.png
-rm -f sdk/hosts/xcode/ios/Icon-Small@2x.png
-rm -f sdk/hosts/xcode/ios/Icon-Small-50.png
-rm -f sdk/hosts/xcode/ios/Info.plist
-rm -f sdk/hosts/xcode/ios/MainWindow-iPad.xib
-rm -f sdk/hosts/xcode/ios/MainWindow-iPhone.xib
+rm -rf moai-sdk/hosts/xcode/ios/Classes
+rm -f moai-sdk/hosts/xcode/ios/Entitlements.plist
+rm -f moai-sdk/hosts/xcode/ios/Icon.png
+rm -f moai-sdk/hosts/xcode/ios/Icon@2x.png
+rm -f moai-sdk/hosts/xcode/ios/Icon-72.png
+rm -f moai-sdk/hosts/xcode/ios/Icon-Small.png
+rm -f moai-sdk/hosts/xcode/ios/Icon-Small@2x.png
+rm -f moai-sdk/hosts/xcode/ios/Icon-Small-50.png
+rm -f moai-sdk/hosts/xcode/ios/Info.plist
+rm -f moai-sdk/hosts/xcode/ios/MainWindow-iPad.xib
+rm -f moai-sdk/hosts/xcode/ios/MainWindow-iPhone.xib
