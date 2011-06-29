@@ -15,7 +15,6 @@
 
 #include <aku/AKU-luaext.h>
 #include <aku/AKU-untz.h>
-#import <ParticlePresets.h>
 
 #import "LocationObserver.h"
 #import "MoaiView.h"
@@ -41,6 +40,7 @@ namespace MoaiInputDeviceSensorID {
 // MoaiView ()
 //================================================================//
 @interface MoaiView ()
+@property (nonatomic, assign) CADisplayLink *displayLink;
 
 	//----------------------------------------------------------------//
 	-( void )	handleTouches		:( NSSet* )touches :( BOOL )down;
@@ -48,7 +48,6 @@ namespace MoaiInputDeviceSensorID {
 	-( void )	onUpdateAnim;
 	-( void )	onUpdateHeading		:( LocationObserver* )observer;
 	-( void )	onUpdateLocation	:( LocationObserver* )observer;
-	-( void )	openContext;
 	-( void )	setGlobalPaths;
 	-( void )	startAnimation;
 	-( void )	stopAnimation;
@@ -107,6 +106,8 @@ void _AKUStartGameLoopFunc () {
 //================================================================//
 @implementation MoaiView
 
+@synthesize displayLink;
+
 	//----------------------------------------------------------------//
 	-( void ) accelerometer:( UIAccelerometer* )acel didAccelerate:( UIAcceleration* )acceleration {
 		( void )acel;
@@ -130,7 +131,7 @@ void _AKUStartGameLoopFunc () {
 
 	//----------------------------------------------------------------//
 	-( void ) drawView {
-		
+						
 		[ self beginDrawing ];
 		
 		AKUSetContext ( mAku );
@@ -216,11 +217,9 @@ void _AKUStartGameLoopFunc () {
 		AKUSetFunc_OpenWindow			( _AKUOpenWindowFunc );
 		AKUSetFunc_StartGameLoop		( _AKUStartGameLoopFunc );
 		
-		ParticlePresets ();
-		
 		[ self setGlobalPaths ];
 		
-		mAnimInterval = 1.0f / 60.0f;
+		mAnimInterval = 1; // run at device refresh rate (60fps)
 		
 		mLocationObserver = [[[ LocationObserver alloc ] init ] autorelease ];
 		
@@ -268,14 +267,6 @@ void _AKUStartGameLoopFunc () {
 	}
 	
 	//----------------------------------------------------------------//
-	-( void ) openContext {
-		
-		if ([ EAGLContext currentContext ] != mContext ) {
-			[ EAGLContext setCurrentContext:mContext ];
-		}
-	}
-	
-	//----------------------------------------------------------------//
 	-( void ) run :( NSString* )filename {
 	
 		AKUSetContext ( mAku );
@@ -285,7 +276,7 @@ void _AKUStartGameLoopFunc () {
 	//----------------------------------------------------------------//
 	-( void ) setGlobalPaths {
 	
-//		lua_State* L = AKUGetLuaState ();
+		//lua_State* L = AKUGetLuaState ();
 //		lua_newtable ( L );
 //		
 //		NSString* path;
@@ -314,29 +305,16 @@ void _AKUStartGameLoopFunc () {
 	//----------------------------------------------------------------//
 	-( void ) startAnimation {
 		
-		if ( mAnimInterval > 0.0 ) {
-			
-			if ( !mAnimTimer ) {
-				
-				mAnimTimer = [
-					NSTimer
-					scheduledTimerWithTimeInterval:mAnimInterval
-					target:self
-					selector:@selector( onUpdateAnim )
-					userInfo:nil
-					repeats:YES
-				];
-			}
-		}
-	}
+        CADisplayLink *aDisplayLink = [[UIScreen mainScreen] displayLinkWithTarget:self selector:@selector(onUpdateAnim)];
+        [aDisplayLink setFrameInterval:mAnimInterval];
+        [aDisplayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+        self.displayLink = aDisplayLink;	}
 
 	//----------------------------------------------------------------//
 	-( void ) stopAnimation {
 		
-		if ( mAnimTimer && [ mAnimTimer isValid ]) {
-			[ mAnimTimer invalidate ];
-			mAnimTimer = nil;
-		}
+        [self.displayLink invalidate];
+        self.displayLink = nil;
 	}
 	
 	//----------------------------------------------------------------//

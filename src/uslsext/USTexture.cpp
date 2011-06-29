@@ -412,20 +412,32 @@ void USTexture::CreateTextureFromPVR ( void* data, size_t size ) {
 		int width = header->mWidth;
 		int height = header->mHeight;		
 		char* imageData = (char*)(header->GetFileData ( data, size));
-		for ( int level = 0; width > 0 && height > 0; ++level ) {
+		if ( header->mMipMapCount == 0 ) {
 			GLsizei currentSize = (GLsizei) USFloat::Max ( (float)(32), (float)(width * height * header->mBitCount / 8) );
 			
 			if ( compressed ) {
-				glCompressedTexImage2D ( GL_TEXTURE_2D, level, this->mGLInternalFormat, width, height, 0, currentSize, imageData );
+				glCompressedTexImage2D ( GL_TEXTURE_2D, 0, this->mGLInternalFormat, width, height, 0, currentSize, imageData );
 			}
 			else {
-				glTexImage2D( GL_TEXTURE_2D, level, this->mGLInternalFormat, width, height, 0, this->mGLInternalFormat, this->mGLPixelType, imageData);
+				glTexImage2D( GL_TEXTURE_2D, 0, this->mGLInternalFormat, width, height, 0, this->mGLInternalFormat, this->mGLPixelType, imageData);
 			}
+		}
+		else {
+			for ( int level = 0; width > 0 && height > 0; ++level ) {
+				GLsizei currentSize = (GLsizei) USFloat::Max ( (float)(32), (float)(width * height * header->mBitCount / 8) );
 			
-			imageData += currentSize;
-			width >>= 1;
-			height >>= 1;
-		}				
+				if ( compressed ) {
+					glCompressedTexImage2D ( GL_TEXTURE_2D, level, this->mGLInternalFormat, width, height, 0, currentSize, imageData );
+				}
+				else {
+					glTexImage2D( GL_TEXTURE_2D, level, this->mGLInternalFormat, width, height, 0, this->mGLInternalFormat, this->mGLPixelType, imageData);
+				}
+			
+				imageData += currentSize;
+				width >>= 1;
+				height >>= 1;
+			}	
+		}			
 
 	#endif
 }
