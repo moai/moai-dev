@@ -9,6 +9,7 @@
 
 #import "RefPtr.h"
 
+@class MoaiVC;
 @class MoaiView;
 
 //================================================================//
@@ -18,7 +19,8 @@
 @private
 
 	IBOutlet MoaiView*	mMoaiView;
-	IBOutlet UIWindow*	mWindow;
+	IBOutlet UIWindow*	mWindow;	
+	IBOutlet MoaiVC*	mMoaiVC;
 }
 
 @end

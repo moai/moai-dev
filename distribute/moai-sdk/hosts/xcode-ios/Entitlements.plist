@@ -3,6 +3,6 @@
 <plist version="1.0">
 <dict>
 	<key>get-task-allow</key>
-	<false/>
+	<true/>
 </dict>
 </plist>

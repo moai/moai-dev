@@ -15,12 +15,10 @@
 //================================================================//
 @interface OpenGLView ()
 
-	//----------------------------------------------------------------//
-	-( void )	closeContext;
+	//----------------------------------------------------------------//	
 	-( bool )	createBuffers;
 	-( void )	createContext;
 	-( void )	deleteBuffers;
-	-( void )	openContext;
 	-( void )	releaseContext;
 	-( void )	renewContext;
 
@@ -85,7 +83,7 @@
 		// Get the layer
 		CAEAGLLayer* glLayer = ( CAEAGLLayer* )self.layer;
 		
-		glLayer.opaque = NO;
+		glLayer.opaque = YES;
 		glLayer.drawableProperties = [ NSDictionary
 			dictionaryWithObjectsAndKeys :[ NSNumber numberWithBool:NO ],
 			kEAGLDrawablePropertyRetainedBacking,
@@ -136,7 +134,7 @@
 
 	//----------------------------------------------------------------//
 	-( void ) endDrawing {
-		
+			
 		// finish & present
 		glBindRenderbufferOES ( GL_RENDERBUFFER_OES, mRenderbuffer );
 		[ mContext presentRenderbuffer :GL_RENDERBUFFER_OES ];
