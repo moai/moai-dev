@@ -8,7 +8,7 @@ src - Moai source code and headers.
 test - Lua stress tests for Moai. These were written to crash Moai. We'll be fixing Moai to handle more user errors gracefully (instead of crash) as the project develops.
 vs2008 - Visual Studio 2008 reference projects.
 vs2010 - Visual Studio 2010 reference projects.
-xcode - Mac OSX and iPhone projects.
+xcode - Mac OSX and iPhone projects. 
 
 Developing on Windows:
 
