@@ -4,23 +4,13 @@
 // http://getmoai.com
 //----------------------------------------------------------------//
 
-#import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-#import "RefPtr.h"
-
-@class MoaiVC;
-@class MoaiView;
-
 //================================================================//
-// AppDelegate
+// MoaiVC
 //================================================================//
-@interface AppDelegate : NSObject < UIApplicationDelegate > {
-@private
+@interface MoaiVC : UIViewController {
 
-	IBOutlet MoaiView*	mMoaiView;
-	IBOutlet UIWindow*	mWindow;	
-	IBOutlet MoaiVC*	mMoaiVC;
 }
 
 @end

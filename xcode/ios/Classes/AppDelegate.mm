@@ -19,6 +19,7 @@
 	//----------------------------------------------------------------//
 	-( void ) dealloc {
 
+		[ mMoaiVC release ];
 		[ mMoaiView release ];
 		[ mWindow release ];
 		[ super dealloc ];
