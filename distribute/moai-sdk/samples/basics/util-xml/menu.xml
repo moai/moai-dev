@@ -1,0 +1,60 @@
+<!-- ================================================================ -->
+<!--  Copyright (c) 2010-2011 Zipline Games, Inc. 					  -->
+<!--  All Rights Reserved.  										  -->
+<!--  http://getmoai.com											  -->
+<!-- ================================================================ -->
+
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<breakfast_menu name="Blurtilda's Diner Breakfast Menu" start="8:17AM" stop="11:66AM">
+	<food>
+		<item>Swollen Waffles</item>
+		<price>$5.95</price>
+		<calories>650</calories>
+	</food>
+	<food>
+		<item>Deviled Strawberry Waffles</item>
+		<price>$7.95</price>
+		<calories>900</calories>
+	</food>
+	<food>
+		<item>Saucy Elephant Waffles w/ Pig Floss</item>
+		<price>$8.95</price>
+		<calories>900</calories>
+	</food>
+	<food>
+		<item>French Plaster</item>
+		<price>$4.50</price>
+		<calories>600</calories>
+	</food>
+	<food>
+		<item>Hamster Breakfast</item>
+		<price>$6.95</price>
+		<calories>950</calories>
+	</food>
+	<food>
+		<item>Smushed Ham</item>
+		<price>$0.257</price>
+		<calories>3</calories>
+	</food>
+	<food>
+		<item>Mashed Gravy</item>
+		<price>$0.2578</price>
+		<calories>31</calories>
+	</food>
+	<testing>
+		This is a test string of testing
+	</testing>
+	<testing source="somewhere">
+		This is another test string of testing
+	</testing>
+	<dessert source="Pie Bros." description="siamese siblings joined at the pie">
+		<item>Head Pie</item>
+		<price>$10.95</price>
+		<calories>1200</calories>
+	</dessert>
+	<dessert>
+		<item>Sauteed Bat Groin w/ Fresh Peach Cobbler</item>
+		<price>$2.95</price>
+		<calories>5,000,000</calories>
+	</dessert>
+</breakfast_menu>
