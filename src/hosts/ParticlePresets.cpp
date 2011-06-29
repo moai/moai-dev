@@ -5,19 +5,17 @@
 #include <ParticlePresets.h>
 
 //----------------------------------------------------------------//
-static float	_lerp					( float x0, float x1, float t );
-static void		_linearRender			( float* particle, float* registers, AKUParticleSprite* sprite, float t0, float t1 );
+static float	_lerp				( float x0, float x1, float t );
+static void		_testRender			( float* particle, float* registers, AKUParticleSprite* sprite, float t0, float t1 );
 
 //----------------------------------------------------------------//
-float _lerp ( float x0, float x1, float t ) {
+inline float _lerp ( float x0, float x1, float t ) {
 
 	return x0 + (( x1 - x0 ) * t );
 }
 
 //----------------------------------------------------------------//
-void _linearRender ( float* particle, float* registers, AKUParticleSprite* sprite, float t0, float t1 ) {
-
-	//float linear	= t1;
+void _testRender ( float* particle, float* registers, AKUParticleSprite* sprite, float t0, float t1 ) {
 
 	sprite->mXLoc	= registers [ 0 ] * t1;
 	sprite->mYLoc	= registers [ 1 ] * t1;
@@ -44,5 +42,5 @@ void _linearRender ( float* particle, float* registers, AKUParticleSprite* sprit
 //----------------------------------------------------------------//
 void ParticlePresets () {
 	
-	AKUSetParticlePreset ( "ParticlePresets", 0, _linearRender, 6 );
+	AKUSetParticlePreset ( "ParticlePresets", "test", 0, _testRender, 6 );
 }

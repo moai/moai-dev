@@ -27,7 +27,7 @@ void AKUNewParticlePlugin ( lua_State* L, AKUParticleInitFunc initFunc, AKUParti
 }
 
 //----------------------------------------------------------------//
-void AKUSetParticlePreset ( const char* presetTable, AKUParticleInitFunc initFunc, AKUParticleRenderFunc renderFunc, int size ) {
+void AKUSetParticlePreset ( const char* presetTable, const char* presetName, AKUParticleInitFunc initFunc, AKUParticleRenderFunc renderFunc, int size ) {
 
 	lua_State* L = AKUGetLuaState ();
 	
@@ -42,6 +42,7 @@ void AKUSetParticlePreset ( const char* presetTable, AKUParticleInitFunc initFun
 	assert ( lua_isnil ( L, -1 ) == false );
 	
 	AKUNewParticlePlugin ( L, initFunc, renderFunc, size );
+	lua_setfield ( L, -2, presetName );
 	
 	lua_pop ( L, 1 );
 }
