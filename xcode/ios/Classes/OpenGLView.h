@@ -31,7 +31,9 @@ class USTexture;
 
 	//----------------------------------------------------------------//
 	-( void )	beginDrawing;
+	-( void )	closeContext;
 	-( void )	drawView;
 	-( void )	endDrawing;
+	-( void )	openContext;
 
 @end

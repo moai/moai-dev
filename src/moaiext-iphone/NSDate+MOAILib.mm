@@ -1,5 +1,5 @@
-#import <moai-iphone/NSDate+MOAILib.h>
-#import <moai-iphone/NSString+MOAILib.h>
+#import <moaiext-iphone/NSDate+MOAILib.h>
+#import <moaiext-iphone/NSString+MOAILib.h>
 #import <contrib/ISO8601DateFormatter.h>
 
 //----------------------------------------------------------------//

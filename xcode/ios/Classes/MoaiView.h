@@ -24,6 +24,7 @@
 	RefPtr < LocationObserver > mLocationObserver;
 	
 	NSTimer*			mAnimTimer;
+    CADisplayLink*		displayLink;
 	NSTimeInterval		mAnimInterval;
 	
 	AKUContextID		mAku;

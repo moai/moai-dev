@@ -338,17 +338,47 @@ public:
 	//----------------------------------------------------------------//
 	template < typename PARAM_TYPE >
 	void Transform ( USMetaVec2D < PARAM_TYPE >& point ) const {
+	
+	#ifdef ARM6_IPHONE_3G
+		TYPE src_vec[2] = { ( TYPE )point.mX, ( TYPE )point.mY};
 		
+		asm volatile (
+				
+              "fldmias  %0, {s8-s13}		\n\t"                                
+              "fldmias  %1, {s0-s1}			\n\t"
+                				
+				// x
+              "fmuls s3, s8, s0				\n\t"
+			  "fmacs s3, s10, s1			\n\t"
+			  "fadds s3, s3, s12			\n\t"
+				
+				//y
+              "fmuls s4, s9, s0				\n\t"
+			  "fmacs s4, s11, s1			\n\t"
+			  "fadds s4, s4, s13			\n\t"
+				                
+              // Save vector.
+              "fstmias  %1, {s3-s4}			\n\t"  
+                
+              : 
+              : "r" (m), "r" (src_vec)
+              : "memory","cc", "s0", "s1", "s2", "s3", "s4", "s8", "s9", "s10", "s11", "s12", "s13" 
+		);  
+		point.mX = src_vec[0];
+		point.mY = src_vec[1];
+	#else
+
 		TYPE x =	( m [ C0_R0 ] * ( TYPE )point.mX ) +
 					( m [ C1_R0 ] * ( TYPE )point.mY ) +
 					( m [ C2_R0 ]);
 		
 		TYPE y =	( m [ C0_R1 ] * ( TYPE )point.mX ) +
 					( m [ C1_R1 ] * ( TYPE )point.mY ) +
-					( m [ C2_R1 ]);
+					( m [ C2_R1 ]); 
 		
 		point.mX = ( PARAM_TYPE )x;
 		point.mY = ( PARAM_TYPE )y;
+	#endif
 	}
 
 	//----------------------------------------------------------------//
