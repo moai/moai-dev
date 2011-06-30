@@ -23,15 +23,26 @@ mkdir -p moai-sdk/include/aku
 cp -R ../src/aku/*.h moai-sdk/include/aku
 
 mkdir -p moai-sdk/hosts/src
-cp -R ../src/hosts moai-sdk/hosts/src
+
+cp ../version.txt moai-sdk/version.txt
+
+cd ../src/hosts
+cp -R * ../../distribute/moai-sdk/hosts/src
+cd ../../distribute
 
 # android host
-mkdir -p moai-sdk/hosts/eclipse
-cp -R ../eclipse moai-sdk/hosts/eclipse/android-project
+mkdir -p moai-sdk/hosts/eclipse/android-project
+
+cd ../eclipse/android-project
+cp -R * ../../distribute/moai-sdk/hosts/eclipse/android-project
+cd ../../distribute
 
 # ios host
 mkdir -p moai-sdk/hosts/xcode-ios/Classes
-cp -R ../xcode/ios/Classes moai-sdk/hosts/xcode-ios/Classes
+
+cd ../xcode/ios/Classes
+cp -R * ../../../distribute/moai-sdk/hosts/xcode-ios/Classes
+cd ../../../distribute
 
 cp ../xcode/ios/Entitlements.plist moai-sdk/hosts/xcode-ios/Entitlements.plist
 cp ../xcode/ios/Icon.png moai-sdk/hosts/xcode-ios/Icon.png
