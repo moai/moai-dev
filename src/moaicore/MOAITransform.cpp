@@ -581,7 +581,7 @@ bool MOAITransform::ApplyAttrOp ( u32 attrID, USAttrOp& attrOp ) {
 				return true;
 		}
 	}
-	return false;
+	return MOAITransformBase::ApplyAttrOp ( attrID, attrOp );
 }
 
 //----------------------------------------------------------------//
@@ -656,11 +656,11 @@ void MOAITransform::RegisterLuaClass ( USLuaState& state ) {
 	
 	MOAITransformBase::RegisterLuaClass ( state );
 	
-	state.SetField ( -1, "ATTR_X_LOC", MOAITransformAttr::Pack ( ATTR_X_LOC ));
-	state.SetField ( -1, "ATTR_Y_LOC", MOAITransformAttr::Pack ( ATTR_Y_LOC ));
-	state.SetField ( -1, "ATTR_Z_ROT", MOAITransformAttr::Pack ( ATTR_Z_ROT ));
-	state.SetField ( -1, "ATTR_X_SCL", MOAITransformAttr::Pack ( ATTR_X_SCL ));
-	state.SetField ( -1, "ATTR_Y_SCL", MOAITransformAttr::Pack ( ATTR_Y_SCL ));
+	state.SetField ( -1, "ATTR_X_LOC",			MOAITransformAttr::Pack ( ATTR_X_LOC ));
+	state.SetField ( -1, "ATTR_Y_LOC",			MOAITransformAttr::Pack ( ATTR_Y_LOC ));
+	state.SetField ( -1, "ATTR_Z_ROT",			MOAITransformAttr::Pack ( ATTR_Z_ROT ));
+	state.SetField ( -1, "ATTR_X_SCL",			MOAITransformAttr::Pack ( ATTR_X_SCL ));
+	state.SetField ( -1, "ATTR_Y_SCL",			MOAITransformAttr::Pack ( ATTR_Y_SCL ));
 }
 
 //----------------------------------------------------------------//

@@ -44,9 +44,10 @@ public:
 		INHERIT_FRAME			= 0x00000008,
 		INHERIT_PARTITION		= 0x00000010,
 		INHERIT_SHADER			= 0x00000020,
+		INHERIT_VISIBLE			= 0x00000040,
 	};
 	
-	static const u32 DEFAULT_MASK = 0x00000007;
+	static const u32 DEFAULT_MASK = 0x00000046;
 	
 	//----------------------------------------------------------------//
 	virtual USColorVec			GetColorTrait			();
@@ -54,6 +55,7 @@ public:
 	virtual MOAIPartition*		GetPartitionTrait		();
 	virtual MOAIShader*			GetShaderTrait			();
 	virtual const USAffine2D*	GetTransformTrait		();
+	virtual bool				GetVisibleTrait			();
 								MOAITraits				();
 								~MOAITraits				();
 	void						RegisterLuaClass		( USLuaState& state );

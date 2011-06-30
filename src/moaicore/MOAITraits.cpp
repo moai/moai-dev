@@ -15,7 +15,7 @@
 			for a list of trait bitmasks.
 	
 	@in		MOAITraits self
-	@opt	MOAITransformBase mask	Default value is MOAITraits.INHERIT_TRANSFORM + MOAITraits.INHERIT_COLOR.
+	@opt	MOAITransformBase mask	Default value is MOAITraits.INHERIT_TRANSFORM + MOAITraits.INHERIT_COLOR + MOAITraits.INHERIT_VISIBLE.
 	@out	nil
 */
 int MOAITraits::_setTraitMask ( lua_State* L ) {
@@ -76,6 +76,12 @@ const USAffine2D* MOAITraits::GetTransformTrait () {
 }
 
 //----------------------------------------------------------------//
+bool MOAITraits::GetVisibleTrait () {
+
+	return true;
+}
+
+//----------------------------------------------------------------//
 MOAITraits::MOAITraits () :
 	mTraitMask ( DEFAULT_MASK ) {
 	
@@ -97,6 +103,7 @@ void MOAITraits::RegisterLuaClass ( USLuaState& state ) {
 	state.SetField ( -1, "INHERIT_FRAME", ( u32 )INHERIT_FRAME );
 	state.SetField ( -1, "INHERIT_PARTITION", ( u32 )INHERIT_PARTITION );
 	state.SetField ( -1, "INHERIT_SHADER", ( u32 )INHERIT_SHADER );
+	state.SetField ( -1, "INHERIT_VISIBLE", ( u32 )INHERIT_VISIBLE );
 }
 
 //----------------------------------------------------------------//

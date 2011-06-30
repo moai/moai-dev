@@ -233,16 +233,16 @@ int MOAINode::_setAttr ( lua_State* L ) {
 //----------------------------------------------------------------//
 /**	@name	setAttrLink
 	@text	Sets a *pull* attribute connecting an attribute in the
-			note to an attribute in a foreign node.
+			node to an attribute in a foreign node.
 	
 	@in		MOAINode self
-	@in		number attrID			ID of attribute to become dependent of foreign node.
-	@in		MOAINode sourceNode		Foreign node.
-	@in		number sourceAttrID		Attribute in foreign node to control value of attribue.
+	@in		number attrID				ID of attribute to become dependent of foreign node.
+	@in		MOAINode sourceNode			Foreign node.
+	@opt	number sourceAttrID			Attribute in foreign node to control value of attribue. Default value is attrID.
 	@out	nil
 */
 int MOAINode::_setAttrLink ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAINode, "UNUN" );
+	MOAI_LUA_SETUP ( MOAINode, "UNU" );
 	
 	u32 attrID = state.GetValue < u32 >( 2, 0 );
 	MOAI_ERROR_UNLESS ( self->AttrExists ( attrID ), state, MOAILogMessages::MOAINode_AttributeNotFound );
@@ -250,7 +250,7 @@ int MOAINode::_setAttrLink ( lua_State* L ) {
 	MOAINode* srcNode = state.GetLuaObject < MOAINode >( 3 );
 	if ( !srcNode ) return 0;
 
-	u32 srcAttrID = state.GetValue < u32 >( 4, 0 );
+	u32 srcAttrID = state.GetValue < u32 >( 4, attrID );
 	MOAI_ERROR_UNLESS ( srcNode->AttrExists ( srcAttrID ), state, MOAILogMessages::MOAINode_AttributeNotFound );
 
 	self->SetAttrLink ( attrID, srcNode, srcAttrID );
