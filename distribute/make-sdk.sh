@@ -34,7 +34,7 @@ cd ../../distribute
 mkdir -p moai-sdk/hosts/eclipse/android-project
 
 cd ../eclipse/android-project
-cp -R * ../../distribute/moai-sdk/hosts/eclipse/android-project
+cp -a * ../../distribute/moai-sdk/hosts/eclipse/android-project
 cd ../../distribute
 
 # ios host
