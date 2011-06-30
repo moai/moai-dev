@@ -44,7 +44,7 @@
 		<link>
 			<name>libs</name>
 			<type>2</type>
-			<locationURI>PARENT-1-PROJECT_LOC/../../../bin/android</locationURI>
+			<locationURI>PARENT-3-PROJECT_LOC/bin/android</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>
