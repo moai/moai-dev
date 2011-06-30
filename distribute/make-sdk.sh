@@ -8,7 +8,10 @@
 
 # general files
 mkdir -p moai-sdk/3rdparty/glut-3.7.6
-cp -R ../3rdparty/glut-3.7.6-bin moai-sdk/3rdparty/glut-3.7.6
+
+cd ../3rdparty/glut-3.7.6-bin
+cp -R * ../../distribute/moai-sdk/3rdparty/glut-3.7.6
+cd ../../distribute
 
 mkdir -p moai-sdk/samples
 cp -R ../samples/basics moai-sdk/samples
@@ -34,7 +37,7 @@ cd ../../distribute
 mkdir -p moai-sdk/hosts/eclipse/android-project
 
 cd ../eclipse/android-project
-cp -a * ../../distribute/moai-sdk/hosts/eclipse/android-project
+cp -R . ../../distribute/moai-sdk/hosts/eclipse/android-project
 cd ../../distribute
 
 # ios host
