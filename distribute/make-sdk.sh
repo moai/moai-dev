@@ -40,7 +40,7 @@ cd ../../distribute
 # docs
 mkdir moai-sdk/docs
 cd doxygen/html-lua/html
-cp -R * ../../moai-sdk/docs
+cp -R * ../../../moai-sdk/docs
 cd ../../..
 
 # android host
