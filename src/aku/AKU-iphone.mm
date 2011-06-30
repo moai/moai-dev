@@ -1,9 +1,10 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#include <aku/AKU-iphone.h>
-#include <moaiext-iphone/moaiext-iphone.h>
-#include <moaicore/MOAIEnvironment.h>
+#import <aku/AKU-iphone.h>
+#import <moaiext-iphone/moaiext-iphone.h>
+#import <moaiext-iphone/Reachability.h>
+#import <moaicore/MOAIEnvironment.h>
 
 //----------------------------------------------------------------//
 void AKUAppDidFailToRegisterForRemoteNotificationsWithError ( NSError* error ) {
