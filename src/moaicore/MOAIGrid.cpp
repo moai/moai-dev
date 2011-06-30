@@ -372,36 +372,6 @@ void MOAIGrid::RegisterLuaFuncs ( USLuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGrid::RowFromString ( u32 rowID, cc8* str ) {
-
-	int width = this->GetWidth ();
-	u32 base = rowID * width;
-	u32 strStep = USTile::TILE_STR_LEN + 2;
-
-	for ( int i = 0; i < width; ++i ) {
-		this->mTiles [ base + i ] = USTile::FromString ( &str [ i * strStep ]);
-	}
-}
-
-//----------------------------------------------------------------//
-STLString MOAIGrid::RowToString ( u32 rowID ) {
-
-	int width = this->GetWidth ();
-	u32 base = rowID * width;
-
-	STLString rowStr;
-
-	for ( int i = 0; i < width; ++i ) {
-		if ( i ) {
-			rowStr.append ( ", " );
-		}
-		rowStr.append ( USTile::ToString ( this->mTiles [ base + i ] ));
-	}
-	
-	return rowStr;
-}
-
-//----------------------------------------------------------------//
 void MOAIGrid::SerializeIn ( USLuaState& state, USLuaSerializer& serializer ) {
 	UNUSED ( serializer );
 

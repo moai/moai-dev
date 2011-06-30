@@ -264,6 +264,22 @@ int MOAIProp2D::_setUVTransform ( lua_State* L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
+/**	@name	setVisible
+	@text	Sets or clears the prop's visibility.
+	
+	@in		MOAIProp2D self
+	@opt	boolean visible		Default value is true.
+	@out	nil
+*/
+int MOAIProp2D::_setVisible ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIProp2D, "U" )
+
+	self->mVisible = state.GetValue < bool >( 2, true );
+
+	return 0;
+}
+
 //================================================================//
 // MOAIProp2D
 //================================================================//
@@ -296,6 +312,7 @@ bool MOAIProp2D::BindDeck () {
 //----------------------------------------------------------------//
 void MOAIProp2D::Draw () {
 
+	if ( !this->mVisible ) return;
 	if ( !this->BindDeck ()) return;
 
 	USDrawBuffer& drawbuffer = USDrawBuffer::Get ();
@@ -490,6 +507,12 @@ u32 MOAIProp2D::GetLocalFrame ( USRect& frame ) {
 }
 
 //----------------------------------------------------------------//
+bool MOAIProp2D::GetVisibleTrait () {
+
+	return this->mVisible;
+}
+
+//----------------------------------------------------------------//
 bool MOAIProp2D::Inside ( USVec2D vec ) {
 
 	const USAffine2D& worldToLocal = this->GetWorldToLocalMtx ();
@@ -546,7 +569,8 @@ MOAIProp2D::MOAIProp2D () :
 	mIndex( 1 ),
 	mRepeat ( 0 ),
 	mGridScale ( 1.0f, 1.0f ),
-	mFitToFrame ( false ) {
+	mFitToFrame ( false ),
+	mVisible ( true ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIProp )
@@ -603,6 +627,10 @@ void MOAIProp2D::OnDepNodeUpdate () {
 		
 		if ( this->mTraitMask & INHERIT_SHADER ) {
 			this->mShader = this->mTraitSource->GetShaderTrait ();
+		}
+		
+		if ( this->mTraitMask & INHERIT_VISIBLE ) {
+			this->mVisible = this->mTraitSource->GetVisibleTrait ();
 		}
 	}
 	
@@ -675,6 +703,7 @@ void MOAIProp2D::RegisterLuaFuncs ( USLuaState& state ) {
 		{ "setRepeat",			_setRepeat },
 		{ "setShader",			_setShader },
 		{ "setUVTransform",		_setUVTransform },
+		{ "setVisible",			_setVisible },
 		{ NULL, NULL }
 	};
 	

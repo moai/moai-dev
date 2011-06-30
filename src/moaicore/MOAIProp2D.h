@@ -53,6 +53,7 @@ protected:
 	USRef < MOAITransformBase >	mUVTransform;
 	
 	USColorVec					mColor;
+	bool						mVisible;
 	
 	//----------------------------------------------------------------//
 	static int		_getGrid			( lua_State* L );
@@ -67,6 +68,7 @@ protected:
 	static int		_setRepeat			( lua_State* L );
 	static int		_setShader			( lua_State* L );
 	static int		_setUVTransform		( lua_State* L );
+	static int		_setVisible			( lua_State* L );
 	
 	//----------------------------------------------------------------//
 	bool			BindDeck				();
@@ -75,6 +77,7 @@ protected:
 	USColorVec		GetColorTrait			();
 	USRect*			GetFrameTrait			();
 	MOAIShader*		GetShaderTrait			();
+	bool			GetVisibleTrait			();
 	void			LoadShader				();
 
 public:
