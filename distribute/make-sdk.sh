@@ -37,6 +37,12 @@ cd ../src/hosts
 cp -R * ../../distribute/moai-sdk/hosts/src
 cd ../../distribute
 
+# docs
+mkdir moai-sdk/docs
+cd doxygen/html-lua/html
+cp -R * ../../moai-sdk/docs
+cd ../..
+
 # android host
 mkdir -p moai-sdk/hosts/eclipse/android-project
 
