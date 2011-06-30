@@ -11,9 +11,9 @@ pushd ..\android-project
 popd
 
 ::----------------------------------------------------------------::
-set LUA_PREP_PATH=samples\hosts\eclipse\lua-prep
+set LUA_PREP_PATH=hosts\eclipse\lua-prep
 
-pushd ..\..\..\..
+pushd ..\..\..
 
 	if exist %LUA_PREP_PATH% (
 		del /Q /S %LUA_PREP_PATH%\*.*
@@ -23,12 +23,12 @@ pushd ..\..\..\..
 	echo ----------------------------------------------------------------
 	echo Copying Resources
 	echo ----------------------------------------------------------------
-	xcopy "%LUA_FOLDER%" "%LUA_PREP_PATH%" /E /C /I /K /Y /EXCLUDE:samples\hosts\eclipse\packager\excludes.txt
+	xcopy "%LUA_FOLDER%" "%LUA_PREP_PATH%" /E /C /I /K /Y /EXCLUDE:hosts\eclipse\packager\excludes.txt
 
 	echo ----------------------------------------------------------------
 	echo Copying Android Config File
 	echo ----------------------------------------------------------------
-	copy "samples\lua\config\config-android.lua" "%LUA_PREP_PATH%\config-android.lua" /Y
+	copy "samples\config\config-android.lua" "%LUA_PREP_PATH%\config-android.lua" /Y
 	
 	echo ----------------------------------------------------------------
 	echo Packaging Resources
@@ -39,7 +39,7 @@ pushd ..\..\..\..
 		zip -9 -r ../android-project/res/raw/lua . *.*
 	popd
 
-	pushd samples\hosts\eclipse\android-project\res\raw
+	pushd hosts\eclipse\android-project\res\raw
 		ren lua.zip lua
 	popd
 	
