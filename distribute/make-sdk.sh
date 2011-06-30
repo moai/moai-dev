@@ -17,10 +17,14 @@ mkdir -p moai-sdk/samples
 cp -R ../samples/basics moai-sdk/samples
 
 mkdir -p moai-sdk/samples/hello-moai
-cp -R ../samples/hello-moai moai-sdk/samples/hello-moai
+cd ../samples/hello-moai
+cp -R * ../../distribute/moai-sdk/samples/hello-moai
+cd ../../distribute
 
 mkdir -p moai-sdk/samples/config
-cp -R ../samples/config moai-sdk/samples/config
+cd ../samples/config
+cp -R * ../../distribute/moai-sdk/samples/config
+cd ../../distribute
 
 mkdir -p moai-sdk/include/aku
 cp -R ../src/aku/*.h moai-sdk/include/aku
