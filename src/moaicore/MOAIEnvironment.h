@@ -24,20 +24,21 @@ private:
 	STLString			mAppDisplayName;
 	STLString			mAppID;
 	STLString			mAppVersion;
+	STLString			mCacheDirectory;
 	STLString			mCPUABI;
 	STLString			mDevBrand;
 	STLString			mDevName;
 	STLString			mDevManufacturer;
 	STLString			mDevModel;
 	STLString			mDevProduct;
+	STLString			mDocumentDirectory;
 	STLString			mOSBrand;
 	STLString			mOSVersion;
+	STLString			mResourceDirectory;
 	STLString			mUDID;
 	
 	long ( *getConnectivityFunc )( void );
 	cc8* ( *getGUIDfunc ) ( void );
-	int ( *getHeightFunc ) ( void );
-	int ( *getWidthFunc ) ( void );
 	
 
 	//----------------------------------------------------------------//
@@ -45,6 +46,7 @@ private:
 	static int			_getAppDisplayName		( lua_State* L );
 	static int			_getAppID				( lua_State* L );
 	static int			_getAppVersion			( lua_State* L );
+	static int			_getCacheDirectory		( lua_State* L );
 	static int			_getConnectionType 		( lua_State* L );
 	static int			_getCPUABI				( lua_State* L );
 	static int			_getDevBrand			( lua_State* L );
@@ -52,8 +54,10 @@ private:
 	static int			_getDevManufacturer		( lua_State* L );
 	static int			_getDevModel			( lua_State* L );
 	static int			_getDevProduct			( lua_State* L );
+	static int			_getDocumentDirectory	( lua_State* L );
 	static int			_getOSBrand				( lua_State* L );
 	static int			_getOSVersion			( lua_State* L );
+	static int			_getResourceDirectory	( lua_State* L );
 	static int			_getUDID				( lua_State* L );
 	static int			_getViewSize			( lua_State* L );
 	
@@ -81,7 +85,8 @@ public:
 	void				RegisterLuaClass			( USLuaState& state );
 	void				SetAppDisplayName			( cc8* displayName );
 	void				SetAppID					( cc8* appID );
-	void				SetAppVersion				( cc8* appVersion );	
+	void				SetAppVersion				( cc8* appVersion );
+	void				SetCacheDirectory			( cc8* cachDir );
 	void				SetConnectivityFunc			( long (*connFunc) () );
 	void				SetCPUABI					( cc8* abi );
 	void				SetDevBrand					( cc8* devBrand );
@@ -89,12 +94,12 @@ public:
 	void				SetDevManufacturer			( cc8* devMan );
 	void				SetDevModel					( cc8* devModel );
 	void				SetDevProduct				( cc8* devProduct );
+	void				SetDocumentDirectory		( cc8* docDir );
 	void				SetGUIDFunc					( cc8* (*guidFunc) () );
-	void				SetHeightFunc				( int (*heightFunc) () );
 	void				SetOSBrand					( cc8* osBrand );
 	void				SetOSVersion				( cc8* osVersion );
+	void				SetResourceDirectory		( cc8* resDir );
 	void				SetUDID						( cc8* udid );
-	void				SetWidthFunc				( int (*widthFunc) () );
 	STLString			ToString					();
 };
 
