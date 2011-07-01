@@ -1,6 +1,6 @@
 moai-sdk/3rdparty/
 moai-sdk/bin/
-moai-sdk/docs/html
+moai-sdk/docs
 moai-sdk/samples/
 moai-sdk/hosts/src
 moai-sdk/hosts/eclipse/android-project/
