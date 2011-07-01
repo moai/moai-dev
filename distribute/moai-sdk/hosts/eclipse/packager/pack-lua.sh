@@ -11,18 +11,17 @@ read LUA_FOLDER < moai-target
 cd ../..
 
 rm -rf eclipse/lua-prep
+mkdir -p eclipse/lua-prep
 
-cp -r "$LUA_FOLDER" "eclipse/lua-prep"
+cp -r ../$LUA_FOLDER/. eclipse/lua-prep
 rm -f eclipse/lua-prep/.DS_Store
 rm -f eclipse/lua-prep/run.bat
-
-# adapt your project to use the below command, and it will filter out svn directories
-#find "$LUA_FOLDER" ! -name "/.svn/" | cpio -admvp "eclipse/lua-prep"
 
 echo ----------------------------------------------------------------
 echo Copying Android Config File
 echo ----------------------------------------------------------------
-cp "samples/config/config-android.lua" "eclipse/lua-prep/config-android.lua"
+
+cp ../samples/config/config-android.lua eclipse/lua-prep/config-android.lua
 echo config-android.lua
 
 echo ----------------------------------------------------------------
