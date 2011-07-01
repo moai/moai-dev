@@ -196,6 +196,8 @@ void _AKUStartGameLoopFunc () {
 	
 		mAku = AKUCreateContext ( self );
 		
+		AKUExtLoadLuasql();
+		AKUExtLoadLuacurl();
 		AKUExtLoadLuacrypto ();
 		AKUExtLoadLuasocket ();
 		

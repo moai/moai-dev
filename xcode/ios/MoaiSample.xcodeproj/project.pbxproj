@@ -31,6 +31,7 @@
 		03EB1AB713B5188100E1A6C2 /* cathead.png in Resources */ = {isa = PBXBuildFile; fileRef = 03EB1AB513B5188100E1A6C2 /* cathead.png */; };
 		03EB1AB813B5188100E1A6C2 /* main.lua in Resources */ = {isa = PBXBuildFile; fileRef = 03EB1AB613B5188100E1A6C2 /* main.lua */; };
 		078D630113BA9EA30072F273 /* MoaiVC.mm in Sources */ = {isa = PBXBuildFile; fileRef = 078D630013BA9EA30072F273 /* MoaiVC.mm */; };
+		07E885A213BE3C9C008D75AA /* sys-util-apsalar.lua in Resources */ = {isa = PBXBuildFile; fileRef = 07E885A113BE3C9C008D75AA /* sys-util-apsalar.lua */; };
 		07E9F73E13B50582006396F3 /* libmoai-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CC90BD13B3C39D00B2724C /* libmoai-ios.a */; };
 		07E9F73F13B50582006396F3 /* libmoai-ios-3rdparty.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CC90BF13B3C39D00B2724C /* libmoai-ios-3rdparty.a */; };
 		07E9F74013B50582006396F3 /* libmoai-ios-luaext.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CC90C113B3C39D00B2724C /* libmoai-ios-luaext.a */; };
@@ -162,6 +163,7 @@
 		03EB1AB613B5188100E1A6C2 /* main.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = main.lua; path = "../../samples/basics/anim-basic/main.lua"; sourceTree = SOURCE_ROOT; };
 		078D62FF13BA9EA30072F273 /* MoaiVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoaiVC.h; sourceTree = "<group>"; };
 		078D630013BA9EA30072F273 /* MoaiVC.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MoaiVC.mm; sourceTree = "<group>"; };
+		07E885A113BE3C9C008D75AA /* sys-util-apsalar.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "sys-util-apsalar.lua"; path = "../../../../../../Desktop/sys-util-apsalar.lua"; sourceTree = SOURCE_ROOT; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D6058910D05DD3D006BFB54 /* MoaiSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MoaiSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -200,6 +202,7 @@
 		0394E90613B3CDBF00CA9F83 /* lua */ = {
 			isa = PBXGroup;
 			children = (
+				07E885A113BE3C9C008D75AA /* sys-util-apsalar.lua */,
 				03EB1AB513B5188100E1A6C2 /* cathead.png */,
 				03EB1AB613B5188100E1A6C2 /* main.lua */,
 			);
@@ -435,6 +438,7 @@
 				03CC905F13B3C1B700B2724C /* MainWindow-iPad.xib in Resources */,
 				03CC906013B3C1B700B2724C /* MainWindow-iPhone.xib in Resources */,
 				03EB1AB713B5188100E1A6C2 /* cathead.png in Resources */,
+				07E885A213BE3C9C008D75AA /* sys-util-apsalar.lua in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
