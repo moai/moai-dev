@@ -69,6 +69,7 @@ private:
 		SPRITE,
 		SUB,
 		TIME,
+		VEC_ANGLE,
 		WRAP,
 	};
 	
@@ -113,6 +114,7 @@ private:
 	static int		_sprite				( lua_State* L );
 	static int		_sub				( lua_State* L );
 	static int		_time				( lua_State* L );
+	static int		_vecAngle			( lua_State* L );
 	static int		_wrap				( lua_State* L );
 	
 	//----------------------------------------------------------------//

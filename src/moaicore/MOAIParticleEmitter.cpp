@@ -25,7 +25,7 @@ int MOAIParticleEmitter::_setAngle ( lua_State* L ) {
 	float min = state.GetValue < float >( 2, 0.0f );
 	float max = state.GetValue < float >( 3, 360.0f );
 
-	self->SetAngle ( min, max );
+	self->SetAngleRange ( min, max );
 	return 0;
 }
 
@@ -44,26 +44,7 @@ int MOAIParticleEmitter::_setEmission ( lua_State* L ) {
 	u32 min = state.GetValue < u32 >( 2, 1 );
 	u32 max = state.GetValue < u32 >( 3, min );
 
-	self->SetEmission ( min, max );
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@name	setEmission
-	@text	Set the emission frequency (in seconds).
-	
-	@in		MOAIParticleEmitter self
-	@in		number min Minimum frequency.
-	@opt	number max Maximum frequency. Defaults to min.
-	@out	nil
-*/
-int MOAIParticleEmitter::_setFrequency ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIParticleEmitter, "UN" )
-
-	float min = state.GetValue < float >( 2, 1.0f );
-	float max = state.GetValue < float >( 3, min );
-
-	self->SetFrequency ( min, max );
+	self->SetEmissionRange ( min, max );
 	return 0;
 }
 
@@ -82,7 +63,7 @@ int MOAIParticleEmitter::_setMagnitude ( lua_State* L ) {
 	float min = state.GetValue < float >( 2, 1.0f );
 	float max = state.GetValue < float >( 3, min );
 
-	self->SetMagnitude ( min, max );
+	self->SetMagnitudeRange ( min, max );
 	return 0;
 }
 
@@ -106,7 +87,7 @@ int MOAIParticleEmitter::_setMagnitude ( lua_State* L ) {
 int MOAIParticleEmitter::_setRadius ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIParticleEmitter, "UN" )
 	
-	self->mShapeID	= CIRCLE;
+	self->mShapeID = CIRCLE;
 
 	if ( state.GetTop () >= 3 ) {
 		self->mInnerRadius = state.GetValue < float >( 2, 0.0f );
@@ -187,46 +168,35 @@ int MOAIParticleEmitter::_surge ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-u32 MOAIParticleEmitter::GetEmission () {
+u32 MOAIParticleEmitter::GetRandomEmission () {
 
 	return ( u32 )USFloat::Rand (( float )this->mMinEmission, ( float )this->mMaxEmission );
 }
 
 //----------------------------------------------------------------//
-float MOAIParticleEmitter::GetFrequency () {
-
-	return USFloat::Rand ( this->mMinFrequency, this->mMaxFrequency );
-}
-
-//----------------------------------------------------------------//
-void MOAIParticleEmitter::GetParticle ( USVec2D& loc, USVec2D& vec ) {
-
-	USAffine2D localToWorld = this->GetLocalToWorldMtx ();
+void MOAIParticleEmitter::GetRandomParticle ( USVec2D& loc, USVec2D& vec ) {
 	
 	switch ( this->mShapeID ) {
 	
 		case CIRCLE:
 			
 			loc = this->GetRandomVec ( 0.0f, 360.0f, this->mInnerRadius, this->mOuterRadius );
-			localToWorld.Transform ( loc );
 			break;
 
 		case POINT:
 			
-			loc = localToWorld.GetTranslation ();
+			loc.mX = 0.0f;
+			loc.mY = 0.0f;
 			break;
 
 		case RECT:
 		
 			loc.mX = USFloat::Rand ( this->mRect.mXMin, this->mRect.mXMax );
 			loc.mY = USFloat::Rand ( this->mRect.mYMin, this->mRect.mYMax );
-			localToWorld.Transform ( loc );
-		
 			break;
 	}
 	
 	vec = this->GetRandomVec ( this->mMinAngle, this->mMaxAngle, this->mMinMagnitude, this->mMaxMagnitude );
-	localToWorld.TransformVec ( vec );
 }
 
 //----------------------------------------------------------------//
@@ -253,10 +223,6 @@ MOAIParticleEmitter::MOAIParticleEmitter () :
 	mShapeID ( POINT ),
 	mInnerRadius ( 0.0f ),
 	mOuterRadius ( 0.0f ),
-	mTime ( 0.0f ),
-	mEmitTime ( 0.0f ),
-	mMinFrequency ( 1.0f ),
-	mMaxFrequency ( 1.0f ),
 	mMinEmission ( 1 ),
 	mMaxEmission ( 1 ),
 	mMinAngle ( 0.0f ),
@@ -275,20 +241,8 @@ MOAIParticleEmitter::~MOAIParticleEmitter () {
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleEmitter::OnUpdate ( float step ) {
-
-	this->mTime += step;
-	if ( !this->mSystem ) return;
-	if ( this->mTime < this->mEmitTime ) return;
-	
-	u32 emission = this->GetEmission ();
-	this->Surge ( emission );
-	
-	this->mEmitTime = this->mTime + this->GetFrequency ();
-}
-
-//----------------------------------------------------------------//
 void MOAIParticleEmitter::RegisterLuaClass ( USLuaState& state ) {
+
 	this->MOAITransform::RegisterLuaClass ( state );
 	this->MOAIAction::RegisterLuaClass ( state );
 }
@@ -302,7 +256,6 @@ void MOAIParticleEmitter::RegisterLuaFuncs ( USLuaState& state ) {
 	luaL_Reg regTable [] = {
 		{ "setAngle",			_setAngle },
 		{ "setEmission",		_setEmission },
-		{ "setFrequency",		_setFrequency },
 		{ "setMagnitude",		_setMagnitude },
 		{ "setRadius",			_setRadius },
 		{ "setRect",			_setRect },
@@ -315,28 +268,21 @@ void MOAIParticleEmitter::RegisterLuaFuncs ( USLuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleEmitter::SetAngle ( float min, float max ) {
+void MOAIParticleEmitter::SetAngleRange ( float min, float max ) {
 
 	this->mMinAngle = min;
 	this->mMaxAngle = max;
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleEmitter::SetEmission ( u32 min, u32 max ) {
+void MOAIParticleEmitter::SetEmissionRange ( u32 min, u32 max ) {
 
 	this->mMinEmission = min;
 	this->mMaxEmission = max;
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleEmitter::SetFrequency ( float min, float max ) {
-
-	this->mMinFrequency = min;
-	this->mMaxFrequency = max;
-}
-
-//----------------------------------------------------------------//
-void MOAIParticleEmitter::SetMagnitude ( float min, float max ) {
+void MOAIParticleEmitter::SetMagnitudeRange ( float min, float max ) {
 
 	this->mMinMagnitude = min;
 	this->mMaxMagnitude = max;
@@ -345,11 +291,16 @@ void MOAIParticleEmitter::SetMagnitude ( float min, float max ) {
 //----------------------------------------------------------------//
 void MOAIParticleEmitter::Surge ( u32 total ) {
 
-	USVec2D loc;
-	USVec2D vec;
-	for ( u32 i = 0; i < total; ++i ) {
-		this->GetParticle ( loc, vec );
-		this->mSystem->PushParticle ( loc.mX, loc.mY, vec.mX, vec.mY );
+	if ( this->mSystem ) {
+
+		USVec2D loc;
+		USVec2D vec;
+		for ( u32 i = 0; i < total; ++i ) {
+			this->GetRandomParticle ( loc, vec );
+			this->mLocalToWorldMtx.Transform ( loc );
+			this->mLocalToWorldMtx.TransformVec ( vec );
+			this->mSystem->PushParticle ( loc.mX, loc.mY, vec.mX, vec.mY );
+		}
 	}
 }
 
@@ -372,17 +323,6 @@ STLString MOAIParticleEmitter::ToString () {
 	}
 
 	PrettyPrint ( repr, "mShapeID", shape_id );
-	PRETTY_PRINT ( repr, mTime )
-	PRETTY_PRINT ( repr, mEmitTime )
-	PRETTY_PRINT ( repr, mMinFrequency )
-	PRETTY_PRINT ( repr, mMaxFrequency )
-	PRETTY_PRINT ( repr, mMinEmission )
-	PRETTY_PRINT ( repr, mMaxEmission )
-	PRETTY_PRINT ( repr, mMinAngle )
-	PRETTY_PRINT ( repr, mMaxAngle )
-	PRETTY_PRINT ( repr, mMinMagnitude )
-	PRETTY_PRINT ( repr, mMaxMagnitude )
-	PRETTY_PRINT ( repr, mSystem )
 
 	return repr;
 }

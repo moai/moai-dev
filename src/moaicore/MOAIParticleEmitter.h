@@ -18,19 +18,13 @@ class MOAIParticleSystem;
 class MOAIParticleEmitter :
 	public MOAITransform,
 	public MOAIAction {
-private:
+protected:
 
 	u32		mShapeID;
 	USRect	mRect;
 	
 	float	mInnerRadius;
 	float	mOuterRadius;
-
-	float	mTime;
-	float	mEmitTime;
-	
-	float	mMinFrequency;
-	float	mMaxFrequency;
 	
 	u32		mMinEmission;
 	u32		mMaxEmission;
@@ -46,7 +40,6 @@ private:
 	//----------------------------------------------------------------//
 	static int		_setAngle				( lua_State* L );
 	static int		_setEmission			( lua_State* L );
-	static int		_setFrequency			( lua_State* L );
 	static int		_setMagnitude			( lua_State* L );
 	static int		_setRadius				( lua_State* L );
 	static int		_setRect				( lua_State* L );
@@ -54,11 +47,9 @@ private:
 	static int		_surge					( lua_State* L );
 	
 	//----------------------------------------------------------------//
-	u32				GetEmission				();
-	float			GetFrequency			();
-	void			GetParticle				( USVec2D& loc, USVec2D& vec );
+	u32				GetRandomEmission		();
+	void			GetRandomParticle		( USVec2D& loc, USVec2D& vec ); // in local space
 	USVec2D			GetRandomVec			( float minAngle, float maxAngle, float min, float max );
-	void			OnUpdate				( float step );
 
 public:
 	
@@ -80,10 +71,9 @@ public:
 					~MOAIParticleEmitter	();
 	void			RegisterLuaClass		( USLuaState& state );
 	void			RegisterLuaFuncs		( USLuaState& state );
-	void			SetAngle				( float min, float max );
-	void			SetEmission				( u32 min, u32 max );
-	void			SetFrequency			( float min, float max );
-	void			SetMagnitude			( float min, float max );
+	void			SetAngleRange			( float min, float max );
+	void			SetEmissionRange		( u32 min, u32 max );
+	void			SetMagnitudeRange		( float min, float max );
 	void			Surge					( u32 total );
 	STLString		ToString				();
 };
