@@ -14,7 +14,9 @@ cp -R * ../../distribute/moai-sdk/3rdparty/glut-3.7.6
 cd ../../distribute
 
 mkdir -p moai-sdk/samples
-cp -R ../samples/basics moai-sdk/samples
+cd ../samples/basics
+cp -R * ../../distribute/moai-sdk/samples
+cd ../../distribute
 
 mkdir -p moai-sdk/samples/hello-moai
 cd ../samples/hello-moai
