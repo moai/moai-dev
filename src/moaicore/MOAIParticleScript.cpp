@@ -433,6 +433,20 @@ int MOAIParticleScript::_wrap ( lua_State* L ) {
 	IMPL_LUA_PARTICLE_OP ( WRAP, "RVVV" )
 }
 
+//----------------------------------------------------------------//
+/**	@name	vecAngle
+	@text	Compute angle (in degrees) between v0 and v1.
+	
+	@in		MOAIParticleScript self
+	@in		number r0
+	@in		number v0
+	@in		number v1
+	@out	nil
+*/
+int MOAIParticleScript::_vecAngle ( lua_State* L ) {
+	IMPL_LUA_PARTICLE_OP ( VEC_ANGLE, "RVV" )
+}
+
 //================================================================//
 // MOAIParticleScript
 //================================================================//
@@ -577,6 +591,7 @@ void MOAIParticleScript::RegisterLuaFuncs ( USLuaState& state ) {
 		{ "sprite",				_sprite },
 		{ "sub",				_sub },
 		{ "time",				_time },
+		{ "vecAngle",			_vecAngle },
 		{ "wrap",				_wrap },
 		{ NULL, NULL }
 	};
@@ -778,6 +793,17 @@ void MOAIParticleScript::Run ( MOAIParticleSystem& system, MOAIParticle& particl
 				
 				if ( r0 ) {
 					*r0 = t1;
+				}
+				break;
+			
+			case VEC_ANGLE: // RVV
+				
+				READ_ADDR	( r0, bytecode );
+				READ_VALUE	( v0, bytecode );
+				READ_VALUE	( v1, bytecode );
+				
+				if ( r0 ) {
+					*r0 = ( float )( atan2 ( v0, v1 ) * R2D );
 				}
 				break;
 			

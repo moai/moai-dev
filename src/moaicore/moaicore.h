@@ -50,12 +50,14 @@
 #include <moaicore/MOAINodeMgr.h>
 #include <moaicore/MOAIParser.h>
 #include <moaicore/MOAIParticle.h>
+#include <moaicore/MOAIParticleDistanceEmitter.h>
 #include <moaicore/MOAIParticleEmitter.h>
 #include <moaicore/MOAIParticleForce.h>
 #include <moaicore/MOAIParticlePlugin.h>
 #include <moaicore/MOAIParticleScript.h>
 #include <moaicore/MOAIParticleState.h>
 #include <moaicore/MOAIParticleSystem.h>
+#include <moaicore/MOAIParticleTimedEmitter.h>
 #include <moaicore/MOAIPartition.h>
 #include <moaicore/MOAIPartitionCell.h>
 #include <moaicore/MOAIPartitionLayer.h>

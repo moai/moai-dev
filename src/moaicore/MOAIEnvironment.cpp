@@ -59,6 +59,18 @@ int MOAIEnvironment::_getAppVersion ( lua_State* L  ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	getCacheDirectory
+	@text	Returns cache directory
+
+	@out	string cacheDirectory
+*/
+int MOAIEnvironment::_getCacheDirectory ( lua_State* L  ) {
+
+	lua_pushstring ( L, MOAIEnvironment::Get ().mCacheDirectory.c_str ());
+	return 1;
+}
+
+//----------------------------------------------------------------//
 /**	@name	_getConnectionType
 	@text	Gets whether the device is connected to WIFI, WWAN or nothing
 
@@ -145,6 +157,18 @@ int MOAIEnvironment::_getDevProduct ( lua_State* L  ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	getDocumentDirectory
+	@text	Returns document directory
+
+	@out	string documentDirectory
+*/
+int MOAIEnvironment::_getDocumentDirectory ( lua_State* L  ) {
+
+	lua_pushstring ( L, MOAIEnvironment::Get ().mDocumentDirectory.c_str ());
+	return 1;
+}
+
+//----------------------------------------------------------------//
 /**	@name	getOSBrand
 	@text	Returns the operating system brand
 
@@ -154,9 +178,9 @@ int MOAIEnvironment::_getOSBrand ( lua_State* L  ) {
 
 	cc8* brandStr = MOAIEnvironment::Get ().mOSBrand.c_str ();
 	u32 brand;
-	if ( strcmp ( brandStr, "Android" ))
+	if ( !strcmp ( brandStr, "Android" ))
 		brand = OS_BRAND_ANDROID;
-	else if ( strcmp ( brandStr, "iOS" ))
+	else if ( !strcmp ( brandStr, "iOS" ))
 		brand = OS_BRAND_IOS;
 	else
 		brand = OS_BRAND_UNAVAILABLE;
@@ -174,6 +198,18 @@ int MOAIEnvironment::_getOSBrand ( lua_State* L  ) {
 int MOAIEnvironment::_getOSVersion ( lua_State* L  ) {
 
 	lua_pushstring ( L, MOAIEnvironment::Get ().mOSVersion.c_str ());
+	return 1;
+}
+
+//----------------------------------------------------------------//
+/**	@name	getResourceDirectory
+	@text	Returns resource directory
+
+	@out	string resourceDirectory
+*/
+int MOAIEnvironment::_getResourceDirectory ( lua_State* L  ) {
+
+	lua_pushstring ( L, MOAIEnvironment::Get ().mResourceDirectory.c_str ());
 	return 1;
 }
 
@@ -215,14 +251,17 @@ MOAIEnvironment::MOAIEnvironment () :
 	mAppDisplayName ( "UNKNOWN" ),
 	mAppID ( "UNKNOWN" ),
 	mAppVersion ( "UNKNOWN" ),
+	mCacheDirectory ( "UNKNOWN" ),
 	mCPUABI ( "UNKNOWN" ),
 	mDevBrand ( "UNKNOWN" ),
 	mDevName ( "UNKNOWN" ),
 	mDevManufacturer ( "UNKNOWN" ),
 	mDevModel ( "UNKNOWN" ),
 	mDevProduct ( "UNKNOWN" ),
+	mDocumentDirectory ( "UNKNOWN" ),
 	mOSBrand ( "UNKNOWN" ),
 	mOSVersion ( "UNKNOWN" ),
+	mResourceDirectory ( "UNKNOWN" ),
 	mUDID ( "UNKNOWN" ) {
 
 	RTTI_SINGLE ( USLuaObject )
@@ -244,21 +283,24 @@ void MOAIEnvironment::RegisterLuaClass ( USLuaState& state ) {
 	state.SetField ( -1, "OS_BRAND_UNAVAILABLE", ( u32 )OS_BRAND_UNAVAILABLE );
 
 	luaL_Reg regTable [] = {
-		{ "generateGUID",			_generateGUID		 },
-		{ "getAppDisplayName",		_getAppDisplayName	 },
-		{ "getAppID",				_getAppID			 },
-		{ "getAppVersion",			_getAppVersion		 },
-		{ "getConnectionType",		_getConnectionType 	 },
-		{ "getCPUABI",				_getCPUABI			 },
-		{ "getDevBrand",			_getDevBrand		 },
-		{ "getDevName",				_getDevName			 },
-		{ "getDevManufacturer",		_getDevManufacturer	 },
-		{ "getDevModel",			_getDevModel		 },
-		{ "getDevProduct",			_getDevProduct		 },
-		{ "getOSBrand",				_getOSBrand			 },
-		{ "getOSVersion",			_getOSVersion		 },
-		{ "getUDID",				_getUDID			 },
-		{ "getViewSize",			_getViewSize		 },
+		{ "generateGUID",			_generateGUID			},
+		{ "getAppDisplayName",		_getAppDisplayName		},
+		{ "getAppID",				_getAppID				},
+		{ "getAppVersion",			_getAppVersion			},
+		{ "getCacheDirectory",		_getCacheDirectory		},
+		{ "getConnectionType",		_getConnectionType		},
+		{ "getCPUABI",				_getCPUABI				},
+		{ "getDevBrand",			_getDevBrand			},
+		{ "getDevName",				_getDevName				},
+		{ "getDevManufacturer",		_getDevManufacturer		},
+		{ "getDevModel",			_getDevModel			},
+		{ "getDevProduct",			_getDevProduct			},
+		{ "getDocumentDirectory",	_getDocumentDirectory	},
+		{ "getOSBrand",				_getOSBrand				},
+		{ "getOSVersion",			_getOSVersion			},
+		{ "getResourceDirectory",	_getResourceDirectory	},
+		{ "getUDID",				_getUDID				},
+		{ "getViewSize",			_getViewSize			},
 		{ NULL, NULL }
 	};
 
@@ -278,6 +320,11 @@ void MOAIEnvironment::SetAppID ( cc8* appID ) {
 //----------------------------------------------------------------//
 void MOAIEnvironment::SetAppVersion ( cc8* appVer ) {
 	mAppVersion = appVer;
+}
+
+//----------------------------------------------------------------//
+void MOAIEnvironment::SetCacheDirectory ( cc8* cacheDir ) {
+	mCacheDirectory = cacheDir;
 }
 
 //----------------------------------------------------------------//
@@ -316,13 +363,13 @@ void MOAIEnvironment::SetDevProduct ( cc8* devProduct ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIEnvironment::SetGUIDFunc ( cc8* (*guidFunc)(void) ) {
-	getGUIDfunc = guidFunc;
+void MOAIEnvironment::SetDocumentDirectory ( cc8* docDir ) {
+	mDocumentDirectory = docDir;
 }
 
 //----------------------------------------------------------------//
-void MOAIEnvironment::SetHeightFunc ( int (*heightFunc)(void) ) {
-	getHeightFunc = heightFunc;
+void MOAIEnvironment::SetGUIDFunc ( cc8* (*guidFunc)(void) ) {
+	getGUIDfunc = guidFunc;
 }
 
 //----------------------------------------------------------------//
@@ -336,13 +383,13 @@ void MOAIEnvironment::SetOSVersion ( cc8* osVer ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIEnvironment::SetUDID ( cc8* udid ) {
-	mUDID = udid;
+void MOAIEnvironment::SetResourceDirectory ( cc8* resDir ) {
+	mResourceDirectory = resDir;
 }
 
 //----------------------------------------------------------------//
-void MOAIEnvironment::SetWidthFunc ( int (*widthFunc)(void) ) {
-	getWidthFunc = widthFunc;
+void MOAIEnvironment::SetUDID ( cc8* udid ) {
+	mUDID = udid;
 }
 
 //----------------------------------------------------------------//
@@ -352,14 +399,17 @@ STLString MOAIEnvironment::ToString () {
 	info += mAppDisplayName += "\n";
 	info += mAppID += "\n";
 	info += mAppVersion += "\n";
+	info += mCacheDirectory += "\n";
 	info += mCPUABI += "\n";
 	info += mDevBrand += "\n";
 	info += mDevName += "\n";
 	info += mDevManufacturer += "\n";
 	info += mDevModel += "\n";
 	info += mDevProduct += "\n";
+	info += mDocumentDirectory += "\n";
 	info += mOSBrand += "\n";
 	info += mOSVersion += "\n";
+	info += mResourceDirectory += "\n";
 	info += mUDID += "\n";
 
 	return info;

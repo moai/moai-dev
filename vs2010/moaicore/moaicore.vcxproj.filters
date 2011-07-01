@@ -363,6 +363,12 @@
     <ClCompile Include="..\..\src\moaicore\moaicore-pch.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIParticleDistanceEmitter.cpp">
+      <Filter>src\particles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIParticleTimedEmitter.cpp">
+      <Filter>src\particles</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\moaicore\MOAIAction.h">
@@ -658,6 +664,12 @@
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIEnvironment.h">
       <Filter>src\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIParticleDistanceEmitter.h">
+      <Filter>src\particles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIParticleTimedEmitter.h">
+      <Filter>src\particles</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

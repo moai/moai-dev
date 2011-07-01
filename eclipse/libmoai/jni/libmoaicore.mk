@@ -104,11 +104,13 @@ $(SRC_PATH)/src/moaicore/MOAIMesh.cpp \
 $(SRC_PATH)/src/moaicore/MOAINode.cpp \
 $(SRC_PATH)/src/moaicore/MOAINodeMgr.cpp \
 $(SRC_PATH)/src/moaicore/MOAIParser.cpp \
+$(SRC_PATH)/src/moaicore/MOAIParticleDistanceEmitter.cpp \
 $(SRC_PATH)/src/moaicore/MOAIParticleEmitter.cpp \
 $(SRC_PATH)/src/moaicore/MOAIParticleForce.cpp \
 $(SRC_PATH)/src/moaicore/MOAIParticleScript.cpp \
 $(SRC_PATH)/src/moaicore/MOAIParticleState.cpp \
 $(SRC_PATH)/src/moaicore/MOAIParticleSystem.cpp \
+$(SRC_PATH)/src/moaicore/MOAIParticleTimedEmitter.cpp \
 $(SRC_PATH)/src/moaicore/MOAIPartition.cpp \
 $(SRC_PATH)/src/moaicore/MOAIPartitionCell.cpp \
 $(SRC_PATH)/src/moaicore/MOAIPartitionLayer.cpp \
