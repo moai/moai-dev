@@ -86,7 +86,7 @@ state2:pushForce ( magnet )
 state1:setNext ( state2 )
 state2:setNext ( state1 )
 
-emitter = MOAIParticleEmitter.new ()
+emitter = MOAIParticleTimedEmitter.new ()
 emitter:setLoc ( 0, 0 )
 emitter:setSystem ( system )
 emitter:setMagnitude ( 50, 100 )
