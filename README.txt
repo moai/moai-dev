@@ -1,4 +1,4 @@
-Project structure: 
+Project structure:
 
 3rdparty - All of the 3rd party libraries we use.
 distribute - The files and set up used to create the SDK installers and other distributable packages
