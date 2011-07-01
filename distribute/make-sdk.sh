@@ -8,16 +8,20 @@
 
 # general files
 mkdir -p moai-sdk/3rdparty/glut-3.7.6
-cp -R ../3rdparty/glut-3.7.6-bin moai-sdk/3rdparty/glut-3.7.6
+
+cd ../3rdparty/glut-3.7.6-bin
+cp -R * ../../distribute/moai-sdk/3rdparty/glut-3.7.6
+cd ../../distribute
 
 mkdir -p moai-sdk/samples
-cp -R ../samples/basics moai-sdk/samples
-
-mkdir -p moai-sdk/samples/hello-moai
-cp -R ../samples/hello-moai moai-sdk/samples/hello-moai
+cd ../samples/basics
+cp -R * ../../distribute/moai-sdk/samples
+cd ../../distribute
 
 mkdir -p moai-sdk/samples/config
-cp -R ../samples/config moai-sdk/samples/config
+cd ../samples/config
+cp -R * ../../distribute/moai-sdk/samples/config
+cd ../../distribute
 
 mkdir -p moai-sdk/include/aku
 cp -R ../src/aku/*.h moai-sdk/include/aku
@@ -30,12 +34,21 @@ cd ../src/hosts
 cp -R * ../../distribute/moai-sdk/hosts/src
 cd ../../distribute
 
+# docs
+mkdir moai-sdk/docs
+cd doxygen/html-lua/html
+cp -R * ../../../moai-sdk/docs
+cd ../../..
+
 # android host
 mkdir -p moai-sdk/hosts/eclipse/android-project
 
 cd ../eclipse/android-project
-cp -R * ../../distribute/moai-sdk/hosts/eclipse/android-project
+cp -R . ../../distribute/moai-sdk/hosts/eclipse/android-project
 cd ../../distribute
+
+cp -f moai-sdk/hosts/eclipse/packager/moai-target.default moai-sdk/hosts/eclipse/android-project/moai-target
+cp -f moai-sdk/hosts/eclipse/packager/default.project moai-sdk/hosts/eclipse/android-project/.project
 
 # ios host
 mkdir -p moai-sdk/hosts/xcode-ios/Classes
@@ -54,4 +67,10 @@ cp ../xcode/ios/Icon-Small-50.png moai-sdk/hosts/xcode-ios/Icon-Small-50.png
 cp ../xcode/ios/Info.plist moai-sdk/hosts/xcode-ios/Info.plist
 cp ../xcode/ios/MainWindow-iPad.xib moai-sdk/hosts/xcode-ios/MainWindow-iPad.xib
 cp ../xcode/ios/MainWindow-iPhone.xib moai-sdk/hosts/xcode-ios/MainWindow-iPhone.xib
+cp ../xcode/ios/main.mm moai-sdk/hosts/xcode-ios/main.mm
+
+# replace run scripts
+cd moai-sdk-run-scripts
+./replace-run-scripts.sh
+cd ..
 

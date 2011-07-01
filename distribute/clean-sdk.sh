@@ -42,3 +42,4 @@ rm -f moai-sdk/hosts/xcode/ios/Icon-Small-50.png
 rm -f moai-sdk/hosts/xcode/ios/Info.plist
 rm -f moai-sdk/hosts/xcode/ios/MainWindow-iPad.xib
 rm -f moai-sdk/hosts/xcode/ios/MainWindow-iPhone.xib
+rm -f moai-sdk/hosts/xcode/ios/main.mm

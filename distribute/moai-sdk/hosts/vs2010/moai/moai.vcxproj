@@ -115,7 +115,7 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /yr "..\..\..\3rdparty\glut-3.7.6\glut32.dll"</Command>
+      <Command>xcopy /yr "..\..\..\3rdparty\glut-3.7.6\glut32.dll"  "$(OutDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -185,7 +185,7 @@ xcopy /yr "$(OutDir)$(TargetName).pdb" "..\..\bin\$(Platform)\$(Configuration)\"
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /yr "..\..\..\3rdparty\glut-3.7.6\glut32.dll"</Command>
+      <Command>xcopy /yr "..\..\..\3rdparty\glut-3.7.6\glut32.dll"  "$(OutDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
