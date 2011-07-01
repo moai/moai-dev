@@ -32,3 +32,4 @@ sound:load ( 'mono16.wav' )
 sound:setVolume ( 1 )
 sound:setLooping ( false )
 sound:play ()
+
