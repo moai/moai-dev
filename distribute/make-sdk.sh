@@ -18,11 +18,6 @@ cd ../samples/basics
 cp -R * ../../distribute/moai-sdk/samples
 cd ../../distribute
 
-mkdir -p moai-sdk/samples/hello-moai
-cd ../samples/hello-moai
-cp -R * ../../distribute/moai-sdk/samples/hello-moai
-cd ../../distribute
-
 mkdir -p moai-sdk/samples/config
 cd ../samples/config
 cp -R * ../../distribute/moai-sdk/samples/config
