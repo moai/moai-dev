@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="pack-lua" default="build">
+<project name="pack-lua" default="pack">
 
 	<taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
 
@@ -18,10 +18,11 @@
     </target>
 
     <!-- ================================================================ -->
-    <!-- build -->
+    <!-- pack -->
     <!-- ================================================================ -->
-	<target name="build" depends="os-selector">
+	<target name="pack" depends="os-selector">
 		
+        <antcall target="pack-osx"/>
 		<antcall target="pack-windows"/>
 	</target>
 
