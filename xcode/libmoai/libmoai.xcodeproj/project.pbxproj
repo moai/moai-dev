@@ -1623,6 +1623,8 @@
 		0324E9CD13564BC9000ADC60 /* USViewQuad.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E69113564BC8000ADC60 /* USViewQuad.h */; };
 		0324E9CE13564BC9000ADC60 /* USXmlReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E69213564BC8000ADC60 /* USXmlReader.cpp */; };
 		0324E9CF13564BC9000ADC60 /* USXmlReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E69313564BC8000ADC60 /* USXmlReader.h */; };
+		0392971613BE44010077B742 /* MOAIParticleDistanceEmitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07E885BB13BE3E78008D75AA /* MOAIParticleDistanceEmitter.cpp */; };
+		0392971713BE44010077B742 /* MOAIParticleTimedEmitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07E885BD13BE3E78008D75AA /* MOAIParticleTimedEmitter.cpp */; };
 		039C283D138EDAB300A3A780 /* MOAIDeckRemapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 039C283B138EDAB300A3A780 /* MOAIDeckRemapper.cpp */; };
 		039C283E138EDAB300A3A780 /* MOAIDeckRemapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 039C283C138EDAB300A3A780 /* MOAIDeckRemapper.h */; };
 		039C283F138EDAB300A3A780 /* MOAIDeckRemapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 039C283B138EDAB300A3A780 /* MOAIDeckRemapper.cpp */; };
@@ -5689,23 +5691,23 @@
 		CD148EEF1395AE7200A3F501 /* particles */ = {
 			isa = PBXGroup;
 			children = (
+				03E4E94013664F7C008D079B /* MOAIParticle.h */,
 				07E885BB13BE3E78008D75AA /* MOAIParticleDistanceEmitter.cpp */,
 				07E885BC13BE3E78008D75AA /* MOAIParticleDistanceEmitter.h */,
-				07E885BD13BE3E78008D75AA /* MOAIParticleTimedEmitter.cpp */,
-				07E885BE13BE3E78008D75AA /* MOAIParticleTimedEmitter.h */,
-				CD7C726313B9479C006CFA19 /* MOAIParticlePlugin.cpp */,
-				CD7C726413B9479C006CFA19 /* MOAIParticlePlugin.h */,
-				03E4E94013664F7C008D079B /* MOAIParticle.h */,
 				0324E56613564BC7000ADC60 /* MOAIParticleEmitter.cpp */,
 				0324E56713564BC7000ADC60 /* MOAIParticleEmitter.h */,
 				0324E56A13564BC7000ADC60 /* MOAIParticleForce.cpp */,
 				0324E56B13564BC7000ADC60 /* MOAIParticleForce.h */,
+				CD7C726313B9479C006CFA19 /* MOAIParticlePlugin.cpp */,
+				CD7C726413B9479C006CFA19 /* MOAIParticlePlugin.h */,
 				0324E56C13564BC7000ADC60 /* MOAIParticleScript.cpp */,
 				0324E56D13564BC7000ADC60 /* MOAIParticleScript.h */,
 				0324E56E13564BC7000ADC60 /* MOAIParticleState.cpp */,
 				0324E56F13564BC7000ADC60 /* MOAIParticleState.h */,
 				0324E57013564BC7000ADC60 /* MOAIParticleSystem.cpp */,
 				0324E57113564BC7000ADC60 /* MOAIParticleSystem.h */,
+				07E885BD13BE3E78008D75AA /* MOAIParticleTimedEmitter.cpp */,
+				07E885BE13BE3E78008D75AA /* MOAIParticleTimedEmitter.h */,
 			);
 			name = particles;
 			sourceTree = "<group>";
@@ -9411,6 +9413,8 @@
 				CD7C726113B9477B006CFA19 /* USLog.cpp in Sources */,
 				CD7C726713B9479C006CFA19 /* MOAIParticlePlugin.cpp in Sources */,
 				CD7C726D13B947AC006CFA19 /* AKU-particles.cpp in Sources */,
+				0392971613BE44010077B742 /* MOAIParticleDistanceEmitter.cpp in Sources */,
+				0392971713BE44010077B742 /* MOAIParticleTimedEmitter.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
