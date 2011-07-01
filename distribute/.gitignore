@@ -17,6 +17,7 @@ build/
 *.sdf
 *.opensdf
 *.user
+moai-sdk*.zip
 moai-sdk/hosts/xcode-ios/Classes/
 moai-sdk/hosts/xcode-ios/Entitlements.plist
 moai-sdk/hosts/xcode-ios/Icon.png
