@@ -50,6 +50,9 @@ cd ../../distribute
 cp -f moai-sdk/hosts/eclipse/packager/moai-target.default moai-sdk/hosts/eclipse/android-project/moai-target
 cp -f moai-sdk/hosts/eclipse/packager/default.project moai-sdk/hosts/eclipse/android-project/.project
 
+rm -f moai-sdk/hosts/eclipse/packager/moai-target.default
+rm -f moai-sdk/hosts/eclipse/packager/default.project
+
 # ios host
 mkdir -p moai-sdk/hosts/xcode-ios/Classes
 
