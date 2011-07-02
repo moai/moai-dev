@@ -18,6 +18,11 @@ cd ../samples/basics
 cp -R * ../../distribute/moai-sdk/samples
 cd ../../distribute
 
+mkdir -p moai-sdk/flash
+cd ../samples/flash
+cp -R * ../../distribute/moai-sdk/flash
+cd ../../distribute
+
 mkdir -p moai-sdk/samples/config
 cd ../samples/config
 cp -R * ../../distribute/moai-sdk/samples/config
@@ -49,9 +54,6 @@ cd ../../distribute
 
 cp -f moai-sdk/hosts/eclipse/packager/moai-target.default moai-sdk/hosts/eclipse/android-project/moai-target
 cp -f moai-sdk/hosts/eclipse/packager/default.project moai-sdk/hosts/eclipse/android-project/.project
-
-rm -f moai-sdk/hosts/eclipse/packager/moai-target.default
-rm -f moai-sdk/hosts/eclipse/packager/default.project
 
 # ios host
 mkdir -p moai-sdk/hosts/xcode-ios/Classes

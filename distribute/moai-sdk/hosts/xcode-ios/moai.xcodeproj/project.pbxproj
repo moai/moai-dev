@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		035724C313BE502F0046501A /* cathead.png in Resources */ = {isa = PBXBuildFile; fileRef = 035724C113BE502F0046501A /* cathead.png */; };
 		035724C413BE502F0046501A /* main.lua in Resources */ = {isa = PBXBuildFile; fileRef = 035724C213BE502F0046501A /* main.lua */; };
+		039DBBE513BE7D1400BF7A66 /* MoaiVC.mm in Sources */ = {isa = PBXBuildFile; fileRef = 039DBBE413BE7D1400BF7A66 /* MoaiVC.mm */; };
 		03CC905813B3C1B700B2724C /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 03CC904F13B3C1B700B2724C /* Icon-72.png */; };
 		03CC905913B3C1B700B2724C /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 03CC905013B3C1B700B2724C /* Icon-Small-50.png */; };
 		03CC905A13B3C1B700B2724C /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = 03CC905113B3C1B700B2724C /* Icon-Small.png */; };
@@ -43,6 +44,8 @@
 /* Begin PBXFileReference section */
 		035724C113BE502F0046501A /* cathead.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cathead.png; path = "../../samples/anim-basic/cathead.png"; sourceTree = SOURCE_ROOT; };
 		035724C213BE502F0046501A /* main.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.lua; name = main.lua; path = "../../samples/anim-basic/main.lua"; sourceTree = SOURCE_ROOT; };
+		039DBBE313BE7D1400BF7A66 /* MoaiVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoaiVC.h; sourceTree = "<group>"; };
+		039DBBE413BE7D1400BF7A66 /* MoaiVC.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MoaiVC.mm; sourceTree = "<group>"; };
 		03CC904F13B3C1B700B2724C /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
 		03CC905013B3C1B700B2724C /* Icon-Small-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small-50.png"; sourceTree = "<group>"; };
 		03CC905113B3C1B700B2724C /* Icon-Small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small.png"; sourceTree = "<group>"; };
@@ -126,6 +129,8 @@
 				03CC909C13B3C37200B2724C /* AppDelegate.mm */,
 				03CC909D13B3C37200B2724C /* LocationObserver.h */,
 				03CC909E13B3C37200B2724C /* LocationObserver.mm */,
+				039DBBE313BE7D1400BF7A66 /* MoaiVC.h */,
+				039DBBE413BE7D1400BF7A66 /* MoaiVC.mm */,
 				03CC909F13B3C37200B2724C /* MoaiView.h */,
 				03CC90A013B3C37200B2724C /* MoaiView.mm */,
 				03CC90A113B3C37200B2724C /* OpenGLView.h */,
@@ -281,6 +286,7 @@
 				03CC90A713B3C37200B2724C /* OpenGLView.mm in Sources */,
 				03CC90A913B3C37C00B2724C /* main.mm in Sources */,
 				CD0BA84013B93A14007ECCD9 /* Reachability.m in Sources */,
+				039DBBE513BE7D1400BF7A66 /* MoaiVC.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

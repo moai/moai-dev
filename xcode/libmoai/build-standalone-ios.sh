@@ -17,6 +17,7 @@ xcodebuild -configuration Release -target libmoai-ios-luaext -sdk iphoneos4.3 bu
 xcodebuild -configuration Release -target libmoai-ios-untz -sdk iphoneos4.3 build
 
 cd build
+mkdir -p Release
 
 lipo -create -output ./Release/libmoai-ios-3rdparty.a ./Release-iphoneos/libmoai-ios-3rdparty.a ./Release-iphonesimulator/libmoai-ios-3rdparty.a
 lipo -create -output ./Release/libmoai-ios.a ./Release-iphoneos/libmoai-ios.a ./Release-iphonesimulator/libmoai-ios.a

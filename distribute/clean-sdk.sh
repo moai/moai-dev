@@ -11,6 +11,7 @@ rm -rf moai-sdk/3rdparty
 rm -rf moai-sdk/docs
 rm -rf moai-sdk/include
 rm -rf moai-sdk/samples
+rm -rf moai-sdk/flash
 rm -rf moai-sdk/include
 
 #----------------------------------------------------------------#
