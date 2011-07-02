@@ -25,6 +25,18 @@ void USLuaRefTable::Clear () {
 }
 
 //----------------------------------------------------------------//
+void USLuaRefTable::InitStrong () {
+
+	USLuaStateHandle state = USLuaRuntime::Get ().State ();
+
+	// create the table
+	lua_newtable ( state );
+
+	// and grab the table ref
+	this->mTableID = luaL_ref ( state, LUA_REGISTRYINDEX );
+}
+
+//----------------------------------------------------------------//
 void USLuaRefTable::InitWeak () {
 
 	USLuaStateHandle state = USLuaRuntime::Get ().State ();
@@ -41,18 +53,6 @@ void USLuaRefTable::InitWeak () {
 
 	//set the metatable
 	lua_setmetatable ( state, -2 );
-
-	// and grab the table ref
-	this->mTableID = luaL_ref ( state, LUA_REGISTRYINDEX );
-}
-
-//----------------------------------------------------------------//
-void USLuaRefTable::InitStrong () {
-
-	USLuaStateHandle state = USLuaRuntime::Get ().State ();
-
-	// create the table
-	lua_newtable ( state );
 
 	// and grab the table ref
 	this->mTableID = luaL_ref ( state, LUA_REGISTRYINDEX );
@@ -89,19 +89,23 @@ int USLuaRefTable::Ref ( USLuaState& state, int idx ) {
 //----------------------------------------------------------------//
 void USLuaRefTable::ReleaseRefID ( int refID ) {
 
-	this->mRefIDStack [ this->mRefIDStackTop++ ] = ( u16 )refID;
+	this->mRefIDStack [ this->mRefIDStackTop++ ] = refID;
 }
 
 //----------------------------------------------------------------//
 int USLuaRefTable::ReserveRefID () {
 
 	if ( !this->mRefIDStackTop ) {
-	
-		u32 size = this->mRefIDStack.Size () + REFID_CHUNK_SIZE;
+
+		u32 currentSize = this->mRefIDStack.Size ();
+
+		assert ( currentSize <= ( MAX_REF_ID - REFID_CHUNK_SIZE ));
+
+		u32 size = currentSize + REFID_CHUNK_SIZE;
 		this->mRefIDStack.Init ( size );
 		
 		for ( u32 i = 0; i < REFID_CHUNK_SIZE; ++i ) {
-			this->mRefIDStack [ i ] = ( u16 )size--;
+			this->mRefIDStack [ i ] = size--;
 		}
 		this->mRefIDStackTop = REFID_CHUNK_SIZE;
 	}

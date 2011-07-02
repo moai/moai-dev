@@ -20,9 +20,11 @@ private:
 
 	int		mTableID;
 	
-	static const u32	REFID_CHUNK_SIZE = 256;
-	USLeanArray < u16 >	mRefIDStack;
-	u32					mRefIDStackTop;
+	static const u32		MAX_REF_ID = 0xffffffff;
+
+	static const u32		REFID_CHUNK_SIZE = 1024;
+	USLeanArray < u32 >		mRefIDStack;
+	u32						mRefIDStackTop;
 
 	//----------------------------------------------------------------//
 	void		ReleaseRefID		( int refID );
@@ -32,8 +34,8 @@ public:
 
 	//----------------------------------------------------------------//
 	void		Clear				();
-	void		InitWeak			();
 	void		InitStrong			();
+	void		InitWeak			();
 	void		PushRef				( USLuaState& state, int refID );
 	int			Ref					( USLuaState& state, int idx );
 	void		Unref				( USLuaState& state, int refID );
