@@ -18,6 +18,11 @@ cd ../samples/basics
 cp -R * ../../distribute/moai-sdk/samples
 cd ../../distribute
 
+mkdir -p moai-sdk/flash
+cd ../samples/flash
+cp -R * ../../distribute/moai-sdk/flash
+cd ../../distribute
+
 mkdir -p moai-sdk/samples/config
 cd ../samples/config
 cp -R * ../../distribute/moai-sdk/samples/config
