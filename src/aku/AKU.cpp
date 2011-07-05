@@ -36,7 +36,7 @@ struct AKUContext {
 	AKU_DEFINE_FUNC_CONTEXT ( StartGameLoop );
 	
 	USGlobals*	mGlobals;
-	void*		mUser;
+	void*		mUserdata;
 };
 
 typedef STLMap < AKUContextID, AKUContext* >::iterator ContextMapIt;
@@ -81,7 +81,7 @@ static void _deleteContext ( AKUContext* context ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-AKUContextID AKUCreateContext ( void* user ) {
+AKUContextID AKUCreateContext () {
 	
 	static bool sysInit = true;
 	if ( sysInit ) {
@@ -93,7 +93,7 @@ AKUContextID AKUCreateContext ( void* user ) {
 	gContextID = ++gContextIDCounter;
 	( *gContextMap )[ gContextID ] = gContext;
 	
-	gContext->mUser = user;
+	gContext->mUserdata = 0;
 	
 	gContext->mGlobals = USGlobals::Create ();
 	moaicore::InitGlobals ( gContext->mGlobals );
@@ -188,10 +188,10 @@ AKUContextID AKUGetContext () {
 }
 
 //----------------------------------------------------------------//
-void* AKUGetContextUser () {
+void* AKUGetUserdata () {
 	
 	if ( gContext ) {
-		return gContext->mUser;
+		return gContext->mUserdata;
 	}
 	return 0;
 }
@@ -264,10 +264,10 @@ void AKUSetContext ( AKUContextID contextID ) {
 }
 
 //----------------------------------------------------------------//
-void AKUSetContextUser ( void* user ) {
+void AKUSetUserdata ( void* userdata ) {
 
 	if ( gContext ) {
-		gContext->mUser = user;
+		gContext->mUserdata = userdata;
 	}
 }
 

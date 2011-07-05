@@ -20,7 +20,8 @@ class MOAIShader;
 	@const INHERIT_COLOR
 	@const INHERIT_FRAME
 	@const INHERIT_PARTITION
-	@const INHERIT_SHADER	
+	@const INHERIT_SHADER
+	@const INHERIT_VISIBLE
 */
 class MOAITraits :
 	public virtual MOAINode {

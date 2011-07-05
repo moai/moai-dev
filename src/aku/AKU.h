@@ -45,13 +45,13 @@ struct lua_State;
 typedef int AKUContextID;
 
 // context api
-AKU_API AKUContextID	AKUCreateContext	( void* user = 0 );
+AKU_API AKUContextID	AKUCreateContext	();
 AKU_API void			AKUDeleteContext	( AKUContextID context );
 AKU_API AKUContextID	AKUGetContext		();
-AKU_API void*			AKUGetContextUser	();
+AKU_API void*			AKUGetUserdata		();
 AKU_API void			AKUFinalize			();
 AKU_API void			AKUSetContext		( AKUContextID context );
-AKU_API void			AKUSetContextUser	( void* user );
+AKU_API void			AKUSetUserdata		( void* user );
 
 
 // management api

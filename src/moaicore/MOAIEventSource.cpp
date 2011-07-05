@@ -16,11 +16,11 @@
 
 	@in		MOAIEventSource self
 	@in		number eventID			The ID of the event.
-	@in		function callback		The callback to be called when the object emits the event.
+	@opt	function callback		The callback to be called when the object emits the event. Default value is nil.
 	@out	nil
 */
 int MOAIEventSource::_setListener ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIEventSource, "UNF" );
+	MOAI_LUA_SETUP ( MOAIEventSource, "UN" );
 
 	self->AffirmListenerTable ( state );
 
