@@ -21,16 +21,13 @@
 @interface MoaiView : OpenGLView < UIAccelerometerDelegate > {
 @private
 	
-	RefPtr < LocationObserver > mLocationObserver;
-	
-	NSTimer*			mAnimTimer;
-    CADisplayLink*		displayLink;
-	NSTimeInterval		mAnimInterval;
-	
-	AKUContextID		mAku;
+	AKUContextID					mAku;
+	NSTimeInterval					mAnimInterval;
+    RefPtr < CADisplayLink >		mDisplayLink;
+	RefPtr < LocationObserver >		mLocationObserver;
 }
 
 	//----------------------------------------------------------------//
-	-( void )			run		:( NSString* )filename;
+	-( void )	run		:( NSString* )filename;
 	
 @end

@@ -330,7 +330,6 @@
 				LIBRARY_SEARCH_PATHS = ../../bin/ios/;
 				PREBINDING = NO;
 				SDKROOT = iphoneos;
-				SRC_PATH = "../../../../bin/ios/$(CONFIGURATION_BUILD_DIR)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -352,7 +351,6 @@
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PREBINDING = NO;
 				SDKROOT = iphoneos;
-				SRC_PATH = "../../../../bin/ios/$(CONFIGURATION_BUILD_DIR)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

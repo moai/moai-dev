@@ -40,7 +40,6 @@ namespace MoaiInputDeviceSensorID {
 // MoaiView ()
 //================================================================//
 @interface MoaiView ()
-@property (nonatomic, assign) CADisplayLink *displayLink;
 
 	//----------------------------------------------------------------//
 	-( void )	handleTouches		:( NSSet* )touches :( BOOL )down;
@@ -48,7 +47,6 @@ namespace MoaiInputDeviceSensorID {
 	-( void )	onUpdateAnim;
 	-( void )	onUpdateHeading		:( LocationObserver* )observer;
 	-( void )	onUpdateLocation	:( LocationObserver* )observer;
-	-( void )	setGlobalPaths;
 	-( void )	startAnimation;
 	-( void )	stopAnimation;
 
@@ -105,8 +103,6 @@ void _AKUStartGameLoopFunc () {
 // MoaiView
 //================================================================//
 @implementation MoaiView
-
-@synthesize displayLink;
 
 	//----------------------------------------------------------------//
 	-( void ) accelerometer:( UIAccelerometer* )acel didAccelerate:( UIAcceleration* )acceleration {
@@ -219,9 +215,7 @@ void _AKUStartGameLoopFunc () {
 		AKUSetFunc_OpenWindow			( _AKUOpenWindowFunc );
 		AKUSetFunc_StartGameLoop		( _AKUStartGameLoopFunc );
 		
-		[ self setGlobalPaths ];
-		
-		mAnimInterval = 1; // run at device refresh rate (60fps)
+		mAnimInterval = 1; // 1 for 60fps, 2 for 30fps
 		
 		mLocationObserver = [[[ LocationObserver alloc ] init ] autorelease ];
 		
@@ -276,47 +270,19 @@ void _AKUStartGameLoopFunc () {
 	}
 	
 	//----------------------------------------------------------------//
-	-( void ) setGlobalPaths {
-	
-		//lua_State* L = AKUGetLuaState ();
-//		lua_newtable ( L );
-//		
-//		NSString* path;
-//		NSArray* paths;
-//		
-//		paths = NSSearchPathForDirectoriesInDomains ( NSDocumentDirectory, NSUserDomainMask, YES );
-//		path = [ paths objectAtIndex :0 ];
-//		NSLog ( @"%@", path );
-//		lua_pushstring ( L, [ path UTF8String ]);
-//		lua_setfield ( L, -2, "documents" );
-//		
-//		paths = NSSearchPathForDirectoriesInDomains ( NSCachesDirectory, NSUserDomainMask, YES );
-//		path = [ paths objectAtIndex:0 ];
-//		NSLog ( @"%@", path );
-//		lua_pushstring ( L, [ path UTF8String ]);
-//		lua_setfield ( L, -2, "caches" );
-//		
-//		path = [[ NSBundle mainBundle ] resourcePath ];
-//		NSLog ( @"%@", path );
-//		lua_pushstring ( L, [ path UTF8String ]);
-//		lua_setfield ( L, -2, "resources" );
-//		
-//		lua_setglobal ( L, "iphone" );
-	}
-	
-	//----------------------------------------------------------------//
 	-( void ) startAnimation {
 		
-        CADisplayLink *aDisplayLink = [[UIScreen mainScreen] displayLinkWithTarget:self selector:@selector(onUpdateAnim)];
-        [aDisplayLink setFrameInterval:mAnimInterval];
-        [aDisplayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
-        self.displayLink = aDisplayLink;	}
+        CADisplayLink* aDisplayLink = [[ UIScreen mainScreen ] displayLinkWithTarget:self selector:@selector( onUpdateAnim )];
+        [ aDisplayLink setFrameInterval:mAnimInterval ];
+        [ aDisplayLink addToRunLoop:[ NSRunLoop currentRunLoop ] forMode:NSDefaultRunLoopMode ];
+        mDisplayLink = aDisplayLink;
+	}
 
 	//----------------------------------------------------------------//
 	-( void ) stopAnimation {
 		
-        [self.displayLink invalidate];
-        self.displayLink = nil;
+        [ mDisplayLink invalidate ];
+        mDisplayLink = nil;
 	}
 	
 	//----------------------------------------------------------------//
