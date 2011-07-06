@@ -98,10 +98,10 @@ $(SRC_PATH)/src/moaicore/MOAIKeyboardSensor.cpp \
 $(SRC_PATH)/src/moaicore/MOAILayer2D.cpp \
 $(SRC_PATH)/src/moaicore/MOAILayerBridge2D.cpp \
 $(SRC_PATH)/src/moaicore/MOAILayoutFrame.cpp \
-$(SRC_PATH)/src/moaicore/MOAILevelSensor.cpp \
 $(SRC_PATH)/src/moaicore/MOAILocationSensor.cpp \
 $(SRC_PATH)/src/moaicore/MOAILogMgr.cpp \
 $(SRC_PATH)/src/moaicore/MOAIMesh.cpp \
+$(SRC_PATH)/src/moaicore/MOAIMotionSensor.cpp \
 $(SRC_PATH)/src/moaicore/MOAINode.cpp \
 $(SRC_PATH)/src/moaicore/MOAINodeMgr.cpp \
 $(SRC_PATH)/src/moaicore/MOAIParser.cpp \
