@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <moaicore/MOAIAction.h>
+#include <moaicore/MOAIActionMgr.h>
 #include <moaicore/MOAILogMessages.h>
 
 //================================================================//
@@ -372,52 +373,4 @@ void MOAIAction::Update ( float step, u32 pass, bool checkPass ) {
 	if ( this->IsDone ()) {
 		this->Stop ();
 	}
-}
-
-//================================================================//
-// MOAIActionMgr
-//================================================================//
-
-//----------------------------------------------------------------//
-void MOAIActionMgr::Clear () {
-
-	this->mRoot.ClearChildren ();
-}
-
-//----------------------------------------------------------------//
-u32 MOAIActionMgr::GetNextPass () {
-
-	this->mTotalPasses = this->mPass + 2;
-	return this->mPass + 1;
-}
-
-//----------------------------------------------------------------//
-MOAIActionMgr::MOAIActionMgr () :
-	mPass ( RESET_PASS ),
-	mCurrentAction ( 0 ) {
-}
-
-//----------------------------------------------------------------//
-MOAIActionMgr::~MOAIActionMgr () {
-
-	this->Clear ();
-}
-
-//----------------------------------------------------------------//
-void MOAIActionMgr::StartAction ( MOAIAction& action ) {
-
-	this->mRoot.AddChild ( action );
-}
-
-//----------------------------------------------------------------//
-void MOAIActionMgr::Update ( float step ) {
-
-	this->GetNextPass ();
-
-	for ( this->mPass = 0; this->mPass < this->mTotalPasses; ++this->mPass ) {
-		this->mRoot.Update ( step, this->mPass, true );
-	}
-
-	this->mPass = RESET_PASS;
-	this->mCurrentAction = 0;
 }

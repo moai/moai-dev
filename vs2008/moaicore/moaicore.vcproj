@@ -338,6 +338,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\moaicore\MOAIActionMgr.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIActionMgr.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\moaicore\MOAIBlocker.cpp"
 				>
 			</File>

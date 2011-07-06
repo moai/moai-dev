@@ -81,36 +81,4 @@ public:
 	STLString			ToString				();
 };
 
-//================================================================//
-// MOAIActionMgr
-//================================================================//
-class MOAIActionMgr :
-	public USGlobalClass < MOAIActionMgr > {
-private:
-
-	static const u32 RESET_PASS	= 0xffffffff;
-
-	u32 mPass;
-	u32 mTotalPasses;
-
-	MOAIAction mRoot;
-	MOAIAction* mCurrentAction;
-
-	//----------------------------------------------------------------//
-	u32				GetNextPass				();
-
-public:
-
-	friend class MOAIAction;
-
-	GET_SET ( MOAIAction*, CurrentAction, mCurrentAction )
-
-	//----------------------------------------------------------------//
-	void			Clear					();
-	void			StartAction				( MOAIAction& action );
-	void			Update					( float step );
-					MOAIActionMgr			();
-					~MOAIActionMgr			();
-};
-
 #endif

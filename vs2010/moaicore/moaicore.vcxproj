@@ -234,6 +234,7 @@
     <ClCompile Include="..\..\src\aku\AKU-particles.cpp" />
     <ClCompile Include="..\..\src\aku\AKU.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIAction.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAIActionMgr.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIBlocker.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIBox2DArbiter.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIBox2DBody.cpp" />
@@ -336,6 +337,7 @@
     <ClInclude Include="..\..\src\aku\AKU-particles.h" />
     <ClInclude Include="..\..\src\aku\AKU.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIAction.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAIActionMgr.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIBlocker.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIBox2DArbiter.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIBox2DBody.h" />

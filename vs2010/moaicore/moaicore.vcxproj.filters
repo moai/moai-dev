@@ -369,6 +369,9 @@
     <ClCompile Include="..\..\src\moaicore\MOAIParticleTimedEmitter.cpp">
       <Filter>src\particles</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIActionMgr.cpp">
+      <Filter>src\action</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\moaicore\MOAIAction.h">
@@ -670,6 +673,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIParticleTimedEmitter.h">
       <Filter>src\particles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIActionMgr.h">
+      <Filter>src\action</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

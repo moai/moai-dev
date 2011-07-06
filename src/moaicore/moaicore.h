@@ -7,6 +7,7 @@
 #include <moaicore/pch.h>
 
 #include <moaicore/MOAIAction.h>
+#include <moaicore/MOAIActionMgr.h>
 #include <moaicore/MOAIAnim.h>
 #include <moaicore/MOAIAnimCurve.h>
 #include <moaicore/MOAIButtonSensor.h>
