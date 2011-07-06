@@ -126,9 +126,6 @@
     <ClCompile Include="..\..\src\moaicore\MOAIKeyboardSensor.cpp">
       <Filter>src\input</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAILevelSensor.cpp">
-      <Filter>src\input</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAILocationSensor.cpp">
       <Filter>src\input</Filter>
     </ClCompile>
@@ -372,6 +369,9 @@
     <ClCompile Include="..\..\src\moaicore\MOAIActionMgr.cpp">
       <Filter>src\action</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIMotionSensor.cpp">
+      <Filter>src\input</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\moaicore\MOAIAction.h">
@@ -420,9 +420,6 @@
       <Filter>src\input</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIKeyboardSensor.h">
-      <Filter>src\input</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\MOAILevelSensor.h">
       <Filter>src\input</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAILocationSensor.h">
@@ -676,6 +673,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIActionMgr.h">
       <Filter>src\action</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIMotionSensor.h">
+      <Filter>src\input</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

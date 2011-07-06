@@ -8,9 +8,9 @@
 #include <moaicore/MOAIInputDevice.h>
 #include <moaicore/MOAIJoystickSensor.h>
 #include <moaicore/MOAIKeyboardSensor.h>
-#include <moaicore/MOAILevelSensor.h>
 #include <moaicore/MOAILocationSensor.h>
 #include <moaicore/MOAILogMessages.h>
+#include <moaicore/MOAIMotionSensor.h>
 #include <moaicore/MOAIPointerSensor.h>
 #include <moaicore/MOAITouchSensor.h>
 #include <moaicore/MOAISensor.h>
@@ -98,7 +98,7 @@ void MOAIInputDevice::SetSensor ( u8 sensorID, cc8* name, u32 type ) {
 			break;
 		}
 		case MOAISensor::LEVEL: {
-			sensor = new MOAILevelSensor ();
+			sensor = new MOAIMotionSensor ();
 			break;
 		}
 		case MOAISensor::LOCATION: {

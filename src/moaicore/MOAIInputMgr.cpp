@@ -9,9 +9,9 @@
 #include <moaicore/MOAIInputMgr.h>
 #include <moaicore/MOAIJoystickSensor.h>
 #include <moaicore/MOAIKeyboardSensor.h>
-#include <moaicore/MOAILevelSensor.h>
 #include <moaicore/MOAILocationSensor.h>
 #include <moaicore/MOAILogMessages.h>
+#include <moaicore/MOAIMotionSensor.h>
 #include <moaicore/MOAIPointerSensor.h>
 #include <moaicore/MOAISensor.h>
 #include <moaicore/MOAITouchSensor.h>
@@ -66,7 +66,7 @@ void MOAIInputMgr::EnqueueLevelEvent ( u8 deviceID, u8 sensorID, float x, float 
 
 	if ( this->CheckSensor ( deviceID, sensorID, MOAISensor::LEVEL )) {
 		this->WriteEventHeader ( deviceID, sensorID, MOAISensor::LEVEL );
-		MOAILevelSensor::WriteEvent ( this->mInput, x, y, z );
+		MOAIMotionSensor::WriteEvent ( this->mInput, x, y, z );
 	}
 }
 

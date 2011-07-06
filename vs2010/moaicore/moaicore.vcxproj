@@ -266,6 +266,7 @@
     <ClCompile Include="..\..\src\moaicore\MOAILayoutFrame.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAILogMgr.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIMesh.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAIMotionSensor.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIParser.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIParticleDistanceEmitter.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIParticleEmitter.cpp" />
@@ -307,7 +308,6 @@
     <ClCompile Include="..\..\src\moaicore\MOAIInputMgr.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIJoystickSensor.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIKeyboardSensor.cpp" />
-    <ClCompile Include="..\..\src\moaicore\MOAILevelSensor.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAILocationSensor.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIPointerSensor.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAISensor.cpp" />
@@ -370,6 +370,7 @@
     <ClInclude Include="..\..\src\moaicore\MOAILogMessages.h" />
     <ClInclude Include="..\..\src\moaicore\MOAILogMgr.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIMesh.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAIMotionSensor.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIParser.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIParticle.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIParticleDistanceEmitter.h" />
@@ -412,7 +413,6 @@
     <ClInclude Include="..\..\src\moaicore\MOAIInputMgr.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIJoystickSensor.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIKeyboardSensor.h" />
-    <ClInclude Include="..\..\src\moaicore\MOAILevelSensor.h" />
     <ClInclude Include="..\..\src\moaicore\MOAILocationSensor.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIPointerSensor.h" />
     <ClInclude Include="..\..\src\moaicore\MOAISensor.h" />

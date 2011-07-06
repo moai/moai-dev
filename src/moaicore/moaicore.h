@@ -42,11 +42,11 @@
 #include <moaicore/MOAILayer2D.h>
 #include <moaicore/MOAILayerBridge2D.h>
 #include <moaicore/MOAILayoutFrame.h>
-#include <moaicore/MOAILevelSensor.h>
 #include <moaicore/MOAILocationSensor.h>
 #include <moaicore/MOAILogMgr.h>
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIMesh.h>
+#include <moaicore/MOAIMotionSensor.h>
 #include <moaicore/MOAINode.h>
 #include <moaicore/MOAINodeMgr.h>
 #include <moaicore/MOAIParser.h>

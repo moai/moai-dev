@@ -586,19 +586,19 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAILevelSensor.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAILevelSensor.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\moaicore\MOAILocationSensor.cpp"
 				>
 			</File>
 			<File
 				RelativePath="..\..\src\moaicore\MOAILocationSensor.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIMotionSensor.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIMotionSensor.h"
 				>
 			</File>
 			<File
