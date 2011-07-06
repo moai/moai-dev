@@ -1623,6 +1623,10 @@
 		0324E9CD13564BC9000ADC60 /* USViewQuad.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E69113564BC8000ADC60 /* USViewQuad.h */; };
 		0324E9CE13564BC9000ADC60 /* USXmlReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E69213564BC8000ADC60 /* USXmlReader.cpp */; };
 		0324E9CF13564BC9000ADC60 /* USXmlReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E69313564BC8000ADC60 /* USXmlReader.h */; };
+		033B1E6013C4EC8A00CE21D2 /* MOAIActionMgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 033B1E5E13C4EC8A00CE21D2 /* MOAIActionMgr.cpp */; };
+		033B1E6113C4EC8A00CE21D2 /* MOAIActionMgr.h in Headers */ = {isa = PBXBuildFile; fileRef = 033B1E5F13C4EC8A00CE21D2 /* MOAIActionMgr.h */; };
+		033B1E6213C4EC8A00CE21D2 /* MOAIActionMgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 033B1E5E13C4EC8A00CE21D2 /* MOAIActionMgr.cpp */; };
+		033B1E6313C4EC8A00CE21D2 /* MOAIActionMgr.h in Headers */ = {isa = PBXBuildFile; fileRef = 033B1E5F13C4EC8A00CE21D2 /* MOAIActionMgr.h */; };
 		0392971613BE44010077B742 /* MOAIParticleDistanceEmitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07E885BB13BE3E78008D75AA /* MOAIParticleDistanceEmitter.cpp */; };
 		0392971713BE44010077B742 /* MOAIParticleTimedEmitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07E885BD13BE3E78008D75AA /* MOAIParticleTimedEmitter.cpp */; };
 		039C283D138EDAB300A3A780 /* MOAIDeckRemapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 039C283B138EDAB300A3A780 /* MOAIDeckRemapper.cpp */; };
@@ -3603,6 +3607,8 @@
 		0324E69113564BC8000ADC60 /* USViewQuad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USViewQuad.h; sourceTree = "<group>"; };
 		0324E69213564BC8000ADC60 /* USXmlReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USXmlReader.cpp; sourceTree = "<group>"; };
 		0324E69313564BC8000ADC60 /* USXmlReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USXmlReader.h; sourceTree = "<group>"; };
+		033B1E5E13C4EC8A00CE21D2 /* MOAIActionMgr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIActionMgr.cpp; sourceTree = "<group>"; };
+		033B1E5F13C4EC8A00CE21D2 /* MOAIActionMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIActionMgr.h; sourceTree = "<group>"; };
 		0379C5961333ECD800E89DDC /* libmoai-ios-3rdparty.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-3rdparty.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		039C283B138EDAB300A3A780 /* MOAIDeckRemapper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIDeckRemapper.cpp; sourceTree = "<group>"; };
 		039C283C138EDAB300A3A780 /* MOAIDeckRemapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIDeckRemapper.h; sourceTree = "<group>"; };
@@ -5918,6 +5924,8 @@
 			children = (
 				0324E4FA13564BC7000ADC60 /* MOAIAction.cpp */,
 				0324E4FB13564BC7000ADC60 /* MOAIAction.h */,
+				033B1E5E13C4EC8A00CE21D2 /* MOAIActionMgr.cpp */,
+				033B1E5F13C4EC8A00CE21D2 /* MOAIActionMgr.h */,
 				0324E50013564BC7000ADC60 /* MOAIBlocker.cpp */,
 				0324E50113564BC7000ADC60 /* MOAIBlocker.h */,
 				0324E59413564BC8000ADC60 /* MOAIThread.cpp */,
@@ -8076,6 +8084,7 @@
 				CD7C726213B9477B006CFA19 /* USLog.h in Headers */,
 				CD7C726813B9479C006CFA19 /* MOAIParticlePlugin.h in Headers */,
 				CD7C726E13B947AC006CFA19 /* AKU-particles.h in Headers */,
+				033B1E6313C4EC8A00CE21D2 /* MOAIActionMgr.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8702,6 +8711,7 @@
 				CD7C726C13B947AC006CFA19 /* AKU-particles.h in Headers */,
 				07E885C013BE3E78008D75AA /* MOAIParticleDistanceEmitter.h in Headers */,
 				07E885C213BE3E78008D75AA /* MOAIParticleTimedEmitter.h in Headers */,
+				033B1E6113C4EC8A00CE21D2 /* MOAIActionMgr.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9415,6 +9425,7 @@
 				CD7C726D13B947AC006CFA19 /* AKU-particles.cpp in Sources */,
 				0392971613BE44010077B742 /* MOAIParticleDistanceEmitter.cpp in Sources */,
 				0392971713BE44010077B742 /* MOAIParticleTimedEmitter.cpp in Sources */,
+				033B1E6213C4EC8A00CE21D2 /* MOAIActionMgr.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10478,6 +10489,7 @@
 				CD7C726B13B947AC006CFA19 /* AKU-particles.cpp in Sources */,
 				07E885BF13BE3E78008D75AA /* MOAIParticleDistanceEmitter.cpp in Sources */,
 				07E885C113BE3E78008D75AA /* MOAIParticleTimedEmitter.cpp in Sources */,
+				033B1E6013C4EC8A00CE21D2 /* MOAIActionMgr.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
