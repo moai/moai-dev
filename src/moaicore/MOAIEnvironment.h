@@ -25,6 +25,11 @@ private:
 	STLString			mAppID;
 	STLString			mAppVersion;
 	STLString			mCacheDirectory;
+	STLString			mCarrierISOCountryCode;
+	STLString			mCarrierMobileCountryCode;
+	STLString			mCarrierMobileNetworkCode;
+	STLString			mCarrierName;
+	STLString			mCountryCode;
 	STLString			mCPUABI;
 	STLString			mDevBrand;
 	STLString			mDevName;
@@ -32,6 +37,8 @@ private:
 	STLString			mDevModel;
 	STLString			mDevProduct;
 	STLString			mDocumentDirectory;
+	bool				mIsRetinaDisplay;
+	STLString			mLanguageCode;
 	STLString			mOSBrand;
 	STLString			mOSVersion;
 	STLString			mResourceDirectory;
@@ -42,24 +49,31 @@ private:
 	
 
 	//----------------------------------------------------------------//
-	static int			_generateGUID			( lua_State* L );
-	static int			_getAppDisplayName		( lua_State* L );
-	static int			_getAppID				( lua_State* L );
-	static int			_getAppVersion			( lua_State* L );
-	static int			_getCacheDirectory		( lua_State* L );
-	static int			_getConnectionType 		( lua_State* L );
-	static int			_getCPUABI				( lua_State* L );
-	static int			_getDevBrand			( lua_State* L );
-	static int			_getDevName				( lua_State* L );
-	static int			_getDevManufacturer		( lua_State* L );
-	static int			_getDevModel			( lua_State* L );
-	static int			_getDevProduct			( lua_State* L );
-	static int			_getDocumentDirectory	( lua_State* L );
-	static int			_getOSBrand				( lua_State* L );
-	static int			_getOSVersion			( lua_State* L );
-	static int			_getResourceDirectory	( lua_State* L );
-	static int			_getUDID				( lua_State* L );
-	static int			_getViewSize			( lua_State* L );
+	static int			_generateGUID					( lua_State* L );
+	static int			_getAppDisplayName				( lua_State* L );
+	static int			_getAppID						( lua_State* L );
+	static int			_getAppVersion					( lua_State* L );
+	static int			_getCacheDirectory				( lua_State* L );
+	static int			_getCarrierISOCountryCode		( lua_State* L );
+	static int			_getCarrierMobileCountryCode	( lua_State* L );
+	static int			_getCarrierMobileNetworkCode	( lua_State* L );
+	static int			_getCarrierName					( lua_State* L );
+	static int			_getConnectionType				( lua_State* L );
+	static int			_getCountryCode					( lua_State* L );
+	static int			_getCPUABI						( lua_State* L );
+	static int			_getDevBrand					( lua_State* L );
+	static int			_getDevName						( lua_State* L );
+	static int			_getDevManufacturer				( lua_State* L );
+	static int			_getDevModel					( lua_State* L );
+	static int			_getDevProduct					( lua_State* L );
+	static int			_getDocumentDirectory			( lua_State* L );
+	static int			_getLanguageCode				( lua_State* L );
+	static int			_getOSBrand						( lua_State* L );
+	static int			_getOSVersion					( lua_State* L );
+	static int			_getResourceDirectory			( lua_State* L );
+	static int			_getUDID						( lua_State* L );
+	static int			_getViewSize					( lua_State* L );
+	static int			_isRetinaDisplay				( lua_State* L );
 	
 	
 	//----------------------------------------------------------------//
@@ -87,7 +101,12 @@ public:
 	void				SetAppID					( cc8* appID );
 	void				SetAppVersion				( cc8* appVersion );
 	void				SetCacheDirectory			( cc8* cachDir );
+	void				SetCarrierISOCountryCode	( cc8* isoCode );
+	void				SetCarrierMobileCountryCode	( cc8* mobCountryCode );
+	void				SetCarrierMobileNetworkCode	( cc8* mobNetworkCode );
+	void				SetCarrierName				( cc8* name );
 	void				SetConnectivityFunc			( long (*connFunc) () );
+	void				SetCountryCode				( cc8* countryCode );
 	void				SetCPUABI					( cc8* abi );
 	void				SetDevBrand					( cc8* devBrand );
 	void				SetDevName					( cc8* devName );
@@ -95,7 +114,9 @@ public:
 	void				SetDevModel					( cc8* devModel );
 	void				SetDevProduct				( cc8* devProduct );
 	void				SetDocumentDirectory		( cc8* docDir );
+	void				SetIsRetinaDisplay			( bool );
 	void				SetGUIDFunc					( cc8* (*guidFunc) () );
+	void				SetLanguageCode				( cc8* langCode );
 	void				SetOSBrand					( cc8* osBrand );
 	void				SetOSVersion				( cc8* osVersion );
 	void				SetResourceDirectory		( cc8* resDir );

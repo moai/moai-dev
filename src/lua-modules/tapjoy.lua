@@ -18,13 +18,18 @@ require "util"
 --==============================================================
 
 ----------------------------------------------------------------
-local function dismissWebViewOnSkip ( webView, request, navType )
+local function shouldStartLoadWithRequestListener ( webView, request, navType )
 	
 	if request == "https://ws.tapjoyads.com/dismiss" then
 		webView:hideWebView ()
 		return false
 	end
 	
+	if navType == MOAIWebView.NAVIGATION_LINK_CLICKED then
+		MOAIWebView.openUrlInSafari ( request )
+		return false
+	end
+
 	return true
 end
 
@@ -66,7 +71,7 @@ local function createWebViewFromFeaturedCallback ( task )
 		local width, height = MOAIEnvironment.getViewSize ()
 		
 		local webView = MOAIWebView.new ()
-		webView:setListener ( MOAIWebView.SHOULD_START_LOAD_WITH_REQUEST, dismissWebViewOnSkip )
+		webView:setListener ( MOAIWebView.SHOULD_START_LOAD_WITH_REQUEST, shouldStartLoadWithRequestListener )
 		
 		webView:setListener ( MOAIWebView.WEB_VIEW_DID_FINISH_LOAD,
 			function ( self )
@@ -78,6 +83,29 @@ local function createWebViewFromFeaturedCallback ( task )
 		
 		webView:initWebView ( 0, 0, width, height, true )	
 		webView:loadRequest ( jsonTable.OfferArray[ 1 ].FullScreenAdURL )
+	end
+end
+
+----------------------------------------------------------------
+local function createWebViewFromOfferCallback ( task )
+
+	if task:getSize () > 0 then
+		
+		local width, height = MOAIEnvironment.getViewSize ()
+		
+		local webView = MOAIWebView.new ()
+		webView:setListener ( MOAIWebView.SHOULD_START_LOAD_WITH_REQUEST, shouldStartLoadWithRequestListener )
+		
+		webView:setListener ( MOAIWebView.WEB_VIEW_DID_FINISH_LOAD,
+			function ( self )
+				if util.isFunc ( task.userDoneCallback ) then
+					task.userDoneCallback ( task, self )
+				end
+			end
+		)
+		
+		webView:initWebView ( 0, 0, width, height, true )
+		webView:loadHTML ( task:getString () )
 	end
 end
 
@@ -147,7 +175,7 @@ end
 ----------------------------------------------------------------
 function getBannerAdProp ( bannerSize, callbackFunc )
 
-	if ( not mAppId ) or ( not mAppSecretkey ) then
+	if ( not mAppId ) or ( not mAppSecretKey ) then
 		error ( "tapjoy.getBannerAdProp called before tapjoy.init was called with valid parameters", 2 )
 	end
 
@@ -166,10 +194,10 @@ function getBannerAdProp ( bannerSize, callbackFunc )
 end
 
 ----------------------------------------------------------------
-function getFeaturedAppWebView ( callbackFunc )
+function showFeaturedAppWebView ( callbackFunc )
 	
 	if ( not mAppId ) or ( not mAppSecretKey ) then
-		error ( "tapjoy.getFeaturedAppWebView called before tapjoy.init was called with valid parameters", 2 )
+		error ( "tapjoy.showFeaturedAppWebView called before tapjoy.init was called with valid parameters", 2 )
 	end
 
 	local timeStamp = getTimeStampString ()
@@ -187,10 +215,10 @@ function getFeaturedAppWebView ( callbackFunc )
 end
 
 ----------------------------------------------------------------
-function getOffersWeb ( callbackFunc )
+function showOffersWebView ( callbackFunc )
 
-	if ( not mAppId ) or ( not mAppSecretkey ) then
-		error ( "tapjoy.getOffersWeb called before tapjoy.init was called with valid parameters", 2 )
+	if ( not mAppId ) or ( not mAppSecretKey ) then
+		error ( "tapjoy.showOffersWebView called before tapjoy.init was called with valid parameters", 2 )
 	end
 
 	local timeStamp = getTimeStampString ()
@@ -203,5 +231,5 @@ function getOffersWeb ( callbackFunc )
 		verifier			= getVerifier ( mAppId, mUdid, timeStamp, mAppSecretKey )
 	}
 	
-	httpGetTask ( OFFERS_WEB_BASE_URL .. "?" .. parameters, callbackFunc )
+	httpGetTask ( OFFERS_WEB_BASE_URL .. "?" .. parameters, createWebViewFromOfferCallback, callbackFunc )
 end
