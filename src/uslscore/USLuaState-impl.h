@@ -38,8 +38,10 @@ TYPE* USLuaState::GetLuaObject ( int idx ) {
 	if ( !this->IsType ( idx, LUA_TUSERDATA )) return 0;
 	
 	USLuaObject* luaData = ( USLuaObject* )this->GetPtrUserData ( idx );
-	
-	return luaData->AsType < TYPE >();
+	if ( luaData ) {
+		return luaData->AsType < TYPE >();
+	}
+	return 0;
 }
 
 //----------------------------------------------------------------//
@@ -51,7 +53,9 @@ TYPE* USLuaState::GetLuaObject ( int idx, cc8* name ) {
 		USLuaObject* luaData = ( USLuaObject* )this->GetPtrUserData ( idx );
 		this->Pop ( 1 );
 		
-		return luaData->AsType < TYPE >();
+		if ( luaData ) {
+			return luaData->AsType < TYPE >();
+		}
 	}
 	return 0;
 }

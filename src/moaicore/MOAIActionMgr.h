@@ -42,11 +42,11 @@ public:
 
 	//----------------------------------------------------------------//
 	void				Clear					();
+						MOAIActionMgr			();
+						~MOAIActionMgr			();
 	void				RegisterLuaClass		( USLuaState& state );
 	void				StartAction				( MOAIAction& action );
 	void				Update					( float step );
-						MOAIActionMgr			();
-						~MOAIActionMgr			();
 };
 
 #endif

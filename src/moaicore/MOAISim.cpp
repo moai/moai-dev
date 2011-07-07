@@ -88,35 +88,6 @@ int MOAISim::_framesToTime ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getDeviceIDString
-	@text	Gets a unique string that identifies the device.
-
-	@out	string id			The identifier string.	
-*/
-int MOAISim::_getDeviceIDString ( lua_State* L ) {
-
-	#ifdef _WIN32
-		USAdapterInfoList infoList;
-		
-		infoList.EnumerateAdapters();
-		STLString name = infoList[0].GetName();
-		if( name ){
-		
-			lua_pushstring( L, name );
-			return 1;
-		}
-	#else 
-		MOAISim& device = MOAISim::Get ();
-		if( device.mUniqueID ){
-		
-			lua_pushstring( L, device.mUniqueID );
-			return 1;
-		}
-	#endif
-	return 0;
-}
-
-//----------------------------------------------------------------//
 /**	@name	getDeviceSize
 	@text	Gets the dimensions of the device screen as two return values (width, height).
 
@@ -168,20 +139,6 @@ int MOAISim::_getFrameSize ( lua_State* L ) {
 	
 	MOAISim& device = MOAISim::Get ();
 	lua_pushnumber ( L, device.mStep );
-	
-	return 1;
-}
-
-//----------------------------------------------------------------//
-/**	@name	getNetworkStatus
-	@text	Returns whether this device is currently able to reach the internet.
-
-	@out	boolean status		Whether the device can reach the internet.
-*/
-int	MOAISim::_getNetworkStatus ( lua_State* L ) {
-
-	MOAISim& device = MOAISim::Get ();
-	lua_pushboolean ( L, device.mHasNetwork );
 	
 	return 1;
 }
@@ -400,8 +357,7 @@ MOAISim::MOAISim () :
 	mFrameRate ( 0.0f ),
 	mFrameRateIdx ( 0 ),
 	mClearFlags ( GL_COLOR_BUFFER_BIT ),
-	mClearColor ( 0xff000000 ),
-	mHasNetwork ( false ) {
+	mClearColor ( 0xff000000 ) {
 	
 	RTTI_SINGLE ( USLuaObject )
 
@@ -480,12 +436,10 @@ void MOAISim::RegisterLuaClass ( USLuaState& state ) {
 		{ "enterFullscreenMode",		_enterFullscreenMode },
 		{ "exitFullscreenMode",			_exitFullscreenMode },
 		{ "framesToTime",				_framesToTime },
-		{ "getDeviceIDString",			_getDeviceIDString },
 		{ "getDeviceSize",				_getDeviceSize },
 		{ "getElapsedFrames",			_getElapsedFrames },
 		{ "getElapsedTime",				_getElapsedTime },
 		{ "getFrameSize",				_getFrameSize },
-		{ "getNetworkStatus",			_getNetworkStatus },
 		{ "getPerformance",				_getPerformance },
 		{ "openWindow",					_openWindow },
 		{ "pauseTimer",					_pauseTimer },
@@ -588,20 +542,8 @@ void MOAISim::RunString ( cc8* script ) {
 }
 
 //----------------------------------------------------------------//
-void MOAISim::SetReachability ( bool networkStatus ) {
-
-	mHasNetwork = networkStatus;
-}
-
-//----------------------------------------------------------------//
-void MOAISim::SetUniqueIdentifier ( cc8* uniqueID ) {
-
-	mUniqueID = uniqueID;
-}
-
-//----------------------------------------------------------------//
 void MOAISim::Update () {
-
+	
 	this->MeasureFrameRate ();
 
 	this->mDeviceTime = USDeviceTime::GetTimeInSeconds ();
@@ -663,8 +605,6 @@ STLString MOAISim::ToString () {
 	PrettyPrint ( repr, "mTimerState", timer_state );
 	PRETTY_PRINT ( repr, mTime )
 	PRETTY_PRINT ( repr, mDeviceTime )
-	PRETTY_PRINT ( repr, mHasNetwork )
-	PRETTY_PRINT ( repr, mUniqueID )
 
 	return repr;
 }

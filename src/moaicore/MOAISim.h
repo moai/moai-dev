@@ -38,9 +38,6 @@ private:
 	float			mFrameRate;
 	float			mFrameRateBuffer [ FPS_BUFFER_SIZE ];
 	u32				mFrameRateIdx;
-	
-	USLuaRef		mOnTextEntry;
-	USLuaRef		mOnCancelTextEntry;
 
 	typedef USList < MOAIProp2D* >::Iterator RenderPassIt;
 	USList < MOAIProp2D* > mRenderPasses;
@@ -55,10 +52,6 @@ private:
 	GLbitfield		mClearFlags;
 	u32				mClearColor;
 	
-	STLString		mUniqueID;
-	
-	bool			mHasNetwork;
-	
 	USTaskThread	mDataIOThread;
 	
 	//----------------------------------------------------------------//
@@ -66,12 +59,10 @@ private:
 	static int		_enterFullscreenMode		( lua_State* L );
 	static int		_exitFullscreenMode			( lua_State* L );
 	static int		_framesToTime				( lua_State* L );
-	static int		_getDeviceIDString			( lua_State* L );
 	static int		_getDeviceSize				( lua_State* L );
 	static int		_getElapsedFrames			( lua_State* L );
 	static int		_getElapsedTime				( lua_State* L );
 	static int		_getFrameSize				( lua_State* L );
-	static int		_getNetworkStatus			( lua_State* L );
 	static int		_getPerformance				( lua_State* L );
 	static int		_openWindow					( lua_State* L );
 	static int		_pauseTimer					( lua_State* L );
@@ -104,10 +95,6 @@ public:
 	void		ResumeMOAI					();
 	void		RunFile						( cc8* filename );
 	void		RunString					( cc8* script );
-	void		SetHeading					( double degrees );
-	void		SetLonLat					( double lon, double lat, double accuracy );
-	void		SetReachability				( bool networkStatus );
-	void		SetUniqueIdentifier			( cc8* uniqueID );
 	void		Update						();
 	STLString	ToString					();
 };

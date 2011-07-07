@@ -678,6 +678,14 @@
 			Name="util"
 			>
 			<File
+				RelativePath="..\..\src\moaicore\MOAIClass.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIClass.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\moaicore\MOAIDataBuffer.cpp"
 				>
 			</File>

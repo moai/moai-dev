@@ -80,10 +80,10 @@ public:
 	void			AddLuaReturn			( USLuaObject* object );
 	void			AddLuaReturn			( USLuaState& state, int idx );
 	void			Clear					();
-	USLuaObject*		Dereference				( USLuaState& state, int idx );
-	USLuaObject*		GetRefField				( USLuaState& state, int idx, cc8* name );
+	USLuaObject*	Dereference				( USLuaState& state, int idx );
+	USLuaObject*	GetRefField				( USLuaState& state, int idx, cc8* name );
 	u32				IsLuaFile				( cc8* filename );
-	USLuaObject*		PopRef					( USLuaState& state );
+	USLuaObject*	PopRef					( USLuaState& state );
 	void			PushRef					( USLuaState& state, USLuaObject* object );
 	u32				SerializeFromFile		( cc8* filename );
 	STLString		SerializeToString		();

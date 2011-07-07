@@ -358,7 +358,6 @@ void* USLuaState::GetPtrUserData ( int idx ) {
 	if ( this->IsType ( idx, LUA_TUSERDATA )) {
 		ptr = *( void** )lua_touserdata ( this->mState, idx );
 	}
-	
 	return ptr;
 }
 

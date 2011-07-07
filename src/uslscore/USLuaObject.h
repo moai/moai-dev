@@ -25,8 +25,11 @@ protected:
 
 
 	//----------------------------------------------------------------//
-	static int		_delete		( lua_State* L );
-	//static int		_tostring	( lua_State* L );
+	static int				_delete					( lua_State* L );
+	static int				_false					( lua_State* L );
+	static int				_gc						( lua_State* L );
+	static int				_true					( lua_State* L );
+	//static int			_tostring				( lua_State* L );
 
 	//----------------------------------------------------------------//
 	void					OnRelease				( u32 refCount );
