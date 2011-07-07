@@ -95,7 +95,7 @@ void _AKUShowSoftwareKeyboardFunc () {
 //----------------------------------------------------------------//
 void _AKUStartGameLoopFunc () {
 	
-	MoaiView* moaiView = ( MoaiView* )AKUGetContextUser ();
+	MoaiView* moaiView = ( MoaiView* )AKUGetUserdata ();
 	[ moaiView startAnimation ];
 }
 
@@ -190,10 +190,11 @@ void _AKUStartGameLoopFunc () {
 	//----------------------------------------------------------------//
 	-( void ) moaiInit {
 	
-		mAku = AKUCreateContext ( self );
+		mAku = AKUCreateContext ();
+		AKUSetUserdata ( self );
 		
-		AKUExtLoadLuasql();
-		AKUExtLoadLuacurl();
+		AKUExtLoadLuasql ();
+		AKUExtLoadLuacurl ();
 		AKUExtLoadLuacrypto ();
 		AKUExtLoadLuasocket ();
 		

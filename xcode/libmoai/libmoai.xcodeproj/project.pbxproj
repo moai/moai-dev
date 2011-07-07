@@ -1633,6 +1633,10 @@
 		03B2EC1513C503B400F8B3CF /* MOAIMotionSensor.h in Headers */ = {isa = PBXBuildFile; fileRef = 03B2EC1313C503B400F8B3CF /* MOAIMotionSensor.h */; };
 		03B2EC1613C503B400F8B3CF /* MOAIMotionSensor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03B2EC1213C503B400F8B3CF /* MOAIMotionSensor.cpp */; };
 		03B2EC1713C503B400F8B3CF /* MOAIMotionSensor.h in Headers */ = {isa = PBXBuildFile; fileRef = 03B2EC1313C503B400F8B3CF /* MOAIMotionSensor.h */; };
+		03B9206613C62500007B0824 /* MOAIClass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03B9206413C62500007B0824 /* MOAIClass.cpp */; };
+		03B9206713C62500007B0824 /* MOAIClass.h in Headers */ = {isa = PBXBuildFile; fileRef = 03B9206513C62500007B0824 /* MOAIClass.h */; };
+		03B9206813C62500007B0824 /* MOAIClass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03B9206413C62500007B0824 /* MOAIClass.cpp */; };
+		03B9206913C62500007B0824 /* MOAIClass.h in Headers */ = {isa = PBXBuildFile; fileRef = 03B9206513C62500007B0824 /* MOAIClass.h */; };
 		03E4E94113664F7C008D079B /* MOAIParticle.h in Headers */ = {isa = PBXBuildFile; fileRef = 03E4E94013664F7C008D079B /* MOAIParticle.h */; };
 		03E4E94213664F7C008D079B /* MOAIParticle.h in Headers */ = {isa = PBXBuildFile; fileRef = 03E4E94013664F7C008D079B /* MOAIParticle.h */; };
 		03F135DA13A2EFC000044AE8 /* MoaiUiWebView.h in Headers */ = {isa = PBXBuildFile; fileRef = 03F135D613A2EFC000044AE8 /* MoaiUiWebView.h */; };
@@ -3612,6 +3616,8 @@
 		039C283C138EDAB300A3A780 /* MOAIDeckRemapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIDeckRemapper.h; sourceTree = "<group>"; };
 		03B2EC1213C503B400F8B3CF /* MOAIMotionSensor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIMotionSensor.cpp; sourceTree = "<group>"; };
 		03B2EC1313C503B400F8B3CF /* MOAIMotionSensor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIMotionSensor.h; sourceTree = "<group>"; };
+		03B9206413C62500007B0824 /* MOAIClass.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIClass.cpp; sourceTree = "<group>"; };
+		03B9206513C62500007B0824 /* MOAIClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIClass.h; sourceTree = "<group>"; };
 		03C2F6F4104DE130009A2D5D /* libmoai-ios.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		03E4E94013664F7C008D079B /* MOAIParticle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIParticle.h; sourceTree = "<group>"; };
 		03F135D613A2EFC000044AE8 /* MoaiUiWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MoaiUiWebView.h; path = "moaiext-iphone/MoaiUiWebView.h"; sourceTree = "<group>"; };
@@ -5606,6 +5612,8 @@
 		CD148EE81395AE2600A3F501 /* util */ = {
 			isa = PBXGroup;
 			children = (
+				03B9206413C62500007B0824 /* MOAIClass.cpp */,
+				03B9206513C62500007B0824 /* MOAIClass.h */,
 				0324E52513564BC7000ADC60 /* MOAIDataBuffer.cpp */,
 				0324E52613564BC7000ADC60 /* MOAIDataBuffer.h */,
 				0324E52713564BC7000ADC60 /* MOAIDataIOAction.cpp */,
@@ -8085,6 +8093,7 @@
 				CD7C726E13B947AC006CFA19 /* AKU-particles.h in Headers */,
 				033B1E6313C4EC8A00CE21D2 /* MOAIActionMgr.h in Headers */,
 				03B2EC1713C503B400F8B3CF /* MOAIMotionSensor.h in Headers */,
+				03B9206913C62500007B0824 /* MOAIClass.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8712,6 +8721,7 @@
 				07E885C213BE3E78008D75AA /* MOAIParticleTimedEmitter.h in Headers */,
 				033B1E6113C4EC8A00CE21D2 /* MOAIActionMgr.h in Headers */,
 				03B2EC1513C503B400F8B3CF /* MOAIMotionSensor.h in Headers */,
+				03B9206713C62500007B0824 /* MOAIClass.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9426,6 +9436,7 @@
 				0392971713BE44010077B742 /* MOAIParticleTimedEmitter.cpp in Sources */,
 				033B1E6213C4EC8A00CE21D2 /* MOAIActionMgr.cpp in Sources */,
 				03B2EC1613C503B400F8B3CF /* MOAIMotionSensor.cpp in Sources */,
+				03B9206813C62500007B0824 /* MOAIClass.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10490,6 +10501,7 @@
 				07E885C113BE3E78008D75AA /* MOAIParticleTimedEmitter.cpp in Sources */,
 				033B1E6013C4EC8A00CE21D2 /* MOAIActionMgr.cpp in Sources */,
 				03B2EC1413C503B400F8B3CF /* MOAIMotionSensor.cpp in Sources */,
+				03B9206613C62500007B0824 /* MOAIClass.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

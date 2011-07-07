@@ -205,26 +205,42 @@ int MOAIWebView::_initWebView ( lua_State* L ) {
 	
 	int left = lua_tointeger ( state, 2 );
 	int top = lua_tointeger ( state, 3 );
-	int width = lua_tointeger ( state, 4 );
-	int height = lua_tointeger ( state, 5 );
+	int right = lua_tointeger ( state, 4 );
+	int bottom = lua_tointeger ( state, 5 );
 	bool hidden = lua_toboolean ( state, 6 );
 			
 	if ( self->mWebView ) {
+		
 		self->mWebView.delegate = nil;
 		[ self->mWebView stopLoading ];
 		[ self->mWebView removeFromSuperview ];
 	}	
 	
 	UIWindow* window = [[ UIApplication sharedApplication ] keyWindow ];		
-	self->mWebView = [[[ UIWebView alloc ] initWithFrame:CGRectMake( left, top, width, height )] autorelease ];
-	[ self->mWebView setDelegate:self->mWebViewDelegate ];
-	[ self->mWebView setScalesPageToFit:YES ];
-	[ self->mWebView setMultipleTouchEnabled:YES ];
-	[ window addSubview:self->mWebView ];
 	
-	if ( hidden )
-		self->mWebView.hidden = true;
-	
+	if ( window ) {
+		
+		self->mWebView = [[[ UIWebView alloc ] initWithFrame:CGRectMake ( left, top, right, bottom )] autorelease ];
+		[ self->mWebView setDelegate:self->mWebViewDelegate ];
+		[ self->mWebView setScalesPageToFit:YES ];
+		[ self->mWebView setMultipleTouchEnabled:YES ];
+
+		if ([[ UIScreen mainScreen ] respondsToSelector:@selector ( scale )]) {
+			
+			CGFloat screenScale = [[ UIScreen mainScreen ] scale ];
+			CGRect screenFrame = [[ UIScreen mainScreen ] applicationFrame ];
+						
+			self->mWebView.transform = CGAffineTransformMakeScale ( 1 / screenScale, 1 / screenScale );
+			self->mWebView.center = CGPointMake ( screenFrame.size.width / 2, screenFrame.size.height / 2 );
+		}
+
+		[ window addSubview:self->mWebView ];
+
+		if ( hidden ) {
+			self->mWebView.hidden = true;
+		}
+	}
+
 	return 0;
 }
 

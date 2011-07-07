@@ -4,15 +4,12 @@
 -- http://getmoai.com
 ----------------------------------------------------------------
 
-package.path = package.path .. ";../../src/lua-modules/?.lua"
 require "tapjoy"
 
-tapjoy.init ( "c38e3b26-3966-4519-82e4-615df57f809f", "lPo9KaVidLxQINpohxw5" )
-
-MOAISim.openWindow ( "test", 320, 480 )
+tapjoy.init ( "7f0cc735-d561-4761-b74b-91fd6787d200", "ZnIBakPig9ygaJN4lAod" )
 
 viewport = MOAIViewport.new ()
-viewport:setSize ( 320, 480 )
+viewport:setSize ( 320 * 2, 480 * 2 )
 viewport:setScale ( 320, 480 )
 
 layer = MOAILayer2D.new ()
@@ -67,13 +64,12 @@ MOAISim.pushRenderPass ( layer )
 -----------------------------------------------------------------
 -- Featured app ad example
 -----------------------------------------------------------------
+function webViewCreatedCallback ( task, webView )
 
-function webviewCreatedCallback ( webView )
-
-	webView:showWebView ( )
+	webView:showWebView ()
 end
 
-tapjoy.getFeaturedAppWebView ( webviewCreatedCallback )
+tapjoy.getFeaturedAppWebView ( webViewCreatedCallback )
 
 -----------------------------------------------------------------
 -- End Featured app ad example

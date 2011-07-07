@@ -67,12 +67,17 @@ local function createWebViewFromFeaturedCallback ( task )
 		
 		local webView = MOAIWebView.new ()
 		webView:setListener ( MOAIWebView.SHOULD_START_LOAD_WITH_REQUEST, dismissWebViewOnSkip )
+		
+		webView:setListener ( MOAIWebView.WEB_VIEW_DID_FINISH_LOAD,
+			function ( self )
+				if util.isFunc ( task.userDoneCallback ) then
+					task.userDoneCallback ( task, self )
+				end
+			end
+		)
+		
 		webView:initWebView ( 0, 0, width, height, true )	
 		webView:loadRequest ( jsonTable.OfferArray[ 1 ].FullScreenAdURL )
-		
-		if util.isFunc ( task.userDoneCallback ) then
-			task.userDoneCallback ( task, webView )
-		end
 	end
 end
 
@@ -163,7 +168,7 @@ end
 ----------------------------------------------------------------
 function getFeaturedAppWebView ( callbackFunc )
 	
-	if ( not mAppId ) or ( not mAppSecretkey ) then
+	if ( not mAppId ) or ( not mAppSecretKey ) then
 		error ( "tapjoy.getFeaturedAppWebView called before tapjoy.init was called with valid parameters", 2 )
 	end
 
