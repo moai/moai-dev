@@ -13,7 +13,6 @@
 #include <moaicore/MOAIButtonSensor.h>
 #include <moaicore/MOAICameraAnchor2D.h>
 #include <moaicore/MOAICameraFitter2D.h>
-#include <moaicore/MOAIClass.h>
 #include <moaicore/MOAIColor.h>
 #include <moaicore/MOAICompassSensor.h>
 #include <moaicore/MOAIDataBuffer.h>

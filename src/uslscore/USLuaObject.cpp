@@ -15,29 +15,10 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-int USLuaObject::_delete ( lua_State* L ) {
-
-	USLuaState state ( L );
-	USLuaObject* data = ( USLuaObject* )state.GetPtrUserData ( 1 );
-
-	if ( data ) {
-		delete data;
-	}
-	return 0;
-}
-
-//----------------------------------------------------------------//
-int USLuaObject::_false ( lua_State* L ) {
-
-	lua_pushboolean ( L, 0 );
-	return 1;
-}
-
-//----------------------------------------------------------------//
 int USLuaObject::_gc ( lua_State* L ) {
 
 	USLuaState state ( L );
-
+	
 	USLuaObject* data = ( USLuaObject* )state.GetPtrUserData ( 1 );
 
 	bool cleanup = data->mUserdata.IsWeak ();
@@ -50,10 +31,29 @@ int USLuaObject::_gc ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-int USLuaObject::_true ( lua_State* L ) {
+int USLuaObject::_getClass ( lua_State* L ) {
 
-	lua_pushboolean ( L, 0 );
-	return 1;
+	USLuaState state ( L );
+	USLuaObject* object = ( USLuaObject* )state.GetPtrUserData ( 1 );
+
+	if ( object ) {
+		object->PushLuaClassTable ( state );
+		return 1;
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+int USLuaObject::_getClassName ( lua_State* L ) {
+
+	USLuaState state ( L );
+	USLuaObject* object = ( USLuaObject* )state.GetPtrUserData ( 1 );
+
+	if ( object ) {
+		lua_pushstring ( L, object->TypeName ());
+		return 1;
+	}
+	return 0;
 }
 
 //----------------------------------------------------------------//
@@ -280,6 +280,13 @@ void USLuaClass::InitLuaFactoryClass ( USLuaObject& data, USLuaState& state ) {
 	int top = lua_gettop ( state );
 
 	lua_newtable ( state );
+	
+	lua_pushcfunction ( state, USLuaObject::_getClass );
+	lua_setfield ( state, -2, "getClass" );
+	
+	lua_pushcfunction ( state, USLuaObject::_getClassName );
+	lua_setfield ( state, -2, "getClassName" );
+
 	data.RegisterLuaFuncs ( state );
 
 	lua_pushvalue ( state, -1 );
@@ -288,8 +295,8 @@ void USLuaClass::InitLuaFactoryClass ( USLuaObject& data, USLuaState& state ) {
 	lua_pushnil ( state );
 	lua_setfield ( state, -2, "__newindex" );
 
-	lua_pushcfunction ( state, USLuaObject::_delete );
-	lua_setfield ( state, -2, "delete" );
+	//lua_pushcfunction ( state, _tostring );
+	//lua_setfield ( state, -2, "__tostring" );
 
 	this->mMemberTable = state.GetStrongRef ( -1 );
 	
@@ -318,14 +325,10 @@ void USLuaClass::InitLuaInstanceTable ( USLuaObject* data, USLuaState& state, in
 	lua_pushvalue ( state, idx );
 	lua_setfield ( state, idx, "__newindex" );
 
-	state.Push ( this->mMemberTable );
-	
 	lua_pushcfunction ( state, USLuaObject::_gc );
 	lua_setfield ( state, idx, "__gc" );
-	
-	//lua_pushcfunction ( state, _tostring );
-	//lua_setfield ( state, idx, "__tostring" );
-	
+
+	state.Push ( this->mMemberTable );
 	lua_setmetatable ( state, idx );
 }
 

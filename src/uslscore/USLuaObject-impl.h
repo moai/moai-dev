@@ -28,6 +28,15 @@ class USLuaFactoryClass :
 private:
 
 	//----------------------------------------------------------------//
+	static int _getClassName ( lua_State* L ) {
+
+		TYPE object;
+		
+		lua_pushstring ( L, object.TypeName ());
+		return 1;
+	}
+
+	//----------------------------------------------------------------//
 	static int _new ( lua_State* L ) {
 
 		USLuaState state ( L );
@@ -43,6 +52,7 @@ private:
 	void RegisterLuaClass ( USLuaState& state ) {
 		
 		luaL_Reg regTable [] = {
+			{ "getClassName",			_getClassName },
 			{ "new",					_new },
 			{ NULL, NULL }
 		};

@@ -25,10 +25,9 @@ protected:
 
 
 	//----------------------------------------------------------------//
-	static int				_delete					( lua_State* L );
-	static int				_false					( lua_State* L );
 	static int				_gc						( lua_State* L );
-	static int				_true					( lua_State* L );
+	static int				_getClass				( lua_State* L );
+	static int				_getClassName			( lua_State* L );
 	//static int			_tostring				( lua_State* L );
 
 	//----------------------------------------------------------------//
