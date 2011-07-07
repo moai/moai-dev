@@ -71,6 +71,54 @@ int MOAIEnvironment::_getCacheDirectory ( lua_State* L  ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	getCarrierISOCountryCode
+	@text	Returns the ISO country code for the device cellular service provider
+
+	@out	string isoCode
+*/
+int MOAIEnvironment::_getCarrierISOCountryCode ( lua_State* L  ) {
+
+	lua_pushstring ( L, MOAIEnvironment::Get ().mCarrierISOCountryCode.c_str ());
+	return 1;
+}
+
+//----------------------------------------------------------------//
+/**	@name	getCarrierMobileCountryCode
+	@text	Returns the mobile country code for the device cellular service provider
+
+	@out	string mobileCountryCode
+*/
+int MOAIEnvironment::_getCarrierMobileCountryCode ( lua_State* L  ) {
+
+	lua_pushstring ( L, MOAIEnvironment::Get ().mCarrierMobileCountryCode.c_str ());
+	return 1;
+}
+
+//----------------------------------------------------------------//
+/**	@name	getCarrierMobileNetworkCode
+	@text	Returns the mobile network code for the device cellular service provider
+
+	@out	string mobileNetworkCode
+*/
+int MOAIEnvironment::_getCarrierMobileNetworkCode ( lua_State* L  ) {
+
+	lua_pushstring ( L, MOAIEnvironment::Get ().mCarrierMobileNetworkCode.c_str ());
+	return 1;
+}
+
+//----------------------------------------------------------------//
+/**	@name	getCarrierName
+	@text	Returns the name of the device cellular service provider
+
+	@out	string name
+*/
+int MOAIEnvironment::_getCarrierName ( lua_State* L  ) {
+
+	lua_pushstring ( L, MOAIEnvironment::Get ().mCarrierName.c_str ());
+	return 1;
+}
+
+//----------------------------------------------------------------//
 /**	@name	_getConnectionType
 	@text	Gets whether the device is connected to WIFI, WWAN or nothing
 
@@ -81,6 +129,18 @@ int MOAIEnvironment::_getConnectionType ( lua_State* L ) {
 	u32 type = ( u32) MOAIEnvironment::Get ().getConnectivityFunc ();
 
 	lua_pushinteger ( L, type );
+	return 1;
+}
+
+//----------------------------------------------------------------//
+/**	@name	_getCountryCode
+	@text	Gets the country code of the current location
+	
+	@out	string countryCode
+*/
+int MOAIEnvironment::_getCountryCode ( lua_State* L ) {
+
+	lua_pushstring ( L, MOAIEnvironment::Get ().mCountryCode.c_str ());
 	return 1;
 }
 
@@ -169,6 +229,18 @@ int MOAIEnvironment::_getDocumentDirectory ( lua_State* L  ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	getLanguageCode
+	@text	Returns the language code
+
+	@out	string languageCode
+*/
+int MOAIEnvironment::_getLanguageCode ( lua_State* L  ) {
+
+	lua_pushstring ( L, MOAIEnvironment::Get ().mLanguageCode.c_str ());
+	return 1;
+}
+
+//----------------------------------------------------------------//
 /**	@name	getOSBrand
 	@text	Returns the operating system brand
 
@@ -242,6 +314,18 @@ int MOAIEnvironment::_getViewSize ( lua_State* L  ) {
 	return 2;
 }
 
+//----------------------------------------------------------------//
+/**	@name	_isRetinaDisplay
+	@text	Returns whether or not the device has a Retina Display 
+	
+	@out	bool isRetinaDisplay
+*/
+int MOAIEnvironment::_isRetinaDisplay ( lua_State* L  ) {
+
+	lua_pushboolean ( L, MOAIEnvironment::Get ().mIsRetinaDisplay );
+	return 1;
+}
+
 //================================================================//
 // MOAIEnvironment
 //================================================================//
@@ -252,6 +336,11 @@ MOAIEnvironment::MOAIEnvironment () :
 	mAppID ( "UNKNOWN" ),
 	mAppVersion ( "UNKNOWN" ),
 	mCacheDirectory ( "UNKNOWN" ),
+	mCarrierISOCountryCode ( "UNKNOWN" ),
+	mCarrierMobileCountryCode ( "UNKNOWN" ),
+	mCarrierMobileNetworkCode ( "UNKNOWN" ),
+	mCarrierName ( "UNKNOWN" ),
+	mCountryCode ( "UNKNOWN" ),
 	mCPUABI ( "UNKNOWN" ),
 	mDevBrand ( "UNKNOWN" ),
 	mDevName ( "UNKNOWN" ),
@@ -259,6 +348,8 @@ MOAIEnvironment::MOAIEnvironment () :
 	mDevModel ( "UNKNOWN" ),
 	mDevProduct ( "UNKNOWN" ),
 	mDocumentDirectory ( "UNKNOWN" ),
+	mIsRetinaDisplay ( false ),
+	mLanguageCode ( "UNKNOWN" ),
 	mOSBrand ( "UNKNOWN" ),
 	mOSVersion ( "UNKNOWN" ),
 	mResourceDirectory ( "UNKNOWN" ),
@@ -283,24 +374,31 @@ void MOAIEnvironment::RegisterLuaClass ( USLuaState& state ) {
 	state.SetField ( -1, "OS_BRAND_UNAVAILABLE", ( u32 )OS_BRAND_UNAVAILABLE );
 
 	luaL_Reg regTable [] = {
-		{ "generateGUID",			_generateGUID			},
-		{ "getAppDisplayName",		_getAppDisplayName		},
-		{ "getAppID",				_getAppID				},
-		{ "getAppVersion",			_getAppVersion			},
-		{ "getCacheDirectory",		_getCacheDirectory		},
-		{ "getConnectionType",		_getConnectionType		},
-		{ "getCPUABI",				_getCPUABI				},
-		{ "getDevBrand",			_getDevBrand			},
-		{ "getDevName",				_getDevName				},
-		{ "getDevManufacturer",		_getDevManufacturer		},
-		{ "getDevModel",			_getDevModel			},
-		{ "getDevProduct",			_getDevProduct			},
-		{ "getDocumentDirectory",	_getDocumentDirectory	},
-		{ "getOSBrand",				_getOSBrand				},
-		{ "getOSVersion",			_getOSVersion			},
-		{ "getResourceDirectory",	_getResourceDirectory	},
-		{ "getUDID",				_getUDID				},
-		{ "getViewSize",			_getViewSize			},
+		{ "generateGUID",					_generateGUID					},
+		{ "getAppDisplayName",				_getAppDisplayName				},
+		{ "getAppID",						_getAppID						},
+		{ "getAppVersion",					_getAppVersion					},
+		{ "getCacheDirectory",				_getCacheDirectory				},
+		{ "getCarrierISOCountryCode",		_getCarrierISOCountryCode		},
+		{ "getCarrierMobileCountryCode",	_getCarrierMobileCountryCode	},
+		{ "getCarrierMobileNetworkCode",	_getCarrierMobileNetworkCode	},
+		{ "getCarrierName",					_getCarrierName					},
+		{ "getConnectionType",				_getConnectionType				},
+		{ "getCountryCode",					_getCountryCode					},
+		{ "getCPUABI",						_getCPUABI						},
+		{ "getDevBrand",					_getDevBrand					},
+		{ "getDevName",						_getDevName						},
+		{ "getDevManufacturer",				_getDevManufacturer				},
+		{ "getDevModel",					_getDevModel					},
+		{ "getDevProduct",					_getDevProduct					},
+		{ "getDocumentDirectory",			_getDocumentDirectory			},
+		{ "getLanguageCode",				_getLanguageCode				},
+		{ "getOSBrand",						_getOSBrand						},
+		{ "getOSVersion",					_getOSVersion					},
+		{ "getResourceDirectory",			_getResourceDirectory			},
+		{ "getUDID",						_getUDID						},
+		{ "getViewSize",					_getViewSize					},
+		{ "isRetinaDisplay",				_isRetinaDisplay				},
 		{ NULL, NULL }
 	};
 
@@ -328,8 +426,33 @@ void MOAIEnvironment::SetCacheDirectory ( cc8* cacheDir ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIEnvironment::SetCarrierISOCountryCode ( cc8* isoCode ) {
+	mCarrierISOCountryCode = isoCode;
+}
+
+//----------------------------------------------------------------//
+void MOAIEnvironment::SetCarrierMobileCountryCode ( cc8* mobCountryCode ) {
+	mCarrierMobileCountryCode = mobCountryCode;
+}
+
+//----------------------------------------------------------------//
+void MOAIEnvironment::SetCarrierMobileNetworkCode ( cc8* mobNetworkCode ) {
+	mCarrierMobileNetworkCode = mobNetworkCode;
+}
+
+//----------------------------------------------------------------//
+void MOAIEnvironment::SetCarrierName ( cc8* name ) {
+	mCarrierName = name;
+}
+
+//----------------------------------------------------------------//
 void MOAIEnvironment::SetConnectivityFunc ( long (*connFunc)(void) ) {
 	getConnectivityFunc = connFunc;
+}
+
+//----------------------------------------------------------------//
+void MOAIEnvironment::SetCountryCode ( cc8* countryCode ) {
+	mCountryCode = countryCode;
 }
 
 //----------------------------------------------------------------//
@@ -370,6 +493,16 @@ void MOAIEnvironment::SetDocumentDirectory ( cc8* docDir ) {
 //----------------------------------------------------------------//
 void MOAIEnvironment::SetGUIDFunc ( cc8* (*guidFunc)(void) ) {
 	getGUIDfunc = guidFunc;
+}
+
+//----------------------------------------------------------------//
+void MOAIEnvironment::SetIsRetinaDisplay ( bool isRetina ) {
+	mIsRetinaDisplay = isRetina;
+}
+
+//----------------------------------------------------------------//
+void MOAIEnvironment::SetLanguageCode ( cc8* langCode ) {
+	mLanguageCode = langCode;
 }
 
 //----------------------------------------------------------------//
