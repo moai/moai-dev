@@ -218,27 +218,24 @@ int MOAIWebView::_initWebView ( lua_State* L ) {
 	
 	UIWindow* window = [[ UIApplication sharedApplication ] keyWindow ];		
 	
-	if ( window ) {
+	self->mWebView = [[[ UIWebView alloc ] initWithFrame:CGRectMake ( left, top, right, bottom )] autorelease ];
+	[ self->mWebView setDelegate:self->mWebViewDelegate ];
+	[ self->mWebView setScalesPageToFit:YES ];
+	[ self->mWebView setMultipleTouchEnabled:YES ];
+
+	if ([[ UIScreen mainScreen ] respondsToSelector:@selector ( scale )]) {
 		
-		self->mWebView = [[[ UIWebView alloc ] initWithFrame:CGRectMake ( left, top, right, bottom )] autorelease ];
-		[ self->mWebView setDelegate:self->mWebViewDelegate ];
-		[ self->mWebView setScalesPageToFit:YES ];
-		[ self->mWebView setMultipleTouchEnabled:YES ];
+		CGFloat screenScale = [[ UIScreen mainScreen ] scale ];
+		CGRect screenFrame = [[ UIScreen mainScreen ] applicationFrame ];
+					
+		self->mWebView.transform = CGAffineTransformMakeScale ( 1 / screenScale, 1 / screenScale );
+		self->mWebView.center = CGPointMake ( screenFrame.size.width / 2, screenFrame.size.height / 2 );
+	}
 
-		if ([[ UIScreen mainScreen ] respondsToSelector:@selector ( scale )]) {
-			
-			CGFloat screenScale = [[ UIScreen mainScreen ] scale ];
-			CGRect screenFrame = [[ UIScreen mainScreen ] applicationFrame ];
-						
-			self->mWebView.transform = CGAffineTransformMakeScale ( 1 / screenScale, 1 / screenScale );
-			self->mWebView.center = CGPointMake ( screenFrame.size.width / 2, screenFrame.size.height / 2 );
-		}
+	[ window addSubview:self->mWebView ];
 
-		[ window addSubview:self->mWebView ];
-
-		if ( hidden ) {
-			self->mWebView.hidden = true;
-		}
+	if ( hidden ) {
+		self->mWebView.hidden = true;
 	}
 
 	return 0;
@@ -360,10 +357,10 @@ int MOAIWebView::_openUrlInSafari ( lua_State* L ) {
 	if ( !state.CheckParams ( 1, "S" )) return 0;
 	
 	cc8* urlStr = lua_tostring ( state, 1 );
-	NSString* urlString = [[ NSString alloc ] initWithCString:urlStr encoding:[NSString defaultCStringEncoding] ];
+	NSString* urlString = [[ NSString alloc ] initWithCString:urlStr encoding:[ NSString defaultCStringEncoding ]];
 	NSURL* url = [ NSURL URLWithString:urlString ];
 	
-	[[UIApplication sharedApplication] openURL:url];
+	[[ UIApplication sharedApplication ] openURL:url ];
 	
 	return 0;
 }
@@ -440,13 +437,13 @@ int MOAIWebView::_setScalesPageToFit ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	showWebView
+/**	@name	show
 	@text	puts the web view onto the current view controller
 	
 	@in		MOAIWebView self
 	@out	nil
 */
-int MOAIWebView::_showWebView ( lua_State* L ) {	
+int MOAIWebView::_show ( lua_State* L ) {	
 	MOAI_LUA_SETUP ( MOAIWebView, "U" );
 			
 	self->mWebView.hidden = false;		
@@ -592,7 +589,7 @@ void MOAIWebView::RegisterLuaFuncs ( USLuaState& state ) {
 		{ "setAllowsInlineMediaPLayback",   _setAllowsInlineMediaPlayback },
 		{ "setMediaPlaybackRequiresAction", _setMediaPlaybackRequiresAction },
 		{ "setScalesPageToFit",				_setScalesPageToFit },
-		{ "showWebView",					_showWebView },
+		{ "show",					_show },
 		{ NULL, NULL }
 	};
 	
