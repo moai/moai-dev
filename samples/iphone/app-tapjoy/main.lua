@@ -1,76 +1,88 @@
-----------------------------------------------------------------
+--==============================================================
 -- Copyright (c) 2010-2011 Zipline Games, Inc. 
 -- All Rights Reserved. 
 -- http://getmoai.com
-----------------------------------------------------------------
+--==============================================================
 
 require "tapjoy"
 
-tapjoy.init ( "7f0cc735-d561-4761-b74b-91fd6787d200", "ZnIBakPig9ygaJN4lAod" )
+SCREEN_UNITS_X = 640
+SCREEN_UNITS_Y = 960
+
+--if MOAIEnvironment.isRetinaDisplay () then
+	SCREEN_WIDTH = 640
+	SCREEN_HEIGHT = 960
+--else
+--	SCREEN_WIDTH = 320
+--	SCREEN_HEIGHT = 480
+--end
 
 viewport = MOAIViewport.new ()
-viewport:setSize ( 320 * 2, 480 * 2 )
-viewport:setScale ( 320, 480 )
+viewport:setSize ( SCREEN_WIDTH, SCREEN_HEIGHT )
+viewport:setScale ( SCREEN_UNITS_X, SCREEN_UNITS_Y )
 
 layer = MOAILayer2D.new ()
 layer:setViewport ( viewport )
 MOAISim.pushRenderPass ( layer )
 
------------------------------------------------------------------
--- Offers WebView example
------------------------------------------------------------------
+--==============================================================
+-- tapjoy examples
+--==============================================================
 
---function shouldStart ()
+ACTIVE_EXAMPLE = "showOffersWebView"
+--ACTIVE_EXAMPLE = "showFeaturedAppWebView"
+--ACTIVE_EXAMPLE = "getBannerAdProp"
 
---	return true
---end
-
---webView = MOAIWebView.new ()
---webView:initWebView ( 20, 20, 280, 210, false )
---webView:setListener ( MOAIWebView.SHOULD_START_LOAD_WITH_REQUEST, shouldStart )
-
---webViewTwo = MOAIWebView.new ()
---webViewTwo:initWebView ( 20, 250, 280, 210, false )
-
---function httpCallback ( httpTask )
-
---	if ( httpTask:getSize () > 0 ) then	
---		webView:loadHTML ( httpTask:getString ())
---		webViewTwo:loadRequest ( "http://www.google.com" )
---	end
---end
-
---tapjoy.getOffersWeb ( httpCallback )
+tapjoy.init ( "7f0cc735-d561-4761-b74b-91fd6787d200", "ZnIBakPig9ygaJN4lAod" )
 
 -----------------------------------------------------------------
--- End Offers WebView example
+-- offers webview example
 -----------------------------------------------------------------
+if ACTIVE_EXAMPLE == "showOffersWebView" then
+	
+	function showOffersWebViewCallback ( task, webView )
 
------------------------------------------------------------------
--- Banner ad example
------------------------------------------------------------------
+		webView:show ()
+	end
 
---function bannerCreatedCallback ( bannerProp )
-
---	layer:insertProp ( bannerProp )
---end
-
---tapjoy.getBannerAdProp ( "320x50", bannerCreatedCallback )
-
------------------------------------------------------------------
--- End Banner ad example
------------------------------------------------------------------
-
------------------------------------------------------------------
--- Featured app ad example
------------------------------------------------------------------
-function webViewCreatedCallback ( task, webView )
-
-	webView:showWebView ()
+	tapjoy.showOffersWebView ( showOffersWebViewCallback )
 end
 
-tapjoy.getFeaturedAppWebView ( webViewCreatedCallback )
+-----------------------------------------------------------------
+-- featured app ad example
+-----------------------------------------------------------------
+if ACTIVE_EXAMPLE == "showFeaturedAppWebView" then
+
+	function showFeaturedAppWebViewCallback ( task, webView )
+
+		webView:show ()
+	end
+
+	tapjoy.showFeaturedAppWebView ( showFeaturedAppWebViewCallback )
+end
 
 -----------------------------------------------------------------
--- End Featured app ad example
+-- banner ad example
 -----------------------------------------------------------------
+if ACTIVE_EXAMPLE == "getBannerAdProp" then
+
+	function getBannerAdPropCallback ( task, bannerProp )
+
+		-- add banner ad prop to layer
+		layer:insertProp ( bannerProp )
+		
+		-- set up click behavior for banner ad prop
+		MOAIInputMgr.device.touch:setCallback ( 
+			
+			function ( eventType, id, x, y, tapCount )
+			
+				if ( eventType == MOAITouchSensor.TOUCH_DOWN ) and bannerProp:inside ( layer:wndToWorld ( x, y )) then
+					local jsonTable = MOAIJsonParser.decode ( task:getString () )
+					MOAIWebView.openUrlInSafari ( jsonTable.ClickURL )
+				end
+			end
+		)
+	end
+
+	tapjoy.getBannerAdProp ( "320x50", getBannerAdPropCallback )
+end
