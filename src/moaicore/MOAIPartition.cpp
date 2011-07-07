@@ -43,6 +43,7 @@ int MOAIPartition::_insertProp ( lua_State* L ) {
 	if ( !prop ) return 0;
 
 	self->InsertProp ( *prop );
+	prop->ScheduleUpdate ();
 
 	return 0;
 }
@@ -146,6 +147,7 @@ int MOAIPartition::_removeProp ( lua_State* L ) {
 	if ( !prop ) return 0;
 
 	self->RemoveProp ( *prop );
+	prop->ScheduleUpdate ();
 
 	return 0;
 }

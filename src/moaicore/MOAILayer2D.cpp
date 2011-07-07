@@ -113,6 +113,7 @@ int	MOAILayer2D::_insertProp ( lua_State* L ) {
 
 	self->AffirmPartition ();
 	self->mPartition->InsertProp ( *prop );
+	prop->ScheduleUpdate ();
 
 	return 0;
 }
@@ -134,6 +135,7 @@ int	MOAILayer2D::_removeProp ( lua_State* L ) {
 
 	if ( self->mPartition ) {
 		self->mPartition->RemoveProp ( *prop );
+		prop->ScheduleUpdate ();
 	}
 
 	return 0;

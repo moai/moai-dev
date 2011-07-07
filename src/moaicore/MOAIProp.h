@@ -77,6 +77,7 @@ public:
 	virtual			~MOAIProp			();
 	void			RegisterLuaClass	( USLuaState& state );
 	void			RegisterLuaFuncs	( USLuaState& state );
+	void			SetPartition		( MOAIPartition* partition );
 	void			UpdateBounds		( u32 status );
 	void			UpdateBounds		( const USRect& bounds, u32 status );
 };

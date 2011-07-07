@@ -620,9 +620,7 @@ void MOAIProp2D::OnDepNodeUpdate () {
 		
 		if ( this->mTraitMask & INHERIT_PARTITION ) {
 			MOAIPartition* partition = this->mTraitSource->GetPartitionTrait ();
-			if ( partition ) {
-				partition->InsertProp ( *this );
-			}
+			this->SetPartition ( partition );
 		}
 		
 		if ( this->mTraitMask & INHERIT_SHADER ) {

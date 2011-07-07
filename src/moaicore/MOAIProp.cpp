@@ -119,6 +119,32 @@ MOAIPartition* MOAIProp::GetPartitionTrait () {
 }
 
 //----------------------------------------------------------------//
+MOAIProp::MOAIProp () :
+	mPartition ( 0 ),
+	mLayer ( 0 ),
+	mCell ( 0 ),
+	mNextResult ( 0 ),
+	mMask ( 0xffffffff ),
+	mCellSize ( 0.0f ),
+	mPriority ( UNKNOWN_PRIORITY ) {
+	
+	RTTI_BEGIN
+		RTTI_EXTEND ( MOAITransform )
+	RTTI_END
+	
+	this->mLinkInCell.Data ( this );
+	this->mBounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
+}
+
+//----------------------------------------------------------------//
+MOAIProp::~MOAIProp () {
+
+	if ( this->mCell ) {
+		this->mCell->RemoveProp ( *this );
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAIProp::RegisterLuaClass ( USLuaState& state ) {
 	
 	MOAITransform::RegisterLuaClass ( state );
@@ -159,6 +185,17 @@ void MOAIProp::SetBounds ( const USRect& bounds ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIProp::SetPartition ( MOAIPartition* partition ) {
+
+	if ( partition ) {
+		partition->InsertProp ( *this );
+	}
+	else if ( this->mPartition ) {
+		this->mPartition->RemoveProp ( *this );
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAIProp::UpdateBounds ( u32 status ) {
 
 	if ( this->mPartition ) {
@@ -177,31 +214,5 @@ void MOAIProp::UpdateBounds ( const USRect& bounds, u32 status ) {
 	}
 	else {
 		this->SetBounds ( bounds );
-	}
-}
-
-//----------------------------------------------------------------//
-MOAIProp::MOAIProp () :
-	mPartition ( 0 ),
-	mLayer ( 0 ),
-	mCell ( 0 ),
-	mNextResult ( 0 ),
-	mMask ( 0xffffffff ),
-	mCellSize ( 0.0f ),
-	mPriority ( UNKNOWN_PRIORITY ) {
-	
-	RTTI_BEGIN
-		RTTI_EXTEND ( MOAITransform )
-	RTTI_END
-	
-	this->mLinkInCell.Data ( this );
-	this->mBounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
-}
-
-//----------------------------------------------------------------//
-MOAIProp::~MOAIProp () {
-
-	if ( this->mCell ) {
-		this->mCell->RemoveProp ( *this );
 	}
 }
