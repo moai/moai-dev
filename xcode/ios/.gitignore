@@ -1,4 +1,6 @@
 build/
+lua/
+/moai-target
 moai-iphone.xcodeproj/project.xcworkspace
 moai-iphone.xcodeproj/xcuserdata/
 *.pbxuser

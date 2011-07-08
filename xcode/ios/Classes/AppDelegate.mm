@@ -48,7 +48,7 @@
 		[ mWindow makeKeyAndVisible ];
 
 		// select product folder
-		[[ NSFileManager defaultManager ] changeCurrentDirectoryPath:[[ NSBundle mainBundle ] resourcePath ]];
+		[[ NSFileManager defaultManager ] changeCurrentDirectoryPath:[[[ NSBundle mainBundle ] resourcePath ] stringByAppendingString:@"/lua" ]];
 		
 		// run scripts
 		[ mMoaiView run:@"main.lua" ];
