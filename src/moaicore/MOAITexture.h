@@ -15,8 +15,12 @@ class MOAIImage;
 /**	@name	MOAITexture
 	@text	Texture class.
 
-	@const	FILTER_POINT
-	@const	FILTER_BILERP
+	@const	GL_LINEAR
+	@const	GL_LINEAR_MIPMAP_LINEAR
+	@const	GL_LINEAR_MIPMAP_NEAREST
+	@const	GL_NEAREST
+	@const	GL_NEAREST_MIPMAP_LINEAR
+	@const	GL_NEAREST_MIPMAP_NEAREST
 */
 class MOAITexture :
 	public virtual USLuaObject,
