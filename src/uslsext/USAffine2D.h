@@ -412,6 +412,67 @@ public:
 		rect.Bless ();
 	}
 
+	template < typename PARAM_TYPE>
+	void TransformQuad ( USMetaVec2D < PARAM_TYPE >* quad ) const {
+	#ifdef MOAI_ARM7
+		TYPE xform_mat[16] = { m[C0_R0], m[C0_R1], 0, 0, //column 1
+		                       m[C1_R0], m[C1_R1], 0, 0, //column 2
+							   m[C2_R0], m[C2_R1], 0, 0, //column 3
+							   0, 0, 0, 0 };			 //column 4
+							   
+		TYPE point_mat[16] = { quad[0].mX, quad[0].mY, 1, 0,   //column 1
+							   quad[1].mX, quad[1].mY, 1, 0,   //column 2
+							   quad[2].mX, quad[2].mY, 1, 0,   //column 3
+							   quad[3].mX, quad[3].mY, 1, 0 }; //column 4
+							   
+   		TYPE outpt_mat[16] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+							   		
+		asm volatile (
+		
+			// Store A & B leaving room at top of registers for result (q0-q3)			
+			"vldmia		%0,		{ q4-q7 }		\n\t"
+			"vldmia		%1,		{ q8-q11 }		\n\t"
+			
+			// result = first column of B x first row of A
+			"vmul.f32	q0,		q8,		d8[0]	\n\t"
+			"vmul.f32	q1,		q8,		d10[0]	\n\t"
+			"vmul.f32	q2,		q8,		d12[0]	\n\t"
+			"vmul.f32	q3,		q8,		d14[0]	\n\t"
+         
+			// result += second column of B x second row of A
+			"vmla.f32	q0,		q9,		d8[1]	\n\t"
+			"vmla.f32	q1,		q9,		d10[1]	\n\t"
+			"vmla.f32	q2,		q9,		d12[1]	\n\t"
+			"vmla.f32	q3,		q9,		d14[1]	\n\t"
+         
+			// result += third column of B x third row of A
+			"vmla.f32	q0,		q10,	d9[0]	\n\t"
+			"vmla.f32	q1,		q10,	d11[0]	\n\t"
+			"vmla.f32	q2,		q10,	d13[0]	\n\t"
+         	"vmla.f32	q3,		q10,	d15[0]	\n\t"
+         
+			// result += last column of B x last row of A
+			"vmla.f32	q0,		q11,	d9[1]	\n\t"
+			"vmla.f32	q1,		q11,	d11[1]	\n\t"
+			"vmla.f32	q2,		q11,	d13[1]	\n\t"
+			"vmla.f32	q3,		q11,	d15[1]	\n\t"
+         
+			// output = result registers
+			"vstmia		%2,		{ q0-q3 }		\n\t"
+			
+			: // no output
+			: "r" (point_mat), "r" (xform_mat), "r" (outpt_mat)  // input - note *value* of pointer doesn't change
+			: "memory", "q0", "q1", "q2", "q3", "q4", "q5", "q6", "q7", "q8", "q9", "q11" //clobber		
+		);
+		
+		quad[0].mX = outpt_mat[0]; quad[0].mY = outpt_mat[1];
+		quad[1].mX = outpt_mat[4]; quad[1].mY = outpt_mat[5];
+		quad[2].mX = outpt_mat[8]; quad[2].mY = outpt_mat[9];
+		quad[3].mX = outpt_mat[12]; quad[3].mY = outpt_mat[13];
+		
+	#endif
+	}
+
 	//----------------------------------------------------------------//
 	// Transforms w/o translation
 	template < typename PARAM_TYPE >
