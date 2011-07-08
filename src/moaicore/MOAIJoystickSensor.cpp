@@ -81,7 +81,8 @@ MOAIJoystickSensor::~MOAIJoystickSensor () {
 
 //----------------------------------------------------------------//
 void MOAIJoystickSensor::RegisterLuaClass ( USLuaState& state ) {
-	UNUSED ( state );
+
+	MOAISensor::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//

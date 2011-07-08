@@ -307,6 +307,8 @@ void MOAITouchSensor::PrintStacks () {
 //----------------------------------------------------------------//
 void MOAITouchSensor::RegisterLuaClass ( USLuaState& state ) {
 
+	MOAISensor::RegisterLuaClass ( state );
+
 	state.SetField ( -1, "TOUCH_DOWN", ( u32 )TOUCH_DOWN );
 	state.SetField ( -1, "TOUCH_MOVE", ( u32 )TOUCH_MOVE );
 	state.SetField ( -1, "TOUCH_UP", ( u32 )TOUCH_UP );

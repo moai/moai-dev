@@ -42,7 +42,6 @@ private:
 	static int	_momentForPolygon	( lua_State* L );
 	static int	_momentForRect		( lua_State* L );
 	static int	_momentForSegment	( lua_State* L );
-	static int	_new				( lua_State* L );
 	static int	_setElasticity		( lua_State* L );
 	static int	_setFriction		( lua_State* L );
 	static int	_setGroup			( lua_State* L );

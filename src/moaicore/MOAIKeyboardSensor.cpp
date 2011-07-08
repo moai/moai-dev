@@ -236,6 +236,8 @@ MOAIKeyboardSensor::~MOAIKeyboardSensor () {
 //----------------------------------------------------------------//
 void MOAIKeyboardSensor::RegisterLuaClass ( USLuaState& state ) {
 
+	MOAISensor::RegisterLuaClass ( state );
+
 	state.SetField ( -1, "SHIFT", ( u32 )MOAIKeyCodes::SHIFT );
 	state.SetField ( -1, "CONTROL", ( u32 )MOAIKeyCodes::CONTROL );
 	state.SetField ( -1, "ALT", ( u32 )MOAIKeyCodes::ALT );

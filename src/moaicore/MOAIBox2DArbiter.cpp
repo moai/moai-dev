@@ -58,19 +58,6 @@ int MOAIBox2DArbiter::_setContactEnabled ( lua_State* L ) {
 	return 0;
 }
 
-//----------------------------------------------------------------//
-/**	@name	new
-	@text	Overrides the default class new method.
-	
-	@out	nil
-*/
-int MOAIBox2DArbiter::_new ( lua_State* L ) {
-	UNUSED ( L );
-	
-	printf ( "MOAIBox2DArbiter.new () is unsupported.\n" );
-	return 0;
-}
-
 //================================================================//
 // MOAIBox2DArbiter
 //================================================================//
@@ -178,7 +165,7 @@ void MOAIBox2DArbiter::RegisterLuaClass ( USLuaState& state ) {
 	state.SetField ( -1, "POST_SOLVE", ( u32 )POST_SOLVE );
 	
 	luaL_Reg regTable [] = {
-		{ "new",							_new },
+		{ "new",							MOAILogMessages::_alertNewIsUnsupported },
 		{ NULL, NULL }
 	};
 	
@@ -192,7 +179,7 @@ void MOAIBox2DArbiter::RegisterLuaFuncs ( USLuaState& state ) {
 		{ "getNormalImpulse",			_getNormalImpulse },
 		{ "getTangentImpulse",			_getTangentImpulse },
 		{ "setContactEnabled",			_setContactEnabled },
-		{ "new",						_new },
+		{ "new",						MOAILogMessages::_alertNewIsUnsupported },
 		{ NULL, NULL }
 	};
 	

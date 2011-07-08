@@ -94,7 +94,8 @@ MOAILocationSensor::~MOAILocationSensor () {
 
 //----------------------------------------------------------------//
 void MOAILocationSensor::RegisterLuaClass ( USLuaState& state ) {
-	UNUSED ( state );
+
+	MOAISensor::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//

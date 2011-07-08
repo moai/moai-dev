@@ -152,14 +152,6 @@ int MOAICpArbiter::_isFirstContact ( lua_State* L ) {
 	return 0;
 }
 
-//----------------------------------------------------------------//
-int MOAICpArbiter::_new ( lua_State* L ) {
-	UNUSED ( L );
-	
-	printf ( "MOAICpArbiter.new () is unsupported.\n" );
-	return 0;
-}
-
 //================================================================//
 // MOAICpArbiter
 //================================================================//
@@ -181,7 +173,7 @@ MOAICpArbiter::~MOAICpArbiter () {
 void MOAICpArbiter::RegisterLuaClass ( USLuaState& state ) {
 
 	luaL_Reg regTable [] = {
-		{ "new",							_new },
+		{ "new",							MOAILogMessages::_alertNewIsUnsupported },
 		{ NULL, NULL }
 	};
 	

@@ -77,10 +77,10 @@ private:
 	u32 mLevel;
 
 	//----------------------------------------------------------------//
-	static int		_isDebugBuild			( lua_State* L );
-	static int		_log					( lua_State* L );
-	static int		_registerLogMessage		( lua_State* L );
-	static int		_setLogLevel			( lua_State* L );
+	static int		_isDebugBuild				( lua_State* L );
+	static int		_log						( lua_State* L );
+	static int		_registerLogMessage			( lua_State* L );
+	static int		_setLogLevel				( lua_State* L );
 
 public:
 	
@@ -96,7 +96,7 @@ public:
 	//----------------------------------------------------------------//
 	void			Log						( u32 level, u32 messageID, ... );
 	void			Log						( u32 level, USLuaState& state, u32 messageID, ... );
-					MOAILogMgr					();
+					MOAILogMgr				();
 					~MOAILogMgr				();
 	void			RegisterLuaClass		( USLuaState& state );
 };

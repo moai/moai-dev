@@ -34,10 +34,11 @@ public:
 	};
 
 	//----------------------------------------------------------------//
-	virtual void	HandleEvent		( USStream& eventStream ) = 0;
-					MOAISensor		();
-					~MOAISensor		();
-	virtual void	Reset			() {}
+	virtual void	HandleEvent			( USStream& eventStream ) = 0;
+					MOAISensor			();
+					~MOAISensor			();
+	void			RegisterLuaClass	( USLuaState& state );
+	virtual void	Reset				() {}
 };
 
 #endif
