@@ -316,7 +316,9 @@ local function makeQueue ()
 		if record.name ~= "start" then
 			record.url = record.url .. "&lag=" .. os.time () - record.time
 		end
-				
+		
+		print ( record.url )
+		
 		-- call api via httpTask
 		self.waitingForCallback = true
 		

@@ -6,7 +6,15 @@
 
 ----------------------------------------------------------------
 -- tapjoy.lua - version 1.0 Beta
+-- this is a first pass at support for tapjoy adds and offer walls
+-- we plan to extend to to cover all tapjoy's features, and all as
+-- support other platforms besides iOS
 ----------------------------------------------------------------
+if MOAIWebView == nil then
+	error ( "currently, tapjoy is only supported on iOS. Support for Android and other platforms coming soon.", 2 )
+	return
+end
+
 module ( ..., package.seeall )
 
 require "crypto"
@@ -19,8 +27,6 @@ require "util"
 
 ----------------------------------------------------------------
 local function shouldStartLoadWithRequestListener ( webView, request, navType )
-	
-	print ( request )
 	
 	if request == "https://ws.tapjoyads.com/dismiss" then
 		webView:hideWebView ()

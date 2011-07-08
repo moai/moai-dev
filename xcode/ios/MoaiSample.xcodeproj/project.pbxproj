@@ -7,10 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		039D4ADD13C52A9400C6067E /* main.lua in Resources */ = {isa = PBXBuildFile; fileRef = 039D4ADC13C52A9400C6067E /* main.lua */; };
-		039D4AFF13C52BFC00C6067E /* tapjoy.lua in Resources */ = {isa = PBXBuildFile; fileRef = 039D4AFE13C52BFC00C6067E /* tapjoy.lua */; };
 		039D4B0213C52C1200C6067E /* url.lua in Resources */ = {isa = PBXBuildFile; fileRef = 039D4B0013C52C1200C6067E /* url.lua */; };
 		039D4B0313C52C1200C6067E /* util.lua in Resources */ = {isa = PBXBuildFile; fileRef = 039D4B0113C52C1200C6067E /* util.lua */; };
+		03A4DFDD13C7AA07002A6959 /* apsalar.lua in Resources */ = {isa = PBXBuildFile; fileRef = 03A4DFDC13C7AA07002A6959 /* apsalar.lua */; };
+		03A4DFDF13C7AAB8002A6959 /* main.lua in Resources */ = {isa = PBXBuildFile; fileRef = 03A4DFDE13C7AAB8002A6959 /* main.lua */; };
 		03CC905813B3C1B700B2724C /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 03CC904F13B3C1B700B2724C /* Icon-72.png */; };
 		03CC905913B3C1B700B2724C /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 03CC905013B3C1B700B2724C /* Icon-Small-50.png */; };
 		03CC905A13B3C1B700B2724C /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = 03CC905113B3C1B700B2724C /* Icon-Small.png */; };
@@ -132,10 +132,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		039D4ADC13C52A9400C6067E /* main.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = main.lua; path = "../../samples/iphone/app-tapjoy/main.lua"; sourceTree = SOURCE_ROOT; };
-		039D4AFE13C52BFC00C6067E /* tapjoy.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = tapjoy.lua; path = "../../src/lua-modules/tapjoy.lua"; sourceTree = SOURCE_ROOT; };
 		039D4B0013C52C1200C6067E /* url.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = url.lua; path = "../../src/lua-modules/url.lua"; sourceTree = SOURCE_ROOT; };
 		039D4B0113C52C1200C6067E /* util.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = util.lua; path = "../../src/lua-modules/util.lua"; sourceTree = SOURCE_ROOT; };
+		03A4DFDC13C7AA07002A6959 /* apsalar.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.lua; name = apsalar.lua; path = "../../src/lua-modules/apsalar.lua"; sourceTree = SOURCE_ROOT; };
+		03A4DFDE13C7AAB8002A6959 /* main.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.lua; name = main.lua; path = "../../samples/iphone/app-apsalar/main.lua"; sourceTree = SOURCE_ROOT; };
 		03CC904F13B3C1B700B2724C /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
 		03CC905013B3C1B700B2724C /* Icon-Small-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small-50.png"; sourceTree = "<group>"; };
 		03CC905113B3C1B700B2724C /* Icon-Small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small.png"; sourceTree = "<group>"; };
@@ -207,8 +207,8 @@
 		0394E90613B3CDBF00CA9F83 /* lua */ = {
 			isa = PBXGroup;
 			children = (
-				039D4ADC13C52A9400C6067E /* main.lua */,
-				039D4AFE13C52BFC00C6067E /* tapjoy.lua */,
+				03A4DFDE13C7AAB8002A6959 /* main.lua */,
+				03A4DFDC13C7AA07002A6959 /* apsalar.lua */,
 				039D4B0013C52C1200C6067E /* url.lua */,
 				039D4B0113C52C1200C6067E /* util.lua */,
 			);
@@ -435,10 +435,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				039D4AFF13C52BFC00C6067E /* tapjoy.lua in Resources */,
+				03A4DFDD13C7AA07002A6959 /* apsalar.lua in Resources */,
+				03A4DFDF13C7AAB8002A6959 /* main.lua in Resources */,
 				039D4B0213C52C1200C6067E /* url.lua in Resources */,
 				039D4B0313C52C1200C6067E /* util.lua in Resources */,
-				039D4ADD13C52A9400C6067E /* main.lua in Resources */,
 				03CC905813B3C1B700B2724C /* Icon-72.png in Resources */,
 				03CC905913B3C1B700B2724C /* Icon-Small-50.png in Resources */,
 				03CC905A13B3C1B700B2724C /* Icon-Small.png in Resources */,
