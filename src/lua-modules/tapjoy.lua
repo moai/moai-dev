@@ -20,6 +20,8 @@ require "util"
 ----------------------------------------------------------------
 local function shouldStartLoadWithRequestListener ( webView, request, navType )
 	
+	print ( request )
+	
 	if request == "https://ws.tapjoyads.com/dismiss" then
 		webView:hideWebView ()
 		return false
@@ -70,6 +72,11 @@ local function createWebViewFromFeaturedCallback ( task )
 		
 		local width, height = MOAIEnvironment.getViewSize ()
 		
+		if MOAIEnvironment.isRetinaDisplay () then
+			width = width / 2
+			height = height / 2
+		end
+		
 		local webView = MOAIWebView.new ()
 		webView:setListener ( MOAIWebView.SHOULD_START_LOAD_WITH_REQUEST, shouldStartLoadWithRequestListener )
 		
@@ -92,6 +99,11 @@ local function createWebViewFromOfferCallback ( task )
 	if task:getSize () > 0 then
 		
 		local width, height = MOAIEnvironment.getViewSize ()
+
+		if MOAIEnvironment.isRetinaDisplay () then
+			width = width / 2
+			height = height / 2
+		end
 		
 		local webView = MOAIWebView.new ()
 		webView:setListener ( MOAIWebView.SHOULD_START_LOAD_WITH_REQUEST, shouldStartLoadWithRequestListener )
@@ -182,12 +194,21 @@ function getBannerAdProp ( bannerSize, callbackFunc )
 	local timeStamp = getTimeStampString ()
 	
 	local parameters = url.encode {
-		app_id				= mAppId,
-		udid				= mUdid,
-		publisher_user_id	= mPubId,
-		size				= bannerSize,
-		time_stamp			= timeStamp,
-		verifier			= getVerifier ( mAppId, mUdid, timeStamp, mAppSecretKey )
+		app_id					= mAppId,
+		udid					= mUdid,
+		publisher_user_id		= mPubId,
+		size					= bannerSize,
+		time_stamp				= timeStamp,
+		verifier				= getVerifier ( mAppId, mUdid, timeStamp, mAppSecretKey ),
+		device_type				= MOAIEnvironment.getDevModel (),
+		os_version				= MOAIEnvironment.getOSVersion (),
+		country_code			= MOAIEnvironment.getCountryCode (),
+		language_code			= MOAIEnvironment.getLanguageCode (),
+		app_version				= MOAIEnvironment.getAppVersion (),
+		carrier_name			= MOAIEnvironment.getCarrierName (),
+		carrier_country_code	= MOAIEnvironment.getCarrierISOCountryCode (),
+		mobile_country_code		= MOAIEnvironment.getCarrierMobileCountryCode (),
+		mobile_network_code		= MOAIEnvironment.getCarrierMobileNetworkCode (),
 	}
 	
 	httpGetTask ( BANNER_AD_BASE_URL .. "?" .. parameters, createPropFromBannerCallback, callbackFunc )
@@ -203,13 +224,22 @@ function showFeaturedAppWebView ( callbackFunc )
 	local timeStamp = getTimeStampString ()
 
 	local parameters = url.encode {
-		app_id				= mAppId,
-		udid				= mUdid,
-		publisher_user_id	= mPubId,
-		time_stamp			= timeStamp,
-		json				= "1",
-		verifier			= getVerifier ( mAppId, mUdid, timeStamp, mAppSecretKey )
-	}				
+		app_id					= mAppId,
+		udid					= mUdid,
+		publisher_user_id		= mPubId,
+		time_stamp				= timeStamp,
+		json					= "1",
+		verifier				= getVerifier ( mAppId, mUdid, timeStamp, mAppSecretKey ),
+		device_type				= MOAIEnvironment.getDevModel (),
+		os_version				= MOAIEnvironment.getOSVersion (),
+		country_code			= MOAIEnvironment.getCountryCode (),
+		language_code			= MOAIEnvironment.getLanguageCode (),
+		app_version				= MOAIEnvironment.getAppVersion (),
+		carrier_name			= MOAIEnvironment.getCarrierName (),
+		carrier_country_code	= MOAIEnvironment.getCarrierISOCountryCode (),
+		mobile_country_code		= MOAIEnvironment.getCarrierMobileCountryCode (),
+		mobile_network_code		= MOAIEnvironment.getCarrierMobileNetworkCode (),
+	}		
 		
 	httpGetTask ( FEATURE_AD_BASE_URL .. "?" .. parameters, createWebViewFromFeaturedCallback, callbackFunc )
 end
@@ -224,11 +254,20 @@ function showOffersWebView ( callbackFunc )
 	local timeStamp = getTimeStampString ()
 	
 	local parameters = url.encode {
-		app_id				= mAppId,
-		udid				= mUdid,
-		publisher_user_id	= mPubId,
-		time_stamp			= timeStamp,
-		verifier			= getVerifier ( mAppId, mUdid, timeStamp, mAppSecretKey )
+		app_id					= mAppId,
+		udid					= mUdid,
+		publisher_user_id		= mPubId,
+		time_stamp				= timeStamp,
+		verifier				= getVerifier ( mAppId, mUdid, timeStamp, mAppSecretKey ),
+		device_type				= MOAIEnvironment.getDevModel (),
+		os_version				= MOAIEnvironment.getOSVersion (),
+		country_code			= MOAIEnvironment.getCountryCode (),
+		language_code			= MOAIEnvironment.getLanguageCode (),
+		app_version				= MOAIEnvironment.getAppVersion (),
+		carrier_name			= MOAIEnvironment.getCarrierName (),
+		carrier_country_code	= MOAIEnvironment.getCarrierISOCountryCode (),
+		mobile_country_code		= MOAIEnvironment.getCarrierMobileCountryCode (),
+		mobile_network_code		= MOAIEnvironment.getCarrierMobileNetworkCode (),
 	}
 	
 	httpGetTask ( OFFERS_WEB_BASE_URL .. "?" .. parameters, createWebViewFromOfferCallback, callbackFunc )

@@ -41,7 +41,7 @@ private:
 	static int			_setAllowsInlineMediaPlayback	( lua_State* L );
 	static int			_setMediaPlaybackRequiresAction	( lua_State* L );
 	static int			_setScalesPageToFit				( lua_State* L );
-	static int			_show					( lua_State* L ); 
+	static int			_show							( lua_State* L ); 
 	
 public:
 	DECL_LUA_FACTORY ( MOAIWebView )
