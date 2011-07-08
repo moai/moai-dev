@@ -51,5 +51,5 @@ queue:setProgressCallback ( progress )
 queue:setFailureCallback ( failure )
 queue:setFinishCallback ( finish )
 
-queue:send ( 5 )	-- send a certain number
+queue:send ( 10 )	-- send a certain number
 -- queue:send ()	-- send entire queue

@@ -38,12 +38,11 @@
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
-		CD0BA84013B93A14007ECCD9 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = CD0BA83F13B93A14007ECCD9 /* Reachability.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		035724C113BE502F0046501A /* cathead.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cathead.png; path = "../../samples/anim-basic/cathead.png"; sourceTree = SOURCE_ROOT; };
-		035724C213BE502F0046501A /* main.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.lua; name = main.lua; path = "../../samples/anim-basic/main.lua"; sourceTree = SOURCE_ROOT; };
+		035724C113BE502F0046501A /* cathead.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cathead.png; path = "../../samples/basics/anim-basic/cathead.png"; sourceTree = SOURCE_ROOT; };
+		035724C213BE502F0046501A /* main.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.lua; name = main.lua; path = "../../samples/basics/anim-basic/main.lua"; sourceTree = SOURCE_ROOT; };
 		039DBBE313BE7D1400BF7A66 /* MoaiVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoaiVC.h; sourceTree = "<group>"; };
 		039DBBE413BE7D1400BF7A66 /* MoaiVC.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MoaiVC.mm; sourceTree = "<group>"; };
 		03CC904F13B3C1B700B2724C /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
@@ -83,8 +82,6 @@
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		32CA4F630368D1EE00C91783 /* moai_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = moai_Prefix.pch; sourceTree = "<group>"; };
-		CD0BA83E13B93A14007ECCD9 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Reachability.h; path = Classes/Reachability.h; sourceTree = SOURCE_ROOT; };
-		CD0BA83F13B93A14007ECCD9 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Reachability.m; path = Classes/Reachability.m; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,8 +132,6 @@
 				03CC90A013B3C37200B2724C /* MoaiView.mm */,
 				03CC90A113B3C37200B2724C /* OpenGLView.h */,
 				03CC90A213B3C37200B2724C /* OpenGLView.mm */,
-				CD0BA83E13B93A14007ECCD9 /* Reachability.h */,
-				CD0BA83F13B93A14007ECCD9 /* Reachability.m */,
 				03CC90A313B3C37200B2724C /* RefPtr.h */,
 			);
 			path = Classes;
@@ -285,7 +280,6 @@
 				03CC90A613B3C37200B2724C /* MoaiView.mm in Sources */,
 				03CC90A713B3C37200B2724C /* OpenGLView.mm in Sources */,
 				03CC90A913B3C37C00B2724C /* main.mm in Sources */,
-				CD0BA84013B93A14007ECCD9 /* Reachability.m in Sources */,
 				039DBBE513BE7D1400BF7A66 /* MoaiVC.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
