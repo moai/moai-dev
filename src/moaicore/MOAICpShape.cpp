@@ -404,17 +404,6 @@ int MOAICpShape::_momentForSegment ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	new
-	@text	Creation of new instances is not supported on this class.
-*/
-int	MOAICpShape::_new ( lua_State* L ) {
-	UNUSED ( L );
-
-	printf ( "MOAICpShape: 'new' is unsupported.\n" );
-	return 0;
-}
-
-//----------------------------------------------------------------//
 /**	@name	setElasticity
 	@text	Sets the current elasticity.
 
@@ -610,7 +599,7 @@ void MOAICpShape::RegisterLuaClass ( USLuaState& state ) {
 		{ "momentForPolygon",	_momentForPolygon },
 		{ "momentForRect",		_momentForRect },
 		{ "momentForSegment",	_momentForSegment },
-		{ "new",				_new },
+		{ "new",				MOAILogMessages::_alertNewIsUnsupported },
 		{ NULL, NULL }
 	};
 	

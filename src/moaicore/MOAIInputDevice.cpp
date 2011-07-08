@@ -51,11 +51,19 @@ MOAIInputDevice::~MOAIInputDevice () {
 }
 
 //----------------------------------------------------------------//
+void MOAIInputDevice::RegisterLuaClass ( USLuaState& state ) {
+
+	luaL_Reg regTable [] = {
+		{ "new",					MOAILogMessages::_alertNewIsUnsupported },
+		{ NULL, NULL }
+	};
+
+	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
 void MOAIInputDevice::RegisterLuaFuncs ( USLuaState& state ) {
 	UNUSED ( state );
-
-	//lua_newtable ( state );
-	//lua_setfield ( state, -2, LUAVAR_SENSORS );
 }
 
 //----------------------------------------------------------------//

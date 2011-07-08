@@ -37,6 +37,7 @@ public:
 	void			HandleEvent			( u8 sensorID, USStream& eventStream );
 					MOAIInputDevice		();
 					~MOAIInputDevice	();
+	void			RegisterLuaClass	( USLuaState& state );
 	void			RegisterLuaFuncs	( USLuaState& state );
 	void			ReserveSensors		( u8 total );
 	void			Reset				();

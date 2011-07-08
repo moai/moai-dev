@@ -57,10 +57,20 @@ public:
 		MOAI_FileNotFound_S,
 		MOAI_IndexNoReserved,
 		MOAI_IndexOutOfRange_DDD,
+		MOAI_NewIsUnsupported,
 		MOAI_ParamTypeMismatch,
 		
 		MOAINode_AttributeNotFound,
 	};
+	
+	//----------------------------------------------------------------//
+	static int _alertNewIsUnsupported ( lua_State* L ) {
+
+		USLuaState state ( L );
+		MOAI_ERROR ( state, MOAI_NewIsUnsupported );
+		
+		return 0;
+	}
 	
 	//----------------------------------------------------------------//
 	static void RegisterLogMessages ( USLuaState& state ) {
@@ -70,6 +80,7 @@ public:
 			REGISTER_LOG_MESSAGE ( MOAI_FileNotFound_S )
 			REGISTER_LOG_MESSAGE ( MOAI_IndexNoReserved )
 			REGISTER_LOG_MESSAGE ( MOAI_IndexOutOfRange_DDD )
+			REGISTER_LOG_MESSAGE ( MOAI_NewIsUnsupported )
 			REGISTER_LOG_MESSAGE ( MOAI_ParamTypeMismatch )
 			
 			REGISTER_LOG_MESSAGE ( MOAINode_AttributeNotFound )

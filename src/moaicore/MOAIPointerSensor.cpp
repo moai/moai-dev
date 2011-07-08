@@ -75,7 +75,8 @@ MOAIPointerSensor::~MOAIPointerSensor () {
 
 //----------------------------------------------------------------//
 void MOAIPointerSensor::RegisterLuaClass ( USLuaState& state ) {
-	UNUSED ( state );
+
+	MOAISensor::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//

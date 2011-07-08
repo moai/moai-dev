@@ -29,7 +29,6 @@ private:
 	static int		_getTotalImpulse				( lua_State* L );
 	static int		_getTotalImpulseWithFriction	( lua_State* L );
 	static int		_isFirstContact					( lua_State* L );
-	static int		_new							( lua_State* L );
 	
 	//----------------------------------------------------------------//
 

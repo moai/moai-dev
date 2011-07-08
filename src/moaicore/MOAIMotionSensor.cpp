@@ -79,7 +79,8 @@ MOAIMotionSensor::~MOAIMotionSensor () {
 
 //----------------------------------------------------------------//
 void MOAIMotionSensor::RegisterLuaClass ( USLuaState& state ) {
-	UNUSED ( state );
+
+	MOAISensor::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//

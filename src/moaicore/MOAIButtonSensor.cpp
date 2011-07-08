@@ -151,7 +151,8 @@ MOAIButtonSensor::~MOAIButtonSensor () {
 
 //----------------------------------------------------------------//
 void MOAIButtonSensor::RegisterLuaClass ( USLuaState& state ) {
-	UNUSED ( state );
+
+	MOAISensor::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//

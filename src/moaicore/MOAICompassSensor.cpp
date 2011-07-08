@@ -69,7 +69,8 @@ MOAICompassSensor::~MOAICompassSensor () {
 
 //----------------------------------------------------------------//
 void MOAICompassSensor::RegisterLuaClass ( USLuaState& state ) {
-	UNUSED ( state );
+
+	MOAISensor::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
