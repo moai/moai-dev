@@ -97,7 +97,8 @@ int MOAITexture::_release ( lua_State* L ) {
 	@text	Set default filtering mode for texture.
 	
 	@in		MOAITexture self
-	@in		number min			One of MOAITexture.GL_LINEAR or MOAITexture.GL_NEAREST.
+	@in		number min			One of MOAITexture.GL_LINEAR, MOAITexture.GL_LINEAR_MIPMAP_LINEAR, MOAITexture.GL_LINEAR_MIPMAP_NEAREST,
+								MOAITexture.GL_NEAREST, MOAITexture.GL_NEAREST_MIPMAP_LINEAR, MOAITexture.GL_NEAREST_MIPMAP_NEAREST
 	@opt	number mag			Defaults to value passed to 'min'.
 	@out	nil
 */

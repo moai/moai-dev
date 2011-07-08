@@ -146,7 +146,7 @@ int MOAISim::_getFrameSize ( lua_State* L ) {
 //----------------------------------------------------------------//
 /**	@name	getPerformance
 	@text	Returns an estimated frames per second based on measurements
-			taked at every render.
+			taken at every render.
 
 	@out	number fps		Estimated frames per second.
 */
