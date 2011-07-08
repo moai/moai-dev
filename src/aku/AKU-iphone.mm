@@ -62,7 +62,7 @@ void AKUIphoneInit ( UIApplication* application ) {
 	MOAIEnvironment::Get ().SetResourceDirectory ( [[[ NSBundle mainBundle ] resourcePath ] UTF8String ]);
 	MOAIEnvironment::Get ().SetUDID ( [[ UIDevice currentDevice ].uniqueIdentifier UTF8String ] );
 	
-	if ( [[ UIScreen mainScreen ] scale] == 2.0 ) {
+	if ([[ UIScreen mainScreen ] scale ] == 2.0 ) {
 		//this is retina
 		MOAIEnvironment::Get ().SetIsRetinaDisplay ( true );
 	}
@@ -74,9 +74,9 @@ void AKUIphoneInit ( UIApplication* application ) {
 	
 		CTCarrier* carrierInfo = [[[ CTTelephonyNetworkInfo alloc ] init ] subscriberCellularProvider ];
 		MOAIEnvironment::Get ().SetCarrierISOCountryCode ( [ carrierInfo.isoCountryCode UTF8String ]);
-		MOAIEnvironment::Get ().SetCarrierMobileCountryCode ( [[carrierInfo mobileCountryCode ] UTF8String ]);
-		MOAIEnvironment::Get ().SetCarrierName ( [[carrierInfo carrierName ] UTF8String ]);
-		MOAIEnvironment::Get ().SetCarrierMobileNetworkCode ( [[carrierInfo mobileNetworkCode ] UTF8String ]);
+		MOAIEnvironment::Get ().SetCarrierMobileCountryCode ( [[ carrierInfo mobileCountryCode ] UTF8String ]);
+		MOAIEnvironment::Get ().SetCarrierName ( [[ carrierInfo carrierName ] UTF8String ]);
+		MOAIEnvironment::Get ().SetCarrierMobileNetworkCode ( [[ carrierInfo mobileNetworkCode ] UTF8String ]);
 	}
 		
 	// MOAI

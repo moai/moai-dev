@@ -222,16 +222,6 @@ int MOAIWebView::_initWebView ( lua_State* L ) {
 	[ self->mWebView setDelegate:self->mWebViewDelegate ];
 	[ self->mWebView setScalesPageToFit:YES ];
 	[ self->mWebView setMultipleTouchEnabled:YES ];
-
-	if ([[ UIScreen mainScreen ] respondsToSelector:@selector ( scale )]) {
-		
-		CGFloat screenScale = [[ UIScreen mainScreen ] scale ];
-		CGRect screenFrame = [[ UIScreen mainScreen ] applicationFrame ];
-					
-		self->mWebView.transform = CGAffineTransformMakeScale ( 1 / screenScale, 1 / screenScale );
-		self->mWebView.center = CGPointMake ( screenFrame.size.width / 2, screenFrame.size.height / 2 );
-	}
-
 	[ window addSubview:self->mWebView ];
 
 	if ( hidden ) {
@@ -310,10 +300,10 @@ int MOAIWebView::_loadHTML ( lua_State* L ) {
 	if ( url != NULL ) {
 		NSString* nsUrlString = [[ NSString alloc ] initWithUTF8String:url ];
 		NSURL* nsURL = [[ NSURL alloc ] initWithString:nsUrlString ];
-		[self->mWebView loadHTMLString:nsHtmlString baseURL:nsURL ];
+		[ self->mWebView loadHTMLString:nsHtmlString baseURL:nsURL ];
 	}
 	else {
-		[self->mWebView loadHTMLString:nsHtmlString baseURL:nil ];
+		[ self->mWebView loadHTMLString:nsHtmlString baseURL:nil ];
 	}
 
 	
@@ -336,8 +326,9 @@ int MOAIWebView::_loadRequest ( lua_State* L ) {
 	NSURL* url = [ NSURL URLWithString:urlString ];
 	NSURLRequest* request = [NSURLRequest requestWithURL:url ];
 	
-	if ( self->mWebView.delegate == nil )
+	if ( self->mWebView.delegate == nil ) {
 		[ self->mWebView setDelegate:self->mWebViewDelegate ];
+	}
 		
 	[ self->mWebView loadRequest:request ];
 	
@@ -464,13 +455,6 @@ MOAIWebView::MOAIWebView ( ) :
 	
 	mWebViewDelegate = [ MoaiUiWebViewDelegate alloc ];
 	mWebViewDelegate.mMOAIWebView = this;
-	
-	//UIWindow* window = [[ UIApplication sharedApplication ] keyWindow ];		
-	//mWebView = [[[ UIWebView alloc ] initWithFrame:CGRectMake( 0, 0, window.bounds.size.width, window.bounds.size.height )] autorelease ];
-	//[ mWebView setDelegate:mWebViewDelegate ];
-	//[ mWebView setScalesPageToFit:YES ];
-	//[ mWebView setMultipleTouchEnabled:YES ];
-	//[ window addSubview:mWebView ];
 }
 
 //----------------------------------------------------------------//
@@ -589,7 +573,7 @@ void MOAIWebView::RegisterLuaFuncs ( USLuaState& state ) {
 		{ "setAllowsInlineMediaPLayback",   _setAllowsInlineMediaPlayback },
 		{ "setMediaPlaybackRequiresAction", _setMediaPlaybackRequiresAction },
 		{ "setScalesPageToFit",				_setScalesPageToFit },
-		{ "show",					_show },
+		{ "show",							_show },
 		{ NULL, NULL }
 	};
 	
