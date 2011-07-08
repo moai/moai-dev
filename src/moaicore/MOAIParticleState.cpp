@@ -310,26 +310,23 @@ void MOAIParticleState::ProcessParticle ( MOAIParticleSystem& system, MOAIPartic
 	}
 	
 	float t1 = particle.mAge / particle.mTerm;
-
-	if ( this->mForces.Count ()) {
 	
-		float* r = particle.mData;
-		
-		USVec2D loc;
-		USVec2D vel;
-		
-		loc.mX = r [ MOAIParticle::PARTICLE_X ];
-		loc.mY = r [ MOAIParticle::PARTICLE_Y ];
-		vel.mX = r [ MOAIParticle::PARTICLE_DX ];
-		vel.mY = r [ MOAIParticle::PARTICLE_DY ];
-		
-		this->GatherForces ( loc, vel, particle.mMass, step );
-		
-		r [ MOAIParticle::PARTICLE_X ]	= loc.mX;
-		r [ MOAIParticle::PARTICLE_Y ]	= loc.mY;
-		r [ MOAIParticle::PARTICLE_DX ]	= vel.mX;
-		r [ MOAIParticle::PARTICLE_DY ]	= vel.mY;
-	}
+	float* r = particle.mData;
+	
+	USVec2D loc;
+	USVec2D vel;
+	
+	loc.mX = r [ MOAIParticle::PARTICLE_X ];
+	loc.mY = r [ MOAIParticle::PARTICLE_Y ];
+	vel.mX = r [ MOAIParticle::PARTICLE_DX ];
+	vel.mY = r [ MOAIParticle::PARTICLE_DY ];
+	
+	this->GatherForces ( loc, vel, particle.mMass, step );
+	
+	r [ MOAIParticle::PARTICLE_X ]	= loc.mX;
+	r [ MOAIParticle::PARTICLE_Y ]	= loc.mY;
+	r [ MOAIParticle::PARTICLE_DX ]	= vel.mX;
+	r [ MOAIParticle::PARTICLE_DY ]	= vel.mY;
 
 	if ( this->mRender ) {
 		this->mRender->Run ( system, particle, t0, t1 );
