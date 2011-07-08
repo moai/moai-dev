@@ -93,6 +93,7 @@ public:
 	void					SetVtxTransform			( const USAffine2D& vtxTransform );
 							USDrawBuffer			();
 							~USDrawBuffer			();
+	void					WriteQuad				( USVec2D* vtx, USVec2D* uv );
 	
 	//----------------------------------------------------------------//
 	inline void WriteColor ( float r, float g, float b, float a ) {

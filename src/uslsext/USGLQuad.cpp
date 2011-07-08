@@ -85,6 +85,12 @@ void USGLQuad::Draw ( const USVec2D* vtx, const USVec2D* uv ) {
 
 	USDrawBuffer& drawBuffer = USDrawBuffer::Get ();
 	
+#ifdef MOAI_ARM7
+	
+	drawBuffer.WriteQuad ( ( USVec2D* )vtx, ( USVec2D* )uv ); 
+
+#else
+	
 	drawBuffer.BeginPrim ();
 		USGLQuad::WriteVertex ( drawBuffer, vtx [ 3 ], uv [ 3 ]);
 		USGLQuad::WriteVertex ( drawBuffer, vtx [ 1 ], uv [ 1 ]);
@@ -96,6 +102,8 @@ void USGLQuad::Draw ( const USVec2D* vtx, const USVec2D* uv ) {
 		USGLQuad::WriteVertex ( drawBuffer, vtx [ 2 ], uv [ 2 ]);
 		USGLQuad::WriteVertex ( drawBuffer, vtx [ 1 ], uv [ 1 ]);
 	drawBuffer.EndPrim ();
+	
+#endif
 }
 
 //----------------------------------------------------------------//

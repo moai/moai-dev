@@ -439,3 +439,42 @@ USDrawBuffer::~USDrawBuffer () {
 
 	this->Clear ();
 }
+
+//----------------------------------------------------------------//
+void USDrawBuffer::WriteQuad ( USVec2D* vtx, USVec2D* uv ) {
+
+	this->mVtxTransform.TransformQuad ( vtx );
+	this->mUVTransform.Transform ( uv [ 0 ] );
+	this->mUVTransform.Transform ( uv [ 1 ] );	
+	this->mUVTransform.Transform ( uv [ 2 ] );	
+	this->mUVTransform.Transform ( uv [ 3 ] );	
+	
+	this->BeginPrim();
+		this->Write ( vtx[ 3 ] );
+		this->Write ( uv [ 3 ] );
+		this->WritePenColor();	
+	
+		this->Write ( vtx[ 1 ] );
+		this->Write ( uv [ 1 ] );
+		this->WritePenColor();	
+	
+		this->Write ( vtx[ 0 ] );
+		this->Write ( uv [ 0 ] );
+		this->WritePenColor();
+	this->EndPrim();
+	
+	this->BeginPrim();
+		this->Write ( vtx[ 3 ] );
+		this->Write ( uv [ 3 ] );
+		this->WritePenColor();	
+	
+		this->Write ( vtx[ 2 ] );
+		this->Write ( uv [ 2 ] );
+		this->WritePenColor();	
+	
+		this->Write ( vtx[ 1 ] );
+		this->Write ( uv [ 1 ] );
+		this->WritePenColor();
+	this->EndPrim();
+	
+}
