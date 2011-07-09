@@ -44,3 +44,5 @@ rm -f moai-sdk/hosts/xcode/ios/Info.plist
 rm -f moai-sdk/hosts/xcode/ios/MainWindow-iPad.xib
 rm -f moai-sdk/hosts/xcode/ios/MainWindow-iPhone.xib
 rm -f moai-sdk/hosts/xcode/ios/main.mm
+rm -f moai-sdk/hosts/xcode/ios/mt.default
+rm -f moai-sdk/hosts/xcode/ios/package.sh
