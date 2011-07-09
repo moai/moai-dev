@@ -9,9 +9,7 @@ read LUA_FOLDER < moai-target
 rm -rf lua
 mkdir -p lua
 
-cd ../..
-cp -r $LUA_FOLDER/* xcode/ios/lua
+cp -r ../../$LUA_FOLDER/* lua
 
-cd xcode/ios/lua
-rm -f run.bat
-rm -f run.sh
+rm -f lua/run.bat
+rm -f lua/run.sh

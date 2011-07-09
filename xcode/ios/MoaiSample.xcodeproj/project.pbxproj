@@ -29,7 +29,6 @@
 		03CC912813B3C4B100B2724C /* libz.1.2.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CC912713B3C4B100B2724C /* libz.1.2.3.dylib */; };
 		03CC912C13B3C4C000B2724C /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CC912B13B3C4C000B2724C /* StoreKit.framework */; };
 		03E27D7C13C7C05100EE3B0D /* lua in Resources */ = {isa = PBXBuildFile; fileRef = 03E27D7A13C7C05100EE3B0D /* lua */; };
-		03E2807113C7CD8100EE3B0D /* moai-target in Resources */ = {isa = PBXBuildFile; fileRef = 03E2806013C7CC3500EE3B0D /* moai-target */; };
 		0711070513C637F000EE7C53 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0711070413C637F000EE7C53 /* CoreTelephony.framework */; };
 		078D630113BA9EA30072F273 /* MoaiVC.mm in Sources */ = {isa = PBXBuildFile; fileRef = 078D630013BA9EA30072F273 /* MoaiVC.mm */; };
 		07E9F73E13B50582006396F3 /* libmoai-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CC90BD13B3C39D00B2724C /* libmoai-ios.a */; };
@@ -439,7 +438,6 @@
 				03CC905F13B3C1B700B2724C /* MainWindow-iPad.xib in Resources */,
 				03CC906013B3C1B700B2724C /* MainWindow-iPhone.xib in Resources */,
 				03E27D7C13C7C05100EE3B0D /* lua in Resources */,
-				03E2807113C7CD8100EE3B0D /* moai-target in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
