@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		035724C313BE502F0046501A /* cathead.png in Resources */ = {isa = PBXBuildFile; fileRef = 035724C113BE502F0046501A /* cathead.png */; };
-		035724C413BE502F0046501A /* main.lua in Resources */ = {isa = PBXBuildFile; fileRef = 035724C213BE502F0046501A /* main.lua */; };
 		039DBBE513BE7D1400BF7A66 /* MoaiVC.mm in Sources */ = {isa = PBXBuildFile; fileRef = 039DBBE413BE7D1400BF7A66 /* MoaiVC.mm */; };
 		03CC905813B3C1B700B2724C /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 03CC904F13B3C1B700B2724C /* Icon-72.png */; };
 		03CC905913B3C1B700B2724C /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 03CC905013B3C1B700B2724C /* Icon-Small-50.png */; };
@@ -31,6 +29,8 @@
 		03CC912213B3C4A400B2724C /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CC912113B3C4A400B2724C /* QuartzCore.framework */; };
 		03CC912813B3C4B100B2724C /* libz.1.2.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CC912713B3C4B100B2724C /* libz.1.2.3.dylib */; };
 		03CC912C13B3C4C000B2724C /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CC912B13B3C4C000B2724C /* StoreKit.framework */; };
+		03E280A713C7D22600EE3B0D /* lua in Resources */ = {isa = PBXBuildFile; fileRef = 03E280A513C7D22600EE3B0D /* lua */; };
+		03E280BA13C7D31C00EE3B0D /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03E280B913C7D31C00EE3B0D /* CoreTelephony.framework */; };
 		03EB9FE613BD372600469D9E /* libmoai-ios-3rdparty.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03EB9FE213BD372600469D9E /* libmoai-ios-3rdparty.a */; };
 		03EB9FE713BD372600469D9E /* libmoai-ios-luaext.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03EB9FE313BD372600469D9E /* libmoai-ios-luaext.a */; };
 		03EB9FE813BD372600469D9E /* libmoai-ios-untz.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03EB9FE413BD372600469D9E /* libmoai-ios-untz.a */; };
@@ -41,8 +41,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		035724C113BE502F0046501A /* cathead.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cathead.png; path = "../../samples/basics/anim-basic/cathead.png"; sourceTree = SOURCE_ROOT; };
-		035724C213BE502F0046501A /* main.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.lua; name = main.lua; path = "../../samples/basics/anim-basic/main.lua"; sourceTree = SOURCE_ROOT; };
 		039DBBE313BE7D1400BF7A66 /* MoaiVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoaiVC.h; sourceTree = "<group>"; };
 		039DBBE413BE7D1400BF7A66 /* MoaiVC.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MoaiVC.mm; sourceTree = "<group>"; };
 		03CC904F13B3C1B700B2724C /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
@@ -73,6 +71,9 @@
 		03CC912113B3C4A400B2724C /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		03CC912713B3C4B100B2724C /* libz.1.2.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.3.dylib; path = usr/lib/libz.1.2.3.dylib; sourceTree = SDKROOT; };
 		03CC912B13B3C4C000B2724C /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		03E280A513C7D22600EE3B0D /* lua */ = {isa = PBXFileReference; lastKnownFileType = folder; path = lua; sourceTree = "<group>"; };
+		03E280B913C7D31C00EE3B0D /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		03E280C213C7D35D00EE3B0D /* moai-target */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "moai-target"; sourceTree = "<group>"; };
 		03EB9FE213BD372600469D9E /* libmoai-ios-3rdparty.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-ios-3rdparty.a"; path = "../../bin/ios/libmoai-ios-3rdparty.a"; sourceTree = SOURCE_ROOT; };
 		03EB9FE313BD372600469D9E /* libmoai-ios-luaext.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-ios-luaext.a"; path = "../../bin/ios/libmoai-ios-luaext.a"; sourceTree = SOURCE_ROOT; };
 		03EB9FE413BD372600469D9E /* libmoai-ios-untz.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-ios-untz.a"; path = "../../bin/ios/libmoai-ios-untz.a"; sourceTree = SOURCE_ROOT; };
@@ -104,19 +105,20 @@
 				03EB9FE713BD372600469D9E /* libmoai-ios-luaext.a in Frameworks */,
 				03EB9FE813BD372600469D9E /* libmoai-ios-untz.a in Frameworks */,
 				03EB9FE913BD372600469D9E /* libmoai-ios.a in Frameworks */,
+				03E280BA13C7D31C00EE3B0D /* CoreTelephony.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		035724C513BE50340046501A /* lua */ = {
+		03E280A413C7D16200EE3B0D /* build */ = {
 			isa = PBXGroup;
 			children = (
-				035724C113BE502F0046501A /* cathead.png */,
-				035724C213BE502F0046501A /* main.lua */,
+				03E280C213C7D35D00EE3B0D /* moai-target */,
+				03E280A513C7D22600EE3B0D /* lua */,
 			);
-			name = lua;
+			name = build;
 			sourceTree = "<group>";
 		};
 		080E96DDFE201D6D7F000001 /* Classes */ = {
@@ -169,7 +171,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				035724C513BE50340046501A /* lua */,
+				03E280A413C7D16200EE3B0D /* build */,
 				03CC90AA13B3C38800B2724C /* Entitlements.plist */,
 				03CC904F13B3C1B700B2724C /* Icon-72.png */,
 				03CC905013B3C1B700B2724C /* Icon-Small-50.png */,
@@ -202,6 +204,7 @@
 				03CC912B13B3C4C000B2724C /* StoreKit.framework */,
 				03CC911B13B3C49400B2724C /* SystemConfiguration.framework */,
 				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
+				03E280B913C7D31C00EE3B0D /* CoreTelephony.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -213,6 +216,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "MoaiSample" */;
 			buildPhases = (
+				03E280A913C7D26B00EE3B0D /* ShellScript */,
 				1D60588D0D05DD3D006BFB54 /* Resources */,
 				1D60588E0D05DD3D006BFB54 /* Sources */,
 				1D60588F0D05DD3D006BFB54 /* Frameworks */,
@@ -263,12 +267,28 @@
 				03CC905D13B3C1B700B2724C /* Icon@2x.png in Resources */,
 				03CC905F13B3C1B700B2724C /* MainWindow-iPad.xib in Resources */,
 				03CC906013B3C1B700B2724C /* MainWindow-iPhone.xib in Resources */,
-				035724C413BE502F0046501A /* main.lua in Resources */,
-				035724C313BE502F0046501A /* cathead.png in Resources */,
+				03E280A713C7D22600EE3B0D /* lua in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		03E280A913C7D26B00EE3B0D /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = ./package.sh;
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		1D60588E0D05DD3D006BFB54 /* Sources */ = {
