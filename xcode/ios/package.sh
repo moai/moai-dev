@@ -6,6 +6,10 @@ fi
 
 read LUA_FOLDER < moai-target
 
+cd lua
+rsync -ru . ../../../$LUA_FOLDER
+cd ..
+
 rm -rf lua
 mkdir -p lua
 
