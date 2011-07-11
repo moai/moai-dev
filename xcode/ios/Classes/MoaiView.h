@@ -28,6 +28,7 @@
 }
 
 	//----------------------------------------------------------------//
+	-( void )	pause	:( BOOL )paused;
 	-( void )	run		:( NSString* )filename;
 	
 @end
