@@ -264,6 +264,19 @@ void _AKUStartGameLoopFunc () {
 	}
 	
 	//----------------------------------------------------------------//
+	-( void ) pause :( BOOL )paused {
+	
+		if ( paused ) {
+			AKUPause ( YES );
+			[ self stopAnimation ];
+		}
+		else {
+			[ self startAnimation ];
+			AKUPause ( NO );
+		}
+	}
+	
+	//----------------------------------------------------------------//
 	-( void ) run :( NSString* )filename {
 	
 		AKUSetContext ( mAku );
@@ -273,10 +286,12 @@ void _AKUStartGameLoopFunc () {
 	//----------------------------------------------------------------//
 	-( void ) startAnimation {
 		
-        CADisplayLink* aDisplayLink = [[ UIScreen mainScreen ] displayLinkWithTarget:self selector:@selector( onUpdateAnim )];
-        [ aDisplayLink setFrameInterval:mAnimInterval ];
-        [ aDisplayLink addToRunLoop:[ NSRunLoop currentRunLoop ] forMode:NSDefaultRunLoopMode ];
-        mDisplayLink = aDisplayLink;
+		if ( !mDisplayLink ) {
+			CADisplayLink* aDisplayLink = [[ UIScreen mainScreen ] displayLinkWithTarget:self selector:@selector( onUpdateAnim )];
+			[ aDisplayLink setFrameInterval:mAnimInterval ];
+			[ aDisplayLink addToRunLoop:[ NSRunLoop currentRunLoop ] forMode:NSDefaultRunLoopMode ];
+			mDisplayLink = aDisplayLink;
+		}
 	}
 
 	//----------------------------------------------------------------//

@@ -76,6 +76,28 @@
 	}
 	
 	//----------------------------------------------------------------//
+	-( void ) applicationDidBecomeActive:( UIApplication* )application {
+	
+		// restart moai view
+		[ mMoaiView pause:NO ];
+	}
+	
+	//----------------------------------------------------------------//
+	-( void ) applicationDidEnterBackground:( UIApplication* )application {
+	}
+	
+	//----------------------------------------------------------------//
+	-( void ) applicationWillEnterForeground:( UIApplication* )application {
+	}
+	
+	//----------------------------------------------------------------//
+	-( void ) applicationWillResignActive:( UIApplication* )application {
+	
+		// pause moai view
+		[ mMoaiView pause:YES ];
+	}
+	
+	//----------------------------------------------------------------//
 	-( void ) applicationWillTerminate :( UIApplication* )application {
 
 		AKUFinalize ();
