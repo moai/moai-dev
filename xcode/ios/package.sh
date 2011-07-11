@@ -11,5 +11,7 @@ mkdir -p lua
 
 cp -r ../../$LUA_FOLDER/* lua
 
+chmod -R 555 lua
+
 rm -f lua/run.bat
 rm -f lua/run.sh
