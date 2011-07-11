@@ -334,6 +334,9 @@ USLuaRuntime::USLuaRuntime () {
 USLuaRuntime::~USLuaRuntime () {
 
 	if ( this->mMainState ) {
+		// run a full cycle of the garbage collector here in case any Lua bound objects
+		// need to send callbacks on destruction
+		lua_gc ( this->mMainState, LUA_GCCOLLECT, 0 );
 		lua_close ( this->mMainState );
 	}
 	this->mMainState = 0;
