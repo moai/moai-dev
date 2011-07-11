@@ -226,12 +226,12 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				078D62FF13BA9EA30072F273 /* MoaiVC.h */,
-				078D630013BA9EA30072F273 /* MoaiVC.mm */,
 				03CC909B13B3C37200B2724C /* AppDelegate.h */,
 				03CC909C13B3C37200B2724C /* AppDelegate.mm */,
 				03CC909D13B3C37200B2724C /* LocationObserver.h */,
 				03CC909E13B3C37200B2724C /* LocationObserver.mm */,
+				078D62FF13BA9EA30072F273 /* MoaiVC.h */,
+				078D630013BA9EA30072F273 /* MoaiVC.mm */,
 				03CC909F13B3C37200B2724C /* MoaiView.h */,
 				03CC90A013B3C37200B2724C /* MoaiView.mm */,
 				03CC90A113B3C37200B2724C /* OpenGLView.h */,
@@ -537,7 +537,7 @@
 				SDKROOT = iphoneos;
 				SRC_PATH = ../..;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				VALID_ARCHS = "armv6 armv7";
+				VALID_ARCHS = "i386 armv6 armv7";
 			};
 			name = Debug;
 		};
@@ -565,7 +565,7 @@
 				SDKROOT = iphoneos;
 				SRC_PATH = ../..;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				VALID_ARCHS = "armv6 armv7";
+				VALID_ARCHS = "i386 armv6 armv7";
 			};
 			name = Release;
 		};

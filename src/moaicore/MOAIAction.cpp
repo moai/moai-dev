@@ -288,7 +288,6 @@ void MOAIAction::RemoveChild ( MOAIAction& action ) {
 		action.UnblockSelf ();
 		action.UnblockAll ();
 		action.mParent = 0;
-		action.OnStop ();
 		action.Release ();
 	}
 }
@@ -311,7 +310,10 @@ void MOAIAction::Start ( MOAIAction& parent ) {
 void MOAIAction::Stop () {
 
 	if ( this->mParent ) {
+		this->Retain ();
 		this->mParent->RemoveChild ( *this );
+		this->OnStop ();
+		this->Release ();
 	}
 }
 
