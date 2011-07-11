@@ -414,7 +414,9 @@ public:
 
 	template < typename PARAM_TYPE>
 	void TransformQuad ( USMetaVec2D < PARAM_TYPE >* quad ) const {
+	
 	#ifdef MOAI_ARM7
+	
 		TYPE xform_mat[16] = { m[C0_R0], m[C0_R1], 0, 0, //column 1
 		                       m[C1_R0], m[C1_R1], 0, 0, //column 2
 							   m[C2_R0], m[C2_R1], 0, 0, //column 3
@@ -470,6 +472,13 @@ public:
 		quad[2].mX = outpt_mat[8]; quad[2].mY = outpt_mat[9];
 		quad[3].mX = outpt_mat[12]; quad[3].mY = outpt_mat[13];
 		
+	#else
+	
+	this->Transform ( quad [ 0 ] );
+	this->Transform ( quad [ 1 ] );
+	this->Transform ( quad [ 2 ] );
+	this->Transform ( quad [ 3 ] );
+	
 	#endif
 	}
 
