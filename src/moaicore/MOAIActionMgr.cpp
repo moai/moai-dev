@@ -106,17 +106,19 @@ void MOAIActionMgr::StartAction ( MOAIAction& action ) {
 //----------------------------------------------------------------//
 void MOAIActionMgr::Update ( float step ) {
 
-	if ( this->mRoot ) {
+	MOAIAction* root = this->mRoot;
+
+	if ( root ) {
 
 		this->GetNextPass ();
 		
-		this->mRoot->Retain ();
+		root->Retain ();
 		
 		for ( this->mPass = 0; this->mPass < this->mTotalPasses; ++this->mPass ) {
-			this->mRoot->Update ( step, this->mPass, true );
+			root->Update ( step, this->mPass, true );
 		}
 
-		this->mRoot->Release ();
+		root->Release ();
 
 		this->mPass = RESET_PASS;
 		this->mCurrentAction = 0;
