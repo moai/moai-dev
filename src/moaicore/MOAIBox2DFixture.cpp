@@ -33,7 +33,12 @@ int MOAIBox2DFixture::_destroy ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	setCollisionHandler
-	@text	Sets a Lua function to call when collisions occur.
+	@text	Sets a Lua function to call when collisions occur. The handler should
+			accept the following parameters: ( phase, fixtureA, fixtureB, arbiter ). 'phase' will
+			be one of the phase masks. 'fixtureA' will be the fixture receiving the collision.
+			'fixtureB' will be the other fixture in the collision. 'arbiter' will be the
+			MOAIArbiter. Note that the arbiter is only good for the current collision: do
+			not keep references to it for later use.
 	
 	@in		MOAIBox2DFixture self
 	@in		function handler
