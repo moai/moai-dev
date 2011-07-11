@@ -22,9 +22,14 @@ texture:setTexture ( "cathead.png" )
 texture:setRect ( -16, -16, 16, 16 )
 
 system = MOAIParticleSystem.new ()
-system:reserveSprites ( 256 )
+system:reserveSprites ( 1000 )
 system:setDeck ( texture )
 
-system:pushSprite ( 0, 0 )
+for i=1, 1000 do
+
+	x = math.random ( -320, 320 )
+	y = math.random ( -240, 240 )
+	system:pushSprite ( x, y )
+end
 
 layer:insertProp ( system )
