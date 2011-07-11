@@ -78,8 +78,8 @@ cp ../xcode/ios/Info.plist moai-sdk/hosts/xcode-ios/Info.plist
 cp ../xcode/ios/MainWindow-iPad.xib moai-sdk/hosts/xcode-ios/MainWindow-iPad.xib
 cp ../xcode/ios/MainWindow-iPhone.xib moai-sdk/hosts/xcode-ios/MainWindow-iPhone.xib
 cp ../xcode/ios/main.mm moai-sdk/hosts/xcode-ios/main.mm
-cp ../xcode/ios/main.mm moai-sdk/hosts/xcode-ios/mt.default
-cp ../xcode/ios/main.mm moai-sdk/hosts/xcode-ios/package.sh
+cp ../xcode/ios/mt.default moai-sdk/hosts/xcode-ios/mt.default
+cp ../xcode/ios/package.sh moai-sdk/hosts/xcode-ios/package.sh
 
 # replace run scripts
 cd moai-sdk-run-scripts
