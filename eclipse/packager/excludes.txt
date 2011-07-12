@@ -1,1 +1,2 @@
-.bat
+run.bat
+run.sh
