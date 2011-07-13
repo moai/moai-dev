@@ -1,7 +1,7 @@
 # extend path to include system folders. on some machines, this is necessary
 PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:$PATH
 
-# if we don't already have our own moai-target file, create one
+# if we don't already have our own moai-target file, create one based on the default file
 if [ ! -f moai-target ]; then
 	cp mt.default moai-target
 fi
