@@ -6,14 +6,6 @@
 
 require "apsalar"
 
-viewport = MOAIViewport.new ()
-viewport:setSize ( 320, 480 )
-viewport:setScale ( 320, 480 )
-
-layer = MOAILayer2D.new ()
-layer:setViewport ( viewport )
-MOAISim.pushRenderPass ( layer )
-
 --==============================================================
 -- apsalar example
 --==============================================================
