@@ -23,7 +23,7 @@ If these two environment variables are set up correctly, you can run each sample
 
 Developing on Mac:
 
-Open xcode/osx/moai-osx.xcodeproj. Make sure a 32-bit architecture is selected (64-bit not yet officially supported). Build moai as a command line utility.
+Open xcode/osx/MoaiSample.xcodeproj. Make sure a 32-bit architecture is selected (64-bit not yet officially supported). Build moai as a command line utility.
 
 To try out the samples, configure Xcode's debug working directory and command line parameters. Set the working directory to the directory of the sample you want to try, relative to the Xcode project (for example '../../samples/basics/anim-basic'). Set the command line parameters to '../../config/config.lua main.lua'.
 
@@ -31,9 +31,9 @@ config.lua sets up some richer error messages; it's a good idea to always pass i
 
 In Xcode 3, right click the executable and choose 'Get Info.' In Xcode 4, select 'Edit Scheme' from the Schemes drop down. You will find the settings on the 'Info' and 'Arguments' tab the scheme editor.
 
-Developing for iPhone:
+Developing for iOS:
 
-Use xcode/iphone/moai-iphone.xcodeproj. This sample project includes the Lua and image found in samples/basics/anim-basic. The Moai runtime is implemented in an OpenGL view. Look at AppDelegate to see how it is used.
+Use xcode/ios/MoaiSample.xcodeproj. This sample project includes the Lua and image found in samples/basics/anim-basic. The Moai runtime is implemented in an OpenGL view. Look at AppDelegate to see how it is used.
 
 As Moai is written in C++, we've generally preferred Objective-C++ for our work. To make dealing with Apple's reference counting easier, we use a smart pointer called RefPtr <>. If you're planning to extend MoaiView and don't mind using Objective-C++, try it out for yourself.
 
