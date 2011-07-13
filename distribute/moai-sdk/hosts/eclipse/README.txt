@@ -9,5 +9,5 @@ Set Up On Windows & Mac:
 ----------------------------------------------------------------
 Add ant-contrib to Eclipse. To do this, Open Eclipse's preferences. 
 Then open Ant->Runtime in the left-hand side tree view. On the right-hand 
-side of the screen, click on Classpath->Global Entries. Click Add External JARS. 
-Navigate to the packager folder included with the sample host and choose ant-contrib-1.0b3.jar.
+side of the screen, click on Classpath->Global Entries. Click 'Add External JARS...' 
+Navigate to hosts->eclipse->packager and choose ant-contrib-1.0b3.jar.
