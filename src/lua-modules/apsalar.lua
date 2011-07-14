@@ -17,7 +17,14 @@ require "util"
 --==============================================================
 -- database
 --==============================================================
-local DB_PATH = MOAIEnvironment.getDocumentDirectory () .. "/apsalar.sqlite3"
+local docDir = MOAIEnvironment.getDocumentDirectory ()
+
+if docDir == "UNKNOWN" then
+	error ( "apsalar is not supported on this platform.", 2 )
+	return
+end
+
+local DB_PATH = docDir .. "/apsalar.sqlite3"
 local needNewDatabase = not util.fileExists ( DB_PATH )
 
 ----------------------------------------------------------------
