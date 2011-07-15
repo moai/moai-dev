@@ -7,6 +7,7 @@ xcopy /v /i /s /y "../../src" "src-copy"
 ::modify copy of source files
 call parser\process-files header-files.lua h
 call parser\process-files source-files.lua cpp
+call parser\process-files source-files.lua mm
 
 ::kill existing doxygen output folder, if any
 rmdir /s /q html-lua
