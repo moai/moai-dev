@@ -39,9 +39,15 @@ cp -R ../src/aku/*.h moai-sdk/include/aku
 mkdir -p moai-sdk/hosts/src
 
 cp ../version.txt moai-sdk/version.txt
+cp ../docs/GettingStartedWithMoai.pdf moai-sdk/GettingStartedWithMoai.pdf
+cp ../docs/MoaiProjectSetup.pdf moai-sdk/MoaiProjectSetup.pdf
 
 cd ../src/hosts
 cp -R * ../../distribute/moai-sdk/hosts/src
+cd ../../distribute
+
+cd ../src/lua-modules
+cp -R * ../../distribute/moai-sdk/include/lua-modules
 cd ../../distribute
 
 # docs
@@ -85,4 +91,3 @@ cp ../xcode/ios/package.sh moai-sdk/hosts/xcode-ios/package.sh
 cd moai-sdk-run-scripts
 ./replace-run-scripts.sh
 cd ..
-
