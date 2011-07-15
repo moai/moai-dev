@@ -7,8 +7,11 @@ if [ ! -f moai-target ]; then
 fi
 
 # remove existing lua folder, so we can make a fresh one
-chmod -R 777 ./lua
-rm -rf lua
+if [ -d lua ]; then
+	chmod -R 777 ./lua
+	rm -rf lua
+fi
+
 mkdir -p lua
 
 # read moai-target file line by line, and copy contents of each folder specified
