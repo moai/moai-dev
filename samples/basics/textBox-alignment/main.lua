@@ -18,7 +18,7 @@ charcodes = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 .,:;
 text = 'Lorem ipsum dolor\nsit amet, consectetur\nadipiscing elit.\nMaecenas diam augue, laoreet\nvitae\ndapibus in, sodales in ligula.'
 
 font = MOAIFont.new ()
-font:loadFromTTF ( 'arial-rounded.ttf', charcodes, 7.5, 163 )
+font:loadFromTTF ( 'arial-rounded.TTF', charcodes, 7.5, 163 )
 
 function addTextbox ( top, height, alignment )
 

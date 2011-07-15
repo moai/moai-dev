@@ -26,51 +26,19 @@
 #include <time.h>
 
 //================================================================//
-// local
-//================================================================//
-
-//----------------------------------------------------------------//
-static long _getTimerInfo () {
-	
-	struct timespec ts;
-	clock_gettime( CLOCK_MONOTONIC, &ts );
-	
-	return ts.tv_nsec;
-}
-
-//================================================================//
 // USDeviceTime
 //================================================================//
 
 	//----------------------------------------------------------------//
-
-
-#ifndef ANDROID
-	double USDeviceTime::GetTimeInSeconds () {
-		
-		static long last_time = _getTimerInfo(); // in nanoseconds
-	
-		long this_time = _getTimerInfo();
-
-		double time = static_cast<double>( this_time - last_time ) * ( 1e-9 );
-
-		last_time = this_time;
-
-		return time;
-	}
-#else
-	//----------------------------------------------------------------//
 	double USDeviceTime::GetTimeInSeconds () {
 		
 		struct timespec timer;
-		timer.tv_nsec = 0;
 		clock_gettime(CLOCK_MONOTONIC, &timer);
-		static double last_time = timer.tv_sec + (double)(timer.tv_nsec*1e-9) ;// in nanoseconds
+		static double start_time = timer.tv_sec + (double)(timer.tv_nsec*1e-9) ;// in nanoseconds
 	
 		
-		double time = ( timer.tv_sec + (double)(timer.tv_nsec*1e-9)) - last_time;
+		double time = ( timer.tv_sec + (double)(timer.tv_nsec*1e-9)) - start_time;
 
 		return time;
 	}
-#endif
 #endif

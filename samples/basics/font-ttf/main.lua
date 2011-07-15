@@ -18,7 +18,7 @@ charcodes = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 .,:;
 text = 'The quick brown fox jumps over the lazy dog.'
 
 font = MOAIFont.new ()
-font:loadFromTTF ( 'Dwarves.ttf', charcodes, 12, 163 )
+font:loadFromTTF ( 'Dwarves.TTF', charcodes, 12, 163 )
 
 textbox = MOAITextBox.new ()
 textbox:setString ( text )

@@ -39,7 +39,7 @@ public:
 	//----------------------------------------------------------------//
 							RTTILinkBase		() {}
 	virtual					~RTTILinkBase		() {}
-	virtual s32				GetOffset			( void* ptr ) = 0;
+	virtual sintptr			GetOffset			( void* ptr ) = 0;
 };
 
 //================================================================//
@@ -57,8 +57,8 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	s32 GetOffset ( void* ptr ) {
-		return ( s32 )(( SUPER_TYPE* )( TYPE* )ptr ) - ( s32 )( ptr );
+	sintptr GetOffset ( void* ptr ) {
+		return ( sintptr )(( SUPER_TYPE* )( TYPE* )ptr ) - ( sintptr )( ptr );
 	}
 };
 

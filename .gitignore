@@ -1,2 +1,16 @@
 Thumbs.db
 .DS_Store
+/vs2010/ipch
+/vs2010/bin
+/vs2008/bin
+
+/ide/bin
+/ide/obj
+
+# Artifacts when building with CMake
+CMakeFiles
+CMakeCache.txt
+cmake_install.cmake
+*.o
+*.a
+src/moai/moai

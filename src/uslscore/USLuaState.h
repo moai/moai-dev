@@ -139,7 +139,7 @@ template <> cc8*	USLuaState::GetValue < cc8* >	( int idx, cc8* value );
 template <> double	USLuaState::GetValue < double >	( int idx, double value );
 template <> float	USLuaState::GetValue < float >	( int idx, float value );
 template <> int		USLuaState::GetValue < int >	( int idx, int value );
-template <> uint	USLuaState::GetValue < uint >	( int idx, uint value );
+template <> uintptr	USLuaState::GetValue < uintptr >( int idx, uintptr value );
 template <> u8		USLuaState::GetValue < u8 >		( int idx, u8 value );
 template <> u16		USLuaState::GetValue < u16 >	( int idx, u16 value );
 template <> u32		USLuaState::GetValue < u32 >	( int idx, u32 value );
