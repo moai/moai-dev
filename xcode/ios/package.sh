@@ -25,6 +25,9 @@ function processDir {
 				processDir $i
 			done
 		fi
+	else
+		
+		echo Could not find directory $1\; skipping this folder.
 	fi
 }
 
