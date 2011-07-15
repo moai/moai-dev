@@ -119,7 +119,7 @@ int MOAIEnvironment::_getCarrierName ( lua_State* L  ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	_getConnectionType
+/**	@name	getConnectionType
 	@text	Gets whether the device is connected to WIFI, WWAN or nothing
 
 	@out	string connectionType
@@ -133,7 +133,7 @@ int MOAIEnvironment::_getConnectionType ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	_getCountryCode
+/**	@name	getCountryCode
 	@text	Gets the country code of the current location
 	
 	@out	string countryCode
@@ -286,7 +286,7 @@ int MOAIEnvironment::_getResourceDirectory ( lua_State* L  ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	_getUDID
+/**	@name	getUDID
 	@text	Returns the device unique identifier
 
 	@out	string UDID
@@ -298,7 +298,7 @@ int MOAIEnvironment::_getUDID ( lua_State* L  ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	_getViewSize
+/**	@name	getViewSize
 	@text	Returns the width and height of the view
 	
 	@out	int width
@@ -315,7 +315,7 @@ int MOAIEnvironment::_getViewSize ( lua_State* L  ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	_isRetinaDisplay
+/**	@name	isRetinaDisplay
 	@text	Returns whether or not the device has a Retina Display 
 	
 	@out	bool isRetinaDisplay
