@@ -16,6 +16,7 @@ mkdir -p eclipse/lua-prep
 cp -r ../$LUA_FOLDER/. eclipse/lua-prep
 rm -f eclipse/lua-prep/.DS_Store
 rm -f eclipse/lua-prep/run.bat
+rm -f eclipse/lua-prep/run.sh
 
 echo ----------------------------------------------------------------
 echo Copying Android Config File
