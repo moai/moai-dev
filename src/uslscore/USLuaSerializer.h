@@ -24,12 +24,12 @@ private:
 	STLList < USLuaObject* > mPending;
 
 	// maps IDs onto instances
-	typedef STLMap < u32, USLuaObject* >::iterator InstanceMapIt;
-	STLMap < u32, USLuaObject* > mInstanceMap;
+	typedef STLMap < uintptr, USLuaObject* >::iterator InstanceMapIt;
+	STLMap < uintptr, USLuaObject* > mInstanceMap;
 
 	// maps IDs onto tables
-	typedef STLMap < u32, USLuaRef >::iterator TableMapIt;
-	STLMap < u32, USLuaRef > mTableMap;
+	typedef STLMap < uintptr, USLuaRef >::iterator TableMapIt;
+	STLMap < uintptr, USLuaRef > mTableMap;
 
 	// return list for Lua runtime
 	typedef STLList < u32 >::iterator ReturnListIt;
@@ -43,9 +43,9 @@ private:
 	static int		_serialize					( lua_State* L );
 
 	//----------------------------------------------------------------//
-	u32				GetID						( USLuaObject* object );
-	u32				GetID						( USLuaState& state, int idx );
-	void			Register					( USLuaObject* object, u32 id );
+	uintptr			GetID						( USLuaObject* object );
+	uintptr			GetID						( USLuaState& state, int idx );
+	void			Register					( USLuaObject* object, uintptr id );
 	void			WriteDecls					( USStream& stream );
 	void			WriteInstanceDecls			( USStream& stream );
 	void			WriteInstanceInits			( USStream& stream );
@@ -75,8 +75,8 @@ public:
 	DECL_LUA_FACTORY ( USLuaSerializer )
 
 	//----------------------------------------------------------------//
-	u32				Affirm					( USLuaObject* object );
-	u32				Affirm					( USLuaState& state, int idx );
+	uintptr			Affirm					( USLuaObject* object );
+	uintptr			Affirm					( USLuaState& state, int idx );
 	void			AddLuaReturn			( USLuaObject* object );
 	void			AddLuaReturn			( USLuaState& state, int idx );
 	void			Clear					();

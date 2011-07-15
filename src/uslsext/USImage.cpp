@@ -52,7 +52,7 @@ void USImage::Alloc () {
 	u32 bitmapSize = this->GetBitmapSize ();
 
 	this->mData = malloc ( paletteSize + bitmapSize );
-	this->mBitmap = ( void* )(( u32 )this->mData + paletteSize );
+	this->mBitmap = ( void* )(( uintptr )this->mData + paletteSize );
 	
 	if ( paletteSize ) {
 		this->mPalette = this->mData;
@@ -109,14 +109,14 @@ void USImage::BleedRect ( int xMin, int yMin, int xMax, int yMax ) {
 	u32 copySize = ( u32 )(( xMax - xMin ) * pixelSize );
 	
 	if ( yMin > 0 ) {
-		void* srcRow = ( void* )(( u32 )this->mBitmap + ( rowSize * yMin ) + ( xMin * pixSize ));
-		void* destRow = ( void* )(( u32 )this->mBitmap + ( rowSize * ( yMin - 1 )) + ( xMin * pixSize ));
+		void* srcRow = ( void* )(( uintptr )this->mBitmap + ( rowSize * yMin ) + ( xMin * pixSize ));
+		void* destRow = ( void* )(( uintptr )this->mBitmap + ( rowSize * ( yMin - 1 )) + ( xMin * pixSize ));
 		memcpy ( destRow, srcRow, copySize );
 	}
 	
 	if ( yMax < height ) {
-		void* srcRow = ( void* )(( u32 )this->mBitmap + ( rowSize * ( yMax - 1 )) + ( xMin * pixSize ));
-		void* destRow = ( void* )(( u32 )this->mBitmap + ( rowSize * yMax ) + ( xMin * pixSize ));
+		void* srcRow = ( void* )(( uintptr )this->mBitmap + ( rowSize * ( yMax - 1 )) + ( xMin * pixSize ));
+		void* destRow = ( void* )(( uintptr )this->mBitmap + ( rowSize * yMax ) + ( xMin * pixSize ));
 		memcpy ( destRow, srcRow, copySize );
 	}
 }
@@ -235,8 +235,8 @@ void USImage::CopyBits ( const USImage& image, int srcX, int srcY, int destX, in
 		
 		for ( int y = 0; y < height; ++y ) {
 		
-			const void* srcRow = ( const void* )(( u32 )image.mBitmap + ( srcRowSize * ( y + srcY )) + ( srcX * size ));
-			void* destRow = ( void* )(( u32 )this->mBitmap + ( destRowSize * ( y + destY )) + ( destX * size ));
+			const void* srcRow = ( const void* )(( uintptr )image.mBitmap + ( srcRowSize * ( y + srcY )) + ( srcX * size ));
+			void* destRow = ( void* )(( uintptr )this->mBitmap + ( destRowSize * ( y + destY )) + ( destX * size ));
 			
 			memcpy ( destRow, srcRow, width );
 		}
@@ -257,7 +257,7 @@ u32 USImage::GetColor ( u32 i ) const {
 	u32 total = this->GetPaletteCount ();
 	if ( i < total ) {
 		
-		u8* stream = ( u8* )(( u32 )this->mPalette + (( u32 )( colorDepth >> 3 ) * i ));
+		u8* stream = ( u8* )(( uintptr )this->mPalette + (( u32 )( colorDepth >> 3 ) * i ));
 		return USColor::ReadRGBA ( stream, this->mColorFormat );
 	}
 	return 0;
@@ -317,7 +317,7 @@ u32 USImage::GetPaletteColor ( u32 idx ) const {
 		u32 colorDepth = USColor::GetDepth ( this->mColorFormat );
 		
 		u32 size = ( colorDepth >> 3 );
-		u8* stream = ( u8* )(( u32 )this->mPalette + ( idx * size ));
+		u8* stream = ( u8* )(( uintptr )this->mPalette + ( idx * size ));
 		u32 color = USPixel::ReadPixel ( stream, size );
 		
 		rgba = USColor::ConvertToRGBA ( color, this->mColorFormat );
@@ -343,13 +343,13 @@ u32 USImage::GetPixel ( u32 x, u32 y ) const {
 	u32 pixel;
 	
 	if ( pixelSize == 0.5f ) {
-		u8* stream = ( u8* )(( u32 )row + ( x >> 0x01 ));
+		u8* stream = ( u8* )(( uintptr )row + ( x >> 0x01 ));
 		pixel = ( u32 )( *stream );
 		pixel = (( pixel >> (( x & 0x01 ) ? 0x04 : 0x00 )) & 0x0F );
 	}
 	else {
 		u32 size = ( u32 )pixelSize;
-		u8* stream = ( u8* )(( u32 )row + ( x * size ));
+		u8* stream = ( u8* )(( uintptr )row + ( x * size ));
 		pixel = USPixel::ReadPixel ( stream, size );
 	}
 	
@@ -359,13 +359,13 @@ u32 USImage::GetPixel ( u32 x, u32 y ) const {
 //----------------------------------------------------------------//
 void* USImage::GetRowAddr ( u32 y ) {
 
-	return ( void* )(( u32 )this->mBitmap + ( this->GetRowSize () * y ));
+	return ( void* )(( uintptr )this->mBitmap + ( this->GetRowSize () * y ));
 }
 
 //----------------------------------------------------------------//
 const void* USImage::GetRowAddr ( u32 y ) const {
 
-	return ( void* )(( u32 )this->mBitmap + ( this->GetRowSize () * y ));
+	return ( void* )(( uintptr )this->mBitmap + ( this->GetRowSize () * y ));
 }
 
 //----------------------------------------------------------------//
@@ -646,7 +646,7 @@ void USImage::LoadPng ( void* pngParam, void* pngInfoParam, u32 transform ) {
 		
 		// copy the rows
 		for ( u32 y = 0; y < height; ++y ) {
-			void* row = ( void* )(( u32 )this->mBitmap  + ( rowsize * y ));
+			void* row = ( void* )(( uintptr )this->mBitmap  + ( rowsize * y ));
 			png_read_row ( png, ( png_bytep )row, 0 );
 		}
 	}
@@ -744,15 +744,15 @@ void USImage::ResizeCanvas ( const USImage& image, USIntRect rect ) {
 		
 			if ( leftSize ) {
 				memset ( row, 0, leftSize );
-				row = ( void* )(( u32 )row + leftSize );
+				row = ( void* )(( uintptr )row + leftSize );
 			}
 			
 			if ( spanSize ) {
 			
-				void* srcRow = ( void* )(( u32 )image.mBitmap + ( srcRowSize * ( y - srcRect.mYMin )) + srcRowXOff );
+				void* srcRow = ( void* )(( uintptr )image.mBitmap + ( srcRowSize * ( y - srcRect.mYMin )) + srcRowXOff );
 				
 				memcpy ( row, srcRow, spanSize );
-				row = ( void* )(( u32 )row + spanSize );
+				row = ( void* )(( uintptr )row + spanSize );
 			}
 			
 			if ( rightSize ) {
@@ -784,7 +784,7 @@ void USImage::SetPaletteColor ( u32 idx, u32 rgba ) {
 		u32 colorDepth = USColor::GetDepth ( this->mColorFormat );
 		
 		u32 size = ( colorDepth >> 3 );
-		u8* stream = ( u8* )(( u32 )this->mPalette + ( idx * size ));
+		u8* stream = ( u8* )(( uintptr )this->mPalette + ( idx * size ));
 		USPixel::WritePixel ( stream, color, size );
 	}
 }
@@ -801,12 +801,12 @@ void USImage::SetPixel ( u32 x, u32 y, u32 pixel ) {
 	u32 pixelMask = USPixel::GetMask ( this->mPixelFormat, this->mColorFormat );
 	
 	if ( pixelDepth == 4 ) {
-		u8* address = ( u8* )(( u32 )row + ( x >> 0x01 ));
+		u8* address = ( u8* )(( uintptr )row + ( x >> 0x01 ));
 		( *address ) = ( *address ) | ( u8 )(( pixel & pixelMask ) << (( x & 0x01 ) ? 0x04 : 0x00 ));
 	}
 	else {
 		u32 size = ( pixelDepth >> 3 );
-		u8* stream = ( u8* )(( u32 )row + ( x * size ));
+		u8* stream = ( u8* )(( uintptr )row + ( x * size ));
 		USPixel::WritePixel ( stream, pixel, size );
 	}
 }

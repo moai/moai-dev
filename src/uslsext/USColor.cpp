@@ -40,7 +40,7 @@ void USColor::Convert ( void* dest, Format destFmt, const void* src, Format srcF
 				for ( u32 i = 0; i < copy; ++i ) {
 				
 					color = *( u8* )src;
-					src = ( void* )(( u32 )src + 1 );
+					src = ( void* )(( uintptr )src + 1 );
 					
 					buffer [ i ] = color << 0x18;
 				}
@@ -52,7 +52,7 @@ void USColor::Convert ( void* dest, Format destFmt, const void* src, Format srcF
 				for ( u32 i = 0; i < copy; ++i ) {
 					
 					color = *( u32* )src;
-					src = ( void* )(( u32 )src + 3 );
+					src = ( void* )(( uintptr )src + 3 );
 					
 					buffer [ i ]= color | 0xff000000;
 				}
@@ -64,7 +64,7 @@ void USColor::Convert ( void* dest, Format destFmt, const void* src, Format srcF
 				for ( u32 i = 0; i < copy; ++i ) {
 					
 					color = *( u16* )src;
-					src = ( void* )(( u32 )src + 2 );
+					src = ( void* )(( uintptr )src + 2 );
 					
 					buffer [ i ] =	((( color >> 0x00 ) & 0x1F ) << 0x03 ) +
 									((( color >> 0x05 ) & 0x3F ) << 0x02 ) +
@@ -80,7 +80,7 @@ void USColor::Convert ( void* dest, Format destFmt, const void* src, Format srcF
 				for ( u32 i = 0; i < copy; ++i ) {
 				
 					color = *( u16* )src;
-					src = ( void* )(( u32 )src + 2 );
+					src = ( void* )(( uintptr )src + 2 );
 					
 					buffer [ i ] =	((( color >> 0x00 ) & 0x1F ) << 0x03 ) +
 									((( color >> 0x05 ) & 0x1F ) << 0x0B ) +
@@ -95,7 +95,7 @@ void USColor::Convert ( void* dest, Format destFmt, const void* src, Format srcF
 				for ( u32 i = 0; i < copy; ++i ) {
 				
 					color = *( u32* )src;
-					src = ( void* )(( u32 )src + 2 );
+					src = ( void* )(( uintptr )src + 2 );
 					
 					buffer [ i ] =	((( color >> 0x00 ) & 0x0F ) << 0x04 ) +
 									((( color >> 0x04 ) & 0x0F ) << 0x0C ) +
@@ -122,7 +122,7 @@ void USColor::Convert ( void* dest, Format destFmt, const void* src, Format srcF
 					color = bufferPtr [ i ];
 					
 					(( u8* )dest )[ 0 ] = ( color >> 0x18 ) & 0xFF;
-					dest = ( void* )(( u32 )dest + 1 );
+					dest = ( void* )(( uintptr )dest + 1 );
 				}
 				break;
 		
@@ -135,7 +135,7 @@ void USColor::Convert ( void* dest, Format destFmt, const void* src, Format srcF
 					(( u8* )dest )[ 0 ] = color & 0xFF;
 					(( u8* )dest )[ 1 ] = ( color >> 8 ) & 0xFF;
 					(( u8* )dest )[ 2 ] = ( color >> 16 ) & 0xFF;
-					dest = ( void* )(( u32 )dest + 3 );
+					dest = ( void* )(( uintptr )dest + 3 );
 				}
 				break;
 				
@@ -148,7 +148,7 @@ void USColor::Convert ( void* dest, Format destFmt, const void* src, Format srcF
 					*( u16* )dest =	((( color >> 0x03 ) & 0x1F ) << 0x0B ) +
 									((( color >> 0x0A ) & 0x3F ) << 0x05 ) +
 									((( color >> 0x13 ) & 0x1F ) << 0x00 );
-					dest = ( void* )(( u32 )dest + 2 );
+					dest = ( void* )(( uintptr )dest + 2 );
 				}
 				break;
 						
@@ -162,7 +162,7 @@ void USColor::Convert ( void* dest, Format destFmt, const void* src, Format srcF
 										((( color >> 0x0B ) & 0x1F ) << 0x05 ) +
 										((( color >> 0x13 ) & 0x1F ) << 0x0A ) +
 										(((( color >> 0x1C ) & 0x0F ) ? 0x01 : 0x00 ) << 0x0F );
-					dest = ( void* )(( u32 )dest + 2 );
+					dest = ( void* )(( uintptr )dest + 2 );
 				}
 				break;
 
@@ -176,14 +176,14 @@ void USColor::Convert ( void* dest, Format destFmt, const void* src, Format srcF
 										((( color >> 0x0C ) & 0x0F ) << 0x08 ) +
 										((( color >> 0x14 ) & 0x0F ) << 0x04 ) +
 										((( color >> 0x1C ) & 0x0F ) << 0x00 );
-					dest = ( void* )(( u32 )dest + 2 );
+					dest = ( void* )(( uintptr )dest + 2 );
 				}
 				break;
 
 			case RGBA_8888:
 				
 				memcpy ( dest, bufferPtr, copy * sizeof ( u32 ));
-				dest = ( void* )(( u32 )dest + ( copy * sizeof ( u32 )));
+				dest = ( void* )(( uintptr )dest + ( copy * sizeof ( u32 )));
 				break;
 			
 			default:
@@ -364,7 +364,7 @@ void USColor::PremultiplyAlpha ( void* colors, Format format, u32 nColors ) {
 											(((( color >> 0x05 ) & 0x1F ) * alpha ) << 0x05 ) +
 											(((( color >> 0x0A ) & 0x1F ) * alpha ) << 0x0A ) +
 											( alpha << 0x0F ));
-				colors = ( void* )(( u32 )colors + 2 );
+				colors = ( void* )(( uintptr )colors + 2 );
 			}
 			break;
 
@@ -377,7 +377,7 @@ void USColor::PremultiplyAlpha ( void* colors, Format format, u32 nColors ) {
 											((((( color >> 0x04 ) & 0x0F ) * alpha ) >> 0x04 ) << 0x04 ) +
 											((((( color >> 0x08 ) & 0x0F ) * alpha ) >> 0x04 ) << 0x08 ) +
 											((((( color >> 0x0c ) & 0x0F ) * alpha ) >> 0x04 ) << 0x0C ));
-				colors = ( void* )(( u32 )colors + 2 );
+				colors = ( void* )(( uintptr )colors + 2 );
 			}
 			break;
 
@@ -390,7 +390,7 @@ void USColor::PremultiplyAlpha ( void* colors, Format format, u32 nColors ) {
 									((((( color >> 0x08 ) & 0xFF ) * alpha ) >> 0x08 ) << 0x08 ) +
 									((((( color >> 0x10 ) & 0xFF ) * alpha ) >> 0x08 ) << 0x10 ) +
 									( alpha << 0x18 );
-				colors = ( void* )(( u32 )colors + 4 );
+				colors = ( void* )(( uintptr )colors + 4 );
 			}
 			break;
 		

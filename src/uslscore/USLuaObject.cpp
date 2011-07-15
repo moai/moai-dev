@@ -77,8 +77,7 @@ int USLuaObject::_getClassName ( lua_State* L ) {
 //----------------------------------------------------------------//
 void USLuaObject::DebugDump () {
 
-	// TODO: fix for 64 bit
-	USLog::Print ( "0x%08X <%s> %s", ( uint )(( u32 )this ), this->TypeName (), this->ToString ().c_str ());
+	USLog::Print ( "%p <%s> %s", this, this->TypeName (), this->ToString ().c_str ());
 }
 
 //----------------------------------------------------------------//

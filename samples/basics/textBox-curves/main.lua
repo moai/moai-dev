@@ -18,7 +18,7 @@ charcodes = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 .,:;
 text = 'The quick <c:f70>brown<c> fox jumps over the <c:7f3>lazy<c> dog.'
 
 font = MOAIFont.new ()
-font:loadFromTTF ( 'arial-rounded.ttf', charcodes, 12, 163 )
+font:loadFromTTF ( 'arial-rounded.TTF', charcodes, 12, 163 )
 
 textbox = MOAITextBox.new ()
 textbox:setString ( text )

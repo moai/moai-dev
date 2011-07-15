@@ -30,7 +30,7 @@ void* RTTIRecord::AsType ( RTTIRecord& record, void* ptr ) {
 	// TODO: binary search?
 	for ( u32 i = 0; i < this->mTypeCount; ++i ) {
 		if ( this->mTypeSet [ i ] == &record ) {
-			return ( void* )(( s32 )ptr + this->mJumpTable [ i ]);
+			return ( void* )(( sintptr )ptr + this->mJumpTable [ i ]);
 		}
 	}
 	return 0;
@@ -62,10 +62,10 @@ void RTTIRecord::Inherit ( RTTIRecord& record, void* ptr, s32 offset ) {
 		
 		RTTILinkBase& link = *record.mLinks [ i ];
 		
-		s32 jump = link.GetOffset ( ptr );
+		sintptr jump = link.GetOffset ( ptr );
 		RTTIRecord& nextRecord = *link.mTarget;
 		
-		void* nextPtr = ( void* )(( s32 )ptr + jump );
+		void* nextPtr = ( void* )(( sintptr )ptr + jump );
 		
 		this->Inherit ( nextRecord, nextPtr, offset + jump );
 	}

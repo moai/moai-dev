@@ -459,10 +459,10 @@ int USLuaState::GetValue < int >( int idx, int value ) {
 
 //----------------------------------------------------------------//
 template <>
-uint USLuaState::GetValue < uint >( int idx, uint value ) {
+uintptr USLuaState::GetValue < uintptr >( int idx, uintptr value ) {
 
 	if ( this->IsType ( idx, LUA_TNUMBER )) {
-		return ( int )lua_tonumber ( this->mState, idx );
+		return ( uintptr )lua_tonumber ( this->mState, idx );
 	}
 	return value;
 }
