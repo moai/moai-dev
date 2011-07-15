@@ -24,7 +24,7 @@
 #ifdef _WIN32
 	#include <glut.h>
 #else
-	#include <GL/glut.h>
+	#include <GLUT/glut.h>
 #endif
 
 namespace GlutInputDeviceID {
