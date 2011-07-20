@@ -358,6 +358,7 @@ void MOAIGrid::RegisterLuaFuncs ( USLuaState& state ) {
 		{ "clearTileFlags",		_clearTileFlags },
 		{ "getTile",			_getTile },
 		{ "getTileFlags",		_getTileFlags },
+		{ "getTileLoc",			_getTileLoc },
 		{ "locToCoord",			_locToCoord },
 		{ "setRow",				_setRow },
 		{ "setSize",			_setSize },
