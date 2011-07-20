@@ -530,6 +530,11 @@ void USImage::LoadPng ( void* pngParam, void* pngInfoParam, u32 transform ) {
 	
 	switch ( pngColorType ) {
 		
+		case PNG_COLOR_TYPE_GRAY:
+			pngPixelFormat = USPixel::TRUECOLOR;
+			pngColorFormat = USColor::A_8;
+			break;
+		
 		case PNG_COLOR_TYPE_PALETTE:
 			pngPixelFormat = ( paletteSize > 16 ) ? USPixel::INDEX_8 : USPixel::INDEX_4;
 			pngColorFormat = ( transSize ) ? USColor::RGBA_8888 : USColor::RGB_888;

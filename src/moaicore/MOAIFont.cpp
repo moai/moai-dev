@@ -5,11 +5,25 @@
 #include <moaicore/MOAIDataBuffer.h>
 #include <moaicore/MOAIFtFontRipper.h>
 #include <moaicore/MOAIFont.h>
+#include <moaicore/MOAIImage.h>
 #include <moaicore/MOAILogMessages.h>
+#include <moaicore/MOAITexture.h>
 
 //================================================================//
 // local
 //================================================================//
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIFont::_getImage ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIFont, "U" )
+
+	if ( self->mImage ) {
+		self->mImage->PushLuaUserdata ( state );
+		return 1;
+	}
+	return 0;
+}
 
 //----------------------------------------------------------------//
 /**	@name	getScale
@@ -28,6 +42,18 @@ int MOAIFont::_getScale ( lua_State* L ) {
 	
 	lua_pushnumber ( state, self->GetScale ());
 	return 1;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIFont::_getTexture ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIFont, "U" )
+
+	if ( self->mTexture ) {
+		self->mTexture->PushLuaUserdata ( state );
+		return 1;
+	}
+	return 0;
 }
 
 //----------------------------------------------------------------//
@@ -89,6 +115,28 @@ int MOAIFont::_loadFromTTF ( lua_State* L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIFont::_setImage ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIFont, "U" )
+
+	MOAIImage* image = state.GetLuaObject < MOAIImage >( 2 );
+	self->SetImage ( image );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIFont::_setTexture ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIFont, "U" )
+
+	MOAITexture* texture = state.GetLuaObject < MOAITexture >( 2 );
+	self->SetTexture ( texture );
+	
+	return 0;
+}
+
 //================================================================//
 // MOAIFont
 //================================================================//
@@ -98,7 +146,8 @@ USFont* MOAIFont::Bind () {
 	
 	USDrawBuffer& drawbuffer = USDrawBuffer::Get ();
 	
-	if ( drawbuffer.SetTexture ( &this->mTexture )) {
+	if ( drawbuffer.SetTexture ( this->mTexture )) {
+		this->mImage = 0;
 		return this;
 	}
 	return 0;
@@ -117,31 +166,31 @@ MOAIFont::~MOAIFont () {
 //----------------------------------------------------------------//
 void MOAIFont::LoadFont ( MOAIDataBuffer& fontImageData, cc8* charCodes ) {
 
-	USImage image;
+	this->mImage = new MOAIImage ();
+	
 	USFontRipper ripper;
-	ripper.RipAndReturn ( fontImageData, *this, image, charCodes );
-	this->mTexture.Init ( image );
-	this->mTexture.SetFilter ( GL_LINEAR, GL_LINEAR );
+	ripper.RipAndReturn ( fontImageData, *this, *this->mImage, charCodes );
+	this->SetImage ( this->mImage );
 }
 
 //----------------------------------------------------------------//
 void MOAIFont::LoadFont ( cc8* fontImageFileName, cc8* charCodes ) {
 
-	USImage image;
+	this->mImage = new MOAIImage ();
+	
 	USFontRipper ripper;
-	ripper.RipAndReturn ( fontImageFileName, *this, image, charCodes );
-	this->mTexture.Init ( image );
-	this->mTexture.SetFilter ( GL_LINEAR, GL_LINEAR );
+	ripper.RipAndReturn ( fontImageFileName, *this, *this->mImage, charCodes );
+	this->SetImage ( this->mImage );
 }
 
 //----------------------------------------------------------------//
 void MOAIFont::LoadFontFromTTF ( cc8* filename, cc8* charCodes, float points, u32 dpi ) {
 
 	#if USE_FREETYPE
-		USImage image;
-		MOAIFtFontRipper::RipFromTTF ( filename, *this, image, charCodes, points, dpi );
-		this->mTexture.Init ( image );
-		this->mTexture.SetFilter ( GL_LINEAR, GL_LINEAR );
+	
+		this->mImage = new MOAIImage ();
+		MOAIFtFontRipper::RipFromTTF ( filename, *this, *this->mImage, charCodes, points, dpi );
+		this->SetImage ( this->mImage );
 	#else
 		UNUSED ( filename );
 		UNUSED ( charCodes );
@@ -159,13 +208,51 @@ void MOAIFont::RegisterLuaClass ( USLuaState& state ) {
 void MOAIFont::RegisterLuaFuncs ( USLuaState& state ) {
 	
 	luaL_Reg regTable [] = {
+		{ "getImage",			_getImage },
 		{ "getScale",			_getScale },
+		{ "getTexture",			_getTexture },
 		{ "load",				_load },
 		{ "loadFromTTF",		_loadFromTTF },
+		{ "setImage",			_setImage },
+		{ "setTexture",			_setTexture },
 		{ NULL, NULL }
 	};
 	
 	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAIFont::SerializeIn ( USLuaState& state, USLuaSerializer& serializer ) {
+	UNUSED ( serializer );
+
+	USFont::SerializeIn ( state );
+}
+
+//----------------------------------------------------------------//
+void MOAIFont::SerializeOut ( USLuaState& state, USLuaSerializer& serializer ) {
+	UNUSED ( serializer );
+
+	USFont::SerializeOut ( state );
+}
+
+//----------------------------------------------------------------//
+void MOAIFont::SetImage ( MOAIImage* image ) {
+
+	this->mImage = image;
+	this->mTexture = 0;
+	
+	if ( image ) {
+		this->mTexture = new MOAITexture ();
+		this->mTexture->Init ( *image );
+		this->mTexture->SetFilter ( GL_LINEAR, GL_LINEAR );
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIFont::SetTexture ( MOAITexture* texture ) {
+
+	this->mImage = 0;
+	this->mTexture = texture;
 }
 
 //----------------------------------------------------------------//

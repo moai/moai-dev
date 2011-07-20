@@ -55,6 +55,8 @@ public:
 	USKernVec		GetKerning			( u32 name ) const;
 	USRect			GetRect				( float points, float x, float y ) const;
 	void			ReserveKernTable	( u32 total );
+	void			SerializeIn			( USLuaState& state );
+	void			SerializeOut		( USLuaState& state );
 	void			SetKernVec			( u32 id, const USKernVec& kernVec );
 	void			SetScreenRect		( float width, float height, float yOff );
 					USGlyph				();
@@ -105,6 +107,8 @@ public:
 	//----------------------------------------------------------------//
 	USGlyph&		GetGlyphForChar		( u32 c );
 	void			Init				( cc8* charCodes );
+	void			SerializeIn			( USLuaState& state );
+	void			SerializeOut		( USLuaState& state );
 	void			SetGlyph			( const USGlyph& glyph );
 	u32				Size				();
 					USFont				();
