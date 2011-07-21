@@ -27,6 +27,22 @@ class MOAISurfaceSampler2D;
 	@const	FRAME_FROM_DECK
 	@const	FRAME_FROM_PARENT
 	@const	FRAME_FROM_SELF
+	
+	@const	BLEND_NORMAL
+	@const	BLEND_ADD
+	@const	BLEND_MULTIPLY
+	
+	@const	GL_ONE
+	@const	GL_ZERO
+	@const	GL_DST_ALPHA
+	@const	GL_DST_COLOR
+	@const	GL_SRC_COLOR
+	@const	GL_ONE_MINUS_DST_ALPHA
+	@const	GL_ONE_MINUS_DST_COLOR
+	@const	GL_ONE_MINUS_SRC_ALPHA
+	@const	GL_ONE_MINUS_SRC_COLOR
+	@const	GL_SRC_ALPHA
+	@const	GL_SRC_ALPHA_SATURATE
 */
 class MOAIProp2D :
 	public MOAIProp,
@@ -53,12 +69,14 @@ protected:
 	USRef < MOAITransformBase >	mUVTransform;
 	
 	USColorVec					mColor;
+	USBlendMode					mBlendMode;
 	bool						mVisible;
 	
 	//----------------------------------------------------------------//
 	static int		_getGrid			( lua_State* L );
 	static int		_getIndex			( lua_State* L );
 	static int		_inside				( lua_State* L );
+	static int		_setBlendMode		( lua_State* L );
 	static int		_setDeck			( lua_State* L );
 	static int		_setFrame			( lua_State* L );
 	static int		_setGrid			( lua_State* L );
@@ -72,6 +90,7 @@ protected:
 	
 	//----------------------------------------------------------------//
 	bool			BindDeck				();
+	USBlendMode		GetBlendModeTrait		();
 	void			GetBoundsInRect			( const USRect& rect, USCellCoord& c0, USCellCoord& c1 );
 	void			GetBoundsInView			( USCellCoord& c0, USCellCoord& c1 );
 	USColorVec		GetColorTrait			();

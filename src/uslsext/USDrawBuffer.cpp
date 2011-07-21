@@ -16,7 +16,7 @@ void USDrawBuffer::BeginPrim () {
 
 	if ( this->mPrimSize ) {
 
-		u32 primBytes = this->mPrimSize * this->mVertexFormat.GetVertexSize ();
+		u32 primBytes = this->mPrimSize * this->mVertexFormat->GetVertexSize ();
 
 		this->mMaxPrims = ( u32 )( this->mSize / primBytes );
 		this->mPrimTop = this->mTop + primBytes;
@@ -44,12 +44,15 @@ void USDrawBuffer::Clear () {
 //----------------------------------------------------------------//
 void USDrawBuffer::DrawPrims () {
 
-	u32 vertexSize = this->mVertexFormat.GetVertexSize ();
+	if ( this->mVertexFormat ) {
 
-	if ( this->mPrimCount && vertexSize ) {
-	
-		u32 count = this->mPrimSize ? this->mPrimCount * this->mPrimSize : ( u32 )( this->mTop / vertexSize );
-		glDrawArrays ( this->mPrimType, 0, count );
+		u32 vertexSize = this->mVertexFormat->GetVertexSize ();
+
+		if ( this->mPrimCount && vertexSize ) {
+		
+			u32 count = this->mPrimSize ? this->mPrimCount * this->mPrimSize : ( u32 )( this->mTop / vertexSize );
+			glDrawArrays ( this->mPrimType, 0, count );
+		}
 	}
 }
 
@@ -59,6 +62,7 @@ void USDrawBuffer::DrawPrims ( const USVertexFormat& format, GLenum primType, vo
 	if ( !( buffer && size )) return;
 	
 	this->Flush ();
+	this->SetVertexFormat ();
 	
 	// load the software render state
 	glColor4f ( this->mPenColor.mR, this->mPenColor.mG, this->mPenColor.mB, this->mPenColor.mA );
@@ -75,12 +79,10 @@ void USDrawBuffer::DrawPrims ( const USVertexFormat& format, GLenum primType, vo
 		
 		format.Bind ( buffer );
 		glDrawArrays ( primType, 0, nVerts );
+		format.Unbind ();
 	}
 	
 	// reset
-	this->mVertexFormat.Clear ();
-	this->mVertexPreset = USVertexFormatMgr::CUSTOM_FORMAT;
-	
 	glColor4f ( 1.0f, 1.0f, 1.0f, 1.0f );
 	
 	glMatrixMode ( GL_MODELVIEW );
@@ -111,6 +113,12 @@ void USDrawBuffer::Flush () {
 	this->mTop = 0;
 	this->mPrimTop = 0;
 	this->mPrimCount = 0;
+}
+
+//----------------------------------------------------------------//
+const USAffine2D& USDrawBuffer::GetCameraTransform () {
+
+	return this->mCameraTransform;
 }
 
 //----------------------------------------------------------------//
@@ -160,16 +168,16 @@ void USDrawBuffer::Reset () {
 	this->mBlendEnabled = false;
 	
 	// clear the vertex format
-	this->mVertexFormat.Clear ();
-	this->mVertexPreset = USVertexFormatMgr::CUSTOM_FORMAT;
+	this->SetVertexFormat ();
 
+	// TODO: GLES2
 	// load identity matrix
-	glMatrixMode ( GL_MODELVIEW );
-	glLoadIdentity ();
+	//glMatrixMode ( GL_MODELVIEW );
+	//glLoadIdentity ();
 	
 	// ident the cpu transforms
-	this->mUVTransform.Ident ();
-	this->mVtxTransform.Ident ();
+	//this->mUVTransform.Ident ();
+	//this->mVtxTransform.Ident ();
 	
 	// disable backface culling
 	glDisable ( GL_CULL_FACE );
@@ -178,12 +186,14 @@ void USDrawBuffer::Reset () {
 	this->mPenWidth = 1.0f;
 	glLineWidth (( GLfloat )this->mPenWidth );
 	
+	// TODO: GLES2
 	// reset the current vertex color
-	glColor4f ( 1.0f, 1.0f, 1.0f, 1.0f );
+	//glColor4f ( 1.0f, 1.0f, 1.0f, 1.0f );
 	
 	// reset the point size
 	this->mPointSize = 1.0f;
-	glPointSize (( GLfloat )this->mPointSize );
+	// TODO: GLES2
+	//glPointSize (( GLfloat )this->mPointSize );
 	
 	// reset the scissor rect
 	USGfxDevice& device = USGfxDevice::Get ();
@@ -221,6 +231,18 @@ void USDrawBuffer::SetBlendMode ( int srcFactor, int dstFactor ) {
 	blendMode.SetBlend ( srcFactor, dstFactor );
 	
 	this->SetBlendMode ( blendMode );
+}
+
+//----------------------------------------------------------------//
+void USDrawBuffer::SetCameraTransform () {
+
+	this->mCameraTransform.Ident ();
+}
+
+//----------------------------------------------------------------//
+void USDrawBuffer::SetCameraTransform ( const USAffine2D& cameraTransform ) {
+
+	this->mCameraTransform = cameraTransform;
 }
 
 //----------------------------------------------------------------//
@@ -353,63 +375,55 @@ void USDrawBuffer::SetUVTransform () {
 //----------------------------------------------------------------//
 void USDrawBuffer::SetUVTransform ( const USAffine2D& uvTransform ) {
 
-	this->mUVTransform.Init ( uvTransform );	
+	this->mUVTransform.Init ( uvTransform );
 }
 
 //----------------------------------------------------------------//
 void USDrawBuffer::SetVertexFormat () {
 
 	this->Flush ();
-	this->mVertexFormat.Clear ();
+	
+	if ( this->mVertexFormat ) {
+		this->mVertexFormat->Unbind ();
+	}
+	this->mVertexFormat = 0;
 }
 
 //----------------------------------------------------------------//
 void USDrawBuffer::SetVertexFormat ( const USVertexFormat& format ) {
 
-	if ( !this->mVertexFormat.IsMatch ( format )) {
+	if ( this->mVertexFormat != &format ) {
 
-		this->Flush ();
-		this->mVertexPreset = USVertexFormatMgr::CUSTOM_FORMAT;
+		this->SetVertexFormat ();
 
-		this->mVertexFormat = format;
+		this->mVertexFormat = &format;
 
-		this->mVertexFormat.Bind ( this->mBuffer );
+		this->mVertexFormat->Bind ( this->mBuffer );
 		this->mVertexColorType = format.GetColorType ();
 	}
-	
 }
 
 //----------------------------------------------------------------//
-void USDrawBuffer::SetVertexPreset ( u32 presetID ) {
+void USDrawBuffer::SetVertexPreset ( u32 preset ) {
 
-	if ( this->mVertexPreset != presetID ) {
-
-		this->Flush ();
-		this->mVertexPreset = presetID;
-		
-		const USVertexFormat& preset = USVertexFormatMgr::Get ().GetPreset ( presetID );
-		this->mVertexFormat = preset;
-
-		this->mVertexFormat.Bind ( this->mBuffer );
-		this->mVertexColorType = preset.GetColorType ();
-	}
+	this->SetVertexFormat ( USVertexFormatMgr::Get ().GetPreset ( preset ));
 }
 
 //----------------------------------------------------------------//
 void USDrawBuffer::SetVtxTransform () {
 
-	this->mVtxTransform.Ident ();	
+	this->mVtxTransform.Ident ();
 }
 
 //----------------------------------------------------------------//
 void USDrawBuffer::SetVtxTransform ( const USAffine2D& vtxTransform ) {
 
-	this->mVtxTransform.Init ( vtxTransform );
+	this->mVtxTransform = vtxTransform;
 }
 
 //----------------------------------------------------------------//
 USDrawBuffer::USDrawBuffer () :
-	mVertexPreset ( USVertexFormatMgr::CUSTOM_FORMAT ),
+	mVertexFormat ( 0 ),
 	mVertexColorType ( 0 ),
 	mBuffer ( 0 ),
 	mSize ( 0 ),
@@ -444,37 +458,36 @@ USDrawBuffer::~USDrawBuffer () {
 void USDrawBuffer::WriteQuad ( USVec2D* vtx, USVec2D* uv ) {
 
 	this->mVtxTransform.TransformQuad ( vtx );
-	this->mUVTransform.Transform ( uv [ 0 ] );
-	this->mUVTransform.Transform ( uv [ 1 ] );	
-	this->mUVTransform.Transform ( uv [ 2 ] );	
-	this->mUVTransform.Transform ( uv [ 3 ] );	
+	this->mUVTransform.Transform ( uv [ 0 ]);
+	this->mUVTransform.Transform ( uv [ 1 ]);	
+	this->mUVTransform.Transform ( uv [ 2 ]);	
+	this->mUVTransform.Transform ( uv [ 3 ]);	
 	
-	this->BeginPrim();
-		this->Write ( vtx[ 3 ] );
-		this->Write ( uv [ 3 ] );
-		this->WritePenColor();	
+	this->BeginPrim ();
+		this->Write ( vtx[ 3 ]);
+		this->Write ( uv [ 3 ]);
+		this->WritePenColor ();
 	
-		this->Write ( vtx[ 1 ] );
-		this->Write ( uv [ 1 ] );
-		this->WritePenColor();	
+		this->Write ( vtx[ 1 ]);
+		this->Write ( uv [ 1 ]);
+		this->WritePenColor ();	
 	
-		this->Write ( vtx[ 0 ] );
-		this->Write ( uv [ 0 ] );
-		this->WritePenColor();
-	this->EndPrim();
+		this->Write ( vtx[ 0 ]);
+		this->Write ( uv [ 0 ]);
+		this->WritePenColor ();
+	this->EndPrim ();
 	
-	this->BeginPrim();
-		this->Write ( vtx[ 3 ] );
-		this->Write ( uv [ 3 ] );
-		this->WritePenColor();	
+	this->BeginPrim ();
+		this->Write ( vtx[ 3 ]);
+		this->Write ( uv [ 3 ]);
+		this->WritePenColor ();	
 	
-		this->Write ( vtx[ 2 ] );
-		this->Write ( uv [ 2 ] );
-		this->WritePenColor();	
+		this->Write ( vtx[ 2 ]);
+		this->Write ( uv [ 2 ]);
+		this->WritePenColor ();	
 	
-		this->Write ( vtx[ 1 ] );
-		this->Write ( uv [ 1 ] );
-		this->WritePenColor();
-	this->EndPrim();
-	
+		this->Write ( vtx[ 1 ]);
+		this->Write ( uv [ 1 ]);
+		this->WritePenColor ();
+	this->EndPrim ();
 }

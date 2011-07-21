@@ -20,29 +20,42 @@ private:
 
 	friend class USVertexFormat;
 	
-	enum {
-		BIND			= 0x00000001,
-		STAY_BOUND		= 0x00000002,
-		UNBIND			= 0x00000004,
-		STAY_UNBOUND	= 0x00000008,
-		
-		IS_BOUND		= 0x00000003,
-		US_UNBOUND		= 0x0000000C,
-	};
-	
 	GLint		mSize;
 	GLenum		mType;		// type of the element
 	u32			mOffset;
-	GLenum		mUse;		// type of gl array (i.e. GL_COLOR_ARRAY, GL_NORMAL_ARRAY, etc.)
- 	u32			mIsEnabled;
+ 	bool		mIsEnabled;
  	
 	//----------------------------------------------------------------//
-	void	Bind				( void* buffer, u32 stride ) const;
-	void	Init				( GLenum use );
-	bool	IsMatch				( const USVertexFormatElem& elem ) const;
-			USVertexFormatElem	();
+	void	Bind				( void* buffer, u32 stride, GLenum use ) const;
+	void	Set					();
 	void	Set					( GLint size, GLenum type, u32 offset );
-	void	Unbind				( u32 type );
+	void	Unbind				( GLenum use ) const;
+			USVertexFormatElem	();
+};
+
+//================================================================//
+// USVertexFormatAttr
+//================================================================//
+class USVertexFormatAttr {
+private:
+
+	friend class USVertexFormat;
+	
+	GLint		mIndex;
+	GLint		mSize;
+	GLenum		mType;			// type of the element
+	GLboolean	mNormalized;
+	u32			mOffset;
+ 	
+	//----------------------------------------------------------------//
+	void	Bind					( void* buffer, u32 stride ) const;
+	void	Set						( GLint index, GLint size, GLenum type, GLboolean normalized, u32 offset );
+	void	Unbind					() const;
+
+public:
+
+	//----------------------------------------------------------------//
+			USVertexFormatAttr		();
 };
 
 //================================================================//
@@ -66,6 +79,9 @@ private:
 	USVertexFormatElem mElements [ TOTAL_ARRAY_TYPES ];
 	u32 mVertexSize;
 
+	USLeanArray < USVertexFormatAttr >	mAttributes;
+	u32									mTotalAttributes;
+
 	//----------------------------------------------------------------//
 	u32			GetSize					( GLint size, GLenum type );
 	
@@ -77,12 +93,14 @@ public:
 	void		Bind					( void* buffer ) const;
 	void		Clear					();
 	bool		ComputeBounds			( void* buffer, u32 size, USRect& bounds );
+	void		DeclareAttribute		( GLint index, GLint size, GLenum type, GLboolean normalized );
 	void		DeclareColorArray		( GLenum type );
 	void		DeclareNormalArray		( GLenum type );
 	void		DeclareTexCoordArray	( GLenum type, GLint size );
 	void		DeclareVertexArray		( GLenum type, GLint size );
 	GLenum		GetColorType			() const;
-	bool		IsMatch					( const USVertexFormat& format ) const;
+	void		ReserveAttributes		( u32 total );
+	void		Unbind					() const;
 				USVertexFormat			();
 	virtual		~USVertexFormat			();
 };

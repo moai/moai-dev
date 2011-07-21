@@ -349,15 +349,20 @@ void MOAILayer2D::Draw () {
 	drawBuffer.Flush ();
 	drawBuffer.Reset ();
 	
-	USAffine2D mtx;
-	USCanvas::GetWorldToWndMtx ( mtx, 1.0f, 1.0f );
-	mtx.Prepend ( this->mLocalToWorldMtx );
-	mtx.Transform ( viewport );
+	// TODO: GLES2
+	//USAffine2D mtx;
+	//USCanvas::GetWorldToWndMtx ( mtx, 1.0f, 1.0f );
+	//mtx.Prepend ( this->mLocalToWorldMtx );
+	//mtx.Transform ( viewport );
 	
 	USAffine2D camera;
 	this->GetCameraMtx ( camera );
 	
 	USCanvas::BeginDrawing ( viewport, camera );
+	
+	USAffine2D viewProj;
+	USCanvas::GetViewProjMtx ( viewport, camera, viewProj );
+	drawBuffer.SetCameraTransform ( viewProj );
 	
 	if ( this->mShowDebugLines ) {
 		

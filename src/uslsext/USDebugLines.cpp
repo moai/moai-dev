@@ -57,7 +57,7 @@ void USDebugLines::Draw () {
 	drawBuffer.SetBlendMode ( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
 	
 	drawBuffer.SetPrimType ( GL_LINES );
-	drawBuffer.SetVertexPreset ( USVertexFormatMgr::VTX_FMT_XYC );
+	drawBuffer.SetVertexPreset ( USVertexFormatMgr::FF_XYC );
 	
 	drawBuffer.SetVtxTransform ();
 	

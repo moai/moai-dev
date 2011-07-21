@@ -24,9 +24,8 @@ private:
 	
 	static const u32 DEFAULT_BUFFER_SIZE	= 0x8000;
 	
-	USVertexFormat	mVertexFormat;
-	u32				mVertexPreset;
-	GLenum			mVertexColorType;
+	const USVertexFormat*	mVertexFormat;
+	GLenum					mVertexColorType;
 	
 	void*			mBuffer;
 	u32				mSize;
@@ -40,6 +39,7 @@ private:
 	
 	USTexture*		mTexture;
 	
+	USAffine2D		mCameraTransform;
 	USAffine2D		mVtxTransform;
 	USAffine2D		mUVTransform;
 	
@@ -67,6 +67,7 @@ public:
 	void					DrawPrims				( const USVertexFormat& format, GLenum primType, void* buffer, u32 size ); 
 	void					EndPrim					();
 	void					Flush					();
+	const USAffine2D&		GetCameraTransform		();
 	const USColorVec&		GetPenColor				();
 	const USAffine2D&		GetUVTransform			();
 	const USAffine2D&		GetVtxTransform			();
@@ -75,6 +76,8 @@ public:
 	void					SetBlendMode			();
 	void					SetBlendMode			( const USBlendMode& blendMode );
 	void					SetBlendMode			( int srcFactor, int dstFactor );
+	void					SetCameraTransform		();
+	void					SetCameraTransform		( const USAffine2D& cameraTransform );
 	void					SetPenColor				( u32 color );
 	void					SetPenColor				( const USColorVec& colorVec );
 	void					SetPenColor				( float r, float g, float b, float a );
@@ -88,7 +91,7 @@ public:
 	void					SetUVTransform			( const USAffine2D& uvTransform );
 	void					SetVertexFormat			();
 	void					SetVertexFormat			( const USVertexFormat& format );
-	void					SetVertexPreset			( u32 presetID );
+	void					SetVertexPreset			( u32 preset );
 	void					SetVtxTransform			();
 	void					SetVtxTransform			( const USAffine2D& vtxTransform );
 							USDrawBuffer			();

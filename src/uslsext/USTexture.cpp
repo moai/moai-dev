@@ -167,7 +167,9 @@ bool USTexture::Bind () {
 	glBindTexture ( GL_TEXTURE_2D, this->mGLTexID );
 
 	glEnable ( GL_TEXTURE_2D );
-	glTexEnvf ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
+	
+	// TODO: GLES2
+	//glTexEnvf ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
 	
 	glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, this->mWrap );
 	glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, this->mWrap );

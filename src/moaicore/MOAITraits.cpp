@@ -49,6 +49,13 @@ int MOAITraits::_setTraitSource ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+USBlendMode MOAITraits::GetBlendModeTrait () {
+
+	USBlendMode blendMode;
+	return blendMode;
+}
+
+//----------------------------------------------------------------//
 USColorVec MOAITraits::GetColorTrait () {
 
 	static USColorVec color ( 1.0f, 1.0f, 1.0f, 1.0f );

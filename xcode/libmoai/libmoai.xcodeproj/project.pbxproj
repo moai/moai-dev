@@ -961,8 +961,6 @@
 		0324E72513564BC8000ADC60 /* MOAIShader.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E58513564BC7000ADC60 /* MOAIShader.h */; };
 		0324E72613564BC8000ADC60 /* MOAISim.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E58613564BC7000ADC60 /* MOAISim.cpp */; };
 		0324E72713564BC8000ADC60 /* MOAISim.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E58713564BC7000ADC60 /* MOAISim.h */; };
-		0324E72813564BC8000ADC60 /* MOAISimpleShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E58813564BC7000ADC60 /* MOAISimpleShader.cpp */; };
-		0324E72913564BC8000ADC60 /* MOAISimpleShader.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E58913564BC7000ADC60 /* MOAISimpleShader.h */; };
 		0324E72A13564BC8000ADC60 /* MOAIStretchPatch2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E58A13564BC7000ADC60 /* MOAIStretchPatch2D.cpp */; };
 		0324E72B13564BC8000ADC60 /* MOAIStretchPatch2D.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E58B13564BC8000ADC60 /* MOAIStretchPatch2D.h */; };
 		0324E72C13564BC8000ADC60 /* MOAISurfaceDeck2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E58C13564BC8000ADC60 /* MOAISurfaceDeck2D.cpp */; };
@@ -1358,8 +1356,6 @@
 		0324E8C313564BC8000ADC60 /* MOAIShader.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E58513564BC7000ADC60 /* MOAIShader.h */; };
 		0324E8C413564BC8000ADC60 /* MOAISim.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E58613564BC7000ADC60 /* MOAISim.cpp */; };
 		0324E8C513564BC8000ADC60 /* MOAISim.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E58713564BC7000ADC60 /* MOAISim.h */; };
-		0324E8C613564BC8000ADC60 /* MOAISimpleShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E58813564BC7000ADC60 /* MOAISimpleShader.cpp */; };
-		0324E8C713564BC8000ADC60 /* MOAISimpleShader.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E58913564BC7000ADC60 /* MOAISimpleShader.h */; };
 		0324E8C813564BC8000ADC60 /* MOAIStretchPatch2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E58A13564BC7000ADC60 /* MOAIStretchPatch2D.cpp */; };
 		0324E8C913564BC8000ADC60 /* MOAIStretchPatch2D.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E58B13564BC8000ADC60 /* MOAIStretchPatch2D.h */; };
 		0324E8CA13564BC8000ADC60 /* MOAISurfaceDeck2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E58C13564BC8000ADC60 /* MOAISurfaceDeck2D.cpp */; };
@@ -1786,6 +1782,10 @@
 		CD218FBB13A7FDBA008337E7 /* utf.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9D13A7FDBA008337E7 /* utf.c */; };
 		CD218FBC13A7FDBA008337E7 /* utf.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F9E13A7FDBA008337E7 /* utf.h */; };
 		CD218FBD13A7FDBA008337E7 /* value.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9F13A7FDBA008337E7 /* value.c */; };
+		CD2C71E413CF6F1000D60E0F /* MOAIGlslProgram.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD2C71E213CF6F1000D60E0F /* MOAIGlslProgram.cpp */; };
+		CD2C71E513CF6F1000D60E0F /* MOAIGlslProgram.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2C71E313CF6F1000D60E0F /* MOAIGlslProgram.h */; };
+		CD2C71E613CF6F1000D60E0F /* MOAIGlslProgram.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD2C71E213CF6F1000D60E0F /* MOAIGlslProgram.cpp */; };
+		CD2C71E713CF6F1000D60E0F /* MOAIGlslProgram.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2C71E313CF6F1000D60E0F /* MOAIGlslProgram.h */; };
 		CD62D6CC13A991BA002286EB /* MOAIJsonParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD62D6CA13A991BA002286EB /* MOAIJsonParser.cpp */; };
 		CD62D6CD13A991BA002286EB /* MOAIJsonParser.h in Headers */ = {isa = PBXBuildFile; fileRef = CD62D6CB13A991BA002286EB /* MOAIJsonParser.h */; };
 		CD62D6CE13A991BA002286EB /* MOAIJsonParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD62D6CA13A991BA002286EB /* MOAIJsonParser.cpp */; };
@@ -3345,8 +3345,6 @@
 		0324E58513564BC7000ADC60 /* MOAIShader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIShader.h; sourceTree = "<group>"; };
 		0324E58613564BC7000ADC60 /* MOAISim.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAISim.cpp; sourceTree = "<group>"; };
 		0324E58713564BC7000ADC60 /* MOAISim.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAISim.h; sourceTree = "<group>"; };
-		0324E58813564BC7000ADC60 /* MOAISimpleShader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAISimpleShader.cpp; sourceTree = "<group>"; };
-		0324E58913564BC7000ADC60 /* MOAISimpleShader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAISimpleShader.h; sourceTree = "<group>"; };
 		0324E58A13564BC7000ADC60 /* MOAIStretchPatch2D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIStretchPatch2D.cpp; sourceTree = "<group>"; };
 		0324E58B13564BC8000ADC60 /* MOAIStretchPatch2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIStretchPatch2D.h; sourceTree = "<group>"; };
 		0324E58C13564BC8000ADC60 /* MOAISurfaceDeck2D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAISurfaceDeck2D.cpp; sourceTree = "<group>"; };
@@ -3760,6 +3758,8 @@
 		CD218F9D13A7FDBA008337E7 /* utf.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = utf.c; path = "../../3rdparty/jansson-2.1/src/utf.c"; sourceTree = SOURCE_ROOT; };
 		CD218F9E13A7FDBA008337E7 /* utf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = utf.h; path = "../../3rdparty/jansson-2.1/src/utf.h"; sourceTree = SOURCE_ROOT; };
 		CD218F9F13A7FDBA008337E7 /* value.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = value.c; path = "../../3rdparty/jansson-2.1/src/value.c"; sourceTree = SOURCE_ROOT; };
+		CD2C71E213CF6F1000D60E0F /* MOAIGlslProgram.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIGlslProgram.cpp; sourceTree = "<group>"; };
+		CD2C71E313CF6F1000D60E0F /* MOAIGlslProgram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIGlslProgram.h; sourceTree = "<group>"; };
 		CD2FDEBB13542F1400B814DF /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/System/Library/Frameworks/AddressBook.framework; sourceTree = DEVELOPER_DIR; };
 		CD2FDEBC13542F1400B814DF /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/System/Library/Frameworks/AddressBookUI.framework; sourceTree = DEVELOPER_DIR; };
 		CD2FDEBD13542F1400B814DF /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/System/Library/Frameworks/AudioToolbox.framework; sourceTree = DEVELOPER_DIR; };
@@ -5804,10 +5804,10 @@
 				CDEB91451360A78800AAC558 /* MOAIImage.h */,
 				0324E54713564BC7000ADC60 /* MOAIIndexBuffer.cpp */,
 				0324E54813564BC7000ADC60 /* MOAIIndexBuffer.h */,
+				CD2C71E213CF6F1000D60E0F /* MOAIGlslProgram.cpp */,
+				CD2C71E313CF6F1000D60E0F /* MOAIGlslProgram.h */,
 				0324E58413564BC7000ADC60 /* MOAIShader.cpp */,
 				0324E58513564BC7000ADC60 /* MOAIShader.h */,
-				0324E58813564BC7000ADC60 /* MOAISimpleShader.cpp */,
-				0324E58913564BC7000ADC60 /* MOAISimpleShader.h */,
 				0324E59213564BC8000ADC60 /* MOAITexture.cpp */,
 				0324E59313564BC8000ADC60 /* MOAITexture.h */,
 				0324E5A013564BC8000ADC60 /* MOAIVertexBuffer.cpp */,
@@ -7924,7 +7924,6 @@
 				0324E8C113564BC8000ADC60 /* MOAISerializer.h in Headers */,
 				0324E8C313564BC8000ADC60 /* MOAIShader.h in Headers */,
 				0324E8C513564BC8000ADC60 /* MOAISim.h in Headers */,
-				0324E8C713564BC8000ADC60 /* MOAISimpleShader.h in Headers */,
 				0324E8C913564BC8000ADC60 /* MOAIStretchPatch2D.h in Headers */,
 				0324E8CB13564BC8000ADC60 /* MOAISurfaceDeck2D.h in Headers */,
 				0324E8CD13564BC8000ADC60 /* MOAISurfaceSampler2D.h in Headers */,
@@ -8089,6 +8088,7 @@
 				CD7C726E13B947AC006CFA19 /* AKU-particles.h in Headers */,
 				033B1E6313C4EC8A00CE21D2 /* MOAIActionMgr.h in Headers */,
 				03B2EC1713C503B400F8B3CF /* MOAIMotionSensor.h in Headers */,
+				CD2C71E713CF6F1000D60E0F /* MOAIGlslProgram.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8530,7 +8530,6 @@
 				0324E72313564BC8000ADC60 /* MOAISerializer.h in Headers */,
 				0324E72513564BC8000ADC60 /* MOAIShader.h in Headers */,
 				0324E72713564BC8000ADC60 /* MOAISim.h in Headers */,
-				0324E72913564BC8000ADC60 /* MOAISimpleShader.h in Headers */,
 				0324E72B13564BC8000ADC60 /* MOAIStretchPatch2D.h in Headers */,
 				0324E72D13564BC8000ADC60 /* MOAISurfaceDeck2D.h in Headers */,
 				0324E72F13564BC8000ADC60 /* MOAISurfaceSampler2D.h in Headers */,
@@ -8716,6 +8715,7 @@
 				07E885C213BE3E78008D75AA /* MOAIParticleTimedEmitter.h in Headers */,
 				033B1E6113C4EC8A00CE21D2 /* MOAIActionMgr.h in Headers */,
 				03B2EC1513C503B400F8B3CF /* MOAIMotionSensor.h in Headers */,
+				CD2C71E513CF6F1000D60E0F /* MOAIGlslProgram.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9301,7 +9301,6 @@
 				0324E8C013564BC8000ADC60 /* MOAISerializer.cpp in Sources */,
 				0324E8C213564BC8000ADC60 /* MOAIShader.cpp in Sources */,
 				0324E8C413564BC8000ADC60 /* MOAISim.cpp in Sources */,
-				0324E8C613564BC8000ADC60 /* MOAISimpleShader.cpp in Sources */,
 				0324E8C813564BC8000ADC60 /* MOAIStretchPatch2D.cpp in Sources */,
 				0324E8CA13564BC8000ADC60 /* MOAISurfaceDeck2D.cpp in Sources */,
 				0324E8CC13564BC8000ADC60 /* MOAISurfaceSampler2D.cpp in Sources */,
@@ -9430,6 +9429,7 @@
 				0392971713BE44010077B742 /* MOAIParticleTimedEmitter.cpp in Sources */,
 				033B1E6213C4EC8A00CE21D2 /* MOAIActionMgr.cpp in Sources */,
 				03B2EC1613C503B400F8B3CF /* MOAIMotionSensor.cpp in Sources */,
+				CD2C71E613CF6F1000D60E0F /* MOAIGlslProgram.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10348,7 +10348,6 @@
 				0324E72213564BC8000ADC60 /* MOAISerializer.cpp in Sources */,
 				0324E72413564BC8000ADC60 /* MOAIShader.cpp in Sources */,
 				0324E72613564BC8000ADC60 /* MOAISim.cpp in Sources */,
-				0324E72813564BC8000ADC60 /* MOAISimpleShader.cpp in Sources */,
 				0324E72A13564BC8000ADC60 /* MOAIStretchPatch2D.cpp in Sources */,
 				0324E72C13564BC8000ADC60 /* MOAISurfaceDeck2D.cpp in Sources */,
 				0324E72E13564BC8000ADC60 /* MOAISurfaceSampler2D.cpp in Sources */,
@@ -10494,6 +10493,7 @@
 				07E885C113BE3E78008D75AA /* MOAIParticleTimedEmitter.cpp in Sources */,
 				033B1E6013C4EC8A00CE21D2 /* MOAIActionMgr.cpp in Sources */,
 				03B2EC1413C503B400F8B3CF /* MOAIMotionSensor.cpp in Sources */,
+				CD2C71E413CF6F1000D60E0F /* MOAIGlslProgram.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10969,6 +10969,7 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_OBJC_CALL_CXX_CDTORS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
+					GLEW_NO_GLU,
 					USE_OPENSSL,
 					USE_SSLEAY,
 					USE_SSL,
@@ -11014,6 +11015,7 @@
 					"\"../../src\"",
 					"\"../../3rdparty\"",
 					"\"../../3rdparty/contrib\"",
+					"\"../../3rdparty/glew-es-1.6.0/include\"",
 					"\"../../3rdparty/tinyxml\"",
 					"\"../../3rdparty/lua-5.1.3/src\"",
 					"\"../../3rdparty/lpng140\"",
@@ -11077,6 +11079,7 @@
 				GCC_OBJC_CALL_CXX_CDTORS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
+					GLEW_NO_GLU,
 					USE_OPENSSL,
 					USE_SSLEAY,
 					USE_SSL,
@@ -11128,6 +11131,7 @@
 					"\"../../src\"",
 					"\"../../3rdparty\"",
 					"\"../../3rdparty/contrib\"",
+					"\"../../3rdparty/glew-es-1.6.0/include\"",
 					"\"../../3rdparty/tinyxml\"",
 					"\"../../3rdparty/lua-5.1.3/src\"",
 					"\"../../3rdparty/lpng140\"",
