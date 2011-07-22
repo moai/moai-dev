@@ -101,6 +101,7 @@
 		}
 		
 		mContext = [[[ EAGLContext alloc ] initWithAPI:kEAGLRenderingAPIOpenGLES1 ] autorelease ];
+		//mContext = [[[ EAGLContext alloc ] initWithAPI:kEAGLRenderingAPIOpenGLES2 ] autorelease ];
 	}
 
 	//----------------------------------------------------------------//

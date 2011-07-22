@@ -22,6 +22,7 @@ class MOAIShader;
 	@const INHERIT_PARTITION
 	@const INHERIT_SHADER
 	@const INHERIT_VISIBLE
+	@const INHERIT_BLEND_MODE
 */
 class MOAITraits :
 	public virtual MOAINode {
@@ -46,11 +47,13 @@ public:
 		INHERIT_PARTITION		= 0x00000010,
 		INHERIT_SHADER			= 0x00000020,
 		INHERIT_VISIBLE			= 0x00000040,
+		INHERIT_BLEND_MODE		= 0x00000080,
 	};
 	
 	static const u32 DEFAULT_MASK = 0x00000046;
 	
 	//----------------------------------------------------------------//
+	virtual USBlendMode			GetBlendModeTrait		();
 	virtual USColorVec			GetColorTrait			();
 	virtual USRect*				GetFrameTrait			();
 	virtual MOAIPartition*		GetPartitionTrait		();

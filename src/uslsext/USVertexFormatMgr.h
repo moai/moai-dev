@@ -14,10 +14,10 @@ class USVertexFormatMgr :
 public:
 
 	enum {
-		VTX_FMT_XYC,
-		VTX_FMT_XYUVC,
+		FF_XYC,
+		FF_XYUVC,
+		PP_XYUVC,
 		TOTAL_PRESETS,
-		CUSTOM_FORMAT,
 	};
 
 private:
@@ -37,6 +37,13 @@ public:
 		float	mX, mY;
 		float	mU, mV;
 		u32		mC;
+	};
+	
+	enum {
+		PP_XYUVC_POSITION,
+		PP_XYUVC_TEXCOORD,
+		PP_XYUVC_COLOR,
+		PP_XYUVC_SIZE,
 	};
 	
 	//----------------------------------------------------------------//

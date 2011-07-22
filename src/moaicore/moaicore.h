@@ -30,6 +30,7 @@
 #include <moaicore/MOAIGfxQuad2D.h>
 #include <moaicore/MOAIGfxQuadDeck2D.h>
 #include <moaicore/MOAIGfxQuadListDeck2D.h>
+#include <moaicore/MOAIGlslProgram.h>
 #include <moaicore/MOAIGrid.h>
 #include <moaicore/MOAIHttpTask.h>
 #include <moaicore/MOAIImage.h>
@@ -70,7 +71,6 @@
 #include <moaicore/MOAISerializer.h>
 #include <moaicore/MOAIShader.h>
 #include <moaicore/MOAISim.h>
-#include <moaicore/MOAISimpleShader.h>
 #include <moaicore/MOAIStretchPatch2D.h>
 #include <moaicore/MOAISurfaceDeck2D.h>
 #include <moaicore/MOAITextBox.h>

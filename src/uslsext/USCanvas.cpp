@@ -47,17 +47,20 @@ void USCanvas::BeginDrawing ( USViewport& viewport, USAffine2D& camera ) {
 	
 	glViewport ( x, y, w, h );
 
-	// load view/proj
-	glMatrixMode ( GL_PROJECTION );
-	glLoadIdentity ();
-	
-	USAffine2D mtx;
-	USCanvas::GetViewProjMtx ( viewport, camera, mtx );
-	USCanvas::LoadMatrix ( mtx );
-	
-	// load ident
-	glMatrixMode ( GL_MODELVIEW );
-	glLoadIdentity ();
+	if ( USGfxDevice::Get ().GetPipelineMode () == USGfxDevice::GL_PIPELINE_FIXED ) {
+
+		// load view/proj
+		glMatrixMode ( GL_PROJECTION );
+		glLoadIdentity ();
+		
+		USAffine2D mtx;
+		USCanvas::GetViewProjMtx ( viewport, camera, mtx );
+		USCanvas::LoadMatrix ( mtx );
+		
+		// load ident
+		glMatrixMode ( GL_MODELVIEW );
+		glLoadIdentity ();
+	}
 	
 	glDisable ( GL_CULL_FACE );
 }

@@ -9,13 +9,13 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void USVertexFormatElem::Bind ( void* buffer, u32 stride ) const {
+void USVertexFormatElem::Bind ( void* buffer, u32 stride, GLenum use ) const {
 
 	if ( this->mIsEnabled ) {
 		
 		buffer = ( void* )(( size_t )buffer + this->mOffset );
 	
-		switch ( this->mUse ) {
+		switch ( use ) {
 			case GL_COLOR_ARRAY:
 				glColorPointer ( this->mSize, this->mType, stride, buffer );
 				break;
@@ -32,43 +32,18 @@ void USVertexFormatElem::Bind ( void* buffer, u32 stride ) const {
 				break;
 		}
 		
-		glEnableClientState ( this->mUse );
+		glEnableClientState ( use );
 	}
 	else {
 		
-		glDisableClientState ( this->mUse );
+		glDisableClientState ( use );
 	}
 }
 
 //----------------------------------------------------------------//
-void USVertexFormatElem::Init ( GLenum use ) {
+void USVertexFormatElem::Set () {
 
-	this->mUse = use;
 	this->mIsEnabled = false;
-}
-
-//----------------------------------------------------------------//
-bool USVertexFormatElem::IsMatch ( const USVertexFormatElem& elem ) const {
-
-	if ( this->mIsEnabled == elem.mIsEnabled ) {
-		if ( !this->mIsEnabled ) return true;
-	
-		return (
-			( this->mSize == elem.mSize ) &&
-			( this->mType == elem.mType ) &&
-			( this->mOffset == elem.mOffset )
-		);
-	}
-	return false;
-}
-
-//----------------------------------------------------------------//
-USVertexFormatElem::USVertexFormatElem () :
-	mSize ( 0 ),
-	mType ( 0 ),
-	mOffset ( 0 ),
-	mUse ( 0 ),
-	mIsEnabled ( false ) {
 }
 
 //----------------------------------------------------------------//
@@ -80,6 +55,54 @@ void USVertexFormatElem::Set ( GLint size, GLenum type, u32 offset ) {
 	this->mIsEnabled = true;
 }
 
+//----------------------------------------------------------------//
+void USVertexFormatElem::Unbind ( GLenum use ) const {
+
+	glDisableClientState ( use );
+}
+
+
+//----------------------------------------------------------------//
+USVertexFormatElem::USVertexFormatElem () :
+	mSize ( 0 ),
+	mType ( 0 ),
+	mOffset ( 0 ),
+	mIsEnabled ( false ) {
+}
+
+//================================================================//
+// USVertexFormatAttr
+//================================================================//
+ 	
+//----------------------------------------------------------------//
+void USVertexFormatAttr::Bind ( void* buffer, u32 stride ) const {
+
+	buffer = ( void* )(( size_t )buffer + this->mOffset );
+
+	glVertexAttribPointer (	this->mIndex, this->mSize, this->mType, this->mNormalized, stride, buffer );
+	glEnableVertexAttribArray ( this->mIndex );
+}
+
+//----------------------------------------------------------------//
+void USVertexFormatAttr::Set ( GLint index, GLint size, GLenum type, GLboolean normalized, u32 offset ) {
+
+	this->mIndex = index;
+	this->mSize = size;
+	this->mType = type;
+	this->mNormalized = normalized;
+	this->mOffset = offset;
+}
+
+//----------------------------------------------------------------//
+void USVertexFormatAttr::Unbind () const {
+
+	glDisableVertexAttribArray ( this->mIndex );
+}
+
+//----------------------------------------------------------------//
+USVertexFormatAttr::USVertexFormatAttr () {
+}
+
 //================================================================//
 // USVertexFormat
 //================================================================//
@@ -87,25 +110,36 @@ void USVertexFormatElem::Set ( GLint size, GLenum type, u32 offset ) {
 //----------------------------------------------------------------//
 void USVertexFormat::Bind ( void* buffer ) const {
 
-	this->mElements [ ARRAY_COLOR ].Bind ( buffer, this->mVertexSize );
-	this->mElements [ ARRAY_NORMAL ].Bind ( buffer, this->mVertexSize );
-	this->mElements [ ARRAY_TEX_COORD ].Bind ( buffer, this->mVertexSize );
-	this->mElements [ ARRAY_VERTEX ].Bind ( buffer, this->mVertexSize );
+	if ( this->mTotalAttributes ) {
+	
+		for ( u32 i = 0; i < this->mTotalAttributes; ++i ) {
+			this->mAttributes [ i ].Bind ( buffer, this->mVertexSize );
+		}
+	}
+	else {
+		this->mElements [ ARRAY_COLOR ].Bind ( buffer, this->mVertexSize, GL_COLOR_ARRAY );
+		this->mElements [ ARRAY_NORMAL ].Bind ( buffer, this->mVertexSize, GL_NORMAL_ARRAY );
+		this->mElements [ ARRAY_TEX_COORD ].Bind ( buffer, this->mVertexSize, GL_TEXTURE_COORD_ARRAY );
+		this->mElements [ ARRAY_VERTEX ].Bind ( buffer, this->mVertexSize, GL_VERTEX_ARRAY );
+	}
 }
 
 //----------------------------------------------------------------//
 void USVertexFormat::Clear () {
 
 	this->mVertexSize = 0;
+	this->mTotalAttributes = 0;
 	
-	this->mElements [ ARRAY_COLOR ].Init ( GL_COLOR_ARRAY );
-	this->mElements [ ARRAY_NORMAL ].Init ( GL_NORMAL_ARRAY );
-	this->mElements [ ARRAY_TEX_COORD ].Init ( GL_TEXTURE_COORD_ARRAY );
-	this->mElements [ ARRAY_VERTEX ].Init ( GL_VERTEX_ARRAY );
+	this->mElements [ ARRAY_COLOR ].Set ();
+	this->mElements [ ARRAY_NORMAL ].Set ();
+	this->mElements [ ARRAY_TEX_COORD ].Set ();
+	this->mElements [ ARRAY_VERTEX ].Set ();
 }
 
 //----------------------------------------------------------------//
 bool USVertexFormat::ComputeBounds ( void* buffer, u32 size, USRect& bounds ) {
+
+	// TODO: GLES2
 
 	u32 total = ( u32 )( size / this->mVertexSize );
 	if ( !total ) return false;
@@ -128,6 +162,18 @@ bool USVertexFormat::ComputeBounds ( void* buffer, u32 size, USRect& bounds ) {
 	}
 	
 	return true;
+}
+
+//----------------------------------------------------------------//
+void USVertexFormat::DeclareAttribute ( GLint index, GLint size, GLenum type, GLboolean normalized ) {
+
+	this->mAttributes.Grow ( this->mTotalAttributes + 1 );
+
+	USVertexFormatAttr& attr = this->mAttributes [ this->mTotalAttributes++ ];
+	
+	u32 offset = this->mVertexSize;
+	attr.Set ( index, size, type, normalized, offset );
+	this->mVertexSize += this->GetSize ( size, type );
 }
 
 //----------------------------------------------------------------//
@@ -206,18 +252,27 @@ GLenum USVertexFormat::GetColorType () const {
 }
 
 //----------------------------------------------------------------//
-bool USVertexFormat::IsMatch ( const USVertexFormat& prevState ) const {
+void USVertexFormat::ReserveAttributes ( u32 total ) {
 
-	if ( this->mVertexSize != prevState.mVertexSize ) {
-		return false;
-	}
+	this->mAttributes.Init ( total );
+	this->mTotalAttributes = 0;
+}
 
-	if ( !this->mElements [ ARRAY_VERTEX ].IsMatch ( prevState.mElements [ ARRAY_VERTEX ])) return false;
-	if ( !this->mElements [ ARRAY_TEX_COORD ].IsMatch ( prevState.mElements [ ARRAY_TEX_COORD ])) return false;
-	if ( !this->mElements [ ARRAY_COLOR ].IsMatch ( prevState.mElements [ ARRAY_COLOR ])) return false;
-	if ( !this->mElements [ ARRAY_NORMAL ].IsMatch ( prevState.mElements [ ARRAY_NORMAL ])) return false;
+//----------------------------------------------------------------//
+void USVertexFormat::Unbind () const {
+
+	if ( this->mTotalAttributes ) {
 	
-	return true;
+		for ( u32 i = 0; i < this->mTotalAttributes; ++i ) {
+			this->mAttributes [ i ].Unbind ();
+		}
+	}
+	else {
+		this->mElements [ ARRAY_COLOR ].Unbind ( GL_COLOR_ARRAY );
+		this->mElements [ ARRAY_NORMAL ].Unbind ( GL_NORMAL_ARRAY );
+		this->mElements [ ARRAY_TEX_COORD ].Unbind ( GL_TEXTURE_COORD_ARRAY );
+		this->mElements [ ARRAY_VERTEX ].Unbind ( GL_VERTEX_ARRAY );
+	}
 }
 
 //----------------------------------------------------------------//
