@@ -372,9 +372,6 @@ void MOAIProp2D::Draw () {
 
 	this->LoadShader ();
 	
-	glDisable ( GL_TEXTURE_2D );
-	glDisable ( GL_BLEND );
-	
 	if ( this->mGrid ) {
 	
 		USCellCoord c0;

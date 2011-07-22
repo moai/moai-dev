@@ -168,8 +168,9 @@ bool USTexture::Bind () {
 
 	glEnable ( GL_TEXTURE_2D );
 	
-	// TODO: GLES2
-	//glTexEnvf ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
+	if ( USGfxDevice::Get ().GetPipelineMode () == USGfxDevice::GL_PIPELINE_FIXED ) {
+		glTexEnvf ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
+	}
 	
 	glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, this->mWrap );
 	glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, this->mWrap );

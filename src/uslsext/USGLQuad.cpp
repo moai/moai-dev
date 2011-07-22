@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <uslsext/USDrawBuffer.h>
+#include <uslsext/USGfxDevice.h>
 #include <uslsext/USGLQuad.h>
 
 //================================================================//
@@ -12,9 +13,12 @@
 //----------------------------------------------------------------//
 void USGLQuad::BindVertexFormat ( USDrawBuffer& drawBuffer ) {
 	
-	// TODO: GLES2
-	drawBuffer.SetVertexPreset ( USVertexFormatMgr::PP_XYUVC );
-	//drawBuffer.SetVertexPreset ( USVertexFormatMgr::FF_XYUVC );
+	if ( USGfxDevice::Get ().GetPipelineMode () == USGfxDevice::GL_PIPELINE_FIXED ) {
+		drawBuffer.SetVertexPreset ( USVertexFormatMgr::FF_XYUVC );
+	}
+	else {
+		drawBuffer.SetVertexPreset ( USVertexFormatMgr::PP_XYUVC );
+	}
 	drawBuffer.SetPrimType ( GL_TRIANGLES );
 }
 

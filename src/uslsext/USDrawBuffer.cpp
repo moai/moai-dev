@@ -169,15 +169,10 @@ void USDrawBuffer::Reset () {
 	
 	// clear the vertex format
 	this->SetVertexFormat ();
-
-	// TODO: GLES2
-	// load identity matrix
-	//glMatrixMode ( GL_MODELVIEW );
-	//glLoadIdentity ();
 	
 	// ident the cpu transforms
-	//this->mUVTransform.Ident ();
-	//this->mVtxTransform.Ident ();
+	this->mUVTransform.Ident ();
+	this->mVtxTransform.Ident ();
 	
 	// disable backface culling
 	glDisable ( GL_CULL_FACE );
@@ -186,20 +181,28 @@ void USDrawBuffer::Reset () {
 	this->mPenWidth = 1.0f;
 	glLineWidth (( GLfloat )this->mPenWidth );
 	
-	// TODO: GLES2
-	// reset the current vertex color
-	//glColor4f ( 1.0f, 1.0f, 1.0f, 1.0f );
-	
 	// reset the point size
 	this->mPointSize = 1.0f;
-	// TODO: GLES2
-	//glPointSize (( GLfloat )this->mPointSize );
 	
 	// reset the scissor rect
 	USGfxDevice& device = USGfxDevice::Get ();
 	USRect scissorRect = device.GetRect ();
 	glScissor (( int )scissorRect.mXMin, ( int )scissorRect.mYMin, ( int )scissorRect.Width (), ( int )scissorRect.Height ());
 	this->mScissorRect = scissorRect;
+	
+	// fixed function reset
+	if ( USGfxDevice::Get ().GetPipelineMode () == USGfxDevice::GL_PIPELINE_FIXED ) {
+		
+		// load identity matrix
+		glMatrixMode ( GL_MODELVIEW );
+		glLoadIdentity ();
+		
+		// reset the current vertex color
+		glColor4f ( 1.0f, 1.0f, 1.0f, 1.0f );
+		
+		// reset the point size
+		glPointSize (( GLfloat )this->mPointSize );
+	}
 }
 
 //----------------------------------------------------------------//
