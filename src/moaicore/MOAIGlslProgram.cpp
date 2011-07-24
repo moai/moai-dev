@@ -66,11 +66,11 @@ void MOAIShaderUniform::BindAffine ( const USAffine2D& affine ) {
 	mtx [ 0x0b ] = 0.0f;
 	
 	mtx [ 0x0c ] = m [ USAffine2D::C2_R0 ];
-	mtx [ 0x0f ] = m [ USAffine2D::C2_R1 ];
+	mtx [ 0x0d ] = m [ USAffine2D::C2_R1 ];
 	mtx [ 0x0e ] = 0.0f;
 	mtx [ 0x0f ] = 1.0f;
 	
-	glUniformMatrix4fv ( this->mAddr, 1, false, mtx );
+	glUniformMatrix4fv ( this->mAddr, 1, true, mtx );
 }
 
 //----------------------------------------------------------------//

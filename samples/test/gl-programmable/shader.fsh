@@ -1,14 +1,13 @@
-//
-//  Shader.fsh
-//  opengl
-//
-//  Created by Patrick Meehan on 7/14/11.
-//  Copyright 2011 Groundspeak, Inc. All rights reserved.
-//
+----------------------------------------------------------------
+-- Copyright (c) 2010-2011 Zipline Games, Inc. 
+-- All Rights Reserved. 
+-- http://getmoai.com
+----------------------------------------------------------------
 
-varying lowp vec4 colorVarying;
+//varying lowp vec4 colorVarying;
+varying vec4 colorVarying;
 
-void main()
-{
+void main() {
+
     gl_FragColor = colorVarying;
 }

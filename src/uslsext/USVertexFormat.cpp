@@ -276,7 +276,9 @@ void USVertexFormat::Unbind () const {
 }
 
 //----------------------------------------------------------------//
-USVertexFormat::USVertexFormat () {
+USVertexFormat::USVertexFormat () :
+	mVertexSize ( 0 ),
+	mTotalAttributes ( 0 ) {
 }
 
 //----------------------------------------------------------------//

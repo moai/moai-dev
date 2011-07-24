@@ -31,7 +31,7 @@ u32 USGfxDevice::GetHeight () {
 //----------------------------------------------------------------//
 u32 USGfxDevice::GetPipelineMode () {
 
-	return GL_PIPELINE_FIXED;
+	return GL_PIPELINE_PROGRAMMABLE;
 }
 
 //----------------------------------------------------------------//

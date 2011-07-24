@@ -48,4 +48,4 @@ prop:setDeck ( gfxQuad )
 prop:setShader ( program )
 layer:insertProp ( prop )
 
---prop:moveRot ( 360, 1.5 )
+prop:moveRot ( 360, 1.5 )
