@@ -29,7 +29,7 @@ int MOAIGfxQuadDeck2D::_reserve ( lua_State* L ) {
 	self->mQuads.Init ( total );
 	
 	for ( u32 i = 0; i < total; ++i ) {
-		USGLQuad& quad = self->mQuads [ i ];
+		MOAIQuadBrush& quad = self->mQuads [ i ];
 		quad.SetVerts ( -0.5f, -0.5f, 0.5f, 0.5f );
 		quad.SetUVs ( 0.0f, 1.0f, 1.0f, 0.0f );
 	}
@@ -209,7 +209,7 @@ bool MOAIGfxQuadDeck2D::Bind () {
 
 	USDrawBuffer& drawBuffer = USDrawBuffer::Get ();
 	if ( !drawBuffer.SetTexture ( this->mTexture )) return false;
-	USGLQuad::BindVertexFormat ( drawBuffer );
+	MOAIQuadBrush::BindVertexFormat ( drawBuffer );
 
 	return true;
 }
@@ -233,7 +233,7 @@ USRect MOAIGfxQuadDeck2D::GetBounds ( u32 idx, MOAIDeckRemapper* remapper ) {
 		idx = remapper ? remapper->Remap ( idx ) : idx;
 		idx = ( idx - 1 ) % size;
 	
-		USGLQuad& quad = this->mQuads [ idx ];
+		MOAIQuadBrush& quad = this->mQuads [ idx ];
 		return quad.GetVtxBounds ();
 	}
 	USRect rect;

@@ -6,6 +6,7 @@
 #include <moaicore/MOAIGrid.h>
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIProp.h>
+#include <moaicore/MOAIQuadBrush.h>
 #include <moaicore/MOAIStretchPatch2D.h>
 #include <moaicore/MOAITexture.h>
 #include <moaicore/MOAITransformBase.h>
@@ -191,7 +192,7 @@ bool MOAIStretchPatch2D::Bind () {
 
 	USDrawBuffer& drawBuffer = USDrawBuffer::Get ();
 	if ( !drawBuffer.SetTexture ( this->mTexture )) return false;
-	USGLQuad::BindVertexFormat ( drawBuffer );
+	MOAIQuadBrush::BindVertexFormat ( drawBuffer );
 
 	return true;
 }
@@ -267,7 +268,7 @@ void MOAIStretchPatch2D::Draw ( u32 idx, MOAIDeckRemapper* remapper, float xStre
 	u32 totalRows = this->mRows.Size ();
 	u32 totalCols = this->mCols.Size ();
 	
-	USGLQuad quad;
+	MOAIQuadBrush quad;
 	
 	float uSpan = uvRect.mXMax - uvRect.mXMin;
 	float vSpan = uvRect.mYMax - uvRect.mYMin;

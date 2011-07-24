@@ -432,22 +432,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\uslsext\USGLLine.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USGLLine.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USGLQuad.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USGLQuad.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\uslsext\USImage.cpp"
 				>
 			</File>

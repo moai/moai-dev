@@ -47,6 +47,7 @@
 #include <moaicore/MOAILayer2D.h>
 #include <moaicore/MOAILayerBridge2D.h>
 #include <moaicore/MOAILayoutFrame.h>
+#include <moaicore/MOAILineBrush.h>
 #include <moaicore/MOAILocationSensor.h>
 #include <moaicore/MOAILogMgr.h>
 #include <moaicore/MOAILogMessages.h>
@@ -70,6 +71,7 @@
 #include <moaicore/MOAIPointerSensor.h>
 #include <moaicore/MOAIProp.h>
 #include <moaicore/MOAIProp2D.h>
+#include <moaicore/MOAIQuadBrush.h>
 #include <moaicore/MOAIScriptNode.h>
 #include <moaicore/MOAISensor.h>
 #include <moaicore/MOAISerializer.h>

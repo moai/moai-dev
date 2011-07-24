@@ -26,8 +26,6 @@
 #include <uslsext/USDrawBuffer.h>
 #include <uslsext/USFsm.h>
 #include <uslsext/USFsmStateFactory.h>
-#include <uslsext/USGLLine.h>
-#include <uslsext/USGLQuad.h>
 #include <uslsext/USGrid.h>
 #include <uslsext/USHttpTask.h>
 #include <uslsext/USHttpTask_impl.h>

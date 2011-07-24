@@ -5,8 +5,6 @@
 #include <uslsext/USBlendMode.h>
 #include <uslsext/USColor.h>
 #include <uslsext/USDrawBuffer.h>
-#include <uslsext/USGLLine.h>
-#include <uslsext/USGLQuad.h>
 #include <uslsext/USCanvas.h>
 #include <uslsext/USMathConsts.h>
 #include <uslsext/USTexture.h>

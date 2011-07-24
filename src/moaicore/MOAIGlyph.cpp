@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <moaicore/MOAIGlyph.h>
+#include <moaicore/MOAIQuadBrush.h>
 
 //================================================================//
 // MOAIGlyph
@@ -13,7 +14,7 @@ void MOAIGlyph::Draw ( float points, float x, float y ) const {
 
 	if ( this->mWidth ) {
 
-		USGLQuad glQuad;
+		MOAIQuadBrush glQuad;
 		
 		x += ( this->mBearingX * points );
 		y += ( this->mYOff * points ); 

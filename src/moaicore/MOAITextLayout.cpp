@@ -5,7 +5,7 @@
 #include <uslsext/USBinarySearch.h>
 #include <uslsext/USDrawBuffer.h>
 #include <moaicore/MOAIFont.h>
-#include <uslsext/USGLQuad.h>
+#include <moaicore/MOAIQuadBrush.h>
 #include <moaicore/MOAITextLayout.h>
 
 //================================================================//
@@ -16,7 +16,7 @@
 void MOAITextLayout::Draw ( u32 reveal ) {
 
 	USDrawBuffer& drawBuffer = USDrawBuffer::Get ();
-	USGLQuad::BindVertexFormat ( drawBuffer );
+	MOAIQuadBrush::BindVertexFormat ( drawBuffer );
 
 	USColorVec baseColor = drawBuffer.GetPenColor ();
 	USColorVec blendColor;

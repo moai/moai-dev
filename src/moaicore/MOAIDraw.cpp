@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <moaicore/MOAIDraw.h>
+#include <moaicore/MOAILineBrush.h>
 
 //================================================================//
 // MOAIDraw
@@ -82,7 +83,7 @@ void MOAIDraw::DrawAxisGrid ( USVec2D loc, USVec2D vec, float size ) {
 	USRect viewRect;
 	viewRect.Init ( -1.0f, -1.0f, 1.0f, 1.0f );
 	
-	USGLLine glLine;
+	MOAILineBrush glLine;
 	
 	for ( ; start < stop; ++start ) {
 		
@@ -203,7 +204,7 @@ void MOAIDraw::DrawEllipseOutline ( float left, float top, float right, float bo
 //----------------------------------------------------------------//
 void MOAIDraw::DrawGrid ( USRect& rect, u32 xCells, u32 yCells ) {
 
-	USGLLine glLine;
+	MOAILineBrush glLine;
 
 	if ( xCells > 1 ) {
 		float xStep = rect.Width () / ( float )xCells;
@@ -235,7 +236,7 @@ void MOAIDraw::DrawGrid ( USRect& rect, u32 xCells, u32 yCells ) {
 //----------------------------------------------------------------//
 void MOAIDraw::DrawLine ( USVec2D& v0, USVec2D& v1 ) {
 	
-	USGLLine glLine;
+	MOAILineBrush glLine;
 	glLine.SetVerts ( v0, v1 );
 	glLine.Draw ();
 }
@@ -243,7 +244,7 @@ void MOAIDraw::DrawLine ( USVec2D& v0, USVec2D& v1 ) {
 //----------------------------------------------------------------//
 void MOAIDraw::DrawLine ( float x0, float y0, float x1, float y1 ) {
 
-	USGLLine glLine;
+	MOAILineBrush glLine;
 	glLine.SetVerts ( x0, y0, x1, y1 );
 	glLine.Draw ();
 }
@@ -285,7 +286,7 @@ void MOAIDraw::DrawRay ( USVec2D loc, USVec2D vec ) {
 	USVec2D p0;
 	USVec2D p1;
 	
-	USGLLine glLine;
+	MOAILineBrush glLine;
 	
 	if ( viewRect.GetIntersection ( loc, vec, p0, p1 )) {
 		
@@ -302,7 +303,7 @@ void MOAIDraw::DrawRectEdges ( USRect rect, u32 edges ) {
 
 	rect.Bless ();
 
-	USGLLine glLine;
+	MOAILineBrush glLine;
 	
 	// right
 	if ( edges & USRect::kRight ) {

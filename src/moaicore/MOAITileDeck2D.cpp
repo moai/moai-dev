@@ -6,6 +6,7 @@
 #include <moaicore/MOAIGrid.h>
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIProp.h>
+#include <moaicore/MOAIQuadBrush.h>
 #include <moaicore/MOAITileDeck2D.h>
 #include <moaicore/MOAITexture.h>
 #include <moaicore/MOAITransformBase.h>
@@ -116,7 +117,7 @@ bool MOAITileDeck2D::Bind () {
 
 	USDrawBuffer& drawBuffer = USDrawBuffer::Get ();
 	if ( !drawBuffer.SetTexture ( this->mTexture )) return false;
-	USGLQuad::BindVertexFormat ( drawBuffer );
+	MOAIQuadBrush::BindVertexFormat ( drawBuffer );
 
 	return true;
 }
@@ -130,7 +131,7 @@ void MOAITileDeck2D::DrawPatch ( u32 idx, float xOff, float yOff, float xScale, 
 	USRect uvRect = this->GetTileRect ( coord );
 	uvRect.FlipY ();
 	
-	USGLQuad quad;
+	MOAIQuadBrush quad;
 	quad.SetVerts ( this->mRect );
 	quad.SetUVs ( uvRect );
 	quad.Draw ( xOff, yOff, xScale, yScale );

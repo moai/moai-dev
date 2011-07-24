@@ -4,6 +4,8 @@
 #ifndef	MOAIDEBUGLINES_H
 #define	MOAIDEBUGLINES_H
 
+#include <moaicore/MOAILineBrush.h>
+
 //================================================================//
 // MOAIDebugLineStyle
 //================================================================//
@@ -25,7 +27,7 @@ private:
 // MOAIDebugLine
 //================================================================//
 class MOAIDebugLine :
-	public USGLLine {
+	public MOAILineBrush {
 private:
 
 	friend class MOAIDebugLines;

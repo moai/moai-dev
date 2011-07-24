@@ -84,7 +84,7 @@ bool MOAIGfxQuad2D::Bind () {
 		if ( !this->mTexture->Bind ()) return false;
 		
 		USDrawBuffer& drawBuffer = USDrawBuffer::Get ();
-		USGLQuad::BindVertexFormat ( drawBuffer );
+		MOAIQuadBrush::BindVertexFormat ( drawBuffer );
 	}
 
 	return true;
@@ -94,7 +94,7 @@ bool MOAIGfxQuad2D::Bind () {
 void MOAIGfxQuad2D::DrawPatch ( u32 idx, float xOff, float yOff, float xScale, float yScale ) {
 	UNUSED ( idx );
 	
-	USGLQuad quad;
+	MOAIQuadBrush quad;
 	quad.SetVerts ( this->mRect );
 	quad.SetUVs ( this->mUVRect );
 	quad.Draw ( xOff, yOff, xScale, yScale );
