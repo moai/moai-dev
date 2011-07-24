@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <moaicore/MOAIDraw.h>
+#include <moaicore/MOAIGfxUtil.h>
 #include <moaicore/MOAILineBrush.h>
 
 //================================================================//
@@ -13,7 +14,7 @@
 void MOAIDraw::DrawAxisGrid ( USVec2D loc, USVec2D vec, float size ) {
 
 	USAffine2D mtx;
-	USCanvas::GetViewProjMtx ( mtx );
+	MOAIGfxUtil::GetViewProjMtx ( mtx );
 	
 	USAffine2D invMtx;
 	invMtx.Inverse ( mtx );
@@ -272,7 +273,7 @@ void MOAIDraw::DrawPoint ( float x, float y ) {
 void MOAIDraw::DrawRay ( USVec2D loc, USVec2D vec ) {
 	
 	USAffine2D mtx;
-	USCanvas::GetViewProjMtx ( mtx );
+	MOAIGfxUtil::GetViewProjMtx ( mtx );
 	
 	USAffine2D invMtx;
 	invMtx.Inverse ( mtx );

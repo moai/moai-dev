@@ -6,6 +6,8 @@
 #include <moaicore/MOAIDeck.h>
 #include <moaicore/MOAICpSpace.h>
 #include <moaicore/MOAIDebugLines.h>
+#include <moaicore/MOAIGfxDevice.h>
+#include <moaicore/MOAIGfxUtil.h>
 #include <moaicore/MOAILayer2D.h>
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIProp2D.h>
@@ -343,52 +345,53 @@ void MOAILayer2D::Draw () {
 
 	if ( !this->mViewport ) return;
 	
-	USViewport viewport = *this->mViewport;
-	USDrawBuffer& drawBuffer = USDrawBuffer::Get ();
+	MOAIViewport viewport = *this->mViewport;
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	
-	drawBuffer.Flush ();
-	drawBuffer.Reset ();
+	gfxDevice.Flush ();
+	gfxDevice.Reset ();
 	
 	// TODO: GLES2
 	//USAffine2D mtx;
-	//USCanvas::GetWorldToWndMtx ( mtx, 1.0f, 1.0f );
+	//MOAIGfxUtil::GetWorldToWndMtx ( mtx, 1.0f, 1.0f );
 	//mtx.Prepend ( this->mLocalToWorldMtx );
 	//mtx.Transform ( viewport );
 	
 	USAffine2D camera;
 	this->GetCameraMtx ( camera );
 	
-	USCanvas::BeginDrawing ( viewport, camera );
+	MOAIGfxUtil::BeginDrawing ( viewport, camera );
 	
 	USAffine2D viewProj;
-	USCanvas::GetViewProjMtx ( viewport, camera, viewProj );
-	drawBuffer.SetCameraTransform ( viewProj );
+	viewport.GetViewProjMtx ( camera, viewProj );
+	gfxDevice.SetCameraTransform ( viewProj );
 	
 	if ( this->mShowDebugLines ) {
 		
 		#if USE_CHIPMUNK
 			if ( this->mCpSpace ) {
 				this->mCpSpace->DrawDebug ();
-				drawBuffer.Flush ();
-				drawBuffer.Reset ();
+				gfxDevice.Flush ();
+				gfxDevice.Reset ();
 			}
 		#endif
 		
 		#if USE_BOX2D
 			if ( this->mBox2DWorld ) {
 				this->mBox2DWorld->DrawDebug ();
-				drawBuffer.Flush ();
-				drawBuffer.Reset ();
+				gfxDevice.Flush ();
+				gfxDevice.Reset ();
 			}
 		#endif
 	}
 	
 	if ( this->mPartition ) {
 		
-		USViewQuad viewQuad;
-		viewQuad.Init ();
+		USQuad viewQuad;
+		MOAIGfxUtil::GetViewQuad ( viewQuad );
+		USRect viewBounds = viewQuad.GetBounds ();
 		
-		this->mPartition->GatherProps ( viewQuad.mBounds, 0, MOAIProp::CAN_DRAW | MOAIProp::CAN_DRAW_DEBUG );
+		this->mPartition->GatherProps ( viewBounds, 0, MOAIProp::CAN_DRAW | MOAIProp::CAN_DRAW_DEBUG );
 		u32 totalResults = this->mPartition->GetTotalResults ();
 		if (( !totalResults ) || ( totalResults > MAX_RENDERABLES )) return;
 		
@@ -417,9 +420,9 @@ void MOAILayer2D::Draw () {
 	
 	// render the debug lines
 	if ( this->mShowDebugLines ) {
-		drawBuffer.Flush ();
+		gfxDevice.Flush ();
 		MOAIDebugLines::Get ().Draw ();
-		drawBuffer.Flush ();
+		gfxDevice.Flush ();
 	}
 }
 
@@ -467,7 +470,7 @@ void MOAILayer2D::GetWndToWorldMtx ( USAffine2D& wndToWorld ) {
 		
 		USAffine2D camera;
 		this->GetCameraMtx ( camera );
-		USCanvas::GetWndToWorldMtx ( *this->mViewport, camera, wndToWorld );
+		this->mViewport->GetWndToWorldMtx ( camera, wndToWorld );
 	}
 	else {
 		wndToWorld.Ident ();
@@ -481,7 +484,7 @@ void MOAILayer2D::GetWorldToWndMtx ( USAffine2D& worldToWnd ) {
 		
 		USAffine2D camera;
 		this->GetCameraMtx ( camera );
-		USCanvas::GetWorldToWndMtx ( *this->mViewport, camera, worldToWnd );
+		this->mViewport->GetWorldToWndMtx ( camera, worldToWnd );
 	}
 	else {
 		worldToWnd.Ident ();

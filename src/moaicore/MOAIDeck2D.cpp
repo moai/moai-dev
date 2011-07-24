@@ -4,6 +4,7 @@
 #include "pch.h"
 #include <moaicore/MOAIDeck2D.h>
 #include <moaicore/MOAIDeckRemapper.h>
+#include <moaicore/MOAIGfxDevice.h>
 #include <moaicore/MOAIGrid.h>
 #include <moaicore/MOAISurfaceSampler2D.h>
 #include <moaicore/MOAITransform.h>
@@ -24,8 +25,8 @@ void MOAIDeck2D::Draw ( const USAffine2D& transform, u32 idx, MOAIDeckRemapper* 
 	idx = remapper ? remapper->Remap ( idx ) : idx;
 	if ( !idx || ( idx & USTile::HIDDEN )) return;
 	
-	USDrawBuffer& drawbuffer = USDrawBuffer::Get ();
-	drawbuffer.SetVtxTransform ( transform );
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	gfxDevice.SetVtxTransform ( transform );
 	
 	float xScale = ( idx & USTile::XFLIP ) ? -1.0f : 1.0f;
 	float yScale = ( idx & USTile::YFLIP ) ? -1.0f : 1.0f;
@@ -45,8 +46,8 @@ void MOAIDeck2D::DrawPatch ( u32 idx, float xOff, float yOff, float xScale, floa
 //----------------------------------------------------------------//
 void MOAIDeck2D::Draw ( const USAffine2D& transform, MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, USCellCoord& c0, USCellCoord& c1 ) {
 	
-	USDrawBuffer& drawbuffer = USDrawBuffer::Get ();
-	drawbuffer.SetVtxTransform ( transform );
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	gfxDevice.SetVtxTransform ( transform );
 
 	float width = grid.GetTileWidth () * gridScale.mX;
 	float height = grid.GetTileHeight () * gridScale.mY;

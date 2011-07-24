@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <moaicore/MOAIEaseDriver.h>
+#include <moaicore/MOAIGfxDevice.h>
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIGlslProgram.h>
 #include <moaicore/MOAITransformBase.h>
@@ -23,7 +24,7 @@ void MOAIShaderUniform::Bind ( const float* attributes ) {
 		}
 		case UNIFORM_MODEL: {
 		
-			const USAffine2D& affine = USDrawBuffer::Get ().GetVtxTransform ();
+			const USAffine2D& affine = MOAIGfxDevice::Get ().GetVtxTransform ();
 			this->BindAffine ( affine );
 			break;
 		}
@@ -37,7 +38,7 @@ void MOAIShaderUniform::Bind ( const float* attributes ) {
 		}
 		case UNIFORM_VIEW_PROJ: {
 		
-			const USAffine2D& affine = USDrawBuffer::Get ().GetCameraTransform ();
+			const USAffine2D& affine = MOAIGfxDevice::Get ().GetCameraTransform ();
 			this->BindAffine ( affine );
 			break;
 		}

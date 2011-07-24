@@ -5,6 +5,8 @@
 #include <moaicore/MOAIDeck.h>
 #include <moaicore/MOAIDeckRemapper.h>
 #include <moaicore/MOAIDebugLines.h>
+#include <moaicore/MOAIGfxDevice.h>
+#include <moaicore/MOAIGfxUtil.h>
 #include <moaicore/MOAIGrid.h>
 #include <moaicore/MOAILayoutFrame.h>
 #include <moaicore/MOAILogMessages.h>
@@ -363,11 +365,11 @@ void MOAIProp2D::Draw () {
 	if ( !this->mVisible ) return;
 	if ( !this->BindDeck ()) return;
 
-	USDrawBuffer& drawbuffer = USDrawBuffer::Get ();
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 
 	if ( this->mUVTransform ) {
 		USAffine2D uvMtx = this->mUVTransform->GetLocalToWorldMtx ();
-		drawbuffer.SetUVTransform ( uvMtx );
+		gfxDevice.SetUVTransform ( uvMtx );
 	}
 
 	this->LoadShader ();
@@ -387,7 +389,7 @@ void MOAIProp2D::Draw () {
 	// TODO
 	//MOAILayoutFrame* parentFrame = USCast < MOAILayoutFrame >( this->mParent );
 	//if ( parentFrame ) {
-	//	drawbuffer.SetScissorRect ();
+	//	gfxDevice.SetScissorRect ();
 	//}
 }
 
@@ -515,11 +517,11 @@ void MOAIProp2D::GetBoundsInView ( USCellCoord& c0, USCellCoord& c1 ) {
 	const USAffine2D& invWorldMtx = this->GetWorldToLocalMtx ();
 
 	// view quad in world space
-	USViewQuad viewQuad;
-	viewQuad.Init ();
+	USQuad viewQuad;
+	MOAIGfxUtil::GetViewQuad ( viewQuad );
 	viewQuad.Transform ( invWorldMtx );
 	
-	USRect viewRect = viewQuad.mBounds;
+	USRect viewRect = viewQuad.GetBounds ();
 	viewRect.Bless ();
 	
 	this->GetBoundsInRect ( viewRect, c0, c1 );
@@ -593,29 +595,29 @@ MOAIOverlapPrim2D* MOAIProp2D::IsOverlapPrim2D () {
 //----------------------------------------------------------------//
 void MOAIProp2D::LoadShader () {
 
-	USDrawBuffer& drawbuffer = USDrawBuffer::Get ();
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 
 	if ( this->mShader ) {
 		this->mShader->Bind ();
 		
-		USColorVec color = drawbuffer.GetPenColor ();
+		USColorVec color = gfxDevice.GetPenColor ();
 		color.Modulate ( this->mColor );
-		drawbuffer.SetPenColor ( color );
+		gfxDevice.SetPenColor ( color );
 	}
 	else {
-		drawbuffer.SetPenColor ( this->mColor );
+		gfxDevice.SetPenColor ( this->mColor );
 	}
 	
-	drawbuffer.SetBlendMode ( this->mBlendMode );
+	gfxDevice.SetBlendMode ( this->mBlendMode );
 	
 	// TODO
 	//MOAILayoutFrame* parent = USCast < MOAILayoutFrame >( this->mParent );
 	//if ( parent ) {
 	//	USRect scissorRect = parent->GetScissorRect ();			
-	//	drawbuffer.SetScissorRect ( scissorRect );
+	//	gfxDevice.SetScissorRect ( scissorRect );
 	//}
 	//else {
-		drawbuffer.SetScissorRect ();
+		gfxDevice.SetScissorRect ();
 	//}
 }
 

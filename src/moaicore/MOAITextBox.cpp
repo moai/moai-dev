@@ -6,6 +6,7 @@
 #include <moaicore/MOAIDeck.h>
 #include <moaicore/MOAIDebugLines.h>
 #include <moaicore/MOAIFont.h>
+#include <moaicore/MOAIGfxDevice.h>
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAINodeMgr.h>
 #include <moaicore/MOAITextBox.h>
@@ -393,13 +394,13 @@ void MOAITextBox::Draw () {
 	
 	if ( font ) {
 	
-		USDrawBuffer& drawbuffer = USDrawBuffer::Get ();
+		MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 		USAffine2D localToWorldMtx = this->GetLocalToWorldMtx ();
 		
-		drawbuffer.SetVtxTransform ( localToWorldMtx );
+		gfxDevice.SetVtxTransform ( localToWorldMtx );
 		
 		this->LoadShader ();
-		drawbuffer.SetBlendMode ( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
+		gfxDevice.SetBlendMode ( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
 		
 		if ( this->mReveal ) {
 			this->Layout ();

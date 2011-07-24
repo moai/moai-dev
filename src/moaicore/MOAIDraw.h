@@ -4,7 +4,7 @@
 #ifndef	MOAIDRAW_H
 #define	MOAIDRAW_H
 
-class USTexture;
+class MOAITexture;
 
 //================================================================//
 // MOAIDraw

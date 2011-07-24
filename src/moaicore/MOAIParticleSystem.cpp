@@ -4,6 +4,7 @@
 #include "pch.h"
 #include <float.h>
 #include <moaicore/MOAIDeck.h>
+#include <moaicore/MOAIGfxDevice.h>
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIParticleState.h>
 #include <moaicore/MOAIParticleSystem.h>
@@ -324,7 +325,7 @@ void MOAIParticleSystem::Draw () {
 	if ( !this->BindDeck ()) return;
 	this->LoadShader ();
 
-	USDrawBuffer& drawbuffer = USDrawBuffer::Get ();
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 
 	USAffine2D drawingMtx;
 	USAffine2D spriteMtx;
@@ -342,7 +343,7 @@ void MOAIParticleSystem::Draw () {
 		u32 idx = ( base + i ) % maxSprites;
 	
 		AKUParticleSprite& sprite = this->mSprites [ idx ];
-		drawbuffer.SetPenColor ( sprite.mRed, sprite.mGreen, sprite.mBlue, sprite.mAlpha );
+		gfxDevice.SetPenColor ( sprite.mRed, sprite.mGreen, sprite.mBlue, sprite.mAlpha );
 		
 		spriteMtx.ScRoTr ( sprite.mXScl, sprite.mYScl, sprite.mZRot * ( float )D2R, sprite.mXLoc, sprite.mYLoc );
 		

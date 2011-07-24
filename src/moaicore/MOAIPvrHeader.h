@@ -1,13 +1,13 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef USPVRHEADER_H
-#define USPVRHEADER_H
+#ifndef MOAIPVRHEADER_H
+#define MOAIPVRHEADER_H
 
 //================================================================//
-// USPvrHeader
+// MOAIPvrHeader
 //================================================================//
-class USPvrHeader {
+class MOAIPvrHeader {
 public:
 	
 	static const u32 HEADER_SIZE		= 52;
@@ -53,10 +53,10 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	static USPvrHeader* GetHeader ( void* data, size_t size ) {
+	static MOAIPvrHeader* GetHeader ( void* data, size_t size ) {
 	
 		if ( data && ( size >= HEADER_SIZE )) {
-			USPvrHeader* header = ( USPvrHeader* )data;
+			MOAIPvrHeader* header = ( MOAIPvrHeader* )data;
 			if ( header->mPVR == PVR_FILE_MAGIC ) {
 				return header;
 			}

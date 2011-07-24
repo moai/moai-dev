@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <moaicore/MOAIEnvironment.h>
+#include <moaicore/MOAIGfxDevice.h>
 #include <moaicore/MOAILogMgr.h>
 #include <aku/AKU.h>
 
@@ -306,10 +307,10 @@ int MOAIEnvironment::_getUDID ( lua_State* L  ) {
 */
 int MOAIEnvironment::_getViewSize ( lua_State* L  ) {
 
-	USDrawBuffer& drawBuffer = USDrawBuffer::Get ();
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	
-	lua_pushnumber ( L, drawBuffer.GetWidth ());
-	lua_pushnumber ( L, drawBuffer.GetHeight ());
+	lua_pushnumber ( L, gfxDevice.GetWidth ());
+	lua_pushnumber ( L, gfxDevice.GetHeight ());
 	
 	return 2;
 }

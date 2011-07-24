@@ -57,6 +57,4 @@ void uslsext::InitGlobals ( USGlobals* globals ) {
 	}
 
 	USUrlMgr::Get ();
-	USVertexFormatMgr::Get ();
-	USDrawBuffer::Get ();
 }

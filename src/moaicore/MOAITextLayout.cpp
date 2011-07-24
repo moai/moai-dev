@@ -3,8 +3,8 @@
 
 #include "pch.h"
 #include <uslsext/USBinarySearch.h>
-#include <uslsext/USDrawBuffer.h>
 #include <moaicore/MOAIFont.h>
+#include <moaicore/MOAIGfxDevice.h>
 #include <moaicore/MOAIQuadBrush.h>
 #include <moaicore/MOAITextLayout.h>
 
@@ -15,10 +15,10 @@
 //----------------------------------------------------------------//
 void MOAITextLayout::Draw ( u32 reveal ) {
 
-	USDrawBuffer& drawBuffer = USDrawBuffer::Get ();
-	MOAIQuadBrush::BindVertexFormat ( drawBuffer );
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	MOAIQuadBrush::BindVertexFormat ( gfxDevice );
 
-	USColorVec baseColor = drawBuffer.GetPenColor ();
+	USColorVec baseColor = gfxDevice.GetPenColor ();
 	USColorVec blendColor;
 	u32 rgba = 0xffffffff;
 
@@ -31,7 +31,7 @@ void MOAITextLayout::Draw ( u32 reveal ) {
 			
 			blendColor.SetRGBA ( rgba );
 			blendColor.Modulate ( baseColor );
-			drawBuffer.SetPenColor ( blendColor );
+			gfxDevice.SetPenColor ( blendColor );
 		}
 		sprite.mGlyph->Draw ( sprite.mPoints, sprite.mX, sprite.mY );
 	}

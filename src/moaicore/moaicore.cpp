@@ -25,6 +25,8 @@ void moaicore::InitGlobals ( USGlobals* globals ) {
 	MOAIInputMgr::Get ();
 	MOAILogMgr::Get ();
 	MOAINodeMgr::Get ();
+	MOAIVertexFormatMgr::Get ();
+	MOAIGfxDevice::Get ();
 	MOAIDebugLines::Get ();
 	MOAISim::Get ();
 	

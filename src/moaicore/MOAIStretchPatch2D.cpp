@@ -190,9 +190,9 @@ int MOAIStretchPatch2D::_setUVRect ( lua_State* L ) {
 //----------------------------------------------------------------//
 bool MOAIStretchPatch2D::Bind () {
 
-	USDrawBuffer& drawBuffer = USDrawBuffer::Get ();
-	if ( !drawBuffer.SetTexture ( this->mTexture )) return false;
-	MOAIQuadBrush::BindVertexFormat ( drawBuffer );
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	if ( !gfxDevice.SetTexture ( this->mTexture )) return false;
+	MOAIQuadBrush::BindVertexFormat ( gfxDevice );
 
 	return true;
 }
@@ -206,8 +206,8 @@ void MOAIStretchPatch2D::Draw ( const USAffine2D& transform, u32 idx, MOAIDeckRe
 	noStretch.Scale ( 1.0f / stretch.mX, 1.0f / stretch.mY );
 	noStretch.Append ( transform );
 	
-	USDrawBuffer& drawBuffer = USDrawBuffer::Get ();
-	drawBuffer.SetVtxTransform ( noStretch );
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	gfxDevice.SetVtxTransform ( noStretch );
 	
 	this->UpdateParams ();
 	this->Draw ( idx, remapper, stretch.mX, stretch.mY );

@@ -105,12 +105,16 @@ bool USQuad::Contains ( float x, float y ) const {
 }
 
 //----------------------------------------------------------------//
-void USQuad::GetBounds ( USRect& rect ) const {
+USRect USQuad::GetBounds () const {
 
-	rect.Init ( this->mV [ 0 ] );
-	rect.Grow ( this->mV [ 1 ] );
-	rect.Grow ( this->mV [ 2 ] );
-	rect.Grow ( this->mV [ 3 ] );
+	USRect rect;
+
+	rect.Init ( this->mV [ 0 ]);
+	rect.Grow ( this->mV [ 1 ]);
+	rect.Grow ( this->mV [ 2 ]);
+	rect.Grow ( this->mV [ 3 ]);
+	
+	return rect;
 }
 
 //----------------------------------------------------------------//

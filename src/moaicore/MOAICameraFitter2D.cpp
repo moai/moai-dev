@@ -5,6 +5,7 @@
 
 #include <moaicore/MOAICameraAnchor2D.h>
 #include <moaicore/MOAICameraFitter2D.h>
+#include <moaicore/MOAIGfxUtil.h>
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAITransform.h>
 #include <moaicore/MOAIViewport.h>
@@ -232,10 +233,10 @@ void MOAICameraFitter2D::Fit () {
 	ident.Ident ();
 	
 	USAffine2D worldToWnd;
-	USCanvas::GetWorldToWndMtx ( *this->mViewport, ident, worldToWnd );
+	this->mViewport->GetWorldToWndMtx ( ident, worldToWnd );
 	
 	USAffine2D wndToWorld;
-	USCanvas::GetWndToWorldMtx ( *this->mViewport, ident, wndToWorld );
+	this->mViewport->GetWndToWorldMtx ( ident, wndToWorld );
 	
 	USRect screenRect = worldRect;
 	worldToWnd.Transform ( screenRect );

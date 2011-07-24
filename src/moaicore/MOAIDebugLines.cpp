@@ -3,7 +3,9 @@
 
 #include "pch.h"
 #include <moaicore/MOAIDebugLines.h>
+#include <moaicore/MOAIGfxDevice.h>
 #include <moaicore/MOAILogMessages.h>
+#include <moaicore/MOAIVertexFormatMgr.h>
 
 //================================================================//
 // MOAIDebugLineStyle
@@ -27,19 +29,19 @@ MOAIDebugLineStyle::~MOAIDebugLineStyle () {
 //----------------------------------------------------------------//
 void MOAIDebugLine::Draw () {
 
-	USDrawBuffer& drawBuffer = USDrawBuffer::Get ();
-	drawBuffer.SetPenColor ( this->mColor );
-	drawBuffer.SetPenWidth ( this->mWidth );
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	gfxDevice.SetPenColor ( this->mColor );
+	gfxDevice.SetPenWidth ( this->mWidth );
 
-	drawBuffer.BeginPrim ();
+	gfxDevice.BeginPrim ();
 	
-		drawBuffer.WriteVtx ( this->mVtx [ 0 ]);
-		drawBuffer.WritePenColor ();
+		gfxDevice.WriteVtx ( this->mVtx [ 0 ]);
+		gfxDevice.WritePenColor ();
 		
-		drawBuffer.WriteVtx ( this->mVtx [ 1 ]);
-		drawBuffer.WritePenColor ();
+		gfxDevice.WriteVtx ( this->mVtx [ 1 ]);
+		gfxDevice.WritePenColor ();
 	
-	drawBuffer.EndPrim ();
+	gfxDevice.EndPrim ();
 }
 
 //----------------------------------------------------------------//
@@ -130,15 +132,15 @@ void MOAIDebugLines::Draw () {
 
 	if ( !this->mTop ) return;
 	
-	USDrawBuffer& drawBuffer = USDrawBuffer::Get ();
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	
-	drawBuffer.SetTexture ();
-	drawBuffer.SetBlendMode ( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
+	gfxDevice.SetTexture ();
+	gfxDevice.SetBlendMode ( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
 	
-	drawBuffer.SetPrimType ( GL_LINES );
-	drawBuffer.SetVertexPreset ( USVertexFormatMgr::FF_XYC );
+	gfxDevice.SetPrimType ( GL_LINES );
+	gfxDevice.SetVertexPreset ( MOAIVertexFormatMgr::FF_XYC );
 	
-	drawBuffer.SetVtxTransform ();
+	gfxDevice.SetVtxTransform ();
 	
 	for ( u32 i = 0; i < this->mTop; ++i ) {
 		this->mLineBuffer [ i ].Draw ();

@@ -30,9 +30,11 @@
 #include <moaicore/MOAIFileSystem.h>
 #include <moaicore/MOAIFont.h>
 #include <moaicore/MOAIFreetypeFontRipper.h>
+#include <moaicore/MOAIGfxDevice.h>
 #include <moaicore/MOAIGfxQuad2D.h>
 #include <moaicore/MOAIGfxQuadDeck2D.h>
 #include <moaicore/MOAIGfxQuadListDeck2D.h>
+#include <moaicore/MOAIGfxUtil.h>
 #include <moaicore/MOAIGlslProgram.h>
 #include <moaicore/MOAIGlyph.h>
 #include <moaicore/MOAIGrid.h>
@@ -71,6 +73,7 @@
 #include <moaicore/MOAIPointerSensor.h>
 #include <moaicore/MOAIProp.h>
 #include <moaicore/MOAIProp2D.h>
+#include <moaicore/MOAIPvrHeader.h>
 #include <moaicore/MOAIQuadBrush.h>
 #include <moaicore/MOAIScriptNode.h>
 #include <moaicore/MOAISensor.h>
@@ -92,6 +95,7 @@
 #include <moaicore/MOAITransformBase.h>
 #include <moaicore/MOAIVertexBuffer.h>
 #include <moaicore/MOAIVertexFormat.h>
+#include <moaicore/MOAIVertexFormatMgr.h>
 #include <moaicore/MOAIViewport.h>
 #include <moaicore/MOAIXmlParser.h>
 

@@ -15,7 +15,6 @@
 #include <uslsext/USBinarySearch.h>
 #include <uslsext/USBlendMode.h>
 #include <uslsext/USBox.h>
-#include <uslsext/USCanvas.h>
 #include <uslsext/USCgt.h>
 #include <uslsext/USColor.h>
 #include <uslsext/USCurve.h>
@@ -23,7 +22,6 @@
 #include <uslsext/USDataIOTask.h>
 #include <uslsext/USDelegate.h>
 #include <uslsext/USDistance.h>
-#include <uslsext/USDrawBuffer.h>
 #include <uslsext/USFsm.h>
 #include <uslsext/USFsmStateFactory.h>
 #include <uslsext/USGrid.h>
@@ -47,7 +45,6 @@
 #include <uslsext/USPolygon2D.h>
 #include <uslsext/USPolyScanner.h>
 #include <uslsext/USPrettyPrint.h>
-#include <uslsext/USPvrHeader.h>
 #include <uslsext/USQuad.h>
 #include <uslsext/USQuadCoord.h>
 #include <uslsext/USRadixSort16.h>
@@ -62,7 +59,6 @@
 #include <uslsext/USSyntaxScanner.h>
 #include <uslsext/USTask.h>
 #include <uslsext/USTaskThread.h>
-#include <uslsext/USTexture.h>
 #include <uslsext/USThread.h>
 #include <uslsext/USThread_posix.h>
 #include <uslsext/USThread_win32.h>
@@ -70,10 +66,6 @@
 #include <uslsext/USTrig.h>
 #include <uslsext/USTypedPtr.h>
 #include <uslsext/USUrlMgr.h>
-#include <uslsext/USVertexFormat.h>
-#include <uslsext/USVertexFormatMgr.h>
-#include <uslsext/USViewport.h>
-#include <uslsext/USViewQuad.h>
 #include <uslsext/USXmlReader.h>
 
 //================================================================//

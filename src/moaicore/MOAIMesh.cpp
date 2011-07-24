@@ -2,6 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <moaicore/MOAIGfxDevice.h>
 #include <moaicore/MOAIGrid.h>
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIMesh.h>
@@ -68,10 +69,10 @@ void MOAIMesh::Draw ( const USAffine2D& transform, u32 idx, MOAIDeckRemapper* re
 	UNUSED ( idx );
 	UNUSED ( remapper );
 	
-	USDrawBuffer& drawBuffer = USDrawBuffer::Get ();
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	
-	drawBuffer.SetTexture ( this->mTexture );
-	drawBuffer.SetVtxTransform ( transform );
+	gfxDevice.SetTexture ( this->mTexture );
+	gfxDevice.SetVtxTransform ( transform );
 
 	this->mVertexBuffer->Draw ();
 }

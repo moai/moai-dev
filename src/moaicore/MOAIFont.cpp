@@ -7,6 +7,7 @@
 #include <moaicore/MOAIDataBuffer.h>
 #include <moaicore/MOAIFreetypeFontRipper.h>
 #include <moaicore/MOAIFont.h>
+#include <moaicore/MOAIGfxDevice.h>
 #include <moaicore/MOAIImage.h>
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAITexture.h>
@@ -146,9 +147,9 @@ int MOAIFont::_setTexture ( lua_State* L ) {
 //----------------------------------------------------------------//
 MOAIFont* MOAIFont::Bind () {
 	
-	USDrawBuffer& drawbuffer = USDrawBuffer::Get ();
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	
-	if ( drawbuffer.SetTexture ( this->mTexture )) {
+	if ( gfxDevice.SetTexture ( this->mTexture )) {
 		this->mImage = 0;
 		return this;
 	}
@@ -470,7 +471,7 @@ void MOAIFont::SetImage ( MOAIImage* image ) {
 	
 	if ( image ) {
 		this->mTexture = new MOAITexture ();
-		this->mTexture->Init ( *image );
+		this->mTexture->Load ( *image );
 		this->mTexture->SetFilter ( GL_LINEAR, GL_LINEAR );
 	}
 }

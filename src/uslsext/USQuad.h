@@ -24,7 +24,7 @@ public:
 
 	//----------------------------------------------------------------//
 	bool		Contains			( float x, float y ) const;
-	void		GetBounds			( USRect& rect ) const;
+	USRect		GetBounds			() const;
 	USPlane2D	GetPlane			( u32 id );
 	USVec2D		GetVert				( u32 id );
 	void		Init				( const USRect& rect );

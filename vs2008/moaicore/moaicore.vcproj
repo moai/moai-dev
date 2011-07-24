@@ -466,6 +466,22 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\moaicore\MOAIGfxDevice.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIGfxDevice.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIGfxUtil.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIGfxUtil.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\moaicore\MOAIGlslProgram.cpp"
 				>
 			</File>
@@ -487,6 +503,10 @@
 			</File>
 			<File
 				RelativePath="..\..\src\moaicore\MOAIIndexBuffer.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIPvrHeader.h"
 				>
 			</File>
 			<File
@@ -519,6 +539,14 @@
 			</File>
 			<File
 				RelativePath="..\..\src\moaicore\MOAIVertexFormat.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIVertexFormatMgr.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIVertexFormatMgr.h"
 				>
 			</File>
 			<File

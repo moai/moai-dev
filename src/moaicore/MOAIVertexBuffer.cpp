@@ -2,6 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <moaicore/MOAIGfxDevice.h>
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIVertexFormat.h>
 #include <moaicore/MOAIVertexBuffer.h>
@@ -275,12 +276,12 @@ void MOAIVertexBuffer::Draw () {
 
 	if ( this->mFormat ) {
 		
-		USDrawBuffer& drawBuffer = USDrawBuffer::Get ();
+		MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 		
-		drawBuffer.SetPenWidth ( this->mPenWidth );
-		drawBuffer.SetPointSize ( this->mPointSize );
+		gfxDevice.SetPenWidth ( this->mPenWidth );
+		gfxDevice.SetPointSize ( this->mPointSize );
 		
-		drawBuffer.DrawPrims ( *this->mFormat, this->mPrimType, this->mBuffer, this->mStream.GetLength ());
+		gfxDevice.DrawPrims ( *this->mFormat, this->mPrimType, this->mBuffer, this->mStream.GetLength ());
 	}
 }
 

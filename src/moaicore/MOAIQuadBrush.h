@@ -3,6 +3,8 @@
 #ifndef	MOAIQUADBRUSH_H
 #define	MOAIQUADBRUSH_H
 
+#include <moaicore/MOAIGfxDevice.h>
+
 //================================================================//
 // MOAIQuadBrush
 //================================================================//
@@ -16,17 +18,17 @@ private:
 	void				Draw				( const USVec2D* vtx, const USVec2D* uv );
 	
 	//----------------------------------------------------------------//
-	static inline void WriteVertex ( USDrawBuffer& drawBuffer, const USVec2D& vtx, const USVec2D& uv ) {
+	static inline void WriteVertex ( MOAIGfxDevice& gfxDevice, const USVec2D& vtx, const USVec2D& uv ) {
 		
-		drawBuffer.WriteVtx ( vtx );
-		drawBuffer.WriteUV ( uv );
-		drawBuffer.WritePenColor ();
+		gfxDevice.WriteVtx ( vtx );
+		gfxDevice.WriteUV ( uv );
+		gfxDevice.WritePenColor ();
 	}
 
 public:
 
 	//----------------------------------------------------------------//
-	static void			BindVertexFormat	( USDrawBuffer& drawBuffer );
+	static void			BindVertexFormat	( MOAIGfxDevice& gfxDevice );
 	void				Draw				();
 	void				Draw				( const USMatrix2D& mtx );
 	void				Draw				( float xOff, float yOff );
@@ -48,8 +50,6 @@ public:
 	void				SetVerts			( const USVec2D& v0, float radius );
 	void				TransformUVs		( const USMatrix2D& mtx );
 	void				TransformVerts		( const USMatrix2D& mtx );
-						MOAIQuadBrush			();
-						~MOAIQuadBrush			();
 };
 
 #endif

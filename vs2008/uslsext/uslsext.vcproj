@@ -377,34 +377,6 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="gfxDevice"
-			>
-			<File
-				RelativePath="..\..\src\uslsext\USDrawBuffer.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USDrawBuffer.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USVertexFormat.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USVertexFormat.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USVertexFormatMgr.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USVertexFormatMgr.h"
-				>
-			</File>
-		</Filter>
-		<Filter
 			Name="gfxObjects"
 			>
 			<File
@@ -413,14 +385,6 @@
 			</File>
 			<File
 				RelativePath="..\..\src\uslsext\USBlendMode.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USCanvas.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USCanvas.h"
 				>
 			</File>
 			<File
@@ -441,34 +405,6 @@
 			</File>
 			<File
 				RelativePath="..\..\src\uslsext\USPolyScanner.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USPvrHeader.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USTexture.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USTexture.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USViewport.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USViewport.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USViewQuad.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USViewQuad.h"
 				>
 			</File>
 		</Filter>

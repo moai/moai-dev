@@ -4,6 +4,8 @@
 #include "pch.h"
 #include <moaicore/MOAIActionMgr.h>
 #include <moaicore/MOAIDebugLines.h>
+#include <moaicore/MOAIGfxDevice.h>
+#include <moaicore/MOAIGfxUtil.h>
 #include <moaicore/MOAIInputMgr.h>
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAINodeMgr.h>
@@ -96,10 +98,10 @@ int MOAISim::_framesToTime ( lua_State* L ) {
 */
 int MOAISim::_getDeviceSize ( lua_State* L ) {
 
-	USDrawBuffer& drawBuffer = USDrawBuffer::Get ();
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	
-	lua_pushnumber ( L, drawBuffer.GetWidth ());
-	lua_pushnumber ( L, drawBuffer.GetHeight ());
+	lua_pushnumber ( L, gfxDevice.GetWidth ());
+	lua_pushnumber ( L, gfxDevice.GetHeight ());
 
 	return 2;
 }
@@ -176,7 +178,7 @@ int MOAISim::_openWindow ( lua_State* L ) {
 	u32 width = state.GetValue < u32 >( 2, 320 );
 	u32 height = state.GetValue < u32 >( 3, 480 );
 	
-	USDrawBuffer::Get ().SetSize ( width, height );
+	MOAIGfxDevice::Get ().SetSize ( width, height );
 
 	AKUOpenWindowFunc openWindow = AKUGetFunc_OpenWindow ();
 	if ( openWindow ) {
@@ -476,16 +478,16 @@ void MOAISim::Render () {
 		glClear ( this->mClearFlags );
 	}
 
-	USDrawBuffer::Get ().Reset ();
+	MOAIGfxDevice::Get ().Reset ();
 
 	RenderPassIt passIt = this->mRenderPasses.Head ();
 	for ( ; passIt; passIt = passIt->Next ()) {
 		MOAIProp2D* renderPass = passIt->Data ();
-		USCanvas::BeginDrawing ();
+		MOAIGfxUtil::BeginDrawing ();
 		renderPass->Draw ();
 	}
 	
-	USDrawBuffer::Get ().Flush ();
+	MOAIGfxDevice::Get ().Flush ();
 }
 
 //----------------------------------------------------------------//

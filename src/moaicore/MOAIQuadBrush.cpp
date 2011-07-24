@@ -3,21 +3,22 @@
 
 #include "pch.h"
 #include <moaicore/MOAIQuadBrush.h>
+#include <moaicore/MOAIVertexFormatMgr.h>
 
 //================================================================//
 // MOAIQuadBrush
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIQuadBrush::BindVertexFormat ( USDrawBuffer& drawBuffer ) {
+void MOAIQuadBrush::BindVertexFormat ( MOAIGfxDevice& gfxDevice ) {
 	
-	if ( drawBuffer.GetPipelineMode () == USDrawBuffer::GL_PIPELINE_FIXED ) {
-		drawBuffer.SetVertexPreset ( USVertexFormatMgr::FF_XYUVC );
+	if ( gfxDevice.GetPipelineMode () == MOAIGfxDevice::GL_PIPELINE_FIXED ) {
+		gfxDevice.SetVertexPreset ( MOAIVertexFormatMgr::FF_XYUVC );
 	}
 	else {
-		drawBuffer.SetVertexPreset ( USVertexFormatMgr::PP_XYUVC );
+		gfxDevice.SetVertexPreset ( MOAIVertexFormatMgr::PP_XYUVC );
 	}
-	drawBuffer.SetPrimType ( GL_TRIANGLES );
+	gfxDevice.SetPrimType ( GL_TRIANGLES );
 }
 
 //----------------------------------------------------------------//
@@ -87,9 +88,9 @@ void MOAIQuadBrush::Draw ( float xOff, float yOff, float xScale, float yScale ) 
 //----------------------------------------------------------------//
 void MOAIQuadBrush::Draw ( const USVec2D* vtx, const USVec2D* uv ) {
 
-	USDrawBuffer& drawBuffer = USDrawBuffer::Get ();
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 		
-	drawBuffer.WriteQuad ( ( USVec2D* )vtx, ( USVec2D* )uv ); 
+	gfxDevice.WriteQuad ( ( USVec2D* )vtx, ( USVec2D* )uv ); 
 }
 
 //----------------------------------------------------------------//
@@ -355,12 +356,4 @@ void MOAIQuadBrush::TransformUVs ( const USMatrix2D& mtx ) {
 	mtx.Transform ( this->mUV [ 1 ]);
 	mtx.Transform ( this->mUV [ 2 ]);
 	mtx.Transform ( this->mUV [ 3 ]);
-}
-
-//----------------------------------------------------------------//
-MOAIQuadBrush::MOAIQuadBrush () {
-}
-
-//----------------------------------------------------------------//
-MOAIQuadBrush::~MOAIQuadBrush () {
 }
