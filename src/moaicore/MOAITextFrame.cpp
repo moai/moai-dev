@@ -2,25 +2,25 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <uslsext/USAnimCurve.h>
-#include <uslsext/USFont.h>
-#include <uslsext/USTextFrame.h>
-#include <uslsext/USTextLayout.h>
 #include <contrib/utf8.h>
+#include <uslsext/USAnimCurve.h>
+#include <moaicore/MOAIFont.h>
+#include <moaicore/MOAITextFrame.h>
+#include <moaicore/MOAITextLayout.h>
 
 //================================================================//
-// USTextCursor
+// MOAITextCursor
 //================================================================//
 
 //----------------------------------------------------------------//
-void USTextCursor::Reset () {
+void MOAITextCursor::Reset () {
 
 	this->mIndex	= 0;
 	this->mRGBA		= 0xffffffff;
 }
 
 //================================================================//
-// USTextFrame
+// MOAITextFrame
 //================================================================//
 
 #define TRANSITION(next)					\
@@ -33,7 +33,7 @@ void USTextCursor::Reset () {
 	}
 
 //----------------------------------------------------------------//
-u32 USTextFrame::DecodeChar () {
+u32 MOAITextFrame::DecodeChar () {
 
 	if ( this->mStr [ this->mIdx ]) {
 		return u8_nextchar ( this->mStr, &this->mIdx );
@@ -43,14 +43,14 @@ u32 USTextFrame::DecodeChar () {
 }
 
 //----------------------------------------------------------------//
-void USTextFrame::Flush () {
+void MOAITextFrame::Flush () {
 
 	this->FlushToken ();
 	this->FlushLine ();
 }
 
 //----------------------------------------------------------------//
-void USTextFrame::FlushLine () {
+void MOAITextFrame::FlushLine () {
 
 	if ( this->mLineCount >= this->mTotalLines ) return;
 
@@ -77,7 +77,7 @@ void USTextFrame::FlushLine () {
 	
 	for ( u32 i = this->mLineBottom; i < this->mLineTop; ++i ) {
 		
-		USTextSprite& sprite = ( *this->mLayout )[ i ];
+		MOAITextSprite& sprite = ( *this->mLayout )[ i ];
 		
 		float yOff = 0.0f;
 		if ( curve ) {
@@ -98,7 +98,7 @@ void USTextFrame::FlushLine () {
 	u32 tokenTop = this->mLayout->GetTop ();
 	for ( u32 i = this->mLineTop; i < tokenTop; ++i ) {
 		
-		USTextSprite& sprite = ( *this->mLayout )[ i ];
+		MOAITextSprite& sprite = ( *this->mLayout )[ i ];
 		sprite.mX -= this->mTokenXMin;
 	}
 
@@ -109,7 +109,7 @@ void USTextFrame::FlushLine () {
 }
 
 //----------------------------------------------------------------//
-void USTextFrame::FlushToken () {
+void MOAITextFrame::FlushToken () {
 	
 	float width = this->mFrame.Width ();
 	
@@ -124,7 +124,7 @@ void USTextFrame::FlushToken () {
 }
 
 //----------------------------------------------------------------//
-u8 USTextFrame::HexToByte ( u32 c ) {
+u8 MOAITextFrame::HexToByte ( u32 c ) {
 
 	if (( c >= '0' ) && ( c <= '9' )) return ( u8 )( c - '0' );
 	if (( c >= 'a' ) && ( c <= 'f' )) return ( u8 )( c + 10 - 'a' );
@@ -134,7 +134,7 @@ u8 USTextFrame::HexToByte ( u32 c ) {
 }
 
 //----------------------------------------------------------------//
-bool USTextFrame::IsWhitespace ( u32 c ) {
+bool MOAITextFrame::IsWhitespace ( u32 c ) {
 
 	if ( !c ) return true;
 	if ( c == ' ' ) return true;
@@ -145,7 +145,7 @@ bool USTextFrame::IsWhitespace ( u32 c ) {
 }
 
 //----------------------------------------------------------------//
-void USTextFrame::Layout ( USTextLayout& layout, cc8* str, USTextCursor& cursor ) {
+void MOAITextFrame::Layout ( MOAITextLayout& layout, cc8* str, MOAITextCursor& cursor ) {
 
 	if ( !this->mFont ) return;
 
@@ -161,7 +161,7 @@ void USTextFrame::Layout ( USTextLayout& layout, cc8* str, USTextCursor& cursor 
 }
 
 //----------------------------------------------------------------//
-void USTextFrame::Parse () {
+void MOAITextFrame::Parse () {
 	
 	this->mLineBottom = 0;
 	this->mLineTop = 0;
@@ -255,8 +255,8 @@ void USTextFrame::Parse () {
 					TRANSITION ( META_START );
 				}
 				
-				const USGlyph* prevGlyph = this->mGlyph;
-				const USGlyph* glyph = &this->mFont->GetGlyphForChar ( c );
+				const MOAIGlyph* prevGlyph = this->mGlyph;
+				const MOAIGlyph* glyph = &this->mFont->GetGlyphForChar ( c );
 				this->mGlyph = glyph;
 				
 				assert ( glyph );
@@ -265,7 +265,7 @@ void USTextFrame::Parse () {
 				
 				// apply kerning
 				if ( prevGlyph ) {
-					USKernVec kernVec = prevGlyph->GetKerning ( glyph->mCode );
+					MOAIKernVec kernVec = prevGlyph->GetKerning ( glyph->mCode );
 					this->mPen.mX += kernVec.mX * points;
 				}
 				
@@ -379,7 +379,7 @@ void USTextFrame::Parse () {
 }
 
 //----------------------------------------------------------------//
-u32 USTextFrame::PackColor ( const u8* color, u32 colorSize ) {
+u32 MOAITextFrame::PackColor ( const u8* color, u32 colorSize ) {
 
 	u32 rgba = 0xffffffff;
 
@@ -448,21 +448,21 @@ u32 USTextFrame::PackColor ( const u8* color, u32 colorSize ) {
 }
 
 //----------------------------------------------------------------//
-void USTextFrame::SaveCursor () {
+void MOAITextFrame::SaveCursor () {
 
 	this->mCursor->mIndex = ( u32 )this->mIdx;
 	this->mCursor->mRGBA =	this->mRGBA;
 }
 
 //----------------------------------------------------------------//
-void USTextFrame::SetCurves ( USAnimCurve** curves, u32 totalCurves ) {
+void MOAITextFrame::SetCurves ( USAnimCurve** curves, u32 totalCurves ) {
 
 	this->mCurves = curves;
 	this->mTotalCurves = totalCurves;
 }
 
 //----------------------------------------------------------------//
-USTextFrame::USTextFrame () :
+MOAITextFrame::MOAITextFrame () :
 	mIdx ( 0 ),
 	mStr ( 0 ),
 	mFont ( 0 ),
@@ -474,6 +474,6 @@ USTextFrame::USTextFrame () :
 }
 
 //----------------------------------------------------------------//
-USTextFrame::~USTextFrame () {
+MOAITextFrame::~MOAITextFrame () {
 }
 

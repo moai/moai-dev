@@ -2,8 +2,10 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <contrib/utf8.h>
+#include <moaicore/MOAIBitmapFontRipper.h>
 #include <moaicore/MOAIDataBuffer.h>
-#include <moaicore/MOAIFtFontRipper.h>
+#include <moaicore/MOAIFreetypeFontRipper.h>
 #include <moaicore/MOAIFont.h>
 #include <moaicore/MOAIImage.h>
 #include <moaicore/MOAILogMessages.h>
@@ -142,7 +144,7 @@ int MOAIFont::_setTexture ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-USFont* MOAIFont::Bind () {
+MOAIFont* MOAIFont::Bind () {
 	
 	USDrawBuffer& drawbuffer = USDrawBuffer::Get ();
 	
@@ -154,7 +156,116 @@ USFont* MOAIFont::Bind () {
 }
 
 //----------------------------------------------------------------//
-MOAIFont::MOAIFont () {
+void MOAIFont::DrawGlyph ( u32 c, float points, float x, float y ) {
+
+	const MOAIGlyph& glyph = this->GetGlyphForChar ( c );
+	glyph.Draw ( points, x, y );
+}
+
+//----------------------------------------------------------------//
+MOAIGlyph& MOAIFont::GetGlyphForChar ( u32 c ) {
+
+	u32 id = this->GetIDForChar ( c );
+	return this->GetGlyphForID ( id );
+}
+
+//----------------------------------------------------------------//
+MOAIGlyph& MOAIFont::GetGlyphForID ( u32 id ) {
+
+	if ( id == INVALID_ID ) {
+		return this->mDummy;
+	}
+
+	if ( id & WIDE_ID_BIT ) {
+		return this->mWideGlyphs [ id & WIDE_ID_MASK ];
+	}
+	return this->mByteGlyphs [ id ];
+}
+
+//----------------------------------------------------------------//
+u32 MOAIFont::GetIDForChar ( u32 c ) {
+
+	if ( this->IsWideChar ( c )) {
+		
+		// TODO: replace sorted lookup w/ AVL tree
+		u32 size = this->mWideGlyphMap.Size ();
+		u32 id = USBinarySearch < u32 >( this->mWideGlyphMap, c, size );
+		if ( id < size ) {
+			return id | WIDE_ID_BIT;
+		}
+	}
+	else {
+		if ( this->mByteGlyphMapBase <= c ) {
+			c -= this->mByteGlyphMapBase;
+			if ( c < this->mByteGlyphMap.Size ()) {
+				return this->mByteGlyphMap [ c ];
+			}
+		}
+	}
+	return INVALID_ID;
+}
+
+//----------------------------------------------------------------//
+void MOAIFont::Init ( cc8* charCodes ) {
+
+	u32 byteCharTop = 0;
+	u32 byteCharBase = 0x000000ff;
+	u32 totalWideChars = 0;
+	
+	for ( int i = 0; charCodes [ i ]; ) {
+		u32 c = u8_nextchar( charCodes, &i );
+		
+		if ( this->IsWideChar ( c )) {
+			totalWideChars++;
+		}
+		else {
+			
+			if ( c < byteCharBase ) {
+				byteCharBase = c;
+			}
+			if ( c > byteCharTop ) {
+				byteCharTop = c;
+			}
+		}
+	}
+	
+	byteCharTop += 1;
+	u32 totalByteChars = ( byteCharBase < byteCharTop ) ? byteCharTop - byteCharBase : 0;
+	
+	this->mByteGlyphs.Init ( totalByteChars );
+	this->mByteGlyphMap.Init ( totalByteChars );
+	this->mByteGlyphMapBase = ( u8 )byteCharBase;
+	
+	this->mWideGlyphs.Init ( totalWideChars );
+	this->mWideGlyphMap.Init ( totalWideChars );
+	
+	u32 b = 0;
+	u32 w = 0;
+	for ( int i = 0; charCodes [ i ]; ) {
+		
+		u32 c = u8_nextchar( charCodes, &i );
+		
+		if ( this->IsWideChar ( c )) {
+			this->mWideGlyphMap [ w++ ] = c;
+		}
+		else {
+			this->mByteGlyphMap [ c - this->mByteGlyphMapBase ] = ( u8 )b++;
+		}
+	}
+	RadixSort32 < u32 >( this->mWideGlyphMap, totalWideChars );
+}
+
+//----------------------------------------------------------------//
+bool MOAIFont::IsWideChar ( u32 c ) {
+
+	return ( c & 0xffffff00 ) != 0;
+}
+
+//----------------------------------------------------------------//
+MOAIFont::MOAIFont () :
+	mByteGlyphMapBase ( 0 ),
+	mScale ( 1.0f ),
+	mLineSpacing ( 1.0f ) {
 	
 	RTTI_SINGLE ( USLuaObject )
 }
@@ -168,7 +279,7 @@ void MOAIFont::LoadFont ( MOAIDataBuffer& fontImageData, cc8* charCodes ) {
 
 	this->mImage = new MOAIImage ();
 	
-	USFontRipper ripper;
+	MOAIBitmapFontRipper ripper;
 	ripper.RipAndReturn ( fontImageData, *this, *this->mImage, charCodes );
 	this->SetImage ( this->mImage );
 }
@@ -178,7 +289,7 @@ void MOAIFont::LoadFont ( cc8* fontImageFileName, cc8* charCodes ) {
 
 	this->mImage = new MOAIImage ();
 	
-	USFontRipper ripper;
+	MOAIBitmapFontRipper ripper;
 	ripper.RipAndReturn ( fontImageFileName, *this, *this->mImage, charCodes );
 	this->SetImage ( this->mImage );
 }
@@ -189,7 +300,7 @@ void MOAIFont::LoadFontFromTTF ( cc8* filename, cc8* charCodes, float points, u3
 	#if USE_FREETYPE
 	
 		this->mImage = new MOAIImage ();
-		MOAIFtFontRipper::RipFromTTF ( filename, *this, *this->mImage, charCodes, points, dpi );
+		MOAIFreetypeFontRipper::RipFromTTF ( filename, *this, *this->mImage, charCodes, points, dpi );
 		this->SetImage ( this->mImage );
 	#else
 		UNUSED ( filename );
@@ -224,15 +335,131 @@ void MOAIFont::RegisterLuaFuncs ( USLuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIFont::SerializeIn ( USLuaState& state, USLuaSerializer& serializer ) {
 	UNUSED ( serializer );
-
-	USFont::SerializeIn ( state );
+	
+	if ( state.GetFieldWithType ( -1, "mByteGlyphs", LUA_TTABLE )) {
+		
+		u32 size = lua_objlen ( state, -1 );
+		this->mByteGlyphs.Init ( size );
+		
+		for ( u32 i = 0; i < size; ++i ) {
+			state.GetField ( -1, i + 1 );
+			this->mByteGlyphs [ i ].SerializeIn ( state );
+			state.Pop ( 1 );
+		}
+		state.Pop ( 1 );
+	}
+	
+	if ( state.GetFieldWithType ( -1, "mByteGlyphMap", LUA_TTABLE )) {
+		
+		u32 size = lua_objlen ( state, -1 );
+		this->mByteGlyphMap.Init ( size );
+		
+		for ( u32 i = 0; i < size; ++i ) {
+			state.GetField ( -1, i + 1 );
+			this->mByteGlyphMap [ i ] = state.GetValue < u8 >( -1, 0 );
+			state.Pop ( 1 );
+		}
+		state.Pop ( 1 );
+	}
+	
+	this->mByteGlyphMapBase		= state.GetField ( -1, "mByteGlyphMapBase", this->mByteGlyphMapBase );
+	
+	if ( state.GetFieldWithType ( -1, "mWideGlyphs", LUA_TTABLE )) {
+		
+		u32 size = lua_objlen ( state, -1 );
+		this->mWideGlyphs.Init ( size );
+		
+		for ( u32 i = 0; i < size; ++i ) {
+			state.GetField ( -1, i + 1 );
+			this->mWideGlyphs [ i ].SerializeIn ( state );
+			state.Pop ( 1 );
+		}
+		state.Pop ( 1 );
+	}
+	
+	if ( state.GetFieldWithType ( -1, "mWideGlyphMap", LUA_TTABLE )) {
+		
+		u32 size = lua_objlen ( state, -1 );
+		this->mWideGlyphMap.Init ( size );
+		
+		for ( u32 i = 0; i < size; ++i ) {
+			state.GetField ( -1, i + 1 );
+			this->mWideGlyphMap [ i ] = state.GetValue < u32 >( -1, 0 );
+			state.Pop ( 1 );
+		}
+		state.Pop ( 1 );
+	}
+	
+	this->mScale				= state.GetField ( -1, "mScale", this->mScale );
+	this->mLineSpacing			= state.GetField ( -1, "mLineSpacing", this->mLineSpacing );
 }
 
 //----------------------------------------------------------------//
 void MOAIFont::SerializeOut ( USLuaState& state, USLuaSerializer& serializer ) {
 	UNUSED ( serializer );
+	
+	if ( this->mByteGlyphs.Size ()) {
+		lua_newtable ( state );
+		for ( u32 i = 0; i < this->mByteGlyphs.Size (); ++i ) {
+			lua_pushnumber ( state, i + 1 );
+			lua_newtable ( state );
+			this->mByteGlyphs [ i ].SerializeOut ( state );
+			lua_settable ( state, -3 );
+		}
+		lua_setfield ( state, -2, "mByteGlyphs" );
+	}
+	
+	if ( this->mByteGlyphMap.Size ()) {
+		lua_newtable ( state );
+		for ( u32 i = 0; i < this->mByteGlyphMap.Size (); ++i ) {
+			state.SetFieldByIndex ( -1, i + 1, this->mByteGlyphMap [ i ]);
+		}
+		lua_setfield ( state, -2, "mByteGlyphMap" );
+	}
 
-	USFont::SerializeOut ( state );
+	state.SetField ( -1, "mByteGlyphMapBase", this->mByteGlyphMapBase );
+	
+	if ( this->mWideGlyphs.Size ()) {
+		lua_newtable ( state );
+		for ( u32 i = 0; i < this->mWideGlyphs.Size (); ++i ) {
+			lua_pushnumber ( state, i + 1 );
+			lua_newtable ( state );
+			this->mWideGlyphs [ i ].SerializeOut ( state );
+			lua_settable ( state, -3 );
+		}
+		lua_setfield ( state, -2, "mWideGlyphs" );
+	}
+	
+	if ( this->mWideGlyphMap.Size ()) {
+		lua_newtable ( state );
+		for ( u32 i = 0; i < this->mWideGlyphMap.Size (); ++i ) {
+			state.SetFieldByIndex ( -1, i + 1, this->mWideGlyphMap [ i ]);
+		}
+		lua_setfield ( state, -2, "mWideGlyphMap" );
+	}
+	
+	state.SetField ( -1, "mScale", this->mScale );
+	state.SetField ( -1, "mLineSpacing", this->mLineSpacing );
+}
+
+//----------------------------------------------------------------//
+void MOAIFont::SetGlyph ( const MOAIGlyph& glyph ) {
+
+	u32 id = this->GetIDForChar ( glyph.mCode );
+	if ( id != INVALID_ID ) {
+	
+		if ( glyph.mAdvanceX > this->mDummy.mAdvanceX ) {
+			this->mDummy.mAdvanceX = glyph.mAdvanceX;
+		}
+	
+		this->GetGlyphForID ( id ) = glyph;
+	}
+}
+
+//----------------------------------------------------------------//
+u32 MOAIFont::Size () {
+
+	return this->mByteGlyphs.Size () + this->mWideGlyphs.Size ();
 }
 
 //----------------------------------------------------------------//

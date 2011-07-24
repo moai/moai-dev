@@ -766,6 +766,14 @@
 			Name="textbox"
 			>
 			<File
+				RelativePath="..\..\src\moaicore\MOAIBitmapFontRipper.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIBitmapFontRipper.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\moaicore\MOAIFont.cpp"
 				>
 			</File>
@@ -774,11 +782,19 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAIFtFontRipper.cpp"
+				RelativePath="..\..\src\moaicore\MOAIFreetypeFontRipper.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAIFtFontRipper.h"
+				RelativePath="..\..\src\moaicore\MOAIFreetypeFontRipper.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIGlyph.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIGlyph.h"
 				>
 			</File>
 			<File
@@ -787,6 +803,22 @@
 			</File>
 			<File
 				RelativePath="..\..\src\moaicore\MOAITextBox.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAITextFrame.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAITextFrame.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAITextLayout.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAITextLayout.h"
 				>
 			</File>
 		</Filter>

@@ -24,8 +24,6 @@
 #include <uslsext/USDelegate.h>
 #include <uslsext/USDistance.h>
 #include <uslsext/USDrawBuffer.h>
-#include <uslsext/USFont.h>
-#include <uslsext/USFontRipper.h>
 #include <uslsext/USFsm.h>
 #include <uslsext/USFsmStateFactory.h>
 #include <uslsext/USGLLine.h>
@@ -66,8 +64,6 @@
 #include <uslsext/USSyntaxScanner.h>
 #include <uslsext/USTask.h>
 #include <uslsext/USTaskThread.h>
-#include <uslsext/USTextFrame.h>
-#include <uslsext/USTextLayout.h>
 #include <uslsext/USTexture.h>
 #include <uslsext/USThread.h>
 #include <uslsext/USThread_posix.h>

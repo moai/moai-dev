@@ -365,42 +365,6 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="font"
-			>
-			<File
-				RelativePath="..\..\src\uslsext\USFont.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USFont.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USFontRipper.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USFontRipper.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USTextFrame.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USTextFrame.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USTextLayout.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USTextLayout.h"
-				>
-			</File>
-		</Filter>
-		<Filter
 			Name="fsm"
 			>
 			<File
