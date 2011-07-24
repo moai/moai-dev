@@ -4,6 +4,7 @@
 #ifndef	MOAIPARTITIONLAYER_H
 #define	MOAIPARTITIONLAYER_H
 
+#include <moaicore/MOAIGridSpace.h>
 #include <moaicore/MOAIPartitionCell.h>
 
 //================================================================//
@@ -12,7 +13,7 @@
 class MOAIPartitionLayer {
 private:
 	
-	USGridSpace								mGridSpace;
+	MOAIGridSpace							mGridSpace;
 	USLeanArray < MOAIPartitionCell >		mCells;
 	float									mCellSize;
 

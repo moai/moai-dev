@@ -24,7 +24,6 @@
 #include <uslsext/USDistance.h>
 #include <uslsext/USFsm.h>
 #include <uslsext/USFsmStateFactory.h>
-#include <uslsext/USGrid.h>
 #include <uslsext/USHttpTask.h>
 #include <uslsext/USHttpTask_impl.h>
 #include <uslsext/USImage.h>
@@ -62,7 +61,6 @@
 #include <uslsext/USThread.h>
 #include <uslsext/USThread_posix.h>
 #include <uslsext/USThread_win32.h>
-#include <uslsext/USTile.h>
 #include <uslsext/USTrig.h>
 #include <uslsext/USTypedPtr.h>
 #include <uslsext/USUrlMgr.h>

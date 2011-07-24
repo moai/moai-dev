@@ -569,6 +569,22 @@
 				RelativePath="..\..\src\moaicore\MOAIGrid.h"
 				>
 			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIGridSpace.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIGridSpace.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAITileFlags.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAITileFlags.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="input"

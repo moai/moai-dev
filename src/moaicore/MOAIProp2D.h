@@ -7,6 +7,7 @@
 #include <moaicore/MOAIColor.h>
 #include <moaicore/MOAIProp.h>
 
+class MOAICellCoord;
 class MOAIDeck;
 class MOAIDeckRemapper;
 class MOAIGrid;
@@ -91,8 +92,8 @@ protected:
 	//----------------------------------------------------------------//
 	bool			BindDeck				();
 	USBlendMode		GetBlendModeTrait		();
-	void			GetBoundsInRect			( const USRect& rect, USCellCoord& c0, USCellCoord& c1 );
-	void			GetBoundsInView			( USCellCoord& c0, USCellCoord& c1 );
+	void			GetBoundsInRect			( const USRect& rect, MOAICellCoord& c0, MOAICellCoord& c1 );
+	void			GetBoundsInView			( MOAICellCoord& c0, MOAICellCoord& c1 );
 	USColorVec		GetColorTrait			();
 	USRect*			GetFrameTrait			();
 	MOAIShader*		GetShaderTrait			();

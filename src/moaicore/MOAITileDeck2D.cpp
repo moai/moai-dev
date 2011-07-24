@@ -127,7 +127,7 @@ void MOAITileDeck2D::DrawPatch ( u32 idx, float xOff, float yOff, float xScale, 
 	
 	idx = idx - 1;
 	
-	USCellCoord coord = this->GetCellCoord ( idx );
+	MOAICellCoord coord = this->GetCellCoord ( idx );
 	USRect uvRect = this->GetTileRect ( coord );
 	uvRect.FlipY ();
 	
@@ -182,7 +182,7 @@ void MOAITileDeck2D::RegisterLuaFuncs ( USLuaState& state ) {
 //----------------------------------------------------------------//
 void MOAITileDeck2D::SerializeIn ( USLuaState& state, USLuaSerializer& serializer ) {
 
-	USGridSpace::SerializeIn ( state );
+	MOAIGridSpace::SerializeIn ( state );
 	
 	this->mTexture = serializer.GetRefField < MOAITexture >( state, -1, "mTexture" );
 }
@@ -190,7 +190,7 @@ void MOAITileDeck2D::SerializeIn ( USLuaState& state, USLuaSerializer& serialize
 //----------------------------------------------------------------//
 void MOAITileDeck2D::SerializeOut ( USLuaState& state, USLuaSerializer& serializer ) {
 
-	USGridSpace::SerializeOut ( state );
+	MOAIGridSpace::SerializeOut ( state );
 	
 	serializer.SetRefField ( state, -1, "mTexture", this->mTexture );
 }

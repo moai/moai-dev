@@ -528,6 +528,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\uslsext\USQuadCoord.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\uslsext\USQuadCoord.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\uslsext\USSurface2D.cpp"
 				>
 			</File>
@@ -541,34 +549,6 @@
 			</File>
 			<File
 				RelativePath="..\..\src\uslsext\USTrig.h"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="grid"
-			>
-			<File
-				RelativePath="..\..\src\uslsext\USGrid.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USGrid.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USQuadCoord.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USQuadCoord.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USTile.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USTile.h"
 				>
 			</File>
 		</Filter>

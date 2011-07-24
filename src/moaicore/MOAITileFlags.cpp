@@ -2,12 +2,12 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <uslsext/USTile.h>
+#include <moaicore/MOAITileFlags.h>
 
 SUPPRESS_EMPTY_FILE_WARNING
 
 //================================================================//
-// USTile
+// MOAITileFlags
 //================================================================//
 
 //----------------------------------------------------------------//

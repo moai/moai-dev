@@ -23,15 +23,15 @@
 void MOAIDeck2D::Draw ( const USAffine2D& transform, u32 idx, MOAIDeckRemapper* remapper ) {
 	
 	idx = remapper ? remapper->Remap ( idx ) : idx;
-	if ( !idx || ( idx & USTile::HIDDEN )) return;
+	if ( !idx || ( idx & MOAITileFlags::HIDDEN )) return;
 	
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	gfxDevice.SetVtxTransform ( transform );
 	
-	float xScale = ( idx & USTile::XFLIP ) ? -1.0f : 1.0f;
-	float yScale = ( idx & USTile::YFLIP ) ? -1.0f : 1.0f;
+	float xScale = ( idx & MOAITileFlags::XFLIP ) ? -1.0f : 1.0f;
+	float yScale = ( idx & MOAITileFlags::YFLIP ) ? -1.0f : 1.0f;
 	
-	this->DrawPatch ( idx & USTile::CODE_MASK, 0.0f, 0.0f, xScale, yScale );
+	this->DrawPatch ( idx & MOAITileFlags::CODE_MASK, 0.0f, 0.0f, xScale, yScale );
 }
 
 //----------------------------------------------------------------//
@@ -44,7 +44,7 @@ void MOAIDeck2D::DrawPatch ( u32 idx, float xOff, float yOff, float xScale, floa
 }
 
 //----------------------------------------------------------------//
-void MOAIDeck2D::Draw ( const USAffine2D& transform, MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, USCellCoord& c0, USCellCoord& c1 ) {
+void MOAIDeck2D::Draw ( const USAffine2D& transform, MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1 ) {
 	
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	gfxDevice.SetVtxTransform ( transform );
@@ -58,15 +58,15 @@ void MOAIDeck2D::Draw ( const USAffine2D& transform, MOAIGrid& grid, MOAIDeckRem
 			u32 idx = grid.GetTile ( x, y );
 			idx = remapper ? remapper->Remap ( idx ) : idx;
 			
-			if ( !idx || ( idx & USTile::HIDDEN )) continue;
+			if ( !idx || ( idx & MOAITileFlags::HIDDEN )) continue;
 			
-			USCellCoord coord ( x, y );
-			USVec2D loc = grid.GetTilePoint ( coord, USGridSpace::TILE_CENTER );
+			MOAICellCoord coord ( x, y );
+			USVec2D loc = grid.GetTilePoint ( coord, MOAIGridSpace::TILE_CENTER );
 			
-			float xScale = ( idx & USTile::XFLIP ) ? -width : width;
-			float yScale = ( idx & USTile::YFLIP ) ? -height : height;
+			float xScale = ( idx & MOAITileFlags::XFLIP ) ? -width : width;
+			float yScale = ( idx & MOAITileFlags::YFLIP ) ? -height : height;
 			
-			this->DrawPatch ( idx & USTile::CODE_MASK, loc.mX, loc.mY, xScale, yScale );
+			this->DrawPatch ( idx & MOAITileFlags::CODE_MASK, loc.mX, loc.mY, xScale, yScale );
 		}
 	}
 }
@@ -79,7 +79,7 @@ void MOAIDeck2D::DrawDebug ( const USAffine2D& transform, u32 idx, MOAIDeckRemap
 }
 
 //----------------------------------------------------------------//
-void MOAIDeck2D::DrawDebug ( const USAffine2D& transform, MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, USCellCoord& c0, USCellCoord& c1 ) {
+void MOAIDeck2D::DrawDebug ( const USAffine2D& transform, MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1 ) {
 	UNUSED ( transform );
 	UNUSED ( grid );
 	UNUSED ( remapper );
@@ -96,7 +96,7 @@ void MOAIDeck2D::GatherSurfaces ( u32 idx, MOAIDeckRemapper* remapper, MOAISurfa
 }
 
 //----------------------------------------------------------------//
-void MOAIDeck2D::GatherSurfaces ( MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, USCellCoord& c0, USCellCoord& c1, MOAISurfaceSampler2D& sampler ) {
+void MOAIDeck2D::GatherSurfaces ( MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1, MOAISurfaceSampler2D& sampler ) {
 	UNUSED ( grid );
 	UNUSED ( remapper );
 	UNUSED ( gridScale );

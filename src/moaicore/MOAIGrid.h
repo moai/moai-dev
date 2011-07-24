@@ -4,6 +4,9 @@
 #ifndef	MOAIGRID_H
 #define	MOAIGRID_H
 
+#include <moaicore/MOAIGridSpace.h>
+#include <moaicore/MOAITileFlags.h>
+
 //================================================================//
 // MOAIGrid
 //================================================================//
@@ -28,7 +31,7 @@
 */
 class MOAIGrid :
 	public USLuaObject,
-	public USGridSpace {
+	public MOAIGridSpace {
 private:
 
 	USLeanArray < u32 > mTiles;

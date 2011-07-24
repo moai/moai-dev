@@ -376,8 +376,8 @@ void MOAIProp2D::Draw () {
 	
 	if ( this->mGrid ) {
 	
-		USCellCoord c0;
-		USCellCoord c1;
+		MOAICellCoord c0;
+		MOAICellCoord c1;
 		
 		this->GetBoundsInView ( c0, c1 );
 		this->mDeck->Draw ( this->GetLocalToWorldMtx (), *this->mGrid, this->mRemapper, this->mGridScale, c0, c1 );
@@ -412,8 +412,8 @@ void MOAIProp2D::DrawDebug () {
 				debugLines.SetPenColor ( 0x40ffffff );
 				debugLines.SetPenWidth ( 2 );
 		
-				USCellCoord c0;
-				USCellCoord c1;
+				MOAICellCoord c0;
+				MOAICellCoord c1;
 				
 				this->GetBoundsInView ( c0, c1 );
 				this->mDeck->DrawDebug ( this->GetLocalToWorldMtx (), *this->mGrid, this->mRemapper, this->mGridScale, c0, c1 );
@@ -469,8 +469,8 @@ void MOAIProp2D::GatherSurfaces ( MOAISurfaceSampler2D& sampler ) {
 		
 		USRect localRect = sampler.GetLocalRect ();
 		
-		USCellCoord c0;
-		USCellCoord c1;
+		MOAICellCoord c0;
+		MOAICellCoord c1;
 		
 		this->GetBoundsInRect ( localRect, c0, c1 );
 		this->mDeck->GatherSurfaces ( *this->mGrid, this->mRemapper, this->mGridScale, c0, c1, sampler );
@@ -487,7 +487,7 @@ USBlendMode MOAIProp2D::GetBlendModeTrait () {
 }
 
 //----------------------------------------------------------------//
-void MOAIProp2D::GetBoundsInRect ( const USRect& rect, USCellCoord& c0, USCellCoord& c1 ) {
+void MOAIProp2D::GetBoundsInRect ( const USRect& rect, MOAICellCoord& c0, MOAICellCoord& c1 ) {
 
 	if ( this->mGrid ) {
 
@@ -512,7 +512,7 @@ void MOAIProp2D::GetBoundsInRect ( const USRect& rect, USCellCoord& c0, USCellCo
 }
 
 //----------------------------------------------------------------//
-void MOAIProp2D::GetBoundsInView ( USCellCoord& c0, USCellCoord& c1 ) {
+void MOAIProp2D::GetBoundsInView ( MOAICellCoord& c0, MOAICellCoord& c1 ) {
 
 	const USAffine2D& invWorldMtx = this->GetWorldToLocalMtx ();
 

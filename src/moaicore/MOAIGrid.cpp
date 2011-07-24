@@ -96,11 +96,11 @@ int MOAIGrid::_getTileFlags ( lua_State* L ) {
 int MOAIGrid::_getTileLoc ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGrid, "UNN" )
 	
-	USCellCoord coord;
+	MOAICellCoord coord;
 	
 	coord.mX		= state.GetValue < int >( 2, 1 ) - 1;
 	coord.mY		= state.GetValue < int >( 3, 1 ) - 1;
-	u32 position	= state.GetValue < u32 >( 4, USGridSpace::TILE_CENTER );
+	u32 position	= state.GetValue < u32 >( 4, MOAIGridSpace::TILE_CENTER );
 	
 	USVec2D loc = self->GetTilePoint ( coord, position );
 	state.Push ( loc.mX );
@@ -125,7 +125,7 @@ int MOAIGrid::_locToCoord ( lua_State* L ) {
 	loc.mX = state.GetValue < float >( 2, 0 );
 	loc.mY = state.GetValue < float >( 3, 0 );
 	
-	USCellCoord coord;
+	MOAICellCoord coord;
 	coord = self->GetCellCoord ( loc );
 
 	state.Push ( coord.mX + 1 );
@@ -292,7 +292,7 @@ int MOAIGrid::_toggleTileFlags ( lua_State* L ) {
 int MOAIGrid::_wrapCoord ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGrid, "UNN" )
 	
-	USCellCoord coord;
+	MOAICellCoord coord;
 	coord.mX = state.GetValue < int >( 2, 1 ) - 1;
 	coord.mY = state.GetValue < int >( 3, 1 ) - 1;
 
@@ -310,7 +310,7 @@ int MOAIGrid::_wrapCoord ( lua_State* L ) {
 //----------------------------------------------------------------//
 u32 MOAIGrid::GetTile ( int xTile, int yTile ) {
 
-	USCellCoord coord ( xTile, yTile );
+	MOAICellCoord coord ( xTile, yTile );
 	u32 addr = this->GetCellAddr ( coord );
 	if ( addr < this->mTiles.Size ()) {
 		return this->mTiles [ addr ];
@@ -333,22 +333,22 @@ MOAIGrid::~MOAIGrid () {
 //----------------------------------------------------------------//
 void MOAIGrid::RegisterLuaClass ( USLuaState& state ) {
 
-	state.SetField ( -1, "TILE_X_FLIP", ( u32 )USTile::XFLIP );
-	state.SetField ( -1, "TILE_Y_FLIP", ( u32 )USTile::YFLIP );
-	state.SetField ( -1, "TILE_XY_FLIP", ( u32 )USTile::FLIP_MASK );
-	state.SetField ( -1, "TILE_HIDE", ( u32 )USTile::HIDDEN );
+	state.SetField ( -1, "TILE_X_FLIP", ( u32 )MOAITileFlags::XFLIP );
+	state.SetField ( -1, "TILE_Y_FLIP", ( u32 )MOAITileFlags::YFLIP );
+	state.SetField ( -1, "TILE_XY_FLIP", ( u32 )MOAITileFlags::FLIP_MASK );
+	state.SetField ( -1, "TILE_HIDE", ( u32 )MOAITileFlags::HIDDEN );
 	
-	state.SetField ( -1, "TILE_LEFT_TOP", ( u32 )USGridSpace::TILE_LEFT_TOP );
-	state.SetField ( -1, "TILE_RIGHT_TOP", ( u32 )USGridSpace::TILE_RIGHT_TOP );
-	state.SetField ( -1, "TILE_LEFT_BOTTOM", ( u32 )USGridSpace::TILE_LEFT_BOTTOM );
-	state.SetField ( -1, "TILE_RIGHT_BOTTOM", ( u32 )USGridSpace::TILE_RIGHT_BOTTOM );
+	state.SetField ( -1, "TILE_LEFT_TOP", ( u32 )MOAIGridSpace::TILE_LEFT_TOP );
+	state.SetField ( -1, "TILE_RIGHT_TOP", ( u32 )MOAIGridSpace::TILE_RIGHT_TOP );
+	state.SetField ( -1, "TILE_LEFT_BOTTOM", ( u32 )MOAIGridSpace::TILE_LEFT_BOTTOM );
+	state.SetField ( -1, "TILE_RIGHT_BOTTOM", ( u32 )MOAIGridSpace::TILE_RIGHT_BOTTOM );
 	
-	state.SetField ( -1, "TILE_LEFT_CENTER", ( u32 )USGridSpace::TILE_LEFT_CENTER );
-	state.SetField ( -1, "TILE_RIGHT_CENTER", ( u32 )USGridSpace::TILE_RIGHT_CENTER );
-	state.SetField ( -1, "TILE_TOP_CENTER", ( u32 )USGridSpace::TILE_TOP_CENTER );
-	state.SetField ( -1, "TILE_BOTTOM_CENTER", ( u32 )USGridSpace::TILE_BOTTOM_CENTER );
+	state.SetField ( -1, "TILE_LEFT_CENTER", ( u32 )MOAIGridSpace::TILE_LEFT_CENTER );
+	state.SetField ( -1, "TILE_RIGHT_CENTER", ( u32 )MOAIGridSpace::TILE_RIGHT_CENTER );
+	state.SetField ( -1, "TILE_TOP_CENTER", ( u32 )MOAIGridSpace::TILE_TOP_CENTER );
+	state.SetField ( -1, "TILE_BOTTOM_CENTER", ( u32 )MOAIGridSpace::TILE_BOTTOM_CENTER );
 	
-	state.SetField ( -1, "TILE_CENTER", ( u32 )USGridSpace::TILE_CENTER );
+	state.SetField ( -1, "TILE_CENTER", ( u32 )MOAIGridSpace::TILE_CENTER );
 }
 
 //----------------------------------------------------------------//
@@ -376,8 +376,8 @@ void MOAIGrid::RegisterLuaFuncs ( USLuaState& state ) {
 void MOAIGrid::SerializeIn ( USLuaState& state, USLuaSerializer& serializer ) {
 	UNUSED ( serializer );
 
-	this->USGridSpace::SerializeIn ( state );
-	this->mTiles.Init ( this->USGridSpace::GetTotalCells ());
+	this->MOAIGridSpace::SerializeIn ( state );
+	this->mTiles.Init ( this->MOAIGridSpace::GetTotalCells ());
 
 	state.GetField ( -1, "mData" );
 
@@ -406,7 +406,7 @@ void MOAIGrid::SerializeIn ( USLuaState& state, USLuaSerializer& serializer ) {
 void MOAIGrid::SerializeOut ( USLuaState& state, USLuaSerializer& serializer ) {
 	UNUSED ( serializer );
 
-	this->USGridSpace::SerializeOut ( state );
+	this->MOAIGridSpace::SerializeOut ( state );
 
 	USLeanArray < u8 > zip;
 	USZip::Deflate ( this->mTiles, this->mTiles.Size () * sizeof ( u32 ), zip );
@@ -428,7 +428,7 @@ void MOAIGrid::SetTile ( u32 addr, u32 tile ) {
 //----------------------------------------------------------------//
 void MOAIGrid::SetTile ( int xTile, int yTile, u32 tile ) {
 
-	USCellCoord coord ( xTile, yTile );
+	MOAICellCoord coord ( xTile, yTile );
 	u32 addr = this->GetCellAddr ( coord );
 	if ( addr < this->mTiles.Size ()) {
 		this->mTiles [ addr ] = tile;
