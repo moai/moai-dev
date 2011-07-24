@@ -306,10 +306,10 @@ int MOAIEnvironment::_getUDID ( lua_State* L  ) {
 */
 int MOAIEnvironment::_getViewSize ( lua_State* L  ) {
 
-	USGfxDevice& gfxDevice = USGfxDevice::Get ();
+	USDrawBuffer& drawBuffer = USDrawBuffer::Get ();
 	
-	lua_pushnumber ( L, gfxDevice.GetWidth ());
-	lua_pushnumber ( L, gfxDevice.GetHeight ());
+	lua_pushnumber ( L, drawBuffer.GetWidth ());
+	lua_pushnumber ( L, drawBuffer.GetHeight ());
 	
 	return 2;
 }

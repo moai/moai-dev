@@ -458,6 +458,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\moaicore\MOAIDraw.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIDraw.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\moaicore\MOAIGlslProgram.cpp"
 				>
 			</File>

@@ -237,7 +237,7 @@ void AKUReserveInputDeviceSensors ( int deviceID, int total ) {
 //----------------------------------------------------------------//
 void AKUResize ( int width, int height ) {
 
-	USGfxDevice::Get ().SetSize ( width, height );
+	USDrawBuffer::Get ().SetSize ( width, height );
 }
 
 //----------------------------------------------------------------//

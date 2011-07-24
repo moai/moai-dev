@@ -21,6 +21,7 @@
 
 #include "pch.h"
 #include <moaicore/MOAICpDebugDraw.h>
+#include <moaicore/MOAIDraw.h>
 #include <chipmunk/chipmunk_private.h>
 
 SUPPRESS_EMPTY_FILE_WARNING
@@ -212,7 +213,7 @@ drawSegmentShape(cpBody *body, cpSegmentShape *seg, cpSpace *space)
 		} glPopMatrix();
 	} else {
 		glColor4f(LINE_COLOR,1);
-		USCanvas::DrawLine (( float )a.x, ( float )a.y, ( float )b.x, ( float )b.y );
+		MOAIDraw::DrawLine (( float )a.x, ( float )a.y, ( float )b.x, ( float )b.y );
 	}
 }
 
@@ -284,8 +285,8 @@ drawSpring(cpDampedSpring *spring, cpBody *body_a, cpBody *body_b)
 
 	glPointSize(5.0f);
 
-	USCanvas::DrawPoint (( float )a.x, ( float )a.y );
-	USCanvas::DrawPoint (( float )b.x, ( float )b.y );
+	MOAIDraw::DrawPoint (( float )a.x, ( float )a.y );
+	MOAIDraw::DrawPoint (( float )b.x, ( float )b.y );
 
 	cpVect delta = cpvsub(b, a);
 
@@ -324,9 +325,9 @@ drawConstraint(cpConstraint *constraint)
 
 		glPointSize(5.0f);
 		
-		USCanvas::DrawPoint (( float )a.x, ( float )a.y );
-		USCanvas::DrawPoint (( float )b.x, ( float )b.y );
-		USCanvas::DrawLine (( float )a.x, ( float )a.y, ( float )b.x, ( float )b.y );
+		MOAIDraw::DrawPoint (( float )a.x, ( float )a.y );
+		MOAIDraw::DrawPoint (( float )b.x, ( float )b.y );
+		MOAIDraw::DrawLine (( float )a.x, ( float )a.y, ( float )b.x, ( float )b.y );
 		
 	} else if(klass == cpSlideJointGetClass()){
 		cpSlideJoint *joint = (cpSlideJoint *)constraint;
@@ -336,8 +337,8 @@ drawConstraint(cpConstraint *constraint)
 
 		glPointSize(5.0f);
 
-		USCanvas::DrawPoint (( float )a.x, ( float )a.y );
-		USCanvas::DrawPoint (( float )b.x, ( float )b.y );
+		MOAIDraw::DrawPoint (( float )a.x, ( float )a.y );
+		MOAIDraw::DrawPoint (( float )b.x, ( float )b.y );
 		
 	} else if(klass == cpPivotJointGetClass()){
 		cpPivotJoint *joint = (cpPivotJoint *)constraint;
@@ -347,8 +348,8 @@ drawConstraint(cpConstraint *constraint)
 
 		glPointSize(10.0f);
 		
-		USCanvas::DrawPoint (( float )a.x, ( float )a.y );
-		USCanvas::DrawPoint (( float )b.x, ( float )b.y );
+		MOAIDraw::DrawPoint (( float )a.x, ( float )a.y );
+		MOAIDraw::DrawPoint (( float )b.x, ( float )b.y );
 		
 	} else if(klass == cpGrooveJointGetClass()){
 		cpGrooveJoint *joint = (cpGrooveJoint *)constraint;
@@ -359,8 +360,8 @@ drawConstraint(cpConstraint *constraint)
 
 		glPointSize(5.0f);
 		
-		USCanvas::DrawPoint (( float )c.x, ( float )c.y );
-		USCanvas::DrawLine (( float )a.x, ( float )a.y, ( float )b.x, ( float )b.y );
+		MOAIDraw::DrawPoint (( float )c.x, ( float )c.y );
+		MOAIDraw::DrawLine (( float )a.x, ( float )a.y, ( float )b.x, ( float )b.y );
 		
 	} else if(klass == cpDampedSpringGetClass()){
 		drawSpring((cpDampedSpring *)constraint, body_a, body_b);
@@ -491,7 +492,7 @@ void MOAICpDebugDraw::DrawSpace(cpSpace *space, MOAICpDebugDrawOptions *options)
 		cpArray *bodies = space->bodies;
 		for(int i=0, count = bodies->num; i<count; i++){
 			cpBody *body = (cpBody *)bodies->arr[i];
-			USCanvas::DrawPoint (( float )body->p.x, ( float )body->p.y );
+			MOAIDraw::DrawPoint (( float )body->p.x, ( float )body->p.y );
 		}
 	}
 
@@ -504,7 +505,7 @@ void MOAICpDebugDraw::DrawSpace(cpSpace *space, MOAICpDebugDrawOptions *options)
 			glColor4f(COLLISION_COLOR,1);
 			for(int j=0; j<arb->numContacts; j++){
 				cpVect v = arb->contacts[j].p;
-				USCanvas::DrawPoint (( float )v.x, ( float )v.y );
+				MOAIDraw::DrawPoint (( float )v.x, ( float )v.y );
 			}
 		}
 	}

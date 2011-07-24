@@ -28,7 +28,6 @@
 #include <uslsext/USFontRipper.h>
 #include <uslsext/USFsm.h>
 #include <uslsext/USFsmStateFactory.h>
-#include <uslsext/USGfxDevice.h>
 #include <uslsext/USGLLine.h>
 #include <uslsext/USGLQuad.h>
 #include <uslsext/USGrid.h>

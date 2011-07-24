@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include <uslsext/USData.h>
-#include <uslsext/USGfxDevice.h>
+#include <uslsext/USDrawBuffer.h>
 #include <uslsext/USPvrHeader.h>
 #include <uslsext/USTexture.h>
 
@@ -168,7 +168,7 @@ bool USTexture::Bind () {
 
 	glEnable ( GL_TEXTURE_2D );
 	
-	if ( USGfxDevice::Get ().GetPipelineMode () == USGfxDevice::GL_PIPELINE_FIXED ) {
+	if ( USDrawBuffer::Get ().GetPipelineMode () == USDrawBuffer::GL_PIPELINE_FIXED ) {
 		glTexEnvf ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
 	}
 	

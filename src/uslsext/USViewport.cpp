@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include <uslsext/USMathConsts.h>
-#include <uslsext/USGfxDevice.h>
+#include <uslsext/USDrawBuffer.h>
 #include <uslsext/USViewport.h>
 
 //================================================================//

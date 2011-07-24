@@ -96,10 +96,10 @@ int MOAISim::_framesToTime ( lua_State* L ) {
 */
 int MOAISim::_getDeviceSize ( lua_State* L ) {
 
-	USGfxDevice& gfxDevice = USGfxDevice::Get ();
+	USDrawBuffer& drawBuffer = USDrawBuffer::Get ();
 	
-	lua_pushnumber ( L, gfxDevice.GetWidth ());
-	lua_pushnumber ( L, gfxDevice.GetHeight ());
+	lua_pushnumber ( L, drawBuffer.GetWidth ());
+	lua_pushnumber ( L, drawBuffer.GetHeight ());
 
 	return 2;
 }
@@ -176,7 +176,7 @@ int MOAISim::_openWindow ( lua_State* L ) {
 	u32 width = state.GetValue < u32 >( 2, 320 );
 	u32 height = state.GetValue < u32 >( 3, 480 );
 	
-	USGfxDevice::Get ().SetSize ( width, height );
+	USDrawBuffer::Get ().SetSize ( width, height );
 
 	AKUOpenWindowFunc openWindow = AKUGetFunc_OpenWindow ();
 	if ( openWindow ) {

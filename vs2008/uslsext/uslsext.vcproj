@@ -424,14 +424,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\uslsext\USGfxDevice.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USGfxDevice.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\uslsext\USVertexFormat.cpp"
 				>
 			</File>

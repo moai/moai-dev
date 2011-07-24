@@ -4,7 +4,7 @@
 #include "pch.h"
 #include <uslsext/USCanvas.h>
 #include <uslsext/USDrawBuffer.h>
-#include <uslsext/USGfxDevice.h>
+#include <uslsext/USDrawBuffer.h>
 #include <uslsext/USTexture.h>
 
 //================================================================//
@@ -39,6 +39,20 @@ void USDrawBuffer::Clear () {
 		this->mSize = 0;
 		this->mTop = 0;
 	}
+}
+
+//----------------------------------------------------------------//
+void USDrawBuffer::ClearErrors () {
+
+	while ( glGetError () != GL_NO_ERROR );
+}
+
+//----------------------------------------------------------------//
+u32 USDrawBuffer::CountErrors () {
+
+	u32 count = 0;
+	while ( glGetError () != GL_NO_ERROR ) count++;
+	return count;
 }
 
 //----------------------------------------------------------------//
@@ -122,9 +136,47 @@ const USAffine2D& USDrawBuffer::GetCameraTransform () {
 }
 
 //----------------------------------------------------------------//
+cc8* USDrawBuffer::GetErrorString ( int error ) {
+
+	switch ( error ) {
+		case GL_INVALID_ENUM:		return "GL_INVALID_ENUM";
+		case GL_INVALID_VALUE:		return "GL_INVALID_VALUE";
+		case GL_INVALID_OPERATION:	return "GL_INVALID_OPERATION";
+		case GL_STACK_OVERFLOW:		return "GL_STACK_OVERFLOW";
+		case GL_STACK_UNDERFLOW:	return "GL_STACK_UNDERFLOW";
+		case GL_OUT_OF_MEMORY:		return "GL_OUT_OF_MEMORY";
+	}
+	return "";
+}
+
+//----------------------------------------------------------------//
+u32 USDrawBuffer::GetHeight () {
+
+	return this->mHeight;
+}
+
+//----------------------------------------------------------------//
 const USColorVec& USDrawBuffer::GetPenColor () {
 
 	return this->mPenColor;
+}
+
+//----------------------------------------------------------------//
+u32 USDrawBuffer::GetPipelineMode () {
+
+	return GL_PIPELINE_PROGRAMMABLE;
+}
+
+//----------------------------------------------------------------//
+USRect USDrawBuffer::GetRect () {
+
+	USRect rect;
+	rect.mXMin = 0;
+	rect.mYMin = 0;
+	rect.mXMax = ( float )this->mWidth;
+	rect.mYMax = ( float )this->mHeight;
+	
+	return rect;
 }
 
 //----------------------------------------------------------------//
@@ -137,6 +189,22 @@ const USAffine2D& USDrawBuffer::GetUVTransform () {
 const USAffine2D& USDrawBuffer::GetVtxTransform () {
 
 	return this->mVtxTransform;
+}
+
+//----------------------------------------------------------------//
+u32 USDrawBuffer::GetWidth () {
+
+	return this->mWidth;
+}
+
+//----------------------------------------------------------------//
+u32 USDrawBuffer::PrintErrors () {
+
+	u32 count = 0;
+	for ( int error = glGetError (); error != GL_NO_ERROR; error = glGetError (), ++count ) {
+		printf ( "OPENGL ERROR: %s\n", this->GetErrorString ( error ));
+	}
+	return count;
 }
 
 //----------------------------------------------------------------//
@@ -185,13 +253,13 @@ void USDrawBuffer::Reset () {
 	this->mPointSize = 1.0f;
 	
 	// reset the scissor rect
-	USGfxDevice& device = USGfxDevice::Get ();
+	USDrawBuffer& device = USDrawBuffer::Get ();
 	USRect scissorRect = device.GetRect ();
 	glScissor (( int )scissorRect.mXMin, ( int )scissorRect.mYMin, ( int )scissorRect.Width (), ( int )scissorRect.Height ());
 	this->mScissorRect = scissorRect;
 	
 	// fixed function reset
-	if ( USGfxDevice::Get ().GetPipelineMode () == USGfxDevice::GL_PIPELINE_FIXED ) {
+	if ( USDrawBuffer::Get ().GetPipelineMode () == USDrawBuffer::GL_PIPELINE_FIXED ) {
 		
 		// load identity matrix
 		glMatrixMode ( GL_MODELVIEW );
@@ -325,7 +393,7 @@ void USDrawBuffer::SetPrimType ( u32 primType ) {
 //----------------------------------------------------------------//
 void USDrawBuffer::SetScissorRect () {
 
-	USGfxDevice& device = USGfxDevice::Get ();
+	USDrawBuffer& device = USDrawBuffer::Get ();
 	this->SetScissorRect ( device.GetRect ());
 }
 
@@ -343,6 +411,13 @@ void USDrawBuffer::SetScissorRect ( const USRect& rect ) {
 		glScissor (( int )rect.mXMin, ( int )rect.mYMin, ( int )rect.Width (), ( int )rect.Height ());
 		this->mScissorRect = rect;
 	}
+}
+
+//----------------------------------------------------------------//
+void USDrawBuffer::SetSize ( u32 width, u32 height ) {
+
+	this->mWidth = width;
+	this->mHeight = height;
 }
 
 //----------------------------------------------------------------//
@@ -440,7 +515,9 @@ USDrawBuffer::USDrawBuffer () :
 	mPackedColor ( 0xffffffff ),
 	mPenWidth ( 1.0f ),
 	mPointSize ( 1.0f ),
-	mBlendEnabled ( 0 ) {
+	mBlendEnabled ( 0 ),
+	mWidth ( 0 ),
+	mHeight ( 0 ) {
 	
 	RTTI_SINGLE ( USDrawBuffer )
 	

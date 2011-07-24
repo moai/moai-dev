@@ -53,6 +53,9 @@ private:
 	
 	USRect			mScissorRect;
 
+	u32				mWidth;
+	u32				mHeight;
+
 	//----------------------------------------------------------------//
 	void					ClearBuffer				();
 	void					DrawPrims				();
@@ -60,17 +63,31 @@ private:
 	
 public:
 	
+	enum {
+		GL_PIPELINE_FIXED,
+		GL_PIPELINE_PROGRAMMABLE,
+	};
+	
 	//----------------------------------------------------------------//
 	void					BeginPrim				();
 	void					BeginPrim				( u32 primType );
 	void					Clear					();
+	void					ClearErrors				();
+	u32						CountErrors				();
 	void					DrawPrims				( const USVertexFormat& format, GLenum primType, void* buffer, u32 size ); 
 	void					EndPrim					();
 	void					Flush					();
 	const USAffine2D&		GetCameraTransform		();
+	cc8*					GetErrorString			( int error );
+	u32						GetHeight				();
 	const USColorVec&		GetPenColor				();
+	u32						GetPipelineMode			();
+	USRect					GetRect					();
 	const USAffine2D&		GetUVTransform			();
 	const USAffine2D&		GetVtxTransform			();
+	u32						GetWidth				();
+	u32						LogErrors				();
+	u32						PrintErrors				();
 	void					Reserve					( u32 size );
 	void					Reset					();
 	void					SetBlendMode			();
@@ -86,6 +103,7 @@ public:
 	void					SetPrimType				( u32 primType );
 	void					SetScissorRect			();
 	void					SetScissorRect			( const USRect& rect );
+	void					SetSize					( u32 width, u32 height );
 	bool					SetTexture				( USTexture* texture = 0 );
 	void					SetUVTransform			();
 	void					SetUVTransform			( const USAffine2D& uvTransform );
