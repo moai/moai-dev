@@ -108,7 +108,7 @@ void MOAISurfaceDeck2D::DrawDebug ( const USAffine2D& transform, u32 idx, MOAIDe
 	
 	MOAIDebugLines& debugLines = MOAIDebugLines::Get ();
 	debugLines.SetWorldMtx ( transform );
-	debugLines.SetPenSpace ( USDebugLines::MODEL_SPACE );
+	debugLines.SetPenSpace ( MOAIDebugLines::MODEL_SPACE );
 	
 	this->DrawDebug ( idx, 0.0f, 0.0f, false, false );
 }
@@ -150,7 +150,7 @@ void MOAISurfaceDeck2D::DrawDebug ( const USAffine2D& transform, MOAIGrid& grid,
 	
 	MOAIDebugLines& debugLines = MOAIDebugLines::Get ();
 	debugLines.SetWorldMtx ( transform );
-	debugLines.SetPenSpace ( USDebugLines::MODEL_SPACE );
+	debugLines.SetPenSpace ( MOAIDebugLines::MODEL_SPACE );
 	
 	for ( int y = c0.mY; y <= c1.mY; ++y ) {
 		for ( int x = c0.mX; x <= c1.mX; ++x ) {

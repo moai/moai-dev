@@ -21,7 +21,6 @@
 #include <uslsext/USCurve.h>
 #include <uslsext/USData.h>
 #include <uslsext/USDataIOTask.h>
-#include <uslsext/USDebugLines.h>
 #include <uslsext/USDelegate.h>
 #include <uslsext/USDistance.h>
 #include <uslsext/USDrawBuffer.h>
