@@ -140,7 +140,7 @@ void MOAIDebugLines::Draw () {
 	gfxDevice.SetPrimType ( GL_LINES );
 	gfxDevice.SetVertexPreset ( MOAIVertexFormatMgr::FF_XYC );
 	
-	gfxDevice.SetVtxTransform ();
+	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM );
 	
 	for ( u32 i = 0; i < this->mTop; ++i ) {
 		this->mLineBuffer [ i ].Draw ();

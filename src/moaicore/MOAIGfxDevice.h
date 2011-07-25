@@ -6,12 +6,39 @@
 
 class MOAITexture;
 class MOAIVertexFormat;
+class MOAIViewport;
 
 //================================================================//
 // MOAIGfxDevice
 //================================================================//
 class MOAIGfxDevice :
 	public USGlobalClass < MOAIGfxDevice > {
+public:
+	
+	enum {
+		GL_PIPELINE_FIXED,
+		GL_PIPELINE_PROGRAMMABLE,
+	};
+	
+	enum {
+		VTX_STAGE_MODEL,
+		VTX_STAGE_WORLD,
+		VTX_STAGE_VIEW,
+		VTX_STAGE_PROJ,
+	};
+	
+	enum {
+		UV_STAGE_MODEL,
+		UV_STAGE_TEXTURE,
+	};
+	
+	enum {
+		VTX_WORLD_TRANSFORM,
+		VTX_VIEW_TRANSFORM,
+		VTX_PROJ_TRANSFORM,
+		TOTAL_VTX_TRANSFORMS,
+	};
+	
 private:
 	
 	static const u32 DEFAULT_BUFFER_SIZE	= 0x8000;
@@ -31,9 +58,8 @@ private:
 	
 	MOAITexture*	mTexture;
 	
-	USAffine2D		mCameraTransform;
-	USAffine2D		mVtxTransform;
 	USAffine2D		mUVTransform;
+	USAffine2D		mVertexTransforms [ TOTAL_VTX_TRANSFORMS ];
 	
 	USColorVec		mPenColor;
 	u32				mPackedColor;
@@ -44,49 +70,81 @@ private:
 	bool			mBlendEnabled;
 	
 	USRect			mScissorRect;
-
+	USRect			mViewRect;
+	
 	u32				mWidth;
 	u32				mHeight;
 
+	u32				mUVMtxInput;
+	u32				mUVMtxOutput;
+
+	u32				mVertexMtxInput;
+	u32				mVertexMtxOutput;
+
+	bool			mCpuVertexTransform;
+	USAffine2D		mCpuVertexTransformMtx; // composition of matrices to be applied via CPU
+	
+	bool			mCpuUVTransform;
+
 	//----------------------------------------------------------------//
-	void					ClearBuffer				();
+	void					Clear					();
 	void					DrawPrims				();
+	void					GpuLoadMatrix			( const USAffine2D& mtx );
+	void					GpuLoadMatrix			( const USMatrix3D& mtx );
+	void					GpuMultMatrix			( const USAffine2D& mtx );
+	void					GpuMultMatrix			( const USMatrix3D& mtx );
 	void					Rebind					();
+	void					UpdateUVTransform		();
+	void					UpdateVertexTransform	();
 	
 public:
-	
-	enum {
-		GL_PIPELINE_FIXED,
-		GL_PIPELINE_PROGRAMMABLE,
-	};
 	
 	//----------------------------------------------------------------//
 	void					BeginPrim				();
 	void					BeginPrim				( u32 primType );
-	void					Clear					();
+	void					ClearColorBuffer		( u32 color );
+
 	void					ClearErrors				();
 	u32						CountErrors				();
+	
 	void					DrawPrims				( const MOAIVertexFormat& format, GLenum primType, void* buffer, u32 size ); 
 	void					EndPrim					();
 	void					Flush					();
-	const USAffine2D&		GetCameraTransform		();
+	
 	cc8*					GetErrorString			( int error );
+	
 	u32						GetHeight				();
-	const USColorVec&		GetPenColor				();
+	
+	USAffine2D				GetModelToWndMtx		();
+	USAffine2D				GetModelToWorldMtx		();
+	
+	USColorVec				GetPenColor				();
 	u32						GetPipelineMode			();
 	USRect					GetRect					();
-	const USAffine2D&		GetUVTransform			();
-	const USAffine2D&		GetVtxTransform			();
+	USAffine2D				GetUVTransform			();
+	USAffine2D				GetVertexTransform		( u32 id );
+	
+	USAffine2D				GetViewProjMtx			();
+	USQuad					GetViewQuad				();
+	USRect					GetViewRect				();
+	
 	u32						GetWidth				();
-	u32						LogErrors				();
+
+	USAffine2D				GetWorldToModelMtx		();
+	USAffine2D				GetWorldToWndMtx		( float xScale = 1.0f, float yScale = 1.0f );
+	USAffine2D				GetWndToModelMtx		();
+	USAffine2D				GetWndToWorldMtx		();
+	
+							MOAIGfxDevice			();
+							~MOAIGfxDevice			();
 	u32						PrintErrors				();
 	void					Reserve					( u32 size );
 	void					Reset					();
+	
 	void					SetBlendMode			();
 	void					SetBlendMode			( const USBlendMode& blendMode );
 	void					SetBlendMode			( int srcFactor, int dstFactor );
-	void					SetCameraTransform		();
-	void					SetCameraTransform		( const USAffine2D& cameraTransform );
+	
 	void					SetPenColor				( u32 color );
 	void					SetPenColor				( const USColorVec& colorVec );
 	void					SetPenColor				( float r, float g, float b, float a );
@@ -95,17 +153,24 @@ public:
 	void					SetPrimType				( u32 primType );
 	void					SetScissorRect			();
 	void					SetScissorRect			( const USRect& rect );
+	void					SetScreenSpace			( MOAIViewport& viewport );
 	void					SetSize					( u32 width, u32 height );
 	bool					SetTexture				( MOAITexture* texture = 0 );
+	
+	void					SetUVMtxMode			( u32 input, u32 output );
 	void					SetUVTransform			();
-	void					SetUVTransform			( const USAffine2D& uvTransform );
+	void					SetUVTransform			( const USAffine2D& transform );
+	
 	void					SetVertexFormat			();
 	void					SetVertexFormat			( const MOAIVertexFormat& format );
+	void					SetVertexMtxMode		( u32 input, u32 output );
 	void					SetVertexPreset			( u32 preset );
-	void					SetVtxTransform			();
-	void					SetVtxTransform			( const USAffine2D& vtxTransform );
-							MOAIGfxDevice			();
-							~MOAIGfxDevice			();
+	void					SetVertexTransform		( u32 id );
+	void					SetVertexTransform		( u32 id, const USAffine2D& transform );
+	
+	void					SetViewport				();
+	void					SetViewport				( MOAIViewport& viewport );
+	
 	void					WriteQuad				( USVec2D* vtx, USVec2D* uv );
 	
 	//----------------------------------------------------------------//
@@ -130,14 +195,18 @@ public:
 	//----------------------------------------------------------------//
 	inline void WriteUV ( USVec2D uv ) {
 	
-		this->mUVTransform.Transform ( uv );
+		if ( this->mCpuUVTransform ) {
+			this->mUVTransform.Transform ( uv );
+		}
 		this->Write ( uv );
 	}
 	
 	//----------------------------------------------------------------//
 	inline void WriteVtx ( USVec2D vtx ) {
-	
-		this->mVtxTransform.Transform ( vtx );		
+		
+		if ( this->mCpuVertexTransform ) {
+			this->mCpuVertexTransformMtx.Transform ( vtx );	
+		}
 		this->Write ( vtx );
 	}
 	

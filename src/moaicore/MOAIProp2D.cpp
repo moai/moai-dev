@@ -6,7 +6,6 @@
 #include <moaicore/MOAIDeckRemapper.h>
 #include <moaicore/MOAIDebugLines.h>
 #include <moaicore/MOAIGfxDevice.h>
-#include <moaicore/MOAIGfxUtil.h>
 #include <moaicore/MOAIGrid.h>
 #include <moaicore/MOAILayoutFrame.h>
 #include <moaicore/MOAILogMessages.h>
@@ -517,8 +516,7 @@ void MOAIProp2D::GetBoundsInView ( MOAICellCoord& c0, MOAICellCoord& c1 ) {
 	const USAffine2D& invWorldMtx = this->GetWorldToLocalMtx ();
 
 	// view quad in world space
-	USQuad viewQuad;
-	MOAIGfxUtil::GetViewQuad ( viewQuad );
+	USQuad viewQuad = MOAIGfxDevice::Get ().GetViewQuad ();
 	viewQuad.Transform ( invWorldMtx );
 	
 	USRect viewRect = viewQuad.GetBounds ();

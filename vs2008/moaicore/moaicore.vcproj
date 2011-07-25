@@ -474,14 +474,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAIGfxUtil.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIGfxUtil.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\moaicore\MOAIGlslProgram.cpp"
 				>
 			</File>

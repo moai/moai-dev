@@ -395,9 +395,8 @@ void MOAITextBox::Draw () {
 	if ( font ) {
 	
 		MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-		USAffine2D localToWorldMtx = this->GetLocalToWorldMtx ();
 		
-		gfxDevice.SetVtxTransform ( localToWorldMtx );
+		gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, this->GetLocalToWorldMtx ());
 		
 		this->LoadShader ();
 		gfxDevice.SetBlendMode ( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );

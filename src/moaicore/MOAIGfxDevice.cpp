@@ -4,10 +4,11 @@
 #include "pch.h"
 
 #include <moaicore/MOAIGfxDevice.h>
-#include <moaicore/MOAIGfxUtil.h>
+#include <moaicore/MOAIGfxDevice.h>
 #include <moaicore/MOAITexture.h>
 #include <moaicore/MOAIVertexFormat.h>
 #include <moaicore/MOAIVertexFormatMgr.h>
+#include <moaicore/MOAIViewport.h>
 
 //================================================================//
 // MOAIGfxDevice
@@ -41,6 +42,16 @@ void MOAIGfxDevice::Clear () {
 		this->mSize = 0;
 		this->mTop = 0;
 	}
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDevice::ClearColorBuffer ( u32 color ) {
+
+	USColorVec colorVec;
+	colorVec.SetRGBA ( color );
+	
+	glClearColor ( colorVec.mR, colorVec.mG, colorVec.mB, 1.0f );
+	glClear ( GL_COLOR_BUFFER_BIT );
 }
 
 //----------------------------------------------------------------//
@@ -83,11 +94,12 @@ void MOAIGfxDevice::DrawPrims ( const MOAIVertexFormat& format, GLenum primType,
 	// load the software render state
 	glColor4f ( this->mPenColor.mR, this->mPenColor.mG, this->mPenColor.mB, this->mPenColor.mA );
 	
-	glMatrixMode ( GL_MODELVIEW );
-	MOAIGfxUtil::LoadMatrix ( this->mVtxTransform );
-	
-	glMatrixMode ( GL_TEXTURE );
-	MOAIGfxUtil::LoadMatrix ( this->mUVTransform );
+	// TODO
+	//glMatrixMode ( GL_MODELVIEW );
+	//MOAIGfxDevice::LoadMatrix ( this->mModelToWorldMtx );
+	//
+	//glMatrixMode ( GL_TEXTURE );
+	//MOAIGfxDevice::LoadMatrix ( this->mUVTransform );
 	
 	// draw the prims
 	u32 nVerts = ( u32 )( size / format.GetVertexSize ());
@@ -132,12 +144,6 @@ void MOAIGfxDevice::Flush () {
 }
 
 //----------------------------------------------------------------//
-const USAffine2D& MOAIGfxDevice::GetCameraTransform () {
-
-	return this->mCameraTransform;
-}
-
-//----------------------------------------------------------------//
 cc8* MOAIGfxDevice::GetErrorString ( int error ) {
 
 	switch ( error ) {
@@ -158,7 +164,21 @@ u32 MOAIGfxDevice::GetHeight () {
 }
 
 //----------------------------------------------------------------//
-const USColorVec& MOAIGfxDevice::GetPenColor () {
+USAffine2D MOAIGfxDevice::GetModelToWorldMtx () {
+
+	return this->mVertexTransforms [ VTX_WORLD_TRANSFORM ];
+}
+
+//----------------------------------------------------------------//
+USAffine2D MOAIGfxDevice::GetModelToWndMtx () {
+
+	USAffine2D modelToWnd = this->GetModelToWorldMtx ();
+	modelToWnd.Append ( this->GetWorldToWndMtx ());
+	return modelToWnd;
+}
+
+//----------------------------------------------------------------//
+USColorVec MOAIGfxDevice::GetPenColor () {
 
 	return this->mPenColor;
 }
@@ -182,21 +202,192 @@ USRect MOAIGfxDevice::GetRect () {
 }
 
 //----------------------------------------------------------------//
-const USAffine2D& MOAIGfxDevice::GetUVTransform () {
+USAffine2D MOAIGfxDevice::GetUVTransform () {
 
 	return this->mUVTransform;
 }
 
 //----------------------------------------------------------------//
-const USAffine2D& MOAIGfxDevice::GetVtxTransform () {
+USAffine2D MOAIGfxDevice::GetVertexTransform ( u32 id ) {
 
-	return this->mVtxTransform;
+	return this->mVertexTransforms [ id ];
+}
+
+//----------------------------------------------------------------//
+USAffine2D MOAIGfxDevice::GetViewProjMtx () {
+
+	USAffine2D mtx = this->mVertexTransforms [ VTX_VIEW_TRANSFORM ];
+	mtx.Append ( this->mVertexTransforms [ VTX_PROJ_TRANSFORM ]);
+	return mtx;
+}
+
+//----------------------------------------------------------------//
+USQuad MOAIGfxDevice::GetViewQuad () {
+
+	USQuad quad;
+
+	USAffine2D invMtx;
+	invMtx.Inverse ( this->GetViewProjMtx ());
+	
+	quad.mV [ 0 ].Init ( -1.0f, 1.0f );
+	quad.mV [ 1 ].Init ( 1.0f, 1.0f );
+	quad.mV [ 2 ].Init ( 1.0f, -1.0f );
+	quad.mV [ 3 ].Init ( -1.0f, -1.0f );
+	
+	quad.Transform ( invMtx );
+	return quad;
+}
+
+//----------------------------------------------------------------//
+USRect MOAIGfxDevice::GetViewRect () {
+
+	return this->mViewRect;
 }
 
 //----------------------------------------------------------------//
 u32 MOAIGfxDevice::GetWidth () {
 
 	return this->mWidth;
+}
+
+//----------------------------------------------------------------//
+USAffine2D MOAIGfxDevice::GetWndToModelMtx () {
+
+	USAffine2D wndToModel;
+	wndToModel.Inverse ( this->GetModelToWndMtx ());
+	return wndToModel;
+}
+
+//----------------------------------------------------------------//
+USAffine2D MOAIGfxDevice::GetWndToWorldMtx () {
+
+	USAffine2D wndToWorld;
+	USAffine2D mtx;
+
+	USRect rect = this->GetViewRect ();
+	
+	float hWidth = rect.Width () * 0.5f;
+	float hHeight = rect.Height () * 0.5f;
+
+	// Inv Wnd
+	wndToWorld.Translate ( -hWidth - rect.mXMin, -hHeight - rect.mYMin );
+		
+	mtx.Scale (( 1.0f / hWidth ), -( 1.0f / hHeight ));
+	wndToWorld.Append ( mtx );
+	
+	// inv viewproj
+	mtx = this->GetViewProjMtx ();
+	mtx.Inverse ();
+	wndToWorld.Append ( mtx );
+	
+	return wndToWorld;
+}
+
+//----------------------------------------------------------------//
+USAffine2D MOAIGfxDevice::GetWorldToModelMtx () {
+	
+	USAffine2D worldToModel;
+	worldToModel.Inverse ( this->mVertexTransforms [ VTX_WORLD_TRANSFORM ]);
+	return worldToModel;
+}
+
+//----------------------------------------------------------------//
+USAffine2D MOAIGfxDevice::GetWorldToWndMtx ( float xScale, float yScale ) {
+
+	USAffine2D worldToWnd;
+	USAffine2D mtx;
+
+	USRect rect = this->GetViewRect ();
+	
+	float hWidth = rect.Width () * 0.5f;
+	float hHeight = rect.Height () * 0.5f;
+
+	// viewproj
+	worldToWnd = this->GetViewProjMtx ();
+	
+	// wnd
+	mtx.Scale ( hWidth * xScale, hHeight * yScale );
+	worldToWnd.Append ( mtx );
+		
+	mtx.Translate ( hWidth + rect.mXMin, hHeight + rect.mYMin );
+	worldToWnd.Append ( mtx );
+	
+	return worldToWnd;
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDevice::GpuLoadMatrix ( const USAffine2D& mtx ) {
+
+	USMatrix3D mtx3D;
+	mtx3D.Init ( mtx );
+	glLoadMatrixf ( mtx3D.m );
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDevice::GpuLoadMatrix ( const USMatrix3D& mtx ) {
+
+	glLoadMatrixf ( mtx.m );
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDevice::GpuMultMatrix ( const USAffine2D& mtx ) {
+
+	USMatrix3D mtx3D;
+	mtx3D.Init ( mtx );
+	glMultMatrixf ( mtx3D.m );
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDevice::GpuMultMatrix ( const USMatrix3D& mtx ) {
+
+	glMultMatrixf ( mtx.m );
+}
+
+//----------------------------------------------------------------//
+MOAIGfxDevice::MOAIGfxDevice () :
+	mVertexFormat ( 0 ),
+	mVertexColorType ( 0 ),
+	mBuffer ( 0 ),
+	mSize ( 0 ),
+	mTop ( 0 ),
+	mPrimTop ( 0 ),
+	mPrimType ( GL_POINTS ),
+	mPrimSize ( 0 ),
+	mPrimCount ( 0 ),
+	mMaxPrims ( 0 ),
+	mTexture ( 0 ),
+	mPackedColor ( 0xffffffff ),
+	mPenWidth ( 1.0f ),
+	mPointSize ( 1.0f ),
+	mBlendEnabled ( 0 ),
+	mWidth ( 0 ),
+	mHeight ( 0 ),
+	mUVMtxInput ( UV_STAGE_MODEL ),
+	mUVMtxOutput ( UV_STAGE_MODEL ),
+	mVertexMtxInput ( VTX_STAGE_MODEL ),
+	mVertexMtxOutput ( VTX_STAGE_MODEL ),
+	mCpuVertexTransform ( false ),
+	mCpuUVTransform ( false ) {
+	
+	RTTI_SINGLE ( MOAIGfxDevice )
+	
+	this->Reserve ( DEFAULT_BUFFER_SIZE );
+	
+	for ( u32 i = 0; i < TOTAL_VTX_TRANSFORMS; ++i ) {
+		this->mVertexTransforms [ i ].Ident ();
+	}
+	this->mUVTransform.Ident ();
+	
+	this->mPenColor.Set ( 1.0f, 1.0f, 1.0f, 1.0f );
+	
+	this->mViewRect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
+	this->mScissorRect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
+}
+
+//----------------------------------------------------------------//
+MOAIGfxDevice::~MOAIGfxDevice () {
+
+	this->Clear ();
 }
 
 //----------------------------------------------------------------//
@@ -240,10 +431,6 @@ void MOAIGfxDevice::Reset () {
 	// clear the vertex format
 	this->SetVertexFormat ();
 	
-	// ident the cpu transforms
-	this->mUVTransform.Ident ();
-	this->mVtxTransform.Ident ();
-	
 	// disable backface culling
 	glDisable ( GL_CULL_FACE );
 	
@@ -261,7 +448,7 @@ void MOAIGfxDevice::Reset () {
 	this->mScissorRect = scissorRect;
 	
 	// fixed function reset
-	if ( MOAIGfxDevice::Get ().GetPipelineMode () == MOAIGfxDevice::GL_PIPELINE_FIXED ) {
+	if ( this->GetPipelineMode () == MOAIGfxDevice::GL_PIPELINE_FIXED ) {
 		
 		// load identity matrix
 		glMatrixMode ( GL_MODELVIEW );
@@ -304,18 +491,6 @@ void MOAIGfxDevice::SetBlendMode ( int srcFactor, int dstFactor ) {
 	blendMode.SetBlend ( srcFactor, dstFactor );
 	
 	this->SetBlendMode ( blendMode );
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxDevice::SetCameraTransform () {
-
-	this->mCameraTransform.Ident ();
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxDevice::SetCameraTransform ( const USAffine2D& cameraTransform ) {
-
-	this->mCameraTransform = cameraTransform;
 }
 
 //----------------------------------------------------------------//
@@ -395,8 +570,7 @@ void MOAIGfxDevice::SetPrimType ( u32 primType ) {
 //----------------------------------------------------------------//
 void MOAIGfxDevice::SetScissorRect () {
 
-	MOAIGfxDevice& device = MOAIGfxDevice::Get ();
-	this->SetScissorRect ( device.GetRect ());
+	this->SetScissorRect ( this->GetRect ());
 }
 
 //----------------------------------------------------------------//
@@ -413,6 +587,22 @@ void MOAIGfxDevice::SetScissorRect ( const USRect& rect ) {
 		glScissor (( int )rect.mXMin, ( int )rect.mYMin, ( int )rect.Width (), ( int )rect.Height ());
 		this->mScissorRect = rect;
 	}
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDevice::SetScreenSpace ( MOAIViewport& viewport ) {
+	UNUSED ( viewport );
+
+	// TODO
+
+	//glMatrixMode ( GL_MODELVIEW );
+	//glLoadIdentity ();
+	//
+	//USAffine2D wndToNorm;
+	//viewport.GetWndToNormMtx ( wndToNorm );
+	//
+	//glMatrixMode ( GL_PROJECTION );
+	//MOAIGfxDevice::LoadMatrix ( wndToNorm );
 }
 
 //----------------------------------------------------------------//
@@ -447,15 +637,35 @@ bool MOAIGfxDevice::SetTexture ( MOAITexture* texture ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::SetUVTransform () {
+void MOAIGfxDevice::SetUVMtxMode ( u32 input, u32 output ) {
 
-	this->mUVTransform.Ident ();	
+	if (( this->mUVMtxInput != input ) || ( this->mUVMtxOutput != output )) {
+		
+		this->Flush ();
+
+		this->mUVMtxInput = input;
+		this->mUVMtxOutput = output;
+		
+		this->UpdateUVTransform ();
+	}
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::SetUVTransform ( const USAffine2D& uvTransform ) {
+void MOAIGfxDevice::SetUVTransform () {
 
-	this->mUVTransform.Init ( uvTransform );
+	this->mUVTransform.Ident ();
+	
+	this->Flush ();
+	this->UpdateUVTransform ();
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDevice::SetUVTransform ( const USAffine2D& transform ) {
+
+	this->mUVTransform = transform;
+	
+	this->Flush ();
+	this->UpdateUVTransform ();
 }
 
 //----------------------------------------------------------------//
@@ -484,72 +694,138 @@ void MOAIGfxDevice::SetVertexFormat ( const MOAIVertexFormat& format ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIGfxDevice::SetVertexMtxMode ( u32 input, u32 output ) {
+
+	if (( this->mVertexMtxInput != input ) || ( this->mVertexMtxOutput != output )) {
+		
+		this->Flush ();
+
+		this->mVertexMtxInput = input;
+		this->mVertexMtxOutput = output;
+		
+		this->UpdateVertexTransform ();
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAIGfxDevice::SetVertexPreset ( u32 preset ) {
 
 	this->SetVertexFormat ( MOAIVertexFormatMgr::Get ().GetPreset ( preset ));
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::SetVtxTransform () {
+void MOAIGfxDevice::SetVertexTransform ( u32 id ) {
 
-	this->mVtxTransform.Ident ();
+	this->mVertexTransforms [ id ].Ident ();
+	
+	this->Flush ();
+	this->UpdateVertexTransform ();
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::SetVtxTransform ( const USAffine2D& vtxTransform ) {
+void MOAIGfxDevice::SetVertexTransform ( u32 id, const USAffine2D& transform ) {
 
-	this->mVtxTransform = vtxTransform;
+	this->mVertexTransforms [ id ] = transform;
+	
+	this->Flush ();
+	this->UpdateVertexTransform ();
 }
 
 //----------------------------------------------------------------//
-MOAIGfxDevice::MOAIGfxDevice () :
-	mVertexFormat ( 0 ),
-	mVertexColorType ( 0 ),
-	mBuffer ( 0 ),
-	mSize ( 0 ),
-	mTop ( 0 ),
-	mPrimTop ( 0 ),
-	mPrimType ( GL_POINTS ),
-	mPrimSize ( 0 ),
-	mPrimCount ( 0 ),
-	mMaxPrims ( 0 ),
-	mTexture ( 0 ),
-	mPackedColor ( 0xffffffff ),
-	mPenWidth ( 1.0f ),
-	mPointSize ( 1.0f ),
-	mBlendEnabled ( 0 ),
-	mWidth ( 0 ),
-	mHeight ( 0 ) {
+void MOAIGfxDevice::SetViewport () {
+
+	float width = ( float )this->mWidth;
+	float height = ( float )this->mHeight;
+
+	MOAIViewport viewport;
+	viewport.Init ( 0.0f, 0.0f, width, height );
+	viewport.SetScale ( width, -height );
+	viewport.SetOffset ( -1.0f, 1.0f );
 	
-	RTTI_SINGLE ( MOAIGfxDevice )
-	
-	this->Reserve ( DEFAULT_BUFFER_SIZE );
-	
-	this->mVtxTransform.Ident ();
-	this->mUVTransform.Ident ();
-	this->mPenColor.Set ( 1.0f, 1.0f, 1.0f, 1.0f );
+	this->SetViewport ( viewport );
 }
 
 //----------------------------------------------------------------//
-MOAIGfxDevice::~MOAIGfxDevice () {
+void MOAIGfxDevice::SetViewport ( MOAIViewport& viewport ) {
 
-	this->Clear ();
+	// set us up the viewport
+	USRect rect = viewport.GetRect ();
+	
+	GLint x = ( GLint )rect.mXMin;
+	GLint y = ( GLint )rect.mYMin;
+	
+	GLsizei w = ( GLsizei )( rect.Width () + 0.5f );
+	GLsizei h = ( GLsizei )( rect.Height () + 0.5f );
+	
+	glViewport ( x, y, w, h );
+
+	this->mViewRect = rect;
+
+	// TODO:
+	//if ( MOAIGfxDevice::Get ().GetPipelineMode () == MOAIGfxDevice::GL_PIPELINE_FIXED ) {
+
+	//	// load view/proj
+	//	glMatrixMode ( GL_PROJECTION );
+	//	glLoadIdentity ();
+	//	
+	//	USAffine2D mtx;
+	//	viewport.GetViewProjMtx ( camera, mtx );
+	//	MOAIGfxDevice::LoadMatrix ( mtx );
+	//	
+	//	// load ident
+	//	glMatrixMode ( GL_MODELVIEW );
+	//	glLoadIdentity ();
+	//}
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDevice::UpdateUVTransform () {
+
+	this->mCpuVertexTransformMtx.Ident ();
+
+	if (( this->mUVMtxInput == UV_STAGE_MODEL ) && ( this->mUVMtxOutput == UV_STAGE_TEXTURE )) {
+	
+		this->mCpuVertexTransformMtx = this->mUVTransform;
+	}
+	else {
+		// load gl UV transform
+	}
+
+	this->mCpuUVTransform = !this->mCpuVertexTransformMtx.IsIdent ();
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDevice::UpdateVertexTransform () {
+
+	this->mCpuVertexTransformMtx.Ident ();
+	
+	u32 start = this->mVertexMtxInput;
+	u32 finish = this->mVertexMtxOutput;
+	
+	for ( u32 i = start; i < finish; ++i ) {
+		this->mCpuVertexTransformMtx.Append ( this->mVertexTransforms [ i ]);
+	}
+
+	this->mCpuVertexTransform = !this->mCpuVertexTransformMtx.IsIdent ();
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxDevice::WriteQuad ( USVec2D* vtx, USVec2D* uv ) {
 
-	this->mVtxTransform.TransformQuad ( vtx );
-	this->mUVTransform.Transform ( uv [ 0 ]);
-	this->mUVTransform.Transform ( uv [ 1 ]);	
-	this->mUVTransform.Transform ( uv [ 2 ]);	
-	this->mUVTransform.Transform ( uv [ 3 ]);	
+	if ( this->mCpuVertexTransform ) {
+		this->mCpuVertexTransformMtx.TransformQuad ( vtx );
+	}
+	
+	if ( this->mCpuUVTransform ) {
+		this->mUVTransform.TransformQuad ( uv );
+	}
 	
 	this->BeginPrim ();
+	
 		this->Write ( vtx[ 3 ]);
 		this->Write ( uv [ 3 ]);
 		this->WritePenColor ();
-	
+		
 		this->Write ( vtx[ 1 ]);
 		this->Write ( uv [ 1 ]);
 		this->WritePenColor ();	
@@ -557,9 +833,11 @@ void MOAIGfxDevice::WriteQuad ( USVec2D* vtx, USVec2D* uv ) {
 		this->Write ( vtx[ 0 ]);
 		this->Write ( uv [ 0 ]);
 		this->WritePenColor ();
+		
 	this->EndPrim ();
 	
 	this->BeginPrim ();
+	
 		this->Write ( vtx[ 3 ]);
 		this->Write ( uv [ 3 ]);
 		this->WritePenColor ();	
@@ -571,5 +849,6 @@ void MOAIGfxDevice::WriteQuad ( USVec2D* vtx, USVec2D* uv ) {
 		this->Write ( vtx[ 1 ]);
 		this->Write ( uv [ 1 ]);
 		this->WritePenColor ();
+		
 	this->EndPrim ();
 }

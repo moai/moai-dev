@@ -5,7 +5,6 @@
 #include <moaicore/MOAIActionMgr.h>
 #include <moaicore/MOAIDebugLines.h>
 #include <moaicore/MOAIGfxDevice.h>
-#include <moaicore/MOAIGfxUtil.h>
 #include <moaicore/MOAIInputMgr.h>
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAINodeMgr.h>
@@ -483,7 +482,7 @@ void MOAISim::Render () {
 	RenderPassIt passIt = this->mRenderPasses.Head ();
 	for ( ; passIt; passIt = passIt->Next ()) {
 		MOAIProp2D* renderPass = passIt->Data ();
-		MOAIGfxUtil::BeginDrawing ();
+		MOAIGfxDevice::Get ().SetViewport ();
 		renderPass->Draw ();
 	}
 	

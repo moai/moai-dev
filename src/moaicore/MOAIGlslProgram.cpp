@@ -23,8 +23,8 @@ void MOAIShaderUniform::Bind ( const float* attributes ) {
 			break;
 		}
 		case UNIFORM_MODEL: {
-		
-			const USAffine2D& affine = MOAIGfxDevice::Get ().GetVtxTransform ();
+			
+			const USAffine2D& affine = MOAIGfxDevice::Get ().GetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM );
 			this->BindAffine ( affine );
 			break;
 		}
@@ -38,8 +38,9 @@ void MOAIShaderUniform::Bind ( const float* attributes ) {
 		}
 		case UNIFORM_VIEW_PROJ: {
 		
-			const USAffine2D& affine = MOAIGfxDevice::Get ().GetCameraTransform ();
-			this->BindAffine ( affine );
+			// TODO
+			//const USAffine2D& affine = MOAIGfxDevice::Get ().GetCameraTransform ();
+			//this->BindAffine ( affine );
 			break;
 		}
 	}

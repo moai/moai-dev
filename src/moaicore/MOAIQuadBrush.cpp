@@ -12,6 +12,7 @@
 //----------------------------------------------------------------//
 void MOAIQuadBrush::BindVertexFormat ( MOAIGfxDevice& gfxDevice ) {
 	
+	// TODO: move this logic to MOAIVertexFormatMgr
 	if ( gfxDevice.GetPipelineMode () == MOAIGfxDevice::GL_PIPELINE_FIXED ) {
 		gfxDevice.SetVertexPreset ( MOAIVertexFormatMgr::FF_XYUVC );
 	}

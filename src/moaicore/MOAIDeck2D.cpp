@@ -26,7 +26,8 @@ void MOAIDeck2D::Draw ( const USAffine2D& transform, u32 idx, MOAIDeckRemapper* 
 	if ( !idx || ( idx & MOAITileFlags::HIDDEN )) return;
 	
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-	gfxDevice.SetVtxTransform ( transform );
+	
+	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, transform );
 	
 	float xScale = ( idx & MOAITileFlags::XFLIP ) ? -1.0f : 1.0f;
 	float yScale = ( idx & MOAITileFlags::YFLIP ) ? -1.0f : 1.0f;
@@ -47,7 +48,7 @@ void MOAIDeck2D::DrawPatch ( u32 idx, float xOff, float yOff, float xScale, floa
 void MOAIDeck2D::Draw ( const USAffine2D& transform, MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1 ) {
 	
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-	gfxDevice.SetVtxTransform ( transform );
+	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, transform );
 
 	float width = grid.GetTileWidth () * gridScale.mX;
 	float height = grid.GetTileHeight () * gridScale.mY;

@@ -10,7 +10,6 @@
 #include <moaicore/MOAIBox2DJoint.h>
 #include <moaicore/MOAIBox2DWorld.h>
 #include <moaicore/MOAIGfxDevice.h>
-#include <moaicore/MOAIGfxUtil.h>
 #include <moaicore/MOAILogMessages.h>
 
 SUPPRESS_EMPTY_FILE_WARNING

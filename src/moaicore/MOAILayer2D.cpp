@@ -7,7 +7,6 @@
 #include <moaicore/MOAICpSpace.h>
 #include <moaicore/MOAIDebugLines.h>
 #include <moaicore/MOAIGfxDevice.h>
-#include <moaicore/MOAIGfxUtil.h>
 #include <moaicore/MOAILayer2D.h>
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIProp2D.h>
@@ -352,19 +351,16 @@ void MOAILayer2D::Draw () {
 	gfxDevice.Reset ();
 	
 	// TODO: GLES2
-	//USAffine2D mtx;
-	//MOAIGfxUtil::GetWorldToWndMtx ( mtx, 1.0f, 1.0f );
+	//USAffine2D mtx = MOAIGfxDevice::Get ().GetWorldToWndMtx ( 1.0f, 1.0f );
 	//mtx.Prepend ( this->mLocalToWorldMtx );
 	//mtx.Transform ( viewport );
 	
+	gfxDevice.SetViewport ( viewport );
+	
 	USAffine2D camera;
 	this->GetCameraMtx ( camera );
-	
-	MOAIGfxUtil::BeginDrawing ( viewport, camera );
-	
-	USAffine2D viewProj;
-	viewport.GetViewProjMtx ( camera, viewProj );
-	gfxDevice.SetCameraTransform ( viewProj );
+	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_VIEW_TRANSFORM, camera );
+	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_PROJ_TRANSFORM, viewport.GetProjMtx ());
 	
 	if ( this->mShowDebugLines ) {
 		
@@ -387,8 +383,7 @@ void MOAILayer2D::Draw () {
 	
 	if ( this->mPartition ) {
 		
-		USQuad viewQuad;
-		MOAIGfxUtil::GetViewQuad ( viewQuad );
+		USQuad viewQuad = gfxDevice.GetViewQuad ();
 		USRect viewBounds = viewQuad.GetBounds ();
 		
 		this->mPartition->GatherProps ( viewBounds, 0, MOAIProp::CAN_DRAW | MOAIProp::CAN_DRAW_DEBUG );
@@ -434,6 +429,8 @@ void MOAILayer2D::GetCameraMtx ( USAffine2D& camera ) {
 		
 		camera.m [ USAffine2D::C2_R0 ] *= this->mParallax.mX;
 		camera.m [ USAffine2D::C2_R1 ] *= this->mParallax.mY;
+		
+		camera.Inverse ();
 	}
 	else {
 		camera.Ident ();
@@ -470,7 +467,7 @@ void MOAILayer2D::GetWndToWorldMtx ( USAffine2D& wndToWorld ) {
 		
 		USAffine2D camera;
 		this->GetCameraMtx ( camera );
-		this->mViewport->GetWndToWorldMtx ( camera, wndToWorld );
+		wndToWorld = this->mViewport->GetWndToWorldMtx ( camera );
 	}
 	else {
 		wndToWorld.Ident ();
@@ -484,7 +481,7 @@ void MOAILayer2D::GetWorldToWndMtx ( USAffine2D& worldToWnd ) {
 		
 		USAffine2D camera;
 		this->GetCameraMtx ( camera );
-		this->mViewport->GetWorldToWndMtx ( camera, worldToWnd );
+		worldToWnd = this->mViewport->GetWorldToWndMtx ( camera );
 	}
 	else {
 		worldToWnd.Ident ();
