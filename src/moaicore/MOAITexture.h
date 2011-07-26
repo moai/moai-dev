@@ -52,7 +52,6 @@ private:
 	int					mGLInternalFormat;
 	int					mGLPixelType;
 	
-	STLString			mTexturePath;
 	STLString			mFilename;
 	MOAITextureLoader*	mLoader;
 

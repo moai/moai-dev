@@ -219,6 +219,19 @@ public:
 	}
 
 	//----------------------------------------------------------------//
+	bool IsSame ( const USMetaAffine2D < TYPE >& compare ) const {
+		
+		return (
+			( m [ C0_R0 ] == compare.m [ C0_R0 ]) &&
+			( m [ C0_R1 ] == compare.m [ C0_R1 ]) &&
+			( m [ C1_R0 ] == compare.m [ C1_R0 ]) &&
+			( m [ C1_R1 ] == compare.m [ C1_R1 ]) &&
+			( m [ C2_R0 ] == compare.m [ C2_R0 ]) &&
+			( m [ C2_R1 ] == compare.m [ C2_R1 ])
+		);
+	}
+
+	//----------------------------------------------------------------//
 	void Multiply ( const USMetaAffine2D < TYPE >& mtx2, const USMetaAffine2D < TYPE >& mtx1 ) {
 
 		m [ C0_R0 ]	=	( mtx1.m [ C0_R0 ] * mtx2.m [ C0_R0 ])	+

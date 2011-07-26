@@ -61,7 +61,7 @@ void MOAIGfxDevice::ClearErrors () {
 }
 
 //----------------------------------------------------------------//
-u32 MOAIGfxDevice::CountErrors () {
+u32 MOAIGfxDevice::CountErrors () const {
 
 	u32 count = 0;
 	while ( glGetError () != GL_NO_ERROR ) count++;
@@ -144,7 +144,7 @@ void MOAIGfxDevice::Flush () {
 }
 
 //----------------------------------------------------------------//
-cc8* MOAIGfxDevice::GetErrorString ( int error ) {
+cc8* MOAIGfxDevice::GetErrorString ( int error ) const {
 
 	switch ( error ) {
 		case GL_INVALID_ENUM:		return "GL_INVALID_ENUM";
@@ -158,19 +158,19 @@ cc8* MOAIGfxDevice::GetErrorString ( int error ) {
 }
 
 //----------------------------------------------------------------//
-u32 MOAIGfxDevice::GetHeight () {
+u32 MOAIGfxDevice::GetHeight () const {
 
 	return this->mHeight;
 }
 
 //----------------------------------------------------------------//
-USAffine2D MOAIGfxDevice::GetModelToWorldMtx () {
+USAffine2D MOAIGfxDevice::GetModelToWorldMtx () const {
 
 	return this->mVertexTransforms [ VTX_WORLD_TRANSFORM ];
 }
 
 //----------------------------------------------------------------//
-USAffine2D MOAIGfxDevice::GetModelToWndMtx () {
+USAffine2D MOAIGfxDevice::GetModelToWndMtx () const {
 
 	USAffine2D modelToWnd = this->GetModelToWorldMtx ();
 	modelToWnd.Append ( this->GetWorldToWndMtx ());
@@ -178,19 +178,20 @@ USAffine2D MOAIGfxDevice::GetModelToWndMtx () {
 }
 
 //----------------------------------------------------------------//
-USColorVec MOAIGfxDevice::GetPenColor () {
+USColorVec MOAIGfxDevice::GetPenColor () const {
 
 	return this->mPenColor;
 }
 
 //----------------------------------------------------------------//
-u32 MOAIGfxDevice::GetPipelineMode () {
+u32 MOAIGfxDevice::GetPipelineMode () const {
 
-	return GL_PIPELINE_PROGRAMMABLE;
+	return GL_PIPELINE_FIXED;
+	//return GL_PIPELINE_PROGRAMMABLE;
 }
 
 //----------------------------------------------------------------//
-USRect MOAIGfxDevice::GetRect () {
+USRect MOAIGfxDevice::GetRect () const {
 
 	USRect rect;
 	rect.mXMin = 0;
@@ -202,19 +203,19 @@ USRect MOAIGfxDevice::GetRect () {
 }
 
 //----------------------------------------------------------------//
-USAffine2D MOAIGfxDevice::GetUVTransform () {
+USAffine2D MOAIGfxDevice::GetUVTransform () const {
 
 	return this->mUVTransform;
 }
 
 //----------------------------------------------------------------//
-USAffine2D MOAIGfxDevice::GetVertexTransform ( u32 id ) {
+USAffine2D MOAIGfxDevice::GetVertexTransform ( u32 id ) const {
 
 	return this->mVertexTransforms [ id ];
 }
 
 //----------------------------------------------------------------//
-USAffine2D MOAIGfxDevice::GetViewProjMtx () {
+USAffine2D MOAIGfxDevice::GetViewProjMtx () const {
 
 	USAffine2D mtx = this->mVertexTransforms [ VTX_VIEW_TRANSFORM ];
 	mtx.Append ( this->mVertexTransforms [ VTX_PROJ_TRANSFORM ]);
@@ -222,7 +223,7 @@ USAffine2D MOAIGfxDevice::GetViewProjMtx () {
 }
 
 //----------------------------------------------------------------//
-USQuad MOAIGfxDevice::GetViewQuad () {
+USQuad MOAIGfxDevice::GetViewQuad () const {
 
 	USQuad quad;
 
@@ -239,19 +240,19 @@ USQuad MOAIGfxDevice::GetViewQuad () {
 }
 
 //----------------------------------------------------------------//
-USRect MOAIGfxDevice::GetViewRect () {
+USRect MOAIGfxDevice::GetViewRect () const {
 
 	return this->mViewRect;
 }
 
 //----------------------------------------------------------------//
-u32 MOAIGfxDevice::GetWidth () {
+u32 MOAIGfxDevice::GetWidth () const {
 
 	return this->mWidth;
 }
 
 //----------------------------------------------------------------//
-USAffine2D MOAIGfxDevice::GetWndToModelMtx () {
+USAffine2D MOAIGfxDevice::GetWndToModelMtx () const {
 
 	USAffine2D wndToModel;
 	wndToModel.Inverse ( this->GetModelToWndMtx ());
@@ -259,7 +260,7 @@ USAffine2D MOAIGfxDevice::GetWndToModelMtx () {
 }
 
 //----------------------------------------------------------------//
-USAffine2D MOAIGfxDevice::GetWndToWorldMtx () {
+USAffine2D MOAIGfxDevice::GetWndToWorldMtx () const {
 
 	USAffine2D wndToWorld;
 	USAffine2D mtx;
@@ -284,7 +285,7 @@ USAffine2D MOAIGfxDevice::GetWndToWorldMtx () {
 }
 
 //----------------------------------------------------------------//
-USAffine2D MOAIGfxDevice::GetWorldToModelMtx () {
+USAffine2D MOAIGfxDevice::GetWorldToModelMtx () const {
 	
 	USAffine2D worldToModel;
 	worldToModel.Inverse ( this->mVertexTransforms [ VTX_WORLD_TRANSFORM ]);
@@ -292,7 +293,7 @@ USAffine2D MOAIGfxDevice::GetWorldToModelMtx () {
 }
 
 //----------------------------------------------------------------//
-USAffine2D MOAIGfxDevice::GetWorldToWndMtx ( float xScale, float yScale ) {
+USAffine2D MOAIGfxDevice::GetWorldToWndMtx ( float xScale, float yScale ) const {
 
 	USAffine2D worldToWnd;
 	USAffine2D mtx;
@@ -316,7 +317,7 @@ USAffine2D MOAIGfxDevice::GetWorldToWndMtx ( float xScale, float yScale ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::GpuLoadMatrix ( const USAffine2D& mtx ) {
+void MOAIGfxDevice::GpuLoadMatrix ( const USAffine2D& mtx ) const {
 
 	USMatrix3D mtx3D;
 	mtx3D.Init ( mtx );
@@ -324,13 +325,13 @@ void MOAIGfxDevice::GpuLoadMatrix ( const USAffine2D& mtx ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::GpuLoadMatrix ( const USMatrix3D& mtx ) {
+void MOAIGfxDevice::GpuLoadMatrix ( const USMatrix3D& mtx ) const {
 
 	glLoadMatrixf ( mtx.m );
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::GpuMultMatrix ( const USAffine2D& mtx ) {
+void MOAIGfxDevice::GpuMultMatrix ( const USAffine2D& mtx ) const {
 
 	USMatrix3D mtx3D;
 	mtx3D.Init ( mtx );
@@ -338,7 +339,7 @@ void MOAIGfxDevice::GpuMultMatrix ( const USAffine2D& mtx ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::GpuMultMatrix ( const USMatrix3D& mtx ) {
+void MOAIGfxDevice::GpuMultMatrix ( const USMatrix3D& mtx ) const {
 
 	glMultMatrixf ( mtx.m );
 }
@@ -641,31 +642,26 @@ void MOAIGfxDevice::SetUVMtxMode ( u32 input, u32 output ) {
 
 	if (( this->mUVMtxInput != input ) || ( this->mUVMtxOutput != output )) {
 		
-		this->Flush ();
-
 		this->mUVMtxInput = input;
 		this->mUVMtxOutput = output;
 		
-		this->UpdateUVTransform ();
+		this->UpdateUVMtx ();
 	}
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxDevice::SetUVTransform () {
 
-	this->mUVTransform.Ident ();
-	
-	this->Flush ();
-	this->UpdateUVTransform ();
+	USAffine2D mtx;
+	mtx.Ident ();
+	this->SetUVTransform ( mtx );
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxDevice::SetUVTransform ( const USAffine2D& transform ) {
 
 	this->mUVTransform = transform;
-	
-	this->Flush ();
-	this->UpdateUVTransform ();
+	this->UpdateUVMtx ();
 }
 
 //----------------------------------------------------------------//
@@ -697,13 +693,12 @@ void MOAIGfxDevice::SetVertexFormat ( const MOAIVertexFormat& format ) {
 void MOAIGfxDevice::SetVertexMtxMode ( u32 input, u32 output ) {
 
 	if (( this->mVertexMtxInput != input ) || ( this->mVertexMtxOutput != output )) {
-		
-		this->Flush ();
 
 		this->mVertexMtxInput = input;
 		this->mVertexMtxOutput = output;
 		
-		this->UpdateVertexTransform ();
+		this->UpdateCpuVertexMtx ();
+		this->UpdateGpuVertexMtx ();
 	}
 }
 
@@ -716,19 +711,26 @@ void MOAIGfxDevice::SetVertexPreset ( u32 preset ) {
 //----------------------------------------------------------------//
 void MOAIGfxDevice::SetVertexTransform ( u32 id ) {
 
-	this->mVertexTransforms [ id ].Ident ();
-	
-	this->Flush ();
-	this->UpdateVertexTransform ();
+	USAffine2D mtx;
+	mtx.Ident ();
+	this->SetVertexTransform ( id, mtx );
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxDevice::SetVertexTransform ( u32 id, const USAffine2D& transform ) {
 
-	this->mVertexTransforms [ id ] = transform;
-	
-	this->Flush ();
-	this->UpdateVertexTransform ();
+	if ( !this->mVertexTransforms [ id ].IsSame ( transform )) {
+
+		this->mVertexTransforms [ id ] = transform;
+		
+		// check to see if this is a CPU or GPU matrix and update accordingly
+		if ( id < this->mVertexMtxOutput ) {
+			this->UpdateCpuVertexMtx ();
+		}
+		else {
+			this->UpdateGpuVertexMtx ();
+		}
+	}
 }
 
 //----------------------------------------------------------------//
@@ -760,53 +762,89 @@ void MOAIGfxDevice::SetViewport ( MOAIViewport& viewport ) {
 	glViewport ( x, y, w, h );
 
 	this->mViewRect = rect;
-
-	// TODO:
-	//if ( MOAIGfxDevice::Get ().GetPipelineMode () == MOAIGfxDevice::GL_PIPELINE_FIXED ) {
-
-	//	// load view/proj
-	//	glMatrixMode ( GL_PROJECTION );
-	//	glLoadIdentity ();
-	//	
-	//	USAffine2D mtx;
-	//	viewport.GetViewProjMtx ( camera, mtx );
-	//	MOAIGfxDevice::LoadMatrix ( mtx );
-	//	
-	//	// load ident
-	//	glMatrixMode ( GL_MODELVIEW );
-	//	glLoadIdentity ();
-	//}
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::UpdateUVTransform () {
+void MOAIGfxDevice::UpdateCpuVertexMtx () {
 
-	this->mCpuVertexTransformMtx.Ident ();
-
-	if (( this->mUVMtxInput == UV_STAGE_MODEL ) && ( this->mUVMtxOutput == UV_STAGE_TEXTURE )) {
-	
-		this->mCpuVertexTransformMtx = this->mUVTransform;
-	}
-	else {
-		// load gl UV transform
-	}
-
-	this->mCpuUVTransform = !this->mCpuVertexTransformMtx.IsIdent ();
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxDevice::UpdateVertexTransform () {
-
-	this->mCpuVertexTransformMtx.Ident ();
-	
 	u32 start = this->mVertexMtxInput;
 	u32 finish = this->mVertexMtxOutput;
 	
 	for ( u32 i = start; i < finish; ++i ) {
 		this->mCpuVertexTransformMtx.Append ( this->mVertexTransforms [ i ]);
 	}
-
 	this->mCpuVertexTransform = !this->mCpuVertexTransformMtx.IsIdent ();
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDevice::UpdateGpuVertexMtx () {
+
+	if ( !this->GetPipelineMode () == GL_PIPELINE_FIXED ) return;
+
+	this->Flush ();
+
+	// update the gpu matrices
+	switch ( this->mVertexMtxOutput ) {
+		
+		case VTX_STAGE_MODEL:
+		
+			glMatrixMode ( GL_MODELVIEW );
+			this->GpuLoadMatrix ( this->mVertexTransforms [ VTX_WORLD_TRANSFORM ]);
+			this->GpuMultMatrix ( this->mVertexTransforms [ VTX_VIEW_TRANSFORM ]);
+		
+			glMatrixMode ( GL_PROJECTION );
+			this->GpuLoadMatrix ( this->mVertexTransforms [ VTX_PROJ_TRANSFORM ]);
+			
+			break;
+			
+		case VTX_STAGE_WORLD:
+			
+			glMatrixMode ( GL_MODELVIEW );
+			this->GpuLoadMatrix ( this->mVertexTransforms [ VTX_VIEW_TRANSFORM ]);
+			
+			glMatrixMode ( GL_PROJECTION );
+			this->GpuLoadMatrix ( this->mVertexTransforms [ VTX_PROJ_TRANSFORM ]);
+		
+			break;
+			
+		case VTX_STAGE_VIEW:
+			
+			glMatrixMode ( GL_MODELVIEW );
+			glLoadIdentity ();
+			
+			glMatrixMode ( GL_PROJECTION );
+			this->GpuLoadMatrix ( this->mVertexTransforms [ VTX_PROJ_TRANSFORM ]);
+			
+			break;
+		
+		case VTX_STAGE_PROJ:
+		
+			glMatrixMode ( GL_MODELVIEW );
+			glLoadIdentity ();
+			
+			glMatrixMode ( GL_PROJECTION );
+			glLoadIdentity ();
+		
+			break;
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDevice::UpdateUVMtx () {
+
+	if ( this->mUVMtxOutput == UV_STAGE_TEXTURE ) {
+		
+		this->mCpuUVTransform = !this->mUVTransform.IsIdent ();
+	}
+	else {
+		
+		this->mCpuUVTransform = false;
+		
+		// flush and load gl UV transform
+		this->Flush ();
+		glMatrixMode ( GL_TEXTURE );
+		this->GpuLoadMatrix ( this->mUVTransform );
+	}
 }
 
 //----------------------------------------------------------------//

@@ -89,13 +89,14 @@ private:
 	//----------------------------------------------------------------//
 	void					Clear					();
 	void					DrawPrims				();
-	void					GpuLoadMatrix			( const USAffine2D& mtx );
-	void					GpuLoadMatrix			( const USMatrix3D& mtx );
-	void					GpuMultMatrix			( const USAffine2D& mtx );
-	void					GpuMultMatrix			( const USMatrix3D& mtx );
+	void					GpuLoadMatrix			( const USAffine2D& mtx ) const;
+	void					GpuLoadMatrix			( const USMatrix3D& mtx ) const;
+	void					GpuMultMatrix			( const USAffine2D& mtx ) const;
+	void					GpuMultMatrix			( const USMatrix3D& mtx ) const;
 	void					Rebind					();
-	void					UpdateUVTransform		();
-	void					UpdateVertexTransform	();
+	void					UpdateCpuVertexMtx		();
+	void					UpdateGpuVertexMtx		();
+	void					UpdateUVMtx				();
 	
 public:
 	
@@ -105,38 +106,39 @@ public:
 	void					ClearColorBuffer		( u32 color );
 
 	void					ClearErrors				();
-	u32						CountErrors				();
+	u32						CountErrors				() const;
 	
 	void					DrawPrims				( const MOAIVertexFormat& format, GLenum primType, void* buffer, u32 size ); 
 	void					EndPrim					();
 	void					Flush					();
 	
-	cc8*					GetErrorString			( int error );
+	cc8*					GetErrorString			( int error ) const;
 	
-	u32						GetHeight				();
+	u32						GetHeight				() const;
 	
-	USAffine2D				GetModelToWndMtx		();
-	USAffine2D				GetModelToWorldMtx		();
+	USAffine2D				GetModelToWndMtx		() const;
+	USAffine2D				GetModelToWorldMtx		() const;
 	
-	USColorVec				GetPenColor				();
-	u32						GetPipelineMode			();
-	USRect					GetRect					();
-	USAffine2D				GetUVTransform			();
-	USAffine2D				GetVertexTransform		( u32 id );
+	USColorVec				GetPenColor				() const;
+	u32						GetPipelineMode			() const;
+	USRect					GetRect					() const;
+	USAffine2D				GetUVTransform			() const;
+	USAffine2D				GetVertexTransform		( u32 id ) const;
 	
-	USAffine2D				GetViewProjMtx			();
-	USQuad					GetViewQuad				();
-	USRect					GetViewRect				();
+	USAffine2D				GetViewProjMtx			() const;
+	USQuad					GetViewQuad				() const;
+	USRect					GetViewRect				() const;
 	
-	u32						GetWidth				();
+	u32						GetWidth				() const;
 
-	USAffine2D				GetWorldToModelMtx		();
-	USAffine2D				GetWorldToWndMtx		( float xScale = 1.0f, float yScale = 1.0f );
-	USAffine2D				GetWndToModelMtx		();
-	USAffine2D				GetWndToWorldMtx		();
+	USAffine2D				GetWorldToModelMtx		() const;
+	USAffine2D				GetWorldToWndMtx		( float xScale = 1.0f, float yScale = 1.0f ) const;
+	USAffine2D				GetWndToModelMtx		() const;
+	USAffine2D				GetWndToWorldMtx		() const;
 	
 							MOAIGfxDevice			();
 							~MOAIGfxDevice			();
+	
 	u32						PrintErrors				();
 	void					Reserve					( u32 size );
 	void					Reset					();

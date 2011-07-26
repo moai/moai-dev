@@ -641,7 +641,7 @@ void MOAITexture::Load ( cc8* filename, u32 transform ) {
 	this->Release ();
 	if ( !USFileSys::CheckFileExists ( filename )) return;
 
-	this->mTexturePath = USFileSys::Expand ( filename );
+	this->mFilename = USFileSys::Expand ( filename );
 	
 	this->mLoader = new MOAITextureLoader ();
 	this->mLoader->mTransform = transform;
@@ -758,7 +758,7 @@ void MOAITexture::SerializeIn ( USLuaState& state, USLuaSerializer& serializer )
 void MOAITexture::SerializeOut ( USLuaState& state, USLuaSerializer& serializer ) {
 	UNUSED ( serializer );
 
-	STLString path = USFileSys::GetRelativePath ( this->mTexturePath );
+	STLString path = USFileSys::GetRelativePath ( this->mFilename );
 	state.SetField ( -1, "mPath", path.str ());
 }
 

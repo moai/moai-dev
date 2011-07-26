@@ -28,6 +28,7 @@ void MOAIDeck2D::Draw ( const USAffine2D& transform, u32 idx, MOAIDeckRemapper* 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	
 	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, transform );
+	gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
 	
 	float xScale = ( idx & MOAITileFlags::XFLIP ) ? -1.0f : 1.0f;
 	float yScale = ( idx & MOAITileFlags::YFLIP ) ? -1.0f : 1.0f;

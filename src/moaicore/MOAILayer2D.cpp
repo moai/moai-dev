@@ -344,7 +344,7 @@ void MOAILayer2D::Draw () {
 
 	if ( !this->mViewport ) return;
 	
-	MOAIViewport viewport = *this->mViewport;
+	MOAIViewport& viewport = *this->mViewport;
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	
 	gfxDevice.Flush ();
