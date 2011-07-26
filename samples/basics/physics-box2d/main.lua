@@ -41,6 +41,7 @@ end
 world = MOAIBox2DWorld.new ()
 world:setGravity ( 0, -10 )
 world:setUnitsToMeters ( 2 )
+world:setAutoClearForces ( false )
 world:start ()
 layer:setBox2DWorld ( world )
 
@@ -59,8 +60,10 @@ fixture:setFriction ( 0.3 )
 fixture:setFilter ( 0x01 )
 fixture:setCollisionHandler ( onCollide, MOAIBox2DArbiter.BEGIN, 0x02 )
 
-body:resetMassData ()
-body:applyAngularImpulse ( 2 )
+body:setMassData ( 2 )
+--body:applyAngularImpulse ( 2 )
+x, y = body:getWorldCenter ()
+body:applyForce ( 0, 10 , x, y )
 
 body2 = world:addBody ( MOAIBox2DBody.STATIC )
 fixture2 = body2:addRect ( -5, -5, 5, -3 )

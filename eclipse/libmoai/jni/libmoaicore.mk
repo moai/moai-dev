@@ -41,6 +41,7 @@ $(SRC_PATH)/3rdparty/box2d-2.1.2/Box2D/Box2D/Common \
 $(SRC_PATH)/3rdparty/box2d-2.1.2/Box2D/Box2D/Dynamics \
 $(SRC_PATH)/3rdparty/box2d-2.1.2/Box2D/Box2D/Dynamics/Contacts \
 $(SRC_PATH)/3rdparty/box2d-2.1.2/Box2D/Box2D/Dynamics/Joints \
+$(SRC_PATH)/3rdparty/physfs-2.0.2 \
 
 #----------------------------------------------------------------#
 # included files

@@ -15,23 +15,25 @@ class MOAIFileSystem :
 private:
 
 	//----------------------------------------------------------------//
-	static int		_affirmPath				( lua_State* L );
 	static int		_checkFileExists		( lua_State* L );
 	static int		_checkPathExists		( lua_State* L );
-	static int		_deleteDirectory		( lua_State* L );
-	static int		_deleteFile				( lua_State* L );
-	static int		_expandFilename			( lua_State* L );
-	static int		_expandPath				( lua_State* L );
-	static int		_getRelativePath		( lua_State* L );
-	static int		_getWorkingDirectory	( lua_State* L );
-	static int		_rename					( lua_State* L );
-	static int		_setWorkingDirectory	( lua_State* L );
+	static int		_delete					( lua_State* L );
+	static int		_getBaseDirectory		( lua_State* L );
+	static int		_getDirSeparator		( lua_State* L );
+	static int		_getFileDirectory		( lua_State* L );
+	static int		_getRealPath			( lua_State* L );
+	static int		_mount					( lua_State* L );
+	static int		_printSearchPath		( lua_State* L );
+	static int		_setWriteDirectory		( lua_State* L );
+	static int		_unmount				( lua_State* L );
 
 public:
 	
 	DECL_LUA_SINGLETON ( MOAIFileSystem )
 	
 	//----------------------------------------------------------------//
+						MOAIFileSystem			();
+						~MOAIFileSystem			();
 	void				RegisterLuaClass		( USLuaState& state );
 };
 

@@ -23,4 +23,4 @@ prop = MOAIProp2D.new ()
 prop:setDeck ( gfxQuad )
 layer:insertProp ( prop )
 
-prop:moveRot ( 360, 1.5 )
+--prop:moveRot ( 360, 1.5 )
