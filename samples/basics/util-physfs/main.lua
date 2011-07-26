@@ -4,7 +4,6 @@
 -- http://getmoai.com
 ----------------------------------------------------------------
 
-print = MOAILogMgr.log
 print ( "util-physfs" )
 
 MOAISim.openWindow ( "test", 320, 480 )
