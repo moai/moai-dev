@@ -12,6 +12,7 @@
 #include <moaicore/MOAIPartition.h>
 #include <moaicore/MOAIProp2D.h>
 #include <moaicore/MOAIShader.h>
+#include <moaicore/MOAIShaderMgr.h>
 #include <moaicore/MOAISurfaceSampler2D.h>
 
 //================================================================//
@@ -595,18 +596,16 @@ void MOAIProp2D::LoadShader () {
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 
+	gfxDevice.SetPenColor ( this->mColor );
+	gfxDevice.SetBlendMode ( this->mBlendMode );
+
 	if ( this->mShader ) {
 		this->mShader->Bind ();
-		
-		USColorVec color = gfxDevice.GetPenColor ();
-		color.Modulate ( this->mColor );
-		gfxDevice.SetPenColor ( color );
 	}
-	else {
-		gfxDevice.SetPenColor ( this->mColor );
+	else if ( this->mDeck ) {
+		// TODO: move to deck
+		this->mDeck->LoadShader ();
 	}
-	
-	gfxDevice.SetBlendMode ( this->mBlendMode );
 	
 	// TODO
 	//MOAILayoutFrame* parent = USCast < MOAILayoutFrame >( this->mParent );

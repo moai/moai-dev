@@ -184,13 +184,6 @@ USColorVec MOAIGfxDevice::GetPenColor () const {
 }
 
 //----------------------------------------------------------------//
-u32 MOAIGfxDevice::GetPipelineMode () const {
-
-	return GL_PIPELINE_FIXED;
-	//return GL_PIPELINE_PROGRAMMABLE;
-}
-
-//----------------------------------------------------------------//
 USRect MOAIGfxDevice::GetRect () const {
 
 	USRect rect;
@@ -345,6 +338,12 @@ void MOAIGfxDevice::GpuMultMatrix ( const USMatrix3D& mtx ) const {
 }
 
 //----------------------------------------------------------------//
+bool MOAIGfxDevice::IsProgrammable () {
+
+	return false;
+}
+
+//----------------------------------------------------------------//
 MOAIGfxDevice::MOAIGfxDevice () :
 	mVertexFormat ( 0 ),
 	mVertexColorType ( 0 ),
@@ -378,9 +377,9 @@ MOAIGfxDevice::MOAIGfxDevice () :
 		this->mVertexTransforms [ i ].Ident ();
 	}
 	this->mUVTransform.Ident ();
+	this->mCpuVertexTransformMtx.Ident ();
 	
 	this->mPenColor.Set ( 1.0f, 1.0f, 1.0f, 1.0f );
-	
 	this->mViewRect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
 	this->mScissorRect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
 }
@@ -449,7 +448,7 @@ void MOAIGfxDevice::Reset () {
 	this->mScissorRect = scissorRect;
 	
 	// fixed function reset
-	if ( this->GetPipelineMode () == MOAIGfxDevice::GL_PIPELINE_FIXED ) {
+	if ( !this->IsProgrammable ()) {
 		
 		// load identity matrix
 		glMatrixMode ( GL_MODELVIEW );
@@ -770,6 +769,8 @@ void MOAIGfxDevice::UpdateCpuVertexMtx () {
 	u32 start = this->mVertexMtxInput;
 	u32 finish = this->mVertexMtxOutput;
 	
+	this->mCpuVertexTransformMtx.Ident ();
+	
 	for ( u32 i = start; i < finish; ++i ) {
 		this->mCpuVertexTransformMtx.Append ( this->mVertexTransforms [ i ]);
 	}
@@ -779,7 +780,7 @@ void MOAIGfxDevice::UpdateCpuVertexMtx () {
 //----------------------------------------------------------------//
 void MOAIGfxDevice::UpdateGpuVertexMtx () {
 
-	if ( !this->GetPipelineMode () == GL_PIPELINE_FIXED ) return;
+	if ( this->IsProgrammable ()) return;
 
 	this->Flush ();
 

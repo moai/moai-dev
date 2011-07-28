@@ -12,13 +12,7 @@
 //----------------------------------------------------------------//
 void MOAIQuadBrush::BindVertexFormat ( MOAIGfxDevice& gfxDevice ) {
 	
-	// TODO: move this logic to MOAIVertexFormatMgr
-	if ( gfxDevice.GetPipelineMode () == MOAIGfxDevice::GL_PIPELINE_FIXED ) {
-		gfxDevice.SetVertexPreset ( MOAIVertexFormatMgr::FF_XYUVC );
-	}
-	else {
-		gfxDevice.SetVertexPreset ( MOAIVertexFormatMgr::PP_XYUVC );
-	}
+	gfxDevice.SetVertexPreset ( MOAIVertexFormatMgr::XYUVC );
 	gfxDevice.SetPrimType ( GL_TRIANGLES );
 }
 

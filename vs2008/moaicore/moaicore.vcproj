@@ -510,6 +510,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\moaicore\MOAIShaderMgr.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIShaderMgr.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\moaicore\MOAITexture.cpp"
 				>
 			</File>
@@ -549,6 +557,18 @@
 				RelativePath="..\..\src\moaicore\MOAIViewport.h"
 				>
 			</File>
+			<Filter
+				Name="shaders"
+				>
+				<File
+					RelativePath="..\..\src\moaicore\shaders\MOAIBasicNoTexture-fsh.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\moaicore\shaders\MOAIBasicNoTexture-vsh.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="grid"

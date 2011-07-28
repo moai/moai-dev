@@ -6,6 +6,7 @@
 #include <moaicore/MOAIGrid.h>
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIShader.h>
+#include <moaicore/MOAIShaderMgr.h>
 #include <moaicore/MOAISurfaceSampler2D.h>
 #include <moaicore/MOAITransform.h>
 
@@ -105,6 +106,11 @@ USRect MOAIDeck::GetBounds ( u32 idx, MOAIDeckRemapper* remapper ) {
 	USRect rect;
 	rect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
 	return rect;
+}
+
+//----------------------------------------------------------------//
+void MOAIDeck::LoadShader () {
+	MOAIShaderMgr::Get ().BindShader ( MOAIShaderMgr::MOAI_BASIC_ONE_TEXTURE );
 }
 
 //----------------------------------------------------------------//

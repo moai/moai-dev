@@ -24,23 +24,22 @@ void MOAIShaderUniform::Bind ( const float* attributes ) {
 		}
 		case UNIFORM_MODEL: {
 			
-			const USAffine2D& affine = MOAIGfxDevice::Get ().GetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM );
+			USAffine2D affine = MOAIGfxDevice::Get ().GetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM );
 			this->BindAffine ( affine );
 			break;
 		}
 		case UNIFORM_TRANSFORM: {
 			
 			if ( this->mTransform ) {
-				const USAffine2D& affine = this->mTransform->GetLocalToWorldMtx ();
+				USAffine2D affine = this->mTransform->GetLocalToWorldMtx ();
 				this->BindAffine ( affine );
 			}
 			break;
 		}
 		case UNIFORM_VIEW_PROJ: {
 		
-			// TODO
-			//const USAffine2D& affine = MOAIGfxDevice::Get ().GetCameraTransform ();
-			//this->BindAffine ( affine );
+			USAffine2D affine = MOAIGfxDevice::Get ().GetViewProjMtx ();
+			this->BindAffine ( affine );
 			break;
 		}
 	}
@@ -105,15 +104,8 @@ int MOAIGlslProgram::_declareUniform ( lua_State* L ) {
 	STLString name		= state.GetValue < cc8* >( 3, "" );
 	u32  type			= state.GetValue < u32 >( 4, MOAIShaderUniform::UNIFORM_NONE );
 	
-	if ( idx < self->mUniforms.Size ()) {
-		
-		self->ClearUniform ( idx );
-		
-		MOAIShaderUniform& uniform = self->mUniforms [ idx ];
-		
-		uniform.mName	= name;
-		uniform.mType	= type;
-	}
+	self->DeclareUniform ( idx, name, type );
+
 	return 0;
 }
 
@@ -135,10 +127,8 @@ int MOAIGlslProgram::_load ( lua_State* L ) {
 int MOAIGlslProgram::_reserveAttributes ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGlslProgram, "U" )
 	
-	u32 total = state.GetValue < u32 >( 2, 0 );
-	self->mAttributes.Init ( total );
-	
-	memset ( self->mAttributes, 0, total * sizeof ( float ));
+	u32 nAttributes = state.GetValue < u32 >( 2, 0 );
+	self->ReserveAttributes ( nAttributes );
 	
 	return 0;
 }
@@ -148,8 +138,8 @@ int MOAIGlslProgram::_reserveAttributes ( lua_State* L ) {
 int MOAIGlslProgram::_reserveUniforms ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGlslProgram, "U" )
 	
-	u32 total = state.GetValue < u32 >( 2, 0 );
-	self->mUniforms.Init ( total );
+	u32 nUniforms = state.GetValue < u32 >( 2, 0 );
+	self->ReserveUniforms ( nUniforms );
 	
 	return 0;
 }
@@ -184,12 +174,11 @@ int MOAIGlslProgram::_setUniform ( lua_State* L ) {
 int MOAIGlslProgram::_setVertexAttribute ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGlslProgram, "UNS" )
 	
-	GLuint index			= state.GetValue < GLuint >( 2, 0 );
+	GLuint idx				= state.GetValue < GLuint >( 2, 0 );
 	STLString attribute		= state.GetValue < cc8* >( 3, "" );
 	
-	if ( attribute.length ()) {
-		self->mAttributeMap [ index ] = attribute;
-	}
+	self->SetVertexAttribute ( idx, attribute );
+
 	return 0;
 }
 
@@ -308,7 +297,7 @@ void MOAIGlslProgram::ClearUniform ( u32 idx ) {
 }
 
 //----------------------------------------------------------------//
-GLuint MOAIGlslProgram::CompileShader ( GLuint type,  cc8* source ) {
+GLuint MOAIGlslProgram::CompileShader ( GLuint type, cc8* source ) {
 
 	GLuint shader = glCreateShader ( type );
 	glShaderSource ( shader, 1, &source, NULL );
@@ -318,11 +307,37 @@ GLuint MOAIGlslProgram::CompileShader ( GLuint type,  cc8* source ) {
 	glGetShaderiv ( shader, GL_COMPILE_STATUS, &status );
 	
 	if ( status == 0 ) {
+	
+		int logLength;
+		glGetShaderiv ( shader, GL_INFO_LOG_LENGTH, &logLength );
+ 
+		/* The maxLength includes the NULL character */
+		GLchar* log = ( GLchar* )malloc ( logLength );
+ 
+		glGetShaderInfoLog ( shader, logLength, &logLength, log );
+		printf ( "%s", log );
+		
+		free ( log );
+	
 		glDeleteShader ( shader );
 		return 0;
 	}
 
 	return shader;
+}
+
+//----------------------------------------------------------------//
+void MOAIGlslProgram::DeclareUniform ( u32 idx, cc8* name, u32 type ) {
+	
+	if ( idx < this->mUniforms.Size ()) {
+		
+		this->ClearUniform ( idx );
+		
+		MOAIShaderUniform& uniform = this->mUniforms [ idx ];
+		
+		uniform.mName	= name;
+		uniform.mType	= type;
+	}
 }
 
 //----------------------------------------------------------------//
@@ -374,6 +389,19 @@ void MOAIGlslProgram::RegisterLuaFuncs ( USLuaState& state ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIGlslProgram::ReserveAttributes ( u32 nAttributes ) {
+
+	this->mAttributes.Init ( nAttributes );
+	memset ( this->mAttributes, 0, nAttributes * sizeof ( float ));
+}
+
+//----------------------------------------------------------------//
+void MOAIGlslProgram::ReserveUniforms ( u32 nUniforms ) {
+
+	this->mUniforms.Init ( nUniforms );
+}
+
+//----------------------------------------------------------------//
 void MOAIGlslProgram::SetSource ( cc8* vshSource, cc8* fshSource ) {
 
 	if ( this->mState != STATE_UNINITIALIZED ) {
@@ -388,6 +416,39 @@ void MOAIGlslProgram::SetSource ( cc8* vshSource, cc8* fshSource ) {
 		this->mFragmentShaderSource = fshSource;
 		
 		this->mState = STATE_PENDING_LOAD;
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIGlslProgram::SetUniform ( u32 idx, u32 src, u32 size ) {
+	
+	if ( idx < this->mUniforms.Size ()) {
+		
+		MOAIShaderUniform& uniform = this->mUniforms [ idx ];
+		if ( uniform.mType == MOAIShaderUniform::UNIFORM_TRANSFORM ) return;
+		
+		uniform.mSrc	= src;
+		uniform.mSize	= size;
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIGlslProgram::SetUniform ( u32 idx, MOAITransformBase* transform ) {
+	
+	if ( idx < this->mUniforms.Size ()) {
+		
+		MOAIShaderUniform& uniform = this->mUniforms [ idx ];
+		if ( uniform.mType != MOAIShaderUniform::UNIFORM_TRANSFORM ) return;
+		
+		uniform.mTransform	= transform;
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIGlslProgram::SetVertexAttribute ( u32 idx, cc8* attribute ) {
+
+	if ( attribute ) {
+		this->mAttributeMap [ idx ] = attribute;
 	}
 }
 

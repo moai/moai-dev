@@ -16,11 +16,6 @@ class MOAIGfxDevice :
 public:
 	
 	enum {
-		GL_PIPELINE_FIXED,
-		GL_PIPELINE_PROGRAMMABLE,
-	};
-	
-	enum {
 		VTX_STAGE_MODEL,
 		VTX_STAGE_WORLD,
 		VTX_STAGE_VIEW,
@@ -120,7 +115,6 @@ public:
 	USAffine2D				GetModelToWorldMtx		() const;
 	
 	USColorVec				GetPenColor				() const;
-	u32						GetPipelineMode			() const;
 	USRect					GetRect					() const;
 	USAffine2D				GetUVTransform			() const;
 	USAffine2D				GetVertexTransform		( u32 id ) const;
@@ -135,6 +129,8 @@ public:
 	USAffine2D				GetWorldToWndMtx		( float xScale = 1.0f, float yScale = 1.0f ) const;
 	USAffine2D				GetWndToModelMtx		() const;
 	USAffine2D				GetWndToWorldMtx		() const;
+	
+	bool					IsProgrammable			();
 	
 							MOAIGfxDevice			();
 							~MOAIGfxDevice			();

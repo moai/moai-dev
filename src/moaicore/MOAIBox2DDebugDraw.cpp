@@ -35,7 +35,7 @@ SUPPRESS_EMPTY_FILE_WARNING
 //----------------------------------------------------------------//
 void MOAIBox2DDebugDraw::BindVertexFormat ( MOAIGfxDevice& gfxDevice ) {
 
-	gfxDevice.SetVertexPreset ( MOAIVertexFormatMgr::FF_XYC );
+	gfxDevice.SetVertexPreset ( MOAIVertexFormatMgr::XYC );
 }
 
 //----------------------------------------------------------------//

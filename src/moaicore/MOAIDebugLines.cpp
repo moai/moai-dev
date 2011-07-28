@@ -138,7 +138,7 @@ void MOAIDebugLines::Draw () {
 	gfxDevice.SetBlendMode ( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
 	
 	gfxDevice.SetPrimType ( GL_LINES );
-	gfxDevice.SetVertexPreset ( MOAIVertexFormatMgr::FF_XYC );
+	gfxDevice.SetVertexPreset ( MOAIVertexFormatMgr::XYC );
 	
 	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM );
 	

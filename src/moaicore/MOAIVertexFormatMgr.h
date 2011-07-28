@@ -14,15 +14,15 @@ class MOAIVertexFormatMgr :
 public:
 
 	enum {
-		FF_XYC,
-		FF_XYUVC,
-		PP_XYUVC,
+		XYC,
+		XYUVC,
 		TOTAL_PRESETS,
 	};
 
 private:
 	
-	MOAIVertexFormat mFormats [ TOTAL_PRESETS ];
+	MOAIVertexFormat mFormatsFF [ TOTAL_PRESETS ];
+	MOAIVertexFormat mFormatsPP [ TOTAL_PRESETS ];
 	
 public:
 	
@@ -40,16 +40,22 @@ public:
 	};
 	
 	enum {
-		PP_XYUVC_POSITION,
-		PP_XYUVC_TEXCOORD,
-		PP_XYUVC_COLOR,
-		PP_XYUVC_SIZE,
+		XYC_POSITION,
+		XYC_COLOR,
+		XYC_SIZE,
+	};
+	
+	enum {
+		XYUVC_POSITION,
+		XYUVC_TEXCOORD,
+		XYUVC_COLOR,
+		XYUVC_SIZE,
 	};
 	
 	//----------------------------------------------------------------//
-	const MOAIVertexFormat&	GetPreset				( u32 presetID );
-							MOAIVertexFormatMgr		();
-							~MOAIVertexFormatMgr		();
+	const MOAIVertexFormat&		GetPreset					( u32 presetID );
+								MOAIVertexFormatMgr			();
+								~MOAIVertexFormatMgr		();
 };
 
 #endif

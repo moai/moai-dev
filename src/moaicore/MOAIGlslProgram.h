@@ -86,7 +86,6 @@ protected:
 	//----------------------------------------------------------------//
 	void			Affirm					();
 	GLuint			CompileShader			( GLuint type,  cc8* source );
-	void			SetSource				( cc8* vshSource, cc8* fshSource );
 	void			Validate				();
 
 public:
@@ -97,10 +96,17 @@ public:
 	void			Bind					();
 	void			Clear					();
 	void			ClearUniform			( u32 idx );
+	void			DeclareUniform			( u32 idx, cc8* name, u32 type );
 					MOAIGlslProgram			();
 					~MOAIGlslProgram		();
 	void			RegisterLuaClass		( USLuaState& state );
 	void			RegisterLuaFuncs		( USLuaState& state );
+	void			ReserveAttributes		( u32 nAttributes );
+	void			ReserveUniforms			( u32 nUniforms );
+	void			SetSource				( cc8* vshSource, cc8* fshSource );
+	void			SetUniform				( u32 idx, u32 src, u32 size );
+	void			SetUniform				( u32 idx, MOAITransformBase* transform );
+	void			SetVertexAttribute		( u32 idx, cc8* attribute );
 	STLString		ToString				();
 };
 

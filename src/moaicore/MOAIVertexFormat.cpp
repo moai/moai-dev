@@ -2,6 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <moaicore/MOAIGfxDevice.h>
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIVertexFormat.h>
 
@@ -203,8 +204,8 @@ int MOAIVertexFormat::_declareUV ( lua_State* L ) {
 //----------------------------------------------------------------//
 void MOAIVertexFormat::Bind ( void* buffer ) const {
 
-	if ( this->mTotalAttributes ) {
-	
+	if ( MOAIGfxDevice::Get ().IsProgrammable ()) {
+		
 		for ( u32 i = 0; i < this->mTotalAttributes; ++i ) {
 			this->mAttributes [ i ].Bind ( buffer, this->mVertexSize );
 		}

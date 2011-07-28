@@ -330,7 +330,7 @@ bool MOAITexture::Bind () {
 	glBindTexture ( GL_TEXTURE_2D, this->mGLTexID );
 	glEnable ( GL_TEXTURE_2D );
 	
-	if ( MOAIGfxDevice::Get ().GetPipelineMode () == MOAIGfxDevice::GL_PIPELINE_FIXED ) {
+	if ( !MOAIGfxDevice::Get ().IsProgrammable ()) {
 		glTexEnvf ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
 	}
 	
