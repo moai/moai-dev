@@ -197,6 +197,8 @@ void _AKUOpenWindowFunc ( const char* title, int width, int height ) {
 	glutDisplayFunc ( _onPaint );
 	glutReshapeFunc ( _onReshape );
 	glutIdleFunc ( _onUpdate );
+	
+	AKUDetectGfxContext ();
 }
 
 //----------------------------------------------------------------//

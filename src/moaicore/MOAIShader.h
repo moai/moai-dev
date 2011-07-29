@@ -85,6 +85,7 @@ protected:
 	
 	//----------------------------------------------------------------//
 	void			Affirm					();
+	void			Bind					();
 	GLuint			CompileShader			( GLuint type,  cc8* source );
 	void			Validate				();
 
@@ -92,8 +93,9 @@ public:
 	
 	DECL_LUA_FACTORY ( MOAIShader )
 	
+	friend class MOAIGfxDevice;
+	
 	//----------------------------------------------------------------//
-	void			Bind					();
 	void			Clear					();
 	void			ClearUniform			( u32 idx );
 	void			DeclareUniform			( u32 idx, cc8* name, u32 type );

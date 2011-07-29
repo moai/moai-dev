@@ -471,7 +471,7 @@ void MOAIFont::SetImage ( MOAIImage* image ) {
 	
 	if ( image ) {
 		this->mTexture = new MOAITexture ();
-		this->mTexture->Load ( *image );
+		this->mTexture->Init ( *image );
 		this->mTexture->SetFilter ( GL_LINEAR, GL_LINEAR );
 	}
 }

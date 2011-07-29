@@ -159,13 +159,13 @@ int MOAITexture::_load ( lua_State* L ) {
 
 	if ( data ) {
 
-		self->Load ( *data, transform );
+		self->Init ( *data, transform );
 	}
 	else if ( state.IsType( 2, LUA_TSTRING ) ) {
 
 		cc8* filename = lua_tostring ( state, 2 );
 		MOAI_CHECK_FILE ( filename );
-		self->Load ( filename, transform );
+		self->Init ( filename, transform );
 	}
 
 	return 0;
@@ -284,7 +284,7 @@ MOAITexture* MOAITexture::AffirmTexture ( USLuaState& state, int idx ) {
 			
 			if ( image ) {
 				texture = new MOAITexture ();
-				texture->Load ( *image );
+				texture->Init ( *image );
 			}
 			else {
 			
@@ -292,7 +292,7 @@ MOAITexture* MOAITexture::AffirmTexture ( USLuaState& state, int idx ) {
 				
 				if ( data ) {
 					texture = new MOAITexture ();
-					texture->Load ( *data, transform );
+					texture->Init ( *data, transform );
 				}
 			}
 		}
@@ -300,7 +300,7 @@ MOAITexture* MOAITexture::AffirmTexture ( USLuaState& state, int idx ) {
 			
 			cc8* filename = lua_tostring ( state, idx );
 			texture = new MOAITexture ();
-			texture->Load ( filename, transform );
+			texture->Init ( filename, transform );
 		}
 	}
 	return texture;
@@ -321,7 +321,7 @@ bool MOAITexture::Bind () {
 	
 		// ugh... fix this monstrosity later!
 		if ( this->mFilename.size ()) {
-			this->Load ( this->mFilename );
+			this->Init ( this->mFilename );
 			this->Affirm ();
 		}
 		if ( !this->mGLTexID ) return false;
@@ -624,7 +624,7 @@ bool MOAITexture::IsOK () {
 }
 
 //----------------------------------------------------------------//
-void MOAITexture::Load ( MOAIImage& image ) {
+void MOAITexture::Init ( MOAIImage& image ) {
 
 	this->Release ();
 	this->mLoader = new MOAITextureLoader ();
@@ -636,7 +636,7 @@ void MOAITexture::Load ( MOAIImage& image ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITexture::Load ( cc8* filename, u32 transform ) {
+void MOAITexture::Init ( cc8* filename, u32 transform ) {
 
 	this->Release ();
 	if ( !USFileSys::CheckFileExists ( filename )) return;
@@ -652,19 +652,19 @@ void MOAITexture::Load ( cc8* filename, u32 transform ) {
 
 
 //----------------------------------------------------------------//
-void MOAITexture::Load ( MOAIDataBuffer& data, u32 transform ) {
+void MOAITexture::Init ( MOAIDataBuffer& data, u32 transform ) {
 
 	void* bytes;
 	u32 size;
 	data.Lock ( &bytes, &size );
 
-	this->Load ( bytes, size, transform );
+	this->Init ( bytes, size, transform );
 	
 	data.Unlock ();
 }
 
 //----------------------------------------------------------------//
-void MOAITexture::Load ( const void* data, u32 size, u32 transform ) {
+void MOAITexture::Init ( const void* data, u32 size, u32 transform ) {
 
 	this->Release ();
 	this->mLoader = new MOAITextureLoader ();
@@ -750,7 +750,7 @@ void MOAITexture::SerializeIn ( USLuaState& state, USLuaSerializer& serializer )
 	if ( path.size ()) {
 		USFilename filename;
 		filename.Bless ( path.str ());
-		this->Load ( filename.mBuffer, DEFAULT_TRANSFORM ); // TODO: serialization
+		this->Init ( filename.mBuffer, DEFAULT_TRANSFORM ); // TODO: serialization
 	}
 }
 

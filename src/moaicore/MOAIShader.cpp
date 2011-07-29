@@ -20,6 +20,7 @@ void MOAIShaderUniform::Bind ( const float* attributes ) {
 		
 		case UNIFORM_INT: {
 			
+			// TODO: convert from floats to ints
 			//glUniform1iv ( this->mAddr, this->mSize, &attributes [ this->mSrc ]);
 			break;
 		}

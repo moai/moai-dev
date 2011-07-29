@@ -5,6 +5,7 @@
 
 #include <moaicore/MOAIGfxDevice.h>
 #include <moaicore/MOAIGfxDevice.h>
+#include <moaicore/MOAIShader.h>
 #include <moaicore/MOAITexture.h>
 #include <moaicore/MOAIVertexFormat.h>
 #include <moaicore/MOAIVertexFormatMgr.h>
@@ -66,6 +67,18 @@ u32 MOAIGfxDevice::CountErrors () const {
 	u32 count = 0;
 	while ( glGetError () != GL_NO_ERROR ) count++;
 	return count;
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDevice::DetectContext () {
+
+	const GLubyte* version = glGetString ( GL_VERSION );
+	
+	this->mIsES = false;
+	this->mMajorVersion = version [ 0 ] - '0';
+	this->mMinorVersion = version [ 2 ] - '0';
+	
+	this->mIsProgrammable = ( this->mMajorVersion >= 2.0f );
 }
 
 //----------------------------------------------------------------//
@@ -340,7 +353,7 @@ void MOAIGfxDevice::GpuMultMatrix ( const USMatrix3D& mtx ) const {
 //----------------------------------------------------------------//
 bool MOAIGfxDevice::IsProgrammable () {
 
-	return true;
+	return this->mIsProgrammable;
 }
 
 //----------------------------------------------------------------//
@@ -355,6 +368,7 @@ MOAIGfxDevice::MOAIGfxDevice () :
 	mPrimSize ( 0 ),
 	mPrimCount ( 0 ),
 	mMaxPrims ( 0 ),
+	mShader ( 0 ),
 	mTexture ( 0 ),
 	mPackedColor ( 0xffffffff ),
 	mPenWidth ( 1.0f ),
@@ -367,7 +381,11 @@ MOAIGfxDevice::MOAIGfxDevice () :
 	mVertexMtxInput ( VTX_STAGE_MODEL ),
 	mVertexMtxOutput ( VTX_STAGE_MODEL ),
 	mCpuVertexTransform ( false ),
-	mCpuUVTransform ( false ) {
+	mCpuUVTransform ( false ),
+	mIsES ( false ),
+	mMajorVersion ( 0 ),
+	mMinorVersion ( 0 ),
+	mIsProgrammable ( false ) {
 	
 	RTTI_SINGLE ( MOAIGfxDevice )
 	
@@ -398,12 +416,6 @@ u32 MOAIGfxDevice::PrintErrors () {
 		printf ( "OPENGL ERROR: %s\n", this->GetErrorString ( error ));
 	}
 	return count;
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxDevice::Rebind () {
-
-	this->Flush ();
 }
 
 //----------------------------------------------------------------//
@@ -603,6 +615,20 @@ void MOAIGfxDevice::SetScreenSpace ( MOAIViewport& viewport ) {
 	//
 	//glMatrixMode ( GL_PROJECTION );
 	//MOAIGfxDevice::LoadMatrix ( wndToNorm );
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDevice::SetShader ( MOAIShader* shader ) {
+
+	if ( this->mShader != shader ) {
+	
+		this->Flush ();
+		this->mShader = shader;
+		
+		if ( shader ) {
+			shader->Bind ();
+		}
+	}
 }
 
 //----------------------------------------------------------------//

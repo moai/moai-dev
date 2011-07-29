@@ -25,8 +25,7 @@ void MOAIShaderMgr::BindShader ( u32 shaderID ) {
 	if ( gfxDevice.IsProgrammable ()) {
 
 		MOAIShader& shader = this->GetShader ( shaderID );
-		gfxDevice.Flush ();
-		shader.Bind ();
+		gfxDevice.SetShader ( &shader );
 	}
 }
 

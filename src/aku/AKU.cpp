@@ -118,6 +118,12 @@ void AKUDeleteContext ( AKUContextID contextID ) {
 }
 
 //----------------------------------------------------------------//
+void AKUDetectGfxContext () {
+
+	MOAIGfxDevice::Get ().DetectContext ();
+}
+
+//----------------------------------------------------------------//
 void AKUEnqueueButtonEvent ( int deviceID, int sensorID, bool down ) {
 
 	MOAIInputMgr::Get ().EnqueueButtonEvent (( u8 )deviceID, ( u8 )sensorID, down );

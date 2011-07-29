@@ -600,10 +600,9 @@ void MOAIProp2D::LoadShader () {
 	gfxDevice.SetBlendMode ( this->mBlendMode );
 
 	if ( this->mShader ) {
-		this->mShader->Bind ();
+		gfxDevice.SetShader ( this->mShader );
 	}
 	else if ( this->mDeck ) {
-		// TODO: move to deck
 		this->mDeck->LoadShader ();
 	}
 	

@@ -4,6 +4,7 @@
 #ifndef	MOAIGFXDEVICE_H
 #define	MOAIGFXDEVICE_H
 
+class MOAIShader;
 class MOAITexture;
 class MOAIVertexFormat;
 class MOAIViewport;
@@ -52,6 +53,7 @@ private:
 	u32				mMaxPrims;
 	
 	MOAITexture*	mTexture;
+	MOAIShader*		mShader;
 	
 	USAffine2D		mUVTransform;
 	USAffine2D		mVertexTransforms [ TOTAL_VTX_TRANSFORMS ];
@@ -80,6 +82,11 @@ private:
 	USAffine2D		mCpuVertexTransformMtx; // composition of matrices to be applied via CPU
 	
 	bool			mCpuUVTransform;
+	
+	bool			mIsES;
+	u32				mMajorVersion;
+	u32				mMinorVersion;
+	bool			mIsProgrammable;
 
 	//----------------------------------------------------------------//
 	void					Clear					();
@@ -88,7 +95,6 @@ private:
 	void					GpuLoadMatrix			( const USMatrix3D& mtx ) const;
 	void					GpuMultMatrix			( const USAffine2D& mtx ) const;
 	void					GpuMultMatrix			( const USMatrix3D& mtx ) const;
-	void					Rebind					();
 	void					UpdateCpuVertexMtx		();
 	void					UpdateGpuVertexMtx		();
 	void					UpdateUVMtx				();
@@ -103,6 +109,7 @@ public:
 	void					ClearErrors				();
 	u32						CountErrors				() const;
 	
+	void					DetectContext			();
 	void					DrawPrims				( const MOAIVertexFormat& format, GLenum primType, void* buffer, u32 size ); 
 	void					EndPrim					();
 	void					Flush					();
@@ -152,6 +159,7 @@ public:
 	void					SetScissorRect			();
 	void					SetScissorRect			( const USRect& rect );
 	void					SetScreenSpace			( MOAIViewport& viewport );
+	void					SetShader				( MOAIShader* shader = 0 );
 	void					SetSize					( u32 width, u32 height );
 	bool					SetTexture				( MOAITexture* texture = 0 );
 	

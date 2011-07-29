@@ -81,10 +81,10 @@ public:
 	u32						GetHeight				();
 	u32						GetWidth				();
 	bool					IsOK					();
-	void					Load					( MOAIImage& image );
-	void					Load					( cc8* filename, u32 transform = DEFAULT_TRANSFORM );
-	void					Load					( MOAIDataBuffer& data, u32 transform = DEFAULT_TRANSFORM);
-	void					Load					( const void* data, u32 size, u32 transform = DEFAULT_TRANSFORM ) ;
+	void					Init					( MOAIImage& image );
+	void					Init					( cc8* filename, u32 transform = DEFAULT_TRANSFORM );
+	void					Init					( MOAIDataBuffer& data, u32 transform = DEFAULT_TRANSFORM);
+	void					Init					( const void* data, u32 size, u32 transform = DEFAULT_TRANSFORM ) ;
 							MOAITexture				();
 							~MOAITexture			();
 	void					SerializeIn				( USLuaState& state, USLuaSerializer& serializer );
