@@ -18,6 +18,11 @@ void MOAIShaderUniform::Bind ( const float* attributes ) {
 
 	switch ( this->mType ) {
 		
+		case UNIFORM_INT: {
+			
+			//glUniform1iv ( this->mAddr, this->mSize, &attributes [ this->mSrc ]);
+			break;
+		}
 		case UNIFORM_FLOAT: {
 			
 			glUniform1fv ( this->mAddr, this->mSize, &attributes [ this->mSrc ]);

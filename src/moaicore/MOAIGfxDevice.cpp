@@ -340,7 +340,7 @@ void MOAIGfxDevice::GpuMultMatrix ( const USMatrix3D& mtx ) const {
 //----------------------------------------------------------------//
 bool MOAIGfxDevice::IsProgrammable () {
 
-	return false;
+	return true;
 }
 
 //----------------------------------------------------------------//

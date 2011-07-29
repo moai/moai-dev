@@ -10,6 +10,9 @@
 #include <moaicore/shaders/MOAIBasicNoTexture-fsh.h>
 #include <moaicore/shaders/MOAIBasicNoTexture-vsh.h>
 
+#include <moaicore/shaders/MOAIBasicOneTexture-fsh.h>
+#include <moaicore/shaders/MOAIBasicOneTexture-vsh.h>
+
 //================================================================//
 // MOAIShaderMgr
 //================================================================//
@@ -50,8 +53,9 @@ MOAIShader& MOAIShaderMgr::GetShader ( u32 shaderID ) {
 			case MOAI_BASIC_ONE_TEXTURE:
 				
 				shader->SetVertexAttribute ( MOAIVertexFormatMgr::XYUVC_POSITION, "position" );
+				shader->SetVertexAttribute ( MOAIVertexFormatMgr::XYUVC_TEXCOORD, "uv" );
 				shader->SetVertexAttribute ( MOAIVertexFormatMgr::XYUVC_COLOR, "color" );
-				shader->SetSource ( _basicNoTextureVSH, _basicNoTextureFSH );
+				shader->SetSource ( _basicOneTextureVSH, _basicOneTextureFSH );
 				break;
 		}
 		

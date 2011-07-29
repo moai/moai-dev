@@ -560,6 +560,14 @@
 					RelativePath="..\..\src\moaicore\shaders\MOAIBasicNoTexture-vsh.h"
 					>
 				</File>
+				<File
+					RelativePath="..\..\src\moaicore\shaders\MOAIBasicOneTexture-fsh.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\moaicore\shaders\MOAIBasicOneTexture-vsh.h"
+					>
+				</File>
 			</Filter>
 		</Filter>
 		<Filter
