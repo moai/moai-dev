@@ -4,7 +4,7 @@
 #ifndef	MOAISHADERMGR_H
 #define	MOAISHADERMGR_H
 
-#include <moaicore/MOAIGlslProgram.h>
+class MOAIShader;
 
 //================================================================//
 // MOAIShaderMgr

@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include <moaicore/MOAIGfxDevice.h>
-#include <moaicore/MOAIGlslProgram.h>
+#include <moaicore/MOAIShader.h>
 #include <moaicore/MOAIShaderMgr.h>
 #include <moaicore/MOAIVertexFormatMgr.h>
 
@@ -34,25 +34,24 @@ MOAIShader& MOAIShaderMgr::GetShader ( u32 shaderID ) {
 	MOAIShader* shader = this->mShaders [ shaderID ];
 	
 	if ( !shader ) {
-	
-		MOAIGlslProgram* program = new MOAIGlslProgram ();
-		program->Retain ();
-		shader = program;
+
+		shader = new MOAIShader ();
+		shader->Retain ();
 		
 		switch ( shaderID ) {
 			
 			case MOAI_BASIC_NO_TEXTURE:
 			
-				program->SetVertexAttribute ( MOAIVertexFormatMgr::XYC_POSITION, "position" );
-				program->SetVertexAttribute ( MOAIVertexFormatMgr::XYC_COLOR, "color" );
-				program->SetSource ( _basicNoTextureVSH, _basicNoTextureFSH );
+				shader->SetVertexAttribute ( MOAIVertexFormatMgr::XYC_POSITION, "position" );
+				shader->SetVertexAttribute ( MOAIVertexFormatMgr::XYC_COLOR, "color" );
+				shader->SetSource ( _basicNoTextureVSH, _basicNoTextureFSH );
 				break;
 				
 			case MOAI_BASIC_ONE_TEXTURE:
 				
-				program->SetVertexAttribute ( MOAIVertexFormatMgr::XYUVC_POSITION, "position" );
-				program->SetVertexAttribute ( MOAIVertexFormatMgr::XYUVC_COLOR, "color" );
-				program->SetSource ( _basicNoTextureVSH, _basicNoTextureFSH );
+				shader->SetVertexAttribute ( MOAIVertexFormatMgr::XYUVC_POSITION, "position" );
+				shader->SetVertexAttribute ( MOAIVertexFormatMgr::XYUVC_COLOR, "color" );
+				shader->SetSource ( _basicNoTextureVSH, _basicNoTextureFSH );
 				break;
 		}
 		

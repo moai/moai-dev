@@ -34,7 +34,6 @@
 #include <moaicore/MOAIGfxQuad2D.h>
 #include <moaicore/MOAIGfxQuadDeck2D.h>
 #include <moaicore/MOAIGfxQuadListDeck2D.h>
-#include <moaicore/MOAIGlslProgram.h>
 #include <moaicore/MOAIGlyph.h>
 #include <moaicore/MOAIGrid.h>
 #include <moaicore/MOAIGridSpace.h>
