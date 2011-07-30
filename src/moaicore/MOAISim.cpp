@@ -182,7 +182,6 @@ int MOAISim::_openWindow ( lua_State* L ) {
 	AKUOpenWindowFunc openWindow = AKUGetFunc_OpenWindow ();
 	if ( openWindow ) {
 		openWindow ( title, width, height );
-		glewInit (); // TODO
 	}
 
 	return 0;

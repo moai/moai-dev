@@ -5,6 +5,7 @@
 #define	MOAITEXTFRAME_H
 
 class MOAIFont;
+class MOAITextLayout;
 
 //================================================================//
 // MOAITextCursor

@@ -137,6 +137,7 @@ public:
 	USAffine2D				GetWndToModelMtx		() const;
 	USAffine2D				GetWndToWorldMtx		() const;
 	
+	bool					IsOpenGLES				();
 	bool					IsProgrammable			();
 	
 							MOAIGfxDevice			();

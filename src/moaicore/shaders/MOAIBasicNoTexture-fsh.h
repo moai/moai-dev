@@ -8,7 +8,7 @@
 
 static cc8* _basicNoTextureFSH = SHADER (
 
-	varying vec4 colorVarying;
+	varying LOWP vec4 colorVarying;
 
 	void main() {
 		gl_FragColor = colorVarying;

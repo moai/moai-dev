@@ -306,8 +306,17 @@ void MOAIShader::ClearUniform ( u32 idx ) {
 //----------------------------------------------------------------//
 GLuint MOAIShader::CompileShader ( GLuint type, cc8* source ) {
 
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+
 	GLuint shader = glCreateShader ( type );
-	glShaderSource ( shader, 1, &source, NULL );
+	cc8* sources [ 2 ];
+	
+	sources [ 0 ] = gfxDevice.IsOpenGLES () ? OPENGL_ES_PREPROC : OPENGL_PREPROC;
+	sources [ 1 ] = source;
+	
+	printf ( "%s\n", OPENGL_ES_PREPROC );
+	
+	glShaderSource ( shader, 2, sources, NULL );
 	glCompileShader ( shader );
 
 	GLint status;

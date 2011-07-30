@@ -7,6 +7,9 @@
 #include <moaicore/MOAINode.h>
 
 class MOAITransformBase;
+	
+#define		OPENGL_PREPROC		"#define LOWP\n #define MEDP\n"
+#define		OPENGL_ES_PREPROC	"#define LOWP lowp\n #define MEDP mediump\n"
 
 //================================================================//
 // MOAIShaderUniform

@@ -72,13 +72,32 @@ u32 MOAIGfxDevice::CountErrors () const {
 //----------------------------------------------------------------//
 void MOAIGfxDevice::DetectContext () {
 
-	const GLubyte* version = glGetString ( GL_VERSION );
+	const GLubyte* driverVersion = glGetString ( GL_VERSION );
 	
-	this->mIsES = false;
-	this->mMajorVersion = version [ 0 ] - '0';
-	this->mMinorVersion = version [ 2 ] - '0';
+	STLString version = ( cc8* )driverVersion;
+	version.to_lower ();
 	
-	this->mIsProgrammable = ( this->mMajorVersion >= 2.0f );
+	STLString gles = "opengl es";
+	
+	if ( version.find ( gles ) != version.npos ) {
+		this->mIsES = true;
+		version = version.substr ( gles.length ());
+		
+		size_t space = version.find ( ' ' );
+		if ( space != version.npos ) {
+			version = version.substr ( space + 1 );
+		}
+	}
+	else {
+		this->mIsES = false;
+	}
+	
+	version = version.substr ( 0, 3 );
+	
+	this->mMajorVersion = version.at ( 0 ) - '0';
+	this->mMinorVersion = version.at ( 2 ) - '0';
+	
+	this->mIsProgrammable = ( this->mMajorVersion >= 2 );
 }
 
 //----------------------------------------------------------------//
@@ -351,6 +370,12 @@ void MOAIGfxDevice::GpuMultMatrix ( const USMatrix3D& mtx ) const {
 }
 
 //----------------------------------------------------------------//
+bool MOAIGfxDevice::IsOpenGLES () {
+
+	return this->mIsES;
+}
+
+//----------------------------------------------------------------//
 bool MOAIGfxDevice::IsProgrammable () {
 
 	return this->mIsProgrammable;
@@ -368,8 +393,8 @@ MOAIGfxDevice::MOAIGfxDevice () :
 	mPrimSize ( 0 ),
 	mPrimCount ( 0 ),
 	mMaxPrims ( 0 ),
-	mShader ( 0 ),
 	mTexture ( 0 ),
+	mShader ( 0 ),
 	mPackedColor ( 0xffffffff ),
 	mPenWidth ( 1.0f ),
 	mPointSize ( 1.0f ),

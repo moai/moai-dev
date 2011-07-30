@@ -216,6 +216,8 @@ void _AKUStartGameLoopFunc () {
 		AKUSetFunc_OpenWindow			( _AKUOpenWindowFunc );
 		AKUSetFunc_StartGameLoop		( _AKUStartGameLoopFunc );
 		
+		AKUDetectGfxContext ();
+		
 		mAnimInterval = 1; // 1 for 60fps, 2 for 30fps
 		
 		mLocationObserver = [[[ LocationObserver alloc ] init ] autorelease ];
