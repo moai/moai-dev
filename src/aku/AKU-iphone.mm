@@ -3,7 +3,6 @@
 
 #import <aku/AKU-iphone.h>
 #import <moaiext-iphone/moaiext-iphone.h>
-#import <moaiext-iphone/Reachability.h>
 #import <moaicore/MOAIEnvironment.h>
 #import <CoreTelephony/CTTelephonyNetworkInfo.h>
 #import <CoreTelephony/CTCarrier.h>
@@ -53,7 +52,6 @@ void AKUIphoneInit ( UIApplication* application ) {
 	MOAIEnvironment::Get ().SetAppDisplayName ( [[[[ NSBundle mainBundle ] infoDictionary ] objectForKey:@"CFBundleDisplayName" ] UTF8String ] );
 	MOAIEnvironment::Get ().SetCacheDirectory ( [[ NSSearchPathForDirectoriesInDomains ( NSCachesDirectory, NSUserDomainMask, YES ) objectAtIndex:0 ] UTF8String ]);
 	MOAIEnvironment::Get ().SetCountryCode ( [[[ NSLocale currentLocale ] objectForKey: NSLocaleCountryCode ] UTF8String ]);
-	MOAIEnvironment::Get ().SetConnectivityFunc ( &AKUGetIphoneNetworkReachability );
 	MOAIEnvironment::Get ().SetDocumentDirectory ( [[ NSSearchPathForDirectoriesInDomains ( NSDocumentDirectory, NSUserDomainMask, YES ) objectAtIndex:0 ] UTF8String ]);
 	MOAIEnvironment::Get ().SetGUIDFunc ( &AKUGetGUID );
 	MOAIEnvironment::Get ().SetLanguageCode ( [[[ NSLocale currentLocale ] objectForKey: NSLocaleLanguageCode ] UTF8String ]);
@@ -69,43 +67,10 @@ void AKUIphoneInit ( UIApplication* application ) {
 	else {
 		MOAIEnvironment::Get ().SetIsRetinaDisplay ( false );
 	}	
-	
-	if ( AKUGetIphoneNetworkReachability () == CONNECTION_TYPE_WWAN ) {
-	
-		CTCarrier* carrierInfo = [[[ CTTelephonyNetworkInfo alloc ] init ] subscriberCellularProvider ];
-		MOAIEnvironment::Get ().SetCarrierISOCountryCode ( [ carrierInfo.isoCountryCode UTF8String ]);
-		MOAIEnvironment::Get ().SetCarrierMobileCountryCode ( [[ carrierInfo mobileCountryCode ] UTF8String ]);
-		MOAIEnvironment::Get ().SetCarrierName ( [[ carrierInfo carrierName ] UTF8String ]);
-		MOAIEnvironment::Get ().SetCarrierMobileNetworkCode ( [[ carrierInfo mobileNetworkCode ] UTF8String ]);
-	}
-		
+			
 	// MOAI
 	REGISTER_LUA_CLASS ( MOAIApp )
 	REGISTER_LUA_CLASS ( MOAIWebView )
-}
-
-//-----------------------------------------------------------------//
-long AKUGetIphoneNetworkReachability ( ) {
-
-
-	Reachability *reach = [ Reachability reachabilityForInternetConnection ];
-	NetworkStatus status = [ reach currentReachabilityStatus ];
-		
-	if ( status == NotReachable ) {
-		return ( long )CONNECTION_TYPE_NONE;
-	} else if ( status == ReachableViaWWAN ) {
-		// Update network information
-		CTCarrier* carrierInfo = [[[ CTTelephonyNetworkInfo alloc ] init ] subscriberCellularProvider ];
-		MOAIEnvironment::Get ().SetCarrierISOCountryCode ( [ carrierInfo.isoCountryCode UTF8String ]);
-		MOAIEnvironment::Get ().SetCarrierMobileCountryCode ( [[carrierInfo mobileCountryCode ] UTF8String ]);
-		MOAIEnvironment::Get ().SetCarrierName ( [[carrierInfo carrierName ] UTF8String ]);
-		MOAIEnvironment::Get ().SetCarrierMobileNetworkCode ( [[carrierInfo mobileNetworkCode ] UTF8String ]);
-		return ( long )CONNECTION_TYPE_WWAN;
-	} else if ( status == ReachableViaWiFi ) {
-		return ( long )CONNECTION_TYPE_WIFI;
-	}
-	
-	return ( long )CONNECTION_TYPE_NONE;
 }
 
 //-----------------------------------------------------------------//
@@ -117,3 +82,18 @@ const char* AKUGetGUID ( ) {
 	return [ session_uuid UTF8String ];
 }
 
+//-----------------------------------------------------------------//
+void AKUSetConnectionType ( long type ) {
+
+	MOAIEnvironment::Get ().SetConnectionType ( type );
+	
+	// If we have a cellualr connection, get carrier information
+	if ( type == CONNECTION_TYPE_WWAN ) {
+	
+		CTCarrier* carrierInfo = [[[ CTTelephonyNetworkInfo alloc ] init ] subscriberCellularProvider ];
+		MOAIEnvironment::Get ().SetCarrierISOCountryCode ( [ carrierInfo.isoCountryCode UTF8String ]);
+		MOAIEnvironment::Get ().SetCarrierMobileCountryCode ( [[ carrierInfo mobileCountryCode ] UTF8String ]);
+		MOAIEnvironment::Get ().SetCarrierName ( [[ carrierInfo carrierName ] UTF8String ]);
+		MOAIEnvironment::Get ().SetCarrierMobileNetworkCode ( [[ carrierInfo mobileNetworkCode ] UTF8String ]);
+	}
+}

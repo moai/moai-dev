@@ -126,9 +126,7 @@ int MOAIEnvironment::_getCarrierName ( lua_State* L  ) {
 */
 int MOAIEnvironment::_getConnectionType ( lua_State* L ) {
 
-	u32 type = ( u32) MOAIEnvironment::Get ().getConnectivityFunc ();
-
-	lua_pushinteger ( L, type );
+	lua_pushinteger ( L, MOAIEnvironment::Get ().mConnectionType );
 	return 1;
 }
 
@@ -331,6 +329,12 @@ int MOAIEnvironment::_isRetinaDisplay ( lua_State* L  ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+long MOAIEnvironment::GetConnectivity () {
+		
+	return mConnectionType;
+}
+
+//----------------------------------------------------------------//
 MOAIEnvironment::MOAIEnvironment () :
 	mAppDisplayName ( "UNKNOWN" ),
 	mAppID ( "UNKNOWN" ),
@@ -340,6 +344,7 @@ MOAIEnvironment::MOAIEnvironment () :
 	mCarrierMobileCountryCode ( "UNKNOWN" ),
 	mCarrierMobileNetworkCode ( "UNKNOWN" ),
 	mCarrierName ( "UNKNOWN" ),
+	mConnectionType ( CONNECTION_TYPE_NONE ),
 	mCountryCode ( "UNKNOWN" ),
 	mCPUABI ( "UNKNOWN" ),
 	mDevBrand ( "UNKNOWN" ),
@@ -448,6 +453,11 @@ void MOAIEnvironment::SetCarrierName ( cc8* name ) {
 //----------------------------------------------------------------//
 void MOAIEnvironment::SetConnectivityFunc ( long (*connFunc)(void) ) {
 	getConnectivityFunc = connFunc;
+}
+
+//----------------------------------------------------------------//
+void MOAIEnvironment::SetConnectionType ( long connType ) {
+	mConnectionType = connType;
 }
 
 //----------------------------------------------------------------//

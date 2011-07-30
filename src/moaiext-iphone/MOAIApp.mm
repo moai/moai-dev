@@ -281,6 +281,9 @@ MOAIApp::MOAIApp () {
 	
 	this->mStoreKitListener = [[ MOAIStoreKitListener alloc ] init ];
 	[[ SKPaymentQueue defaultQueue ] addTransactionObserver:this->mStoreKitListener ];
+	
+	this->mReachabilityListener = [ ReachabilityListener alloc ];
+	[ this->mReachabilityListener startListener ];
 }
 
 //----------------------------------------------------------------//
