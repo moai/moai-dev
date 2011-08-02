@@ -25,7 +25,6 @@ private:
 	static int		_loadAndRunLuaFile		( lua_State* L );
 	static int		_loadLuaFile			( lua_State* L );
 	static int		_mount					( lua_State* L );
-	static int		_openRead				( lua_State* L );
 	static int		_printSearchPath		( lua_State* L );
 	static int		_setWriteDirectory		( lua_State* L );
 	static int		_unmount				( lua_State* L );

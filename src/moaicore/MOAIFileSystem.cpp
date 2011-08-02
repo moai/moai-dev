@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <moaicore/MOAIFileSystem.h>
+#include <moaicore/MOAIFile.h>
 #include <moaicore/MOAILogMessages.h>
 #include <physfs.h>
 
@@ -59,7 +60,7 @@ int MOAIFileSystem::_checkPathExists ( lua_State* L ) {
 	@text	Deletes a file or directory.
 
 	@in		string file/directory
-	@out	boolean error
+	@out	string error
 */
 int MOAIFileSystem::_delete ( lua_State* L ) {
 	USLuaState state ( L );
@@ -230,26 +231,6 @@ int MOAIFileSystem::_mount ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	openRead
-	@text	Opens a file for reading
-
-	@in		string fileName
-	@out	PHYSFS_File file
-*/
-int MOAIFileSystem::_openRead ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIFileSystem, "US" )
-	
-	/*cc8* fileName = state.GetValue < cc8* >( 1, "" );
-	
-	PHYSFS_File* file = PHYSFS_openRead ( fileName );
-	if ( file != NULL )
-		self->PushLuaUserdata ( file );
-	else
-		printf ( "File did not open: %s", PHYSFS_getLastError ())*/
-	return 1;
-}
-
-//----------------------------------------------------------------//
 /**	@name	printSearchPath
 	@text	Prints the archives and directories in the search path.
 
@@ -330,7 +311,6 @@ void MOAIFileSystem::RegisterLuaClass ( USLuaState& state ) {
 		{ "loadAndRunLuaFile",		_loadAndRunLuaFile }, 
 		{ "loadLuaFile",			_loadLuaFile }, 
 		{ "mount",					_mount },
-		{ "openRead",				_openRead },
 		{ "printSearchPath",		_printSearchPath },
 		{ "setWriteDirectory",		_setWriteDirectory },
 		{ "unmount",				_unmount },
