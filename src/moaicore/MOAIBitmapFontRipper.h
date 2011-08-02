@@ -5,6 +5,7 @@
 #define MOAIBITMAPFONTRIPPER_H
 
 #include <moaicore/MOAIFont.h>
+#include <moaicore/MOAIImage.h>
 
 //================================================================//
 // MOAIBitmapGlyphRipper
@@ -41,8 +42,8 @@ private:
 	typedef STLList < MOAIBitmapGlyphRipper >::iterator GlyphListIt;
 	STLList < MOAIBitmapGlyphRipper > mGlyphList;
 	
-	USImage mInBmp;
-	USImage mOutBmp;
+	MOAIImage mInBmp;
+	MOAIImage mOutBmp;
 
 	//----------------------------------------------------------------//
 	void			CopyGlyph					( MOAIBitmapGlyphRipper& glyph, int dstX, int dstY );
@@ -55,13 +56,13 @@ private:
 	void			Scan						();
 	void			ScanRow						( u32 y );
 	void			SetPixel					( u32 x, u32 y, u32 color );
-	void			RipAndReturn				( MOAIFont& font, USImage& image, cc8* charCodes );
+	void			RipAndReturn				( MOAIFont& font, MOAIImage& image, cc8* charCodes );
 public:
 
 	//----------------------------------------------------------------//
 	void			Clear						();
-	void			RipAndReturn				( USData& inData, MOAIFont& font, USImage& image, cc8* charCodes );
-	void			RipAndReturn				( cc8* inFile, MOAIFont& font, USImage& image, cc8* charCodes );
+	void			RipAndReturn				( USData& inData, MOAIFont& font, MOAIImage& image, cc8* charCodes );
+	void			RipAndReturn				( cc8* inFile, MOAIFont& font, MOAIImage& image, cc8* charCodes );
 					MOAIBitmapFontRipper		();
 					~MOAIBitmapFontRipper		();
 };

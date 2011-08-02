@@ -7,12 +7,14 @@
 
 #include <moaicore/MOAIFont.h>
 
+class MOAIImage;
+
 //================================================================//
 // MOAIFreetypeFontRipper
 //================================================================//
 namespace MOAIFreetypeFontRipper {
 
-	void	RipFromTTF		( cc8* filename, MOAIFont& font, USImage& image, cc8* chars, float points, u32 dpi );
+	void	RipFromTTF		( cc8* filename, MOAIFont& font, MOAIImage& image, cc8* chars, float points, u32 dpi );
 };
 
 #endif

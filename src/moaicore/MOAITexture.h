@@ -5,6 +5,7 @@
 #define	MOAITEXTURE2D_H
 
 #include <moaicore/MOAIDeck.h>
+#include <moaicore/MOAIImage.h>
 
 class MOAIDataBuffer;
 class MOAIImage;
@@ -27,7 +28,7 @@ class MOAITexture :
 	public virtual USLuaObject {
 private:
 
-	static const u32 DEFAULT_TRANSFORM = USImageTransform::TRUECOLOR | USImageTransform::PREMULTIPLY_ALPHA;
+	static const u32 DEFAULT_TRANSFORM = MOAIImageTransform::TRUECOLOR | MOAIImageTransform::PREMULTIPLY_ALPHA;
 
 	// GL texture
 	GLuint				mGLTexID;
@@ -66,7 +67,7 @@ private:
 	//----------------------------------------------------------------//
 	void					Affirm					();
 	bool					Bind					();
-	void					CreateTextureFromImage	( USImage& image );
+	void					CreateTextureFromImage	( MOAIImage& image );
 	void					CreateTextureFromPVR	( void* data, size_t size );
 	void					ReleaseLoader			();
 

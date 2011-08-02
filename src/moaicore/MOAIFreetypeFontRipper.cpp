@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <moaicore/MOAIFreetypeFontRipper.h>
+#include <moaicore/MOAIImage.h>
 #include <moaicore/MOAILogMessages.h>
 #include <contrib/utf8.h>
 
@@ -19,7 +20,7 @@ SUPPRESS_EMPTY_FILE_WARNING
 class RenderParams {
 public:
 
-	USImage*	mImage;
+	MOAIImage*	mImage;
 	int			mPenX;
 	int			mPenY;
 };
@@ -29,11 +30,11 @@ public:
 //================================================================//
 
 //----------------------------------------------------------------//
-static void		_initializeImage	( USImage& image, cc8* chars, FT_Face face );
+static void		_initializeImage	( MOAIImage& image, cc8* chars, FT_Face face );
 static void		_renderSpan			( const int y, const int count, const FT_Span* const spans, void* const user );
 
 //----------------------------------------------------------------//
-static void _initializeImage ( USImage& image, cc8* chars, FT_Face face ) {
+static void _initializeImage ( MOAIImage& image, cc8* chars, FT_Face face ) {
 
 	int max = 1024;
 
@@ -119,7 +120,7 @@ static void _renderSpan ( const int y, const int count, const FT_Span* const spa
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIFreetypeFontRipper::RipFromTTF ( cc8* filename, MOAIFont& font, USImage& image, cc8* chars, float points, u32 dpi ) {
+void MOAIFreetypeFontRipper::RipFromTTF ( cc8* filename, MOAIFont& font, MOAIImage& image, cc8* chars, float points, u32 dpi ) {
 
 	USLeanArray < char > validChars;
 	validChars.Init ( strlen ( chars ) + 1 );

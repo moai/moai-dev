@@ -25,7 +25,7 @@ public:
 	STLString		mFilename;
 	void*			mFileData;
 	size_t			mFileDataSize;
-	USImage			mImage;
+	MOAIImage			mImage;
 	u32				mTransform;
 	u32				mType;
 	
@@ -344,7 +344,7 @@ bool MOAITexture::Bind () {
 }
 
 //----------------------------------------------------------------//
-void MOAITexture::CreateTextureFromImage ( USImage& image ) {
+void MOAITexture::CreateTextureFromImage ( MOAIImage& image ) {
 
 	if ( !image.IsOK ()) return;
 

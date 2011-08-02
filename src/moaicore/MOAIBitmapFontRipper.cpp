@@ -4,8 +4,8 @@
 #include "pch.h"
 
 #include <contrib/utf8.h>
-#include <moaicore/MOAIFont.h>
 #include <moaicore/MOAIBitmapFontRipper.h>
+#include <moaicore/MOAIFont.h>
 
 //================================================================//
 // MOAIBitmapFontRipper
@@ -195,7 +195,7 @@ void MOAIBitmapFontRipper::MakeGlyph ( MOAIBitmapGlyphRipper& glyph ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIBitmapFontRipper::RipAndReturn ( MOAIFont& font, USImage& image, cc8* charCodes ) {
+void MOAIBitmapFontRipper::RipAndReturn ( MOAIFont& font, MOAIImage& image, cc8* charCodes ) {
 
 	font.Init ( charCodes );
 	if ( !font.Size ()) return;
@@ -226,14 +226,14 @@ void MOAIBitmapFontRipper::RipAndReturn ( MOAIFont& font, USImage& image, cc8* c
 }
 
 //----------------------------------------------------------------//
-void MOAIBitmapFontRipper::RipAndReturn ( USData& inData, MOAIFont& font, USImage& image, cc8* charCodes ) {
+void MOAIBitmapFontRipper::RipAndReturn ( USData& inData, MOAIFont& font, MOAIImage& image, cc8* charCodes ) {
 
 	this->mInBmp.Load ( inData );
 	this->RipAndReturn ( font, image, charCodes );
 }
 
 //----------------------------------------------------------------//
-void MOAIBitmapFontRipper::RipAndReturn ( cc8* inFile, MOAIFont& font, USImage& image, cc8* charCodes ) {
+void MOAIBitmapFontRipper::RipAndReturn ( cc8* inFile, MOAIFont& font, MOAIImage& image, cc8* charCodes ) {
 
 	this->mInBmp.Load ( inFile );
 	this->RipAndReturn ( font, image, charCodes );

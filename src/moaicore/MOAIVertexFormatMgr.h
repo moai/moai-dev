@@ -4,7 +4,7 @@
 #ifndef	MOAIVERTEXFORMATMGR_H
 #define	MOAIVERTEXFORMATMGR_H
 
-class MOAIVertexFormat;
+#include <moaicore/MOAIVertexFormat.h>
 
 //================================================================//
 // MOAIVertexFormatMgr

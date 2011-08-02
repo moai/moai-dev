@@ -396,14 +396,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\uslsext\USImage.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USImage.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\uslsext\USPolyScanner.h"
 				>
 			</File>

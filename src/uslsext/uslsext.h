@@ -26,7 +26,6 @@
 #include <uslsext/USFsmStateFactory.h>
 #include <uslsext/USHttpTask.h>
 #include <uslsext/USHttpTask_impl.h>
-#include <uslsext/USImage.h>
 #include <uslsext/USInterpolate.h>
 #include <uslsext/USIntersect.h>
 #include <uslsext/USLexStream.h>
