@@ -3,7 +3,6 @@
 
 #include "pch.h"
 #include <moaicore/MOAIFileSystem.h>
-#include <moaicore/MOAIFile.h>
 #include <moaicore/MOAILogMessages.h>
 #include <physfs.h>
 
