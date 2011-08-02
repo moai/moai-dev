@@ -181,7 +181,7 @@
 				FavorSizeOrSpeed="2"
 				OmitFramePointers="true"
 				WholeProgramOptimization="false"
-				AdditionalIncludeDirectories="&quot;..\..\3rdparty\physfs-2.0.2\&quot;"
+				AdditionalIncludeDirectories="&quot;..\..\3rdparty\zlib-1.2.3\&quot;;&quot;..\..\3rdparty\physfs-2.0.2\&quot;"
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;PHYSFS_SUPPORTS_ZIP"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
