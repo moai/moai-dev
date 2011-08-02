@@ -851,6 +851,14 @@ void MOAIGfxDevice::SetVertexTransform ( u32 id, const USAffine2D& transform ) {
 		else {
 			this->UpdateGpuVertexMtx ();
 		}
+		
+		if ( this->mShader ) {
+			this->mShader->UpdatePipelineTransforms (
+				this->mVertexTransforms [ VTX_WORLD_TRANSFORM ],
+				this->mVertexTransforms [ VTX_VIEW_TRANSFORM ],
+				this->mVertexTransforms [ VTX_PROJ_TRANSFORM ]
+			);
+		}
 	}
 }
 

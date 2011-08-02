@@ -14,52 +14,6 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIShaderUniform::Bind ( const float* attributes ) {
-
-	switch ( this->mType ) {
-		
-		case UNIFORM_INT: {
-			
-			// TODO: convert from floats to ints
-			//glUniform1iv ( this->mAddr, this->mSize, &attributes [ this->mSrc ]);
-			break;
-		}
-		case UNIFORM_FLOAT: {
-			
-			glUniform1fv ( this->mAddr, this->mSize, &attributes [ this->mSrc ]);
-			break;
-		}
-		case UNIFORM_TRANSFORM: {
-			
-			if ( this->mTransform ) {
-				USAffine2D affine = this->mTransform->GetLocalToWorldMtx ();
-				this->BindAffine ( affine );
-			}
-			break;
-		}
-		case UNIFORM_VIEW_PROJ: {
-		
-			USAffine2D affine = MOAIGfxDevice::Get ().GetViewProjMtx ();
-			this->BindAffine ( affine );
-			break;
-		}
-		case UNIFORM_WORLD: {
-			
-			USAffine2D affine = MOAIGfxDevice::Get ().GetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM );
-			this->BindAffine ( affine );
-			break;
-		}
-		case UNIFORM_WORLD_VIEW_PROJ: {
-			
-			USAffine2D affine = MOAIGfxDevice::Get ().GetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM );
-			affine.Append ( MOAIGfxDevice::Get ().GetViewProjMtx ());
-			this->BindAffine ( affine );
-			break;
-		}
-	}
-}
-
-//----------------------------------------------------------------//
 void MOAIShaderUniform::BindAffine ( const USAffine2D& affine ) {
 
 	float mtx [ 16 ];
@@ -86,6 +40,61 @@ void MOAIShaderUniform::BindAffine ( const USAffine2D& affine ) {
 	mtx [ 0x0f ] = 1.0f;
 	
 	glUniformMatrix4fv ( this->mAddr, 1, true, mtx );
+}
+
+//----------------------------------------------------------------//
+void MOAIShaderUniform::BindAttributes ( const float* attributes ) {
+
+	switch ( this->mType ) {
+		
+		case UNIFORM_INT: {
+			
+			// TODO: convert from floats to ints
+			//glUniform1iv ( this->mAddr, this->mSize, &attributes [ this->mSrc ]);
+			break;
+		}
+		case UNIFORM_FLOAT: {
+			
+			glUniform1fv ( this->mAddr, this->mSize, &attributes [ this->mSrc ]);
+			break;
+		}
+		case UNIFORM_TRANSFORM: {
+			
+			if ( this->mTransform ) {
+				USAffine2D affine = this->mTransform->GetLocalToWorldMtx ();
+				this->BindAffine ( affine );
+			}
+			break;
+		}
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIShaderUniform::BindPipelineTransforms ( const USAffine2D& world, const USAffine2D& view, const USAffine2D& proj ) {
+
+	switch ( this->mType ) {
+		
+		case UNIFORM_VIEW_PROJ: {
+			
+			USAffine2D affine = view;
+			affine.Append ( proj );
+			this->BindAffine ( affine );
+			break;
+		}
+		case UNIFORM_WORLD: {
+			
+			this->BindAffine ( world );
+			break;
+		}
+		case UNIFORM_WORLD_VIEW_PROJ: {
+			
+			USAffine2D affine = world;
+			affine.Append ( view );
+			affine.Append ( proj );
+			this->BindAffine ( affine );
+			break;
+		}
+	}
 }
 
 //----------------------------------------------------------------//
@@ -270,7 +279,7 @@ void MOAIShader::Bind () {
 
 		// reload the uniform values
 		for ( u32 i = 0; i < this->mUniforms.Size (); ++i ) {
-			this->mUniforms [ i ].Bind ( this->mAttributes );
+			this->mUniforms [ i ].BindAttributes ( this->mAttributes );
 		}
 	}
 }
@@ -479,6 +488,15 @@ STLString MOAIShader::ToString () {
 	STLString repr;
 
 	return repr;
+}
+
+//----------------------------------------------------------------//
+void MOAIShader::UpdatePipelineTransforms ( const USAffine2D& world, const USAffine2D& view, const USAffine2D& proj ) {
+
+	// reload the uniform values
+	for ( u32 i = 0; i < this->mUniforms.Size (); ++i ) {
+		this->mUniforms [ i ].BindPipelineTransforms ( world, view, proj );
+	}
 }
 
 //----------------------------------------------------------------//

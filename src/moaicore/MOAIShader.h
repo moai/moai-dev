@@ -38,8 +38,9 @@ private:
 	USRef < MOAITransformBase >	mTransform;
 
 	//----------------------------------------------------------------//
-	void		Bind				( const float* attributes );
-	void		BindAffine			( const USAffine2D& affine );
+	void		BindAffine					( const USAffine2D& affine );
+	void		BindAttributes				( const float* attributes );
+	void		BindPipelineTransforms		( const USAffine2D& world, const USAffine2D& view, const USAffine2D& proj );
 
 public:
 
@@ -88,10 +89,11 @@ protected:
 	static int		_setVertexAttribute		( lua_State* L );
 	
 	//----------------------------------------------------------------//
-	void			Affirm					();
-	void			Bind					();
-	GLuint			CompileShader			( GLuint type,  cc8* source );
-	void			Validate				();
+	void			Affirm						();
+	void			Bind						();
+	GLuint			CompileShader				( GLuint type,  cc8* source );
+	void			UpdatePipelineTransforms	( const USAffine2D& world, const USAffine2D& view, const USAffine2D& proj );
+	void			Validate					();
 
 public:
 	
