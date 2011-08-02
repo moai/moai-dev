@@ -4,8 +4,6 @@
 -- http://getmoai.com
 ----------------------------------------------------------------
 
-print ( "util-physfs" )
-
 MOAISim.openWindow ( "test", 320, 480 )
 
 viewport = MOAIViewport.new ()
@@ -25,10 +23,10 @@ prop = MOAIProp2D.new ()
 prop:setDeck ( gfxQuad )
 layer:insertProp ( prop )
 
-----------------------------------------------------------------
-print ( "testPhysFS" )
-print ( tostring ( MOAIFileSystem.mount ( "archive.zip", "", 1 )))
-print ( tostring ( MOAIFileSystem.checkFileExists ( "file.txt" )))
+prop:moveRot ( 360, 1.5 )
 
 ----------------------------------------------------------------
-prop:moveRot ( 360, 1.5 )
+print ( MOAIFileSystem.checkFileExists ( "luaFile.lua" ))
+luaBlock = require "luaFile"
+print ( luaBlock.helloString )
+dofile ( "luaDoFile" )

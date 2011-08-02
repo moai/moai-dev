@@ -135,6 +135,79 @@ int MOAIFileSystem::_getRealPath ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	_loadAndRunLuaFile
+	@text	Loads and runs a Lua file from the PHYSFS file system.
+
+	@in		string filename
+	@out	int error
+*/
+
+int MOAIFileSystem::_loadAndRunLuaFile ( lua_State* L ) {
+	USLuaState state ( L );
+
+	cc8* filename = state.GetValue < cc8* >( 1, "" );
+	
+	// Check that the lua file exists in the archive
+	if ( !PHYSFS_exists ( filename )) {
+		printf ( "File does not exist" );
+		return 0;
+	}
+
+	// File exists, so read the data
+	PHYSFS_File* file = PHYSFS_openRead ( filename );
+	int fileSize = ( int )PHYSFS_fileLength ( file );
+	char* data = new char[ fileSize ];
+	PHYSFS_read ( file, data, 1, fileSize );
+
+	// Load and run the chunk
+	luaL_loadbuffer ( state, data, fileSize, filename );
+	lua_pcall( state, 0, LUA_MULTRET, 0 );
+
+	// Cleanup
+	delete [] data;
+	PHYSFS_close ( file );
+
+	// Return 1 ( the return of the function/module ran in of pcall )
+	return 1;
+}
+
+//----------------------------------------------------------------//
+/**	@name	loadLuaFile
+	@text	Loads a Lua file from the PHYSFS file system. 
+
+	@in		string filename
+	@out	int error
+*/
+
+int MOAIFileSystem::_loadLuaFile ( lua_State* L ) {
+	USLuaState state ( L );
+
+	cc8* filename = state.GetValue < cc8* >( 1, "" );
+	
+	// Check that the lua file exists in the archive
+	if ( !PHYSFS_exists ( filename )) {
+		printf ( "File does not exist" );
+		return 0;
+	}
+
+	// File exists, so read the data
+	PHYSFS_File* file = PHYSFS_openRead ( filename );
+	int fileSize = ( int )PHYSFS_fileLength ( file );
+	char* data = new char[ fileSize ];
+	PHYSFS_read ( file, data, 1, fileSize );
+
+	// Load and the chunk
+	luaL_loadbuffer ( state, data, fileSize, filename );
+
+	// Cleanup
+	delete [] data;
+	PHYSFS_close ( file );
+
+	// Return 1 ( the file buffer )
+	return 1;
+}
+
+//----------------------------------------------------------------//
 /**	@name	mount
 	@text	Mounts a new archive or directory to the current PHYSFS file system.
 
@@ -153,6 +226,26 @@ int MOAIFileSystem::_mount ( lua_State* L ) {
 	PHYSFS_mount ( newDir, mountPoint, appendToPath ); 
 
 	lua_pushstring ( state, PHYSFS_getLastError ());
+	return 1;
+}
+
+//----------------------------------------------------------------//
+/**	@name	openRead
+	@text	Opens a file for reading
+
+	@in		string fileName
+	@out	PHYSFS_File file
+*/
+int MOAIFileSystem::_openRead ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIFileSystem, "US" )
+	
+	/*cc8* fileName = state.GetValue < cc8* >( 1, "" );
+	
+	PHYSFS_File* file = PHYSFS_openRead ( fileName );
+	if ( file != NULL )
+		self->PushLuaUserdata ( file );
+	else
+		printf ( "File did not open: %s", PHYSFS_getLastError ())*/
 	return 1;
 }
 
@@ -234,7 +327,10 @@ void MOAIFileSystem::RegisterLuaClass ( USLuaState& state ) {
 		{ "getDirSeparator",		_getDirSeparator },
 		{ "getFileDirectory",		_getFileDirectory },
 		{ "getRealPath",			_getRealPath },
+		{ "loadAndRunLuaFile",		_loadAndRunLuaFile }, 
+		{ "loadLuaFile",			_loadLuaFile }, 
 		{ "mount",					_mount },
+		{ "openRead",				_openRead },
 		{ "printSearchPath",		_printSearchPath },
 		{ "setWriteDirectory",		_setWriteDirectory },
 		{ "unmount",				_unmount },
