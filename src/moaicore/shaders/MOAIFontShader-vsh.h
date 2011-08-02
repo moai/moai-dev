@@ -1,12 +1,12 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIBASICONETEXTURE_VSH_H
-#define	MOAIBASICONETEXTURE_VSH_H
+#ifndef	MOAIFONTSHADER_VSH_H
+#define	MOAIFONTSHADER_VSH_H
 
 #define SHADER(str) #str
 
-static cc8* _basicOneTextureVSH = SHADER (
+static cc8* _fontShaderVSH = SHADER (
 
 	attribute vec4 position;
 	attribute vec2 uv;

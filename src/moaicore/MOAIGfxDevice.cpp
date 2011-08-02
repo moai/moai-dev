@@ -6,10 +6,25 @@
 #include <moaicore/MOAIGfxDevice.h>
 #include <moaicore/MOAIGfxDevice.h>
 #include <moaicore/MOAIShader.h>
+#include <moaicore/MOAIShaderMgr.h>
 #include <moaicore/MOAITexture.h>
 #include <moaicore/MOAIVertexFormat.h>
 #include <moaicore/MOAIVertexFormatMgr.h>
 #include <moaicore/MOAIViewport.h>
+
+//================================================================//
+// local
+//================================================================//
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIGfxDevice::_isProgrammable ( lua_State* L ) {
+
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	lua_pushboolean ( L, gfxDevice.IsProgrammable ());
+	
+	return 1;
+}
 
 //================================================================//
 // MOAIGfxDevice
@@ -72,6 +87,10 @@ u32 MOAIGfxDevice::CountErrors () const {
 //----------------------------------------------------------------//
 void MOAIGfxDevice::DetectContext () {
 
+	#ifdef __GLEW_H__
+		glewInit ();
+	#endif
+
 	const GLubyte* driverVersion = glGetString ( GL_VERSION );
 	
 	STLString version = ( cc8* )driverVersion;
@@ -124,7 +143,7 @@ void MOAIGfxDevice::DrawPrims ( const MOAIVertexFormat& format, GLenum primType,
 	this->SetVertexFormat ();
 	
 	// load the software render state
-	glColor4f ( this->mPenColor.mR, this->mPenColor.mG, this->mPenColor.mB, this->mPenColor.mA );
+	//glColor4f ( this->mPenColor.mR, this->mPenColor.mG, this->mPenColor.mB, this->mPenColor.mA );
 	
 	// TODO
 	//glMatrixMode ( GL_MODELVIEW );
@@ -137,19 +156,28 @@ void MOAIGfxDevice::DrawPrims ( const MOAIVertexFormat& format, GLenum primType,
 	u32 nVerts = ( u32 )( size / format.GetVertexSize ());
 	if ( nVerts ) {
 		
-		format.Bind ( buffer );
-		glDrawArrays ( primType, 0, nVerts );
-		format.Unbind ();
+		if ( this->mIsProgrammable ) {
+		
+			format.BindProgrammable ( buffer );
+			glDrawArrays ( primType, 0, nVerts );
+			format.UnbindProgrammable ();
+		}
+		else {
+		
+			format.BindFixed ( buffer );
+			glDrawArrays ( primType, 0, nVerts );
+			format.UnbindFixed ();
+		}
 	}
 	
 	// reset
-	glColor4f ( 1.0f, 1.0f, 1.0f, 1.0f );
+	//glColor4f ( 1.0f, 1.0f, 1.0f, 1.0f );
 	
-	glMatrixMode ( GL_MODELVIEW );
-	glLoadIdentity ();
+	//glMatrixMode ( GL_MODELVIEW );
+	//glLoadIdentity ();
 	
-	glMatrixMode ( GL_TEXTURE );
-	glLoadIdentity ();
+	//glMatrixMode ( GL_TEXTURE );
+	// glLoadIdentity ();
 }
 
 //----------------------------------------------------------------//
@@ -384,7 +412,6 @@ bool MOAIGfxDevice::IsProgrammable () {
 //----------------------------------------------------------------//
 MOAIGfxDevice::MOAIGfxDevice () :
 	mVertexFormat ( 0 ),
-	mVertexColorType ( 0 ),
 	mBuffer ( 0 ),
 	mSize ( 0 ),
 	mTop ( 0 ),
@@ -444,6 +471,17 @@ u32 MOAIGfxDevice::PrintErrors () {
 }
 
 //----------------------------------------------------------------//
+void MOAIGfxDevice::RegisterLuaClass ( USLuaState& state ) {
+
+	luaL_Reg regTable [] = {
+		{ "isProgrammable",				_isProgrammable },
+		{ NULL, NULL }
+	};
+
+	luaL_register( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
 void MOAIGfxDevice::Reserve ( u32 size ) {
 
 	this->mSize = size;
@@ -467,6 +505,9 @@ void MOAIGfxDevice::Reset () {
 	
 	// clear the vertex format
 	this->SetVertexFormat ();
+
+	// clear the shader
+	this->mShader = 0;
 	
 	// disable backface culling
 	glDisable ( GL_CULL_FACE );
@@ -484,11 +525,26 @@ void MOAIGfxDevice::Reset () {
 	glScissor (( int )scissorRect.mXMin, ( int )scissorRect.mYMin, ( int )scissorRect.Width (), ( int )scissorRect.Height ());
 	this->mScissorRect = scissorRect;
 	
+	for ( u32 i = 0; i < TOTAL_VTX_TRANSFORMS; ++i ) {
+		this->mVertexTransforms [ i ].Ident ();
+	}
+	this->mUVTransform.Ident ();
+	this->mCpuVertexTransformMtx.Ident ();
+	
+	this->mVertexMtxInput = VTX_STAGE_MODEL;
+	this->mVertexMtxOutput = VTX_STAGE_MODEL;
+	
 	// fixed function reset
 	if ( !this->IsProgrammable ()) {
 		
 		// load identity matrix
 		glMatrixMode ( GL_MODELVIEW );
+		glLoadIdentity ();
+		
+		glMatrixMode ( GL_PROJECTION );
+		glLoadIdentity ();
+		
+		glMatrixMode ( GL_TEXTURE );
 		glLoadIdentity ();
 		
 		// reset the current vertex color
@@ -657,6 +713,12 @@ void MOAIGfxDevice::SetShader ( MOAIShader* shader ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIGfxDevice::SetShaderPreset ( u32 preset ) {
+
+	MOAIShaderMgr::Get ().BindShader ( preset );
+}
+
+//----------------------------------------------------------------//
 void MOAIGfxDevice::SetSize ( u32 width, u32 height ) {
 
 	this->mWidth = width;
@@ -720,7 +782,13 @@ void MOAIGfxDevice::SetVertexFormat () {
 	this->Flush ();
 	
 	if ( this->mVertexFormat ) {
-		this->mVertexFormat->Unbind ();
+		
+		if ( this->mIsProgrammable ) {
+			this->mVertexFormat->UnbindProgrammable ();
+		}
+		else {
+			this->mVertexFormat->UnbindFixed ();
+		}
 	}
 	this->mVertexFormat = 0;
 }
@@ -731,11 +799,14 @@ void MOAIGfxDevice::SetVertexFormat ( const MOAIVertexFormat& format ) {
 	if ( this->mVertexFormat != &format ) {
 
 		this->SetVertexFormat ();
-
 		this->mVertexFormat = &format;
 
-		this->mVertexFormat->Bind ( this->mBuffer );
-		this->mVertexColorType = format.GetColorType ();
+		if ( this->mIsProgrammable ) {
+			this->mVertexFormat->BindProgrammable ( this->mBuffer );
+		}
+		else {
+			this->mVertexFormat->BindFixed ( this->mBuffer );
+		}
 	}
 }
 
@@ -914,15 +985,15 @@ void MOAIGfxDevice::WriteQuad ( USVec2D* vtx, USVec2D* uv ) {
 	
 		this->Write ( vtx[ 3 ]);
 		this->Write ( uv [ 3 ]);
-		this->WritePenColor ();
+		this->WritePenColor4b ();
 		
 		this->Write ( vtx[ 1 ]);
 		this->Write ( uv [ 1 ]);
-		this->WritePenColor ();	
+		this->WritePenColor4b ();	
 	
 		this->Write ( vtx[ 0 ]);
 		this->Write ( uv [ 0 ]);
-		this->WritePenColor ();
+		this->WritePenColor4b ();
 		
 	this->EndPrim ();
 	
@@ -930,15 +1001,15 @@ void MOAIGfxDevice::WriteQuad ( USVec2D* vtx, USVec2D* uv ) {
 	
 		this->Write ( vtx[ 3 ]);
 		this->Write ( uv [ 3 ]);
-		this->WritePenColor ();	
+		this->WritePenColor4b ();	
 	
 		this->Write ( vtx[ 2 ]);
 		this->Write ( uv [ 2 ]);
-		this->WritePenColor ();	
+		this->WritePenColor4b ();	
 	
 		this->Write ( vtx[ 1 ]);
 		this->Write ( uv [ 1 ]);
-		this->WritePenColor ();
+		this->WritePenColor4b ();
 		
 	this->EndPrim ();
 }

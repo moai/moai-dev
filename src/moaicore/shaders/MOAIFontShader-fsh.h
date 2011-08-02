@@ -1,12 +1,12 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIBASICONETEXTURE_FSH_H
-#define	MOAIBASICONETEXTURE_FSH_H
+#ifndef	MOAIFONTSHADER_FSH_H
+#define	MOAIFONTSHADER_FSH_H
 
 #define SHADER(str) #str
 
-static cc8* _basicOneTextureFSH = SHADER (
+static cc8* _fontShaderFSH = SHADER (
 
 	varying LOWP vec4 colorVarying;
 	varying MEDP vec2 uvVarying;
@@ -14,7 +14,7 @@ static cc8* _basicOneTextureFSH = SHADER (
 	uniform sampler2D sampler;
 
 	void main() {
-		gl_FragColor = texture2D ( sampler, uvVarying ) * colorVarying;
+		gl_FragColor = texture2D ( sampler, uvVarying )[ 3 ] * colorVarying;
 	}
 );
 

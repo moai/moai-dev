@@ -9,6 +9,7 @@
 #include <moaicore/MOAIGfxDevice.h>
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAINodeMgr.h>
+#include <moaicore/MOAIShaderMgr.h>
 #include <moaicore/MOAITextBox.h>
 
 //================================================================//
@@ -392,19 +393,21 @@ void MOAITextBox::Draw () {
 	
 	MOAIFont* font = this->mFont->Bind ();
 	
-	if ( font ) {
+	if ( font && this->mReveal ) {
 	
 		MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-		
-		gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, this->GetLocalToWorldMtx ());
-		
-		this->LoadShader ();
+
+		gfxDevice.SetPenColor ( this->mColor );
 		gfxDevice.SetBlendMode ( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
+		gfxDevice.SetScissorRect ();
+
+		MOAIShaderMgr::Get ().BindShader ( MOAIShaderMgr::FONT_SHADER );
+
+		gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, this->GetLocalToWorldMtx ());
+		gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
 		
-		if ( this->mReveal ) {
-			this->Layout ();
-			this->mLayout.Draw ( this->mReveal );
-		}
+		this->Layout ();
+		this->mLayout.Draw ( this->mReveal );
 	}
 }
 

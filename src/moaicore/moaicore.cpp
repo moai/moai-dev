@@ -50,6 +50,7 @@ void moaicore::InitGlobals ( USGlobals* globals ) {
 	REGISTER_LUA_CLASS ( MOAIEventSource )
 	REGISTER_LUA_CLASS ( MOAIFileSystem )
 	REGISTER_LUA_CLASS ( MOAIFont )
+	REGISTER_LUA_CLASS ( MOAIGfxDevice )
 	REGISTER_LUA_CLASS ( MOAIGfxQuad2D )
 	REGISTER_LUA_CLASS ( MOAIGfxQuadDeck2D )
 	REGISTER_LUA_CLASS ( MOAIGfxQuadListDeck2D )

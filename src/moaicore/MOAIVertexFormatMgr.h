@@ -4,7 +4,7 @@
 #ifndef	MOAIVERTEXFORMATMGR_H
 #define	MOAIVERTEXFORMATMGR_H
 
-#include <moaicore/MOAIVertexFormat.h>
+class MOAIVertexFormat;
 
 //================================================================//
 // MOAIVertexFormatMgr
@@ -21,8 +21,7 @@ public:
 
 private:
 	
-	MOAIVertexFormat mFormatsFF [ TOTAL_PRESETS ];
-	MOAIVertexFormat mFormatsPP [ TOTAL_PRESETS ];
+	MOAIVertexFormat mFormats [ TOTAL_PRESETS ];
 	
 public:
 	

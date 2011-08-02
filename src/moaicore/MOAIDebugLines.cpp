@@ -5,6 +5,7 @@
 #include <moaicore/MOAIDebugLines.h>
 #include <moaicore/MOAIGfxDevice.h>
 #include <moaicore/MOAILogMessages.h>
+#include <moaicore/MOAIShaderMgr.h>
 #include <moaicore/MOAIVertexFormatMgr.h>
 
 //================================================================//
@@ -36,10 +37,10 @@ void MOAIDebugLine::Draw () {
 	gfxDevice.BeginPrim ();
 	
 		gfxDevice.WriteVtx ( this->mVtx [ 0 ]);
-		gfxDevice.WritePenColor ();
+		gfxDevice.WritePenColor4b ();
 		
 		gfxDevice.WriteVtx ( this->mVtx [ 1 ]);
-		gfxDevice.WritePenColor ();
+		gfxDevice.WritePenColor4b ();
 	
 	gfxDevice.EndPrim ();
 }
@@ -136,10 +137,10 @@ void MOAIDebugLines::Draw () {
 	
 	gfxDevice.SetTexture ();
 	gfxDevice.SetBlendMode ( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
+	gfxDevice.SetShaderPreset ( MOAIShaderMgr::LINE_SHADER );
 	
 	gfxDevice.SetPrimType ( GL_LINES );
 	gfxDevice.SetVertexPreset ( MOAIVertexFormatMgr::XYC );
-	
 	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM );
 	
 	for ( u32 i = 0; i < this->mTop; ++i ) {

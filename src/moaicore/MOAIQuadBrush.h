@@ -22,7 +22,7 @@ private:
 		
 		gfxDevice.WriteVtx ( vtx );
 		gfxDevice.WriteUV ( uv );
-		gfxDevice.WritePenColor ();
+		gfxDevice.WritePenColor4b ();
 	}
 
 public:

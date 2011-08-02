@@ -347,7 +347,6 @@ void MOAILayer2D::Draw () {
 	MOAIViewport& viewport = *this->mViewport;
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	
-	gfxDevice.Flush ();
 	gfxDevice.Reset ();
 	
 	// TODO: GLES2
@@ -364,11 +363,12 @@ void MOAILayer2D::Draw () {
 	
 	if ( this->mShowDebugLines ) {
 		
+		gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_MODEL );
+		
 		#if USE_CHIPMUNK
 			if ( this->mCpSpace ) {
 				this->mCpSpace->DrawDebug ();
 				gfxDevice.Flush ();
-				gfxDevice.Reset ();
 			}
 		#endif
 		
@@ -376,7 +376,6 @@ void MOAILayer2D::Draw () {
 			if ( this->mBox2DWorld ) {
 				this->mBox2DWorld->DrawDebug ();
 				gfxDevice.Flush ();
-				gfxDevice.Reset ();
 			}
 		#endif
 	}
@@ -415,10 +414,9 @@ void MOAILayer2D::Draw () {
 	
 	// render the debug lines
 	if ( this->mShowDebugLines ) {
-		gfxDevice.Flush ();
 		MOAIDebugLines::Get ().Draw ();
-		gfxDevice.Flush ();
 	}
+	gfxDevice.Flush ();
 }
 
 //----------------------------------------------------------------//

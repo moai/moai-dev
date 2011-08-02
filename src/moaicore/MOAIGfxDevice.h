@@ -13,7 +13,7 @@ class MOAIViewport;
 // MOAIGfxDevice
 //================================================================//
 class MOAIGfxDevice :
-	public USGlobalClass < MOAIGfxDevice > {
+	public USGlobalClass < MOAIGfxDevice, USLuaObject > {
 public:
 	
 	enum {
@@ -40,7 +40,6 @@ private:
 	static const u32 DEFAULT_BUFFER_SIZE	= 0x8000;
 	
 	const MOAIVertexFormat*	mVertexFormat;
-	GLenum					mVertexColorType;
 	
 	void*			mBuffer;
 	u32				mSize;
@@ -89,6 +88,9 @@ private:
 	bool			mIsProgrammable;
 
 	//----------------------------------------------------------------//
+	static int				_isProgrammable			( lua_State* L );
+
+	//----------------------------------------------------------------//
 	void					Clear					();
 	void					DrawPrims				();
 	void					GpuLoadMatrix			( const USAffine2D& mtx ) const;
@@ -100,6 +102,8 @@ private:
 	void					UpdateUVMtx				();
 	
 public:
+	
+	DECL_LUA_SINGLETON ( MOAIGfxDevice )
 	
 	//----------------------------------------------------------------//
 	void					BeginPrim				();
@@ -144,6 +148,7 @@ public:
 							~MOAIGfxDevice			();
 	
 	u32						PrintErrors				();
+	void					RegisterLuaClass		( USLuaState& state );
 	void					Reserve					( u32 size );
 	void					Reset					();
 	
@@ -161,6 +166,7 @@ public:
 	void					SetScissorRect			( const USRect& rect );
 	void					SetScreenSpace			( MOAIViewport& viewport );
 	void					SetShader				( MOAIShader* shader = 0 );
+	void					SetShaderPreset			( u32 preset );
 	void					SetSize					( u32 width, u32 height );
 	bool					SetTexture				( MOAITexture* texture = 0 );
 	
@@ -189,14 +195,15 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	inline void WritePenColor () {
+	inline void WritePenColor4b () {
 		
-		if ( this->mVertexColorType == GL_FLOAT ) {
-			this->Write < USColorVec >( this->mPenColor );
-		}
-		else {
-			this->Write < u32 >( this->mPackedColor );
-		}
+		this->Write < u32 >( this->mPackedColor );
+	}
+	
+	//----------------------------------------------------------------//
+	inline void WritePenColor4f () {
+		
+		this->Write < USColorVec >( this->mPenColor );
 	}
 	
 	//----------------------------------------------------------------//

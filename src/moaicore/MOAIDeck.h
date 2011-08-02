@@ -20,11 +20,11 @@ class MOAIDeck :
 	public virtual USLuaObject {
 private:
 
-	USRef < MOAIShader >	mDefaultShader;
+	USRef < MOAIShader >	mShader;
 	u32						mContentMask;
 
 	//----------------------------------------------------------------//
-	static int			_setDefaultShader			( lua_State* L );
+	static int			_setShader			( lua_State* L );
 
 protected:
 

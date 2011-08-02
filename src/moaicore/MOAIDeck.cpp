@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <moaicore/MOAIDeck.h>
+#include <moaicore/MOAIGfxDevice.h>
 #include <moaicore/MOAIGrid.h>
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIShader.h>
@@ -15,17 +16,17 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	setDefaultShader
+/**	@name	setShader
 	@text	Set the shader to use if neither the deck item nor the prop specifies a shader.
 	
 	@in		MOAIDeck self
 	@in		MOAIShader shader
 	@out	nil
 */
-int MOAIDeck::_setDefaultShader ( lua_State* L ) {
+int MOAIDeck::_setShader ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIDeck, "UU" )
 	
-	self->mDefaultShader = state.GetLuaObject < MOAIShader >( 2 );
+	self->mShader = state.GetLuaObject < MOAIShader >( 2 );
 	
 	return 0;
 }
@@ -110,7 +111,13 @@ USRect MOAIDeck::GetBounds ( u32 idx, MOAIDeckRemapper* remapper ) {
 
 //----------------------------------------------------------------//
 void MOAIDeck::LoadShader () {
-	MOAIShaderMgr::Get ().BindShader ( MOAIShaderMgr::MOAI_BASIC_ONE_TEXTURE );
+
+	if ( this->mShader ) {
+		MOAIGfxDevice::Get ().SetShader ( this->mShader );
+	}
+	else {
+		MOAIShaderMgr::Get ().BindShader ( MOAIShaderMgr::DECK2D_SHADER );
+	}
 }
 
 //----------------------------------------------------------------//
@@ -133,7 +140,7 @@ void MOAIDeck::RegisterLuaClass ( USLuaState& state ) {
 void MOAIDeck::RegisterLuaFuncs ( USLuaState& state ) {
 
 	luaL_Reg regTable [] = {
-		{ "setDefaultShader",		_setDefaultShader },
+		{ "setShader",				_setShader },
 		{ NULL, NULL }
 	};
 

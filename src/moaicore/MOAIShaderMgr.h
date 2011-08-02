@@ -14,8 +14,9 @@ class MOAIShaderMgr :
 public:
 
 	enum {
-		MOAI_BASIC_NO_TEXTURE,
-		MOAI_BASIC_ONE_TEXTURE,
+		DECK2D_SHADER,
+		FONT_SHADER,
+		LINE_SHADER,
 		TOTAL_SHADERS,
 	};
 

@@ -553,19 +553,27 @@
 				Name="shaders"
 				>
 				<File
-					RelativePath="..\..\src\moaicore\shaders\MOAIBasicNoTexture-fsh.h"
+					RelativePath="..\..\src\moaicore\shaders\MOAIDeck2DShader-fsh.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\moaicore\shaders\MOAIBasicNoTexture-vsh.h"
+					RelativePath="..\..\src\moaicore\shaders\MOAIDeck2DShader-vsh.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\moaicore\shaders\MOAIBasicOneTexture-fsh.h"
+					RelativePath="..\..\src\moaicore\shaders\MOAIFontShader-fsh.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\moaicore\shaders\MOAIBasicOneTexture-vsh.h"
+					RelativePath="..\..\src\moaicore\shaders\MOAIFontShader-vsh.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\moaicore\shaders\MOAILineShader-fsh.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\moaicore\shaders\MOAILineShader-vsh.h"
 					>
 				</File>
 			</Filter>

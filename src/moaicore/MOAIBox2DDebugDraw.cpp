@@ -220,7 +220,7 @@ void MOAIBox2DDebugDraw::WriteVtx ( MOAIGfxDevice& gfxDevice, float x, float y )
 	vtx.mX = x * this->mScale;
 	vtx.mY = y * this->mScale;
 	gfxDevice.WriteVtx ( vtx );
-	gfxDevice.WritePenColor ();
+	gfxDevice.WritePenColor4b ();
 }
 
 #endif

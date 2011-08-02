@@ -29,12 +29,6 @@ void MOAIShaderUniform::Bind ( const float* attributes ) {
 			glUniform1fv ( this->mAddr, this->mSize, &attributes [ this->mSrc ]);
 			break;
 		}
-		case UNIFORM_MODEL: {
-			
-			USAffine2D affine = MOAIGfxDevice::Get ().GetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM );
-			this->BindAffine ( affine );
-			break;
-		}
 		case UNIFORM_TRANSFORM: {
 			
 			if ( this->mTransform ) {
@@ -46,6 +40,19 @@ void MOAIShaderUniform::Bind ( const float* attributes ) {
 		case UNIFORM_VIEW_PROJ: {
 		
 			USAffine2D affine = MOAIGfxDevice::Get ().GetViewProjMtx ();
+			this->BindAffine ( affine );
+			break;
+		}
+		case UNIFORM_WORLD: {
+			
+			USAffine2D affine = MOAIGfxDevice::Get ().GetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM );
+			this->BindAffine ( affine );
+			break;
+		}
+		case UNIFORM_WORLD_VIEW_PROJ: {
+			
+			USAffine2D affine = MOAIGfxDevice::Get ().GetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM );
+			affine.Append ( MOAIGfxDevice::Get ().GetViewProjMtx ());
 			this->BindAffine ( affine );
 			break;
 		}
@@ -181,7 +188,7 @@ int MOAIShader::_setUniform ( lua_State* L ) {
 int MOAIShader::_setVertexAttribute ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIShader, "UNS" )
 	
-	GLuint idx				= state.GetValue < GLuint >( 2, 0 );
+	GLuint idx				= state.GetValue < GLuint >( 2, 1 ) - 1;
 	STLString attribute		= state.GetValue < cc8* >( 3, "" );
 	
 	self->SetVertexAttribute ( idx, attribute );
@@ -314,8 +321,6 @@ GLuint MOAIShader::CompileShader ( GLuint type, cc8* source ) {
 	sources [ 0 ] = gfxDevice.IsOpenGLES () ? OPENGL_ES_PREPROC : OPENGL_PREPROC;
 	sources [ 1 ] = source;
 	
-	printf ( "%s\n", OPENGL_ES_PREPROC );
-	
 	glShaderSource ( shader, 2, sources, NULL );
 	glCompileShader ( shader );
 
@@ -323,11 +328,10 @@ GLuint MOAIShader::CompileShader ( GLuint type, cc8* source ) {
 	glGetShaderiv ( shader, GL_COMPILE_STATUS, &status );
 	
 	if ( status == 0 ) {
-	
+		
 		int logLength;
 		glGetShaderiv ( shader, GL_INFO_LOG_LENGTH, &logLength );
  
-		/* The maxLength includes the NULL character */
 		GLchar* log = ( GLchar* )malloc ( logLength );
  
 		glGetShaderInfoLog ( shader, logLength, &logLength, log );
@@ -379,11 +383,12 @@ void MOAIShader::RegisterLuaClass ( USLuaState& state ) {
 	
 	MOAINode::RegisterLuaClass ( state );
 	
-	state.SetField ( -1, "UNIFORM_INT",			( u32 )MOAIShaderUniform::UNIFORM_INT );
-	state.SetField ( -1, "UNIFORM_FLOAT",		( u32 )MOAIShaderUniform::UNIFORM_FLOAT );
-	state.SetField ( -1, "UNIFORM_MODEL",		( u32 )MOAIShaderUniform::UNIFORM_MODEL );
-	state.SetField ( -1, "UNIFORM_TRANSFORM",	( u32 )MOAIShaderUniform::UNIFORM_TRANSFORM );
-	state.SetField ( -1, "UNIFORM_VIEW_PROJ",	( u32 )MOAIShaderUniform::UNIFORM_VIEW_PROJ );
+	state.SetField ( -1, "UNIFORM_INT",					( u32 )MOAIShaderUniform::UNIFORM_INT );
+	state.SetField ( -1, "UNIFORM_FLOAT",				( u32 )MOAIShaderUniform::UNIFORM_FLOAT );
+	state.SetField ( -1, "UNIFORM_TRANSFORM",			( u32 )MOAIShaderUniform::UNIFORM_TRANSFORM );
+	state.SetField ( -1, "UNIFORM_VIEW_PROJ",			( u32 )MOAIShaderUniform::UNIFORM_VIEW_PROJ );
+	state.SetField ( -1, "UNIFORM_WORLD",				( u32 )MOAIShaderUniform::UNIFORM_WORLD );
+	state.SetField ( -1, "UNIFORM_WORLD_VIEW_PROJ",		( u32 )MOAIShaderUniform::UNIFORM_WORLD_VIEW_PROJ );
 }
 
 //----------------------------------------------------------------//

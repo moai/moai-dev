@@ -7,11 +7,12 @@
 #include <moaicore/MOAIShaderMgr.h>
 #include <moaicore/MOAIVertexFormatMgr.h>
 
-#include <moaicore/shaders/MOAIBasicNoTexture-fsh.h>
-#include <moaicore/shaders/MOAIBasicNoTexture-vsh.h>
-
-#include <moaicore/shaders/MOAIBasicOneTexture-fsh.h>
-#include <moaicore/shaders/MOAIBasicOneTexture-vsh.h>
+#include <moaicore/shaders/MOAIDeck2DShader-fsh.h>
+#include <moaicore/shaders/MOAIDeck2DShader-vsh.h>
+#include <moaicore/shaders/MOAIFontShader-fsh.h>
+#include <moaicore/shaders/MOAIFontShader-vsh.h>
+#include <moaicore/shaders/MOAILineShader-fsh.h>
+#include <moaicore/shaders/MOAILineShader-vsh.h>
 
 //================================================================//
 // MOAIShaderMgr
@@ -42,19 +43,27 @@ MOAIShader& MOAIShaderMgr::GetShader ( u32 shaderID ) {
 		
 		switch ( shaderID ) {
 			
-			case MOAI_BASIC_NO_TEXTURE:
+			case DECK2D_SHADER:
 			
-				shader->SetVertexAttribute ( MOAIVertexFormatMgr::XYC_POSITION, "position" );
-				shader->SetVertexAttribute ( MOAIVertexFormatMgr::XYC_COLOR, "color" );
-				shader->SetSource ( _basicNoTextureVSH, _basicNoTextureFSH );
+				shader->SetVertexAttribute ( MOAIVertexFormatMgr::XYUVC_POSITION, "position" );
+				shader->SetVertexAttribute ( MOAIVertexFormatMgr::XYUVC_TEXCOORD, "uv" );
+				shader->SetVertexAttribute ( MOAIVertexFormatMgr::XYUVC_COLOR, "color" );
+				shader->SetSource ( _deck2DShaderVSH, _deck2DShaderFSH );
 				break;
 				
-			case MOAI_BASIC_ONE_TEXTURE:
+			case FONT_SHADER:
 				
 				shader->SetVertexAttribute ( MOAIVertexFormatMgr::XYUVC_POSITION, "position" );
 				shader->SetVertexAttribute ( MOAIVertexFormatMgr::XYUVC_TEXCOORD, "uv" );
 				shader->SetVertexAttribute ( MOAIVertexFormatMgr::XYUVC_COLOR, "color" );
-				shader->SetSource ( _basicOneTextureVSH, _basicOneTextureFSH );
+				shader->SetSource ( _fontShaderVSH, _fontShaderFSH );
+				break;
+			
+			case LINE_SHADER:
+				
+				shader->SetVertexAttribute ( MOAIVertexFormatMgr::XYC_POSITION, "position" );
+				shader->SetVertexAttribute ( MOAIVertexFormatMgr::XYC_COLOR, "color" );
+				shader->SetSource ( _lineShaderVSH, _lineShaderFSH );
 				break;
 		}
 		

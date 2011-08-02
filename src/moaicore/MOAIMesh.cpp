@@ -71,6 +71,7 @@ void MOAIMesh::Draw ( const USAffine2D& transform, u32 idx, MOAIDeckRemapper* re
 	
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	
+	gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_MODEL );
 	gfxDevice.SetTexture ( this->mTexture );
 	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, transform );
 

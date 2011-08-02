@@ -208,6 +208,7 @@ void MOAIStretchPatch2D::Draw ( const USAffine2D& transform, u32 idx, MOAIDeckRe
 	
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, noStretch );
+	gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
 	
 	this->UpdateParams ();
 	this->Draw ( idx, remapper, stretch.mX, stretch.mY );

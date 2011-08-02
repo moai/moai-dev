@@ -458,6 +458,7 @@ void MOAIProp2D::DrawDebug () {
 		}
 	}
 }
+
 //----------------------------------------------------------------//
 void MOAIProp2D::GatherSurfaces ( MOAISurfaceSampler2D& sampler ) {
 
