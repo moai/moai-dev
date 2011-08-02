@@ -87,6 +87,8 @@ int AudioMixer::process(UInt32 numInputChannels, float* inputBuffer, UInt32 numO
 				totalFramesRead < numFrames && 
 				framesRead >= 0);
             
+			RPRINT("frames read for source = %d\n", framesRead);
+
 			if(framesRead < 0)
             {
                 mLock.unlock();
@@ -97,7 +99,16 @@ int AudioMixer::process(UInt32 numInputChannels, float* inputBuffer, UInt32 numO
 	}
 
     mLock.unlock();
-    
+
+	// clipping
+    for(UInt32 k = 0; k < numOutputChannels * numFrames; ++k)
+    {
+		float val = *outputBuffer;
+		val = val > 1.0 ? 1.0 : val;
+		val = val < -1.0 ? -1.0 : val;
+		*(outputBuffer)++ = val;
+    }
+
 	return 0;
 }
 
