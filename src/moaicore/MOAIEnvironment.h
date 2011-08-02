@@ -29,6 +29,7 @@ private:
 	STLString			mCarrierMobileCountryCode;
 	STLString			mCarrierMobileNetworkCode;
 	STLString			mCarrierName;
+	long				mConnectionType;
 	STLString			mCountryCode;
 	STLString			mCPUABI;
 	STLString			mDevBrand;
@@ -74,8 +75,9 @@ private:
 	static int			_getUDID						( lua_State* L );
 	static int			_getViewSize					( lua_State* L );
 	static int			_isRetinaDisplay				( lua_State* L );
-	
-	
+
+public:	
+
 	//----------------------------------------------------------------//
 	enum {
 		CONNECTION_TYPE_NONE,
@@ -88,14 +90,13 @@ private:
 		OS_BRAND_IOS,
 		OS_BRAND_UNAVAILABLE
 	};
-
-public:
 	
 	DECL_LUA_SINGLETON ( MOAIEnvironment )
 
 	//----------------------------------------------------------------//
+	long				GetConnectivity				( );
 						MOAIEnvironment				( );
-						~MOAIEnvironment				( );
+						~MOAIEnvironment			( );
 	void				RegisterLuaClass			( USLuaState& state );
 	void				SetAppDisplayName			( cc8* displayName );
 	void				SetAppID					( cc8* appID );
@@ -106,6 +107,7 @@ public:
 	void				SetCarrierMobileNetworkCode	( cc8* mobNetworkCode );
 	void				SetCarrierName				( cc8* name );
 	void				SetConnectivityFunc			( long (*connFunc) () );
+	void				SetConnectionType			( long connType );
 	void				SetCountryCode				( cc8* countryCode );
 	void				SetCPUABI					( cc8* abi );
 	void				SetDevBrand					( cc8* devBrand );

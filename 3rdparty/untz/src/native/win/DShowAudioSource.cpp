@@ -2,10 +2,12 @@
 #include "SystemData.h"
 #include "SoundData.h"
 
-HRESULT FindUnconnectedPin(CComPtr<IBaseFilter> pFilter, PIN_DIRECTION PinDir, IPin **ppPin)
+#define SECONDS_TO_BUFFER 2
+
+HRESULT FindUnconnectedPin(IBaseFilter* pFilter, PIN_DIRECTION PinDir, IPin **ppPin)
 {
-    CComPtr<IEnumPins> pEnum = 0;
-    CComPtr<IPin> pPin = 0;
+    IEnumPins* pEnum = 0;
+    IPin* pPin = 0;
     BOOL bFound = false;
 
     HRESULT hr = pFilter->EnumPins(&pEnum);
@@ -18,7 +20,7 @@ HRESULT FindUnconnectedPin(CComPtr<IBaseFilter> pFilter, PIN_DIRECTION PinDir, I
         pPin->QueryDirection(&pinDirection);
         if (PinDir == pinDirection)
         {
-			*ppPin = pPin.Detach();
+			*ppPin = pPin;
             return S_OK;
         }
 		pPin = NULL;
@@ -26,10 +28,10 @@ HRESULT FindUnconnectedPin(CComPtr<IBaseFilter> pFilter, PIN_DIRECTION PinDir, I
     return E_FAIL;  
 }
 
-HRESULT ConnectFilters(CComPtr<IGraphBuilder> pGraph, CComPtr<IBaseFilter> pSrc, CComPtr<IBaseFilter> pDest)
+HRESULT ConnectFilters(IGraphBuilder* pGraph, IBaseFilter* pSrc, IBaseFilter* pDest)
 {
-	CComPtr<IPin> pOut = 0;
-	CComPtr<IPin> pIn = 0;
+	IPin* pOut = 0;
+	IPin* pIn = 0;
 
     HRESULT hr = FindUnconnectedPin(pSrc, PINDIR_OUTPUT, &pOut);
 	if(FAILED(hr))
@@ -86,8 +88,8 @@ public:
 };
 
 
-DShowAudioSource::DShowAudioSource()
-{
+DShowAudioSource::DShowAudioSource() : mpSampleGrabberCallback(0)
+{	
 	mIsCoInitialized = false;
     HRESULT hr = CoInitializeEx(NULL, COINIT_MULTITHREADED);
 	if(!FAILED(hr))
@@ -96,34 +98,38 @@ DShowAudioSource::DShowAudioSource()
 
 DShowAudioSource::~DShowAudioSource()
 {
+	if(mpSampleGrabberCallback)
+		delete mpSampleGrabberCallback;
+
 	if(mIsCoInitialized)
 		CoUninitialize();
 }
 
-bool DShowAudioSource::load(const RString& path)
+bool DShowAudioSource::init(const RString& path, bool loadIntoMemory)
 {
 	mPath = path;
 	HRESULT hr = S_OK;
 
 	// Create the graph builder
-	CComPtr<IGraphBuilder> pGraphBuilder;
-	hr = pGraphBuilder.CoCreateInstance(CLSID_FilterGraph, NULL, CLSCTX_INPROC_SERVER);
-    if(FAILED(hr)) 
+	RComPtr<IGraphBuilder> pGraphBuilder;
+	hr = CoCreateInstance(CLSID_FilterGraph, NULL, CLSCTX_INPROC, IID_IGraphBuilder, (void **)&pGraphBuilder);
+	if(FAILED(hr))
 		return false;
 
 	// Create the sample grabber filter
-	CComPtr<IBaseFilter> pSampleGrabberBaseFilter;
-	hr = pSampleGrabberBaseFilter.CoCreateInstance(CLSID_SampleGrabber, NULL, CLSCTX_INPROC_SERVER);
+	RComPtr<IBaseFilter> pSampleGrabberBaseFilter;
+    hr = CoCreateInstance(CLSID_SampleGrabber, NULL, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&pSampleGrabberBaseFilter));
 	if(FAILED(hr))
 		return false;
 
 	// Add the sample grabber filter to the graph
-	hr = pGraphBuilder->AddFilter(pSampleGrabberBaseFilter, L"Sample Grabber");
+	hr = pGraphBuilder->AddFilter(pSampleGrabberBaseFilter.get(), L"Sample Grabber");
 	if(FAILED(hr))
 		return false;
 
 	// Get the Sample Grabber interface
-	CComQIPtr<ISampleGrabber> pSampleGrabberFilter(pSampleGrabberBaseFilter);
+	RComPtr<ISampleGrabber> pSampleGrabberFilter;
+	pSampleGrabberBaseFilter->QueryInterface(IID_PPV_ARGS(&pSampleGrabberFilter));
 	if(pSampleGrabberFilter == 0)
 		return false;
 
@@ -138,7 +144,7 @@ bool DShowAudioSource::load(const RString& path)
 		return false;
 
 	// Create the sample grabber callback
-	mpSampleGrabberCallback.Attach(new SampleGrabberCallback(this));
+	mpSampleGrabberCallback = new SampleGrabberCallback(this);
 	hr = pSampleGrabberFilter->SetCallback(mpSampleGrabberCallback, 1);
 	if(FAILED(hr))
 		return false;
@@ -146,36 +152,38 @@ bool DShowAudioSource::load(const RString& path)
 	// Add the source filter to the graph
 	WCHAR filename[MAX_PATH];
     MultiByteToWideChar(CP_ACP, 0,mPath.c_str(), -1, filename, MAX_PATH);
-	CComPtr<IBaseFilter> pSourceFilter;
+	RComPtr<IBaseFilter> pSourceFilter;
 	hr = pGraphBuilder->AddSourceFilter(filename, L"Audio Source", &pSourceFilter);
 	if(FAILED(hr)) 
 		return false;
 
 	// Create the NULL renderer.  We are only decoding
-	CComPtr<IBaseFilter> pNullRenderer;
-	hr = pNullRenderer.CoCreateInstance(CLSID_NullRenderer, NULL, CLSCTX_INPROC_SERVER);
+	IBaseFilter* pNullRenderer;
+    hr = CoCreateInstance(CLSID_NullRenderer, NULL, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&pNullRenderer));
 	hr = pGraphBuilder->AddFilter(pNullRenderer, L"NULL Renderer");
+	if(FAILED(hr))
+		return false;
 
 	// Connect input to sample grabber
-	hr = ConnectFilters(pGraphBuilder, pSourceFilter, pSampleGrabberBaseFilter);
+	hr = ConnectFilters(pGraphBuilder.get(), pSourceFilter, pSampleGrabberBaseFilter.get());
 	if(FAILED(hr))
 		return false;
 
 	// Connect sample grabber to NULL renderer
-	hr = ConnectFilters(pGraphBuilder, pSampleGrabberBaseFilter, pNullRenderer);
+	hr = ConnectFilters(pGraphBuilder.get(), pSampleGrabberBaseFilter.get(), pNullRenderer);
 	if(FAILED(hr))
 		return false;
 
 	// Get some useful interfaces
-	mpMediaControl = pGraphBuilder;
+	hr = pGraphBuilder->QueryInterface(IID_PPV_ARGS(&mpMediaControl));
 	if(mpMediaControl == 0)
 		return false;
 
-	mpMediaEvent = pGraphBuilder;
+	hr = pGraphBuilder->QueryInterface(IID_PPV_ARGS(&mpMediaEvent));
 	if(mpMediaEvent == 0)
 		return false;
 
-	mpMediaSeeking = pGraphBuilder;
+	hr = pGraphBuilder->QueryInterface(IID_PPV_ARGS(&mpMediaSeeking));
 	if(mpMediaSeeking == 0)
 		return false;
 
@@ -187,28 +195,43 @@ bool DShowAudioSource::load(const RString& path)
 	if(FAILED(hr)) 
 		return false;
 
-	CComQIPtr<IMediaFilter> pMediaFilter(pGraphBuilder);
+	RComPtr<IMediaFilter> pMediaFilter;
+	hr = pGraphBuilder->QueryInterface(IID_PPV_ARGS(&pMediaFilter));
 	pMediaFilter->SetSyncSource(0);
 
-	mCurrentPosition = 0;
+	mCurrentFrame = 0;
 	mEOF = false;
+	mLoadedInMemory = loadIntoMemory;
 
-	printf("# channels = %d\n", mpWaveFormatEx->nChannels);
-	printf("Sample rate = %d\n", mpWaveFormatEx->nSamplesPerSec);
+	RPRINT("# channels = %d\n", mpWaveFormatEx->nChannels);
+	RPRINT("Sample rate = %d\n", mpWaveFormatEx->nSamplesPerSec);
+
+	start();
+
+	if(mLoadedInMemory)
+	{
+		RPRINT("loading into memory...\n");
+		long evCode = 0;
+		HRESULT hr = mpMediaEvent->WaitForCompletion(INFINITE, &evCode);
+		if(FAILED(hr))
+		{
+			RPRINT("failed waiting for file to finish decoding.\n");
+			return false;
+		}
+		mEOF = true;
+	}
 
 	return true;
 }
 
 void DShowAudioSource::start()
 {
-	// Start decoding...
 	if(mpMediaControl)
 		mpMediaControl->Run();
 }
 
 void DShowAudioSource::stop()
 {
-	// Stop decoding...
 	if(mpMediaControl)
 		mpMediaControl->Stop();
 }
@@ -226,9 +249,14 @@ void DShowAudioSource::putData(BYTE *data, long length)
 		mBuffer.push_back(temp);
 	}
 
+	RPRINT("just read %d samples (%d)\n", samples, mBuffer.size());
+
 	// Stop decoding once we have 2 seconds of data
-	if(mBuffer.size() > UNTZ::System::get()->getSampleRate() * mpWaveFormatEx->nChannels * 2)
+	if(!mLoadedInMemory && mBuffer.size() > UNTZ::System::get()->getSampleRate() * mpWaveFormatEx->nChannels * SECONDS_TO_BUFFER)
+	{
+		RPRINT("pausing decoder\n");
 		mpMediaControl->Pause();
+	}
 }
 
 Int64 DShowAudioSource::readFrames(float* data, UInt32 numChannels, UInt32 numFrames)
@@ -236,84 +264,126 @@ Int64 DShowAudioSource::readFrames(float* data, UInt32 numChannels, UInt32 numFr
 	memset(data, 0, sizeof(float) * numChannels * numFrames);
 
 	// Check if we are done decoding...
-	long evCode;
-	mpMediaControl->Run();
-	HRESULT hr = mpMediaEvent->WaitForCompletion(0, &evCode);
-	if(evCode == EC_COMPLETE)
+	if(!mEOF && !mLoadedInMemory)
 	{
-		mEOF = true;
+		long evCode;
+		HRESULT hr = mpMediaEvent->WaitForCompletion(0, &evCode);
+		if(FAILED(hr))
+		{
+			RPRINT("failed while testing for completion\n");
+			if(hr == VFW_E_WRONG_STATE)
+				RPRINT("filter graph in wrong state\n");
+		}
+
+		if(evCode == EC_COMPLETE)
+		{
+			RPRINT("reahed EOF\n");
+			mEOF = true;
+		}
 	}
 
 	RScopedLock l(&mLock);
 
 	Int64 framesRead = numFrames;
-	if(mBuffer.size() > 0)
-	{
-		if(mBuffer.size() / mpWaveFormatEx->nChannels < framesRead)
-		{
-			framesRead = mBuffer.size() / mpWaveFormatEx->nChannels;
-		}
+	int framesAvailable = mBuffer.size() / getNumChannels() - mCurrentFrame;
+    
+	// For disk-streaming sources we calculate available frames using the whole buffer
+    if(!mLoadedInMemory)
+        framesAvailable = mBuffer.size() / getNumChannels();
 
+	RPRINT("available data = %d\n", framesAvailable);
+
+
+	if(framesAvailable > 0)
+	{
+		if(framesAvailable < numFrames)
+			framesRead = framesAvailable;
+
+		int sourceChannels = getNumChannels();
+        int frameOffset = mCurrentFrame;
+        
+        // For disk-streaming sources we always start at the beginning of the buffer
+        if(!mLoadedInMemory)
+            frameOffset = 0;
+        
 		for(UInt32 j = 0; j < numChannels; ++j)
 		{
 			float *in = NULL;
-			if(mpWaveFormatEx->nChannels == 1)
-				in = &mBuffer[0];
+			if(sourceChannels == 1)
+				in = &mBuffer[frameOffset * sourceChannels];
 			else
-				in = &mBuffer[j];
+				in = &mBuffer[frameOffset * sourceChannels + j];
 
 			for(UInt32 i = 0; i < framesRead; ++i)
 			{
 				*(data++) = *in;
-				in += mpWaveFormatEx->nChannels;
+				in += sourceChannels;
 			}
 		}
 
-		mBuffer.erase(mBuffer.begin(), mBuffer.begin()+(framesRead * mpWaveFormatEx->nChannels));
-	}
-
-	mCurrentPosition += framesRead;
-
-	// Check if we need to decode more data
-	if(mBuffer.size() < numFrames * mpWaveFormatEx->nChannels * 2)
-	{
-		if(mEOF && isLooping())
+        mCurrentFrame += framesRead;
+		
+        if(!mLoadedInMemory)
 		{
-			setDecoderPosition(0);
+			mBuffer.erase(mBuffer.begin(), mBuffer.begin() + (framesRead * sourceChannels));
+			framesAvailable = mBuffer.size() / getNumChannels();
+			UInt32 minimumFrames = getSampleRate() * SECONDS_TO_BUFFER / 2;
+			if(framesAvailable <= minimumFrames)
+			{
+				mpMediaControl->Run();
+			}
 		}
-	}	
-
-	if(mEOF && framesRead == 0)
-	{
-		return -1;
 	}
-
+    else
+    {
+        framesRead = 0;
+        mCurrentFrame = 0;
+        
+        if(isLooping() && mEOF)
+        {
+			RPRINT("reached EOF and will now loop.");
+			setDecoderPosition(0);
+        }
+        else if (mEOF)
+        {            
+            return -1; // signal that we are done
+        }
+    }
+    
 	return framesRead;
 }
 
-void DShowAudioSource::setDecoderPosition(double position)
+void DShowAudioSource::setDecoderPosition(double seconds)
 {
-	mEOF = false;
-	mpMediaControl->Stop();
-	REFERENCE_TIME current = (REFERENCE_TIME)(position * 1000 * 10000);
-	HRESULT hr = mpMediaSeeking->SetPositions(&current, AM_SEEKING_AbsolutePositioning, NULL, 0);
-	mpMediaControl->Run();
+	if(!mLoadedInMemory)
+	{
+		mEOF = false;
+		mpMediaControl->Stop();
+		REFERENCE_TIME current = (REFERENCE_TIME)(seconds * 1000 * 10000);
+		HRESULT hr = mpMediaSeeking->SetPositions(&current, AM_SEEKING_AbsolutePositioning, NULL, 0);
+		if(FAILED(hr))
+			RPRINT("failed to set decoder position\n");
+		mpMediaControl->Run();
+	}
 }
 
-void DShowAudioSource::setPosition(double position)
+void DShowAudioSource::setPosition(double seconds)
 {
-	setDecoderPosition(position);
-
-	RScopedLock l(&mLock);
-
-	mBuffer.clear();
-	mCurrentPosition = (Int64)(position * getSampleRate());
-	mpMediaControl->Run();
+	mCurrentFrame = (Int64)(seconds * getSampleRate());
+    
+    if(!mLoadedInMemory)
+    {
+		{
+			RScopedLock l(&mLock);
+			mBuffer.clear();
+		}
+        setDecoderPosition(seconds);
+    }
 }
 
 double DShowAudioSource::getPosition()
 {
-	return (double)mCurrentPosition / getSampleRate();
+	return (double)mCurrentFrame / getSampleRate();
 }
 
 UInt32 DShowAudioSource::getBitsPerSample() 

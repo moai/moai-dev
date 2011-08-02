@@ -24,7 +24,8 @@ enum ConnectionType {
 	CONNECTION_TYPE_WWAN
 };
 
-long AKUGetIphoneNetworkReachability					    	( );
-const char* AKUGetGUID													( );
+//long AKUGetIphoneNetworkReachability								( );
+const char* AKUGetGUID												( );
+void		AKUSetConnectionType									( long type );
 
 #endif

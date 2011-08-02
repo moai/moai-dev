@@ -6,9 +6,28 @@
 #include <tchar.h>
 #include <dshow.h>
 #include <qedit.h>
-#include <atlbase.h>
 
 class SampleGrabberCallback;
+
+template <typename T>
+class RComPtr
+{
+	T* mP;
+public:
+	RComPtr() : mP(0) {}
+	~RComPtr() {
+		if(mP)
+			((IUnknown*)mP)->Release();
+	}
+
+	T* get() { return mP; }
+	operator T*() { return mP; }
+	T* operator->() const { return mP; }
+	RComPtr<T>& operator=(RComPtr<T>& p) { mP = p; }
+	T** operator&() { return &mP; }
+	bool operator==(T* p) { return mP == p; }
+};
+
 
 // supported formats: aiff, wav, mp3,
 
@@ -19,12 +38,10 @@ class DShowAudioSource : public AudioSource
 public:
 	DShowAudioSource();
 	~DShowAudioSource();
-	bool load(const RString& path);
+	virtual bool init(const RString& path, bool loadIntoMemory);
 
 	// AudioSource
 	virtual Int64 readFrames(float* buffer, UInt32 numChannels, UInt32 numSamples);
-	virtual void start();
-	virtual void stop();
 	virtual void setPosition(double position);
 	virtual double getPosition();
 	virtual UInt32 getBitsPerSample();
@@ -33,17 +50,21 @@ public:
 	virtual double getLength();
 
 protected:
+	void start();
+	void stop();
 	void putData(BYTE *data, long length);
 	void setDecoderPosition(double position);
+
 private:
 	std::vector<float> mBuffer;
-	Int64 mCurrentPosition;
+	Int64 mCurrentFrame;
+	bool mLoadedInMemory;
 	RString mPath;
 	bool mIsCoInitialized;
-	CComPtr<SampleGrabberCallback> mpSampleGrabberCallback;
-	CComQIPtr<IMediaControl> mpMediaControl;
-	CComQIPtr<IMediaEventEx > mpMediaEvent;
-	CComQIPtr<IMediaSeeking> mpMediaSeeking;
+	SampleGrabberCallback* mpSampleGrabberCallback;
+	RComPtr<IMediaControl> mpMediaControl;	
+	RComPtr<IMediaEventEx> mpMediaEvent;	
+	RComPtr<IMediaSeeking> mpMediaSeeking;	
 	WAVEFORMATEX* mpWaveFormatEx;
 	RCriticalSection mLock;
 	bool mEOF;

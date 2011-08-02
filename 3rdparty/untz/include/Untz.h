@@ -24,6 +24,13 @@ typedef unsigned int UInt32;
 typedef unsigned char UInt8;
 #endif
 
+#if defined(_DEBUG)
+	#define RPRINT(fmt, ...) printf(fmt, __VA_ARGS__)
+#else
+	#define RPRINT(fmt, ...)
+	
+#endif
+
 #include "UntzSystem.h"
 #include "UntzSound.h"
 

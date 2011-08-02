@@ -8,6 +8,7 @@
 #import <StoreKit/StoreKit.h>
 #import <UIKit/UIKit.h>
 #import <moaicore/moaicore.h>
+#import <moaiext-iphone/ReachabilityListener.h>
 
 @class MOAIStoreKitListener;
 
@@ -50,6 +51,7 @@ private:
 	UIApplication*			mApplication;
 	USLuaRef				mListeners [ TOTAL ];
 	MOAIStoreKitListener*	mStoreKitListener;
+	ReachabilityListener*	mReachabilityListener;
 
 	//----------------------------------------------------------------//
 	static int		_canMakePayments						( lua_State* L );
