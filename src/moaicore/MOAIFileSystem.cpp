@@ -59,7 +59,7 @@ int MOAIFileSystem::_checkPathExists ( lua_State* L ) {
 	@text	Deletes a file or directory.
 
 	@in		string file/directory
-	@out	boolean error
+	@out	string error
 */
 int MOAIFileSystem::_delete ( lua_State* L ) {
 	USLuaState state ( L );
@@ -131,6 +131,79 @@ int MOAIFileSystem::_getRealPath ( lua_State* L ) {
 	STLString result = PHYSFS_getRealDir ( path );
 	
 	lua_pushstring ( state, result );
+	return 1;
+}
+
+//----------------------------------------------------------------//
+/**	@name	_loadAndRunLuaFile
+	@text	Loads and runs a Lua file from the PHYSFS file system.
+
+	@in		string filename
+	@out	int error
+*/
+
+int MOAIFileSystem::_loadAndRunLuaFile ( lua_State* L ) {
+	USLuaState state ( L );
+
+	cc8* filename = state.GetValue < cc8* >( 1, "" );
+	
+	// Check that the lua file exists in the archive
+	if ( !PHYSFS_exists ( filename )) {
+		printf ( "File does not exist" );
+		return 0;
+	}
+
+	// File exists, so read the data
+	PHYSFS_File* file = PHYSFS_openRead ( filename );
+	int fileSize = ( int )PHYSFS_fileLength ( file );
+	char* data = new char[ fileSize ];
+	PHYSFS_read ( file, data, 1, fileSize );
+
+	// Load and run the chunk
+	luaL_loadbuffer ( state, data, fileSize, filename );
+	lua_pcall( state, 0, LUA_MULTRET, 0 );
+
+	// Cleanup
+	delete [] data;
+	PHYSFS_close ( file );
+
+	// Return 1 ( the return of the function/module ran in of pcall )
+	return 1;
+}
+
+//----------------------------------------------------------------//
+/**	@name	loadLuaFile
+	@text	Loads a Lua file from the PHYSFS file system. 
+
+	@in		string filename
+	@out	int error
+*/
+
+int MOAIFileSystem::_loadLuaFile ( lua_State* L ) {
+	USLuaState state ( L );
+
+	cc8* filename = state.GetValue < cc8* >( 1, "" );
+	
+	// Check that the lua file exists in the archive
+	if ( !PHYSFS_exists ( filename )) {
+		printf ( "File does not exist" );
+		return 0;
+	}
+
+	// File exists, so read the data
+	PHYSFS_File* file = PHYSFS_openRead ( filename );
+	int fileSize = ( int )PHYSFS_fileLength ( file );
+	char* data = new char[ fileSize ];
+	PHYSFS_read ( file, data, 1, fileSize );
+
+	// Load and the chunk
+	luaL_loadbuffer ( state, data, fileSize, filename );
+
+	// Cleanup
+	delete [] data;
+	PHYSFS_close ( file );
+
+	// Return 1 ( the file buffer )
 	return 1;
 }
 
@@ -234,6 +307,8 @@ void MOAIFileSystem::RegisterLuaClass ( USLuaState& state ) {
 		{ "getDirSeparator",		_getDirSeparator },
 		{ "getFileDirectory",		_getFileDirectory },
 		{ "getRealPath",			_getRealPath },
+		{ "loadAndRunLuaFile",		_loadAndRunLuaFile }, 
+		{ "loadLuaFile",			_loadLuaFile }, 
 		{ "mount",					_mount },
 		{ "printSearchPath",		_printSearchPath },
 		{ "setWriteDirectory",		_setWriteDirectory },

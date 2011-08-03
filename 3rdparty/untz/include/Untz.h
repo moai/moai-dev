@@ -25,7 +25,11 @@ typedef unsigned char UInt8;
 #endif
 
 #if defined(_DEBUG)
-	#define RPRINT(fmt, ...) printf(fmt, __VA_ARGS__)
+	#ifdef __GNUC__
+		#define RPRINT(fmt...) printf(fmt)
+	#else
+		#define RPRINT(fmt, ...) printf(fmt, __VA_ARGS__)
+	#endif
 #else
 	#define RPRINT(fmt, ...)
 	
