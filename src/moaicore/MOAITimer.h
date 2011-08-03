@@ -23,8 +23,8 @@ class MOAIAnimCurve;
 	@const	LOOP_REVERSE
 	@const	PING_PONG
 	
-	@const	EVENT_KEYFRAME		ID of event stop callback. Signature is: nil onKeyframe ( number time, number value )
-	@const	EVENT_TIMER_LOOP	ID of event loop callback. Signature is: nil onLoop ()
+	@const	EVENT_TIMER_KEYFRAME	ID of event stop callback. Signature is: nil onKeyframe ( number time, number value )
+	@const	EVENT_TIMER_LOOP		ID of event loop callback. Signature is: nil onLoop ()
 */
 class MOAITimer :
 	public virtual MOAINode,
