@@ -26,6 +26,9 @@ layer:insertProp ( prop )
 prop:moveRot ( 360, 1.5 )
 
 ----------------------------------------------------------------
+print ( "path: " .. package.path )
+require "config-physfs"
+
 print ( MOAIFileSystem.checkFileExists ( "luaFile.lua" ))
 luaBlock = require "luaFile"
 print ( luaBlock.helloString )

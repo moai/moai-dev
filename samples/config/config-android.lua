@@ -4,7 +4,7 @@
 -- http://getmoai.com
 ----------------------------------------------------------------
 
-package.path = ".\\?.lua;!\\lua\\?.lua;!\\lua\\init.lua;!\\?.lua;!\\?\\init.lua"
+package.path = "?.lua"
 print = MOAILogMgr.log
 
 print ( "config-android.lua loaded successfully" )
