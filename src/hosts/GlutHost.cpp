@@ -4,7 +4,6 @@
 #include <stdio.h>
 #include <GlutHost.h>
 
-
 #ifdef GLUTHOST_USE_FMOD
 	#include <aku/AKU-fmod.h>
 #endif
@@ -52,6 +51,8 @@ static int sWinX;
 static int sWinY;
 static int sWinWidth;
 static int sWinHeight;
+
+static const int GLUT_TIMER_INTERVAL = 16;
 
 //================================================================//
 // glut callbacks
@@ -126,8 +127,10 @@ static void _onReshape( int w, int h ) {
 }
 
 //----------------------------------------------------------------//
-static void _onUpdate () {
+void _onTimer ( int millisec ) {
 
+	glutTimerFunc ( GLUT_TIMER_INTERVAL, _onTimer, GLUT_TIMER_INTERVAL );
+	
 	AKUUpdate ();
 	
 	#ifdef AKUGLUT_USE_FMOD
@@ -196,7 +199,8 @@ void _AKUOpenWindowFunc ( const char* title, int width, int height ) {
 	
 	glutDisplayFunc ( _onPaint );
 	glutReshapeFunc ( _onReshape );
-	glutIdleFunc ( _onUpdate );
+	
+	glutTimerFunc ( GLUT_TIMER_INTERVAL, _onTimer, GLUT_TIMER_INTERVAL );
 	
 	AKUDetectGfxContext ();
 }
