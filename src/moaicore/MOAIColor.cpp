@@ -29,26 +29,38 @@
 int MOAIColor::_moveColor ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIColor, "UNNNNN" )
 
-	MOAIEaseDriver* action = new MOAIEaseDriver ();
-	action->ReserveLinks ( 4 );
-	
 	float r			= state.GetValue < float >( 2, 0.0f );
 	float g			= state.GetValue < float >( 3, 0.0f );
 	float b			= state.GetValue < float >( 4, 0.0f );
 	float a			= state.GetValue < float >( 5, 0.0f );
 	float delay		= state.GetValue < float >( 6, 0.0f );
-	u32 mode		= state.GetValue < u32 >( 7, USInterpolate::kSmooth );
 	
-	action->SetLink ( 0, self, MOAIColorAttr::Pack ( ATTR_R_COL ), r, mode );
-	action->SetLink ( 1, self, MOAIColorAttr::Pack ( ATTR_G_COL ), g, mode );
-	action->SetLink ( 2, self, MOAIColorAttr::Pack ( ATTR_B_COL ), b, mode );
-	action->SetLink ( 3, self, MOAIColorAttr::Pack ( ATTR_A_COL ), a, mode );
+	if ( delay > 0.0f ) {
 	
-	action->SetLength ( delay );
-	action->Start ();
-	action->PushLuaUserdata ( state );
+		u32 mode = state.GetValue < u32 >( 7, USInterpolate::kSmooth );
+		
+		MOAIEaseDriver* action = new MOAIEaseDriver ();
+		action->ReserveLinks ( 4 );
+		
+		action->SetLink ( 0, self, MOAIColorAttr::Pack ( ATTR_R_COL ), r, mode );
+		action->SetLink ( 1, self, MOAIColorAttr::Pack ( ATTR_G_COL ), g, mode );
+		action->SetLink ( 2, self, MOAIColorAttr::Pack ( ATTR_B_COL ), b, mode );
+		action->SetLink ( 3, self, MOAIColorAttr::Pack ( ATTR_A_COL ), a, mode );
+		
+		action->SetLength ( delay );
+		action->Start ();
+		action->PushLuaUserdata ( state );
 
-	return 1;
+		return 1;
+	}
+	
+	self->mR += r;
+	self->mG += g;
+	self->mB += b;
+	self->mA += a;
+	self->ScheduleUpdate ();
+	
+	return 0;
 }
 
 //----------------------------------------------------------------//
@@ -71,26 +83,39 @@ int MOAIColor::_moveColor ( lua_State* L ) {
 int MOAIColor::_seekColor ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIColor, "UNNNNN" )
 
-	MOAIEaseDriver* action = new MOAIEaseDriver ();
-	action->ReserveLinks ( 4 );
-	
 	float r			= state.GetValue < float >( 2, 0.0f );
 	float g			= state.GetValue < float >( 3, 0.0f );
 	float b			= state.GetValue < float >( 4, 0.0f );
 	float a			= state.GetValue < float >( 5, 0.0f );
 	float delay		= state.GetValue < float >( 6, 0.0f );
-	u32 mode		= state.GetValue < u32 >( 7, USInterpolate::kSmooth );
 	
-	action->SetLink ( 0, self, MOAIColorAttr::Pack ( ATTR_R_COL ), r - self->mR, mode );
-	action->SetLink ( 1, self, MOAIColorAttr::Pack ( ATTR_G_COL ), g - self->mG, mode );
-	action->SetLink ( 2, self, MOAIColorAttr::Pack ( ATTR_B_COL ), b - self->mB, mode );
-	action->SetLink ( 3, self, MOAIColorAttr::Pack ( ATTR_A_COL ), a - self->mA, mode );
 	
-	action->SetLength ( delay );
-	action->Start ();
-	action->PushLuaUserdata ( state );
+	if ( delay > 0.0f ) {
+	
+		u32 mode = state.GetValue < u32 >( 7, USInterpolate::kSmooth );
+		
+		MOAIEaseDriver* action = new MOAIEaseDriver ();
+		action->ReserveLinks ( 4 );
+		
+		action->SetLink ( 0, self, MOAIColorAttr::Pack ( ATTR_R_COL ), r - self->mR, mode );
+		action->SetLink ( 1, self, MOAIColorAttr::Pack ( ATTR_G_COL ), g - self->mG, mode );
+		action->SetLink ( 2, self, MOAIColorAttr::Pack ( ATTR_B_COL ), b - self->mB, mode );
+		action->SetLink ( 3, self, MOAIColorAttr::Pack ( ATTR_A_COL ), a - self->mA, mode );
+		
+		action->SetLength ( delay );
+		action->Start ();
+		action->PushLuaUserdata ( state );
 
-	return 1;
+		return 1;
+	}
+	
+	self->mR = r;
+	self->mG = g;
+	self->mB = b;
+	self->mA = a;
+	self->ScheduleUpdate ();
+	
+	return 0;
 }
 
 //----------------------------------------------------------------//
