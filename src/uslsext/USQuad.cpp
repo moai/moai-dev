@@ -315,33 +315,33 @@ void USQuad::Transform ( const USAffine2D& transform ) {
 }
 
 //----------------------------------------------------------------//
-void USQuad::Transform ( const USMatrix2D& transform ) {
+void USQuad::Transform ( const USMatrix3x3& transform ) {
 	
 	float x;
 	float y;
 	
 	const float* m = transform.m;
 	
-	x =	( m[ USMatrix2D::C0_R0 ] * this->mV [ 0 ].mX ) + ( m[ USMatrix2D::C1_R0 ] * this->mV [ 0 ].mY ) + ( m[ USMatrix2D::C2_R0 ]);
-	y =	( m[ USMatrix2D::C0_R1 ] * this->mV [ 0 ].mX ) + ( m[ USMatrix2D::C1_R1 ] * this->mV [ 0 ].mY ) + ( m[ USMatrix2D::C2_R1 ]);
+	x =	( m[ USMatrix3x3::C0_R0 ] * this->mV [ 0 ].mX ) + ( m[ USMatrix3x3::C1_R0 ] * this->mV [ 0 ].mY ) + ( m[ USMatrix3x3::C2_R0 ]);
+	y =	( m[ USMatrix3x3::C0_R1 ] * this->mV [ 0 ].mX ) + ( m[ USMatrix3x3::C1_R1 ] * this->mV [ 0 ].mY ) + ( m[ USMatrix3x3::C2_R1 ]);
 	
 	this->mV [ 0 ].mX = x;
 	this->mV [ 0 ].mY = y;
 	
-	x =	( m[ USMatrix2D::C0_R0 ] * this->mV [ 1 ].mX ) + ( m[ USMatrix2D::C1_R0 ] * this->mV [ 1 ].mY ) + ( m[ USMatrix2D::C2_R0 ]);
-	y =	( m[ USMatrix2D::C0_R1 ] * this->mV [ 1 ].mX ) + ( m[ USMatrix2D::C1_R1 ] * this->mV [ 1 ].mY ) + ( m[ USMatrix2D::C2_R1 ]);
+	x =	( m[ USMatrix3x3::C0_R0 ] * this->mV [ 1 ].mX ) + ( m[ USMatrix3x3::C1_R0 ] * this->mV [ 1 ].mY ) + ( m[ USMatrix3x3::C2_R0 ]);
+	y =	( m[ USMatrix3x3::C0_R1 ] * this->mV [ 1 ].mX ) + ( m[ USMatrix3x3::C1_R1 ] * this->mV [ 1 ].mY ) + ( m[ USMatrix3x3::C2_R1 ]);
 	
 	this->mV [ 1 ].mX = x;
 	this->mV [ 1 ].mY = y;
 	
-	x =	( m[ USMatrix2D::C0_R0 ] * this->mV [ 2 ].mX ) + ( m[ USMatrix2D::C1_R0 ] * this->mV [ 2 ].mY ) + ( m[ USMatrix2D::C2_R0 ]);
-	y =	( m[ USMatrix2D::C0_R1 ] * this->mV [ 2 ].mX ) + ( m[ USMatrix2D::C1_R1 ] * this->mV [ 2 ].mY ) + ( m[ USMatrix2D::C2_R1 ]);
+	x =	( m[ USMatrix3x3::C0_R0 ] * this->mV [ 2 ].mX ) + ( m[ USMatrix3x3::C1_R0 ] * this->mV [ 2 ].mY ) + ( m[ USMatrix3x3::C2_R0 ]);
+	y =	( m[ USMatrix3x3::C0_R1 ] * this->mV [ 2 ].mX ) + ( m[ USMatrix3x3::C1_R1 ] * this->mV [ 2 ].mY ) + ( m[ USMatrix3x3::C2_R1 ]);
 	
 	this->mV [ 2 ].mX = x;
 	this->mV [ 2 ].mY = y;
 	
-	x =	( m[ USMatrix2D::C0_R0 ] * this->mV [ 3 ].mX ) + ( m[ USMatrix2D::C1_R0 ] * this->mV [ 3 ].mY ) + ( m[ USMatrix2D::C2_R0 ]);
-	y =	( m[ USMatrix2D::C0_R1 ] * this->mV [ 3 ].mX ) + ( m[ USMatrix2D::C1_R1 ] * this->mV [ 3 ].mY ) + ( m[ USMatrix2D::C2_R1 ]);
+	x =	( m[ USMatrix3x3::C0_R0 ] * this->mV [ 3 ].mX ) + ( m[ USMatrix3x3::C1_R0 ] * this->mV [ 3 ].mY ) + ( m[ USMatrix3x3::C2_R0 ]);
+	y =	( m[ USMatrix3x3::C0_R1 ] * this->mV [ 3 ].mX ) + ( m[ USMatrix3x3::C1_R1 ] * this->mV [ 3 ].mY ) + ( m[ USMatrix3x3::C2_R1 ]);
 	
 	this->mV [ 3 ].mX = x;
 	this->mV [ 3 ].mY = y;

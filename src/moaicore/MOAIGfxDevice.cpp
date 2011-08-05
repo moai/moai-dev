@@ -224,15 +224,15 @@ u32 MOAIGfxDevice::GetHeight () const {
 }
 
 //----------------------------------------------------------------//
-USMatrix3D MOAIGfxDevice::GetModelToWorldMtx () const {
+USMatrix4x4 MOAIGfxDevice::GetModelToWorldMtx () const {
 
 	return this->mVertexTransforms [ VTX_WORLD_TRANSFORM ];
 }
 
 //----------------------------------------------------------------//
-USMatrix3D MOAIGfxDevice::GetModelToWndMtx () const {
+USMatrix4x4 MOAIGfxDevice::GetModelToWndMtx () const {
 
-	USMatrix3D modelToWnd = this->GetModelToWorldMtx ();
+	USMatrix4x4 modelToWnd = this->GetModelToWorldMtx ();
 	modelToWnd.Append ( this->GetWorldToWndMtx ());
 	return modelToWnd;
 }
@@ -256,21 +256,21 @@ USRect MOAIGfxDevice::GetRect () const {
 }
 
 //----------------------------------------------------------------//
-USMatrix3D MOAIGfxDevice::GetUVTransform () const {
+USMatrix4x4 MOAIGfxDevice::GetUVTransform () const {
 
 	return this->mUVTransform;
 }
 
 //----------------------------------------------------------------//
-USMatrix3D MOAIGfxDevice::GetVertexTransform ( u32 id ) const {
+USMatrix4x4 MOAIGfxDevice::GetVertexTransform ( u32 id ) const {
 
 	return this->mVertexTransforms [ id ];
 }
 
 //----------------------------------------------------------------//
-USMatrix3D MOAIGfxDevice::GetViewProjMtx () const {
+USMatrix4x4 MOAIGfxDevice::GetViewProjMtx () const {
 
-	USMatrix3D mtx = this->mVertexTransforms [ VTX_VIEW_TRANSFORM ];
+	USMatrix4x4 mtx = this->mVertexTransforms [ VTX_VIEW_TRANSFORM ];
 	mtx.Append ( this->mVertexTransforms [ VTX_PROJ_TRANSFORM ]);
 	return mtx;
 }
@@ -280,7 +280,7 @@ USQuad MOAIGfxDevice::GetViewQuad () const {
 
 	USQuad quad;
 
-	USMatrix3D invMtx;
+	USMatrix4x4 invMtx;
 	invMtx.Inverse ( this->GetViewProjMtx ());
 	
 	quad.mV [ 0 ].Init ( -1.0f, 1.0f );
@@ -305,18 +305,18 @@ u32 MOAIGfxDevice::GetWidth () const {
 }
 
 //----------------------------------------------------------------//
-USMatrix3D MOAIGfxDevice::GetWndToModelMtx () const {
+USMatrix4x4 MOAIGfxDevice::GetWndToModelMtx () const {
 
-	USMatrix3D wndToModel;
+	USMatrix4x4 wndToModel;
 	wndToModel.Inverse ( this->GetModelToWndMtx ());
 	return wndToModel;
 }
 
 //----------------------------------------------------------------//
-USMatrix3D MOAIGfxDevice::GetWndToWorldMtx () const {
+USMatrix4x4 MOAIGfxDevice::GetWndToWorldMtx () const {
 
-	USMatrix3D wndToWorld;
-	USMatrix3D mtx;
+	USMatrix4x4 wndToWorld;
+	USMatrix4x4 mtx;
 
 	USRect rect = this->GetViewRect ();
 	
@@ -338,18 +338,18 @@ USMatrix3D MOAIGfxDevice::GetWndToWorldMtx () const {
 }
 
 //----------------------------------------------------------------//
-USMatrix3D MOAIGfxDevice::GetWorldToModelMtx () const {
+USMatrix4x4 MOAIGfxDevice::GetWorldToModelMtx () const {
 	
-	USMatrix3D worldToModel;
+	USMatrix4x4 worldToModel;
 	worldToModel.Inverse ( this->mVertexTransforms [ VTX_WORLD_TRANSFORM ]);
 	return worldToModel;
 }
 
 //----------------------------------------------------------------//
-USMatrix3D MOAIGfxDevice::GetWorldToWndMtx ( float xScale, float yScale ) const {
+USMatrix4x4 MOAIGfxDevice::GetWorldToWndMtx ( float xScale, float yScale ) const {
 
-	USMatrix3D worldToWnd;
-	USMatrix3D mtx;
+	USMatrix4x4 worldToWnd;
+	USMatrix4x4 mtx;
 
 	USRect rect = this->GetViewRect ();
 	
@@ -370,13 +370,13 @@ USMatrix3D MOAIGfxDevice::GetWorldToWndMtx ( float xScale, float yScale ) const 
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::GpuLoadMatrix ( const USMatrix3D& mtx ) const {
+void MOAIGfxDevice::GpuLoadMatrix ( const USMatrix4x4& mtx ) const {
 
 	glLoadMatrixf ( mtx.m );
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::GpuMultMatrix ( const USMatrix3D& mtx ) const {
+void MOAIGfxDevice::GpuMultMatrix ( const USMatrix4x4& mtx ) const {
 
 	glMultMatrixf ( mtx.m );
 }
@@ -687,7 +687,7 @@ void MOAIGfxDevice::SetScreenSpace ( MOAIViewport& viewport ) {
 	//glMatrixMode ( GL_MODELVIEW );
 	//glLoadIdentity ();
 	//
-	//USMatrix3D wndToNorm;
+	//USMatrix4x4 wndToNorm;
 	//viewport.GetWndToNormMtx ( wndToNorm );
 	//
 	//glMatrixMode ( GL_PROJECTION );
@@ -760,7 +760,7 @@ void MOAIGfxDevice::SetUVMtxMode ( u32 input, u32 output ) {
 //----------------------------------------------------------------//
 void MOAIGfxDevice::SetUVTransform () {
 
-	USMatrix3D mtx;
+	USMatrix4x4 mtx;
 	mtx.Ident ();
 	this->SetUVTransform ( mtx );
 }
@@ -773,7 +773,7 @@ void MOAIGfxDevice::SetUVTransform ( const USAffine2D& transform ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::SetUVTransform ( const USMatrix3D& transform ) {
+void MOAIGfxDevice::SetUVTransform ( const USMatrix4x4& transform ) {
 
 	this->mUVTransform = transform;
 	this->UpdateUVMtx ();
@@ -835,7 +835,7 @@ void MOAIGfxDevice::SetVertexPreset ( u32 preset ) {
 //----------------------------------------------------------------//
 void MOAIGfxDevice::SetVertexTransform ( u32 id ) {
 
-	USMatrix3D mtx;
+	USMatrix4x4 mtx;
 	mtx.Ident ();
 	this->SetVertexTransform ( id, mtx );
 }
@@ -843,13 +843,13 @@ void MOAIGfxDevice::SetVertexTransform ( u32 id ) {
 //----------------------------------------------------------------//
 void MOAIGfxDevice::SetVertexTransform ( u32 id, const USAffine2D& transform ) {
 
-	USMatrix3D mtx;
+	USMatrix4x4 mtx;
 	mtx.Init ( transform );
 	this->SetVertexTransform ( id, mtx );
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::SetVertexTransform ( u32 id, const USMatrix3D& transform ) {
+void MOAIGfxDevice::SetVertexTransform ( u32 id, const USMatrix4x4& transform ) {
 
 	if ( !this->mVertexTransforms [ id ].IsSame ( transform )) {
 

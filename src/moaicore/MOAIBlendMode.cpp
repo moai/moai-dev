@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <uslsext/MOAIBlendMode.h>
+#include <moaicore/MOAIBlendMode.h>
 
 //================================================================//
 // MOAIBlendMode

@@ -39,8 +39,8 @@ private:
 
 	//----------------------------------------------------------------//
 	void		BindAttributes				( const float* attributes );
-	void		BindMatrix					( const USMatrix3D& matrix );
-	void		BindPipelineTransforms		( const USMatrix3D& world, const USMatrix3D& view, const USMatrix3D& proj );
+	void		BindMatrix					( const USMatrix4x4& matrix );
+	void		BindPipelineTransforms		( const USMatrix4x4& world, const USMatrix4x4& view, const USMatrix4x4& proj );
 
 public:
 
@@ -92,7 +92,7 @@ protected:
 	void			Affirm						();
 	void			Bind						();
 	GLuint			CompileShader				( GLuint type,  cc8* source );
-	void			UpdatePipelineTransforms	( const USMatrix3D& world, const USMatrix3D& view, const USMatrix3D& proj );
+	void			UpdatePipelineTransforms	( const USMatrix4x4& world, const USMatrix4x4& view, const USMatrix4x4& proj );
 	void			Validate					();
 
 public:

@@ -11,7 +11,7 @@
 
 //----------------------------------------------------------------//
 /**	@name	getWorldDir
-	@text	Returns the normalized direction vector ot the transform.
+	@text	Returns the normalized direction vector of the transform.
 			This value is returned in world space so includes parent
 			transforms (if any).
 	

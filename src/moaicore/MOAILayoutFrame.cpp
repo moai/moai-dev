@@ -296,7 +296,7 @@ USRect MOAILayoutFrame::GetScissorRect () {
 
 	USRect scissorRect = this->GetFrame ();
 	
-	USMatrix3D mtx;
+	USMatrix4x4 mtx;
 	
 	mtx.Init ( this->mLocalToWorldMtx );
 	mtx.Append ( MOAIGfxDevice::Get ().GetWorldToWndMtx ( 1.0f, 1.0f ));

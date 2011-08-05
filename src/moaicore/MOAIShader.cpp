@@ -33,7 +33,7 @@ void MOAIShaderUniform::BindAttributes ( const float* attributes ) {
 			
 			if ( this->mTransform ) {
 				const USAffine2D& affine = this->mTransform->GetLocalToWorldMtx ();
-				USMatrix3D matrix;
+				USMatrix4x4 matrix;
 				matrix.Init ( affine );
 				this->BindMatrix ( matrix );
 			}
@@ -43,19 +43,19 @@ void MOAIShaderUniform::BindAttributes ( const float* attributes ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIShaderUniform::BindMatrix ( const USMatrix3D& matrix ) {
+void MOAIShaderUniform::BindMatrix ( const USMatrix4x4& matrix ) {
 	
 	glUniformMatrix4fv ( this->mAddr, 1, true, matrix.m );
 }
 
 //----------------------------------------------------------------//
-void MOAIShaderUniform::BindPipelineTransforms ( const USMatrix3D& world, const USMatrix3D& view, const USMatrix3D& proj ) {
+void MOAIShaderUniform::BindPipelineTransforms ( const USMatrix4x4& world, const USMatrix4x4& view, const USMatrix4x4& proj ) {
 
 	switch ( this->mType ) {
 		
 		case UNIFORM_VIEW_PROJ: {
 			
-			USMatrix3D mtx = view;
+			USMatrix4x4 mtx = view;
 			mtx.Append ( proj );
 			this->BindMatrix ( mtx );
 			break;
@@ -67,7 +67,7 @@ void MOAIShaderUniform::BindPipelineTransforms ( const USMatrix3D& world, const 
 		}
 		case UNIFORM_WORLD_VIEW_PROJ: {
 			
-			USMatrix3D mtx = world;
+			USMatrix4x4 mtx = world;
 			mtx.Append ( view );
 			mtx.Append ( proj );
 			this->BindMatrix ( mtx );
@@ -470,7 +470,7 @@ STLString MOAIShader::ToString () {
 }
 
 //----------------------------------------------------------------//
-void MOAIShader::UpdatePipelineTransforms ( const USMatrix3D& world, const USMatrix3D& view, const USMatrix3D& proj ) {
+void MOAIShader::UpdatePipelineTransforms ( const USMatrix4x4& world, const USMatrix4x4& view, const USMatrix4x4& proj ) {
 
 	// reload the uniform values
 	for ( u32 i = 0; i < this->mUniforms.Size (); ++i ) {

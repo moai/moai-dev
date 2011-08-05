@@ -13,9 +13,9 @@
 //----------------------------------------------------------------//
 void MOAIDraw::DrawAxisGrid ( USVec2D loc, USVec2D vec, float size ) {
 
-	USMatrix3D mtx = MOAIGfxDevice::Get ().GetViewProjMtx ();
+	USMatrix4x4 mtx = MOAIGfxDevice::Get ().GetViewProjMtx ();
 	
-	USMatrix3D invMtx;
+	USMatrix4x4 invMtx;
 	invMtx.Inverse ( mtx );
 	
 	// Set the axis to the grid length so we can get the length back post-transform
@@ -271,9 +271,9 @@ void MOAIDraw::DrawPoint ( float x, float y ) {
 //----------------------------------------------------------------//
 void MOAIDraw::DrawRay ( USVec2D loc, USVec2D vec ) {
 	
-	USMatrix3D mtx = MOAIGfxDevice::Get ().GetViewProjMtx ();
+	USMatrix4x4 mtx = MOAIGfxDevice::Get ().GetViewProjMtx ();
 	
-	USMatrix3D invMtx;
+	USMatrix4x4 invMtx;
 	invMtx.Inverse ( mtx );
 	
 	mtx.Transform ( loc );

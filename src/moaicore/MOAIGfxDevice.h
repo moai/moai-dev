@@ -4,6 +4,8 @@
 #ifndef	MOAIGFXDEVICE_H
 #define	MOAIGFXDEVICE_H
 
+#include <moaicore/MOAIBlendMode.h>
+
 class MOAIFrameBuffer;
 class MOAIShader;
 class MOAITexture;
@@ -55,15 +57,15 @@ private:
 	MOAITexture*	mTexture;
 	MOAIShader*		mShader;
 	
-	USMatrix3D		mUVTransform;
-	USMatrix3D		mVertexTransforms [ TOTAL_VTX_TRANSFORMS ];
+	USMatrix4x4		mUVTransform;
+	USMatrix4x4		mVertexTransforms [ TOTAL_VTX_TRANSFORMS ];
 	
 	USColorVec		mPenColor;
 	u32				mPackedColor;
 	float			mPenWidth;
 	float			mPointSize;
 	
-	MOAIBlendMode		mBlendMode;
+	MOAIBlendMode	mBlendMode;
 	bool			mBlendEnabled;
 	
 	USRect			mScissorRect;
@@ -79,7 +81,7 @@ private:
 	u32				mVertexMtxOutput;
 
 	bool			mCpuVertexTransform;
-	USMatrix3D		mCpuVertexTransformMtx; // composition of matrices to be applied via CPU
+	USMatrix4x4		mCpuVertexTransformMtx; // composition of matrices to be applied via CPU
 	
 	bool			mCpuUVTransform;
 	
@@ -94,8 +96,8 @@ private:
 	//----------------------------------------------------------------//
 	void					Clear					();
 	void					DrawPrims				();
-	void					GpuLoadMatrix			( const USMatrix3D& mtx ) const;
-	void					GpuMultMatrix			( const USMatrix3D& mtx ) const;
+	void					GpuLoadMatrix			( const USMatrix4x4& mtx ) const;
+	void					GpuMultMatrix			( const USMatrix4x4& mtx ) const;
 	void					UpdateCpuVertexMtx		();
 	void					UpdateGpuVertexMtx		();
 	void					UpdateUVMtx				();
@@ -121,24 +123,24 @@ public:
 	
 	u32						GetHeight				() const;
 	
-	USMatrix3D				GetModelToWndMtx		() const;
-	USMatrix3D				GetModelToWorldMtx		() const;
+	USMatrix4x4				GetModelToWndMtx		() const;
+	USMatrix4x4				GetModelToWorldMtx		() const;
 	
 	USColorVec				GetPenColor				() const;
 	USRect					GetRect					() const;
-	USMatrix3D				GetUVTransform			() const;
-	USMatrix3D				GetVertexTransform		( u32 id ) const;
+	USMatrix4x4				GetUVTransform			() const;
+	USMatrix4x4				GetVertexTransform		( u32 id ) const;
 	
-	USMatrix3D				GetViewProjMtx			() const;
+	USMatrix4x4				GetViewProjMtx			() const;
 	USQuad					GetViewQuad				() const;
 	USRect					GetViewRect				() const;
 	
 	u32						GetWidth				() const;
 
-	USMatrix3D				GetWorldToModelMtx		() const;
-	USMatrix3D				GetWorldToWndMtx		( float xScale = 1.0f, float yScale = 1.0f ) const;
-	USMatrix3D				GetWndToModelMtx		() const;
-	USMatrix3D				GetWndToWorldMtx		() const;
+	USMatrix4x4				GetWorldToModelMtx		() const;
+	USMatrix4x4				GetWorldToWndMtx		( float xScale = 1.0f, float yScale = 1.0f ) const;
+	USMatrix4x4				GetWndToModelMtx		() const;
+	USMatrix4x4				GetWndToWorldMtx		() const;
 	
 	bool					IsOpenGLES				();
 	bool					IsProgrammable			();
@@ -173,7 +175,7 @@ public:
 	void					SetUVMtxMode			( u32 input, u32 output );
 	void					SetUVTransform			();
 	void					SetUVTransform			( const USAffine2D& transform );
-	void					SetUVTransform			( const USMatrix3D& transform );
+	void					SetUVTransform			( const USMatrix4x4& transform );
 	
 	void					SetVertexFormat			();
 	void					SetVertexFormat			( const MOAIVertexFormat& format );
@@ -181,7 +183,7 @@ public:
 	void					SetVertexPreset			( u32 preset );
 	void					SetVertexTransform		( u32 id );
 	void					SetVertexTransform		( u32 id, const USAffine2D& transform );
-	void					SetVertexTransform		( u32 id, const USMatrix3D& transform );
+	void					SetVertexTransform		( u32 id, const USMatrix4x4& transform );
 	
 	void					SetViewport				();
 	void					SetViewport				( MOAIViewport& viewport );
