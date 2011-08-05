@@ -36,6 +36,23 @@ int MOAIGrid::_clearTileFlags ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	getSize
+	@text	Returns the dimensions of the grid (in tiles).
+
+	@in		MOAIGrid self
+	@out	number width
+	@out	number height
+*/
+int MOAIGrid::_getSize ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGrid, "U" )
+
+	state.Push ( self->mWidth );
+	state.Push ( self->mHeight );
+	
+	return 2;
+}
+
+//----------------------------------------------------------------//
 /**	@name	getTile
 	@text	Returns the value of a given tile.
 
@@ -356,6 +373,7 @@ void MOAIGrid::RegisterLuaFuncs ( USLuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "clearTileFlags",		_clearTileFlags },
+		{ "getSize",			_getSize },
 		{ "getTile",			_getTile },
 		{ "getTileFlags",		_getTileFlags },
 		{ "getTileLoc",			_getTileLoc },
