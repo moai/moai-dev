@@ -587,6 +587,18 @@ void MOAIGfxDevice::SetBlendMode ( int srcFactor, int dstFactor ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIGfxDevice::SetFrameBuffer ( MOAITexture* frameBuffer ) {
+
+	this->Flush ();
+	if ( frameBuffer && frameBuffer->IsFrameBuffer ()) {
+		frameBuffer->BindFrameBuffer ();
+	}
+	else {
+		glBindFramebuffer ( GL_FRAMEBUFFER, 0 );
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAIGfxDevice::SetPenColor ( u32 color ) {
 
 	this->mPenColor.SetRGBA ( color );

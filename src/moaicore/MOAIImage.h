@@ -71,7 +71,6 @@ private:
 
 	//----------------------------------------------------------------//
 	void			Alloc				();
-	void			Clear				();
 	static u32		GetMinPowerOfTwo	( u32 size ); // gets the smallest power of two greater than size
 	void			Init				( const void* bitmap, u32 width, u32 height, USColor::Format colorFmt, bool copy );
 	void			LoadPng				( USStream& stream, u32 transform );
@@ -93,6 +92,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	void				BleedRect				( int xMin, int yMin, int xMax, int yMax );
+	void				Clear					();
 	void				ClearBitmap				();
 	void				ConvertColors			( const MOAIImage& image, USColor::Format colorFmt );
 	void				Copy					( const MOAIImage& image );

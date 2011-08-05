@@ -19,7 +19,7 @@
 int	MOAIIndexBuffer::_release ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIIndexBuffer, "U" )
 	
-	self->Release ();
+	self->Clear ();
 	return 0;
 }
 
@@ -85,6 +85,16 @@ bool MOAIIndexBuffer::Bind () {
 }
 
 //----------------------------------------------------------------//
+void MOAIIndexBuffer::Clear () {
+
+	this->ClearBuffer ();
+	if ( this->mGLBufferID ) {
+		glDeleteBuffers ( 1, &this->mGLBufferID );
+		this->mGLBufferID = 0;
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAIIndexBuffer::ClearBuffer () {
 
 	if ( this->mBuffer ) {
@@ -112,7 +122,7 @@ MOAIIndexBuffer::MOAIIndexBuffer () :
 //----------------------------------------------------------------//
 MOAIIndexBuffer::~MOAIIndexBuffer () {
 
-	this->Release ();
+	this->Clear ();
 }
 
 //----------------------------------------------------------------//
@@ -131,16 +141,6 @@ void MOAIIndexBuffer::RegisterLuaFuncs ( USLuaState& state ) {
 	};
 
 	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAIIndexBuffer::Release () {
-
-	this->ClearBuffer ();
-	if ( this->mGLBufferID ) {
-		glDeleteBuffers ( 1, &this->mGLBufferID );
-		this->mGLBufferID = 0;
-	}
 }
 
 //----------------------------------------------------------------//

@@ -466,6 +466,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\moaicore\MOAIFrameBuffer.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIFrameBuffer.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\moaicore\MOAIGfxDevice.cpp"
 				>
 			</File>

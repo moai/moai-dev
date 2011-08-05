@@ -4,6 +4,7 @@
 #ifndef	MOAIGFXDEVICE_H
 #define	MOAIGFXDEVICE_H
 
+class MOAIFrameBuffer;
 class MOAIShader;
 class MOAITexture;
 class MOAIVertexFormat;
@@ -156,6 +157,7 @@ public:
 	void					SetBlendMode			( const USBlendMode& blendMode );
 	void					SetBlendMode			( int srcFactor, int dstFactor );
 	
+	void					SetFrameBuffer			( MOAITexture* frameBuffer );
 	void					SetPenColor				( u32 color );
 	void					SetPenColor				( const USColorVec& colorVec );
 	void					SetPenColor				( float r, float g, float b, float a );

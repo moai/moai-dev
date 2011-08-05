@@ -503,7 +503,6 @@ void MOAIImage::Clear () {
 	if ( this->mData ) {
 		free ( this->mData );
 	}
-	
 	this->Surrender ();
 }
 
@@ -820,7 +819,7 @@ void MOAIImage::Load ( USData& data, u32 transform ) {
 //----------------------------------------------------------------//
 void MOAIImage::Load ( cc8* filename, u32 transform ) {
 
-	this->Release ();
+	this->Clear ();
 	if ( !USFileSys::CheckFileExists ( filename )) return;
 	
 	USFileStream stream;
@@ -839,7 +838,7 @@ void MOAIImage::Load ( cc8* filename, u32 transform ) {
 //----------------------------------------------------------------//
 void MOAIImage::Load ( const void* buffer, u32 size, u32 transform ) {
 
-	this->Release ();
+	this->Clear ();
 	if ( size < 8 ) return;
 	
 	int isPng = ( png_sig_cmp (( png_bytep )buffer, 0, 8 ) == 0 );
@@ -1063,7 +1062,7 @@ MOAIImage::MOAIImage () :
 }
 
 //----------------------------------------------------------------//
-MOAIImage::~MOAIImage	() {
+MOAIImage::~MOAIImage () {
 
 	this->Clear ();
 }
