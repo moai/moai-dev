@@ -131,6 +131,7 @@ void MOAITraits::RegisterLuaFuncs ( USLuaState& state ) {
 void MOAITraits::SetTraitSource ( MOAITraits* traitSource ) {
 
 	this->SetDependentMember < MOAITraits >( this->mTraitSource, traitSource );
+	this->ForceUpdate ();
 }
 
 //----------------------------------------------------------------//
