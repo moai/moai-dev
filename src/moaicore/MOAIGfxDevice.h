@@ -63,7 +63,7 @@ private:
 	float			mPenWidth;
 	float			mPointSize;
 	
-	USBlendMode		mBlendMode;
+	MOAIBlendMode		mBlendMode;
 	bool			mBlendEnabled;
 	
 	USRect			mScissorRect;
@@ -152,7 +152,7 @@ public:
 	void					Reset					();
 	
 	void					SetBlendMode			();
-	void					SetBlendMode			( const USBlendMode& blendMode );
+	void					SetBlendMode			( const MOAIBlendMode& blendMode );
 	void					SetBlendMode			( int srcFactor, int dstFactor );
 	
 	void					SetFrameBuffer			( MOAITexture* frameBuffer );

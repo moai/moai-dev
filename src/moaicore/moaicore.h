@@ -11,6 +11,7 @@
 #include <moaicore/MOAIAnim.h>
 #include <moaicore/MOAIAnimCurve.h>
 #include <moaicore/MOAIBitmapFontRipper.h>
+#include <moaicore/MOAIBlendMode.h>
 #include <moaicore/MOAIButtonSensor.h>
 #include <moaicore/MOAICameraAnchor2D.h>
 #include <moaicore/MOAICameraFitter2D.h>

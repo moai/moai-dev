@@ -53,7 +53,7 @@ public:
 	static const u32 DEFAULT_MASK = 0x00000046;
 	
 	//----------------------------------------------------------------//
-	virtual USBlendMode			GetBlendModeTrait		();
+	virtual MOAIBlendMode			GetBlendModeTrait		();
 	virtual USColorVec			GetColorTrait			();
 	virtual USRect*				GetFrameTrait			();
 	virtual MOAIPartition*		GetPartitionTrait		();

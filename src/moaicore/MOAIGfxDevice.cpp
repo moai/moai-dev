@@ -550,7 +550,7 @@ void MOAIGfxDevice::SetBlendMode () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::SetBlendMode ( const USBlendMode& blendMode ) {
+void MOAIGfxDevice::SetBlendMode ( const MOAIBlendMode& blendMode ) {
 
 	if ( !( this->mBlendEnabled && this->mBlendMode.IsSame ( blendMode ))) {
 		this->Flush ();
@@ -564,7 +564,7 @@ void MOAIGfxDevice::SetBlendMode ( const USBlendMode& blendMode ) {
 //----------------------------------------------------------------//
 void MOAIGfxDevice::SetBlendMode ( int srcFactor, int dstFactor ) {
 
-	USBlendMode blendMode;
+	MOAIBlendMode blendMode;
 	blendMode.SetBlend ( srcFactor, dstFactor );
 	
 	this->SetBlendMode ( blendMode );

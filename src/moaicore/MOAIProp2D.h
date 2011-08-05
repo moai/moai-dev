@@ -70,7 +70,7 @@ protected:
 	USRef < MOAITransformBase >	mUVTransform;
 	
 	USColorVec					mColor;
-	USBlendMode					mBlendMode;
+	MOAIBlendMode					mBlendMode;
 	bool						mVisible;
 	
 	//----------------------------------------------------------------//
@@ -91,7 +91,7 @@ protected:
 	
 	//----------------------------------------------------------------//
 	bool			BindDeck				();
-	USBlendMode		GetBlendModeTrait		();
+	MOAIBlendMode		GetBlendModeTrait		();
 	void			GetBoundsInRect			( const USRect& rect, MOAICellCoord& c0, MOAICellCoord& c1 );
 	void			GetBoundsInView			( MOAICellCoord& c0, MOAICellCoord& c1 );
 	USColorVec		GetColorTrait			();

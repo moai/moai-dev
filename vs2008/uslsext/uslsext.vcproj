@@ -380,14 +380,6 @@
 			Name="gfxObjects"
 			>
 			<File
-				RelativePath="..\..\src\uslsext\USBlendMode.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USBlendMode.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\uslsext\USColor.cpp"
 				>
 			</File>

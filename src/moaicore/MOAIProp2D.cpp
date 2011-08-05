@@ -108,12 +108,12 @@ int MOAIProp2D::_setBlendMode ( lua_State* L ) {
 		}
 		else {
 			
-			u32 blendMode = state.GetValue < u32 >( 2, USBlendMode::BLEND_NORMAL );
+			u32 blendMode = state.GetValue < u32 >( 2, MOAIBlendMode::BLEND_NORMAL );
 			self->mBlendMode.SetBlend ( blendMode );
 		}
 	}
 	else {
-		self->mBlendMode.SetBlend ( USBlendMode::BLEND_NORMAL );
+		self->mBlendMode.SetBlend ( MOAIBlendMode::BLEND_NORMAL );
 	}
 	
 	self->ScheduleUpdate ();
@@ -482,7 +482,7 @@ void MOAIProp2D::GatherSurfaces ( MOAISurfaceSampler2D& sampler ) {
 }
 
 //----------------------------------------------------------------//
-USBlendMode MOAIProp2D::GetBlendModeTrait () {
+MOAIBlendMode MOAIProp2D::GetBlendModeTrait () {
 
 	return this->mBlendMode;
 }
@@ -739,9 +739,9 @@ void MOAIProp2D::RegisterLuaClass ( USLuaState& state ) {
 	
 	state.SetField ( -1, "ATTR_INDEX", MOAIProp2DAttr::Pack ( ATTR_INDEX ));
 	
-	state.SetField ( -1, "BLEND_ADD", ( u32 )USBlendMode::BLEND_ADD );
-	state.SetField ( -1, "BLEND_MULTIPLY", ( u32 )USBlendMode::BLEND_MULTIPLY );
-	state.SetField ( -1, "BLEND_NORMAL", ( u32 )USBlendMode::BLEND_NORMAL );
+	state.SetField ( -1, "BLEND_ADD", ( u32 )MOAIBlendMode::BLEND_ADD );
+	state.SetField ( -1, "BLEND_MULTIPLY", ( u32 )MOAIBlendMode::BLEND_MULTIPLY );
+	state.SetField ( -1, "BLEND_NORMAL", ( u32 )MOAIBlendMode::BLEND_NORMAL );
 	
 	state.SetField ( -1, "GL_ONE", ( u32 )GL_ONE );
 	state.SetField ( -1, "GL_ZERO", ( u32 )GL_ZERO );
