@@ -39,7 +39,7 @@ public:
 	TYPE m [ 16 ];
 
 	//----------------------------------------------------------------//
-	void Append	( USMetaMatrix3D < TYPE >& mtx ) {
+	void Append	( const USMetaMatrix3D < TYPE >& mtx ) {
 
 		USMetaMatrix3D < TYPE > temp;
 		temp.Multiply (	*this, mtx );
@@ -250,7 +250,7 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	bool Inverse ( USMetaMatrix3D < TYPE >& mtx ) {
+	bool Inverse ( const USMetaMatrix3D < TYPE >& mtx ) {
 
 		// 2x2 determinants
 		TYPE fA0 = mtx.m[C0_R0]*mtx.m[C1_R1] - mtx.m[C1_R0]*mtx.m[C0_R1];
@@ -300,7 +300,25 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	void Multiply (	USMetaMatrix3D < TYPE >&	mtx2, USMetaMatrix3D < TYPE >& mtx1 ) {
+	bool IsIdent () const {
+		
+		if ( !(( m [ C0_R0 ] == 1.0f ) && ( m [ C1_R1 ] == 1.0f ) && ( m [ C2_R2 ] == 1.0f ) && ( m [ C3_R3 ] == 1.0f ))) return false;
+		if ( !(( m [ C1_R0 ] == 0.0f ) && ( m [ C2_R0 ] == 0.0f ) && ( m [ C3_R0 ] == 0.0f ))) return false;
+		if ( !(( m [ C0_R1 ] == 0.0f ) && ( m [ C2_R1 ] == 0.0f ) && ( m [ C3_R1 ] == 0.0f ))) return false;
+		if ( !(( m [ C0_R2 ] == 0.0f ) && ( m [ C1_R2 ] == 0.0f ) && ( m [ C3_R2 ] == 0.0f ))) return false;
+		if ( !(( m [ C0_R3 ] == 0.0f ) && ( m [ C1_R3 ] == 0.0f ) && ( m [ C2_R3 ] == 0.0f ))) return false;
+		
+		return true;
+	}
+
+	//----------------------------------------------------------------//
+	bool IsSame ( const USMetaMatrix3D < TYPE >& compare ) const {
+		
+		return ( memcmp ( m, compare.m, sizeof ( m )) == 0.0f );
+	}
+
+	//----------------------------------------------------------------//
+	void Multiply (	const USMetaMatrix3D < TYPE >& mtx2, const USMetaMatrix3D < TYPE >& mtx1 ) {
 
 		m[C0_R0]	=	( mtx1.m[C0_R0] * mtx2.m[C0_R0] )	+
 						( mtx1.m[C1_R0] * mtx2.m[C0_R1] )	+
@@ -384,7 +402,7 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	void Prepend ( USMetaMatrix3D < TYPE >& mtx ) {
+	void Prepend ( const USMetaMatrix3D < TYPE >& mtx ) {
 
 		USMetaMatrix3D < TYPE > temp;
 		temp.Multiply (	mtx, *this );
@@ -562,7 +580,7 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	void ScRoTr	( USMetaVec3D < TYPE >& sc, USMetaVec3D < TYPE >&	ro,	USMetaVec3D < TYPE >& tr ) {
+	void ScRoTr	( USMetaVec3D < TYPE >& sc, USMetaVec3D < TYPE >& ro,	USMetaVec3D < TYPE >& tr ) {
 
 		TYPE cx = Cos ( ro.mX );
 		TYPE sx = Sin ( ro.mX );
@@ -805,6 +823,16 @@ public:
 	}
 
 	//----------------------------------------------------------------//
+	template < typename PARAM_TYPE>
+	void TransformQuad ( USMetaVec2D < PARAM_TYPE >* quad ) const {
+	
+		this->Transform ( quad [ 0 ]);
+		this->Transform ( quad [ 1 ]);
+		this->Transform ( quad [ 2 ]);
+		this->Transform ( quad [ 3 ]);
+	}
+
+	//----------------------------------------------------------------//
 	// Transforms w/o translation
 	template < typename PARAM_TYPE >
 	void TransformVec (	USMetaVec2D < PARAM_TYPE >& point ) const {
@@ -911,18 +939,7 @@ public:
 	}
 };
 
-//================================================================//
-// USMatrix3D
-//================================================================//
-class USMatrix3D :
-	public USMetaMatrix3D < float > {
-};
-
-//================================================================//
-// USMatrix3D64
-//================================================================//
-class USMatrix3D64 :
-	public USMetaMatrix3D < double > {
-};
+typedef USMetaMatrix3D < float > USMatrix3D;
+typedef USMetaMatrix3D < double > USMatrix3D64;
 
 #endif

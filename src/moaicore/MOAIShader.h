@@ -38,9 +38,9 @@ private:
 	USRef < MOAITransformBase >	mTransform;
 
 	//----------------------------------------------------------------//
-	void		BindAffine					( const USAffine2D& affine );
 	void		BindAttributes				( const float* attributes );
-	void		BindPipelineTransforms		( const USAffine2D& world, const USAffine2D& view, const USAffine2D& proj );
+	void		BindMatrix					( const USMatrix3D& matrix );
+	void		BindPipelineTransforms		( const USMatrix3D& world, const USMatrix3D& view, const USMatrix3D& proj );
 
 public:
 
@@ -92,7 +92,7 @@ protected:
 	void			Affirm						();
 	void			Bind						();
 	GLuint			CompileShader				( GLuint type,  cc8* source );
-	void			UpdatePipelineTransforms	( const USAffine2D& world, const USAffine2D& view, const USAffine2D& proj );
+	void			UpdatePipelineTransforms	( const USMatrix3D& world, const USMatrix3D& view, const USMatrix3D& proj );
 	void			Validate					();
 
 public:

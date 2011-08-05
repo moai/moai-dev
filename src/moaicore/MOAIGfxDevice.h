@@ -55,8 +55,8 @@ private:
 	MOAITexture*	mTexture;
 	MOAIShader*		mShader;
 	
-	USAffine2D		mUVTransform;
-	USAffine2D		mVertexTransforms [ TOTAL_VTX_TRANSFORMS ];
+	USMatrix3D		mUVTransform;
+	USMatrix3D		mVertexTransforms [ TOTAL_VTX_TRANSFORMS ];
 	
 	USColorVec		mPenColor;
 	u32				mPackedColor;
@@ -79,7 +79,7 @@ private:
 	u32				mVertexMtxOutput;
 
 	bool			mCpuVertexTransform;
-	USAffine2D		mCpuVertexTransformMtx; // composition of matrices to be applied via CPU
+	USMatrix3D		mCpuVertexTransformMtx; // composition of matrices to be applied via CPU
 	
 	bool			mCpuUVTransform;
 	
@@ -94,9 +94,7 @@ private:
 	//----------------------------------------------------------------//
 	void					Clear					();
 	void					DrawPrims				();
-	void					GpuLoadMatrix			( const USAffine2D& mtx ) const;
 	void					GpuLoadMatrix			( const USMatrix3D& mtx ) const;
-	void					GpuMultMatrix			( const USAffine2D& mtx ) const;
 	void					GpuMultMatrix			( const USMatrix3D& mtx ) const;
 	void					UpdateCpuVertexMtx		();
 	void					UpdateGpuVertexMtx		();
@@ -123,24 +121,24 @@ public:
 	
 	u32						GetHeight				() const;
 	
-	USAffine2D				GetModelToWndMtx		() const;
-	USAffine2D				GetModelToWorldMtx		() const;
+	USMatrix3D				GetModelToWndMtx		() const;
+	USMatrix3D				GetModelToWorldMtx		() const;
 	
 	USColorVec				GetPenColor				() const;
 	USRect					GetRect					() const;
-	USAffine2D				GetUVTransform			() const;
-	USAffine2D				GetVertexTransform		( u32 id ) const;
+	USMatrix3D				GetUVTransform			() const;
+	USMatrix3D				GetVertexTransform		( u32 id ) const;
 	
-	USAffine2D				GetViewProjMtx			() const;
+	USMatrix3D				GetViewProjMtx			() const;
 	USQuad					GetViewQuad				() const;
 	USRect					GetViewRect				() const;
 	
 	u32						GetWidth				() const;
 
-	USAffine2D				GetWorldToModelMtx		() const;
-	USAffine2D				GetWorldToWndMtx		( float xScale = 1.0f, float yScale = 1.0f ) const;
-	USAffine2D				GetWndToModelMtx		() const;
-	USAffine2D				GetWndToWorldMtx		() const;
+	USMatrix3D				GetWorldToModelMtx		() const;
+	USMatrix3D				GetWorldToWndMtx		( float xScale = 1.0f, float yScale = 1.0f ) const;
+	USMatrix3D				GetWndToModelMtx		() const;
+	USMatrix3D				GetWndToWorldMtx		() const;
 	
 	bool					IsOpenGLES				();
 	bool					IsProgrammable			();
@@ -175,6 +173,7 @@ public:
 	void					SetUVMtxMode			( u32 input, u32 output );
 	void					SetUVTransform			();
 	void					SetUVTransform			( const USAffine2D& transform );
+	void					SetUVTransform			( const USMatrix3D& transform );
 	
 	void					SetVertexFormat			();
 	void					SetVertexFormat			( const MOAIVertexFormat& format );
@@ -182,6 +181,7 @@ public:
 	void					SetVertexPreset			( u32 preset );
 	void					SetVertexTransform		( u32 id );
 	void					SetVertexTransform		( u32 id, const USAffine2D& transform );
+	void					SetVertexTransform		( u32 id, const USMatrix3D& transform );
 	
 	void					SetViewport				();
 	void					SetViewport				( MOAIViewport& viewport );
