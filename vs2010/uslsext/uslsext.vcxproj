@@ -228,7 +228,6 @@
     <ClCompile Include="..\..\src\uslsext\USAttributed.cpp" />
     <ClCompile Include="..\..\src\uslsext\USAttrMap.cpp" />
     <ClCompile Include="..\..\src\uslsext\USAttrOp.cpp" />
-    <ClCompile Include="..\..\src\uslsext\USBlendMode.cpp" />
     <ClCompile Include="..\..\src\uslsext\USColor.cpp" />
     <ClCompile Include="..\..\src\uslsext\USLexStream.cpp" />
     <ClCompile Include="..\..\src\uslsext\USParser.cpp" />
@@ -297,11 +296,12 @@
     <ClInclude Include="..\..\src\uslsext\USAttrOp.h" />
     <ClInclude Include="..\..\src\uslsext\USFsm.h" />
     <ClInclude Include="..\..\src\uslsext\USFsmStateFactory.h" />
-    <ClInclude Include="..\..\src\uslsext\USBlendMode.h" />
     <ClInclude Include="..\..\src\uslsext\USColor.h" />
     <ClInclude Include="..\..\src\uslsext\USLexStream.h" />
+    <ClInclude Include="..\..\src\uslsext\USMatrix3x3.h" />
+    <ClInclude Include="..\..\src\uslsext\USMatrix4x4.h" />
     <ClInclude Include="..\..\src\uslsext\USParser.h" />
-    <ClInclude Include="..\..\src\uslsext\USPvrHeader.h" />
+    <ClInclude Include="..\..\src\uslsext\USPolyScanner.h" />
     <ClInclude Include="..\..\src\uslsext\USSyntaxNode.h" />
     <ClInclude Include="..\..\src\uslsext\USSyntaxScanner.h" />
     <ClInclude Include="..\..\src\uslsext\USData.h" />
@@ -313,8 +313,6 @@
     <ClInclude Include="..\..\src\uslsext\USIntersect.h" />
     <ClInclude Include="..\..\src\uslsext\USMathConsts.h" />
     <ClInclude Include="..\..\src\uslsext\USMatrix.h" />
-    <ClInclude Include="..\..\src\uslsext\USMatrix2D.h" />
-    <ClInclude Include="..\..\src\uslsext\USMatrix3D.h" />
     <ClInclude Include="..\..\src\uslsext\USMercator.h" />
     <ClInclude Include="..\..\src\uslsext\USPlane.h" />
     <ClInclude Include="..\..\src\uslsext\USPolar.h" />

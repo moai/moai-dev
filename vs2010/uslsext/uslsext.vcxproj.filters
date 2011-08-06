@@ -57,9 +57,6 @@
     <ClCompile Include="..\..\src\uslsext\USAttrOp.cpp">
       <Filter>src\attributed</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\uslsext\USBlendMode.cpp">
-      <Filter>src\gfxObjects</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\uslsext\USColor.cpp">
       <Filter>src\gfxObjects</Filter>
     </ClCompile>
@@ -209,9 +206,6 @@
     <ClInclude Include="..\..\src\uslsext\USFsmStateFactory.h">
       <Filter>src\fsm</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\uslsext\USBlendMode.h">
-      <Filter>src\gfxObjects</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\uslsext\USColor.h">
       <Filter>src\gfxObjects</Filter>
     </ClInclude>
@@ -240,12 +234,6 @@
       <Filter>src\math</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\uslsext\USMatrix.h">
-      <Filter>src\math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\uslsext\USMatrix2D.h">
-      <Filter>src\math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\uslsext\USMatrix3D.h">
       <Filter>src\math</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\uslsext\USMercator.h">
@@ -368,8 +356,14 @@
     <ClInclude Include="..\..\src\uslsext\USBinarySearch.h">
       <Filter>src\util</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\uslsext\USPvrHeader.h">
+    <ClInclude Include="..\..\src\uslsext\USPolyScanner.h">
       <Filter>src\gfxObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USMatrix3x3.h">
+      <Filter>src\math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USMatrix4x4.h">
+      <Filter>src\math</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

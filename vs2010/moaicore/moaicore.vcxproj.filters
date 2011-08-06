@@ -408,6 +408,12 @@
     <ClCompile Include="..\..\src\moaicore\MOAIQuadBrush.cpp">
       <Filter>src\brush</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIFrameBuffer.cpp">
+      <Filter>src\gfx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIBlendMode.cpp">
+      <Filter>src\gfx</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\moaicore\MOAIAction.h">
@@ -748,6 +754,12 @@
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAILineBrush.h">
       <Filter>src\brush</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIFrameBuffer.h">
+      <Filter>src\gfx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIBlendMode.h">
+      <Filter>src\gfx</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

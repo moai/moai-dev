@@ -439,17 +439,26 @@ void MOAIGrid::SerializeOut ( USLuaState& state, USLuaSerializer& serializer ) {
 //----------------------------------------------------------------//
 void MOAIGrid::SetTile ( u32 addr, u32 tile ) {
 
-	addr = addr % this->mTiles.Size ();
-	this->mTiles [ addr ] = tile;
+	u32 size = this->mTiles.Size ();
+
+	if ( size ) {
+		addr = addr % this->mTiles.Size ();
+		this->mTiles [ addr ] = tile;
+	}
 }
 
 //----------------------------------------------------------------//
 void MOAIGrid::SetTile ( int xTile, int yTile, u32 tile ) {
 
-	MOAICellCoord coord ( xTile, yTile );
-	u32 addr = this->GetCellAddr ( coord );
-	if ( addr < this->mTiles.Size ()) {
-		this->mTiles [ addr ] = tile;
+	u32 size = this->mTiles.Size ();
+	
+	if ( size ) {
+
+		MOAICellCoord coord ( xTile, yTile );
+		u32 addr = this->GetCellAddr ( coord );
+		if ( addr < this->mTiles.Size ()) {
+			this->mTiles [ addr ] = tile;
+		}
 	}
 }
 
