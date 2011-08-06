@@ -130,6 +130,8 @@ USMatrix3x3 MOAIGridSpace::GetGridToWorldMtx () const {
 //----------------------------------------------------------------//
 int MOAIGridSpace::GetCellAddr ( MOAICellCoord cellCoord ) const {
 
+	if ( !( this->mWidth && this->mHeight )) return 0;
+
 	cellCoord.mX = cellCoord.mX % this->mWidth;
 	if ( cellCoord.mX < 0 ) cellCoord.mX += this->mWidth;
 
