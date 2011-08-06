@@ -38,6 +38,7 @@ private:
 
 	//----------------------------------------------------------------//
 	static int	_clearTileFlags		( lua_State* L );
+	static int	_getSize			( lua_State* L );
 	static int	_getTile			( lua_State* L );
 	static int	_getTileFlags		( lua_State* L );
 	static int	_getTileLoc			( lua_State* L );

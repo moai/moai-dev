@@ -41,7 +41,7 @@ int MOAIVertexBuffer::_bless ( lua_State* L ) {
 int	MOAIVertexBuffer::_release ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVertexBuffer, "U" )
 	
-	self->Release ();
+	self->Clear ();
 	return 0;
 }
 
@@ -272,6 +272,12 @@ int MOAIVertexBuffer::_writeInt32 ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIVertexBuffer::Clear () {
+
+	this->Reserve ( 0 );
+}
+
+//----------------------------------------------------------------//
 void MOAIVertexBuffer::Draw () {
 
 	if ( this->mFormat ) {
@@ -305,7 +311,7 @@ MOAIVertexBuffer::MOAIVertexBuffer () :
 //----------------------------------------------------------------//
 MOAIVertexBuffer::~MOAIVertexBuffer () {
 
-	this->Release ();
+	this->Clear ();
 }
 
 //----------------------------------------------------------------//
@@ -342,12 +348,6 @@ void MOAIVertexBuffer::RegisterLuaFuncs ( USLuaState& state ) {
 	};
 	
 	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAIVertexBuffer::Release () {
-
-	this->Reserve ( 0 );
 }
 
 //----------------------------------------------------------------//

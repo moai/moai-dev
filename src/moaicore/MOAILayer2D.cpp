@@ -6,10 +6,12 @@
 #include <moaicore/MOAIDeck.h>
 #include <moaicore/MOAICpSpace.h>
 #include <moaicore/MOAIDebugLines.h>
+#include <moaicore/MOAIFrameBuffer.h>
 #include <moaicore/MOAIGfxDevice.h>
 #include <moaicore/MOAILayer2D.h>
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIProp2D.h>
+#include <moaicore/MOAITexture.h>
 #include <moaicore/MOAITransform.h>
 
 #define MAX_RENDERABLES 512
@@ -199,6 +201,19 @@ int MOAILayer2D::_setCpSpace ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAILayer2D::_setFrameBuffer ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAILayer2D, "UU" )
+
+	MOAITexture* frameBuffer = state.GetLuaObject < MOAITexture >( 2 );
+	if ( !frameBuffer ) return 0;
+
+	self->mFrameBuffer = frameBuffer;
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	setParallax
 	@text	Sets the parallax scale for this layer. This is simply a
 			scalar applied to the view transform before rendering.
@@ -348,6 +363,7 @@ void MOAILayer2D::Draw () {
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	
 	gfxDevice.Reset ();
+	gfxDevice.SetFrameBuffer ( this->mFrameBuffer );
 	
 	// TODO: GLES2
 	//USAffine2D mtx = MOAIGfxDevice::Get ().GetWorldToWndMtx ( 1.0f, 1.0f );
@@ -522,6 +538,7 @@ void MOAILayer2D::RegisterLuaFuncs ( USLuaState& state ) {
 		{ "setBox2DWorld",			_setBox2DWorld },
 		{ "setCamera",				_setCamera },
 		{ "setCpSpace",				_setCpSpace },
+		{ "setFrameBuffer",			_setFrameBuffer },
 		{ "setParallax",			_setParallax },
 		{ "setPartition",			_setPartition },
 		{ "setViewport",			_setViewport },

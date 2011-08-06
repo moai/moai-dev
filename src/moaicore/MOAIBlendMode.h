@@ -1,13 +1,13 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef USBLENDMODE_H
-#define USBLENDMODE_H
+#ifndef MOAIBLENDMODE_H
+#define MOAIBLENDMODE_H
 
 //================================================================//
-// USBlendMode
+// MOAIBlendMode
 //================================================================//
-class USBlendMode {
+class MOAIBlendMode {
 public:
 	
 	enum {
@@ -24,11 +24,11 @@ public:
 	static void		GetBlendFactors		( u32 blend, int& srcFactor, int& dstFactor );
 	void			SetBlend			( u32 blend );
 	void			SetBlend			( int srcFactor, int dstFactor );
-					USBlendMode			();
-					~USBlendMode		();
+					MOAIBlendMode			();
+					~MOAIBlendMode		();
 	
 	//----------------------------------------------------------------//
-	inline bool IsSame ( const USBlendMode& blendMode ) {
+	inline bool IsSame ( const MOAIBlendMode& blendMode ) {
 		return (( this->mSourceFactor == blendMode.mSourceFactor ) && ( this->mDestFactor == blendMode.mDestFactor ));
 	}
 };

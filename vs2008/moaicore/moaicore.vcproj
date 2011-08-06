@@ -442,6 +442,14 @@
 			Name="gfx"
 			>
 			<File
+				RelativePath="..\..\src\moaicore\MOAIBlendMode.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIBlendMode.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\moaicore\MOAIColor.cpp"
 				>
 			</File>
@@ -463,6 +471,14 @@
 			</File>
 			<File
 				RelativePath="..\..\src\moaicore\MOAIDraw.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIFrameBuffer.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIFrameBuffer.h"
 				>
 			</File>
 			<File

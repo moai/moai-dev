@@ -2,21 +2,21 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <uslsext/USBlendMode.h>
+#include <moaicore/MOAIBlendMode.h>
 
 //================================================================//
-// USBlendMode
+// MOAIBlendMode
 //================================================================//
 
 //----------------------------------------------------------------//
-void USBlendMode::Bind () {
+void MOAIBlendMode::Bind () {
 	
 	glEnable ( GL_BLEND );
 	glBlendFunc ( this->mSourceFactor, this->mDestFactor );
 }
 
 //----------------------------------------------------------------//
-void USBlendMode::GetBlendFactors ( u32 blend, int& srcFactor, int& dstFactor ) {
+void MOAIBlendMode::GetBlendFactors ( u32 blend, int& srcFactor, int& dstFactor ) {
 
 	switch ( blend ) {
 		case BLEND_NORMAL: {
@@ -38,13 +38,13 @@ void USBlendMode::GetBlendFactors ( u32 blend, int& srcFactor, int& dstFactor ) 
 }
 
 //----------------------------------------------------------------//
-void USBlendMode::SetBlend ( u32 blend ) {
+void MOAIBlendMode::SetBlend ( u32 blend ) {
 	
-	USBlendMode::GetBlendFactors ( blend, this->mSourceFactor, this->mDestFactor );
+	MOAIBlendMode::GetBlendFactors ( blend, this->mSourceFactor, this->mDestFactor );
 }
 
 //----------------------------------------------------------------//
-void USBlendMode::SetBlend ( int srcFactor, int dstFactor ) {
+void MOAIBlendMode::SetBlend ( int srcFactor, int dstFactor ) {
 
 	// GL_ZERO
 	// GL_ONE
@@ -69,11 +69,11 @@ void USBlendMode::SetBlend ( int srcFactor, int dstFactor ) {
 }
 
 //----------------------------------------------------------------//
-USBlendMode::USBlendMode () :
+MOAIBlendMode::MOAIBlendMode () :
 	mSourceFactor ( GL_ONE ),
 	mDestFactor ( GL_ONE_MINUS_SRC_ALPHA ) {
 }
 
 //----------------------------------------------------------------//
-USBlendMode::~USBlendMode () {
+MOAIBlendMode::~MOAIBlendMode () {
 }

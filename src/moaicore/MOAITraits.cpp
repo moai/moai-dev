@@ -49,9 +49,9 @@ int MOAITraits::_setTraitSource ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-USBlendMode MOAITraits::GetBlendModeTrait () {
+MOAIBlendMode MOAITraits::GetBlendModeTrait () {
 
-	USBlendMode blendMode;
+	MOAIBlendMode blendMode;
 	return blendMode;
 }
 
@@ -131,6 +131,7 @@ void MOAITraits::RegisterLuaFuncs ( USLuaState& state ) {
 void MOAITraits::SetTraitSource ( MOAITraits* traitSource ) {
 
 	this->SetDependentMember < MOAITraits >( this->mTraitSource, traitSource );
+	this->ForceUpdate ();
 }
 
 //----------------------------------------------------------------//

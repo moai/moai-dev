@@ -4,6 +4,9 @@
 #ifndef	MOAIGFXDEVICE_H
 #define	MOAIGFXDEVICE_H
 
+#include <moaicore/MOAIBlendMode.h>
+
+class MOAIFrameBuffer;
 class MOAIShader;
 class MOAITexture;
 class MOAIVertexFormat;
@@ -54,15 +57,15 @@ private:
 	MOAITexture*	mTexture;
 	MOAIShader*		mShader;
 	
-	USAffine2D		mUVTransform;
-	USAffine2D		mVertexTransforms [ TOTAL_VTX_TRANSFORMS ];
+	USMatrix4x4		mUVTransform;
+	USMatrix4x4		mVertexTransforms [ TOTAL_VTX_TRANSFORMS ];
 	
 	USColorVec		mPenColor;
 	u32				mPackedColor;
 	float			mPenWidth;
 	float			mPointSize;
 	
-	USBlendMode		mBlendMode;
+	MOAIBlendMode	mBlendMode;
 	bool			mBlendEnabled;
 	
 	USRect			mScissorRect;
@@ -78,7 +81,7 @@ private:
 	u32				mVertexMtxOutput;
 
 	bool			mCpuVertexTransform;
-	USAffine2D		mCpuVertexTransformMtx; // composition of matrices to be applied via CPU
+	USMatrix4x4		mCpuVertexTransformMtx; // composition of matrices to be applied via CPU
 	
 	bool			mCpuUVTransform;
 	
@@ -93,10 +96,8 @@ private:
 	//----------------------------------------------------------------//
 	void					Clear					();
 	void					DrawPrims				();
-	void					GpuLoadMatrix			( const USAffine2D& mtx ) const;
-	void					GpuLoadMatrix			( const USMatrix3D& mtx ) const;
-	void					GpuMultMatrix			( const USAffine2D& mtx ) const;
-	void					GpuMultMatrix			( const USMatrix3D& mtx ) const;
+	void					GpuLoadMatrix			( const USMatrix4x4& mtx ) const;
+	void					GpuMultMatrix			( const USMatrix4x4& mtx ) const;
 	void					UpdateCpuVertexMtx		();
 	void					UpdateGpuVertexMtx		();
 	void					UpdateUVMtx				();
@@ -122,24 +123,24 @@ public:
 	
 	u32						GetHeight				() const;
 	
-	USAffine2D				GetModelToWndMtx		() const;
-	USAffine2D				GetModelToWorldMtx		() const;
+	USMatrix4x4				GetModelToWndMtx		() const;
+	USMatrix4x4				GetModelToWorldMtx		() const;
 	
 	USColorVec				GetPenColor				() const;
 	USRect					GetRect					() const;
-	USAffine2D				GetUVTransform			() const;
-	USAffine2D				GetVertexTransform		( u32 id ) const;
+	USMatrix4x4				GetUVTransform			() const;
+	USMatrix4x4				GetVertexTransform		( u32 id ) const;
 	
-	USAffine2D				GetViewProjMtx			() const;
+	USMatrix4x4				GetViewProjMtx			() const;
 	USQuad					GetViewQuad				() const;
 	USRect					GetViewRect				() const;
 	
 	u32						GetWidth				() const;
 
-	USAffine2D				GetWorldToModelMtx		() const;
-	USAffine2D				GetWorldToWndMtx		( float xScale = 1.0f, float yScale = 1.0f ) const;
-	USAffine2D				GetWndToModelMtx		() const;
-	USAffine2D				GetWndToWorldMtx		() const;
+	USMatrix4x4				GetWorldToModelMtx		() const;
+	USMatrix4x4				GetWorldToWndMtx		( float xScale = 1.0f, float yScale = 1.0f ) const;
+	USMatrix4x4				GetWndToModelMtx		() const;
+	USMatrix4x4				GetWndToWorldMtx		() const;
 	
 	bool					IsOpenGLES				();
 	bool					IsProgrammable			();
@@ -153,9 +154,10 @@ public:
 	void					Reset					();
 	
 	void					SetBlendMode			();
-	void					SetBlendMode			( const USBlendMode& blendMode );
+	void					SetBlendMode			( const MOAIBlendMode& blendMode );
 	void					SetBlendMode			( int srcFactor, int dstFactor );
 	
+	void					SetFrameBuffer			( MOAITexture* frameBuffer );
 	void					SetPenColor				( u32 color );
 	void					SetPenColor				( const USColorVec& colorVec );
 	void					SetPenColor				( float r, float g, float b, float a );
@@ -173,6 +175,7 @@ public:
 	void					SetUVMtxMode			( u32 input, u32 output );
 	void					SetUVTransform			();
 	void					SetUVTransform			( const USAffine2D& transform );
+	void					SetUVTransform			( const USMatrix4x4& transform );
 	
 	void					SetVertexFormat			();
 	void					SetVertexFormat			( const MOAIVertexFormat& format );
@@ -180,6 +183,7 @@ public:
 	void					SetVertexPreset			( u32 preset );
 	void					SetVertexTransform		( u32 id );
 	void					SetVertexTransform		( u32 id, const USAffine2D& transform );
+	void					SetVertexTransform		( u32 id, const USMatrix4x4& transform );
 	
 	void					SetViewport				();
 	void					SetViewport				( MOAIViewport& viewport );

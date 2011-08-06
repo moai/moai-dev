@@ -13,7 +13,6 @@
 #include <uslsext/USAttrMap.h>
 #include <uslsext/USAttrOp.h>
 #include <uslsext/USBinarySearch.h>
-#include <uslsext/USBlendMode.h>
 #include <uslsext/USBox.h>
 #include <uslsext/USCgt.h>
 #include <uslsext/USColor.h>
@@ -31,8 +30,8 @@
 #include <uslsext/USLexStream.h>
 #include <uslsext/USMathConsts.h>
 #include <uslsext/USMatrix.h>
-#include <uslsext/USMatrix2D.h>
-#include <uslsext/USMatrix3D.h>
+#include <uslsext/USMatrix3x3.h>
+#include <uslsext/USMatrix4x4.h>
 #include <uslsext/USMercator.h>
 #include <uslsext/USMutex.h>
 #include <uslsext/USMutex_posix.h>

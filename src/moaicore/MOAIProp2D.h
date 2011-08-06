@@ -4,6 +4,7 @@
 #ifndef	MOAIPROP2D_H
 #define	MOAIPROP2D_H
 
+#include <moaicore/MOAIBlendMode.h>
 #include <moaicore/MOAIColor.h>
 #include <moaicore/MOAIProp.h>
 
@@ -70,7 +71,7 @@ protected:
 	USRef < MOAITransformBase >	mUVTransform;
 	
 	USColorVec					mColor;
-	USBlendMode					mBlendMode;
+	MOAIBlendMode					mBlendMode;
 	bool						mVisible;
 	
 	//----------------------------------------------------------------//
@@ -90,15 +91,15 @@ protected:
 	static int		_setVisible			( lua_State* L );
 	
 	//----------------------------------------------------------------//
-	bool			BindDeck				();
-	USBlendMode		GetBlendModeTrait		();
-	void			GetBoundsInRect			( const USRect& rect, MOAICellCoord& c0, MOAICellCoord& c1 );
-	void			GetBoundsInView			( MOAICellCoord& c0, MOAICellCoord& c1 );
-	USColorVec		GetColorTrait			();
-	USRect*			GetFrameTrait			();
-	MOAIShader*		GetShaderTrait			();
-	bool			GetVisibleTrait			();
-	void			LoadShader				();
+	bool				BindDeck				();
+	MOAIBlendMode		GetBlendModeTrait		();
+	void				GetBoundsInRect			( const USRect& rect, MOAICellCoord& c0, MOAICellCoord& c1 );
+	void				GetBoundsInView			( MOAICellCoord& c0, MOAICellCoord& c1 );
+	USColorVec			GetColorTrait			();
+	USRect*				GetFrameTrait			();
+	MOAIShader*			GetShaderTrait			();
+	bool				GetVisibleTrait			();
+	void				LoadShader				();
 
 public:
 	

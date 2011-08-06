@@ -120,9 +120,9 @@ USRect MOAIGridSpace::GetBounds ( MOAICellCoord c0, MOAICellCoord c1 ) const {
 }
 
 //----------------------------------------------------------------//
-USMatrix2D MOAIGridSpace::GetGridToWorldMtx () const {
+USMatrix3x3 MOAIGridSpace::GetGridToWorldMtx () const {
 
-	USMatrix2D mtx;
+	USMatrix3x3 mtx;
 	mtx.Scale ( 1.0f, -1.0f );
 	return mtx;
 }
@@ -291,9 +291,9 @@ int MOAIGridSpace::GetTotalCells () const {
 }
 
 //----------------------------------------------------------------//
-USMatrix2D MOAIGridSpace::GetWorldToGridMtx () const {
+USMatrix3x3 MOAIGridSpace::GetWorldToGridMtx () const {
 
-	USMatrix2D mtx;
+	USMatrix3x3 mtx;
 	mtx.Scale ( 1.0f, -1.0f );
 	return mtx;
 }

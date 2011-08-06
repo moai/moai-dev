@@ -4,6 +4,7 @@
 #ifndef	MOAITRAITED_H
 #define	MOAITRAITED_H
 
+#include <moaicore/MOAIBlendMode.h>
 #include <moaicore/MOAINode.h>
 
 class MOAIPartition;
@@ -53,7 +54,7 @@ public:
 	static const u32 DEFAULT_MASK = 0x00000046;
 	
 	//----------------------------------------------------------------//
-	virtual USBlendMode			GetBlendModeTrait		();
+	virtual MOAIBlendMode		GetBlendModeTrait		();
 	virtual USColorVec			GetColorTrait			();
 	virtual USRect*				GetFrameTrait			();
 	virtual MOAIPartition*		GetPartitionTrait		();

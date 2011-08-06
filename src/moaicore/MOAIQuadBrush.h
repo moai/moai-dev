@@ -30,7 +30,7 @@ public:
 	//----------------------------------------------------------------//
 	static void			BindVertexFormat	( MOAIGfxDevice& gfxDevice );
 	void				Draw				();
-	void				Draw				( const USMatrix2D& mtx );
+	void				Draw				( const USMatrix3x3& mtx );
 	void				Draw				( float xOff, float yOff );
 	void				Draw				( float xOff, float yOff, float xScale, float yScale );
 	USRect				GetUVBounds			();
@@ -48,8 +48,8 @@ public:
 	void				SetVerts			( const USVec2D& v0, const USVec2D& v1, const USVec2D& v2, const USVec2D& v3 );
 	void				SetVerts			( float x0, float y0, float x1, float y1, float x2, float y2, float x3, float y3 );
 	void				SetVerts			( const USVec2D& v0, float radius );
-	void				TransformUVs		( const USMatrix2D& mtx );
-	void				TransformVerts		( const USMatrix2D& mtx );
+	void				TransformUVs		( const USMatrix3x3& mtx );
+	void				TransformVerts		( const USMatrix3x3& mtx );
 };
 
 #endif

@@ -503,7 +503,6 @@ void MOAIImage::Clear () {
 	if ( this->mData ) {
 		free ( this->mData );
 	}
-	
 	this->Surrender ();
 }
 
@@ -820,7 +819,7 @@ void MOAIImage::Load ( USData& data, u32 transform ) {
 //----------------------------------------------------------------//
 void MOAIImage::Load ( cc8* filename, u32 transform ) {
 
-	this->Release ();
+	this->Clear ();
 	if ( !USFileSys::CheckFileExists ( filename )) return;
 	
 	USFileStream stream;
@@ -839,7 +838,7 @@ void MOAIImage::Load ( cc8* filename, u32 transform ) {
 //----------------------------------------------------------------//
 void MOAIImage::Load ( const void* buffer, u32 size, u32 transform ) {
 
-	this->Release ();
+	this->Clear ();
 	if ( size < 8 ) return;
 	
 	int isPng = ( png_sig_cmp (( png_bytep )buffer, 0, 8 ) == 0 );
@@ -893,7 +892,7 @@ void MOAIImage::LoadPng ( void* pngParam, void* pngInfoParam, u32 transform ) {
 	png_get_tRNS ( png, pngInfo, &trans, &transSize, 0 );
 	
 	// we don't handle interlaced pngs at the moment
-	if ( interlaceType != PNG_INTERLACE_NONE ) return;
+	int passes = png_set_interlace_handling ( png );
 	
 	// no fat palettes
 	if ( paletteSize > 256 ) return;
@@ -985,11 +984,16 @@ void MOAIImage::LoadPng ( void* pngParam, void* pngInfoParam, u32 transform ) {
 			
 			if ( this->GetRowSize () < png_get_rowbytes ( png, pngInfo )) return;
 			
-			for ( u32 y = 0; y < height; ++y ) {
-				void* row = this->GetRowAddr ( y );
-				png_read_row ( png, ( png_bytep )row, 0 );
-				
-				if ( transform & MOAIImageTransform::PREMULTIPLY_ALPHA ) {
+			for ( int i = 0; i < passes; ++i ) {
+				for ( u32 y = 0; y < height; ++y ) {
+					void* row = this->GetRowAddr ( y );
+					png_read_row ( png, ( png_bytep )row, 0 );
+				}
+			}
+			
+			if ( transform & MOAIImageTransform::PREMULTIPLY_ALPHA ) {
+				for ( u32 y = 0; y < height; ++y ) {
+					void* row = this->GetRowAddr ( y );
 					USColor::PremultiplyAlpha ( row, this->mColorFormat, width );
 				}
 			}
@@ -998,19 +1002,43 @@ void MOAIImage::LoadPng ( void* pngParam, void* pngInfoParam, u32 transform ) {
 			
 			u32 srcRowSize = ( u32 )png_get_rowbytes ( png, pngInfo );
 			
-			assert ( width <= 1024 ); // handle this better later
-			assert ( srcRowSize <= ( 1024 * sizeof ( u32 ))); // handle this better later
-			
-			u32 srcRow [ 1024 ];
-			
-			for ( u32 y = 0; y < height; ++y ) {
-				png_read_row ( png, ( png_bytep )srcRow, 0 );
-				void* destRow = this->GetRowAddr ( y );
-				USColor::Convert ( destRow, this->mColorFormat, srcRow, pngColorFormat, width );
+			if ( passes > 1 ) {
 				
-				if ( transform & MOAIImageTransform::PREMULTIPLY_ALPHA ) {
-					USColor::PremultiplyAlpha ( destRow, this->mColorFormat, width );
+				u32 srcBuffSize = srcRowSize * height;
+				void* srcBuff = malloc ( srcBuffSize );
+				
+				for ( int i = 0; i < passes; ++i ) {
+					for ( u32 y = 0; y < height; ++y ) {
+						void* srcRow = ( void* )(( uintptr )srcBuff + ( srcRowSize * y ));
+						png_read_row ( png, ( png_bytep )srcRow, 0 );
+					}
 				}
+				
+				for ( u32 y = 0; y < height; ++y ) {
+					void* srcRow = ( void* )(( uintptr )srcBuff + ( srcRowSize * y ));
+					void* destRow = this->GetRowAddr ( y );
+					USColor::Convert ( destRow, this->mColorFormat, srcRow, pngColorFormat, width );
+					
+					if ( transform & MOAIImageTransform::PREMULTIPLY_ALPHA ) {
+						USColor::PremultiplyAlpha ( destRow, this->mColorFormat, width );
+					}
+				}
+				free ( srcBuff );
+			}
+			else {
+				
+				void* srcRow = malloc ( srcRowSize );
+				
+				for ( u32 y = 0; y < height; ++y ) {
+					png_read_row ( png, ( png_bytep )srcRow, 0 );
+					void* destRow = this->GetRowAddr ( y );
+					USColor::Convert ( destRow, this->mColorFormat, srcRow, pngColorFormat, width );
+					
+					if ( transform & MOAIImageTransform::PREMULTIPLY_ALPHA ) {
+						USColor::PremultiplyAlpha ( destRow, this->mColorFormat, width );
+					}
+				}
+				free ( srcRow );
 			}
 		}
 	}
@@ -1032,13 +1060,21 @@ void MOAIImage::LoadPng ( void* pngParam, void* pngInfoParam, u32 transform ) {
 			int b = palette [ i ].blue;
 			int a = i < transSize ? trans [ i ] : 0xff;
 			
+			if ( transform & MOAIImageTransform::PREMULTIPLY_ALPHA ) {
+				r = ( r * a ) >> 8;
+				g = ( g * a ) >> 8;
+				b = ( b * a ) >> 8;
+			}
+			
 			this->SetPaletteColor ( i, USColor::PackRGBA ( r, g, b, a ));
 		}
 		
 		// copy the rows
-		for ( u32 y = 0; y < height; ++y ) {
-			void* row = ( void* )(( uintptr )this->mBitmap  + ( rowsize * y ));
-			png_read_row ( png, ( png_bytep )row, 0 );
+		for ( int i = 0; i < passes; ++i ) {
+			for ( u32 y = 0; y < height; ++y ) {
+				void* row = this->GetRowAddr ( y );
+				png_read_row ( png, ( png_bytep )row, 0 );
+			}
 		}
 	}
 }
@@ -1063,7 +1099,7 @@ MOAIImage::MOAIImage () :
 }
 
 //----------------------------------------------------------------//
-MOAIImage::~MOAIImage	() {
+MOAIImage::~MOAIImage () {
 
 	this->Clear ();
 }

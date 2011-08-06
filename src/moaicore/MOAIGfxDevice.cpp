@@ -224,15 +224,15 @@ u32 MOAIGfxDevice::GetHeight () const {
 }
 
 //----------------------------------------------------------------//
-USAffine2D MOAIGfxDevice::GetModelToWorldMtx () const {
+USMatrix4x4 MOAIGfxDevice::GetModelToWorldMtx () const {
 
 	return this->mVertexTransforms [ VTX_WORLD_TRANSFORM ];
 }
 
 //----------------------------------------------------------------//
-USAffine2D MOAIGfxDevice::GetModelToWndMtx () const {
+USMatrix4x4 MOAIGfxDevice::GetModelToWndMtx () const {
 
-	USAffine2D modelToWnd = this->GetModelToWorldMtx ();
+	USMatrix4x4 modelToWnd = this->GetModelToWorldMtx ();
 	modelToWnd.Append ( this->GetWorldToWndMtx ());
 	return modelToWnd;
 }
@@ -256,21 +256,21 @@ USRect MOAIGfxDevice::GetRect () const {
 }
 
 //----------------------------------------------------------------//
-USAffine2D MOAIGfxDevice::GetUVTransform () const {
+USMatrix4x4 MOAIGfxDevice::GetUVTransform () const {
 
 	return this->mUVTransform;
 }
 
 //----------------------------------------------------------------//
-USAffine2D MOAIGfxDevice::GetVertexTransform ( u32 id ) const {
+USMatrix4x4 MOAIGfxDevice::GetVertexTransform ( u32 id ) const {
 
 	return this->mVertexTransforms [ id ];
 }
 
 //----------------------------------------------------------------//
-USAffine2D MOAIGfxDevice::GetViewProjMtx () const {
+USMatrix4x4 MOAIGfxDevice::GetViewProjMtx () const {
 
-	USAffine2D mtx = this->mVertexTransforms [ VTX_VIEW_TRANSFORM ];
+	USMatrix4x4 mtx = this->mVertexTransforms [ VTX_VIEW_TRANSFORM ];
 	mtx.Append ( this->mVertexTransforms [ VTX_PROJ_TRANSFORM ]);
 	return mtx;
 }
@@ -280,7 +280,7 @@ USQuad MOAIGfxDevice::GetViewQuad () const {
 
 	USQuad quad;
 
-	USAffine2D invMtx;
+	USMatrix4x4 invMtx;
 	invMtx.Inverse ( this->GetViewProjMtx ());
 	
 	quad.mV [ 0 ].Init ( -1.0f, 1.0f );
@@ -288,7 +288,7 @@ USQuad MOAIGfxDevice::GetViewQuad () const {
 	quad.mV [ 2 ].Init ( 1.0f, -1.0f );
 	quad.mV [ 3 ].Init ( -1.0f, -1.0f );
 	
-	quad.Transform ( invMtx );
+	invMtx.TransformQuad ( quad.mV );
 	return quad;
 }
 
@@ -305,18 +305,18 @@ u32 MOAIGfxDevice::GetWidth () const {
 }
 
 //----------------------------------------------------------------//
-USAffine2D MOAIGfxDevice::GetWndToModelMtx () const {
+USMatrix4x4 MOAIGfxDevice::GetWndToModelMtx () const {
 
-	USAffine2D wndToModel;
+	USMatrix4x4 wndToModel;
 	wndToModel.Inverse ( this->GetModelToWndMtx ());
 	return wndToModel;
 }
 
 //----------------------------------------------------------------//
-USAffine2D MOAIGfxDevice::GetWndToWorldMtx () const {
+USMatrix4x4 MOAIGfxDevice::GetWndToWorldMtx () const {
 
-	USAffine2D wndToWorld;
-	USAffine2D mtx;
+	USMatrix4x4 wndToWorld;
+	USMatrix4x4 mtx;
 
 	USRect rect = this->GetViewRect ();
 	
@@ -324,9 +324,9 @@ USAffine2D MOAIGfxDevice::GetWndToWorldMtx () const {
 	float hHeight = rect.Height () * 0.5f;
 
 	// Inv Wnd
-	wndToWorld.Translate ( -hWidth - rect.mXMin, -hHeight - rect.mYMin );
+	wndToWorld.Translate ( -hWidth - rect.mXMin, -hHeight - rect.mYMin, 0.0f );
 		
-	mtx.Scale (( 1.0f / hWidth ), -( 1.0f / hHeight ));
+	mtx.Scale (( 1.0f / hWidth ), -( 1.0f / hHeight ), 1.0f );
 	wndToWorld.Append ( mtx );
 	
 	// inv viewproj
@@ -338,18 +338,18 @@ USAffine2D MOAIGfxDevice::GetWndToWorldMtx () const {
 }
 
 //----------------------------------------------------------------//
-USAffine2D MOAIGfxDevice::GetWorldToModelMtx () const {
+USMatrix4x4 MOAIGfxDevice::GetWorldToModelMtx () const {
 	
-	USAffine2D worldToModel;
+	USMatrix4x4 worldToModel;
 	worldToModel.Inverse ( this->mVertexTransforms [ VTX_WORLD_TRANSFORM ]);
 	return worldToModel;
 }
 
 //----------------------------------------------------------------//
-USAffine2D MOAIGfxDevice::GetWorldToWndMtx ( float xScale, float yScale ) const {
+USMatrix4x4 MOAIGfxDevice::GetWorldToWndMtx ( float xScale, float yScale ) const {
 
-	USAffine2D worldToWnd;
-	USAffine2D mtx;
+	USMatrix4x4 worldToWnd;
+	USMatrix4x4 mtx;
 
 	USRect rect = this->GetViewRect ();
 	
@@ -360,39 +360,23 @@ USAffine2D MOAIGfxDevice::GetWorldToWndMtx ( float xScale, float yScale ) const 
 	worldToWnd = this->GetViewProjMtx ();
 	
 	// wnd
-	mtx.Scale ( hWidth * xScale, hHeight * yScale );
+	mtx.Scale ( hWidth * xScale, hHeight * yScale, 1.0f );
 	worldToWnd.Append ( mtx );
 		
-	mtx.Translate ( hWidth + rect.mXMin, hHeight + rect.mYMin );
+	mtx.Translate ( hWidth + rect.mXMin, hHeight + rect.mYMin, 0.0f );
 	worldToWnd.Append ( mtx );
 	
 	return worldToWnd;
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::GpuLoadMatrix ( const USAffine2D& mtx ) const {
-
-	USMatrix3D mtx3D;
-	mtx3D.Init ( mtx );
-	glLoadMatrixf ( mtx3D.m );
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxDevice::GpuLoadMatrix ( const USMatrix3D& mtx ) const {
+void MOAIGfxDevice::GpuLoadMatrix ( const USMatrix4x4& mtx ) const {
 
 	glLoadMatrixf ( mtx.m );
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::GpuMultMatrix ( const USAffine2D& mtx ) const {
-
-	USMatrix3D mtx3D;
-	mtx3D.Init ( mtx );
-	glMultMatrixf ( mtx3D.m );
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxDevice::GpuMultMatrix ( const USMatrix3D& mtx ) const {
+void MOAIGfxDevice::GpuMultMatrix ( const USMatrix4x4& mtx ) const {
 
 	glMultMatrixf ( mtx.m );
 }
@@ -566,7 +550,7 @@ void MOAIGfxDevice::SetBlendMode () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::SetBlendMode ( const USBlendMode& blendMode ) {
+void MOAIGfxDevice::SetBlendMode ( const MOAIBlendMode& blendMode ) {
 
 	if ( !( this->mBlendEnabled && this->mBlendMode.IsSame ( blendMode ))) {
 		this->Flush ();
@@ -580,10 +564,22 @@ void MOAIGfxDevice::SetBlendMode ( const USBlendMode& blendMode ) {
 //----------------------------------------------------------------//
 void MOAIGfxDevice::SetBlendMode ( int srcFactor, int dstFactor ) {
 
-	USBlendMode blendMode;
+	MOAIBlendMode blendMode;
 	blendMode.SetBlend ( srcFactor, dstFactor );
 	
 	this->SetBlendMode ( blendMode );
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDevice::SetFrameBuffer ( MOAITexture* frameBuffer ) {
+
+	this->Flush ();
+	if ( frameBuffer && frameBuffer->IsFrameBuffer ()) {
+		frameBuffer->BindFrameBuffer ();
+	}
+	else {
+		glBindFramebuffer ( GL_FRAMEBUFFER, 0 );
+	}
 }
 
 //----------------------------------------------------------------//
@@ -691,7 +687,7 @@ void MOAIGfxDevice::SetScreenSpace ( MOAIViewport& viewport ) {
 	//glMatrixMode ( GL_MODELVIEW );
 	//glLoadIdentity ();
 	//
-	//USAffine2D wndToNorm;
+	//USMatrix4x4 wndToNorm;
 	//viewport.GetWndToNormMtx ( wndToNorm );
 	//
 	//glMatrixMode ( GL_PROJECTION );
@@ -764,13 +760,20 @@ void MOAIGfxDevice::SetUVMtxMode ( u32 input, u32 output ) {
 //----------------------------------------------------------------//
 void MOAIGfxDevice::SetUVTransform () {
 
-	USAffine2D mtx;
+	USMatrix4x4 mtx;
 	mtx.Ident ();
 	this->SetUVTransform ( mtx );
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxDevice::SetUVTransform ( const USAffine2D& transform ) {
+
+	this->mUVTransform.Init ( transform );
+	this->UpdateUVMtx ();
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDevice::SetUVTransform ( const USMatrix4x4& transform ) {
 
 	this->mUVTransform = transform;
 	this->UpdateUVMtx ();
@@ -832,13 +835,21 @@ void MOAIGfxDevice::SetVertexPreset ( u32 preset ) {
 //----------------------------------------------------------------//
 void MOAIGfxDevice::SetVertexTransform ( u32 id ) {
 
-	USAffine2D mtx;
+	USMatrix4x4 mtx;
 	mtx.Ident ();
 	this->SetVertexTransform ( id, mtx );
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxDevice::SetVertexTransform ( u32 id, const USAffine2D& transform ) {
+
+	USMatrix4x4 mtx;
+	mtx.Init ( transform );
+	this->SetVertexTransform ( id, mtx );
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDevice::SetVertexTransform ( u32 id, const USMatrix4x4& transform ) {
 
 	if ( !this->mVertexTransforms [ id ].IsSame ( transform )) {
 

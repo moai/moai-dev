@@ -1,17 +1,17 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef USMATRIX2D_H
-#define USMATRIX2D_H
+#ifndef USMATRIX3X3_H
+#define USMATRIX3X3_H
 
 #include <uslsext/USMatrix.h>
 #include <uslsext/USTrig.h>
 
 //================================================================//
-// USMetaMatrix2D
+// USMetaMatrix3x3
 //================================================================//
 template < typename TYPE >
-class USMetaMatrix2D {
+class USMetaMatrix3x3 {
 public:
 
 	enum {
@@ -31,9 +31,9 @@ public:
 	TYPE	m [ 9 ];
 
 	//----------------------------------------------------------------//
-	void Append ( const USMetaMatrix2D < TYPE >& mtx ) {
+	void Append ( const USMetaMatrix3x3 < TYPE >& mtx ) {
 
-		USMetaMatrix2D < TYPE > temp;
+		USMetaMatrix3x3 < TYPE > temp;
 		temp.Multiply (	*this, mtx );
 		this->Init ( temp );
 	}
@@ -119,7 +119,7 @@ public:
 
 	//----------------------------------------------------------------//
 	template < typename PARAM_TYPE >
-	void Init ( const USMetaMatrix2D < PARAM_TYPE >& mtx ) {
+	void Init ( const USMetaMatrix3x3 < PARAM_TYPE >& mtx ) {
 
 		m[C0_R0]	= ( TYPE )mtx.m[C0_R0];
 		m[C0_R1]	= ( TYPE )mtx.m[C0_R1];
@@ -136,7 +136,7 @@ public:
 
 	//----------------------------------------------------------------//
 	template < typename PARAM_TYPE >
-	void Init ( const USMetaMatrix3D < PARAM_TYPE >& mtx ) {
+	void Init ( const USMetaMatrix4x4 < PARAM_TYPE >& mtx ) {
 
 		m[C0_R0]	= ( TYPE )mtx.m[MatrixElem3D::C0_R0];
 		m[C0_R1]	= ( TYPE )mtx.m[MatrixElem3D::C0_R1];
@@ -154,12 +154,12 @@ public:
 	//----------------------------------------------------------------//
 	bool Inverse () {
 
-		USMetaMatrix2D < TYPE > temp	= *this;
+		USMetaMatrix3x3 < TYPE > temp	= *this;
 		return Inverse ( temp );
 	}
 
 	//----------------------------------------------------------------//
-	bool Inverse ( const USMetaMatrix2D < TYPE >& mtx ) {
+	bool Inverse ( const USMetaMatrix3x3 < TYPE >& mtx ) {
 
 		TYPE det = mtx.Determinant ();
 		
@@ -187,7 +187,7 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	void Multiply ( const USMetaMatrix2D < TYPE >& mtx2, const USMetaMatrix2D < TYPE >& mtx1 ) {
+	void Multiply ( const USMetaMatrix3x3 < TYPE >& mtx2, const USMetaMatrix3x3 < TYPE >& mtx1 ) {
 
 		m[C0_R0]	=	( mtx1.m[C0_R0] * mtx2.m[C0_R0] )	+
 						( mtx1.m[C1_R0] * mtx2.m[C0_R1] )	+
@@ -227,9 +227,9 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	void Prepend ( const USMetaMatrix2D < TYPE >& mtx ) {
+	void Prepend ( const USMetaMatrix3x3 < TYPE >& mtx ) {
 
-		USMetaMatrix2D < TYPE > temp;
+		USMetaMatrix3x3 < TYPE > temp;
 		temp.Multiply (	mtx, *this );
 		this->Init ( temp );
 	}
@@ -447,11 +447,10 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	USMetaMatrix2D () {
+	USMetaMatrix3x3 () {
 	}
 };
 
-typedef USMetaMatrix2D < float > USMatrix2D;
-typedef USMetaMatrix2D < double > USMatrix2D64;
+typedef USMetaMatrix3x3 < float > USMatrix3x3;
 
 #endif

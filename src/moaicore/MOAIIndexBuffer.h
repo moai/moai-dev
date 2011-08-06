@@ -27,6 +27,7 @@ private:
 
 	//----------------------------------------------------------------//
 	void		ClearBuffer				();
+	void		Clear					();
 	
 public:
 	
@@ -39,7 +40,6 @@ public:
 				~MOAIIndexBuffer		();
 	void		RegisterLuaClass		( USLuaState& state );
 	void		RegisterLuaFuncs		( USLuaState& state );
-	void		Release					();
 	void		ReserveIndices			( u32 indexCount );
 	void		SetIndex				( u32 idx, u16 value );
 	STLString	ToString				();

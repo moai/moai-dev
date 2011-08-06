@@ -4,7 +4,7 @@
 #ifndef POLYGON2D_H
 #define	POLYGON2D_H
 
-#include <uslsext/USMatrix2D.h>
+#include <uslsext/USMatrix3x3.h>
 
 //================================================================//
 // USMetaPolygon2D
@@ -108,7 +108,7 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	void Transform ( const USMetaMatrix2D < TYPE >& matrix ) {
+	void Transform ( const USMetaMatrix3x3 < TYPE >& matrix ) {
 	
 		u32 totalVerts = this->mVerts.Size ();
 		for ( u32 i = 0; i < totalVerts; i++ ) {

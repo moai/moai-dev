@@ -4,7 +4,7 @@
 #ifndef MOAIGRIDSPACE_H
 #define MOAIGRIDSPACE_H
 
-#include <uslsext/USMatrix2D.h>
+#include <uslsext/USMatrix3x3.h>
 
 //================================================================//
 // MOAICellCoord
@@ -100,7 +100,7 @@ public:
 	USRect				GetBounds				() const;
 	USRect				GetBounds				( MOAICellCoord c0, MOAICellCoord c1 ) const;
 	
-	USMatrix2D			GetGridToWorldMtx		() const;
+	USMatrix3x3			GetGridToWorldMtx		() const;
 	
 	int					GetCellAddr				( MOAICellCoord cellCoord ) const;
 	MOAICellCoord		GetCellCoord			( int cellAddr ) const;
@@ -116,7 +116,7 @@ public:
 	
 	int					GetTotalCells			() const;
 	
-	USMatrix2D			GetWorldToGridMtx		() const;
+	USMatrix3x3			GetWorldToGridMtx		() const;
 	
 	USVec2D				GridToWorld				( USVec2D loc ) const;
 	bool				IsValidCoord			( MOAICellCoord cellCoord ) const;

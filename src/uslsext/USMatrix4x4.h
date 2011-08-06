@@ -1,17 +1,17 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef USMATRIX3D_H
-#define USMATRIX3D_H
+#ifndef USMATRIX4X4_H
+#define USMATRIX4X4_H
 
 #include <uslsext/USTrig.h>
 #include <uslsext/USMatrix.h>
 
 //================================================================//
-// USMetaMatrix3D
+// USMetaMatrix4x4
 //================================================================//
 template < typename TYPE >
-class USMetaMatrix3D {
+class USMetaMatrix4x4 {
 public:
 
 	enum {
@@ -39,9 +39,9 @@ public:
 	TYPE m [ 16 ];
 
 	//----------------------------------------------------------------//
-	void Append	( USMetaMatrix3D < TYPE >& mtx ) {
+	void Append	( const USMetaMatrix4x4 < TYPE >& mtx ) {
 
-		USMetaMatrix3D < TYPE > temp;
+		USMetaMatrix4x4 < TYPE > temp;
 		temp.Multiply (	*this, mtx );
 		this->Init ( temp );
 	}
@@ -194,7 +194,7 @@ public:
 
 	//----------------------------------------------------------------//
 	template < typename PARAM_TYPE >
-	void Init (	const USMetaMatrix2D < PARAM_TYPE >& mtx ) {
+	void Init (	const USMetaMatrix3x3 < PARAM_TYPE >& mtx ) {
 
 		m[C0_R0]	= ( TYPE )mtx.m[MatrixElem2D::C0_R0];
 		m[C0_R1]	= ( TYPE )mtx.m[MatrixElem2D::C0_R1];
@@ -219,7 +219,7 @@ public:
 
 	//----------------------------------------------------------------//
 	template < typename PARAM_TYPE >
-	void Init ( const USMetaMatrix3D < PARAM_TYPE >& mtx ) {
+	void Init ( const USMetaMatrix4x4 < PARAM_TYPE >& mtx ) {
 
 		m[C0_R0]	= ( TYPE )mtx.m[C0_R0];
 		m[C0_R1]	= ( TYPE )mtx.m[C0_R1];
@@ -245,12 +245,12 @@ public:
 	//----------------------------------------------------------------//
 	bool Inverse ( void	) {
 
-		USMetaMatrix3D < TYPE > temp	= *this;
+		USMetaMatrix4x4 < TYPE > temp	= *this;
 		return Inverse ( temp );
 	}
 
 	//----------------------------------------------------------------//
-	bool Inverse ( USMetaMatrix3D < TYPE >& mtx ) {
+	bool Inverse ( const USMetaMatrix4x4 < TYPE >& mtx ) {
 
 		// 2x2 determinants
 		TYPE fA0 = mtx.m[C0_R0]*mtx.m[C1_R1] - mtx.m[C1_R0]*mtx.m[C0_R1];
@@ -300,7 +300,25 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	void Multiply (	USMetaMatrix3D < TYPE >&	mtx2, USMetaMatrix3D < TYPE >& mtx1 ) {
+	bool IsIdent () const {
+		
+		if ( !(( m [ C0_R0 ] == 1.0f ) && ( m [ C1_R1 ] == 1.0f ) && ( m [ C2_R2 ] == 1.0f ) && ( m [ C3_R3 ] == 1.0f ))) return false;
+		if ( !(( m [ C1_R0 ] == 0.0f ) && ( m [ C2_R0 ] == 0.0f ) && ( m [ C3_R0 ] == 0.0f ))) return false;
+		if ( !(( m [ C0_R1 ] == 0.0f ) && ( m [ C2_R1 ] == 0.0f ) && ( m [ C3_R1 ] == 0.0f ))) return false;
+		if ( !(( m [ C0_R2 ] == 0.0f ) && ( m [ C1_R2 ] == 0.0f ) && ( m [ C3_R2 ] == 0.0f ))) return false;
+		if ( !(( m [ C0_R3 ] == 0.0f ) && ( m [ C1_R3 ] == 0.0f ) && ( m [ C2_R3 ] == 0.0f ))) return false;
+		
+		return true;
+	}
+
+	//----------------------------------------------------------------//
+	bool IsSame ( const USMetaMatrix4x4 < TYPE >& compare ) const {
+		
+		return ( memcmp ( m, compare.m, sizeof ( m )) == 0.0f );
+	}
+
+	//----------------------------------------------------------------//
+	void Multiply (	const USMetaMatrix4x4 < TYPE >& mtx2, const USMetaMatrix4x4 < TYPE >& mtx1 ) {
 
 		m[C0_R0]	=	( mtx1.m[C0_R0] * mtx2.m[C0_R0] )	+
 						( mtx1.m[C1_R0] * mtx2.m[C0_R1] )	+
@@ -384,9 +402,9 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	void Prepend ( USMetaMatrix3D < TYPE >& mtx ) {
+	void Prepend ( const USMetaMatrix4x4 < TYPE >& mtx ) {
 
-		USMetaMatrix3D < TYPE > temp;
+		USMetaMatrix4x4 < TYPE > temp;
 		temp.Multiply (	mtx, *this );
 		this->Init ( temp );
 	}
@@ -562,7 +580,7 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	void ScRoTr	( USMetaVec3D < TYPE >& sc, USMetaVec3D < TYPE >&	ro,	USMetaVec3D < TYPE >& tr ) {
+	void ScRoTr	( USMetaVec3D < TYPE >& sc, USMetaVec3D < TYPE >& ro,	USMetaVec3D < TYPE >& tr ) {
 
 		TYPE cx = Cos ( ro.mX );
 		TYPE sx = Sin ( ro.mX );
@@ -805,6 +823,16 @@ public:
 	}
 
 	//----------------------------------------------------------------//
+	template < typename PARAM_TYPE>
+	void TransformQuad ( USMetaVec2D < PARAM_TYPE >* quad ) const {
+	
+		this->Transform ( quad [ 0 ]);
+		this->Transform ( quad [ 1 ]);
+		this->Transform ( quad [ 2 ]);
+		this->Transform ( quad [ 3 ]);
+	}
+
+	//----------------------------------------------------------------//
 	// Transforms w/o translation
 	template < typename PARAM_TYPE >
 	void TransformVec (	USMetaVec2D < PARAM_TYPE >& point ) const {
@@ -907,22 +935,10 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	USMetaMatrix3D () {
+	USMetaMatrix4x4 () {
 	}
 };
 
-//================================================================//
-// USMatrix3D
-//================================================================//
-class USMatrix3D :
-	public USMetaMatrix3D < float > {
-};
-
-//================================================================//
-// USMatrix3D64
-//================================================================//
-class USMatrix3D64 :
-	public USMetaMatrix3D < double > {
-};
+typedef USMetaMatrix4x4 < float > USMatrix4x4;
 
 #endif
