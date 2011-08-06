@@ -67,7 +67,7 @@ bool MOAIFrameBuffer::Bind () {
 void MOAIFrameBuffer::Clear () {
 
 	if ( this->mGLFrameBufferID ) {
-		glDeleteFramebuffersEXT ( 1, &this->mGLFrameBufferID );
+		glDeleteFramebuffers ( 1, &this->mGLFrameBufferID );
 	}
 	
 	if ( this->mGLColorBufferID ) {

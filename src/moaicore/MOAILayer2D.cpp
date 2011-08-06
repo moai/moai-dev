@@ -363,7 +363,7 @@ void MOAILayer2D::Draw () {
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	
 	gfxDevice.Reset ();
-	gfxDevice.SetFrameBuffer ( this->mFrameBuffer );
+	//gfxDevice.SetFrameBuffer ( this->mFrameBuffer );
 	
 	// TODO: GLES2
 	//USAffine2D mtx = MOAIGfxDevice::Get ().GetWorldToWndMtx ( 1.0f, 1.0f );

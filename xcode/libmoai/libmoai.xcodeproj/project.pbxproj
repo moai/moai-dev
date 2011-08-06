@@ -1087,8 +1087,6 @@
 		0324E7AA13564BC8000ADC60 /* USAttrOp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E60C13564BC8000ADC60 /* USAttrOp.cpp */; };
 		0324E7AB13564BC8000ADC60 /* USAttrOp.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E60D13564BC8000ADC60 /* USAttrOp.h */; };
 		0324E7AC13564BC8000ADC60 /* USBinarySearch.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E60E13564BC8000ADC60 /* USBinarySearch.h */; };
-		0324E7AD13564BC8000ADC60 /* USBlendMode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E60F13564BC8000ADC60 /* USBlendMode.cpp */; };
-		0324E7AE13564BC8000ADC60 /* USBlendMode.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E61013564BC8000ADC60 /* USBlendMode.h */; };
 		0324E7AF13564BC8000ADC60 /* USBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E61113564BC8000ADC60 /* USBox.cpp */; };
 		0324E7B013564BC8000ADC60 /* USBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E61213564BC8000ADC60 /* USBox.h */; };
 		0324E7B313564BC8000ADC60 /* USCgt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E61513564BC8000ADC60 /* USCgt.cpp */; };
@@ -1110,8 +1108,6 @@
 		0324E7D313564BC8000ADC60 /* USHttpTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E63513564BC8000ADC60 /* USHttpTask.h */; };
 		0324E7D413564BC8000ADC60 /* USHttpTask_impl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E63613564BC8000ADC60 /* USHttpTask_impl.cpp */; };
 		0324E7D513564BC8000ADC60 /* USHttpTask_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E63713564BC8000ADC60 /* USHttpTask_impl.h */; };
-		0324E7D613564BC8000ADC60 /* USImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E63813564BC8000ADC60 /* USImage.cpp */; };
-		0324E7D713564BC8000ADC60 /* USImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E63913564BC8000ADC60 /* USImage.h */; };
 		0324E7D813564BC8000ADC60 /* USInterpolate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E63A13564BC8000ADC60 /* USInterpolate.cpp */; };
 		0324E7D913564BC8000ADC60 /* USInterpolate.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E63B13564BC8000ADC60 /* USInterpolate.h */; };
 		0324E7DA13564BC8000ADC60 /* USIntersect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E63C13564BC8000ADC60 /* USIntersect.cpp */; };
@@ -1446,8 +1442,6 @@
 		0324E94813564BC9000ADC60 /* USAttrOp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E60C13564BC8000ADC60 /* USAttrOp.cpp */; };
 		0324E94913564BC9000ADC60 /* USAttrOp.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E60D13564BC8000ADC60 /* USAttrOp.h */; };
 		0324E94A13564BC9000ADC60 /* USBinarySearch.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E60E13564BC8000ADC60 /* USBinarySearch.h */; };
-		0324E94B13564BC9000ADC60 /* USBlendMode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E60F13564BC8000ADC60 /* USBlendMode.cpp */; };
-		0324E94C13564BC9000ADC60 /* USBlendMode.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E61013564BC8000ADC60 /* USBlendMode.h */; };
 		0324E94D13564BC9000ADC60 /* USBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E61113564BC8000ADC60 /* USBox.cpp */; };
 		0324E94E13564BC9000ADC60 /* USBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E61213564BC8000ADC60 /* USBox.h */; };
 		0324E95113564BC9000ADC60 /* USCgt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E61513564BC8000ADC60 /* USCgt.cpp */; };
@@ -1469,8 +1463,6 @@
 		0324E97113564BC9000ADC60 /* USHttpTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E63513564BC8000ADC60 /* USHttpTask.h */; };
 		0324E97213564BC9000ADC60 /* USHttpTask_impl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E63613564BC8000ADC60 /* USHttpTask_impl.cpp */; };
 		0324E97313564BC9000ADC60 /* USHttpTask_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E63713564BC8000ADC60 /* USHttpTask_impl.h */; };
-		0324E97413564BC9000ADC60 /* USImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E63813564BC8000ADC60 /* USImage.cpp */; };
-		0324E97513564BC9000ADC60 /* USImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E63913564BC8000ADC60 /* USImage.h */; };
 		0324E97613564BC9000ADC60 /* USInterpolate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E63A13564BC8000ADC60 /* USInterpolate.cpp */; };
 		0324E97713564BC9000ADC60 /* USInterpolate.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E63B13564BC8000ADC60 /* USInterpolate.h */; };
 		0324E97813564BC9000ADC60 /* USIntersect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E63C13564BC8000ADC60 /* USIntersect.cpp */; };
@@ -1566,6 +1558,14 @@
 		071106EF13C6353400EE7C53 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 071106EE13C6353400EE7C53 /* CoreTelephony.framework */; };
 		07CDCFB213AA7C5D009674C7 /* Reachability.h in Headers */ = {isa = PBXBuildFile; fileRef = 07CDCFB013AA7C5D009674C7 /* Reachability.h */; };
 		07CDCFB313AA7C5D009674C7 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 07CDCFB113AA7C5D009674C7 /* Reachability.m */; };
+		07D1A8A213EDFD8300604979 /* MOAIBlendMode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07D1A89E13EDFD8300604979 /* MOAIBlendMode.cpp */; };
+		07D1A8A313EDFD8300604979 /* MOAIBlendMode.h in Headers */ = {isa = PBXBuildFile; fileRef = 07D1A89F13EDFD8300604979 /* MOAIBlendMode.h */; };
+		07D1A8A413EDFD8300604979 /* MOAIFrameBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07D1A8A013EDFD8300604979 /* MOAIFrameBuffer.cpp */; };
+		07D1A8A513EDFD8300604979 /* MOAIFrameBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 07D1A8A113EDFD8300604979 /* MOAIFrameBuffer.h */; };
+		07D1A8A613EDFD8300604979 /* MOAIBlendMode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07D1A89E13EDFD8300604979 /* MOAIBlendMode.cpp */; };
+		07D1A8A713EDFD8300604979 /* MOAIBlendMode.h in Headers */ = {isa = PBXBuildFile; fileRef = 07D1A89F13EDFD8300604979 /* MOAIBlendMode.h */; };
+		07D1A8A813EDFD8300604979 /* MOAIFrameBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07D1A8A013EDFD8300604979 /* MOAIFrameBuffer.cpp */; };
+		07D1A8A913EDFD8300604979 /* MOAIFrameBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 07D1A8A113EDFD8300604979 /* MOAIFrameBuffer.h */; };
 		07E885BF13BE3E78008D75AA /* MOAIParticleDistanceEmitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07E885BB13BE3E78008D75AA /* MOAIParticleDistanceEmitter.cpp */; };
 		07E885C013BE3E78008D75AA /* MOAIParticleDistanceEmitter.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E885BC13BE3E78008D75AA /* MOAIParticleDistanceEmitter.h */; };
 		07E885C113BE3E78008D75AA /* MOAIParticleTimedEmitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07E885BD13BE3E78008D75AA /* MOAIParticleTimedEmitter.cpp */; };
@@ -3455,8 +3455,6 @@
 		0324E60C13564BC8000ADC60 /* USAttrOp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USAttrOp.cpp; sourceTree = "<group>"; };
 		0324E60D13564BC8000ADC60 /* USAttrOp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USAttrOp.h; sourceTree = "<group>"; };
 		0324E60E13564BC8000ADC60 /* USBinarySearch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USBinarySearch.h; sourceTree = "<group>"; };
-		0324E60F13564BC8000ADC60 /* USBlendMode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USBlendMode.cpp; sourceTree = "<group>"; };
-		0324E61013564BC8000ADC60 /* USBlendMode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USBlendMode.h; sourceTree = "<group>"; };
 		0324E61113564BC8000ADC60 /* USBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USBox.cpp; sourceTree = "<group>"; };
 		0324E61213564BC8000ADC60 /* USBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USBox.h; sourceTree = "<group>"; };
 		0324E61513564BC8000ADC60 /* USCgt.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USCgt.cpp; sourceTree = "<group>"; };
@@ -3478,8 +3476,6 @@
 		0324E63513564BC8000ADC60 /* USHttpTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USHttpTask.h; sourceTree = "<group>"; };
 		0324E63613564BC8000ADC60 /* USHttpTask_impl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USHttpTask_impl.cpp; sourceTree = "<group>"; };
 		0324E63713564BC8000ADC60 /* USHttpTask_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USHttpTask_impl.h; sourceTree = "<group>"; };
-		0324E63813564BC8000ADC60 /* USImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USImage.cpp; sourceTree = "<group>"; };
-		0324E63913564BC8000ADC60 /* USImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USImage.h; sourceTree = "<group>"; };
 		0324E63A13564BC8000ADC60 /* USInterpolate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USInterpolate.cpp; sourceTree = "<group>"; };
 		0324E63B13564BC8000ADC60 /* USInterpolate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USInterpolate.h; sourceTree = "<group>"; };
 		0324E63C13564BC8000ADC60 /* USIntersect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USIntersect.cpp; sourceTree = "<group>"; };
@@ -3568,6 +3564,10 @@
 		071106EE13C6353400EE7C53 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		07CDCFB013AA7C5D009674C7 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Reachability.h; path = "moaiext-iphone/Reachability.h"; sourceTree = "<group>"; };
 		07CDCFB113AA7C5D009674C7 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Reachability.m; path = "moaiext-iphone/Reachability.m"; sourceTree = "<group>"; };
+		07D1A89E13EDFD8300604979 /* MOAIBlendMode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIBlendMode.cpp; sourceTree = "<group>"; };
+		07D1A89F13EDFD8300604979 /* MOAIBlendMode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIBlendMode.h; sourceTree = "<group>"; };
+		07D1A8A013EDFD8300604979 /* MOAIFrameBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIFrameBuffer.cpp; sourceTree = "<group>"; };
+		07D1A8A113EDFD8300604979 /* MOAIFrameBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIFrameBuffer.h; sourceTree = "<group>"; };
 		07E885BB13BE3E78008D75AA /* MOAIParticleDistanceEmitter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIParticleDistanceEmitter.cpp; sourceTree = "<group>"; };
 		07E885BC13BE3E78008D75AA /* MOAIParticleDistanceEmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIParticleDistanceEmitter.h; sourceTree = "<group>"; };
 		07E885BD13BE3E78008D75AA /* MOAIParticleTimedEmitter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIParticleTimedEmitter.cpp; sourceTree = "<group>"; };
@@ -5783,12 +5783,16 @@
 			isa = PBXGroup;
 			children = (
 				CDEFB42D13E37FA6000A9523 /* shaders */,
+				07D1A89E13EDFD8300604979 /* MOAIBlendMode.cpp */,
+				07D1A89F13EDFD8300604979 /* MOAIBlendMode.h */,
 				0324E51013564BC7000ADC60 /* MOAIColor.cpp */,
 				0324E51113564BC7000ADC60 /* MOAIColor.h */,
 				0324E52913564BC7000ADC60 /* MOAIDebugLines.cpp */,
 				0324E52A13564BC7000ADC60 /* MOAIDebugLines.h */,
 				CDEFB3DE13E37F3C000A9523 /* MOAIDraw.cpp */,
 				CDEFB3DF13E37F3C000A9523 /* MOAIDraw.h */,
+				07D1A8A013EDFD8300604979 /* MOAIFrameBuffer.cpp */,
+				07D1A8A113EDFD8300604979 /* MOAIFrameBuffer.h */,
 				CDEFB3E213E37F3C000A9523 /* MOAIGfxDevice.cpp */,
 				CDEFB3E313E37F3C000A9523 /* MOAIGfxDevice.h */,
 				CDEB91441360A78800AAC558 /* MOAIImage.cpp */,
@@ -6246,12 +6250,8 @@
 		CD148F111395B3E400A3F501 /* gfxObjects */ = {
 			isa = PBXGroup;
 			children = (
-				0324E60F13564BC8000ADC60 /* USBlendMode.cpp */,
-				0324E61013564BC8000ADC60 /* USBlendMode.h */,
 				0324E61713564BC8000ADC60 /* USColor.cpp */,
 				0324E61813564BC8000ADC60 /* USColor.h */,
-				0324E63813564BC8000ADC60 /* USImage.cpp */,
-				0324E63913564BC8000ADC60 /* USImage.h */,
 				0324E65713564BC8000ADC60 /* USPolyScanner.h */,
 			);
 			name = gfxObjects;
@@ -7959,7 +7959,6 @@
 				0324E94713564BC9000ADC60 /* USAttrMap.h in Headers */,
 				0324E94913564BC9000ADC60 /* USAttrOp.h in Headers */,
 				0324E94A13564BC9000ADC60 /* USBinarySearch.h in Headers */,
-				0324E94C13564BC9000ADC60 /* USBlendMode.h in Headers */,
 				0324E94E13564BC9000ADC60 /* USBox.h in Headers */,
 				0324E95213564BC9000ADC60 /* USCgt.h in Headers */,
 				0324E95413564BC9000ADC60 /* USColor.h in Headers */,
@@ -7972,7 +7971,6 @@
 				0324E96713564BC9000ADC60 /* USFsmStateFactory.h in Headers */,
 				0324E97113564BC9000ADC60 /* USHttpTask.h in Headers */,
 				0324E97313564BC9000ADC60 /* USHttpTask_impl.h in Headers */,
-				0324E97513564BC9000ADC60 /* USImage.h in Headers */,
 				0324E97713564BC9000ADC60 /* USInterpolate.h in Headers */,
 				0324E97913564BC9000ADC60 /* USIntersect.h in Headers */,
 				0324E97B13564BC9000ADC60 /* USLexStream.h in Headers */,
@@ -8047,6 +8045,8 @@
 				CDEFB43713E37FBC000A9523 /* MOAIBasicNoTexture-vsh.h in Headers */,
 				CDEFB43813E37FBC000A9523 /* MOAIBasicOneTexture-fsh.h in Headers */,
 				CDEFB43913E37FBC000A9523 /* MOAIBasicOneTexture-vsh.h in Headers */,
+				07D1A8A713EDFD8300604979 /* MOAIBlendMode.h in Headers */,
+				07D1A8A913EDFD8300604979 /* MOAIFrameBuffer.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8563,7 +8563,6 @@
 				0324E7A913564BC8000ADC60 /* USAttrMap.h in Headers */,
 				0324E7AB13564BC8000ADC60 /* USAttrOp.h in Headers */,
 				0324E7AC13564BC8000ADC60 /* USBinarySearch.h in Headers */,
-				0324E7AE13564BC8000ADC60 /* USBlendMode.h in Headers */,
 				0324E7B013564BC8000ADC60 /* USBox.h in Headers */,
 				0324E7B413564BC8000ADC60 /* USCgt.h in Headers */,
 				0324E7B613564BC8000ADC60 /* USColor.h in Headers */,
@@ -8576,7 +8575,6 @@
 				0324E7C913564BC8000ADC60 /* USFsmStateFactory.h in Headers */,
 				0324E7D313564BC8000ADC60 /* USHttpTask.h in Headers */,
 				0324E7D513564BC8000ADC60 /* USHttpTask_impl.h in Headers */,
-				0324E7D713564BC8000ADC60 /* USImage.h in Headers */,
 				0324E7D913564BC8000ADC60 /* USInterpolate.h in Headers */,
 				0324E7DB13564BC8000ADC60 /* USIntersect.h in Headers */,
 				0324E7DD13564BC8000ADC60 /* USLexStream.h in Headers */,
@@ -8672,6 +8670,8 @@
 				CDEFB43313E37FBC000A9523 /* MOAIBasicNoTexture-vsh.h in Headers */,
 				CDEFB43413E37FBC000A9523 /* MOAIBasicOneTexture-fsh.h in Headers */,
 				CDEFB43513E37FBC000A9523 /* MOAIBasicOneTexture-vsh.h in Headers */,
+				07D1A8A313EDFD8300604979 /* MOAIBlendMode.h in Headers */,
+				07D1A8A513EDFD8300604979 /* MOAIFrameBuffer.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9308,7 +9308,6 @@
 				0324E94413564BC9000ADC60 /* USAttributed.cpp in Sources */,
 				0324E94613564BC9000ADC60 /* USAttrMap.cpp in Sources */,
 				0324E94813564BC9000ADC60 /* USAttrOp.cpp in Sources */,
-				0324E94B13564BC9000ADC60 /* USBlendMode.cpp in Sources */,
 				0324E94D13564BC9000ADC60 /* USBox.cpp in Sources */,
 				0324E95113564BC9000ADC60 /* USCgt.cpp in Sources */,
 				0324E95313564BC9000ADC60 /* USColor.cpp in Sources */,
@@ -9318,7 +9317,6 @@
 				0324E95E13564BC9000ADC60 /* USDistance.cpp in Sources */,
 				0324E97013564BC9000ADC60 /* USHttpTask.cpp in Sources */,
 				0324E97213564BC9000ADC60 /* USHttpTask_impl.cpp in Sources */,
-				0324E97413564BC9000ADC60 /* USImage.cpp in Sources */,
 				0324E97613564BC9000ADC60 /* USInterpolate.cpp in Sources */,
 				0324E97813564BC9000ADC60 /* USIntersect.cpp in Sources */,
 				0324E97A13564BC9000ADC60 /* USLexStream.cpp in Sources */,
@@ -9380,6 +9378,8 @@
 				CDEFB42713E37F3C000A9523 /* MOAITextLayout.cpp in Sources */,
 				CDEFB42913E37F3C000A9523 /* MOAITileFlags.cpp in Sources */,
 				CDEFB42B13E37F3C000A9523 /* MOAIVertexFormatMgr.cpp in Sources */,
+				07D1A8A613EDFD8300604979 /* MOAIBlendMode.cpp in Sources */,
+				07D1A8A813EDFD8300604979 /* MOAIFrameBuffer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10349,7 +10349,6 @@
 				0324E7A613564BC8000ADC60 /* USAttributed.cpp in Sources */,
 				0324E7A813564BC8000ADC60 /* USAttrMap.cpp in Sources */,
 				0324E7AA13564BC8000ADC60 /* USAttrOp.cpp in Sources */,
-				0324E7AD13564BC8000ADC60 /* USBlendMode.cpp in Sources */,
 				0324E7AF13564BC8000ADC60 /* USBox.cpp in Sources */,
 				0324E7B313564BC8000ADC60 /* USCgt.cpp in Sources */,
 				0324E7B513564BC8000ADC60 /* USColor.cpp in Sources */,
@@ -10359,7 +10358,6 @@
 				0324E7C013564BC8000ADC60 /* USDistance.cpp in Sources */,
 				0324E7D213564BC8000ADC60 /* USHttpTask.cpp in Sources */,
 				0324E7D413564BC8000ADC60 /* USHttpTask_impl.cpp in Sources */,
-				0324E7D613564BC8000ADC60 /* USImage.cpp in Sources */,
 				0324E7D813564BC8000ADC60 /* USInterpolate.cpp in Sources */,
 				0324E7DA13564BC8000ADC60 /* USIntersect.cpp in Sources */,
 				0324E7DC13564BC8000ADC60 /* USLexStream.cpp in Sources */,
@@ -10438,6 +10436,8 @@
 				CDEFB40C13E37F3C000A9523 /* MOAITextLayout.cpp in Sources */,
 				CDEFB40E13E37F3C000A9523 /* MOAITileFlags.cpp in Sources */,
 				CDEFB41013E37F3C000A9523 /* MOAIVertexFormatMgr.cpp in Sources */,
+				07D1A8A213EDFD8300604979 /* MOAIBlendMode.cpp in Sources */,
+				07D1A8A413EDFD8300604979 /* MOAIFrameBuffer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
