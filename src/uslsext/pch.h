@@ -31,6 +31,8 @@
 #ifdef MOAI_OS_ANDROID
 	#include <GLES/gl.h>
 	#include <GLES/glext.h>
+	#include <GLES2/gl2.h>
+	#include <GLES2/gl2ext.h>
 #endif
 
 #ifdef MOAI_OS_LINUX

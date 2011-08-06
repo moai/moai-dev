@@ -4,7 +4,7 @@
 include $(CLEAR_VARS)
 
 LOCAL_MODULE := libmoaicore
-LOCAL_LDLIBS := -llog -lstring -lm -lz -lGLESv1_CM.so
+LOCAL_LDLIBS := -llog -lstring -lm -lz -lGLESv2.so -lGLESv1_CM.so
 
 #----------------------------------------------------------------#
 # header search paths
@@ -50,6 +50,7 @@ $(SRC_PATH)/src/moaicore/MOAIAction.cpp \
 $(SRC_PATH)/src/moaicore/MOAIActionMgr.cpp \
 $(SRC_PATH)/src/moaicore/MOAIAnim.cpp \
 $(SRC_PATH)/src/moaicore/MOAIAnimCurve.cpp \
+$(SRC_PATH)/src/moaicore/MOAIBitmapFontRipper.cpp \
 $(SRC_PATH)/src/moaicore/MOAIBlocker.cpp \
 $(SRC_PATH)/src/moaicore/MOAIBox2DArbiter.cpp \
 $(SRC_PATH)/src/moaicore/MOAIBox2DBody.cpp \
@@ -63,6 +64,7 @@ $(SRC_PATH)/src/moaicore/MOAICameraFitter2D.cpp \
 $(SRC_PATH)/src/moaicore/MOAIColor.cpp \
 $(SRC_PATH)/src/moaicore/MOAICompassSensor.cpp \
 $(SRC_PATH)/src/moaicore/moaicore.cpp \
+$(SRC_PATH)/src/moaicore/moaicore-pch.cpp \
 $(SRC_PATH)/src/moaicore/MOAICp.cpp \
 $(SRC_PATH)/src/moaicore/MOAICpArbiter.cpp \
 $(SRC_PATH)/src/moaicore/MOAICpBody.cpp \
@@ -76,17 +78,21 @@ $(SRC_PATH)/src/moaicore/MOAIDeck.cpp \
 $(SRC_PATH)/src/moaicore/MOAIDeck2D.cpp \
 $(SRC_PATH)/src/moaicore/MOAIDeckRemapper.cpp \
 $(SRC_PATH)/src/moaicore/MOAIDebugLines.cpp \
+$(SRC_PATH)/src/moaicore/MOAIDraw.cpp \
 $(SRC_PATH)/src/moaicore/MOAIEaseDriver.cpp \
 $(SRC_PATH)/src/moaicore/MOAIEaseType.cpp \
 $(SRC_PATH)/src/moaicore/MOAIEnvironment.cpp \
 $(SRC_PATH)/src/moaicore/MOAIEventSource.cpp \
 $(SRC_PATH)/src/moaicore/MOAIFileSystem.cpp \
 $(SRC_PATH)/src/moaicore/MOAIFont.cpp \
-$(SRC_PATH)/src/moaicore/MOAIFtFontRipper.cpp \
+$(SRC_PATH)/src/moaicore/MOAIFreetypeFontRipper.cpp \
+$(SRC_PATH)/src/moaicore/MOAIGfxDevice.cpp \
 $(SRC_PATH)/src/moaicore/MOAIGfxQuad2D.cpp \
 $(SRC_PATH)/src/moaicore/MOAIGfxQuadDeck2D.cpp \
 $(SRC_PATH)/src/moaicore/MOAIGfxQuadListDeck2D.cpp \
+$(SRC_PATH)/src/moaicore/MOAIGlyph.cpp \
 $(SRC_PATH)/src/moaicore/MOAIGrid.cpp \
+$(SRC_PATH)/src/moaicore/MOAIGridSpace.cpp \
 $(SRC_PATH)/src/moaicore/MOAIHttpTask.cpp \
 $(SRC_PATH)/src/moaicore/MOAIImage.cpp \
 $(SRC_PATH)/src/moaicore/MOAIIndexBuffer.cpp \
@@ -98,6 +104,7 @@ $(SRC_PATH)/src/moaicore/MOAIKeyboardSensor.cpp \
 $(SRC_PATH)/src/moaicore/MOAILayer2D.cpp \
 $(SRC_PATH)/src/moaicore/MOAILayerBridge2D.cpp \
 $(SRC_PATH)/src/moaicore/MOAILayoutFrame.cpp \
+$(SRC_PATH)/src/moaicore/MOAILineBrush.cpp \
 $(SRC_PATH)/src/moaicore/MOAILocationSensor.cpp \
 $(SRC_PATH)/src/moaicore/MOAILogMgr.cpp \
 $(SRC_PATH)/src/moaicore/MOAIMesh.cpp \
@@ -108,6 +115,7 @@ $(SRC_PATH)/src/moaicore/MOAIParser.cpp \
 $(SRC_PATH)/src/moaicore/MOAIParticleDistanceEmitter.cpp \
 $(SRC_PATH)/src/moaicore/MOAIParticleEmitter.cpp \
 $(SRC_PATH)/src/moaicore/MOAIParticleForce.cpp \
+$(SRC_PATH)/src/moaicore/MOAIParticlePlugin.cpp \
 $(SRC_PATH)/src/moaicore/MOAIParticleScript.cpp \
 $(SRC_PATH)/src/moaicore/MOAIParticleState.cpp \
 $(SRC_PATH)/src/moaicore/MOAIParticleSystem.cpp \
@@ -118,19 +126,23 @@ $(SRC_PATH)/src/moaicore/MOAIPartitionLayer.cpp \
 $(SRC_PATH)/src/moaicore/MOAIPointerSensor.cpp \
 $(SRC_PATH)/src/moaicore/MOAIProp.cpp \
 $(SRC_PATH)/src/moaicore/MOAIProp2D.cpp \
+$(SRC_PATH)/src/moaicore/MOAIQuadBrush.cpp \
 $(SRC_PATH)/src/moaicore/MOAIScriptNode.cpp \
 $(SRC_PATH)/src/moaicore/MOAISensor.cpp \
 $(SRC_PATH)/src/moaicore/MOAISerializer.cpp \
 $(SRC_PATH)/src/moaicore/MOAIShader.cpp \
+$(SRC_PATH)/src/moaicore/MOAIShaderMgr.cpp \
 $(SRC_PATH)/src/moaicore/MOAISim.cpp \
-$(SRC_PATH)/src/moaicore/MOAISimpleShader.cpp \
 $(SRC_PATH)/src/moaicore/MOAIStretchPatch2D.cpp \
 $(SRC_PATH)/src/moaicore/MOAISurfaceDeck2D.cpp \
 $(SRC_PATH)/src/moaicore/MOAISurfaceSampler2D.cpp \
 $(SRC_PATH)/src/moaicore/MOAITextBox.cpp \
+$(SRC_PATH)/src/moaicore/MOAITextFrame.cpp \
+$(SRC_PATH)/src/moaicore/MOAITextLayout.cpp \
 $(SRC_PATH)/src/moaicore/MOAITexture.cpp \
-$(SRC_PATH)/src/moaicore/MOAITileDeck2D.cpp \
 $(SRC_PATH)/src/moaicore/MOAIThread.cpp \
+$(SRC_PATH)/src/moaicore/MOAITileDeck2D.cpp \
+$(SRC_PATH)/src/moaicore/MOAITileFlags.cpp \
 $(SRC_PATH)/src/moaicore/MOAITimer.cpp \
 $(SRC_PATH)/src/moaicore/MOAITouchSensor.cpp \
 $(SRC_PATH)/src/moaicore/MOAITraits.cpp \
@@ -138,6 +150,7 @@ $(SRC_PATH)/src/moaicore/MOAITransform.cpp \
 $(SRC_PATH)/src/moaicore/MOAITransformBase.cpp \
 $(SRC_PATH)/src/moaicore/MOAIVertexBuffer.cpp \
 $(SRC_PATH)/src/moaicore/MOAIVertexFormat.cpp \
+$(SRC_PATH)/src/moaicore/MOAIVertexFormatMgr.cpp \
 $(SRC_PATH)/src/moaicore/MOAIViewport.cpp \
 $(SRC_PATH)/src/moaicore/MOAIXmlParser.cpp
 
