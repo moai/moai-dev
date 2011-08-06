@@ -6,7 +6,6 @@
 #include <moaicore/MOAIGfxDevice.h>
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIShader.h>
-#include <moaicore/MOAIShader.h>
 #include <moaicore/MOAITransformBase.h>
 
 //================================================================//
@@ -341,7 +340,7 @@ GLuint MOAIShader::CompileShader ( GLuint type, cc8* source ) {
 		int logLength;
 		glGetShaderiv ( shader, GL_INFO_LOG_LENGTH, &logLength );
  
-		GLchar* log = ( GLchar* )malloc ( logLength );
+		char* log = ( char* )malloc ( logLength );
  
 		glGetShaderInfoLog ( shader, logLength, &logLength, log );
 		printf ( "%s", log );
@@ -508,7 +507,7 @@ void MOAIShader::Validate () {
     glGetProgramiv ( this->mProgram, GL_INFO_LOG_LENGTH, &logLength );
 	
     if ( logLength > 0 ) {
-        GLchar *log = ( GLchar* )malloc ( logLength );
+        char* log = ( char* )malloc ( logLength );
         glGetProgramInfoLog ( this->mProgram, logLength, &logLength, log );
         printf ( "%s", log );
         free ( log );

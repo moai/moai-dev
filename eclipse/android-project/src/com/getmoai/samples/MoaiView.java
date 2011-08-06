@@ -8,7 +8,8 @@ package com.getmoai.samples;
  
 import javax.microedition.khronos.egl.EGLConfig; 
 import javax.microedition.khronos.opengles.GL10;
-  
+
+import static android.opengl.GLES20.*;  
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -221,7 +222,7 @@ public class MoaiView extends GLSurfaceView {
 
 			if ( mIsValid ) {
 				onDraw ( mWidth, mHeight );
-				gl.glFlush (); 
+				glFlush (); 
 			}
 		}
 
@@ -229,7 +230,7 @@ public class MoaiView extends GLSurfaceView {
 		@Override
 		public void onSurfaceChanged ( GL10 gl, int width, int height ) {
 
-			gl.glViewport ( 0, 0, width, height );
+			glViewport ( 0, 0, width, height );
 			mWidth = width;
 			mHeight = height;
 		}

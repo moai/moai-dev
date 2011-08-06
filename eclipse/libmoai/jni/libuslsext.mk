@@ -4,7 +4,7 @@
 include $(CLEAR_VARS)
 
 LOCAL_MODULE := libuslsext
-LOCAL_LDLIBS := -llog -lstring -lm -lz -lGLESv1_CM.so
+LOCAL_LDLIBS := -llog -lstring -lm -lz -lGLESv2.so -lGLESv1_CM.so
 
 #----------------------------------------------------------------#
 # header search paths
@@ -44,24 +44,14 @@ $(SRC_PATH)/src/uslsext/USAttrMap.cpp \
 $(SRC_PATH)/src/uslsext/USAttrOp.cpp \
 $(SRC_PATH)/src/uslsext/USBlendMode.cpp \
 $(SRC_PATH)/src/uslsext/USBox.cpp \
-$(SRC_PATH)/src/uslsext/USCanvas.cpp \
 $(SRC_PATH)/src/uslsext/USCgt.cpp \
 $(SRC_PATH)/src/uslsext/USColor.cpp \
 $(SRC_PATH)/src/uslsext/USCurve.cpp \
 $(SRC_PATH)/src/uslsext/USData.cpp \
 $(SRC_PATH)/src/uslsext/USDataIOTask.cpp \
-$(SRC_PATH)/src/uslsext/USDebugLines.cpp \
 $(SRC_PATH)/src/uslsext/USDistance.cpp \
-$(SRC_PATH)/src/uslsext/USDrawBuffer.cpp \
-$(SRC_PATH)/src/uslsext/USFont.cpp \
-$(SRC_PATH)/src/uslsext/USFontRipper.cpp \
-$(SRC_PATH)/src/uslsext/USGfxDevice.cpp \
-$(SRC_PATH)/src/uslsext/USGLLine.cpp \
-$(SRC_PATH)/src/uslsext/USGLQuad.cpp \
-$(SRC_PATH)/src/uslsext/USGrid.cpp \
 $(SRC_PATH)/src/uslsext/USHttpTask.cpp \
 $(SRC_PATH)/src/uslsext/USHttpTask_impl.cpp \
-$(SRC_PATH)/src/uslsext/USImage.cpp \
 $(SRC_PATH)/src/uslsext/USInterpolate.cpp \
 $(SRC_PATH)/src/uslsext/USIntersect.cpp \
 $(SRC_PATH)/src/uslsext/USLexStream.cpp \
@@ -87,20 +77,12 @@ $(SRC_PATH)/src/uslsext/USSyntaxNode.cpp \
 $(SRC_PATH)/src/uslsext/USSyntaxScanner.cpp \
 $(SRC_PATH)/src/uslsext/USTask.cpp \
 $(SRC_PATH)/src/uslsext/USTaskThread.cpp \
-$(SRC_PATH)/src/uslsext/USTextFrame.cpp \
-$(SRC_PATH)/src/uslsext/USTextLayout.cpp \
-$(SRC_PATH)/src/uslsext/USTexture.cpp \
 $(SRC_PATH)/src/uslsext/USThread.cpp \
 $(SRC_PATH)/src/uslsext/USThread_posix.cpp \
 $(SRC_PATH)/src/uslsext/USThread_win32.cpp \
-$(SRC_PATH)/src/uslsext/USTile.cpp \
 $(SRC_PATH)/src/uslsext/USTrig.cpp \
 $(SRC_PATH)/src/uslsext/USTypedPtr.cpp \
 $(SRC_PATH)/src/uslsext/USUrlMgr.cpp \
-$(SRC_PATH)/src/uslsext/USVertexFormat.cpp \
-$(SRC_PATH)/src/uslsext/USVertexFormatMgr.cpp \
-$(SRC_PATH)/src/uslsext/USViewport.cpp \
-$(SRC_PATH)/src/uslsext/USViewQuad.cpp \
 $(SRC_PATH)/src/uslsext/USXmlReader.cpp \
 
 include $(BUILD_STATIC_LIBRARY)
