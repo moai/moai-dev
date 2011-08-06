@@ -236,6 +236,7 @@
     <ClCompile Include="..\..\src\moaicore\MOAIAction.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIActionMgr.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIBitmapFontRipper.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAIBlendMode.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIBlocker.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIBox2DArbiter.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIBox2DBody.cpp" />
@@ -258,6 +259,7 @@
     <ClCompile Include="..\..\src\moaicore\MOAIEnvironment.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIEventSource.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIFileSystem.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAIFrameBuffer.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIFreetypeFontRipper.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIGfxDevice.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIGfxQuad2D.cpp" />
@@ -350,6 +352,7 @@
     <ClInclude Include="..\..\src\moaicore\MOAIAction.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIActionMgr.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIBitmapFontRipper.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAIBlendMode.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIBlocker.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIBox2DArbiter.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIBox2DBody.h" />
@@ -372,6 +375,7 @@
     <ClInclude Include="..\..\src\moaicore\MOAIEnvironment.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIEventSource.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIFileSystem.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAIFrameBuffer.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIFreetypeFontRipper.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIGfxDevice.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIGfxQuad2D.h" />
