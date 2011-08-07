@@ -9,6 +9,7 @@
 #include <moaicore/MOAIBox2DFixture.h>
 #include <moaicore/MOAIBox2DJoint.h>
 #include <moaicore/MOAIBox2DWorld.h>
+#include <moaicore/MOAIDraw.h>
 #include <moaicore/MOAIGfxDevice.h>
 #include <moaicore/MOAILogMessages.h>
 
@@ -565,6 +566,14 @@ void MOAIBox2DWorld::DrawDebug () {
 
 	if ( this->mDebugDraw ) {
 		MOAIGfxDevice::Get ().SetTexture ();
+		
+		MOAIDraw::Bind ();
+		
+		MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+		
+		gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_WORLD, MOAIGfxDevice::VTX_STAGE_PROJ );
+		gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_STAGE_WORLD );
+		
 		this->mDebugDraw->mScale = 1.0f / this->mUnitsToMeters;
 		this->mWorld->DrawDebugData ();
 	}

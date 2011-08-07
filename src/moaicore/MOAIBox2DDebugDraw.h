@@ -33,7 +33,6 @@ class MOAIBox2DDebugDraw : public b2DebugDraw {
 
 	float mScale;
 
-	void BindVertexFormat ( MOAIGfxDevice& gfxDevice );
 	void WriteVtx ( MOAIGfxDevice& gfxDevice, float x, float y );
 
 public:

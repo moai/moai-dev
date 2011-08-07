@@ -18,6 +18,7 @@
 
 #include "pch.h"
 #include <moaicore/MOAIBox2DDebugDraw.h>
+#include <moaicore/MOAIDraw.h>
 #include <moaicore/MOAIGfxDevice.h>
 #include <moaicore/MOAIVertexFormatMgr.h>
 
@@ -33,16 +34,9 @@ SUPPRESS_EMPTY_FILE_WARNING
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIBox2DDebugDraw::BindVertexFormat ( MOAIGfxDevice& gfxDevice ) {
+void MOAIBox2DDebugDraw::DrawPolygon ( const b2Vec2* vertices, int32 vertexCount, const b2Color& color ) {
 
-	gfxDevice.SetVertexPreset ( MOAIVertexFormatMgr::XYC );
-}
-
-//----------------------------------------------------------------//
-void MOAIBox2DDebugDraw::DrawPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color)
-{
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-	this->BindVertexFormat ( gfxDevice );
 	
 	gfxDevice.SetPenColor ( color.r, color.g, color.b, 1.0f );
 
@@ -54,12 +48,12 @@ void MOAIBox2DDebugDraw::DrawPolygon(const b2Vec2* vertices, int32 vertexCount, 
 }
 
 //----------------------------------------------------------------//
-void MOAIBox2DDebugDraw::DrawSolidPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color)
-{
+void MOAIBox2DDebugDraw::DrawSolidPolygon ( const b2Vec2* vertices, int32 vertexCount, const b2Color& color ) {
+
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-	this->BindVertexFormat ( gfxDevice );
 	
 	gfxDevice.SetBlendMode ( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
+	
 	gfxDevice.SetPenColor ( 0.5f * color.r, 0.5f * color.g, 0.5f * color.b, 0.5f );
 
 	gfxDevice.BeginPrim ( GL_TRIANGLE_FAN );
@@ -79,10 +73,9 @@ void MOAIBox2DDebugDraw::DrawSolidPolygon(const b2Vec2* vertices, int32 vertexCo
 }
 
 //----------------------------------------------------------------//
-void MOAIBox2DDebugDraw::DrawCircle(const b2Vec2& center, float32 radius, const b2Color& color)
-{
+void MOAIBox2DDebugDraw::DrawCircle ( const b2Vec2& center, float32 radius, const b2Color& color ) {
+
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-	this->BindVertexFormat ( gfxDevice );
 	
 	gfxDevice.SetPenColor ( color.r, color.g, color.b, 1.0f );
 
@@ -100,10 +93,9 @@ void MOAIBox2DDebugDraw::DrawCircle(const b2Vec2& center, float32 radius, const 
 }
 
 //----------------------------------------------------------------//
-void MOAIBox2DDebugDraw::DrawSolidCircle(const b2Vec2& center, float32 radius, const b2Vec2& axis, const b2Color& color)
-{
+void MOAIBox2DDebugDraw::DrawSolidCircle ( const b2Vec2& center, float32 radius, const b2Vec2& axis, const b2Color& color ) {
+
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-	this->BindVertexFormat ( gfxDevice );
 	
 	gfxDevice.SetBlendMode ( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
 	gfxDevice.SetPenColor ( 0.5f * color.r, 0.5f * color.g, 0.5f * color.b, 0.5f );
@@ -141,10 +133,9 @@ void MOAIBox2DDebugDraw::DrawSolidCircle(const b2Vec2& center, float32 radius, c
 }
 
 //----------------------------------------------------------------//
-void MOAIBox2DDebugDraw::DrawSegment(const b2Vec2& p1, const b2Vec2& p2, const b2Color& color)
-{
+void MOAIBox2DDebugDraw::DrawSegment ( const b2Vec2& p1, const b2Vec2& p2, const b2Color& color ) {
+
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-	this->BindVertexFormat ( gfxDevice );
 	
 	gfxDevice.SetPenColor ( color.r, color.g, color.b, 1.0f );
 
@@ -155,10 +146,9 @@ void MOAIBox2DDebugDraw::DrawSegment(const b2Vec2& p1, const b2Vec2& p2, const b
 }
 
 //----------------------------------------------------------------//
-void MOAIBox2DDebugDraw::DrawTransform(const b2Transform& xf)
-{
+void MOAIBox2DDebugDraw::DrawTransform ( const b2Transform& xf ) {
+
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-	this->BindVertexFormat ( gfxDevice );
 
 	b2Vec2 p1 = xf.position, p2;
 	const float32 k_axisScale = 0.4f;
@@ -185,10 +175,9 @@ void MOAIBox2DDebugDraw::DrawTransform(const b2Transform& xf)
 }
 
 //----------------------------------------------------------------//
-void MOAIBox2DDebugDraw::DrawPoint(const b2Vec2& p, float32 size, const b2Color& color)
-{
+void MOAIBox2DDebugDraw::DrawPoint ( const b2Vec2& p, float32 size, const b2Color& color ) {
+
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-	this->BindVertexFormat ( gfxDevice );
 
 	gfxDevice.SetPointSize(size);
 	gfxDevice.BeginPrim(GL_POINTS);
@@ -199,10 +188,9 @@ void MOAIBox2DDebugDraw::DrawPoint(const b2Vec2& p, float32 size, const b2Color&
 }
 
 //----------------------------------------------------------------//
-void MOAIBox2DDebugDraw::DrawAABB(b2AABB* aabb, const b2Color& c)
-{
+void MOAIBox2DDebugDraw::DrawAABB ( b2AABB* aabb, const b2Color& c ) {
+
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-	this->BindVertexFormat ( gfxDevice );
 
 	gfxDevice.SetPenColor(c.r, c.g, c.b, 1.0f);
 	gfxDevice.BeginPrim(GL_LINE_LOOP);

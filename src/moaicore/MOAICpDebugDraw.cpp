@@ -120,8 +120,6 @@ static const int springVAR_count = sizeof(springVAR)/sizeof(GLfloat)/2;
 //----------------------------------------------------------------//
 static void draw_shape_verts ( USVec2D* verts, u32 count, u32 color, bool drawFilled ) {
 
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-
 	if ( drawFilled ) {
 		MOAIDraw::DrawVertexArray ( verts, count, color, GL_TRIANGLE_FAN );
 	}
@@ -312,6 +310,7 @@ static void drawObject ( cpShape *shape, cpSpace *space ) {
 static void drawSpring ( cpDampedSpring* spring, cpBody* body_a, cpBody* body_b ) {
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
 
 	cpVect a = cpvadd ( body_a->p, cpvrotate ( spring->anchr1, body_a->rot ));
 	cpVect b = cpvadd ( body_b->p, cpvrotate ( spring->anchr2, body_b->rot ));
@@ -368,6 +367,7 @@ static void drawSpring ( cpDampedSpring* spring, cpBody* body_a, cpBody* body_b 
 static void drawConstraint ( cpConstraint* constraint ) {
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_WORLD, MOAIGfxDevice::VTX_STAGE_PROJ );
 
 	cpBody* body_a = constraint->a;
 	cpBody* body_b = constraint->b;
@@ -437,6 +437,7 @@ static void drawBB ( cpShape *shape, void *unused ) {
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	
+	gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_WORLD, MOAIGfxDevice::VTX_STAGE_PROJ );
 	gfxDevice.SetPrimType ( GL_LINE_LOOP );
 
 	gfxDevice.WriteVtx (( float )shape->bb.l, ( float )shape->bb.b );
@@ -513,10 +514,12 @@ static inline cpHashValue hash_func ( cpHashValue x, cpHashValue y, cpHashValue 
 //----------------------------------------------------------------//
 void MOAICpDebugDraw::DrawSpace ( cpSpace *space, MOAICpDebugDrawOptions *options ) {
 
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	MOAIDraw::Bind ();
 
-	gfxDevice.SetVertexPreset ( MOAIVertexFormatMgr::XYC );
-	gfxDevice.SetShaderPreset ( MOAIShaderMgr::LINE_SHADER );
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	
+	// clear out model to world transform
+	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM );
 
 	// TODO
 	//if ( options->drawHash ) {
