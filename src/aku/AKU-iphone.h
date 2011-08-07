@@ -10,13 +10,9 @@
 #import <Foundation/Foundation.h>
 #import <StoreKit/StoreKit.h>
 #import <UIKit/UIKit.h>
-
-void		AKUAppDidFailToRegisterForRemoteNotificationsWithError	( NSError* error );
-void		AKUAppDidReceiveLocalNotification						( UILocalNotification* notification );
-void		AKUAppDidReceiveRemoteNotification						( NSDictionary* userInfo );
-void		AKUAppDidRegisterForRemoteNotificationsWithDeviceToken	( NSData* deviceToken );
-void		AKUIphoneInit											( UIApplication* application );
-
+#import <OpenGLES/EAGL.h>
+#import <OpenGLES/ES1/gl.h>
+#import <OpenGLES/ES1/glext.h>
 
 enum ConnectionType {
 	CONNECTION_TYPE_NONE,
@@ -24,7 +20,13 @@ enum ConnectionType {
 	CONNECTION_TYPE_WWAN
 };
 
-long AKUGetIphoneNetworkReachability					    	( );
-const char* AKUGetGUID													( );
+void			AKUAppDidFailToRegisterForRemoteNotificationsWithError	( NSError* error );
+void			AKUAppDidReceiveLocalNotification						( UILocalNotification* notification );
+void			AKUAppDidReceiveRemoteNotification						( NSDictionary* userInfo );
+void			AKUAppDidRegisterForRemoteNotificationsWithDeviceToken	( NSData* deviceToken );
+const char*		AKUGetGUID												();
+long			AKUGetIphoneNetworkReachability					    	();
+void			AKUIphoneInit											( UIApplication* application );
+void			AKUSetDefaultFrameBuffer								( GLuint frameBuffer );
 
 #endif

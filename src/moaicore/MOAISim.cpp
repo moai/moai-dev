@@ -476,12 +476,11 @@ void MOAISim::Render () {
 		glClear ( this->mClearFlags );
 	}
 
-	MOAIGfxDevice::Get ().Reset ();
-
 	RenderPassIt passIt = this->mRenderPasses.Head ();
 	for ( ; passIt; passIt = passIt->Next ()) {
 		MOAIProp2D* renderPass = passIt->Data ();
-		MOAIGfxDevice::Get ().SetViewport ();
+		
+		MOAIGfxDevice::Get ().BeginDrawing ();
 		renderPass->Draw ();
 	}
 	

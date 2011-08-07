@@ -32,6 +32,39 @@ void AKUAppDidRegisterForRemoteNotificationsWithDeviceToken ( NSData* deviceToke
 	MOAIApp::Get ().DidRegisterForRemoteNotificationsWithDeviceToken ( deviceToken );
 }
 
+//-----------------------------------------------------------------//
+const char* AKUGetGUID ( ) {
+
+	CFUUIDRef uuid = CFUUIDCreate( NULL );
+	NSString* session_uuid = ( NSString * ) CFUUIDCreateString( NULL, uuid );
+	CFRelease( uuid );
+	return [ session_uuid UTF8String ];
+}
+
+//-----------------------------------------------------------------//
+long AKUGetIphoneNetworkReachability ( ) {
+
+
+	Reachability *reach = [ Reachability reachabilityForInternetConnection ];
+	NetworkStatus status = [ reach currentReachabilityStatus ];
+		
+	if ( status == NotReachable ) {
+		return ( long )CONNECTION_TYPE_NONE;
+	} else if ( status == ReachableViaWWAN ) {
+		// Update network information
+		CTCarrier* carrierInfo = [[[ CTTelephonyNetworkInfo alloc ] init ] subscriberCellularProvider ];
+		MOAIEnvironment::Get ().SetCarrierISOCountryCode ( [ carrierInfo.isoCountryCode UTF8String ]);
+		MOAIEnvironment::Get ().SetCarrierMobileCountryCode ( [[carrierInfo mobileCountryCode ] UTF8String ]);
+		MOAIEnvironment::Get ().SetCarrierName ( [[carrierInfo carrierName ] UTF8String ]);
+		MOAIEnvironment::Get ().SetCarrierMobileNetworkCode ( [[carrierInfo mobileNetworkCode ] UTF8String ]);
+		return ( long )CONNECTION_TYPE_WWAN;
+	} else if ( status == ReachableViaWiFi ) {
+		return ( long )CONNECTION_TYPE_WIFI;
+	}
+	
+	return ( long )CONNECTION_TYPE_NONE;
+}
+
 //----------------------------------------------------------------//
 void AKUIphoneInit ( UIApplication* application ) {
 
@@ -45,7 +78,6 @@ void AKUIphoneInit ( UIApplication* application ) {
 	loadMoaiLib_NSString ();
 	
 	MOAIApp::Get ().SetApplication ( application );
-	
 	
 	// Device properties	
 	MOAIEnvironment::Get ().SetAppVersion ( [[[[ NSBundle mainBundle ] infoDictionary ] objectForKey:@"CFBundleVersion" ] UTF8String ] );
@@ -85,35 +117,7 @@ void AKUIphoneInit ( UIApplication* application ) {
 }
 
 //-----------------------------------------------------------------//
-long AKUGetIphoneNetworkReachability ( ) {
+void AKUSetDefaultFrameBuffer ( GLuint frameBuffer ) {
 
-
-	Reachability *reach = [ Reachability reachabilityForInternetConnection ];
-	NetworkStatus status = [ reach currentReachabilityStatus ];
-		
-	if ( status == NotReachable ) {
-		return ( long )CONNECTION_TYPE_NONE;
-	} else if ( status == ReachableViaWWAN ) {
-		// Update network information
-		CTCarrier* carrierInfo = [[[ CTTelephonyNetworkInfo alloc ] init ] subscriberCellularProvider ];
-		MOAIEnvironment::Get ().SetCarrierISOCountryCode ( [ carrierInfo.isoCountryCode UTF8String ]);
-		MOAIEnvironment::Get ().SetCarrierMobileCountryCode ( [[carrierInfo mobileCountryCode ] UTF8String ]);
-		MOAIEnvironment::Get ().SetCarrierName ( [[carrierInfo carrierName ] UTF8String ]);
-		MOAIEnvironment::Get ().SetCarrierMobileNetworkCode ( [[carrierInfo mobileNetworkCode ] UTF8String ]);
-		return ( long )CONNECTION_TYPE_WWAN;
-	} else if ( status == ReachableViaWiFi ) {
-		return ( long )CONNECTION_TYPE_WIFI;
-	}
-	
-	return ( long )CONNECTION_TYPE_NONE;
+	MOAIGfxDevice::Get ().SetDefaultFrameBuffer ( frameBuffer );
 }
-
-//-----------------------------------------------------------------//
-const char* AKUGetGUID ( ) {
-
-	CFUUIDRef uuid = CFUUIDCreate( NULL );
-	NSString* session_uuid = ( NSString * ) CFUUIDCreateString( NULL, uuid );
-	CFRelease( uuid );
-	return [ session_uuid UTF8String ];
-}
-

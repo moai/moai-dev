@@ -362,15 +362,18 @@ void MOAILayer2D::Draw () {
 	MOAIViewport& viewport = *this->mViewport;
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	
-	gfxDevice.Reset ();
-	//gfxDevice.SetFrameBuffer ( this->mFrameBuffer );
+	gfxDevice.ResetState ();
+	gfxDevice.SetFrameBuffer ( this->mFrameBuffer );
 	
 	// TODO: GLES2
-	//USAffine2D mtx = MOAIGfxDevice::Get ().GetWorldToWndMtx ( 1.0f, 1.0f );
-	//mtx.Prepend ( this->mLocalToWorldMtx );
-	//mtx.Transform ( viewport );
+	USMatrix4x4 mtx;
+	mtx.Init ( this->mLocalToWorldMtx );
+	mtx.Append (gfxDevice. GetWorldToWndMtx ( 1.0f, 1.0f ));
 	
-	gfxDevice.SetViewport ( viewport );
+	USRect viewportRect = viewport;
+	mtx.Transform ( viewportRect );
+	
+	gfxDevice.SetViewport ( viewportRect );
 	
 	USAffine2D camera;
 	this->GetCameraMtx ( camera );

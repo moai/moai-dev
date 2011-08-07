@@ -33,6 +33,53 @@ int MOAIGfxDevice::_isProgrammable ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIGfxDevice::BeginDrawing () {
+
+	float width = ( float )this->mWidth;
+	float height = ( float )this->mHeight;
+	
+	MOAIViewport viewport;
+	viewport.Init ( 0.0f, 0.0f, width, height );
+	viewport.SetScale ( width, -height );
+	viewport.SetOffset ( -1.0f, 1.0f );
+	
+	this->SetViewport ( viewport );
+
+	for ( u32 i = 0; i < TOTAL_VTX_TRANSFORMS; ++i ) {
+		this->mVertexTransforms [ i ].Ident ();
+	}
+	this->mUVTransform.Ident ();
+	this->mCpuVertexTransformMtx.Ident ();
+	
+	this->mVertexMtxInput = VTX_STAGE_MODEL;
+	this->mVertexMtxOutput = VTX_STAGE_MODEL;
+	
+	USMatrix4x4 projMtx;
+	projMtx.Init ( viewport.GetProjMtx ());
+	this->mVertexTransforms [ VTX_PROJ_TRANSFORM ] = projMtx;
+	
+	// fixed function reset
+	if ( !this->IsProgrammable ()) {
+		
+		// load identity matrix
+		glMatrixMode ( GL_MODELVIEW );
+		glLoadIdentity ();
+		
+		glMatrixMode ( GL_PROJECTION );
+		this->GpuLoadMatrix ( projMtx );
+		
+		glMatrixMode ( GL_TEXTURE );
+		glLoadIdentity ();
+		
+		// reset the current vertex color
+		glColor4f ( 1.0f, 1.0f, 1.0f, 1.0f );
+		
+		// reset the point size
+		glPointSize (( GLfloat )this->mPointSize );
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAIGfxDevice::BeginPrim () {
 
 	if ( this->mPrimSize ) {
@@ -443,7 +490,8 @@ MOAIGfxDevice::MOAIGfxDevice () :
 	mIsES ( false ),
 	mMajorVersion ( 0 ),
 	mMinorVersion ( 0 ),
-	mIsProgrammable ( false ) {
+	mIsProgrammable ( false ),
+	mDefaultFrameBuffer ( 0 ) {
 	
 	RTTI_SINGLE ( MOAIGfxDevice )
 	
@@ -496,7 +544,7 @@ void MOAIGfxDevice::Reserve ( u32 size ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::Reset () {
+void MOAIGfxDevice::ResetState () {
 
 	this->mTop = 0;
 	this->mPrimCount = 0;
@@ -531,27 +579,8 @@ void MOAIGfxDevice::Reset () {
 	glScissor (( int )scissorRect.mXMin, ( int )scissorRect.mYMin, ( int )scissorRect.Width (), ( int )scissorRect.Height ());
 	this->mScissorRect = scissorRect;
 	
-	for ( u32 i = 0; i < TOTAL_VTX_TRANSFORMS; ++i ) {
-		this->mVertexTransforms [ i ].Ident ();
-	}
-	this->mUVTransform.Ident ();
-	this->mCpuVertexTransformMtx.Ident ();
-	
-	this->mVertexMtxInput = VTX_STAGE_MODEL;
-	this->mVertexMtxOutput = VTX_STAGE_MODEL;
-	
 	// fixed function reset
 	if ( !this->IsProgrammable ()) {
-		
-		// load identity matrix
-		glMatrixMode ( GL_MODELVIEW );
-		glLoadIdentity ();
-		
-		glMatrixMode ( GL_PROJECTION );
-		glLoadIdentity ();
-		
-		glMatrixMode ( GL_TEXTURE );
-		glLoadIdentity ();
 		
 		// reset the current vertex color
 		glColor4f ( 1.0f, 1.0f, 1.0f, 1.0f );
@@ -593,6 +622,12 @@ void MOAIGfxDevice::SetBlendMode ( int srcFactor, int dstFactor ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIGfxDevice::SetDefaultFrameBuffer ( GLuint frameBuffer ) {
+
+	this->mDefaultFrameBuffer = frameBuffer;
+}
+
+//----------------------------------------------------------------//
 void MOAIGfxDevice::SetFrameBuffer ( MOAITexture* frameBuffer ) {
 
 	this->Flush ();
@@ -600,7 +635,7 @@ void MOAIGfxDevice::SetFrameBuffer ( MOAITexture* frameBuffer ) {
 		frameBuffer->BindFrameBuffer ();
 	}
 	else {
-		glBindFramebuffer ( GL_FRAMEBUFFER, 0 );
+		glBindFramebuffer ( GL_FRAMEBUFFER, this->mDefaultFrameBuffer );
 	}
 }
 
@@ -910,20 +945,19 @@ void MOAIGfxDevice::SetViewport () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::SetViewport ( MOAIViewport& viewport ) {
+void MOAIGfxDevice::SetViewport ( const USRect& viewport ) {
 
 	// set us up the viewport
-	USRect rect = viewport.GetRect ();
 	
-	GLint x = ( GLint )rect.mXMin;
-	GLint y = ( GLint )rect.mYMin;
+	GLint x = ( GLint )viewport.mXMin;
+	GLint y = ( GLint )viewport.mYMin;
 	
-	GLsizei w = ( GLsizei )( rect.Width () + 0.5f );
-	GLsizei h = ( GLsizei )( rect.Height () + 0.5f );
+	GLsizei w = ( GLsizei )( viewport.Width () + 0.5f );
+	GLsizei h = ( GLsizei )( viewport.Height () + 0.5f );
 	
 	glViewport ( x, y, w, h );
 
-	this->mViewRect = rect;
+	this->mViewRect = viewport;
 }
 
 //----------------------------------------------------------------//

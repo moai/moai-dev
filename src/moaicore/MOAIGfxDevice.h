@@ -89,6 +89,8 @@ private:
 	u32				mMajorVersion;
 	u32				mMinorVersion;
 	bool			mIsProgrammable;
+	
+	GLuint			mDefaultFrameBuffer;
 
 	//----------------------------------------------------------------//
 	static int				_isProgrammable			( lua_State* L );
@@ -107,6 +109,7 @@ public:
 	DECL_LUA_SINGLETON ( MOAIGfxDevice )
 	
 	//----------------------------------------------------------------//
+	void					BeginDrawing			();
 	void					BeginPrim				();
 	void					BeginPrim				( u32 primType );
 	void					ClearColorBuffer		( u32 color );
@@ -151,12 +154,13 @@ public:
 	u32						PrintErrors				();
 	void					RegisterLuaClass		( USLuaState& state );
 	void					Reserve					( u32 size );
-	void					Reset					();
+	void					ResetState				();
 	
 	void					SetBlendMode			();
 	void					SetBlendMode			( const MOAIBlendMode& blendMode );
 	void					SetBlendMode			( int srcFactor, int dstFactor );
 	
+	void					SetDefaultFrameBuffer	( GLuint frameBuffer );
 	void					SetFrameBuffer			( MOAITexture* frameBuffer );
 	void					SetPenColor				( u32 color );
 	void					SetPenColor				( const USColorVec& colorVec );
@@ -186,7 +190,7 @@ public:
 	void					SetVertexTransform		( u32 id, const USMatrix4x4& transform );
 	
 	void					SetViewport				();
-	void					SetViewport				( MOAIViewport& viewport );
+	void					SetViewport				( const USRect& viewport );
 	
 	void					WriteQuad				( USVec2D* vtx, USVec2D* uv );
 	
