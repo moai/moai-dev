@@ -29,6 +29,8 @@
 //================================================================//
 @implementation OpenGLView
 
+	SYNTHESIZE	( GLuint, framebuffer, Framebuffer );
+
 	//----------------------------------------------------------------//
 	-( void ) beginDrawing {
 	
