@@ -2,6 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <moaicore/MOAIGfxDevice.h>
 #include <moaicore/MOAILineBrush.h>
 
 //================================================================//
@@ -11,14 +12,19 @@
 //----------------------------------------------------------------//
 void MOAILineBrush::Draw () {
 
-	glVertexPointer ( 2, GL_FLOAT, 0, this->mVtx );
-	glEnableClientState ( GL_VERTEX_ARRAY );
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+
+	gfxDevice.SetPrimType ( GL_LINES );
+
+	gfxDevice.BeginPrim ();
 	
-	glDisable ( GL_TEXTURE_2D );
-	glDisableClientState ( GL_TEXTURE_COORD_ARRAY );
-	glDisableClientState ( GL_COLOR_ARRAY );
+		gfxDevice.WriteVtx ( this->mVtx [ 0 ], this->mVtx [ 1 ]);
+		gfxDevice.WritePenColor4b ();
+		
+		gfxDevice.WriteVtx ( this->mVtx [ 2 ], this->mVtx [ 3 ]);
+		gfxDevice.WritePenColor4b ();
 	
-	glDrawArrays ( GL_LINES, 0, 2 );
+	gfxDevice.EndPrim ();
 }
 
 //----------------------------------------------------------------//

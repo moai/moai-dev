@@ -22,82 +22,19 @@
 #include "pch.h"
 #include <moaicore/MOAICpDebugDraw.h>
 #include <moaicore/MOAIDraw.h>
+#include <moaicore/MOAIGfxDevice.h>
+#include <moaicore/MOAIShaderMgr.h>
+#include <moaicore/MOAIVertexFormatMgr.h>
 #include <chipmunk/chipmunk_private.h>
 
 SUPPRESS_EMPTY_FILE_WARNING
 #if USE_CHIPMUNK
 
-/*
-	IMPORTANT - READ ME!
-	
-	This file sets up a simple interface that the individual demos can use to get
-	a Chipmunk space running and draw what's in it. In order to keep the Chipmunk
-	examples clean and simple, they contain no graphics code. All drawing is done
-	by accessing the Chipmunk structures at a very low level. It is NOT
-	recommended to write a game or application this way as it does not scale
-	beyond simple shape drawing and is very dependent on implementation details
-	about Chipmunk which may change with little to no warning.
-*/
-
 #define LINE_COLOR 0.0f, 0.0f, 0.0f
 #define COLLISION_COLOR 1.0f, 0.0f, 0.0f
 #define BODY_COLOR 0.0f, 0.0f, 1.0f
-
-static void
-glColor_from_pointer(void *ptr)
-{
-	unsigned long val = (long)ptr;
-	
-	// hash the pointer up nicely
-	val = (val+0x7ed55d16) + (val<<12);
-	val = (val^0xc761c23c) ^ (val>>19);
-	val = (val+0x165667b1) + (val<<5);
-	val = (val+0xd3a2646c) ^ (val<<9);
-	val = (val+0xfd7046c5) + (val<<3);
-	val = (val^0xb55a4f09) ^ (val>>16);
-	
-//	GLfloat v = (GLfloat)val/(GLfloat)ULONG_MAX;
-//	v = 0.95f - v*0.15f;
-//	
-//	glColor3f(v, v, v);
-
-	GLubyte r = (val>>0) & 0xFF;
-	GLubyte g = (val>>8) & 0xFF;
-	GLubyte b = (val>>16) & 0xFF;
-	
-	GLubyte max = r>g ? (r>b ? r : b) : (g>b ? g : b);
-	
-	const int mult = 127;
-	const int add = 63;
-	r = (r*mult)/max + add;
-	g = (g*mult)/max + add;
-	b = (b*mult)/max + add;
-	
-	GLfloat rf = ( float )r / 255;
-	GLfloat gf = ( float )g / 255;
-	GLfloat bf = ( float )b / 255;
-	
-	glColor4f(rf, gf, bf, 1);
-}
-
-static void
-glColor_for_shape(cpShape *shape, cpSpace *space)
-{
-	cpBody *body = shape->body;
-	if(body){
-		if(body->node.next){
-			GLfloat v = 0.25f;
-			glColor4f(v,v,v,1);
-			return;
-		} else if(body->node.idleTime > space->sleepTimeThreshold) {
-			GLfloat v = 0.9f;
-			glColor4f(v,v,v,1);
-			return;
-		}
-	}
-	
-	glColor_from_pointer(shape);
-}
+#define BB_COLOR 0.3f, 0.5f, 0.3f
+#define CONSTRAINT_COLOR 0.5f, 1.0f, 0.5f
 
 static const GLfloat circleVAR[] = {
 	 0.0000f,  1.0000f,
@@ -127,28 +64,6 @@ static const GLfloat circleVAR[] = {
 	 0.0000f,  1.0000f,
 	 0.0f, 0.0f, // For an extra line to see the rotation.
 };
-static const int circleVAR_count = sizeof(circleVAR)/sizeof(GLfloat)/2;
-
-static void
-drawCircleShape(cpBody *body, cpCircleShape *circle, cpSpace *space)
-{
-	glVertexPointer(2, GL_FLOAT, 0, circleVAR);
-
-	glPushMatrix(); {
-		cpVect center = circle->tc;
-		glTranslatef((GLfloat)center.x, (GLfloat)center.y, 0.0f);
-		glRotatef((GLfloat)( body->a*180.0/M_PI ), 0.0f, 0.0f, 1.0f);
-		glScalef((GLfloat)circle->r, (GLfloat)circle->r, 1.0f);
-		
-		if(!circle->shape.sensor){
-			glColor_for_shape((cpShape *)circle, space);
-			glDrawArrays(GL_TRIANGLE_FAN, 0, circleVAR_count - 1);
-		}
-		
-		glColor4f(LINE_COLOR,1);
-		glDrawArrays(GL_LINE_STRIP, 0, circleVAR_count);
-	} glPopMatrix();
-}
 
 static const GLfloat pillVAR[] = {
 	 0.0000f,  1.0000f, 1.0f,
@@ -179,84 +94,6 @@ static const GLfloat pillVAR[] = {
 	-0.2588f,  0.9659f, 0.0f,
 	 0.0000f,  1.0000f, 0.0f,
 };
-static const int pillVAR_count = sizeof(pillVAR)/sizeof(GLfloat)/3;
-
-static void
-drawSegmentShape(cpBody *body, cpSegmentShape *seg, cpSpace *space)
-{
-	UNUSED ( body );
-
-	cpVect a = seg->ta;
-	cpVect b = seg->tb;
-	
-	if(seg->r){
-		glVertexPointer(3, GL_FLOAT, 0, pillVAR);
-		glPushMatrix(); {
-			cpVect d = cpvsub(b, a);
-			cpVect r = cpvmult(d, seg->r/cpvlength(d));
-
-			const GLfloat matrix[] = {
-				 (GLfloat)r.x, (GLfloat)r.y, 0.0f, 0.0f,
-				-(GLfloat)r.y, (GLfloat)r.x, 0.0f, 0.0f,
-				 (GLfloat)d.x, (GLfloat)d.y, 0.0f, 0.0f,
-				 (GLfloat)a.x, (GLfloat)a.y, 0.0f, 1.0f,
-			};
-			glMultMatrixf(matrix);
-			
-			if(!seg->shape.sensor){
-				glColor_for_shape((cpShape *)seg, space);
-				glDrawArrays(GL_TRIANGLE_FAN, 0, pillVAR_count);
-			}
-			
-			glColor4f(LINE_COLOR,1);
-			glDrawArrays(GL_LINE_LOOP, 0, pillVAR_count);
-		} glPopMatrix();
-	} else {
-		glColor4f(LINE_COLOR,1);
-		MOAIDraw::DrawLine (( float )a.x, ( float )a.y, ( float )b.x, ( float )b.y );
-	}
-}
-
-static void
-drawPolyShape(cpBody *body, cpPolyShape *poly, cpSpace *space)
-{
-	UNUSED ( body );
-
-	int count = poly->numVerts;
-#if CP_USE_DOUBLES
-	glVertexPointer(2, GL_DOUBLE, 0, poly->tVerts);
-#else
-	glVertexPointer(2, GL_FLOAT, 0, poly->tVerts);
-#endif
-	
-	if(!poly->shape.sensor){
-		glColor_for_shape((cpShape *)poly, space);
-		glDrawArrays(GL_TRIANGLE_FAN, 0, count);
-	}
-	
-	glColor4f(LINE_COLOR,1);
-	glDrawArrays(GL_LINE_LOOP, 0, count);
-}
-
-static void
-drawObject(cpShape *shape, cpSpace *space)
-{
-	cpBody *body = shape->body;
-	
-	switch(shape->klass->type){
-		case CP_CIRCLE_SHAPE:
-			drawCircleShape(body, (cpCircleShape *)shape, space);
-			break;
-		case CP_SEGMENT_SHAPE:
-			drawSegmentShape(body, (cpSegmentShape *)shape, space);
-			break;
-		case CP_POLY_SHAPE:
-			drawPolyShape(body, (cpPolyShape *)shape, space);
-			break;
-		default:
-			printf("Bad enumeration in drawObject().\n");
-	}
-}
 
 static const GLfloat springVAR[] = {
 	0.00f, 0.0f,
@@ -275,236 +112,463 @@ static const GLfloat springVAR[] = {
 	0.80f, 0.0f,
 	1.00f, 0.0f,
 };
+
+static const int circleVAR_count = sizeof(circleVAR)/sizeof(GLfloat)/2;
+static const int pillVAR_count = sizeof(pillVAR)/sizeof(GLfloat)/3;
 static const int springVAR_count = sizeof(springVAR)/sizeof(GLfloat)/2;
 
-static void
-drawSpring(cpDampedSpring *spring, cpBody *body_a, cpBody *body_b)
-{
-	cpVect a = cpvadd(body_a->p, cpvrotate(spring->anchr1, body_a->rot));
-	cpVect b = cpvadd(body_b->p, cpvrotate(spring->anchr2, body_b->rot));
+//----------------------------------------------------------------//
+static void draw_shape_verts ( USVec2D* verts, u32 count, u32 color, bool drawFilled ) {
 
-	glPointSize(5.0f);
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+
+	if ( drawFilled ) {
+		MOAIDraw::DrawVertexArray ( verts, count, color, GL_TRIANGLE_FAN );
+	}
+	
+	color = USColor::PackRGBA ( LINE_COLOR, 1.0f );
+	MOAIDraw::DrawVertexArray ( verts, count, color, GL_LINE_LOOP );
+}
+
+//----------------------------------------------------------------//
+static u32 color_from_pointer(void *ptr) {
+
+	unsigned long val = (long)ptr;
+	
+	// hash the pointer up nicely
+	val = ( val + 0x7ed55d16 ) + ( val << 12 );
+	val = ( val ^ 0xc761c23c ) ^ ( val >> 19 );
+	val = ( val + 0x165667b1 ) + ( val << 5 );
+	val = ( val + 0xd3a2646c ) ^ ( val << 9 );
+	val = ( val + 0xfd7046c5 ) + ( val << 3 );
+	val = ( val ^ 0xb55a4f09 ) ^ ( val >> 16 );
+	
+	int r = ( val >> 0 ) & 0xFF;
+	int g = ( val >> 8 ) & 0xFF;
+	int b = ( val >> 16 ) & 0xFF;
+	
+	int max = r > g ? ( r > b ? r : b) : ( g > b ? g : b );
+	
+	const int mult = 127;
+	const int add = 63;
+	r = (( r * mult ) / max ) + add;
+	g = (( g * mult ) / max ) + add;
+	b = (( b * mult ) / max ) + add;
+	
+	return USColor::PackRGBA ( r, g, b, 1 );
+}
+
+//----------------------------------------------------------------//
+static u32 color_for_shape ( cpShape *shape, cpSpace *space ) {
+
+	cpBody *body = shape->body;
+	if ( body ) {
+		if ( body->node.next ) {
+			float v = 0.25f;
+			return USColor::PackRGBA ( v, v, v, 1.0f );
+		}
+		else if ( body->node.idleTime > space->sleepTimeThreshold ) {
+			float v = 0.9f;
+			return USColor::PackRGBA ( v, v, v, 1.0f );
+		}
+	}
+	
+	return color_from_pointer ( shape );
+}
+
+//----------------------------------------------------------------//
+static void drawCircleShape(cpBody *body, cpCircleShape *circle, cpSpace *space) {
+
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
+
+	cpVect center = circle->tc;
+	
+	USAffine2D mtx;
+	mtx.ScRoTr (
+		( float )circle->r, ( float )circle->r,
+		( float )( body->a * 180.0 / M_PI ),
+		( float )center.x, ( float )center.y
+	);
+	
+	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, mtx );
+	
+	u32 color = color_for_shape (( cpShape* )circle, space );
+	draw_shape_verts (( USVec2D* )circleVAR, circleVAR_count, color, ( circle->shape.sensor == 0 ));
+	
+	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM );
+}
+
+//----------------------------------------------------------------//
+static void drawSegmentShape ( cpBody* body, cpSegmentShape* seg, cpSpace* space ) {
+	UNUSED ( body );
+
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
+
+	cpVect a = seg->ta;
+	cpVect b = seg->tb;
+	
+	if ( seg->r ){
+		
+		cpVect d = cpvsub(b, a);
+		cpVect r = cpvmult(d, seg->r/cpvlength(d));
+
+		USMatrix4x4 mtx;
+		
+		mtx.m [ 0 ] = ( float )r.x;
+		mtx.m [ 1 ] = ( float )r.y;
+		mtx.m [ 2 ] = 0.0f;
+		mtx.m [ 3 ] = 0.0f;
+		
+		mtx.m [ 4 ] = ( float )-r.y;
+		mtx.m [ 5 ] = ( float )r.x;
+		mtx.m [ 6 ] = 0.0f;
+		mtx.m [ 7 ] = 0.0f;
+		
+		mtx.m [ 8 ] = ( float )d.x;
+		mtx.m [ 9 ] = ( float )d.y;
+		mtx.m [ 10 ] = 0.0f;
+		mtx.m [ 11 ] = 0.0f;
+		
+		mtx.m [ 12 ] = ( float )a.x;
+		mtx.m [ 13 ] = ( float )a.y;
+		mtx.m [ 14 ] = 0.0f;
+		mtx.m [ 15 ] = 0.0f;
+		
+		gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, mtx );
+		
+		u32 color = color_for_shape (( cpShape* )seg, space );
+		draw_shape_verts (( USVec2D* )pillVAR, pillVAR_count, color, ( seg->shape.sensor == 0 ));
+		
+		gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM );
+
+	}
+	else {
+	
+		gfxDevice.SetPrimType ( GL_LINES );
+		gfxDevice.SetPenColor ( USColor::PackRGBA ( LINE_COLOR, 1.0f ));
+		
+		gfxDevice.WriteVtx (( float )a.x, ( float )a.y );
+		gfxDevice.WritePenColor4b ();
+		
+		gfxDevice.WriteVtx (( float )b.x, ( float )b.y );
+		gfxDevice.WritePenColor4b ();
+		
+		gfxDevice.Flush ();
+	}
+}
+
+//----------------------------------------------------------------//
+static void drawPolyShape ( cpBody* body, cpPolyShape* poly, cpSpace* space ) {
+	UNUSED ( body );
+
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_WORLD, MOAIGfxDevice::VTX_STAGE_PROJ );
+
+	int count = poly->numVerts;
+	
+	#if CP_USE_DOUBLES
+		static const u32 max = 1024;
+		USVec2D verts [ max ];
+		USVec2D64* verts64 = ( USVec2D64* )poly->tVerts;
+		
+		count = count > max ? max : count;
+		for ( int i = 0; i < count; ++i ) {
+			USVec2D& vtx = verts [ i ];
+			USVec2D64& vtx64 = verts64 [ i ];
+			vtx.mX = ( float )vtx64.mX;
+			vtx.mY = ( float )vtx64.mY;
+		}
+	#else
+		USVec2D* verts = ( USVec2D* )poly->tVerts;
+	#endif
+	
+	u32 color = color_for_shape (( cpShape* )poly, space );
+	draw_shape_verts ( verts, count, color, ( poly->shape.sensor == 0 ));
+}
+
+//----------------------------------------------------------------//
+static void drawObject ( cpShape *shape, cpSpace *space ) {
+
+	cpBody *body = shape->body;
+	
+	switch(shape->klass->type){
+		case CP_CIRCLE_SHAPE:
+			drawCircleShape(body, (cpCircleShape *)shape, space);
+			break;
+		case CP_SEGMENT_SHAPE:
+			drawSegmentShape(body, (cpSegmentShape *)shape, space);
+			break;
+		case CP_POLY_SHAPE:
+			drawPolyShape(body, (cpPolyShape *)shape, space);
+			break;
+		default:
+			printf("Bad enumeration in drawObject().\n");
+	}
+}
+
+//----------------------------------------------------------------//
+static void drawSpring ( cpDampedSpring* spring, cpBody* body_a, cpBody* body_b ) {
+
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+
+	cpVect a = cpvadd ( body_a->p, cpvrotate ( spring->anchr1, body_a->rot ));
+	cpVect b = cpvadd ( body_b->p, cpvrotate ( spring->anchr2, body_b->rot ));
+
+	gfxDevice.SetPointSize ( 5.0f );
 
 	MOAIDraw::DrawPoint (( float )a.x, ( float )a.y );
 	MOAIDraw::DrawPoint (( float )b.x, ( float )b.y );
 
-	cpVect delta = cpvsub(b, a);
-
-	glVertexPointer(2, GL_FLOAT, 0, springVAR);
-	glPushMatrix(); {
-		GLfloat x = (GLfloat)a.x;
-		GLfloat y = (GLfloat)a.y;
-		GLfloat cos = (GLfloat)delta.x;
-		GLfloat sin = (GLfloat)delta.y;
-		GLfloat s = (GLfloat)(1.0/cpvlength(delta));
-
-		const GLfloat matrix[] = {
-			cos,	sin,	0.0f, 0.0f,
-			-sin*s,	cos*s,	0.0f, 0.0f,
-			0.0f,	0.0f,	1.0f, 0.0f,
-			x,		y,		0.0f, 1.0f,
-		};
-		
-		glMultMatrixf(matrix);
-		glDrawArrays(GL_LINE_STRIP, 0, springVAR_count);
-	} glPopMatrix();
+	cpVect delta = cpvsub ( b, a );
+	GLfloat cos = ( float )delta.x;
+	GLfloat sin = ( float )delta.y;
+	GLfloat s = ( float )( 1.0 / cpvlength ( delta ));
+	
+	USMatrix4x4 mtx;
+	
+	mtx.m [ 0 ] = cos;
+	mtx.m [ 1 ] = sin;
+	mtx.m [ 2 ] = 0.0f;
+	mtx.m [ 3 ] = 0.0f;
+	
+	mtx.m [ 4 ] = -sin * s;
+	mtx.m [ 5 ] = cos * s;
+	mtx.m [ 6 ] = 0.0f;
+	mtx.m [ 7 ] = 0.0f;
+	
+	mtx.m [ 8 ] = 0.0f;
+	mtx.m [ 9 ] = 0.0f;
+	mtx.m [ 10 ] = 1.0f;
+	mtx.m [ 11 ] = 0.0f;
+	
+	mtx.m [ 12 ] = ( float )a.x;
+	mtx.m [ 13 ] = ( float )a.y;
+	mtx.m [ 14 ] = 0.0f;
+	mtx.m [ 15 ] = 1.0f;
+	
+	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, mtx );
+	
+	gfxDevice.SetPrimType ( GL_LINE_STRIP );
+	gfxDevice.SetPenColor ( USColor::PackRGBA ( LINE_COLOR, 1.0f ));
+	
+	USVec2D* verts = ( USVec2D* )springVAR;
+	for ( u32 i = 0; i < springVAR_count; ++i ) {
+		USVec2D& vtx = verts [ i ];
+		gfxDevice.WriteVtx ( vtx );
+		gfxDevice.WritePenColor4b ();
+	}
+	gfxDevice.Flush ();
+	
+	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM );
 }
 
-static void
-drawConstraint(cpConstraint *constraint)
-{
-	cpBody *body_a = constraint->a;
-	cpBody *body_b = constraint->b;
+//----------------------------------------------------------------//
+static void drawConstraint ( cpConstraint* constraint ) {
 
-	const cpConstraintClass *klass = constraint->klass;
-	if(klass == cpPinJointGetClass()){
-		cpPinJoint *joint = (cpPinJoint *)constraint;
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+
+	cpBody* body_a = constraint->a;
+	cpBody* body_b = constraint->b;
+
+	const cpConstraintClass* klass = constraint->klass;
+	if ( klass == cpPinJointGetClass ()){
+		
+		cpPinJoint* joint = ( cpPinJoint* )constraint;
 	
 		cpVect a = cpvadd(body_a->p, cpvrotate(joint->anchr1, body_a->rot));
 		cpVect b = cpvadd(body_b->p, cpvrotate(joint->anchr2, body_b->rot));
 
-		glPointSize(5.0f);
+		gfxDevice.SetPointSize ( 5.0f );
 		
 		MOAIDraw::DrawPoint (( float )a.x, ( float )a.y );
 		MOAIDraw::DrawPoint (( float )b.x, ( float )b.y );
 		MOAIDraw::DrawLine (( float )a.x, ( float )a.y, ( float )b.x, ( float )b.y );
+	}
+	else if ( klass == cpSlideJointGetClass ()) {
 		
-	} else if(klass == cpSlideJointGetClass()){
 		cpSlideJoint *joint = (cpSlideJoint *)constraint;
 	
 		cpVect a = cpvadd(body_a->p, cpvrotate(joint->anchr1, body_a->rot));
 		cpVect b = cpvadd(body_b->p, cpvrotate(joint->anchr2, body_b->rot));
 
-		glPointSize(5.0f);
+		gfxDevice.SetPointSize ( 5.0f );
 
 		MOAIDraw::DrawPoint (( float )a.x, ( float )a.y );
 		MOAIDraw::DrawPoint (( float )b.x, ( float )b.y );
-		
-	} else if(klass == cpPivotJointGetClass()){
+	}
+	else if ( klass == cpPivotJointGetClass ()){
+	
 		cpPivotJoint *joint = (cpPivotJoint *)constraint;
 	
 		cpVect a = cpvadd(body_a->p, cpvrotate(joint->anchr1, body_a->rot));
 		cpVect b = cpvadd(body_b->p, cpvrotate(joint->anchr2, body_b->rot));
 
-		glPointSize(10.0f);
+		gfxDevice.SetPointSize ( 10.0f );
 		
 		MOAIDraw::DrawPoint (( float )a.x, ( float )a.y );
 		MOAIDraw::DrawPoint (( float )b.x, ( float )b.y );
-		
-	} else if(klass == cpGrooveJointGetClass()){
+	}
+	else if ( klass == cpGrooveJointGetClass ()){
+	
 		cpGrooveJoint *joint = (cpGrooveJoint *)constraint;
 	
 		cpVect a = cpvadd(body_a->p, cpvrotate(joint->grv_a, body_a->rot));
 		cpVect b = cpvadd(body_a->p, cpvrotate(joint->grv_b, body_a->rot));
 		cpVect c = cpvadd(body_b->p, cpvrotate(joint->anchr2, body_b->rot));
 
-		glPointSize(5.0f);
+		gfxDevice.SetPointSize ( 5.0f );
 		
 		MOAIDraw::DrawPoint (( float )c.x, ( float )c.y );
 		MOAIDraw::DrawLine (( float )a.x, ( float )a.y, ( float )b.x, ( float )b.y );
-		
-	} else if(klass == cpDampedSpringGetClass()){
+	}
+	else if ( klass == cpDampedSpringGetClass ()) {
 		drawSpring((cpDampedSpring *)constraint, body_a, body_b);
-	} else {
+	}
+	else {
 //		printf("Cannot draw constraint\n");
 	}
 }
 
-static void
-drawBB(cpShape *shape, void *unused)
-{
+//----------------------------------------------------------------//
+static void drawBB ( cpShape *shape, void *unused ) {
 	UNUSED ( unused );
 
-	float lineLoop [ 8 ];
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	
+	gfxDevice.SetPrimType ( GL_LINE_LOOP );
 
-	lineLoop [ 0 ] = ( GLfloat )shape->bb.l;
-	lineLoop [ 1 ] = ( GLfloat )shape->bb.b;
+	gfxDevice.WriteVtx (( float )shape->bb.l, ( float )shape->bb.b );
+	gfxDevice.WritePenColor4b ();
 	
-	lineLoop [ 2 ] = ( GLfloat )shape->bb.l;
-	lineLoop [ 3 ] = ( GLfloat )shape->bb.t;
+	gfxDevice.WriteVtx (( float )shape->bb.l, ( float )shape->bb.t );
+	gfxDevice.WritePenColor4b ();
 	
-	lineLoop [ 4 ] = ( GLfloat )shape->bb.r;
-	lineLoop [ 5 ] = ( GLfloat )shape->bb.t;
+	gfxDevice.WriteVtx (( float )shape->bb.r, ( float )shape->bb.t );
+	gfxDevice.WritePenColor4b ();
 	
-	lineLoop [ 6 ] = ( GLfloat )shape->bb.r;
-	lineLoop [ 7 ] = ( GLfloat )shape->bb.b;
-	
-	glVertexPointer ( 2, GL_FLOAT, 0, lineLoop );
-	glDrawArrays ( GL_LINE_LOOP, 0, 4 );
+	gfxDevice.WriteVtx (( float )shape->bb.r, ( float )shape->bb.b );
+	gfxDevice.WritePenColor4b ();
+
+	gfxDevice.Flush ();
 }
 
+//----------------------------------------------------------------//
 // copied from cpSpaceHash.c
-static inline cpHashValue
-hash_func(cpHashValue x, cpHashValue y, cpHashValue n)
-{
-	return (x*1640531513ul ^ y*2654435789ul) % n;
+static inline cpHashValue hash_func ( cpHashValue x, cpHashValue y, cpHashValue n ) {
+	return ( x*1640531513ul ^ y*2654435789ul ) % n;
 }
 
-static void
-drawSpatialHash(cpSpaceHash *hash)
-{
-	cpBB bb = cpBBNew(-320, -240, 320, 240);
-	
-	cpFloat dim = hash->celldim;
-	int n = hash->numcells;
-	
-	int l = (int)floor(bb.l/dim);
-	int r = (int)floor(bb.r/dim);
-	int b = (int)floor(bb.b/dim);
-	int t = (int)floor(bb.t/dim);
-	
-	float vtx [ 8 ];
-	
-	for(int i=l; i<=r; i++){
-		for(int j=b; j<=t; j++){
-			int cell_count = 0;
-			
-			int index = hash_func(i,j,n);
-			for(cpSpaceHashBin *bin = hash->table[index]; bin; bin = bin->next)
-				cell_count++;
-			
-			GLfloat v = 1.0f - (GLfloat)cell_count/10.0f;
-			glColor4f(v,v,v,1);
-			
-			float x1 = ( float )( i * dim );
-			float y1 = ( float )( j * dim );
-			float x2 = ( float )(( i + 1 ) * dim );
-			float y2 = ( float )(( j + 1 ) * dim );
-			
-			vtx [ 0 ] = x1;
-			vtx [ 1 ] = y2;
-			
-			vtx [ 2 ] = x2;
-			vtx [ 3 ] = y2;
-			
-			vtx [ 4 ] = x1;
-			vtx [ 5 ] = y1;
-			
-			vtx [ 6 ] = x2;
-			vtx [ 7 ] = y1;
-			
-			glVertexPointer ( 2, GL_FLOAT, 0, vtx );
-			glDrawArrays ( GL_TRIANGLE_STRIP, 0, 4 );
-		}
-	}
-}
+//----------------------------------------------------------------//
+// TODO
+//static void drawSpatialHash ( cpSpaceHash *hash ) {
+//
+//	cpBB bb = cpBBNew ( -320, -240, 320, 240 );
+//	
+//	cpFloat dim = hash->celldim;
+//	int n = hash->numcells;
+//	
+//	int l = (int)floor(bb.l/dim);
+//	int r = (int)floor(bb.r/dim);
+//	int b = (int)floor(bb.b/dim);
+//	int t = (int)floor(bb.t/dim);
+//	
+//	float vtx [ 8 ];
+//	
+//	for(int i=l; i<=r; i++){
+//		for(int j=b; j<=t; j++){
+//			int cell_count = 0;
+//			
+//			int index = hash_func(i,j,n);
+//			for(cpSpaceHashBin *bin = hash->table[index]; bin; bin = bin->next)
+//				cell_count++;
+//			
+//			GLfloat v = 1.0f - (GLfloat)cell_count/10.0f;
+//			glColor4f(v,v,v,1);
+//			
+//			float x1 = ( float )( i * dim );
+//			float y1 = ( float )( j * dim );
+//			float x2 = ( float )(( i + 1 ) * dim );
+//			float y2 = ( float )(( j + 1 ) * dim );
+//			
+//			vtx [ 0 ] = x1;
+//			vtx [ 1 ] = y2;
+//			
+//			vtx [ 2 ] = x2;
+//			vtx [ 3 ] = y2;
+//			
+//			vtx [ 4 ] = x1;
+//			vtx [ 5 ] = y1;
+//			
+//			vtx [ 6 ] = x2;
+//			vtx [ 7 ] = y1;
+//			
+//			glVertexPointer ( 2, GL_FLOAT, 0, vtx );
+//			glDrawArrays ( GL_TRIANGLE_STRIP, 0, 4 );
+//		}
+//	}
+//}
 
-void MOAICpDebugDraw::DrawSpace(cpSpace *space, MOAICpDebugDrawOptions *options)
-{
-	glDisable ( GL_TEXTURE_2D );
+//----------------------------------------------------------------//
+void MOAICpDebugDraw::DrawSpace ( cpSpace *space, MOAICpDebugDrawOptions *options ) {
 
-	glDisableClientState ( GL_COLOR_ARRAY );
-	glDisableClientState ( GL_NORMAL_ARRAY );
-	glDisableClientState ( GL_TEXTURE_COORD_ARRAY );
-	glEnableClientState ( GL_VERTEX_ARRAY );
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 
-	if(options->drawHash){
-		glColorMask(GL_FALSE, GL_TRUE, GL_FALSE, GL_TRUE);
-		drawSpatialHash(space->activeShapes);
-		glColorMask(GL_TRUE, GL_FALSE, GL_FALSE, GL_FALSE);
-		drawSpatialHash(space->staticShapes);
-		glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
+	gfxDevice.SetVertexPreset ( MOAIVertexFormatMgr::XYC );
+	gfxDevice.SetShaderPreset ( MOAIShaderMgr::LINE_SHADER );
+
+	// TODO
+	//if ( options->drawHash ) {
+	//	glColorMask ( GL_FALSE, GL_TRUE, GL_FALSE, GL_TRUE );
+	//	drawSpatialHash ( space->activeShapes );
+	//	glColorMask ( GL_TRUE, GL_FALSE, GL_FALSE, GL_FALSE );
+	//	drawSpatialHash ( space->staticShapes );
+	//	glColorMask ( GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE );
+	//}
+	
+	gfxDevice.SetPenWidth ( options->lineThickness );
+	if ( options->drawShapes ) {
+		cpSpaceHashEach ( space->activeShapes, ( cpSpaceHashIterator )drawObject, space );
+		cpSpaceHashEach ( space->staticShapes, ( cpSpaceHashIterator )drawObject, space );
 	}
 	
-	glLineWidth(options->lineThickness);
-	if(options->drawShapes){
-		cpSpaceHashEach(space->activeShapes, (cpSpaceHashIterator)drawObject, space);
-		cpSpaceHashEach(space->staticShapes, (cpSpaceHashIterator)drawObject, space);
-	}
-	
-	glLineWidth(1.0f);
-	if(options->drawBBs){
-		glColor4f(0.3f, 0.5f, 0.3f, 1);
-		cpSpaceHashEach(space->activeShapes, (cpSpaceHashIterator)drawBB, NULL);
-		cpSpaceHashEach(space->staticShapes, (cpSpaceHashIterator)drawBB, NULL);
+	gfxDevice.SetPenWidth ( 1.0f );
+	if ( options->drawBBs ){
+		gfxDevice.SetPenColor (  BB_COLOR, 1.0f );
+		cpSpaceHashEach ( space->activeShapes, ( cpSpaceHashIterator )drawBB, NULL );
+		cpSpaceHashEach ( space->staticShapes, ( cpSpaceHashIterator )drawBB, NULL );
 	}
 
+	gfxDevice.SetPenColor ( CONSTRAINT_COLOR, 1.0f );
 	cpArray *constraints = space->constraints;
-
-	glColor4f(0.5f, 1.0f, 0.5f, 1);
-	for(int i=0, count = constraints->num; i<count; i++){
-		drawConstraint((cpConstraint *)constraints->arr[i]);
+	for ( int i = 0, count = constraints->num; i < count; i++ ){
+		drawConstraint (( cpConstraint* )constraints->arr [ i ]);
 	}
 	
-	if(options->bodyPointSize){
-		glPointSize(options->bodyPointSize);
-		glColor4f(LINE_COLOR,1);
+	if ( options->bodyPointSize ) {
+		
+		gfxDevice.SetPointSize ( options->bodyPointSize );
+		gfxDevice.SetPenColor ( LINE_COLOR, 1.0f );
+		
 		cpArray *bodies = space->bodies;
-		for(int i=0, count = bodies->num; i<count; i++){
-			cpBody *body = (cpBody *)bodies->arr[i];
+		for ( int i=0, count = bodies->num; i<count; i++ ){
+			cpBody* body = ( cpBody* )bodies->arr [ i ];
 			MOAIDraw::DrawPoint (( float )body->p.x, ( float )body->p.y );
 		}
 	}
 
-	if(options->collisionPointSize){
-		glPointSize(options->collisionPointSize);
+	if ( options->collisionPointSize ) {
+		
+		gfxDevice.SetPointSize ( options->collisionPointSize );
+		gfxDevice.SetPenColor ( COLLISION_COLOR, 1.0f );
+		
 		cpArray *arbiters = space->arbiters;
-		for(int i=0; i<arbiters->num; i++){
-			cpArbiter *arb = (cpArbiter*)arbiters->arr[i];
+		for ( int i = 0; i < arbiters->num; i++ ) {
 			
-			glColor4f(COLLISION_COLOR,1);
-			for(int j=0; j<arb->numContacts; j++){
-				cpVect v = arb->contacts[j].p;
+			cpArbiter* arb = ( cpArbiter* )arbiters->arr [ i ];
+			for ( int j = 0; j < arb->numContacts; j++ ){
+				cpVect v = arb->contacts [ j ].p;
 				MOAIDraw::DrawPoint (( float )v.x, ( float )v.y );
 			}
 		}

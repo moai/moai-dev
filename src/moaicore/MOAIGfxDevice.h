@@ -195,6 +195,14 @@ public:
 	void					WriteQuad				( USVec2D* vtx, USVec2D* uv );
 	
 	//----------------------------------------------------------------//
+	template < typename TYPE >
+	inline void Write ( const TYPE& type ) {
+		
+		*( TYPE* )(( size_t )this->mBuffer + this->mTop ) = type;
+		this->mTop += sizeof ( TYPE );
+	}
+	
+	//----------------------------------------------------------------//
 	inline void WriteColor ( float r, float g, float b, float a ) {
 		UNUSED ( r );
 		UNUSED ( g );
@@ -215,6 +223,19 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
+	inline void WriteUV ( float u, float v ) {
+	
+		USVec2D uv;
+		uv.mX = u;
+		uv.mY = v;
+	
+		if ( this->mCpuUVTransform ) {
+			this->mUVTransform.Transform ( uv );
+		}
+		this->Write ( uv );
+	}
+	
+	//----------------------------------------------------------------//
 	inline void WriteUV ( USVec2D uv ) {
 	
 		if ( this->mCpuUVTransform ) {
@@ -224,7 +245,11 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	inline void WriteVtx ( USVec2D vtx ) {
+	inline void WriteVtx ( float x, float y ) {
+		
+		USVec2D vtx;
+		vtx.mX = x;
+		vtx.mY = y;
 		
 		if ( this->mCpuVertexTransform ) {
 			this->mCpuVertexTransformMtx.Transform ( vtx );	
@@ -233,11 +258,12 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	template < typename TYPE >
-	inline void Write ( const TYPE& type ) {
+	inline void WriteVtx ( USVec2D vtx ) {
 		
-		*( TYPE* )(( size_t )this->mBuffer + this->mTop ) = type;
-		this->mTop += sizeof ( TYPE );
+		if ( this->mCpuVertexTransform ) {
+			this->mCpuVertexTransformMtx.Transform ( vtx );	
+		}
+		this->Write ( vtx );
 	}
 };
 

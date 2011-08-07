@@ -198,8 +198,7 @@ void MOAIGfxDevice::DrawPrims () {
 
 		u32 vertexSize = this->mVertexFormat->GetVertexSize ();
 
-		if ( this->mPrimCount && vertexSize ) {
-		
+		if ( vertexSize ) {
 			u32 count = this->mPrimSize ? this->mPrimCount * this->mPrimSize : ( u32 )( this->mTop / vertexSize );
 			glDrawArrays ( this->mPrimType, 0, count );
 		}

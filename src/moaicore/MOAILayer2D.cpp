@@ -365,7 +365,6 @@ void MOAILayer2D::Draw () {
 	gfxDevice.ResetState ();
 	gfxDevice.SetFrameBuffer ( this->mFrameBuffer );
 	
-	// TODO: GLES2
 	USMatrix4x4 mtx;
 	mtx.Init ( this->mLocalToWorldMtx );
 	mtx.Append (gfxDevice. GetWorldToWndMtx ( 1.0f, 1.0f ));
@@ -381,8 +380,6 @@ void MOAILayer2D::Draw () {
 	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_PROJ_TRANSFORM, viewport.GetProjMtx ());
 	
 	if ( this->mShowDebugLines ) {
-		
-		gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_MODEL );
 		
 		#if USE_CHIPMUNK
 			if ( this->mCpSpace ) {

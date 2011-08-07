@@ -5,10 +5,21 @@
 #include <moaicore/MOAIDraw.h>
 #include <moaicore/MOAIGfxDevice.h>
 #include <moaicore/MOAILineBrush.h>
+#include <moaicore/MOAIShaderMgr.h>
+#include <moaicore/MOAIVertexFormatMgr.h>
 
 //================================================================//
 // MOAIDraw
 //================================================================//
+
+//----------------------------------------------------------------//
+void MOAIDraw::Bind () {
+
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	
+	gfxDevice.SetShaderPreset ( MOAIShaderMgr::LINE_SHADER );
+	gfxDevice.SetVertexPreset ( MOAIVertexFormatMgr::XYC );
+}
 
 //----------------------------------------------------------------//
 void MOAIDraw::DrawAxisGrid ( USVec2D loc, USVec2D vec, float size ) {
@@ -235,7 +246,7 @@ void MOAIDraw::DrawGrid ( USRect& rect, u32 xCells, u32 yCells ) {
 
 //----------------------------------------------------------------//
 void MOAIDraw::DrawLine ( USVec2D& v0, USVec2D& v1 ) {
-	
+
 	MOAILineBrush glLine;
 	glLine.SetVerts ( v0, v1 );
 	glLine.Draw ();
@@ -258,14 +269,14 @@ void MOAIDraw::DrawPoint ( USVec2D& loc ) {
 //----------------------------------------------------------------//
 void MOAIDraw::DrawPoint ( float x, float y ) {
 
-	float vtx [ 2 ];
-	glVertexPointer ( 2, GL_FLOAT, 0, vtx );
-	glEnableClientState ( GL_VERTEX_ARRAY );
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 
-	vtx [ 0 ] = x;
-	vtx [ 1 ] = y;
+	gfxDevice.SetPrimType ( GL_POINTS );
 
-	glDrawArrays ( GL_POINTS, 0, 1 );
+	gfxDevice.BeginPrim ();
+		gfxDevice.WriteVtx ( x, y );
+		gfxDevice.WritePenColor4b ();
+	gfxDevice.EndPrim ();
 }
 
 //----------------------------------------------------------------//
@@ -391,4 +402,23 @@ void MOAIDraw::DrawRectOutline ( float left, float top, float right, float botto
 	vtx [ 7 ] = bottom;
 	
 	glDrawArrays ( GL_LINE_LOOP, 0, 4 );
+}
+
+//----------------------------------------------------------------//
+void MOAIDraw::DrawVertexArray ( USVec2D* verts, u32 count, u32 color, u32 primType ) {
+
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+
+	gfxDevice.SetPrimType ( primType );
+	gfxDevice.SetPenColor ( color );
+	
+	gfxDevice.BeginPrim ();
+	
+	for ( u32 i = 0; i < count; ++i ) {
+		USVec2D& vtx = verts [ i ];
+		gfxDevice.WriteVtx ( vtx );
+		gfxDevice.WritePenColor4b ();
+	}
+
+	gfxDevice.EndPrim ();
 }

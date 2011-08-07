@@ -13,6 +13,7 @@ class MOAIDraw {
 public:
 
 	//----------------------------------------------------------------//
+	static void			Bind					();
 	static void			DrawAxisGrid			( USVec2D loc, USVec2D vec, float size );
 	static void			DrawEllipseFill			( USRect& rect, u32 steps );
 	static void			DrawEllipseFill			( USVec2D& loc, float rad, u32 steps );
@@ -33,6 +34,7 @@ public:
 	static void			DrawRectFill			( float left, float top, float right, float bottom );
 	static void			DrawRectOutline			( USRect& rect );
 	static void			DrawRectOutline			( float left, float top, float right, float bottom );
+	static void			DrawVertexArray			( USVec2D* verts, u32 count, u32 color, u32 primType );
 };
 
 #endif
