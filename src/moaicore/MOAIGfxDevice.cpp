@@ -120,24 +120,27 @@ void MOAIGfxDevice::DetectContext () {
 	
 	this->mIsProgrammable = ( this->mMajorVersion >= 2 );
 	
-	#if GL_EXT_framebuffer_object
-  
-		REMAP_EXTENSION_PTR ( glBindFramebuffer,						glBindFramebufferEXT )
-		REMAP_EXTENSION_PTR ( glCheckFramebufferStatus,					glCheckFramebufferStatusEXT )
-		REMAP_EXTENSION_PTR ( glDeleteFramebuffers,						glDeleteFramebuffersEXT )
-		REMAP_EXTENSION_PTR ( glDeleteRenderbuffers,					glDeleteRenderbuffersEXT )
-		REMAP_EXTENSION_PTR ( glFramebufferRenderbuffer,				glFramebufferRenderbufferEXT )
-		REMAP_EXTENSION_PTR ( glFramebufferTexture1D,					glFramebufferTexture1DEXT )
-		REMAP_EXTENSION_PTR ( glFramebufferTexture2D,					glFramebufferTexture2DEXT )
-		REMAP_EXTENSION_PTR ( glFramebufferTexture3D,					glFramebufferTexture3DEXT )
-		REMAP_EXTENSION_PTR ( glGenFramebuffers,						glGenFramebuffersEXT )
-		REMAP_EXTENSION_PTR ( glGenRenderbuffers,						glGenRenderbuffersEXT )
-		REMAP_EXTENSION_PTR ( glGenerateMipmap,							glGenerateMipmapEXT )
-		REMAP_EXTENSION_PTR ( glGetFramebufferAttachmentParameteriv,	glGetFramebufferAttachmentParameterivEXT )
-		REMAP_EXTENSION_PTR ( glGetRenderbufferParameteriv,				glGetRenderbufferParameterivEXT )
-		REMAP_EXTENSION_PTR ( glIsFramebuffer,							glIsFramebufferEXT )
-		REMAP_EXTENSION_PTR ( glIsRenderbuffer,							glIsRenderbufferEXT )
-		REMAP_EXTENSION_PTR ( glRenderbufferStorage,					glRenderbufferStorageEXT )
+	#ifdef MOAI_OS_IPHONE || MOAI_OS_ANDROID
+	
+		#if GL_EXT_framebuffer_object
+	  
+			REMAP_EXTENSION_PTR ( glBindFramebuffer,						glBindFramebufferEXT )
+			REMAP_EXTENSION_PTR ( glCheckFramebufferStatus,					glCheckFramebufferStatusEXT )
+			REMAP_EXTENSION_PTR ( glDeleteFramebuffers,						glDeleteFramebuffersEXT )
+			REMAP_EXTENSION_PTR ( glDeleteRenderbuffers,					glDeleteRenderbuffersEXT )
+			REMAP_EXTENSION_PTR ( glFramebufferRenderbuffer,				glFramebufferRenderbufferEXT )
+			REMAP_EXTENSION_PTR ( glFramebufferTexture1D,					glFramebufferTexture1DEXT )
+			REMAP_EXTENSION_PTR ( glFramebufferTexture2D,					glFramebufferTexture2DEXT )
+			REMAP_EXTENSION_PTR ( glFramebufferTexture3D,					glFramebufferTexture3DEXT )
+			REMAP_EXTENSION_PTR ( glGenFramebuffers,						glGenFramebuffersEXT )
+			REMAP_EXTENSION_PTR ( glGenRenderbuffers,						glGenRenderbuffersEXT )
+			REMAP_EXTENSION_PTR ( glGenerateMipmap,							glGenerateMipmapEXT )
+			REMAP_EXTENSION_PTR ( glGetFramebufferAttachmentParameteriv,	glGetFramebufferAttachmentParameterivEXT )
+			REMAP_EXTENSION_PTR ( glGetRenderbufferParameteriv,				glGetRenderbufferParameterivEXT )
+			REMAP_EXTENSION_PTR ( glIsFramebuffer,							glIsFramebufferEXT )
+			REMAP_EXTENSION_PTR ( glIsRenderbuffer,							glIsRenderbufferEXT )
+			REMAP_EXTENSION_PTR ( glRenderbufferStorage,					glRenderbufferStorageEXT )
+		#endif
 	#endif
 }
 
