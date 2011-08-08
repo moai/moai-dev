@@ -827,15 +827,18 @@ void MOAIGfxDevice::SetUVTransform () {
 //----------------------------------------------------------------//
 void MOAIGfxDevice::SetUVTransform ( const USAffine2D& transform ) {
 
-	this->mUVTransform.Init ( transform );
-	this->UpdateUVMtx ();
+	USMatrix4x4 mtx;
+	mtx.Init ( transform );
+	this->SetUVTransform ( mtx );
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxDevice::SetUVTransform ( const USMatrix4x4& transform ) {
 
-	this->mUVTransform = transform;
-	this->UpdateUVMtx ();
+	if ( !this->mUVTransform.IsSame ( transform )) {
+		this->mUVTransform = transform;
+		this->UpdateUVMtx ();
+	}
 }
 
 //----------------------------------------------------------------//
@@ -1035,15 +1038,24 @@ void MOAIGfxDevice::UpdateUVMtx () {
 	if ( this->mUVMtxOutput == UV_STAGE_TEXTURE ) {
 		
 		this->mCpuUVTransform = !this->mUVTransform.IsIdent ();
+		
+		// flush and load gl UV transform
+		if ( !this->mIsProgrammable ) {
+			this->Flush ();
+			glMatrixMode ( GL_TEXTURE );
+			glLoadIdentity ();
+		}
 	}
 	else {
 		
 		this->mCpuUVTransform = false;
 		
 		// flush and load gl UV transform
-		this->Flush ();
-		glMatrixMode ( GL_TEXTURE );
-		this->GpuLoadMatrix ( this->mUVTransform );
+		if ( !this->mIsProgrammable ) {
+			this->Flush ();
+			glMatrixMode ( GL_TEXTURE );
+			this->GpuLoadMatrix ( this->mUVTransform );
+		}
 	}
 }
 

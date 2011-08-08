@@ -371,6 +371,9 @@ void MOAIProp2D::Draw () {
 		USAffine2D uvMtx = this->mUVTransform->GetLocalToWorldMtx ();
 		gfxDevice.SetUVTransform ( uvMtx );
 	}
+	else {
+		gfxDevice.SetUVTransform ();
+	}
 
 	this->LoadShader ();
 	
