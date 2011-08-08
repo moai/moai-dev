@@ -503,7 +503,16 @@ void MOAIImage::Clear () {
 	if ( this->mData ) {
 		free ( this->mData );
 	}
-	this->Surrender ();
+	
+	this->mColorFormat	= USColor::CLR_FMT_UNKNOWN;
+	this->mPixelFormat	= USPixel::PXL_FMT_UNKNOWN;
+
+	this->mWidth		= 0;
+	this->mHeight		= 0;
+	
+	this->mData			= 0;
+	this->mBitmap		= 0;
+	this->mPalette		= 0;
 }
 
 //----------------------------------------------------------------//
@@ -1306,17 +1315,23 @@ void MOAIImage::SetPixel ( u32 x, u32 y, u32 pixel ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIImage::Surrender () {
+void MOAIImage::Take ( MOAIImage& image ) {
 
-	mColorFormat = USColor::CLR_FMT_UNKNOWN;
-	mPixelFormat = USPixel::PXL_FMT_UNKNOWN;
+	this->Clear ();
 
-	this->mWidth = 0;
-	this->mHeight = 0;
+	this->mColorFormat	= image.mColorFormat;
+	this->mPixelFormat	= image.mPixelFormat;
+
+	this->mWidth		= image.mWidth;
+	this->mHeight		= image.mHeight;
 	
-	this->mData = 0;
-	this->mBitmap = 0;
-	this->mPalette = 0;
+	this->mData			= image.mData;
+	this->mBitmap		= image.mBitmap;
+	this->mPalette		= image.mPalette;
+
+	// kill the data before clear
+	image.mData = 0;
+	image.Clear ();
 }
 
 //----------------------------------------------------------------//

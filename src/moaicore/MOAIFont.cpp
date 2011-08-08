@@ -278,21 +278,21 @@ MOAIFont::~MOAIFont () {
 //----------------------------------------------------------------//
 void MOAIFont::LoadFont ( MOAIDataBuffer& fontImageData, cc8* charCodes ) {
 
-	this->mImage = new MOAIImage ();
+	MOAIImage* image = new MOAIImage ();
 	
 	MOAIBitmapFontRipper ripper;
-	ripper.RipAndReturn ( fontImageData, *this, *this->mImage, charCodes );
-	this->SetImage ( this->mImage );
+	ripper.RipAndReturn ( fontImageData, *this, *image, charCodes );
+	this->SetImage ( image );
 }
 
 //----------------------------------------------------------------//
 void MOAIFont::LoadFont ( cc8* fontImageFileName, cc8* charCodes ) {
 
-	this->mImage = new MOAIImage ();
+	MOAIImage* image = new MOAIImage ();
 	
 	MOAIBitmapFontRipper ripper;
-	ripper.RipAndReturn ( fontImageFileName, *this, *this->mImage, charCodes );
-	this->SetImage ( this->mImage );
+	ripper.RipAndReturn ( fontImageFileName, *this, *image, charCodes );
+	this->SetImage ( image );
 }
 
 //----------------------------------------------------------------//
@@ -300,9 +300,9 @@ void MOAIFont::LoadFontFromTTF ( cc8* filename, cc8* charCodes, float points, u3
 
 	#if USE_FREETYPE
 	
-		this->mImage = new MOAIImage ();
-		MOAIFreetypeFontRipper::RipFromTTF ( filename, *this, *this->mImage, charCodes, points, dpi );
-		this->SetImage ( this->mImage );
+		MOAIImage* image = new MOAIImage ();
+		MOAIFreetypeFontRipper::RipFromTTF ( filename, *this, *image, charCodes, points, dpi );
+		this->SetImage ( image );
 	#else
 		UNUSED ( filename );
 		UNUSED ( charCodes );

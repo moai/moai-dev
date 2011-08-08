@@ -216,9 +216,9 @@ void MOAIBitmapFontRipper::RipAndReturn ( MOAIFont& font, MOAIImage& image, cc8*
 
 	this->Scan ();
 	this->MakeFont ( font, charCodes );
-
-	image = this->mOutBmp;
-	this->mOutBmp.Surrender();
+	
+	// take over of the output bitmap
+	image.Take ( this->mOutBmp );
 	
 	// done with the bitmaps
 	this->mInBmp.Clear ();
