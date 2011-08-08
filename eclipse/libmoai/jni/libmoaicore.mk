@@ -51,6 +51,7 @@ $(SRC_PATH)/src/moaicore/MOAIActionMgr.cpp \
 $(SRC_PATH)/src/moaicore/MOAIAnim.cpp \
 $(SRC_PATH)/src/moaicore/MOAIAnimCurve.cpp \
 $(SRC_PATH)/src/moaicore/MOAIBitmapFontRipper.cpp \
+$(SRC_PATH)/src/moaicore/MOAIBlendMode.cpp \
 $(SRC_PATH)/src/moaicore/MOAIBlocker.cpp \
 $(SRC_PATH)/src/moaicore/MOAIBox2DArbiter.cpp \
 $(SRC_PATH)/src/moaicore/MOAIBox2DBody.cpp \
@@ -83,6 +84,7 @@ $(SRC_PATH)/src/moaicore/MOAIEaseDriver.cpp \
 $(SRC_PATH)/src/moaicore/MOAIEaseType.cpp \
 $(SRC_PATH)/src/moaicore/MOAIEnvironment.cpp \
 $(SRC_PATH)/src/moaicore/MOAIEventSource.cpp \
+$(SRC_PATH)/src/moaicore/MOAIFrameBuffer.cpp \
 $(SRC_PATH)/src/moaicore/MOAIFileSystem.cpp \
 $(SRC_PATH)/src/moaicore/MOAIFont.cpp \
 $(SRC_PATH)/src/moaicore/MOAIFreetypeFontRipper.cpp \

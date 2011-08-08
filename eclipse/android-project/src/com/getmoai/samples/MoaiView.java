@@ -62,9 +62,7 @@ public class MoaiView extends GLSurfaceView {
 	public MoaiView ( Context context ) {
 		
 		super ( context );
-		mRenderer = new MoaiRenderer ();
-		setRenderer ( mRenderer );
-		
+	
 		if ( mThread == null ) {
 			mThread = new MoaiThread ();
 		}
@@ -76,10 +74,7 @@ public class MoaiView extends GLSurfaceView {
 	public MoaiView ( Context context, int w, int h ) {
 		
 		super ( context );
-		mRenderer = new MoaiRenderer ();
-		setRenderer ( mRenderer );
-		setRenderMode ( RENDERMODE_WHEN_DIRTY );
-		
+				
 		if ( mThread == null ) {
 			mThread = new MoaiThread ();
 		}
@@ -242,6 +237,7 @@ public class MoaiView extends GLSurfaceView {
 			InitializeAku ( mForRen ); 
 			GetDeviceProperties ();
 			
+			DetectAkuContext ();
 			mSurfaceCreated = true;
 			mIsValid = true;
 
@@ -282,6 +278,7 @@ public class MoaiView extends GLSurfaceView {
 	protected static native void Run ( String fileName, int width, int height );
 	protected static native void FinalizeAku ();
 	protected static native void DeinitializeAku ();
+	protected static native void DetectAkuContext ();
 	public static native void onDraw ( int width, int height );
 	public static native void onUpdateAnim ();
 	public static native void onUpdateHeading ( int heading );
