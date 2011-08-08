@@ -52,15 +52,16 @@ int importGLInit()
 #undef IMPORT_FUNC
 
 
+sGLESSO = dlopen("libGLESv2.so", RTLD_NOW);
+
+if (sGLESSO == NULL)
+    return 0;   // Cannot find OpenGL ES Common or Common Lite SO.
+	
 sGLESSO = dlopen("libGLESv1_CM.so", RTLD_NOW);
 
 if (sGLESSO == NULL)
     return 0;   // Cannot find OpenGL ES Common or Common Lite SO.
 
-sGLESSO = dlopen("libGLESv2.so", RTLD_NOW);
-
-if (sGLESSO == NULL)
-    return 0;   // Cannot find OpenGL ES Common or Common Lite SO.
 	
 	
 
@@ -445,12 +446,21 @@ void Java_com_getmoai_samples_MoaiView_FinalizeAku
 	AKUFinalize();
 	//importGLDeinit();
 }
+
 extern "C"
 void Java_com_getmoai_samples_MoaiView_DeinitializeAku
 (JNIEnv *env, jclass clazz)
 {
 	AKUDeleteContext ( mAku );
 }
+
+extern "C"
+void Java_com_getmoai_samples_MoaiView_DetectAkuContext
+(JNIEnv *env, jclass clazz)
+{
+	AKUDetectGfxContext ( );
+}
+
 extern "C"
 void Java_com_getmoai_samples_MoaiView_onDraw
 	(JNIEnv *env, jclass clazz,

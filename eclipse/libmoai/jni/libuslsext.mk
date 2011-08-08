@@ -42,7 +42,6 @@ $(SRC_PATH)/src/uslsext/USAnimCurve.cpp \
 $(SRC_PATH)/src/uslsext/USAttributed.cpp \
 $(SRC_PATH)/src/uslsext/USAttrMap.cpp \
 $(SRC_PATH)/src/uslsext/USAttrOp.cpp \
-$(SRC_PATH)/src/uslsext/USBlendMode.cpp \
 $(SRC_PATH)/src/uslsext/USBox.cpp \
 $(SRC_PATH)/src/uslsext/USCgt.cpp \
 $(SRC_PATH)/src/uslsext/USColor.cpp \
