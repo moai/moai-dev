@@ -352,13 +352,7 @@ static void drawSpring ( cpDampedSpring* spring, cpBody* body_a, cpBody* body_b 
 	gfxDevice.SetPrimType ( GL_LINE_STRIP );
 	gfxDevice.SetPenColor ( USColor::PackRGBA ( LINE_COLOR, 1.0f ));
 	
-	USVec2D* verts = ( USVec2D* )springVAR;
-	for ( u32 i = 0; i < springVAR_count; ++i ) {
-		USVec2D& vtx = verts [ i ];
-		gfxDevice.WriteVtx ( vtx );
-		gfxDevice.WritePenColor4b ();
-	}
-	gfxDevice.Flush ();
+	MOAIDraw::DrawVertexArray (( USVec2D* )springVAR, springVAR_count, USColor::PackRGBA ( LINE_COLOR, 1.0f ), GL_LINE_STRIP );
 	
 	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM );
 }

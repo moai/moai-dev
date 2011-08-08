@@ -10,6 +10,7 @@
 #import "AppDelegate.h"
 #import "LocationObserver.h"
 #import "MoaiView.h"
+#import "ParticlePresets.h"
 
 //================================================================//
 // AppDelegate
@@ -41,7 +42,10 @@
 
 		// init aku
 		AKUIphoneInit ( application );
-	
+		
+		// add in the particle presets
+		ParticlePresets ();
+		
 		// configure window
 		[ application setStatusBarHidden:true ];
 		[ mWindow addSubview:mMoaiView ];
