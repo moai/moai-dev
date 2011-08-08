@@ -1118,8 +1118,6 @@
 		0324E7E113564BC8000ADC60 /* uslsext.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E64313564BC8000ADC60 /* uslsext.h */; };
 		0324E7E213564BC8000ADC60 /* USMathConsts.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E64413564BC8000ADC60 /* USMathConsts.h */; };
 		0324E7E313564BC8000ADC60 /* USMatrix.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E64513564BC8000ADC60 /* USMatrix.h */; };
-		0324E7E413564BC8000ADC60 /* USMatrix2D.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E64613564BC8000ADC60 /* USMatrix2D.h */; };
-		0324E7E513564BC8000ADC60 /* USMatrix3D.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E64713564BC8000ADC60 /* USMatrix3D.h */; };
 		0324E7E613564BC8000ADC60 /* USMercator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E64813564BC8000ADC60 /* USMercator.cpp */; };
 		0324E7E713564BC8000ADC60 /* USMercator.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E64913564BC8000ADC60 /* USMercator.h */; };
 		0324E7E813564BC8000ADC60 /* USMutex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E64A13564BC8000ADC60 /* USMutex.cpp */; };
@@ -1473,8 +1471,6 @@
 		0324E97F13564BC9000ADC60 /* uslsext.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E64313564BC8000ADC60 /* uslsext.h */; };
 		0324E98013564BC9000ADC60 /* USMathConsts.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E64413564BC8000ADC60 /* USMathConsts.h */; };
 		0324E98113564BC9000ADC60 /* USMatrix.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E64513564BC8000ADC60 /* USMatrix.h */; };
-		0324E98213564BC9000ADC60 /* USMatrix2D.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E64613564BC8000ADC60 /* USMatrix2D.h */; };
-		0324E98313564BC9000ADC60 /* USMatrix3D.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E64713564BC8000ADC60 /* USMatrix3D.h */; };
 		0324E98413564BC9000ADC60 /* USMercator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E64813564BC8000ADC60 /* USMercator.cpp */; };
 		0324E98513564BC9000ADC60 /* USMercator.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E64913564BC8000ADC60 /* USMercator.h */; };
 		0324E98613564BC9000ADC60 /* USMutex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E64A13564BC8000ADC60 /* USMutex.cpp */; };
@@ -2584,6 +2580,10 @@
 		CDEFB42A13E37F3C000A9523 /* MOAITileFlags.h in Headers */ = {isa = PBXBuildFile; fileRef = CDEFB3F413E37F3C000A9523 /* MOAITileFlags.h */; };
 		CDEFB42B13E37F3C000A9523 /* MOAIVertexFormatMgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDEFB3F513E37F3C000A9523 /* MOAIVertexFormatMgr.cpp */; };
 		CDEFB42C13E37F3C000A9523 /* MOAIVertexFormatMgr.h in Headers */ = {isa = PBXBuildFile; fileRef = CDEFB3F613E37F3C000A9523 /* MOAIVertexFormatMgr.h */; };
+		CDF86DEC13F09B6D00D2FFFF /* USMatrix3x3.h in Headers */ = {isa = PBXBuildFile; fileRef = CDF86DEA13F09B6D00D2FFFF /* USMatrix3x3.h */; };
+		CDF86DED13F09B6D00D2FFFF /* USMatrix4x4.h in Headers */ = {isa = PBXBuildFile; fileRef = CDF86DEB13F09B6D00D2FFFF /* USMatrix4x4.h */; };
+		CDF86DEE13F09B6D00D2FFFF /* USMatrix3x3.h in Headers */ = {isa = PBXBuildFile; fileRef = CDF86DEA13F09B6D00D2FFFF /* USMatrix3x3.h */; };
+		CDF86DEF13F09B6D00D2FFFF /* USMatrix4x4.h in Headers */ = {isa = PBXBuildFile; fileRef = CDF86DEB13F09B6D00D2FFFF /* USMatrix4x4.h */; };
 		CDFCFDCA13995A6800E43A41 /* lapi.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B6D13564CB0000ADC60 /* lapi.c */; };
 		CDFCFDCB13995A6800E43A41 /* lapi.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240B6E13564CB0000ADC60 /* lapi.h */; };
 		CDFCFDCC13995A6800E43A41 /* lauxlib.c in Sources */ = {isa = PBXBuildFile; fileRef = 03240B6F13564CB0000ADC60 /* lauxlib.c */; };
@@ -3490,8 +3490,6 @@
 		0324E64313564BC8000ADC60 /* uslsext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = uslsext.h; sourceTree = "<group>"; };
 		0324E64413564BC8000ADC60 /* USMathConsts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USMathConsts.h; sourceTree = "<group>"; };
 		0324E64513564BC8000ADC60 /* USMatrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USMatrix.h; sourceTree = "<group>"; };
-		0324E64613564BC8000ADC60 /* USMatrix2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USMatrix2D.h; sourceTree = "<group>"; };
-		0324E64713564BC8000ADC60 /* USMatrix3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USMatrix3D.h; sourceTree = "<group>"; };
 		0324E64813564BC8000ADC60 /* USMercator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USMercator.cpp; sourceTree = "<group>"; };
 		0324E64913564BC8000ADC60 /* USMercator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USMercator.h; sourceTree = "<group>"; };
 		0324E64A13564BC8000ADC60 /* USMutex.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USMutex.cpp; sourceTree = "<group>"; };
@@ -4525,6 +4523,8 @@
 		CDEFB3F413E37F3C000A9523 /* MOAITileFlags.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAITileFlags.h; sourceTree = "<group>"; };
 		CDEFB3F513E37F3C000A9523 /* MOAIVertexFormatMgr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIVertexFormatMgr.cpp; sourceTree = "<group>"; };
 		CDEFB3F613E37F3C000A9523 /* MOAIVertexFormatMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIVertexFormatMgr.h; sourceTree = "<group>"; };
+		CDF86DEA13F09B6D00D2FFFF /* USMatrix3x3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = USMatrix3x3.h; path = ../../src/uslsext/USMatrix3x3.h; sourceTree = SOURCE_ROOT; };
+		CDF86DEB13F09B6D00D2FFFF /* USMatrix4x4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = USMatrix4x4.h; path = ../../src/uslsext/USMatrix4x4.h; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -6214,8 +6214,8 @@
 				0324E63D13564BC8000ADC60 /* USIntersect.h */,
 				0324E64413564BC8000ADC60 /* USMathConsts.h */,
 				0324E64513564BC8000ADC60 /* USMatrix.h */,
-				0324E64613564BC8000ADC60 /* USMatrix2D.h */,
-				0324E64713564BC8000ADC60 /* USMatrix3D.h */,
+				CDF86DEA13F09B6D00D2FFFF /* USMatrix3x3.h */,
+				CDF86DEB13F09B6D00D2FFFF /* USMatrix4x4.h */,
 				0324E64813564BC8000ADC60 /* USMercator.cpp */,
 				0324E64913564BC8000ADC60 /* USMercator.h */,
 				0324E65213564BC8000ADC60 /* USPlane.cpp */,
@@ -7985,8 +7985,6 @@
 				0324E97F13564BC9000ADC60 /* uslsext.h in Headers */,
 				0324E98013564BC9000ADC60 /* USMathConsts.h in Headers */,
 				0324E98113564BC9000ADC60 /* USMatrix.h in Headers */,
-				0324E98213564BC9000ADC60 /* USMatrix2D.h in Headers */,
-				0324E98313564BC9000ADC60 /* USMatrix3D.h in Headers */,
 				0324E98513564BC9000ADC60 /* USMercator.h in Headers */,
 				0324E98713564BC9000ADC60 /* USMutex.h in Headers */,
 				0324E98913564BC9000ADC60 /* USMutex_posix.h in Headers */,
@@ -8057,6 +8055,8 @@
 				CDE0AB3813EE03E200CB9F35 /* MOAIFontShader-vsh.h in Headers */,
 				CDE0AB3913EE03E200CB9F35 /* MOAILineShader-fsh.h in Headers */,
 				CDE0AB3A13EE03E200CB9F35 /* MOAILineShader-vsh.h in Headers */,
+				CDF86DEE13F09B6D00D2FFFF /* USMatrix3x3.h in Headers */,
+				CDF86DEF13F09B6D00D2FFFF /* USMatrix4x4.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8591,8 +8591,6 @@
 				0324E7E113564BC8000ADC60 /* uslsext.h in Headers */,
 				0324E7E213564BC8000ADC60 /* USMathConsts.h in Headers */,
 				0324E7E313564BC8000ADC60 /* USMatrix.h in Headers */,
-				0324E7E413564BC8000ADC60 /* USMatrix2D.h in Headers */,
-				0324E7E513564BC8000ADC60 /* USMatrix3D.h in Headers */,
 				0324E7E713564BC8000ADC60 /* USMercator.h in Headers */,
 				0324E7E913564BC8000ADC60 /* USMutex.h in Headers */,
 				0324E7EB13564BC8000ADC60 /* USMutex_posix.h in Headers */,
@@ -8684,6 +8682,8 @@
 				CDE0AB3213EE03E200CB9F35 /* MOAIFontShader-vsh.h in Headers */,
 				CDE0AB3313EE03E200CB9F35 /* MOAILineShader-fsh.h in Headers */,
 				CDE0AB3413EE03E200CB9F35 /* MOAILineShader-vsh.h in Headers */,
+				CDF86DEC13F09B6D00D2FFFF /* USMatrix3x3.h in Headers */,
+				CDF86DED13F09B6D00D2FFFF /* USMatrix4x4.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

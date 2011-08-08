@@ -44,7 +44,29 @@ void MOAIShaderUniform::BindAttributes ( const float* attributes ) {
 //----------------------------------------------------------------//
 void MOAIShaderUniform::BindMatrix ( const USMatrix4x4& matrix ) {
 	
-	glUniformMatrix4fv ( this->mAddr, 1, true, matrix.m );
+	float m [ 16 ];
+	
+	m [ 0 ]		= matrix.m [ USMatrix4x4::C0_R0 ];
+	m [ 1 ]		= matrix.m [ USMatrix4x4::C1_R0 ];
+	m [ 2 ]		= matrix.m [ USMatrix4x4::C2_R0 ];
+	m [ 3 ]		= matrix.m [ USMatrix4x4::C3_R0 ];
+	
+	m [ 4 ]		= matrix.m [ USMatrix4x4::C0_R1 ];
+	m [ 5 ]		= matrix.m [ USMatrix4x4::C1_R1 ];
+	m [ 6 ]		= matrix.m [ USMatrix4x4::C2_R1 ];
+	m [ 7 ]		= matrix.m [ USMatrix4x4::C3_R1 ];
+	
+	m [ 8 ]		= matrix.m [ USMatrix4x4::C0_R2 ];
+	m [ 9 ]		= matrix.m [ USMatrix4x4::C1_R2 ];
+	m [ 10 ]	= matrix.m [ USMatrix4x4::C2_R2 ];
+	m [ 11 ]	= matrix.m [ USMatrix4x4::C3_R2 ];
+	
+	m [ 12 ]	= matrix.m [ USMatrix4x4::C0_R3 ];
+	m [ 13 ]	= matrix.m [ USMatrix4x4::C1_R3 ];
+	m [ 14 ]	= matrix.m [ USMatrix4x4::C2_R3 ];
+	m [ 15 ]	= matrix.m [ USMatrix4x4::C3_R3 ];
+	
+	glUniformMatrix4fv ( this->mAddr, 1, false, m );
 }
 
 //----------------------------------------------------------------//
