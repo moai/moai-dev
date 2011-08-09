@@ -4,13 +4,14 @@
 -- http://getmoai.com
 ----------------------------------------------------------------
 
--- Mount archives here
+-- Mount archives here - you can mount non archived folders on system drive as well, i.e. C: on windows - then have access to entire C: drive
 MOAIFileSystem.mount ( "luaArchive.zip", "", 1 )
 MOAIFileSystem.mount ( "archive.zip", "", 1 )
 
--- Set write directory here
+-- Set write directory here ( writing not yet supported, though directory can be set )
 --MOAIFileSystem.setWriteDirectory ( )
 
+-- Save a reference to require, then write our own to check the physfs file system
 oldRequire = require
 require = function ( name )
 	
@@ -37,6 +38,7 @@ require = function ( name )
 	return package.loaded [ moaiName ]
 end
 
+-- Save a reference to dofile, then write our own to check the physfs file system
 oldDoFile = dofile
 dofile = function ( name )
 	
@@ -54,6 +56,7 @@ dofile = function ( name )
 	end	
 end
 
+-- Save a reference to loadfile, then write our own to check the physfs file system
 oldLoadFile = loadfile
 loadfile = function ( name )
 	
@@ -64,7 +67,7 @@ loadfile = function ( name )
 	end
 	
 	if not MOAIFileSystem.checkFileExists ( moaiName ) then
-		print ( "File not found in archives, try normal dofile" )
+		print ( "File not found in archives, try normal loadfile" )
 		return oldLoadFile ( name )
 	else 
 		return MOAIFileSystem.loadLuaFile ( moaiName )
