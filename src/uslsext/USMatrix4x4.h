@@ -833,10 +833,10 @@ public:
 								   m[C2_R0], m[C2_R1], m[C2_R2], m[C2_R3], //column 3
 								   m[C3_R0], m[C3_R1], m[C3_R2], m[C3_R3] };			 //column 4
 								   
-			TYPE point_mat[16] = { quad[0].mX, quad[0].mY, 1, 0,   //column 1
-								   quad[1].mX, quad[1].mY, 1, 0,   //column 2
-								   quad[2].mX, quad[2].mY, 1, 0,   //column 3
-								   quad[3].mX, quad[3].mY, 1, 0 }; //column 4
+			TYPE point_mat[16] = { quad[0].mX, quad[0].mY, 0, 1,   //column 1
+								   quad[1].mX, quad[1].mY, 0, 1,   //column 2
+								   quad[2].mX, quad[2].mY, 0, 1,   //column 3
+								   quad[3].mX, quad[3].mY, 0, 1 }; //column 4
 								   
    			TYPE outpt_mat[16] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 								   		
