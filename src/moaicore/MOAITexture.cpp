@@ -479,6 +479,12 @@ void MOAITexture::CreateTextureFromImage ( MOAIImage& image ) {
 			this->mGLPixelType,  
 			image.GetBitmap ()
 		);
+		if ( glGetError () != 0 ) {
+			// we have an error
+			this->mGLTexID = 0;
+			return;
+		}
+		
 	}
 	else {
 	
@@ -638,9 +644,19 @@ void MOAITexture::CreateTextureFromPVR ( void* data, size_t size ) {
 			
 			if ( compressed ) {
 				glCompressedTexImage2D ( GL_TEXTURE_2D, 0, this->mGLInternalFormat, width, height, 0, currentSize, imageData );
+				if ( glGetError () != 0 ) {
+					// we have an error
+					this->mGLTexID = 0;
+					return;
+				}
 			}
 			else {
 				glTexImage2D( GL_TEXTURE_2D, 0, this->mGLInternalFormat, width, height, 0, this->mGLInternalFormat, this->mGLPixelType, imageData);
+				if ( glGetError () != 0 ) {
+					// we have an error
+					this->mGLTexID = 0;
+					return;
+				}
 			}
 		}
 		else {
@@ -649,9 +665,19 @@ void MOAITexture::CreateTextureFromPVR ( void* data, size_t size ) {
 			
 				if ( compressed ) {
 					glCompressedTexImage2D ( GL_TEXTURE_2D, level, this->mGLInternalFormat, width, height, 0, currentSize, imageData );
+					if ( glGetError () != 0 ) {
+						// we have an error
+						this->mGLTexID = 0;
+						return;
+					}
 				}
 				else {
 					glTexImage2D( GL_TEXTURE_2D, level, this->mGLInternalFormat, width, height, 0, this->mGLInternalFormat, this->mGLPixelType, imageData);
+					if ( glGetError () != 0 ) {
+						// we have an error
+						this->mGLTexID = 0;
+						return;
+					}
 				}
 			
 				imageData += currentSize;
