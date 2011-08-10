@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <moaicore/MOAIDebugLines.h>
+#include <moaicore/MOAIGfxDevice.h>
 #include <moaicore/MOAILayoutFrame.h>
 #include <moaicore/MOAILogMessages.h>
 
@@ -295,10 +296,10 @@ USRect MOAILayoutFrame::GetScissorRect () {
 
 	USRect scissorRect = this->GetFrame ();
 	
-	USAffine2D mtx;
-	USCanvas::GetWorldToWndMtx ( mtx, 1.0f, 1.0f );
-	mtx.Prepend ( this->mLocalToWorldMtx );
+	USMatrix4x4 mtx;
 	
+	mtx.Init ( this->mLocalToWorldMtx );
+	mtx.Append ( MOAIGfxDevice::Get ().GetWorldToWndMtx ( 1.0f, 1.0f ));
 	mtx.Transform ( scissorRect );
 	
 	return scissorRect;

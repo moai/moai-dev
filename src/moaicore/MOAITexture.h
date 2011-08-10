@@ -5,9 +5,12 @@
 #define	MOAITEXTURE2D_H
 
 #include <moaicore/MOAIDeck.h>
+#include <moaicore/MOAIImage.h>
 
 class MOAIDataBuffer;
+class MOAIFrameBuffer;
 class MOAIImage;
+class MOAITextureLoader;
 
 //================================================================//
 // MOAITexture
@@ -23,36 +26,80 @@ class MOAIImage;
 	@const	GL_NEAREST_MIPMAP_NEAREST
 */
 class MOAITexture :
-	public virtual USLuaObject,
-	public USTexture {
+	public virtual USLuaObject {
 private:
 
-	static const u32 DEFAULT_TRANSFORM = USImageTransform::TRUECOLOR | USImageTransform::PREMULTIPLY_ALPHA;
+	static const u32 DEFAULT_TRANSFORM = MOAIImageTransform::TRUECOLOR | MOAIImageTransform::PREMULTIPLY_ALPHA;
 
-	STLString		mTexturePath;
+	// GL texture
+	GLuint				mGLTexID;
+	
+	// size of the original texture
+	u32					mWidth;
+	u32					mHeight;
+
+	// GL_LINEAR
+	// GL_LINEAR_MIPMAP_LINEAR
+	// GL_LINEAR_MIPMAP_NEAREST
+	// GL_NEAREST
+	// GL_NEAREST_MIPMAP_LINEAR
+	// GL_NEAREST_MIPMAP_NEAREST
+	int					mMinFilter;
+	int					mMagFilter;
+	
+	// GL_CLAMP_TO_EDGE
+	// GL_REPEAT
+	int					mWrap;
+	
+	int					mGLInternalFormat;
+	int					mGLPixelType;
+	
+	STLString					mFilename;
+	MOAITextureLoader*			mLoader;
+	MOAIFrameBuffer*			mFrameBuffer;
 
 	//----------------------------------------------------------------//
-	static int		_bind				( lua_State* L );
-	static int		_getSize			( lua_State* L );
-	static int		_load				( lua_State* L );
-	static int		_release			( lua_State* L );
-	static int		_setFilter			( lua_State* L );
-	static int		_setWrap			( lua_State* L );
+	static int		_bind					( lua_State* L );
+	static int		_getSize				( lua_State* L );
+	static int		_initFrameBuffer		( lua_State* L );
+	static int		_load					( lua_State* L );
+	static int		_release				( lua_State* L );
+	static int		_setFilter				( lua_State* L );
+	static int		_setWrap				( lua_State* L );
+
+	//----------------------------------------------------------------//
+	void					Affirm					();
+	bool					Bind					();
+	bool					BindFrameBuffer			();
+	void					CreateTextureFromImage	( MOAIImage& image );
+	void					CreateTextureFromPVR	( void* data, size_t size );
+	void					ReleaseLoader			();
 
 public:
 	
 	DECL_LUA_FACTORY ( MOAITexture )
 	
+	friend class MOAIGfxDevice;
+	
 	//----------------------------------------------------------------//
 	static MOAITexture*		AffirmTexture			( USLuaState& state, int idx );
-	bool					Bind					();
-	void					Load					( MOAIImage& image );
-	void					Load					( MOAIDataBuffer& data, u32 transform  );
-	void					Load					( cc8* filename, u32 transform  );
+	void					Clear					();
+	u32						GetHeight				();
+	u32						GetWidth				();
+	void					Init					( MOAIImage& image );
+	void					Init					( cc8* filename, u32 transform = DEFAULT_TRANSFORM );
+	void					Init					( MOAIDataBuffer& data, u32 transform = DEFAULT_TRANSFORM);
+	void					Init					( const void* data, u32 size, u32 transform = DEFAULT_TRANSFORM );
+	void					InitFrameBuffer			( u32 width, u32 height, GLenum colorFormat, GLenum depthFormat, GLenum stencilFormat );
+	bool					IsFrameBuffer			();
+	bool					IsOK					();
 							MOAITexture				();
 							~MOAITexture			();
 	void					SerializeIn				( USLuaState& state, USLuaSerializer& serializer );
 	void					SerializeOut			( USLuaState& state, USLuaSerializer& serializer );
+	void					SetFilter				( int filter );
+	void					SetFilter				( int min, int mag );
+	void					SetWrap					( int wrap );
 	void					RegisterLuaClass		( USLuaState& state );
 	void					RegisterLuaFuncs		( USLuaState& state );
 	STLString				ToString				();

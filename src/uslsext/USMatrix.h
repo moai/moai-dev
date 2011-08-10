@@ -73,7 +73,7 @@ namespace MatrixElem3D {
 }
 
 template < typename TYPE > class USMetaAffine2D;
-template < typename TYPE > class USMetaMatrix2D;
-template < typename TYPE > class USMetaMatrix3D;
+template < typename TYPE > class USMetaMatrix3x3;
+template < typename TYPE > class USMetaMatrix4x4;
 
 #endif

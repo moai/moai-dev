@@ -6,6 +6,8 @@
 
 #include <moaicore/MOAIAction.h>
 #include <moaicore/MOAIProp2D.h>
+#include <moaicore/MOAITextFrame.h>
+#include <moaicore/MOAITextLayout.h>
 #include <moaicore/MOAITransform.h>
 
 class MOAIAnimCurve;
@@ -47,9 +49,9 @@ private:
 	bool				mYFlip;
 	
 	bool				mNeedsLayout;
-	USTextCursor		mCurrentPage;
-	USTextCursor		mNextPage;
-	USTextLayout		mLayout;
+	MOAITextCursor		mCurrentPage;
+	MOAITextCursor		mNextPage;
+	MOAITextLayout		mLayout;
 	
 	USLeanArray < MOAIAnimCurve* >	mMOAICurves;
 	USLeanArray < USAnimCurve* >	mCurves;

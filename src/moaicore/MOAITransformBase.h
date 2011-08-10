@@ -14,6 +14,9 @@
 	
 	@attr	ATTR_WORLD_X_LOC
 	@attr	ATTR_WORLD_Y_LOC
+	@attr	ATTR_WORLD_Z_ROT
+	@attr	ATTR_WORLD_X_SCL
+	@attr	ATTR_WORLD_Y_SCL
 */
 class MOAITransformBase :
 	public virtual MOAITraits {

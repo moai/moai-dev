@@ -5,7 +5,7 @@
 #define	USQUAD_H
 
 #include <uslsext/USAffine2D.h>
-#include <uslsext/USMatrix2D.h>
+#include <uslsext/USMatrix3x3.h>
 #include <uslsext/USPlane.h>
 
 //================================================================//
@@ -24,7 +24,7 @@ public:
 
 	//----------------------------------------------------------------//
 	bool		Contains			( float x, float y ) const;
-	void		GetBounds			( USRect& rect ) const;
+	USRect		GetBounds			() const;
 	USPlane2D	GetPlane			( u32 id );
 	USVec2D		GetVert				( u32 id );
 	void		Init				( const USRect& rect );
@@ -36,7 +36,7 @@ public:
 	void		ReverseWinding		();
 	void		Scale				( float xScale, float yScale );
 	void		Transform			( const USAffine2D& transform );
-	void		Transform			( const USMatrix2D& transform );
+	void		Transform			( const USMatrix3x3& transform );
 };
 
 #endif

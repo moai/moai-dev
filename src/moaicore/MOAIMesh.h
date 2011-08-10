@@ -34,7 +34,7 @@ public:
 	//----------------------------------------------------------------//
 	bool			Bind					();
 	void			Draw					( const USAffine2D& transform, u32 idx, MOAIDeckRemapper* remapper );
-    void            Draw					( const USAffine2D& transform, MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, USCellCoord& c0, USCellCoord& c1 );
+    void            Draw					( const USAffine2D& transform, MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1 );
     USRect			GetBounds				( u32 idx, MOAIDeckRemapper* remapper );
 					MOAIMesh				();
 					~MOAIMesh				();

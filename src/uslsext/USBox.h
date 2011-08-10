@@ -5,7 +5,7 @@
 #define	BOX_H
 
 #include <uslsext/USPlane.h>
-#include <uslsext/USMatrix3D.h>
+#include <uslsext/USMatrix4x4.h>
 
 //================================================================//
 // USBox
@@ -37,7 +37,7 @@ class USBox {
 	bool	OverlapZY	( USBox& box ); // True if boxes overlap in ZY plane
 	void	Pad			( float pad ); // Add padding to all sides; so dim += pad * 2 for all axes
 	void	Scale		( float scale );
-	void	Transform	( USMatrix3D& mtx ); // Gets AABB of transformed box
+	void	Transform	( USMatrix4x4& mtx ); // Gets AABB of transformed box
 };
 
 //================================================================//
@@ -57,7 +57,7 @@ class USRhombus {
 	void	InitXY		( USRect& rect, float zOff );
 	void	InitXZ		( USRect& rect, float yOff );
 	void	InitZY		( USRect& rect, float xOff );
-	void	Transform	( USMatrix3D& mtx );
+	void	Transform	( USMatrix4x4& mtx );
 };
 
 //================================================================//
@@ -75,7 +75,7 @@ class USPrism {
 	void	GetAABB		( USBox& box );
 	void	GetCenter	( USVec3D& center );
 	void	Init		( USBox& box );
-	void	Transform	( USMatrix3D& mtx );
+	void	Transform	( USMatrix4x4& mtx );
 };
 
 #endif

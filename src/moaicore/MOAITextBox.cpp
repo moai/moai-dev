@@ -6,8 +6,10 @@
 #include <moaicore/MOAIDeck.h>
 #include <moaicore/MOAIDebugLines.h>
 #include <moaicore/MOAIFont.h>
+#include <moaicore/MOAIGfxDevice.h>
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAINodeMgr.h>
+#include <moaicore/MOAIShaderMgr.h>
 #include <moaicore/MOAITextBox.h>
 
 //================================================================//
@@ -141,7 +143,7 @@ int MOAITextBox::_revealAll ( lua_State* L ) {
 int MOAITextBox::_setAlignment ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextBox, "UN" )
 
-	u32 alignment = state.GetValue < u32 >( 2, USFont::LEFT_JUSTIFY );
+	u32 alignment = state.GetValue < u32 >( 2, MOAIFont::LEFT_JUSTIFY );
 	self->mJustify = alignment;
 
 	return 0;
@@ -389,22 +391,23 @@ void MOAITextBox::Draw () {
 	
 	if ( !this->mFont ) return;
 	
-	USFont* font = this->mFont->Bind ();
+	MOAIFont* font = this->mFont->Bind ();
 	
-	if ( font ) {
+	if ( font && this->mReveal ) {
 	
-		USDrawBuffer& drawbuffer = USDrawBuffer::Get ();
-		USAffine2D localToWorldMtx = this->GetLocalToWorldMtx ();
+		MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+
+		gfxDevice.SetPenColor ( this->mColor );
+		gfxDevice.SetBlendMode ( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
+		gfxDevice.SetScissorRect ();
+
+		MOAIShaderMgr::Get ().BindShader ( MOAIShaderMgr::FONT_SHADER );
+
+		gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, this->GetLocalToWorldMtx ());
+		gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
 		
-		drawbuffer.SetVtxTransform ( localToWorldMtx );
-		
-		this->LoadShader ();
-		drawbuffer.SetBlendMode ( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
-		
-		if ( this->mReveal ) {
-			this->Layout ();
-			this->mLayout.Draw ( this->mReveal );
-		}
+		this->Layout ();
+		this->mLayout.Draw ( this->mReveal );
 	}
 }
 
@@ -448,7 +451,7 @@ void MOAITextBox::Layout () {
 	
 	if ( !this->mTextLength ) return;
 	
-	USTextFrame textFrame;
+	MOAITextFrame textFrame;
 	
 	textFrame.SetAlignment ( this->mJustify );
 	textFrame.SetPoints ( this->mPoints );
@@ -471,7 +474,7 @@ void MOAITextBox::Layout () {
 MOAITextBox::MOAITextBox () :
 	mText ( "" ),
 	mTextLength ( 0 ),
-	mJustify ( USFont::LEFT_JUSTIFY ),
+	mJustify ( MOAIFont::LEFT_JUSTIFY ),
 	mPoints ( 0 ),
 	mSpool ( 0.0f ),
 	mSpeed ( DEFAULT_SPOOL_SPEED ),
@@ -555,9 +558,9 @@ void MOAITextBox::RegisterLuaClass ( USLuaState& state ) {
 	MOAIProp2D::RegisterLuaClass ( state );
 	MOAIAction::RegisterLuaClass ( state );
 
-	state.SetField ( -1, "LEFT_JUSTIFY", ( u32 )USFont::LEFT_JUSTIFY );
-	state.SetField ( -1, "CENTER_JUSTIFY", ( u32 )USFont::CENTER_JUSTIFY );
-	state.SetField ( -1, "RIGHT_JUSTIFY", ( u32 )USFont::RIGHT_JUSTIFY );
+	state.SetField ( -1, "LEFT_JUSTIFY", ( u32 )MOAIFont::LEFT_JUSTIFY );
+	state.SetField ( -1, "CENTER_JUSTIFY", ( u32 )MOAIFont::CENTER_JUSTIFY );
+	state.SetField ( -1, "RIGHT_JUSTIFY", ( u32 )MOAIFont::RIGHT_JUSTIFY );
 }
 
 //----------------------------------------------------------------//

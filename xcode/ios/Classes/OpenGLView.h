@@ -24,10 +24,12 @@ class USTexture;
     
 	RefPtr < EAGLContext > mContext;
     
-	GLuint mRenderbuffer;
 	GLuint mFramebuffer;
+	GLuint mRenderbuffer;
 	GLuint mDepthbuffer;
 }
+
+	PROPERTY_READONLY ( GLuint, framebuffer );
 
 	//----------------------------------------------------------------//
 	-( void )	beginDrawing;

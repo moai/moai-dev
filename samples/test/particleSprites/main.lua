@@ -18,8 +18,8 @@ MOAISim.openWindow ( "cathead", 640, 480 )
 
 ----------------------------------------------------------------
 texture = MOAIGfxQuad2D.new ()
-texture:setTexture ( "cathead.png" )
-texture:setRect ( -16, -16, 16, 16 )
+texture:setTexture ( "cathead_small.png" )
+texture:setRect ( -8, -8, 8, 8 )
 
 system = MOAIParticleSystem.new ()
 system:reserveSprites ( 1000 )

@@ -4,7 +4,7 @@
 include $(CLEAR_VARS)
 
 LOCAL_MODULE := libcontrib
-LOCAL_LDLIBS := -llog -lstring -lm -lz -lGLESv1_CM.so
+LOCAL_LDLIBS := -llog -lstring -lm -lz -lGLESv2.so -lGLESv1_CM.so
 
 #----------------------------------------------------------------#
 # header search paths

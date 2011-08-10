@@ -14,8 +14,13 @@ import java.io.InputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream; 
 
+import com.getmoai.samples.MoaiView.MoaiRenderer;
+
 import android.app.Activity; 
+import android.app.ActivityManager;
 import android.content.Context;
+import android.content.pm.ConfigurationInfo;
+import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
@@ -50,6 +55,9 @@ public class MoaiSample extends Activity {
 	    getWindow().addFlags( WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON );
 	    
 	    mView = new MoaiView ( this, display.getWidth(), display.getHeight());
+	    if ( detectOpenGLES20 ()) mView.setEGLContextClientVersion( 2 );
+        mView.setRenderer ( mView.new MoaiRenderer ());
+        mView.setRenderMode ( GLSurfaceView.RENDERMODE_WHEN_DIRTY );
 		setContentView ( mView );
 	    
 	    try {
@@ -60,6 +68,13 @@ public class MoaiSample extends Activity {
 		} 
 
 	    mView.SetDirectory ( mAppRoot.getAbsolutePath ());
+    }
+    
+    private boolean detectOpenGLES20() {
+        ActivityManager am =
+            (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        ConfigurationInfo info = am.getDeviceConfigurationInfo();
+        return (info.reqGlEsVersion >= 0x20000);
     }
     
     //----------------------------------------------------------------//

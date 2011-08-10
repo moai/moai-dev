@@ -253,7 +253,7 @@ void USBox::Scale ( float scale ) {
 }
 
 //----------------------------------------------------------------//
-void USBox::Transform ( USMatrix3D& mtx ) {
+void USBox::Transform ( USMatrix4x4& mtx ) {
 
 	USPrism prism;
 	prism.Init ( *this );
@@ -383,7 +383,7 @@ void USRhombus::InitZY ( USRect& rect, float xOff ) {
 }
 
 //----------------------------------------------------------------//
-void USRhombus::Transform ( USMatrix3D& mtx ) {
+void USRhombus::Transform ( USMatrix4x4& mtx ) {
 
 	mtx.Transform ( mLoc );
 	mtx.TransformVec ( mXAxis );
@@ -451,7 +451,7 @@ void USPrism::Init ( USBox& box ) {
 }
 
 //----------------------------------------------------------------//
-void USPrism::Transform ( USMatrix3D& mtx ) {
+void USPrism::Transform ( USMatrix4x4& mtx ) {
 
 	mtx.Transform ( mLoc );
 	mtx.TransformVec ( mXAxis );

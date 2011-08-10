@@ -40,7 +40,7 @@ void USGlobals::Delete ( USGlobals* globals ) {
 		}
 	}
 	
-	// don't get this to nil until *after* deleting it!
+	// don't set this to nil until *after* deleting it!
 	if ( globals == sInstance ) {
 		sInstance = 0;
 	}

@@ -4,7 +4,7 @@
 #ifndef SURFACE2D_H
 #define SURFACE2D_H
 
-#include <uslsext/USMatrix2D.h>
+#include <uslsext/USMatrix3x3.h>
 #include <uslsext/USPlane.h>
 
 class USCollPrim2D;

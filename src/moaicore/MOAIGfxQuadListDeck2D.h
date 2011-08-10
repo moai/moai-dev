@@ -5,6 +5,7 @@
 #define	MOAIGFXQUADLISTDECK2D_H
 
 #include <moaicore/MOAIDeck2D.h>
+#include <moaicore/MOAIQuadBrush.h>
 
 class MOAITexture;
 

@@ -19,8 +19,10 @@
 #endif
 
 #ifdef MOAI_OS_IPHONE
-	#include <OpenGLES/ES1/gl.h>
-	#include <OpenGLES/ES1/glext.h>
+	#import <OpenGLES/ES1/gl.h>
+	#import <OpenGLES/ES1/glext.h>
+	#import <OpenGLES/ES2/gl.h>
+	#import <OpenGLES/ES2/glext.h>
 	
 	// TODO: replace this w/ runtime ogl extension checks
 	#define MOAI_TEST_PVR
@@ -29,6 +31,8 @@
 #ifdef MOAI_OS_ANDROID
 	#include <GLES/gl.h>
 	#include <GLES/glext.h>
+	#include <GLES2/gl2.h>
+	#include <GLES2/gl2ext.h>
 #endif
 
 #ifdef MOAI_OS_LINUX

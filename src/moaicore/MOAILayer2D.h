@@ -8,8 +8,10 @@
 #include <moaicore/MOAIProp2D.h>
 #include <moaicore/MOAIViewport.h>
 
-class MOAICpSpace;
 class MOAIBox2DWorld;
+class MOAICpSpace;
+class MOAIFrameBuffer;
+class MOAITexture;
 
 //================================================================//
 // MOAILayer2D
@@ -24,6 +26,8 @@ private:
 	USRef < MOAITransformBase >		mCamera;
 	USRef < MOAIViewport >			mViewport;
 	USRef < MOAIPartition >			mPartition;
+
+	USRef < MOAITexture >			mFrameBuffer;
 
 	#if USE_CHIPMUNK
 		USRef < MOAICpSpace >		mCpSpace;
@@ -45,6 +49,7 @@ private:
 	static int	_setBox2DWorld		( lua_State* L );
 	static int	_setCamera			( lua_State* L );
 	static int	_setCpSpace			( lua_State* L );
+	static int	_setFrameBuffer		( lua_State* L );
 	static int	_setParallax		( lua_State* L );
 	static int	_setPartition		( lua_State* L );
 	static int	_setViewport		( lua_State* L );

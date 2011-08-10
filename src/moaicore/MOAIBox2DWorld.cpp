@@ -9,6 +9,8 @@
 #include <moaicore/MOAIBox2DFixture.h>
 #include <moaicore/MOAIBox2DJoint.h>
 #include <moaicore/MOAIBox2DWorld.h>
+#include <moaicore/MOAIDraw.h>
+#include <moaicore/MOAIGfxDevice.h>
 #include <moaicore/MOAILogMessages.h>
 
 SUPPRESS_EMPTY_FILE_WARNING
@@ -563,7 +565,15 @@ void MOAIBox2DWorld::Destroy () {
 void MOAIBox2DWorld::DrawDebug () {
 
 	if ( this->mDebugDraw ) {
-		USCanvas::SetTexture ();
+		MOAIGfxDevice::Get ().SetTexture ();
+		
+		MOAIDraw::Bind ();
+		
+		MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+		
+		gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_WORLD, MOAIGfxDevice::VTX_STAGE_PROJ );
+		gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_STAGE_WORLD );
+		
 		this->mDebugDraw->mScale = 1.0f / this->mUnitsToMeters;
 		this->mWorld->DrawDebugData ();
 	}

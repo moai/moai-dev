@@ -6,6 +6,7 @@
 #include <moaicore/MOAIGrid.h>
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIProp.h>
+#include <moaicore/MOAIQuadBrush.h>
 #include <moaicore/MOAIStretchPatch2D.h>
 #include <moaicore/MOAITexture.h>
 #include <moaicore/MOAITransformBase.h>
@@ -189,9 +190,9 @@ int MOAIStretchPatch2D::_setUVRect ( lua_State* L ) {
 //----------------------------------------------------------------//
 bool MOAIStretchPatch2D::Bind () {
 
-	USDrawBuffer& drawBuffer = USDrawBuffer::Get ();
-	if ( !drawBuffer.SetTexture ( this->mTexture )) return false;
-	USGLQuad::BindVertexFormat ( drawBuffer );
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	if ( !gfxDevice.SetTexture ( this->mTexture )) return false;
+	MOAIQuadBrush::BindVertexFormat ( gfxDevice );
 
 	return true;
 }
@@ -205,8 +206,9 @@ void MOAIStretchPatch2D::Draw ( const USAffine2D& transform, u32 idx, MOAIDeckRe
 	noStretch.Scale ( 1.0f / stretch.mX, 1.0f / stretch.mY );
 	noStretch.Append ( transform );
 	
-	USDrawBuffer& drawBuffer = USDrawBuffer::Get ();
-	drawBuffer.SetVtxTransform ( noStretch );
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, noStretch );
+	gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
 	
 	this->UpdateParams ();
 	this->Draw ( idx, remapper, stretch.mX, stretch.mY );
@@ -267,7 +269,7 @@ void MOAIStretchPatch2D::Draw ( u32 idx, MOAIDeckRemapper* remapper, float xStre
 	u32 totalRows = this->mRows.Size ();
 	u32 totalCols = this->mCols.Size ();
 	
-	USGLQuad quad;
+	MOAIQuadBrush quad;
 	
 	float uSpan = uvRect.mXMax - uvRect.mXMin;
 	float vSpan = uvRect.mYMax - uvRect.mYMin;
@@ -318,7 +320,7 @@ void MOAIStretchPatch2D::Draw ( u32 idx, MOAIDeckRemapper* remapper, float xStre
 }
 
 //----------------------------------------------------------------//
-void MOAIStretchPatch2D::Draw ( const USAffine2D& transform, MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, USCellCoord& c0, USCellCoord& c1 ) {
+void MOAIStretchPatch2D::Draw ( const USAffine2D& transform, MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1 ) {
 	UNUSED ( transform );
 	UNUSED ( grid );
 	UNUSED ( remapper );

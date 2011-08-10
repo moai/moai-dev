@@ -49,6 +49,13 @@ int MOAITraits::_setTraitSource ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+MOAIBlendMode MOAITraits::GetBlendModeTrait () {
+
+	MOAIBlendMode blendMode;
+	return blendMode;
+}
+
+//----------------------------------------------------------------//
 USColorVec MOAITraits::GetColorTrait () {
 
 	static USColorVec color ( 1.0f, 1.0f, 1.0f, 1.0f );
@@ -124,6 +131,7 @@ void MOAITraits::RegisterLuaFuncs ( USLuaState& state ) {
 void MOAITraits::SetTraitSource ( MOAITraits* traitSource ) {
 
 	this->SetDependentMember < MOAITraits >( this->mTraitSource, traitSource );
+	this->ForceUpdate ();
 }
 
 //----------------------------------------------------------------//

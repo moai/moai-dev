@@ -5,12 +5,14 @@
 #include <moaicore/MOAIDeck.h>
 #include <moaicore/MOAIDeckRemapper.h>
 #include <moaicore/MOAIDebugLines.h>
+#include <moaicore/MOAIGfxDevice.h>
 #include <moaicore/MOAIGrid.h>
 #include <moaicore/MOAILayoutFrame.h>
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIPartition.h>
 #include <moaicore/MOAIProp2D.h>
 #include <moaicore/MOAIShader.h>
+#include <moaicore/MOAIShaderMgr.h>
 #include <moaicore/MOAISurfaceSampler2D.h>
 
 //================================================================//
@@ -69,6 +71,54 @@ int	MOAIProp2D::_inside ( lua_State* L ) {
 	lua_pushboolean ( state, result );
 	
 	return 1;
+}
+
+//----------------------------------------------------------------//
+/** @name	setBlendMode
+	@text	Set the blend mode.
+
+	@overload	Reset the blend mode to MOAIProp2D.BLEND_NORMAL (equivalent to src = GL_ONE, dst = GL_ONE_MINUS_SRC_ALPHA)
+
+		@in		MOAIProp2D self
+		@out	nil
+
+	@overload	Set blend mode using one of the Moai presets.
+
+		@in		MOAIProp2D self
+		@in		number mode					One of MOAIProp2D.BLEND_NORMAL, MOAIProp2D.BLEND_ADD, MOAIProp2D.BLEND_MULTIPLY.
+		@out	nil
+	
+	@overload	Set blend mode using OpenGL source and dest factors. OpenGl blend factor constants are exposed as members of MOAIProp2D.
+				See the OpenGL documentation for an explanation of blending constants.
+
+		@in		MOAIProp2D self
+		@in		number srcFactor
+		@in		number dstFactor
+		@out	nil
+*/
+int MOAIProp2D::_setBlendMode ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIProp2D, "U" )
+
+	if ( state.IsType ( 2, LUA_TNUMBER )) {
+		if ( state.IsType ( 3, LUA_TNUMBER )) {
+		
+			u32 srcFactor = state.GetValue < u32 >( 2, 0 );
+			u32 dstFactor = state.GetValue < u32 >( 3, 0 );
+			self->mBlendMode.SetBlend ( srcFactor, dstFactor );
+		}
+		else {
+			
+			u32 blendMode = state.GetValue < u32 >( 2, MOAIBlendMode::BLEND_NORMAL );
+			self->mBlendMode.SetBlend ( blendMode );
+		}
+	}
+	else {
+		self->mBlendMode.SetBlend ( MOAIBlendMode::BLEND_NORMAL );
+	}
+	
+	self->ScheduleUpdate ();
+	
+	return 0;
 }
 
 //----------------------------------------------------------------//
@@ -315,19 +365,22 @@ void MOAIProp2D::Draw () {
 	if ( !this->mVisible ) return;
 	if ( !this->BindDeck ()) return;
 
-	USDrawBuffer& drawbuffer = USDrawBuffer::Get ();
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 
 	if ( this->mUVTransform ) {
 		USAffine2D uvMtx = this->mUVTransform->GetLocalToWorldMtx ();
-		drawbuffer.SetUVTransform ( uvMtx );
+		gfxDevice.SetUVTransform ( uvMtx );
+	}
+	else {
+		gfxDevice.SetUVTransform ();
 	}
 
 	this->LoadShader ();
 	
 	if ( this->mGrid ) {
 	
-		USCellCoord c0;
-		USCellCoord c1;
+		MOAICellCoord c0;
+		MOAICellCoord c1;
 		
 		this->GetBoundsInView ( c0, c1 );
 		this->mDeck->Draw ( this->GetLocalToWorldMtx (), *this->mGrid, this->mRemapper, this->mGridScale, c0, c1 );
@@ -339,7 +392,7 @@ void MOAIProp2D::Draw () {
 	// TODO
 	//MOAILayoutFrame* parentFrame = USCast < MOAILayoutFrame >( this->mParent );
 	//if ( parentFrame ) {
-	//	drawbuffer.SetScissorRect ();
+	//	gfxDevice.SetScissorRect ();
 	//}
 }
 
@@ -362,8 +415,8 @@ void MOAIProp2D::DrawDebug () {
 				debugLines.SetPenColor ( 0x40ffffff );
 				debugLines.SetPenWidth ( 2 );
 		
-				USCellCoord c0;
-				USCellCoord c1;
+				MOAICellCoord c0;
+				MOAICellCoord c1;
 				
 				this->GetBoundsInView ( c0, c1 );
 				this->mDeck->DrawDebug ( this->GetLocalToWorldMtx (), *this->mGrid, this->mRemapper, this->mGridScale, c0, c1 );
@@ -408,6 +461,7 @@ void MOAIProp2D::DrawDebug () {
 		}
 	}
 }
+
 //----------------------------------------------------------------//
 void MOAIProp2D::GatherSurfaces ( MOAISurfaceSampler2D& sampler ) {
 
@@ -419,8 +473,8 @@ void MOAIProp2D::GatherSurfaces ( MOAISurfaceSampler2D& sampler ) {
 		
 		USRect localRect = sampler.GetLocalRect ();
 		
-		USCellCoord c0;
-		USCellCoord c1;
+		MOAICellCoord c0;
+		MOAICellCoord c1;
 		
 		this->GetBoundsInRect ( localRect, c0, c1 );
 		this->mDeck->GatherSurfaces ( *this->mGrid, this->mRemapper, this->mGridScale, c0, c1, sampler );
@@ -431,7 +485,13 @@ void MOAIProp2D::GatherSurfaces ( MOAISurfaceSampler2D& sampler ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIProp2D::GetBoundsInRect ( const USRect& rect, USCellCoord& c0, USCellCoord& c1 ) {
+MOAIBlendMode MOAIProp2D::GetBlendModeTrait () {
+
+	return this->mBlendMode;
+}
+
+//----------------------------------------------------------------//
+void MOAIProp2D::GetBoundsInRect ( const USRect& rect, MOAICellCoord& c0, MOAICellCoord& c1 ) {
 
 	if ( this->mGrid ) {
 
@@ -456,16 +516,15 @@ void MOAIProp2D::GetBoundsInRect ( const USRect& rect, USCellCoord& c0, USCellCo
 }
 
 //----------------------------------------------------------------//
-void MOAIProp2D::GetBoundsInView ( USCellCoord& c0, USCellCoord& c1 ) {
+void MOAIProp2D::GetBoundsInView ( MOAICellCoord& c0, MOAICellCoord& c1 ) {
 
 	const USAffine2D& invWorldMtx = this->GetWorldToLocalMtx ();
 
 	// view quad in world space
-	USViewQuad viewQuad;
-	viewQuad.Init ();
+	USQuad viewQuad = MOAIGfxDevice::Get ().GetViewQuad ();
 	viewQuad.Transform ( invWorldMtx );
 	
-	USRect viewRect = viewQuad.mBounds;
+	USRect viewRect = viewQuad.GetBounds ();
 	viewRect.Bless ();
 	
 	this->GetBoundsInRect ( viewRect, c0, c1 );
@@ -539,28 +598,26 @@ MOAIOverlapPrim2D* MOAIProp2D::IsOverlapPrim2D () {
 //----------------------------------------------------------------//
 void MOAIProp2D::LoadShader () {
 
-	USDrawBuffer& drawbuffer = USDrawBuffer::Get ();
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+
+	gfxDevice.SetPenColor ( this->mColor );
+	gfxDevice.SetBlendMode ( this->mBlendMode );
 
 	if ( this->mShader ) {
-		this->mShader->Bind ();
-		
-		USColorVec color = drawbuffer.GetPenColor ();
-		color.Modulate ( this->mColor );
-		drawbuffer.SetPenColor ( color );
+		gfxDevice.SetShader ( this->mShader );
 	}
-	else {
-		drawbuffer.SetPenColor ( this->mColor );
-		drawbuffer.SetBlendMode ( GL_ONE, GL_ONE_MINUS_SRC_ALPHA );
+	else if ( this->mDeck ) {
+		this->mDeck->LoadShader ();
 	}
 	
 	// TODO
 	//MOAILayoutFrame* parent = USCast < MOAILayoutFrame >( this->mParent );
 	//if ( parent ) {
 	//	USRect scissorRect = parent->GetScissorRect ();			
-	//	drawbuffer.SetScissorRect ( scissorRect );
+	//	gfxDevice.SetScissorRect ( scissorRect );
 	//}
 	//else {
-		drawbuffer.SetScissorRect ();
+		gfxDevice.SetScissorRect ();
 	//}
 }
 
@@ -605,6 +662,10 @@ void MOAIProp2D::OnDepNodeUpdate () {
 	USRect frame = this->mFrame;
 	
 	if ( this->mTraitSource ) {
+	
+		if ( this->mTraitMask & INHERIT_BLEND_MODE ) {
+			this->mBlendMode = this->mTraitSource->GetBlendModeTrait ();
+		}
 	
 		if ( this->mTraitMask & INHERIT_COLOR ) {
 			this->mColor.Modulate ( this->mTraitSource->GetColorTrait ());
@@ -680,6 +741,22 @@ void MOAIProp2D::RegisterLuaClass ( USLuaState& state ) {
 	state.SetField ( -1, "INHERIT_PARTITION", ( u32 )INHERIT_PARTITION );
 	
 	state.SetField ( -1, "ATTR_INDEX", MOAIProp2DAttr::Pack ( ATTR_INDEX ));
+	
+	state.SetField ( -1, "BLEND_ADD", ( u32 )MOAIBlendMode::BLEND_ADD );
+	state.SetField ( -1, "BLEND_MULTIPLY", ( u32 )MOAIBlendMode::BLEND_MULTIPLY );
+	state.SetField ( -1, "BLEND_NORMAL", ( u32 )MOAIBlendMode::BLEND_NORMAL );
+	
+	state.SetField ( -1, "GL_ONE", ( u32 )GL_ONE );
+	state.SetField ( -1, "GL_ZERO", ( u32 )GL_ZERO );
+	state.SetField ( -1, "GL_DST_ALPHA", ( u32 )GL_DST_ALPHA );
+	state.SetField ( -1, "GL_DST_COLOR", ( u32 )GL_DST_COLOR );
+	state.SetField ( -1, "GL_SRC_COLOR", ( u32 )GL_SRC_COLOR );
+	state.SetField ( -1, "GL_ONE_MINUS_DST_ALPHA", ( u32 )GL_ONE_MINUS_DST_ALPHA );
+	state.SetField ( -1, "GL_ONE_MINUS_DST_COLOR", ( u32 )GL_ONE_MINUS_DST_COLOR );
+	state.SetField ( -1, "GL_ONE_MINUS_SRC_ALPHA", ( u32 )GL_ONE_MINUS_SRC_ALPHA );
+	state.SetField ( -1, "GL_ONE_MINUS_SRC_COLOR", ( u32 )GL_ONE_MINUS_SRC_COLOR );
+	state.SetField ( -1, "GL_SRC_ALPHA", ( u32 )GL_SRC_ALPHA );
+	state.SetField ( -1, "GL_SRC_ALPHA_SATURATE", ( u32 )GL_SRC_ALPHA_SATURATE );
 }
 
 //----------------------------------------------------------------//

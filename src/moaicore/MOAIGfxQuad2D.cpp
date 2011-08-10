@@ -4,6 +4,7 @@
 #include "pch.h"
 #include <moaicore/MOAIDataBuffer.h>
 #include <moaicore/MOAIGrid.h>
+#include <moaicore/MOAIGfxDevice.h>
 #include <moaicore/MOAIGfxQuad2D.h>
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIProp.h>
@@ -79,14 +80,11 @@ int MOAIGfxQuad2D::_setUVRect ( lua_State* L ) {
 //----------------------------------------------------------------//
 bool MOAIGfxQuad2D::Bind () {
 
-	if ( this->mTexture ) {
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 
-		if ( !this->mTexture->Bind ()) return false;
-		
-		USDrawBuffer& drawBuffer = USDrawBuffer::Get ();
-		USGLQuad::BindVertexFormat ( drawBuffer );
+	if ( gfxDevice.SetTexture ( this->mTexture )) {
+		MOAIQuadBrush::BindVertexFormat ( gfxDevice );
 	}
-
 	return true;
 }
 
@@ -94,7 +92,7 @@ bool MOAIGfxQuad2D::Bind () {
 void MOAIGfxQuad2D::DrawPatch ( u32 idx, float xOff, float yOff, float xScale, float yScale ) {
 	UNUSED ( idx );
 	
-	USGLQuad quad;
+	MOAIQuadBrush quad;
 	quad.SetVerts ( this->mRect );
 	quad.SetUVs ( this->mUVRect );
 	quad.Draw ( xOff, yOff, xScale, yScale );

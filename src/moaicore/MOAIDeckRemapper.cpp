@@ -4,6 +4,7 @@
 #include "pch.h"
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIDeckRemapper.h>
+#include <moaicore/MOAITileFlags.h>
 
 //================================================================//
 // local
@@ -123,12 +124,12 @@ void MOAIDeckRemapper::RegisterLuaFuncs ( USLuaState& state ) {
 //----------------------------------------------------------------//
 u32 MOAIDeckRemapper::Remap ( u32 idx ) {
 
-	u32 code = ( idx & USTile::CODE_MASK ) - 1;
+	u32 code = ( idx & MOAITileFlags::CODE_MASK ) - 1;
 
 	if (( code >= this->mBase ) && ( code < this->mRemap.Size ())) {
 	
-		u32 flags = idx & USTile::FLAGS_MASK;
-		return ( this->mRemap [ code ] ^ ( flags & USTile::FLIP_MASK )) | ( flags & USTile::HIDDEN );
+		u32 flags = idx & MOAITileFlags::FLAGS_MASK;
+		return ( this->mRemap [ code ] ^ ( flags & MOAITileFlags::FLIP_MASK )) | ( flags & MOAITileFlags::HIDDEN );
 	}
 	return idx;
 }

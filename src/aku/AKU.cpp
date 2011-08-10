@@ -118,6 +118,12 @@ void AKUDeleteContext ( AKUContextID contextID ) {
 }
 
 //----------------------------------------------------------------//
+void AKUDetectGfxContext () {
+
+	MOAIGfxDevice::Get ().DetectContext ();
+}
+
+//----------------------------------------------------------------//
 void AKUEnqueueButtonEvent ( int deviceID, int sensorID, bool down ) {
 
 	MOAIInputMgr::Get ().EnqueueButtonEvent (( u8 )deviceID, ( u8 )sensorID, down );
@@ -237,7 +243,7 @@ void AKUReserveInputDeviceSensors ( int deviceID, int total ) {
 //----------------------------------------------------------------//
 void AKUResize ( int width, int height ) {
 
-	USGfxDevice::Get ().SetSize ( width, height );
+	MOAIGfxDevice::Get ().SetSize ( width, height );
 }
 
 //----------------------------------------------------------------//

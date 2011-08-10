@@ -7,14 +7,14 @@
 print ( "hello, moai!" )
 
 viewport = MOAIViewport.new ()
-viewport:setSize ( 640, 480 )
-viewport:setScale ( 640, 480 )
+viewport:setSize ( 320, 480 )
+viewport:setScale ( 320, 480 )
 
 layer = MOAILayer2D.new ()
 layer:setViewport ( viewport )
 MOAISim.pushRenderPass ( layer )
 
-MOAISim.openWindow ( "cathead", 640, 480 )
+MOAISim.openWindow ( "cathead", 320, 480 )
 
 CONST = MOAIParticleScript.packConst
 
