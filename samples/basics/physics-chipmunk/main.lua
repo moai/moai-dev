@@ -102,49 +102,53 @@ end
 
 --space:setCollisionHandler ( 1, 2, MOAICpSpace.BEGIN, handleCollisions )
 
--- set up the mouse body
-mouseBody = MOAICpBody.new ( MOAICp.INFINITY, MOAICp.INFINITY )
+if ( MOAIInputMgr.device.pointer     and
+	 MOAIInputMgr.device.mouseLeft ) then
 
-mouseX = 0
-mouseY = 0
+	-- set up the mouse body
+	mouseBody = MOAICpBody.new ( MOAICp.INFINITY, MOAICp.INFINITY )
 
-MOAIInputMgr.device.pointer:setCallback (
+	mouseX = 0
+	mouseY = 0
 
-	function ( x, y )
-		mouseX, mouseY = layer:wndToWorld ( x, y )
-		mouseBody:setPos ( mouseX, mouseY )
-	end
-)
+	MOAIInputMgr.device.pointer:setCallback (
 
-MOAIInputMgr.device.mouseLeft:setCallback (
+		function ( x, y )
+			mouseX, mouseY = layer:wndToWorld ( x, y )
+			mouseBody:setPos ( mouseX, mouseY )
+		end
+	)
 
-	function ( down )
-	
-		if down then
-			
-			pick = space:shapeForPoint ( mouseX, mouseY )
-			
-			if pick then
+	MOAIInputMgr.device.mouseLeft:setCallback (
+
+		function ( down )
+		
+			if down then
 				
-				body = pick:getBody ()
+				pick = space:shapeForPoint ( mouseX, mouseY )
 				
-				mouseJoint = MOAICpConstraint.newPivotJoint (
-					mouseBody,
-					body,
-					0,
-					0,
-					body:worldToLocal ( mouseX, mouseY )
-				)
-				mouseJoint:setMaxForce ( 50000 )
-				mouseJoint:setBiasCoef ( 0.15 )
-				space:insertPrim ( mouseJoint )
-			end
-		else
-			
-			if mouseJoint then
-				space:removePrim ( mouseJoint )
-				mouseJoint = nil
+				if pick then
+					
+					body = pick:getBody ()
+					
+					mouseJoint = MOAICpConstraint.newPivotJoint (
+						mouseBody,
+						body,
+						0,
+						0,
+						body:worldToLocal ( mouseX, mouseY )
+					)
+					mouseJoint:setMaxForce ( 50000 )
+					mouseJoint:setBiasCoef ( 0.15 )
+					space:insertPrim ( mouseJoint )
+				end
+			else
+				
+				if mouseJoint then
+					space:removePrim ( mouseJoint )
+					mouseJoint = nil
+				end
 			end
 		end
-	end
-)
+	)
+end

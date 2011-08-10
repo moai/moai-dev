@@ -18,9 +18,6 @@ using namespace UNTZ;
 
 Sound* Sound::create(const RString& path, bool loadIntoMemory)
 {
-	if(!UNTZ::System::get())
-		return 0;
-
 	Sound* newSound = new Sound();
 
 	if (path.find(OGG_FILE_EXT) != RString::npos)
@@ -42,14 +39,15 @@ Sound* Sound::create(const RString& path, bool loadIntoMemory)
 	{
 #if defined(WIN32)
 		DShowAudioSource* source = new DShowAudioSource();
-		if(source->init(path, loadIntoMemory))
+//FIXME:		source->setSound(newSound);
+		if(source->load(path))
 		{
 			newSound->mpData = new UNTZ::SoundData();
 			newSound->mpData->mpSource = source;
 		}
 		else
 		{
-			RPRINT("could not load file, %s\n", path.c_str());
+			printf("could not load file, %s\n", path.c_str());
 			delete source;
 			delete newSound;
 			return 0;
@@ -75,9 +73,6 @@ Sound* Sound::create(const RString& path, bool loadIntoMemory)
 
 Sound* Sound::create(UInt32 sampleRate, UInt32 channels, UInt32 samples, Int16* interleavedData)
 {
-	if(!UNTZ::System::get())
-		return 0;
-
 	Sound* newSound = new Sound();
 
 	MemoryAudioSource* source = new MemoryAudioSource(sampleRate, channels, samples, interleavedData);
@@ -89,9 +84,6 @@ Sound* Sound::create(UInt32 sampleRate, UInt32 channels, UInt32 samples, Int16* 
 
 Sound* Sound::create(UInt32 sampleRate, UInt32 channels, StreamCallback* proc, void* userdata)
 {
-	if(!UNTZ::System::get())
-		return 0;
-
 	Sound* newSound = new Sound();
 
 	UserAudioSource* source = new UserAudioSource(sampleRate, channels, proc, userdata);
@@ -149,7 +141,6 @@ void Sound::setPosition(double seconds)
 
 double Sound::getPosition()
 {
-	RPRINT("sound position = %f\n", mpData->mpSource->getPosition());
 	return mpData->mpSource->getPosition();
 }
 
@@ -163,7 +154,7 @@ void Sound::play()
     else if(mpData->mPlayState == kPlayStatePlaying)
         mpData->getSource()->setPosition(0);
 	else if(mpData->mPlayState == kPlayStatePaused)
-		mpData->mPlayState = kPlayStatePlaying;        
+		mpData->mPlayState = kPlayStatePaused;        
 }
 
 void Sound::pause()
@@ -173,10 +164,8 @@ void Sound::pause()
 
 void Sound::stop()
 {	
-	RPRINT("stopping sound\n");
 	mpData->mPlayState = kPlayStateStopped;
 	UNTZ::System::get()->getData()->mMixer.removeSound(this);
-	mpData->getSource()->setPosition(0);
 }
 
 bool Sound::isPlaying()
