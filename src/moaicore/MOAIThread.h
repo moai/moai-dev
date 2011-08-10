@@ -19,6 +19,7 @@ private:
 	USLuaRef		mRef;
 	lua_State*		mState;
 	u32				mNarg;
+	STLString		mFuncName;
 	
 	//----------------------------------------------------------------//
 	static int		_blockOnAction			( lua_State* L );
@@ -38,6 +39,8 @@ public:
 	void			OnUpdate				( float step );
 	void			RegisterLuaClass		( USLuaState& state );
 	void			RegisterLuaFuncs		( USLuaState& state );
+
+	STLString		ToString				();
 };
 
 #endif

@@ -11,6 +11,20 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+/**	@name	getVolume
+ @text	Returns the current volume of the channel.
+ 
+ @in		MOAIFmodChannel self
+ @out	float Volume - the volume currently set in this channel.
+ */
+int MOAIFmodChannel::_getVolume( lua_State* L) {
+	
+	MOAI_LUA_SETUP ( MOAIFmodChannel, "U" )
+	
+	lua_pushnumber ( state, self->GetVolume() );
+	return 1;
+}
+//----------------------------------------------------------------//
 /**	@name	moveVolume
 	@text	Creates a new MOAIAction that will move the volume from it's current value to the value specified.
 
@@ -208,6 +222,7 @@ void MOAIFmodChannel::RegisterLuaClass ( USLuaState& state ) {
 void MOAIFmodChannel::RegisterLuaFuncs ( USLuaState& state ) {
 
 	luaL_Reg regTable [] = {
+		{ "getVolume",		_getVolume },
 		{ "moveVolume",		_moveVolume },
 		{ "play",			_play },
 		{ "seekVolume",		_seekVolume },
@@ -228,6 +243,9 @@ void MOAIFmodChannel::SetPaused ( bool paused ) {
 	this->mChannel->setPaused ( this->mPaused );
 }
 
+float MOAIFmodChannel::GetVolume () {
+	return this->mVolume;
+}
 //----------------------------------------------------------------//
 void MOAIFmodChannel::SetVolume ( float volume ) {
 

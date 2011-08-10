@@ -38,6 +38,7 @@ private:
 	static int		_release			( lua_State* L );
 	static int		_setFilter			( lua_State* L );
 	static int		_setWrap			( lua_State* L );
+	static int		_softRelease		( lua_State* L );
 
 public:
 	

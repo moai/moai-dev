@@ -239,21 +239,26 @@ MOAIBox2DJoint::MOAIBox2DJoint () :
 //----------------------------------------------------------------//
 MOAIBox2DJoint::~MOAIBox2DJoint () {
 
-	MOAIBox2DBody* bodyA = ( MOAIBox2DBody* )this->mJoint->GetBodyA ();
-	MOAIBox2DBody* bodyB = ( MOAIBox2DBody* )this->mJoint->GetBodyB ();
+	if( mJoint )
+	{
+		MOAIBox2DBody* bodyA = ( MOAIBox2DBody* )this->mJoint->GetBodyA ();
+		MOAIBox2DBody* bodyB = ( MOAIBox2DBody* )this->mJoint->GetBodyB ();
 	
-	bodyA->Release ();
-	bodyB->Release ();
+		bodyA->Release ();
+		bodyB->Release ();
+	}
 }
 
 //----------------------------------------------------------------//
 void MOAIBox2DJoint::RegisterLuaClass ( USLuaState& state ) {
-	UNUSED ( state );
+	MOAIBox2DPrim::RegisterLuaClass( state );
+//	UNUSED ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAIBox2DJoint::RegisterLuaFuncs ( USLuaState& state ) {
-	
+	MOAIBox2DPrim::RegisterLuaFuncs( state );
+
 	luaL_Reg regTable [] = {
 		{ "destroy",				_destroy },
 		{ "getAnchorA",				_getAnchorA },

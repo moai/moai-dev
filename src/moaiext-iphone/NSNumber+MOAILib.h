@@ -8,6 +8,7 @@
 
 	//----------------------------------------------------------------//
 	-( void	)			toLua			:( lua_State* )state;
+	-( id )				initWithLua		:(lua_State* )state stackIndex:(int)idx;
 
 @end
 

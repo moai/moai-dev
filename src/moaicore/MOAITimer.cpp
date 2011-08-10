@@ -131,6 +131,13 @@ int MOAITimer::_setTime ( lua_State* L ) {
 	return 0;
 }
 
+int MOAITimer::_getTime( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITimer, "U" )
+
+	lua_pushnumber ( L, self->mTime );
+	return 1;
+}
+
 //================================================================//
 // MOAITimer
 //================================================================//
@@ -424,6 +431,7 @@ void MOAITimer::RegisterLuaFuncs ( USLuaState& state ) {
 		{ "setSpan",			_setSpan },
 		{ "setSpeed",			_setSpeed },
 		{ "setTime",			_setTime },
+		{ "getTime",			_getTime },
 		{ NULL, NULL }
 	};
 

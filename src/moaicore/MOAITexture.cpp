@@ -131,6 +131,30 @@ int MOAITexture::_setWrap ( lua_State* L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
+/**	@name	softRelease
+	@text	Attempt to release the resources for this texture and free it up
+			in such a way that it can be re-loaded automatically on demand.
+			Generally this is used when responding to a memory warning from
+			the system and allow older/unused textures to be released in an
+			attempt to keep the application from crashing. Currently textures
+			loaded from files (not buffers) can be reloaded in this fashion.
+			Be warned, however, loading texures is expensive and your frame
+			rate is likely going to suffer.
+ 
+ @in		MOAITexture self
+ @in		int age	(Optional) Release only if the texture hasn't been used in X frames.
+ @out		bool True if the texture was actually released.
+ */
+int MOAITexture::_softRelease ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITexture, "U" )
+	
+	int age = state.GetValue < int >( 2, 0 );
+	lua_pushboolean(L, self->SoftRelease(age) );
+
+	return 1;
+}
+
 
 //================================================================//
 // MOAITexture
@@ -235,6 +259,7 @@ void MOAITexture::RegisterLuaFuncs ( USLuaState& state ) {
 		{ "release",			_release },
 		{ "setFilter",			_setFilter },
 		{ "setWrap",			_setWrap },
+		{ "softRelease",		_softRelease },
 		{ NULL, NULL }
 	};
 

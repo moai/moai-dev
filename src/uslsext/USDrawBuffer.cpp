@@ -148,6 +148,8 @@ void USDrawBuffer::Reserve ( u32 size ) {
 //----------------------------------------------------------------//
 void USDrawBuffer::Reset () {
 
+	this->mFrameCounter++;
+	
 	this->mTop = 0;
 	this->mPrimCount = 0;
 
@@ -423,7 +425,8 @@ USDrawBuffer::USDrawBuffer () :
 	mPackedColor ( 0xffffffff ),
 	mPenWidth ( 1.0f ),
 	mPointSize ( 1.0f ),
-	mBlendEnabled ( 0 ) {
+	mBlendEnabled ( 0 ),
+	mFrameCounter ( 0 ) {
 	
 	RTTI_SINGLE ( USDrawBuffer )
 	

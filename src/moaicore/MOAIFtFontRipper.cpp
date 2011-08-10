@@ -29,11 +29,11 @@ public:
 //================================================================//
 
 //----------------------------------------------------------------//
-static void		_initializeImage	( USImage& image, cc8* chars, FT_Face face );
+static bool		_initializeImage	( USImage& image, cc8* chars, FT_Face face );
 static void		_renderSpan			( const int y, const int count, const FT_Span* const spans, void* const user );
 
 //----------------------------------------------------------------//
-static void _initializeImage ( USImage& image, cc8* chars, FT_Face face ) {
+static bool _initializeImage ( USImage& image, cc8* chars, FT_Face face ) {
 
 	int max = 1024;
 
@@ -77,8 +77,11 @@ static void _initializeImage ( USImage& image, cc8* chars, FT_Face face ) {
 					x = glyphWidth;
 					y += yStep;
 					
-					if (( y > height ) && ( height < max )) {
+					if ( y > height ) {
 						height = height << 1;
+						if ( height >= max )
+							return false;
+							
 					}
 				}
 			}
@@ -87,6 +90,8 @@ static void _initializeImage ( USImage& image, cc8* chars, FT_Face face ) {
 	
 	image.Init ( width, height, USColor::A_8, USPixel::TRUECOLOR );
 	image.ClearBitmap ();
+	
+	return true;
 }
 
 //----------------------------------------------------------------//
@@ -146,7 +151,13 @@ void MOAIFtFontRipper::RipFromTTF ( cc8* filename, USFont& font, USImage& image,
 	
 	int faceHeight = yMax - yMin;
 	
-	_initializeImage ( image, chars, face );
+	if( !_initializeImage ( image, chars, face ) )
+	{
+		fprintf(stderr, "Cannot rip TTF font: size exceeds maximum (point=%f, dpi=%u): %s\n", points, dpi, filename);
+		FT_Done_Face ( face );
+		FT_Done_FreeType ( library );
+		return;
+	}
 	
 	u32 imageWidth	= image.GetWidth ();
 	//u32 imageHeight	= image.GetHeight ();
@@ -232,7 +243,12 @@ void MOAIFtFontRipper::RipFromTTF ( cc8* filename, USFont& font, USImage& image,
 		}
 	}
 	
-	if ( !validLength ) return;
+	if ( !validLength )
+	{
+		FT_Done_Face ( face );
+		FT_Done_FreeType ( library );
+		return;
+	}
 	validChars [ validLength ] = 0;
 	
 	font.Init ( validChars.Data ());
@@ -240,7 +256,7 @@ void MOAIFtFontRipper::RipFromTTF ( cc8* filename, USFont& font, USImage& image,
 	font.SetLineSpacing ( lineSpacing );
 	
 	USLeanArray < USKernVec > kernTable;
-	kernTable.Init ( font.Size ());
+	kernTable.Init ( font.Size () * font.Size() );
 	
 	bool hasKerning = ( FT_HAS_KERNING ( face ) != 0 );
 	

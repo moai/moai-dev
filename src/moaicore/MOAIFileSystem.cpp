@@ -201,6 +201,105 @@ int MOAIFileSystem::_setWorkingDirectory ( lua_State* L ) {
 	return 1;
 }
 
+//----------------------------------------------------------------//
+/**	@name	getFiles
+ @text	Lists the files contained in a directory
+ 
+ @in	(Optional) string path Path to search (or current directory if nil)
+ @out	table A table of filenames (or nil if the path is invalid)
+ */
+int MOAIFileSystem::_getFiles ( lua_State* L ) {
+	STLString oldPath = USFileSys::GetCurrentPath();
+	
+	cc8* dir = NULL;
+	if( lua_type(L, 1) == LUA_TSTRING )
+	{
+		dir = lua_tostring(L, 1);
+		if( !USFileSys::SetCurrentPath(dir) )
+		{
+			return 0;
+		}
+	}
+
+	
+	USDirectoryItr dirItr;
+	
+	lua_newtable(L);
+	int n = 0;
+	dirItr.Start ();
+	while ( dirItr.NextFile() )
+	{
+		if( dir )
+		{
+			lua_pushstring(L, dir);
+			lua_pushstring(L, "/");
+			lua_pushstring(L, dirItr.Current());
+			lua_concat(L, 3);
+		}
+		else
+		{
+			lua_pushstring(L, dirItr.Current());
+		}
+
+		n++;
+		luaL_setn(L, -2, n);  // new size
+		lua_rawseti(L, -2, n);  // t[pos] = v
+	}
+	
+	USFileSys::SetCurrentPath(oldPath);
+	
+	return 1;
+}
+
+//----------------------------------------------------------------//
+/**	@name	getDirectories
+ @text	Lists the sub-directories contained in a directory.
+ 
+ @in	(Optional) string path Path to search (or current directory if nil)
+ @out	table A table of directory names (or nil if the path is invalid)
+ */
+int MOAIFileSystem::_getDirectories ( lua_State* L ) {
+	STLString oldPath = USFileSys::GetCurrentPath();
+	
+	cc8* dir = NULL;
+	if( lua_type(L, 1) == LUA_TSTRING )
+	{
+		dir = lua_tostring(L, 1);
+		if( !USFileSys::SetCurrentPath(dir) )
+		{
+			return 0;
+		}
+	}
+	
+	USDirectoryItr dirItr;
+	
+	lua_newtable(L);
+	int n = 0;
+	dirItr.Start ();
+	while ( dirItr.NextDirectory() )
+	{
+		if( dir )
+		{
+			lua_pushstring(L, dir);
+			lua_pushstring(L, "/");
+			lua_pushstring(L, dirItr.Current());
+			lua_concat(L, 3);
+		}
+		else
+		{
+			lua_pushstring(L, dirItr.Current());
+		}
+		n++;
+		luaL_setn(L, -2, n);  // new size
+		lua_rawseti(L, -2, n);  // t[pos] = v
+	}
+	
+	USFileSys::SetCurrentPath(oldPath);
+	
+	return 1;
+}
+
+
 //================================================================//
 // MOAIFileSystem
 //================================================================//
@@ -220,6 +319,8 @@ void MOAIFileSystem::RegisterLuaClass ( USLuaState& state ) {
 		{ "getWorkingDirectory",	_getWorkingDirectory },
 		{ "rename",					_rename },
 		{ "setWorkingDirectory",	_setWorkingDirectory },
+		{ "getFiles",				_getFiles },
+		{ "getDirectories",			_getDirectories },
 		{ NULL, NULL }
 	};
 

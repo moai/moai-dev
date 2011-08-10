@@ -6,6 +6,38 @@
 #include <uslsext/USGfxDevice.h>
 #include <uslsext/USPvrHeader.h>
 #include <uslsext/USTexture.h>
+#include <uslsext/USDrawBuffer.h>
+
+#define DEBUG_TEXTURE_MEMORY 1
+
+static size_t _g_TextureSize = 0;
+
+#ifdef DEBUG_TEXTURE_MEMORY
+
+
+	#define DEBUG_TEXTURE_ALLOC(name, size) do { \
+		_g_TextureSize += size; \
+		printf("TEXTURE: + %10lu = %6.2fMB < %s\n", size, _g_TextureSize / 1024.0 / 1024.0, (name).c_str()); \
+	} while(0);
+
+	#define DEBUG_TEXTURE_FREE(name, size) do { \
+		_g_TextureSize -= size; \
+		printf("TEXTURE: - %10lu = %6.2fMB < %s\n", size, _g_TextureSize / 1024.0 / 1024.0, (name).c_str()); \
+	} while(0);
+
+
+#else
+
+	#define	DEBUG_TEXTURE_ALLOC(name, size)
+	#define DEBUG_TEXTURE_FREE(name, size)
+
+#endif
+
+size_t USTexture::GetMemoryUsage()
+{
+	return _g_TextureSize;
+}
+
 
 //================================================================//
 // USTextureLoader
@@ -26,14 +58,27 @@ public:
 	USImage			mImage;
 	u32				mTransform;
 	u32				mType;
+	bool			mReloadable;
+	
+	void Release() {
+		if ( this->mFileData )
+		{
+			free ( this->mFileData );
+			this->mFileData = 0;
+		}
+		
+		this->mImage.Release();
+	}
+	
 	
 	//----------------------------------------------------------------//
 	void Load ( u32 transform = 0 ) {
 	
-		if ( this->mType != TYPE_UNKNOWN ) {
+		if ( this->mType != TYPE_UNKNOWN && !mReloadable ) {
 			return;
 		}
 		
+		this->mReloadable = false;
 		this->mTransform |= transform;
 		
 		if ( !this->mImage.IsOK ()) {
@@ -45,6 +90,7 @@ public:
 			}
 			else if ( mFilename.size ()) {
 				this->mImage.Load ( this->mFilename, this->mTransform );
+				this->mReloadable = this->mImage.IsOK();
 			}
 		}
 		
@@ -70,17 +116,14 @@ public:
 				
 				if ( USPvrHeader::GetHeader( this->mFileData, this->mFileDataSize )) {				
 					this->mType = TYPE_PVR;
+					this->mReloadable = true;
 				}
 			}
 		#endif
 		
 		if ( this->mType == TYPE_UNKNOWN ) {
 			this->mType = TYPE_FAIL;
-			
-			if ( this->mFileData ) {
-				free ( this->mFileData );
-				this->mFileData = 0;
-			}
+			this->Release();
 		}
 	}
 	
@@ -88,15 +131,13 @@ public:
 	USTextureLoader () :
 		mFileData ( 0 ),
 		mFileDataSize ( 0 ),
-		mType ( TYPE_UNKNOWN ) {
+		mType ( TYPE_UNKNOWN ),
+		mReloadable ( false ) {
 	}
 	
 	//----------------------------------------------------------------//
 	~USTextureLoader () {
-	
-		if ( this->mFileData ) {
-			free ( this->mFileData );
-		}
+		Release();
 	}
 };
 
@@ -136,10 +177,31 @@ void USTexture::AffirmTexture () {
 	}
 
 	if ( this->mGLTexID ) {
-
-		// done with the loader
-		delete this->mLoader;
-		this->mLoader = 0;
+#ifdef DEBUG_TEXTURE_MEMORY
+		if ( this->mFilename.size() == 0 && this->mLoader )
+		{
+			// Loader's filename doesn't seem to be copied in all code paths...
+			DEBUG_TEXTURE_ALLOC( this->mLoader->mFilename, this->mDataSize)
+		}
+		else
+		{
+			DEBUG_TEXTURE_ALLOC( this->mFilename, this->mDataSize)
+		}
+#endif
+		
+		this->mLastFrameUsed = USDrawBuffer::Get().GetFrameCounter();
+		
+		if( this->mLoader->mReloadable )
+		{
+			// Release the loader's copy. It isn't needed any more.
+			this->mLoader->Release();
+		}
+		else
+		{
+			// done with the loader entirely
+			delete this->mLoader;
+			this->mLoader = 0;
+		}
 	}
 }
 
@@ -163,6 +225,8 @@ bool USTexture::Bind () {
 		}
 		if ( !this->mGLTexID ) return false;
 	}
+	
+	this->mLastFrameUsed = USDrawBuffer::Get().GetFrameCounter();
 
 	glBindTexture ( GL_TEXTURE_2D, this->mGLTexID );
 
@@ -258,6 +322,11 @@ void USTexture::CreateTextureFromImage ( USImage& image ) {
 			this->mGLPixelType,  
 			image.GetBitmap ()
 		);
+		
+#ifdef DEBUG_TEXTURE_MEMORY
+		this->mDataSize = image.GetBitmapSize();
+#endif
+		
 	}
 	else {
 	
@@ -409,12 +478,19 @@ void USTexture::CreateTextureFromPVR ( void* data, size_t size ) {
 
 		glBindTexture ( GL_TEXTURE_2D, this->mGLTexID );
 		
+	
+#ifdef DEBUG_TEXTURE_MEMORY
+		this->mDataSize = 0;
+#endif
 		int width = header->mWidth;
-		int height = header->mHeight;		
+		int height = header->mHeight;
 		char* imageData = (char*)(header->GetFileData ( data, size));
 		if ( header->mMipMapCount == 0 ) {
-			GLsizei currentSize = (GLsizei) USFloat::Max ( (float)(32), (float)(width * height * header->mBitCount / 8) );
 			
+			GLsizei currentSize = (GLsizei) USFloat::Max ( (float)(32), (float)(width * height * header->mBitCount / 8) );
+#ifdef DEBUG_TEXTURE_MEMORY
+			this->mDataSize += currentSize;
+#endif
 			if ( compressed ) {
 				glCompressedTexImage2D ( GL_TEXTURE_2D, 0, this->mGLInternalFormat, width, height, 0, currentSize, imageData );
 			}
@@ -423,6 +499,7 @@ void USTexture::CreateTextureFromPVR ( void* data, size_t size ) {
 			}
 		}
 		else {
+			
 			for ( int level = 0; width > 0 && height > 0; ++level ) {
 				GLsizei currentSize = (GLsizei) USFloat::Max ( (float)(32), (float)(width * height * header->mBitCount / 8) );
 			
@@ -434,11 +511,13 @@ void USTexture::CreateTextureFromPVR ( void* data, size_t size ) {
 				}
 			
 				imageData += currentSize;
+#ifdef DEBUG_TEXTURE_MEMORY
+				this->mDataSize += currentSize;
+#endif
 				width >>= 1;
 				height >>= 1;
-			}	
-		}			
-
+			}
+		}	
 	#endif
 }
 
@@ -453,13 +532,13 @@ u32 USTexture::GetWidth () {
 }
 
 //----------------------------------------------------------------//
-void USTexture::Init ( USData& data, u32 transform ) {
+void USTexture::Init ( USData& data, u32 transform, cc8* debugname ) {
 
 	void* bytes;
 	u32 size;
 	data.Lock ( &bytes, &size );
 
-	this->Init ( bytes, size, transform );
+	this->Init ( bytes, size, transform, debugname );
 	
 	data.Unlock ();
 }
@@ -479,7 +558,7 @@ void USTexture::Init ( cc8* filename, u32 transform ) {
 }
 
 //----------------------------------------------------------------//
-void USTexture::Init ( const void* data, u32 size, u32 transform ) {
+void USTexture::Init ( const void* data, u32 size, u32 transform, cc8* debugname ) {
 
 	this->Release ();
 	this->mLoader = new USTextureLoader ();
@@ -488,18 +567,22 @@ void USTexture::Init ( const void* data, u32 size, u32 transform ) {
 	this->mLoader->mFileDataSize = size;
 	this->mLoader->mFileData = malloc ( size );
 	memcpy ( this->mLoader->mFileData, data, size );
+	if( debugname )
+		this->mLoader->mFilename = debugname;
 	
 	this->Bind ();
 }
 
 //----------------------------------------------------------------//
-void USTexture::Init ( USImage& image ) {
+void USTexture::Init ( USImage& image, cc8* debugname ) {
 
 	this->Release ();
 	this->mLoader = new USTextureLoader ();
 	
 	this->mLoader->mTransform = 0;
 	this->mLoader->mImage.Copy ( image );
+	if( debugname )
+		this->mLoader->mFilename = debugname;
 	
 	this->Bind ();
 }
@@ -511,9 +594,18 @@ bool USTexture::IsOK () {
 }
 
 //----------------------------------------------------------------//
+bool USTexture::IsReloadable () {
+	
+	return this->mLoader && this->mLoader->mReloadable;
+}
+
+//----------------------------------------------------------------//
 void USTexture::Release () {
 
 	if ( this->mGLTexID ) {
+#ifdef DEBUG_TEXTURE_MEMORY
+		DEBUG_TEXTURE_FREE(this->mFilename, this->mDataSize)
+#endif
 		glDeleteTextures ( 1, &this->mGLTexID );
 		this->mGLTexID = 0;
 	}
@@ -547,6 +639,36 @@ void USTexture::SetWrap ( int wrap ) {
 }
 
 //----------------------------------------------------------------//
+bool USTexture::SoftRelease ( int age ) {
+	
+	if( !this->IsReloadable() )
+		return false;
+	
+	if( !this->mGLTexID )
+		return false;
+	
+//	if( true )
+//		return false;
+
+	u32 f = USDrawBuffer::Get().GetFrameCounter();
+	u32 myage = f > mLastFrameUsed ? f - mLastFrameUsed : 0xffffffff - mLastFrameUsed + f;
+	if( myage < (u32)(age & 0x7fffffff) )
+		return false;
+
+#ifdef DEBUG_TEXTURE_MEMORY
+	DEBUG_TEXTURE_FREE(this->mFilename, this->mDataSize)
+#endif
+	glDeleteTextures ( 1, &this->mGLTexID );
+	this->mGLTexID = 0;
+	// Horrible to call this (especially since we're likely freeing textures
+	// in a loop), but generally this is only called in response to a low 
+	// memory warning and we want to free as soon as possible.
+	glFlush();
+	
+	return true;
+}
+
+//----------------------------------------------------------------//
 USTexture::USTexture () :
 	mGLTexID ( 0 ),
 	mWidth ( 0 ),
@@ -554,7 +676,8 @@ USTexture::USTexture () :
 	mMinFilter ( GL_LINEAR ),
 	mMagFilter ( GL_NEAREST ),
 	mWrap ( GL_CLAMP_TO_EDGE ),
-	mLoader ( 0 ) {
+	mLoader ( 0 ),
+	mLastFrameUsed (0) {
 }
 
 //----------------------------------------------------------------//

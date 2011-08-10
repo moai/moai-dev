@@ -109,14 +109,14 @@ void USImage::BleedRect ( int xMin, int yMin, int xMax, int yMax ) {
 	u32 copySize = ( u32 )(( xMax - xMin ) * pixelSize );
 	
 	if ( yMin > 0 ) {
-		void* srcRow = ( void* )(( uintptr )this->mBitmap + ( rowSize * yMin ) + ( xMin * pixSize ));
-		void* destRow = ( void* )(( uintptr )this->mBitmap + ( rowSize * ( yMin - 1 )) + ( xMin * pixSize ));
+		void* srcRow = ( void* )(( u32 )this->mBitmap + ( rowSize * yMin ) + ( xMin * pixSize ));
+		void* destRow = ( void* )(( u32 )this->mBitmap + ( rowSize * ( yMin - 1 )) + ( xMin * pixSize ));
 		memcpy ( destRow, srcRow, copySize );
 	}
 	
 	if ( yMax < height ) {
-		void* srcRow = ( void* )(( uintptr )this->mBitmap + ( rowSize * ( yMax - 1 )) + ( xMin * pixSize ));
-		void* destRow = ( void* )(( uintptr )this->mBitmap + ( rowSize * yMax ) + ( xMin * pixSize ));
+		void* srcRow = ( void* )(( u32 )this->mBitmap + ( rowSize * ( yMax - 1 )) + ( xMin * pixSize ));
+		void* destRow = ( void* )(( u32 )this->mBitmap + ( rowSize * yMax ) + ( xMin * pixSize ));
 		memcpy ( destRow, srcRow, copySize );
 	}
 }
@@ -334,8 +334,8 @@ u32 USImage::GetPaletteSize () const {
 //----------------------------------------------------------------//
 u32 USImage::GetPixel ( u32 x, u32 y ) const {
 
-	if ( y > this->mHeight ) return 0;
-	if ( x > this->mWidth ) return 0;
+	if ( y >= this->mHeight ) return 0;
+	if ( x >= this->mWidth ) return 0;
 
 	const void* row = this->GetRowAddr ( y );
 
@@ -797,8 +797,8 @@ void USImage::SetPaletteColor ( u32 idx, u32 rgba ) {
 //----------------------------------------------------------------//
 void USImage::SetPixel ( u32 x, u32 y, u32 pixel ) {
 
-	if ( y > this->mHeight ) return;
-	if ( x > this->mWidth ) return;
+	if ( y >= this->mHeight ) return;
+	if ( x >= this->mWidth ) return;
 	
 	void* row = this->GetRowAddr ( y );
 

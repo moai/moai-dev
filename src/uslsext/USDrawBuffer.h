@@ -52,6 +52,8 @@ private:
 	bool			mBlendEnabled;
 	
 	USRect			mScissorRect;
+		
+	u32				mFrameCounter;
 
 	//----------------------------------------------------------------//
 	void					ClearBuffer				();
@@ -95,6 +97,9 @@ public:
 							~USDrawBuffer			();
 	void					WriteQuad				( USVec2D* vtx, USVec2D* uv );
 	
+	//----------------------------------------------------------------//
+	inline u32 GetFrameCounter() const { return mFrameCounter; }
+		
 	//----------------------------------------------------------------//
 	inline void WriteColor ( float r, float g, float b, float a ) {
 		UNUSED ( r );

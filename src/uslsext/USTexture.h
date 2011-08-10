@@ -41,6 +41,9 @@ protected:
 	
 	STLString			mFilename;
 	USTextureLoader*	mLoader;
+	size_t				mDataSize;
+	
+	u32				mLastFrameUsed;
 	
 	//----------------------------------------------------------------//
 	void			AffirmTexture				();
@@ -49,20 +52,24 @@ protected:
 	void			ReleaseLoader				();
 
 public:
+	
+	static size_t	GetMemoryUsage		();
 
 	//----------------------------------------------------------------//
 	bool			Bind				();
 	u32				GetHeight			();
 	u32				GetWidth			();
-	void			Init				( USData& data, u32 transform = ( USImageTransform::TRUECOLOR | USImageTransform::QUANTIZE ));
+	void			Init				( USData& data, u32 transform = ( USImageTransform::TRUECOLOR | USImageTransform::QUANTIZE ), cc8* debugname = 0);
 	void			Init				( cc8* filename, u32 transform = ( USImageTransform::TRUECOLOR | USImageTransform::QUANTIZE ));
-	void			Init				( const void* data, u32 size, u32 transform = ( USImageTransform::TRUECOLOR | USImageTransform::QUANTIZE ));
-	void			Init				( USImage& image );
+	void			Init				( const void* data, u32 size, u32 transform = ( USImageTransform::TRUECOLOR | USImageTransform::QUANTIZE ), cc8* debugname = 0);
+	void			Init				( USImage& image, cc8* debugname = 0 );
 	bool			IsOK				();
+	bool			IsReloadable		();
 	void			Release				();
 	void			SetFilter			( int filter );
 	void			SetFilter			( int min, int mag );
 	void			SetWrap				( int wrap );
+	bool			SoftRelease			( int age = 0 );
 					USTexture			();
 	virtual			~USTexture			();
 };

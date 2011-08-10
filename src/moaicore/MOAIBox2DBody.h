@@ -38,8 +38,10 @@ private:
 	static int		_destroy				( lua_State* L );
 	static int		_getAngle				( lua_State* L );
 	static int		_getAngularVelocity		( lua_State* L );
+	static int		_getInertia				( lua_State* L );
 	static int		_getLinearVelocity		( lua_State* L );
 	static int		_getLocalCenter			( lua_State* L );
+	static int		_getMass				( lua_State* L );
 	static int		_getPosition			( lua_State* L );
 	static int		_getWorldCenter			( lua_State* L );
 	static int		_isActive				( lua_State* L );

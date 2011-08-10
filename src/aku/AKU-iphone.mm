@@ -43,7 +43,7 @@ void AKUIphoneInit ( UIApplication* application ) {
 	loadMoaiLib_NSNumber ();
 	loadMoaiLib_NSObject ();
 	loadMoaiLib_NSString ();
-	
+
 	MOAIApp::Get ().SetApplication ( application );
 	
 	

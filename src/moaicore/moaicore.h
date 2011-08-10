@@ -92,6 +92,7 @@
 	#include <moaicore/MOAIBox2DBody.h>
 	#include <moaicore/MOAIBox2DDebugDraw.h>
 	#include <moaicore/MOAIBox2DFixture.h>
+	#include <moaicore/MOAIBox2DJoint.h>
 	#include <moaicore/MOAIBox2DWorld.h>
 #endif
 

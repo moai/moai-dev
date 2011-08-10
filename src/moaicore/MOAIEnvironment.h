@@ -95,7 +95,7 @@ public:
 
 	//----------------------------------------------------------------//
 						MOAIEnvironment				( );
-						~MOAIEnvironment				( );
+						~MOAIEnvironment			( );
 	void				RegisterLuaClass			( USLuaState& state );
 	void				SetAppDisplayName			( cc8* displayName );
 	void				SetAppID					( cc8* appID );

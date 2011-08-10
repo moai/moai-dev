@@ -26,6 +26,8 @@ private:
 	static int		_getWorkingDirectory	( lua_State* L );
 	static int		_rename					( lua_State* L );
 	static int		_setWorkingDirectory	( lua_State* L );
+	static int		_getFiles				( lua_State* L );
+	static int		_getDirectories			( lua_State* L );
 
 public:
 	

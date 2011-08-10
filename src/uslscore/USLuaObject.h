@@ -22,7 +22,7 @@ protected:
 
 	USLuaRef		mInstanceTable;		// strong ref to instance table stack
 	USLuaRef		mUserdata;			// weak ref to handle userdata 
-
+		
 
 	//----------------------------------------------------------------//
 	static int				_gc						( lua_State* L );
@@ -55,6 +55,10 @@ public:
 	void					SetLuaInstanceTable		( USLuaState& state, int idx );
 							USLuaObject				();
 	virtual					~USLuaObject			();
+		
+	static void             ReportLeaks				( FILE *f, bool clearAfter );
+	static void				SetLeakTrackingEnabled	( bool enable );
+	void					CallCreationHook		( USLuaState& state );
 };
 
 //================================================================//

@@ -25,3 +25,19 @@ void AKUFmodUpdate () {
 
 	MOAIFmod::Get ().Update ();
 }
+
+//----------------------------------------------------------------//
+void	AKUFmodMuteSystem	( bool mute ) {
+	
+	MOAIFmod::Get().MuteChannels( mute );
+}
+
+//----------------------------------------------------------------//
+void	AKUFmodRestoreSession () {
+	FMOD_IPhone_RestoreAudioSession();
+}
+
+void	AKUFmodRelease		()
+{
+	MOAIFmod::Get().CloseSoundSystem();
+}
