@@ -22,7 +22,7 @@ namespace UNTZ
 		~Sound();
 		
 		// Create a sound object from a file path
-		static Sound* create(const RString& path, bool loadIntoMemory = false);
+		static Sound* create(const RString& path, bool loadIntoMemory = true);
 		// Create a sound object from a memory buffer
 		static Sound* create(UInt32 sampleRate, UInt32 channels, UInt32 samples, Int16* inverleavedData);
 		// Create a sound object that streams audio data via a callback

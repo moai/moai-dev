@@ -21,6 +21,7 @@ include libjson.mk
 include libmoaicore.mk
 include libssl.mk
 include libcontrib.mk
+include libmoaiext-untz.mk
 
 #================================================================#
 # Moai
@@ -71,13 +72,16 @@ $(SRC_PATH)/3rdparty/sqlite-3.6.16 \
 $(SRC_PATH)/3rdparty/tinyxml \
 $(SRC_PATH)/3rdparty/openssl-1.0.0d/include-android \
 $(SRC_PATH)/3rdparty/physfs-2.0.2 \
+$(SRC_PATH)/3rdparty/untz/include \
+$(SRC_PATH)/src/moaiext-untz \
 
 #----------------------------------------------------------------#
 # included files
 #----------------------------------------------------------------#
 LOCAL_SRC_FILES := moaiJNI.cpp \
 $(SRC_PATH)/src/aku/pch.cpp \
-$(SRC_PATH)/src/aku/AKU.cpp
+$(SRC_PATH)/src/aku/AKU.cpp \
+$(SRC_PATH)/src/aku/AKU-untz.cpp
 
 #----------------------------------------------------------------#
 # libraries
@@ -98,5 +102,6 @@ LOCAL_STATIC_LIBRARIES += libssl
 LOCAL_STATIC_LIBRARIES += libcontrib
 LOCAL_STATIC_LIBRARIES += libjson
 LOCAL_STATIC_LIBRARIES += libphysfs
+LOCAL_STATIC_LIBRARIES += libmoaiext-untz
 
 include $(BUILD_SHARED_LIBRARY)
