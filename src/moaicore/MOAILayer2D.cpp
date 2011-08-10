@@ -6,9 +6,12 @@
 #include <moaicore/MOAIDeck.h>
 #include <moaicore/MOAICpSpace.h>
 #include <moaicore/MOAIDebugLines.h>
+#include <moaicore/MOAIFrameBuffer.h>
+#include <moaicore/MOAIGfxDevice.h>
 #include <moaicore/MOAILayer2D.h>
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIProp2D.h>
+#include <moaicore/MOAITexture.h>
 #include <moaicore/MOAITransform.h>
 
 #define MAX_RENDERABLES 512
@@ -198,6 +201,19 @@ int MOAILayer2D::_setCpSpace ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAILayer2D::_setFrameBuffer ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAILayer2D, "UU" )
+
+	MOAITexture* frameBuffer = state.GetLuaObject < MOAITexture >( 2 );
+	if ( !frameBuffer ) return 0;
+
+	self->mFrameBuffer = frameBuffer;
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	setParallax
 	@text	Sets the parallax scale for this layer. This is simply a
 			scalar applied to the view transform before rendering.
@@ -343,47 +359,49 @@ void MOAILayer2D::Draw () {
 
 	if ( !this->mViewport ) return;
 	
-	USViewport viewport = *this->mViewport;
-	USDrawBuffer& drawBuffer = USDrawBuffer::Get ();
+	MOAIViewport& viewport = *this->mViewport;
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	
-	drawBuffer.Flush ();
-	drawBuffer.Reset ();
+	gfxDevice.ResetState ();
+	gfxDevice.SetFrameBuffer ( this->mFrameBuffer );
 	
-	USAffine2D mtx;
-	USCanvas::GetWorldToWndMtx ( mtx, 1.0f, 1.0f );
-	mtx.Prepend ( this->mLocalToWorldMtx );
-	mtx.Transform ( viewport );
+	USMatrix4x4 mtx;
+	mtx.Init ( this->mLocalToWorldMtx );
+	mtx.Append (gfxDevice. GetWorldToWndMtx ( 1.0f, 1.0f ));
+	
+	USRect viewportRect = viewport;
+	mtx.Transform ( viewportRect );
+	
+	gfxDevice.SetViewport ( viewportRect );
 	
 	USAffine2D camera;
 	this->GetCameraMtx ( camera );
-	
-	USCanvas::BeginDrawing ( viewport, camera );
+	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_VIEW_TRANSFORM, camera );
+	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_PROJ_TRANSFORM, viewport.GetProjMtx ());
 	
 	if ( this->mShowDebugLines ) {
 		
 		#if USE_CHIPMUNK
 			if ( this->mCpSpace ) {
 				this->mCpSpace->DrawDebug ();
-				drawBuffer.Flush ();
-				drawBuffer.Reset ();
+				gfxDevice.Flush ();
 			}
 		#endif
 		
 		#if USE_BOX2D
 			if ( this->mBox2DWorld ) {
 				this->mBox2DWorld->DrawDebug ();
-				drawBuffer.Flush ();
-				drawBuffer.Reset ();
+				gfxDevice.Flush ();
 			}
 		#endif
 	}
 	
 	if ( this->mPartition ) {
 		
-		USViewQuad viewQuad;
-		viewQuad.Init ();
+		USQuad viewQuad = gfxDevice.GetViewQuad ();
+		USRect viewBounds = viewQuad.GetBounds ();
 		
-		this->mPartition->GatherProps ( viewQuad.mBounds, 0, MOAIProp::CAN_DRAW | MOAIProp::CAN_DRAW_DEBUG );
+		this->mPartition->GatherProps ( viewBounds, 0, MOAIProp::CAN_DRAW | MOAIProp::CAN_DRAW_DEBUG );
 		u32 totalResults = this->mPartition->GetTotalResults ();
 		if (( !totalResults ) || ( totalResults > MAX_RENDERABLES )) return;
 		
@@ -412,10 +430,9 @@ void MOAILayer2D::Draw () {
 	
 	// render the debug lines
 	if ( this->mShowDebugLines ) {
-		drawBuffer.Flush ();
 		MOAIDebugLines::Get ().Draw ();
-		drawBuffer.Flush ();
 	}
+	gfxDevice.Flush ();
 }
 
 //----------------------------------------------------------------//
@@ -426,6 +443,8 @@ void MOAILayer2D::GetCameraMtx ( USAffine2D& camera ) {
 		
 		camera.m [ USAffine2D::C2_R0 ] *= this->mParallax.mX;
 		camera.m [ USAffine2D::C2_R1 ] *= this->mParallax.mY;
+		
+		camera.Inverse ();
 	}
 	else {
 		camera.Ident ();
@@ -462,7 +481,7 @@ void MOAILayer2D::GetWndToWorldMtx ( USAffine2D& wndToWorld ) {
 		
 		USAffine2D camera;
 		this->GetCameraMtx ( camera );
-		USCanvas::GetWndToWorldMtx ( *this->mViewport, camera, wndToWorld );
+		wndToWorld = this->mViewport->GetWndToWorldMtx ( camera );
 	}
 	else {
 		wndToWorld.Ident ();
@@ -476,7 +495,7 @@ void MOAILayer2D::GetWorldToWndMtx ( USAffine2D& worldToWnd ) {
 		
 		USAffine2D camera;
 		this->GetCameraMtx ( camera );
-		USCanvas::GetWorldToWndMtx ( *this->mViewport, camera, worldToWnd );
+		worldToWnd = this->mViewport->GetWorldToWndMtx ( camera );
 	}
 	else {
 		worldToWnd.Ident ();
@@ -519,6 +538,7 @@ void MOAILayer2D::RegisterLuaFuncs ( USLuaState& state ) {
 		{ "setBox2DWorld",			_setBox2DWorld },
 		{ "setCamera",				_setCamera },
 		{ "setCpSpace",				_setCpSpace },
+		{ "setFrameBuffer",			_setFrameBuffer },
 		{ "setParallax",			_setParallax },
 		{ "setPartition",			_setPartition },
 		{ "setViewport",			_setViewport },

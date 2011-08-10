@@ -2,6 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <moaicore/MOAIGfxDevice.h>
 #include <moaicore/MOAIGrid.h>
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIMesh.h>
@@ -68,16 +69,17 @@ void MOAIMesh::Draw ( const USAffine2D& transform, u32 idx, MOAIDeckRemapper* re
 	UNUSED ( idx );
 	UNUSED ( remapper );
 	
-	USDrawBuffer& drawBuffer = USDrawBuffer::Get ();
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	
-	drawBuffer.SetTexture ( this->mTexture );
-	drawBuffer.SetVtxTransform ( transform );
+	gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_MODEL );
+	gfxDevice.SetTexture ( this->mTexture );
+	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, transform );
 
 	this->mVertexBuffer->Draw ();
 }
 
 //----------------------------------------------------------------//
-void MOAIMesh::Draw ( const USAffine2D& transform, MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, USCellCoord& c0, USCellCoord& c1 ) {
+void MOAIMesh::Draw ( const USAffine2D& transform, MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1 ) {
 	UNUSED ( transform );
 	UNUSED ( grid );
 	UNUSED ( remapper );

@@ -8,6 +8,7 @@
 #include <moaicore/MOAICpDebugDraw.h>
 #include <moaicore/MOAICpShape.h>
 #include <moaicore/MOAICpSpace.h>
+#include <moaicore/MOAIGfxDevice.h>
 #include <moaicore/MOAILogMessages.h>
 
 SUPPRESS_EMPTY_FILE_WARNING
@@ -771,7 +772,7 @@ void MOAICpSpace::DrawDebug () {
 		options.bodyPointSize = 0.0f;
 		options.lineThickness = 1.5f;
 
-		USCanvas::SetTexture ();
+		MOAIGfxDevice::Get ().SetTexture ();
 
 		glEnableClientState ( GL_VERTEX_ARRAY );
 		MOAICpDebugDraw::DrawSpace ( this->mSpace, &options );

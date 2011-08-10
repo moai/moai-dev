@@ -4,6 +4,9 @@
 #ifndef	MOAIGRID_H
 #define	MOAIGRID_H
 
+#include <moaicore/MOAIGridSpace.h>
+#include <moaicore/MOAITileFlags.h>
+
 //================================================================//
 // MOAIGrid
 //================================================================//
@@ -28,13 +31,14 @@
 */
 class MOAIGrid :
 	public USLuaObject,
-	public USGridSpace {
+	public MOAIGridSpace {
 private:
 
 	USLeanArray < u32 > mTiles;
 
 	//----------------------------------------------------------------//
 	static int	_clearTileFlags		( lua_State* L );
+	static int	_getSize			( lua_State* L );
 	static int	_getTile			( lua_State* L );
 	static int	_getTileFlags		( lua_State* L );
 	static int	_getTileLoc			( lua_State* L );

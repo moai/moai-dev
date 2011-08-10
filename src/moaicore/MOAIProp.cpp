@@ -81,7 +81,7 @@ bool MOAIProp::GetCellRect ( USRect* cellRect, USRect* paddedRect ) {
 		USVec2D center;
 		this->mBounds.GetCenter ( center );
 		
-		USCellCoord coord = this->mLayer->mGridSpace.GetCellCoord ( center );
+		MOAICellCoord coord = this->mLayer->mGridSpace.GetCellCoord ( center );
 		USRect rect = this->mLayer->mGridSpace.GetCellRect ( coord );
 		
 		if ( cellRect ) {

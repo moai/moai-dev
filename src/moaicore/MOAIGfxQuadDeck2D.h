@@ -5,6 +5,7 @@
 #define	MOAIGFXQUADDECK2D_H
 
 #include <moaicore/MOAIDeck2D.h>
+#include <moaicore/MOAIQuadBrush.h>
 
 class MOAITexture;
 
@@ -19,7 +20,7 @@ class MOAIGfxQuadDeck2D :
 private:
 
 	USRef < MOAITexture >			mTexture;
-	USLeanArray < USGLQuad >		mQuads;
+	USLeanArray < MOAIQuadBrush >		mQuads;
 	
 	//----------------------------------------------------------------//
 	static int	_reserve				( lua_State* L );

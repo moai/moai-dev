@@ -28,7 +28,7 @@ include libcontrib.mk
 include $(CLEAR_VARS)
 
 LOCAL_MODULE := libmoai
-LOCAL_LDLIBS := -lm -llog -ljnigraphics -lGLESv1_CM -ldl -lz libcrypto.a
+LOCAL_LDLIBS := -lm -llog -ljnigraphics -lGLESv2 -lGLESv1_CM -ldl -lz libcrypto.a
 LOCAL_CFLAGS := -DANDROID_NDK -DDISABLE_IMPORTGL
 APP_STL := gnustl_static
 

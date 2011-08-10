@@ -53,7 +53,7 @@ private:
 	static int		_writeInt32				( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void			ClearBuffer				();
+	void			Clear					();
 	
 public:
 	
@@ -69,7 +69,6 @@ public:
 					~MOAIVertexBuffer		();
 	void			RegisterLuaClass		( USLuaState& state );
 	void			RegisterLuaFuncs		( USLuaState& state );
-	void			Release					();
 	void			Reserve					( u32 size );
 	void			SetPrimType				( u32 primType );
 	STLString		ToString				();

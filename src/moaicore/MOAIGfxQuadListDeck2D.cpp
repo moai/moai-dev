@@ -299,9 +299,9 @@ int MOAIGfxQuadListDeck2D::_setUVRect ( lua_State* L ) {
 //----------------------------------------------------------------//
 bool MOAIGfxQuadListDeck2D::Bind () {
 
-	USDrawBuffer& drawBuffer = USDrawBuffer::Get ();
-	if ( !drawBuffer.SetTexture ( this->mTexture )) return false;
-	USGLQuad::BindVertexFormat ( drawBuffer );
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	if ( !gfxDevice.SetTexture ( this->mTexture )) return false;
+	MOAIQuadBrush::BindVertexFormat ( gfxDevice );
 
 	return true;
 }
@@ -335,7 +335,7 @@ void MOAIGfxQuadListDeck2D::DrawPatch ( u32 idx, float xOff, float yOff, float x
 		idx = ( idx - 1 ) % size;
 
 		USSprite& sprite = this->mSprites [ idx ];
-		USGLQuad glQuad;
+		MOAIQuadBrush glQuad;
 		
 		u32 base = sprite.mBasePair;
 		u32 top = base + sprite.mTotalPairs;
@@ -375,7 +375,7 @@ USRect MOAIGfxQuadListDeck2D::GetBounds ( u32 idx, MOAIDeckRemapper* remapper ) 
 			USSpritePair prim = this->mPairs [ sprite.mBasePair ];
 			USQuad& baseQuad = this->mQuads [ prim.mQuadID ];
 			
-			baseQuad.GetBounds ( rect );
+			rect = baseQuad.GetBounds ();
 			
 			for ( u32 i = 1; i < sprite.mTotalPairs; ++i ) {
 				
@@ -435,7 +435,7 @@ void MOAIGfxQuadListDeck2D::RegisterLuaFuncs ( USLuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIGfxQuadListDeck2D::ReleaseTexture () {
 
-	this->mTexture->USTexture::Release ();
+	this->mTexture->MOAITexture::Release ();
 }
 
 //----------------------------------------------------------------//

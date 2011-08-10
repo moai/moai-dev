@@ -78,7 +78,6 @@ private:
 
 public:
 	
-	
 	DECL_LUA_SINGLETON ( MOAISim )
 	
 	GET ( USTaskThread&, DataIOThread, mDataIOThread )

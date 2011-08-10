@@ -8,7 +8,8 @@ package com.getmoai.samples;
  
 import javax.microedition.khronos.egl.EGLConfig; 
 import javax.microedition.khronos.opengles.GL10;
-  
+
+import static android.opengl.GLES20.*;  
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -61,9 +62,7 @@ public class MoaiView extends GLSurfaceView {
 	public MoaiView ( Context context ) {
 		
 		super ( context );
-		mRenderer = new MoaiRenderer ();
-		setRenderer ( mRenderer );
-		
+	
 		if ( mThread == null ) {
 			mThread = new MoaiThread ();
 		}
@@ -75,10 +74,7 @@ public class MoaiView extends GLSurfaceView {
 	public MoaiView ( Context context, int w, int h ) {
 		
 		super ( context );
-		mRenderer = new MoaiRenderer ();
-		setRenderer ( mRenderer );
-		setRenderMode ( RENDERMODE_WHEN_DIRTY );
-		
+				
 		if ( mThread == null ) {
 			mThread = new MoaiThread ();
 		}
@@ -221,7 +217,7 @@ public class MoaiView extends GLSurfaceView {
 
 			if ( mIsValid ) {
 				onDraw ( mWidth, mHeight );
-				gl.glFlush (); 
+				glFlush (); 
 			}
 		}
 
@@ -229,7 +225,7 @@ public class MoaiView extends GLSurfaceView {
 		@Override
 		public void onSurfaceChanged ( GL10 gl, int width, int height ) {
 
-			gl.glViewport ( 0, 0, width, height );
+			glViewport ( 0, 0, width, height );
 			mWidth = width;
 			mHeight = height;
 		}
@@ -241,6 +237,7 @@ public class MoaiView extends GLSurfaceView {
 			InitializeAku ( mForRen ); 
 			GetDeviceProperties ();
 			
+			DetectAkuContext ();
 			mSurfaceCreated = true;
 			mIsValid = true;
 
@@ -281,6 +278,7 @@ public class MoaiView extends GLSurfaceView {
 	protected static native void Run ( String fileName, int width, int height );
 	protected static native void FinalizeAku ();
 	protected static native void DeinitializeAku ();
+	protected static native void DetectAkuContext ();
 	public static native void onDraw ( int width, int height );
 	public static native void onUpdateAnim ();
 	public static native void onUpdateHeading ( int heading );

@@ -25,6 +25,9 @@ void moaicore::InitGlobals ( USGlobals* globals ) {
 	MOAIInputMgr::Get ();
 	MOAILogMgr::Get ();
 	MOAINodeMgr::Get ();
+	MOAIVertexFormatMgr::Get ();
+	MOAIShaderMgr::Get ();
+	MOAIGfxDevice::Get ();
 	MOAIDebugLines::Get ();
 	MOAISim::Get ();
 	
@@ -48,6 +51,7 @@ void moaicore::InitGlobals ( USGlobals* globals ) {
 	REGISTER_LUA_CLASS ( MOAIEventSource )
 	REGISTER_LUA_CLASS ( MOAIFileSystem )
 	REGISTER_LUA_CLASS ( MOAIFont )
+	REGISTER_LUA_CLASS ( MOAIGfxDevice )
 	REGISTER_LUA_CLASS ( MOAIGfxQuad2D )
 	REGISTER_LUA_CLASS ( MOAIGfxQuadDeck2D )
 	REGISTER_LUA_CLASS ( MOAIGfxQuadListDeck2D )
@@ -80,8 +84,8 @@ void moaicore::InitGlobals ( USGlobals* globals ) {
 	REGISTER_LUA_CLASS ( MOAIProp2D )
 	REGISTER_LUA_CLASS ( MOAIScriptNode )
 	REGISTER_LUA_CLASS ( MOAISerializer )
+	REGISTER_LUA_CLASS ( MOAIShader )
 	REGISTER_LUA_CLASS ( MOAISim )
-	REGISTER_LUA_CLASS ( MOAISimpleShader )
 	REGISTER_LUA_CLASS ( MOAIStretchPatch2D )
 	REGISTER_LUA_CLASS ( MOAISurfaceDeck2D )
 	REGISTER_LUA_CLASS ( MOAITextBox )

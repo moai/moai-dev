@@ -17,7 +17,7 @@ class MOAITexture;
 */
 class MOAITileDeck2D :
 	public MOAIDeck2D,
-	public USGridSpace {
+	public MOAIGridSpace {
 private:
 	
 	USRect					mRect;

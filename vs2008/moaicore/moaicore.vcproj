@@ -92,6 +92,84 @@
 			/>
 		</Configuration>
 		<Configuration
+			Name="Release|Win32"
+			OutputDirectory="..\bin\$(PlatformName)\$(ConfigurationName)\"
+			IntermediateDirectory="$(ConfigurationName)"
+			ConfigurationType="4"
+			CharacterSet="2"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+				CommandLine=""
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				AdditionalOptions="/vmg"
+				Optimization="3"
+				EnableIntrinsicFunctions="false"
+				FavorSizeOrSpeed="1"
+				OmitFramePointers="false"
+				AdditionalIncludeDirectories="..\..\src;..\..\3rdparty;&quot;..\..\3rdparty\lua-5.1.3\src&quot;;&quot;..\..\3rdparty\glew-1.5.6\include&quot;;&quot;..\..\3rdparty\zlib-1.2.3&quot;;&quot;..\..\3rdparty\sqlite-3.6.16&quot;;..\..\3rdparty\tinyxml;&quot;..\..\3rdparty\curl-7.19.7\include&quot;;..\..\3rdparty\lpng140;&quot;..\..\3rdparty\expat-2.0.1\lib&quot;;&quot;..\..\3rdparty\jansson-2.1\src&quot;;&quot;..\..\3rdparty\freetype-2.4.4\include&quot;;&quot;..\..\3rdparty\box2d-2.1.2\Box2D&quot;;&quot;..\..\3rdparty\chipmunk-5.3.4\include&quot;"
+				PreprocessorDefinitions="WIN32;_LIB;_USE_32BIT_TIME_T;_CRT_SECURE_NO_WARNINGS;XML_STATIC"
+				StringPooling="true"
+				ExceptionHandling="1"
+				RuntimeLibrary="2"
+				BufferSecurityCheck="false"
+				EnableEnhancedInstructionSet="0"
+				TreatWChar_tAsBuiltInType="true"
+				ForceConformanceInForLoopScope="true"
+				RuntimeTypeInfo="false"
+				UsePrecompiledHeader="2"
+				PrecompiledHeaderThrough="pch.h"
+				WarningLevel="4"
+				DebugInformationFormat="0"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLibrarianTool"
+				LinkLibraryDependencies="true"
+				AdditionalOptions="/LTCG"
+				AdditionalLibraryDirectories=""
+				IgnoreAllDefaultLibraries="true"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+				CommandLine=""
+			/>
+		</Configuration>
+		<Configuration
 			Name="Debug|x64"
 			OutputDirectory="$(PlatformName)\$(ConfigurationName)"
 			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
@@ -163,84 +241,6 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				CommandLine="&#x0D;&#x0A;"
-			/>
-		</Configuration>
-		<Configuration
-			Name="Release|Win32"
-			OutputDirectory="..\bin\$(PlatformName)\$(ConfigurationName)\"
-			IntermediateDirectory="$(ConfigurationName)"
-			ConfigurationType="4"
-			CharacterSet="2"
-			>
-			<Tool
-				Name="VCPreBuildEventTool"
-			/>
-			<Tool
-				Name="VCCustomBuildTool"
-				CommandLine=""
-			/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"
-			/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"
-			/>
-			<Tool
-				Name="VCMIDLTool"
-			/>
-			<Tool
-				Name="VCCLCompilerTool"
-				AdditionalOptions="/vmg"
-				Optimization="3"
-				EnableIntrinsicFunctions="false"
-				FavorSizeOrSpeed="1"
-				OmitFramePointers="false"
-				AdditionalIncludeDirectories="&quot;..\..\3rdparty\physfs-2.0.2&quot;;..\..\src;..\..\3rdparty;&quot;..\..\3rdparty\lua-5.1.3\src&quot;;&quot;..\..\3rdparty\glew-1.5.6\include&quot;;&quot;..\..\3rdparty\zlib-1.2.3&quot;;&quot;..\..\3rdparty\sqlite-3.6.16&quot;;..\..\3rdparty\tinyxml;&quot;..\..\3rdparty\curl-7.19.7\include&quot;;..\..\3rdparty\lpng140;&quot;..\..\3rdparty\expat-2.0.1\lib&quot;;&quot;..\..\3rdparty\jansson-2.1\src&quot;;&quot;..\..\3rdparty\freetype-2.4.4\include&quot;;&quot;..\..\3rdparty\box2d-2.1.2\Box2D&quot;;&quot;..\..\3rdparty\chipmunk-5.3.4\include&quot;"
-				PreprocessorDefinitions="WIN32;_LIB;_USE_32BIT_TIME_T;_CRT_SECURE_NO_WARNINGS;XML_STATIC"
-				StringPooling="true"
-				ExceptionHandling="1"
-				RuntimeLibrary="2"
-				BufferSecurityCheck="false"
-				EnableEnhancedInstructionSet="0"
-				TreatWChar_tAsBuiltInType="true"
-				ForceConformanceInForLoopScope="true"
-				RuntimeTypeInfo="false"
-				UsePrecompiledHeader="2"
-				PrecompiledHeaderThrough="pch.h"
-				WarningLevel="4"
-				DebugInformationFormat="0"
-			/>
-			<Tool
-				Name="VCManagedResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCPreLinkEventTool"
-			/>
-			<Tool
-				Name="VCLibrarianTool"
-				LinkLibraryDependencies="true"
-				AdditionalOptions="/LTCG"
-				AdditionalLibraryDirectories=""
-				IgnoreAllDefaultLibraries="true"
-			/>
-			<Tool
-				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCXDCMakeTool"
-			/>
-			<Tool
-				Name="VCBscMakeTool"
-			/>
-			<Tool
-				Name="VCFxCopTool"
-			/>
-			<Tool
-				Name="VCPostBuildEventTool"
-				CommandLine=""
 			/>
 		</Configuration>
 		<Configuration
@@ -442,6 +442,14 @@
 			Name="gfx"
 			>
 			<File
+				RelativePath="..\..\src\moaicore\MOAIBlendMode.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIBlendMode.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\moaicore\MOAIColor.cpp"
 				>
 			</File>
@@ -455,6 +463,30 @@
 			</File>
 			<File
 				RelativePath="..\..\src\moaicore\MOAIDebugLines.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIDraw.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIDraw.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIFrameBuffer.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIFrameBuffer.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIGfxDevice.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIGfxDevice.h"
 				>
 			</File>
 			<File
@@ -474,6 +506,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\moaicore\MOAIPvrHeader.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\moaicore\MOAIShader.cpp"
 				>
 			</File>
@@ -482,11 +518,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAISimpleShader.cpp"
+				RelativePath="..\..\src\moaicore\MOAIShaderMgr.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAISimpleShader.h"
+				RelativePath="..\..\src\moaicore\MOAIShaderMgr.h"
 				>
 			</File>
 			<File
@@ -514,6 +550,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\moaicore\MOAIVertexFormatMgr.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIVertexFormatMgr.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\moaicore\MOAIViewport.cpp"
 				>
 			</File>
@@ -521,6 +565,34 @@
 				RelativePath="..\..\src\moaicore\MOAIViewport.h"
 				>
 			</File>
+			<Filter
+				Name="shaders"
+				>
+				<File
+					RelativePath="..\..\src\moaicore\shaders\MOAIDeck2DShader-fsh.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\moaicore\shaders\MOAIDeck2DShader-vsh.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\moaicore\shaders\MOAIFontShader-fsh.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\moaicore\shaders\MOAIFontShader-vsh.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\moaicore\shaders\MOAILineShader-fsh.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\moaicore\shaders\MOAILineShader-vsh.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="grid"
@@ -531,6 +603,22 @@
 			</File>
 			<File
 				RelativePath="..\..\src\moaicore\MOAIGrid.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIGridSpace.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIGridSpace.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAITileFlags.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAITileFlags.h"
 				>
 			</File>
 		</Filter>
@@ -758,6 +846,14 @@
 			Name="textbox"
 			>
 			<File
+				RelativePath="..\..\src\moaicore\MOAIBitmapFontRipper.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIBitmapFontRipper.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\moaicore\MOAIFont.cpp"
 				>
 			</File>
@@ -766,11 +862,19 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAIFtFontRipper.cpp"
+				RelativePath="..\..\src\moaicore\MOAIFreetypeFontRipper.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAIFtFontRipper.h"
+				RelativePath="..\..\src\moaicore\MOAIFreetypeFontRipper.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIGlyph.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIGlyph.h"
 				>
 			</File>
 			<File
@@ -779,6 +883,22 @@
 			</File>
 			<File
 				RelativePath="..\..\src\moaicore\MOAITextBox.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAITextFrame.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAITextFrame.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAITextLayout.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAITextLayout.h"
 				>
 			</File>
 		</Filter>
@@ -1195,6 +1315,26 @@
 			</File>
 			<File
 				RelativePath="..\..\src\aku\AKU.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="brush"
+			>
+			<File
+				RelativePath="..\..\src\moaicore\MOAILineBrush.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAILineBrush.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIQuadBrush.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIQuadBrush.h"
 				>
 			</File>
 		</Filter>
