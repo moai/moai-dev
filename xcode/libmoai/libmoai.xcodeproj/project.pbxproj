@@ -1552,6 +1552,52 @@
 		03F135DC13A2EFC000044AE8 /* MOAIWebView.h in Headers */ = {isa = PBXBuildFile; fileRef = 03F135D813A2EFC000044AE8 /* MOAIWebView.h */; };
 		03F135DD13A2EFC000044AE8 /* MOAIWebView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 03F135D913A2EFC000044AE8 /* MOAIWebView.mm */; };
 		071106EF13C6353400EE7C53 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 071106EE13C6353400EE7C53 /* CoreTelephony.framework */; };
+		0767114C13F340FA00121E13 /* dir.c in Sources */ = {isa = PBXBuildFile; fileRef = 0767113513F340FA00121E13 /* dir.c */; };
+		0767114D13F340FA00121E13 /* grp.c in Sources */ = {isa = PBXBuildFile; fileRef = 0767113613F340FA00121E13 /* grp.c */; };
+		0767114E13F340FA00121E13 /* hog.c in Sources */ = {isa = PBXBuildFile; fileRef = 0767113713F340FA00121E13 /* hog.c */; };
+		0767114F13F340FA00121E13 /* lzma.c in Sources */ = {isa = PBXBuildFile; fileRef = 0767113813F340FA00121E13 /* lzma.c */; };
+		0767115013F340FA00121E13 /* mvl.c in Sources */ = {isa = PBXBuildFile; fileRef = 0767113913F340FA00121E13 /* mvl.c */; };
+		0767115113F340FA00121E13 /* qpak.c in Sources */ = {isa = PBXBuildFile; fileRef = 0767113A13F340FA00121E13 /* qpak.c */; };
+		0767115213F340FA00121E13 /* wad.c in Sources */ = {isa = PBXBuildFile; fileRef = 0767113B13F340FA00121E13 /* wad.c */; };
+		0767115313F340FA00121E13 /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = 0767113C13F340FA00121E13 /* zip.c */; };
+		0767115413F340FA00121E13 /* physfs_byteorder.c in Sources */ = {isa = PBXBuildFile; fileRef = 0767113D13F340FA00121E13 /* physfs_byteorder.c */; };
+		0767115513F340FA00121E13 /* physfs_casefolding.h in Headers */ = {isa = PBXBuildFile; fileRef = 0767113E13F340FA00121E13 /* physfs_casefolding.h */; };
+		0767115613F340FA00121E13 /* physfs_internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 0767113F13F340FA00121E13 /* physfs_internal.h */; };
+		0767115713F340FA00121E13 /* physfs_platforms.h in Headers */ = {isa = PBXBuildFile; fileRef = 0767114013F340FA00121E13 /* physfs_platforms.h */; };
+		0767115813F340FA00121E13 /* physfs_unicode.c in Sources */ = {isa = PBXBuildFile; fileRef = 0767114113F340FA00121E13 /* physfs_unicode.c */; };
+		0767115913F340FA00121E13 /* physfs.c in Sources */ = {isa = PBXBuildFile; fileRef = 0767114213F340FA00121E13 /* physfs.c */; };
+		0767115A13F340FA00121E13 /* physfs.h in Headers */ = {isa = PBXBuildFile; fileRef = 0767114313F340FA00121E13 /* physfs.h */; };
+		0767115B13F340FA00121E13 /* beos.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0767114513F340FA00121E13 /* beos.cpp */; };
+		0767115C13F340FA00121E13 /* macosx.c in Sources */ = {isa = PBXBuildFile; fileRef = 0767114613F340FA00121E13 /* macosx.c */; };
+		0767115D13F340FA00121E13 /* os2.c in Sources */ = {isa = PBXBuildFile; fileRef = 0767114713F340FA00121E13 /* os2.c */; };
+		0767115E13F340FA00121E13 /* pocketpc.c in Sources */ = {isa = PBXBuildFile; fileRef = 0767114813F340FA00121E13 /* pocketpc.c */; };
+		0767115F13F340FA00121E13 /* posix.c in Sources */ = {isa = PBXBuildFile; fileRef = 0767114913F340FA00121E13 /* posix.c */; };
+		0767116013F340FA00121E13 /* unix.c in Sources */ = {isa = PBXBuildFile; fileRef = 0767114A13F340FA00121E13 /* unix.c */; };
+		0767116113F340FA00121E13 /* windows.c in Sources */ = {isa = PBXBuildFile; fileRef = 0767114B13F340FA00121E13 /* windows.c */; };
+		0767116213F340FA00121E13 /* dir.c in Sources */ = {isa = PBXBuildFile; fileRef = 0767113513F340FA00121E13 /* dir.c */; };
+		0767116313F340FA00121E13 /* grp.c in Sources */ = {isa = PBXBuildFile; fileRef = 0767113613F340FA00121E13 /* grp.c */; };
+		0767116413F340FA00121E13 /* hog.c in Sources */ = {isa = PBXBuildFile; fileRef = 0767113713F340FA00121E13 /* hog.c */; };
+		0767116513F340FA00121E13 /* lzma.c in Sources */ = {isa = PBXBuildFile; fileRef = 0767113813F340FA00121E13 /* lzma.c */; };
+		0767116613F340FA00121E13 /* mvl.c in Sources */ = {isa = PBXBuildFile; fileRef = 0767113913F340FA00121E13 /* mvl.c */; };
+		0767116713F340FA00121E13 /* qpak.c in Sources */ = {isa = PBXBuildFile; fileRef = 0767113A13F340FA00121E13 /* qpak.c */; };
+		0767116813F340FA00121E13 /* wad.c in Sources */ = {isa = PBXBuildFile; fileRef = 0767113B13F340FA00121E13 /* wad.c */; };
+		0767116913F340FA00121E13 /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = 0767113C13F340FA00121E13 /* zip.c */; };
+		0767116A13F340FA00121E13 /* physfs_byteorder.c in Sources */ = {isa = PBXBuildFile; fileRef = 0767113D13F340FA00121E13 /* physfs_byteorder.c */; };
+		0767116B13F340FA00121E13 /* physfs_casefolding.h in Headers */ = {isa = PBXBuildFile; fileRef = 0767113E13F340FA00121E13 /* physfs_casefolding.h */; };
+		0767116C13F340FA00121E13 /* physfs_internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 0767113F13F340FA00121E13 /* physfs_internal.h */; };
+		0767116D13F340FA00121E13 /* physfs_platforms.h in Headers */ = {isa = PBXBuildFile; fileRef = 0767114013F340FA00121E13 /* physfs_platforms.h */; };
+		0767116E13F340FA00121E13 /* physfs_unicode.c in Sources */ = {isa = PBXBuildFile; fileRef = 0767114113F340FA00121E13 /* physfs_unicode.c */; };
+		0767116F13F340FA00121E13 /* physfs.c in Sources */ = {isa = PBXBuildFile; fileRef = 0767114213F340FA00121E13 /* physfs.c */; };
+		0767117013F340FA00121E13 /* physfs.h in Headers */ = {isa = PBXBuildFile; fileRef = 0767114313F340FA00121E13 /* physfs.h */; };
+		0767117113F340FA00121E13 /* beos.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0767114513F340FA00121E13 /* beos.cpp */; };
+		0767117213F340FA00121E13 /* macosx.c in Sources */ = {isa = PBXBuildFile; fileRef = 0767114613F340FA00121E13 /* macosx.c */; };
+		0767117313F340FA00121E13 /* os2.c in Sources */ = {isa = PBXBuildFile; fileRef = 0767114713F340FA00121E13 /* os2.c */; };
+		0767117413F340FA00121E13 /* pocketpc.c in Sources */ = {isa = PBXBuildFile; fileRef = 0767114813F340FA00121E13 /* pocketpc.c */; };
+		0767117513F340FA00121E13 /* posix.c in Sources */ = {isa = PBXBuildFile; fileRef = 0767114913F340FA00121E13 /* posix.c */; };
+		0767117613F340FA00121E13 /* unix.c in Sources */ = {isa = PBXBuildFile; fileRef = 0767114A13F340FA00121E13 /* unix.c */; };
+		0767117713F340FA00121E13 /* windows.c in Sources */ = {isa = PBXBuildFile; fileRef = 0767114B13F340FA00121E13 /* windows.c */; };
+		0767117C13F3414000121E13 /* ReachabilityListener.h in Headers */ = {isa = PBXBuildFile; fileRef = 0767117A13F3414000121E13 /* ReachabilityListener.h */; };
+		0767117D13F3414000121E13 /* ReachabilityListener.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0767117B13F3414000121E13 /* ReachabilityListener.mm */; };
 		07CDCFB213AA7C5D009674C7 /* Reachability.h in Headers */ = {isa = PBXBuildFile; fileRef = 07CDCFB013AA7C5D009674C7 /* Reachability.h */; };
 		07CDCFB313AA7C5D009674C7 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 07CDCFB113AA7C5D009674C7 /* Reachability.m */; };
 		07D1A8A213EDFD8300604979 /* MOAIBlendMode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07D1A89E13EDFD8300604979 /* MOAIBlendMode.cpp */; };
@@ -3564,6 +3610,30 @@
 		03F135D813A2EFC000044AE8 /* MOAIWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIWebView.h; path = "moaiext-iphone/MOAIWebView.h"; sourceTree = "<group>"; };
 		03F135D913A2EFC000044AE8 /* MOAIWebView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIWebView.mm; path = "moaiext-iphone/MOAIWebView.mm"; sourceTree = "<group>"; };
 		071106EE13C6353400EE7C53 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		0767113513F340FA00121E13 /* dir.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = dir.c; sourceTree = "<group>"; };
+		0767113613F340FA00121E13 /* grp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = grp.c; sourceTree = "<group>"; };
+		0767113713F340FA00121E13 /* hog.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = hog.c; sourceTree = "<group>"; };
+		0767113813F340FA00121E13 /* lzma.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lzma.c; sourceTree = "<group>"; };
+		0767113913F340FA00121E13 /* mvl.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mvl.c; sourceTree = "<group>"; };
+		0767113A13F340FA00121E13 /* qpak.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = qpak.c; sourceTree = "<group>"; };
+		0767113B13F340FA00121E13 /* wad.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = wad.c; sourceTree = "<group>"; };
+		0767113C13F340FA00121E13 /* zip.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = zip.c; sourceTree = "<group>"; };
+		0767113D13F340FA00121E13 /* physfs_byteorder.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = physfs_byteorder.c; path = "../../3rdparty/physfs-2.0.2/physfs_byteorder.c"; sourceTree = SOURCE_ROOT; };
+		0767113E13F340FA00121E13 /* physfs_casefolding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = physfs_casefolding.h; path = "../../3rdparty/physfs-2.0.2/physfs_casefolding.h"; sourceTree = SOURCE_ROOT; };
+		0767113F13F340FA00121E13 /* physfs_internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = physfs_internal.h; path = "../../3rdparty/physfs-2.0.2/physfs_internal.h"; sourceTree = SOURCE_ROOT; };
+		0767114013F340FA00121E13 /* physfs_platforms.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = physfs_platforms.h; path = "../../3rdparty/physfs-2.0.2/physfs_platforms.h"; sourceTree = SOURCE_ROOT; };
+		0767114113F340FA00121E13 /* physfs_unicode.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = physfs_unicode.c; path = "../../3rdparty/physfs-2.0.2/physfs_unicode.c"; sourceTree = SOURCE_ROOT; };
+		0767114213F340FA00121E13 /* physfs.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = physfs.c; path = "../../3rdparty/physfs-2.0.2/physfs.c"; sourceTree = SOURCE_ROOT; };
+		0767114313F340FA00121E13 /* physfs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = physfs.h; path = "../../3rdparty/physfs-2.0.2/physfs.h"; sourceTree = SOURCE_ROOT; };
+		0767114513F340FA00121E13 /* beos.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = beos.cpp; sourceTree = "<group>"; };
+		0767114613F340FA00121E13 /* macosx.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = macosx.c; sourceTree = "<group>"; };
+		0767114713F340FA00121E13 /* os2.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = os2.c; sourceTree = "<group>"; };
+		0767114813F340FA00121E13 /* pocketpc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pocketpc.c; sourceTree = "<group>"; };
+		0767114913F340FA00121E13 /* posix.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = posix.c; sourceTree = "<group>"; };
+		0767114A13F340FA00121E13 /* unix.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = unix.c; sourceTree = "<group>"; };
+		0767114B13F340FA00121E13 /* windows.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = windows.c; sourceTree = "<group>"; };
+		0767117A13F3414000121E13 /* ReachabilityListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ReachabilityListener.h; path = "moaiext-iphone/ReachabilityListener.h"; sourceTree = "<group>"; };
+		0767117B13F3414000121E13 /* ReachabilityListener.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ReachabilityListener.mm; path = "moaiext-iphone/ReachabilityListener.mm"; sourceTree = "<group>"; };
 		07CDCFB013AA7C5D009674C7 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Reachability.h; path = "moaiext-iphone/Reachability.h"; sourceTree = "<group>"; };
 		07CDCFB113AA7C5D009674C7 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Reachability.m; path = "moaiext-iphone/Reachability.m"; sourceTree = "<group>"; };
 		07D1A89E13EDFD8300604979 /* MOAIBlendMode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIBlendMode.cpp; sourceTree = "<group>"; };
@@ -4591,6 +4661,7 @@
 		032409EE13564CAF000ADC60 /* 3rd party */ = {
 			isa = PBXGroup;
 			children = (
+				0767113313F340D000121E13 /* physfs */,
 				032409EF13564CAF000ADC60 /* box2d */,
 				03240A3D13564CAF000ADC60 /* chipmunk */,
 				03240A7613564CAF000ADC60 /* contrib */,
@@ -5327,6 +5398,53 @@
 			);
 			name = Products;
 			sourceTree = "<group>";
+		};
+		0767113313F340D000121E13 /* physfs */ = {
+			isa = PBXGroup;
+			children = (
+				0767113413F340FA00121E13 /* archivers */,
+				0767113D13F340FA00121E13 /* physfs_byteorder.c */,
+				0767113E13F340FA00121E13 /* physfs_casefolding.h */,
+				0767113F13F340FA00121E13 /* physfs_internal.h */,
+				0767114013F340FA00121E13 /* physfs_platforms.h */,
+				0767114113F340FA00121E13 /* physfs_unicode.c */,
+				0767114213F340FA00121E13 /* physfs.c */,
+				0767114313F340FA00121E13 /* physfs.h */,
+				0767114413F340FA00121E13 /* platform */,
+			);
+			name = physfs;
+			sourceTree = "<group>";
+		};
+		0767113413F340FA00121E13 /* archivers */ = {
+			isa = PBXGroup;
+			children = (
+				0767113513F340FA00121E13 /* dir.c */,
+				0767113613F340FA00121E13 /* grp.c */,
+				0767113713F340FA00121E13 /* hog.c */,
+				0767113813F340FA00121E13 /* lzma.c */,
+				0767113913F340FA00121E13 /* mvl.c */,
+				0767113A13F340FA00121E13 /* qpak.c */,
+				0767113B13F340FA00121E13 /* wad.c */,
+				0767113C13F340FA00121E13 /* zip.c */,
+			);
+			name = archivers;
+			path = "../../3rdparty/physfs-2.0.2/archivers";
+			sourceTree = SOURCE_ROOT;
+		};
+		0767114413F340FA00121E13 /* platform */ = {
+			isa = PBXGroup;
+			children = (
+				0767114513F340FA00121E13 /* beos.cpp */,
+				0767114613F340FA00121E13 /* macosx.c */,
+				0767114713F340FA00121E13 /* os2.c */,
+				0767114813F340FA00121E13 /* pocketpc.c */,
+				0767114913F340FA00121E13 /* posix.c */,
+				0767114A13F340FA00121E13 /* unix.c */,
+				0767114B13F340FA00121E13 /* windows.c */,
+			);
+			name = platform;
+			path = "../../3rdparty/physfs-2.0.2/platform";
+			sourceTree = SOURCE_ROOT;
 		};
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
@@ -6393,6 +6511,8 @@
 				CDD06EDC1398BA6200AB0420 /* NSString+MOAILib.mm */,
 				07CDCFB013AA7C5D009674C7 /* Reachability.h */,
 				07CDCFB113AA7C5D009674C7 /* Reachability.m */,
+				0767117A13F3414000121E13 /* ReachabilityListener.h */,
+				0767117B13F3414000121E13 /* ReachabilityListener.mm */,
 			);
 			name = "moaiext-iphone";
 			sourceTree = "<group>";
@@ -7816,6 +7936,10 @@
 				CD218FB513A7FDBA008337E7 /* jansson.h in Headers */,
 				CD218FBA13A7FDBA008337E7 /* strbuffer.h in Headers */,
 				CD218FBC13A7FDBA008337E7 /* utf.h in Headers */,
+				0767116B13F340FA00121E13 /* physfs_casefolding.h in Headers */,
+				0767116C13F340FA00121E13 /* physfs_internal.h in Headers */,
+				0767116D13F340FA00121E13 /* physfs_platforms.h in Headers */,
+				0767117013F340FA00121E13 /* physfs.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8422,6 +8546,10 @@
 				CD218FA613A7FDBA008337E7 /* jansson.h in Headers */,
 				CD218FAB13A7FDBA008337E7 /* strbuffer.h in Headers */,
 				CD218FAD13A7FDBA008337E7 /* utf.h in Headers */,
+				0767115513F340FA00121E13 /* physfs_casefolding.h in Headers */,
+				0767115613F340FA00121E13 /* physfs_internal.h in Headers */,
+				0767115713F340FA00121E13 /* physfs_platforms.h in Headers */,
+				0767115A13F340FA00121E13 /* physfs.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8684,6 +8812,7 @@
 				CDE0AB3413EE03E200CB9F35 /* MOAILineShader-vsh.h in Headers */,
 				CDF86DEC13F09B6D00D2FFFF /* USMatrix3x3.h in Headers */,
 				CDF86DED13F09B6D00D2FFFF /* USMatrix4x4.h in Headers */,
+				0767117C13F3414000121E13 /* ReachabilityListener.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9195,6 +9324,24 @@
 				CD218FB913A7FDBA008337E7 /* strbuffer.c in Sources */,
 				CD218FBB13A7FDBA008337E7 /* utf.c in Sources */,
 				CD218FBD13A7FDBA008337E7 /* value.c in Sources */,
+				0767116213F340FA00121E13 /* dir.c in Sources */,
+				0767116313F340FA00121E13 /* grp.c in Sources */,
+				0767116413F340FA00121E13 /* hog.c in Sources */,
+				0767116513F340FA00121E13 /* lzma.c in Sources */,
+				0767116613F340FA00121E13 /* mvl.c in Sources */,
+				0767116713F340FA00121E13 /* qpak.c in Sources */,
+				0767116813F340FA00121E13 /* wad.c in Sources */,
+				0767116913F340FA00121E13 /* zip.c in Sources */,
+				0767116A13F340FA00121E13 /* physfs_byteorder.c in Sources */,
+				0767116E13F340FA00121E13 /* physfs_unicode.c in Sources */,
+				0767116F13F340FA00121E13 /* physfs.c in Sources */,
+				0767117113F340FA00121E13 /* beos.cpp in Sources */,
+				0767117213F340FA00121E13 /* macosx.c in Sources */,
+				0767117313F340FA00121E13 /* os2.c in Sources */,
+				0767117413F340FA00121E13 /* pocketpc.c in Sources */,
+				0767117513F340FA00121E13 /* posix.c in Sources */,
+				0767117613F340FA00121E13 /* unix.c in Sources */,
+				0767117713F340FA00121E13 /* windows.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10236,6 +10383,24 @@
 				CD218FAA13A7FDBA008337E7 /* strbuffer.c in Sources */,
 				CD218FAC13A7FDBA008337E7 /* utf.c in Sources */,
 				CD218FAE13A7FDBA008337E7 /* value.c in Sources */,
+				0767114C13F340FA00121E13 /* dir.c in Sources */,
+				0767114D13F340FA00121E13 /* grp.c in Sources */,
+				0767114E13F340FA00121E13 /* hog.c in Sources */,
+				0767114F13F340FA00121E13 /* lzma.c in Sources */,
+				0767115013F340FA00121E13 /* mvl.c in Sources */,
+				0767115113F340FA00121E13 /* qpak.c in Sources */,
+				0767115213F340FA00121E13 /* wad.c in Sources */,
+				0767115313F340FA00121E13 /* zip.c in Sources */,
+				0767115413F340FA00121E13 /* physfs_byteorder.c in Sources */,
+				0767115813F340FA00121E13 /* physfs_unicode.c in Sources */,
+				0767115913F340FA00121E13 /* physfs.c in Sources */,
+				0767115B13F340FA00121E13 /* beos.cpp in Sources */,
+				0767115C13F340FA00121E13 /* macosx.c in Sources */,
+				0767115D13F340FA00121E13 /* os2.c in Sources */,
+				0767115E13F340FA00121E13 /* pocketpc.c in Sources */,
+				0767115F13F340FA00121E13 /* posix.c in Sources */,
+				0767116013F340FA00121E13 /* unix.c in Sources */,
+				0767116113F340FA00121E13 /* windows.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10450,6 +10615,7 @@
 				CDEFB41013E37F3C000A9523 /* MOAIVertexFormatMgr.cpp in Sources */,
 				07D1A8A213EDFD8300604979 /* MOAIBlendMode.cpp in Sources */,
 				07D1A8A413EDFD8300604979 /* MOAIFrameBuffer.cpp in Sources */,
+				0767117D13F3414000121E13 /* ReachabilityListener.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10976,6 +11142,7 @@
 					"\"../../3rdparty/openssl-1.0.0d/include-iphone\"",
 					"\"../../3rdparty/curl-7.19.7/include-iphone\"",
 					"\"../../3rdparty/curl-7.19.7/lib\"",
+					"\"../../3rdparty/physfs-2.0.2\"",
 					"\"../../3rdparty/expat-2.0.1/lib\"",
 					"\"../../3rdparty/freetype-2.4.4/include\"",
 					"\"../../3rdparty/box2d-2.1.2/Box2D\"",
@@ -11090,6 +11257,7 @@
 					"\"../../3rdparty/openssl-1.0.0d/include-iphone\"",
 					"\"../../3rdparty/curl-7.19.7/include-iphone\"",
 					"\"../../3rdparty/curl-7.19.7/lib\"",
+					"\"../../3rdparty/physfs-2.0.2\"",
 					"\"../../3rdparty/expat-2.0.1/lib\"",
 					"\"../../3rdparty/freetype-2.4.4/include\"",
 					"\"../../3rdparty/box2d-2.1.2/Box2D\"",

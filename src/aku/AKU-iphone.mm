@@ -3,6 +3,7 @@
 
 #import <aku/AKU-iphone.h>
 #import <moaiext-iphone/moaiext-iphone.h>
+#import <moaiext-iphone/Reachability.h>
 #import <moaicore/MOAIEnvironment.h>
 #import <CoreTelephony/CTTelephonyNetworkInfo.h>
 #import <CoreTelephony/CTCarrier.h>
