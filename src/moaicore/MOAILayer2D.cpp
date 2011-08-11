@@ -396,6 +396,10 @@ void MOAILayer2D::Draw () {
 		#endif
 	}
 	
+	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM );
+	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_VIEW_TRANSFORM, camera );
+	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_PROJ_TRANSFORM, viewport.GetProjMtx ());
+	
 	if ( this->mPartition ) {
 		
 		USQuad viewQuad = gfxDevice.GetViewQuad ();
