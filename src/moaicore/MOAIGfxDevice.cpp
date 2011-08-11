@@ -167,7 +167,7 @@ void MOAIGfxDevice::DetectContext () {
 	
 	this->mIsProgrammable = ( this->mMajorVersion >= 2 );
 	
-	#if defined ( MOAI_OS_IPHONE ) || defined ( MOAI_OS_ANDROID )
+	#if defined ( __GLEW_H__ )
 	
 		#if GL_EXT_framebuffer_object
 	  
