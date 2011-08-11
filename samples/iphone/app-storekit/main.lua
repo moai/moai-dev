@@ -6,9 +6,6 @@
 
 print ( "hello, iPhone!" )
 
-print ( iphone.documents )
-print ( iphone.caches )
-print ( iphone.resources )
 
 function onPaymentQueueTransaction ( transaction )
 

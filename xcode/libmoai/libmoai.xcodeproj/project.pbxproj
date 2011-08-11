@@ -1598,6 +1598,14 @@
 		0767117713F340FA00121E13 /* windows.c in Sources */ = {isa = PBXBuildFile; fileRef = 0767114B13F340FA00121E13 /* windows.c */; };
 		0767117C13F3414000121E13 /* ReachabilityListener.h in Headers */ = {isa = PBXBuildFile; fileRef = 0767117A13F3414000121E13 /* ReachabilityListener.h */; };
 		0767117D13F3414000121E13 /* ReachabilityListener.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0767117B13F3414000121E13 /* ReachabilityListener.mm */; };
+		07AF16C013F45A0100E38D1D /* MOAIPartitionResultBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07AF16BC13F45A0100E38D1D /* MOAIPartitionResultBuffer.cpp */; };
+		07AF16C113F45A0100E38D1D /* MOAIPartitionResultBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 07AF16BD13F45A0100E38D1D /* MOAIPartitionResultBuffer.h */; };
+		07AF16C213F45A0100E38D1D /* MOAIPartitionResultMgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07AF16BE13F45A0100E38D1D /* MOAIPartitionResultMgr.cpp */; };
+		07AF16C313F45A0100E38D1D /* MOAIPartitionResultMgr.h in Headers */ = {isa = PBXBuildFile; fileRef = 07AF16BF13F45A0100E38D1D /* MOAIPartitionResultMgr.h */; };
+		07AF16C413F45A0100E38D1D /* MOAIPartitionResultBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07AF16BC13F45A0100E38D1D /* MOAIPartitionResultBuffer.cpp */; };
+		07AF16C513F45A0100E38D1D /* MOAIPartitionResultBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 07AF16BD13F45A0100E38D1D /* MOAIPartitionResultBuffer.h */; };
+		07AF16C613F45A0100E38D1D /* MOAIPartitionResultMgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07AF16BE13F45A0100E38D1D /* MOAIPartitionResultMgr.cpp */; };
+		07AF16C713F45A0100E38D1D /* MOAIPartitionResultMgr.h in Headers */ = {isa = PBXBuildFile; fileRef = 07AF16BF13F45A0100E38D1D /* MOAIPartitionResultMgr.h */; };
 		07CDCFB213AA7C5D009674C7 /* Reachability.h in Headers */ = {isa = PBXBuildFile; fileRef = 07CDCFB013AA7C5D009674C7 /* Reachability.h */; };
 		07CDCFB313AA7C5D009674C7 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 07CDCFB113AA7C5D009674C7 /* Reachability.m */; };
 		07D1A8A213EDFD8300604979 /* MOAIBlendMode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07D1A89E13EDFD8300604979 /* MOAIBlendMode.cpp */; };
@@ -3634,6 +3642,10 @@
 		0767114B13F340FA00121E13 /* windows.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = windows.c; sourceTree = "<group>"; };
 		0767117A13F3414000121E13 /* ReachabilityListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ReachabilityListener.h; path = "moaiext-iphone/ReachabilityListener.h"; sourceTree = "<group>"; };
 		0767117B13F3414000121E13 /* ReachabilityListener.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ReachabilityListener.mm; path = "moaiext-iphone/ReachabilityListener.mm"; sourceTree = "<group>"; };
+		07AF16BC13F45A0100E38D1D /* MOAIPartitionResultBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIPartitionResultBuffer.cpp; sourceTree = "<group>"; };
+		07AF16BD13F45A0100E38D1D /* MOAIPartitionResultBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIPartitionResultBuffer.h; sourceTree = "<group>"; };
+		07AF16BE13F45A0100E38D1D /* MOAIPartitionResultMgr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIPartitionResultMgr.cpp; sourceTree = "<group>"; };
+		07AF16BF13F45A0100E38D1D /* MOAIPartitionResultMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIPartitionResultMgr.h; sourceTree = "<group>"; };
 		07CDCFB013AA7C5D009674C7 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Reachability.h; path = "moaiext-iphone/Reachability.h"; sourceTree = "<group>"; };
 		07CDCFB113AA7C5D009674C7 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Reachability.m; path = "moaiext-iphone/Reachability.m"; sourceTree = "<group>"; };
 		07D1A89E13EDFD8300604979 /* MOAIBlendMode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIBlendMode.cpp; sourceTree = "<group>"; };
@@ -5791,6 +5803,10 @@
 		CD148EEE1395AE6A00A3F501 /* partition */ = {
 			isa = PBXGroup;
 			children = (
+				07AF16BC13F45A0100E38D1D /* MOAIPartitionResultBuffer.cpp */,
+				07AF16BD13F45A0100E38D1D /* MOAIPartitionResultBuffer.h */,
+				07AF16BE13F45A0100E38D1D /* MOAIPartitionResultMgr.cpp */,
+				07AF16BF13F45A0100E38D1D /* MOAIPartitionResultMgr.h */,
 				0324E57213564BC7000ADC60 /* MOAIPartition.cpp */,
 				0324E57313564BC7000ADC60 /* MOAIPartition.h */,
 				0324E57413564BC7000ADC60 /* MOAIPartitionCell.cpp */,
@@ -8181,6 +8197,8 @@
 				CDE0AB3A13EE03E200CB9F35 /* MOAILineShader-vsh.h in Headers */,
 				CDF86DEE13F09B6D00D2FFFF /* USMatrix3x3.h in Headers */,
 				CDF86DEF13F09B6D00D2FFFF /* USMatrix4x4.h in Headers */,
+				07AF16C513F45A0100E38D1D /* MOAIPartitionResultBuffer.h in Headers */,
+				07AF16C713F45A0100E38D1D /* MOAIPartitionResultMgr.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8813,6 +8831,8 @@
 				CDF86DEC13F09B6D00D2FFFF /* USMatrix3x3.h in Headers */,
 				CDF86DED13F09B6D00D2FFFF /* USMatrix4x4.h in Headers */,
 				0767117C13F3414000121E13 /* ReachabilityListener.h in Headers */,
+				07AF16C113F45A0100E38D1D /* MOAIPartitionResultBuffer.h in Headers */,
+				07AF16C313F45A0100E38D1D /* MOAIPartitionResultMgr.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9539,6 +9559,8 @@
 				CDEFB42B13E37F3C000A9523 /* MOAIVertexFormatMgr.cpp in Sources */,
 				07D1A8A613EDFD8300604979 /* MOAIBlendMode.cpp in Sources */,
 				07D1A8A813EDFD8300604979 /* MOAIFrameBuffer.cpp in Sources */,
+				07AF16C413F45A0100E38D1D /* MOAIPartitionResultBuffer.cpp in Sources */,
+				07AF16C613F45A0100E38D1D /* MOAIPartitionResultMgr.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10616,6 +10638,8 @@
 				07D1A8A213EDFD8300604979 /* MOAIBlendMode.cpp in Sources */,
 				07D1A8A413EDFD8300604979 /* MOAIFrameBuffer.cpp in Sources */,
 				0767117D13F3414000121E13 /* ReachabilityListener.mm in Sources */,
+				07AF16C013F45A0100E38D1D /* MOAIPartitionResultBuffer.cpp in Sources */,
+				07AF16C213F45A0100E38D1D /* MOAIPartitionResultMgr.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
