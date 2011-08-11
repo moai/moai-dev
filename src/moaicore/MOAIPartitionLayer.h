@@ -18,9 +18,9 @@ private:
 	float									mCellSize;
 
 	//----------------------------------------------------------------//
-	void					GatherProps			( MOAIPartition& partition, MOAIProp* ignore, u32 mask );
-	void					GatherProps			( MOAIPartition& partition, MOAIProp* ignore, USVec2D point, u32 mask );
-	void					GatherProps			( MOAIPartition& partition, MOAIProp* ignore, USRect rect, u32 mask );
+	void					GatherProps			( MOAIPartitionResultBuffer& results, MOAIProp* ignore, u32 mask );
+	void					GatherProps			( MOAIPartitionResultBuffer& results, MOAIProp* ignore, USVec2D point, u32 mask );
+	void					GatherProps			( MOAIPartitionResultBuffer& results, MOAIProp* ignore, USRect rect, u32 mask );
 	MOAIPartitionCell*		GetCell				( MOAIProp& prop );
 	void					Init				( float cellSize, u32 width, u32 height );
 	void					PlaceProp			( MOAIProp& prop );

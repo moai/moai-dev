@@ -10,11 +10,11 @@
 #include <moaicore/MOAIGfxDevice.h>
 #include <moaicore/MOAILayer2D.h>
 #include <moaicore/MOAILogMessages.h>
+#include <moaicore/MOAIPartitionResultBuffer.h>
+#include <moaicore/MOAIPartitionResultMgr.h>
 #include <moaicore/MOAIProp2D.h>
 #include <moaicore/MOAITexture.h>
 #include <moaicore/MOAITransform.h>
-
-#define MAX_RENDERABLES 512
 
 //================================================================//
 // local
@@ -405,28 +405,17 @@ void MOAILayer2D::Draw () {
 		USQuad viewQuad = gfxDevice.GetViewQuad ();
 		USRect viewBounds = viewQuad.GetBounds ();
 		
-		this->mPartition->GatherProps ( viewBounds, 0, MOAIProp::CAN_DRAW | MOAIProp::CAN_DRAW_DEBUG );
-		u32 totalResults = this->mPartition->GetTotalResults ();
-		if (( !totalResults ) || ( totalResults > MAX_RENDERABLES )) return;
+		MOAIPartitionResultBuffer& buffer = MOAIPartitionResultMgr::Get ().GetBuffer ();
 		
-		// initialize the sort buffer
-		USRadixKey16 < MOAIProp* > key [ MAX_RENDERABLES ];
-		USRadixKey16 < MOAIProp* > swap [ MAX_RENDERABLES ];
+		u32 totalResults = this->mPartition->GatherProps ( buffer, viewBounds, 0, MOAIProp::CAN_DRAW | MOAIProp::CAN_DRAW_DEBUG );
+		if ( !totalResults ) return;
 		
-		u32 count = 0;
-		while ( MOAIProp* prop = this->mPartition->PopResult ()) {
-			s16 priority = ( s16 )prop->GetPriority ();
-			key [ count ].mKey = (( priority ^ 0x8000 ) | ( priority & 0x7fff ));
-			key [ count ].mData = prop;
-			count++;
-		}
-
-		// sort
-		USRadixKey16 < MOAIProp* >* sort = RadixSort16 < MOAIProp* >( key, swap, count );
+		// TODO: allow configurable sort
+		buffer.Sort ( MOAIPartitionResultBuffer::SORT_PRIORITY );
 
 		// render the sorted list
-		for ( u32 i = 0; i < count; ++i ) {
-			MOAIProp* prop = sort [ i ].mData;
+		for ( u32 i = 0; i < totalResults; ++i ) {
+			MOAIProp* prop = buffer.GetResultUnsafe ( i );
 			prop->Draw ();
 			prop->DrawDebug ();
 		}

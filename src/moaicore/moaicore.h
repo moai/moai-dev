@@ -71,6 +71,8 @@
 #include <moaicore/MOAIPartition.h>
 #include <moaicore/MOAIPartitionCell.h>
 #include <moaicore/MOAIPartitionLayer.h>
+#include <moaicore/MOAIPartitionResultBuffer.h>
+#include <moaicore/MOAIPartitionResultMgr.h>
 #include <moaicore/MOAIPointerSensor.h>
 #include <moaicore/MOAIProp.h>
 #include <moaicore/MOAIProp2D.h>

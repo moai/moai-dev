@@ -13,6 +13,11 @@ public:
 
 	u16		mKey;
 	TYPE	mData;
+	
+	//----------------------------------------------------------------//
+	inline operator u16 () {
+		return mKey;
+	}
 };
 
 //================================================================//
@@ -21,11 +26,11 @@ public:
 
 //----------------------------------------------------------------//
 template < typename TYPE >
-USRadixKey16 < TYPE >* RadixSort16 ( USRadixKey16 < TYPE >* keyBuffer, USRadixKey16 < TYPE >* swapBuffer, u32 total ) {
+TYPE* RadixSort16 ( TYPE* keyBuffer, TYPE* swapBuffer, u32 total ) {
 
-	USRadixKey16 < TYPE >* bufferA = keyBuffer;
-	USRadixKey16 < TYPE >* bufferB = swapBuffer;
-	USRadixKey16 < TYPE >* bufferC = 0;
+	TYPE* bufferA = keyBuffer;
+	TYPE* bufferB = swapBuffer;
+	TYPE* bufferC = 0;
 
 	// Create the offset tables on the stack
 	u16 offsets0 [ 64 ];	// LSB
@@ -39,7 +44,7 @@ USRadixKey16 < TYPE >* RadixSort16 ( USRadixKey16 < TYPE >* keyBuffer, USRadixKe
 	// Build the histograms
 	for ( u32 i = 0; i < total; ++i ) {
 
-		u16 key = bufferA [ i ].mKey;
+		u16 key = bufferA [ i ];
 		++offsets0 [( key >> 0x00 ) & 0x0f ];
 		++offsets1 [( key >> 0x04 ) & 0x0f ];
 		++offsets2 [( key >> 0x08 ) & 0x0f ];
@@ -47,7 +52,7 @@ USRadixKey16 < TYPE >* RadixSort16 ( USRadixKey16 < TYPE >* keyBuffer, USRadixKe
 	}
 
 	// Check to see which passes may be skipped
-	u16 anyKey = bufferA [ 0 ].mKey;
+	u16 anyKey = bufferA [ 0 ];
 	bool pass0 = offsets0 [( anyKey >> 0x00 ) & 0x0f ] < total;
 	bool pass1 = offsets1 [( anyKey >> 0x04 ) & 0x0f ] < total;
 	bool pass2 = offsets2 [( anyKey >> 0x08 ) & 0x0f ] < total;
@@ -87,7 +92,7 @@ USRadixKey16 < TYPE >* RadixSort16 ( USRadixKey16 < TYPE >* keyBuffer, USRadixKe
 	if ( pass0 ) {
 		for ( u32 i = 0; i < total; ++i ) {
 
-			key = ((( bufferA [ i ].mKey ) >> 0x00 ) & 0x0f );
+			key = ((( bufferA [ i ]) >> 0x00 ) & 0x0f );
 			offset = offsets0 [ key ]++;
 			bufferB [ offset ] = bufferA [ i ];
 		}
@@ -99,7 +104,7 @@ USRadixKey16 < TYPE >* RadixSort16 ( USRadixKey16 < TYPE >* keyBuffer, USRadixKe
 	if ( pass1 ) {
 		for ( u32 i = 0; i < total; ++i ) {
 
-			key = ((( bufferA [ i ].mKey ) >> 0x04 ) & 0x0f );
+			key = ((( bufferA [ i ]) >> 0x04 ) & 0x0f );
 			offset = offsets1 [ key ]++;
 			bufferB [ offset ] = bufferA [ i ];
 		}
@@ -111,7 +116,7 @@ USRadixKey16 < TYPE >* RadixSort16 ( USRadixKey16 < TYPE >* keyBuffer, USRadixKe
 	if ( pass2 ) {
 		for ( u32 i = 0; i < total; ++i ) {
 
-			key = ((( bufferA [ i ].mKey ) >> 0x08 ) & 0x0f );
+			key = ((( bufferA [ i ]) >> 0x08 ) & 0x0f );
 			offset = offsets2 [ key ]++;
 			bufferB [ offset ] = bufferA [ i ];
 		}
@@ -123,7 +128,7 @@ USRadixKey16 < TYPE >* RadixSort16 ( USRadixKey16 < TYPE >* keyBuffer, USRadixKe
 	if ( pass3 ) {
 		for ( u32 i = 0; i < total; ++i ) {
 
-			key = ((( bufferA [ i ].mKey ) >> 0x0c ) & 0x0f );
+			key = ((( bufferA [ i ]) >> 0x0c ) & 0x0f );
 			offset = offsets3 [ key ]++;
 			bufferB [ offset ] = bufferA [ i ];
 		}
