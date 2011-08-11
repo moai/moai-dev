@@ -15,7 +15,7 @@
 			for a list of trait bitmasks.
 	
 	@in		MOAITraits self
-	@opt	MOAITransformBase mask	Default value is MOAITraits.INHERIT_TRANSFORM + MOAITraits.INHERIT_COLOR.
+	@opt	MOAITransformBase mask	Default value is MOAITraits.INHERIT_TRANSFORM + MOAITraits.INHERIT_COLOR + MOAITraits.INHERIT_VISIBLE.
 	@out	nil
 */
 int MOAITraits::_setTraitMask ( lua_State* L ) {

@@ -109,14 +109,14 @@ void USImage::BleedRect ( int xMin, int yMin, int xMax, int yMax ) {
 	u32 copySize = ( u32 )(( xMax - xMin ) * pixelSize );
 	
 	if ( yMin > 0 ) {
-		void* srcRow = ( void* )(( u32 )this->mBitmap + ( rowSize * yMin ) + ( xMin * pixSize ));
-		void* destRow = ( void* )(( u32 )this->mBitmap + ( rowSize * ( yMin - 1 )) + ( xMin * pixSize ));
+		void* srcRow = ( void* )(( uintptr )this->mBitmap + ( rowSize * yMin ) + ( xMin * pixSize ));
+		void* destRow = ( void* )(( uintptr )this->mBitmap + ( rowSize * ( yMin - 1 )) + ( xMin * pixSize ));
 		memcpy ( destRow, srcRow, copySize );
 	}
 	
 	if ( yMax < height ) {
-		void* srcRow = ( void* )(( u32 )this->mBitmap + ( rowSize * ( yMax - 1 )) + ( xMin * pixSize ));
-		void* destRow = ( void* )(( u32 )this->mBitmap + ( rowSize * yMax ) + ( xMin * pixSize ));
+		void* srcRow = ( void* )(( uintptr )this->mBitmap + ( rowSize * ( yMax - 1 )) + ( xMin * pixSize ));
+		void* destRow = ( void* )(( uintptr )this->mBitmap + ( rowSize * yMax ) + ( xMin * pixSize ));
 		memcpy ( destRow, srcRow, copySize );
 	}
 }

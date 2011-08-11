@@ -237,7 +237,7 @@ int MOAISim::_getMemoryUsage ( lua_State* L ) {
 //----------------------------------------------------------------//
 /**	@name	getPerformance
 	@text	Returns an estimated frames per second based on measurements
-			taked at every render.
+			taken at every render.
 
 	@out	number fps		Estimated frames per second.
 */
@@ -741,13 +741,6 @@ void MOAISim::Update () {
 		this->mTime += step; \
 	} \
 } while(0)
-	
-	
-	// Fake sleep
-	//			USDeviceTime::fakeyTime += 8 * 3600;
-	//			this->mDeviceTime = USDeviceTime::GetTimeInSeconds ();
-	//			this->mTime = this->mDeviceTime;
-	//			printf("REMOVEME: faking extended sleep\n");
 	
 	
 	// We potentially "drop" update frames if we've gone a long time

@@ -252,7 +252,6 @@ MOAIBox2DJoint::~MOAIBox2DJoint () {
 //----------------------------------------------------------------//
 void MOAIBox2DJoint::RegisterLuaClass ( USLuaState& state ) {
 	MOAIBox2DPrim::RegisterLuaClass( state );
-//	UNUSED ( state );
 }
 
 //----------------------------------------------------------------//
