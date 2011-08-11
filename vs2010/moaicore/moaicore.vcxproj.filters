@@ -414,6 +414,12 @@
     <ClCompile Include="..\..\src\moaicore\MOAIBlendMode.cpp">
       <Filter>src\gfx</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIPartitionResultBuffer.cpp">
+      <Filter>src\partition</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIPartitionResultMgr.cpp">
+      <Filter>src\partition</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\moaicore\MOAIAction.h">
@@ -760,6 +766,12 @@
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIBlendMode.h">
       <Filter>src\gfx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIPartitionResultBuffer.h">
+      <Filter>src\partition</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIPartitionResultMgr.h">
+      <Filter>src\partition</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -286,6 +286,8 @@
     <ClCompile Include="..\..\src\moaicore\MOAIParticleTimedEmitter.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIPartitionCell.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIPartitionLayer.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAIPartitionResultBuffer.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAIPartitionResultMgr.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIProp.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIProp2D.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIQuadBrush.cpp" />
@@ -404,6 +406,8 @@
     <ClInclude Include="..\..\src\moaicore\MOAIParticleTimedEmitter.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIPartitionCell.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIPartitionLayer.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAIPartitionResultBuffer.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAIPartitionResultMgr.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIProp.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIProp2D.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIPvrHeader.h" />
