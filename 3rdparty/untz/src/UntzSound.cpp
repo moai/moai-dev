@@ -9,7 +9,12 @@
 #if defined(WIN32)
 #include <Native/Win/DShowAudioSource.h>
 #else
+#ifdef __APPLE__
 #include "ExtAudioFileAudioSource.h"
+#endif
+#ifdef __ANDROID__
+#include "WaveFileAudioSource.h"
+#endif
 #endif
 
 using namespace UNTZ;
@@ -52,7 +57,12 @@ Sound* Sound::create(const RString& path, bool loadIntoMemory)
 			return 0;
 		}
 #else
+#ifdef __APPLE__
 		ExtAudioFileAudioSource *source = new ExtAudioFileAudioSource();
+#endif
+#ifdef __ANDROID__
+        WaveFileAudioSource *source = new WaveFileAudioSource();
+#endif
 		if(source->init(path, loadIntoMemory))
         {
             newSound->mpData = new UNTZ::SoundData();

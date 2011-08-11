@@ -13,20 +13,23 @@ typedef long long Int64;
 typedef short Int16;
 typedef unsigned long ULong;
 
-#ifndef WIN32
-#ifdef MACOSX
-	#include <Carbon/Carbon.h>
+#if defined(__APPLE__)
+    #if defined(MACOSX)
+        #include <Carbon/Carbon.h>
+    #else
+        #include <MacTypes.h>
+    #endif
 #else
-	#include <MacTypes.h>
-#endif
-#else
-typedef unsigned int UInt32;
-typedef unsigned char UInt8;
+    typedef unsigned int UInt32;
+    typedef signed short SInt16;
+    typedef unsigned short UInt16;
+    typedef unsigned char UInt8;
 #endif
 
+
 #if defined(_DEBUG)
-	#ifdef __GNUC__
-		#define RPRINT(fmt...) printf(fmt)
+	#if defined(__ANDROID__)
+		#define RPRINT(fmt, ...) printf(fmt)
 	#else
 		#define RPRINT(fmt, ...) printf(fmt, __VA_ARGS__)
 	#endif

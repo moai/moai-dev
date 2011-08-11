@@ -73,7 +73,7 @@ $(SRC_PATH)/3rdparty/tinyxml \
 $(SRC_PATH)/3rdparty/openssl-1.0.0d/include-android \
 $(SRC_PATH)/3rdparty/physfs-2.0.2 \
 $(SRC_PATH)/3rdparty/untz/include \
-$(SRC_PATH)/src/moaiext-untz \
+$(SRC_PATH)/src/moaiext-untz
 
 #----------------------------------------------------------------#
 # included files
