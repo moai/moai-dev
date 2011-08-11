@@ -572,7 +572,7 @@ void MOAIBox2DWorld::DrawDebug () {
 		MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 		
 		gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_WORLD, MOAIGfxDevice::VTX_STAGE_PROJ );
-		gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_STAGE_WORLD );
+		gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM );
 		
 		this->mDebugDraw->mScale = 1.0f / this->mUnitsToMeters;
 		this->mWorld->DrawDebugData ();
@@ -612,7 +612,7 @@ MOAIBox2DWorld::MOAIBox2DWorld () :
 		b2DebugDraw::e_shapeBit			|
 		b2DebugDraw::e_jointBit			|
 		//b2DebugDraw::e_aabbBit			|
-		b2DebugDraw::e_pairBit			|
+		//b2DebugDraw::e_pairBit			|
 		b2DebugDraw::e_centerOfMassBit
 	);
 }
