@@ -12,16 +12,16 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIPartitionLayer::GatherProps ( MOAIPartition& partition, MOAIProp* ignore, u32 mask ) {
+void MOAIPartitionLayer::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignore, u32 mask ) {
 
 	u32 totalCells = this->mCells.Size ();
 	for ( u32 i = 0; i < totalCells; ++i ) {
-		this->mCells [ i ].GatherProps ( partition, ignore, mask );
+		this->mCells [ i ].GatherProps ( results, ignore, mask );
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAIPartitionLayer::GatherProps ( MOAIPartition& partition, MOAIProp* ignore, USVec2D point, u32 mask ) {
+void MOAIPartitionLayer::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignore, USVec2D point, u32 mask ) {
 
 	float halfSize = this->mCellSize * 0.5f;
 	point.mX = point.mX - halfSize;
@@ -37,16 +37,16 @@ void MOAIPartitionLayer::GatherProps ( MOAIPartition& partition, MOAIProp* ignor
 	
 	for ( int y = 0; y < yTotal; ++y ) {
 		for ( int x = 0; x < xTotal; ++x ) {
-		
+			
 			MOAICellCoord offset = coord.MakeOffset ( x, y );
 			int addr = this->mGridSpace.GetCellAddr ( offset );
-			this->mCells [ addr ].GatherProps ( partition, ignore, point, mask );
+			this->mCells [ addr ].GatherProps ( results, ignore, point, mask );
 		}
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAIPartitionLayer::GatherProps ( MOAIPartition& partition, MOAIProp* ignore, USRect rect, u32 mask ) {
+void MOAIPartitionLayer::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignore, USRect rect, u32 mask ) {
 
 	float halfSize = this->mCellSize * 0.5f;
 
@@ -64,10 +64,10 @@ void MOAIPartitionLayer::GatherProps ( MOAIPartition& partition, MOAIProp* ignor
 
 	for ( int y = 0; y < yTotal; ++y ) {
 		for ( int x = 0; x < xTotal; ++x ) {
-		
+			
 			MOAICellCoord offset = coord.MakeOffset ( x, -y );
 			u32 addr = this->mGridSpace.GetCellAddr ( offset );
-			this->mCells [ addr ].GatherProps ( partition, ignore, rect, mask );
+			this->mCells [ addr ].GatherProps ( results, ignore, rect, mask );
 		}
 	}
 }

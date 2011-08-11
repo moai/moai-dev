@@ -6,6 +6,8 @@
 #include <moaicore/MOAIPartition.h>
 #include <moaicore/MOAIPartitionCell.h>
 #include <moaicore/MOAIPartitionLayer.h>
+#include <moaicore/MOAIPartitionResultBuffer.h>
+#include <moaicore/MOAIPartitionResultMgr.h>
 #include <moaicore/MOAIProp.h>
 
 //================================================================//
@@ -65,11 +67,13 @@ int MOAIPartition::_propForPoint ( lua_State* L ) {
 	vec.mX = state.GetValue < float >( 2, 0.0f );
 	vec.mY = state.GetValue < float >( 3, 0.0f );
 
-	u32 total = self->GatherProps ( vec, 0 );
+	MOAIPartitionResultBuffer& buffer = MOAIPartitionResultMgr::Get ().GetBuffer ();
+
+	u32 total = self->GatherProps ( buffer, vec, 0 );
 	if ( total ) {
 	
-		MOAIProp* prop = self->PopResult ();
-		while ( MOAIProp* test = self->PopResult ()) {
+		MOAIProp* prop = buffer.PopResult ();
+		while ( MOAIProp* test = buffer.PopResult ()) {
 			if ( test->GetPriority () > prop->GetPriority ()) {
 				prop = test;
 			}
@@ -96,9 +100,11 @@ int MOAIPartition::_propListForPoint ( lua_State* L ) {
 	vec.mX = state.GetValue < float >( 2, 0.0f );
 	vec.mY = state.GetValue < float >( 3, 0.0f );
 
-	u32 total = self->GatherProps ( vec, 0 );
+	MOAIPartitionResultBuffer& buffer = MOAIPartitionResultMgr::Get ().GetBuffer ();
+
+	u32 total = self->GatherProps ( buffer, vec, 0 );
 	if ( total ) {
-		self->PushResultsList ( L );
+		buffer.PushResultsList ( L );
 		return 1;
 	}
 	return 0;
@@ -124,9 +130,11 @@ int MOAIPartition::_propListForRect ( lua_State* L ) {
 	rect.mXMax = state.GetValue < float >( 4, 0.0f );
 	rect.mYMax = state.GetValue < float >( 5, 0.0f );
 
-	u32 total = self->GatherProps ( rect, 0 );
+	MOAIPartitionResultBuffer& buffer = MOAIPartitionResultMgr::Get ().GetBuffer ();
+
+	u32 total = self->GatherProps ( buffer, rect, 0 );
 	if ( total ) {
-		self->PushResultsList ( L );
+		buffer.PushResultsList ( L );
 		return 1;
 	}
 	return 0;
@@ -219,9 +227,12 @@ int MOAIPartition::_sortedPropListForPoint ( lua_State* L ) {
 	vec.mX = state.GetValue < float >( 2, 0.0f );
 	vec.mY = state.GetValue < float >( 3, 0.0f );
 	
-	u32 total = self->GatherProps ( vec, 0 );
+	MOAIPartitionResultBuffer& buffer = MOAIPartitionResultMgr::Get ().GetBuffer ();
+	
+	u32 total = self->GatherProps ( buffer, vec, 0 );
 	if ( total ) {
-		self->PushSortedResultsList ( L );
+		buffer.Sort ( MOAIPartitionResultBuffer::SORT_PRIORITY ); // TODO: pass in as param
+		buffer.PushResultsList ( L );
 		return 1;
 	}
 	return 0;
@@ -248,9 +259,12 @@ int MOAIPartition::_sortedPropListForRect ( lua_State* L ) {
 	rect.mXMax = state.GetValue < float >( 4, 0.0f );
 	rect.mYMax = state.GetValue < float >( 5, 0.0f );
 	
-	u32 total = self->GatherProps ( rect, 0 );
+	MOAIPartitionResultBuffer& buffer = MOAIPartitionResultMgr::Get ().GetBuffer ();
+	
+	u32 total = self->GatherProps ( buffer, rect, 0 );
 	if ( total ) {
-		self->PushSortedResultsList ( L );
+		buffer.Sort ( MOAIPartitionResultBuffer::SORT_PRIORITY ); // TODO: pass in as param
+		buffer.PushResultsList ( L );
 		return 1;
 	}
 	return 0;
@@ -272,53 +286,58 @@ void MOAIPartition::AffirmPriority ( MOAIProp& prop ) {
 //----------------------------------------------------------------//
 void MOAIPartition::Clear () {
 
-	this->GatherProps ( 0, 0 );
-	while ( MOAIProp* prop = this->PopResult ()) {
+	MOAIPartitionResultBuffer& buffer = MOAIPartitionResultMgr::Get ().GetBuffer ();
+
+	this->GatherProps ( buffer, 0, 0 );
+	while ( MOAIProp* prop = buffer.PopResult ()) {
 		this->RemoveProp ( *prop );
 	}
 }
 
 //----------------------------------------------------------------//
-u32 MOAIPartition::GatherProps ( MOAIProp* ignore, u32 mask ) {
+u32 MOAIPartition::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignore, u32 mask ) {
 	
-	this->ResetResults ();
+	results.Reset ();
 	
 	u32 totalLayers = this->mLayers.Size ();
 	for ( u32 i = 0; i < totalLayers; ++i ) {
-		this->mLayers [ i ].GatherProps ( *this, ignore, mask );
+		this->mLayers [ i ].GatherProps ( results, ignore, mask );
 	}
-	this->mGlobals.GatherProps ( *this, ignore, mask );
-	this->mEmpties.GatherProps ( *this, ignore, mask );
+	this->mGlobals.GatherProps ( results, ignore, mask );
+	this->mEmpties.GatherProps ( results, ignore, mask );
 	
-	return this->mTotalResults;
+	results.FinishQuery ();
+	return results.mTotalResults;
 }
 
 //----------------------------------------------------------------//
-u32 MOAIPartition::GatherProps ( USVec2D& point, MOAIProp* ignore, u32 mask ) {
+u32 MOAIPartition::GatherProps ( MOAIPartitionResultBuffer& results, USVec2D& point, MOAIProp* ignore, u32 mask ) {
 	
-	this->ResetResults ();
+	results.Reset ();
 	
 	u32 totalLayers = this->mLayers.Size ();
 	for ( u32 i = 0; i < totalLayers; ++i ) {
-		this->mLayers [ i ].GatherProps ( *this, ignore, point, mask );
+		this->mLayers [ i ].GatherProps ( results, ignore, point, mask );
 	}
-	this->mGlobals.GatherProps ( *this, ignore, point, mask );
+	this->mGlobals.GatherProps ( results, ignore, point, mask );
 	
-	return this->mTotalResults;
+	results.FinishQuery ();
+	return results.mTotalResults;
 }
 
 //----------------------------------------------------------------//
-u32 MOAIPartition::GatherProps ( USRect& rect, MOAIProp* ignore, u32 mask ) {
+u32 MOAIPartition::GatherProps ( MOAIPartitionResultBuffer& results, USRect& rect, MOAIProp* ignore, u32 mask ) {
 	
-	this->ResetResults ();
+	results.Reset ();
 	
 	u32 totalLayers = this->mLayers.Size ();
 	for ( u32 i = 0; i < totalLayers; ++i ) {
-		this->mLayers [ i ].GatherProps ( *this, ignore, rect, mask );
+		this->mLayers [ i ].GatherProps ( results, ignore, rect, mask );
 	}
-	this->mGlobals.GatherProps ( *this, ignore, rect, mask );
+	this->mGlobals.GatherProps ( results, ignore, rect, mask );
 	
-	return this->mTotalResults;
+	results.FinishQuery ();
+	return results.mTotalResults;
 }
 
 //----------------------------------------------------------------//
@@ -346,8 +365,6 @@ void MOAIPartition::InsertProp ( MOAIProp& prop ) {
 
 //----------------------------------------------------------------//
 MOAIPartition::MOAIPartition () :
-	mTotalResults ( 0 ),
-	mResults ( 0 ),
 	mPriorityCounter ( 0 ) {
 	
 	RTTI_BEGIN
@@ -359,77 +376,6 @@ MOAIPartition::MOAIPartition () :
 MOAIPartition::~MOAIPartition () {
 
 	this->Clear ();
-}
-
-//----------------------------------------------------------------//
-MOAIProp* MOAIPartition::PopResult () {
-
-	MOAIProp* result = 0;
-
-	if ( this->mResults ) {
-		
-		result = this->mResults;
-		this->mResults = this->mResults->mNextResult;
-	}
-	return result;
-}
-
-//----------------------------------------------------------------//
-void MOAIPartition::PushResult ( MOAIProp& result ) {
-
-	result.mNextResult = this->mResults;
-	this->mResults = &result;
-	this->mTotalResults++;
-}
-
-//----------------------------------------------------------------//
-void MOAIPartition::PushResultsList ( lua_State* L ) {
-	USLuaState state ( L );
-
-	u32 total = this->GetTotalResults ();
-	total =  ( total > MAX_RESULTS ) ? MAX_RESULTS : total;
-	
-	lua_createtable ( state, total, 0 );
-	
-	u32 i = 1;
-	while ( MOAIProp* prop = this->PopResult ()) {
-		lua_pushnumber ( state, i++ );
-		prop->PushLuaUserdata ( state );
-		lua_settable ( state, -3 );
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIPartition::PushSortedResultsList ( lua_State* L ) {
-	USLuaState state ( L );
-
-	u32 total = this->GetTotalResults ();
-	total =  ( total > MAX_RESULTS ) ? MAX_RESULTS : total;
-	
-	lua_createtable ( state, total, 0 );
-	
-	// initialize the sort buffer
-	USRadixKey16 < MOAIProp* > key [ MAX_RESULTS ];
-	USRadixKey16 < MOAIProp* > swap [ MAX_RESULTS ];
-	
-	u32 i = 0;
-	while ( MOAIProp* prop = this->PopResult ()) {
-		s16 priority = ( s16 )prop->GetPriority ();
-		key [ i ].mKey = ( s16 )(( priority ^ 0x80000000 ) | ( priority & 0x7fffffff ));
-		key [ i ].mData = prop;
-		++i;
-	}
-
-	// sort
-	USRadixKey16 < MOAIProp* >* sort = RadixSort16 < MOAIProp* >( key, swap, total );
-	
-	for ( i = 0; i < total; ++i ) {
-	
-		MOAIProp* prop = sort [ i ].mData;
-		lua_pushnumber ( state, i + 1 );
-		prop->PushLuaUserdata ( state );
-		lua_settable ( state, -3 );
-	}
 }
 
 //----------------------------------------------------------------//
@@ -474,13 +420,6 @@ void MOAIPartition::RemoveProp ( MOAIProp& prop ) {
 void MOAIPartition::ReserveLayers ( int totalLayers ) {
 
 	this->mLayers.Init ( totalLayers );
-}
-
-//----------------------------------------------------------------//
-void MOAIPartition::ResetResults () {
-
-	this->mTotalResults = 0;
-	this->mResults = 0;
 }
 
 //----------------------------------------------------------------//

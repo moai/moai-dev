@@ -742,6 +742,22 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\moaicore\MOAIPartitionResultBuffer.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIPartitionResultBuffer.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIPartitionResultMgr.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIPartitionResultMgr.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\moaicore\MOAISurfaceSampler2D.cpp"
 				>
 			</File>

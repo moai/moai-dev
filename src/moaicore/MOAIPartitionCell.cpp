@@ -6,6 +6,7 @@
 #include <moaicore/MOAIPartition.h>
 #include <moaicore/MOAIPartitionCell.h>
 #include <moaicore/MOAIPartitionLayer.h>
+#include <moaicore/MOAIPartitionResultBuffer.h>
 #include <moaicore/MOAIProp.h>
 
 //================================================================//
@@ -13,7 +14,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIPartitionCell::GatherProps ( MOAIPartition& partition, MOAIProp* ignore, u32 mask ) {
+void MOAIPartitionCell::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignore, u32 mask ) {
 	
 	PrimIt primIt = this->mPrims.Head ();
 	for ( ; primIt; primIt = primIt->Next ()) {
@@ -22,13 +23,13 @@ void MOAIPartitionCell::GatherProps ( MOAIPartition& partition, MOAIProp* ignore
 		if ( prop == ignore ) continue;
 		
 		if (( mask == 0 ) || ( prop->mMask & mask )) {
-			partition.PushResult ( *prop );
+			results.PushResult ( *prop );
 		}
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAIPartitionCell::GatherProps ( MOAIPartition& partition, MOAIProp* ignore, USVec2D& point, u32 mask ) {
+void MOAIPartitionCell::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignore, USVec2D& point, u32 mask ) {
 
 	PrimIt primIt = this->mPrims.Head ();
 	for ( ; primIt; primIt = primIt->Next ()) {
@@ -40,18 +41,18 @@ void MOAIPartitionCell::GatherProps ( MOAIPartition& partition, MOAIProp* ignore
 			if ( prop->mCellSize > 0.0f ) {
 		
 				if ( prop->mBounds.Contains ( point )) {
-					partition.PushResult ( *prop );
+					results.PushResult ( *prop );
 				}
 			}
 			else {
-				partition.PushResult ( *prop );
+				results.PushResult ( *prop );
 			}
 		}
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAIPartitionCell::GatherProps ( MOAIPartition& partition, MOAIProp* ignore, USRect& rect, u32 mask ) {
+void MOAIPartitionCell::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignore, USRect& rect, u32 mask ) {
 
 	PrimIt primIt = this->mPrims.Head ();
 	for ( ; primIt; primIt = primIt->Next ()) {
@@ -64,11 +65,11 @@ void MOAIPartitionCell::GatherProps ( MOAIPartition& partition, MOAIProp* ignore
 			if ( prop->mCellSize > 0.0f ) {
 				
 				if ( prop->mBounds.Overlap ( rect )) {
-					partition.PushResult ( *prop );
+					results.PushResult ( *prop );
 				}
 			}
 			else {
-				partition.PushResult ( *prop );
+				results.PushResult ( *prop );
 			}
 		}
 	}

@@ -75,7 +75,7 @@ public:
 	u32				GetLocalFrame			( USRect& frame );
 	void			GetWndToWorldMtx		( USAffine2D& wndToWorld );
 	void			GetWorldToWndMtx		( USAffine2D& worldToWnd );
-					MOAILayer2D			();
+					MOAILayer2D				();
 					~MOAILayer2D			();
 	void			RegisterLuaClass		( USLuaState& state );
 	void			RegisterLuaFuncs		( USLuaState& state );

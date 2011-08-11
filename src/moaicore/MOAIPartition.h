@@ -22,16 +22,9 @@ private:
 	friend class MOAIPartitionLayer;
 	friend class MOAIProp;
 
-	enum {
-		MAX_RESULTS	= 256,
-	};
-
-	USLeanArray < MOAIPartitionLayer >		mLayers;
-	MOAIPartitionCell						mEmpties;
-	MOAIPartitionCell						mGlobals;
-
-	u32					mTotalResults;
-	MOAIProp*			mResults;
+	USLeanArray < MOAIPartitionLayer >	mLayers;
+	MOAIPartitionCell					mEmpties;
+	MOAIPartitionCell					mGlobals;
 
 	s32					mPriorityCounter;
 	static const s32	PRIORITY_MASK = 0x7fffffff;
@@ -50,10 +43,6 @@ private:
 
 	//----------------------------------------------------------------//
 	void			AffirmPriority			( MOAIProp& prop );
-	void			PushResult				( MOAIProp& result );
-	void			PushResultsList			( lua_State* L );
-	void			PushSortedResultsList	( lua_State* L );
-	void			ResetResults			();
 	void			UpdateProp				( MOAIProp& prop, u32 status );
 	void			UpdateProp				( MOAIProp& prop, const USRect& bounds, u32 status );
 
@@ -61,17 +50,14 @@ public:
 	
 	DECL_LUA_FACTORY ( MOAIPartition )
 	
-	GET ( u32, TotalResults, mTotalResults )
-	
 	//----------------------------------------------------------------//
 	void			Clear					();
-	u32				GatherProps				( MOAIProp* ignore, u32 mask = 0xffffffff );
-	u32				GatherProps				( USVec2D& point, MOAIProp* ignore, u32 mask = 0xffffffff );
-	u32				GatherProps				( USRect& rect, MOAIProp* ignore, u32 mask = 0xffffffff );
+	u32				GatherProps				( MOAIPartitionResultBuffer& results, MOAIProp* ignore, u32 mask = 0xffffffff );
+	u32				GatherProps				( MOAIPartitionResultBuffer& results, USVec2D& point, MOAIProp* ignore, u32 mask = 0xffffffff );
+	u32				GatherProps				( MOAIPartitionResultBuffer& results, USRect& rect, MOAIProp* ignore, u32 mask = 0xffffffff );
 	void			InsertProp				( MOAIProp& prop );
 					MOAIPartition			();
 					~MOAIPartition			();
-	MOAIProp*		PopResult				();
 	void			RegisterLuaClass		( USLuaState& state );
 	void			RegisterLuaFuncs		( USLuaState& state );
 	void			RemoveProp				( MOAIProp& prop );
