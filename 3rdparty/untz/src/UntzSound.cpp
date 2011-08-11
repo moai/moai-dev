@@ -39,8 +39,7 @@ Sound* Sound::create(const RString& path, bool loadIntoMemory)
 	{
 #if defined(WIN32)
 		DShowAudioSource* source = new DShowAudioSource();
-//FIXME:		source->setSound(newSound);
-		if(source->load(path))
+		if(source->init(path, loadIntoMemory))
 		{
 			newSound->mpData = new UNTZ::SoundData();
 			newSound->mpData->mpSource = source;
@@ -154,18 +153,20 @@ void Sound::play()
     else if(mpData->mPlayState == kPlayStatePlaying)
         mpData->getSource()->setPosition(0);
 	else if(mpData->mPlayState == kPlayStatePaused)
-		mpData->mPlayState = kPlayStatePaused;        
+		mpData->mPlayState = kPlayStatePlaying;        
 }
 
 void Sound::pause()
 {
-	mpData->mPlayState = kPlayStatePaused;
+	if(mpData->mPlayState == kPlayStatePlaying)
+		mpData->mPlayState = kPlayStatePaused;
 }
 
 void Sound::stop()
 {	
 	mpData->mPlayState = kPlayStateStopped;
 	UNTZ::System::get()->getData()->mMixer.removeSound(this);
+	mpData->getSource()->setPosition(0);
 }
 
 bool Sound::isPlaying()
