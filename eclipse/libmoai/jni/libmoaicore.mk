@@ -126,6 +126,8 @@ $(SRC_PATH)/src/moaicore/MOAIParticleTimedEmitter.cpp \
 $(SRC_PATH)/src/moaicore/MOAIPartition.cpp \
 $(SRC_PATH)/src/moaicore/MOAIPartitionCell.cpp \
 $(SRC_PATH)/src/moaicore/MOAIPartitionLayer.cpp \
+$(SRC_PATH)/src/moaicore/MOAIPartitionResultBuffer.cpp \
+$(SRC_PATH)/src/moaicore/MOAIPartitionResultMgr.cpp \
 $(SRC_PATH)/src/moaicore/MOAIPointerSensor.cpp \
 $(SRC_PATH)/src/moaicore/MOAIProp.cpp \
 $(SRC_PATH)/src/moaicore/MOAIProp2D.cpp \
