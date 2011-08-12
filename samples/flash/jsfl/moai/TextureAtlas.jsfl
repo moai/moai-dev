@@ -14,6 +14,7 @@ function TextureAtlas ( padding, forceSquare ) {
 }
 
 //----------------------------------------------------------------//
+/*
 TextureAtlas.prototype.addRect = function ( list, name, width, height ) {
 
 	var rect = {};
@@ -33,15 +34,16 @@ TextureAtlas.prototype.addRect = function ( list, name, width, height ) {
 	
 	return rect;
 }
+*/
 
 //----------------------------------------------------------------//
 TextureAtlas.prototype.createLuaBrushDeck = function () {
 
 	var lua = new LuaTable ();
 	
-	for ( var i = 0; i < this.rects.length; i++ ) {
-		var rect = this.rects [ i ];
-		var uvRect = rect.uvRect;
+	for ( var i = 0; i < this.entries.length; i++ ) {
+		var entry = this.entries [ i ];
+		var uvRect = entry.uvRect;
 		
 		var brush = lua.pushTable ();
 		
@@ -50,10 +52,10 @@ TextureAtlas.prototype.createLuaBrushDeck = function () {
 		brush.set ( 'u1', uvRect.x1 );
 		brush.set ( 'v1', uvRect.y1 );
 		
-		brush.set ( 'w', rect.width );
-		brush.set ( 'h', rect.height );
+		brush.set ( 'w', entry.packRect.width );
+		brush.set ( 'h', entry.packRect.height );
 		
-		if ( rect.isRotated ) {
+		if ( entry.uvRect.isRotated ) {
 			brush.set ( 'r', true );
 		}
 	}
@@ -70,26 +72,28 @@ TextureAtlas.prototype.createTextureAtlas = function () {
 	var xScale = 1 / size.width;
 	var yScale = 1 / size.height;
 	
-	this.rects = packed;
+	this.entries = packed;
 	this.map = {};
 
 	for ( var i = 0; i < packed.length; ++i ) {
 		
-		var rect = packed [ i ];
-		this.map [ rect.name ] = rect;
-		rect.idx = i;
+		var entry = packed [ i ];
+		this.map [ entry.name ] = entry;
+		entry.idx = i;
 		
 		var uvRect = {}; 
 		
-		uvRect.x0 = rect.x0 * xScale;
-		uvRect.y0 = rect.y0 * yScale;
-		uvRect.x1 = rect.x1 * xScale;
-		uvRect.y1 = rect.y1 * yScale;
+		uvRect.x0 = entry.packRect.x0 * xScale;
+		uvRect.y0 = entry.packRect.y0 * yScale;
+		uvRect.x1 = entry.packRect.x1 * xScale;
+		uvRect.y1 = entry.packRect.y1 * yScale;
 		
-		uvRect.width = rect.width * xScale;
-		uvRect.height = rect.height * yScale;
+		uvRect.width = entry.packRect.width * xScale;
+		uvRect.height = entry.packRect.height * yScale;
 		
-		rect.uvRect = uvRect;
+		uvRect.isRotated = entry.packRect.isRotated;
+		
+		entry.uvRect = uvRect;
 	}
 	return this;
 }
@@ -97,8 +101,8 @@ TextureAtlas.prototype.createTextureAtlas = function () {
 //----------------------------------------------------------------//
 TextureAtlas.prototype.createTextureAtlasDoc = function () {
 	
-	var packed = this.rects;
-	var size = this.getTextureSize ( packed );
+	var entries = this.entries;
+	var size = this.getTextureSize ( entries );
 	
 	var document = fl.getDocumentDOM ();
 	var library = document.library;
@@ -109,20 +113,31 @@ TextureAtlas.prototype.createTextureAtlasDoc = function () {
 	atlasDoc.width = size.width;
 	atlasDoc.height = size.height;
 	
-	for ( var i = 0; i < packed.length; i++ ) {
-		var rect = packed [ i ];
+	for ( var i = 0; i < entries.length; i++ ) {
+		var entry = entries [ i ];
 		
-		var idx = library.findItemIndex ( rect.name );
+		var xCenter = entry.packRect.x0 + ( entry.packRect.width * 0.5 );
+		var yCenter = entry.packRect.y0 + ( entry.packRect.height * 0.5 );
+		
+		var idx = library.findItemIndex ( entry.name );
 		var item = library.items [ idx ];
 		
 		atlasDoc.addItem ({ x:0, y:0 }, item );
 		
 		var element = atlasDoc.selection [ 0 ];
-		element.x = rect.x0 + ( rect.width * 0.5 );
-		element.y = rect.y0 + ( rect.height * 0.5 );
 		
-		if ( rect.isRotated ) {
-			element.setTransformationPoint ({ x:0, y:0 });
+		element.x = xCenter;
+		element.y = yCenter;
+		
+		// account for elements w/ off-center registration points
+		element.x = xCenter - (( element.width * 0.5 ) - entry.modelRect.x );
+		element.y = yCenter - (( element.height * 0.5 ) - entry.modelRect.y );
+		
+		if ( entry.packRect.isRotated ) {
+			element.setTransformationPoint ({
+				x:(( element.width * 0.5 ) - entry.modelRect.x ),
+				y:(( element.height * 0.5 ) - entry.modelRect.y )
+			});
 			element.rotation = 90;
 		}
 	}
@@ -155,8 +170,7 @@ TextureAtlas.prototype.getBaseHeight = function ( skyline, i, width ) {
 }
 
 //----------------------------------------------------------------//
-// This generates a list of packed rects based on the current document's library.
-// The rects represent the library items as laid out into a pow2 image.
+// This generates a list of packed entries based on the current document's library.
 TextureAtlas.prototype.getPackListForLibrary = function () {
 
 	var padding = this.padding;
@@ -182,31 +196,52 @@ TextureAtlas.prototype.getPackListForLibrary = function () {
 		var frame = layer.frames [ 0 ];
 		var element = frame.elements [ 0 ];
 		
+		element.x = 0;
+		element.y = 0;
+		
 		var width = element.width;
 		var height = element.height;
 		
-		var rect = {};
-		rect.name = item.name;
+		var entry = {};
+		entry.name = item.name;
+		
+		entry.modelRect = {}; 
+		
+		entry.modelRect.width = width;
+		entry.modelRect.height = height;
+		
+		entry.modelRect.x = element.x - element.left;
+		entry.modelRect.y = element.y - element.top;
+		
+		entry.modelRect.x0 = element.left;
+		entry.modelRect.y0 = element.top;
+		entry.modelRect.x1 = element.left + element.width;
+		entry.modelRect.y1 = element.top + element.height;
+		
+		entry.packRect = {}; 
 		
 		if ( height > width ) {
-			rect.width = height;
-			rect.height = width;
-			rect.isRotated = true;
+		
+			entry.packRect.width = height;
+			entry.packRect.height = width;
+			
+			entry.packRect.isRotated = true;
 		}
 		else {
-			rect.width = width;
-			rect.height = height;
+		
+			entry.packRect.width = width;
+			entry.packRect.height = height;
 		}
 		
 		// store the original width and height
-		rect.originalWidth = rect.width;
-		rect.originalHeight = rect.height;
+		entry.packRect.originalWidth = entry.packRect.width;
+		entry.packRect.originalHeight = entry.packRect.height;
 		
 		// pad the width and height to a pixel boundary
-		rect.width = Math.ceil ( rect.width ) + gutter;
-		rect.height = Math.ceil ( rect.height ) + gutter;
+		entry.packRect.width = Math.ceil ( entry.packRect.width ) + gutter;
+		entry.packRect.height = Math.ceil ( entry.packRect.height ) + gutter;
 		
-		list.push ( rect );
+		list.push ( entry );
 		
 		scratchDoc.selectAll ();
 		scratchDoc.deleteSelection ();
@@ -214,28 +249,28 @@ TextureAtlas.prototype.getPackListForLibrary = function () {
 	
 	fl.closeDocument ( scratchDoc, false );
 	
-	// pack the rects
+	// pack the entries
 	list = this.packRects ( list );
 	
 	// remove the padding and adjust the final rect
 	for ( var i = 0; i < list.length; i++ ) {
-		var rect = list [ i ];
+		var entry = list [ i ];
 		
 		// restore the original dimensions 
-		rect.width = rect.originalWidth;
-		rect.height = rect.originalHeight;
+		entry.packRect.width = entry.packRect.originalWidth;
+		entry.packRect.height = entry.packRect.originalHeight;
 		
 		// clear out the temp variables
-		rect.originalWidth = null;
-		rect.originalHeight = null;
+		entry.packRect.originalWidth = null;
+		entry.packRect.originalHeight = null;
 		
 		// offset the rect
-		rect.x0 += padding;
-		rect.y0 += padding;
+		entry.packRect.x0 += padding;
+		entry.packRect.y0 += padding;
 		
 		// set up the max dimensions
-		rect.x1 = rect.x0 + rect.width;
-		rect.y1 = rect.y0 + rect.height;
+		entry.packRect.x1 = entry.packRect.x0 +entry.packRect.width;
+		entry.packRect.y1 = entry.packRect.y0 + entry.packRect.height;
 	}
 	return list;
 }
@@ -247,14 +282,14 @@ TextureAtlas.prototype.getTextureSize = function ( list ) {
 	var height = 0;
 	
 	for ( var i = 0; i < list.length; ++i ) {
-		var rect = list [ i ];
+		var entry = list [ i ];
 		
-		if ( rect.x1 > width ) {
-			width = rect.x1;
+		if ( entry.packRect.x1 > width ) {
+			width = entry.packRect.x1;
 		}
 		
-		if ( rect.y1 > height ) {
-			height = rect.y1;
+		if ( entry.packRect.y1 > height ) {
+			height = entry.packRect.y1;
 		}
 	}
 	
@@ -316,35 +351,35 @@ TextureAtlas.prototype.packRects = function ( list ) {
 		skyline.push ( this.newSpan ( 0, size, 0 ));
 		
 		for ( var i = 0; i < list.length; ++i ) {
-			var rect = list [ i ];
+			var entry = list [ i ];
 			
-			if ( !this.placeRect ( skyline, rect, size )) {
+			if ( !this.placeRect ( skyline, entry, size )) {
 				packed = new Array ();
 				break;
 			}
-			skyline = this.rebuildTextureAtlas ( skyline, rect );
-			packed.push ( rect );
+			skyline = this.rebuildTextureAtlas ( skyline, entry );
+			packed.push ( entry );
 		}
 	}
 	return packed;
 }
 
 //----------------------------------------------------------------//
-TextureAtlas.prototype.placeRect = function ( skyline, rect, size ) {
+TextureAtlas.prototype.placeRect = function ( skyline, entry, size ) {
 	
 	var bias = 4;
 	
 	var bestX = 0;
-	var bestY = this.getBaseHeight ( skyline, 0, rect.width );
+	var bestY = this.getBaseHeight ( skyline, 0, entry.packRect.width );
 	
 	for ( i = 1; i < skyline.length; ++i ) {
 		var span = skyline [ i ];
 		
-		if (( span.x0 + rect.width ) > size ) {
+		if (( span.x0 + entry.packRect.width ) > size ) {
 			break;
 		}
 		
-		var y = this.getBaseHeight ( skyline, i, rect.width );
+		var y = this.getBaseHeight ( skyline, i, entry.packRect.width );
 		
 		if ( y < ( bestY - bias )) {
 			bestX = span.x0;
@@ -352,19 +387,19 @@ TextureAtlas.prototype.placeRect = function ( skyline, rect, size ) {
 		}
 	}
 	
-	if (( bestX + rect.width ) > size ) return false;
-	if (( bestY + rect.height ) > size ) return false;
+	if (( bestX + entry.packRect.width ) > size ) return false;
+	if (( bestY + entry.packRect.height ) > size ) return false;
 		
-	rect.x0 = bestX;
-	rect.y0 = bestY;
-	rect.x1 = rect.x0 + rect.width;
-	rect.y1 = rect.y0 + rect.height;
+	entry.packRect.x0 = bestX;
+	entry.packRect.y0 = bestY;
+	entry.packRect.x1 = entry.packRect.x0 + entry.packRect.width;
+	entry.packRect.y1 = entry.packRect.y0 + entry.packRect.height;
 	
 	return true;
 }
 
 //----------------------------------------------------------------//
-TextureAtlas.prototype.rebuildTextureAtlas = function ( list, rect ) {
+TextureAtlas.prototype.rebuildTextureAtlas = function ( list, entry ) {
 	
 	var i = 0;
 	var temp = new Array ();
@@ -372,16 +407,16 @@ TextureAtlas.prototype.rebuildTextureAtlas = function ( list, rect ) {
 	for ( ; i < list.length; ++i ) {
 		var span = list [ i ];
 		
-		if ( span.x1 <= rect.x0 ) {
+		if ( span.x1 <= entry.packRect.x0 ) {
 			temp.push ( span );
 		}
-		else if ( span.x1 > rect.x0 ) {
+		else if ( span.x1 > entry.packRect.x0 ) {
 		
-			if ( span.x0 < rect.x0 ) {
-				temp.push ( this.newSpan ( span.x0, rect.x0, span.y ));
+			if ( span.x0 < entry.packRect.x0 ) {
+				temp.push ( this.newSpan ( span.x0, entry.packRect.x0, span.y ));
 			}
 			
-			temp.push ( this.newSpan ( rect.x0, rect.x1, rect.y1 ));			
+			temp.push ( this.newSpan ( entry.packRect.x0, entry.packRect.x1, entry.packRect.y1 ));			
 			break;
 		}
 	}
@@ -389,11 +424,11 @@ TextureAtlas.prototype.rebuildTextureAtlas = function ( list, rect ) {
 	for ( ; i < list.length; ++i ) {
 		var span = list [ i ];
 		
-		if ( span.x0 >= rect.x1 ) {
+		if ( span.x0 >= entry.packRect.x1 ) {
 			temp.push ( span );
 		}
-		else if ( span.x1 > rect.x1 ) {
-			temp.push ( this.newSpan ( rect.x1, span.x1, span.y ));
+		else if ( span.x1 > entry.packRect.x1 ) {
+			temp.push ( this.newSpan ( entry.packRect.x1, span.x1, span.y ));
 		}
 	}
 	

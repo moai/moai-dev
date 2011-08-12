@@ -4,6 +4,7 @@
 // http://getmoai.com
 //----------------------------------------------------------------//
 
+fl.runScript ( fl.configURI + 'Commands/moai/Settings.jsfl' );
 fl.runScript ( fl.configURI + 'Commands/moai/LuaTable.jsfl' );
 fl.runScript ( fl.configURI + 'Commands/moai/TextureAtlas.jsfl' );
 fl.runScript ( fl.configURI + 'Commands/moai/SpriteDeckBuilder.jsfl' );
@@ -51,4 +52,4 @@ function exportSpriteLibrary ( padding, forceSquare ) {
 	fl.closeDocument ( atlasDoc, false );
 }
 	
-exportSpriteLibrary ( 0, true );
+exportSpriteLibrary ( MOAI_TEXTURE_ATLAS_PADDING, MOAI_TEXTURE_ATLAS_FORCE_SQUARE );

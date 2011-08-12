@@ -4,6 +4,7 @@
 // http://getmoai.com
 //----------------------------------------------------------------//
 
+fl.runScript ( fl.configURI + 'Commands/moai/Settings.jsfl' );
 fl.runScript ( fl.configURI + 'Commands/moai/LuaTable.jsfl' );
 fl.runScript ( fl.configURI + 'Commands/moai/TextureAtlas.jsfl' );
 fl.runScript ( fl.configURI + 'Commands/moai/SpriteDeckBuilder.jsfl' );
@@ -99,10 +100,10 @@ function getFrameLua ( atlas, frame, idx, startIdx ) {
 	
 	if ( element && element.libraryItem ) {
 	
-		var rect = atlas.map [ element.libraryItem.name ];
-		if ( !rect ) return;
+		var entry = atlas.map [ element.libraryItem.name ];
+		if ( !entry ) return;
 		
-		lua.set ( 'id', rect.idx + 1 );
+		lua.set ( 'id', entry.idx + 1 );
 		
 		var transform = lua.setTable ( 'transform' );
 	
@@ -193,4 +194,4 @@ function reflect ( objName, obj ) {
 	fl.trace ( '\n' );
 }
 
-exportToLua ( 0, true );
+exportToLua ( MOAI_TEXTURE_ATLAS_PADDING, MOAI_TEXTURE_ATLAS_FORCE_SQUARE );

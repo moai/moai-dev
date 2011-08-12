@@ -4,6 +4,7 @@
 // http://getmoai.com
 //----------------------------------------------------------------//
 
+fl.runScript ( fl.configURI + 'Commands/moai/Settings.jsfl' );
 fl.runScript ( fl.configURI + 'Commands/moai/LuaTable.jsfl' );
 fl.runScript ( fl.configURI + 'Commands/moai/TextureAtlas.jsfl' );
 
@@ -37,4 +38,4 @@ function exportGfxQuadDeck2D ( padding, forceSquare ) {
     fl.closeDocument ( atlasDoc, false );
 }
    
-exportBrushDeck ( 0, true );
+exportBrushDeck ( MOAI_TEXTURE_ATLAS_PADDING, MOAI_TEXTURE_ATLAS_FORCE_SQUARE );

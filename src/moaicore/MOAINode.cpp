@@ -495,6 +495,7 @@ void MOAINode::ExtendUpdate () {
 //----------------------------------------------------------------//
 void MOAINode::ForceUpdate () {
 
+	this->ScheduleUpdate ();
 	this->DepNodeUpdate ();
 }
 

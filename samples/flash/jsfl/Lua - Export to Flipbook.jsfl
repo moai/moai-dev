@@ -4,6 +4,7 @@
 // http://getmoai.com
 //----------------------------------------------------------------//
 
+fl.runScript ( fl.configURI + 'Commands/moai/Settings.jsfl' );
 fl.runScript ( fl.configURI + 'Commands/moai/LuaTable.jsfl' );
 fl.runScript ( fl.configURI + 'Commands/moai/TextureAtlas.jsfl' );
 fl.runScript ( fl.configURI + 'Commands/moai/SpriteDeckBuilder.jsfl' );
@@ -125,4 +126,4 @@ function isKeyframe ( timeline, frameIdx ) {
 	return false;
 }
 
-exportToLua ( 0, true );
+exportToLua ( MOAI_TEXTURE_ATLAS_PADDING, MOAI_TEXTURE_ATLAS_FORCE_SQUARE );
