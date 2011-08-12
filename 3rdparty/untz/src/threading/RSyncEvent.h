@@ -6,6 +6,12 @@
 #ifdef WIN32
 	#include <windows.h>
 #else
+    #ifdef __ANDROID__
+        #define POSIX
+    #endif
+    #ifdef __APPLE__
+        #define POSIX
+    #endif
 	#ifndef POSIX
 		#warning POSIX will be used (but you did not define it)
 	#endif
@@ -32,7 +38,7 @@ public:
 #else
 		pthread_mutexattr_t attr;
 		pthread_mutexattr_init(&attr);
-        pthread_mutexattr_setprotocol (&attr, PTHREAD_PRIO_INHERIT);
+//        pthread_mutexattr_setprotocol (&attr, PTHREAD_PRIO_INHERIT);
 		pthread_mutex_init(&mMutex, &attr);
 		pthread_mutexattr_destroy(&attr);
 		pthread_cond_init(&mCondition, 0);

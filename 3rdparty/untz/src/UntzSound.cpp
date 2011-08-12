@@ -3,13 +3,20 @@
 #include "SoundData.h"
 #include "AudioMixer.h"
 // Audio sources
-#include "OggAudioSource.h"
 #include "UserAudioSource.h"
 #include "MemoryAudioSource.h"
+#ifndef __ANDROID__
+	#include "OggAudioSource.h"
+#endif
 #if defined(WIN32)
-#include <Native/Win/DShowAudioSource.h>
+	#include <Native/Win/DShowAudioSource.h>
 #else
-#include "ExtAudioFileAudioSource.h"
+#ifdef __APPLE__
+	#include "ExtAudioFileAudioSource.h"
+#endif
+#ifdef __ANDROID__
+	#include "WaveFileAudioSource.h"
+#endif
 #endif
 
 using namespace UNTZ;
@@ -22,6 +29,7 @@ Sound* Sound::create(const RString& path, bool loadIntoMemory)
 
 	if (path.find(OGG_FILE_EXT) != RString::npos)
 	{
+#ifndef __ANDROID__
 		OggAudioSource* source = new OggAudioSource();
 		if(source->init(path, loadIntoMemory))
 		{
@@ -34,6 +42,9 @@ Sound* Sound::create(const RString& path, bool loadIntoMemory)
 			delete newSound;
 			return 0;
 		}
+#else
+		return 0;
+#endif
 	}
 	else
 	{
@@ -52,7 +63,12 @@ Sound* Sound::create(const RString& path, bool loadIntoMemory)
 			return 0;
 		}
 #else
+#ifdef __APPLE__
 		ExtAudioFileAudioSource *source = new ExtAudioFileAudioSource();
+#endif
+#ifdef __ANDROID__
+        WaveFileAudioSource *source = new WaveFileAudioSource();
+#endif
 		if(source->init(path, loadIntoMemory))
         {
             newSound->mpData = new UNTZ::SoundData();

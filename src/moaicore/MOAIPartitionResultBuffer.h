@@ -53,7 +53,7 @@ public:
 	void			Sort							( u32 mode );
 	
 	//----------------------------------------------------------------//
-	inline MOAIProp* MOAIPartitionResultBuffer::GetResult ( u32 idx ) {
+	inline MOAIProp* GetResult ( u32 idx ) {
 
 		if ( this->mResults && ( idx < this->mTotalResults )) {
 			return this->mResults [ idx ].mData;
@@ -62,7 +62,7 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	inline MOAIProp* MOAIPartitionResultBuffer::GetResultUnsafe ( u32 idx ) {
+	inline MOAIProp* GetResultUnsafe ( u32 idx ) {
 		
 		return this->mResults [ idx ].mData;
 	}
