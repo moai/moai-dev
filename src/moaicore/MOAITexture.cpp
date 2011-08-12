@@ -268,7 +268,6 @@ void MOAITexture::Affirm () {
 		//if ( !GLEW_OES_compressed_paletted_texture ) {
 		//	transform.ConvertToTrueColor ();
 		//}
-		
 		this->mLoader->Load ();
 		
 		switch ( this->mLoader->mType ) {
@@ -404,6 +403,10 @@ void MOAITexture::CreateTextureFromImage ( MOAIImage& image ) {
 
 	if ( !image.IsOK ()) return;
 
+	printf ( "MOAITexture::CreateTextureFromImage - %s\n", this->mFilename.str ());
+
+	MOAIGfxDevice::Get ().ClearErrors ();
+
 	// get the dimensions before trying to get the OpenGL texture ID
 	this->mWidth = image.GetWidth ();
 	this->mHeight = image.GetHeight ();
@@ -479,9 +482,10 @@ void MOAITexture::CreateTextureFromImage ( MOAIImage& image ) {
 			this->mGLPixelType,  
 			image.GetBitmap ()
 		);
+		
 		if ( glGetError () != 0 ) {
 			// we have an error
-			this->mGLTexID = 0;
+			this->Clear ();
 			return;
 		}
 		
@@ -552,6 +556,8 @@ void MOAITexture::CreateTextureFromPVR ( void* data, size_t size ) {
 	UNUSED ( size );
 
 	#ifdef MOAI_TEST_PVR
+
+		MOAIGfxDevice::Get ().ClearErrors ();
 
 		MOAIPvrHeader* header = MOAIPvrHeader::GetHeader ( data, size );
 		if ( !header ) return;
@@ -654,7 +660,7 @@ void MOAITexture::CreateTextureFromPVR ( void* data, size_t size ) {
 				glTexImage2D( GL_TEXTURE_2D, 0, this->mGLInternalFormat, width, height, 0, this->mGLInternalFormat, this->mGLPixelType, imageData);
 				if ( glGetError () != 0 ) {
 					// we have an error
-					this->mGLTexID = 0;
+					this->Clear ();
 					return;
 				}
 			}
@@ -667,7 +673,7 @@ void MOAITexture::CreateTextureFromPVR ( void* data, size_t size ) {
 					glCompressedTexImage2D ( GL_TEXTURE_2D, level, this->mGLInternalFormat, width, height, 0, currentSize, imageData );
 					if ( glGetError () != 0 ) {
 						// we have an error
-						this->mGLTexID = 0;
+						this->Clear ();
 						return;
 					}
 				}
@@ -675,7 +681,7 @@ void MOAITexture::CreateTextureFromPVR ( void* data, size_t size ) {
 					glTexImage2D( GL_TEXTURE_2D, level, this->mGLInternalFormat, width, height, 0, this->mGLInternalFormat, this->mGLPixelType, imageData);
 					if ( glGetError () != 0 ) {
 						// we have an error
-						this->mGLTexID = 0;
+						this->Clear ();
 						return;
 					}
 				}

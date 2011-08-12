@@ -84,8 +84,9 @@ bool MOAIGfxQuad2D::Bind () {
 
 	if ( gfxDevice.SetTexture ( this->mTexture )) {
 		MOAIQuadBrush::BindVertexFormat ( gfxDevice );
+		return true;
 	}
-	return true;
+	return false;
 }
 
 //----------------------------------------------------------------//
