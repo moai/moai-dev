@@ -4,6 +4,12 @@
 #ifdef WIN32
 	#include <windows.h>
 #else
+    #ifdef __ANDROID__
+        #define POSIX
+    #endif
+    #ifdef __APPLE__
+        #define POSIX
+    #endif
 	#ifndef POSIX
 		#warning POSIX will be used (but you did not define it)
 	#endif

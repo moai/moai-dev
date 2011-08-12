@@ -3,17 +3,19 @@
 #include "SoundData.h"
 #include "AudioMixer.h"
 // Audio sources
-#include "OggAudioSource.h"
 #include "UserAudioSource.h"
 #include "MemoryAudioSource.h"
+#ifndef __ANDROID__
+	#include "OggAudioSource.h"
+#endif
 #if defined(WIN32)
-#include <Native/Win/DShowAudioSource.h>
+	#include <Native/Win/DShowAudioSource.h>
 #else
 #ifdef __APPLE__
-#include "ExtAudioFileAudioSource.h"
+	#include "ExtAudioFileAudioSource.h"
 #endif
 #ifdef __ANDROID__
-#include "WaveFileAudioSource.h"
+	#include "WaveFileAudioSource.h"
 #endif
 #endif
 
@@ -27,6 +29,7 @@ Sound* Sound::create(const RString& path, bool loadIntoMemory)
 
 	if (path.find(OGG_FILE_EXT) != RString::npos)
 	{
+#ifndef __ANDROID__
 		OggAudioSource* source = new OggAudioSource();
 		if(source->init(path, loadIntoMemory))
 		{
@@ -39,6 +42,9 @@ Sound* Sound::create(const RString& path, bool loadIntoMemory)
 			delete newSound;
 			return 0;
 		}
+#else
+		return 0;
+#endif
 	}
 	else
 	{
