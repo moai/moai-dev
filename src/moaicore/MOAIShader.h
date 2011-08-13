@@ -52,7 +52,9 @@ public:
 //================================================================//
 // MOAIShader
 //================================================================//
-// TODO: doxygen
+/**	@name	MOAIShader
+	@text	Programmable shader class.
+*/
 class MOAIShader :
 	public virtual MOAINode {
 protected:
