@@ -35,6 +35,7 @@
 		03EB9FE713BD372600469D9E /* libmoai-ios-luaext.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03EB9FE313BD372600469D9E /* libmoai-ios-luaext.a */; };
 		03EB9FE813BD372600469D9E /* libmoai-ios-untz.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03EB9FE413BD372600469D9E /* libmoai-ios-untz.a */; };
 		03EB9FE913BD372600469D9E /* libmoai-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03EB9FE513BD372600469D9E /* libmoai-ios.a */; };
+		07A9779D13F60EEE00FD50FE /* ParticlePresets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07A9779B13F60EEE00FD50FE /* ParticlePresets.cpp */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
@@ -78,6 +79,8 @@
 		03EB9FE313BD372600469D9E /* libmoai-ios-luaext.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-ios-luaext.a"; path = "../../bin/ios/libmoai-ios-luaext.a"; sourceTree = SOURCE_ROOT; };
 		03EB9FE413BD372600469D9E /* libmoai-ios-untz.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-ios-untz.a"; path = "../../bin/ios/libmoai-ios-untz.a"; sourceTree = SOURCE_ROOT; };
 		03EB9FE513BD372600469D9E /* libmoai-ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-ios.a"; path = "../../bin/ios/libmoai-ios.a"; sourceTree = SOURCE_ROOT; };
+		07A9779B13F60EEE00FD50FE /* ParticlePresets.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ParticlePresets.cpp; path = ../src/ParticlePresets.cpp; sourceTree = SOURCE_ROOT; };
+		07A9779C13F60EEE00FD50FE /* ParticlePresets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ParticlePresets.h; path = ../src/ParticlePresets.h; sourceTree = SOURCE_ROOT; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D6058910D05DD3D006BFB54 /* MoaiSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MoaiSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -134,6 +137,8 @@
 				03CC90A013B3C37200B2724C /* MoaiView.mm */,
 				03CC90A113B3C37200B2724C /* OpenGLView.h */,
 				03CC90A213B3C37200B2724C /* OpenGLView.mm */,
+				07A9779B13F60EEE00FD50FE /* ParticlePresets.cpp */,
+				07A9779C13F60EEE00FD50FE /* ParticlePresets.h */,
 				03CC90A313B3C37200B2724C /* RefPtr.h */,
 			);
 			path = Classes;
@@ -301,6 +306,7 @@
 				03CC90A713B3C37200B2724C /* OpenGLView.mm in Sources */,
 				03CC90A913B3C37C00B2724C /* main.mm in Sources */,
 				039DBBE513BE7D1400BF7A66 /* MoaiVC.mm in Sources */,
+				07A9779D13F60EEE00FD50FE /* ParticlePresets.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
