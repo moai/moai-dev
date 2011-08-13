@@ -141,7 +141,6 @@ function explosionState ( prop )
 	prop:setDeck ( explosionGfx )
 	prop:setScl ( 1, 1 )
 	prop.state = explosionState
-	prop:setFrameSource ( MOAIProp2D.FRAME_FROM_SELF )
 	
 	function prop:main ()
 		
