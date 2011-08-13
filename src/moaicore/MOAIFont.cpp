@@ -17,7 +17,13 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	getImage
+	@text	Returns the image containing the font's glyphs. Only valid
+			before font is used (i.e. immediately after ripping).
+
+	@in		MOAIFont self
+	@out	MOAIImage image
+*/
 int MOAIFont::_getImage ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIFont, "U" )
 
@@ -48,7 +54,12 @@ int MOAIFont::_getScale ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	getTexture
+	@text	Returns the font's texture.
+
+	@in		MOAIFont self
+	@out	MOAITexture texture
+*/
 int MOAIFont::_getTexture ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIFont, "U" )
 
@@ -119,7 +130,13 @@ int MOAIFont::_loadFromTTF ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	setImage
+	@text	Set an image for the font to use.
+
+	@in		MOAIFont self
+	@opt	MOAIImage image		Default value is nil.
+	@out	nil
+*/
 int MOAIFont::_setImage ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIFont, "U" )
 
@@ -130,7 +147,13 @@ int MOAIFont::_setImage ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	setTexture
+	@text	Set a texture for the font to use.
+
+	@in		MOAIFont self
+	@opt	MOAITexture texture		Default value is nil.
+	@out	nil
+*/
 int MOAIFont::_setTexture ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIFont, "U" )
 

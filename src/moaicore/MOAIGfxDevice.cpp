@@ -19,7 +19,13 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	isProgrammable
+	@text	Returns a boolean indicating whether or not Moai is running
+			under the programmable pipeline.
+
+	@in		MOAIGfxDevice self
+	@out	boolean isProgrammable
+*/
 int MOAIGfxDevice::_isProgrammable ( lua_State* L ) {
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();

@@ -201,7 +201,14 @@ int MOAILayer2D::_setCpSpace ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	setFrameBuffer
+	@text	Attach a frame buffer. Layer will render to frame buffer
+			instead of the main view.
+	
+	@in		MOAILayer2D self
+	@in		MOAITexture frameBuffer
+	@out	nil
+*/
 int MOAILayer2D::_setFrameBuffer ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAILayer2D, "UU" )
 

@@ -107,7 +107,13 @@ MOAIShaderUniform::MOAIShaderUniform () :
 //================================================================//
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	clearUniform
+	@text	Clears a uniform mapping.
+
+	@in		MOAIShader self
+	@in		number idx
+	@out	nil
+*/
 int MOAIShader::_clearUniform ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIShader, "UN" )
 	
@@ -119,7 +125,16 @@ int MOAIShader::_clearUniform ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	declareUniform
+	@text	Declares a uniform mapping.
+
+	@in		MOAIShader self
+	@in		number idx
+	@in		string name
+	@opt	number type		One of MOAIShader.UNIFORM_FLOAT, MOAIShader.UNIFORM_TRANSFORM,
+							MOAIShader.UNIFORM_VIEW_PROJ, MOAIShader.UNIFORM_WORLD, MOAIShader.UNIFORM_WORLD_VIEW_PROJ
+	@out	nil
+*/
 int MOAIShader::_declareUniform ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIShader, "UNS" )
 	
@@ -133,7 +148,14 @@ int MOAIShader::_declareUniform ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	load
+	@text	Load a shader program.
+
+	@in		MOAIShader self
+	@in		string vertexShaderSource
+	@in		string fragmentShaderSource
+	@out	nil
+*/
 int MOAIShader::_load ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIShader, "USS" )
 	
@@ -146,7 +168,13 @@ int MOAIShader::_load ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	reserveAttributes
+	@text	Reserve dependency node attributes (may be mapped onto shader uniforms).
+
+	@in		MOAIShader self
+	@opt	number nAttributes	Default value is 0.
+	@out	nil
+*/
 int MOAIShader::_reserveAttributes ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIShader, "U" )
 	
@@ -157,7 +185,13 @@ int MOAIShader::_reserveAttributes ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	reserveUniforms
+	@text	Reserve shader uniforms.
+
+	@in		MOAIShader self
+	@opt	number nUniforms	Default value is 0.
+	@out	nil
+*/
 int MOAIShader::_reserveUniforms ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIShader, "U" )
 	
@@ -168,7 +202,27 @@ int MOAIShader::_reserveUniforms ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	setUniform
+	@text	Set a uniform mapping. Expects a mapping from the shader's
+			dep node attributes if uniform is of type MOAIShader.UNIFORM_FLOAT.
+			Expects a MOAITransform if uniform is of type MOAIShader.UNIFORM_TRANSFORM.
+			Do not use for uniforms expecting pipeline transforms.
+
+	@overload
+
+		@in		MOAIShader self
+		@opt	number index				Default value is 1.
+		@opt	number srcAttr				Base index of the attributes to be mapped onto the uniform from the shader's dep graph attributes.
+		@opt	number nAttr				Number of attributes to map onto uniform.
+	
+	@overload
+	
+		@in		MOAIShader self
+		@opt	number index				Default value is 1.
+		@opt	MOAITransform transform		Transform to map onto uniform.
+	
+	@out	nil
+*/
 int MOAIShader::_setUniform ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIShader, "U" )
 	
@@ -193,7 +247,14 @@ int MOAIShader::_setUniform ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	setVertexAttribute
+	@text	Names a shader vertex attribute.
+
+	@in		MOAIShader self
+	@in		number index	Default value is 1.
+	@in		string name		Name of attribute.
+	@out	nil
+*/
 int MOAIShader::_setVertexAttribute ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIShader, "UNS" )
 	

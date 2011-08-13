@@ -11,7 +11,16 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	declareAttribute
+	@text	Declare a custom attribute (for use with programmable pipeline).
+	
+	@in		MOAIVertexFormat self
+	@in		number index		Default value is 1.
+	@in		number type			Data type of component elements. See OpenGL ES documentation.
+	@in		number size			Number of elements. See OpenGL ES documentation.
+	@opt	boolean normalized	See OpenGL ES documentation.
+	@out	nil
+*/
 int	MOAIVertexFormat::_declareAttribute ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVertexFormat, "UNNN" )
 

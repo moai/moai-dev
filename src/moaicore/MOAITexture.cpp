@@ -130,8 +130,8 @@ int MOAITexture::_bind ( lua_State* L ) {
 			resolution swapping.
 	
 	@in		MOAITexture self
-	@out	width
-	@out	height
+	@out	number width
+	@out	number height
 */
 int MOAITexture::_getSize ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITexture, "U" )
@@ -143,7 +143,14 @@ int MOAITexture::_getSize ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	initFrameBuffer
+	@text	Initializes shader as a frame buffer.
+	
+	@in		MOAITexture self
+	@in		number width
+	@in		number height
+	@out	nil
+*/
 int MOAITexture::_initFrameBuffer ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITexture, "UNN" )
 	

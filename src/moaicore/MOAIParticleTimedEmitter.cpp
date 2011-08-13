@@ -11,7 +11,14 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	setFrequency
+	@text	Set timer frequency.
+	
+	@in		MOAIParticleTimedEmitter self
+	@in		number min
+	@opt	number max		Defaulkt value is min.
+	@out	nil
+*/
 int MOAIParticleTimedEmitter::_setFrequency ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIParticleTimedEmitter, "UN" )
 
