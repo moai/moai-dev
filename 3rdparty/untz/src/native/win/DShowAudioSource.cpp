@@ -210,7 +210,7 @@ bool DShowAudioSource::init(const RString& path, bool loadIntoMemory)
 
 	if(mLoadedInMemory)
 	{
-		RPRINT("loading into memory...\n");
+		RPRINT("loading sound into memory...\n");
 		long evCode = 0;
 		HRESULT hr = mpMediaEvent->WaitForCompletion(INFINITE, &evCode);
 		if(FAILED(hr))
@@ -285,24 +285,23 @@ Int64 DShowAudioSource::readFrames(float* data, UInt32 numChannels, UInt32 numFr
 	RScopedLock l(&mLock);
 
 	Int64 framesRead = numFrames;
-	int framesAvailable = mBuffer.size() / getNumChannels() - mCurrentFrame;
+	Int64 framesAvailable = mBuffer.size() / getNumChannels() - mCurrentFrame;
     
 	// For disk-streaming sources we calculate available frames using the whole buffer
     if(!mLoadedInMemory)
         framesAvailable = mBuffer.size() / getNumChannels();
 
-	RPRINT("available data = %d\n", framesAvailable);
-
+//	RPRINT("available data = %d\n", framesAvailable);
 
 	if(framesAvailable > 0)
 	{
+		int sourceChannels = getNumChannels();
+
 		if(framesAvailable < numFrames)
 			framesRead = framesAvailable;
-
-		int sourceChannels = getNumChannels();
-        int frameOffset = mCurrentFrame;
         
         // For disk-streaming sources we always start at the beginning of the buffer
+        int frameOffset = mCurrentFrame;
         if(!mLoadedInMemory)
             frameOffset = 0;
         
@@ -336,17 +335,17 @@ Int64 DShowAudioSource::readFrames(float* data, UInt32 numChannels, UInt32 numFr
 	}
     else
     {
-        framesRead = 0;
+        framesRead = ERR_BUFFERING;
         mCurrentFrame = 0;
         
         if(isLooping() && mEOF)
         {
-			RPRINT("reached EOF and will now loop.");
+			RPRINT("reached EOF and will now loop.\n");
 			setDecoderPosition(0);
         }
         else if (mEOF)
         {            
-            return -1; // signal that we are done
+            return 0; // signal that we are done
         }
     }
     

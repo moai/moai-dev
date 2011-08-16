@@ -105,14 +105,14 @@ int MOAIUntzSound::_load ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIUntzSound, "US" )
 	
 	cc8* filename = state.GetValue < cc8* >( 2, "" );
-	bool streamFromDisk = state.GetValue < bool >( 3, false );	
+	bool loadIntoMemory = state.GetValue < bool >( 3, true );	
 
 	if ( self->mSound ) {
 		//delete self->mSound;
 		self->mSound = 0;
 	}
 	
-	self->mSound = UNTZ::Sound::create ( filename, streamFromDisk );
+	self->mSound = UNTZ::Sound::create ( filename, loadIntoMemory );
 	return 0;
 }
 

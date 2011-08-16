@@ -27,6 +27,7 @@ bool BufferedAudioSource::init(const RString& path, bool loadIntoMemory)
 { 
 	if(loadIntoMemory)
 	{
+		RPRINT("loading sound into memory...\n");
         int channels = getNumChannels();
         double length = getLength();
 		UInt32 totalNumSamples = (UInt32)(getNumChannels() * getSampleRate() * getLength());
@@ -134,7 +135,7 @@ Int64 BufferedAudioSource::readFrames(float* buffer, UInt32 numChannels, UInt32 
 	}
     else
     {
-        framesRead = 0;
+        framesRead = ERR_BUFFERING;
         mCurrentFrame = 0;
         
         if(isLooping() || !isEOF())
@@ -147,7 +148,7 @@ Int64 BufferedAudioSource::readFrames(float* buffer, UInt32 numChannels, UInt32 
             if(!isLoadedInMemory())
                 BufferedAudioSourceThread::getInstance()->removeSource(this);
             
-            return -1; // signal that we are done
+            return 0; // signal that we are done
         }
     }
     

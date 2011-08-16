@@ -126,15 +126,18 @@ void BufferedAudioSourceThread::run()
 				while(framesToRead > 0 && !pSource->isEOF());
 
                 // Now write the data back to the buffer
-                pSource->mLock.lock();
+				Int64 framesRead = numFrames - framesToRead;
+				if(framesRead > 0)
+				{
+	                pSource->mLock.lock();
                 
-                int fillPosition = pSource->mBuffer.size();
-                Int64 totalSamples = pSource->mBuffer.size() + (numFrames - framesToRead) * pSource->getNumChannels();
-                pSource->mBuffer.resize(totalSamples);
-                memcpy(&pSource->mBuffer[fillPosition], &tempBuffer[0], sizeof(float) * (numFrames - framesToRead) * pSource->getNumChannels());
+		            int fillPosition = pSource->mBuffer.size();
+			        Int64 totalSamples = pSource->mBuffer.size() + framesRead * pSource->getNumChannels();
+				    pSource->mBuffer.resize(totalSamples);
+					memcpy(&pSource->mBuffer[fillPosition], &tempBuffer[0], sizeof(float) * framesRead * pSource->getNumChannels());
 
-                pSource->mLock.unlock();
-                
+					pSource->mLock.unlock();
+				}
                 
                 // Check if we've reached the end
 				if(pSource->isEOF())

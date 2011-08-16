@@ -2,6 +2,8 @@
 
 #include "Untz.h"
 
+#define ERR_BUFFERING (-1)
+
 class AudioSource
 {
 protected:

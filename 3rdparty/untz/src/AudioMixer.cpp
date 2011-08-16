@@ -76,20 +76,18 @@ int AudioMixer::process(UInt32 numInputChannels, float* inputBuffer, UInt32 numO
                     for(UInt32 k = 0; k < numOutputChannels; ++k)
                     {
                         float *out = &outputBuffer[k*numFrames + totalFramesRead];
-                        float *in = &mBuffer[k*numFrames + totalFramesRead]; 
+                        float *in = &mBuffer[k*framesRead + totalFramesRead]; 
                         for(UInt32 j = 0; j < framesRead; j++)
                             *(out++) += *(in++) * s->getData()->mVolume;
                     }
                     totalFramesRead += framesRead;
                 }
 			}
-			while(totalFramesRead > 0 && 
-				totalFramesRead < numFrames && 
-				framesRead >= 0);
+			while(framesRead > 0 && totalFramesRead < numFrames);
             
-			RPRINT("frames read for source = %d\n", framesRead);
+//			RPRINT("frames read for source = %d\n", totalFramesRead);
 
-			if(framesRead < 0)
+			if(framesRead == 0)
             {
                 mLock.unlock();
 				s->stop();
