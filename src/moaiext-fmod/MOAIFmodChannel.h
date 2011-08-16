@@ -24,7 +24,8 @@ private:
 	float	mVolume;
 	bool	mPaused;
 
-	//----------------------------------------------------------------//
+	//----------------------------------------------------------------//'
+	static int	_getVolume			( lua_State* L );
 	static int	_moveVolume			( lua_State* L );
 	static int	_play				( lua_State* L );
 	static int	_seekVolume			( lua_State* L );
@@ -48,6 +49,7 @@ public:
 	bool		ApplyAttrOp			( u32 attrID, USAttrOp& attrOp );
 				MOAIFmodChannel		();
 				~MOAIFmodChannel	();
+	float		GetVolume			();
 	void		Play				( MOAIFmodSound* sound, int loopCount );
 	void		RegisterLuaClass	( USLuaState& state );
 	void		RegisterLuaFuncs	( USLuaState& state );

@@ -10,6 +10,7 @@ namespace FMOD {
 	class System;
 	class Sound;
 	class Channel;
+	class ChannelGroup;
 };
 
 //================================================================//
@@ -23,20 +24,23 @@ class MOAIFmod :
 private:
 
 	FMOD::System* mSoundSys;
+	FMOD::ChannelGroup* mMainChannelGroup;
 
 	//----------------------------------------------------------------//
 	static int	_init				( lua_State* L );
-
+	static int	_getMemoryStats		( lua_State* L );
 public:
 
 	DECL_LUA_SINGLETON ( MOAIFmod )
 
 	GET ( FMOD::System*, SoundSys, mSoundSys );
+	GET ( FMOD::ChannelGroup*, MainChannelGroup, mMainChannelGroup);
 
 	//----------------------------------------------------------------//
 	void			CloseSoundSystem	();
 					MOAIFmod			();
 					~MOAIFmod			();
+	void			MuteChannels		( bool mute );
 	void			OpenSoundSystem		();
 	void			RegisterLuaClass	( USLuaState& state );
 	void			RegisterLuaFuncs	( USLuaState& state );

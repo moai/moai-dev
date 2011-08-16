@@ -29,6 +29,10 @@ private:
 	static int		_setWriteDirectory		( lua_State* L );
 	static int		_unmount				( lua_State* L );
 
+	// TODO: harebrained
+	static int		_getFiles				( lua_State* L );
+	static int		_getDirectories			( lua_State* L );
+
 public:
 	
 	DECL_LUA_SINGLETON ( MOAIFileSystem )

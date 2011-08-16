@@ -107,6 +107,7 @@ void moaicore::InitGlobals ( USGlobals* globals ) {
 		REGISTER_LUA_CLASS ( MOAIBox2DBody )
 		REGISTER_LUA_CLASS ( MOAIBox2DFixture )
 		REGISTER_LUA_CLASS ( MOAIBox2DWorld )
+		REGISTER_LUA_CLASS ( MOAIBox2DJoint )
 	#endif
 	
 	#if USE_CHIPMUNK

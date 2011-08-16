@@ -64,7 +64,31 @@ int MOAIThread::_currentThread ( lua_State* L ) {
 */
 int MOAIThread::_run ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIThread, "UF" )
+
+	// Get a copy of the function's debug info and store it so we can
+	// refer to it in any debugging info regarding this thread.
+	lua_Debug ar;
+	lua_pushvalue(state, 2);
+    lua_getinfo(state, ">Snl", &ar);
+
+	bool isC = strcmp(ar.what, "C") == 0;
 	
+	if( !ar.what )
+		ar.what = "??";
+	
+	if( !ar.source ) {
+		if( isC )
+			ar.source = "@?";
+		else
+			ar.source = "@<string>";
+	}
+
+	self->mFuncName.clear();
+	if( ar.name )
+		self->mFuncName.write( "%s:%s%s:%d", ar.what, ar.name, ar.source, ar.linedefined );
+	else
+		self->mFuncName.write( "%s:%s:%d", ar.what, ar.source, ar.linedefined );
+
 	self->mNarg = lua_gettop ( state ) - 2;
 	self->mState = lua_newthread ( state );
 	self->mRef.SetRef ( state, -1, false );
@@ -97,6 +121,12 @@ MOAIThread::~MOAIThread () {
 bool MOAIThread::IsDone () {
 
 	return this->mRef.IsNil ();
+}
+
+//----------------------------------------------------------------//
+STLString MOAIThread::ToString () {
+
+	return mFuncName;
 }
 
 //----------------------------------------------------------------//
