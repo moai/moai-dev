@@ -152,9 +152,9 @@ void MOAIFreetypeFontRipper::RipFromTTF ( cc8* filename, MOAIFont& font, MOAIIma
 	
 	int faceHeight = yMax - yMin;
 	
-	if( !_initializeImage ( image, chars, face ) )
-	{
-		fprintf(stderr, "Cannot rip TTF font: size exceeds maximum (point=%f, dpi=%u): %s\n", points, dpi, filename);
+	// TODO: harebrained
+	if ( !_initializeImage ( image, chars, face )) {
+		fprintf ( stderr, "Cannot rip TTF font: size exceeds maximum (point=%f, dpi=%u): %s\n", points, dpi, filename );
 		FT_Done_Face ( face );
 		FT_Done_FreeType ( library );
 		return;
@@ -244,8 +244,8 @@ void MOAIFreetypeFontRipper::RipFromTTF ( cc8* filename, MOAIFont& font, MOAIIma
 		}
 	}
 	
-	if ( !validLength )
-	{
+	// TODO: harebrained
+	if ( !validLength ) {
 		FT_Done_Face ( face );
 		FT_Done_FreeType ( library );
 		return;

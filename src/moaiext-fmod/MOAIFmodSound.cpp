@@ -184,15 +184,20 @@ void MOAIFmodSound::Load ( cc8* filename, bool streaming, bool async ) {
 	FMOD_RESULT result;
 	FMOD::Sound* sound = 0;
 	FMOD_CREATESOUNDEXINFO info;
-	memset(&info, 0, sizeof(FMOD_CREATESOUNDEXINFO));
+	memset ( &info, 0, sizeof( FMOD_CREATESOUNDEXINFO ));
 	
-	info.cbsize = sizeof(FMOD_CREATESOUNDEXINFO);
-	info.audioqueuepolicy = FMOD_AUDIOQUEUE_CODECPOLICY_SOFTWAREONLY;
+	info.cbsize = sizeof ( FMOD_CREATESOUNDEXINFO );
+	
+	#ifdef MOAI_OS_IPHONE
+		info.audioqueuepolicy = FMOD_AUDIOQUEUE_CODECPOLICY_SOFTWAREONLY;
+	#endif
 
-	if(streaming)
-		result = soundSys->createStream(filename, FMOD_SOFTWARE, &info, &sound);
-	else
+	if ( streaming ) {
+		result = soundSys->createStream ( filename, FMOD_SOFTWARE, &info, &sound );
+	}
+	else {
 		result = soundSys->createSound ( filename, FMOD_SOFTWARE | mode, &info, &sound );
+	}
 	
 	if ( result != FMOD_OK ) return;
 	

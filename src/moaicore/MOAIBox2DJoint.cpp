@@ -239,8 +239,8 @@ MOAIBox2DJoint::MOAIBox2DJoint () :
 //----------------------------------------------------------------//
 MOAIBox2DJoint::~MOAIBox2DJoint () {
 
-	if( mJoint )
-	{
+	if ( this->mJoint ) {
+
 		MOAIBox2DBody* bodyA = ( MOAIBox2DBody* )this->mJoint->GetBodyA ();
 		MOAIBox2DBody* bodyB = ( MOAIBox2DBody* )this->mJoint->GetBodyB ();
 	
@@ -251,12 +251,12 @@ MOAIBox2DJoint::~MOAIBox2DJoint () {
 
 //----------------------------------------------------------------//
 void MOAIBox2DJoint::RegisterLuaClass ( USLuaState& state ) {
-	MOAIBox2DPrim::RegisterLuaClass( state );
+	MOAIBox2DPrim::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAIBox2DJoint::RegisterLuaFuncs ( USLuaState& state ) {
-	MOAIBox2DPrim::RegisterLuaFuncs( state );
+	MOAIBox2DPrim::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
 		{ "destroy",				_destroy },

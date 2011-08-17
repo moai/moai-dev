@@ -44,7 +44,7 @@ private:
 		
 		data->SetLuaInstanceTable ( state, 1 );
 		data->PushLuaUserdata ( state );
-		data->CallCreationHook( state );
+		data->CallCreationHook ( state );
 
 		return 1;
 	}

@@ -65,29 +65,35 @@ int MOAIThread::_currentThread ( lua_State* L ) {
 int MOAIThread::_run ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIThread, "UF" )
 
+	// TODO: harebrained
+
 	// Get a copy of the function's debug info and store it so we can
 	// refer to it in any debugging info regarding this thread.
 	lua_Debug ar;
-	lua_pushvalue(state, 2);
-    lua_getinfo(state, ">Snl", &ar);
+	lua_pushvalue ( state, 2 );
+    lua_getinfo ( state, ">Snl", &ar );
 
-	bool isC = strcmp(ar.what, "C") == 0;
+	bool isC = strcmp ( ar.what, "C" ) == 0;
 	
-	if( !ar.what )
+	if ( !ar.what )
 		ar.what = "??";
 	
-	if( !ar.source ) {
-		if( isC )
+	if ( !ar.source ) {
+		if ( isC ) {
 			ar.source = "@?";
-		else
+		}
+		else {
 			ar.source = "@<string>";
+		}
 	}
 
-	self->mFuncName.clear();
-	if( ar.name )
-		self->mFuncName.write( "%s:%s%s:%d", ar.what, ar.name, ar.source, ar.linedefined );
-	else
-		self->mFuncName.write( "%s:%s:%d", ar.what, ar.source, ar.linedefined );
+	self->mFuncName.clear ();
+	if ( ar.name ) {
+		self->mFuncName.write ( "%s:%s%s:%d", ar.what, ar.name, ar.source, ar.linedefined );
+	}
+	else {
+		self->mFuncName.write ( "%s:%s:%d", ar.what, ar.source, ar.linedefined );
+	}
 
 	self->mNarg = lua_gettop ( state ) - 2;
 	self->mState = lua_newthread ( state );
@@ -106,6 +112,12 @@ int MOAIThread::_run ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+bool MOAIThread::IsDone () {
+
+	return this->mRef.IsNil ();
+}
+
+//----------------------------------------------------------------//
 MOAIThread::MOAIThread () :
 	mState ( 0 ),
 	mNarg ( 0 ) {
@@ -115,18 +127,6 @@ MOAIThread::MOAIThread () :
 
 //----------------------------------------------------------------//
 MOAIThread::~MOAIThread () {
-}
-
-//----------------------------------------------------------------//
-bool MOAIThread::IsDone () {
-
-	return this->mRef.IsNil ();
-}
-
-//----------------------------------------------------------------//
-STLString MOAIThread::ToString () {
-
-	return mFuncName;
 }
 
 //----------------------------------------------------------------//
@@ -192,3 +192,8 @@ void MOAIThread::RegisterLuaFuncs ( USLuaState& state ) {
 	lua_pop ( state, 1 );
 }
 
+//----------------------------------------------------------------//
+STLString MOAIThread::ToString () {
+
+	return mFuncName;
+}

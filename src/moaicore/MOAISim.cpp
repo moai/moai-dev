@@ -384,23 +384,6 @@ int MOAISim::_reportLeaks ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setLeakTrackingEnabled
-	@text	Enable extra memory book-keeping measures that allow all MOAI objects to be
-			tracked back to their point of allocation (in Lua). Use together with
-			MOAISim.reportLeaks() to determine exactly where your memory usage is
-			being created. NOTE: This is very expensive in terms of both CPU and
-			the extra memory associated with the stack info book-keeping. Use only
-			when tracking down leaks.
- 
-	@in		bool enable True if tracking should be used.
-*/
-int MOAISim::_setLeakTrackingEnabled ( lua_State* L ) {
-	USLuaState state ( L );
-	USLuaObject::SetLeakTrackingEnabled( state.GetValue<bool>(1, true) );
-	return 0;
-}
-
-//----------------------------------------------------------------//
 /**	@name	setClearColor
 	@text	At the start of each frame the device will by default automatically render a background color.  Using this function you can set the background color that is drawn each frame.  If you specify no arguments to this function, then automatic redraw of the background color will be turned off (i.e. the previous render will be used as the background).
 
@@ -472,6 +455,23 @@ int MOAISim::_setFrameSize ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	setLeakTrackingEnabled
+	@text	Enable extra memory book-keeping measures that allow all MOAI objects to be
+			tracked back to their point of allocation (in Lua). Use together with
+			MOAISim.reportLeaks() to determine exactly where your memory usage is
+			being created. NOTE: This is very expensive in terms of both CPU and
+			the extra memory associated with the stack info book-keeping. Use only
+			when tracking down leaks.
+ 
+	@in		bool enable True if tracking should be used.
+*/
+int MOAISim::_setLeakTrackingEnabled ( lua_State* L ) {
+	USLuaState state ( L );
+	USLuaObject::SetLeakTrackingEnabled( state.GetValue<bool>(1, true) );
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	timeToFrames
 	@text	Converts the number of time passed in seconds to frames.
 
@@ -510,6 +510,7 @@ MOAISim::MOAISim () :
 	mStep ( 0.01f ),
 	mTime ( 0.0f ),
 	mFrameTime ( 0.0 ),
+	mFrameCounter ( 0 ),
 	mFrameRate ( 0.0f ),
 	mFrameRateIdx ( 0 ),
 	mClearFlags ( GL_COLOR_BUFFER_BIT ),
@@ -702,6 +703,8 @@ void MOAISim::RunString ( cc8* script ) {
 //----------------------------------------------------------------//
 void MOAISim::Update () {
 
+	// TODO: harebrained
+
 	this->MeasureFrameRate ();
 	
 	this->mDeviceTime = USDeviceTime::GetTimeInSeconds ();
@@ -716,6 +719,8 @@ void MOAISim::Update () {
 			MOAIInputMgr::Get ().Update ();
 			MOAIActionMgr::Get ().Update ( 0.0f );
 			MOAINodeMgr::Get ().Update ();
+			
+			this->mFrameCounter++;
 		}
 		else {
 			return;
@@ -740,6 +745,7 @@ void MOAISim::Update () {
 		/* double t4 = USDeviceTime::GetTimeInSeconds ();  \
 		printf("  frame times (step = %5.1f) = %5.1f %5.1f %5.1f %5.1f\n", step*1000, (t1 - t0)*1000, (t2 - t1)*1000, (t3 - t2)*1000, (t4 - t3)*1000); */ \
 		this->mTime += step; \
+		this->mFrameCounter++; \
 	} \
 } while(0)
 	

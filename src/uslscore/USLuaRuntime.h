@@ -31,10 +31,10 @@ public:
 
 	//----------------------------------------------------------------//
 	void					Close					();
+	size_t					GetMemoryUsage			();
 	bool					IsOpen					();
 	void					LoadLibs				( cc8* runtimeLibName );
 	USLuaStateHandle		Open					();
-	size_t					GetMemoryUsage			();
 	void					RegisterModule			( cc8* name, lua_CFunction loader, bool autoLoad );
 	void					SetPath					( cc8* path );
 	USLuaStateHandle		State					();

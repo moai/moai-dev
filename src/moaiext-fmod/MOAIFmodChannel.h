@@ -47,9 +47,9 @@ public:
 
 	//----------------------------------------------------------------//
 	bool		ApplyAttrOp			( u32 attrID, USAttrOp& attrOp );
+	float		GetVolume			();
 				MOAIFmodChannel		();
 				~MOAIFmodChannel	();
-	float		GetVolume			();
 	void		Play				( MOAIFmodSound* sound, int loopCount );
 	void		RegisterLuaClass	( USLuaState& state );
 	void		RegisterLuaFuncs	( USLuaState& state );

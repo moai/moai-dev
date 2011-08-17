@@ -362,6 +362,68 @@ void* USLuaState::GetPtrUserData ( int idx ) {
 }
 
 //----------------------------------------------------------------//
+STLString USLuaState::GetStackTrace ( int level ) {
+
+	int firstpart = 1;  /* still before eventual `...' */
+	lua_Debug ar;
+	
+	lua_State* L = this->mState;
+
+	STLString out;
+	
+	out.append ( "stack traceback:" );
+	
+	while ( lua_getstack ( L, level++, &ar )) {
+		
+		if (level > LEVELS1 && firstpart) {
+			
+			if ( !lua_getstack ( L, level + LEVELS2, &ar )) {
+				level--;
+			}
+			else {
+				// too many levels
+				out.append ( "\n\t..." );  /* too many levels */
+				
+				// find last levels */
+				while ( lua_getstack ( L, level + LEVELS2, &ar ))  
+					level++;
+			}
+			firstpart = 0;
+			continue;
+		}
+		
+		out.append ( "\n\t" );
+		
+		lua_getinfo ( L, "Snl", &ar );
+		
+		out.append ( ar.short_src );
+		
+		if ( ar.currentline > 0 ) {
+			out.write ( ":%d", ar.currentline );
+		}
+		
+		if ( *ar.namewhat != '\0' ) {
+			out.write ( " in function '%s'", ar.name );
+		}
+		else {
+			if ( *ar.what == 'm' ) {
+				out.write ( " in main chunk" );
+			}
+			else if ( *ar.what == 'C' || *ar.what == 't' ) {
+				out.write ( " ?" );
+			}
+			else {
+				out.write ( " in function <%s:%d>", ar.short_src, ar.linedefined );
+			}
+		}
+	}
+	
+	out.append ( "\n" );
+
+	return out;
+}
+
+//----------------------------------------------------------------//
 USLuaRef USLuaState::GetStrongRef ( int idx ) {
 
 	USLuaRef ref;
@@ -642,70 +704,6 @@ void USLuaState::PrintStackTrace ( int level ) {
 
 	_printStackTrace ( this->mState, level  );
 }
-
-//----------------------------------------------------------------//
-STLString USLuaState::GetStackTrace ( int level ) {
-
-	int firstpart = 1;  /* still before eventual `...' */
-	lua_Debug ar;
-	
-	lua_State* L = this->mState;
-
-	STLString out;
-	
-	out.append("stack traceback:");
-	
-	while ( lua_getstack ( L, level++, &ar )) {
-		
-		if (level > LEVELS1 && firstpart) {
-			
-			if ( !lua_getstack ( L, level + LEVELS2, &ar )) {
-				level--;
-			}
-			else {
-				// too many levels
-				out.append("\n\t...");  /* too many levels */
-				
-				// find last levels */
-				while ( lua_getstack ( L, level + LEVELS2, &ar ))  
-					level++;
-			}
-			firstpart = 0;
-			continue;
-		}
-		
-		out.append("\n\t");
-		
-		lua_getinfo ( L, "Snl", &ar );
-		
-		out.append(ar.short_src);
-		
-		if ( ar.currentline > 0 ) {
-			out.write(":%d", ar.currentline);
-		}
-		
-		if (*ar.namewhat != '\0' ) {
-			out.write(" in function '%s'", ar.name);
-		}
-		else {
-			if ( *ar.what == 'm' ) {
-				out.write(" in main chunk");
-			}
-			else if ( *ar.what == 'C' || *ar.what == 't' ) {
-				out.write(" ?");
-			}
-			else {
-				out.write(" in function <%s:%d>", ar.short_src,
-					ar.linedefined);
-			}
-		}
-	}
-	
-	out.append("\n");
-
-	return out;
-}
-
 
 //----------------------------------------------------------------//
 void USLuaState::Push ( bool value ) {

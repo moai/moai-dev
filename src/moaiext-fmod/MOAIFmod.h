@@ -27,8 +27,9 @@ private:
 	FMOD::ChannelGroup* mMainChannelGroup;
 
 	//----------------------------------------------------------------//
-	static int	_init				( lua_State* L );
 	static int	_getMemoryStats		( lua_State* L );
+	static int	_init				( lua_State* L );
+
 public:
 
 	DECL_LUA_SINGLETON ( MOAIFmod )

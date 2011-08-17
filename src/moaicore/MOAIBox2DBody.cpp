@@ -264,11 +264,12 @@ int MOAIBox2DBody::_getAngularVelocity ( lua_State* L ) {
 /**	@name	getInertia
 	@text   See Box2D documentation.
 
+	@in		MOAIBox2DBody self
 	@out	number inertia Calculated inertia (based on last call to resetMassData()).
 */
 int MOAIBox2DBody::_getInertia ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DBody, "U" )
-	lua_pushnumber(L, self->mBody->GetInertia());
+	lua_pushnumber ( L, self->mBody->GetInertia ());
 	return 1;
 }
 
@@ -314,11 +315,12 @@ int MOAIBox2DBody::_getLocalCenter ( lua_State* L ) {
 /**	@name	getMass
 	@text   See Box2D documentation.
 
+	@in		MOAIBox2DBody self
 	@out	number Mass Calculated mass (based on last call to resetMassData()).
 */
 int MOAIBox2DBody::_getMass ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DBody, "U" )
-	lua_pushnumber(L, self->mBody->GetMass());
+	lua_pushnumber ( L, self->mBody->GetMass ());
 	return 1;
 }
 

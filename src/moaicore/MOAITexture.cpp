@@ -8,12 +8,8 @@
 #include <moaicore/MOAIImage.h>
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIPvrHeader.h>
+#include <moaicore/MOAISim.h>
 #include <moaicore/MOAITexture.h>
-
-// TODO
-u32 GetFrameCounter () {
-	return 0;
-}
 
 #define DEBUG_TEXTURE_MEMORY 1
 
@@ -364,7 +360,7 @@ void MOAITexture::Affirm () {
 				DEBUG_TEXTURE_ALLOC ( this->mFilename, this->mDataSize )
 			}
 			
-			this->mLastFrameUsed = GetFrameCounter ();
+			this->mLastFrameUsed = MOAISim::Get ().GetFrameCounter ();
 			
 			if( this->mLoader->mReloadable ) {
 				// Release the loader's copy. It isn't needed any more.
@@ -437,7 +433,7 @@ bool MOAITexture::Bind () {
 		if ( !this->mGLTexID ) return false;
 	}
 
-	this->mLastFrameUsed = GetFrameCounter ();
+	this->mLastFrameUsed = MOAISim::Get ().GetFrameCounter ();
 
 	glBindTexture ( GL_TEXTURE_2D, this->mGLTexID );
 	glEnable ( GL_TEXTURE_2D );
@@ -1010,7 +1006,7 @@ bool MOAITexture::SoftRelease ( int age ) {
 		return false;
 	}
 
-	u32 f = GetFrameCounter ();
+	u32 f = MOAISim::Get ().GetFrameCounter ();
 	u32 myage = f > this->mLastFrameUsed ? f - this->mLastFrameUsed : 0xffffffff - this->mLastFrameUsed + f;
 	if ( myage < ( u32 )( age & 0x7fffffff )) {
 		return false;

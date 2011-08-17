@@ -24,6 +24,7 @@ int MOAIAnimCurve::_getLength ( lua_State* L ) {
 	return 1;
 }
 
+//----------------------------------------------------------------//
 /**	@name	getValueAtTime
 	@text	Return the interpolated value given a point in time along the curve. This does not change
 	        the curve's built in TIME attribute (it simply performs the requisite computation on demand).
@@ -32,15 +33,13 @@ int MOAIAnimCurve::_getLength ( lua_State* L ) {
 	@in		number time
 	@out	number interpolated value
 */
-int MOAIAnimCurve::_getValueAtTime ( lua_State* L )
-{
+int MOAIAnimCurve::_getValueAtTime ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAnimCurve, "UN" );
 
-	lua_pushnumber ( state, self->GetFloatValue( state.GetValue<float>(2, 0) ) );
+	lua_pushnumber ( state, self->GetFloatValue ( state.GetValue < float >( 2, 0 )));
 
 	return 1;
 }
-
 
 //----------------------------------------------------------------//
 /**	@name	reserveKeys

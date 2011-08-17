@@ -15,6 +15,9 @@
 #include <uslscore/STLSet.h>
 #include <lstate.h>
 
+// TODO: harebrained
+static size_t _g_total_bytes = 0;
+
 //================================================================//
 // local
 //================================================================//
@@ -156,6 +159,31 @@ static void dumpTypeByAddress ( lua_State* L, TValue* tvalue, const char *name, 
 	lua_pop ( L, 1 );
 }
 
+//----------------------------------------------------------------//
+// TODO: harebrained
+static void *l_tracking_alloc (void *ud, void *ptr, size_t osize, size_t nsize) {
+	(void)ud;
+	if (nsize == 0) {
+		_g_total_bytes -= osize;
+		free(ptr);
+		return NULL;
+	}
+	else {
+		_g_total_bytes -= osize;
+		_g_total_bytes += nsize;
+		return realloc(ptr, nsize);
+	}
+}
+
+//----------------------------------------------------------------//
+// TODO: harebrained
+static int panic (lua_State *L) {
+	(void)L;  /* to avoid warnings */
+	fprintf(stderr, "PANIC: unprotected error in call to Lua API (%s)\n",
+			lua_tostring(L, -1));
+	return 0;
+}
+
 //================================================================//
 // USLuaRuntime Lua API
 //================================================================//
@@ -263,6 +291,12 @@ void USLuaRuntime::Close () {
 }
 
 //----------------------------------------------------------------//
+// TODO: harebrained
+size_t USLuaRuntime::GetMemoryUsage() {
+	return _g_total_bytes;
+}
+
+//----------------------------------------------------------------//
 bool USLuaRuntime::IsOpen () {
 
 	return ( this->mMainState != 0 );
@@ -279,37 +313,6 @@ void USLuaRuntime::LoadLibs ( cc8* runtimeLibName ) {
 	this->mMainState.Push ( _traceback );
 	this->mTraceback.SetRef ( this->mMainState, -1, false );
 	this->mMainState.Pop ( 1 );
-}
-
-//----------------------------------------------------------------//
-
-static size_t _g_total_bytes = 0;
-
-static void *l_tracking_alloc (void *ud, void *ptr, size_t osize, size_t nsize) {
-	(void)ud;
-	if (nsize == 0) {
-		_g_total_bytes -= osize;
-		free(ptr);
-		return NULL;
-	}
-	else {
-		_g_total_bytes -= osize;
-		_g_total_bytes += nsize;
-		return realloc(ptr, nsize);
-	}
-}
-
-static int panic (lua_State *L) {
-	(void)L;  /* to avoid warnings */
-	fprintf(stderr, "PANIC: unprotected error in call to Lua API (%s)\n",
-			lua_tostring(L, -1));
-	return 0;
-}
-
-
-//----------------------------------------------------------------//
-size_t USLuaRuntime::GetMemoryUsage() {
-	return _g_total_bytes;
 }
 
 //----------------------------------------------------------------//

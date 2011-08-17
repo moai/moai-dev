@@ -44,13 +44,13 @@ protected:
 	int		mTimesExecuted;
 
 	//----------------------------------------------------------------//
+	static int		_getTime			( lua_State* L );
 	static int		_getTimesExecuted	( lua_State* L );
 	static int		_setCurve			( lua_State* L );
 	static int		_setMode			( lua_State* L );
 	static int		_setSpan			( lua_State* L );
 	static int		_setSpeed			( lua_State* L );
 	static int		_setTime			( lua_State* L );
-	static int		_getTime			( lua_State* L );
 	
 	//----------------------------------------------------------------//
 	float			DoStep				( float step );
