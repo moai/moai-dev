@@ -27,7 +27,7 @@ bool BufferedAudioSource::init(const RString& path, bool loadIntoMemory)
 { 
 	if(loadIntoMemory)
 	{
-		RPRINT("loading sound into memory...\n");
+		//RPRINT("loading sound into memory...\n");
         int channels = getNumChannels();
         double length = getLength();
 		UInt32 totalNumSamples = (UInt32)(getNumChannels() * getSampleRate() * getLength());

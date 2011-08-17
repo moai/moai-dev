@@ -1,4 +1,7 @@
+#import <moaiext-iphone/NSDictionary+MOAILib.h>
+#import <moaiext-iphone/NSNumber+MOAILib.h>
 #import <moaiext-iphone/NSObject+MOAILib.h>
+#import <moaiext-iphone/NSString+MOAILib.h>
 
 //----------------------------------------------------------------//
 void loadMoaiLib_NSObject () {
@@ -44,6 +47,29 @@ void loadMoaiLib_NSObject () {
 	}
 
 	//----------------------------------------------------------------//
+	+( id ) objectFromLua:( lua_State* )state stackIndex:( int )idx {
+	
+		int type = lua_type ( state, idx );
+		switch ( type ) {
+			case LUA_TNUMBER:
+				return [[ NSNumber alloc ] initWithLua:state stackIndex:idx ];
+				break;
+				
+			case LUA_TSTRING:
+				return [[ NSString alloc ] initWithLua:state stackIndex:idx ];
+				break;
+				
+			case LUA_TTABLE:
+				return [[ NSMutableDictionary dictionary ] initWithLua:state stackIndex:idx ];
+				break;
+				
+			default:
+				// No other compatible types atm.
+				return nil;
+		}
+	}
+
+	//----------------------------------------------------------------//
 	-( void ) performSelector :( SEL )selector afterDelay:( float )delay {
 	
 		[ self performSelector:selector withObject:nil afterDelay:delay ];
@@ -53,30 +79,6 @@ void loadMoaiLib_NSObject () {
 	-( void	) toLua:( lua_State* )state {
 
 		lua_pushnil ( state );
-	}
-
-	//----------------------------------------------------------------//
-	-( id ) objectFromLua:( lua_State* )state stackIndex:( int )idx
-	{
-		int type = lua_type(state, idx);
-		switch( type )
-		{
-			case LUA_TNUMBER:
-				return [[NSNumber alloc] initWithLua:state stackIndex:idx];
-				break;
-				
-			case LUA_TSTRING:
-				return [[NSString alloc] initWithLua:state stackIndex:idx];
-				break;
-				
-			case LUA_TTABLE:
-				return [[NSMutableDictionary dictionary] initWithLua:state stackIndex:idx];
-				break;
-				
-			default:
-				// No other compatible types atm.
-				return nil;
-		}
 	}
 
 @end

@@ -73,26 +73,24 @@ void loadMoaiLib_NSDictionary () {
 @implementation NSMutableDictionary ( MOAILib )
 
 	//----------------------------------------------------------------//
-	-( id ) initWithLua:( lua_State* )state stackIndex:(int) idx {
+	-( id ) initWithLua:( lua_State* )state stackIndex:( int )idx {
 
 		// table is in the stack at index 'idx'
-		lua_pushnil(state);  // first key
-		while( lua_next(state, idx) != 0 )
-		{
+		lua_pushnil ( state );  // first key
+		while ( lua_next ( state, idx ) != 0 ) {
 			
 			// use the 'key' (at index -2) and 'value' (at index -1)
-			id key = [NSObject objectFromLua:state stackIndex:-2];
-			if( key != nil )
-			{
-				id value = [NSObject objectFromLua:state stackIndex:-1];
-				if( value != nil )
-				{
-					[self setObject:value forKey:key];
+			id key = [ NSObject objectFromLua:state stackIndex:-2 ];
+			if( key != nil ) {
+				
+				id value = [ NSObject objectFromLua:state stackIndex:-1 ];
+				if ( value != nil ) {
+					[ self setObject:value forKey:key ];
 				}
 			}			
 			
 			// removes 'value'; keeps 'key' for next iteration
-			lua_pop(state, 1);
+			lua_pop ( state, 1 );
 		}
 		
 		return self;

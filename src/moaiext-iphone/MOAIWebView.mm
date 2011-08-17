@@ -446,7 +446,7 @@ int MOAIWebView::_show ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIWebView::MOAIWebView ( ) :
+MOAIWebView::MOAIWebView () :
 	mWebView ( 0 ) {
 
 	RTTI_BEGIN

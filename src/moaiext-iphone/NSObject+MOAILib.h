@@ -8,9 +8,9 @@
 
 	//----------------------------------------------------------------//
 	-( id )		isOf				:( id )base;
+	+( id )		objectFromLua		:( lua_State* )state stackIndex:( int )idx;
 	-( void )	performSelector		:( SEL )selector afterDelay:( float )delay;
 	-( void	)	toLua				:( lua_State* )state;
-	+( id )		objectFromLua		:( lua_State* )state stackIndex:( int )idx;
 
 @end
 

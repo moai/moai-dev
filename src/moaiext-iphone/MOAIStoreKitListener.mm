@@ -34,14 +34,14 @@
 	}
 	
 	//----------------------------------------------------------------//
-	-( void ) paymentQueueRestoreCompletedTransactionsFinished:(SKPaymentQueue* )queue {
-		UNUSED ( queue );
-	}
-	
-	//----------------------------------------------------------------//
 	-( void ) paymentQueue:( SKPaymentQueue* )queue updatedTransactions:( NSArray* )transactions {
 	
 		MOAIApp::Get ().PaymentQueueUpdatedTransactions ( queue, transactions );
+	}
+
+	//----------------------------------------------------------------//
+	-( void ) paymentQueueRestoreCompletedTransactionsFinished:(SKPaymentQueue* )queue {
+		UNUSED ( queue );
 	}
 
 	//================================================================//
