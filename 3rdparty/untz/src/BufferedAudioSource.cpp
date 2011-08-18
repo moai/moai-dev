@@ -84,7 +84,7 @@ double BufferedAudioSource::getPosition()
 
 Int64 BufferedAudioSource::readFrames(float* buffer, UInt32 numChannels, UInt32 numFrames)
 {
-	RScopedLock l(&mLock);
+	mLock.lock();
 
 	Int64 framesRead = numFrames;
 	int framesAvailable = mBuffer.size() / getNumChannels() - mCurrentFrame;
@@ -93,8 +93,12 @@ Int64 BufferedAudioSource::readFrames(float* buffer, UInt32 numChannels, UInt32 
     if(!isLoadedInMemory())
         framesAvailable = mBuffer.size() / getNumChannels();
     
+	mLock.unlock();
+
 	if(framesAvailable > 0)
 	{
+		RScopedLock l(&mLock);
+
 		if(framesAvailable < numFrames)
 			framesRead = framesAvailable;
 
