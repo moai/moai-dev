@@ -357,7 +357,7 @@ void MOAIAction::Update ( float step, u32 pass, bool checkPass ) {
 	#if PROFILE_ACTIONS
 		double elapsed = USDeviceTime::GetTimeInSeconds () - t0;
 		if ( elapsed >= 0.005 ) {
-			STLString name = ToStringWithType ();
+			STLString name = this->ToStringWithType ();
 			printf ( "MOAIAction::Update(%p: %s) step %.2f ms took %.2f ms\n", this, name.c_str(), step * 1000, elapsed * 1000 );
 		}
 	#endif

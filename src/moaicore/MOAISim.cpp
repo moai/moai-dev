@@ -357,29 +357,27 @@ int MOAISim::_pushRenderPass ( lua_State* L ) {
 */
 int MOAISim::_reportLeaks ( lua_State* L ) {
 	
+	// TODO: harebrained
+	
 	USLuaState state ( L );
-	bool clearAfter = state.GetValue<bool>(1, false);
-	cc8* filename   = state.GetValue<cc8*>(2, 0);
+	bool clearAfter = state.GetValue < bool >( 1, false );
+	cc8* filename   = state.GetValue < cc8* >( 2, 0 );
 	
-	if( filename )
-	{
-		FILE *f = fopen(filename, "w");
-		if (f)
-		{
-			printf("Writing leak report to: %s\n", filename);
-			USLuaObject::ReportLeaks(f, clearAfter);
-			fclose(f);
+	if ( filename ) {
+		FILE *f = fopen ( filename, "w" );
+		if ( f ) {
+			printf ( "Writing leak report to: %s\n", filename );
+			USLuaObject::ReportLeaks ( f, clearAfter );
+			fclose ( f );
 		}
-		else
-		{
-			printf("Error opening file for write, dumping leak report to console instead: %s\n", filename);
-			USLuaObject::ReportLeaks(stdout, clearAfter);
+		else {
+			printf ( "Error opening file for write, dumping leak report to console instead: %s\n", filename );
+			USLuaObject::ReportLeaks ( stdout, clearAfter );
 		}
-
 	}
-	else
-		USLuaObject::ReportLeaks(stdout, clearAfter);
-	
+	else {
+		USLuaObject::ReportLeaks ( stdout, clearAfter );
+	}
 	return 0;
 }
 
@@ -728,27 +726,26 @@ void MOAISim::Update () {
 	}
 
 	USLuaStateHandle state = USLuaRuntime::Get ().State ();
-//	printf("MOAISim::Update() frame! delta = %.1f ms\n", (mDeviceTime - mTime) * 1000);
+	// printf("MOAISim::Update() frame! delta = %.1f ms\n", (mDeviceTime - mTime) * 1000);
 
-#define STEP_LOOP_IMPL() do { \
-	while (( this->mTime + step ) < this->mDeviceTime ) { \
-		/*if ( step > mStep ) \
-			printf("MOAISim::Update() step = %.1f ms\n", step * 1000); \
-		double t0 = USDeviceTime::GetTimeInSeconds (); */ \
-		MOAIDebugLines::Get ().Reset (); \
-		/* double t1 = USDeviceTime::GetTimeInSeconds (); */ \
-		MOAIInputMgr::Get ().Update (); \
-		/* double t2 = USDeviceTime::GetTimeInSeconds (); */ \
-		MOAIActionMgr::Get ().Update (( float )step ); \
-		/* double t3 = USDeviceTime::GetTimeInSeconds (); */ \
-		MOAINodeMgr::Get ().Update (); \
-		/* double t4 = USDeviceTime::GetTimeInSeconds ();  \
-		printf("  frame times (step = %5.1f) = %5.1f %5.1f %5.1f %5.1f\n", step*1000, (t1 - t0)*1000, (t2 - t1)*1000, (t3 - t2)*1000, (t4 - t3)*1000); */ \
-		this->mTime += step; \
-		this->mFrameCounter++; \
-	} \
-} while(0)
-	
+	#define STEP_LOOP_IMPL() do { \
+		while (( this->mTime + step ) < this->mDeviceTime ) { \
+			/*if ( step > mStep ) \
+				printf("MOAISim::Update() step = %.1f ms\n", step * 1000); \
+			double t0 = USDeviceTime::GetTimeInSeconds (); */ \
+			MOAIDebugLines::Get ().Reset (); \
+			/* double t1 = USDeviceTime::GetTimeInSeconds (); */ \
+			MOAIInputMgr::Get ().Update (); \
+			/* double t2 = USDeviceTime::GetTimeInSeconds (); */ \
+			MOAIActionMgr::Get ().Update (( float )step ); \
+			/* double t3 = USDeviceTime::GetTimeInSeconds (); */ \
+			MOAINodeMgr::Get ().Update (); \
+			/* double t4 = USDeviceTime::GetTimeInSeconds ();  \
+			printf("  frame times (step = %5.1f) = %5.1f %5.1f %5.1f %5.1f\n", step*1000, (t1 - t0)*1000, (t2 - t1)*1000, (t3 - t2)*1000, (t4 - t3)*1000); */ \
+			this->mTime += step; \
+			this->mFrameCounter++; \
+		} \
+	} while(0)
 	
 	// We potentially "drop" update frames if we've gone a long time
 	// since the last update. This will hopefully catch us up quicker and
@@ -756,20 +753,17 @@ void MOAISim::Update () {
 	
 	double step = this->mDeviceTime - this->mTime - this->mStep * 2;
 
-	if( step > this->mStep )
-	{
-		STEP_LOOP_IMPL();
+	if( step > this->mStep ) {
+		STEP_LOOP_IMPL ();
 	}
 	
 	step = this->mStep;
 	
-	STEP_LOOP_IMPL();
+	STEP_LOOP_IMPL ();
 
 	USUrlMgr::Get ().Process ();
-	
 	this->mDataIOThread.Publish ();
 	
-
 	//printf("  frame delta = %.1f\n", (USDeviceTime::GetTimeInSeconds() - mDeviceTime) * 1000);
 }
 

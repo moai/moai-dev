@@ -39,7 +39,6 @@ public:
 	friend class USLuaClass;
 
 	//----------------------------------------------------------------//
-	void					CallCreationHook		( USLuaState& state );
 	void					DebugDump				();
 	virtual STLString		ToString				();
 	STLString				ToStringWithType		();
@@ -54,7 +53,6 @@ public:
 	static void             ReportLeaks				( FILE *f, bool clearAfter );
 	virtual	void			SerializeIn				( USLuaState& state, USLuaSerializer& serializer );
 	virtual	void			SerializeOut			( USLuaState& state, USLuaSerializer& serializer );
-	static void				SetLeakTrackingEnabled	( bool enable );
 	void					SetLuaInstanceTable		( USLuaState& state, int idx );
 							USLuaObject				();
 	virtual					~USLuaObject			();

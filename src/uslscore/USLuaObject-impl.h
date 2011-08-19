@@ -44,7 +44,7 @@ private:
 		
 		data->SetLuaInstanceTable ( state, 1 );
 		data->PushLuaUserdata ( state );
-		data->CallCreationHook ( state );
+		USLuaRuntime::Get ().SetObjectStackTrace ( data, state.GetStackTrace ( 1 ));
 
 		return 1;
 	}

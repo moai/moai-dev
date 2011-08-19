@@ -10,25 +10,6 @@
 #include <uslscore/USLuaSerializer.h>
 #include <uslscore/USLuaState-impl.h>
 
-// TODO: harebrained
-typedef std::map<USLuaObject*,STLString> LeakMap;
-typedef std::vector<USLuaObject*> LeakPtrList;
-typedef std::map<STLString, LeakPtrList> LeakStackMap;
-
-static bool gLeakTrackingEnabled;
-static LeakMap gLeaks;
-
-// TODO: harebrained
-static bool isluaident(const char *str)
-{
-	const char *p = str;
-	while ( *p != '\0' && ( isalnum(*p) || *p == '_' ) )
-	{
-		p++;
-	}
-	return p > str && *p == '\0';
-}
-
 //================================================================//
 // local
 //================================================================//
@@ -43,10 +24,7 @@ int USLuaObject::_gc ( lua_State* L ) {
 	bool cleanup = data->mUserdata.IsWeak ();
 	data->mUserdata.Clear ();
 	
-	// TODO: harebrained
-	LeakMap::iterator it = gLeaks.find(data);
-	if( it != gLeaks.end() )
-		gLeaks.erase(it);
+	USLuaRuntime::Get ().SetObjectStackTrace ( data, 0 );
 
 	if ( cleanup ) {
 		delete data;
@@ -100,142 +78,9 @@ int USLuaObject::_getClassName ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-// TODO: harebrained
-void USLuaObject::CallCreationHook( USLuaState &state )
-{
-	if( gLeakTrackingEnabled )
-	{
-		gLeaks[this] = state.GetStackTrace(1);
-	}
-}
-
-//----------------------------------------------------------------//
 void USLuaObject::DebugDump () {
 
 	USLog::Print ( "%p <%s> %s", this, this->TypeName (), this->ToString ().c_str ());
-}
-
-//----------------------------------------------------------------//
-// TODO: harebrained
-// This beast will walk through all tables and functions accessible in the
-// current lua state and print a reference line for each one found to help
-// track who is pointing to it.
-static void FindAndPrintLuaRefs(lua_State *L, int idx, cc8* prefix, FILE *f, const LeakPtrList& objects)
-{
-	// Convert to absolute index
-	if ( idx < 0 )
-		idx = lua_gettop(L) + idx + 1;
-	
-	// Check if the item at the top of the stack has been traversed yet.
-	lua_pushvalue(L, -1);
-	lua_gettable(L, idx);
-	if( lua_type(L, -1) != LUA_TNIL )
-	{
-		// It has, let's bail.
-		lua_pop(L, 1); // Clean our 'true'
-		return;
-	}
-	lua_pop(L, 1); // Remove the nil
-	
-	int tt = lua_type(L, -1);
-	if( tt == LUA_TTABLE )
-	{
-//		printf("finding refs in: %s\n", prefix);
-		// It hasn't been visited, so mark it in our tarversal set
-		lua_pushvalue(L, -1); // Push table as key
-		lua_pushboolean(L, true);
-		lua_settable(L, idx);
-		
-		lua_pushnil(L);  // first key
-		while( lua_next(L, -2) != 0 )
-		{
-			// use the 'key' (at index -2) and 'value' (at index -1)
-			STLString key;
-			
-			if (lua_type(L, -2) == LUA_TSTRING )
-			{
-				if( isluaident(lua_tostring(L, -2)) )
-					key.write("%s.%s", prefix, lua_tostring(L, -2));
-				else // TODO: escape '\"'
-					key.write("%s[\"%s\"]", prefix, lua_tostring(L, -2));
-			}
-			else
-			{
-				// stringify key
-				lua_pushstring(L, "tostring");
-				lua_gettable(L, LUA_GLOBALSINDEX);
-				lua_pushvalue(L, -3);
-				lua_call(L, 1, 1);
-				
-				key.write("%s[%s]", prefix, lua_tostring(L, -1));
-				// Pop stringified key
-				lua_pop(L, 1);
-			}
-			
-			FindAndPrintLuaRefs(L, idx, key.c_str(), f, objects);
-
-			// removes 'value'; keeps 'key' for next iteration
-			lua_pop(L, 1);
-		}
-		
-		// Check its metatable (if it has one)
-		if( lua_getmetatable(L, -1) )
-		{
-			STLString key;
-			key.write("%s~mt", prefix);
-			FindAndPrintLuaRefs(L, idx, key.c_str(), f, objects);
-			lua_pop(L, 1); // Pop metatable
-		}
-	}
-	else if( tt == LUA_TFUNCTION )
-	{
-//		printf("finding refs in: %s\n", prefix);
-		// It hasn't been visited, so mark it in our tarversal set
-		lua_pushvalue(L, -1); // Push table as key
-		lua_pushboolean(L, true);
-		lua_settable(L, idx);
-		
-		const char *upname;
-		for (int i = 1; (upname = lua_getupvalue(L, -1, i)) != NULL; ++i)
-		{
-			STLString key;
-			key.write("%s(%s)", prefix, upname);
-			FindAndPrintLuaRefs(L, idx, key.c_str(), f, objects);
-			// Pop the upvalue
-			lua_pop(L, 1);
-		}
-	}
-	else if( tt == LUA_TUSERDATA )
-	{
-		// It hasn't been visited, so mark it in our tarversal set
-		lua_pushvalue(L, -1); // Push table as key
-		lua_pushboolean(L, true);
-		lua_settable(L, idx);
-
-		USLuaState state ( L );
-		void *ud = state.GetPtrUserData(-1);
-		for (LeakPtrList::const_iterator i = objects.begin(); i != objects.end(); ++i)
-		{
-			if( *i == ud )
-			{
-				fprintf(f, "\tLua Ref: %s = %s <%p>\n", prefix, (*i)->TypeName(), ud);
-//				if ( strcmp((*i)->TypeName(), "MOAIThread") == 0 )
-//				{
-//					MOAIThread *t = (MOAIThread*)ud;
-//					
-//				}
-			}
-		}
-		
-		// Check its metatable (if it has one)
-		if( lua_getmetatable(L, -1) )
-		{
-			STLString key;
-			key.write("%s~mt", prefix);
-			FindAndPrintLuaRefs(L, idx, key.c_str(), f, objects);
-			lua_pop(L, 1); // Pop metatable
-		}
-	}
 }
 
 //----------------------------------------------------------------//
@@ -356,87 +201,6 @@ void USLuaObject::RegisterLuaFuncs ( USLuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: harebrained
-void USLuaObject::ReportLeaks( FILE *f, bool clearAfter )
-{
-	lua_State *L = USLuaRuntime::Get().State();
-
-	// Make sure that anything that can be collected, is. Note: we collect
-	// more than once because of this scary snippet:
-	//   "When Lua collects a full userdata with a gc metamethod, Lua
-	//    calls the metamethod and marks the userdata as finalized. When
-	//    this userdata is collected again then Lua frees its corresponding
-	//    memory."
-	
-	lua_gc(L, LUA_GCCOLLECT, 0);
-	lua_gc(L, LUA_GCCOLLECT, 0);
-	lua_gc(L, LUA_GCCOLLECT, 0);
-	lua_gc(L, LUA_GCCOLLECT, 0);
-	lua_gc(L, LUA_GCCOLLECT, 0);
-	lua_gc(L, LUA_GCCOLLECT, 0);
-	
-#if 0
-	
-	// Old way was just a raw dump (but it was much faster)
-	fprintf(f, "-- MOAI LEAK REPORT ------------\n");
-	u32 count = 0;
-	
-	for( LeakMap::const_iterator i = gLeaks.begin() ; i != gLeaks.end(); ++i )
-	{
-		fputs(i->second.c_str(), f);
-		count++;
-	}
-	
-	fprintf(f, "-- END LEAK REPORT (Total Objects: %lu) ---------\n", count);
-
-#else
-	
-	// First, correlate leaks by identical stack traces.
-	
-	LeakStackMap stacks;
-	
-	for( LeakMap::const_iterator i = gLeaks.begin() ; i != gLeaks.end(); ++i )
-		stacks[i->second].push_back(i->first);
-	
-	fprintf(f, "-- BEGIN MOAI LEAKS --\n");
-	// Then, print out each unique allocation spot along with all references
-	// (including multiple references) followed by the alloction stack
-	int top = lua_gettop(L);
-	for( LeakStackMap::const_iterator i = stacks.begin() ; i != stacks.end(); ++i )
-	{
-		const LeakPtrList& list = i->second;
-		
-		USLuaObject *o = list.front();
-		fprintf(f, "Allocation: %lu x %s\n", list.size(), o->TypeName()); 
-		for( LeakPtrList::const_iterator j = list.begin(); j != list.end(); ++j )
-		{
-			fprintf(f, "\t(%6d) %p\n", (*j)->GetRefCount(), *j);
-		}
-		// A table to use as a traversal set.
-		lua_newtable(L);
-		// And the table to use as seed
-		lua_pushvalue(L, LUA_GLOBALSINDEX);
-		
-		FindAndPrintLuaRefs(L, -2, "_G", f, list);
-		
-		lua_pop(L, 2); // Pop the 'done' set and our globals table
-		fputs(i->first.c_str(), f);
-		fputs("\n", f);
-		fflush(f);
-	}
-	assert( top == lua_gettop(L) );
-	fprintf(f, "-- END MOAI LEAKS --\n");
-	
-	
-#endif
-	
-	if( clearAfter )
-	{
-		gLeaks.clear();
-	}
-}
-
-//----------------------------------------------------------------//
 void USLuaObject::SerializeIn ( USLuaState& state, USLuaSerializer& serializer ) {
 	UNUSED ( state );
 	UNUSED ( serializer );
@@ -446,13 +210,6 @@ void USLuaObject::SerializeIn ( USLuaState& state, USLuaSerializer& serializer )
 void USLuaObject::SerializeOut ( USLuaState& state, USLuaSerializer& serializer ) {
 	UNUSED ( state );
 	UNUSED ( serializer );
-}
-
-//----------------------------------------------------------------//
-// TODO: harebrained
-void USLuaObject::SetLeakTrackingEnabled( bool enabled )
-{
-	gLeakTrackingEnabled = enabled;
 }
 
 //----------------------------------------------------------------//
@@ -499,13 +256,8 @@ USLuaObject::USLuaObject () {
 //----------------------------------------------------------------//
 USLuaObject::~USLuaObject () {
 
-	// TODO: harebrained
-	// This shouldn't be necessary, but let's be paranoid.
-	LeakMap::iterator it = gLeaks.find(this);
-	if( it != gLeaks.end() )
-		gLeaks.erase(it);
+	USLuaRuntime::Get ().SetObjectStackTrace ( data, 0 );
 	
-	// TODO: keep the tombstone idiom?
 	if ( USLuaRuntime::IsValid ()) {
 		
 		if ( this->mUserdata ) {
