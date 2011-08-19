@@ -334,6 +334,8 @@ MOAIUntzSound::~MOAIUntzSound () {
 void MOAIUntzSound::RegisterLuaClass ( USLuaState& state ) {
 
 	MOAINode::RegisterLuaClass ( state );
+
+	state.SetField ( -1, "ATTR_VOLUME", MOAIUntzSoundAttr::Pack ( ATTR_VOLUME ));
 }
 
 //----------------------------------------------------------------//

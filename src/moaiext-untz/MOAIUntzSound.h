@@ -15,6 +15,8 @@ class MOAIDataBuffer;
 //================================================================//
 /**	@name	MOAIUntzSound
 	@text	Untz sound object.
+	
+	@attr	ATTR_VOLUME
 */
 class MOAIUntzSound :
 	public virtual MOAINode {
