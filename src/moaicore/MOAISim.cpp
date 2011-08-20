@@ -116,6 +116,18 @@ int MOAISim::_getDeviceSize ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	getDeviceTime
+	@text	Gets the raw device clock. This is a replacement for Lua's os.time ().
+
+	@out	number time			The device clock time in seconds.
+*/
+int MOAISim::_getDeviceTime ( lua_State* L ) {
+	
+	lua_pushnumber ( L, USDeviceTime::GetTimeInSeconds ());
+	return 1;
+}
+
+//----------------------------------------------------------------//
 /**	@name	getElapsedFrames
 	@text	Gets the number of frames elapsed since the application was started.
 
@@ -597,6 +609,7 @@ void MOAISim::RegisterLuaClass ( USLuaState& state ) {
 		{ "exitFullscreenMode",			_exitFullscreenMode },
 		{ "framesToTime",				_framesToTime },
 		{ "getDeviceSize",				_getDeviceSize },
+		{ "getDeviceTime",				_getDeviceTime },
 		{ "getElapsedFrames",			_getElapsedFrames },
 		{ "getElapsedTime",				_getElapsedTime },
 		{ "getFrameSize",				_getFrameSize },
