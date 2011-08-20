@@ -89,7 +89,6 @@ public:
 	static MOAITexture*		AffirmTexture			( USLuaState& state, int idx );
 	void					Clear					();
 	u32						GetHeight				();
-	static size_t			GetMemoryUsage			();
 	u32						GetWidth				();
 	void					Init					( MOAIImage& image, cc8* debugname = 0 );
 	void					Init					( cc8* filename, u32 transform = DEFAULT_TRANSFORM );

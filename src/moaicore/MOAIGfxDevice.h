@@ -91,6 +91,8 @@ private:
 	bool			mIsProgrammable;
 	
 	GLuint			mDefaultFrameBuffer;
+	
+	size_t			mTextureMemoryUsage;
 
 	//----------------------------------------------------------------//
 	static int				_isProgrammable			( lua_State* L );
@@ -100,13 +102,20 @@ private:
 	void					DrawPrims				();
 	void					GpuLoadMatrix			( const USMatrix4x4& mtx ) const;
 	void					GpuMultMatrix			( const USMatrix4x4& mtx ) const;
+	void					ReportTextureAlloc		( cc8* name, size_t size );
+	void					ReportTextureFree		( cc8* name, size_t size );
 	void					UpdateCpuVertexMtx		();
 	void					UpdateGpuVertexMtx		();
 	void					UpdateUVMtx				();
 	
+
 public:
 	
+	friend class MOAITexture;
+	
 	DECL_LUA_SINGLETON ( MOAIGfxDevice )
+	
+	GET ( size_t, TextureMemoryUsage, mTextureMemoryUsage )
 	
 	//----------------------------------------------------------------//
 	void					BeginDrawing			();

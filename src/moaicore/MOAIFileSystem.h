@@ -22,16 +22,14 @@ private:
 	static int		_getDirSeparator		( lua_State* L );
 	static int		_getFileDirectory		( lua_State* L );
 	static int		_getRealPath			( lua_State* L );
+	static int		_listDirectories		( lua_State* L );
+	static int		_listFiles				( lua_State* L );
 	static int		_loadAndRunLuaFile		( lua_State* L );
 	static int		_loadLuaFile			( lua_State* L );
 	static int		_mount					( lua_State* L );
 	static int		_printSearchPath		( lua_State* L );
 	static int		_setWriteDirectory		( lua_State* L );
 	static int		_unmount				( lua_State* L );
-
-	// TODO: harebrained
-	static int		_getFiles				( lua_State* L );
-	static int		_getDirectories			( lua_State* L );
 
 public:
 	

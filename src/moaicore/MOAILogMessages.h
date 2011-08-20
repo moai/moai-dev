@@ -8,42 +8,19 @@
 
 #define REGISTER_LOG_MESSAGE(messageID) state.SetField ( -1, #messageID, ( u32 )messageID );
 
-#define MOAI_CHECK_FILE(filename)														\
-	if ( !USFileSys::CheckFileExists ( filename )) {									\
-		STLString expand = USFileSys::Expand ( filename );								\
-		MOAI_ERROR ( state, MOAILogMessages::MOAI_FileNotFound_S, expand.str ());		\
-		return 0;																		\
-	}
-
-#define MOAI_CHECK_INDEX(idx,size)														\
-	if ( size == 0 ) {																	\
-		MOAI_ERROR ( state, MOAILogMessages::MOAI_IndexNoReserved );					\
-		return 0;																		\
-	}																					\
-	else if ( !( idx < size )) {														\
-		MOAI_ERROR ( state, MOAILogMessages::MOAI_IndexOutOfRange_DDD, idx, 0, size );	\
-		return 0;																		\
-	}
-
-#define MOAI_CHECK_RESERVE(size)														\
-	if ( !( idx < size )) {																\
-		MOAI_ERROR ( state, MOAILogMessages::MOAI_IndexNoReserved );					\
-		return 0;																		\
-	}
-
 #ifdef _DEBUG
-	#define MOAI_LUA_SETUP(type,str)														\
-		USLuaState state ( L );																\
-		if ( !state.CheckParams ( 1, str )) {												\
-			MOAI_ERROR ( state, MOAILogMessages::MOAI_ParamTypeMismatch );					\
-			return 0;																		\
-		}																					\
-		type* self = state.GetLuaObject < type >( 1 );										\
+	#define MOAI_LUA_SETUP(type,str)									\
+		USLuaState state ( L );											\
+		if ( !state.CheckParams ( 1, str )) {							\
+			MOAILog ( L, MOAILogMessages::MOAI_ParamTypeMismatch );		\
+			return 0;													\
+		}																\
+		type* self = state.GetLuaObject < type >( 1 );					\
 		if ( !self ) return 0;
 #else
-	#define MOAI_LUA_SETUP(type,str)														\
-		USLuaState state ( L );																\
-		type* self = state.GetLuaObject < type >( 1 );										\
+	#define MOAI_LUA_SETUP(type,str)									\
+		USLuaState state ( L );											\
+		type* self = state.GetLuaObject < type >( 1 );					\
 		if ( !self ) return 0;
 #endif
 
@@ -60,16 +37,55 @@ public:
 		MOAI_NewIsUnsupported,
 		MOAI_ParamTypeMismatch,
 		
+		MOAIAction_Profile_PSFF,		// "MOAIAction::Update(%p: %s) step %.2f ms took %.2f ms\n"
+		
 		MOAINode_AttributeNotFound,
+		
+		MOAITexture_MemoryUse_SDFS,		// "TEXTURE: %s %10lu = %6.2fMB < %s\n"
 	};
 	
 	//----------------------------------------------------------------//
 	static int _alertNewIsUnsupported ( lua_State* L ) {
 
-		USLuaState state ( L );
-		MOAI_ERROR ( state, MOAI_NewIsUnsupported );
-		
+		MOAILog ( L, MOAI_NewIsUnsupported );
 		return 0;
+	}
+	
+	//----------------------------------------------------------------//
+	static bool CheckFileExists ( cc8* filename, lua_State* L = 0 ) {
+		
+		if ( USFileSys::CheckFileExists ( filename )) {
+			return true;
+		}
+		
+		STLString expand = USFileSys::Expand ( filename );
+		MOAILog ( L, MOAILogMessages::MOAI_FileNotFound_S, expand.str ());
+		
+		return false;
+	}
+	
+	//----------------------------------------------------------------//
+	static bool CheckIndex ( u32 idx, u32 size, lua_State* L = 0 ) {
+	
+		if ( size == 0 ) {
+			MOAILog ( L, MOAILogMessages::MOAI_IndexNoReserved );
+			return false;
+		}
+		else if ( !( idx < size )) {
+			MOAILog ( L, MOAILogMessages::MOAI_IndexOutOfRange_DDD, idx, 0, size );
+			return false;
+		}
+		return true;
+	}
+	
+	//----------------------------------------------------------------//
+	static bool CheckReserve ( u32 idx, u32 size, lua_State* L = 0 ) {
+	
+		if ( !( idx < size )) {
+			MOAILog ( L, MOAILogMessages::MOAI_IndexNoReserved );
+			return false;
+		}
+		return true;
 	}
 	
 	//----------------------------------------------------------------//

@@ -121,14 +121,20 @@ int MOAIGfxQuadListDeck2D::_setPair ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGfxQuadListDeck2D, "UNNN" )
 
 	u32 idx = state.GetValue < u32 >( 2, 1 ) - 1;
-	MOAI_CHECK_INDEX ( idx, self->mPairs.Size ())
+	if ( !MOAILogMessages::CheckIndex ( idx, self->mPairs.Size (), L )) {
+		return 0;
+	}
 	
 	u32 uvQuadID = state.GetValue < u32 >( 3, 1 ) - 1;
-	MOAI_CHECK_INDEX ( uvQuadID, self->mUVQuads.Size ())
+	if ( !MOAILogMessages::CheckIndex ( uvQuadID, self->mUVQuads.Size (), L )) {
+		return 0;
+	}
 	
 	u32 quadID = state.GetValue < u32 >( 4, 1 ) - 1;
-	MOAI_CHECK_INDEX ( quadID, self->mQuads.Size ())
-
+	if ( !MOAILogMessages::CheckIndex ( quadID, self->mQuads.Size (), L )) {
+		return 0;
+	}
+	
 	self->SetPair ( idx, uvQuadID, quadID );
 
 	return 0;
@@ -155,21 +161,21 @@ int MOAIGfxQuadListDeck2D::_setQuad ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGfxQuadListDeck2D, "UNNNNNNNNN" )
 
 	u32 idx = state.GetValue < u32 >( 2, 1 ) - 1;
-	MOAI_CHECK_INDEX ( idx, self->mQuads.Size ())
+	if ( MOAILogMessages::CheckIndex ( idx, self->mQuads.Size (), L )) {
 	
-	USQuad quad;
-	
-	quad.mV [ 0 ].mX = state.GetValue < float >( 3, 0.0f );
-	quad.mV [ 0 ].mY = state.GetValue < float >( 4, 0.0f );
-	quad.mV [ 1 ].mX = state.GetValue < float >( 5, 0.0f );
-	quad.mV [ 1 ].mY = state.GetValue < float >( 6, 0.0f );
-	quad.mV [ 2 ].mX = state.GetValue < float >( 7, 0.0f );
-	quad.mV [ 2 ].mY = state.GetValue < float >( 8, 0.0f );
-	quad.mV [ 3 ].mX = state.GetValue < float >( 9, 0.0f );
-	quad.mV [ 3 ].mY = state.GetValue < float >( 10, 0.0f );
+		USQuad quad;
+		
+		quad.mV [ 0 ].mX = state.GetValue < float >( 3, 0.0f );
+		quad.mV [ 0 ].mY = state.GetValue < float >( 4, 0.0f );
+		quad.mV [ 1 ].mX = state.GetValue < float >( 5, 0.0f );
+		quad.mV [ 1 ].mY = state.GetValue < float >( 6, 0.0f );
+		quad.mV [ 2 ].mX = state.GetValue < float >( 7, 0.0f );
+		quad.mV [ 2 ].mY = state.GetValue < float >( 8, 0.0f );
+		quad.mV [ 3 ].mX = state.GetValue < float >( 9, 0.0f );
+		quad.mV [ 3 ].mY = state.GetValue < float >( 10, 0.0f );
 
-	self->SetQuad ( idx, quad );
-	
+		self->SetQuad ( idx, quad );
+	}
 	return 0;
 }
 
@@ -189,17 +195,17 @@ int MOAIGfxQuadListDeck2D::_setRect ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGfxQuadListDeck2D, "UNNNNN" )
 
 	u32 idx = state.GetValue < u32 >( 2, 1 ) - 1;
-	MOAI_CHECK_INDEX ( idx, self->mQuads.Size ())
+	if ( MOAILogMessages::CheckIndex ( idx, self->mQuads.Size (), L )) {
 	
-	USRect rect;
-	
-	rect.mXMin = state.GetValue < float >( 3, 0.0f );
-	rect.mYMin = state.GetValue < float >( 4, 0.0f );
-	rect.mXMax = state.GetValue < float >( 5, 0.0f );
-	rect.mYMax = state.GetValue < float >( 6, 0.0f );
+		USRect rect;
+		
+		rect.mXMin = state.GetValue < float >( 3, 0.0f );
+		rect.mYMin = state.GetValue < float >( 4, 0.0f );
+		rect.mXMax = state.GetValue < float >( 5, 0.0f );
+		rect.mYMax = state.GetValue < float >( 6, 0.0f );
 
-	self->SetRect ( idx, rect );
-	
+		self->SetRect ( idx, rect );
+	}
 	return 0;
 }
 
@@ -244,21 +250,21 @@ int MOAIGfxQuadListDeck2D::_setUVQuad ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGfxQuadListDeck2D, "UNNNNNNNNN" )
 
 	u32 idx = state.GetValue < u32 >( 2, 1 ) - 1;
-	MOAI_CHECK_INDEX ( idx, self->mUVQuads.Size ())
+	if ( MOAILogMessages::CheckIndex ( idx, self->mUVQuads.Size (), L )) {
 	
-	USQuad quad;
-	
-	quad.mV [ 0 ].mX = state.GetValue < float >( 3, 0.0f );
-	quad.mV [ 0 ].mY = state.GetValue < float >( 4, 0.0f );
-	quad.mV [ 1 ].mX = state.GetValue < float >( 5, 0.0f );
-	quad.mV [ 1 ].mY = state.GetValue < float >( 6, 0.0f );
-	quad.mV [ 2 ].mX = state.GetValue < float >( 7, 0.0f );
-	quad.mV [ 2 ].mY = state.GetValue < float >( 8, 0.0f );
-	quad.mV [ 3 ].mX = state.GetValue < float >( 9, 0.0f );
-	quad.mV [ 3 ].mY = state.GetValue < float >( 10, 0.0f );
+		USQuad quad;
+		
+		quad.mV [ 0 ].mX = state.GetValue < float >( 3, 0.0f );
+		quad.mV [ 0 ].mY = state.GetValue < float >( 4, 0.0f );
+		quad.mV [ 1 ].mX = state.GetValue < float >( 5, 0.0f );
+		quad.mV [ 1 ].mY = state.GetValue < float >( 6, 0.0f );
+		quad.mV [ 2 ].mX = state.GetValue < float >( 7, 0.0f );
+		quad.mV [ 2 ].mY = state.GetValue < float >( 8, 0.0f );
+		quad.mV [ 3 ].mX = state.GetValue < float >( 9, 0.0f );
+		quad.mV [ 3 ].mY = state.GetValue < float >( 10, 0.0f );
 
-	self->SetUVQuad ( idx, quad );
-	
+		self->SetUVQuad ( idx, quad );
+	}
 	return 0;
 }
 
@@ -278,17 +284,17 @@ int MOAIGfxQuadListDeck2D::_setUVRect ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGfxQuadListDeck2D, "UNNNNN" )
 
 	u32 idx = state.GetValue < u32 >( 2, 1 ) - 1;
-	MOAI_CHECK_INDEX ( idx, self->mUVQuads.Size ())
+	if ( MOAILogMessages::CheckIndex ( idx, self->mUVQuads.Size (), L )) {
 	
-	USRect rect;
-	
-	rect.mXMin = state.GetValue < float >( 3, 0.0f );
-	rect.mYMin = state.GetValue < float >( 4, 0.0f );
-	rect.mXMax = state.GetValue < float >( 5, 0.0f );
-	rect.mYMax = state.GetValue < float >( 6, 0.0f );
+		USRect rect;
+		
+		rect.mXMin = state.GetValue < float >( 3, 0.0f );
+		rect.mYMin = state.GetValue < float >( 4, 0.0f );
+		rect.mXMax = state.GetValue < float >( 5, 0.0f );
+		rect.mYMax = state.GetValue < float >( 6, 0.0f );
 
-	self->SetUVRect ( idx, rect );
-
+		self->SetUVRect ( idx, rect );
+	}
 	return 0;
 }
 

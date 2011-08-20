@@ -100,8 +100,6 @@ int MOAINode::_getAttr ( lua_State* L ) {
 
 	u32 attrID = state.GetValue < u32 >( 2, 0 );
 
-	MOAI_ERROR_UNLESS ( self->AttrExists ( attrID ), state, MOAILogMessages::MOAINode_AttributeNotFound );
-
 	USAttrGetter getter;
 	self->ApplyAttrOp ( attrID, getter );
 	
@@ -109,6 +107,8 @@ int MOAINode::_getAttr ( lua_State* L ) {
 		lua_pushnumber ( state, getter.Get < float >());
 		return 1;
 	}
+	
+	MOAILog ( L, MOAILogMessages::MOAINode_AttributeNotFound );
 	return 0;
 }
 
@@ -137,14 +137,18 @@ int MOAINode::_moveAttr ( lua_State* L ) {
 	float length	= state.GetValue < float >( 4, 0.0f );
 	u32 mode		= state.GetValue < u32 >( 5, USInterpolate::kSmooth );
 	
-	MOAI_ERROR_UNLESS ( self->AttrExists ( attrID ), state, MOAILogMessages::MOAINode_AttributeNotFound );
+	if ( self->AttrExists ( attrID )) {
 	
-	action->SetLink ( 0, self, attrID, value, mode );
-	action->SetLength ( length );
-	action->Start ();
-	action->PushLuaUserdata ( state );
+		action->SetLink ( 0, self, attrID, value, mode );
+		action->SetLength ( length );
+		action->Start ();
+		action->PushLuaUserdata ( state );
 
-	return 1;
+		return 1;
+	}
+	
+	MOAILog ( L, MOAILogMessages::MOAINode_AttributeNotFound );
+	return 0;
 }
 
 //----------------------------------------------------------------//
@@ -184,23 +188,27 @@ int MOAINode::_seekAttr ( lua_State* L ) {
 	action->ReserveLinks ( 1 );
 	
 	u32 attrID = state.GetValue < u32 >( 2, 0 );
-	MOAI_ERROR_UNLESS ( self->AttrExists ( attrID ), state, MOAILogMessages::MOAINode_AttributeNotFound );
+	if ( self->AttrExists ( attrID )) {
 	
-	USAttrGetter getter;
-	self->ApplyAttrOp ( attrID, getter );
-	if ( !getter.IsValid ()) return 0;
-	
-	float value		= state.GetValue < float >( 3, 0.0f );
-	float delay		= state.GetValue < float >( 4, 0.0f );
-	u32 mode		= state.GetValue < u32 >( 5, USInterpolate::kSmooth );
-	
-	action->SetLink ( 0, self, attrID, value - getter.Get < float >(), mode );
-	
-	action->SetLength ( delay );
-	action->Start ();
-	action->PushLuaUserdata ( state );
+		USAttrGetter getter;
+		self->ApplyAttrOp ( attrID, getter );
+		if ( !getter.IsValid ()) return 0;
+		
+		float value		= state.GetValue < float >( 3, 0.0f );
+		float delay		= state.GetValue < float >( 4, 0.0f );
+		u32 mode		= state.GetValue < u32 >( 5, USInterpolate::kSmooth );
+		
+		action->SetLink ( 0, self, attrID, value - getter.Get < float >(), mode );
+		
+		action->SetLength ( delay );
+		action->Start ();
+		action->PushLuaUserdata ( state );
 
-	return 1;
+		return 1;
+	}
+	
+	MOAILog ( L, MOAILogMessages::MOAINode_AttributeNotFound );
+	return 0;
 }
 
 //----------------------------------------------------------------//
@@ -217,16 +225,20 @@ int MOAINode::_setAttr ( lua_State* L ) {
 	
 	u32 attrID = state.GetValue < u32 >( 2, 0 );
 	float value = state.GetValue < float >( 3, 0.0f );
-
-	MOAI_ERROR_UNLESS ( self->AttrExists ( attrID ), state, MOAILogMessages::MOAINode_AttributeNotFound );
-
-	USAttrSetter setter;
-	setter.Set ( value );
 	
-	self->ClearAttrLink ( attrID );
-	self->ApplyAttrOp ( attrID, setter );
-	self->ScheduleUpdate ();
-
+	if ( self->AttrExists ( attrID )) {
+	
+		USAttrSetter setter;
+		setter.Set ( value );
+	
+		self->ClearAttrLink ( attrID );
+		self->ApplyAttrOp ( attrID, setter );
+		self->ScheduleUpdate ();
+	}
+	else {
+		MOAILog ( L, MOAILogMessages::MOAINode_AttributeNotFound );
+	}
+	
 	return 0;
 }
 
@@ -245,16 +257,22 @@ int MOAINode::_setAttrLink ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAINode, "UNU" );
 	
 	u32 attrID = state.GetValue < u32 >( 2, 0 );
-	MOAI_ERROR_UNLESS ( self->AttrExists ( attrID ), state, MOAILogMessages::MOAINode_AttributeNotFound );
 	
-	MOAINode* srcNode = state.GetLuaObject < MOAINode >( 3 );
-	if ( !srcNode ) return 0;
+	if ( self->AttrExists ( attrID )) {
+	
+		MOAINode* srcNode = state.GetLuaObject < MOAINode >( 3 );
+		if ( !srcNode ) return 0;
 
-	u32 srcAttrID = state.GetValue < u32 >( 4, attrID );
-	MOAI_ERROR_UNLESS ( srcNode->AttrExists ( srcAttrID ), state, MOAILogMessages::MOAINode_AttributeNotFound );
-
-	self->SetAttrLink ( attrID, srcNode, srcAttrID );
-	self->ScheduleUpdate ();
+		u32 srcAttrID = state.GetValue < u32 >( 4, attrID );
+		
+		if ( srcNode->AttrExists ( srcAttrID )) {
+			self->SetAttrLink ( attrID, srcNode, srcAttrID );
+			self->ScheduleUpdate ();
+			return 0;
+		}
+	}
+	
+	MOAILog ( L, MOAILogMessages::MOAINode_AttributeNotFound );
 	return 0;
 }
 

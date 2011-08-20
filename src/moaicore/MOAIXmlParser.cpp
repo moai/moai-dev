@@ -24,13 +24,14 @@ int MOAIXmlParser::_parseFile ( lua_State* L ) {
 	if ( !state.CheckParams ( 1, "S" )) return 0;
 	
 	cc8* filename = lua_tostring ( state, 1 );
-	MOAI_CHECK_FILE ( filename );
 	
-	TiXmlDocument doc;
-	doc.LoadFile ( filename );
-	MOAIXmlParser::Parse ( state, doc.RootElement ());
-
-	return 1;
+	if ( MOAILogMessages::CheckFileExists ( filename, L )) {
+		TiXmlDocument doc;
+		doc.LoadFile ( filename );
+		MOAIXmlParser::Parse ( state, doc.RootElement ());
+		return 1;
+	}
+	return 0;
 }
 
 //----------------------------------------------------------------//

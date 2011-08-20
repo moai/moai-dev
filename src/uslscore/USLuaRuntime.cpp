@@ -15,12 +15,13 @@
 #include <uslscore/STLSet.h>
 #include <lstate.h>
 
+#define DUMP_FORMAT "%p <%s> %s"
+
+typedef STLSet < struct Table* > TableSet;
+
 //================================================================//
 // local
 //================================================================//
-
-#define DUMP_FORMAT "%p <%s> %s"
-typedef STLSet < struct Table* > TableSet;
 
 //----------------------------------------------------------------//
 static void _dumpType ( lua_State* L, int idx, const char *name, bool verbose, TableSet& foundTables ) {
@@ -553,15 +554,17 @@ void USLuaRuntime::ResetLeakTracking () {
 }
 
 //----------------------------------------------------------------//
-void USLuaRuntime::SetObjectStackTrace ( USLuaObject& object, cc8* trace ) {
+void USLuaRuntime::SetObjectStackTrace ( USLuaObject* object, cc8* trace ) {
 
-	if ( trace ) {
-		if ( this->mLeakTrackingEnabled ) {
-			this->mLeaks [ &object ] = trace;
+	if ( object ) {
+		if ( trace ) {
+			if ( this->mLeakTrackingEnabled ) {
+				this->mLeaks [ object ] = trace;
+			}
 		}
-	}
-	else {
-		this->mLeaks.erase ( &object );
+		else {
+			this->mLeaks.erase ( object );
+		}
 	}
 }
 

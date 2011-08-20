@@ -11,6 +11,8 @@
 #include <uslscore/USLuaState.h>
 #include <uslscore/USLuaStateHandle.h>
 
+class USLuaObject;
+
 //================================================================//
 // USLuaRuntime
 //================================================================//
@@ -40,7 +42,6 @@ private:
 	//----------------------------------------------------------------//
 	void					FindAndPrintLuaRefs		( int idx, cc8* prefix, FILE *f, const LeakPtrList& objects );
 	static bool				IsLuaIdentifier			( const char *str );
-	void					SetObjectStackTrace		( USLuaObject& object, cc8* trace );
 
 public:
 
@@ -61,6 +62,7 @@ public:
 	void					ReportLeaksRaw			( FILE *f );
 	void					ReportLuaRefs			( FILE *f );
 	void					ResetLeakTracking		();
+	void					SetObjectStackTrace		( USLuaObject* object, cc8* trace );
 	void					SetPath					( cc8* path );
 	USLuaStateHandle		State					();
 							USLuaRuntime			();

@@ -80,10 +80,9 @@ int MOAIAnimCurve::_setKey ( lua_State* L ) {
 	u32 mode		= state.GetValue < u32 >( 5, USInterpolate::kSmooth );
 	float weight	= state.GetValue < float >( 6, 1.0f );
 	
-	MOAI_CHECK_INDEX ( index, self->Size ())
-	
-	self->SetKey ( index, time, value, mode, weight );
-
+	if ( MOAILogMessages::CheckIndex ( index, self->Size (), L )) {
+		self->SetKey ( index, time, value, mode, weight );
+	}
 	return 0;
 }
 

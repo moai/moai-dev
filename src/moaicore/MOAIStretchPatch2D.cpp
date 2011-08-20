@@ -89,11 +89,11 @@ int MOAIStretchPatch2D::_setColumn ( lua_State* L ) {
 	float percent		= state.GetValue < float >( 3, 0.0f );
 	bool canStretch		= state.GetValue < bool >( 4, false );
 
-	MOAI_CHECK_INDEX ( idx, self->mCols.Size ())
-	self->mCols [ idx ].mPercent = percent;
-	self->mCols [ idx ].mCanStretch = canStretch;
-
-	self->mNeedsUpdate = true;
+	if ( MOAILogMessages::CheckIndex ( idx, self->mCols.Size (), L )) {
+		self->mCols [ idx ].mPercent = percent;
+		self->mCols [ idx ].mCanStretch = canStretch;
+		self->mNeedsUpdate = true;
+	}
 	return 0;
 }
 
@@ -133,11 +133,11 @@ int MOAIStretchPatch2D::_setRow ( lua_State* L ) {
 	float percent		= state.GetValue < float >( 3, 0.0f );
 	bool canStretch		= state.GetValue < bool >( 4, false );
 
-	MOAI_CHECK_INDEX ( idx, self->mRows.Size ())
-	self->mRows [ idx ].mPercent = percent;
-	self->mRows [ idx ].mCanStretch = canStretch;
-
-	self->mNeedsUpdate = true;
+	if ( MOAILogMessages::CheckIndex ( idx, self->mRows.Size (), L )) {
+		self->mRows [ idx ].mPercent = percent;
+		self->mRows [ idx ].mCanStretch = canStretch;
+		self->mNeedsUpdate = true;
+	}
 	return 0;
 }
 
@@ -178,8 +178,9 @@ int MOAIStretchPatch2D::_setUVRect ( lua_State* L ) {
 	
 	u32 idx = state.GetValue < u32 >( 2, 1 ) - 1;
 	
-	MOAI_CHECK_INDEX ( idx, self->mUVRects.Size ())
-	self->mUVRects [ idx ] = state.GetRect < float >( 3 );
+	if ( MOAILogMessages::CheckIndex ( idx, self->mUVRects.Size (), L )) {
+		self->mUVRects [ idx ] = state.GetRect < float >( 3 );
+	}
 	return 0;
 }
 

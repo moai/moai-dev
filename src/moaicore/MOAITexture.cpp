@@ -11,27 +11,6 @@
 #include <moaicore/MOAISim.h>
 #include <moaicore/MOAITexture.h>
 
-#define DEBUG_TEXTURE_MEMORY 1
-
-static size_t _g_TextureSize = 0;
-
-#ifdef DEBUG_TEXTURE_MEMORY
-
-	#define DEBUG_TEXTURE_ALLOC(name, size) do { \
-		_g_TextureSize += size; \
-		printf("TEXTURE: + %10lu = %6.2fMB < %s\n", size, _g_TextureSize / 1024.0 / 1024.0, (name).c_str()); \
-	} while(0);
-
-	#define DEBUG_TEXTURE_FREE(name, size) do { \
-		_g_TextureSize -= size; \
-		printf("TEXTURE: - %10lu = %6.2fMB < %s\n", size, _g_TextureSize / 1024.0 / 1024.0, (name).c_str()); \
-	} while(0);
-
-#else
-	#define	DEBUG_TEXTURE_ALLOC(name, size)
-	#define DEBUG_TEXTURE_FREE(name, size)
-#endif
-
 //================================================================//
 // MOAITextureLoader
 //================================================================//
@@ -216,16 +195,15 @@ int MOAITexture::_load ( lua_State* L ) {
 	u32 transform = state.GetValue < u32 >( 3, DEFAULT_TRANSFORM );
 
 	if ( data ) {
-
 		self->Init ( *data, transform );
 	}
 	else if ( state.IsType( 2, LUA_TSTRING ) ) {
 
 		cc8* filename = lua_tostring ( state, 2 );
-		MOAI_CHECK_FILE ( filename );
-		self->Init ( filename, transform );
+		if ( MOAILogMessages::CheckFileExists ( filename, L )) {
+			self->Init ( filename, transform );
+		}
 	}
-
 	return 0;
 }
 
@@ -354,10 +332,10 @@ void MOAITexture::Affirm () {
 
 			if ( this->mFilename.size() == 0 && this->mLoader ) {
 				// Loader's filename doesn't seem to be copied in all code paths...
-				DEBUG_TEXTURE_ALLOC ( this->mLoader->mFilename, this->mDataSize )
+				MOAIGfxDevice::Get ().ReportTextureAlloc ( this->mLoader->mFilename, this->mDataSize );
 			}
 			else {
-				DEBUG_TEXTURE_ALLOC ( this->mFilename, this->mDataSize )
+				MOAIGfxDevice::Get ().ReportTextureAlloc ( this->mFilename, this->mDataSize );
 			}
 			
 			this->mLastFrameUsed = MOAISim::Get ().GetFrameCounter ();
@@ -462,7 +440,7 @@ bool MOAITexture::BindFrameBuffer () {
 void MOAITexture::Clear () {
 
 	if ( this->mGLTexID ) {
-		DEBUG_TEXTURE_FREE ( this->mFilename, this->mDataSize )
+		MOAIGfxDevice::Get ().ReportTextureFree ( this->mFilename, this->mDataSize );
 		glDeleteTextures ( 1, &this->mGLTexID );
 		this->mGLTexID = 0;
 	}
@@ -485,8 +463,6 @@ void MOAITexture::Clear () {
 void MOAITexture::CreateTextureFromImage ( MOAIImage& image ) {
 
 	if ( !image.IsOK ()) return;
-
-	printf ( "MOAITexture::CreateTextureFromImage - %s\n", this->mFilename.str ());
 
 	MOAIGfxDevice::Get ().ClearErrors ();
 
@@ -791,11 +767,6 @@ u32 MOAITexture::GetHeight () {
 }
 
 //----------------------------------------------------------------//
-size_t MOAITexture::GetMemoryUsage () {
-	return _g_TextureSize;
-}
-
-//----------------------------------------------------------------//
 u32 MOAITexture::GetWidth () {
 	return this->mWidth;
 }
@@ -1012,7 +983,7 @@ bool MOAITexture::SoftRelease ( int age ) {
 		return false;
 	}
 
-	DEBUG_TEXTURE_FREE ( this->mFilename, this->mDataSize )
+	MOAIGfxDevice::Get ().ReportTextureFree ( this->mFilename, this->mDataSize );
 
 	glDeleteTextures ( 1, &this->mGLTexID );
 	this->mGLTexID = 0;

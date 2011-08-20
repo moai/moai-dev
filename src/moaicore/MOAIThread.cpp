@@ -47,13 +47,6 @@ int MOAIThread::_currentThread ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@brief <tt>run ( self, func )</tt>\n
-\n
-	Sets the thread's function and starts it.
-	@param self (in)
-	@param func (in) Function for this thread to run.
-*/
-
 /**	@name	run
 	@text	Starts a thread with a function and passes parameters to it.
 	
@@ -65,34 +58,36 @@ int MOAIThread::_currentThread ( lua_State* L ) {
 int MOAIThread::_run ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIThread, "UF" )
 
-	// TODO: harebrained
+	if ( MOAIActionMgr::Get ().GetThreadInfoEnabled ()) {
 
-	// Get a copy of the function's debug info and store it so we can
-	// refer to it in any debugging info regarding this thread.
-	lua_Debug ar;
-	lua_pushvalue ( state, 2 );
-    lua_getinfo ( state, ">Snl", &ar );
+		// Get a copy of the function's debug info and store it so we can
+		// refer to it in any debugging info regarding this thread.
+		lua_Debug ar;
+		lua_pushvalue ( state, 2 );
+		lua_getinfo ( state, ">Snl", &ar );
 
-	bool isC = strcmp ( ar.what, "C" ) == 0;
-	
-	if ( !ar.what )
-		ar.what = "??";
-	
-	if ( !ar.source ) {
-		if ( isC ) {
-			ar.source = "@?";
+		bool isC = strcmp ( ar.what, "C" ) == 0;
+		
+		if ( !ar.what ) {
+			ar.what = "??";
+		}
+		
+		if ( !ar.source ) {
+			if ( isC ) {
+				ar.source = "@?";
+			}
+			else {
+				ar.source = "@<string>";
+			}
+		}
+
+		self->mFuncName.clear ();
+		if ( ar.name ) {
+			self->mFuncName.write ( "%s:%s%s:%d", ar.what, ar.name, ar.source, ar.linedefined );
 		}
 		else {
-			ar.source = "@<string>";
+			self->mFuncName.write ( "%s:%s:%d", ar.what, ar.source, ar.linedefined );
 		}
-	}
-
-	self->mFuncName.clear ();
-	if ( ar.name ) {
-		self->mFuncName.write ( "%s:%s%s:%d", ar.what, ar.name, ar.source, ar.linedefined );
-	}
-	else {
-		self->mFuncName.write ( "%s:%s:%d", ar.what, ar.source, ar.linedefined );
 	}
 
 	self->mNarg = lua_gettop ( state ) - 2;

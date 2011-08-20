@@ -328,19 +328,15 @@ STLString MOAIAction::ToString () {
 //----------------------------------------------------------------//
 void MOAIAction::Update ( float step, u32 pass, bool checkPass ) {
 
-	// TODO: harebrained
-	#if 1 || defined(_DEBUG)
-		#define PROFILE_ACTIONS 1
-	#else
-		#define PROFILE_ACTIONS 0
-	#endif
+	bool profilingEnabled = MOAIActionMgr::Get ().GetProfilingEnabled ();
 
 	if ( this->IsBlocked ()) return;
 	if (( checkPass ) && ( pass < this->mPass )) return;
 
-	#if PROFILE_ACTIONS
-		double t0 = USDeviceTime::GetTimeInSeconds ();
-	#endif
+	double t0 = 0.0;
+	if ( profilingEnabled ) {
+		USDeviceTime::GetTimeInSeconds ();
+	}
 
 	step *= this->mThrottle;
 	
@@ -354,13 +350,13 @@ void MOAIAction::Update ( float step, u32 pass, bool checkPass ) {
 		this->OnUpdate ( step );
 	}
 
-	#if PROFILE_ACTIONS
+	if ( profilingEnabled ) {
 		double elapsed = USDeviceTime::GetTimeInSeconds () - t0;
 		if ( elapsed >= 0.005 ) {
 			STLString name = this->ToStringWithType ();
-			printf ( "MOAIAction::Update(%p: %s) step %.2f ms took %.2f ms\n", this, name.c_str(), step * 1000, elapsed * 1000 );
+			MOAILog ( 0, MOAILogMessages::MOAIAction_Profile_PSFF, this, name.c_str(), step * 1000, elapsed * 1000 );
 		}
-	#endif
+	}
 
 	this->mPass = 0;
 	this->mNew = false;

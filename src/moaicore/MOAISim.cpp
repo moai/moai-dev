@@ -185,7 +185,7 @@ int MOAISim::_getMemoryUsage ( lua_State* L ) {
 	
 	size_t count;
 	
-	count = USLuaRuntime::Get().GetMemoryUsage();
+	count = USLuaRuntime::Get().GetMemoryUsage ();
 	lua_pushnumber(L, count / divisor);
 	lua_setfield(L, -2, "lua");
 	total += count;
@@ -193,12 +193,12 @@ int MOAISim::_getMemoryUsage ( lua_State* L ) {
 	// This is informational only (i.e. don't double count with the previous field).
 	// It doesn't actually seem to represent the real usage of lua, but maybe
 	// someone is interested.
-	lua_pushnumber(L, lua_gc(L, LUA_GCCOUNTB, 0) / divisor);
-	lua_setfield(L, -2, "_luagc_count");
+	lua_pushnumber ( L, lua_gc ( L, LUA_GCCOUNTB, 0 ) / divisor );
+	lua_setfield ( L, -2, "_luagc_count" );
 	
-	count = MOAITexture::GetMemoryUsage();
-	lua_pushnumber(L, count / divisor);
-	lua_setfield(L, -2, "texture");
+	count = MOAIGfxDevice::Get ().GetTextureMemoryUsage ();
+	lua_pushnumber ( L, count / divisor );
+	lua_setfield ( L, -2, "texture" );
 	total += count;
 	
 #if defined(_WIN32)
@@ -357,26 +357,30 @@ int MOAISim::_pushRenderPass ( lua_State* L ) {
 */
 int MOAISim::_reportLeaks ( lua_State* L ) {
 	
-	// TODO: harebrained
-	
 	USLuaState state ( L );
 	bool clearAfter = state.GetValue < bool >( 1, false );
 	cc8* filename   = state.GetValue < cc8* >( 2, 0 );
+	
+	USLuaRuntime& luaRuntime = USLuaRuntime::Get ();
 	
 	if ( filename ) {
 		FILE *f = fopen ( filename, "w" );
 		if ( f ) {
 			printf ( "Writing leak report to: %s\n", filename );
-			USLuaObject::ReportLeaks ( f, clearAfter );
+			luaRuntime.ReportLeaksFormatted ( f );
 			fclose ( f );
 		}
 		else {
 			printf ( "Error opening file for write, dumping leak report to console instead: %s\n", filename );
-			USLuaObject::ReportLeaks ( stdout, clearAfter );
+			luaRuntime.ReportLeaksFormatted ( stdout );
 		}
 	}
 	else {
-		USLuaObject::ReportLeaks ( stdout, clearAfter );
+		luaRuntime.ReportLeaksFormatted ( stdout );
+	}
+	
+	if ( clearAfter ) {
+		luaRuntime.ResetLeakTracking ();
 	}
 	return 0;
 }
@@ -461,11 +465,12 @@ int MOAISim::_setFrameSize ( lua_State* L ) {
 			the extra memory associated with the stack info book-keeping. Use only
 			when tracking down leaks.
  
-	@in		bool enable True if tracking should be used.
+	@opt	bool enable		Default value is false.
+	@out	nil
 */
 int MOAISim::_setLeakTrackingEnabled ( lua_State* L ) {
 	USLuaState state ( L );
-	USLuaObject::SetLeakTrackingEnabled( state.GetValue<bool>(1, true) );
+	USLuaRuntime::Get ().EnableLeakTracking( state.GetValue < bool >( 1, false ));
 	return 0;
 }
 

@@ -256,7 +256,7 @@ USLuaObject::USLuaObject () {
 //----------------------------------------------------------------//
 USLuaObject::~USLuaObject () {
 
-	USLuaRuntime::Get ().SetObjectStackTrace ( data, 0 );
+	USLuaRuntime::Get ().SetObjectStackTrace ( this, 0 );
 	
 	if ( USLuaRuntime::IsValid ()) {
 		

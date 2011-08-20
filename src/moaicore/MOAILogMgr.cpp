@@ -6,6 +6,21 @@
 #include <moaicore/MOAILogMessages.h>
 
 //================================================================//
+// helpers
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAILog ( lua_State *L, u32 messageID, ... ) {
+	
+	va_list args;
+	va_start ( args, messageID );
+	
+	MOAILogMgr::Get ().LogVar ( L, messageID, args );
+	
+	va_end ( args );
+}
+
+//================================================================//
 // lua
 //================================================================//
 
@@ -54,6 +69,8 @@ int MOAILogMgr::_log ( lua_State* L ) {
 	
 	@in		number messageID
 	@opt	string formatString		Default value is an empty string.
+	@opt	number level			One of MOAILogMgr.LOG_ERROR, MOAILogMgr.LOG_WARNING, MOAILogMgr.LOG_STATUS.
+									Default value is MOAILogMgr.LOG_STATUS.
 	@out	nil
 */
 int MOAILogMgr::_registerLogMessage ( lua_State* L ) {
@@ -64,10 +81,14 @@ int MOAILogMgr::_registerLogMessage ( lua_State* L ) {
 		USLuaState state ( L );
 		if ( !state.CheckParams ( 1, "N" )) return 0;
 
-		u32 messageID	= state.GetValue < u32 >( 1, 0 );
-		cc8* message	= state.GetValue < cc8* >( 2, "" );
+		u32 messageID		= state.GetValue < u32 >( 1, 0 );
+		cc8* formatString	= state.GetValue < cc8* >( 2, "" );
+		u32 level			= state.GetValue < u32 >( 3, LOG_STATUS );
 
-		MOAILogMgr::Get ().mMessageMap [ messageID ] = message;
+		MOAILogMessage& message = MOAILogMgr::Get ().mMessageMap [ messageID ];
+		
+		message.mLevel = level;
+		message.mFormatString = formatString;
 	
 	#endif
 	
@@ -96,55 +117,48 @@ int MOAILogMgr::_setLogLevel ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAILogMgr::Log ( u32 level, u32 messageID, ... ) {
-
-	if ( level <= this->mLevel ) {
-
-		MessageMapIt messageMapIt = this->mMessageMap.find ( messageID );
-		if ( messageMapIt != this->mMessageMap.end ()) {
-		
-			STLString& format = messageMapIt->second;
-			
-			va_list args;
-			va_start ( args, messageID );
-			vprintf ( format, args );
-			va_end ( args );
-			
-			printf ( "\n" );
-		}
-	}
+void MOAILogMgr::Log ( lua_State *L, u32 messageID, ... ) {
+	
+	va_list args;
+	va_start ( args, messageID );
+	
+	MOAILogMgr::Get ().LogVar ( L, messageID, args );
+	
+	va_end ( args );
 }
 
 //----------------------------------------------------------------//
-void MOAILogMgr::Log ( u32 level, USLuaState& state, u32 messageID, ... ) {
+void MOAILogMgr::LogVar ( lua_State *L, u32 messageID, va_list args ) {
 
-	if ( level <= this->mLevel ) {
+	if ( this->mLevel ) {
 
 		MessageMapIt messageMapIt = this->mMessageMap.find ( messageID );
 		if ( messageMapIt != this->mMessageMap.end ()) {
 		
-			STLString& format = messageMapIt->second;
+			MOAILogMessage& message = messageMapIt->second;
 			
-			va_list args;
-			va_start ( args, messageID );
-			
-			printf ( "----------------------------------------------------------------\n" );
-			vprintf ( format, args );
-			printf ( "\n" );
-			
-			va_end ( args );
-			
-			if ( level <= LOG_WARNING ) {
-				state.PrintStackTrace ( 0 );
+			if ( message.mLevel <= this->mLevel ) {
+				
+				if ( L ) {
+					printf ( "----------------------------------------------------------------\n" );
+				}
+				
+				vprintf ( message.mFormatString, args );
+				printf ( "\n" );
+				
+				if ( L ) {
+					USLuaState state ( L );
+					state.PrintStackTrace ( 0 );
+					printf ( "\n" );
+				}
 			}
-			printf ( "\n" );
 		}
 	}
 }
 
 //----------------------------------------------------------------//
 MOAILogMgr::MOAILogMgr () :
-	mLevel ( LOG_WARNING ) {
+	mLevel ( LOG_STATUS ) {
 
 	RTTI_SINGLE ( USLuaObject )
 }
