@@ -5,8 +5,8 @@
 ----------------------------------------------------------------
 
 -- Mount archives here - you can mount non archived folders on system drive as well, i.e. C: on windows - then have access to entire C: drive
-MOAIFileSystem.mount ( "luaArchive.zip", "", 1 )
-MOAIFileSystem.mount ( "archive.zip", "", 1 )
+--MOAIFileSystem.mount ( "luaArchive.zip", "", 1 )
+--MOAIFileSystem.mount ( "archive.zip", "", 1 )
 
 -- Set write directory here ( writing not yet supported, though directory can be set )
 --MOAIFileSystem.setWriteDirectory ( )
@@ -41,35 +41,23 @@ end
 -- Save a reference to dofile, then write our own to check the physfs file system
 oldDoFile = dofile
 dofile = function ( name )
-	
-	local moaiName = name
-	s, e = string.find ( name, ".lua" )
-	if e == nil or e ~= string.len ( name ) then
-		moaiName = name .. ".lua"
-	end
-	
-	if not MOAIFileSystem.checkFileExists ( moaiName ) then
+		
+	if not MOAIFileSystem.checkFileExists ( name ) then
 		print ( "File not found in archives, try normal dofile" )
-		return oldDofile ( name )
+		return oldDoFile ( name )
 	else 
-		return MOAIFileSystem.loadAndRunLuaFile ( moaiName )
+		return MOAIFileSystem.loadAndRunLuaFile ( name )
 	end	
 end
 
 -- Save a reference to loadfile, then write our own to check the physfs file system
 oldLoadFile = loadfile
 loadfile = function ( name )
-	
-	local moaiName = name
-	s, e = string.find ( name, ".lua" )
-	if e == nil or e ~= string.len ( name ) then
-		moaiName = name .. ".lua"
-	end
-	
-	if not MOAIFileSystem.checkFileExists ( moaiName ) then
+		
+	if not MOAIFileSystem.checkFileExists ( name ) then
 		print ( "File not found in archives, try normal loadfile" )
 		return oldLoadFile ( name )
 	else 
-		return MOAIFileSystem.loadLuaFile ( moaiName )
+		return MOAIFileSystem.loadLuaFile ( name )
 	end	
 end

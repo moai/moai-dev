@@ -21,6 +21,25 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+/**	@name	addArchive
+	@text	Mounts a new archive or directory to the current PHYSFS file system.
+
+	@in		string newDir
+	@out	string error
+*/
+int MOAIFileSystem::_addArchive ( lua_State* L ) {
+	USLuaState state ( L );
+	
+	cc8* newDir = state.GetValue < cc8* >( 1, "" );
+	
+	STLString workingDir = MOAIFileSystem::Get ().mWorkingDirectory;
+	workingDir.append ( newDir );
+	MOAIFileSystem::Get ().mArchives.push_back ( workingDir );
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	checkFileExists
 	@text	Check for the existence of a file.
 
@@ -31,8 +50,10 @@ int MOAIFileSystem::_checkFileExists ( lua_State* L ) {
 	USLuaState state ( L );
 	
 	cc8* filename = state.GetValue < cc8* >( 1, "" );
-	int result = PHYSFS_exists ( filename );
 	
+	MOAIFileSystem::Get ().SwapPhysFSPaths ();
+	int result = PHYSFS_exists ( filename );
+		
 	lua_pushboolean ( state, ( result == 0 ) ? false : true );
 	return 1;
 }
@@ -48,6 +69,8 @@ int MOAIFileSystem::_checkPathExists ( lua_State* L ) {
 	USLuaState state ( L );
 	
 	cc8* path = state.GetValue < cc8* >( 1, "" );
+
+	MOAIFileSystem::Get ().SwapPhysFSPaths ();
 	int result = PHYSFS_isDirectory ( path );
 	
 	lua_pushboolean ( state, ( result == 0 ) ? false : true );
@@ -65,6 +88,8 @@ int MOAIFileSystem::_delete ( lua_State* L ) {
 	USLuaState state ( L );
 	
 	cc8* name = state.GetValue < cc8* >( 1, "" );
+
+	MOAIFileSystem::Get ().SwapPhysFSPaths ();
 	PHYSFS_delete ( name );
 	
 	lua_pushstring ( state, PHYSFS_getLastError ());
@@ -81,7 +106,7 @@ int MOAIFileSystem::_delete ( lua_State* L ) {
 int MOAIFileSystem::_getBaseDirectory ( lua_State* L ) {
 	USLuaState state ( L );
 	
-	lua_pushstring ( state, PHYSFS_getBaseDir ());
+	lua_pushstring ( state, USFileSys::GetCurrentPath ());
 
 	return 1;
 }
@@ -102,22 +127,6 @@ int MOAIFileSystem::_getDirSeparator ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getFileDirectory
-	@text	Returns the directory inside the PHYSFS search path.
-
-	@in		string filename
-	@out	string directroy
-*/
-int MOAIFileSystem::_getFileDirectory ( lua_State* L ) {
-	USLuaState state ( L );
-	
-	cc8* filename = state.GetValue < cc8* >( 1, "" );
-	lua_pushstring ( state, PHYSFS_getRealDir ( filename ));
-
-	return 1;
-}
-
-//----------------------------------------------------------------//
 /**	@name	getRealPath
 	@text	Returns a the real path of a file
 
@@ -128,12 +137,27 @@ int MOAIFileSystem::_getRealPath ( lua_State* L ) {
 	USLuaState state ( L );
 	
 	cc8* path = state.GetValue < cc8* >( 1, "" );
+	
+	MOAIFileSystem::Get ().SwapPhysFSPaths ();
 	STLString result = PHYSFS_getRealDir ( path );
 	
 	lua_pushstring ( state, result );
 	return 1;
 }
 
+//----------------------------------------------------------------//
+/**	@name	getWorkingDirectory
+	@text	Returns the current working directory
+
+	@in		nil
+	@out	string currentDir
+*/
+int MOAIFileSystem::_getWorkingDirectory ( lua_State* L ) {
+	USLuaState state ( L );
+	
+	lua_pushstring ( state, MOAIFileSystem::Get ().mWorkingDirectory.str ());
+	return 1;
+}
 //----------------------------------------------------------------//
 /**	@name	_loadAndRunLuaFile
 	@text	Loads and runs a Lua file from the PHYSFS file system.
@@ -146,7 +170,8 @@ int MOAIFileSystem::_loadAndRunLuaFile ( lua_State* L ) {
 	USLuaState state ( L );
 
 	cc8* filename = state.GetValue < cc8* >( 1, "" );
-	
+
+	MOAIFileSystem::Get ().SwapPhysFSPaths ();
 	// Check that the lua file exists in the archive
 	if ( !PHYSFS_exists ( filename )) {
 		printf ( "File does not exist" );
@@ -184,6 +209,7 @@ int MOAIFileSystem::_loadLuaFile ( lua_State* L ) {
 
 	cc8* filename = state.GetValue < cc8* >( 1, "" );
 	
+	MOAIFileSystem::Get ().SwapPhysFSPaths ();
 	// Check that the lua file exists in the archive
 	if ( !PHYSFS_exists ( filename )) {
 		printf ( "File does not exist" );
@@ -208,28 +234,6 @@ int MOAIFileSystem::_loadLuaFile ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	mount
-	@text	Mounts a new archive or directory to the current PHYSFS file system.
-
-	@in		string newDir
-	@in		string mountPoint
-	@in		int appendToPath (Non-zero to append, zero to prepend)
-	@out	string error
-*/
-int MOAIFileSystem::_mount ( lua_State* L ) {
-	USLuaState state ( L );
-	
-	cc8* newDir = state.GetValue < cc8* >( 1, "" );
-	cc8* mountPoint = state.GetValue < cc8* >( 2, "" );
-	int appendToPath = state.GetValue < int >( 3, 1 ); 
-	
-	PHYSFS_mount ( newDir, mountPoint, appendToPath ); 
-
-	lua_pushstring ( state, PHYSFS_getLastError ());
-	return 1;
-}
-
-//----------------------------------------------------------------//
 /**	@name	printSearchPath
 	@text	Prints the archives and directories in the search path.
 
@@ -239,12 +243,46 @@ int MOAIFileSystem::_mount ( lua_State* L ) {
 int MOAIFileSystem::_printSearchPath ( lua_State* L ) {
 	USLuaState state ( L );
 	
+	MOAIFileSystem::Get ().SwapPhysFSPaths ();
 	char **list = PHYSFS_getSearchPath();
 	for ( char** i = list; *i != NULL; i++ )
 		printf ( "[%s] - ", *i );
 	
 	printf ( "[end]\n" );
 	PHYSFS_freeList ( list );
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	removeArchive
+	@text	Removces a diretory or archive from the PHYFS file system.
+
+	@in		string oldDir
+	@out	string error
+*/
+int MOAIFileSystem::_removeArchive ( lua_State* L ) {
+	USLuaState state ( L );
+	
+	cc8* oldDir = state.GetValue < cc8* >( 1, "" );	
+	MOAIFileSystem::Get ().mArchives.remove ( oldDir );
+
+	lua_pushstring ( state, PHYSFS_getLastError ());
+	return 1;
+}
+
+//----------------------------------------------------------------//
+/**	@name	setWorkingDirectory
+	@text	Sets the current working directory.
+
+	@in		string path
+	@out	string error
+*/
+int MOAIFileSystem::_setWorkingDirectory ( lua_State* L ) {
+	USLuaState state ( L );
+	
+	cc8* path = state.GetValue < cc8* >( 1, "" );
+	MOAIFileSystem::Get ().mWorkingDirectory = path;
+	
 	return 0;
 }
 
@@ -259,27 +297,9 @@ int MOAIFileSystem::_setWriteDirectory ( lua_State* L ) {
 	USLuaState state ( L );
 	
 	cc8* path = state.GetValue < cc8* >( 1, "" );
-	PHYSFS_setWriteDir ( path );
+	MOAIFileSystem::Get ().mWriteDirectory = path;
 	
-	lua_pushstring ( state, PHYSFS_getLastError ());
-	return 1;
-}
-
-//----------------------------------------------------------------//
-/**	@name	unmount
-	@text	Removces a diretory or archive from the PHYFS file system.
-
-	@in		string oldDir
-	@out	string error
-*/
-int MOAIFileSystem::_unmount ( lua_State* L ) {
-	USLuaState state ( L );
-	
-	cc8* oldDir = state.GetValue < cc8* >( 1, "" );	
-	PHYSFS_removeFromSearchPath ( oldDir ); 
-
-	lua_pushstring ( state, PHYSFS_getLastError ());
-	return 1;
+	return 0;
 }
 
 //================================================================//
@@ -288,33 +308,60 @@ int MOAIFileSystem::_unmount ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 MOAIFileSystem::MOAIFileSystem () {
-	PHYSFS_init ( NULL );
+
+	// set up initial working directory
+	mWorkingDirectory = USFileSys::GetCurrentPath ();
+	
+	// set up initial write directory
+	mWriteDirectory = mWorkingDirectory;
+	PHYSFS_setWriteDir ( mWriteDirectory );
 }
 
 //----------------------------------------------------------------//
 MOAIFileSystem::~MOAIFileSystem () {
-	PHYSFS_deinit ();
 }
 
 //----------------------------------------------------------------//
 void MOAIFileSystem::RegisterLuaClass ( USLuaState& state ) {
 
 	luaL_Reg regTable [] = {
+		{ "addArchive",				_addArchive },
 		{ "checkFileExists",		_checkFileExists },
 		{ "checkPathExists",		_checkPathExists },
 		{ "delete",					_delete },
 		{ "getBaseDirectory",		_getBaseDirectory },
 		{ "getDirSeparator",		_getDirSeparator },
-		{ "getFileDirectory",		_getFileDirectory },
 		{ "getRealPath",			_getRealPath },
+		{ "getWorkingDirectory",	_getWorkingDirectory },
 		{ "loadAndRunLuaFile",		_loadAndRunLuaFile }, 
 		{ "loadLuaFile",			_loadLuaFile }, 
-		{ "mount",					_mount },
 		{ "printSearchPath",		_printSearchPath },
+		{ "removeArchive",			_removeArchive },
+		{ "setWorkingDirectory",	_setWorkingDirectory },
 		{ "setWriteDirectory",		_setWriteDirectory },
-		{ "unmount",				_unmount },
 		{ NULL, NULL }
 	};
 
 	luaL_register( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAIFileSystem::SwapPhysFSPaths ( ) {
+	
+	// set the write dir
+	PHYSFS_setWriteDir( mWriteDirectory.str ());
+		
+	// clear old working directory and archives
+	char** oldSearchPath = PHYSFS_getSearchPath ();
+	for ( int i = 0; oldSearchPath [ i ]; ++i ) {
+		PHYSFS_removeFromSearchPath ( oldSearchPath [ i ] );
+	}
+	
+	// add current directory
+	PHYSFS_mount ( mWorkingDirectory.str (), "", 1 );
+	
+	// add current archives		
+	for ( STLList < STLString >::iterator it = mArchives.begin (); it != mArchives.end (); ++it ) {
+		PHYSFS_mount ( (*it).str (), "", 1 );
+	}
 }

@@ -4,10 +4,17 @@
 #include "pch.h"
 #include <chipmunk/chipmunk.h>
 #include <moaicore/moaicore.h>
+#include <physfs.h>
 
 //================================================================//
 // moaicore
 //================================================================//
+
+//----------------------------------------------------------------//
+static void _cleanup () {
+
+	PHYSFS_deinit ();
+}
 
 //----------------------------------------------------------------//
 void moaicore::InitGlobals ( USGlobals* globals ) {
@@ -15,6 +22,10 @@ void moaicore::InitGlobals ( USGlobals* globals ) {
 	static bool sysInit = true;
 	if ( sysInit ) {
 		cpInitChipmunk ();
+		PHYSFS_init ( NULL );
+		
+		atexit ( _cleanup );
+		
 		sysInit = false;
 	}
 

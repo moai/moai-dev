@@ -95,6 +95,7 @@ public:
 
 	//----------------------------------------------------------------//
 	long				GetConnectivity				( );
+	STLString			GetResourceDirectory		( );
 						MOAIEnvironment				( );
 						~MOAIEnvironment			( );
 	void				RegisterLuaClass			( USLuaState& state );

@@ -28,7 +28,7 @@ typedef unsigned long ULong;
 
 
 #if defined(_DEBUG)
-	#if defined(__ANDROID__)
+	#if defined(__GNUC__)
 		#define RPRINT(fmt, ...) printf(fmt)
 	#else
 		#define RPRINT(fmt, ...) printf(fmt, __VA_ARGS__)

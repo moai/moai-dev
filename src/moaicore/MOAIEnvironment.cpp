@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <moaicore/MOAIEnvironment.h>
+#include <moaicore/MOAIFileSystem.h>
 #include <moaicore/MOAIGfxDevice.h>
 #include <moaicore/MOAILogMgr.h>
 #include <aku/AKU.h>
@@ -336,6 +337,12 @@ long MOAIEnvironment::GetConnectivity () {
 }
 
 //----------------------------------------------------------------//
+STLString MOAIEnvironment::GetResourceDirectory () {
+		
+	return mResourceDirectory;
+}
+
+//----------------------------------------------------------------//
 MOAIEnvironment::MOAIEnvironment () :
 	mAppDisplayName ( "UNKNOWN" ),
 	mAppID ( "UNKNOWN" ),
@@ -527,7 +534,7 @@ void MOAIEnvironment::SetOSVersion ( cc8* osVer ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIEnvironment::SetResourceDirectory ( cc8* resDir ) {
+void MOAIEnvironment::SetResourceDirectory ( cc8* resDir ) {		
 	mResourceDirectory = resDir;
 }
 
