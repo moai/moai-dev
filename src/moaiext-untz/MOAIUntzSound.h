@@ -15,9 +15,11 @@ class MOAIDataBuffer;
 //================================================================//
 /**	@name	MOAIUntzSound
 	@text	Untz sound object.
+	
+	@attr	ATTR_VOLUME
 */
 class MOAIUntzSound :
-	public virtual USLuaObject {
+	public virtual MOAINode {
 private:
 
 	UNTZ::Sound* mSound;
@@ -29,8 +31,10 @@ private:
 	static int		_isPaused			( lua_State* L );
 	static int		_isPlaying			( lua_State* L );
 	static int		_load				( lua_State* L );
+	static int		_moveVolume			( lua_State* L );
 	static int		_pause				( lua_State* L );
 	static int		_play				( lua_State* L );
+	static int		_seekVolume			( lua_State* L );
 	static int		_setLooping			( lua_State* L );
 	static int		_setPosition		( lua_State* L );
 	static int		_setVolume			( lua_State* L );
@@ -39,8 +43,15 @@ private:
 public:
 
 	DECL_LUA_FACTORY ( MOAIUntzSound )
+	DECL_ATTR_HELPER ( MOAIUntzSound )
+
+	enum {
+		ATTR_VOLUME,
+		TOTAL_ATTR,
+	};
 
 	//----------------------------------------------------------------//
+	bool			ApplyAttrOp			( u32 attrID, USAttrOp& attrOp );
 					MOAIUntzSound		();
 					~MOAIUntzSound		();
 	void			RegisterLuaClass	( USLuaState& state );

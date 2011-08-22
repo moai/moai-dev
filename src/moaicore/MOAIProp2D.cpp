@@ -769,6 +769,7 @@ void MOAIProp2D::RegisterLuaFuncs ( USLuaState& state ) {
 		{ "getGrid",			_getGrid },
 		{ "getIndex",			_getIndex },
 		{ "inside",				_inside },
+		{ "setBlendMode",		_setBlendMode },
 		{ "setDeck",			_setDeck },
 		{ "setFrame",			_setFrame },
 		{ "setGrid",			_setGrid },

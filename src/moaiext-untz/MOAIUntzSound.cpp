@@ -117,6 +117,46 @@ int MOAIUntzSound::_load ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	moveVolume
+	@text	Animation helper for volume attribute,
+	
+	@in		MOAITransform self
+	@in		number vDelta		Delta to be added to v.
+	@in		number length		Length of animation in seconds.
+	@opt	number mode			The ease mode. One of MOAIEaseType.EASE_IN, MOAIEaseType.EASE_OUT, MOAIEaseType.FLAT MOAIEaseType.LINEAR,
+								MOAIEaseType.SMOOTH, MOAIEaseType.SOFT_EASE_IN, MOAIEaseType.SOFT_EASE_OUT, MOAIEaseType.SOFT_SMOOTH. Defaults to MOAIEaseType.SMOOTH.
+
+	@out	MOAIEaseDriver easeDriver
+*/
+int MOAIUntzSound::_moveVolume ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIUntzSound, "UNN" )
+	
+	float volume	= state.GetValue < float >( 2, 0.0f );
+	float delay		= state.GetValue < float >( 3, 0.0f );
+	
+	if ( delay > 0.0f ) {
+	
+		u32 mode = state.GetValue < u32 >( 4, USInterpolate::kSmooth );
+		
+		MOAIEaseDriver* action = new MOAIEaseDriver ();
+		action->ReserveLinks ( 1 );
+		
+		action->SetLink ( 0, self, MOAIUntzSoundAttr::Pack ( ATTR_VOLUME ), volume, mode );
+		
+		action->SetLength ( delay );
+		action->Start ();
+		action->PushLuaUserdata ( state );
+
+		return 1;
+	}
+	
+	self->mSound->setVolume ( self->mSound->getVolume () + volume );
+	self->ScheduleUpdate ();
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	pause
 	@text	Pause the sound.
 	
@@ -145,6 +185,46 @@ int MOAIUntzSound::_play ( lua_State* L ) {
 	if ( self->mSound ) {
 		self->mSound->play ();
 	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	seekVolume
+	@text	Animation helper for volume attribute,
+	
+	@in		MOAITransform self
+	@in		number vGoal		Desired resulting value for v.
+	@in		number length		Length of animation in seconds.
+	@opt	number mode			The ease mode. One of MOAIEaseType.EASE_IN, MOAIEaseType.EASE_OUT, MOAIEaseType.FLAT MOAIEaseType.LINEAR,
+								MOAIEaseType.SMOOTH, MOAIEaseType.SOFT_EASE_IN, MOAIEaseType.SOFT_EASE_OUT, MOAIEaseType.SOFT_SMOOTH. Defaults to MOAIEaseType.SMOOTH.
+
+	@out	MOAIEaseDriver easeDriver
+*/
+int MOAIUntzSound::_seekVolume ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIUntzSound, "UNN" )
+
+	float volume	= state.GetValue < float >( 2, 0.0f );
+	float delay		= state.GetValue < float >( 3, 0.0f );
+	
+	if ( delay > 0.0f ) {
+	
+		u32 mode = state.GetValue < u32 >( 4, USInterpolate::kSmooth );
+		
+		MOAIEaseDriver* action = new MOAIEaseDriver ();
+		action->ReserveLinks ( 1 );
+		
+		action->SetLink ( 0, self, MOAIUntzSoundAttr::Pack ( ATTR_VOLUME ), volume - self->mSound->getVolume (), mode );
+		
+		action->SetLength ( delay );
+		action->Start ();
+		action->PushLuaUserdata ( state );
+
+		return 1;
+	}
+	
+	self->mSound->setVolume ( volume );
+	self->ScheduleUpdate ();
+	
 	return 0;
 }
 
@@ -223,9 +303,24 @@ int MOAIUntzSound::_stop ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+bool MOAIUntzSound::ApplyAttrOp ( u32 attrID, USAttrOp& attrOp ) {
+
+	if ( MOAIUntzSoundAttr::Check ( attrID )) {
+		attrID = UNPACK_ATTR ( attrID );
+
+		if ( attrID == ATTR_VOLUME ) {
+			this->mSound->setVolume ( attrOp.Op ( this->mSound->getVolume ()));
+			return true;
+		}
+	}
+	
+	return false;
+}
+
+//----------------------------------------------------------------//
 MOAIUntzSound::MOAIUntzSound () {
 
-	RTTI_SINGLE ( USLuaObject )
+	RTTI_SINGLE ( MOAINode )
 }
 
 //----------------------------------------------------------------//
@@ -237,11 +332,16 @@ MOAIUntzSound::~MOAIUntzSound () {
 }
 //----------------------------------------------------------------//
 void MOAIUntzSound::RegisterLuaClass ( USLuaState& state ) {
-	UNUSED ( state );
+
+	MOAINode::RegisterLuaClass ( state );
+
+	state.SetField ( -1, "ATTR_VOLUME", MOAIUntzSoundAttr::Pack ( ATTR_VOLUME ));
 }
 
 //----------------------------------------------------------------//
 void MOAIUntzSound::RegisterLuaFuncs ( USLuaState& state ) {
+
+	MOAINode::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
 		{ "isLooping",			_isLooping },
@@ -250,8 +350,10 @@ void MOAIUntzSound::RegisterLuaFuncs ( USLuaState& state ) {
 		{ "isPaused",			_isPaused },
 		{ "isPlaying",			_isPlaying },
 		{ "load",				_load },
+		{ "moveVolume",			_moveVolume },
 		{ "pause",				_pause },
 		{ "play",				_play },
+		{ "seekVolume",			_seekVolume },
 		{ "setLooping",			_setLooping },
 		{ "setPosition",		_setPosition },
 		{ "setVolume",			_setVolume },

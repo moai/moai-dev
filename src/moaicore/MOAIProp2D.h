@@ -71,7 +71,7 @@ protected:
 	USRef < MOAITransformBase >	mUVTransform;
 	
 	USColorVec					mColor;
-	MOAIBlendMode					mBlendMode;
+	MOAIBlendMode				mBlendMode;
 	bool						mVisible;
 	
 	//----------------------------------------------------------------//

@@ -283,7 +283,10 @@ void MOAIAction::RegisterLuaFuncs ( USLuaState& state ) {
 void MOAIAction::RemoveChild ( MOAIAction& action ) {
 
 	if ( action.mParent == this ) {
-		this->mChildren.Remove ( action.mLink );
+	
+		// use Exclude instead of Remove to preserve Link's prev and next pointers
+		// this avoids a mess when removing/stopping actions during update
+		this->mChildren.Exclude ( action.mLink );
 		
 		action.UnblockSelf ();
 		action.UnblockAll ();
@@ -369,7 +372,9 @@ void MOAIAction::Update ( float step, u32 pass, bool checkPass ) {
 			childIt->Data ()->Retain ();
 		}
 		
-		child->Update ( step, pass, checkPass );
+		if ( child->mParent ) {
+			child->Update ( step, pass, checkPass );
+		}
 		
 		// release the *current* child
 		child->Release ();
