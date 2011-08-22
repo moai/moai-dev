@@ -53,5 +53,5 @@ void uslscore::InitGlobals ( USGlobals* globals ) {
 
 	USGlobals::Get ()->Set ( globals );
 
-	USLuaRuntime::Get ();
+	USLuaRuntime::Affirm ();
 }

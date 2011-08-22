@@ -18,13 +18,31 @@
 
 //----------------------------------------------------------------//
 void USLog::Print ( cc8* format, ... ) {
-	UNUSED ( format );
 
-	//#ifdef _DEBUG
+	va_list args;
+	va_start ( args, format );	
+	
+	#ifdef ANDROID
+		char str [ 1024 ];
+		vsnprintf ( str, 1024, format, args );
+		__android_log_print(ANDROID_LOG_ERROR,"Moai Debug", "%s",str);
+	#else
+		vprintf ( format, args );
+	#endif
+	
+	va_end ( args );
+}
 
-		va_list args;
-		va_start ( args, format );	
-		
+//----------------------------------------------------------------//
+void USLog::Print ( FILE* file, cc8* format, ... ) {
+
+	va_list args;
+	va_start ( args, format );	
+	
+	if ( file ) {
+		vfprintf ( file, format, args );
+	}
+	else {
 		#ifdef ANDROID
 			char str [ 1024 ];
 			vsnprintf ( str, 1024, format, args );
@@ -32,8 +50,7 @@ void USLog::Print ( cc8* format, ... ) {
 		#else
 			vprintf ( format, args );
 		#endif
-		
-		va_end ( args );
-
-	//#endif
+	}
+	
+	va_end ( args );
 }

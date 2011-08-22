@@ -17,68 +17,8 @@
 #include <uslscore/USLuaState-impl.h>
 #include <uslscore/USMemStream.h>
 
-//================================================================//
-// local
-//================================================================//
-
 #define LEVELS1	12	// size of the first part of the stack
 #define LEVELS2	10	// size of the second part of the stack
-
-//----------------------------------------------------------------//
-static void _printStackTrace ( lua_State *L, int level ) {
-  
-	int firstpart = 1;  /* still before eventual `...' */
-	lua_Debug ar;
-
-	USLog::Print ( "stack traceback:" );
-  
-	while ( lua_getstack ( L, level++, &ar )) {
-	
-		if (level > LEVELS1 && firstpart) {
-		
-			if ( !lua_getstack ( L, level + LEVELS2, &ar )) {
-				level--;
-			}
-			else {
-				// too many levels
-				USLog::Print ( "\n\t..." );  /* too many levels */
-				
-				// find last levels */
-				while ( lua_getstack ( L, level + LEVELS2, &ar ))  
-				level++;
-			}
-			firstpart = 0;
-			continue;
-		}
-	
-		USLog::Print ( "\n\t" );
-		
-		lua_getinfo ( L, "Snl", &ar );
-		
-		USLog::Print ( "%s:", ar.short_src );
-		
-		if ( ar.currentline > 0 ) {
-			USLog::Print ( "%d:", ar.currentline );
-		}
-		
-		if (*ar.namewhat != '\0' ) {
-			USLog::Print ( " in function " LUA_QS, ar.name );
-		}
-		else {
-			if ( *ar.what == 'm' ) {
-				USLog::Print ( " in main chunk" );
-			}
-			else if ( *ar.what == 'C' || *ar.what == 't' ) {
-				USLog::Print ( " ?" );
-			}
-			else {
-				USLog::Print ( " in function <%s:%d>", ar.short_src, ar.linedefined );
-			}
-		}
-	}
-	
-	USLog::Print ( "\n" );
-}
 
 //================================================================//
 // USLuaState
@@ -375,7 +315,7 @@ STLString USLuaState::GetStackTrace ( int level ) {
 	
 	while ( lua_getstack ( L, level++, &ar )) {
 		
-		if (level > LEVELS1 && firstpart) {
+		if ( level > LEVELS1 && firstpart ) {
 			
 			if ( !lua_getstack ( L, level + LEVELS2, &ar )) {
 				level--;
@@ -684,14 +624,14 @@ bool USLuaState::PrepMemberFunc ( int idx, cc8* name ) {
 }
 
 //----------------------------------------------------------------//
-bool USLuaState::PrintErrors ( int status ) {
+bool USLuaState::PrintErrors ( FILE* file, int status ) {
 
 	if ( status != 0 ) {
 	
 		cc8* error = lua_tostring ( this->mState, -1 );
 		if ( error ) {
 			STLString msg = lua_tostring ( this->mState, -1 );
-			USLog::Print ( "-- %s\n", msg.c_str ());
+			USLog::Print ( file, "-- %s\n", msg.c_str ());
 		}
 		lua_pop ( this->mState, 1 ); // pop error message
 		return true;
@@ -700,9 +640,10 @@ bool USLuaState::PrintErrors ( int status ) {
 }
 
 //----------------------------------------------------------------//
-void USLuaState::PrintStackTrace ( int level ) {
+void USLuaState::PrintStackTrace ( FILE* file, int level ) {
 
-	_printStackTrace ( this->mState, level  );
+	STLString stackTrace = this->GetStackTrace ( level );
+	USLog::Print ( file, stackTrace.str ());
 }
 
 //----------------------------------------------------------------//

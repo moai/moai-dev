@@ -24,7 +24,9 @@ int USLuaObject::_gc ( lua_State* L ) {
 	bool cleanup = data->mUserdata.IsWeak ();
 	data->mUserdata.Clear ();
 	
-	USLuaRuntime::Get ().SetObjectStackTrace ( data, 0 );
+	if ( USLuaRuntime::IsValid ()) {
+		USLuaRuntime::Get ().SetObjectStackTrace ( data, 0 );
+	}
 
 	if ( cleanup ) {
 		delete data;
@@ -255,10 +257,10 @@ USLuaObject::USLuaObject () {
 
 //----------------------------------------------------------------//
 USLuaObject::~USLuaObject () {
-
-	USLuaRuntime::Get ().SetObjectStackTrace ( this, 0 );
 	
 	if ( USLuaRuntime::IsValid ()) {
+		
+		USLuaRuntime::Get ().SetObjectStackTrace ( this, 0 );
 		
 		if ( this->mUserdata ) {
 

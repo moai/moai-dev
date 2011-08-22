@@ -471,6 +471,16 @@ bool MOAIGfxDevice::IsProgrammable () {
 }
 
 //----------------------------------------------------------------//
+u32 MOAIGfxDevice::LogErrors () {
+
+	u32 count = 0;
+	for ( int error = glGetError (); error != GL_NO_ERROR; error = glGetError (), ++count ) {
+		MOAILog ( 0, MOAILogMessages::MOAIGfxDevice_OpenGLError_S, this->GetErrorString ( error ));
+	}
+	return count;
+}
+
+//----------------------------------------------------------------//
 MOAIGfxDevice::MOAIGfxDevice () :
 	mVertexFormat ( 0 ),
 	mBuffer ( 0 ),
@@ -521,16 +531,6 @@ MOAIGfxDevice::MOAIGfxDevice () :
 MOAIGfxDevice::~MOAIGfxDevice () {
 
 	this->Clear ();
-}
-
-//----------------------------------------------------------------//
-u32 MOAIGfxDevice::PrintErrors () {
-
-	u32 count = 0;
-	for ( int error = glGetError (); error != GL_NO_ERROR; error = glGetError (), ++count ) {
-		printf ( "OPENGL ERROR: %s\n", this->GetErrorString ( error ));
-	}
-	return count;
 }
 
 //----------------------------------------------------------------//

@@ -173,16 +173,25 @@ int USLuaRuntime::_panic ( lua_State *L ) {
 void* USLuaRuntime::_tracking_alloc ( void *ud, void *ptr, size_t osize, size_t nsize ) {
 	UNUSED ( ud );
 	
-	USLuaRuntime& self = USLuaRuntime::Get ();
+	if ( USLuaRuntime::IsValid ()) {
+		USLuaRuntime& self = USLuaRuntime::Get ();
+	
+		if ( nsize == 0 ) {
+			self.mTotalBytes -= osize;
+			free ( ptr );
+			return NULL;
+		}
+
+		self.mTotalBytes -= osize;
+		self.mTotalBytes += nsize;
+		return realloc ( ptr, nsize );
+	}
 	
 	if ( nsize == 0 ) {
-		self.mTotalBytes -= osize;
 		free ( ptr );
 		return NULL;
 	}
 
-	self.mTotalBytes -= osize;
-	self.mTotalBytes += nsize;
 	return realloc ( ptr, nsize );
 }
 
@@ -254,7 +263,7 @@ static int _traceback ( lua_State *L ) {
 	}
 	
 	USLuaState state ( L );
-	state.PrintStackTrace ( 1 );
+	state.PrintStackTrace ( USLog::CONSOLE, 1 );
 	
 	return 0;
 }

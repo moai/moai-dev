@@ -364,33 +364,16 @@ int MOAISim::_pushRenderPass ( lua_State* L ) {
 							method to be called after a known operation and
 							get only those allocations created since the last call
 							to this function.
-	@in		string filename (Optional) If present, write the results to the given
-							file, otherwise the report will be written to stdout.
+	@out	nil
 */
 int MOAISim::_reportLeaks ( lua_State* L ) {
 	
 	USLuaState state ( L );
 	bool clearAfter = state.GetValue < bool >( 1, false );
-	cc8* filename   = state.GetValue < cc8* >( 2, 0 );
 	
 	USLuaRuntime& luaRuntime = USLuaRuntime::Get ();
-	
-	if ( filename ) {
-		FILE *f = fopen ( filename, "w" );
-		if ( f ) {
-			printf ( "Writing leak report to: %s\n", filename );
-			luaRuntime.ReportLeaksFormatted ( f );
-			fclose ( f );
-		}
-		else {
-			printf ( "Error opening file for write, dumping leak report to console instead: %s\n", filename );
-			luaRuntime.ReportLeaksFormatted ( stdout );
-		}
-	}
-	else {
-		luaRuntime.ReportLeaksFormatted ( stdout );
-	}
-	
+	luaRuntime.ReportLeaksFormatted ( MOAILogMgr::Get ().GetFile ());
+
 	if ( clearAfter ) {
 		luaRuntime.ResetLeakTracking ();
 	}
@@ -679,7 +662,7 @@ void MOAISim::RunFile ( cc8* filename ) {
 	USLuaStateHandle state = USLuaRuntime::Get ().State ();
 	
 	status = luaL_loadfile ( state, filename );
-	if ( state.PrintErrors ( status )) return;
+	if ( state.PrintErrors ( USLog::CONSOLE, status )) return;
 	
 	this->mRenderPasses.Clear ();
 	MOAIActionMgr::Get ().Clear ();
@@ -701,7 +684,7 @@ void MOAISim::RunString ( cc8* script ) {
 	USLuaStateHandle state = USLuaRuntime::Get ().State ();
 	
 	status = luaL_loadstring ( state, script );
-	if ( state.PrintErrors ( status )) return;
+	if ( state.PrintErrors ( USLog::CONSOLE, status )) return;
 	
 	this->mRenderPasses.Clear ();
 	MOAIActionMgr::Get ().Clear ();

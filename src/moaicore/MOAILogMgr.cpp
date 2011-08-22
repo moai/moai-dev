@@ -20,9 +20,34 @@ void MOAILog ( lua_State *L, u32 messageID, ... ) {
 	va_end ( args );
 }
 
+//----------------------------------------------------------------//
+void MOAIPrint ( cc8* message, ... ) {
+	
+	va_list args;
+	va_start ( args, message );
+	
+	MOAILogMgr::Get ().PrintVar ( message, args );
+	
+	va_end ( args );
+}
+
 //================================================================//
 // lua
 //================================================================//
+
+//----------------------------------------------------------------//
+/**	@name	closeFile
+	@text	Resets log output to stdout.
+	
+	@out	nil
+*/
+int MOAILogMgr::_closeFile ( lua_State* L ) {
+	UNUSED ( L );
+
+	MOAILogMgr::Get ().CloseFile ();
+	
+	return 0;
+}
 
 //----------------------------------------------------------------//
 /**	@name	isDebugBuild
@@ -63,6 +88,24 @@ int MOAILogMgr::_log ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	openFile
+	@text	Opens a new file to receive log messages.
+	
+	@in		string filename
+	@out	nil
+*/
+int MOAILogMgr::_openFile ( lua_State* L ) {
+
+	USLuaState state ( L );
+	if ( !state.CheckParams ( 1, "S" )) return 0;
+	
+	cc8* filename = state.GetValue < cc8* >( 1, "" );
+	MOAILogMgr::Get ().OpenFile ( filename );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	registerLogMessage
 	@text	Register a format string to handle a log message. Register
 			an empty string to hide messages.
@@ -76,22 +119,15 @@ int MOAILogMgr::_log ( lua_State* L ) {
 int MOAILogMgr::_registerLogMessage ( lua_State* L ) {
 	UNUSED ( L );
 
-	#ifdef _DEBUG
+	USLuaState state ( L );
+	if ( !state.CheckParams ( 1, "N" )) return 0;
 
-		USLuaState state ( L );
-		if ( !state.CheckParams ( 1, "N" )) return 0;
+	u32 messageID		= state.GetValue < u32 >( 1, 0 );
+	cc8* formatString	= state.GetValue < cc8* >( 2, "" );
+	u32 level			= state.GetValue < u32 >( 3, LOG_STATUS );
 
-		u32 messageID		= state.GetValue < u32 >( 1, 0 );
-		cc8* formatString	= state.GetValue < cc8* >( 2, "" );
-		u32 level			= state.GetValue < u32 >( 3, LOG_STATUS );
+	MOAILogMgr::Get ().RegisterLogMessage ( messageID, level, formatString );
 
-		MOAILogMessage& message = MOAILogMgr::Get ().mMessageMap [ messageID ];
-		
-		message.mLevel = level;
-		message.mFormatString = formatString;
-	
-	#endif
-	
 	return 0;
 }
 
@@ -117,6 +153,16 @@ int MOAILogMgr::_setLogLevel ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAILogMgr::CloseFile () {
+
+	if ( this->mOwnsFileHandle ) {
+		fclose ( this->mFile );
+		this->mFile = stdout;
+		this->mOwnsFileHandle = false;
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAILogMgr::Log ( lua_State *L, u32 messageID, ... ) {
 	
 	va_list args;
@@ -140,16 +186,16 @@ void MOAILogMgr::LogVar ( lua_State *L, u32 messageID, va_list args ) {
 			if ( message.mLevel <= this->mLevel ) {
 				
 				if ( L ) {
-					printf ( "----------------------------------------------------------------\n" );
+					this->Print ( "----------------------------------------------------------------\n" );
 				}
 				
-				vprintf ( message.mFormatString, args );
-				printf ( "\n" );
+				this->PrintVar ( message.mFormatString, args );
+				this->Print ( "\n" );
 				
 				if ( L ) {
 					USLuaState state ( L );
-					state.PrintStackTrace ( 0 );
-					printf ( "\n" );
+					state.PrintStackTrace ( this->mFile, 0 );
+					this->Print ( "\n" );
 				}
 			}
 		}
@@ -158,13 +204,54 @@ void MOAILogMgr::LogVar ( lua_State *L, u32 messageID, va_list args ) {
 
 //----------------------------------------------------------------//
 MOAILogMgr::MOAILogMgr () :
-	mLevel ( LOG_STATUS ) {
+	mLevel ( LOG_STATUS ),
+	mFile ( stdout ),
+	mOwnsFileHandle ( false ) {
 
 	RTTI_SINGLE ( USLuaObject )
 }
 
 //----------------------------------------------------------------//
 MOAILogMgr::~MOAILogMgr () {
+
+	this->CloseFile ();
+}
+
+//----------------------------------------------------------------//
+void MOAILogMgr::OpenFile ( cc8* filename ) {
+
+	FILE* file = fopen ( filename, "w" );
+	if ( file ) {
+		this->CloseFile ();
+		this->mFile = file;
+		this->mOwnsFileHandle = true;
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAILogMgr::Print ( cc8* message, ... ) {
+
+	va_list args;
+	va_start ( args, message );
+	
+	MOAILogMgr::Get ().PrintVar ( message, args );
+	
+	va_end ( args );
+}
+
+//----------------------------------------------------------------//
+void MOAILogMgr::PrintVar ( cc8* message, va_list args ) {
+
+	vfprintf ( this->mFile, message, args );
+}
+
+//----------------------------------------------------------------//
+void MOAILogMgr::RegisterLogMessage ( u32 messageID, u32 level, cc8* formatString ) {
+
+	MOAILogMessage& message = MOAILogMgr::Get ().mMessageMap [ messageID ];
+	
+	message.mLevel = level;
+	message.mFormatString = formatString;
 }
 
 //----------------------------------------------------------------//
@@ -175,11 +262,13 @@ void MOAILogMgr::RegisterLuaClass ( USLuaState& state ) {
 	state.SetField ( -1, "LOG_WARNING",			( u32 )LOG_WARNING );
 	state.SetField ( -1, "LOG_STATUS",			( u32 )LOG_STATUS );
 	
-	MOAILogMessages::RegisterLogMessages ( state );
+	MOAILogMessages::RegisterLogMessageIDs ( state );
 	
 	luaL_Reg regTable[] = {
+		{ "closeFile",				_closeFile },
 		{ "log",					_log },
 		{ "isDebugBuild",			_isDebugBuild },
+		{ "openFile",				_openFile },
 		{ "registerLogMessage",		_registerLogMessage },
 		{ "setLogLevel",			_setLogLevel },
 		{ NULL, NULL }
@@ -187,5 +276,6 @@ void MOAILogMgr::RegisterLuaClass ( USLuaState& state ) {
 
 	luaL_register( state, 0, regTable );
 }
+
 
 

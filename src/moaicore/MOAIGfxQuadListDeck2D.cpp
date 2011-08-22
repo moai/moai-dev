@@ -121,17 +121,17 @@ int MOAIGfxQuadListDeck2D::_setPair ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGfxQuadListDeck2D, "UNNN" )
 
 	u32 idx = state.GetValue < u32 >( 2, 1 ) - 1;
-	if ( !MOAILogMessages::CheckIndex ( idx, self->mPairs.Size (), L )) {
+	if ( !MOAILogMessages::CheckIndexPlusOne ( idx, self->mPairs.Size (), L )) {
 		return 0;
 	}
 	
 	u32 uvQuadID = state.GetValue < u32 >( 3, 1 ) - 1;
-	if ( !MOAILogMessages::CheckIndex ( uvQuadID, self->mUVQuads.Size (), L )) {
+	if ( !MOAILogMessages::CheckIndexPlusOne ( uvQuadID, self->mUVQuads.Size (), L )) {
 		return 0;
 	}
 	
 	u32 quadID = state.GetValue < u32 >( 4, 1 ) - 1;
-	if ( !MOAILogMessages::CheckIndex ( quadID, self->mQuads.Size (), L )) {
+	if ( !MOAILogMessages::CheckIndexPlusOne ( quadID, self->mQuads.Size (), L )) {
 		return 0;
 	}
 	
@@ -161,7 +161,7 @@ int MOAIGfxQuadListDeck2D::_setQuad ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGfxQuadListDeck2D, "UNNNNNNNNN" )
 
 	u32 idx = state.GetValue < u32 >( 2, 1 ) - 1;
-	if ( MOAILogMessages::CheckIndex ( idx, self->mQuads.Size (), L )) {
+	if ( MOAILogMessages::CheckIndexPlusOne ( idx, self->mQuads.Size (), L )) {
 	
 		USQuad quad;
 		
@@ -195,7 +195,7 @@ int MOAIGfxQuadListDeck2D::_setRect ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGfxQuadListDeck2D, "UNNNNN" )
 
 	u32 idx = state.GetValue < u32 >( 2, 1 ) - 1;
-	if ( MOAILogMessages::CheckIndex ( idx, self->mQuads.Size (), L )) {
+	if ( MOAILogMessages::CheckIndexPlusOne ( idx, self->mQuads.Size (), L )) {
 	
 		USRect rect;
 		
@@ -250,7 +250,7 @@ int MOAIGfxQuadListDeck2D::_setUVQuad ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGfxQuadListDeck2D, "UNNNNNNNNN" )
 
 	u32 idx = state.GetValue < u32 >( 2, 1 ) - 1;
-	if ( MOAILogMessages::CheckIndex ( idx, self->mUVQuads.Size (), L )) {
+	if ( MOAILogMessages::CheckIndexPlusOne ( idx, self->mUVQuads.Size (), L )) {
 	
 		USQuad quad;
 		
@@ -284,7 +284,7 @@ int MOAIGfxQuadListDeck2D::_setUVRect ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGfxQuadListDeck2D, "UNNNNN" )
 
 	u32 idx = state.GetValue < u32 >( 2, 1 ) - 1;
-	if ( MOAILogMessages::CheckIndex ( idx, self->mUVQuads.Size (), L )) {
+	if ( MOAILogMessages::CheckIndexPlusOne ( idx, self->mUVQuads.Size (), L )) {
 	
 		USRect rect;
 		

@@ -440,7 +440,10 @@ bool MOAITexture::BindFrameBuffer () {
 void MOAITexture::Clear () {
 
 	if ( this->mGLTexID ) {
-		MOAIGfxDevice::Get ().ReportTextureFree ( this->mFilename, this->mDataSize );
+	
+		if ( MOAIGfxDevice::IsValid ()) {
+			MOAIGfxDevice::Get ().ReportTextureFree ( this->mFilename, this->mDataSize );
+		}
 		glDeleteTextures ( 1, &this->mGLTexID );
 		this->mGLTexID = 0;
 	}

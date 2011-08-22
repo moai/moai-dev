@@ -57,7 +57,7 @@ int MOAIGfxQuadDeck2D::_setQuad ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGfxQuadDeck2D, "UNNNNNNNNN" )
 
 	u32 idx = state.GetValue < u32 >( 2, 1 ) - 1;
-	if ( MOAILogMessages::CheckIndex ( idx, self->mQuads.Size (), L )) {
+	if ( MOAILogMessages::CheckIndexPlusOne ( idx, self->mQuads.Size (), L )) {
 	
 		USQuad quad;
 		
@@ -92,7 +92,7 @@ int MOAIGfxQuadDeck2D::_setRect ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGfxQuadDeck2D, "UNNNNN" )
 
 	u32 idx = state.GetValue < u32 >( 2, 1 ) - 1;
-	if ( MOAILogMessages::CheckIndex ( idx, self->mQuads.Size (), L )) {
+	if ( MOAILogMessages::CheckIndexPlusOne ( idx, self->mQuads.Size (), L )) {
 	
 		float x0	= state.GetValue < float >( 3, 0.0f );
 		float y0	= state.GetValue < float >( 4, 0.0f );
@@ -147,7 +147,7 @@ int MOAIGfxQuadDeck2D::_setUVQuad ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGfxQuadDeck2D, "UNNNNNNNNN" )
 
 	u32 idx = state.GetValue < u32 >( 2, 1 ) - 1;
-	if ( MOAILogMessages::CheckIndex ( idx, self->mQuads.Size (), L )) {
+	if ( MOAILogMessages::CheckIndexPlusOne ( idx, self->mQuads.Size (), L )) {
 	
 		USQuad quad;
 		
@@ -182,7 +182,7 @@ int MOAIGfxQuadDeck2D::_setUVRect ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGfxQuadDeck2D, "UNNNNN" )
 
 	u32 idx = state.GetValue < u32 >( 2, 1 ) - 1;
-	if ( MOAILogMessages::CheckIndex ( idx, self->mQuads.Size (), L )) {
+	if ( MOAILogMessages::CheckIndexPlusOne ( idx, self->mQuads.Size (), L )) {
 	
 		float u0	= state.GetValue < float >( 3, 0.0f );
 		float v0	= state.GetValue < float >( 4, 0.0f );

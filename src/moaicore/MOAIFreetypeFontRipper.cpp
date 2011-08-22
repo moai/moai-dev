@@ -284,7 +284,7 @@ void MOAIFreetypeFontRipper::RipFromTTF ( cc8* filename, MOAIFont& font, MOAIIma
 				
 				if ( kernX || kernY ) {
 					
-					//printf ( "X Kerning %d->%d: ( %d, %d )\n", ( int )idx0, ( int )idx1, kernX, kernY );
+					//MOAIPrint ( "X Kerning %d->%d: ( %d, %d )\n", ( int )idx0, ( int )idx1, kernX, kernY );
 					
 					MOAIKernVec& kernVec = kernTable [ kernTableSize++ ];
 					

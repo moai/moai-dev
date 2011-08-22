@@ -14,6 +14,17 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIPartitionCell::Clear () {
+
+	PrimIt primIt = this->mPrims.Head ();
+	while ( primIt ) {
+		MOAIProp* prop = primIt->Data ();
+		primIt = primIt->Next ();
+		prop->SetPartition ( 0 );
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAIPartitionCell::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignore, u32 mask ) {
 	
 	PrimIt primIt = this->mPrims.Head ();
@@ -88,6 +99,15 @@ void MOAIPartitionCell::InsertProp ( MOAIProp& prop ) {
 }
 
 //----------------------------------------------------------------//
+MOAIPartitionCell::MOAIPartitionCell () {
+}
+
+//----------------------------------------------------------------//
+MOAIPartitionCell::~MOAIPartitionCell () {
+	this->Clear ();
+}
+
+//----------------------------------------------------------------//
 void MOAIPartitionCell::RemoveProp ( MOAIProp& prop ) {
 
 	if ( prop.mCell != this ) return;
@@ -96,10 +116,3 @@ void MOAIPartitionCell::RemoveProp ( MOAIProp& prop ) {
 	prop.mCell = 0;
 }
 
-//----------------------------------------------------------------//
-MOAIPartitionCell::MOAIPartitionCell () {
-}
-
-//----------------------------------------------------------------//
-MOAIPartitionCell::~MOAIPartitionCell () {
-}

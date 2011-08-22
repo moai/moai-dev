@@ -156,11 +156,11 @@ public:
 	
 	bool					IsOpenGLES				();
 	bool					IsProgrammable			();
+	u32						LogErrors				();
 	
 							MOAIGfxDevice			();
 							~MOAIGfxDevice			();
 	
-	u32						PrintErrors				();
 	void					RegisterLuaClass		( USLuaState& state );
 	void					Reserve					( u32 size );
 	void					ResetState				();

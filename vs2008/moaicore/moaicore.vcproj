@@ -1106,6 +1106,10 @@
 			Name="log"
 			>
 			<File
+				RelativePath="..\..\src\moaicore\MOAILogMessages.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\moaicore\MOAILogMessages.h"
 				>
 			</File>

@@ -142,7 +142,7 @@ void MOAIThread::OnUpdate ( float step ) {
 				lua_pop ( this->mState, 1 );
 				
 				USLuaStateHandle state ( this->mState );
-				state.PrintStackTrace ( 0 );
+				state.PrintStackTrace ( USLog::CONSOLE, 0 );
 			}
 		
 			this->mRef.Clear ();

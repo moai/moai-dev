@@ -65,7 +65,7 @@ public:
 
 	//----------------------------------------------------------------//
 	static USLuaFactoryClass& Get () {
-		return *USGlobals::Get ()->GetGlobal < USLuaFactoryClass >();
+		return *USGlobals::Get ()->AffirmGlobal < USLuaFactoryClass >();
 	}
 
 	//----------------------------------------------------------------//
@@ -95,12 +95,12 @@ public:
 	
 	//----------------------------------------------------------------//
 	static USLuaSingletonClass& Get () {
-		return *USGlobals::Get ()->GetGlobal < USLuaSingletonClass >();
+		return *USGlobals::Get ()->AffirmGlobal < USLuaSingletonClass >();
 	}
 
 	//----------------------------------------------------------------//
 	USLuaObject* GetSingleton () {
-		return USGlobals::Get ()->GetGlobal < TYPE >();
+		return USGlobals::Get ()->AffirmGlobal < TYPE >();
 	}
 
 	//----------------------------------------------------------------//
