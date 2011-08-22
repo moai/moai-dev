@@ -420,6 +420,9 @@
     <ClCompile Include="..\..\src\moaicore\MOAIPartitionResultMgr.cpp">
       <Filter>src\partition</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAILogMessages.cpp">
+      <Filter>src\log</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\moaicore\MOAIAction.h">
