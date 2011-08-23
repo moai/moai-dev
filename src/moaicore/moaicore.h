@@ -78,6 +78,7 @@
 #include <moaicore/MOAIProp2D.h>
 #include <moaicore/MOAIPvrHeader.h>
 #include <moaicore/MOAIQuadBrush.h>
+#include <moaicore/MOAIScriptDeck.h>
 #include <moaicore/MOAIScriptNode.h>
 #include <moaicore/MOAISensor.h>
 #include <moaicore/MOAISerializer.h>

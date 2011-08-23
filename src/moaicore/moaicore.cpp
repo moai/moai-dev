@@ -52,6 +52,7 @@ void moaicore::InitGlobals ( USGlobals* globals ) {
 	MOAIVertexFormatMgr::Affirm ();
 	MOAIShaderMgr::Affirm ();
 	MOAIGfxDevice::Affirm ();
+	MOAIDraw::Affirm ();
 	MOAIDebugLines::Affirm ();
 	MOAIPartitionResultMgr::Affirm ();
 	MOAISim::Affirm ();
@@ -72,6 +73,7 @@ void moaicore::InitGlobals ( USGlobals* globals ) {
 	REGISTER_LUA_CLASS ( MOAIDataIOAction )
 	REGISTER_LUA_CLASS ( MOAIDebugLines )
 	REGISTER_LUA_CLASS ( MOAIDeckRemapper )
+	REGISTER_LUA_CLASS ( MOAIDraw )
 	REGISTER_LUA_CLASS ( MOAIEnvironment )
 	REGISTER_LUA_CLASS ( MOAIEaseDriver )
 	REGISTER_LUA_CLASS ( MOAIEaseType )
@@ -108,6 +110,7 @@ void moaicore::InitGlobals ( USGlobals* globals ) {
 	REGISTER_LUA_CLASS ( MOAIPointerSensor )
 	REGISTER_LUA_CLASS ( MOAIProp )
 	REGISTER_LUA_CLASS ( MOAIProp2D )
+	REGISTER_LUA_CLASS ( MOAIScriptDeck )
 	REGISTER_LUA_CLASS ( MOAIScriptNode )
 	REGISTER_LUA_CLASS ( MOAISerializer )
 	REGISTER_LUA_CLASS ( MOAIShader )

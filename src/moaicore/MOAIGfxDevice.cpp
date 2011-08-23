@@ -34,6 +34,58 @@ int MOAIGfxDevice::_isProgrammable ( lua_State* L ) {
 	return 1;
 }
 
+//----------------------------------------------------------------//
+/**	@name	setPenColor
+
+	@in		number r
+	@in		number g
+	@in		number b
+	@opt	number a	Default value is 1.
+	@out	nil
+*/
+int MOAIGfxDevice::_setPenColor ( lua_State* L ) {
+
+	USLuaState state ( L );
+
+	float r = state.GetValue < float >( 1, 1.0f );
+	float g = state.GetValue < float >( 2, 1.0f );
+	float b = state.GetValue < float >( 3, 1.0f );
+	float a = state.GetValue < float >( 4, 1.0f );
+
+	MOAIGfxDevice::Get ().SetPenColor ( r, g, b, a );
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	setPenWidth
+
+	@in		number width
+	@out	nil
+*/
+int MOAIGfxDevice::_setPenWidth ( lua_State* L ) {
+
+	USLuaState state ( L );
+
+	float width = state.GetValue < float >( 1, 1.0f );
+	MOAIGfxDevice::Get ().SetPenWidth ( width );
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	setPointSize
+
+	@in		number size
+	@out	nil
+*/
+int MOAIGfxDevice::_setPointSize ( lua_State* L ) {
+
+	USLuaState state ( L );
+
+	float size = state.GetValue < float >( 1, 1.0f );
+	MOAIGfxDevice::Get ().SetPointSize ( size );
+	return 0;
+}
+
 //================================================================//
 // MOAIGfxDevice
 //================================================================//
@@ -538,6 +590,9 @@ void MOAIGfxDevice::RegisterLuaClass ( USLuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "isProgrammable",				_isProgrammable },
+		{ "setPenColor",				_setPenColor },
+		{ "setPenWidth",				_setPenWidth },
+		{ "setPointSize",				_setPointSize },
 		{ NULL, NULL }
 	};
 

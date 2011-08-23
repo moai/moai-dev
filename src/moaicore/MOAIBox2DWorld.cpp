@@ -567,7 +567,6 @@ void MOAIBox2DWorld::Destroy () {
 void MOAIBox2DWorld::DrawDebug () {
 
 	if ( this->mDebugDraw ) {
-		MOAIGfxDevice::Get ().SetTexture ();
 		
 		MOAIDraw::Bind ();
 		
