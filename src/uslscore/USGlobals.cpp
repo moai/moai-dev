@@ -6,76 +6,9 @@
 #include <uslscore/STLSet.h>
 #include <uslscore/USGlobals.h>
 
-typedef STLSet < USGlobals* >::iterator GlobalsSetIt;
-typedef STLSet < USGlobals* > GlobalsSet;
-
-static GlobalsSet* sGlobalsSet = 0;
-static USGlobals* sInstance = 0;
-
 //================================================================//
 // USGlobals
 //================================================================//
-
-//----------------------------------------------------------------//
-USGlobals* USGlobals::Create () {
-
-	if ( !sGlobalsSet ) {
-		sGlobalsSet = new GlobalsSet ();
-	}
-
-	USGlobals* globals = new USGlobals ();
-	sGlobalsSet->insert ( globals );
-	sInstance = globals;
-
-	return globals;
-}
-
-//----------------------------------------------------------------//
-void USGlobals::Delete ( USGlobals* globals ) {
-	
-	if ( sGlobalsSet ) {
-		if ( sGlobalsSet->contains ( globals )) {
-			sGlobalsSet->erase ( globals );
-			delete globals;
-		}
-	}
-	
-	// don't set this to nil until *after* deleting it!
-	if ( globals == sInstance ) {
-		sInstance = 0;
-	}
-}
-
-//----------------------------------------------------------------//
-void USGlobals::Finalize () {
-
-	if ( sGlobalsSet ) {
-
-		GlobalsSetIt globalsIt = sGlobalsSet->begin ();
-		for ( ; globalsIt != sGlobalsSet->end (); ++globalsIt ) {
-			USGlobals* globals = *globalsIt;
-			delete globals;
-		}
-		
-		sGlobalsSet->clear ();
-		sInstance = 0;
-		
-		delete sGlobalsSet;
-		sGlobalsSet = 0;
-	}
-}
-
-//----------------------------------------------------------------//
-USGlobals* USGlobals::Get () {
-
-	return sInstance;
-}
-
-//----------------------------------------------------------------//
-void USGlobals::Set ( USGlobals* globals ) {
-
-	sInstance = globals;
-}
 
 //----------------------------------------------------------------//
 USGlobals::USGlobals () {
@@ -96,4 +29,81 @@ USGlobals::~USGlobals () {
 			object->Release ();
 		}
 	}
+}
+
+
+//================================================================//
+// USGlobalsMgr
+//================================================================//
+
+USGlobalsMgr::GlobalsSet* USGlobalsMgr::sGlobalsSet = 0;
+USGlobals* USGlobalsMgr::sInstance = 0;
+
+//----------------------------------------------------------------//
+USGlobals* USGlobalsMgr::Create () {
+	
+	if ( !sGlobalsSet ) {
+		sGlobalsSet = new GlobalsSet ();
+	}
+
+	USGlobals* globals = new USGlobals ();
+	sGlobalsSet->insert ( globals );
+	sInstance = globals;
+
+	return globals;
+}
+
+//----------------------------------------------------------------//
+void USGlobalsMgr::Delete ( USGlobals* globals ) {
+	
+	if ( sGlobalsSet ) {
+		if ( sGlobalsSet->contains ( globals )) {
+			sGlobalsSet->erase ( globals );
+			delete globals;
+		}
+	}
+	
+	// don't set this to nil until *after* deleting it!
+	if ( globals == sInstance ) {
+		sInstance = 0;
+	}
+}
+
+//----------------------------------------------------------------//
+void USGlobalsMgr::Finalize () {
+
+	if ( sGlobalsSet ) {
+
+		GlobalsSetIt globalsIt = sGlobalsSet->begin ();
+		for ( ; globalsIt != sGlobalsSet->end (); ++globalsIt ) {
+			USGlobals* globals = *globalsIt;
+			delete globals;
+		}
+		
+		sGlobalsSet->clear ();
+		sInstance = 0;
+		
+		delete sGlobalsSet;
+		sGlobalsSet = 0;
+	}
+}
+
+//----------------------------------------------------------------//
+USGlobals* USGlobalsMgr::Get () {
+
+	return sInstance;
+}
+
+//----------------------------------------------------------------//
+void USGlobalsMgr::Set ( USGlobals* globals ) {
+
+	sInstance = globals;
+}
+
+//----------------------------------------------------------------//
+USGlobalsMgr::USGlobalsMgr () {
+}
+
+//----------------------------------------------------------------//
+USGlobalsMgr::~USGlobalsMgr () {
 }

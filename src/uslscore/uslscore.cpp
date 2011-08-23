@@ -7,7 +7,7 @@
 //----------------------------------------------------------------//
 static void _cleanup () {
 
-	USGlobals::Get ()->Finalize ();
+	USGlobalsMgr::Finalize ();
 }
 
 //----------------------------------------------------------------//
@@ -51,7 +51,7 @@ void uslscore::InitGlobals ( USGlobals* globals ) {
 		sysInit = false;
 	}
 
-	USGlobals::Get ()->Set ( globals );
+	USGlobalsMgr::Set ( globals );
 
 	USLuaRuntime::Get ();
 }

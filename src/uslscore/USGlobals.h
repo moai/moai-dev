@@ -4,6 +4,7 @@
 #ifndef	USGLOBALS_H
 #define	USGLOBALS_H
 
+#include <uslscore/STLSet.h>
 #include <uslscore/USAccessors.h>
 #include <uslscore/USObject.h>
 #include <uslscore/USLeanArray.h>
@@ -55,6 +56,8 @@ private:
 class USGlobals {
 private:
 
+	friend class USGlobalsMgr;
+
 	enum {
 		CHUNK_SIZE = 32,
 	};
@@ -62,17 +65,10 @@ private:
 	USLeanArray < USGlobalPair > mGlobals;
 
 	//----------------------------------------------------------------//
-						USGlobals			();
-						~USGlobals			();
+			USGlobals		();
+			~USGlobals		();
 
 public:
-
-	//----------------------------------------------------------------//
-	static USGlobals*	Create				();
-	static void			Delete				( USGlobals* globals );	
-	static void			Finalize			();
-	static USGlobals*	Get					();
-	static void			Set					( USGlobals* globals );
 	
 	//----------------------------------------------------------------//
 	template < typename TYPE >
@@ -112,6 +108,32 @@ public:
 };
 
 //================================================================//
+// USGlobalsMgr
+//================================================================//
+class USGlobalsMgr {
+private:
+
+	typedef STLSet < USGlobals* >::iterator GlobalsSetIt;
+	typedef STLSet < USGlobals* > GlobalsSet;
+
+	static GlobalsSet* sGlobalsSet;
+	static USGlobals* sInstance;
+
+	//----------------------------------------------------------------//
+						USGlobalsMgr			();
+						~USGlobalsMgr			();
+
+public:
+
+	//----------------------------------------------------------------//
+	static USGlobals*		Create			();	
+	static void				Delete			( USGlobals* globals );	
+	static void				Finalize		();
+	static USGlobals*		Get				();
+	static void				Set				( USGlobals* globals );
+};
+
+//================================================================//
 // USGlobalClass
 //================================================================//
 template < typename TYPE, typename SUPER = USObject >
@@ -121,14 +143,14 @@ public:
 	
 	//----------------------------------------------------------------//
 	inline static TYPE& Get () {
-		TYPE* global = USGlobals::Get ()->GetGlobal < TYPE >();
+		TYPE* global = USGlobalsMgr::Get ()->GetGlobal < TYPE >();
 		assert ( global );
 		return *global;
 	}
 	
 	//----------------------------------------------------------------//
 	inline static bool IsValid () {
-		return USGlobals::Get ()->IsValid < TYPE >();
+		return USGlobalsMgr::Get ()->IsValid < TYPE >();
 	}
 };
 
