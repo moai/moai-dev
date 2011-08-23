@@ -26,17 +26,18 @@ layer:insertProp ( prop )
 prop:moveRot ( 360, 1.5 )
 
 ----------------------------------------------------------------
--- require 'config-physfs' to allow zip files being mounted
-require "config-physfs"
+-- override lua require, dofile and loadfile (in config)
+dofile ( "config-physfs.lua" )
 
 -- check if a file exists
-print ( MOAIFileSystem.checkFileExists ( "luaFile.lua" ))
+MOAIFileSystem.setWorkingDirectory ( MOAIFileSystem.getBaseDirectory ())
+print ( MOAIFileSystem.getWorkingDirectory ())
 
--- require now checks the physfs file system before defaulting to normal require
-luaBlock = require "luaFile"
+MOAIFileSystem.addArchive ( "archive.zip" )
+print ( MOAIFileSystem.checkFileExists ( "file.txt" ))
 
--- print a string from the required file above
-print ( luaBlock.helloString )
 
--- dofile now checks the physfs file system before defaulting to normal dofile
-dofile ( "luaDoFile" )
+MOAIFileSystem.addArchive ( "luaArchive.zip" )
+module = require ( "luaFile" )
+print ( module.helloString )
+dofile ( "luaDoFile.lua" )

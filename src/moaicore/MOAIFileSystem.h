@@ -11,23 +11,28 @@
 	@text	Functions for manipulating the file system.
 */
 class MOAIFileSystem :
-	public USLuaObject {
+	public USGlobalClass < MOAIFileSystem, USLuaObject > {
 private:
 
+	STLString					mWorkingDirectory;
+	STLString					mWriteDirectory;
+	STLList < STLString >		mArchives;
+
 	//----------------------------------------------------------------//
+	static int		_addArchive				( lua_State* L );
 	static int		_checkFileExists		( lua_State* L );
 	static int		_checkPathExists		( lua_State* L );
 	static int		_delete					( lua_State* L );
 	static int		_getBaseDirectory		( lua_State* L );
 	static int		_getDirSeparator		( lua_State* L );
-	static int		_getFileDirectory		( lua_State* L );
 	static int		_getRealPath			( lua_State* L );
+	static int		_getWorkingDirectory	( lua_State* L );
 	static int		_loadAndRunLuaFile		( lua_State* L );
 	static int		_loadLuaFile			( lua_State* L );
-	static int		_mount					( lua_State* L );
 	static int		_printSearchPath		( lua_State* L );
+	static int		_setWorkingDirectory	( lua_State* L );
 	static int		_setWriteDirectory		( lua_State* L );
-	static int		_unmount				( lua_State* L );
+	static int		_removeArchive			( lua_State* L );
 
 public:
 	
@@ -37,6 +42,7 @@ public:
 						MOAIFileSystem			();
 						~MOAIFileSystem			();
 	void				RegisterLuaClass		( USLuaState& state );
+	void				SwapPhysFSPaths			();
 };
 
 #endif
