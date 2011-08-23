@@ -410,7 +410,7 @@ void MOAITexture::CreateTextureFromImage ( MOAIImage& image ) {
 
 	if ( !image.IsOK ()) return;
 
-	printf ( "MOAITexture::CreateTextureFromImage - %s\n", this->mFilename.str ());
+	//printf ( "MOAITexture::CreateTextureFromImage - %s\n", this->mFilename.str ());
 
 	MOAIGfxDevice::Get ().ClearErrors ();
 
