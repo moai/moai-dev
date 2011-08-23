@@ -42,6 +42,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "moaicore", "moaicore\moaico
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "uslscore", "uslscore\uslscore.vcxproj", "{86E29F0A-83D1-4001-9E1A-B20C6AECE6F7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D5A80894-B22D-410D-8D43-1F182A8EF4E4} = {D5A80894-B22D-410D-8D43-1F182A8EF4E4}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "uslsext", "uslsext\uslsext.vcxproj", "{97FD97F4-5C0F-411E-9F3A-6549D4263664}"
 EndProject
@@ -76,6 +79,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "moai-untz", "moai-untz\moai-untz.vcxproj", "{83DE7C0A-667A-4B75-8D00-B575501BC289}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "physfs", "physfs\physfs.vcxproj", "{C9D9A0FA-2D6E-440E-BF2B-C81DE58EBED0}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "moaiio", "moaiio\moaiio.vcxproj", "{D5A80894-B22D-410D-8D43-1F182A8EF4E4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -349,6 +354,14 @@ Global
 		{C9D9A0FA-2D6E-440E-BF2B-C81DE58EBED0}.Release|Win32.Build.0 = Release|Win32
 		{C9D9A0FA-2D6E-440E-BF2B-C81DE58EBED0}.Release|x64.ActiveCfg = Release|x64
 		{C9D9A0FA-2D6E-440E-BF2B-C81DE58EBED0}.Release|x64.Build.0 = Release|x64
+		{D5A80894-B22D-410D-8D43-1F182A8EF4E4}.Debug|Win32.ActiveCfg = Debug|Win32
+		{D5A80894-B22D-410D-8D43-1F182A8EF4E4}.Debug|Win32.Build.0 = Debug|Win32
+		{D5A80894-B22D-410D-8D43-1F182A8EF4E4}.Debug|x64.ActiveCfg = Debug|x64
+		{D5A80894-B22D-410D-8D43-1F182A8EF4E4}.Debug|x64.Build.0 = Debug|x64
+		{D5A80894-B22D-410D-8D43-1F182A8EF4E4}.Release|Win32.ActiveCfg = Release|Win32
+		{D5A80894-B22D-410D-8D43-1F182A8EF4E4}.Release|Win32.Build.0 = Release|Win32
+		{D5A80894-B22D-410D-8D43-1F182A8EF4E4}.Release|x64.ActiveCfg = Release|x64
+		{D5A80894-B22D-410D-8D43-1F182A8EF4E4}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -387,5 +400,6 @@ Global
 		{52496C82-2EDB-4649-8509-451891F6A3DE} = {9F8AD78A-95B2-4E97-8070-087F82AA848D}
 		{51007BE8-C720-4A9F-A1BF-C2AA31179E02} = {9F8AD78A-95B2-4E97-8070-087F82AA848D}
 		{C9D9A0FA-2D6E-440E-BF2B-C81DE58EBED0} = {9F8AD78A-95B2-4E97-8070-087F82AA848D}
+		{D5A80894-B22D-410D-8D43-1F182A8EF4E4} = {9F8AD78A-95B2-4E97-8070-087F82AA848D}
 	EndGlobalSection
 EndGlobal
