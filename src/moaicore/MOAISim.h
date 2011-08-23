@@ -39,8 +39,8 @@ private:
 	double			mStep;			// simulation step size
 	double			mTime;			// elapsed simulation running time (in seconds)
 
-	double			mFrameTime;		// time last frame was rendered (in seconds)
-	
+	double			mFrameTime;		// time last frame time was measured (in seconds)
+	u32				mFrameCounter;	// Increments every simulation step
 	
 	static const u32 FPS_BUFFER_SIZE = 30;
 	float			mFrameRate;
@@ -68,17 +68,22 @@ private:
 	static int		_exitFullscreenMode			( lua_State* L );
 	static int		_framesToTime				( lua_State* L );
 	static int		_getDeviceSize				( lua_State* L );
+	static int		_getDeviceTime				( lua_State* L );
 	static int		_getElapsedFrames			( lua_State* L );
 	static int		_getElapsedTime				( lua_State* L );
 	static int		_getFrameSize				( lua_State* L );
+	static int		_getMemoryUsage				( lua_State* L );
+	static int		_getNetworkStatus			( lua_State* L );
 	static int		_getPerformance				( lua_State* L );
 	static int		_openWindow					( lua_State* L );
 	static int		_pauseTimer					( lua_State* L );
 	static int		_popRenderPass				( lua_State* L );
 	static int		_pushRenderPass				( lua_State* L );
+	static int		_reportLeaks				( lua_State* L );
 	static int		_setClearColor				( lua_State* L );
 	static int		_setClearDepth				( lua_State* L );
 	static int		_setFrameSize				( lua_State* L );
+	static int		_setLeakTrackingEnabled		( lua_State* L );
 	static int		_timeToFrames				( lua_State* L );
 
 	//----------------------------------------------------------------//
@@ -89,6 +94,7 @@ public:
 	DECL_LUA_SINGLETON ( MOAISim )
 	
 	GET ( USTaskThread&, DataIOThread, mDataIOThread )
+	GET ( u32, FrameCounter, mFrameCounter )
 	
 	//----------------------------------------------------------------//
 	void			Clear						();

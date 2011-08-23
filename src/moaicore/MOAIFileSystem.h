@@ -27,6 +27,8 @@ private:
 	static int		_getDirSeparator		( lua_State* L );
 	static int		_getRealPath			( lua_State* L );
 	static int		_getWorkingDirectory	( lua_State* L );
+	static int		_listDirectories		( lua_State* L );
+	static int		_listFiles				( lua_State* L );
 	static int		_loadAndRunLuaFile		( lua_State* L );
 	static int		_loadLuaFile			( lua_State* L );
 	static int		_printSearchPath		( lua_State* L );

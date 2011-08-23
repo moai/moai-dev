@@ -44,17 +44,19 @@ void moaicore::InitGlobals ( USGlobals* globals ) {
 
 	uslsext::InitGlobals ( globals );
 
-	MOAIXmlParser::Get ();
-	MOAIActionMgr::Get ();
-	MOAIInputMgr::Get ();
-	MOAILogMgr::Get ();
-	MOAINodeMgr::Get ();
-	MOAIVertexFormatMgr::Get ();
-	MOAIShaderMgr::Get ();
-	MOAIGfxDevice::Get ();
-	MOAIDebugLines::Get ();
-	MOAIPartitionResultMgr::Get ();
-	MOAISim::Get ();
+	MOAIXmlParser::Affirm ();
+	MOAIActionMgr::Affirm ();
+	MOAIInputMgr::Affirm ();
+	MOAILogMgr::Affirm ();
+	MOAINodeMgr::Affirm ();
+	MOAIVertexFormatMgr::Affirm ();
+	MOAIShaderMgr::Affirm ();
+	MOAIGfxDevice::Affirm ();
+	MOAIDebugLines::Affirm ();
+	MOAIPartitionResultMgr::Affirm ();
+	MOAISim::Affirm ();
+	
+	MOAILogMessages::RegisterDefaultLogMessages ();
 	
 	// MOAI
 	REGISTER_LUA_CLASS ( MOAIAction )
@@ -129,12 +131,13 @@ void moaicore::InitGlobals ( USGlobals* globals ) {
 		REGISTER_LUA_CLASS ( MOAIBox2DArbiter )
 		REGISTER_LUA_CLASS ( MOAIBox2DBody )
 		REGISTER_LUA_CLASS ( MOAIBox2DFixture )
+		REGISTER_LUA_CLASS ( MOAIBox2DJoint )
 		REGISTER_LUA_CLASS ( MOAIBox2DWorld )
 	#endif
 	
 	#if USE_CHIPMUNK
 	
-		MOAICp::Get ();
+		MOAICp::Affirm ();
 	
 		REGISTER_LUA_CLASS ( MOAICp )
 		REGISTER_LUA_CLASS ( MOAICpArbiter )

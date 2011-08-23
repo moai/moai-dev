@@ -83,6 +83,7 @@ int MOAIBox2DWorld::_addBody ( lua_State* L ) {
 	@in		number anchorB_Y
 	@opt	number frequencyHz
 	@opt	number dampingRatio
+	@opt	number collideConnected (Default: false)
 	@out	MOAIBox2DJoint joint
 */
 int	MOAIBox2DWorld::_addDistanceJoint ( lua_State* L ) {
@@ -104,6 +105,7 @@ int	MOAIBox2DWorld::_addDistanceJoint ( lua_State* L ) {
 	
 	jointDef.frequencyHz	= state.GetValue < float >( 8, jointDef.frequencyHz );
 	jointDef.dampingRatio	= state.GetValue < float >( 9, jointDef.dampingRatio );
+	jointDef.collideConnected = state.GetValue < bool >( 10, false );
 	
 	MOAIBox2DJoint* joint = new MOAIBox2DJoint ();
 	joint->SetJoint ( self->mWorld->CreateJoint ( &jointDef ));

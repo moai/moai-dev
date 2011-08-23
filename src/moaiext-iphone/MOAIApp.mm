@@ -11,11 +11,210 @@
 #import <moaiext-iphone/NSError+MOAILib.h>
 #import <moaiext-iphone/NSString+MOAILib.h>
 
+#include <netinet/in.h>     // INET6_ADDRSTRLEN
+#include <arpa/nameser.h>   // NS_MAXDNAME
+#include <netdb.h>          // getaddrinfo, struct addrinfo, AI_NUMERICHOST
+#include <unistd.h>         // getopt
+
+
 #define UILOCALNOTIFICATION_USER_INFO_KEY	@"userInfo"
+
+//================================================================//
+// LuaAlertView
+//================================================================//
+// TODO: harebrained
+@implementation LuaAlertView
+
+	//----------------------------------------------------------------//
+	-( id )initWithTitle:( NSString* )title message:( NSString* )message cancelButtonTitle:( NSString* )cancelButtonTitle {
+		return [ super initWithTitle:title message:message delegate:self cancelButtonTitle:cancelButtonTitle otherButtonTitles:nil ];
+	}
+
+	//----------------------------------------------------------------//
+	-( void )alertView:( UIAlertView* )alertView didDismissWithButtonIndex:( NSInteger )buttonIndex {
+		
+		if ( self->callback ) {
+			USLuaStateHandle state = self->callback.GetSelf ();
+			state.Push (( int )buttonIndex + 1 );
+			state.DebugCall ( 1, 0 );
+		}
+		[ self release ];
+	}
+
+@end
+
+//================================================================//
+// local
+//================================================================//
+
+// TODO: harebrained
+#define USE_ASYNC_NAME_RESOLVE 0
+
+#if USE_ASYNC_NAME_RESOLVE
+
+//----------------------------------------------------------------//
+static void AsyncNameRequestHostCleanup ( CFHostRef host ) {
+
+	assert ( host != NULL );
+	
+	CFHostUnscheduleFromRunLoop ( host, CFRunLoopGetCurrent(), kCFRunLoopCommonModes );
+	( void )CFHostSetClient ( host, NULL, NULL );
+	
+	CFRelease ( host );
+}
+
+//----------------------------------------------------------------//
+static void AsyncNameRequestCFHCC ( CFHostRef host, CFHostInfoType typeInfo, const CFStreamError *error, void *info ) {
+
+	CFStringRef hostname = ( CFStringRef )info;
+	char ipAddress [ INET6_ADDRSTRLEN ];
+	CFArrayRef array;
+    
+	if ( error->error == noErr ) {
+		
+		switch ( typeInfo ) {
+				
+			case kCFHostAddresses:
+				// CFHostGetAddressing retrieves the known addresses from the given host. Returns a
+				// CFArrayRef of addresses.  Each address is a CFDataRef wrapping a struct sockaddr.
+				 
+				array = CFHostGetAddressing ( host, NULL );
+				if ( CFArrayGetCount ( array ) > 0 ) {
+					
+					// Only need one, take the first.
+					struct sockaddr *addr = ( struct sockaddr* )CFDataGetBytePtr((CFDataRef)CFArrayGetValueAtIndex ( array, 0 ));
+					
+					if ( getnameinfo ( addr, addr->sa_len, ipAddress, INET6_ADDRSTRLEN, NULL, 0, NI_NUMERICHOST )) {
+						assert ([ NSThread isMainThread ]);
+						// Need to call this on main thread.
+						MOAIApp::Get().DidResolveHostName (( NSString* )hostname, ipAddress );
+					}
+				}
+                break;
+				
+			default:
+				break;
+        }
+    }
+	else {
+		fprintf ( stderr, "AsyncNameRequestCFHCC returned (%ld, %ld)\n", error->domain, error->error );
+	}
+    
+	// The CFHost callback only gets called once, so we cleanup now that we're done.
+	AsyncNameRequestHostCleanup ( host );
+    
+	// Stop the run loop now that we've retrieved the host info.
+	CFRunLoopStop ( CFRunLoopGetCurrent ());
+}
+#endif
 
 //================================================================//
 // lua
 //================================================================//
+
+//----------------------------------------------------------------//
+/** @name	alert
+	@text	Display a modal style dialog box with one or more buttons, including a
+			cancel button. This will not halt execution (this function returns immediately),
+			so if you need to respond to the user's selection, pass a callback.
+
+	@in		string title		The title of the dialog box.
+	@in		string message		The message to display.
+	@in		function callback	The function that will receive an integer index as which button was pressed.
+	@in		string cancelTitle	The title of the cancel button.
+	@in		string... buttons	Other buttons to add to the alert box.
+ 
+*/
+int MOAIApp::_alert( lua_State* L ) {
+	
+	USLuaState state ( L );
+	
+	cc8* title = state.GetValue< cc8* >(1, "Alert");
+	cc8* message = state.GetValue< cc8* >(2, "");
+	cc8* cancelTitle = state.GetValue< cc8*>(4, NULL);
+	
+	NSString *cancelButtonTitle = nil;
+	if( cancelTitle )
+	{
+		cancelButtonTitle = [NSString stringWithUTF8String:cancelTitle];
+	}
+	
+	// TODO: We'd love to be able to specify a list of button labels and a callback
+	// to call when the button is clicked (or alternately, wrap this call into
+	// a coroutine.yield() style infinite loop until we get a result)
+	
+	LuaAlertView *alert = [[ LuaAlertView alloc ]
+						   initWithTitle:[NSString stringWithUTF8String:title ] 
+						   message:[NSString stringWithUTF8String:message ]
+						   cancelButtonTitle:cancelButtonTitle ];
+	
+	if ( state.IsType ( 3, LUA_TFUNCTION )) {
+		alert->callback.SetRef ( state, 3, false );
+	}	
+	
+	int top = state.GetTop ();
+	for ( int i = 5; i <= top; ++i ) {
+		cc8* button = state.GetValue < cc8* >( i, NULL );
+		if ( button ) {
+			[ alert addButtonWithTitle:[ NSString stringWithUTF8String:button ]];
+		}
+	}
+	
+	// Keep this alive until pressed.
+	[ alert retain ];
+	[ alert show ];
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	asyncNameResolve
+	@text	Perform an asynchronous name resolution. You must have registered a
+			listener for ASYNC_NAME_RESOLVE on MOAIApp in order to receive the 
+			results of this lookup.
+ 
+	@in		string hostname		The hostname to look up.
+*/ 
+int MOAIApp::_asyncNameResolve( lua_State* L ) {
+	USLuaState state( L );
+	
+	if ( !state.IsType ( 1, LUA_TSTRING )) {
+		return 0;
+	}
+
+	#if USE_ASYNC_NAME_RESOLVE
+		// Grr. link errors on armv6/7 for some reason!
+		
+		// We provide a NSURLConnection implementation here, because libcurl currently
+		// has DNS issues on iOS (blocking).
+		
+		cc8* hostnamestr = state.GetValue < cc8* >( 1, 0 );
+
+		// Because NSURLConnection does not do asynchronous DNS, we have to try and
+		// do yet another layer of indirection to see if it's going to work.
+		NSString *hostName = [NSString stringWithUTF8String:hostnamestr];
+		
+		CFHostClientContext	context = { 0, (void *)hostName, CFRetain, CFRelease, NULL };
+		CFStreamError error;
+		
+		CFHostRef host = CFHostCreateWithName ( kCFAllocatorDefault, ( CFStringRef )hostName );
+		if( CFHostSetClient ( host, AsyncNameRequestCFHCC, &context )) {
+			CFHostScheduleWithRunLoop(host, CFRunLoopGetCurrent(), kCFRunLoopCommonModes);
+			
+			if( !CFHostStartInfoResolution ( host, kCFHostAddresses, &error )) {
+				AsyncNameRequestHostCleanup ( host );
+			}
+		}
+		else {
+			NSLog ( @"Error getting hostname for: %@", hostName );
+			CFRelease ( host );
+			host = NULL;
+		}
+	#endif
+	
+	return 0;
+}
+
 
 //----------------------------------------------------------------//
 /**	@name	canMakePayments
@@ -43,6 +242,58 @@ int MOAIApp::_getAppIconBadgeNumber ( lua_State* L ) {
 	
 	UIApplication* application = [ UIApplication sharedApplication ];
 	lua_pushnumber ( state, application.applicationIconBadgeNumber );
+	
+	return 1;
+}
+
+//----------------------------------------------------------------//
+/**	@name	getDirectoryInDomain
+	@text	Search the platform's internal directory structure for a special directory
+			as defined by the platform.
+ 
+	@in		string domain		One of MOAIApp.DOMAIN_DOCUMENTS, MOAIApp.DOMAIN_APP_SUPPORT
+	@out	string directory	The directory associated with the given domain.
+*/
+int MOAIApp::_getDirectoryInDomain ( lua_State* L ) {
+	USLuaState state ( L );
+	
+	u32 dirCode = state.GetValue<u32>( 1, 0 ); 
+	
+	if( dirCode == 0 ) {
+		lua_pushstring ( L, "" );
+	}
+	else {
+	
+		NSString *dir = [ NSSearchPathForDirectoriesInDomains ( dirCode, NSUserDomainMask, YES ) lastObject ];
+
+		if ( ![[ NSFileManager defaultManager ] fileExistsAtPath:dir ]) {
+			NSError *error;
+			if ( ![[ NSFileManager defaultManager ] createDirectoryAtPath:dir withIntermediateDirectories:YES attributes:nil error:&error ]) {
+				NSLog ( @"Error creating directory %@: %@", dir, error );
+				return 0;
+			}
+		}
+	
+		[ dir toLua:L ];
+	}
+	return 1;
+}
+
+//----------------------------------------------------------------//
+/**	@name	openURL
+	@text	See UIApplication documentation.
+ 
+	@in		string url
+	@out	nil
+*/
+int MOAIApp::_openURL ( lua_State* L ) {
+	USLuaState state ( L );
+	
+	cc8* url	= state.GetValue < cc8* >( 1, "" );
+	
+	if( url && url [ 0 ] != '\0' ) {
+		[[ UIApplication sharedApplication ] openURL:[ NSURL URLWithString:[ NSString stringWithFormat: @"%s", url ]]];
+	}
 	
 	return 1;
 }
@@ -125,6 +376,20 @@ int MOAIApp::_requestProductIdentifiers ( lua_State* L ) {
 	request.delegate = MOAIApp::Get ().mStoreKitListener;
 	[ request start ];
 	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/** @name	restoreCompletedTransactions
+	@text	Request a restore of all purchased non-consumables from the App Store.
+			Use this to retrieve a list of all previously purchased items (for example
+			after reinstalling the app on a different device).
+ 
+*/
+int MOAIApp::_restoreCompletedTransactions( lua_State* L ) {
+	
+	[[SKPaymentQueue defaultQueue] restoreCompletedTransactions];
+
 	return 0;
 }
 
@@ -245,6 +510,21 @@ void MOAIApp::DidReceiveLocalNotification ( UILocalNotification* notification ) 
 }
 
 //----------------------------------------------------------------//
+void MOAIApp::DidReceivePaymentQueueError ( NSError* error, cc8* extraInfo ) {
+	
+	USLuaRef& callback = this->mListeners [ PAYMENT_QUEUE_ERROR ];
+	
+	if ( callback ) {
+		USLuaStateHandle state = callback.GetSelf ();
+		
+		[ error toLua:state ];
+		lua_pushstring(state, extraInfo);
+		
+		state.DebugCall ( 2, 0 );
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAIApp::DidReceiveRemoteNotification ( NSDictionary* userInfo ) {
 
 	USLuaRef& callback = this->mListeners [ REMOTE_NOTIFICATION ];
@@ -275,6 +555,20 @@ void MOAIApp::DidRegisterForRemoteNotificationsWithDeviceToken	( NSData* deviceT
 }
 
 //----------------------------------------------------------------//
+void MOAIApp::DidResolveHostName( NSString* hostname, cc8* ipAddress ) {
+
+	USLuaRef& callback = this->mListeners [ ASYNC_NAME_RESOLVE ];
+	
+	if ( callback ) {
+		USLuaStateHandle state = callback.GetSelf ();
+		
+		[ hostname toLua:state ];
+		state.Push ( ipAddress );
+		state.DebugCall ( 2, 0 );
+	}
+}
+
+//----------------------------------------------------------------//
 MOAIApp::MOAIApp () {
 
 	RTTI_SINGLE ( USLuaObject )
@@ -289,6 +583,7 @@ MOAIApp::MOAIApp () {
 //----------------------------------------------------------------//
 MOAIApp::~MOAIApp () {
 
+	[[ SKPaymentQueue defaultQueue ] removeTransactionObserver:this->mStoreKitListener];
 	[ this->mStoreKitListener release ];
 }
 
@@ -341,6 +636,14 @@ void MOAIApp::ProductsRequestDidReceiveResponse ( SKProductsRequest* request, SK
 			lua_settable ( state, -3 );
 		}
 		
+		// Note: If you're testing in-app purchases, chances are your product Id
+		// will take time to propagate into Apple's sandbox/test environment and
+		// thus the id's will be invalid for hours(?) (at the time of writing this).
+		for ( NSString *invalidProductId in response.invalidProductIdentifiers )
+		{
+			NSLog(@"StoreKit: Invalid product id: %@" , invalidProductId);
+		}
+		
 		state.DebugCall ( 1, 0 );
 	}
 	[ request autorelease ];
@@ -364,7 +667,13 @@ void MOAIApp::PushPaymentTransaction ( lua_State* L, SKPaymentTransaction* trans
 			break;
 		}
 		case SKPaymentTransactionStateFailed: {
-			lua_pushnumber ( L, TRANSACTION_STATE_FAILED );
+			//int code = transaction.error.code;
+			if( transaction.error.code == SKErrorPaymentCancelled ) {
+				lua_pushnumber ( L, TRANSACTION_STATE_CANCELLED );
+			}
+			else {
+				lua_pushnumber ( L, TRANSACTION_STATE_FAILED );
+			}
 			break;
 		}
 		case SKPaymentTransactionStateRestored: {
@@ -409,7 +718,13 @@ void MOAIApp::PushPaymentTransaction ( lua_State* L, SKPaymentTransaction* trans
 	
 	if ( transaction.transactionState == SKPaymentTransactionStatePurchased ) {
 		lua_pushstring ( L, "transactionReceipt" );
-		[ transaction.transactionReceipt toLua:L ];
+		if( transaction.transactionReceipt != nil ) {
+			[ transaction.transactionReceipt toLua:L ];
+		}
+		else {
+			lua_pushnil ( L );
+		}
+
 		lua_settable ( L, -3 );
 	}
 	
@@ -438,12 +753,28 @@ void MOAIApp::RegisterLuaClass ( USLuaState& state ) {
 	//state.SetField ( -1, "LOCAL_NOTIFICATION",		( u32 )LOCAL_NOTIFICATION );
 	state.SetField ( -1, "PAYMENT_QUEUE_TRANSACTION",	( u32 )PAYMENT_QUEUE_TRANSACTION );
 	state.SetField ( -1, "PRODUCT_REQUEST_RESPONSE",	( u32 )PRODUCT_REQUEST_RESPONSE );
+	state.SetField ( -1, "PAYMENT_QUEUE_ERROR",			( u32 )PAYMENT_QUEUE_ERROR );
 	state.SetField ( -1, "REMOTE_NOTIFICATION",			( u32 )REMOTE_NOTIFICATION );
+	state.SetField ( -1, "ASYNC_NAME_RESOLVE",			( u32 )ASYNC_NAME_RESOLVE );
+	
+	state.SetField ( -1, "DOMAIN_DOCUMENTS",			( u32 )DOMAIN_DOCUMENTS );
+	state.SetField ( -1, "DOMAIN_APP_SUPPORT",			( u32 )DOMAIN_APP_SUPPORT );
 
+	state.SetField ( -1, "TRANSACTION_STATE_PURCHASING",( u32 )TRANSACTION_STATE_PURCHASING );
+	state.SetField ( -1, "TRANSACTION_STATE_PURCHASED", ( u32 )TRANSACTION_STATE_PURCHASED );
+	state.SetField ( -1, "TRANSACTION_STATE_FAILED",    ( u32 )TRANSACTION_STATE_FAILED );
+	state.SetField ( -1, "TRANSACTION_STATE_RESTORED",  ( u32 )TRANSACTION_STATE_RESTORED );
+	state.SetField ( -1, "TRANSACTION_STATE_CANCELLED", ( u32 )TRANSACTION_STATE_CANCELLED );
+	
 	luaL_Reg regTable[] = {
+		{ "alert",								_alert },
+		{ "asyncNameResolve",					_asyncNameResolve },
 		{ "canMakePayments",					_canMakePayments },
 		{ "getAppIconBadgeNumber",				_getAppIconBadgeNumber },
+		{ "getDirectoryInDomain",				_getDirectoryInDomain },
+		{ "openURL",							_openURL },
 		{ "registerForRemoteNotifications",		_registerForRemoteNotifications },
+		{ "restoreCompletedTransactions",		_restoreCompletedTransactions },
 		{ "requestPaymentForProduct",			_requestPaymentForProduct },
 		{ "requestProductIdentifiers",			_requestProductIdentifiers },
 		//{ "scheduleLocalNotification",			_scheduleLocalNotification },
@@ -453,5 +784,12 @@ void MOAIApp::RegisterLuaClass ( USLuaState& state ) {
 	};
 
 	luaL_register( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAIApp::Reset () {
+	for ( int i = 0 ; i < TOTAL; i++ ) {
+		mListeners [ i ].Clear ();
+	}
 }
 

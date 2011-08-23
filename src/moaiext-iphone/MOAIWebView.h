@@ -10,6 +10,9 @@
 
 @class MoaiUiWebViewDelegate;
 
+//================================================================//
+// MOAIWebView
+//================================================================//
 class MOAIWebView :
 	public MOAIEventSource {
 private:
@@ -44,6 +47,7 @@ private:
 	static int			_show							( lua_State* L ); 
 	
 public:
+
 	DECL_LUA_FACTORY ( MOAIWebView )
 	
 	enum {

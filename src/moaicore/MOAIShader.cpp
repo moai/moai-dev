@@ -405,7 +405,7 @@ GLuint MOAIShader::CompileShader ( GLuint type, cc8* source ) {
 		char* log = ( char* )malloc ( logLength );
  
 		glGetShaderInfoLog ( shader, logLength, &logLength, log );
-		printf ( "%s", log );
+		MOAILog ( 0, MOAILogMessages::MOAIShader_ShaderInfoLog_S, log );
 		
 		free ( log );
 	
@@ -571,7 +571,7 @@ void MOAIShader::Validate () {
     if ( logLength > 0 ) {
         char* log = ( char* )malloc ( logLength );
         glGetProgramInfoLog ( this->mProgram, logLength, &logLength, log );
-        printf ( "%s", log );
+        MOAILog ( 0, MOAILogMessages::MOAIShader_ShaderInfoLog_S, log );
         free ( log );
     }
     

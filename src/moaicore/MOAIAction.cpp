@@ -208,6 +208,7 @@ MOAIAction::MOAIAction () :
 	mNew ( true ),
 	mPass ( 0 ),
 	mParent ( 0 ),
+	mChildIt ( 0 ),
 	mThrottle ( 1.0f ) {
 
 	this->mLink.Data ( this );
@@ -284,13 +285,20 @@ void MOAIAction::RemoveChild ( MOAIAction& action ) {
 
 	if ( action.mParent == this ) {
 	
-		// use Exclude instead of Remove to preserve Link's prev and next pointers
-		// this avoids a mess when removing/stopping actions during update
-		this->mChildren.Exclude ( action.mLink );
+		if ( this->mChildIt == &action.mLink ) {
+			this->mChildIt = this->mChildIt->Next ();
+			if ( this->mChildIt ) {
+				this->mChildIt->Data ()->Retain ();
+			}
+			action.Release ();
+		}
+		
+		this->mChildren.Remove ( action.mLink );
 		
 		action.UnblockSelf ();
 		action.UnblockAll ();
 		action.mParent = 0;
+		action.OnStop ();
 		action.Release ();
 	}
 }
@@ -315,7 +323,6 @@ void MOAIAction::Stop () {
 	if ( this->mParent ) {
 		this->Retain ();
 		this->mParent->RemoveChild ( *this );
-		this->OnStop ();
 		this->Release ();
 	}
 }
@@ -330,9 +337,16 @@ STLString MOAIAction::ToString () {
 //----------------------------------------------------------------//
 void MOAIAction::Update ( float step, u32 pass, bool checkPass ) {
 
+	bool profilingEnabled = MOAIActionMgr::Get ().GetProfilingEnabled ();
+
 	if ( this->IsBlocked ()) return;
 	if (( checkPass ) && ( pass < this->mPass )) return;
-	
+
+	double t0 = 0.0;
+	if ( profilingEnabled ) {
+		USDeviceTime::GetTimeInSeconds ();
+	}
+
 	step *= this->mThrottle;
 	
 	if ( this->mNew ) {
@@ -344,7 +358,15 @@ void MOAIAction::Update ( float step, u32 pass, bool checkPass ) {
 		MOAIActionMgr::Get ().SetCurrentAction ( this );
 		this->OnUpdate ( step );
 	}
-	
+
+	if ( profilingEnabled ) {
+		double elapsed = USDeviceTime::GetTimeInSeconds () - t0;
+		if ( elapsed >= 0.005 ) {
+			STLString name = this->ToStringWithType ();
+			MOAILog ( 0, MOAILogMessages::MOAIAction_Profile_PSFF, this, name.c_str(), step * 1000, elapsed * 1000 );
+		}
+	}
+
 	this->mPass = 0;
 	this->mNew = false;
 	
@@ -356,20 +378,20 @@ void MOAIAction::Update ( float step, u32 pass, bool checkPass ) {
 	// we retain the head child in the list (if any)
 	// here because the first child retained inside the loop (below)
 	// is the *second* child in the list
-	ChildIt childIt = this->mChildren.Head ();
-	if ( childIt ) {
-		childIt->Data ()->Retain ();
+	this->mChildIt = this->mChildren.Head ();
+	if ( this->mChildIt ) {
+		this->mChildIt->Data ()->Retain ();
 	}
 	
 	MOAIAction* child = 0;
-	while ( childIt ) {
+	while ( this->mChildIt ) {
 		
-		child = childIt->Data ();
+		child = this->mChildIt->Data ();
 		
 		// retain the *next* child in the list (if any)
-		childIt = childIt->Next ();
-		if ( childIt ) {
-			childIt->Data ()->Retain ();
+		this->mChildIt = this->mChildIt->Next ();
+		if ( this->mChildIt ) {
+			this->mChildIt->Data ()->Retain ();
 		}
 		
 		if ( child->mParent ) {
@@ -379,6 +401,8 @@ void MOAIAction::Update ( float step, u32 pass, bool checkPass ) {
 		// release the *current* child
 		child->Release ();
 	}
+	
+	this->mChildIt = 0;
 	
 	if ( this->IsDone ()) {
 		this->Stop ();

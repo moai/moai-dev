@@ -30,7 +30,7 @@
 //----------------------------------------------------------------//
 void AKUUntzInit () {
 	
-	MOAIUntzSystem::Get ();
+	MOAIUntzSystem::Affirm ();
 	
 	REGISTER_LUA_CLASS ( MOAIUntzSound )
 	REGISTER_LUA_CLASS ( MOAIUntzSystem )

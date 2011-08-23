@@ -4,7 +4,7 @@
 #include "pch.h"
 
 #include <moaicore/MOAIGfxDevice.h>
-#include <moaicore/MOAIGfxDevice.h>
+#include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIShader.h>
 #include <moaicore/MOAIShaderMgr.h>
 #include <moaicore/MOAITexture.h>
@@ -471,6 +471,16 @@ bool MOAIGfxDevice::IsProgrammable () {
 }
 
 //----------------------------------------------------------------//
+u32 MOAIGfxDevice::LogErrors () {
+
+	u32 count = 0;
+	for ( int error = glGetError (); error != GL_NO_ERROR; error = glGetError (), ++count ) {
+		MOAILog ( 0, MOAILogMessages::MOAIGfxDevice_OpenGLError_S, this->GetErrorString ( error ));
+	}
+	return count;
+}
+
+//----------------------------------------------------------------//
 MOAIGfxDevice::MOAIGfxDevice () :
 	mVertexFormat ( 0 ),
 	mBuffer ( 0 ),
@@ -499,7 +509,8 @@ MOAIGfxDevice::MOAIGfxDevice () :
 	mMajorVersion ( 0 ),
 	mMinorVersion ( 0 ),
 	mIsProgrammable ( false ),
-	mDefaultFrameBuffer ( 0 ) {
+	mDefaultFrameBuffer ( 0 ),
+	mTextureMemoryUsage ( 0 ) {
 	
 	RTTI_SINGLE ( MOAIGfxDevice )
 	
@@ -523,16 +534,6 @@ MOAIGfxDevice::~MOAIGfxDevice () {
 }
 
 //----------------------------------------------------------------//
-u32 MOAIGfxDevice::PrintErrors () {
-
-	u32 count = 0;
-	for ( int error = glGetError (); error != GL_NO_ERROR; error = glGetError (), ++count ) {
-		printf ( "OPENGL ERROR: %s\n", this->GetErrorString ( error ));
-	}
-	return count;
-}
-
-//----------------------------------------------------------------//
 void MOAIGfxDevice::RegisterLuaClass ( USLuaState& state ) {
 
 	luaL_Reg regTable [] = {
@@ -541,6 +542,22 @@ void MOAIGfxDevice::RegisterLuaClass ( USLuaState& state ) {
 	};
 
 	luaL_register( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDevice::ReportTextureAlloc ( cc8* name, size_t size ) {
+
+	this->mTextureMemoryUsage += size;
+	float mb = ( float )this->mTextureMemoryUsage / 1024.0f / 1024.0f;
+	MOAILog ( 0, MOAILogMessages::MOAITexture_MemoryUse_SDFS, "+", size, mb, name );
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDevice::ReportTextureFree ( cc8* name, size_t size ) {
+
+	this->mTextureMemoryUsage -= size;
+	float mb = ( float )this->mTextureMemoryUsage / 1024.0f / 1024.0f;
+	MOAILog ( 0, MOAILogMessages::MOAITexture_MemoryUse_SDFS, "-", size, mb, name );
 }
 
 //----------------------------------------------------------------//

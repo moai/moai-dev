@@ -13,6 +13,21 @@
 @class MOAIStoreKitListener;
 
 //================================================================//
+// LuaAlertView
+//================================================================//
+// TODO: harebrained
+@interface LuaAlertView : UIAlertView < UIAlertViewDelegate > {
+@public
+	USLuaRef callback;
+};
+
+	//----------------------------------------------------------------//
+	- (id)initWithTitle:(NSString *)title message:(NSString *)message cancelButtonTitle:(NSString *)cancelButtonTitle;
+	//- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex;
+
+@end
+
+//================================================================//
 // MOAIApp
 //================================================================//
 /**	@name	MOAIApp
@@ -36,8 +51,10 @@ private:
 		DID_REGISTER,
 		LOCAL_NOTIFICATION,
 		PAYMENT_QUEUE_TRANSACTION,
+		PAYMENT_QUEUE_ERROR,
 		PRODUCT_REQUEST_RESPONSE,
 		REMOTE_NOTIFICATION,
+		ASYNC_NAME_RESOLVE,
 		TOTAL,
 	};
 	
@@ -46,17 +63,31 @@ private:
 		TRANSACTION_STATE_PURCHASED,
 		TRANSACTION_STATE_FAILED,
 		TRANSACTION_STATE_RESTORED,
+		TRANSACTION_STATE_CANCELLED,
+	};
+		
+	enum {
+		DOMAIN_DOCUMENTS   = NSDocumentDirectory,
+		DOMAIN_APP_SUPPORT = NSApplicationSupportDirectory,
 	};
 	
 	UIApplication*			mApplication;
 	USLuaRef				mListeners [ TOTAL ];
 	MOAIStoreKitListener*	mStoreKitListener;
+
+	int						mNumRequests;
+
 	ReachabilityListener*	mReachabilityListener;
 
 	//----------------------------------------------------------------//
+	static int		_alert									( lua_State* L );
+	static int		_asyncNameResolve						( lua_State* L );
 	static int		_canMakePayments						( lua_State* L );
 	static int		_getAppIconBadgeNumber					( lua_State* L );
+	static int		_getDirectoryInDomain					( lua_State* L );
+	static int		_openURL								( lua_State* L );
 	static int		_registerForRemoteNotifications			( lua_State* L );
+	static int		_restoreCompletedTransactions			( lua_State* L );
 	static int		_requestPaymentForProduct				( lua_State* L );
 	static int		_requestProductIdentifiers				( lua_State* L );
 	static int		_scheduleLocalNotification				( lua_State* L );
@@ -75,8 +106,10 @@ public:
 	//----------------------------------------------------------------//
 	void		DidFailToRegisterForRemoteNotificationsWithError			( NSError* error );
 	void		DidReceiveLocalNotification									( UILocalNotification* notification );
+	void		DidReceivePaymentQueueError									( NSError *error, cc8 *extraInfo );
 	void		DidReceiveRemoteNotification								( NSDictionary* userInfo );
 	void		DidRegisterForRemoteNotificationsWithDeviceToken			( NSData* deviceToken );
+	void		DidResolveHostName											( NSString* hostname, cc8* ipAddress );
 	void		InitStoreKit												();
 				MOAIApp														();
 				~MOAIApp													();
@@ -84,6 +117,7 @@ public:
 	void		PaymentQueueUpdatedTransactions								( SKPaymentQueue* queue, NSArray* transactions );
 	void		ProductsRequestDidReceiveResponse							( SKProductsRequest* request, SKProductsResponse* response );
 	void		RegisterLuaClass											( USLuaState& state );
+	void		Reset														();
 };
 
 #endif

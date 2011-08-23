@@ -286,12 +286,12 @@ void MOAIPartition::AffirmPriority ( MOAIProp& prop ) {
 //----------------------------------------------------------------//
 void MOAIPartition::Clear () {
 
-	MOAIPartitionResultBuffer& buffer = MOAIPartitionResultMgr::Get ().GetBuffer ();
-
-	this->GatherProps ( buffer, 0, 0 );
-	while ( MOAIProp* prop = buffer.PopResult ()) {
-		this->RemoveProp ( *prop );
+	u32 totalLayers = this->mLayers.Size ();
+	for ( u32 i = 0; i < totalLayers; ++i ) {
+		this->mLayers [ i ].Clear ();
 	}
+	this->mGlobals.Clear ();
+	this->mEmpties.Clear ();
 }
 
 //----------------------------------------------------------------//
@@ -374,7 +374,6 @@ MOAIPartition::MOAIPartition () :
 
 //----------------------------------------------------------------//
 MOAIPartition::~MOAIPartition () {
-
 	this->Clear ();
 }
 

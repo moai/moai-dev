@@ -53,7 +53,6 @@ AKU_API void			AKUFinalize				();
 AKU_API void			AKUSetContext			( AKUContextID context );
 AKU_API void			AKUSetUserdata			( void* user );
 
-
 // management api
 AKU_API void			AKUDetectGfxContext		();
 AKU_API lua_State*		AKUGetLuaState			();

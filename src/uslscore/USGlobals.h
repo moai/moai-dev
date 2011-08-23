@@ -88,7 +88,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	template < typename TYPE >
-	TYPE* GetGlobal () {
+	TYPE* AffirmGlobal () {
 		
 		u32 id = USGlobalID < TYPE >::GetID ();
 		
@@ -106,6 +106,17 @@ public:
 			this->mGlobals [ id ].mPtr = global;
 		}
 		return ( TYPE* )this->mGlobals [ id ].mPtr;
+	}
+	
+	//----------------------------------------------------------------//
+	template < typename TYPE >
+	TYPE* GetGlobal () {
+		
+		u32 id = USGlobalID < TYPE >::GetID ();
+		if ( id < this->mGlobals.Size ()) {
+			return ( TYPE* )this->mGlobals [ id ].mPtr;
+		}
+		return 0;
 	}
 	
 	//----------------------------------------------------------------//
@@ -163,6 +174,13 @@ template < typename TYPE, typename SUPER = USObject >
 class USGlobalClass :
 public virtual SUPER {
 public:
+	
+	//----------------------------------------------------------------//
+	inline static TYPE& Affirm () {
+		TYPE* global = USGlobalsMgr::Get ()->AffirmGlobal < TYPE >();
+		assert ( global );
+		return *global;
+	}
 	
 	//----------------------------------------------------------------//
 	inline static TYPE& Get () {

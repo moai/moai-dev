@@ -302,7 +302,8 @@ static void drawObject ( cpShape *shape, cpSpace *space ) {
 			drawPolyShape(body, (cpPolyShape *)shape, space);
 			break;
 		default:
-			printf("Bad enumeration in drawObject().\n");
+			//printf("Bad enumeration in drawObject().\n");
+			break;
 	}
 }
 
@@ -421,7 +422,7 @@ static void drawConstraint ( cpConstraint* constraint ) {
 		drawSpring((cpDampedSpring *)constraint, body_a, body_b);
 	}
 	else {
-//		printf("Cannot draw constraint\n");
+		//printf("Cannot draw constraint\n");
 	}
 }
 

@@ -54,9 +54,12 @@ private:
 	int					mGLInternalFormat;
 	int					mGLPixelType;
 	
-	STLString					mFilename;
-	MOAITextureLoader*			mLoader;
-	MOAIFrameBuffer*			mFrameBuffer;
+	STLString				mFilename;
+	MOAITextureLoader*		mLoader;
+	MOAIFrameBuffer*		mFrameBuffer;
+	
+	size_t				mDataSize;
+	u32					mLastFrameUsed;
 
 	//----------------------------------------------------------------//
 	static int		_bind					( lua_State* L );
@@ -66,6 +69,7 @@ private:
 	static int		_release				( lua_State* L );
 	static int		_setFilter				( lua_State* L );
 	static int		_setWrap				( lua_State* L );
+	static int		_softRelease			( lua_State* L );
 
 	//----------------------------------------------------------------//
 	void					Affirm					();
@@ -86,13 +90,14 @@ public:
 	void					Clear					();
 	u32						GetHeight				();
 	u32						GetWidth				();
-	void					Init					( MOAIImage& image );
+	void					Init					( MOAIImage& image, cc8* debugname = 0 );
 	void					Init					( cc8* filename, u32 transform = DEFAULT_TRANSFORM );
-	void					Init					( MOAIDataBuffer& data, u32 transform = DEFAULT_TRANSFORM);
-	void					Init					( const void* data, u32 size, u32 transform = DEFAULT_TRANSFORM );
+	void					Init					( MOAIDataBuffer& data, u32 transform = DEFAULT_TRANSFORM, cc8* debugname = 0 );
+	void					Init					( const void* data, u32 size, u32 transform = DEFAULT_TRANSFORM, cc8* debugname = 0 );
 	void					InitFrameBuffer			( u32 width, u32 height, GLenum colorFormat, GLenum depthFormat, GLenum stencilFormat );
 	bool					IsFrameBuffer			();
 	bool					IsOK					();
+	bool					IsReloadable			();
 							MOAITexture				();
 							~MOAITexture			();
 	void					SerializeIn				( USLuaState& state, USLuaSerializer& serializer );
@@ -100,6 +105,7 @@ public:
 	void					SetFilter				( int filter );
 	void					SetFilter				( int min, int mag );
 	void					SetWrap					( int wrap );
+	bool					SoftRelease				( int age = 0 );
 	void					RegisterLuaClass		( USLuaState& state );
 	void					RegisterLuaFuncs		( USLuaState& state );
 	STLString				ToString				();

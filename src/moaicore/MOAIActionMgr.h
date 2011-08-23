@@ -21,12 +21,17 @@ private:
 	u32 mPass;
 	u32 mTotalPasses;
 
+	bool mProfilingEnabled;
+	bool mThreadInfoEnabled;
+
 	USRef < MOAIAction > mRoot;
 	MOAIAction* mCurrentAction;
 
 	//----------------------------------------------------------------//
 	static int			_getRoot				( lua_State* L );
+	static int			_setProfilingEnabled	( lua_State* L );
 	static int			_setRoot				( lua_State* L );
+	static int			_setThreadInfoEnabled	( lua_State* L );
 
 	//----------------------------------------------------------------//
 	MOAIAction*			AffirmRoot				();
@@ -39,6 +44,9 @@ public:
 	DECL_LUA_SINGLETON ( MOAIActionMgr )
 
 	GET_SET ( MOAIAction*, CurrentAction, mCurrentAction )
+	
+	GET_SET ( bool, ProfilingEnabled, mProfilingEnabled )
+	GET_SET ( bool, ThreadInfoEnabled, mThreadInfoEnabled )
 
 	//----------------------------------------------------------------//
 	void				Clear					();

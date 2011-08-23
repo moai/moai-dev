@@ -116,29 +116,6 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	void Exclude ( USLeanLink < TYPE >& link ) {
-
-		if ( link.mList != this ) return;
-
-		if ( link.mNext ) {
-			link.mNext->mPrev = link.mPrev;
-		}
-		else {
-			this->mTail = link.mPrev;
-		}
-
-		if ( link.mPrev ) {
-			link.mPrev->mNext = link.mNext;
-		}
-		else {
-			this->mHead = link.mNext;
-		}
-		
-		link.mList = 0;
-		--this->mCount;
-	}
-
-	//----------------------------------------------------------------//
 	USLeanLink < TYPE >* FindFirst ( const TYPE& type ) {
 	
 		Iterator iterator = this->Head ();
@@ -278,10 +255,27 @@ public:
 	//----------------------------------------------------------------//
 	void Remove ( USLeanLink < TYPE >& link ) {
 
-		this->Exclude ( link );
+		if ( link.mList != this ) return;
 
+		if ( link.mNext ) {
+			link.mNext->mPrev = link.mPrev;
+		}
+		else {
+			this->mTail = link.mPrev;
+		}
+
+		if ( link.mPrev ) {
+			link.mPrev->mNext = link.mNext;
+		}
+		else {
+			this->mHead = link.mNext;
+		}
+		
 		link.mPrev = 0;
 		link.mNext = 0;
+		link.mList = 0;
+		
+		--this->mCount;
 	}
 	
 	//----------------------------------------------------------------//

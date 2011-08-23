@@ -158,6 +158,107 @@ int MOAIFileSystem::_getWorkingDirectory ( lua_State* L ) {
 	lua_pushstring ( state, MOAIFileSystem::Get ().mWorkingDirectory.str ());
 	return 1;
 }
+
+//----------------------------------------------------------------//
+/**	@name	listDirectories
+	@text	Lists the sub-directories contained in a directory.
+ 
+	@opt	string path				Path to search. Default is current directory.
+	@out	table diresctories		A table of directory names (or nil if the path is invalid)
+*/
+int MOAIFileSystem::_listDirectories ( lua_State* L ) {
+	UNUSED ( L );
+	
+	// TODO: harebrained
+	
+	//STLString oldPath = USFileSys::GetCurrentPath();
+	
+	//cc8* dir = NULL;
+	//if ( lua_type ( L, 1 ) == LUA_TSTRING ) {
+	//	dir = lua_tostring ( L, 1 );
+	//	if ( !USFileSys::SetCurrentPath ( dir )) {
+	//		return 0;
+	//	}
+	//}
+	//
+	//USDirectoryItr dirItr;
+	//
+	//lua_newtable ( L );
+	//int n = 0;
+	//dirItr.Start ();
+	//while ( dirItr.NextDirectory ())
+	//{
+	//	if ( dir ) {
+	//		lua_pushstring ( L, dir );
+	//		lua_pushstring ( L, "/" );
+	//		lua_pushstring ( L, dirItr.Current ());
+	//		lua_concat ( L, 3 );
+	//	}
+	//	else {
+	//		lua_pushstring ( L, dirItr.Current ());
+	//	}
+	//	n++;
+	//	luaL_setn ( L, -2, n );  // new size
+	//	lua_rawseti ( L, -2, n );  // t[pos] = v
+	//}
+	//
+	//USFileSys::SetCurrentPath ( oldPath );
+	//
+	//return 1;
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	listFiles
+	@text	Lists the files contained in a directory
+ 
+	@opt	string path		Path to search. Default is current directory.
+	@out	table files		A table of filenames (or nil if the path is invalid)
+*/
+int MOAIFileSystem::_listFiles ( lua_State* L ) {
+	UNUSED ( L );
+	
+	// TODO: harebrained
+	
+	//STLString oldPath = USFileSys::GetCurrentPath ();
+	
+	//cc8* dir = NULL;
+	//if ( lua_type ( L, 1 ) == LUA_TSTRING ) {
+	//	dir = lua_tostring ( L, 1 );
+	//	if( !USFileSys::SetCurrentPath ( dir )) {
+	//		return 0;
+	//	}
+	//}
+
+	//USDirectoryItr dirItr;
+	//
+	//lua_newtable ( L );
+	//int n = 0;
+	//dirItr.Start ();
+	//while ( dirItr.NextFile ()) {
+	//	if ( dir ) {
+	//		lua_pushstring ( L, dir );
+	//		lua_pushstring ( L, "/" );
+	//		lua_pushstring ( L, dirItr.Current ());
+	//		lua_concat ( L, 3 );
+	//	}
+	//	else {
+	//		lua_pushstring ( L, dirItr.Current ());
+	//	}
+
+	//	n++;
+	//	luaL_setn ( L, -2, n );  // new size
+	//	lua_rawseti ( L, -2, n );  // t[pos] = v
+	//}
+	//
+	//USFileSys::SetCurrentPath ( oldPath );
+	//
+	//return 1;
+	
+	return 0;
+}
+
 //----------------------------------------------------------------//
 /**	@name	_loadAndRunLuaFile
 	@text	Loads and runs a Lua file from the PHYSFS file system.
@@ -365,3 +466,4 @@ void MOAIFileSystem::SwapPhysFSPaths ( ) {
 		PHYSFS_mount ( (*it).str (), "", 1 );
 	}
 }
+

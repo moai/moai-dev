@@ -19,6 +19,11 @@ void loadMoaiLib_NSString () {
 	}
 
 	//----------------------------------------------------------------//
+	-( id ) initWithLua:( lua_State* )state stackIndex:( int )idx {
+		return [ self initWithUTF8String:lua_tostring ( state, idx)];
+	}
+
+	//----------------------------------------------------------------//
 	-( void	) toLua:( lua_State* )state {
 
 		lua_pushstring ( state, [ self UTF8String ]);

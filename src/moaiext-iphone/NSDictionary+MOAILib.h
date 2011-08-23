@@ -16,5 +16,14 @@
 
 @end
 
+//================================================================//
+// NSMutableDictionary ( MOAILib )
+//================================================================//
+@interface NSMutableDictionary ( MOAILib )
+
+	//----------------------------------------------------------------//
+	-( id )				initWithLua         :( lua_State* )luaState stackIndex:( int )idx;
+@end
+
 //----------------------------------------------------------------//
 extern void loadMoaiLib_NSDictionary ();

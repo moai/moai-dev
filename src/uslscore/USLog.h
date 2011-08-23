@@ -9,8 +9,11 @@
 //================================================================//
 namespace USLog {
 
+	static FILE* CONSOLE = 0;
+
 	//----------------------------------------------------------------//
 	void	Print	( cc8* format, ... );
+	void	Print	( FILE* file, cc8* format, ... );
 }
 
 #endif

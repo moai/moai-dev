@@ -22,16 +22,17 @@ int MOAIParser::_loadFile ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIParser, "US" )
 	
 	cc8* filename = state.GetValue < cc8* >( 2, "" );
-	MOAI_CHECK_FILE ( filename );
+	if ( MOAILogMessages::CheckFileExists ( filename, L )) {
 	
-	USFileStream stream;
-	if ( stream.OpenRead ( filename )) {
-		
-		USParser parser;
-		parser.Init ( self->mCGT, 0 );
-		USSyntaxNode* ast = parser.Parse ( stream );
-		
-		self->SetAST ( ast );
+		USFileStream stream;
+		if ( stream.OpenRead ( filename )) {
+			
+			USParser parser;
+			parser.Init ( self->mCGT, 0 );
+			USSyntaxNode* ast = parser.Parse ( stream );
+			
+			self->SetAST ( ast );
+		}
 	}
 	return 0;
 }
@@ -48,10 +49,10 @@ int MOAIParser::_loadRules ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIParser, "US" )
 
 	cc8* filename = state.GetValue < cc8* >( 2, "" );
-	MOAI_CHECK_FILE ( filename );
-	
-	self->mCGT.Load ( filename );
-	
+
+	if ( MOAILogMessages::CheckFileExists ( filename, L )) {
+		self->mCGT.Load ( filename );
+	}
 	return 0;
 }
 

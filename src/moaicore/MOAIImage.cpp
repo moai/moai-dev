@@ -728,8 +728,8 @@ u32 MOAIImage::GetPaletteSize () const {
 //----------------------------------------------------------------//
 u32 MOAIImage::GetPixel ( u32 x, u32 y ) const {
 
-	if ( y > this->mHeight ) return 0;
-	if ( x > this->mWidth ) return 0;
+	if ( y >= this->mHeight ) return 0;
+	if ( x >= this->mWidth ) return 0;
 
 	const void* row = this->GetRowAddr ( y );
 
@@ -1295,8 +1295,8 @@ void MOAIImage::SetPaletteColor ( u32 idx, u32 rgba ) {
 //----------------------------------------------------------------//
 void MOAIImage::SetPixel ( u32 x, u32 y, u32 pixel ) {
 
-	if ( y > this->mHeight ) return;
-	if ( x > this->mWidth ) return;
+	if ( y >= this->mHeight ) return;
+	if ( x >= this->mWidth ) return;
 	
 	void* row = this->GetRowAddr ( y );
 

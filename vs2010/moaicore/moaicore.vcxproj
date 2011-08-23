@@ -272,6 +272,7 @@
     <ClCompile Include="..\..\src\moaicore\MOAIJsonParser.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAILayoutFrame.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAILineBrush.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAILogMessages.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAILogMgr.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIMesh.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIMotionSensor.cpp" />

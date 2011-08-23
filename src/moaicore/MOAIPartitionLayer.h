@@ -18,6 +18,7 @@ private:
 	float									mCellSize;
 
 	//----------------------------------------------------------------//
+	void					Clear				();
 	void					GatherProps			( MOAIPartitionResultBuffer& results, MOAIProp* ignore, u32 mask );
 	void					GatherProps			( MOAIPartitionResultBuffer& results, MOAIProp* ignore, USVec2D point, u32 mask );
 	void					GatherProps			( MOAIPartitionResultBuffer& results, MOAIProp* ignore, USRect rect, u32 mask );

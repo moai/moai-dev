@@ -27,6 +27,22 @@ int MOAIActionMgr::_getRoot ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	setProfilingEnabled
+	@text	Enables action profiling.
+
+	@opt	boolean enable		Default value is false.
+	@out	nil
+*/
+int MOAIActionMgr::_setProfilingEnabled ( lua_State* L ) {
+	
+	USLuaState state ( L );
+	bool enable = state.GetValue < bool >( -1, false );
+	MOAIActionMgr::Get ().SetProfilingEnabled ( enable );
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	setRoot
 	@text	Replaces or clears the root action.
 
@@ -39,6 +55,22 @@ int MOAIActionMgr::_setRoot ( lua_State* L ) {
 	
 	MOAIAction* root = state.GetLuaObject < MOAIAction >( -1 );
 	MOAIActionMgr::Get ().mRoot = root;
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	setThreadInfoEnabled
+	@text	Enables function name and line number info for MOAIThread.
+
+	@opt	boolean enable		Default value is false.
+	@out	nil
+*/
+int MOAIActionMgr::_setThreadInfoEnabled ( lua_State* L ) {
+	
+	USLuaState state ( L );
+	bool enable = state.GetValue < bool >( -1, false );
+	MOAIActionMgr::Get ().SetThreadInfoEnabled ( enable );
 
 	return 0;
 }
@@ -73,7 +105,9 @@ u32 MOAIActionMgr::GetNextPass () {
 //----------------------------------------------------------------//
 MOAIActionMgr::MOAIActionMgr () :
 	mPass ( RESET_PASS ),
-	mCurrentAction ( 0 ) {
+	mCurrentAction ( 0 ),
+	mProfilingEnabled ( false ),
+	mThreadInfoEnabled ( false ) {
 	
 	RTTI_SINGLE ( USLuaObject )
 }
@@ -88,8 +122,10 @@ MOAIActionMgr::~MOAIActionMgr () {
 void MOAIActionMgr::RegisterLuaClass ( USLuaState& state ) {
 
 	luaL_Reg regTable [] = {
-		{ "getRoot",			_getRoot },
-		{ "setRoot",			_setRoot },
+		{ "getRoot",				_getRoot },
+		{ "setProfilingEnabled",	_setProfilingEnabled },
+		{ "setRoot",				_setRoot },
+		{ "setThreadInfoEnabled",	_setThreadInfoEnabled },
 		{ NULL, NULL }
 	};
 

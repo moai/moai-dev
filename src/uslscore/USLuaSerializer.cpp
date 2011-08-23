@@ -6,6 +6,7 @@
 #include <uslscore/USFileStream.h>
 #include <uslscore/USFileSys.h>
 #include <uslscore/USDirectoryItr.h>
+#include <uslscore/USLog.h>
 
 #include <uslscore/USLuaSerializer.h>
 #include <uslscore/USLuaState.h>
@@ -286,7 +287,7 @@ u32 USLuaSerializer::SerializeFromFile ( cc8* filename ) {
 
 	// load the lua file
 	status = luaL_loadfile ( state, filename );
-	if ( state.PrintErrors ( status )) return LOAD_ERROR;
+	if ( state.PrintErrors ( USLog::CONSOLE, status )) return LOAD_ERROR;
 	
 	// load self as the func param
 	this->PushLuaUserdata ( state );

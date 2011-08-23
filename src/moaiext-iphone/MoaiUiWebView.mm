@@ -6,8 +6,12 @@
 
 #import <moaiext-iphone/MoaiUiWebView.h>
 
+//================================================================//
+// MoaiUiWebViewDelegate
+//================================================================//
 @implementation MoaiUiWebViewDelegate
-@synthesize mMOAIWebView;
+
+	@synthesize mMOAIWebView;
 
 
 	//================================================================//
@@ -24,6 +28,17 @@
 	}
 	
 	//----------------------------------------------------------------//
+	- (BOOL)webView:( UIWebView* )webView shouldStartLoadWithRequest:( NSURLRequest* )request navigationType:( UIWebViewNavigationType )navigationType {
+	
+		if ( mMOAIWebView ) {
+		
+			bool result = mMOAIWebView->RaiseShouldStartLoadWithRequestEvent ( request, navigationType );
+			return result;
+		}
+		return true;
+	}
+	
+	//----------------------------------------------------------------//
 	- ( void ) webViewDidFinishLoad:( UIWebView * )webView {
 		
 		if ( mMOAIWebView ) {
@@ -37,17 +52,6 @@
 		if ( mMOAIWebView ) {
 			mMOAIWebView->RaiseWebViewDidStartLoadEvent ();
 		}
-	}
-
-	//----------------------------------------------------------------//
-	- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
-	
-		if ( mMOAIWebView ) {
-		
-			bool result = mMOAIWebView->RaiseShouldStartLoadWithRequestEvent ( request, navigationType );
-			return result;
-		}
-		return true;
 	}
 	
 @end

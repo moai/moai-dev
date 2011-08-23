@@ -25,6 +25,7 @@ private:
 
 	//----------------------------------------------------------------//
 	static int	_getLength		( lua_State* L );
+	static int  _getValueAtTime ( lua_State* L );
 	static int	_reserveKeys	( lua_State* L );
 	static int	_setKey			( lua_State* L );
 

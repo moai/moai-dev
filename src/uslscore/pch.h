@@ -48,6 +48,7 @@
 
 #ifdef MOAI_OS_WINDOWS
 
+	#pragma warning ( disable : 4127 )
 	#pragma warning ( disable : 4995 )
 	#pragma warning ( disable : 4996 )
 

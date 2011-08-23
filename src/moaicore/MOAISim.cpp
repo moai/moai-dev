@@ -10,7 +10,17 @@
 #include <moaicore/MOAINodeMgr.h>
 #include <moaicore/MOAIProp2D.h>
 #include <moaicore/MOAISim.h>
+#include <moaicore/MOAITexture.h>
 #include <aku/AKU.h>
+
+#if defined(_WIN32)
+#include <Psapi.h>
+#elif defined(__APPLE__) //&& defined(TARGET_IPHONE_SIMULATOR)
+// Not sure if using mach API is disallowed in the app store. :/
+#include <mach/mach.h>
+#endif
+
+
 
 //================================================================//
 // local
@@ -106,6 +116,18 @@ int MOAISim::_getDeviceSize ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	getDeviceTime
+	@text	Gets the raw device clock. This is a replacement for Lua's os.time ().
+
+	@out	number time			The device clock time in seconds.
+*/
+int MOAISim::_getDeviceTime ( lua_State* L ) {
+	
+	lua_pushnumber ( L, USDeviceTime::GetTimeInSeconds ());
+	return 1;
+}
+
+//----------------------------------------------------------------//
 /**	@name	getElapsedFrames
 	@text	Gets the number of frames elapsed since the application was started.
 
@@ -140,6 +162,88 @@ int MOAISim::_getFrameSize ( lua_State* L ) {
 	
 	MOAISim& device = MOAISim::Get ();
 	lua_pushnumber ( L, device.mStep );
+	
+	return 1;
+}
+
+//----------------------------------------------------------------//
+/** @name	getMemoryUsage
+	@text	Get the current amount of memory used by MOAI and its subsystems. This will
+			attempt to return reasonable estimates where exact values cannot be obtained.
+			Some fields represent informational fields (i.e. are not double counted in the
+			total, but present to assist debugging) and may be only available on certain
+			platforms (e.g. Windows, etc). These fields begin with a '_' character.
+ 
+	@out	table	usage		The breakdown of each subsystem's memory usage, in bytes. There is also a "total" field that contains the summed value.
+*/
+int MOAISim::_getMemoryUsage ( lua_State* L ) {
+	
+	float divisor = 1.0f;
+	
+	if( lua_type(L, 1) == LUA_TSTRING )
+	{
+		cc8* str = lua_tostring(L, 1);
+		if( str[0] == 'k' || str[0] == 'K' )
+			divisor = 1024.0f;
+		else if( str[0] == 'm' || str[0] == 'M' )
+			divisor = 1024.0f * 1024.0f;
+		else if( str[0] == 'b' || str[0] == 'B' )
+			divisor = 1.0f;
+	}
+	
+	size_t total = 0;
+	
+	lua_newtable(L);
+	
+	size_t count;
+	
+	count = USLuaRuntime::Get().GetMemoryUsage ();
+	lua_pushnumber(L, count / divisor);
+	lua_setfield(L, -2, "lua");
+	total += count;
+
+	// This is informational only (i.e. don't double count with the previous field).
+	// It doesn't actually seem to represent the real usage of lua, but maybe
+	// someone is interested.
+	lua_pushnumber ( L, lua_gc ( L, LUA_GCCOUNTB, 0 ) / divisor );
+	lua_setfield ( L, -2, "_luagc_count" );
+	
+	count = MOAIGfxDevice::Get ().GetTextureMemoryUsage ();
+	lua_pushnumber ( L, count / divisor );
+	lua_setfield ( L, -2, "texture" );
+	total += count;
+	
+#if defined(_WIN32)
+    PROCESS_MEMORY_COUNTERS pmc;
+
+    // Print the process identifier.
+    if ( GetProcessMemoryInfo( GetCurrentProcess(), &pmc, sizeof(pmc)) )
+    {
+		lua_pushnumber(L, pmc.PagefileUsage / divisor);
+		lua_setfield(L, -2, "_sys_vs");
+		lua_pushnumber(L, pmc.WorkingSetSize / divisor);
+		lua_setfield(L, -2, "_sys_rss");
+    }
+#elif defined(__APPLE__) //&& defined(TARGET_IPHONE_SIMULATOR) 
+	// Tricky undocumented mach polling of memory
+	struct task_basic_info t_info;
+	mach_msg_type_number_t t_info_count = TASK_BASIC_INFO_COUNT;
+	kern_return_t kr = task_info(mach_task_self(),
+								 TASK_BASIC_INFO,
+								 reinterpret_cast<task_info_t>(&t_info),
+								 &t_info_count);
+	// Most likely cause for failure: |task| is a zombie.
+	if( kr == KERN_SUCCESS )
+	{
+		lua_pushnumber(L, t_info.virtual_size / divisor);
+		lua_setfield(L, -2, "_sys_vs");
+		lua_pushnumber(L, t_info.resident_size / divisor);
+		lua_setfield(L, -2, "_sys_rss");
+	}
+#endif
+	
+	lua_pushnumber(L, total / divisor);
+	lua_setfield(L, -2, "total");
 	
 	return 1;
 }
@@ -246,6 +350,37 @@ int MOAISim::_pushRenderPass ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	reportLeaks
+	@text	Analyze the currently allocated MOAI objects and create a textual
+			report of where they were declared, and what Lua references (if any)
+			can be found. NOTE: This is incredibly slow, so only use to debug
+			leaking memory issues.
+ 
+			This will also trigger a full garbage collection before performing
+			the required report. (Equivalent of collectgarbage("collect").)
+ 
+	@in		bool clearAfter	If true, it will reset the allocation tables (without
+							freeing the underlying objects). This allows this
+							method to be called after a known operation and
+							get only those allocations created since the last call
+							to this function.
+	@out	nil
+*/
+int MOAISim::_reportLeaks ( lua_State* L ) {
+	
+	USLuaState state ( L );
+	bool clearAfter = state.GetValue < bool >( 1, false );
+	
+	USLuaRuntime& luaRuntime = USLuaRuntime::Get ();
+	luaRuntime.ReportLeaksFormatted ( MOAILogMgr::Get ().GetFile ());
+
+	if ( clearAfter ) {
+		luaRuntime.ResetLeakTracking ();
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	setClearColor
 	@text	At the start of each frame the device will by default automatically render a background color.  Using this function you can set the background color that is drawn each frame.  If you specify no arguments to this function, then automatic redraw of the background color will be turned off (i.e. the previous render will be used as the background).
 
@@ -317,6 +452,24 @@ int MOAISim::_setFrameSize ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	setLeakTrackingEnabled
+	@text	Enable extra memory book-keeping measures that allow all MOAI objects to be
+			tracked back to their point of allocation (in Lua). Use together with
+			MOAISim.reportLeaks() to determine exactly where your memory usage is
+			being created. NOTE: This is very expensive in terms of both CPU and
+			the extra memory associated with the stack info book-keeping. Use only
+			when tracking down leaks.
+ 
+	@opt	bool enable		Default value is false.
+	@out	nil
+*/
+int MOAISim::_setLeakTrackingEnabled ( lua_State* L ) {
+	USLuaState state ( L );
+	USLuaRuntime::Get ().EnableLeakTracking( state.GetValue < bool >( 1, false ));
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	timeToFrames
 	@text	Converts the number of time passed in seconds to frames.
 
@@ -355,6 +508,7 @@ MOAISim::MOAISim () :
 	mStep ( 0.01f ),
 	mTime ( 0.0f ),
 	mFrameTime ( 0.0 ),
+	mFrameCounter ( 0 ),
 	mFrameRate ( 0.0f ),
 	mFrameRateIdx ( 0 ),
 	mClearFlags ( GL_COLOR_BUFFER_BIT ),
@@ -440,14 +594,18 @@ void MOAISim::RegisterLuaClass ( USLuaState& state ) {
 		{ "exitFullscreenMode",			_exitFullscreenMode },
 		{ "framesToTime",				_framesToTime },
 		{ "getDeviceSize",				_getDeviceSize },
+		{ "getDeviceTime",				_getDeviceTime },
 		{ "getElapsedFrames",			_getElapsedFrames },
 		{ "getElapsedTime",				_getElapsedTime },
 		{ "getFrameSize",				_getFrameSize },
+		{ "getMemoryUsage",				_getMemoryUsage },
 		{ "getPerformance",				_getPerformance },
 		{ "openWindow",					_openWindow },
 		{ "pauseTimer",					_pauseTimer },
 		{ "popRenderPass",				_popRenderPass },
 		{ "pushRenderPass",				_pushRenderPass },
+		{ "reportLeaks",				_reportLeaks },
+		{ "setLeakTrackingEnabled",		_setLeakTrackingEnabled },
 		{ "setClearColor",				_setClearColor },
 		{ "setClearDepth",				_setClearDepth },
 		{ "setFrameSize",				_setFrameSize },
@@ -512,7 +670,7 @@ void MOAISim::RunFile ( cc8* filename ) {
 	USLuaStateHandle state = USLuaRuntime::Get ().State ();
 	
 	status = luaL_loadfile ( state, filename );
-	if ( state.PrintErrors ( status )) return;
+	if ( state.PrintErrors ( USLog::CONSOLE, status )) return;
 	
 	this->mRenderPasses.Clear ();
 	MOAIActionMgr::Get ().Clear ();
@@ -534,7 +692,7 @@ void MOAISim::RunString ( cc8* script ) {
 	USLuaStateHandle state = USLuaRuntime::Get ().State ();
 	
 	status = luaL_loadstring ( state, script );
-	if ( state.PrintErrors ( status )) return;
+	if ( state.PrintErrors ( USLog::CONSOLE, status )) return;
 	
 	this->mRenderPasses.Clear ();
 	MOAIActionMgr::Get ().Clear ();
@@ -560,9 +718,11 @@ void MOAISim::SendFinalizeEvent () {
 
 //----------------------------------------------------------------//
 void MOAISim::Update () {
-	
-	this->MeasureFrameRate ();
 
+	// TODO: harebrained
+
+	this->MeasureFrameRate ();
+	
 	this->mDeviceTime = USDeviceTime::GetTimeInSeconds ();
 
 	if ( this->mTimerState != RUNNING ) {
@@ -575,6 +735,8 @@ void MOAISim::Update () {
 			MOAIInputMgr::Get ().Update ();
 			MOAIActionMgr::Get ().Update ( 0.0f );
 			MOAINodeMgr::Get ().Update ();
+			
+			this->mFrameCounter++;
 		}
 		else {
 			return;
@@ -582,20 +744,45 @@ void MOAISim::Update () {
 	}
 
 	USLuaStateHandle state = USLuaRuntime::Get ().State ();
+	// printf("MOAISim::Update() frame! delta = %.1f ms\n", (mDeviceTime - mTime) * 1000);
 
-	while (( this->mTime + this->mStep ) < this->mDeviceTime ) {
+	#define STEP_LOOP_IMPL() do { \
+		while (( this->mTime + step ) < this->mDeviceTime ) { \
+			/*if ( step > mStep ) \
+				printf("MOAISim::Update() step = %.1f ms\n", step * 1000); \
+			double t0 = USDeviceTime::GetTimeInSeconds (); */ \
+			MOAIDebugLines::Get ().Reset (); \
+			/* double t1 = USDeviceTime::GetTimeInSeconds (); */ \
+			MOAIInputMgr::Get ().Update (); \
+			/* double t2 = USDeviceTime::GetTimeInSeconds (); */ \
+			MOAIActionMgr::Get ().Update (( float )step ); \
+			/* double t3 = USDeviceTime::GetTimeInSeconds (); */ \
+			MOAINodeMgr::Get ().Update (); \
+			/* double t4 = USDeviceTime::GetTimeInSeconds ();  \
+			printf("  frame times (step = %5.1f) = %5.1f %5.1f %5.1f %5.1f\n", step*1000, (t1 - t0)*1000, (t2 - t1)*1000, (t3 - t2)*1000, (t4 - t3)*1000); */ \
+			this->mTime += step; \
+			this->mFrameCounter++; \
+		} \
+	} while(0)
 	
-		MOAIDebugLines::Get ().Reset ();
-		MOAIInputMgr::Get ().Update ();
-		MOAIActionMgr::Get ().Update (( float )this->mStep );
-		MOAINodeMgr::Get ().Update ();
-		
-		this->mTime += this->mStep;
+	// We potentially "drop" update frames if we've gone a long time
+	// since the last update. This will hopefully catch us up quicker and
+	// prevent vicious cycles where the frame rate never catches up.
+	
+	double step = this->mDeviceTime - this->mTime - this->mStep * 2;
+
+	if( step > this->mStep ) {
+		STEP_LOOP_IMPL ();
 	}
 	
-	USUrlMgr::Get ().Process ();
+	step = this->mStep;
 	
+	STEP_LOOP_IMPL ();
+
+	USUrlMgr::Get ().Process ();
 	this->mDataIOThread.Publish ();
+	
+	//printf("  frame delta = %.1f\n", (USDeviceTime::GetTimeInSeconds() - mDeviceTime) * 1000);
 }
 
 //----------------------------------------------------------------//

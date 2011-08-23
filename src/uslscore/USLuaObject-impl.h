@@ -44,6 +44,7 @@ private:
 		
 		data->SetLuaInstanceTable ( state, 1 );
 		data->PushLuaUserdata ( state );
+		USLuaRuntime::Get ().SetObjectStackTrace ( data, state.GetStackTrace ( 1 ));
 
 		return 1;
 	}
@@ -64,7 +65,7 @@ public:
 
 	//----------------------------------------------------------------//
 	static USLuaFactoryClass& Get () {
-		return *USGlobalsMgr::Get ()->GetGlobal < USLuaFactoryClass >();
+		return *USGlobalsMgr::Get ()->AffirmGlobal < USLuaFactoryClass >();
 	}
 
 	//----------------------------------------------------------------//
@@ -94,12 +95,12 @@ public:
 	
 	//----------------------------------------------------------------//
 	static USLuaSingletonClass& Get () {
-		return *USGlobalsMgr::Get ()->GetGlobal < USLuaSingletonClass >();
+		return *USGlobalsMgr::Get ()->AffirmGlobal < USLuaSingletonClass >();
 	}
 
 	//----------------------------------------------------------------//
 	USLuaObject* GetSingleton () {
-		return USGlobalsMgr::Get ()->GetGlobal < TYPE >();
+		return USGlobalsMgr::Get ()->AffirmGlobal < TYPE >();
 	}
 
 	//----------------------------------------------------------------//

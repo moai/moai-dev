@@ -12,6 +12,20 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+/**	@name	getTime
+	@text	Return the current time.
+
+	@in		MOAITimer self
+	@out	number time
+*/
+int MOAITimer::_getTime( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITimer, "U" )
+
+	lua_pushnumber ( L, self->mTime );
+	return 1;
+}
+
+//----------------------------------------------------------------//
 /**	@name	getTimesExecuted
 	@text	Gets the number of times the timer has completed a cycle.
 
@@ -418,6 +432,7 @@ void MOAITimer::RegisterLuaFuncs ( USLuaState& state ) {
 	MOAIAction::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
+		{ "getTime",			_getTime },
 		{ "getTimesExecuted",	_getTimesExecuted },
 		{ "setCurve",			_setCurve },
 		{ "setMode",			_setMode },

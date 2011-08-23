@@ -56,5 +56,5 @@ void uslsext::InitGlobals ( USGlobals* globals ) {
 		sysInit = false;
 	}
 
-	USUrlMgr::Get ();
+	USUrlMgr::Affirm ();
 }

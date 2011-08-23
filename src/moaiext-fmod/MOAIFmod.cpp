@@ -9,6 +9,30 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+/**	@name	getMemoryStats
+	@text	Get memory usage.
+
+	@opt	boolean blocking - Default value is 'false.'
+	@out	number currentAlloc
+	@out	number maxAlloc
+*/
+int	MOAIFmod::_getMemoryStats( lua_State* L ) {
+	USLuaState state ( L );
+	
+	bool blocking = state.GetValue < bool >( 1, false );
+	
+	int currentAlloc;
+	int maxAlloc;
+	
+	FMOD_Memory_GetStats ( &currentAlloc, &maxAlloc, blocking );
+	
+	lua_pushnumber ( state, currentAlloc );
+	lua_pushnumber ( state, maxAlloc );
+	
+	return 2;
+}
+
+//----------------------------------------------------------------//
 /**	@name	init
 	@text	Initializes the sound system.
 
@@ -32,6 +56,7 @@ void MOAIFmod::CloseSoundSystem () {
 
 	if ( !this->mSoundSys ) return;
 	
+	this->mSoundSys->close ();
 	this->mSoundSys->release ();
 	this->mSoundSys = 0;
 }
@@ -48,6 +73,12 @@ MOAIFmod::~MOAIFmod () {
 }
 
 //----------------------------------------------------------------//
+void MOAIFmod::MuteChannels ( bool mute ) {
+
+	this->mMainChannelGroup->setMute ( mute );
+}
+
+//----------------------------------------------------------------//
 void MOAIFmod::OpenSoundSystem () {
 
 	FMOD_RESULT result;
@@ -57,22 +88,26 @@ void MOAIFmod::OpenSoundSystem () {
 	
 	result = this->mSoundSys->init ( 100, FMOD_INIT_NORMAL, 0 ); // Initialize FMOD.
 	if ( result != FMOD_OK ) return;
+	
+	result = this->mSoundSys->getMasterChannelGroup ( &this->mMainChannelGroup );
+	if ( result != FMOD_OK ) return;
 }
 
 //----------------------------------------------------------------//
 void MOAIFmod::RegisterLuaClass ( USLuaState& state ) {
-	UNUSED ( state );
+	
+	luaL_Reg regTable [] = {
+		{ "getMemoryStats",		_getMemoryStats },
+		{ "init",				_init },
+		{ NULL, NULL }
+	};
+	
+	luaL_register ( state, 0, regTable );
 }
 
 //----------------------------------------------------------------//
 void MOAIFmod::RegisterLuaFuncs ( USLuaState& state ) {
-
-	luaL_Reg regTable [] = {
-		{ "init",			_init },
-		{ NULL, NULL }
-	};
-
-	luaL_register ( state, 0, regTable );
+	UNUSED ( state );
 }
 
 //----------------------------------------------------------------//

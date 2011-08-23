@@ -8,6 +8,7 @@
 #include <moaicore/MOAIImage.h>
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIPvrHeader.h>
+#include <moaicore/MOAISim.h>
 #include <moaicore/MOAITexture.h>
 
 //================================================================//
@@ -29,14 +30,16 @@ public:
 	MOAIImage		mImage;
 	u32				mTransform;
 	u32				mType;
+	bool			mReloadable;
 	
 	//----------------------------------------------------------------//
 	void Load ( u32 transform = 0 ) {
 	
-		if ( this->mType != TYPE_UNKNOWN ) {
+		if (( this->mType != TYPE_UNKNOWN ) && ( !this->mReloadable )) {
 			return;
 		}
 		
+		this->mReloadable = false;
 		this->mTransform |= transform;
 		
 		if ( !this->mImage.IsOK ()) {
@@ -79,11 +82,10 @@ public:
 		
 		if ( this->mType == TYPE_UNKNOWN ) {
 			this->mType = TYPE_FAIL;
-			
-			if ( this->mFileData ) {
-				free ( this->mFileData );
-				this->mFileData = 0;
-			}
+			this->Release ();
+		}
+		else {
+			this->mReloadable = true;
 		}
 	}
 	
@@ -91,7 +93,8 @@ public:
 	MOAITextureLoader () :
 		mFileData ( 0 ),
 		mFileDataSize ( 0 ),
-		mType ( TYPE_UNKNOWN ) {
+		mType ( TYPE_UNKNOWN ),
+		mReloadable ( false ) {
 	}
 	
 	//----------------------------------------------------------------//
@@ -100,6 +103,15 @@ public:
 		if ( this->mFileData ) {
 			free ( this->mFileData );
 		}
+	}
+	
+	//----------------------------------------------------------------//
+	void Release () {
+		if ( this->mFileData ) {
+			free ( this->mFileData );
+			this->mFileData = 0;
+		}
+		this->mImage.Release ();
 	}
 };
 
@@ -183,16 +195,15 @@ int MOAITexture::_load ( lua_State* L ) {
 	u32 transform = state.GetValue < u32 >( 3, DEFAULT_TRANSFORM );
 
 	if ( data ) {
-
 		self->Init ( *data, transform );
 	}
 	else if ( state.IsType( 2, LUA_TSTRING ) ) {
 
 		cc8* filename = lua_tostring ( state, 2 );
-		MOAI_CHECK_FILE ( filename );
-		self->Init ( filename, transform );
+		if ( MOAILogMessages::CheckFileExists ( filename, L )) {
+			self->Init ( filename, transform );
+		}
 	}
-
 	return 0;
 }
 
@@ -250,6 +261,30 @@ int MOAITexture::_setWrap ( lua_State* L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
+/**	@name	softRelease
+	@text	Attempt to release the resources for this texture and free it up
+			in such a way that it can be re-loaded automatically on demand.
+			Generally this is used when responding to a memory warning from
+			the system and allow older/unused textures to be released in an
+			attempt to keep the application from crashing. Currently textures
+			loaded from files (not buffers) can be reloaded in this fashion.
+			Be warned, however, loading texures is expensive and your frame
+			rate is likely going to suffer.
+ 
+ @in		MOAITexture self
+ @in		int age	(Optional) Release only if the texture hasn't been used in X frames.
+ @out		bool True if the texture was actually released.
+ */
+int MOAITexture::_softRelease ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITexture, "U" )
+	
+	int age = state.GetValue < int >( 2, 0 );
+	lua_pushboolean(L, self->SoftRelease(age) );
+
+	return 1;
+}
+
 //================================================================//
 // MOAITexture
 //================================================================//
@@ -295,9 +330,25 @@ void MOAITexture::Affirm () {
 
 		if ( this->mGLTexID ) {
 
-			// done with the loader
-			delete this->mLoader;
-			this->mLoader = 0;
+			if ( this->mFilename.size() == 0 && this->mLoader ) {
+				// Loader's filename doesn't seem to be copied in all code paths...
+				MOAIGfxDevice::Get ().ReportTextureAlloc ( this->mLoader->mFilename, this->mDataSize );
+			}
+			else {
+				MOAIGfxDevice::Get ().ReportTextureAlloc ( this->mFilename, this->mDataSize );
+			}
+			
+			this->mLastFrameUsed = MOAISim::Get ().GetFrameCounter ();
+			
+			if( this->mLoader->mReloadable ) {
+				// Release the loader's copy. It isn't needed any more.
+				this->mLoader->Release();
+			}
+			else {
+				// done with the loader entirely
+				delete this->mLoader;
+				this->mLoader = 0;
+			}
 		}
 	}
 }
@@ -360,6 +411,8 @@ bool MOAITexture::Bind () {
 		if ( !this->mGLTexID ) return false;
 	}
 
+	this->mLastFrameUsed = MOAISim::Get ().GetFrameCounter ();
+
 	glBindTexture ( GL_TEXTURE_2D, this->mGLTexID );
 	glEnable ( GL_TEXTURE_2D );
 	
@@ -387,6 +440,10 @@ bool MOAITexture::BindFrameBuffer () {
 void MOAITexture::Clear () {
 
 	if ( this->mGLTexID ) {
+	
+		if ( MOAIGfxDevice::IsValid ()) {
+			MOAIGfxDevice::Get ().ReportTextureFree ( this->mFilename, this->mDataSize );
+		}
 		glDeleteTextures ( 1, &this->mGLTexID );
 		this->mGLTexID = 0;
 	}
@@ -409,8 +466,6 @@ void MOAITexture::Clear () {
 void MOAITexture::CreateTextureFromImage ( MOAIImage& image ) {
 
 	if ( !image.IsOK ()) return;
-
-	//printf ( "MOAITexture::CreateTextureFromImage - %s\n", this->mFilename.str ());
 
 	MOAIGfxDevice::Get ().ClearErrors ();
 
@@ -496,6 +551,7 @@ void MOAITexture::CreateTextureFromImage ( MOAIImage& image ) {
 			return;
 		}
 		
+		this->mDataSize = image.GetBitmapSize ();
 	}
 	else {
 	
@@ -649,11 +705,15 @@ void MOAITexture::CreateTextureFromPVR ( void* data, size_t size ) {
 
 		glBindTexture ( GL_TEXTURE_2D, this->mGLTexID );
 		
+		this->mDataSize = 0;
+		
 		int width = header->mWidth;
-		int height = header->mHeight;		
+		int height = header->mHeight;
 		char* imageData = (char*)(header->GetFileData ( data, size));
 		if ( header->mMipMapCount == 0 ) {
+			
 			GLsizei currentSize = (GLsizei) USFloat::Max ( (float)(32), (float)(width * height * header->mBitCount / 8) );
+			this->mDataSize += currentSize;
 			
 			if ( compressed ) {
 				glCompressedTexImage2D ( GL_TEXTURE_2D, 0, this->mGLInternalFormat, width, height, 0, currentSize, imageData );
@@ -694,6 +754,8 @@ void MOAITexture::CreateTextureFromPVR ( void* data, size_t size ) {
 				}
 			
 				imageData += currentSize;
+				this->mDataSize += currentSize;
+				
 				width >>= 1;
 				height >>= 1;
 			}	
@@ -713,13 +775,17 @@ u32 MOAITexture::GetWidth () {
 }
 
 //----------------------------------------------------------------//
-void MOAITexture::Init ( MOAIImage& image ) {
+void MOAITexture::Init ( MOAIImage& image, cc8* debugname ) {
 
 	this->Clear ();
 	this->mLoader = new MOAITextureLoader ();
 	
 	this->mLoader->mTransform = 0;
 	this->mLoader->mImage.Copy ( image );
+	
+	if ( debugname ) {
+		this->mLoader->mFilename = debugname;
+	}
 	
 	this->Bind ();
 }
@@ -741,19 +807,19 @@ void MOAITexture::Init ( cc8* filename, u32 transform ) {
 
 
 //----------------------------------------------------------------//
-void MOAITexture::Init ( MOAIDataBuffer& data, u32 transform ) {
+void MOAITexture::Init ( MOAIDataBuffer& data, u32 transform, cc8* debugname ) {
 
 	void* bytes;
 	u32 size;
 	data.Lock ( &bytes, &size );
 
-	this->Init ( bytes, size, transform );
+	this->Init ( bytes, size, transform, debugname );
 	
 	data.Unlock ();
 }
 
 //----------------------------------------------------------------//
-void MOAITexture::Init ( const void* data, u32 size, u32 transform ) {
+void MOAITexture::Init ( const void* data, u32 size, u32 transform, cc8* debugname ) {
 
 	this->Clear ();
 	this->mLoader = new MOAITextureLoader ();
@@ -762,6 +828,10 @@ void MOAITexture::Init ( const void* data, u32 size, u32 transform ) {
 	this->mLoader->mFileDataSize = size;
 	this->mLoader->mFileData = malloc ( size );
 	memcpy ( this->mLoader->mFileData, data, size );
+	
+	if ( debugname ) {
+		this->mLoader->mFilename = debugname;
+	}
 	
 	this->Bind ();
 }
@@ -792,6 +862,12 @@ bool MOAITexture::IsOK () {
 }
 
 //----------------------------------------------------------------//
+bool MOAITexture::IsReloadable () {
+	
+	return this->mLoader && this->mLoader->mReloadable;
+}
+
+//----------------------------------------------------------------//
 MOAITexture::MOAITexture () :
 	mGLTexID ( 0 ),
 	mWidth ( 0 ),
@@ -800,7 +876,9 @@ MOAITexture::MOAITexture () :
 	mMagFilter ( GL_NEAREST ),
 	mWrap ( GL_REPEAT ),
 	mLoader ( 0 ),
-	mFrameBuffer ( 0 ) {
+	mFrameBuffer ( 0 ),
+	mDataSize ( 0 ),
+	mLastFrameUsed ( 0 ) {
 	
 	RTTI_SINGLE ( USLuaObject )
 }
@@ -845,6 +923,7 @@ void MOAITexture::RegisterLuaFuncs ( USLuaState& state ) {
 		{ "release",				_release },
 		{ "setFilter",				_setFilter },
 		{ "setWrap",				_setWrap },
+		{ "softRelease",			_softRelease },
 		{ NULL, NULL }
 	};
 
@@ -889,6 +968,35 @@ void MOAITexture::SetFilter ( int min, int mag ) {
 void MOAITexture::SetWrap ( int wrap ) {
 
 	this->mWrap = wrap;
+}
+
+//----------------------------------------------------------------//
+bool MOAITexture::SoftRelease ( int age ) {
+	
+	if( !this->IsReloadable ())
+		return false;
+	
+	if ( !this->mGLTexID ) {
+		return false;
+	}
+
+	u32 f = MOAISim::Get ().GetFrameCounter ();
+	u32 myage = f > this->mLastFrameUsed ? f - this->mLastFrameUsed : 0xffffffff - this->mLastFrameUsed + f;
+	if ( myage < ( u32 )( age & 0x7fffffff )) {
+		return false;
+	}
+
+	MOAIGfxDevice::Get ().ReportTextureFree ( this->mFilename, this->mDataSize );
+
+	glDeleteTextures ( 1, &this->mGLTexID );
+	this->mGLTexID = 0;
+	
+	// Horrible to call this (especially since we're likely freeing textures
+	// in a loop), but generally this is only called in response to a low 
+	// memory warning and we want to free as soon as possible.
+	glFlush ();
+	
+	return true;
 }
 
 //----------------------------------------------------------------//

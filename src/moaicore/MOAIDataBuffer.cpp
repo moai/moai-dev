@@ -204,7 +204,7 @@ int MOAIDataBuffer::_save ( lua_State* L ) {
 	bool success = self->Save ( filename, affirm_path );
 	lua_pushboolean ( state, success );
 
-	return 0;
+	return 1;
 }
 
 //----------------------------------------------------------------//
@@ -225,7 +225,7 @@ int MOAIDataBuffer::_saveAsync ( lua_State* L ) {
 	action->StartSave ();
 	action->PushLuaUserdata( state );
 
-	return 0;
+	return 1;
 }
 
 //----------------------------------------------------------------//
