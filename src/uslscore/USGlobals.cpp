@@ -7,6 +7,18 @@
 #include <uslscore/USGlobals.h>
 
 //================================================================//
+// USGlobalsFinalizer
+//================================================================//
+
+//----------------------------------------------------------------//
+USGlobalsFinalizer::USGlobalsFinalizer () {
+}
+
+//----------------------------------------------------------------//
+USGlobalsFinalizer::~USGlobalsFinalizer () {
+}
+
+//================================================================//
 // USGlobals
 //================================================================//
 
@@ -16,6 +28,14 @@ USGlobals::USGlobals () {
 
 //----------------------------------------------------------------//
 USGlobals::~USGlobals () {
+
+	FinalizersIt finalizersIt = this->mFinalizers.begin ();
+	for ( ; finalizersIt != this->mFinalizers.end (); ++finalizersIt ) {
+		USGlobalsFinalizer* finalizer = ( *finalizersIt );
+		finalizer->OnFinalize ();
+		delete finalizer;
+	}
+	this->mFinalizers.clear ();
 
 	u32 total = this->mGlobals.Size ();
 	for ( u32 i = 1; i <= total; ++i ) {

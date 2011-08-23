@@ -7,6 +7,19 @@
 #include <physfs.h>
 
 //================================================================//
+// MOAIGlobalsFinalizer
+//================================================================//
+class MOAIGlobalsFinalizer :
+	public USGlobalsFinalizer {
+public:
+
+	//----------------------------------------------------------------//
+	void OnFinalize () {
+		MOAISim::Get ().SendFinalizeEvent ();
+	}
+};
+
+//================================================================//
 // moaicore
 //================================================================//
 
@@ -60,7 +73,6 @@ void moaicore::InitGlobals ( USGlobals* globals ) {
 	REGISTER_LUA_CLASS ( MOAIEnvironment )
 	REGISTER_LUA_CLASS ( MOAIEaseDriver )
 	REGISTER_LUA_CLASS ( MOAIEaseType )
-	REGISTER_LUA_CLASS ( MOAIEventSource )
 	REGISTER_LUA_CLASS ( MOAIFileSystem )
 	REGISTER_LUA_CLASS ( MOAIFont )
 	REGISTER_LUA_CLASS ( MOAIGfxDevice )
@@ -131,4 +143,6 @@ void moaicore::InitGlobals ( USGlobals* globals ) {
 		REGISTER_LUA_CLASS ( MOAICpShape )
 		REGISTER_LUA_CLASS ( MOAICpSpace )
 	#endif
+	
+	globals->PushFinalizer < MOAIGlobalsFinalizer >();
 }

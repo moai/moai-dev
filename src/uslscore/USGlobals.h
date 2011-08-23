@@ -4,6 +4,7 @@
 #ifndef	USGLOBALS_H
 #define	USGLOBALS_H
 
+#include <uslscore/STLList.h>
 #include <uslscore/STLSet.h>
 #include <uslscore/USAccessors.h>
 #include <uslscore/USObject.h>
@@ -51,6 +52,18 @@ private:
 };
 
 //================================================================//
+// USGlobalsFinalizer
+//================================================================//
+class USGlobalsFinalizer {
+public:
+
+	//----------------------------------------------------------------//
+	virtual void	OnFinalize				() = 0;
+					USGlobalsFinalizer		();
+	virtual			~USGlobalsFinalizer		();
+};
+
+//================================================================//
 // USGlobals
 //================================================================//
 class USGlobals {
@@ -63,6 +76,9 @@ private:
 	};
 
 	USLeanArray < USGlobalPair > mGlobals;
+	
+	typedef STLList < USGlobalsFinalizer* >::iterator FinalizersIt;
+	STLList < USGlobalsFinalizer* > mFinalizers;
 
 	//----------------------------------------------------------------//
 			USGlobals		();
@@ -104,6 +120,13 @@ public:
 			}
 		}
 		return false;
+	}
+	
+	//----------------------------------------------------------------//
+	template < typename TYPE >
+	void PushFinalizer () {
+		TYPE* finalizer = new TYPE ();
+		this->mFinalizers.push_front ( finalizer );
 	}
 };
 

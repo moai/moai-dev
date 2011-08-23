@@ -13,9 +13,12 @@ class MOAIProp2D;
 //================================================================//
 /**	@name	MOAISim
 	@text	Sim timing and settings class.
+	
+	@const	EVENT_FINALIZE
 */
 class MOAISim :
-	public USGlobalClass < MOAISim, USLuaObject > {
+	public USGlobalClass < MOAISim, USLuaObject >,
+	public MOAIEventSource {
 private:
 
 	// timer state
@@ -23,6 +26,11 @@ private:
 		RUNNING,
 		PAUSED,
 		RESUMING,
+	};
+
+	// events
+	enum {
+		EVENT_FINALIZE,
 	};
 
 	u32				mTimerState;
@@ -83,19 +91,21 @@ public:
 	GET ( USTaskThread&, DataIOThread, mDataIOThread )
 	
 	//----------------------------------------------------------------//
-	void		Clear						();
-				MOAISim						();
-				~MOAISim					();
-	void		PauseMOAI					();
-	void		PopRenderPass				();
-	void		PushRenderPass				( MOAIProp2D* prop );
-	void		RegisterLuaClass			( USLuaState& state );
-	void		Render						();
-	void		ResumeMOAI					();
-	void		RunFile						( cc8* filename );
-	void		RunString					( cc8* script );
-	void		Update						();
-	STLString	ToString					();
+	void			Clear						();
+					MOAISim						();
+					~MOAISim					();
+	void			PauseMOAI					();
+	void			PopRenderPass				();
+	void			PushRenderPass				( MOAIProp2D* prop );
+	void			RegisterLuaClass			( USLuaState& state );
+	void			RegisterLuaFuncs			( USLuaState& state );
+	void			Render						();
+	void			ResumeMOAI					();
+	void			RunFile						( cc8* filename );
+	void			RunString					( cc8* script );
+	void			SendFinalizeEvent			();
+	void			Update						();
+	STLString		ToString					();
 };
 
 #endif

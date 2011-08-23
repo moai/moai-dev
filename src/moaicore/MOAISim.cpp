@@ -432,6 +432,8 @@ void MOAISim::PushRenderPass ( MOAIProp2D* prop ) {
 //----------------------------------------------------------------//
 void MOAISim::RegisterLuaClass ( USLuaState& state ) {
 
+	state.SetField ( -1, "EVENT_FINALIZE", ( u32 )EVENT_FINALIZE );
+
 	luaL_Reg regTable [] = {
 		{ "clearRenderStack",			_clearRenderStack },
 		{ "enterFullscreenMode",		_enterFullscreenMode },
@@ -449,11 +451,17 @@ void MOAISim::RegisterLuaClass ( USLuaState& state ) {
 		{ "setClearColor",				_setClearColor },
 		{ "setClearDepth",				_setClearDepth },
 		{ "setFrameSize",				_setFrameSize },
+		{ "setListener",				&MOAIEventSource::_setListener < MOAISim > },
 		{ "timeToFrames",				_timeToFrames },
 		{ NULL, NULL }
 	};
 
 	luaL_register( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAISim::RegisterLuaFuncs ( USLuaState& state ) {
+	UNUSED ( state );
 }
 
 //----------------------------------------------------------------//
@@ -538,6 +546,15 @@ void MOAISim::RunString ( cc8* script ) {
 	AKUStartGameLoopFunc startGameLoop = AKUGetFunc_StartGameLoop ();
 	if ( startGameLoop ) {
 		startGameLoop ();
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAISim::SendFinalizeEvent () {
+
+	USLuaStateHandle state = USLuaRuntime::Get ().State ();
+	if ( this->PushListenerAndSelf ( EVENT_FINALIZE, state )) {
+		state.DebugCall ( 1, 0 );
 	}
 }
 
