@@ -47,7 +47,7 @@ public:
 	//----------------------------------------------------------------//
 	void SetTop ( u32 top ) {
 	
-		this->Grow ( top );
+		this->Grow ( top, CHUNKSIZE );
 		this->mTop = top;
 	}
 	

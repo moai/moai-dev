@@ -50,7 +50,7 @@ void MOAIPartitionResultBuffer::PushResult ( MOAIProp& result ) {
 	u32 idx = this->mTotalResults++;
 	
 	if ( idx >= this->mMainBuffer.Size ()) {
-		this->mMainBuffer.Grow ( BLOCK_SIZE );
+		this->mMainBuffer.Grow ( idx + 1, BLOCK_SIZE );
 	}
 
 	this->mMainBuffer [ idx ].mData = &result;
