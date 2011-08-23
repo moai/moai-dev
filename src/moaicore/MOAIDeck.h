@@ -18,21 +18,19 @@ class MOAISurfaceSampler2D;
 */
 class MOAIDeck :
 	public virtual USLuaObject {
-private:
-
-	USRef < MOAIShader >	mShader;
-	u32						mContentMask;
-
-	//----------------------------------------------------------------//
-	static int			_setShader			( lua_State* L );
-
 protected:
 
 	enum {
 		NO_CONTENT = 0xffffffff,
 	};
 
+	USRef < MOAIShader >	mShader;
+	u32						mContentMask;
+
 	SET ( u32, ContentMask, mContentMask )
+
+	//----------------------------------------------------------------//
+	static int			_setShader			( lua_State* L );
 
 public:
 	

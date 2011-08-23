@@ -8,6 +8,222 @@
 #include <moaicore/MOAIShaderMgr.h>
 #include <moaicore/MOAIVertexFormatMgr.h>
 
+#define DEFAULT_ELLIPSE_STEPS 64
+
+//================================================================//
+// lua
+//================================================================//
+
+//----------------------------------------------------------------//
+// TODO
+int MOAIDraw::_drawAxisGrid ( lua_State* L ) {
+	UNUSED ( L );
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	drawCircle
+	
+	@in		number x
+	@in		number y
+	@in		number r
+	@in		number steps
+	@out	nil
+*/
+int MOAIDraw::_drawCircle ( lua_State* L ) {
+
+	USLuaState state ( L );
+	
+	float x0	= state.GetValue < float >( 1, 0.0f );
+	float y0	= state.GetValue < float >( 2, 0.0f );
+	float r		= state.GetValue < float >( 3, 0.0f );
+	u32 steps	= state.GetValue < u32 >( 4, DEFAULT_ELLIPSE_STEPS );
+
+	MOAIDraw::DrawEllipseOutline ( x0, y0, r, r, steps );
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	drawEllipse
+	
+	@in		number x
+	@in		number y
+	@in		number xRad
+	@in		number yRad
+	@in		number steps
+	@out	nil
+*/
+int MOAIDraw::_drawEllipse ( lua_State* L ) {
+
+	USLuaState state ( L );
+	
+	float x		= state.GetValue < float >( 1, 0.0f );
+	float y		= state.GetValue < float >( 2, 0.0f );
+	float xRad	= state.GetValue < float >( 3, 0.0f );
+	float yRad	= state.GetValue < float >( 4, 0.0f );
+	
+	u32 steps = state.GetValue < u32 >( 5, DEFAULT_ELLIPSE_STEPS );
+
+	MOAIDraw::DrawEllipseOutline ( x, y, xRad, yRad, steps );
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO
+int MOAIDraw::_drawGrid ( lua_State* L ) {
+	UNUSED ( L );
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	drawLine
+	
+	@in		...		List of vertices (x, y)
+	@out	nil
+*/
+int MOAIDraw::_drawLine ( lua_State* L ) {
+
+	MOAIDraw::DrawLuaParams( L, GL_LINE_STRIP );
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	drawPoints
+	
+	@in		...		List of vertices (x, y)
+	@out	nil
+*/
+int MOAIDraw::_drawPoints ( lua_State* L ) {
+	
+	MOAIDraw::DrawLuaParams( L, GL_POINTS );
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	drawRay
+	
+	@in		number x
+	@in		number y
+	@in		number dx
+	@in		number dy
+	@out	nil
+*/
+int MOAIDraw::_drawRay ( lua_State* L ) {
+
+	USLuaState state ( L );
+	
+	float x		= state.GetValue < float >( 1, 0.0f );
+	float y		= state.GetValue < float >( 2, 0.0f );
+	float dx	= state.GetValue < float >( 3, 0.0f );
+	float dy	= state.GetValue < float >( 4, 0.0f );
+
+	MOAIDraw::DrawRay ( x, y, dx, dy );
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	drawRect
+	
+	@in		number x0
+	@in		number y0
+	@in		number x1
+	@in		number y1
+	@out	nil
+*/
+int MOAIDraw::_drawRect ( lua_State* L ) {
+
+	USLuaState state ( L );
+	
+	float x0 = state.GetValue < float >( 1, 0.0f );
+	float y0 = state.GetValue < float >( 2, 0.0f );
+	float x1 = state.GetValue < float >( 3, 0.0f );
+	float y1 = state.GetValue < float >( 4, 0.0f );
+
+	MOAIDraw::DrawRectOutline ( x0, y0, x1, y1 );
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	fillCircle
+	
+	@in		number x
+	@in		number y
+	@in		number r
+	@in		number steps
+	@out	nil
+*/
+int MOAIDraw::_fillCircle ( lua_State* L ) {
+
+	USLuaState state ( L );
+	
+	float x0	= state.GetValue < float >( 1, 0.0f );
+	float y0	= state.GetValue < float >( 2, 0.0f );
+	float r		= state.GetValue < float >( 3, 0.0f );
+	u32 steps	= state.GetValue < u32 >( 4, DEFAULT_ELLIPSE_STEPS );
+
+	MOAIDraw::DrawEllipseFill ( x0, y0, r, r, steps );
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	fillEllipse
+	
+	@in		number x
+	@in		number y
+	@in		number xRad
+	@in		number yRad
+	@in		number steps
+	@out	nil
+*/
+int MOAIDraw::_fillEllipse ( lua_State* L ) {
+
+	USLuaState state ( L );
+	
+	float x		= state.GetValue < float >( 1, 0.0f );
+	float y		= state.GetValue < float >( 2, 0.0f );
+	float xRad	= state.GetValue < float >( 3, 0.0f );
+	float yRad	= state.GetValue < float >( 4, 0.0f );
+	
+	u32 steps = state.GetValue < u32 >( 5, DEFAULT_ELLIPSE_STEPS );
+
+	MOAIDraw::DrawEllipseFill ( x, y, xRad, yRad, steps );
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	fillFan
+	
+	@in		...		List of vertices (x, y)
+	@out	nil
+*/
+int MOAIDraw::_fillFan ( lua_State* L ) {
+
+	MOAIDraw::DrawLuaParams( L, GL_TRIANGLE_FAN );
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	fillRect
+	
+	@in		number x0
+	@in		number y0
+	@in		number x1
+	@in		number y1
+	@out	nil
+*/
+int MOAIDraw::_fillRect ( lua_State* L ) {
+
+	USLuaState state ( L );
+	
+	float x0 = state.GetValue < float >( 1, 0.0f );
+	float y0 = state.GetValue < float >( 2, 0.0f );
+	float x1 = state.GetValue < float >( 3, 0.0f );
+	float y1 = state.GetValue < float >( 4, 0.0f );
+
+	MOAIDraw::DrawRectFill ( x0, y0, x1, y1 );
+	return 0;
+}
+
 //================================================================//
 // MOAIDraw
 //================================================================//
@@ -17,6 +233,7 @@ void MOAIDraw::Bind () {
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	
+	gfxDevice.SetTexture ();
 	gfxDevice.SetShaderPreset ( MOAIShaderMgr::LINE_SHADER );
 	gfxDevice.SetVertexPreset ( MOAIVertexFormatMgr::XYC );
 }
@@ -120,47 +337,27 @@ void MOAIDraw::DrawEllipseFill ( USRect& rect, u32 steps ) {
 	float xRad = ( rect.mXMax - rect.mXMin ) * 0.5f;
 	float yRad = ( rect.mYMax - rect.mYMin ) * 0.5f;
 
-	USVec2D loc;
-	loc.mX = rect.mXMin + xRad;
-	loc.mY = rect.mYMin + yRad;
-
-	MOAIDraw::DrawEllipseFill ( loc, xRad, yRad, steps );
+	MOAIDraw::DrawEllipseFill ( rect.mXMin + xRad, rect.mYMin + yRad, xRad, yRad, steps );
 }
 
 //----------------------------------------------------------------//
-void MOAIDraw::DrawEllipseFill ( USVec2D& loc, float rad, u32 steps ) {
+void MOAIDraw::DrawEllipseFill ( float x, float y, float xRad, float yRad, u32 steps ) {
 
-	MOAIDraw::DrawEllipseFill ( loc, rad, rad, steps );
-}
-
-//----------------------------------------------------------------//
-void MOAIDraw::DrawEllipseFill ( USVec2D& loc, float xRad, float yRad, u32 steps ) {
-
-	static const u32 MAX = 64;
-	if ( steps > MAX ) steps = MAX;
-	float vtx [ MAX * 2 ];
-	glVertexPointer ( 2, GL_FLOAT, 0, vtx );
-	glEnableClientState ( GL_VERTEX_ARRAY );
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 
 	float angle = ( float )TWOPI / ( float )steps;
 	float angleStep = ( float )PI;
 	
+	gfxDevice.BeginPrim ( GL_TRIANGLE_FAN );
+	
 	for ( u32 i = 0; i < steps; ++i, angleStep += angle ) {
-	
-		u32 vi = i << 1;
-		vtx [ vi ] = loc.mX + ( Sin ( angleStep ) * xRad );
-		vtx [ vi + 1 ] = loc.mY + ( Cos ( angleStep ) * yRad );
+		gfxDevice.WriteVtx (
+			x + ( Sin ( angleStep ) * xRad ),
+			y + ( Cos ( angleStep ) * yRad )
+		);
+		gfxDevice.WritePenColor4b ();
 	}
-	
-	glDrawArrays ( GL_TRIANGLE_FAN, 0, steps );
-}
-
-//----------------------------------------------------------------//
-void MOAIDraw::DrawEllipseFill ( float left, float top, float right, float bottom, u32 steps ) {
-
-	USRect rect;
-	rect.Init ( left, top, right, bottom );
-	MOAIDraw::DrawEllipseFill ( rect, steps );
+	gfxDevice.EndPrim ();
 }
 
 //----------------------------------------------------------------//
@@ -169,47 +366,27 @@ void MOAIDraw::DrawEllipseOutline ( USRect& rect, u32 steps ) {
 	float xRad = ( rect.mXMax - rect.mXMin ) * 0.5f;
 	float yRad = ( rect.mYMax - rect.mYMin ) * 0.5f;
 
-	USVec2D loc;
-	loc.mX = rect.mXMin + xRad;
-	loc.mY = rect.mYMin + yRad;
-
-	MOAIDraw::DrawEllipseOutline ( loc, xRad, yRad, steps );
+	MOAIDraw::DrawEllipseOutline ( rect.mXMin + xRad, rect.mYMin + yRad, xRad, yRad, steps );
 }
 
 //----------------------------------------------------------------//
-void MOAIDraw::DrawEllipseOutline ( USVec2D& loc, float rad, u32 steps ) {
+void MOAIDraw::DrawEllipseOutline ( float x, float y, float xRad, float yRad, u32 steps ) {
 
-	MOAIDraw::DrawEllipseOutline ( loc, rad, rad, steps );
-}
-
-//----------------------------------------------------------------//
-void MOAIDraw::DrawEllipseOutline ( USVec2D& loc, float xRad, float yRad, u32 steps ) {
-
-	static const u32 MAX = 64;
-	if ( steps > MAX ) steps = MAX;
-	float vtx [ MAX * 2 ];
-	glVertexPointer ( 2, GL_FLOAT, 0, vtx );
-	glEnableClientState ( GL_VERTEX_ARRAY );
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 
 	float angle = ( float )TWOPI / ( float )steps;
 	float angleStep = ( float )PI;
 	
+	gfxDevice.BeginPrim ( GL_LINE_LOOP );
+	
 	for ( u32 i = 0; i < steps; ++i, angleStep += angle ) {
-	
-		u32 vi = i << 1;
-		vtx [ vi ] = loc.mX + ( Sin ( angleStep ) * xRad );
-		vtx [ vi + 1 ] = loc.mY + ( Cos ( angleStep ) * yRad );
+		gfxDevice.WriteVtx (
+			x + ( Sin ( angleStep ) * xRad ),
+			y + ( Cos ( angleStep ) * yRad )
+		);
+		gfxDevice.WritePenColor4b ();
 	}
-	
-	glDrawArrays ( GL_LINE_LOOP, 0, steps );
-}
-
-//----------------------------------------------------------------//
-void MOAIDraw::DrawEllipseOutline ( float left, float top, float right, float bottom, u32 steps ) {
-
-	USRect rect;
-	rect.Init ( left, top, right, bottom );
-	MOAIDraw::DrawEllipseOutline ( rect, steps );
+	gfxDevice.EndPrim ();
 }
 
 //----------------------------------------------------------------//
@@ -261,6 +438,30 @@ void MOAIDraw::DrawLine ( float x0, float y0, float x1, float y1 ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIDraw::DrawLuaParams ( lua_State* L, u32 primType ) {
+
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	USLuaState state ( L );
+
+	u32 total = state.GetTop () >> 1;
+	
+	gfxDevice.BeginPrim ( primType );
+	
+	for ( u32 i = 0; i < total; ++i ) {
+		
+		u32 idx = ( i << 1 ) + 1;
+		
+		float x = state.GetValue < float >( idx, 0.0f );
+		float y = state.GetValue < float >( idx + 1, 0.0f );
+		
+		gfxDevice.WriteVtx ( x, y );
+		gfxDevice.WritePenColor4b ();
+	}
+	
+	gfxDevice.EndPrim ();
+}
+
+//----------------------------------------------------------------//
 void MOAIDraw::DrawPoint ( USVec2D& loc ) {
 
 	MOAIDraw::DrawPoint ( loc.mX, loc.mY );
@@ -280,7 +481,10 @@ void MOAIDraw::DrawPoint ( float x, float y ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIDraw::DrawRay ( USVec2D loc, USVec2D vec ) {
+void MOAIDraw::DrawRay ( float x, float y, float dx, float dy ) {
+	
+	USVec2D loc ( x, y );
+	USVec2D vec ( dx, dy );
 	
 	USMatrix4x4 mtx = MOAIGfxDevice::Get ().GetViewProjMtx ();
 	
@@ -296,15 +500,22 @@ void MOAIDraw::DrawRay ( USVec2D loc, USVec2D vec ) {
 	USVec2D p0;
 	USVec2D p1;
 	
-	MOAILineBrush glLine;
-	
 	if ( viewRect.GetIntersection ( loc, vec, p0, p1 )) {
 		
 		invMtx.Transform ( p0 );
 		invMtx.Transform ( p1 );
 		
-		glLine.SetVerts ( p0, p1 );
-		glLine.Draw ();
+		MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+		
+		gfxDevice.BeginPrim ( GL_LINES );
+		
+			gfxDevice.WriteVtx ( p0.mX, p0.mY );
+			gfxDevice.WritePenColor4b ();
+			
+			gfxDevice.WriteVtx ( p1.mX, p1.mY );
+			gfxDevice.WritePenColor4b ();
+
+		gfxDevice.EndPrim ();
 	}
 }
 
@@ -350,30 +561,23 @@ void MOAIDraw::DrawRectFill ( USRect rect ) {
 //----------------------------------------------------------------//
 void MOAIDraw::DrawRectFill ( float left, float top, float right, float bottom ) {
 	
-	glDisableClientState ( GL_TEXTURE_COORD_ARRAY );
-	glDisableClientState ( GL_COLOR_ARRAY );
-	//glDisable ( GL_CULL_FACE );
-
-	glEnable ( GL_BLEND );
-	glBlendFunc ( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	
-	float vtx [ 8 ];
-	glVertexPointer ( 2, GL_FLOAT, 0, vtx );
-	glEnableClientState ( GL_VERTEX_ARRAY );
+	gfxDevice.BeginPrim ( GL_TRIANGLE_STRIP );
 	
-	vtx [ 0 ] = left;
-	vtx [ 1 ] = top;
+		gfxDevice.WriteVtx ( left, top );
+		gfxDevice.WritePenColor4b ();
+		
+		gfxDevice.WriteVtx ( right, top );
+		gfxDevice.WritePenColor4b ();
+		
+		gfxDevice.WriteVtx ( left, bottom );
+		gfxDevice.WritePenColor4b ();
+		
+		gfxDevice.WriteVtx ( right, bottom );
+		gfxDevice.WritePenColor4b ();
 	
-	vtx [ 2 ] = right;
-	vtx [ 3 ] = top;
-	
-	vtx [ 4 ] = left;
-	vtx [ 5 ] = bottom;
-	
-	vtx [ 6 ] = right;
-	vtx [ 7 ] = bottom;
-	
-	glDrawArrays ( GL_TRIANGLE_STRIP, 0, 4 );
+	gfxDevice.EndPrim ();
 }
 
 //----------------------------------------------------------------//
@@ -385,23 +589,23 @@ void MOAIDraw::DrawRectOutline ( USRect& rect ) {
 //----------------------------------------------------------------//
 void MOAIDraw::DrawRectOutline ( float left, float top, float right, float bottom ) {
 	
-	float vtx [ 8 ];
-	glVertexPointer ( 2, GL_FLOAT, 0, vtx );
-	glEnableClientState ( GL_VERTEX_ARRAY );
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	
-	vtx [ 0 ] = left;
-	vtx [ 1 ] = top;
+	gfxDevice.BeginPrim ( GL_LINE_LOOP );
 	
-	vtx [ 2 ] = right;
-	vtx [ 3 ] = top;
+		gfxDevice.WriteVtx ( left, top );
+		gfxDevice.WritePenColor4b ();
+		
+		gfxDevice.WriteVtx ( right, top );
+		gfxDevice.WritePenColor4b ();
+		
+		gfxDevice.WriteVtx ( right, bottom );
+		gfxDevice.WritePenColor4b ();
+		
+		gfxDevice.WriteVtx ( left, bottom );
+		gfxDevice.WritePenColor4b ();
 	
-	vtx [ 4 ] = right;
-	vtx [ 5 ] = bottom;
-	
-	vtx [ 6 ] = left;
-	vtx [ 7 ] = bottom;
-	
-	glDrawArrays ( GL_LINE_LOOP, 0, 4 );
+	gfxDevice.EndPrim ();
 }
 
 //----------------------------------------------------------------//
@@ -421,4 +625,37 @@ void MOAIDraw::DrawVertexArray ( USVec2D* verts, u32 count, u32 color, u32 primT
 	}
 
 	gfxDevice.EndPrim ();
+}
+
+//----------------------------------------------------------------//
+MOAIDraw::MOAIDraw () {
+
+	RTTI_SINGLE ( MOAIDraw )
+}
+
+//----------------------------------------------------------------//
+MOAIDraw::~MOAIDraw () {
+}
+
+//----------------------------------------------------------------//
+void MOAIDraw::RegisterLuaClass ( USLuaState& state ) {
+	UNUSED ( state );
+
+	luaL_Reg regTable [] = {
+		//{ "drawAxisGrid",			_drawAxisGrid }, // TODO
+		{ "drawCircle",				_drawCircle },
+		{ "drawEllipse",			_drawEllipse },
+		//{ "drawGrid",				_drawGrid }, // TODO
+		{ "drawLine",				_drawLine },
+		{ "drawPoints",				_drawPoints },
+		{ "drawRay",				_drawRay },
+		{ "drawRect",				_drawRect },
+		{ "fillCircle",				_fillCircle },
+		{ "fillEllipse",			_fillEllipse },
+		{ "fillFan",				_fillFan },
+		{ "fillRect",				_fillRect },
+		{ NULL, NULL }
+	};
+
+	luaL_register( state, 0, regTable );
 }

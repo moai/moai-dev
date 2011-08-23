@@ -94,6 +94,9 @@ private:
 
 	//----------------------------------------------------------------//
 	static int				_isProgrammable			( lua_State* L );
+	static int				_setPenColor			( lua_State* L );
+	static int				_setPenWidth			( lua_State* L );
+	static int				_setPointSize			( lua_State* L );
 
 	//----------------------------------------------------------------//
 	void					Clear					();
