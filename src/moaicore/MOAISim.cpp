@@ -136,7 +136,7 @@ int MOAISim::_getDeviceTime ( lua_State* L ) {
 int MOAISim::_getElapsedFrames ( lua_State* L ) {
 	
 	MOAISim& device = MOAISim::Get ();
-	lua_pushnumber ( L, device.mTime / device.mStep );
+	lua_pushnumber ( L, device.mSimTime / device.mStep );
 	return 1;
 }
 
@@ -148,7 +148,7 @@ int MOAISim::_getElapsedFrames ( lua_State* L ) {
 */
 int MOAISim::_getElapsedTime ( lua_State* L ) {
 	
-	lua_pushnumber ( L, MOAISim::Get ().mTime );
+	lua_pushnumber ( L, MOAISim::Get ().mSimTime );
 	return 1;
 }
 
@@ -304,12 +304,11 @@ int MOAISim::_pauseTimer ( lua_State* L ) {
 	bool pause = state.GetValue < bool >( 1, true );
 	
 	if ( pause ) {
-		MOAISim::Get ().mTimerState = MOAISim::RESUMING;
+		MOAISim::Get ().mLoopState = MOAISim::START;
 	}
 	else {
-		MOAISim::Get ().mTimerState = MOAISim::RUNNING;
+		MOAISim::Get ().mLoopState = MOAISim::RUNNING;
 	}
-	
 	return 0;
 }
 
@@ -377,6 +376,23 @@ int MOAISim::_reportLeaks ( lua_State* L ) {
 	if ( clearAfter ) {
 		luaRuntime.ResetLeakTracking ();
 	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	setBoostThreshold
+	@text	Sets the boost threshold, a scalar applied to step. If the gap
+			between simulation time and device time is greater than the step
+			size multiplied by the boost threshold and MOAISim.SIM_LOOP_ALLOW_BOOST
+			is set in the loop flags, then the simulation is updated once with a
+			large, variable step to make up the entire gap.
+
+	@opt	number boostThreshold		Default value is 3.
+	@out	nil
+*/
+int MOAISim::_setBoostThreshold ( lua_State* L ) {
+	USLuaState state ( L );
+	MOAISim::Get ().mBoostThreshold = state.GetValue < double >( 1, DEFAULT_BOOST_THRESHOLD );
 	return 0;
 }
 
@@ -470,6 +486,25 @@ int MOAISim::_setLeakTrackingEnabled ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	setLoopFlags
+	@text	Fine tune behavior of the simulation loop. MOAISim.SIM_LOOP_ALLOW_SPIN
+			will allow the simulation step to run multiple times per update to try
+			and catch up with device time, but will abort if processing the simulation
+			exceeds the configfured step time. MOAISim.SIM_LOOP_ALLOW_BOOST will permit
+			a *variable* update step if simulation time falls too far behind
+			device time (based on the boost threshold). Be warned: this can wreak
+			havok with physics and stepwise animation or game AI.
+
+	@opt	number flags		Mask or MOAISim.SIM_LOOP_ALLOW_BOOST, MOAISim.SIM_LOOP_ALLOW_SPIN. Default value is MOAISim.SIM_LOOP_ALLOW_SPIN.
+	@out	nil
+*/
+int MOAISim::_setLoopFlags ( lua_State* L ) {
+	USLuaState state ( L );
+	USLuaRuntime::Get ().EnableLeakTracking( state.GetValue < bool >( 1, false ));
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	timeToFrames
 	@text	Converts the number of time passed in seconds to frames.
 
@@ -493,6 +528,8 @@ int MOAISim::_timeToFrames ( lua_State* L ) {
 // MOAISim
 //================================================================//
 
+const double MOAISim::DEFAULT_BOOST_THRESHOLD = 3.0;
+
 //----------------------------------------------------------------//
 void MOAISim::Clear () {
 
@@ -503,20 +540,20 @@ void MOAISim::Clear () {
 
 //----------------------------------------------------------------//
 MOAISim::MOAISim () :
-	mTimerState ( RESUMING ),
-	mDeviceTime ( 0.0f ),
+	mLoopState ( START ),
 	mStep ( 0.01f ),
-	mTime ( 0.0f ),
+	mSimTime ( 0.0f ),
+	mBaseTime ( 0.0f ),
 	mFrameTime ( 0.0 ),
 	mFrameCounter ( 0 ),
 	mFrameRate ( 0.0f ),
 	mFrameRateIdx ( 0 ),
 	mClearFlags ( GL_COLOR_BUFFER_BIT ),
-	mClearColor ( 0xff000000 ) {
+	mClearColor ( 0xff000000 ),
+	mLoopFlags ( DEFAULT_LOOP_FLAGS ),
+	mBoostThreshold ( DEFAULT_BOOST_THRESHOLD ) {
 	
 	RTTI_SINGLE ( USLuaObject )
-
-	this->mDeviceTime = USDeviceTime::GetTimeInSeconds ();
 	
 	// Start Lua
 	USLuaRuntime& luaRuntime = USLuaRuntime::Get ();
@@ -559,7 +596,7 @@ void MOAISim::MeasureFrameRate () {
 //----------------------------------------------------------------//
 void MOAISim::PauseMOAI () {
 
-	this->mTimerState = PAUSED;
+	this->mLoopState = PAUSED;
 }
 
 //----------------------------------------------------------------//
@@ -588,6 +625,9 @@ void MOAISim::RegisterLuaClass ( USLuaState& state ) {
 
 	state.SetField ( -1, "EVENT_FINALIZE", ( u32 )EVENT_FINALIZE );
 
+	state.SetField ( -1, "SIM_LOOP_ALLOW_BOOST", ( u32 )SIM_LOOP_ALLOW_BOOST );
+	state.SetField ( -1, "SIM_LOOP_ALLOW_SPIN", ( u32 )SIM_LOOP_ALLOW_SPIN );
+
 	luaL_Reg regTable [] = {
 		{ "clearRenderStack",			_clearRenderStack },
 		{ "enterFullscreenMode",		_enterFullscreenMode },
@@ -605,11 +645,13 @@ void MOAISim::RegisterLuaClass ( USLuaState& state ) {
 		{ "popRenderPass",				_popRenderPass },
 		{ "pushRenderPass",				_pushRenderPass },
 		{ "reportLeaks",				_reportLeaks },
-		{ "setLeakTrackingEnabled",		_setLeakTrackingEnabled },
+		{ "setBoostThreshold",			_setBoostThreshold },
 		{ "setClearColor",				_setClearColor },
 		{ "setClearDepth",				_setClearDepth },
 		{ "setFrameSize",				_setFrameSize },
+		{ "setLeakTrackingEnabled",		_setLeakTrackingEnabled },
 		{ "setListener",				&MOAIEventSource::_setListener < MOAISim > },
+		{ "setLoopFlags",				_setLoopFlags },
 		{ "timeToFrames",				_timeToFrames },
 		{ NULL, NULL }
 	};
@@ -656,8 +698,8 @@ void MOAISim::Render () {
 //----------------------------------------------------------------//
 void MOAISim::ResumeMOAI() {
 
-	if ( this->mTimerState == PAUSED ) {
-		this->mTimerState = RESUMING;
+	if ( this->mLoopState == PAUSED ) {
+		this->mLoopState = START;
 	}
 }
 
@@ -674,8 +716,7 @@ void MOAISim::RunFile ( cc8* filename ) {
 	
 	this->mRenderPasses.Clear ();
 	MOAIActionMgr::Get ().Clear ();
-	this->mTime = 0.0f;
-	this->mDeviceTime = 0.0;
+	this->mSimTime = 0.0f;
 	
 	state.DebugCall ( 0, 0 );
 
@@ -696,8 +737,7 @@ void MOAISim::RunString ( cc8* script ) {
 	
 	this->mRenderPasses.Clear ();
 	MOAIActionMgr::Get ().Clear ();
-	this->mTime = 0.0f;
-	this->mDeviceTime = 0.0;
+	this->mSimTime = 0.0f;
 	
 	state.DebugCall ( 0, 0 );
 
@@ -717,108 +757,83 @@ void MOAISim::SendFinalizeEvent () {
 }
 
 //----------------------------------------------------------------//
+double MOAISim::StepSim ( double step ) {
+
+	double time = USDeviceTime::GetTimeInSeconds ();
+
+	MOAIDebugLines::Get ().Reset ();
+	MOAIInputMgr::Get ().Update ();
+	MOAIActionMgr::Get ().Update (( float )step );
+	MOAINodeMgr::Get ().Update ();
+	
+	this->mSimTime += step;
+	
+	return USDeviceTime::GetTimeInSeconds () - time;
+}
+
+//----------------------------------------------------------------//
 void MOAISim::Update () {
 
 	this->MeasureFrameRate ();
+	
+	// bail if we're paused
+	if ( this->mLoopState == PAUSED ) {
+		return;
+	}
+	
+	// 'budget' will be used to measure the actual time each update takes
+	// under no circumstances should we continue updating if we've exceeded the size of a single frame
+	double budget = this->mStep;
+	
+	// the actual device time
+	double realTime = USDeviceTime::GetTimeInSeconds () - this->mBaseTime;
 
-	this->mDeviceTime = USDeviceTime::GetTimeInSeconds ();
-
-	if ( this->mTimerState != RUNNING ) {
-		this->mTime = this->mDeviceTime;
+	// reset sim time on start
+	if ( this->mLoopState == START ) {
+	
+		this->mBaseTime = USDeviceTime::GetTimeInSeconds ();
+		realTime = 0.0f;
+	
+		this->mSimTime = realTime;
+		this->mLoopState = RUNNING;
 		
-		if ( this->mTimerState == RESUMING ) {
-			this->mTimerState = RUNNING;
-			
-			MOAIDebugLines::Get ().Reset ();
-			MOAIInputMgr::Get ().Update ();
-			MOAIActionMgr::Get ().Update ( 0.0f );
-			MOAINodeMgr::Get ().Update ();
+		printf ( "sim step: START\n" );
+		budget -= this->StepSim ( 0.0 );
+	}
+
+	// 'gap' is the time left to make up between sim time and real time
+	double gap = realTime - this->mSimTime;
+
+	if ( this->mLoopFlags & SIM_LOOP_ALLOW_BOOST ) {
+		double boost = gap - ( this->mStep * this->mBoostThreshold );
+		if ( boost > 0.0f ) {
+			printf ( "sim step: BOOST\n" );
+			budget -= this->StepSim ( gap );
+			gap = 0.0f;
 		}
-		else {
-			return;
+	}
+	
+	// single step
+	if (( this->mStep <= gap ) && ( budget > 0.0 )) {
+	
+		printf ( "sim step: UPDATE\n" );
+		budget -= this->StepSim ( this->mStep );
+		gap -= this->mStep;
+	}
+	
+	// spin to use up any additional budget
+	if ( this->mLoopFlags & SIM_LOOP_ALLOW_SPIN ) {
+		while (( this->mStep <= gap ) && ( budget > 0.0 )) {
+		
+			printf ( "sim step: SPIN\n" );
+			budget -= this->StepSim ( this->mStep );
+			gap -= this->mStep;
 		}
 	}
 
-	USLuaStateHandle state = USLuaRuntime::Get ().State ();
-
-	while (( this->mTime + this->mStep ) < this->mDeviceTime ) {
-	
-		MOAIDebugLines::Get ().Reset ();
-		MOAIInputMgr::Get ().Update ();
-		MOAIActionMgr::Get ().Update (( float )this->mStep );
-		MOAINodeMgr::Get ().Update ();
-		
-		this->mTime += this->mStep;
-	}
-	
+	// these stay out of the sim step for now
 	USUrlMgr::Get ().Process ();
-	
 	this->mDataIOThread.Publish ();
-
-	// TODO: harebrained
-	
-	//this->MeasureFrameRate ();
-	//
-	//this->mDeviceTime = USDeviceTime::GetTimeInSeconds ();
-
-	//if ( this->mTimerState != RUNNING ) {
-	//	this->mTime = this->mDeviceTime;
-	//	
-	//	if ( this->mTimerState == RESUMING ) {
-	//		this->mTimerState = RUNNING;
-	//		
-	//		MOAIDebugLines::Get ().Reset ();
-	//		MOAIInputMgr::Get ().Update ();
-	//		MOAIActionMgr::Get ().Update ( 0.0f );
-	//		MOAINodeMgr::Get ().Update ();
-	//		
-	//		this->mFrameCounter++;
-	//	}
-	//	else {
-	//		return;
-	//	}
-	//}
-
-	//USLuaStateHandle state = USLuaRuntime::Get ().State ();
-	//// printf("MOAISim::Update() frame! delta = %.1f ms\n", (mDeviceTime - mTime) * 1000);
-
-	//#define STEP_LOOP_IMPL() do { \
-	//	while (( this->mTime + step ) < this->mDeviceTime ) { \
-	//		/*if ( step > mStep ) \
-	//			printf("MOAISim::Update() step = %.1f ms\n", step * 1000); \
-	//		double t0 = USDeviceTime::GetTimeInSeconds (); */ \
-	//		MOAIDebugLines::Get ().Reset (); \
-	//		/* double t1 = USDeviceTime::GetTimeInSeconds (); */ \
-	//		MOAIInputMgr::Get ().Update (); \
-	//		/* double t2 = USDeviceTime::GetTimeInSeconds (); */ \
-	//		MOAIActionMgr::Get ().Update (( float )step ); \
-	//		/* double t3 = USDeviceTime::GetTimeInSeconds (); */ \
-	//		MOAINodeMgr::Get ().Update (); \
-	//		/* double t4 = USDeviceTime::GetTimeInSeconds ();  \
-	//		printf("  frame times (step = %5.1f) = %5.1f %5.1f %5.1f %5.1f\n", step*1000, (t1 - t0)*1000, (t2 - t1)*1000, (t3 - t2)*1000, (t4 - t3)*1000); */ \
-	//		this->mTime += step; \
-	//		this->mFrameCounter++; \
-	//	} \
-	//} while(0)
-	//
-	//// We potentially "drop" update frames if we've gone a long time
-	//// since the last update. This will hopefully catch us up quicker and
-	//// prevent vicious cycles where the frame rate never catches up.
-	//
-	//double step = this->mDeviceTime - this->mTime - this->mStep * 2;
-
-	//if( step > this->mStep ) {
-	//	STEP_LOOP_IMPL ();
-	//}
-	//
-	//step = this->mStep;
-	//
-	//STEP_LOOP_IMPL ();
-
-	//USUrlMgr::Get ().Process ();
-	//this->mDataIOThread.Publish ();
-	//
-	////printf("  frame delta = %.1f\n", (USDeviceTime::GetTimeInSeconds() - mDeviceTime) * 1000);
 }
 
 //----------------------------------------------------------------//
@@ -828,12 +843,12 @@ STLString MOAISim::ToString () {
 
 	const char *timer_state;
 
-	switch ( mTimerState ) {
+	switch ( mLoopState ) {
 		case PAUSED:
 			timer_state = "paused";
 			break;
-		case RESUMING:
-			timer_state = "resuming";
+		case START:
+			timer_state = "start";
 			break;
 		case RUNNING:
 			timer_state = "running";
@@ -842,9 +857,8 @@ STLString MOAISim::ToString () {
 			timer_state = "INVALID";
 	}
 
-	PrettyPrint ( repr, "mTimerState", timer_state );
-	PRETTY_PRINT ( repr, mTime )
-	PRETTY_PRINT ( repr, mDeviceTime )
+	PrettyPrint ( repr, "mLoopState", timer_state );
+	PRETTY_PRINT ( repr, this->mSimTime )
 
 	return repr;
 }
