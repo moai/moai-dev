@@ -7,13 +7,14 @@
 //================================================================//
 // USLog
 //================================================================//
-namespace USLog {
+class USLog {
 
-	static FILE* CONSOLE = 0;
+public:
+	static FILE* CONSOLE;
 
 	//----------------------------------------------------------------//
-	void	Print	( cc8* format, ... );
-	void	Print	( FILE* file, cc8* format, ... );
-}
+	static void	Print	( cc8* format, ... );
+	static void	Print	( FILE* file, cc8* format, ... );
+};
 
 #endif

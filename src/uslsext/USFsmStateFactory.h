@@ -51,7 +51,7 @@ public:
 	template < typename STATE_TYPE >
 	void RegisterState ( cc8* statename ) {
 	
-		this->mCreatorTable [ statename ] = &USGlobals::Get ()->GetGlobal < USConcreteStateCreator < STATE_TYPE > > ();
+		this->mCreatorTable [ statename ] = &USGlobalsMgr::Get ()->GetGlobal < USConcreteStateCreator < STATE_TYPE > > ();
 	}
 	
 	//----------------------------------------------------------------//

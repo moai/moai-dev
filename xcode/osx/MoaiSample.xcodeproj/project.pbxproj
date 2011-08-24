@@ -10,12 +10,12 @@
 		032410EB13565FF6000ADC60 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDEE22E413543D6600C2E04C /* GLUT.framework */; };
 		032410EE13565FFD000ADC60 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDEE22E613543D8600C2E04C /* OpenGL.framework */; };
 		0324CC64135643FD000ADC60 /* libSystem.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0324CC63135643FD000ADC60 /* libSystem.dylib */; };
-		0324CC6613564411000ADC60 /* libz.1.2.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0324CC6513564411000ADC60 /* libz.1.2.3.dylib */; };
 		0324E2EF135649A9000ADC60 /* libmoai-osx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0324E2C21356485F000ADC60 /* libmoai-osx.a */; };
 		03EB1AE913B519B200E1A6C2 /* libmoai-osx-untz.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDBDAEBF13A2F6C700FD5641 /* libmoai-osx-untz.a */; };
 		07CC7AFA13DF7E9B00F2DEDE /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07CC7AF913DF7E9B00F2DEDE /* CoreFoundation.framework */; };
 		07CC7B0013DF7EF200F2DEDE /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07CC7AFF13DF7EF200F2DEDE /* Carbon.framework */; };
 		07CC7B0713DF7F0F00F2DEDE /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07CC7B0613DF7F0F00F2DEDE /* IOKit.framework */; };
+		66D9680C14047B7100017919 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 66D9680B14047B7100017919 /* libz.dylib */; };
 		CD07C42713A1864F00C9386C /* libmoai-osx-3rdparty.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0324E2C01356485F000ADC60 /* libmoai-osx-3rdparty.a */; };
 		CD07C42813A1865200C9386C /* libmoai-osx-luaext.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD07C41713A185E200C9386C /* libmoai-osx-luaext.a */; };
 		CD2D875D13B9AD3C00AF7809 /* GlutHostMain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD2D875C13B9AD3C00AF7809 /* GlutHostMain.cpp */; };
@@ -126,11 +126,11 @@
 
 /* Begin PBXFileReference section */
 		0324CC63135643FD000ADC60 /* libSystem.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libSystem.dylib; path = /usr/lib/libSystem.dylib; sourceTree = "<absolute>"; };
-		0324CC6513564411000ADC60 /* libz.1.2.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.3.dylib; path = /usr/lib/libz.1.2.3.dylib; sourceTree = "<absolute>"; };
 		0324CC6913564429000ADC60 /* libmoai.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = libmoai.xcodeproj; path = ../libmoai/libmoai.xcodeproj; sourceTree = SOURCE_ROOT; };
 		07CC7AF913DF7E9B00F2DEDE /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = /System/Library/Frameworks/CoreFoundation.framework; sourceTree = "<absolute>"; };
 		07CC7AFF13DF7EF200F2DEDE /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
 		07CC7B0613DF7F0F00F2DEDE /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = /System/Library/Frameworks/IOKit.framework; sourceTree = "<absolute>"; };
+		66D9680B14047B7100017919 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = ../../../../../../../usr/lib/libz.dylib; sourceTree = "<group>"; };
 		CD2D875C13B9AD3C00AF7809 /* GlutHostMain.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GlutHostMain.cpp; path = ../../src/hosts/GlutHostMain.cpp; sourceTree = SOURCE_ROOT; };
 		CD2FDEBB13542F1400B814DF /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/System/Library/Frameworks/AddressBook.framework; sourceTree = DEVELOPER_DIR; };
 		CD74EA2B137807E40093EE68 /* libcrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.dylib; path = /usr/lib/libcrypto.dylib; sourceTree = "<absolute>"; };
@@ -152,7 +152,6 @@
 				032410EE13565FFD000ADC60 /* OpenGL.framework in Frameworks */,
 				032410EB13565FF6000ADC60 /* GLUT.framework in Frameworks */,
 				0324CC64135643FD000ADC60 /* libSystem.dylib in Frameworks */,
-				0324CC6613564411000ADC60 /* libz.1.2.3.dylib in Frameworks */,
 				CD74EA2C137807E40093EE68 /* libcrypto.dylib in Frameworks */,
 				CD74EA321378080E0093EE68 /* libssl.dylib in Frameworks */,
 				0324E2EF135649A9000ADC60 /* libmoai-osx.a in Frameworks */,
@@ -162,6 +161,7 @@
 				07CC7AFA13DF7E9B00F2DEDE /* CoreFoundation.framework in Frameworks */,
 				07CC7B0013DF7EF200F2DEDE /* Carbon.framework in Frameworks */,
 				07CC7B0713DF7F0F00F2DEDE /* IOKit.framework in Frameworks */,
+				66D9680C14047B7100017919 /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -224,7 +224,7 @@
 				CD74EA2B137807E40093EE68 /* libcrypto.dylib */,
 				CD74EA311378080E0093EE68 /* libssl.dylib */,
 				0324CC63135643FD000ADC60 /* libSystem.dylib */,
-				0324CC6513564411000ADC60 /* libz.1.2.3.dylib */,
+				66D9680B14047B7100017919 /* libz.dylib */,
 				07CC7AF913DF7E9B00F2DEDE /* CoreFoundation.framework */,
 				07CC7AFF13DF7EF200F2DEDE /* Carbon.framework */,
 				07CC7B0613DF7F0F00F2DEDE /* IOKit.framework */,
