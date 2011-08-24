@@ -719,10 +719,8 @@ void MOAISim::SendFinalizeEvent () {
 //----------------------------------------------------------------//
 void MOAISim::Update () {
 
-	// TODO: harebrained
-
 	this->MeasureFrameRate ();
-	
+
 	this->mDeviceTime = USDeviceTime::GetTimeInSeconds ();
 
 	if ( this->mTimerState != RUNNING ) {
@@ -735,8 +733,6 @@ void MOAISim::Update () {
 			MOAIInputMgr::Get ().Update ();
 			MOAIActionMgr::Get ().Update ( 0.0f );
 			MOAINodeMgr::Get ().Update ();
-			
-			this->mFrameCounter++;
 		}
 		else {
 			return;
@@ -744,45 +740,85 @@ void MOAISim::Update () {
 	}
 
 	USLuaStateHandle state = USLuaRuntime::Get ().State ();
-	// printf("MOAISim::Update() frame! delta = %.1f ms\n", (mDeviceTime - mTime) * 1000);
 
-	#define STEP_LOOP_IMPL() do { \
-		while (( this->mTime + step ) < this->mDeviceTime ) { \
-			/*if ( step > mStep ) \
-				printf("MOAISim::Update() step = %.1f ms\n", step * 1000); \
-			double t0 = USDeviceTime::GetTimeInSeconds (); */ \
-			MOAIDebugLines::Get ().Reset (); \
-			/* double t1 = USDeviceTime::GetTimeInSeconds (); */ \
-			MOAIInputMgr::Get ().Update (); \
-			/* double t2 = USDeviceTime::GetTimeInSeconds (); */ \
-			MOAIActionMgr::Get ().Update (( float )step ); \
-			/* double t3 = USDeviceTime::GetTimeInSeconds (); */ \
-			MOAINodeMgr::Get ().Update (); \
-			/* double t4 = USDeviceTime::GetTimeInSeconds ();  \
-			printf("  frame times (step = %5.1f) = %5.1f %5.1f %5.1f %5.1f\n", step*1000, (t1 - t0)*1000, (t2 - t1)*1000, (t3 - t2)*1000, (t4 - t3)*1000); */ \
-			this->mTime += step; \
-			this->mFrameCounter++; \
-		} \
-	} while(0)
+	while (( this->mTime + this->mStep ) < this->mDeviceTime ) {
 	
-	// We potentially "drop" update frames if we've gone a long time
-	// since the last update. This will hopefully catch us up quicker and
-	// prevent vicious cycles where the frame rate never catches up.
-	
-	double step = this->mDeviceTime - this->mTime - this->mStep * 2;
-
-	if( step > this->mStep ) {
-		STEP_LOOP_IMPL ();
+		MOAIDebugLines::Get ().Reset ();
+		MOAIInputMgr::Get ().Update ();
+		MOAIActionMgr::Get ().Update (( float )this->mStep );
+		MOAINodeMgr::Get ().Update ();
+		
+		this->mTime += this->mStep;
 	}
 	
-	step = this->mStep;
-	
-	STEP_LOOP_IMPL ();
-
 	USUrlMgr::Get ().Process ();
-	this->mDataIOThread.Publish ();
 	
-	//printf("  frame delta = %.1f\n", (USDeviceTime::GetTimeInSeconds() - mDeviceTime) * 1000);
+	this->mDataIOThread.Publish ();
+
+	// TODO: harebrained
+	
+	//this->MeasureFrameRate ();
+	//
+	//this->mDeviceTime = USDeviceTime::GetTimeInSeconds ();
+
+	//if ( this->mTimerState != RUNNING ) {
+	//	this->mTime = this->mDeviceTime;
+	//	
+	//	if ( this->mTimerState == RESUMING ) {
+	//		this->mTimerState = RUNNING;
+	//		
+	//		MOAIDebugLines::Get ().Reset ();
+	//		MOAIInputMgr::Get ().Update ();
+	//		MOAIActionMgr::Get ().Update ( 0.0f );
+	//		MOAINodeMgr::Get ().Update ();
+	//		
+	//		this->mFrameCounter++;
+	//	}
+	//	else {
+	//		return;
+	//	}
+	//}
+
+	//USLuaStateHandle state = USLuaRuntime::Get ().State ();
+	//// printf("MOAISim::Update() frame! delta = %.1f ms\n", (mDeviceTime - mTime) * 1000);
+
+	//#define STEP_LOOP_IMPL() do { \
+	//	while (( this->mTime + step ) < this->mDeviceTime ) { \
+	//		/*if ( step > mStep ) \
+	//			printf("MOAISim::Update() step = %.1f ms\n", step * 1000); \
+	//		double t0 = USDeviceTime::GetTimeInSeconds (); */ \
+	//		MOAIDebugLines::Get ().Reset (); \
+	//		/* double t1 = USDeviceTime::GetTimeInSeconds (); */ \
+	//		MOAIInputMgr::Get ().Update (); \
+	//		/* double t2 = USDeviceTime::GetTimeInSeconds (); */ \
+	//		MOAIActionMgr::Get ().Update (( float )step ); \
+	//		/* double t3 = USDeviceTime::GetTimeInSeconds (); */ \
+	//		MOAINodeMgr::Get ().Update (); \
+	//		/* double t4 = USDeviceTime::GetTimeInSeconds ();  \
+	//		printf("  frame times (step = %5.1f) = %5.1f %5.1f %5.1f %5.1f\n", step*1000, (t1 - t0)*1000, (t2 - t1)*1000, (t3 - t2)*1000, (t4 - t3)*1000); */ \
+	//		this->mTime += step; \
+	//		this->mFrameCounter++; \
+	//	} \
+	//} while(0)
+	//
+	//// We potentially "drop" update frames if we've gone a long time
+	//// since the last update. This will hopefully catch us up quicker and
+	//// prevent vicious cycles where the frame rate never catches up.
+	//
+	//double step = this->mDeviceTime - this->mTime - this->mStep * 2;
+
+	//if( step > this->mStep ) {
+	//	STEP_LOOP_IMPL ();
+	//}
+	//
+	//step = this->mStep;
+	//
+	//STEP_LOOP_IMPL ();
+
+	//USUrlMgr::Get ().Process ();
+	//this->mDataIOThread.Publish ();
+	//
+	////printf("  frame delta = %.1f\n", (USDeviceTime::GetTimeInSeconds() - mDeviceTime) * 1000);
 }
 
 //----------------------------------------------------------------//
