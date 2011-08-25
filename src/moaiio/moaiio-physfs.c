@@ -104,6 +104,7 @@ MOAIFILE* moai_fopen ( const char* filename, const char* mode ) {
 	
 	MOAIFILE* outFile;
 	char* base;
+	int length;
 
 	if ( PHYSFS_isInit () == 0 )
 		return NULL;
@@ -115,6 +116,8 @@ MOAIFILE* moai_fopen ( const char* filename, const char* mode ) {
 
 	case 'r':
 		outFile = PHYSFS_openRead ( base );
+		length = PHYSFS_fileLength ( outFile );
+		break;
 	case 'w':
 		outFile = PHYSFS_openWrite ( base );
 		break;
@@ -152,11 +155,12 @@ size_t moai_fread ( void* buffer, size_t size, size_t count, MOAIFILE* file ) {
 //----------------------------------------------------------------//
 int	moai_fseek ( MOAIFILE* file, long offset, int origin ) {
 	
+	int length;
 	if ( PHYSFS_isInit () == 0 )
 		return 0;
-
+	length = PHYSFS_fileLength ( file );
 	if ( origin == SEEK_END )
-		return PHYSFS_seek ( file, PHYSFS_fileLength ( file ));
+		return PHYSFS_seek ( file, length);
 	else if ( origin == SEEK_SET )
 		return PHYSFS_seek ( file, 0 );
 	else

@@ -15,6 +15,8 @@
 // physfs
 #ifdef MOAI_IO_PHYSFS
 	#include <physfs.h>
+
+	#define MAX_PATH 260
 #endif
 
 #endif

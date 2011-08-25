@@ -68,8 +68,7 @@ int	moai_fputs ( const char* string, MOAIFILE* file ) {
 
 //----------------------------------------------------------------//
 size_t moai_fread ( void* buffer, size_t size, size_t count, MOAIFILE* file ) {
-	size_t num = fread ( buffer, size, count, file );
-	return num;
+	return fread ( buffer, size, count, file );
 }
 
 //----------------------------------------------------------------//

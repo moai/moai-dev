@@ -50,9 +50,9 @@ bool USFileStream::OpenRead ( cc8* filename ) {
 	this->mFile = ( MOAIFILE* )moai_fopen ( filename, "rb" );
 	if ( this->mFile ) {
 
-		moai_fseek ( this->mFile, 0, SEEK_END );
+		moai_fseek ( this->mFile, 0L, SEEK_END );
 		this->mLength = ( u32 )moai_ftell ( this->mFile );
-		moai_fseek ( this->mFile, 0, SEEK_SET );
+		moai_fseek ( this->mFile, 0L, SEEK_SET );
 	}
 
 	return this->mFile != NULL;
