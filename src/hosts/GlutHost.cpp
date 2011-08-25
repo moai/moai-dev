@@ -127,7 +127,7 @@ static void _onReshape( int w, int h ) {
 }
 
 //----------------------------------------------------------------//
-void _onTimer ( int millisec ) {
+static void _onTimer ( int millisec ) {
 
 	glutTimerFunc ( GLUT_TIMER_INTERVAL, _onTimer, GLUT_TIMER_INTERVAL );
 	

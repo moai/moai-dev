@@ -129,6 +129,7 @@ public class MoaiSample extends Activity {
 			zis.close();
 		}
 		catch ( Exception e ) {
+			Log.e( "MoaiSample", "Unable to read or write to SD card");
 		}
 		finally {
 		}
