@@ -40,6 +40,7 @@ private:
 
 	//----------------------------------------------------------------//
 	static int		_clear					( lua_State* L );
+	static int		_getFitDistance			( lua_State* L );
 	static int		_insertAnchor			( lua_State* L );
 	static int		_removeAnchor			( lua_State* L );
 	static int		_setBounds				( lua_State* L );
@@ -63,8 +64,9 @@ public:
 	DECL_LUA_FACTORY ( MOAICameraFitter2D )
 
 	//----------------------------------------------------------------//
-	void			Clear					();
 	void			AddAnchor				( MOAICameraAnchor2D& anchor );
+	void			Clear					();
+	float			GetFitDistance			();
 	bool			IsDone					();
 					MOAICameraFitter2D		();
 					~MOAICameraFitter2D		();
