@@ -3,9 +3,12 @@
 
 #include "pch.h"
 #include <uslscore/uslscore.h>
+#include <physfs.h>
 
 //----------------------------------------------------------------//
 static void _cleanup () {
+
+	PHYSFS_deinit ();
 
 	USGlobals::Get ()->Finalize ();
 }
@@ -48,6 +51,16 @@ void uslscore::InitGlobals ( USGlobals* globals ) {
 		srand (( u32 )time ( 0 ));
 		atexit ( _cleanup );
 
+		// get current path for PhysFS init		
+		char path [ PATH_MAX ];
+		char* str = getcwd ( path, PATH_MAX );
+		UNUSED ( str );
+
+		// init PhysFS
+		PHYSFS_init ( "MOAI" );
+		PHYSFS_addToSearchPath ( path, 1 ); //init search path to current working dir
+		PHYSFS_setWriteDir ( path );        //init write directory to current working dir
+		
 		sysInit = false;
 	}
 

@@ -119,6 +119,11 @@ extern "C" {
 	#include <lualib.h>
 }
 
+// io
+extern "C" {
+	#include <moaiio/moaiio.h>
+}
+
 //----------------------------------------------------------------//
 typedef unsigned int			uint;
 typedef unsigned long			uintptr;

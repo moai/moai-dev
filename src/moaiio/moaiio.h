@@ -8,44 +8,55 @@
 // MOAI IO
 //================================================================//
 
+#ifdef MOAI_IO_PHYSFS
+	typedef		PHYSFS_File		MOAIFILE;
+#elif defined MOAI_IO_STD
+	typedef		FILE			MOAIFILE;
+#else
+	typedef		void			MOAIFILE;
+#endif
+		
 //----------------------------------------------------------------//
-int					MOAIfclose			( void* file );
+char*				moai_basename		( const char* filename );
 
 //----------------------------------------------------------------//
-int					MOAIfeof			( void* file );
+int					moai_fclose			( MOAIFILE* file );
 
 //----------------------------------------------------------------//
-int					MOAIfflush			( void* file );
+int					moai_feof			( MOAIFILE* file );
 
 //----------------------------------------------------------------//
-int					MOAIfgetc			( void* file );
+int					moai_fflush			( MOAIFILE* file );
 
 //----------------------------------------------------------------//
-char* 				MOAIfgets			( char* string, int length, void* file );
+int					moai_fgetc			( MOAIFILE* file );
 
 //----------------------------------------------------------------//
-void* 				MOAIfopen 			( const char* filename, const char* mode );
+char* 				moai_fgets			( char* string, int length, MOAIFILE* file );
 
 //----------------------------------------------------------------//
-int 				MOAIfputc			( int c, void* file );
+MOAIFILE* 			moai_fopen 			( const char* filename, const char* mode );
 
 //----------------------------------------------------------------//
-int					MOAIfputs			( const char* string, void* file );
+int 				moai_fputc			( int c, MOAIFILE* file );
 
 //----------------------------------------------------------------//
-size_t				MOAIfread			( const void* buffer, size_t size, size_t count, void* file );
+int					moai_fputs			( const char* string, MOAIFILE* file );
 
 //----------------------------------------------------------------//
-int					MOAIfreopen			( const char* filename, const char* mode, void* file );
+size_t				moai_fread			( const void* buffer, size_t size, size_t count, MOAIFILE* file );
 
 //----------------------------------------------------------------//
-int					MOAIfseek			( void* file, long offset, int origin );
+int					moai_freopen		( const char* filename, const char* mode, MOAIFILE* file );
 
 //----------------------------------------------------------------//
-long				MOAIftell			( void* file );
+int					moai_fseek			( MOAIFILE* file, long offset, int origin );
 
 //----------------------------------------------------------------//
-size_t				MOAIfwrite			( const void* data, size_t size, size_t count, void* file );
+long				moai_ftell			( MOAIFILE* file );
+
+//----------------------------------------------------------------//
+size_t				moai_fwrite			( const void* data, size_t size, size_t count, MOAIFILE* file );
 
 
 #endif
