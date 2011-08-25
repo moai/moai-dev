@@ -44,71 +44,6 @@
 @end
 
 //================================================================//
-// local
-//================================================================//
-
-// TODO: harebrained
-#define USE_ASYNC_NAME_RESOLVE 0
-
-#if USE_ASYNC_NAME_RESOLVE
-
-//----------------------------------------------------------------//
-static void AsyncNameRequestHostCleanup ( CFHostRef host ) {
-
-	assert ( host != NULL );
-	
-	CFHostUnscheduleFromRunLoop ( host, CFRunLoopGetCurrent(), kCFRunLoopCommonModes );
-	( void )CFHostSetClient ( host, NULL, NULL );
-	
-	CFRelease ( host );
-}
-
-//----------------------------------------------------------------//
-static void AsyncNameRequestCFHCC ( CFHostRef host, CFHostInfoType typeInfo, const CFStreamError *error, void *info ) {
-
-	CFStringRef hostname = ( CFStringRef )info;
-	char ipAddress [ INET6_ADDRSTRLEN ];
-	CFArrayRef array;
-    
-	if ( error->error == noErr ) {
-		
-		switch ( typeInfo ) {
-				
-			case kCFHostAddresses:
-				// CFHostGetAddressing retrieves the known addresses from the given host. Returns a
-				// CFArrayRef of addresses.  Each address is a CFDataRef wrapping a struct sockaddr.
-				 
-				array = CFHostGetAddressing ( host, NULL );
-				if ( CFArrayGetCount ( array ) > 0 ) {
-					
-					// Only need one, take the first.
-					struct sockaddr *addr = ( struct sockaddr* )CFDataGetBytePtr((CFDataRef)CFArrayGetValueAtIndex ( array, 0 ));
-					
-					if ( getnameinfo ( addr, addr->sa_len, ipAddress, INET6_ADDRSTRLEN, NULL, 0, NI_NUMERICHOST )) {
-						assert ([ NSThread isMainThread ]);
-						// Need to call this on main thread.
-						MOAIApp::Get().DidResolveHostName (( NSString* )hostname, ipAddress );
-					}
-				}
-                break;
-				
-			default:
-				break;
-        }
-    }
-	else {
-		fprintf ( stderr, "AsyncNameRequestCFHCC returned (%ld, %ld)\n", error->domain, error->error );
-	}
-    
-	// The CFHost callback only gets called once, so we cleanup now that we're done.
-	AsyncNameRequestHostCleanup ( host );
-    
-	// Stop the run loop now that we've retrieved the host info.
-	CFRunLoopStop ( CFRunLoopGetCurrent ());
-}
-#endif
-
-//================================================================//
 // lua
 //================================================================//
 
@@ -166,55 +101,6 @@ int MOAIApp::_alert( lua_State* L ) {
 	
 	return 0;
 }
-
-//----------------------------------------------------------------//
-/**	@name	asyncNameResolve
-	@text	Perform an asynchronous name resolution. You must have registered a
-			listener for ASYNC_NAME_RESOLVE on MOAIApp in order to receive the 
-			results of this lookup.
- 
-	@in		string hostname		The hostname to look up.
-*/ 
-int MOAIApp::_asyncNameResolve( lua_State* L ) {
-	USLuaState state( L );
-	
-	if ( !state.IsType ( 1, LUA_TSTRING )) {
-		return 0;
-	}
-
-	#if USE_ASYNC_NAME_RESOLVE
-		// Grr. link errors on armv6/7 for some reason!
-		
-		// We provide a NSURLConnection implementation here, because libcurl currently
-		// has DNS issues on iOS (blocking).
-		
-		cc8* hostnamestr = state.GetValue < cc8* >( 1, 0 );
-
-		// Because NSURLConnection does not do asynchronous DNS, we have to try and
-		// do yet another layer of indirection to see if it's going to work.
-		NSString *hostName = [NSString stringWithUTF8String:hostnamestr];
-		
-		CFHostClientContext	context = { 0, (void *)hostName, CFRetain, CFRelease, NULL };
-		CFStreamError error;
-		
-		CFHostRef host = CFHostCreateWithName ( kCFAllocatorDefault, ( CFStringRef )hostName );
-		if( CFHostSetClient ( host, AsyncNameRequestCFHCC, &context )) {
-			CFHostScheduleWithRunLoop(host, CFRunLoopGetCurrent(), kCFRunLoopCommonModes);
-			
-			if( !CFHostStartInfoResolution ( host, kCFHostAddresses, &error )) {
-				AsyncNameRequestHostCleanup ( host );
-			}
-		}
-		else {
-			NSLog ( @"Error getting hostname for: %@", hostName );
-			CFRelease ( host );
-			host = NULL;
-		}
-	#endif
-	
-	return 0;
-}
-
 
 //----------------------------------------------------------------//
 /**	@name	canMakePayments
@@ -768,7 +654,6 @@ void MOAIApp::RegisterLuaClass ( USLuaState& state ) {
 	
 	luaL_Reg regTable[] = {
 		{ "alert",								_alert },
-		{ "asyncNameResolve",					_asyncNameResolve },
 		{ "canMakePayments",					_canMakePayments },
 		{ "getAppIconBadgeNumber",				_getAppIconBadgeNumber },
 		{ "getDirectoryInDomain",				_getDirectoryInDomain },

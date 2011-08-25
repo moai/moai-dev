@@ -81,7 +81,6 @@ private:
 
 	//----------------------------------------------------------------//
 	static int		_alert									( lua_State* L );
-	static int		_asyncNameResolve						( lua_State* L );
 	static int		_canMakePayments						( lua_State* L );
 	static int		_getAppIconBadgeNumber					( lua_State* L );
 	static int		_getDirectoryInDomain					( lua_State* L );

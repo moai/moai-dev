@@ -105,9 +105,9 @@ u32 MOAIActionMgr::GetNextPass () {
 //----------------------------------------------------------------//
 MOAIActionMgr::MOAIActionMgr () :
 	mPass ( RESET_PASS ),
-	mCurrentAction ( 0 ),
 	mProfilingEnabled ( false ),
-	mThreadInfoEnabled ( false ) {
+	mThreadInfoEnabled ( false ),
+	mCurrentAction ( 0 ) {
 	
 	RTTI_SINGLE ( USLuaObject )
 }

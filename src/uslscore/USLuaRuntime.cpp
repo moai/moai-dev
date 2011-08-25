@@ -553,7 +553,7 @@ void USLuaRuntime::ReportLeaksRaw ( FILE *f ) {
 		fputs ( i->second.c_str (), f );
 		count++;
 	}
-	fprintf ( f, "-- END LEAK REPORT (Total Objects: %lu) ---------\n", count );
+	fprintf ( f, "-- END LEAK REPORT (Total Objects: %d) ---------\n", count );
 }
 
 //----------------------------------------------------------------//
