@@ -797,7 +797,6 @@ void MOAISim::Update () {
 		this->mSimTime = realTime;
 		this->mLoopState = RUNNING;
 		
-		printf ( "sim step: START\n" );
 		budget -= this->StepSim ( 0.0 );
 	}
 
@@ -807,7 +806,6 @@ void MOAISim::Update () {
 	if ( this->mLoopFlags & SIM_LOOP_ALLOW_BOOST ) {
 		double boost = gap - ( this->mStep * this->mBoostThreshold );
 		if ( boost > 0.0f ) {
-			printf ( "sim step: BOOST\n" );
 			budget -= this->StepSim ( gap );
 			gap = 0.0f;
 		}
@@ -815,8 +813,6 @@ void MOAISim::Update () {
 	
 	// single step
 	if (( this->mStep <= gap ) && ( budget > 0.0 )) {
-	
-		printf ( "sim step: UPDATE\n" );
 		budget -= this->StepSim ( this->mStep );
 		gap -= this->mStep;
 	}
@@ -824,8 +820,6 @@ void MOAISim::Update () {
 	// spin to use up any additional budget
 	if ( this->mLoopFlags & SIM_LOOP_ALLOW_SPIN ) {
 		while (( this->mStep <= gap ) && ( budget > 0.0 )) {
-		
-			printf ( "sim step: SPIN\n" );
 			budget -= this->StepSim ( this->mStep );
 			gap -= this->mStep;
 		}
