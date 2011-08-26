@@ -68,7 +68,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="moaicore.lib moaiext-luaext.lib moaiext-untz.lib dsound.lib strmiids.lib opengl32.lib glu32.lib glut32.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.com"
+				AdditionalDependencies="moaicore.lib moaiext-luaext.lib moaiext-untz.lib dsound.lib strmiids.lib opengl32.lib glu32.lib glut32.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib"
 				ShowProgress="0"
 				AdditionalLibraryDirectories="..\..\..\bin\win32\vs2008;&quot;..\..\..\3rdparty\glut-3.7.6&quot;"
 				IgnoreAllDefaultLibraries="false"
@@ -147,7 +147,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="moaicore.lib moaiext-luaext.lib moaiext-untz.lib dsound.lib strmiids.lib opengl32.lib glu32.lib glut32.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.com"
+				AdditionalDependencies="moaicore.lib moaiext-luaext.lib moaiext-untz.lib dsound.lib strmiids.lib opengl32.lib glu32.lib glut32.lib advapi32.lib comctl32.lib oleaut32.lib rpcrt4.lib winmm.lib wldap32.lib ws2_32.lib wsock32.lib iphlpapi.lib psapi.lib"
 				AdditionalLibraryDirectories="..\..\..\bin\win32\vs2008;&quot;..\..\..\3rdparty\glut-3.7.6&quot;"
 				IgnoreAllDefaultLibraries="false"
 				GenerateDebugInformation="true"
