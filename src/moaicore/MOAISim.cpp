@@ -545,7 +545,7 @@ MOAISim::MOAISim () :
 	mSimTime ( 0.0f ),
 	mBaseTime ( 0.0f ),
 	mFrameTime ( 0.0 ),
-	mFrameCounter ( 0 ),
+	mRenderCounter ( 0 ),
 	mFrameRate ( 0.0f ),
 	mFrameRateIdx ( 0 ),
 	mClearFlags ( GL_COLOR_BUFFER_BIT ),
@@ -666,6 +666,8 @@ void MOAISim::RegisterLuaFuncs ( USLuaState& state ) {
 
 //----------------------------------------------------------------//
 void MOAISim::Render () {
+
+	this->mRenderCounter++;
 
 	if ( this->mClearFlags & GL_COLOR_BUFFER_BIT ) {
 	

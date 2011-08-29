@@ -38,9 +38,9 @@ private:
 	double			mStep;			// simulation step size
 	double			mSimTime;		// elapsed simulation running time (in seconds)
 	double			mBaseTime;		// subtracted from real time
-
 	double			mFrameTime;		// time last frame time was measured (in seconds)
-	u32				mFrameCounter;	// Increments every simulation step
+	
+	u32				mRenderCounter;	// increments every render
 	
 	static const u32 FPS_BUFFER_SIZE = 30;
 	float			mFrameRate;
@@ -105,7 +105,7 @@ public:
 	DECL_LUA_SINGLETON ( MOAISim )
 	
 	GET ( USTaskThread&, DataIOThread, mDataIOThread )
-	GET ( u32, FrameCounter, mFrameCounter )
+	GET ( u32, RenderCounter, mRenderCounter )
 	
 	static const u32 DEFAULT_LOOP_FLAGS = SIM_LOOP_ALLOW_SPIN;
 	static const double DEFAULT_BOOST_THRESHOLD;

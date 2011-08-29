@@ -75,6 +75,30 @@ static void _onKeyUp ( unsigned char key, int x, int y ) {
 }
 
 //----------------------------------------------------------------//
+static void _onSpecialFunc ( int key, int x, int y ) {
+	( void )x;
+	( void )y;
+	
+	if ( key == GLUT_KEY_F1 ) {
+	
+		static bool toggle = true;
+		
+		if ( toggle ) {
+			AKUReleaseGfxContext ();
+		}
+		else {
+			AKUDetectGfxContext ();
+		}
+		toggle = !toggle;
+	}
+	
+	if ( key == GLUT_KEY_F2 ) {
+	
+		AKUSoftReleaseGfxResources ( 0 );
+	}
+}
+
+//----------------------------------------------------------------//
 static void _onMouseButton ( int button, int state, int x, int y ) {
 	( void )x;
 	( void )y;
@@ -192,6 +216,7 @@ void _AKUOpenWindowFunc ( const char* title, int width, int height ) {
 
 	glutKeyboardFunc ( _onKeyDown );
 	glutKeyboardUpFunc ( _onKeyUp );
+	glutSpecialFunc ( _onSpecialFunc );
 	
 	glutMouseFunc ( _onMouseButton );
 	glutMotionFunc ( _onMouseDrag );

@@ -4,13 +4,14 @@
 #ifndef	MOAIFRAMEBUFFER_H
 #define	MOAIFRAMEBUFFER_H
 
+#include <moaicore/MOAIGfxResource.h>
+
 //================================================================//
 // MOAIFrameBuffer
 //================================================================//
-class MOAIFrameBuffer {
+class MOAIFrameBuffer :
+	public MOAIGfxResource {
 private:
-	
-	bool				mError;
 	
 	u32					mWidth;
 	u32					mHeight;
@@ -29,19 +30,23 @@ private:
 	static int		_init					( lua_State* L );
 	
 	//----------------------------------------------------------------//
-	bool			Bind					();
-	void			Clear					();
+	virtual bool		IsRenewable				();
+	virtual void		OnBind					();
+	virtual void		OnClear					();
+	virtual void		OnLoad					();
+	virtual void		OnRenew					();
+	virtual void		OnUnload				();
 
 public:
 	
 	friend class MOAITexture;
 	
 	//----------------------------------------------------------------//
-	void			Init					( u32 width, u32 height, GLenum colorFormat, GLenum depthFormat, GLenum stencilFormat );
-	bool			IsOK					();
-					MOAIFrameBuffer			();
-					~MOAIFrameBuffer		();
-	STLString		ToString				();
+	void				Init					( u32 width, u32 height, GLenum colorFormat, GLenum depthFormat, GLenum stencilFormat );
+	bool				IsValid					();
+						MOAIFrameBuffer			();
+						~MOAIFrameBuffer		();
+	STLString			ToString				();
 };
 
 #endif
