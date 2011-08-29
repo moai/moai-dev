@@ -4,6 +4,7 @@
 #ifndef	MOAISHADER_H
 #define	MOAISHADER_H
 
+#include <moaicore/MOAIGfxResource.h>
 #include <moaicore/MOAINode.h>
 
 class MOAITransformBase;
@@ -56,17 +57,9 @@ public:
 	@text	Programmable shader class.
 */
 class MOAIShader :
-	public virtual MOAINode {
+	public virtual MOAINode,
+	public MOAIGfxResource {
 protected:
-	
-	enum {
-		STATE_UNINITIALIZED,
-		STATE_PENDING_LOAD,
-		STATE_ERROR,
-		STATE_VALID,
-	};
-	
-	u32				mState;
 	
 	STLString		mVertexShaderSource;
 	STLString		mFragmentShaderSource;
@@ -91,11 +84,15 @@ protected:
 	static int		_setVertexAttribute		( lua_State* L );
 	
 	//----------------------------------------------------------------//
-	void			Affirm						();
-	void			Bind						();
 	GLuint			CompileShader				( GLuint type,  cc8* source );
+	bool			IsRenewable					();
+	void			OnBind						();
+	void			OnClear						();
+	void			OnLoad						();
+	void			OnRenew						();
+	void			OnUnload					();
 	void			UpdatePipelineTransforms	( const USMatrix4x4& world, const USMatrix4x4& view, const USMatrix4x4& proj );
-	void			Validate					();
+	bool			Validate					();
 
 public:
 	
@@ -104,9 +101,9 @@ public:
 	friend class MOAIGfxDevice;
 	
 	//----------------------------------------------------------------//
-	void			Clear					();
 	void			ClearUniform			( u32 idx );
 	void			DeclareUniform			( u32 idx, cc8* name, u32 type );
+	bool			IsValid					();
 					MOAIShader				();
 					~MOAIShader				();
 	void			RegisterLuaClass		( USLuaState& state );

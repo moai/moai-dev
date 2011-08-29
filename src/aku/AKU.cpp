@@ -223,6 +223,12 @@ void AKUPause ( bool pause ) {
 }
 
 //----------------------------------------------------------------//
+void AKUReleaseGfxContext () {
+
+	MOAIGfxDevice::Get ().ReleaseResources ();
+}
+
+//----------------------------------------------------------------//
 void AKURender () {
 
 	MOAISim::Get ().Render ();
@@ -335,6 +341,12 @@ void AKUSetInputDevicePointer ( int deviceID, int sensorID, char const* name ) {
 void AKUSetInputDeviceTouch ( int deviceID, int sensorID, char const* name ) {
 
 	MOAIInputMgr::Get ().SetSensor (( u8 )deviceID, ( u8 )sensorID, name, MOAISensor::TOUCH );
+}
+
+//----------------------------------------------------------------//
+void AKUSoftReleaseGfxResources ( int age ) {
+
+	MOAIGfxDevice::Get ().SoftReleaseResources ( age );
 }
 
 //----------------------------------------------------------------//

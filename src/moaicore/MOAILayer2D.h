@@ -60,6 +60,7 @@ private:
 	//----------------------------------------------------------------//
 	void			AffirmPartition			();
 	void			GetCameraMtx			( USAffine2D& camera );
+	bool			IsOffscreen				();
 
 public:
 	

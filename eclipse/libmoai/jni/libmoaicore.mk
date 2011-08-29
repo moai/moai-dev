@@ -93,6 +93,7 @@ $(SRC_PATH)/src/moaicore/MOAIGfxDevice.cpp \
 $(SRC_PATH)/src/moaicore/MOAIGfxQuad2D.cpp \
 $(SRC_PATH)/src/moaicore/MOAIGfxQuadDeck2D.cpp \
 $(SRC_PATH)/src/moaicore/MOAIGfxQuadListDeck2D.cpp \
+$(SRC_PATH)/src/moaicore/MOAIGfxResource.cpp \
 $(SRC_PATH)/src/moaicore/MOAIGlyph.cpp \
 $(SRC_PATH)/src/moaicore/MOAIGrid.cpp \
 $(SRC_PATH)/src/moaicore/MOAIGridSpace.cpp \

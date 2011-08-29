@@ -3,10 +3,13 @@
 
 #include "pch.h"
 
+#include <moaicore/MOAIFrameBuffer.h>
 #include <moaicore/MOAIGfxDevice.h>
+#include <moaicore/MOAIGfxResource.h>
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIShader.h>
 #include <moaicore/MOAIShaderMgr.h>
+#include <moaicore/MOAISim.h>
 #include <moaicore/MOAITexture.h>
 #include <moaicore/MOAIVertexFormat.h>
 #include <moaicore/MOAIVertexFormatMgr.h>
@@ -195,7 +198,11 @@ u32 MOAIGfxDevice::CountErrors () const {
 void MOAIGfxDevice::DetectContext () {
 
 	#ifdef __GLEW_H__
-		glewInit ();
+		static bool initGlew = true;
+		if ( initGlew ) {
+			glewInit ();
+			initGlew = false;
+		}
 	#endif
 
 	const GLubyte* driverVersion = glGetString ( GL_VERSION );
@@ -247,6 +254,8 @@ void MOAIGfxDevice::DetectContext () {
 			REMAP_EXTENSION_PTR ( glRenderbufferStorage,					glRenderbufferStorageEXT )
 		#endif
 	#endif
+	
+	this->RenewResources ();
 }
 
 //----------------------------------------------------------------//
@@ -511,6 +520,12 @@ void MOAIGfxDevice::GpuMultMatrix ( const USMatrix4x4& mtx ) const {
 }
 
 //----------------------------------------------------------------//
+void MOAIGfxDevice::InsertGfxResource ( MOAIGfxResource& resource ) {
+
+	this->mResources.PushBack ( resource.mLink );
+}
+
+//----------------------------------------------------------------//
 bool MOAIGfxDevice::IsOpenGLES () {
 
 	return this->mIsES;
@@ -597,6 +612,30 @@ void MOAIGfxDevice::RegisterLuaClass ( USLuaState& state ) {
 	};
 
 	luaL_register( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDevice::ReleaseResources () {
+
+	ResourceIt resourceIt = this->mResources.Head ();
+	for ( ; resourceIt; resourceIt = resourceIt->Next ()) {
+		resourceIt->Data ()->ReleaseGfxResource ();
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDevice::RemoveGfxResource ( MOAIGfxResource& resource ) {
+
+	this->mResources.Remove ( resource.mLink );
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDevice::RenewResources () {
+
+	ResourceIt resourceIt = this->mResources.Head ();
+	for ( ; resourceIt; resourceIt = resourceIt->Next ()) {
+		resourceIt->Data ()->RenewGfxResource ();
+	}
 }
 
 //----------------------------------------------------------------//
@@ -708,11 +747,13 @@ void MOAIGfxDevice::SetDefaultFrameBuffer ( GLuint frameBuffer ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::SetFrameBuffer ( MOAITexture* frameBuffer ) {
+void MOAIGfxDevice::SetFrameBuffer ( MOAITexture* texture ) {
 
 	this->Flush ();
-	if ( frameBuffer && frameBuffer->IsFrameBuffer ()) {
-		frameBuffer->BindFrameBuffer ();
+
+	MOAIFrameBuffer* frameBuffer = texture ? texture->GetFrameBuffer () : 0;
+	if ( frameBuffer ) {
+		frameBuffer->Bind ();
 	}
 	else {
 		glBindFramebuffer ( GL_FRAMEBUFFER, this->mDefaultFrameBuffer );
@@ -1041,6 +1082,19 @@ void MOAIGfxDevice::SetViewport ( const USRect& viewport ) {
 	glViewport ( x, y, w, h );
 
 	this->mViewRect = viewport;
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDevice::SoftReleaseResources ( u32 age ) {
+
+	ResourceIt resourceIt = this->mResources.Head ();
+	for ( ; resourceIt; resourceIt = resourceIt->Next ()) {
+		resourceIt->Data ()->SoftReleaseGfxResource ( age );
+	}
+	
+	// Horrible to call this, but generally soft release is only used
+	// in response to a low memory warning and we want to free as soon as possible.
+	glFlush ();
 }
 
 //----------------------------------------------------------------//

@@ -20,7 +20,7 @@ function initFrameBuffer ()
 	viewport:setScale ( 128, 128 )
 
 	local frameBuffer = MOAITexture.new ()
-	frameBuffer:initFrameBuffer ( 128, 128, MOAITexture.GL_RGBA8 )
+	frameBuffer:initFrameBuffer ( 128, 128 )
 
 	local layer = MOAILayer2D.new ()
 	layer:setViewport ( viewport )
