@@ -166,7 +166,6 @@ int MOAITexture::_initFrameBuffer ( lua_State* L ) {
 	GLenum depthFormat		= state.GetValue < GLenum >( 5, 0 );
 	GLenum stencilFormat	= state.GetValue < GLenum >( 6, 0 );
 	
-	
 	self->InitFrameBuffer ( width, height, colorFormat, depthFormat, stencilFormat );
 	
 	return 0;
