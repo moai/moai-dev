@@ -265,6 +265,7 @@
     <ClCompile Include="..\..\src\moaicore\MOAIGfxQuad2D.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIGfxQuadDeck2D.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIGfxQuadListDeck2D.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAIGfxResource.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIGlyph.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIGridSpace.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIImage.cpp" />
@@ -385,6 +386,7 @@
     <ClInclude Include="..\..\src\moaicore\MOAIGfxQuad2D.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIGfxQuadDeck2D.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIGfxQuadListDeck2D.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAIGfxResource.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIGlyph.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIGridSpace.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIImage.h" />
