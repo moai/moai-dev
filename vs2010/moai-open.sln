@@ -81,6 +81,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "physfs", "physfs\physfs.vcxproj", "{C9D9A0FA-2D6E-440E-BF2B-C81DE58EBED0}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "moaiio", "moaiio\moaiio.vcxproj", "{D5A80894-B22D-410D-8D43-1F182A8EF4E4}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C9D9A0FA-2D6E-440E-BF2B-C81DE58EBED0} = {C9D9A0FA-2D6E-440E-BF2B-C81DE58EBED0}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

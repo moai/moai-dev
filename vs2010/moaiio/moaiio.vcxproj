@@ -30,6 +30,16 @@
     <ClCompile Include="..\..\src\moaiio\moaiio-physfs.c" />
     <ClCompile Include="..\..\src\moaiio\moaiio-std.c" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\physfs\physfs.vcxproj">
+      <Project>{c9d9a0fa-2d6e-440e-bf2b-c81de58ebed0}</Project>
+      <Private>true</Private>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{D5A80894-B22D-410D-8D43-1F182A8EF4E4}</ProjectGuid>
     <RootNamespace>moaiio</RootNamespace>

@@ -15,7 +15,7 @@
 char* moai_basename ( const char* filename ) {
 
 	char* token;
-	char* lastToken;
+	char* lastToken = 0;
 	
 	char* file = ( char* )filename;
 	char delim = '/';
@@ -31,15 +31,16 @@ char* moai_basename ( const char* filename ) {
 int	moai_fclose ( MOAIFILE* file ) {
 
 	if ( PHYSFS_isInit () == 0 )
-		return 0;
+		return fclose ( ( FILE* )file );
 	
-	if ( file )
-		return PHYSFS_close ( file );
-	
-#ifdef _DEBUG
-	printf ( "%s\n", PHYSFS_getLastError ());
-#endif
+	if ( file ) {
 
+		if ( PHYSFS_close ( ( PHYSFS_File* )file ) == 0 ) {
+			return fclose ( ( FILE* )file );
+		}
+		return 0;
+	}	
+	
 	return 0;
 }
 
@@ -47,15 +48,16 @@ int	moai_fclose ( MOAIFILE* file ) {
 int	moai_fflush ( MOAIFILE* file ) {
 	
 	if ( PHYSFS_isInit () == 0 )
+		return fflush ( ( FILE* )file );
+
+	if ( file ) {
+
+		if ( PHYSFS_flush ( ( PHYSFS_File* )file ) == 0 ) {
+			return fflush ( ( FILE* )file );
+		}
 		return 0;
-
-	if ( file )
-		return PHYSFS_flush ( file );
+	}	
 	
-#ifdef _DEBUG
-	printf ( "%s\n", PHYSFS_getLastError ());
-#endif
-
 	return 0;
 }
 
@@ -63,17 +65,19 @@ int	moai_fflush ( MOAIFILE* file ) {
 int moai_fgetc ( MOAIFILE* file ) {
 	
 	char c;
+	int result;
 
 	if ( PHYSFS_isInit () == 0 )
-		return 0;
+		return fgetc ( ( FILE* )file );
 
-	if ( PHYSFS_read ( file, &c, 1, 1 ) != 1 )
+	result =  ( int )PHYSFS_read ( ( PHYSFS_File* )file, &c, 1, 1 );
+	if ( result == -1 ) {
+		return fgetc ( ( FILE* )file );
+	}
+	else if ( result != 1 ) {
 		return EOF;
+	}
 	
-#ifdef _DEBUG
-	printf ( "%s\n", PHYSFS_getLastError ());
-#endif
-
 	return c;
 }
 
@@ -84,7 +88,7 @@ char* moai_fgets ( char* string, int length, MOAIFILE* file ) {
 	int c = 0;
 
 	if ( PHYSFS_isInit () == 0 )
-		return 0;
+		return fgets ( string, length, ( FILE* )file );
 
 	if ( length <= 1 )
 		return 0;
@@ -92,7 +96,7 @@ char* moai_fgets ( char* string, int length, MOAIFILE* file ) {
 	do {
 		c = moai_fgetc ( file );
 		if ( c == EOF ) break;
-		string [ i++ ] = c;
+		string [ i++ ] = ( char )c;
 	} while ( c != '\0' && c != -1 && c != '\n' );
 
 	string [ i ] = '\0';
@@ -103,35 +107,25 @@ char* moai_fgets ( char* string, int length, MOAIFILE* file ) {
 MOAIFILE* moai_fopen ( const char* filename, const char* mode ) {
 	
 	MOAIFILE* outFile;
-	char* base;
-	int length;
 
-	if ( PHYSFS_isInit () == 0 )
-		return NULL;
-	
-	// PhysFS uses relative names - the whole working directory is on the search path, get the filename
-	base = moai_basename ( filename );
+	if ( PHYSFS_isInit () == 0 || PHYSFS_exists ( filename ) == 0 )
+		return fopen ( filename, mode );
 
 	switch ( mode[0] ) {
 
 	case 'r':
-		outFile = PHYSFS_openRead ( base );
-		length = PHYSFS_fileLength ( outFile );
+		outFile = PHYSFS_openRead ( filename );
 		break;
 	case 'w':
-		outFile = PHYSFS_openWrite ( base );
+		outFile = PHYSFS_openWrite ( filename );
 		break;
 	case 'a':
-		outFile = PHYSFS_openAppend ( base );
+		outFile = PHYSFS_openAppend ( filename );
 		break;
 	default:
 		outFile = NULL;
 		break;
 	}
-
-#ifdef _DEBUG
-	printf ( "%s\n", PHYSFS_getLastError ());
-#endif
 
 	return outFile;
 }
@@ -139,70 +133,72 @@ MOAIFILE* moai_fopen ( const char* filename, const char* mode ) {
 //----------------------------------------------------------------//
 size_t moai_fread ( void* buffer, size_t size, size_t count, MOAIFILE* file ) {
 	
+	size_t result;
+
 	if ( PHYSFS_isInit () == 0 )
-		return 0;
+		return fread ( buffer, size, count, ( FILE* )file );
 
-	if ( file )
-		return ( size_t )PHYSFS_read ( file, buffer, size, count );
-	
-#ifdef _DEBUG
-	printf ( "%s\n", PHYSFS_getLastError ());
-#endif
+	result = ( size_t )PHYSFS_read ( ( PHYSFS_File* )file, buffer, size, count );
+	if ( result == -1 ) {
+		return fread ( buffer, size, count, ( FILE* )file );
+	}
 
-	return 0;
+	return result;
 }
 
 //----------------------------------------------------------------//
 int	moai_fseek ( MOAIFILE* file, long offset, int origin ) {
 	
 	int length;
-	if ( PHYSFS_isInit () == 0 )
-		return 0;
-	length = PHYSFS_fileLength ( file );
-	if ( origin == SEEK_END )
-		return PHYSFS_seek ( file, length);
-	else if ( origin == SEEK_SET )
-		return PHYSFS_seek ( file, 0 );
-	else
-		return PHYSFS_seek ( file, origin + offset );
-	
-#ifdef _DEBUG
-	printf ( "%s\n", PHYSFS_getLastError ());
-#endif
+	int result;
 
-	return 0;
+	if ( PHYSFS_isInit () == 0 )
+		return fseek ( ( FILE* )file, offset, origin );
+
+	length = ( int )PHYSFS_fileLength ( ( PHYSFS_File* )file );
+	if ( origin == SEEK_CUR )
+		result = PHYSFS_seek ( ( PHYSFS_File* )file, PHYSFS_tell ( ( PHYSFS_File* )file ) + offset );
+	else if ( origin == SEEK_END )
+		result = PHYSFS_seek ( ( PHYSFS_File* )file, length);
+	else if ( origin == SEEK_SET )
+		result = PHYSFS_seek ( ( PHYSFS_File* )file, 0 );
+	else
+		result = PHYSFS_seek ( ( PHYSFS_File* )file, origin + offset );
+	
+	if ( result == 0 )
+		return fseek ( ( FILE* )file, offset, origin );
+	
+	return result;
 }
 
 //----------------------------------------------------------------//
 long moai_ftell ( MOAIFILE* file ) {
 	
+	long result;
+
 	if ( PHYSFS_isInit () == 0 )
-		return 0;
+		return ftell ( ( FILE* )file );
 
-	if ( file )
-		return ( long )PHYSFS_tell ( file );
+	result = ( long )PHYSFS_tell ( ( PHYSFS_File* )file );
+	if ( result == -1 )
+		return ftell ( ( FILE* )file );
 	
-#ifdef _DEBUG
-	printf ( "%s\n", PHYSFS_getLastError ());
-#endif
-
-	return 0;
+	return result;
 }
 
 //----------------------------------------------------------------//
 size_t moai_fwrite ( const void* data, size_t size, size_t count, MOAIFILE* file ) {
 	
-	if ( PHYSFS_isInit () == 0 )
-		return 0;
-	
-	if ( file )
-		return ( size_t )PHYSFS_write ( file, data, size, count );
-	
-#ifdef _DEBUG
-	printf ( "%s\n", PHYSFS_getLastError ());
-#endif
+	size_t result;
 
-	return 0;
+	if ( PHYSFS_isInit () == 0 )
+		return fwrite ( data, size, count, ( FILE* )file );
+	
+	result = ( size_t )PHYSFS_write ( ( PHYSFS_File* )file, data, size, count );
+	if ( result == -1 )
+		return fwrite ( data, size, count, ( FILE* )file );
+
+	return result;
 }
 
 #endif

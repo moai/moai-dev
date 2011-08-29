@@ -40,7 +40,7 @@ static void _typeCheck () {
 void uslscore::InitGlobals ( USGlobals* globals ) {
 
 	static bool sysInit = true;
-	if ( sysInit ) {;
+	if ( sysInit ) {
 
 		_typeCheck ();
 

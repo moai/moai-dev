@@ -8,14 +8,8 @@
 // MOAI IO
 //================================================================//
 
-#ifdef MOAI_IO_PHYSFS
-	typedef		PHYSFS_File		MOAIFILE;
-#elif defined MOAI_IO_STD
-	typedef		FILE			MOAIFILE;
-#else
-	typedef		void			MOAIFILE;
-#endif
-		
+typedef		void		MOAIFILE;
+
 //----------------------------------------------------------------//
 char*				moai_basename		( const char* filename );
 

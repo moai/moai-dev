@@ -198,6 +198,11 @@
     <ClInclude Include="..\..\3rdparty\physfs-2.0.2\physfs_internal.h" />
     <ClInclude Include="..\..\3rdparty\physfs-2.0.2\physfs_platforms.h" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\zlib\zlib.vcxproj">
+      <Project>{e6c55a0c-b5b7-4963-8f77-19f1624b9f47}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

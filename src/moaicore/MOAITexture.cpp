@@ -730,7 +730,8 @@ void MOAITexture::Init ( cc8* filename, u32 transform ) {
 	this->Clear ();
 	if ( !USFileSys::CheckFileExists ( filename )) return;
 
-	this->mFilename = USFileSys::Expand ( filename );
+	//this->mFilename = USFileSys::Expand ( filename );
+	this->mFilename = filename;
 	
 	this->mLoader = new MOAITextureLoader ();
 	this->mLoader->mTransform = transform;
