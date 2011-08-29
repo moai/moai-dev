@@ -36,6 +36,7 @@ private:
 	static int		_play				( lua_State* L );
 	static int		_seekVolume			( lua_State* L );
 	static int		_setLooping			( lua_State* L );
+	static int		_setLoopPoints		( lua_State* L );
 	static int		_setPosition		( lua_State* L );
 	static int		_setVolume			( lua_State* L );
 	static int		_stop				( lua_State* L );

@@ -115,6 +115,8 @@ Sound::Sound()
 
 Sound::~Sound()
 {
+	UNTZ::System::get()->getData()->mMixer.removeSound(this);
+
 	if(mpData)
 	{
 		if(mpData->mpSource)
@@ -149,6 +151,16 @@ bool Sound::isLooping() const
 	return mpData->mpSource->isLooping();
 }
 
+void Sound::setLoopPoints(double startTime, double endTime)
+{
+	mpData->mpSource->setLoopPoints(startTime, endTime);
+}
+
+void Sound::getLoopPoints(double& startTime, double& endTime)
+{
+	mpData->mpSource->getLoopPoints(startTime, endTime);
+}
+
 void Sound::setPosition(double seconds)
 {
 	mpData->mpSource->setPosition(seconds);
@@ -164,6 +176,7 @@ void Sound::play()
 	if(mpData->mPlayState == kPlayStateStopped)
 	{
 		mpData->mPlayState = kPlayStatePlaying;
+		mpData->getSource()->setPosition(0);
 	    System::get()->getData()->mMixer.addSound(this);
 	}
     else if(mpData->mPlayState == kPlayStatePlaying)
@@ -181,7 +194,7 @@ void Sound::pause()
 void Sound::stop()
 {	
 	mpData->mPlayState = kPlayStateStopped;
-	UNTZ::System::get()->getData()->mMixer.removeSound(this);
+//	UNTZ::System::get()->getData()->mMixer.removeSound(this);
 	mpData->getSource()->setPosition(0);
 }
 

@@ -57,7 +57,6 @@ protected:
 
 private:
 	std::vector<float> mBuffer;
-	Int64 mCurrentFrame;
 	bool mLoadedInMemory;
 	RString mPath;
 	bool mIsCoInitialized;
@@ -67,5 +66,4 @@ private:
 	RComPtr<IMediaSeeking> mpMediaSeeking;	
 	WAVEFORMATEX* mpWaveFormatEx;
 	RCriticalSection mLock;
-	bool mEOF;
 };

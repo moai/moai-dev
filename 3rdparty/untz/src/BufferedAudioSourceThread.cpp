@@ -140,15 +140,26 @@ void BufferedAudioSourceThread::run()
 				}
                 
                 // Check if we've reached the end
-				if(pSource->isEOF())
+/*
+				double loopStart;
+				double loopEnd;
+				pSource->getLoopPoints(loopStart, loopEnd);
+				Int64 loopEndFrame = pSource->convertSecondsToSamples(pSource->mLoopEnd);
+
+                if(pSource->isLooping() && pSource->mCurrentFrame >= loopEndFrame && loopEndFrame > 0)
+					pSource->setPosition(loopStart);
+
+
+				if(pSource->isEOF() || (pSource->mCurrentFrame >= loopEndFrame && loopEndFrame > 0))
                 {
                     if(pSource->isLooping())
                         // Reset the buffering position and keep on going...
-                        pSource->setDecoderPosition(0);
+                        pSource->setPosition(loopStart);
 //                    else
 //                        // We didn't fill the whole buffer, so resize appropriately
 //                        pSource->mBuffer.resize(availableFrames + numFrames - framesToRead);
                 }
+*/
 			}
 
 		}
