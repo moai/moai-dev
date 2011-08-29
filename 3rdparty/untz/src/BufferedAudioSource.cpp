@@ -64,10 +64,12 @@ void BufferedAudioSource::close()
 
 void BufferedAudioSource::setPosition(double seconds)
 {
-    RScopedLock l(&mLock);
+	seconds = seconds < 0 ? 0.0f : seconds;
+	seconds = seconds > getLength() ? getLength() : seconds;
 
-	mCurrentFrame = (Int64)(seconds * getSampleRate());
-    
+	RScopedLock l(&mLock);
+
+	mCurrentFrame = (Int64)(seconds * getSampleRate());    
     if(!isLoadedInMemory())
     {
         mBuffer.clear();
@@ -95,7 +97,11 @@ Int64 BufferedAudioSource::readFrames(float* buffer, UInt32 numChannels, UInt32 
     
 	mLock.unlock();
 
-	if(framesAvailable > 0)
+	Int64 loopEndFrame = convertSecondsToSamples(mLoopEnd);
+	Int64 totalFrames = convertSecondsToSamples(getLength());
+	bool needToLoop = isLooping() && ((mCurrentFrame >= loopEndFrame && loopEndFrame > 0) || mCurrentFrame >= totalFrames);
+	
+	if(framesAvailable > 0 && !needToLoop)
 	{
 		RScopedLock l(&mLock);
 
@@ -140,20 +146,35 @@ Int64 BufferedAudioSource::readFrames(float* buffer, UInt32 numChannels, UInt32 
     else
     {
         framesRead = ERR_BUFFERING;
-        mCurrentFrame = 0;
         
-        if(isLooping() || !isEOF())
-        {
-            if(!isLoadedInMemory())
-                BufferedAudioSourceThread::getInstance()->readMore();
-        }
-        else
+		if(needToLoop)
+			setPosition(mLoopStart);
+
+		Int64 totalFrames = convertSecondsToSamples(getLength());
+        if(mCurrentFrame >= totalFrames)
         {
             if(!isLoadedInMemory())
                 BufferedAudioSourceThread::getInstance()->removeSource(this);
             
             return 0; // signal that we are done
         }
+		else
+            if(!isLoadedInMemory())
+                BufferedAudioSourceThread::getInstance()->readMore();
+/*
+        if(isLooping() || !isEOF())
+        {
+            if(!isLoadedInMemory())
+                BufferedAudioSourceThread::getInstance()->readMore();
+        }
+        else if(isEOF())
+        {
+            if(!isLoadedInMemory())
+                BufferedAudioSourceThread::getInstance()->removeSource(this);
+            
+            return 0; // signal that we are done
+        }
+*/
     }
     
 

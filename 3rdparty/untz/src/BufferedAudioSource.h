@@ -28,11 +28,8 @@ public:
 
 protected:
     bool isEOF() { return mEOF; }
-    bool isLoadedInMemory() { return mLoadedInMemory; }
-    
+    bool isLoadedInMemory() { return mLoadedInMemory; }    
 	bool mLoadedInMemory;
-	bool mEOF;
-	Int64 mCurrentFrame;
 	std::vector<float> mBuffer;
 	RCriticalSection mLock;
 };

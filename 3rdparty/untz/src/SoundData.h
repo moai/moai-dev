@@ -17,10 +17,10 @@ namespace UNTZ
 	public:
 		SoundData() : mPlayState(kPlayStateStopped), mVolume(1.0f) {};
 		PlayState getState() const { return mPlayState; }
+		void setState(PlayState state) { mPlayState = state; }
 		AudioSource* getSource() const { return mpSource; }
 
 		float mVolume;
-		bool mLooping;
 	protected:
 		AudioSource* mpSource;
 		PlayState mPlayState;

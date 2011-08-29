@@ -247,6 +247,27 @@ int MOAIUntzSound::_setLooping ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	setLoopPoints
+	@text	Sets the start and end looping positions for the sound
+	
+	@in		MOAIUntzSound self
+	@in		double startTime
+	@in		double endTime
+	
+	@out	nil
+*/
+int MOAIUntzSound::_setLoopPoints ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIUntzSound, "U" )
+	
+	if ( self->mSound ) {
+		double startTime = state.GetValue < double >( 2, 0.0 );
+		double endTime = state.GetValue < double >( 3, 0.0 );
+		self->mSound->setLoopPoints ( startTime, endTime );
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	setPosition
 	@text	Sets the position of the sound cursor.
 	
@@ -355,6 +376,7 @@ void MOAIUntzSound::RegisterLuaFuncs ( USLuaState& state ) {
 		{ "play",				_play },
 		{ "seekVolume",			_seekVolume },
 		{ "setLooping",			_setLooping },
+		{ "setLoopPoints",		_setLoopPoints },
 		{ "setPosition",		_setPosition },
 		{ "setVolume",			_setVolume },
 		{ "stop",				_stop },
