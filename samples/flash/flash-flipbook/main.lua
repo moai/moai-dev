@@ -94,7 +94,11 @@ function parseFlash ( flashAnim )
 	local step = 1 / flashAnim.fps
 	
 	local quadListDeck = loadQuadListDeck ( flashAnim.spriteDeck )
-	quadListDeck:setTexture ( flashAnim.texture )
+	
+	local texture = MOAITexture.new ()
+	texture:load ( flashAnim.texture )
+	texture:setFilter ( MOAITexture.GL_LINEAR, MOAITexture.GL_LINEAR )
+	quadListDeck:setTexture ( texture )
 	
 	local curve = MOAIAnimCurve.new ()
 	curve :reserveKeys ( #flashAnim.frames )

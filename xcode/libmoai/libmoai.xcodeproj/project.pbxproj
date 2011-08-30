@@ -1764,6 +1764,10 @@
 		CD218FBB13A7FDBA008337E7 /* utf.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9D13A7FDBA008337E7 /* utf.c */; };
 		CD218FBC13A7FDBA008337E7 /* utf.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F9E13A7FDBA008337E7 /* utf.h */; };
 		CD218FBD13A7FDBA008337E7 /* value.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9F13A7FDBA008337E7 /* value.c */; };
+		CD2672C3140C561000256EB9 /* MOAIGfxResource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD2672C1140C561000256EB9 /* MOAIGfxResource.cpp */; };
+		CD2672C4140C561000256EB9 /* MOAIGfxResource.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2672C2140C561000256EB9 /* MOAIGfxResource.h */; };
+		CD2672C5140C561000256EB9 /* MOAIGfxResource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD2672C1140C561000256EB9 /* MOAIGfxResource.cpp */; };
+		CD2672C6140C561000256EB9 /* MOAIGfxResource.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2672C2140C561000256EB9 /* MOAIGfxResource.h */; };
 		CD62D6CC13A991BA002286EB /* MOAIJsonParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD62D6CA13A991BA002286EB /* MOAIJsonParser.cpp */; };
 		CD62D6CD13A991BA002286EB /* MOAIJsonParser.h in Headers */ = {isa = PBXBuildFile; fileRef = CD62D6CB13A991BA002286EB /* MOAIJsonParser.h */; };
 		CD62D6CE13A991BA002286EB /* MOAIJsonParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD62D6CA13A991BA002286EB /* MOAIJsonParser.cpp */; };
@@ -3798,6 +3802,8 @@
 		CD218F9D13A7FDBA008337E7 /* utf.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = utf.c; path = "../../3rdparty/jansson-2.1/src/utf.c"; sourceTree = SOURCE_ROOT; };
 		CD218F9E13A7FDBA008337E7 /* utf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = utf.h; path = "../../3rdparty/jansson-2.1/src/utf.h"; sourceTree = SOURCE_ROOT; };
 		CD218F9F13A7FDBA008337E7 /* value.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = value.c; path = "../../3rdparty/jansson-2.1/src/value.c"; sourceTree = SOURCE_ROOT; };
+		CD2672C1140C561000256EB9 /* MOAIGfxResource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIGfxResource.cpp; path = ../../src/moaicore/MOAIGfxResource.cpp; sourceTree = SOURCE_ROOT; };
+		CD2672C2140C561000256EB9 /* MOAIGfxResource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIGfxResource.h; path = ../../src/moaicore/MOAIGfxResource.h; sourceTree = SOURCE_ROOT; };
 		CD2FDEBB13542F1400B814DF /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/System/Library/Frameworks/AddressBook.framework; sourceTree = DEVELOPER_DIR; };
 		CD2FDEBC13542F1400B814DF /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/System/Library/Frameworks/AddressBookUI.framework; sourceTree = DEVELOPER_DIR; };
 		CD2FDEBD13542F1400B814DF /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/System/Library/Frameworks/AudioToolbox.framework; sourceTree = DEVELOPER_DIR; };
@@ -5945,6 +5951,8 @@
 				07D1A8A113EDFD8300604979 /* MOAIFrameBuffer.h */,
 				CDEFB3E213E37F3C000A9523 /* MOAIGfxDevice.cpp */,
 				CDEFB3E313E37F3C000A9523 /* MOAIGfxDevice.h */,
+				CD2672C1140C561000256EB9 /* MOAIGfxResource.cpp */,
+				CD2672C2140C561000256EB9 /* MOAIGfxResource.h */,
 				CDEB91441360A78800AAC558 /* MOAIImage.cpp */,
 				CDEB91451360A78800AAC558 /* MOAIImage.h */,
 				0324E54713564BC7000ADC60 /* MOAIIndexBuffer.cpp */,
@@ -8212,6 +8220,7 @@
 				07AF16C513F45A0100E38D1D /* MOAIPartitionResultBuffer.h in Headers */,
 				07AF16C713F45A0100E38D1D /* MOAIPartitionResultMgr.h in Headers */,
 				66D967FD14047A2500017919 /* MOAIScriptDeck.h in Headers */,
+				CD2672C6140C561000256EB9 /* MOAIGfxResource.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8847,6 +8856,7 @@
 				07AF16C113F45A0100E38D1D /* MOAIPartitionResultBuffer.h in Headers */,
 				07AF16C313F45A0100E38D1D /* MOAIPartitionResultMgr.h in Headers */,
 				66D967FC14047A2500017919 /* MOAIScriptDeck.h in Headers */,
+				CD2672C4140C561000256EB9 /* MOAIGfxResource.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9577,6 +9587,7 @@
 				07AF16C613F45A0100E38D1D /* MOAIPartitionResultMgr.cpp in Sources */,
 				66D967F6140479DF00017919 /* MOAILogMessages.cpp in Sources */,
 				66D967FB14047A2500017919 /* MOAIScriptDeck.cpp in Sources */,
+				CD2672C5140C561000256EB9 /* MOAIGfxResource.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10658,6 +10669,7 @@
 				07AF16C213F45A0100E38D1D /* MOAIPartitionResultMgr.cpp in Sources */,
 				66D967F5140479DF00017919 /* MOAILogMessages.cpp in Sources */,
 				66D967FA14047A2500017919 /* MOAIScriptDeck.cpp in Sources */,
+				CD2672C3140C561000256EB9 /* MOAIGfxResource.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
