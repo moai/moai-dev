@@ -548,7 +548,7 @@ int MOAIBox2DBody::_setFixedRotation ( lua_State* L ) {
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DBody self
-	@opt	boolean damping
+	@opt	number damping
 	@out	nil
 */
 int MOAIBox2DBody::_setLinearDamping ( lua_State* L ) {
@@ -565,8 +565,8 @@ int MOAIBox2DBody::_setLinearDamping ( lua_State* L ) {
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DBody self
-	@opt	boolean velocityX	Default is 0.
-	@opt	boolean velocityY	Default is 0.
+	@opt	number velocityX	Default is 0.
+	@opt	number velocityY	Default is 0.
 	@out	nil
 */
 int MOAIBox2DBody::_setLinearVelocity ( lua_State* L ) {
