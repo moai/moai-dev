@@ -4,7 +4,7 @@
 #include "pch.h"
 
 #import <moaiext-iphone/MOAIGameCenter.h>
-#import <moaiext-iphone/NSArray+MOAILib.h>
+#import <moaiext-iphone/NSDate+MOAILib.h>
 
 
 //================================================================//
@@ -178,12 +178,30 @@ void MOAIGameCenter::CallScoresCallback ( NSArray* scores ) {
 	
 		USLuaStateHandle state = mGetScoresCallback.GetSelf ();
 		lua_newtable ( state );
-		int idx = 1;
+		
 		for ( id score in scores ) {
-			lua_pushnumber ( state, idx++ );
+		
+			lua_pushstring( state, "formattedValue");
 			lua_pushstring ( state, [[ score formattedValue ] UTF8String ]);
+			lua_settable ( state, -3 );			
+			
+			lua_pushstring( state, "playerId");
+			lua_pushstring ( state, [[ score playerID ] UTF8String ]);
+			lua_settable ( state, -3 );
+			
+			lua_pushstring( state, "category");
+			lua_pushstring ( state, [[ score category ] UTF8String ]);
+			lua_settable ( state, -3 );
+						
+			lua_pushstring( state, "rank");
+			lua_pushnumber ( state, [ score rank ] );
+			lua_settable ( state, -3 );
+			
+			lua_pushstring( state, "date");
+			[[ score date ] toLua:state ];
 			lua_settable ( state, -3 );
 		}
+		
 		state.DebugCall ( 1, 0 );
 	}
 }
