@@ -1551,6 +1551,10 @@
 		03F135DB13A2EFC000044AE8 /* MoaiUiWebView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 03F135D713A2EFC000044AE8 /* MoaiUiWebView.mm */; };
 		03F135DC13A2EFC000044AE8 /* MOAIWebView.h in Headers */ = {isa = PBXBuildFile; fileRef = 03F135D813A2EFC000044AE8 /* MOAIWebView.h */; };
 		03F135DD13A2EFC000044AE8 /* MOAIWebView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 03F135D913A2EFC000044AE8 /* MOAIWebView.mm */; };
+		0729146F140ED8F000FDC5AA /* MOAIGfxResource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0729146D140ED8F000FDC5AA /* MOAIGfxResource.cpp */; };
+		07291470140ED8F000FDC5AA /* MOAIGfxResource.h in Headers */ = {isa = PBXBuildFile; fileRef = 0729146E140ED8F000FDC5AA /* MOAIGfxResource.h */; };
+		07291471140ED8F000FDC5AA /* MOAIGfxResource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0729146D140ED8F000FDC5AA /* MOAIGfxResource.cpp */; };
+		07291472140ED8F000FDC5AA /* MOAIGfxResource.h in Headers */ = {isa = PBXBuildFile; fileRef = 0729146E140ED8F000FDC5AA /* MOAIGfxResource.h */; };
 		0767114C13F340FA00121E13 /* dir.c in Sources */ = {isa = PBXBuildFile; fileRef = 0767113513F340FA00121E13 /* dir.c */; };
 		0767114D13F340FA00121E13 /* grp.c in Sources */ = {isa = PBXBuildFile; fileRef = 0767113613F340FA00121E13 /* grp.c */; };
 		0767114E13F340FA00121E13 /* hog.c in Sources */ = {isa = PBXBuildFile; fileRef = 0767113713F340FA00121E13 /* hog.c */; };
@@ -3625,6 +3629,8 @@
 		03F135D813A2EFC000044AE8 /* MOAIWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIWebView.h; path = "moaiext-iphone/MOAIWebView.h"; sourceTree = "<group>"; };
 		03F135D913A2EFC000044AE8 /* MOAIWebView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIWebView.mm; path = "moaiext-iphone/MOAIWebView.mm"; sourceTree = "<group>"; };
 		071106EE13C6353400EE7C53 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		0729146D140ED8F000FDC5AA /* MOAIGfxResource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIGfxResource.cpp; sourceTree = "<group>"; };
+		0729146E140ED8F000FDC5AA /* MOAIGfxResource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIGfxResource.h; sourceTree = "<group>"; };
 		0767113513F340FA00121E13 /* dir.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = dir.c; sourceTree = "<group>"; };
 		0767113613F340FA00121E13 /* grp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = grp.c; sourceTree = "<group>"; };
 		0767113713F340FA00121E13 /* hog.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = hog.c; sourceTree = "<group>"; };
@@ -5948,6 +5954,8 @@
 				07D1A8A113EDFD8300604979 /* MOAIFrameBuffer.h */,
 				CDEFB3E213E37F3C000A9523 /* MOAIGfxDevice.cpp */,
 				CDEFB3E313E37F3C000A9523 /* MOAIGfxDevice.h */,
+				0729146D140ED8F000FDC5AA /* MOAIGfxResource.cpp */,
+				0729146E140ED8F000FDC5AA /* MOAIGfxResource.h */,
 				CDEB91441360A78800AAC558 /* MOAIImage.cpp */,
 				CDEB91451360A78800AAC558 /* MOAIImage.h */,
 				0324E54713564BC7000ADC60 /* MOAIIndexBuffer.cpp */,
@@ -8218,6 +8226,7 @@
 				07AF16C513F45A0100E38D1D /* MOAIPartitionResultBuffer.h in Headers */,
 				07AF16C713F45A0100E38D1D /* MOAIPartitionResultMgr.h in Headers */,
 				66D967FD14047A2500017919 /* MOAIScriptDeck.h in Headers */,
+				07291472140ED8F000FDC5AA /* MOAIGfxResource.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8854,6 +8863,7 @@
 				07AF16C313F45A0100E38D1D /* MOAIPartitionResultMgr.h in Headers */,
 				66D967FC14047A2500017919 /* MOAIScriptDeck.h in Headers */,
 				07E6C630140C490B004D1227 /* MOAIGameCenter.h in Headers */,
+				07291470140ED8F000FDC5AA /* MOAIGfxResource.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9584,6 +9594,7 @@
 				07AF16C613F45A0100E38D1D /* MOAIPartitionResultMgr.cpp in Sources */,
 				66D967F6140479DF00017919 /* MOAILogMessages.cpp in Sources */,
 				66D967FB14047A2500017919 /* MOAIScriptDeck.cpp in Sources */,
+				07291471140ED8F000FDC5AA /* MOAIGfxResource.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10666,6 +10677,7 @@
 				66D967F5140479DF00017919 /* MOAILogMessages.cpp in Sources */,
 				66D967FA14047A2500017919 /* MOAIScriptDeck.cpp in Sources */,
 				07E6C631140C490B004D1227 /* MOAIGameCenter.mm in Sources */,
+				0729146F140ED8F000FDC5AA /* MOAIGfxResource.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
