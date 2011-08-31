@@ -78,6 +78,7 @@ void AKUIphoneInit ( UIApplication* application ) {
 	loadMoaiLib_NSString ();
 
 	MOAIApp::Affirm ().SetApplication ( application );
+	MOAIGameCenter::Affirm ();
 	
 	MOAIEnvironment::Affirm ();
 	// Device properties	
@@ -104,6 +105,7 @@ void AKUIphoneInit ( UIApplication* application ) {
 			
 	// MOAI
 	REGISTER_LUA_CLASS ( MOAIApp )
+	REGISTER_LUA_CLASS ( MOAIGameCenter )
 	REGISTER_LUA_CLASS ( MOAIWebView )
 }
 

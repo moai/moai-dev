@@ -48,6 +48,7 @@
 		
 		// configure window
 		[ application setStatusBarHidden:true ];
+		mWindow.rootViewController = ( UIViewController* )mMoaiVC;
 		[ mWindow addSubview:mMoaiView ];
 		[ mWindow makeKeyAndVisible ];
 
