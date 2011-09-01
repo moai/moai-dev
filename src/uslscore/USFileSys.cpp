@@ -52,14 +52,17 @@ void USFileSys::AffirmPath ( cc8* path ) {
 		}
 		else more = false;
 		
-		if(*fullpath.mBuffer) {
+		if ( *fullpath.mBuffer ) {
 			int result = mkdir ( fullpath.mBuffer );
 			assert ( !( result && ( errno != EEXIST )));
 		}
 		
-		if ( more ) *cursor = '/';
-		else return;
-
+		if ( more ) {
+			*cursor = '/';
+		}
+		else {
+			return;
+		}
 		++cursor;
 	}
 }

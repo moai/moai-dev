@@ -11,7 +11,7 @@
 void USFileStream::Close () {
 
 	if ( this->mFile ) {
-		moai_fclose ( this->mFile );
+		moaio_fclose ( this->mFile );
 	}
 	
 	this->mLength = 0;
@@ -21,13 +21,13 @@ void USFileStream::Close () {
 //----------------------------------------------------------------//
 void USFileStream::Flush () {
 
-	moai_fflush ( this->mFile );
+	moaio_fflush ( this->mFile );
 }
 
 //----------------------------------------------------------------//
 u32 USFileStream::GetCursor () {
 
-	return ( u32 )moai_ftell ( this->mFile );
+	return ( u32 )moaio_ftell ( this->mFile );
 }
 
 //----------------------------------------------------------------//
@@ -47,12 +47,12 @@ bool USFileStream::OpenRead ( cc8* filename ) {
 
 	Close ();
 	
-	this->mFile = ( MOAIFILE* )moai_fopen ( filename, "rb" );
+	this->mFile = ( MOAIFILE* )moaio_fopen ( filename, "rb" );
 	if ( this->mFile ) {
 
-		moai_fseek ( this->mFile, 0L, SEEK_END );
-		this->mLength = ( u32 )moai_ftell ( this->mFile );
-		moai_fseek ( this->mFile, 0L, SEEK_SET );
+		moaio_fseek ( this->mFile, 0L, SEEK_END );
+		this->mLength = ( u32 )moaio_ftell ( this->mFile );
+		moaio_fseek ( this->mFile, 0L, SEEK_SET );
 	}
 
 	return this->mFile != NULL;
@@ -67,20 +67,20 @@ bool USFileStream::OpenWrite ( cc8* filename, bool affirmPath ) {
 		USFileSys::AffirmPath ( USPathOps::GetPath ( filename, true ));
 	}
 
-	this->mFile = ( MOAIFILE* )moai_fopen ( filename, "wb" );
+	this->mFile = ( MOAIFILE* )moaio_fopen ( filename, "wb" );
 	return this->mFile != NULL;
 }
 
 //----------------------------------------------------------------//
 u32 USFileStream::ReadBytes ( void* buffer, u32 size ) {
 
-	return ( u32 )moai_fread ( buffer, 1, size, this->mFile );
+	return ( u32 )moaio_fread ( buffer, 1, size, this->mFile );
 }
 
 //----------------------------------------------------------------//
 void USFileStream::Seek ( long offset, int origin ) {
 
-	moai_fseek ( this->mFile, offset, origin );
+	moaio_fseek ( this->mFile, offset, origin );
 }
 
 //----------------------------------------------------------------//
@@ -97,9 +97,9 @@ USFileStream::~USFileStream () {
 //----------------------------------------------------------------//
 u32 USFileStream::WriteBytes ( const void* buffer, u32 size ) {
 
-	u32 result = ( u32 )moai_fwrite ( buffer, 1, size, this->mFile );
+	u32 result = ( u32 )moaio_fwrite ( buffer, 1, size, this->mFile );
 	
-	u32 cursor = ( u32 )moai_ftell ( this->mFile );
+	u32 cursor = ( u32 )moaio_ftell ( this->mFile );
 	if ( cursor > this->mLength ) {
 		this->mLength = cursor;
 	}

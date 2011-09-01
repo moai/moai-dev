@@ -3,14 +3,15 @@
 
 #include "pch.h"
 #include <uslscore/uslscore.h>
-#include <physfs.h>
 
 //----------------------------------------------------------------//
 static void _cleanup () {
 
-	PHYSFS_deinit ();
+	//PHYSFS_deinit ();
 
 	USGlobals::Get ()->Finalize ();
+	
+	moaio_cleanup ();
 }
 
 //----------------------------------------------------------------//
@@ -37,6 +38,27 @@ static void _typeCheck () {
 //================================================================//
 
 //----------------------------------------------------------------//
+void testMoaio () {
+
+	cc8* relpath;
+	
+	relpath = moaio_get_rel_path ( "C:/foo/bar/baz.txt" );
+	relpath = moaio_get_rel_path ( "/foo/bar/baz.txt" );
+	relpath = moaio_get_rel_path ( "./foo/bar/baz.txt" );
+	relpath = moaio_get_rel_path ( "foo/bar/baz.txt" );
+
+	moaio_set_virtual_path ( "test", "test.zip" );
+	
+	moaio_chdir ( "test" );
+	
+	MOAIFILE file = moaio_fopen ( "test.txt", "w" );
+	
+	char* str = "bazbarfoo";
+	
+	moaio_fwrite ( str, 9, 1, file );
+}
+
+//----------------------------------------------------------------//
 void uslscore::InitGlobals ( USGlobals* globals ) {
 
 	static bool sysInit = true;
@@ -50,16 +72,10 @@ void uslscore::InitGlobals ( USGlobals* globals ) {
 		
 		srand (( u32 )time ( 0 ));
 		atexit ( _cleanup );
-
-		// get current path for PhysFS init		
-		char path [ PATH_MAX ];
-		char* str = getcwd ( path, PATH_MAX );
-		UNUSED ( str );
-
-		// init PhysFS
-		PHYSFS_init ( "MOAI" );
-		PHYSFS_addToSearchPath ( path, 1 ); //init search path to current working dir
-		PHYSFS_setWriteDir ( path );        //init write directory to current working dir
+		
+		moaio_init ();
+		
+		testMoaio ();
 		
 		sysInit = false;
 	}

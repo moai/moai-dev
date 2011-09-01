@@ -121,7 +121,7 @@ extern "C" {
 
 // io
 extern "C" {
-	#include <moaiio/moaiio.h>
+	#include <moaio/moaio.h>
 }
 
 //----------------------------------------------------------------//
