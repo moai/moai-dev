@@ -21,6 +21,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <physfs.h>
+#include <zlib.h>
+
+#include <sys/types.h>
+#include <sys/stat.h>
 
 #endif

@@ -38,6 +38,6 @@ void			moaio_init					();
 int				moaio_mkdir					( const char* path );
 char*			moaio_normalize_path		( const char* path );
 int				moaio_rmdir					( const char* path );
-void			moaio_set_virtual_path		( const char* path, const char* archive );
+int				moaio_set_virtual_path		( const char* path, const char* archive );
 
 #endif

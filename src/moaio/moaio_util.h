@@ -11,5 +11,6 @@
 //----------------------------------------------------------------//
 extern char*	clear_string	( char* str );
 extern char*	copy_string		( char const* str );
+extern size_t	count_same		( char const* str0, char const* str1 );
 
 #endif

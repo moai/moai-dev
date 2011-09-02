@@ -32,3 +32,10 @@ char* copy_string ( char const* str ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
+size_t count_same ( char const* str0, char const* str1 ) {
+
+	size_t c;
+	for ( c = 0; str0 [ c ] && str1 [ c ] && ( str0 [ c ] == str1 [ c ]); ++c );
+	return c;
+}

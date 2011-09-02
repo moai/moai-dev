@@ -12,21 +12,30 @@
 //----------------------------------------------------------------//
 void MOAIOVirtualPath_Delete ( MOAIOVirtualPath* self ) {
 	
+	if ( self->mArchive ) {
+		MOAIOZipFile_Delete ( self->mArchive );
+	}
 	clear_string ( self->mPath );
-	clear_string ( self->mArchive );
 	free ( self );
 }
 
 //----------------------------------------------------------------//
+const char* MOAIOVirtualPath_GetLocalPath ( MOAIOVirtualPath* self, const char* path ) {
+
+	if ( self->mArchive ) {
+		
+		size_t baselen = strlen ( self->mPath );
+		path = &path [ baselen ];
+		
+		if ( MOAIOZipFile_FindEntry ( self->mArchive, path )) return path;
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
 MOAIOVirtualPath* MOAIOVirtualPath_New () {
-	
-	MOAIOVirtualPath* self = ( MOAIOVirtualPath* )malloc ( sizeof ( MOAIOVirtualPath ));
-	
-	self->mPath = 0;
-	self->mArchive = 0;
-	self->mNext = 0;
-	
-	return self;
+
+	return ( MOAIOVirtualPath* )calloc ( 1, sizeof ( MOAIOVirtualPath ));
 }
 
 //----------------------------------------------------------------//
@@ -37,15 +46,22 @@ MOAIOVirtualPath* MOAIOVirtualPath_PushFront ( MOAIOVirtualPath* self, MOAIOVirt
 }
 
 //----------------------------------------------------------------//
-void MOAIOVirtualPath_SetArchive ( MOAIOVirtualPath* self, const char* archive ) {
-
-	self->mArchive = clear_string ( self->mArchive );
-	self->mArchive = copy_string ( archive );
+int MOAIOVirtualPath_SetArchive ( MOAIOVirtualPath* self, const char* archive ) {
+	
+	if ( self->mArchive ) {
+		MOAIOZipFile_Delete ( self->mArchive );
+	}
+	
+	self->mArchive = MOAIOZipFile_New ( archive );
+	if ( !self->mArchive ) return -1;
+	
+	return 0;
 }
 
 //----------------------------------------------------------------//
-void MOAIOVirtualPath_SetPath ( MOAIOVirtualPath* self, const char* path ) {
+int MOAIOVirtualPath_SetPath ( MOAIOVirtualPath* self, const char* path ) {
 
-	self->mPath = clear_string ( self->mPath );
+	clear_string ( self->mPath );
 	self->mPath = copy_string ( path );
+	return 0;
 }

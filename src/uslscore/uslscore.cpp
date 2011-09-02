@@ -4,13 +4,15 @@
 #include "pch.h"
 #include <uslscore/uslscore.h>
 
+extern "C" {
+	#include <zlib.h>
+	#include <moaio/MOAIOZipFile.h>
+}
+
 //----------------------------------------------------------------//
 static void _cleanup () {
 
-	//PHYSFS_deinit ();
-
 	USGlobals::Get ()->Finalize ();
-	
 	moaio_cleanup ();
 }
 
@@ -40,22 +42,31 @@ static void _typeCheck () {
 //----------------------------------------------------------------//
 void testMoaio () {
 
-	cc8* relpath;
-	
-	relpath = moaio_get_rel_path ( "C:/foo/bar/baz.txt" );
-	relpath = moaio_get_rel_path ( "/foo/bar/baz.txt" );
-	relpath = moaio_get_rel_path ( "./foo/bar/baz.txt" );
-	relpath = moaio_get_rel_path ( "foo/bar/baz.txt" );
+	//MOAIOZipFile* zipFile = MOAIOZipFile_New ( "test.zip" );
+	//MOAIOZipFile_Delete ( zipFile );
+
+	//cc8* relpath;
+	//
+	//relpath = moaio_get_rel_path ( "C:/foo/bar/baz.txt" );
+	//relpath = moaio_get_rel_path ( "/foo/bar/baz.txt" );
+	//relpath = moaio_get_rel_path ( "./foo/bar/baz.txt" );
+	//relpath = moaio_get_rel_path ( "foo/bar/baz.txt" );
 
 	moaio_set_virtual_path ( "test", "test.zip" );
+	moaio_chdir ( "test/foo/baz/c" );
 	
-	moaio_chdir ( "test" );
+	MOAIFILE file = moaio_fopen ( "Metamorphosis.txt", "r" );
 	
-	MOAIFILE file = moaio_fopen ( "test.txt", "w" );
+	char buffer [ 1024 ];
 	
-	char* str = "bazbarfoo";
+	moaio_fread ( buffer, 1024, 1, file );
+	moaio_fseek ( file, -512, SEEK_CUR );
 	
-	moaio_fwrite ( str, 9, 1, file );
+	moaio_fread ( buffer, 1024, 1, file );
+	buffer [ 1023 ] = 0;
+	printf ( "%s\n", buffer );
+	
+	moaio_fclose ( file );
 }
 
 //----------------------------------------------------------------//

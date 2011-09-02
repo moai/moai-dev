@@ -6,14 +6,19 @@
 #include <moaio\moaio_util.h>
 #include <moaio\MOAIOString.h>
 #include <moaio\MOAIOVirtualPath.h>
+#include <moaio\MOAIOZipFile.h>
 
 //================================================================//
 // MOAIOFile
 //================================================================//
 typedef struct MOAIOFile {
 
-	int		mIsVirtual;
-	void*	mPtr;
+	int		mIsArchive;
+	
+	union {
+		FILE*				mFile;
+		MOAIOZipStream*		mZip;
+	} mPtr;
 
 } MOAIOFile;
 
@@ -59,7 +64,7 @@ MOAIOVirtualPath* find_best_virtual_path ( char const* path ) {
 	for ( ; cursor; cursor = cursor->mNext ) {
 	
 		char* test = cursor->mPath;
-		for ( len = 0; test [ len ] && ( path [ len ] == test [ len ]); ++len );
+		len = count_same ( test, path );
 	
 		if (( !test [ len ]) && ( len > bestlen )) {
 			best = cursor;
@@ -80,18 +85,10 @@ MOAIOVirtualPath* find_virtual_path ( char const* path ) {
 }
 
 //----------------------------------------------------------------//
-char* resolve_working_path () {
+const char* resolve_working_path () {
 
 	if ( sVirtual ) {
-	
-		size_t baselen;
-	
-		// try to mount the virtual path using physfs
-		
-		PHYSFS_mount ( sVirtual->mArchive, 0, 0 );
-		
-		baselen = strlen ( sVirtual->mPath );
-		return &sWorkingPath->mMem [ baselen ];
+		return MOAIOVirtualPath_GetLocalPath ( sVirtual, sWorkingPath->mMem );
 	}
 	
 	// fall back on the regular file system
@@ -176,19 +173,26 @@ char* moaio_bless_path ( const char* path ) {
 //----------------------------------------------------------------//
 int moaio_chdir ( char* path ) {
 
-	int result = 0;
+	int result = -1;
+	MOAIOVirtualPath* mount = 0;
 
 	path = moaio_get_abs_dirpath ( path );
-	sVirtual = find_best_virtual_path ( path );
+	mount = find_best_virtual_path ( path );
 	
-	if ( !sVirtual ) {
+	if ( mount ) {
+		const char* localpath = MOAIOVirtualPath_GetLocalPath ( mount, path );
+		if ( localpath ) {
+			sVirtual = mount;
+			result = 0;
+		}
+	}
+	else {
 		result = chdir ( path );
 	}
-	
+
 	if ( result == 0 ) {
 		MOAIOString_Set ( sWorkingPath, path );
 	}
-
 	return result;
 }
 
@@ -207,8 +211,6 @@ void moaio_cleanup () {
 		free ( sBuffer );
 		sBuffer = 0;
 	}
-	
-	PHYSFS_deinit ();
 }
 
 //----------------------------------------------------------------//
@@ -218,7 +220,8 @@ int	moaio_fclose ( MOAIFILE fp ) {
 
 	if ( fp ) {
 		MOAIOFile* file = ( MOAIOFile* )fp;
-		result = ( file->mIsVirtual ) ? PHYSFS_close (( PHYSFS_File* )file->mPtr ) : fclose (( FILE* )file->mPtr );
+		result = ( file->mIsArchive ) ? MOAIOZipStream_Close ( file->mPtr.mZip ) : fclose ( file->mPtr.mFile );
+		memset ( fp, 0, sizeof ( MOAIOFile ));
 		free ( file );
 	}
 	return result;
@@ -229,7 +232,9 @@ int	moaio_fflush ( MOAIFILE fp ) {
 	
 	if ( fp ) {
 		MOAIOFile* file = ( MOAIOFile* )fp;
-		return ( file->mIsVirtual ) ? PHYSFS_flush (( PHYSFS_File* )file->mPtr ) : fflush (( FILE* )file->mPtr );
+		if ( !file->mIsArchive ) {
+			return fflush ( file->mPtr.mFile );
+		}
 	}
 	return 0;
 }
@@ -242,16 +247,16 @@ int moaio_fgetc ( MOAIFILE fp ) {
 	if ( fp ) {
 		MOAIOFile* file = ( MOAIOFile* )fp;
 		
-		if ( file->mIsVirtual ) {
+		if ( file->mIsArchive ) {
 			char c;
-			result = ( int )PHYSFS_read (( PHYSFS_File* )file->mPtr, &c, 1, 1 );
+			result = ( int )MOAIOZipStream_Read ( file->mPtr.mZip, &c, 1 );
 			
 			if ( result == 1 ) {
 				result = c;
 			}
 		}
 		else {
-			result = fgetc (( FILE* )file->mPtr );
+			result = fgetc ( file->mPtr.mFile );
 		}
 	}
 	return result;
@@ -267,7 +272,7 @@ char* moaio_fgets ( char* string, int length, MOAIFILE fp ) {
 		
 		MOAIOFile* file = ( MOAIOFile* )fp;
 		
-		if ( file->mIsVirtual ) {
+		if ( file->mIsArchive ) {
 		
 			if ( length <= 1 ) return 0;
 
@@ -284,7 +289,7 @@ char* moaio_fgets ( char* string, int length, MOAIFILE fp ) {
 			return string;
 		}
 		else {
-			return fgets ( string, length, ( FILE* )file->mPtr );
+			return fgets ( string, length, file->mPtr.mFile );
 		}
 	}
 	return 0;
@@ -297,20 +302,21 @@ MOAIFILE moaio_fopen ( const char* filename, const char* mode ) {
 
 	if ( sVirtual ) {
 		
-		PHYSFS_File* physFile = 0;
-		
-		char* path = resolve_working_path ();
-		MOAIOString_Set ( sBuffer, path );
-		filename = MOAIOString_Append ( sBuffer, filename );
-		
 		if ( mode [ 0 ] == 'r' ) {
-			physFile = PHYSFS_openRead ( filename );
-		}
 		
-		if ( physFile ) {
-			file = ( MOAIOFile* )malloc ( sizeof ( MOAIOFile ));
-			file->mIsVirtual = TRUE;
-			file->mPtr = physFile;
+			MOAIOZipStream* zipStream;
+			
+			const char* path = resolve_working_path ();
+			MOAIOString_Set ( sBuffer, path );
+			filename = MOAIOString_Append ( sBuffer, filename );
+			
+			zipStream = MOAIOZipStream_Open ( sVirtual->mArchive, filename );
+			
+			if ( zipStream ) {
+				file = ( MOAIOFile* )malloc ( sizeof ( MOAIOFile ));
+				file->mIsArchive = TRUE;
+				file->mPtr.mZip = zipStream;
+			}
 		}
 	}
 	else {
@@ -319,8 +325,8 @@ MOAIFILE moaio_fopen ( const char* filename, const char* mode ) {
 		
 		if ( stdFile ) {
 			file = ( MOAIOFile* )malloc ( sizeof ( MOAIOFile ));
-			file->mIsVirtual = FALSE;
-			file->mPtr = stdFile;
+			file->mIsArchive = FALSE;
+			file->mPtr.mFile = stdFile;
 		}
 	}
 
@@ -332,7 +338,7 @@ size_t moaio_fread ( void* buffer, size_t size, size_t count, MOAIFILE fp ) {
 	
 	if ( fp ) {
 		MOAIOFile* file = ( MOAIOFile* )fp;
-		return ( file->mIsVirtual ) ? ( size_t )PHYSFS_read (( PHYSFS_File* )file->mPtr, buffer, size, count ) : fread ( buffer, size, count, ( FILE* )file->mPtr );
+		return ( file->mIsArchive ) ? ( size_t )MOAIOZipStream_Read ( file->mPtr.mZip, buffer, size * count ) : fread ( buffer, size, count, file->mPtr.mFile );
 	}
 	return 0;
 }
@@ -341,34 +347,8 @@ size_t moaio_fread ( void* buffer, size_t size, size_t count, MOAIFILE fp ) {
 int	moaio_fseek ( MOAIFILE fp, long offset, int origin ) {
 	
 	if ( fp ) {
-	
 		MOAIOFile* file = ( MOAIOFile* )fp;
-		
-		if ( file->mIsVirtual ) {
-		
-			int result;
-			int length;
-		
-			length = ( int )PHYSFS_fileLength (( PHYSFS_File* )fp );
-			
-			switch ( origin ) {
-				case SEEK_CUR:
-					result = PHYSFS_seek (( PHYSFS_File* )fp, PHYSFS_tell (( PHYSFS_File* )file->mPtr ) + offset );
-					break;
-				case SEEK_END:
-					result = PHYSFS_seek (( PHYSFS_File* )file->mPtr, length );
-					break;
-				case SEEK_SET:
-					result = PHYSFS_seek (( PHYSFS_File* )file->mPtr, 0 );
-					break;
-				default:
-					return -1;
-			};
-			if ( result == 0 ) return -1;
-		}
-		else {
-			return fseek (( FILE* )fp, offset, origin );
-		}
+		return ( file->mIsArchive ) ? MOAIOZipStream_Seek ( file->mPtr.mZip, offset, origin ) : fseek ( file->mPtr.mFile, offset, origin );
 	}	
 	return -1;
 }
@@ -378,7 +358,7 @@ long moaio_ftell ( MOAIFILE fp ) {
 
 	if ( fp ) {
 		MOAIOFile* file = ( MOAIOFile* )fp;
-		return ( file->mIsVirtual ) ? ( long )PHYSFS_tell (( PHYSFS_File* )file->mPtr ) : ftell (( FILE* )file->mPtr );
+		return ( file->mIsArchive ) ? ( long )MOAIOZipStream_Tell ( file->mPtr.mZip ) : ftell ( file->mPtr.mFile );
 	}
 	return -1L;
 }
@@ -388,8 +368,8 @@ size_t moaio_fwrite ( const void* data, size_t size, size_t count, MOAIFILE fp )
 	
 	if ( fp ) {
 		MOAIOFile* file = ( MOAIOFile* )fp;
-		if ( file->mPtr ) {
-			fwrite ( data, size, count, ( FILE* )file->mPtr );
+		if ( !file->mIsArchive ) {
+			fwrite ( data, size, count, file->mPtr.mFile );
 		}
 	}
 	return 0;
@@ -522,8 +502,6 @@ void moaio_init () {
 	sBuffer = MOAIOString_New ();
 	
 	moaio_get_working_path ();
-	
-	PHYSFS_init ( "moaio" );
 }
 
 //----------------------------------------------------------------//
@@ -596,51 +574,56 @@ int moaio_rmdir ( const char* path ) {
 }
 
 //----------------------------------------------------------------//
-void moaio_set_virtual_path ( const char* path, const char* archive ) {
+int moaio_set_virtual_path ( const char* path, const char* archive ) {
 
-	if ( !path ) return;
-
+	// delete the path if it exists
+	int result;
+	MOAIOVirtualPath* cursor = sVirtualPaths;
+	MOAIOVirtualPath* virtualPath;
+	MOAIOVirtualPath* list = 0;
+	
+	if ( !path ) return -1;
 	path = moaio_get_abs_dirpath ( path );
+	
+	while ( cursor ) {
+		virtualPath = cursor;
+		cursor = cursor->mNext;
+		
+		if ( strcmp ( virtualPath->mPath, path ) == 0 ) {
+			MOAIOVirtualPath_Delete ( virtualPath );
+		}
+		else {
+			list = MOAIOVirtualPath_PushFront ( virtualPath, list );
+		}
+	}
+	
+	cursor = list;
+	while ( cursor ) {
+		virtualPath = cursor;
+		cursor = cursor->mNext;
+		
+		sVirtualPaths = MOAIOVirtualPath_PushFront ( virtualPath, sVirtualPaths );
+	}
 
-	if ( archive ) {
-		// affirm the path
-		
-		MOAIOVirtualPath* virtualPath = find_virtual_path ( path );
-		
-		if ( !virtualPath ) {
-			virtualPath = MOAIOVirtualPath_New ();
-			sVirtualPaths = MOAIOVirtualPath_PushFront ( virtualPath, sVirtualPaths );
-		}
-		
-		MOAIOVirtualPath_SetPath ( virtualPath, path );
-		MOAIOVirtualPath_SetArchive ( virtualPath, moaio_get_abs_filepath ( archive ));
+	if ( !archive ) return 0;
+
+	virtualPath = MOAIOVirtualPath_New ();
+	if ( !virtualPath ) goto error;
+
+	result = MOAIOVirtualPath_SetPath ( virtualPath, path );
+	if ( result ) goto error;
+	
+	result = MOAIOVirtualPath_SetArchive ( virtualPath, moaio_get_abs_filepath ( archive ));
+	if ( result ) goto error;
+
+	sVirtualPaths = MOAIOVirtualPath_PushFront ( virtualPath, sVirtualPaths );
+
+	return 0;
+
+error:
+
+	if ( virtualPath ) {
+		MOAIOVirtualPath_Delete ( virtualPath );
 	}
-	else {
-		// delete the path
-		
-		MOAIOVirtualPath* cursor = sVirtualPaths;
-		MOAIOVirtualPath* virtualPath;
-		MOAIOVirtualPath* list = 0;
-		
-		while ( cursor ) {
-			virtualPath = cursor;
-			cursor = cursor->mNext;
-			
-			if ( strcmp ( virtualPath->mPath, path ) == 0 ) {
-				MOAIOVirtualPath_Delete ( virtualPath );
-			}
-			else {
-				list = MOAIOVirtualPath_PushFront ( virtualPath, list );
-			}
-		}
-		
-		cursor = list;
-		while ( cursor ) {
-			virtualPath = cursor;
-			cursor = cursor->mNext;
-			
-			sVirtualPaths = MOAIOVirtualPath_PushFront ( virtualPath, sVirtualPaths );
-		}
-	}
-	return;
+	return -1;
 }
