@@ -53,9 +53,9 @@ void testMoaio () {
 	//relpath = moaio_get_rel_path ( "foo/bar/baz.txt" );
 
 	moaio_set_virtual_path ( "test", "test.zip" );
-	moaio_chdir ( "test/foo/baz/c" );
+	moaio_chdir ( "test/foo/baz/b" );
 	
-	MOAIFILE file = moaio_fopen ( "Metamorphosis.txt", "r" );
+	MOAIFILE file = moaio_fopen ( "../c/Metamorphosis.txt", "r" );
 	
 	char buffer [ 1024 ];
 	

@@ -7,9 +7,9 @@
 #define ZIP_STREAM_BUFFER_MAX 4096
 
 //================================================================//
-// MOAIOZipEntry
+// MOAIOZipFileEntry
 //================================================================//
-typedef struct MOAIOZipEntry {
+typedef struct MOAIOZipFileEntry {
 
 	char*			mName;
 	unsigned long	mFileHeaderAddr;
@@ -17,8 +17,29 @@ typedef struct MOAIOZipEntry {
 	unsigned short	mCompression;
 	unsigned long	mCompressedSize;
 	unsigned long	mUncompressedSize;
+	
+	struct MOAIOZipFileEntry*	mNext;
 
-} MOAIOZipEntry;
+} MOAIOZipFileEntry;
+
+//----------------------------------------------------------------//
+void	MOAIOZipFileEntry_Delete	( MOAIOZipFileEntry* self );
+
+//================================================================//
+// MOAIOZipFileDir
+//================================================================//
+typedef struct MOAIOZipFileDir {
+
+	char*				mName;
+	
+	struct MOAIOZipFileDir*		mNext;
+	struct MOAIOZipFileDir*		mChildDirs;
+	struct MOAIOZipFileEntry*	mChildFiles;
+
+} MOAIOZipFileDir;
+
+//----------------------------------------------------------------//
+void	MOAIOZipFileDir_Delete	( MOAIOZipFileDir* self );
 
 //================================================================//
 // MOAIOZipFile
@@ -26,15 +47,15 @@ typedef struct MOAIOZipEntry {
 typedef struct MOAIOZipFile {
 
 	char*				mFilename;
-    int					mTotalEntries;
-    MOAIOZipEntry*		mEntries;
+    MOAIOZipFileDir*	mRoot;
 
 } MOAIOZipFile;
 
 //----------------------------------------------------------------//
-extern void				MOAIOZipFile_Delete			( MOAIOZipFile* self );
-extern MOAIOZipEntry*	MOAIOZipFile_FindEntry		( MOAIOZipFile* self, char const* name );
-extern MOAIOZipFile*	MOAIOZipFile_New			( const char* filename );
+extern void					MOAIOZipFile_Delete			( MOAIOZipFile* self );
+extern MOAIOZipFileDir*		MOAIOZipFile_FindDir		( MOAIOZipFile* self, char const* path );
+extern MOAIOZipFileEntry*	MOAIOZipFile_FindEntry		( MOAIOZipFile* self, char const* filename );
+extern MOAIOZipFile*		MOAIOZipFile_New			( const char* filename );
 
 //================================================================//
 // MOAIOZipStream
@@ -42,7 +63,7 @@ extern MOAIOZipFile*	MOAIOZipFile_New			( const char* filename );
 typedef struct MOAIOZipStream {
 
 	FILE*				mFile;
-	MOAIOZipEntry*		mEntry;
+	MOAIOZipFileEntry*	mEntry;
 	size_t				mCompressedCursor;
 	size_t				mUncompressedCursor;
 	z_stream			mStream;

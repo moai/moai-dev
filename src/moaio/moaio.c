@@ -84,18 +84,6 @@ MOAIOVirtualPath* find_virtual_path ( char const* path ) {
 	return cursor;
 }
 
-//----------------------------------------------------------------//
-const char* resolve_working_path () {
-
-	if ( sVirtual ) {
-		return MOAIOVirtualPath_GetLocalPath ( sVirtual, sWorkingPath->mMem );
-	}
-	
-	// fall back on the regular file system
-	chdir ( sWorkingPath->mMem );
-	return sWorkingPath->mMem;
-}
-
 //================================================================//
 // moaio
 //================================================================//
@@ -300,16 +288,15 @@ MOAIFILE moaio_fopen ( const char* filename, const char* mode ) {
 	
 	MOAIOFile* file = 0;
 
+	filename = moaio_get_abs_filepath ( filename );
+
 	if ( sVirtual ) {
 		
 		if ( mode [ 0 ] == 'r' ) {
 		
 			MOAIOZipStream* zipStream;
 			
-			const char* path = resolve_working_path ();
-			MOAIOString_Set ( sBuffer, path );
-			filename = MOAIOString_Append ( sBuffer, filename );
-			
+			filename = MOAIOVirtualPath_GetLocalPath ( sVirtual, filename );
 			zipStream = MOAIOZipStream_Open ( sVirtual->mArchive, filename );
 			
 			if ( zipStream ) {

@@ -27,7 +27,7 @@ const char* MOAIOVirtualPath_GetLocalPath ( MOAIOVirtualPath* self, const char* 
 		size_t baselen = strlen ( self->mPath );
 		path = &path [ baselen ];
 		
-		if ( MOAIOZipFile_FindEntry ( self->mArchive, path )) return path;
+		if ( MOAIOZipFile_FindDir ( self->mArchive, path )) return path;
 	}
 	return 0;
 }
