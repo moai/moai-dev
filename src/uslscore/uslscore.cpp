@@ -55,6 +55,9 @@ void testMoaio () {
 	moaio_set_virtual_path ( "test", "test.zip" );
 	moaio_chdir ( "test//foo/baz////" );
 	
+	moaio_rmdir ( "test" );
+	moaio_rmdir ( "test/foo" );
+	
 	MOAIODIR dir = moaio_dir_open ();
 	
 	while ( moaio_dir_read_entry ( dir )) {
@@ -66,6 +69,9 @@ void testMoaio () {
 	moaio_dir_close ( dir );
 	
 	moaio_chdir ( "b" );
+	
+	moaio_stat filestat;
+	moaio_get_stat ( "././/./..//c////Metamorphosis.txt", &filestat );
 	
 	MOAIOFILE file = moaio_fopen ( "././/./..//c////Metamorphosis.txt", "r" );
 	

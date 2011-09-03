@@ -5,6 +5,21 @@
 #define MOAIO_H
 
 //================================================================//
+// moaio_stat
+//================================================================//
+typedef struct moaio_stat {
+
+	int						mExists;
+	int						mIsDir;
+	
+	unsigned long long		mTimeCreated;	// Time created (in seconds from cardinal date)
+	unsigned long long		mTimeModified;	// Time last modified (in seconds from cardinal date)
+	unsigned long long		mTimeViewed;	// Time last viewed (in seconds from cardinal date)
+	size_t					mSize;			// Yeah, that
+
+} moaio_stat;
+
+//================================================================//
 // MOAI IO
 //================================================================//
 
@@ -18,8 +33,8 @@ extern char*				moaio_bless_path				( const char* path );
 extern int					moaio_chdir						( char* path );
 extern void					moaio_cleanup					();
 extern void					moaio_dir_close					( MOAIODIR dir );
-extern const int			moaio_dir_entry_is_subdir		( MOAIODIR dir );
-extern const char*			moaio_dir_entry_name			( MOAIODIR dir );
+extern char const*			moaio_dir_entry_name			( MOAIODIR dir );
+extern int					moaio_dir_entry_is_subdir		( MOAIODIR dir );
 extern MOAIODIR				moaio_dir_open					();
 extern int					moaio_dir_read_entry			( MOAIODIR dir );
 extern int					moaio_fclose					( MOAIOFILE fp );
@@ -38,6 +53,7 @@ extern size_t				moaio_fwrite					( const void* data, size_t size, size_t count,
 extern char*				moaio_get_abs_dirpath			( const char* path );
 extern char*				moaio_get_abs_filepath			( const char* path );
 extern char*				moaio_get_rel_path				( const char* path );
+extern int					moaio_get_stat					( char const* path, moaio_stat* filestat );
 extern char*				moaio_get_working_path			();
 extern char*				moaio_getcwd					( char* buffer, size_t length );
 extern void					moaio_init						();

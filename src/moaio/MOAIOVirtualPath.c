@@ -61,7 +61,27 @@ int MOAIOVirtualPath_SetArchive ( MOAIOVirtualPath* self, const char* archive ) 
 //----------------------------------------------------------------//
 int MOAIOVirtualPath_SetPath ( MOAIOVirtualPath* self, const char* path ) {
 
+	size_t base = 0;
+	size_t i = 0;
+	size_t namelen = 0;
+
 	clear_string ( self->mPath );
 	self->mPath = copy_string ( path );
+	
+	clear_string ( self->mName );
+	
+	for ( ; path [ i ]; ++i ) {
+		if (( path [ i ] == '/' ) && path [ i + 1 ]) {
+			base = i + 1;
+		}
+	}
+	
+	namelen = i - base;
+	if ( path [ i - 1 ] == '/' ) namelen--;
+
+	self->mName = malloc ( namelen + 1 );
+	memcpy ( self->mName, &path [ base ], namelen );
+	self->mName [ namelen ] = 0;
+
 	return 0;
 }

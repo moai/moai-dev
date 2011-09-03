@@ -12,6 +12,7 @@
 typedef struct MOAIOVirtualPath {
 
 	char*			mPath;
+	char*			mName;
 	MOAIOZipFile*	mArchive;
 
 	struct MOAIOVirtualPath* mNext;
