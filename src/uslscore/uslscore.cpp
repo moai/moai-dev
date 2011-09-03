@@ -53,9 +53,21 @@ void testMoaio () {
 	//relpath = moaio_get_rel_path ( "foo/bar/baz.txt" );
 
 	moaio_set_virtual_path ( "test", "test.zip" );
-	moaio_chdir ( "test/foo/baz/b" );
+	moaio_chdir ( "test//foo/baz////" );
 	
-	MOAIFILE file = moaio_fopen ( "../c/Metamorphosis.txt", "r" );
+	MOAIODIR dir = moaio_dir_open ();
+	
+	while ( moaio_dir_read_entry ( dir )) {
+		cc8* name = moaio_dir_entry_name ( dir );
+		int isSubDir = moaio_dir_entry_is_subdir ( dir );
+		
+		printf ( "%s: %s\n", isSubDir ? "dir" : "file", name );
+	}
+	moaio_dir_close ( dir );
+	
+	moaio_chdir ( "b" );
+	
+	MOAIOFILE file = moaio_fopen ( "././/./..//c////Metamorphosis.txt", "r" );
 	
 	char buffer [ 1024 ];
 	

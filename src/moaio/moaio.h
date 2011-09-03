@@ -8,36 +8,42 @@
 // MOAI IO
 //================================================================//
 
-typedef void* MOAIFILE;
+typedef void* MOAIODIR;
+typedef void* MOAIOFILE;
 
 //----------------------------------------------------------------//
-int				moaio_affirm_path			( const char* path );
-char*			moaio_basename				( const char* filename );
-char*			moaio_bless_path			( const char* path );
-int				moaio_chdir					( char* path );
-void			moaio_cleanup				();
-int				moaio_fclose				( MOAIFILE fp );
-int				moaio_feof					( MOAIFILE fp );
-int				moaio_fflush				( MOAIFILE fp );
-int				moaio_fgetc					( MOAIFILE fp );
-char* 			moaio_fgets					( char* string, int length, MOAIFILE fp );
-MOAIFILE 		moaio_fopen 				( const char* filename, const char* mode );
-int 			moaio_fputc					( int c, MOAIFILE fp );
-int				moaio_fputs					( const char* string, MOAIFILE fp );
-size_t			moaio_fread					( const void* buffer, size_t size, size_t count, MOAIFILE fp );
-int				moaio_freopen				( const char* filename, const char* mode, MOAIFILE fp );
-int				moaio_fseek					( MOAIFILE fp, long offset, int origin );
-long			moaio_ftell					( MOAIFILE fp );
-size_t			moaio_fwrite				( const void* data, size_t size, size_t count, MOAIFILE fp );
-char*			moaio_get_abs_dirpath		( const char* path );
-char*			moaio_get_abs_filepath		( const char* path );
-char*			moaio_get_rel_path			( const char* path );
-char*			moaio_get_working_path		();
-char*			moaio_getcwd				( char* buffer, size_t length );
-void			moaio_init					();
-int				moaio_mkdir					( const char* path );
-char*			moaio_normalize_path		( const char* path );
-int				moaio_rmdir					( const char* path );
-int				moaio_set_virtual_path		( const char* path, const char* archive );
+extern int					moaio_affirm_path				( const char* path );
+extern char*				moaio_basename					( const char* filename );
+extern char*				moaio_bless_path				( const char* path );
+extern int					moaio_chdir						( char* path );
+extern void					moaio_cleanup					();
+extern void					moaio_dir_close					( MOAIODIR dir );
+extern const int			moaio_dir_entry_is_subdir		( MOAIODIR dir );
+extern const char*			moaio_dir_entry_name			( MOAIODIR dir );
+extern MOAIODIR				moaio_dir_open					();
+extern int					moaio_dir_read_entry			( MOAIODIR dir );
+extern int					moaio_fclose					( MOAIOFILE fp );
+extern int					moaio_feof						( MOAIOFILE fp );
+extern int					moaio_fflush					( MOAIOFILE fp );
+extern int					moaio_fgetc						( MOAIOFILE fp );
+extern char* 				moaio_fgets						( char* string, int length, MOAIOFILE fp );
+extern MOAIOFILE 			moaio_fopen 					( const char* filename, const char* mode );
+extern int 					moaio_fputc						( int c, MOAIOFILE fp );
+extern int					moaio_fputs						( const char* string, MOAIOFILE fp );
+extern size_t				moaio_fread						( const void* buffer, size_t size, size_t count, MOAIOFILE fp );
+extern int					moaio_freopen					( const char* filename, const char* mode, MOAIOFILE fp );
+extern int					moaio_fseek						( MOAIOFILE fp, long offset, int origin );
+extern long					moaio_ftell						( MOAIOFILE fp );
+extern size_t				moaio_fwrite					( const void* data, size_t size, size_t count, MOAIOFILE fp );
+extern char*				moaio_get_abs_dirpath			( const char* path );
+extern char*				moaio_get_abs_filepath			( const char* path );
+extern char*				moaio_get_rel_path				( const char* path );
+extern char*				moaio_get_working_path			();
+extern char*				moaio_getcwd					( char* buffer, size_t length );
+extern void					moaio_init						();
+extern int					moaio_mkdir						( const char* path );
+extern char*				moaio_normalize_path			( const char* path );
+extern int					moaio_rmdir						( const char* path );
+extern int					moaio_set_virtual_path			( const char* path, const char* archive );
 
 #endif

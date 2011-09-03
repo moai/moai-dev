@@ -213,7 +213,7 @@ uintptr USLuaSerializer::GetID ( USLuaState& state, int idx ) {
 //----------------------------------------------------------------//
 u32 USLuaSerializer::IsLuaFile ( cc8* filename ) {
 
-	MOAIFILE* file = ( MOAIFILE* )moaio_fopen ( filename, "r" );
+	MOAIOFILE* file = ( MOAIOFILE* )moaio_fopen ( filename, "r" );
 	if ( !file ) return LOAD_ERROR;
 	
 	char magic [ 256 ];

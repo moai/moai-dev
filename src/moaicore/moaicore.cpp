@@ -4,7 +4,6 @@
 #include "pch.h"
 #include <chipmunk/chipmunk.h>
 #include <moaicore/moaicore.h>
-#include <physfs.h>
 
 //================================================================//
 // moaicore

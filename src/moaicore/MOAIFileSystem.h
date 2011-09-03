@@ -1,8 +1,8 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIFILESYSTEM_H
-#define	MOAIFILESYSTEM_H
+#ifndef	MOAIOFILESYSTEM_H
+#define	MOAIOFILESYSTEM_H
 
 //================================================================//
 // MOAIFileSystem

@@ -31,7 +31,7 @@ u32 USFileStream::GetCursor () {
 }
 
 //----------------------------------------------------------------//
-MOAIFILE* USFileStream::GetFile () {
+MOAIOFILE* USFileStream::GetFile () {
 
 	return this->mFile;
 }
@@ -47,7 +47,7 @@ bool USFileStream::OpenRead ( cc8* filename ) {
 
 	Close ();
 	
-	this->mFile = ( MOAIFILE* )moaio_fopen ( filename, "rb" );
+	this->mFile = ( MOAIOFILE* )moaio_fopen ( filename, "rb" );
 	if ( this->mFile ) {
 
 		moaio_fseek ( this->mFile, 0L, SEEK_END );
@@ -67,7 +67,7 @@ bool USFileStream::OpenWrite ( cc8* filename, bool affirmPath ) {
 		USFileSys::AffirmPath ( USPathOps::GetPath ( filename, true ));
 	}
 
-	this->mFile = ( MOAIFILE* )moaio_fopen ( filename, "wb" );
+	this->mFile = ( MOAIOFILE* )moaio_fopen ( filename, "wb" );
 	return this->mFile != NULL;
 }
 

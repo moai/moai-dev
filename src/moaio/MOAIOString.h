@@ -19,6 +19,7 @@ typedef struct MOAIOString {
 
 //----------------------------------------------------------------//
 extern char*			MOAIOString_Append		( MOAIOString* self, const char* str );
+extern void				MOAIOString_Clear		( MOAIOString* self );
 extern void				MOAIOString_Delete		( MOAIOString* self );
 extern char*			MOAIOString_Grow		( MOAIOString* self, size_t size );
 extern MOAIOString*		MOAIOString_New			();

@@ -27,11 +27,19 @@ char* MOAIOString_Append ( MOAIOString* self, const char* str ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIOString_Delete ( MOAIOString* self ) {
+void MOAIOString_Clear ( MOAIOString* self ) {
 
 	if ( self->mMem ) {
 		free ( self->mMem );
+		self->mMem = 0;
 	}
+	memset ( self, 0, sizeof ( MOAIOString ));
+}
+
+//----------------------------------------------------------------//
+void MOAIOString_Delete ( MOAIOString* self ) {
+
+	MOAIOString_Clear ( self );
 	free ( self );
 }
 

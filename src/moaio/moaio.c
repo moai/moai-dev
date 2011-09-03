@@ -23,6 +23,69 @@ typedef struct MOAIOFile {
 } MOAIOFile;
 
 //================================================================//
+// MOAIODir
+//================================================================//
+typedef struct MOAIODir {
+
+	MOAIOZipFileDir*		mZipFileDir;
+	MOAIOZipFileDir*		mZipFileSubDir;
+	MOAIOZipFileEntry*		mZipFileEntry;
+
+	MOAIOString			mName;
+	int					mIsDir;
+
+} MOAIODir;
+
+//----------------------------------------------------------------//
+int MOAIODir_ReadZipEntry ( MOAIODir* self ) {
+
+	if ( self->mZipFileSubDir ) {
+		
+		self->mZipFileSubDir = self->mZipFileSubDir->mNext;
+		if ( !self->mZipFileSubDir ) {
+		
+			self->mZipFileEntry = self->mZipFileDir->mChildFiles;
+			if ( !self->mZipFileEntry ) {
+				self->mZipFileDir = 0;
+			}
+		}
+	}
+	else if ( self->mZipFileEntry  ) {
+	
+		self->mZipFileSubDir = self->mZipFileSubDir->mNext;
+		if ( !self->mZipFileSubDir ) {
+			self->mZipFileDir = 0;
+		}
+	}
+	else {
+		
+		self->mZipFileSubDir = self->mZipFileDir->mChildDirs;
+		if ( !self->mZipFileSubDir ) {
+	
+			self->mZipFileEntry = self->mZipFileDir->mChildFiles;
+			if ( !self->mZipFileEntry ) {
+				self->mZipFileDir = 0;
+			}
+		}
+	}
+	
+	if ( self->mZipFileDir ) {
+	
+		if ( self->mZipFileSubDir ) {
+			self->mIsDir = 1;
+			MOAIOString_Set ( &self->mName, self->mZipFileSubDir->mName );
+		}
+		else if ( self->mZipFileEntry  ) {
+			self->mIsDir = 0;
+			MOAIOString_Set ( &self->mName, self->mZipFileEntry->mName );
+		}
+		return 1;
+	}
+	
+	return 0;
+}
+
+//================================================================//
 // local
 //================================================================//
 
@@ -84,6 +147,13 @@ MOAIOVirtualPath* find_virtual_path ( char const* path ) {
 	return cursor;
 }
 
+//----------------------------------------------------------------//
+int is_separator ( char c ) {
+
+	return ( c == '/' ) || ( c == '\\' ) ? 1 : 0; 
+
+}
+
 //================================================================//
 // moaio
 //================================================================//
@@ -143,17 +213,38 @@ char* moaio_basename ( const char* filename ) {
 //----------------------------------------------------------------//
 char* moaio_bless_path ( const char* path ) {
 
-	size_t i;
-	size_t length = strlen ( path );
+	size_t i = 0;
+	size_t j = 0;
 	
-	MOAIOString_Grow ( sBuffer, length );
-	
-	for ( i = 0; i < length; ++i ) {
-		char c = path [ i ];
-		sBuffer->mMem [ i ] = ( c == '\\' ) ? '/' : c;
+	for ( i = 0; path [ i ]; ++i ) {
+		if ( is_separator ( path [ i ] )) {
+			while ( is_separator ( path [ ++i ]));
+			--i;
+		}
+		j++;
 	}
-	sBuffer->mMem [ length ] = 0;
-	sBuffer->mStrLen = length;
+	
+	MOAIOString_Grow ( sBuffer, j );
+	
+	i = 0;
+	j = 0;
+	
+	for ( i = 0; path [ i ]; ++i ) {
+		
+		char c = path [ i ];
+		
+		if ( is_separator ( c )) {
+		
+			c = '/';
+			while ( is_separator ( path [ ++i ]));
+			--i;
+		}
+		
+		sBuffer->mMem [ j++ ] = c;
+	}
+	
+	sBuffer->mMem [ j ] = 0;
+	sBuffer->mStrLen = j;
 
 	return sBuffer->mMem;
 }
@@ -202,7 +293,53 @@ void moaio_cleanup () {
 }
 
 //----------------------------------------------------------------//
-int	moaio_fclose ( MOAIFILE fp ) {
+void moaio_dir_close ( MOAIODIR dir ) {
+
+	MOAIODir* self = ( MOAIODir* )dir;
+	MOAIOString_Clear ( &self->mName );
+	memset ( self, 0, sizeof ( MOAIODir ));
+	free ( self );
+}
+
+//----------------------------------------------------------------//
+const int moaio_dir_entry_is_subdir ( MOAIODIR dir ) {
+
+	MOAIODir* self = ( MOAIODir* )dir;
+	return self->mIsDir;
+}
+
+//----------------------------------------------------------------//
+const char* moaio_dir_entry_name ( MOAIODIR dir ) {
+
+	MOAIODir* self = ( MOAIODir* )dir;
+	return self->mName.mMem;
+}
+
+//----------------------------------------------------------------//
+MOAIODIR moaio_dir_open () {
+
+	MOAIODir* self = ( MOAIODir* )calloc ( 1, sizeof ( MOAIODir ));
+	
+	if ( sVirtual ) {
+		char const* path = MOAIOVirtualPath_GetLocalPath ( sVirtual, sWorkingPath->mMem );
+		self->mZipFileDir = MOAIOZipFile_FindDir ( sVirtual->mArchive, path );
+	}
+	return self;
+}
+
+//----------------------------------------------------------------//
+int moaio_dir_read_entry ( MOAIODIR dir ) {
+
+	MOAIODir* self = ( MOAIODir* )dir;
+
+	if ( self->mZipFileDir ) {
+		return MOAIODir_ReadZipEntry ( self );		
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+int	moaio_fclose ( MOAIOFILE fp ) {
 
 	int result = 0;
 
@@ -216,7 +353,7 @@ int	moaio_fclose ( MOAIFILE fp ) {
 }
 
 //----------------------------------------------------------------//
-int	moaio_fflush ( MOAIFILE fp ) {
+int	moaio_fflush ( MOAIOFILE fp ) {
 	
 	if ( fp ) {
 		MOAIOFile* file = ( MOAIOFile* )fp;
@@ -228,7 +365,7 @@ int	moaio_fflush ( MOAIFILE fp ) {
 }
 
 //----------------------------------------------------------------//
-int moaio_fgetc ( MOAIFILE fp ) {
+int moaio_fgetc ( MOAIOFILE fp ) {
 	
 	int result = EOF;
 
@@ -251,7 +388,7 @@ int moaio_fgetc ( MOAIFILE fp ) {
 }
 
 //----------------------------------------------------------------//
-char* moaio_fgets ( char* string, int length, MOAIFILE fp ) {
+char* moaio_fgets ( char* string, int length, MOAIOFILE fp ) {
 	
 	int i = 0;
 	int c = 0;
@@ -284,7 +421,7 @@ char* moaio_fgets ( char* string, int length, MOAIFILE fp ) {
 }
 
 //----------------------------------------------------------------//
-MOAIFILE moaio_fopen ( const char* filename, const char* mode ) {
+MOAIOFILE moaio_fopen ( const char* filename, const char* mode ) {
 	
 	MOAIOFile* file = 0;
 
@@ -317,11 +454,11 @@ MOAIFILE moaio_fopen ( const char* filename, const char* mode ) {
 		}
 	}
 
-	return ( MOAIFILE )file;
+	return ( MOAIOFILE )file;
 }
 
 //----------------------------------------------------------------//
-size_t moaio_fread ( void* buffer, size_t size, size_t count, MOAIFILE fp ) {
+size_t moaio_fread ( void* buffer, size_t size, size_t count, MOAIOFILE fp ) {
 	
 	if ( fp ) {
 		MOAIOFile* file = ( MOAIOFile* )fp;
@@ -331,7 +468,7 @@ size_t moaio_fread ( void* buffer, size_t size, size_t count, MOAIFILE fp ) {
 }
 
 //----------------------------------------------------------------//
-int	moaio_fseek ( MOAIFILE fp, long offset, int origin ) {
+int	moaio_fseek ( MOAIOFILE fp, long offset, int origin ) {
 	
 	if ( fp ) {
 		MOAIOFile* file = ( MOAIOFile* )fp;
@@ -341,7 +478,7 @@ int	moaio_fseek ( MOAIFILE fp, long offset, int origin ) {
 }
 
 //----------------------------------------------------------------//
-long moaio_ftell ( MOAIFILE fp ) {
+long moaio_ftell ( MOAIOFILE fp ) {
 
 	if ( fp ) {
 		MOAIOFile* file = ( MOAIOFile* )fp;
@@ -351,7 +488,7 @@ long moaio_ftell ( MOAIFILE fp ) {
 }
 
 //----------------------------------------------------------------//
-size_t moaio_fwrite ( const void* data, size_t size, size_t count, MOAIFILE fp ) {
+size_t moaio_fwrite ( const void* data, size_t size, size_t count, MOAIOFILE fp ) {
 	
 	if ( fp ) {
 		MOAIOFile* file = ( MOAIOFile* )fp;
@@ -384,7 +521,7 @@ char* moaio_get_abs_dirpath ( const char* path ) {
 
 	moaio_get_abs_filepath ( path );
 	
-	if ( sBuffer->mMem [ sBuffer->mStrLen ] != '/' ) {
+	if ( sBuffer->mMem [ sBuffer->mStrLen - 1 ] != '/' ) {
 		MOAIOString_Append ( sBuffer, "/" );
 	}
 	return sBuffer->mMem;
