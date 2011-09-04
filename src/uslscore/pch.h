@@ -119,9 +119,9 @@ extern "C" {
 	#include <lualib.h>
 }
 
-// io
+// vfs
 extern "C" {
-	#include <moaio/moaio.h>
+	#include <zipfs/zipfs.h>
 }
 
 //----------------------------------------------------------------//

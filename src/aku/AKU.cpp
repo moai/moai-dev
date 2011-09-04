@@ -212,6 +212,18 @@ lua_State* AKUGetLuaState () {
 }
 
 //----------------------------------------------------------------//
+char const* AKUGetWorkingDirectory () {
+
+	return zipfs_get_working_path ();
+}
+
+//----------------------------------------------------------------//
+int AKUMountVirtualDirectory ( char const* virtualPath, char const* archive ) {
+
+	return zipfs_mount_virtual ( virtualPath, archive );
+}
+
+//----------------------------------------------------------------//
 void AKUPause ( bool pause ) {
 
 	if ( pause ) {
@@ -244,6 +256,12 @@ void AKUReserveInputDeviceSensors ( int deviceID, int total ) {
 void AKUResize ( int width, int height ) {
 
 	MOAIGfxDevice::Get ().SetSize ( width, height );
+}
+
+//----------------------------------------------------------------//
+int AKUSetWorkingDirectory ( char const* path ) {
+
+	return zipfs_chdir ( path );
 }
 
 //----------------------------------------------------------------//

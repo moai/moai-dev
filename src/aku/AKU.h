@@ -53,15 +53,17 @@ AKU_API void			AKUFinalize				();
 AKU_API void			AKUSetContext			( AKUContextID context );
 AKU_API void			AKUSetUserdata			( void* user );
 
-
 // management api
-AKU_API void			AKUDetectGfxContext		();
-AKU_API lua_State*		AKUGetLuaState			();
-AKU_API void			AKUPause				( bool pause );
-AKU_API void			AKURender				();
-AKU_API void			AKUResize				( int width, int height );
-AKU_API void			AKURunScript			( const char* filename );
-AKU_API void			AKUUpdate				();
+AKU_API void			AKUDetectGfxContext				();
+AKU_API lua_State*		AKUGetLuaState					();
+AKU_API char const*		AKUGetWorkingDirectory			();
+AKU_API int				AKUMountVirtualDirectory		( char const* virtualPath, char const* archive );
+AKU_API void			AKUPause						( bool pause );
+AKU_API void			AKURender						();
+AKU_API void			AKUResize						( int width, int height );
+AKU_API void			AKURunScript					( const char* filename );
+AKU_API int				AKUSetWorkingDirectory			( char const* path );
+AKU_API void			AKUUpdate						();
 
 // input device api
 AKU_API void			AKUReserveInputDevices			( int total );
