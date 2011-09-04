@@ -13,7 +13,7 @@
 //----------------------------------------------------------------//
 char* USFilename::GetAbsoluteDirPath ( cc8* path ) {
 
-	path = moaio_get_abs_dirpath ( path );
+	path = zipfs_get_abs_dirpath ( path );
 	strcpy ( this->mBuffer, path );
 	
 	return this->mBuffer;
@@ -22,7 +22,7 @@ char* USFilename::GetAbsoluteDirPath ( cc8* path ) {
 //----------------------------------------------------------------//
 char* USFilename::GetAbsoluteFilePath ( cc8* path ) {
 
-	path = moaio_get_abs_filepath ( path );
+	path = zipfs_get_abs_filepath ( path );
 	strcpy ( this->mBuffer, path );
 	
 	return this->mBuffer;
@@ -31,13 +31,13 @@ char* USFilename::GetAbsoluteFilePath ( cc8* path ) {
 //----------------------------------------------------------------//
 char* USFilename::GetCurrentPath () {
 
-	return moaio_getcwd ( this->mBuffer, PATH_MAX );
+	return zipfs_getcwd ( this->mBuffer, PATH_MAX );
 }
 
 //----------------------------------------------------------------//
 char* USFilename::GetRelativePath ( cc8* path ) {
 	
-	path = moaio_get_rel_path ( path );
+	path = zipfs_get_rel_path ( path );
 	strcpy ( this->mBuffer, path );
 	return this->mBuffer;
 }
@@ -45,7 +45,7 @@ char* USFilename::GetRelativePath ( cc8* path ) {
 //----------------------------------------------------------------//
 char* USFilename::TruncateFilename ( cc8* filename ) {
 
-	filename = moaio_bless_path ( filename );
+	filename = zipfs_bless_path ( filename );
 	
 	int len = 0;
 	for ( u32 i = 0; filename [ i ]; ++i ) {

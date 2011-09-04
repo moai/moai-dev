@@ -213,13 +213,13 @@ uintptr USLuaSerializer::GetID ( USLuaState& state, int idx ) {
 //----------------------------------------------------------------//
 u32 USLuaSerializer::IsLuaFile ( cc8* filename ) {
 
-	MOAIOFILE* file = ( MOAIOFILE* )moaio_fopen ( filename, "r" );
+	ZIPFSFILE* file = ( ZIPFSFILE* )zipfs_fopen ( filename, "r" );
 	if ( !file ) return LOAD_ERROR;
 	
 	char magic [ 256 ];
-	char* str = moaio_fgets ( magic, 6, file );
+	char* str = zipfs_fgets ( magic, 6, file );
 	UNUSED ( str );
-	moaio_fclose ( file );
+	zipfs_fclose ( file );
 	
 	if ( strcmp ( magic, this->GetFileMagic ()) != 0 ) return INVALID_FILE;
 	

@@ -20,7 +20,7 @@ cc8* USDirectoryItr::Current () {
 void USDirectoryItr::Finish () {
 
 	if ( this->mHandle ) {
-		moaio_dir_close (( MOAIODIR )this->mHandle );
+		zipfs_dir_close (( ZIPFSDIR )this->mHandle );
 		this->mHandle = 0;
 	}
 	this->mCurrent = 0;
@@ -31,10 +31,10 @@ cc8* USDirectoryItr::NextDirectory () {
 
 	this->mCurrent = 0;
 
-	MOAIODIR* dir = ( MOAIODIR* )this->mHandle;
-	while ( moaio_dir_read_entry ( dir )) {
-		if ( moaio_dir_entry_is_subdir ( dir )) {
-			this->mCurrent = moaio_dir_entry_name ( dir );
+	ZIPFSDIR* dir = ( ZIPFSDIR* )this->mHandle;
+	while ( zipfs_dir_read_entry ( dir )) {
+		if ( zipfs_dir_entry_is_subdir ( dir )) {
+			this->mCurrent = zipfs_dir_entry_name ( dir );
 			break;
 		}
 	}
@@ -44,10 +44,10 @@ cc8* USDirectoryItr::NextDirectory () {
 //----------------------------------------------------------------//
 cc8* USDirectoryItr::NextEntry () {
 
-	MOAIODIR* dir = ( MOAIODIR* )this->mHandle;
+	ZIPFSDIR* dir = ( ZIPFSDIR* )this->mHandle;
 
-	moaio_dir_read_entry ( dir );
-	this->mCurrent= moaio_dir_entry_name ( dir );
+	zipfs_dir_read_entry ( dir );
+	this->mCurrent= zipfs_dir_entry_name ( dir );
 
 	return this->mCurrent;
 }
@@ -57,10 +57,10 @@ cc8* USDirectoryItr::NextFile () {
 
 	this->mCurrent = 0;
 
-	MOAIODIR* dir = ( MOAIODIR* )this->mHandle;
-	while ( moaio_dir_read_entry ( dir )) {
-		if ( !moaio_dir_entry_is_subdir ( dir )) {
-			this->mCurrent = moaio_dir_entry_name ( dir );
+	ZIPFSDIR* dir = ( ZIPFSDIR* )this->mHandle;
+	while ( zipfs_dir_read_entry ( dir )) {
+		if ( !zipfs_dir_entry_is_subdir ( dir )) {
+			this->mCurrent = zipfs_dir_entry_name ( dir );
 			break;
 		}
 	}
@@ -71,7 +71,7 @@ cc8* USDirectoryItr::NextFile () {
 void USDirectoryItr::Start () {
 
 	this->Finish ();
-	this->mHandle = moaio_dir_open ();
+	this->mHandle = zipfs_dir_open ();
 }
 
 //----------------------------------------------------------------//

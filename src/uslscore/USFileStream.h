@@ -13,7 +13,7 @@ class USFileStream :
 	public USStream {
 protected:
 
-	MOAIOFILE*		mFile;
+	ZIPFSFILE*		mFile;
 	u32				mLength;
 
 public:
@@ -22,7 +22,7 @@ public:
 	void			Close				();
 	void			Flush				();
 	u32				GetCursor			();
-	MOAIOFILE*		GetFile				();
+	ZIPFSFILE*		GetFile				();
 	u32				GetLength			();
 	bool			OpenRead			( cc8* filename );
 	bool			OpenWrite			( cc8* filename, bool affirmPath = true );

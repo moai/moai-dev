@@ -6,14 +6,14 @@
 
 extern "C" {
 	#include <zlib.h>
-	#include <moaio/MOAIOZipFile.h>
+	#include <zipfs/ZIPFSZipFile.h>
 }
 
 //----------------------------------------------------------------//
 static void _cleanup () {
 
 	USGlobals::Get ()->Finalize ();
-	moaio_cleanup ();
+	zipfs_cleanup ();
 }
 
 //----------------------------------------------------------------//
@@ -42,49 +42,49 @@ static void _typeCheck () {
 //----------------------------------------------------------------//
 void testMoaio () {
 
-	//MOAIOZipFile* zipFile = MOAIOZipFile_New ( "test.zip" );
-	//MOAIOZipFile_Delete ( zipFile );
+	//ZIPFSZipFile* zipFile = ZIPFSZipFile_New ( "test.zip" );
+	//ZIPFSZipFile_Delete ( zipFile );
 
 	//cc8* relpath;
 	//
-	//relpath = moaio_get_rel_path ( "C:/foo/bar/baz.txt" );
-	//relpath = moaio_get_rel_path ( "/foo/bar/baz.txt" );
-	//relpath = moaio_get_rel_path ( "./foo/bar/baz.txt" );
-	//relpath = moaio_get_rel_path ( "foo/bar/baz.txt" );
+	//relpath = zipfs_get_rel_path ( "C:/foo/bar/baz.txt" );
+	//relpath = zipfs_get_rel_path ( "/foo/bar/baz.txt" );
+	//relpath = zipfs_get_rel_path ( "./foo/bar/baz.txt" );
+	//relpath = zipfs_get_rel_path ( "foo/bar/baz.txt" );
 
-	moaio_set_virtual_path ( "test", "test.zip" );
-	moaio_chdir ( "test//foo/baz////" );
+	zipfs_mount_virtual ( "test", "test.zip" );
+	zipfs_chdir ( "test//foo/baz////" );
 	
-	moaio_rmdir ( "test" );
-	moaio_rmdir ( "test/foo" );
+	zipfs_rmdir ( "test" );
+	zipfs_rmdir ( "test/foo" );
 	
-	MOAIODIR dir = moaio_dir_open ();
+	ZIPFSDIR dir = zipfs_dir_open ();
 	
-	while ( moaio_dir_read_entry ( dir )) {
-		cc8* name = moaio_dir_entry_name ( dir );
-		int isSubDir = moaio_dir_entry_is_subdir ( dir );
+	while ( zipfs_dir_read_entry ( dir )) {
+		cc8* name = zipfs_dir_entry_name ( dir );
+		int isSubDir = zipfs_dir_entry_is_subdir ( dir );
 		
 		printf ( "%s: %s\n", isSubDir ? "dir" : "file", name );
 	}
-	moaio_dir_close ( dir );
+	zipfs_dir_close ( dir );
 	
-	moaio_chdir ( "b" );
+	zipfs_chdir ( "b" );
 	
-	moaio_stat filestat;
-	moaio_get_stat ( "././/./..//c////Metamorphosis.txt", &filestat );
+	zipfs_stat filestat;
+	zipfs_get_stat ( "././/./..//c////Metamorphosis.txt", &filestat );
 	
-	MOAIOFILE file = moaio_fopen ( "././/./..//c////Metamorphosis.txt", "r" );
+	ZIPFSFILE file = zipfs_fopen ( "././/./..//c////Metamorphosis.txt", "r" );
 	
 	char buffer [ 1024 ];
 	
-	moaio_fread ( buffer, 1024, 1, file );
-	moaio_fseek ( file, -512, SEEK_CUR );
+	zipfs_fread ( buffer, 1024, 1, file );
+	zipfs_fseek ( file, -512, SEEK_CUR );
 	
-	moaio_fread ( buffer, 1024, 1, file );
+	zipfs_fread ( buffer, 1024, 1, file );
 	buffer [ 1023 ] = 0;
 	printf ( "%s\n", buffer );
 	
-	moaio_fclose ( file );
+	zipfs_fclose ( file );
 }
 
 //----------------------------------------------------------------//
@@ -102,7 +102,7 @@ void uslscore::InitGlobals ( USGlobals* globals ) {
 		srand (( u32 )time ( 0 ));
 		atexit ( _cleanup );
 		
-		moaio_init ();
+		zipfs_init ();
 		
 		testMoaio ();
 		

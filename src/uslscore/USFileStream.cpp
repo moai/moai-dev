@@ -11,7 +11,7 @@
 void USFileStream::Close () {
 
 	if ( this->mFile ) {
-		moaio_fclose ( this->mFile );
+		zipfs_fclose ( this->mFile );
 	}
 	
 	this->mLength = 0;
@@ -21,17 +21,17 @@ void USFileStream::Close () {
 //----------------------------------------------------------------//
 void USFileStream::Flush () {
 
-	moaio_fflush ( this->mFile );
+	zipfs_fflush ( this->mFile );
 }
 
 //----------------------------------------------------------------//
 u32 USFileStream::GetCursor () {
 
-	return ( u32 )moaio_ftell ( this->mFile );
+	return ( u32 )zipfs_ftell ( this->mFile );
 }
 
 //----------------------------------------------------------------//
-MOAIOFILE* USFileStream::GetFile () {
+ZIPFSFILE* USFileStream::GetFile () {
 
 	return this->mFile;
 }
@@ -47,12 +47,12 @@ bool USFileStream::OpenRead ( cc8* filename ) {
 
 	Close ();
 	
-	this->mFile = ( MOAIOFILE* )moaio_fopen ( filename, "rb" );
+	this->mFile = ( ZIPFSFILE* )zipfs_fopen ( filename, "rb" );
 	if ( this->mFile ) {
 
-		moaio_fseek ( this->mFile, 0L, SEEK_END );
-		this->mLength = ( u32 )moaio_ftell ( this->mFile );
-		moaio_fseek ( this->mFile, 0L, SEEK_SET );
+		zipfs_fseek ( this->mFile, 0L, SEEK_END );
+		this->mLength = ( u32 )zipfs_ftell ( this->mFile );
+		zipfs_fseek ( this->mFile, 0L, SEEK_SET );
 	}
 
 	return this->mFile != NULL;
@@ -65,24 +65,24 @@ bool USFileStream::OpenWrite ( cc8* filename, bool affirmPath ) {
 	
 	if ( affirmPath ) {
 		USFilename path;
-		int result = moaio_affirm_path ( path.TruncateFilename ( filename ));
+		int result = zipfs_affirm_path ( path.TruncateFilename ( filename ));
 		if ( result ) return false;
 	}
 
-	this->mFile = ( MOAIOFILE* )moaio_fopen ( filename, "wb" );
+	this->mFile = ( ZIPFSFILE* )zipfs_fopen ( filename, "wb" );
 	return this->mFile != NULL;
 }
 
 //----------------------------------------------------------------//
 u32 USFileStream::ReadBytes ( void* buffer, u32 size ) {
 
-	return ( u32 )moaio_fread ( buffer, 1, size, this->mFile );
+	return ( u32 )zipfs_fread ( buffer, 1, size, this->mFile );
 }
 
 //----------------------------------------------------------------//
 void USFileStream::Seek ( long offset, int origin ) {
 
-	moaio_fseek ( this->mFile, offset, origin );
+	zipfs_fseek ( this->mFile, offset, origin );
 }
 
 //----------------------------------------------------------------//
@@ -99,9 +99,9 @@ USFileStream::~USFileStream () {
 //----------------------------------------------------------------//
 u32 USFileStream::WriteBytes ( const void* buffer, u32 size ) {
 
-	u32 result = ( u32 )moaio_fwrite ( buffer, 1, size, this->mFile );
+	u32 result = ( u32 )zipfs_fwrite ( buffer, 1, size, this->mFile );
 	
-	u32 cursor = ( u32 )moaio_ftell ( this->mFile );
+	u32 cursor = ( u32 )zipfs_ftell ( this->mFile );
 	if ( cursor > this->mLength ) {
 		this->mLength = cursor;
 	}

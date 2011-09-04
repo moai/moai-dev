@@ -104,35 +104,35 @@ int MOAIFileSystem::_deleteFile ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	expandFilename
-	@text	Returns the absolute path to a file. Result includes the
-			file name.
+/**	@name	getAbsoluteDirectoryPath
+	@text	Returns the absolute path given a relative path.
 
-	@in		string filename
+	@in		string path
 	@out	string absolute
 */
-int MOAIFileSystem::_expandFilename ( lua_State* L ) {
+int MOAIFileSystem::_getAbsoluteDirectoryPath ( lua_State* L ) {
 	USLuaState state ( L );
 	
-	cc8* filename = state.GetValue < cc8* >( 1, "" );
-	STLString result = USFileSys::GetAbsoluteFilePath ( filename );
+	cc8* path = state.GetValue < cc8* >( 2, "" );
+	STLString result = USFileSys::GetAbsoluteDirPath ( path );
 	
 	lua_pushstring ( state, result );
 	return 1;
 }
 
 //----------------------------------------------------------------//
-/**	@name	expandPath
-	@text	Returns the absolute path given a relative path.
+/**	@name	getAbsoluteFilePath
+	@text	Returns the absolute path to a file. Result includes the
+			file name.
 
-	@in		string path
+	@in		string filename
 	@out	string absolute
 */
-int MOAIFileSystem::_expandPath ( lua_State* L ) {
+int MOAIFileSystem::_getAbsoluteFilePath ( lua_State* L ) {
 	USLuaState state ( L );
 	
-	cc8* path = state.GetValue < cc8* >( 2, "" );
-	STLString result = USFileSys::GetAbsoluteDirPath ( path );
+	cc8* filename = state.GetValue < cc8* >( 1, "" );
+	STLString result = USFileSys::GetAbsoluteFilePath ( filename );
 	
 	lua_pushstring ( state, result );
 	return 1;
@@ -161,6 +161,117 @@ int MOAIFileSystem::_getWorkingDirectory ( lua_State* L ) {
 	STLString result = USFileSys::GetCurrentPath ();
 	
 	lua_pushstring ( state, result );
+	return 1;
+}
+
+//----------------------------------------------------------------//
+/**	@name	listDirectories
+	@text	Lists the sub-directories contained in a directory.
+ 
+	@opt	string path				Path to search. Default is current directory.
+	@out	table diresctories		A table of directory names (or nil if the path is invalid)
+*/
+int MOAIFileSystem::_listDirectories ( lua_State* L ) {
+	UNUSED ( L );
+	
+	STLString oldPath = USFileSys::GetCurrentPath();
+	
+	cc8* dir = NULL;
+	if ( lua_type ( L, 1 ) == LUA_TSTRING ) {
+		dir = lua_tostring ( L, 1 );
+		if ( !USFileSys::SetCurrentPath ( dir )) {
+			return 0;
+		}
+	}
+	
+	USDirectoryItr dirItr;
+	
+	lua_newtable ( L );
+	int n = 0;
+	dirItr.Start ();
+	while ( dirItr.NextDirectory ()) {
+		if ( dir ) {
+			lua_pushstring ( L, dir );
+			lua_pushstring ( L, "/" );
+			lua_pushstring ( L, dirItr.Current ());
+			lua_concat ( L, 3 );
+		}
+		else {
+			lua_pushstring ( L, dirItr.Current ());
+		}
+		n++;
+		luaL_setn ( L, -2, n );  // new size
+		lua_rawseti ( L, -2, n );  // t[pos] = v
+	}
+	
+	USFileSys::SetCurrentPath ( oldPath );
+	
+	return 1;
+}
+
+//----------------------------------------------------------------//
+/**	@name	listFiles
+	@text	Lists the files contained in a directory
+ 
+	@opt	string path		Path to search. Default is current directory.
+	@out	table files		A table of filenames (or nil if the path is invalid)
+*/
+int MOAIFileSystem::_listFiles ( lua_State* L ) {
+	UNUSED ( L );
+	
+	STLString oldPath = USFileSys::GetCurrentPath ();
+	
+	cc8* dir = NULL;
+	if ( lua_type ( L, 1 ) == LUA_TSTRING ) {
+		dir = lua_tostring ( L, 1 );
+		if( !USFileSys::SetCurrentPath ( dir )) {
+			return 0;
+		}
+	}
+
+	USDirectoryItr dirItr;
+	
+	lua_newtable ( L );
+	int n = 0;
+	dirItr.Start ();
+	while ( dirItr.NextFile ()) {
+		if ( dir ) {
+			lua_pushstring ( L, dir );
+			lua_pushstring ( L, "/" );
+			lua_pushstring ( L, dirItr.Current ());
+			lua_concat ( L, 3 );
+		}
+		else {
+			lua_pushstring ( L, dirItr.Current ());
+		}
+
+		n++;
+		luaL_setn ( L, -2, n );  // new size
+		lua_rawseti ( L, -2, n );  // t[pos] = v
+	}
+	
+	USFileSys::SetCurrentPath ( oldPath );
+	
+	return 1;
+}
+
+//----------------------------------------------------------------//
+/**	@name	mountVirtualDirectory
+	@text	Mount an archive as a virtual filesystem directory.
+
+	@in		string path			Virtual path.
+	@opt	string archive		Name of archive file to mount. Default value is nil.
+	@out	boolean success
+*/
+int MOAIFileSystem::_mountVirtualDirectory ( lua_State* L ) {
+	USLuaState state ( L );
+	
+	cc8* path		= state.GetValue < cc8* >( 1, "" );
+	cc8* archive	= state.GetValue < cc8* >( 2, 0 );
+	
+	bool result = USFileSys::MountVirtualDirectory ( path, archive );
+	
+	lua_pushboolean ( state, result );
 	return 1;
 }
 
@@ -209,17 +320,20 @@ int MOAIFileSystem::_setWorkingDirectory ( lua_State* L ) {
 void MOAIFileSystem::RegisterLuaClass ( USLuaState& state ) {
 
 	luaL_Reg regTable [] = {
-		{ "affirmPath",				_affirmPath },
-		{ "checkFileExists",		_checkFileExists },
-		{ "checkPathExists",		_checkPathExists },
-		{ "deleteDirectory",		_deleteDirectory },
-		{ "deleteFile",				_deleteFile },
-		{ "expandFilename",			_expandFilename },
-		{ "expandPath",				_expandPath },
-		{ "getRelativePath",		_getRelativePath },
-		{ "getWorkingDirectory",	_getWorkingDirectory },
-		{ "rename",					_rename },
-		{ "setWorkingDirectory",	_setWorkingDirectory },
+		{ "affirmPath",					_affirmPath },
+		{ "checkFileExists",			_checkFileExists },
+		{ "checkPathExists",			_checkPathExists },
+		{ "deleteDirectory",			_deleteDirectory },
+		{ "deleteFile",					_deleteFile },
+		{ "getAbsoluteFilePath",		_getAbsoluteFilePath },
+		{ "getAbsoluteDirectoryPath",	_getAbsoluteDirectoryPath },
+		{ "getRelativePath",			_getRelativePath },
+		{ "getWorkingDirectory",		_getWorkingDirectory },
+		{ "listDirectories",			_listDirectories },
+		{ "listFiles",					_listFiles },
+		{ "mountVirtualDirectory",		_mountVirtualDirectory },
+		{ "rename",						_rename },
+		{ "setWorkingDirectory",		_setWorkingDirectory },
 		{ NULL, NULL }
 	};
 

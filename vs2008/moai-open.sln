@@ -126,7 +126,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "visualinfo", "visualinfo\vi
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "zlib", "zlib\zlib.vcproj", "{E6C55A0C-B5B7-4963-8F77-19F1624B9F47}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "moaio", "moaio\moaio.vcproj", "{A92A8C1C-C62D-43F8-98A9-C418A786BE56}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "zipfs", "zipfs\zipfs.vcproj", "{A92A8C1C-C62D-43F8-98A9-C418A786BE56}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -428,8 +428,8 @@ Global
 		{A92A8C1C-C62D-43F8-98A9-C418A786BE56} = {9F8AD78A-95B2-4E97-8070-087F82AA848D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		AMDCaPersistentConfig = Debug|Win32
-		AMDCaPersistentStartup = moai (Utilities\moai)
 		AMDCaProjectFile = C:\Documents and Settings\Patrick\My Documents\git\moai\vs2008\CodeAnalyst\moai-open.caw
+		AMDCaPersistentStartup = moai (Utilities\moai)
+		AMDCaPersistentConfig = Debug|Win32
 	EndGlobalSection
 EndGlobal

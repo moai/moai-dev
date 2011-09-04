@@ -15,13 +15,13 @@
 //----------------------------------------------------------------//
 bool USFileSys::AffirmPath ( cc8* path ) {
 
-	return ( moaio_affirm_path ( path ) == 0 );
+	return ( zipfs_affirm_path ( path ) == 0 );
 }
 
 //----------------------------------------------------------------//
 bool USFileSys::CheckFileExists ( cc8* path ) {
 
-	moaio_stat fileStat;
+	zipfs_stat fileStat;
 	USFileSys::GetFileStat ( path, fileStat );
 	return ( fileStat.mExists != 0 );
 }
@@ -43,7 +43,7 @@ bool USFileSys::DeleteDirectory ( cc8* path, bool force, bool recursive ) {
 
 	if ( USFileSys::CheckPathExists ( path ) == false ) return true;
 		
-	int result = moaio_rmdir ( path );
+	int result = zipfs_rmdir ( path );
 	
 	if ( result == 0 ) return true;
 	if ( !( force || recursive )) return false;
@@ -68,14 +68,14 @@ bool USFileSys::DeleteDirectory ( cc8* path, bool force, bool recursive ) {
 	}
 
 	USFileSys::SetCurrentPath ( currentDir );
-	return ( moaio_rmdir ( path ) == 0 );
+	return ( zipfs_rmdir ( path ) == 0 );
 }
 
 //----------------------------------------------------------------//
 bool USFileSys::DeleteFile ( cc8* path ) {
 
 	if ( USFileSys::CheckFileExists ( path )) {
-		return ( moaio_remove ( path ) == 0 );
+		return ( zipfs_remove ( path ) == 0 );
 	}
 	return true;
 }
@@ -83,25 +83,25 @@ bool USFileSys::DeleteFile ( cc8* path ) {
 //----------------------------------------------------------------//
 STLString USFileSys::GetAbsoluteDirPath ( cc8* path ) {
 
-	return moaio_get_abs_dirpath ( path );
+	return zipfs_get_abs_dirpath ( path );
 }
 
 //----------------------------------------------------------------//
 STLString USFileSys::GetAbsoluteFilePath ( cc8* path ) {
 
-	return moaio_get_abs_filepath ( path );
+	return zipfs_get_abs_filepath ( path );
 }
 
 //----------------------------------------------------------------//
 STLString USFileSys::GetCurrentPath () {
 
-	return moaio_get_working_path ();
+	return zipfs_get_working_path ();
 }
 
 //----------------------------------------------------------------//
-bool USFileSys::GetFileStat ( cc8* filename, moaio_stat& fileStat ) {
+bool USFileSys::GetFileStat ( cc8* filename, zipfs_stat& fileStat ) {
 
-	int result = moaio_get_stat ( filename, &fileStat );
+	int result = zipfs_get_stat ( filename, &fileStat );
 	if ( result ) return false;
 	return true;
 }
@@ -114,15 +114,22 @@ STLString USFileSys::GetRelativePath ( cc8* path ) {
 }
 
 //----------------------------------------------------------------//
+bool USFileSys::MountVirtualDirectory ( cc8* path, cc8* archive ) {
+
+	int result = zipfs_mount_virtual ( path, archive );
+	return ( result == 0 );
+}
+
+//----------------------------------------------------------------//
 bool USFileSys::Rename ( cc8* oldPath, cc8* newPath ) {
 
-	int result = moaio_rename ( oldPath, newPath );
+	int result = zipfs_rename ( oldPath, newPath );
 	return ( result == 0 );
 }
 
 //----------------------------------------------------------------//
 bool USFileSys::SetCurrentPath ( cc8* path ) {
 
-	int result = moaio_chdir ( path );
+	int result = zipfs_chdir ( path );
 	return ( result == 0 );
 }

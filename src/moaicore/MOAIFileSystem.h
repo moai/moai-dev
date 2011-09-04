@@ -15,17 +15,20 @@ class MOAIFileSystem :
 private:
 
 	//----------------------------------------------------------------//
-	static int		_affirmPath				( lua_State* L );
-	static int		_checkFileExists		( lua_State* L );
-	static int		_checkPathExists		( lua_State* L );
-	static int		_deleteDirectory		( lua_State* L );
-	static int		_deleteFile				( lua_State* L );
-	static int		_expandFilename			( lua_State* L );
-	static int		_expandPath				( lua_State* L );
-	static int		_getRelativePath		( lua_State* L );
-	static int		_getWorkingDirectory	( lua_State* L );
-	static int		_rename					( lua_State* L );
-	static int		_setWorkingDirectory	( lua_State* L );
+	static int		_affirmPath					( lua_State* L );
+	static int		_checkFileExists			( lua_State* L );
+	static int		_checkPathExists			( lua_State* L );
+	static int		_deleteDirectory			( lua_State* L );
+	static int		_deleteFile					( lua_State* L );
+	static int		_getAbsoluteFilePath		( lua_State* L );
+	static int		_getAbsoluteDirectoryPath	( lua_State* L );
+	static int		_getRelativePath			( lua_State* L );
+	static int		_getWorkingDirectory		( lua_State* L );
+	static int		_listDirectories			( lua_State* L );
+	static int		_listFiles					( lua_State* L );
+	static int		_mountVirtualDirectory		( lua_State* L );
+	static int		_rename						( lua_State* L );
+	static int		_setWorkingDirectory		( lua_State* L );
 
 public:
 	
