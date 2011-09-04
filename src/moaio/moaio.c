@@ -115,27 +115,6 @@ static MOAIOString* sBuffer;
 static MOAIOVirtualPath* sVirtualPaths = 0;
 
 //----------------------------------------------------------------//
-size_t compare_paths ( const char* p0, const char* p1 ) {
-
-	size_t i;
-	size_t same = 0;
-
-	for ( i = 0; p0 [ i ] && p1 [ i ]; ++i ) {
-		
-		char h = ( char )tolower ( p0 [ i ]);
-		char v = ( char )tolower ( p1 [ i ]);
-		
-		if ( h != v ) break;
-		
-		if ( h == '/' ) {
-			same = i + 1;
-		}
-	}
-
-	return same;
-}
-
-//----------------------------------------------------------------//
 MOAIOVirtualPath* find_best_virtual_path ( char const* path ) {
 
 	size_t len = 0;
@@ -146,7 +125,7 @@ MOAIOVirtualPath* find_best_virtual_path ( char const* path ) {
 	for ( ; cursor; cursor = cursor->mNext ) {
 	
 		char* test = cursor->mPath;
-		len = count_same ( test, path );
+		len = compare_paths ( test, path );
 	
 		if (( !test [ len ]) && ( len > bestlen )) {
 			best = cursor;
@@ -166,7 +145,7 @@ MOAIOVirtualPath* find_next_virtual_subdir ( char const* path, MOAIOVirtualPath*
 	for ( ; cursor; cursor = cursor->mNext ) {
 	
 		char* test = cursor->mPath;
-		len = count_same ( test, path );
+		len = compare_paths ( test, path );
 		
 		if ( test [ len ] && ( !path [ len ])) {
 			return cursor;
@@ -178,9 +157,15 @@ MOAIOVirtualPath* find_next_virtual_subdir ( char const* path, MOAIOVirtualPath*
 //----------------------------------------------------------------//
 MOAIOVirtualPath* find_virtual_path ( char const* path ) {
 
+	size_t len = 0;
+
 	MOAIOVirtualPath* cursor = sVirtualPaths;
 	for ( ; cursor; cursor = cursor->mNext ) {
-		if ( strcmp ( cursor->mPath, path ) == 0 ) break;
+	
+		char* test = cursor->mPath;
+		len = compare_paths ( test, path );
+		
+		if ( !( test [ len ] || path [ len ])) break;
 	}
 	return cursor;
 }
@@ -193,7 +178,7 @@ int is_separator ( char c ) {
 }
 
 //----------------------------------------------------------------//
-MOAIOVirtualPath* is_virtual_path ( char const* path ) {
+int is_virtual_path ( char const* path ) {
 
 	size_t len = 0;
 	MOAIOVirtualPath* cursor = sVirtualPaths;
@@ -201,7 +186,7 @@ MOAIOVirtualPath* is_virtual_path ( char const* path ) {
 	for ( ; cursor; cursor = cursor->mNext ) {
 	
 		char* test = cursor->mPath;
-		len = count_same ( test, path );
+		len = compare_paths ( test, path );
 		
 		if ( !test [ len ]) return 1;
 	}
@@ -221,8 +206,7 @@ int moaio_affirm_path ( const char* path ) {
 	if ( !path ) return -1;
 
 	moaio_get_abs_dirpath ( path );
-
-	if ( find_best_virtual_path ( path )) return -1;
+	if ( is_virtual_path ( path )) return -1;
 	
 	cursor = sBuffer->mMem;
 	if ( *cursor == '/' ) {
@@ -304,7 +288,7 @@ char* moaio_bless_path ( const char* path ) {
 }
 
 //----------------------------------------------------------------//
-int moaio_chdir ( char* path ) {
+int moaio_chdir ( const char* path ) {
 
 	int result = -1;
 	MOAIOVirtualPath* mount = 0;
@@ -408,6 +392,7 @@ MOAIODIR moaio_dir_open () {
 int moaio_dir_read_entry ( MOAIODIR dir ) {
 
 	MOAIODir* self = ( MOAIODir* )dir;
+	if ( !self ) return 0;
 
 	self->mName = 0;
 	self->mIsDir = 0;
@@ -803,15 +788,26 @@ void moaio_init () {
 }
 
 //----------------------------------------------------------------//
+int moaio_is_virtual_path ( const char* path ) {
+
+	if ( sVirtualPaths ) {
+		path = moaio_get_abs_dirpath ( path );
+		return is_virtual_path ( path );
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
 int moaio_mkdir ( const char* path ) {
 
 	if ( !path ) return -1;
-
-	moaio_get_abs_dirpath ( path );
-
-	if ( find_best_virtual_path ( path )) return -1;
+	if ( moaio_is_virtual_path ( path )) return -1;
 	
-	return mkdir ( sBuffer->mMem );
+	#ifdef _WIN32
+		return mkdir ( sBuffer->mMem );
+	#else
+		return mkdir ( path, S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH );
+	#endif
 }
 
 //----------------------------------------------------------------//
@@ -866,12 +862,26 @@ char* moaio_normalize_path ( const char* path ) {
 }
 
 //----------------------------------------------------------------//
+int moaio_remove ( const char* path ) {
+
+	if ( moaio_is_virtual_path ( path )) return -1;
+	return remove ( path );
+}
+
+//----------------------------------------------------------------//
 int moaio_rmdir ( const char* path ) {
 
-	path = moaio_get_abs_filepath ( path );
-	if ( is_virtual_path ( path )) return -1;
-
+	if ( moaio_is_virtual_path ( path )) return -1;
 	return rmdir ( path );
+}
+
+//----------------------------------------------------------------//
+int moaio_rename ( const char* oldname, const char* newname ) {
+
+	if ( moaio_is_virtual_path ( oldname )) return -1;
+	if ( moaio_is_virtual_path ( newname )) return -1;
+	
+	return rename ( oldname, newname );
 }
 
 //----------------------------------------------------------------//
@@ -890,7 +900,7 @@ int moaio_set_virtual_path ( const char* path, const char* archive ) {
 		virtualPath = cursor;
 		cursor = cursor->mNext;
 		
-		if ( strcmp ( virtualPath->mPath, path ) == 0 ) {
+		if ( stricmp ( virtualPath->mPath, path ) == 0 ) {
 			MOAIOVirtualPath_Delete ( virtualPath );
 		}
 		else {

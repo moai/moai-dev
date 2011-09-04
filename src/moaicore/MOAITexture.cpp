@@ -859,9 +859,7 @@ void MOAITexture::SerializeIn ( USLuaState& state, USLuaSerializer& serializer )
 	STLString path = state.GetField ( -1, "mPath", "" );
 	
 	if ( path.size ()) {
-		USFilename filename;
-		filename.Bless ( path.str ());
-		this->Init ( filename.mBuffer, DEFAULT_TRANSFORM ); // TODO: serialization
+		this->Init ( path, DEFAULT_TRANSFORM ); // TODO: serialization
 	}
 }
 

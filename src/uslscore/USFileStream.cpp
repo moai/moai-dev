@@ -64,7 +64,9 @@ bool USFileStream::OpenWrite ( cc8* filename, bool affirmPath ) {
 	Close ();
 	
 	if ( affirmPath ) {
-		USFileSys::AffirmPath ( USPathOps::GetPath ( filename, true ));
+		USFilename path;
+		int result = moaio_affirm_path ( path.TruncateFilename ( filename ));
+		if ( result ) return false;
 	}
 
 	this->mFile = ( MOAIOFILE* )moaio_fopen ( filename, "wb" );

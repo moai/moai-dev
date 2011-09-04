@@ -7,72 +7,23 @@
 #include <uslscore/USFileSys.h>
 
 #include <errno.h>
-#include <time.h>
-#include <sys/stat.h>
-
-#ifdef _WIN32
-	#define S_ISDIR(B) (((B)&_S_IFDIR)!=0)
-#endif
-
-#ifndef _WIN32
-
-	int mkdir ( const char* path );
-
-	//----------------------------------------------------------------//
-	int mkdir ( const char* path ) {
-		return mkdir ( path, S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH );
-	}
-
-#endif
 
 //================================================================//
 // USFileSys
 //================================================================//
 
 //----------------------------------------------------------------//
-void USFileSys::AffirmPath ( cc8* path ) {
+bool USFileSys::AffirmPath ( cc8* path ) {
 
-	assert ( path );
-
-	USFilename fullpath;
-	fullpath.GetPath ( path );
-
-	bool more = true;
-	char* cursor = fullpath.mBuffer;
-	
-	// While there is still some string left in dirname...
-	while ( *cursor ) {
-
-		// Copy the next directory name into newDir
-		while (( *cursor ) && ( *cursor != '/' )) ++cursor;
-		
-		if ( *cursor ) {
-			more = true;
-			*cursor = 0;
-		}
-		else more = false;
-		
-		if ( *fullpath.mBuffer ) {
-			int result = mkdir ( fullpath.mBuffer );
-			assert ( !( result && ( errno != EEXIST )));
-		}
-		
-		if ( more ) {
-			*cursor = '/';
-		}
-		else {
-			return;
-		}
-		++cursor;
-	}
+	return ( moaio_affirm_path ( path ) == 0 );
 }
 
 //----------------------------------------------------------------//
 bool USFileSys::CheckFileExists ( cc8* path ) {
 
-	USFileStat fileStat;
+	moaio_stat fileStat;
 	USFileSys::GetFileStat ( path, fileStat );
-	return fileStat.mExists;
+	return ( fileStat.mExists != 0 );
 }
 
 //----------------------------------------------------------------//
@@ -80,11 +31,8 @@ bool USFileSys::CheckPathExists ( cc8* path ) {
 
 	USFilename currentDir;
 	currentDir.GetCurrentPath ();
-	
-	USFilename pathBuf;
-	pathBuf.GetPath ( path );
 
-	bool exists = USFileSys::SetCurrentPath ( pathBuf.mBuffer );
+	bool exists = USFileSys::SetCurrentPath ( path );
 	
 	USFileSys::SetCurrentPath ( currentDir.mBuffer );
 	return exists;
@@ -95,7 +43,7 @@ bool USFileSys::DeleteDirectory ( cc8* path, bool force, bool recursive ) {
 
 	if ( USFileSys::CheckPathExists ( path ) == false ) return true;
 		
-	int result = rmdir ( path );
+	int result = moaio_rmdir ( path );
 	
 	if ( result == 0 ) return true;
 	if ( !( force || recursive )) return false;
@@ -120,58 +68,41 @@ bool USFileSys::DeleteDirectory ( cc8* path, bool force, bool recursive ) {
 	}
 
 	USFileSys::SetCurrentPath ( currentDir );
-	return ( rmdir( path ) == 0 );
+	return ( moaio_rmdir ( path ) == 0 );
 }
 
 //----------------------------------------------------------------//
 bool USFileSys::DeleteFile ( cc8* path ) {
 
 	if ( USFileSys::CheckFileExists ( path )) {
-		return ( remove ( path ) == 0 );
+		return ( moaio_remove ( path ) == 0 );
 	}
 	return true;
 }
 
 //----------------------------------------------------------------//
-STLString USFileSys::Expand ( cc8* path ) {
+STLString USFileSys::GetAbsoluteDirPath ( cc8* path ) {
 
-	USFilename fullpath;
-	return fullpath.Expand ( path );
+	return moaio_get_abs_dirpath ( path );
 }
 
 //----------------------------------------------------------------//
-STLString USFileSys::ExpandPath ( cc8* path ) {
+STLString USFileSys::GetAbsoluteFilePath ( cc8* path ) {
 
-	USFilename fullpath;
-	return fullpath.ExpandPath ( path );
+	return moaio_get_abs_filepath ( path );
 }
 
 //----------------------------------------------------------------//
 STLString USFileSys::GetCurrentPath () {
 
-	USFilename fullpath;
-	return fullpath.GetCurrentPath ();
+	return moaio_get_working_path ();
 }
 
 //----------------------------------------------------------------//
-bool USFileSys::GetFileStat ( cc8* filename, USFileStat& fileStat ) {
+bool USFileSys::GetFileStat ( cc8* filename, moaio_stat& fileStat ) {
 
-	fileStat.mExists = false;
-
-	struct stat s;
-	int result = stat ( filename, &s );
+	int result = moaio_get_stat ( filename, &fileStat );
 	if ( result ) return false;
-
-	fileStat.mExists		= true;
-	
-	fileStat.mIsDir			= S_ISDIR ( s.st_mode );
-	fileStat.mIsFile		= !fileStat.mIsDir;
-	
-	fileStat.mSize			= s.st_size;
-	fileStat.mTimeCreated	= s.st_ctime;
-	fileStat.mTimeModified	= s.st_mtime;
-	fileStat.mTimeViewed	= s.st_atime;
-	
 	return true;
 }
 
@@ -185,13 +116,13 @@ STLString USFileSys::GetRelativePath ( cc8* path ) {
 //----------------------------------------------------------------//
 bool USFileSys::Rename ( cc8* oldPath, cc8* newPath ) {
 
-	int result = rename ( oldPath, newPath );
+	int result = moaio_rename ( oldPath, newPath );
 	return ( result == 0 );
 }
 
 //----------------------------------------------------------------//
 bool USFileSys::SetCurrentPath ( cc8* path ) {
 
-	int result = chdir ( path );
+	int result = moaio_chdir ( path );
 	return ( result == 0 );
 }

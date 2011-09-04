@@ -115,7 +115,7 @@ int MOAIFileSystem::_expandFilename ( lua_State* L ) {
 	USLuaState state ( L );
 	
 	cc8* filename = state.GetValue < cc8* >( 1, "" );
-	STLString result = USFileSys::Expand ( filename );
+	STLString result = USFileSys::GetAbsoluteFilePath ( filename );
 	
 	lua_pushstring ( state, result );
 	return 1;
@@ -132,7 +132,7 @@ int MOAIFileSystem::_expandPath ( lua_State* L ) {
 	USLuaState state ( L );
 	
 	cc8* path = state.GetValue < cc8* >( 2, "" );
-	STLString result = USFileSys::ExpandPath ( path );
+	STLString result = USFileSys::GetAbsoluteDirPath ( path );
 	
 	lua_pushstring ( state, result );
 	return 1;

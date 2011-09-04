@@ -10,7 +10,7 @@
 
 #define MOAI_CHECK_FILE(filename)														\
 	if ( !USFileSys::CheckFileExists ( filename )) {									\
-		STLString expand = USFileSys::Expand ( filename );								\
+		STLString expand = USFileSys::GetAbsoluteFilePath ( filename );					\
 		MOAI_ERROR ( state, MOAILogMessages::MOAI_FileNotFound_S, expand.str ());		\
 		return 0;																		\
 	}
