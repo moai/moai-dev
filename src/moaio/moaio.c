@@ -565,7 +565,11 @@ size_t moaio_fread ( void* buffer, size_t size, size_t count, MOAIOFILE fp ) {
 	
 	if ( fp ) {
 		MOAIOFile* file = ( MOAIOFile* )fp;
-		return ( file->mIsArchive ) ? ( size_t )MOAIOZipStream_Read ( file->mPtr.mZip, buffer, size * count ) : fread ( buffer, size, count, file->mPtr.mFile );
+		if ( file->mIsArchive ) {
+			size_t result = ( size_t )MOAIOZipStream_Read ( file->mPtr.mZip, buffer, size * count );
+			return ( size_t )( result / size );
+		}
+		return fread ( buffer, size, count, file->mPtr.mFile );
 	}
 	return 0;
 }
