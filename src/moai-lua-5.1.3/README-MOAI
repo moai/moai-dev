@@ -1,0 +1,7 @@
+This is a tailored version of Lua for use with Moai.
+
+It has been adapted in the following ways:
+
+- Use of localeconv has been removed from trydecpoint () in llex.c.
+- All C standard file io functions have been replaced by zipfs equivalents.
+- Initialization and cleanup of zipfs has been added to main () in lua.c and luac.c.

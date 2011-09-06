@@ -367,6 +367,10 @@
 			>
 		</File>
 		<File
+			RelativePath="..\..\src\zipfs\zipfs_vfscanf.c"
+			>
+		</File>
+		<File
 			RelativePath="..\..\src\zipfs\ZIPFSString.c"
 			>
 		</File>

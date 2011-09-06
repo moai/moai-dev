@@ -61,7 +61,7 @@ void USByteStream::Seek ( long offset, int origin ) {
 			break;
 		}
 		case SEEK_END: {
-			this->mCursor = this->mLength;
+			this->mCursor = this->mLength + offset;
 			break;
 		}
 		case SEEK_SET: {

@@ -40,54 +40,6 @@ static void _typeCheck () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void testMoaio () {
-
-	//ZIPFSZipFile* zipFile = ZIPFSZipFile_New ( "test.zip" );
-	//ZIPFSZipFile_Delete ( zipFile );
-
-	//cc8* relpath;
-	//
-	//relpath = zipfs_get_rel_path ( "C:/foo/bar/baz.txt" );
-	//relpath = zipfs_get_rel_path ( "/foo/bar/baz.txt" );
-	//relpath = zipfs_get_rel_path ( "./foo/bar/baz.txt" );
-	//relpath = zipfs_get_rel_path ( "foo/bar/baz.txt" );
-
-	zipfs_mount_virtual ( "test", "test.zip" );
-	zipfs_chdir ( "test//foo/baz////" );
-	
-	zipfs_rmdir ( "test" );
-	zipfs_rmdir ( "test/foo" );
-	
-	ZIPFSDIR dir = zipfs_dir_open ();
-	
-	while ( zipfs_dir_read_entry ( dir )) {
-		cc8* name = zipfs_dir_entry_name ( dir );
-		int isSubDir = zipfs_dir_entry_is_subdir ( dir );
-		
-		printf ( "%s: %s\n", isSubDir ? "dir" : "file", name );
-	}
-	zipfs_dir_close ( dir );
-	
-	zipfs_chdir ( "b" );
-	
-	zipfs_stat filestat;
-	zipfs_get_stat ( "././/./..//c////Metamorphosis.txt", &filestat );
-	
-	ZIPFSFILE file = zipfs_fopen ( "././/./..//c////Metamorphosis.txt", "r" );
-	
-	char buffer [ 1024 ];
-	
-	zipfs_fread ( buffer, 1024, 1, file );
-	zipfs_fseek ( file, -512, SEEK_CUR );
-	
-	zipfs_fread ( buffer, 1024, 1, file );
-	buffer [ 1023 ] = 0;
-	printf ( "%s\n", buffer );
-	
-	zipfs_fclose ( file );
-}
-
-//----------------------------------------------------------------//
 void uslscore::InitGlobals ( USGlobals* globals ) {
 
 	static bool sysInit = true;
@@ -103,9 +55,6 @@ void uslscore::InitGlobals ( USGlobals* globals ) {
 		atexit ( _cleanup );
 		
 		zipfs_init ();
-		
-		testMoaio ();
-		
 		sysInit = false;
 	}
 

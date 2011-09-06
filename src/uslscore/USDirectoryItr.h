@@ -13,7 +13,7 @@
 class USDirectoryItr {
 private:
 
-	void*		mHandle;
+	ZIPFSDIR*	mDir;
 	cc8*		mCurrent;
 
 public:

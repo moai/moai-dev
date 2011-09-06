@@ -166,7 +166,7 @@ void USCipherStream::Seek ( long offset, int origin ) {
 			break;
 		}
 		case SEEK_END: {
-			this->mPlainCursor = length;
+			this->mPlainCursor = length + offset;
 			break;
 		}
 		case SEEK_SET: {

@@ -63,7 +63,7 @@ void USLexStream::Seek ( long offset, int origin ) {
 			break;
 		}
 		case SEEK_END: {
-			offset = ( this->GetLength () - offset ) - cursor;
+			offset = ( this->GetLength () + offset ) - cursor;
 			break;
 		}
 		case SEEK_SET: {

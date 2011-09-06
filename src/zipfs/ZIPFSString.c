@@ -29,9 +29,8 @@ char* ZIPFSString_Append ( ZIPFSString* self, const char* str ) {
 //----------------------------------------------------------------//
 void ZIPFSString_Clear ( ZIPFSString* self ) {
 
-	if ( self->mMem ) {
+	if ( self->mCleanup && self->mMem ) {
 		free ( self->mMem );
-		self->mMem = 0;
 	}
 	memset ( self, 0, sizeof ( ZIPFSString ));
 }
@@ -47,10 +46,21 @@ void ZIPFSString_Delete ( ZIPFSString* self ) {
 char* ZIPFSString_Grow ( ZIPFSString* self, size_t size ) {
 
 	size = size + 1;
-	if ( size > self->mSize ) {		
+	if ( size > self->mSize ) {
+	
+		char* buffer;
+		
 		size = (( size_t )( size / MOAIO_STRING_BLOCK_SIZE ) + 1 ) * MOAIO_STRING_BLOCK_SIZE;
-		self->mMem = realloc ( self->mMem, size );
+		buffer = ( char* )malloc ( size );
+		memcpy ( buffer, self->mMem, self->mSize );
+		
+		if ( self->mCleanup ) {
+			free ( self->mMem );
+		}
+		
+		self->mMem = buffer;
 		self->mSize = size;
+		self->mCleanup = 1;
 	}
 	return self->mMem;
 }
@@ -58,13 +68,22 @@ char* ZIPFSString_Grow ( ZIPFSString* self, size_t size ) {
 //----------------------------------------------------------------//
 ZIPFSString* ZIPFSString_New () {
 
-	ZIPFSString* self = ( ZIPFSString* )malloc ( sizeof ( ZIPFSString ));
-	
-	self->mMem = 0;
-	self->mSize = 0;
-	self->mStrLen = 0;
-	
-	return self;
+	return ( ZIPFSString* )calloc ( 1, sizeof ( ZIPFSString ));
+}
+
+//----------------------------------------------------------------//
+char ZIPFSString_PopChar ( ZIPFSString* self ) {
+
+	char c = self->mMem [ --self->mStrLen ];
+	self->mMem [ self->mStrLen ] = 0;
+	return c;
+}
+
+//----------------------------------------------------------------//
+void ZIPFSString_PushChar ( ZIPFSString* self, char c ) {
+
+	ZIPFSString_Grow ( self, self->mStrLen + 1 );
+	self->mMem [ self->mStrLen++ ] = c;
 }
 
 //----------------------------------------------------------------//
@@ -75,6 +94,15 @@ char* ZIPFSString_Set ( ZIPFSString* self, const char* str ) {
 	strcpy ( self->mMem, str );
 	
 	return self->mMem;
+}
+
+//----------------------------------------------------------------//
+void ZIPFSString_SetBuffer ( ZIPFSString* self, char* buffer, size_t size ) {
+
+	self->mMem = buffer;
+	self->mSize = size;
+	self->mStrLen = 0;
+	self->mCleanup = 0;
 }
 
 //----------------------------------------------------------------//

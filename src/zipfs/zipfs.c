@@ -114,6 +114,10 @@ static ZIPFSString* sBuffer;
 
 static ZIPFSVirtualPath* sVirtualPaths = 0;
 
+ZIPFSFILE* zipfs_stderr	= 0;
+ZIPFSFILE* zipfs_stdin	= 0;
+ZIPFSFILE* zipfs_stdout	= 0;
+
 //----------------------------------------------------------------//
 ZIPFSVirtualPath* find_best_virtual_path ( char const* path ) {
 
@@ -171,6 +175,26 @@ ZIPFSVirtualPath* find_virtual_path ( char const* path ) {
 }
 
 //----------------------------------------------------------------//
+ZIPFSZipStream* is_Archive ( ZIPFSFILE* opaque ) {
+
+	if ( opaque ) { 
+		ZIPFSFile* self = ( ZIPFSFile* )self;
+		return self->mIsArchive ? self->mPtr.mZip : 0;
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+FILE* is_file ( ZIPFSFILE* opaque ) {
+
+	if ( opaque ) { 
+		ZIPFSFile* self = ( ZIPFSFile* )self;
+		return self->mIsArchive ? 0 : self->mPtr.mFile;
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
 int is_separator ( char c ) {
 
 	return ( c == '/' ) || ( c == '\\' ) ? 1 : 0; 
@@ -194,7 +218,355 @@ int is_virtual_path ( char const* path ) {
 }
 
 //================================================================//
-// moaio
+// stdio
+//================================================================//
+
+//----------------------------------------------------------------//
+void zipfs_clearerr ( ZIPFSFILE* fp ) {
+
+	FILE* file = is_file ( fp );
+	if ( file ) {
+		clearerr ( file );
+	}
+}
+
+//----------------------------------------------------------------//
+int	zipfs_fclose ( ZIPFSFILE* fp ) {
+
+	int result = 0;
+
+	if ( fp ) {
+		ZIPFSFile* file = ( ZIPFSFile* )fp;
+		result = ( file->mIsArchive ) ? ZIPFSZipStream_Close ( file->mPtr.mZip ) : fclose ( file->mPtr.mFile );
+		memset ( fp, 0, sizeof ( ZIPFSFile ));
+		free ( file );
+	}
+	return result;
+}
+
+//----------------------------------------------------------------//
+int zipfs_feof ( ZIPFSFILE* fp ) {
+
+	int result = 0;
+
+	if ( fp ) {
+		ZIPFSFile* file = ( ZIPFSFile* )fp;
+		result = ( file->mIsArchive ) ? ZIPFSZipStream_IsAtEnd ( file->mPtr.mZip ) : feof ( file->mPtr.mFile );
+		memset ( fp, 0, sizeof ( ZIPFSFile ));
+		free ( file );
+	}
+	return result;
+}
+
+//----------------------------------------------------------------//
+int	zipfs_fflush ( ZIPFSFILE* fp ) {
+	
+	if ( fp ) {
+		ZIPFSFile* file = ( ZIPFSFile* )fp;
+		if ( !file->mIsArchive ) {
+			return fflush ( file->mPtr.mFile );
+		}
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+int zipfs_fgetc ( ZIPFSFILE* fp ) {
+	
+	int result = EOF;
+
+	if ( fp ) {
+		ZIPFSFile* file = ( ZIPFSFile* )fp;
+		
+		if ( file->mIsArchive ) {
+			char c;
+			result = ( int )ZIPFSZipStream_Read ( file->mPtr.mZip, &c, 1 );
+			
+			if ( result == 1 ) {
+				result = c;
+			}
+		}
+		else {
+			result = fgetc ( file->mPtr.mFile );
+		}
+	}
+	return result;
+}
+
+//----------------------------------------------------------------//
+int zipfs_fgetpos ( ZIPFSFILE* fp, fpos_t* position ) {
+	(( void )fp );
+	(( void )position );
+
+	assert ( 0 ); // not implemented
+	return -1;
+}
+
+//----------------------------------------------------------------//
+char* zipfs_fgets ( char* string, int length, ZIPFSFILE* fp ) {
+	
+	int i = 0;
+	int c = 0;
+
+	if ( fp ) {
+		
+		ZIPFSFile* file = ( ZIPFSFile* )fp;
+		
+		if ( file->mIsArchive ) {
+		
+			if ( length <= 1 ) return 0;
+
+			do {
+				c = zipfs_fgetc ( fp );
+				if ( c == EOF ) break;
+				
+				string [ i++ ] = ( char )c;
+				if ( i >= length ) return 0;
+				
+			} while ( c && ( c != '\n' ));
+
+			string [ i ] = 0;
+			return string;
+		}
+		else {
+			return fgets ( string, length, file->mPtr.mFile );
+		}
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+ZIPFSFILE* zipfs_fopen ( const char* filename, const char* mode ) {
+	
+	ZIPFSFile* file = 0;
+	ZIPFSVirtualPath* mount;
+
+	filename = zipfs_get_abs_filepath ( filename );
+	mount = find_best_virtual_path ( filename );
+
+	if ( mount ) {
+		
+		if ( mode [ 0 ] == 'r' ) {
+		
+			ZIPFSZipStream* zipStream;
+			
+			filename = ZIPFSVirtualPath_GetLocalPath ( mount, filename );
+			zipStream = ZIPFSZipStream_Open ( mount->mArchive, filename );
+			
+			if ( zipStream ) {
+				file = ( ZIPFSFile* )malloc ( sizeof ( ZIPFSFile ));
+				file->mIsArchive = TRUE;
+				file->mPtr.mZip = zipStream;
+			}
+		}
+	}
+	else {
+		
+		FILE* stdFile = fopen ( filename, mode );
+		
+		if ( stdFile ) {
+			file = ( ZIPFSFile* )malloc ( sizeof ( ZIPFSFile ));
+			file->mIsArchive = FALSE;
+			file->mPtr.mFile = stdFile;
+		}
+	}
+
+	return ( ZIPFSFILE* )file;
+}
+
+//----------------------------------------------------------------//
+int zipfs_fprintf ( ZIPFSFILE * fp, const char * format, ... ) {
+	// TODO
+	return -1;
+}
+
+//----------------------------------------------------------------//
+int zipfs_fputc ( int c, ZIPFSFILE* fp ) {
+	// TODO
+	return -1;
+}
+
+//----------------------------------------------------------------//
+int zipfs_fputs ( const char* string, ZIPFSFILE* fp ) {
+	// TODO
+	return -1;
+}
+
+//----------------------------------------------------------------//
+size_t zipfs_fread ( void* buffer, size_t size, size_t count, ZIPFSFILE* fp ) {
+	
+	if ( fp ) {
+		ZIPFSFile* file = ( ZIPFSFile* )fp;
+		if ( file->mIsArchive ) {
+			size_t result = ( size_t )ZIPFSZipStream_Read ( file->mPtr.mZip, buffer, size * count );
+			return ( size_t )( result / size );
+		}
+		return fread ( buffer, size, count, file->mPtr.mFile );
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+int zipfs_freopen ( const char* filename, const char* mode, ZIPFSFILE* fp ) {
+	// TODO
+	return -1;
+}
+
+//----------------------------------------------------------------//
+int zipfs_fscanf ( ZIPFSFILE * fp, const char * format, ... ) {
+	
+	int result;
+	va_list args;
+	
+	va_start ( args, format );
+	result = zipfs_vfscanf ( fp, format, args );
+	va_end ( args );
+	
+	return result;
+}
+
+//----------------------------------------------------------------//
+int	zipfs_fseek ( ZIPFSFILE* fp, long offset, int origin ) {
+	
+	if ( fp ) {
+		ZIPFSFile* file = ( ZIPFSFile* )fp;
+		return ( file->mIsArchive ) ? ZIPFSZipStream_Seek ( file->mPtr.mZip, offset, origin ) : fseek ( file->mPtr.mFile, offset, origin );
+	}	
+	return -1;
+}
+
+//----------------------------------------------------------------//
+int zipfs_fsetpos ( ZIPFSFILE* fp, const fpos_t * pos ) {
+	(( void )fp );
+	(( void )pos );
+
+	assert ( 0 ); // not implemented
+	return -1;
+}
+
+//----------------------------------------------------------------//
+long zipfs_ftell ( ZIPFSFILE* fp ) {
+
+	if ( fp ) {
+		ZIPFSFile* file = ( ZIPFSFile* )fp;
+		return ( file->mIsArchive ) ? ( long )ZIPFSZipStream_Tell ( file->mPtr.mZip ) : ftell ( file->mPtr.mFile );
+	}
+	return -1L;
+}
+
+//----------------------------------------------------------------//
+size_t zipfs_fwrite ( const void* data, size_t size, size_t count, ZIPFSFILE* fp ) {
+	
+	if ( fp ) {
+		ZIPFSFile* file = ( ZIPFSFile* )fp;
+		if ( !file->mIsArchive ) {
+			fwrite ( data, size, count, file->mPtr.mFile );
+		}
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+int zipfs_getc ( ZIPFSFILE* fp ) {
+
+	return zipfs_fgetc ( fp );
+}
+
+//----------------------------------------------------------------//
+int zipfs_putc ( int character, ZIPFSFILE* fp ) {
+
+	return zipfs_fputc ( character, fp );
+}
+
+//----------------------------------------------------------------//
+int zipfs_remove ( const char* path ) {
+
+	if ( zipfs_is_virtual_path ( path )) return -1;
+	return remove ( path );
+}
+
+//----------------------------------------------------------------//
+int zipfs_rename ( const char* oldname, const char* newname ) {
+
+	if ( zipfs_is_virtual_path ( oldname )) return -1;
+	if ( zipfs_is_virtual_path ( newname )) return -1;
+	
+	return rename ( oldname, newname );
+}
+
+//----------------------------------------------------------------//
+void zipfs_rewind ( ZIPFSFILE* fp ) {
+
+	zipfs_fseek ( fp, 0, SEEK_SET );
+}
+
+
+//----------------------------------------------------------------//
+void zipfs_setbuf ( ZIPFSFILE* fp, char* buffer ) {
+
+	FILE* file = is_file ( fp );
+	if ( file ) {
+		setbuf ( file, buffer );
+	}
+}
+
+//----------------------------------------------------------------//
+int zipfs_setvbuf ( ZIPFSFILE* fp, char* buffer, int mode, size_t size ) {
+
+	FILE* file = is_file ( fp );
+	if ( file ) {
+		setvbuf ( file, buffer, mode, size );
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+ZIPFSFILE* zipfs_tmpfile () {
+
+	FILE* fp = tmpfile ();
+	if ( fp ) {
+	
+		ZIPFSFile* file = ( ZIPFSFile* )calloc ( 1, sizeof ( ZIPFSFile ));
+		file->mPtr.mFile = fp;
+		return ( ZIPFSFILE* )file;
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+char* zipfs_tmpnam ( char* str ) {
+
+	return tmpnam ( str );
+}
+
+//----------------------------------------------------------------//
+int zipfs_ungetc ( int character, ZIPFSFILE* fp ) {
+	
+	if ( fp ) {
+		ZIPFSFile* file = ( ZIPFSFile* )fp;
+		if ( file->mIsArchive ) {
+			int result = ZIPFSZipStream_UnGetChar ( file->mPtr.mZip, ( char )character );
+			return result ? EOF : 0;
+		}
+		else {
+			return ungetc ( character, file->mPtr.mFile );
+		}
+	}
+	return EOF;
+}
+
+//----------------------------------------------------------------//
+int zipfs_vfprintf ( ZIPFSFILE* fp, const char* format, va_list arg ) {
+
+	FILE* file = is_file ( fp );
+	if ( file ) {
+		return vprintf ( file, format, arg );
+	}
+	return -1;
+}
+
+//================================================================//
+// extra
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -321,16 +693,29 @@ void zipfs_cleanup () {
 		cursor = cursor->mNext;
 		ZIPFSVirtualPath_Delete ( virtualPath );
 	}
-	sVirtualPaths = 0;
 	
-	if ( sBuffer ) {
-		free ( sBuffer );
-		sBuffer = 0;
-	}
+	ZIPFSString_Delete ( sBuffer );
+	ZIPFSString_Delete ( sWorkingPath );
+	
+	memset ( zipfs_stderr, 0, sizeof ( ZIPFSFile ));
+	free ( zipfs_stderr );
+
+	memset ( zipfs_stdin, 0, sizeof ( ZIPFSFile ));
+	free ( zipfs_stdin );
+
+	memset ( zipfs_stdout, 0, sizeof ( ZIPFSFile ));
+	free ( zipfs_stdout );
+
+	sVirtualPaths = 0;
+	sBuffer = 0;
+	sWorkingPath = 0;
+	zipfs_stderr = 0;
+	zipfs_stdin = 0;
+	zipfs_stdout = 0;
 }
 
 //----------------------------------------------------------------//
-void zipfs_dir_close ( ZIPFSDIR dir ) {
+void zipfs_dir_close ( ZIPFSDIR* dir ) {
 
 	ZIPFSDir* self = ( ZIPFSDir* )dir;
 
@@ -351,21 +736,21 @@ void zipfs_dir_close ( ZIPFSDIR dir ) {
 }
 
 //----------------------------------------------------------------//
-char const* zipfs_dir_entry_name ( ZIPFSDIR dir ) {
+char const* zipfs_dir_entry_name ( ZIPFSDIR* dir ) {
 
 	ZIPFSDir* self = ( ZIPFSDir* )dir;
 	return self->mName;
 }
 
 //----------------------------------------------------------------//
-int zipfs_dir_entry_is_subdir ( ZIPFSDIR dir ) {
+int zipfs_dir_entry_is_subdir ( ZIPFSDIR* dir ) {
 
 	ZIPFSDir* self = ( ZIPFSDir* )dir;
 	return self->mIsDir;
 }
 
 //----------------------------------------------------------------//
-ZIPFSDIR zipfs_dir_open () {
+ZIPFSDIR* zipfs_dir_open () {
 
 	ZIPFSDir* self = ( ZIPFSDir* )calloc ( 1, sizeof ( ZIPFSDir ));
 	ZIPFSVirtualPath* mount = find_best_virtual_path ( sWorkingPath->mMem );
@@ -385,11 +770,11 @@ ZIPFSDIR zipfs_dir_open () {
 		self->mHandle = opendir ( "." );
 	#endif
 	
-	return self;
+	return ( ZIPFSDIR* )self;
 }
 
 //----------------------------------------------------------------//
-int zipfs_dir_read_entry ( ZIPFSDIR dir ) {
+int zipfs_dir_read_entry ( ZIPFSDIR* dir ) {
 
 	ZIPFSDir* self = ( ZIPFSDir* )dir;
 	if ( !self ) return 0;
@@ -436,173 +821,6 @@ int zipfs_dir_read_entry ( ZIPFSDIR dir ) {
 	}
 	#endif
 	
-	return 0;
-}
-
-//----------------------------------------------------------------//
-int	zipfs_fclose ( ZIPFSFILE fp ) {
-
-	int result = 0;
-
-	if ( fp ) {
-		ZIPFSFile* file = ( ZIPFSFile* )fp;
-		result = ( file->mIsArchive ) ? ZIPFSZipStream_Close ( file->mPtr.mZip ) : fclose ( file->mPtr.mFile );
-		memset ( fp, 0, sizeof ( ZIPFSFile ));
-		free ( file );
-	}
-	return result;
-}
-
-//----------------------------------------------------------------//
-int	zipfs_fflush ( ZIPFSFILE fp ) {
-	
-	if ( fp ) {
-		ZIPFSFile* file = ( ZIPFSFile* )fp;
-		if ( !file->mIsArchive ) {
-			return fflush ( file->mPtr.mFile );
-		}
-	}
-	return 0;
-}
-
-//----------------------------------------------------------------//
-int zipfs_fgetc ( ZIPFSFILE fp ) {
-	
-	int result = EOF;
-
-	if ( fp ) {
-		ZIPFSFile* file = ( ZIPFSFile* )fp;
-		
-		if ( file->mIsArchive ) {
-			char c;
-			result = ( int )ZIPFSZipStream_Read ( file->mPtr.mZip, &c, 1 );
-			
-			if ( result == 1 ) {
-				result = c;
-			}
-		}
-		else {
-			result = fgetc ( file->mPtr.mFile );
-		}
-	}
-	return result;
-}
-
-//----------------------------------------------------------------//
-char* zipfs_fgets ( char* string, int length, ZIPFSFILE fp ) {
-	
-	int i = 0;
-	int c = 0;
-
-	if ( fp ) {
-		
-		ZIPFSFile* file = ( ZIPFSFile* )fp;
-		
-		if ( file->mIsArchive ) {
-		
-			if ( length <= 1 ) return 0;
-
-			do {
-				c = zipfs_fgetc ( fp );
-				if ( c == EOF ) break;
-				
-				string [ i++ ] = ( char )c;
-				if ( i >= length ) return 0;
-				
-			} while ( c && ( c != '\n' ));
-
-			string [ i ] = 0;
-			return string;
-		}
-		else {
-			return fgets ( string, length, file->mPtr.mFile );
-		}
-	}
-	return 0;
-}
-
-//----------------------------------------------------------------//
-ZIPFSFILE zipfs_fopen ( const char* filename, const char* mode ) {
-	
-	ZIPFSFile* file = 0;
-	ZIPFSVirtualPath* mount;
-
-	filename = zipfs_get_abs_filepath ( filename );
-	mount = find_best_virtual_path ( filename );
-
-	if ( mount ) {
-		
-		if ( mode [ 0 ] == 'r' ) {
-		
-			ZIPFSZipStream* zipStream;
-			
-			filename = ZIPFSVirtualPath_GetLocalPath ( mount, filename );
-			zipStream = ZIPFSZipStream_Open ( mount->mArchive, filename );
-			
-			if ( zipStream ) {
-				file = ( ZIPFSFile* )malloc ( sizeof ( ZIPFSFile ));
-				file->mIsArchive = TRUE;
-				file->mPtr.mZip = zipStream;
-			}
-		}
-	}
-	else {
-		
-		FILE* stdFile = fopen ( filename, mode );
-		
-		if ( stdFile ) {
-			file = ( ZIPFSFile* )malloc ( sizeof ( ZIPFSFile ));
-			file->mIsArchive = FALSE;
-			file->mPtr.mFile = stdFile;
-		}
-	}
-
-	return ( ZIPFSFILE )file;
-}
-
-//----------------------------------------------------------------//
-size_t zipfs_fread ( void* buffer, size_t size, size_t count, ZIPFSFILE fp ) {
-	
-	if ( fp ) {
-		ZIPFSFile* file = ( ZIPFSFile* )fp;
-		if ( file->mIsArchive ) {
-			size_t result = ( size_t )ZIPFSZipStream_Read ( file->mPtr.mZip, buffer, size * count );
-			return ( size_t )( result / size );
-		}
-		return fread ( buffer, size, count, file->mPtr.mFile );
-	}
-	return 0;
-}
-
-//----------------------------------------------------------------//
-int	zipfs_fseek ( ZIPFSFILE fp, long offset, int origin ) {
-	
-	if ( fp ) {
-		ZIPFSFile* file = ( ZIPFSFile* )fp;
-		return ( file->mIsArchive ) ? ZIPFSZipStream_Seek ( file->mPtr.mZip, offset, origin ) : fseek ( file->mPtr.mFile, offset, origin );
-	}	
-	return -1;
-}
-
-//----------------------------------------------------------------//
-long zipfs_ftell ( ZIPFSFILE fp ) {
-
-	if ( fp ) {
-		ZIPFSFile* file = ( ZIPFSFile* )fp;
-		return ( file->mIsArchive ) ? ( long )ZIPFSZipStream_Tell ( file->mPtr.mZip ) : ftell ( file->mPtr.mFile );
-	}
-	return -1L;
-}
-
-//----------------------------------------------------------------//
-size_t zipfs_fwrite ( const void* data, size_t size, size_t count, ZIPFSFILE fp ) {
-	
-	if ( fp ) {
-		ZIPFSFile* file = ( ZIPFSFile* )fp;
-		if ( !file->mIsArchive ) {
-			fwrite ( data, size, count, file->mPtr.mFile );
-		}
-	}
 	return 0;
 }
 
@@ -785,10 +1003,24 @@ char* zipfs_getcwd ( char* buffer, size_t length ) {
 //----------------------------------------------------------------//
 void zipfs_init () {
 
+	ZIPFSFile* file;
+
 	sWorkingPath = ZIPFSString_New ();
 	sBuffer = ZIPFSString_New ();
 	
 	zipfs_get_working_path ();
+	
+	file = ( ZIPFSFile* )calloc ( 1, sizeof ( ZIPFSFile ));
+	file->mPtr.mFile = stderr;
+	zipfs_stderr = ( ZIPFSFILE* )file;
+	
+	file = ( ZIPFSFile* )calloc ( 1, sizeof ( ZIPFSFile ));
+	file->mPtr.mFile = stdin;
+	zipfs_stdin = ( ZIPFSFILE* )file;
+	
+	file = ( ZIPFSFile* )calloc ( 1, sizeof ( ZIPFSFile ));
+	file->mPtr.mFile = stdout;
+	zipfs_stdout = ( ZIPFSFILE* )file;
 }
 
 //----------------------------------------------------------------//
@@ -839,6 +1071,8 @@ int zipfs_mount_virtual ( const char* path, const char* archive ) {
 	}
 	
 	cursor = list;
+	sVirtualPaths = 0;
+	
 	while ( cursor ) {
 		virtualPath = cursor;
 		cursor = cursor->mNext;
@@ -921,26 +1155,8 @@ char* zipfs_normalize_path ( const char* path ) {
 }
 
 //----------------------------------------------------------------//
-int zipfs_remove ( const char* path ) {
-
-	if ( zipfs_is_virtual_path ( path )) return -1;
-	return remove ( path );
-}
-
-//----------------------------------------------------------------//
 int zipfs_rmdir ( const char* path ) {
 
 	if ( zipfs_is_virtual_path ( path )) return -1;
 	return rmdir ( path );
 }
-
-//----------------------------------------------------------------//
-int zipfs_rename ( const char* oldname, const char* newname ) {
-
-	if ( zipfs_is_virtual_path ( oldname )) return -1;
-	if ( zipfs_is_virtual_path ( newname )) return -1;
-	
-	return rename ( oldname, newname );
-}
-
-
