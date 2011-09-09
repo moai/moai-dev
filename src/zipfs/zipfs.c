@@ -8,7 +8,7 @@
 #include <zipfs/ZIPFSVirtualPath.h>
 #include <zipfs/ZIPFSZipFile.h>
 
-#ifdef __WIN32
+#ifdef _WIN32
 	#include <direct.h>
 #else
 	#include <sys/types.h>

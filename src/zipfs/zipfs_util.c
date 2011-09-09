@@ -78,7 +78,7 @@ size_t count_same_nocase ( char const* str0, char const* str1 ) {
 //----------------------------------------------------------------//
 int strcmp_ignore_case	( char const* str0, char const* str1 ) {
 
-	#ifdef __WIN32
+	#ifdef _WIN32
 		return stricmp ( str0, str1 );
 	#else
 		return strcasecmp ( str0, str1 );
