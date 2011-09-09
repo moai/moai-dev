@@ -175,10 +175,10 @@ ZIPFSVirtualPath* find_virtual_path ( char const* path ) {
 }
 
 //----------------------------------------------------------------//
-ZIPFSZipStream* is_Archive ( ZIPFSFILE* opaque ) {
+ZIPFSZipStream* is_archive ( ZIPFSFILE* opaque ) {
 
 	if ( opaque ) { 
-		ZIPFSFile* self = ( ZIPFSFile* )self;
+		ZIPFSFile* self = ( ZIPFSFile* )opaque;
 		return self->mIsArchive ? self->mPtr.mZip : 0;
 	}
 	return 0;
@@ -188,7 +188,7 @@ ZIPFSZipStream* is_Archive ( ZIPFSFILE* opaque ) {
 FILE* is_file ( ZIPFSFILE* opaque ) {
 
 	if ( opaque ) { 
-		ZIPFSFile* self = ( ZIPFSFile* )self;
+		ZIPFSFile* self = ( ZIPFSFile* )opaque;
 		return self->mIsArchive ? 0 : self->mPtr.mFile;
 	}
 	return 0;

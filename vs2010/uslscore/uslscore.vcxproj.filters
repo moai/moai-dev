@@ -197,12 +197,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\uslscore\USDirectoryItr_posix.cpp">
-      <Filter>src\util</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\uslscore\USDirectoryItr_win32.cpp">
-      <Filter>src\util</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\uslscore\USFileSys.cpp">
       <Filter>src\util</Filter>
     </ClCompile>
@@ -289,6 +283,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\uslscore\uslscore-pch.cpp">
       <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslscore\USDirectoryItr.cpp">
+      <Filter>src\util</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

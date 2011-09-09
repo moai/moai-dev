@@ -283,8 +283,8 @@
 #define lua_freeline(L,b)	((void)L, free(b))
 #else
 #define lua_readline(L,b,p)	\
-	((void)L, zipfs_fputs(p, stdout), zipfs_fflush(stdout),  /* show prompt */ \
-	zipfs_fgets(b, LUA_MAXINPUT, stdin) != NULL)  /* get line */
+	((void)L, zipfs_fputs(p, zipfs_stdout), zipfs_fflush(zipfs_stdout),  /* show prompt */ \
+	zipfs_fgets(b, LUA_MAXINPUT, zipfs_stdin) != NULL)  /* get line */
 #define lua_saveline(L,idx)	{ (void)L; (void)idx; }
 #define lua_freeline(L,b)	{ (void)L; (void)b; }
 #endif

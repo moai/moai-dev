@@ -18,31 +18,9 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\src\moaiio\moaiio.h" />
-    <ClInclude Include="..\..\src\moaiio\pch.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\src\moaiio\moaiio-pch.c">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="..\..\src\moaiio\moaiio-physfs.c" />
-    <ClCompile Include="..\..\src\moaiio\moaiio-std.c" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\physfs\physfs.vcxproj">
-      <Project>{c9d9a0fa-2d6e-440e-bf2b-c81de58ebed0}</Project>
-      <Private>true</Private>
-      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
-      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
-      <LinkLibraryDependencies>false</LinkLibraryDependencies>
-      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
-    </ProjectReference>
-  </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{D5A80894-B22D-410D-8D43-1F182A8EF4E4}</ProjectGuid>
-    <RootNamespace>moaiio</RootNamespace>
+    <ProjectGuid>{A92A8C1C-C62D-43F8-98A9-C418A786BE56}</ProjectGuid>
+    <RootNamespace>zipfs</RootNamespace>
     <Keyword>Win32Proj</Keyword>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -105,8 +83,8 @@
     <ClCompile>
       <AdditionalOptions>/vmg %(AdditionalOptions)</AdditionalOptions>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\3rdparty\physfs-2.0.2;..\..\src</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;AKU_STATIC;XML_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\zlib-1.2.3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>true</MinimalRebuild>
       <ExceptionHandling>Sync</ExceptionHandling>
@@ -118,8 +96,8 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <WarningLevel>Level4</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <ShowIncludes>false</ShowIncludes>
       <CompileAs>CompileAsC</CompileAs>
+      <ShowIncludes>false</ShowIncludes>
     </ClCompile>
     <Lib>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -140,8 +118,8 @@
       <IntrinsicFunctions>false</IntrinsicFunctions>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>false</OmitFramePointers>
-      <AdditionalIncludeDirectories>..\..\3rdparty\physfs-2.0.2;..\..\src</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_LIB;_USE_32BIT_TIME_T;_CRT_SECURE_NO_WARNINGS;AKU_STATIC;XML_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\src;..\..\3rdparty\zlib-1.2.3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <ExceptionHandling>Sync</ExceptionHandling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -155,6 +133,7 @@
       <WarningLevel>Level4</WarningLevel>
       <DebugInformationFormat>
       </DebugInformationFormat>
+      <CompileAs>CompileAsC</CompileAs>
     </ClCompile>
     <Lib>
       <AdditionalOptions>/LTCG %(AdditionalOptions)</AdditionalOptions>
@@ -238,6 +217,26 @@
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\zipfs\pch.h" />
+    <ClInclude Include="..\..\src\zipfs\zipfs.h" />
+    <ClInclude Include="..\..\src\zipfs\zipfs_util.h" />
+    <ClInclude Include="..\..\src\zipfs\ZIPFSString.h" />
+    <ClInclude Include="..\..\src\zipfs\ZIPFSVirtualPath.h" />
+    <ClInclude Include="..\..\src\zipfs\ZIPFSZipFile.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\zipfs\zipfs-pch.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src\zipfs\zipfs.c" />
+    <ClCompile Include="..\..\src\zipfs\zipfs_util.c" />
+    <ClCompile Include="..\..\src\zipfs\zipfs_vfscanf.c" />
+    <ClCompile Include="..\..\src\zipfs\ZIPFSString.c" />
+    <ClCompile Include="..\..\src\zipfs\ZIPFSVirtualPath.c" />
+    <ClCompile Include="..\..\src\zipfs\ZIPFSZipFile.c" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

@@ -35,26 +35,26 @@ static const char* progname=PROGNAME;	/* actual program name */
 
 static void fatal(const char* message)
 {
- fprintf(stderr,"%s: %s\n",progname,message);
+ zipfs_fprintf(zipfs_stderr,"%s: %s\n",progname,message);
  exit(EXIT_FAILURE);
 }
 
 static void cannot(const char* what)
 {
- fprintf(stderr,"%s: cannot %s %s: %s\n",progname,what,output,strerror(errno));
+ zipfs_fprintf(zipfs_stderr,"%s: cannot %s %s: %s\n",progname,what,output,strerror(errno));
  exit(EXIT_FAILURE);
 }
 
 static void usage(const char* message)
 {
  if (*message=='-')
-  fprintf(stderr,"%s: unrecognized option " LUA_QS "\n",progname,message);
+  zipfs_fprintf(zipfs_stderr,"%s: unrecognized option " LUA_QS "\n",progname,message);
  else
-  fprintf(stderr,"%s: %s\n",progname,message);
- fprintf(stderr,
+  zipfs_fprintf(zipfs_stderr,"%s: %s\n",progname,message);
+ zipfs_fprintf(zipfs_stderr,
  "usage: %s [options] [filenames].\n"
  "Available options are:\n"
- "  -        process stdin\n"
+ "  -        process zipfs_stdin\n"
  "  -l       list\n"
  "  -o name  output to file " LUA_QL("name") " (default is \"%s\")\n"
  "  -p       parse only\n"
@@ -82,7 +82,7 @@ static int doargs(int argc, char* argv[])
    if (version) ++version;
    break;
   }
-  else if (IS("-"))			/* end of options; use stdin */
+  else if (IS("-"))			/* end of options; use zipfs_stdin */
    break;
   else if (IS("-l"))			/* list */
    ++listing;
@@ -147,7 +147,7 @@ static const Proto* combine(lua_State* L, int n)
 static int writer(lua_State* L, const void* p, size_t size, void* u)
 {
  UNUSED(L);
- return (fwrite(p,size,1,(FILE*)u)!=1) && (size!=0);
+ return (zipfs_fwrite(p,size,1,(ZIPFSFILE*)u)!=1) && (size!=0);
 }
 
 struct Smain {
@@ -172,13 +172,13 @@ static int pmain(lua_State* L)
  if (listing) luaU_print(f,listing>1);
  if (dumping)
  {
-  FILE* D= (output==NULL) ? stdout : fopen(output,"wb");
+  ZIPFSFILE* D= (output==NULL) ? zipfs_stdout : zipfs_fopen(output,"wb");
   if (D==NULL) cannot("open");
   lua_lock(L);
   luaU_dump(L,f,writer,D,stripping);
   lua_unlock(L);
-  if (ferror(D)) cannot("write");
-  if (fclose(D)) cannot("close");
+  if (zipfs_ferror(D)) cannot("write");
+  if (zipfs_fclose(D)) cannot("close");
  }
  return 0;
 }
