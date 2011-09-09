@@ -8,8 +8,14 @@
 #include <zipfs/ZIPFSVirtualPath.h>
 #include <zipfs/ZIPFSZipFile.h>
 
+#ifdef __WIN32
+	#include <direct.h>
+#else
+	#include <sys/types.h>
+	#include <dirent.h>
+#endif
+
 #include <errno.h>
-#include <direct.h>
 #include <io.h>
 #include <sys/stat.h>
 #include <time.h>
@@ -402,7 +408,7 @@ int zipfs_fputs ( const char* string, ZIPFSFILE* fp ) {
 }
 
 //----------------------------------------------------------------//
-size_t zipfs_fread ( void* buffer, size_t size, size_t count, ZIPFSFILE* fp ) {
+size_t zipfs_fread ( const void* buffer, size_t size, size_t count, ZIPFSFILE* fp ) {
 	
 	if ( fp ) {
 		ZIPFSFile* file = ( ZIPFSFile* )fp;
@@ -569,7 +575,7 @@ int zipfs_vfprintf ( ZIPFSFILE* fp, const char* format, va_list arg ) {
 
 	FILE* file = is_file ( fp );
 	if ( file ) {
-		return vprintf ( file, format, arg );
+		return vfprintf ( file, format, arg );
 	}
 	return -1;
 }
@@ -602,7 +608,7 @@ int zipfs_affirm_path ( const char* path ) {
 	
 		*cursor = 0;
 
-		result = mkdir ( sBuffer->mMem );
+		result = zipfs_mkdir ( sBuffer->mMem );
 		
 		if ( result && ( errno != EEXIST )) break;
 		result = 0;
@@ -820,9 +826,9 @@ int zipfs_dir_read_entry ( ZIPFSDIR* dir ) {
 			return 1;
 		}
 		
-	#else {
-		
-		dirent* entry;
+	#else
+	{
+		struct dirent* entry;
 		if ( entry = readdir ( self->mHandle )) {
 			self->mName = entry->d_name;
 			self->mIsDir = ( entry->d_type == DT_DIR ) ? 1 : 0;
@@ -1072,7 +1078,7 @@ int zipfs_mount_virtual ( const char* path, const char* archive ) {
 		virtualPath = cursor;
 		cursor = cursor->mNext;
 		
-		if ( stricmp ( virtualPath->mPath, path ) == 0 ) {
+		if ( strcmp_ignore_case ( virtualPath->mPath, path ) == 0 ) {
 			ZIPFSVirtualPath_Delete ( virtualPath );
 		}
 		else {

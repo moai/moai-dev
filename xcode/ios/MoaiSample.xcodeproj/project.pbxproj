@@ -28,7 +28,6 @@
 		03CC912213B3C4A400B2724C /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CC912113B3C4A400B2724C /* QuartzCore.framework */; };
 		03CC912813B3C4B100B2724C /* libz.1.2.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CC912713B3C4B100B2724C /* libz.1.2.3.dylib */; };
 		03CC912C13B3C4C000B2724C /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CC912B13B3C4C000B2724C /* StoreKit.framework */; };
-		03E27D7C13C7C05100EE3B0D /* lua in Resources */ = {isa = PBXBuildFile; fileRef = 03E27D7A13C7C05100EE3B0D /* lua */; };
 		0711070513C637F000EE7C53 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0711070413C637F000EE7C53 /* CoreTelephony.framework */; };
 		078D630113BA9EA30072F273 /* MoaiVC.mm in Sources */ = {isa = PBXBuildFile; fileRef = 078D630013BA9EA30072F273 /* MoaiVC.mm */; };
 		07E9F73E13B50582006396F3 /* libmoai-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CC90BD13B3C39D00B2724C /* libmoai-ios.a */; };
@@ -38,6 +37,8 @@
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
+		CD490200141AC32A00913D80 /* lua in Resources */ = {isa = PBXBuildFile; fileRef = CD4901FC141AC32A00913D80 /* lua */; };
+		CD490202141AC34300913D80 /* moai-target in Resources */ = {isa = PBXBuildFile; fileRef = CD490201141AC34300913D80 /* moai-target */; };
 		CD7C73AE13B95516006CFA19 /* ParticlePresets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD7C73AC13B95516006CFA19 /* ParticlePresets.cpp */; };
 /* End PBXBuildFile section */
 
@@ -159,8 +160,6 @@
 		03CC912113B3C4A400B2724C /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		03CC912713B3C4B100B2724C /* libz.1.2.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.3.dylib; path = usr/lib/libz.1.2.3.dylib; sourceTree = SDKROOT; };
 		03CC912B13B3C4C000B2724C /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
-		03E27D7A13C7C05100EE3B0D /* lua */ = {isa = PBXFileReference; lastKnownFileType = folder; path = lua; sourceTree = "<group>"; };
-		03E2806013C7CC3500EE3B0D /* moai-target */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "moai-target"; sourceTree = "<group>"; };
 		0711070413C637F000EE7C53 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		078D62FF13BA9EA30072F273 /* MoaiVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoaiVC.h; sourceTree = "<group>"; };
 		078D630013BA9EA30072F273 /* MoaiVC.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MoaiVC.mm; sourceTree = "<group>"; };
@@ -169,6 +168,8 @@
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		32CA4F630368D1EE00C91783 /* MoaiSample_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoaiSample_Prefix.pch; sourceTree = "<group>"; };
+		CD4901FC141AC32A00913D80 /* lua */ = {isa = PBXFileReference; lastKnownFileType = folder; path = lua; sourceTree = SOURCE_ROOT; };
+		CD490201141AC34300913D80 /* moai-target */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "moai-target"; sourceTree = SOURCE_ROOT; };
 		CD7C73AC13B95516006CFA19 /* ParticlePresets.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ParticlePresets.cpp; path = ../../src/hosts/ParticlePresets.cpp; sourceTree = SOURCE_ROOT; };
 		CD7C73AD13B95516006CFA19 /* ParticlePresets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ParticlePresets.h; path = ../../src/hosts/ParticlePresets.h; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -218,9 +219,9 @@
 		03E2806113C7CC4800EE3B0D /* build */ = {
 			isa = PBXGroup;
 			children = (
-				03E2806013C7CC3500EE3B0D /* moai-target */,
+				CD490201141AC34300913D80 /* moai-target */,
 				037ED45813CD1FD2009CBA72 /* package.sh */,
-				03E27D7A13C7C05100EE3B0D /* lua */,
+				CD4901FC141AC32A00913D80 /* lua */,
 			);
 			name = build;
 			sourceTree = "<group>";
@@ -439,7 +440,8 @@
 				03CC905D13B3C1B700B2724C /* Icon@2x.png in Resources */,
 				03CC905F13B3C1B700B2724C /* MainWindow-iPad.xib in Resources */,
 				03CC906013B3C1B700B2724C /* MainWindow-iPhone.xib in Resources */,
-				03E27D7C13C7C05100EE3B0D /* lua in Resources */,
+				CD490200141AC32A00913D80 /* lua in Resources */,
+				CD490202141AC34300913D80 /* moai-target in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

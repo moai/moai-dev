@@ -26,7 +26,7 @@ typedef struct zipfs_stat {
 // stdio
 //================================================================//
 
-typedef void* ZIPFSFILE;
+typedef void ZIPFSFILE;
 
 extern ZIPFSFILE* zipfs_stderr;
 extern ZIPFSFILE* zipfs_stdin;
@@ -67,7 +67,7 @@ extern int					zipfs_vfscanf				( ZIPFSFILE* fp, const char* format, va_list arg
 // extra
 //================================================================//
 
-typedef void* ZIPFSDIR;
+typedef void ZIPFSDIR;
 
 //----------------------------------------------------------------//
 extern int					zipfs_affirm_path				( const char* path );

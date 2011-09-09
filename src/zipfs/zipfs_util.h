@@ -14,5 +14,6 @@ extern size_t	compare_paths		( const char* p0, const char* p1 );
 extern char*	copy_string			( char const* str );
 extern size_t	count_same			( char const* str0, char const* str1 );
 extern size_t	count_same_nocase	( char const* str0, char const* str1 );
+extern int		strcmp_ignore_case	( char const* str0, char const* str1 );
 
 #endif
