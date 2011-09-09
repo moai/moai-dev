@@ -100,7 +100,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="xcopy /yr &quot;..\..\3rdparty\glut-3.7.6-bin\glut32.dll&quot; &quot;$(OutDir)&quot;&#x0D;&#x0A;"
+				CommandLine="xcopy /yr &quot;..\..\3rdparty\glut-3.7.6-bin\glut32.dll&quot; &quot;$(OutDir)&quot;"
 			/>
 		</Configuration>
 		<Configuration

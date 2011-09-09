@@ -4,8 +4,6 @@
 #ifndef	GLUTHOST
 #define	GLUTHOST
 
-#include <aku/AKU.h>
-
 //----------------------------------------------------------------//
 int GlutHost ( int argc, char** argv );
 

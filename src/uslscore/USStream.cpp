@@ -25,13 +25,16 @@ u32 USStream::Pipe ( USStream& source ) {
 	u8 buffer [ LOCAL_BUFFER ];
 
 	u32 readSize = 0;
+	u32 writeSize = 0;
 	u32 total = 0;
 	
 	do {
 	
 		readSize = source.ReadBytes ( buffer, LOCAL_BUFFER );
 		if ( readSize ) {
-			total += this->WriteBytes ( buffer, readSize );
+			writeSize = this->WriteBytes ( buffer, readSize );
+			total += writeSize;
+			if ( writeSize != readSize ) break;
 		}
 		
 	} while ( readSize == LOCAL_BUFFER );

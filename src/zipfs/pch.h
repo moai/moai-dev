@@ -7,14 +7,6 @@
 
 #pragma warning ( disable : 4996 )
 
-#ifndef TRUE
-	#define TRUE 1
-#endif
-
-#ifndef FALSE
-	#define FALSE 1
-#endif
-
 #include <assert.h>
 #include <ctype.h>
 #include <direct.h>

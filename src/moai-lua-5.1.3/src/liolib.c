@@ -366,7 +366,7 @@ static int g_read (lua_State *L, ZIPFSFILE *f, int first) {
       }
     }
   }
-  if (ferror(f))
+  if (zipfs_ferror(f))
     return pushresult(L, 0, NULL);
   if (!success) {
     lua_pop(L, 1);  /* remove last result */
@@ -392,7 +392,7 @@ static int io_readline (lua_State *L) {
   if (f == NULL)  /* file is already closed? */
     luaL_error(L, "file is already closed");
   sucess = read_line(L, f);
-  if (ferror(f))
+  if (zipfs_ferror(f))
     return luaL_error(L, "%s", strerror(errno));
   if (sucess) return 1;
   else {  /* EOF */

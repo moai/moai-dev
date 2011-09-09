@@ -3,21 +3,36 @@
 //----------------------------------------------------------------//
 int work_zipfs_fscanf ( int argc, char **argv ) {
 	
-	float f1, f2;
+	int result;
+	float f1, f2, f3;
+	char s [ 256 ];
+	u32 i1, i2;
+	cc8* scanString = "%f,    %fabc%f,e-,%*s%d,%x";
 	
-	zipfs_init ();
+	f1 = -1.0f;
+	f2 = -1.0f;
+	f3 = -1.0f;
+	*s = 0;
+	i1 = 0;
+	i2 = 0;
 	
 	// try it straight
-	
 	FILE* file = fopen ( "scan.txt", "r" );
-	fscanf ( file, "%f,    %f", &f1, &f2 );
+	result = fscanf ( file, scanString, &f1, &f2, &f3, &i1, &i2 );
 	fclose ( file );
 	
 	// try it virtual
-	zipfs_mount_virtual ( "scan", "scan.zip" );
+	zipfs_init ();
 	
-	ZIPFSFILE* zfile = zipfs_fopen ( "scan/scan.txt", "r" );
-	zipfs_fscanf ( zfile, "%f", &f1 );
+	f1 = -1.0f;
+	f2 = -1.0f;
+	f3 = -1.0f;
+	*s = 0;
+	i1 = 0;
+	i2 = 0;
+	
+	ZIPFSFILE* zfile = zipfs_fopen ( "scan.txt", "r" );
+	result = zipfs_fscanf ( zfile, scanString, &f1, &f2, &f3, &i1, &i2 );
 	zipfs_fclose ( zfile );
 	
 	zipfs_cleanup ();

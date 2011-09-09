@@ -74,8 +74,11 @@ ZIPFSString* ZIPFSString_New () {
 //----------------------------------------------------------------//
 char ZIPFSString_PopChar ( ZIPFSString* self ) {
 
-	char c = self->mMem [ --self->mStrLen ];
-	self->mMem [ self->mStrLen ] = 0;
+	char c = 0;
+	if ( self->mStrLen ) {
+		c = self->mMem [ --self->mStrLen ];
+		self->mMem [ self->mStrLen ] = 0;
+	}
 	return c;
 }
 

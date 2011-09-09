@@ -252,8 +252,18 @@ int zipfs_feof ( ZIPFSFILE* fp ) {
 	if ( fp ) {
 		ZIPFSFile* file = ( ZIPFSFile* )fp;
 		result = ( file->mIsArchive ) ? ZIPFSZipStream_IsAtEnd ( file->mPtr.mZip ) : feof ( file->mPtr.mFile );
-		memset ( fp, 0, sizeof ( ZIPFSFile ));
-		free ( file );
+	}
+	return result;
+}
+
+//----------------------------------------------------------------//
+int zipfs_ferror ( ZIPFSFILE* fp ) {
+
+	int result = 0;
+
+	if ( fp ) {
+		ZIPFSFile* file = ( ZIPFSFile* )fp;
+		result = ( file->mIsArchive ) ? 0 : ferror ( file->mPtr.mFile ); // TODO: error flag for zip file
 	}
 	return result;
 }
@@ -355,7 +365,7 @@ ZIPFSFILE* zipfs_fopen ( const char* filename, const char* mode ) {
 			
 			if ( zipStream ) {
 				file = ( ZIPFSFile* )malloc ( sizeof ( ZIPFSFile ));
-				file->mIsArchive = TRUE;
+				file->mIsArchive = 1;
 				file->mPtr.mZip = zipStream;
 			}
 		}
@@ -365,8 +375,7 @@ ZIPFSFILE* zipfs_fopen ( const char* filename, const char* mode ) {
 		FILE* stdFile = fopen ( filename, mode );
 		
 		if ( stdFile ) {
-			file = ( ZIPFSFile* )malloc ( sizeof ( ZIPFSFile ));
-			file->mIsArchive = FALSE;
+			file = ( ZIPFSFile* )calloc ( 1, sizeof ( ZIPFSFile ));
 			file->mPtr.mFile = stdFile;
 		}
 	}
@@ -460,7 +469,7 @@ size_t zipfs_fwrite ( const void* data, size_t size, size_t count, ZIPFSFILE* fp
 	if ( fp ) {
 		ZIPFSFile* file = ( ZIPFSFile* )fp;
 		if ( !file->mIsArchive ) {
-			fwrite ( data, size, count, file->mPtr.mFile );
+			return fwrite ( data, size, count, file->mPtr.mFile );
 		}
 	}
 	return 0;
@@ -596,6 +605,7 @@ int zipfs_affirm_path ( const char* path ) {
 		result = mkdir ( sBuffer->mMem );
 		
 		if ( result && ( errno != EEXIST )) break;
+		result = 0;
 		
 		*cursor = '/';
 		++cursor;

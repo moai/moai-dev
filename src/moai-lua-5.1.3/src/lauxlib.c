@@ -578,7 +578,7 @@ LUALIB_API int luaL_loadfile (lua_State *L, const char *filename) {
   }
   zipfs_ungetc(c, lf.f);
   status = lua_load(L, getF, &lf, lua_tostring(L, -1));
-  readstatus = ferror(lf.f);
+  readstatus = zipfs_ferror(lf.f);
   if (filename) zipfs_fclose(lf.f);  /* close file (even in case of errors) */
   if (readstatus) {
     lua_settop(L, fnameindex);  /* ignore results from `lua_load' */

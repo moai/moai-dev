@@ -3,23 +3,8 @@
 
 #include <stdio.h>
 #include <aku/AKU.h>
-#include <GlutHost.h>
-
-#ifdef GLUTHOST_USE_FMOD
-	#include <aku/AKU-fmod.h>
-#endif
-
-#ifdef GLUTHOST_USE_LUAEXT
-	#include <aku/AKU-luaext.h>
-#endif
-
-#ifdef GLUTHOST_USE_UNTZ
-	#include <aku/AKU-untz.h>
-#endif
-
-#ifdef GLUTHOST_USE_PARTICLE_PRESETS
-	#include <ParticlePresets.h>
-#endif
+#include <moaicore/moaicore.h>
+#include <work/work-moai-zipfs.h>
 
 #ifdef _WIN32
 	#include <glut.h>
@@ -219,32 +204,12 @@ void _AKUStartGameLoopFunc () {
 //================================================================//
 
 //----------------------------------------------------------------//
-int GlutHost ( int argc, char** argv ) {
+int work_moai_zipfs ( int argc, char** argv ) {
 
 	glutInit ( &argc, argv );
 
 	AKUCreateContext ();
-	
-	#ifdef GLUTHOST_USE_FMOD
-		AKUFmodLoad ();
-	#endif
-	
-	#ifdef GLUTHOST_USE_LUAEXT
-		AKUExtLoadLuacrypto ();
-		AKUExtLoadLuacurl ();
-		AKUExtLoadLuasocket ();
-		AKUExtLoadLuasql ();
-	#endif
-	
-	#ifdef GLUTHOST_USE_UNTZ
-		AKUUntzInit ();
-	#endif
-	
-	#ifdef GLUTHOST_USE_PARTICLE_PRESETS
-		ParticlePresets ();
-	#endif
 
-	
 	AKUSetInputConfigurationName ( "AKUGlut" );
 
 	AKUReserveInputDevices			( GlutInputDeviceID::TOTAL );
@@ -262,9 +227,11 @@ int GlutHost ( int argc, char** argv ) {
 	AKUSetFunc_OpenWindow ( _AKUOpenWindowFunc );
 	AKUSetFunc_StartGameLoop ( _AKUStartGameLoopFunc );
 
-	for ( int i = 1; i < argc; ++i ) {
-		AKURunScript ( argv [ i ]);
-	}
+	AKUMountVirtualDirectory ( "test", "anim-basic.zip" );
+	AKUSetWorkingDirectory ( "test/anim-basic" );
+	
+	AKURunScript ( "main.lua" );
+
 	return 0;
 }
 
