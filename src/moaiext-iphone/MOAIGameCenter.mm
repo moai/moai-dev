@@ -24,7 +24,7 @@
 int MOAIGameCenter::_authenticatePlayer ( lua_State* L ) {
 	USLuaState state ( L );
 	
-    // Check for presence of GKLocalPlayer class.
+	// Check for presence of GKLocalPlayer class.
     BOOL localPlayerClassAvailable = ( NSClassFromString ( @"GKLocalPlayer" )) != nil;
 	
 	// The device must be running iOS 4.1 or later.
@@ -153,13 +153,16 @@ int MOAIGameCenter::_setGetScoresCallback ( lua_State* L ) {
 int MOAIGameCenter::_showDefaultLeaderboard ( lua_State* L ) {
 	USLuaState state ( L );
 
+	printf("1\n");
 	UIWindow* window = [[ UIApplication sharedApplication ] keyWindow ];
 	UIViewController* rootVC = [ window rootViewController ];	
 	GKLeaderboardViewController *leaderboardController = [[ GKLeaderboardViewController alloc ] init ];
     if ( leaderboardController != nil )
-    {
+    {	
+		printf("2\n");
         leaderboardController.leaderboardDelegate = MOAIGameCenter::Get ().mLeaderboardDelegate;
 		if ( rootVC != nil ) {
+			printf("3\n");
 			[ rootVC presentModalViewController: leaderboardController animated: YES ];
 		}
     }	

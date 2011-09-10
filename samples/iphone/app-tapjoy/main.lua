@@ -32,6 +32,7 @@ MOAISim.pushRenderPass ( layer )
 ACTIVE_EXAMPLE = "showOffersWebView"
 --ACTIVE_EXAMPLE = "showFeaturedAppWebView"
 --ACTIVE_EXAMPLE = "getBannerAdProp"
+--ACTIVE_EXAMPLE = "google"
 
 tapjoy.init ( "7f0cc735-d561-4761-b74b-91fd6787d200", "ZnIBakPig9ygaJN4lAod" )
 
@@ -87,4 +88,17 @@ if ACTIVE_EXAMPLE == "getBannerAdProp" then
 	end
 
 	tapjoy.getBannerAdProp ( "320x50", getBannerAdPropCallback )
+end
+
+-----------------------------------------------------------------
+-- google webview example
+-----------------------------------------------------------------
+if ACTIVE_EXAMPLE == "google" then
+
+	print "google"
+	webView = MOAIWebView.new ()
+	webView:initWebView ( 0, 0, 360, 480, false )
+	webView:loadRequest ( "http://www.google.com/")
+	webView:show ()
+	
 end

@@ -13,7 +13,15 @@
 
 	@synthesize mMOAIWebView;
 
-
+	//Action methods for toolbar buttons:	
+	- ( void ) doneButtonPressed:( id )sender {
+	
+		if ( mMOAIWebView ) {
+		
+			mMOAIWebView->Hide ();
+		}
+	}
+	
 	//================================================================//
 	#pragma mark -
 	#pragma mark Protocol UIWebViewDelegate

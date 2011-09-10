@@ -15,6 +15,8 @@
 			MOAIWebView*			mMOAIWebView;
 }
 
+	-( void	)			doneButtonPressed		:( id )sender;
+
 @property ( readwrite, assign ) MOAIWebView*	mMOAIWebView;	
 
 @end

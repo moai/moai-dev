@@ -14,9 +14,12 @@
 // MOAIWebView
 //================================================================//
 class MOAIWebView :
+	public UIViewController, 
 	public MOAIEventSource {
 private:
 	
+	bool						mHasToolBar;
+	UIToolbar*					mToolBar;
 	UIWebView*					mWebView;
 	MoaiUiWebViewDelegate*		mWebViewDelegate;
 	
@@ -32,6 +35,7 @@ private:
 	static int			_getCurrentRequest				( lua_State* L );
 	static int			_getMediaPlaybackRequiresAction	( lua_State* L );
 	static int			_getScalesPageToFit				( lua_State* L );
+	static int			_hasToolBar						( lua_State* L );
 	static int			_hideWebView					( lua_State* L );
 	static int			_isHidden						( lua_State* L );
 	static int			_initWebView					( lua_State* L );
@@ -67,6 +71,7 @@ public:
 	};
 	
 	//----------------------------------------------------------------//
+	void				Hide									();
 						MOAIWebView								();
 						~MOAIWebView							();
 	void				RaiseDidFailLoadWithErrorEvent			( NSError* error );

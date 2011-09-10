@@ -554,6 +554,7 @@ void MOAIApp::PushPaymentTransaction ( lua_State* L, SKPaymentTransaction* trans
 		}
 		case SKPaymentTransactionStateFailed: {
 			//int code = transaction.error.code;
+			printf ("%s\n", [ transaction.error.localizedDescription UTF8String ]);
 			if( transaction.error.code == SKErrorPaymentCancelled ) {
 				lua_pushnumber ( L, TRANSACTION_STATE_CANCELLED );
 			}
