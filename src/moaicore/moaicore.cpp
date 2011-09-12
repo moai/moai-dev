@@ -6,6 +6,19 @@
 #include <moaicore/moaicore.h>
 
 //================================================================//
+// MOAIGlobalsFinalizer
+//================================================================//
+class MOAIGlobalsFinalizer :
+	public USGlobalsFinalizer {
+public:
+
+	//----------------------------------------------------------------//
+	void OnFinalize () {
+		MOAISim::Get ().SendFinalizeEvent ();
+	}
+};
+
+//================================================================//
 // moaicore
 //================================================================//
 
@@ -21,17 +34,20 @@ void moaicore::InitGlobals ( USGlobals* globals ) {
 
 	uslsext::InitGlobals ( globals );
 
-	MOAIXmlParser::Get ();
-	MOAIActionMgr::Get ();
-	MOAIInputMgr::Get ();
-	MOAILogMgr::Get ();
-	MOAINodeMgr::Get ();
-	MOAIVertexFormatMgr::Get ();
-	MOAIShaderMgr::Get ();
-	MOAIGfxDevice::Get ();
-	MOAIDebugLines::Get ();
-	MOAIPartitionResultMgr::Get ();
-	MOAISim::Get ();
+	MOAIXmlParser::Affirm ();
+	MOAIActionMgr::Affirm ();
+	MOAIInputMgr::Affirm ();
+	MOAILogMgr::Affirm ();
+	MOAINodeMgr::Affirm ();
+	MOAIVertexFormatMgr::Affirm ();
+	MOAIShaderMgr::Affirm ();
+	MOAIGfxDevice::Affirm ();
+	MOAIDraw::Affirm ();
+	MOAIDebugLines::Affirm ();
+	MOAIPartitionResultMgr::Affirm ();
+	MOAISim::Affirm ();
+	
+	MOAILogMessages::RegisterDefaultLogMessages ();
 	
 	// MOAI
 	REGISTER_LUA_CLASS ( MOAIAction )
@@ -47,10 +63,10 @@ void moaicore::InitGlobals ( USGlobals* globals ) {
 	REGISTER_LUA_CLASS ( MOAIDataIOAction )
 	REGISTER_LUA_CLASS ( MOAIDebugLines )
 	REGISTER_LUA_CLASS ( MOAIDeckRemapper )
+	REGISTER_LUA_CLASS ( MOAIDraw )
 	REGISTER_LUA_CLASS ( MOAIEnvironment )
 	REGISTER_LUA_CLASS ( MOAIEaseDriver )
 	REGISTER_LUA_CLASS ( MOAIEaseType )
-	REGISTER_LUA_CLASS ( MOAIEventSource )
 	REGISTER_LUA_CLASS ( MOAIFileSystem )
 	REGISTER_LUA_CLASS ( MOAIFont )
 	REGISTER_LUA_CLASS ( MOAIGfxDevice )
@@ -84,6 +100,7 @@ void moaicore::InitGlobals ( USGlobals* globals ) {
 	REGISTER_LUA_CLASS ( MOAIPointerSensor )
 	REGISTER_LUA_CLASS ( MOAIProp )
 	REGISTER_LUA_CLASS ( MOAIProp2D )
+	REGISTER_LUA_CLASS ( MOAIScriptDeck )
 	REGISTER_LUA_CLASS ( MOAIScriptNode )
 	REGISTER_LUA_CLASS ( MOAISerializer )
 	REGISTER_LUA_CLASS ( MOAIShader )
@@ -107,12 +124,13 @@ void moaicore::InitGlobals ( USGlobals* globals ) {
 		REGISTER_LUA_CLASS ( MOAIBox2DArbiter )
 		REGISTER_LUA_CLASS ( MOAIBox2DBody )
 		REGISTER_LUA_CLASS ( MOAIBox2DFixture )
+		REGISTER_LUA_CLASS ( MOAIBox2DJoint )
 		REGISTER_LUA_CLASS ( MOAIBox2DWorld )
 	#endif
 	
 	#if USE_CHIPMUNK
 	
-		MOAICp::Get ();
+		MOAICp::Affirm ();
 	
 		REGISTER_LUA_CLASS ( MOAICp )
 		REGISTER_LUA_CLASS ( MOAICpArbiter )
@@ -121,4 +139,6 @@ void moaicore::InitGlobals ( USGlobals* globals ) {
 		REGISTER_LUA_CLASS ( MOAICpShape )
 		REGISTER_LUA_CLASS ( MOAICpSpace )
 	#endif
+	
+	globals->PushFinalizer < MOAIGlobalsFinalizer >();
 }

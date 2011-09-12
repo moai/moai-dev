@@ -29,17 +29,19 @@
 	-( void ) paymentQueue:( SKPaymentQueue* )queue restoreCompletedTransactionsFailedWithError:( NSError* )error {
 		UNUSED ( queue );
 		UNUSED ( error );
-	}
-	
-	//----------------------------------------------------------------//
-	-( void ) paymentQueueRestoreCompletedTransactionsFinished:(SKPaymentQueue* )queue {
-		UNUSED ( queue );
+		NSLog ( @"StoreKit Restore Completed Transactions Error: %@", error.localizedDescription );
+		MOAIApp::Get().DidReceivePaymentQueueError(error, "restoreCompletedTransactions");
 	}
 	
 	//----------------------------------------------------------------//
 	-( void ) paymentQueue:( SKPaymentQueue* )queue updatedTransactions:( NSArray* )transactions {
 	
 		MOAIApp::Get ().PaymentQueueUpdatedTransactions ( queue, transactions );
+	}
+
+	//----------------------------------------------------------------//
+	-( void ) paymentQueueRestoreCompletedTransactionsFinished:(SKPaymentQueue* )queue {
+		UNUSED ( queue );
 	}
 
 	//================================================================//
@@ -49,8 +51,8 @@
 
 	//----------------------------------------------------------------//
 	-( void ) request:( SKRequest* )request didFailWithError:( NSError* )error {
-		
-		NSLog ( @"%@", error.localizedDescription );
+		NSLog ( @"StoreKit Request Error: %@", error.localizedDescription );
+		MOAIApp::Get().DidReceivePaymentQueueError(error, "request");
 	}
 
 	//================================================================//

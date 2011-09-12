@@ -3,10 +3,13 @@
 
 #include "pch.h"
 
+#include <moaicore/MOAIFrameBuffer.h>
 #include <moaicore/MOAIGfxDevice.h>
-#include <moaicore/MOAIGfxDevice.h>
+#include <moaicore/MOAIGfxResource.h>
+#include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIShader.h>
 #include <moaicore/MOAIShaderMgr.h>
+#include <moaicore/MOAISim.h>
 #include <moaicore/MOAITexture.h>
 #include <moaicore/MOAIVertexFormat.h>
 #include <moaicore/MOAIVertexFormatMgr.h>
@@ -32,6 +35,58 @@ int MOAIGfxDevice::_isProgrammable ( lua_State* L ) {
 	lua_pushboolean ( L, gfxDevice.IsProgrammable ());
 	
 	return 1;
+}
+
+//----------------------------------------------------------------//
+/**	@name	setPenColor
+
+	@in		number r
+	@in		number g
+	@in		number b
+	@opt	number a	Default value is 1.
+	@out	nil
+*/
+int MOAIGfxDevice::_setPenColor ( lua_State* L ) {
+
+	USLuaState state ( L );
+
+	float r = state.GetValue < float >( 1, 1.0f );
+	float g = state.GetValue < float >( 2, 1.0f );
+	float b = state.GetValue < float >( 3, 1.0f );
+	float a = state.GetValue < float >( 4, 1.0f );
+
+	MOAIGfxDevice::Get ().SetPenColor ( r, g, b, a );
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	setPenWidth
+
+	@in		number width
+	@out	nil
+*/
+int MOAIGfxDevice::_setPenWidth ( lua_State* L ) {
+
+	USLuaState state ( L );
+
+	float width = state.GetValue < float >( 1, 1.0f );
+	MOAIGfxDevice::Get ().SetPenWidth ( width );
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	setPointSize
+
+	@in		number size
+	@out	nil
+*/
+int MOAIGfxDevice::_setPointSize ( lua_State* L ) {
+
+	USLuaState state ( L );
+
+	float size = state.GetValue < float >( 1, 1.0f );
+	MOAIGfxDevice::Get ().SetPointSize ( size );
+	return 0;
 }
 
 //================================================================//
@@ -143,7 +198,11 @@ u32 MOAIGfxDevice::CountErrors () const {
 void MOAIGfxDevice::DetectContext () {
 
 	#ifdef __GLEW_H__
-		glewInit ();
+		static bool initGlew = true;
+		if ( initGlew ) {
+			glewInit ();
+			initGlew = false;
+		}
 	#endif
 
 	const GLubyte* driverVersion = glGetString ( GL_VERSION );
@@ -195,6 +254,8 @@ void MOAIGfxDevice::DetectContext () {
 			REMAP_EXTENSION_PTR ( glRenderbufferStorage,					glRenderbufferStorageEXT )
 		#endif
 	#endif
+	
+	this->RenewResources ();
 }
 
 //----------------------------------------------------------------//
@@ -459,6 +520,12 @@ void MOAIGfxDevice::GpuMultMatrix ( const USMatrix4x4& mtx ) const {
 }
 
 //----------------------------------------------------------------//
+void MOAIGfxDevice::InsertGfxResource ( MOAIGfxResource& resource ) {
+
+	this->mResources.PushBack ( resource.mLink );
+}
+
+//----------------------------------------------------------------//
 bool MOAIGfxDevice::IsOpenGLES () {
 
 	return this->mIsES;
@@ -468,6 +535,16 @@ bool MOAIGfxDevice::IsOpenGLES () {
 bool MOAIGfxDevice::IsProgrammable () {
 
 	return this->mIsProgrammable;
+}
+
+//----------------------------------------------------------------//
+u32 MOAIGfxDevice::LogErrors () {
+
+	u32 count = 0;
+	for ( int error = glGetError (); error != GL_NO_ERROR; error = glGetError (), ++count ) {
+		MOAILog ( 0, MOAILogMessages::MOAIGfxDevice_OpenGLError_S, this->GetErrorString ( error ));
+	}
+	return count;
 }
 
 //----------------------------------------------------------------//
@@ -499,7 +576,8 @@ MOAIGfxDevice::MOAIGfxDevice () :
 	mMajorVersion ( 0 ),
 	mMinorVersion ( 0 ),
 	mIsProgrammable ( false ),
-	mDefaultFrameBuffer ( 0 ) {
+	mDefaultFrameBuffer ( 0 ),
+	mTextureMemoryUsage ( 0 ) {
 	
 	RTTI_SINGLE ( MOAIGfxDevice )
 	
@@ -523,24 +601,57 @@ MOAIGfxDevice::~MOAIGfxDevice () {
 }
 
 //----------------------------------------------------------------//
-u32 MOAIGfxDevice::PrintErrors () {
-
-	u32 count = 0;
-	for ( int error = glGetError (); error != GL_NO_ERROR; error = glGetError (), ++count ) {
-		printf ( "OPENGL ERROR: %s\n", this->GetErrorString ( error ));
-	}
-	return count;
-}
-
-//----------------------------------------------------------------//
 void MOAIGfxDevice::RegisterLuaClass ( USLuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "isProgrammable",				_isProgrammable },
+		{ "setPenColor",				_setPenColor },
+		{ "setPenWidth",				_setPenWidth },
+		{ "setPointSize",				_setPointSize },
 		{ NULL, NULL }
 	};
 
 	luaL_register( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDevice::ReleaseResources () {
+
+	ResourceIt resourceIt = this->mResources.Head ();
+	for ( ; resourceIt; resourceIt = resourceIt->Next ()) {
+		resourceIt->Data ()->ReleaseGfxResource ();
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDevice::RemoveGfxResource ( MOAIGfxResource& resource ) {
+
+	this->mResources.Remove ( resource.mLink );
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDevice::RenewResources () {
+
+	ResourceIt resourceIt = this->mResources.Head ();
+	for ( ; resourceIt; resourceIt = resourceIt->Next ()) {
+		resourceIt->Data ()->RenewGfxResource ();
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDevice::ReportTextureAlloc ( cc8* name, size_t size ) {
+
+	this->mTextureMemoryUsage += size;
+	float mb = ( float )this->mTextureMemoryUsage / 1024.0f / 1024.0f;
+	MOAILog ( 0, MOAILogMessages::MOAITexture_MemoryUse_SDFS, "+", size, mb, name );
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDevice::ReportTextureFree ( cc8* name, size_t size ) {
+
+	this->mTextureMemoryUsage -= size;
+	float mb = ( float )this->mTextureMemoryUsage / 1024.0f / 1024.0f;
+	MOAILog ( 0, MOAILogMessages::MOAITexture_MemoryUse_SDFS, "-", size, mb, name );
 }
 
 //----------------------------------------------------------------//
@@ -636,11 +747,13 @@ void MOAIGfxDevice::SetDefaultFrameBuffer ( GLuint frameBuffer ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::SetFrameBuffer ( MOAITexture* frameBuffer ) {
+void MOAIGfxDevice::SetFrameBuffer ( MOAITexture* texture ) {
 
 	this->Flush ();
-	if ( frameBuffer && frameBuffer->IsFrameBuffer ()) {
-		frameBuffer->BindFrameBuffer ();
+
+	MOAIFrameBuffer* frameBuffer = texture ? texture->GetFrameBuffer () : 0;
+	if ( frameBuffer ) {
+		frameBuffer->Bind ();
 	}
 	else {
 		glBindFramebuffer ( GL_FRAMEBUFFER, this->mDefaultFrameBuffer );
@@ -969,6 +1082,19 @@ void MOAIGfxDevice::SetViewport ( const USRect& viewport ) {
 	glViewport ( x, y, w, h );
 
 	this->mViewRect = viewport;
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDevice::SoftReleaseResources ( u32 age ) {
+
+	ResourceIt resourceIt = this->mResources.Head ();
+	for ( ; resourceIt; resourceIt = resourceIt->Next ()) {
+		resourceIt->Data ()->SoftReleaseGfxResource ( age );
+	}
+	
+	// Horrible to call this, but generally soft release is only used
+	// in response to a low memory warning and we want to free as soon as possible.
+	glFlush ();
 }
 
 //----------------------------------------------------------------//

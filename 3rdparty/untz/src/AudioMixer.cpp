@@ -85,13 +85,9 @@ int AudioMixer::process(UInt32 numInputChannels, float* inputBuffer, UInt32 numO
 			}
 			while(framesRead > 0 && totalFramesRead < numFrames);
             
-//			RPRINT("frames read for source = %d\n", totalFramesRead);
-
 			if(framesRead == 0)
             {
-                mLock.unlock();
-				s->stop();
-                mLock.lock();
+				s->getData()->setState(kPlayStateStopped);
             }
 		}
 	}

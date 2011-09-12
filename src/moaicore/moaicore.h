@@ -78,6 +78,7 @@
 #include <moaicore/MOAIProp2D.h>
 #include <moaicore/MOAIPvrHeader.h>
 #include <moaicore/MOAIQuadBrush.h>
+#include <moaicore/MOAIScriptDeck.h>
 #include <moaicore/MOAIScriptNode.h>
 #include <moaicore/MOAISensor.h>
 #include <moaicore/MOAISerializer.h>
@@ -109,6 +110,7 @@
 	#include <moaicore/MOAIBox2DBody.h>
 	#include <moaicore/MOAIBox2DDebugDraw.h>
 	#include <moaicore/MOAIBox2DFixture.h>
+	#include <moaicore/MOAIBox2DJoint.h>
 	#include <moaicore/MOAIBox2DWorld.h>
 #endif
 

@@ -249,12 +249,12 @@ void DShowAudioSource::putData(BYTE *data, long length)
 		mBuffer.push_back(temp);
 	}
 
-	RPRINT("just read %d samples (%d)\n", samples, mBuffer.size());
+//	RPRINT("just read %d samples (%d)\n", samples, mBuffer.size());
 
 	// Stop decoding once we have 2 seconds of data
 	if(!mLoadedInMemory && mBuffer.size() > UNTZ::System::get()->getSampleRate() * mpWaveFormatEx->nChannels * SECONDS_TO_BUFFER)
 	{
-		RPRINT("pausing decoder\n");
+//		RPRINT("pausing decoder\n");
 		mpMediaControl->Pause();
 	}
 }
@@ -291,9 +291,11 @@ Int64 DShowAudioSource::readFrames(float* data, UInt32 numChannels, UInt32 numFr
     if(!mLoadedInMemory)
         framesAvailable = mBuffer.size() / getNumChannels();
 
-//	RPRINT("available data = %d\n", framesAvailable);
-
-	if(framesAvailable > 0)
+	Int64 loopEndFrame = convertSecondsToSamples(mLoopEnd);
+	Int64 totalFrames = convertSecondsToSamples(getLength());
+	bool needToLoop = isLooping() && ((mCurrentFrame >= loopEndFrame && loopEndFrame > 0) || mCurrentFrame >= totalFrames);
+	
+	if(framesAvailable > 0 && !needToLoop)
 	{
 		int sourceChannels = getNumChannels();
 
@@ -336,12 +338,10 @@ Int64 DShowAudioSource::readFrames(float* data, UInt32 numChannels, UInt32 numFr
     else
     {
         framesRead = ERR_BUFFERING;
-        mCurrentFrame = 0;
-        
-        if(isLooping() && mEOF)
+        if(needToLoop)
         {
-			RPRINT("reached EOF and will now loop.\n");
-			setDecoderPosition(0);
+			RPRINT("reached loop end...looping again.\n");
+			setPosition(mLoopStart);
         }
         else if (mEOF)
         {            
@@ -368,6 +368,9 @@ void DShowAudioSource::setDecoderPosition(double seconds)
 
 void DShowAudioSource::setPosition(double seconds)
 {
+	seconds = seconds < 0 ? 0.0f : seconds;
+	seconds = seconds > getLength() ? getLength() : seconds;
+
 	mCurrentFrame = (Int64)(seconds * getSampleRate());
     
     if(!mLoadedInMemory)

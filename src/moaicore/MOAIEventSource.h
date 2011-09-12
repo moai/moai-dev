@@ -20,15 +20,40 @@ private:
 	//----------------------------------------------------------------//
 	static int			_setListener			( lua_State* L );
 
-public:
-
-	DECL_LUA_FACTORY ( MOAIEventSource )
-
 	//----------------------------------------------------------------//
 	void				AffirmListenerTable		( USLuaState& state );
+
+protected:
+
+	//----------------------------------------------------------------//
+	template < typename TYPE >
+	static int _setListener ( lua_State* L ) {
+	
+		u32 idx = 1;
+		
+		USLuaState state ( L );
+		if ( !state.IsType ( idx, LUA_TNUMBER )) {
+			idx = 2;
+		}
+		
+		if ( state.IsType ( idx, LUA_TNUMBER )) {
+		
+			TYPE& global = TYPE::Get ();
+			global.SetListener ( L, idx );
+		}
+		return 0;
+	}
+
+	//----------------------------------------------------------------//
+	bool				PushListenerAndSelf		( u32 eventID, USLuaState& state );
+	void				SetListener				( lua_State* L, u32 idx );
+
+public:
+
+	//----------------------------------------------------------------//
+	
 						MOAIEventSource			();
 	virtual				~MOAIEventSource		();
-	bool				PushListenerAndSelf		( u32 eventID, USLuaState& state );
 	void				RegisterLuaClass		( USLuaState& state );
 	void				RegisterLuaFuncs		( USLuaState& state );
 };

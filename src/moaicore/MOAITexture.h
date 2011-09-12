@@ -6,6 +6,7 @@
 
 #include <moaicore/MOAIDeck.h>
 #include <moaicore/MOAIImage.h>
+#include <moaicore/MOAIGfxResource.h>
 
 class MOAIDataBuffer;
 class MOAIFrameBuffer;
@@ -26,7 +27,8 @@ class MOAITextureLoader;
 	@const	GL_NEAREST_MIPMAP_NEAREST
 */
 class MOAITexture :
-	public virtual USLuaObject {
+	public virtual USLuaObject,
+	public MOAIGfxResource {
 private:
 
 	static const u32 DEFAULT_TRANSFORM = MOAIImageTransform::TRUECOLOR | MOAIImageTransform::PREMULTIPLY_ALPHA;
@@ -54,9 +56,14 @@ private:
 	int					mGLInternalFormat;
 	int					mGLPixelType;
 	
-	STLString					mFilename;
-	MOAITextureLoader*			mLoader;
-	MOAIFrameBuffer*			mFrameBuffer;
+	STLString			mFilename;
+	MOAITextureLoader*	mLoader;
+	MOAIFrameBuffer*	mFrameBuffer;
+	
+	size_t				mDataSize;
+
+	bool				mIsRenewable;
+	u32					mTransform;
 
 	//----------------------------------------------------------------//
 	static int		_bind					( lua_State* L );
@@ -68,12 +75,15 @@ private:
 	static int		_setWrap				( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void					Affirm					();
-	bool					Bind					();
-	bool					BindFrameBuffer			();
-	void					CreateTextureFromImage	( MOAIImage& image );
-	void					CreateTextureFromPVR	( void* data, size_t size );
-	void					ReleaseLoader			();
+	void			CreateTextureFromImage	( MOAIImage& image );
+	void			CreateTextureFromPVR	( void* data, size_t size );
+	bool			IsRenewable				();
+	void			OnBind					();
+	void			OnClear					();
+	void			OnLoad					();
+	void			OnRenew					();
+	void			OnUnload				();
+	void			ReleaseLoader			();
 
 public:
 	
@@ -81,18 +91,19 @@ public:
 	
 	friend class MOAIGfxDevice;
 	
+	GET ( MOAIFrameBuffer*, FrameBuffer, mFrameBuffer )
+	
 	//----------------------------------------------------------------//
 	static MOAITexture*		AffirmTexture			( USLuaState& state, int idx );
-	void					Clear					();
 	u32						GetHeight				();
 	u32						GetWidth				();
-	void					Init					( MOAIImage& image );
+	void					Init					( MOAIImage& image, cc8* debugname = 0 );
 	void					Init					( cc8* filename, u32 transform = DEFAULT_TRANSFORM );
-	void					Init					( MOAIDataBuffer& data, u32 transform = DEFAULT_TRANSFORM);
-	void					Init					( const void* data, u32 size, u32 transform = DEFAULT_TRANSFORM );
+	void					Init					( MOAIDataBuffer& data, u32 transform = DEFAULT_TRANSFORM, cc8* debugname = 0 );
+	void					Init					( const void* data, u32 size, u32 transform = DEFAULT_TRANSFORM, cc8* debugname = 0 );
 	void					InitFrameBuffer			( u32 width, u32 height, GLenum colorFormat, GLenum depthFormat, GLenum stencilFormat );
 	bool					IsFrameBuffer			();
-	bool					IsOK					();
+	bool					IsValid					();
 							MOAITexture				();
 							~MOAITexture			();
 	void					SerializeIn				( USLuaState& state, USLuaSerializer& serializer );

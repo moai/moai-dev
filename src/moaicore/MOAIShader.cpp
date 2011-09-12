@@ -271,103 +271,6 @@ int MOAIShader::_setVertexAttribute ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIShader::Affirm () {
-
-	if ( this->mState != STATE_PENDING_LOAD ) return;
-
-	this->mVertexShader = this->CompileShader ( GL_VERTEX_SHADER, this->mVertexShaderSource );
-	this->mFragmentShader = this->CompileShader ( GL_FRAGMENT_SHADER, this->mFragmentShaderSource );
-	this->mProgram = glCreateProgram ();
-	
-	if ( !( this->mVertexShader && this->mFragmentShader && this->mProgram )) {
-		this->mState = STATE_ERROR;
-		this->Clear ();
-		return;
-	}
-    
-	glAttachShader ( this->mProgram, this->mVertexShader );
-	glAttachShader ( this->mProgram, this->mFragmentShader );
-    
-	// bind attribute locations.
-	// this needs to be done prior to linking.
-	AttributeMapIt attrMapIt = this->mAttributeMap.begin ();
-	for ( ; attrMapIt != this->mAttributeMap.end (); ++attrMapIt ) {
-		glBindAttribLocation ( this->mProgram, attrMapIt->first, attrMapIt->second.str ());
-	}
-    
-    // link program.
-	glLinkProgram ( this->mProgram );
-	
-	GLint status;
-	glGetProgramiv ( this->mProgram, GL_LINK_STATUS, &status );
-	
-	if ( status == 0 ) {
-		this->mState = STATE_ERROR;
-		this->Clear ();
-		return;
-	}
-	
-	// get the uniform locations and clear out the names (no longer needed)
-	for ( u32 i = 0; i < this->mUniforms.Size (); ++i ) {
-		MOAIShaderUniform& uniform = this->mUniforms [ i ];
-		
-		if ( uniform.mType != MOAIShaderUniform::UNIFORM_NONE ) {
-			uniform.mAddr = glGetUniformLocation ( this->mProgram, uniform.mName );
-			uniform.mName.clear ();
-		}
-	}
-
-	glDeleteShader ( this->mVertexShader );
-	this->mVertexShader = 0;
-	
-	glDeleteShader ( this->mFragmentShader );
-	this->mFragmentShader = 0;
-	
-	this->mAttributeMap.clear ();
-	
-	this->mState = STATE_VALID;
-}
-
-//----------------------------------------------------------------//
-void MOAIShader::Bind () {
-
-	this->Affirm ();
-	
-	if ( this->mState == STATE_VALID ) {
-		
-		// use shader program.
-		glUseProgram ( this->mProgram );
-
-		// reload the uniform values
-		for ( u32 i = 0; i < this->mUniforms.Size (); ++i ) {
-			this->mUniforms [ i ].BindAttributes ( this->mAttributes );
-		}
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIShader::Clear () {
-
-	if ( this->mVertexShader ) {
-		glDeleteShader ( this->mVertexShader );
-		this->mVertexShader = 0;
-	}
-	
-	if ( this->mFragmentShader ) {
-		glDeleteShader ( this->mFragmentShader );
-		this->mFragmentShader = 0;
-	}
-	
-	if ( this->mProgram ) {
-		glDeleteProgram ( this->mProgram );
-		this->mProgram = 0;
-	}
-	
-	this->mAttributeMap.clear ();
-	this->mUniforms.Clear ();
-}
-
-//----------------------------------------------------------------//
 void MOAIShader::ClearUniform ( u32 idx ) {
 
 	if ( idx < this->mUniforms.Size ()) {
@@ -405,7 +308,7 @@ GLuint MOAIShader::CompileShader ( GLuint type, cc8* source ) {
 		char* log = ( char* )malloc ( logLength );
  
 		glGetShaderInfoLog ( shader, logLength, &logLength, log );
-		printf ( "%s", log );
+		MOAILog ( 0, MOAILogMessages::MOAIShader_ShaderInfoLog_S, log );
 		
 		free ( log );
 	
@@ -431,14 +334,26 @@ void MOAIShader::DeclareUniform ( u32 idx, cc8* name, u32 type ) {
 }
 
 //----------------------------------------------------------------//
+bool MOAIShader::IsRenewable () {
+
+	return true;
+}
+
+//----------------------------------------------------------------//
+bool MOAIShader::IsValid () {
+
+	return ( this->mProgram != 0 );
+}
+
+//----------------------------------------------------------------//
 MOAIShader::MOAIShader () :
-	mState ( STATE_UNINITIALIZED ),
 	mProgram ( 0 ),
 	mVertexShader ( 0 ),
 	mFragmentShader ( 0 ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAINode )
+		RTTI_EXTEND ( MOAIGfxResource )
 	RTTI_END
 }
 
@@ -449,9 +364,112 @@ MOAIShader::~MOAIShader () {
 }
 
 //----------------------------------------------------------------//
+void MOAIShader::OnBind () {
+		
+	// use shader program.
+	glUseProgram ( this->mProgram );
+
+	// reload the uniform values
+	for ( u32 i = 0; i < this->mUniforms.Size (); ++i ) {
+		this->mUniforms [ i ].BindAttributes ( this->mAttributes );
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIShader::OnClear () {
+	
+	this->mVertexShaderSource.clear ();
+	this->mFragmentShaderSource.clear ();
+	
+	this->mAttributeMap.clear ();
+	this->mUniforms.Clear ();
+}
+
+//----------------------------------------------------------------//
+void MOAIShader::OnLoad () {
+
+	this->mVertexShader = this->CompileShader ( GL_VERTEX_SHADER, this->mVertexShaderSource );
+	this->mFragmentShader = this->CompileShader ( GL_FRAGMENT_SHADER, this->mFragmentShaderSource );
+	this->mProgram = glCreateProgram ();
+	
+	if ( !( this->mVertexShader && this->mFragmentShader && this->mProgram )) {
+		this->Clear ();
+		this->SetError ();
+		return;
+	}
+    
+	glAttachShader ( this->mProgram, this->mVertexShader );
+	glAttachShader ( this->mProgram, this->mFragmentShader );
+    
+	// bind attribute locations.
+	// this needs to be done prior to linking.
+	AttributeMapIt attrMapIt = this->mAttributeMap.begin ();
+	for ( ; attrMapIt != this->mAttributeMap.end (); ++attrMapIt ) {
+		glBindAttribLocation ( this->mProgram, attrMapIt->first, attrMapIt->second.str ());
+	}
+    
+    // link program.
+	glLinkProgram ( this->mProgram );
+	
+	GLint status;
+	glGetProgramiv ( this->mProgram, GL_LINK_STATUS, &status );
+	
+	if ( status == 0 ) {
+		this->Clear ();
+		this->SetError ();
+		return;
+	}
+	
+	// get the uniform locations and clear out the names (no longer needed)
+	for ( u32 i = 0; i < this->mUniforms.Size (); ++i ) {
+		MOAIShaderUniform& uniform = this->mUniforms [ i ];
+		
+		if ( uniform.mType != MOAIShaderUniform::UNIFORM_NONE ) {
+			uniform.mAddr = glGetUniformLocation ( this->mProgram, uniform.mName );
+			uniform.mName.clear ();
+		}
+	}
+
+	glDeleteShader ( this->mVertexShader );
+	this->mVertexShader = 0;
+	
+	glDeleteShader ( this->mFragmentShader );
+	this->mFragmentShader = 0;
+	
+	this->mAttributeMap.clear ();
+}
+
+//----------------------------------------------------------------//
+void MOAIShader::OnRenew () {
+
+	// don't need to do anything here - vertex and fragment source should
+	// already be cached
+}
+
+//----------------------------------------------------------------//
+void MOAIShader::OnUnload () {
+
+	if ( this->mVertexShader ) {
+		glDeleteShader ( this->mVertexShader );
+		this->mVertexShader = 0;
+	}
+	
+	if ( this->mFragmentShader ) {
+		glDeleteShader ( this->mFragmentShader );
+		this->mFragmentShader = 0;
+	}
+	
+	if ( this->mProgram ) {
+		glDeleteProgram ( this->mProgram );
+		this->mProgram = 0;
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAIShader::RegisterLuaClass ( USLuaState& state ) {
 	
 	MOAINode::RegisterLuaClass ( state );
+	MOAIGfxResource::RegisterLuaClass ( state );
 	
 	state.SetField ( -1, "UNIFORM_INT",					( u32 )MOAIShaderUniform::UNIFORM_INT );
 	state.SetField ( -1, "UNIFORM_FLOAT",				( u32 )MOAIShaderUniform::UNIFORM_FLOAT );
@@ -465,6 +483,7 @@ void MOAIShader::RegisterLuaClass ( USLuaState& state ) {
 void MOAIShader::RegisterLuaFuncs ( USLuaState& state ) {
 	
 	MOAINode::RegisterLuaFuncs ( state );
+	MOAIGfxResource::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
 		{ "clearUniform",				_clearUniform },
@@ -495,18 +514,11 @@ void MOAIShader::ReserveUniforms ( u32 nUniforms ) {
 //----------------------------------------------------------------//
 void MOAIShader::SetSource ( cc8* vshSource, cc8* fshSource ) {
 
-	if ( this->mState != STATE_UNINITIALIZED ) {
-		this->Clear ();
-	}
-
-	this->mState = STATE_UNINITIALIZED;
+	this->Clear ();
 
 	if ( vshSource && fshSource ) {
-
 		this->mVertexShaderSource = vshSource;
 		this->mFragmentShaderSource = fshSource;
-		
-		this->mState = STATE_PENDING_LOAD;
 	}
 }
 
@@ -561,7 +573,7 @@ void MOAIShader::UpdatePipelineTransforms ( const USMatrix4x4& world, const USMa
 }
 
 //----------------------------------------------------------------//
-void MOAIShader::Validate () {
+bool MOAIShader::Validate () {
 
     GLint logLength;
     
@@ -571,14 +583,14 @@ void MOAIShader::Validate () {
     if ( logLength > 0 ) {
         char* log = ( char* )malloc ( logLength );
         glGetProgramInfoLog ( this->mProgram, logLength, &logLength, log );
-        printf ( "%s", log );
+        MOAILog ( 0, MOAILogMessages::MOAIShader_ShaderInfoLog_S, log );
         free ( log );
     }
     
 	GLint status;
     glGetProgramiv ( this->mProgram, GL_VALIDATE_STATUS, &status );
     if ( status == 0 ) {
-		this->mState = STATE_ERROR;
-		this->Clear ();
+		return false;
 	}
+	return true;
 }

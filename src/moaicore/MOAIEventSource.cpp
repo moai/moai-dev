@@ -12,22 +12,28 @@
 //----------------------------------------------------------------//
 /**	@name	setListener
 	@text	Sets a listener callback for a given event ID. It is up
-			to individual classes to declare their event IDs.
+			to individual classes to declare their event IDs. This function
+			has two forms: one for instances and one for singletons. When
+			using setListener with a singleton (such as MOAISim), simply
+			omit the first parameter (self).
 
-	@in		MOAIEventSource self
-	@in		number eventID			The ID of the event.
-	@opt	function callback		The callback to be called when the object emits the event. Default value is nil.
-	@out	nil
+	@overload
+
+		@in		MOAIEventSource self
+		@in		number eventID			The ID of the event.
+		@opt	function callback		The callback to be called when the object emits the event. Default value is nil.
+		@out	nil
+	
+	@overload
+		
+		@in		number eventID			The ID of the event.
+		@opt	function callback		The callback to be called when the object emits the event. Default value is nil.
+		@out	nil
 */
 int MOAIEventSource::_setListener ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIEventSource, "UN" );
 
-	self->AffirmListenerTable ( state );
-
-	self->mListenerTable.PushRef ( state );
-	lua_pushvalue ( state, 2 );
-	lua_pushvalue ( state, 3 );
-	lua_settable ( state, -3 );
+	self->SetListener ( state, 2 );
 
 	return 0;
 }
@@ -90,4 +96,18 @@ void MOAIEventSource::RegisterLuaFuncs ( USLuaState& state ) {
 	};
 	
 	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAIEventSource::SetListener ( lua_State* L, u32 idx ) {
+
+	USLuaState state ( L );
+	idx = state.AbsIndex ( idx );
+
+	this->AffirmListenerTable ( state );
+
+	this->mListenerTable.PushRef ( state );
+	lua_pushvalue ( state, idx );
+	lua_pushvalue ( state, idx + 1 );
+	lua_settable ( state, -3 );
 }

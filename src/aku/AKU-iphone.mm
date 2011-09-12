@@ -76,9 +76,11 @@ void AKUIphoneInit ( UIApplication* application ) {
 	loadMoaiLib_NSNumber ();
 	loadMoaiLib_NSObject ();
 	loadMoaiLib_NSString ();
+
+	MOAIApp::Affirm ().SetApplication ( application );
+	MOAIGameCenter::Affirm ();
 	
-	MOAIApp::Get ().SetApplication ( application );
-	
+	MOAIEnvironment::Affirm ();
 	// Device properties	
 	MOAIEnvironment::Get ().SetAppVersion ( [[[[ NSBundle mainBundle ] infoDictionary ] objectForKey:@"CFBundleVersion" ] UTF8String ] );
 	MOAIEnvironment::Get ().SetAppID ( [[[[ NSBundle mainBundle ] infoDictionary ] objectForKey:@"CFBundleIdentifier" ] UTF8String ] );
@@ -103,6 +105,7 @@ void AKUIphoneInit ( UIApplication* application ) {
 			
 	// MOAI
 	REGISTER_LUA_CLASS ( MOAIApp )
+	REGISTER_LUA_CLASS ( MOAIGameCenter )
 	REGISTER_LUA_CLASS ( MOAIWebView )
 }
 

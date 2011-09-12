@@ -24,11 +24,12 @@ private:
 	u32		mPass;
 	
 	MOAIAction* mParent;
-	MOAIAction* mStackNext;
-	USLeanLink < MOAIAction* > mLink;
 	
 	typedef USLeanList < MOAIAction* >::Iterator ChildIt;
 	USLeanList < MOAIAction* > mChildren;
+	
+	USLeanLink < MOAIAction* > mLink;
+	ChildIt mChildIt;
 	
 	float mThrottle;
 	

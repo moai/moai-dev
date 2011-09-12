@@ -71,7 +71,7 @@ AKU_DEFINE_FUNC_ACCESSORS ( StartGameLoop, _StartGameLoop )
 static void _deleteContext ( AKUContext* context ) {
 	
 	if ( context->mGlobals ) {
-		USGlobals::Delete ( context->mGlobals );
+		USGlobalsMgr::Delete ( context->mGlobals );
 	}
 	free ( context );
 }
@@ -95,7 +95,7 @@ AKUContextID AKUCreateContext () {
 	
 	gContext->mUserdata = 0;
 	
-	gContext->mGlobals = USGlobals::Create ();
+	gContext->mGlobals = USGlobalsMgr::Create ();
 	moaicore::InitGlobals ( gContext->mGlobals );
 
 	if ( sysInit ) {
@@ -235,6 +235,12 @@ void AKUPause ( bool pause ) {
 }
 
 //----------------------------------------------------------------//
+void AKUReleaseGfxContext () {
+
+	MOAIGfxDevice::Get ().ReleaseResources ();
+}
+
+//----------------------------------------------------------------//
 void AKURender () {
 
 	MOAISim::Get ().Render ();
@@ -279,10 +285,10 @@ void AKUSetContext ( AKUContextID contextID ) {
 		gContext = gContextMap->value_for_key ( contextID );
 		
 		if ( gContext ) {
-			USGlobals::Set ( gContext->mGlobals );
+			USGlobalsMgr::Set ( gContext->mGlobals );
 		}
 		else {
-			USGlobals::Set ( 0 );
+			USGlobalsMgr::Set ( 0 );
 		}
 	}
 }
@@ -353,6 +359,12 @@ void AKUSetInputDevicePointer ( int deviceID, int sensorID, char const* name ) {
 void AKUSetInputDeviceTouch ( int deviceID, int sensorID, char const* name ) {
 
 	MOAIInputMgr::Get ().SetSensor (( u8 )deviceID, ( u8 )sensorID, name, MOAISensor::TOUCH );
+}
+
+//----------------------------------------------------------------//
+void AKUSoftReleaseGfxResources ( int age ) {
+
+	MOAIGfxDevice::Get ().SoftReleaseResources ( age );
 }
 
 //----------------------------------------------------------------//

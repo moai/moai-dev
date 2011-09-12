@@ -122,6 +122,7 @@ local function createWebViewFromOfferCallback ( task )
 			end
 		)
 		
+		webView:hasToolBar ( true ) 
 		webView:initWebView ( 0, 0, width, height, true )
 		webView:loadHTML ( task:getString () )
 	end

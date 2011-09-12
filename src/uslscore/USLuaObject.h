@@ -22,7 +22,7 @@ protected:
 
 	USLuaRef		mInstanceTable;		// strong ref to instance table stack
 	USLuaRef		mUserdata;			// weak ref to handle userdata 
-
+		
 
 	//----------------------------------------------------------------//
 	static int				_gc						( lua_State* L );
@@ -50,6 +50,7 @@ public:
 	void					PushLuaUserdata			( USLuaState& state );
 	virtual void			RegisterLuaClass		( USLuaState& state );
 	virtual void			RegisterLuaFuncs		( USLuaState& state );
+	static void             ReportLeaks				( FILE *f, bool clearAfter );
 	virtual	void			SerializeIn				( USLuaState& state, USLuaSerializer& serializer );
 	virtual	void			SerializeOut			( USLuaState& state, USLuaSerializer& serializer );
 	void					SetLuaInstanceTable		( USLuaState& state, int idx );

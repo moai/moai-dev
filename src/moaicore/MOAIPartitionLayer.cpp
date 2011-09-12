@@ -12,6 +12,15 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIPartitionLayer::Clear () {
+
+	u32 totalCells = this->mCells.Size ();
+	for ( u32 i = 0; i < totalCells; ++i ) {
+		this->mCells [ i ].Clear ();
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAIPartitionLayer::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignore, u32 mask ) {
 
 	u32 totalCells = this->mCells.Size ();
@@ -97,6 +106,16 @@ MOAIPartitionCell* MOAIPartitionLayer::GetCell ( MOAIProp& prop ) {
 }
 
 //----------------------------------------------------------------//
+MOAIPartitionLayer::MOAIPartitionLayer () :
+	mCellSize ( 0.0f ) {
+}
+
+//----------------------------------------------------------------//
+MOAIPartitionLayer::~MOAIPartitionLayer () {
+	this->Clear ();
+}
+
+//----------------------------------------------------------------//
 void MOAIPartitionLayer::PlaceProp ( MOAIProp& prop ) {
 
 	USVec2D loc;
@@ -109,11 +128,3 @@ void MOAIPartitionLayer::PlaceProp ( MOAIProp& prop ) {
 	cell->InsertProp ( prop );
 }
 
-//----------------------------------------------------------------//
-MOAIPartitionLayer::MOAIPartitionLayer () :
-	mCellSize ( 0.0f ) {
-}
-
-//----------------------------------------------------------------//
-MOAIPartitionLayer::~MOAIPartitionLayer () {
-}

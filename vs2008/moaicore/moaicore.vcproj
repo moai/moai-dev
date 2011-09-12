@@ -490,6 +490,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\moaicore\MOAIGfxResource.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIGfxResource.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\moaicore\MOAIImage.cpp"
 				>
 			</File>
@@ -1106,6 +1114,10 @@
 			Name="log"
 			>
 			<File
+				RelativePath="..\..\src\moaicore\MOAILogMessages.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\moaicore\MOAILogMessages.h"
 				>
 			</File>
@@ -1243,6 +1255,14 @@
 			</File>
 			<File
 				RelativePath="..\..\src\moaicore\MOAIMesh.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIScriptDeck.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIScriptDeck.h"
 				>
 			</File>
 			<File

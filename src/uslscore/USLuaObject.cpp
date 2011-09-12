@@ -24,6 +24,10 @@ int USLuaObject::_gc ( lua_State* L ) {
 	bool cleanup = data->mUserdata.IsWeak ();
 	data->mUserdata.Clear ();
 	
+	if ( USLuaRuntime::IsValid ()) {
+		USLuaRuntime::Get ().SetObjectStackTrace ( data, 0 );
+	}
+
 	if ( cleanup ) {
 		delete data;
 	}
@@ -56,6 +60,7 @@ int USLuaObject::_getClassName ( lua_State* L ) {
 	return 0;
 }
 
+
 //----------------------------------------------------------------//
 // TODO: restore lua dump methods
 //int USLuaObject::_tostring ( lua_State* L ) {
@@ -78,23 +83,6 @@ int USLuaObject::_getClassName ( lua_State* L ) {
 void USLuaObject::DebugDump () {
 
 	USLog::Print ( "%p <%s> %s", this, this->TypeName (), this->ToString ().c_str ());
-}
-
-//----------------------------------------------------------------//
-STLString USLuaObject::ToString () {
-
-	return STLString ();
-}
-
-//----------------------------------------------------------------//
-STLString USLuaObject::ToStringWithType () {
-
-	STLString members = this->ToString();
-
-	STLString repr;
-	repr.write ( "(%s) %s", this->TypeName (), members.c_str() );
-
-	return repr;
 }
 
 //----------------------------------------------------------------//
@@ -246,15 +234,33 @@ void USLuaObject::SetLuaInstanceTable ( USLuaState& state, int idx ) {
 }
 
 //----------------------------------------------------------------//
+STLString USLuaObject::ToString () {
+
+	return STLString ();
+}
+
+//----------------------------------------------------------------//
+STLString USLuaObject::ToStringWithType () {
+
+	STLString members = this->ToString();
+
+	STLString repr;
+	repr.write ( "(%s) %s", this->TypeName (), members.c_str() );
+
+	return repr;
+}
+
+//----------------------------------------------------------------//
 USLuaObject::USLuaObject () {
 	RTTI_SINGLE ( RTTIBase )
 }
 
 //----------------------------------------------------------------//
 USLuaObject::~USLuaObject () {
-
-	// TODO: keep the tombstone idiom?
+	
 	if ( USLuaRuntime::IsValid ()) {
+		
+		USLuaRuntime::Get ().SetObjectStackTrace ( this, 0 );
 		
 		if ( this->mUserdata ) {
 

@@ -6,6 +6,8 @@
 #import <moaiext-iphone/NSError+MOAILib.h>
 #import <moaiext-iphone/NSString+MOAILib.h>
 
+#define TOOL_BAR_HEIGHT 44
+
 //================================================================//
 // lua
 //================================================================//
@@ -178,17 +180,32 @@ int MOAIWebView::_getScalesPageToFit ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	hideWebView
-	@text	Returns whether or not the UIWebView automatically scales
-			pages to fit the view.
+/**	@name	hasToolBar
+	@text	Sets whether or not the web view has a tool bar - dafault is yes
 			
 	@in		MOAIWebView self
-	@out	bool scalesPageToFit
+	@in		bool hasToolBar
+	@out	nil
+*/
+int MOAIWebView::_hasToolBar ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIWebView, "U" );
+			
+	self->mHasToolBar = lua_toboolean ( state, 2 );;	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	hideWebView
+	@text	Sets the web view to hidden
+			
+	@in		MOAIWebView self
+	@out	nil
 */
 int MOAIWebView::_hideWebView ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIWebView, "U" );
 			
-	self->mWebView.hidden = true;	
+	self->mWebView.hidden = true;
+	self->mToolBar.hidden = true;
 	return 0;
 }
 
@@ -218,7 +235,34 @@ int MOAIWebView::_initWebView ( lua_State* L ) {
 	
 	UIWindow* window = [[ UIApplication sharedApplication ] keyWindow ];		
 	
-	self->mWebView = [[[ UIWebView alloc ] initWithFrame:CGRectMake ( left, top, right, bottom )] autorelease ];
+	if ( self->mHasToolBar ) {
+		
+		self->mToolBar.frame = CGRectMake( left, top, right, top + TOOL_BAR_HEIGHT );		
+		[ window addSubview:self->mToolBar ];	
+		self->mToolBar.hidden = true;	
+		
+		self->mWebView = [[[ UIWebView alloc ] initWithFrame:CGRectMake ( left, top + TOOL_BAR_HEIGHT, right, bottom - TOOL_BAR_HEIGHT )] autorelease ];		
+		
+		if ( right - left > bottom - top ) {
+		
+			self->mWebView = [[[ UIWebView alloc ] initWithFrame:CGRectMake ( left, top, right, bottom - TOOL_BAR_HEIGHT )] autorelease ];
+			self->mToolBar.center = CGPointMake( 0, 0 );
+			self->mToolBar.transform = CGAffineTransformConcat ( CGAffineTransformMakeRotation(( float )( M_PI / 2 + M_PI )), CGAffineTransformMakeTranslation ( TOOL_BAR_HEIGHT / 2, ( right - left ) / 2 ));
+			self->mWebView.center = CGPointMake( 0, 0 );
+			self->mWebView.transform = CGAffineTransformConcat ( CGAffineTransformMakeRotation(( float )( M_PI / 2 + M_PI )), CGAffineTransformMakeTranslation ((( bottom - top ) / 2 ) + ( TOOL_BAR_HEIGHT / 2 ), ( right - left ) / 2 ));
+		}
+	}
+	else {
+	
+		self->mWebView = [[[ UIWebView alloc ] initWithFrame:CGRectMake ( left, top, right, bottom )] autorelease ];		
+		
+		if ( right - left > bottom - top ) {
+				
+			self->mWebView.center = CGPointMake(0, 0);
+			self->mWebView.transform = CGAffineTransformConcat ( CGAffineTransformMakeRotation(( float )( M_PI / 2 + M_PI )), CGAffineTransformMakeTranslation (( bottom - top ) / 2, ( right - left ) / 2 ));
+		}			
+	}
+		
 	[ self->mWebView setDelegate:self->mWebViewDelegate ];
 	[ self->mWebView setScalesPageToFit:YES ];
 	[ self->mWebView setMultipleTouchEnabled:YES ];
@@ -438,6 +482,8 @@ int MOAIWebView::_show ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIWebView, "U" );
 			
 	self->mWebView.hidden = false;		
+	if ( self->mHasToolBar )
+		self->mToolBar.hidden = false;
 	return 0;
 }
 
@@ -446,7 +492,14 @@ int MOAIWebView::_show ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIWebView::MOAIWebView ( ) :
+void MOAIWebView::Hide () {
+
+	mWebView.hidden = true;
+	mToolBar.hidden = true;
+}
+
+//----------------------------------------------------------------//
+MOAIWebView::MOAIWebView () :
 	mWebView ( 0 ) {
 
 	RTTI_BEGIN
@@ -455,6 +508,18 @@ MOAIWebView::MOAIWebView ( ) :
 	
 	mWebViewDelegate = [ MoaiUiWebViewDelegate alloc ];
 	mWebViewDelegate.mMOAIWebView = this;
+
+	//create toolbar using new
+	mToolBar = [ UIToolbar new ];
+	mToolBar.barStyle = UIBarStyleDefault;
+	[ mToolBar sizeToFit] ;
+	mHasToolBar = true;
+	
+	UIBarButtonItem *done = [[ UIBarButtonItem alloc ] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:mWebViewDelegate action:@selector ( doneButtonPressed: )];
+	
+	NSArray* items = [ NSArray arrayWithObjects: done, nil ];
+	[ done release ];
+	[ mToolBar setItems:items animated:NO ];
 }
 
 //----------------------------------------------------------------//
@@ -562,6 +627,7 @@ void MOAIWebView::RegisterLuaFuncs ( USLuaState& state ) {
 		{ "getCurrentRequest",				_getCurrentRequest },	
 		{ "getMediaPlaybackRequiresAction", _getMediaPlaybackRequiresAction },
 		{ "getScalesPageToFit",				_getScalesPageToFit },
+		{ "hasToolBar",						_hasToolBar },
 		{ "hideWebView",					_hideWebView },
 		{ "initWebView",					_initWebView },
 		{ "isHidden",						_isHidden },

@@ -507,10 +507,6 @@
 				RelativePath="..\..\src\uslscore\STLString.h"
 				>
 			</File>
-			<File
-				RelativePath="..\..\src\uslscore\USStlHelp.h"
-				>
-			</File>
 		</Filter>
 		<Filter
 			Name="templates"

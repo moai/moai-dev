@@ -420,6 +420,15 @@
     <ClCompile Include="..\..\src\moaicore\MOAIPartitionResultMgr.cpp">
       <Filter>src\partition</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAILogMessages.cpp">
+      <Filter>src\log</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIScriptDeck.cpp">
+      <Filter>src\deck</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIGfxResource.cpp">
+      <Filter>src\gfx</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\moaicore\MOAIAction.h">
@@ -772,6 +781,12 @@
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIPartitionResultMgr.h">
       <Filter>src\partition</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIScriptDeck.h">
+      <Filter>src\deck</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIGfxResource.h">
+      <Filter>src\gfx</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

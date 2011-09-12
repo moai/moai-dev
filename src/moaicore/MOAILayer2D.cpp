@@ -372,13 +372,14 @@ void MOAILayer2D::Draw () {
 	gfxDevice.ResetState ();
 	gfxDevice.SetFrameBuffer ( this->mFrameBuffer );
 	
-	USMatrix4x4 mtx;
-	mtx.Init ( this->mLocalToWorldMtx );
-	mtx.Append (gfxDevice. GetWorldToWndMtx ( 1.0f, 1.0f ));
-	
 	USRect viewportRect = viewport;
-	mtx.Transform ( viewportRect );
 	
+	if ( !this->IsOffscreen ()) {
+		USMatrix4x4 mtx;
+		mtx.Init ( this->mLocalToWorldMtx );
+		mtx.Append (gfxDevice. GetWorldToWndMtx ( 1.0f, 1.0f ));
+		mtx.Transform ( viewportRect );
+	}
 	gfxDevice.SetViewport ( viewportRect );
 	
 	USAffine2D camera;
@@ -500,6 +501,12 @@ void MOAILayer2D::GetWorldToWndMtx ( USAffine2D& worldToWnd ) {
 	else {
 		worldToWnd.Ident ();
 	}
+}
+
+//----------------------------------------------------------------//
+bool MOAILayer2D::IsOffscreen () {
+
+	return this->mFrameBuffer ? this->mFrameBuffer->GetFrameBuffer () != 0 : false;
 }
 
 //----------------------------------------------------------------//

@@ -93,6 +93,7 @@ $(SRC_PATH)/src/moaicore/MOAIGfxDevice.cpp \
 $(SRC_PATH)/src/moaicore/MOAIGfxQuad2D.cpp \
 $(SRC_PATH)/src/moaicore/MOAIGfxQuadDeck2D.cpp \
 $(SRC_PATH)/src/moaicore/MOAIGfxQuadListDeck2D.cpp \
+$(SRC_PATH)/src/moaicore/MOAIGfxResource.cpp \
 $(SRC_PATH)/src/moaicore/MOAIGlyph.cpp \
 $(SRC_PATH)/src/moaicore/MOAIGrid.cpp \
 $(SRC_PATH)/src/moaicore/MOAIGridSpace.cpp \
@@ -109,6 +110,7 @@ $(SRC_PATH)/src/moaicore/MOAILayerBridge2D.cpp \
 $(SRC_PATH)/src/moaicore/MOAILayoutFrame.cpp \
 $(SRC_PATH)/src/moaicore/MOAILineBrush.cpp \
 $(SRC_PATH)/src/moaicore/MOAILocationSensor.cpp \
+$(SRC_PATH)/src/moaicore/MOAILogMessages.cpp \
 $(SRC_PATH)/src/moaicore/MOAILogMgr.cpp \
 $(SRC_PATH)/src/moaicore/MOAIMesh.cpp \
 $(SRC_PATH)/src/moaicore/MOAIMotionSensor.cpp \
@@ -132,6 +134,7 @@ $(SRC_PATH)/src/moaicore/MOAIPointerSensor.cpp \
 $(SRC_PATH)/src/moaicore/MOAIProp.cpp \
 $(SRC_PATH)/src/moaicore/MOAIProp2D.cpp \
 $(SRC_PATH)/src/moaicore/MOAIQuadBrush.cpp \
+$(SRC_PATH)/src/moaicore/MOAIScriptDeck.cpp \
 $(SRC_PATH)/src/moaicore/MOAIScriptNode.cpp \
 $(SRC_PATH)/src/moaicore/MOAISensor.cpp \
 $(SRC_PATH)/src/moaicore/MOAISerializer.cpp \

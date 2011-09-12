@@ -4,6 +4,8 @@
 #ifndef	USGLOBALS_H
 #define	USGLOBALS_H
 
+#include <uslscore/STLList.h>
+#include <uslscore/STLSet.h>
 #include <uslscore/USAccessors.h>
 #include <uslscore/USObject.h>
 #include <uslscore/USLeanArray.h>
@@ -50,33 +52,43 @@ private:
 };
 
 //================================================================//
+// USGlobalsFinalizer
+//================================================================//
+class USGlobalsFinalizer {
+public:
+
+	//----------------------------------------------------------------//
+	virtual void	OnFinalize				() = 0;
+					USGlobalsFinalizer		();
+	virtual			~USGlobalsFinalizer		();
+};
+
+//================================================================//
 // USGlobals
 //================================================================//
 class USGlobals {
 private:
+
+	friend class USGlobalsMgr;
 
 	enum {
 		CHUNK_SIZE = 32,
 	};
 
 	USLeanArray < USGlobalPair > mGlobals;
+	
+	typedef STLList < USGlobalsFinalizer* >::iterator FinalizersIt;
+	STLList < USGlobalsFinalizer* > mFinalizers;
 
 	//----------------------------------------------------------------//
-						USGlobals			();
-						~USGlobals			();
+			USGlobals		();
+			~USGlobals		();
 
 public:
-
-	//----------------------------------------------------------------//
-	static USGlobals*	Create				();
-	static void			Delete				( USGlobals* globals );	
-	static void			Finalize			();
-	static USGlobals*	Get					();
-	static void			Set					( USGlobals* globals );
 	
 	//----------------------------------------------------------------//
 	template < typename TYPE >
-	TYPE* GetGlobal () {
+	TYPE* AffirmGlobal () {
 		
 		u32 id = USGlobalID < TYPE >::GetID ();
 		
@@ -98,6 +110,17 @@ public:
 	
 	//----------------------------------------------------------------//
 	template < typename TYPE >
+	TYPE* GetGlobal () {
+		
+		u32 id = USGlobalID < TYPE >::GetID ();
+		if ( id < this->mGlobals.Size ()) {
+			return ( TYPE* )this->mGlobals [ id ].mPtr;
+		}
+		return 0;
+	}
+	
+	//----------------------------------------------------------------//
+	template < typename TYPE >
 	bool IsValid () {
 		
 		u32 id = USGlobalID < TYPE >::GetID ();
@@ -109,6 +132,39 @@ public:
 		}
 		return false;
 	}
+	
+	//----------------------------------------------------------------//
+	template < typename TYPE >
+	void PushFinalizer () {
+		TYPE* finalizer = new TYPE ();
+		this->mFinalizers.push_front ( finalizer );
+	}
+};
+
+//================================================================//
+// USGlobalsMgr
+//================================================================//
+class USGlobalsMgr {
+private:
+
+	typedef STLSet < USGlobals* >::iterator GlobalsSetIt;
+	typedef STLSet < USGlobals* > GlobalsSet;
+
+	static GlobalsSet* sGlobalsSet;
+	static USGlobals* sInstance;
+
+	//----------------------------------------------------------------//
+						USGlobalsMgr			();
+						~USGlobalsMgr			();
+
+public:
+
+	//----------------------------------------------------------------//
+	static USGlobals*		Create			();	
+	static void				Delete			( USGlobals* globals );	
+	static void				Finalize		();
+	static USGlobals*		Get				();
+	static void				Set				( USGlobals* globals );
 };
 
 //================================================================//
@@ -120,15 +176,22 @@ public virtual SUPER {
 public:
 	
 	//----------------------------------------------------------------//
+	inline static TYPE& Affirm () {
+		TYPE* global = USGlobalsMgr::Get ()->AffirmGlobal < TYPE >();
+		assert ( global );
+		return *global;
+	}
+	
+	//----------------------------------------------------------------//
 	inline static TYPE& Get () {
-		TYPE* global = USGlobals::Get ()->GetGlobal < TYPE >();
+		TYPE* global = USGlobalsMgr::Get ()->GetGlobal < TYPE >();
 		assert ( global );
 		return *global;
 	}
 	
 	//----------------------------------------------------------------//
 	inline static bool IsValid () {
-		return USGlobals::Get ()->IsValid < TYPE >();
+		return USGlobalsMgr::Get ()->IsValid < TYPE >();
 	}
 };
 

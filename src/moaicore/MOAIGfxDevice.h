@@ -7,6 +7,7 @@
 #include <moaicore/MOAIBlendMode.h>
 
 class MOAIFrameBuffer;
+class MOAIGfxResource;
 class MOAIShader;
 class MOAITexture;
 class MOAIVertexFormat;
@@ -91,22 +92,40 @@ private:
 	bool			mIsProgrammable;
 	
 	GLuint			mDefaultFrameBuffer;
+	
+	size_t			mTextureMemoryUsage;
+
+	typedef USLeanList < MOAIGfxResource* >::Iterator ResourceIt;
+	USLeanList < MOAIGfxResource* > mResources;
 
 	//----------------------------------------------------------------//
 	static int				_isProgrammable			( lua_State* L );
+	static int				_setPenColor			( lua_State* L );
+	static int				_setPenWidth			( lua_State* L );
+	static int				_setPointSize			( lua_State* L );
 
 	//----------------------------------------------------------------//
 	void					Clear					();
 	void					DrawPrims				();
 	void					GpuLoadMatrix			( const USMatrix4x4& mtx ) const;
 	void					GpuMultMatrix			( const USMatrix4x4& mtx ) const;
+	void					InsertGfxResource		( MOAIGfxResource& resource );
+	void					RemoveGfxResource		( MOAIGfxResource& resource );
+	void					ReportTextureAlloc		( cc8* name, size_t size );
+	void					ReportTextureFree		( cc8* name, size_t size );
 	void					UpdateCpuVertexMtx		();
 	void					UpdateGpuVertexMtx		();
 	void					UpdateUVMtx				();
 	
+
 public:
 	
+	friend class MOAIGfxResource;
+	friend class MOAITexture;
+	
 	DECL_LUA_SINGLETON ( MOAIGfxDevice )
+	
+	GET ( size_t, TextureMemoryUsage, mTextureMemoryUsage )
 	
 	//----------------------------------------------------------------//
 	void					BeginDrawing			();
@@ -147,12 +166,15 @@ public:
 	
 	bool					IsOpenGLES				();
 	bool					IsProgrammable			();
+	u32						LogErrors				();
 	
 							MOAIGfxDevice			();
 							~MOAIGfxDevice			();
 	
-	u32						PrintErrors				();
 	void					RegisterLuaClass		( USLuaState& state );
+	void					ReleaseResources		();
+	void					RenewResources			();
+	
 	void					Reserve					( u32 size );
 	void					ResetState				();
 	
@@ -161,7 +183,7 @@ public:
 	void					SetBlendMode			( int srcFactor, int dstFactor );
 	
 	void					SetDefaultFrameBuffer	( GLuint frameBuffer );
-	void					SetFrameBuffer			( MOAITexture* frameBuffer );
+	void					SetFrameBuffer			( MOAITexture* texture );
 	void					SetPenColor				( u32 color );
 	void					SetPenColor				( const USColorVec& colorVec );
 	void					SetPenColor				( float r, float g, float b, float a );
@@ -191,6 +213,8 @@ public:
 	
 	void					SetViewport				();
 	void					SetViewport				( const USRect& viewport );
+	
+	void					SoftReleaseResources	( u32 age );
 	
 	void					WriteQuad				( USVec2D* vtx, USVec2D* uv );
 	

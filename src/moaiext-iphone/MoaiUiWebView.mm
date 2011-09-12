@@ -6,10 +6,22 @@
 
 #import <moaiext-iphone/MoaiUiWebView.h>
 
+//================================================================//
+// MoaiUiWebViewDelegate
+//================================================================//
 @implementation MoaiUiWebViewDelegate
-@synthesize mMOAIWebView;
 
+	@synthesize mMOAIWebView;
 
+	//Action methods for toolbar buttons:	
+	- ( void ) doneButtonPressed:( id )sender {
+	
+		if ( mMOAIWebView ) {
+		
+			mMOAIWebView->Hide ();
+		}
+	}
+	
 	//================================================================//
 	#pragma mark -
 	#pragma mark Protocol UIWebViewDelegate
@@ -21,6 +33,17 @@
 		if ( mMOAIWebView ) {
 			mMOAIWebView->RaiseDidFailLoadWithErrorEvent ( error );
 		}
+	}
+	
+	//----------------------------------------------------------------//
+	- (BOOL)webView:( UIWebView* )webView shouldStartLoadWithRequest:( NSURLRequest* )request navigationType:( UIWebViewNavigationType )navigationType {
+	
+		if ( mMOAIWebView ) {
+		
+			bool result = mMOAIWebView->RaiseShouldStartLoadWithRequestEvent ( request, navigationType );
+			return result;
+		}
+		return true;
 	}
 	
 	//----------------------------------------------------------------//
@@ -37,17 +60,6 @@
 		if ( mMOAIWebView ) {
 			mMOAIWebView->RaiseWebViewDidStartLoadEvent ();
 		}
-	}
-
-	//----------------------------------------------------------------//
-	- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
-	
-		if ( mMOAIWebView ) {
-		
-			bool result = mMOAIWebView->RaiseShouldStartLoadWithRequestEvent ( request, navigationType );
-			return result;
-		}
-		return true;
 	}
 	
 @end

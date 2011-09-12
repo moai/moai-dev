@@ -7,11 +7,17 @@
 #import <UIKit/UIKit.h>
 #import <moaiext-iphone/MOAIWebView.h>
 
+//================================================================//
+// MoaiUiWebViewDelegate
+//================================================================//
 @interface MoaiUiWebViewDelegate : NSObject < UIWebViewDelegate > {
 @private
-								MOAIWebView*			mMOAIWebView;
-}	
-@property ( readwrite, assign ) MOAIWebView*			mMOAIWebView;	
+			MOAIWebView*			mMOAIWebView;
+}
+
+	-( void	)			doneButtonPressed		:( id )sender;
+
+@property ( readwrite, assign ) MOAIWebView*	mMOAIWebView;	
 
 @end
 

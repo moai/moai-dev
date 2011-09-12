@@ -4,57 +4,17 @@
 #ifndef	MOAILOGMGR_H
 #define	MOAILOGMGR_H
 
-#ifdef _DEBUG
-
-	#ifdef __GNUC__
-		
-		#define MOAI_LOG(messageID...)																\
-			MOAILogMgr::Get ().Log ( MOAILogMgr::LOG_STATUS, messageID );
-		
-		#define MOAI_WARN(state,messageID...)														\
-			MOAILogMgr::Get ().Log ( MOAILogMgr::LOG_WARNING, state, messageID );
-			
-		#define MOAI_ERROR(state,messageID...)														\
-			MOAILogMgr::Get ().Log ( MOAILogMgr::LOG_ERROR, state, messageID );
-		
-		#define MOAI_ERROR_UNLESS(clause,state,messageID...)										\
-			if (( clause ) == false ) {																\
-				MOAILogMgr::Get ().Log ( MOAILogMgr::LOG_ERROR, state, messageID );					\
-			}
-		
-	#else
+//================================================================//
+// MOAILogMessage
+//================================================================//
+class MOAILogMessage {
+	private:
 	
-		#define MOAI_LOG(messageID,...)																\
-			MOAILogMgr::Get ().Log ( MOAILogMgr::LOG_STATUS, messageID, __VA_ARGS__ );
-		
-		#define MOAI_WARN(state,messageID,...)														\
-			MOAILogMgr::Get ().Log ( MOAILogMgr::LOG_WARNING, state, messageID, __VA_ARGS__ );
-			
-		#define MOAI_ERROR(state,messageID,...)														\
-			MOAILogMgr::Get ().Log ( MOAILogMgr::LOG_ERROR, state, messageID, __VA_ARGS__ );
-		
-		#define MOAI_ERROR_UNLESS(clause,state,messageID,...)										\
-			if (( clause ) == false ) {																\
-				MOAILogMgr::Get ().Log ( MOAILogMgr::LOG_ERROR, state, messageID, __VA_ARGS__ );	\
-			}
-		
-	#endif
+	friend class MOAILogMgr;
 	
-#else
-	
-	#ifdef __GNUC__
-		#define MOAI_LOG(messageID...)
-		#define MOAI_WARN(state,messageID...)
-		#define MOAI_ERROR(state,messageID...)
-		#define MOAI_ERROR_UNLESS(clause,state,messageID...)
-	#else
-		#define MOAI_LOG(messageID,...)
-		#define MOAI_WARN(state,messageID,...)
-		#define MOAI_ERROR(state,messageID,...)
-		#define MOAI_ERROR_UNLESS(clause,state,messageID,...)
-	#endif
-
-#endif
+	u32				mLevel;
+	STLString		mFormatString;
+};
 
 //================================================================//
 // MOAILogMgr
@@ -71,14 +31,18 @@ class MOAILogMgr :
 	public USGlobalClass < MOAILogMgr, USLuaObject > {
 private:
 
-	typedef STLMap < u32, STLString >::iterator MessageMapIt;
-	STLMap < u32, STLString > mMessageMap;
+	typedef STLMap < u32, MOAILogMessage >::iterator MessageMapIt;
+	STLMap < u32, MOAILogMessage > mMessageMap;
 
-	u32 mLevel;
+	u32			mLevel;
+	FILE*		mFile;
+	bool		mOwnsFileHandle;
 
 	//----------------------------------------------------------------//
+	static int		_closeFile					( lua_State* L );
 	static int		_isDebugBuild				( lua_State* L );
 	static int		_log						( lua_State* L );
+	static int		_openFile					( lua_State* L );
 	static int		_registerLogMessage			( lua_State* L );
 	static int		_setLogLevel				( lua_State* L );
 
@@ -93,12 +57,25 @@ public:
 		LOG_STATUS,
 	};
 	
+	GET ( FILE*, File, mFile )
+	
 	//----------------------------------------------------------------//
-	void			Log						( u32 level, u32 messageID, ... );
-	void			Log						( u32 level, USLuaState& state, u32 messageID, ... );
+	void			CloseFile				();
+	void			Log						( lua_State *L, u32 messageID, ... );
+	void			LogVar					( lua_State *L, u32 messageID, va_list args );
 					MOAILogMgr				();
 					~MOAILogMgr				();
+	void			OpenFile				( cc8* filename );
+	void			Print					( cc8* message, ... );
+	void			PrintVar				( cc8* message, va_list args );
+	void			RegisterLogMessage		( u32 messageID, u32 level, cc8* formatString );
 	void			RegisterLuaClass		( USLuaState& state );
 };
+
+//================================================================//
+// helpers
+//================================================================//
+extern void MOAILog		( lua_State *L, u32 messageID, ... );
+extern void MOAIPrint	( cc8* message, ... );
 
 #endif

@@ -265,6 +265,7 @@
     <ClCompile Include="..\..\src\moaicore\MOAIGfxQuad2D.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIGfxQuadDeck2D.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIGfxQuadListDeck2D.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAIGfxResource.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIGlyph.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIGridSpace.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIImage.cpp" />
@@ -272,6 +273,7 @@
     <ClCompile Include="..\..\src\moaicore\MOAIJsonParser.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAILayoutFrame.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAILineBrush.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAILogMessages.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAILogMgr.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIMesh.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIMotionSensor.cpp" />
@@ -291,6 +293,7 @@
     <ClCompile Include="..\..\src\moaicore\MOAIProp.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIProp2D.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIQuadBrush.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAIScriptDeck.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIScriptNode.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIShaderMgr.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIStretchPatch2D.cpp" />
@@ -383,6 +386,7 @@
     <ClInclude Include="..\..\src\moaicore\MOAIGfxQuad2D.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIGfxQuadDeck2D.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIGfxQuadListDeck2D.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAIGfxResource.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIGlyph.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIGridSpace.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIImage.h" />
@@ -412,6 +416,7 @@
     <ClInclude Include="..\..\src\moaicore\MOAIProp2D.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIPvrHeader.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIQuadBrush.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAIScriptDeck.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIScriptNode.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIShaderMgr.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIStretchPatch2D.h" />

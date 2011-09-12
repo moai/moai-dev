@@ -261,6 +261,19 @@ int MOAIBox2DBody::_getAngularVelocity ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	getInertia
+	@text   See Box2D documentation.
+
+	@in		MOAIBox2DBody self
+	@out	number inertia Calculated inertia (based on last call to resetMassData()).
+*/
+int MOAIBox2DBody::_getInertia ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIBox2DBody, "U" )
+	lua_pushnumber ( L, self->mBody->GetInertia ());
+	return 1;
+}
+
+//----------------------------------------------------------------//
 /**	@name	getLinearVelocity
 	@text	See Box2D documentation.
 	
@@ -296,6 +309,19 @@ int MOAIBox2DBody::_getLocalCenter ( lua_State* L ) {
 	lua_pushnumber ( state, center.y / unitsToMeters );
 	
 	return 2;
+}
+
+//----------------------------------------------------------------//
+/**	@name	getMass
+	@text   See Box2D documentation.
+
+	@in		MOAIBox2DBody self
+	@out	number Mass Calculated mass (based on last call to resetMassData()).
+*/
+int MOAIBox2DBody::_getMass ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIBox2DBody, "U" )
+	lua_pushnumber ( L, self->mBody->GetMass ());
+	return 1;
 }
 
 //----------------------------------------------------------------//
@@ -522,7 +548,7 @@ int MOAIBox2DBody::_setFixedRotation ( lua_State* L ) {
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DBody self
-	@opt	boolean damping
+	@opt	number damping
 	@out	nil
 */
 int MOAIBox2DBody::_setLinearDamping ( lua_State* L ) {
@@ -539,8 +565,8 @@ int MOAIBox2DBody::_setLinearDamping ( lua_State* L ) {
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DBody self
-	@opt	boolean velocityX	Default is 0.
-	@opt	boolean velocityY	Default is 0.
+	@opt	number velocityX	Default is 0.
+	@opt	number velocityY	Default is 0.
 	@out	nil
 */
 int MOAIBox2DBody::_setLinearVelocity ( lua_State* L ) {
@@ -686,8 +712,10 @@ void MOAIBox2DBody::RegisterLuaFuncs ( USLuaState& state ) {
 		{ "destroy",				_destroy },
 		{ "getAngle",				_getAngle },
 		{ "getAngularVelocity",		_getAngularVelocity },
+		{ "getInertia",				_getInertia },
 		{ "getLinearVelocity",		_getLinearVelocity },
 		{ "getLocalCenter",			_getLocalCenter },
+		{ "getMass",				_getMass },
 		{ "getPosition",			_getPosition },
 		{ "getWorldCenter",			_getWorldCenter },
 		{ "isActive",				_isActive },

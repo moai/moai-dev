@@ -30,6 +30,8 @@ namespace UNTZ
 
 		void setLooping(bool loop);
 		bool isLooping() const;
+		void setLoopPoints(double startTime, double endTime);
+		void getLoopPoints(double& startTime, double& endTime);
         void setVolume(float volume);
 		float getVolume() const;
 		void setPosition(double seconds);

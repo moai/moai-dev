@@ -9,7 +9,10 @@
 
 #include <aku/AKU.h>
 
-AKU_API void	AKUFmodInit			();
-AKU_API void	AKUFmodUpdate		();
+AKU_API void	AKUFmodInit				();
+AKU_API void	AKUFmodMuteSystem		( bool mute );
+AKU_API void	AKUFmodRelease			();
+AKU_API void	AKUFmodRestoreSession	();
+AKU_API void	AKUFmodUpdate			();
 
 #endif

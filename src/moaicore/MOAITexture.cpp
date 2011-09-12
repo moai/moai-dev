@@ -8,6 +8,7 @@
 #include <moaicore/MOAIImage.h>
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIPvrHeader.h>
+#include <moaicore/MOAISim.h>
 #include <moaicore/MOAITexture.h>
 
 //================================================================//
@@ -79,11 +80,7 @@ public:
 		
 		if ( this->mType == TYPE_UNKNOWN ) {
 			this->mType = TYPE_FAIL;
-			
-			if ( this->mFileData ) {
-				free ( this->mFileData );
-				this->mFileData = 0;
-			}
+			this->Release ();
 		}
 	}
 	
@@ -100,6 +97,15 @@ public:
 		if ( this->mFileData ) {
 			free ( this->mFileData );
 		}
+	}
+	
+	//----------------------------------------------------------------//
+	void Release () {
+		if ( this->mFileData ) {
+			free ( this->mFileData );
+			this->mFileData = 0;
+		}
+		this->mImage.Release ();
 	}
 };
 
@@ -156,10 +162,9 @@ int MOAITexture::_initFrameBuffer ( lua_State* L ) {
 	
 	u32 width				= state.GetValue < u32 >( 2, 0 );
 	u32 height				= state.GetValue < u32 >( 3, 0 );
-	GLenum colorFormat		= state.GetValue < GLenum >( 4, 0 );
+	GLenum colorFormat		= state.GetValue < GLenum >( 4, GL_RGBA8 );
 	GLenum depthFormat		= state.GetValue < GLenum >( 5, 0 );
 	GLenum stencilFormat	= state.GetValue < GLenum >( 6, 0 );
-	
 	
 	self->InitFrameBuffer ( width, height, colorFormat, depthFormat, stencilFormat );
 	
@@ -183,16 +188,15 @@ int MOAITexture::_load ( lua_State* L ) {
 	u32 transform = state.GetValue < u32 >( 3, DEFAULT_TRANSFORM );
 
 	if ( data ) {
-
 		self->Init ( *data, transform );
 	}
 	else if ( state.IsType( 2, LUA_TSTRING ) ) {
 
 		cc8* filename = lua_tostring ( state, 2 );
-		MOAI_CHECK_FILE ( filename );
-		self->Init ( filename, transform );
+		if ( MOAILogMessages::CheckFileExists ( filename, L )) {
+			self->Init ( filename, transform );
+		}
 	}
-
 	return 0;
 }
 
@@ -255,54 +259,6 @@ int MOAITexture::_setWrap ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAITexture::Affirm () {
-
-	if ( this->mGLTexID ) return;
-	
-	if ( this->mFrameBuffer ) {
-		
-		this->mFrameBuffer->Bind ();
-		if ( this->mFrameBuffer->IsOK ()) {
-		
-			glGenTextures ( 1, &this->mGLTexID );
-			glBindTexture ( GL_TEXTURE_2D, this->mGLTexID );
-			glTexImage2D ( GL_TEXTURE_2D, 0, GL_RGBA, this->mWidth, this->mHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0 );
-			glFramebufferTexture2D ( GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, this->mGLTexID, 0 );
-		}
-	}
-	else if ( this->mLoader ) {
-
-		//if ( !GLEW_OES_compressed_paletted_texture ) {
-		//	transform.ConvertToTrueColor ();
-		//}
-		this->mLoader->Load ();
-		
-		switch ( this->mLoader->mType ) {
-			
-			case MOAITextureLoader::TYPE_MOAI_IMAGE: {
-				this->CreateTextureFromImage ( this->mLoader->mImage );
-				break;
-			}
-			
-			case MOAITextureLoader::TYPE_PVR: {
-				this->CreateTextureFromPVR ( this->mLoader->mFileData, this->mLoader->mFileDataSize );
-				break;
-			}
-			default:
-				delete this->mLoader;
-				this->mLoader = 0;
-		}
-
-		if ( this->mGLTexID ) {
-
-			// done with the loader
-			delete this->mLoader;
-			this->mLoader = 0;
-		}
-	}
-}
-
-//----------------------------------------------------------------//
 MOAITexture* MOAITexture::AffirmTexture ( USLuaState& state, int idx ) {
 
 	MOAITexture* texture = state.GetLuaObject < MOAITexture >( idx );
@@ -340,77 +296,9 @@ MOAITexture* MOAITexture::AffirmTexture ( USLuaState& state, int idx ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAITexture::Bind () {
-
-	this->Affirm ();
-	if ( !this->mGLTexID ) {
-		return false;
-	}
-
-	// attempt to recover from lost context
-	if ( !glIsTexture ( this->mGLTexID )) {
-	
-		this->mGLTexID = 0;
-	
-		// ugh... fix this monstrosity later!
-		if ( this->mFilename.size ()) {
-			this->Init ( this->mFilename );
-			this->Affirm ();
-		}
-		if ( !this->mGLTexID ) return false;
-	}
-
-	glBindTexture ( GL_TEXTURE_2D, this->mGLTexID );
-	glEnable ( GL_TEXTURE_2D );
-	
-	if ( !MOAIGfxDevice::Get ().IsProgrammable ()) {
-		glTexEnvf ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
-	}
-	
-	glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, this->mWrap );
-	glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, this->mWrap );
-	
-	glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, this->mMinFilter );
-	glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, this->mMagFilter );
-	
-	return true;
-}
-
-//----------------------------------------------------------------//
-bool MOAITexture::BindFrameBuffer () {
-
-	this->Affirm ();
-	return this->mFrameBuffer->Bind ();
-}
-
-//----------------------------------------------------------------//
-void MOAITexture::Clear () {
-
-	if ( this->mGLTexID ) {
-		glDeleteTextures ( 1, &this->mGLTexID );
-		this->mGLTexID = 0;
-	}
-	
-	this->mWidth = 0;
-	this->mHeight = 0;
-	
-	if ( this->mLoader ) {
-		delete this->mLoader;
-		this->mLoader = 0;
-	}
-	
-	if ( this->mFrameBuffer ) {
-		delete this->mFrameBuffer;
-		this->mFrameBuffer = 0;
-	}
-}
-
-//----------------------------------------------------------------//
 void MOAITexture::CreateTextureFromImage ( MOAIImage& image ) {
 
 	if ( !image.IsOK ()) return;
-
-	//printf ( "MOAITexture::CreateTextureFromImage - %s\n", this->mFilename.str ());
 
 	MOAIGfxDevice::Get ().ClearErrors ();
 
@@ -496,6 +384,7 @@ void MOAITexture::CreateTextureFromImage ( MOAIImage& image ) {
 			return;
 		}
 		
+		this->mDataSize = image.GetBitmapSize ();
 	}
 	else {
 	
@@ -649,11 +538,15 @@ void MOAITexture::CreateTextureFromPVR ( void* data, size_t size ) {
 
 		glBindTexture ( GL_TEXTURE_2D, this->mGLTexID );
 		
+		this->mDataSize = 0;
+		
 		int width = header->mWidth;
-		int height = header->mHeight;		
+		int height = header->mHeight;
 		char* imageData = (char*)(header->GetFileData ( data, size));
 		if ( header->mMipMapCount == 0 ) {
+			
 			GLsizei currentSize = (GLsizei) USFloat::Max ( (float)(32), (float)(width * height * header->mBitCount / 8) );
+			this->mDataSize += currentSize;
 			
 			if ( compressed ) {
 				glCompressedTexImage2D ( GL_TEXTURE_2D, 0, this->mGLInternalFormat, width, height, 0, currentSize, imageData );
@@ -694,6 +587,8 @@ void MOAITexture::CreateTextureFromPVR ( void* data, size_t size ) {
 				}
 			
 				imageData += currentSize;
+				this->mDataSize += currentSize;
+				
 				width >>= 1;
 				height >>= 1;
 			}	
@@ -713,15 +608,18 @@ u32 MOAITexture::GetWidth () {
 }
 
 //----------------------------------------------------------------//
-void MOAITexture::Init ( MOAIImage& image ) {
+void MOAITexture::Init ( MOAIImage& image, cc8* debugname ) {
 
 	this->Clear ();
-	this->mLoader = new MOAITextureLoader ();
 	
+	this->mLoader = new MOAITextureLoader ();
+	this->mLoader->mFilename = debugname ? debugname : "";
 	this->mLoader->mTransform = 0;
 	this->mLoader->mImage.Copy ( image );
 	
-	this->Bind ();
+	this->mTransform = 0;
+	
+	this->OnLoad ();
 }
 
 //----------------------------------------------------------------//
@@ -734,37 +632,43 @@ void MOAITexture::Init ( cc8* filename, u32 transform ) {
 	this->mFilename = filename;
 	
 	this->mLoader = new MOAITextureLoader ();
-	this->mLoader->mTransform = transform;
 	this->mLoader->mFilename = this->mFilename;
+	this->mLoader->mTransform = transform;
 	
-	this->Bind ();
+	this->mIsRenewable = true;
+	
+	this->mTransform = transform;
+	
+	this->OnLoad ();
 }
 
-
 //----------------------------------------------------------------//
-void MOAITexture::Init ( MOAIDataBuffer& data, u32 transform ) {
+void MOAITexture::Init ( MOAIDataBuffer& data, u32 transform, cc8* debugname ) {
 
 	void* bytes;
 	u32 size;
 	data.Lock ( &bytes, &size );
 
-	this->Init ( bytes, size, transform );
+	this->Init ( bytes, size, transform, debugname );
 	
 	data.Unlock ();
 }
 
 //----------------------------------------------------------------//
-void MOAITexture::Init ( const void* data, u32 size, u32 transform ) {
+void MOAITexture::Init ( const void* data, u32 size, u32 transform, cc8* debugname ) {
 
 	this->Clear ();
-	this->mLoader = new MOAITextureLoader ();
 	
+	this->mLoader = new MOAITextureLoader ();
+	this->mLoader->mFilename = debugname ? debugname : "";
 	this->mLoader->mTransform = transform;
 	this->mLoader->mFileDataSize = size;
 	this->mLoader->mFileData = malloc ( size );
 	memcpy ( this->mLoader->mFileData, data, size );
 	
-	this->Bind ();
+	this->mTransform = transform;
+	
+	this->OnLoad ();
 }
 
 //----------------------------------------------------------------//
@@ -778,6 +682,9 @@ void MOAITexture::InitFrameBuffer ( u32 width, u32 height, GLenum colorFormat, G
 	this->mHeight = height;
 
 	this->mFrameBuffer->Init ( width, height, colorFormat, depthFormat, stencilFormat );
+	this->mIsRenewable = true;
+	
+	this->OnLoad ();
 }
 
 //----------------------------------------------------------------//
@@ -787,9 +694,18 @@ bool MOAITexture::IsFrameBuffer () {
 }
 
 //----------------------------------------------------------------//
-bool MOAITexture::IsOK () {
- 
-	return (( this->mLoader ) || ( this->mGLTexID != 0 ));
+bool MOAITexture::IsRenewable () {
+
+	return this->mIsRenewable;
+}
+
+//----------------------------------------------------------------//
+bool MOAITexture::IsValid () {
+
+	if ( this->mFrameBuffer && ( !this->mFrameBuffer->IsValid ())) {
+		return false;
+	}
+	return ( this->mGLTexID != 0 );
 }
 
 //----------------------------------------------------------------//
@@ -801,9 +717,15 @@ MOAITexture::MOAITexture () :
 	mMagFilter ( GL_NEAREST ),
 	mWrap ( GL_REPEAT ),
 	mLoader ( 0 ),
-	mFrameBuffer ( 0 ) {
+	mFrameBuffer ( 0 ),
+	mDataSize ( 0 ),
+	mIsRenewable ( false ),
+	mTransform ( DEFAULT_TRANSFORM ) {
 	
-	RTTI_SINGLE ( USLuaObject )
+	RTTI_BEGIN
+		RTTI_EXTEND ( USLuaObject )
+		RTTI_EXTEND ( MOAIGfxResource )
+	RTTI_END
 }
 
 //----------------------------------------------------------------//
@@ -813,7 +735,128 @@ MOAITexture::~MOAITexture () {
 }
 
 //----------------------------------------------------------------//
+void MOAITexture::OnBind () {
+
+	if ( !this->mGLTexID ) return;
+
+	glBindTexture ( GL_TEXTURE_2D, this->mGLTexID );
+	glEnable ( GL_TEXTURE_2D );
+	
+	if ( !MOAIGfxDevice::Get ().IsProgrammable ()) {
+		glTexEnvf ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
+	}
+	
+	glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, this->mWrap );
+	glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, this->mWrap );
+	
+	glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, this->mMinFilter );
+	glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, this->mMagFilter );
+}
+
+//----------------------------------------------------------------//
+void MOAITexture::OnClear () {
+
+	this->OnUnload ();
+	
+	this->mWidth = 0;
+	this->mHeight = 0;
+	
+	if ( this->mLoader ) {
+		delete this->mLoader;
+		this->mLoader = 0;
+	}
+	
+	if ( this->mFrameBuffer ) {
+		delete this->mFrameBuffer;
+		this->mFrameBuffer = 0;
+	}
+	
+	this->mFilename.clear ();
+	this->mTransform = DEFAULT_TRANSFORM;
+	
+	this->mIsRenewable = false;
+}
+
+//----------------------------------------------------------------//
+void MOAITexture::OnLoad () {
+
+	if ( this->mFrameBuffer ) {
+		
+		this->mFrameBuffer->Bind ();
+		if ( this->mFrameBuffer->IsValid ()) {
+		
+			glGenTextures ( 1, &this->mGLTexID );
+			glBindTexture ( GL_TEXTURE_2D, this->mGLTexID );
+			glTexImage2D ( GL_TEXTURE_2D, 0, GL_RGBA, this->mWidth, this->mHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0 );
+			glFramebufferTexture2D ( GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, this->mGLTexID, 0 );
+		}
+	}
+	else if ( this->mLoader ) {
+
+		//if ( !GLEW_OES_compressed_paletted_texture ) {
+		//	transform.ConvertToTrueColor ();
+		//}
+		this->mLoader->Load ();
+		
+		switch ( this->mLoader->mType ) {
+			
+			case MOAITextureLoader::TYPE_MOAI_IMAGE: {
+				this->CreateTextureFromImage ( this->mLoader->mImage );
+				break;
+			}
+			case MOAITextureLoader::TYPE_PVR: {
+				this->CreateTextureFromPVR ( this->mLoader->mFileData, this->mLoader->mFileDataSize );
+				break;
+			}
+			default:
+				delete this->mLoader;
+				this->mLoader = 0;
+				this->SetError ();
+		}
+
+		if ( this->mGLTexID ) {
+
+			if ( this->mFilename.size() == 0 && this->mLoader ) {
+				// Loader's filename doesn't seem to be copied in all code paths...
+				MOAIGfxDevice::Get ().ReportTextureAlloc ( this->mLoader->mFilename, this->mDataSize );
+			}
+			else {
+				MOAIGfxDevice::Get ().ReportTextureAlloc ( this->mFilename, this->mDataSize );
+			}
+			
+			// done with the loader entirely
+			delete this->mLoader;
+			this->mLoader = 0;
+		}
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAITexture::OnRenew () {
+
+	if ( !this->mFrameBuffer ) {
+		STLString filename = this->mFilename;
+		this->Init ( filename, this->mTransform );
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAITexture::OnUnload () {
+
+	if ( this->mGLTexID ) {
+	
+		if ( MOAIGfxDevice::IsValid ()) {
+			MOAIGfxDevice::Get ().ReportTextureFree ( this->mFilename, this->mDataSize );
+		}
+		glDeleteTextures ( 1, &this->mGLTexID );
+		this->mGLTexID = 0;
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAITexture::RegisterLuaClass ( USLuaState& state ) {
+	
+	MOAIGfxResource::RegisterLuaClass ( state );
 	
 	state.SetField ( -1, "GL_LINEAR", ( u32 )GL_LINEAR );
 	state.SetField ( -1, "GL_LINEAR_MIPMAP_LINEAR", ( u32 )GL_LINEAR_MIPMAP_LINEAR );
@@ -824,7 +867,7 @@ void MOAITexture::RegisterLuaClass ( USLuaState& state ) {
 	state.SetField ( -1, "GL_NEAREST_MIPMAP_NEAREST", ( u32 )GL_NEAREST_MIPMAP_NEAREST );
 	
 	state.SetField ( -1, "GL_RGBA4",				( u32 )GL_RGBA4 );
-	//***state.SetField ( -1, "GL_RGBA8",				( u32 )GL_RGBA8 );
+	state.SetField ( -1, "GL_RGBA8",				( u32 )GL_RGBA8 );
 	//state.SetField ( -1, "GL_RGB565",				( u32 )GL_RGB565 );
 	state.SetField ( -1, "GL_RGB5_A1",				( u32 )GL_RGB5_A1 );
 	state.SetField ( -1, "GL_DEPTH_COMPONENT16",	( u32 )GL_DEPTH_COMPONENT16 );
@@ -837,6 +880,8 @@ void MOAITexture::RegisterLuaClass ( USLuaState& state ) {
 
 //----------------------------------------------------------------//
 void MOAITexture::RegisterLuaFuncs ( USLuaState& state ) {
+
+	MOAIGfxResource::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
 		{ "bind",					_bind },

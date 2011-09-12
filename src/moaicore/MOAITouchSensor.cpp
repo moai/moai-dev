@@ -268,40 +268,40 @@ MOAITouchSensor::~MOAITouchSensor () {
 //----------------------------------------------------------------//
 void MOAITouchSensor::PrintStacks () {
 
-	printf ( "[" );
+	MOAIPrint ( "[" );
 
 	for ( u32 i = 0; i < MAX_TOUCHES; ++i ) {
 	
 		if ( i == this->mTop ) {
-			printf ( "|" );
+			MOAIPrint ( "|" );
 		}
 		else {
-			printf ( " " );
+			MOAIPrint ( " " );
 		}
 	
-		printf ( "%d", ( int )this->mAllocStack [ i ]);
+		MOAIPrint ( "%d", ( int )this->mAllocStack [ i ]);
 	}
 	
-	printf ( " ] [" );
+	MOAIPrint ( " ] [" );
 	
 	for ( u32 i = 0; i < MAX_TOUCHES; ++i ) {
 	
 		if ( i == this->mTop ) {
-			printf ( "|" );
+			MOAIPrint ( "|" );
 		}
 		else {
-			printf ( " " );
+			MOAIPrint ( " " );
 		}
 		
 		if ( this->mActiveStack [ i ] < MAX_TOUCHES ) {
-			printf ( "%d", ( int )this->mActiveStack [ i ]);
+			MOAIPrint ( "%d", ( int )this->mActiveStack [ i ]);
 		}
 		else {
-			printf ( "-" );
+			MOAIPrint ( "-" );
 		}
 	}
 	
-	printf ( " ]\n" );
+	MOAIPrint ( " ]\n" );
 }
 
 //----------------------------------------------------------------//

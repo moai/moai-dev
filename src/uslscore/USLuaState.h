@@ -55,6 +55,7 @@ public:
 	bool			GetFieldWithType		( int idx, cc8* name, int type );
 	bool			GetFieldWithType		( int idx, int key, int type );
 	void*			GetPtrUserData			( int idx );
+	STLString		GetStackTrace			( int level );
 	USLuaRef		GetStrongRef			( int idx );
 	int				GetTop					();
 	void*			GetUserData				( int idx, void* value );
@@ -74,8 +75,8 @@ public:
 	void			MoveToTop				( int idx );
 	void			Pop						( int n );
 	bool			PrepMemberFunc			( int idx, cc8* name );
-	bool			PrintErrors				( int status );
-	void			PrintStackTrace			( int level );
+	bool			PrintErrors				( FILE* file, int status );
+	void			PrintStackTrace			( FILE* file, int level );
 	void			Push					( bool value );
 	void			Push					( cc8* value );
 	void			Push					( double value );

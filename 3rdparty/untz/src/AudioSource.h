@@ -7,7 +7,7 @@
 class AudioSource
 {
 protected:
-	AudioSource() :  mLooping(false) {};
+	AudioSource() :  mLooping(false), mLoopStart(0), mLoopEnd(0) {};
 public:
 	virtual ~AudioSource() {};
 
@@ -22,11 +22,27 @@ public:
     
     void setLooping(bool loop) { mLooping = loop; };
     bool isLooping() const { return mLooping; };
+	void setLoopPoints(double startTime, double endTime)
+	{
+		if(startTime < endTime || (startTime == -1.0 && endTime == -1.0))
+		{
+			mLoopStart = startTime;
+			mLoopEnd = endTime;
+		}
+	}
+
+	void getLoopPoints(double& startTime, double& endTime)
+	{
+		startTime = mLoopStart;
+		endTime = mLoopEnd;
+	}
+
 	double convertSamplesToSeconds(Int64 samples) 
 	{
 		double time = (double)samples;
 		return time / getSampleRate();
 	}
+
 	Int64 convertSecondsToSamples(float seconds)
 	{
 		return (Int64)(seconds * getSampleRate());
@@ -37,6 +53,11 @@ public:
 		return (Int64)(seconds * getSampleRate() * getBitsPerSample() / 8);
 	}
 
+	Int64 mCurrentFrame;
+
 protected:
 	bool mLooping;
+	bool mEOF;
+	double mLoopStart;
+	double mLoopEnd;
 };

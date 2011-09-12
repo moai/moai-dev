@@ -26,6 +26,24 @@ int MOAICameraFitter2D::_clear ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	getFitDistance
+	@text	Returns the distance between the camera's current x, y, scale and
+			the target x, y, scale. As the camera approaches its target, the
+			distance approaches 0. Check the value returned by this function
+			against a small epsilon value.
+	
+	@in		MOAICameraFitter2D self
+	@out	number distance
+*/
+int MOAICameraFitter2D::_getFitDistance ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAICameraFitter2D, "U" )
+	
+	float distance = self->GetFitDistance ();
+	lua_pushnumber ( state, distance );
+	return 1;
+}
+
+//----------------------------------------------------------------//
 /**	@name	insertAnchor
 	@text	Add an anchor to the fitter.
 	
@@ -235,31 +253,45 @@ void MOAICameraFitter2D::Fit () {
 	USAffine2D worldToWnd = this->mViewport->GetWorldToWndMtx ( ident );
 	USAffine2D wndToWorld = this->mViewport->GetWndToWorldMtx ( ident );
 	
-	USRect screenRect = worldRect;
-	worldToWnd.Transform ( screenRect );
-	
 	// fit the viewport rect to the target rect
-	USRect viewport = this->mViewport->GetRect ();
-	screenRect.FitOutside ( viewport );
+	USRect worldViewRect = this->mViewport->GetRect ();
+	wndToWorld.Transform ( worldViewRect );
+	worldViewRect.Bless ();
 	
-	// since aspect stayed constant, can use either width or height to fit
-	this->mTargetScale *= viewport.Width () / this->mViewport->Width ();
-
 	// TODO: take viewport offset into account
 	
-	// take the viewport back into world space
-	wndToWorld.Transform ( viewport );
+	// fit the view rect
+	USRect fitViewRect = worldViewRect;
+	worldRect.FitOutside ( fitViewRect );
 	
-	viewport.Bless ();
-	this->mBounds.Constrain ( viewport );
+	// constrain the rect
+	this->mBounds.Constrain ( fitViewRect );
 	
-	viewport.GetCenter ( this->mTargetLoc );
+	// get the fitting
+	this->mTargetScale *= fitViewRect.Width () / worldViewRect.Width ();	
+	fitViewRect.GetCenter ( this->mTargetLoc );
 }
 
 //----------------------------------------------------------------//
 void MOAICameraFitter2D::GetCamera ( USAffine2D& camera ) {
 
 	camera.ScRoTr ( this->mTargetScale, this->mTargetScale, 0.0f, this->mTargetLoc.mX, this->mTargetLoc.mY );
+}
+
+//----------------------------------------------------------------//
+float MOAICameraFitter2D::GetFitDistance () {
+
+	if ( this->mCamera ) {
+
+		USVec2D loc = this->mCamera->GetLoc ();
+		float scale = this->mCamera->GetScl ().mX;
+
+		USVec3D current ( loc.mX, loc.mY, scale );
+		USVec3D target ( this->mTargetLoc.mX, this->mTargetLoc.mY, this->mTargetScale );
+		
+		return USDist::VecToVec ( current, target );
+	}
+	return 0.0f;
 }
 
 //----------------------------------------------------------------//
@@ -356,7 +388,7 @@ void MOAICameraFitter2D::OnUpdate ( float step ) {
 	
 	this->ScheduleUpdate ();
 	
-	// make sure all the anchors are ahead of fitter in the schedule
+	// make sure all the anchors are ahead of fitter in the update schedule
 	AnchorIt anchorIt = this->mAnchors.begin ();	
 	for ( ; anchorIt != this->mAnchors.end (); ++anchorIt ) {
 		MOAICameraAnchor2D* anchor = *anchorIt;
@@ -400,6 +432,7 @@ void MOAICameraFitter2D::RegisterLuaFuncs ( USLuaState& state ) {
 	
 	luaL_Reg regTable [] = {
 		{ "clear",				_clear },
+		{ "getFitDistance",		_getFitDistance },
 		{ "insertAnchor",		_insertAnchor },
 		{ "removeAnchor",		_removeAnchor },
 		{ "setBounds",			_setBounds },

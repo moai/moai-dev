@@ -6,19 +6,62 @@
 #include <uslscore/STLSet.h>
 #include <uslscore/USGlobals.h>
 
-typedef STLSet < USGlobals* >::iterator GlobalsSetIt;
-typedef STLSet < USGlobals* > GlobalsSet;
+//================================================================//
+// USGlobalsFinalizer
+//================================================================//
 
-static GlobalsSet* sGlobalsSet = 0;
-static USGlobals* sInstance = 0;
+//----------------------------------------------------------------//
+USGlobalsFinalizer::USGlobalsFinalizer () {
+}
+
+//----------------------------------------------------------------//
+USGlobalsFinalizer::~USGlobalsFinalizer () {
+}
 
 //================================================================//
 // USGlobals
 //================================================================//
 
 //----------------------------------------------------------------//
-USGlobals* USGlobals::Create () {
+USGlobals::USGlobals () {
+}
 
+//----------------------------------------------------------------//
+USGlobals::~USGlobals () {
+
+	FinalizersIt finalizersIt = this->mFinalizers.begin ();
+	for ( ; finalizersIt != this->mFinalizers.end (); ++finalizersIt ) {
+		USGlobalsFinalizer* finalizer = ( *finalizersIt );
+		finalizer->OnFinalize ();
+		delete finalizer;
+	}
+	this->mFinalizers.clear ();
+
+	u32 total = this->mGlobals.Size ();
+	for ( u32 i = 1; i <= total; ++i ) {
+		USGlobalPair& pair = this->mGlobals [ total - i ];
+		
+		USObject* object = pair.mObject;
+		pair.mObject = 0;
+		pair.mPtr = 0;
+		
+		if ( object ) {
+			object->Release ();
+		}
+	}
+}
+
+
+//================================================================//
+// USGlobalsMgr
+//================================================================//
+
+USGlobalsMgr::GlobalsSet* USGlobalsMgr::sGlobalsSet = 0;
+USGlobals* USGlobalsMgr::sInstance = 0;
+
+//----------------------------------------------------------------//
+USGlobals* USGlobalsMgr::Create () {
+	
 	if ( !sGlobalsSet ) {
 		sGlobalsSet = new GlobalsSet ();
 	}
@@ -31,7 +74,7 @@ USGlobals* USGlobals::Create () {
 }
 
 //----------------------------------------------------------------//
-void USGlobals::Delete ( USGlobals* globals ) {
+void USGlobalsMgr::Delete ( USGlobals* globals ) {
 	
 	if ( sGlobalsSet ) {
 		if ( sGlobalsSet->contains ( globals )) {
@@ -47,7 +90,7 @@ void USGlobals::Delete ( USGlobals* globals ) {
 }
 
 //----------------------------------------------------------------//
-void USGlobals::Finalize () {
+void USGlobalsMgr::Finalize () {
 
 	if ( sGlobalsSet ) {
 
@@ -66,34 +109,21 @@ void USGlobals::Finalize () {
 }
 
 //----------------------------------------------------------------//
-USGlobals* USGlobals::Get () {
+USGlobals* USGlobalsMgr::Get () {
 
 	return sInstance;
 }
 
 //----------------------------------------------------------------//
-void USGlobals::Set ( USGlobals* globals ) {
+void USGlobalsMgr::Set ( USGlobals* globals ) {
 
 	sInstance = globals;
 }
 
 //----------------------------------------------------------------//
-USGlobals::USGlobals () {
+USGlobalsMgr::USGlobalsMgr () {
 }
 
 //----------------------------------------------------------------//
-USGlobals::~USGlobals () {
-
-	u32 total = this->mGlobals.Size ();
-	for ( u32 i = 1; i <= total; ++i ) {
-		USGlobalPair& pair = this->mGlobals [ total - i ];
-		
-		USObject* object = pair.mObject;
-		pair.mObject = 0;
-		pair.mPtr = 0;
-		
-		if ( object ) {
-			object->Release ();
-		}
-	}
+USGlobalsMgr::~USGlobalsMgr () {
 }
