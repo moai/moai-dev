@@ -10,13 +10,13 @@
 
 #ifdef _WIN32
 	#include <direct.h>
+	#include <io.h>
 #else
 	#include <sys/types.h>
 	#include <dirent.h>
 #endif
 
 #include <errno.h>
-#include <io.h>
 #include <sys/stat.h>
 #include <time.h>
 
@@ -391,24 +391,39 @@ ZIPFSFILE* zipfs_fopen ( const char* filename, const char* mode ) {
 
 //----------------------------------------------------------------//
 int zipfs_fprintf ( ZIPFSFILE * fp, const char * format, ... ) {
-	// TODO
-	return -1;
+
+	int result;
+
+	va_list args;
+	va_start ( args, format );
+	result = zipfs_vfprintf ( fp, format, args );
+	va_end ( args );
+
+	return result;
 }
 
 //----------------------------------------------------------------//
 int zipfs_fputc ( int c, ZIPFSFILE* fp ) {
-	// TODO
-	return -1;
+
+	FILE* file = is_file ( fp );
+	if ( file ) {
+		return fputc ( c, fp );
+	}
+	return EOF;
 }
 
 //----------------------------------------------------------------//
 int zipfs_fputs ( const char* string, ZIPFSFILE* fp ) {
-	// TODO
-	return -1;
+
+	FILE* file = is_file ( fp );
+	if ( file ) {
+		return fputs ( string, fp );
+	}
+	return EOF;
 }
 
 //----------------------------------------------------------------//
-size_t zipfs_fread ( const void* buffer, size_t size, size_t count, ZIPFSFILE* fp ) {
+size_t zipfs_fread ( void* buffer, size_t size, size_t count, ZIPFSFILE* fp ) {
 	
 	if ( fp ) {
 		ZIPFSFile* file = ( ZIPFSFile* )fp;
@@ -422,13 +437,57 @@ size_t zipfs_fread ( const void* buffer, size_t size, size_t count, ZIPFSFILE* f
 }
 
 //----------------------------------------------------------------//
-int zipfs_freopen ( const char* filename, const char* mode, ZIPFSFILE* fp ) {
-	// TODO
-	return -1;
+ZIPFSFILE* zipfs_freopen ( const char* filename, const char* mode, ZIPFSFILE* fp ) {
+
+	ZIPFSFile* result = 0;
+	ZIPFSFile* file = ( ZIPFSFile* )fp;
+	ZIPFSVirtualPath* mount;
+
+	if ( !file ) return 0;
+
+	if ( file->mIsArchive ){
+		ZIPFSZipStream_Close ( file->mPtr.mZip );
+	}
+	else {
+		fclose ( file->mPtr.mFile );
+	}
+	
+	memset ( fp, 0, sizeof ( ZIPFSFile ));
+
+	filename = zipfs_get_abs_filepath ( filename );
+	mount = find_best_virtual_path ( filename );
+
+	if ( mount ) {
+		
+		if ( mode [ 0 ] == 'r' ) {
+			
+			ZIPFSZipStream* zipStream;
+			
+			filename = ZIPFSVirtualPath_GetLocalPath ( mount, filename );
+			zipStream = ZIPFSZipStream_Open ( mount->mArchive, filename );
+			
+			if ( zipStream ) {
+				file->mIsArchive = 1;
+				file->mPtr.mZip = zipStream;
+				result = file;
+			}
+		}
+	}
+	else {
+		
+		FILE* stdFile = fopen ( filename, mode );
+		
+		if ( stdFile ) {
+			file->mPtr.mFile = stdFile;
+			result = file;
+		}
+	}
+
+	return ( ZIPFSFILE* )result;
 }
 
 //----------------------------------------------------------------//
-int zipfs_fscanf ( ZIPFSFILE * fp, const char * format, ... ) {
+int zipfs_fscanf ( ZIPFSFILE* fp, const char * format, ... ) {
 	
 	int result;
 	va_list args;

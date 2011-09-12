@@ -12,6 +12,7 @@ LOCAL_LDLIBS := -llog -lstring -lm -lz -lGLESv2.so -lGLESv1_CM.so
 LOCAL_C_INCLUDES := $(SRC_PATH)/src/uslsext \
 $(SRC_PATH)/src \
 $(SRC_PATH)/src/uslscore \
+$(SRC_PATH)/src/moai-lua-5.1.3/src \
 $(SRC_PATH)/3rdparty \
 $(SRC_PATH)/3rdparty/expat-2.0.1/amiga \
 $(SRC_PATH)/3rdparty/expat-2.0.1/lib \
@@ -22,7 +23,6 @@ $(SRC_PATH)/3rdparty/freetype-2.4.4/include/freetype2 \
 $(SRC_PATH)/3rdparty/freetype-2.4.4/builds \
 $(SRC_PATH)/3rdparty/freetype-2.4.4/src \
 $(SRC_PATH)/3rdparty/freetype-2.4.4/config \
-$(SRC_PATH)/3rdparty/lua-5.1.3/src \
 $(SRC_PATH)/3rdparty/lpng140 \
 $(SRC_PATH)/3rdparty/curl-7.19.7 \
 $(SRC_PATH)/3rdparty/curl-7.19.7/lib \

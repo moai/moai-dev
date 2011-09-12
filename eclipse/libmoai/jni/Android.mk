@@ -14,7 +14,7 @@ include liblua.mk
 include libsqlite.mk
 include libtinyxml.mk
 include libpng.mk
-include libphysfs.mk
+include libzipfs.mk
 include libuslscore.mk
 include libuslsext.mk
 include libjson.mk
@@ -54,6 +54,8 @@ $(SRC_PATH)/src/moaicore \
 $(SRC_PATH)/src/uslsext \
 $(SRC_PATH)/src/uslscore \
 $(SRC_PATH)/src/contrib \
+$(SRC_PATH)/src/zipfs \
+$(SRC_PATH)/src/moai-lua-5.1.3/src \
 $(SRC_PATH)/3rdparty/contrib \
 $(SRC_PATH)/3rdparty/expat-2.0.1/amiga \
 $(SRC_PATH)/3rdparty/expat-2.0.1/lib \
@@ -65,15 +67,13 @@ $(SRC_PATH)/3rdparty/freetype-2.4.4/builds \
 $(SRC_PATH)/3rdparty/freetype-2.4.4/src \
 $(SRC_PATH)/3rdparty/freetype-2.4.4/config \
 $(SRC_PATH)/3rdparty/jansson-2.1/src \
-$(SRC_PATH)/3rdparty/lua-5.1.3/src \
 $(SRC_PATH)/3rdparty/lpng140 \
 $(SRC_PATH)/3rdparty/curl-7.19.7/include-android\
 $(SRC_PATH)/3rdparty/sqlite-3.6.16 \
 $(SRC_PATH)/3rdparty/tinyxml \
 $(SRC_PATH)/3rdparty/openssl-1.0.0d/include-android \
-$(SRC_PATH)/3rdparty/physfs-2.0.2 \
 $(SRC_PATH)/3rdparty/untz/include \
-$(SRC_PATH)/src/moaiext-untz
+$(SRC_PATH)/src/moaiext-untz \
 
 #----------------------------------------------------------------#
 # included files
@@ -101,7 +101,7 @@ LOCAL_STATIC_LIBRARIES += libcurl
 LOCAL_STATIC_LIBRARIES += libssl
 LOCAL_STATIC_LIBRARIES += libcontrib
 LOCAL_STATIC_LIBRARIES += libjson
-LOCAL_STATIC_LIBRARIES += libphysfs
+LOCAL_STATIC_LIBRARIES += libzipfs
 LOCAL_STATIC_LIBRARIES += libmoaiext-untz
 
 include $(BUILD_SHARED_LIBRARY)

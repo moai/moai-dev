@@ -11,7 +11,7 @@ LOCAL_LDLIBS := -llog -lstring -lm -lz
 #----------------------------------------------------------------#
 LOCAL_C_INCLUDES := $(SRC_PATH)/src \
 $(SRC_PATH)/src/uslscore \
-$(SRC_PATH)/3rdparty/lua-5.1.3/src_android
+$(SRC_PATH)/src/moai-lua-5.1.3/src
 
 #----------------------------------------------------------------#
 # included files
@@ -27,8 +27,7 @@ $(SRC_PATH)/src/uslscore/USDeflater.cpp \
 $(SRC_PATH)/src/uslscore/USDeviceTime_apple.cpp \
 $(SRC_PATH)/src/uslscore/USDeviceTime_posix.cpp \
 $(SRC_PATH)/src/uslscore/USDeviceTime_win32.cpp \
-$(SRC_PATH)/src/uslscore/USDirectoryItr_posix.cpp \
-$(SRC_PATH)/src/uslscore/USDirectoryItr_win32.cpp \
+$(SRC_PATH)/src/uslscore/USDirectoryItr.cpp \
 $(SRC_PATH)/src/uslscore/USFilename.cpp \
 $(SRC_PATH)/src/uslscore/USFileStream.cpp \
 $(SRC_PATH)/src/uslscore/USFileSys.cpp \

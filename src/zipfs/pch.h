@@ -76,8 +76,9 @@
 #endif
 
 #ifdef MOAI_OS_LINUX
-	#include <cstdlib>
-	#include <cstring>
+	#include <stdlib.h>
+	#include <string.h>
+	#include <unistd.h>
 #endif
 
 #ifdef MOAI_COMPILER_MSVC
