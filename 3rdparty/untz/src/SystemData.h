@@ -1,4 +1,5 @@
-#pragma once
+#ifndef SYSTEMDATA_H_
+#define SYSTEMDATA_H_
 
 #include "AudioMixer.h"
 
@@ -15,3 +16,5 @@ namespace UNTZ
 		AudioMixer mMixer;
 	};
 };
+
+#endif

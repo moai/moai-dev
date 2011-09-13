@@ -1,4 +1,5 @@
-#pragma once;
+#ifndef USERAUDIOSOURCE_H_
+#define USERAUDIOSOURCE_H_
 
 #include "Untz.h"
 #include "AudioSource.h"
@@ -15,3 +16,5 @@ private:
 	UInt32 mNumChannels;
 	UInt32 mSampleRate;
 };
+
+#endif

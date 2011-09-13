@@ -1,4 +1,6 @@
-#pragma once
+#ifndef RTHREAD_H_
+#define RTHREAD_H_
+
 
 // Use Win or Posix
 #ifdef WIN32
@@ -124,3 +126,5 @@ private:
 #endif
 
 };
+
+#endif

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef SOUNDDATA_H
+#define SOUNDDATA_H
 
 #include "Untz.h"
 #include "AudioSource.h"
@@ -26,3 +27,5 @@ namespace UNTZ
 		PlayState mPlayState;
 	};
 };
+
+#endif

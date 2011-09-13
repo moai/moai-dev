@@ -1,4 +1,5 @@
-#pragma once
+#ifndef RSYNCEVENT_H_
+#define RSYNCEVENT_H_
 
 #include "Untz.h"
 
@@ -87,3 +88,5 @@ public:
 #endif
 	}
 };
+
+#endif

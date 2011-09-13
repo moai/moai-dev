@@ -1,5 +1,5 @@
-
-#pragma once;
+#ifndef UNTZSOUND_H_
+#define UNTZSOUND_H_
 
 #include "Untz.h"
 
@@ -50,3 +50,5 @@ namespace UNTZ
 		SoundData* mpData;
     };
 };
+
+#endif

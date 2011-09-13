@@ -1,4 +1,5 @@
-#pragma once
+#ifndef OGGAUDIOSOURCE_H_
+#define OGGAUDIOSOURCE_H_
 
 #include "BufferedAudioSource.h"
 #include <Threading/Threading.h>
@@ -34,3 +35,5 @@ private:
 	OggVorbis_File mOggFile;
 	std::vector<float> mBuffer;
 };
+
+#endif

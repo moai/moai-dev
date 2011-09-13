@@ -1,4 +1,5 @@
-#pragma once
+#ifndef AUDIOMIXER_H_
+#define AUDIOMIXER_H_
 
 #include "Untz.h"
 #include <Threading/Threading.h>
@@ -23,3 +24,4 @@ private:
 	std::vector<float> mBuffer;
 };
 
+#endif

@@ -1,4 +1,5 @@
-#pragma once;
+#ifndef MEMORYAUDIOSOURCE_H_
+#define MEMORYAUDIOSOURCE_H_
 
 #include "Untz.h"
 #include "BufferedAudioSource.h"
@@ -25,3 +26,5 @@ private:
     Int64 mNumFrames;
     UInt32 mNumChannels;
 };
+
+#endif

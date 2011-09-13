@@ -1,4 +1,5 @@
-#pragma once
+#ifndef UNTZSYSTEM_H_
+#define UNTZSYSTEM_H_
 
 #include "Untz.h"
 
@@ -37,3 +38,5 @@ namespace UNTZ
 		SystemData* mpData;
     };
 };
+
+#endif

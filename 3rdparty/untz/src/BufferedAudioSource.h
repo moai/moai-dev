@@ -1,4 +1,5 @@
-#pragma once
+#ifndef BUFFEREDAUDIOSOURCE_H_
+#define BUFFEREDAUDIOSOURCE_H_
 
 #include "AudioSource.h"
 #include <Threading/Threading.h>
@@ -33,3 +34,5 @@ protected:
 	std::vector<float> mBuffer;
 	RCriticalSection mLock;
 };
+
+#endif

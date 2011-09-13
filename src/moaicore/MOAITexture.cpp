@@ -162,7 +162,14 @@ int MOAITexture::_initFrameBuffer ( lua_State* L ) {
 	
 	u32 width				= state.GetValue < u32 >( 2, 0 );
 	u32 height				= state.GetValue < u32 >( 3, 0 );
-	GLenum colorFormat		= state.GetValue < GLenum >( 4, GL_RGBA8 );
+	
+	// TODO: fix me
+	#ifdef MOAI_OS_ANDROID
+		GLenum colorFormat		= state.GetValue < GLenum >( 4, GL_RGB565 );
+	#else
+		GLenum colorFormat		= state.GetValue < GLenum >( 4, GL_RGBA8 );
+	#endif
+	
 	GLenum depthFormat		= state.GetValue < GLenum >( 5, 0 );
 	GLenum stencilFormat	= state.GetValue < GLenum >( 6, 0 );
 	
@@ -867,8 +874,6 @@ void MOAITexture::RegisterLuaClass ( USLuaState& state ) {
 	state.SetField ( -1, "GL_NEAREST_MIPMAP_NEAREST", ( u32 )GL_NEAREST_MIPMAP_NEAREST );
 	
 	state.SetField ( -1, "GL_RGBA4",				( u32 )GL_RGBA4 );
-	state.SetField ( -1, "GL_RGBA8",				( u32 )GL_RGBA8 );
-	//state.SetField ( -1, "GL_RGB565",				( u32 )GL_RGB565 );
 	state.SetField ( -1, "GL_RGB5_A1",				( u32 )GL_RGB5_A1 );
 	state.SetField ( -1, "GL_DEPTH_COMPONENT16",	( u32 )GL_DEPTH_COMPONENT16 );
 	//***state.SetField ( -1, "GL_DEPTH_COMPONENT24",	( u32 )GL_DEPTH_COMPONENT24 );
@@ -876,6 +881,13 @@ void MOAITexture::RegisterLuaClass ( USLuaState& state ) {
 	//***state.SetField ( -1, "GL_STENCIL_INDEX4",		( u32 )GL_STENCIL_INDEX4 );
 	state.SetField ( -1, "GL_STENCIL_INDEX8",		( u32 )GL_STENCIL_INDEX8 );
 	//***state.SetField ( -1, "GL_STENCIL_INDEX16",		( u32 )GL_STENCIL_INDEX16 );
+	
+	// TODO:
+	#ifdef MOAI_OS_ANDROID
+		state.SetField ( -1, "GL_RGB565",				( u32 )GL_RGB565 );
+	#else
+		state.SetField ( -1, "GL_RGBA8",				( u32 )GL_RGBA8 );
+	#endif
 }
 
 //----------------------------------------------------------------//

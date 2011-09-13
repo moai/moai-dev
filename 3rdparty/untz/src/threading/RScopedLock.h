@@ -1,4 +1,5 @@
-#pragma once
+#ifndef RSCOPEDLOCK_H_
+#define RSCOPEDLOCK_H_
 
 #include <Threading/Threading.h>
 
@@ -18,3 +19,5 @@ public:
 private:
 	RCriticalSection *mLock;
 };
+
+#endif

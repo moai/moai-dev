@@ -1,4 +1,5 @@
-#pragma once
+#ifndef RCRITICALSECTION_H_
+#define RCRITICALSECTION_H_
 
 // Use Window or Posix
 #ifdef WIN32
@@ -116,3 +117,5 @@ private:
 		_locked = false;
 	}
 };
+
+#endif

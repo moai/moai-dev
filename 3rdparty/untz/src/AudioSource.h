@@ -1,4 +1,5 @@
-#pragma once
+#ifndef AUDIOSOURCE_H_
+#define AUDIOSOURCE_H_
 
 #include "Untz.h"
 
@@ -61,3 +62,5 @@ protected:
 	double mLoopStart;
 	double mLoopEnd;
 };
+
+#endif
