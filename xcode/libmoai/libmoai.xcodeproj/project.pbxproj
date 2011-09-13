@@ -1547,7 +1547,6 @@
 		03F135DB13A2EFC000044AE8 /* MoaiUiWebView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 03F135D713A2EFC000044AE8 /* MoaiUiWebView.mm */; };
 		03F135DC13A2EFC000044AE8 /* MOAIWebView.h in Headers */ = {isa = PBXBuildFile; fileRef = 03F135D813A2EFC000044AE8 /* MOAIWebView.h */; };
 		03F135DD13A2EFC000044AE8 /* MOAIWebView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 03F135D913A2EFC000044AE8 /* MOAIWebView.mm */; };
-		071106EF13C6353400EE7C53 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 071106EE13C6353400EE7C53 /* CoreTelephony.framework */; };
 		0767117C13F3414000121E13 /* ReachabilityListener.h in Headers */ = {isa = PBXBuildFile; fileRef = 0767117A13F3414000121E13 /* ReachabilityListener.h */; };
 		0767117D13F3414000121E13 /* ReachabilityListener.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0767117B13F3414000121E13 /* ReachabilityListener.mm */; };
 		07AF16C013F45A0100E38D1D /* MOAIPartitionResultBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07AF16BC13F45A0100E38D1D /* MOAIPartitionResultBuffer.cpp */; };
@@ -1569,7 +1568,6 @@
 		07D1A8A813EDFD8300604979 /* MOAIFrameBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07D1A8A013EDFD8300604979 /* MOAIFrameBuffer.cpp */; };
 		07D1A8A913EDFD8300604979 /* MOAIFrameBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 07D1A8A113EDFD8300604979 /* MOAIFrameBuffer.h */; };
 		07E6C630140C490B004D1227 /* MOAIGameCenter.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E6C62E140C490B004D1227 /* MOAIGameCenter.h */; };
-		07E6C631140C490B004D1227 /* MOAIGameCenter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 07E6C62F140C490B004D1227 /* MOAIGameCenter.mm */; };
 		07E885BF13BE3E78008D75AA /* MOAIParticleDistanceEmitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07E885BB13BE3E78008D75AA /* MOAIParticleDistanceEmitter.cpp */; };
 		07E885C013BE3E78008D75AA /* MOAIParticleDistanceEmitter.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E885BC13BE3E78008D75AA /* MOAIParticleDistanceEmitter.h */; };
 		07E885C113BE3E78008D75AA /* MOAIParticleTimedEmitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07E885BD13BE3E78008D75AA /* MOAIParticleTimedEmitter.cpp */; };
@@ -1577,10 +1575,6 @@
 		07FAC91613B8F1CA00AFD0B3 /* moaicore-pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07FAC91513B8F1CA00AFD0B3 /* moaicore-pch.cpp */; };
 		07FAC91813B8F1E000AFD0B3 /* uslscore-pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07FAC91713B8F1E000AFD0B3 /* uslscore-pch.cpp */; };
 		07FAC91A13B8F1F000AFD0B3 /* uslsext-pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07FAC91913B8F1F000AFD0B3 /* uslsext-pch.cpp */; };
-		66D967F5140479DF00017919 /* MOAILogMessages.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66D967F4140479DF00017919 /* MOAILogMessages.cpp */; };
-		66D967F6140479DF00017919 /* MOAILogMessages.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66D967F4140479DF00017919 /* MOAILogMessages.cpp */; };
-		66D967FA14047A2500017919 /* MOAIScriptDeck.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66D967F814047A2500017919 /* MOAIScriptDeck.cpp */; };
-		66D967FB14047A2500017919 /* MOAIScriptDeck.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66D967F814047A2500017919 /* MOAIScriptDeck.cpp */; };
 		66D967FC14047A2500017919 /* MOAIScriptDeck.h in Headers */ = {isa = PBXBuildFile; fileRef = 66D967F914047A2500017919 /* MOAIScriptDeck.h */; };
 		66D967FD14047A2500017919 /* MOAIScriptDeck.h in Headers */ = {isa = PBXBuildFile; fileRef = 66D967F914047A2500017919 /* MOAIScriptDeck.h */; };
 		C37D422213B16930009600BB /* BufferedAudioSource.h in Headers */ = {isa = PBXBuildFile; fileRef = C37D421E13B1692F009600BB /* BufferedAudioSource.h */; };
@@ -2728,6 +2722,15 @@
 		CDEFB42A13E37F3C000A9523 /* MOAITileFlags.h in Headers */ = {isa = PBXBuildFile; fileRef = CDEFB3F413E37F3C000A9523 /* MOAITileFlags.h */; };
 		CDEFB42B13E37F3C000A9523 /* MOAIVertexFormatMgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDEFB3F513E37F3C000A9523 /* MOAIVertexFormatMgr.cpp */; };
 		CDEFB42C13E37F3C000A9523 /* MOAIVertexFormatMgr.h in Headers */ = {isa = PBXBuildFile; fileRef = CDEFB3F613E37F3C000A9523 /* MOAIVertexFormatMgr.h */; };
+		CDF7130F141EBC5C00D650CA /* MOAIGfxResource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDF7130D141EBC5C00D650CA /* MOAIGfxResource.cpp */; };
+		CDF71310141EBC5C00D650CA /* MOAIGfxResource.h in Headers */ = {isa = PBXBuildFile; fileRef = CDF7130E141EBC5C00D650CA /* MOAIGfxResource.h */; };
+		CDF71311141EBC5C00D650CA /* MOAIGfxResource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDF7130D141EBC5C00D650CA /* MOAIGfxResource.cpp */; };
+		CDF71312141EBC5C00D650CA /* MOAIGfxResource.h in Headers */ = {isa = PBXBuildFile; fileRef = CDF7130E141EBC5C00D650CA /* MOAIGfxResource.h */; };
+		CDF7131C141EBDAB00D650CA /* MOAILogMessages.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66D967F4140479DF00017919 /* MOAILogMessages.cpp */; };
+		CDF7131D141EBDAC00D650CA /* MOAILogMessages.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66D967F4140479DF00017919 /* MOAILogMessages.cpp */; };
+		CDF71328141EBDEE00D650CA /* MOAIScriptDeck.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66D967F814047A2500017919 /* MOAIScriptDeck.cpp */; };
+		CDF71329141EBDEF00D650CA /* MOAIScriptDeck.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66D967F814047A2500017919 /* MOAIScriptDeck.cpp */; };
+		CDF7132E141EBE7300D650CA /* MOAIGameCenter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 07E6C62F140C490B004D1227 /* MOAIGameCenter.mm */; };
 		CDF86DEC13F09B6D00D2FFFF /* USMatrix3x3.h in Headers */ = {isa = PBXBuildFile; fileRef = CDF86DEA13F09B6D00D2FFFF /* USMatrix3x3.h */; };
 		CDF86DED13F09B6D00D2FFFF /* USMatrix4x4.h in Headers */ = {isa = PBXBuildFile; fileRef = CDF86DEB13F09B6D00D2FFFF /* USMatrix4x4.h */; };
 		CDF86DEE13F09B6D00D2FFFF /* USMatrix3x3.h in Headers */ = {isa = PBXBuildFile; fileRef = CDF86DEA13F09B6D00D2FFFF /* USMatrix3x3.h */; };
@@ -4589,6 +4592,8 @@
 		CDEFB3F413E37F3C000A9523 /* MOAITileFlags.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAITileFlags.h; sourceTree = "<group>"; };
 		CDEFB3F513E37F3C000A9523 /* MOAIVertexFormatMgr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIVertexFormatMgr.cpp; sourceTree = "<group>"; };
 		CDEFB3F613E37F3C000A9523 /* MOAIVertexFormatMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIVertexFormatMgr.h; sourceTree = "<group>"; };
+		CDF7130D141EBC5C00D650CA /* MOAIGfxResource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIGfxResource.cpp; path = ../../src/moaicore/MOAIGfxResource.cpp; sourceTree = SOURCE_ROOT; };
+		CDF7130E141EBC5C00D650CA /* MOAIGfxResource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIGfxResource.h; path = ../../src/moaicore/MOAIGfxResource.h; sourceTree = SOURCE_ROOT; };
 		CDF86DEA13F09B6D00D2FFFF /* USMatrix3x3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = USMatrix3x3.h; path = ../../src/uslsext/USMatrix3x3.h; sourceTree = SOURCE_ROOT; };
 		CDF86DEB13F09B6D00D2FFFF /* USMatrix4x4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = USMatrix4x4.h; path = ../../src/uslsext/USMatrix4x4.h; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -5812,8 +5817,8 @@
 				07D1A8A113EDFD8300604979 /* MOAIFrameBuffer.h */,
 				CDEFB3E213E37F3C000A9523 /* MOAIGfxDevice.cpp */,
 				CDEFB3E313E37F3C000A9523 /* MOAIGfxDevice.h */,
-				0729146D140ED8F000FDC5AA /* MOAIGfxResource.cpp */,
-				0729146E140ED8F000FDC5AA /* MOAIGfxResource.h */,
+				CDF7130D141EBC5C00D650CA /* MOAIGfxResource.cpp */,
+				CDF7130E141EBC5C00D650CA /* MOAIGfxResource.h */,
 				CDEB91441360A78800AAC558 /* MOAIImage.cpp */,
 				CDEB91451360A78800AAC558 /* MOAIImage.h */,
 				0324E54713564BC7000ADC60 /* MOAIIndexBuffer.cpp */,
@@ -5853,7 +5858,6 @@
 		CD148EF81395AEC100A3F501 /* deck */ = {
 			isa = PBXGroup;
 			children = (
-				66D967F814047A2500017919 /* MOAIScriptDeck.cpp */,
 				0324E52B13564BC7000ADC60 /* MOAIDeck.cpp */,
 				0324E52C13564BC7000ADC60 /* MOAIDeck.h */,
 				0324E52D13564BC7000ADC60 /* MOAIDeck2D.cpp */,
@@ -5868,6 +5872,7 @@
 				0324E54213564BC7000ADC60 /* MOAIGfxQuadListDeck2D.h */,
 				0324E55E13564BC7000ADC60 /* MOAIMesh.cpp */,
 				0324E55F13564BC7000ADC60 /* MOAIMesh.h */,
+				66D967F814047A2500017919 /* MOAIScriptDeck.cpp */,
 				66D967F914047A2500017919 /* MOAIScriptDeck.h */,
 				0324E58A13564BC7000ADC60 /* MOAIStretchPatch2D.cpp */,
 				0324E58B13564BC8000ADC60 /* MOAIStretchPatch2D.h */,
@@ -8165,7 +8170,7 @@
 				07AF16C513F45A0100E38D1D /* MOAIPartitionResultBuffer.h in Headers */,
 				07AF16C713F45A0100E38D1D /* MOAIPartitionResultMgr.h in Headers */,
 				66D967FD14047A2500017919 /* MOAIScriptDeck.h in Headers */,
-				07291472140ED8F000FDC5AA /* MOAIGfxResource.h in Headers */,
+				CDF71310141EBC5C00D650CA /* MOAIGfxResource.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8804,7 +8809,7 @@
 				07AF16C313F45A0100E38D1D /* MOAIPartitionResultMgr.h in Headers */,
 				66D967FC14047A2500017919 /* MOAIScriptDeck.h in Headers */,
 				07E6C630140C490B004D1227 /* MOAIGameCenter.h in Headers */,
-				07291470140ED8F000FDC5AA /* MOAIGfxResource.h in Headers */,
+				CDF71312141EBC5C00D650CA /* MOAIGfxResource.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9521,6 +9526,9 @@
 				07AF16C413F45A0100E38D1D /* MOAIPartitionResultBuffer.cpp in Sources */,
 				07AF16C613F45A0100E38D1D /* MOAIPartitionResultMgr.cpp in Sources */,
 				CD490186141ABD1B00913D80 /* USDirectoryItr.cpp in Sources */,
+				CDF7130F141EBC5C00D650CA /* MOAIGfxResource.cpp in Sources */,
+				CDF7131D141EBDAC00D650CA /* MOAILogMessages.cpp in Sources */,
+				CDF71329141EBDEF00D650CA /* MOAIScriptDeck.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10588,6 +10596,10 @@
 				07AF16C013F45A0100E38D1D /* MOAIPartitionResultBuffer.cpp in Sources */,
 				07AF16C213F45A0100E38D1D /* MOAIPartitionResultMgr.cpp in Sources */,
 				CD490187141ABD1B00913D80 /* USDirectoryItr.cpp in Sources */,
+				CDF71311141EBC5C00D650CA /* MOAIGfxResource.cpp in Sources */,
+				CDF7131C141EBDAB00D650CA /* MOAILogMessages.cpp in Sources */,
+				CDF71328141EBDEE00D650CA /* MOAIScriptDeck.cpp in Sources */,
+				CDF7132E141EBE7300D650CA /* MOAIGameCenter.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

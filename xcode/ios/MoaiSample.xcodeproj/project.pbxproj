@@ -38,8 +38,6 @@
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
-		CD490200141AC32A00913D80 /* lua in Resources */ = {isa = PBXBuildFile; fileRef = CD4901FC141AC32A00913D80 /* lua */; };
-		CD490202141AC34300913D80 /* moai-target in Resources */ = {isa = PBXBuildFile; fileRef = CD490201141AC34300913D80 /* moai-target */; };
 		CD7C73AE13B95516006CFA19 /* ParticlePresets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD7C73AC13B95516006CFA19 /* ParticlePresets.cpp */; };
 /* End PBXBuildFile section */
 
@@ -170,8 +168,6 @@
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		32CA4F630368D1EE00C91783 /* MoaiSample_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoaiSample_Prefix.pch; sourceTree = "<group>"; };
-		CD4901FC141AC32A00913D80 /* lua */ = {isa = PBXFileReference; lastKnownFileType = folder; path = lua; sourceTree = SOURCE_ROOT; };
-		CD490201141AC34300913D80 /* moai-target */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "moai-target"; sourceTree = SOURCE_ROOT; };
 		CD7C73AC13B95516006CFA19 /* ParticlePresets.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ParticlePresets.cpp; path = ../../src/hosts/ParticlePresets.cpp; sourceTree = SOURCE_ROOT; };
 		CD7C73AD13B95516006CFA19 /* ParticlePresets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ParticlePresets.h; path = ../../src/hosts/ParticlePresets.h; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -222,9 +218,7 @@
 		03E2806113C7CC4800EE3B0D /* build */ = {
 			isa = PBXGroup;
 			children = (
-				03E2806013C7CC3500EE3B0D /* moai-target */,
 				037ED45813CD1FD2009CBA72 /* package.sh */,
-				03E27D7A13C7C05100EE3B0D /* lua */,
 			);
 			name = build;
 			sourceTree = "<group>";
@@ -444,8 +438,6 @@
 				03CC905D13B3C1B700B2724C /* Icon@2x.png in Resources */,
 				03CC905F13B3C1B700B2724C /* MainWindow-iPad.xib in Resources */,
 				03CC906013B3C1B700B2724C /* MainWindow-iPhone.xib in Resources */,
-				CD490200141AC32A00913D80 /* lua in Resources */,
-				CD490202141AC34300913D80 /* moai-target in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
