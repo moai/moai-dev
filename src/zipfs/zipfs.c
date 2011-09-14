@@ -407,7 +407,7 @@ int zipfs_fputc ( int c, ZIPFSFILE* fp ) {
 
 	FILE* file = is_file ( fp );
 	if ( file ) {
-		return fputc ( c, fp );
+		return fputc ( c, file );
 	}
 	return EOF;
 }
@@ -417,7 +417,7 @@ int zipfs_fputs ( const char* string, ZIPFSFILE* fp ) {
 
 	FILE* file = is_file ( fp );
 	if ( file ) {
-		return fputs ( string, fp );
+		return fputs ( string, file );
 	}
 	return EOF;
 }
