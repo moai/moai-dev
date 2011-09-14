@@ -29,5 +29,6 @@ long			AKUGetIphoneNetworkReachability					    	();
 void			AKUIphoneInit											( UIApplication* application );
 void			AKUSetConnectionType									( long type );
 void			AKUSetDefaultFrameBuffer								( GLuint frameBuffer );
+void			AKUWasLaunchedWithRemoteNotification					( NSDictionary* remoteNotificationPayload );
 
 #endif

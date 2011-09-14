@@ -130,3 +130,12 @@ void AKUSetDefaultFrameBuffer ( GLuint frameBuffer ) {
 
 	MOAIGfxDevice::Get ().SetDefaultFrameBuffer ( frameBuffer );
 }
+
+//-----------------------------------------------------------------//
+void AKUWasLaunchedWithRemoteNotification ( NSDictionary* remoteNotificationPayload ) {
+
+	if ( remoteNotificationPayload ) {
+	
+		MOAIApp::Get ().SetRemoteNotificationPayload ( remoteNotificationPayload );
+	}
+}

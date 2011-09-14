@@ -73,6 +73,7 @@ private:
 	
 	UIApplication*			mApplication;
 	USLuaRef				mListeners [ TOTAL ];
+	NSDictionary*			mAppNotificationPayload;
 	MOAIStoreKitListener*	mStoreKitListener;
 
 	int						mNumRequests;
@@ -84,7 +85,9 @@ private:
 	static int		_canMakePayments						( lua_State* L );
 	static int		_getAppIconBadgeNumber					( lua_State* L );
 	static int		_getDirectoryInDomain					( lua_State* L );
+	static int		_getNotificationThatStartedApp			( lua_State* L );
 	static int		_openURL								( lua_State* L );
+	static int		_presentLocalNotification				( lua_State* L );
 	static int		_registerForRemoteNotifications			( lua_State* L );
 	static int		_restoreCompletedTransactions			( lua_State* L );
 	static int		_requestPaymentForProduct				( lua_State* L );
@@ -117,6 +120,7 @@ public:
 	void		ProductsRequestDidReceiveResponse							( SKProductsRequest* request, SKProductsResponse* response );
 	void		RegisterLuaClass											( USLuaState& state );
 	void		Reset														();
+	void		SetRemoteNotificationPayload								( NSDictionary* remoteNotificationPayload );
 };
 
 #endif
