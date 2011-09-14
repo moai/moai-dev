@@ -53,8 +53,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "lua", "lua\lua.vcproj", "{C
 		{E8571557-09C8-4176-B89B-D69DA3028FAF} = {E8571557-09C8-4176-B89B-D69DA3028FAF}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "lua-dll", "lua-dll\lua-dll.vcproj", "{61855FD6-02F9-4996-B437-32F8AF3681BE}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "lua-lib", "lua-lib\lua-lib.vcproj", "{E8571557-09C8-4176-B89B-D69DA3028FAF}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "luac", "luac\luac.vcproj", "{3AC1F428-E1A9-44D5-9A7C-F03BDCBCF92E}"
@@ -270,14 +268,6 @@ Global
 		{CCE1639A-B6FD-4144-A309-741B55DC835D}.Release|Win32.Build.0 = Release|Win32
 		{CCE1639A-B6FD-4144-A309-741B55DC835D}.Release|x64.ActiveCfg = Release|x64
 		{CCE1639A-B6FD-4144-A309-741B55DC835D}.Release|x64.Build.0 = Release|x64
-		{61855FD6-02F9-4996-B437-32F8AF3681BE}.Debug|Win32.ActiveCfg = Debug|Win32
-		{61855FD6-02F9-4996-B437-32F8AF3681BE}.Debug|Win32.Build.0 = Debug|Win32
-		{61855FD6-02F9-4996-B437-32F8AF3681BE}.Debug|x64.ActiveCfg = Debug|x64
-		{61855FD6-02F9-4996-B437-32F8AF3681BE}.Debug|x64.Build.0 = Debug|x64
-		{61855FD6-02F9-4996-B437-32F8AF3681BE}.Release|Win32.ActiveCfg = Release|Win32
-		{61855FD6-02F9-4996-B437-32F8AF3681BE}.Release|Win32.Build.0 = Release|Win32
-		{61855FD6-02F9-4996-B437-32F8AF3681BE}.Release|x64.ActiveCfg = Release|x64
-		{61855FD6-02F9-4996-B437-32F8AF3681BE}.Release|x64.Build.0 = Release|x64
 		{E8571557-09C8-4176-B89B-D69DA3028FAF}.Debug|Win32.ActiveCfg = Debug|Win32
 		{E8571557-09C8-4176-B89B-D69DA3028FAF}.Debug|Win32.Build.0 = Debug|Win32
 		{E8571557-09C8-4176-B89B-D69DA3028FAF}.Debug|x64.ActiveCfg = Debug|x64
@@ -396,18 +386,11 @@ Global
 		{A130115C-B50F-436E-8C90-4243E310DC9C}.Release|Win32.ActiveCfg = Release|Win32
 		{A130115C-B50F-436E-8C90-4243E310DC9C}.Release|Win32.Build.0 = Release|Win32
 		{A130115C-B50F-436E-8C90-4243E310DC9C}.Release|x64.ActiveCfg = Release|Win32
-		{C9D9A0FA-2D6E-440E-BF2B-C81DE58EBED0}.Debug|Win32.ActiveCfg = Debug|Win32
-		{C9D9A0FA-2D6E-440E-BF2B-C81DE58EBED0}.Debug|Win32.Build.0 = Debug|Win32
-		{C9D9A0FA-2D6E-440E-BF2B-C81DE58EBED0}.Debug|x64.ActiveCfg = Debug|Win32
-		{C9D9A0FA-2D6E-440E-BF2B-C81DE58EBED0}.Release|Win32.ActiveCfg = Release|Win32
-		{C9D9A0FA-2D6E-440E-BF2B-C81DE58EBED0}.Release|Win32.Build.0 = Release|Win32
-		{C9D9A0FA-2D6E-440E-BF2B-C81DE58EBED0}.Release|x64.ActiveCfg = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{61855FD6-02F9-4996-B437-32F8AF3681BE} = {186712BD-8399-44F6-974F-EB8AED706355}
 		{30D318C3-18A8-40B4-ADAC-3360CDCB4DD4} = {186712BD-8399-44F6-974F-EB8AED706355}
 		{C699BB79-8F3F-48A3-A06A-2D4E0EA73360} = {186712BD-8399-44F6-974F-EB8AED706355}
 		{4A578B4D-01AF-46BD-81CE-A775B0553526} = {186712BD-8399-44F6-974F-EB8AED706355}
@@ -443,8 +426,8 @@ Global
 		{A92A8C1C-C62D-43F8-98A9-C418A786BE56} = {9F8AD78A-95B2-4E97-8070-087F82AA848D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		AMDCaPersistentConfig = Debug|Win32
-		AMDCaPersistentStartup = moai (Utilities\moai)
 		AMDCaProjectFile = C:\Documents and Settings\Patrick\My Documents\git\moai\vs2008\CodeAnalyst\moai-open.caw
+		AMDCaPersistentStartup = moai (Utilities\moai)
+		AMDCaPersistentConfig = Debug|Win32
 	EndGlobalSection
 EndGlobal
