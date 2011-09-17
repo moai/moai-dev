@@ -42,11 +42,11 @@ static int luaB_print (lua_State *L) {
     if (s == NULL)
       return luaL_error(L, LUA_QL("tostring") " must return a string to "
                            LUA_QL("print"));
-    if (i>1) zipfs_fputs("\t", stdout);
-    zipfs_fputs(s, stdout);
+    if (i>1) zipfs_fputs("\t", zipfs_stdout);
+    zipfs_fputs(s, zipfs_stdout);
     lua_pop(L, 1);  /* pop result */
   }
-  zipfs_fputs("\n", stdout);
+  zipfs_fputs("\n", zipfs_stdout);
   return 0;
 }
 
