@@ -57,8 +57,17 @@ $(SRC_PATH)/src/moaicore/MOAIBlocker.cpp \
 $(SRC_PATH)/src/moaicore/MOAIBox2DArbiter.cpp \
 $(SRC_PATH)/src/moaicore/MOAIBox2DBody.cpp \
 $(SRC_PATH)/src/moaicore/MOAIBox2DDebugDraw.cpp \
+$(SRC_PATH)/src/moaicore/MOAIBox2DDistanceJoint.cpp \
 $(SRC_PATH)/src/moaicore/MOAIBox2DFixture.cpp \
+$(SRC_PATH)/src/moaicore/MOAIBox2DFrictionJoint.cpp \
+$(SRC_PATH)/src/moaicore/MOAIBox2DGearJoint.cpp \
 $(SRC_PATH)/src/moaicore/MOAIBox2DJoint.cpp \
+$(SRC_PATH)/src/moaicore/MOAIBox2DLineJoint.cpp \
+$(SRC_PATH)/src/moaicore/MOAIBox2DMouseJoint.cpp \
+$(SRC_PATH)/src/moaicore/MOAIBox2DPrismaticJoint.cpp \
+$(SRC_PATH)/src/moaicore/MOAIBox2DPulleyJoint.cpp \
+$(SRC_PATH)/src/moaicore/MOAIBox2DRevoluteJoint.cpp \
+$(SRC_PATH)/src/moaicore/MOAIBox2DWeldJoint.cpp \
 $(SRC_PATH)/src/moaicore/MOAIBox2DWorld.cpp \
 $(SRC_PATH)/src/moaicore/MOAIButtonSensor.cpp \
 $(SRC_PATH)/src/moaicore/MOAICameraAnchor2D.cpp \

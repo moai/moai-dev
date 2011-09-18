@@ -109,8 +109,17 @@
 	#include <moaicore/MOAIBox2DArbiter.h>
 	#include <moaicore/MOAIBox2DBody.h>
 	#include <moaicore/MOAIBox2DDebugDraw.h>
+	#include <moaicore/MOAIBox2DDistanceJoint.h>
 	#include <moaicore/MOAIBox2DFixture.h>
+	#include <moaicore/MOAIBox2DFrictionJoint.h>
+	#include <moaicore/MOAIBox2DGearJoint.h>
 	#include <moaicore/MOAIBox2DJoint.h>
+	#include <moaicore/MOAIBox2DLineJoint.h>
+	#include <moaicore/MOAIBox2DMouseJoint.h>
+	#include <moaicore/MOAIBox2DPrismaticJoint.h>
+	#include <moaicore/MOAIBox2DPulleyJoint.h>
+	#include <moaicore/MOAIBox2DRevoluteJoint.h>
+	#include <moaicore/MOAIBox2DWeldJoint.h>
 	#include <moaicore/MOAIBox2DWorld.h>
 #endif
 

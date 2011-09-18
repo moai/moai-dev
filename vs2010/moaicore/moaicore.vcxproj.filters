@@ -79,6 +79,9 @@
     <Filter Include="src\brush">
       <UniqueIdentifier>{093f94ff-8095-432a-9122-f63ed13e8b54}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\box2D\joints">
+      <UniqueIdentifier>{1e8b7ec0-b40a-4ac2-9ad5-b1212013fe89}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\moaicore\MOAIAction.cpp">
@@ -428,6 +431,33 @@
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAIGfxResource.cpp">
       <Filter>src\gfx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIBox2DDistanceJoint.cpp">
+      <Filter>src\box2D\joints</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIBox2DFrictionJoint.cpp">
+      <Filter>src\box2D\joints</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIBox2DGearJoint.cpp">
+      <Filter>src\box2D\joints</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIBox2DLineJoint.cpp">
+      <Filter>src\box2D\joints</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIBox2DMouseJoint.cpp">
+      <Filter>src\box2D\joints</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIBox2DPrismaticJoint.cpp">
+      <Filter>src\box2D\joints</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIBox2DPulleyJoint.cpp">
+      <Filter>src\box2D\joints</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIBox2DRevoluteJoint.cpp">
+      <Filter>src\box2D\joints</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIBox2DWeldJoint.cpp">
+      <Filter>src\box2D\joints</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -787,6 +817,33 @@
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIGfxResource.h">
       <Filter>src\gfx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIBox2DDistanceJoint.h">
+      <Filter>src\box2D\joints</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIBox2DFrictionJoint.h">
+      <Filter>src\box2D\joints</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIBox2DGearJoint.h">
+      <Filter>src\box2D\joints</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIBox2DLineJoint.h">
+      <Filter>src\box2D\joints</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIBox2DMouseJoint.h">
+      <Filter>src\box2D\joints</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIBox2DPrismaticJoint.h">
+      <Filter>src\box2D\joints</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIBox2DPulleyJoint.h">
+      <Filter>src\box2D\joints</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIBox2DRevoluteJoint.h">
+      <Filter>src\box2D\joints</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIBox2DWeldJoint.h">
+      <Filter>src\box2D\joints</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
