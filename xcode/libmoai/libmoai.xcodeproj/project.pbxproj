@@ -2561,6 +2561,42 @@
 		CDBC71191398C6E50016F98A /* MOAIFileSystem.h in Headers */ = {isa = PBXBuildFile; fileRef = CDBC71171398C6E50016F98A /* MOAIFileSystem.h */; };
 		CDBC711A1398C6E50016F98A /* MOAIFileSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDBC71161398C6E50016F98A /* MOAIFileSystem.cpp */; };
 		CDBC711B1398C6E50016F98A /* MOAIFileSystem.h in Headers */ = {isa = PBXBuildFile; fileRef = CDBC71171398C6E50016F98A /* MOAIFileSystem.h */; };
+		CDBD3D1C1425DC2600BC33D4 /* MOAIBox2DDistanceJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDBD3D0A1425DC2600BC33D4 /* MOAIBox2DDistanceJoint.cpp */; };
+		CDBD3D1D1425DC2600BC33D4 /* MOAIBox2DDistanceJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = CDBD3D0B1425DC2600BC33D4 /* MOAIBox2DDistanceJoint.h */; };
+		CDBD3D1E1425DC2600BC33D4 /* MOAIBox2DFrictionJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDBD3D0C1425DC2600BC33D4 /* MOAIBox2DFrictionJoint.cpp */; };
+		CDBD3D1F1425DC2600BC33D4 /* MOAIBox2DFrictionJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = CDBD3D0D1425DC2600BC33D4 /* MOAIBox2DFrictionJoint.h */; };
+		CDBD3D201425DC2600BC33D4 /* MOAIBox2DGearJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDBD3D0E1425DC2600BC33D4 /* MOAIBox2DGearJoint.cpp */; };
+		CDBD3D211425DC2600BC33D4 /* MOAIBox2DGearJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = CDBD3D0F1425DC2600BC33D4 /* MOAIBox2DGearJoint.h */; };
+		CDBD3D221425DC2600BC33D4 /* MOAIBox2DLineJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDBD3D101425DC2600BC33D4 /* MOAIBox2DLineJoint.cpp */; };
+		CDBD3D231425DC2600BC33D4 /* MOAIBox2DLineJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = CDBD3D111425DC2600BC33D4 /* MOAIBox2DLineJoint.h */; };
+		CDBD3D241425DC2600BC33D4 /* MOAIBox2DMouseJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDBD3D121425DC2600BC33D4 /* MOAIBox2DMouseJoint.cpp */; };
+		CDBD3D251425DC2600BC33D4 /* MOAIBox2DMouseJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = CDBD3D131425DC2600BC33D4 /* MOAIBox2DMouseJoint.h */; };
+		CDBD3D261425DC2600BC33D4 /* MOAIBox2DPrismaticJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDBD3D141425DC2600BC33D4 /* MOAIBox2DPrismaticJoint.cpp */; };
+		CDBD3D271425DC2600BC33D4 /* MOAIBox2DPrismaticJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = CDBD3D151425DC2600BC33D4 /* MOAIBox2DPrismaticJoint.h */; };
+		CDBD3D281425DC2600BC33D4 /* MOAIBox2DPulleyJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDBD3D161425DC2600BC33D4 /* MOAIBox2DPulleyJoint.cpp */; };
+		CDBD3D291425DC2600BC33D4 /* MOAIBox2DPulleyJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = CDBD3D171425DC2600BC33D4 /* MOAIBox2DPulleyJoint.h */; };
+		CDBD3D2A1425DC2600BC33D4 /* MOAIBox2DRevoluteJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDBD3D181425DC2600BC33D4 /* MOAIBox2DRevoluteJoint.cpp */; };
+		CDBD3D2B1425DC2600BC33D4 /* MOAIBox2DRevoluteJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = CDBD3D191425DC2600BC33D4 /* MOAIBox2DRevoluteJoint.h */; };
+		CDBD3D2C1425DC2600BC33D4 /* MOAIBox2DWeldJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDBD3D1A1425DC2600BC33D4 /* MOAIBox2DWeldJoint.cpp */; };
+		CDBD3D2D1425DC2600BC33D4 /* MOAIBox2DWeldJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = CDBD3D1B1425DC2600BC33D4 /* MOAIBox2DWeldJoint.h */; };
+		CDBD3D2E1425DC2600BC33D4 /* MOAIBox2DDistanceJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDBD3D0A1425DC2600BC33D4 /* MOAIBox2DDistanceJoint.cpp */; };
+		CDBD3D2F1425DC2600BC33D4 /* MOAIBox2DDistanceJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = CDBD3D0B1425DC2600BC33D4 /* MOAIBox2DDistanceJoint.h */; };
+		CDBD3D301425DC2600BC33D4 /* MOAIBox2DFrictionJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDBD3D0C1425DC2600BC33D4 /* MOAIBox2DFrictionJoint.cpp */; };
+		CDBD3D311425DC2600BC33D4 /* MOAIBox2DFrictionJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = CDBD3D0D1425DC2600BC33D4 /* MOAIBox2DFrictionJoint.h */; };
+		CDBD3D321425DC2600BC33D4 /* MOAIBox2DGearJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDBD3D0E1425DC2600BC33D4 /* MOAIBox2DGearJoint.cpp */; };
+		CDBD3D331425DC2600BC33D4 /* MOAIBox2DGearJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = CDBD3D0F1425DC2600BC33D4 /* MOAIBox2DGearJoint.h */; };
+		CDBD3D341425DC2600BC33D4 /* MOAIBox2DLineJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDBD3D101425DC2600BC33D4 /* MOAIBox2DLineJoint.cpp */; };
+		CDBD3D351425DC2600BC33D4 /* MOAIBox2DLineJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = CDBD3D111425DC2600BC33D4 /* MOAIBox2DLineJoint.h */; };
+		CDBD3D361425DC2600BC33D4 /* MOAIBox2DMouseJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDBD3D121425DC2600BC33D4 /* MOAIBox2DMouseJoint.cpp */; };
+		CDBD3D371425DC2600BC33D4 /* MOAIBox2DMouseJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = CDBD3D131425DC2600BC33D4 /* MOAIBox2DMouseJoint.h */; };
+		CDBD3D381425DC2600BC33D4 /* MOAIBox2DPrismaticJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDBD3D141425DC2600BC33D4 /* MOAIBox2DPrismaticJoint.cpp */; };
+		CDBD3D391425DC2600BC33D4 /* MOAIBox2DPrismaticJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = CDBD3D151425DC2600BC33D4 /* MOAIBox2DPrismaticJoint.h */; };
+		CDBD3D3A1425DC2600BC33D4 /* MOAIBox2DPulleyJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDBD3D161425DC2600BC33D4 /* MOAIBox2DPulleyJoint.cpp */; };
+		CDBD3D3B1425DC2600BC33D4 /* MOAIBox2DPulleyJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = CDBD3D171425DC2600BC33D4 /* MOAIBox2DPulleyJoint.h */; };
+		CDBD3D3C1425DC2600BC33D4 /* MOAIBox2DRevoluteJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDBD3D181425DC2600BC33D4 /* MOAIBox2DRevoluteJoint.cpp */; };
+		CDBD3D3D1425DC2600BC33D4 /* MOAIBox2DRevoluteJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = CDBD3D191425DC2600BC33D4 /* MOAIBox2DRevoluteJoint.h */; };
+		CDBD3D3E1425DC2600BC33D4 /* MOAIBox2DWeldJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDBD3D1A1425DC2600BC33D4 /* MOAIBox2DWeldJoint.cpp */; };
+		CDBD3D3F1425DC2600BC33D4 /* MOAIBox2DWeldJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = CDBD3D1B1425DC2600BC33D4 /* MOAIBox2DWeldJoint.h */; };
 		CDD06D8A1398832300AB0420 /* lcrypto.c in Sources */ = {isa = PBXBuildFile; fileRef = CDD06D881398832300AB0420 /* lcrypto.c */; };
 		CDD06D8B1398832300AB0420 /* lcrypto.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD06D891398832300AB0420 /* lcrypto.h */; };
 		CDD06D8C1398832300AB0420 /* lcrypto.c in Sources */ = {isa = PBXBuildFile; fileRef = CDD06D881398832300AB0420 /* lcrypto.c */; };
@@ -4499,6 +4535,24 @@
 		CD80F63E135BBCFF006B0683 /* ISO8601DateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ISO8601DateFormatter.m; path = ../../3rdparty/contrib/ISO8601DateFormatter.m; sourceTree = "<group>"; };
 		CDBC71161398C6E50016F98A /* MOAIFileSystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIFileSystem.cpp; path = ../../src/moaicore/MOAIFileSystem.cpp; sourceTree = SOURCE_ROOT; };
 		CDBC71171398C6E50016F98A /* MOAIFileSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIFileSystem.h; path = ../../src/moaicore/MOAIFileSystem.h; sourceTree = SOURCE_ROOT; };
+		CDBD3D0A1425DC2600BC33D4 /* MOAIBox2DDistanceJoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIBox2DDistanceJoint.cpp; path = ../../src/moaicore/MOAIBox2DDistanceJoint.cpp; sourceTree = SOURCE_ROOT; };
+		CDBD3D0B1425DC2600BC33D4 /* MOAIBox2DDistanceJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIBox2DDistanceJoint.h; path = ../../src/moaicore/MOAIBox2DDistanceJoint.h; sourceTree = SOURCE_ROOT; };
+		CDBD3D0C1425DC2600BC33D4 /* MOAIBox2DFrictionJoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIBox2DFrictionJoint.cpp; path = ../../src/moaicore/MOAIBox2DFrictionJoint.cpp; sourceTree = SOURCE_ROOT; };
+		CDBD3D0D1425DC2600BC33D4 /* MOAIBox2DFrictionJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIBox2DFrictionJoint.h; path = ../../src/moaicore/MOAIBox2DFrictionJoint.h; sourceTree = SOURCE_ROOT; };
+		CDBD3D0E1425DC2600BC33D4 /* MOAIBox2DGearJoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIBox2DGearJoint.cpp; path = ../../src/moaicore/MOAIBox2DGearJoint.cpp; sourceTree = SOURCE_ROOT; };
+		CDBD3D0F1425DC2600BC33D4 /* MOAIBox2DGearJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIBox2DGearJoint.h; path = ../../src/moaicore/MOAIBox2DGearJoint.h; sourceTree = SOURCE_ROOT; };
+		CDBD3D101425DC2600BC33D4 /* MOAIBox2DLineJoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIBox2DLineJoint.cpp; path = ../../src/moaicore/MOAIBox2DLineJoint.cpp; sourceTree = SOURCE_ROOT; };
+		CDBD3D111425DC2600BC33D4 /* MOAIBox2DLineJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIBox2DLineJoint.h; path = ../../src/moaicore/MOAIBox2DLineJoint.h; sourceTree = SOURCE_ROOT; };
+		CDBD3D121425DC2600BC33D4 /* MOAIBox2DMouseJoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIBox2DMouseJoint.cpp; path = ../../src/moaicore/MOAIBox2DMouseJoint.cpp; sourceTree = SOURCE_ROOT; };
+		CDBD3D131425DC2600BC33D4 /* MOAIBox2DMouseJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIBox2DMouseJoint.h; path = ../../src/moaicore/MOAIBox2DMouseJoint.h; sourceTree = SOURCE_ROOT; };
+		CDBD3D141425DC2600BC33D4 /* MOAIBox2DPrismaticJoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIBox2DPrismaticJoint.cpp; path = ../../src/moaicore/MOAIBox2DPrismaticJoint.cpp; sourceTree = SOURCE_ROOT; };
+		CDBD3D151425DC2600BC33D4 /* MOAIBox2DPrismaticJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIBox2DPrismaticJoint.h; path = ../../src/moaicore/MOAIBox2DPrismaticJoint.h; sourceTree = SOURCE_ROOT; };
+		CDBD3D161425DC2600BC33D4 /* MOAIBox2DPulleyJoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIBox2DPulleyJoint.cpp; path = ../../src/moaicore/MOAIBox2DPulleyJoint.cpp; sourceTree = SOURCE_ROOT; };
+		CDBD3D171425DC2600BC33D4 /* MOAIBox2DPulleyJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIBox2DPulleyJoint.h; path = ../../src/moaicore/MOAIBox2DPulleyJoint.h; sourceTree = SOURCE_ROOT; };
+		CDBD3D181425DC2600BC33D4 /* MOAIBox2DRevoluteJoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIBox2DRevoluteJoint.cpp; path = ../../src/moaicore/MOAIBox2DRevoluteJoint.cpp; sourceTree = SOURCE_ROOT; };
+		CDBD3D191425DC2600BC33D4 /* MOAIBox2DRevoluteJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIBox2DRevoluteJoint.h; path = ../../src/moaicore/MOAIBox2DRevoluteJoint.h; sourceTree = SOURCE_ROOT; };
+		CDBD3D1A1425DC2600BC33D4 /* MOAIBox2DWeldJoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIBox2DWeldJoint.cpp; path = ../../src/moaicore/MOAIBox2DWeldJoint.cpp; sourceTree = SOURCE_ROOT; };
+		CDBD3D1B1425DC2600BC33D4 /* MOAIBox2DWeldJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIBox2DWeldJoint.h; path = ../../src/moaicore/MOAIBox2DWeldJoint.h; sourceTree = SOURCE_ROOT; };
 		CDD06BD01398822500AB0420 /* libmoai-ios-luaext.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-luaext.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDD06D87139882D900AB0420 /* libmoai-osx-luaext.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-luaext.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDD06D881398832300AB0420 /* lcrypto.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lcrypto.c; path = "../../3rdparty/luacrypto-0.2.0/src/lcrypto.c"; sourceTree = SOURCE_ROOT; };
@@ -5919,6 +5973,7 @@
 		CD148EFB1395AF2600A3F501 /* box2d */ = {
 			isa = PBXGroup;
 			children = (
+				CDBD3D091425DC0600BC33D4 /* joints */,
 				0324E50213564BC7000ADC60 /* MOAIBox2DArbiter.cpp */,
 				0324E50313564BC7000ADC60 /* MOAIBox2DArbiter.h */,
 				0324E50413564BC7000ADC60 /* MOAIBox2DBody.cpp */,
@@ -7642,6 +7697,31 @@
 			path = "../../3rdparty/openssl-1.0.0d/crypto/pqueue";
 			sourceTree = "<group>";
 		};
+		CDBD3D091425DC0600BC33D4 /* joints */ = {
+			isa = PBXGroup;
+			children = (
+				CDBD3D0A1425DC2600BC33D4 /* MOAIBox2DDistanceJoint.cpp */,
+				CDBD3D0B1425DC2600BC33D4 /* MOAIBox2DDistanceJoint.h */,
+				CDBD3D0C1425DC2600BC33D4 /* MOAIBox2DFrictionJoint.cpp */,
+				CDBD3D0D1425DC2600BC33D4 /* MOAIBox2DFrictionJoint.h */,
+				CDBD3D0E1425DC2600BC33D4 /* MOAIBox2DGearJoint.cpp */,
+				CDBD3D0F1425DC2600BC33D4 /* MOAIBox2DGearJoint.h */,
+				CDBD3D101425DC2600BC33D4 /* MOAIBox2DLineJoint.cpp */,
+				CDBD3D111425DC2600BC33D4 /* MOAIBox2DLineJoint.h */,
+				CDBD3D121425DC2600BC33D4 /* MOAIBox2DMouseJoint.cpp */,
+				CDBD3D131425DC2600BC33D4 /* MOAIBox2DMouseJoint.h */,
+				CDBD3D141425DC2600BC33D4 /* MOAIBox2DPrismaticJoint.cpp */,
+				CDBD3D151425DC2600BC33D4 /* MOAIBox2DPrismaticJoint.h */,
+				CDBD3D161425DC2600BC33D4 /* MOAIBox2DPulleyJoint.cpp */,
+				CDBD3D171425DC2600BC33D4 /* MOAIBox2DPulleyJoint.h */,
+				CDBD3D181425DC2600BC33D4 /* MOAIBox2DRevoluteJoint.cpp */,
+				CDBD3D191425DC2600BC33D4 /* MOAIBox2DRevoluteJoint.h */,
+				CDBD3D1A1425DC2600BC33D4 /* MOAIBox2DWeldJoint.cpp */,
+				CDBD3D1B1425DC2600BC33D4 /* MOAIBox2DWeldJoint.h */,
+			);
+			name = joints;
+			sourceTree = "<group>";
+		};
 		CDD06BD11398824600AB0420 /* luasocket */ = {
 			isa = PBXGroup;
 			children = (
@@ -8171,6 +8251,15 @@
 				07AF16C713F45A0100E38D1D /* MOAIPartitionResultMgr.h in Headers */,
 				66D967FD14047A2500017919 /* MOAIScriptDeck.h in Headers */,
 				CDF71310141EBC5C00D650CA /* MOAIGfxResource.h in Headers */,
+				CDBD3D1D1425DC2600BC33D4 /* MOAIBox2DDistanceJoint.h in Headers */,
+				CDBD3D1F1425DC2600BC33D4 /* MOAIBox2DFrictionJoint.h in Headers */,
+				CDBD3D211425DC2600BC33D4 /* MOAIBox2DGearJoint.h in Headers */,
+				CDBD3D231425DC2600BC33D4 /* MOAIBox2DLineJoint.h in Headers */,
+				CDBD3D251425DC2600BC33D4 /* MOAIBox2DMouseJoint.h in Headers */,
+				CDBD3D271425DC2600BC33D4 /* MOAIBox2DPrismaticJoint.h in Headers */,
+				CDBD3D291425DC2600BC33D4 /* MOAIBox2DPulleyJoint.h in Headers */,
+				CDBD3D2B1425DC2600BC33D4 /* MOAIBox2DRevoluteJoint.h in Headers */,
+				CDBD3D2D1425DC2600BC33D4 /* MOAIBox2DWeldJoint.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8810,6 +8899,15 @@
 				66D967FC14047A2500017919 /* MOAIScriptDeck.h in Headers */,
 				07E6C630140C490B004D1227 /* MOAIGameCenter.h in Headers */,
 				CDF71312141EBC5C00D650CA /* MOAIGfxResource.h in Headers */,
+				CDBD3D2F1425DC2600BC33D4 /* MOAIBox2DDistanceJoint.h in Headers */,
+				CDBD3D311425DC2600BC33D4 /* MOAIBox2DFrictionJoint.h in Headers */,
+				CDBD3D331425DC2600BC33D4 /* MOAIBox2DGearJoint.h in Headers */,
+				CDBD3D351425DC2600BC33D4 /* MOAIBox2DLineJoint.h in Headers */,
+				CDBD3D371425DC2600BC33D4 /* MOAIBox2DMouseJoint.h in Headers */,
+				CDBD3D391425DC2600BC33D4 /* MOAIBox2DPrismaticJoint.h in Headers */,
+				CDBD3D3B1425DC2600BC33D4 /* MOAIBox2DPulleyJoint.h in Headers */,
+				CDBD3D3D1425DC2600BC33D4 /* MOAIBox2DRevoluteJoint.h in Headers */,
+				CDBD3D3F1425DC2600BC33D4 /* MOAIBox2DWeldJoint.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9529,6 +9627,15 @@
 				CDF7130F141EBC5C00D650CA /* MOAIGfxResource.cpp in Sources */,
 				CDF7131D141EBDAC00D650CA /* MOAILogMessages.cpp in Sources */,
 				CDF71329141EBDEF00D650CA /* MOAIScriptDeck.cpp in Sources */,
+				CDBD3D1C1425DC2600BC33D4 /* MOAIBox2DDistanceJoint.cpp in Sources */,
+				CDBD3D1E1425DC2600BC33D4 /* MOAIBox2DFrictionJoint.cpp in Sources */,
+				CDBD3D201425DC2600BC33D4 /* MOAIBox2DGearJoint.cpp in Sources */,
+				CDBD3D221425DC2600BC33D4 /* MOAIBox2DLineJoint.cpp in Sources */,
+				CDBD3D241425DC2600BC33D4 /* MOAIBox2DMouseJoint.cpp in Sources */,
+				CDBD3D261425DC2600BC33D4 /* MOAIBox2DPrismaticJoint.cpp in Sources */,
+				CDBD3D281425DC2600BC33D4 /* MOAIBox2DPulleyJoint.cpp in Sources */,
+				CDBD3D2A1425DC2600BC33D4 /* MOAIBox2DRevoluteJoint.cpp in Sources */,
+				CDBD3D2C1425DC2600BC33D4 /* MOAIBox2DWeldJoint.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10600,6 +10707,15 @@
 				CDF7131C141EBDAB00D650CA /* MOAILogMessages.cpp in Sources */,
 				CDF71328141EBDEE00D650CA /* MOAIScriptDeck.cpp in Sources */,
 				CDF7132E141EBE7300D650CA /* MOAIGameCenter.mm in Sources */,
+				CDBD3D2E1425DC2600BC33D4 /* MOAIBox2DDistanceJoint.cpp in Sources */,
+				CDBD3D301425DC2600BC33D4 /* MOAIBox2DFrictionJoint.cpp in Sources */,
+				CDBD3D321425DC2600BC33D4 /* MOAIBox2DGearJoint.cpp in Sources */,
+				CDBD3D341425DC2600BC33D4 /* MOAIBox2DLineJoint.cpp in Sources */,
+				CDBD3D361425DC2600BC33D4 /* MOAIBox2DMouseJoint.cpp in Sources */,
+				CDBD3D381425DC2600BC33D4 /* MOAIBox2DPrismaticJoint.cpp in Sources */,
+				CDBD3D3A1425DC2600BC33D4 /* MOAIBox2DPulleyJoint.cpp in Sources */,
+				CDBD3D3C1425DC2600BC33D4 /* MOAIBox2DRevoluteJoint.cpp in Sources */,
+				CDBD3D3E1425DC2600BC33D4 /* MOAIBox2DWeldJoint.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
