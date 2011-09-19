@@ -108,7 +108,7 @@ int MOAIUntzSound::_load ( lua_State* L ) {
 	bool loadIntoMemory = state.GetValue < bool >( 3, true );	
 
 	if ( self->mSound ) {
-		//delete self->mSound;
+		delete self->mSound;
 		self->mSound = 0;
 	}
 	
@@ -339,7 +339,8 @@ bool MOAIUntzSound::ApplyAttrOp ( u32 attrID, USAttrOp& attrOp ) {
 }
 
 //----------------------------------------------------------------//
-MOAIUntzSound::MOAIUntzSound () {
+MOAIUntzSound::MOAIUntzSound () :
+	mSound ( 0 ) {
 
 	RTTI_SINGLE ( MOAINode )
 }
@@ -348,7 +349,7 @@ MOAIUntzSound::MOAIUntzSound () {
 MOAIUntzSound::~MOAIUntzSound () {
 
 	if ( this->mSound ) {
-		//delete this->mSound;
+		delete this->mSound;
 	}
 }
 //----------------------------------------------------------------//
