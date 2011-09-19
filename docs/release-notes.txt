@@ -1,0 +1,89 @@
+================================================================
+= Moai SDK
+= Version 0.6 Beta
+= Revision 2
+================================================================
+
+- Integration of code contributions from Harebrained Schemes (Crimson dev team). Thanks!
+- Harebrained - Memory tracking and diagnostics for Lua and texture use
+- Harebrained - Additions/completions of Box2D API
+- Harebrained - Additions/completions to iOS in-app purchase API
+- Harebrained - Lua object dump/leak detection
+- Harebrained - MOAISim update loop configuration for variable step ‘boost’ mode
+- Untz - EOF bugs fixed
+- Untz - moveVolume, seekVolume, ATTR_VOLUME added to MOAIUntzSound
+- Fixed MOAIAction stop bug (removal during action tree update, found by Benny Chen)
+- Fixed buffer overflow bug in MOAIPartitionResultBuffer
+- Rewrote and improved MOAISim update loop; added update loop configuration API
+- Updated the Flash jsfl exporter samples to use shared settings file
+- Fixed Flash jsfl exporters to work with non-centered registration points
+- Added support for immediate mode drawing via MOAIDraw and MOAIScriptDeck
+- Added finalization event to MOAISim
+- Android host - Added log message if SD card cannot be written to
+- Improved logging model; inclusion of default log messages
+- Improved lifecycle management of context objects (USGlobals, USGlobalsMgr)
+- Restored Box2D physics demo (in samples/basics folder)
+- Added getDistance method to MOAICameraFitter
+
+================================================================
+= Moai SDK
+= Version 0.5 Beta
+= Revision 1
+================================================================
+
+- Serialization support for MOAIFont
+- Ability to get/set MOAIFont image or texture
+- First pass of OpenGL programmable pipeline integration
+- Refactor of uslsext graphics objects into moaicore
+- First pass of PhysFS integration
+- Updated MOAIVertexFormat to support programmable pipeline
+- Fixed GLUT bug causing processor over-use when in the background
+- Added support for offscreen rendering (MOAIFrameBuffer)
+- Added support for interlaced PNGs
+- Fixed seek() and move() helper functions when used with a duration of 0
+- Added particle presets demo to iOS sample
+- Modified iOS sample host to create GLES 2 context with a fallback to GLES 1.1
+- Improvements to untz (streaming sounds, fixes on all supported platforms)
+- Updated Flash jsfl export commants to handle offset registration points
+- Removed upper limit on props per layer
+
+================================================================
+= Moai SDK
+= Version 0.4 Beta
+= Revision 12
+================================================================
+
+- Included Moai Project Setup document which, among other things, describes how to set up your Moai IDE projects.
+- Changed the iOS host packaging script. It no longer rsync's edits to files. Also, support for multiple target folders added.
+- Integrated Thorbjørn's contributed 64-bit compatbility changes.
+- Various improvments to SDK packaging scripts.
+
+================================================================
+= Moai SDK
+= Version 0.4 Beta
+= Revision 11
+================================================================
+
+- Inclusion of Tapjoy and Apsalar lua modules
+- Misc. bug fixes
+
+================================================================
+= Moai SDK
+= Version 0.4 Beta
+= Revision 10
+================================================================
+
+- Fixed iPhone touch input coordinates on retina display devices
+- Added new log message type for unsupported 'new'; removed 'new' from MOAIInputDevice and all MOAISensor classes
+- Fixed bug in particle processing causing physics to be skipped if no forces attached to state
+- Fixed MOAITexture filter documentation
+- Fixed MOAIProp2D partition membership trait inheritance bug (removal from partition failed to affect children)
+- Cleaned some more cruft out of MOAISim
+- Updated Lua binding code; added getClass, getClassName to Lua bound objects
+- Added first pass of Tapjoy Lua SDK and examples
+- Renamed MOAILevelSensor to MOAIMotionSensor
+- Exposed MOAIActionMgr to Lua; added getRoot () and setLoc () to MOAIActionMgr
+- Renamed 'user' pointer to 'userdata' in Aku
+- Deprecated userdata param on AKUCreateContext (now must set with AKUSetUserdata)
+- Code improvements and formatting in iPhone MoaiSample app
+- Fixed internal lua ref bug (inconsistent behavior in projects with tens of thousands of refs) and added asserts
