@@ -6,8 +6,17 @@
 #include <moaicore/MOAIBox2DArbiter.h>
 #include <moaicore/MOAIBox2DBody.h>
 #include <moaicore/MOAIBox2DDebugDraw.h>
+#include <moaicore/MOAIBox2DDistanceJoint.h>
 #include <moaicore/MOAIBox2DFixture.h>
+#include <moaicore/MOAIBox2DFrictionJoint.h>
+#include <moaicore/MOAIBox2DGearJoint.h>
 #include <moaicore/MOAIBox2DJoint.h>
+#include <moaicore/MOAIBox2DLineJoint.h>
+#include <moaicore/MOAIBox2DMouseJoint.h>
+#include <moaicore/MOAIBox2DPrismaticJoint.h>
+#include <moaicore/MOAIBox2DPulleyJoint.h>
+#include <moaicore/MOAIBox2DRevoluteJoint.h>
+#include <moaicore/MOAIBox2DWeldJoint.h>
 #include <moaicore/MOAIBox2DWorld.h>
 #include <moaicore/MOAIDraw.h>
 #include <moaicore/MOAIGfxDevice.h>
@@ -107,7 +116,7 @@ int	MOAIBox2DWorld::_addDistanceJoint ( lua_State* L ) {
 	jointDef.dampingRatio	= state.GetValue < float >( 9, jointDef.dampingRatio );
 	jointDef.collideConnected = state.GetValue < bool >( 10, false );
 	
-	MOAIBox2DJoint* joint = new MOAIBox2DJoint ();
+	MOAIBox2DDistanceJoint* joint = new MOAIBox2DDistanceJoint ();
 	joint->SetJoint ( self->mWorld->CreateJoint ( &jointDef ));
 	joint->SetWorld ( self );
 	joint->Retain ();
@@ -145,7 +154,7 @@ int	MOAIBox2DWorld::_addFrictionJoint ( lua_State* L ) {
 	jointDef.maxForce	= state.GetValue < float >( 6, jointDef.maxForce / self->mUnitsToMeters ) * self->mUnitsToMeters;
 	jointDef.maxTorque	= state.GetValue < float >( 7, jointDef.maxTorque * ( float )R2D ) * ( float )D2R;
 	
-	MOAIBox2DJoint* joint = new MOAIBox2DJoint ();
+	MOAIBox2DFrictionJoint* joint = new MOAIBox2DFrictionJoint ();
 	joint->SetJoint ( self->mWorld->CreateJoint ( &jointDef ));
 	joint->SetWorld ( self );
 	joint->Retain ();
@@ -172,13 +181,13 @@ int	MOAIBox2DWorld::_addGearJoint ( lua_State* L ) {
 	
 	b2GearJointDef jointDef;
 	
-	jointDef.bodyA	= jointA->mJoint->GetBodyB ();
+	jointDef.bodyA	= jointA->mJoint->GetBodyA ();
 	jointDef.bodyB	= jointB->mJoint->GetBodyB ();
 	jointDef.joint1	= jointA->mJoint;
 	jointDef.joint2	= jointB->mJoint;
 	jointDef.ratio	= state.GetValue < float >( 4, 0.0f );
 	
-	MOAIBox2DJoint* joint = new MOAIBox2DJoint ();
+	MOAIBox2DGearJoint* joint = new MOAIBox2DGearJoint ();
 	joint->SetJoint ( self->mWorld->CreateJoint ( &jointDef ));
 	joint->SetWorld ( self );
 	joint->Retain ();
@@ -220,7 +229,7 @@ int	MOAIBox2DWorld::_addLineJoint ( lua_State* L ) {
 	b2LineJointDef jointDef;
 	jointDef.Initialize ( bodyA->mBody, bodyB->mBody, anchor, axis );
 	
-	MOAIBox2DJoint* joint = new MOAIBox2DJoint ();
+	MOAIBox2DLineJoint* joint = new MOAIBox2DLineJoint ();
 	joint->SetJoint ( self->mWorld->CreateJoint ( &jointDef ));
 	joint->SetWorld ( self );
 	joint->Retain ();
@@ -255,7 +264,7 @@ int	MOAIBox2DWorld::_addMouseJoint ( lua_State* L ) {
 	jointDef.frequencyHz	= state.GetValue < float >( 5, 0.0f );
 	jointDef.dampingRatio	= state.GetValue < float >( 6, 0.0f );
 	
-	MOAIBox2DJoint* joint = new MOAIBox2DJoint ();
+	MOAIBox2DMouseJoint* joint = new MOAIBox2DMouseJoint ();
 	joint->SetJoint ( self->mWorld->CreateJoint ( &jointDef ));
 	joint->SetWorld ( self );
 	joint->Retain ();
@@ -294,7 +303,7 @@ int	MOAIBox2DWorld::_addPrismaticJoint ( lua_State* L ) {
 	b2PrismaticJointDef jointDef;
 	jointDef.Initialize ( bodyA->mBody, bodyB->mBody, anchor, axis );
 	
-	MOAIBox2DJoint* joint = new MOAIBox2DJoint ();
+	MOAIBox2DPrismaticJoint* joint = new MOAIBox2DPrismaticJoint ();
 	joint->SetJoint ( self->mWorld->CreateJoint ( &jointDef ));
 	joint->SetWorld ( self );
 	joint->Retain ();
@@ -353,7 +362,7 @@ int	MOAIBox2DWorld::_addPulleyJoint ( lua_State* L ) {
 	jointDef.maxLengthA	= state.GetValue < float >( 13, 0 ) * self->mUnitsToMeters;
 	jointDef.maxLengthB	= state.GetValue < float >( 14, 0 ) * self->mUnitsToMeters;
 	
-	MOAIBox2DJoint* joint = new MOAIBox2DJoint ();
+	MOAIBox2DPulleyJoint* joint = new MOAIBox2DPulleyJoint ();
 	joint->SetJoint ( self->mWorld->CreateJoint ( &jointDef ));
 	joint->SetWorld ( self );
 	joint->Retain ();
@@ -386,7 +395,7 @@ int	MOAIBox2DWorld::_addRevoluteJoint ( lua_State* L ) {
 	b2RevoluteJointDef jointDef;
 	jointDef.Initialize ( bodyA->mBody, bodyB->mBody, anchor );
 	
-	MOAIBox2DJoint* joint = new MOAIBox2DJoint ();
+	MOAIBox2DRevoluteJoint* joint = new MOAIBox2DRevoluteJoint ();
 	joint->SetJoint ( self->mWorld->CreateJoint ( &jointDef ));
 	joint->SetWorld ( self );
 	joint->Retain ();
@@ -419,7 +428,7 @@ int	MOAIBox2DWorld::_addWeldJoint ( lua_State* L ) {
 	b2WeldJointDef jointDef;
 	jointDef.Initialize ( bodyA->mBody, bodyB->mBody, anchor );
 	
-	MOAIBox2DJoint* joint = new MOAIBox2DJoint ();
+	MOAIBox2DWeldJoint* joint = new MOAIBox2DWeldJoint ();
 	joint->SetJoint ( self->mWorld->CreateJoint ( &jointDef ));
 	joint->SetWorld ( self );
 	joint->Retain ();

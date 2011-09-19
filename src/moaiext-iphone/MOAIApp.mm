@@ -164,7 +164,24 @@ int MOAIApp::_getDirectoryInDomain ( lua_State* L ) {
 	}
 	return 1;
 }
+//----------------------------------------------------------------//
+/**	@name	getNotificationThatStartedApp
+	@text	Returns the notification payload of a remote notification that launched the app.
+ 
+	@in		nil
+	@out	dictionary	The notification payload that started the app
+*/
+int MOAIApp::_getNotificationThatStartedApp ( lua_State* L ) {
 
+	if ( MOAIApp::Get ().mAppNotificationPayload == NULL ) {
+		lua_pushnil ( L );
+	}
+	else {
+		[ MOAIApp::Get ().mAppNotificationPayload toLua:L ];
+	}
+	
+	return 1;
+}
 //----------------------------------------------------------------//
 /**	@name	openURL
 	@text	See UIApplication documentation.
@@ -182,6 +199,20 @@ int MOAIApp::_openURL ( lua_State* L ) {
 	}
 	
 	return 1;
+}
+
+int MOAIApp::_presentLocalNotification ( lua_State* L ) {
+	USLuaState state ( L );
+	
+	cc8* alertBody				= state.GetValue < cc8* >( 1, "" );
+
+	UILocalNotification* notification = [[[ NSNotification alloc ] init ] autorelease ];		
+	notification.alertBody			= [ NSString stringWithUTF8String:alertBody ];
+	
+	UIApplication* application = [ UIApplication sharedApplication ];
+	[ application scheduleLocalNotification:notification ];
+	
+	return 0;
 }
 
 //----------------------------------------------------------------//
@@ -301,8 +332,8 @@ int MOAIApp::_scheduleLocalNotification ( lua_State* L ) {
 	notification.fireDate			= [ NSDate dateFromISO8601String:[ NSString stringWithUTF8String:fireDate ]];
 	notification.timeZone			= [ NSString stringWithUTF8String:timeZone ];
 	
-	notification.alertBody			= [ NSString stringWithUTF8String:alertAction ];
-	notification.alertAction		= [ NSString stringWithUTF8String:alertBody ];
+	notification.alertBody			= [ NSString stringWithUTF8String:alertBody ];
+	notification.alertAction		= [ NSString stringWithUTF8String:alertAction ];	
 	notification.hasAction			= hasAction;
 	notification.alertLaunchImage	= [ NSString stringWithUTF8String:alertLaunchImage ];
 	
@@ -458,6 +489,8 @@ void MOAIApp::DidResolveHostName( NSString* hostname, cc8* ipAddress ) {
 MOAIApp::MOAIApp () {
 
 	RTTI_SINGLE ( USLuaObject )
+	
+	mAppNotificationPayload = NULL;
 	
 	this->mStoreKitListener = [[ MOAIStoreKitListener alloc ] init ];
 	[[ SKPaymentQueue defaultQueue ] addTransactionObserver:this->mStoreKitListener ];
@@ -658,7 +691,9 @@ void MOAIApp::RegisterLuaClass ( USLuaState& state ) {
 		{ "canMakePayments",					_canMakePayments },
 		{ "getAppIconBadgeNumber",				_getAppIconBadgeNumber },
 		{ "getDirectoryInDomain",				_getDirectoryInDomain },
+		{ "getNotificationThatStartedApp",		_getNotificationThatStartedApp },
 		{ "openURL",							_openURL },
+		{ "presentLocalNotification",			_presentLocalNotification },
 		{ "registerForRemoteNotifications",		_registerForRemoteNotifications },
 		{ "restoreCompletedTransactions",		_restoreCompletedTransactions },
 		{ "requestPaymentForProduct",			_requestPaymentForProduct },
@@ -677,5 +712,11 @@ void MOAIApp::Reset () {
 	for ( int i = 0 ; i < TOTAL; i++ ) {
 		mListeners [ i ].Clear ();
 	}
+}
+
+//----------------------------------------------------------------//
+void MOAIApp::SetRemoteNotificationPayload ( NSDictionary* remoteNotificationPayload ) {
+
+	mAppNotificationPayload = remoteNotificationPayload;
 }
 

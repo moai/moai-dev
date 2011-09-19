@@ -890,7 +890,11 @@ int zipfs_dir_read_entry ( ZIPFSDIR* dir ) {
 		struct dirent* entry;
 		if ( entry = readdir ( self->mHandle )) {
 			self->mName = entry->d_name;
+#ifndef NACL
 			self->mIsDir = ( entry->d_type == DT_DIR ) ? 1 : 0;
+#else
+			self->mIsDir = 1;
+#endif
 			return 1;
 		}
 	}
@@ -1080,10 +1084,12 @@ void zipfs_init () {
 
 	ZIPFSFile* file;
 
+#ifndef NACL
 	sWorkingPath = ZIPFSString_New ();
 	sBuffer = ZIPFSString_New ();
 	
 	zipfs_get_working_path ();
+#endif
 	
 	file = ( ZIPFSFile* )calloc ( 1, sizeof ( ZIPFSFile ));
 	file->mPtr.mFile = stderr;

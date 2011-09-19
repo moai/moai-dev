@@ -17,8 +17,7 @@ class MOAIProp2D;
 	@const	EVENT_FINALIZE
 */
 class MOAISim :
-	public USGlobalClass < MOAISim, USLuaObject >,
-	public MOAIEventSource {
+	public USGlobalClass < MOAISim, MOAIEventSource > {
 private:
 
 	// timer state
@@ -106,6 +105,7 @@ public:
 	
 	GET ( USTaskThread&, DataIOThread, mDataIOThread )
 	GET ( u32, RenderCounter, mRenderCounter )
+	GET ( double, Step, mStep )
 	
 	static const u32 DEFAULT_LOOP_FLAGS = SIM_LOOP_ALLOW_SPIN;
 	static const double DEFAULT_BOOST_THRESHOLD;

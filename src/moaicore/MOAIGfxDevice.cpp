@@ -579,7 +579,7 @@ MOAIGfxDevice::MOAIGfxDevice () :
 	mDefaultFrameBuffer ( 0 ),
 	mTextureMemoryUsage ( 0 ) {
 	
-	RTTI_SINGLE ( MOAIGfxDevice )
+	RTTI_SINGLE ( MOAIEventSource )
 	
 	this->Reserve ( DEFAULT_BUFFER_SIZE );
 	
@@ -603,8 +603,11 @@ MOAIGfxDevice::~MOAIGfxDevice () {
 //----------------------------------------------------------------//
 void MOAIGfxDevice::RegisterLuaClass ( USLuaState& state ) {
 
+	state.SetField ( -1, "EVENT_RESIZE", ( u32 )EVENT_RESIZE );
+
 	luaL_Reg regTable [] = {
 		{ "isProgrammable",				_isProgrammable },
+		{ "setListener",				&MOAIEventSource::_setListener < MOAIGfxDevice > },
 		{ "setPenColor",				_setPenColor },
 		{ "setPenWidth",				_setPenWidth },
 		{ "setPointSize",				_setPointSize },
@@ -897,6 +900,13 @@ void MOAIGfxDevice::SetSize ( u32 width, u32 height ) {
 
 	this->mWidth = width;
 	this->mHeight = height;
+	
+	USLuaStateHandle state = USLuaRuntime::Get ().State ();
+	if ( this->PushListener ( EVENT_RESIZE, state )) {
+		lua_pushnumber ( state, width );
+		lua_pushnumber ( state, height );
+		state.DebugCall ( 2, 0 );
+	}
 }
 
 //----------------------------------------------------------------//

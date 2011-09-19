@@ -8,6 +8,7 @@
 #include <moaicore/MOAIBox2DJoint.h>
 #include <moaicore/MOAIBox2DWorld.h>
 #include <moaicore/MOAILogMessages.h>
+#include <moaicore/MOAISim.h>
 
 SUPPRESS_EMPTY_FILE_WARNING
 #if USE_BOX2D
@@ -80,7 +81,7 @@ int MOAIBox2DJoint::_getAnchorB ( lua_State* L ) {
 int MOAIBox2DJoint::_getBodyA ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DJoint, "U" )
 	
-	MOAIBox2DBody* body = ( MOAIBox2DBody* )self->mJoint->GetBodyA ()->GetUserData ();;
+	MOAIBox2DBody* body = ( MOAIBox2DBody* )self->mJoint->GetBodyA ()->GetUserData ();
 	body->PushLuaUserdata ( state );
 	
 	return 1;
@@ -96,7 +97,7 @@ int MOAIBox2DJoint::_getBodyA ( lua_State* L ) {
 int MOAIBox2DJoint::_getBodyB ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DJoint, "U" )
 	
-	MOAIBox2DBody* body = ( MOAIBox2DBody* )self->mJoint->GetBodyB ()->GetUserData ();;
+	MOAIBox2DBody* body = ( MOAIBox2DBody* )self->mJoint->GetBodyB ()->GetUserData ();
 	body->PushLuaUserdata ( state );
 	
 	return 1;
@@ -113,10 +114,11 @@ int MOAIBox2DJoint::_getBodyB ( lua_State* L ) {
 int MOAIBox2DJoint::_getReactionForce ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DJoint, "U" )
 	
-	// TODO
-	//b2Vec2 force = self->mJoint->GetReactionForce ();
-	//lua_pushnumber ( state, force.x );
-	//lua_pushnumber ( state, force.y );
+	float step = ( float )( 1.0 / MOAISim::Get ().GetStep ());
+	
+	b2Vec2 force = self->mJoint->GetReactionForce ( step );
+	lua_pushnumber ( state, force.x );
+	lua_pushnumber ( state, force.y );
 	
 	return 2;
 }
@@ -131,85 +133,12 @@ int MOAIBox2DJoint::_getReactionForce ( lua_State* L ) {
 int MOAIBox2DJoint::_getReactionTorque ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DJoint, "U" )
 	
-	// TODO
-	//float torque = self->mJoint->GetReactionTorque ();
-	//lua_pushnumber ( state, torque );
+	float step = ( float )( 1.0 / MOAISim::Get ().GetStep ());
+	
+	float torque = self->mJoint->GetReactionTorque ( step );
+	lua_pushnumber ( state, torque );
 	
 	return 1;
-}
-
-//----------------------------------------------------------------//
-/**	@name	setLimit
-	@text	See Box2D documentation.
-	
-	@in		MOAIBox2DJoint self
-	@opt	number lower			Default value is 0.
-	@opt	number upper			Default value is 0.
-	@out	nil
-*/
-int MOAIBox2DJoint::_setLimit ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIBox2DJoint, "U" )
-	
-	float lower	= state.GetValue < float >( 2, 0.0f );
-	float upper	= state.GetValue < float >( 3, 0.0f );
-	
-	self->SetLimit ( lower, upper );
-	
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@name	setLimitEnabled
-	@text	See Box2D documentation.
-	
-	@in		MOAIBox2DJoint self
-	@opt	boolean enabled			Default value is 'true'
-	@out	nil
-*/
-int MOAIBox2DJoint::_setLimitEnabled ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIBox2DJoint, "U" )
-	
-	bool enabled = state.GetValue < bool >( 2, true );
-	self->SetLimitEnabled ( enabled );
-	
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@name	setMotor
-	@text	See Box2D documentation.
-	
-	@in		MOAIBox2DJoint self
-	@opt	number speed			Default value is 0.
-	@opt	number max				Default value is 0.
-	@out	nil
-*/
-int MOAIBox2DJoint::_setMotor ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIBox2DJoint, "U" )
-	
-	float speed	= state.GetValue < float >( 2, 0.0f );
-	float max	= state.GetValue < float >( 3, 0.0f );
-	
-	self->SetMotor ( speed, max );
-	
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@name	setMotorEnabled
-	@text	See Box2D documentation.
-	
-	@in		MOAIBox2DJoint self
-	@opt	boolean enabled			Default value is 'true'
-	@out	nil
-*/
-int MOAIBox2DJoint::_setMotorEnabled ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIBox2DJoint, "U" )
-	
-	bool enabled = state.GetValue < bool >( 2, true );
-	self->SetMotorEnabled ( enabled );
-	
-	return 0;
 }
 
 //================================================================//
@@ -266,10 +195,6 @@ void MOAIBox2DJoint::RegisterLuaFuncs ( USLuaState& state ) {
 		{ "getBodyB",				_getBodyB },
 		{ "getReactionForce",		_getReactionForce },
 		{ "getReactionTorque",		_getReactionTorque },
-		{ "setLimit",				_setLimit },
-		{ "setLimitEnabled",		_setLimitEnabled },
-		{ "setMotor",				_setMotor },
-		{ "setMotorEnabled",		_setMotorEnabled },
 		{ NULL, NULL }
 	};
 	
@@ -281,145 +206,6 @@ void MOAIBox2DJoint::SetJoint ( b2Joint* joint ) {
 
 	this->mJoint = joint;
 	joint->SetUserData ( this );
-}
-
-//----------------------------------------------------------------//
-void MOAIBox2DJoint::SetLimit ( float lower, float upper ) {
-	float unitsToMeters = this->GetUnitsToMeters ();
-	
-	b2JointType type = this->mJoint->GetType ();
-	switch ( type ) {
-		
-		case e_lineJoint: {
-			
-			b2LineJoint* joint = ( b2LineJoint* )this->mJoint;
-			joint->SetLimits ( lower * unitsToMeters, upper * unitsToMeters );
-			joint->EnableLimit ( true );
-			break;
-		}
-		
-		case e_prismaticJoint: {
-			
-			b2PrismaticJoint* joint = ( b2PrismaticJoint* )this->mJoint;
-			joint->SetLimits ( lower * unitsToMeters, upper * unitsToMeters );
-			joint->EnableLimit ( true );
-			break;
-		}
-		
-		case e_revoluteJoint: {
-		
-			b2RevoluteJoint* joint = ( b2RevoluteJoint* )this->mJoint;
-			joint->SetLimits ( lower * ( float )D2R, upper * ( float )D2R );
-			joint->EnableLimit ( true );
-			break;
-		}
-		
-		default:
-			break;
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIBox2DJoint::SetLimitEnabled ( bool enabled ) {
-	
-	b2JointType type = this->mJoint->GetType ();
-	switch ( type ) {
-		
-		case e_lineJoint: {
-			
-			b2LineJoint* joint = ( b2LineJoint* )this->mJoint;
-			joint->EnableLimit ( enabled );
-			break;
-		}
-		
-		case e_prismaticJoint: {
-			
-			b2PrismaticJoint* joint = ( b2PrismaticJoint* )this->mJoint;
-			joint->EnableLimit ( enabled );
-			break;
-		}
-		
-		case e_revoluteJoint: {
-		
-			b2RevoluteJoint* joint = ( b2RevoluteJoint* )this->mJoint;
-			joint->EnableLimit ( enabled );
-			break;
-		}
-		
-		default:
-			break;
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIBox2DJoint::SetMotor ( float speed, float max ) {
-	float unitsToMeters = this->GetUnitsToMeters ();
-	
-	b2JointType type = this->mJoint->GetType ();
-	switch ( type ) {
-		
-		case e_lineJoint: {
-		
-			b2LineJoint* joint = ( b2LineJoint* )this->mJoint;
-			joint->SetMotorSpeed ( speed * unitsToMeters );
-			joint->SetMaxMotorForce ( max * unitsToMeters );
-			joint->EnableMotor ( speed != 0.0f );
-			break;
-		}
-		
-		case e_prismaticJoint: {
-		
-			b2PrismaticJoint* joint = ( b2PrismaticJoint* )this->mJoint;
-			joint->SetMotorSpeed ( speed * unitsToMeters );
-			joint->SetMaxMotorForce ( max * unitsToMeters );
-			joint->EnableMotor ( speed != 0.0f );
-			break;
-		}
-		
-		case e_revoluteJoint: {
-		
-			b2RevoluteJoint* joint = ( b2RevoluteJoint* )this->mJoint;
-			joint->SetMotorSpeed ( speed * ( float )D2R );
-			joint->SetMaxMotorTorque ( max * ( float )D2R );
-			joint->EnableMotor ( speed != 0.0f );
-			break;
-		}
-		
-		default:
-			break;
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIBox2DJoint::SetMotorEnabled ( bool enabled ) {
-	
-	b2JointType type = this->mJoint->GetType ();
-	switch ( type ) {
-		
-		case e_lineJoint: {
-			
-			b2LineJoint* joint = ( b2LineJoint* )this->mJoint;
-			joint->EnableMotor ( enabled );
-			break;
-		}
-		
-		case e_prismaticJoint: {
-			
-			b2PrismaticJoint* joint = ( b2PrismaticJoint* )this->mJoint;
-			joint->EnableMotor ( enabled );
-			break;
-		}
-		
-		case e_revoluteJoint: {
-		
-			b2RevoluteJoint* joint = ( b2RevoluteJoint* )this->mJoint;
-			joint->EnableMotor ( enabled );
-			break;
-		}
-		
-		default:
-			break;
-	}
 }
 
 //----------------------------------------------------------------//
