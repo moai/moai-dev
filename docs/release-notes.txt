@@ -1,5 +1,24 @@
 ================================================================
 = Moai SDK
+= Version 0.7 Beta
+= Revision 1
+================================================================
+
+- Implemented release/renew cycle for OpenGL resources to handle lost context scenario
+- Replaced physfs with custom vfs (zipfs)
+- Patched Lua 5.1.3 file io to use stdio 'lookalike' functions from zipfs
+- Partial implementation of vfscanf via zipfs_vfscanf
+- Fixed viewport layers transform bug for offscreen buffers
+- Fixed MOAICameraFitter to properly recognize world space bounds
+- Added moai-untz target to osx sample host
+- Added basic Game Center support (leaderboards)
+- Added toolbar to MOAIWebView (ios)
+- Fixed MOAIWebView to appear correctly in both portrait and landscape modes (ios)
+- Extended Box2D wrapper to better expose joints API
+- Added resize event to MOAIGfxDevice
+
+================================================================
+= Moai SDK
 = Version 0.6 Beta
 = Revision 2
 ================================================================
