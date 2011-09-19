@@ -5,6 +5,7 @@
 #define	MOAIGFXDEVICE_H
 
 #include <moaicore/MOAIBlendMode.h>
+#include <moaicore/MOAIEventSource.h>
 
 class MOAIFrameBuffer;
 class MOAIGfxResource;
@@ -17,7 +18,7 @@ class MOAIViewport;
 // MOAIGfxDevice
 //================================================================//
 class MOAIGfxDevice :
-	public USGlobalClass < MOAIGfxDevice, USLuaObject > {
+	public USGlobalClass < MOAIGfxDevice, MOAIEventSource > {
 public:
 	
 	enum {
@@ -37,6 +38,11 @@ public:
 		VTX_VIEW_TRANSFORM,
 		VTX_PROJ_TRANSFORM,
 		TOTAL_VTX_TRANSFORMS,
+	};
+	
+	enum {
+		EVENT_RESIZE,
+		TOTAL_EVENTS,
 	};
 	
 private:

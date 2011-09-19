@@ -45,6 +45,7 @@ protected:
 	}
 
 	//----------------------------------------------------------------//
+	bool				PushListener			( u32 eventID, USLuaState& state );
 	bool				PushListenerAndSelf		( u32 eventID, USLuaState& state );
 	void				SetListener				( lua_State* L, u32 idx );
 

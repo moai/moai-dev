@@ -32,7 +32,7 @@ public:
 
 	//----------------------------------------------------------------//
 	void			HandleEvent				( USStream& eventStream );
-					MOAIMotionSensor			();
+					MOAIMotionSensor		();
 					~MOAIMotionSensor		();
 	void			RegisterLuaClass		( USLuaState& state );
 	void			RegisterLuaFuncs		( USLuaState& state );

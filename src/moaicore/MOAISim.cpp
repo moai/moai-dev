@@ -553,7 +553,7 @@ MOAISim::MOAISim () :
 	mLoopFlags ( DEFAULT_LOOP_FLAGS ),
 	mBoostThreshold ( DEFAULT_BOOST_THRESHOLD ) {
 	
-	RTTI_SINGLE ( USLuaObject )
+	RTTI_SINGLE ( MOAIEventSource )
 	
 	// Start Lua
 	USLuaRuntime& luaRuntime = USLuaRuntime::Get ();
@@ -753,8 +753,8 @@ void MOAISim::RunString ( cc8* script ) {
 void MOAISim::SendFinalizeEvent () {
 
 	USLuaStateHandle state = USLuaRuntime::Get ().State ();
-	if ( this->PushListenerAndSelf ( EVENT_FINALIZE, state )) {
-		state.DebugCall ( 1, 0 );
+	if ( this->PushListener ( EVENT_FINALIZE, state )) {
+		state.DebugCall ( 0, 0 );
 	}
 }
 
