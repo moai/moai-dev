@@ -153,16 +153,13 @@ int MOAIGameCenter::_setGetScoresCallback ( lua_State* L ) {
 int MOAIGameCenter::_showDefaultLeaderboard ( lua_State* L ) {
 	USLuaState state ( L );
 
-	printf("1\n");
 	UIWindow* window = [[ UIApplication sharedApplication ] keyWindow ];
 	UIViewController* rootVC = [ window rootViewController ];	
-	GKLeaderboardViewController *leaderboardController = [[ GKLeaderboardViewController alloc ] init ];
+	GKLeaderboardViewController *leaderboardController = [[[ GKLeaderboardViewController alloc ] init ] autorelease ];
     if ( leaderboardController != nil )
     {	
-		printf("2\n");
         leaderboardController.leaderboardDelegate = MOAIGameCenter::Get ().mLeaderboardDelegate;
 		if ( rootVC != nil ) {
-			printf("3\n");
 			[ rootVC presentModalViewController: leaderboardController animated: YES ];
 		}
     }	

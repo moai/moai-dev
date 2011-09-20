@@ -201,16 +201,28 @@ int MOAIApp::_openURL ( lua_State* L ) {
 	return 1;
 }
 
+//----------------------------------------------------------------//
+/**	@name	presentLocalNotification
+	@text	Presents a local notification.
+ 
+	@in		string alerBody
+	@out	nil
+*/
 int MOAIApp::_presentLocalNotification ( lua_State* L ) {
 	USLuaState state ( L );
 	
-	cc8* alertBody				= state.GetValue < cc8* >( 1, "" );
-
-	UILocalNotification* notification = [[[ NSNotification alloc ] init ] autorelease ];		
-	notification.alertBody			= [ NSString stringWithUTF8String:alertBody ];
+	cc8* alertBody					  = state.GetValue < cc8* >( 1, "" );
+	cc8* alertAction				  = state.GetValue < cc8* >( 2, "" );
 	
-	UIApplication* application = [ UIApplication sharedApplication ];
-	[ application scheduleLocalNotification:notification ];
+	UILocalNotification* notification = [[[ UILocalNotification alloc ] init ] autorelease ];
+	if ( notification ) {
+	
+		notification.alertBody			  = [ NSString stringWithUTF8String:alertBody ];
+		notification.alertAction		  = [ NSString stringWithUTF8String:alertAction ];
+		
+		UIApplication* application		  = [ UIApplication sharedApplication ];
+		[ application presentLocalNotificationNow:notification ];
+	}
 	
 	return 0;
 }
@@ -486,6 +498,18 @@ void MOAIApp::DidResolveHostName( NSString* hostname, cc8* ipAddress ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIApp::DidStartSession( ) {
+
+	USLuaRef& callback = this->mListeners [ SESSION_START ];
+	
+	if ( callback ) {
+		USLuaStateHandle state = callback.GetSelf ();
+		
+		state.DebugCall ( 0, 0 );
+	}
+}
+
+//----------------------------------------------------------------//
 MOAIApp::MOAIApp () {
 
 	RTTI_SINGLE ( USLuaObject )
@@ -670,7 +694,7 @@ void MOAIApp::RegisterLuaClass ( USLuaState& state ) {
 	
 	state.SetField ( -1, "ERROR",						( u32 )ERROR );
 	state.SetField ( -1, "DID_REGISTER",				( u32 )DID_REGISTER );
-	//state.SetField ( -1, "LOCAL_NOTIFICATION",		( u32 )LOCAL_NOTIFICATION );
+	state.SetField ( -1, "LOCAL_NOTIFICATION",			( u32 )LOCAL_NOTIFICATION );
 	state.SetField ( -1, "PAYMENT_QUEUE_TRANSACTION",	( u32 )PAYMENT_QUEUE_TRANSACTION );
 	state.SetField ( -1, "PRODUCT_REQUEST_RESPONSE",	( u32 )PRODUCT_REQUEST_RESPONSE );
 	state.SetField ( -1, "PAYMENT_QUEUE_ERROR",			( u32 )PAYMENT_QUEUE_ERROR );
@@ -685,6 +709,9 @@ void MOAIApp::RegisterLuaClass ( USLuaState& state ) {
 	state.SetField ( -1, "TRANSACTION_STATE_FAILED",    ( u32 )TRANSACTION_STATE_FAILED );
 	state.SetField ( -1, "TRANSACTION_STATE_RESTORED",  ( u32 )TRANSACTION_STATE_RESTORED );
 	state.SetField ( -1, "TRANSACTION_STATE_CANCELLED", ( u32 )TRANSACTION_STATE_CANCELLED );
+		
+	state.SetField ( -1, "SESSION_START",	( u32 )SESSION_START );
+	state.SetField ( -1, "SESSION_END",		( u32 )SESSION_END );
 	
 	luaL_Reg regTable[] = {
 		{ "alert",								_alert },
@@ -718,5 +745,17 @@ void MOAIApp::Reset () {
 void MOAIApp::SetRemoteNotificationPayload ( NSDictionary* remoteNotificationPayload ) {
 
 	mAppNotificationPayload = remoteNotificationPayload;
+}
+
+//----------------------------------------------------------------//
+void MOAIApp::WillEndSession( ) {
+
+	USLuaRef& callback = this->mListeners [ SESSION_END ];
+	
+	if ( callback ) {
+		USLuaStateHandle state = callback.GetSelf ();
+		
+		state.DebugCall ( 0, 0 );
+	}
 }
 
