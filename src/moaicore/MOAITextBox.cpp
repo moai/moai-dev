@@ -582,6 +582,7 @@ void MOAITextBox::RegisterLuaFuncs ( USLuaState& state ) {
 		{ "setFont",			_setFont },
 		{ "setRect",			_setRect },
 		{ "setReveal",			_setReveal },
+		{ "setSpeed",			_setSpeed },
 		{ "setString",			_setString },
 		{ "setTextSize",		_setTextSize },
 		{ "setYFlip",			_setYFlip },
