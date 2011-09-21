@@ -33,6 +33,18 @@ void AKUAppDidRegisterForRemoteNotificationsWithDeviceToken ( NSData* deviceToke
 }
 
 //-----------------------------------------------------------------//
+void AKUAppDidStartSession () {
+
+	MOAIApp::Get ().DidStartSession ();
+}
+
+//-----------------------------------------------------------------//
+void AKUAppWillEndSession () {
+
+	MOAIApp::Get ().WillEndSession ();
+}
+
+//-----------------------------------------------------------------//
 const char* AKUGetGUID ( ) {
 
 	CFUUIDRef uuid = CFUUIDCreate( NULL );

@@ -71,6 +71,11 @@ private:
 		DOMAIN_APP_SUPPORT = NSApplicationSupportDirectory,
 	};
 	
+	enum {
+		SESSION_START,
+		SESSION_END
+	};
+	
 	UIApplication*			mApplication;
 	USLuaRef				mListeners [ TOTAL ];
 	NSDictionary*			mAppNotificationPayload;
@@ -112,6 +117,7 @@ public:
 	void		DidReceiveRemoteNotification								( NSDictionary* userInfo );
 	void		DidRegisterForRemoteNotificationsWithDeviceToken			( NSData* deviceToken );
 	void		DidResolveHostName											( NSString* hostname, cc8* ipAddress );
+	void		DidStartSession												();
 	void		InitStoreKit												();
 				MOAIApp														();
 				~MOAIApp													();
@@ -121,6 +127,7 @@ public:
 	void		RegisterLuaClass											( USLuaState& state );
 	void		Reset														();
 	void		SetRemoteNotificationPayload								( NSDictionary* remoteNotificationPayload );
+	void		WillEndSession												();
 };
 
 #endif
