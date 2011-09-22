@@ -5,6 +5,10 @@
 #include <aku/AKU.h>
 #include <GlutHost.h>
 
+#ifdef GLUTHOST_USE_DEBUGGER
+	#include <aku/AKU-debugger.h>
+#endif
+
 #ifdef GLUTHOST_USE_FMOD
 	#include <aku/AKU-fmod.h>
 #endif
@@ -290,6 +294,11 @@ int GlutHost ( int argc, char** argv ) {
 	for ( int i = 1; i < argc; ++i ) {
 		AKURunScript ( argv [ i ]);
 	}
+	
+	#ifdef GLUTHOST_USE_DEBUGGER
+		AKUDebugHarnessInit ();
+	#endif
+	
 	return 0;
 }
 
