@@ -2,6 +2,7 @@
 // http://getmoai.com
 
 #include <aku/AKU-debugger.h>
+#include <moaiext-debugger/MOAIHarness.h>
 
 //================================================================//
 // AKU-debugger
@@ -12,5 +13,6 @@ void AKUDebugHarnessInit () {
 	
 	lua_State* L = AKUGetLuaState ();
 	
-	// hook lua debug callbacks here
+	// Hook lua debug callbacks here
+	MOAIHarness::HookLua(L, "127.0.0.1", 7018);
 }
