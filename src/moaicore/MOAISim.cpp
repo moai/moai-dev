@@ -88,7 +88,7 @@ int MOAISim::_exitFullscreenMode ( lua_State* L ) {
 int MOAISim::_flagLongLoad ( lua_State* L ) {
 	
 	MOAISim& device = MOAISim::Get ();
-	device.mLongLoadFlag = TRUE;
+	device.mLongLoadFlag = true;
 		
 	return 0;
 }
@@ -847,7 +847,7 @@ void MOAISim::Update () {
 	if ( mLongLoadFlag ) {
 		
 		this->mSimTime = realTime;
-		this->mLongLoadFlag = FALSE;
+		this->mLongLoadFlag = false;
 	}
 
 	// 'gap' is the time left to make up between sim time and real time
