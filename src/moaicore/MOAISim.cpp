@@ -79,6 +79,21 @@ int MOAISim::_exitFullscreenMode ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	flagLongLoad
+	@text	Lets the sim know to skip the catch up process after a long load
+
+	@in		nil
+	@out	nil
+*/
+int MOAISim::_flagLongLoad ( lua_State* L ) {
+	
+	MOAISim& device = MOAISim::Get ();
+	device.mLongLoadFlag = TRUE;
+		
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	framesToTime
 	@text	Converts the number of frames to time passed in seconds.
 
@@ -304,7 +319,7 @@ int MOAISim::_pauseTimer ( lua_State* L ) {
 	bool pause = state.GetValue < bool >( 1, true );
 	
 	if ( pause ) {
-		MOAISim::Get ().mLoopState = MOAISim::START;
+		MOAISim::Get ().mLoopState = MOAISim::PAUSED;
 	}
 	else {
 		MOAISim::Get ().mLoopState = MOAISim::RUNNING;
@@ -468,6 +483,24 @@ int MOAISim::_setFrameSize ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	setFramesToDo
+	@text	Sets the number of frames to do for the next loops. This is used if you want to speed up the simulation temporarily
+	
+	@in		number count		The number of steps to take during the next loop
+	@out	nil
+*/
+int MOAISim::_setFramesToDo ( lua_State* L ) {
+
+	USLuaState state ( L );
+	if ( !state.CheckParams ( 1, "N" )) return 0;
+	
+	MOAISim& device = MOAISim::Get ();
+	device.mFramesToDo = state.GetValue < u32 >( 1, 1 );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	setLeakTrackingEnabled
 	@text	Enable extra memory book-keeping measures that allow all MOAI objects to be
 			tracked back to their point of allocation (in Lua). Use together with
@@ -551,7 +584,9 @@ MOAISim::MOAISim () :
 	mClearFlags ( GL_COLOR_BUFFER_BIT ),
 	mClearColor ( 0xff000000 ),
 	mLoopFlags ( DEFAULT_LOOP_FLAGS ),
-	mBoostThreshold ( DEFAULT_BOOST_THRESHOLD ) {
+	mBoostThreshold ( DEFAULT_BOOST_THRESHOLD ),
+	mLongLoadFlag ( false ),
+	mFramesToDo ( 1 ) {
 	
 	RTTI_SINGLE ( MOAIEventSource )
 	
@@ -632,6 +667,7 @@ void MOAISim::RegisterLuaClass ( USLuaState& state ) {
 		{ "clearRenderStack",			_clearRenderStack },
 		{ "enterFullscreenMode",		_enterFullscreenMode },
 		{ "exitFullscreenMode",			_exitFullscreenMode },
+		{ "flagLongLoad",				_flagLongLoad },
 		{ "framesToTime",				_framesToTime },
 		{ "getDeviceSize",				_getDeviceSize },
 		{ "getDeviceTime",				_getDeviceTime },
@@ -649,6 +685,7 @@ void MOAISim::RegisterLuaClass ( USLuaState& state ) {
 		{ "setClearColor",				_setClearColor },
 		{ "setClearDepth",				_setClearDepth },
 		{ "setFrameSize",				_setFrameSize },
+		{ "setFramesToDo",				_setFramesToDo },
 		{ "setLeakTrackingEnabled",		_setLeakTrackingEnabled },
 		{ "setListener",				&MOAIEventSource::_setListener < MOAISim > },
 		{ "setLoopFlags",				_setLoopFlags },
@@ -763,10 +800,13 @@ double MOAISim::StepSim ( double step ) {
 
 	double time = USDeviceTime::GetTimeInSeconds ();
 
-	MOAIDebugLines::Get ().Reset ();
-	MOAIInputMgr::Get ().Update ();
-	MOAIActionMgr::Get ().Update (( float )step );
-	MOAINodeMgr::Get ().Update ();
+	for ( u32 s = 0; s < this->mFramesToDo; ++s ) {
+		MOAIDebugLines::Get ().Reset ();
+		MOAIInputMgr::Get ().Update ();
+		MOAIActionMgr::Get ().Update (( float )step );
+		MOAINodeMgr::Get ().Update ();
+	}
+	this->mFramesToDo = 1;
 	
 	this->mSimTime += step;
 	
@@ -802,8 +842,16 @@ void MOAISim::Update () {
 		budget -= this->StepSim ( 0.0 );
 	}
 
+
+	// if we just had a long load, skip the updates for the time difference
+	if ( mLongLoadFlag ) {
+		
+		this->mSimTime = realTime;
+		this->mLongLoadFlag = FALSE;
+	}
+
 	// 'gap' is the time left to make up between sim time and real time
-	double gap = realTime - this->mSimTime;
+	double gap = realTime - this->mSimTime;	
 
 	if ( this->mLoopFlags & SIM_LOOP_ALLOW_BOOST ) {
 		double boost = gap - ( this->mStep * this->mBoostThreshold );
@@ -818,14 +866,14 @@ void MOAISim::Update () {
 		budget -= this->StepSim ( this->mStep );
 		gap -= this->mStep;
 	}
-	
+		
 	// spin to use up any additional budget
 	if ( this->mLoopFlags & SIM_LOOP_ALLOW_SPIN ) {
 		while (( this->mStep <= gap ) && ( budget > 0.0 )) {
 			budget -= this->StepSim ( this->mStep );
 			gap -= this->mStep;
 		}
-	}
+	}	
 
 	// these stay out of the sim step for now
 	USUrlMgr::Get ().Process ();
