@@ -64,10 +64,14 @@ private:
 	u32				mLoopFlags;
 	double			mBoostThreshold;
 	
+	bool			mLongLoadFlag;
+	u32				mFramesToDo;
+	
 	//----------------------------------------------------------------//
 	static int		_clearRenderStack			( lua_State* L );
 	static int		_enterFullscreenMode		( lua_State* L );
 	static int		_exitFullscreenMode			( lua_State* L );
+	static int		_flagLongLoad				( lua_State* L );
 	static int		_framesToTime				( lua_State* L );
 	static int		_getDeviceSize				( lua_State* L );
 	static int		_getDeviceTime				( lua_State* L );
@@ -86,6 +90,7 @@ private:
 	static int		_setClearColor				( lua_State* L );
 	static int		_setClearDepth				( lua_State* L );
 	static int		_setFrameSize				( lua_State* L );
+	static int		_setFramesToDo				( lua_State* L );
 	static int		_setLeakTrackingEnabled		( lua_State* L );
 	static int		_setLoopFlags				( lua_State* L );
 	static int		_timeToFrames				( lua_State* L );
