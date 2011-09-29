@@ -82,14 +82,27 @@ int MOAISim::_exitFullscreenMode ( lua_State* L ) {
 /**	@name	flagLongLoad
 	@text	Lets the sim know to skip the catch up process after a long load
 
-	@in		nil
 	@out	nil
 */
 int MOAISim::_flagLongLoad ( lua_State* L ) {
+	UNUSED ( L );
 	
 	MOAISim& device = MOAISim::Get ();
 	device.mLongLoadFlag = TRUE;
 		
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name forceGarbageCollection
+	@text	Runs the garbage collector repeatedly until no more USLuaObjects
+			can be collected.
+
+	@out	nil
+*/
+int MOAISim::_forceGarbageCollection ( lua_State* L ) {
+
+	USLuaRuntime::Get ().ForceGarbageCollection ();
 	return 0;
 }
 
@@ -178,6 +191,18 @@ int MOAISim::_getFrameSize ( lua_State* L ) {
 	MOAISim& device = MOAISim::Get ();
 	lua_pushnumber ( L, device.mStep );
 	
+	return 1;
+}
+
+//----------------------------------------------------------------//
+/**	@name	getLuaObjectCount
+	@text	Gets the total number of objects in memory that inherit USLuaObject. Count includes
+			objects that are not bound to the Lua runtime.
+
+	@out	number count
+*/
+int MOAISim::_getLuaObjectCount ( lua_State* L ) {
+	lua_pushnumber ( L, USLuaRuntime::Get ().GetObjectCount ());
 	return 1;
 }
 
@@ -533,7 +558,20 @@ int MOAISim::_setLeakTrackingEnabled ( lua_State* L ) {
 */
 int MOAISim::_setLoopFlags ( lua_State* L ) {
 	USLuaState state ( L );
-	USLuaRuntime::Get ().EnableLeakTracking( state.GetValue < bool >( 1, false ));
+	USLuaRuntime::Get ().EnableLeakTracking ( state.GetValue < bool >( 1, false ));
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	setLuaAllocLogEnabled
+	@text	Toggles log messages from Lua allocator.
+
+	@opt	boolean enable			Default value is 'false.'
+	@out	nil
+*/
+int MOAISim::_setLuaAllocLogEnabled ( lua_State* L ) {
+	USLuaState state ( L );
+	USLuaRuntime::Get ().SetAllocLogEnabled ( state.GetValue < bool >( 1, false ));
 	return 0;
 }
 
@@ -668,12 +706,14 @@ void MOAISim::RegisterLuaClass ( USLuaState& state ) {
 		{ "enterFullscreenMode",		_enterFullscreenMode },
 		{ "exitFullscreenMode",			_exitFullscreenMode },
 		{ "flagLongLoad",				_flagLongLoad },
+		{ "forceGarbageCollection",		_forceGarbageCollection },
 		{ "framesToTime",				_framesToTime },
 		{ "getDeviceSize",				_getDeviceSize },
 		{ "getDeviceTime",				_getDeviceTime },
 		{ "getElapsedFrames",			_getElapsedFrames },
 		{ "getElapsedTime",				_getElapsedTime },
 		{ "getFrameSize",				_getFrameSize },
+		{ "getLuaObjectCount",			_getLuaObjectCount },
 		{ "getMemoryUsage",				_getMemoryUsage },
 		{ "getPerformance",				_getPerformance },
 		{ "openWindow",					_openWindow },
@@ -689,6 +729,7 @@ void MOAISim::RegisterLuaClass ( USLuaState& state ) {
 		{ "setLeakTrackingEnabled",		_setLeakTrackingEnabled },
 		{ "setListener",				&MOAIEventSource::_setListener < MOAISim > },
 		{ "setLoopFlags",				_setLoopFlags },
+		{ "setLuaAllocLogEnabled",		_setLuaAllocLogEnabled },
 		{ "timeToFrames",				_timeToFrames },
 		{ NULL, NULL }
 	};

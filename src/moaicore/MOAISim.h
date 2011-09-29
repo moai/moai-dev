@@ -72,12 +72,14 @@ private:
 	static int		_enterFullscreenMode		( lua_State* L );
 	static int		_exitFullscreenMode			( lua_State* L );
 	static int		_flagLongLoad				( lua_State* L );
+	static int		_forceGarbageCollection		( lua_State* L );
 	static int		_framesToTime				( lua_State* L );
 	static int		_getDeviceSize				( lua_State* L );
 	static int		_getDeviceTime				( lua_State* L );
 	static int		_getElapsedFrames			( lua_State* L );
 	static int		_getElapsedTime				( lua_State* L );
 	static int		_getFrameSize				( lua_State* L );
+	static int		_getLuaObjectCount			( lua_State* L );
 	static int		_getMemoryUsage				( lua_State* L );
 	static int		_getNetworkStatus			( lua_State* L );
 	static int		_getPerformance				( lua_State* L );
@@ -93,6 +95,7 @@ private:
 	static int		_setFramesToDo				( lua_State* L );
 	static int		_setLeakTrackingEnabled		( lua_State* L );
 	static int		_setLoopFlags				( lua_State* L );
+	static int		_setLuaAllocLogEnabled		( lua_State* L );
 	static int		_timeToFrames				( lua_State* L );
 
 	//----------------------------------------------------------------//
