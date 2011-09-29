@@ -15,10 +15,12 @@
 int MOAIHarness::mSocketID = -1;
 bool MOAIHarness::mEnginePaused = false;
 struct sockaddr_in MOAIHarness::mSocketAddr;
+std::vector<MOAIBreakpoint> MOAIHarness::mBreakpoints;
 
 //----------------------------------------------------------------//
 void MOAIHarness::Callback(lua_State *L, lua_Debug *ar)
 {
+	// Fill debugging information.
 	lua_getinfo(L, "nSl", ar);
 	int ev = ar->event;
 	const char *name = ar->name;
@@ -30,8 +32,25 @@ void MOAIHarness::Callback(lua_State *L, lua_Debug *ar)
 	int nups = ar->nups;
 	int linedefined = ar->linedefined;
 	int lastlinedefined = ar->lastlinedefined;
-	// debugging information is now filled in.
-	// compare with set breakpoints etc...
+
+	// Compare against a list of breakpoints.
+	for (std::vector<MOAIBreakpoint>::const_iterator i = MOAIHarness::mBreakpoints.begin(); i < MOAIHarness::mBreakpoints.end(); i++)
+	{
+		if (/*i.filename == short_src && */(*i).line == currentline)
+		{
+			// Breakpoint hit.
+			if (std::string(what) == "main")
+				MOAIHarness::SendBreak("<main>", (unsigned int)currentline, short_src);
+			else if (std::string(what) == "C")
+				MOAIHarness::SendBreak("<native>", (unsigned int)currentline, short_src);
+			else if (std::string(what) == "tail")
+				MOAIHarness::SendBreak("<tail call>", (unsigned int)currentline, short_src);
+			else
+				MOAIHarness::SendBreak(name, (unsigned int)currentline, short_src);
+			MOAIHarness::Pause();
+			return;
+		}
+	}
 
 	return;
 }
@@ -50,7 +69,7 @@ void MOAIHarness::HookLua(lua_State* L, const char* target, int port)
     int err = WSAStartup(wVersionRequested, &wsaData);
 	if (err != 0)
 	{
-		printf("debug harness: Unable to initalize WinSock! [winsock error %i]", WSAGetLastError());
+		printf("debug harness: Unable to initalize WinSock! [winsock error %i]\n", WSAGetLastError());
 		return;
 	}
 #endif
@@ -61,7 +80,7 @@ void MOAIHarness::HookLua(lua_State* L, const char* target, int port)
 	MOAIHarness::mSocketID = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
 	if (MOAIHarness::mSocketID == -1)
 	{
-		printf("debug harness: Unable to create socket for debugging! [winsock error %i]", WSAGetLastError());
+		printf("debug harness: Unable to create socket for debugging! [winsock error %i]\n", WSAGetLastError());
 		return;
 	}
 
@@ -72,14 +91,14 @@ void MOAIHarness::HookLua(lua_State* L, const char* target, int port)
     int res = inet_pton(AF_INET, target, &MOAIHarness::mSocketAddr.sin_addr);
 	if (res < 0)
 	{
-		printf("debug harness: Unable to connect socket for debugging (invalid address family)! [winsock error %i]", WSAGetLastError());
+		printf("debug harness: Unable to connect socket for debugging (invalid address family)! [winsock error %i]\n", WSAGetLastError());
 		closesocket(MOAIHarness::mSocketID);
 		MOAIHarness::mSocketID = -1;
 		return;
 	}
 	else if (res == 0)
 	{
-		printf("debug harness: Unable to connect socket for debugging (invalid IP address)! [winsock error %i]", WSAGetLastError());
+		printf("debug harness: Unable to connect socket for debugging (invalid IP address)! [winsock error %i]\n", WSAGetLastError());
 		closesocket(MOAIHarness::mSocketID);
 		MOAIHarness::mSocketID = -1;
 		return;
@@ -88,19 +107,22 @@ void MOAIHarness::HookLua(lua_State* L, const char* target, int port)
 	// Connect to the actual IDE.
 	if (connect(MOAIHarness::mSocketID, (struct sockaddr *)&MOAIHarness::mSocketAddr, sizeof(MOAIHarness::mSocketAddr)) == -1)
 	{
-		printf("debug harness: Unable to connect socket to requested endpoint! [winsock error %i]", WSAGetLastError());
+		printf("debug harness: Unable to connect socket to requested endpoint! [winsock error %i]\n", WSAGetLastError());
 		closesocket(MOAIHarness::mSocketID);
 		MOAIHarness::mSocketID = -1;
 		return;
 	}
 
 	// Initalize the Lua hooks.
-	lua_sethook(L, MOAIHarness::Callback, LUA_MASKCALL | LUA_MASKRET | LUA_MASKLINE | LUA_MASKCOUNT, 1);
+	lua_sethook(L, MOAIHarness::Callback, LUA_MASKCALL | LUA_MASKRET | LUA_MASKLINE, 0);
 
 	// At this point the debug hooks are initalized, but we don't want to proceed until the IDE tells
 	// us to continue (in case it wants to set up initial breakpoints).
 	MOAIHarness::SendWait();
 	MOAIHarness::Pause();
+
+	// DEBUG: Add some breakpoints.
+	mBreakpoints.insert(mBreakpoints.begin(), MOAIBreakpoint("Main.lua", 10));
 
 	// After we have done the wait-and-pause cycle, we are ready to give control back to the engine.
 	return;
@@ -109,14 +131,14 @@ void MOAIHarness::HookLua(lua_State* L, const char* target, int port)
 //----------------------------------------------------------------//
 void MOAIHarness::Pause()
 {
-	printf("debug harness: Waiting to receive messages from debugging interface.");
+	printf("debug harness: Waiting to receive messages from debugging interface.\n");
 	MOAIHarness::mEnginePaused = true;
 	while (MOAIHarness::mEnginePaused)
 	{
 		// Receive and handle IDE messages until we get a continue.
 		MOAIHarness::ReceiveMessage();
 	}
-	printf("debug harness: Continuing execution of program.");
+	printf("debug harness: Continuing execution of program.\n");
 }
 
 //----------------------------------------------------------------//
@@ -126,6 +148,17 @@ void MOAIHarness::SendWait()
 	std::string wait;
 	wait = "{\"ID\":\"wait\"}";
 	MOAIHarness::SendMessage(wait);
+}
+
+//----------------------------------------------------------------//
+void MOAIHarness::SendBreak(std::string func, unsigned int line, std::string file)
+{
+	// Sends a "breakpoint hit" signal to the IDE.
+	std::string breakm;
+	std::ostringstream stream;
+	stream << line;
+	breakm = "{\"ID\":\"break\", \"FunctionName\":\"" + func + "\", \"LineNumber\":" + stream.str() + ", \"FileName\":\"" + file + "\"}";
+	MOAIHarness::SendMessage(breakm);
 }
 
 //----------------------------------------------------------------//
@@ -166,7 +199,13 @@ void MOAIHarness::ReceiveContinue(json_t* node)
 }
 
 //----------------------------------------------------------------//
-void MOAIHarness::ReceiveBreak(json_t* node)
+void MOAIHarness::ReceivePause(json_t* node)
+{
+	MOAIHarness::Pause();
+}
+
+//----------------------------------------------------------------//
+void MOAIHarness::ReceiveStop(json_t* node)
 {
 }
 
@@ -231,14 +270,18 @@ void MOAIHarness::ReceiveMessage()
 	
 	// Get a reference to the ID value.
 	json_t* np_id = json_object_get(node, "ID");
-	if (np_id == NULL || json_typeof(np_id) == JSON_STRING)
+	if (np_id == NULL || json_typeof(np_id) != JSON_STRING)
 		return; // Unknown message type.
 	
+	printf("debug harness: Received message with ID %s.\n", json_string_value(np_id));
+
 	// Check the type of message.
 	if (std::string(json_string_value(np_id)) == "continue")
 		MOAIHarness::ReceiveContinue(node);
-	else if (std::string(json_string_value(np_id)) == "break")
-		MOAIHarness::ReceiveBreak(node);
+	else if (std::string(json_string_value(np_id)) == "pause")
+		MOAIHarness::ReceivePause(node);
+	else if (std::string(json_string_value(np_id)) == "stop")
+		MOAIHarness::ReceiveStop(node);
 	else if (std::string(json_string_value(np_id)) == "break_set_always")
 		MOAIHarness::ReceiveBreakSetAlways(node);
 	else if (std::string(json_string_value(np_id)) == "break_set_conditional")
