@@ -175,11 +175,15 @@ void* USLuaRuntime::_tracking_alloc ( void *ud, void *ptr, size_t osize, size_t 
 	
 	if ( USLuaRuntime::IsValid ()) {
 		USLuaRuntime& self = USLuaRuntime::Get ();
-	
+		
 		if ( nsize == 0 ) {
 			self.mTotalBytes -= osize;
 			free ( ptr );
 			return NULL;
+		}
+
+		if ( self.mAllocLogEnabled ) {
+			printf ( "Lua alloc: %d\n", nsize );
 		}
 
 		self.mTotalBytes -= osize;
@@ -432,12 +436,23 @@ void USLuaRuntime::ForceGarbageCollection () {
 	//    calls the metamethod and marks the userdata as finalized. When
 	//    this userdata is collected again then Lua frees its corresponding
 	//    memory."
-	lua_gc ( L, LUA_GCCOLLECT, 0 );
-	lua_gc ( L, LUA_GCCOLLECT, 0 );
-	lua_gc ( L, LUA_GCCOLLECT, 0 );
-	lua_gc ( L, LUA_GCCOLLECT, 0 );
-	lua_gc ( L, LUA_GCCOLLECT, 0 );
-	lua_gc ( L, LUA_GCCOLLECT, 0 );
+	
+	// collect until no more changes in memory use or object count are registered
+	bool more = true;
+	while ( more ) {
+	
+		size_t b0 = this->mTotalBytes;
+		size_t c0 = this->mObjectCount;
+		
+		lua_gc ( L, LUA_GCCOLLECT, 0 );
+		
+		size_t b1 = this->mTotalBytes;
+		size_t c1 = this->mObjectCount;
+		
+		if (( b0 == b1 ) && ( c0 == c1 )) {
+			more = false;
+		}
+	}
 }
 
 //----------------------------------------------------------------//
@@ -601,7 +616,9 @@ USLuaStateHandle USLuaRuntime::State () {
 //----------------------------------------------------------------//
 USLuaRuntime::USLuaRuntime () :
 	mLeakTrackingEnabled ( false ),
-	mTotalBytes ( 0 ) {
+	mTotalBytes ( 0 ),
+	mObjectCount ( 0 ),
+	mAllocLogEnabled ( false ) {
 }
 
 //----------------------------------------------------------------//

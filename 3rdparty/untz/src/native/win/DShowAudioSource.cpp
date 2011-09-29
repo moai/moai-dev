@@ -293,7 +293,10 @@ Int64 DShowAudioSource::readFrames(float* data, UInt32 numChannels, UInt32 numFr
 
 	Int64 loopEndFrame = convertSecondsToSamples(mLoopEnd);
 	Int64 totalFrames = convertSecondsToSamples(getLength());
-	bool needToLoop = isLooping() && ((mCurrentFrame >= loopEndFrame && loopEndFrame > 0) || mCurrentFrame >= totalFrames);
+//	RPRINT("loop end frame = %ld\n", loopEndFrame);
+//	RPRINT("current frame = %ld\n", mCurrentFrame);
+//	RPRINT("total frames = %ld\n", totalFrames);
+	bool needToLoop = isLooping() && ((mCurrentFrame >= loopEndFrame && loopEndFrame > 0) || (framesAvailable == 0 && mEOF));
 	
 	if(framesAvailable > 0 && !needToLoop)
 	{

@@ -23,6 +23,8 @@ class MOAIUntzSound :
 private:
 
 	UNTZ::Sound* mSound;
+	STLString mFilename;
+	bool mInMemory;
 
 	//----------------------------------------------------------------//
 	static int		_isLooping			( lua_State* L );

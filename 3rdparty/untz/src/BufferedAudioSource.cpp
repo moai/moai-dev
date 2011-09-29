@@ -99,7 +99,7 @@ Int64 BufferedAudioSource::readFrames(float* buffer, UInt32 numChannels, UInt32 
 
 	Int64 loopEndFrame = convertSecondsToSamples(mLoopEnd);
 	Int64 totalFrames = convertSecondsToSamples(getLength());
-	bool needToLoop = isLooping() && ((mCurrentFrame >= loopEndFrame && loopEndFrame > 0) || mCurrentFrame >= totalFrames);
+	bool needToLoop = isLooping() && ((mCurrentFrame >= loopEndFrame && loopEndFrame > 0) || (framesAvailable == 0 && mEOF));
 	
 	if(framesAvailable > 0 && !needToLoop)
 	{

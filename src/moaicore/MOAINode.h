@@ -111,7 +111,7 @@ protected:
 	void SetDependentMember ( USWeak < TYPE >& member, TYPE* ref ) {
 		
 		if ( member == ref ) return;
-	
+		
 		if ( member ) {
 			this->ClearDependency ( *member );
 		}
