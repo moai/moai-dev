@@ -101,7 +101,9 @@ int MOAISim::_flagLongLoad ( lua_State* L ) {
 	@out	nil
 */
 int MOAISim::_forceGarbageCollection ( lua_State* L ) {
+	UNUSED ( L );
 
+	MOAINodeMgr::Get ().Update ();
 	USLuaRuntime::Get ().ForceGarbageCollection ();
 	return 0;
 }
