@@ -22,7 +22,7 @@ void MOAINodeMgr::InsertAfter ( MOAINode& cursor, MOAINode& node ) {
 		node.mPrev->mNext = &node;
 		node.mNext->mPrev = &node;
 		
-		//node.Retain ();
+		node.Retain ();
 	}
 	else {
 		this->PushBack ( node );
@@ -39,7 +39,7 @@ void MOAINodeMgr::InsertBefore ( MOAINode& cursor, MOAINode& node ) {
 		node.mPrev->mNext = &node;
 		node.mNext->mPrev = &node;
 		
-		//node.Retain ();
+		node.Retain ();
 	}
 	else {
 		this->PushFront ( node );
@@ -62,7 +62,7 @@ void MOAINodeMgr::PushBack ( MOAINode& node ) {
 		this->mUpdateListTail = &node;
 	}
 	
-	//node.Retain ();
+	node.Retain ();
 }
 
 //----------------------------------------------------------------//
@@ -81,7 +81,7 @@ void MOAINodeMgr::PushFront ( MOAINode& node ) {
 		this->mUpdateListHead = &node;
 	}
 	
-	//node.Retain ();
+	node.Retain ();
 }
 
 //----------------------------------------------------------------//
@@ -101,7 +101,7 @@ void MOAINodeMgr::Remove ( MOAINode& node ) {
 		this->mUpdateListHead = node.mNext;
 	}
 	
-	//node.Release ();
+	node.Release ();
 }
 
 //----------------------------------------------------------------//
@@ -120,7 +120,7 @@ void MOAINodeMgr::Update () {
 		node = node->mNext;
 		
 		temp->mState = MOAINode::STATE_IDLE;
-		//temp->Release ();
+		temp->Release ();
 	}
 	
 	this->mUpdateListHead = 0;
@@ -142,6 +142,6 @@ MOAINodeMgr::~MOAINodeMgr () {
 		cursor = cursor->mNext;
 		
 		node->mState = MOAINode::STATE_IDLE;
-		//node->Release ();
+		node->Release ();
 	}
 }
