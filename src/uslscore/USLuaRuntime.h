@@ -34,6 +34,9 @@ private:
 	USLuaState			mMainState;
 
 	size_t				mTotalBytes;
+	size_t				mObjectCount;			// All USLuaObjects, whether or not bound to Lua
+
+	bool				mAllocLogEnabled;
 
 	//----------------------------------------------------------------//
 	static int				_panic					( lua_State *L );
@@ -48,6 +51,9 @@ public:
 	friend class USLuaObject;
 	friend class USLuaRef;
 	friend class USLuaState;
+
+	GET ( size_t, ObjectCount, mObjectCount )
+	GET_SET ( bool, AllocLogEnabled, mAllocLogEnabled )
 
 	//----------------------------------------------------------------//
 	void					Close					();

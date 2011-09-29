@@ -560,6 +560,10 @@ MOAINode::~MOAINode () {
 		}
 		delete link;
 	}
+	
+	if ( MOAINodeMgr::IsValid ()) {
+		MOAINodeMgr::Get ().Remove ( *this );
+	}
 }
 
 //----------------------------------------------------------------//
