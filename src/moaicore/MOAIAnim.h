@@ -15,7 +15,7 @@ class MOAIAnimLink {
 public:
 
 	USRef < MOAIAnimCurve >		mCurve;
-	USRef < MOAINode >			mTarget;
+	USWeak < MOAINode >			mTarget;
 	u32							mAttrID;
 	bool						mRelative;
 };
