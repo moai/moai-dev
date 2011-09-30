@@ -167,7 +167,7 @@ void USLuaObject::PushLuaUserdata ( USLuaState& state ) {
 		lua_newtable ( state );
 		type->InitLuaInstanceTable ( this, state, -1 );
 		
-		this->mInstanceTable = state.GetStrongRef ( -1 );
+		this->mInstanceTable = state.GetWeakRef ( -1 );
 		state.Pop ( 1 );
 	}
 
@@ -229,7 +229,7 @@ void USLuaObject::SetLuaInstanceTable ( USLuaState& state, int idx ) {
 		// set the instance table
 		type->InitLuaInstanceTable ( this, state, idx );
 		
-		this->mInstanceTable = state.GetStrongRef ( idx );
+		this->mInstanceTable = state.GetWeakRef ( idx );
 	}
 }
 

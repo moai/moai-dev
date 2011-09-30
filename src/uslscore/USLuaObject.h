@@ -20,8 +20,8 @@ class USLuaObject :
 	public virtual USObject {
 protected:
 
-	USLuaRef		mInstanceTable;		// strong ref to instance table stack
-	USLuaRef		mUserdata;			// weak ref to handle userdata 
+	USLuaRef		mInstanceTable;		// weak ref to instance table stack
+	USLuaRef		mUserdata;			// weak/strong ref to handle userdata 
 		
 
 	//----------------------------------------------------------------//
