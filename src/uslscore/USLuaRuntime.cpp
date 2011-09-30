@@ -183,7 +183,7 @@ void* USLuaRuntime::_tracking_alloc ( void *ud, void *ptr, size_t osize, size_t 
 		}
 
 		if ( self.mAllocLogEnabled ) {
-			printf ( "Lua alloc: %d\n", nsize );
+			printf ( "Lua alloc: %d\n", ( int )nsize );
 		}
 
 		self.mTotalBytes -= osize;
