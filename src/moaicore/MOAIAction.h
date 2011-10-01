@@ -70,6 +70,7 @@ public:
 	void				ClearChildren			();
 	bool				IsActive				();
 	bool				IsBusy					();
+	bool				IsCurrent				();
 	virtual bool		IsDone					();
 						MOAIAction				();
 						~MOAIAction				();

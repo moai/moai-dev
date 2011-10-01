@@ -21,12 +21,16 @@ private:
 	u32				mNarg;
 	STLString		mFuncName;
 	
+	bool			mIsUpdating;
+	bool			mIsActive;
+	
 	//----------------------------------------------------------------//
 	static int		_blockOnAction			( lua_State* L );
 	static int		_currentThread			( lua_State* L );
 	static int		_run					( lua_State* L );
 	
 	//----------------------------------------------------------------//
+	void			OnStop					();
 	
 public:
 	

@@ -133,22 +133,36 @@ void MOAIThread::OnUpdate ( float step ) {
 		int result = lua_resume ( this->mState, this->mNarg );
 		this->mNarg = 0;
 		
-		if ( result != LUA_YIELD ) {
-		
-			if ( result != 0 ) {
-				
-				cc8* msg = lua_tostring ( this->mState, -1 );
-				USLog::Print ( "%s\n", msg );
-				lua_pop ( this->mState, 1 );
-				
-				USLuaStateHandle state ( this->mState );
-				state.PrintStackTrace ( USLog::CONSOLE, 0 );
+		if ( this->IsActive ()) {
+			if (( result != LUA_YIELD )) {
+			
+				if ( result != 0 ) {
+					
+					cc8* msg = lua_tostring ( this->mState, -1 );
+					USLog::Print ( "%s\n", msg );
+					lua_pop ( this->mState, 1 );
+					
+					USLuaStateHandle state ( this->mState );
+					state.PrintStackTrace ( USLog::CONSOLE, 0 );
+				}
+				this->Stop ();
 			}
-		
+		}
+		else {
 			this->mRef.Clear ();
 			this->mState = 0;
-			this->Stop ();
 		}
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIThread::OnStop () {
+	MOAIAction::OnStop ();
+	
+	// if we're stopping the thread from outside of its coroutine, clear out the ref
+	if ( !this->IsCurrent ()) {
+		this->mRef.Clear ();
+		this->mState = 0;
 	}
 }
 

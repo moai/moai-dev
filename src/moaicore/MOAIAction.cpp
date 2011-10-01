@@ -198,6 +198,15 @@ bool MOAIAction::IsBusy () {
 }
 
 //----------------------------------------------------------------//
+bool MOAIAction::IsCurrent () {
+
+	if ( MOAIActionMgr::IsValid ()) {
+		return ( MOAIActionMgr::Get ().GetCurrentAction () == this );
+	}
+	return false;
+}
+
+//----------------------------------------------------------------//
 bool MOAIAction::IsDone () {
 
 	return ( this->mChildren.Count () == 0 );
