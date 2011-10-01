@@ -563,6 +563,8 @@ void USLuaRuntime::ReportHistogram ( FILE *f ) {
 		}
 	}
 	
+	fprintf ( f, "tracking %d of %d allocated USLuaObjects\n", ( int )this->mHistSet.size (), ( int )this->mObjectCount );
+	
 	HistMap::iterator histogramIt = histogram.begin ();
 	for ( ; histogramIt != histogram.end (); ++histogramIt ) {
 	
@@ -570,7 +572,7 @@ void USLuaRuntime::ReportHistogram ( FILE *f ) {
 		size_t count = histogramIt->second;
 		float percent = (( float )count / ( float )this->mObjectCount ) * 100.0f;
 	
-		fprintf ( f, "%s:\t\t%d (%.2f%% of %d)\n", name.str (), ( int )count, percent, ( int )this->mObjectCount );
+		fprintf ( f, "%-32.32s %d (%.2f%% of %d)\n", name.str (), ( int )count, percent, ( int )this->mObjectCount );
 	}
 }
 
