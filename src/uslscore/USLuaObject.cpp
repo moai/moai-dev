@@ -254,7 +254,7 @@ STLString USLuaObject::ToStringWithType () {
 USLuaObject::USLuaObject () {
 	RTTI_SINGLE ( RTTIBase )
 	
-	USLuaRuntime::Get ().mObjectCount++;
+	USLuaRuntime::Get ().RegisterObject ( *this );
 }
 
 //----------------------------------------------------------------//
@@ -269,7 +269,8 @@ USLuaObject::~USLuaObject () {
 			USLuaStateHandle state = USLuaRuntime::Get ().State ();
 			this->LuaUnbind ( state );
 		}
-		USLuaRuntime::Get ().mObjectCount--;
+
+		USLuaRuntime::Get ().DeregisterObject ( *this );
 	}
 }
 

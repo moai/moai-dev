@@ -87,12 +87,14 @@ private:
 	static int		_pauseTimer					( lua_State* L );
 	static int		_popRenderPass				( lua_State* L );
 	static int		_pushRenderPass				( lua_State* L );
+	static int		_reportHistogram			( lua_State* L );
 	static int		_reportLeaks				( lua_State* L );
 	static int		_setBoostThreshold			( lua_State* L );
 	static int		_setClearColor				( lua_State* L );
 	static int		_setClearDepth				( lua_State* L );
 	static int		_setFrameSize				( lua_State* L );
 	static int		_setFramesToDo				( lua_State* L );
+	static int		_setHistogramEnabled		( lua_State* L );
 	static int		_setLeakTrackingEnabled		( lua_State* L );
 	static int		_setLoopFlags				( lua_State* L );
 	static int		_setLuaAllocLogEnabled		( lua_State* L );

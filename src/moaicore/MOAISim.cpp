@@ -391,6 +391,18 @@ int MOAISim::_pushRenderPass ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	reportHistogram
+	@text	Generates a histogram of active USLuaObjects.
+
+	@out	nil
+*/
+int MOAISim::_reportHistogram ( lua_State* L ) {
+	USLuaState state ( L );
+	USLuaRuntime::Get ().ReportHistogram ( MOAILogMgr::Get ().GetFile ());
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	reportLeaks
 	@text	Analyze the currently allocated MOAI objects and create a textual
 			report of where they were declared, and what Lua references (if any)
@@ -528,6 +540,20 @@ int MOAISim::_setFramesToDo ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	setHistogramEnabled
+	@text	Enable tracking of every USLuaObject so that an object count
+			histogram may be generated.
+ 
+	@opt	bool enable		Default value is false.
+	@out	nil
+*/
+int MOAISim::_setHistogramEnabled ( lua_State* L ) {
+	USLuaState state ( L );
+	USLuaRuntime::Get ().EnableHistogram ( state.GetValue < bool >( 1, false ));
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	setLeakTrackingEnabled
 	@text	Enable extra memory book-keeping measures that allow all MOAI objects to be
 			tracked back to their point of allocation (in Lua). Use together with
@@ -541,7 +567,7 @@ int MOAISim::_setFramesToDo ( lua_State* L ) {
 */
 int MOAISim::_setLeakTrackingEnabled ( lua_State* L ) {
 	USLuaState state ( L );
-	USLuaRuntime::Get ().EnableLeakTracking( state.GetValue < bool >( 1, false ));
+	USLuaRuntime::Get ().EnableLeakTracking ( state.GetValue < bool >( 1, false ));
 	return 0;
 }
 
@@ -722,12 +748,14 @@ void MOAISim::RegisterLuaClass ( USLuaState& state ) {
 		{ "pauseTimer",					_pauseTimer },
 		{ "popRenderPass",				_popRenderPass },
 		{ "pushRenderPass",				_pushRenderPass },
+		{ "reportHistogram",			_reportHistogram },
 		{ "reportLeaks",				_reportLeaks },
 		{ "setBoostThreshold",			_setBoostThreshold },
 		{ "setClearColor",				_setClearColor },
 		{ "setClearDepth",				_setClearDepth },
 		{ "setFrameSize",				_setFrameSize },
 		{ "setFramesToDo",				_setFramesToDo },
+		{ "setHistogramEnabled",		_setHistogramEnabled },
 		{ "setLeakTrackingEnabled",		_setLeakTrackingEnabled },
 		{ "setListener",				&MOAIEventSource::_setListener < MOAISim > },
 		{ "setLoopFlags",				_setLoopFlags },

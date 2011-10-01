@@ -305,6 +305,26 @@ void USLuaRuntime::Close () {
 }
 
 //----------------------------------------------------------------//
+void USLuaRuntime::DeregisterObject ( USLuaObject& object ) {
+
+	this->mObjectCount--;
+	
+	if ( this->mHistogramEnabled ) {
+		this->mHistSet.erase ( &object );
+	}
+}
+
+//----------------------------------------------------------------//
+void USLuaRuntime::EnableHistogram ( bool enable ) {
+
+	this->mHistogramEnabled = enable;
+	
+	if ( !enable ) {
+		this->mHistSet.clear ();
+	}
+}
+
+//----------------------------------------------------------------//
 void USLuaRuntime::EnableLeakTracking ( bool enable ) {
 
 	this->mLeakTrackingEnabled = enable;
@@ -513,6 +533,48 @@ void USLuaRuntime::RegisterModule ( cc8* name, lua_CFunction loader, bool autoLo
 }
 
 //----------------------------------------------------------------//
+void USLuaRuntime::RegisterObject ( USLuaObject& object ) {
+
+	this->mObjectCount++;
+	
+	if ( this->mHistogramEnabled ) {
+		this->mHistSet.affirm ( &object );
+	}
+}
+
+//----------------------------------------------------------------//
+void USLuaRuntime::ReportHistogram ( FILE *f ) {
+
+	if ( !this->mHistogramEnabled ) return;
+	
+	HistMap histogram;
+	
+	HistSet::iterator histSetIt = this->mHistSet.begin ();
+	for ( ; histSetIt != this->mHistSet.end (); ++histSetIt ) {
+	
+		USLuaObject* obj = *histSetIt;
+		cc8* name = obj->TypeName ();
+	
+		if ( !histogram.contains ( name )) {
+			histogram [ name ] = 1;
+		}
+		else {
+			histogram [ name ]++;
+		}
+	}
+	
+	HistMap::iterator histogramIt = histogram.begin ();
+	for ( ; histogramIt != histogram.end (); ++histogramIt ) {
+	
+		const STLString& name = histogramIt->first;
+		size_t count = histogramIt->second;
+		float percent = (( float )count / ( float )this->mObjectCount ) * 100.0f;
+	
+		fprintf ( f, "%s:\t\t%d (%.2f%% of %d)\n", name.str (), count, percent, this->mObjectCount );
+	}
+}
+
+//----------------------------------------------------------------//
 void USLuaRuntime::ReportLeaksFormatted ( FILE *f ) {
 
 	this->ForceGarbageCollection ();
@@ -615,6 +677,7 @@ USLuaStateHandle USLuaRuntime::State () {
 
 //----------------------------------------------------------------//
 USLuaRuntime::USLuaRuntime () :
+	mHistogramEnabled ( false ),
 	mLeakTrackingEnabled ( false ),
 	mTotalBytes ( 0 ),
 	mObjectCount ( 0 ),
