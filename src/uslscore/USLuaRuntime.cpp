@@ -570,7 +570,7 @@ void USLuaRuntime::ReportHistogram ( FILE *f ) {
 		size_t count = histogramIt->second;
 		float percent = (( float )count / ( float )this->mObjectCount ) * 100.0f;
 	
-		fprintf ( f, "%s:\t\t%d (%.2f%% of %d)\n", name.str (), count, percent, this->mObjectCount );
+		fprintf ( f, "%s:\t\t%d (%.2f%% of %d)\n", name.str (), ( int )count, percent, ( int )this->mObjectCount );
 	}
 }
 

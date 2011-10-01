@@ -6,7 +6,7 @@
 
 print ( "hello, moai!" )
 
-MOAISim.setHistogramEnabled ( true );
+MOAISim.setHistogramEnabled ( true )
 
 function alloc ( class, count )
 
@@ -22,7 +22,7 @@ alloc ( MOAIGfxQuad2D,	2 )
 alloc ( MOAIProp2D,		3 )
 alloc ( MOAILayer2D,	4 )
 
-MOAISim.reportHistogram ();
+MOAISim.reportHistogram ()
 
 
 
