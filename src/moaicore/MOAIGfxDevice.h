@@ -92,6 +92,7 @@ private:
 	
 	bool			mCpuUVTransform;
 	
+	bool			mHasContext;
 	bool			mIsES;
 	u32				mMajorVersion;
 	u32				mMinorVersion;
@@ -132,6 +133,7 @@ public:
 	DECL_LUA_SINGLETON ( MOAIGfxDevice )
 	
 	GET ( size_t, TextureMemoryUsage, mTextureMemoryUsage )
+	GET ( bool, HasContext, mHasContext )
 	
 	//----------------------------------------------------------------//
 	void					BeginDrawing			();

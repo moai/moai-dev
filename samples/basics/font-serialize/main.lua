@@ -4,16 +4,6 @@
 -- http://getmoai.com
 ----------------------------------------------------------------
 
-MOAISim.openWindow ( "test", 320, 480 )
-
-viewport = MOAIViewport.new ()
-viewport:setSize ( 320, 480 )
-viewport:setScale ( 320, 480 )
-
-layer = MOAILayer2D.new ()
-layer:setViewport ( viewport )
-MOAISim.pushRenderPass ( layer )
-
 -- build the font
 charcodes = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 .,:;!?()&/-'
 text = 'The quick brown fox jumps over the lazy dog.'
@@ -39,7 +29,18 @@ image = nil
 font = nil
 file = nil
 
-collectgarbage ( 'collect' ) 
+MOAISim.forceGarbageCollection ()
+
+-- load and show the font
+MOAISim.openWindow ( "test", 320, 480 )
+
+viewport = MOAIViewport.new ()
+viewport:setSize ( 320, 480 )
+viewport:setScale ( 320, 480 )
+
+layer = MOAILayer2D.new ()
+layer:setViewport ( viewport )
+MOAISim.pushRenderPass ( layer )
 
 -- load the font image back in
 image = MOAIImage.new ()

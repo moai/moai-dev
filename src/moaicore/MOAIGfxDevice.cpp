@@ -197,6 +197,8 @@ u32 MOAIGfxDevice::CountErrors () const {
 //----------------------------------------------------------------//
 void MOAIGfxDevice::DetectContext () {
 
+	this->mHasContext = true;
+
 	#ifdef __GLEW_H__
 		static bool initGlew = true;
 		if ( initGlew ) {
@@ -572,6 +574,7 @@ MOAIGfxDevice::MOAIGfxDevice () :
 	mVertexMtxOutput ( VTX_STAGE_MODEL ),
 	mCpuVertexTransform ( false ),
 	mCpuUVTransform ( false ),
+	mHasContext ( false ),
 	mIsES ( false ),
 	mMajorVersion ( 0 ),
 	mMinorVersion ( 0 ),
