@@ -681,14 +681,14 @@ void MOAITransform::BuildTransforms ( MOAITraitsBuffer* traits, float xOff, floa
 	
 	if ( traits && traits->HasTraits ()) {
 			
-		if ( this->mTraitMask & INHERIT_TRANSFORM ) {
+		if ( traits->HasTrait ( INHERIT_TRANSFORM )) {
 		
 			const USAffine2D* inherit = traits->GetTransformTrait ();
 			if ( inherit ) {
 				this->mLocalToWorldMtx.Append ( *inherit );
 			}
 		}
-		else if ( this->mTraitMask & INHERIT_LOC ) {
+		else if ( traits->HasTrait ( INHERIT_LOC )) {
 			
 			const USAffine2D* inherit = traits->GetLocTrait ();
 			if ( inherit ) {

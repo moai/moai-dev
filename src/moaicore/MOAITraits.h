@@ -86,7 +86,6 @@ private:
 	MOAITraitLink* mSourceList; // set of sources
 	
 	//----------------------------------------------------------------//
-	static int	_setTraitMask		( lua_State* L );
 	static int	_setTraitSource		( lua_State* L );
 
 	//----------------------------------------------------------------//
@@ -100,8 +99,6 @@ private:
 	virtual bool				GetVisibleTrait			();
 
 protected:
-
-	u32 mTraitMask; // mask used to inherit traits
 
 	//----------------------------------------------------------------//
 	void						AccumulateSources		( MOAITraitsBuffer& buffer );

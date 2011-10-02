@@ -82,23 +82,6 @@ bool MOAITraitsBuffer::HasTraits () {
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	setTraitMask
-	@text	Mask which traits will be inherited. See class documentation
-			for a list of trait bitmasks.
-	
-	@in		MOAITraits self
-	@opt	MOAITransformBase mask	Default value is MOAITraits.INHERIT_TRANSFORM + MOAITraits.INHERIT_COLOR + MOAITraits.INHERIT_VISIBLE.
-	@out	nil
-*/
-int MOAITraits::_setTraitMask ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITraits, "U" )
-	
-	self->mTraitMask = state.GetValue < u32 >( 2, DEFAULT_MASK );
-	
-	return 0;
-}
-
-//----------------------------------------------------------------//
 /**	@name	setTraitSource
 	@text	Sets or clears the trait source.
 	
@@ -127,23 +110,25 @@ void MOAITraits::AccumulateSources ( MOAITraitsBuffer& buffer ) {
 
 	buffer.mMask = 0;
 	
-	if ( this->mTraitMask ) {
-
+	if ( this->mSourceList ) {
+		
 		for ( u32 i = 0; i < MOAITraitsBuffer::TOTAL_SOURCES; ++i ) {
 			
-			if (( this->mTraitMask >> i ) & 0x01 ) {
-			
-				MOAITraitLink* link = this->mSourceList;
-				for ( ; link; link = link->mNext ) {
+			MOAITraitLink* link = this->mSourceList;
+			for ( ; link; link = link->mNext ) {
 				
-					if ( link->mMask & ( 1 << i )) {
-						buffer.mSources [ i ] = link->mSource;
-						buffer.mMask |= ( 1 << i );
+				if ( link->mSource ) {
+					
+					u32 mask = link->mMask;
+					buffer.mMask |= mask;
+					
+					for ( u32 i = 0; mask; i++, mask = mask >> 1 ) {
+					
+						if ( mask & 0x01 ) {
+							buffer.mSources [ i ] = link->mSource;	
+						}
 					}
 				}
-			}
-			else {
-				buffer.mSources [ i ] = 0;
 			}
 		}
 	}
@@ -227,8 +212,7 @@ bool MOAITraits::HasTraitsSource () {
 
 //----------------------------------------------------------------//
 MOAITraits::MOAITraits () :
-	mSourceList ( 0 ),
-	mTraitMask ( 0 ) {
+	mSourceList ( 0 ) {
 	
 	RTTI_SINGLE ( MOAINode )
 }
@@ -268,7 +252,6 @@ void MOAITraits::RegisterLuaFuncs ( USLuaState& state ) {
 	MOAINode::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
-		{ "setTraitMask",			_setTraitMask },
 		{ "setTraitSource",			_setTraitSource },
 		{ NULL, NULL }
 	};
@@ -278,13 +261,6 @@ void MOAITraits::RegisterLuaFuncs ( USLuaState& state ) {
 
 //----------------------------------------------------------------//
 void MOAITraits::SetTraitSource ( MOAITraits* source, u32 mask ) {
-
-	if ( source ) {
-		this->mTraitMask |= mask;
-	}
-	else {
-		this->mTraitMask &= ~mask;
-	}
 
 	bool foundLink = false;
 

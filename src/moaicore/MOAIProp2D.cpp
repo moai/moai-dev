@@ -664,6 +664,8 @@ void MOAIProp2D::OnDepNodeUpdate () {
 	MOAITraitsBuffer buffer;
 	this->AccumulateSources ( buffer );
 	
+	bool inheritFrame = false;
+	
 	if ( buffer.HasTraits ()) {
 
 		if ( buffer.HasTrait ( INHERIT_BLEND_MODE )) {
@@ -679,6 +681,7 @@ void MOAIProp2D::OnDepNodeUpdate () {
 			USRect* frameTrait = buffer.GetFrameTrait ();
 			if ( frameTrait ) {
 				frame = *frameTrait;
+				inheritFrame = true;
 			}
 		}
 		
@@ -696,7 +699,7 @@ void MOAIProp2D::OnDepNodeUpdate () {
 		}
 	}
 	
-	if (( this->mTraitMask & INHERIT_FRAME ) || this->mFitToFrame ) {
+	if ( inheritFrame || this->mFitToFrame ) {
 
 		// and check if the target frame is empty, too
 		if ( frame.Area () == 0.0f ) {
