@@ -142,6 +142,12 @@ const USAffine2D& MOAITransformBase::GetLocalToWorldMtx () {
 }
 
 //----------------------------------------------------------------//
+const USAffine2D* MOAITransformBase::GetLocTrait () {
+
+	return &this->mLocalToWorldMtx;
+}
+
+//----------------------------------------------------------------//
 const USAffine2D* MOAITransformBase::GetTransformTrait () {
 
 	return &this->mLocalToWorldMtx;

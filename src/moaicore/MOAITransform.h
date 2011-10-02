@@ -50,7 +50,7 @@ protected:
 	static int	_worldToModel	( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void	BuildTransforms			( float xOff, float yOff, float xStretch, float yStretch );
+	void	BuildTransforms			( MOAITraitsBuffer* traits, float xOff, float yOff, float xStretch, float yStretch );
 	void	OnDepNodeUpdate			();
 
 public:

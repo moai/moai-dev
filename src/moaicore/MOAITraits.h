@@ -11,11 +11,63 @@ class MOAIPartition;
 class MOAIShader;
 
 //================================================================//
+// MOAITraitLink
+//================================================================//
+class MOAITraitLink {
+private:
+
+	friend class MOAITraits;
+	
+	USWeak < MOAITraits >		mSource;
+	u32							mMask;
+	MOAITraitLink*				mNext;
+};
+
+//================================================================//
+// MOAITraitsBuffer
+//================================================================//
+class MOAITraitsBuffer {
+private:
+
+	friend class MOAITraits;
+
+	enum {
+		SOURCE_LOC,
+		SOURCE_TRANSFORM,
+		SOURCE_COLOR,
+		SOURCE_FRAME,
+		SOURCE_PARTITION,
+		SOURCE_SHADER,
+		SOURCE_VISIBLE,
+		SOURCE_BLEND_MODE,
+		TOTAL_SOURCES,
+	};
+
+	MOAITraits* mSources [ TOTAL_SOURCES ];
+	u32 mMask;
+
+public:
+
+	//----------------------------------------------------------------//
+	MOAIBlendMode		GetBlendModeTrait		();
+	USColorVec			GetColorTrait			();
+	USRect*				GetFrameTrait			();
+	const USAffine2D*	GetLocTrait				();
+	MOAIPartition*		GetPartitionTrait		();
+	MOAIShader*			GetShaderTrait			();
+	const USAffine2D*	GetTransformTrait		();
+	bool				GetVisibleTrait			();
+	bool				HasTrait				( u32 mask );
+	bool				HasTraits				();
+};
+
+//================================================================//
 // MOAITraits
 //================================================================//
 /**	@name	MOAITraits
 	@text	Abstracts heritable prop traits.
 	
+	@const INHERIT_ALL
 	@const INHERIT_LOC
 	@const INHERIT_TRANSFORM
 	@const INHERIT_COLOR
@@ -27,14 +79,33 @@ class MOAIShader;
 */
 class MOAITraits :
 	public virtual MOAINode {
-protected:
+private:
 	
-	USWeak < MOAITraits >		mTraitSource;
-	u32							mTraitMask;
-
+	friend class MOAITraitsBuffer;
+	
+	MOAITraitLink* mSourceList; // set of sources
+	
 	//----------------------------------------------------------------//
 	static int	_setTraitMask		( lua_State* L );
 	static int	_setTraitSource		( lua_State* L );
+
+	//----------------------------------------------------------------//
+	virtual MOAIBlendMode		GetBlendModeTrait		();
+	virtual USColorVec			GetColorTrait			();
+	virtual USRect*				GetFrameTrait			();
+	virtual const USAffine2D*	GetLocTrait				();
+	virtual MOAIPartition*		GetPartitionTrait		();
+	virtual MOAIShader*			GetShaderTrait			();
+	virtual const USAffine2D*	GetTransformTrait		();
+	virtual bool				GetVisibleTrait			();
+
+protected:
+
+	u32 mTraitMask; // mask used to inherit traits
+
+	//----------------------------------------------------------------//
+	void						AccumulateSources		( MOAITraitsBuffer& buffer );
+	bool						HasTraitsSource			();
 
 public:
 	
@@ -51,21 +122,17 @@ public:
 		INHERIT_BLEND_MODE		= 0x00000080,
 	};
 	
-	static const u32 DEFAULT_MASK = 0x00000046;
+	static const u32 DEFAULT_MASK	= 0x00000046;
+	static const u32 ALL_TRAITS		= 0xffffffff;
 	
 	//----------------------------------------------------------------//
-	virtual MOAIBlendMode		GetBlendModeTrait		();
-	virtual USColorVec			GetColorTrait			();
-	virtual USRect*				GetFrameTrait			();
-	virtual MOAIPartition*		GetPartitionTrait		();
-	virtual MOAIShader*			GetShaderTrait			();
-	virtual const USAffine2D*	GetTransformTrait		();
-	virtual bool				GetVisibleTrait			();
+	void						ClearTraitSources		();
+	MOAITraits*					GetTraitSource			( u32 mask );
 								MOAITraits				();
 								~MOAITraits				();
 	void						RegisterLuaClass		( USLuaState& state );
 	void						RegisterLuaFuncs		( USLuaState& state );
-	void						SetTraitSource			( MOAITraits* traitSource );
+	void						SetTraitSource			( MOAITraits* source, u32 mask );
 	STLString					ToString				();
 };
 

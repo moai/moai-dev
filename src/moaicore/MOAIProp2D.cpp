@@ -661,35 +661,38 @@ void MOAIProp2D::OnDepNodeUpdate () {
 	// select the frame
 	USRect frame = this->mFrame;
 	
-	if ( this->mTraitSource ) {
+	MOAITraitsBuffer buffer;
+	this->AccumulateSources ( buffer );
 	
-		if ( this->mTraitMask & INHERIT_BLEND_MODE ) {
-			this->mBlendMode = this->mTraitSource->GetBlendModeTrait ();
+	if ( buffer.HasTraits ()) {
+
+		if ( buffer.HasTrait ( INHERIT_BLEND_MODE )) {
+			this->mBlendMode = buffer.GetBlendModeTrait ();
 		}
 	
-		if ( this->mTraitMask & INHERIT_COLOR ) {
-			this->mColor.Modulate ( this->mTraitSource->GetColorTrait ());
+		if ( buffer.HasTrait ( INHERIT_COLOR )) {
+			this->mColor.Modulate ( buffer.GetColorTrait ());
 		}
 		
-		if ( this->mTraitMask & INHERIT_FRAME ) {
+		if ( buffer.HasTrait ( INHERIT_FRAME )) {
 			
-			USRect* frameTrait = this->mTraitSource->GetFrameTrait ();
+			USRect* frameTrait = buffer.GetFrameTrait ();
 			if ( frameTrait ) {
 				frame = *frameTrait;
 			}
 		}
 		
-		if ( this->mTraitMask & INHERIT_PARTITION ) {
-			MOAIPartition* partition = this->mTraitSource->GetPartitionTrait ();
+		if ( buffer.HasTrait ( INHERIT_PARTITION )) {
+			MOAIPartition* partition = buffer.GetPartitionTrait ();
 			this->SetPartition ( partition );
 		}
 		
-		if ( this->mTraitMask & INHERIT_SHADER ) {
-			this->mShader = this->mTraitSource->GetShaderTrait ();
+		if ( buffer.HasTrait ( INHERIT_SHADER )) {
+			this->mShader = buffer.GetShaderTrait ();
 		}
 		
-		if ( this->mTraitMask & INHERIT_VISIBLE ) {
-			this->mVisible = this->mTraitSource->GetVisibleTrait ();
+		if ( buffer.HasTrait ( INHERIT_VISIBLE )) {
+			this->mVisible = buffer.GetVisibleTrait ();
 		}
 	}
 	
@@ -712,7 +715,7 @@ void MOAIProp2D::OnDepNodeUpdate () {
 	}
 	
 	// inherit parent and offset transforms (and compute the inverse)
-	this->BuildTransforms ( offset.mX, offset.mY, stretch.mX, stretch.mY );
+	this->BuildTransforms ( &buffer, offset.mX, offset.mY, stretch.mX, stretch.mY );
 	
 	// update the prop location in the partition
 	// use the local frame; world transform will match it to target frame

@@ -669,7 +669,7 @@ bool MOAITransform::ApplyAttrOp ( u32 attrID, USAttrOp& attrOp ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITransform::BuildTransforms ( float xOff, float yOff, float xStretch, float yStretch ) {
+void MOAITransform::BuildTransforms ( MOAITraitsBuffer* traits, float xOff, float yOff, float xStretch, float yStretch ) {
 	
 	this->mLocalToWorldMtx.ScRoTr (
 		this->mScale.mX * xStretch,
@@ -679,17 +679,20 @@ void MOAITransform::BuildTransforms ( float xOff, float yOff, float xStretch, fl
 		this->mLoc.mY + yOff
 	);
 	
-	if ( this->mTraitSource ) {
+	if ( traits && traits->HasTraits ()) {
+			
+		if ( this->mTraitMask & INHERIT_TRANSFORM ) {
 		
-		const USAffine2D* inherit = this->mTraitSource->GetTransformTrait ();
-		
-		if ( inherit ) {
-		
-			if ( this->mTraitMask & INHERIT_TRANSFORM ) {
+			const USAffine2D* inherit = traits->GetTransformTrait ();
+			if ( inherit ) {
 				this->mLocalToWorldMtx.Append ( *inherit );
 			}
-			else if ( this->mTraitMask & INHERIT_LOC ) {
-				
+		}
+		else if ( this->mTraitMask & INHERIT_LOC ) {
+			
+			const USAffine2D* inherit = traits->GetLocTrait ();
+			if ( inherit ) {
+			
 				USVec2D loc = this->mLoc;
 				inherit->Transform ( loc );
 				
@@ -732,7 +735,7 @@ MOAITransform::~MOAITransform () {
 //----------------------------------------------------------------//
 void MOAITransform::OnDepNodeUpdate () {
 	
-	this->BuildTransforms ( 0.0f, 0.0f, 1.0f, 1.0f );
+	this->BuildTransforms ( 0, 0.0f, 0.0f, 1.0f, 1.0f );
 }
 
 //----------------------------------------------------------------//
@@ -789,7 +792,7 @@ void MOAITransform::SetLoc ( float x, float y ) {
 //----------------------------------------------------------------//
 void MOAITransform::SetParent ( MOAITransformBase* parent ) {
 
-	this->SetTraitSource ( parent );
+	this->SetTraitSource ( parent, ALL_TRAITS );
 }
 
 //----------------------------------------------------------------//

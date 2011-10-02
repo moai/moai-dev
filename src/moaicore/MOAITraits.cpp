@@ -6,6 +6,78 @@
 #include <moaicore/MOAITraits.h>
 
 //================================================================//
+// MOAITraitsBuffer
+//================================================================//
+
+//----------------------------------------------------------------//
+MOAIBlendMode MOAITraitsBuffer::GetBlendModeTrait () {
+
+	if ( this->mMask & MOAITraits::INHERIT_BLEND_MODE ) {
+		return this->mSources [ SOURCE_BLEND_MODE ]->GetBlendModeTrait ();
+	}
+	MOAIBlendMode blendMode;
+	return blendMode;
+}
+
+//----------------------------------------------------------------//
+USColorVec MOAITraitsBuffer::GetColorTrait () {
+
+	if ( this->mMask & MOAITraits::INHERIT_COLOR ) {
+		return this->mSources [ SOURCE_COLOR ]->GetColorTrait ();
+	}
+	static USColorVec color ( 1.0f, 1.0f, 1.0f, 1.0f );
+	return color;
+}
+
+//----------------------------------------------------------------//
+USRect* MOAITraitsBuffer::GetFrameTrait () {
+
+	return this->mMask & MOAITraits::INHERIT_FRAME ? this->mSources [ SOURCE_FRAME ]->GetFrameTrait () : 0;
+}
+
+//----------------------------------------------------------------//
+const USAffine2D* MOAITraitsBuffer::GetLocTrait () {
+
+	return this->mMask & MOAITraits::INHERIT_LOC ? this->mSources [ SOURCE_LOC ]->GetLocTrait () : 0;
+}
+
+//----------------------------------------------------------------//
+MOAIPartition* MOAITraitsBuffer::GetPartitionTrait () {
+
+	return this->mMask & MOAITraits::INHERIT_PARTITION ? this->mSources [ SOURCE_PARTITION ]->GetPartitionTrait () : 0;
+}
+
+//----------------------------------------------------------------//
+MOAIShader* MOAITraitsBuffer::GetShaderTrait () {
+
+	return this->mMask & MOAITraits::INHERIT_SHADER ? this->mSources [ SOURCE_SHADER ]->GetShaderTrait () : 0;
+}
+
+//----------------------------------------------------------------//
+const USAffine2D* MOAITraitsBuffer::GetTransformTrait () {
+
+	return this->mMask & MOAITraits::INHERIT_TRANSFORM ? this->mSources [ SOURCE_TRANSFORM ]->GetTransformTrait () : 0;
+}
+
+//----------------------------------------------------------------//
+bool MOAITraitsBuffer::GetVisibleTrait () {
+
+	return this->mMask & MOAITraits::INHERIT_VISIBLE ? this->mSources [ SOURCE_VISIBLE ]->GetVisibleTrait () : true;
+}
+
+//----------------------------------------------------------------//
+bool MOAITraitsBuffer::HasTrait ( u32 mask ) {
+
+	return (( this->mMask & mask ) != 0 );
+}
+
+//----------------------------------------------------------------//
+bool MOAITraitsBuffer::HasTraits () {
+
+	return ( this->mMask != 0 );
+}
+
+//================================================================//
 // local
 //================================================================//
 
@@ -32,21 +104,65 @@ int MOAITraits::_setTraitMask ( lua_State* L ) {
 	
 	@in		MOAITraits self
 	@opt	MOAITransformBase traitSource	Default value is nil.
+	@opt	number mask						Default value is 0xffffffff (all traits).
 	@out	nil
 */
 int MOAITraits::_setTraitSource ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITraits, "U" )
 	
-	MOAITraits* traitSource = state.GetLuaObject < MOAITraits >( 2 );
-	self->SetTraitSource ( traitSource );
+	MOAITraits* traitSource	= state.GetLuaObject < MOAITraits >( 2 );
+	u32 mask				= state.GetValue < u32 >( 3, ALL_TRAITS );
+
+	self->SetTraitSource ( traitSource, mask );
 	
 	return 0;
 }
 
-
 //================================================================//
 // MOAITraits
 //================================================================//
+
+//----------------------------------------------------------------//
+void MOAITraits::AccumulateSources ( MOAITraitsBuffer& buffer ) {
+
+	buffer.mMask = 0;
+	
+	if ( this->mTraitMask ) {
+
+		for ( u32 i = 0; i < MOAITraitsBuffer::TOTAL_SOURCES; ++i ) {
+			
+			if (( this->mTraitMask >> i ) & 0x01 ) {
+			
+				MOAITraitLink* link = this->mSourceList;
+				for ( ; link; link = link->mNext ) {
+				
+					if ( link->mMask & ( 1 << i )) {
+						buffer.mSources [ i ] = link->mSource;
+						buffer.mMask |= ( 1 << i );
+					}
+				}
+			}
+			else {
+				buffer.mSources [ i ] = 0;
+			}
+		}
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAITraits::ClearTraitSources () {
+
+	MOAITraitLink* cursor = this->mSourceList;
+	this->mSourceList = 0;
+	
+	for ( ; cursor;  ) {
+		MOAITraitLink* link = cursor;
+		cursor = cursor->mNext;
+		
+		this->SetDependentMember < MOAITraits >( link->mSource, 0 );
+		delete link;
+	}
+}
 
 //----------------------------------------------------------------//
 MOAIBlendMode MOAITraits::GetBlendModeTrait () {
@@ -68,12 +184,27 @@ USRect* MOAITraits::GetFrameTrait () {
 }
 
 //----------------------------------------------------------------//
+const USAffine2D* MOAITraits::GetLocTrait () {
+	return 0;
+}
+
+//----------------------------------------------------------------//
 MOAIPartition* MOAITraits::GetPartitionTrait () {
 	return 0;
 }
 
 //----------------------------------------------------------------//
 MOAIShader* MOAITraits::GetShaderTrait () {
+	return 0;
+}
+
+//----------------------------------------------------------------//
+MOAITraits* MOAITraits::GetTraitSource ( u32 mask ) {
+
+	MOAITraitLink* link = this->mSourceList;
+	for ( ; link; link = link->mNext ) {
+		if ( link->mMask & mask ) return link->mSource;
+	}
 	return 0;
 }
 
@@ -89,14 +220,31 @@ bool MOAITraits::GetVisibleTrait () {
 }
 
 //----------------------------------------------------------------//
+bool MOAITraits::HasTraitsSource () {
+
+	return this->mSourceList != 0;
+}
+
+//----------------------------------------------------------------//
 MOAITraits::MOAITraits () :
-	mTraitMask ( DEFAULT_MASK ) {
+	mSourceList ( 0 ),
+	mTraitMask ( 0 ) {
 	
 	RTTI_SINGLE ( MOAINode )
 }
 
 //----------------------------------------------------------------//
 MOAITraits::~MOAITraits () {
+
+	MOAITraitLink* cursor = this->mSourceList;
+	this->mSourceList = 0;
+	
+	for ( ; cursor;  ) {
+		MOAITraitLink* link = cursor;
+		cursor = cursor->mNext;
+
+		delete link;
+	}
 }
 
 //----------------------------------------------------------------//
@@ -104,6 +252,7 @@ void MOAITraits::RegisterLuaClass ( USLuaState& state ) {
 	
 	MOAINode::RegisterLuaClass ( state );
 	
+	state.SetField ( -1, "INHERIT_ALL", ( u32 )ALL_TRAITS );
 	state.SetField ( -1, "INHERIT_LOC", ( u32 )INHERIT_LOC );
 	state.SetField ( -1, "INHERIT_TRANSFORM", ( u32 )INHERIT_TRANSFORM );
 	state.SetField ( -1, "INHERIT_COLOR", ( u32 )INHERIT_COLOR );
@@ -128,9 +277,58 @@ void MOAITraits::RegisterLuaFuncs ( USLuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITraits::SetTraitSource ( MOAITraits* traitSource ) {
+void MOAITraits::SetTraitSource ( MOAITraits* source, u32 mask ) {
 
-	this->SetDependentMember < MOAITraits >( this->mTraitSource, traitSource );
+	if ( source ) {
+		this->mTraitMask |= mask;
+	}
+	else {
+		this->mTraitMask &= ~mask;
+	}
+
+	bool foundLink = false;
+
+	// clear out any links that match mask
+	MOAITraitLink* cursor = this->mSourceList;
+	this->mSourceList = 0;
+	
+	for ( ; cursor;  ) {
+		MOAITraitLink* link = cursor;
+		cursor = cursor->mNext;
+		
+		if ( link->mSource ) {
+			if ( link->mSource == source ) {
+				link->mMask |= mask; // set mask
+				foundLink = true;
+			}
+			else {
+				link->mMask &= ~mask; // clear mask
+			}
+		}
+		else {
+			link->mMask = 0;
+		}
+		
+		if ( link->mMask ) {
+			link->mNext = this->mSourceList;
+			this->mSourceList = link;
+		}
+		else {
+			this->SetDependentMember < MOAITraits >( link->mSource, 0 );
+			delete link;
+		}
+	}
+
+	if ( source && !foundLink ) {
+		
+		MOAITraitLink* link = new MOAITraitLink ();
+		this->SetDependentMember < MOAITraits >( link->mSource, source );
+		link->mMask = mask;
+		
+		link->mNext = this->mSourceList;
+		this->mSourceList = link;
+	}
+
 	this->ForceUpdate ();
 }
 
