@@ -119,7 +119,7 @@ void MOAITraits::AccumulateSources ( MOAITraitsBuffer& buffer, u32 traitsMask ) 
 				
 				if ( link->mSource ) {
 					
-					u32 mask = link->mMask & traitsMask;
+					u32 mask = (( link->mMask & traitsMask ) & MOAITraitsBuffer::MASK_TO_8_BITS);
 					buffer.mMask |= mask;
 					
 					for ( u32 i = 0; mask; i++, mask = mask >> 1 ) {

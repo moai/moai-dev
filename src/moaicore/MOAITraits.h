@@ -43,6 +43,10 @@ private:
 		TOTAL_SOURCES,
 	};
 
+	enum {
+		MASK_TO_8_BITS = 0xFF
+	};
+
 	MOAITraits* mSources [ TOTAL_SOURCES ];
 	u32 mMask;
 
