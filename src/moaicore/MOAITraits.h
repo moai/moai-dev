@@ -101,7 +101,7 @@ private:
 protected:
 
 	//----------------------------------------------------------------//
-	void						AccumulateSources		( MOAITraitsBuffer& buffer );
+	void						AccumulateSources		( MOAITraitsBuffer& buffer, u32 traitsMask = 0xffffffff );
 	bool						HasTraitsSource			();
 
 public:

@@ -106,7 +106,7 @@ int MOAITraits::_setTraitSource ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAITraits::AccumulateSources ( MOAITraitsBuffer& buffer ) {
+void MOAITraits::AccumulateSources ( MOAITraitsBuffer& buffer, u32 traitsMask ) {
 
 	buffer.mMask = 0;
 	
@@ -119,7 +119,7 @@ void MOAITraits::AccumulateSources ( MOAITraitsBuffer& buffer ) {
 				
 				if ( link->mSource ) {
 					
-					u32 mask = link->mMask;
+					u32 mask = link->mMask & traitsMask;
 					buffer.mMask |= mask;
 					
 					for ( u32 i = 0; mask; i++, mask = mask >> 1 ) {

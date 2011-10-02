@@ -533,13 +533,25 @@ void MOAIProp2D::GetBoundsInView ( MOAICellCoord& c0, MOAICellCoord& c1 ) {
 //----------------------------------------------------------------//
 USColorVec MOAIProp2D::GetColorTrait () {
 
-	return this->mColor;
+	return MOAIColor::GetColorTrait ();
 }
 
 //----------------------------------------------------------------//
 USRect* MOAIProp2D::GetFrameTrait () {
 
 	return &this->mFrame;
+}
+
+//----------------------------------------------------------------//
+const USAffine2D* MOAIProp2D::GetLocTrait () {
+
+	return MOAITransform::GetLocTrait ();
+}
+
+//----------------------------------------------------------------//
+MOAIPartition* MOAIProp2D::GetPartitionTrait () {
+
+	return MOAIProp::GetPartitionTrait ();
 }
 
 //----------------------------------------------------------------//
@@ -563,6 +575,12 @@ u32 MOAIProp2D::GetLocalFrame ( USRect& frame ) {
 	}
 	
 	return BOUNDS_EMPTY;
+}
+
+//----------------------------------------------------------------//
+const USAffine2D* MOAIProp2D::GetTransformTrait () {
+
+	return MOAITransform::GetTransformTrait ();
 }
 
 //----------------------------------------------------------------//
