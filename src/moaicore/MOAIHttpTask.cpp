@@ -163,7 +163,7 @@ int MOAIHttpTask::_parseXml ( lua_State* L ) {
 int MOAIHttpTask::_setCallback ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIHttpTask, "UF" )
 
-	self->mOnFinish.SetRef ( state, 2, false );
+	self->mOnFinish.SetStrongRef ( state, 2 );
 
 	return 0;
 }

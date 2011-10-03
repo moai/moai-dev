@@ -441,7 +441,7 @@ int MOAICpSpace::_setCollisionHandler ( lua_State* L ) {
 		}
 		
 		handler->mMask = state.GetValue < u32 >( 4, ALL );
-		handler->mHandler.SetRef ( state, 5, false );
+		handler->mHandler.SetStrongRef ( state, 5 );
 	}
 	else {
 	

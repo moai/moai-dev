@@ -14,15 +14,41 @@ class USLuaState;
 class USLuaStateHandle;
 
 //================================================================//
+// USLuaPrivateRef
+//================================================================//
+class USLuaPrivateRef {
+private:
+
+	friend class USLuaObject;
+	int mRef;
+
+public:
+	
+	//----------------------------------------------------------------//
+			USLuaPrivateRef		();
+			~USLuaPrivateRef	();
+	
+	//----------------------------------------------------------------//
+	inline operator bool () {
+		return ( this->mRef != LUA_NOREF );
+	}
+};
+
+//================================================================//
 // USLuaObject
 //================================================================//
 class USLuaObject :
 	public virtual USObject {
+private:
+
+	USLuaRef			mPrivate;		// weak/strong ref to private local reference table
+	USLuaPrivateRef		mContain;		// holds other lua objects this object depends on
+
 protected:
 
 	USLuaRef		mInstanceTable;		// weak ref to instance table stack
-	USLuaRef		mUserdata;			// weak/strong ref to handle userdata 
-		
+	USLuaRef		mUserdata;			// weak/strong ref to userdata
+	
 
 	//----------------------------------------------------------------//
 	static int				_gc						( lua_State* L );
@@ -31,6 +57,7 @@ protected:
 	//static int			_tostring				( lua_State* L );
 
 	//----------------------------------------------------------------//
+	void					AffirmPrivate			();
 	void					OnRelease				( u32 refCount );
 	void					OnRetain				( u32 refCount );
 
@@ -44,16 +71,20 @@ public:
 	STLString				ToStringWithType		();
 	virtual USLuaClass*		GetLuaClass				();
 	USLuaStateHandle		GetSelf					();
+	void					InsertObject			( USLuaObject& object );
 	bool					IsBound					();
 	void					LuaUnbind				( USLuaState& state );
 	void					PushLuaClassTable		( USLuaState& state );
 	void					PushLuaUserdata			( USLuaState& state );
+	bool					PushPrivateRef			( USLuaState& state, USLuaPrivateRef& ref );
 	virtual void			RegisterLuaClass		( USLuaState& state );
 	virtual void			RegisterLuaFuncs		( USLuaState& state );
+	void					RemoveObject			( USLuaObject& object );
 	static void             ReportLeaks				( FILE *f, bool clearAfter );
 	virtual	void			SerializeIn				( USLuaState& state, USLuaSerializer& serializer );
 	virtual	void			SerializeOut			( USLuaState& state, USLuaSerializer& serializer );
 	void					SetLuaInstanceTable		( USLuaState& state, int idx );
+	void					SetPrivateRef			( USLuaState& state, int idx, USLuaPrivateRef& ref );
 							USLuaObject				();
 	virtual					~USLuaObject			();
 };

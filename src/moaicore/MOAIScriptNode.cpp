@@ -38,7 +38,7 @@ int MOAIScriptNode::_reserveAttrs ( lua_State* L ) {
 int MOAIScriptNode::_setCallback ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIScriptNode, "UF" );
 
-	self->mOnUpdate.SetRef ( state, -1, USLuaRef::STRONG_REF );
+	self->mOnUpdate.SetStrongRef ( state, -1 );
 	return 0;
 }
 

@@ -15,7 +15,7 @@ class MOAIEventSource :
 	public virtual USLuaObject {
 private:
 
-	USLuaRef			mListenerTable;
+	USLuaPrivateRef		mListenerTable;
 
 	//----------------------------------------------------------------//
 	static int			_setListener			( lua_State* L );

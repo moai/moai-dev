@@ -73,7 +73,7 @@ int MOAIBox2DWorld::_addBody ( lua_State* L ) {
 	MOAIBox2DBody* body = new MOAIBox2DBody ();
 	body->SetBody ( self->mWorld->CreateBody ( &groundBodyDef ));
 	body->SetWorld ( self );
-	body->Retain ();
+	self->InsertObject ( *body );
 	
 	body->PushLuaUserdata ( state );
 	return 1;
@@ -119,7 +119,7 @@ int	MOAIBox2DWorld::_addDistanceJoint ( lua_State* L ) {
 	MOAIBox2DDistanceJoint* joint = new MOAIBox2DDistanceJoint ();
 	joint->SetJoint ( self->mWorld->CreateJoint ( &jointDef ));
 	joint->SetWorld ( self );
-	joint->Retain ();
+	self->InsertObject ( *joint );
 	
 	joint->PushLuaUserdata ( state );
 	return 1;
@@ -157,7 +157,7 @@ int	MOAIBox2DWorld::_addFrictionJoint ( lua_State* L ) {
 	MOAIBox2DFrictionJoint* joint = new MOAIBox2DFrictionJoint ();
 	joint->SetJoint ( self->mWorld->CreateJoint ( &jointDef ));
 	joint->SetWorld ( self );
-	joint->Retain ();
+	self->InsertObject ( *joint );
 	
 	joint->PushLuaUserdata ( state );
 	return 1;
@@ -190,7 +190,7 @@ int	MOAIBox2DWorld::_addGearJoint ( lua_State* L ) {
 	MOAIBox2DGearJoint* joint = new MOAIBox2DGearJoint ();
 	joint->SetJoint ( self->mWorld->CreateJoint ( &jointDef ));
 	joint->SetWorld ( self );
-	joint->Retain ();
+	self->InsertObject ( *joint );
 	
 	joint->mJointA = jointA;
 	joint->mJointB = jointB;
@@ -232,7 +232,7 @@ int	MOAIBox2DWorld::_addLineJoint ( lua_State* L ) {
 	MOAIBox2DLineJoint* joint = new MOAIBox2DLineJoint ();
 	joint->SetJoint ( self->mWorld->CreateJoint ( &jointDef ));
 	joint->SetWorld ( self );
-	joint->Retain ();
+	self->InsertObject ( *joint );
 	
 	joint->PushLuaUserdata ( state );
 	return 1;
@@ -267,7 +267,7 @@ int	MOAIBox2DWorld::_addMouseJoint ( lua_State* L ) {
 	MOAIBox2DMouseJoint* joint = new MOAIBox2DMouseJoint ();
 	joint->SetJoint ( self->mWorld->CreateJoint ( &jointDef ));
 	joint->SetWorld ( self );
-	joint->Retain ();
+	self->InsertObject ( *joint );
 	
 	joint->PushLuaUserdata ( state );
 	return 1;
@@ -306,7 +306,7 @@ int	MOAIBox2DWorld::_addPrismaticJoint ( lua_State* L ) {
 	MOAIBox2DPrismaticJoint* joint = new MOAIBox2DPrismaticJoint ();
 	joint->SetJoint ( self->mWorld->CreateJoint ( &jointDef ));
 	joint->SetWorld ( self );
-	joint->Retain ();
+	self->InsertObject ( *joint );
 	
 	joint->PushLuaUserdata ( state );
 	return 1;
@@ -365,7 +365,7 @@ int	MOAIBox2DWorld::_addPulleyJoint ( lua_State* L ) {
 	MOAIBox2DPulleyJoint* joint = new MOAIBox2DPulleyJoint ();
 	joint->SetJoint ( self->mWorld->CreateJoint ( &jointDef ));
 	joint->SetWorld ( self );
-	joint->Retain ();
+	self->InsertObject ( *joint );
 	
 	joint->PushLuaUserdata ( state );
 	return 1;
@@ -398,7 +398,7 @@ int	MOAIBox2DWorld::_addRevoluteJoint ( lua_State* L ) {
 	MOAIBox2DRevoluteJoint* joint = new MOAIBox2DRevoluteJoint ();
 	joint->SetJoint ( self->mWorld->CreateJoint ( &jointDef ));
 	joint->SetWorld ( self );
-	joint->Retain ();
+	self->InsertObject ( *joint );
 	
 	joint->PushLuaUserdata ( state );
 	return 1;
@@ -431,7 +431,7 @@ int	MOAIBox2DWorld::_addWeldJoint ( lua_State* L ) {
 	MOAIBox2DWeldJoint* joint = new MOAIBox2DWeldJoint ();
 	joint->SetJoint ( self->mWorld->CreateJoint ( &jointDef ));
 	joint->SetWorld ( self );
-	joint->Retain ();
+	self->InsertObject ( *joint );
 	
 	joint->PushLuaUserdata ( state );
 	return 1;
@@ -557,18 +557,21 @@ void MOAIBox2DWorld::Destroy () {
 		MOAIBox2DPrim* prim = this->mDestroyFixtures;
 		this->mDestroyFixtures = this->mDestroyFixtures->mDestroyNext;
 		prim->Destroy ();
+		prim->Release ();
 	}
 	
 	while ( this->mDestroyJoints ) {
 		MOAIBox2DPrim* prim = this->mDestroyJoints;
 		this->mDestroyJoints = this->mDestroyJoints->mDestroyNext;
 		prim->Destroy ();
+		prim->Release ();
 	}
 	
 	while ( this->mDestroyBodies ) {
 		MOAIBox2DPrim* prim = this->mDestroyBodies;
 		this->mDestroyBodies = this->mDestroyBodies->mDestroyNext;
 		prim->Destroy ();
+		prim->Release ();
 	}
 }
 
@@ -636,7 +639,7 @@ MOAIBox2DWorld::~MOAIBox2DWorld () {
 		MOAIBox2DBody* moaiBody = ( MOAIBox2DBody* )body->GetUserData ();
 		
 		this->mWorld->DestroyBody ( body );
-		moaiBody->Release ();
+		this->RemoveObject ( *moaiBody );
 	}
 	
 	delete ( this->mDebugDraw );
@@ -698,7 +701,6 @@ void MOAIBox2DWorld::SayGoodbye ( b2Fixture* fixture ) {
 
 	MOAIBox2DFixture* moaiFixture = ( MOAIBox2DFixture* )fixture->GetUserData ();
 	moaiFixture->mFixture = 0;
-	moaiFixture->Release ();
 }
 
 //----------------------------------------------------------------//
@@ -706,7 +708,6 @@ void MOAIBox2DWorld::SayGoodbye ( b2Joint* joint ) {
 
 	MOAIBox2DJoint* moaiJoint = ( MOAIBox2DJoint* )joint->GetUserData ();
 	moaiJoint->mJoint = 0;
-	moaiJoint->Release ();
 }
 
 //----------------------------------------------------------------//
@@ -716,6 +717,7 @@ void MOAIBox2DWorld::ScheduleDestruction ( MOAIBox2DBody& body ) {
 		body.mDestroyNext = this->mDestroyBodies;
 		this->mDestroyBodies = &body;
 		body.mDestroy = true;
+		body.Retain ();
 	}
 }
 
@@ -726,6 +728,7 @@ void MOAIBox2DWorld::ScheduleDestruction ( MOAIBox2DFixture& fixture ) {
 		fixture.mDestroyNext = this->mDestroyFixtures;
 		this->mDestroyFixtures = &fixture;
 		fixture.mDestroy = true;
+		fixture.Retain ();
 	}
 }
 
@@ -736,6 +739,7 @@ void MOAIBox2DWorld::ScheduleDestruction ( MOAIBox2DJoint& joint ) {
 		joint.mDestroyNext = this->mDestroyJoints;
 		this->mDestroyJoints = &joint;
 		joint.mDestroy = true;
+		joint.Retain ();
 	}
 }
 

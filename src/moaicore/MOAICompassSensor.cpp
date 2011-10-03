@@ -35,7 +35,7 @@ int MOAICompassSensor::_getHeading ( lua_State* L ) {
 int MOAICompassSensor::_setCallback ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICompassSensor, "U" )
 	
-	self->mCallback.SetRef ( state, 2, false );
+	self->mCallback.SetStrongRef ( state, 2 );
 	
 	return 0;
 }

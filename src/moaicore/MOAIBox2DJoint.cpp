@@ -152,7 +152,7 @@ void MOAIBox2DJoint::Destroy () {
 		b2World* world = this->mWorld->mWorld;
 		world->DestroyJoint ( this->mJoint );
 		this->mJoint = 0;
-		this->Release ();
+		this->mWorld->RemoveObject ( *this );
 	}
 }
 
@@ -176,6 +176,8 @@ MOAIBox2DJoint::~MOAIBox2DJoint () {
 		bodyA->Release ();
 		bodyB->Release ();
 	}
+	
+	this->Destroy ();
 }
 
 //----------------------------------------------------------------//

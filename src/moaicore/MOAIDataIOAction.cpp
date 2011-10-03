@@ -26,7 +26,7 @@ int MOAIDataIOAction::_setCallback ( lua_State* L ) {
 	MOAIDataIOAction* self = state.GetLuaObject < MOAIDataIOAction >( 1 );
 	if ( !self ) return 0;
 
-	self->mOnFinish.SetRef ( state, 2, false );
+	self->mOnFinish.SetStrongRef ( state, 2 );
 
 	return 0;
 }

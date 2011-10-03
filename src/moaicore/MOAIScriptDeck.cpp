@@ -29,7 +29,7 @@
 int MOAIScriptDeck::_setDrawCallback ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIScriptDeck, "UF" )
 	
-	self->mOnDraw.SetRef ( state, 2, false );
+	self->mOnDraw.SetStrongRef ( state, 2 );
 	
 	return 0;
 }
@@ -66,7 +66,7 @@ int MOAIScriptDeck::_setRect ( lua_State* L ) {
 int MOAIScriptDeck::_setRectCallback ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIScriptDeck, "UF" )
 	
-	self->mOnRect.SetRef ( state, 2, false );
+	self->mOnRect.SetStrongRef ( state, 2 );
 	
 	return 0;
 }

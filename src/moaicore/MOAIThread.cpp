@@ -92,7 +92,7 @@ int MOAIThread::_run ( lua_State* L ) {
 
 	self->mNarg = lua_gettop ( state ) - 2;
 	self->mState = lua_newthread ( state );
-	self->mRef.SetRef ( state, -1, false );
+	self->mRef.SetStrongRef ( state, -1 );
 	lua_pop ( state, 1 );
 	
 	lua_xmove ( state, self->mState, self->mNarg + 1 );

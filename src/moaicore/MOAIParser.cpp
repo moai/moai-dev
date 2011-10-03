@@ -97,9 +97,9 @@ int MOAIParser::_loadString ( lua_State* L ) {
 int MOAIParser::_setCallbacks ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIParser, "U" )
 	
-	self->mOnStartNonterminal.SetRef ( state, 2, false );
-	self->mOnEndNonterminal.SetRef ( state, 3, false );
-	self->mOnTerminal.SetRef ( state, 4, false );
+	self->mOnStartNonterminal.SetStrongRef ( state, 2 );
+	self->mOnEndNonterminal.SetStrongRef ( state, 3 );
+	self->mOnTerminal.SetStrongRef ( state, 4 );
 	
 	return 0;
 }

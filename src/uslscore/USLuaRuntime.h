@@ -64,25 +64,26 @@ public:
 	GET_SET ( bool, AllocLogEnabled, mAllocLogEnabled )
 
 	//----------------------------------------------------------------//
-	void					Close					();
-	void					EnableHistogram			( bool enable );
-	void					EnableLeakTracking		( bool enable );
-	void					ForceGarbageCollection	();
-	size_t					GetMemoryUsage			();
-	bool					IsOpen					();
-	void					LoadLibs				( cc8* runtimeLibName );
-	USLuaStateHandle		Open					();
-	void					RegisterModule			( cc8* name, lua_CFunction loader, bool autoLoad );
-	void					ReportHistogram			( FILE *f );
-	void					ReportLeaksFormatted	( FILE *f );
-	void					ReportLeaksRaw			( FILE *f );
-	void					ReportLuaRefs			( FILE *f );
-	void					ResetLeakTracking		();
-	void					SetObjectStackTrace		( USLuaObject* object, cc8* trace );
-	void					SetPath					( cc8* path );
-	USLuaStateHandle		State					();
-							USLuaRuntime			();
-							~USLuaRuntime			();
+	void					ClearObjectStackTrace		( USLuaObject* object );
+	void					Close						();
+	void					EnableHistogram				( bool enable );
+	void					EnableLeakTracking			( bool enable );
+	void					ForceGarbageCollection		();
+	size_t					GetMemoryUsage				();
+	bool					IsOpen						();
+	void					LoadLibs					( cc8* runtimeLibName );
+	USLuaStateHandle		Open						();
+	void					RegisterModule				( cc8* name, lua_CFunction loader, bool autoLoad );
+	void					ReportHistogram				( FILE *f );
+	void					ReportLeaksFormatted		( FILE *f );
+	void					ReportLeaksRaw				( FILE *f );
+	void					ReportLuaRefs				( FILE *f );
+	void					ResetLeakTracking			();
+	void					SetObjectStackTrace			( USLuaObject* object );
+	void					SetPath						( cc8* path );
+	USLuaStateHandle		State						();
+							USLuaRuntime				();
+							~USLuaRuntime				();
 };
 
 #endif

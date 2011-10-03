@@ -295,6 +295,14 @@ static int _register ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+void USLuaRuntime::ClearObjectStackTrace ( USLuaObject* object ) {
+
+	if ( object ) {
+		this->mLeaks.erase ( object );
+	}
+}
+
+//----------------------------------------------------------------//
 void USLuaRuntime::Close () {
 
 	if ( this->mMainState ) {
@@ -504,7 +512,7 @@ void USLuaRuntime::LoadLibs ( cc8* runtimeLibName ) {
 	this->RegisterModule ( runtimeLibName, _register, true );
 	
 	this->mMainState.Push ( _traceback );
-	this->mTraceback.SetRef ( this->mMainState, -1, false );
+	this->mTraceback.SetStrongRef ( this->mMainState, -1 );
 	this->mMainState.Pop ( 1 );
 }
 
@@ -642,17 +650,12 @@ void USLuaRuntime::ResetLeakTracking () {
 }
 
 //----------------------------------------------------------------//
-void USLuaRuntime::SetObjectStackTrace ( USLuaObject* object, cc8* trace ) {
+void USLuaRuntime::SetObjectStackTrace ( USLuaObject* object ) {
 
-	if ( object ) {
-		if ( trace ) {
-			if ( this->mLeakTrackingEnabled ) {
-				this->mLeaks [ object ] = trace;
-			}
-		}
-		else {
-			this->mLeaks.erase ( object );
-		}
+	if ( object && this->mLeakTrackingEnabled ) {
+	
+		STLString trace = this->mMainState.GetStackTrace ( 1 );
+		this->mLeaks [ object ] = trace;
 	}
 }
 
