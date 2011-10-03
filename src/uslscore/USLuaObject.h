@@ -54,7 +54,7 @@ protected:
 	static int				_gc						( lua_State* L );
 	static int				_getClass				( lua_State* L );
 	static int				_getClassName			( lua_State* L );
-	//static int			_tostring				( lua_State* L );
+	static int				_tostring				( lua_State* L );
 
 	//----------------------------------------------------------------//
 	void					OnRelease				( u32 refCount );
@@ -65,6 +65,7 @@ public:
 	friend class USLuaClass;
 
 	//----------------------------------------------------------------//
+	void					BindToLuaWithTable		( USLuaState& state ); // push table at top of stack!
 	void					DebugDump				();
 	virtual STLString		ToString				();
 	STLString				ToStringWithType		();
@@ -100,8 +101,8 @@ protected:
 
 	//----------------------------------------------------------------//
 	void				InitLuaFactoryClass			( USLuaObject& data, USLuaState& state );
-	void				InitLuaInstanceTable		( USLuaObject* data, USLuaState& state, int idx );
 	void				InitLuaSingletonClass		( USLuaObject& data, USLuaState& state );
+	void				PushMemberTable				( USLuaState& state );
 	virtual void		RegisterLuaClass			( USLuaState& state ) = 0;
 
 public:

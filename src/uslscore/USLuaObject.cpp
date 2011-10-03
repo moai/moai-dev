@@ -75,22 +75,81 @@ int USLuaObject::_getClassName ( lua_State* L ) {
 
 
 //----------------------------------------------------------------//
-// TODO: restore lua dump methods
-//int USLuaObject::_tostring ( lua_State* L ) {
-//
-//	USLuaState state ( L );
-//	if ( !state.CheckParams ( 1, "U" ) ) return 0;
-//
-//	USLuaObject* data = ( USLuaObject* )state.GetPtrUserData ( 1 );
-//
-//	lua_pushstring( state, data->ToStringWithType ().c_str () );
-//	
-//	return 1;
-//}
+int USLuaObject::_tostring ( lua_State* L ) {
+
+	USLuaState state ( L );
+
+	USLuaObject* data = ( USLuaObject* )state.GetPtrUserData ( 1 );
+	if ( data ) {
+	
+		STLString str;
+		str.write ( "0x%08X: %s", ( u32 )data, data->TypeName ()); // TODO: 64-bit
+		state.Push ( str );
+		return 1;
+	}
+	return 0;
+}
 
 //================================================================//
 // USLuaObject
 //================================================================//
+
+//----------------------------------------------------------------//
+void USLuaObject::BindToLuaWithTable ( USLuaState& state ) {
+
+	assert ( !this->mUserdata );
+	assert ( state.IsType ( -1, LUA_TTABLE ));
+	
+	USLuaClass* type = this->GetLuaClass ();
+	assert ( type );
+	
+	// create and initialize a new userdata
+	state.PushPtrUserData ( this );
+
+	// move the instance table to top; initialize it
+	state.MoveToTop ( -2 );
+	
+	lua_pushvalue ( state, -1 );
+	lua_setfield ( state, -2, "__index" );
+	
+	lua_pushvalue ( state, -1 );
+	lua_setfield ( state, -2, "__newindex" );
+
+	lua_pushcfunction ( state, USLuaObject::_gc );
+	lua_setfield ( state, -2, "__gc" );
+	
+	lua_pushcfunction ( state, USLuaObject::_tostring );
+	lua_setfield ( state, -2, "__tostring" );
+	
+	// create and initialize the private table
+	lua_newtable ( state );
+	
+	// use the member table as the private table's __index
+	type->PushMemberTable ( state );
+	lua_setfield ( state, -2, "__index" );
+	
+	// and make the member table the private table's meta
+	type->PushMemberTable ( state );
+	lua_setmetatable ( state, -2 );
+	
+	// grab a ref to the private table; attach it to the instance table
+	this->mPrivateTable = state.GetWeakRef ( -1 );
+	lua_setmetatable ( state, -2 );
+
+	// grab a ref to the instance table; attach it to the userdata
+	this->mInstanceTable = state.GetWeakRef ( -1 );
+	lua_setmetatable ( state, -2 );
+	
+	// and take a ref back to the userdata	
+	if ( this->GetRefCount () == 0 ) {
+		this->mUserdata.SetWeakRef ( state, -1 );
+	}
+	else {
+		this->mUserdata.SetStrongRef ( state, -1 );
+	}
+
+	assert ( !lua_isnil ( state, -1 ));
+}
 
 //----------------------------------------------------------------//
 void USLuaObject::DebugDump () {
@@ -198,40 +257,11 @@ void USLuaObject::PushLuaUserdata ( USLuaState& state ) {
 		// pop the 'nil' pushed by PushRef
 		state.Pop ( 1 );
 		
-		// create and initialize a new userdata
-		state.PushPtrUserData ( this );
-
-		// set the instance table
-		if ( !this->mInstanceTable.PushRef ( state )) {
-			
-			// pop the 'nil' pushed by PushRef
-			state.Pop ( 1 );
-			
-			USLuaClass* type = this->GetLuaClass ();
-			assert ( type );
-			
-			// set the instance table
-			lua_newtable ( state );
-			type->InitLuaInstanceTable ( this, state, -1 );
-			
-			this->mInstanceTable = state.GetWeakRef ( -1 );
-		}
-
-		// create the private table and add it to the instance table
+		// create an empty instance table
 		lua_newtable ( state );
-		this->mPrivateTable = state.GetWeakRef ( -1 );
-		lua_setfield ( state, -2, "_private" );
-
-		// instance table is not top of the stack again; attach it to the userdata
-		lua_setmetatable ( state, -2 );
 		
-		// and take a ref back to the userdata	
-		if ( this->GetRefCount () == 0 ) {
-			this->mUserdata.SetWeakRef ( state, -1 );
-		}
-		else {
-			this->mUserdata.SetStrongRef ( state, -1 );
-		}
+		// initialize and bind the userdata
+		this->BindToLuaWithTable ( state );
 	}
 	assert ( !lua_isnil ( state, -1 ));
 }
@@ -291,25 +321,6 @@ void USLuaObject::SerializeIn ( USLuaState& state, USLuaSerializer& serializer )
 void USLuaObject::SerializeOut ( USLuaState& state, USLuaSerializer& serializer ) {
 	UNUSED ( state );
 	UNUSED ( serializer );
-}
-
-//----------------------------------------------------------------//
-void USLuaObject::SetLuaInstanceTable ( USLuaState& state, int idx ) {
-
-	assert ( !this->mInstanceTable );
-
-	if ( state.IsType ( idx, LUA_TTABLE )) {
-
-		idx = state.AbsIndex ( idx );
-
-		USLuaClass* type = this->GetLuaClass ();
-		assert ( type );
-		
-		// set the instance table
-		type->InitLuaInstanceTable ( this, state, idx );
-		
-		this->mInstanceTable = state.GetWeakRef ( idx );
-	}
 }
 
 //----------------------------------------------------------------//
@@ -401,9 +412,6 @@ void USLuaClass::InitLuaFactoryClass ( USLuaObject& data, USLuaState& state ) {
 	lua_pushnil ( state );
 	lua_setfield ( state, -2, "__newindex" );
 
-	//lua_pushcfunction ( state, _tostring );
-	//lua_setfield ( state, -2, "__tostring" );
-
 	this->mMemberTable = state.GetStrongRef ( -1 );
 	
 	lua_settop ( state, top );
@@ -416,26 +424,6 @@ void USLuaClass::InitLuaFactoryClass ( USLuaObject& data, USLuaState& state ) {
 	lua_setglobal ( state, data.TypeName ());
 
 	lua_settop ( state, top );
-}
-
-//----------------------------------------------------------------//
-void USLuaClass::InitLuaInstanceTable ( USLuaObject* data, USLuaState& state, int idx ) {
-
-	UNUSED ( data );
-	
-	idx = state.AbsIndex ( idx );
-	
-	lua_pushvalue ( state, idx );
-	lua_setfield ( state, idx, "__index" );
-	
-	lua_pushvalue ( state, idx );
-	lua_setfield ( state, idx, "__newindex" );
-
-	lua_pushcfunction ( state, USLuaObject::_gc );
-	lua_setfield ( state, idx, "__gc" );
-
-	state.Push ( this->mMemberTable );
-	lua_setmetatable ( state, idx );
 }
 
 //----------------------------------------------------------------//
@@ -467,6 +455,12 @@ void USLuaClass::InitLuaSingletonClass ( USLuaObject& data, USLuaState& state ) 
 bool USLuaClass::IsSingleton () {
 
 	return ( this->GetSingleton () != 0 );
+}
+
+//----------------------------------------------------------------//
+void USLuaClass::PushMemberTable ( USLuaState& state ) {
+
+	state.Push ( this->mMemberTable );
 }
 
 //----------------------------------------------------------------//
