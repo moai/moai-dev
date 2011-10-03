@@ -253,14 +253,3 @@ void MOAIHttpTask::RegisterLuaFuncs ( USLuaState& state ) {
 	
 	luaL_register ( state, 0, regTable );
 }
-
-//----------------------------------------------------------------//
-STLString MOAIHttpTask::ToString () {
-
-	STLString repr;
-
-	PRETTY_PRINT ( repr, mBuffer )
-	PRETTY_PRINT ( repr, mSize )
-
-	return repr;
-}

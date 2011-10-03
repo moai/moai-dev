@@ -234,13 +234,3 @@ void MOAIAnim::SetLink ( u32 linkID, MOAIAnimCurve* curve, MOAINode* target, u32
 	this->mEndTime = this->mLength;
 }
 
-//----------------------------------------------------------------//
-STLString MOAIAnim::ToString () {
-
-	STLString repr;
-
-	PRETTY_PRINT ( repr, mLength )
-	PRETTY_PRINT ( repr, mLinks )
-
-	return repr;
-}

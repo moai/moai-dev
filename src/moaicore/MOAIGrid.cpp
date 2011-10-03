@@ -467,13 +467,3 @@ u32 MOAIGrid::Size () {
 
 	return this->mTiles.Size ();
 }
-
-//----------------------------------------------------------------//
-STLString MOAIGrid::ToString () {
-
-	STLString repr;
-
-	//PrettyPrint ( repr, "bounds", this->USTilemap::GetBounds ());
-
-	return repr;
-}

@@ -57,7 +57,6 @@ public:
 	void			RegisterLuaFuncs	( USLuaState& state );
 	void			ReserveLinks		( u32 totalLinks );
 	void			SetLink				( u32 linkID, MOAIAnimCurve* curve, MOAINode* target, u32 attrID, bool relative );
-	STLString		ToString			();
 };
 
 #endif

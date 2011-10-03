@@ -127,10 +127,3 @@ void MOAICameraAnchor2D::SetParent ( MOAITransformBase* parent ) {
 
 	this->ScheduleUpdate ();
 }
-
-//----------------------------------------------------------------//
-STLString MOAICameraAnchor2D::ToString () {
-
-	STLString repr( MOAINode::ToString ());
-	return repr;
-}

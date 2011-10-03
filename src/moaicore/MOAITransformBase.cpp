@@ -199,10 +199,3 @@ void MOAITransformBase::RegisterLuaFuncs ( USLuaState& state ) {
 	
 	luaL_register ( state, 0, regTable );
 }
-
-//----------------------------------------------------------------//
-STLString MOAITransformBase::ToString () {
-
-	STLString repr;
-	return repr;
-}

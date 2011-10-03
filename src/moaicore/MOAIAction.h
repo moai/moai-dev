@@ -80,7 +80,6 @@ public:
 	void				Start					();
 	void				Start					( MOAIAction& parent );
 	void				Stop					();
-	STLString			ToString				();
 };
 
 #endif

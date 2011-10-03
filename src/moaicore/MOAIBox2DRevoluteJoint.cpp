@@ -291,11 +291,4 @@ void MOAIBox2DRevoluteJoint::RegisterLuaFuncs ( USLuaState& state ) {
 	luaL_register ( state, 0, regTable );
 }
 
-//----------------------------------------------------------------//
-STLString MOAIBox2DRevoluteJoint::ToString () {
-
-	STLString repr;
-	return repr;
-}
-
 #endif

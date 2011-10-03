@@ -359,17 +359,6 @@ void MOAITouchSensor::Reset () {
 }
 
 //----------------------------------------------------------------//
-STLString MOAITouchSensor::ToString () {
-
-	STLString repr;
-
-	//PRETTY_PRINT ( repr, mX )
-	//PRETTY_PRINT ( repr, mY )
-
-	return repr;
-}
-
-//----------------------------------------------------------------//
 void MOAITouchSensor::WriteEvent ( USStream& eventStream, u32 touchID, bool down, float x, float y, u32 tapCount ) {
 
 	u32 eventType = down ? TOUCH_DOWN : TOUCH_UP;

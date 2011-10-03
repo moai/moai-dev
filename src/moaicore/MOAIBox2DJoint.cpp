@@ -210,11 +210,4 @@ void MOAIBox2DJoint::SetJoint ( b2Joint* joint ) {
 	joint->SetUserData ( this );
 }
 
-//----------------------------------------------------------------//
-STLString MOAIBox2DJoint::ToString () {
-
-	STLString repr;
-	return repr;
-}
-
 #endif

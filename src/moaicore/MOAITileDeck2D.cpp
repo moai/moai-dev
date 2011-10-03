@@ -194,13 +194,3 @@ void MOAITileDeck2D::SerializeOut ( USLuaState& state, USLuaSerializer& serializ
 	
 	serializer.SetRefField ( state, -1, "mTexture", this->mTexture );
 }
-
-//----------------------------------------------------------------//
-STLString MOAITileDeck2D::ToString () {
-
-	STLString repr;
-
-	PRETTY_PRINT ( repr, mTexture )
-
-	return repr;
-}

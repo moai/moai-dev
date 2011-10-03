@@ -748,11 +748,4 @@ void MOAIBox2DBody::SetBody ( b2Body* body ) {
 	body->SetUserData ( this );
 }
 
-//----------------------------------------------------------------//
-STLString MOAIBox2DBody::ToString () {
-
-	STLString repr;
-	return repr;
-}
-
 #endif

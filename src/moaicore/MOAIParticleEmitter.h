@@ -75,7 +75,6 @@ public:
 	void			SetEmissionRange		( u32 min, u32 max );
 	void			SetMagnitudeRange		( float min, float max );
 	void			Surge					( u32 total );
-	STLString		ToString				();
 };
 
 #endif

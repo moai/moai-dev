@@ -183,9 +183,3 @@ void MOAIUntzSystem::RegisterLuaFuncs ( USLuaState& state ) {
 	UNUSED ( state );
 }
 
-//----------------------------------------------------------------//
-STLString MOAIUntzSystem::ToString () {
-
-	STLString repr;
-	return repr;
-}

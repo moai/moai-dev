@@ -952,11 +952,4 @@ void MOAICpSpace::RemovePrim ( MOAICpPrim& prim ) {
 	prim.Release ();
 }
 
-//----------------------------------------------------------------//
-STLString MOAICpSpace::ToString () {
-
-	STLString repr;
-	return repr;
-}
-
 #endif

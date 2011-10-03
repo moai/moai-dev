@@ -556,14 +556,6 @@ void MOAIShader::SetVertexAttribute ( u32 idx, cc8* attribute ) {
 }
 
 //----------------------------------------------------------------//
-STLString MOAIShader::ToString () {
-
-	STLString repr;
-
-	return repr;
-}
-
-//----------------------------------------------------------------//
 void MOAIShader::UpdatePipelineTransforms ( const USMatrix4x4& world, const USMatrix4x4& view, const USMatrix4x4& proj ) {
 
 	// reload the uniform values

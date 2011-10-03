@@ -743,11 +743,4 @@ void MOAIBox2DWorld::ScheduleDestruction ( MOAIBox2DJoint& joint ) {
 	}
 }
 
-//----------------------------------------------------------------//
-STLString MOAIBox2DWorld::ToString () {
-
-	STLString repr;
-	return repr;
-}
-
 #endif

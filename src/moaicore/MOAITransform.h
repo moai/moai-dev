@@ -82,7 +82,6 @@ public:
 	void				SetLoc							( float x, float y );
 	virtual void		SetParent						( MOAITransformBase* parent );
 	void				SetScl							( float x, float y );
-	STLString			ToString						();
 };
 
 #endif

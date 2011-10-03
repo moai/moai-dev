@@ -71,7 +71,6 @@ public:
 	void			RegisterLuaFuncs		( USLuaState& state );
 	void			Reserve					( u32 size );
 	void			SetPrimType				( u32 primType );
-	STLString		ToString				();
 };
 
 #endif

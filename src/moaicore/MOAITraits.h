@@ -134,7 +134,6 @@ public:
 	void						RegisterLuaClass		( USLuaState& state );
 	void						RegisterLuaFuncs		( USLuaState& state );
 	void						SetTraitSource			( MOAITraits* source, u32 mask );
-	STLString					ToString				();
 };
 
 #endif

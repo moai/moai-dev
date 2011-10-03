@@ -124,7 +124,6 @@ public:
 	void				SetOSVersion				( cc8* osVersion );
 	void				SetResourceDirectory		( cc8* resDir );
 	void				SetUDID						( cc8* udid );
-	STLString			ToString					();
 };
 
 #endif

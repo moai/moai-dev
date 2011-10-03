@@ -131,11 +131,3 @@ void MOAIMesh::RegisterLuaFuncs ( USLuaState& state ) {
 	
 	luaL_register ( state, 0, regTable );
 }
-
-//----------------------------------------------------------------//
-STLString MOAIMesh::ToString () {
-
-	STLString repr;
-
-	return repr;
-}

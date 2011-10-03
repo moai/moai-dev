@@ -161,11 +161,4 @@ void MOAIBox2DDistanceJoint::RegisterLuaFuncs ( USLuaState& state ) {
 	luaL_register ( state, 0, regTable );
 }
 
-//----------------------------------------------------------------//
-STLString MOAIBox2DDistanceJoint::ToString () {
-
-	STLString repr;
-	return repr;
-}
-
 #endif

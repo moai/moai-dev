@@ -802,14 +802,3 @@ void MOAITransform::SetScl ( float x, float y ) {
 	this->mScale.mY = y;
 }
 
-//----------------------------------------------------------------//
-STLString MOAITransform::ToString () {
-
-	STLString repr;
-
-	PRETTY_PRINT ( repr, mLoc )
-	PRETTY_PRINT ( repr, mScale )
-	PRETTY_PRINT ( repr, mDegrees )
-
-	return repr;
-}

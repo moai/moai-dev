@@ -887,11 +887,4 @@ void MOAICpBody::RegisterLuaFuncs ( USLuaState& state ) {
 	luaL_register ( state, 0, regTable );
 }
 
-//----------------------------------------------------------------//
-STLString MOAICpBody::ToString () {
-
-	STLString repr;
-	return repr;
-}
-
 #endif

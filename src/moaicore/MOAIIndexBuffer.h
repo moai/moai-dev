@@ -42,7 +42,6 @@ public:
 	void		RegisterLuaFuncs		( USLuaState& state );
 	void		ReserveIndices			( u32 indexCount );
 	void		SetIndex				( u32 idx, u16 value );
-	STLString	ToString				();
 };
 
 #endif

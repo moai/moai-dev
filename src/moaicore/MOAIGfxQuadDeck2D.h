@@ -44,7 +44,6 @@ public:
 	void		RegisterLuaFuncs		( USLuaState& state );
 	void		ScaleScreenCoords		( float xScale, float yScale );
 	void		ScaleUVCoords			( float xScale, float yScale );
-	STLString	ToString				();
 };
 
 #endif

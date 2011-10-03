@@ -83,7 +83,7 @@ int USLuaObject::_tostring ( lua_State* L ) {
 	if ( data ) {
 	
 		STLString str;
-		str.write ( "0x%08X: %s", ( u32 )data, data->TypeName ()); // TODO: 64-bit
+		str.write ( "0x%p <%s>", data, data->TypeName ()); // TODO: 64-bit
 		state.Push ( str );
 		return 1;
 	}
@@ -149,12 +149,6 @@ void USLuaObject::BindToLuaWithTable ( USLuaState& state ) {
 	}
 
 	assert ( !lua_isnil ( state, -1 ));
-}
-
-//----------------------------------------------------------------//
-void USLuaObject::DebugDump () {
-
-	USLog::Print ( "%p <%s> %s", this, this->TypeName (), this->ToString ().c_str ());
 }
 
 //----------------------------------------------------------------//
@@ -339,23 +333,6 @@ void USLuaObject::SetPrivateRef ( USLuaState& state, int idx, USLuaPrivateRef& r
 	
 	state.CopyToTop ( idx );
 	ref.mRef = luaL_ref ( state, -2 );
-}
-
-//----------------------------------------------------------------//
-STLString USLuaObject::ToString () {
-
-	return STLString ();
-}
-
-//----------------------------------------------------------------//
-STLString USLuaObject::ToStringWithType () {
-
-	STLString members = this->ToString();
-
-	STLString repr;
-	repr.write ( "(%s) %s", this->TypeName (), members.c_str() );
-
-	return repr;
 }
 
 //----------------------------------------------------------------//

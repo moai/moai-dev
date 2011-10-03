@@ -44,7 +44,6 @@ public:
 	void			RegisterLuaFuncs		( USLuaState& state );
 	void			SerializeIn				( USLuaState& state, USLuaSerializer& serializer );
 	void			SerializeOut			( USLuaState& state, USLuaSerializer& serializer );
-	STLString		ToString				();
 };
 
 #endif

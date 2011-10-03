@@ -107,7 +107,6 @@ public:
 	void			SetRect					( float left, float top, float right, float bottom );
 	void			SetText					( cc8* text );
 	void			SetTextSize				( float newSize );
-	STLString		ToString				();
 };
 
 #endif

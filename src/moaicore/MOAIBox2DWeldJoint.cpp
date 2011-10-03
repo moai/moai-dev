@@ -44,11 +44,4 @@ void MOAIBox2DWeldJoint::RegisterLuaFuncs ( USLuaState& state ) {
 	MOAIBox2DJoint::RegisterLuaFuncs ( state );
 }
 
-//----------------------------------------------------------------//
-STLString MOAIBox2DWeldJoint::ToString () {
-
-	STLString repr;
-	return repr;
-}
-
 #endif

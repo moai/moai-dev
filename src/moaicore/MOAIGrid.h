@@ -67,7 +67,6 @@ public:
 	void			SetTile				( u32 addr, u32 tile );
 	void			SetTile				( int xTile, int yTile, u32 tile );
 	u32				Size				();
-	STLString		ToString			();
 };
 
 #endif

@@ -66,9 +66,6 @@ public:
 
 	//----------------------------------------------------------------//
 	void					BindToLuaWithTable		( USLuaState& state ); // push table at top of stack!
-	void					DebugDump				();
-	virtual STLString		ToString				();
-	STLString				ToStringWithType		();
 	virtual USLuaClass*		GetLuaClass				();
 	USLuaStateHandle		GetSelf					();
 	void					InsertObject			( USLuaObject& object );

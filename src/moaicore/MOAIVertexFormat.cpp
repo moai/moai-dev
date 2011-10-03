@@ -319,13 +319,6 @@ void MOAIVertexFormat::RegisterLuaFuncs ( USLuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-STLString MOAIVertexFormat::ToString () {
-
-	STLString repr;
-	return repr;
-}
-
-//----------------------------------------------------------------//
 void MOAIVertexFormat::UnbindFixed () const {
 
 	for ( u32 i = 0; i < TOTAL_ARRAY_TYPES; ++i ) {

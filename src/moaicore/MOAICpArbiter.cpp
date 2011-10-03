@@ -197,11 +197,4 @@ void MOAICpArbiter::RegisterLuaFuncs ( USLuaState& state ) {
 	luaL_register ( state, 0, regTable );
 }
 
-//----------------------------------------------------------------//
-STLString MOAICpArbiter::ToString () {
-
-	STLString repr;
-	return repr;
-}
-
 #endif

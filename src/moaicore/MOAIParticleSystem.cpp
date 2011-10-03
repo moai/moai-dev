@@ -611,11 +611,3 @@ void MOAIParticleSystem::SerializeOut ( USLuaState& state, USLuaSerializer& seri
 	MOAIProp2D::SerializeOut ( state, serializer );
 	MOAIAction::SerializeOut ( state, serializer );
 }
-
-//----------------------------------------------------------------//
-STLString MOAIParticleSystem::ToString () {
-
-	STLString repr ( "TODO" );
-
-	return repr;
-}

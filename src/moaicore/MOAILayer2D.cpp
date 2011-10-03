@@ -557,15 +557,3 @@ void MOAILayer2D::RegisterLuaFuncs ( USLuaState& state ) {
 	
 	luaL_register ( state, 0, regTable );
 }
-
-//----------------------------------------------------------------//
-STLString MOAILayer2D::ToString () {
-
-	STLString repr( MOAIProp2D::ToString () );
-
-	PRETTY_PRINT ( repr, mCamera )
-	PRETTY_PRINT ( repr, mViewport )
-	PRETTY_PRINT ( repr, mPartition )
-
-	return repr;
-}

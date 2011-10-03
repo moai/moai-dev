@@ -178,11 +178,3 @@ void MOAIParticleDistanceEmitter::SetDistanceRange ( float min, float max ) {
 	this->mMinDistance = min;
 	this->mMaxDistance = max;
 }
-
-//----------------------------------------------------------------//
-STLString MOAIParticleDistanceEmitter::ToString () {
-
-	STLString repr;
-
-	return repr;
-}

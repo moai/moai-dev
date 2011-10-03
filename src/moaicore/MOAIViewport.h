@@ -51,7 +51,6 @@ public:
 	void			SetOffset				( float xOffset, float yOffset );
 	void			SetRotation				( float degrees );
 	void			SetScale				( float xScale, float yScale );
-	STLString		ToString				();
 };
 
 #endif

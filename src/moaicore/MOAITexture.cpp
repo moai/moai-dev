@@ -948,14 +948,3 @@ void MOAITexture::SetWrap ( int wrap ) {
 
 	this->mWrap = wrap;
 }
-
-//----------------------------------------------------------------//
-STLString MOAITexture::ToString () {
-
-	STLString repr;
-
-	PrettyPrint ( repr, "mWidth", GetWidth ());
-	PrettyPrint ( repr, "mHeight", GetHeight ());
-
-	return repr;
-}

@@ -398,18 +398,3 @@ void MOAIViewport::SetScale ( float xScale, float yScale ) {
 	this->mYScale = ( yScale != 0.0f );
 	this->mScale.mY = yScale;
 }
-
-//----------------------------------------------------------------//
-STLString MOAIViewport::ToString () {
-
-	// TODO pretty print rects!
-
-	STLString repr;
-
-	PRETTY_PRINT ( repr, GetScale () )
-
-	return repr;
-}
-
-
-

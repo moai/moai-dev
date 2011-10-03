@@ -73,7 +73,6 @@ public:
 	void			RegisterLuaClass		( USLuaState& state );
 	void			RegisterLuaFuncs		( USLuaState& state );
 	void			RemoveAnchor			( MOAICameraAnchor2D& anchor );
-	STLString		ToString				();
 };
 
 #endif

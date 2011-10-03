@@ -111,7 +111,6 @@ public:
 	void			OnUpdate				( float step );
 	void			RegisterLuaClass		( USLuaState& state );
 	void			RegisterLuaFuncs		( USLuaState& state );
-	STLString		ToString				();
 };
 
 #endif

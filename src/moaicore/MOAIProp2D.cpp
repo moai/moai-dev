@@ -824,9 +824,3 @@ void MOAIProp2D::SerializeOut ( USLuaState& state, USLuaSerializer& serializer )
 	serializer.SetRefField ( state, -1, "mGrid", this->mGrid );
 }
 
-//----------------------------------------------------------------//
-STLString MOAIProp2D::ToString () {
-
-	return "";
-}
-

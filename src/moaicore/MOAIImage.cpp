@@ -1335,14 +1335,6 @@ void MOAIImage::Take ( MOAIImage& image ) {
 }
 
 //----------------------------------------------------------------//
-STLString MOAIImage::ToString () {
-
-	STLString repr;
-
-	return repr;
-}
-
-//----------------------------------------------------------------//
 void MOAIImage::Transform ( u32 transform ) {
 	UNUSED ( transform );
 }

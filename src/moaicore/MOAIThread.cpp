@@ -200,9 +200,3 @@ void MOAIThread::RegisterLuaFuncs ( USLuaState& state ) {
 	
 	lua_pop ( state, 1 );
 }
-
-//----------------------------------------------------------------//
-STLString MOAIThread::ToString () {
-
-	return mFuncName;
-}

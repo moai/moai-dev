@@ -307,10 +307,3 @@ void MOAITraits::SetTraitSource ( MOAITraits* source, u32 mask ) {
 
 	this->ForceUpdate ();
 }
-
-//----------------------------------------------------------------//
-STLString MOAITraits::ToString () {
-
-	STLString repr;
-	return repr;
-}

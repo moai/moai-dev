@@ -117,11 +117,4 @@ void MOAIBox2DGearJoint::RegisterLuaFuncs ( USLuaState& state ) {
 	luaL_register ( state, 0, regTable );
 }
 
-//----------------------------------------------------------------//
-STLString MOAIBox2DGearJoint::ToString () {
-
-	STLString repr;
-	return repr;
-}
-
 #endif

@@ -93,10 +93,3 @@ void MOAIParticleTimedEmitter::SetFrequencyRange ( float min, float max ) {
 	this->mMinFrequency = min;
 	this->mMaxFrequency = max;
 }
-
-//----------------------------------------------------------------//
-STLString MOAIParticleTimedEmitter::ToString () {
-
-	STLString repr;
-	return repr;
-}

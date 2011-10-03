@@ -180,10 +180,3 @@ void MOAIEaseDriver::SetLink ( u32 idx, MOAINode* target, u32 attrID, float valu
 		link.mMode = mode;
 	}
 }
-
-//----------------------------------------------------------------//
-STLString MOAIEaseDriver::ToString () {
-
-	STLString repr( MOAIAction::ToString ());
-	return repr;
-}

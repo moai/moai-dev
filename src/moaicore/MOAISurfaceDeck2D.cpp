@@ -307,11 +307,3 @@ void MOAISurfaceDeck2D::RegisterLuaFuncs ( USLuaState& state ) {
 
 	luaL_register ( state, 0, regTable );
 }
-
-//----------------------------------------------------------------//
-STLString MOAISurfaceDeck2D::ToString () {
-
-	STLString repr;
-
-	return repr;
-}

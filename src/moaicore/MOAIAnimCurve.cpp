@@ -148,13 +148,3 @@ void MOAIAnimCurve::RegisterLuaFuncs ( USLuaState& state ) {
 	luaL_register ( state, 0, regTable );
 }
 
-//----------------------------------------------------------------//
-STLString MOAIAnimCurve::ToString () {
-
-	STLString repr;
-
-	PRETTY_PRINT ( repr, mTime );
-	PRETTY_PRINT ( repr, mValue );
-
-	return repr;
-}

@@ -92,17 +92,6 @@ void MOAIPointerSensor::RegisterLuaFuncs ( USLuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-STLString MOAIPointerSensor::ToString () {
-
-	STLString repr;
-
-	PRETTY_PRINT ( repr, mX )
-	PRETTY_PRINT ( repr, mY )
-
-	return repr;
-}
-
-//----------------------------------------------------------------//
 void MOAIPointerSensor::WriteEvent ( USStream& eventStream, int x, int y ) {
 
 	eventStream.Write < int >( x );

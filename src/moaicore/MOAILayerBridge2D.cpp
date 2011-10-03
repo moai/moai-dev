@@ -84,13 +84,3 @@ void MOAILayerBridge2D::RegisterLuaFuncs ( USLuaState& state ) {
 	luaL_register ( state, 0, regTable );
 }
 
-//----------------------------------------------------------------//
-STLString MOAILayerBridge2D::ToString () {
-
-	STLString repr( MOAITransform::ToString () );
-
-	PRETTY_PRINT ( repr, mSourceScene )
-	PRETTY_PRINT ( repr, mTargetScene )
-
-	return repr;
-}

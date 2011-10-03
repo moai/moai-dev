@@ -337,13 +337,6 @@ void MOAIAction::Stop () {
 }
 
 //----------------------------------------------------------------//
-STLString MOAIAction::ToString () {
-
-	STLString repr;
-	return repr;
-}
-
-//----------------------------------------------------------------//
 void MOAIAction::Update ( float step, u32 pass, bool checkPass ) {
 
 	bool profilingEnabled = MOAIActionMgr::Get ().GetProfilingEnabled ();
@@ -371,8 +364,7 @@ void MOAIAction::Update ( float step, u32 pass, bool checkPass ) {
 	if ( profilingEnabled ) {
 		double elapsed = USDeviceTime::GetTimeInSeconds () - t0;
 		if ( elapsed >= 0.005 ) {
-			STLString name = this->ToStringWithType ();
-			MOAILog ( 0, MOAILogMessages::MOAIAction_Profile_PSFF, this, name.c_str(), step * 1000, elapsed * 1000 );
+			MOAILog ( 0, MOAILogMessages::MOAIAction_Profile_PSFF, this, this->TypeName (), step * 1000, elapsed * 1000 );
 		}
 	}
 

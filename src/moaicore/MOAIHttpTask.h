@@ -50,7 +50,6 @@ public:
 	void			Init					( u32 size );
 	void			RegisterLuaClass		( USLuaState& state );
 	void			RegisterLuaFuncs		( USLuaState& state );
-	STLString		ToString				();
 };
 
 #endif

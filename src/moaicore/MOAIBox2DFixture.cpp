@@ -265,11 +265,4 @@ void MOAIBox2DFixture::SetFixture ( b2Fixture* fixture ) {
 	}
 }
 
-//----------------------------------------------------------------//
-STLString MOAIBox2DFixture::ToString () {
-
-	STLString repr;
-	return repr;
-}
-
 #endif

@@ -74,11 +74,3 @@ void MOAISerializer::RegisterLuaFuncs ( USLuaState& state ) {
 	
 	USLuaSerializer::RegisterLuaFuncs ( state );
 }
-
-//----------------------------------------------------------------//
-STLString MOAISerializer::ToString () {
-
-	STLString repr;
-	
-	return repr;
-}

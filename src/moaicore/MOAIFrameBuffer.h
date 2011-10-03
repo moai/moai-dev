@@ -46,7 +46,6 @@ public:
 	bool				IsValid					();
 						MOAIFrameBuffer			();
 						~MOAIFrameBuffer		();
-	STLString			ToString				();
 };
 
 #endif

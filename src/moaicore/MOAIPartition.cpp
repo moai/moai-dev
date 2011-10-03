@@ -428,14 +428,6 @@ void MOAIPartition::SetLayer ( int layerID, float cellSize, int width, int heigh
 }
 
 //----------------------------------------------------------------//
-STLString MOAIPartition::ToString () {
-
-	STLString repr( USLuaObject::ToString ());
-
-	return repr;
-}
-
-//----------------------------------------------------------------//
 void MOAIPartition::UpdateProp ( MOAIProp& prop, u32 status ) {
 
 	prop.SetBounds ();

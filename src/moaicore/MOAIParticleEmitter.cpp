@@ -303,26 +303,3 @@ void MOAIParticleEmitter::Surge ( u32 total ) {
 		}
 	}
 }
-
-//----------------------------------------------------------------//
-STLString MOAIParticleEmitter::ToString () {
-
-	STLString repr;
-
-	const char *shape_id;
-
-	switch ( mShapeID ) {
-		case CIRCLE:
-			shape_id = "CIRCLE";
-			break;
-		case RECT:
-			shape_id = "RECT";
-			break;
-		default:
-			shape_id = "INVALID";
-	}
-
-	PrettyPrint ( repr, "mShapeID", shape_id );
-
-	return repr;
-}

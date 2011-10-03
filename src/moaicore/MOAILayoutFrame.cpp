@@ -524,11 +524,3 @@ void MOAILayoutFrame::SetParent ( MOAITransformBase* parent ) {
 		}
 	}
 }
-
-//----------------------------------------------------------------//
-STLString MOAILayoutFrame::ToString () {
-
-	STLString repr ( MOAITransform::ToString ());
-
-	return repr;
-}

@@ -302,11 +302,4 @@ void MOAIBox2DPrismaticJoint::RegisterLuaFuncs ( USLuaState& state ) {
 	luaL_register ( state, 0, regTable );
 }
 
-//----------------------------------------------------------------//
-STLString MOAIBox2DPrismaticJoint::ToString () {
-
-	STLString repr;
-	return repr;
-}
-
 #endif
