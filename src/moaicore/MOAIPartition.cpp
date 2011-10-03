@@ -345,7 +345,7 @@ void MOAIPartition::InsertProp ( MOAIProp& prop ) {
 	
 	if ( prop.mPartition == this ) return;
 	
-	prop.Retain ();
+	this->InsertObject ( prop );
 	
 	if ( prop.mPartition ) {
 		prop.mPartition->RemoveProp ( prop );
@@ -412,7 +412,7 @@ void MOAIPartition::RemoveProp ( MOAIProp& prop ) {
 	}
 
 	prop.mPartition = 0;
-	prop.Release ();
+	this->RemoveObject ( prop );
 }
 
 //----------------------------------------------------------------//
