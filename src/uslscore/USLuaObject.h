@@ -41,12 +41,12 @@ class USLuaObject :
 	public virtual USObject {
 private:
 
-	USLuaRef			mPrivate;		// weak/strong ref to private local reference table
-	USLuaPrivateRef		mContain;		// holds other lua objects this object depends on
+	USLuaPrivateRef		mContain;
 
 protected:
 
 	USLuaRef		mInstanceTable;		// weak ref to instance table stack
+	USLuaRef		mPrivateTable;		// weak ref to private local reference table
 	USLuaRef		mUserdata;			// weak/strong ref to userdata
 	
 
@@ -57,7 +57,6 @@ protected:
 	//static int			_tostring				( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void					AffirmPrivate			();
 	void					OnRelease				( u32 refCount );
 	void					OnRetain				( u32 refCount );
 

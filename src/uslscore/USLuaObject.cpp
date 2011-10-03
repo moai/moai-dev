@@ -93,25 +93,6 @@ int USLuaObject::_getClassName ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void USLuaObject::AffirmPrivate () {
-
-	if ( !this->mPrivate ) {
-
-		USLuaStateHandle state = USLuaRuntime::Get ().State ();
-
-		lua_newtable ( state );
-			
-		if ( this->GetRefCount () == 0 ) {
-			this->mPrivate.SetWeakRef ( state, -1 );
-		}
-		else {
-			this->mPrivate.SetStrongRef ( state, -1 );
-		}
-		lua_pop ( state, 1 );
-	}
-}
-
-//----------------------------------------------------------------//
 void USLuaObject::DebugDump () {
 
 	USLog::Print ( "%p <%s> %s", this, this->TypeName (), this->ToString ().c_str ());
@@ -145,6 +126,8 @@ void USLuaObject::InsertObject ( USLuaObject& object ) {
 		lua_newtable ( state );
 		this->SetPrivateRef ( state, -1, this->mContain );
 	}
+	
+	assert ( !lua_isnil ( state, -1 ));
 	
 	object.PushLuaUserdata ( state );
 	lua_pushvalue ( state, -1 );
@@ -185,7 +168,6 @@ void USLuaObject::OnRelease ( u32 refCount ) {
 		if ( this->mUserdata ) {
 			assert ( !this->mUserdata.IsWeak ());
 			this->mUserdata.MakeWeak ();
-			this->mPrivate.MakeWeak ();
 		}
 		else {
 			delete this;
@@ -198,7 +180,6 @@ void USLuaObject::OnRetain ( u32 refCount ) {
 	UNUSED ( refCount );
 
 	this->mUserdata.MakeStrong ();
-	this->mPrivate.MakeStrong ();
 }
 
 //----------------------------------------------------------------//
@@ -211,20 +192,6 @@ void USLuaObject::PushLuaClassTable ( USLuaState& state ) {
 //----------------------------------------------------------------//
 void USLuaObject::PushLuaUserdata ( USLuaState& state ) {
 
-	// create an instance table if none exists
-	if ( this->mInstanceTable.IsNil ()) {
-		
-		USLuaClass* type = this->GetLuaClass ();
-		assert ( type );
-		
-		// set the instance table
-		lua_newtable ( state );
-		type->InitLuaInstanceTable ( this, state, -1 );
-		
-		this->mInstanceTable = state.GetWeakRef ( -1 );
-		state.Pop ( 1 );
-	}
-
 	// create the handle userdata for reference counting
 	if ( !this->mUserdata.PushRef ( state )) {
 		
@@ -235,12 +202,30 @@ void USLuaObject::PushLuaUserdata ( USLuaState& state ) {
 		state.PushPtrUserData ( this );
 
 		// set the instance table
-		this->mInstanceTable.PushRef ( state );
+		if ( !this->mInstanceTable.PushRef ( state )) {
+			
+			// pop the 'nil' pushed by PushRef
+			state.Pop ( 1 );
+			
+			USLuaClass* type = this->GetLuaClass ();
+			assert ( type );
+			
+			// set the instance table
+			lua_newtable ( state );
+			type->InitLuaInstanceTable ( this, state, -1 );
+			
+			this->mInstanceTable = state.GetWeakRef ( -1 );
+		}
 
-		// attach it to the handle
+		// create the private table and add it to the instance table
+		lua_newtable ( state );
+		this->mPrivateTable = state.GetWeakRef ( -1 );
+		lua_setfield ( state, -2, "_private" );
+
+		// instance table is not top of the stack again; attach it to the userdata
 		lua_setmetatable ( state, -2 );
 		
-		// and take a ref back to the handle	
+		// and take a ref back to the userdata	
 		if ( this->GetRefCount () == 0 ) {
 			this->mUserdata.SetWeakRef ( state, -1 );
 		}
@@ -254,14 +239,14 @@ void USLuaObject::PushLuaUserdata ( USLuaState& state ) {
 //----------------------------------------------------------------//
 bool USLuaObject::PushPrivateRef ( USLuaState& state, USLuaPrivateRef& ref ) {
 
-	if ( this->mPrivate && ref ) {
+	if ( ref ) {
 		
-		if ( this->mPrivate.PushRef ( state )) {
-			lua_rawgeti ( state, -1, ref.mRef );
-			lua_replace ( state, -2 );
-			return true;
-		}
-		return false;
+		assert ( this->mPrivateTable );
+		
+		this->mPrivateTable.PushRef ( state );
+		lua_rawgeti ( state, -1, ref.mRef );
+		lua_replace ( state, -2 );
+		return true;
 	}
 	lua_pushnil ( state );
 	return false;
@@ -332,9 +317,9 @@ void USLuaObject::SetPrivateRef ( USLuaState& state, int idx, USLuaPrivateRef& r
 
 	idx = state.AbsIndex ( idx );
 
-	this->AffirmPrivate ();
+	assert ( this->mPrivateTable );
 
-	this->mPrivate.PushRef ( state );
+	this->mPrivateTable.PushRef ( state );
 	
 	if ( ref ) {
 		luaL_unref ( state, -1, ref.mRef );
