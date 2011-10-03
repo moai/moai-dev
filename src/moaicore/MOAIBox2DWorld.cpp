@@ -553,6 +553,8 @@ int MOAIBox2DWorld::_setUnitsToMeters ( lua_State* L ) {
 //----------------------------------------------------------------//
 void MOAIBox2DWorld::Destroy () {
 
+	if ( this->mLock ) return;
+
 	while ( this->mDestroyFixtures ) {
 		MOAIBox2DPrim* prim = this->mDestroyFixtures;
 		this->mDestroyFixtures = this->mDestroyFixtures->mDestroyNext;
@@ -600,6 +602,7 @@ bool MOAIBox2DWorld::IsDone () {
 
 //----------------------------------------------------------------//
 MOAIBox2DWorld::MOAIBox2DWorld () :
+	mLock ( false ),
 	mVelocityIterations ( 10 ),
 	mPositionIterations ( 10 ),
 	mUnitsToMeters ( 1.0f ),
@@ -649,7 +652,9 @@ MOAIBox2DWorld::~MOAIBox2DWorld () {
 //----------------------------------------------------------------//
 void MOAIBox2DWorld::OnUpdate ( float step ) {
 	
+	this->mLock = true;
 	this->mWorld->Step ( step, this->mVelocityIterations, this->mPositionIterations );
+	this->mLock = false;
 	
 	this->Destroy ();
 	
@@ -719,6 +724,7 @@ void MOAIBox2DWorld::ScheduleDestruction ( MOAIBox2DBody& body ) {
 		body.mDestroy = true;
 		body.Retain ();
 	}
+	this->Destroy ();
 }
 
 //----------------------------------------------------------------//
@@ -730,6 +736,7 @@ void MOAIBox2DWorld::ScheduleDestruction ( MOAIBox2DFixture& fixture ) {
 		fixture.mDestroy = true;
 		fixture.Retain ();
 	}
+	this->Destroy ();
 }
 
 //----------------------------------------------------------------//
@@ -741,6 +748,7 @@ void MOAIBox2DWorld::ScheduleDestruction ( MOAIBox2DJoint& joint ) {
 		joint.mDestroy = true;
 		joint.Retain ();
 	}
+	this->Destroy ();
 }
 
 #endif

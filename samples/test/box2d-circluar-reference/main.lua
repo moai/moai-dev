@@ -6,6 +6,9 @@
 
 print ( "hello, moai!" )
 
+MOAISim.forceGarbageCollection ()
+MOAISim.setHistogramEnabled ( true )
+
 local b2dWorld = MOAIBox2DWorld.new ()
 
 local function makePhysicsBody ()
@@ -36,14 +39,10 @@ local function makePhysicsBody ()
 	return prop
 end
 
-MOAISim.forceGarbageCollection ()
-MOAISim.setHistogramEnabled ( false )
 for i = 1, 3 do
 	
-	MOAISim.setHistogramEnabled ( false )
-	MOAISim.setHistogramEnabled ( true )
-	
 	physBody = makePhysicsBody ()
+	physBody.body:destroy ()
 	physBody = nil
 	
 	print ( "---- Iteration " .. i .. " ----" )
