@@ -31,13 +31,15 @@ int MOAIUntzSampleBuffer::_load ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIUntzSampleBuffer::MOAIUntzSampleBuffer () {
+MOAIUntzSampleBuffer::MOAIUntzSampleBuffer () : mBuffer(0) {
 
 	RTTI_SINGLE ( MOAINode )
 }
 
 //----------------------------------------------------------------//
 MOAIUntzSampleBuffer::~MOAIUntzSampleBuffer () {
+	if(mBuffer)
+		delete [] mBuffer;
 }
 //----------------------------------------------------------------//
 void MOAIUntzSampleBuffer::RegisterLuaClass ( USLuaState& state ) {
