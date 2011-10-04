@@ -24,14 +24,13 @@ prop1:setColor ( 0, 0, .5, .5 )
 prop1:setLoc ( 0, 0 )
 
 transform = MOAITransform.new ()
+transform:setParent ( prop1 )
 
 prop2 = MOAIProp2D.new ()
 prop2:setDeck ( gfxQuad )
 prop2:setColor ( .5, .5, 0, .5 )
 prop2:setLoc ( 0, 0 )
-
 prop2:setParent ( transform )
-transform:setParent ( prop1 )
 
 layer:insertProp ( prop1 )
 layer:insertProp ( prop2 )

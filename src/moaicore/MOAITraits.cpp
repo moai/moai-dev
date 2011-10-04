@@ -110,24 +110,18 @@ void MOAITraits::AccumulateSources ( MOAITraitsBuffer& buffer, u32 traitsMask ) 
 
 	buffer.mMask = 0;
 	
-	if ( this->mSourceList ) {
+	MOAITraitLink* link = this->mSourceList;
+	for ( ; link; link = link->mNext ) {
 		
-		for ( u32 i = 0; i < MOAITraitsBuffer::TOTAL_SOURCES; ++i ) {
+		if ( link->mSource ) {
 			
-			MOAITraitLink* link = this->mSourceList;
-			for ( ; link; link = link->mNext ) {
-				
-				if ( link->mSource ) {
-					
-					u32 mask = (( link->mMask & traitsMask ) & MOAITraitsBuffer::MASK_TO_8_BITS);
-					buffer.mMask |= mask;
-					
-					for ( u32 i = 0; mask; i++, mask = mask >> 1 ) {
-					
-						if ( mask & 0x01 ) {
-							buffer.mSources [ i ] = link->mSource;	
-						}
-					}
+			u32 mask = (( link->mMask & traitsMask ) & MOAITraitsBuffer::MASK_TO_8_BITS);
+			buffer.mMask |= mask;
+			
+			for ( u32 i = 0; mask; i++, mask = mask >> 1 ) {
+			
+				if ( mask & 0x01 ) {
+					buffer.mSources [ i ] = link->mSource;	
 				}
 			}
 		}

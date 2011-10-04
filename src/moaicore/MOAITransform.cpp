@@ -735,7 +735,9 @@ MOAITransform::~MOAITransform () {
 //----------------------------------------------------------------//
 void MOAITransform::OnDepNodeUpdate () {
 	
-	this->BuildTransforms ( 0, 0.0f, 0.0f, 1.0f, 1.0f );
+	MOAITraitsBuffer buffer;
+	this->AccumulateSources ( buffer );
+	this->BuildTransforms ( &buffer, 0.0f, 0.0f, 1.0f, 1.0f );
 }
 
 //----------------------------------------------------------------//
