@@ -2,7 +2,6 @@
 // http://getmoai.com
 
 #include <moaiext-untz/MOAIUntzSound.h>
-#include <moaiext-untz/MOAIUntzSound.h>
 
 //================================================================//
 // local

@@ -326,10 +326,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\3rdparty\untz\src\RSharedPtr.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\3rdparty\untz\src\SoundData.h"
 				>
 			</File>
