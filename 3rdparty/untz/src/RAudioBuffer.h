@@ -53,12 +53,6 @@ public:
 		}
 	}
 
-	void resize(int frames)
-	{
-		if(mOwnsBuffer)
-			resize(1, frames);
-	}
-
 	void clear()
 	{
 		if(mOwnsBuffer)
@@ -67,6 +61,8 @@ public:
 
 	UInt32 size() const
 	{
+		if(mOwnsBuffer)
+			return mBuffer.size();
 		return mChannels * mFrames;
 	}
 
