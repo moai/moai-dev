@@ -189,17 +189,29 @@ bool Sound::decode(const RString& path, SoundInfo& info, float** data)
 	AudioSource* source = 0;
 	if (path.find(OGG_FILE_EXT) != RString::npos)
 	{
-		OggAudioSource* oas = new OggAudioSource();
-		source = oas;
-		if(oas->init(path, true))
+		OggAudioSource* as = new OggAudioSource();
+		source = as;
+		if(as->init(path, true))
 			decoded = true;
 	}
 	else
 	{
-		DShowAudioSource* das = new DShowAudioSource();
-		source = das;
-		if(das->init(path, true))
+#if defined(__APPLE__)
+		ExtAudioFileAudioSource *as = new ExtAudioFileAudioSource();
+		source = as
+		if(as->init(path, true))
 			decoded = true;
+#elif defined(__ANDROID__)
+        WaveFileAudioSource *as = new WaveFileAudioSource();
+		source = as
+		if(as->init(path, true))
+			decoded = true;
+#else
+		DShowAudioSource* as = new DShowAudioSource();
+		source = as;
+		if(as->init(path, true))
+			decoded = true;
+#endif
 	}
 	
 	// Couldn't decode the file
