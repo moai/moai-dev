@@ -219,7 +219,7 @@ bool DShowAudioSource::init(const RString& path, bool loadIntoMemory)
 
 	if(mLoadedInMemory)
 	{
-		mBuffer.resize(getNumChannels(), convertSecondsToSamples(getLength()) * getNumChannels(), false);
+		mBuffer = RAudioBuffer(getNumChannels(), convertSecondsToSamples(getLength()) * getNumChannels());
 		start();
 
 		RPRINT("loading sound into memory...\n");
@@ -234,7 +234,7 @@ bool DShowAudioSource::init(const RString& path, bool loadIntoMemory)
 	}
 	else
 	{
-		mBuffer.resize(getNumChannels(), getSampleRate() * SECONDS_TO_BUFFER, false);
+		mBuffer = RAudioBuffer(getNumChannels(), getSampleRate() * SECONDS_TO_BUFFER);
 		start();
 	}
 
