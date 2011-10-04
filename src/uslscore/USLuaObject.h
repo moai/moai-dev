@@ -14,9 +14,9 @@ class USLuaState;
 class USLuaStateHandle;
 
 //================================================================//
-// USLuaPrivateRef
+// USLuaLocal
 //================================================================//
-class USLuaPrivateRef {
+class USLuaLocal {
 private:
 
 	friend class USLuaObject;
@@ -25,8 +25,8 @@ private:
 public:
 	
 	//----------------------------------------------------------------//
-			USLuaPrivateRef		();
-			~USLuaPrivateRef	();
+			USLuaLocal		();
+			~USLuaLocal		();
 	
 	//----------------------------------------------------------------//
 	inline operator bool () {
@@ -41,7 +41,7 @@ class USLuaObject :
 	public virtual USObject {
 private:
 
-	USLuaPrivateRef		mContain;
+	USLuaLocal		mContain;
 
 protected:
 
@@ -57,11 +57,11 @@ protected:
 	static int				_tostring				( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void					ClearPrivateRef			( USLuaPrivateRef& ref );
+	void					ClearLocal			( USLuaLocal& ref );
 	void					OnRelease				( u32 refCount );
 	void					OnRetain				( u32 refCount );
-	bool					PushPrivateRef			( USLuaState& state, USLuaPrivateRef& ref );
-	void					SetPrivateRef			( USLuaState& state, int idx, USLuaPrivateRef& ref );
+	bool					PushLocal			( USLuaState& state, USLuaLocal& ref );
+	void					SetLocal			( USLuaState& state, int idx, USLuaLocal& ref );
 
 public:
 
@@ -94,8 +94,8 @@ class USLuaClass :
 	public USObject {
 protected:
 
-	USLuaRef mClassTable;	// global factory class for type
-	USLuaRef mMemberTable;	// metatable shared by all instances of type
+	USLuaRef	mClassTable;	// global factory class for type
+	USLuaRef	mMemberTable;	// metatable shared by all instances of type
 
 	//----------------------------------------------------------------//
 	void				InitLuaFactoryClass			( USLuaObject& data, USLuaState& state );

@@ -16,13 +16,13 @@ class MOAIThread :
 	public MOAIAction {
 private:
 
-	USLuaPrivateRef		mRef; // reference to the coroutine
-	lua_State*			mState;
-	u32					mNarg;
-	STLString			mFuncName;
+	USLuaLocal		mRef; // reference to the coroutine
+	lua_State*		mState;
+	u32				mNarg;
+	STLString		mFuncName;
 	
-	bool				mIsUpdating;
-	bool				mIsActive;
+	bool			mIsUpdating;
+	bool			mIsActive;
 	
 	//----------------------------------------------------------------//
 	static int		_blockOnAction			( lua_State* L );

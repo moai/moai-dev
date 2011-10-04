@@ -11,16 +11,16 @@
 #include <uslscore/USLuaState-impl.h>
 
 //================================================================//
-// USLuaPrivateRef
+// USLuaLocal
 //================================================================//
 	
 //----------------------------------------------------------------//
-USLuaPrivateRef::USLuaPrivateRef () :
+USLuaLocal::USLuaLocal () :
 	mRef ( LUA_NOREF ) {
 }
 
 //----------------------------------------------------------------//
-USLuaPrivateRef::~USLuaPrivateRef () {
+USLuaLocal::~USLuaLocal () {
 }
 
 //================================================================//
@@ -152,7 +152,7 @@ void USLuaObject::BindToLuaWithTable ( USLuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void USLuaObject::ClearPrivateRef ( USLuaPrivateRef& ref ) {
+void USLuaObject::ClearLocal ( USLuaLocal& ref ) {
 	
 	USLuaStateHandle state = USLuaRuntime::Get ().State ();
 	
@@ -189,17 +189,17 @@ void USLuaObject::InsertObject ( USLuaObject& object ) {
 	USLuaStateHandle state = USLuaRuntime::Get ().State ();
 
 	if ( this->mContain ) {
-		this->PushPrivateRef ( state, this->mContain );
+		this->PushLocal ( state, this->mContain );
 	}
 	else {
 		lua_newtable ( state );
-		this->SetPrivateRef ( state, -1, this->mContain );
+		this->SetLocal ( state, -1, this->mContain );
 	}
 	
 	assert ( !lua_isnil ( state, -1 ));
 	
 	lua_pop ( state, 1 );
-	this->PushPrivateRef ( state, this->mContain );
+	this->PushLocal ( state, this->mContain );
 	
 	object.PushLuaUserdata ( state );
 	lua_pushvalue ( state, -1 );
@@ -286,7 +286,7 @@ void USLuaObject::PushLuaUserdata ( USLuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-bool USLuaObject::PushPrivateRef ( USLuaState& state, USLuaPrivateRef& ref ) {
+bool USLuaObject::PushLocal ( USLuaState& state, USLuaLocal& ref ) {
 
 	if ( ref ) {
 		
@@ -319,7 +319,7 @@ void USLuaObject::RemoveObject ( USLuaObject& object ) {
 		USLuaStateHandle state = USLuaRuntime::Get ().State ();
 
 		if ( this->mContain ) {
-			if ( this->PushPrivateRef ( state, this->mContain )) {
+			if ( this->PushLocal ( state, this->mContain )) {
 				
 				object.PushLuaUserdata ( state );
 				lua_pushnil ( state );
@@ -343,7 +343,7 @@ void USLuaObject::SerializeOut ( USLuaState& state, USLuaSerializer& serializer 
 }
 
 //----------------------------------------------------------------//
-void USLuaObject::SetPrivateRef ( USLuaState& state, int idx, USLuaPrivateRef& ref ) {
+void USLuaObject::SetLocal ( USLuaState& state, int idx, USLuaLocal& ref ) {
 
 	idx = state.AbsIndex ( idx );
 

@@ -92,7 +92,7 @@ int MOAIThread::_run ( lua_State* L ) {
 
 	self->mNarg = lua_gettop ( state ) - 2;
 	self->mState = lua_newthread ( state );
-	self->SetPrivateRef ( state, -1, self->mRef );
+	self->SetLocal ( state, -1, self->mRef );
 	lua_pop ( state, 1 );
 	
 	lua_xmove ( state, self->mState, self->mNarg + 1 );
@@ -149,7 +149,7 @@ void MOAIThread::OnUpdate ( float step ) {
 			}
 		}
 		else {
-			this->ClearPrivateRef ( this->mRef );
+			this->ClearLocal ( this->mRef );
 			this->mState = 0;
 		}
 	}
@@ -161,7 +161,7 @@ void MOAIThread::OnStop () {
 	
 	// if we're stopping the thread from outside of its coroutine, clear out the ref
 	if ( !this->IsCurrent ()) {
-		this->ClearPrivateRef ( this->mRef );
+		this->ClearLocal ( this->mRef );
 		this->mState = 0;
 	}
 }
