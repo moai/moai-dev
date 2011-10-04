@@ -1,3 +1,11 @@
+//
+//  SoundData.h
+//  Part of UNTZ
+//
+//  Created by Robert Dalton Jr. (bob@retronyms.com) on 06/01/2011.
+//  Copyright 2011 Retronyms. All rights reserved.
+//
+
 #ifndef SOUNDDATA_H
 #define SOUNDDATA_H
 
@@ -16,14 +24,25 @@ namespace UNTZ
 	{
 		friend class Sound;
 	public:
-		SoundData() : mPlayState(kPlayStateStopped), mVolume(1.0f) {};
+		SoundData() : mPlayState(kPlayStateStopped), mVolume(1.0f) 
+		{
+			mState.mCurrentFrame = 0;
+			mState.mLooping = false;
+			mState.mLoopStart = 0.0;
+			mState.mLoopEnd = 0.0;
+
+			mPlayState == kPlayStateStopped;
+		};
+
 		PlayState getState() const { return mPlayState; }
 		void setState(PlayState state) { mPlayState = state; }
-		AudioSource* getSource() const { return mpSource; }
+		AudioSourcePtr getSource() const { return mpSource; }
 
 		float mVolume;
+		AudioSourceState mState;
+		RString mPath;
 	protected:
-		AudioSource* mpSource;
+		AudioSourcePtr mpSource;
 		PlayState mPlayState;
 	};
 };

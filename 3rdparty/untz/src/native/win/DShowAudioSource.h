@@ -1,4 +1,13 @@
-#pragma once
+//
+//  DShowAudioSource.h
+//  Part of UNTZ
+//
+//  Created by Robert Dalton Jr. (bob@retronyms.com) on 06/01/2011.
+//  Copyright 2011 Retronyms. All rights reserved.
+//
+
+#ifndef DSHOWAUDIOSOURCE_H_
+#define DSHOWAUDIOSOURCE_H_
 
 #include "Untz.h"
 #include "AudioSource.h"
@@ -41,9 +50,8 @@ public:
 	virtual bool init(const RString& path, bool loadIntoMemory);
 
 	// AudioSource
-	virtual Int64 readFrames(float* buffer, UInt32 numChannels, UInt32 numSamples);
+	virtual Int64 readFrames(float* buffer, UInt32 numChannels, UInt32 numSamples, AudioSourceState& state);
 	virtual void setPosition(double position);
-	virtual double getPosition();
 	virtual UInt32 getBitsPerSample();
 	virtual double getSampleRate();
 	virtual UInt32 getNumChannels();
@@ -56,8 +64,6 @@ protected:
 	void setDecoderPosition(double position);
 
 private:
-	std::vector<float> mBuffer;
-	bool mLoadedInMemory;
 	RString mPath;
 	bool mIsCoInitialized;
 	SampleGrabberCallback* mpSampleGrabberCallback;
@@ -66,4 +72,8 @@ private:
 	RComPtr<IMediaSeeking> mpMediaSeeking;	
 	WAVEFORMATEX* mpWaveFormatEx;
 	RCriticalSection mLock;
+
+	double length;
 };
+
+#endif

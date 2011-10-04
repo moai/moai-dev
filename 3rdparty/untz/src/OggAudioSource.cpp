@@ -1,7 +1,13 @@
+//
+//  OggAudioSource.cpp
+//  Part of UNTZ
+//
+//  Created by Robert Dalton Jr. (bob@retronyms.com) on 06/01/2011.
+//  Copyright 2011 Retronyms. All rights reserved.
+//
+
 #include "OggAudioSource.h"
 
-//#define fmin(a,b) (a < b) ? a : b
-//#define fmax(a,b) (b < a) ? a : b
 
 OggAudioSource::OggAudioSource()
 {
@@ -15,6 +21,9 @@ OggAudioSource::~OggAudioSource()
 
 bool OggAudioSource::init(const RString& path, bool loadIntoMemory)
 {
+	if(mLoadedInMemory && loadIntoMemory)
+		return true;
+
 	mPath = path;
 	mInFile = fopen(mPath.c_str(), "rb");
 
@@ -41,15 +50,15 @@ void OggAudioSource::close()
 {
     BufferedAudioSource::close();
     
-	ov_clear(&mOggFile);
-    
 	if(mInFile)
+	{
+		ov_clear(&mOggFile);
 		fclose(mInFile);    
+	}
 }
 
 void OggAudioSource::setDecoderPosition(Int64 startFrame)
 {
-//	ov_time_seek(&mOggFile, position);
 	int status = ov_pcm_seek(&mOggFile, startFrame * getNumChannels());
 	if(startFrame < getLength() * getSampleRate())
 		mEOF = false;

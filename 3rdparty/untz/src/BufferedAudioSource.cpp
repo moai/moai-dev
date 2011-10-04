@@ -1,3 +1,11 @@
+//
+//  BufferedAudioSource.cpp
+//  Part of UNTZ
+//
+//  Created by Robert Dalton Jr. (bob@retronyms.com) on 06/01/2011.
+//  Copyright 2011 Retronyms. All rights reserved.
+//
+
 #include "BufferedAudioSource.h"
 #include "BufferedAudioSourceThread.h"
 
@@ -9,16 +17,16 @@ BufferedAudioSource::BufferedAudioSource()
 
 BufferedAudioSource::~BufferedAudioSource()
 {
+	close();
 }
 
 bool BufferedAudioSource::init(float* interleavedData, Int64 numSamples)
 {
-    mCurrentFrame = 0;
 	mLoadedInMemory = true;
     mEOF = false;
     
     mBuffer.resize(numSamples);
-    memcpy(&mBuffer[0], interleavedData, sizeof(float) * numSamples);
+    memcpy(mBuffer.getData(), interleavedData, sizeof(float) * numSamples);
 
     return true;
 }
@@ -30,9 +38,8 @@ bool BufferedAudioSource::init(const RString& path, bool loadIntoMemory)
 		//RPRINT("loading sound into memory...\n");
         int channels = getNumChannels();
         double length = getLength();
-		UInt32 totalNumSamples = (UInt32)(getNumChannels() * getSampleRate() * getLength());
-		mBuffer.resize(totalNumSamples, 0);
-		float *pWritePos = &mBuffer[0];
+		mBuffer.resize(getNumChannels(), getSampleRate() * getLength());
+		float *pWritePos = mBuffer.getData();
 		UInt32 numFrames = (UInt32)(getSampleRate());
 		UInt32 framesRead = 0;
 		do
@@ -46,11 +53,10 @@ bool BufferedAudioSource::init(const RString& path, bool loadIntoMemory)
 	else
 	{
         RScopedLock l(&mLock);
+		mBuffer.resize(getNumChannels(), getNumChannels() * getSampleRate() * SECONDS_TO_BUFFER, false);
 		BufferedAudioSourceThread::getInstance()->addSource(this);
 	}
 
-	mCurrentFrame = 0;
-    
 	return true;
 }
 
@@ -69,27 +75,21 @@ void BufferedAudioSource::setPosition(double seconds)
 
 	RScopedLock l(&mLock);
 
-	mCurrentFrame = (Int64)(seconds * getSampleRate());    
+	Int64 frames = (Int64)(seconds * getSampleRate()); 
     if(!isLoadedInMemory())
     {
         mBuffer.clear();
-        setDecoderPosition(mCurrentFrame);
-        BufferedAudioSourceThread::getInstance()->readMore();
+        setDecoderPosition(frames);
+		BufferedAudioSourceThread::getInstance()->readMore();
     }
 }
 
-double BufferedAudioSource::getPosition()
-{
-	double position = (double)mCurrentFrame / getSampleRate();
-	return position;
-}
-
-Int64 BufferedAudioSource::readFrames(float* buffer, UInt32 numChannels, UInt32 numFrames)
+Int64 BufferedAudioSource::readFrames(float* buffer, UInt32 numChannels, UInt32 numFrames, AudioSourceState& state)
 {
 	mLock.lock();
 
 	Int64 framesRead = numFrames;
-	int framesAvailable = mBuffer.size() / getNumChannels() - mCurrentFrame;
+	int framesAvailable = mBuffer.size() / getNumChannels() - state.mCurrentFrame;
     
 	// For disk-streaming sources we calculate available frames using the whole buffer
     if(!isLoadedInMemory())
@@ -97,9 +97,9 @@ Int64 BufferedAudioSource::readFrames(float* buffer, UInt32 numChannels, UInt32 
     
 	mLock.unlock();
 
-	Int64 loopEndFrame = convertSecondsToSamples(mLoopEnd);
+	Int64 loopEndFrame = convertSecondsToSamples(state.mLoopEnd);
 	Int64 totalFrames = convertSecondsToSamples(getLength());
-	bool needToLoop = isLooping() && ((mCurrentFrame >= loopEndFrame && loopEndFrame > 0) || (framesAvailable == 0 && mEOF));
+	bool needToLoop = state.mLooping && ((state.mCurrentFrame >= loopEndFrame && loopEndFrame > 0) || (framesAvailable == 0 && mEOF));
 	
 	if(framesAvailable > 0 && !needToLoop)
 	{
@@ -109,7 +109,7 @@ Int64 BufferedAudioSource::readFrames(float* buffer, UInt32 numChannels, UInt32 
 			framesRead = framesAvailable;
 
 		int sourceChannels = getNumChannels();
-        int frameOffset = mCurrentFrame;
+        int frameOffset = state.mCurrentFrame;
         
         // For disk-streaming sources we always start at the beginning of the buffer
         if(!isLoadedInMemory())
@@ -119,9 +119,9 @@ Int64 BufferedAudioSource::readFrames(float* buffer, UInt32 numChannels, UInt32 
 		{
 			float *in = NULL;
 			if(sourceChannels == 1)
-				in = &mBuffer[frameOffset * sourceChannels];
+				in = mBuffer.getData(0, frameOffset);
 			else
-				in = &mBuffer[frameOffset * sourceChannels + j];
+				in = mBuffer.getData(j, frameOffset);
 
 			for(UInt32 i = 0; i < framesRead; ++i)
 			{
@@ -130,11 +130,11 @@ Int64 BufferedAudioSource::readFrames(float* buffer, UInt32 numChannels, UInt32 
 			}
 		}
 
-        mCurrentFrame += framesRead;
+        state.mCurrentFrame += framesRead;
 		
         if(!isLoadedInMemory())
 		{
-			mBuffer.erase(mBuffer.begin(), mBuffer.begin() + (framesRead * sourceChannels));
+			mBuffer.erase(0, framesRead);
 			framesAvailable = mBuffer.size() / getNumChannels();
 			UInt32 minimumFrames = getSampleRate() * SECONDS_TO_BUFFER / 2;
 			if(framesAvailable <= minimumFrames)
@@ -148,10 +148,13 @@ Int64 BufferedAudioSource::readFrames(float* buffer, UInt32 numChannels, UInt32 
         framesRead = ERR_BUFFERING;
         
 		if(needToLoop)
-			setPosition(mLoopStart);
+		{
+			setPosition(state.mLoopStart);
+			state.mCurrentFrame = convertSecondsToSamples(state.mLoopStart);
+		}
 
 		Int64 totalFrames = convertSecondsToSamples(getLength());
-        if(mCurrentFrame >= totalFrames)
+        if(state.mCurrentFrame >= totalFrames)
         {
             if(!isLoadedInMemory())
                 BufferedAudioSourceThread::getInstance()->removeSource(this);
@@ -161,22 +164,7 @@ Int64 BufferedAudioSource::readFrames(float* buffer, UInt32 numChannels, UInt32 
 		else
             if(!isLoadedInMemory())
                 BufferedAudioSourceThread::getInstance()->readMore();
-/*
-        if(isLooping() || !isEOF())
-        {
-            if(!isLoadedInMemory())
-                BufferedAudioSourceThread::getInstance()->readMore();
-        }
-        else if(isEOF())
-        {
-            if(!isLoadedInMemory())
-                BufferedAudioSourceThread::getInstance()->removeSource(this);
-            
-            return 0; // signal that we are done
-        }
-*/
     }
     
-
 	return framesRead;
 }

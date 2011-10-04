@@ -1,3 +1,10 @@
+//
+//  BufferedAudioSourceThread.cpp
+//  Part of UNTZ
+//
+//  Created by Robert Dalton Jr. (bob@retronyms.com) on 06/01/2011.
+//  Copyright 2011 Retronyms. All rights reserved.
+//
 
 #include "BufferedAudioSourceThread.h"
 #include "BufferedAudioSource.h"
@@ -131,11 +138,13 @@ void BufferedAudioSourceThread::run()
 				{
 	                pSource->mLock.lock();
                 
-		            int fillPosition = pSource->mBuffer.size();
-			        Int64 totalSamples = pSource->mBuffer.size() + framesRead * pSource->getNumChannels();
-				    pSource->mBuffer.resize(totalSamples);
-					memcpy(&pSource->mBuffer[fillPosition], &tempBuffer[0], sizeof(float) * framesRead * pSource->getNumChannels());
+//		            int fillPosition = pSource->mBuffer.size();
+//			        Int64 totalSamples = pSource->mBuffer.size() + framesRead * pSource->getNumChannels();
+//				    pSource->mBuffer.resize(totalSamples);
+	//				memcpy(&pSource->mBuffer[fillPosition], &tempBuffer[0], sizeof(float) * framesRead * pSource->getNumChannels());
+//					pSource->mBuffer.putData(&tempBuffer[0], framesRead * pSource->getNumChannels(), startFrame);
 
+					pSource->mBuffer.putData(&tempBuffer[0], framesRead * pSource->getNumChannels());
 					pSource->mLock.unlock();
 				}
                 

@@ -1,3 +1,11 @@
+//
+//  RCriticalSection.h
+//  Part of UNTZ
+//
+//  Created by Robert Dalton Jr. (bob@retronyms.com) on 06/01/2011.
+//  Copyright 2011 Retronyms. All rights reserved.
+//
+
 #ifndef RCRITICALSECTION_H_
 #define RCRITICALSECTION_H_
 
@@ -85,7 +93,6 @@ public:
 #endif
 	}
 
-
 	bool unlock()
 	{ 
 		_locked = false;
@@ -102,7 +109,6 @@ public:
 		return _locked;
 	}
 
-
 private:
 	void init(){
 #ifdef WIN32
@@ -110,7 +116,6 @@ private:
 #else
 		pthread_mutexattr_t attr;
 		pthread_mutexattr_init(&attr);
-//        pthread_mutexattr_setprotocol (&attr, PTHREAD_PRIO_INHERIT);
 		pthread_mutex_init(&mMutex,&attr);
 		pthread_mutexattr_destroy(&attr);
 #endif
