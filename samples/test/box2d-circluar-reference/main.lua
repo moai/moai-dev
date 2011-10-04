@@ -64,6 +64,7 @@ for i = 1, 3 do
 	
 	physBody = makePhysicsBody ( layer )
 	physBody.body:destroy ()
+	layer:removeProp ( physBody )
 	physBody = nil
 	
 	print ( "---- Iteration " .. i .. " ----" )

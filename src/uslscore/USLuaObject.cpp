@@ -182,9 +182,18 @@ void USLuaObject::InsertObject ( USLuaObject& object ) {
 	
 	assert ( !lua_isnil ( state, -1 ));
 	
+	lua_pop ( state, 1 );
+	this->PushPrivateRef ( state, this->mContain );
+	
 	object.PushLuaUserdata ( state );
 	lua_pushvalue ( state, -1 );
-	lua_settable ( state, -3 );
+	lua_rawset ( state, -3 );
+	
+	//lua_pop ( state, 1 );
+	
+	//object.PushLuaUserdata ( state );
+	//lua_pushnil ( state );
+	//lua_rawset ( state, -3 );
 	
 	lua_pop ( state, 1 );
 }
@@ -295,10 +304,10 @@ void USLuaObject::RemoveObject ( USLuaObject& object ) {
 
 		if ( this->mContain ) {
 			if ( this->PushPrivateRef ( state, this->mContain )) {
-		
+				
 				object.PushLuaUserdata ( state );
 				lua_pushnil ( state );
-				lua_settable ( state, -3 );
+				lua_rawset ( state, -3 );
 			}
 			lua_pop ( state, 1 );
 		}
@@ -333,6 +342,8 @@ void USLuaObject::SetPrivateRef ( USLuaState& state, int idx, USLuaPrivateRef& r
 	
 	state.CopyToTop ( idx );
 	ref.mRef = luaL_ref ( state, -2 );
+	
+	lua_pop ( state, 1 );
 }
 
 //----------------------------------------------------------------//
