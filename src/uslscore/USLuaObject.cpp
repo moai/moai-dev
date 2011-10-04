@@ -152,6 +152,22 @@ void USLuaObject::BindToLuaWithTable ( USLuaState& state ) {
 }
 
 //----------------------------------------------------------------//
+void USLuaObject::ClearPrivateRef ( USLuaPrivateRef& ref ) {
+	
+	USLuaStateHandle state = USLuaRuntime::Get ().State ();
+	
+	if ( this->mPrivateTable.PushRef ( state )) {
+	
+		lua_pushnumber ( state, ref.mRef );
+		lua_pushnil ( state );
+		lua_settable ( state, -3 );
+		lua_pop ( state, 1 );
+		
+		ref.mRef = LUA_NOREF;
+	}
+}
+
+//----------------------------------------------------------------//
 USLuaClass* USLuaObject::GetLuaClass () {
 
 	// no implementation

@@ -57,8 +57,11 @@ protected:
 	static int				_tostring				( lua_State* L );
 
 	//----------------------------------------------------------------//
+	void					ClearPrivateRef			( USLuaPrivateRef& ref );
 	void					OnRelease				( u32 refCount );
 	void					OnRetain				( u32 refCount );
+	bool					PushPrivateRef			( USLuaState& state, USLuaPrivateRef& ref );
+	void					SetPrivateRef			( USLuaState& state, int idx, USLuaPrivateRef& ref );
 
 public:
 
@@ -73,7 +76,6 @@ public:
 	void					LuaUnbind				( USLuaState& state );
 	void					PushLuaClassTable		( USLuaState& state );
 	void					PushLuaUserdata			( USLuaState& state );
-	bool					PushPrivateRef			( USLuaState& state, USLuaPrivateRef& ref );
 	virtual void			RegisterLuaClass		( USLuaState& state );
 	virtual void			RegisterLuaFuncs		( USLuaState& state );
 	void					RemoveObject			( USLuaObject& object );
@@ -81,7 +83,6 @@ public:
 	virtual	void			SerializeIn				( USLuaState& state, USLuaSerializer& serializer );
 	virtual	void			SerializeOut			( USLuaState& state, USLuaSerializer& serializer );
 	void					SetLuaInstanceTable		( USLuaState& state, int idx );
-	void					SetPrivateRef			( USLuaState& state, int idx, USLuaPrivateRef& ref );
 							USLuaObject				();
 	virtual					~USLuaObject			();
 };

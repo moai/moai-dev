@@ -11,21 +11,16 @@ MOAISim.setHistogramEnabled ( true )
 
 local function makeThreadClosure ( theLayer )
 
-	local scrollUVTransform = MOAITransform.new ()
-	local UVscroll = MOAIThread.new ()
-	UVscroll:run (
-		function ()
-			while true do
-				
-				MOAIThread.blockOnAction ( scrollUVTransform:moveLoc ( 0, 40, 350, MOAIEaseType.LINEAR ) )
-			end
-		end
-	)
+	local thread = MOAIThread.new ()
+	thread:run ( function () print ( 'test' ) end )
+	return thread
 end
 
 for i = 1, 3 do
 	
-	makeThreadClosure ( )
+	local thread = makeThreadClosure ( )
+	thread:stop ()
+	thread = nil
 	
 	print ( "---- Iteration " .. i .. " ----" )
 	MOAISim.forceGarbageCollection ()	
