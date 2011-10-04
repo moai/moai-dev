@@ -57,7 +57,7 @@ Sound* Sound::create(const RString& path, bool loadIntoMemory)
 				newSound->mpData->mpSource = prevSound->getData()->getSource();
 			else
 				// This is the first use of the audio soruce...set it explicitly
-				newSound->mpData->mpSource.reset(source);
+				newSound->mpData->mpSource = AudioSourcePtr(source);
 
 			System::get()->getData()->mMixer.addSound(newSound);
 		}
@@ -90,7 +90,7 @@ Sound* Sound::create(const RString& path, bool loadIntoMemory)
 				newSound->mpData->mpSource = prevSound->getData()->getSource();
 			else
 				// This is the first use of the audio soruce...set it explicitly
-				newSound->mpData->mpSource.reset(source);
+				newSound->mpData->mpSource = AudioSourcePtr(source);
 
 			System::get()->getData()->mMixer.addSound(newSound);
 		}
@@ -130,7 +130,7 @@ Sound* Sound::create(UInt32 sampleRate, UInt32 channels, UInt32 samples, Int16* 
 
 	MemoryAudioSource* source = new MemoryAudioSource(sampleRate, channels, samples, interleavedData);
     newSound->mpData = new UNTZ::SoundData();
-	newSound->mpData->mpSource.reset(source);
+	newSound->mpData->mpSource = AudioSourcePtr(source);
 
 	return newSound;
 }
@@ -141,7 +141,7 @@ Sound* Sound::create(UInt32 sampleRate, UInt32 channels, StreamCallback* proc, v
 
 	UserAudioSource* source = new UserAudioSource(sampleRate, channels, proc, userdata);
 	newSound->mpData = new UNTZ::SoundData();
-	newSound->mpData->mpSource.reset(source);
+	newSound->mpData->mpSource = AudioSourcePtr(source);
 
 	return newSound;
 }
@@ -247,7 +247,7 @@ bool Sound::isPaused()
 SoundInfo Sound::getInfo()
 {
 	SoundInfo info;
-	if(mpData->getSource())
+	if(mpData->getSource().get())
 	{
 		info.mBitsPerSample = mpData->getSource()->getBitsPerSample();
 		info.mChannels = mpData->getSource()->getNumChannels();

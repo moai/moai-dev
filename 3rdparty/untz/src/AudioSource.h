@@ -11,11 +11,17 @@
 
 #include "Untz.h"
 #include "RAudioBuffer.h"
+
+#define NO_MEMBER_TEMPLATES
+#include "counted_ptr.h"
+
+/*
 #ifdef WIN32
 #include <memory>
 #else
 #include <tr1/memory>
 #endif
+*/
 
 #define ERR_BUFFERING (-1)
 
@@ -64,6 +70,6 @@ protected:
 	RAudioBuffer mBuffer;
 };
 
-typedef std::tr1::shared_ptr<AudioSource> AudioSourcePtr;
+typedef counted_ptr<AudioSource> AudioSourcePtr;
 
 #endif
