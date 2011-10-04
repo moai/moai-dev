@@ -17,6 +17,7 @@ OggAudioSource::OggAudioSource()
 
 OggAudioSource::~OggAudioSource()
 {
+	close();
 }
 
 bool OggAudioSource::init(const RString& path, bool loadIntoMemory)
@@ -81,6 +82,13 @@ UInt32 OggAudioSource::getNumChannels()
 	if(mpOggInfo)
 		return mpOggInfo->channels;
 	return 0; 
+}
+
+UInt32 OggAudioSource::getBitsPerSample()
+{
+	if(mpOggInfo)
+		return mpOggInfo->bitrate_upper;
+	return 0;
 }
 
 Int64 OggAudioSource::decodeData(float* buffer, UInt32 numFrames)

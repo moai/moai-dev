@@ -5,6 +5,7 @@
 #define	MOAIUNTZSAMPLEBUFFER_H
 
 #include <moaicore/moaicore.h>
+#include <UntzSound.h>
 
 //================================================================//
 // MOAIUntzSampleBuffer
@@ -16,6 +17,8 @@
 class MOAIUntzSampleBuffer :
 	public virtual USLuaObject {
 private:
+	float* mBuffer;
+	UNTZ::SoundInfo mInfo;
 
 	//----------------------------------------------------------------//
 	static int		_load						( lua_State* L );
@@ -29,6 +32,9 @@ public:
 					~MOAIUntzSampleBuffer		();
 	void			RegisterLuaClass			( USLuaState& state );
 	void			RegisterLuaFuncs			( USLuaState& state );		
+
+	UNTZ::SoundInfo GetSoundInfo() { return mInfo; }
+	float* GetSampleBuffer() { return mBuffer; } 
 };
 
 #endif

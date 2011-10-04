@@ -27,6 +27,7 @@ public:
 	double getSampleRate();
 	double getLength();
 	UInt32 getNumChannels();
+	UInt32 getBitsPerSample();
 
 	// BufferedAudioSource
 	virtual bool init(const RString& path, bool loadIntoMemory);

@@ -11,17 +11,8 @@
 
 #include "Untz.h"
 #include "RAudioBuffer.h"
-
 #define NO_MEMBER_TEMPLATES
 #include "counted_ptr.h"
-
-/*
-#ifdef WIN32
-#include <memory>
-#else
-#include <tr1/memory>
-#endif
-*/
 
 #define ERR_BUFFERING (-1)
 
@@ -63,6 +54,8 @@ public:
 
 	bool isEOF() const { return mEOF; }
     bool isLoadedInMemory() { return mLoadedInMemory; }    
+
+	RAudioBuffer* getBuffer() { return &mBuffer; }
 
 protected:
 	bool mEOF;

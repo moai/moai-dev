@@ -105,14 +105,31 @@ Sound* Sound::create(const RString& path, bool loadIntoMemory)
 #else
 #ifdef __APPLE__
 		ExtAudioFileAudioSource *source = new ExtAudioFileAudioSource();
+		if(prevSound && loadIntoMemory && prevSound->getData()->getSource()->isLoadedInMemory())
+			source = (ExtAudioFileAudioSource*)prevSound->getData()->getSource().get();
+		else
+			source = new ExtAudioFileAudioSource();
 #endif
 #ifdef __ANDROID__
         WaveFileAudioSource *source = new WaveFileAudioSource();
+		if(prevSound && loadIntoMemory && prevSound->getData()->getSource()->isLoadedInMemory())
+			source = (WaveFileAudioSource*)prevSound->getData()->getSource().get();
+		else
+			source = new WaveFileAudioSource();
 #endif
 		if(source->init(path, loadIntoMemory))
         {
             newSound->mpData = new UNTZ::SoundData();
             newSound->mpData->mpSource = source;
+
+			if(prevSound)
+				// Share the audio source
+				newSound->mpData->mpSource = prevSound->getData()->getSource();
+			else
+				// This is the first use of the audio soruce...set it explicitly
+				newSound->mpData->mpSource = AudioSourcePtr(source);
+
+			System::get()->getData()->mMixer.addSound(newSound);
         }
         else
         {
@@ -124,6 +141,21 @@ Sound* Sound::create(const RString& path, bool loadIntoMemory)
 	return newSound;
 }
 
+Sound* Sound::create(SoundInfo info, float* interleavedData, bool ownsData)
+{
+	Sound* newSound = new Sound();
+	newSound->mpData = new UNTZ::SoundData();
+	newSound->mpData->mPath = "";
+
+	MemoryAudioSource* source = new MemoryAudioSource(info, (float*)interleavedData, ownsData);
+	newSound->mpData->mpSource = AudioSourcePtr(source);
+
+	System::get()->getData()->mMixer.addSound(newSound);
+
+	return newSound;
+}
+
+/*
 Sound* Sound::create(UInt32 sampleRate, UInt32 channels, UInt32 samples, Int16* interleavedData)
 {
 	Sound* newSound = new Sound();
@@ -134,17 +166,66 @@ Sound* Sound::create(UInt32 sampleRate, UInt32 channels, UInt32 samples, Int16* 
 
 	return newSound;
 }
+*/
 
 Sound* Sound::create(UInt32 sampleRate, UInt32 channels, StreamCallback* proc, void* userdata)
 {
 	Sound* newSound = new Sound();
+	newSound->mpData = new UNTZ::SoundData();
+	newSound->mpData->mPath = "";
 
 	UserAudioSource* source = new UserAudioSource(sampleRate, channels, proc, userdata);
-	newSound->mpData = new UNTZ::SoundData();
 	newSound->mpData->mpSource = AudioSourcePtr(source);
+
+	System::get()->getData()->mMixer.addSound(newSound);
 
 	return newSound;
 }
+
+// Decode
+bool Sound::decode(const RString& path, SoundInfo& info, float** data)
+{
+	bool decoded = false;
+	AudioSource* source = 0;
+	if (path.find(OGG_FILE_EXT) != RString::npos)
+	{
+		OggAudioSource* oas = new OggAudioSource();
+		source = oas;
+		if(oas->init(path, true))
+			decoded = true;
+	}
+	else
+	{
+		DShowAudioSource* das = new DShowAudioSource();
+		source = das;
+		if(das->init(path, true))
+			decoded = true;
+	}
+	
+	// Couldn't decode the file
+	if(!decoded)
+	{
+		if(source)
+			delete source;
+		return false;
+	}
+
+	info.mChannels = source->getNumChannels();
+	info.mBitsPerSample = source->getBitsPerSample();
+	info.mSampleRate = source->getSampleRate();
+	info.mLength = source->getLength();
+
+	RAudioBuffer* buffer = source->getBuffer();
+
+	// Allocate space and copy the buffer
+	*data = (float*)new char[buffer->getDataSize()];
+	buffer->copyInto(*data);
+
+	if(source)
+		delete source;
+	return true;
+}
+
 
 Sound::Sound()
 {

@@ -2,6 +2,7 @@
 // http://getmoai.com
 
 #include <moaiext-untz/MOAIUntzSound.h>
+#include <moaiext-untz/MOAIUntzSampleBuffer.h>
 
 //================================================================//
 // local
@@ -101,19 +102,30 @@ int MOAIUntzSound::_isPlaying ( lua_State* L ) {
 	@out	nil
 */
 int MOAIUntzSound::_load ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIUntzSound, "US" )
-	
-	cc8* filename = state.GetValue < cc8* >( 2, "" );
-	bool loadIntoMemory = state.GetValue < bool >( 3, true );	
+	MOAI_LUA_SETUP ( MOAIUntzSound, "U" )
 
 	if ( self->mSound ) {
 		delete self->mSound;
 		self->mSound = 0;
 	}
-	self->mFilename = filename;
-	self->mInMemory = loadIntoMemory;
-	//printf ( "creating sound: %s - %s\n", self->mFilename.str(), (loadIntoMemory) ? "in memory" : "not in memory" );
-	self->mSound = UNTZ::Sound::create ( filename, loadIntoMemory );
+
+	MOAIUntzSampleBuffer* data = state.GetLuaObject < MOAIUntzSampleBuffer >( 2 );
+	if(data)
+	{
+		self->mSound = UNTZ::Sound::create(data->GetSoundInfo(), data->GetSampleBuffer());
+		self->mInMemory = true;
+	}
+	else if ( state.IsType( 2, LUA_TSTRING ) ) 
+	{
+		cc8* filename = state.GetValue < cc8* >( 2, "" );
+		bool loadIntoMemory = state.GetValue < bool >( 3, true );	
+
+		self->mFilename = filename;
+		self->mInMemory = loadIntoMemory;
+		//printf ( "creating sound: %s - %s\n", self->mFilename.str(), (loadIntoMemory) ? "in memory" : "not in memory" );
+		self->mSound = UNTZ::Sound::create ( filename, loadIntoMemory );
+	}
+
 	return 0;
 }
 

@@ -137,40 +137,10 @@ void BufferedAudioSourceThread::run()
 				if(framesRead > 0)
 				{
 	                pSource->mLock.lock();
-                
-//		            int fillPosition = pSource->mBuffer.size();
-//			        Int64 totalSamples = pSource->mBuffer.size() + framesRead * pSource->getNumChannels();
-//				    pSource->mBuffer.resize(totalSamples);
-	//				memcpy(&pSource->mBuffer[fillPosition], &tempBuffer[0], sizeof(float) * framesRead * pSource->getNumChannels());
-//					pSource->mBuffer.putData(&tempBuffer[0], framesRead * pSource->getNumChannels(), startFrame);
-
 					pSource->mBuffer.putData(&tempBuffer[0], framesRead * pSource->getNumChannels());
 					pSource->mLock.unlock();
 				}
-                
-                // Check if we've reached the end
-/*
-				double loopStart;
-				double loopEnd;
-				pSource->getLoopPoints(loopStart, loopEnd);
-				Int64 loopEndFrame = pSource->convertSecondsToSamples(pSource->mLoopEnd);
-
-                if(pSource->isLooping() && pSource->mCurrentFrame >= loopEndFrame && loopEndFrame > 0)
-					pSource->setPosition(loopStart);
-
-
-				if(pSource->isEOF() || (pSource->mCurrentFrame >= loopEndFrame && loopEndFrame > 0))
-                {
-                    if(pSource->isLooping())
-                        // Reset the buffering position and keep on going...
-                        pSource->setPosition(loopStart);
-//                    else
-//                        // We didn't fill the whole buffer, so resize appropriately
-//                        pSource->mBuffer.resize(availableFrames + numFrames - framesToRead);
-                }
-*/
 			}
-
 		}
 
         mLock.unlock();

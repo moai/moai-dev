@@ -18,6 +18,11 @@
 int MOAIUntzSampleBuffer::_load ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIUntzSampleBuffer, "US" )
 	
+	cc8* filename = state.GetValue < cc8* >( 2, "" );
+
+	if(!UNTZ::Sound::decode(filename, self->mInfo, (float**)&self->mBuffer))
+		printf ( "error creating sample buffer\n" );
+
 	return 0;
 }
 
