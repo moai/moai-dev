@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <zipfs/zipfs.h>
 
 #define luac_c
 #define LUA_CORE
@@ -188,6 +189,9 @@ int main(int argc, char* argv[])
  lua_State* L;
  struct Smain s;
  int i=doargs(argc,argv);
+ 
+ zipfs_init ();
+ 
  argc-=i; argv+=i;
  if (argc<=0) usage("no input files given");
  L=lua_open();
@@ -196,5 +200,8 @@ int main(int argc, char* argv[])
  s.argv=argv;
  if (lua_cpcall(L,pmain,&s)!=0) fatal(lua_tostring(L,-1));
  lua_close(L);
+ 
+ zipfs_cleanup ();
+ 
  return EXIT_SUCCESS;
 }

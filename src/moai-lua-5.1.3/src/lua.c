@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <zipfs/zipfs.h>
 
 #define lua_c
 
@@ -377,9 +378,14 @@ static int pmain (lua_State *L) {
 int main (int argc, char **argv) {
   int status;
   struct Smain s;
-  lua_State *L = lua_open();  /* create state */
+   lua_State *L;
+  
+  zipfs_init ();
+  
+  L = lua_open();  /* create state */
   if (L == NULL) {
     l_message(argv[0], "cannot create state: not enough memory");
+	zipfs_cleanup ();
     return EXIT_FAILURE;
   }
   s.argc = argc;
@@ -387,6 +393,9 @@ int main (int argc, char **argv) {
   status = lua_cpcall(L, &pmain, &s);
   report(L, status);
   lua_close(L);
+  
+  zipfs_cleanup ();
+  
   return (status || s.status) ? EXIT_FAILURE : EXIT_SUCCESS;
 }
 
