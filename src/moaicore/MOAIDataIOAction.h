@@ -28,7 +28,7 @@ private:
 
 	STLString					mFilename;
 	USRef < MOAIDataBuffer >	mData;
-	USLuaRef					mOnFinish;
+	USLuaLocal					mOnFinish;
 	u32							mState;
 
 	//----------------------------------------------------------------//

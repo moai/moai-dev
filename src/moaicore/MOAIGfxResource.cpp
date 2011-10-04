@@ -83,7 +83,8 @@ bool MOAIGfxResource::Affirm () {
 		this->mState = STATE_CLEAR;
 	
 		if ( this->mOnRenew ) {
-			USLuaStateHandle state = this->mOnRenew.GetSelf ();
+			USLuaStateHandle state = USLuaRuntime::Get ().State ();
+			this->PushLocal ( state, this->mOnRenew );
 			this->PushLuaUserdata ( state );
 			state.DebugCall ( 1, 0 );
 		}

@@ -20,7 +20,7 @@ private:
 	void*				mBuffer;
 	u32					mSize;
 
-	USLuaRef			mOnFinish;
+	USLuaLocal			mOnFinish;
 	
 	USRef < MOAIDataBuffer > mPostData;
 	STLString mPostString;
