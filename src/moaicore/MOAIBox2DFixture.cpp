@@ -52,7 +52,7 @@ int MOAIBox2DFixture::_destroy ( lua_State* L ) {
 int MOAIBox2DFixture::_setCollisionHandler ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DFixture, "UF" )
 	
-	self->SetPrivateRef ( state, 2, self->mCollisionHandler );
+	self->SetLocal ( state, 2, self->mCollisionHandler );
 	self->mCollisionPhaseMask = state.GetValue < u32 >( 3, MOAIBox2DArbiter::ALL );
 	self->mCollisionCategoryMask = state.GetValue < u32 >( 4, 0xffffffff );
 	
@@ -181,7 +181,7 @@ void MOAIBox2DFixture::HandleCollision ( u32 eventType, MOAIBox2DFixture* other,
 			if ( this->mCollisionHandler ) {
 			
 				USLuaStateHandle state = USLuaRuntime::Get ().State ();
-				if ( this->PushPrivateRef ( state, this->mCollisionHandler )) {
+				if ( this->PushLocal ( state, this->mCollisionHandler )) {
 					
 					state.Push ( eventType );
 					this->PushLuaUserdata ( state );

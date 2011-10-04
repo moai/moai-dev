@@ -358,6 +358,10 @@ void MOAILayer2D::AffirmPartition () {
 
 	if ( !this->mPartition ) {
 		this->mPartition = new MOAIPartition ();
+		
+		USLuaStateHandle state = USLuaRuntime::Get ().State ();
+		this->mPartition->PushLuaUserdata ( state );
+		state.Pop ( 1 );
 	}
 }
 

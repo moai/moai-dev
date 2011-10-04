@@ -541,9 +541,9 @@ LUALIB_API int luaopen_io (lua_State *L) {
   luaL_register(L, LUA_IOLIBNAME, iolib);
   /* create (and set) default files */
   newfenv(L, io_noclose);  /* close function for default files */
-  createstdfile(L, stdin, IO_INPUT, "stdin");
-  createstdfile(L, stdout, IO_OUTPUT, "stdout");
-  createstdfile(L, stderr, 0, "stderr");
+  createstdfile(L, zipfs_stdin, IO_INPUT, "stdin");
+  createstdfile(L, zipfs_stdout, IO_OUTPUT, "stdout");
+  createstdfile(L, zipfs_stderr, 0, "stderr");
   lua_pop(L, 1);  /* pop environment for default files */
   lua_getfield(L, -1, "popen");
   newfenv(L, io_pclose);  /* create environment for 'popen' */

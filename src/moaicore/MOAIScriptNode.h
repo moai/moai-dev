@@ -18,7 +18,7 @@ class MOAIScriptNode :
 	public MOAINode {
 private:
 
-	USLuaRef mOnUpdate;
+	USLuaLocal mOnUpdate;
 	USLeanArray < float > mAttributes;
 
 	//----------------------------------------------------------------//

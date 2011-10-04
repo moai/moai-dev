@@ -1,3 +1,11 @@
+//
+//  UntzSound.cpp
+//  Part of UNTZ
+//
+//  Created by Robert Dalton Jr. (bob@retronyms.com) on 06/01/2011.
+//  Copyright 2011 Retronyms. All rights reserved.
+//
+
 #include "UntzSound.h"
 #include "SystemData.h"
 #include "SoundData.h"
@@ -25,16 +33,32 @@ using namespace UNTZ;
 
 Sound* Sound::create(const RString& path, bool loadIntoMemory)
 {
+	Sound* prevSound = UNTZ::System::get()->getData()->getInMemorySound(path);
 	Sound* newSound = new Sound();
 
 	if (path.find(OGG_FILE_EXT) != RString::npos)
 	{
 #ifndef __ANDROID__
-		OggAudioSource* source = new OggAudioSource();
+		OggAudioSource* source;
+		if(prevSound && loadIntoMemory && prevSound->getData()->getSource()->isLoadedInMemory())
+			// Use the existing AudioSource
+			source = (OggAudioSource*)prevSound->getData()->getSource().get();
+		else
+			// Create a new AudioSource
+			source = new OggAudioSource();
+		
 		if(source->init(path, loadIntoMemory))
 		{
 			newSound->mpData = new UNTZ::SoundData();
-			newSound->mpData->mpSource = source;
+			newSound->mpData->mPath = path;
+			if(prevSound)
+				// Share the audio source
+				newSound->mpData->mpSource = prevSound->getData()->getSource();
+			else
+				// This is the first use of the audio soruce...set it explicitly
+				newSound->mpData->mpSource = AudioSourcePtr(source);
+
+			System::get()->getData()->mMixer.addSound(newSound);
 		}
 		else
 		{
@@ -49,30 +73,38 @@ Sound* Sound::create(const RString& path, bool loadIntoMemory)
 	else
 	{
 #if defined(WIN32)
-		DShowAudioSource* source = new DShowAudioSource();
-		if(source->init(path, loadIntoMemory))
-		{
-			newSound->mpData = new UNTZ::SoundData();
-			newSound->mpData->mpSource = source;
-		}
+		DShowAudioSource* source;
+		if(prevSound && loadIntoMemory && prevSound->getData()->getSource()->isLoadedInMemory())
+			source = (DShowAudioSource*)prevSound->getData()->getSource().get();
 		else
-		{
-			printf("could not load file, %s\n", path.c_str());
-			delete source;
-			delete newSound;
-			return 0;
-		}
-#else
-#ifdef __APPLE__
-		ExtAudioFileAudioSource *source = new ExtAudioFileAudioSource();
+			source = new DShowAudioSource();
+#elif defined(__APPLE__)
+		ExtAudioFileAudioSource *source = 0;
+		if(prevSound && loadIntoMemory && prevSound->getData()->getSource()->isLoadedInMemory())
+			source = (ExtAudioFileAudioSource*)prevSound->getData()->getSource().get();
+		else
+			source = new ExtAudioFileAudioSource();
+#elif defined(__ANDROID__)
+        WaveFileAudioSource *source = 0;
+		if(prevSound && loadIntoMemory && prevSound->getData()->getSource()->isLoadedInMemory())
+			source = (WaveFileAudioSource*)prevSound->getData()->getSource().get();
+		else
+			source = new WaveFileAudioSource();
 #endif
-#ifdef __ANDROID__
-        WaveFileAudioSource *source = new WaveFileAudioSource();
-#endif
+		
 		if(source->init(path, loadIntoMemory))
         {
             newSound->mpData = new UNTZ::SoundData();
-            newSound->mpData->mpSource = source;
+			newSound->mpData->mPath = path;
+
+			if(prevSound)
+				// Share the audio source
+				newSound->mpData->mpSource = prevSound->getData()->getSource();
+			else
+				// This is the first use of the audio soruce...set it explicitly
+				newSound->mpData->mpSource = AudioSourcePtr(source);
+
+			System::get()->getData()->mMixer.addSound(newSound);
         }
         else
         {
@@ -80,33 +112,107 @@ Sound* Sound::create(const RString& path, bool loadIntoMemory)
             delete newSound;
             return 0;
         }
-#endif
 	}
+	return newSound;
+}
+
+Sound* Sound::create(SoundInfo info, float* interleavedData, bool ownsData)
+{
+	Sound* newSound = new Sound();
+	newSound->mpData = new UNTZ::SoundData();
+	newSound->mpData->mPath = "";
+
+	MemoryAudioSource* source = new MemoryAudioSource(info, (float*)interleavedData, ownsData);
+	newSound->mpData->mpSource = AudioSourcePtr(source);
+
+	System::get()->getData()->mMixer.addSound(newSound);
 
 	return newSound;
 }
 
+/*
 Sound* Sound::create(UInt32 sampleRate, UInt32 channels, UInt32 samples, Int16* interleavedData)
 {
 	Sound* newSound = new Sound();
 
 	MemoryAudioSource* source = new MemoryAudioSource(sampleRate, channels, samples, interleavedData);
     newSound->mpData = new UNTZ::SoundData();
-	newSound->mpData->mpSource = source;
+	newSound->mpData->mpSource = AudioSourcePtr(source);
 
 	return newSound;
 }
+*/
 
 Sound* Sound::create(UInt32 sampleRate, UInt32 channels, StreamCallback* proc, void* userdata)
 {
 	Sound* newSound = new Sound();
+	newSound->mpData = new UNTZ::SoundData();
+	newSound->mpData->mPath = "";
 
 	UserAudioSource* source = new UserAudioSource(sampleRate, channels, proc, userdata);
-	newSound->mpData = new UNTZ::SoundData();
-	newSound->mpData->mpSource = source;
+	newSound->mpData->mpSource = AudioSourcePtr(source);
+
+	System::get()->getData()->mMixer.addSound(newSound);
 
 	return newSound;
 }
+
+// Decode
+bool Sound::decode(const RString& path, SoundInfo& info, float** data)
+{
+	bool decoded = false;
+	AudioSource* source = 0;
+	if (path.find(OGG_FILE_EXT) != RString::npos)
+	{
+		OggAudioSource* as = new OggAudioSource();
+		source = as;
+		if(as->init(path, true))
+			decoded = true;
+	}
+	else
+	{
+#if defined(__APPLE__)
+		ExtAudioFileAudioSource *as = new ExtAudioFileAudioSource();
+		source = as;
+		if(as->init(path, true))
+			decoded = true;
+#elif defined(__ANDROID__)
+        WaveFileAudioSource *as = new WaveFileAudioSource();
+		source = as;
+		if(as->init(path, true))
+			decoded = true;
+#else
+		DShowAudioSource* as = new DShowAudioSource();
+		source = as;
+		if(as->init(path, true))
+			decoded = true;
+#endif
+	}
+	
+	// Couldn't decode the file
+	if(!decoded)
+	{
+		if(source)
+			delete source;
+		return false;
+	}
+
+	info.mChannels = source->getNumChannels();
+	info.mBitsPerSample = source->getBitsPerSample();
+	info.mSampleRate = source->getSampleRate();
+	info.mLength = source->getLength();
+
+	RAudioBuffer* buffer = source->getBuffer();
+
+	// Allocate space and copy the buffer
+	*data = (float*)new char[buffer->getDataSize()];
+	buffer->copyInto(*data);
+
+	if(source)
+		delete source;
+	return true;
+}
+
 
 Sound::Sound()
 {
@@ -118,15 +224,7 @@ Sound::~Sound()
 	UNTZ::System::get()->getData()->mMixer.removeSound(this);
 
 	if(mpData)
-	{
-		if(mpData->mpSource)
-		{
-            mpData->mpSource->close();
-			delete mpData->mpSource;
-		}
-
 		delete mpData;
-	}
 }
 
 void Sound::setVolume(float volume)
@@ -141,34 +239,43 @@ float Sound::getVolume() const
 	return mpData->mVolume;
 }
 
-void Sound::setLooping(bool loop)
-{
-	mpData->mpSource->setLooping(loop);
+void Sound::setLooping(bool loop) 
+{ 
+	mpData->mState.mLooping = loop; 
 }
 
-bool Sound::isLooping() const
-{
-	return mpData->mpSource->isLooping();
+bool Sound::isLooping() const 
+{ 
+	return mpData->mState.mLooping; 
 }
 
 void Sound::setLoopPoints(double startTime, double endTime)
 {
-	mpData->mpSource->setLoopPoints(startTime, endTime);
+	if(startTime < endTime || (startTime == -1.0 && endTime == -1.0))
+	{
+		mpData->mState.mLoopStart = startTime;
+		mpData->mState.mLoopEnd = endTime;
+	}
 }
 
 void Sound::getLoopPoints(double& startTime, double& endTime)
 {
-	mpData->mpSource->getLoopPoints(startTime, endTime);
+	startTime = mpData->mState.mLoopStart;
+	endTime = mpData->mState.mLoopEnd;
 }
 
 void Sound::setPosition(double seconds)
 {
-	mpData->mpSource->setPosition(seconds);
+	seconds = seconds < 0 ? 0.0f : seconds;
+	seconds = seconds > mpData->getSource()->getLength() ? mpData->getSource()->getLength() : seconds;
+	mpData->mState.mCurrentFrame = (Int64)(seconds * mpData->getSource()->getSampleRate());   
+	mpData->getSource()->setPosition(0);
 }
 
 double Sound::getPosition()
 {
-	return mpData->mpSource->getPosition();
+	double position = (double)mpData->mState.mCurrentFrame / mpData->getSource()->getSampleRate();
+	return position;
 }
 
 void Sound::play()
@@ -176,11 +283,9 @@ void Sound::play()
 	if(mpData->mPlayState == kPlayStateStopped)
 	{
 		mpData->mPlayState = kPlayStatePlaying;
-		mpData->getSource()->setPosition(0);
-	    System::get()->getData()->mMixer.addSound(this);
 	}
     else if(mpData->mPlayState == kPlayStatePlaying)
-        mpData->getSource()->setPosition(0);
+		setPosition(0);
 	else if(mpData->mPlayState == kPlayStatePaused)
 		mpData->mPlayState = kPlayStatePlaying;        
 }
@@ -194,8 +299,7 @@ void Sound::pause()
 void Sound::stop()
 {	
 	mpData->mPlayState = kPlayStateStopped;
-//	UNTZ::System::get()->getData()->mMixer.removeSound(this);
-	mpData->getSource()->setPosition(0);
+	setPosition(0);
 }
 
 bool Sound::isPlaying()
@@ -211,7 +315,7 @@ bool Sound::isPaused()
 SoundInfo Sound::getInfo()
 {
 	SoundInfo info;
-	if(mpData->getSource())
+	if(mpData->getSource().get())
 	{
 		info.mBitsPerSample = mpData->getSource()->getBitsPerSample();
 		info.mChannels = mpData->getSource()->getNumChannels();

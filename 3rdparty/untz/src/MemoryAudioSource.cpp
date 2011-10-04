@@ -1,14 +1,32 @@
+//
+//  MemoryAudioSource.cpp
+//  Part of UNTZ
+//
+//  Created by Robert Dalton Jr. (bob@retronyms.com) on 06/01/2011.
+//  Copyright 2011 Retronyms. All rights reserved.
+//
+
 #include "MemoryAudioSource.h"
 #include <math.h>
 
 using namespace UNTZ;
 
 
+MemoryAudioSource::MemoryAudioSource(UNTZ::SoundInfo& info, float* interleavedData, bool ownsData)
+{
+	mInfo = info;
+	UInt32 frames = info.mLength * info.mSampleRate;
+	mBuffer = RAudioBuffer(info.mChannels, frames, interleavedData, ownsData);
+	mLoadedInMemory = true;
+	mEOF = true;
+}
+/*
 MemoryAudioSource::MemoryAudioSource(UInt32 sampleRate, UInt32 numChannels, UInt32 numSamples, Int16* buffer)
 {
-	mSampleRate = (double)sampleRate;
-	mNumChannels = numChannels;
-    mNumFrames = numSamples / numChannels;
+	mInfo.mChannels = numChannels;
+	mInfo.mSampleRate = sampleRate;
+	mInfo.mLength = (double)numSamples * sampleRate; 
+	mInfo.mBitsPerSample = 4;
     
     std::vector<float> data(numSamples, 0);    
     for(UInt32 i = 0; i < numSamples; i++)
@@ -16,39 +34,28 @@ MemoryAudioSource::MemoryAudioSource(UInt32 sampleRate, UInt32 numChannels, UInt
         data[i] = *(buffer++)/32767.0;
     }
 
-    init(&data[0], numSamples);
+	mBuffer = RAudioBuffer(numChannels, numSamples / numChannels, &data[0], true);
+	mLoadedInMemory = true;
+	mEOF = true;
 }
-
-bool MemoryAudioSource::init(const RString& path, bool loadIntoMemory)
-{
-    return false;
-}
-
-bool MemoryAudioSource::init(float* interleavedData, Int64 numSamples)
-{
-    return BufferedAudioSource::init(interleavedData, numSamples);
-}
-
-Int64 MemoryAudioSource::decodeData(float* buffer, UInt32 numFrames)
-{
-    return 0;
-}
-
-void MemoryAudioSource::setDecoderPosition(Int64 startFrame)
-{
-}
+*/
 
 double MemoryAudioSource::getSampleRate()
 {
-    return mSampleRate;
+    return mInfo.mSampleRate;
 }
 
 double MemoryAudioSource::getLength()
 {
-    return (double)mNumFrames / getSampleRate();
+    return mInfo.mLength;
 }
 
 UInt32 MemoryAudioSource::getNumChannels()
 {
-    return mNumChannels;
+    return mInfo.mChannels;
+}
+
+UInt32 MemoryAudioSource::getBitsPerSample()
+{
+	return mInfo.mBitsPerSample;
 }

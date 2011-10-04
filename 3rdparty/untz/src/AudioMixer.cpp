@@ -1,3 +1,11 @@
+//
+//  AudioMixer.h
+//  Part of UNTZ
+//
+//  Created by Robert Dalton Jr. (bob@retronyms.com) on 06/01/2011.
+//  Copyright 2011 Retronyms. All rights reserved.
+//
+
 #include "AudioMixer.h"
 #include "SystemData.h"
 #include "SoundData.h"
@@ -8,6 +16,7 @@ using namespace UNTZ;
 AudioMixer::AudioMixer(void)
 {
     mNumChannels = 0;
+	mVolume = 1.0f;
 }
 
 AudioMixer::~AudioMixer(void)
@@ -56,6 +65,18 @@ void AudioMixer::removeSound(int index)
 	mSounds.erase(mSounds.begin() + index);
 }
 
+void AudioMixer::setVolume(float volume)
+{
+	volume = volume < 0.0f ? 0.0f : volume;
+	volume = volume > 1.0f ? 1.0f : volume;
+	mVolume = volume;
+}
+
+float AudioMixer::getVolume() const
+{
+	return mVolume;
+}
+
 int AudioMixer::process(UInt32 numInputChannels, float* inputBuffer, UInt32 numOutputChannels, float *outputBuffer, UInt32 numFrames)
 {
     mLock.lock();
@@ -70,7 +91,7 @@ int AudioMixer::process(UInt32 numInputChannels, float* inputBuffer, UInt32 numO
 			Int64 framesRead = 0;
 			do
 			{
-				framesRead = s->getData()->getSource()->readFrames((float*)&mBuffer[0], numOutputChannels, numFrames - totalFramesRead);
+				framesRead = s->getData()->getSource()->readFrames((float*)&mBuffer[0], numOutputChannels, numFrames - totalFramesRead, s->getData()->mState);
 				if(framesRead > 0)
                 {
                     for(UInt32 k = 0; k < numOutputChannels; ++k)
@@ -94,10 +115,10 @@ int AudioMixer::process(UInt32 numInputChannels, float* inputBuffer, UInt32 numO
 
     mLock.unlock();
 
-	// clipping
+	// volume & clipping
     for(UInt32 k = 0; k < numOutputChannels * numFrames; ++k)
     {
-		float val = *outputBuffer;
+		float val = *outputBuffer * mVolume;;
 		val = val > 1.0 ? 1.0 : val;
 		val = val < -1.0 ? -1.0 : val;
 		*(outputBuffer)++ = val;

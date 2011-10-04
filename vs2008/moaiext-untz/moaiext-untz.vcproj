@@ -342,6 +342,14 @@
 			>
 		</File>
 		<File
+			RelativePath="..\..\src\moaiext-untz\MOAIUntzSampleBuffer.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\moaiext-untz\MOAIUntzSampleBuffer.h"
+			>
+		</File>
+		<File
 			RelativePath="..\..\src\moaiext-untz\MOAIUntzSound.cpp"
 			>
 		</File>

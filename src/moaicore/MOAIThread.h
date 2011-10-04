@@ -16,7 +16,7 @@ class MOAIThread :
 	public MOAIAction {
 private:
 
-	USLuaRef		mRef;
+	USLuaLocal		mRef; // reference to the coroutine
 	lua_State*		mState;
 	u32				mNarg;
 	STLString		mFuncName;

@@ -18,8 +18,8 @@ private:
 
 	USRect			mRect;
 
-	USLuaRef		mOnDraw;
-	USLuaRef		mOnRect;
+	USLuaLocal		mOnDraw;
+	USLuaLocal		mOnRect;
 
 	//----------------------------------------------------------------//
 	static int		_setDrawCallback	( lua_State* L );

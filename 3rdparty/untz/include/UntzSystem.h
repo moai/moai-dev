@@ -1,3 +1,11 @@
+//
+//  UntzSystem.h
+//  Part of UNTZ
+//
+//  Created by Robert Dalton Jr. (bob@retronyms.com) on 06/01/2011.
+//  Copyright 2011 Retronyms. All rights reserved.
+//
+
 #ifndef UNTZSYSTEM_H_
 #define UNTZSYSTEM_H_
 
@@ -29,6 +37,9 @@ namespace UNTZ
 		DeviceInfo getDeviceInfo(UInt32 deviceIndex);
 		void setInputDevice(UInt32 deviceIndex);
 		void setOutputDevice(UInt32 deviceIndex);
+
+		void setVolume(float volume);
+		float getVolume() const;
 
 		SystemData* getData() const { return mpData; }
 	private:

@@ -22,9 +22,9 @@ private:
 	USCgt			mCGT;
 	USSyntaxNode*	mAST;
 
-	USLuaRef		mOnStartNonterminal;
-	USLuaRef		mOnEndNonterminal;
-	USLuaRef		mOnTerminal;
+	USLuaLocal		mOnStartNonterminal;
+	USLuaLocal		mOnEndNonterminal;
+	USLuaLocal		mOnTerminal;
 
 	//----------------------------------------------------------------//
 	static int		_loadFile				( lua_State* L );

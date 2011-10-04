@@ -217,11 +217,13 @@ xcopy /yr "$(OutDir)$(TargetName).lib" "..\..\bin\win32\$(Configuration)\"
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\aku\AKU-untz.cpp" />
+    <ClCompile Include="..\..\src\moaiext-untz\MOAIUntzSampleBuffer.cpp" />
     <ClCompile Include="..\..\src\moaiext-untz\MOAIUntzSound.cpp" />
     <ClCompile Include="..\..\src\moaiext-untz\MOAIUntzSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\aku\AKU-untz.h" />
+    <ClInclude Include="..\..\src\moaiext-untz\MOAIUntzSampleBuffer.h" />
     <ClInclude Include="..\..\src\moaiext-untz\MOAIUntzSound.h" />
     <ClInclude Include="..\..\src\moaiext-untz\MOAIUntzSystem.h" />
   </ItemGroup>

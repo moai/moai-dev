@@ -1,3 +1,11 @@
+//
+//  OggAudioSource.h
+//  Part of UNTZ
+//
+//  Created by Robert Dalton Jr. (bob@retronyms.com) on 06/01/2011.
+//  Copyright 2011 Retronyms. All rights reserved.
+//
+
 #ifndef OGGAUDIOSOURCE_H_
 #define OGGAUDIOSOURCE_H_
 
@@ -19,6 +27,7 @@ public:
 	double getSampleRate();
 	double getLength();
 	UInt32 getNumChannels();
+	UInt32 getBitsPerSample();
 
 	// BufferedAudioSource
 	virtual bool init(const RString& path, bool loadIntoMemory);
@@ -33,7 +42,6 @@ private:
 	FILE* mInFile;
 	vorbis_info* mpOggInfo;
 	OggVorbis_File mOggFile;
-	std::vector<float> mBuffer;
 };
 
 #endif

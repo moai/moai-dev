@@ -26,8 +26,11 @@ if not exist "%MOAI_CONFIG%" (
 	echo.
 )
 
+:: run luac
+"%MOAI_BIN%\luac" -o "main.out" "main.lua"
+
 :: run moai
-"%MOAI_BIN%\moai" "%MOAI_CONFIG%\config.lua" "main.lua"
+"%MOAI_BIN%\moai" "%MOAI_CONFIG%\config.lua" "main.out"
 
 :end
 pause

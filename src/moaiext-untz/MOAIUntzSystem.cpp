@@ -144,6 +144,39 @@ int MOAIUntzSystem::_setSampleRate ( lua_State* L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
+/**	@name	setVolume
+	@text	Set the system level volume.
+	
+	@in		MOAIUntzSystem self
+	@opt	number volume		Valid Range: 0 >= x <= 1.0 (Default value is 1.0)
+	@out	nil
+*/
+int MOAIUntzSystem::_setVolume ( lua_State* L ) {
+	USLuaState state ( L );
+	
+	float volume = state.GetValue ( 1, 1.0 );
+	UNTZ::System::get ()->setVolume ( volume );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	getVolume
+	@text	Return the system's current volume
+	
+	@in		MOAIUntzSystem self
+	@out	number volume
+*/
+int MOAIUntzSystem::_getVolume ( lua_State* L ) {
+	USLuaState state ( L );
+	
+	float volume = UNTZ::System::get ()->getSampleRate ();
+	lua_pushnumber ( L, volume );
+	
+	return 1;
+}
+
 //================================================================//
 // MOAIUntzSystem
 //================================================================//
@@ -172,6 +205,8 @@ void MOAIUntzSystem::RegisterLuaClass ( USLuaState& state ) {
 		//{ "setOptions",				_setOptions },
 		//{ "setOutputDevice",		_setOutputDevice },
 		{ "setSampleRate",			_setSampleRate },
+		{ "setVolume",				_setVolume },
+		{ "getVolume",				_getVolume },
 		{ NULL, NULL }
 	};
 
