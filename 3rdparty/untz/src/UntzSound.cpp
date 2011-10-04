@@ -39,7 +39,6 @@ Sound* Sound::create(const RString& path, bool loadIntoMemory)
 	if (path.find(OGG_FILE_EXT) != RString::npos)
 	{
 #ifndef __ANDROID__
-
 		OggAudioSource* source;
 		if(prevSound && loadIntoMemory && prevSound->getData()->getSource()->isLoadedInMemory())
 			// Use the existing AudioSource
@@ -74,53 +73,29 @@ Sound* Sound::create(const RString& path, bool loadIntoMemory)
 	else
 	{
 #if defined(WIN32)
-
 		DShowAudioSource* source;
 		if(prevSound && loadIntoMemory && prevSound->getData()->getSource()->isLoadedInMemory())
 			source = (DShowAudioSource*)prevSound->getData()->getSource().get();
 		else
 			source = new DShowAudioSource();
-
-		if(source->init(path, loadIntoMemory))
-		{
-			newSound->mpData = new UNTZ::SoundData();
-			newSound->mpData->mPath = path;
-			if(prevSound)
-				// Share the audio source
-				newSound->mpData->mpSource = prevSound->getData()->getSource();
-			else
-				// This is the first use of the audio soruce...set it explicitly
-				newSound->mpData->mpSource = AudioSourcePtr(source);
-
-			System::get()->getData()->mMixer.addSound(newSound);
-		}
-		else
-		{
-			printf("could not load file, %s\n", path.c_str());
-			delete source;
-			delete newSound;
-			return 0;
-		}
-	}
-#else
-#ifdef __APPLE__
-		ExtAudioFileAudioSource *source = new ExtAudioFileAudioSource();
+#elif defined(__APPLE__)
+		ExtAudioFileAudioSource *source = 0;
 		if(prevSound && loadIntoMemory && prevSound->getData()->getSource()->isLoadedInMemory())
 			source = (ExtAudioFileAudioSource*)prevSound->getData()->getSource().get();
 		else
 			source = new ExtAudioFileAudioSource();
-#endif
-#ifdef __ANDROID__
-        WaveFileAudioSource *source = new WaveFileAudioSource();
+#elif defined(__ANDROID__)
+        WaveFileAudioSource *source = 0;
 		if(prevSound && loadIntoMemory && prevSound->getData()->getSource()->isLoadedInMemory())
 			source = (WaveFileAudioSource*)prevSound->getData()->getSource().get();
 		else
 			source = new WaveFileAudioSource();
 #endif
+		
 		if(source->init(path, loadIntoMemory))
         {
             newSound->mpData = new UNTZ::SoundData();
-            newSound->mpData->mpSource = source;
+			newSound->mpData->mPath = path;
 
 			if(prevSound)
 				// Share the audio source
@@ -137,7 +112,7 @@ Sound* Sound::create(const RString& path, bool loadIntoMemory)
             delete newSound;
             return 0;
         }
-#endif
+	}
 	return newSound;
 }
 
@@ -198,12 +173,12 @@ bool Sound::decode(const RString& path, SoundInfo& info, float** data)
 	{
 #if defined(__APPLE__)
 		ExtAudioFileAudioSource *as = new ExtAudioFileAudioSource();
-		source = as
+		source = as;
 		if(as->init(path, true))
 			decoded = true;
 #elif defined(__ANDROID__)
         WaveFileAudioSource *as = new WaveFileAudioSource();
-		source = as
+		source = as;
 		if(as->init(path, true))
 			decoded = true;
 #else

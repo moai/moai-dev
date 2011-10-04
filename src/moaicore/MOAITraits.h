@@ -9,6 +9,7 @@
 
 class MOAIPartition;
 class MOAIShader;
+class MOAITraits;
 
 //================================================================//
 // MOAITraitLink

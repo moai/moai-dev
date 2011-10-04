@@ -22,12 +22,13 @@ BufferedAudioSource::~BufferedAudioSource()
 
 bool BufferedAudioSource::init(float* interleavedData, Int64 numSamples)
 {
+/*
 	mLoadedInMemory = true;
     mEOF = false;
     
     mBuffer.resize(numSamples);
     memcpy(mBuffer.getData(), interleavedData, sizeof(float) * numSamples);
-
+*/
     return true;
 }
 
@@ -38,7 +39,7 @@ bool BufferedAudioSource::init(const RString& path, bool loadIntoMemory)
 		//RPRINT("loading sound into memory...\n");
         int channels = getNumChannels();
         double length = getLength();
-		mBuffer.resize(getNumChannels(), getSampleRate() * getLength());
+		mBuffer.resize(getNumChannels(), getSampleRate() * getLength(), true);
 		float *pWritePos = mBuffer.getData();
 		UInt32 numFrames = (UInt32)(getSampleRate());
 		UInt32 framesRead = 0;
@@ -53,7 +54,7 @@ bool BufferedAudioSource::init(const RString& path, bool loadIntoMemory)
 	else
 	{
         RScopedLock l(&mLock);
-		mBuffer.resize(getNumChannels(), getNumChannels() * getSampleRate() * SECONDS_TO_BUFFER, false);
+		mBuffer.resize(getNumChannels(), getSampleRate() * SECONDS_TO_BUFFER, false);
 		BufferedAudioSourceThread::getInstance()->addSource(this);
 	}
 

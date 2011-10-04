@@ -234,7 +234,7 @@ bool DShowAudioSource::init(const RString& path, bool loadIntoMemory)
 	}
 	else
 	{
-		mBuffer.resize(getNumChannels(), getNumChannels() * getSampleRate() * SECONDS_TO_BUFFER, false);
+		mBuffer.resize(getNumChannels(), getSampleRate() * SECONDS_TO_BUFFER, false);
 		start();
 	}
 
