@@ -338,10 +338,16 @@ void System::setSampleRate(UInt32 sampleRate)
 {
 }
 
-//MOAI_RESULT System::playSound(MOAI::Sound* sound)
-//{
-//	return MOAI_OK;
-//}
+void System::setVolume(float volume)
+{
+	return msInstance->mpData->mMixer.setVolume(volume);
+}
+
+float System::getVolume() const
+{
+	return msInstance->mpData->mMixer.getVolume();
+}
+
 
 #pragma mark Helper functions
 
