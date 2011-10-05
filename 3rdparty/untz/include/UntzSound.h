@@ -18,6 +18,7 @@ namespace UNTZ
 	typedef struct {
 		UInt32 mBitsPerSample;
 		UInt32 mChannels;
+		UInt32 mTotalFrames;
 		double mSampleRate;
 		double mLength;
 	} SoundInfo;

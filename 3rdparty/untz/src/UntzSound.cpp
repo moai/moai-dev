@@ -197,16 +197,19 @@ bool Sound::decode(const RString& path, SoundInfo& info, float** data)
 		return false;
 	}
 
-	info.mChannels = source->getNumChannels();
-	info.mBitsPerSample = source->getBitsPerSample();
-	info.mSampleRate = source->getSampleRate();
-	info.mLength = source->getLength();
-
 	RAudioBuffer* buffer = source->getBuffer();
 
+	UInt32 size = buffer->getDataSize();
+
 	// Allocate space and copy the buffer
-	*data = (float*)new char[buffer->getDataSize()];
+	*data = (float*)new char[size];
 	buffer->copyInto(*data);
+
+	info.mChannels = source->getNumChannels();
+	info.mBitsPerSample = 32;
+	info.mSampleRate = source->getSampleRate();
+	info.mTotalFrames = size / 4 / source->getNumChannels();
+	info.mLength = (double)size / 4.0 / source->getNumChannels() / source->getSampleRate();
 
 	if(source)
 		delete source;

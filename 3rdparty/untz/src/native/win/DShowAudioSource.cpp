@@ -106,6 +106,8 @@ DShowAudioSource::DShowAudioSource() : mpSampleGrabberCallback(0)
 
 DShowAudioSource::~DShowAudioSource()
 {
+	stop();
+
 	if(mpSampleGrabberCallback)
 		delete mpSampleGrabberCallback;
 
@@ -219,7 +221,7 @@ bool DShowAudioSource::init(const RString& path, bool loadIntoMemory)
 
 	if(mLoadedInMemory)
 	{
-		mBuffer = RAudioBuffer(getNumChannels(), convertSecondsToSamples(getLength()) * getNumChannels());
+		mBuffer = RAudioBuffer(getNumChannels(), getSampleRate() * getLength());
 		start();
 
 		RPRINT("loading sound into memory...\n");
