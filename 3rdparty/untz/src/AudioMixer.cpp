@@ -108,7 +108,7 @@ int AudioMixer::process(UInt32 numInputChannels, float* inputBuffer, UInt32 numO
             
 			if(framesRead == 0)
             {
-				s->getData()->setState(kPlayStateStopped);
+				s->stop();
             }
 		}
 	}
