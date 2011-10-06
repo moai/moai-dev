@@ -19,8 +19,8 @@ void printCode(const char *tag, OSStatus s)
     } else
         // no, format it as an integer
         sprintf(str, "%d", (int)s);
-    fprintf(stderr, "%s%s\n", tag, str);
-    
+    //fprintf(stderr, "%s%s\n", tag, str);
+	RPRINT("%s%s\n", tag, str);
 }
 
 ExtAudioFileAudioSource::ExtAudioFileAudioSource()
@@ -29,6 +29,7 @@ ExtAudioFileAudioSource::ExtAudioFileAudioSource()
 
 ExtAudioFileAudioSource::~ExtAudioFileAudioSource()
 {
+	close();
 }
 
 double ExtAudioFileAudioSource::getLength() 
@@ -48,6 +49,9 @@ UInt32 ExtAudioFileAudioSource::getNumChannels()
 
 bool ExtAudioFileAudioSource::init(const RString& path, bool loadIntoMemory)
 {
+	if(mLoadedInMemory && loadIntoMemory)
+		return true;
+	
     // FIXME: query the file to find out how many channels instead of hardcoding.
     
     CFURLRef path_url = CFURLCreateFromFileSystemRepresentation (kCFAllocatorDefault,
