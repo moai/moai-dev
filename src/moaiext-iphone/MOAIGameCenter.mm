@@ -138,7 +138,7 @@ int MOAIGameCenter::_reportScore ( lua_State* L ) {
 int MOAIGameCenter::_setGetScoresCallback ( lua_State* L ) {
 	USLuaState state ( L );
 
-	MOAIGameCenter::Get ().mGetScoresCallback.SetRef ( state, 1, false );
+	MOAIGameCenter::Get ().mGetScoresCallback.SetStrongRef ( state, 1 );
 		
 	return 0;
 }

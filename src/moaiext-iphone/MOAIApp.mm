@@ -84,7 +84,7 @@ int MOAIApp::_alert( lua_State* L ) {
 						   cancelButtonTitle:cancelButtonTitle ];
 	
 	if ( state.IsType ( 3, LUA_TFUNCTION )) {
-		alert->callback.SetRef ( state, 3, false );
+		alert->callback.SetStrongRef ( state, 3 );
 	}	
 	
 	int top = state.GetTop ();
@@ -393,7 +393,7 @@ int MOAIApp::_setListener ( lua_State* L ) {
 	u32 idx = state.GetValue < u32 >( 1, TOTAL );
 	
 	if ( idx < TOTAL ) {
-		MOAIApp::Get ().mListeners [ idx ].SetRef ( state, 2, false );
+		MOAIApp::Get ().mListeners [ idx ].SetStrongRef ( state, 2 );
 	}
 	
 	return 0;
