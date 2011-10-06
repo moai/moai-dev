@@ -312,7 +312,8 @@ int MOAIParticleScript::_packConst ( lua_State* L ) {
 	USLuaState state ( L );
 
 	float val = state.GetValue < float >( 1, 0.0f );
-	u32 bits = *(( u32* )&val );
+	u32 bits;
+	memcpy ( &bits, &val, sizeof ( u32 ));
 	state.Push ( Pack64 ( bits, PARAM_TYPE_CONST ));
 
 	return 1;
@@ -511,12 +512,14 @@ MOAIParticleScript::Instruction& MOAIParticleScript::PushInstruction ( u32 op, c
 //----------------------------------------------------------------//
 u64 MOAIParticleScript::Pack64 ( u32 low, u32 hi ) {
 
-	u64 val64 = 0;
-	u32* lohi = ( u32* )&val64;
-	
-	lohi [ 0 ] = low;
-	lohi [ 1 ] = hi;
-
+	u64 val64 = 0; 
+	u32 lohi [ 2 ]; 
+      
+	lohi [ 0 ] = low; 
+	lohi [ 1 ] = hi; 
+ 
+	memcpy ( &val64, lohi, sizeof ( val64 )); 
+ 
 	return val64;
 }
 
