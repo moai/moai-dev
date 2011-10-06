@@ -29,6 +29,7 @@ ExtAudioFileAudioSource::ExtAudioFileAudioSource()
 
 ExtAudioFileAudioSource::~ExtAudioFileAudioSource()
 {
+    BufferedAudioSource::close();	
 }
 
 double ExtAudioFileAudioSource::getLength() 
@@ -48,6 +49,9 @@ UInt32 ExtAudioFileAudioSource::getNumChannels()
 
 bool ExtAudioFileAudioSource::init(const RString& path, bool loadIntoMemory)
 {
+	if(mLoadedInMemory && loadIntoMemory)
+		return true;
+	
     // FIXME: query the file to find out how many channels instead of hardcoding.
     
     CFURLRef path_url = CFURLCreateFromFileSystemRepresentation (kCFAllocatorDefault,
