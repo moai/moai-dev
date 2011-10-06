@@ -218,7 +218,7 @@ int MOAICameraFitter2D::_snapToTarget ( lua_State* L ) {
 void MOAICameraFitter2D::AddAnchor ( MOAICameraAnchor2D& anchor ) {
 
 	if ( !this->mAnchors.contains ( &anchor )) {
-		anchor.Retain ();
+		this->InsertObject ( anchor );
 		this->mAnchors.insert ( &anchor );
 	}
 }
@@ -230,7 +230,7 @@ void MOAICameraFitter2D::Clear () {
 		AnchorIt anchorIt = this->mAnchors.begin ();
 		MOAICameraAnchor2D* anchor = *anchorIt;
 		this->mAnchors.erase ( anchorIt );
-		anchor->Release ();
+		this->RemoveObject ( anchor );
 	} 
 }
 
@@ -244,32 +244,71 @@ void MOAICameraFitter2D::Fit () {
 	this->mTargetLoc.Init ( 0.0f, 0.0f );
 	this->mTargetScale = 1.0f;
 
-	// build the world rect
-	USRect worldRect = this->GetWorldRect ();
-
 	USAffine2D ident;
 	ident.Ident ();
 	
 	USAffine2D worldToWnd = this->mViewport->GetWorldToWndMtx ( ident );
 	USAffine2D wndToWorld = this->mViewport->GetWndToWorldMtx ( ident );
 	
-	// fit the viewport rect to the target rect
+	// take the view rect into world space
 	USRect worldViewRect = this->mViewport->GetRect ();
 	wndToWorld.Transform ( worldViewRect );
 	worldViewRect.Bless ();
 	
 	// TODO: take viewport offset into account
 	
-	// fit the view rect
-	USRect fitViewRect = worldViewRect;
-	worldRect.FitOutside ( fitViewRect );
+	// build the anchor rect (clipped to bounds)
+	USRect anchorRect = this->GetAnchorRect ();
 	
-	// constrain the rect
-	this->mBounds.Constrain ( fitViewRect );
+	// fit the view rect around the world rect while preserving aspect ratio
+	USRect fitViewRect = worldViewRect;
+	anchorRect.FitOutside ( fitViewRect );
+	
+	// constrain the view rect to the bounds while preserving aspect
+	this->mBounds.ConstrainWithAspect ( fitViewRect );
 	
 	// get the fitting
 	this->mTargetScale *= fitViewRect.Width () / worldViewRect.Width ();	
 	fitViewRect.GetCenter ( this->mTargetLoc );
+}
+
+//----------------------------------------------------------------//
+USRect MOAICameraFitter2D::GetAnchorRect () {
+
+	// expand the world rect to include all the anchors
+	AnchorIt anchorIt = this->mAnchors.begin ();
+	USRect worldRect = ( *anchorIt )->GetRect ();
+	++anchorIt;
+	
+	for ( ; anchorIt != this->mAnchors.end (); ++anchorIt ) {
+		MOAICameraAnchor2D* anchor = *anchorIt;
+		worldRect.Grow ( anchor->GetRect ());
+	}
+	
+	// clip the world rect to the bounds
+	this->mBounds.Clip ( worldRect );
+	
+	// enforce the minimum
+	float width = worldRect.Width ();
+	float height = worldRect.Height ();
+	float pad;
+	
+	if ( this->mMin > 0.0f ) {
+	
+		if ( width < this->mMin ) {
+			pad = ( this->mMin - width ) * 0.5f;
+			worldRect.mXMin -= pad;
+			worldRect.mXMax += pad;
+		}
+		
+		if ( height < this->mMin ) {
+			pad = ( this->mMin - height ) * 0.5f;
+			worldRect.mYMin -= pad;
+			worldRect.mYMax += pad;
+		}
+	}
+	
+	return worldRect;
 }
 
 //----------------------------------------------------------------//
@@ -292,43 +331,6 @@ float MOAICameraFitter2D::GetFitDistance () {
 		return USDist::VecToVec ( current, target );
 	}
 	return 0.0f;
-}
-
-//----------------------------------------------------------------//
-USRect MOAICameraFitter2D::GetWorldRect () {
-
-	// build the world rect
-	AnchorIt anchorIt = this->mAnchors.begin ();
-	USRect worldRect = ( *anchorIt )->GetRect ();
-	++anchorIt;
-	
-	for ( ; anchorIt != this->mAnchors.end (); ++anchorIt ) {
-		MOAICameraAnchor2D* anchor = *anchorIt;
-		worldRect.Grow ( anchor->GetRect ());
-	}
-	
-	this->mBounds.Clip ( worldRect );
-	
-	float width = worldRect.Width ();
-	float height = worldRect.Height ();
-	float pad;
-	
-	if ( this->mMin > 0.0f ) {
-	
-		if ( width < this->mMin ) {
-			pad = ( this->mMin - width ) * 0.5f;
-			worldRect.mXMin -= pad;
-			worldRect.mXMax += pad;
-		}
-		
-		if ( height < this->mMin ) {
-			pad = ( this->mMin - height ) * 0.5f;
-			worldRect.mYMin -= pad;
-			worldRect.mYMax += pad;
-		}
-	}
-	
-	return worldRect;
 }
 
 //----------------------------------------------------------------//
@@ -401,7 +403,7 @@ void MOAICameraFitter2D::RemoveAnchor ( MOAICameraAnchor2D& anchor ) {
 
 	if ( this->mAnchors.contains ( &anchor )) {
 		this->mAnchors.erase ( &anchor );
-		anchor.Release ();
+		this->RemoveObject ( anchor );
 	}
 }
 

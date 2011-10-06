@@ -109,9 +109,7 @@ public:
 			
 				rect.mXMin = this->mXMax - rectWidth;
 				rect.mXMax = this->mXMax;
-			}
-			
-			
+			}	
 		}
 		else {
 		
@@ -140,6 +138,90 @@ public:
 		
 			rect.mYMin = yCenter - ( TYPE )( rectHeight * 0.5f );
 			rect.mYMax = yCenter + ( TYPE )( rectHeight * 0.5f );
+		}
+	}
+
+	//----------------------------------------------------------------//
+	// Fit the rect (without centering) while preserving the aspect ratio 
+	void ConstrainWithAspect ( USMetaRect < TYPE >& rect ) const {
+
+		TYPE width = this->Width ();
+		TYPE height = this->Height ();
+		
+		if (( width == 0.0 ) || ( height == 0.0 )) {
+			rect.Init ( 0.0, 0.0, 0.0, 0.0 );
+			return;
+		}
+		
+		TYPE fitWidth = rect.Width ();
+		TYPE fitHeight = rect.Height ();
+		
+		TYPE xCenter = rect.mXMin + ( fitWidth * ( TYPE )0.5 );
+		TYPE yCenter = rect.mYMin + ( fitHeight * ( TYPE )0.5 );
+		
+		// if neither rect dimension is larger, just do a regular constrain and return
+		if (( fitWidth <= width ) && ( fitHeight <= height )) {
+			
+			this->Constrain ( rect );
+			return;
+		}
+		
+		// the rect is larger, so we have to shrink it
+		
+		TYPE fitAspect = rect.Aspect ();
+		TYPE aspect = width / height;
+		
+		if ( fitAspect >= aspect ) {
+			
+			// rect is fatter
+			fitWidth = width;
+			fitHeight = ( width / fitAspect );
+			
+			// align rect along x axis 
+			rect.mXMin = this->mXMin;
+			rect.mXMax = this->mXMax;
+			
+			// center along y axis
+			rect.mYMin = yCenter - ( fitHeight * ( TYPE )0.5 );
+			rect.mYMax = rect.mYMin + fitHeight;
+			
+			// translate rect along y axis
+			if ( rect.mXMin < this->mXMin ) {
+			
+				rect.mYMin = this->mYMin;
+				rect.mYMax = this->mYMin + fitHeight;
+			}
+			else if ( rect.mXMax > this->mXMax ) {
+			
+				rect.mYMin = this->mYMax - fitHeight;
+				rect.mYMax = this->mYMax;
+			}
+		}
+		else {
+			
+			// rect is thinner
+			fitWidth = ( height * fitAspect );
+			fitHeight = height;
+			
+			// align rect along y axis
+			rect.mYMin = this->mYMin;
+			rect.mYMax = this->mYMax;
+			
+			// center along x axis
+			rect.mXMin = xCenter - ( fitWidth * ( TYPE )0.5 );
+			rect.mXMax = rect.mXMin + fitWidth;
+			
+			// translate rect along x axis
+			if ( rect.mXMin < this->mXMin ) {
+			
+				rect.mXMin = this->mXMin;
+				rect.mXMax = this->mXMin + fitWidth;
+			}
+			else if ( rect.mXMax > this->mXMax ) {
+			
+				rect.mXMin = this->mXMax - fitWidth;
+				rect.mXMax = this->mXMax;
+			}
 		}
 	}
 
@@ -257,12 +339,12 @@ public:
 			TYPE aspect = width / height;
 			
 			if ( fitAspect >= aspect ) {
-				// rect is fatter
+				// fit rect is fatter
 				fitWidth = ( height * fitAspect );
 				fitHeight = height;
 			}
 			else {
-				// rect is thinner
+				// fit rect is thinner
 				fitWidth = width;
 				fitHeight = ( width / fitAspect );
 			}
