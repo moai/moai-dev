@@ -52,8 +52,8 @@ private:
 
 	//----------------------------------------------------------------//
 	void			Fit						();
+	USRect			GetAnchorRect			();
 	void			GetCamera				( USAffine2D& camera );
-	USRect			GetWorldRect			();
 	void			OnDepNodeUpdate			();
 	void			OnUpdate				( float step );
 	void			SetTarget				( const USAffine2D& camera, const USRect& screenRect );

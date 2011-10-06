@@ -46,7 +46,6 @@ int MOAIUntzSystem::_getOptions ( lua_State* L ) {
 /**	@name	getSampleRate
 	@text	Return the system's current sample rate.
 	
-	@in		MOAIUntzSystem self
 	@out	number sampleRate
 */
 int MOAIUntzSystem::_getSampleRate ( lua_State* L ) {
@@ -77,7 +76,6 @@ int MOAIUntzSystem::_getSupportedFormats ( lua_State* L ) {
 /**	@name	initialize
 	@text	Inititalize the sound system.
 	
-	@in		MOAIUntzSystem self
 	@opt	number sampleRate		Default value is 44100.
 	@opt	number numFrames		Default value is 4096.
 	@out	nil
@@ -131,7 +129,6 @@ int MOAIUntzSystem::_setOutputDevice ( lua_State* L ) {
 /**	@name	setSampleRate
 	@text	Set the system sample rate.
 	
-	@in		MOAIUntzSystem self
 	@opt	number sampleRate		Default value is 44100.
 	@out	nil
 */
@@ -148,14 +145,13 @@ int MOAIUntzSystem::_setSampleRate ( lua_State* L ) {
 /**	@name	setVolume
 	@text	Set the system level volume.
 	
-	@in		MOAIUntzSystem self
 	@opt	number volume		Valid Range: 0 >= x <= 1.0 (Default value is 1.0)
 	@out	nil
 */
 int MOAIUntzSystem::_setVolume ( lua_State* L ) {
 	USLuaState state ( L );
 	
-	float volume = state.GetValue ( 1, 1.0 );
+	float volume = ( float )state.GetValue ( 1, 1.0 );
 	UNTZ::System::get ()->setVolume ( volume );
 	
 	return 0;
@@ -165,13 +161,12 @@ int MOAIUntzSystem::_setVolume ( lua_State* L ) {
 /**	@name	getVolume
 	@text	Return the system's current volume
 	
-	@in		MOAIUntzSystem self
 	@out	number volume
 */
 int MOAIUntzSystem::_getVolume ( lua_State* L ) {
 	USLuaState state ( L );
 	
-	float volume = UNTZ::System::get ()->getSampleRate ();
+	float volume = UNTZ::System::get ()->getVolume ();
 	lua_pushnumber ( L, volume );
 	
 	return 1;
