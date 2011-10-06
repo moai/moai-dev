@@ -30,8 +30,8 @@ layer:insertProp ( textbox )
 
 textbox:spool ()
 
-shader = MOAISimpleShader.new ()
-shader:setColor ( 0, 0, 0, 1 )
-shader:seekColor ( 1, 0, 0, 1, 3, MOAIEaseType.EASE_IN )
-textbox:setShader ( shader )
+color = MOAIColor.new ()
+color:setColor ( 0, 0, 0, 1 )
+color:seekColor ( 1, 0, 0, 1, 3, MOAIEaseType.EASE_IN )
+textbox:setTraitSource ( color, MOAITraits.INHERIT_COLOR )
 

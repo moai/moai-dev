@@ -230,7 +230,7 @@ void MOAICameraFitter2D::Clear () {
 		AnchorIt anchorIt = this->mAnchors.begin ();
 		MOAICameraAnchor2D* anchor = *anchorIt;
 		this->mAnchors.erase ( anchorIt );
-		this->RemoveObject ( anchor );
+		this->RemoveObject ( *anchor );
 	} 
 }
 

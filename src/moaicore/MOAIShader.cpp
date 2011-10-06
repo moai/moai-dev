@@ -514,8 +514,6 @@ void MOAIShader::ReserveUniforms ( u32 nUniforms ) {
 //----------------------------------------------------------------//
 void MOAIShader::SetSource ( cc8* vshSource, cc8* fshSource ) {
 
-	this->Clear ();
-
 	if ( vshSource && fshSource ) {
 		this->mVertexShaderSource = vshSource;
 		this->mFragmentShaderSource = fshSource;
