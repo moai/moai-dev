@@ -19,8 +19,8 @@ void printCode(const char *tag, OSStatus s)
     } else
         // no, format it as an integer
         sprintf(str, "%d", (int)s);
-    fprintf(stderr, "%s%s\n", tag, str);
-    
+    //fprintf(stderr, "%s%s\n", tag, str);
+	RPRINT("%s%s\n", tag, str);
 }
 
 ExtAudioFileAudioSource::ExtAudioFileAudioSource()
@@ -29,7 +29,7 @@ ExtAudioFileAudioSource::ExtAudioFileAudioSource()
 
 ExtAudioFileAudioSource::~ExtAudioFileAudioSource()
 {
-    BufferedAudioSource::close();	
+	close();
 }
 
 double ExtAudioFileAudioSource::getLength() 
