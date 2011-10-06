@@ -254,10 +254,22 @@ bool Sound::isLooping() const
 
 void Sound::setLoopPoints(double startTime, double endTime)
 {
-	if(startTime < endTime || (startTime == -1.0 && endTime == -1.0))
+	double length = mpData->getSource()->getLength();
+
+	startTime = startTime < 0 ? 0 : startTime;
+	startTime = startTime > length ? length : startTime;
+	endTime = endTime < 0 ? 0 : endTime;
+	endTime = endTime > length ? length : endTime;
+		
+	if(startTime < endTime)
 	{
 		mpData->mState.mLoopStart = startTime;
 		mpData->mState.mLoopEnd = endTime;
+	}
+	else if(startTime == endTime)
+	{
+		mpData->mState.mLoopStart = 0.0f;
+		mpData->mState.mLoopEnd = 0.0f;
 	}
 }
 
