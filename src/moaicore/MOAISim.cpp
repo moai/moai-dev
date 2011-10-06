@@ -950,30 +950,3 @@ void MOAISim::Update () {
 	USUrlMgr::Get ().Process ();
 	this->mDataIOThread.Publish ();
 }
-
-//----------------------------------------------------------------//
-STLString MOAISim::ToString () {
-
-	STLString repr;
-
-	const char *timer_state;
-
-	switch ( mLoopState ) {
-		case PAUSED:
-			timer_state = "paused";
-			break;
-		case START:
-			timer_state = "start";
-			break;
-		case RUNNING:
-			timer_state = "running";
-			break;
-		default:
-			timer_state = "INVALID";
-	}
-
-	PrettyPrint ( repr, "mLoopState", timer_state );
-	PRETTY_PRINT ( repr, this->mSimTime )
-
-	return repr;
-}

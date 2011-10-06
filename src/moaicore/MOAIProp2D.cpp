@@ -533,13 +533,25 @@ void MOAIProp2D::GetBoundsInView ( MOAICellCoord& c0, MOAICellCoord& c1 ) {
 //----------------------------------------------------------------//
 USColorVec MOAIProp2D::GetColorTrait () {
 
-	return this->mColor;
+	return MOAIColor::GetColorTrait ();
 }
 
 //----------------------------------------------------------------//
 USRect* MOAIProp2D::GetFrameTrait () {
 
 	return &this->mFrame;
+}
+
+//----------------------------------------------------------------//
+const USAffine2D* MOAIProp2D::GetLocTrait () {
+
+	return MOAITransform::GetLocTrait ();
+}
+
+//----------------------------------------------------------------//
+MOAIPartition* MOAIProp2D::GetPartitionTrait () {
+
+	return MOAIProp::GetPartitionTrait ();
 }
 
 //----------------------------------------------------------------//
@@ -563,6 +575,12 @@ u32 MOAIProp2D::GetLocalFrame ( USRect& frame ) {
 	}
 	
 	return BOUNDS_EMPTY;
+}
+
+//----------------------------------------------------------------//
+const USAffine2D* MOAIProp2D::GetTransformTrait () {
+
+	return MOAITransform::GetTransformTrait ();
 }
 
 //----------------------------------------------------------------//
@@ -661,39 +679,45 @@ void MOAIProp2D::OnDepNodeUpdate () {
 	// select the frame
 	USRect frame = this->mFrame;
 	
-	if ( this->mTraitSource ) {
+	MOAITraitsBuffer buffer;
+	this->AccumulateSources ( buffer );
 	
-		if ( this->mTraitMask & INHERIT_BLEND_MODE ) {
-			this->mBlendMode = this->mTraitSource->GetBlendModeTrait ();
+	bool inheritFrame = false;
+	
+	if ( buffer.HasTraits ()) {
+
+		if ( buffer.HasTrait ( INHERIT_BLEND_MODE )) {
+			this->mBlendMode = buffer.GetBlendModeTrait ();
 		}
 	
-		if ( this->mTraitMask & INHERIT_COLOR ) {
-			this->mColor.Modulate ( this->mTraitSource->GetColorTrait ());
+		if ( buffer.HasTrait ( INHERIT_COLOR )) {
+			this->mColor.Modulate ( buffer.GetColorTrait ());
 		}
 		
-		if ( this->mTraitMask & INHERIT_FRAME ) {
+		if ( buffer.HasTrait ( INHERIT_FRAME )) {
 			
-			USRect* frameTrait = this->mTraitSource->GetFrameTrait ();
+			USRect* frameTrait = buffer.GetFrameTrait ();
 			if ( frameTrait ) {
 				frame = *frameTrait;
+				inheritFrame = true;
 			}
 		}
 		
-		if ( this->mTraitMask & INHERIT_PARTITION ) {
-			MOAIPartition* partition = this->mTraitSource->GetPartitionTrait ();
+		if ( buffer.HasTrait ( INHERIT_PARTITION )) {
+			MOAIPartition* partition = buffer.GetPartitionTrait ();
 			this->SetPartition ( partition );
 		}
 		
-		if ( this->mTraitMask & INHERIT_SHADER ) {
-			this->mShader = this->mTraitSource->GetShaderTrait ();
+		if ( buffer.HasTrait ( INHERIT_SHADER )) {
+			this->mShader = buffer.GetShaderTrait ();
 		}
 		
-		if ( this->mTraitMask & INHERIT_VISIBLE ) {
-			this->mVisible = this->mTraitSource->GetVisibleTrait ();
+		if ( buffer.HasTrait ( INHERIT_VISIBLE )) {
+			this->mVisible = buffer.GetVisibleTrait ();
 		}
 	}
 	
-	if (( this->mTraitMask & INHERIT_FRAME ) || this->mFitToFrame ) {
+	if ( inheritFrame || this->mFitToFrame ) {
 
 		// and check if the target frame is empty, too
 		if ( frame.Area () == 0.0f ) {
@@ -712,7 +736,7 @@ void MOAIProp2D::OnDepNodeUpdate () {
 	}
 	
 	// inherit parent and offset transforms (and compute the inverse)
-	this->BuildTransforms ( offset.mX, offset.mY, stretch.mX, stretch.mY );
+	this->BuildTransforms ( &buffer, offset.mX, offset.mY, stretch.mX, stretch.mY );
 	
 	// update the prop location in the partition
 	// use the local frame; world transform will match it to target frame
@@ -798,11 +822,5 @@ void MOAIProp2D::SerializeOut ( USLuaState& state, USLuaSerializer& serializer )
 	
 	serializer.SetRefField ( state, -1, "mDeck", this->mDeck );
 	serializer.SetRefField ( state, -1, "mGrid", this->mGrid );
-}
-
-//----------------------------------------------------------------//
-STLString MOAIProp2D::ToString () {
-
-	return "";
 }
 

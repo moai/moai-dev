@@ -506,12 +506,3 @@ void MOAIFont::SetTexture ( MOAITexture* texture ) {
 	this->mTexture = texture;
 }
 
-//----------------------------------------------------------------//
-STLString MOAIFont::ToString () {
-
-	STLString repr;
-
-	PRETTY_PRINT ( repr, mTexture )
-
-	return repr;
-}

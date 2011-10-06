@@ -37,7 +37,6 @@ public:
 					~MOAILayerBridge2D			();
 	void			RegisterLuaClass			( USLuaState& state );
 	void			RegisterLuaFuncs			( USLuaState& state );
-	STLString		ToString					();
 };
 
 #endif

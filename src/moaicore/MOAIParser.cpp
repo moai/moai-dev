@@ -97,9 +97,9 @@ int MOAIParser::_loadString ( lua_State* L ) {
 int MOAIParser::_setCallbacks ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIParser, "U" )
 	
-	self->mOnStartNonterminal.SetRef ( state, 2, false );
-	self->mOnEndNonterminal.SetRef ( state, 3, false );
-	self->mOnTerminal.SetRef ( state, 4, false );
+	self->SetLocal ( state, 2, self->mOnStartNonterminal );
+	self->SetLocal ( state, 3, self->mOnEndNonterminal );
+	self->SetLocal ( state, 4, self->mOnTerminal );
 	
 	return 0;
 }
@@ -142,7 +142,8 @@ MOAIParser::~MOAIParser () {
 void MOAIParser::OnEndNonterminal ( USSyntaxNode* node ) {
 
 	if ( !this->mOnEndNonterminal ) return;
-	USLuaStateHandle state = this->mOnEndNonterminal.GetSelf ();
+	USLuaStateHandle state = USLuaRuntime::Get ().State ();
+	this->PushLocal ( state, this->mOnEndNonterminal );
 	
 	state.Push ( node->GetID () );
 	state.DebugCall ( 1, 0 );
@@ -152,7 +153,8 @@ void MOAIParser::OnEndNonterminal ( USSyntaxNode* node ) {
 void MOAIParser::OnStartNonterminal ( USSyntaxNode* node ) {
 
 	if ( !this->mOnStartNonterminal ) return;
-	USLuaStateHandle state = this->mOnStartNonterminal.GetSelf ();
+	USLuaStateHandle state = USLuaRuntime::Get ().State ();
+	this->PushLocal ( state, this->mOnStartNonterminal );
 	
 	state.Push ( node->GetID ());
 	state.Push ( node->GetLine ());
@@ -165,7 +167,8 @@ void MOAIParser::OnStartNonterminal ( USSyntaxNode* node ) {
 void MOAIParser::OnTerminal ( USSyntaxNode* node ) {
 
 	if ( !this->mOnTerminal ) return;
-	USLuaStateHandle state = this->mOnTerminal.GetSelf ();
+	USLuaStateHandle state = USLuaRuntime::Get ().State ();
+	this->PushLocal ( state, this->mOnTerminal );
 	
 	state.Push ( node->GetID ());
 	state.Push ( node->GetLine ());

@@ -20,7 +20,7 @@ private:
 	void*				mBuffer;
 	u32					mSize;
 
-	USLuaRef			mOnFinish;
+	USLuaLocal			mOnFinish;
 	
 	USRef < MOAIDataBuffer > mPostData;
 	STLString mPostString;
@@ -50,7 +50,6 @@ public:
 	void			Init					( u32 size );
 	void			RegisterLuaClass		( USLuaState& state );
 	void			RegisterLuaFuncs		( USLuaState& state );
-	STLString		ToString				();
 };
 
 #endif

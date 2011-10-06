@@ -405,19 +405,6 @@ void MOAIStretchPatch2D::SerializeOut ( USLuaState& state, USLuaSerializer& seri
 }
 
 //----------------------------------------------------------------//
-STLString MOAIStretchPatch2D::ToString () {
-
-	STLString repr;
-
-//	PrettyPrint ( repr, "mWidth", GetWidth ());
-//	PrettyPrint ( repr, "mHeight", GetHeight ());
-//	PrettyPrint ( repr, "U", GetU ());
-//	PrettyPrint ( repr, "V", GetV ());
-
-	return repr;
-}
-
-//----------------------------------------------------------------//
 void MOAIStretchPatch2D::UpdateParams () {
 	
 	if ( !this->mNeedsUpdate ) return;

@@ -147,11 +147,4 @@ void MOAIBox2DPulleyJoint::RegisterLuaFuncs ( USLuaState& state ) {
 	luaL_register ( state, 0, regTable );
 }
 
-//----------------------------------------------------------------//
-STLString MOAIBox2DPulleyJoint::ToString () {
-
-	STLString repr;
-	return repr;
-}
-
 #endif

@@ -119,7 +119,6 @@ public:
 	void			RegisterLuaClass		( USLuaState& state );
 	void			RegisterLuaFuncs		( USLuaState& state );
 	void			RemovePrim				( MOAICpPrim& prim );
-	STLString		ToString				();
 };
 
 #endif

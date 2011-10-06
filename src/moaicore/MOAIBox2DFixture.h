@@ -22,11 +22,11 @@ private:
 
 	static const u32 MAX_POLY_VERTS = 1024;
 
-	b2Fixture*	mFixture;
+	b2Fixture*		mFixture;
 
-	USLuaRef	mCollisionHandler;
-	u32			mCollisionPhaseMask;
-	u32			mCollisionCategoryMask;
+	USLuaLocal		mCollisionHandler;
+	u32				mCollisionPhaseMask;
+	u32				mCollisionCategoryMask;
 
 	//----------------------------------------------------------------//
 	static int	_destroy				( lua_State* L );
@@ -57,7 +57,6 @@ public:
 					~MOAIBox2DFixture		();
 	void			RegisterLuaClass		( USLuaState& state );
 	void			RegisterLuaFuncs		( USLuaState& state );
-	STLString		ToString				();
 };
 
 #endif

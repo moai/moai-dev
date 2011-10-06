@@ -50,7 +50,6 @@ public:
 	void				SetDevice					( u8 deviceID, cc8* name );
 	void				SetDeviceActive				( u8 deviceID, bool active );
 	void				SetSensor					( u8 deviceID, u8 sensorID, cc8* name, u32 type );
-	STLString			ToString					();
 	void				Update						();
 };
 

@@ -45,10 +45,10 @@ int MOAIEventSource::_setListener ( lua_State* L ) {
 //----------------------------------------------------------------//
 void MOAIEventSource::AffirmListenerTable ( USLuaState& state ) {
 
-	if ( !mListenerTable ) {
+	if ( !this->mListenerTable ) {
 	
 		lua_newtable ( state );
-		this->mListenerTable.SetRef ( state, -1, false );
+		this->SetLocal ( state, -1, this->mListenerTable );
 		state.Pop ( 1 );
 	}
 }
@@ -70,11 +70,12 @@ bool MOAIEventSource::PushListener ( u32 eventID, USLuaState& state ) {
 
 	if ( this->mListenerTable ) {
 	
-		this->mListenerTable.PushRef ( state );
-		if ( state.GetFieldWithType ( -1, eventID, LUA_TFUNCTION )) {
-			
-			lua_replace ( state, -2 );
-			return true;
+		if ( this->PushLocal ( state, this->mListenerTable )) {
+			if ( state.GetFieldWithType ( -1, eventID, LUA_TFUNCTION )) {
+				
+				lua_replace ( state, -2 );
+				return true;
+			}
 		}
 		state.Pop ( 1 );
 	}
@@ -86,12 +87,13 @@ bool MOAIEventSource::PushListenerAndSelf ( u32 eventID, USLuaState& state ) {
 
 	if ( this->mListenerTable ) {
 	
-		this->mListenerTable.PushRef ( state );
-		if ( state.GetFieldWithType ( -1, eventID, LUA_TFUNCTION )) {
-			
-			lua_replace ( state, -2 );
-			this->PushLuaUserdata ( state );
-			return true;
+		if ( this->PushLocal ( state, this->mListenerTable )) {
+			if ( state.GetFieldWithType ( -1, eventID, LUA_TFUNCTION )) {
+				
+				lua_replace ( state, -2 );
+				this->PushLuaUserdata ( state );
+				return true;
+			}
 		}
 		state.Pop ( 1 );
 	}
@@ -122,8 +124,10 @@ void MOAIEventSource::SetListener ( lua_State* L, u32 idx ) {
 
 	this->AffirmListenerTable ( state );
 
-	this->mListenerTable.PushRef ( state );
-	lua_pushvalue ( state, idx );
-	lua_pushvalue ( state, idx + 1 );
-	lua_settable ( state, -3 );
+	if ( this->PushLocal ( state, this->mListenerTable )) {
+		lua_pushvalue ( state, idx );
+		lua_pushvalue ( state, idx + 1 );
+		lua_settable ( state, -3 );
+	}
+	lua_pop ( state, 1 );
 }

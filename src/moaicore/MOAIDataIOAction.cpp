@@ -26,7 +26,7 @@ int MOAIDataIOAction::_setCallback ( lua_State* L ) {
 	MOAIDataIOAction* self = state.GetLuaObject < MOAIDataIOAction >( 1 );
 	if ( !self ) return 0;
 
-	self->mOnFinish.SetRef ( state, 2, false );
+	self->SetLocal ( state, 2, self->mOnFinish );
 
 	return 0;
 }
@@ -42,12 +42,10 @@ void MOAIDataIOAction::Finished ( USDataIOTask* task ) {
 	if ( this->mOnFinish ) {
 	
 		USLuaStateHandle state = USLuaRuntime::Get ().State ();
-		
-		this->mOnFinish.PushRef ( state );
+		this->PushLocal ( state, this->mOnFinish );
 		this->mData->PushLuaUserdata ( state );
 		state.DebugCall ( 1, 0 );
 	}
-
 	this->mState = DONE;
 }
 

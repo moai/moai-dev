@@ -92,7 +92,7 @@ int MOAIThread::_run ( lua_State* L ) {
 
 	self->mNarg = lua_gettop ( state ) - 2;
 	self->mState = lua_newthread ( state );
-	self->mRef.SetRef ( state, -1, false );
+	self->SetLocal ( state, -1, self->mRef );
 	lua_pop ( state, 1 );
 	
 	lua_xmove ( state, self->mState, self->mNarg + 1 );
@@ -109,7 +109,7 @@ int MOAIThread::_run ( lua_State* L ) {
 //----------------------------------------------------------------//
 bool MOAIThread::IsDone () {
 
-	return this->mRef.IsNil ();
+	return ( this->mRef == false );
 }
 
 //----------------------------------------------------------------//
@@ -149,7 +149,7 @@ void MOAIThread::OnUpdate ( float step ) {
 			}
 		}
 		else {
-			this->mRef.Clear ();
+			this->ClearLocal ( this->mRef );
 			this->mState = 0;
 		}
 	}
@@ -161,7 +161,7 @@ void MOAIThread::OnStop () {
 	
 	// if we're stopping the thread from outside of its coroutine, clear out the ref
 	if ( !this->IsCurrent ()) {
-		this->mRef.Clear ();
+		this->ClearLocal ( this->mRef );
 		this->mState = 0;
 	}
 }
@@ -199,10 +199,4 @@ void MOAIThread::RegisterLuaFuncs ( USLuaState& state ) {
 	lua_setfield ( state, -3, "resume" );
 	
 	lua_pop ( state, 1 );
-}
-
-//----------------------------------------------------------------//
-STLString MOAIThread::ToString () {
-
-	return mFuncName;
 }

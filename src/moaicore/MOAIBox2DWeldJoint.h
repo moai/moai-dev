@@ -28,7 +28,6 @@ public:
 					~MOAIBox2DWeldJoint		();
 	void			RegisterLuaClass		( USLuaState& state );
 	void			RegisterLuaFuncs		( USLuaState& state );
-	STLString		ToString				();
 };
 
 #endif

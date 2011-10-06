@@ -159,10 +159,3 @@ void MOAIIndexBuffer::SetIndex ( u32 idx, u16 value ) {
 		this->mBuffer [ idx ] = value;
 	}
 }
-
-//----------------------------------------------------------------//
-STLString MOAIIndexBuffer::ToString () {
-
-	STLString repr;
-	return repr;
-}

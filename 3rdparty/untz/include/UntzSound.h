@@ -1,3 +1,11 @@
+//
+//  UntzSound.h
+//  Part of UNTZ
+//
+//  Created by Robert Dalton Jr. (bob@retronyms.com) on 06/01/2011.
+//  Copyright 2011 Retronyms. All rights reserved.
+//
+
 #ifndef UNTZSOUND_H_
 #define UNTZSOUND_H_
 
@@ -10,6 +18,7 @@ namespace UNTZ
 	typedef struct {
 		UInt32 mBitsPerSample;
 		UInt32 mChannels;
+		UInt32 mTotalFrames;
 		double mSampleRate;
 		double mLength;
 	} SoundInfo;
@@ -24,9 +33,11 @@ namespace UNTZ
 		// Create a sound object from a file path
 		static Sound* create(const RString& path, bool loadIntoMemory = true);
 		// Create a sound object from a memory buffer
-		static Sound* create(UInt32 sampleRate, UInt32 channels, UInt32 samples, Int16* inverleavedData);
+		static Sound* create(SoundInfo info, float* interleavedData, bool ownsData = false);
 		// Create a sound object that streams audio data via a callback
 		static Sound* create(UInt32 sampleRate, UInt32 channels, StreamCallback* proc, void* userdata);
+		// Decode file, data will be allocated by the function and the caller is responsible for freeing
+		static bool decode(const RString& path, SoundInfo& info, float** data);
 
 		void setLooping(bool loop);
 		bool isLooping() const;

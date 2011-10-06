@@ -40,6 +40,11 @@ public:
 	virtual void	Destroy					() = 0;
 	float			GetUnitsToMeters		();
 					MOAIBox2DPrim			();
+	
+	//----------------------------------------------------------------//
+	inline bool IsDestroyed () {
+		return this->mDestroy;
+	}
 };
 
 //================================================================//
@@ -52,6 +57,8 @@ class MOAIBox2DWorld :
 	public MOAIAction,
 	public b2DestructionListener {
 private:
+
+	bool						mLock;
 
 	b2World*					mWorld;
 	MOAIBox2DDebugDraw*			mDebugDraw;
@@ -111,7 +118,6 @@ public:
 	void			OnUpdate				( float step );
 	void			RegisterLuaClass		( USLuaState& state );
 	void			RegisterLuaFuncs		( USLuaState& state );
-	STLString		ToString				();
 };
 
 #endif

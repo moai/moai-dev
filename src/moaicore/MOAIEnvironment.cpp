@@ -542,26 +542,3 @@ void MOAIEnvironment::SetResourceDirectory ( cc8* resDir ) {
 void MOAIEnvironment::SetUDID ( cc8* udid ) {
 	mUDID = udid;
 }
-
-//----------------------------------------------------------------//
-STLString MOAIEnvironment::ToString () {
-
-	STLString info = "";
-	info += mAppDisplayName += "\n";
-	info += mAppID += "\n";
-	info += mAppVersion += "\n";
-	info += mCacheDirectory += "\n";
-	info += mCPUABI += "\n";
-	info += mDevBrand += "\n";
-	info += mDevName += "\n";
-	info += mDevManufacturer += "\n";
-	info += mDevModel += "\n";
-	info += mDevProduct += "\n";
-	info += mDocumentDirectory += "\n";
-	info += mOSBrand += "\n";
-	info += mOSVersion += "\n";
-	info += mResourceDirectory += "\n";
-	info += mUDID += "\n";
-
-	return info;
-}

@@ -29,8 +29,7 @@
 int MOAIScriptDeck::_setDrawCallback ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIScriptDeck, "UF" )
 	
-	self->mOnDraw.SetRef ( state, 2, false );
-	
+	self->SetLocal ( state, 2, self->mOnDraw );
 	return 0;
 }
 
@@ -66,8 +65,7 @@ int MOAIScriptDeck::_setRect ( lua_State* L ) {
 int MOAIScriptDeck::_setRectCallback ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIScriptDeck, "UF" )
 	
-	self->mOnRect.SetRef ( state, 2, false );
-	
+	self->SetLocal ( state, 2, self->mOnRect );
 	return 0;
 }
 
@@ -91,7 +89,9 @@ void MOAIScriptDeck::DrawPatch ( u32 idx, float xOff, float yOff, float xScale, 
 	
 	if ( this->mOnDraw ) {
 	
-		USLuaStateHandle state = this->mOnDraw.GetSelf ();
+		USLuaStateHandle state = USLuaRuntime::Get ().State ();
+		this->PushLocal ( state, this->mOnDraw );
+		
 		lua_pushnumber ( state, idx );
 		lua_pushnumber ( state, xOff );
 		lua_pushnumber ( state, yOff );
@@ -108,7 +108,9 @@ USRect MOAIScriptDeck::GetBounds ( u32 idx, MOAIDeckRemapper* remapper ) {
 	
 		idx = remapper ? remapper->Remap ( idx ) : idx;
 	
-		USLuaStateHandle state = this->mOnRect.GetSelf ();
+		USLuaStateHandle state = USLuaRuntime::Get ().State ();
+		this->PushLocal ( state, this->mOnRect );
+		
 		lua_pushnumber ( state, idx );
 		state.DebugCall ( 1, 4 );
 		

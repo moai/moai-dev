@@ -1,3 +1,11 @@
+//
+//  AudioMixer.h
+//  Part of UNTZ
+//
+//  Created by Robert Dalton Jr. (bob@retronyms.com) on 06/01/2011.
+//  Copyright 2011 Retronyms. All rights reserved.
+//
+
 #ifndef AUDIOMIXER_H_
 #define AUDIOMIXER_H_
 
@@ -7,6 +15,7 @@
 
 class AudioMixer
 {
+	friend class UNTZ::SystemData;
 public:
 	AudioMixer();
 	virtual ~AudioMixer();	
@@ -15,10 +24,14 @@ public:
 	void addSound(UNTZ::Sound* sound);
 	void removeSound(UNTZ::Sound* sound);
 	void removeSound(int index);
+	void setVolume(float volume);
+	float getVolume() const;
 	int process(UInt32 numInputChannels, float* inputChannelData, 
 		UInt32 numOutputChannels, float* outputChannelData, UInt32 numFrames);
-private:
+	
+protected:
 	int mNumChannels;
+	float mVolume;
 	RCriticalSection mLock;
 	std::vector<UNTZ::Sound*> mSounds;
 	std::vector<float> mBuffer;

@@ -389,9 +389,3 @@ void MOAIVertexBuffer::SetPrimType ( u32 primType ) {
 	}
 }
 
-//----------------------------------------------------------------//
-STLString MOAIVertexBuffer::ToString () {
-
-	STLString repr;
-	return repr;
-}

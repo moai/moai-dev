@@ -284,6 +284,18 @@ void USLuaRef::SetRef ( USLuaState& state, int idx, bool weak ) {
 }
 
 //----------------------------------------------------------------//
+void USLuaRef::SetStrongRef ( USLuaState& state, int idx ) {
+
+	this->SetRef ( state, idx, false );
+}
+
+//----------------------------------------------------------------//
+void USLuaRef::SetWeakRef ( USLuaState& state, int idx ) {
+
+	this->SetRef ( state, idx, true );
+}
+
+//----------------------------------------------------------------//
 void USLuaRef::Take ( const USLuaRef& assign ) {
 
 	this->Clear ();

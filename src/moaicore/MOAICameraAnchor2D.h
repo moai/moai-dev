@@ -43,7 +43,6 @@ public:
 	void			RegisterLuaClass		( USLuaState& state );
 	void			RegisterLuaFuncs		( USLuaState& state );
 	void			SetParent				( MOAITransformBase* parent );
-	STLString		ToString				();
 };
 
 #endif

@@ -290,10 +290,3 @@ void MOAIGfxQuadDeck2D::ScaleUVCoords ( float xScale, float yScale ) {
 	}
 }
 
-//----------------------------------------------------------------//
-STLString MOAIGfxQuadDeck2D::ToString () {
-
-	STLString repr ( MOAIDeck::ToString () );
-	PRETTY_PRINT ( repr, mTexture )
-	return repr;
-}

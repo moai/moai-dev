@@ -279,8 +279,9 @@ float MOAILayoutFrame::GetInnerSize ( u32 axis ) {
 //----------------------------------------------------------------//
 MOAILayoutFrame* MOAILayoutFrame::GetParentWidget () {
 
-	if ( this->mTraitSource ) {
-		return this->mTraitSource->AsType < MOAILayoutFrame >();
+	MOAITraits* source = this->GetTraitSource ( INHERIT_FRAME );
+	if ( source ) {
+		return source->AsType < MOAILayoutFrame >();
 	}
 	return 0;
 }
@@ -522,12 +523,4 @@ void MOAILayoutFrame::SetParent ( MOAITransformBase* parent ) {
 			parentWidget->mChildren.PushBack ( this->mLinkInChildren );
 		}
 	}
-}
-
-//----------------------------------------------------------------//
-STLString MOAILayoutFrame::ToString () {
-
-	STLString repr ( MOAITransform::ToString ());
-
-	return repr;
 }

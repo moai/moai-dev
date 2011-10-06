@@ -87,7 +87,6 @@ public:
 	void			SetImage			( MOAIImage* image );
 	void			SetTexture			( MOAITexture* texture );
 	u32				Size				();
-	STLString		ToString			();
 };
 
 #endif

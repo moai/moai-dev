@@ -671,12 +671,3 @@ void MOAITextBox::SetTextSize( float newSize ) {
 	this->mPoints = newSize;
 	this->mNeedsLayout = true;
 }
-
-//----------------------------------------------------------------//
-STLString MOAITextBox::ToString () {
-
-	STLString repr;
-
-	// TODO
-	return repr;
-}

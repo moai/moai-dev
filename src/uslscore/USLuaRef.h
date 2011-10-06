@@ -48,11 +48,13 @@ public:
 //================================================================//
 class USLuaRef {
 private:
-protected:
 
 	int			mRef;
 	bool		mOwnsRef;
 	bool		mWeak;
+
+	//----------------------------------------------------------------//
+	void					SetRef			( USLuaState& state, int idx, bool weak );
 
 public:
 
@@ -68,7 +70,8 @@ public:
 	void					MakeStrong		();
 	void					MakeWeak		();
 	bool					PushRef			( USLuaState& state );
-	void					SetRef			( USLuaState& state, int idx, bool weak );
+	void					SetStrongRef	( USLuaState& state, int idx );
+	void					SetWeakRef		( USLuaState& state, int idx );
 	void					Take			( const USLuaRef& assign );
 							USLuaRef		();
 							USLuaRef		( const USLuaRef& assign );

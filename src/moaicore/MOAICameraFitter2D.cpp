@@ -446,10 +446,3 @@ void MOAICameraFitter2D::RegisterLuaFuncs ( USLuaState& state ) {
 	
 	luaL_register ( state, 0, regTable );
 }
-
-//----------------------------------------------------------------//
-STLString MOAICameraFitter2D::ToString () {
-
-	STLString repr( MOAIAction::ToString ());
-	return repr;
-}

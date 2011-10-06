@@ -1,3 +1,10 @@
+//
+//  UntzSystem.cpp
+//  Part of UNTZ
+//
+//  Created by Robert Dalton Jr. (bob@retronyms.com) on 06/01/2011.
+//  Copyright 2011 Retronyms. All rights reserved.
+//
 
 #include "UntzSystem.h"
 #include "SystemData.h"
@@ -63,6 +70,7 @@ System::System(UInt32 sampleRate, UInt32 numFrames, UInt32 options)
 	}
 	catch(RtError& error)
 	{
+		wsd->setError(true);
 		printf("!!!AudioIO Error: %s\n", error.getMessage());
 	}
 }
@@ -87,7 +95,14 @@ System* System::initialize(UInt32 sampleRate, UInt32 numFrames, UInt32 options)
 	if(!msInstance)
 	{
 		msInstance = new System(sampleRate, numFrames, options);
-		msInstance->mpData->mMixer.init();
+		if(msInstance->mpData->getError())
+		{
+			delete msInstance;
+		}
+		else
+		{
+			msInstance->mpData->mMixer.init();
+		}
 	}
 
 	return msInstance;
@@ -106,4 +121,14 @@ unsigned int System::getSampleRate()
 {
 	WinSystemData* wsd = (WinSystemData*)mpData;
 	return wsd->audioIO.getStreamSampleRate();
+}
+
+void System::setVolume(float volume)
+{
+	return msInstance->mpData->mMixer.setVolume(volume);
+}
+
+float System::getVolume() const
+{
+	return msInstance->mpData->mMixer.getVolume();
 }

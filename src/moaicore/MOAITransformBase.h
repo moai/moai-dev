@@ -47,13 +47,13 @@ public:
 	//----------------------------------------------------------------//
 	bool					ApplyAttrOp					( u32 attrID, USAttrOp& attrOp );
 	const USAffine2D&		GetLocalToWorldMtx			();
+	const USAffine2D*		GetLocTrait					();
 	const USAffine2D*		GetTransformTrait			();
 	const USAffine2D&		GetWorldToLocalMtx			();
 							MOAITransformBase			();
 							~MOAITransformBase			();
 	void					RegisterLuaClass			( USLuaState& state );
 	void					RegisterLuaFuncs			( USLuaState& state );
-	STLString				ToString					();
 };
 
 #endif

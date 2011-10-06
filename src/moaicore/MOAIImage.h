@@ -126,7 +126,6 @@ public:
 	void				SetPaletteColor			( u32 idx, u32 rgba );
 	void				SetPixel				( u32 x, u32 y, u32 pixel );
 	void				Take					( MOAIImage& image );
-	STLString			ToString				();
 	void				Transform				( u32 transform );
 	bool				WritePNG				( USStream& stream );
 };

@@ -124,11 +124,4 @@ void MOAIBox2DFrictionJoint::RegisterLuaFuncs ( USLuaState& state ) {
 	luaL_register ( state, 0, regTable );
 }
 
-//----------------------------------------------------------------//
-STLString MOAIBox2DFrictionJoint::ToString () {
-
-	STLString repr;
-	return repr;
-}
-
 #endif

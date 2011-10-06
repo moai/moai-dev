@@ -70,7 +70,6 @@ protected:
 	USRef < MOAIShader >		mShader;
 	USRef < MOAITransformBase >	mUVTransform;
 	
-	USColorVec					mColor;
 	MOAIBlendMode				mBlendMode;
 	bool						mVisible;
 	
@@ -97,7 +96,10 @@ protected:
 	void				GetBoundsInView			( MOAICellCoord& c0, MOAICellCoord& c1 );
 	USColorVec			GetColorTrait			();
 	USRect*				GetFrameTrait			();
+	const USAffine2D*	GetLocTrait				();
+	MOAIPartition*		GetPartitionTrait		();
 	MOAIShader*			GetShaderTrait			();
+	const USAffine2D*	GetTransformTrait		();
 	bool				GetVisibleTrait			();
 	void				LoadShader				();
 
@@ -135,7 +137,6 @@ public:
 	void							RegisterLuaFuncs		( USLuaState& state );
 	void							SerializeIn				( USLuaState& state, USLuaSerializer& serializer );
 	void							SerializeOut			( USLuaState& state, USLuaSerializer& serializer );
-	STLString						ToString				();
 };
 
 #endif

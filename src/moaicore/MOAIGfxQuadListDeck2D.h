@@ -102,7 +102,6 @@ public:
 	void			SetRect					( u32 idx, USRect& rect );
 	void			SetUVQuad				( u32 idx, USQuad& quad );
 	void			SetUVRect				( u32 idx, USRect& rect );
-	STLString		ToString				();
 };
 
 #endif

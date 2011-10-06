@@ -527,16 +527,3 @@ void MOAIGfxQuadListDeck2D::SetUVRect ( u32 idx, USRect& rect ) {
 	this->mUVQuads [ idx ].Init ( rect );
 }
 
-//----------------------------------------------------------------//
-STLString MOAIGfxQuadListDeck2D::ToString () {
-
-	STLString repr;
-
-	//PRETTY_PRINT ( repr, mTexture )
-	//PRETTY_PRINT ( repr, mUVQuads )
-	//PRETTY_PRINT ( repr, mQuads )
-	//PRETTY_PRINT ( repr, mPairs )
-	//PRETTY_PRINT ( repr, mSprites )
-
-	return repr;
-}

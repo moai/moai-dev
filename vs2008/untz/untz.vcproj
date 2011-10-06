@@ -318,6 +318,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\3rdparty\untz\src\counted_ptr.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\3rdparty\untz\src\RAudioBuffer.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\3rdparty\untz\src\SoundData.h"
 				>
 			</File>

@@ -154,7 +154,7 @@ uintptr USLuaSerializer::Affirm ( USLuaState& state, int idx ) {
 	if ( this->mTableMap.contains ( tableID )) return tableID;
 
 	// add the ref now to avoid cycles
-	this->mTableMap [ tableID ].SetRef ( state, idx, false );
+	this->mTableMap [ tableID ].SetStrongRef ( state, idx );
 
 	// follow the table's refs to make sure everything gets added
 	u32 itr = state.PushTableItr ( idx );

@@ -93,7 +93,6 @@ public:
 	void			RegisterLuaClass	( USLuaState& state );
 	void			RegisterLuaFuncs	( USLuaState& state );
 	void			SetTime				( float time );
-	STLString		ToString			();
 };
 
 #endif

@@ -35,7 +35,6 @@ public:
 					~MOAIPointerSensor		();
 	void			RegisterLuaClass		( USLuaState& state );
 	void			RegisterLuaFuncs		( USLuaState& state );
-	STLString		ToString				();
 	static void		WriteEvent				( USStream& eventStream, int x, int y );
 };
 

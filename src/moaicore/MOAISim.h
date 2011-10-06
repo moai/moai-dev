@@ -135,7 +135,6 @@ public:
 	void			RunString					( cc8* script );
 	void			SendFinalizeEvent			();
 	void			Update						();
-	STLString		ToString					();
 };
 
 #endif

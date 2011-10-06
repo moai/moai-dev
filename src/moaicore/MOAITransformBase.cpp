@@ -142,6 +142,12 @@ const USAffine2D& MOAITransformBase::GetLocalToWorldMtx () {
 }
 
 //----------------------------------------------------------------//
+const USAffine2D* MOAITransformBase::GetLocTrait () {
+
+	return &this->mLocalToWorldMtx;
+}
+
+//----------------------------------------------------------------//
 const USAffine2D* MOAITransformBase::GetTransformTrait () {
 
 	return &this->mLocalToWorldMtx;
@@ -192,11 +198,4 @@ void MOAITransformBase::RegisterLuaFuncs ( USLuaState& state ) {
 	};
 	
 	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-STLString MOAITransformBase::ToString () {
-
-	STLString repr;
-	return repr;
 }

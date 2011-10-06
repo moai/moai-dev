@@ -16,7 +16,7 @@ class MOAIThread :
 	public MOAIAction {
 private:
 
-	USLuaRef		mRef;
+	USLuaLocal		mRef; // reference to the coroutine
 	lua_State*		mState;
 	u32				mNarg;
 	STLString		mFuncName;
@@ -43,7 +43,6 @@ public:
 	void			OnUpdate				( float step );
 	void			RegisterLuaClass		( USLuaState& state );
 	void			RegisterLuaFuncs		( USLuaState& state );
-	STLString		ToString				();
 };
 
 #endif

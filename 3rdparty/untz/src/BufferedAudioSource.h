@@ -1,3 +1,11 @@
+//
+//  BufferedAudioSource.h
+//  Part of UNTZ
+//
+//  Created by Robert Dalton Jr. (bob@retronyms.com) on 06/01/2011.
+//  Copyright 2011 Retronyms. All rights reserved.
+//
+
 #ifndef BUFFEREDAUDIOSOURCE_H_
 #define BUFFEREDAUDIOSOURCE_H_
 
@@ -16,22 +24,17 @@ public:
     ~BufferedAudioSource();
 
 	// AudioSource
-	virtual Int64 readFrames(float* buffer, UInt32 numChannels, UInt32 numFrames);
+	virtual Int64 readFrames(float* buffer, UInt32 numChannels, UInt32 numFrames, AudioSourceState& state);
 	virtual void setPosition(double seconds);
-	virtual double getPosition();
 
 	// BufferedAudioSource
 	virtual bool init(const RString& path, bool loadIntoMemory);
 	virtual bool init(float* interleavedData, Int64 numSamples);
     virtual void close();
-	virtual Int64 decodeData(float* buffer, UInt32 numFrames) = 0;
-	virtual void setDecoderPosition(Int64 startFrame) = 0;
+	virtual Int64 decodeData(float* buffer, UInt32 numFrames) { return 0; }
+	virtual void setDecoderPosition(Int64 startFrame) {};
 
 protected:
-    bool isEOF() { return mEOF; }
-    bool isLoadedInMemory() { return mLoadedInMemory; }    
-	bool mLoadedInMemory;
-	std::vector<float> mBuffer;
 	RCriticalSection mLock;
 };
 

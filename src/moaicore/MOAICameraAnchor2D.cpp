@@ -84,7 +84,7 @@ MOAICameraAnchor2D::~MOAICameraAnchor2D () {
 void MOAICameraAnchor2D::OnDepNodeUpdate () {
 	
 	if ( this->mParent ) {
-	
+		
 		const USAffine2D& worldMtx = this->mParent->GetLocalToWorldMtx ();
 		this->mLoc = worldMtx.GetTranslation ();
 	}
@@ -126,11 +126,4 @@ void MOAICameraAnchor2D::SetParent ( MOAITransformBase* parent ) {
 	}
 
 	this->ScheduleUpdate ();
-}
-
-//----------------------------------------------------------------//
-STLString MOAICameraAnchor2D::ToString () {
-
-	STLString repr( MOAINode::ToString ());
-	return repr;
 }

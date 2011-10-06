@@ -345,7 +345,7 @@ void MOAIPartition::InsertProp ( MOAIProp& prop ) {
 	
 	if ( prop.mPartition == this ) return;
 	
-	prop.Retain ();
+	this->InsertObject ( prop );
 	
 	if ( prop.mPartition ) {
 		prop.mPartition->RemoveProp ( prop );
@@ -412,7 +412,7 @@ void MOAIPartition::RemoveProp ( MOAIProp& prop ) {
 	}
 
 	prop.mPartition = 0;
-	prop.Release ();
+	this->RemoveObject ( prop );
 }
 
 //----------------------------------------------------------------//
@@ -425,14 +425,6 @@ void MOAIPartition::ReserveLayers ( int totalLayers ) {
 void MOAIPartition::SetLayer ( int layerID, float cellSize, int width, int height ) {
 
 	this->mLayers [ layerID ].Init ( cellSize, width, height );
-}
-
-//----------------------------------------------------------------//
-STLString MOAIPartition::ToString () {
-
-	STLString repr( USLuaObject::ToString ());
-
-	return repr;
 }
 
 //----------------------------------------------------------------//

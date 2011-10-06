@@ -37,7 +37,6 @@ public:
 	bool			ApplyAttrOp				( u32 attrID, USAttrOp& attrOp );
 					MOAIDeckRemapper		();
 					~MOAIDeckRemapper		();
-	STLString		ToString				();
 	void			RegisterLuaClass		( USLuaState& state );
 	void			RegisterLuaFuncs		( USLuaState& state );
 	u32				Remap					( u32 idx );

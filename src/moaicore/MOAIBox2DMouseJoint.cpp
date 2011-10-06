@@ -208,11 +208,4 @@ void MOAIBox2DMouseJoint::RegisterLuaFuncs ( USLuaState& state ) {
 	luaL_register ( state, 0, regTable );
 }
 
-//----------------------------------------------------------------//
-STLString MOAIBox2DMouseJoint::ToString () {
-
-	STLString repr;
-	return repr;
-}
-
 #endif

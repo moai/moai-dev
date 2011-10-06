@@ -44,7 +44,6 @@ public:
 	void			RegisterLuaClass				( USLuaState& state );
 	void			RegisterLuaFuncs				( USLuaState& state );
 	void			SetDistanceRange				( float min, float max );
-	STLString		ToString						();
 };
 
 #endif

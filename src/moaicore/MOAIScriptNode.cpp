@@ -38,7 +38,7 @@ int MOAIScriptNode::_reserveAttrs ( lua_State* L ) {
 int MOAIScriptNode::_setCallback ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIScriptNode, "UF" );
 
-	self->mOnUpdate.SetRef ( state, -1, USLuaRef::STRONG_REF );
+	self->SetLocal ( state, 2, self->mOnUpdate );
 	return 0;
 }
 
@@ -73,7 +73,7 @@ void MOAIScriptNode::OnDepNodeUpdate () {
 		
 		USLuaStateHandle state = USLuaRuntime::Get ().State ();
 		
-		this->mOnUpdate.PushRef ( state );
+		this->PushLocal ( state, this->mOnUpdate );
 		this->PushLuaUserdata ( state );
 
 		state.DebugCall ( 1, 0 );

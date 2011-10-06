@@ -114,7 +114,6 @@ public:
 	void			SetUniform				( u32 idx, u32 src, u32 size );
 	void			SetUniform				( u32 idx, MOAITransformBase* transform );
 	void			SetVertexAttribute		( u32 idx, cc8* attribute );
-	STLString		ToString				();
 };
 
 #endif

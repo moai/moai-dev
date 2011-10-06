@@ -2,6 +2,7 @@
 // http://getmoai.com
 
 #include <aku/AKU-untz.h>
+#include <moaiext-untz/MOAIUntzSampleBuffer.h>
 #include <moaiext-untz/MOAIUntzSound.h>
 #include <moaiext-untz/MOAIUntzSystem.h>
 #include <UntzSound.h>
@@ -32,6 +33,7 @@ void AKUUntzInit () {
 	
 	MOAIUntzSystem::Affirm ();
 	
+	REGISTER_LUA_CLASS ( MOAIUntzSampleBuffer )
 	REGISTER_LUA_CLASS ( MOAIUntzSound )
 	REGISTER_LUA_CLASS ( MOAIUntzSystem )
 }

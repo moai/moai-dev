@@ -63,7 +63,6 @@ public:
 	void			RemoveProp				( MOAIProp& prop );
 	void			ReserveLayers			( int totalLayers );
 	void			SetLayer				( int layerID, float cellSize, int width, int height );
-	STLString		ToString				();
 };
 
 #endif

@@ -163,8 +163,7 @@ int MOAIHttpTask::_parseXml ( lua_State* L ) {
 int MOAIHttpTask::_setCallback ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIHttpTask, "UF" )
 
-	self->mOnFinish.SetRef ( state, 2, false );
-
+	self->SetLocal ( state, 2, self->mOnFinish );
 	return 0;
 }
 
@@ -221,7 +220,8 @@ void MOAIHttpTask::OnHttpFinish ( USHttpTask* task ) {
 	
 	if ( this->mOnFinish ) {
 	
-		USLuaStateHandle state = this->mOnFinish.GetSelf ();
+		USLuaStateHandle state = USLuaRuntime::Get ().State ();
+		this->PushLocal ( state, this->mOnFinish );
 		this->PushLuaUserdata ( state );
 		state.Push ( task->GetResponseCode ());
 		state.DebugCall ( 2, 0 );
@@ -252,15 +252,4 @@ void MOAIHttpTask::RegisterLuaFuncs ( USLuaState& state ) {
 	};
 	
 	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-STLString MOAIHttpTask::ToString () {
-
-	STLString repr;
-
-	PRETTY_PRINT ( repr, mBuffer )
-	PRETTY_PRINT ( repr, mSize )
-
-	return repr;
 }

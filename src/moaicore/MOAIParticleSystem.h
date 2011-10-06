@@ -90,7 +90,6 @@ public:
 	void			SerializeOut			( USLuaState& state, USLuaSerializer& serializer );
 	void			SetConstant				( u32 idx, float value );
 	void			SetRect					( u32 idx, USRect& rect );
-	STLString		ToString				();
 };
 
 #endif

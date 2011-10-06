@@ -4,6 +4,7 @@
 #include "pch.h"
 #include <Box2D/Box2D.h>
 #include <moaicore/MOAIBox2DArbiter.h>
+#include <moaicore/MOAIBox2DBody.h>
 #include <moaicore/MOAIBox2DFixture.h>
 #include <moaicore/MOAIBox2DWorld.h>
 #include <moaicore/MOAILogMessages.h>
@@ -51,7 +52,7 @@ int MOAIBox2DFixture::_destroy ( lua_State* L ) {
 int MOAIBox2DFixture::_setCollisionHandler ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DFixture, "UF" )
 	
-	self->mCollisionHandler.SetRef ( state, 2, false );
+	self->SetLocal ( state, 2, self->mCollisionHandler );
 	self->mCollisionPhaseMask = state.GetValue < u32 >( 3, MOAIBox2DArbiter::ALL );
 	self->mCollisionCategoryMask = state.GetValue < u32 >( 4, 0xffffffff );
 	
@@ -157,10 +158,14 @@ int MOAIBox2DFixture::_setSensor ( lua_State* L ) {
 void MOAIBox2DFixture::Destroy () {
 
 	if ( this->mFixture ) {
+		
 		b2Body* body = this->mFixture->GetBody ();
+		MOAIBox2DBody* moaiBody = ( MOAIBox2DBody* )body->GetUserData ();
+		
 		body->DestroyFixture ( this->mFixture );
 		this->mFixture = 0;
-		this->Release ();
+		
+		moaiBody->RemoveObject ( *this );
 	}
 }
 
@@ -176,7 +181,7 @@ void MOAIBox2DFixture::HandleCollision ( u32 eventType, MOAIBox2DFixture* other,
 			if ( this->mCollisionHandler ) {
 			
 				USLuaStateHandle state = USLuaRuntime::Get ().State ();
-				if ( this->mCollisionHandler.PushRef ( state )) {
+				if ( this->PushLocal ( state, this->mCollisionHandler )) {
 					
 					state.Push ( eventType );
 					this->PushLuaUserdata ( state );
@@ -225,6 +230,8 @@ MOAIBox2DFixture::MOAIBox2DFixture () :
 
 //----------------------------------------------------------------//
 MOAIBox2DFixture::~MOAIBox2DFixture () {
+
+	this->Destroy ();
 }
 
 //----------------------------------------------------------------//
@@ -256,13 +263,6 @@ void MOAIBox2DFixture::SetFixture ( b2Fixture* fixture ) {
 	if ( fixture ) {
 		fixture->SetUserData ( this );
 	}
-}
-
-//----------------------------------------------------------------//
-STLString MOAIBox2DFixture::ToString () {
-
-	STLString repr;
-	return repr;
 }
 
 #endif

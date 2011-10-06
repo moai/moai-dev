@@ -119,7 +119,7 @@ int MOAITouchSensor::_isDown ( lua_State* L ) {
 int MOAITouchSensor::_setCallback ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITouchSensor, "UF" )
 	
-	self->mCallback.SetRef ( state, 2, false );
+	self->mCallback.SetStrongRef ( state, 2 );
 	
 	return 0;
 }
@@ -356,17 +356,6 @@ void MOAITouchSensor::Reset () {
 	if ( this->mTop == 0 ) {
 		this->Clear ();
 	}
-}
-
-//----------------------------------------------------------------//
-STLString MOAITouchSensor::ToString () {
-
-	STLString repr;
-
-	//PRETTY_PRINT ( repr, mX )
-	//PRETTY_PRINT ( repr, mY )
-
-	return repr;
 }
 
 //----------------------------------------------------------------//

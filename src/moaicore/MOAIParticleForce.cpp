@@ -244,10 +244,3 @@ void MOAIParticleForce::RegisterLuaFuncs ( USLuaState& state ) {
 	
 	luaL_register ( state, 0, regTable );
 }
-
-//----------------------------------------------------------------//
-STLString MOAIParticleForce::ToString () {
-
-	STLString repr;
-	return repr;
-}

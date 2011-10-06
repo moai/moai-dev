@@ -40,7 +40,6 @@ public:
 	void			RegisterLuaClass			( USLuaState& state );
 	void			RegisterLuaFuncs			( USLuaState& state );
 	void			SetFrequencyRange			( float min, float max );
-	STLString		ToString					();
 };
 
 #endif

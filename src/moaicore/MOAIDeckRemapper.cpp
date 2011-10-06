@@ -133,11 +133,3 @@ u32 MOAIDeckRemapper::Remap ( u32 idx ) {
 	}
 	return idx;
 }
-
-//----------------------------------------------------------------//
-STLString MOAIDeckRemapper::ToString () {
-
-	STLString repr;
-
-	return repr;
-}

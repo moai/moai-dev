@@ -58,7 +58,6 @@ public:
 	void			ReserveLinks		( u32 total );
 	void			SetLink				( u32 idx, MOAINode* target, u32 attrID, float force, u32 mode );
 	void			SetLink				( u32 mode );
-	STLString		ToString			();
 };
 
 #endif

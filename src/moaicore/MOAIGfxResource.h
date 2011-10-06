@@ -21,7 +21,7 @@ private:
 	u32				mState;
 	u32				mLastRenderCount;
 	
-	USLuaRef		mOnRenew;
+	USLuaLocal		mOnRenew;
 
 	USLeanLink < MOAIGfxResource* > mLink;
 

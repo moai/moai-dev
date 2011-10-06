@@ -367,7 +367,7 @@ STLString USLuaState::GetStackTrace ( int level ) {
 USLuaRef USLuaState::GetStrongRef ( int idx ) {
 
 	USLuaRef ref;
-	ref.SetRef ( *this, idx, false );
+	ref.SetStrongRef ( *this, idx );
 	return ref;
 }
 
@@ -513,7 +513,7 @@ u64 USLuaState::GetValue < u64 >( int idx, u64 value ) {
 USLuaRef USLuaState::GetWeakRef ( int idx ) {
 
 	USLuaRef ref;
-	ref.SetRef ( *this, idx, true );
+	ref.SetWeakRef ( *this, idx );
 	return ref;
 }
 

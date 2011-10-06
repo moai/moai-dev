@@ -145,11 +145,3 @@ void MOAIGfxQuad2D::RegisterLuaFuncs ( USLuaState& state ) {
 
 	luaL_register ( state, 0, regTable );
 }
-
-//----------------------------------------------------------------//
-STLString MOAIGfxQuad2D::ToString () {
-
-	STLString repr;
-
-	return repr;
-}

@@ -11,6 +11,19 @@
 #include <uslscore/USLuaState-impl.h>
 
 //================================================================//
+// USLuaLocal
+//================================================================//
+	
+//----------------------------------------------------------------//
+USLuaLocal::USLuaLocal () :
+	mRef ( LUA_NOREF ) {
+}
+
+//----------------------------------------------------------------//
+USLuaLocal::~USLuaLocal () {
+}
+
+//================================================================//
 // local
 //================================================================//
 
@@ -25,7 +38,7 @@ int USLuaObject::_gc ( lua_State* L ) {
 	data->mUserdata.Clear ();
 	
 	if ( USLuaRuntime::IsValid ()) {
-		USLuaRuntime::Get ().SetObjectStackTrace ( data, 0 );
+		USLuaRuntime::Get ().ClearObjectStackTrace ( data );
 	}
 
 	if ( cleanup ) {
@@ -62,27 +75,96 @@ int USLuaObject::_getClassName ( lua_State* L ) {
 
 
 //----------------------------------------------------------------//
-// TODO: restore lua dump methods
-//int USLuaObject::_tostring ( lua_State* L ) {
-//
-//	USLuaState state ( L );
-//	if ( !state.CheckParams ( 1, "U" ) ) return 0;
-//
-//	USLuaObject* data = ( USLuaObject* )state.GetPtrUserData ( 1 );
-//
-//	lua_pushstring( state, data->ToStringWithType ().c_str () );
-//	
-//	return 1;
-//}
+int USLuaObject::_tostring ( lua_State* L ) {
+
+	USLuaState state ( L );
+
+	USLuaObject* data = ( USLuaObject* )state.GetPtrUserData ( 1 );
+	if ( data ) {
+	
+		STLString str;
+		str.write ( "0x%p <%s>", data, data->TypeName ()); // TODO: 64-bit
+		state.Push ( str );
+		return 1;
+	}
+	return 0;
+}
 
 //================================================================//
 // USLuaObject
 //================================================================//
 
 //----------------------------------------------------------------//
-void USLuaObject::DebugDump () {
+void USLuaObject::BindToLuaWithTable ( USLuaState& state ) {
 
-	USLog::Print ( "%p <%s> %s", this, this->TypeName (), this->ToString ().c_str ());
+	assert ( !this->mUserdata );
+	assert ( state.IsType ( -1, LUA_TTABLE ));
+	
+	USLuaClass* type = this->GetLuaClass ();
+	assert ( type );
+	
+	// create and initialize a new userdata
+	state.PushPtrUserData ( this );
+
+	// move the instance table to top; initialize it
+	state.MoveToTop ( -2 );
+	
+	lua_pushvalue ( state, -1 );
+	lua_setfield ( state, -2, "__index" );
+	
+	lua_pushvalue ( state, -1 );
+	lua_setfield ( state, -2, "__newindex" );
+
+	lua_pushcfunction ( state, USLuaObject::_gc );
+	lua_setfield ( state, -2, "__gc" );
+	
+	lua_pushcfunction ( state, USLuaObject::_tostring );
+	lua_setfield ( state, -2, "__tostring" );
+	
+	// create and initialize the private table
+	lua_newtable ( state );
+	
+	// use the member table as the private table's __index
+	type->PushMemberTable ( state );
+	lua_setfield ( state, -2, "__index" );
+	
+	// and make the member table the private table's meta
+	type->PushMemberTable ( state );
+	lua_setmetatable ( state, -2 );
+	
+	// grab a ref to the private table; attach it to the instance table
+	this->mPrivateTable = state.GetWeakRef ( -1 );
+	lua_setmetatable ( state, -2 );
+
+	// grab a ref to the instance table; attach it to the userdata
+	this->mInstanceTable = state.GetWeakRef ( -1 );
+	lua_setmetatable ( state, -2 );
+	
+	// and take a ref back to the userdata	
+	if ( this->GetRefCount () == 0 ) {
+		this->mUserdata.SetWeakRef ( state, -1 );
+	}
+	else {
+		this->mUserdata.SetStrongRef ( state, -1 );
+	}
+
+	assert ( !lua_isnil ( state, -1 ));
+}
+
+//----------------------------------------------------------------//
+void USLuaObject::ClearLocal ( USLuaLocal& ref ) {
+	
+	USLuaStateHandle state = USLuaRuntime::Get ().State ();
+	
+	if ( this->mPrivateTable.PushRef ( state )) {
+	
+		lua_pushnumber ( state, ref.mRef );
+		lua_pushnil ( state );
+		lua_settable ( state, -3 );
+		lua_pop ( state, 1 );
+		
+		ref.mRef = LUA_NOREF;
+	}
 }
 
 //----------------------------------------------------------------//
@@ -99,6 +181,37 @@ USLuaStateHandle USLuaObject::GetSelf () {
 	USLuaStateHandle state = USLuaRuntime::Get ().State ();
 	this->PushLuaUserdata ( state );
 	return state;
+}
+
+//----------------------------------------------------------------//
+void USLuaObject::InsertObject ( USLuaObject& object ) {
+
+	USLuaStateHandle state = USLuaRuntime::Get ().State ();
+
+	if ( this->mContain ) {
+		this->PushLocal ( state, this->mContain );
+	}
+	else {
+		lua_newtable ( state );
+		this->SetLocal ( state, -1, this->mContain );
+	}
+	
+	assert ( !lua_isnil ( state, -1 ));
+	
+	lua_pop ( state, 1 );
+	this->PushLocal ( state, this->mContain );
+	
+	object.PushLuaUserdata ( state );
+	lua_pushvalue ( state, -1 );
+	lua_rawset ( state, -3 );
+	
+	//lua_pop ( state, 1 );
+	
+	//object.PushLuaUserdata ( state );
+	//lua_pushnil ( state );
+	//lua_rawset ( state, -3 );
+	
+	lua_pop ( state, 1 );
 }
 
 //----------------------------------------------------------------//
@@ -157,39 +270,35 @@ void USLuaObject::PushLuaClassTable ( USLuaState& state ) {
 //----------------------------------------------------------------//
 void USLuaObject::PushLuaUserdata ( USLuaState& state ) {
 
-	// create an instance table if none exists
-	if ( this->mInstanceTable.IsNil ()) {
-		
-		USLuaClass* type = this->GetLuaClass ();
-		assert ( type );
-		
-		// set the instance table
-		lua_newtable ( state );
-		type->InitLuaInstanceTable ( this, state, -1 );
-		
-		this->mInstanceTable = state.GetWeakRef ( -1 );
-		state.Pop ( 1 );
-	}
-
 	// create the handle userdata for reference counting
 	if ( !this->mUserdata.PushRef ( state )) {
 		
 		// pop the 'nil' pushed by PushRef
 		state.Pop ( 1 );
 		
-		// create and initialize a new userdata
-		state.PushPtrUserData ( this );
-
-		// set the instance table
-		this->mInstanceTable.PushRef ( state );
-
-		// attach it to the handle
-		lua_setmetatable ( state, -2 );
+		// create an empty instance table
+		lua_newtable ( state );
 		
-		// and take a ref back to the handle
-		bool weak = ( this->GetRefCount () == 0 );
-		this->mUserdata.SetRef ( state, -1, weak );
+		// initialize and bind the userdata
+		this->BindToLuaWithTable ( state );
 	}
+	assert ( !lua_isnil ( state, -1 ));
+}
+
+//----------------------------------------------------------------//
+bool USLuaObject::PushLocal ( USLuaState& state, USLuaLocal& ref ) {
+
+	if ( ref ) {
+		
+		assert ( this->mPrivateTable );
+		
+		this->mPrivateTable.PushRef ( state );
+		lua_rawgeti ( state, -1, ref.mRef );
+		lua_replace ( state, -2 );
+		return true;
+	}
+	lua_pushnil ( state );
+	return false;
 }
 
 //----------------------------------------------------------------//
@@ -200,6 +309,25 @@ void USLuaObject::RegisterLuaClass ( USLuaState& state ) {
 //----------------------------------------------------------------//
 void USLuaObject::RegisterLuaFuncs ( USLuaState& state ) {
 	UNUSED ( state );
+}
+
+//----------------------------------------------------------------//
+void USLuaObject::RemoveObject ( USLuaObject& object ) {
+
+	if ( USLuaRuntime::IsValid ()) {
+
+		USLuaStateHandle state = USLuaRuntime::Get ().State ();
+
+		if ( this->mContain ) {
+			if ( this->PushLocal ( state, this->mContain )) {
+				
+				object.PushLuaUserdata ( state );
+				lua_pushnil ( state );
+				lua_rawset ( state, -3 );
+			}
+			lua_pop ( state, 1 );
+		}
+	}
 }
 
 //----------------------------------------------------------------//
@@ -215,39 +343,23 @@ void USLuaObject::SerializeOut ( USLuaState& state, USLuaSerializer& serializer 
 }
 
 //----------------------------------------------------------------//
-void USLuaObject::SetLuaInstanceTable ( USLuaState& state, int idx ) {
+void USLuaObject::SetLocal ( USLuaState& state, int idx, USLuaLocal& ref ) {
 
-	assert ( !this->mInstanceTable );
+	idx = state.AbsIndex ( idx );
 
-	if ( state.IsType ( idx, LUA_TTABLE )) {
+	assert ( this->mPrivateTable );
 
-		idx = state.AbsIndex ( idx );
-
-		USLuaClass* type = this->GetLuaClass ();
-		assert ( type );
-		
-		// set the instance table
-		type->InitLuaInstanceTable ( this, state, idx );
-		
-		this->mInstanceTable = state.GetWeakRef ( idx );
+	this->mPrivateTable.PushRef ( state );
+	
+	if ( ref ) {
+		luaL_unref ( state, -1, ref.mRef );
+		ref.mRef = LUA_NOREF;
 	}
-}
-
-//----------------------------------------------------------------//
-STLString USLuaObject::ToString () {
-
-	return STLString ();
-}
-
-//----------------------------------------------------------------//
-STLString USLuaObject::ToStringWithType () {
-
-	STLString members = this->ToString();
-
-	STLString repr;
-	repr.write ( "(%s) %s", this->TypeName (), members.c_str() );
-
-	return repr;
+	
+	state.CopyToTop ( idx );
+	ref.mRef = luaL_ref ( state, -2 );
+	
+	lua_pop ( state, 1 );
 }
 
 //----------------------------------------------------------------//
@@ -262,7 +374,7 @@ USLuaObject::~USLuaObject () {
 	
 	if ( USLuaRuntime::IsValid ()) {
 		
-		USLuaRuntime::Get ().SetObjectStackTrace ( this, 0 );
+		USLuaRuntime::Get ().ClearObjectStackTrace ( this );
 		
 		if ( this->mUserdata ) {
 
@@ -304,9 +416,6 @@ void USLuaClass::InitLuaFactoryClass ( USLuaObject& data, USLuaState& state ) {
 	lua_pushnil ( state );
 	lua_setfield ( state, -2, "__newindex" );
 
-	//lua_pushcfunction ( state, _tostring );
-	//lua_setfield ( state, -2, "__tostring" );
-
 	this->mMemberTable = state.GetStrongRef ( -1 );
 	
 	lua_settop ( state, top );
@@ -319,26 +428,6 @@ void USLuaClass::InitLuaFactoryClass ( USLuaObject& data, USLuaState& state ) {
 	lua_setglobal ( state, data.TypeName ());
 
 	lua_settop ( state, top );
-}
-
-//----------------------------------------------------------------//
-void USLuaClass::InitLuaInstanceTable ( USLuaObject* data, USLuaState& state, int idx ) {
-
-	UNUSED ( data );
-	
-	idx = state.AbsIndex ( idx );
-	
-	lua_pushvalue ( state, idx );
-	lua_setfield ( state, idx, "__index" );
-	
-	lua_pushvalue ( state, idx );
-	lua_setfield ( state, idx, "__newindex" );
-
-	lua_pushcfunction ( state, USLuaObject::_gc );
-	lua_setfield ( state, idx, "__gc" );
-
-	state.Push ( this->mMemberTable );
-	lua_setmetatable ( state, idx );
 }
 
 //----------------------------------------------------------------//
@@ -370,6 +459,12 @@ void USLuaClass::InitLuaSingletonClass ( USLuaObject& data, USLuaState& state ) 
 bool USLuaClass::IsSingleton () {
 
 	return ( this->GetSingleton () != 0 );
+}
+
+//----------------------------------------------------------------//
+void USLuaClass::PushMemberTable ( USLuaState& state ) {
+
+	state.Push ( this->mMemberTable );
 }
 
 //----------------------------------------------------------------//

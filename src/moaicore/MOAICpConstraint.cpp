@@ -581,11 +581,4 @@ void MOAICpConstraint::RegisterLuaFuncs ( USLuaState& state ) {
 	luaL_register ( state, 0, regTable );
 }
 
-//----------------------------------------------------------------//
-STLString MOAICpConstraint::ToString () {
-
-	STLString repr;
-	return repr;
-}
-
 #endif

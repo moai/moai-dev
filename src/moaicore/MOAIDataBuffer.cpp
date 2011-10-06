@@ -296,18 +296,3 @@ void MOAIDataBuffer::RegisterLuaFuncs ( USLuaState& state ) {
 	luaL_register ( state, 0, regTable );
 }
 
-//----------------------------------------------------------------//
-STLString MOAIDataBuffer::ToString () {
-
-	STLString repr;
-
-	void* bytes;
-	u32 size;
-	this->Lock ( &bytes, &size );
-
-	PrettyPrint ( repr, "size", size );
-
-	this->Unlock ();
-
-	return repr;
-}

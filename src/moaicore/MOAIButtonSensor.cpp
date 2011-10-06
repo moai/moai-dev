@@ -85,7 +85,7 @@ int MOAIButtonSensor::_up ( lua_State* L ) {
 int MOAIButtonSensor::_setCallback ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIButtonSensor, "UF" )
 	
-	self->mOnButton.SetRef ( state, 2, false );
+	self->mOnButton.SetStrongRef ( state, 2 );
 	
 	return 0;
 }

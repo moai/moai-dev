@@ -148,11 +148,3 @@ void MOAIFrameBuffer::OnUnload () {
 		glDeleteRenderbuffers ( 1, &this->mGLStencilBufferID );
 	}
 }
-
-//----------------------------------------------------------------//
-STLString MOAIFrameBuffer::ToString () {
-
-	STLString repr;
-
-	return repr;
-}

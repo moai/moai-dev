@@ -87,7 +87,6 @@ public:
 	void			RegisterLuaClass		( USLuaState& state );
 	void			RegisterLuaFuncs		( USLuaState& state );
 	void			Reset					();
-	STLString		ToString				();
 	static void		WriteEvent				( USStream& eventStream, u32 touchID, bool down, float x, float y, u32 tapCount );
 	static void		WriteEventCancel		( USStream& eventStream );
 };
