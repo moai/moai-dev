@@ -109,6 +109,26 @@ int MOAIGameCenter::_isSupported ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	reportAchievementProgress
+	@text	Reports an achievement progress tod Game Center.
+			
+	@in		string	identifier
+	@in		number	percentComplete
+	@out	nil
+*/
+int MOAIGameCenter::_reportAchievementProgress ( lua_State* L ) {
+	if ( !MOAIGameCenter::Get ().mIsGameCenterSupported ) return 0;
+	USLuaState state ( L );
+
+	cc8* identifier = lua_tostring ( state, 1 );
+	float percent =  ( float )lua_tonumber ( state, 2 );
+		
+	MOAIGameCenter::Get ().ReportAchievementProgress ( identifier, percent );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	reportScore
 	@text	Reports a score to a desired leaderboard on Game Center.
 			
@@ -138,7 +158,33 @@ int MOAIGameCenter::_reportScore ( lua_State* L ) {
 int MOAIGameCenter::_setGetScoresCallback ( lua_State* L ) {
 	USLuaState state ( L );
 
-	MOAIGameCenter::Get ().mGetScoresCallback.SetRef ( state, 1, false );
+	MOAIGameCenter::Get ().mGetScoresCallback.SetStrongRef ( state, 1 );
+		
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	showDefaultAchievments
+	@text	Displays the default achievements view controller
+			
+	@in		nil
+	@out	nil
+*/
+int MOAIGameCenter::_showDefaultAchievements ( lua_State* L ) {
+	USLuaState state ( L );
+
+	UIWindow* window = [[ UIApplication sharedApplication ] keyWindow ];
+	UIViewController* rootVC = [ window rootViewController ];	
+	
+	GKAchievementViewController *achievements = [[ GKAchievementViewController alloc ] init ];
+    if (achievements != NULL)
+    {
+        achievements.achievementDelegate = MOAIGameCenter::Get ().mAchievementDelegate;
+		if  ( rootVC != nil ) {
+			[ rootVC presentModalViewController: achievements animated: YES ];
+		}
+    }
+	[ achievements release ];
 		
 	return 0;
 }
@@ -155,14 +201,15 @@ int MOAIGameCenter::_showDefaultLeaderboard ( lua_State* L ) {
 
 	UIWindow* window = [[ UIApplication sharedApplication ] keyWindow ];
 	UIViewController* rootVC = [ window rootViewController ];	
-	GKLeaderboardViewController *leaderboardController = [[[ GKLeaderboardViewController alloc ] init ] autorelease ];
+	GKLeaderboardViewController *leaderboardController = [[ GKLeaderboardViewController alloc ] init ];
     if ( leaderboardController != nil )
     {	
         leaderboardController.leaderboardDelegate = MOAIGameCenter::Get ().mLeaderboardDelegate;
 		if ( rootVC != nil ) {
 			[ rootVC presentModalViewController: leaderboardController animated: YES ];
 		}
-    }	
+    }
+	[ leaderboardController release ];
 		
 	return 0;
 }
@@ -213,11 +260,14 @@ MOAIGameCenter::MOAIGameCenter () :
 	RTTI_SINGLE ( USLuaObject )		
 	
 	mLeaderboardDelegate = [ MoaiLeaderboardDelegate alloc ];
+	mAchievementDelegate = [ MoaiAchievementDelegate alloc ];
 }
 
 //----------------------------------------------------------------//
 MOAIGameCenter::~MOAIGameCenter () {
-
+	
+	[ mAchievementDelegate release ];
+	[ mLeaderboardDelegate release ];
 }
 
 //----------------------------------------------------------------//
@@ -231,12 +281,13 @@ void MOAIGameCenter::RegisterLuaClass ( USLuaState& state ) {
 	state.SetField ( -1, "PLAYERSCOPE_FRIENDS",	( u32 )PLAYERSCOPE_FRIENDS );
 	
 	luaL_Reg regTable[] = {
-		{ "authenticatePlayer",		_authenticatePlayer },
-		{ "getScores",				_getScores },
-		{ "isSupported",			_isSupported },
-		{ "reportScore",			_reportScore },
-		{ "setGetScoresCallback",	_setGetScoresCallback },
-		{ "showDefaultLeaderboard",	_showDefaultLeaderboard },
+		{ "authenticatePlayer",			_authenticatePlayer },
+		{ "getScores",					_getScores },
+		{ "isSupported",				_isSupported },
+		{ "reportScore",				_reportScore },
+		{ "setGetScoresCallback",		_setGetScoresCallback },
+		{ "showDefaultAchievements",	_showDefaultAchievements },
+		{ "showDefaultLeaderboard",		_showDefaultLeaderboard },
 		{ NULL, NULL }
 	};
 
@@ -244,17 +295,41 @@ void MOAIGameCenter::RegisterLuaClass ( USLuaState& state ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIGameCenter::ReportAchievementProgress ( cc8* identifier, float percent ) {
+
+	GKAchievement *achievement = [[[ GKAchievement alloc ] initWithIdentifier:[ NSString stringWithUTF8String:identifier ]] autorelease];
+	
+    if ( achievement ) {
+	
+		achievement.percentComplete = percent;
+		
+        [ achievement reportAchievementWithCompletionHandler:^(NSError *error) {
+			if (error != nil)
+			{
+				printf ( "Error in achievement reporting: %d", [ error code ]);
+				// TODO: Save off achievement for later if network error
+			}
+		}];
+    }
+}
+
+//----------------------------------------------------------------//
 void MOAIGameCenter::ReportScore ( s64 score, cc8* category ) {
 
 	GKScore *scoreReporter = [[[ GKScore alloc ] initWithCategory:[ NSString stringWithUTF8String:category ]] autorelease ];
-    scoreReporter.value = score;
-    [ scoreReporter reportScoreWithCompletionHandler: ^( NSError *error ) {
-		if (error != nil)
-		{
-			printf ( "Error in score reporting: %d", [ error code ]);
-			// TODO: Save off score for later if network error
-		}
-    }];
+	
+	if ( scoreReporter ) {
+	
+		scoreReporter.value = score;
+		
+		[ scoreReporter reportScoreWithCompletionHandler: ^( NSError *error ) {
+			if (error != nil)
+			{
+				printf ( "Error in score reporting: %d", [ error code ]);
+				// TODO: Save off score for later if network error
+			}
+		}];
+	}
 }
 
 //================================================================//
@@ -271,7 +346,31 @@ void MOAIGameCenter::ReportScore ( s64 score, cc8* category ) {
 	
 		UIWindow* window = [[ UIApplication sharedApplication ] keyWindow ];
 		UIViewController* rootVC = [ window rootViewController ];
-		[ rootVC dismissModalViewControllerAnimated:YES ];
+		if ( rootVC ) {
+			[ rootVC dismissModalViewControllerAnimated:YES ];
+		}
+	}
+
+
+@end
+
+//================================================================//
+// MoaiAchievmentsdDelegate
+//================================================================//
+@implementation MoaiAchievementDelegate
+
+	//================================================================//
+	#pragma mark -
+	#pragma mark Protocol GKAchievementViewControllerDelegate
+	//================================================================//
+	
+	-( void ) achievementViewControllerDidFinish:( GKAchievementViewController* ) viewController {
+	
+		UIWindow* window = [[ UIApplication sharedApplication ] keyWindow ];
+		UIViewController* rootVC = [ window rootViewController ];
+		if ( rootVC ) {
+			[ rootVC dismissModalViewControllerAnimated:YES ];
+		}
 	}
 
 

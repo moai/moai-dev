@@ -1572,6 +1572,10 @@
 		07E885C013BE3E78008D75AA /* MOAIParticleDistanceEmitter.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E885BC13BE3E78008D75AA /* MOAIParticleDistanceEmitter.h */; };
 		07E885C113BE3E78008D75AA /* MOAIParticleTimedEmitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07E885BD13BE3E78008D75AA /* MOAIParticleTimedEmitter.cpp */; };
 		07E885C213BE3E78008D75AA /* MOAIParticleTimedEmitter.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E885BE13BE3E78008D75AA /* MOAIParticleTimedEmitter.h */; };
+		07F59344143E318B00C6D185 /* MOAIUntzSampleBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07F59342143E318B00C6D185 /* MOAIUntzSampleBuffer.cpp */; };
+		07F59345143E318B00C6D185 /* MOAIUntzSampleBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 07F59343143E318B00C6D185 /* MOAIUntzSampleBuffer.h */; };
+		07F59346143E318B00C6D185 /* MOAIUntzSampleBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07F59342143E318B00C6D185 /* MOAIUntzSampleBuffer.cpp */; };
+		07F59347143E318B00C6D185 /* MOAIUntzSampleBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 07F59343143E318B00C6D185 /* MOAIUntzSampleBuffer.h */; };
 		07FAC91613B8F1CA00AFD0B3 /* moaicore-pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07FAC91513B8F1CA00AFD0B3 /* moaicore-pch.cpp */; };
 		07FAC91813B8F1E000AFD0B3 /* uslscore-pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07FAC91713B8F1E000AFD0B3 /* uslscore-pch.cpp */; };
 		07FAC91A13B8F1F000AFD0B3 /* uslsext-pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07FAC91913B8F1F000AFD0B3 /* uslsext-pch.cpp */; };
@@ -3610,6 +3614,8 @@
 		07E885BC13BE3E78008D75AA /* MOAIParticleDistanceEmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIParticleDistanceEmitter.h; sourceTree = "<group>"; };
 		07E885BD13BE3E78008D75AA /* MOAIParticleTimedEmitter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIParticleTimedEmitter.cpp; sourceTree = "<group>"; };
 		07E885BE13BE3E78008D75AA /* MOAIParticleTimedEmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIParticleTimedEmitter.h; sourceTree = "<group>"; };
+		07F59342143E318B00C6D185 /* MOAIUntzSampleBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIUntzSampleBuffer.cpp; path = "moaiext-untz/MOAIUntzSampleBuffer.cpp"; sourceTree = "<group>"; };
+		07F59343143E318B00C6D185 /* MOAIUntzSampleBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIUntzSampleBuffer.h; path = "moaiext-untz/MOAIUntzSampleBuffer.h"; sourceTree = "<group>"; };
 		07FAC91513B8F1CA00AFD0B3 /* moaicore-pch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "moaicore-pch.cpp"; sourceTree = "<group>"; };
 		07FAC91713B8F1E000AFD0B3 /* uslscore-pch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "uslscore-pch.cpp"; sourceTree = "<group>"; };
 		07FAC91913B8F1F000AFD0B3 /* uslsext-pch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "uslsext-pch.cpp"; sourceTree = "<group>"; };
@@ -5611,6 +5617,8 @@
 			children = (
 				CD07C31813A1755300C9386C /* AKU-untz.cpp */,
 				CD07C31913A1755300C9386C /* AKU-untz.h */,
+				07F59342143E318B00C6D185 /* MOAIUntzSampleBuffer.cpp */,
+				07F59343143E318B00C6D185 /* MOAIUntzSampleBuffer.h */,
 				CD07C31E13A1756300C9386C /* MOAIUntzSound.cpp */,
 				CD07C31F13A1756300C9386C /* MOAIUntzSound.h */,
 				CD07C32013A1756300C9386C /* MOAIUntzSystem.cpp */,
@@ -8922,6 +8930,7 @@
 				CD07C3D713A1832C00C9386C /* AKU-untz.h in Headers */,
 				CD07C3D913A1832C00C9386C /* MOAIUntzSound.h in Headers */,
 				CD07C3DB13A1832C00C9386C /* MOAIUntzSystem.h in Headers */,
+				07F59345143E318B00C6D185 /* MOAIUntzSampleBuffer.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8932,6 +8941,7 @@
 				CD07C4FE13A191D800C9386C /* AKU-untz.h in Headers */,
 				CD07C50013A191D800C9386C /* MOAIUntzSound.h in Headers */,
 				CD07C50213A191D800C9386C /* MOAIUntzSystem.h in Headers */,
+				07F59347143E318B00C6D185 /* MOAIUntzSampleBuffer.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10764,6 +10774,7 @@
 				031BBBAE13B18A0C0005ECE0 /* vorbisenc.c in Sources */,
 				031BBBAF13B18A0C0005ECE0 /* vorbisfile.c in Sources */,
 				031BBBB013B18A0C0005ECE0 /* window.c in Sources */,
+				07F59344143E318B00C6D185 /* MOAIUntzSampleBuffer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10808,6 +10819,7 @@
 				031BBBC413B18A0D0005ECE0 /* vorbisenc.c in Sources */,
 				031BBBC513B18A0D0005ECE0 /* vorbisfile.c in Sources */,
 				031BBBC613B18A0D0005ECE0 /* window.c in Sources */,
+				07F59346143E318B00C6D185 /* MOAIUntzSampleBuffer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

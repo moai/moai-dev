@@ -113,10 +113,10 @@ public:
 		}
 		else {
 		
-			float xCenter = this->mXMin + ( TYPE )( width * 0.5f );
+			float xCenter = this->mXMin + ( TYPE )( width * 0.5 );
 		
-			rect.mXMin = xCenter - ( TYPE )( rectWidth * 0.5f );
-			rect.mXMax = xCenter + ( TYPE )( rectWidth * 0.5f );
+			rect.mXMin = xCenter - ( TYPE )( rectWidth * 0.5 );
+			rect.mXMax = xCenter + ( TYPE )( rectWidth * 0.5 );
 		}
 		
 		if ( rectHeight < height ) {
@@ -134,10 +134,10 @@ public:
 		}
 		else {
 		
-			float yCenter = this->mYMin + ( TYPE )( height * 0.5f );
-		
-			rect.mYMin = yCenter - ( TYPE )( rectHeight * 0.5f );
-			rect.mYMax = yCenter + ( TYPE )( rectHeight * 0.5f );
+			float yCenter = this->mYMin + ( TYPE )( height * 0.5 );
+			
+			rect.mYMin = yCenter - ( TYPE )( rectHeight * 0.5 );
+			rect.mYMax = yCenter + ( TYPE )( rectHeight * 0.5 );
 		}
 	}
 
@@ -148,8 +148,8 @@ public:
 		TYPE width = this->Width ();
 		TYPE height = this->Height ();
 		
-		if (( width == 0.0 ) || ( height == 0.0 )) {
-			rect.Init ( 0.0, 0.0, 0.0, 0.0 );
+		if (( width == 0 ) || ( height == 0 )) {
+			rect.Init ( 0, 0, 0, 0 );
 			return;
 		}
 		
@@ -279,8 +279,8 @@ public:
 		TYPE width = this->Width ();
 		TYPE height = this->Height ();
 		
-		if (( width == 0.0 ) || ( height == 0.0 )) {
-			rect.Init ( 0.0, 0.0, 0.0, 0.0 );
+		if (( width == 0 ) || ( height == 0 )) {
+			rect.Init ( 0, 0, 0, 0 );
 			return;
 		}
 		

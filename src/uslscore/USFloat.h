@@ -133,7 +133,8 @@ public:
 		// - when the sign bit is set, xor with 0xFFFFFFFF (flip every bit)
 		// - when the sign bit is unset, xor with 0x80000000 (flip the sign bit)
 		
-		u32 i = ( u32& )f;
+		u32 i;
+		memcpy ( &i, &f, sizeof ( u32 ));
 		u32 mask = ( u32 )( -s32( i >> 31 ) | 0x80000000 );
 		return ( u32 )( i ^ mask );
 	}
@@ -159,7 +160,9 @@ public:
 
 		u32 mask = (( i >> 31 ) - 1 ) | 0x80000000;
 		i = i ^ mask;
-		return ( float& )i;
+		float f;
+		memcpy ( &f, &i, sizeof ( float ));
+		return f;
 	}
 
 	//----------------------------------------------------------------//
