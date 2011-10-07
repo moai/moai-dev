@@ -8,6 +8,7 @@
 #import <moaicore/moaicore.h>
 
 @class MoaiLeaderboardDelegate;
+@class MoaiAchievementDelegate;
 
 //================================================================//
 // MOAIGameCenter
@@ -41,13 +42,16 @@ private:
 	USLuaRef					mGetScoresCallback;
 	BOOL						mIsGameCenterSupported;
 	MoaiLeaderboardDelegate*	mLeaderboardDelegate;
+	MoaiAchievementDelegate*	mAchievementDelegate;
 	
 	//----------------------------------------------------------------//
 	static int		_authenticatePlayer			( lua_State* L );
 	static int		_getScores					( lua_State* L );
 	static int		_isSupported				( lua_State* L );
+	static int		_reportAchievementProgress	( lua_State* L );
 	static int		_reportScore				( lua_State* L );
 	static int		_setGetScoresCallback		( lua_State* L );
+	static int		_showDefaultAchievements	( lua_State* L );
 	static int		_showDefaultLeaderboard		( lua_State* L );
 	
 public:
@@ -59,6 +63,7 @@ public:
 					MOAIGameCenter				();
 					~MOAIGameCenter				();
 	void			RegisterLuaClass			( USLuaState& state );
+	void			ReportAchievementProgress	( cc8* identifier, float percent );
 	void			ReportScore					( s64 score, cc8* category );
 	
 };
@@ -72,5 +77,12 @@ public:
 }
 @end
 
+//================================================================//
+// MoaiAchievementDelegate
+//================================================================//
+@interface MoaiAchievementDelegate : NSObject < GKAchievementViewControllerDelegate > {
+@private
+}
+@end
 
 #endif
