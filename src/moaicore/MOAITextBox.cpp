@@ -398,7 +398,7 @@ void MOAITextBox::Draw () {
 		MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 
 		gfxDevice.SetPenColor ( this->mColor );
-		gfxDevice.SetBlendMode ( GL_ONE, GL_ONE_MINUS_SRC_ALPHA );
+		gfxDevice.SetBlendMode ( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
 		gfxDevice.SetScissorRect ();
 
 		MOAIShaderMgr::Get ().BindShader ( MOAIShaderMgr::FONT_SHADER );
