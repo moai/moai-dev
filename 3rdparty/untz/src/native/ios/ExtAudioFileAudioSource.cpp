@@ -25,6 +25,7 @@ void printCode(const char *tag, OSStatus s)
 
 ExtAudioFileAudioSource::ExtAudioFileAudioSource()
 {
+	mpBufferList = 0;
 }
 
 ExtAudioFileAudioSource::~ExtAudioFileAudioSource()
@@ -96,7 +97,8 @@ void ExtAudioFileAudioSource::close()
     BufferedAudioSource::close();
     
     ExtAudioFileDispose(mAudioFile);
-    free (mpBufferList);    
+	if(mpBufferList)
+	    free (mpBufferList);    
 	RPRINT("done closing.\n");
 }
  

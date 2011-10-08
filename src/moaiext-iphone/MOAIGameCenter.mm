@@ -45,6 +45,8 @@ int MOAIGameCenter::_authenticatePlayer ( lua_State* L ) {
 		 }];
 	}
 	
+	MOAIGameCenter::Get ().GetAchievements ();
+	
 	return 0;
 }
 
@@ -254,6 +256,41 @@ void MOAIGameCenter::CallScoresCallback ( NSArray* scores ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIGameCenter::CreateAchievementDictionary ( NSArray* achievements ) {
+	
+	for ( GKAchievement* achievement in achievements ) {
+				
+		[ mAchievementsDictionary setObject: achievement forKey: achievement.identifier ];
+	}
+}
+
+//----------------------------------------------------------------//
+GKAchievement* MOAIGameCenter::GetAchievementFromDictionary ( cc8* identifier ) {
+	
+	GKAchievement* achievement = [ mAchievementsDictionary objectForKey:[ NSString stringWithUTF8String:identifier ]];
+	
+    if ( achievement == nil ) {
+	
+        achievement = [[[ GKAchievement alloc ] initWithIdentifier:[ NSString stringWithUTF8String:identifier ]] autorelease ];
+        [ mAchievementsDictionary setObject:achievement forKey:achievement.identifier  ];
+    }
+	
+    return [[ achievement retain ] autorelease ];
+}
+
+//----------------------------------------------------------------//
+void MOAIGameCenter::GetAchievements () {
+	
+	[ GKAchievement loadAchievementsWithCompletionHandler:^( NSArray* achievements, NSError* error ) {
+	
+		if ( error == nil ) {
+					
+			CreateAchievementDictionary ( achievements );
+		}
+	}];
+}
+
+//----------------------------------------------------------------//
 MOAIGameCenter::MOAIGameCenter () :
 	mIsGameCenterSupported ( false ) {
 
@@ -261,6 +298,7 @@ MOAIGameCenter::MOAIGameCenter () :
 	
 	mLeaderboardDelegate = [ MoaiLeaderboardDelegate alloc ];
 	mAchievementDelegate = [ MoaiAchievementDelegate alloc ];
+	mAchievementsDictionary = [[ NSMutableDictionary alloc ] init ];
 }
 
 //----------------------------------------------------------------//
@@ -284,6 +322,7 @@ void MOAIGameCenter::RegisterLuaClass ( USLuaState& state ) {
 		{ "authenticatePlayer",			_authenticatePlayer },
 		{ "getScores",					_getScores },
 		{ "isSupported",				_isSupported },
+		{ "reportAchievementProgress",	_reportAchievementProgress },
 		{ "reportScore",				_reportScore },
 		{ "setGetScoresCallback",		_setGetScoresCallback },
 		{ "showDefaultAchievements",	_showDefaultAchievements },
@@ -297,19 +336,34 @@ void MOAIGameCenter::RegisterLuaClass ( USLuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIGameCenter::ReportAchievementProgress ( cc8* identifier, float percent ) {
 
-	GKAchievement *achievement = [[[ GKAchievement alloc ] initWithIdentifier:[ NSString stringWithUTF8String:identifier ]] autorelease];
+	GKAchievement *achievement = GetAchievementFromDictionary ( identifier );
 	
     if ( achievement ) {
 	
+		if ( achievement.percentComplete >= 100 ) return;
+				
 		achievement.percentComplete = percent;
 		
-        [ achievement reportAchievementWithCompletionHandler:^(NSError *error) {
-			if (error != nil)
+        [ achievement reportAchievementWithCompletionHandler: ^(NSError *error) {
+			if ( error != nil )
 			{
 				printf ( "Error in achievement reporting: %d", [ error code ]);
 				// TODO: Save off achievement for later if network error
 			}
 		}];
+				
+		if ( percent >= 100 ) {
+			
+			 UIAlertView *alert = [[ UIAlertView alloc ] 
+				initWithTitle: @"Achievement Earned!"
+                      message: achievement.identifier
+                     delegate: nil
+			cancelButtonTitle: @"OK"
+            otherButtonTitles: nil ];
+			
+            [alert show];
+            [alert release];
+		}
     }
 }
 
@@ -323,7 +377,7 @@ void MOAIGameCenter::ReportScore ( s64 score, cc8* category ) {
 		scoreReporter.value = score;
 		
 		[ scoreReporter reportScoreWithCompletionHandler: ^( NSError *error ) {
-			if (error != nil)
+			if ( error != nil )
 			{
 				printf ( "Error in score reporting: %d", [ error code ]);
 				// TODO: Save off score for later if network error
