@@ -14,7 +14,11 @@ static cc8* _fontShaderFSH = SHADER (
 	uniform sampler2D sampler;
 
 	void main() {
-		gl_FragColor = texture2D ( sampler, uvVarying )[ 3 ] * colorVarying;
+		float alpha = texture2D ( sampler, uvVarying )[ 3 ] * colorVarying [ 3 ];
+		gl_FragColor [ 0 ] = colorVarying [ 0 ] * alpha;
+		gl_FragColor [ 1 ] = colorVarying [ 1 ] * alpha;
+		gl_FragColor [ 2 ] = colorVarying [ 2 ] * alpha;
+		gl_FragColor [ 3 ] = alpha;
 	}
 );
 
