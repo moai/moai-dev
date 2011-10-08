@@ -8,6 +8,7 @@
 
 static cc8* _fontShaderFSH = SHADER (
 
+	precision highp float;
 	varying LOWP vec4 colorVarying;
 	varying MEDP vec2 uvVarying;
 	
