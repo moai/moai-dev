@@ -137,7 +137,7 @@ Int64 BufferedAudioSource::readFrames(float* buffer, UInt32 numChannels, UInt32 
 		{
 			mBuffer.erase(0, framesRead);
 			framesAvailable = mBuffer.size() / getNumChannels();
-			UInt32 minimumFrames = getSampleRate() * SECONDS_TO_BUFFER / 2;
+			UInt32 minimumFrames = getSampleRate() * 2; // 2 seconds 
 			if(framesAvailable <= minimumFrames)
 			{
 				BufferedAudioSourceThread::getInstance()->readMore();

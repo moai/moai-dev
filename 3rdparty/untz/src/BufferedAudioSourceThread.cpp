@@ -113,10 +113,10 @@ void BufferedAudioSourceThread::run()
             pSource->mLock.lock();
 
 			Int64 totalFrames = pSource->getSampleRate() * SECONDS_TO_BUFFER;
-			Int64 framesThreshold = totalFrames / SECONDS_TO_BUFFER;
+			Int64 framesThreshold = totalFrames / SECONDS_TO_BUFFER / 2;
 			Int64 availableFrames = pSource->mBuffer.size() / pSource->getNumChannels();
 
-//            pSource->mLock.unlock();
+            pSource->mLock.unlock();
             
 			if(availableFrames < framesThreshold)
 			{
@@ -137,12 +137,12 @@ void BufferedAudioSourceThread::run()
 				Int64 framesRead = numFrames - framesToRead;
 				if(framesRead > 0)
 				{
-//	                pSource->mLock.lock();
+	                pSource->mLock.lock();
 					pSource->mBuffer.putData(&tempBuffer[0], framesRead * pSource->getNumChannels());
-//					pSource->mLock.unlock();
+					pSource->mLock.unlock();
 				}
 			}
-			pSource->mLock.unlock();
+//			pSource->mLock.unlock();
 		}
 
         mLock.unlock();
