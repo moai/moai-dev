@@ -77,7 +77,7 @@ int MOAIUntzSystem::_getSupportedFormats ( lua_State* L ) {
 	@text	Inititalize the sound system.
 	
 	@opt	number sampleRate		Default value is 44100.
-	@opt	number numFrames		Default value is 4096.
+	@opt	number numFrames		Default value is 8192
 	@out	nil
 */
 int MOAIUntzSystem::_initialize ( lua_State* L ) {

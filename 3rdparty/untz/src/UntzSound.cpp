@@ -224,6 +224,8 @@ Sound::Sound()
 
 Sound::~Sound()
 {
+	stop();
+	
 	UNTZ::System::get()->getData()->mMixer.removeSound(this);
 
 	if(mpData)

@@ -18,7 +18,7 @@ class MOAIUntzSystem :
 private:
 
 	static const u32 DEFAULT_SAMPLE_RATE		= 44100;
-	static const u32 DEFAULT_FRAMES_PER_BUFFER	= 4096;
+	static const u32 DEFAULT_FRAMES_PER_BUFFER	= 8192;
 	static const u32 DEFAULT_OPTIONS			= 0;
 
 	//----------------------------------------------------------------//

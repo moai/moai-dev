@@ -23,7 +23,9 @@ public:
 	bool addSource(BufferedAudioSource *source);
 	bool removeSource(BufferedAudioSource *source);
 	void readMore();
-
+	
+	RCriticalSection& getLock() { return mLock; }
+	
 protected:	
 	// RThread
 	void run();
