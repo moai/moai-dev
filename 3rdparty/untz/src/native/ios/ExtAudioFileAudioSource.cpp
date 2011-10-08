@@ -92,14 +92,17 @@ bool ExtAudioFileAudioSource::init(const RString& path, bool loadIntoMemory)
 
 void ExtAudioFileAudioSource::close()
 {
+	RPRINT("closing...\n");
     BufferedAudioSource::close();
     
     ExtAudioFileDispose(mAudioFile);
     free (mpBufferList);    
+	RPRINT("done closing.\n");
 }
  
 void ExtAudioFileAudioSource::setDecoderPosition(Int64 startFrame)
 {
+	RPRINT("setting decoder position\n");
     ExtAudioFileSeek(mAudioFile, startFrame);  
 	if(startFrame < getLength() * getSampleRate())
 		mEOF = false;
@@ -107,6 +110,7 @@ void ExtAudioFileAudioSource::setDecoderPosition(Int64 startFrame)
 
 Int64 ExtAudioFileAudioSource::decodeData(float* buffer, UInt32 numFrames)
 {
+	RPRINT("decoding data\n");
     UInt32 numChannels = getNumChannels();
     OSStatus err = noErr;
     
@@ -121,6 +125,7 @@ Int64 ExtAudioFileAudioSource::decodeData(float* buffer, UInt32 numFrames)
     if(err || framesRead == 0)
     {
         mEOF = true;
+		RPRINT("done decoding data\n");
         return 0;
     }
     
@@ -136,6 +141,7 @@ Int64 ExtAudioFileAudioSource::decodeData(float* buffer, UInt32 numFrames)
         }
     }
     
+	RPRINT("done decoding data\n");
     return framesRead;    
 }
 
