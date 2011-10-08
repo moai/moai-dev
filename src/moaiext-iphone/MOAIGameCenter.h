@@ -43,6 +43,7 @@ private:
 	BOOL						mIsGameCenterSupported;
 	MoaiLeaderboardDelegate*	mLeaderboardDelegate;
 	MoaiAchievementDelegate*	mAchievementDelegate;
+	NSMutableDictionary*        mAchievementsDictionary;
 	
 	//----------------------------------------------------------------//
 	static int		_authenticatePlayer			( lua_State* L );
@@ -59,12 +60,15 @@ public:
 	DECL_LUA_SINGLETON ( MOAIGameCenter );
 	
 	//----------------------------------------------------------------//
-	void			CallScoresCallback			( NSArray* scores );	
-					MOAIGameCenter				();
-					~MOAIGameCenter				();
-	void			RegisterLuaClass			( USLuaState& state );
-	void			ReportAchievementProgress	( cc8* identifier, float percent );
-	void			ReportScore					( s64 score, cc8* category );
+	void			CallScoresCallback				( NSArray* scores );
+	void			CreateAchievementDictionary		( NSArray* achievements );
+	void			GetAchievements					();
+	GKAchievement*	GetAchievementFromDictionary	( cc8* identifier );
+					MOAIGameCenter					();
+					~MOAIGameCenter					();
+	void			RegisterLuaClass				( USLuaState& state );
+	void			ReportAchievementProgress		( cc8* identifier, float percent );
+	void			ReportScore						( s64 score, cc8* category );
 	
 };
 
