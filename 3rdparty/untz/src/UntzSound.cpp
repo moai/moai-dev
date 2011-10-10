@@ -315,8 +315,11 @@ void Sound::pause()
 
 void Sound::stop()
 {	
-	mpData->mPlayState = kPlayStateStopped;
-	setPosition(0);
+	if(mpData)
+	{
+		mpData->mPlayState = kPlayStateStopped;
+		setPosition(0);
+	}
 }
 
 bool Sound::isPlaying()
