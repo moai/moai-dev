@@ -459,6 +459,12 @@
     <ClCompile Include="..\..\src\moaicore\MOAIBox2DWeldJoint.cpp">
       <Filter>src\box2D\joints</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIImage-jpg.cpp">
+      <Filter>src\gfx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIImage-png.cpp">
+      <Filter>src\gfx</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\moaicore\MOAIAction.h">

@@ -64,7 +64,7 @@
 	#endif
 
 	#include <stdlib.h>
-	#include <crtdbg.h>
+	//#include <crtdbg.h>
 	#include <ctype.h>
 	#include <direct.h>
 	#include <string.h>

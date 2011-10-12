@@ -762,7 +762,7 @@ void MOAIGfxDevice::SetFrameBuffer ( MOAITexture* texture ) {
 		frameBuffer->Bind ();
 	}
 	else {
-		glBindFramebuffer ( GL_FRAMEBUFFER, this->mDefaultFrameBuffer );
+		glBindFramebuffer ( GL_FRAMEBUFFER, this->mDefaultFrameBuffer ); // TODO: crash?
 	}
 }
 

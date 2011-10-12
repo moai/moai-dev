@@ -11,6 +11,10 @@
  * optimizations.  Most users will not need to touch this file.
  */
 
+#define HAVE_UNSIGNED_CHAR
+#define CHAR_IS_UNSIGNED
+#define HAVE_UNSIGNED_SHORT
+#define HAVE_PROTOTYPES
 
 /*
  * Define BITS_IN_JSAMPLE as either
