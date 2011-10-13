@@ -1,0 +1,90 @@
+// !$*UTF8*$!
+{
+	0700675B143E792C007D006D /* TJ Virtual Goods */ = {
+		isa = PBXExecutable;
+		activeArgIndices = (
+		);
+		argumentStrings = (
+		);
+		autoAttachOnCrash = 1;
+		breakpointsEnabled = 0;
+		configStateDict = {
+		};
+		customDataFormattersEnabled = 1;
+		dataTipCustomDataFormattersEnabled = 1;
+		dataTipShowTypeColumn = 1;
+		dataTipSortType = 0;
+		debuggerPlugin = GDBDebugging;
+		disassemblyDisplayState = 0;
+		dylibVariantSuffix = "";
+		enableDebugStr = 1;
+		environmentEntries = (
+		);
+		executableSystemSymbolLevel = 0;
+		executableUserSymbolLevel = 0;
+		libgmallocEnabled = 0;
+		name = "TJ Virtual Goods";
+		showTypeColumn = 0;
+		sourceDirectories = (
+		);
+	};
+	07006772143E7940007D006D /* Source Control */ = {
+		isa = PBXSourceControlManager;
+		fallbackIsa = XCSourceControlManager;
+		isSCMEnabled = 0;
+		scmConfiguration = {
+			repositoryNamesForRoots = {
+				"" = "";
+			};
+		};
+	};
+	07006773143E7940007D006D /* Code sense */ = {
+		isa = PBXCodeSenseManager;
+		indexTemplatePath = "";
+	};
+	ABEE1A45140EF50800C9DC3D /* Project object */ = {
+		activeBuildConfigurationName = Debug;
+		activeExecutable = 0700675B143E792C007D006D /* TJ Virtual Goods */;
+		activeSDKPreference = iphonesimulator4.3;
+		activeTarget = ABEE1A4D140EF50800C9DC3D /* TJ Virtual Goods */;
+		codeSenseManager = 07006773143E7940007D006D /* Code sense */;
+		executables = (
+			0700675B143E792C007D006D /* TJ Virtual Goods */,
+		);
+		perUserDictionary = {
+			PBXConfiguration.PBXFileTableDataSource3.PBXFileTableDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					364,
+					20,
+					48.16259765625,
+					43,
+					43,
+					20,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+					PBXFileDataSource_Target_ColumnID,
+				);
+			};
+			PBXPerProjectTemplateStateSaveDate = 340068413;
+			PBXWorkspaceStateSaveDate = 340068413;
+		};
+		sourceControlManager = 07006772143E7940007D006D /* Source Control */;
+		userBuildSettings = {
+		};
+	};
+	ABEE1A4D140EF50800C9DC3D /* TJ Virtual Goods */ = {
+		activeExec = 0;
+		executables = (
+			0700675B143E792C007D006D /* TJ Virtual Goods */,
+		);
+	};
+}

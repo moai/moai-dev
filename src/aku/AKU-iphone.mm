@@ -119,6 +119,10 @@ void AKUIphoneInit ( UIApplication* application ) {
 	REGISTER_LUA_CLASS ( MOAIApp )
 	REGISTER_LUA_CLASS ( MOAIGameCenter )
 	REGISTER_LUA_CLASS ( MOAIWebView )
+	
+	#ifndef DISABLE_TAPJOY
+		REGISTER_LUA_CLASS ( MOAITapjoy )
+	#endif
 }
 
 //-----------------------------------------------------------------//

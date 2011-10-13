@@ -1549,6 +1549,8 @@
 		03F135DD13A2EFC000044AE8 /* MOAIWebView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 03F135D913A2EFC000044AE8 /* MOAIWebView.mm */; };
 		0767117C13F3414000121E13 /* ReachabilityListener.h in Headers */ = {isa = PBXBuildFile; fileRef = 0767117A13F3414000121E13 /* ReachabilityListener.h */; };
 		0767117D13F3414000121E13 /* ReachabilityListener.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0767117B13F3414000121E13 /* ReachabilityListener.mm */; };
+		0780B1D714463B71006626CF /* MOAITapjoy.h in Headers */ = {isa = PBXBuildFile; fileRef = 0780B1D514463B71006626CF /* MOAITapjoy.h */; };
+		0780B1D814463B71006626CF /* MOAITapjoy.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0780B1D614463B71006626CF /* MOAITapjoy.mm */; };
 		07AF16C013F45A0100E38D1D /* MOAIPartitionResultBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07AF16BC13F45A0100E38D1D /* MOAIPartitionResultBuffer.cpp */; };
 		07AF16C113F45A0100E38D1D /* MOAIPartitionResultBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 07AF16BD13F45A0100E38D1D /* MOAIPartitionResultBuffer.h */; };
 		07AF16C213F45A0100E38D1D /* MOAIPartitionResultMgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07AF16BE13F45A0100E38D1D /* MOAIPartitionResultMgr.cpp */; };
@@ -3597,6 +3599,8 @@
 		071106EE13C6353400EE7C53 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		0767117A13F3414000121E13 /* ReachabilityListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ReachabilityListener.h; path = "moaiext-iphone/ReachabilityListener.h"; sourceTree = "<group>"; };
 		0767117B13F3414000121E13 /* ReachabilityListener.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ReachabilityListener.mm; path = "moaiext-iphone/ReachabilityListener.mm"; sourceTree = "<group>"; };
+		0780B1D514463B71006626CF /* MOAITapjoy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAITapjoy.h; path = "moaiext-iphone/MOAITapjoy.h"; sourceTree = "<group>"; };
+		0780B1D614463B71006626CF /* MOAITapjoy.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAITapjoy.mm; path = "moaiext-iphone/MOAITapjoy.mm"; sourceTree = "<group>"; };
 		07AF16BC13F45A0100E38D1D /* MOAIPartitionResultBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIPartitionResultBuffer.cpp; sourceTree = "<group>"; };
 		07AF16BD13F45A0100E38D1D /* MOAIPartitionResultBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIPartitionResultBuffer.h; sourceTree = "<group>"; };
 		07AF16BE13F45A0100E38D1D /* MOAIPartitionResultMgr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIPartitionResultMgr.cpp; sourceTree = "<group>"; };
@@ -6536,6 +6540,8 @@
 				CDD06EC91398BA6200AB0420 /* MOAIApp.mm */,
 				07E6C62E140C490B004D1227 /* MOAIGameCenter.h */,
 				07E6C62F140C490B004D1227 /* MOAIGameCenter.mm */,
+				0780B1D514463B71006626CF /* MOAITapjoy.h */,
+				0780B1D614463B71006626CF /* MOAITapjoy.mm */,
 				03F135D813A2EFC000044AE8 /* MOAIWebView.h */,
 				03F135D913A2EFC000044AE8 /* MOAIWebView.mm */,
 				03F135D613A2EFC000044AE8 /* MoaiUiWebView.h */,
@@ -8920,6 +8926,7 @@
 				CDBD3D3D1425DC2600BC33D4 /* MOAIBox2DRevoluteJoint.h in Headers */,
 				CDBD3D3F1425DC2600BC33D4 /* MOAIBox2DWeldJoint.h in Headers */,
 				C359A149143A81BA005E7829 /* RAudioBuffer.h in Headers */,
+				0780B1D714463B71006626CF /* MOAITapjoy.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10730,6 +10737,7 @@
 				CDBD3D3A1425DC2600BC33D4 /* MOAIBox2DPulleyJoint.cpp in Sources */,
 				CDBD3D3C1425DC2600BC33D4 /* MOAIBox2DRevoluteJoint.cpp in Sources */,
 				CDBD3D3E1425DC2600BC33D4 /* MOAIBox2DWeldJoint.cpp in Sources */,
+				0780B1D814463B71006626CF /* MOAITapjoy.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11330,6 +11338,22 @@
 					"\"../../3rdparty/untz/src\"",
 					"\"../../3rdparty/libvorbis-1.3.2/lib\"",
 					"\"../../3rdparty/libvorbis-1.3.2/include\"",
+					"\"../../3rdparty/tapjoyiOS-8.1.1/TapjoyConnect/Components/TJCAds\"",
+					"\"../../3rdparty/tapjoyiOS-8.1.1/TapjoyConnect/Components/TJCCore\"",
+					"\"../../3rdparty/tapjoyiOS-8.1.1/TapjoyConnect/Components/TJCCore/Utilities\"",
+					"\"../../3rdparty/tapjoyiOS-8.1.1/TapjoyConnect/Components/TJCCore/Views\"",
+					"\"../../3rdparty/tapjoyiOS-8.1.1/TapjoyConnect/Components/TJCCore/WebFetcher\"",
+					"\"../../3rdparty/tapjoyiOS-8.1.1/TapjoyConnect/Components/TJCFeaturedApp\"",
+					"\"../../3rdparty/tapjoyiOS-8.1.1/TapjoyConnect/Components/TJCOffers\"",
+					"\"../../3rdparty/tapjoyiOS-8.1.1/TapjoyConnect/Components/TJCUserAccount\"",
+					"\"../../3rdparty/tapjoyiOS-8.1.1/TapjoyConnect/Components/TJCVideoAds\"",
+					"\"../../3rdparty/tapjoyiOS-8.1.1/TapjoyConnect/Components/TJCVirtualGoods\"",
+					"\"../../3rdparty/tapjoyiOS-8.1.1/TapjoyConnect/Components/TJCVirtualGoods/TJCVG_FileDownloading\"",
+					"\"../../3rdparty/tapjoyiOS-8.1.1/TapjoyConnect/Components/TJCVirtualGoods/TJCVG_LocalDatabase\"",
+					"\"../../3rdparty/tapjoyiOS-8.1.1/TapjoyConnect/Components/TJCVirtualGoods/TJCVG_Resources\"",
+					"\"../../3rdparty/tapjoyiOS-8.1.1/TapjoyConnect/Components/TJCVirtualGoods/TJCVG_Views\"",
+					"\"../../3rdparty/tapjoyiOS-8.1.1/TapjoyConnect/Components/TJCVirtualGoods/TJCVG_ZipArchive\"",
+					"\"../../3rdparty/tapjoyiOS-8.1.1/TapjoyConnect\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PROVISIONING_PROFILE = "";
@@ -11446,6 +11470,22 @@
 					"\"../../3rdparty/untz/src\"",
 					"\"../../3rdparty/libvorbis-1.3.2/lib\"",
 					"\"../../3rdparty/libvorbis-1.3.2/include\"",
+					"\"../../3rdparty/tapjoyiOS-8.1.1/TapjoyConnect/Components/TJCAds\"",
+					"\"../../3rdparty/tapjoyiOS-8.1.1/TapjoyConnect/Components/TJCCore\"",
+					"\"../../3rdparty/tapjoyiOS-8.1.1/TapjoyConnect/Components/TJCCore/Utilities\"",
+					"\"../../3rdparty/tapjoyiOS-8.1.1/TapjoyConnect/Components/TJCCore/Views\"",
+					"\"../../3rdparty/tapjoyiOS-8.1.1/TapjoyConnect/Components/TJCCore/WebFetcher\"",
+					"\"../../3rdparty/tapjoyiOS-8.1.1/TapjoyConnect/Components/TJCFeaturedApp\"",
+					"\"../../3rdparty/tapjoyiOS-8.1.1/TapjoyConnect/Components/TJCOffers\"",
+					"\"../../3rdparty/tapjoyiOS-8.1.1/TapjoyConnect/Components/TJCUserAccount\"",
+					"\"../../3rdparty/tapjoyiOS-8.1.1/TapjoyConnect/Components/TJCVideoAds\"",
+					"\"../../3rdparty/tapjoyiOS-8.1.1/TapjoyConnect/Components/TJCVirtualGoods\"",
+					"\"../../3rdparty/tapjoyiOS-8.1.1/TapjoyConnect/Components/TJCVirtualGoods/TJCVG_FileDownloading\"",
+					"\"../../3rdparty/tapjoyiOS-8.1.1/TapjoyConnect/Components/TJCVirtualGoods/TJCVG_LocalDatabase\"",
+					"\"../../3rdparty/tapjoyiOS-8.1.1/TapjoyConnect/Components/TJCVirtualGoods/TJCVG_Resources\"",
+					"\"../../3rdparty/tapjoyiOS-8.1.1/TapjoyConnect/Components/TJCVirtualGoods/TJCVG_Views\"",
+					"\"../../3rdparty/tapjoyiOS-8.1.1/TapjoyConnect/Components/TJCVirtualGoods/TJCVG_ZipArchive\"",
+					"\"../../3rdparty/tapjoyiOS-8.1.1/TapjoyConnect\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PROVISIONING_PROFILE = "";
