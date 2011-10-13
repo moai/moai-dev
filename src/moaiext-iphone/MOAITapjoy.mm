@@ -145,9 +145,13 @@ void MOAITapjoy::SendVideoAdCloseEvent () {
 	//================================================================//
 	
 	-( void ) videoAdBegan {
+	
+		MOAITapjoy::Get ().SendVideoAdBeginEvent ();
 	}
 	
 	-( void ) videoAdClosed {
+	
+		MOAITapjoy::Get ().SendVideoAdCloseEvent ();
 	}
 	
 @end
