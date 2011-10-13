@@ -76,6 +76,7 @@ protected:
 	//----------------------------------------------------------------//
 	static int		_getGrid			( lua_State* L );
 	static int		_getIndex			( lua_State* L );
+	static int		_getRect			( lua_State* L );
 	static int		_inside				( lua_State* L );
 	static int		_setBlendMode		( lua_State* L );
 	static int		_setDeck			( lua_State* L );
@@ -128,7 +129,7 @@ public:
 	virtual void					DrawDebug				();
 	virtual void					GatherSurfaces			( MOAISurfaceSampler2D& sampler );
 	virtual u32						GetLocalFrame			( USRect& frame );
-	bool							Inside					( USVec2D vec );
+	bool							Inside					( USVec2D vec, float pad );
 	virtual MOAIOverlapPrim2D*		IsOverlapPrim2D			();
 									MOAIProp2D				();
 									~MOAIProp2D				();
