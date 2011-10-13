@@ -18,7 +18,7 @@ class MOAIViewport;
 // MOAIGfxDevice
 //================================================================//
 class MOAIGfxDevice :
-	public USGlobalClass < MOAIGfxDevice, MOAIEventSource > {
+	public USGlobalClass < MOAIGfxDevice, MOAIGlobalEventSource > {
 public:
 	
 	enum {

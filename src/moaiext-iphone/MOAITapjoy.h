@@ -23,7 +23,7 @@
 */
 
 class MOAITapjoy :
-	public USGlobalClass < MOAITapjoy, MOAIEventSource > {
+	public USGlobalClass < MOAITapjoy, MOAIGlobalEventSource > {
 private:
 
 	MoaiTapjoyVideoAdDelegate* mVideoAdDelegate;

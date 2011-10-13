@@ -27,6 +27,7 @@ $(SRC_PATH)/3rdparty/freetype-2.4.4/builds \
 $(SRC_PATH)/3rdparty/freetype-2.4.4/src \
 $(SRC_PATH)/3rdparty/freetype-2.4.4/config \
 $(SRC_PATH)/3rdparty/jansson-2.1/src \
+$(SRC_PATH)/3rdparty/jpeg-8c \
 $(SRC_PATH)/3rdparty/lpng140 \
 $(SRC_PATH)/3rdparty/curl-7.19.7/include-android\
 $(SRC_PATH)/3rdparty/sqlite-3.6.16 \
@@ -107,6 +108,8 @@ $(SRC_PATH)/src/moaicore/MOAIGlyph.cpp \
 $(SRC_PATH)/src/moaicore/MOAIGrid.cpp \
 $(SRC_PATH)/src/moaicore/MOAIGridSpace.cpp \
 $(SRC_PATH)/src/moaicore/MOAIHttpTask.cpp \
+$(SRC_PATH)/src/moaicore/MOAIImage-jpg.cpp \
+$(SRC_PATH)/src/moaicore/MOAIImage-png.cpp \
 $(SRC_PATH)/src/moaicore/MOAIImage.cpp \
 $(SRC_PATH)/src/moaicore/MOAIIndexBuffer.cpp \
 $(SRC_PATH)/src/moaicore/MOAIInputDevice.cpp \

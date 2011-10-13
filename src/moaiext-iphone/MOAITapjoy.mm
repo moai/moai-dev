@@ -106,7 +106,7 @@ void MOAITapjoy::RegisterLuaClass ( USLuaState& state ) {
 	
 		{ "initVideoAds",				_initVideoAds },
 		{ "requestTapjoyConnect",		_requestTapjoyConnect },
-		{ "setListener",				&MOAIEventSource::_setListener < MOAITapjoy > },
+		{ "setListener",				&MOAIGlobalEventSource::_setListener < MOAITapjoy >  },
 		{ "showOffers",					_showOffers },
 		{ NULL, NULL }
 	};

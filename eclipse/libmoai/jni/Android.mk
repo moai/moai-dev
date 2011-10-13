@@ -13,6 +13,7 @@ include libcurl.mk
 include liblua.mk
 include libsqlite.mk
 include libtinyxml.mk
+include libjpg.mk
 include libpng.mk
 include libzipfs.mk
 include libuslscore.mk
@@ -67,6 +68,7 @@ $(SRC_PATH)/3rdparty/freetype-2.4.4/builds \
 $(SRC_PATH)/3rdparty/freetype-2.4.4/src \
 $(SRC_PATH)/3rdparty/freetype-2.4.4/config \
 $(SRC_PATH)/3rdparty/jansson-2.1/src \
+$(SRC_PATH)/3rdparty/jpeg-8c \
 $(SRC_PATH)/3rdparty/lpng140 \
 $(SRC_PATH)/3rdparty/curl-7.19.7/include-android\
 $(SRC_PATH)/3rdparty/sqlite-3.6.16 \
@@ -96,6 +98,7 @@ LOCAL_STATIC_LIBRARIES += liblua
 LOCAL_STATIC_LIBRARIES += libfreetype
 LOCAL_STATIC_LIBRARIES += libsqlite
 LOCAL_STATIC_LIBRARIES += libtinyxml
+LOCAL_STATIC_LIBRARIES += libjpg
 LOCAL_STATIC_LIBRARIES += libpng
 LOCAL_STATIC_LIBRARIES += libcurl
 LOCAL_STATIC_LIBRARIES += libssl

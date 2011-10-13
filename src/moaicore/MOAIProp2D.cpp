@@ -52,12 +52,44 @@ int MOAIProp2D::_getIndex ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	getRect
+	@text	Return the prop's local rect or 'nil' if prop rect is global.
+	
+	@in		MOAIProp2D self
+	@out	number xMin
+	@out	number yMin
+	@out	number xMax
+	@out	number yMax
+*/
+int MOAIProp2D::_getRect ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIProp2D, "U" )
+	
+	USRect rect;
+
+	if ( self->mFitToFrame ) {
+		rect = self->mFrame;
+	}
+	else {
+		u32 status = self->GetLocalFrame ( rect );
+		if ( status != BOUNDS_OK ) return 0;
+	}
+
+	state.Push ( rect.mXMin );
+	state.Push ( rect.mYMin );
+	state.Push ( rect.mXMax );
+	state.Push ( rect.mYMax );
+
+	return 4;
+}
+
+//----------------------------------------------------------------//
 /**	@name	inside
 	@text	Returns true if this prop is under the given world space point.
 	
 	@in		MOAIProp2D self
 	@in		number x
 	@in		number y
+	@opt	number pad			Pad the hit rectangle (in the prop's local space)
 	@out	boolean isInside
 */
 int	MOAIProp2D::_inside ( lua_State* L ) {
@@ -67,7 +99,9 @@ int	MOAIProp2D::_inside ( lua_State* L ) {
 	vec.mX	= state.GetValue < float >( 2, 0.0f );
 	vec.mY	= state.GetValue < float >( 3, 0.0f );
 
-	bool result = self->Inside ( vec );
+	float pad = state.GetValue < float >( 4, 0.0f );
+
+	bool result = self->Inside ( vec, pad );
 	lua_pushboolean ( state, result );
 	
 	return 1;
@@ -590,20 +624,25 @@ bool MOAIProp2D::GetVisibleTrait () {
 }
 
 //----------------------------------------------------------------//
-bool MOAIProp2D::Inside ( USVec2D vec ) {
+bool MOAIProp2D::Inside ( USVec2D vec, float pad ) {
 
 	const USAffine2D& worldToLocal = this->GetWorldToLocalMtx ();
 	worldToLocal.Transform ( vec );
 
+	USRect rect;
+
 	if ( this->mFitToFrame ) {
-		return this->mFrame.Contains ( vec ); 
+		rect = this->mFrame;
+	}
+	else {
+	
+		u32 status = this->GetLocalFrame ( rect );
+		
+		if ( status == BOUNDS_GLOBAL ) return true;
+		if ( status == BOUNDS_EMPTY ) return false;
 	}
 	
-	USRect rect;
-	u32 status = this->GetLocalFrame ( rect );
-	
-	if ( status == BOUNDS_GLOBAL ) return true;
-	if ( status == BOUNDS_EMPTY ) return false;
+	rect.Inflate ( pad );
 	
 	return rect.Contains ( vec );
 }
@@ -792,6 +831,7 @@ void MOAIProp2D::RegisterLuaFuncs ( USLuaState& state ) {
 	luaL_Reg regTable [] = {
 		{ "getGrid",			_getGrid },
 		{ "getIndex",			_getIndex },
+		{ "getRect",			_getRect },
 		{ "inside",				_inside },
 		{ "setBlendMode",		_setBlendMode },
 		{ "setDeck",			_setDeck },

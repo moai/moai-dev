@@ -36,7 +36,7 @@ SUPPRESS_EMPTY_FILE_WARNING
 #define BB_COLOR 0.3f, 0.5f, 0.3f
 #define CONSTRAINT_COLOR 0.5f, 1.0f, 0.5f
 
-static const GLfloat circleVAR[] = {
+static const float circleVAR[] = {
 	 0.0000f,  1.0000f,
 	 0.2588f,  0.9659f,
 	 0.5000f,  0.8660f,
@@ -65,7 +65,7 @@ static const GLfloat circleVAR[] = {
 	 0.0f, 0.0f, // For an extra line to see the rotation.
 };
 
-static const GLfloat pillVAR[] = {
+static const float pillVAR[] = {
 	 0.0000f,  1.0000f, 1.0f,
 	 0.2588f,  0.9659f, 1.0f,
 	 0.5000f,  0.8660f, 1.0f,
@@ -118,7 +118,7 @@ static const int pillVAR_count = sizeof(pillVAR)/sizeof(GLfloat)/3;
 static const int springVAR_count = sizeof(springVAR)/sizeof(GLfloat)/2;
 
 //----------------------------------------------------------------//
-static void draw_shape_verts ( USVec2D* verts, u32 count, u32 color, bool drawFilled ) {
+static void draw_shape_verts ( const float* verts, u32 count, u32 color, bool drawFilled ) {
 
 	if ( drawFilled ) {
 		MOAIDraw::DrawVertexArray ( verts, count, color, GL_TRIANGLE_FAN );
@@ -192,7 +192,7 @@ static void drawCircleShape(cpBody *body, cpCircleShape *circle, cpSpace *space)
 	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, mtx );
 	
 	u32 color = color_for_shape (( cpShape* )circle, space );
-	draw_shape_verts (( USVec2D* )circleVAR, circleVAR_count, color, ( circle->shape.sensor == 0 ));
+	draw_shape_verts ( circleVAR, circleVAR_count, color, ( circle->shape.sensor == 0 ));
 	
 	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM );
 }
@@ -237,7 +237,7 @@ static void drawSegmentShape ( cpBody* body, cpSegmentShape* seg, cpSpace* space
 		gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, mtx );
 		
 		u32 color = color_for_shape (( cpShape* )seg, space );
-		draw_shape_verts (( USVec2D* )pillVAR, pillVAR_count, color, ( seg->shape.sensor == 0 ));
+		draw_shape_verts ( pillVAR, pillVAR_count, color, ( seg->shape.sensor == 0 ));
 		
 		gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM );
 
@@ -267,23 +267,22 @@ static void drawPolyShape ( cpBody* body, cpPolyShape* poly, cpSpace* space ) {
 	int count = poly->numVerts;
 	
 	#if CP_USE_DOUBLES
-		static const u32 max = 1024;
-		USVec2D verts [ max ];
-		USVec2D64* verts64 = ( USVec2D64* )poly->tVerts;
+		static const u32 MAX = 2048;
+		float verts [ MAX ];
+		double* verts64 = ( double* )poly->tVerts;
 		
-		count = count > max ? max : count;
-		for ( int i = 0; i < count; ++i ) {
-			USVec2D& vtx = verts [ i ];
-			USVec2D64& vtx64 = verts64 [ i ];
-			vtx.mX = ( float )vtx64.mX;
-			vtx.mY = ( float )vtx64.mY;
+		u32 copy = ( u32 )( count * 2 );
+		
+		copy = copy > MAX ? MAX : copy;
+		for ( u32 i = 0; i < copy; ++i ) {
+			verts [ i ] = ( float )verts64 [ i ];
 		}
 	#else
 		USVec2D* verts = ( USVec2D* )poly->tVerts;
 	#endif
 	
 	u32 color = color_for_shape (( cpShape* )poly, space );
-	draw_shape_verts ( verts, count, color, ( poly->shape.sensor == 0 ));
+	draw_shape_verts (( float* )verts, count, color, ( poly->shape.sensor == 0 ));
 }
 
 //----------------------------------------------------------------//
@@ -353,7 +352,7 @@ static void drawSpring ( cpDampedSpring* spring, cpBody* body_a, cpBody* body_b 
 	gfxDevice.SetPrimType ( GL_LINE_STRIP );
 	gfxDevice.SetPenColor ( USColor::PackRGBA ( LINE_COLOR, 1.0f ));
 	
-	MOAIDraw::DrawVertexArray (( USVec2D* )springVAR, springVAR_count, USColor::PackRGBA ( LINE_COLOR, 1.0f ), GL_LINE_STRIP );
+	MOAIDraw::DrawVertexArray ( springVAR, springVAR_count, USColor::PackRGBA ( LINE_COLOR, 1.0f ), GL_LINE_STRIP );
 	
 	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM );
 }

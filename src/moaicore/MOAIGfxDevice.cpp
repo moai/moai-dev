@@ -582,7 +582,7 @@ MOAIGfxDevice::MOAIGfxDevice () :
 	mDefaultFrameBuffer ( 0 ),
 	mTextureMemoryUsage ( 0 ) {
 	
-	RTTI_SINGLE ( MOAIEventSource )
+	RTTI_SINGLE ( MOAIGlobalEventSource )
 	
 	this->Reserve ( DEFAULT_BUFFER_SIZE );
 	
@@ -610,7 +610,7 @@ void MOAIGfxDevice::RegisterLuaClass ( USLuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "isProgrammable",				_isProgrammable },
-		{ "setListener",				&MOAIEventSource::_setListener < MOAIGfxDevice > },
+		{ "setListener",				&MOAIGlobalEventSource::_setListener < MOAIGfxDevice > },
 		{ "setPenColor",				_setPenColor },
 		{ "setPenWidth",				_setPenWidth },
 		{ "setPointSize",				_setPointSize },
@@ -762,7 +762,7 @@ void MOAIGfxDevice::SetFrameBuffer ( MOAITexture* texture ) {
 		frameBuffer->Bind ();
 	}
 	else {
-		glBindFramebuffer ( GL_FRAMEBUFFER, this->mDefaultFrameBuffer );
+		glBindFramebuffer ( GL_FRAMEBUFFER, this->mDefaultFrameBuffer ); // TODO: crash?
 	}
 }
 

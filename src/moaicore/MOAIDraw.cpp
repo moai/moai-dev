@@ -609,7 +609,7 @@ void MOAIDraw::DrawRectOutline ( float left, float top, float right, float botto
 }
 
 //----------------------------------------------------------------//
-void MOAIDraw::DrawVertexArray ( USVec2D* verts, u32 count, u32 color, u32 primType ) {
+void MOAIDraw::DrawVertexArray ( const USVec2D* verts, u32 count, u32 color, u32 primType ) {
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 
@@ -619,8 +619,27 @@ void MOAIDraw::DrawVertexArray ( USVec2D* verts, u32 count, u32 color, u32 primT
 	gfxDevice.BeginPrim ();
 	
 	for ( u32 i = 0; i < count; ++i ) {
-		USVec2D& vtx = verts [ i ];
+		const USVec2D& vtx = verts [ i ];
 		gfxDevice.WriteVtx ( vtx );
+		gfxDevice.WritePenColor4b ();
+	}
+
+	gfxDevice.EndPrim ();
+}
+
+//----------------------------------------------------------------//
+void MOAIDraw::DrawVertexArray ( const float* verts, u32 count, u32 color, u32 primType ) {
+
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+
+	gfxDevice.SetPrimType ( primType );
+	gfxDevice.SetPenColor ( color );
+	
+	gfxDevice.BeginPrim ();
+	
+	for ( u32 i = 0; i < count; ++i ) {
+		u32 v = i << 1;
+		gfxDevice.WriteVtx ( verts [ v ], verts [ v + 1 ]);
 		gfxDevice.WritePenColor4b ();
 	}
 
