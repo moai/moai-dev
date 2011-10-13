@@ -4,8 +4,6 @@
 #ifndef	MOAITAPJOY_H
 #define	MOAITAPJOY_H
 
-#ifdef ENABLE_TAPJOY
-
 #import <Foundation/Foundation.h> 
 #import <moaicore/moaicore.h>
 #import <Components/TJCVideoAds/TJCVideoAdProtocol.h>
@@ -57,7 +55,5 @@ public:
 @private
 }
 @end
-
-#endif //ifdef ENABLE_TAPJOY
 
 #endif //MOAITAPJOY_H

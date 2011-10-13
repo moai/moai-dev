@@ -1,0 +1,125 @@
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/team/!svn/ver/5291/development/trunk/projects/WolfToss/host-ios/Libraries/TapjoyConnect/Components/TJCVideoAds
+END
+TJCVideoView.xib
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/team/!svn/ver/5291/development/trunk/projects/WolfToss/host-ios/Libraries/TapjoyConnect/Components/TJCVideoAds/TJCVideoView.xib
+END
+TJCVideoObject.h
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/team/!svn/ver/5291/development/trunk/projects/WolfToss/host-ios/Libraries/TapjoyConnect/Components/TJCVideoAds/TJCVideoObject.h
+END
+TJCVideoAdProtocol.h
+K 25
+svn:wc:ra_dav:version-url
+V 132
+/team/!svn/ver/5291/development/trunk/projects/WolfToss/host-ios/Libraries/TapjoyConnect/Components/TJCVideoAds/TJCVideoAdProtocol.h
+END
+button_highlight.png
+K 25
+svn:wc:ra_dav:version-url
+V 132
+/team/!svn/ver/5291/development/trunk/projects/WolfToss/host-ios/Libraries/TapjoyConnect/Components/TJCVideoAds/button_highlight.png
+END
+TJCVideoViewHandler.h
+K 25
+svn:wc:ra_dav:version-url
+V 133
+/team/!svn/ver/5291/development/trunk/projects/WolfToss/host-ios/Libraries/TapjoyConnect/Components/TJCVideoAds/TJCVideoViewHandler.h
+END
+back_default.png
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/team/!svn/ver/5291/development/trunk/projects/WolfToss/host-ios/Libraries/TapjoyConnect/Components/TJCVideoAds/back_default.png
+END
+TJCVideoView.h
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/team/!svn/ver/5291/development/trunk/projects/WolfToss/host-ios/Libraries/TapjoyConnect/Components/TJCVideoAds/TJCVideoView.h
+END
+TJCVideoManager.h
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/team/!svn/ver/5291/development/trunk/projects/WolfToss/host-ios/Libraries/TapjoyConnect/Components/TJCVideoAds/TJCVideoManager.h
+END
+TJCVideoObject.m
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/team/!svn/ver/5291/development/trunk/projects/WolfToss/host-ios/Libraries/TapjoyConnect/Components/TJCVideoAds/TJCVideoObject.m
+END
+TJCVideoLayer.h
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/team/!svn/ver/5291/development/trunk/projects/WolfToss/host-ios/Libraries/TapjoyConnect/Components/TJCVideoAds/TJCVideoLayer.h
+END
+TJCVideoViewHandler.m
+K 25
+svn:wc:ra_dav:version-url
+V 133
+/team/!svn/ver/5291/development/trunk/projects/WolfToss/host-ios/Libraries/TapjoyConnect/Components/TJCVideoAds/TJCVideoViewHandler.m
+END
+TJCVideoView.m
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/team/!svn/ver/5291/development/trunk/projects/WolfToss/host-ios/Libraries/TapjoyConnect/Components/TJCVideoAds/TJCVideoView.m
+END
+TJCVideoManager.m
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/team/!svn/ver/5291/development/trunk/projects/WolfToss/host-ios/Libraries/TapjoyConnect/Components/TJCVideoAds/TJCVideoManager.m
+END
+TJCVideoLayer.m
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/team/!svn/ver/5291/development/trunk/projects/WolfToss/host-ios/Libraries/TapjoyConnect/Components/TJCVideoAds/TJCVideoLayer.m
+END
+.DS_Store
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/team/!svn/ver/5291/development/trunk/projects/WolfToss/host-ios/Libraries/TapjoyConnect/Components/TJCVideoAds/.DS_Store
+END
+tapjoy_icon.png
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/team/!svn/ver/5291/development/trunk/projects/WolfToss/host-ios/Libraries/TapjoyConnect/Components/TJCVideoAds/tapjoy_icon.png
+END
+TJCVideoRequestHandler.h
+K 25
+svn:wc:ra_dav:version-url
+V 136
+/team/!svn/ver/5291/development/trunk/projects/WolfToss/host-ios/Libraries/TapjoyConnect/Components/TJCVideoAds/TJCVideoRequestHandler.h
+END
+TJCVideoRequestHandler.m
+K 25
+svn:wc:ra_dav:version-url
+V 136
+/team/!svn/ver/5291/development/trunk/projects/WolfToss/host-ios/Libraries/TapjoyConnect/Components/TJCVideoAds/TJCVideoRequestHandler.m
+END
+tapjoy_logo.png
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/team/!svn/ver/5291/development/trunk/projects/WolfToss/host-ios/Libraries/TapjoyConnect/Components/TJCVideoAds/tapjoy_logo.png
+END
+done_default.png
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/team/!svn/ver/5291/development/trunk/projects/WolfToss/host-ios/Libraries/TapjoyConnect/Components/TJCVideoAds/done_default.png
+END
