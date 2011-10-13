@@ -4,7 +4,7 @@
 #ifndef	MOAITAPJOY_H
 #define	MOAITAPJOY_H
 
-#ifndef DISABLE_TAPJOY
+#ifdef ENABLE_TAPJOY
 
 #import <Foundation/Foundation.h> 
 #import <moaicore/moaicore.h>
@@ -58,6 +58,6 @@ public:
 }
 @end
 
-#endif //ifndef DISABLE_TAPJOY
+#endif //ifdef ENABLE_TAPJOY
 
 #endif //MOAITAPJOY_H

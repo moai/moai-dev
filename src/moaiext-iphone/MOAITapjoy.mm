@@ -1,7 +1,7 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef DISABLE_TAPJOY
+#ifdef ENABLE_TAPJOY
 
 #include "pch.h"
 
@@ -154,4 +154,4 @@ void MOAITapjoy::SendVideoAdCloseEvent () {
 	
 @end
 
-#endif //ifndef DISABLE_TAPJOY
+#endif //ifdef ENABLE_TAPJOY
