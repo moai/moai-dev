@@ -1717,6 +1717,122 @@
 		CD218FBB13A7FDBA008337E7 /* utf.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9D13A7FDBA008337E7 /* utf.c */; };
 		CD218FBC13A7FDBA008337E7 /* utf.h in Headers */ = {isa = PBXBuildFile; fileRef = CD218F9E13A7FDBA008337E7 /* utf.h */; };
 		CD218FBD13A7FDBA008337E7 /* value.c in Sources */ = {isa = PBXBuildFile; fileRef = CD218F9F13A7FDBA008337E7 /* value.c */; };
+		CD3D85651446610100CDC5BD /* jaricom.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D85291446610100CDC5BD /* jaricom.c */; };
+		CD3D85661446610100CDC5BD /* jcapimin.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D852A1446610100CDC5BD /* jcapimin.c */; };
+		CD3D85671446610100CDC5BD /* jcapistd.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D852B1446610100CDC5BD /* jcapistd.c */; };
+		CD3D85681446610100CDC5BD /* jcarith.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D852C1446610100CDC5BD /* jcarith.c */; };
+		CD3D85691446610100CDC5BD /* jccoefct.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D852D1446610100CDC5BD /* jccoefct.c */; };
+		CD3D856A1446610100CDC5BD /* jccolor.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D852E1446610100CDC5BD /* jccolor.c */; };
+		CD3D856B1446610100CDC5BD /* jcdctmgr.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D852F1446610100CDC5BD /* jcdctmgr.c */; };
+		CD3D856C1446610100CDC5BD /* jchuff.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D85301446610100CDC5BD /* jchuff.c */; };
+		CD3D856D1446610100CDC5BD /* jcinit.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D85311446610100CDC5BD /* jcinit.c */; };
+		CD3D856E1446610100CDC5BD /* jcmainct.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D85321446610100CDC5BD /* jcmainct.c */; };
+		CD3D856F1446610100CDC5BD /* jcmarker.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D85331446610100CDC5BD /* jcmarker.c */; };
+		CD3D85701446610100CDC5BD /* jcmaster.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D85341446610100CDC5BD /* jcmaster.c */; };
+		CD3D85711446610100CDC5BD /* jcomapi.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D85351446610100CDC5BD /* jcomapi.c */; };
+		CD3D85721446610100CDC5BD /* jconfig.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3D85361446610100CDC5BD /* jconfig.h */; };
+		CD3D85731446610100CDC5BD /* jcparam.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D85371446610100CDC5BD /* jcparam.c */; };
+		CD3D85741446610100CDC5BD /* jcprepct.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D85381446610100CDC5BD /* jcprepct.c */; };
+		CD3D85751446610100CDC5BD /* jcsample.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D85391446610100CDC5BD /* jcsample.c */; };
+		CD3D85761446610100CDC5BD /* jctrans.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D853A1446610100CDC5BD /* jctrans.c */; };
+		CD3D85771446610100CDC5BD /* jdapimin.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D853B1446610100CDC5BD /* jdapimin.c */; };
+		CD3D85781446610100CDC5BD /* jdapistd.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D853C1446610100CDC5BD /* jdapistd.c */; };
+		CD3D85791446610100CDC5BD /* jdarith.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D853D1446610100CDC5BD /* jdarith.c */; };
+		CD3D857A1446610100CDC5BD /* jdatadst.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D853E1446610100CDC5BD /* jdatadst.c */; };
+		CD3D857B1446610100CDC5BD /* jdatasrc.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D853F1446610100CDC5BD /* jdatasrc.c */; };
+		CD3D857C1446610100CDC5BD /* jdcoefct.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D85401446610100CDC5BD /* jdcoefct.c */; };
+		CD3D857D1446610100CDC5BD /* jdcolor.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D85411446610100CDC5BD /* jdcolor.c */; };
+		CD3D857E1446610100CDC5BD /* jdct.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3D85421446610100CDC5BD /* jdct.h */; };
+		CD3D857F1446610100CDC5BD /* jddctmgr.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D85431446610100CDC5BD /* jddctmgr.c */; };
+		CD3D85801446610100CDC5BD /* jdhuff.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D85441446610100CDC5BD /* jdhuff.c */; };
+		CD3D85811446610100CDC5BD /* jdinput.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D85451446610100CDC5BD /* jdinput.c */; };
+		CD3D85821446610100CDC5BD /* jdmainct.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D85461446610100CDC5BD /* jdmainct.c */; };
+		CD3D85831446610100CDC5BD /* jdmarker.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D85471446610100CDC5BD /* jdmarker.c */; };
+		CD3D85841446610100CDC5BD /* jdmaster.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D85481446610100CDC5BD /* jdmaster.c */; };
+		CD3D85851446610100CDC5BD /* jdmerge.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D85491446610100CDC5BD /* jdmerge.c */; };
+		CD3D85861446610100CDC5BD /* jdpostct.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D854A1446610100CDC5BD /* jdpostct.c */; };
+		CD3D85871446610100CDC5BD /* jdsample.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D854B1446610100CDC5BD /* jdsample.c */; };
+		CD3D85881446610100CDC5BD /* jdtrans.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D854C1446610100CDC5BD /* jdtrans.c */; };
+		CD3D85891446610100CDC5BD /* jerror-moai.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D854D1446610100CDC5BD /* jerror-moai.c */; };
+		CD3D858A1446610100CDC5BD /* jerror.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3D854E1446610100CDC5BD /* jerror.h */; };
+		CD3D858B1446610100CDC5BD /* jfdctflt.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D854F1446610100CDC5BD /* jfdctflt.c */; };
+		CD3D858C1446610100CDC5BD /* jfdctfst.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D85501446610100CDC5BD /* jfdctfst.c */; };
+		CD3D858D1446610100CDC5BD /* jfdctint.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D85511446610100CDC5BD /* jfdctint.c */; };
+		CD3D858E1446610100CDC5BD /* jidctflt.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D85521446610100CDC5BD /* jidctflt.c */; };
+		CD3D858F1446610100CDC5BD /* jidctfst.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D85531446610100CDC5BD /* jidctfst.c */; };
+		CD3D85901446610100CDC5BD /* jidctint.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D85541446610100CDC5BD /* jidctint.c */; };
+		CD3D85911446610100CDC5BD /* jinclude.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3D85551446610100CDC5BD /* jinclude.h */; };
+		CD3D85951446610100CDC5BD /* jmemmgr.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D85591446610100CDC5BD /* jmemmgr.c */; };
+		CD3D85971446610100CDC5BD /* jmemnobs.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D855B1446610100CDC5BD /* jmemnobs.c */; };
+		CD3D85981446610100CDC5BD /* jmemsys.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3D855C1446610100CDC5BD /* jmemsys.h */; };
+		CD3D85991446610100CDC5BD /* jmorecfg.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3D855D1446610100CDC5BD /* jmorecfg.h */; };
+		CD3D859A1446610100CDC5BD /* jpegint.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3D855E1446610100CDC5BD /* jpegint.h */; };
+		CD3D859B1446610100CDC5BD /* jpeglib.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3D855F1446610100CDC5BD /* jpeglib.h */; };
+		CD3D859C1446610100CDC5BD /* jpegtran.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D85601446610100CDC5BD /* jpegtran.c */; };
+		CD3D859D1446610100CDC5BD /* jquant1.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D85611446610100CDC5BD /* jquant1.c */; };
+		CD3D859E1446610100CDC5BD /* jquant2.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D85621446610100CDC5BD /* jquant2.c */; };
+		CD3D859F1446610100CDC5BD /* jutils.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D85631446610100CDC5BD /* jutils.c */; };
+		CD3D85A01446610100CDC5BD /* jversion.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3D85641446610100CDC5BD /* jversion.h */; };
+		CD3D85A11446610100CDC5BD /* jaricom.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D85291446610100CDC5BD /* jaricom.c */; };
+		CD3D85A21446610100CDC5BD /* jcapimin.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D852A1446610100CDC5BD /* jcapimin.c */; };
+		CD3D85A31446610100CDC5BD /* jcapistd.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D852B1446610100CDC5BD /* jcapistd.c */; };
+		CD3D85A41446610100CDC5BD /* jcarith.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D852C1446610100CDC5BD /* jcarith.c */; };
+		CD3D85A51446610100CDC5BD /* jccoefct.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D852D1446610100CDC5BD /* jccoefct.c */; };
+		CD3D85A61446610100CDC5BD /* jccolor.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D852E1446610100CDC5BD /* jccolor.c */; };
+		CD3D85A71446610100CDC5BD /* jcdctmgr.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D852F1446610100CDC5BD /* jcdctmgr.c */; };
+		CD3D85A81446610100CDC5BD /* jchuff.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D85301446610100CDC5BD /* jchuff.c */; };
+		CD3D85A91446610100CDC5BD /* jcinit.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D85311446610100CDC5BD /* jcinit.c */; };
+		CD3D85AA1446610100CDC5BD /* jcmainct.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D85321446610100CDC5BD /* jcmainct.c */; };
+		CD3D85AB1446610100CDC5BD /* jcmarker.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D85331446610100CDC5BD /* jcmarker.c */; };
+		CD3D85AC1446610100CDC5BD /* jcmaster.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D85341446610100CDC5BD /* jcmaster.c */; };
+		CD3D85AD1446610100CDC5BD /* jcomapi.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D85351446610100CDC5BD /* jcomapi.c */; };
+		CD3D85AE1446610100CDC5BD /* jconfig.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3D85361446610100CDC5BD /* jconfig.h */; };
+		CD3D85AF1446610100CDC5BD /* jcparam.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D85371446610100CDC5BD /* jcparam.c */; };
+		CD3D85B01446610100CDC5BD /* jcprepct.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D85381446610100CDC5BD /* jcprepct.c */; };
+		CD3D85B11446610100CDC5BD /* jcsample.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D85391446610100CDC5BD /* jcsample.c */; };
+		CD3D85B21446610100CDC5BD /* jctrans.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D853A1446610100CDC5BD /* jctrans.c */; };
+		CD3D85B31446610100CDC5BD /* jdapimin.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D853B1446610100CDC5BD /* jdapimin.c */; };
+		CD3D85B41446610100CDC5BD /* jdapistd.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D853C1446610100CDC5BD /* jdapistd.c */; };
+		CD3D85B51446610100CDC5BD /* jdarith.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D853D1446610100CDC5BD /* jdarith.c */; };
+		CD3D85B61446610100CDC5BD /* jdatadst.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D853E1446610100CDC5BD /* jdatadst.c */; };
+		CD3D85B71446610100CDC5BD /* jdatasrc.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D853F1446610100CDC5BD /* jdatasrc.c */; };
+		CD3D85B81446610100CDC5BD /* jdcoefct.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D85401446610100CDC5BD /* jdcoefct.c */; };
+		CD3D85B91446610100CDC5BD /* jdcolor.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D85411446610100CDC5BD /* jdcolor.c */; };
+		CD3D85BA1446610100CDC5BD /* jdct.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3D85421446610100CDC5BD /* jdct.h */; };
+		CD3D85BB1446610100CDC5BD /* jddctmgr.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D85431446610100CDC5BD /* jddctmgr.c */; };
+		CD3D85BC1446610100CDC5BD /* jdhuff.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D85441446610100CDC5BD /* jdhuff.c */; };
+		CD3D85BD1446610100CDC5BD /* jdinput.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D85451446610100CDC5BD /* jdinput.c */; };
+		CD3D85BE1446610100CDC5BD /* jdmainct.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D85461446610100CDC5BD /* jdmainct.c */; };
+		CD3D85BF1446610100CDC5BD /* jdmarker.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D85471446610100CDC5BD /* jdmarker.c */; };
+		CD3D85C01446610100CDC5BD /* jdmaster.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D85481446610100CDC5BD /* jdmaster.c */; };
+		CD3D85C11446610100CDC5BD /* jdmerge.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D85491446610100CDC5BD /* jdmerge.c */; };
+		CD3D85C21446610100CDC5BD /* jdpostct.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D854A1446610100CDC5BD /* jdpostct.c */; };
+		CD3D85C31446610100CDC5BD /* jdsample.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D854B1446610100CDC5BD /* jdsample.c */; };
+		CD3D85C41446610100CDC5BD /* jdtrans.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D854C1446610100CDC5BD /* jdtrans.c */; };
+		CD3D85C51446610100CDC5BD /* jerror-moai.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D854D1446610100CDC5BD /* jerror-moai.c */; };
+		CD3D85C61446610100CDC5BD /* jerror.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3D854E1446610100CDC5BD /* jerror.h */; };
+		CD3D85C71446610100CDC5BD /* jfdctflt.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D854F1446610100CDC5BD /* jfdctflt.c */; };
+		CD3D85C81446610100CDC5BD /* jfdctfst.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D85501446610100CDC5BD /* jfdctfst.c */; };
+		CD3D85C91446610100CDC5BD /* jfdctint.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D85511446610100CDC5BD /* jfdctint.c */; };
+		CD3D85CA1446610100CDC5BD /* jidctflt.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D85521446610100CDC5BD /* jidctflt.c */; };
+		CD3D85CB1446610100CDC5BD /* jidctfst.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D85531446610100CDC5BD /* jidctfst.c */; };
+		CD3D85CC1446610100CDC5BD /* jidctint.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D85541446610100CDC5BD /* jidctint.c */; };
+		CD3D85CD1446610100CDC5BD /* jinclude.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3D85551446610100CDC5BD /* jinclude.h */; };
+		CD3D85D11446610100CDC5BD /* jmemmgr.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D85591446610100CDC5BD /* jmemmgr.c */; };
+		CD3D85D31446610100CDC5BD /* jmemnobs.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D855B1446610100CDC5BD /* jmemnobs.c */; };
+		CD3D85D41446610100CDC5BD /* jmemsys.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3D855C1446610100CDC5BD /* jmemsys.h */; };
+		CD3D85D51446610100CDC5BD /* jmorecfg.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3D855D1446610100CDC5BD /* jmorecfg.h */; };
+		CD3D85D61446610100CDC5BD /* jpegint.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3D855E1446610100CDC5BD /* jpegint.h */; };
+		CD3D85D71446610100CDC5BD /* jpeglib.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3D855F1446610100CDC5BD /* jpeglib.h */; };
+		CD3D85D81446610100CDC5BD /* jpegtran.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D85601446610100CDC5BD /* jpegtran.c */; };
+		CD3D85D91446610100CDC5BD /* jquant1.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D85611446610100CDC5BD /* jquant1.c */; };
+		CD3D85DA1446610100CDC5BD /* jquant2.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D85621446610100CDC5BD /* jquant2.c */; };
+		CD3D85DB1446610100CDC5BD /* jutils.c in Sources */ = {isa = PBXBuildFile; fileRef = CD3D85631446610100CDC5BD /* jutils.c */; };
+		CD3D85DC1446610100CDC5BD /* jversion.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3D85641446610100CDC5BD /* jversion.h */; };
+		CD3D86191446637D00CDC5BD /* MOAIImage-jpg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD3D86171446637D00CDC5BD /* MOAIImage-jpg.cpp */; };
+		CD3D861A1446637D00CDC5BD /* MOAIImage-png.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD3D86181446637D00CDC5BD /* MOAIImage-png.cpp */; };
+		CD3D861B1446637D00CDC5BD /* MOAIImage-jpg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD3D86171446637D00CDC5BD /* MOAIImage-jpg.cpp */; };
+		CD3D861C1446637D00CDC5BD /* MOAIImage-png.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD3D86181446637D00CDC5BD /* MOAIImage-png.cpp */; };
 		CD490075141AB6EC00913D80 /* lapi.c in Sources */ = {isa = PBXBuildFile; fileRef = CD490040141AB6EC00913D80 /* lapi.c */; };
 		CD490076141AB6EC00913D80 /* lapi.h in Headers */ = {isa = PBXBuildFile; fileRef = CD490041141AB6EC00913D80 /* lapi.h */; };
 		CD490077141AB6EC00913D80 /* lauxlib.c in Sources */ = {isa = PBXBuildFile; fileRef = CD490042141AB6EC00913D80 /* lauxlib.c */; };
@@ -3771,6 +3887,64 @@
 		CD2FDECA13542F1400B814DF /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		CD2FDEDB13542F3600B814DF /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/usr/lib/libiconv.dylib; sourceTree = DEVELOPER_DIR; };
 		CD2FDEDC13542F3600B814DF /* libz.1.2.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.3.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/usr/lib/libz.1.2.3.dylib; sourceTree = DEVELOPER_DIR; };
+		CD3D85291446610100CDC5BD /* jaricom.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jaricom.c; path = "../../3rdparty/jpeg-8c/jaricom.c"; sourceTree = SOURCE_ROOT; };
+		CD3D852A1446610100CDC5BD /* jcapimin.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jcapimin.c; path = "../../3rdparty/jpeg-8c/jcapimin.c"; sourceTree = SOURCE_ROOT; };
+		CD3D852B1446610100CDC5BD /* jcapistd.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jcapistd.c; path = "../../3rdparty/jpeg-8c/jcapistd.c"; sourceTree = SOURCE_ROOT; };
+		CD3D852C1446610100CDC5BD /* jcarith.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jcarith.c; path = "../../3rdparty/jpeg-8c/jcarith.c"; sourceTree = SOURCE_ROOT; };
+		CD3D852D1446610100CDC5BD /* jccoefct.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jccoefct.c; path = "../../3rdparty/jpeg-8c/jccoefct.c"; sourceTree = SOURCE_ROOT; };
+		CD3D852E1446610100CDC5BD /* jccolor.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jccolor.c; path = "../../3rdparty/jpeg-8c/jccolor.c"; sourceTree = SOURCE_ROOT; };
+		CD3D852F1446610100CDC5BD /* jcdctmgr.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jcdctmgr.c; path = "../../3rdparty/jpeg-8c/jcdctmgr.c"; sourceTree = SOURCE_ROOT; };
+		CD3D85301446610100CDC5BD /* jchuff.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jchuff.c; path = "../../3rdparty/jpeg-8c/jchuff.c"; sourceTree = SOURCE_ROOT; };
+		CD3D85311446610100CDC5BD /* jcinit.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jcinit.c; path = "../../3rdparty/jpeg-8c/jcinit.c"; sourceTree = SOURCE_ROOT; };
+		CD3D85321446610100CDC5BD /* jcmainct.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jcmainct.c; path = "../../3rdparty/jpeg-8c/jcmainct.c"; sourceTree = SOURCE_ROOT; };
+		CD3D85331446610100CDC5BD /* jcmarker.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jcmarker.c; path = "../../3rdparty/jpeg-8c/jcmarker.c"; sourceTree = SOURCE_ROOT; };
+		CD3D85341446610100CDC5BD /* jcmaster.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jcmaster.c; path = "../../3rdparty/jpeg-8c/jcmaster.c"; sourceTree = SOURCE_ROOT; };
+		CD3D85351446610100CDC5BD /* jcomapi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jcomapi.c; path = "../../3rdparty/jpeg-8c/jcomapi.c"; sourceTree = SOURCE_ROOT; };
+		CD3D85361446610100CDC5BD /* jconfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jconfig.h; path = "../../3rdparty/jpeg-8c/jconfig.h"; sourceTree = SOURCE_ROOT; };
+		CD3D85371446610100CDC5BD /* jcparam.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jcparam.c; path = "../../3rdparty/jpeg-8c/jcparam.c"; sourceTree = SOURCE_ROOT; };
+		CD3D85381446610100CDC5BD /* jcprepct.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jcprepct.c; path = "../../3rdparty/jpeg-8c/jcprepct.c"; sourceTree = SOURCE_ROOT; };
+		CD3D85391446610100CDC5BD /* jcsample.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jcsample.c; path = "../../3rdparty/jpeg-8c/jcsample.c"; sourceTree = SOURCE_ROOT; };
+		CD3D853A1446610100CDC5BD /* jctrans.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jctrans.c; path = "../../3rdparty/jpeg-8c/jctrans.c"; sourceTree = SOURCE_ROOT; };
+		CD3D853B1446610100CDC5BD /* jdapimin.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jdapimin.c; path = "../../3rdparty/jpeg-8c/jdapimin.c"; sourceTree = SOURCE_ROOT; };
+		CD3D853C1446610100CDC5BD /* jdapistd.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jdapistd.c; path = "../../3rdparty/jpeg-8c/jdapistd.c"; sourceTree = SOURCE_ROOT; };
+		CD3D853D1446610100CDC5BD /* jdarith.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jdarith.c; path = "../../3rdparty/jpeg-8c/jdarith.c"; sourceTree = SOURCE_ROOT; };
+		CD3D853E1446610100CDC5BD /* jdatadst.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jdatadst.c; path = "../../3rdparty/jpeg-8c/jdatadst.c"; sourceTree = SOURCE_ROOT; };
+		CD3D853F1446610100CDC5BD /* jdatasrc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jdatasrc.c; path = "../../3rdparty/jpeg-8c/jdatasrc.c"; sourceTree = SOURCE_ROOT; };
+		CD3D85401446610100CDC5BD /* jdcoefct.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jdcoefct.c; path = "../../3rdparty/jpeg-8c/jdcoefct.c"; sourceTree = SOURCE_ROOT; };
+		CD3D85411446610100CDC5BD /* jdcolor.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jdcolor.c; path = "../../3rdparty/jpeg-8c/jdcolor.c"; sourceTree = SOURCE_ROOT; };
+		CD3D85421446610100CDC5BD /* jdct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jdct.h; path = "../../3rdparty/jpeg-8c/jdct.h"; sourceTree = SOURCE_ROOT; };
+		CD3D85431446610100CDC5BD /* jddctmgr.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jddctmgr.c; path = "../../3rdparty/jpeg-8c/jddctmgr.c"; sourceTree = SOURCE_ROOT; };
+		CD3D85441446610100CDC5BD /* jdhuff.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jdhuff.c; path = "../../3rdparty/jpeg-8c/jdhuff.c"; sourceTree = SOURCE_ROOT; };
+		CD3D85451446610100CDC5BD /* jdinput.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jdinput.c; path = "../../3rdparty/jpeg-8c/jdinput.c"; sourceTree = SOURCE_ROOT; };
+		CD3D85461446610100CDC5BD /* jdmainct.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jdmainct.c; path = "../../3rdparty/jpeg-8c/jdmainct.c"; sourceTree = SOURCE_ROOT; };
+		CD3D85471446610100CDC5BD /* jdmarker.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jdmarker.c; path = "../../3rdparty/jpeg-8c/jdmarker.c"; sourceTree = SOURCE_ROOT; };
+		CD3D85481446610100CDC5BD /* jdmaster.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jdmaster.c; path = "../../3rdparty/jpeg-8c/jdmaster.c"; sourceTree = SOURCE_ROOT; };
+		CD3D85491446610100CDC5BD /* jdmerge.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jdmerge.c; path = "../../3rdparty/jpeg-8c/jdmerge.c"; sourceTree = SOURCE_ROOT; };
+		CD3D854A1446610100CDC5BD /* jdpostct.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jdpostct.c; path = "../../3rdparty/jpeg-8c/jdpostct.c"; sourceTree = SOURCE_ROOT; };
+		CD3D854B1446610100CDC5BD /* jdsample.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jdsample.c; path = "../../3rdparty/jpeg-8c/jdsample.c"; sourceTree = SOURCE_ROOT; };
+		CD3D854C1446610100CDC5BD /* jdtrans.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jdtrans.c; path = "../../3rdparty/jpeg-8c/jdtrans.c"; sourceTree = SOURCE_ROOT; };
+		CD3D854D1446610100CDC5BD /* jerror-moai.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = "jerror-moai.c"; path = "../../3rdparty/jpeg-8c/jerror-moai.c"; sourceTree = SOURCE_ROOT; };
+		CD3D854E1446610100CDC5BD /* jerror.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jerror.h; path = "../../3rdparty/jpeg-8c/jerror.h"; sourceTree = SOURCE_ROOT; };
+		CD3D854F1446610100CDC5BD /* jfdctflt.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jfdctflt.c; path = "../../3rdparty/jpeg-8c/jfdctflt.c"; sourceTree = SOURCE_ROOT; };
+		CD3D85501446610100CDC5BD /* jfdctfst.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jfdctfst.c; path = "../../3rdparty/jpeg-8c/jfdctfst.c"; sourceTree = SOURCE_ROOT; };
+		CD3D85511446610100CDC5BD /* jfdctint.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jfdctint.c; path = "../../3rdparty/jpeg-8c/jfdctint.c"; sourceTree = SOURCE_ROOT; };
+		CD3D85521446610100CDC5BD /* jidctflt.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jidctflt.c; path = "../../3rdparty/jpeg-8c/jidctflt.c"; sourceTree = SOURCE_ROOT; };
+		CD3D85531446610100CDC5BD /* jidctfst.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jidctfst.c; path = "../../3rdparty/jpeg-8c/jidctfst.c"; sourceTree = SOURCE_ROOT; };
+		CD3D85541446610100CDC5BD /* jidctint.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jidctint.c; path = "../../3rdparty/jpeg-8c/jidctint.c"; sourceTree = SOURCE_ROOT; };
+		CD3D85551446610100CDC5BD /* jinclude.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jinclude.h; path = "../../3rdparty/jpeg-8c/jinclude.h"; sourceTree = SOURCE_ROOT; };
+		CD3D85591446610100CDC5BD /* jmemmgr.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jmemmgr.c; path = "../../3rdparty/jpeg-8c/jmemmgr.c"; sourceTree = SOURCE_ROOT; };
+		CD3D855B1446610100CDC5BD /* jmemnobs.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jmemnobs.c; path = "../../3rdparty/jpeg-8c/jmemnobs.c"; sourceTree = SOURCE_ROOT; };
+		CD3D855C1446610100CDC5BD /* jmemsys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jmemsys.h; path = "../../3rdparty/jpeg-8c/jmemsys.h"; sourceTree = SOURCE_ROOT; };
+		CD3D855D1446610100CDC5BD /* jmorecfg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jmorecfg.h; path = "../../3rdparty/jpeg-8c/jmorecfg.h"; sourceTree = SOURCE_ROOT; };
+		CD3D855E1446610100CDC5BD /* jpegint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jpegint.h; path = "../../3rdparty/jpeg-8c/jpegint.h"; sourceTree = SOURCE_ROOT; };
+		CD3D855F1446610100CDC5BD /* jpeglib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jpeglib.h; path = "../../3rdparty/jpeg-8c/jpeglib.h"; sourceTree = SOURCE_ROOT; };
+		CD3D85601446610100CDC5BD /* jpegtran.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jpegtran.c; path = "../../3rdparty/jpeg-8c/jpegtran.c"; sourceTree = SOURCE_ROOT; };
+		CD3D85611446610100CDC5BD /* jquant1.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jquant1.c; path = "../../3rdparty/jpeg-8c/jquant1.c"; sourceTree = SOURCE_ROOT; };
+		CD3D85621446610100CDC5BD /* jquant2.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jquant2.c; path = "../../3rdparty/jpeg-8c/jquant2.c"; sourceTree = SOURCE_ROOT; };
+		CD3D85631446610100CDC5BD /* jutils.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = jutils.c; path = "../../3rdparty/jpeg-8c/jutils.c"; sourceTree = SOURCE_ROOT; };
+		CD3D85641446610100CDC5BD /* jversion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jversion.h; path = "../../3rdparty/jpeg-8c/jversion.h"; sourceTree = SOURCE_ROOT; };
+		CD3D86171446637D00CDC5BD /* MOAIImage-jpg.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "MOAIImage-jpg.cpp"; path = "../../src/moaicore/MOAIImage-jpg.cpp"; sourceTree = SOURCE_ROOT; };
+		CD3D86181446637D00CDC5BD /* MOAIImage-png.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "MOAIImage-png.cpp"; path = "../../src/moaicore/MOAIImage-png.cpp"; sourceTree = SOURCE_ROOT; };
 		CD490040141AB6EC00913D80 /* lapi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lapi.c; path = "../../src/moai-lua-5.1.3/src/lapi.c"; sourceTree = SOURCE_ROOT; };
 		CD490041141AB6EC00913D80 /* lapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lapi.h; path = "../../src/moai-lua-5.1.3/src/lapi.h"; sourceTree = SOURCE_ROOT; };
 		CD490042141AB6EC00913D80 /* lauxlib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lauxlib.c; path = "../../src/moai-lua-5.1.3/src/lauxlib.c"; sourceTree = SOURCE_ROOT; };
@@ -4731,6 +4905,7 @@
 				03240B2713564CB0000ADC60 /* freetype */,
 				CD218F9013A7FD8F008337E7 /* jansson */,
 				CD74E4481377D6610093EE68 /* libcrypto */,
+				CD3D8528144660A200CDC5BD /* libjpg */,
 				CD07C0FE13A14B2900C9386C /* libogg */,
 				03240B5813564CB0000ADC60 /* libpng */,
 				CD74E44A1377D6780093EE68 /* libssl */,
@@ -5884,6 +6059,8 @@
 				CDEFB3E313E37F3C000A9523 /* MOAIGfxDevice.h */,
 				CDF7130D141EBC5C00D650CA /* MOAIGfxResource.cpp */,
 				CDF7130E141EBC5C00D650CA /* MOAIGfxResource.h */,
+				CD3D86171446637D00CDC5BD /* MOAIImage-jpg.cpp */,
+				CD3D86181446637D00CDC5BD /* MOAIImage-png.cpp */,
 				CDEB91441360A78800AAC558 /* MOAIImage.cpp */,
 				CDEB91451360A78800AAC558 /* MOAIImage.h */,
 				0324E54713564BC7000ADC60 /* MOAIIndexBuffer.cpp */,
@@ -6445,6 +6622,69 @@
 				03240FE8135656D7000ADC60 /* OpenGL.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		CD3D8528144660A200CDC5BD /* libjpg */ = {
+			isa = PBXGroup;
+			children = (
+				CD3D85291446610100CDC5BD /* jaricom.c */,
+				CD3D852A1446610100CDC5BD /* jcapimin.c */,
+				CD3D852B1446610100CDC5BD /* jcapistd.c */,
+				CD3D852C1446610100CDC5BD /* jcarith.c */,
+				CD3D852D1446610100CDC5BD /* jccoefct.c */,
+				CD3D852E1446610100CDC5BD /* jccolor.c */,
+				CD3D852F1446610100CDC5BD /* jcdctmgr.c */,
+				CD3D85301446610100CDC5BD /* jchuff.c */,
+				CD3D85311446610100CDC5BD /* jcinit.c */,
+				CD3D85321446610100CDC5BD /* jcmainct.c */,
+				CD3D85331446610100CDC5BD /* jcmarker.c */,
+				CD3D85341446610100CDC5BD /* jcmaster.c */,
+				CD3D85351446610100CDC5BD /* jcomapi.c */,
+				CD3D85361446610100CDC5BD /* jconfig.h */,
+				CD3D85371446610100CDC5BD /* jcparam.c */,
+				CD3D85381446610100CDC5BD /* jcprepct.c */,
+				CD3D85391446610100CDC5BD /* jcsample.c */,
+				CD3D853A1446610100CDC5BD /* jctrans.c */,
+				CD3D853B1446610100CDC5BD /* jdapimin.c */,
+				CD3D853C1446610100CDC5BD /* jdapistd.c */,
+				CD3D853D1446610100CDC5BD /* jdarith.c */,
+				CD3D853E1446610100CDC5BD /* jdatadst.c */,
+				CD3D853F1446610100CDC5BD /* jdatasrc.c */,
+				CD3D85401446610100CDC5BD /* jdcoefct.c */,
+				CD3D85411446610100CDC5BD /* jdcolor.c */,
+				CD3D85421446610100CDC5BD /* jdct.h */,
+				CD3D85431446610100CDC5BD /* jddctmgr.c */,
+				CD3D85441446610100CDC5BD /* jdhuff.c */,
+				CD3D85451446610100CDC5BD /* jdinput.c */,
+				CD3D85461446610100CDC5BD /* jdmainct.c */,
+				CD3D85471446610100CDC5BD /* jdmarker.c */,
+				CD3D85481446610100CDC5BD /* jdmaster.c */,
+				CD3D85491446610100CDC5BD /* jdmerge.c */,
+				CD3D854A1446610100CDC5BD /* jdpostct.c */,
+				CD3D854B1446610100CDC5BD /* jdsample.c */,
+				CD3D854C1446610100CDC5BD /* jdtrans.c */,
+				CD3D854D1446610100CDC5BD /* jerror-moai.c */,
+				CD3D854E1446610100CDC5BD /* jerror.h */,
+				CD3D854F1446610100CDC5BD /* jfdctflt.c */,
+				CD3D85501446610100CDC5BD /* jfdctfst.c */,
+				CD3D85511446610100CDC5BD /* jfdctint.c */,
+				CD3D85521446610100CDC5BD /* jidctflt.c */,
+				CD3D85531446610100CDC5BD /* jidctfst.c */,
+				CD3D85541446610100CDC5BD /* jidctint.c */,
+				CD3D85551446610100CDC5BD /* jinclude.h */,
+				CD3D85591446610100CDC5BD /* jmemmgr.c */,
+				CD3D855B1446610100CDC5BD /* jmemnobs.c */,
+				CD3D855C1446610100CDC5BD /* jmemsys.h */,
+				CD3D855D1446610100CDC5BD /* jmorecfg.h */,
+				CD3D855E1446610100CDC5BD /* jpegint.h */,
+				CD3D855F1446610100CDC5BD /* jpeglib.h */,
+				CD3D85601446610100CDC5BD /* jpegtran.c */,
+				CD3D85611446610100CDC5BD /* jquant1.c */,
+				CD3D85621446610100CDC5BD /* jquant2.c */,
+				CD3D85631446610100CDC5BD /* jutils.c */,
+				CD3D85641446610100CDC5BD /* jversion.h */,
+			);
+			name = libjpg;
 			sourceTree = "<group>";
 		};
 		CD49003E141AB67700913D80 /* moai-lua-5.1.3 */ = {
@@ -8017,6 +8257,15 @@
 				CD490101141AB72200913D80 /* ZIPFSString.h in Headers */,
 				CD490103141AB72200913D80 /* ZIPFSVirtualPath.h in Headers */,
 				CD490105141AB72200913D80 /* ZIPFSZipFile.h in Headers */,
+				CD3D85AE1446610100CDC5BD /* jconfig.h in Headers */,
+				CD3D85BA1446610100CDC5BD /* jdct.h in Headers */,
+				CD3D85C61446610100CDC5BD /* jerror.h in Headers */,
+				CD3D85CD1446610100CDC5BD /* jinclude.h in Headers */,
+				CD3D85D41446610100CDC5BD /* jmemsys.h in Headers */,
+				CD3D85D51446610100CDC5BD /* jmorecfg.h in Headers */,
+				CD3D85D61446610100CDC5BD /* jpegint.h in Headers */,
+				CD3D85D71446610100CDC5BD /* jpeglib.h in Headers */,
+				CD3D85DC1446610100CDC5BD /* jversion.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8642,6 +8891,15 @@
 				CD4900F4141AB72200913D80 /* ZIPFSString.h in Headers */,
 				CD4900F6141AB72200913D80 /* ZIPFSVirtualPath.h in Headers */,
 				CD4900F8141AB72200913D80 /* ZIPFSZipFile.h in Headers */,
+				CD3D85721446610100CDC5BD /* jconfig.h in Headers */,
+				CD3D857E1446610100CDC5BD /* jdct.h in Headers */,
+				CD3D858A1446610100CDC5BD /* jerror.h in Headers */,
+				CD3D85911446610100CDC5BD /* jinclude.h in Headers */,
+				CD3D85981446610100CDC5BD /* jmemsys.h in Headers */,
+				CD3D85991446610100CDC5BD /* jmorecfg.h in Headers */,
+				CD3D859A1446610100CDC5BD /* jpegint.h in Headers */,
+				CD3D859B1446610100CDC5BD /* jpeglib.h in Headers */,
+				CD3D85A01446610100CDC5BD /* jversion.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9440,6 +9698,53 @@
 				CD490100141AB72200913D80 /* ZIPFSString.c in Sources */,
 				CD490102141AB72200913D80 /* ZIPFSVirtualPath.c in Sources */,
 				CD490104141AB72200913D80 /* ZIPFSZipFile.c in Sources */,
+				CD3D85A11446610100CDC5BD /* jaricom.c in Sources */,
+				CD3D85A21446610100CDC5BD /* jcapimin.c in Sources */,
+				CD3D85A31446610100CDC5BD /* jcapistd.c in Sources */,
+				CD3D85A41446610100CDC5BD /* jcarith.c in Sources */,
+				CD3D85A51446610100CDC5BD /* jccoefct.c in Sources */,
+				CD3D85A61446610100CDC5BD /* jccolor.c in Sources */,
+				CD3D85A71446610100CDC5BD /* jcdctmgr.c in Sources */,
+				CD3D85A81446610100CDC5BD /* jchuff.c in Sources */,
+				CD3D85A91446610100CDC5BD /* jcinit.c in Sources */,
+				CD3D85AA1446610100CDC5BD /* jcmainct.c in Sources */,
+				CD3D85AB1446610100CDC5BD /* jcmarker.c in Sources */,
+				CD3D85AC1446610100CDC5BD /* jcmaster.c in Sources */,
+				CD3D85AD1446610100CDC5BD /* jcomapi.c in Sources */,
+				CD3D85AF1446610100CDC5BD /* jcparam.c in Sources */,
+				CD3D85B01446610100CDC5BD /* jcprepct.c in Sources */,
+				CD3D85B11446610100CDC5BD /* jcsample.c in Sources */,
+				CD3D85B21446610100CDC5BD /* jctrans.c in Sources */,
+				CD3D85B31446610100CDC5BD /* jdapimin.c in Sources */,
+				CD3D85B41446610100CDC5BD /* jdapistd.c in Sources */,
+				CD3D85B51446610100CDC5BD /* jdarith.c in Sources */,
+				CD3D85B61446610100CDC5BD /* jdatadst.c in Sources */,
+				CD3D85B71446610100CDC5BD /* jdatasrc.c in Sources */,
+				CD3D85B81446610100CDC5BD /* jdcoefct.c in Sources */,
+				CD3D85B91446610100CDC5BD /* jdcolor.c in Sources */,
+				CD3D85BB1446610100CDC5BD /* jddctmgr.c in Sources */,
+				CD3D85BC1446610100CDC5BD /* jdhuff.c in Sources */,
+				CD3D85BD1446610100CDC5BD /* jdinput.c in Sources */,
+				CD3D85BE1446610100CDC5BD /* jdmainct.c in Sources */,
+				CD3D85BF1446610100CDC5BD /* jdmarker.c in Sources */,
+				CD3D85C01446610100CDC5BD /* jdmaster.c in Sources */,
+				CD3D85C11446610100CDC5BD /* jdmerge.c in Sources */,
+				CD3D85C21446610100CDC5BD /* jdpostct.c in Sources */,
+				CD3D85C31446610100CDC5BD /* jdsample.c in Sources */,
+				CD3D85C41446610100CDC5BD /* jdtrans.c in Sources */,
+				CD3D85C51446610100CDC5BD /* jerror-moai.c in Sources */,
+				CD3D85C71446610100CDC5BD /* jfdctflt.c in Sources */,
+				CD3D85C81446610100CDC5BD /* jfdctfst.c in Sources */,
+				CD3D85C91446610100CDC5BD /* jfdctint.c in Sources */,
+				CD3D85CA1446610100CDC5BD /* jidctflt.c in Sources */,
+				CD3D85CB1446610100CDC5BD /* jidctfst.c in Sources */,
+				CD3D85CC1446610100CDC5BD /* jidctint.c in Sources */,
+				CD3D85D11446610100CDC5BD /* jmemmgr.c in Sources */,
+				CD3D85D31446610100CDC5BD /* jmemnobs.c in Sources */,
+				CD3D85D81446610100CDC5BD /* jpegtran.c in Sources */,
+				CD3D85D91446610100CDC5BD /* jquant1.c in Sources */,
+				CD3D85DA1446610100CDC5BD /* jquant2.c in Sources */,
+				CD3D85DB1446610100CDC5BD /* jutils.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9650,6 +9955,8 @@
 				CDBD3D281425DC2600BC33D4 /* MOAIBox2DPulleyJoint.cpp in Sources */,
 				CDBD3D2A1425DC2600BC33D4 /* MOAIBox2DRevoluteJoint.cpp in Sources */,
 				CDBD3D2C1425DC2600BC33D4 /* MOAIBox2DWeldJoint.cpp in Sources */,
+				CD3D861B1446637D00CDC5BD /* MOAIImage-jpg.cpp in Sources */,
+				CD3D861C1446637D00CDC5BD /* MOAIImage-png.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10501,6 +10808,53 @@
 				CD4900F3141AB72200913D80 /* ZIPFSString.c in Sources */,
 				CD4900F5141AB72200913D80 /* ZIPFSVirtualPath.c in Sources */,
 				CD4900F7141AB72200913D80 /* ZIPFSZipFile.c in Sources */,
+				CD3D85651446610100CDC5BD /* jaricom.c in Sources */,
+				CD3D85661446610100CDC5BD /* jcapimin.c in Sources */,
+				CD3D85671446610100CDC5BD /* jcapistd.c in Sources */,
+				CD3D85681446610100CDC5BD /* jcarith.c in Sources */,
+				CD3D85691446610100CDC5BD /* jccoefct.c in Sources */,
+				CD3D856A1446610100CDC5BD /* jccolor.c in Sources */,
+				CD3D856B1446610100CDC5BD /* jcdctmgr.c in Sources */,
+				CD3D856C1446610100CDC5BD /* jchuff.c in Sources */,
+				CD3D856D1446610100CDC5BD /* jcinit.c in Sources */,
+				CD3D856E1446610100CDC5BD /* jcmainct.c in Sources */,
+				CD3D856F1446610100CDC5BD /* jcmarker.c in Sources */,
+				CD3D85701446610100CDC5BD /* jcmaster.c in Sources */,
+				CD3D85711446610100CDC5BD /* jcomapi.c in Sources */,
+				CD3D85731446610100CDC5BD /* jcparam.c in Sources */,
+				CD3D85741446610100CDC5BD /* jcprepct.c in Sources */,
+				CD3D85751446610100CDC5BD /* jcsample.c in Sources */,
+				CD3D85761446610100CDC5BD /* jctrans.c in Sources */,
+				CD3D85771446610100CDC5BD /* jdapimin.c in Sources */,
+				CD3D85781446610100CDC5BD /* jdapistd.c in Sources */,
+				CD3D85791446610100CDC5BD /* jdarith.c in Sources */,
+				CD3D857A1446610100CDC5BD /* jdatadst.c in Sources */,
+				CD3D857B1446610100CDC5BD /* jdatasrc.c in Sources */,
+				CD3D857C1446610100CDC5BD /* jdcoefct.c in Sources */,
+				CD3D857D1446610100CDC5BD /* jdcolor.c in Sources */,
+				CD3D857F1446610100CDC5BD /* jddctmgr.c in Sources */,
+				CD3D85801446610100CDC5BD /* jdhuff.c in Sources */,
+				CD3D85811446610100CDC5BD /* jdinput.c in Sources */,
+				CD3D85821446610100CDC5BD /* jdmainct.c in Sources */,
+				CD3D85831446610100CDC5BD /* jdmarker.c in Sources */,
+				CD3D85841446610100CDC5BD /* jdmaster.c in Sources */,
+				CD3D85851446610100CDC5BD /* jdmerge.c in Sources */,
+				CD3D85861446610100CDC5BD /* jdpostct.c in Sources */,
+				CD3D85871446610100CDC5BD /* jdsample.c in Sources */,
+				CD3D85881446610100CDC5BD /* jdtrans.c in Sources */,
+				CD3D85891446610100CDC5BD /* jerror-moai.c in Sources */,
+				CD3D858B1446610100CDC5BD /* jfdctflt.c in Sources */,
+				CD3D858C1446610100CDC5BD /* jfdctfst.c in Sources */,
+				CD3D858D1446610100CDC5BD /* jfdctint.c in Sources */,
+				CD3D858E1446610100CDC5BD /* jidctflt.c in Sources */,
+				CD3D858F1446610100CDC5BD /* jidctfst.c in Sources */,
+				CD3D85901446610100CDC5BD /* jidctint.c in Sources */,
+				CD3D85951446610100CDC5BD /* jmemmgr.c in Sources */,
+				CD3D85971446610100CDC5BD /* jmemnobs.c in Sources */,
+				CD3D859C1446610100CDC5BD /* jpegtran.c in Sources */,
+				CD3D859D1446610100CDC5BD /* jquant1.c in Sources */,
+				CD3D859E1446610100CDC5BD /* jquant2.c in Sources */,
+				CD3D859F1446610100CDC5BD /* jutils.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10730,6 +11084,8 @@
 				CDBD3D3A1425DC2600BC33D4 /* MOAIBox2DPulleyJoint.cpp in Sources */,
 				CDBD3D3C1425DC2600BC33D4 /* MOAIBox2DRevoluteJoint.cpp in Sources */,
 				CDBD3D3E1425DC2600BC33D4 /* MOAIBox2DWeldJoint.cpp in Sources */,
+				CD3D86191446637D00CDC5BD /* MOAIImage-jpg.cpp in Sources */,
+				CD3D861A1446637D00CDC5BD /* MOAIImage-png.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11311,6 +11667,7 @@
 					"\"../../3rdparty\"",
 					"\"../../3rdparty/contrib\"",
 					"\"../../3rdparty/tinyxml\"",
+					"\"../../3rdparty/jpeg-8c\"",
 					"\"../../3rdparty/lpng140\"",
 					"\"../../3rdparty/openssl-1.0.0d/include-iphone\"",
 					"\"../../3rdparty/curl-7.19.7/include-iphone\"",
@@ -11427,6 +11784,7 @@
 					"\"../../3rdparty\"",
 					"\"../../3rdparty/contrib\"",
 					"\"../../3rdparty/tinyxml\"",
+					"\"../../3rdparty/jpeg-8c\"",
 					"\"../../3rdparty/lpng140\"",
 					"\"../../3rdparty/openssl-1.0.0d/include-iphone\"",
 					"\"../../3rdparty/curl-7.19.7/include-iphone\"",
