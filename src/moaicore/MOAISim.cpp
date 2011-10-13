@@ -654,7 +654,7 @@ MOAISim::MOAISim () :
 	mLongLoadFlag ( false ),
 	mFramesToDo ( 1 ) {
 	
-	RTTI_SINGLE ( MOAIEventSource )
+	RTTI_SINGLE ( MOAIGlobalEventSource )
 	
 	// Start Lua
 	USLuaRuntime& luaRuntime = USLuaRuntime::Get ();
@@ -757,7 +757,7 @@ void MOAISim::RegisterLuaClass ( USLuaState& state ) {
 		{ "setFramesToDo",				_setFramesToDo },
 		{ "setHistogramEnabled",		_setHistogramEnabled },
 		{ "setLeakTrackingEnabled",		_setLeakTrackingEnabled },
-		{ "setListener",				&MOAIEventSource::_setListener < MOAISim > },
+		{ "setListener",				&MOAIGlobalEventSource::_setListener < MOAISim > },
 		{ "setLoopFlags",				_setLoopFlags },
 		{ "setLuaAllocLogEnabled",		_setLuaAllocLogEnabled },
 		{ "timeToFrames",				_timeToFrames },

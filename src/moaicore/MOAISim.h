@@ -17,7 +17,7 @@ class MOAIProp2D;
 	@const	EVENT_FINALIZE
 */
 class MOAISim :
-	public USGlobalClass < MOAISim, MOAIEventSource > {
+	public USGlobalClass < MOAISim, MOAIGlobalEventSource > {
 private:
 
 	// timer state
