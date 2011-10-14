@@ -164,10 +164,12 @@ bool Sound::decode(const RString& path, SoundInfo& info, float** data)
 	AudioSource* source = 0;
 	if (path.find(OGG_FILE_EXT) != RString::npos)
 	{
+#ifndef __ANDROID__
 		OggAudioSource* as = new OggAudioSource();
 		source = as;
 		if(as->init(path, true))
 			decoded = true;
+#endif			
 	}
 	else
 	{

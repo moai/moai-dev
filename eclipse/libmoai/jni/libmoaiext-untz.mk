@@ -65,6 +65,7 @@ $(SRC_PATH)/3rdparty/untz/src/native/android/WaveFile.cpp \
 $(SRC_PATH)/3rdparty/untz/src/native/android/RiffFile.cpp \
 $(SRC_PATH)/src/moaiext-untz/MOAIUntzSound.cpp \
 $(SRC_PATH)/src/moaiext-untz/MOAIUntzSystem.cpp \
+$(SRC_PATH)/src/moaiext-untz/MOAIUntzSampleBuffer.cpp \
 #$(SRC_PATH)/3rdparty/untz/src/OggAudioSource.cpp 
 
 include $(BUILD_STATIC_LIBRARY)

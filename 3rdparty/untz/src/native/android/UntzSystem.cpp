@@ -281,3 +281,12 @@ void System::setSampleRate(UInt32 sampleRate)
 {
 }
 
+void System::setVolume(float volume)
+{
+	return msInstance->mpData->mMixer.setVolume(volume);
+}
+
+float System::getVolume() const
+{
+	return msInstance->mpData->mMixer.getVolume();
+}
