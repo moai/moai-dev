@@ -3,6 +3,7 @@
 
 #import <moaiext-iphone/MOAIApp.h>
 #import <moaiext-iphone/MOAIGameCenter.h>
+#import <moaiext-iphone/MOAITapjoy.h>
 #import <moaiext-iphone/MOAIWebView.h>
 
 #import <moaiext-iphone/NSArray+MOAILib.h>

@@ -15,7 +15,7 @@
 //================================================================//
 class MOAIWebView :
 	public UIViewController, 
-	public MOAIEventSource {
+	public MOAIInstanceEventSource {
 private:
 	
 	bool						mHasToolBar;

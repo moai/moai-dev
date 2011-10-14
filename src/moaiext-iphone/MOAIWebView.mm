@@ -613,7 +613,7 @@ void MOAIWebView::RegisterLuaClass ( USLuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIWebView::RegisterLuaFuncs ( USLuaState& state ) {
 
-	MOAIEventSource::RegisterLuaFuncs ( state );
+	MOAIInstanceEventSource::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
 		{ "canGoBack",						_canGoBack },

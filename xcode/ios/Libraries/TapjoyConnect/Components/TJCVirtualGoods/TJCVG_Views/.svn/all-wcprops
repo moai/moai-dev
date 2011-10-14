@@ -1,0 +1,137 @@
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/team/!svn/ver/5291/development/trunk/projects/WolfToss/host-ios/Libraries/TapjoyConnect/Components/TJCVirtualGoods/TJCVG_Views
+END
+TJCVGGenericButtons.h
+K 25
+svn:wc:ra_dav:version-url
+V 149
+/team/!svn/ver/5291/development/trunk/projects/WolfToss/host-ios/Libraries/TapjoyConnect/Components/TJCVirtualGoods/TJCVG_Views/TJCVGGenericButtons.h
+END
+TJCVGItemButton.m
+K 25
+svn:wc:ra_dav:version-url
+V 145
+/team/!svn/ver/5291/development/trunk/projects/WolfToss/host-ios/Libraries/TapjoyConnect/Components/TJCVirtualGoods/TJCVG_Views/TJCVGItemButton.m
+END
+TJCVGGenericButtons.m
+K 25
+svn:wc:ra_dav:version-url
+V 149
+/team/!svn/ver/5291/development/trunk/projects/WolfToss/host-ios/Libraries/TapjoyConnect/Components/TJCVirtualGoods/TJCVG_Views/TJCVGGenericButtons.m
+END
+TJCVGItemDetailSectionView.h
+K 25
+svn:wc:ra_dav:version-url
+V 156
+/team/!svn/ver/5291/development/trunk/projects/WolfToss/host-ios/Libraries/TapjoyConnect/Components/TJCVirtualGoods/TJCVG_Views/TJCVGItemDetailSectionView.h
+END
+TJCVGPageView.xib
+K 25
+svn:wc:ra_dav:version-url
+V 145
+/team/!svn/ver/5291/development/trunk/projects/WolfToss/host-ios/Libraries/TapjoyConnect/Components/TJCVirtualGoods/TJCVG_Views/TJCVGPageView.xib
+END
+TJCVGView.xib
+K 25
+svn:wc:ra_dav:version-url
+V 141
+/team/!svn/ver/5291/development/trunk/projects/WolfToss/host-ios/Libraries/TapjoyConnect/Components/TJCVirtualGoods/TJCVG_Views/TJCVGView.xib
+END
+TJCVGItemDetailSectionView.m
+K 25
+svn:wc:ra_dav:version-url
+V 156
+/team/!svn/ver/5291/development/trunk/projects/WolfToss/host-ios/Libraries/TapjoyConnect/Components/TJCVirtualGoods/TJCVG_Views/TJCVGItemDetailSectionView.m
+END
+TJCVGPageView.h
+K 25
+svn:wc:ra_dav:version-url
+V 143
+/team/!svn/ver/5291/development/trunk/projects/WolfToss/host-ios/Libraries/TapjoyConnect/Components/TJCVirtualGoods/TJCVG_Views/TJCVGPageView.h
+END
+TJCVGView.h
+K 25
+svn:wc:ra_dav:version-url
+V 139
+/team/!svn/ver/5291/development/trunk/projects/WolfToss/host-ios/Libraries/TapjoyConnect/Components/TJCVirtualGoods/TJCVG_Views/TJCVGView.h
+END
+TJCVGPageView.m
+K 25
+svn:wc:ra_dav:version-url
+V 143
+/team/!svn/ver/5291/development/trunk/projects/WolfToss/host-ios/Libraries/TapjoyConnect/Components/TJCVirtualGoods/TJCVG_Views/TJCVGPageView.m
+END
+TJCVGItemDetail.xib
+K 25
+svn:wc:ra_dav:version-url
+V 147
+/team/!svn/ver/5291/development/trunk/projects/WolfToss/host-ios/Libraries/TapjoyConnect/Components/TJCVirtualGoods/TJCVG_Views/TJCVGItemDetail.xib
+END
+.DS_Store
+K 25
+svn:wc:ra_dav:version-url
+V 137
+/team/!svn/ver/5291/development/trunk/projects/WolfToss/host-ios/Libraries/TapjoyConnect/Components/TJCVirtualGoods/TJCVG_Views/.DS_Store
+END
+TJCVGTableViewCell.xib
+K 25
+svn:wc:ra_dav:version-url
+V 150
+/team/!svn/ver/5291/development/trunk/projects/WolfToss/host-ios/Libraries/TapjoyConnect/Components/TJCVirtualGoods/TJCVG_Views/TJCVGTableViewCell.xib
+END
+TJCVGView.m
+K 25
+svn:wc:ra_dav:version-url
+V 139
+/team/!svn/ver/5291/development/trunk/projects/WolfToss/host-ios/Libraries/TapjoyConnect/Components/TJCVirtualGoods/TJCVG_Views/TJCVGView.m
+END
+TJCVGItemDetail.h
+K 25
+svn:wc:ra_dav:version-url
+V 145
+/team/!svn/ver/5291/development/trunk/projects/WolfToss/host-ios/Libraries/TapjoyConnect/Components/TJCVirtualGoods/TJCVG_Views/TJCVGItemDetail.h
+END
+TJCVGTableViewCell.h
+K 25
+svn:wc:ra_dav:version-url
+V 148
+/team/!svn/ver/5291/development/trunk/projects/WolfToss/host-ios/Libraries/TapjoyConnect/Components/TJCVirtualGoods/TJCVG_Views/TJCVGTableViewCell.h
+END
+TJCVGItemButtonView.h
+K 25
+svn:wc:ra_dav:version-url
+V 149
+/team/!svn/ver/5291/development/trunk/projects/WolfToss/host-ios/Libraries/TapjoyConnect/Components/TJCVirtualGoods/TJCVG_Views/TJCVGItemButtonView.h
+END
+TJCVGItemButton.xib
+K 25
+svn:wc:ra_dav:version-url
+V 147
+/team/!svn/ver/5291/development/trunk/projects/WolfToss/host-ios/Libraries/TapjoyConnect/Components/TJCVirtualGoods/TJCVG_Views/TJCVGItemButton.xib
+END
+TJCVGItemDetail.m
+K 25
+svn:wc:ra_dav:version-url
+V 145
+/team/!svn/ver/5291/development/trunk/projects/WolfToss/host-ios/Libraries/TapjoyConnect/Components/TJCVirtualGoods/TJCVG_Views/TJCVGItemDetail.m
+END
+TJCVGTableViewCell.m
+K 25
+svn:wc:ra_dav:version-url
+V 148
+/team/!svn/ver/5291/development/trunk/projects/WolfToss/host-ios/Libraries/TapjoyConnect/Components/TJCVirtualGoods/TJCVG_Views/TJCVGTableViewCell.m
+END
+TJCVGItemButtonView.m
+K 25
+svn:wc:ra_dav:version-url
+V 149
+/team/!svn/ver/5291/development/trunk/projects/WolfToss/host-ios/Libraries/TapjoyConnect/Components/TJCVirtualGoods/TJCVG_Views/TJCVGItemButtonView.m
+END
+TJCVGItemButton.h
+K 25
+svn:wc:ra_dav:version-url
+V 145
+/team/!svn/ver/5291/development/trunk/projects/WolfToss/host-ios/Libraries/TapjoyConnect/Components/TJCVirtualGoods/TJCVG_Views/TJCVGItemButton.h
+END
