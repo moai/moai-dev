@@ -93,11 +93,12 @@ private:
 	bool			mCpuUVTransform;
 	
 	bool			mHasContext;
-	bool			mIsES;
+	bool			mIsOpenGLES;
 	u32				mMajorVersion;
 	u32				mMinorVersion;
 	bool			mIsProgrammable;
 	
+	bool			mIsFramebufferSupported;
 	GLuint			mDefaultFrameBuffer;
 	
 	size_t			mTextureMemoryUsage;
@@ -134,6 +135,10 @@ public:
 	
 	GET ( size_t, TextureMemoryUsage, mTextureMemoryUsage )
 	GET ( bool, HasContext, mHasContext )
+	
+	GET_BOOL ( IsOpenGLES, mIsOpenGLES )
+	GET_BOOL ( IsProgrammable, mIsProgrammable )
+	GET_BOOL ( IsFramebufferSupported, mIsFramebufferSupported )
 	
 	//----------------------------------------------------------------//
 	void					BeginDrawing			();
@@ -172,8 +177,6 @@ public:
 	USMatrix4x4				GetWndToModelMtx		() const;
 	USMatrix4x4				GetWndToWorldMtx		() const;
 	
-	bool					IsOpenGLES				();
-	bool					IsProgrammable			();
 	u32						LogErrors				();
 	
 							MOAIGfxDevice			();

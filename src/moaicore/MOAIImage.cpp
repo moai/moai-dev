@@ -659,6 +659,8 @@ u32 MOAIImage::GetDataSize () const {
 //----------------------------------------------------------------//
 u32 MOAIImage::GetMinPowerOfTwo ( u32 size ) {
 
+	if ( MOAIImage::IsPow2 ( size )) return size;
+
 	u32 pow2 = 1;
 	while ( pow2 < size ) pow2 = pow2 << 0x01;
 	return pow2;
@@ -789,6 +791,18 @@ bool MOAIImage::IsJpg ( const void* buffer, u32 size ) {
 
 	if ( size < 4 ) return false;
 	return ( memcmp ( buffer, magic, 4 ) == 0 );
+}
+
+//----------------------------------------------------------------//
+bool MOAIImage::IsPow2 () {
+
+	return ( MOAIImage::IsPow2 ( this->mWidth ) && MOAIImage::IsPow2 ( this->mHeight ));
+}
+
+//----------------------------------------------------------------//
+bool MOAIImage::IsPow2 ( u32 n ) {
+
+	return (( n == 1 ) || (( n & ( n - 1 )) == 0 ));
 }
 
 //----------------------------------------------------------------//

@@ -215,7 +215,7 @@ void MOAIGfxDevice::DetectContext () {
 	STLString gles = "opengl es";
 	
 	if ( version.find ( gles ) != version.npos ) {
-		this->mIsES = true;
+		this->mIsOpenGLES = true;
 		version = version.substr ( gles.length ());
 		
 		size_t space = version.find ( ' ' );
@@ -224,7 +224,7 @@ void MOAIGfxDevice::DetectContext () {
 		}
 	}
 	else {
-		this->mIsES = false;
+		this->mIsOpenGLES = false;
 	}
 	
 	version = version.substr ( 0, 3 );
@@ -233,28 +233,38 @@ void MOAIGfxDevice::DetectContext () {
 	this->mMinorVersion = version.at ( 2 ) - '0';
 	
 	this->mIsProgrammable = ( this->mMajorVersion >= 2 );
+	this->mIsFramebufferSupported = true;
 	
 	#if defined ( __GLEW_H__ )
 	
-		#if GL_EXT_framebuffer_object
-	  
-			REMAP_EXTENSION_PTR ( glBindFramebuffer,						glBindFramebufferEXT )
-			REMAP_EXTENSION_PTR ( glCheckFramebufferStatus,					glCheckFramebufferStatusEXT )
-			REMAP_EXTENSION_PTR ( glDeleteFramebuffers,						glDeleteFramebuffersEXT )
-			REMAP_EXTENSION_PTR ( glDeleteRenderbuffers,					glDeleteRenderbuffersEXT )
-			REMAP_EXTENSION_PTR ( glFramebufferRenderbuffer,				glFramebufferRenderbufferEXT )
-			REMAP_EXTENSION_PTR ( glFramebufferTexture1D,					glFramebufferTexture1DEXT )
-			REMAP_EXTENSION_PTR ( glFramebufferTexture2D,					glFramebufferTexture2DEXT )
-			REMAP_EXTENSION_PTR ( glFramebufferTexture3D,					glFramebufferTexture3DEXT )
-			REMAP_EXTENSION_PTR ( glGenFramebuffers,						glGenFramebuffersEXT )
-			REMAP_EXTENSION_PTR ( glGenRenderbuffers,						glGenRenderbuffersEXT )
-			REMAP_EXTENSION_PTR ( glGenerateMipmap,							glGenerateMipmapEXT )
-			REMAP_EXTENSION_PTR ( glGetFramebufferAttachmentParameteriv,	glGetFramebufferAttachmentParameterivEXT )
-			REMAP_EXTENSION_PTR ( glGetRenderbufferParameteriv,				glGetRenderbufferParameterivEXT )
-			REMAP_EXTENSION_PTR ( glIsFramebuffer,							glIsFramebufferEXT )
-			REMAP_EXTENSION_PTR ( glIsRenderbuffer,							glIsRenderbufferEXT )
-			REMAP_EXTENSION_PTR ( glRenderbufferStorage,					glRenderbufferStorageEXT )
-		#endif
+		// if framebuffer object is not in code, check to see if it's available as
+		// an extension and remap to core function pointers if so
+		if (( this->mIsOpenGLES == false ) && ( this->mMajorVersion < 3 )) {
+			
+			if ( glewIsSupported ( "GL_EXT_framebuffer_object" )) {
+		  
+				REMAP_EXTENSION_PTR ( glBindFramebuffer,						glBindFramebufferEXT )
+				REMAP_EXTENSION_PTR ( glCheckFramebufferStatus,					glCheckFramebufferStatusEXT )
+				REMAP_EXTENSION_PTR ( glDeleteFramebuffers,						glDeleteFramebuffersEXT )
+				REMAP_EXTENSION_PTR ( glDeleteRenderbuffers,					glDeleteRenderbuffersEXT )
+				REMAP_EXTENSION_PTR ( glFramebufferRenderbuffer,				glFramebufferRenderbufferEXT )
+				REMAP_EXTENSION_PTR ( glFramebufferTexture1D,					glFramebufferTexture1DEXT )
+				REMAP_EXTENSION_PTR ( glFramebufferTexture2D,					glFramebufferTexture2DEXT )
+				REMAP_EXTENSION_PTR ( glFramebufferTexture3D,					glFramebufferTexture3DEXT )
+				REMAP_EXTENSION_PTR ( glGenFramebuffers,						glGenFramebuffersEXT )
+				REMAP_EXTENSION_PTR ( glGenRenderbuffers,						glGenRenderbuffersEXT )
+				REMAP_EXTENSION_PTR ( glGenerateMipmap,							glGenerateMipmapEXT )
+				REMAP_EXTENSION_PTR ( glGetFramebufferAttachmentParameteriv,	glGetFramebufferAttachmentParameterivEXT )
+				REMAP_EXTENSION_PTR ( glGetRenderbufferParameteriv,				glGetRenderbufferParameterivEXT )
+				REMAP_EXTENSION_PTR ( glIsFramebuffer,							glIsFramebufferEXT )
+				REMAP_EXTENSION_PTR ( glIsRenderbuffer,							glIsRenderbufferEXT )
+				REMAP_EXTENSION_PTR ( glRenderbufferStorage,					glRenderbufferStorageEXT )	
+			}
+			else {
+				// looks like frame buffer isn't supported
+				this->mIsFramebufferSupported = false;
+			}
+		}
 	#endif
 	
 	this->RenewResources ();
@@ -528,18 +538,6 @@ void MOAIGfxDevice::InsertGfxResource ( MOAIGfxResource& resource ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIGfxDevice::IsOpenGLES () {
-
-	return this->mIsES;
-}
-
-//----------------------------------------------------------------//
-bool MOAIGfxDevice::IsProgrammable () {
-
-	return this->mIsProgrammable;
-}
-
-//----------------------------------------------------------------//
 u32 MOAIGfxDevice::LogErrors () {
 
 	u32 count = 0;
@@ -575,10 +573,11 @@ MOAIGfxDevice::MOAIGfxDevice () :
 	mCpuVertexTransform ( false ),
 	mCpuUVTransform ( false ),
 	mHasContext ( false ),
-	mIsES ( false ),
+	mIsOpenGLES ( false ),
 	mMajorVersion ( 0 ),
 	mMinorVersion ( 0 ),
 	mIsProgrammable ( false ),
+	mIsFramebufferSupported ( 0 ),
 	mDefaultFrameBuffer ( 0 ),
 	mTextureMemoryUsage ( 0 ) {
 	
@@ -762,7 +761,9 @@ void MOAIGfxDevice::SetFrameBuffer ( MOAITexture* texture ) {
 		frameBuffer->Bind ();
 	}
 	else {
-		glBindFramebuffer ( GL_FRAMEBUFFER, this->mDefaultFrameBuffer ); // TODO: crash?
+		if ( this->mIsFramebufferSupported ) {
+			glBindFramebuffer ( GL_FRAMEBUFFER, this->mDefaultFrameBuffer ); // TODO: crash?
+		}
 	}
 }
 

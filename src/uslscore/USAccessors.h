@@ -7,6 +7,9 @@
 #define GET(type,name,member) \
 	inline type Get##name () { return member; }
 
+#define GET_BOOL(name,member) \
+	inline bool name () { return ( member == true ); }
+
 #define GET_CONST(type,name,member) \
 	inline const type Get##name () const { return member; }
 

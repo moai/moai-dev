@@ -150,7 +150,7 @@ int MOAITexture::_getSize ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	initFrameBuffer
-	@text	Initializes shader as a frame buffer.
+	@text	Initializes texture as a frame buffer.
 	
 	@in		MOAITexture self
 	@in		number width
@@ -313,6 +313,11 @@ void MOAITexture::CreateTextureFromImage ( MOAIImage& image ) {
 	// get the dimensions before trying to get the OpenGL texture ID
 	this->mWidth = image.GetWidth ();
 	this->mHeight = image.GetHeight ();
+
+	// warn if not a power of two
+	if ( !image.IsPow2 ()) {
+		MOAILog ( 0, MOAILogMessages::MOAITexture_NonPowerOfTwo_SDD, ( cc8* )this->mFilename, this->mWidth, this->mHeight );
+	}
 
 	glGenTextures ( 1, &this->mGLTexID );
 	if ( !this->mGLTexID ) return;
@@ -683,17 +688,23 @@ void MOAITexture::Init ( const void* data, u32 size, u32 transform, cc8* debugna
 //----------------------------------------------------------------//
 void MOAITexture::InitFrameBuffer ( u32 width, u32 height, GLenum colorFormat, GLenum depthFormat, GLenum stencilFormat ) {
 
-	if ( !this->mFrameBuffer ) {
-		this->mFrameBuffer = new MOAIFrameBuffer ();
+	if ( MOAIGfxDevice::Get ().IsFramebufferSupported ()) {
+
+		if ( !this->mFrameBuffer ) {
+			this->mFrameBuffer = new MOAIFrameBuffer ();
+		}
+
+		this->mWidth = width;
+		this->mHeight = height;
+
+		this->mFrameBuffer->Init ( width, height, colorFormat, depthFormat, stencilFormat );
+		this->mIsRenewable = true;
+		
+		this->OnLoad ();
 	}
-
-	this->mWidth = width;
-	this->mHeight = height;
-
-	this->mFrameBuffer->Init ( width, height, colorFormat, depthFormat, stencilFormat );
-	this->mIsRenewable = true;
-	
-	this->OnLoad ();
+	else {
+		MOAILog ( 0, MOAILogMessages::MOAITexture_NoFramebuffer );
+	}
 }
 
 //----------------------------------------------------------------//

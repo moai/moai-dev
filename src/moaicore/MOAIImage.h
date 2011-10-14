@@ -114,6 +114,8 @@ public:
 	u32					GetRowSize				() const;
 	void				Init					( u32 width, u32 height, USColor::Format colorFmt, USPixel::Format pixelFmt );
 	void				Init					( const void* bitmap, u32 width, u32 height, USColor::Format colorFmt );
+	bool				IsPow2					();
+	static bool			IsPow2					( u32 n );
 	void				Load					( USData& data, u32 transform = 0 );
 	void				Load					( cc8* filename, u32 transform = 0 );
 	void				Load					( const void* buffer, u32 size, u32 transform = 0 );
