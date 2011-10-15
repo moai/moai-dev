@@ -41,7 +41,7 @@ public:
 	};
 	
 	//----------------------------------------------------------------//
-	bool			ApplyAttrOp			( u32 attrID, USAttrOp& attrOp );
+	bool			ApplyAttrOp			( u32 attrID, USAttrOp& attrOp, u32 op );
 					MOAIAnimCurve		();
 					~MOAIAnimCurve		();
 	void			OnDepNodeUpdate		();

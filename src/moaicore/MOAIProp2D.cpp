@@ -369,19 +369,19 @@ int MOAIProp2D::_setVisible ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIProp2D::ApplyAttrOp ( u32 attrID, USAttrOp& attrOp ) {
+bool MOAIProp2D::ApplyAttrOp ( u32 attrID, USAttrOp& attrOp, u32 op ) {
 
 	if ( MOAIProp2DAttr::Check ( attrID )) {
 		attrID = UNPACK_ATTR ( attrID );
 
 		if ( attrID == ATTR_INDEX ) {
-			this->mIndex = attrOp.Op ( this->mIndex );
+			this->mIndex = attrOp.Apply ( this->mIndex, op );
 			return true;
 		}
 	}
 	
-	if ( MOAIColor::ApplyAttrOp ( attrID, attrOp )) return true;
-	return MOAITransform::ApplyAttrOp ( attrID, attrOp );
+	if ( MOAIColor::ApplyAttrOp ( attrID, attrOp, op )) return true;
+	return MOAITransform::ApplyAttrOp ( attrID, attrOp, op );
 }
 
 //----------------------------------------------------------------//

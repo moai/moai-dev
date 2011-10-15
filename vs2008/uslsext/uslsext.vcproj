@@ -348,14 +348,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\uslsext\USAttrMap.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USAttrMap.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\uslsext\USAttrOp.cpp"
 				>
 			</File>

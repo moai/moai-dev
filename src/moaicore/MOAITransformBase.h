@@ -45,7 +45,7 @@ public:
 	};
 	
 	//----------------------------------------------------------------//
-	bool					ApplyAttrOp					( u32 attrID, USAttrOp& attrOp );
+	bool					ApplyAttrOp					( u32 attrID, USAttrOp& attrOp, u32 op );
 	const USAffine2D&		GetLocalToWorldMtx			();
 	const USAffine2D*		GetLocTrait					();
 	const USAffine2D*		GetTransformTrait			();

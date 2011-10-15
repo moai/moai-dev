@@ -4,160 +4,219 @@
 #ifndef	USATTROP_H
 #define	USATTROP_H
 
+#include <uslsext/USAffine2D.h>
+
 //================================================================//
 // USAttrOp
 //================================================================//
 class USAttrOp  {
 protected:
 
-	float mFloat;
+	enum {
+		TYPE_UNKNOWN,
+		TYPE_AFFINE_2D,
+		TYPE_NUMBER,
+		TYPE_RECT,
+		TYPE_VALID,
+	};
+	
 	u32 mType;
 
-public:
+	union {
+		float		mNumber;
+		
+		u8			mAffine2D [ sizeof ( USAffine2D )];
+		u8			mRect [ sizeof ( USAffine2D )];
+	};
 
+public:
+	
 	enum {
-		TYPE_BOOLEAN	= 0x00000001 << 0,
-		TYPE_FLOAT		= 0x00000001 << 1,
-		TYPE_INT		= 0x00000001 << 2,
-		TYPE_INDEX		= 0x00000001 << 3,
+		NONE,
+		ADD,
+		CHECK,
+		GET,
+		SET,
 	};
 	
 	//----------------------------------------------------------------//
-	virtual bool		Op		( bool value ) = 0;
-	virtual float		Op		( float value ) = 0;
-	virtual int			Op		( int value ) = 0;
-	virtual u32			Op		( u32 value ) = 0;
-	
+	inline void Apply ( USAffine2D& attr, u32 op ) {
+
+		this->ComplexTypeOp ( attr, op );
+	}
+
 	//----------------------------------------------------------------//
-	template < typename TYPE > TYPE	Get	();
-	template < typename TYPE > void	Set	( TYPE value );
-	
+	inline bool Apply ( bool attr, u32 op ) {
+
+		if ( op == ADD ) {
+			if ( this->mType == TYPE_NUMBER ) {
+				return ( this->mNumber == 1.0f ) && attr;
+			}
+		}
+		return this->NumericTypeOp ( attr, op );
+	}
+
 	//----------------------------------------------------------------//
-	inline void Clear () {
-		this->mType = 0;
+	inline float Apply ( float attr, u32 op ) {
+
+		if (( op == ADD ) && ( this->mType == TYPE_NUMBER )) {
+			return attr + this->mNumber;
+		}
+		return this->NumericTypeOp ( attr, op );
+	}
+
+	//----------------------------------------------------------------//
+	inline int Apply ( int attr, u32 op ) {
+
+		if (( op == ADD ) && ( this->mType == TYPE_NUMBER )) {
+			return attr + USFloat::ToInt ( this->mNumber );
+		}
+		return this->NumericTypeOp ( attr, op );
+	}
+
+	//----------------------------------------------------------------//
+	inline int Apply ( u32 attr, u32 op ) {
+
+		if (( op == ADD ) && ( this->mType == TYPE_NUMBER )) {
+			return attr + ( u32 )USFloat::ToInt ( this->mNumber );
+		}
+		return this->NumericTypeOp ( attr, op );
+	}
+
+	//----------------------------------------------------------------//
+	inline void Apply ( USRect& attr, u32 op ) {
+
+		this->ComplexTypeOp ( attr, op );
 	}
 	
 	//----------------------------------------------------------------//
-	inline void Copy ( const USAttrOp& assign ) {
-		this->mFloat = assign.mFloat;
-		this->mType = assign.mType;
+	inline void Clear () {
+		this->mType = TYPE_UNKNOWN;
+	}
+	
+	//----------------------------------------------------------------//
+	inline void GetValue ( USAffine2D& value ) {
+
+		if ( this->mType == TYPE_RECT ) {
+			memcpy ( &value, &this->mAffine2D, sizeof ( USAffine2D ));
+		}
+	}
+	
+	//----------------------------------------------------------------//
+	inline void GetValue ( USRect& value ) {
+
+		if ( this->mType == TYPE_RECT ) {
+			memcpy ( &value, &this->mRect, sizeof ( USRect ));
+		}
 	}
 	
 	//----------------------------------------------------------------//
 	inline bool IsValid () {
-		return ( this->mType != 0 );
+		return ( this->mType != TYPE_UNKNOWN );
+	}
+
+	//----------------------------------------------------------------//
+	inline void SetValue ( const USAffine2D& value ) {
+
+		this->mType = TYPE_AFFINE_2D;
+		memcpy ( &this->mAffine2D, &value, sizeof ( USAffine2D ));
+	}
+
+	//----------------------------------------------------------------//
+	inline void SetValue ( bool value ) {
+
+		this->mType = TYPE_NUMBER;
+		this->mNumber = value ? 1.0f : 0.0f;
+	}
+
+	//----------------------------------------------------------------//
+	inline void SetValue ( float value ) {
+
+		this->mType = TYPE_NUMBER;
+		this->mNumber = value;
+	}
+
+	//----------------------------------------------------------------//
+	inline void SetValue ( int value ) {
+
+		this->mType = TYPE_NUMBER;
+		this->mNumber = ( float )value;
+	}
+
+	//----------------------------------------------------------------//
+	inline void SetValue ( u32 value ) {
+
+		this->mType = TYPE_NUMBER;
+		this->mNumber = ( float )value;
+	}
+
+	//----------------------------------------------------------------//
+	inline void SetValue ( const USRect& value ) {
+
+		this->mType = TYPE_RECT;
+		memcpy ( &this->mRect, &value, sizeof ( USRect ));
 	}
 
 	//----------------------------------------------------------------//
 	USAttrOp () :
-		mType ( 0 ) {
+		mType ( TYPE_UNKNOWN ) {
 	}
 	
 	//----------------------------------------------------------------//
-	virtual ~USAttrOp () {
+	~USAttrOp () {
+	}
+	
+	//----------------------------------------------------------------//
+	template < typename TYPE > TYPE		GetValue	();
+
+private:
+
+	//----------------------------------------------------------------//
+	template < typename TYPE >
+	inline void ComplexTypeOp ( TYPE attr, u32 op ) {
+	
+		switch ( op ) {
+			case CHECK: {
+				this->mType = TYPE_VALID;
+				break;
+			}
+			case GET: {
+				this->SetValue ( attr );
+				break;
+			}
+			case SET: {
+				this->GetValue ( attr );
+				break;
+			}
+		}
+	}
+
+	//----------------------------------------------------------------//
+	template < typename TYPE >
+	inline TYPE NumericTypeOp ( TYPE attr, u32 op ) {
+	
+		switch ( op ) {
+			case CHECK: {
+				this->mType = TYPE_VALID;
+				break;
+			}
+			case GET: {
+				this->SetValue ( attr );
+				break;
+			}
+			case SET: {
+				attr = this->GetValue < TYPE >();
+				break;
+			}
+		}
+		return attr;
 	}
 };
 
 //----------------------------------------------------------------//
-template <> bool	USAttrOp::Get < bool >		();
-template <> float	USAttrOp::Get < float >		();
-template <> int		USAttrOp::Get < int >		();
-template <> u32		USAttrOp::Get < u32 >		();
-template <> void	USAttrOp::Set < bool >		( bool value );
-template <> void	USAttrOp::Set < float >		( float value );
-template <> void	USAttrOp::Set < int >		( int value );
-template <> void	USAttrOp::Set < u32 >		( u32 value );
-
-//================================================================//
-// USAttrAdder
-//================================================================//
-class USAttrAdder :
-	public USAttrOp {
-public:
-
-	//----------------------------------------------------------------//
-	bool Op ( bool value ) {
-		return ( this->mFloat == 1.0f ) ? true : value;
-	}
-	
-	//----------------------------------------------------------------//
-	float Op ( float value ) {
-		return value + this->mFloat;
-	}
-	
-	//----------------------------------------------------------------//
-	int Op ( int value ) {
-		return value + ( int )this->mFloat;
-	}
-	
-	//----------------------------------------------------------------//
-	u32 Op ( u32 value ) {
-		return value + ( u32 )this->mFloat;
-	}
-};
-
-//================================================================//
-// USAttrGetter
-//================================================================//
-class USAttrGetter :
-	public USAttrOp {
-public:
-
-	//----------------------------------------------------------------//
-	bool Op ( bool value ) {
-		this->Set < bool >( value );
-		return value;
-	}
-	
-	//----------------------------------------------------------------//
-	float Op ( float value ) {
-		this->Set < float >( value );
-		return value;
-	}
-	
-	//----------------------------------------------------------------//
-	int Op ( int value ) {
-		this->Set < int >( value );
-		return value;
-	}
-	
-	//----------------------------------------------------------------//
-	u32 Op ( u32 value ) {
-		this->Set < u32 >( value );
-		return value;
-	}
-};
-
-//================================================================//
-// USAttrSetter
-//================================================================//
-class USAttrSetter :
-	public USAttrOp {
-public:
-
-	//----------------------------------------------------------------//
-	bool Op ( bool value ) {
-		UNUSED ( value );
-		return ( this->mFloat == 1.0f );
-	}
-	
-	//----------------------------------------------------------------//
-	float Op ( float value ) {
-		UNUSED ( value );
-		return this->mFloat;
-	}
-	
-	//----------------------------------------------------------------//
-	int Op ( int value ) {
-		UNUSED ( value );
-		return ( int )this->mFloat;
-	}
-	
-	//----------------------------------------------------------------//
-	u32 Op ( u32 value ) {
-		UNUSED ( value );
-		return ( u32 )this->mFloat;
-	}
-};
+template <> bool	USAttrOp::GetValue < bool >		();
+template <> float	USAttrOp::GetValue < float >	();
+template <> int		USAttrOp::GetValue < int >		();
+template <> u32		USAttrOp::GetValue < u32 >		();
 
 #endif

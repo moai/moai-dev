@@ -24,9 +24,11 @@ public:
 		
 		C2_R0,
 		C2_R1,
+		
+		SIZE,
 	};
 
-	TYPE	m [ 6 ];
+	TYPE	m [ SIZE ];
 
 	//----------------------------------------------------------------//
 	void Append ( const USMetaAffine2D < TYPE >& mtx ) {

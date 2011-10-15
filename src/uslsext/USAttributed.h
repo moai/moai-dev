@@ -27,7 +27,7 @@ public:
 	};
 
 	//----------------------------------------------------------------//
-	virtual bool	ApplyAttrOp			( u32 attrID, USAttrOp& attrOp );
+	virtual bool	ApplyAttrOp			( u32 attrID, USAttrOp& attrOp, u32 op );
 	bool			AttrExists			( u32 attrID );
 					USAttributed		();
 	virtual			~USAttributed		();
@@ -44,9 +44,9 @@ public:
 	TYPE GetAttributeValue ( u32 attrID, TYPE value ) {
 		
 		if ( attrID != NULL_ATTR ) {
-			USAttrGetter getter;
-			this->ApplyAttrOp ( attrID, getter );
-			value = getter.Get < TYPE >();
+			USAttrOp getter;
+			this->ApplyAttrOp ( attrID, getter, USAttrOp::GET );
+			value = getter.GetValue < TYPE >();
 		}
 		return value;
 	}
@@ -62,9 +62,9 @@ public:
 	template < typename TYPE >
 	void SetAttributeValue ( u32 attrID, TYPE value ) {
 		if ( attrID != NULL_ATTR ) {
-			USAttrSetter setter;
-			setter.Set < TYPE >( value );
-			this->ApplyAttrOp ( attrID, setter );
+			USAttrOp setter;
+			setter.SetValue ( value );
+			this->ApplyAttrOp ( attrID, setter, USAttrOp::SET );
 		}
 	}
 	

@@ -47,10 +47,10 @@ int MOAIScriptNode::_setCallback ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIScriptNode::ApplyAttrOp ( u32 attrID, USAttrOp& attrOp ) {
+bool MOAIScriptNode::ApplyAttrOp ( u32 attrID, USAttrOp& attrOp, u32 op ) {
 
 	if ( attrID < this->mAttributes.Size ()) {
-		this->mAttributes [ attrID ] = attrOp.Op ( this->mAttributes [ attrID ]);
+		this->mAttributes [ attrID ] = attrOp.Apply ( this->mAttributes [ attrID ], op );
 		return true;
 	}
 	return false;

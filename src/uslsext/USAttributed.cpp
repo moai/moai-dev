@@ -9,9 +9,10 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-bool USAttributed::ApplyAttrOp ( u32 attrID, USAttrOp& attrOp ) {
+bool USAttributed::ApplyAttrOp ( u32 attrID, USAttrOp& attrOp, u32 op ) {
 	UNUSED ( attrID );
 	UNUSED ( attrOp );
+	UNUSED ( op );
 	
 	return false;
 }
@@ -21,8 +22,8 @@ bool USAttributed::AttrExists ( u32 attrID ) {
 
 	if ( attrID == NULL_ATTR ) return false;
 
-	USAttrGetter getter;
-	this->ApplyAttrOp ( attrID, getter );
+	USAttrOp getter;
+	this->ApplyAttrOp ( attrID, getter, USAttrOp::CHECK );
 	return getter.IsValid ();
 }
 

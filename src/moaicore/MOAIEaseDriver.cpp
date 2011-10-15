@@ -90,7 +90,7 @@ void MOAIEaseDriver::Apply ( float step ) {
 		t1 = 1.0f;
 	}
 
-	USAttrAdder adder;
+	USAttrOp adder;
 
 	u32 total = this->mLinks.Size ();
 	for ( u32 i = 0; i < total; ++i ) {
@@ -106,8 +106,8 @@ void MOAIEaseDriver::Apply ( float step ) {
 			float delta = ( link.mValue * f1 ) - ( link.mValue * f0 );
 			
 			if ( delta != 0.0f ) {
-				adder.Set ( delta );
-				link.mTarget->ApplyAttrOp ( link.mAttrID, adder );
+				adder.SetValue ( delta );
+				link.mTarget->ApplyAttrOp ( link.mAttrID, adder, USAttrOp::ADD );
 				link.mTarget->ScheduleUpdate ();
 			}
 		}

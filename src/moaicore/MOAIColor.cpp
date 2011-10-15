@@ -148,22 +148,22 @@ int MOAIColor::_setColor ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIColor::ApplyAttrOp ( u32 attrID, USAttrOp& attrOp ) {
+bool MOAIColor::ApplyAttrOp ( u32 attrID, USAttrOp& attrOp, u32 op ) {
 
 	if ( MOAIColorAttr::Check ( attrID )) {
 
 		switch ( UNPACK_ATTR ( attrID )) {
 			case ATTR_R_COL:
-				this->mR = USFloat::Clamp ( attrOp.Op ( this->mR ), 0.0f, 1.0f );
+				this->mR = USFloat::Clamp ( attrOp.Apply ( this->mR, op ), 0.0f, 1.0f );
 				return true;
 			case ATTR_G_COL:
-				this->mG = USFloat::Clamp ( attrOp.Op ( this->mG ), 0.0f, 1.0f );
+				this->mG = USFloat::Clamp ( attrOp.Apply ( this->mG, op ), 0.0f, 1.0f );
 				return true;
 			case ATTR_B_COL:
-				this->mB = USFloat::Clamp ( attrOp.Op ( this->mB ), 0.0f, 1.0f );
+				this->mB = USFloat::Clamp ( attrOp.Apply ( this->mB, op ), 0.0f, 1.0f );
 				return true;
 			case ATTR_A_COL:
-				this->mA = USFloat::Clamp ( attrOp.Op ( this->mA ), 0.0f, 1.0f );
+				this->mA = USFloat::Clamp ( attrOp.Apply ( this->mA, op ), 0.0f, 1.0f );
 				return true;
 		}
 	}

@@ -643,29 +643,29 @@ int MOAITransform::_worldToModel ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAITransform::ApplyAttrOp ( u32 attrID, USAttrOp& attrOp ) {
+bool MOAITransform::ApplyAttrOp ( u32 attrID, USAttrOp& attrOp, u32 op ) {
 
 	if ( MOAITransformAttr::Check ( attrID )) {
 
 		switch ( UNPACK_ATTR ( attrID )) {
 			case ATTR_X_LOC:
-				this->mLoc.mX = attrOp.Op ( this->mLoc.mX );
+				this->mLoc.mX = attrOp.Apply ( this->mLoc.mX, op );
 				return true;
 			case ATTR_Y_LOC:
-				this->mLoc.mY = attrOp.Op ( this->mLoc.mY );
+				this->mLoc.mY = attrOp.Apply ( this->mLoc.mY, op );
 				return true;
 			case ATTR_Z_ROT:
-				this->mDegrees = attrOp.Op ( this->mDegrees );
+				this->mDegrees = attrOp.Apply ( this->mDegrees, op );
 				return true;
 			case ATTR_X_SCL:
-				this->mScale.mX = attrOp.Op ( this->mScale.mX );
+				this->mScale.mX = attrOp.Apply ( this->mScale.mX, op );
 				return true;
 			case ATTR_Y_SCL:
-				this->mScale.mY = attrOp.Op ( this->mScale.mY );
+				this->mScale.mY = attrOp.Apply ( this->mScale.mY, op );
 				return true;
 		}
 	}
-	return MOAITransformBase::ApplyAttrOp ( attrID, attrOp );
+	return MOAITransformBase::ApplyAttrOp ( attrID, attrOp, op );
 }
 
 //----------------------------------------------------------------//

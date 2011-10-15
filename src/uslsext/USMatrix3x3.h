@@ -26,9 +26,11 @@ public:
 		C2_R0,
 		C2_R1,
 		C2_R2,
+		
+		SIZE,
 	};
 
-	TYPE	m [ 9 ];
+	TYPE	m [ SIZE ];
 
 	//----------------------------------------------------------------//
 	void Append ( const USMetaMatrix3x3 < TYPE >& mtx ) {

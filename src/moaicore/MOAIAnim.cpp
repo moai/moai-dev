@@ -131,7 +131,7 @@ void MOAIAnim::Apply ( float t0, float t1 ) {
 		return;
 	}
 	
-	USAttrAdder adder;
+	USAttrOp adder;
 	
 	u32 total = this->mLinks.Size ();
 	for ( u32 i = 0; i < total; ++i ) {
@@ -144,8 +144,8 @@ void MOAIAnim::Apply ( float t0, float t1 ) {
 			
 			if ( link.mRelative ) {
 				float value = curve->GetFloatDelta ( t0, t1 );
-				adder.Set ( value );
-				target->ApplyAttrOp ( link.mAttrID, adder );
+				adder.SetValue ( value );
+				target->ApplyAttrOp ( link.mAttrID, adder, USAttrOp::ADD );
 			}
 			else {
 				float value = curve->GetFloatValue ( t1 );

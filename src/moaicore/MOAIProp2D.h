@@ -124,7 +124,7 @@ public:
 	GET_SET ( u32, Index, mIndex )
 	
 	//----------------------------------------------------------------//
-	bool							ApplyAttrOp				( u32 attrID, USAttrOp& attrOp );
+	bool							ApplyAttrOp				( u32 attrID, USAttrOp& attrOp, u32 op );
 	virtual void					Draw					();
 	virtual void					DrawDebug				();
 	virtual void					GatherSurfaces			( MOAISurfaceSampler2D& sampler );

@@ -10,7 +10,6 @@
 #include <uslsext/USAffine2D.h>
 #include <uslsext/USAnimCurve.h>
 #include <uslsext/USAttributed.h>
-#include <uslsext/USAttrMap.h>
 #include <uslsext/USAttrOp.h>
 #include <uslsext/USBinarySearch.h>
 #include <uslsext/USBox.h>

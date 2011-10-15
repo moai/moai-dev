@@ -34,7 +34,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIDeckRemapper )
 	
 	//----------------------------------------------------------------//
-	bool			ApplyAttrOp				( u32 attrID, USAttrOp& attrOp );
+	bool			ApplyAttrOp				( u32 attrID, USAttrOp& attrOp, u32 op );
 					MOAIDeckRemapper		();
 					~MOAIDeckRemapper		();
 	void			RegisterLuaClass		( USLuaState& state );

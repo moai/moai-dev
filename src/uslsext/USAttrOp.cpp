@@ -7,55 +7,31 @@
 //================================================================//
 // USAttrOp
 //================================================================//
-	
+
 //----------------------------------------------------------------//
 template <>
-bool USAttrOp::Get < bool > () {
-	return ( this->mFloat == 0.0f ) ? false : true;
+bool USAttrOp::GetValue < bool >() {
+
+	return this->mType == TYPE_NUMBER ? ( this->mNumber == 0.0f ? false : true ) : false;
 }
 
 //----------------------------------------------------------------//
 template <>
-float USAttrOp::Get < float > () {
-	return this->mFloat;
+float USAttrOp::GetValue < float >() {
+
+	return this->mType == TYPE_NUMBER ? this->mNumber : 0.0f;
 }
 
 //----------------------------------------------------------------//
 template <>
-int USAttrOp::Get < int > () {
-	return ( int )this->mFloat;
+int USAttrOp::GetValue < int >() {
+
+	return this->mType == TYPE_NUMBER ? USFloat::ToInt ( this->mNumber ) : 0;
 }
 
 //----------------------------------------------------------------//
 template <>
-u32 USAttrOp::Get < u32 > () {
-	return ( u32 )this->mFloat;
-}
+u32 USAttrOp::GetValue < u32 >() {
 
-//----------------------------------------------------------------//
-template <>
-void USAttrOp::Set ( bool value ) {
-	this->mFloat = value ? 1.0f : 0.0f;
-	this->mType = TYPE_BOOLEAN;
-}
-
-//----------------------------------------------------------------//
-template <>
-void USAttrOp::Set ( float value ) {
-	this->mFloat = value;
-	this->mType = TYPE_FLOAT;
-}
-
-//----------------------------------------------------------------//
-template <>
-void USAttrOp::Set ( int value ) {
-	this->mFloat = ( float )value;
-	this->mType = TYPE_INT;
-}
-
-//----------------------------------------------------------------//
-template <>
-void USAttrOp::Set ( u32 value ) {
-	this->mFloat = ( float )value;
-	this->mType = TYPE_INDEX;
+	return this->mType == TYPE_NUMBER ? ( u32 )USFloat::ToInt ( this->mNumber ) : 0;
 }

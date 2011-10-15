@@ -90,7 +90,7 @@ int MOAITransformBase::_getWorldScl ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAITransformBase::ApplyAttrOp ( u32 attrID, USAttrOp& attrOp ) {
+bool MOAITransformBase::ApplyAttrOp ( u32 attrID, USAttrOp& attrOp, u32 op ) {
 
 	// TODO: these values may need to be cached for performance reasons
 	if ( MOAITransformBaseAttr::Check ( attrID )) {
@@ -98,15 +98,15 @@ bool MOAITransformBase::ApplyAttrOp ( u32 attrID, USAttrOp& attrOp ) {
 		switch ( UNPACK_ATTR ( attrID )) {
 			
 			case ATTR_WORLD_X_LOC:
-				attrOp.Op ( this->mLocalToWorldMtx.m [ USAffine2D::C2_R0 ]);
+				attrOp.Apply ( this->mLocalToWorldMtx.m [ USAffine2D::C2_R0 ], op );
 				return true;
 			
 			case ATTR_WORLD_Y_LOC:
-				attrOp.Op ( this->mLocalToWorldMtx.m [ USAffine2D::C2_R1 ]);
+				attrOp.Apply ( this->mLocalToWorldMtx.m [ USAffine2D::C2_R1 ], op );
 				return true;
 				
 			case ATTR_WORLD_Z_ROT:
-				attrOp.Op (( float )( atan2 ( this->mLocalToWorldMtx.m [ USAffine2D::C0_R0 ], this->mLocalToWorldMtx.m [ USAffine2D::C0_R1 ]) * R2D ));
+				attrOp.Apply (( float )( atan2 ( this->mLocalToWorldMtx.m [ USAffine2D::C0_R0 ], this->mLocalToWorldMtx.m [ USAffine2D::C0_R1 ]) * R2D ), op );
 				return true;
 			
 			case ATTR_WORLD_X_SCL: {
@@ -116,7 +116,7 @@ bool MOAITransformBase::ApplyAttrOp ( u32 attrID, USAttrOp& attrOp ) {
 				axis.mX =	this->mLocalToWorldMtx.m [ USAffine2D::C0_R0 ];
 				axis.mY =	this->mLocalToWorldMtx.m [ USAffine2D::C0_R1 ];
 			
-				attrOp.Op ( axis.Length ());
+				attrOp.Apply ( axis.Length (), op );
 				return true;
 			}
 			
@@ -127,7 +127,7 @@ bool MOAITransformBase::ApplyAttrOp ( u32 attrID, USAttrOp& attrOp ) {
 				axis.mX =	this->mLocalToWorldMtx.m [ USAffine2D::C1_R0 ];
 				axis.mY =	this->mLocalToWorldMtx.m [ USAffine2D::C1_R1 ];
 				
-				attrOp.Op ( axis.Length ());
+				attrOp.Apply ( axis.Length (), op );
 				return true;
 			}
 		}

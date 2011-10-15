@@ -100,11 +100,11 @@ int MOAINode::_getAttr ( lua_State* L ) {
 
 	u32 attrID = state.GetValue < u32 >( 2, 0 );
 
-	USAttrGetter getter;
-	self->ApplyAttrOp ( attrID, getter );
+	USAttrOp getter;
+	self->ApplyAttrOp ( attrID, getter, USAttrOp::GET );
 	
 	if ( getter.IsValid ()) {
-		lua_pushnumber ( state, getter.Get < float >());
+		lua_pushnumber ( state, getter.GetValue < float >());
 		return 1;
 	}
 	
@@ -190,15 +190,15 @@ int MOAINode::_seekAttr ( lua_State* L ) {
 	u32 attrID = state.GetValue < u32 >( 2, 0 );
 	if ( self->AttrExists ( attrID )) {
 	
-		USAttrGetter getter;
-		self->ApplyAttrOp ( attrID, getter );
+		USAttrOp getter;
+		self->ApplyAttrOp ( attrID, getter, USAttrOp::GET );
 		if ( !getter.IsValid ()) return 0;
 		
 		float value		= state.GetValue < float >( 3, 0.0f );
 		float delay		= state.GetValue < float >( 4, 0.0f );
 		u32 mode		= state.GetValue < u32 >( 5, USInterpolate::kSmooth );
 		
-		action->SetLink ( 0, self, attrID, value - getter.Get < float >(), mode );
+		action->SetLink ( 0, self, attrID, value - getter.GetValue < float >(), mode );
 		
 		action->SetLength ( delay );
 		action->Start ();
@@ -228,11 +228,11 @@ int MOAINode::_setAttr ( lua_State* L ) {
 	
 	if ( self->AttrExists ( attrID )) {
 	
-		USAttrSetter setter;
-		setter.Set ( value );
+		USAttrOp setter;
+		setter.SetValue ( value );
 	
 		self->ClearAttrLink ( attrID );
-		self->ApplyAttrOp ( attrID, setter );
+		self->ApplyAttrOp ( attrID, setter, USAttrOp::SET );
 		self->ScheduleUpdate ();
 	}
 	else {
@@ -569,8 +569,7 @@ void MOAINode::OnDepNodeUpdate () {
 //----------------------------------------------------------------//
 void MOAINode::PullAttributes () {
 
-	USAttrGetter getter;
-	USAttrSetter setter;
+	USAttrOp attrOp;
 
 	MOAIAttrLink* link = this->mPullAttrLinks;	
 	for ( ; link ; link = link->mNextInDest ) {
@@ -580,9 +579,8 @@ void MOAINode::PullAttributes () {
 		}
 		
 		if ( link->mDestAttrExists && ( link->mSourceAttrID != NULL_ATTR )) {
-			link->mSourceNode->ApplyAttrOp ( link->mSourceAttrID, getter );
-			setter.Copy ( getter );
-			this->ApplyAttrOp ( link->mDestAttrID, setter );
+			link->mSourceNode->ApplyAttrOp ( link->mSourceAttrID, attrOp, USAttrOp::GET );
+			this->ApplyAttrOp ( link->mDestAttrID, attrOp, USAttrOp::SET );
 		}
 	}
 }

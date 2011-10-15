@@ -33,10 +33,12 @@ public:
 		C3_R0,
 		C3_R1,
 		C3_R2,
-		C3_R3
+		C3_R3,
+		
+		SIZE,
 	};
 
-	TYPE m [ 16 ];
+	TYPE m [ SIZE ];
 
 	//----------------------------------------------------------------//
 	void Append	( const USMetaMatrix4x4 < TYPE >& mtx ) {

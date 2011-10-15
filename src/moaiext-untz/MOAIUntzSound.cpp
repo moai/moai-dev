@@ -337,13 +337,13 @@ int MOAIUntzSound::_stop ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIUntzSound::ApplyAttrOp ( u32 attrID, USAttrOp& attrOp ) {
+bool MOAIUntzSound::ApplyAttrOp ( u32 attrID, USAttrOp& attrOp, u32 op ) {
 
 	if ( MOAIUntzSoundAttr::Check ( attrID )) {
 		attrID = UNPACK_ATTR ( attrID );
 
 		if ( attrID == ATTR_VOLUME ) {
-			this->mSound->setVolume ( attrOp.Op ( this->mSound->getVolume ()));
+			this->mSound->setVolume ( attrOp.Apply ( this->mSound->getVolume ()), op );
 			return true;
 		}
 	}

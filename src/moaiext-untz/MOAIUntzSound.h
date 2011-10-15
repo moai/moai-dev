@@ -54,7 +54,7 @@ public:
 	};
 
 	//----------------------------------------------------------------//
-	bool			ApplyAttrOp			( u32 attrID, USAttrOp& attrOp );
+	bool			ApplyAttrOp			( u32 attrID, USAttrOp& attrOp, u32 op );
 					MOAIUntzSound		();
 					~MOAIUntzSound		();
 	void			RegisterLuaClass	( USLuaState& state );

@@ -75,13 +75,13 @@ int MOAIDeckRemapper::_setRemap ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIDeckRemapper::ApplyAttrOp ( u32 attrID, USAttrOp& attrOp ) {
+bool MOAIDeckRemapper::ApplyAttrOp ( u32 attrID, USAttrOp& attrOp, u32 op ) {
 	UNUSED ( attrID );
 	UNUSED ( attrOp );
 
 	attrID -=1;
 	if (( attrID >= this->mBase ) && ( attrID < this->mRemap.Size ())) {
-		this->mRemap [ attrID ] = attrOp.Op ( this->mRemap [ attrID ]);
+		this->mRemap [ attrID ] = attrOp.Apply ( this->mRemap [ attrID ], op );
 		return true;
 	}
 	return false;
