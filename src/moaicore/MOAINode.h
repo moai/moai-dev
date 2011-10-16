@@ -6,18 +6,23 @@
 
 class MOAINode;
 
+// refactor into link set for dependencies plus individual
+// links for attributes and traits
+// figure out how to differentiate between attributes and traits to
+// prevent improper bindings
+
 //================================================================//
 // MOAIAttrLink
 //================================================================//
 class MOAIAttrLink {
 private:
 
-	USWeak < MOAINode >			mSourceNode;
+	USWeak < MOAINode >			mSourceNode;		// don't think we need a smart ptr here...
 	u32							mSourceAttrID;
 
 	MOAINode*					mDestNode;
 	u32							mDestAttrID;
-	bool						mDestAttrExists;
+	bool						mDestAttrExists;	// do we really need this?
 
 	// sibling pointers for the two singly linked lists
 	MOAIAttrLink*				mNextInSource;
