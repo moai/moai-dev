@@ -26,7 +26,7 @@ protected:
 		float		mNumber;
 		
 		u8			mAffine2D [ sizeof ( USAffine2D )];
-		u8			mRect [ sizeof ( USAffine2D )];
+		u8			mRect [ sizeof ( USRect )];
 	};
 
 public:
