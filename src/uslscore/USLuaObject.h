@@ -58,8 +58,8 @@ protected:
 
 	//----------------------------------------------------------------//
 	void					ClearLocal			( USLuaLocal& ref );
-	void					OnRelease				( u32 refCount );
-	void					OnRetain				( u32 refCount );
+	void					OnRelease			( u32 refCount );
+	void					OnRetain			( u32 refCount );
 	bool					PushLocal			( USLuaState& state, USLuaLocal& ref );
 	void					SetLocal			( USLuaState& state, int idx, USLuaLocal& ref );
 
