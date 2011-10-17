@@ -163,7 +163,7 @@ const USAffine2D& MOAITransformBase::GetWorldToLocalMtx () {
 //----------------------------------------------------------------//
 MOAITransformBase::MOAITransformBase () {
 	
-	RTTI_SINGLE ( MOAITraits )
+	RTTI_SINGLE ( MOAINode )
 	
 	this->mLocalToWorldMtx.Ident ();
 	this->mWorldToLocalMtx.Ident ();
@@ -176,7 +176,7 @@ MOAITransformBase::~MOAITransformBase () {
 //----------------------------------------------------------------//
 void MOAITransformBase::RegisterLuaClass ( USLuaState& state ) {
 	
-	MOAITraits::RegisterLuaClass ( state );
+	MOAINode::RegisterLuaClass ( state );
 	
 	state.SetField ( -1, "ATTR_WORLD_X_LOC",	MOAITransformBaseAttr::Pack ( ATTR_WORLD_X_LOC ));
 	state.SetField ( -1, "ATTR_WORLD_Y_LOC",	MOAITransformBaseAttr::Pack ( ATTR_WORLD_Y_LOC ));
@@ -188,7 +188,7 @@ void MOAITransformBase::RegisterLuaClass ( USLuaState& state ) {
 //----------------------------------------------------------------//
 void MOAITransformBase::RegisterLuaFuncs ( USLuaState& state ) {
 	
-	MOAITraits::RegisterLuaFuncs ( state );
+	MOAINode::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
 		{ "getWorldDir",		_getWorldDir },

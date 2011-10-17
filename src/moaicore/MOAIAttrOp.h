@@ -4,30 +4,29 @@
 #ifndef	MOAIATTROP_H
 #define	MOAIATTROP_H
 
-#include <uslsext/USAffine2D.h>
-
 //================================================================//
 // MOAIAttrOp
 //================================================================//
 class MOAIAttrOp  {
 protected:
 
+	static const size_t MAX_SIZE = 64;
+
 	enum {
 		TYPE_UNKNOWN,
-		TYPE_AFFINE_2D,
+		TYPE_COMPLEX,
 		TYPE_NUMBER,
-		TYPE_RECT,
 		TYPE_VALID,
 	};
 	
 	u32 mType;
+	u32 mComplexType;
 	u32 mFlags;
 
 	union {
-		float	mNumber;
-		
-		u8		mAffine2D [ sizeof ( USAffine2D )];
-		u8		mRect [ sizeof ( USRect )];
+		float			mNumber;
+		const void*		mPtr;
+		u8				mBuffer [ MAX_SIZE ];
 	};
 
 public:
@@ -39,61 +38,77 @@ public:
 		GET,
 		SET,
 	};
-	
-	//----------------------------------------------------------------//
-	inline void Apply ( USAffine2D& attr, u32 op, u32 flags ) {
-
-		this->mFlags = flags;
-		this->ComplexTypeOp ( attr, op );
-	}
-
-	//----------------------------------------------------------------//
-	inline bool Apply ( bool attr, u32 op, u32 flags ) {
-
-		this->mFlags = flags;
-		if ( op == ADD ) {
-			if ( this->mType == TYPE_NUMBER ) {
-				return ( this->mNumber == 1.0f ) && attr;
-			}
-		}
-		return this->NumericTypeOp ( attr, op );
-	}
 
 	//----------------------------------------------------------------//
 	inline float Apply ( float attr, u32 op, u32 flags ) {
 	
 		this->mFlags = flags;
-		if (( op == ADD ) && ( this->mType == TYPE_NUMBER )) {
-			return attr + this->mNumber;
-		}
-		return this->NumericTypeOp ( attr, op );
-	}
 
+		switch ( op ) {
+			case ADD:
+				if ( this->mType == TYPE_NUMBER ) {
+					return attr + this->mNumber;
+				}
+				break;
+			case CHECK: {
+				this->mType = TYPE_VALID;
+				break;
+			}
+			case GET: {
+				this->SetValue ( attr );
+				break;
+			}
+			case SET: {
+				return this->GetValue ();
+				break;
+			}
+		}
+		return attr;
+	}
+	
 	//----------------------------------------------------------------//
-	inline int Apply ( int attr, u32 op, u32 flags ) {
+	template < typename TYPE >
+	inline TYPE* Apply ( TYPE* attr, u32 op, u32 flags ) {
 
 		this->mFlags = flags;
-		if (( op == ADD ) && ( this->mType == TYPE_NUMBER )) {
-			return attr + USFloat::ToInt ( this->mNumber );
+		
+		switch ( op ) {
+			case CHECK: {
+				this->mType = TYPE_VALID;
+				break;
+			}
+			case GET: {
+				this->SetValue < TYPE >( attr );
+				break;
+			}
+			case SET: {
+				return this->GetValue < TYPE >();
+				break;
+			}
 		}
-		return this->NumericTypeOp ( attr, op );
+		return attr;
 	}
-
+	
 	//----------------------------------------------------------------//
-	inline int Apply ( u32 attr, u32 op, u32 flags ) {
+	template < typename TYPE >
+	inline void Apply ( TYPE& attr, u32 op, u32 flags ) {
 
 		this->mFlags = flags;
-		if (( op == ADD ) && ( this->mType == TYPE_NUMBER )) {
-			return attr + ( u32 )USFloat::ToInt ( this->mNumber );
+		
+		switch ( op ) {
+			case CHECK: {
+				this->mType = TYPE_VALID;
+				break;
+			}
+			case GET: {
+				this->SetValue < TYPE >( attr );
+				break;
+			}
+			case SET: {
+				this->GetValue < TYPE >( attr );
+				break;
+			}
 		}
-		return this->NumericTypeOp ( attr, op );
-	}
-
-	//----------------------------------------------------------------//
-	inline void Apply ( USRect& attr, u32 op, u32 flags ) {
-
-		this->mFlags = flags;
-		this->ComplexTypeOp ( attr, op );
 	}
 	
 	//----------------------------------------------------------------//
@@ -107,19 +122,34 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	inline void GetValue ( USAffine2D& value ) {
-
-		if ( this->mType == TYPE_RECT ) {
-			memcpy ( &value, &this->mAffine2D, sizeof ( USAffine2D ));
-		}
+	float GetValue () {
+		return this->mType == TYPE_NUMBER ? this->mNumber : 0.0f;
 	}
 	
 	//----------------------------------------------------------------//
-	inline void GetValue ( USRect& value ) {
+	template < typename TYPE >
+	inline TYPE* GetValue () {
 
-		if ( this->mType == TYPE_RECT ) {
-			memcpy ( &value, &this->mRect, sizeof ( USRect ));
+		if (( this->mType == TYPE_COMPLEX ) && ( this->mComplexType == USTypeID < TYPE >::GetID ())) {
+			return ( TYPE* )this->mPtr;
 		}
+		return 0;
+	}
+	
+	//----------------------------------------------------------------//
+	template < typename TYPE >
+	inline bool GetValue ( TYPE& value ) {
+
+		if (( this->mType == TYPE_COMPLEX ) && ( this->mComplexType == USTypeID < TYPE >::GetID ())) {
+			memcpy ( &value, this->mBuffer, sizeof ( TYPE ));
+			return true;
+		}
+		return false;
+	}
+	
+	//----------------------------------------------------------------//
+	inline bool IsNumber () {
+		return ( this->mType == TYPE_NUMBER );
 	}
 	
 	//----------------------------------------------------------------//
@@ -130,6 +160,7 @@ public:
 	//----------------------------------------------------------------//
 	MOAIAttrOp () :
 		mType ( TYPE_UNKNOWN ),
+		mComplexType ( 0 ),
 		mFlags ( 0 ) {
 	}
 	
@@ -138,98 +169,31 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	inline void SetValue ( const USAffine2D& value ) {
-
-		this->mType = TYPE_AFFINE_2D;
-		memcpy ( &this->mAffine2D, &value, sizeof ( USAffine2D ));
-	}
-
-	//----------------------------------------------------------------//
-	inline void SetValue ( bool value ) {
-
-		this->mType = TYPE_NUMBER;
-		this->mNumber = value ? 1.0f : 0.0f;
-	}
-
-	//----------------------------------------------------------------//
 	inline void SetValue ( float value ) {
 
 		this->mType = TYPE_NUMBER;
 		this->mNumber = value;
 	}
-
-	//----------------------------------------------------------------//
-	inline void SetValue ( int value ) {
-
-		this->mType = TYPE_NUMBER;
-		this->mNumber = ( float )value;
-	}
-
-	//----------------------------------------------------------------//
-	inline void SetValue ( u32 value ) {
-
-		this->mType = TYPE_NUMBER;
-		this->mNumber = ( float )value;
-	}
-
-	//----------------------------------------------------------------//
-	inline void SetValue ( const USRect& value ) {
-
-		this->mType = TYPE_RECT;
-		memcpy ( &this->mRect, &value, sizeof ( USRect ));
-	}
 	
-	//----------------------------------------------------------------//
-	template < typename TYPE > TYPE		GetValue	();
-
-private:
-
 	//----------------------------------------------------------------//
 	template < typename TYPE >
-	inline void ComplexTypeOp ( TYPE attr, u32 op ) {
-	
-		switch ( op ) {
-			case CHECK: {
-				this->mType = TYPE_VALID;
-				break;
-			}
-			case GET: {
-				this->SetValue ( attr );
-				break;
-			}
-			case SET: {
-				this->GetValue ( attr );
-				break;
-			}
-		}
-	}
+	inline void SetValue ( const TYPE* value ) {
 
+		this->mType = TYPE_COMPLEX;
+		this->mComplexType = USTypeID < TYPE >::GetID ();
+		this->mPtr = value;
+	}
+	
 	//----------------------------------------------------------------//
 	template < typename TYPE >
-	inline TYPE NumericTypeOp ( TYPE attr, u32 op ) {
-	
-		switch ( op ) {
-			case CHECK: {
-				this->mType = TYPE_VALID;
-				break;
-			}
-			case GET: {
-				this->SetValue ( attr );
-				break;
-			}
-			case SET: {
-				attr = this->GetValue < TYPE >();
-				break;
-			}
-		}
-		return attr;
+	inline void SetValue ( const TYPE& value ) {
+
+		assert ( sizeof TYPE <= MAX_SIZE );
+
+		this->mType = TYPE_COMPLEX;
+		this->mComplexType = USTypeID < TYPE >::GetID ();
+		memcpy ( &this->mBuffer, &value, sizeof ( TYPE ));
 	}
 };
-
-//----------------------------------------------------------------//
-template <> bool	MOAIAttrOp::GetValue < bool >		();
-template <> float	MOAIAttrOp::GetValue < float >		();
-template <> int		MOAIAttrOp::GetValue < int >		();
-template <> u32		MOAIAttrOp::GetValue < u32 >		();
 
 #endif

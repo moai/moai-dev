@@ -1415,18 +1415,6 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="traits"
-			>
-			<File
-				RelativePath="..\..\src\moaicore\MOAITraits.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAITraits.h"
-				>
-			</File>
-		</Filter>
-		<Filter
 			Name="aku"
 			>
 			<File

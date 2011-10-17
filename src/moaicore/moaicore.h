@@ -97,7 +97,6 @@
 #include <moaicore/MOAITileFlags.h>
 #include <moaicore/MOAITimer.h>
 #include <moaicore/MOAITouchSensor.h>
-#include <moaicore/MOAITraits.h>
 #include <moaicore/MOAITransform.h>
 #include <moaicore/MOAITransformBase.h>
 #include <moaicore/MOAIVertexBuffer.h>

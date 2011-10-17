@@ -187,11 +187,13 @@ void MOAIProp::SetBounds ( const USRect& bounds ) {
 //----------------------------------------------------------------//
 void MOAIProp::SetPartition ( MOAIPartition* partition ) {
 
-	if ( partition ) {
-		partition->InsertProp ( *this );
-	}
-	else if ( this->mPartition ) {
-		this->mPartition->RemoveProp ( *this );
+	if ( partition != this->mPartition ) {
+		if ( partition ) {
+			partition->InsertProp ( *this );
+		}
+		else if ( this->mPartition ) {
+			this->mPartition->RemoveProp ( *this );
+		}
 	}
 }
 

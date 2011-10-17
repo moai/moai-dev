@@ -191,25 +191,6 @@ int MOAITextBox::_setFont ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setParent
-	@text	Sets this text object as a child of the specified parent transform, prim or layout.
-
-	@in		MOAITextBox self
-	@in		MOAITransform parent		The MOAITransform that will be the parent of this text object.
-	@out	nil
-*/
-int MOAITextBox::_setParent ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITextBox, "UU" )
-
-	MOAITransform* parent = state.GetLuaObject < MOAITransform >( 2 );
-	if ( !parent ) return 0;
-	
-	self->SetParent ( parent );
-
-	return 0;
-}
-
-//----------------------------------------------------------------//
 /**	@name	setRect
 	@text	Sets the rectangular area for this text box.
 

@@ -69,6 +69,39 @@ protected:
 
 	//----------------------------------------------------------------//
 	virtual void	OnDepNodeUpdate		();
+	bool			PullLinkedAttr		( u32 attrID, MOAIAttrOp& attrOp );
+
+	//----------------------------------------------------------------//
+	float GetLinkedValue ( u32 attrID, float value ) {
+		
+		MOAIAttrOp attrOp;
+		if ( this->PullLinkedAttr ( attrID, attrOp )) {
+			return attrOp.IsNumber () ? attrOp.GetValue () : value;
+		}
+		return value;
+	}
+
+	//----------------------------------------------------------------//
+	template < typename TYPE >
+	TYPE* GetLinkedValue ( u32 attrID ) {
+		
+		MOAIAttrOp attrOp;
+		if ( this->PullLinkedAttr ( attrID, attrOp )) {
+			return attrOp.GetValue < TYPE >();
+		}
+		return 0;
+	}
+
+	//----------------------------------------------------------------//
+	template < typename TYPE >
+	bool GetLinkedValue ( u32 attrID, TYPE& value ) {
+		
+		MOAIAttrOp attrOp;
+		if ( this->PullLinkedAttr ( attrID, attrOp )) {
+			return attrOp.GetValue < TYPE >( value );
+		}
+		return false;
+	}
 
 	//----------------------------------------------------------------//
 	template < typename TYPE >
@@ -114,7 +147,7 @@ public:
 	
 	DECL_LUA_FACTORY ( MOAINode )
 	
-	static const u32	NULL_ATTR			= 0xffffffff;
+	static const u32	NULL_ATTR			= 0x3fffffff;
 	static const u32	ATTR_ID_MASK		= 0x0000ffff;
 	static const u32	CLASS_ID_MASK		= 0x3fff0000;
 	static const u32	ATTR_FLAGS_MASK		= 0xC0000000;

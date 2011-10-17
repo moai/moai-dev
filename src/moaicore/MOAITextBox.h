@@ -66,7 +66,6 @@ private:
 	static int	_setAlignment		( lua_State* L );
 	static int	_setCurve			( lua_State* L );
 	static int	_setFont			( lua_State* L );
-	static int	_setParent			( lua_State* L );
 	static int	_setRect			( lua_State* L );
 	static int	_setReveal			( lua_State* L );
 	static int	_setSpeed			( lua_State* L );

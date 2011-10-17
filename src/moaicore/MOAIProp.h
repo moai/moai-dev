@@ -65,6 +65,7 @@ public:
 
 	GET_SET ( u32, Mask, mMask )
 	GET ( s32, Priority, mPriority )
+	GET ( MOAIPartition*, Partition, mPartition )
 
 	//----------------------------------------------------------------//
 	virtual void	Draw				();

@@ -4,7 +4,7 @@
 #ifndef	MOAITRANSFORMBASE_H
 #define	MOAITRANSFORMBASE_H
 
-#include <moaicore/MOAITraits.h>
+#include <moaicore/MOAINode.h>
 
 //================================================================//
 // MOAITransformBase
@@ -19,7 +19,7 @@
 	@attr	ATTR_WORLD_Y_SCL
 */
 class MOAITransformBase :
-	public virtual MOAITraits {
+	public virtual MOAINode {
 protected:
 	
 	USAffine2D		mLocalToWorldMtx;

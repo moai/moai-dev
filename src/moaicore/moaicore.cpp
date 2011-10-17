@@ -113,7 +113,6 @@ void moaicore::InitGlobals ( USGlobals* globals ) {
 	REGISTER_LUA_CLASS ( MOAITileDeck2D )
 	REGISTER_LUA_CLASS ( MOAITimer )
 	REGISTER_LUA_CLASS ( MOAITouchSensor )
-	REGISTER_LUA_CLASS ( MOAITraits )
 	REGISTER_LUA_CLASS ( MOAITransform )
 	REGISTER_LUA_CLASS ( MOAIVertexBuffer )
 	REGISTER_LUA_CLASS ( MOAIVertexFormat )
