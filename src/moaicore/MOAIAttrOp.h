@@ -1,15 +1,15 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	USATTROP_H
-#define	USATTROP_H
+#ifndef	MOAIATTROP_H
+#define	MOAIATTROP_H
 
 #include <uslsext/USAffine2D.h>
 
 //================================================================//
-// USAttrOp
+// MOAIAttrOp
 //================================================================//
-class USAttrOp  {
+class MOAIAttrOp  {
 protected:
 
 	enum {
@@ -21,12 +21,13 @@ protected:
 	};
 	
 	u32 mType;
+	u32 mFlags;
 
 	union {
-		float		mNumber;
+		float	mNumber;
 		
-		u8			mAffine2D [ sizeof ( USAffine2D )];
-		u8			mRect [ sizeof ( USRect )];
+		u8		mAffine2D [ sizeof ( USAffine2D )];
+		u8		mRect [ sizeof ( USRect )];
 	};
 
 public:
@@ -40,14 +41,16 @@ public:
 	};
 	
 	//----------------------------------------------------------------//
-	inline void Apply ( USAffine2D& attr, u32 op ) {
+	inline void Apply ( USAffine2D& attr, u32 op, u32 flags ) {
 
+		this->mFlags = flags;
 		this->ComplexTypeOp ( attr, op );
 	}
 
 	//----------------------------------------------------------------//
-	inline bool Apply ( bool attr, u32 op ) {
+	inline bool Apply ( bool attr, u32 op, u32 flags ) {
 
+		this->mFlags = flags;
 		if ( op == ADD ) {
 			if ( this->mType == TYPE_NUMBER ) {
 				return ( this->mNumber == 1.0f ) && attr;
@@ -57,8 +60,9 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	inline float Apply ( float attr, u32 op ) {
-
+	inline float Apply ( float attr, u32 op, u32 flags ) {
+	
+		this->mFlags = flags;
 		if (( op == ADD ) && ( this->mType == TYPE_NUMBER )) {
 			return attr + this->mNumber;
 		}
@@ -66,8 +70,9 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	inline int Apply ( int attr, u32 op ) {
+	inline int Apply ( int attr, u32 op, u32 flags ) {
 
+		this->mFlags = flags;
 		if (( op == ADD ) && ( this->mType == TYPE_NUMBER )) {
 			return attr + USFloat::ToInt ( this->mNumber );
 		}
@@ -75,8 +80,9 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	inline int Apply ( u32 attr, u32 op ) {
+	inline int Apply ( u32 attr, u32 op, u32 flags ) {
 
+		this->mFlags = flags;
 		if (( op == ADD ) && ( this->mType == TYPE_NUMBER )) {
 			return attr + ( u32 )USFloat::ToInt ( this->mNumber );
 		}
@@ -84,14 +90,20 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	inline void Apply ( USRect& attr, u32 op ) {
+	inline void Apply ( USRect& attr, u32 op, u32 flags ) {
 
+		this->mFlags = flags;
 		this->ComplexTypeOp ( attr, op );
 	}
 	
 	//----------------------------------------------------------------//
 	inline void Clear () {
 		this->mType = TYPE_UNKNOWN;
+	}
+	
+	//----------------------------------------------------------------//
+	inline u32 GetFlags () {
+		return this->mFlags;
 	}
 	
 	//----------------------------------------------------------------//
@@ -113,6 +125,16 @@ public:
 	//----------------------------------------------------------------//
 	inline bool IsValid () {
 		return ( this->mType != TYPE_UNKNOWN );
+	}
+
+	//----------------------------------------------------------------//
+	MOAIAttrOp () :
+		mType ( TYPE_UNKNOWN ),
+		mFlags ( 0 ) {
+	}
+	
+	//----------------------------------------------------------------//
+	~MOAIAttrOp () {
 	}
 
 	//----------------------------------------------------------------//
@@ -155,15 +177,6 @@ public:
 
 		this->mType = TYPE_RECT;
 		memcpy ( &this->mRect, &value, sizeof ( USRect ));
-	}
-
-	//----------------------------------------------------------------//
-	USAttrOp () :
-		mType ( TYPE_UNKNOWN ) {
-	}
-	
-	//----------------------------------------------------------------//
-	~USAttrOp () {
 	}
 	
 	//----------------------------------------------------------------//
@@ -214,9 +227,9 @@ private:
 };
 
 //----------------------------------------------------------------//
-template <> bool	USAttrOp::GetValue < bool >		();
-template <> float	USAttrOp::GetValue < float >	();
-template <> int		USAttrOp::GetValue < int >		();
-template <> u32		USAttrOp::GetValue < u32 >		();
+template <> bool	MOAIAttrOp::GetValue < bool >		();
+template <> float	MOAIAttrOp::GetValue < float >		();
+template <> int		MOAIAttrOp::GetValue < int >		();
+template <> u32		MOAIAttrOp::GetValue < u32 >		();
 
 #endif

@@ -337,26 +337,6 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="attributed"
-			>
-			<File
-				RelativePath="..\..\src\uslsext\USAttributed.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USAttributed.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USAttrOp.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USAttrOp.h"
-				>
-			</File>
-		</Filter>
-		<Filter
 			Name="fsm"
 			>
 			<File

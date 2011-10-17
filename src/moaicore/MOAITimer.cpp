@@ -150,13 +150,13 @@ int MOAITimer::_setTime ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAITimer::ApplyAttrOp ( u32 attrID, USAttrOp& attrOp, u32 op ) {
+bool MOAITimer::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 
 	if ( MOAITimerAttr::Check ( attrID )) {
 		attrID = UNPACK_ATTR ( attrID );
 		
 		if ( attrID == ATTR_TIME ) {
-			this->mTime = attrOp.Apply ( this->mTime, op );
+			this->mTime = attrOp.Apply ( this->mTime, op, MOAINode::ATTR_READ_WRITE );
 			return true;
 		}
 	}

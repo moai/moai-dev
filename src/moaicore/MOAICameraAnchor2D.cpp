@@ -116,13 +116,13 @@ void MOAICameraAnchor2D::SetParent ( MOAITransformBase* parent ) {
 	if ( this->mParent == parent ) return;
 	
 	if ( this->mParent ) {
-		this->ClearDependency ( *this->mParent );
+		this->ClearNodeLink( *this->mParent );
 	}
 
 	this->mParent = parent;
 	
 	if ( parent ) {
-		this->SetDependency ( *parent );
+		this->SetNodeLink ( *parent );
 	}
 
 	this->ScheduleUpdate ();

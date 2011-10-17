@@ -29,14 +29,14 @@ private:
 protected:
 
 	//----------------------------------------------------------------//
-	void			OnDepNodeUpdate		();
+	void			OnDepNodeUpdate			();
 
 public:
 	
 	DECL_LUA_FACTORY ( MOAIScriptNode )
 	
 	//----------------------------------------------------------------//
-	bool			ApplyAttrOp				( u32 attrID, USAttrOp& attrOp, u32 op );
+	bool			ApplyAttrOp				( u32 attrID, MOAIAttrOp& attrOp, u32 op );
 					MOAIScriptNode			();
 					~MOAIScriptNode			();
 	void			RegisterLuaClass		( USLuaState& state );
