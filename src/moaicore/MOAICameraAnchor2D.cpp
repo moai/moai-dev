@@ -78,8 +78,6 @@ MOAICameraAnchor2D::MOAICameraAnchor2D () {
 
 //----------------------------------------------------------------//
 MOAICameraAnchor2D::~MOAICameraAnchor2D () {
-
-	printf ( "~MOAICameraAnchor2D ()\n" );
 }
 
 //----------------------------------------------------------------//

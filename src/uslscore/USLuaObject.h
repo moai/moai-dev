@@ -45,9 +45,9 @@ private:
 
 protected:
 
-	USLuaRef		mInstanceTable;		// ref to instance table stack
-	USLuaRef		mPrivateTable;		// ref to private local reference table
-	USLuaRef		mUserdata;			// ref to userdata
+	USLuaRef		mInstanceTable;		// ref to instance table stack (weak)
+	USLuaRef		mPrivateTable;		// ref to private local reference table (weak for factory class instances; strong for singletons)
+	USLuaRef		mUserdata;			// ref to userdata (weak)
 	
 
 	//----------------------------------------------------------------//
@@ -72,7 +72,6 @@ public:
 	virtual USLuaClass*		GetLuaClass				();
 	USLuaStateHandle		GetSelf					();
 	bool					IsBound					();
-	void					LockToRefCount			();
 	void					LuaRelease				( USLuaObject& object );
 	void					LuaRetain				( USLuaObject& object );
 	void					LuaUnbind				( USLuaState& state );

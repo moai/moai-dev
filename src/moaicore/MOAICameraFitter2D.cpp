@@ -357,11 +357,6 @@ MOAICameraFitter2D::MOAICameraFitter2D () :
 //----------------------------------------------------------------//
 MOAICameraFitter2D::~MOAICameraFitter2D () {
 
-	printf ( "~MOAICameraFitter2D ()\n" );
-
-	// do not have to remove objects here as no objects are reference counted
-	// trying to force removal will result in crash during Lua shutdown
-	// since objects are only referenced by Lua table, Lua's GC will handle cleanup
 	this->Clear ();
 }
 
