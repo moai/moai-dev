@@ -32,8 +32,6 @@ void moaicore::InitGlobals ( USGlobals* globals ) {
 		sysInit = false;
 	}
 
-	uslsext::InitGlobals ( globals );
-
 	MOAIXmlParser::Affirm ();
 	MOAIActionMgr::Affirm ();
 	MOAIInputMgr::Affirm ();
@@ -46,6 +44,14 @@ void moaicore::InitGlobals ( USGlobals* globals ) {
 	MOAIDebugLines::Affirm ();
 	MOAIPartitionResultMgr::Affirm ();
 	MOAISim::Affirm ();
+	
+	// after for now; USLuaState should be highest level object
+	uslsext::InitGlobals ( globals );
+	
+	// Start Lua
+	USLuaRuntime& luaRuntime = USLuaRuntime::Get ();
+	luaRuntime.Open ();
+	luaRuntime.LoadLibs ( "moai" );
 	
 	MOAILogMessages::RegisterDefaultLogMessages ();
 	

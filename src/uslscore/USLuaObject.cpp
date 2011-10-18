@@ -34,7 +34,10 @@ int USLuaObject::_gc ( lua_State* L ) {
 	
 	USLuaObject* data = ( USLuaObject* )state.GetPtrUserData ( 1 );
 
+	printf ( "USLuaObject::_gc () - %s\n", data->TypeName ());
+
 	bool cleanup = data->mUserdata.IsWeak ();
+
 	data->mUserdata.Clear ();
 	
 	if ( USLuaRuntime::IsValid ()) {
@@ -42,6 +45,7 @@ int USLuaObject::_gc ( lua_State* L ) {
 	}
 
 	if ( cleanup ) {
+		printf ( "DELETE!\n" );
 		delete data;
 	}
 	return 0;
@@ -366,7 +370,9 @@ void USLuaObject::SetLocal ( USLuaState& state, int idx, USLuaLocal& ref ) {
 USLuaObject::USLuaObject () {
 	RTTI_SINGLE ( RTTIBase )
 	
-	USLuaRuntime::Get ().RegisterObject ( *this );
+	if ( USLuaRuntime::IsValid ()) {
+		USLuaRuntime::Get ().RegisterObject ( *this );
+	}
 }
 
 //----------------------------------------------------------------//

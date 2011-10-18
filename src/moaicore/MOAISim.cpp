@@ -656,12 +656,6 @@ MOAISim::MOAISim () :
 	
 	RTTI_SINGLE ( MOAIGlobalEventSource )
 	
-	// Start Lua
-	USLuaRuntime& luaRuntime = USLuaRuntime::Get ();
-
-	luaRuntime.Open ();
-	luaRuntime.LoadLibs ( "moai" );
-	
 	for ( u32 i = 0; i < FPS_BUFFER_SIZE; ++i ) {
 		this->mFrameRateBuffer [ i ] = 0.0f;
 	}

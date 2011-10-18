@@ -58,6 +58,8 @@ int MOAIThread::_currentThread ( lua_State* L ) {
 int MOAIThread::_run ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIThread, "UF" )
 
+	if ( !MOAIActionMgr::IsValid ()) return 0;
+
 	if ( MOAIActionMgr::Get ().GetThreadInfoEnabled ()) {
 
 		// Get a copy of the function's debug info and store it so we can

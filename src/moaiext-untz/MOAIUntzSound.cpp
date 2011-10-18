@@ -343,11 +343,10 @@ bool MOAIUntzSound::ApplyAttrOp ( u32 attrID, USAttrOp& attrOp, u32 op ) {
 		attrID = UNPACK_ATTR ( attrID );
 
 		if ( attrID == ATTR_VOLUME ) {
-			this->mSound->setVolume ( attrOp.Apply ( this->mSound->getVolume ()), op );
+			this->mSound->setVolume ( attrOp.Apply ( this->mSound->getVolume (), op ));
 			return true;
 		}
 	}
-	
 	return false;
 }
 
