@@ -257,11 +257,11 @@ int MOAIParticleSystem::_setState ( lua_State* L ) {
 	if ( idx < self->mStates.Size ()) {
 	
 		MOAIParticleState* particleState =  state.GetLuaObject < MOAIParticleState >( 3 );
-		if ( particleState ) {
+		if ( particleState != self->mStates [ idx ]) {
 		
-			particleState->Retain ();
+			self->LuaRetain ( *particleState );
 			if ( self->mStates [ idx ]) {
-				self->mStates [ idx ]->Release ();
+				self->LuaRelease ( *self->mStates [ idx ]);
 			}
 			self->mStates [ idx ] = particleState;
 		}
@@ -306,7 +306,7 @@ void MOAIParticleSystem::ClearStates () {
 
 	for ( u32 i = 0; i < this->mStates.Size (); ++i ) {
 		if ( this->mStates [ i ]) {
-			this->mStates [ i ]->Release ();
+			this->LuaRelease ( *this->mStates [ i ]);
 		}
 	}
 	this->mStates.Clear ();

@@ -24,7 +24,7 @@ private:
 	bool mProfilingEnabled;
 	bool mThreadInfoEnabled;
 
-	USRef < MOAIAction > mRoot;
+	MOAIAction* mRoot;
 	MOAIAction* mCurrentAction;
 
 	//----------------------------------------------------------------//
@@ -34,7 +34,6 @@ private:
 	static int			_setThreadInfoEnabled	( lua_State* L );
 
 	//----------------------------------------------------------------//
-	MOAIAction*			AffirmRoot				();
 	u32					GetNextPass				();
 
 public:
@@ -49,6 +48,7 @@ public:
 	GET_SET ( bool, ThreadInfoEnabled, mThreadInfoEnabled )
 
 	//----------------------------------------------------------------//
+	MOAIAction*			AffirmRoot				();
 	void				Clear					();
 						MOAIActionMgr			();
 						~MOAIActionMgr			();

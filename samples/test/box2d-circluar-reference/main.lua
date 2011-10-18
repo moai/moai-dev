@@ -33,10 +33,7 @@ local function makePhysicsBody ( theLayer )
 	
 	prop.body = b2dWorld:addBody ( MOAIBox2DBody.DYNAMIC )	
 	prop.fixture = prop.body:addRect ( -32, -32, 32, 32 )
-	prop.fixture.isType = function ( self )
-	
-		return 1
-	end
+	prop.fixture.isType = function ( self ) return 1 end
 	
 	local thing = makeThingBody ( layer )
 	

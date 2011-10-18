@@ -218,7 +218,7 @@ int MOAICameraFitter2D::_snapToTarget ( lua_State* L ) {
 void MOAICameraFitter2D::AddAnchor ( MOAICameraAnchor2D& anchor ) {
 
 	if ( !this->mAnchors.contains ( &anchor )) {
-		this->InsertObject ( anchor );
+		this->LuaRetain ( anchor );
 		this->mAnchors.insert ( &anchor );
 	}
 }
@@ -230,7 +230,7 @@ void MOAICameraFitter2D::Clear () {
 		AnchorIt anchorIt = this->mAnchors.begin ();
 		MOAICameraAnchor2D* anchor = *anchorIt;
 		this->mAnchors.erase ( anchorIt );
-		this->RemoveObject ( *anchor );
+		this->LuaRelease ( *anchor );
 	} 
 }
 
@@ -357,6 +357,8 @@ MOAICameraFitter2D::MOAICameraFitter2D () :
 //----------------------------------------------------------------//
 MOAICameraFitter2D::~MOAICameraFitter2D () {
 
+	printf ( "~MOAICameraFitter2D ()\n" );
+
 	// do not have to remove objects here as no objects are reference counted
 	// trying to force removal will result in crash during Lua shutdown
 	// since objects are only referenced by Lua table, Lua's GC will handle cleanup
@@ -406,7 +408,7 @@ void MOAICameraFitter2D::RemoveAnchor ( MOAICameraAnchor2D& anchor ) {
 
 	if ( this->mAnchors.contains ( &anchor )) {
 		this->mAnchors.erase ( &anchor );
-		this->RemoveObject ( anchor );
+		this->LuaRelease ( anchor );
 	}
 }
 

@@ -19,7 +19,7 @@ private:
 	STLString	mName;
 	bool		mIsActive;
 
-	USLeanArray < USRef < MOAISensor > > mSensors;
+	USLeanArray < MOAISensor* > mSensors;
 
 	//----------------------------------------------------------------//
 	MOAISensor*		GetSensor			( u8 sensorID );

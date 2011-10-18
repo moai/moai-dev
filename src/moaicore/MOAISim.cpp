@@ -700,7 +700,7 @@ void MOAISim::PopRenderPass () {
 	if ( this->mRenderPasses.Count ()) {
 		MOAIProp2D* prop = this->mRenderPasses.Back ();
 		this->mRenderPasses.PopBack ();
-		prop->Release ();
+		this->LuaRelease ( *prop );
 	}
 }
 
@@ -709,7 +709,7 @@ void MOAISim::PushRenderPass ( MOAIProp2D* prop ) {
 
 	if ( prop ) {
 		if ( !this->mRenderPasses.Contains ( prop )) {
-			prop->Retain ();
+			this->LuaRetain ( *prop );
 			this->mRenderPasses.PushBack ( prop );
 		}
 	}

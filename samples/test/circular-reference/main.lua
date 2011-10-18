@@ -6,8 +6,8 @@
 
 print ( "hello, moai!" )
 
---MOAISim.setLuaAllocLogEnabled ( true )
-
+MOAISim.forceGarbageCollection ()
+MOAISim.setHistogramEnabled ( true )
 
 prop1 = MOAIProp2D.new ()
 prop1.me = prop
@@ -21,9 +21,12 @@ prop2.prop1 = prop1
 prop1 = nil
 prop2 = nil
 
-print ( MOAISim.getLuaObjectCount ())
+print ( "--------------------------------" )
+MOAISim.reportHistogram ()
+
+print ( "--------------------------------" )
 MOAISim.forceGarbageCollection ()
-print ( MOAISim.getLuaObjectCount ())
+MOAISim.reportHistogram ()	
 
 
 

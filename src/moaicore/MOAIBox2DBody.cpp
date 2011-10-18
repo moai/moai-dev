@@ -41,7 +41,7 @@ int MOAIBox2DBody::_addCircle ( lua_State* L ) {
 	MOAIBox2DFixture* fixture = new MOAIBox2DFixture ();
 	fixture->SetFixture ( self->mBody->CreateFixture ( &fixtureDef ));
 	fixture->SetWorld ( self->mWorld );
-	self->InsertObject ( *fixture );
+	self->mWorld->LuaRetain ( *fixture );
 
 	fixture->PushLuaUserdata ( state );
 	return 1;
@@ -74,7 +74,7 @@ int MOAIBox2DBody::_addPolygon ( lua_State* L ) {
 		MOAIBox2DFixture* fixture = new MOAIBox2DFixture ();
 		fixture->SetFixture ( self->mBody->CreateFixture ( &fixtureDef ));
 		fixture->SetWorld ( self->mWorld );
-		self->InsertObject ( *fixture );
+		self->mWorld->LuaRetain ( *fixture );
 
 		fixture->PushLuaUserdata ( state );
 		return 1;
@@ -116,7 +116,7 @@ int MOAIBox2DBody::_addRect ( lua_State* L ) {
 	MOAIBox2DFixture* fixture = new MOAIBox2DFixture ();
 	fixture->SetFixture ( self->mBody->CreateFixture ( &fixtureDef ));
 	fixture->SetWorld ( self->mWorld );
-	self->InsertObject ( *fixture );
+	self->mWorld->LuaRetain ( *fixture );
 
 	fixture->PushLuaUserdata ( state );
 	return 1;
@@ -646,7 +646,7 @@ void MOAIBox2DBody::Destroy () {
 		b2World* world = this->mWorld->mWorld;
 		world->DestroyBody ( this->mBody );
 		this->mBody = 0;
-		this->mWorld->RemoveObject ( *this );
+		this->mWorld->LuaRelease ( *this );
 	}
 }
 

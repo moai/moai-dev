@@ -197,7 +197,7 @@ void MOAIParticleState::ClearForces () {
 		ForceNode* forceNode = this->mForces.Head ();
 		this->mForces.PopFront ();
 		
-		forceNode->Data ()->Release ();
+		this->LuaRelease ( *forceNode->Data ());
 		delete forceNode;
 	}
 }
@@ -267,7 +267,7 @@ MOAIParticleState::~MOAIParticleState () {
 //----------------------------------------------------------------//
 void MOAIParticleState::PushForce ( MOAIParticleForce& force ) {
 
-	force.Retain ();
+	this->LuaRetain ( force );
 
 	ForceNode* forceNode = new ForceNode ();
 	forceNode->Data ( &force );
