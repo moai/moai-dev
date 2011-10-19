@@ -13,8 +13,7 @@
 //================================================================//
 // MOAIWebView
 //================================================================//
-class MOAIWebView :
-	public UIViewController, 
+class MOAIWebView : 
 	public MOAIInstanceEventSource {
 private:
 	
@@ -39,6 +38,7 @@ private:
 	static int			_hideWebView					( lua_State* L );
 	static int			_isHidden						( lua_State* L );
 	static int			_initWebView					( lua_State* L );
+	static int			_initWithRootVC					( lua_State* L );
 	static int			_isLoading						( lua_State* L );
 	static int			_loadData						( lua_State* L ); //TODO
 	static int			_loadHTML						( lua_State* L );

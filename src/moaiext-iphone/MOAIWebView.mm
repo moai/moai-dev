@@ -276,6 +276,45 @@ int MOAIWebView::_initWebView ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	initWithRootVC
+	@text	Kills current UIWebView (if one exists) and creates a
+			new one inheriting events from the root view controller.
+			
+	@in		MOAIWebView self
+	@in		bool hidden
+	@out	nil
+*/
+int MOAIWebView::_initWithRootVC ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIWebView, "U" );
+	
+	bool hidden = lua_toboolean ( state, 2 );
+	
+	if ( self->mWebView ) {
+		
+		self->mWebView.delegate = nil;
+		[ self->mWebView stopLoading ];
+		[ self->mWebView removeFromSuperview ];
+	}	
+	
+	UIWindow* window = [[ UIApplication sharedApplication ] keyWindow ];
+	UIViewController* rootVC = [ window rootViewController ];
+	self->mWebView = [[[ UIWebView alloc ] initWithFrame:rootVC.view.bounds ] autorelease ];
+	self->mWebView.transform = CGAffineTransformConcat ([ rootVC.view transform ], CGAffineTransformMakeRotation(( float )( M_PI / 2 + M_PI )));
+	
+	[ self->mWebView setDelegate:self->mWebViewDelegate ];
+	[ self->mWebView setScalesPageToFit:YES ];
+	[ self->mWebView setMultipleTouchEnabled:YES ];
+	[ rootVC.view addSubview:self->mWebView ];
+	[ self->mWebView addSubview:self->mToolBar ];
+	
+	if ( hidden ) {
+		self->mWebView.hidden = true;
+	}
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	isHidden
 	@text	Returns whether or not the UIWebView is hidden.
 				
@@ -506,7 +545,7 @@ MOAIWebView::MOAIWebView () :
 		RTTI_EXTEND ( MOAIEventSource )
 	RTTI_END
 	
-	mWebViewDelegate = [ MoaiUiWebViewDelegate alloc ];
+	mWebViewDelegate = [[ MoaiUiWebViewDelegate alloc ] retain ];
 	mWebViewDelegate.mMOAIWebView = this;
 
 	//create toolbar using new
@@ -630,11 +669,13 @@ void MOAIWebView::RegisterLuaFuncs ( USLuaState& state ) {
 		{ "hasToolBar",						_hasToolBar },
 		{ "hideWebView",					_hideWebView },
 		{ "initWebView",					_initWebView },
+		{ "initWithRootVC",					_initWithRootVC },
 		{ "isHidden",						_isHidden },
 		{ "isLoading",						_isLoading },
 		{ "loadData",						_loadData },
 		{ "loadHTML",						_loadHTML },
 		{ "loadRequest",					_loadRequest },
+		{ "openURLInSafari",				_openUrlInSafari },
 		{ "runJavaScript",					_runJavaScript },
 		{ "setAllowsInlineMediaPLayback",   _setAllowsInlineMediaPlayback },
 		{ "setMediaPlaybackRequiresAction", _setMediaPlaybackRequiresAction },

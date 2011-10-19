@@ -1080,8 +1080,6 @@
 		0324E7A513564BC8000ADC60 /* USAnimCurve.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E60713564BC8000ADC60 /* USAnimCurve.h */; };
 		0324E7A613564BC8000ADC60 /* USAttributed.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E60813564BC8000ADC60 /* USAttributed.cpp */; };
 		0324E7A713564BC8000ADC60 /* USAttributed.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E60913564BC8000ADC60 /* USAttributed.h */; };
-		0324E7A813564BC8000ADC60 /* USAttrMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E60A13564BC8000ADC60 /* USAttrMap.cpp */; };
-		0324E7A913564BC8000ADC60 /* USAttrMap.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E60B13564BC8000ADC60 /* USAttrMap.h */; };
 		0324E7AA13564BC8000ADC60 /* USAttrOp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E60C13564BC8000ADC60 /* USAttrOp.cpp */; };
 		0324E7AB13564BC8000ADC60 /* USAttrOp.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E60D13564BC8000ADC60 /* USAttrOp.h */; };
 		0324E7AC13564BC8000ADC60 /* USBinarySearch.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E60E13564BC8000ADC60 /* USBinarySearch.h */; };
@@ -1431,8 +1429,6 @@
 		0324E94313564BC9000ADC60 /* USAnimCurve.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E60713564BC8000ADC60 /* USAnimCurve.h */; };
 		0324E94413564BC9000ADC60 /* USAttributed.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E60813564BC8000ADC60 /* USAttributed.cpp */; };
 		0324E94513564BC9000ADC60 /* USAttributed.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E60913564BC8000ADC60 /* USAttributed.h */; };
-		0324E94613564BC9000ADC60 /* USAttrMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E60A13564BC8000ADC60 /* USAttrMap.cpp */; };
-		0324E94713564BC9000ADC60 /* USAttrMap.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E60B13564BC8000ADC60 /* USAttrMap.h */; };
 		0324E94813564BC9000ADC60 /* USAttrOp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E60C13564BC8000ADC60 /* USAttrOp.cpp */; };
 		0324E94913564BC9000ADC60 /* USAttrOp.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E60D13564BC8000ADC60 /* USAttrOp.h */; };
 		0324E94A13564BC9000ADC60 /* USBinarySearch.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E60E13564BC8000ADC60 /* USBinarySearch.h */; };
@@ -3605,8 +3601,6 @@
 		0324E60713564BC8000ADC60 /* USAnimCurve.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USAnimCurve.h; sourceTree = "<group>"; };
 		0324E60813564BC8000ADC60 /* USAttributed.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USAttributed.cpp; sourceTree = "<group>"; };
 		0324E60913564BC8000ADC60 /* USAttributed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USAttributed.h; sourceTree = "<group>"; };
-		0324E60A13564BC8000ADC60 /* USAttrMap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USAttrMap.cpp; sourceTree = "<group>"; };
-		0324E60B13564BC8000ADC60 /* USAttrMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USAttrMap.h; sourceTree = "<group>"; };
 		0324E60C13564BC8000ADC60 /* USAttrOp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USAttrOp.cpp; sourceTree = "<group>"; };
 		0324E60D13564BC8000ADC60 /* USAttrOp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USAttrOp.h; sourceTree = "<group>"; };
 		0324E60E13564BC8000ADC60 /* USBinarySearch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USBinarySearch.h; sourceTree = "<group>"; };
@@ -6611,8 +6605,6 @@
 			children = (
 				0324E60813564BC8000ADC60 /* USAttributed.cpp */,
 				0324E60913564BC8000ADC60 /* USAttributed.h */,
-				0324E60A13564BC8000ADC60 /* USAttrMap.cpp */,
-				0324E60B13564BC8000ADC60 /* USAttrMap.h */,
 				0324E60C13564BC8000ADC60 /* USAttrOp.cpp */,
 				0324E60D13564BC8000ADC60 /* USAttrOp.h */,
 			);
@@ -8425,7 +8417,6 @@
 				0324E94113564BC9000ADC60 /* USAffine2D.h in Headers */,
 				0324E94313564BC9000ADC60 /* USAnimCurve.h in Headers */,
 				0324E94513564BC9000ADC60 /* USAttributed.h in Headers */,
-				0324E94713564BC9000ADC60 /* USAttrMap.h in Headers */,
 				0324E94913564BC9000ADC60 /* USAttrOp.h in Headers */,
 				0324E94A13564BC9000ADC60 /* USBinarySearch.h in Headers */,
 				0324E94E13564BC9000ADC60 /* USBox.h in Headers */,
@@ -9059,7 +9050,6 @@
 				0324E7A313564BC8000ADC60 /* USAffine2D.h in Headers */,
 				0324E7A513564BC8000ADC60 /* USAnimCurve.h in Headers */,
 				0324E7A713564BC8000ADC60 /* USAttributed.h in Headers */,
-				0324E7A913564BC8000ADC60 /* USAttrMap.h in Headers */,
 				0324E7AB13564BC8000ADC60 /* USAttrOp.h in Headers */,
 				0324E7AC13564BC8000ADC60 /* USBinarySearch.h in Headers */,
 				0324E7B013564BC8000ADC60 /* USBox.h in Headers */,
@@ -9879,7 +9869,6 @@
 				0324E94013564BC9000ADC60 /* USAdapterInfo_win32.cpp in Sources */,
 				0324E94213564BC9000ADC60 /* USAnimCurve.cpp in Sources */,
 				0324E94413564BC9000ADC60 /* USAttributed.cpp in Sources */,
-				0324E94613564BC9000ADC60 /* USAttrMap.cpp in Sources */,
 				0324E94813564BC9000ADC60 /* USAttrOp.cpp in Sources */,
 				0324E94D13564BC9000ADC60 /* USBox.cpp in Sources */,
 				0324E95113564BC9000ADC60 /* USCgt.cpp in Sources */,
@@ -10990,7 +10979,6 @@
 				0324E7A213564BC8000ADC60 /* USAdapterInfo_win32.cpp in Sources */,
 				0324E7A413564BC8000ADC60 /* USAnimCurve.cpp in Sources */,
 				0324E7A613564BC8000ADC60 /* USAttributed.cpp in Sources */,
-				0324E7A813564BC8000ADC60 /* USAttrMap.cpp in Sources */,
 				0324E7AA13564BC8000ADC60 /* USAttrOp.cpp in Sources */,
 				0324E7AF13564BC8000ADC60 /* USBox.cpp in Sources */,
 				0324E7B313564BC8000ADC60 /* USCgt.cpp in Sources */,

@@ -92,6 +92,7 @@ private:
 	static int		_getDirectoryInDomain					( lua_State* L );
 	static int		_getNotificationThatStartedApp			( lua_State* L );
 	static int		_openURL								( lua_State* L );
+	static int		_openURLWithParams						( lua_State* L );
 	static int		_presentLocalNotification				( lua_State* L );
 	static int		_registerForRemoteNotifications			( lua_State* L );
 	static int		_restoreCompletedTransactions			( lua_State* L );

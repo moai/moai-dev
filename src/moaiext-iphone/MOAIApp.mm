@@ -202,6 +202,41 @@ int MOAIApp::_openURL ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	openURLWithParams
+	@text	See UIApplication documentation.
+ 
+	@in		string url
+	@in		table params
+	@out	bool success
+*/
+int MOAIApp::_openURLWithParams ( lua_State* L ) {
+	USLuaState state ( L );
+	
+	NSString* baseURL = [[ NSString alloc ] initWithLua: state stackIndex: 1 ];
+	NSMutableDictionary* params = [[ NSMutableDictionary alloc ] initWithCapacity:5 ];
+	[ params initWithLua: state stackIndex: 2 ];
+	
+	if ( baseURL == NULL || params == NULL ) return 0;
+	
+	NSURL* parsedURL = [ NSURL URLWithString: baseURL ];
+	NSString* urlQueryPrefix = parsedURL.query ? @"&" : @"?";
+	
+	NSMutableArray* paramPairs = [ NSMutableArray array ];
+	for ( NSString* key in [ params keyEnumerator ] ) {
+		
+		NSString* escapedValue = ( NSString* )CFURLCreateStringByAddingPercentEscapes( NULL, ( CFStringRef )[ params objectForKey: key ], NULL, ( CFStringRef )@"!*'();:@&=+$,/?%#[]", kCFStringEncodingUTF8 );
+		[ paramPairs addObject:[ NSString stringWithFormat: @"%@=%@", key, escapedValue ]];
+		[ escapedValue release ];
+	}
+	
+	NSString* urlQuery = [ paramPairs componentsJoinedByString: @"&" ];
+		
+	bool success = [[ UIApplication sharedApplication ] openURL:[ NSURL URLWithString:[ NSString stringWithFormat: @"%@%@%@", baseURL, urlQueryPrefix, urlQuery ]]];	
+	lua_pushboolean ( state, success );
+	return 1;
+}
+
+//----------------------------------------------------------------//
 /**	@name	presentLocalNotification
 	@text	Presents a local notification.
  
@@ -720,6 +755,7 @@ void MOAIApp::RegisterLuaClass ( USLuaState& state ) {
 		{ "getDirectoryInDomain",				_getDirectoryInDomain },
 		{ "getNotificationThatStartedApp",		_getNotificationThatStartedApp },
 		{ "openURL",							_openURL },
+		{ "openURLWithParams",					_openURLWithParams },
 		{ "presentLocalNotification",			_presentLocalNotification },
 		{ "registerForRemoteNotifications",		_registerForRemoteNotifications },
 		{ "restoreCompletedTransactions",		_restoreCompletedTransactions },
