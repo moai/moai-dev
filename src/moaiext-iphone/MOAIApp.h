@@ -72,6 +72,7 @@ private:
 	};
 	
 	enum {
+		APP_OPENED_FROM_URL,
 		SESSION_START,
 		SESSION_END
 	};
@@ -112,6 +113,7 @@ public:
 	SET ( UIApplication*, Application, mApplication )
 	
 	//----------------------------------------------------------------//
+	void		AppOpenedFromURL											( NSURL* url );
 	void		DidFailToRegisterForRemoteNotificationsWithError			( NSError* error );
 	void		DidReceiveLocalNotification									( UILocalNotification* notification );
 	void		DidReceivePaymentQueueError									( NSError *error, cc8 *extraInfo );

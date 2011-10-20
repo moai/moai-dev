@@ -437,6 +437,19 @@ int MOAIApp::_setListener ( lua_State* L ) {
 //================================================================//
 // MOAIApp
 //================================================================//
+//----------------------------------------------------------------//
+void MOAIApp::AppOpenedFromURL ( NSURL* url ) {
+	
+	USLuaRef& callback = this->mListeners [ APP_OPENED_FROM_URL ];
+	
+	if ( callback ) {
+		USLuaStateHandle state = callback.GetSelf ();
+		
+		[[ url absoluteString ] toLua:state ];
+		
+		state.DebugCall ( 1, 0 );
+	}
+}
 
 //----------------------------------------------------------------//
 void MOAIApp::DidFailToRegisterForRemoteNotificationsWithError ( NSError* error ) {
@@ -744,9 +757,10 @@ void MOAIApp::RegisterLuaClass ( USLuaState& state ) {
 	state.SetField ( -1, "TRANSACTION_STATE_FAILED",    ( u32 )TRANSACTION_STATE_FAILED );
 	state.SetField ( -1, "TRANSACTION_STATE_RESTORED",  ( u32 )TRANSACTION_STATE_RESTORED );
 	state.SetField ( -1, "TRANSACTION_STATE_CANCELLED", ( u32 )TRANSACTION_STATE_CANCELLED );
-		
-	state.SetField ( -1, "SESSION_START",	( u32 )SESSION_START );
-	state.SetField ( -1, "SESSION_END",		( u32 )SESSION_END );
+			
+	state.SetField ( -1, "APP_OPENED_FROM_URL",	( u32 )APP_OPENED_FROM_URL );
+	state.SetField ( -1, "SESSION_START",	    ( u32 )SESSION_START );
+	state.SetField ( -1, "SESSION_END",		    ( u32 )SESSION_END );
 	
 	luaL_Reg regTable[] = {
 		{ "alert",								_alert },

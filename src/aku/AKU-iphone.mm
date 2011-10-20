@@ -39,6 +39,12 @@ void AKUAppDidStartSession () {
 }
 
 //-----------------------------------------------------------------//
+void AKUAppOpenFromURL ( NSURL* url ) {
+	
+	MOAIApp::Get ().AppOpenedFromURL ( url );
+}
+
+//-----------------------------------------------------------------//
 void AKUAppWillEndSession () {
 
 	MOAIApp::Get ().WillEndSession ();
