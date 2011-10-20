@@ -51,6 +51,8 @@
 
 	//----------------------------------------------------------------//
 	-( void ) request:( SKRequest* )request didFailWithError:( NSError* )error {
+		UNUSED ( request );
+	
 		NSLog ( @"StoreKit Request Error: %@", error.localizedDescription );
 		MOAIApp::Get().DidReceivePaymentQueueError(error, "request");
 	}

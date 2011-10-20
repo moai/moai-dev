@@ -252,8 +252,8 @@ void USSqlStatement::Take ( USSqlStatement& statement ) {
 	this->mConnection = statement.mConnection;
 	
 	(( USSqlStatement& )statement ).mOwns = false;
-	(( USSqlStatement& )statement ).mStatement = false;
-	(( USSqlStatement& )statement ).mConnection = false;
+	(( USSqlStatement& )statement ).mStatement = 0;
+	(( USSqlStatement& )statement ).mConnection = 0;
 };
 
 //----------------------------------------------------------------//

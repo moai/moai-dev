@@ -66,7 +66,8 @@ int MOAITapjoy::_requestTapjoyConnect ( lua_State* L ) {
 	@out	nil
 */
 int MOAITapjoy::_showOffers ( lua_State* L ) {
-		
+	UNUSED ( L );
+	
 	UIWindow* window = [[ UIApplication sharedApplication ] keyWindow ];
 		
 	UIViewController* rootVC = [ window rootViewController ];

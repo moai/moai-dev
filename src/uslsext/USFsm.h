@@ -64,6 +64,7 @@ private:
 	
 	//----------------------------------------------------------------//
 	void End ( RTTIBase* self ) {
+		UNUSED ( self );
 		if ( this->mSelf ) {
 			this->OnEnd ( *this->mSelf );
 		}
@@ -76,6 +77,7 @@ private:
 
 	//----------------------------------------------------------------//
 	USFsmTrans::Type Update ( RTTIBase* self, float step ) {
+		UNUSED ( self );
 		if ( this->mSelf ) {
 			return this->OnUpdate ( *this->mSelf, step );
 		}
@@ -86,14 +88,18 @@ public:
 	
 	//----------------------------------------------------------------//
 	virtual void OnBegin ( TYPE& self ) {
+		UNUSED ( self );
 	}
 	
 	//----------------------------------------------------------------//
 	virtual void OnEnd ( TYPE& self ) {
+		UNUSED ( self );
 	}
 	
 	//----------------------------------------------------------------//
 	virtual USFsmTrans::Type OnUpdate ( TYPE& self, float step ) {
+		UNUSED ( self );
+		UNUSED ( step );
 		return USFsmTrans::END;
 	}
 	

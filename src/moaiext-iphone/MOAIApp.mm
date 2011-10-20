@@ -32,6 +32,7 @@
 
 	//----------------------------------------------------------------//
 	-( void )alertView:( UIAlertView* )alertView didDismissWithButtonIndex:( NSInteger )buttonIndex {
+		UNUSED ( alertView );
 		
 		if ( self->callback ) {
 			USLuaStateHandle state = self->callback.GetSelf ();
@@ -351,6 +352,7 @@ int MOAIApp::_requestProductIdentifiers ( lua_State* L ) {
  
 */
 int MOAIApp::_restoreCompletedTransactions( lua_State* L ) {
+	UNUSED ( L );
 	
 	[[SKPaymentQueue defaultQueue] restoreCompletedTransactions];
 
@@ -374,7 +376,7 @@ int MOAIApp::_scheduleLocalNotification ( lua_State* L ) {
 	int appIconBadgeNumber		= state.GetValue < int >( 8, 0 );
 	cc8* soundName				= state.GetValue < cc8* >( 9, 0 );
 	
-	UILocalNotification* notification = [[[ NSNotification alloc ] init ] autorelease ];
+	UILocalNotification* notification = [[[ UILocalNotification alloc ] init ] autorelease ];
 	
 	notification.fireDate			= [ NSDate dateFromISO8601String:[ NSString stringWithUTF8String:fireDate ]];
 	notification.timeZone			= [ NSString stringWithUTF8String:timeZone ];

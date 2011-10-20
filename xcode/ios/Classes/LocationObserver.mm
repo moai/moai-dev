@@ -80,13 +80,13 @@ static double _getSpeed ( CLLocation* location1, CLLocation* location2 ) {
 	//----------------------------------------------------------------//
 	-( BOOL ) headingAvailable {
 	
-		return [ mLocMgr headingAvailable ];
+		return [ CLLocationManager headingAvailable ];
 	}
 
 	//----------------------------------------------------------------//
 	-( BOOL ) locationAvailable {
 		
-		return ([ mLocMgr locationServicesEnabled ]);
+		return ([ CLLocationManager locationServicesEnabled ]);
 	}
 
 	//----------------------------------------------------------------//
@@ -142,7 +142,7 @@ static double _getSpeed ( CLLocation* location1, CLLocation* location2 ) {
 		
 		[ mLocMgr startUpdatingLocation ];
 		
-		if ([ mLocMgr headingAvailable ]) {
+		if ([ CLLocationManager headingAvailable ]) {
 			[ mLocMgr startUpdatingHeading ];
 		}
 	}
@@ -152,7 +152,7 @@ static double _getSpeed ( CLLocation* location1, CLLocation* location2 ) {
 		
 		[ mLocMgr stopUpdatingLocation ];
 		
-		if ([ mLocMgr headingAvailable ]) {
+		if ([ CLLocationManager headingAvailable ]) {
 			[ mLocMgr stopUpdatingHeading ];
 		}
 	}
@@ -184,7 +184,7 @@ static double _getSpeed ( CLLocation* location1, CLLocation* location2 ) {
 			
 			mSpeed = _getSpeed ( oldLocation, newLocation );
 			
-			if (([ mLocMgr headingAvailable ] == false ) && ( mSpeed > 0.0f )) {
+			if (([ CLLocationManager headingAvailable ] == false ) && ( mSpeed > 0.0f )) {
 				
 				mCourse = _getBearing (
 					oldLocation.coordinate.latitude,
