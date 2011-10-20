@@ -72,6 +72,7 @@ public:
 	virtual USLuaClass*		GetLuaClass				();
 	USLuaStateHandle		GetSelf					();
 	bool					IsBound					();
+	void					LockToRefCount			();
 	void					LuaRelease				( USLuaObject& object );
 	void					LuaRetain				( USLuaObject& object );
 	void					LuaUnbind				( USLuaState& state );
