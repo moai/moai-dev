@@ -23,18 +23,18 @@ class MOAILayer2D :
 	public virtual MOAIProp2D {
 private:
 
-	USRef < MOAITransformBase >		mCamera;
-	USRef < MOAIViewport >			mViewport;
-	USRef < MOAIPartition >			mPartition;
+	USLuaObjRef < MOAITransformBase >	mCamera;
+	USLuaObjRef < MOAIViewport >		mViewport;
+	USLuaObjRef < MOAIPartition >		mPartition;
 
-	USRef < MOAITexture >			mFrameBuffer;
+	USLuaObjRef < MOAITexture >			mFrameBuffer;
 
 	#if USE_CHIPMUNK
-		USRef < MOAICpSpace >		mCpSpace;
+		USLuaObjRef < MOAICpSpace >		mCpSpace;
 	#endif
 	
 	#if USE_BOX2D
-		USRef < MOAIBox2DWorld >	mBox2DWorld;
+		USLuaObjRef < MOAIBox2DWorld >	mBox2DWorld;
 	#endif
 
 	USVec2D							mParallax;

@@ -306,6 +306,8 @@ MOAIVertexBuffer::MOAIVertexBuffer () :
 	RTTI_SINGLE ( MOAIVertexBuffer )
 	
 	this->mBounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
+	
+	this->mFormat.InitWithOwner ( *this );
 }
 
 //----------------------------------------------------------------//

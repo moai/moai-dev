@@ -17,6 +17,7 @@
 #include <uslscore/USLuaState.h>
 #include <uslscore/USLuaStateHandle.h>
 #include <uslscore/USLuaObject.h>
+#include <uslscore/USLuaObjRef.h>
 #include <uslscore/USLuaRuntime.h>
 #include <uslscore/USLuaRef.h>
 

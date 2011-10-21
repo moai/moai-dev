@@ -31,7 +31,7 @@ class MOAITimer :
 	public MOAIAction {
 protected:
 
-	USRef < MOAIAnimCurve >	mCurve;
+	USLuaObjRef < MOAIAnimCurve > mCurve;
 
 	float	mStartTime;
 	float	mEndTime;

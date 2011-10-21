@@ -168,6 +168,8 @@ MOAIAnim::MOAIAnim () :
 	mLength ( 0.0f ) {
 	
 	RTTI_SINGLE ( MOAITimer )
+	
+	this->mCurve.InitWithOwner ( *this );
 }
 
 //----------------------------------------------------------------//
@@ -211,6 +213,11 @@ void MOAIAnim::RegisterLuaFuncs ( USLuaState& state ) {
 void MOAIAnim::ReserveLinks ( u32 totalLinks ) {
 
 	this->mLinks.Init ( totalLinks );
+	
+	for ( u32 i = 0; i < totalLinks; ++i ) {
+		MOAIAnimLink& link = this->mLinks [ i ];
+		link.mCurve.InitWithOwner ( *this );
+	}
 }
 
 //----------------------------------------------------------------//

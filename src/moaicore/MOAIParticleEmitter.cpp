@@ -234,6 +234,8 @@ MOAIParticleEmitter::MOAIParticleEmitter () :
 		RTTI_EXTEND ( MOAITransform )
 		RTTI_EXTEND ( MOAIAction )
 	RTTI_END
+	
+	this->mSystem.InitWithOwner ( *this );
 }
 
 //----------------------------------------------------------------//

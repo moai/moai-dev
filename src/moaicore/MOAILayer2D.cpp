@@ -523,6 +523,19 @@ MOAILayer2D::MOAILayer2D () :
 	RTTI_END
 	
 	this->SetMask ( MOAIProp::CAN_DRAW | MOAIProp::CAN_DRAW_DEBUG );
+	
+	this->mCamera.InitWithOwner ( *this );
+	this->mViewport.InitWithOwner ( *this );
+	this->mPartition.InitWithOwner ( *this );
+	this->mFrameBuffer.InitWithOwner ( *this );
+
+	#if USE_CHIPMUNK
+		this->mCpSpace.InitWithOwner ( *this );
+	#endif
+	
+	#if USE_BOX2D
+		this->mBox2DWorld.InitWithOwner ( *this );
+	#endif
 }
 
 //----------------------------------------------------------------//

@@ -36,7 +36,7 @@ private:
 	u32		mSrc;
 	
 	STLString mName;
-	USRef < MOAITransformBase >	mTransform;
+	MOAITransformBase* mTransform;
 
 	//----------------------------------------------------------------//
 	void		BindAttributes				( const float* attributes );
@@ -47,7 +47,6 @@ public:
 
 	//----------------------------------------------------------------//
 				MOAIShaderUniform	();
-
 };
 
 //================================================================//

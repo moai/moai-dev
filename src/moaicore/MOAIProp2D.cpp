@@ -693,6 +693,12 @@ MOAIProp2D::MOAIProp2D () :
 	
 	this->mColor.Set ( 1.0f, 1.0f, 1.0f, 1.0f );
 	this->mFrame.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
+	
+	this->mDeck.InitWithOwner ( *this );
+	this->mRemapper.InitWithOwner ( *this );
+	this->mGrid.InitWithOwner ( *this );
+	this->mShader.InitWithOwner ( *this );
+	this->mUVTransform.InitWithOwner ( *this );
 }
 
 //----------------------------------------------------------------//

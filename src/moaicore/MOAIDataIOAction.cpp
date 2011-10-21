@@ -81,6 +81,8 @@ MOAIDataIOAction::MOAIDataIOAction () :
 	mState ( IDLE ) {
 	
 	RTTI_SINGLE ( MOAIAction )
+	
+	this->mData.InitWithOwner ( *this );
 }
 
 //----------------------------------------------------------------//

@@ -491,6 +491,8 @@ MOAITextBox::MOAITextBox () :
 	
 	this->mFrame.Init ( 0.0f, 0.0f, 0.0f, 0.0f ); 
 	this->SetMask ( MOAIProp::CAN_DRAW | MOAIProp::CAN_DRAW_DEBUG );
+	
+	this->mFont.InitWithOwner ( *this );
 }
 
 //----------------------------------------------------------------//

@@ -152,6 +152,8 @@ MOAITileDeck2D::MOAITileDeck2D () {
 	this->SetContentMask ( MOAIProp::CAN_DRAW );
 	
 	this->mRect.Init ( -0.5f, -0.5f, 0.5f, 0.5f );
+	
+	this->mTexture.InitWithOwner ( *this );
 }
 
 //----------------------------------------------------------------//

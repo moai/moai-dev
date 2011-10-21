@@ -238,9 +238,19 @@ int MOAIShader::_setUniform ( lua_State* L ) {
 				uniform.mSrc	= state.GetValue < u32 >( 3, 0 );
 				uniform.mSize	= state.GetValue < u32 >( 4, 0 );
 				break;
-			case MOAIShaderUniform::UNIFORM_TRANSFORM:
-				uniform.mTransform	= state.GetLuaObject < MOAITransformBase >( 3 );
+			case MOAIShaderUniform::UNIFORM_TRANSFORM: {
+				
+				MOAITransformBase* transform = state.GetLuaObject < MOAITransformBase >( 3 );
+				
+				if ( transform ) {
+					self->LuaRetain ( *transform );
+				}
+				
+				self->ClearUniform ( idx );
+				
+				uniform.mTransform	= transform;
 				break;
+			}
 		}
 	}
 	return 0;
@@ -276,6 +286,10 @@ void MOAIShader::ClearUniform ( u32 idx ) {
 	if ( idx < this->mUniforms.Size ()) {
 		
 		MOAIShaderUniform& uniform = this->mUniforms [ idx ];
+		
+		if ( uniform.mTransform ) {
+			this->LuaRelease ( *uniform.mTransform );
+		}
 		
 		uniform.mName.clear ();
 		uniform.mType = MOAIShaderUniform::UNIFORM_NONE;

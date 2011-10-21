@@ -106,6 +106,9 @@ MOAIMesh::MOAIMesh () {
 
 	RTTI_SINGLE ( MOAIDeck )
 	this->SetContentMask ( MOAIProp::CAN_DRAW );
+	
+	this->mTexture.InitWithOwner ( *this );
+	this->mVertexBuffer.InitWithOwner ( *this );
 }
 
 //----------------------------------------------------------------//

@@ -705,6 +705,7 @@ MOAIBox2DWorld::MOAIBox2DWorld () :
 		RTTI_EXTEND ( MOAIAction )
 	RTTI_END
 	
+	this->mArbiter.InitWithOwner ( *this );
 	this->mArbiter = new MOAIBox2DArbiter ();
 	
 	b2Vec2 gravity ( 0.0f, 0.0f );

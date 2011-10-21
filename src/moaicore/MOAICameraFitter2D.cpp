@@ -352,6 +352,9 @@ MOAICameraFitter2D::MOAICameraFitter2D () :
 	this->mViewRect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
 	this->mTargetLoc.Init ( 0.0f, 0.0f );
 	this->mTargetScale = 1.0f;
+	
+	this->mCamera.InitWithOwner ( *this );
+	this->mViewport.InitWithOwner ( *this );
 }
 
 //----------------------------------------------------------------//

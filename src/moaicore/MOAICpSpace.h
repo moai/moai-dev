@@ -54,9 +54,9 @@ class MOAICpSpace :
 	public MOAIAction {
 private:
 
-	cpSpace*					mSpace;
-	USRef < MOAICpBody >		mStaticBody;
-	USRef < MOAICpArbiter >		mArbiter;
+	cpSpace*						mSpace;
+	USLuaObjRef < MOAICpBody >		mStaticBody;
+	USLuaObjRef < MOAICpArbiter >	mArbiter;
 	
 	MOAICpCollisionHandler*	mCollisionHandlers;
 	MOAICpCollisionHandler* mDefaultHandler;

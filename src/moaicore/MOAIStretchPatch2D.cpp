@@ -348,6 +348,8 @@ MOAIStretchPatch2D::MOAIStretchPatch2D () :
 	this->SetContentMask ( MOAIProp::CAN_DRAW );
 
 	this->mRect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
+	
+	this->mTexture.InitWithOwner ( *this );
 }
 
 //----------------------------------------------------------------//

@@ -19,9 +19,9 @@ class MOAIGfxQuad2D :
 	public MOAIDeck2D {
 private:
 
-	USRef < MOAITexture	>	mTexture;
-	USRect					mRect;
-	USRect					mUVRect;
+	USLuaObjRef < MOAITexture	> mTexture;
+	USRect	mRect;
+	USRect	mUVRect;
 
 	//----------------------------------------------------------------//
 	static int		_setRect			( lua_State* L );

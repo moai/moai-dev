@@ -58,7 +58,7 @@ class MOAIGfxQuadListDeck2D :
 	public MOAIDeck2D {
 private:
 
-	USRef < MOAITexture >			mTexture;
+	USLuaObjRef < MOAITexture >		mTexture;
 	
 	USLeanArray < USQuad >			mUVQuads;
 	USLeanArray < USQuad >			mQuads;

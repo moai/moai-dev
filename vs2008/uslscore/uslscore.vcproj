@@ -432,6 +432,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\uslscore\USLuaObjRef.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\uslscore\USLuaRef.cpp"
 				>
 			</File>

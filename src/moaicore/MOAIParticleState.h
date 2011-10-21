@@ -31,9 +31,9 @@ private:
 
 	float mDamping;
 
-	USRef < MOAIParticleScript > mInit;
-	USRef < MOAIParticleScript > mRender;
-	USRef < MOAIParticlePlugin > mPlugin;
+	USLuaObjRef < MOAIParticleScript > mInit;
+	USLuaObjRef < MOAIParticleScript > mRender;
+	USLuaObjRef < MOAIParticlePlugin > mPlugin;
 	
 	USWeak < MOAIParticleState > mNext;
 

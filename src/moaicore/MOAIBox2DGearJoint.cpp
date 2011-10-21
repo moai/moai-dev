@@ -101,6 +101,9 @@ MOAIBox2DGearJoint::MOAIBox2DGearJoint () {
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIBox2DJoint )
 	RTTI_END
+	
+	this->mJointA.InitWithOwner ( *this );
+	this->mJointB.InitWithOwner ( *this );
 }
 
 //----------------------------------------------------------------//

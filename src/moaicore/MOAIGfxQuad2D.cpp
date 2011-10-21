@@ -116,6 +116,8 @@ MOAIGfxQuad2D::MOAIGfxQuad2D () {
 	// set up rects to draw a unit tile centered at the origin
 	this->mRect.Init ( -0.5f, -0.5f, 0.5f, 0.5f );
 	this->mUVRect.Init ( 0.0f, 1.0f, 1.0f, 0.0f );
+	
+	this->mTexture.InitWithOwner ( *this );
 }
 
 //----------------------------------------------------------------//

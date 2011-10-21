@@ -22,7 +22,7 @@ private:
 
 	USLuaLocal			mOnFinish;
 	
-	USRef < MOAIDataBuffer > mPostData;
+	USLuaObjRef < MOAIDataBuffer > mPostData;
 	STLString mPostString;
 
 	//----------------------------------------------------------------//

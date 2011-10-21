@@ -24,11 +24,11 @@ private:
 	static const u32 WIDE_ID_MASK	= 0x7fffffff;
 	static const u32 INVALID_ID		= 0xffffffff;
 
-	USLeanArray < MOAIGlyph >		mByteGlyphs;
+	USLeanArray < MOAIGlyph >	mByteGlyphs;
 	USLeanArray < u8 >			mByteGlyphMap;
 	u8							mByteGlyphMapBase;
 
-	USLeanArray < MOAIGlyph >		mWideGlyphs;
+	USLeanArray < MOAIGlyph >	mWideGlyphs;
 	USLeanArray < u32 >			mWideGlyphMap;
 
 	float mScale;
@@ -36,8 +36,8 @@ private:
 	
 	MOAIGlyph mDummy;
 
-	USRef < MOAITexture >		mTexture;
-	USRef < MOAIImage >			mImage;
+	USLuaObjRef < MOAITexture >	mTexture;
+	USLuaObjRef < MOAIImage >	mImage;
 
 	//----------------------------------------------------------------//
 	static int		_getImage			( lua_State* L );

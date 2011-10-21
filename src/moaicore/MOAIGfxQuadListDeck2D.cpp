@@ -403,6 +403,8 @@ MOAIGfxQuadListDeck2D::MOAIGfxQuadListDeck2D () {
 	
 	RTTI_SINGLE ( MOAIDeck2D )
 	this->SetContentMask ( MOAIProp::CAN_DRAW );
+	
+	this->mTexture.InitWithOwner ( *this );
 }
 
 //----------------------------------------------------------------//

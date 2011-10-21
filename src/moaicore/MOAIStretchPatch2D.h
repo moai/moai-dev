@@ -31,7 +31,7 @@ class MOAIStretchPatch2D :
 	virtual public MOAIDeck {
 private:
 
-	USRef < MOAITexture >	mTexture; // source texture for patch
+	USLuaObjRef < MOAITexture >	mTexture; // source texture for patch
 
 	USLeanArray < MOAIStretchPatchSpan >	mRows;
 	USLeanArray < MOAIStretchPatchSpan >	mCols;

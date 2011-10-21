@@ -820,6 +820,9 @@ MOAICpSpace::MOAICpSpace () :
 	RTTI_END
 	
 	this->mSpace = cpSpaceNew ();
+	
+	this->mStaticBody.InitWithOwner ( *this );
+	this->mArbiter.InitWithOwner ( *this );
 }
 
 //----------------------------------------------------------------//

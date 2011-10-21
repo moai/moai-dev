@@ -185,20 +185,6 @@ void MOAIHttpTask::Clear () {
 }
 
 //----------------------------------------------------------------//
-MOAIHttpTask::MOAIHttpTask () :
-	mBuffer ( 0 ),
-	mSize ( 0 ) {
-
-	RTTI_SINGLE ( USLuaObject )
-}
-
-//----------------------------------------------------------------//
-MOAIHttpTask::~MOAIHttpTask () {
-
-	this->Clear ();
-}
-
-//----------------------------------------------------------------//
 void MOAIHttpTask::Init ( u32 size ) {
 
 	this->Clear ();
@@ -207,6 +193,22 @@ void MOAIHttpTask::Init ( u32 size ) {
 	
 	u8* buffer = ( u8* )this->mBuffer;
 	buffer [ size ] = 0;
+}
+
+//----------------------------------------------------------------//
+MOAIHttpTask::MOAIHttpTask () :
+	mBuffer ( 0 ),
+	mSize ( 0 ) {
+
+	RTTI_SINGLE ( USLuaObject )
+	
+	this->mPostData.InitWithOwner ( *this );
+}
+
+//----------------------------------------------------------------//
+MOAIHttpTask::~MOAIHttpTask () {
+
+	this->Clear ();
 }
 
 //----------------------------------------------------------------//

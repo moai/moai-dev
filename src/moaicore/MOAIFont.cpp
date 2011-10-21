@@ -292,6 +292,9 @@ MOAIFont::MOAIFont () :
 	mLineSpacing ( 1.0f ) {
 	
 	RTTI_SINGLE ( USLuaObject )
+	
+	this->mTexture.InitWithOwner ( *this );
+	this->mImage.InitWithOwner ( *this );
 }
 
 //----------------------------------------------------------------//

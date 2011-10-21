@@ -20,8 +20,8 @@ class MOAIMesh :
 	public MOAIDeck {
 private:
 
-	USRef < MOAITexture	> mTexture;
-	USRef < MOAIVertexBuffer > mVertexBuffer;
+	USLuaObjRef < MOAITexture	>		mTexture;
+	USLuaObjRef < MOAIVertexBuffer >	mVertexBuffer;
 
 	//----------------------------------------------------------------//
 	static int		_setTexture			( lua_State* L );

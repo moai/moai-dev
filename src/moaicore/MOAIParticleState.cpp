@@ -256,6 +256,10 @@ MOAIParticleState::MOAIParticleState () :
 	
 	this->mTermRange [ 0 ] = 1.0f;
 	this->mTermRange [ 1 ] = 1.0f;
+	
+	this->mInit.InitWithOwner ( *this );
+	this->mRender.InitWithOwner ( *this );
+	this->mPlugin.InitWithOwner ( *this );
 }
 
 //----------------------------------------------------------------//

@@ -125,6 +125,8 @@ MOAIDeck::MOAIDeck () :
 	mContentMask ( 0xffffffff ) {
 	
 	RTTI_SINGLE ( USLuaObject )
+	
+	this->mShader.InitWithOwner ( *this );
 }
 
 //----------------------------------------------------------------//

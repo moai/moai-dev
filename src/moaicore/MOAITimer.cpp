@@ -356,6 +356,8 @@ MOAITimer::MOAITimer () :
 		RTTI_EXTEND ( MOAINode )
 		RTTI_EXTEND ( MOAIAction )
 	RTTI_END
+	
+	this->mCurve.InitWithOwner ( *this );
 }
 
 //----------------------------------------------------------------//
