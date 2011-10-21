@@ -39,6 +39,12 @@ void AKUAppDidStartSession () {
 }
 
 //-----------------------------------------------------------------//
+void AKUAppOpenFromURL ( NSURL* url ) {
+	
+	MOAIApp::Get ().AppOpenedFromURL ( url );
+}
+
+//-----------------------------------------------------------------//
 void AKUAppWillEndSession () {
 
 	MOAIApp::Get ().WillEndSession ();
@@ -117,9 +123,12 @@ void AKUIphoneInit ( UIApplication* application ) {
 			
 	// MOAI
 	REGISTER_LUA_CLASS ( MOAIApp )
-	REGISTER_LUA_CLASS ( MOAIGameCenter )		
-	REGISTER_LUA_CLASS ( MOAITapjoy )
+	REGISTER_LUA_CLASS ( MOAIGameCenter )
 	REGISTER_LUA_CLASS ( MOAIWebView )
+			
+	#ifndef DISABLE_TAPJOY
+		REGISTER_LUA_CLASS ( MOAITapjoy )
+	#endif
 }
 
 //-----------------------------------------------------------------//

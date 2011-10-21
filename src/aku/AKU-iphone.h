@@ -14,6 +14,8 @@
 #import <OpenGLES/ES1/gl.h>
 #import <OpenGLES/ES1/glext.h>
 
+//#define DISABLE_TAPJOY
+
 enum ConnectionType {
 	CONNECTION_TYPE_NONE,
 	CONNECTION_TYPE_WIFI,
@@ -25,6 +27,7 @@ void			AKUAppDidReceiveLocalNotification						( UILocalNotification* notificatio
 void			AKUAppDidReceiveRemoteNotification						( NSDictionary* userInfo );
 void			AKUAppDidRegisterForRemoteNotificationsWithDeviceToken	( NSData* deviceToken );
 void			AKUAppDidStartSession									();
+void			AKUAppOpenFromURL										( NSURL* url );
 void			AKUAppWillEndSession									();
 const char*		AKUGetGUID												();
 long			AKUGetIphoneNetworkReachability					    	();

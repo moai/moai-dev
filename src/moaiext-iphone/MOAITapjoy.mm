@@ -1,6 +1,8 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
+#ifndef DISABLE_TAPJOY
+
 #include "pch.h"
 
 #import <UIKit/UIKit.h>
@@ -64,7 +66,8 @@ int MOAITapjoy::_requestTapjoyConnect ( lua_State* L ) {
 	@out	nil
 */
 int MOAITapjoy::_showOffers ( lua_State* L ) {
-		
+	UNUSED ( L );
+	
 	UIWindow* window = [[ UIApplication sharedApplication ] keyWindow ];
 		
 	UIViewController* rootVC = [ window rootViewController ];
@@ -155,3 +158,5 @@ void MOAITapjoy::SendVideoAdCloseEvent () {
 	}
 	
 @end
+
+#endif

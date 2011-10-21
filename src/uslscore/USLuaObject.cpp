@@ -198,6 +198,12 @@ bool USLuaObject::IsBound () {
 }
 
 //----------------------------------------------------------------//
+void USLuaObject::LockToRefCount () {
+
+	this->mUserdata.MakeStrong ();
+}
+
+//----------------------------------------------------------------//
 void USLuaObject::LuaRelease ( USLuaObject& object ) {
 
 	if ( this->mContain && USLuaRuntime::IsValid ()) {
@@ -264,8 +270,11 @@ void USLuaObject::LuaUnbind ( USLuaState& state ) {
 void USLuaObject::OnRelease ( u32 refCount ) {
 
 	if ( refCount == 0 ) {
-		if ( !this->mUserdata ) {
-		
+	
+		if ( this->mUserdata ) {
+			this->mUserdata.MakeWeak ();
+		}
+		else {
 			// no Lua binding and no references, so
 			// go ahead and kill this turkey
 			delete this;

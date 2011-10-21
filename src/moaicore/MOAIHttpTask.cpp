@@ -64,6 +64,7 @@ int MOAIHttpTask::_httpGet ( lua_State* L ) {
 	bool verbose	= state.GetValue < bool >( 4, false );
 	
 	self->Retain ();
+	self->LockToRefCount ();
 	
 	USHttpTask* task = new USHttpTask ();
 	task->SetDelegate < MOAIHttpTask >( self, &MOAIHttpTask::OnHttpFinish );
@@ -104,6 +105,7 @@ int MOAIHttpTask::_httpPost ( lua_State* L ) {
 	if ( state.IsType (3, LUA_TUSERDATA) ) {
 		
 		self->Retain ();
+		self->LockToRefCount ();
 		
 		self->mPostData = state.GetLuaObject < MOAIDataBuffer >( 3 );
 		
@@ -120,6 +122,7 @@ int MOAIHttpTask::_httpPost ( lua_State* L ) {
 	else if ( state.IsType (3, LUA_TSTRING )) {
 		
 		self->Retain ();
+		self->LockToRefCount ();
 		
 		self->mPostString = lua_tostring ( state, 3 );
 		

@@ -15,9 +15,9 @@
 
 	//Action methods for toolbar buttons:	
 	- ( void ) doneButtonPressed:( id )sender {
+		UNUSED ( sender );
 	
 		if ( mMOAIWebView ) {
-		
 			mMOAIWebView->Hide ();
 		}
 	}
@@ -29,6 +29,7 @@
 	
 	//----------------------------------------------------------------//
 	- ( void )webView:( UIWebView* )webView webViewDidFailLoadWithError:( NSError * )error {
+		UNUSED ( webView );
 	
 		if ( mMOAIWebView ) {
 			mMOAIWebView->RaiseDidFailLoadWithErrorEvent ( error );
@@ -37,9 +38,9 @@
 	
 	//----------------------------------------------------------------//
 	- (BOOL)webView:( UIWebView* )webView shouldStartLoadWithRequest:( NSURLRequest* )request navigationType:( UIWebViewNavigationType )navigationType {
+		UNUSED ( webView );
 	
 		if ( mMOAIWebView ) {
-		
 			bool result = mMOAIWebView->RaiseShouldStartLoadWithRequestEvent ( request, navigationType );
 			return result;
 		}
@@ -48,6 +49,7 @@
 	
 	//----------------------------------------------------------------//
 	- ( void ) webViewDidFinishLoad:( UIWebView * )webView {
+		UNUSED ( webView );
 		
 		if ( mMOAIWebView ) {
 			mMOAIWebView->RaiseWebViewDidFinishLoadEvent ();
@@ -56,6 +58,7 @@
 	
 	//----------------------------------------------------------------//
 	- ( void ) webViewDidStartLoad:( UIWebView * )webView {
+		UNUSED ( webView );
 	
 		if ( mMOAIWebView ) {
 			mMOAIWebView->RaiseWebViewDidStartLoadEvent ();
