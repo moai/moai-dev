@@ -113,6 +113,7 @@ public:
 	//----------------------------------------------------------------//
 	void			DrawDebug				();
 	bool			IsDone					();
+	bool			IsLocked				();
 					MOAIBox2DWorld			();
 					~MOAIBox2DWorld			();
 	void			OnUpdate				( float step );

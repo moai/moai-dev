@@ -54,6 +54,7 @@ protected:
 	static int				_gc						( lua_State* L );
 	static int				_getClass				( lua_State* L );
 	static int				_getClassName			( lua_State* L );
+	static int				_tombstone				( lua_State* L );
 	static int				_tostring				( lua_State* L );
 
 	//----------------------------------------------------------------//
@@ -75,7 +76,7 @@ public:
 	void					LockToRefCount			();
 	void					LuaRelease				( USLuaObject& object );
 	void					LuaRetain				( USLuaObject& object );
-	void					LuaUnbind				( USLuaState& state );
+	void					LuaUnbind				();
 	void					PushLuaClassTable		( USLuaState& state );
 	void					PushLuaUserdata			( USLuaState& state );
 	virtual void			RegisterLuaClass		( USLuaState& state );

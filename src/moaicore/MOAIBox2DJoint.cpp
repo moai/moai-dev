@@ -27,9 +27,9 @@ SUPPRESS_EMPTY_FILE_WARNING
 int MOAIBox2DJoint::_destroy ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DJoint, "U" )
 	
-	assert ( self->mWorld );
-	self->mWorld->ScheduleDestruction ( *self );
-	
+	if ( self->mWorld ) {
+		self->mWorld->ScheduleDestruction ( *self );
+	}
 	return 0;
 }
 
@@ -44,6 +44,11 @@ int MOAIBox2DJoint::_destroy ( lua_State* L ) {
 int MOAIBox2DJoint::_getAnchorA ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DJoint, "U" )
 	float unitsToMeters = self->GetUnitsToMeters ();
+	
+	if ( !self->mJoint ) {
+		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		return 0;
+	}
 	
 	b2Vec2 anchor = self->mJoint->GetAnchorA ();
 	lua_pushnumber ( state, anchor.x / unitsToMeters );
@@ -64,6 +69,11 @@ int MOAIBox2DJoint::_getAnchorB ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DJoint, "U" )
 	float unitsToMeters = self->GetUnitsToMeters ();
 	
+	if ( !self->mJoint ) {
+		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		return 0;
+	}
+	
 	b2Vec2 anchor = self->mJoint->GetAnchorB ();
 	lua_pushnumber ( state, anchor.x / unitsToMeters );
 	lua_pushnumber ( state, anchor.y / unitsToMeters );
@@ -81,6 +91,11 @@ int MOAIBox2DJoint::_getAnchorB ( lua_State* L ) {
 int MOAIBox2DJoint::_getBodyA ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DJoint, "U" )
 	
+	if ( !self->mJoint ) {
+		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		return 0;
+	}
+	
 	MOAIBox2DBody* body = ( MOAIBox2DBody* )self->mJoint->GetBodyA ()->GetUserData ();
 	body->PushLuaUserdata ( state );
 	
@@ -96,6 +111,11 @@ int MOAIBox2DJoint::_getBodyA ( lua_State* L ) {
 */
 int MOAIBox2DJoint::_getBodyB ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DJoint, "U" )
+	
+	if ( !self->mJoint ) {
+		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		return 0;
+	}
 	
 	MOAIBox2DBody* body = ( MOAIBox2DBody* )self->mJoint->GetBodyB ()->GetUserData ();
 	body->PushLuaUserdata ( state );
@@ -113,6 +133,11 @@ int MOAIBox2DJoint::_getBodyB ( lua_State* L ) {
 */
 int MOAIBox2DJoint::_getReactionForce ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DJoint, "U" )
+	
+	if ( !self->mJoint ) {
+		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		return 0;
+	}
 	
 	float step = ( float )( 1.0 / MOAISim::Get ().GetStep ());
 	
@@ -132,6 +157,11 @@ int MOAIBox2DJoint::_getReactionForce ( lua_State* L ) {
 */
 int MOAIBox2DJoint::_getReactionTorque ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DJoint, "U" )
+	
+	if ( !self->mJoint ) {
+		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		return 0;
+	}
 	
 	float step = ( float )( 1.0 / MOAISim::Get ().GetStep ());
 	

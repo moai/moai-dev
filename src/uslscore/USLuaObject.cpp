@@ -80,6 +80,18 @@ int USLuaObject::_getClassName ( lua_State* L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
+int USLuaObject::_tombstone ( lua_State* L ) {
+
+	USLuaState state ( L );
+	
+	USLog::Print ( "----------------------------------------------------------------\n" );
+	USLog::Print ( "ERROR: Attempt to access missing object instance.\n" );
+	state.PrintStackTrace ( USLog::CONSOLE, 0 );
+	USLog::Print ( "\n" );
+	
+	return 0;
+}
 
 //----------------------------------------------------------------//
 int USLuaObject::_tostring ( lua_State* L ) {
@@ -249,18 +261,34 @@ void USLuaObject::LuaRetain ( USLuaObject& object ) {
 }
 
 //----------------------------------------------------------------//
-void USLuaObject::LuaUnbind ( USLuaState& state ) {
+void USLuaObject::LuaUnbind () {
 	
-	if ( this->mUserdata ) {
+	if ( this->mUserdata && USLuaRuntime::IsValid ()) {
+		
+		USLuaStateHandle state = USLuaRuntime::Get ().State ();
 		
 		this->mUserdata.PushRef ( state );
-		assert ( lua_isuserdata ( state, -1 ));
 		
 		void* userdata = lua_touserdata ( state, -1 );
 		memset ( userdata, 0, sizeof ( void* ));
 		
-		lua_pushnil ( state );
+		lua_newtable ( state );
+		
+		lua_pushvalue ( state, -1 );
 		lua_setmetatable ( state, -2 );
+		
+		lua_pushcfunction ( state, USLuaObject::_tombstone );
+		lua_setfield ( state, -2, "__index" );
+		
+		lua_pushcfunction ( state, USLuaObject::_tombstone );
+		lua_setfield ( state, -2, "__newindex" );
+		
+		lua_pushcfunction ( state, USLuaObject::_tombstone );
+		lua_setfield ( state, -2, "__tostring" );
+		
+		lua_setmetatable ( state, -2 );
+
+		lua_pop ( state, 1 );
 
 		this->mUserdata.Clear ();
 	}
@@ -386,11 +414,8 @@ USLuaObject::~USLuaObject () {
 		
 		USLuaRuntime::Get ().ClearObjectStackTrace ( this );
 		
-		if ( this->mUserdata ) {
-			USLuaStateHandle state = USLuaRuntime::Get ().State ();
-			this->LuaUnbind ( state );
-		}
-
+		this->LuaUnbind ();
+		
 		USLuaRuntime::Get ().DeregisterObject ( *this );
 	}
 }

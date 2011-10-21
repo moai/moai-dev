@@ -747,6 +747,11 @@ int MOAIBox2DBody::_setMassData ( lua_State* L ) {
 		return 0;
 	}
 	
+	if ( self->mWorld->IsLocked ()) {
+		MOAILog ( state, MOAILogMessages::MOAIBox2DWorld_IsLocked );
+		return 0;
+	}
+	
 	b2MassData massData;
 	self->mBody->GetMassData ( &massData );
 	
@@ -779,6 +784,11 @@ int MOAIBox2DBody::_setTransform ( lua_State* L ) {
 		return 0;
 	}
 	
+	if ( self->mWorld->IsLocked ()) {
+		MOAILog ( state, MOAILogMessages::MOAIBox2DWorld_IsLocked );
+		return 0;
+	}
+	
 	b2Vec2 position;
 	position.x		= state.GetValue < float >( 2, 0.0f ) * unitsToMeters;
 	position.y		= state.GetValue < float >( 3, 0.0f ) * unitsToMeters;
@@ -801,7 +811,6 @@ void MOAIBox2DBody::Destroy () {
 		b2World* world = this->mWorld->mWorld;
 		world->DestroyBody ( this->mBody );
 		this->mBody = 0;
-		this->mWorld->LuaRelease ( *this );
 	}
 }
 

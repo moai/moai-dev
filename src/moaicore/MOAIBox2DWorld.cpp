@@ -62,6 +62,11 @@ MOAIBox2DPrim::MOAIBox2DPrim () :
 int MOAIBox2DWorld::_addBody ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWorld, "UN" )
 	
+	if ( self->IsLocked ()) {
+		MOAILog ( state, MOAILogMessages::MOAIBox2DWorld_IsLocked );
+		return 0;
+	}
+	
 	u32 type	= state.GetValue < u32 >( 2, 0 );
 	float x		= state.GetValue < float >( 3, 0.0f ) * self->mUnitsToMeters;
 	float y		= state.GetValue < float >( 4, 0.0f ) * self->mUnitsToMeters;
@@ -97,6 +102,11 @@ int MOAIBox2DWorld::_addBody ( lua_State* L ) {
 */
 int	MOAIBox2DWorld::_addDistanceJoint ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWorld, "UUUNNNN" )
+	
+	if ( self->IsLocked ()) {
+		MOAILog ( state, MOAILogMessages::MOAIBox2DWorld_IsLocked );
+		return 0;
+	}
 	
 	MOAIBox2DBody* bodyA = state.GetLuaObject < MOAIBox2DBody >( 2 );
 	MOAIBox2DBody* bodyB = state.GetLuaObject < MOAIBox2DBody >( 3 );
@@ -143,6 +153,11 @@ int	MOAIBox2DWorld::_addDistanceJoint ( lua_State* L ) {
 int	MOAIBox2DWorld::_addFrictionJoint ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWorld, "UUUNN" )
 	
+	if ( self->IsLocked ()) {
+		MOAILog ( state, MOAILogMessages::MOAIBox2DWorld_IsLocked );
+		return 0;
+	}
+	
 	MOAIBox2DBody* bodyA = state.GetLuaObject < MOAIBox2DBody >( 2 );
 	MOAIBox2DBody* bodyB = state.GetLuaObject < MOAIBox2DBody >( 3 );
 	
@@ -179,6 +194,11 @@ int	MOAIBox2DWorld::_addFrictionJoint ( lua_State* L ) {
 */
 int	MOAIBox2DWorld::_addGearJoint ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWorld, "UUUN" )
+	
+	if ( self->IsLocked ()) {
+		MOAILog ( state, MOAILogMessages::MOAIBox2DWorld_IsLocked );
+		return 0;
+	}
 	
 	MOAIBox2DJoint* jointA = state.GetLuaObject < MOAIBox2DJoint >( 2 );
 	MOAIBox2DJoint* jointB = state.GetLuaObject < MOAIBox2DJoint >( 3 );
@@ -220,6 +240,11 @@ int	MOAIBox2DWorld::_addGearJoint ( lua_State* L ) {
 */
 int	MOAIBox2DWorld::_addLineJoint ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWorld, "UUUNNNN" )
+	
+	if ( self->IsLocked ()) {
+		MOAILog ( state, MOAILogMessages::MOAIBox2DWorld_IsLocked );
+		return 0;
+	}
 	
 	MOAIBox2DBody* bodyA = state.GetLuaObject < MOAIBox2DBody >( 2 );
 	MOAIBox2DBody* bodyB = state.GetLuaObject < MOAIBox2DBody >( 3 );
@@ -263,6 +288,11 @@ int	MOAIBox2DWorld::_addLineJoint ( lua_State* L ) {
 int	MOAIBox2DWorld::_addMouseJoint ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWorld, "UNNNNN" )
 	
+	if ( self->IsLocked ()) {
+		MOAILog ( state, MOAILogMessages::MOAIBox2DWorld_IsLocked );
+		return 0;
+	}
+	
 	MOAIBox2DBody* bodyA = state.GetLuaObject < MOAIBox2DBody >( 2 );
 	MOAIBox2DBody* bodyB = state.GetLuaObject < MOAIBox2DBody >( 3 );
 	
@@ -303,6 +333,11 @@ int	MOAIBox2DWorld::_addMouseJoint ( lua_State* L ) {
 */
 int	MOAIBox2DWorld::_addPrismaticJoint ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWorld, "UUUNNNN" )
+	
+	if ( self->IsLocked ()) {
+		MOAILog ( state, MOAILogMessages::MOAIBox2DWorld_IsLocked );
+		return 0;
+	}
 	
 	MOAIBox2DBody* bodyA = state.GetLuaObject < MOAIBox2DBody >( 2 );
 	MOAIBox2DBody* bodyB = state.GetLuaObject < MOAIBox2DBody >( 3 );
@@ -351,6 +386,11 @@ int	MOAIBox2DWorld::_addPrismaticJoint ( lua_State* L ) {
 */
 int	MOAIBox2DWorld::_addPulleyJoint ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWorld, "UUUNNNNNNNNNNN" )
+	
+	if ( self->IsLocked ()) {
+		MOAILog ( state, MOAILogMessages::MOAIBox2DWorld_IsLocked );
+		return 0;
+	}
 	
 	MOAIBox2DBody* bodyA = state.GetLuaObject < MOAIBox2DBody >( 2 );
 	MOAIBox2DBody* bodyB = state.GetLuaObject < MOAIBox2DBody >( 3 );
@@ -404,6 +444,11 @@ int	MOAIBox2DWorld::_addPulleyJoint ( lua_State* L ) {
 int	MOAIBox2DWorld::_addRevoluteJoint ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWorld, "UUUNN" )
 	
+	if ( self->IsLocked ()) {
+		MOAILog ( state, MOAILogMessages::MOAIBox2DWorld_IsLocked );
+		return 0;
+	}
+	
 	MOAIBox2DBody* bodyA = state.GetLuaObject < MOAIBox2DBody >( 2 );
 	MOAIBox2DBody* bodyB = state.GetLuaObject < MOAIBox2DBody >( 3 );
 	
@@ -438,6 +483,11 @@ int	MOAIBox2DWorld::_addRevoluteJoint ( lua_State* L ) {
 */
 int	MOAIBox2DWorld::_addWeldJoint ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWorld, "UUUNN" )
+	
+	if ( self->IsLocked ()) {
+		MOAILog ( state, MOAILogMessages::MOAIBox2DWorld_IsLocked );
+		return 0;
+	}
 	
 	MOAIBox2DBody* bodyA = state.GetLuaObject < MOAIBox2DBody >( 2 );
 	MOAIBox2DBody* bodyB = state.GetLuaObject < MOAIBox2DBody >( 3 );
@@ -583,21 +633,27 @@ void MOAIBox2DWorld::Destroy () {
 		MOAIBox2DPrim* prim = this->mDestroyFixtures;
 		this->mDestroyFixtures = this->mDestroyFixtures->mDestroyNext;
 		prim->Destroy ();
-		prim->Release ();
+		
+		prim->SetWorld ( 0 );
+		this->LuaRelease ( *prim );
 	}
 	
 	while ( this->mDestroyJoints ) {
 		MOAIBox2DPrim* prim = this->mDestroyJoints;
 		this->mDestroyJoints = this->mDestroyJoints->mDestroyNext;
 		prim->Destroy ();
-		prim->Release ();
+		
+		prim->SetWorld ( 0 );
+		this->LuaRelease ( *prim );
 	}
 	
 	while ( this->mDestroyBodies ) {
 		MOAIBox2DPrim* prim = this->mDestroyBodies;
 		this->mDestroyBodies = this->mDestroyBodies->mDestroyNext;
 		prim->Destroy ();
-		prim->Release ();
+		
+		prim->SetWorld ( 0 );
+		this->LuaRelease ( *prim );
 	}
 	
 	this->mLock = false;
@@ -623,6 +679,15 @@ void MOAIBox2DWorld::DrawDebug () {
 //----------------------------------------------------------------//
 bool MOAIBox2DWorld::IsDone () {
 
+	return false;
+}
+
+//----------------------------------------------------------------//
+bool MOAIBox2DWorld::IsLocked () {
+
+	if ( this->mWorld ) {
+		return this->mWorld->IsLocked ();
+	}
 	return false;
 }
 
@@ -669,6 +734,7 @@ MOAIBox2DWorld::~MOAIBox2DWorld () {
 		
 		this->mWorld->DestroyBody ( body );
 		moaiBody->mBody = 0;
+		moaiBody->SetWorld ( 0 );
 		this->LuaRelease ( *moaiBody );
 	}
 	
@@ -732,18 +798,22 @@ void MOAIBox2DWorld::RegisterLuaFuncs ( USLuaState& state ) {
 void MOAIBox2DWorld::SayGoodbye ( b2Fixture* fixture ) {
 
 	MOAIBox2DFixture* moaiFixture = ( MOAIBox2DFixture* )fixture->GetUserData ();
-	moaiFixture->mFixture = 0;
-	moaiFixture->SetWorld ( 0 );
-	this->LuaRelease ( *moaiFixture );
+	if ( moaiFixture->mFixture ) {
+		moaiFixture->mFixture = 0;
+		moaiFixture->SetWorld ( 0 );
+		this->LuaRelease ( *moaiFixture );
+	}
 }
 
 //----------------------------------------------------------------//
 void MOAIBox2DWorld::SayGoodbye ( b2Joint* joint ) {
 
 	MOAIBox2DJoint* moaiJoint = ( MOAIBox2DJoint* )joint->GetUserData ();
-	moaiJoint->mJoint = 0;
-	moaiJoint->SetWorld ( 0 );
-	this->LuaRelease ( *moaiJoint );
+	if ( moaiJoint->mJoint ) {
+		moaiJoint->mJoint = 0;
+		moaiJoint->SetWorld ( 0 );
+		this->LuaRelease ( *moaiJoint );
+	}
 }
 
 //----------------------------------------------------------------//

@@ -86,6 +86,8 @@ void MOAILogMessages::RegisterDefaultLogMessages () {
 		log.RegisterLogMessage ( MOAIAction_Profile_PSFF,			MOAILogMgr::LOG_STATUS,		"MOAIAction::Update(%p: %s) step %.2f ms took %.2f ms" );
 		log.RegisterLogMessage ( MOAIBox2DBody_MissingInstance,		MOAILogMgr::LOG_ERROR,		"BOX2D ERROR: Attempt to access missing Box2D body instance" );
 		log.RegisterLogMessage ( MOAIBox2DFixture_MissingInstance,	MOAILogMgr::LOG_ERROR,		"BOX2D ERROR: Attempt to access missing Box2D fixture instance" );
+		log.RegisterLogMessage ( MOAIBox2DJoint_MissingInstance,	MOAILogMgr::LOG_ERROR,		"BOX2D ERROR: Attempt to access missing Box2D joint instance" );
+		log.RegisterLogMessage ( MOAIBox2DWorld_IsLocked,			MOAILogMgr::LOG_ERROR,		"BOX2D ERROR: Attempt to perform illegal operation during collision update" );
 		log.RegisterLogMessage ( MOAIGfxDevice_OpenGLError_S,		MOAILogMgr::LOG_ERROR,		"OPENGL ERROR: %s" );
 		log.RegisterLogMessage ( MOAINode_AttributeNotFound,		MOAILogMgr::LOG_ERROR,		"No such attribute" );
 		log.RegisterLogMessage ( MOAIShader_ShaderInfoLog_S,		MOAILogMgr::LOG_ERROR,		"%s" );
@@ -106,7 +108,17 @@ void MOAILogMessages::RegisterLogMessageIDs ( USLuaState& state ) {
 	REGISTER_LOG_MESSAGE ( MOAI_IndexOutOfRange_DDD )
 	REGISTER_LOG_MESSAGE ( MOAI_NewIsUnsupported )
 	REGISTER_LOG_MESSAGE ( MOAI_ParamTypeMismatch )
-	
+	REGISTER_LOG_MESSAGE ( MOAIAction_Profile_PSFF )
+	REGISTER_LOG_MESSAGE ( MOAIBox2DBody_MissingInstance )
+	REGISTER_LOG_MESSAGE ( MOAIBox2DFixture_MissingInstance )
+	REGISTER_LOG_MESSAGE ( MOAIBox2DJoint_MissingInstance )
+	REGISTER_LOG_MESSAGE ( MOAIBox2DWorld_IsLocked )
+	REGISTER_LOG_MESSAGE ( MOAIGfxDevice_OpenGLError_S )
 	REGISTER_LOG_MESSAGE ( MOAINode_AttributeNotFound )
+	REGISTER_LOG_MESSAGE ( MOAIShader_ShaderInfoLog_S )
+	REGISTER_LOG_MESSAGE ( MOAITexture_MemoryUse_SDFS )
+	REGISTER_LOG_MESSAGE ( MOAITexture_MissingDevice_S )
+	REGISTER_LOG_MESSAGE ( MOAITexture_NoFramebuffer )
+	REGISTER_LOG_MESSAGE ( MOAITexture_NonPowerOfTwo_SDD )
 }
 
