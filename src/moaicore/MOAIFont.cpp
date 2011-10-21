@@ -495,7 +495,7 @@ void MOAIFont::SetImage ( MOAIImage* image ) {
 	this->mImage = image;
 	this->mTexture = 0;
 	
-	if ( image ) {
+	if ( image && MOAIGfxDevice::Get ().GetHasContext ()) {
 		this->mTexture = new MOAITexture ();
 		this->mTexture->Init ( *image );
 		this->mTexture->SetFilter ( GL_LINEAR, GL_LINEAR );
