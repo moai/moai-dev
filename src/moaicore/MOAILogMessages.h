@@ -37,6 +37,8 @@ public:
 		MOAI_NewIsUnsupported,
 		MOAI_ParamTypeMismatch,
 		MOAIAction_Profile_PSFF,
+		MOAIBox2DBody_MissingInstance,
+		MOAIBox2DFixture_MissingInstance,
 		MOAIGfxDevice_OpenGLError_S,
 		MOAINode_AttributeNotFound,
 		MOAIShader_ShaderInfoLog_S,

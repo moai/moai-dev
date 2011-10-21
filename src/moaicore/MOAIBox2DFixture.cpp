@@ -26,9 +26,9 @@ SUPPRESS_EMPTY_FILE_WARNING
 int MOAIBox2DFixture::_destroy ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DFixture, "U" )
 	
-	assert ( self->mWorld );
-	self->mWorld->ScheduleDestruction ( *self );
-	
+	if ( self->mWorld ) {
+		self->mWorld->ScheduleDestruction ( *self );
+	}
 	return 0;
 }
 
@@ -70,7 +70,10 @@ int MOAIBox2DFixture::_setCollisionHandler ( lua_State* L ) {
 int MOAIBox2DFixture::_setDensity ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DFixture, "UN" )
 	
-	if ( !self->mFixture ) return 0;
+	if ( !self->mFixture ) {
+		MOAILog ( state, MOAILogMessages::MOAIBox2DFixture_MissingInstance );
+		return 0;
+	}
 	
 	float density = state.GetValue < float >( 2, 0.0f );
 	self->mFixture->SetDensity ( density );
@@ -91,7 +94,10 @@ int MOAIBox2DFixture::_setDensity ( lua_State* L ) {
 int MOAIBox2DFixture::_setFilter ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DFixture, "UN" )
 	
-	if ( !self->mFixture ) return 0;
+	if ( !self->mFixture ) {
+		MOAILog ( state, MOAILogMessages::MOAIBox2DFixture_MissingInstance );
+		return 0;
+	}
 	
 	b2Filter filter = self->mFixture->GetFilterData ();
 	
@@ -114,7 +120,10 @@ int MOAIBox2DFixture::_setFilter ( lua_State* L ) {
 int MOAIBox2DFixture::_setFriction ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DFixture, "UN" )
 	
-	if ( !self->mFixture ) return 0;
+	if ( !self->mFixture ) {
+		MOAILog ( state, MOAILogMessages::MOAIBox2DFixture_MissingInstance );
+		return 0;
+	}
 	
 	float friction = state.GetValue < float >( 2, 0.0f );
 	self->mFixture->SetFriction ( friction );
@@ -133,7 +142,10 @@ int MOAIBox2DFixture::_setFriction ( lua_State* L ) {
 int MOAIBox2DFixture::_setRestitution ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DFixture, "UN" )
 	
-	if ( !self->mFixture ) return 0;
+	if ( !self->mFixture ) {
+		MOAILog ( state, MOAILogMessages::MOAIBox2DFixture_MissingInstance );
+		return 0;
+	}
 	
 	float restitution = state.GetValue < float >( 2, 0.0f );
 	self->mFixture->SetRestitution ( restitution );
@@ -152,7 +164,10 @@ int MOAIBox2DFixture::_setRestitution ( lua_State* L ) {
 int MOAIBox2DFixture::_setSensor ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DFixture, "U" )
 	
-	if ( !self->mFixture ) return 0;
+	if ( !self->mFixture ) {
+		MOAILog ( state, MOAILogMessages::MOAIBox2DFixture_MissingInstance );
+		return 0;
+	}
 	
 	bool isSensor = state.GetValue < bool >( 2, true );
 	self->mFixture->SetSensor ( isSensor );

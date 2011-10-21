@@ -35,7 +35,7 @@ typedef unsigned long ULong;
 #endif
 
 
-#if defined(_DEBUG)
+#if defined(UNTZ_ENABLE_LOGGING)
 	#if defined(__GNUC__)
 		#define RPRINT(fmt, ...) printf(fmt)
 	#else
