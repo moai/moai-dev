@@ -183,15 +183,9 @@ void MOAIGfxDevice::ClearColorBuffer ( u32 color ) {
 //----------------------------------------------------------------//
 void MOAIGfxDevice::ClearErrors () {
 
-	while ( glGetError () != GL_NO_ERROR );
-}
-
-//----------------------------------------------------------------//
-u32 MOAIGfxDevice::CountErrors () const {
-
-	u32 count = 0;
-	while ( glGetError () != GL_NO_ERROR ) count++;
-	return count;
+	if ( this->mHasContext ) {
+		while ( glGetError () != GL_NO_ERROR );
+	}
 }
 
 //----------------------------------------------------------------//
@@ -541,8 +535,11 @@ void MOAIGfxDevice::InsertGfxResource ( MOAIGfxResource& resource ) {
 u32 MOAIGfxDevice::LogErrors () {
 
 	u32 count = 0;
-	for ( int error = glGetError (); error != GL_NO_ERROR; error = glGetError (), ++count ) {
-		MOAILog ( 0, MOAILogMessages::MOAIGfxDevice_OpenGLError_S, this->GetErrorString ( error ));
+
+	if ( this->mHasContext ) {
+		for ( int error = glGetError (); error != GL_NO_ERROR; error = glGetError (), ++count ) {
+			MOAILog ( 0, MOAILogMessages::MOAIGfxDevice_OpenGLError_S, this->GetErrorString ( error ));
+		}
 	}
 	return count;
 }

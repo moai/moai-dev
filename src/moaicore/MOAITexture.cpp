@@ -800,6 +800,11 @@ void MOAITexture::OnClear () {
 //----------------------------------------------------------------//
 void MOAITexture::OnLoad () {
 
+	if ( !MOAIGfxDevice::Get ().GetHasContext ()) {
+		MOAILog ( 0, MOAILogMessages::MOAITexture_MissingDevice_S, this->mFilename.str ());
+		return;
+	}
+
 	if ( this->mFrameBuffer ) {
 		
 		this->mFrameBuffer->Bind ();

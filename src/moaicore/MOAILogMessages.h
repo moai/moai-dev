@@ -41,6 +41,7 @@ public:
 		MOAINode_AttributeNotFound,
 		MOAIShader_ShaderInfoLog_S,
 		MOAITexture_MemoryUse_SDFS,
+		MOAITexture_MissingDevice_S,
 		MOAITexture_NoFramebuffer,
 		MOAITexture_NonPowerOfTwo_SDD,
 	};

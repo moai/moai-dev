@@ -90,9 +90,9 @@ int MOAIBox2DWorld::_addBody ( lua_State* L ) {
 	@in		number anchorA_Y
 	@in		number anchorB_X
 	@in		number anchorB_Y
-	@opt	number frequencyHz
-	@opt	number dampingRatio
-	@opt	number collideConnected (Default: false)
+	@opt	number frequencyHz			Default value determined by Box2D
+	@opt	number dampingRatio			Default value determined by Box2D
+	@opt	number collideConnected		Default value is false
 	@out	MOAIBox2DJoint joint
 */
 int	MOAIBox2DWorld::_addDistanceJoint ( lua_State* L ) {
@@ -100,6 +100,8 @@ int	MOAIBox2DWorld::_addDistanceJoint ( lua_State* L ) {
 	
 	MOAIBox2DBody* bodyA = state.GetLuaObject < MOAIBox2DBody >( 2 );
 	MOAIBox2DBody* bodyB = state.GetLuaObject < MOAIBox2DBody >( 3 );
+	
+	if ( !( bodyA && bodyB )) return 0;
 	
 	b2Vec2 anchorA;
 	anchorA.x	= state.GetValue < float >( 4, 0 ) * self->mUnitsToMeters;
@@ -134,8 +136,8 @@ int	MOAIBox2DWorld::_addDistanceJoint ( lua_State* L ) {
 	@in		MOAIBox2DBody bodyB
 	@in		number anchorX
 	@in		number anchorY
-	@opt	number maxForce
-	@opt	number maxTorque
+	@opt	number maxForce				Default value determined by Box2D
+	@opt	number maxTorque			Default value determined by Box2D
 	@out	MOAIBox2DJoint joint
 */
 int	MOAIBox2DWorld::_addFrictionJoint ( lua_State* L ) {
@@ -143,6 +145,8 @@ int	MOAIBox2DWorld::_addFrictionJoint ( lua_State* L ) {
 	
 	MOAIBox2DBody* bodyA = state.GetLuaObject < MOAIBox2DBody >( 2 );
 	MOAIBox2DBody* bodyB = state.GetLuaObject < MOAIBox2DBody >( 3 );
+	
+	if ( !( bodyA && bodyB )) return 0;
 	
 	b2Vec2 anchor;
 	anchor.x	= state.GetValue < float >( 4, 0 ) * self->mUnitsToMeters;
@@ -178,6 +182,8 @@ int	MOAIBox2DWorld::_addGearJoint ( lua_State* L ) {
 	
 	MOAIBox2DJoint* jointA = state.GetLuaObject < MOAIBox2DJoint >( 2 );
 	MOAIBox2DJoint* jointB = state.GetLuaObject < MOAIBox2DJoint >( 3 );
+	
+	if ( !( jointA && jointB )) return 0;
 	
 	b2GearJointDef jointDef;
 	
@@ -218,6 +224,8 @@ int	MOAIBox2DWorld::_addLineJoint ( lua_State* L ) {
 	MOAIBox2DBody* bodyA = state.GetLuaObject < MOAIBox2DBody >( 2 );
 	MOAIBox2DBody* bodyB = state.GetLuaObject < MOAIBox2DBody >( 3 );
 	
+	if ( !( bodyA && bodyB )) return 0;
+	
 	b2Vec2 anchor;
 	anchor.x	= state.GetValue < float >( 4, 0 ) * self->mUnitsToMeters;
 	anchor.y	= state.GetValue < float >( 5, 0 ) * self->mUnitsToMeters;
@@ -243,26 +251,33 @@ int	MOAIBox2DWorld::_addLineJoint ( lua_State* L ) {
 	@text	Create and add a joint to the world. See Box2D documentation.
 	
 	@in		MOAIBox2DWorld self
+	@in		MOAIBox2DBody bodyA
+	@in		MOAIBox2DBody bodyB
 	@in		number targetX
 	@in		number targetY
 	@in		number maxForce
-	@in		number frequencyHz
-	@in		number dampingRatio
+	@opt	number frequencyHz			Default value determined by Box2D
+	@opt	number dampingRatio			Default value determined by Box2D
 	@out	MOAIBox2DJoint joint
 */
 int	MOAIBox2DWorld::_addMouseJoint ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWorld, "UNNNNN" )
 	
+	MOAIBox2DBody* bodyA = state.GetLuaObject < MOAIBox2DBody >( 2 );
+	MOAIBox2DBody* bodyB = state.GetLuaObject < MOAIBox2DBody >( 3 );
+	
+	if ( !( bodyA && bodyB )) return 0;
+	
 	b2Vec2 target;
-	target.x	= state.GetValue < float >( 2, 0 ) * self->mUnitsToMeters;
-	target.y	= state.GetValue < float >( 3, 0 ) * self->mUnitsToMeters;
+	target.x	= state.GetValue < float >( 4, 0 ) * self->mUnitsToMeters;
+	target.y	= state.GetValue < float >( 5, 0 ) * self->mUnitsToMeters;
 	
 	b2MouseJointDef jointDef;
 	
 	jointDef.target			= target;
-	jointDef.maxForce		= state.GetValue < float >( 4, 0.0f ) * self->mUnitsToMeters;
-	jointDef.frequencyHz	= state.GetValue < float >( 5, 0.0f );
-	jointDef.dampingRatio	= state.GetValue < float >( 6, 0.0f );
+	jointDef.maxForce		= state.GetValue < float >( 6, 0.0f ) * self->mUnitsToMeters;
+	jointDef.frequencyHz	= state.GetValue < float >( 7, jointDef.frequencyHz );
+	jointDef.dampingRatio	= state.GetValue < float >( 8, jointDef.dampingRatio );
 	
 	MOAIBox2DMouseJoint* joint = new MOAIBox2DMouseJoint ();
 	joint->SetJoint ( self->mWorld->CreateJoint ( &jointDef ));
@@ -291,6 +306,8 @@ int	MOAIBox2DWorld::_addPrismaticJoint ( lua_State* L ) {
 	
 	MOAIBox2DBody* bodyA = state.GetLuaObject < MOAIBox2DBody >( 2 );
 	MOAIBox2DBody* bodyB = state.GetLuaObject < MOAIBox2DBody >( 3 );
+	
+	if ( !( bodyA && bodyB )) return 0;
 	
 	b2Vec2 anchor;
 	anchor.x	= state.GetValue < float >( 4, 0 ) * self->mUnitsToMeters;
@@ -337,6 +354,8 @@ int	MOAIBox2DWorld::_addPulleyJoint ( lua_State* L ) {
 	
 	MOAIBox2DBody* bodyA = state.GetLuaObject < MOAIBox2DBody >( 2 );
 	MOAIBox2DBody* bodyB = state.GetLuaObject < MOAIBox2DBody >( 3 );
+	
+	if ( !( bodyA && bodyB )) return 0;
 	
 	b2Vec2 groundAnchorA;
 	groundAnchorA.x		= state.GetValue < float >( 4, 0 ) * self->mUnitsToMeters;
@@ -388,6 +407,8 @@ int	MOAIBox2DWorld::_addRevoluteJoint ( lua_State* L ) {
 	MOAIBox2DBody* bodyA = state.GetLuaObject < MOAIBox2DBody >( 2 );
 	MOAIBox2DBody* bodyB = state.GetLuaObject < MOAIBox2DBody >( 3 );
 	
+	if ( !( bodyA && bodyB )) return 0;
+	
 	b2Vec2 anchor;
 	anchor.x	= state.GetValue < float >( 4, 0 ) * self->mUnitsToMeters;
 	anchor.y	= state.GetValue < float >( 5, 0 ) * self->mUnitsToMeters;
@@ -420,6 +441,8 @@ int	MOAIBox2DWorld::_addWeldJoint ( lua_State* L ) {
 	
 	MOAIBox2DBody* bodyA = state.GetLuaObject < MOAIBox2DBody >( 2 );
 	MOAIBox2DBody* bodyB = state.GetLuaObject < MOAIBox2DBody >( 3 );
+	
+	if ( !( bodyA && bodyB )) return 0;
 	
 	b2Vec2 anchor;
 	anchor.x	= state.GetValue < float >( 4, 0 ) * self->mUnitsToMeters;

@@ -29,6 +29,8 @@ int MOAIBox2DBody::_addCircle ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DBody, "UNNN" )
 	float unitsToMeters = self->GetUnitsToMeters ();
 	
+	if ( !self->mBody ) return 0;
+	
 	b2CircleShape circleShape;
 
 	circleShape.m_p.x		= state.GetValue < float >( 2, 0.0f ) * unitsToMeters;
@@ -57,6 +59,8 @@ int MOAIBox2DBody::_addCircle ( lua_State* L ) {
 */
 int MOAIBox2DBody::_addPolygon ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DBody, "U" )
+
+	if ( !self->mBody ) return 0;
 
 	float unitsToMeters = self->GetUnitsToMeters ();
 
@@ -97,6 +101,8 @@ int MOAIBox2DBody::_addRect ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DBody, "UNNNN" )
 	float unitsToMeters = self->GetUnitsToMeters ();
 	
+	if ( !self->mBody ) return 0;
+	
 	USRect rect = state.GetRect < float >( 2 );
 	rect.Bless ();
 	
@@ -133,6 +139,8 @@ int MOAIBox2DBody::_addRect ( lua_State* L ) {
 int MOAIBox2DBody::_applyAngularImpulse ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DBody, "UN" )
 	
+	if ( !self->mBody ) return 0;
+	
 	float impulse = state.GetValue < float >( 2, 0.0f ) * ( float )D2R;
 	self->mBody->ApplyAngularImpulse ( impulse );
 	
@@ -153,6 +161,8 @@ int MOAIBox2DBody::_applyAngularImpulse ( lua_State* L ) {
 int MOAIBox2DBody::_applyForce ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DBody, "UNN" )
 	float unitsToMeters = self->GetUnitsToMeters ();
+	
+	if ( !self->mBody ) return 0;
 	
 	b2Vec2 force;
 	force.x = state.GetValue < float >( 2, 0.0f ) * unitsToMeters;
@@ -182,6 +192,8 @@ int MOAIBox2DBody::_applyLinearImpulse ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DBody, "UNN" )
 	float unitsToMeters = self->GetUnitsToMeters ();
 	
+	if ( !self->mBody ) return 0;
+	
 	b2Vec2 impulse;
 	impulse.x = state.GetValue < float >( 2, 0.0f ) * unitsToMeters;
 	impulse.y = state.GetValue < float >( 3, 0.0f ) * unitsToMeters;
@@ -206,6 +218,8 @@ int MOAIBox2DBody::_applyLinearImpulse ( lua_State* L ) {
 int MOAIBox2DBody::_applyTorque ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DBody, "U" )
 	
+	if ( !self->mBody ) return 0;
+	
 	float torque = state.GetValue < float >( 2, 0.0f ) * ( float )D2R;
 	self->mBody->ApplyTorque ( torque );
 	
@@ -221,6 +235,8 @@ int MOAIBox2DBody::_applyTorque ( lua_State* L ) {
 */
 int MOAIBox2DBody::_destroy ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DBody, "U" )
+	
+	if ( !self->mBody ) return 0;
 	
 	assert ( self->mWorld );
 	self->mWorld->ScheduleDestruction ( *self );
@@ -238,9 +254,10 @@ int MOAIBox2DBody::_destroy ( lua_State* L ) {
 int MOAIBox2DBody::_getAngle ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DBody, "U" )
 	
+	if ( !self->mBody ) return 0;
+	
 	float angle = self->mBody->GetAngle () * ( float )R2D;
 	lua_pushnumber ( state, angle );
-	
 	return 1;
 }
 
@@ -254,9 +271,10 @@ int MOAIBox2DBody::_getAngle ( lua_State* L ) {
 int MOAIBox2DBody::_getAngularVelocity ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DBody, "U" )
 	
+	if ( !self->mBody ) return 0;
+	
 	float omega = self->mBody->GetAngularVelocity () * ( float )R2D;
 	lua_pushnumber ( state, omega );
-	
 	return 1;
 }
 
@@ -269,6 +287,9 @@ int MOAIBox2DBody::_getAngularVelocity ( lua_State* L ) {
 */
 int MOAIBox2DBody::_getInertia ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DBody, "U" )
+	
+	if ( !self->mBody ) return 0;
+	
 	lua_pushnumber ( L, self->mBody->GetInertia ());
 	return 1;
 }
@@ -284,6 +305,8 @@ int MOAIBox2DBody::_getInertia ( lua_State* L ) {
 int MOAIBox2DBody::_getLinearVelocity ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DBody, "U" )
 	float unitsToMeters = self->GetUnitsToMeters ();
+	
+	if ( !self->mBody ) return 0;
 	
 	b2Vec2 velocity = self->mBody->GetLinearVelocity ();
 	lua_pushnumber ( state, velocity.x / unitsToMeters );
@@ -304,6 +327,8 @@ int MOAIBox2DBody::_getLocalCenter ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DBody, "U" )
 	float unitsToMeters = self->GetUnitsToMeters ();
 	
+	if ( !self->mBody ) return 0;
+	
 	b2Vec2 center = self->mBody->GetLocalCenter ();
 	lua_pushnumber ( state, center.x / unitsToMeters );
 	lua_pushnumber ( state, center.y / unitsToMeters );
@@ -320,6 +345,9 @@ int MOAIBox2DBody::_getLocalCenter ( lua_State* L ) {
 */
 int MOAIBox2DBody::_getMass ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DBody, "U" )
+	
+	if ( !self->mBody ) return 0;
+	
 	lua_pushnumber ( L, self->mBody->GetMass ());
 	return 1;
 }
@@ -335,6 +363,8 @@ int MOAIBox2DBody::_getMass ( lua_State* L ) {
 int MOAIBox2DBody::_getPosition ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DBody, "U" )
 	float unitsToMeters = self->GetUnitsToMeters ();
+	
+	if ( !self->mBody ) return 0;
 	
 	b2Vec2 position = self->mBody->GetPosition ();
 	lua_pushnumber ( state, position.x / unitsToMeters );
@@ -355,6 +385,8 @@ int MOAIBox2DBody::_getWorldCenter ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DBody, "U" )
 	float unitsToMeters = self->GetUnitsToMeters ();
 	
+	if ( !self->mBody ) return 0;
+	
 	b2Vec2 center = self->mBody->GetWorldCenter ();
 	lua_pushnumber ( state, center.x / unitsToMeters );
 	lua_pushnumber ( state, center.y / unitsToMeters );
@@ -372,6 +404,8 @@ int MOAIBox2DBody::_getWorldCenter ( lua_State* L ) {
 int MOAIBox2DBody::_isActive ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DBody, "U" )
 	
+	if ( !self->mBody ) return 0;
+	
 	bool isActive = self->mBody->IsActive ();
 	lua_pushboolean ( state, isActive );
 	
@@ -387,6 +421,8 @@ int MOAIBox2DBody::_isActive ( lua_State* L ) {
 */
 int MOAIBox2DBody::_isAwake ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DBody, "U" )
+	
+	if ( !self->mBody ) return 0;
 	
 	bool isAwake = self->mBody->IsAwake ();
 	lua_pushboolean ( state, isAwake );
@@ -404,6 +440,8 @@ int MOAIBox2DBody::_isAwake ( lua_State* L ) {
 int MOAIBox2DBody::_isBullet ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DBody, "U" )
 	
+	if ( !self->mBody ) return 0;
+	
 	bool isBullet = self->mBody->IsBullet ();
 	lua_pushboolean ( state, isBullet );
 	
@@ -419,6 +457,8 @@ int MOAIBox2DBody::_isBullet ( lua_State* L ) {
 */
 int MOAIBox2DBody::_isFixedRotation ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DBody, "U" )
+	
+	if ( !self->mBody ) return 0;
 	
 	bool isFixedRotation = self->mBody->IsFixedRotation ();
 	lua_pushboolean ( state, isFixedRotation );
@@ -436,6 +476,8 @@ int MOAIBox2DBody::_isFixedRotation ( lua_State* L ) {
 int MOAIBox2DBody::_resetMassData ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DBody, "U" )
 	
+	if ( !self->mBody ) return 0;
+	
 	self->mBody->ResetMassData ();
 	
 	return 0;
@@ -451,6 +493,8 @@ int MOAIBox2DBody::_resetMassData ( lua_State* L ) {
 */
 int MOAIBox2DBody::_setActive ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DBody, "U" )
+
+	if ( !self->mBody ) return 0;
 
 	bool active = state.GetValue < bool >( 2, false );
 	self->mBody->SetActive ( active );
@@ -469,6 +513,8 @@ int MOAIBox2DBody::_setActive ( lua_State* L ) {
 int MOAIBox2DBody::_setAngularDamping ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DBody, "UN" )
 	
+	if ( !self->mBody ) return 0;
+	
 	float damping = state.GetValue < float >( 2, 0.0f );
 	self->mBody->SetAngularDamping ( damping );
 	
@@ -485,6 +531,8 @@ int MOAIBox2DBody::_setAngularDamping ( lua_State* L ) {
 */
 int MOAIBox2DBody::_setAngularVelocity ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DBody, "U" )
+	
+	if ( !self->mBody ) return 0;
 	
 	float omega = state.GetValue < float >( 2, 0.0f ) * ( float )D2R;
 	self->mBody->SetAngularVelocity ( omega );
@@ -503,6 +551,8 @@ int MOAIBox2DBody::_setAngularVelocity ( lua_State* L ) {
 int MOAIBox2DBody::_setAwake ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DBody, "U" )
 	
+	if ( !self->mBody ) return 0;
+	
 	bool awake = state.GetValue < bool >( 2, true );
 	self->mBody->SetAwake ( awake );
 	
@@ -519,6 +569,8 @@ int MOAIBox2DBody::_setAwake ( lua_State* L ) {
 */
 int MOAIBox2DBody::_setBullet ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DBody, "U" )
+	
+	if ( !self->mBody ) return 0;
 	
 	bool bullet = state.GetValue < bool >( 2, true );
 	self->mBody->SetBullet ( bullet );
@@ -537,6 +589,8 @@ int MOAIBox2DBody::_setBullet ( lua_State* L ) {
 int MOAIBox2DBody::_setFixedRotation ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DBody, "U" )
 	
+	if ( !self->mBody ) return 0;
+	
 	bool fixedRotation = state.GetValue < bool >( 2, true );
 	self->mBody->SetFixedRotation ( fixedRotation );
 	
@@ -553,6 +607,8 @@ int MOAIBox2DBody::_setFixedRotation ( lua_State* L ) {
 */
 int MOAIBox2DBody::_setLinearDamping ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DBody, "UN" )
+	
+	if ( !self->mBody ) return 0;
 	
 	float damping = state.GetValue < float >( 2, 0.0f );
 	self->mBody->SetLinearDamping ( damping );
@@ -572,6 +628,8 @@ int MOAIBox2DBody::_setLinearDamping ( lua_State* L ) {
 int MOAIBox2DBody::_setLinearVelocity ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DBody, "U" )
 	float unitsToMeters = self->GetUnitsToMeters ();
+	
+	if ( !self->mBody ) return 0;
 	
 	b2Vec2 v;
 	v.x		= state.GetValue < float >( 2, 0.0f ) * unitsToMeters;
@@ -596,6 +654,8 @@ int MOAIBox2DBody::_setLinearVelocity ( lua_State* L ) {
 int MOAIBox2DBody::_setMassData ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DBody, "UN" )
 	float unitsToMeters = self->GetUnitsToMeters ();
+	
+	if ( !self->mBody ) return 0;
 	
 	b2MassData massData;
 	self->mBody->GetMassData ( &massData );
@@ -623,6 +683,8 @@ int MOAIBox2DBody::_setMassData ( lua_State* L ) {
 int MOAIBox2DBody::_setTransform ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DBody, "U" )
 	float unitsToMeters = self->GetUnitsToMeters ();
+	
+	if ( !self->mBody ) return 0;
 	
 	b2Vec2 position;
 	position.x		= state.GetValue < float >( 2, 0.0f ) * unitsToMeters;
