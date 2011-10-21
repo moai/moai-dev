@@ -51,9 +51,6 @@
     <ClCompile Include="..\..\src\uslsext\USAttributed.cpp">
       <Filter>src\attributed</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\uslsext\USAttrMap.cpp">
-      <Filter>src\attributed</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\uslsext\USAttrOp.cpp">
       <Filter>src\attributed</Filter>
     </ClCompile>
@@ -192,9 +189,6 @@
       <Filter>src\animCurve</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\uslsext\USAttributed.h">
-      <Filter>src\attributed</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\uslsext\USAttrMap.h">
       <Filter>src\attributed</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\uslsext\USAttrOp.h">

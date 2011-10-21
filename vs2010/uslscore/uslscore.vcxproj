@@ -230,6 +230,7 @@
     <ClInclude Include="..\..\src\uslscore\USLog.h" />
     <ClInclude Include="..\..\src\uslscore\USLuaObject-impl.h" />
     <ClInclude Include="..\..\src\uslscore\USLuaObject.h" />
+    <ClInclude Include="..\..\src\uslscore\USLuaObjRef.h" />
     <ClInclude Include="..\..\src\uslscore\USTypeID.h" />
     <ClInclude Include="..\..\src\uslscore\USCanary.h" />
     <ClInclude Include="..\..\src\uslscore\USGlobals.h" />

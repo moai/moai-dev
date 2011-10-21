@@ -195,6 +195,9 @@
     <ClInclude Include="..\..\src\uslscore\USFilename.h">
       <Filter>src\util</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\uslscore\USLuaObjRef.h">
+      <Filter>src\lua</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\uslscore\USFileSys.cpp">

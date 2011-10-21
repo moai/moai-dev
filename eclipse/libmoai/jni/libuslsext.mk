@@ -40,7 +40,6 @@ $(SRC_PATH)/src/uslsext/USAdapterInfo_posix.cpp \
 $(SRC_PATH)/src/uslsext/USAdapterInfo_win32.cpp \
 $(SRC_PATH)/src/uslsext/USAnimCurve.cpp \
 $(SRC_PATH)/src/uslsext/USAttributed.cpp \
-$(SRC_PATH)/src/uslsext/USAttrMap.cpp \
 $(SRC_PATH)/src/uslsext/USAttrOp.cpp \
 $(SRC_PATH)/src/uslsext/USBox.cpp \
 $(SRC_PATH)/src/uslsext/USCgt.cpp \
