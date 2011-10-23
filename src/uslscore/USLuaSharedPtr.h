@@ -93,6 +93,9 @@ public:
 	USLuaSharedPtr ( const USLuaSharedPtr < TYPE >& assign ) :
 		mObject ( 0 ),
 		mOwner ( 0 ) {
+		
+		UNUSED ( assign );
+		
 		assert ( false ); // unsupported
 	};
 	
