@@ -230,12 +230,12 @@
     <ClInclude Include="..\..\src\uslscore\USLog.h" />
     <ClInclude Include="..\..\src\uslscore\USLuaObject-impl.h" />
     <ClInclude Include="..\..\src\uslscore\USLuaObject.h" />
-    <ClInclude Include="..\..\src\uslscore\USLuaObjRef.h" />
+    <ClInclude Include="..\..\src\uslscore\USLuaSharedPtr.h" />
+    <ClInclude Include="..\..\src\uslscore\USSharedPtr.h" />
     <ClInclude Include="..\..\src\uslscore\USTypeID.h" />
     <ClInclude Include="..\..\src\uslscore\USCanary.h" />
     <ClInclude Include="..\..\src\uslscore\USGlobals.h" />
     <ClInclude Include="..\..\src\uslscore\USObject.h" />
-    <ClInclude Include="..\..\src\uslscore\USRef.h" />
     <ClInclude Include="..\..\src\uslscore\USRtti.h" />
     <ClInclude Include="..\..\src\uslscore\USLua.h" />
     <ClInclude Include="..\..\src\uslscore\USLuaRef.h" />
@@ -273,6 +273,7 @@
     <ClInclude Include="..\..\src\uslscore\USCipherStream.h" />
     <ClInclude Include="..\..\src\uslscore\pch.h" />
     <ClInclude Include="..\..\src\uslscore\uslscore.h" />
+    <ClInclude Include="..\..\src\uslscore\USWeakPtr.h" />
     <ClInclude Include="..\..\src\uslscore\USZip.h" />
     <ClInclude Include="..\..\src\uslscore\USZipFile.h" />
   </ItemGroup>
