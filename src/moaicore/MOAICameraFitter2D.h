@@ -25,8 +25,8 @@ private:
 
 	USRect mViewRect;
 
-	USLuaObjRef < MOAITransform >	mCamera;
-	USLuaObjRef < MOAIViewport >	mViewport;
+	USLuaSharedPtr < MOAITransform >	mCamera;
+	USLuaSharedPtr < MOAIViewport >		mViewport;
 
 	typedef STLSet < MOAICameraAnchor2D* >::iterator AnchorIt;
 	STLSet < MOAICameraAnchor2D* > mAnchors;

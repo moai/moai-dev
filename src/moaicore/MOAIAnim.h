@@ -14,10 +14,10 @@ class MOAIAnimCurve;
 class MOAIAnimLink {
 public:
 
-	USLuaObjRef < MOAIAnimCurve >	mCurve;
-	USWeak < MOAINode >				mTarget;
-	u32								mAttrID;
-	bool							mRelative;
+	USLuaSharedPtr < MOAIAnimCurve >	mCurve;
+	USWeakPtr < MOAINode >				mTarget;
+	u32									mAttrID;
+	bool								mRelative;
 };
 
 //================================================================//

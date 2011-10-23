@@ -17,7 +17,7 @@ class MOAINode;
 class MOAIAttrLink {
 private:
 
-	USWeak < MOAINode >			mSourceNode;		// don't think we need a smart ptr here...
+	USWeakPtr < MOAINode >			mSourceNode;		// don't think we need a smart ptr here...
 	u32							mSourceAttrID;
 
 	MOAINode*					mDestNode;
@@ -94,7 +94,7 @@ protected:
 
 	//----------------------------------------------------------------//
 	template < typename TYPE >
-	void SetDependentMember ( USLuaObjRef < TYPE >& member, TYPE* ref ) {
+	void SetDependentMember ( USLuaSharedPtr < TYPE >& member, TYPE* ref ) {
 		
 		if ( member == ref ) return;
 	
@@ -113,7 +113,7 @@ protected:
 
 	//----------------------------------------------------------------//
 	template < typename TYPE >
-	void SetDependentMember ( USRef < TYPE >& member, TYPE* ref ) {
+	void SetDependentMember ( USSharedPtr < TYPE >& member, TYPE* ref ) {
 		
 		if ( member == ref ) return;
 	
@@ -132,7 +132,7 @@ protected:
 
 	//----------------------------------------------------------------//
 	template < typename TYPE >
-	void SetDependentMember ( USWeak < TYPE >& member, TYPE* ref ) {
+	void SetDependentMember ( USWeakPtr < TYPE >& member, TYPE* ref ) {
 		
 		if ( member == ref ) return;
 		

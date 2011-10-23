@@ -63,7 +63,7 @@ private:
 	b2World*					mWorld;
 	MOAIBox2DDebugDraw*			mDebugDraw;
 	
-	USLuaObjRef < MOAIBox2DArbiter > mArbiter;
+	USLuaSharedPtr < MOAIBox2DArbiter > mArbiter;
 
 	u32		mVelocityIterations;
 	u32		mPositionIterations;

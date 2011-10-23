@@ -1,16 +1,16 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	USLUAOBREF_H
-#define	USLUAOBREF_H
+#ifndef	USLUASHAREDPTR_H
+#define	USLUASHAREDPTR_H
 
 #include <uslscore/USCanary.h>
 
 //================================================================//
-// USLuaObjRef
+// USLuaSharedPtr
 //================================================================//
 template < typename TYPE >
-class USLuaObjRef {
+class USLuaSharedPtr {
 protected:
 
 	TYPE*			mObject;
@@ -84,20 +84,20 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	USLuaObjRef () :
+	USLuaSharedPtr () :
 		mObject ( 0 ),
 		mOwner ( 0 ) {
 	}
 
 	//----------------------------------------------------------------//
-	USLuaObjRef ( const USLuaObjRef < TYPE >& assign ) :
+	USLuaSharedPtr ( const USLuaSharedPtr < TYPE >& assign ) :
 		mObject ( 0 ),
 		mOwner ( 0 ) {
 		assert ( false ); // unsupported
 	};
 	
 	//----------------------------------------------------------------//
-	~USLuaObjRef () {
+	~USLuaSharedPtr () {
 		this->Release ();
 	}
 };

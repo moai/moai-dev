@@ -35,7 +35,7 @@ protected:
 	float	mMinMagnitude;
 	float	mMaxMagnitude;
 
-	USLuaObjRef < MOAIParticleSystem > mSystem;
+	USLuaSharedPtr < MOAIParticleSystem > mSystem;
 
 	//----------------------------------------------------------------//
 	static int		_setAngle				( lua_State* L );

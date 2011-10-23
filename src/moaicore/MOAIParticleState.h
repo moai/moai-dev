@@ -31,11 +31,11 @@ private:
 
 	float mDamping;
 
-	USLuaObjRef < MOAIParticleScript > mInit;
-	USLuaObjRef < MOAIParticleScript > mRender;
-	USLuaObjRef < MOAIParticlePlugin > mPlugin;
+	USLuaSharedPtr < MOAIParticleScript > mInit;
+	USLuaSharedPtr < MOAIParticleScript > mRender;
+	USLuaSharedPtr < MOAIParticlePlugin > mPlugin;
 	
-	USWeak < MOAIParticleState > mNext;
+	USWeakPtr < MOAIParticleState > mNext;
 
 	//----------------------------------------------------------------//
 	static int		_clearForces			( lua_State* L );

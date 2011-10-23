@@ -26,10 +26,10 @@ private:
 		DONE,
 	};
 
-	STLString						mFilename;
-	USLuaObjRef < MOAIDataBuffer >	mData;
-	USLuaLocal						mOnFinish;
-	u32								mState;
+	STLString							mFilename;
+	USLuaSharedPtr < MOAIDataBuffer >	mData;
+	USLuaLocal							mOnFinish;
+	u32									mState;
 
 	//----------------------------------------------------------------//
 	static int	_setCallback		( lua_State* L );

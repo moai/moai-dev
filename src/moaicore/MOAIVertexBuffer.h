@@ -27,7 +27,7 @@ private:
 	USLeanArray < u8 > mBuffer;
 	USByteStream mStream;
 
-	USLuaObjRef < MOAIVertexFormat > mFormat;
+	USLuaSharedPtr < MOAIVertexFormat > mFormat;
 	u32 mPrimType;
 	
 	float	mPenWidth;
