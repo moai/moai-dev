@@ -14,42 +14,25 @@ class USLuaSharedPtr {
 protected:
 
 	TYPE*			mObject;
-	USLuaObject*	mOwner;
+	
+	//----------------------------------------------------------------//
+	inline void operator = ( const USLuaSharedPtr < TYPE >& assign ) {
+		UNUSED ( assign );
+		assert ( false ); // unsupported
+	};
 	
 	//----------------------------------------------------------------//
 	inline TYPE* Get () {
 	
 		return this->mObject;
 	}
-	
+
 	//----------------------------------------------------------------//
-	inline void Release () {
-	
-		assert ( this->mOwner ); // owner must be set!
-	
-		if ( this->mObject ) {
-
-			this->mOwner->LuaRelease ( *this->mObject );
-			this->mObject = 0;
-		}
-	}
-	
-	//----------------------------------------------------------------//
-	inline void Set ( TYPE* assign ) {
-
-		assert ( this->mOwner ); // owner must be set!
-
-		if ( this->mObject != assign ) {
-
-			this->Release ();
-
-			if ( assign ) {
-			
-				this->mObject = assign;
-				this->mOwner->LuaRetain ( *this->mObject );
-			}
-		}
-	}
+	USLuaSharedPtr ( const USLuaSharedPtr < TYPE >& assign ) :
+		mObject ( 0 ) {
+		UNUSED ( assign );
+		assert ( false ); // unsupported
+	};
 
 public:
 
@@ -74,34 +57,30 @@ public:
 	};
 
 	//----------------------------------------------------------------//
-	inline void operator = ( TYPE* assign ) {
-		this->Set ( assign );
-	};
+	inline void Set ( USLuaObject& owner, TYPE* assign ) {
 
-	//----------------------------------------------------------------//
-	void InitWithOwner ( USLuaObject& owner ) {
-		this->mOwner = &owner;
+		if ( this->mObject != assign ) {
+
+			if ( assign ) {
+				owner.LuaRetain ( *assign );
+			}
+
+			if ( this->mObject ) {
+				owner.LuaRelease ( *this->mObject );
+			}
+			
+			this->mObject = assign;
+		}
 	}
 
 	//----------------------------------------------------------------//
 	USLuaSharedPtr () :
-		mObject ( 0 ),
-		mOwner ( 0 ) {
+		mObject ( 0 ) {
 	}
-
-	//----------------------------------------------------------------//
-	USLuaSharedPtr ( const USLuaSharedPtr < TYPE >& assign ) :
-		mObject ( 0 ),
-		mOwner ( 0 ) {
-		
-		UNUSED ( assign );
-		
-		assert ( false ); // unsupported
-	};
 	
 	//----------------------------------------------------------------//
 	~USLuaSharedPtr () {
-		this->Release ();
+		assert ( !this->mObject ); // must be manually cleared before destruction; use Set ( owner, 0 )
 	}
 };
 

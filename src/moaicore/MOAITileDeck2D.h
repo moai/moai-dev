@@ -30,8 +30,6 @@ private:
 	
 public:
 	
-	GET_SET ( MOAITexture*, Texture, mTexture )
-	
 	DECL_LUA_FACTORY ( MOAITileDeck2D )
 	
 	//----------------------------------------------------------------//

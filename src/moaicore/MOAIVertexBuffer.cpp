@@ -109,7 +109,7 @@ int MOAIVertexBuffer::_reset ( lua_State* L ) {
 int MOAIVertexBuffer::_setFormat ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVertexBuffer, "U" )
 	
-	self->mFormat = state.GetLuaObject < MOAIVertexFormat >( 2 );
+	self->mFormat.Set ( *self, state.GetLuaObject < MOAIVertexFormat >( 2 ));
 
 	return 0;
 }
@@ -275,6 +275,7 @@ int MOAIVertexBuffer::_writeInt32 ( lua_State* L ) {
 void MOAIVertexBuffer::Clear () {
 
 	this->Reserve ( 0 );
+	this->mFormat.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//
@@ -306,8 +307,6 @@ MOAIVertexBuffer::MOAIVertexBuffer () :
 	RTTI_SINGLE ( MOAIVertexBuffer )
 	
 	this->mBounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
-	
-	this->mFormat.InitWithOwner ( *this );
 }
 
 //----------------------------------------------------------------//

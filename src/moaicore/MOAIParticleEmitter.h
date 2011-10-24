@@ -63,7 +63,6 @@ public:
 
 	SET ( USRect, Rect, mRect )
 	SET ( u32, ShapeID, mShapeID )
-	SET ( MOAIParticleSystem*, System, mSystem )
 
 	//----------------------------------------------------------------//
 	bool			IsDone					();

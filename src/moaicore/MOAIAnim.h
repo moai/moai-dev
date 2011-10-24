@@ -50,6 +50,7 @@ public:
 	void			Apply				( float t );
 	void			Apply				( float t0, float t1 );
 	void			Clear				();
+	void			ClearLinks			();
 					MOAIAnim			();
 					~MOAIAnim			();
 	void			OnUpdate			( float step );

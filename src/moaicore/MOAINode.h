@@ -102,7 +102,7 @@ protected:
 			this->ClearDependency ( *member );
 		}
 		
-		member = ref;
+		member.Set ( *this, ref );
 		
 		if ( ref ) {
 			this->SetDependency ( *ref );

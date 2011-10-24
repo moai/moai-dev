@@ -272,7 +272,7 @@ int MOAICpSpace::_getStaticBody ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICpSpace, "U" )
 	
 	if ( !self->mStaticBody ) {
-		self->mStaticBody = new MOAICpBody ();
+		self->mStaticBody.Set ( *self, new MOAICpBody ());
 		self->mStaticBody->mBody = &self->mSpace->staticBody;
 		self->mStaticBody->mBody->data = self->mStaticBody;
 	}
@@ -783,7 +783,7 @@ void MOAICpSpace::DrawDebug () {
 MOAICpArbiter* MOAICpSpace::GetArbiter () {
 
 	if ( !this->mArbiter ) {
-		this->mArbiter = new MOAICpArbiter ();
+		this->mArbiter.Set ( *this, new MOAICpArbiter ());
 	}
 	return this->mArbiter;
 }
@@ -820,9 +820,6 @@ MOAICpSpace::MOAICpSpace () :
 	RTTI_END
 	
 	this->mSpace = cpSpaceNew ();
-	
-	this->mStaticBody.InitWithOwner ( *this );
-	this->mArbiter.InitWithOwner ( *this );
 }
 
 //----------------------------------------------------------------//
@@ -861,6 +858,9 @@ MOAICpSpace::~MOAICpSpace () {
 		cpSpaceRemoveCollisionHandler ( this->mSpace, handler->mTypeA, handler->mTypeB );
 		delete handler;
 	}
+
+	this->mStaticBody.Set ( *this, 0 );
+	this->mArbiter.Set ( *this, 0 );
 
 	cpSpaceFree ( this->mSpace );
 }

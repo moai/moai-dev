@@ -166,7 +166,7 @@ int MOAIProp2D::_setBlendMode ( lua_State* L ) {
 int MOAIProp2D::_setDeck ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIProp2D, "U" )
 
-	self->mDeck = state.GetLuaObject < MOAIDeck >( 2 );
+	self->mDeck.Set ( *self, state.GetLuaObject < MOAIDeck >( 2 ));
 
 	if ( self->mDeck ) {
 		self->SetMask ( self->mDeck->GetContentMask ());
@@ -232,7 +232,7 @@ int MOAIProp2D::_setGrid ( lua_State* L ) {
 	MOAIGrid* grid = state.GetLuaObject < MOAIGrid >( 2 );
 	if ( !grid ) return 0;
 	
-	self->mGrid = grid;
+	self->mGrid.Set ( *self, grid );
 	
 	return 0;
 }
@@ -693,16 +693,16 @@ MOAIProp2D::MOAIProp2D () :
 	
 	this->mColor.Set ( 1.0f, 1.0f, 1.0f, 1.0f );
 	this->mFrame.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
-	
-	this->mDeck.InitWithOwner ( *this );
-	this->mRemapper.InitWithOwner ( *this );
-	this->mGrid.InitWithOwner ( *this );
-	this->mShader.InitWithOwner ( *this );
-	this->mUVTransform.InitWithOwner ( *this );
 }
 
 //----------------------------------------------------------------//
 MOAIProp2D::~MOAIProp2D () {
+
+	this->mDeck.Set ( *this, 0 );
+	this->mRemapper.Set ( *this, 0 );
+	this->mGrid.Set ( *this, 0 );
+	this->mShader.Set ( *this, 0 );
+	this->mUVTransform.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//
@@ -754,7 +754,7 @@ void MOAIProp2D::OnDepNodeUpdate () {
 		}
 		
 		if ( buffer.HasTrait ( INHERIT_SHADER )) {
-			this->mShader = buffer.GetShaderTrait ();
+			this->mShader.Set ( *this, buffer.GetShaderTrait ());
 		}
 		
 		if ( buffer.HasTrait ( INHERIT_VISIBLE )) {
@@ -859,8 +859,8 @@ void MOAIProp2D::RegisterLuaFuncs ( USLuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIProp2D::SerializeIn ( USLuaState& state, USLuaSerializer& serializer ) {
 	
-	this->mDeck = serializer.GetRefField < MOAIDeck >( state, -1, "mDeck" );
-	this->mGrid = serializer.GetRefField < MOAIGrid >( state, -1, "mGrid" );
+	this->mDeck.Set ( *this, serializer.GetRefField < MOAIDeck >( state, -1, "mDeck" ));
+	this->mGrid.Set ( *this, serializer.GetRefField < MOAIGrid >( state, -1, "mGrid" ));
 }
 
 //----------------------------------------------------------------//

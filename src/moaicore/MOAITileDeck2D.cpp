@@ -100,7 +100,7 @@ int	MOAITileDeck2D::_setSize ( lua_State* L ) {
 int	MOAITileDeck2D::_setTexture ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITileDeck2D, "U" )
 	
-	self->mTexture = MOAITexture::AffirmTexture ( state, 2 );
+	self->mTexture.Set ( *self, MOAITexture::AffirmTexture ( state, 2 ));
 	if ( self->mTexture ) {
 		self->mTexture->PushLuaUserdata ( state );
 		return 1;
@@ -152,12 +152,12 @@ MOAITileDeck2D::MOAITileDeck2D () {
 	this->SetContentMask ( MOAIProp::CAN_DRAW );
 	
 	this->mRect.Init ( -0.5f, -0.5f, 0.5f, 0.5f );
-	
-	this->mTexture.InitWithOwner ( *this );
 }
 
 //----------------------------------------------------------------//
 MOAITileDeck2D::~MOAITileDeck2D () {
+
+	this->mTexture.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//
@@ -186,7 +186,7 @@ void MOAITileDeck2D::SerializeIn ( USLuaState& state, USLuaSerializer& serialize
 
 	MOAIGridSpace::SerializeIn ( state );
 	
-	this->mTexture = serializer.GetRefField < MOAITexture >( state, -1, "mTexture" );
+	this->mTexture.Set ( *this, serializer.GetRefField < MOAITexture >( state, -1, "mTexture" ));
 }
 
 //----------------------------------------------------------------//

@@ -107,7 +107,7 @@ int MOAIHttpTask::_httpPost ( lua_State* L ) {
 		self->Retain ();
 		self->LockToRefCount ();
 		
-		self->mPostData = state.GetLuaObject < MOAIDataBuffer >( 3 );
+		self->mPostData.Set ( *self, state.GetLuaObject < MOAIDataBuffer >( 3 ));
 		
 		void* bytes;
 		u32 size;
@@ -182,6 +182,8 @@ void MOAIHttpTask::Clear () {
 	}
 	this->mBuffer = 0;
 	this->mSize = 0;
+	
+	this->mPostData.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//
@@ -201,8 +203,6 @@ MOAIHttpTask::MOAIHttpTask () :
 	mSize ( 0 ) {
 
 	RTTI_SINGLE ( USLuaObject )
-	
-	this->mPostData.InitWithOwner ( *this );
 }
 
 //----------------------------------------------------------------//
@@ -232,7 +232,7 @@ void MOAIHttpTask::OnHttpFinish ( USHttpTask* task ) {
 		state.DebugCall ( 2, 0 );
 	}
 	
-	this->mPostData = 0;
+	this->mPostData.Set ( *this, 0 );
 	this->mPostString.clear ();
 	
 	this->Release ();
