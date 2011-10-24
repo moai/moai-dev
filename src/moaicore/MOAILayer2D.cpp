@@ -246,10 +246,7 @@ int MOAILayer2D::_setParallax ( lua_State* L ) {
 int MOAILayer2D::_setPartition ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAILayer2D, "UU" )
 
-	MOAIPartition* partition = state.GetLuaObject < MOAIPartition >( 2 );
-	if ( !partition ) return 0;
-
-	self->SetPartition ( partition );
+	self->mPartition.Set ( *self, state.GetLuaObject < MOAIPartition >( 2 ));
 
 	return 0;
 }
