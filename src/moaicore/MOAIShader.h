@@ -36,7 +36,7 @@ private:
 	u32		mSrc;
 	
 	STLString mName;
-	MOAITransformBase* mTransform;
+	USLuaSharedPtr < MOAITransformBase > mTransform;
 
 	//----------------------------------------------------------------//
 	void		BindAttributes				( const float* attributes );
@@ -101,6 +101,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	void			ClearUniform			( u32 idx );
+	void			ClearUniforms			();
 	void			DeclareUniform			( u32 idx, cc8* name, u32 type );
 	bool			IsValid					();
 					MOAIShader				();

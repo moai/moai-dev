@@ -1,5 +1,38 @@
 ================================================================
 = Moai SDK
+= Version 0.8 Beta
+= Revision 1
+================================================================
+
+- Improvements to Apsalar Lua implementation
+- Exposed MOAITextBox setSpeed ()
+- moaiext-debugger project (vs2008, vs2010) for Lua debug harness
+- Untz looping bug fixed
+- Untz now supports shared audio data (multpile sounds using same source)
+- Settings for MOAISim to skip frames after long loads
+- Settings for MOAISim to throttle sim update steps
+- Options for tracking Moai object allocations (via histogram)
+- Fixes to Lua binding system (prevent circular references and premature GC)
+- Updated Xcode projects to build under Xcode 4.2 and iOS SDK 5.0
+- Modified traits system to allow multiple traits sources
+- Added _tostring metamethod on USLuaObject userdata
+- Improved Box2D binding - mouse joint, better errors and warnings
+- Fixed bugs around destruction of Box2D objects during collision handler
+- Additional tests for memory leaks and cirular references
+- Fixed Moai's tailored (zipfs) build of luac
+- Improved Xcode compiler settings
+- Updated Xcode SDK build to build device specific versions of libmoai
+- Improved MOAICameraFitter2D algorithm
+- Expanded GameCenter binding to include acheivements
+- Fixed default font shader (bug causing fringe around glyphs)
+- Added binding for IJG libjpeg
+- Added Tapjoy SDK and support for video offers (iOS)
+- Improvents to attribute system implementation
+- Improvements to MOAIWebView (iOS)
+- Added event for app opening from registered URL (iOS)
+
+================================================================
+= Moai SDK
 = Version 0.7 Beta
 = Revision 1
 ================================================================
