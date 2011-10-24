@@ -391,8 +391,11 @@ void MOAITexture::CreateTextureFromImage ( MOAIImage& image ) {
 			image.GetBitmap ()
 		);
 		
-		if ( glGetError () != 0 ) {
-			// we have an error
+		if ( MOAIGfxDevice::Get ().LogErrors ()) {
+
+			glDeleteTextures ( 1, &this->mGLTexID );
+			this->mGLTexID = 0;
+			
 			this->Clear ();
 			return;
 		}

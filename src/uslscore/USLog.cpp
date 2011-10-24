@@ -27,7 +27,7 @@ void USLog::Print ( cc8* format, ... ) {
 	#ifdef ANDROID
 		char str [ 1024 ];
 		vsnprintf ( str, 1024, format, args );
-		__android_log_print(ANDROID_LOG_ERROR,"Moai Debug", "%s",str);
+		__android_log_print(ANDROID_LOG_INFO,"MoaiLog", "%s",str);
 	#else
 		vprintf ( format, args );
 	#endif
@@ -48,7 +48,7 @@ void USLog::Print ( FILE* file, cc8* format, ... ) {
 		#ifdef ANDROID
 			char str [ 1024 ];
 			vsnprintf ( str, 1024, format, args );
-			__android_log_print(ANDROID_LOG_ERROR,"Moai Debug", "%s",str);
+			__android_log_print(ANDROID_LOG_INFO,"MoaiLog", "%s",str);
 		#else
 			vprintf ( format, args );
 		#endif
