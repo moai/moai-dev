@@ -201,13 +201,19 @@ MOAIGlyph& MOAIFont::GetGlyphForID ( u32 id ) {
 	}
 
 	if ( id & WIDE_ID_BIT ) {
-		return this->mWideGlyphs [ id & WIDE_ID_MASK ];
+		id = id & WIDE_ID_MASK;
+		assert ( id < this->mWideGlyphs.Size ());
+		return this->mWideGlyphs [ id ];
 	}
+	
+	assert ( id < this->mByteGlyphs.Size ());
 	return this->mByteGlyphs [ id ];
 }
 
 //----------------------------------------------------------------//
 u32 MOAIFont::GetIDForChar ( u32 c ) {
+
+	u32 id = INVALID_ID;
 
 	if ( this->IsWideChar ( c )) {
 		
@@ -222,11 +228,14 @@ u32 MOAIFont::GetIDForChar ( u32 c ) {
 		if ( this->mByteGlyphMapBase <= c ) {
 			c -= this->mByteGlyphMapBase;
 			if ( c < this->mByteGlyphMap.Size ()) {
-				return this->mByteGlyphMap [ c ];
+				id = this->mByteGlyphMap [ c ];
+				if ( id == INVALID_BYTE_ID ) {
+					id = INVALID_ID;
+				}
 			}
 		}
 	}
-	return INVALID_ID;
+	return id;
 }
 
 //----------------------------------------------------------------//
@@ -262,6 +271,9 @@ void MOAIFont::Init ( cc8* charCodes ) {
 	
 	this->mWideGlyphs.Init ( totalWideChars );
 	this->mWideGlyphMap.Init ( totalWideChars );
+	
+	this->mByteGlyphMap.Fill ( INVALID_BYTE_ID );
+	this->mWideGlyphMap.Fill ( INVALID_ID );
 	
 	u32 b = 0;
 	u32 w = 0;
@@ -478,7 +490,6 @@ void MOAIFont::SetGlyph ( const MOAIGlyph& glyph ) {
 		if ( glyph.mAdvanceX > this->mDummy.mAdvanceX ) {
 			this->mDummy.mAdvanceX = glyph.mAdvanceX;
 		}
-	
 		this->GetGlyphForID ( id ) = glyph;
 	}
 }
