@@ -238,9 +238,10 @@ int MOAIShader::_setUniform ( lua_State* L ) {
 				uniform.mSrc	= state.GetValue < u32 >( 3, 0 );
 				uniform.mSize	= state.GetValue < u32 >( 4, 0 );
 				break;
-			case MOAIShaderUniform::UNIFORM_TRANSFORM:
-				uniform.mTransform	= state.GetLuaObject < MOAITransformBase >( 3 );
+			case MOAIShaderUniform::UNIFORM_TRANSFORM: {
+				uniform.mTransform.Set ( *self,	state.GetLuaObject < MOAITransformBase >( 3 ));
 				break;
+			}
 		}
 	}
 	return 0;
@@ -274,13 +275,21 @@ int MOAIShader::_setVertexAttribute ( lua_State* L ) {
 void MOAIShader::ClearUniform ( u32 idx ) {
 
 	if ( idx < this->mUniforms.Size ()) {
-		
 		MOAIShaderUniform& uniform = this->mUniforms [ idx ];
-		
 		uniform.mName.clear ();
 		uniform.mType = MOAIShaderUniform::UNIFORM_NONE;
-		uniform.mTransform = 0;
+		uniform.mTransform.Set ( *this, 0 );
 	}
+}
+
+//----------------------------------------------------------------//
+void MOAIShader::ClearUniforms ( ) {
+
+	for ( u32 i = 0; i < this->mUniforms.Size (); ++i ) {
+		MOAIShaderUniform& uniform = this->mUniforms [ i ];
+		uniform.mTransform.Set ( *this, 0 );
+	}
+	this->mUniforms.Clear ();
 }
 
 //----------------------------------------------------------------//
@@ -382,7 +391,7 @@ void MOAIShader::OnClear () {
 	this->mFragmentShaderSource.clear ();
 	
 	this->mAttributeMap.clear ();
-	this->mUniforms.Clear ();
+	this->ClearUniforms ();
 }
 
 //----------------------------------------------------------------//
@@ -508,6 +517,7 @@ void MOAIShader::ReserveAttributes ( u32 nAttributes ) {
 //----------------------------------------------------------------//
 void MOAIShader::ReserveUniforms ( u32 nUniforms ) {
 
+	this->ClearUniforms ();
 	this->mUniforms.Init ( nUniforms );
 }
 
@@ -541,7 +551,7 @@ void MOAIShader::SetUniform ( u32 idx, MOAITransformBase* transform ) {
 		MOAIShaderUniform& uniform = this->mUniforms [ idx ];
 		if ( uniform.mType != MOAIShaderUniform::UNIFORM_TRANSFORM ) return;
 		
-		uniform.mTransform	= transform;
+		uniform.mTransform.Set ( *this,	transform );
 	}
 }
 

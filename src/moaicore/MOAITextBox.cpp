@@ -359,7 +359,9 @@ const float MOAITextBox::DEFAULT_SPOOL_SPEED = 24.0f;
 void MOAITextBox::ClearCurves () {
 
 	for ( u32 i = 0; i < this->mMOAICurves.Size (); ++i ) {
-		this->mMOAICurves [ i ]->Release ();
+		if ( this->mMOAICurves [ i ]) {
+			this->LuaRelease ( *this->mMOAICurves [ i ]);
+		}
 	}
 	this->mMOAICurves.Clear ();
 	this->mCurves.Clear ();
@@ -476,6 +478,7 @@ MOAITextBox::MOAITextBox () :
 MOAITextBox::~MOAITextBox () {
 
 	this->ClearCurves ();
+	this->mFont.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//
@@ -606,11 +609,12 @@ void MOAITextBox::SerializeOut ( USLuaState& state, USLuaSerializer& serializer 
 void MOAITextBox::SetCurve ( u32 idx, MOAIAnimCurve* curve ) {
 
 	if ( idx > this->mMOAICurves.Size ()) return;
+	if ( this->mMOAICurves [ idx ] == curve ) return;
 
-	curve->Retain ();
+	this->LuaRetain ( *curve );
 	
 	if ( this->mMOAICurves [ idx ]) {
-		this->mMOAICurves [ idx ]->Release ();
+		this->LuaRelease ( *this->mMOAICurves [ idx ]);
 	}
 	
 	this->mMOAICurves [ idx ] = curve;
@@ -622,7 +626,7 @@ void MOAITextBox::SetCurve ( u32 idx, MOAIAnimCurve* curve ) {
 //----------------------------------------------------------------//
 void MOAITextBox::SetFont ( MOAIFont* font ) {
 
-	this->mFont = font;
+	this->mFont.Set ( *this, font );
 	this->mNeedsLayout = true;
 }
 

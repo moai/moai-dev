@@ -56,19 +56,19 @@ protected:
 		REPEAT_Y	= 0x00000002,
 	};
 	
-	USRef < MOAIDeck >			mDeck;
-	USRef < MOAIDeckRemapper >	mRemapper;
-	u32							mIndex;
+	USLuaSharedPtr < MOAIDeck >			mDeck;
+	USLuaSharedPtr < MOAIDeckRemapper >	mRemapper;
+	u32									mIndex;
 	
-	USRef < MOAIGrid >			mGrid;
-	u32							mRepeat;
-	USVec2D						mGridScale;
+	USLuaSharedPtr < MOAIGrid >			mGrid;
+	u32									mRepeat;
+	USVec2D								mGridScale;
+	
+	USLuaSharedPtr < MOAIShader >			mShader;
+	USLuaSharedPtr < MOAITransformBase >	mUVTransform;
 	
 	USRect						mFrame;
 	bool						mFitToFrame;
-	
-	USRef < MOAIShader >		mShader;
-	USRef < MOAITransformBase >	mUVTransform;
 	
 	MOAIBlendMode				mBlendMode;
 	bool						mVisible;

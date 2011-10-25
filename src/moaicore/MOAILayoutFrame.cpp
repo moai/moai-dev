@@ -513,6 +513,7 @@ void MOAILayoutFrame::SetLocByAxis ( u32 axis, float loc ) {
 
 //----------------------------------------------------------------//
 void MOAILayoutFrame::SetParent ( MOAITransformBase* parent ) {
+	UNUSED ( parent );
 
 	// TODO
 	//this->mLinkInChildren.Remove ();

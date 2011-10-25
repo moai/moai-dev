@@ -57,9 +57,6 @@
     <ClInclude Include="..\..\src\uslscore\USObject.h">
       <Filter>src\lifecycle</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\uslscore\USRef.h">
-      <Filter>src\lifecycle</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\uslscore\USRtti.h">
       <Filter>src\lifecycle</Filter>
     </ClInclude>
@@ -194,6 +191,15 @@
     </ClInclude>
     <ClInclude Include="..\..\src\uslscore\USFilename.h">
       <Filter>src\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslscore\USSharedPtr.h">
+      <Filter>src\lifecycle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslscore\USWeakPtr.h">
+      <Filter>src\lifecycle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslscore\USLuaSharedPtr.h">
+      <Filter>src\lua</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

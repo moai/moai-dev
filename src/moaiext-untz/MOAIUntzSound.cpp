@@ -347,7 +347,6 @@ bool MOAIUntzSound::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 			return true;
 		}
 	}
-	
 	return false;
 }
 

@@ -13,7 +13,7 @@ class MOAINode;
 //================================================================//
 class MOAIEaseDriverLink {
 public:
-	USWeak < MOAINode >		mTarget;
+	USWeakPtr < MOAINode >		mTarget;
 	u32						mAttrID;
 	float					mValue;
 	u32						mMode;

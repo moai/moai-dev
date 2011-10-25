@@ -32,6 +32,7 @@
 
 	//----------------------------------------------------------------//
 	-( void )alertView:( UIAlertView* )alertView didDismissWithButtonIndex:( NSInteger )buttonIndex {
+		UNUSED ( alertView );
 		
 		if ( self->callback ) {
 			USLuaStateHandle state = self->callback.GetSelf ();
@@ -202,6 +203,41 @@ int MOAIApp::_openURL ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	openURLWithParams
+	@text	See UIApplication documentation.
+ 
+	@in		string url
+	@in		table params
+	@out	bool success
+*/
+int MOAIApp::_openURLWithParams ( lua_State* L ) {
+	USLuaState state ( L );
+	
+	NSString* baseURL = [[ NSString alloc ] initWithLua: state stackIndex: 1 ];
+	NSMutableDictionary* params = [[ NSMutableDictionary alloc ] initWithCapacity:5 ];
+	[ params initWithLua: state stackIndex: 2 ];
+	
+	if ( baseURL == NULL || params == NULL ) return 0;
+	
+	NSURL* parsedURL = [ NSURL URLWithString: baseURL ];
+	NSString* urlQueryPrefix = parsedURL.query ? @"&" : @"?";
+	
+	NSMutableArray* paramPairs = [ NSMutableArray array ];
+	for ( NSString* key in [ params keyEnumerator ] ) {
+		
+		NSString* escapedValue = ( NSString* )CFURLCreateStringByAddingPercentEscapes( NULL, ( CFStringRef )[ params objectForKey: key ], NULL, ( CFStringRef )@"!*'();:@&=+$,/?%#[]", kCFStringEncodingUTF8 );
+		[ paramPairs addObject:[ NSString stringWithFormat: @"%@=%@", key, escapedValue ]];
+		[ escapedValue release ];
+	}
+	
+	NSString* urlQuery = [ paramPairs componentsJoinedByString: @"&" ];
+		
+	bool success = [[ UIApplication sharedApplication ] openURL:[ NSURL URLWithString:[ NSString stringWithFormat: @"%@%@%@", baseURL, urlQueryPrefix, urlQuery ]]];	
+	lua_pushboolean ( state, success );
+	return 1;
+}
+
+//----------------------------------------------------------------//
 /**	@name	presentLocalNotification
 	@text	Presents a local notification.
  
@@ -316,6 +352,7 @@ int MOAIApp::_requestProductIdentifiers ( lua_State* L ) {
  
 */
 int MOAIApp::_restoreCompletedTransactions( lua_State* L ) {
+	UNUSED ( L );
 	
 	[[SKPaymentQueue defaultQueue] restoreCompletedTransactions];
 
@@ -339,7 +376,7 @@ int MOAIApp::_scheduleLocalNotification ( lua_State* L ) {
 	int appIconBadgeNumber		= state.GetValue < int >( 8, 0 );
 	cc8* soundName				= state.GetValue < cc8* >( 9, 0 );
 	
-	UILocalNotification* notification = [[[ NSNotification alloc ] init ] autorelease ];
+	UILocalNotification* notification = [[[ UILocalNotification alloc ] init ] autorelease ];
 	
 	notification.fireDate			= [ NSDate dateFromISO8601String:[ NSString stringWithUTF8String:fireDate ]];
 	notification.timeZone			= [ NSString stringWithUTF8String:timeZone ];
@@ -402,6 +439,19 @@ int MOAIApp::_setListener ( lua_State* L ) {
 //================================================================//
 // MOAIApp
 //================================================================//
+//----------------------------------------------------------------//
+void MOAIApp::AppOpenedFromURL ( NSURL* url ) {
+	
+	USLuaRef& callback = this->mListeners [ APP_OPENED_FROM_URL ];
+	
+	if ( callback ) {
+		USLuaStateHandle state = callback.GetSelf ();
+		
+		[[ url absoluteString ] toLua:state ];
+		
+		state.DebugCall ( 1, 0 );
+	}
+}
 
 //----------------------------------------------------------------//
 void MOAIApp::DidFailToRegisterForRemoteNotificationsWithError ( NSError* error ) {
@@ -709,9 +759,10 @@ void MOAIApp::RegisterLuaClass ( USLuaState& state ) {
 	state.SetField ( -1, "TRANSACTION_STATE_FAILED",    ( u32 )TRANSACTION_STATE_FAILED );
 	state.SetField ( -1, "TRANSACTION_STATE_RESTORED",  ( u32 )TRANSACTION_STATE_RESTORED );
 	state.SetField ( -1, "TRANSACTION_STATE_CANCELLED", ( u32 )TRANSACTION_STATE_CANCELLED );
-		
-	state.SetField ( -1, "SESSION_START",	( u32 )SESSION_START );
-	state.SetField ( -1, "SESSION_END",		( u32 )SESSION_END );
+			
+	state.SetField ( -1, "APP_OPENED_FROM_URL",	( u32 )APP_OPENED_FROM_URL );
+	state.SetField ( -1, "SESSION_START",	    ( u32 )SESSION_START );
+	state.SetField ( -1, "SESSION_END",		    ( u32 )SESSION_END );
 	
 	luaL_Reg regTable[] = {
 		{ "alert",								_alert },
@@ -720,6 +771,7 @@ void MOAIApp::RegisterLuaClass ( USLuaState& state ) {
 		{ "getDirectoryInDomain",				_getDirectoryInDomain },
 		{ "getNotificationThatStartedApp",		_getNotificationThatStartedApp },
 		{ "openURL",							_openURL },
+		{ "openURLWithParams",					_openURLWithParams },
 		{ "presentLocalNotification",			_presentLocalNotification },
 		{ "registerForRemoteNotifications",		_registerForRemoteNotifications },
 		{ "restoreCompletedTransactions",		_restoreCompletedTransactions },

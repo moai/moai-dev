@@ -24,8 +24,8 @@ protected:
 		NO_CONTENT = 0xffffffff,
 	};
 
-	USRef < MOAIShader >	mShader;
-	u32						mContentMask;
+	USLuaSharedPtr < MOAIShader > mShader;
+	u32 mContentMask;
 
 	SET ( u32, ContentMask, mContentMask )
 

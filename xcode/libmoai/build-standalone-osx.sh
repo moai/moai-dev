@@ -6,7 +6,7 @@
 
 #!/bin/bash
 
-xcodebuild -configuration Release -target libmoai-osx-3rdparty -sdk macosx10.6 build
-xcodebuild -configuration Release -target libmoai-osx -sdk macosx10.6 build
-xcodebuild -configuration Release -target libmoai-osx-luaext -sdk macosx10.6 build
-xcodebuild -configuration Release -target libmoai-osx-untz -sdk macosx10.6 build
+xcodebuild -configuration Release -target libmoai-osx-3rdparty -sdk macosx build
+xcodebuild -configuration Release -target libmoai-osx -sdk macosx build
+xcodebuild -configuration Release -target libmoai-osx-luaext -sdk macosx build
+xcodebuild -configuration Release -target libmoai-osx-untz -sdk macosx build

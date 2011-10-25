@@ -145,10 +145,8 @@ public:
 	void					BeginPrim				();
 	void					BeginPrim				( u32 primType );
 	void					ClearColorBuffer		( u32 color );
-
-	void					ClearErrors				();
-	u32						CountErrors				() const;
 	
+	void					ClearErrors				();
 	void					DetectContext			();
 	void					DrawPrims				( const MOAIVertexFormat& format, GLenum primType, void* buffer, u32 size ); 
 	void					EndPrim					();

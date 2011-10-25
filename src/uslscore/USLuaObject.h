@@ -45,15 +45,16 @@ private:
 
 protected:
 
-	USLuaRef		mInstanceTable;		// weak ref to instance table stack
-	USLuaRef		mPrivateTable;		// weak ref to private local reference table
-	USLuaRef		mUserdata;			// weak/strong ref to userdata
+	USLuaRef		mInstanceTable;		// ref to instance table stack (weak)
+	USLuaRef		mPrivateTable;		// ref to private local reference table (weak for factory class instances; strong for singletons)
+	USLuaRef		mUserdata;			// ref to userdata (weak)
 	
 
 	//----------------------------------------------------------------//
 	static int				_gc						( lua_State* L );
 	static int				_getClass				( lua_State* L );
 	static int				_getClassName			( lua_State* L );
+	static int				_tombstone				( lua_State* L );
 	static int				_tostring				( lua_State* L );
 
 	//----------------------------------------------------------------//
@@ -71,14 +72,15 @@ public:
 	void					BindToLuaWithTable		( USLuaState& state ); // push table at top of stack!
 	virtual USLuaClass*		GetLuaClass				();
 	USLuaStateHandle		GetSelf					();
-	void					InsertObject			( USLuaObject& object );
 	bool					IsBound					();
-	void					LuaUnbind				( USLuaState& state );
+	void					LockToRefCount			();
+	void					LuaRelease				( USLuaObject& object );
+	void					LuaRetain				( USLuaObject& object );
+	void					LuaUnbind				();
 	void					PushLuaClassTable		( USLuaState& state );
 	void					PushLuaUserdata			( USLuaState& state );
 	virtual void			RegisterLuaClass		( USLuaState& state );
 	virtual void			RegisterLuaFuncs		( USLuaState& state );
-	void					RemoveObject			( USLuaObject& object );
 	static void             ReportLeaks				( FILE *f, bool clearAfter );
 	virtual	void			SerializeIn				( USLuaState& state, USLuaSerializer& serializer );
 	virtual	void			SerializeOut			( USLuaState& state, USLuaSerializer& serializer );

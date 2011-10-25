@@ -153,7 +153,7 @@ int MOAIStretchPatch2D::_setRow ( lua_State* L ) {
 int MOAIStretchPatch2D::_setTexture ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIStretchPatch2D, "U" )
 
-	self->mTexture = MOAITexture::AffirmTexture ( state, 2 );
+	self->mTexture.Set ( *self, MOAITexture::AffirmTexture ( state, 2 ));
 	if ( self->mTexture ) {
 		self->mTexture->PushLuaUserdata ( state );
 		return 1;
@@ -352,6 +352,8 @@ MOAIStretchPatch2D::MOAIStretchPatch2D () :
 
 //----------------------------------------------------------------//
 MOAIStretchPatch2D::~MOAIStretchPatch2D () {
+
+	this->mTexture.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//

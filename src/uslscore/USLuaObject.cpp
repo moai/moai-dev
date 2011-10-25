@@ -34,13 +34,20 @@ int USLuaObject::_gc ( lua_State* L ) {
 	
 	USLuaObject* data = ( USLuaObject* )state.GetPtrUserData ( 1 );
 
-	bool cleanup = data->mUserdata.IsWeak ();
+	bool cleanup = ( data->GetRefCount () == 0 ); // ready to cleanup if no references
+
+	// in any event, let's get rid of the userdata and lua refs we know about
+	data->ClearLocal ( data->mContain );
 	data->mUserdata.Clear ();
+	data->mPrivateTable.Clear ();
+	data->mInstanceTable.Clear ();
 	
+	// check to see if gc is being invoked during finalization
 	if ( USLuaRuntime::IsValid ()) {
 		USLuaRuntime::Get ().ClearObjectStackTrace ( data );
 	}
 
+	// delete if no references
 	if ( cleanup ) {
 		delete data;
 	}
@@ -73,6 +80,18 @@ int USLuaObject::_getClassName ( lua_State* L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
+int USLuaObject::_tombstone ( lua_State* L ) {
+
+	USLuaState state ( L );
+	
+	USLog::Print ( "----------------------------------------------------------------\n" );
+	USLog::Print ( "ERROR: Attempt to access missing object instance.\n" );
+	state.PrintStackTrace ( USLog::CONSOLE, 0 );
+	USLog::Print ( "\n" );
+	
+	return 0;
+}
 
 //----------------------------------------------------------------//
 int USLuaObject::_tostring ( lua_State* L ) {
@@ -154,17 +173,18 @@ void USLuaObject::BindToLuaWithTable ( USLuaState& state ) {
 //----------------------------------------------------------------//
 void USLuaObject::ClearLocal ( USLuaLocal& ref ) {
 	
-	USLuaStateHandle state = USLuaRuntime::Get ().State ();
-	
-	if ( this->mPrivateTable.PushRef ( state )) {
-	
-		lua_pushnumber ( state, ref.mRef );
-		lua_pushnil ( state );
-		lua_settable ( state, -3 );
-		lua_pop ( state, 1 );
+	if ( USLuaRuntime::IsValid ()) {
+		USLuaStateHandle state = USLuaRuntime::Get ().State ();
 		
-		ref.mRef = LUA_NOREF;
+		if ( this->mPrivateTable.PushRef ( state )) {
+		
+			lua_pushnumber ( state, ref.mRef );
+			lua_pushnil ( state );
+			lua_settable ( state, -3 );
+			lua_pop ( state, 1 );
+		}
 	}
+	ref.mRef = LUA_NOREF;
 }
 
 //----------------------------------------------------------------//
@@ -184,55 +204,91 @@ USLuaStateHandle USLuaObject::GetSelf () {
 }
 
 //----------------------------------------------------------------//
-void USLuaObject::InsertObject ( USLuaObject& object ) {
-
-	USLuaStateHandle state = USLuaRuntime::Get ().State ();
-
-	if ( this->mContain ) {
-		this->PushLocal ( state, this->mContain );
-	}
-	else {
-		lua_newtable ( state );
-		this->SetLocal ( state, -1, this->mContain );
-	}
-	
-	assert ( !lua_isnil ( state, -1 ));
-	
-	lua_pop ( state, 1 );
-	this->PushLocal ( state, this->mContain );
-	
-	object.PushLuaUserdata ( state );
-	lua_pushvalue ( state, -1 );
-	lua_rawset ( state, -3 );
-	
-	//lua_pop ( state, 1 );
-	
-	//object.PushLuaUserdata ( state );
-	//lua_pushnil ( state );
-	//lua_rawset ( state, -3 );
-	
-	lua_pop ( state, 1 );
-}
-
-//----------------------------------------------------------------//
 bool USLuaObject::IsBound () {
 
 	return ( this->mUserdata != 0 );
 }
 
 //----------------------------------------------------------------//
-void USLuaObject::LuaUnbind ( USLuaState& state ) {
+void USLuaObject::LockToRefCount () {
+
+	this->mUserdata.MakeStrong ();
+}
+
+//----------------------------------------------------------------//
+void USLuaObject::LuaRelease ( USLuaObject& object ) {
+
+	if ( this->mContain && USLuaRuntime::IsValid ()) {
 	
-	if ( this->mUserdata ) {
+		USLuaStateHandle state = USLuaRuntime::Get ().State ();
+	
+		if ( this->PushLocal ( state, this->mContain )) {
+			
+			object.PushLuaUserdata ( state );
+			lua_pushnil ( state );
+			lua_rawset ( state, -3 );
+		}
+		lua_pop ( state, 1 );
+	}
+	object.Release ();
+}
+
+//----------------------------------------------------------------//
+void USLuaObject::LuaRetain ( USLuaObject& object ) {
+
+	if ( this->mPrivateTable ) {
+		USLuaStateHandle state = USLuaRuntime::Get ().State ();
+
+		// affirm container table
+		if ( this->mContain ) {
+			this->PushLocal ( state, this->mContain );
+		}
+		else {
+			lua_newtable ( state );
+			this->SetLocal ( state, -1, this->mContain );
+		}
+		
+		lua_pop ( state, 1 );
+		this->PushLocal ( state, this->mContain );
+		
+		object.PushLuaUserdata ( state );
+		lua_pushvalue ( state, -1 );
+		lua_rawset ( state, -3 );
+		
+		lua_pop ( state, 1 );
+	}
+	object.Retain ();
+}
+
+//----------------------------------------------------------------//
+void USLuaObject::LuaUnbind () {
+	
+	if ( this->mUserdata && USLuaRuntime::IsValid ()) {
+		
+		USLuaStateHandle state = USLuaRuntime::Get ().State ();
 		
 		this->mUserdata.PushRef ( state );
-		assert ( lua_isuserdata ( state, -1 ));
 		
 		void* userdata = lua_touserdata ( state, -1 );
 		memset ( userdata, 0, sizeof ( void* ));
 		
-		lua_pushnil ( state );
+		lua_newtable ( state );
+		
+		lua_pushvalue ( state, -1 );
 		lua_setmetatable ( state, -2 );
+		
+		lua_pushcfunction ( state, USLuaObject::_tombstone );
+		lua_setfield ( state, -2, "__index" );
+		
+		lua_pushcfunction ( state, USLuaObject::_tombstone );
+		lua_setfield ( state, -2, "__newindex" );
+		
+		lua_pushcfunction ( state, USLuaObject::_tombstone );
+		lua_setfield ( state, -2, "__tostring" );
+		
+		lua_setmetatable ( state, -2 );
+
+		lua_pop ( state, 1 );
 
 		this->mUserdata.Clear ();
 	}
@@ -244,10 +300,11 @@ void USLuaObject::OnRelease ( u32 refCount ) {
 	if ( refCount == 0 ) {
 	
 		if ( this->mUserdata ) {
-			assert ( !this->mUserdata.IsWeak ());
 			this->mUserdata.MakeWeak ();
 		}
 		else {
+			// no Lua binding and no references, so
+			// go ahead and kill this turkey
 			delete this;
 		}
 	}
@@ -256,8 +313,6 @@ void USLuaObject::OnRelease ( u32 refCount ) {
 //----------------------------------------------------------------//
 void USLuaObject::OnRetain ( u32 refCount ) {
 	UNUSED ( refCount );
-
-	this->mUserdata.MakeStrong ();
 }
 
 //----------------------------------------------------------------//
@@ -312,25 +367,6 @@ void USLuaObject::RegisterLuaFuncs ( USLuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void USLuaObject::RemoveObject ( USLuaObject& object ) {
-
-	if ( USLuaRuntime::IsValid ()) {
-
-		USLuaStateHandle state = USLuaRuntime::Get ().State ();
-
-		if ( this->mContain ) {
-			if ( this->PushLocal ( state, this->mContain )) {
-				
-				object.PushLuaUserdata ( state );
-				lua_pushnil ( state );
-				lua_rawset ( state, -3 );
-			}
-			lua_pop ( state, 1 );
-		}
-	}
-}
-
-//----------------------------------------------------------------//
 void USLuaObject::SerializeIn ( USLuaState& state, USLuaSerializer& serializer ) {
 	UNUSED ( state );
 	UNUSED ( serializer );
@@ -366,7 +402,9 @@ void USLuaObject::SetLocal ( USLuaState& state, int idx, USLuaLocal& ref ) {
 USLuaObject::USLuaObject () {
 	RTTI_SINGLE ( RTTIBase )
 	
-	USLuaRuntime::Get ().RegisterObject ( *this );
+	if ( USLuaRuntime::IsValid ()) {
+		USLuaRuntime::Get ().RegisterObject ( *this );
+	}
 }
 
 //----------------------------------------------------------------//
@@ -376,12 +414,8 @@ USLuaObject::~USLuaObject () {
 		
 		USLuaRuntime::Get ().ClearObjectStackTrace ( this );
 		
-		if ( this->mUserdata ) {
-
-			USLuaStateHandle state = USLuaRuntime::Get ().State ();
-			this->LuaUnbind ( state );
-		}
-
+		this->LuaUnbind ();
+		
 		USLuaRuntime::Get ().DeregisterObject ( *this );
 	}
 }
@@ -451,6 +485,11 @@ void USLuaClass::InitLuaSingletonClass ( USLuaObject& data, USLuaState& state ) 
 	lua_setmetatable ( state, -2 );
 
 	lua_setglobal ( state, data.TypeName ());
+
+	// set up the private table so we can use lua retain/release
+	lua_newtable ( state );
+	data.mPrivateTable.SetStrongRef ( state, -1 );
+	lua_pop ( state, 1 );
 
 	lua_settop ( state, top );
 }

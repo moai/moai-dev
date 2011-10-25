@@ -6,12 +6,12 @@
 
 #!/bin/bash
 
-xcodebuild -configuration Release -target libmoai-ios-3rdparty -sdk iphonesimulator4.3 clean
-xcodebuild configuration Release -target libmoai-ios -sdk iphonesimulator4.3 clean
-xcodebuild -configuration Release -target libmoai-ios-luaext -sdk iphonesimulator4.3 clean
-xcodebuild -configuration Release -target libmoai-ios-untz -sdk iphonesimulator4.3 clean
+xcodebuild -configuration Release -target libmoai-ios-3rdparty -sdk iphonesimulator clean
+xcodebuild -configuration Release -target libmoai-ios -sdk iphonesimulator clean
+xcodebuild -configuration Release -target libmoai-ios-luaext -sdk iphonesimulator clean
+xcodebuild -configuration Release -target libmoai-ios-untz -sdk iphonesimulator clean
 
-xcodebuild -configuration Release -target libmoai-ios-3rdparty -sdk iphoneos4.3 clean
-xcodebuild -configuration Release -target libmoai-ios -sdk iphoneos4.3 clean
-xcodebuild -configuration Release -target libmoai-ios-luaext -sdk iphoneos4.3 clean
-xcodebuild -configuration Release -target libmoai-ios-untz -sdk iphoneos4.3 clean
+xcodebuild -configuration Release -target libmoai-ios-3rdparty -sdk iphoneos clean
+xcodebuild -configuration Release -target libmoai-ios -sdk iphoneos clean
+xcodebuild -configuration Release -target libmoai-ios-luaext -sdk iphoneos clean
+xcodebuild -configuration Release -target libmoai-ios-untz -sdk iphoneos clean

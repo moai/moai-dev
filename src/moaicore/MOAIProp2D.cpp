@@ -166,7 +166,7 @@ int MOAIProp2D::_setBlendMode ( lua_State* L ) {
 int MOAIProp2D::_setDeck ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIProp2D, "U" )
 
-	self->mDeck = state.GetLuaObject < MOAIDeck >( 2 );
+	self->mDeck.Set ( *self, state.GetLuaObject < MOAIDeck >( 2 ));
 
 	if ( self->mDeck ) {
 		self->SetMask ( self->mDeck->GetContentMask ());
@@ -232,7 +232,7 @@ int MOAIProp2D::_setGrid ( lua_State* L ) {
 	MOAIGrid* grid = state.GetLuaObject < MOAIGrid >( 2 );
 	if ( !grid ) return 0;
 	
-	self->mGrid = grid;
+	self->mGrid.Set ( *self, grid );
 	
 	return 0;
 }
@@ -381,7 +381,7 @@ bool MOAIProp2D::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 				this->SetPartition ( attrOp.Apply < MOAIPartition >( this->GetPartition (), op, MOAINode::ATTR_READ_WRITE ));
 				return true;
 			case ATTR_SHADER:
-				this->mShader = attrOp.Apply < MOAIShader >( this->mShader, op, MOAINode::ATTR_READ_WRITE );
+				this->mShader.Set ( *this, attrOp.Apply < MOAIShader >( this->mShader, op, MOAINode::ATTR_READ_WRITE ));
 				return true;
 			case ATTR_BLEND_MODE:
 				attrOp.Apply < MOAIBlendMode >( this->mBlendMode, op, MOAINode::ATTR_READ_WRITE );
@@ -664,6 +664,12 @@ MOAIProp2D::MOAIProp2D () :
 
 //----------------------------------------------------------------//
 MOAIProp2D::~MOAIProp2D () {
+
+	this->mDeck.Set ( *this, 0 );
+	this->mRemapper.Set ( *this, 0 );
+	this->mGrid.Set ( *this, 0 );
+	this->mShader.Set ( *this, 0 );
+	this->mUVTransform.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//
@@ -735,15 +741,14 @@ void MOAIProp2D::RegisterLuaClass ( USLuaState& state ) {
 	MOAIProp::RegisterLuaClass ( state );
 	MOAIColor::RegisterLuaClass ( state );
 	
-	//state.SetField ( -1, "INHERIT_COLOR", ( u32 )INHERIT_COLOR );
-	state.SetField ( -1, "INHERIT_FRAME", ( u32 )INHERIT_FRAME );
-	//state.SetField ( -1, "INHERIT_PARTITION", ( u32 )INHERIT_PARTITION );
-	
 	state.SetField ( -1, "ATTR_INDEX", MOAIProp2DAttr::Pack ( ATTR_INDEX ));
 	state.SetField ( -1, "ATTR_PARTITION", MOAIProp2DAttr::Pack ( ATTR_PARTITION ));
 	state.SetField ( -1, "ATTR_SHADER", MOAIProp2DAttr::Pack ( ATTR_SHADER ));
 	state.SetField ( -1, "ATTR_BLEND_MODE", MOAIProp2DAttr::Pack ( ATTR_BLEND_MODE ));
 	state.SetField ( -1, "ATTR_VISIBLE", MOAIProp2DAttr::Pack ( ATTR_VISIBLE ));
+	
+	state.SetField ( -1, "INHERIT_FRAME", MOAIProp2DAttr::Pack ( INHERIT_FRAME ));
+	state.SetField ( -1, "FRAME_TRAIT", MOAIProp2DAttr::Pack ( FRAME_TRAIT ));
 	
 	state.SetField ( -1, "BLEND_ADD", ( u32 )MOAIBlendMode::BLEND_ADD );
 	state.SetField ( -1, "BLEND_MULTIPLY", ( u32 )MOAIBlendMode::BLEND_MULTIPLY );
@@ -793,8 +798,8 @@ void MOAIProp2D::RegisterLuaFuncs ( USLuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIProp2D::SerializeIn ( USLuaState& state, USLuaSerializer& serializer ) {
 	
-	this->mDeck = serializer.GetRefField < MOAIDeck >( state, -1, "mDeck" );
-	this->mGrid = serializer.GetRefField < MOAIGrid >( state, -1, "mGrid" );
+	this->mDeck.Set ( *this, serializer.GetRefField < MOAIDeck >( state, -1, "mDeck" ));
+	this->mGrid.Set ( *this, serializer.GetRefField < MOAIGrid >( state, -1, "mGrid" ));
 }
 
 //----------------------------------------------------------------//

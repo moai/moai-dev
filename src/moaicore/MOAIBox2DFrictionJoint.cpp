@@ -27,6 +27,11 @@ int MOAIBox2DFrictionJoint::_getMaxForce ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DFrictionJoint, "U" )
 	float unitsToMeters = self->GetUnitsToMeters ();
 
+	if ( !self->mJoint ) {
+		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		return 0;
+	}
+
 	b2FrictionJoint* joint = ( b2FrictionJoint* )self->mJoint;
 	state.Push ( joint->GetMaxForce () / unitsToMeters );
 
@@ -42,6 +47,11 @@ int MOAIBox2DFrictionJoint::_getMaxForce ( lua_State* L ) {
 */
 int MOAIBox2DFrictionJoint::_getMaxTorque ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DFrictionJoint, "U" )
+	
+	if ( !self->mJoint ) {
+		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		return 0;
+	}
 	
 	b2FrictionJoint* joint = ( b2FrictionJoint* )self->mJoint;
 	state.Push ( joint->GetMaxTorque () * ( float )R2D );
@@ -61,6 +71,11 @@ int MOAIBox2DFrictionJoint::_setMaxForce ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DFrictionJoint, "U" )
 	float unitsToMeters = self->GetUnitsToMeters ();
 
+	if ( !self->mJoint ) {
+		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		return 0;
+	}
+
 	float maxForce = state.GetValue < float >( 1, 0.0f ) * unitsToMeters;
 
 	b2FrictionJoint* joint = ( b2FrictionJoint* )self->mJoint;
@@ -79,6 +94,11 @@ int MOAIBox2DFrictionJoint::_setMaxForce ( lua_State* L ) {
 */
 int MOAIBox2DFrictionJoint::_setMaxTorque ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DFrictionJoint, "U" )
+
+	if ( !self->mJoint ) {
+		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		return 0;
+	}
 
 	float maxTorque = state.GetValue < float >( 1, 0.0f ) * ( float )D2R;
 

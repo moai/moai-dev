@@ -70,9 +70,6 @@
     <Filter Include="src\camera">
       <UniqueIdentifier>{9acdb11e-3d7c-4894-b6a0-f0328e270421}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\traits">
-      <UniqueIdentifier>{ec27eb1a-e73d-4f9e-92ca-e6ca544f87db}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\aku">
       <UniqueIdentifier>{e69e8559-adbe-447a-80a1-93a23dc7b196}</UniqueIdentifier>
     </Filter>
@@ -335,9 +332,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAICameraFitter2D.cpp">
       <Filter>src\camera</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAITraits.cpp">
-      <Filter>src\traits</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\aku\AKU.cpp">
       <Filter>src\aku</Filter>
@@ -730,9 +724,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAICameraFitter2D.h">
       <Filter>src\camera</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\MOAITraits.h">
-      <Filter>src\traits</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\aku\AKU.h">
       <Filter>src\aku</Filter>

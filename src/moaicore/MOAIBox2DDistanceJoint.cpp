@@ -26,6 +26,11 @@ SUPPRESS_EMPTY_FILE_WARNING
 int MOAIBox2DDistanceJoint::_getDampingRatio ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DDistanceJoint, "U" )
 
+	if ( !self->mJoint ) {
+		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		return 0;
+	}
+
 	b2DistanceJoint* joint = ( b2DistanceJoint* )self->mJoint;
 	state.Push ( joint->GetDampingRatio ());
 	
@@ -41,6 +46,11 @@ int MOAIBox2DDistanceJoint::_getDampingRatio ( lua_State* L ) {
 */
 int MOAIBox2DDistanceJoint::_getFrequency ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DDistanceJoint, "U" )
+
+	if ( !self->mJoint ) {
+		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		return 0;
+	}
 
 	b2DistanceJoint* joint = ( b2DistanceJoint* )self->mJoint;
 	state.Push ( joint->GetFrequency ());
@@ -59,6 +69,11 @@ int MOAIBox2DDistanceJoint::_getLength ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DDistanceJoint, "U" )
 	float unitsToMeters = self->GetUnitsToMeters ();
 
+	if ( !self->mJoint ) {
+		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		return 0;
+	}
+
 	b2DistanceJoint* joint = ( b2DistanceJoint* )self->mJoint;
 	state.Push ( joint->GetLength () / unitsToMeters );
 	
@@ -75,6 +90,11 @@ int MOAIBox2DDistanceJoint::_getLength ( lua_State* L ) {
 */
 int MOAIBox2DDistanceJoint::_setDampingRatio ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DDistanceJoint, "U" )
+
+	if ( !self->mJoint ) {
+		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		return 0;
+	}
 
 	float dampingRatio = state.GetValue < float >( 1, 0.0f );
 
@@ -95,6 +115,11 @@ int MOAIBox2DDistanceJoint::_setDampingRatio ( lua_State* L ) {
 int MOAIBox2DDistanceJoint::_setFrequency ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DDistanceJoint, "U" )
 
+	if ( !self->mJoint ) {
+		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		return 0;
+	}
+
 	float frequency = state.GetValue < float >( 1, 0.0f );
 
 	b2DistanceJoint* joint = ( b2DistanceJoint* )self->mJoint;
@@ -114,6 +139,11 @@ int MOAIBox2DDistanceJoint::_setFrequency ( lua_State* L ) {
 int MOAIBox2DDistanceJoint::_setLength ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DDistanceJoint, "U" )
 	float unitsToMeters = self->GetUnitsToMeters ();
+
+	if ( !self->mJoint ) {
+		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		return 0;
+	}
 
 	float length = state.GetValue < float >( 1, 0.0f ) * unitsToMeters;
 

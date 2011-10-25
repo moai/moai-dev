@@ -173,7 +173,7 @@ MOAIFont* MOAIFont::Bind () {
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	
 	if ( gfxDevice.SetTexture ( this->mTexture )) {
-		this->mImage = 0;
+		this->mImage.Set ( *this, 0 );
 		return this;
 	}
 	return 0;
@@ -296,6 +296,9 @@ MOAIFont::MOAIFont () :
 
 //----------------------------------------------------------------//
 MOAIFont::~MOAIFont () {
+
+	this->mTexture.Set ( *this, 0 );
+	this->mImage.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//
@@ -489,12 +492,12 @@ u32 MOAIFont::Size () {
 //----------------------------------------------------------------//
 void MOAIFont::SetImage ( MOAIImage* image ) {
 
-	this->mImage = image;
-	this->mTexture = 0;
+	this->mImage.Set ( *this, image );
+	this->mTexture.Set ( *this, 0 );
 	
-	if ( image ) {
-		this->mTexture = new MOAITexture ();
-		this->mTexture->Init ( *image );
+	if ( image && MOAIGfxDevice::Get ().GetHasContext ()) {
+		this->mTexture.Set ( *this, new MOAITexture ());
+		this->mTexture->Init ( *image, "'texture from font'" );
 		this->mTexture->SetFilter ( GL_LINEAR, GL_LINEAR );
 	}
 }
@@ -502,7 +505,7 @@ void MOAIFont::SetImage ( MOAIImage* image ) {
 //----------------------------------------------------------------//
 void MOAIFont::SetTexture ( MOAITexture* texture ) {
 
-	this->mImage = 0;
-	this->mTexture = texture;
+	this->mImage.Set ( *this, 0 );
+	this->mTexture.Set ( *this, texture );
 }
 

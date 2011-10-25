@@ -15,8 +15,6 @@
 #include <moaicore/MOAITouchSensor.h>
 #include <moaicore/MOAISensor.h>
 
-#define LUAVAR_SENSORS "sensors"
-
 //================================================================//
 // MOAIInputDevice
 //================================================================//
@@ -48,6 +46,12 @@ MOAIInputDevice::MOAIInputDevice () :
 
 //----------------------------------------------------------------//
 MOAIInputDevice::~MOAIInputDevice () {
+
+	for ( u32 i = 0; i < this->mSensors.Size (); ++i ) {
+		if ( this->mSensors [ i ]) {
+			this->LuaRelease ( *this->mSensors [ i ]);
+		}
+	}
 }
 
 //----------------------------------------------------------------//
@@ -69,7 +73,8 @@ void MOAIInputDevice::RegisterLuaFuncs ( USLuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIInputDevice::ReserveSensors ( u8 total ) {
 
-	this->mSensors.Resize ( total );
+	this->mSensors.Init ( total );
+	this->mSensors.Fill ( 0 );
 }
 
 //----------------------------------------------------------------//
@@ -85,6 +90,8 @@ void MOAIInputDevice::Reset () {
 
 //----------------------------------------------------------------//
 void MOAIInputDevice::SetSensor ( u8 sensorID, cc8* name, u32 type ) {
+
+	if ( !( sensorID < this->mSensors.Size ())) return;
 
 	MOAISensor* sensor = 0;
 
@@ -128,14 +135,16 @@ void MOAIInputDevice::SetSensor ( u8 sensorID, cc8* name, u32 type ) {
 	sensor->mType = type;
 	sensor->mName = name;
 	
-	this->mSensors.Grow ( sensorID + 1 );
+	if ( this->mSensors [ sensorID ]) {
+		this->LuaRelease ( *this->mSensors [ sensorID ]);
+	}
+	
 	this->mSensors [ sensorID ] = sensor;
+	this->LuaRetain ( *sensor );
 	
 	USLuaStateHandle state = USLuaRuntime::Get ().State ();
 	this->PushLuaUserdata ( state );
 	
-	//if ( state.GetFieldWithType ( -1, LUAVAR_SENSORS, LUA_TTABLE )) {
-		sensor->PushLuaUserdata ( state );
-		lua_setfield ( state, -2, name );
-	//}
+	sensor->PushLuaUserdata ( state );
+	lua_setfield ( state, -2, name );
 }

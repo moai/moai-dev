@@ -19,7 +19,7 @@ class MOAICameraAnchor2D :
 	public MOAINode {
 private:
 
-	USWeak < MOAITransformBase >	mParent;
+	USWeakPtr < MOAITransformBase >	mParent;
 	USRect							mRect;
 	USVec2D							mLoc;
 	

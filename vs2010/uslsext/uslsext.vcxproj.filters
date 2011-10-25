@@ -10,12 +10,6 @@
     <Filter Include="src\animCurve">
       <UniqueIdentifier>{5a4c71c9-66f7-4fb6-abfa-8f29e115eb83}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\attributed">
-      <UniqueIdentifier>{a1b9c515-1bf7-400e-b282-b0d3e92258a2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\fsm">
-      <UniqueIdentifier>{901808a7-23a0-46a9-9ce6-5d6ef7513bb3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\gfxObjects">
       <UniqueIdentifier>{24dc16d5-28ae-493a-adcf-e99b0c8cb51b}</UniqueIdentifier>
     </Filter>
@@ -47,15 +41,6 @@
   <ItemGroup>
     <ClCompile Include="..\..\src\uslsext\USAnimCurve.cpp">
       <Filter>src\animCurve</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\uslsext\USAttributed.cpp">
-      <Filter>src\attributed</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\uslsext\USAttrMap.cpp">
-      <Filter>src\attributed</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\uslsext\USAttrOp.cpp">
-      <Filter>src\attributed</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\uslsext\USColor.cpp">
       <Filter>src\gfxObjects</Filter>
@@ -147,9 +132,6 @@
     <ClCompile Include="..\..\src\uslsext\USAdapterInfo_win32.cpp">
       <Filter>src\util</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\uslsext\USPrettyPrint.cpp">
-      <Filter>src\util</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\uslsext\USTypedPtr.cpp">
       <Filter>src\util</Filter>
     </ClCompile>
@@ -190,21 +172,6 @@
   <ItemGroup>
     <ClInclude Include="..\..\src\uslsext\USAnimCurve.h">
       <Filter>src\animCurve</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\uslsext\USAttributed.h">
-      <Filter>src\attributed</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\uslsext\USAttrMap.h">
-      <Filter>src\attributed</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\uslsext\USAttrOp.h">
-      <Filter>src\attributed</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\uslsext\USFsm.h">
-      <Filter>src\fsm</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\uslsext\USFsmStateFactory.h">
-      <Filter>src\fsm</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\uslsext\USColor.h">
       <Filter>src\gfxObjects</Filter>
@@ -303,9 +270,6 @@
       <Filter>src\thread</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\uslsext\USDelegate.h">
-      <Filter>src\util</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\uslsext\USPrettyPrint.h">
       <Filter>src\util</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\uslsext\USRadixSort16.h">

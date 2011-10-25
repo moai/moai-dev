@@ -27,6 +27,11 @@ int MOAIBox2DLineJoint::_getJointSpeed ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DLineJoint, "U" )
 	float unitsToMeters = self->GetUnitsToMeters ();
 
+	if ( !self->mJoint ) {
+		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		return 0;
+	}
+
 	b2LineJoint* joint = ( b2LineJoint* )self->mJoint;
 	state.Push ( joint->GetJointSpeed () / unitsToMeters );
 	
@@ -43,6 +48,11 @@ int MOAIBox2DLineJoint::_getJointSpeed ( lua_State* L ) {
 int MOAIBox2DLineJoint::_getJointTranslation ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DLineJoint, "U" )
 	float unitsToMeters = self->GetUnitsToMeters ();
+
+	if ( !self->mJoint ) {
+		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		return 0;
+	}
 
 	b2LineJoint* joint = ( b2LineJoint* )self->mJoint;
 	state.Push ( joint->GetJointTranslation () / unitsToMeters );
@@ -61,6 +71,11 @@ int MOAIBox2DLineJoint::_getLowerLimit ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DLineJoint, "U" )
 	float unitsToMeters = self->GetUnitsToMeters ();
 
+	if ( !self->mJoint ) {
+		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		return 0;
+	}
+
 	b2LineJoint* joint = ( b2LineJoint* )self->mJoint;
 	state.Push ( joint->GetLowerLimit () / unitsToMeters );
 	
@@ -77,6 +92,11 @@ int MOAIBox2DLineJoint::_getLowerLimit ( lua_State* L ) {
 int MOAIBox2DLineJoint::_getMotorForce ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DLineJoint, "U" )
 	float unitsToMeters = self->GetUnitsToMeters ();
+
+	if ( !self->mJoint ) {
+		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		return 0;
+	}
 
 	b2LineJoint* joint = ( b2LineJoint* )self->mJoint;
 	state.Push ( joint->GetMotorForce () / unitsToMeters );
@@ -95,6 +115,11 @@ int MOAIBox2DLineJoint::_getMotorSpeed ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DLineJoint, "U" )
 	float unitsToMeters = self->GetUnitsToMeters ();
 
+	if ( !self->mJoint ) {
+		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		return 0;
+	}
+
 	b2LineJoint* joint = ( b2LineJoint* )self->mJoint;
 	state.Push ( joint->GetMotorSpeed () / unitsToMeters );
 	
@@ -112,6 +137,11 @@ int MOAIBox2DLineJoint::_getUpperLimit ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DLineJoint, "U" )
 	float unitsToMeters = self->GetUnitsToMeters ();
 
+	if ( !self->mJoint ) {
+		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		return 0;
+	}
+
 	b2LineJoint* joint = ( b2LineJoint* )self->mJoint;
 	state.Push ( joint->GetUpperLimit () / unitsToMeters );
 	
@@ -128,6 +158,11 @@ int MOAIBox2DLineJoint::_getUpperLimit ( lua_State* L ) {
 int MOAIBox2DLineJoint::_isLimitEnabled ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DLineJoint, "U" )
 
+	if ( !self->mJoint ) {
+		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		return 0;
+	}
+
 	b2LineJoint* joint = ( b2LineJoint* )self->mJoint;
 	state.Push ( joint->IsLimitEnabled ());
 	
@@ -143,6 +178,11 @@ int MOAIBox2DLineJoint::_isLimitEnabled ( lua_State* L ) {
 */
 int MOAIBox2DLineJoint::_isMotorEnabled ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DLineJoint, "U" )
+
+	if ( !self->mJoint ) {
+		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		return 0;
+	}
 
 	b2LineJoint* joint = ( b2LineJoint* )self->mJoint;
 	state.Push ( joint->IsMotorEnabled ());
@@ -161,6 +201,11 @@ int MOAIBox2DLineJoint::_isMotorEnabled ( lua_State* L ) {
 */
 int MOAIBox2DLineJoint::_setLimit ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DLineJoint, "U" )
+	
+	if ( !self->mJoint ) {
+		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		return 0;
+	}
 	
 	float lower	= state.GetValue < float >( 2, 0.0f );
 	float upper	= state.GetValue < float >( 3, 0.0f );
@@ -185,6 +230,11 @@ int MOAIBox2DLineJoint::_setLimit ( lua_State* L ) {
 int MOAIBox2DLineJoint::_setLimitEnabled ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DLineJoint, "U" )
 	
+	if ( !self->mJoint ) {
+		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		return 0;
+	}
+	
 	bool enabled = state.GetValue < bool >( 2, true );
 	
 	b2LineJoint* joint = ( b2LineJoint* )self->mJoint;
@@ -205,6 +255,11 @@ int MOAIBox2DLineJoint::_setMaxMotorForce ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DLineJoint, "U" )
 	float unitsToMeters = self->GetUnitsToMeters ();
 
+	if ( !self->mJoint ) {
+		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		return 0;
+	}
+
 	float maxMotorForce = state.GetValue < float >( 1, 0.0f );
 
 	b2LineJoint* joint = ( b2LineJoint* )self->mJoint;
@@ -224,6 +279,11 @@ int MOAIBox2DLineJoint::_setMaxMotorForce ( lua_State* L ) {
 */
 int MOAIBox2DLineJoint::_setMotor ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DLineJoint, "U" )
+	
+	if ( !self->mJoint ) {
+		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		return 0;
+	}
 	
 	float speed	= state.GetValue < float >( 2, 0.0f );
 	float max	= state.GetValue < float >( 3, 0.0f );
@@ -248,6 +308,11 @@ int MOAIBox2DLineJoint::_setMotor ( lua_State* L ) {
 */
 int MOAIBox2DLineJoint::_setMotorEnabled ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DLineJoint, "U" )
+	
+	if ( !self->mJoint ) {
+		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		return 0;
+	}
 	
 	bool enabled = state.GetValue < bool >( 2, true );
 	

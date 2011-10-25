@@ -97,6 +97,7 @@ USMetaRect < TYPE > USLuaState::GetRect ( int idx ) {
 //----------------------------------------------------------------//
 template < typename TYPE >
 TYPE USLuaState::GetValue ( int idx, TYPE value ) {
+	UNUSED ( idx );
 
 	assert ( false ); // unsupported type
 	return value;

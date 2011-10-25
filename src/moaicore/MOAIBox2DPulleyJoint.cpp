@@ -28,6 +28,11 @@ int MOAIBox2DPulleyJoint::_getGroundAnchorA ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DPulleyJoint, "U" )
 	float unitsToMeters = self->GetUnitsToMeters ();
 
+	if ( !self->mJoint ) {
+		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		return 0;
+	}
+
 	b2PulleyJoint* joint = ( b2PulleyJoint* )self->mJoint;
 	
 	b2Vec2 groundAnchorA = joint->GetGroundAnchorA ();
@@ -50,6 +55,11 @@ int MOAIBox2DPulleyJoint::_getGroundAnchorB ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DPulleyJoint, "U" )
 	float unitsToMeters = self->GetUnitsToMeters ();
 
+	if ( !self->mJoint ) {
+		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		return 0;
+	}
+
 	b2PulleyJoint* joint = ( b2PulleyJoint* )self->mJoint;
 	
 	b2Vec2 groundAnchorB = joint->GetGroundAnchorB ();
@@ -71,6 +81,11 @@ int MOAIBox2DPulleyJoint::_getLength1 ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DPulleyJoint, "U" )
 	float unitsToMeters = self->GetUnitsToMeters ();
 
+	if ( !self->mJoint ) {
+		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		return 0;
+	}
+
 	b2PulleyJoint* joint = ( b2PulleyJoint* )self->mJoint;
 	state.Push ( joint->GetLength1 () / unitsToMeters );
 	
@@ -88,6 +103,11 @@ int MOAIBox2DPulleyJoint::_getLength2 ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DPulleyJoint, "U" )
 	float unitsToMeters = self->GetUnitsToMeters ();
 
+	if ( !self->mJoint ) {
+		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		return 0;
+	}
+
 	b2PulleyJoint* joint = ( b2PulleyJoint* )self->mJoint;
 	state.Push ( joint->GetLength2 () / unitsToMeters );
 	
@@ -103,6 +123,11 @@ int MOAIBox2DPulleyJoint::_getLength2 ( lua_State* L ) {
 */
 int MOAIBox2DPulleyJoint::_getRatio ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DPulleyJoint, "U" )
+
+	if ( !self->mJoint ) {
+		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		return 0;
+	}
 
 	b2PulleyJoint* joint = ( b2PulleyJoint* )self->mJoint;
 	state.Push ( joint->GetRatio ());

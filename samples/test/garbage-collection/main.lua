@@ -6,7 +6,8 @@
 
 print ( "hello, moai!" )
 
---MOAISim.setLuaAllocLogEnabled ( true )
+MOAISim.forceGarbageCollection ()
+MOAISim.setHistogramEnabled ( true )
 
 texture = MOAITexture.new ()
 
@@ -24,9 +25,12 @@ gfxQuad = nil
 prop = nil
 layer = nil
 
-print ( MOAISim.getLuaObjectCount ())
+print ( "--------------------------------" )
+MOAISim.reportHistogram ()
+
+print ( "--------------------------------" )
 MOAISim.forceGarbageCollection ()
-print ( MOAISim.getLuaObjectCount ())
+MOAISim.reportHistogram ()	
 
 
 

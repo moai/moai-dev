@@ -159,8 +159,18 @@ void MOAIAnim::Apply ( float t0, float t1 ) {
 //----------------------------------------------------------------//
 void MOAIAnim::Clear () {
 
-	this->mLinks.Clear ();
+	this->ClearLinks ();
 	this->mLength = 0.0f;
+}
+
+//----------------------------------------------------------------//
+void MOAIAnim::ClearLinks () {
+
+	for ( u32 i = 0; i < this->mLinks.Size (); ++i ) {
+		MOAIAnimLink& link = this->mLinks [ i ];
+		link.mCurve.Set ( *this, 0 );
+	}
+	this->mLinks.Clear ();
 }
 
 //----------------------------------------------------------------//
@@ -210,6 +220,7 @@ void MOAIAnim::RegisterLuaFuncs ( USLuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIAnim::ReserveLinks ( u32 totalLinks ) {
 
+	this->ClearLinks ();
 	this->mLinks.Init ( totalLinks );
 }
 
@@ -221,7 +232,7 @@ void MOAIAnim::SetLink ( u32 linkID, MOAIAnimCurve* curve, MOAINode* target, u32
 	if ( !target->CheckAttrExists ( attrID )) return;
 
 	MOAIAnimLink& link = this->mLinks [ linkID ];
-	link.mCurve		= curve;
+	link.mCurve.Set ( *this, curve );
 	link.mTarget	= target;
 	link.mAttrID	= attrID;
 	link.mRelative	= relative;

@@ -20,8 +20,8 @@ class MOAITileDeck2D :
 	public MOAIGridSpace {
 private:
 	
-	USRect					mRect;
-	USRef < MOAITexture >	mTexture;
+	USRect mRect;
+	USLuaSharedPtr < MOAITexture > mTexture;
 	
 	//----------------------------------------------------------------//
 	static int		_setRect				( lua_State* L );
@@ -29,8 +29,6 @@ private:
 	static int		_setTexture				( lua_State* L );
 	
 public:
-	
-	GET_SET ( MOAITexture*, Texture, mTexture )
 	
 	DECL_LUA_FACTORY ( MOAITileDeck2D )
 	

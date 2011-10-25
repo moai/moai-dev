@@ -26,7 +26,7 @@
 int MOAIDeck::_setShader ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIDeck, "UU" )
 	
-	self->mShader = state.GetLuaObject < MOAIShader >( 2 );
+	self->mShader.Set ( *self, state.GetLuaObject < MOAIShader >( 2 ));
 	
 	return 0;
 }
@@ -129,6 +129,8 @@ MOAIDeck::MOAIDeck () :
 
 //----------------------------------------------------------------//
 MOAIDeck::~MOAIDeck () {
+
+	this->mShader.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//

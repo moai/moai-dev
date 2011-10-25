@@ -105,7 +105,26 @@ protected:
 
 	//----------------------------------------------------------------//
 	template < typename TYPE >
-	void SetDependentMember ( USRef < TYPE >& member, TYPE* ref ) {
+	void SetDependentMember ( USLuaSharedPtr < TYPE >& member, TYPE* ref ) {
+		
+		if ( member == ref ) return;
+	
+		if ( member ) {
+			this->ClearNodeLink ( *member );
+		}
+		
+		member.Set ( *this, ref );
+		
+		if ( ref ) {
+			this->SetNodeLink ( *ref );
+		}
+		
+		this->ScheduleUpdate ();
+	}
+
+	//----------------------------------------------------------------//
+	template < typename TYPE >
+	void SetDependentMember ( USSharedPtr < TYPE >& member, TYPE* ref ) {
 		
 		if ( member == ref ) return;
 	
@@ -124,7 +143,7 @@ protected:
 
 	//----------------------------------------------------------------//
 	template < typename TYPE >
-	void SetDependentMember ( USWeak < TYPE >& member, TYPE* ref ) {
+	void SetDependentMember ( USWeakPtr < TYPE >& member, TYPE* ref ) {
 		
 		if ( member == ref ) return;
 		

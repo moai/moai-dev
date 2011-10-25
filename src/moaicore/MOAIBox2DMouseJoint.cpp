@@ -26,6 +26,11 @@ SUPPRESS_EMPTY_FILE_WARNING
 int MOAIBox2DMouseJoint::_getDampingRatio ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DMouseJoint, "U" )
 
+	if ( !self->mJoint ) {
+		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		return 0;
+	}
+
 	b2MouseJoint* joint = ( b2MouseJoint* )self->mJoint;
 	state.Push ( joint->GetDampingRatio ());
 	
@@ -41,6 +46,11 @@ int MOAIBox2DMouseJoint::_getDampingRatio ( lua_State* L ) {
 */
 int MOAIBox2DMouseJoint::_getFrequency ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DMouseJoint, "U" )
+
+	if ( !self->mJoint ) {
+		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		return 0;
+	}
 
 	b2MouseJoint* joint = ( b2MouseJoint* )self->mJoint;
 	state.Push ( joint->GetFrequency ());
@@ -59,6 +69,11 @@ int MOAIBox2DMouseJoint::_getMaxForce ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DMouseJoint, "U" )
 	float unitsToMeters = self->GetUnitsToMeters ();
 
+	if ( !self->mJoint ) {
+		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		return 0;
+	}
+
 	b2MouseJoint* joint = ( b2MouseJoint* )self->mJoint;
 	state.Push ( joint->GetMaxForce () / unitsToMeters );
 	
@@ -76,6 +91,11 @@ int MOAIBox2DMouseJoint::_getMaxForce ( lua_State* L ) {
 int MOAIBox2DMouseJoint::_getTarget ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DMouseJoint, "U" )
 	float unitsToMeters = self->GetUnitsToMeters ();
+
+	if ( !self->mJoint ) {
+		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		return 0;
+	}
 
 	b2MouseJoint* joint = ( b2MouseJoint* )self->mJoint;
 	
@@ -98,6 +118,11 @@ int MOAIBox2DMouseJoint::_getTarget ( lua_State* L ) {
 int MOAIBox2DMouseJoint::_setDampingRatio ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DMouseJoint, "U" )
 
+	if ( !self->mJoint ) {
+		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		return 0;
+	}
+
 	float dampingRatio = state.GetValue < float >( 1, 0.0f );
 
 	b2MouseJoint* joint = ( b2MouseJoint* )self->mJoint;
@@ -116,6 +141,11 @@ int MOAIBox2DMouseJoint::_setDampingRatio ( lua_State* L ) {
 */
 int MOAIBox2DMouseJoint::_setFrequency ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DMouseJoint, "U" )
+
+	if ( !self->mJoint ) {
+		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		return 0;
+	}
 
 	float frequency = state.GetValue < float >( 1, 0.0f );
 
@@ -137,6 +167,11 @@ int MOAIBox2DMouseJoint::_setMaxForce ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DMouseJoint, "U" )
 	float unitsToMeters = self->GetUnitsToMeters ();
 
+	if ( !self->mJoint ) {
+		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		return 0;
+	}
+
 	float maxForce = state.GetValue < float >( 1, 0.0f ) * unitsToMeters;
 
 	b2MouseJoint* joint = ( b2MouseJoint* )self->mJoint;
@@ -157,6 +192,11 @@ int MOAIBox2DMouseJoint::_setMaxForce ( lua_State* L ) {
 int MOAIBox2DMouseJoint::_setTarget ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DMouseJoint, "U" )
 	float unitsToMeters = self->GetUnitsToMeters ();
+
+	if ( !self->mJoint ) {
+		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		return 0;
+	}
 
 	b2Vec2 target;
 	target.x = state.GetValue < float >( 1, 0.0f ) * unitsToMeters;

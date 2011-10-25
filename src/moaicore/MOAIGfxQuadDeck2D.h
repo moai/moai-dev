@@ -19,8 +19,8 @@ class MOAIGfxQuadDeck2D :
 	public MOAIDeck2D {
 private:
 
-	USRef < MOAITexture >			mTexture;
-	USLeanArray < MOAIQuadBrush >		mQuads;
+	USLuaSharedPtr < MOAITexture >	mTexture;
+	USLeanArray < MOAIQuadBrush >	mQuads;
 	
 	//----------------------------------------------------------------//
 	static int	_reserve				( lua_State* L );

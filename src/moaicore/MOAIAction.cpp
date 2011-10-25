@@ -165,7 +165,9 @@ int MOAIAction::_throttle ( lua_State* L ) {
 //----------------------------------------------------------------//
 void MOAIAction::AddChild ( MOAIAction& action ) {
 
-	action.Retain ();
+	if ( action.mParent == this ) return;
+
+	this->LuaRetain ( action );
 	action.Stop ();
 	
 	this->mChildren.PushBack ( action.mLink );
@@ -241,9 +243,11 @@ void MOAIAction::OnStart () {
 //----------------------------------------------------------------//
 void MOAIAction::OnStop () {
 
-	USLuaStateHandle state = USLuaRuntime::Get ().State ();
-	if ( this->PushListenerAndSelf ( EVENT_STOP, state )) {
-		state.DebugCall ( 1, 0 );
+	if ( USLuaRuntime::IsValid ()) {
+		USLuaStateHandle state = USLuaRuntime::Get ().State ();
+		if ( this->PushListenerAndSelf ( EVENT_STOP, state )) {
+			state.DebugCall ( 1, 0 );
+		}
 	}
 }
 
@@ -308,7 +312,8 @@ void MOAIAction::RemoveChild ( MOAIAction& action ) {
 		action.UnblockAll ();
 		action.mParent = 0;
 		action.OnStop ();
-		action.Release ();
+		
+		this->LuaRelease ( action );
 	}
 }
 

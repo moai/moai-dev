@@ -84,7 +84,7 @@ MOAIAction* MOAIActionMgr::AffirmRoot () {
 
 	if ( !this->mRoot ) {
 		this->mRoot = new MOAIAction ();
-		assert ( this->mRoot );
+		this->LuaRetain ( *this->mRoot );
 	}
 	return this->mRoot;
 }
@@ -92,7 +92,11 @@ MOAIAction* MOAIActionMgr::AffirmRoot () {
 //----------------------------------------------------------------//
 void MOAIActionMgr::Clear () {
 
-	this->mRoot = 0;
+	if ( this->mRoot ) {
+		this->LuaRelease ( *this->mRoot );
+		this->mRoot = 0;
+	}
+	this->AffirmRoot ();
 }
 
 //----------------------------------------------------------------//
@@ -107,6 +111,7 @@ MOAIActionMgr::MOAIActionMgr () :
 	mPass ( RESET_PASS ),
 	mProfilingEnabled ( false ),
 	mThreadInfoEnabled ( false ),
+	mRoot ( 0 ),
 	mCurrentAction ( 0 ) {
 	
 	RTTI_SINGLE ( USLuaObject )

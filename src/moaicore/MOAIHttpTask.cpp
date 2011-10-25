@@ -64,6 +64,7 @@ int MOAIHttpTask::_httpGet ( lua_State* L ) {
 	bool verbose	= state.GetValue < bool >( 4, false );
 	
 	self->Retain ();
+	self->LockToRefCount ();
 	
 	USHttpTask* task = new USHttpTask ();
 	task->SetDelegate < MOAIHttpTask >( self, &MOAIHttpTask::OnHttpFinish );
@@ -104,8 +105,9 @@ int MOAIHttpTask::_httpPost ( lua_State* L ) {
 	if ( state.IsType (3, LUA_TUSERDATA) ) {
 		
 		self->Retain ();
+		self->LockToRefCount ();
 		
-		self->mPostData = state.GetLuaObject < MOAIDataBuffer >( 3 );
+		self->mPostData.Set ( *self, state.GetLuaObject < MOAIDataBuffer >( 3 ));
 		
 		void* bytes;
 		u32 size;
@@ -120,6 +122,7 @@ int MOAIHttpTask::_httpPost ( lua_State* L ) {
 	else if ( state.IsType (3, LUA_TSTRING )) {
 		
 		self->Retain ();
+		self->LockToRefCount ();
 		
 		self->mPostString = lua_tostring ( state, 3 );
 		
@@ -179,6 +182,19 @@ void MOAIHttpTask::Clear () {
 	}
 	this->mBuffer = 0;
 	this->mSize = 0;
+	
+	this->mPostData.Set ( *this, 0 );
+}
+
+//----------------------------------------------------------------//
+void MOAIHttpTask::Init ( u32 size ) {
+
+	this->Clear ();
+	this->mSize = size;
+	this->mBuffer = malloc ( size + 1 );
+	
+	u8* buffer = ( u8* )this->mBuffer;
+	buffer [ size ] = 0;
 }
 
 //----------------------------------------------------------------//
@@ -193,17 +209,6 @@ MOAIHttpTask::MOAIHttpTask () :
 MOAIHttpTask::~MOAIHttpTask () {
 
 	this->Clear ();
-}
-
-//----------------------------------------------------------------//
-void MOAIHttpTask::Init ( u32 size ) {
-
-	this->Clear ();
-	this->mSize = size;
-	this->mBuffer = malloc ( size + 1 );
-	
-	u8* buffer = ( u8* )this->mBuffer;
-	buffer [ size ] = 0;
 }
 
 //----------------------------------------------------------------//
@@ -227,7 +232,7 @@ void MOAIHttpTask::OnHttpFinish ( USHttpTask* task ) {
 		state.DebugCall ( 2, 0 );
 	}
 	
-	this->mPostData = 0;
+	this->mPostData.Set ( *this, 0 );
 	this->mPostString.clear ();
 	
 	this->Release ();

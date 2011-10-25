@@ -19,7 +19,7 @@ private:
 
 	USMemStream	mInput;
 
-	USLeanArray < USRef < MOAIInputDevice > > mDevices;
+	USLeanArray < MOAIInputDevice* > mDevices;
 
 	//----------------------------------------------------------------//
 	bool				CheckSensor					( u8 deviceID, u8 sensorID, u32 type );

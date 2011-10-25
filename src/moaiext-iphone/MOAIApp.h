@@ -72,6 +72,7 @@ private:
 	};
 	
 	enum {
+		APP_OPENED_FROM_URL,
 		SESSION_START,
 		SESSION_END
 	};
@@ -92,6 +93,7 @@ private:
 	static int		_getDirectoryInDomain					( lua_State* L );
 	static int		_getNotificationThatStartedApp			( lua_State* L );
 	static int		_openURL								( lua_State* L );
+	static int		_openURLWithParams						( lua_State* L );
 	static int		_presentLocalNotification				( lua_State* L );
 	static int		_registerForRemoteNotifications			( lua_State* L );
 	static int		_restoreCompletedTransactions			( lua_State* L );
@@ -111,6 +113,7 @@ public:
 	SET ( UIApplication*, Application, mApplication )
 	
 	//----------------------------------------------------------------//
+	void		AppOpenedFromURL											( NSURL* url );
 	void		DidFailToRegisterForRemoteNotificationsWithError			( NSError* error );
 	void		DidReceiveLocalNotification									( UILocalNotification* notification );
 	void		DidReceivePaymentQueueError									( NSError *error, cc8 *extraInfo );

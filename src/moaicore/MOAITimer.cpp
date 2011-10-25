@@ -50,7 +50,7 @@ int MOAITimer::_getTimesExecuted ( lua_State* L ) {
 int MOAITimer::_setCurve ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITimer, "U" );
 
-	self->mCurve = state.GetLuaObject < MOAIAnimCurve >( 2 );
+	self->mCurve.Set ( *self, state.GetLuaObject < MOAIAnimCurve >( 2 ));
 	self->ScheduleUpdate ();
 
 	return 0;
@@ -360,6 +360,8 @@ MOAITimer::MOAITimer () :
 
 //----------------------------------------------------------------//
 MOAITimer::~MOAITimer () {
+
+	this->mCurve.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//

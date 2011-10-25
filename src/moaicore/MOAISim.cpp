@@ -656,12 +656,6 @@ MOAISim::MOAISim () :
 	
 	RTTI_SINGLE ( MOAIGlobalEventSource )
 	
-	// Start Lua
-	USLuaRuntime& luaRuntime = USLuaRuntime::Get ();
-
-	luaRuntime.Open ();
-	luaRuntime.LoadLibs ( "moai" );
-	
 	for ( u32 i = 0; i < FPS_BUFFER_SIZE; ++i ) {
 		this->mFrameRateBuffer [ i ] = 0.0f;
 	}
@@ -706,7 +700,7 @@ void MOAISim::PopRenderPass () {
 	if ( this->mRenderPasses.Count ()) {
 		MOAIProp2D* prop = this->mRenderPasses.Back ();
 		this->mRenderPasses.PopBack ();
-		prop->Release ();
+		this->LuaRelease ( *prop );
 	}
 }
 
@@ -715,7 +709,7 @@ void MOAISim::PushRenderPass ( MOAIProp2D* prop ) {
 
 	if ( prop ) {
 		if ( !this->mRenderPasses.Contains ( prop )) {
-			prop->Retain ();
+			this->LuaRetain ( *prop );
 			this->mRenderPasses.PushBack ( prop );
 		}
 	}

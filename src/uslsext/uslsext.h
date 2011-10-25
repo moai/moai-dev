@@ -18,8 +18,6 @@
 #include <uslsext/USDataIOTask.h>
 #include <uslsext/USDelegate.h>
 #include <uslsext/USDistance.h>
-#include <uslsext/USFsm.h>
-#include <uslsext/USFsmStateFactory.h>
 #include <uslsext/USHttpTask.h>
 #include <uslsext/USHttpTask_impl.h>
 #include <uslsext/USInterpolate.h>
@@ -38,7 +36,6 @@
 #include <uslsext/USPolar.h>
 #include <uslsext/USPolygon2D.h>
 #include <uslsext/USPolyScanner.h>
-#include <uslsext/USPrettyPrint.h>
 #include <uslsext/USQuad.h>
 #include <uslsext/USQuadCoord.h>
 #include <uslsext/USRadixSort16.h>

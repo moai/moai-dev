@@ -13,8 +13,7 @@
 //================================================================//
 // MOAIWebView
 //================================================================//
-class MOAIWebView :
-	public UIViewController, 
+class MOAIWebView : 
 	public MOAIInstanceEventSource {
 private:
 	

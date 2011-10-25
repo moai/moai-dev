@@ -81,7 +81,7 @@ int MOAIParticleState::_setInitScript ( lua_State* L ) {
 	if ( init ) {
 		init->Compile ();
 	}
-	self->mInit = init;
+	self->mInit.Set ( *self, init );
 	
 	return 0;
 }
@@ -135,9 +135,7 @@ int MOAIParticleState::_setNext ( lua_State* L ) {
 int MOAIParticleState::_setPlugin ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIParticleState, "U" )
 
-	MOAIParticlePlugin* plugin = state.GetLuaObject < MOAIParticlePlugin >( 2 );
-
-	self->mPlugin = plugin;
+	self->mPlugin.Set ( *self, state.GetLuaObject < MOAIParticlePlugin >( 2 ));
 	
 	return 0;
 }
@@ -158,7 +156,7 @@ int MOAIParticleState::_setRenderScript ( lua_State* L ) {
 	if ( render ) {
 		render->Compile ();
 	}
-	self->mRender = render;
+	self->mRender.Set ( *self, render );
 	
 	return 0;
 }
@@ -197,7 +195,7 @@ void MOAIParticleState::ClearForces () {
 		ForceNode* forceNode = this->mForces.Head ();
 		this->mForces.PopFront ();
 		
-		forceNode->Data ()->Release ();
+		this->LuaRelease ( *forceNode->Data ());
 		delete forceNode;
 	}
 }
@@ -262,12 +260,16 @@ MOAIParticleState::MOAIParticleState () :
 MOAIParticleState::~MOAIParticleState () {
 
 	this->ClearForces ();
+	
+	this->mInit.Set ( *this, 0 );
+	this->mRender.Set ( *this, 0 );
+	this->mPlugin.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//
 void MOAIParticleState::PushForce ( MOAIParticleForce& force ) {
 
-	force.Retain ();
+	this->LuaRetain ( force );
 
 	ForceNode* forceNode = new ForceNode ();
 	forceNode->Data ( &force );

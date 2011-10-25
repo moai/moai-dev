@@ -396,10 +396,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\uslscore\USRef.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\uslscore\USRtti.cpp"
 				>
 			</File>
@@ -408,7 +404,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\uslscore\USWeak.h"
+				RelativePath="..\..\src\uslscore\USSharedPtr.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\uslscore\USWeakPtr.h"
 				>
 			</File>
 		</Filter>
@@ -453,6 +453,10 @@
 			</File>
 			<File
 				RelativePath="..\..\src\uslscore\USLuaSerializer.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\uslscore\USLuaSharedPtr.h"
 				>
 			</File>
 			<File

@@ -63,7 +63,7 @@ private:
 	b2World*					mWorld;
 	MOAIBox2DDebugDraw*			mDebugDraw;
 	
-	USRef < MOAIBox2DArbiter >	mArbiter;
+	USLuaSharedPtr < MOAIBox2DArbiter > mArbiter;
 
 	u32		mVelocityIterations;
 	u32		mPositionIterations;
@@ -113,6 +113,7 @@ public:
 	//----------------------------------------------------------------//
 	void			DrawDebug				();
 	bool			IsDone					();
+	bool			IsLocked				();
 					MOAIBox2DWorld			();
 					~MOAIBox2DWorld			();
 	void			OnUpdate				( float step );

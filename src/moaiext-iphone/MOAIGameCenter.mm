@@ -397,6 +397,7 @@ void MOAIGameCenter::ReportScore ( s64 score, cc8* category ) {
 	//================================================================//
 	
 	-( void ) leaderboardViewControllerDidFinish:( GKLeaderboardViewController* ) viewController {
+		UNUSED ( viewController );
 	
 		UIWindow* window = [[ UIApplication sharedApplication ] keyWindow ];
 		UIViewController* rootVC = [ window rootViewController ];
@@ -419,6 +420,7 @@ void MOAIGameCenter::ReportScore ( s64 score, cc8* category ) {
 	//================================================================//
 	
 	-( void ) achievementViewControllerDidFinish:( GKAchievementViewController* ) viewController {
+		UNUSED ( viewController );
 	
 		UIWindow* window = [[ UIApplication sharedApplication ] keyWindow ];
 		UIViewController* rootVC = [ window rootViewController ];
