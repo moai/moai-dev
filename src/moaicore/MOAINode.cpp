@@ -65,7 +65,6 @@ int MOAINode::_clearAttrLink ( lua_State* L ) {
 
 	u32 attrID = state.GetValue < u32 >( 2, 0 );
 	self->ClearAttrLink ( attrID );
-	self->ScheduleUpdate ();
 
 	return 0;
 }
@@ -388,6 +387,7 @@ void MOAINode::ClearAttrLink ( int attrID ) {
 		if ( link->mDestAttrID == ( u32 )attrID ) {
 			link->mSourceNode->RemoveDepLink ( *link );
 			delete link;
+			this->ScheduleUpdate ();
 		}
 		else {
 			link->mNextInDest = this->mPullLinks;
@@ -409,6 +409,7 @@ void MOAINode::ClearNodeLink ( MOAINode& srcNode ) {
 		if (( link->mDestAttrID == NULL_ATTR ) && ( link->mSourceNode == &srcNode )) {
 			link->mSourceNode->RemoveDepLink ( *link );
 			delete link;
+			this->ScheduleUpdate ();
 		}
 		else {
 			link->mNextInDest = this->mPullLinks;
