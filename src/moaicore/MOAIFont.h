@@ -42,6 +42,7 @@ private:
 
 	//----------------------------------------------------------------//
 	static int		_getImage			( lua_State* L );
+	static int		_getLineScale		( lua_State* L );
 	static int		_getScale			( lua_State* L );
 	static int		_getTexture			( lua_State* L );
 	static int		_load				( lua_State* L );

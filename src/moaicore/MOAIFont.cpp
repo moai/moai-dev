@@ -35,6 +35,20 @@ int MOAIFont::_getImage ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	getLineScale
+	@text	Returns the default size of a line (in pixels).
+
+	@in		MOAIFont self
+	@out	number lineScale		The default size of the line in pixels.
+*/
+int MOAIFont::_getLineScale ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIFont, "U" )
+	
+	lua_pushnumber ( state, self->GetScale () * self->GetLineSpacing ());
+	return 1;
+}
+
+//----------------------------------------------------------------//
 /**	@name	getScale
 	@text	Returns the default size of this font for use with the MOAITextbox:setTextSize function.
 
@@ -42,12 +56,7 @@ int MOAIFont::_getImage ( lua_State* L ) {
 	@out	number size				The default point size of the font.
 */
 int MOAIFont::_getScale ( lua_State* L ) {
-
-	USLuaState state ( L );
-	if ( !state.CheckParams ( 1, "U" )) return 0;
-	
-	MOAIFont* self = state.GetLuaObject < MOAIFont >( 1 );
-	if ( !self ) return 0;
+	MOAI_LUA_SETUP ( MOAIFont, "U" )
 	
 	lua_pushnumber ( state, self->GetScale ());
 	return 1;
@@ -112,7 +121,7 @@ int MOAIFont::_load ( lua_State* L ) {
 	@in		string filename			The path to the TTF file to load.
 	@in		string charCodes		A string which defines the characters found in the font.
 	@in		number points			The point size to be rendered onto the internal texture.
-	@in		number dpi				The device DPI (dots per inch of device screen).
+	@opt	number dpi				The device DPI (dots per inch of device screen). Default value is 72 (points same as pixels).
 	@out	nil
 */
 int MOAIFont::_loadFromTTF ( lua_State* L ) {
@@ -122,8 +131,8 @@ int MOAIFont::_loadFromTTF ( lua_State* L ) {
 	cc8* charCodes	= state.GetValue < cc8* >( 3, "" );
 	float points	= state.GetValue < float >( 4, 0 );
 	u32 dpi			= state.GetValue < u32 >( 5, 72 );
-
-	if ( points && dpi ) {
+	
+	if (( points > 0.0f ) && dpi ) {
 		self->LoadFontFromTTF ( filename, charCodes, points, dpi );
 	}
 	return 0;
@@ -359,6 +368,7 @@ void MOAIFont::RegisterLuaFuncs ( USLuaState& state ) {
 	
 	luaL_Reg regTable [] = {
 		{ "getImage",			_getImage },
+		{ "getLineScale",		_getLineScale },
 		{ "getScale",			_getScale },
 		{ "getTexture",			_getTexture },
 		{ "load",				_load },
