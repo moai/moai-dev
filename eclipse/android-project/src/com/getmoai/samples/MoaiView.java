@@ -217,7 +217,8 @@ public class MoaiView extends GLSurfaceView {
 
 			if ( mIsValid ) {
 				onDraw ( mWidth, mHeight );
-				glFlush (); 
+				glFlush ();
+				onUpdateAnim ();
 			}
 		}
 
@@ -263,7 +264,6 @@ public class MoaiView extends GLSurfaceView {
 				long elapsed = SystemClock.uptimeMillis () - time;
 				
 				if ( elapsed >= 32 ) {
-					onUpdateAnim ();
 					requestRender ();
 					time += elapsed;
 				}

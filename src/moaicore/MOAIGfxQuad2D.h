@@ -19,7 +19,7 @@ class MOAIGfxQuad2D :
 	public MOAIDeck2D {
 private:
 
-	USLuaObjRef < MOAITexture	> mTexture;
+	USLuaSharedPtr < MOAITexture > mTexture;
 	USRect	mRect;
 	USRect	mUVRect;
 

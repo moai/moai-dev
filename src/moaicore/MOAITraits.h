@@ -19,7 +19,7 @@ private:
 
 	friend class MOAITraits;
 	
-	USWeak < MOAITraits >		mSource;
+	USWeakPtr < MOAITraits >		mSource;
 	u32							mMask;
 	MOAITraitLink*				mNext;
 };

@@ -118,7 +118,7 @@ int MOAIGfxQuadDeck2D::_setRect ( lua_State* L ) {
 int MOAIGfxQuadDeck2D::_setTexture ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGfxQuadDeck2D, "U" )
 
-	self->mTexture = MOAITexture::AffirmTexture ( state, 2 );
+	self->mTexture.Set ( *self, MOAITexture::AffirmTexture ( state, 2 ));
 	if ( self->mTexture ) {
 		self->mTexture->PushLuaUserdata ( state );
 		return 1;
@@ -242,12 +242,12 @@ MOAIGfxQuadDeck2D::MOAIGfxQuadDeck2D () {
 
 	RTTI_SINGLE ( MOAIDeck2D )
 	this->SetContentMask ( MOAIProp::CAN_DRAW );
-	
-	this->mTexture.InitWithOwner ( *this );
 }
 
 //----------------------------------------------------------------//
 MOAIGfxQuadDeck2D::~MOAIGfxQuadDeck2D () {
+
+	this->mTexture.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//

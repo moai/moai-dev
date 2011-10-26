@@ -23,18 +23,18 @@ class MOAILayer2D :
 	public virtual MOAIProp2D {
 private:
 
-	USLuaObjRef < MOAITransformBase >	mCamera;
-	USLuaObjRef < MOAIViewport >		mViewport;
-	USLuaObjRef < MOAIPartition >		mPartition;
+	USLuaSharedPtr < MOAITransformBase >	mCamera;
+	USLuaSharedPtr < MOAIViewport >			mViewport;
+	USLuaSharedPtr < MOAIPartition >		mPartition;
 
-	USLuaObjRef < MOAITexture >			mFrameBuffer;
+	USLuaSharedPtr < MOAITexture >			mFrameBuffer;
 
 	#if USE_CHIPMUNK
-		USLuaObjRef < MOAICpSpace >		mCpSpace;
+		USLuaSharedPtr < MOAICpSpace >		mCpSpace;
 	#endif
 	
 	#if USE_BOX2D
-		USLuaObjRef < MOAIBox2DWorld >	mBox2DWorld;
+		USLuaSharedPtr < MOAIBox2DWorld >	mBox2DWorld;
 	#endif
 
 	USVec2D							mParallax;
@@ -65,10 +65,6 @@ private:
 public:
 	
 	DECL_LUA_FACTORY ( MOAILayer2D )
-	
-	GET_SET ( MOAITransformBase*, Camera, mCamera )
-	GET_SET ( MOAIViewport*, Viewport, mViewport )
-	GET_SET ( MOAIPartition*, Partition, mPartition )
 	
 	//----------------------------------------------------------------//
 	void			Draw					();

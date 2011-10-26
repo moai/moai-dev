@@ -140,8 +140,7 @@ int MOAIParticleEmitter::_setRect ( lua_State* L ) {
 int MOAIParticleEmitter::_setSystem ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIParticleEmitter, "UU" )
 
-	MOAIParticleSystem* system = state.GetLuaObject < MOAIParticleSystem >( 2 );
-	self->SetSystem ( system );
+	self->mSystem.Set ( *self, state.GetLuaObject < MOAIParticleSystem >( 2 ));
 
 	return 0;
 }
@@ -234,12 +233,12 @@ MOAIParticleEmitter::MOAIParticleEmitter () :
 		RTTI_EXTEND ( MOAITransform )
 		RTTI_EXTEND ( MOAIAction )
 	RTTI_END
-	
-	this->mSystem.InitWithOwner ( *this );
 }
 
 //----------------------------------------------------------------//
 MOAIParticleEmitter::~MOAIParticleEmitter () {
+
+	this->mSystem.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//

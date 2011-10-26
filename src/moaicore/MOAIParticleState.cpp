@@ -81,7 +81,7 @@ int MOAIParticleState::_setInitScript ( lua_State* L ) {
 	if ( init ) {
 		init->Compile ();
 	}
-	self->mInit = init;
+	self->mInit.Set ( *self, init );
 	
 	return 0;
 }
@@ -135,9 +135,7 @@ int MOAIParticleState::_setNext ( lua_State* L ) {
 int MOAIParticleState::_setPlugin ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIParticleState, "U" )
 
-	MOAIParticlePlugin* plugin = state.GetLuaObject < MOAIParticlePlugin >( 2 );
-
-	self->mPlugin = plugin;
+	self->mPlugin.Set ( *self, state.GetLuaObject < MOAIParticlePlugin >( 2 ));
 	
 	return 0;
 }
@@ -158,7 +156,7 @@ int MOAIParticleState::_setRenderScript ( lua_State* L ) {
 	if ( render ) {
 		render->Compile ();
 	}
-	self->mRender = render;
+	self->mRender.Set ( *self, render );
 	
 	return 0;
 }
@@ -256,16 +254,16 @@ MOAIParticleState::MOAIParticleState () :
 	
 	this->mTermRange [ 0 ] = 1.0f;
 	this->mTermRange [ 1 ] = 1.0f;
-	
-	this->mInit.InitWithOwner ( *this );
-	this->mRender.InitWithOwner ( *this );
-	this->mPlugin.InitWithOwner ( *this );
 }
 
 //----------------------------------------------------------------//
 MOAIParticleState::~MOAIParticleState () {
 
 	this->ClearForces ();
+	
+	this->mInit.Set ( *this, 0 );
+	this->mRender.Set ( *this, 0 );
+	this->mPlugin.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//

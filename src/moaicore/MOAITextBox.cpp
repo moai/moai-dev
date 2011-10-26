@@ -491,14 +491,13 @@ MOAITextBox::MOAITextBox () :
 	
 	this->mFrame.Init ( 0.0f, 0.0f, 0.0f, 0.0f ); 
 	this->SetMask ( MOAIProp::CAN_DRAW | MOAIProp::CAN_DRAW_DEBUG );
-	
-	this->mFont.InitWithOwner ( *this );
 }
 
 //----------------------------------------------------------------//
 MOAITextBox::~MOAITextBox () {
 
 	this->ClearCurves ();
+	this->mFont.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//
@@ -646,7 +645,7 @@ void MOAITextBox::SetCurve ( u32 idx, MOAIAnimCurve* curve ) {
 //----------------------------------------------------------------//
 void MOAITextBox::SetFont ( MOAIFont* font ) {
 
-	this->mFont = font;
+	this->mFont.Set ( *this, font );
 	this->mNeedsLayout = true;
 }
 

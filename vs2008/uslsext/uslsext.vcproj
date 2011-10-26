@@ -357,18 +357,6 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="fsm"
-			>
-			<File
-				RelativePath="..\..\src\uslsext\USFsm.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USFsmStateFactory.h"
-				>
-			</File>
-		</Filter>
-		<Filter
 			Name="gfxObjects"
 			>
 			<File
@@ -725,14 +713,6 @@
 			</File>
 			<File
 				RelativePath="..\..\src\uslsext\USDelegate.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USPrettyPrint.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USPrettyPrint.h"
 				>
 			</File>
 			<File

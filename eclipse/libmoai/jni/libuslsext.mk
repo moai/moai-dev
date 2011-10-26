@@ -61,7 +61,6 @@ $(SRC_PATH)/src/uslsext/USMutex_win32.cpp \
 $(SRC_PATH)/src/uslsext/USParser.cpp \
 $(SRC_PATH)/src/uslsext/USPlane.cpp \
 $(SRC_PATH)/src/uslsext/USPolar.cpp \
-$(SRC_PATH)/src/uslsext/USPrettyPrint.cpp \
 $(SRC_PATH)/src/uslsext/USQuad.cpp \
 $(SRC_PATH)/src/uslsext/USQuadCoord.cpp \
 $(SRC_PATH)/src/uslsext/USSqlBinding.cpp \

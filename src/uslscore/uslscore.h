@@ -14,10 +14,10 @@
 #include <uslscore/STLString.h>
 
 #include <uslscore/USLuaSerializer.h>
+#include <uslscore/USLuaSharedPtr.h>
 #include <uslscore/USLuaState.h>
 #include <uslscore/USLuaStateHandle.h>
 #include <uslscore/USLuaObject.h>
-#include <uslscore/USLuaObjRef.h>
 #include <uslscore/USLuaRuntime.h>
 #include <uslscore/USLuaRef.h>
 
@@ -44,7 +44,7 @@
 #include <uslscore/USLog.h>
 #include <uslscore/USMemStream.h>
 #include <uslscore/USRect.h>
-#include <uslscore/USRef.h>
+#include <uslscore/USSharedPtr.h>
 #include <uslscore/USRtti.h>
 #include <uslscore/USStream.h>
 #include <uslscore/USStreamFormatter.h>
@@ -52,7 +52,7 @@
 #include <uslscore/USUnion.h>
 #include <uslscore/USVec2D.h>
 #include <uslscore/USVec3D.h>
-#include <uslscore/USWeak.h>
+#include <uslscore/USWeakPtr.h>
 #include <uslscore/USZip.h>
 #include <uslscore/USZipFile.h>
 

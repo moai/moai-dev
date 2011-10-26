@@ -55,7 +55,7 @@ void MOAIDataIOAction::Init ( cc8* filename, MOAIDataBuffer* data ) {
 	if ( this->mState != IDLE ) return;
 	
 	this->mFilename = filename;
-	this->mData = data;
+	this->mData.Set ( *this, data );
 }
 
 //----------------------------------------------------------------//
@@ -81,12 +81,12 @@ MOAIDataIOAction::MOAIDataIOAction () :
 	mState ( IDLE ) {
 	
 	RTTI_SINGLE ( MOAIAction )
-	
-	this->mData.InitWithOwner ( *this );
 }
 
 //----------------------------------------------------------------//
 MOAIDataIOAction::~MOAIDataIOAction () {
+
+	this->mData.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//

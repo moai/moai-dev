@@ -118,8 +118,7 @@ int MOAICameraFitter2D::_setBounds ( lua_State* L ) {
 int MOAICameraFitter2D::_setCamera ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICameraFitter2D, "U" )
 	
-	MOAITransform* camera = state.GetLuaObject < MOAITransform >( 2 );
-	self->mCamera = camera;
+	self->mCamera.Set ( *self, state.GetLuaObject < MOAITransform >( 2 ));
 
 	return 0;
 }
@@ -173,7 +172,7 @@ int MOAICameraFitter2D::_setMin ( lua_State* L ) {
 int MOAICameraFitter2D::_setViewport ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICameraFitter2D, "U" )
 	
-	self->mViewport = state.GetLuaObject < MOAIViewport >( 2 );
+	self->mViewport.Set ( *self, state.GetLuaObject < MOAIViewport >( 2 ));
 	if ( self->mViewport ) {
 		self->mViewRect = self->mViewport->GetRect ();
 	}
@@ -231,7 +230,10 @@ void MOAICameraFitter2D::Clear () {
 		MOAICameraAnchor2D* anchor = *anchorIt;
 		this->mAnchors.erase ( anchorIt );
 		this->LuaRelease ( *anchor );
-	} 
+	}
+	
+	this->mCamera.Set ( *this, 0 );
+	this->mViewport.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//
@@ -352,9 +354,6 @@ MOAICameraFitter2D::MOAICameraFitter2D () :
 	this->mViewRect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
 	this->mTargetLoc.Init ( 0.0f, 0.0f );
 	this->mTargetScale = 1.0f;
-	
-	this->mCamera.InitWithOwner ( *this );
-	this->mViewport.InitWithOwner ( *this );
 }
 
 //----------------------------------------------------------------//

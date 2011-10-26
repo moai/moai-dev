@@ -1,52 +1,54 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	USLUAOBREF_H
-#define	USLUAOBREF_H
+#ifndef	USWEAKPTR_H
+#define	USWEAKPTR_H
 
 #include <uslscore/USCanary.h>
 
 //================================================================//
-// USLuaObjRef
+// USWeakPtr
 //================================================================//
 template < typename TYPE >
-class USLuaObjRef {
+class USWeakPtr {
 protected:
 
-	TYPE*			mObject;
-	USLuaObject*	mOwner;
+	TYPE*		mObject;
+	USCanary*	mCanary;
 	
 	//----------------------------------------------------------------//
 	inline TYPE* Get () {
 	
-		return this->mObject;
+		if ( this->mCanary ) {	
+			if ( this->mCanary->IsValid ()) {
+				return this->mObject;
+			}
+			this->Release ();
+		}
+		return 0;
 	}
 	
 	//----------------------------------------------------------------//
-	inline void Release () {
+	void Release () {
 	
-		assert ( this->mOwner ); // owner must be set!
-	
-		if ( this->mObject ) {
-
-			this->mOwner->LuaRelease ( *this->mObject );
+		if ( this->mCanary ) {
+			this->mCanary->Release ( false );
 			this->mObject = 0;
+			this->mCanary = 0;
 		}
 	}
 	
 	//----------------------------------------------------------------//
-	inline void Set ( TYPE* assign ) {
-
-		assert ( this->mOwner ); // owner must be set!
+	void Set ( TYPE* assign ) {
 
 		if ( this->mObject != assign ) {
 
 			this->Release ();
 
 			if ( assign ) {
-			
 				this->mObject = assign;
-				this->mOwner->LuaRetain ( *this->mObject );
+				this->mCanary = assign->AffirmCanary ();
+				this->mCanary->Retain ( false );
 			}
 		}
 	}
@@ -79,25 +81,20 @@ public:
 	};
 
 	//----------------------------------------------------------------//
-	void InitWithOwner ( USLuaObject& owner ) {
-		this->mOwner = &owner;
+	USWeakPtr () :
+		mObject ( 0 ),
+		mCanary ( 0 ) {
 	}
 
 	//----------------------------------------------------------------//
-	USLuaObjRef () :
+	USWeakPtr ( TYPE* assign ) :
 		mObject ( 0 ),
-		mOwner ( 0 ) {
-	}
-
-	//----------------------------------------------------------------//
-	USLuaObjRef ( const USLuaObjRef < TYPE >& assign ) :
-		mObject ( 0 ),
-		mOwner ( 0 ) {
-		assert ( false ); // unsupported
+		mCanary ( 0 ) {
+		this->Set ( assign );
 	};
 	
 	//----------------------------------------------------------------//
-	~USLuaObjRef () {
+	~USWeakPtr () {
 		this->Release ();
 	}
 };

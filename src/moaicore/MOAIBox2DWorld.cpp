@@ -218,8 +218,8 @@ int	MOAIBox2DWorld::_addGearJoint ( lua_State* L ) {
 	joint->SetWorld ( self );
 	self->LuaRetain ( *joint );
 	
-	joint->mJointA = jointA;
-	joint->mJointB = jointB;
+	joint->mJointA.Set ( *self, jointA );
+	joint->mJointB.Set ( *self, jointB );
 	
 	joint->PushLuaUserdata ( state );
 	return 1;
@@ -705,8 +705,7 @@ MOAIBox2DWorld::MOAIBox2DWorld () :
 		RTTI_EXTEND ( MOAIAction )
 	RTTI_END
 	
-	this->mArbiter.InitWithOwner ( *this );
-	this->mArbiter = new MOAIBox2DArbiter ();
+	this->mArbiter.Set ( *this, new MOAIBox2DArbiter ());
 	
 	b2Vec2 gravity ( 0.0f, 0.0f );
 	this->mWorld = new b2World ( gravity, true );
@@ -738,6 +737,8 @@ MOAIBox2DWorld::~MOAIBox2DWorld () {
 		moaiBody->SetWorld ( 0 );
 		this->LuaRelease ( *moaiBody );
 	}
+	
+	this->mArbiter.Set ( *this, 0 );
 	
 	delete ( this->mDebugDraw );
 	delete ( this->mWorld );

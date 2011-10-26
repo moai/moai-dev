@@ -156,7 +156,7 @@ int MOAILayer2D::_setBox2DWorld ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAILayer2D, "UU" )
 	
 	#if USE_BOX2D
-		self->mBox2DWorld = state.GetLuaObject < MOAIBox2DWorld >( 2 );
+		self->mBox2DWorld.Set ( *self, state.GetLuaObject < MOAIBox2DWorld >( 2 ));
 	#endif
 	return 0;
 }
@@ -175,10 +175,7 @@ int MOAILayer2D::_setBox2DWorld ( lua_State* L ) {
 int MOAILayer2D::_setCamera ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAILayer2D, "UU" )
 
-	MOAITransformBase* camera = state.GetLuaObject < MOAITransformBase >( 2 );
-	if ( !camera ) return 0;
-
-	self->SetCamera ( camera );
+	self->mCamera.Set ( *self, state.GetLuaObject < MOAITransformBase >( 2 ));
 
 	return 0;
 }
@@ -195,7 +192,7 @@ int MOAILayer2D::_setCpSpace ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAILayer2D, "UU" )
 	
 	#if USE_CHIPMUNK
-		self->mCpSpace = state.GetLuaObject < MOAICpSpace >( 2 );
+		self->mCpSpace.Set ( *self, state.GetLuaObject < MOAICpSpace >( 2 ));
 	#endif
 	return 0;
 }
@@ -212,10 +209,7 @@ int MOAILayer2D::_setCpSpace ( lua_State* L ) {
 int MOAILayer2D::_setFrameBuffer ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAILayer2D, "UU" )
 
-	MOAITexture* frameBuffer = state.GetLuaObject < MOAITexture >( 2 );
-	if ( !frameBuffer ) return 0;
-
-	self->mFrameBuffer = frameBuffer;
+	self->mFrameBuffer.Set ( *self, state.GetLuaObject < MOAITexture >( 2 ));
 
 	return 0;
 }
@@ -252,10 +246,7 @@ int MOAILayer2D::_setParallax ( lua_State* L ) {
 int MOAILayer2D::_setPartition ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAILayer2D, "UU" )
 
-	MOAIPartition* partition = state.GetLuaObject < MOAIPartition >( 2 );
-	if ( !partition ) return 0;
-
-	self->SetPartition ( partition );
+	self->mPartition.Set ( *self, state.GetLuaObject < MOAIPartition >( 2 ));
 
 	return 0;
 }
@@ -271,10 +262,7 @@ int MOAILayer2D::_setPartition ( lua_State* L ) {
 int MOAILayer2D::_setViewport ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAILayer2D, "UU" )
 
-	MOAIViewport* viewport = state.GetLuaObject < MOAIViewport >( 2 );
-	if ( !viewport ) return 0;
-
-	self->SetViewport ( viewport );
+	self->mViewport.Set ( *self, state.GetLuaObject < MOAIViewport >( 2 ));
 
 	return 0;
 }
@@ -357,7 +345,7 @@ int MOAILayer2D::_worldToWnd ( lua_State* L ) {
 void MOAILayer2D::AffirmPartition () {
 
 	if ( !this->mPartition ) {
-		this->mPartition = new MOAIPartition ();
+		this->mPartition.Set ( *this, new MOAIPartition ());
 		
 		USLuaStateHandle state = USLuaRuntime::Get ().State ();
 		this->mPartition->PushLuaUserdata ( state );
@@ -523,23 +511,23 @@ MOAILayer2D::MOAILayer2D () :
 	RTTI_END
 	
 	this->SetMask ( MOAIProp::CAN_DRAW | MOAIProp::CAN_DRAW_DEBUG );
-	
-	this->mCamera.InitWithOwner ( *this );
-	this->mViewport.InitWithOwner ( *this );
-	this->mPartition.InitWithOwner ( *this );
-	this->mFrameBuffer.InitWithOwner ( *this );
-
-	#if USE_CHIPMUNK
-		this->mCpSpace.InitWithOwner ( *this );
-	#endif
-	
-	#if USE_BOX2D
-		this->mBox2DWorld.InitWithOwner ( *this );
-	#endif
 }
 
 //----------------------------------------------------------------//
 MOAILayer2D::~MOAILayer2D () {
+
+	this->mCamera.Set ( *this, 0 );
+	this->mViewport.Set ( *this, 0 );
+	this->mPartition.Set ( *this, 0 );
+	this->mFrameBuffer.Set ( *this, 0 );
+
+	#if USE_CHIPMUNK
+		this->mCpSpace.Set ( *this, 0 );
+	#endif
+	
+	#if USE_BOX2D
+		this->mBox2DWorld.Set ( *this, 0 );
+	#endif
 }
 
 //----------------------------------------------------------------//

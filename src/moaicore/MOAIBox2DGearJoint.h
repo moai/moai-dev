@@ -19,8 +19,8 @@ private:
 
 	friend class MOAIBox2DWorld;
 
-	USLuaObjRef < MOAIBox2DJoint > mJointA;
-	USLuaObjRef < MOAIBox2DJoint > mJointB;
+	USLuaSharedPtr < MOAIBox2DJoint > mJointA;
+	USLuaSharedPtr < MOAIBox2DJoint > mJointB;
 
 	//----------------------------------------------------------------//
 	static int		_getJointA				( lua_State* L );

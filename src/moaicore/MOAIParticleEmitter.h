@@ -35,7 +35,7 @@ protected:
 	float	mMinMagnitude;
 	float	mMaxMagnitude;
 
-	USLuaObjRef < MOAIParticleSystem > mSystem;
+	USLuaSharedPtr < MOAIParticleSystem > mSystem;
 
 	//----------------------------------------------------------------//
 	static int		_setAngle				( lua_State* L );
@@ -63,7 +63,6 @@ public:
 
 	SET ( USRect, Rect, mRect )
 	SET ( u32, ShapeID, mShapeID )
-	SET ( MOAIParticleSystem*, System, mSystem )
 
 	//----------------------------------------------------------------//
 	bool			IsDone					();
