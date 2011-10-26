@@ -117,8 +117,13 @@ void MOAIGlyph::SerializeIn ( USLuaState& state ) {
 		this->mKernTable.Init ( size );
 		
 		for ( u32 i = 0; i < size; ++i ) {
-			state.GetField ( -1, i + 1 );
-			this->mKernTable [ i ].mName = state.GetValue < u32 >( -1, 0 );
+		
+			if ( state.GetFieldWithType ( -1, i + 1, LUA_TTABLE )) {
+				
+				this->mKernTable [ i ].mName = state.GetField ( -1, "mName", 0 );
+				this->mKernTable [ i ].mX = state.GetField ( -1, "mX", 0.0f );
+				this->mKernTable [ i ].mY = state.GetField ( -1, "mY", 0.0f );
+			}
 			state.Pop ( 1 );
 		}
 		state.Pop ( 1 );
@@ -147,7 +152,15 @@ void MOAIGlyph::SerializeOut ( USLuaState& state ) {
 	if ( this->mKernTable.Size ()) {
 		lua_newtable ( state );
 		for ( u32 i = 0; i < this->mKernTable.Size (); ++i ) {
-			state.SetFieldByIndex ( -1, i + 1, this->mKernTable [ i ].mName ); // TODO: serialize the rest of the kern vec!
+		
+			lua_pushnumber ( state, i + 1 );
+			lua_newtable ( state );
+			
+			state.SetField ( -1, "mName", this->mKernTable [ i ].mName );
+			state.SetField ( -1, "mX", this->mKernTable [ i ].mX );
+			state.SetField ( -1, "mY", this->mKernTable [ i ].mY );
+			
+			lua_settable ( state, -3 );
 		}
 		lua_setfield ( state, -2, "mKernTable" );
 	}
