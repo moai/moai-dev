@@ -366,6 +366,7 @@
     <ClInclude Include="..\..\src\aku\AKU.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIAction.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIActionMgr.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAIAttrOp.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIBitmapFontRipper.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIBlendMode.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIBlocker.h" />

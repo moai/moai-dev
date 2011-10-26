@@ -842,5 +842,8 @@
     <ClInclude Include="..\..\src\moaicore\MOAIBox2DWeldJoint.h">
       <Filter>src\box2D\joints</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIAttrOp.h">
+      <Filter>src\node</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

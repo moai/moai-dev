@@ -75,22 +75,28 @@ private:
 	MOAIBox2DPrim*		mDestroyJoints;
 
 	//----------------------------------------------------------------//
-	static int		_addBody				( lua_State* L );
-	static int		_addDistanceJoint		( lua_State* L );
-	static int		_addFrictionJoint		( lua_State* L );
-	static int		_addGearJoint			( lua_State* L );
-	static int		_addLineJoint			( lua_State* L );
-	static int		_addMouseJoint			( lua_State* L );
-	static int		_addPrismaticJoint		( lua_State* L );
-	static int		_addPulleyJoint			( lua_State* L );
-	static int		_addRevoluteJoint		( lua_State* L );
-	static int		_addWeldJoint			( lua_State* L );
-	static int		_getAutoClearForces		( lua_State* L );
-	static int		_getGravity				( lua_State* L );
-	static int		_setAutoClearForces		( lua_State* L );
-	static int		_setGravity				( lua_State* L );
-	static int		_setIterations			( lua_State* L );
-	static int		_setUnitsToMeters		( lua_State* L );
+	static int		_addBody					( lua_State* L );
+	static int		_addDistanceJoint			( lua_State* L );
+	static int		_addFrictionJoint			( lua_State* L );
+	static int		_addGearJoint				( lua_State* L );
+	static int		_addLineJoint				( lua_State* L );
+	static int		_addMouseJoint				( lua_State* L );
+	static int		_addPrismaticJoint			( lua_State* L );
+	static int		_addPulleyJoint				( lua_State* L );
+	static int		_addRevoluteJoint			( lua_State* L );
+	static int		_addWeldJoint				( lua_State* L );
+	static int		_getAngularSleepTolerance	( lua_State* L );
+	static int		_getAutoClearForces			( lua_State* L );
+	static int		_getGravity					( lua_State* L );
+	static int		_getLinearSleepTolerance	( lua_State* L );
+	static int		_getTimeToSleep				( lua_State* L );
+	static int		_setAngularSleepTolerance	( lua_State* L );
+	static int		_setAutoClearForces			( lua_State* L );
+	static int		_setGravity					( lua_State* L );
+	static int		_setIterations				( lua_State* L );
+	static int		_setLinearSleepTolerance	( lua_State* L );
+	static int		_setTimeToSleep				( lua_State* L );
+	static int		_setUnitsToMeters			( lua_State* L );
 	
 	//----------------------------------------------------------------//
 	void			Destroy					();

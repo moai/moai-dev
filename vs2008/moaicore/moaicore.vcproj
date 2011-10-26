@@ -1220,10 +1220,6 @@
 			Name="node"
 			>
 			<File
-				RelativePath="..\..\src\moaicore\MOAIAttrOp.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\moaicore\MOAIAttrOp.h"
 				>
 			</File>
