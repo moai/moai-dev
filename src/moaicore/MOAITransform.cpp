@@ -554,23 +554,6 @@ int MOAITransform::_setLoc ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setParent
-	@text	Sets or clears the prop's parent transform.
-	
-	@in		MOAITransform self
-	@opt	MOAITransformBase parent	Default value is nil.
-	@out	nil
-*/
-int MOAITransform::_setParent ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITransform, "U" )
-	
-	MOAITransformBase* parent = state.GetLuaObject < MOAITransformBase >( 2 );
-	self->SetParent ( parent );
-	
-	return 0;
-}
-
-//----------------------------------------------------------------//
 /**	@name	setRot
 	@text	Sets the transform's rotation.
 	
@@ -643,25 +626,28 @@ int MOAITransform::_worldToModel ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAITransform::ApplyAttrOp ( u32 attrID, USAttrOp& attrOp, u32 op ) {
+bool MOAITransform::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 
 	if ( MOAITransformAttr::Check ( attrID )) {
 
 		switch ( UNPACK_ATTR ( attrID )) {
 			case ATTR_X_LOC:
-				this->mLoc.mX = attrOp.Apply ( this->mLoc.mX, op );
+				this->mLoc.mX = attrOp.Apply ( this->mLoc.mX, op, MOAINode::ATTR_READ_WRITE );
 				return true;
 			case ATTR_Y_LOC:
-				this->mLoc.mY = attrOp.Apply ( this->mLoc.mY, op );
+				this->mLoc.mY = attrOp.Apply ( this->mLoc.mY, op, MOAINode::ATTR_READ_WRITE );
 				return true;
 			case ATTR_Z_ROT:
-				this->mDegrees = attrOp.Apply ( this->mDegrees, op );
+				this->mDegrees = attrOp.Apply ( this->mDegrees, op, MOAINode::ATTR_READ_WRITE );
 				return true;
 			case ATTR_X_SCL:
-				this->mScale.mX = attrOp.Apply ( this->mScale.mX, op );
+				this->mScale.mX = attrOp.Apply ( this->mScale.mX, op, MOAINode::ATTR_READ_WRITE );
 				return true;
 			case ATTR_Y_SCL:
-				this->mScale.mY = attrOp.Apply ( this->mScale.mY, op );
+				this->mScale.mY = attrOp.Apply ( this->mScale.mY, op, MOAINode::ATTR_READ_WRITE );
+				return true;
+			case TRANSFORM_TRAIT:
+				attrOp.Apply < USAffine2D >( &this->mLocalToWorldMtx, op, MOAINode::ATTR_READ );
 				return true;
 		}
 	}
@@ -669,7 +655,7 @@ bool MOAITransform::ApplyAttrOp ( u32 attrID, USAttrOp& attrOp, u32 op ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITransform::BuildTransforms ( MOAITraitsBuffer* traits, float xOff, float yOff, float xStretch, float yStretch ) {
+void MOAITransform::BuildTransforms ( float xOff, float yOff, float xStretch, float yStretch ) {
 	
 	this->mLocalToWorldMtx.ScRoTr (
 		this->mScale.mX * xStretch,
@@ -679,29 +665,22 @@ void MOAITransform::BuildTransforms ( MOAITraitsBuffer* traits, float xOff, floa
 		this->mLoc.mY + yOff
 	);
 	
-	if ( traits && traits->HasTraits ()) {
+	const USAffine2D* inherit = this->GetLinkedValue < USAffine2D >( MOAITransformAttr::Pack ( INHERIT_TRANSFORM ));
+	if ( inherit ) {
+		this->mLocalToWorldMtx.Append ( *inherit );
+	}
+	else {
+	
+		inherit = this->GetLinkedValue < USAffine2D >( MOAITransformAttr::Pack ( INHERIT_LOC ));
+		if ( inherit ) {
 			
-		if ( traits->HasTrait ( INHERIT_TRANSFORM )) {
-		
-			const USAffine2D* inherit = traits->GetTransformTrait ();
-			if ( inherit ) {
-				this->mLocalToWorldMtx.Append ( *inherit );
-			}
-		}
-		else if ( traits->HasTrait ( INHERIT_LOC )) {
+			USVec2D loc = this->mLoc;
+			inherit->Transform ( loc );
 			
-			const USAffine2D* inherit = traits->GetLocTrait ();
-			if ( inherit ) {
-			
-				USVec2D loc = this->mLoc;
-				inherit->Transform ( loc );
-				
-				this->mLocalToWorldMtx.m [ USAffine2D::C2_R0 ] = loc.mX;
-				this->mLocalToWorldMtx.m [ USAffine2D::C2_R1 ] = loc.mY;
-			}
+			this->mLocalToWorldMtx.m [ USAffine2D::C2_R0 ] = loc.mX;
+			this->mLocalToWorldMtx.m [ USAffine2D::C2_R1 ] = loc.mY;
 		}
 	}
-	
 	this->mWorldToLocalMtx.Inverse ( this->mLocalToWorldMtx );
 }
 
@@ -735,9 +714,7 @@ MOAITransform::~MOAITransform () {
 //----------------------------------------------------------------//
 void MOAITransform::OnDepNodeUpdate () {
 	
-	MOAITraitsBuffer buffer;
-	this->AccumulateSources ( buffer );
-	this->BuildTransforms ( &buffer, 0.0f, 0.0f, 1.0f, 1.0f );
+	this->BuildTransforms ( 0.0f, 0.0f, 1.0f, 1.0f );
 }
 
 //----------------------------------------------------------------//
@@ -750,6 +727,10 @@ void MOAITransform::RegisterLuaClass ( USLuaState& state ) {
 	state.SetField ( -1, "ATTR_Z_ROT",			MOAITransformAttr::Pack ( ATTR_Z_ROT ));
 	state.SetField ( -1, "ATTR_X_SCL",			MOAITransformAttr::Pack ( ATTR_X_SCL ));
 	state.SetField ( -1, "ATTR_Y_SCL",			MOAITransformAttr::Pack ( ATTR_Y_SCL ));
+	
+	state.SetField ( -1, "INHERIT_LOC",			MOAITransformAttr::Pack ( INHERIT_LOC ));
+	state.SetField ( -1, "INHERIT_TRANSFORM",	MOAITransformAttr::Pack ( INHERIT_TRANSFORM ));
+	state.SetField ( -1, "TRANSFORM_TRAIT",		MOAITransformAttr::Pack ( TRANSFORM_TRAIT ));
 }
 
 //----------------------------------------------------------------//
@@ -774,7 +755,6 @@ void MOAITransform::RegisterLuaFuncs ( USLuaState& state ) {
 		{ "seekRot",			_seekRot },
 		{ "seekScl",			_seekScl },
 		{ "setLoc",				_setLoc },
-		{ "setParent",			_setParent },
 		{ "setRot",				_setRot },
 		{ "setScl",				_setScl },
 		{ "worldToModel",		_worldToModel },
@@ -789,12 +769,6 @@ void MOAITransform::SetLoc ( float x, float y ) {
 
 	this->mLoc.mX = x;
 	this->mLoc.mY = y;
-}
-
-//----------------------------------------------------------------//
-void MOAITransform::SetParent ( MOAITransformBase* parent ) {
-
-	this->SetTraitSource ( parent, DEFAULT_MASK );
 }
 
 //----------------------------------------------------------------//

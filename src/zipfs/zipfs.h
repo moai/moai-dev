@@ -4,8 +4,7 @@
 #ifndef ZIPFS_H
 #define ZIPFS_H
 
-#include <stdarg.h>
-#include <stdio.h>
+#include <zipfs/pch.h>
 
 //================================================================//
 // zipfs_stat
@@ -22,6 +21,15 @@ typedef struct zipfs_stat {
 
 } zipfs_stat;
 
+//================================================================//
+// stdlib
+//================================================================//
+
+//----------------------------------------------------------------//
+extern void*				zipfs_calloc				( size_t num, size_t size );
+extern void					zipfs_free					( void * ptr );
+extern void*				zipfs_malloc				( size_t size );
+extern void*				zipfs_realloc				( void * ptr, size_t size );
 
 //================================================================//
 // stdio

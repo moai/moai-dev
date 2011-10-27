@@ -20,10 +20,6 @@ class MOAIFont :
 	public virtual USLuaObject {
 private:
 
-	static const u32 WIDE_ID_BIT	= 0x80000000;
-	static const u32 WIDE_ID_MASK	= 0x7fffffff;
-	static const u32 INVALID_ID		= 0xffffffff;
-
 	USLeanArray < MOAIGlyph >	mByteGlyphs;
 	USLeanArray < u8 >			mByteGlyphMap;
 	u8							mByteGlyphMapBase;
@@ -41,6 +37,7 @@ private:
 
 	//----------------------------------------------------------------//
 	static int		_getImage			( lua_State* L );
+	static int		_getLineScale		( lua_State* L );
 	static int		_getScale			( lua_State* L );
 	static int		_getTexture			( lua_State* L );
 	static int		_load				( lua_State* L );

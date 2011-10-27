@@ -44,13 +44,12 @@ protected:
 	static int	_seekRot		( lua_State* L );
 	static int	_seekScl		( lua_State* L );
 	static int	_setLoc			( lua_State* L );
-	static int	_setParent		( lua_State* L );
 	static int	_setRot			( lua_State* L );
 	static int	_setScl			( lua_State* L );
 	static int	_worldToModel	( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void	BuildTransforms			( MOAITraitsBuffer* traits, float xOff, float yOff, float xStretch, float yStretch );
+	void	BuildTransforms			( float xOff, float yOff, float xStretch, float yStretch );
 	void	OnDepNodeUpdate			();
 
 public:
@@ -64,6 +63,11 @@ public:
 		ATTR_Z_ROT,
 		ATTR_X_SCL,
 		ATTR_Y_SCL,
+		
+		INHERIT_LOC,
+		INHERIT_TRANSFORM,
+		TRANSFORM_TRAIT,
+		
 		TOTAL_ATTR,
 	};
 	
@@ -72,7 +76,7 @@ public:
 	GET_SET ( float, Rot, mDegrees )
 	
 	//----------------------------------------------------------------//
-	bool				ApplyAttrOp						( u32 attrID, USAttrOp& attrOp, u32 op );
+	bool				ApplyAttrOp						( u32 attrID, MOAIAttrOp& attrOp, u32 op );
 	const USAffine2D&	GetLocalToWorldMtx				();
 	const USAffine2D&	GetWorldToLocalMtx				();
 						MOAITransform					();
@@ -80,7 +84,6 @@ public:
 	void				RegisterLuaClass				( USLuaState& state );
 	void				RegisterLuaFuncs				( USLuaState& state );
 	void				SetLoc							( float x, float y );
-	virtual void		SetParent						( MOAITransformBase* parent );
 	void				SetScl							( float x, float y );
 };
 

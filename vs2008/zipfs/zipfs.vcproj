@@ -359,6 +359,10 @@
 			>
 		</File>
 		<File
+			RelativePath="..\..\src\zipfs\zipfs_replace.h"
+			>
+		</File>
+		<File
 			RelativePath="..\..\src\zipfs\zipfs_util.c"
 			>
 		</File>

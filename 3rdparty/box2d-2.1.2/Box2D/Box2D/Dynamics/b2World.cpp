@@ -53,6 +53,10 @@ b2World::b2World(const b2Vec2& gravity, bool doSleep)
 	m_inv_dt0 = 0.0f;
 
 	m_contactManager.m_allocator = &m_blockAllocator;
+	
+	m_timeToSleep = 0.5f;
+	m_linearSleepTolerance = 0.01f;
+	m_angularSleepTolerance = (2.0f / 180.0f * b2_pi);
 }
 
 b2World::~b2World()
@@ -338,7 +342,8 @@ void b2World::DestroyJoint(b2Joint* j)
 void b2World::Solve(const b2TimeStep& step)
 {
 	// Size the island for the worst case.
-	b2Island island(m_bodyCount,
+	b2Island island(*this,
+					m_bodyCount,
 					m_contactManager.m_contactCount,
 					m_jointCount,
 					&m_stackAllocator,
@@ -1073,4 +1078,28 @@ void b2World::DrawDebugData()
 int32 b2World::GetProxyCount() const
 {
 	return m_contactManager.m_broadPhase.GetProxyCount();
+}
+
+void b2World::SetTimeToSleep(float timeToSleep) {
+	m_timeToSleep = timeToSleep;
+}
+
+float b2World::GetTimeToSleep() {
+	return m_timeToSleep;
+}
+
+void b2World::SetLinearSleepTolerance(float linearSleepTolerance) {
+	m_linearSleepTolerance = linearSleepTolerance;
+}
+
+float b2World::GetLinearSleepTolerance() {
+	return m_linearSleepTolerance;
+}
+
+void b2World::SetAngularSleepTolerance(float angularSleepTolerance) {
+	m_angularSleepTolerance = angularSleepTolerance;
+}
+
+float b2World::GetAngularSleepTolerance() {
+	return m_angularSleepTolerance;
 }

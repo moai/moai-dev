@@ -32,6 +32,23 @@ int MOAITextBox::_clearCurves ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	getLineSize
+	@text	Returns the size of a line (in pixels).
+
+	@in		MOAIFont self
+	@out	number lineScale		The size of the line in pixels.
+*/
+int MOAITextBox::_getLineSize ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextBox, "U" )
+	
+	if ( self->mFont ) {
+		lua_pushnumber ( state, self->mPoints * self->mFont->GetLineSpacing ());
+		return 1;
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	getStringBounds
 	@text	Returns the bounding rectange of a given substring on a
 			single line in the local space of the text box.
@@ -186,25 +203,6 @@ int MOAITextBox::_setFont ( lua_State* L ) {
 	if ( !font ) return 0;
 	
 	self->SetFont ( font );
-
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@name	setParent
-	@text	Sets this text object as a child of the specified parent transform, prim or layout.
-
-	@in		MOAITextBox self
-	@in		MOAITransform parent		The MOAITransform that will be the parent of this text object.
-	@out	nil
-*/
-int MOAITextBox::_setParent ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITextBox, "UU" )
-
-	MOAITransform* parent = state.GetLuaObject < MOAITransform >( 2 );
-	if ( !parent ) return 0;
-	
-	self->SetParent ( parent );
 
 	return 0;
 }
@@ -574,6 +572,7 @@ void MOAITextBox::RegisterLuaFuncs ( USLuaState& state ) {
 	
 	luaL_Reg regTable [] = {
 		{ "clearCurves",		_clearCurves },
+		{ "getLineSize",		_getLineSize },
 		{ "getStringBounds",	_getStringBounds },
 		{ "more",				_more },
 		{ "nextPage",			_nextPage },

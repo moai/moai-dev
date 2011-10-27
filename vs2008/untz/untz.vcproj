@@ -45,7 +45,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\3rdparty\untz\src;..\..\3rdparty\untz\src\native\win;..\..\3rdparty\untz\include;&quot;..\..\3rdparty\libogg-1.2.2\include&quot;;&quot;..\..\3rdparty\libvorbis-1.3.2\include&quot;;&quot;..\..\3rdparty\rtaudio-4.0.8&quot;"
+				AdditionalIncludeDirectories="..\..\src;..\..\3rdparty\untz\src;..\..\3rdparty\untz\src\native\win;..\..\3rdparty\untz\include;&quot;..\..\3rdparty\libogg-1.2.2\include&quot;;&quot;..\..\3rdparty\libvorbis-1.3.2\include&quot;;&quot;..\..\3rdparty\rtaudio-4.0.8&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;__WINDOWS_DS__"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -55,6 +55,7 @@
 				DebugInformationFormat="3"
 				CallingConvention="0"
 				CompileAs="2"
+				ForcedIncludeFiles="&quot;zipfs/zipfs_replace.h&quot;"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -114,13 +115,14 @@
 				EnableIntrinsicFunctions="true"
 				FavorSizeOrSpeed="2"
 				OmitFramePointers="true"
-				AdditionalIncludeDirectories="..\..\3rdparty\untz\src;..\..\3rdparty\untz\src\native\win;..\..\3rdparty\untz\include;&quot;..\..\3rdparty\libogg-1.2.2\include&quot;;&quot;..\..\3rdparty\libvorbis-1.3.2\include&quot;;&quot;..\..\3rdparty\rtaudio-4.0.8&quot;"
+				AdditionalIncludeDirectories="..\..\src;..\..\3rdparty\untz\src;..\..\3rdparty\untz\src\native\win;..\..\3rdparty\untz\include;&quot;..\..\3rdparty\libogg-1.2.2\include&quot;;&quot;..\..\3rdparty\libvorbis-1.3.2\include&quot;;&quot;..\..\3rdparty\rtaudio-4.0.8&quot;"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;__WINDOWS_DS__"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
 				WarningLevel="0"
 				DebugInformationFormat="0"
 				CompileAs="2"
+				ForcedIncludeFiles="&quot;zipfs/zipfs_replace.h&quot;"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"

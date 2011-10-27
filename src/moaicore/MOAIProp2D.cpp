@@ -369,14 +369,29 @@ int MOAIProp2D::_setVisible ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIProp2D::ApplyAttrOp ( u32 attrID, USAttrOp& attrOp, u32 op ) {
+bool MOAIProp2D::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 
 	if ( MOAIProp2DAttr::Check ( attrID )) {
-		attrID = UNPACK_ATTR ( attrID );
-
-		if ( attrID == ATTR_INDEX ) {
-			this->mIndex = attrOp.Apply ( this->mIndex, op );
-			return true;
+		
+		switch ( UNPACK_ATTR ( attrID )) {
+			case ATTR_INDEX:
+				this->mIndex = USFloat::ToIndex ( attrOp.Apply (( float )this->mIndex, op, MOAINode::ATTR_READ_WRITE ));
+				return true;
+			case ATTR_PARTITION:
+				this->SetPartition ( attrOp.Apply < MOAIPartition >( this->GetPartition (), op, MOAINode::ATTR_READ_WRITE ));
+				return true;
+			case ATTR_SHADER:
+				this->mShader.Set ( *this, attrOp.Apply < MOAIShader >( this->mShader, op, MOAINode::ATTR_READ_WRITE ));
+				return true;
+			case ATTR_BLEND_MODE:
+				attrOp.Apply < MOAIBlendMode >( this->mBlendMode, op, MOAINode::ATTR_READ_WRITE );
+				return true;
+			case ATTR_VISIBLE:
+				this->mIndex = USFloat::ToBoolean ( attrOp.Apply ( USFloat::FromBoolean ( this->mVisible ), op, MOAINode::ATTR_READ_WRITE ));
+				return true;
+			case FRAME_TRAIT:
+				attrOp.Apply < USRect >( &this->mFrame, op, MOAINode::ATTR_READ );
+				return true;
 		}
 	}
 	
@@ -519,12 +534,6 @@ void MOAIProp2D::GatherSurfaces ( MOAISurfaceSampler2D& sampler ) {
 }
 
 //----------------------------------------------------------------//
-MOAIBlendMode MOAIProp2D::GetBlendModeTrait () {
-
-	return this->mBlendMode;
-}
-
-//----------------------------------------------------------------//
 void MOAIProp2D::GetBoundsInRect ( const USRect& rect, MOAICellCoord& c0, MOAICellCoord& c1 ) {
 
 	if ( this->mGrid ) {
@@ -565,36 +574,6 @@ void MOAIProp2D::GetBoundsInView ( MOAICellCoord& c0, MOAICellCoord& c1 ) {
 }
 
 //----------------------------------------------------------------//
-USColorVec MOAIProp2D::GetColorTrait () {
-
-	return MOAIColor::GetColorTrait ();
-}
-
-//----------------------------------------------------------------//
-USRect* MOAIProp2D::GetFrameTrait () {
-
-	return &this->mFrame;
-}
-
-//----------------------------------------------------------------//
-const USAffine2D* MOAIProp2D::GetLocTrait () {
-
-	return MOAITransform::GetLocTrait ();
-}
-
-//----------------------------------------------------------------//
-MOAIPartition* MOAIProp2D::GetPartitionTrait () {
-
-	return MOAIProp::GetPartitionTrait ();
-}
-
-//----------------------------------------------------------------//
-MOAIShader* MOAIProp2D::GetShaderTrait () {
-
-	return this->mShader;
-}
-
-//----------------------------------------------------------------//
 u32 MOAIProp2D::GetLocalFrame ( USRect& frame ) {
 	
 	if ( this->mGrid ) {
@@ -609,18 +588,6 @@ u32 MOAIProp2D::GetLocalFrame ( USRect& frame ) {
 	}
 	
 	return BOUNDS_EMPTY;
-}
-
-//----------------------------------------------------------------//
-const USAffine2D* MOAIProp2D::GetTransformTrait () {
-
-	return MOAITransform::GetTransformTrait ();
-}
-
-//----------------------------------------------------------------//
-bool MOAIProp2D::GetVisibleTrait () {
-
-	return this->mVisible;
 }
 
 //----------------------------------------------------------------//
@@ -708,7 +675,7 @@ MOAIProp2D::~MOAIProp2D () {
 //----------------------------------------------------------------//
 void MOAIProp2D::OnDepNodeUpdate () {
 	
-	this->mColor = *this;
+	MOAIColor::OnDepNodeUpdate ();
 	
 	USRect rect;
 	rect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
@@ -724,42 +691,11 @@ void MOAIProp2D::OnDepNodeUpdate () {
 	// select the frame
 	USRect frame = this->mFrame;
 	
-	MOAITraitsBuffer buffer;
-	this->AccumulateSources ( buffer );
-	
 	bool inheritFrame = false;
-	
-	if ( buffer.HasTraits ()) {
-
-		if ( buffer.HasTrait ( INHERIT_BLEND_MODE )) {
-			this->mBlendMode = buffer.GetBlendModeTrait ();
-		}
-	
-		if ( buffer.HasTrait ( INHERIT_COLOR )) {
-			this->mColor.Modulate ( buffer.GetColorTrait ());
-		}
-		
-		if ( buffer.HasTrait ( INHERIT_FRAME )) {
-			
-			USRect* frameTrait = buffer.GetFrameTrait ();
-			if ( frameTrait ) {
-				frame = *frameTrait;
-				inheritFrame = true;
-			}
-		}
-		
-		if ( buffer.HasTrait ( INHERIT_PARTITION )) {
-			MOAIPartition* partition = buffer.GetPartitionTrait ();
-			this->SetPartition ( partition );
-		}
-		
-		if ( buffer.HasTrait ( INHERIT_SHADER )) {
-			this->mShader.Set ( *this, buffer.GetShaderTrait ());
-		}
-		
-		if ( buffer.HasTrait ( INHERIT_VISIBLE )) {
-			this->mVisible = buffer.GetVisibleTrait ();
-		}
+	const USRect* frameTrait = this->GetLinkedValue < USRect >( MOAIProp2DAttr::Pack ( INHERIT_FRAME ));
+	if ( frameTrait ) {
+		frame = *frameTrait;
+		inheritFrame = true;
 	}
 	
 	if ( inheritFrame || this->mFitToFrame ) {
@@ -781,7 +717,7 @@ void MOAIProp2D::OnDepNodeUpdate () {
 	}
 	
 	// inherit parent and offset transforms (and compute the inverse)
-	this->BuildTransforms ( &buffer, offset.mX, offset.mY, stretch.mX, stretch.mY );
+	this->BuildTransforms ( offset.mX, offset.mY, stretch.mX, stretch.mY );
 	
 	// update the prop location in the partition
 	// use the local frame; world transform will match it to target frame
@@ -805,11 +741,14 @@ void MOAIProp2D::RegisterLuaClass ( USLuaState& state ) {
 	MOAIProp::RegisterLuaClass ( state );
 	MOAIColor::RegisterLuaClass ( state );
 	
-	state.SetField ( -1, "INHERIT_COLOR", ( u32 )INHERIT_COLOR );
-	state.SetField ( -1, "INHERIT_FRAME", ( u32 )INHERIT_FRAME );
-	state.SetField ( -1, "INHERIT_PARTITION", ( u32 )INHERIT_PARTITION );
-	
 	state.SetField ( -1, "ATTR_INDEX", MOAIProp2DAttr::Pack ( ATTR_INDEX ));
+	state.SetField ( -1, "ATTR_PARTITION", MOAIProp2DAttr::Pack ( ATTR_PARTITION ));
+	state.SetField ( -1, "ATTR_SHADER", MOAIProp2DAttr::Pack ( ATTR_SHADER ));
+	state.SetField ( -1, "ATTR_BLEND_MODE", MOAIProp2DAttr::Pack ( ATTR_BLEND_MODE ));
+	state.SetField ( -1, "ATTR_VISIBLE", MOAIProp2DAttr::Pack ( ATTR_VISIBLE ));
+	
+	state.SetField ( -1, "INHERIT_FRAME", MOAIProp2DAttr::Pack ( INHERIT_FRAME ));
+	state.SetField ( -1, "FRAME_TRAIT", MOAIProp2DAttr::Pack ( FRAME_TRAIT ));
 	
 	state.SetField ( -1, "BLEND_ADD", ( u32 )MOAIBlendMode::BLEND_ADD );
 	state.SetField ( -1, "BLEND_MULTIPLY", ( u32 )MOAIBlendMode::BLEND_MULTIPLY );

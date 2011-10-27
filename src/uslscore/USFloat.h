@@ -152,6 +152,11 @@ public:
 	}
 
 	//----------------------------------------------------------------//
+	static inline float FromBoolean ( bool b ) {
+		return b ? 1.0f : 0.0f;
+	}
+
+	//----------------------------------------------------------------//
 	static inline float IntKeyToFloat ( u32 i ) {
 
 		// Michael Herf says:
@@ -233,6 +238,18 @@ public:
 
 		if ( decimal >= 0.5f ) integer += 1.0f;
 		return integer;
+	}
+	
+	//----------------------------------------------------------------//
+	static inline bool ToBoolean ( float n ) {
+		
+		return n == 0.0f ? false : true;
+	}
+	
+	//----------------------------------------------------------------//
+	static inline u32 ToIndex ( float n ) {
+		
+		return ( u32 )n;
 	}
 	
 	//----------------------------------------------------------------//

@@ -54,6 +54,7 @@
 				WarningLevel="3"
 				DebugInformationFormat="3"
 				CompileAs="1"
+				ForcedIncludeFiles="&quot;zipfs/zipfs_replace.h&quot;"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -131,6 +132,7 @@
 				WarningLevel="3"
 				DebugInformationFormat="3"
 				CompileAs="1"
+				ForcedIncludeFiles="&quot;zipfs/zipfs_replace.h&quot;"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"

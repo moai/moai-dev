@@ -91,16 +91,16 @@ int MOAIAnimCurve::_setKey ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIAnimCurve::ApplyAttrOp ( u32 attrID, USAttrOp& attrOp, u32 op ) {
+bool MOAIAnimCurve::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 
 	if ( MOAIAnimCurveAttr::Check ( attrID )) {
 
 		switch ( UNPACK_ATTR ( attrID )) {
 			case ATTR_TIME:
-				this->mTime = attrOp.Apply ( this->mTime, op );
+				this->mTime = attrOp.Apply ( this->mTime, op, MOAINode::ATTR_READ_WRITE );
 				return true;
 			case ATTR_VALUE:
-				this->mValue = attrOp.Apply ( this->mValue, op );
+				this->mValue = attrOp.Apply ( this->mValue, op, MOAINode::ATTR_READ_WRITE );
 				return true;
 		}
 	}

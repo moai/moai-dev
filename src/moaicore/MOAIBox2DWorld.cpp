@@ -511,6 +511,20 @@ int	MOAIBox2DWorld::_addWeldJoint ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	getAngularSleepTolerance
+	@text	See Box2D documentation.
+	
+	@in		MOAIBox2DWorld self
+	@out	number angularSleepTolerance
+*/
+int MOAIBox2DWorld::_getAngularSleepTolerance ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIBox2DWorld, "U" )
+	
+	lua_pushnumber ( state, self->mWorld->GetAngularSleepTolerance ());
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	getAutoClearForces
 	@text	See Box2D documentation.
 	
@@ -543,6 +557,49 @@ int MOAIBox2DWorld::_getGravity ( lua_State* L ) {
 	lua_pushnumber ( L, gravity.y / self->mUnitsToMeters );
 	
 	return 2;
+}
+
+//----------------------------------------------------------------//
+/**	@name	getLinearSleepTolerance
+	@text	See Box2D documentation.
+	
+	@in		MOAIBox2DWorld self
+	@out	number linearSleepTolerance
+*/
+int MOAIBox2DWorld::_getLinearSleepTolerance ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIBox2DWorld, "U" )
+	
+	lua_pushnumber ( state, self->mWorld->GetLinearSleepTolerance () / self->mUnitsToMeters );
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	getTimeToSleep
+	@text	See Box2D documentation.
+	
+	@in		MOAIBox2DWorld self
+	@out	number timeToSleep
+*/
+int MOAIBox2DWorld::_getTimeToSleep ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIBox2DWorld, "U" )
+	
+	lua_pushnumber ( state, self->mWorld->GetTimeToSleep ());
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	setAngularSleepTolerance
+	@text	See Box2D documentation.
+	
+	@in		MOAIBox2DWorld self
+	@opt	number angularSleepTolerance		Default value is 0.0f.
+	@out	nil
+*/
+int MOAIBox2DWorld::_setAngularSleepTolerance ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIBox2DWorld, "U" )
+	
+	self->mWorld->SetAngularSleepTolerance ( state.GetValue < float >( 2, 0.0f ));
+	return 0;
 }
 
 //----------------------------------------------------------------//
@@ -600,6 +657,36 @@ int MOAIBox2DWorld::_setIterations ( lua_State* L ) {
 	self->mVelocityIterations = state.GetValue < u32 >( 2, self->mVelocityIterations );
 	self->mPositionIterations = state.GetValue < u32 >( 3, self->mPositionIterations );
 	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	setLinearSleepTolerance
+	@text	See Box2D documentation.
+	
+	@in		MOAIBox2DWorld self
+	@opt	number linearSleepTolerance		Default value is 0.0f.
+	@out	nil
+*/
+int MOAIBox2DWorld::_setLinearSleepTolerance ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIBox2DWorld, "U" )
+	
+	self->mWorld->SetLinearSleepTolerance ( state.GetValue < float >( 2, 0.0f ) * self->mUnitsToMeters );
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	setTimeToSleep
+	@text	See Box2D documentation.
+	
+	@in		MOAIBox2DWorld self
+	@opt	number timeToSleep				Default value is 0.0f.
+	@out	nil
+*/
+int MOAIBox2DWorld::_setTimeToSleep ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIBox2DWorld, "U" )
+	
+	self->mWorld->SetTimeToSleep ( state.GetValue < float >( 2, 0.0f ));
 	return 0;
 }
 

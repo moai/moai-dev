@@ -58,6 +58,7 @@
 				PrecompiledHeaderThrough="pch.h"
 				WarningLevel="4"
 				DebugInformationFormat="3"
+				ForcedIncludeFiles="&quot;zipfs/zipfs_replace.h&quot;"
 				ShowIncludes="false"
 			/>
 			<Tool
@@ -134,6 +135,7 @@
 				PrecompiledHeaderThrough="pch.h"
 				WarningLevel="4"
 				DebugInformationFormat="0"
+				ForcedIncludeFiles="&quot;zipfs/zipfs_replace.h&quot;"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -333,26 +335,6 @@
 			</File>
 			<File
 				RelativePath="..\..\src\uslsext\USAnimCurve.h"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="attributed"
-			>
-			<File
-				RelativePath="..\..\src\uslsext\USAttributed.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USAttributed.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USAttrOp.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USAttrOp.h"
 				>
 			</File>
 		</Filter>

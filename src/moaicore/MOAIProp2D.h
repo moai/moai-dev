@@ -92,16 +92,8 @@ protected:
 	
 	//----------------------------------------------------------------//
 	bool				BindDeck				();
-	MOAIBlendMode		GetBlendModeTrait		();
 	void				GetBoundsInRect			( const USRect& rect, MOAICellCoord& c0, MOAICellCoord& c1 );
 	void				GetBoundsInView			( MOAICellCoord& c0, MOAICellCoord& c1 );
-	USColorVec			GetColorTrait			();
-	USRect*				GetFrameTrait			();
-	const USAffine2D*	GetLocTrait				();
-	MOAIPartition*		GetPartitionTrait		();
-	MOAIShader*			GetShaderTrait			();
-	const USAffine2D*	GetTransformTrait		();
-	bool				GetVisibleTrait			();
 	void				LoadShader				();
 
 public:
@@ -111,20 +103,21 @@ public:
 	
 	enum {
 		ATTR_INDEX,
+		ATTR_PARTITION,
+		ATTR_SHADER,
+		ATTR_BLEND_MODE,
+		ATTR_VISIBLE,
+		
+		INHERIT_FRAME,
+		FRAME_TRAIT,
+		
 		TOTAL_ATTR,
 	};
-	
-	enum {
-		INHERIT_COLOR		= 0x00000004,
-		INHERIT_FRAME		= 0x00000008,
-		INHERIT_PARTITION	= 0x00000010,
-	};
-	
 	
 	GET_SET ( u32, Index, mIndex )
 	
 	//----------------------------------------------------------------//
-	bool							ApplyAttrOp				( u32 attrID, USAttrOp& attrOp, u32 op );
+	bool							ApplyAttrOp				( u32 attrID, MOAIAttrOp& attrOp, u32 op );
 	virtual void					Draw					();
 	virtual void					DrawDebug				();
 	virtual void					GatherSurfaces			( MOAISurfaceSampler2D& sampler );

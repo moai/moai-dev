@@ -361,12 +361,10 @@ Global
 		{86E29F0A-83D1-4001-9E1A-B20C6AECE6F7}.Release|x64.ActiveCfg = Release|Win32
 		{97FD97F4-5C0F-411E-9F3A-6549D4263664}.Debug|Win32.ActiveCfg = Debug|Win32
 		{97FD97F4-5C0F-411E-9F3A-6549D4263664}.Debug|Win32.Build.0 = Debug|Win32
-		{97FD97F4-5C0F-411E-9F3A-6549D4263664}.Debug|x64.ActiveCfg = Debug|x64
-		{97FD97F4-5C0F-411E-9F3A-6549D4263664}.Debug|x64.Build.0 = Debug|x64
+		{97FD97F4-5C0F-411E-9F3A-6549D4263664}.Debug|x64.ActiveCfg = Debug|Win32
 		{97FD97F4-5C0F-411E-9F3A-6549D4263664}.Release|Win32.ActiveCfg = Release|Win32
 		{97FD97F4-5C0F-411E-9F3A-6549D4263664}.Release|Win32.Build.0 = Release|Win32
-		{97FD97F4-5C0F-411E-9F3A-6549D4263664}.Release|x64.ActiveCfg = Release|x64
-		{97FD97F4-5C0F-411E-9F3A-6549D4263664}.Release|x64.Build.0 = Release|x64
+		{97FD97F4-5C0F-411E-9F3A-6549D4263664}.Release|x64.ActiveCfg = Release|Win32
 		{CC196C96-AE3D-4E3A-A405-620F83104EB7}.Debug|Win32.ActiveCfg = Debug|Win32
 		{CC196C96-AE3D-4E3A-A405-620F83104EB7}.Debug|Win32.Build.0 = Debug|Win32
 		{CC196C96-AE3D-4E3A-A405-620F83104EB7}.Debug|x64.ActiveCfg = Debug|x64
@@ -449,8 +447,8 @@ Global
 		{1F65FE7F-80D7-4380-BDD3-2546D7C2DFF0} = {9F8AD78A-95B2-4E97-8070-087F82AA848D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		AMDCaProjectFile = C:\Documents and Settings\Patrick\My Documents\git\moai\vs2008\CodeAnalyst\moai-open.caw
-		AMDCaPersistentStartup = moai (Utilities\moai)
 		AMDCaPersistentConfig = Debug|Win32
+		AMDCaPersistentStartup = moai (Utilities\moai)
+		AMDCaProjectFile = C:\Documents and Settings\Patrick\My Documents\git\moai\vs2008\CodeAnalyst\moai-open.caw
 	EndGlobalSection
 EndGlobal

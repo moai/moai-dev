@@ -47,7 +47,7 @@ struct b2Velocity
 class b2Island
 {
 public:
-	b2Island(int32 bodyCapacity, int32 contactCapacity, int32 jointCapacity,
+	b2Island(b2World& world, int32 bodyCapacity, int32 contactCapacity, int32 jointCapacity,
 			b2StackAllocator* allocator, b2ContactListener* listener);
 	~b2Island();
 
@@ -80,6 +80,8 @@ public:
 	}
 
 	void Report(const b2ContactConstraint* constraints);
+
+	b2World* m_world;
 
 	b2StackAllocator* m_allocator;
 	b2ContactListener* m_listener;

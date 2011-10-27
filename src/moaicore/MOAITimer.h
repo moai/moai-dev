@@ -83,7 +83,7 @@ public:
 	};
 	
 	//----------------------------------------------------------------//
-	bool			ApplyAttrOp			( u32 attrID, USAttrOp& attrOp, u32 op );
+	bool			ApplyAttrOp			( u32 attrID, MOAIAttrOp& attrOp, u32 op );
 	bool			IsDone				();
 					MOAITimer			();
 					~MOAITimer			();

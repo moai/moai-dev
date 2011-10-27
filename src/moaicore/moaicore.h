@@ -10,6 +10,7 @@
 #include <moaicore/MOAIActionMgr.h>
 #include <moaicore/MOAIAnim.h>
 #include <moaicore/MOAIAnimCurve.h>
+#include <moaicore/MOAIAttrOp.h>
 #include <moaicore/MOAIBitmapFontRipper.h>
 #include <moaicore/MOAIBlendMode.h>
 #include <moaicore/MOAIButtonSensor.h>
@@ -96,7 +97,6 @@
 #include <moaicore/MOAITileFlags.h>
 #include <moaicore/MOAITimer.h>
 #include <moaicore/MOAITouchSensor.h>
-#include <moaicore/MOAITraits.h>
 #include <moaicore/MOAITransform.h>
 #include <moaicore/MOAITransformBase.h>
 #include <moaicore/MOAIVertexBuffer.h>

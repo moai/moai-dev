@@ -144,12 +144,15 @@ However, we can compute sin+cos of the same angle fast.
 */
 
 b2Island::b2Island(
+	b2World& world,
 	int32 bodyCapacity,
 	int32 contactCapacity,
 	int32 jointCapacity,
 	b2StackAllocator* allocator,
 	b2ContactListener* listener)
 {
+	m_world = &world;
+
 	m_bodyCapacity = bodyCapacity;
 	m_contactCapacity = contactCapacity;
 	m_jointCapacity	 = jointCapacity;
@@ -307,8 +310,8 @@ void b2Island::Solve(const b2TimeStep& step, const b2Vec2& gravity, bool allowSl
 	{
 		float32 minSleepTime = b2_maxFloat;
 
-		const float32 linTolSqr = b2_linearSleepTolerance * b2_linearSleepTolerance;
-		const float32 angTolSqr = b2_angularSleepTolerance * b2_angularSleepTolerance;
+		const float32 linTolSqr = m_world->m_linearSleepTolerance * m_world->m_linearSleepTolerance;
+		const float32 angTolSqr = m_world->m_angularSleepTolerance * m_world->m_angularSleepTolerance;
 
 		for (int32 i = 0; i < m_bodyCount; ++i)
 		{
@@ -338,7 +341,7 @@ void b2Island::Solve(const b2TimeStep& step, const b2Vec2& gravity, bool allowSl
 			}
 		}
 
-		if (minSleepTime >= b2_timeToSleep)
+		if (minSleepTime >= m_world->m_timeToSleep)
 		{
 			for (int32 i = 0; i < m_bodyCount; ++i)
 			{

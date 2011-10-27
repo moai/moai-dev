@@ -58,6 +58,7 @@ private:
 	
 	//----------------------------------------------------------------//
 	static int	_clearCurves		( lua_State* L );
+	static int	_getLineSize		( lua_State* L );
 	static int	_getStringBounds	( lua_State* L );
 	static int	_more				( lua_State* L );
 	static int	_nextPage			( lua_State* L );
@@ -66,7 +67,6 @@ private:
 	static int	_setAlignment		( lua_State* L );
 	static int	_setCurve			( lua_State* L );
 	static int	_setFont			( lua_State* L );
-	static int	_setParent			( lua_State* L );
 	static int	_setRect			( lua_State* L );
 	static int	_setReveal			( lua_State* L );
 	static int	_setSpeed			( lua_State* L );

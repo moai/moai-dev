@@ -45,7 +45,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;..\..\3rdparty\zlib-1.2.3&quot;"
+				AdditionalIncludeDirectories="..\..\src;&quot;..\..\3rdparty\zlib-1.2.3&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;PNG_NO_STDIO"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -54,6 +54,8 @@
 				WarningLevel="0"
 				DebugInformationFormat="3"
 				CompileAs="1"
+				ForcedIncludeFiles="&quot;zipfs/zipfs_replace.h&quot;"
+				ForcedUsingFiles=""
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -114,13 +116,14 @@
 				FavorSizeOrSpeed="2"
 				OmitFramePointers="true"
 				WholeProgramOptimization="false"
-				AdditionalIncludeDirectories="&quot;..\..\3rdparty\zlib-1.2.3&quot;"
+				AdditionalIncludeDirectories="..\..\src;&quot;..\..\3rdparty\zlib-1.2.3&quot;"
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;PNG_NO_STDIO"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
 				WarningLevel="0"
 				DebugInformationFormat="0"
 				CompileAs="1"
+				ForcedUsingFiles="&quot;zipfs/zipfs_replace.h&quot;"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"

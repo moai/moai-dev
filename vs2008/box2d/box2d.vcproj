@@ -44,7 +44,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;..\..\3rdparty\box2d-2.1.2\Box2D&quot;"
+				AdditionalIncludeDirectories="..\..\src;&quot;..\..\3rdparty\box2d-2.1.2\Box2D&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -54,6 +54,8 @@
 				DebugInformationFormat="3"
 				CompileAs="2"
 				DisableSpecificWarnings="4068"
+				ForcedIncludeFiles="&quot;zipfs/zipfs_replace.h&quot;"
+				ForcedUsingFiles=""
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -112,7 +114,7 @@
 				EnableIntrinsicFunctions="true"
 				FavorSizeOrSpeed="2"
 				OmitFramePointers="true"
-				AdditionalIncludeDirectories="&quot;..\..\3rdparty\box2d-2.1.2\Box2D&quot;"
+				AdditionalIncludeDirectories="..\..\src;&quot;..\..\3rdparty\box2d-2.1.2\Box2D&quot;"
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
@@ -120,6 +122,8 @@
 				DebugInformationFormat="0"
 				CompileAs="2"
 				DisableSpecificWarnings="4068"
+				ForcedIncludeFiles="&quot;zipfs/zipfs_replace.h&quot;"
+				ForcedUsingFiles=""
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"

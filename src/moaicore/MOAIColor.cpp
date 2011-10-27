@@ -148,22 +148,25 @@ int MOAIColor::_setColor ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIColor::ApplyAttrOp ( u32 attrID, USAttrOp& attrOp, u32 op ) {
+bool MOAIColor::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 
 	if ( MOAIColorAttr::Check ( attrID )) {
 
 		switch ( UNPACK_ATTR ( attrID )) {
 			case ATTR_R_COL:
-				this->mR = USFloat::Clamp ( attrOp.Apply ( this->mR, op ), 0.0f, 1.0f );
+				this->mR = USFloat::Clamp ( attrOp.Apply ( this->mR, op, MOAINode::ATTR_READ_WRITE ), 0.0f, 1.0f );
 				return true;
 			case ATTR_G_COL:
-				this->mG = USFloat::Clamp ( attrOp.Apply ( this->mG, op ), 0.0f, 1.0f );
+				this->mG = USFloat::Clamp ( attrOp.Apply ( this->mG, op, MOAINode::ATTR_READ_WRITE ), 0.0f, 1.0f );
 				return true;
 			case ATTR_B_COL:
-				this->mB = USFloat::Clamp ( attrOp.Apply ( this->mB, op ), 0.0f, 1.0f );
+				this->mB = USFloat::Clamp ( attrOp.Apply ( this->mB, op, MOAINode::ATTR_READ_WRITE ), 0.0f, 1.0f );
 				return true;
 			case ATTR_A_COL:
-				this->mA = USFloat::Clamp ( attrOp.Apply ( this->mA, op ), 0.0f, 1.0f );
+				this->mA = USFloat::Clamp ( attrOp.Apply ( this->mA, op, MOAINode::ATTR_READ_WRITE ), 0.0f, 1.0f );
+				return true;
+			case COLOR_TRAIT:
+				attrOp.Apply < USColorVec >( this->mColor, op, MOAINode::ATTR_READ );
 				return true;
 		}
 	}
@@ -180,7 +183,7 @@ USColorVec MOAIColor::GetColorTrait () {
 MOAIColor::MOAIColor () {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAITraits )
+		RTTI_EXTEND ( MOAINode )
 	RTTI_END
 	
 	this->Set ( 1.0f, 1.0f, 1.0f, 1.0f );
@@ -195,29 +198,30 @@ void MOAIColor::OnDepNodeUpdate () {
 
 	this->mColor = *this;
 
-	MOAITraitsBuffer buffer;
-	this->AccumulateSources ( buffer, INHERIT_COLOR );
-
-	if ( buffer.HasTrait ( INHERIT_COLOR )) {
-		this->mColor.Modulate ( buffer.GetColorTrait ());
+	USColorVec color;
+	if ( this->GetLinkedValue < USColorVec >( MOAIColorAttr::Pack ( INHERIT_COLOR ), color )) {
+		this->mColor.Modulate ( color );
 	}
 }
 
 //----------------------------------------------------------------//
 void MOAIColor::RegisterLuaClass ( USLuaState& state ) {
 	
-	MOAITraits::RegisterLuaClass ( state );
+	MOAINode::RegisterLuaClass ( state );
 	
 	state.SetField ( -1, "ATTR_R_COL", MOAIColorAttr::Pack ( ATTR_R_COL ));
 	state.SetField ( -1, "ATTR_G_COL", MOAIColorAttr::Pack ( ATTR_G_COL ));
 	state.SetField ( -1, "ATTR_B_COL", MOAIColorAttr::Pack ( ATTR_B_COL ));
 	state.SetField ( -1, "ATTR_A_COL", MOAIColorAttr::Pack ( ATTR_A_COL ));
+	
+	state.SetField ( -1, "INHERIT_COLOR", MOAIColorAttr::Pack ( INHERIT_COLOR ));
+	state.SetField ( -1, "COLOR_TRAIT", MOAIColorAttr::Pack ( COLOR_TRAIT ));
 }
 
 //----------------------------------------------------------------//
 void MOAIColor::RegisterLuaFuncs ( USLuaState& state ) {
 	
-	MOAITraits::RegisterLuaFuncs ( state );
+	MOAINode::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
 		{ "moveColor",				_moveColor },

@@ -166,6 +166,15 @@ public:
 	/// Get the flag that controls automatic clearing of forces after each time step.
 	bool GetAutoClearForces() const;
 
+	void SetTimeToSleep(float timeToSleep);
+	float GetTimeToSleep();
+
+	void SetLinearSleepTolerance(float linearSleepTolerance);
+	float GetLinearSleepTolerance();
+	
+	void SetAngularSleepTolerance(float angularSleepTolerance);
+	float GetAngularSleepTolerance();
+
 private:
 
 	// m_flags
@@ -179,6 +188,7 @@ private:
 	friend class b2Body;
 	friend class b2ContactManager;
 	friend class b2Controller;
+	friend class b2Island;
 
 	void Solve(const b2TimeStep& step);
 	void SolveTOI();
@@ -217,6 +227,15 @@ private:
 
 	// This is for debugging the solver.
 	bool m_continuousPhysics;
+	
+	// The time that a body must be still before it will go to sleep.
+	float m_timeToSleep; // 0.5f
+	
+	// A body cannot sleep if its linear velocity is above this tolerance.
+	float m_linearSleepTolerance; // 0.01f
+	
+	// A body cannot sleep if its angular velocity is above this tolerance.
+	float m_angularSleepTolerance; // (2.0f / 180.0f * b2_pi)
 };
 
 inline b2Body* b2World::GetBodyList()

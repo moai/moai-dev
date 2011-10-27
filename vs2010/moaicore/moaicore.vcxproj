@@ -321,7 +321,6 @@
     <ClCompile Include="..\..\src\moaicore\MOAISurfaceSampler2D.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIColor.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIShader.cpp" />
-    <ClCompile Include="..\..\src\moaicore\MOAITraits.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAITransform.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAITransformBase.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIVertexBuffer.cpp" />
@@ -367,6 +366,7 @@
     <ClInclude Include="..\..\src\aku\AKU.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIAction.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIActionMgr.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAIAttrOp.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIBitmapFontRipper.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIBlendMode.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIBlocker.h" />
@@ -453,7 +453,6 @@
     <ClInclude Include="..\..\src\moaicore\MOAISurfaceSampler2D.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIColor.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIShader.h" />
-    <ClInclude Include="..\..\src\moaicore\MOAITraits.h" />
     <ClInclude Include="..\..\src\moaicore\MOAITransform.h" />
     <ClInclude Include="..\..\src\moaicore\MOAITransformBase.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIVertexBuffer.h" />

@@ -17,8 +17,7 @@ prop = MOAIProp2D.new ()
 prop:setDeck ( gfxQuad )
 layer:insertProp ( prop )
 prop:moveRot ( 360, 1.5 )
-
-function pollInput ()
+--[[function pollInput ()
 	
 	while true do
 		
@@ -36,8 +35,8 @@ end
 
 thread = MOAIThread.new ()
 thread:run ( pollInput )
-
---[[MOAIInputMgr.device.touch:setCallback (
+]]--
+MOAIInputMgr.device.touch:setCallback (
 	function (eventType, id, x, y, tapCount)
 		if eventType == MOAITouchSensor.TOUCH_DOWN or 
 		   eventType == MOAITouchSensor.TOUCH_MOVE then
@@ -47,4 +46,4 @@ thread:run ( pollInput )
 			print "Touch Cancel"
 		end
 	end
-)]]--
+)
