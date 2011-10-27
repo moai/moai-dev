@@ -859,24 +859,30 @@ void MOAIBox2DWorld::RegisterLuaClass ( USLuaState& state ) {
 void MOAIBox2DWorld::RegisterLuaFuncs ( USLuaState& state ) {
 	
 	MOAIAction::RegisterLuaFuncs ( state );
-	
+
 	luaL_Reg regTable [] = {
-		{ "addBody",				_addBody },
-		{ "addDistanceJoint",		_addDistanceJoint },
-		{ "addFrictionJoint",		_addFrictionJoint },
-		{ "addGearJoint",			_addGearJoint },
-		{ "addLineJoint",			_addLineJoint },
-		{ "addMouseJoint",			_addMouseJoint },
-		{ "addPrismaticJoint",		_addPrismaticJoint },
-		{ "addPulleyJoint",			_addPulleyJoint },
-		{ "addRevoluteJoint",		_addRevoluteJoint },
-		{ "addWeldJoint",			_addWeldJoint },
-		{ "getAutoClearForces",		_getAutoClearForces },
-		{ "getGravity",				_getGravity },
-		{ "setAutoClearForces",		_setAutoClearForces },
-		{ "setGravity",				_setGravity },
-		{ "setIterations",			_setIterations },
-		{ "setUnitsToMeters",		_setUnitsToMeters },
+		{ "addBody",					_addBody },
+		{ "addDistanceJoint",			_addDistanceJoint },
+		{ "addFrictionJoint",			_addFrictionJoint },
+		{ "addGearJoint",				_addGearJoint },
+		{ "addLineJoint",				_addLineJoint },
+		{ "addMouseJoint",				_addMouseJoint },
+		{ "addPrismaticJoint",			_addPrismaticJoint },
+		{ "addPulleyJoint",				_addPulleyJoint },
+		{ "addRevoluteJoint",			_addRevoluteJoint },
+		{ "addWeldJoint",				_addWeldJoint },
+		{ "getAutoClearForces",			_getAutoClearForces },
+		{ "getAngularSleepTolerance",	_getAngularSleepTolerance },
+		{ "getGravity",					_getGravity },
+		{ "getLinearSleepTolerance",	_getLinearSleepTolerance },
+		{ "getTimeToSleep",				_getTimeToSleep },
+		{ "setAngularSleepTolerance",	_setAngularSleepTolerance },
+		{ "setAutoClearForces",			_setAutoClearForces },
+		{ "setGravity",					_setGravity },
+		{ "setIterations",				_setIterations },
+		{ "setLinearSleepTolerance",	_setLinearSleepTolerance },
+		{ "setTimeToSleep",				_setTimeToSleep },
+		{ "setUnitsToMeters",			_setUnitsToMeters },
 		{ NULL, NULL }
 	};
 	
