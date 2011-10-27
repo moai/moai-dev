@@ -7,10 +7,8 @@
 #include <moaicore/MOAINode.h>
 #include <moaicore/MOAINodeMgr.h>
 
-// refactor into link set for dependencies plus individual
-// links for attributes and traits
-// figure out how to differentiate between attributes and traits to
-// prevent improper bindings
+// TODO: remove when setParent is removed
+#include <moaicore/MOAIProp2D.h>
 
 //================================================================//
 // MOAIDepLink
@@ -314,6 +312,28 @@ int MOAINode::_setNodeLink ( lua_State* L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
+/**	@name	setParent
+	@text	This method has been deprecated. Use MOAINode setAttrLink instead.
+	
+	@in		MOAIProp2D self
+	@opt	MOAINode parent		Default value is nil.
+	@out	nil
+*/
+int MOAINode::_setParent ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIProp2D, "U" )
+
+	MOAINode* parent = state.GetLuaObject < MOAINode >( 2 );
+	
+	self->SetAttrLink ( MOAINode::PackAttrID < MOAIColor >( MOAIColor::INHERIT_COLOR ), parent, MOAINode::PackAttrID < MOAIColor >( MOAIColor::COLOR_TRAIT ));
+	self->SetAttrLink ( MOAINode::PackAttrID < MOAITransform >( MOAITransform::INHERIT_TRANSFORM ), parent, MOAINode::PackAttrID < MOAITransform >( MOAITransform::TRANSFORM_TRAIT ) );
+	self->SetAttrLink ( MOAINode::PackAttrID < MOAIProp2D >( MOAIProp2D::ATTR_VISIBLE ), parent, MOAINode::PackAttrID < MOAIProp2D >( MOAIProp2D::ATTR_VISIBLE ));
+	
+	MOAILog ( state, MOAILogMessages::MOAI_FunctionDeprecated_S, "setParent" );
+	
+	return 0;
+}
+
 //================================================================//
 // MOAINode
 //================================================================//
@@ -605,6 +625,7 @@ void MOAINode::RegisterLuaFuncs ( USLuaState& state ) {
 		{ "setAttr",				_setAttr },
 		{ "setAttrLink",			_setAttrLink },
 		{ "setNodeLink",			_setNodeLink },
+		{ "setParent",				_setParent },
 		{ NULL, NULL }
 	};
 	
