@@ -12,6 +12,11 @@
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAITexture.h>
 
+#define WIDE_ID_BIT			0x80000000
+#define WIDE_ID_MASK		0x7fffffff
+#define INVALID_ID			0xffffffff
+#define INVALID_BYTE_ID		0xff
+
 //================================================================//
 // local
 //================================================================//
@@ -228,7 +233,7 @@ u32 MOAIFont::GetIDForChar ( u32 c ) {
 		
 		// TODO: replace sorted lookup w/ AVL tree
 		u32 size = this->mWideGlyphMap.Size ();
-		u32 id = USBinarySearch < u32 >( this->mWideGlyphMap, c, size );
+		id = USBinarySearch < u32 >( this->mWideGlyphMap, c, size );
 		if ( id < size ) {
 			return id | WIDE_ID_BIT;
 		}

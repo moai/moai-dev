@@ -188,7 +188,7 @@ public:
 	template < typename TYPE >
 	inline void SetValue ( const TYPE& value ) {
 
-		assert ( sizeof TYPE <= MAX_SIZE );
+		assert ( sizeof ( TYPE ) <= MAX_SIZE );
 
 		this->mType = TYPE_COMPLEX;
 		this->mComplexType = USTypeID < TYPE >::GetID ();

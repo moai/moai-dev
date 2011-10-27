@@ -20,11 +20,6 @@ class MOAIFont :
 	public virtual USLuaObject {
 private:
 
-	static const u32 WIDE_ID_BIT		= 0x80000000;
-	static const u32 WIDE_ID_MASK		= 0x7fffffff;
-	static const u32 INVALID_ID			= 0xffffffff;
-	static const u8 INVALID_BYTE_ID		= 0xff;
-
 	USLeanArray < MOAIGlyph >	mByteGlyphs;
 	USLeanArray < u8 >			mByteGlyphMap;
 	u8							mByteGlyphMapBase;
