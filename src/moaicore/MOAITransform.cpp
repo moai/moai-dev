@@ -806,9 +806,6 @@ bool MOAITransform::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 			case ATTR_Y_SCL:
 				this->mScale.mY = attrOp.Apply ( this->mScale.mY, op, MOAINode::ATTR_READ_WRITE );
 				return true;
-			case TRANSFORM_TRAIT:
-				attrOp.Apply < USAffine2D >( &this->mLocalToWorldMtx, op, MOAINode::ATTR_READ );
-				return true;
 		}
 	}
 	return MOAITransformBase::ApplyAttrOp ( attrID, attrOp, op );
@@ -900,7 +897,6 @@ void MOAITransform::RegisterLuaClass ( USLuaState& state ) {
 	
 	state.SetField ( -1, "INHERIT_LOC",			MOAITransformAttr::Pack ( INHERIT_LOC ));
 	state.SetField ( -1, "INHERIT_TRANSFORM",	MOAITransformAttr::Pack ( INHERIT_TRANSFORM ));
-	state.SetField ( -1, "TRANSFORM_TRAIT",		MOAITransformAttr::Pack ( TRANSFORM_TRAIT ));
 }
 
 //----------------------------------------------------------------//

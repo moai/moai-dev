@@ -120,7 +120,6 @@ bool MOAITransformBase::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 				attrOp.Apply ( axis.Length (), op, MOAINode::ATTR_READ );
 				return true;
 			}
-			
 			case ATTR_WORLD_Y_SCL: {
 				
 				USVec2D axis;
@@ -131,6 +130,9 @@ bool MOAITransformBase::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 				attrOp.Apply ( axis.Length (), op, MOAINode::ATTR_READ );
 				return true;
 			}
+			case TRANSFORM_TRAIT:
+				attrOp.Apply < USAffine2D >( &this->mLocalToWorldMtx, op, MOAINode::ATTR_READ );
+				return true;
 		}
 	}
 	return false;
@@ -183,6 +185,7 @@ void MOAITransformBase::RegisterLuaClass ( USLuaState& state ) {
 	state.SetField ( -1, "ATTR_WORLD_Z_ROT",	MOAITransformBaseAttr::Pack ( ATTR_WORLD_Z_ROT ));
 	state.SetField ( -1, "ATTR_WORLD_X_SCL",	MOAITransformBaseAttr::Pack ( ATTR_WORLD_X_SCL ));
 	state.SetField ( -1, "ATTR_WORLD_Y_SCL",	MOAITransformBaseAttr::Pack ( ATTR_WORLD_Y_SCL ));
+	state.SetField ( -1, "TRANSFORM_TRAIT",		MOAITransformBaseAttr::Pack ( TRANSFORM_TRAIT ));
 }
 
 //----------------------------------------------------------------//

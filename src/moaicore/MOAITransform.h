@@ -76,7 +76,6 @@ public:
 		
 		INHERIT_LOC,
 		INHERIT_TRANSFORM,
-		TRANSFORM_TRAIT,
 		
 		TOTAL_ATTR,
 	};

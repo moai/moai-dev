@@ -19,7 +19,6 @@ class MOAICameraAnchor2D :
 	public MOAINode {
 private:
 
-	USWeakPtr < MOAITransformBase >	mParent;
 	USRect							mRect;
 	USVec2D							mLoc;
 	
@@ -34,15 +33,20 @@ private:
 public:
 
 	DECL_LUA_FACTORY ( MOAICameraAnchor2D )
+	DECL_ATTR_HELPER ( MOAICameraAnchor2D )
 
 	friend class MOAICameraFitter2D;
+
+	enum {
+		INHERIT_LOC,
+		TOTAL_ATTR,
+	};
 
 	//----------------------------------------------------------------//
 					MOAICameraAnchor2D		();
 	virtual			~MOAICameraAnchor2D		();
 	void			RegisterLuaClass		( USLuaState& state );
 	void			RegisterLuaFuncs		( USLuaState& state );
-	void			SetParent				( MOAITransformBase* parent );
 };
 
 #endif
