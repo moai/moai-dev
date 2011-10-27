@@ -33,6 +33,29 @@ int MOAITransform::_addLoc ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	addPiv
+	@text	Adds a delta to the transform's pivot.
+	
+	@in		MOAITransform self
+	@in		number xDelta
+	@in		number yDelta
+	@out	nil
+*/
+int MOAITransform::_addPiv ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITransform, "UNN" )
+	
+	USVec2D piv = self->GetLoc ();
+	
+	piv.mX += state.GetValue < float >( 2, 0.0f );
+	piv.mY += state.GetValue < float >( 3, 0.0f );
+	
+	self->SetPiv ( piv );
+	self->ScheduleUpdate ();
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	addRot
 	@text	Adds a delta to the transform's rotation
 	
@@ -88,6 +111,23 @@ int	MOAITransform::_getLoc ( lua_State* L ) {
 	
 	lua_pushnumber ( state, self->mLoc.mX );
 	lua_pushnumber ( state, self->mLoc.mY );
+
+	return 2;
+}
+
+//----------------------------------------------------------------//
+/**	@name	getPiv
+	@text	Returns the transform's current pivot.
+	
+	@in		MOAITransform self
+	@out	number xPiv
+	@out	number yPiv
+*/
+int	MOAITransform::_getPiv ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITransform, "U" )
+	
+	lua_pushnumber ( state, self->mPiv.mX );
+	lua_pushnumber ( state, self->mPiv.mY );
 
 	return 2;
 }
@@ -247,6 +287,51 @@ int MOAITransform::_moveLoc ( lua_State* L ) {
 	
 	self->mLoc.mX += xLoc;
 	self->mLoc.mY += yLoc;
+	self->ScheduleUpdate ();
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	movePiv
+	@text	Animate the transform by applying a delta. Creates and returns
+			a MOAIEaseDriver initialized to apply the delta.
+	
+	@in		MOAITransform self
+	@in		number xDelta		Delta to be added to xPiv.
+	@in		number yDelta		Delta to be added to yPiv.
+	@in		number length		Length of animation in seconds.
+	@opt	number mode			The ease mode. One of MOAIEaseType.EASE_IN, MOAIEaseType.EASE_OUT, MOAIEaseType.FLAT MOAIEaseType.LINEAR,
+								MOAIEaseType.SMOOTH, MOAIEaseType.SOFT_EASE_IN, MOAIEaseType.SOFT_EASE_OUT, MOAIEaseType.SOFT_SMOOTH. Defaults to MOAIEaseType.SMOOTH.
+
+	@out	MOAIEaseDriver easeDriver
+*/
+int MOAITransform::_movePiv ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITransform, "UNNN" )
+	
+	float xPiv		= state.GetValue < float >( 2, 0.0f );
+	float yPiv		= state.GetValue < float >( 3, 0.0f );
+	float delay		= state.GetValue < float >( 4, 0.0f );
+	
+	if ( delay > 0.0f ) {
+	
+		u32 mode = state.GetValue < u32 >( 5, USInterpolate::kSmooth );
+		
+		MOAIEaseDriver* action = new MOAIEaseDriver ();
+		action->ReserveLinks ( 2 );
+		
+		action->SetLink ( 0, self, MOAITransformAttr::Pack ( ATTR_X_PIV ), xPiv, mode );
+		action->SetLink ( 1, self, MOAITransformAttr::Pack ( ATTR_Y_PIV ), yPiv, mode );
+		
+		action->SetLength ( delay );
+		action->Start ();
+		action->PushLuaUserdata ( state );
+
+		return 1;
+	}
+	
+	self->mPiv.mX += xPiv;
+	self->mPiv.mY += yPiv;
 	self->ScheduleUpdate ();
 
 	return 0;
@@ -443,6 +528,52 @@ int MOAITransform::_seekLoc ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	seekPiv
+	@text	Animate the transform by applying a delta. Delta is computed
+			given a target value. Creates and returns a MOAIEaseDriver
+			initialized to apply the delta.
+	
+	@in		MOAITransform self
+	@in		number xGoal		Desired resulting value for xPiv.
+	@in		number yGoal		Desired resulting value for yPiv.
+	@in		number length		Length of animation in seconds.
+	@opt	number mode			The ease mode. One of MOAIEaseType.EASE_IN, MOAIEaseType.EASE_OUT, MOAIEaseType.FLAT MOAIEaseType.LINEAR,
+								MOAIEaseType.SMOOTH, MOAIEaseType.SOFT_EASE_IN, MOAIEaseType.SOFT_EASE_OUT, MOAIEaseType.SOFT_SMOOTH. Defaults to MOAIEaseType.SMOOTH.
+
+	@out	MOAIEaseDriver easeDriver
+*/
+int MOAITransform::_seekPiv ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITransform, "UNNN" )
+
+	float xPiv		= state.GetValue < float >( 2, 0.0f );
+	float yPiv		= state.GetValue < float >( 3, 0.0f );
+	float delay		= state.GetValue < float >( 4, 0.0f );
+	
+	if ( delay > 0.0f ) {
+
+		u32 mode = state.GetValue < u32 >( 5, USInterpolate::kSmooth );		
+		
+		MOAIEaseDriver* action = new MOAIEaseDriver ();
+		action->ReserveLinks ( 2 );
+
+		action->SetLink ( 0, self, MOAITransformAttr::Pack ( ATTR_X_PIV ), xPiv - self->mPiv.mX, mode );
+		action->SetLink ( 1, self, MOAITransformAttr::Pack ( ATTR_Y_PIV ), yPiv - self->mPiv.mY, mode );
+		
+		action->SetLength ( delay );
+		action->Start ();
+		action->PushLuaUserdata ( state );
+
+		return 1;
+	}
+	
+	self->mPiv.mX = xPiv;
+	self->mPiv.mY = yPiv;
+	self->ScheduleUpdate ();
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	seekRot
 	@text	Animate the transform by applying a delta. Delta is computed
 			given a target value. Creates and returns a MOAIEaseDriver
@@ -554,6 +685,29 @@ int MOAITransform::_setLoc ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	setPiv
+	@text	Sets the transform's pivot.
+	
+	@in		MOAITransform self
+	@in		number xPiv
+	@in		number yPiv
+	@out	nil
+*/
+int MOAITransform::_setPiv ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITransform, "UNN" )
+	
+	USVec2D piv;
+	
+	piv.mX = state.GetValue < float >( 2, 0.0f );
+	piv.mY = state.GetValue < float >( 3, 0.0f );
+	
+	self->SetPiv ( piv );
+	self->ScheduleUpdate ();
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	setRot
 	@text	Sets the transform's rotation.
 	
@@ -631,6 +785,12 @@ bool MOAITransform::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 	if ( MOAITransformAttr::Check ( attrID )) {
 
 		switch ( UNPACK_ATTR ( attrID )) {
+			case ATTR_X_PIV:
+				this->mPiv.mX = attrOp.Apply ( this->mPiv.mX, op, MOAINode::ATTR_READ_WRITE );
+				return true;
+			case ATTR_Y_PIV:
+				this->mPiv.mY = attrOp.Apply ( this->mPiv.mY, op, MOAINode::ATTR_READ_WRITE );
+				return true;
 			case ATTR_X_LOC:
 				this->mLoc.mX = attrOp.Apply ( this->mLoc.mX, op, MOAINode::ATTR_READ_WRITE );
 				return true;
@@ -681,6 +841,13 @@ void MOAITransform::BuildTransforms ( float xOff, float yOff, float xStretch, fl
 			this->mLocalToWorldMtx.m [ USAffine2D::C2_R1 ] = loc.mY;
 		}
 	}
+	
+	if (( this->mPiv.mX != 0.0f ) || ( this->mPiv.mY != 0.0f )) {
+		
+		USAffine2D pivot;
+		pivot.Translate ( -this->mPiv.mX, -this->mPiv.mY );
+		this->mLocalToWorldMtx.Prepend ( pivot );
+	}
 	this->mWorldToLocalMtx.Inverse ( this->mLocalToWorldMtx );
 }
 
@@ -698,6 +865,7 @@ const USAffine2D& MOAITransform::GetWorldToLocalMtx () {
 
 //----------------------------------------------------------------//
 MOAITransform::MOAITransform () :
+	mPiv ( 0.0f, 0.0f ),
 	mLoc ( 0.0f, 0.0f ),
 	mScale ( 1.0f, 1.0f ),
 	mDegrees ( 0.0f ) {
@@ -722,6 +890,8 @@ void MOAITransform::RegisterLuaClass ( USLuaState& state ) {
 	
 	MOAITransformBase::RegisterLuaClass ( state );
 	
+	state.SetField ( -1, "ATTR_X_PIV",			MOAITransformAttr::Pack ( ATTR_X_PIV ));
+	state.SetField ( -1, "ATTR_Y_PIV",			MOAITransformAttr::Pack ( ATTR_Y_PIV ));
 	state.SetField ( -1, "ATTR_X_LOC",			MOAITransformAttr::Pack ( ATTR_X_LOC ));
 	state.SetField ( -1, "ATTR_Y_LOC",			MOAITransformAttr::Pack ( ATTR_Y_LOC ));
 	state.SetField ( -1, "ATTR_Z_ROT",			MOAITransformAttr::Pack ( ATTR_Z_ROT ));
@@ -740,21 +910,26 @@ void MOAITransform::RegisterLuaFuncs ( USLuaState& state ) {
 	
 	luaL_Reg regTable [] = {
 		{ "addLoc",				_addLoc },
+		{ "addPiv",				_addPiv },
 		{ "addRot",				_addRot },
 		{ "addScl",				_addScl },
 		{ "getLoc",				_getLoc },
+		{ "getPiv",				_getPiv },
 		{ "getRot",				_getRot },
 		{ "getScl",				_getScl },
 		{ "modelToWorld",		_modelToWorld },
 		{ "move",				_move },
 		{ "moveLoc",			_moveLoc },
+		{ "movePiv",			_movePiv },
 		{ "moveRot",			_moveRot },
 		{ "moveScl",			_moveScl },
 		{ "seek",				_seek },
 		{ "seekLoc",			_seekLoc },
+		{ "seekPiv",			_seekPiv },
 		{ "seekRot",			_seekRot },
 		{ "seekScl",			_seekScl },
 		{ "setLoc",				_setLoc },
+		{ "setPiv",				_setPiv },
 		{ "setRot",				_setRot },
 		{ "setScl",				_setScl },
 		{ "worldToModel",		_worldToModel },
@@ -769,6 +944,13 @@ void MOAITransform::SetLoc ( float x, float y ) {
 
 	this->mLoc.mX = x;
 	this->mLoc.mY = y;
+}
+
+//----------------------------------------------------------------//
+void MOAITransform::SetPiv ( float x, float y ) {
+
+	this->mPiv.mX = x;
+	this->mPiv.mY = y;
 }
 
 //----------------------------------------------------------------//
