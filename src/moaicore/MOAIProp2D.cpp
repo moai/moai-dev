@@ -387,7 +387,7 @@ bool MOAIProp2D::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 				attrOp.Apply < MOAIBlendMode >( this->mBlendMode, op, MOAINode::ATTR_READ_WRITE );
 				return true;
 			case ATTR_VISIBLE:
-				this->mIndex = USFloat::ToBoolean ( attrOp.Apply ( USFloat::FromBoolean ( this->mVisible ), op, MOAINode::ATTR_READ_WRITE ));
+				this->mVisible = USFloat::ToBoolean ( attrOp.Apply ( USFloat::FromBoolean ( this->mVisible ), op, MOAINode::ATTR_READ_WRITE ));
 				return true;
 			case FRAME_TRAIT:
 				attrOp.Apply < USRect >( &this->mFrame, op, MOAINode::ATTR_READ );

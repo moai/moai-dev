@@ -6,6 +6,9 @@
 
 #include <moaicore/MOAIAttrOp.h>
 
+#define PACK_ATTR(type,attrID)	\
+	( MOAINode::PackAttrID < type >( type::attrID ))
+
 #define UNPACK_ATTR(attrID)	\
 	( attrID & MOAINode::ATTR_ID_MASK )
 

@@ -41,6 +41,9 @@ public:
 		ATTR_WORLD_Z_ROT,
 		ATTR_WORLD_X_SCL,
 		ATTR_WORLD_Y_SCL,
+		
+		TRANSFORM_TRAIT,
+		
 		TOTAL_ATTR,
 	};
 	

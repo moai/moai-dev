@@ -325,11 +325,11 @@ int MOAINode::_setParent ( lua_State* L ) {
 
 	MOAINode* parent = state.GetLuaObject < MOAINode >( 2 );
 	
-	self->SetAttrLink ( MOAINode::PackAttrID < MOAIColor >( MOAIColor::INHERIT_COLOR ), parent, MOAINode::PackAttrID < MOAIColor >( MOAIColor::COLOR_TRAIT ));
-	self->SetAttrLink ( MOAINode::PackAttrID < MOAITransform >( MOAITransform::INHERIT_TRANSFORM ), parent, MOAINode::PackAttrID < MOAITransform >( MOAITransform::TRANSFORM_TRAIT ) );
-	self->SetAttrLink ( MOAINode::PackAttrID < MOAIProp2D >( MOAIProp2D::ATTR_VISIBLE ), parent, MOAINode::PackAttrID < MOAIProp2D >( MOAIProp2D::ATTR_VISIBLE ));
+	self->SetAttrLink ( PACK_ATTR ( MOAIColor, INHERIT_COLOR ), parent, PACK_ATTR ( MOAIColor, COLOR_TRAIT ));
+	self->SetAttrLink ( PACK_ATTR ( MOAITransform, INHERIT_TRANSFORM ), parent, PACK_ATTR ( MOAITransformBase, TRANSFORM_TRAIT ));
+	self->SetAttrLink ( PACK_ATTR ( MOAIProp2D, ATTR_VISIBLE ), parent, PACK_ATTR ( MOAIProp2D, ATTR_VISIBLE ));
 	
-	MOAILog ( state, MOAILogMessages::MOAI_FunctionDeprecated_S, "setParent" );
+	//MOAILog ( state, MOAILogMessages::MOAI_FunctionDeprecated_S, "setParent" );
 	
 	return 0;
 }

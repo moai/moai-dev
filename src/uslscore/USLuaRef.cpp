@@ -254,8 +254,19 @@ bool USLuaRef::PushRef ( USLuaState& state ) {
 		luaRuntime.mStrongRefTable.PushRef ( state, this->mRef );
 	}
 
-	// make sure
-	return !lua_isnil ( state, -1 );
+	// this is a nasty edge case where the userdata has been tagged for garbage
+	// collection, but not actually collected. the result is that the ref hasn't
+	// be cleared yet, but when we push it we get nil. this should only happen to
+	// refs to userdata. it's tempting to try and clear out the ref here, but if
+	// the ref is to a USLuaObject's userdata, the next step may be to recreate
+	// the object... which means when it is garbage collected the wrong (new)
+	// userdata will be cleaned up! so all we can do is force a full collection
+	// step, set ourselves to nil and return failure.
+	if ( lua_isnil ( state, -1 )) {
+		USLuaRuntime::Get ().ForceGarbageCollection ();
+		return false;
+	}
+	return true;
 }
 
 //----------------------------------------------------------------//
