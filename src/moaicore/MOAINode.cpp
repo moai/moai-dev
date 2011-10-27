@@ -381,8 +381,8 @@ void MOAINode::ClearAttrLink ( int attrID ) {
 	this->mPullLinks = 0;
 
 	while ( cursor ) {
-		cursor = cursor->mNextInDest;
 		MOAIDepLink* link = cursor;
+		cursor = cursor->mNextInDest;
 		
 		if ( link->mDestAttrID == ( u32 )attrID ) {
 			link->mSourceNode->RemoveDepLink ( *link );
@@ -633,6 +633,10 @@ void MOAINode::ScheduleUpdate () {
 void MOAINode::SetAttrLink ( int attrID, MOAINode* srcNode, int srcAttrID ) {
 	
 	if ( attrID == ( int )NULL_ATTR ) return;
+	
+	if (( srcNode ) && ( !srcNode->CheckAttrExists ( srcAttrID ))) {
+		srcNode = 0;
+	}
 	
 	if (( !srcNode ) || ( srcAttrID == ( int )NULL_ATTR )) {
 		this->ClearAttrLink ( attrID );

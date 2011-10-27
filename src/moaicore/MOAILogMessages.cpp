@@ -79,6 +79,7 @@ void MOAILogMessages::RegisterDefaultLogMessages () {
 		MOAILogMgr& log = MOAILogMgr::Get ();
 		
 		log.RegisterLogMessage ( MOAI_FileNotFound_S,				MOAILogMgr::LOG_ERROR,		"File not found: %s" );
+		log.RegisterLogMessage ( MOAI_FunctionDeprecated_S,			MOAILogMgr::LOG_WARNING,	"WARNING: Function '%s' has been deprecated." );
 		log.RegisterLogMessage ( MOAI_IndexNoReserved,				MOAILogMgr::LOG_ERROR,		"Nothing reserved" );
 		log.RegisterLogMessage ( MOAI_IndexOutOfRange_DDD,			MOAILogMgr::LOG_ERROR,		"Index %d is out of acceptable range [%d, %d]" );
 		log.RegisterLogMessage ( MOAI_NewIsUnsupported,				MOAILogMgr::LOG_ERROR,		"Method \'new\' is unsupported. Instances of this class are created by the engine or through another interface." );
@@ -104,6 +105,7 @@ void MOAILogMessages::RegisterLogMessageIDs ( USLuaState& state ) {
 	UNUSED ( state );
 	
 	REGISTER_LOG_MESSAGE ( MOAI_FileNotFound_S )
+	REGISTER_LOG_MESSAGE ( MOAI_FunctionDeprecated_S )
 	REGISTER_LOG_MESSAGE ( MOAI_IndexNoReserved )
 	REGISTER_LOG_MESSAGE ( MOAI_IndexOutOfRange_DDD )
 	REGISTER_LOG_MESSAGE ( MOAI_NewIsUnsupported )

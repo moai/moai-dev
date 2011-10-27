@@ -84,6 +84,7 @@ protected:
 	static int		_setGrid			( lua_State* L );
 	static int		_setGridScale		( lua_State* L );
 	static int		_setIndex			( lua_State* L );
+	static int		_setParent			( lua_State* L );
 	static int		_setRemapper		( lua_State* L );
 	static int		_setRepeat			( lua_State* L );
 	static int		_setShader			( lua_State* L );

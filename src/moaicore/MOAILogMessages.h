@@ -32,6 +32,7 @@ public:
 
 	enum {
 		MOAI_FileNotFound_S,
+		MOAI_FunctionDeprecated_S,
 		MOAI_IndexNoReserved,
 		MOAI_IndexOutOfRange_DDD,
 		MOAI_NewIsUnsupported,
