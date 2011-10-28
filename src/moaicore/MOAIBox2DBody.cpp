@@ -53,6 +53,45 @@ int MOAIBox2DBody::_addCircle ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	addEdge
+ @text	Create and add a polygon fixture to the body.
+ 
+ @in		MOAIBox2DBody self
+ @in		table verts Array containing vertex coordinate components ( t[1] = x0, t[2] = y0, t[3] = x1, t[4] = y1 )
+ @out	    MOAIBox2DFixture fixture	Returns nil on failure.
+ */
+int MOAIBox2DBody::_addEdge ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIBox2DBody, "U" )
+	float unitsToMeters = self->GetUnitsToMeters ();
+	
+	if ( !self->mBody ) {
+		MOAILog ( state, MOAILogMessages::MOAIBox2DBody_MissingInstance );
+		return 0;
+	}
+	
+	b2Vec2 verts[2];
+	int numVerts = MOAIBox2DFixture::LoadVerts(state, 2, verts, 2, unitsToMeters);
+	
+	if (numVerts) {
+		
+		b2PolygonShape polyShape;
+		polyShape.SetAsEdge(verts[0], verts[1]);
+		
+		b2FixtureDef fixtureDef;
+		fixtureDef.shape = &polyShape;
+		
+		MOAIBox2DFixture* fixture = new MOAIBox2DFixture ();
+		fixture->SetFixture ( self->mBody->CreateFixture ( &fixtureDef ));
+		fixture->SetWorld ( self->mWorld );
+		self->mWorld->LuaRetain ( *fixture );
+		
+		fixture->PushLuaUserdata ( state );
+		return 1;
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	addPolygon
 	@text	Create and add a polygon fixture to the body.
 	
@@ -869,6 +908,7 @@ void MOAIBox2DBody::RegisterLuaFuncs ( USLuaState& state ) {
 	
 	luaL_Reg regTable [] = {
 		{ "addCircle",				_addCircle },
+		{ "addEdge",                _addEdge },
 		{ "addPolygon",				_addPolygon },
 		{ "addRect",				_addRect },
 		{ "applyAngularImpulse",	_applyAngularImpulse },
