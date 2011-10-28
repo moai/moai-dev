@@ -27,10 +27,12 @@ private:
 	b2Contact*					mContact;
 	const b2ContactImpulse*		mImpulse;
 
+	b2Vec2  mContactNormal;
 	float	mNormalImpulse;
 	float	mTangentImpulse;
 
 	//----------------------------------------------------------------//
+	static int		_getContactNormal		( lua_State* L );
 	static int		_getNormalImpulse		( lua_State* L );
 	static int		_getTangentImpulse		( lua_State* L );
 	static int		_setContactEnabled		( lua_State* L );

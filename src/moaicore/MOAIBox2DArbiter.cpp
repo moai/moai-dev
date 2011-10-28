@@ -15,6 +15,22 @@ SUPPRESS_EMPTY_FILE_WARNING
 //================================================================//
 
 //----------------------------------------------------------------//
+/**	@name	getContactNormal
+ @text	Returns the normal for the contact.
+ 
+ @in	MOAIBox2DArbiter self
+ @out	number normal.x
+ @out	number normal.y
+ */
+int MOAIBox2DArbiter::_getContactNormal ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIBox2DArbiter, "U" )
+	
+	state.Push ( self->mContactNormal.x );
+	state.Push ( self->mContactNormal.y );
+	return 2;
+}
+
+//----------------------------------------------------------------//
 /**	@name	getNormalImpulse
 	@text	Returns total normal impulse for contact.
 	
@@ -68,6 +84,7 @@ void MOAIBox2DArbiter::BeginContact ( b2Contact* contact ) {
 	this->mContact = contact;
 	this->mImpulse = 0;
 	
+	this->mContactNormal = b2Vec2();
 	this->mNormalImpulse = 0.0f;
 	this->mTangentImpulse = 0.0f;
 	
@@ -122,6 +139,11 @@ void MOAIBox2DArbiter::PostSolve ( b2Contact* contact, const b2ContactImpulse* i
 	
 	MOAIBox2DFixture* moaiFixtureA = ( MOAIBox2DFixture* )fixtureA->GetUserData ();
 	MOAIBox2DFixture* moaiFixtureB = ( MOAIBox2DFixture* )fixtureB->GetUserData ();
+		
+	b2WorldManifold* worldManifold = new b2WorldManifold ();
+	contact->GetWorldManifold ( worldManifold );
+	this->mContactNormal = worldManifold->normal;
+	delete worldManifold;
 	
 	b2Manifold* manifold = contact->GetManifold ();
 	u32 totalPoints = manifold->pointCount;
@@ -176,6 +198,7 @@ void MOAIBox2DArbiter::RegisterLuaClass ( USLuaState& state ) {
 void MOAIBox2DArbiter::RegisterLuaFuncs ( USLuaState& state ) {
 
 	luaL_Reg regTable [] = {
+		{ "getContactNormal",			_getContactNormal },
 		{ "getNormalImpulse",			_getNormalImpulse },
 		{ "getTangentImpulse",			_getTangentImpulse },
 		{ "setContactEnabled",			_setContactEnabled },
