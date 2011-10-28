@@ -248,7 +248,20 @@ void _AKUStartGameLoopFunc () {
 //================================================================//
 
 //----------------------------------------------------------------//
+static void _cleanup () {
+
+	// TODO:
+	// don't call this on windows; atexit conflict with untz
+	// possible to fix?
+	//AKUClearMemPool ();
+}
+
+//----------------------------------------------------------------//
 int GlutHost ( int argc, char** argv ) {
+
+	// TODO: integrate this nicely with host
+	//AKUInitMemPool ( 100 * 1024 * 1024 );
+	atexit ( _cleanup );
 
 	glutInit ( &argc, argv );
 

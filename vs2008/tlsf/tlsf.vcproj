@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="zipfs"
-	ProjectGUID="{A92A8C1C-C62D-43F8-98A9-C418A786BE56}"
-	RootNamespace="zipfs"
+	Name="tlsf"
+	ProjectGUID="{1E78302D-CF63-4922-8113-DCCD24F94087}"
+	RootNamespace="tlsf"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="131072"
 	>
@@ -24,7 +24,8 @@
 			OutputDirectory="$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="4"
-			CharacterSet="2"
+			CharacterSet="1"
+			WholeProgramOptimization="0"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -43,23 +44,16 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="/vmg"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\src;&quot;..\..\3rdparty\tlsf-2.0&quot;;&quot;..\..\3rdparty\zlib-1.2.3&quot;"
+				AdditionalIncludeDirectories="..\..\src;&quot;..\..\3rdparty\tlsf-2.0&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS"
-				StringPooling="true"
 				MinimalRebuild="true"
-				ExceptionHandling="1"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
-				BufferSecurityCheck="false"
-				RuntimeTypeInfo="false"
-				UsePrecompiledHeader="2"
-				PrecompiledHeaderThrough="pch.h"
-				WarningLevel="4"
+				WarningLevel="0"
 				DebugInformationFormat="3"
 				CompileAs="1"
-				ShowIncludes="false"
+				ForcedIncludeFiles=""
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -72,7 +66,6 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				AdditionalLibraryDirectories=""
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -88,7 +81,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine=""
+				CommandLine="&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -96,14 +89,14 @@
 			OutputDirectory="$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="4"
-			CharacterSet="2"
+			CharacterSet="1"
+			WholeProgramOptimization="0"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
-				CommandLine=""
 			/>
 			<Tool
 				Name="VCXMLDataGeneratorTool"
@@ -116,26 +109,18 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="/vmg"
 				Optimization="3"
-				EnableIntrinsicFunctions="false"
-				FavorSizeOrSpeed="1"
-				OmitFramePointers="false"
-				AdditionalIncludeDirectories="..\..\src;&quot;..\..\3rdparty\tlsf-2.0&quot;;&quot;..\..\3rdparty\zlib-1.2.3&quot;"
-				PreprocessorDefinitions="WIN32;_LIB;_CRT_SECURE_NO_WARNINGS"
-				StringPooling="true"
-				ExceptionHandling="1"
+				EnableIntrinsicFunctions="true"
+				FavorSizeOrSpeed="2"
+				OmitFramePointers="true"
+				WholeProgramOptimization="false"
+				AdditionalIncludeDirectories="..\..\src;&quot;..\..\3rdparty\tlsf-2.0&quot;"
+				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS"
 				RuntimeLibrary="2"
-				BufferSecurityCheck="false"
-				EnableEnhancedInstructionSet="0"
-				TreatWChar_tAsBuiltInType="true"
-				ForceConformanceInForLoopScope="true"
-				RuntimeTypeInfo="false"
-				UsePrecompiledHeader="2"
-				PrecompiledHeaderThrough="pch.h"
-				WarningLevel="4"
+				WarningLevel="0"
 				DebugInformationFormat="0"
 				CompileAs="1"
+				ForcedIncludeFiles=""
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -148,9 +133,6 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				AdditionalOptions="/LTCG"
-				AdditionalLibraryDirectories=""
-				IgnoreAllDefaultLibraries="true"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -166,7 +148,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine=""
+				CommandLine="&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -174,7 +156,7 @@
 			OutputDirectory="$(PlatformName)\$(ConfigurationName)"
 			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
 			ConfigurationType="4"
-			CharacterSet="2"
+			CharacterSet="1"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -194,22 +176,16 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="/vmg"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;..\..\src&quot;;&quot;..\..\3rdparty\lua-5.1.3\src&quot;;&quot;..\..\3rdparty\SOIL\src&quot;;&quot;..\..\3rdparty\openGL\include&quot;;&quot;..\..\3rdparty\zlib-1.2.3&quot;;&quot;..\..\3rdparty\sqlite-3.6.16&quot;;&quot;..\..\3rdparty\tinyxml&quot;;&quot;..\..\3rdparty\gsoap-2.7\gsoap&quot;;&quot;..\..\3rdparty\FMOD\inc&quot;;&quot;..\..\3rdparty\curl-7.19.7\include&quot;;&quot;..\..\3rdparty\lpng140&quot;;&quot;..\..\3rdparty\expat-2.0.1\lib&quot;"
-				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;AKU_STATIC;XML_STATIC"
-				StringPooling="true"
+				AdditionalIncludeDirectories="&quot;..\..\3rdparty\zlib-1.2.3&quot;"
+				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS"
 				MinimalRebuild="true"
-				ExceptionHandling="1"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
-				BufferSecurityCheck="false"
-				RuntimeTypeInfo="false"
-				UsePrecompiledHeader="2"
-				PrecompiledHeaderThrough="pch.h"
+				ProgramDataBaseFileName="$(OutDir)\$(ProjectName).pdb"
 				WarningLevel="3"
 				DebugInformationFormat="3"
-				ShowIncludes="false"
+				CompileAs="1"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -222,9 +198,6 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				AdditionalDependencies="iphlpapi.lib"
-				OutputFile="$(OutDir)\$(ProjectName).lib"
-				AdditionalLibraryDirectories=""
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -248,14 +221,14 @@
 			OutputDirectory="$(PlatformName)\$(ConfigurationName)"
 			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
 			ConfigurationType="4"
-			CharacterSet="2"
+			CharacterSet="1"
+			WholeProgramOptimization="1"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
-				CommandLine=""
 			/>
 			<Tool
 				Name="VCXMLDataGeneratorTool"
@@ -269,26 +242,17 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="/vmg"
 				Optimization="3"
 				EnableIntrinsicFunctions="true"
 				FavorSizeOrSpeed="2"
 				OmitFramePointers="true"
-				WholeProgramOptimization="true"
-				AdditionalIncludeDirectories="&quot;..\..\src&quot;;&quot;..\..\3rdparty\lua-5.1.3\src&quot;;&quot;..\..\3rdparty\SOIL\src&quot;;&quot;..\..\3rdparty\openGL\include&quot;;&quot;..\..\3rdparty\zlib-1.2.3&quot;;&quot;..\..\3rdparty\sqlite-3.6.16&quot;;&quot;..\..\3rdparty\tinyxml&quot;;&quot;..\..\3rdparty\gsoap-2.7\gsoap&quot;;&quot;..\..\3rdparty\FMOD\inc&quot;;&quot;..\..\3rdparty\curl-7.19.7\include&quot;;&quot;..\..\3rdparty\lpng140&quot;;&quot;..\..\3rdparty\expat-2.0.1\lib&quot;"
-				PreprocessorDefinitions="WIN32;_LIB;_USE_32BIT_TIME_T;_CRT_SECURE_NO_WARNINGS;AKU_STATIC;XML_STATIC"
-				StringPooling="true"
-				ExceptionHandling="1"
+				AdditionalIncludeDirectories="&quot;..\..\3rdparty\SOIL\src&quot;"
+				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS"
 				RuntimeLibrary="2"
-				BufferSecurityCheck="false"
-				EnableEnhancedInstructionSet="1"
-				TreatWChar_tAsBuiltInType="true"
-				ForceConformanceInForLoopScope="true"
-				RuntimeTypeInfo="false"
-				UsePrecompiledHeader="2"
-				PrecompiledHeaderThrough="pch.h"
+				ProgramDataBaseFileName="$(OutDir)\$(ProjectName).pdb"
 				WarningLevel="3"
 				DebugInformationFormat="3"
+				CompileAs="1"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -301,9 +265,6 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				AdditionalOptions="/LTCG"
-				OutputFile="$(OutDir)\$(ProjectName).lib"
-				AdditionalLibraryDirectories=""
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -319,7 +280,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="xcopy /yr &quot;$(OutDir)\$(TargetFileName)&quot; &quot;..\..\windows\bin\&quot;&#x0D;&#x0A;"
+				CommandLine="&#x0D;&#x0A;"
 			/>
 		</Configuration>
 	</Configurations>
@@ -327,75 +288,15 @@
 	</References>
 	<Files>
 		<File
-			RelativePath="..\..\src\zipfs\pch.h"
+			RelativePath="..\..\3rdparty\tlsf-2.0\tlsf.c"
 			>
 		</File>
 		<File
-			RelativePath="..\..\src\zipfs\zipfs-pch.c"
-			>
-			<FileConfiguration
-				Name="Debug|Win32"
-				>
-				<Tool
-					Name="VCCLCompilerTool"
-					UsePrecompiledHeader="1"
-				/>
-			</FileConfiguration>
-			<FileConfiguration
-				Name="Release|Win32"
-				>
-				<Tool
-					Name="VCCLCompilerTool"
-					UsePrecompiledHeader="1"
-				/>
-			</FileConfiguration>
-		</File>
-		<File
-			RelativePath="..\..\src\zipfs\zipfs.c"
+			RelativePath="..\..\3rdparty\tlsf-2.0\tlsf.h"
 			>
 		</File>
 		<File
-			RelativePath="..\..\src\zipfs\zipfs.h"
-			>
-		</File>
-		<File
-			RelativePath="..\..\src\zipfs\zipfs_replace.h"
-			>
-		</File>
-		<File
-			RelativePath="..\..\src\zipfs\zipfs_util.c"
-			>
-		</File>
-		<File
-			RelativePath="..\..\src\zipfs\zipfs_util.h"
-			>
-		</File>
-		<File
-			RelativePath="..\..\src\zipfs\zipfs_vfscanf.c"
-			>
-		</File>
-		<File
-			RelativePath="..\..\src\zipfs\ZIPFSString.c"
-			>
-		</File>
-		<File
-			RelativePath="..\..\src\zipfs\ZIPFSString.h"
-			>
-		</File>
-		<File
-			RelativePath="..\..\src\zipfs\ZIPFSVirtualPath.c"
-			>
-		</File>
-		<File
-			RelativePath="..\..\src\zipfs\ZIPFSVirtualPath.h"
-			>
-		</File>
-		<File
-			RelativePath="..\..\src\zipfs\ZIPFSZipFile.c"
-			>
-		</File>
-		<File
-			RelativePath="..\..\src\zipfs\ZIPFSZipFile.h"
+			RelativePath="..\..\3rdparty\tlsf-2.0\tlsfbits.h"
 			>
 		</File>
 	</Files>

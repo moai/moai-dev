@@ -48,7 +48,7 @@ void uslsext::InitGlobals ( USGlobals* globals ) {
 	if ( sysInit ) {;
 
 		SSL_load_error_strings ();
-		SSL_library_init (); 
+		SSL_library_init ();
 
 		curl_global_init ( CURL_GLOBAL_WIN32 | CURL_GLOBAL_SSL );
 

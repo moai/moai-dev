@@ -9,6 +9,7 @@
 #include <uslsext/USTaskThread.h>
 
 class USHttpTask;
+class USUrlMgrOpaque;
 
 //================================================================//
 // USUrlMgr
@@ -17,7 +18,8 @@ class USUrlMgr :
 	public USGlobalClass < USUrlMgr > {
 private:
 
-	USTaskThread	mDataIOThread;
+	USUrlMgrOpaque*		mOpaque;
+	USTaskThread		mDataIOThread;
 
 	//----------------------------------------------------------------//
 	void			AddHandle			( USHttpTask& task );

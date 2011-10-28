@@ -35,8 +35,8 @@ struct AKUContext {
 	AKU_DEFINE_FUNC_CONTEXT ( OpenWindow );
 	AKU_DEFINE_FUNC_CONTEXT ( StartGameLoop );
 	
-	USGlobals*	mGlobals;
-	void*		mUserdata;
+	USGlobals*			mGlobals;
+	void*				mUserdata;
 };
 
 typedef STLMap < AKUContextID, AKUContext* >::iterator ContextMapIt;
@@ -81,6 +81,17 @@ static void _deleteContext ( AKUContext* context ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+void AKUClearMemPool () {
+
+	ZIPFS_TLSF_POOL* pool = zipfs_tlsf_get_pool ();
+	zipfs_tlsf_set_pool ( 0 );
+	
+	if ( pool ) {
+		zipfs_tlsf_destroy_pool ( pool );
+	}
+}
+
+//----------------------------------------------------------------//
 AKUContextID AKUCreateContext () {
 	
 	static bool sysInit = true;
@@ -108,10 +119,10 @@ AKUContextID AKUCreateContext () {
 //----------------------------------------------------------------//
 void AKUDeleteContext ( AKUContextID contextID ) {
 	
-	AKUContext* context = gContextMap->value_for_key ( contextID );
-	if ( !context ) return;
+	AKUSetContext ( contextID );
+	if ( !gContext ) return;
 	
-	_deleteContext ( context );
+	_deleteContext ( gContext );
 	gContextMap->erase ( contextID );
 	
 	AKUSetContext ( 0 );
@@ -215,6 +226,15 @@ lua_State* AKUGetLuaState () {
 char const* AKUGetWorkingDirectory () {
 
 	return zipfs_get_working_path ();
+}
+
+//----------------------------------------------------------------//
+void AKUInitMemPool ( size_t bytes ) {
+
+	assert ( !zipfs_tlsf_get_pool ());
+
+	ZIPFS_TLSF_POOL* pool = zipfs_tlsf_create_pool ( bytes );
+	zipfs_tlsf_set_pool ( pool );
 }
 
 //----------------------------------------------------------------//

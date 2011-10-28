@@ -25,11 +25,17 @@ typedef struct zipfs_stat {
 // stdlib
 //================================================================//
 
+typedef void ZIPFS_TLSF_POOL;
+
 //----------------------------------------------------------------//
 extern void*				zipfs_calloc				( size_t num, size_t size );
-extern void					zipfs_free					( void * ptr );
+extern void					zipfs_free					( void* ptr );
 extern void*				zipfs_malloc				( size_t size );
-extern void*				zipfs_realloc				( void * ptr, size_t size );
+extern void*				zipfs_realloc				( void* ptr, size_t size );
+extern ZIPFS_TLSF_POOL*		zipfs_tlsf_create_pool		( size_t bytes );
+extern void					zipfs_tlsf_destroy_pool		( ZIPFS_TLSF_POOL* opaque );
+extern ZIPFS_TLSF_POOL*		zipfs_tlsf_get_pool			();
+extern void					zipfs_tlsf_set_pool			( ZIPFS_TLSF_POOL* opaque );
 
 //================================================================//
 // stdio

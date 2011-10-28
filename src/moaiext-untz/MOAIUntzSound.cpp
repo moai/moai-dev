@@ -105,7 +105,7 @@ int MOAIUntzSound::_load ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIUntzSound, "U" )
 
 	if ( self->mSound ) {
-		delete self->mSound;
+		UNTZ::Sound::dispose ( self->mSound );
 		self->mSound = 0;
 	}
 
@@ -366,7 +366,7 @@ MOAIUntzSound::~MOAIUntzSound () {
 		//printf ( "deleteing sound: %s - %s\n", mFilename.str(), (mInMemory) ? "in memory" : "not in memory" );
 		
 	if ( this->mSound ) {
-		delete this->mSound;
+		UNTZ::Sound::dispose ( this->mSound );
 	}
 }
 //----------------------------------------------------------------//

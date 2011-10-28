@@ -17,7 +17,8 @@ class MOAIProp2D;
 	@const	EVENT_FINALIZE
 */
 class MOAISim :
-	public USGlobalClass < MOAISim, MOAIGlobalEventSource > {
+	public USGlobalClass < MOAISim, MOAIGlobalEventSource >,
+	public USGlobalClassFinalizer {
 private:
 
 	// timer state
@@ -102,6 +103,9 @@ private:
 
 	//----------------------------------------------------------------//
 	void			MeasureFrameRate			();
+	void			OnGlobalsFinalize			();
+	void			OnGlobalsRestore			();
+	void			OnGlobalsRetire				();
 	double			StepSim						( double step );
 
 public:

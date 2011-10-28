@@ -39,6 +39,8 @@ namespace UNTZ
 		// Decode file, data will be allocated by the function and the caller is responsible for freeing
 		static bool decode(const RString& path, SoundInfo& info, float** data);
 
+		static void dispose ( Sound* sound );
+
 		void setLooping(bool loop);
 		bool isLooping() const;
 		void setLoopPoints(double startTime, double endTime);

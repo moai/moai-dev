@@ -649,7 +649,7 @@ void MOAIDraw::DrawVertexArray ( const float* verts, u32 count, u32 color, u32 p
 //----------------------------------------------------------------//
 MOAIDraw::MOAIDraw () {
 
-	RTTI_SINGLE ( MOAIDraw )
+	RTTI_SINGLE ( USLuaObject )
 }
 
 //----------------------------------------------------------------//

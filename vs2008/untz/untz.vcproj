@@ -484,10 +484,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\3rdparty\rtaudio-4.0.8\include\iasiothiscallresolver.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\..\3rdparty\rtaudio-4.0.8\include\iasiothiscallresolver.h"
 				>
 			</File>

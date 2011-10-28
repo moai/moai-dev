@@ -6,19 +6,6 @@
 #include <moaicore/moaicore.h>
 
 //================================================================//
-// MOAIGlobalsFinalizer
-//================================================================//
-class MOAIGlobalsFinalizer :
-	public USGlobalsFinalizer {
-public:
-
-	//----------------------------------------------------------------//
-	void OnFinalize () {
-		MOAISim::Get ().SendFinalizeEvent ();
-	}
-};
-
-//================================================================//
 // moaicore
 //================================================================//
 
@@ -152,6 +139,4 @@ void moaicore::InitGlobals ( USGlobals* globals ) {
 		REGISTER_LUA_CLASS ( MOAICpShape )
 		REGISTER_LUA_CLASS ( MOAICpSpace )
 	#endif
-	
-	globals->PushFinalizer < MOAIGlobalsFinalizer >();
 }

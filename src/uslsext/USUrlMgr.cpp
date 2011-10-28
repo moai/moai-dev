@@ -8,12 +8,37 @@
 #include <uslsext/USUrlMgr.h>
 
 //================================================================//
+// USUrlMgrOpaque
+//================================================================//
+class USUrlMgrOpaque {
+public:
+
+	STLMap < CURL*, USHttpTask* > mHandleMap;
+	CURLM*	mMultiHandle;
+	bool	mMore;
+
+	//----------------------------------------------------------------//
+	USUrlMgrOpaque () :
+		mMultiHandle ( 0 ),
+		mMore ( false ) {
+		
+		this->mMultiHandle = curl_multi_init ();
+	}
+	
+	//----------------------------------------------------------------//
+	~USUrlMgrOpaque () {
+
+		if ( this->mMultiHandle ) {
+			curl_multi_cleanup ( this->mMultiHandle );
+		}
+	}
+};
+
+//================================================================//
 // USUrlMgr
 //================================================================//
 
-static CURLM* sMultiHandle = 0;
-static bool sMore = false;
-static STLMap < CURL*, USHttpTask* > sHandleMap;
+
 
 //----------------------------------------------------------------//
 void USUrlMgr::AddHandle ( USHttpTask& task ) {
@@ -23,43 +48,46 @@ void USUrlMgr::AddHandle ( USHttpTask& task ) {
 	CURL* handle = task.mInfo->mEasyHandle;
 	if ( !handle ) return;
 	
-	curl_multi_add_handle ( sMultiHandle, handle );
-	sHandleMap [ handle ] = &task;
-	sMore = true;
+	curl_multi_add_handle ( this->mOpaque->mMultiHandle, handle );
+	this->mOpaque->mHandleMap [ handle ] = &task;
+	this->mOpaque->mMore = true;
 }
 
 //----------------------------------------------------------------//
 bool USUrlMgr::More () {
 
-	return sMore;
+	return this->mOpaque->mMore;
 }
 
 //----------------------------------------------------------------//
 void USUrlMgr::Process () {
 
+	STLMap < CURL*, USHttpTask* >& handleMap = this->mOpaque->mHandleMap;
+	CURLM* multiHandle = this->mOpaque->mMultiHandle;
+
 	this->mDataIOThread.Publish ();
 
-	if ( !sMore ) return;
-	sMore = false;
+	if ( !this->mOpaque->mMore ) return;
+	this->mOpaque->mMore = false;
 
-	if ( !sMultiHandle ) return;
+	if ( !multiHandle ) return;
 	
 	// pump the multi handle
 	int stillRunning;
-	while ( CURLM_CALL_MULTI_PERFORM == curl_multi_perform ( sMultiHandle, &stillRunning ));
+	while ( CURLM_CALL_MULTI_PERFORM == curl_multi_perform ( multiHandle, &stillRunning ));
 
 	int msgsInQueue;
 	CURLMsg* msg;
 	do {
 		
-		msg = curl_multi_info_read ( sMultiHandle, &msgsInQueue );
+		msg = curl_multi_info_read ( multiHandle, &msgsInQueue );
 	
 		if ( msg && ( msg->msg == CURLMSG_DONE )) {
 		
 			CURL* handle = msg->easy_handle;
-			if ( sHandleMap.contains ( handle )) {
-				sHandleMap [ handle ]->Finish ();
-				sHandleMap.erase ( handle );
+			if ( handleMap.contains ( handle )) {
+				handleMap [ handle ]->Finish ();
+				handleMap.erase ( handle );
 			}
 		}
 	}
@@ -68,22 +96,18 @@ void USUrlMgr::Process () {
 	// bail if nothing left running
 	if ( !stillRunning ) return;
 	
-	sMore = true;
+	this->mOpaque->mMore = true;
 }
 
 //----------------------------------------------------------------//
 USUrlMgr::USUrlMgr () {
 
-	sMultiHandle = curl_multi_init ();
+	this->mOpaque = new USUrlMgrOpaque ();
 }
 
 //----------------------------------------------------------------//
 USUrlMgr::~USUrlMgr () {
-
-	if ( sMultiHandle ) {
-		curl_multi_cleanup ( sMultiHandle );
-	}
 	
-	sHandleMap.clear ();
+	delete this->mOpaque;
 }
 

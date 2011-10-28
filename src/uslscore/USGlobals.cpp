@@ -7,15 +7,49 @@
 #include <uslscore/USGlobals.h>
 
 //================================================================//
-// USGlobalsFinalizer
+// USGlobalClassFinalizer
 //================================================================//
 
 //----------------------------------------------------------------//
-USGlobalsFinalizer::USGlobalsFinalizer () {
+void USGlobalClassFinalizer::OnGlobalsFinalize () {
 }
 
 //----------------------------------------------------------------//
-USGlobalsFinalizer::~USGlobalsFinalizer () {
+void USGlobalClassFinalizer::OnGlobalsRestore () {
+}
+
+//----------------------------------------------------------------//
+void USGlobalClassFinalizer::OnGlobalsRetire () {
+}
+
+//----------------------------------------------------------------//
+USGlobalClassFinalizer::USGlobalClassFinalizer () {
+
+	USGlobals* globals = USGlobalsMgr::Get ();
+	assert ( globals );
+	
+	this->mNext = globals->mFinalizers;
+	globals->mFinalizers = this;
+}
+
+//----------------------------------------------------------------//
+USGlobalClassFinalizer::~USGlobalClassFinalizer () {
+
+	USGlobals* globals = USGlobalsMgr::Get ();
+	assert ( globals );
+	
+	USGlobalClassFinalizer* cursor = globals->mFinalizers;
+	globals->mFinalizers = 0;
+	
+	while ( cursor ) {
+		USGlobalClassFinalizer* finalizer = cursor;
+		cursor = cursor->mNext;
+		
+		if ( finalizer != this ) {
+			finalizer->mNext = globals->mFinalizers;
+			globals->mFinalizers = finalizer;
+		}
+	}
 }
 
 //================================================================//
@@ -23,25 +57,42 @@ USGlobalsFinalizer::~USGlobalsFinalizer () {
 //================================================================//
 
 //----------------------------------------------------------------//
-USGlobals::USGlobals () {
+void USGlobals::Restore () {
+
+	USGlobalClassFinalizer* finalizer = this->mFinalizers;
+	for ( ; finalizer; finalizer = finalizer->mNext ) {
+		finalizer->OnGlobalsRestore ();
+	}
+}
+
+//----------------------------------------------------------------//
+void USGlobals::Retire () {
+
+	USGlobalClassFinalizer* finalizer = this->mFinalizers;
+	for ( ; finalizer; finalizer = finalizer->mNext ) {
+		finalizer->OnGlobalsRetire ();
+	}
+}
+
+//----------------------------------------------------------------//
+USGlobals::USGlobals () :
+	mFinalizers ( 0 ) {
 }
 
 //----------------------------------------------------------------//
 USGlobals::~USGlobals () {
 
-	FinalizersIt finalizersIt = this->mFinalizers.begin ();
-	for ( ; finalizersIt != this->mFinalizers.end (); ++finalizersIt ) {
-		USGlobalsFinalizer* finalizer = ( *finalizersIt );
-		finalizer->OnFinalize ();
-		delete finalizer;
+	USGlobalClassFinalizer* finalizer = this->mFinalizers;
+	for ( ; finalizer; finalizer = finalizer->mNext ) {
+		finalizer->OnGlobalsFinalize ();
 	}
-	this->mFinalizers.clear ();
-
+	this->mFinalizers = 0;
+	
 	u32 total = this->mGlobals.Size ();
 	for ( u32 i = 1; i <= total; ++i ) {
 		USGlobalPair& pair = this->mGlobals [ total - i ];
-		
 		USObject* object = pair.mObject;
+		
 		pair.mObject = 0;
 		pair.mPtr = 0;
 		

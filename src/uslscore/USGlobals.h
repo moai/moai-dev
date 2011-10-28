@@ -40,27 +40,34 @@ public:
 };
 
 //================================================================//
+// USGlobalClassFinalizer
+//================================================================//
+class USGlobalClassFinalizer {
+private:
+
+	friend class USGlobals;
+	
+	USGlobalClassFinalizer* mNext;
+
+protected:
+
+	//----------------------------------------------------------------//
+	virtual void	OnGlobalsFinalize			();
+	virtual void	OnGlobalsRestore			();
+	virtual void	OnGlobalsRetire				();
+					USGlobalClassFinalizer		();
+	virtual			~USGlobalClassFinalizer		();
+};
+
+//================================================================//
 // USGlobalPair
 //================================================================//
 class USGlobalPair {
 private:
-
 	friend class USGlobals;
 
-	USObject*		mObject;
-	void*			mPtr;
-};
-
-//================================================================//
-// USGlobalsFinalizer
-//================================================================//
-class USGlobalsFinalizer {
-public:
-
-	//----------------------------------------------------------------//
-	virtual void	OnFinalize				() = 0;
-					USGlobalsFinalizer		();
-	virtual			~USGlobalsFinalizer		();
+	USObject*					mObject;
+	void*						mPtr;
 };
 
 //================================================================//
@@ -70,19 +77,20 @@ class USGlobals {
 private:
 
 	friend class USGlobalsMgr;
+	friend class USGlobalClassFinalizer;
 
 	enum {
 		CHUNK_SIZE = 32,
 	};
 
-	USLeanArray < USGlobalPair > mGlobals;
-	
-	typedef STLList < USGlobalsFinalizer* >::iterator FinalizersIt;
-	STLList < USGlobalsFinalizer* > mFinalizers;
+	USLeanArray < USGlobalPair >	mGlobals;
+	USGlobalClassFinalizer*			mFinalizers;
 
 	//----------------------------------------------------------------//
-			USGlobals		();
-			~USGlobals		();
+	void		Restore			();
+	void		Retire			();
+				USGlobals		();
+				~USGlobals		();
 
 public:
 	
@@ -131,13 +139,6 @@ public:
 			}
 		}
 		return false;
-	}
-	
-	//----------------------------------------------------------------//
-	template < typename TYPE >
-	void PushFinalizer () {
-		TYPE* finalizer = new TYPE ();
-		this->mFinalizers.push_front ( finalizer );
 	}
 };
 

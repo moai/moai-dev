@@ -689,6 +689,19 @@ void MOAISim::MeasureFrameRate () {
 }
 
 //----------------------------------------------------------------//
+void MOAISim::OnGlobalsFinalize () {
+	this->SendFinalizeEvent ();
+}
+
+//----------------------------------------------------------------//
+void MOAISim::OnGlobalsRestore () {
+}
+
+//----------------------------------------------------------------//
+void MOAISim::OnGlobalsRetire () {
+}
+
+//----------------------------------------------------------------//
 void MOAISim::PauseMOAI () {
 
 	this->mLoopState = PAUSED;

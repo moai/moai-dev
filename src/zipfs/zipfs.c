@@ -19,6 +19,7 @@
 #include <errno.h>
 #include <sys/stat.h>
 #include <time.h>
+#include <tlsf.h>
 
 #ifdef _WIN32
 	#define S_ISDIR(B) (((B)&_S_IFDIR)!=0)
@@ -62,6 +63,17 @@ typedef struct ZIPFSDir {
 	#endif
 
 } ZIPFSDir;
+
+//================================================================//
+// ZIPFSTlsfPool
+//================================================================//
+typedef struct ZIPFSTlsfPool {
+
+	tlsf_pool	mPool;
+	void*		mBuffer;
+
+} ZIPFSTlsfPool;
+
 
 //----------------------------------------------------------------//
 int ZIPFSDir_ReadZipEntry ( ZIPFSDir* self ) {
@@ -227,24 +239,83 @@ int is_virtual_path ( char const* path ) {
 // stdlib
 //================================================================//
 
+static ZIPFSTlsfPool* sTlsfPool = 0;
+
 //----------------------------------------------------------------//
 void* zipfs_calloc ( size_t num, size_t size ) {
+
+	if ( sTlsfPool ) {
+		void* ptr = tlsf_malloc ( sTlsfPool->mPool, num * size );
+		if ( ptr ) {
+			memset ( ptr, 0, num * size );
+		}
+		return ptr;
+	}
 	return calloc ( num, size );
 }
 
 //----------------------------------------------------------------//
-void zipfs_free ( void * ptr ) {
-	free ( ptr );
+void zipfs_free ( void* ptr ) {
+
+	if ( sTlsfPool ) {
+		tlsf_free ( sTlsfPool->mPool, ptr );
+	}
+	else {
+		free ( ptr );
+	}
 }
 
 //----------------------------------------------------------------//
 void* zipfs_malloc ( size_t size ) {
+
+	if ( sTlsfPool ) {
+		return tlsf_malloc ( sTlsfPool->mPool, size );
+	}
 	return malloc ( size );
 }
 
 //----------------------------------------------------------------//
-void* zipfs_realloc ( void * ptr, size_t size ) {
+void* zipfs_realloc ( void* ptr, size_t size ) {
+
+	if ( sTlsfPool ) {
+		return tlsf_realloc ( sTlsfPool->mPool, ptr, size );
+	}
 	return realloc ( ptr, size );
+}
+
+//----------------------------------------------------------------//
+ZIPFS_TLSF_POOL* zipfs_tlsf_create_pool ( size_t bytes ) {
+	
+	ZIPFSTlsfPool* pool = ( ZIPFSTlsfPool* )malloc ( sizeof ( ZIPFSTlsfPool ));
+	
+	pool->mBuffer = malloc ( bytes );
+	pool->mPool = tlsf_create ( pool->mBuffer, bytes );
+	
+	return ( ZIPFS_TLSF_POOL* )pool;
+}
+
+//----------------------------------------------------------------//
+void zipfs_tlsf_destroy_pool ( ZIPFS_TLSF_POOL* opaque ) {
+
+	ZIPFSTlsfPool* pool = ( ZIPFSTlsfPool* )opaque;
+
+	if ( pool ) {
+		tlsf_destroy ( pool->mPool );
+		free ( pool->mBuffer );
+		free ( pool );
+	}
+}
+
+//----------------------------------------------------------------//
+ZIPFS_TLSF_POOL* zipfs_tlsf_get_pool () {
+
+	return ( ZIPFS_TLSF_POOL* )sTlsfPool;
+}
+
+//----------------------------------------------------------------//
+void zipfs_tlsf_set_pool ( ZIPFS_TLSF_POOL* opaque ) {
+
+	sTlsfPool = ( ZIPFSTlsfPool* )opaque;
 }
 
 //================================================================//

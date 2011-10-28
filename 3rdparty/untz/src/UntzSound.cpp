@@ -218,6 +218,10 @@ bool Sound::decode(const RString& path, SoundInfo& info, float** data)
 	return true;
 }
 
+void Sound::dispose ( Sound* sound )
+{
+	delete sound;
+}
 
 Sound::Sound()
 {
