@@ -620,7 +620,7 @@ int MOAISim::_timeToFrames ( lua_State* L ) {
 	MOAISim& device = MOAISim::Get ();
 	lua_pushnumber ( state, time / device.mStep );
 	
-	return 0;
+	return 1;
 }
 
 //================================================================//
