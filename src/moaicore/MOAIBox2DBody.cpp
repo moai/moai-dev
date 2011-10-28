@@ -62,20 +62,21 @@ int MOAIBox2DBody::_addCircle ( lua_State* L ) {
  */
 int MOAIBox2DBody::_addEdge ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DBody, "U" )
-	float unitsToMeters = self->GetUnitsToMeters ();
 	
 	if ( !self->mBody ) {
 		MOAILog ( state, MOAILogMessages::MOAIBox2DBody_MissingInstance );
 		return 0;
 	}
 	
-	b2Vec2 verts[2];
-	int numVerts = MOAIBox2DFixture::LoadVerts(state, 2, verts, 2, unitsToMeters);
+	float unitsToMeters = self->GetUnitsToMeters ();
 	
-	if (numVerts) {
+	b2Vec2 verts[2];
+	int numVerts = MOAIBox2DFixture::LoadVerts( state, 2, verts, 2, unitsToMeters );
+	
+	if ( numVerts ) {
 		
 		b2PolygonShape polyShape;
-		polyShape.SetAsEdge(verts[0], verts[1]);
+		polyShape.SetAsEdge( verts[0], verts[1] );
 		
 		b2FixtureDef fixtureDef;
 		fixtureDef.shape = &polyShape;
