@@ -33,5 +33,5 @@ textbox:spool ()
 color = MOAIColor.new ()
 color:setColor ( 0, 0, 0, 1 )
 color:seekColor ( 1, 0, 0, 1, 3, MOAIEaseType.EASE_IN )
-textbox:setTraitSource ( color, MOAITraits.INHERIT_COLOR )
+textbox:setAttrLink ( MOAITextBox.INHERIT_COLOR, color, MOAIColor.COLOR_TRAIT )
 

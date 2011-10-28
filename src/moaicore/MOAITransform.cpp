@@ -685,6 +685,26 @@ int MOAITransform::_setLoc ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	setParent
+	@text	This method has been deprecated. Use MOAINode setAttrLink instead.
+	
+	@in		MOAIProp2D self
+	@opt	MOAINode parent		Default value is nil.
+	@out	nil
+*/
+int MOAITransform::_setParent ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITransform, "U" )
+
+	MOAINode* parent = state.GetLuaObject < MOAINode >( 2 );
+	
+	self->SetAttrLink ( PACK_ATTR ( MOAITransform, INHERIT_TRANSFORM ), parent, PACK_ATTR ( MOAITransformBase, TRANSFORM_TRAIT ));
+	
+	//MOAILog ( state, MOAILogMessages::MOAI_FunctionDeprecated_S, "setParent" );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	setPiv
 	@text	Sets the transform's pivot.
 	
@@ -921,6 +941,7 @@ void MOAITransform::RegisterLuaFuncs ( USLuaState& state ) {
 		{ "moveScl",			_moveScl },
 		{ "seek",				_seek },
 		{ "seekLoc",			_seekLoc },
+		{ "setParent",			_setParent },
 		{ "seekPiv",			_seekPiv },
 		{ "seekRot",			_seekRot },
 		{ "seekScl",			_seekScl },

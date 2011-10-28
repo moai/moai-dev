@@ -143,6 +143,26 @@ int MOAIColor::_setColor ( lua_State* L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
+/**	@name	setParent
+	@text	This method has been deprecated. Use MOAINode setAttrLink instead.
+	
+	@in		MOAIProp2D self
+	@opt	MOAINode parent		Default value is nil.
+	@out	nil
+*/
+int MOAIColor::_setParent ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIColor, "U" )
+
+	MOAINode* parent = state.GetLuaObject < MOAINode >( 2 );
+	
+	self->SetAttrLink ( PACK_ATTR ( MOAIColor, INHERIT_COLOR ), parent, PACK_ATTR ( MOAIColor, COLOR_TRAIT ));
+	
+	//MOAILog ( state, MOAILogMessages::MOAI_FunctionDeprecated_S, "setParent" );
+	
+	return 0;
+}
+
 //================================================================//
 // MOAIColor
 //================================================================//
@@ -227,6 +247,7 @@ void MOAIColor::RegisterLuaFuncs ( USLuaState& state ) {
 		{ "moveColor",				_moveColor },
 		{ "seekColor",				_seekColor },
 		{ "setColor",				_setColor },
+		{ "setParent",				_setParent },
 		{ NULL, NULL }
 	};
 	

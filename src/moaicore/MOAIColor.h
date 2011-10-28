@@ -26,6 +26,7 @@ protected:
 	static int		_moveColor			( lua_State* L );
 	static int		_seekColor			( lua_State* L );
 	static int		_setColor			( lua_State* L );
+	static int		_setParent			( lua_State* L );
 
 public:
 	

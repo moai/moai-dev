@@ -57,7 +57,6 @@ private:
 	static int		_setAttrLink		( lua_State* L );
 	static int		_setAttr			( lua_State* L );
 	static int		_setNodeLink		( lua_State* L );
-	static int		_setParent			( lua_State* L ); // TODO: kill me
 	
 	//----------------------------------------------------------------//
 	void			ActivateOnLink		( MOAINode& srcNode );

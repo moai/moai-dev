@@ -169,11 +169,11 @@ int MOAILayer2D::_setBox2DWorld ( lua_State* L ) {
 			identity transform.
 	
 	@in		MOAILayer2D self
-	@in		MOAITransformBase camera
+	@opt	MOAITransformBase camera	Default value is nil.
 	@out	nil
 */
 int MOAILayer2D::_setCamera ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAILayer2D, "UU" )
+	MOAI_LUA_SETUP ( MOAILayer2D, "U" )
 
 	self->mCamera.Set ( *self, state.GetLuaObject < MOAITransformBase >( 2 ));
 
@@ -484,7 +484,7 @@ void MOAILayer2D::GetWndToWorldMtx ( USAffine2D& wndToWorld ) {
 //----------------------------------------------------------------//
 void MOAILayer2D::GetWorldToWndMtx ( USAffine2D& worldToWnd ) {
 
-	if ( this->mCamera && this->mViewport ) {
+	if ( this->mViewport ) {
 		
 		USAffine2D camera;
 		this->GetCameraMtx ( camera );

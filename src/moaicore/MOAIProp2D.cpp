@@ -273,6 +273,28 @@ int MOAIProp2D::_setIndex ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	setParent
+	@text	This method has been deprecated. Use MOAINode setAttrLink instead.
+	
+	@in		MOAIProp2D self
+	@opt	MOAINode parent		Default value is nil.
+	@out	nil
+*/
+int MOAIProp2D::_setParent ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIProp2D, "U" )
+
+	MOAINode* parent = state.GetLuaObject < MOAINode >( 2 );
+	
+	self->SetAttrLink ( PACK_ATTR ( MOAIColor, INHERIT_COLOR ), parent, PACK_ATTR ( MOAIColor, COLOR_TRAIT ));
+	self->SetAttrLink ( PACK_ATTR ( MOAITransform, INHERIT_TRANSFORM ), parent, PACK_ATTR ( MOAITransformBase, TRANSFORM_TRAIT ));
+	self->SetAttrLink ( PACK_ATTR ( MOAIProp2D, ATTR_VISIBLE ), parent, PACK_ATTR ( MOAIProp2D, ATTR_VISIBLE ));
+	
+	//MOAILog ( state, MOAILogMessages::MOAI_FunctionDeprecated_S, "setParent" );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	setRemapper
 	@text	Set a remapper for this prop to use when drawing deck members.
 	
@@ -784,6 +806,7 @@ void MOAIProp2D::RegisterLuaFuncs ( USLuaState& state ) {
 		{ "setGrid",			_setGrid },
 		{ "setGridScale",		_setGridScale },
 		{ "setIndex",			_setIndex },
+		{ "setParent",			_setParent },
 		{ "setRemapper",		_setRemapper },
 		{ "setRepeat",			_setRepeat },
 		{ "setShader",			_setShader },
