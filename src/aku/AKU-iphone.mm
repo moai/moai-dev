@@ -112,7 +112,11 @@ void AKUIphoneInit ( UIApplication* application ) {
 	MOAIEnvironment::Get ().SetOSVersion ( [[ UIDevice currentDevice ].systemVersion UTF8String ] );
 	MOAIEnvironment::Get ().SetResourceDirectory ( [[[ NSBundle mainBundle ] resourcePath ] UTF8String ]);
 	MOAIEnvironment::Get ().SetUDID ( [[ UIDevice currentDevice ].uniqueIdentifier UTF8String ] );
-	
+	MOAIEnvironment::Get ().SetDevModel ( [[ UIDevice currentDevice ].model UTF8String ] );
+
+	CGRect screenRect = [[UIScreen mainScreen] bounds];
+	MOAIEnvironment::Get ().SetScreenSize( screenRect.size.width, screenRect.size.height );
+
 	if ([[ UIScreen mainScreen ] scale ] == 2.0 ) {
 		//this is retina
 		MOAIEnvironment::Get ().SetIsRetinaDisplay ( true );
