@@ -44,6 +44,8 @@ private:
 	STLString			mOSVersion;
 	STLString			mResourceDirectory;
 	STLString			mUDID;
+	long				mScreenWidth;
+	long				mScreenHeight;
 	
 	long ( *getConnectivityFunc )( void );
 	cc8* ( *getGUIDfunc ) ( void );
@@ -74,6 +76,7 @@ private:
 	static int			_getResourceDirectory			( lua_State* L );
 	static int			_getUDID						( lua_State* L );
 	static int			_getViewSize					( lua_State* L );
+	static int			_getDeviceSize					( lua_State* L );
 	static int			_isRetinaDisplay				( lua_State* L );
 
 public:	
@@ -124,6 +127,7 @@ public:
 	void				SetOSVersion				( cc8* osVersion );
 	void				SetResourceDirectory		( cc8* resDir );
 	void				SetUDID						( cc8* udid );
+	void				SetScreenSize				( long width, long height );
 };
 
 #endif
