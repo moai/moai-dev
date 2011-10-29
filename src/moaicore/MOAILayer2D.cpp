@@ -484,7 +484,7 @@ void MOAILayer2D::GetWndToWorldMtx ( USAffine2D& wndToWorld ) {
 //----------------------------------------------------------------//
 void MOAILayer2D::GetWorldToWndMtx ( USAffine2D& worldToWnd ) {
 
-	if ( this->mCamera && this->mViewport ) {
+	if ( this->mViewport ) {
 		
 		USAffine2D camera;
 		this->GetCameraMtx ( camera );
