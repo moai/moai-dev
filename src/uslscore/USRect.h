@@ -648,6 +648,19 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
+	void SetCenter ( TYPE xLoc, TYPE yLoc ) {
+		
+		TYPE width = this->mXMax - this->mXMin;
+		TYPE height = this->mYMax - this->mYMin;
+		
+		this->mXMin = xOff - width * 0.5f;
+		this->mXMax = this->mXMin + width;
+		
+		this->mYMin = yOff - height * 0.5f;
+		this->mYMax = this->mYMin + height;
+	}
+	
+	//----------------------------------------------------------------//
 	void TransformLocalToWorld ( USMetaRect < TYPE >& rect ) const {
 		
 		float width = this->Width ();

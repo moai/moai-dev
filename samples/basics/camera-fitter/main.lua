@@ -47,4 +47,3 @@ anchor = MOAICameraAnchor2D.new ()
 anchor:setParent ( prop )
 anchor:setRect ( -64, -64, 64, 64 )
 fitter:insertAnchor ( anchor )
-
