@@ -66,7 +66,7 @@ void MOAIPartitionResultBuffer::PushResultsList ( lua_State* L ) {
 	lua_createtable ( state, total, 0 );
 	
 	for ( u32 i = 1; i <= total; ++i ) {
-		lua_pushnumber ( state, i++ );
+		lua_pushnumber ( state, i );
 		this->mResults [ i ].mData->PushLuaUserdata ( state );
 		lua_settable ( state, -3 );
 	}
