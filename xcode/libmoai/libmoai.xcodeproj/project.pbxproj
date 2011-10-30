@@ -1638,6 +1638,12 @@
 		073D58521459269600289D5C /* TJCVGUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = CDB6084F14527E65006EBFB5 /* TJCVGUtil.m */; };
 		073D58531459269600289D5C /* TJCVGViewHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = CDB6085114527E65006EBFB5 /* TJCVGViewHandler.m */; };
 		073D58541459269600289D5C /* TapjoyConnect.m in Sources */ = {isa = PBXBuildFile; fileRef = CDB6085314527E65006EBFB5 /* TapjoyConnect.m */; };
+		0765874E145CD06900723A7D /* tlsf.c in Sources */ = {isa = PBXBuildFile; fileRef = 0765874B145CD06900723A7D /* tlsf.c */; };
+		0765874F145CD06900723A7D /* tlsf.c in Sources */ = {isa = PBXBuildFile; fileRef = 0765874B145CD06900723A7D /* tlsf.c */; };
+		07658750145CD06900723A7D /* tlsf.h in Headers */ = {isa = PBXBuildFile; fileRef = 0765874C145CD06900723A7D /* tlsf.h */; };
+		07658751145CD06900723A7D /* tlsf.h in Headers */ = {isa = PBXBuildFile; fileRef = 0765874C145CD06900723A7D /* tlsf.h */; };
+		07658752145CD06900723A7D /* tlsfbits.h in Headers */ = {isa = PBXBuildFile; fileRef = 0765874D145CD06900723A7D /* tlsfbits.h */; };
+		07658753145CD06900723A7D /* tlsfbits.h in Headers */ = {isa = PBXBuildFile; fileRef = 0765874D145CD06900723A7D /* tlsfbits.h */; };
 		0767117C13F3414000121E13 /* ReachabilityListener.h in Headers */ = {isa = PBXBuildFile; fileRef = 0767117A13F3414000121E13 /* ReachabilityListener.h */; };
 		0767117D13F3414000121E13 /* ReachabilityListener.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0767117B13F3414000121E13 /* ReachabilityListener.mm */; };
 		0780B1D714463B71006626CF /* MOAITapjoy.h in Headers */ = {isa = PBXBuildFile; fileRef = 0780B1D514463B71006626CF /* MOAITapjoy.h */; };
@@ -3787,6 +3793,9 @@
 		03F135D913A2EFC000044AE8 /* MOAIWebView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIWebView.mm; path = "moaiext-iphone/MOAIWebView.mm"; sourceTree = "<group>"; };
 		071106EE13C6353400EE7C53 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		073D58591459269600289D5C /* libmoai-ios-tapjoy.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-tapjoy.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		0765874B145CD06900723A7D /* tlsf.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = tlsf.c; path = "../../3rdparty/tlsf-2.0/tlsf.c"; sourceTree = "<group>"; };
+		0765874C145CD06900723A7D /* tlsf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tlsf.h; path = "../../3rdparty/tlsf-2.0/tlsf.h"; sourceTree = "<group>"; };
+		0765874D145CD06900723A7D /* tlsfbits.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tlsfbits.h; path = "../../3rdparty/tlsf-2.0/tlsfbits.h"; sourceTree = "<group>"; };
 		0767117A13F3414000121E13 /* ReachabilityListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ReachabilityListener.h; path = "moaiext-iphone/ReachabilityListener.h"; sourceTree = "<group>"; };
 		0767117B13F3414000121E13 /* ReachabilityListener.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ReachabilityListener.mm; path = "moaiext-iphone/ReachabilityListener.mm"; sourceTree = "<group>"; };
 		0780B1D514463B71006626CF /* MOAITapjoy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAITapjoy.h; path = "moaiext-iphone/MOAITapjoy.h"; sourceTree = "<group>"; };
@@ -5120,6 +5129,7 @@
 				03240BA213564CB0000ADC60 /* sqlite */,
 				CDB607BB14527E2E006EBFB5 /* tapjoy */,
 				03240BA613564CB0000ADC60 /* tinyxml */,
+				07658749145CD04800723A7D /* tlsf */,
 				CD07C10013A14B5100C9386C /* untz */,
 			);
 			name = "3rd party";
@@ -5775,6 +5785,16 @@
 				073D58591459269600289D5C /* libmoai-ios-tapjoy.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		07658749145CD04800723A7D /* tlsf */ = {
+			isa = PBXGroup;
+			children = (
+				0765874B145CD06900723A7D /* tlsf.c */,
+				0765874C145CD06900723A7D /* tlsf.h */,
+				0765874D145CD06900723A7D /* tlsfbits.h */,
+			);
+			name = tlsf;
 			sourceTree = "<group>";
 		};
 		0795291A1447907100143A72 /* jpeg-8c */ = {
@@ -8699,6 +8719,8 @@
 				07952A6A1447907100143A72 /* jpegint.h in Headers */,
 				07952A6B1447907100143A72 /* jpeglib.h in Headers */,
 				07952A701447907100143A72 /* jversion.h in Headers */,
+				07658751145CD06900723A7D /* tlsf.h in Headers */,
+				07658753145CD06900723A7D /* tlsfbits.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9314,6 +9336,8 @@
 				07952A141447907100143A72 /* jpegint.h in Headers */,
 				07952A151447907100143A72 /* jpeglib.h in Headers */,
 				07952A1A1447907100143A72 /* jversion.h in Headers */,
+				07658750145CD06900723A7D /* tlsf.h in Headers */,
+				07658752145CD06900723A7D /* tlsfbits.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10243,6 +10267,7 @@
 				07952A6D1447907100143A72 /* jquant1.c in Sources */,
 				07952A6E1447907100143A72 /* jquant2.c in Sources */,
 				07952A6F1447907100143A72 /* jutils.c in Sources */,
+				0765874F145CD06900723A7D /* tlsf.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11346,6 +11371,7 @@
 				07952A171447907100143A72 /* jquant1.c in Sources */,
 				07952A181447907100143A72 /* jquant2.c in Sources */,
 				07952A191447907100143A72 /* jutils.c in Sources */,
+				0765874E145CD06900723A7D /* tlsf.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12178,6 +12204,7 @@
 					"\"../../3rdparty/untz/src\"",
 					"\"../../3rdparty/libvorbis-1.3.2/lib\"",
 					"\"../../3rdparty/libvorbis-1.3.2/include\"",
+					"\"../../3rdparty/tlsf-2.0\"",
 					"\"../../3rdparty/tapjoyiOS-8.1.1/TapjoyConnect/Components/TJCAds\"",
 					"\"../../3rdparty/tapjoyiOS-8.1.1/TapjoyConnect/Components/TJCCore\"",
 					"\"../../3rdparty/tapjoyiOS-8.1.1/TapjoyConnect/Components/TJCCore/Utilities\"",
@@ -12376,6 +12403,7 @@
 					"\"../../3rdparty/untz/src\"",
 					"\"../../3rdparty/libvorbis-1.3.2/lib\"",
 					"\"../../3rdparty/libvorbis-1.3.2/include\"",
+					"\"../../3rdparty/tlsf-2.0\"",
 					"\"../../3rdparty/tapjoyiOS-8.1.1/TapjoyConnect/Components/TJCAds\"",
 					"\"../../3rdparty/tapjoyiOS-8.1.1/TapjoyConnect/Components/TJCCore\"",
 					"\"../../3rdparty/tapjoyiOS-8.1.1/TapjoyConnect/Components/TJCCore/Utilities\"",

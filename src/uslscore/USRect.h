@@ -638,7 +638,7 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	void Scale ( float xScale, float yScale ) {
+	void Scale ( TYPE xScale, TYPE yScale ) {
 		
 		this->mXMin *= xScale;
 		this->mXMax *= xScale;
@@ -653,10 +653,10 @@ public:
 		TYPE width = this->mXMax - this->mXMin;
 		TYPE height = this->mYMax - this->mYMin;
 		
-		this->mXMin = xOff - width * 0.5f;
+		this->mXMin = xLoc - width * 0.5f;
 		this->mXMax = this->mXMin + width;
 		
-		this->mYMin = yOff - height * 0.5f;
+		this->mYMin = yLoc - height * 0.5f;
 		this->mYMax = this->mYMin + height;
 	}
 	
