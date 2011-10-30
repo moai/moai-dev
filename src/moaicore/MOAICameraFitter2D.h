@@ -55,6 +55,8 @@ private:
 	static int		_getFitLoc				( lua_State* L );
 	static int		_getFitMode				( lua_State* L );
 	static int		_getFitScale			( lua_State* L );
+	static int		_getTargetLoc			( lua_State* L );
+	static int		_getTargetScale			( lua_State* L );
 	static int		_insertAnchor			( lua_State* L );
 	static int		_removeAnchor			( lua_State* L );
 	static int		_setBounds				( lua_State* L );

@@ -93,7 +93,7 @@ int MOAICameraFitter2D::_getFitMode ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	getFitScale
-	@text	Add an anchor to the fitter.
+	@text	Returns the fit scale
 	
 	@in		MOAICameraFitter2D self
 	@out	number scale
@@ -102,6 +102,36 @@ int MOAICameraFitter2D::_getFitScale ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICameraFitter2D, "U" )
 
 	lua_pushnumber ( state, self->mFitScale );
+	return 1;
+}
+
+//----------------------------------------------------------------//
+/**	@name	getTargetLoc
+ @text	Get the 
+ 
+ @in	MOAICameraFitter2D self
+ @out	number x
+ @out	number y
+ */
+int MOAICameraFitter2D::_getTargetLoc ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAICameraFitter2D, "U" )
+	
+	lua_pushnumber ( state, self->mTargetLoc.mX );
+	lua_pushnumber ( state, self->mTargetLoc.mY );
+	return 2;
+}
+
+//----------------------------------------------------------------//
+/**	@name	getTargetScale
+ @text	Returns the target scale
+ 
+ @in	MOAICameraFitter2D self
+ @out	number scale
+ */
+int MOAICameraFitter2D::_getTargetScale ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAICameraFitter2D, "U" )
+	
+	lua_pushnumber ( state, self->mTargetScale );
 	return 1;
 }
 
@@ -635,6 +665,8 @@ void MOAICameraFitter2D::RegisterLuaFuncs ( USLuaState& state ) {
 		{ "getFitLoc",			_getFitLoc },
 		{ "getFitMode",			_getFitMode },
 		{ "getFitScale",		_getFitScale },
+		{ "getTargetLoc",		_getTargetLoc },
+		{ "getTargetScale",		_getTargetScale },
 		{ "insertAnchor",		_insertAnchor },
 		{ "removeAnchor",		_removeAnchor },
 		{ "setBounds",			_setBounds },
