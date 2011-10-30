@@ -131,6 +131,32 @@ int MOAINode::_getAttr ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	getAttrLink
+	@text	Returns the link if it exists or nil if it doesn't.
+	
+	@in		MOAINode self
+	@in		number attrID
+	@out	MOAINode sourceNode
+	@out	number aourceAttrID
+*/
+int MOAINode::_getAttrLink ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAINode, "UN" );
+
+	u32 attrID = state.GetValue < u32 >( 2, 0 );
+
+	MOAIDepLink* link = self->FindAttrLink ( attrID );
+	if ( link && link->mSourceNode ) {
+		state.Push ( link->mSourceNode );
+		if ( link->mSourceAttrID != NULL_ATTR ) {
+			state.Push ( link->mSourceAttrID );
+			return 2;
+		}
+		return 1;
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	moveAttr
 	@text	Animate the attribute by applying a delta. Creates and returns
 			a MOAIEaseDriver initialized to apply the delta.
@@ -597,6 +623,7 @@ void MOAINode::RegisterLuaFuncs ( USLuaState& state ) {
 		{ "clearNodeLink",			_clearNodeLink },
 		{ "forceUpdate",			_forceUpdate },
 		{ "getAttr",				_getAttr },
+		{ "getAttrLink",			_getAttrLink },
 		{ "moveAttr",				_moveAttr },
 		{ "scheduleUpdate",			_scheduleUpdate },
 		{ "seekAttr",				_seekAttr },

@@ -11,6 +11,7 @@
 
 class USCipher;
 class USLuaRef;
+class USLuaObject;
 class USStreamFormatter;
 
 #define LUA_SETUP(type,str) \
@@ -86,6 +87,7 @@ public:
 	void			Push					( u32 value );
 	void			Push					( u64 value );
 	void			Push					( lua_CFunction value );
+	void			Push					( USLuaObject* luaObject );
 	void			Push					( USLuaRef& ref );
 	void			PushPtrUserData			( void* ptr );
 	int				PushTableItr			( int idx );

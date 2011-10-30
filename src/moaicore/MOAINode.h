@@ -51,6 +51,7 @@ private:
 	static int		_clearNodeLink		( lua_State* L );
 	static int		_forceUpdate		( lua_State* L );
 	static int		_getAttr			( lua_State* L );
+	static int		_getAttrLink		( lua_State* L );
 	static int		_moveAttr			( lua_State* L );
 	static int		_scheduleUpdate		( lua_State* L );
 	static int		_seekAttr			( lua_State* L );

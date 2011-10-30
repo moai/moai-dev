@@ -701,6 +701,16 @@ void USLuaState::Push ( lua_CFunction value ) {
 }
 
 //----------------------------------------------------------------//
+void USLuaState::Push ( USLuaObject* luaObject ) {
+
+	if ( luaObject ) {
+		luaObject->PushLuaUserdata ( *this );
+		return;
+	}
+	lua_pushnil ( this->mState );
+}
+
+//----------------------------------------------------------------//
 void USLuaState::Push ( USLuaRef& ref ) {
 
 	ref.PushRef ( *this );
