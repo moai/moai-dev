@@ -7,6 +7,8 @@
 #ifndef AKU_H
 #define AKU_H
 
+#include <stddef.h>
+
 #ifdef WIN32
 
 	#ifdef AKU_EXPORT
