@@ -38,8 +38,8 @@ public:
 	DECL_LUA_FACTORY ( MOAIBox2DWheelJoint )
 
 	//----------------------------------------------------------------//
-	MOAIBox2DWheelJoint		();
-	~MOAIBox2DWheelJoint	();
+					MOAIBox2DWheelJoint		();
+					~MOAIBox2DWheelJoint	();
 	void			RegisterLuaClass		( USLuaState& state );
 	void			RegisterLuaFuncs		( USLuaState& state );
 };

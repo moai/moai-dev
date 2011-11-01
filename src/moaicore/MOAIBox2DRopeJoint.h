@@ -27,8 +27,8 @@ public:
 	DECL_LUA_FACTORY ( MOAIBox2DRopeJoint )
 	
 	//----------------------------------------------------------------//
-	MOAIBox2DRopeJoint		();
-	~MOAIBox2DRopeJoint		();
+					MOAIBox2DRopeJoint		();
+					~MOAIBox2DRopeJoint		();
 	void			RegisterLuaClass		( USLuaState& state );
 	void			RegisterLuaFuncs		( USLuaState& state );
 };
