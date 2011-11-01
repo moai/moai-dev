@@ -79,12 +79,12 @@ private:
 	static int		_addDistanceJoint		( lua_State* L );
 	static int		_addFrictionJoint		( lua_State* L );
 	static int		_addGearJoint			( lua_State* L );
-	static int		_addLineJoint			( lua_State* L );
 	static int		_addMouseJoint			( lua_State* L );
 	static int		_addPrismaticJoint		( lua_State* L );
 	static int		_addPulleyJoint			( lua_State* L );
 	static int		_addRevoluteJoint		( lua_State* L );
 	static int		_addWeldJoint			( lua_State* L );
+	static int		_addWheelJoint			( lua_State* L );
 	static int		_getAutoClearForces		( lua_State* L );
 	static int		_getGravity				( lua_State* L );
 	static int		_setAutoClearForces		( lua_State* L );

@@ -133,12 +133,12 @@ void moaicore::InitGlobals ( USGlobals* globals ) {
 		REGISTER_LUA_CLASS ( MOAIBox2DFixture )
 		REGISTER_LUA_CLASS ( MOAIBox2DFrictionJoint )
 		REGISTER_LUA_CLASS ( MOAIBox2DGearJoint )
-		REGISTER_LUA_CLASS ( MOAIBox2DLineJoint )
 		REGISTER_LUA_CLASS ( MOAIBox2DMouseJoint )
 		REGISTER_LUA_CLASS ( MOAIBox2DPrismaticJoint )
 		REGISTER_LUA_CLASS ( MOAIBox2DPulleyJoint )
 		REGISTER_LUA_CLASS ( MOAIBox2DRevoluteJoint )
 		REGISTER_LUA_CLASS ( MOAIBox2DWeldJoint )
+		REGISTER_LUA_CLASS ( MOAIBox2DWheelJoint )
 		REGISTER_LUA_CLASS ( MOAIBox2DWorld )
 	#endif
 	

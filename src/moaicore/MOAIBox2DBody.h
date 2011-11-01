@@ -29,7 +29,7 @@ private:
 
 	//----------------------------------------------------------------//
 	static int		_addCircle				( lua_State* L );
-	static int      _addEdge                ( lua_State* L );
+	static int      _addEdges               ( lua_State* L );
 	static int		_addPolygon				( lua_State* L );
 	static int		_addRect				( lua_State* L );
 	static int		_applyAngularImpulse	( lua_State* L );

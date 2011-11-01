@@ -11,12 +11,12 @@
 #include <moaicore/MOAIBox2DFrictionJoint.h>
 #include <moaicore/MOAIBox2DGearJoint.h>
 #include <moaicore/MOAIBox2DJoint.h>
-#include <moaicore/MOAIBox2DLineJoint.h>
 #include <moaicore/MOAIBox2DMouseJoint.h>
 #include <moaicore/MOAIBox2DPrismaticJoint.h>
 #include <moaicore/MOAIBox2DPulleyJoint.h>
 #include <moaicore/MOAIBox2DRevoluteJoint.h>
 #include <moaicore/MOAIBox2DWeldJoint.h>
+#include <moaicore/MOAIBox2DWheelJoint.h>
 #include <moaicore/MOAIBox2DWorld.h>
 #include <moaicore/MOAIDraw.h>
 #include <moaicore/MOAIGfxDevice.h>
@@ -226,52 +226,6 @@ int	MOAIBox2DWorld::_addGearJoint ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	addLineJoint
-	@text	Create and add a joint to the world. See Box2D documentation.
-	
-	@in		MOAIBox2DWorld self
-	@in		MOAIBox2DBody bodyA
-	@in		MOAIBox2DBody bodyB
-	@in		number anchorX
-	@in		number anchorY
-	@in		number axisX
-	@in		number axisY
-	@out	MOAIBox2DJoint joint
-*/
-int	MOAIBox2DWorld::_addLineJoint ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIBox2DWorld, "UUUNNNN" )
-	
-	if ( self->IsLocked ()) {
-		MOAILog ( state, MOAILogMessages::MOAIBox2DWorld_IsLocked );
-		return 0;
-	}
-	
-	MOAIBox2DBody* bodyA = state.GetLuaObject < MOAIBox2DBody >( 2 );
-	MOAIBox2DBody* bodyB = state.GetLuaObject < MOAIBox2DBody >( 3 );
-	
-	if ( !( bodyA && bodyB )) return 0;
-	
-	b2Vec2 anchor;
-	anchor.x	= state.GetValue < float >( 4, 0 ) * self->mUnitsToMeters;
-	anchor.y	= state.GetValue < float >( 5, 0 ) * self->mUnitsToMeters;
-	
-	b2Vec2 axis;
-	axis.x		= state.GetValue < float >( 6, 0 ) * self->mUnitsToMeters;
-	axis.y		= state.GetValue < float >( 7, 0 ) * self->mUnitsToMeters;
-	
-	b2LineJointDef jointDef;
-	jointDef.Initialize ( bodyA->mBody, bodyB->mBody, anchor, axis );
-	
-	MOAIBox2DLineJoint* joint = new MOAIBox2DLineJoint ();
-	joint->SetJoint ( self->mWorld->CreateJoint ( &jointDef ));
-	joint->SetWorld ( self );
-	self->LuaRetain ( *joint );
-	
-	joint->PushLuaUserdata ( state );
-	return 1;
-}
-
-//----------------------------------------------------------------//
 /**	@name	addMouseJoint
 	@text	Create and add a joint to the world. See Box2D documentation.
 	
@@ -418,8 +372,8 @@ int	MOAIBox2DWorld::_addPulleyJoint ( lua_State* L ) {
 	b2PulleyJointDef jointDef;
 	jointDef.Initialize ( bodyA->mBody, bodyB->mBody, groundAnchorA, groundAnchorB, anchorA, anchorB, ratio );
 	
-	jointDef.maxLengthA	= state.GetValue < float >( 13, 0 ) * self->mUnitsToMeters;
-	jointDef.maxLengthB	= state.GetValue < float >( 14, 0 ) * self->mUnitsToMeters;
+	jointDef.lengthA	= state.GetValue < float >( 13, 0 ) * self->mUnitsToMeters;
+	jointDef.lengthB	= state.GetValue < float >( 14, 0 ) * self->mUnitsToMeters;
 	
 	MOAIBox2DPulleyJoint* joint = new MOAIBox2DPulleyJoint ();
 	joint->SetJoint ( self->mWorld->CreateJoint ( &jointDef ));
@@ -502,6 +456,52 @@ int	MOAIBox2DWorld::_addWeldJoint ( lua_State* L ) {
 	jointDef.Initialize ( bodyA->mBody, bodyB->mBody, anchor );
 	
 	MOAIBox2DWeldJoint* joint = new MOAIBox2DWeldJoint ();
+	joint->SetJoint ( self->mWorld->CreateJoint ( &jointDef ));
+	joint->SetWorld ( self );
+	self->LuaRetain ( *joint );
+	
+	joint->PushLuaUserdata ( state );
+	return 1;
+}
+
+//----------------------------------------------------------------//
+/**	@name	_addWheelJoint
+ @text	Create and add a joint to the world. See Box2D documentation.
+ 
+ @in		MOAIBox2DWorld self
+ @in		MOAIBox2DBody bodyA
+ @in		MOAIBox2DBody bodyB
+ @in		number anchorX
+ @in		number anchorY
+ @in		number axisX
+ @in		number axisY
+ @out	MOAIBox2DJoint joint
+ */
+int	MOAIBox2DWorld::_addWheelJoint ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIBox2DWorld, "UUUNNNN" )
+	
+	if ( self->IsLocked ()) {
+		MOAILog ( state, MOAILogMessages::MOAIBox2DWorld_IsLocked );
+		return 0;
+	}
+	
+	MOAIBox2DBody* bodyA = state.GetLuaObject < MOAIBox2DBody >( 2 );
+	MOAIBox2DBody* bodyB = state.GetLuaObject < MOAIBox2DBody >( 3 );
+	
+	if ( !( bodyA && bodyB )) return 0;
+	
+	b2Vec2 anchor;
+	anchor.x	= state.GetValue < float >( 4, 0 ) * self->mUnitsToMeters;
+	anchor.y	= state.GetValue < float >( 5, 0 ) * self->mUnitsToMeters;
+	
+	b2Vec2 axis;
+	axis.x		= state.GetValue < float >( 6, 0 ) * self->mUnitsToMeters;
+	axis.y      = state.GetValue < float >( 7, 0 ) * self->mUnitsToMeters;
+	
+	b2WheelJointDef jointDef;
+	jointDef.Initialize ( bodyA->mBody, bodyB->mBody, anchor, axis );
+	
+	MOAIBox2DWheelJoint* joint = new MOAIBox2DWheelJoint ();
 	joint->SetJoint ( self->mWorld->CreateJoint ( &jointDef ));
 	joint->SetWorld ( self );
 	self->LuaRetain ( *joint );
@@ -708,19 +708,19 @@ MOAIBox2DWorld::MOAIBox2DWorld () :
 	this->mArbiter.Set ( *this, new MOAIBox2DArbiter ());
 	
 	b2Vec2 gravity ( 0.0f, 0.0f );
-	this->mWorld = new b2World ( gravity, true );
+	this->mWorld = new b2World ( gravity);
 	this->mWorld->SetContactListener ( this->mArbiter );
 	this->mWorld->SetDestructionListener ( this );
-	
+	this->mWorld->SetAllowSleeping(true);
 	this->mDebugDraw = new MOAIBox2DDebugDraw ();
 	this->mWorld->SetDebugDraw ( this->mDebugDraw );
 	
 	this->mDebugDraw->SetFlags (
-		b2DebugDraw::e_shapeBit			|
-		b2DebugDraw::e_jointBit			|
+		b2Draw::e_shapeBit			|
+		b2Draw::e_jointBit			|
 		//b2DebugDraw::e_aabbBit			|
 		//b2DebugDraw::e_pairBit			|
-		b2DebugDraw::e_centerOfMassBit
+		b2Draw::e_centerOfMassBit
 	);
 }
 
@@ -778,12 +778,12 @@ void MOAIBox2DWorld::RegisterLuaFuncs ( USLuaState& state ) {
 		{ "addDistanceJoint",		_addDistanceJoint },
 		{ "addFrictionJoint",		_addFrictionJoint },
 		{ "addGearJoint",			_addGearJoint },
-		{ "addLineJoint",			_addLineJoint },
 		{ "addMouseJoint",			_addMouseJoint },
 		{ "addPrismaticJoint",		_addPrismaticJoint },
 		{ "addPulleyJoint",			_addPulleyJoint },
 		{ "addRevoluteJoint",		_addRevoluteJoint },
 		{ "addWeldJoint",			_addWeldJoint },
+		{ "addWheelJoint",			_addWheelJoint },
 		{ "getAutoClearForces",		_getAutoClearForces },
 		{ "getGravity",				_getGravity },
 		{ "setAutoClearForces",		_setAutoClearForces },
