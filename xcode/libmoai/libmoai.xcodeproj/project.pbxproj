@@ -1547,6 +1547,10 @@
 		9198D46B145DC7AD00B17BE1 /* MOAIBox2DWheelJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 9198D468145DC78A00B17BE1 /* MOAIBox2DWheelJoint.h */; };
 		9198D46D145DC7C200B17BE1 /* MOAIBox2DWheelJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9198D46C145DC7C200B17BE1 /* MOAIBox2DWheelJoint.cpp */; };
 		9198D46E145DC7C200B17BE1 /* MOAIBox2DWheelJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9198D46C145DC7C200B17BE1 /* MOAIBox2DWheelJoint.cpp */; };
+		9198D521145FA3EB00B17BE1 /* MOAIBox2DRopeJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 9198D520145FA3EA00B17BE1 /* MOAIBox2DRopeJoint.h */; };
+		9198D522145FA3EB00B17BE1 /* MOAIBox2DRopeJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 9198D520145FA3EA00B17BE1 /* MOAIBox2DRopeJoint.h */; };
+		9198D524146063B800B17BE1 /* MOAIBox2DRopeJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9198D523146063B700B17BE1 /* MOAIBox2DRopeJoint.cpp */; };
+		9198D525146063B800B17BE1 /* MOAIBox2DRopeJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9198D523146063B700B17BE1 /* MOAIBox2DRopeJoint.cpp */; };
 		91BF83D9145B493A0083B0E9 /* Box2D.h in Headers */ = {isa = PBXBuildFile; fileRef = 91BF8377145B493A0083B0E9 /* Box2D.h */; };
 		91BF83DA145B493A0083B0E9 /* Box2D.h in Headers */ = {isa = PBXBuildFile; fileRef = 91BF8377145B493A0083B0E9 /* Box2D.h */; };
 		91BF83DB145B493A0083B0E9 /* b2BroadPhase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 91BF8379145B493A0083B0E9 /* b2BroadPhase.cpp */; };
@@ -3873,6 +3877,8 @@
 		66D967F914047A2500017919 /* MOAIScriptDeck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIScriptDeck.h; sourceTree = "<group>"; };
 		9198D468145DC78A00B17BE1 /* MOAIBox2DWheelJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIBox2DWheelJoint.h; sourceTree = "<group>"; };
 		9198D46C145DC7C200B17BE1 /* MOAIBox2DWheelJoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIBox2DWheelJoint.cpp; sourceTree = "<group>"; };
+		9198D520145FA3EA00B17BE1 /* MOAIBox2DRopeJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIBox2DRopeJoint.h; sourceTree = "<group>"; };
+		9198D523146063B700B17BE1 /* MOAIBox2DRopeJoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIBox2DRopeJoint.cpp; sourceTree = "<group>"; };
 		91BF8377145B493A0083B0E9 /* Box2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Box2D.h; path = "../../3rdparty/box2d-2.2.1/Box2D/Box2D/Box2D.h"; sourceTree = "<group>"; };
 		91BF8379145B493A0083B0E9 /* b2BroadPhase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = b2BroadPhase.cpp; sourceTree = "<group>"; };
 		91BF837A145B493A0083B0E9 /* b2BroadPhase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2BroadPhase.h; sourceTree = "<group>"; };
@@ -8540,6 +8546,8 @@
 				CDBD3D1B1425DC2600BC33D4 /* MOAIBox2DWeldJoint.h */,
 				9198D468145DC78A00B17BE1 /* MOAIBox2DWheelJoint.h */,
 				9198D46C145DC7C200B17BE1 /* MOAIBox2DWheelJoint.cpp */,
+				9198D520145FA3EA00B17BE1 /* MOAIBox2DRopeJoint.h */,
+				9198D523146063B700B17BE1 /* MOAIBox2DRopeJoint.cpp */,
 			);
 			name = joints;
 			sourceTree = "<group>";
@@ -9098,6 +9106,7 @@
 				CDF053961453AA0400FA4CB2 /* USSharedPtr.h in Headers */,
 				CDF053981453AA0400FA4CB2 /* USWeakPtr.h in Headers */,
 				9198D46B145DC7AD00B17BE1 /* MOAIBox2DWheelJoint.h in Headers */,
+				9198D522145FA3EB00B17BE1 /* MOAIBox2DRopeJoint.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9827,6 +9836,7 @@
 				CDF053951453AA0400FA4CB2 /* USSharedPtr.h in Headers */,
 				CDF053971453AA0400FA4CB2 /* USWeakPtr.h in Headers */,
 				9198D469145DC78A00B17BE1 /* MOAIBox2DWheelJoint.h in Headers */,
+				9198D521145FA3EB00B17BE1 /* MOAIBox2DRopeJoint.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10616,6 +10626,7 @@
 				079529131447902700143A72 /* MOAIImage-jpg.cpp in Sources */,
 				079529141447902700143A72 /* MOAIImage-png.cpp in Sources */,
 				9198D46E145DC7C200B17BE1 /* MOAIBox2DWheelJoint.cpp in Sources */,
+				9198D525146063B800B17BE1 /* MOAIBox2DRopeJoint.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11809,6 +11820,7 @@
 				079529111447902700143A72 /* MOAIImage-jpg.cpp in Sources */,
 				079529121447902700143A72 /* MOAIImage-png.cpp in Sources */,
 				9198D46D145DC7C200B17BE1 /* MOAIBox2DWheelJoint.cpp in Sources */,
+				9198D524146063B800B17BE1 /* MOAIBox2DRopeJoint.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

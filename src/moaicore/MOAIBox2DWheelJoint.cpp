@@ -325,6 +325,7 @@ int MOAIBox2DWheelJoint::_setSpringFrequencyHz ( lua_State* L ) {
 MOAIBox2DWheelJoint::~MOAIBox2DWheelJoint () {
 }
 
+//----------------------------------------------------------------//
 void MOAIBox2DWheelJoint::RegisterLuaClass ( USLuaState& state ) {
 	MOAIBox2DJoint::RegisterLuaClass ( state );
 }
