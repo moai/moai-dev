@@ -34,6 +34,7 @@
 	
 	# copy default project files into new host dir
 	cp -f host-source/d.run.sh $new_host_dir/run.sh
+	cp -f host-source/d.run.bat $new_host_dir/run.bat
 	cp -f host-source/d.settings-global.sh $new_host_dir/settings-global.sh
 	rsync -r --exclude=.svn --exclude=.DS_Store host-source/d.res/. $new_host_dir/res
 
