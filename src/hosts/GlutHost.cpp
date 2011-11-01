@@ -2,6 +2,7 @@
 // http://getmoai.com
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <aku/AKU.h>
 #include <GlutHost.h>
 
