@@ -17,6 +17,9 @@ class MOAIViewport;
 //================================================================//
 // MOAIGfxDevice
 //================================================================//
+/**	@name	MOAIGfxDevice
+	@text	Interface to the graphics singleton.
+*/
 class MOAIGfxDevice :
 	public USGlobalClass < MOAIGfxDevice, MOAIGlobalEventSource > {
 public:

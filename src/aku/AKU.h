@@ -36,12 +36,12 @@
 typedef void ( *AKUEnterFullscreenModeFunc )	();
 typedef void ( *AKUExitFullscreenModeFunc )		();
 typedef void ( *AKUOpenWindowFunc )				( const char* title, int width, int height );
-typedef void ( *AKUStartGameLoopFunc )			();
+typedef void ( *AKUSetSimStepFunc )				( double step );
 
 AKU_DECLARE_FUNC_ACCESSORS ( EnterFullscreenMode )
 AKU_DECLARE_FUNC_ACCESSORS ( ExitFullscreenMode )
 AKU_DECLARE_FUNC_ACCESSORS ( OpenWindow )
-AKU_DECLARE_FUNC_ACCESSORS ( StartGameLoop )
+AKU_DECLARE_FUNC_ACCESSORS ( SetSimStep )
 
 struct lua_State;
 typedef int AKUContextID;
@@ -60,6 +60,7 @@ AKU_API void			AKUSetUserdata					( void* user );
 // management api
 AKU_API void			AKUDetectGfxContext				();
 AKU_API lua_State*		AKUGetLuaState					();
+AKU_API double			AKUGetSimStep					();
 AKU_API char const*		AKUGetWorkingDirectory			();
 AKU_API int				AKUMountVirtualDirectory		( char const* virtualPath, char const* archive );
 AKU_API void			AKUPause						( bool pause );

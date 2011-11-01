@@ -57,8 +57,6 @@ static int sWinY;
 static int sWinWidth;
 static int sWinHeight;
 
-static const int GLUT_TIMER_INTERVAL = 16;
-
 //================================================================//
 // glut callbacks
 //================================================================//
@@ -158,7 +156,8 @@ static void _onReshape( int w, int h ) {
 //----------------------------------------------------------------//
 static void _onTimer ( int millisec ) {
 
-	glutTimerFunc ( GLUT_TIMER_INTERVAL, _onTimer, GLUT_TIMER_INTERVAL );
+	int timerInterval = ( int )( AKUGetSimStep () * 1000.0 );
+	glutTimerFunc ( timerInterval, _onTimer, timerInterval );
 	
 	AKUUpdate ();
 	
@@ -230,17 +229,7 @@ void _AKUOpenWindowFunc ( const char* title, int width, int height ) {
 	glutDisplayFunc ( _onPaint );
 	glutReshapeFunc ( _onReshape );
 	
-	glutTimerFunc ( GLUT_TIMER_INTERVAL, _onTimer, GLUT_TIMER_INTERVAL );
-	
 	AKUDetectGfxContext ();
-}
-
-//----------------------------------------------------------------//
-void _AKUStartGameLoopFunc () {
-
-	if ( sHasWindow ) {
-		glutMainLoop ();
-	}
 }
 
 //================================================================//
@@ -290,7 +279,6 @@ int GlutHost ( int argc, char** argv ) {
 		ParticlePresets ();
 	#endif
 
-	
 	AKUSetInputConfigurationName ( "AKUGlut" );
 
 	AKUReserveInputDevices			( GlutInputDeviceID::TOTAL );
@@ -306,16 +294,19 @@ int GlutHost ( int argc, char** argv ) {
 	AKUSetFunc_EnterFullscreenMode ( _AKUEnterFullscreenModeFunc );
 	AKUSetFunc_ExitFullscreenMode ( _AKUExitFullscreenModeFunc );
 	AKUSetFunc_OpenWindow ( _AKUOpenWindowFunc );
-	AKUSetFunc_StartGameLoop ( _AKUStartGameLoopFunc );
+
+	#ifdef GLUTHOST_USE_DEBUGGER
+		AKUDebugHarnessInit ();
+	#endif
 
 	for ( int i = 1; i < argc; ++i ) {
 		AKURunScript ( argv [ i ]);
 	}
 	
-	#ifdef GLUTHOST_USE_DEBUGGER
-		AKUDebugHarnessInit ();
-	#endif
-	
+	if ( sHasWindow ) {
+		glutTimerFunc ( 0, _onTimer, 0 );
+		glutMainLoop ();
+	}
 	return 0;
 }
 

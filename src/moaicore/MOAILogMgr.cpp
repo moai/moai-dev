@@ -248,10 +248,16 @@ void MOAILogMgr::PrintVar ( cc8* message, va_list args ) {
 //----------------------------------------------------------------//
 void MOAILogMgr::RegisterLogMessage ( u32 messageID, u32 level, cc8* formatString ) {
 
-	MOAILogMessage& message = MOAILogMgr::Get ().mMessageMap [ messageID ];
+	if ( strlen ( formatString )) {
+
+		MOAILogMessage& message = MOAILogMgr::Get ().mMessageMap [ messageID ];
 	
-	message.mLevel = level;
-	message.mFormatString = formatString;
+		message.mLevel = level;
+		message.mFormatString = formatString;
+	}
+	else {
+		MOAILogMgr::Get ().mMessageMap.erase ( messageID );
+	}
 }
 
 //----------------------------------------------------------------//

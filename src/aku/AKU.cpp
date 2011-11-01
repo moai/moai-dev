@@ -33,7 +33,7 @@ struct AKUContext {
 	AKU_DEFINE_FUNC_CONTEXT ( EnterFullscreenMode );
 	AKU_DEFINE_FUNC_CONTEXT ( ExitFullscreenMode );
 	AKU_DEFINE_FUNC_CONTEXT ( OpenWindow );
-	AKU_DEFINE_FUNC_CONTEXT ( StartGameLoop );
+	AKU_DEFINE_FUNC_CONTEXT ( SetSimStep );
 	
 	USGlobals*			mGlobals;
 	void*				mUserdata;
@@ -64,8 +64,10 @@ static void _OpenWindow ( const char* title, int width, int height ) {
 AKU_DEFINE_FUNC_ACCESSORS ( OpenWindow, _OpenWindow )
 
 //----------------------------------------------------------------//
-static void _StartGameLoop () {}
-AKU_DEFINE_FUNC_ACCESSORS ( StartGameLoop, _StartGameLoop )
+static void _SetSimStep ( double step ) {
+	UNUSED ( step );
+}
+AKU_DEFINE_FUNC_ACCESSORS ( SetSimStep, _SetSimStep )
 
 //----------------------------------------------------------------//
 static void _deleteContext ( AKUContext* context ) {
@@ -220,6 +222,12 @@ lua_State* AKUGetLuaState () {
 	lua_state = USLuaRuntime::Get ().State ();
 
 	return lua_state;
+}
+
+//----------------------------------------------------------------//
+double AKUGetSimStep () {
+
+	return MOAISim::Get ().GetStep ();
 }
 
 //----------------------------------------------------------------//
