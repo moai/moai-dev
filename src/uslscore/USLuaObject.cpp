@@ -325,11 +325,26 @@ void USLuaObject::PushLuaClassTable ( USLuaState& state ) {
 //----------------------------------------------------------------//
 void USLuaObject::PushLuaUserdata ( USLuaState& state ) {
 
+	bool hasUserdata = !this->mUserdata.IsNil ();
+
 	// create the handle userdata for reference counting
 	if ( !this->mUserdata.PushRef ( state )) {
 		
 		// pop the 'nil' pushed by PushRef
 		state.Pop ( 1 );
+		
+		// this is a nasty edge case where the userdata has been tagged for garbage
+		// collection, but not actually collected. the result is that the ref hasn't
+		// be cleared yet, but when we push it we get nil. this should only happen to
+		// refs to userdata. it's tempting to try and clear out the ref here, but if
+		// the ref is to a USLuaObject's userdata, the next step may be to recreate
+		// the object... which means when it is garbage collected the wrong (new)
+		// userdata will be cleaned up! so all we can do is force a full collection
+		// step, set ourselves to nil and return failure.
+		if ( hasUserdata ) {
+			USLog::Print ( "Attempt to access USLuaObject userdata tagged for garbage collection; running a full cycle of GC prior to reallocation.\n" );
+			USLuaRuntime::Get ().ForceGarbageCollection ();
+		}
 		
 		// create an empty instance table
 		lua_newtable ( state );
