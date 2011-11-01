@@ -57,7 +57,6 @@ int MOAIBox2DBody::_addCircle ( lua_State* L ) {
  @text	Create and add a polygon fixture to the body.
  
  @in		MOAIBox2DBody self
- @in        a number that specifies the total number of edges in the verts array (totalVerts / 2)
  @in		table verts Array containing vertex coordinate components ( t[1] = x0, t[2] = y0, t[3] = x1, t[4] = y1... )
  @out	    MOAIBox2DFixture fixture	Returns nil on failure.
  */
@@ -70,18 +69,17 @@ int MOAIBox2DBody::_addEdges ( lua_State* L ) {
 	}
 	
 	float unitsToMeters = self->GetUnitsToMeters ();
-	int totalEdges = state.GetValue < int >( 2, 0 );
-	int totalVerts = totalEdges * 2;
+	u32 totalVerts = lua_objlen ( state, -1 ) / 2;
 	
 	if (totalVerts) {
 		
 		b2Vec2 * verts = (b2Vec2 *)alloca(sizeof(b2Vec2) * totalVerts);
-		int numVerts = MOAIBox2DFixture::LoadVerts( state, 3, verts, totalVerts, unitsToMeters );
+		int numVerts = MOAIBox2DFixture::LoadVerts( state, 2, verts, totalVerts, unitsToMeters );
 		
 		if ( numVerts ) {
 			
 			b2EdgeShape edgeShape;
-			for ( int32 i = 0; i < totalVerts; i+=2) {
+			for ( u32 i = 0; i < totalVerts; i+=2) {
 				edgeShape.Set(verts[i], verts[i+1]);
 				b2FixtureDef fixtureDef;
 				fixtureDef.shape = &edgeShape;				
