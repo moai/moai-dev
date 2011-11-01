@@ -149,6 +149,13 @@
 			remoteGlobalIDString = CDD06BD5139882D900AB0420;
 			remoteInfo = "libmoai-osx-luaext";
 		};
+		CDA21FED145F7A2B00B92D2F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 073D58591459269600289D5C;
+			remoteInfo = "libmoai-ios-tapjoy";
+		};
 		CDBDAEBE13A2F6C700FD5641 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
@@ -254,6 +261,7 @@
 				0324CC741356442A000ADC60 /* libmoai-ios.a */,
 				0324CC721356442A000ADC60 /* libmoai-ios-3rdparty.a */,
 				CD07C41313A185E200C9386C /* libmoai-ios-luaext.a */,
+				CDA21FEE145F7A2B00B92D2F /* libmoai-ios-tapjoy.a */,
 				CD07C41513A185E200C9386C /* libmoai-ios-untz.a */,
 				0324E2C21356485F000ADC60 /* libmoai-osx.a */,
 				0324E2C01356485F000ADC60 /* libmoai-osx-3rdparty.a */,
@@ -453,6 +461,13 @@
 			fileType = archive.ar;
 			path = "libmoai-osx-luaext.a";
 			remoteRef = CD07C41613A185E200C9386C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		CDA21FEE145F7A2B00B92D2F /* libmoai-ios-tapjoy.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libmoai-ios-tapjoy.a";
+			remoteRef = CDA21FED145F7A2B00B92D2F /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		CDBDAEBF13A2F6C700FD5641 /* libmoai-osx-untz.a */ = {
