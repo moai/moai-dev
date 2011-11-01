@@ -13,9 +13,8 @@
 SUPPRESS_EMPTY_FILE_WARNING
 #if USE_BOX2D
 
-//----------------------------------------------------------------//
-MOAIBox2DRopeJoint::~MOAIBox2DRopeJoint () {
-
+MOAIBox2DRopeJoint::MOAIBox2DRopeJoint () {
+	
 	RTTI_BEGIN
 	RTTI_EXTEND ( MOAIBox2DJoint )
 	RTTI_END
@@ -83,11 +82,16 @@ int MOAIBox2DRopeJoint::_setMaxLength ( lua_State* L ) {
 	}
 	
 	float length = state.GetValue < float >( 1, 0.0f ) * unitsToMeters;
-	
+	printf("\n\n\nmax length = %f", length);
 	b2RopeJoint* joint = ( b2RopeJoint* )self->mJoint;
 	joint->SetMaxLength ( length );
 	
 	return 1;
+}
+
+//----------------------------------------------------------------//
+MOAIBox2DRopeJoint::~MOAIBox2DRopeJoint () {
+	
 }
 
 //----------------------------------------------------------------//
@@ -99,7 +103,9 @@ void MOAIBox2DRopeJoint::RegisterLuaClass ( USLuaState& state ) {
 void MOAIBox2DRopeJoint::RegisterLuaFuncs ( USLuaState& state ) {
 	MOAIBox2DJoint::RegisterLuaFuncs ( state );
 	luaL_Reg regTable [] = {
-		{ "_getLimitState",			_getLimitState },
+		{ "getLimitState",			_getLimitState },
+		{ "getMaxLength",			_getMaxLength },
+		{ "setMaxLength",			_setMaxLength },
 		{ NULL, NULL }
 	};
 	

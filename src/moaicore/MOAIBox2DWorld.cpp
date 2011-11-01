@@ -15,6 +15,7 @@
 #include <moaicore/MOAIBox2DPrismaticJoint.h>
 #include <moaicore/MOAIBox2DPulleyJoint.h>
 #include <moaicore/MOAIBox2DRevoluteJoint.h>
+#include <moaicore/MOAIBox2DRopeJoint.h>
 #include <moaicore/MOAIBox2DWeldJoint.h>
 #include <moaicore/MOAIBox2DWheelJoint.h>
 #include <moaicore/MOAIBox2DWorld.h>
@@ -425,6 +426,58 @@ int	MOAIBox2DWorld::_addRevoluteJoint ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	addRopeJoint
+ @text	Create and add a rope joint to the world. See Box2D documentation.
+ 
+ @in		MOAIBox2DWorld self
+ @in		MOAIBox2DBody bodyA
+ @in		MOAIBox2DBody bodyB 
+ @in		number maxLength
+ @opt		number anchorAX
+ @opt		number anchorAY
+ @opt		number anchorBX
+ @opt		number anchorBY
+ @out	MOAIBox2DJoint joint
+ */
+int	MOAIBox2DWorld::_addRopeJoint ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIBox2DWorld, "UUU" )
+	
+	if ( self->IsLocked ()) {
+		MOAILog ( state, MOAILogMessages::MOAIBox2DWorld_IsLocked );
+		return 0;
+	}
+	
+	MOAIBox2DBody* bodyA = state.GetLuaObject < MOAIBox2DBody >( 2 );
+	MOAIBox2DBody* bodyB = state.GetLuaObject < MOAIBox2DBody >( 3 );
+	
+	if ( !( bodyA && bodyB )) return 0;
+	
+	float maxLength = state.GetValue < float >( 4, 1 ) * self->mUnitsToMeters;
+	
+	b2Vec2 anchorA;
+	anchorA.x	= state.GetValue < float >( 5, 0 ) * self->mUnitsToMeters;
+	anchorA.y	= state.GetValue < float >( 6, 0 ) * self->mUnitsToMeters;
+	
+	b2Vec2 anchorB;
+	anchorB.x	= state.GetValue < float >( 7, 0 ) * self->mUnitsToMeters;
+	anchorB.y	= state.GetValue < float >( 8, 0 ) * self->mUnitsToMeters;
+	
+	b2RopeJointDef jointDef;
+	jointDef.bodyA = bodyA->mBody;
+	jointDef.bodyB = bodyB->mBody;
+	jointDef.maxLength = maxLength;
+	
+	MOAIBox2DRopeJoint* joint = new MOAIBox2DRopeJoint ();
+	joint->SetJoint ( self->mWorld->CreateJoint ( &jointDef ));
+	joint->SetWorld ( self );
+	self->LuaRetain ( *joint );
+	
+	joint->PushLuaUserdata ( state );
+	return 1;
+}
+
+
+//----------------------------------------------------------------//
 /**	@name	addWeldJoint
 	@text	Create and add a joint to the world. See Box2D documentation.
 	
@@ -782,6 +835,7 @@ void MOAIBox2DWorld::RegisterLuaFuncs ( USLuaState& state ) {
 		{ "addPrismaticJoint",		_addPrismaticJoint },
 		{ "addPulleyJoint",			_addPulleyJoint },
 		{ "addRevoluteJoint",		_addRevoluteJoint },
+		{ "addRopeJoint",			_addRopeJoint },
 		{ "addWeldJoint",			_addWeldJoint },
 		{ "addWheelJoint",			_addWheelJoint },
 		{ "getAutoClearForces",		_getAutoClearForces },
