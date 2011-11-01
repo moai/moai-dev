@@ -302,7 +302,7 @@ int MOAICameraFitter2D::_setFitMode ( lua_State* L ) {
 int MOAICameraFitter2D::_setFitScale ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICameraFitter2D, "U" )
 
-	self->mTargetScale = state.GetValue < float >( 2, 1.0f );
+	self->mFitScale = state.GetValue < float >( 2, 1.0f );
 	
 	self->mFittingMode &= ~FITTING_MODE_APPLY_ANCHORS;
 	self->UpdateTarget ();
