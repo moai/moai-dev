@@ -62,6 +62,10 @@
 	sed -i.backup s%@SETTING_PACKAGE@%"$packageName"%g $new_host_dir/run.sh
 	rm -f $new_host_dir/run.sh.backup
 
+	# inject the package name into the run batch file
+	sed -i.backup s%@SETTING_PACKAGE@%"$packageName"%g $new_host_dir/run.bat
+	rm -f $new_host_dir/run.bat.backup
+	
 	# echo descriptive messages about this host
 	echo ""
 	echo "****************************************************************"

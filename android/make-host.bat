@@ -4,5 +4,6 @@
 :: http://getmoai.com
 ::================================================================::
 
-	bash ./build.sh %1
+	bash make-host.sh %1
 	@pause
+	

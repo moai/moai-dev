@@ -95,7 +95,7 @@
 
 	# copy build.xml file and replace text inside
 	cp -f	host-source/project/build.xml	build/build.xml
-	fr build/build.xml		@NAME@		name
+	fr build/build.xml		@NAME@		$project_name
 
 	# copy local.properties file and replace text inside
 	cp -f	host-source/project/local.properties	build/local.properties
@@ -154,12 +154,14 @@
 	popd > /dev/null
 	
 	# install release mode of the project
-	pushd build > /dev/null
-		ant uninstall
-		ant clean
-		ant debug install
-		adb shell am start -a android.intent.action.MAIN -n $package/$package.MoaiActivity
-		# adb logcat MoaiJNI:V MoaiLog:V *:S
-		adb logcat MoaiLog:V *:S
-	popd > /dev/null
+	if [ $OSTYPE != cygwin ]; then
+		pushd build > /dev/null
+			ant uninstall
+			ant clean
+			ant debug install
+			adb shell am start -a android.intent.action.MAIN -n $package/$package.MoaiActivity
+			# adb logcat MoaiJNI:V MoaiLog:V *:S
+			adb logcat MoaiLog:V *:S
+		popd > /dev/null
+	fi
 	
