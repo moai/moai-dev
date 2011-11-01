@@ -10,6 +10,8 @@
 
 #----------------------------------------------------------------#
 # path to Android SDK folder
+# You MUST use forward slashes as the directory separators
+# For example: C:/android-sdk
 #----------------------------------------------------------------#
 
 	android_sdk_root=""

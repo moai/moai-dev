@@ -4,8 +4,6 @@
 # http://getmoai.com
 #================================================================#
 
-	set -e
-	
 	# check for package name provided on command line
 	packageName=$1
 	
