@@ -25,6 +25,19 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+/**	@name	clearLoopFlags
+	@text	Uses the mask provided to clear the loop flags.
+
+	@opt	number mask		Default value is 0xffffffff.
+	@out	nil
+*/
+int MOAISim::_clearLoopFlags ( lua_State* L ) {
+	USLuaState state ( L );
+	MOAISim::Get ().mLoopFlags &= ~state.GetValue < u32 >( 1, 0xffffffff );
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	clearRenderStack
 	@text	Clears the render stack.
 
@@ -162,6 +175,17 @@ int MOAISim::_getElapsedFrames ( lua_State* L ) {
 int MOAISim::_getElapsedTime ( lua_State* L ) {
 	
 	lua_pushnumber ( L, MOAISim::Get ().mSimTime );
+	return 1;
+}
+
+//----------------------------------------------------------------//
+/**	@name	getLoopFlags
+	@text	Returns the current loop flags.
+
+	@out	number mask
+*/
+int MOAISim::_getLoopFlags ( lua_State* L ) {
+	lua_pushnumber ( L, MOAISim::Get ().mLoopFlags );
 	return 1;
 }
 
@@ -547,12 +571,12 @@ int MOAISim::_setLeakTrackingEnabled ( lua_State* L ) {
 
 	@opt	number flags		Mask or a combination of MOAISim.SIM_LOOP_FORCE_STEP, MOAISim.SIM_LOOP_ALLOW_BOOST,
 								MOAISim.SIM_LOOP_ALLOW_SPIN, MOAISim.SIM_LOOP_NO_DEFICIT, MOAISim.SIM_LOOP_NO_SURPLUS,
-								MOAISim.SIM_LOOP_RESET_CLOCK
+								MOAISim.SIM_LOOP_RESET_CLOCK. Default value is 0.
 	@out	nil	
 */
 int MOAISim::_setLoopFlags ( lua_State* L ) {
 	USLuaState state ( L );
-	MOAISim::Get ().mLoopFlags = state.GetValue < u32 >( 1, LOOP_FLAGS_DEFAULT );
+	MOAISim::Get ().mLoopFlags |= state.GetValue < u32 >( 1, 0 );
 	return 0;
 }
 
@@ -763,6 +787,7 @@ void MOAISim::RegisterLuaClass ( USLuaState& state ) {
 	state.SetField ( -1, "DEFAULT_STEP_MULTIPLIER", ( u32 )DEFAULT_STEP_MULTIPLIER );
 
 	luaL_Reg regTable [] = {
+		{ "clearLoopFlags",				_clearLoopFlags },
 		{ "clearRenderStack",			_clearRenderStack },
 		{ "enterFullscreenMode",		_enterFullscreenMode },
 		{ "exitFullscreenMode",			_exitFullscreenMode },
@@ -772,6 +797,7 @@ void MOAISim::RegisterLuaClass ( USLuaState& state ) {
 		{ "getDeviceTime",				_getDeviceTime },
 		{ "getElapsedFrames",			_getElapsedFrames },
 		{ "getElapsedTime",				_getElapsedTime },
+		{ "getLoopFlags",				_getLoopFlags },
 		{ "getLuaObjectCount",			_getLuaObjectCount },
 		{ "getMemoryUsage",				_getMemoryUsage },
 		{ "getPerformance",				_getPerformance },
