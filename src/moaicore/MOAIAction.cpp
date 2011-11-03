@@ -19,12 +19,7 @@
 	@out	nil
 */
 int MOAIAction::_addChild ( lua_State* L ) {
-	
-	USLuaState state ( L );
-	if ( !state.CheckParams ( 1, "UU" )) return 0;
-	
-	MOAIAction* self = state.GetLuaObject < MOAIAction >( 1 );
-	if ( !self ) return 0;
+	MOAI_LUA_SETUP ( MOAIAction, "UU" )
 	
 	MOAIAction* action = state.GetLuaObject < MOAIAction >( 2 );
 	if ( !action ) return 0;
@@ -42,12 +37,7 @@ int MOAIAction::_addChild ( lua_State* L ) {
 	@out	nil
 */
 int MOAIAction::_clear ( lua_State* L ) {
-
-	USLuaState state ( L );
-	if ( !state.CheckParams ( 1, "U" )) return 0;
-	
-	MOAIAction* self = state.GetLuaObject < MOAIAction >( 1 );
-	if ( !self ) return 0;
+	MOAI_LUA_SETUP ( MOAIAction, "U" )
 
 	self->ClearChildren ();
 	
@@ -100,20 +90,23 @@ int MOAIAction::_isDone ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	start
-	@text	Adds the action to the root of the action tree for updating.
+	@text	Adds the action to a parent action or the root of the action tree.
 
 	@in		MOAIAction self
+	@opt	MOAIAction parent		Default value is MOAIActionMgr.getRoot ()
 	@out	MOAIAction self
 */
 int MOAIAction::_start ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAction, "U" )
 
-	USLuaState state ( L );
-	if ( !state.CheckParams ( 1, "U" )) return 0;
+	MOAIAction* action = state.GetLuaObject < MOAIAction >( 2 );
 	
-	MOAIAction* self = state.GetLuaObject < MOAIAction >( 1 );
-	if ( !self ) return 0;
-
-	self->Start ();
+	if ( action ) {
+		self->Start ( *action );
+	}
+	else {
+		self->Start ();
+	}
 
 	state.CopyToTop ( 1 );
 
@@ -129,12 +122,7 @@ int MOAIAction::_start ( lua_State* L ) {
 	@out	nil
 */
 int MOAIAction::_stop ( lua_State* L ) {
-
-	USLuaState state ( L );
-	if ( !state.CheckParams ( 1, "U" )) return 0;
-	
-	MOAIAction* self = state.GetLuaObject < MOAIAction >( 1 );
-	if ( !self ) return 0;
+	MOAI_LUA_SETUP ( MOAIAction, "U" )
 
 	self->Stop ();
 
