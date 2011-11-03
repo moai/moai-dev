@@ -9,15 +9,16 @@
 	set CYGWIN=nodosfilewarning
 	call bash run.sh
 
-	pushd build
-		call ant uninstall 
-		call ant clean
-		call ant debug install
-		call adb shell am start -a android.intent.action.MAIN -n @SETTING_PACKAGE@/@SETTING_PACKAGE@.MoaiActivity
-		:: call adb logcat MoaiJNI:V MoaiLog:V *:S
-		call adb logcat MoaiLog:V *:S
-	popd
+	if %ERRORLEVEL% == 0 (
+		pushd build
+			call ant uninstall 
+			call ant clean
+			call ant debug install
+			call adb shell am start -a android.intent.action.MAIN -n com.distinctdev.tmt2/com.distinctdev.tmt2.MoaiActivity
+			:: call adb logcat MoaiJNI:V MoaiLog:V *:S
+			call adb logcat MoaiLog:V *:S
+		popd
+	)
 
 	endlocal
-	@if %ERRORLEVEL% NEQ 0 echo There was an error. Check "README.txt" for information on settings up your environment.
-	@pause
+	pause

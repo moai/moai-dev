@@ -114,6 +114,7 @@
 	fr build/$package_path/MoaiView.java	@PACKAGE@		$package
 	fr build/$package_path/MoaiView.java	@WORKING_DIR@	$working_dir
 
+	# create run commands for the host
 	for file in "${run[@]}"; do
 		run_command=`echo -e $run_command"Run\(\""$file"\"\,mWidth\,mHeight\)\;\n"`
 	done
@@ -129,6 +130,9 @@
 	fi
 	
 	mkdir -p $bundle_dir
+
+	# bundle android-init file
+	cp -f host-source/init.lua $bundle_dir/init.lua
 
 	# bundle source folders
 	function copyFolderIntoBundle () {
