@@ -37,7 +37,7 @@
 		echo -e "*** Please specify a valid path to Android SDK in \"settings-local.sh\""
 		echo -e "*** Add this file to the ignore list of your version control system."
 		echo
-		exit
+		exit 1
 	fi
 
 	# create build directory
