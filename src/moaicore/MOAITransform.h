@@ -94,6 +94,8 @@ public:
 						~MOAITransform					();
 	void				RegisterLuaClass				( USLuaState& state );
 	void				RegisterLuaFuncs				( USLuaState& state );
+	void				SerializeIn						( USLuaState& state, USLuaSerializer& serializer );
+	void				SerializeOut					( USLuaState& state, USLuaSerializer& serializer );
 	void				SetLoc							( float x, float y );
 	void				SetPiv							( float x, float y );
 	void				SetScl							( float x, float y );

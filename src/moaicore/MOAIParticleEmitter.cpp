@@ -269,6 +269,20 @@ void MOAIParticleEmitter::RegisterLuaFuncs ( USLuaState& state ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIParticleEmitter::SerializeIn ( USLuaState& state, USLuaSerializer& serializer ) {
+
+	MOAITransform::SerializeIn ( state, serializer );
+	MOAIAction::SerializeIn ( state, serializer );
+}
+
+//----------------------------------------------------------------//
+void MOAIParticleEmitter::SerializeOut ( USLuaState& state, USLuaSerializer& serializer ) {
+
+	MOAITransform::SerializeOut ( state, serializer );
+	MOAIAction::SerializeOut ( state, serializer );
+}
+
+//----------------------------------------------------------------//
 void MOAIParticleEmitter::SetAngleRange ( float min, float max ) {
 
 	this->mMinAngle = min;

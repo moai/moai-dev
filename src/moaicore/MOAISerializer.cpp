@@ -25,7 +25,6 @@ int MOAISerializer::_serializeToString ( lua_State* L ) {
 	if ( !( state.IsType ( 1, LUA_TTABLE ) || state.IsType ( 1, LUA_TUSERDATA ))) return 0;
 
 	USLuaSerializer serializer;
-	serializer.Affirm ( state, 1 );
 	serializer.AddLuaReturn ( state, 1 );
 	STLString result = serializer.SerializeToString ();
 

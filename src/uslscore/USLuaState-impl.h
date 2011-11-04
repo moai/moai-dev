@@ -130,6 +130,15 @@ USMetaVec3D < TYPE > USLuaState::GetVec3D ( int idx ) {
 
 //----------------------------------------------------------------//
 template < typename TYPE >
+TYPE USLuaState::PopValue ( TYPE value ) {
+
+	TYPE value = this->GetValue < TYPE >( -1, value );
+	this->Pop ( 1 );
+	return value;
+}
+
+//----------------------------------------------------------------//
+template < typename TYPE >
 void USLuaState::ReadArray ( int size, TYPE* values, TYPE value ) {
 
 	for ( int i = 0; i < size; ++i ) {

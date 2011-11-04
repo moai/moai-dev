@@ -10,6 +10,8 @@
 #include <uslscore/USLuaSerializer.h>
 #include <uslscore/USLuaState-impl.h>
 
+#define LUA_PRIVATE "_p"
+
 //================================================================//
 // USLuaLocal
 //================================================================//
@@ -39,7 +41,6 @@ int USLuaObject::_gc ( lua_State* L ) {
 	// in any event, let's get rid of the userdata and lua refs we know about
 	data->ClearLocal ( data->mContain );
 	data->mUserdata.Clear ();
-	data->mPrivateTable.Clear ();
 	data->mInstanceTable.Clear ();
 	
 	// check to see if gc is being invoked during finalization
@@ -77,6 +78,55 @@ int USLuaObject::_getClassName ( lua_State* L ) {
 		lua_pushstring ( L, object->TypeName ());
 		return 1;
 	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+int USLuaObject::_index ( lua_State* L ) {
+
+	// push the instance table
+	lua_getmetatable ( L, 1 );
+
+	// push the private table
+	lua_pushstring ( L, LUA_PRIVATE );
+	lua_rawget ( L, -2 );
+	
+	// try to get the value
+	lua_pushvalue ( L, 2 ); 
+	lua_gettable ( L, -2 );
+	
+	// if nil...
+	if ( lua_isnil ( L, -1 )) {
+	
+		// pop the nil and the private table
+		lua_pop ( L, 2 );
+		
+		// get the instance table's metatable (the member table)
+		lua_getmetatable ( L, -1 );
+		
+		// and try to get the value from the member table directly
+		lua_pushvalue ( L, 2 );
+		lua_rawget ( L, -2 );
+	}
+	return 1;
+}
+
+//----------------------------------------------------------------//
+int USLuaObject::_newindex ( lua_State* L ) {
+
+	// push the instance table
+	lua_getmetatable ( L, 1 );
+
+	// push the private table
+	lua_pushstring ( L, LUA_PRIVATE );
+	lua_rawget ( L, -2 );
+
+	// set the index into the private table
+	lua_pushvalue ( L, 2 );
+	lua_pushvalue ( L, 3 );
+	
+	lua_settable ( L, -3 );
+
 	return 0;
 }
 
@@ -124,37 +174,31 @@ void USLuaObject::BindToLuaWithTable ( USLuaState& state ) {
 	
 	// create and initialize a new userdata
 	state.PushPtrUserData ( this );
-
-	// move the instance table to top; initialize it
-	state.MoveToTop ( -2 );
 	
-	lua_pushvalue ( state, -1 );
-	lua_setfield ( state, -2, "__index" );
+	// create and initialize the private table
+	lua_newtable ( state );
 	
-	lua_pushvalue ( state, -1 );
-	lua_setfield ( state, -2, "__newindex" );
-
+	// set the ref to the private table
+	lua_pushvalue ( state, -3 );
+	lua_setfield ( state, -2, LUA_PRIVATE );
+	
+	// initialize the private table
 	lua_pushcfunction ( state, USLuaObject::_gc );
 	lua_setfield ( state, -2, "__gc" );
 	
 	lua_pushcfunction ( state, USLuaObject::_tostring );
 	lua_setfield ( state, -2, "__tostring" );
 	
-	// create and initialize the private table
-	lua_newtable ( state );
-	
-	// use the member table as the private table's __index
-	type->PushMemberTable ( state );
+	lua_pushcfunction ( state, USLuaObject::_index );
 	lua_setfield ( state, -2, "__index" );
 	
-	// and make the member table the private table's meta
+	lua_pushcfunction ( state, USLuaObject::_newindex );
+	lua_setfield ( state, -2, "__newindex" );
+	
+	// make the member table the instance table's meta
 	type->PushMemberTable ( state );
 	lua_setmetatable ( state, -2 );
 	
-	// grab a ref to the private table; attach it to the instance table
-	this->mPrivateTable = state.GetWeakRef ( -1 );
-	lua_setmetatable ( state, -2 );
-
 	// grab a ref to the instance table; attach it to the userdata
 	this->mInstanceTable = state.GetWeakRef ( -1 );
 	lua_setmetatable ( state, -2 );
@@ -166,7 +210,7 @@ void USLuaObject::BindToLuaWithTable ( USLuaState& state ) {
 	else {
 		this->mUserdata.SetStrongRef ( state, -1 );
 	}
-
+	
 	assert ( !lua_isnil ( state, -1 ));
 }
 
@@ -176,7 +220,7 @@ void USLuaObject::ClearLocal ( USLuaLocal& ref ) {
 	if ( USLuaRuntime::IsValid ()) {
 		USLuaStateHandle state = USLuaRuntime::Get ().State ();
 		
-		if ( this->mPrivateTable.PushRef ( state )) {
+		if ( this->mInstanceTable.PushRef ( state )) {
 		
 			lua_pushnumber ( state, ref.mRef );
 			lua_pushnil ( state );
@@ -236,7 +280,7 @@ void USLuaObject::LuaRelease ( USLuaObject& object ) {
 //----------------------------------------------------------------//
 void USLuaObject::LuaRetain ( USLuaObject& object ) {
 
-	if ( this->mPrivateTable ) {
+	if ( this->mInstanceTable ) {
 		USLuaStateHandle state = USLuaRuntime::Get ().State ();
 
 		// affirm container table
@@ -360,15 +404,25 @@ bool USLuaObject::PushLocal ( USLuaState& state, USLuaLocal& ref ) {
 
 	if ( ref ) {
 		
-		assert ( this->mPrivateTable );
+		assert ( this->mInstanceTable );
 		
-		this->mPrivateTable.PushRef ( state );
+		this->mInstanceTable.PushRef ( state );
 		lua_rawgeti ( state, -1, ref.mRef );
 		lua_replace ( state, -2 );
 		return true;
 	}
 	lua_pushnil ( state );
 	return false;
+}
+
+//----------------------------------------------------------------//
+void USLuaObject::PushPrivateTable ( USLuaState& state ) {
+
+	this->mInstanceTable.PushRef ( state );
+	
+	lua_pushstring ( state, LUA_PRIVATE );
+	lua_rawget ( state, -2 );
+	lua_remove ( state, -2 );
 }
 
 //----------------------------------------------------------------//
@@ -398,9 +452,9 @@ void USLuaObject::SetLocal ( USLuaState& state, int idx, USLuaLocal& ref ) {
 
 	idx = state.AbsIndex ( idx );
 
-	assert ( this->mPrivateTable );
+	assert ( this->mInstanceTable );
 
-	this->mPrivateTable.PushRef ( state );
+	this->mInstanceTable.PushRef ( state );
 	
 	if ( ref ) {
 		luaL_unref ( state, -1, ref.mRef );
@@ -409,6 +463,18 @@ void USLuaObject::SetLocal ( USLuaState& state, int idx, USLuaLocal& ref ) {
 	
 	state.CopyToTop ( idx );
 	ref.mRef = luaL_ref ( state, -2 );
+	
+	lua_pop ( state, 1 );
+}
+
+//----------------------------------------------------------------//
+void USLuaObject::SetPrivateTable ( USLuaState& state, int idx ) {
+
+	this->mInstanceTable.PushRef ( state );
+	
+	lua_pushstring ( state, LUA_PRIVATE );
+	lua_pushvalue ( state, idx );
+	lua_rawset ( state, -3 );
 	
 	lua_pop ( state, 1 );
 }
@@ -501,9 +567,9 @@ void USLuaClass::InitLuaSingletonClass ( USLuaObject& data, USLuaState& state ) 
 
 	lua_setglobal ( state, data.TypeName ());
 
-	// set up the private table so we can use lua retain/release
+	// set up the instance table so we can use lua retain/release
 	lua_newtable ( state );
-	data.mPrivateTable.SetStrongRef ( state, -1 );
+	data.mInstanceTable.SetStrongRef ( state, -1 );
 	lua_pop ( state, 1 );
 
 	lua_settop ( state, top );

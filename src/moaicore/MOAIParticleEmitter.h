@@ -70,6 +70,8 @@ public:
 					~MOAIParticleEmitter	();
 	void			RegisterLuaClass		( USLuaState& state );
 	void			RegisterLuaFuncs		( USLuaState& state );
+	void			SerializeIn				( USLuaState& state, USLuaSerializer& serializer );
+	void			SerializeOut			( USLuaState& state, USLuaSerializer& serializer );
 	void			SetAngleRange			( float min, float max );
 	void			SetEmissionRange		( u32 min, u32 max );
 	void			SetMagnitudeRange		( float min, float max );

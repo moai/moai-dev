@@ -461,16 +461,6 @@ int USLuaState::GetValue < int >( int idx, int value ) {
 
 //----------------------------------------------------------------//
 template <>
-uintptr USLuaState::GetValue < uintptr >( int idx, uintptr value ) {
-
-	if ( this->IsType ( idx, LUA_TNUMBER )) {
-		return ( uintptr )lua_tonumber ( this->mState, idx );
-	}
-	return value;
-}
-
-//----------------------------------------------------------------//
-template <>
 u8 USLuaState::GetValue < u8 >( int idx, u8 value ) {
 
 	if ( this->IsType ( idx, LUA_TNUMBER )) {
@@ -505,6 +495,16 @@ u64 USLuaState::GetValue < u64 >( int idx, u64 value ) {
 
 	if ( this->IsType ( idx, LUA_TNUMBER )) {
 		return ( u64 )lua_tonumber ( this->mState, idx );
+	}
+	return value;
+}
+
+//----------------------------------------------------------------//
+template <>
+uintptr USLuaState::GetValue < uintptr >( int idx, uintptr value ) {
+
+	if ( this->IsType ( idx, LUA_TLIGHTUSERDATA )) {
+		return ( uintptr )lua_touserdata ( this->mState, idx );
 	}
 	return value;
 }
@@ -570,6 +570,12 @@ bool USLuaState::Inflate ( int idx, int windowBits ) {
 bool USLuaState::IsNil () {
 
 	return ( !this->mState );
+}
+
+//----------------------------------------------------------------//
+bool USLuaState::IsNil ( int idx ) {
+
+	return lua_isnil ( this->mState, idx );
 }
 
 //----------------------------------------------------------------//
@@ -692,6 +698,12 @@ void USLuaState::Push ( u32 value ) {
 void USLuaState::Push ( u64 value ) {
 
 	lua_pushnumber ( this->mState, ( double )value );
+}
+
+//----------------------------------------------------------------//
+void USLuaState::Push ( uintptr value ) {
+
+	lua_pushlightuserdata ( this->mState, ( void* )value );
 }
 
 //----------------------------------------------------------------//

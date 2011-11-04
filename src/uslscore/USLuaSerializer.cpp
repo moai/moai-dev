@@ -21,6 +21,19 @@
 #include <uslscore/USRtti.h>
 
 //----------------------------------------------------------------//
+int USLuaSerializer::_deserialize ( lua_State* L ) {
+	LUA_SETUP ( USLuaSerializer, "UUTT" );
+
+	USLuaObject* object = state.GetLuaObject < USLuaObject >( 2 );
+	if ( !object ) return 0;
+
+	object->SetPrivateTable ( state, 3 );
+	object->SerializeIn ( state, *self );
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
 int USLuaSerializer::_exportToFile ( lua_State* L ) {
 	LUA_SETUP ( USLuaSerializer, "US" )
 	
@@ -38,18 +51,6 @@ int USLuaSerializer::_exportToString ( lua_State* L ) {
 	lua_pushstring ( L, retStr.str() );
 
 	return 1;
-}
-
-//----------------------------------------------------------------//
-int USLuaSerializer::_initInstance ( lua_State* L ) {
-	LUA_SETUP ( USLuaSerializer, "UUT" );
-
-	USLuaObject* object = state.GetLuaObject < USLuaObject >( 2 );
-	if ( !object ) return 0;
-
-	object->SerializeIn ( state, *self );
-
-	return 0;
 }
 
 //----------------------------------------------------------------//
@@ -73,11 +74,9 @@ int USLuaSerializer::_serialize ( lua_State* L ) {
 
 	USLuaObject* object = state.GetLuaObject < USLuaObject >( 2 );
 	if ( object ) {
-		self->Affirm ( object );
 		self->AddLuaReturn ( object );
 	}
 	else if ( state.IsType ( 2, LUA_TTABLE )) {
-		self->Affirm ( state, 2 );
 		self->AddLuaReturn ( state, 2 );
 	}
 	
@@ -111,87 +110,68 @@ static STLString _escapeString ( cc8* str ) {
 //----------------------------------------------------------------//
 void USLuaSerializer::AddLuaReturn ( USLuaObject* object ) {
 
-	uintptr instanceID = this->GetID ( object );
+	uintptr memberID = this->AffirmMemberID ( object );
 
-	if ( this->mInstanceMap.contains ( instanceID )) {
-		this->mReturnList.push_back ( instanceID );
+	if ( this->mObjectMap.contains ( memberID )) {
+		this->mReturnList.push_back ( memberID );
 	}
 }
 
 //----------------------------------------------------------------//
 void USLuaSerializer::AddLuaReturn ( USLuaState& state, int idx ) {
 
-	uintptr tableID = this->GetID ( state, idx );
-
-	if ( this->mTableMap.contains ( tableID )) {
-		this->mReturnList.push_back ( tableID );
+	uintptr memberID = this->AffirmMemberID ( state, idx );
+	
+	if ( this->mTableMap.contains ( memberID )) {
+		this->mReturnList.push_back ( memberID );
 	}
 }
 
 //----------------------------------------------------------------//
-uintptr USLuaSerializer::Affirm ( USLuaObject* object ) {
+uintptr USLuaSerializer::AffirmMemberID ( USLuaObject* object ) {
 
-	uintptr instanceID = this->GetID ( object );
-	this->Register ( object, instanceID );
-	return instanceID;
+	uintptr memberID = this->GetID ( object );
+	
+	this->Register ( object, memberID );
+	return memberID;
 }
 
 //----------------------------------------------------------------//
-uintptr USLuaSerializer::Affirm ( USLuaState& state, int idx ) {
+uintptr USLuaSerializer::AffirmMemberID ( USLuaState& state, int idx ) {
 
 	// if we're an object, affirm as such...
 	if ( state.IsType ( idx, LUA_TUSERDATA )) {
-		return this->Affirm ( state.GetLuaObject < USLuaObject >( -1 ));
+		return this->AffirmMemberID ( state.GetLuaObject < USLuaObject >( -1 ));
 	}
 
 	// bail if we're not a table
 	if ( !state.IsType ( idx, LUA_TTABLE )) return 0;
 
 	// get the table's address
-	uintptr tableID = ( uintptr )lua_topointer ( state, idx );
+	uintptr memberID = ( uintptr )lua_topointer ( state, idx );
 	
 	// bail if the table's already been added
-	if ( this->mTableMap.contains ( tableID )) return tableID;
+	if ( this->mTableMap.contains ( memberID )) return memberID;
 
 	// add the ref now to avoid cycles
-	this->mTableMap [ tableID ].SetStrongRef ( state, idx );
+	this->mTableMap [ memberID ].SetStrongRef ( state, idx );
 
 	// follow the table's refs to make sure everything gets added
 	u32 itr = state.PushTableItr ( idx );
 	while ( state.TableItrNext ( itr )) {
-		this->Affirm ( state, -1 );
+		this->AffirmMemberID ( state, -1 );
 	}
 	
-	return tableID;
+	return memberID;
 }
 
 //----------------------------------------------------------------//
 void USLuaSerializer::Clear () {
 
 	this->mPending.clear ();
-	this->mInstanceMap.clear ();
+	this->mObjectMap.clear ();
 	this->mTableMap.clear ();
 	this->mReturnList.clear ();
-}
-
-//----------------------------------------------------------------//
-USLuaObject* USLuaSerializer::Dereference ( USLuaState& state, int idx ) {
-
-	uintptr id = state.GetValue ( idx, 0 );
-	
-	if ( this->mInstanceMap.contains ( id )) {
-		return this->mInstanceMap [ id ];
-	}
-	return 0;
-}
-
-//----------------------------------------------------------------//
-USLuaObject* USLuaSerializer::GetRefField ( USLuaState& state, int idx, cc8* name ) {
-
-	if ( state.GetFieldWithType ( idx, name, LUA_TNUMBER )) {
-		return this->PopRef ( state );
-	}
-	return 0;
 }
 
 //----------------------------------------------------------------//
@@ -228,33 +208,27 @@ u32 USLuaSerializer::IsLuaFile ( cc8* filename ) {
 }
 
 //----------------------------------------------------------------//
-USLuaObject* USLuaSerializer::PopRef ( USLuaState& state ) {
+USLuaObject* USLuaSerializer::MemberIDToObject ( uintptr objectID ) {
 
-	uintptr id = state.GetValue < uintptr >( -1, 0 );
-	state.Pop ( 1 );
-	
-	if ( this->mInstanceMap.contains ( id )) {
-		return this->mInstanceMap [ id ];
+	if ( this->mObjectMap.contains ( objectID )) {
+		return this->mObjectMap [ objectID ];
 	}
 	return 0;
 }
 
 //----------------------------------------------------------------//
-void USLuaSerializer::PushRef ( USLuaState& state, USLuaObject* object ) {
-
-	this->Affirm ( object );
-	lua_pushlightuserdata ( state, ( void* )this->GetID ( object ));
-}
-
-//----------------------------------------------------------------//
 void USLuaSerializer::Register ( USLuaObject* object, uintptr id ) {
 
-	if ( !this->mInstanceMap.contains ( id )) {
+	if ( !this->mObjectMap.contains ( id )) {
 	
-		this->mInstanceMap [ id ] = object;
+		this->mObjectMap [ id ] = object;
 		
 		if ( object ) {
 			this->mPending.push_back ( object );
+			
+			USLuaStateHandle state = USLuaRuntime::Get ().State ();
+			object->PushPrivateTable ( state );
+			this->AffirmMemberID ( state, -1 );
 		}
 	}
 }
@@ -268,9 +242,9 @@ void USLuaSerializer::RegisterLuaClass ( USLuaState& state ) {
 void USLuaSerializer::RegisterLuaFuncs ( USLuaState& state ) {
 
 	luaL_Reg regTable [] = {
+		{ "deserialize",		_deserialize },
 		{ "exportToFile",		_exportToFile },
 		{ "exportToString",		_exportToString },
-		{ "initInstance",		_initInstance },
 		{ "register",			_register },
 		{ "serialize",			_serialize },
 		{ NULL, NULL }
@@ -330,7 +304,7 @@ void USLuaSerializer::SerializeToStream ( USStream& stream ) {
 	// write the initializer first, in a function
 	stream.Print ( "local function init ( objects )\n\n" );
 	this->WriteTableInits ( stream );
-	this->WriteInstanceInits ( stream );
+	this->WriteObjectInits ( stream );
 	stream.Print ( "end\n\n" );
 	
 	// now write the decls
@@ -340,16 +314,6 @@ void USLuaSerializer::SerializeToStream ( USStream& stream ) {
 	stream.Print ( "init ( objects )\n" );
 	
 	this->WriteReturnList ( stream );
-}
-
-//----------------------------------------------------------------//
-void USLuaSerializer::SetRefField ( USLuaState& state, int idx, cc8* name, USLuaObject* object ) {
-
-	if ( state.IsType ( idx, LUA_TTABLE )) {
-		
-		this->PushRef ( state, object );
-		lua_setfield ( state, -2, name );
-	}
 }
 
 //----------------------------------------------------------------//
@@ -373,22 +337,22 @@ void USLuaSerializer::WriteDecls ( USStream& stream ) {
 	stream.Print ( "local objects = {\n\n" );
 	
 	this->WriteTableDecls ( stream );
-	this->WriteInstanceDecls ( stream );
+	this->WriteObjectDecls ( stream );
 	
 	stream.Print ( "}\n\n" );
 }
 
 //----------------------------------------------------------------//
-void USLuaSerializer::WriteInstanceDecls ( USStream& stream ) {
+void USLuaSerializer::WriteObjectDecls ( USStream& stream ) {
 
-	if ( !this->mInstanceMap.size ()) return;
+	if ( !this->mObjectMap.size ()) return;
 
 	stream.Print ( "\t--Declaring Instances\n" );
-	InstanceMapIt instanceIt;
-	instanceIt = this->mInstanceMap.begin ();
-	for ( ; instanceIt != this->mInstanceMap.end (); ++instanceIt ) {
+	ObjectMapIt objectIt;
+	objectIt = this->mObjectMap.begin ();
+	for ( ; objectIt != this->mObjectMap.end (); ++objectIt ) {
 		
-		USLuaObject* object = instanceIt->second;
+		USLuaObject* object = objectIt->second;
 		if ( !object ) continue;
 		
 		uintptr id = this->GetID ( object );
@@ -402,7 +366,7 @@ void USLuaSerializer::WriteInstanceDecls ( USStream& stream ) {
 }
 
 //----------------------------------------------------------------//
-void USLuaSerializer::WriteInstanceInits ( USStream& stream ) {
+void USLuaSerializer::WriteObjectInits ( USStream& stream ) {
 	
 	if ( !this->mPending.size ()) return;
 	
@@ -415,28 +379,37 @@ void USLuaSerializer::WriteInstanceInits ( USStream& stream ) {
 		u32 id = this->GetID ( object );
 		stream.Print ( "\t--%s\n", object->TypeName ());
 		
+		stream.Print ( "\tserializer:deserialize (\n" );
+		
 		USLuaClass* type = object->GetLuaClass ();
 		if ( type->IsSingleton ()) {
-			stream.Print ( "\tserializer:initInstance ( %s.get (), {", object->TypeName ());
+			stream.Print ( "\t\t%s.get (),\n", object->TypeName ());
 		}
 		else {
-			stream.Print ( "\tserializer:initInstance ( objects [ 0x%08X ], {", id );
+			stream.Print ( "\t\tobjects [ 0x%08X ],\n", id );
 		}
 		
 		USLuaStateHandle state = USLuaRuntime::Get ().State ();
-		lua_newtable ( state );
 		
-		// this should push the table for the class
+		object->PushPrivateTable ( state );
+		stream.Print ( "\t\tobjects [ 0x%08X ],\n", this->AffirmMemberID ( state, -1 ));
+		state.Pop ( 1 );
+		
+		// this should fill the table for the class
+		lua_newtable ( state );
 		object->SerializeOut ( state, *this );
 		
-		if ( this->WriteTable ( stream, state, -1, 2 )) {
-			stream.Print ( "\t})\n" );
+		stream.Print ( "\t\t{" );
+		
+		if ( this->WriteTable ( stream, state, -1, 3 )) {
+			stream.Print ( "\t\t}\n" );
 		}
 		else {
-			stream.Print ( "})\n" );
+			stream.Print ( "}\n" );
 		}
+		state.Pop ( 1 );
 		
-		stream.Print ( "\n" );
+		stream.Print ( "\t)\n\n" );
 	}
 }
 
@@ -459,7 +432,6 @@ void USLuaSerializer::WriteReturnList ( USStream& stream ) {
 		u32 id = *returnListIt;
 		stream.Print ( "objects [ 0x%08X ]", id );
 	}
-	
 	stream.Print ( "\n" );
 }
 
@@ -476,23 +448,36 @@ u32 USLuaSerializer::WriteTable ( USStream& stream, USLuaState& state, int idx, 
 	u32 itr = state.PushTableItr ( idx );
 	while ( state.TableItrNext ( itr )) {
 		
+		cc8* keyName = lua_tostring ( state, -2 );
+		int keyType = lua_type ( state, -2 );
+		int valType = lua_type ( state, -1 );
+		
+		switch ( valType ) {
+			case LUA_TNONE:
+			case LUA_TNIL:
+			case LUA_TFUNCTION:
+			case LUA_TUSERDATA:
+			case LUA_TTHREAD:
+				continue;
+		}
+		
 		if ( count == 0 ) {
 			stream.Print ( "\n" );
 		}
 		
-		switch ( lua_type ( state, -2 )) {
+		switch ( keyType ) {
 		
 			case LUA_TSTRING: {
-				stream.Print ( "%s[ \"%s\" ] = ", indent.c_str (), lua_tostring ( state, -2 ));
+				stream.Print ( "%s[ \"%s\" ] = ", indent.c_str (), keyName );
 				break;
 			}
 			case LUA_TNUMBER: {
-				stream.Print ( "%s[ %s ]\t= ", indent.c_str (), lua_tostring ( state, -2 ));
+				stream.Print ( "%s[ %s ]\t= ", indent.c_str (), keyName );
 				break;
 			}
 		};
 		
-		switch ( lua_type ( state, -1 )) {
+		switch ( valType ) {
 			
 			case LUA_TBOOLEAN: {
 				int value = lua_toboolean ( state, -1 );
@@ -561,19 +546,32 @@ u32 USLuaSerializer::WriteTableInitializer ( USStream& stream, USLuaState& state
 	u32 itr = state.PushTableItr ( idx );
 	while ( state.TableItrNext ( itr )) {
 		
-		switch ( lua_type ( state, -2 )) {
+		cc8* keyName = lua_tostring ( state, -2 );
+		int keyType = lua_type ( state, -2 );
+		int valType = lua_type ( state, -1 );
+		
+		switch ( valType ) {
+			case LUA_TNONE:
+			case LUA_TNIL:
+			case LUA_TFUNCTION:
+			case LUA_TUSERDATA:
+			case LUA_TTHREAD:
+				continue;
+		}
+		
+		switch ( keyType ) {
 		
 			case LUA_TSTRING: {
-				stream.Print ( "\t%s [ \"%s\" ] = ", prefix, lua_tostring ( state, -2 ));
+				stream.Print ( "\t%s [ \"%s\" ] = ", prefix, keyName );
 				break;
 			}
 			case LUA_TNUMBER: {
-				stream.Print ( "\t%s [ %s ]\t= ", prefix, lua_tostring ( state, -2 ));
+				stream.Print ( "\t%s [ %s ]\t= ", prefix, keyName );
 				break;
 			}
 		};
 		
-		switch ( lua_type ( state, -1 )) {
+		switch ( valType ) {
 			
 			case LUA_TBOOLEAN: {
 				int value = lua_toboolean ( state, -1 );

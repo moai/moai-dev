@@ -69,6 +69,7 @@ public:
 	bool			HasField				( int idx, int name, int type );
 	bool			Inflate					( int idx, int windowBits );
 	bool			IsNil					();
+	bool			IsNil					( int idx );
 	bool			IsTableOrUserdata		( int idx );
 	bool			IsType					( int idx, int type );
 	bool			IsType					( int idx, cc8* name, int type );
@@ -86,6 +87,7 @@ public:
 	void			Push					( u16 value );
 	void			Push					( u32 value );
 	void			Push					( u64 value );
+	void			Push					( uintptr value );
 	void			Push					( lua_CFunction value );
 	void			Push					( USLuaObject* luaObject );
 	void			Push					( USLuaRef& ref );
@@ -130,6 +132,7 @@ public:
 	template < typename TYPE > TYPE						GetValue			( int idx, TYPE value );
 	template < typename TYPE > USMetaVec2D < TYPE >		GetVec2D			( int idx );
 	template < typename TYPE > USMetaVec3D < TYPE >		GetVec3D			( int idx );
+	template < typename TYPE > TYPE						PopValue			( TYPE value );
 	template < typename TYPE > void						ReadArray			( int size, TYPE* values, TYPE value );
 	template < typename TYPE > void						SetField			( int idx, cc8* key, TYPE value );
 	template < typename TYPE > void						SetFieldByIndex		( int idx, int key, TYPE value );
@@ -137,15 +140,15 @@ public:
 };
 
 //----------------------------------------------------------------//
-template <> bool	USLuaState::GetValue < bool >	( int idx, bool value );
-template <> cc8*	USLuaState::GetValue < cc8* >	( int idx, cc8* value );
-template <> double	USLuaState::GetValue < double >	( int idx, double value );
-template <> float	USLuaState::GetValue < float >	( int idx, float value );
-template <> int		USLuaState::GetValue < int >	( int idx, int value );
-template <> uintptr	USLuaState::GetValue < uintptr >( int idx, uintptr value );
-template <> u8		USLuaState::GetValue < u8 >		( int idx, u8 value );
-template <> u16		USLuaState::GetValue < u16 >	( int idx, u16 value );
-template <> u32		USLuaState::GetValue < u32 >	( int idx, u32 value );
-template <> u64		USLuaState::GetValue < u64 >	( int idx, u64 value );
+template <> bool		USLuaState::GetValue < bool >		( int idx, bool value );
+template <> cc8*		USLuaState::GetValue < cc8* >		( int idx, cc8* value );
+template <> double		USLuaState::GetValue < double >		( int idx, double value );
+template <> float		USLuaState::GetValue < float >		( int idx, float value );
+template <> int			USLuaState::GetValue < int >		( int idx, int value );
+template <> u8			USLuaState::GetValue < u8 >			( int idx, u8 value );
+template <> u16			USLuaState::GetValue < u16 >		( int idx, u16 value );
+template <> u32			USLuaState::GetValue < u32 >		( int idx, u32 value );
+template <> u64			USLuaState::GetValue < u64 >		( int idx, u64 value );
+template <> uintptr		USLuaState::GetValue < uintptr >	( int idx, uintptr value );
 
 #endif

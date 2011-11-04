@@ -45,8 +45,8 @@ private:
 
 protected:
 
-	USLuaRef		mInstanceTable;		// ref to instance table stack (weak)
-	USLuaRef		mPrivateTable;		// ref to private local reference table (weak for factory class instances; strong for singletons)
+	
+	USLuaRef		mInstanceTable;		// ref to instance table (weak for factory class instances; strong for singletons)
 	USLuaRef		mUserdata;			// ref to userdata (weak)
 	
 
@@ -54,6 +54,8 @@ protected:
 	static int				_gc						( lua_State* L );
 	static int				_getClass				( lua_State* L );
 	static int				_getClassName			( lua_State* L );
+	static int				_index					( lua_State* L );
+	static int				_newindex				( lua_State* L );
 	static int				_tombstone				( lua_State* L );
 	static int				_tostring				( lua_State* L );
 
@@ -62,11 +64,14 @@ protected:
 	void					OnRelease			( u32 refCount );
 	void					OnRetain			( u32 refCount );
 	bool					PushLocal			( USLuaState& state, USLuaLocal& ref );
+	void					PushPrivateTable	( USLuaState& state );
 	void					SetLocal			( USLuaState& state, int idx, USLuaLocal& ref );
+	void					SetPrivateTable		( USLuaState& state, int idx );
 
 public:
 
 	friend class USLuaClass;
+	friend class USLuaSerializer;
 
 	//----------------------------------------------------------------//
 	void					BindToLuaWithTable		( USLuaState& state ); // push table at top of stack!
@@ -84,7 +89,6 @@ public:
 	static void             ReportLeaks				( FILE *f, bool clearAfter );
 	virtual	void			SerializeIn				( USLuaState& state, USLuaSerializer& serializer );
 	virtual	void			SerializeOut			( USLuaState& state, USLuaSerializer& serializer );
-	void					SetLuaInstanceTable		( USLuaState& state, int idx );
 							USLuaObject				();
 	virtual					~USLuaObject			();
 };

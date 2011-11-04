@@ -821,14 +821,14 @@ void MOAIProp2D::RegisterLuaFuncs ( USLuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIProp2D::SerializeIn ( USLuaState& state, USLuaSerializer& serializer ) {
 	
-	this->mDeck.Set ( *this, serializer.GetRefField < MOAIDeck >( state, -1, "mDeck" ));
-	this->mGrid.Set ( *this, serializer.GetRefField < MOAIGrid >( state, -1, "mGrid" ));
+	this->mDeck.Set ( *this, serializer.MemberIDToObject < MOAIDeck >( state.GetField < uintptr >( -1, "mDeck", 0 )));
+	this->mGrid.Set ( *this, serializer.MemberIDToObject < MOAIGrid >( state.GetField < uintptr >( -1, "mGrid", 0 )));
 }
 
 //----------------------------------------------------------------//
 void MOAIProp2D::SerializeOut ( USLuaState& state, USLuaSerializer& serializer ) {
 	
-	serializer.SetRefField ( state, -1, "mDeck", this->mDeck );
-	serializer.SetRefField ( state, -1, "mGrid", this->mGrid );
+	state.SetField ( -1, "mDeck", serializer.AffirmMemberID ( this->mDeck ));
+	state.SetField ( -1, "mGrid", serializer.AffirmMemberID ( this->mGrid ));
 }
 
