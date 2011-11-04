@@ -11840,31 +11840,8 @@
 				);
 				GCC_PREFIX_HEADER = "../../3rdparty/untz/src/native/ios/Untz-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					_DEBUG,
-					DEBUG,
-					POSIX,
+					"${inherited}",
 					MACOSX,
-					i386,
-					x86_64,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					SQLITE_ENABLE_FTS3,
-					SQLITE_ENABLE_FTS3_PARENTHESIS,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT_DEBUG_LEVEL_ERROR,
-					FT_DEBUG_LEVEL_TRACE,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-					OPENSSL_NO_DEPRECATED,
-					PHYSFS_SUPPORTS_ZIP,
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -11911,25 +11888,8 @@
 				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PREFIX_HEADER = "../../3rdparty/untz/src/native/ios/Untz-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					POSIX,
+					"${inherited}",
 					MACOSX,
-					i386,
-					x86_64,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-					OPENSSL_NO_DEPRECATED,
-					PHYSFS_SUPPORTS_ZIP,
 				);
 				GCC_STRICT_ALIASING = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
@@ -11971,28 +11931,8 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					_DEBUG,
-					DEBUG,
-					POSIX,
+					"${inherited}",
 					MACOSX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					SQLITE_ENABLE_FTS3,
-					SQLITE_ENABLE_FTS3_PARENTHESIS,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT_DEBUG_LEVEL_ERROR,
-					FT_DEBUG_LEVEL_TRACE,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-					OPENSSL_NO_DEPRECATED,
 				);
 				PRODUCT_NAME = "moai-osx";
 				SDKROOT = "";
@@ -12005,22 +11945,8 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					POSIX,
+					"${inherited}",
 					MACOSX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-					OPENSSL_NO_DEPRECATED,
 				);
 				PRODUCT_NAME = "moai-osx";
 				SDKROOT = "";
@@ -12060,6 +11986,7 @@
 					"\"$(SRCROOT)/../../3rdparty/glut-3.7.6-bin\"",
 				);
 				PRODUCT_NAME = "moai-ios-3rdparty";
+				SDKROOT = iphoneos;
 			};
 			name = Debug;
 		};
@@ -12096,6 +12023,7 @@
 					"\"$(SRCROOT)/../../3rdparty/glut-3.7.6-bin\"",
 				);
 				PRODUCT_NAME = "moai-ios-3rdparty";
+				SDKROOT = iphoneos;
 			};
 			name = Release;
 		};
@@ -12201,7 +12129,6 @@
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PROVISIONING_PROFILE = "";
-				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = YES;
 				VALIDATE_PRODUCT = YES;
@@ -12214,6 +12141,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "moai-ios";
+				SDKROOT = iphoneos;
 			};
 			name = Debug;
 		};
@@ -12221,6 +12149,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "moai-ios";
+				SDKROOT = iphoneos;
 			};
 			name = Release;
 		};
@@ -12331,7 +12260,6 @@
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PROVISIONING_PROFILE = "";
-				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = NO;
 				VALIDATE_PRODUCT = YES;
@@ -12365,6 +12293,7 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-ios-untz";
+				SDKROOT = iphoneos;
 			};
 			name = Debug;
 		};
@@ -12393,6 +12322,7 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-ios-untz";
+				SDKROOT = iphoneos;
 			};
 			name = Release;
 		};
@@ -12401,28 +12331,8 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					_DEBUG,
-					DEBUG,
-					POSIX,
+					"${inherited}",
 					MACOSX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					SQLITE_ENABLE_FTS3,
-					SQLITE_ENABLE_FTS3_PARENTHESIS,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT_DEBUG_LEVEL_ERROR,
-					FT_DEBUG_LEVEL_TRACE,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-					OPENSSL_NO_DEPRECATED,
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -12457,22 +12367,8 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					POSIX,
+					"${inherited}",
 					MACOSX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-					OPENSSL_NO_DEPRECATED,
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -12527,6 +12423,7 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-ios-luaext";
+				SDKROOT = iphoneos;
 			};
 			name = Debug;
 		};
@@ -12555,6 +12452,7 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-ios-luaext";
+				SDKROOT = iphoneos;
 			};
 			name = Release;
 		};
@@ -12563,28 +12461,8 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					_DEBUG,
-					DEBUG,
-					POSIX,
+					"${inherited}",
 					MACOSX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					SQLITE_ENABLE_FTS3,
-					SQLITE_ENABLE_FTS3_PARENTHESIS,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT_DEBUG_LEVEL_ERROR,
-					FT_DEBUG_LEVEL_TRACE,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-					OPENSSL_NO_DEPRECATED,
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -12619,22 +12497,8 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					POSIX,
+					"${inherited}",
 					MACOSX,
-					SQLITE_ENABLE_COLUMN_METADATA,
-					TIXML_USE_STL,
-					HAVE_MEMMOVE,
-					XML_STATIC,
-					FT2_BUILD_LIBRARY,
-					DARWIN_NO_CARBON,
-					L_ENDIAN,
-					OPENSSL_NO_GMP,
-					OPENSSL_NO_JPAKE,
-					OPENSSL_NO_MD2,
-					OPENSSL_NO_RC5,
-					OPENSSL_NO_RFC3779,
-					OPENSSL_NO_STORE,
-					OPENSSL_NO_DEPRECATED,
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
