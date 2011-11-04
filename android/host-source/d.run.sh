@@ -114,6 +114,20 @@
 	fr build/$package_path/MoaiView.java	@PACKAGE@		$package
 	fr build/$package_path/MoaiView.java	@WORKING_DIR@	$working_dir
 
+	# create run command for the init.lua file
+	working_dir_depth=`grep -o "\/" <<<"$working_dir" | wc -l`
+	(( working_dir_depth += 1 ))
+	
+	for (( i=1; i<=$working_dir_depth; i++ )); do
+		if [ $i == 1 ]; then
+			init_dir=\.\.
+		else
+			init_dir=$init_dir\/\.\.
+		fi
+	done
+
+	fr 	build/$package_path/MoaiView.java	@RUN_INIT_DIR@ 	$init_dir
+	
 	# create run commands for the host
 	for file in "${run[@]}"; do
 		run_command=`echo -e $run_command"Run\(\""$file"\"\,mWidth\,mHeight\)\;\n"`
