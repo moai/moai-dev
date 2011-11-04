@@ -64,9 +64,9 @@ protected:
 	void					OnRelease			( u32 refCount );
 	void					OnRetain			( u32 refCount );
 	bool					PushLocal			( USLuaState& state, USLuaLocal& ref );
-	void					PushPrivateTable	( USLuaState& state );
+	void					PushMemberTable		( USLuaState& state );
 	void					SetLocal			( USLuaState& state, int idx, USLuaLocal& ref );
-	void					SetPrivateTable		( USLuaState& state, int idx );
+	void					SetMemberTable		( USLuaState& state, int idx );
 
 public:
 
@@ -100,13 +100,13 @@ class USLuaClass :
 	public USObject {
 protected:
 
-	USLuaRef	mClassTable;	// global factory class for type
-	USLuaRef	mMemberTable;	// metatable shared by all instances of type
+	USLuaRef	mClassTable;		// global factory class for type
+	USLuaRef	mInterfaceTable;	// interface shared by all instances of type
 
 	//----------------------------------------------------------------//
 	void				InitLuaFactoryClass			( USLuaObject& data, USLuaState& state );
 	void				InitLuaSingletonClass		( USLuaObject& data, USLuaState& state );
-	void				PushMemberTable				( USLuaState& state );
+	void				PushInterfaceTable			( USLuaState& state );
 	virtual void		RegisterLuaClass			( USLuaState& state ) = 0;
 
 public:

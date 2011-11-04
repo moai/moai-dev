@@ -27,7 +27,7 @@ int USLuaSerializer::_deserialize ( lua_State* L ) {
 	USLuaObject* object = state.GetLuaObject < USLuaObject >( 2 );
 	if ( !object ) return 0;
 
-	object->SetPrivateTable ( state, 3 );
+	object->SetMemberTable ( state, 3 );
 	object->SerializeIn ( state, *self );
 
 	return 0;
@@ -227,7 +227,7 @@ void USLuaSerializer::Register ( USLuaObject* object, uintptr id ) {
 			this->mPending.push_back ( object );
 			
 			USLuaStateHandle state = USLuaRuntime::Get ().State ();
-			object->PushPrivateTable ( state );
+			object->PushMemberTable ( state );
 			this->AffirmMemberID ( state, -1 );
 		}
 	}
@@ -391,7 +391,7 @@ void USLuaSerializer::WriteObjectInits ( USStream& stream ) {
 		
 		USLuaStateHandle state = USLuaRuntime::Get ().State ();
 		
-		object->PushPrivateTable ( state );
+		object->PushMemberTable ( state );
 		stream.Print ( "\t\tobjects [ 0x%08X ],\n", this->AffirmMemberID ( state, -1 ));
 		state.Pop ( 1 );
 		

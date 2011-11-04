@@ -10,7 +10,7 @@
 #include <uslscore/USLuaSerializer.h>
 #include <uslscore/USLuaState-impl.h>
 
-#define LUA_PRIVATE "_p"
+#define LUA_MEMBER_TABLE_NAME "_m"
 
 //================================================================//
 // USLuaLocal
@@ -87,8 +87,8 @@ int USLuaObject::_index ( lua_State* L ) {
 	// push the instance table
 	lua_getmetatable ( L, 1 );
 
-	// push the private table
-	lua_pushstring ( L, LUA_PRIVATE );
+	// push the member table
+	lua_pushstring ( L, LUA_MEMBER_TABLE_NAME );
 	lua_rawget ( L, -2 );
 	
 	// try to get the value
@@ -98,13 +98,13 @@ int USLuaObject::_index ( lua_State* L ) {
 	// if nil...
 	if ( lua_isnil ( L, -1 )) {
 	
-		// pop the nil and the private table
+		// pop the nil and the member table
 		lua_pop ( L, 2 );
 		
-		// get the instance table's metatable (the member table)
+		// get the instance table's metatable (the interface table)
 		lua_getmetatable ( L, -1 );
 		
-		// and try to get the value from the member table directly
+		// and try to get the value from the interface table directly
 		lua_pushvalue ( L, 2 );
 		lua_rawget ( L, -2 );
 	}
@@ -118,7 +118,7 @@ int USLuaObject::_newindex ( lua_State* L ) {
 	lua_getmetatable ( L, 1 );
 
 	// push the private table
-	lua_pushstring ( L, LUA_PRIVATE );
+	lua_pushstring ( L, LUA_MEMBER_TABLE_NAME );
 	lua_rawget ( L, -2 );
 
 	// set the index into the private table
@@ -180,7 +180,7 @@ void USLuaObject::BindToLuaWithTable ( USLuaState& state ) {
 	
 	// set the ref to the private table
 	lua_pushvalue ( state, -3 );
-	lua_setfield ( state, -2, LUA_PRIVATE );
+	lua_setfield ( state, -2, LUA_MEMBER_TABLE_NAME );
 	
 	// initialize the private table
 	lua_pushcfunction ( state, USLuaObject::_gc );
@@ -195,8 +195,8 @@ void USLuaObject::BindToLuaWithTable ( USLuaState& state ) {
 	lua_pushcfunction ( state, USLuaObject::_newindex );
 	lua_setfield ( state, -2, "__newindex" );
 	
-	// make the member table the instance table's meta
-	type->PushMemberTable ( state );
+	// make the interface table the instance table's meta
+	type->PushInterfaceTable ( state );
 	lua_setmetatable ( state, -2 );
 	
 	// grab a ref to the instance table; attach it to the userdata
@@ -416,11 +416,11 @@ bool USLuaObject::PushLocal ( USLuaState& state, USLuaLocal& ref ) {
 }
 
 //----------------------------------------------------------------//
-void USLuaObject::PushPrivateTable ( USLuaState& state ) {
+void USLuaObject::PushMemberTable ( USLuaState& state ) {
 
 	this->mInstanceTable.PushRef ( state );
 	
-	lua_pushstring ( state, LUA_PRIVATE );
+	lua_pushstring ( state, LUA_MEMBER_TABLE_NAME );
 	lua_rawget ( state, -2 );
 	lua_remove ( state, -2 );
 }
@@ -468,11 +468,11 @@ void USLuaObject::SetLocal ( USLuaState& state, int idx, USLuaLocal& ref ) {
 }
 
 //----------------------------------------------------------------//
-void USLuaObject::SetPrivateTable ( USLuaState& state, int idx ) {
+void USLuaObject::SetMemberTable ( USLuaState& state, int idx ) {
 
 	this->mInstanceTable.PushRef ( state );
 	
-	lua_pushstring ( state, LUA_PRIVATE );
+	lua_pushstring ( state, LUA_MEMBER_TABLE_NAME );
 	lua_pushvalue ( state, idx );
 	lua_rawset ( state, -3 );
 	
@@ -531,7 +531,7 @@ void USLuaClass::InitLuaFactoryClass ( USLuaObject& data, USLuaState& state ) {
 	lua_pushnil ( state );
 	lua_setfield ( state, -2, "__newindex" );
 
-	this->mMemberTable = state.GetStrongRef ( -1 );
+	this->mInterfaceTable = state.GetStrongRef ( -1 );
 	
 	lua_settop ( state, top );
 
@@ -582,9 +582,9 @@ bool USLuaClass::IsSingleton () {
 }
 
 //----------------------------------------------------------------//
-void USLuaClass::PushMemberTable ( USLuaState& state ) {
+void USLuaClass::PushInterfaceTable ( USLuaState& state ) {
 
-	state.Push ( this->mMemberTable );
+	state.Push ( this->mInterfaceTable );
 }
 
 //----------------------------------------------------------------//
