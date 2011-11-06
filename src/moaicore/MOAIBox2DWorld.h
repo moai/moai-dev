@@ -75,17 +75,17 @@ private:
 	MOAIBox2DPrim*		mDestroyJoints;
 
 	//----------------------------------------------------------------//
-<<<<<<< HEAD
 	static int		_addBody					( lua_State* L );
 	static int		_addDistanceJoint			( lua_State* L );
 	static int		_addFrictionJoint			( lua_State* L );
 	static int		_addGearJoint				( lua_State* L );
-	static int		_addLineJoint				( lua_State* L );
 	static int		_addMouseJoint				( lua_State* L );
 	static int		_addPrismaticJoint			( lua_State* L );
 	static int		_addPulleyJoint				( lua_State* L );
 	static int		_addRevoluteJoint			( lua_State* L );
+	static int		_addRopeJoint				( lua_State* L );
 	static int		_addWeldJoint				( lua_State* L );
+	static int		_addWheelJoint				( lua_State* L );
 	static int		_getAngularSleepTolerance	( lua_State* L );
 	static int		_getAutoClearForces			( lua_State* L );
 	static int		_getGravity					( lua_State* L );
@@ -98,25 +98,6 @@ private:
 	static int		_setLinearSleepTolerance	( lua_State* L );
 	static int		_setTimeToSleep				( lua_State* L );
 	static int		_setUnitsToMeters			( lua_State* L );
-=======
-	static int		_addBody				( lua_State* L );
-	static int		_addDistanceJoint		( lua_State* L );
-	static int		_addFrictionJoint		( lua_State* L );
-	static int		_addGearJoint			( lua_State* L );
-	static int		_addMouseJoint			( lua_State* L );
-	static int		_addPrismaticJoint		( lua_State* L );
-	static int		_addPulleyJoint			( lua_State* L );
-	static int		_addRevoluteJoint		( lua_State* L );
-	static int		_addRopeJoint			( lua_State* L );
-	static int		_addWeldJoint			( lua_State* L );
-	static int		_addWheelJoint			( lua_State* L );
-	static int		_getAutoClearForces		( lua_State* L );
-	static int		_getGravity				( lua_State* L );
-	static int		_setAutoClearForces		( lua_State* L );
-	static int		_setGravity				( lua_State* L );
-	static int		_setIterations			( lua_State* L );
-	static int		_setUnitsToMeters		( lua_State* L );
->>>>>>> 3536441b6e621c9030cc66048d6a203dd8bb6a5e
 	
 	//----------------------------------------------------------------//
 	void			Destroy					();

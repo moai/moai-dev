@@ -45,7 +45,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/vmg"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\src;&quot;..\..\src\moai-lua-5.1.3\src&quot;;..\..\3rdparty;&quot;..\..\3rdparty\glew-1.5.6\include&quot;;&quot;..\..\3rdparty\zlib-1.2.3&quot;;&quot;..\..\3rdparty\sqlite-3.6.16&quot;;..\..\3rdparty\tinyxml;&quot;..\..\3rdparty\curl-7.19.7\include&quot;;&quot;..\..\3rdparty\jpeg-8c&quot;;..\..\3rdparty\lpng140;&quot;..\..\3rdparty\expat-2.0.1\lib&quot;;&quot;..\..\3rdparty\jansson-2.1\src&quot;;&quot;..\..\3rdparty\freetype-2.4.4\include&quot;;&quot;..\..\3rdparty\box2d-2.1.2\Box2D&quot;;&quot;..\..\3rdparty\chipmunk-5.3.4\include&quot;"
+				AdditionalIncludeDirectories="..\..\src;&quot;..\..\src\moai-lua-5.1.3\src&quot;;..\..\3rdparty;&quot;..\..\3rdparty\glew-1.5.6\include&quot;;&quot;..\..\3rdparty\zlib-1.2.3&quot;;&quot;..\..\3rdparty\sqlite-3.6.16&quot;;..\..\3rdparty\tinyxml;&quot;..\..\3rdparty\curl-7.19.7\include&quot;;&quot;..\..\3rdparty\jpeg-8c&quot;;..\..\3rdparty\lpng140;&quot;..\..\3rdparty\expat-2.0.1\lib&quot;;&quot;..\..\3rdparty\jansson-2.1\src&quot;;&quot;..\..\3rdparty\freetype-2.4.4\include&quot;;&quot;..\..\3rdparty\box2d-2.2.1\Box2D&quot;;&quot;..\..\3rdparty\chipmunk-5.3.4\include&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;XML_STATIC"
 				StringPooling="true"
 				MinimalRebuild="true"
@@ -122,7 +122,7 @@
 				EnableIntrinsicFunctions="false"
 				FavorSizeOrSpeed="1"
 				OmitFramePointers="false"
-				AdditionalIncludeDirectories="..\..\src;&quot;..\..\src\moai-lua-5.1.3\src&quot;;..\..\3rdparty;&quot;..\..\3rdparty\glew-1.5.6\include&quot;;&quot;..\..\3rdparty\zlib-1.2.3&quot;;&quot;..\..\3rdparty\sqlite-3.6.16&quot;;..\..\3rdparty\tinyxml;&quot;..\..\3rdparty\curl-7.19.7\include&quot;;&quot;..\..\3rdparty\jpeg-8c&quot;;..\..\3rdparty\lpng140;&quot;..\..\3rdparty\expat-2.0.1\lib&quot;;&quot;..\..\3rdparty\jansson-2.1\src&quot;;&quot;..\..\3rdparty\freetype-2.4.4\include&quot;;&quot;..\..\3rdparty\box2d-2.1.2\Box2D&quot;;&quot;..\..\3rdparty\chipmunk-5.3.4\include&quot;"
+				AdditionalIncludeDirectories="..\..\src;&quot;..\..\src\moai-lua-5.1.3\src&quot;;..\..\3rdparty;&quot;..\..\3rdparty\glew-1.5.6\include&quot;;&quot;..\..\3rdparty\zlib-1.2.3&quot;;&quot;..\..\3rdparty\sqlite-3.6.16&quot;;..\..\3rdparty\tinyxml;&quot;..\..\3rdparty\curl-7.19.7\include&quot;;&quot;..\..\3rdparty\jpeg-8c&quot;;..\..\3rdparty\lpng140;&quot;..\..\3rdparty\expat-2.0.1\lib&quot;;&quot;..\..\3rdparty\jansson-2.1\src&quot;;&quot;..\..\3rdparty\freetype-2.4.4\include&quot;;&quot;..\..\3rdparty\box2d-2.2.1\Box2D&quot;;&quot;..\..\3rdparty\chipmunk-5.3.4\include&quot;"
 				PreprocessorDefinitions="WIN32;_LIB;_USE_32BIT_TIME_T;_CRT_SECURE_NO_WARNINGS;XML_STATIC"
 				StringPooling="true"
 				ExceptionHandling="1"
@@ -1147,14 +1147,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\moaicore\MOAIBox2DLineJoint.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\moaicore\MOAIBox2DLineJoint.h"
-					>
-				</File>
-				<File
 					RelativePath="..\..\src\moaicore\MOAIBox2DMouseJoint.cpp"
 					>
 				</File>
@@ -1187,11 +1179,27 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\moaicore\MOAIBox2DRopeJoint.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\moaicore\MOAIBox2DRopeJoint.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\moaicore\MOAIBox2DWeldJoint.cpp"
 					>
 				</File>
 				<File
 					RelativePath="..\..\src\moaicore\MOAIBox2DWeldJoint.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\moaicore\MOAIBox2DWheelJoint.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\moaicore\MOAIBox2DWheelJoint.h"
 					>
 				</File>
 			</Filter>

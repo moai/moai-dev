@@ -116,13 +116,13 @@ typedef double float64;
 // Sleep
 
 /// The time that a body must be still before it will go to sleep.
-#define b2_timeToSleep				0.5f
+//#define b2_timeToSleep				0.5f // MOAI: moved to b2World
 
 /// A body cannot sleep if its linear velocity is above this tolerance.
-#define b2_linearSleepTolerance		0.01f
+//#define b2_linearSleepTolerance		0.01f // MOAI: moved to b2World
 
 /// A body cannot sleep if its angular velocity is above this tolerance.
-#define b2_angularSleepTolerance	(2.0f / 180.0f * b2_pi)
+//#define b2_angularSleepTolerance	(2.0f / 180.0f * b2_pi) // MOAI: moved to b2World
 
 // Memory Allocation
 

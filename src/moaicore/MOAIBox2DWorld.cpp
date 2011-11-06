@@ -915,19 +915,19 @@ void MOAIBox2DWorld::RegisterLuaFuncs ( USLuaState& state ) {
 	MOAIAction::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
-<<<<<<< HEAD
 		{ "addBody",					_addBody },
 		{ "addDistanceJoint",			_addDistanceJoint },
 		{ "addFrictionJoint",			_addFrictionJoint },
 		{ "addGearJoint",				_addGearJoint },
-		{ "addLineJoint",				_addLineJoint },
 		{ "addMouseJoint",				_addMouseJoint },
 		{ "addPrismaticJoint",			_addPrismaticJoint },
 		{ "addPulleyJoint",				_addPulleyJoint },
 		{ "addRevoluteJoint",			_addRevoluteJoint },
+		{ "addRopeJoint",				_addRopeJoint },
 		{ "addWeldJoint",				_addWeldJoint },
-		{ "getAutoClearForces",			_getAutoClearForces },
+		{ "addWheelJoint",				_addWheelJoint },
 		{ "getAngularSleepTolerance",	_getAngularSleepTolerance },
+		{ "getAutoClearForces",			_getAutoClearForces },
 		{ "getGravity",					_getGravity },
 		{ "getLinearSleepTolerance",	_getLinearSleepTolerance },
 		{ "getTimeToSleep",				_getTimeToSleep },
@@ -938,25 +938,6 @@ void MOAIBox2DWorld::RegisterLuaFuncs ( USLuaState& state ) {
 		{ "setLinearSleepTolerance",	_setLinearSleepTolerance },
 		{ "setTimeToSleep",				_setTimeToSleep },
 		{ "setUnitsToMeters",			_setUnitsToMeters },
-=======
-		{ "addBody",				_addBody },
-		{ "addDistanceJoint",		_addDistanceJoint },
-		{ "addFrictionJoint",		_addFrictionJoint },
-		{ "addGearJoint",			_addGearJoint },
-		{ "addMouseJoint",			_addMouseJoint },
-		{ "addPrismaticJoint",		_addPrismaticJoint },
-		{ "addPulleyJoint",			_addPulleyJoint },
-		{ "addRevoluteJoint",		_addRevoluteJoint },
-		{ "addRopeJoint",			_addRopeJoint },
-		{ "addWeldJoint",			_addWeldJoint },
-		{ "addWheelJoint",			_addWheelJoint },
-		{ "getAutoClearForces",		_getAutoClearForces },
-		{ "getGravity",				_getGravity },
-		{ "setAutoClearForces",		_setAutoClearForces },
-		{ "setGravity",				_setGravity },
-		{ "setIterations",			_setIterations },
-		{ "setUnitsToMeters",		_setUnitsToMeters },
->>>>>>> 3536441b6e621c9030cc66048d6a203dd8bb6a5e
 		{ NULL, NULL }
 	};
 	

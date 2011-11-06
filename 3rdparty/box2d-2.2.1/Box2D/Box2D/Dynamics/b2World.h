@@ -203,6 +203,18 @@ public:
 	/// Dump the world into the log file.
 	/// @warning this should be called outside of a time step.
 	void Dump();
+	
+	// MOAI: moved from bsSettings.h
+	void SetTimeToSleep(float timeToSleep);
+	float GetTimeToSleep();
+
+	// MOAI: moved from bsSettings.h
+	void SetLinearSleepTolerance(float linearSleepTolerance);
+	float GetLinearSleepTolerance();
+	
+	// MOAI: moved from bsSettings.h
+	void SetAngularSleepTolerance(float angularSleepTolerance);
+	float GetAngularSleepTolerance();
 
 private:
 
@@ -256,6 +268,18 @@ private:
 	bool m_stepComplete;
 
 	b2Profile m_profile;
+	
+	// MOAI: moved from bsSettings.h
+	// The time that a body must be still before it will go to sleep.
+	float m_timeToSleep; // 0.5f
+	
+	// MOAI: moved from bsSettings.h
+	// A body cannot sleep if its linear velocity is above this tolerance.
+	float m_linearSleepTolerance; // 0.01f
+	
+	// MOAI: moved from bsSettings.h
+	// A body cannot sleep if its angular velocity is above this tolerance.
+	float m_angularSleepTolerance; // (2.0f / 180.0f * b2_pi)
 };
 
 inline b2Body* b2World::GetBodyList()

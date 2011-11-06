@@ -61,6 +61,11 @@ b2World::b2World(const b2Vec2& gravity)
 	m_contactManager.m_allocator = &m_blockAllocator;
 
 	memset(&m_profile, 0, sizeof(b2Profile));
+	
+	// MOAI: initialize m_timeToSleep, m_linearSleepTolerance, m_angularSleepTolerance
+	m_timeToSleep = 0.5f;
+	m_linearSleepTolerance = 0.01f;
+	m_angularSleepTolerance = (2.0f / 180.0f * b2_pi);
 }
 
 b2World::~b2World()
@@ -528,7 +533,9 @@ void b2World::Solve(const b2TimeStep& step)
 		}
 
 		b2Profile profile;
-		island.Solve(&profile, step, m_gravity, m_allowSleep);
+		
+		// MOAI: passing in m_timeToSleep, m_linearSleepTolerance, m_angularSleepTolerance
+		island.Solve(&profile, step, m_gravity, m_allowSleep, m_timeToSleep, m_linearSleepTolerance, m_angularSleepTolerance);
 		m_profile.solveInit += profile.solveInit;
 		m_profile.solveVelocity += profile.solveVelocity;
 		m_profile.solvePosition += profile.solvePosition;
@@ -1313,4 +1320,34 @@ void b2World::Dump()
 	b2Log("b2Free(bodies);\n");
 	b2Log("joints = NULL;\n");
 	b2Log("bodies = NULL;\n");
+}
+
+// MOAI: moved from bsSettings.h
+void b2World::SetTimeToSleep(float timeToSleep) {
+	m_timeToSleep = timeToSleep;
+}
+
+// MOAI: moved from bsSettings.h
+float b2World::GetTimeToSleep() {
+	return m_timeToSleep;
+}
+
+// MOAI: moved from bsSettings.h
+void b2World::SetLinearSleepTolerance(float linearSleepTolerance) {
+	m_linearSleepTolerance = linearSleepTolerance;
+}
+
+// MOAI: moved from bsSettings.h
+float b2World::GetLinearSleepTolerance() {
+	return m_linearSleepTolerance;
+}
+
+// MOAI: moved from bsSettings.h
+void b2World::SetAngularSleepTolerance(float angularSleepTolerance) {
+	m_angularSleepTolerance = angularSleepTolerance;
+}
+
+// MOAI: moved from bsSettings.h
+float b2World::GetAngularSleepTolerance() {
+	return m_angularSleepTolerance;
 }

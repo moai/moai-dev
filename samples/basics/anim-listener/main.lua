@@ -60,7 +60,7 @@ anim:setListener ( MOAITimer.EVENT_TIMER_LOOP, onLoop )
 anim:setListener ( MOAIAction.EVENT_STOP, onStop )
 
 function onFinalize ( self, i )
-	printf ( "FINALIZE" )
+	printf ( "FINALIZE\n" )
 end
 
 MOAISim.setListener ( MOAISim.EVENT_FINALIZE, onFinalize )
