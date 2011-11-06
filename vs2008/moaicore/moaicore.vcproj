@@ -867,6 +867,22 @@
 				RelativePath="..\..\src\moaicore\MOAIHttpTask.h"
 				>
 			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIHttpTaskInfo_curl.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIHttpTaskInfo_curl.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIUrlMgr.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIUrlMgr_curl.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="textbox"

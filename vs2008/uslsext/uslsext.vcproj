@@ -715,34 +715,6 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="web"
-			>
-			<File
-				RelativePath="..\..\src\uslsext\USHttpTask.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USHttpTask.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USHttpTask_impl.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USHttpTask_impl.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USUrlMgr.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USUrlMgr.h"
-				>
-			</File>
-		</Filter>
-		<Filter
 			Name="xml"
 			>
 			<File

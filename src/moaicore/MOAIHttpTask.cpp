@@ -2,13 +2,18 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <tinyxml.h>
-#include <moaicore/MOAIHttpTask.h>
-#include <moaicore/MOAILogMessages.h>
-#include <moaicore/MOAIXmlParser.h>
-#include <moaicore/MOAIDataBuffer.h>
 
-#define DEFAULT_MOAI_HTTP_USERAGENT "Moai SDK beta; support@getmoai.com"
+#include <tinyxml.h>
+#include <moaicore/MOAIDataBuffer.h>
+#include <moaicore/MOAIHttpTask.h>
+#include <moaicore/MOAIUrlMgr.h>
+#include <moaicore/MOAIXmlParser.h>
+
+//#ifdef MOAI_OS_NACL
+//	#include <uslsext/USHttpTaskInfo_nacl.h>
+//#else
+	#include <moaicore/MOAIHttpTaskInfo_curl.h>
+//#endif
 
 //================================================================//
 // local
@@ -40,7 +45,7 @@ int MOAIHttpTask::_getString ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIHttpTask, "U" )
 
 	if ( self->mSize ) {
-		lua_pushlstring ( state, ( cc8* )self->mBuffer, self->mSize );
+		lua_pushlstring ( state, ( cc8* )self->mData, self->mSize );
 		return 1;
 	}
 	return 0;
@@ -52,7 +57,7 @@ int MOAIHttpTask::_getString ( lua_State* L ) {
 
 	@in		MOAIHttpTask self
 	@in		string url				The URL on which to perform the GET request.
-	@opt	string useragent
+	@opt	string useragent		Default value is "Moai SDK beta; support@getmoai.com"
 	@opt	boolean verbose
 	@out	nil
 */
@@ -63,12 +68,7 @@ int MOAIHttpTask::_httpGet ( lua_State* L ) {
 	cc8* useragent	= state.GetValue < cc8* >( 3, DEFAULT_MOAI_HTTP_USERAGENT );
 	bool verbose	= state.GetValue < bool >( 4, false );
 	
-	self->Retain ();
-	self->LockToRefCount ();
-	
-	USHttpTask* task = new USHttpTask ();
-	task->SetDelegate < MOAIHttpTask >( self, &MOAIHttpTask::OnHttpFinish );
-	task->HttpGet ( url, useragent, verbose );
+	self->HttpGet ( url, useragent, verbose );
 
 	return 0;
 }
@@ -82,7 +82,7 @@ int MOAIHttpTask::_httpGet ( lua_State* L ) {
 		@in		MOAIHttpTask self
 		@in		string url				The URL on which to perform the GET request.
 		@opt	string data				The string containing text to send as POST data.
-		@opt	string useragent
+		@opt	string useragent		Default value is "Moai SDK beta; support@getmoai.com"
 		@opt	boolean verbose
 		@out	nil
 	
@@ -104,31 +104,21 @@ int MOAIHttpTask::_httpPost ( lua_State* L ) {
 
 	if ( state.IsType (3, LUA_TUSERDATA) ) {
 		
-		self->Retain ();
-		self->LockToRefCount ();
+		MOAIDataBuffer* data = state.GetLuaObject < MOAIDataBuffer >( 3 );
 		
-		self->mPostData.Set ( *self, state.GetLuaObject < MOAIDataBuffer >( 3 ));
+		if ( data ) {
 		
-		void* bytes;
-		u32 size;
-		self->mPostData->Lock ( &bytes, &size );
-		
-		USHttpTask* task = new USHttpTask ();
-		task->SetDelegate < MOAIHttpTask >( self, &MOAIHttpTask::OnHttpFinish );
-		task->HttpPost ( url, useragent, bytes, size, verbose );
-		
-		self->mPostData->Unlock ();
+			void* bytes;
+			u32 size;
+			data->Lock ( &bytes, &size );
+			self->HttpPost ( url, useragent, bytes, size, verbose );
+			data->Unlock ();
+		}
 	}
 	else if ( state.IsType (3, LUA_TSTRING )) {
 		
-		self->Retain ();
-		self->LockToRefCount ();
-		
-		self->mPostString = lua_tostring ( state, 3 );
-		
-		USHttpTask* task = new USHttpTask ();
-		task->SetDelegate < MOAIHttpTask >( self, &MOAIHttpTask::OnHttpFinish );
-		task->HttpPost ( url, useragent, self->mPostString.str (), ( u32 )self->mPostString.size (), verbose );
+		cc8* postString = lua_tostring ( state, 3 );
+		self->HttpPost ( url, useragent, postString, ( u32 )strlen ( postString ), verbose );
 	}
 
 	return 0;
@@ -146,7 +136,7 @@ int MOAIHttpTask::_parseXml ( lua_State* L ) {
 
 	if ( !self->mSize ) return 0;
 	
-	cc8* xml = ( cc8* )self->mBuffer;
+	cc8* xml = ( cc8* )self->mData;
 	
 	TiXmlDocument doc;
 	doc.Parse ( xml );
@@ -177,31 +167,74 @@ int MOAIHttpTask::_setCallback ( lua_State* L ) {
 //----------------------------------------------------------------//
 void MOAIHttpTask::Clear () {
 
-	if ( this->mBuffer ) {
-		free ( this->mBuffer );
+	if ( this->mInfo ) {
+		delete this->mInfo;
+		this->mInfo = 0;
 	}
-	this->mBuffer = 0;
-	this->mSize = 0;
 	
-	this->mPostData.Set ( *this, 0 );
+	this->mData = 0;
+	this->mSize = 0;
 }
 
 //----------------------------------------------------------------//
-void MOAIHttpTask::Init ( u32 size ) {
+void MOAIHttpTask::Finish () {
+
+	this->mInfo->Finish ();
+	
+	this->mData = this->mInfo->mData;
+	this->mSize = this->mInfo->mData.Size ();
+	this->mResponseCode = this->mInfo->mResponseCode;
+
+	if ( this->mOnFinish ) {
+	
+		MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+		this->PushLocal ( state, this->mOnFinish );
+		this->PushLuaUserdata ( state );
+		state.Push ( this->GetResponseCode ());
+		state.DebugCall ( 2, 0 );
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIHttpTask::GetData ( void* buffer, u32 size ) {
+
+	USByteStream byteStream;
+	
+	byteStream.SetBuffer ( this->mData, this->mSize );
+	byteStream.SetLength ( this->mSize );
+	byteStream.ReadBytes ( buffer, size );
+}
+
+//----------------------------------------------------------------//
+void MOAIHttpTask::HttpGet ( cc8* url, cc8* useragent, bool verbose ) {
 
 	this->Clear ();
-	this->mSize = size;
-	this->mBuffer = malloc ( size + 1 );
 	
-	u8* buffer = ( u8* )this->mBuffer;
-	buffer [ size ] = 0;
+	this->mInfo = new MOAIHttpTaskInfo ();
+	this->mInfo->InitForGet ( url, useragent, verbose );
+	
+	MOAIUrlMgr::Get ().AddHandle ( *this );
+}
+
+//----------------------------------------------------------------//
+void MOAIHttpTask::HttpPost ( cc8* url, cc8* useragent, const void* buffer, u32 size, bool verbose ) {
+
+	this->Clear ();
+	
+	this->mInfo = new MOAIHttpTaskInfo ();
+	this->mInfo->InitForPost ( url, useragent, buffer, size, verbose );
+	
+	MOAIUrlMgr::Get ().AddHandle ( *this );
 }
 
 //----------------------------------------------------------------//
 MOAIHttpTask::MOAIHttpTask () :
-	mBuffer ( 0 ),
-	mSize ( 0 ) {
-
+	mInfo ( 0 ),
+	mData ( 0 ),
+	mSize ( 0 ),
+	mVerbose ( false ),
+	mResponseCode ( 0 ) {
+	
 	RTTI_SINGLE ( MOAIObject )
 }
 
@@ -209,33 +242,6 @@ MOAIHttpTask::MOAIHttpTask () :
 MOAIHttpTask::~MOAIHttpTask () {
 
 	this->Clear ();
-}
-
-//----------------------------------------------------------------//
-void MOAIHttpTask::OnHttpFinish ( USHttpTask* task ) {
-
-	this->Clear ();
-	
-	u32 size = task->GetSize ();
-	if ( size ) {
-	
-		this->Init ( size );
-		task->GetData ( this->mBuffer, this->mSize );
-	}
-	
-	if ( this->mOnFinish ) {
-	
-		MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
-		this->PushLocal ( state, this->mOnFinish );
-		this->PushLuaUserdata ( state );
-		state.Push ( task->GetResponseCode ());
-		state.DebugCall ( 2, 0 );
-	}
-	
-	this->mPostData.Set ( *this, 0 );
-	this->mPostString.clear ();
-	
-	this->Release ();
 }
 
 //----------------------------------------------------------------//

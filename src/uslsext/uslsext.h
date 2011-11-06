@@ -18,8 +18,6 @@
 #include <uslsext/USDataIOTask.h>
 #include <uslsext/USDelegate.h>
 #include <uslsext/USDistance.h>
-#include <uslsext/USHttpTask.h>
-#include <uslsext/USHttpTask_impl.h>
 #include <uslsext/USInterpolate.h>
 #include <uslsext/USIntersect.h>
 #include <uslsext/USLexStream.h>
@@ -55,7 +53,6 @@
 #include <uslsext/USThread_win32.h>
 #include <uslsext/USTrig.h>
 #include <uslsext/USTypedPtr.h>
-#include <uslsext/USUrlMgr.h>
 #include <uslsext/USXmlReader.h>
 
 //================================================================//

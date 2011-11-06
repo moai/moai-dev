@@ -17,4 +17,6 @@
 #include <moaicore/MOAILuaState-impl.h>
 #include <moaicore/MOAIObject-impl.h>
 
+#include <moaicore/MOAILogMessages.h>
+
 #endif

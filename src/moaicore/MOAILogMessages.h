@@ -10,7 +10,7 @@
 
 #ifdef _DEBUG
 	#define MOAI_LUA_SETUP(type,str)									\
-		MOAILuaState state ( L );											\
+		MOAILuaState state ( L );										\
 		if ( !state.CheckParams ( 1, str )) {							\
 			MOAILog ( L, MOAILogMessages::MOAI_ParamTypeMismatch );		\
 			return 0;													\
@@ -19,7 +19,7 @@
 		if ( !self ) return 0;
 #else
 	#define MOAI_LUA_SETUP(type,str)									\
-		MOAILuaState state ( L );											\
+		MOAILuaState state ( L );										\
 		type* self = state.GetLuaObject < type >( 1 );					\
 		if ( !self ) return 0;
 #endif

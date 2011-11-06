@@ -3,22 +3,22 @@
 
 #include "pch.h"
 
-#include <uslsext/USHttpTask.h>
-#include <uslsext/USHttpTask_impl.h>
-#include <uslsext/USUrlMgr.h>
+#include <moaicore/MOAIHttpTask.h>
+#include <moaicore/MOAIHttpTaskInfo_curl.h>
+#include <moaicore/MOAIUrlMgr.h>
 
 //================================================================//
-// USUrlMgrOpaque
+// MOAIUrlMgrOpaque
 //================================================================//
-class USUrlMgrOpaque {
+class MOAIUrlMgrOpaque {
 public:
 
-	STLMap < CURL*, USHttpTask* > mHandleMap;
+	STLMap < CURL*, MOAIHttpTask* > mHandleMap;
 	CURLM*	mMultiHandle;
 	bool	mMore;
 
 	//----------------------------------------------------------------//
-	USUrlMgrOpaque () :
+	MOAIUrlMgrOpaque () :
 		mMultiHandle ( 0 ),
 		mMore ( false ) {
 		
@@ -26,7 +26,7 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	~USUrlMgrOpaque () {
+	~MOAIUrlMgrOpaque () {
 
 		if ( this->mMultiHandle ) {
 			curl_multi_cleanup ( this->mMultiHandle );
@@ -35,18 +35,19 @@ public:
 };
 
 //================================================================//
-// USUrlMgr
+// MOAIUrlMgr
 //================================================================//
 
-
-
 //----------------------------------------------------------------//
-void USUrlMgr::AddHandle ( USHttpTask& task ) {
+void MOAIUrlMgr::AddHandle ( MOAIHttpTask& task ) {
 
 	if ( !task.mInfo ) return;
 
 	CURL* handle = task.mInfo->mEasyHandle;
 	if ( !handle ) return;
+	
+	task.Retain ();
+	task.LockToRefCount ();
 	
 	curl_multi_add_handle ( this->mOpaque->mMultiHandle, handle );
 	this->mOpaque->mHandleMap [ handle ] = &task;
@@ -54,15 +55,15 @@ void USUrlMgr::AddHandle ( USHttpTask& task ) {
 }
 
 //----------------------------------------------------------------//
-bool USUrlMgr::More () {
+bool MOAIUrlMgr::More () {
 
 	return this->mOpaque->mMore;
 }
 
 //----------------------------------------------------------------//
-void USUrlMgr::Process () {
+void MOAIUrlMgr::Process () {
 
-	STLMap < CURL*, USHttpTask* >& handleMap = this->mOpaque->mHandleMap;
+	STLMap < CURL*, MOAIHttpTask* >& handleMap = this->mOpaque->mHandleMap;
 	CURLM* multiHandle = this->mOpaque->mMultiHandle;
 
 	if ( !this->mOpaque->mMore ) return;
@@ -84,8 +85,11 @@ void USUrlMgr::Process () {
 		
 			CURL* handle = msg->easy_handle;
 			if ( handleMap.contains ( handle )) {
-				handleMap [ handle ]->Finish ();
+				MOAIHttpTask* task = handleMap [ handle ];
 				handleMap.erase ( handle );
+				
+				task->Finish ();
+				task->Release ();
 			}
 		}
 	}
@@ -98,13 +102,13 @@ void USUrlMgr::Process () {
 }
 
 //----------------------------------------------------------------//
-USUrlMgr::USUrlMgr () {
+MOAIUrlMgr::MOAIUrlMgr () {
 
-	this->mOpaque = new USUrlMgrOpaque ();
+	this->mOpaque = new MOAIUrlMgrOpaque ();
 }
 
 //----------------------------------------------------------------//
-USUrlMgr::~USUrlMgr () {
+MOAIUrlMgr::~MOAIUrlMgr () {
 	
 	delete this->mOpaque;
 }

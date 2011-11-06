@@ -5,6 +5,12 @@
 #include <chipmunk/chipmunk.h>
 #include <moaicore/moaicore.h>
 
+//----------------------------------------------------------------//
+static void _cleanup () {
+
+	curl_global_cleanup ();
+}
+
 //================================================================//
 // moaicore
 //================================================================//
@@ -16,11 +22,16 @@ void moaicore::InitGlobals ( USGlobals* globals ) {
 
 	static bool sysInit = true;
 	if ( sysInit ) {
+		
 		cpInitChipmunk ();
 		
+		curl_global_init ( CURL_GLOBAL_WIN32 | CURL_GLOBAL_SSL );
+		
+		atexit ( _cleanup );
 		sysInit = false;
 	}
 
+	MOAIUrlMgr::Affirm ();
 	MOAIXmlParser::Affirm ();
 	MOAIActionMgr::Affirm ();
 	MOAIInputMgr::Affirm ();

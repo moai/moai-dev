@@ -49,6 +49,7 @@
 #include <moaicore/MOAIGrid.h>
 #include <moaicore/MOAIGridSpace.h>
 #include <moaicore/MOAIHttpTask.h>
+#include <moaicore/MOAIHttpTaskInfo_curl.h>
 #include <moaicore/MOAIImage.h>
 #include <moaicore/MOAIIndexBuffer.h>
 #include <moaicore/MOAIInputDevice.h>
@@ -108,6 +109,7 @@
 #include <moaicore/MOAITouchSensor.h>
 #include <moaicore/MOAITransform.h>
 #include <moaicore/MOAITransformBase.h>
+#include <moaicore/MOAIUrlMgr.h>
 #include <moaicore/MOAIVertexBuffer.h>
 #include <moaicore/MOAIVertexFormat.h>
 #include <moaicore/MOAIVertexFormatMgr.h>

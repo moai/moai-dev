@@ -1,8 +1,8 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef USHTTPTASKIMPL_H
-#define USHTTPTASKIMPL_H
+#ifndef MOAIHTTPTASKIMPL_H
+#define MOAIHTTPTASKIMPL_H
 
 #define  CURL_STATICLIB
 #define  CURL_DISABLE_LDAP
@@ -12,9 +12,9 @@ extern "C" {
 }
 
 //================================================================//
-// USHttpTaskInfo
+// MOAIHttpTaskInfo
 //================================================================//
-class USHttpTaskInfo {
+class MOAIHttpTaskInfo {
 private:
 	
 	STLString			mUrl;
@@ -28,8 +28,8 @@ private:
 
 	u32					mResponseCode;
 
-	friend class USHttpTask;
-	friend class USUrlMgr;
+	friend class MOAIHttpTask;
+	friend class MOAIUrlMgr;
 
 	//----------------------------------------------------------------//
 	static void		_printError				( CURLcode error );
@@ -41,8 +41,8 @@ private:
 	void			Finish					();
 	void			InitForGet				( cc8* url, cc8* useragent, bool verbose );
 	void			InitForPost				( cc8* url, cc8* useragent, const void* buffer, u32 size, bool verbose );
-					USHttpTaskInfo			();
-					~USHttpTaskInfo			();
+					MOAIHttpTaskInfo			();
+					~MOAIHttpTaskInfo			();
 };
 
 #endif

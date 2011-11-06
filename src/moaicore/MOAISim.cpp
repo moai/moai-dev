@@ -11,6 +11,7 @@
 #include <moaicore/MOAIProp2D.h>
 #include <moaicore/MOAISim.h>
 #include <moaicore/MOAITexture.h>
+#include <moaicore/MOAIUrlMgr.h>
 #include <aku/AKU.h>
 
 #if defined(_WIN32)
@@ -1039,6 +1040,6 @@ void MOAISim::Update () {
 	}
 
 	// these stay out of the sim step for now
-	USUrlMgr::Get ().Process ();
+	MOAIUrlMgr::Get ().Process ();
 	this->mDataIOThread.Publish ();
 }

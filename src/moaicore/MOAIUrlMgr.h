@@ -1,37 +1,33 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef USURLMGR_H
-#define USURLMGR_H
+#ifndef MOAIURLMGR_H
+#define MOAIURLMGR_H
 
-#include <uslsext/USDelegate.h>
-#include <uslsext/USHttpTask.h>
-#include <uslsext/USTaskThread.h>
-
-class USHttpTask;
-class USUrlMgrOpaque;
+class MOAIHttpTask;
+class MOAIUrlMgrOpaque;
 
 //================================================================//
-// USUrlMgr
+// MOAIUrlMgr
 //================================================================//
-class USUrlMgr :
-	public USGlobalClass < USUrlMgr > {
+class MOAIUrlMgr :
+	public USGlobalClass < MOAIUrlMgr > {
 private:
 
-	USUrlMgrOpaque*		mOpaque;
+	MOAIUrlMgrOpaque*	mOpaque;
 
 	//----------------------------------------------------------------//
-	void			AddHandle			( USHttpTask& task );
+	void			AddHandle			( MOAIHttpTask& task );
 
 public:
 
-	friend class USHttpTask;
+	friend class MOAIHttpTask;
 
 	//----------------------------------------------------------------//
 	bool			More				();
 	void			Process				();
-					USUrlMgr			();
-					~USUrlMgr			();
+					MOAIUrlMgr			();
+					~MOAIUrlMgr			();
 };
 
 #endif
