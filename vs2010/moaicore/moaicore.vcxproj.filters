@@ -435,9 +435,6 @@
     <ClCompile Include="..\..\src\moaicore\MOAIBox2DGearJoint.cpp">
       <Filter>src\box2D\joints</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAIBox2DLineJoint.cpp">
-      <Filter>src\box2D\joints</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAIBox2DMouseJoint.cpp">
       <Filter>src\box2D\joints</Filter>
     </ClCompile>
@@ -458,6 +455,12 @@
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAIImage-png.cpp">
       <Filter>src\gfx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIBox2DWheelJoint.cpp">
+      <Filter>src\box2D\joints</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIBox2DRopeJoint.cpp">
+      <Filter>src\box2D\joints</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -824,9 +827,6 @@
     <ClInclude Include="..\..\src\moaicore\MOAIBox2DGearJoint.h">
       <Filter>src\box2D\joints</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\MOAIBox2DLineJoint.h">
-      <Filter>src\box2D\joints</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIBox2DMouseJoint.h">
       <Filter>src\box2D\joints</Filter>
     </ClInclude>
@@ -844,6 +844,12 @@
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIAttrOp.h">
       <Filter>src\node</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIBox2DWheelJoint.h">
+      <Filter>src\box2D\joints</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIBox2DRopeJoint.h">
+      <Filter>src\box2D\joints</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
