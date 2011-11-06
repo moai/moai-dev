@@ -9,7 +9,7 @@
 #ifndef BUFFEREDAUDIOSOURCETHREAD_H_
 #define BUFFEREDAUDIOSOURCETHREAD_H_
 
-#include <Threading/Threading.h>
+#include <threading/Threading.h>
 #include <vector>
 
 class BufferedAudioSource;
