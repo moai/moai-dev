@@ -58,7 +58,7 @@ int MOAIBox2DBody::_addCircle ( lua_State* L ) {
  
  @in		MOAIBox2DBody self
  @in		table verts Array containing vertex coordinate components ( t[1] = x0, t[2] = y0, t[3] = x1, t[4] = y1... )
- @out	    MOAIBox2DFixture fixture	Returns nil on failure.
+ @out	    table Array containing MOAIBox2DFixture fixtures Returns nil on failure.
  */
 int MOAIBox2DBody::_addEdges ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DBody, "U" )
@@ -77,18 +77,24 @@ int MOAIBox2DBody::_addEdges ( lua_State* L ) {
 		int numVerts = MOAIBox2DFixture::LoadVerts( state, 2, verts, totalVerts, unitsToMeters );
 		
 		if ( numVerts ) {
-			
+			USLuaState retstate ( L );
+			lua_createtable ( retstate, numVerts, 0 );
+			int idx = 1;
 			b2EdgeShape edgeShape;
 			for ( u32 i = 0; i < totalVerts; i+=2) {
 				edgeShape.Set(verts[i], verts[i+1]);
 				b2FixtureDef fixtureDef;
-				fixtureDef.shape = &edgeShape;				
+				fixtureDef.shape = &edgeShape;
 				MOAIBox2DFixture* fixture = new MOAIBox2DFixture ();
 				fixture->SetFixture ( self->mBody->CreateFixture ( &fixtureDef ));
 				fixture->SetWorld ( self->mWorld );
 				self->mWorld->LuaRetain ( *fixture );
-				fixture->PushLuaUserdata ( state );
+				lua_pushnumber ( retstate, idx );
+				fixture->PushLuaUserdata ( retstate );				
+				lua_settable ( retstate, -3 );
+				idx++;
 			}
+			
 			return 1;
 		}
 	}	
