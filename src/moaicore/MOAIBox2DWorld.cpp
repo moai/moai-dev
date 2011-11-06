@@ -241,7 +241,7 @@ int	MOAIBox2DWorld::_addGearJoint ( lua_State* L ) {
 	@out	MOAIBox2DJoint joint
 */
 int	MOAIBox2DWorld::_addMouseJoint ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIBox2DWorld, "UNNNNN" )
+	MOAI_LUA_SETUP ( MOAIBox2DWorld, "UUUNNN" )
 	
 	if ( self->IsLocked ()) {
 		MOAILog ( state, MOAILogMessages::MOAIBox2DWorld_IsLocked );
@@ -258,7 +258,8 @@ int	MOAIBox2DWorld::_addMouseJoint ( lua_State* L ) {
 	target.y	= state.GetValue < float >( 5, 0 ) * self->mUnitsToMeters;
 	
 	b2MouseJointDef jointDef;
-	
+	jointDef.bodyA			= bodyA->mBody;
+	jointDef.bodyB			= bodyB->mBody;
 	jointDef.target			= target;
 	jointDef.maxForce		= state.GetValue < float >( 6, 0.0f ) * self->mUnitsToMeters;
 	jointDef.frequencyHz	= state.GetValue < float >( 7, jointDef.frequencyHz );
