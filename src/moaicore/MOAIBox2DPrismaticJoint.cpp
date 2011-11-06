@@ -99,7 +99,8 @@ int MOAIBox2DPrismaticJoint::_getMotorForce ( lua_State* L ) {
 	}
 
 	b2PrismaticJoint* joint = ( b2PrismaticJoint* )self->mJoint;
-	state.Push ( joint->GetMotorForce () / unitsToMeters );
+
+	state.Push ( joint->GetMotorForce (1.0f) / unitsToMeters );
 	
 	return 1;
 }

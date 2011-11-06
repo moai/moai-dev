@@ -87,7 +87,8 @@ int MOAIBox2DPulleyJoint::_getLength1 ( lua_State* L ) {
 	}
 
 	b2PulleyJoint* joint = ( b2PulleyJoint* )self->mJoint;
-	state.Push ( joint->GetLength1 () / unitsToMeters );
+
+	state.Push ( joint->GetLengthA () / unitsToMeters );
 	
 	return 1;
 }
@@ -109,7 +110,7 @@ int MOAIBox2DPulleyJoint::_getLength2 ( lua_State* L ) {
 	}
 
 	b2PulleyJoint* joint = ( b2PulleyJoint* )self->mJoint;
-	state.Push ( joint->GetLength2 () / unitsToMeters );
+	state.Push ( joint->GetLengthB () / unitsToMeters );
 	
 	return 1;
 }

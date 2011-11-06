@@ -123,7 +123,7 @@ int MOAIBox2DMouseJoint::_setDampingRatio ( lua_State* L ) {
 		return 0;
 	}
 
-	float dampingRatio = state.GetValue < float >( 1, 0.0f );
+	float dampingRatio = state.GetValue < float >( 2, 0.0f );
 
 	b2MouseJoint* joint = ( b2MouseJoint* )self->mJoint;
 	joint->SetDampingRatio ( dampingRatio );
@@ -147,7 +147,7 @@ int MOAIBox2DMouseJoint::_setFrequency ( lua_State* L ) {
 		return 0;
 	}
 
-	float frequency = state.GetValue < float >( 1, 0.0f );
+	float frequency = state.GetValue < float >( 2, 0.0f );
 
 	b2MouseJoint* joint = ( b2MouseJoint* )self->mJoint;
 	joint->SetFrequency ( frequency );
@@ -172,7 +172,7 @@ int MOAIBox2DMouseJoint::_setMaxForce ( lua_State* L ) {
 		return 0;
 	}
 
-	float maxForce = state.GetValue < float >( 1, 0.0f ) * unitsToMeters;
+	float maxForce = state.GetValue < float >( 2, 0.0f ) * unitsToMeters;
 
 	b2MouseJoint* joint = ( b2MouseJoint* )self->mJoint;
 	joint->SetMaxForce ( maxForce );
@@ -199,8 +199,9 @@ int MOAIBox2DMouseJoint::_setTarget ( lua_State* L ) {
 	}
 
 	b2Vec2 target;
-	target.x = state.GetValue < float >( 1, 0.0f ) * unitsToMeters;
-	target.y = state.GetValue < float >( 2, 0.0f ) * unitsToMeters;
+	
+	target.x = state.GetValue < float >( 2, 0.0f ) * unitsToMeters;
+	target.y = state.GetValue < float >( 3, 0.0f ) * unitsToMeters;
 
 	b2MouseJoint* joint = ( b2MouseJoint* )self->mJoint;
 	joint->SetTarget ( target );

@@ -315,6 +315,23 @@ int MOAIEnvironment::_getViewSize ( lua_State* L  ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	getDeviceSize
+	@text	Gets the dimensions of the device screen as two return values (width, height).
+
+	@out	number width		The width of the device screen.
+	@out	number height		The height of the device screen.
+*/
+int MOAIEnvironment::_getDeviceSize ( lua_State* L ) {
+
+	MOAIEnvironment& env = MOAIEnvironment::Get ();
+	
+	lua_pushnumber ( L, env.mScreenWidth );
+	lua_pushnumber ( L, env.mScreenHeight );
+
+	return 2;
+}
+
+//----------------------------------------------------------------//
 /**	@name	isRetinaDisplay
 	@text	Returns whether or not the device has a Retina Display 
 	
@@ -366,7 +383,9 @@ MOAIEnvironment::MOAIEnvironment () :
 	mOSBrand ( "UNKNOWN" ),
 	mOSVersion ( "UNKNOWN" ),
 	mResourceDirectory ( "UNKNOWN" ),
-	mUDID ( "UNKNOWN" ) {
+	mUDID ( "UNKNOWN" ),
+	mScreenWidth ( 0 ),
+	mScreenHeight ( 0 ) {
 
 	RTTI_SINGLE ( USLuaObject )
 }
@@ -411,6 +430,7 @@ void MOAIEnvironment::RegisterLuaClass ( USLuaState& state ) {
 		{ "getResourceDirectory",			_getResourceDirectory			},
 		{ "getUDID",						_getUDID						},
 		{ "getViewSize",					_getViewSize					},
+		{ "getDeviceSize",					_getDeviceSize					},
 		{ "isRetinaDisplay",				_isRetinaDisplay				},
 		{ NULL, NULL }
 	};
@@ -541,4 +561,10 @@ void MOAIEnvironment::SetResourceDirectory ( cc8* resDir ) {
 //----------------------------------------------------------------//
 void MOAIEnvironment::SetUDID ( cc8* udid ) {
 	mUDID = udid;
+}
+
+//----------------------------------------------------------------//
+void MOAIEnvironment::SetScreenSize ( long width, long height ) {
+	mScreenWidth = width;
+	mScreenHeight = height;
 }

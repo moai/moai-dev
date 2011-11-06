@@ -8,6 +8,7 @@
 #include <moaicore/MOAIBox2DRevoluteJoint.h>
 #include <moaicore/MOAIBox2DWorld.h>
 #include <moaicore/MOAILogMessages.h>
+#include <moaicore/MOAISim.h>
 
 SUPPRESS_EMPTY_FILE_WARNING
 #if USE_BOX2D
@@ -116,7 +117,8 @@ int MOAIBox2DRevoluteJoint::_getMotorTorque ( lua_State* L ) {
 	}
 
 	b2RevoluteJoint* joint = ( b2RevoluteJoint* )self->mJoint;
-	state.Push ( joint->GetMotorTorque () * ( float )R2D );
+	float step = ( float )( 1.0 / MOAISim::Get ().GetStep ());
+	state.Push ( joint->GetMotorTorque (step) * ( float )R2D );
 	
 	return 1;
 }

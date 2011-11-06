@@ -351,7 +351,7 @@ int MOAICpShape::_momentForPolygon ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	momentForRectangle
+/**	@name	momentForRect
 	@text	Returns the moment of intertia for the rect.
 
 	@in		number m
