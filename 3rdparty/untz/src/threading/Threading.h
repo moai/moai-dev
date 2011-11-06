@@ -9,9 +9,9 @@
 #ifndef THREADING_H_
 #define THREADING_H_
 
-#include <Threading/RThread.h>
-#include <Threading/RCriticalSection.h>
-#include <Threading/RSyncEvent.h>
-#include <Threading/RScopedLock.h>
+#include <threading/RThread.h>
+#include <threading/RCriticalSection.h>
+#include <threading/RSyncEvent.h>
+#include <threading/RScopedLock.h>
 
 #endif

@@ -13,7 +13,7 @@
 //	#include <lualib.h>
 //}
 
-#import <aku/aku-iphone.h>
+#import <aku/AKU-iphone.h>
 #include <aku/AKU-luaext.h>
 #include <aku/AKU-untz.h>
 
