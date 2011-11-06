@@ -225,12 +225,12 @@ MOAIBox2DMouseJoint::~MOAIBox2DMouseJoint () {
 }
 
 //----------------------------------------------------------------//
-void MOAIBox2DMouseJoint::RegisterLuaClass ( USLuaState& state ) {
+void MOAIBox2DMouseJoint::RegisterLuaClass ( MOAILuaState& state ) {
 	MOAIBox2DJoint::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAIBox2DMouseJoint::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAIBox2DMouseJoint::RegisterLuaFuncs ( MOAILuaState& state ) {
 	MOAIBox2DJoint::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {

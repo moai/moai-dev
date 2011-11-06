@@ -4,6 +4,8 @@
 #ifndef	MOAIHTTPTASK_H
 #define	MOAIHTTPTASK_H
 
+#include <moaicore/MOAILua.h>
+
 class USHttpTask;
 class MOAIDataBuffer;
 
@@ -14,15 +16,15 @@ class MOAIDataBuffer;
 	@text	Object for performing asynchronous http actions.
 */
 class MOAIHttpTask :
-	public virtual USLuaObject {
+	public virtual MOAIObject {
 private:
 
 	void*				mBuffer;
 	u32					mSize;
 
-	USLuaLocal			mOnFinish;
+	MOAILuaLocal		mOnFinish;
 	
-	USLuaSharedPtr < MOAIDataBuffer > mPostData;
+	MOAILuaSharedPtr < MOAIDataBuffer > mPostData;
 	STLString mPostString;
 
 	//----------------------------------------------------------------//
@@ -48,8 +50,8 @@ public:
 					MOAIHttpTask			();
 					~MOAIHttpTask			();
 	void			Init					( u32 size );
-	void			RegisterLuaClass		( USLuaState& state );
-	void			RegisterLuaFuncs		( USLuaState& state );
+	void			RegisterLuaClass		( MOAILuaState& state );
+	void			RegisterLuaFuncs		( MOAILuaState& state );
 };
 
 #endif

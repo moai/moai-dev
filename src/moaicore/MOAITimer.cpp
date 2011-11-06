@@ -371,7 +371,7 @@ void MOAITimer::OnDepNodeUpdate () {
 //----------------------------------------------------------------//
 void MOAITimer::OnKeyframe ( u32 idx, float time, float value ) {
 
-	USLuaStateHandle state = USLuaRuntime::Get ().State ();
+	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 	if ( this->PushListenerAndSelf ( EVENT_TIMER_KEYFRAME, state )) {
 		state.Push ( idx + 1 );
 		state.Push ( time );
@@ -385,7 +385,7 @@ void MOAITimer::OnLoop () {
 	
 	this->mTimesExecuted++;
 	
-	USLuaStateHandle state = USLuaRuntime::Get ().State ();
+	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 	if ( this->PushListenerAndSelf ( EVENT_TIMER_LOOP, state )) {
 		state.Push ( this->mTimesExecuted );
 		state.DebugCall ( 2, 0 );
@@ -410,7 +410,7 @@ void MOAITimer::OnUpdate ( float step ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITimer::RegisterLuaClass ( USLuaState& state ) {
+void MOAITimer::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAINode::RegisterLuaClass ( state );
 	MOAIAction::RegisterLuaClass ( state );
@@ -428,7 +428,7 @@ void MOAITimer::RegisterLuaClass ( USLuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITimer::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAITimer::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	MOAINode::RegisterLuaFuncs ( state );
 	MOAIAction::RegisterLuaFuncs ( state );

@@ -196,13 +196,13 @@ void MOAIAnim::OnUpdate ( float step ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIAnim::RegisterLuaClass ( USLuaState& state ) {
+void MOAIAnim::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAITimer::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAIAnim::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAIAnim::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	MOAITimer::RegisterLuaFuncs ( state );
 

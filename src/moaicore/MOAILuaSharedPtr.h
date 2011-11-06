@@ -4,19 +4,19 @@
 #ifndef	USLUASHAREDPTR_H
 #define	USLUASHAREDPTR_H
 
-#include <uslscore/USCanary.h>
+class MOAIObject;
 
 //================================================================//
-// USLuaSharedPtr
+// MOAILuaSharedPtr
 //================================================================//
 template < typename TYPE >
-class USLuaSharedPtr {
+class MOAILuaSharedPtr {
 protected:
 
 	TYPE*			mObject;
 	
 	//----------------------------------------------------------------//
-	inline void operator = ( const USLuaSharedPtr < TYPE >& assign ) {
+	inline void operator = ( const MOAILuaSharedPtr < TYPE >& assign ) {
 		UNUSED ( assign );
 		assert ( false ); // unsupported
 	};
@@ -28,7 +28,7 @@ protected:
 	}
 
 	//----------------------------------------------------------------//
-	USLuaSharedPtr ( const USLuaSharedPtr < TYPE >& assign ) :
+	MOAILuaSharedPtr ( const MOAILuaSharedPtr < TYPE >& assign ) :
 		mObject ( 0 ) {
 		UNUSED ( assign );
 		assert ( false ); // unsupported
@@ -57,7 +57,7 @@ public:
 	};
 
 	//----------------------------------------------------------------//
-	inline void Set ( USLuaObject& owner, TYPE* assign ) {
+	inline void Set ( MOAIObject& owner, TYPE* assign ) {
 
 		if ( this->mObject != assign ) {
 
@@ -74,12 +74,12 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	USLuaSharedPtr () :
+	MOAILuaSharedPtr () :
 		mObject ( 0 ) {
 	}
 	
 	//----------------------------------------------------------------//
-	~USLuaSharedPtr () {
+	~MOAILuaSharedPtr () {
 		assert ( !this->mObject ); // must be manually cleared before destruction; use Set ( owner, 0 )
 	}
 };

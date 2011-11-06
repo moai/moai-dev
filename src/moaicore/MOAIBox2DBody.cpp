@@ -853,7 +853,7 @@ void MOAIBox2DBody::OnDepNodeUpdate () {
 }
 
 //----------------------------------------------------------------//
-void MOAIBox2DBody::RegisterLuaClass ( USLuaState& state ) {
+void MOAIBox2DBody::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAITransformBase::RegisterLuaClass ( state );
 	
@@ -863,7 +863,7 @@ void MOAIBox2DBody::RegisterLuaClass ( USLuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIBox2DBody::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAIBox2DBody::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	MOAITransformBase::RegisterLuaFuncs ( state );
 	

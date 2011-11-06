@@ -67,12 +67,12 @@ void MOAILayerBridge2D::OnDepNodeUpdate () {
 }
 
 //----------------------------------------------------------------//
-void MOAILayerBridge2D::RegisterLuaClass ( USLuaState& state ) {
+void MOAILayerBridge2D::RegisterLuaClass ( MOAILuaState& state ) {
 	UNUSED ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAILayerBridge2D::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAILayerBridge2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	MOAITransform::RegisterLuaFuncs ( state );
 	

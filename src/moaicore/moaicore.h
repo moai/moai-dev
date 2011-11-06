@@ -6,6 +6,13 @@
 
 #include <moaicore/pch.h>
 
+#include <moaicore/MOAILuaSharedPtr.h>
+#include <moaicore/MOAILuaState.h>
+#include <moaicore/MOAILuaStateHandle.h>
+#include <moaicore/MOAIObject.h>
+#include <moaicore/MOAILuaRuntime.h>
+#include <moaicore/MOAILuaRef.h>
+
 #include <moaicore/MOAIAction.h>
 #include <moaicore/MOAIActionMgr.h>
 #include <moaicore/MOAIAnim.h>
@@ -24,6 +31,7 @@
 #include <moaicore/MOAIDeck.h>
 #include <moaicore/MOAIDeck2D.h>
 #include <moaicore/MOAIDeckRemapper.h>
+#include <moaicore/MOAIDeserializer.h>
 #include <moaicore/MOAIDraw.h>
 #include <moaicore/MOAIEnvironment.h>
 #include <moaicore/MOAIEaseDriver.h>
@@ -83,6 +91,7 @@
 #include <moaicore/MOAIScriptNode.h>
 #include <moaicore/MOAISensor.h>
 #include <moaicore/MOAISerializer.h>
+#include <moaicore/MOAISerializerBase.h>
 #include <moaicore/MOAIShader.h>
 #include <moaicore/MOAIShaderMgr.h>
 #include <moaicore/MOAISim.h>
@@ -132,6 +141,8 @@
 	#include <moaicore/MOAICpShape.h>
 	#include <moaicore/MOAICpSpace.h>
 #endif
+
+#include <moaicore/MOAILuaState-impl.h>
 
 //================================================================//
 // moaicore

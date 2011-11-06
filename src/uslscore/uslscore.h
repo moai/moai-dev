@@ -13,14 +13,6 @@
 #include <uslscore/STLSet.h>
 #include <uslscore/STLString.h>
 
-#include <uslscore/USLuaSerializer.h>
-#include <uslscore/USLuaSharedPtr.h>
-#include <uslscore/USLuaState.h>
-#include <uslscore/USLuaStateHandle.h>
-#include <uslscore/USLuaObject.h>
-#include <uslscore/USLuaRuntime.h>
-#include <uslscore/USLuaRef.h>
-
 #include <uslscore/USAccessors.h>
 #include <uslscore/USBase64Cipher.h>
 #include <uslscore/USByteStream.h>
@@ -55,8 +47,6 @@
 #include <uslscore/USWeakPtr.h>
 #include <uslscore/USZip.h>
 #include <uslscore/USZipFile.h>
-
-#include <uslscore/USLuaState-impl.h>
 
 //================================================================//
 // uslscore

@@ -27,7 +27,7 @@
 	@out	nil
 */
 int MOAIFileSystem::_affirmPath ( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	
 	cc8* path = state.GetValue < cc8* >( 1, "" );
 	USFileSys::AffirmPath ( path );
@@ -43,7 +43,7 @@ int MOAIFileSystem::_affirmPath ( lua_State* L ) {
 	@out	boolean exists
 */
 int MOAIFileSystem::_checkFileExists ( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	
 	cc8* filename = state.GetValue < cc8* >( 1, "" );
 	bool result = USFileSys::CheckFileExists ( filename );
@@ -60,7 +60,7 @@ int MOAIFileSystem::_checkFileExists ( lua_State* L ) {
 	@out	boolean exists
 */
 int MOAIFileSystem::_checkPathExists ( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	
 	cc8* path = state.GetValue < cc8* >( 1, "" );
 	bool result = USFileSys::CheckPathExists ( path );
@@ -77,7 +77,7 @@ int MOAIFileSystem::_checkPathExists ( lua_State* L ) {
 	@out	boolean success
 */
 int MOAIFileSystem::_deleteDirectory ( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	
 	cc8* path = state.GetValue < cc8* >( 1, "" );
 	bool result = USFileSys::DeleteDirectory ( path );
@@ -94,7 +94,7 @@ int MOAIFileSystem::_deleteDirectory ( lua_State* L ) {
 	@out	boolean success
 */
 int MOAIFileSystem::_deleteFile ( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	
 	cc8* filename = state.GetValue < cc8* >( 1, "" );
 	bool result = USFileSys::DeleteFile ( filename );
@@ -111,7 +111,7 @@ int MOAIFileSystem::_deleteFile ( lua_State* L ) {
 	@out	string absolute
 */
 int MOAIFileSystem::_getAbsoluteDirectoryPath ( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	
 	cc8* path = state.GetValue < cc8* >( 2, "" );
 	STLString result = USFileSys::GetAbsoluteDirPath ( path );
@@ -129,7 +129,7 @@ int MOAIFileSystem::_getAbsoluteDirectoryPath ( lua_State* L ) {
 	@out	string absolute
 */
 int MOAIFileSystem::_getAbsoluteFilePath ( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	
 	cc8* filename = state.GetValue < cc8* >( 1, "" );
 	STLString result = USFileSys::GetAbsoluteFilePath ( filename );
@@ -140,7 +140,7 @@ int MOAIFileSystem::_getAbsoluteFilePath ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 int MOAIFileSystem::_getRelativePath ( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	
 	cc8* path = state.GetValue < cc8* >( 1, "" );
 	STLString result = USFileSys::GetRelativePath ( path );
@@ -156,7 +156,7 @@ int MOAIFileSystem::_getRelativePath ( lua_State* L ) {
 	@out	string path
 */
 int MOAIFileSystem::_getWorkingDirectory ( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	
 	STLString result = USFileSys::GetCurrentPath ();
 	
@@ -264,7 +264,7 @@ int MOAIFileSystem::_listFiles ( lua_State* L ) {
 	@out	boolean success
 */
 int MOAIFileSystem::_mountVirtualDirectory ( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	
 	cc8* path		= state.GetValue < cc8* >( 1, "" );
 	cc8* archive	= state.GetValue < cc8* >( 2, 0 );
@@ -284,7 +284,7 @@ int MOAIFileSystem::_mountVirtualDirectory ( lua_State* L ) {
 	@out	boolean success
 */
 int MOAIFileSystem::_rename ( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	
 	cc8* oldPath = state.GetValue < cc8* >( 1, "" );
 	cc8* newPath = state.GetValue < cc8* >( 2, "" );
@@ -303,7 +303,7 @@ int MOAIFileSystem::_rename ( lua_State* L ) {
 	@out	boolean success
 */
 int MOAIFileSystem::_setWorkingDirectory ( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	
 	cc8* path = state.GetValue < cc8* >( 1, "" );
 	bool result = USFileSys::SetCurrentPath ( path );
@@ -317,7 +317,7 @@ int MOAIFileSystem::_setWorkingDirectory ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIFileSystem::RegisterLuaClass ( USLuaState& state ) {
+void MOAIFileSystem::RegisterLuaClass ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "affirmPath",					_affirmPath },

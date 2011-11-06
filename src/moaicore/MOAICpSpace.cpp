@@ -24,7 +24,7 @@ public:
 
 	cpCollisionType		mTypeA;
 	cpCollisionType		mTypeB;
-	USLuaRef			mHandler;
+	MOAILuaRef			mHandler;
 	u32					mMask;
 	
 	MOAICpSpace* mSpace;
@@ -44,7 +44,7 @@ MOAICpPrim::MOAICpPrim () :
 	mSpace ( 0 ) {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( USLuaObject )
+		RTTI_EXTEND ( MOAIObject )
 	RTTI_END
 	
 	this->mLinkInSpace.Data ( this );
@@ -75,9 +75,9 @@ static int _cpCollisionFunc ( cpArbiter* arb, void* data, u32 eventType, bool ch
 	if ( handler->mMask & eventType ) {
 
 		// this can be called during shutdown, so make sure the runtime is still valid
-		if ( USLuaRuntime::IsValid ()) {
+		if ( MOAILuaRuntime::IsValid ()) {
 
-			USLuaStateHandle state = USLuaRuntime::Get ().State ();
+			MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 			if ( handler->mHandler.PushRef ( state )) {
 				
 				cpShape* a;
@@ -144,21 +144,21 @@ static void _cpCollisionSeparateFunc ( cpArbiter* arb, cpSpace* space, void *dat
 //----------------------------------------------------------------//
 static void _shapeListForPointCallback ( cpShape *shape, void *data ) {
 
-	USLuaState& state = *( USLuaState* )data;
+	MOAILuaState& state = *( MOAILuaState* )data;
 	(( MOAICpShape* )shape->data )->PushLuaUserdata ( state );
 }
 
 //----------------------------------------------------------------//
 static void _shapeListForRectCallback ( cpShape *shape, void *data ) {
 
-	USLuaState& state = *( USLuaState* )data;
+	MOAILuaState& state = *( MOAILuaState* )data;
 	(( MOAICpShape* )shape->data )->PushLuaUserdata ( state );
 }
 
 //----------------------------------------------------------------//
 static void _shapeListForSegmentCallback ( cpShape *shape, cpFloat t, cpVect n, void *data ) {
 
-	USLuaState& state = *( USLuaState* )data;
+	MOAILuaState& state = *( MOAILuaState* )data;
 	(( MOAICpShape* )shape->data )->PushLuaUserdata ( state );
 	
 	lua_pushnumber ( state, t );
@@ -896,7 +896,7 @@ void MOAICpSpace::OnUpdate ( float step ) {
 }
 
 //----------------------------------------------------------------//
-void MOAICpSpace::RegisterLuaClass ( USLuaState& state ) {
+void MOAICpSpace::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAIAction::RegisterLuaClass ( state );
 	
@@ -908,7 +908,7 @@ void MOAICpSpace::RegisterLuaClass ( USLuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAICpSpace::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAICpSpace::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	MOAIAction::RegisterLuaFuncs ( state );
 	

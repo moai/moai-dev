@@ -316,7 +316,7 @@ MOAIVertexBuffer::~MOAIVertexBuffer () {
 }
 
 //----------------------------------------------------------------//
-void MOAIVertexBuffer::RegisterLuaClass ( USLuaState& state ) {
+void MOAIVertexBuffer::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	state.SetField ( -1, "GL_POINTS", ( u32 )GL_POINTS );
 	state.SetField ( -1, "GL_LINES", ( u32 )GL_LINES );
@@ -328,7 +328,7 @@ void MOAIVertexBuffer::RegisterLuaClass ( USLuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIVertexBuffer::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAIVertexBuffer::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "bless",					_bless },

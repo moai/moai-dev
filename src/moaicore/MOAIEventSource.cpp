@@ -13,7 +13,7 @@
 MOAIEventSource::MOAIEventSource () {
 
 	RTTI_BEGIN
-		RTTI_EXTEND ( USLuaObject )
+		RTTI_EXTEND ( MOAIObject )
 	RTTI_END
 }
 
@@ -22,7 +22,7 @@ MOAIEventSource::~MOAIEventSource () {
 }
 
 //----------------------------------------------------------------//
-bool MOAIEventSource::PushListener ( u32 eventID, USLuaState& state ) {
+bool MOAIEventSource::PushListener ( u32 eventID, MOAILuaState& state ) {
 
 	if ( this->PushListenerTable ( state )) {
 		if ( state.GetFieldWithType ( -1, eventID, LUA_TFUNCTION )) {
@@ -35,7 +35,7 @@ bool MOAIEventSource::PushListener ( u32 eventID, USLuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIEventSource::PushListenerAndSelf ( u32 eventID, USLuaState& state ) {
+bool MOAIEventSource::PushListenerAndSelf ( u32 eventID, MOAILuaState& state ) {
 
 	if ( this->PushListener ( eventID, state )) {
 		this->PushLuaUserdata ( state );
@@ -47,7 +47,7 @@ bool MOAIEventSource::PushListenerAndSelf ( u32 eventID, USLuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIEventSource::SetListener ( lua_State* L, u32 idx ) {
 
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	idx = state.AbsIndex ( idx );
 
 	this->AffirmListenerTable ( state );
@@ -98,7 +98,7 @@ int MOAIInstanceEventSource::_setListener ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIInstanceEventSource::AffirmListenerTable ( USLuaState& state ) {
+void MOAIInstanceEventSource::AffirmListenerTable ( MOAILuaState& state ) {
 
 	if ( !this->mListenerTable ) {
 		lua_newtable ( state );
@@ -120,7 +120,7 @@ MOAIInstanceEventSource::~MOAIInstanceEventSource () {
 }
 
 //----------------------------------------------------------------//
-bool MOAIInstanceEventSource::PushListenerTable ( USLuaState& state ) {
+bool MOAIInstanceEventSource::PushListenerTable ( MOAILuaState& state ) {
 
 	if ( this->mListenerTable ) {
 		return this->PushLocal ( state, this->mListenerTable );
@@ -129,7 +129,7 @@ bool MOAIInstanceEventSource::PushListenerTable ( USLuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIInstanceEventSource::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAIInstanceEventSource::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "setListener",		_setListener },
@@ -144,7 +144,7 @@ void MOAIInstanceEventSource::RegisterLuaFuncs ( USLuaState& state ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGlobalEventSource::AffirmListenerTable ( USLuaState& state ) {
+void MOAIGlobalEventSource::AffirmListenerTable ( MOAILuaState& state ) {
 
 	if ( !this->mListenerTable ) {
 		lua_newtable ( state );
@@ -166,7 +166,7 @@ MOAIGlobalEventSource::~MOAIGlobalEventSource () {
 }
 
 //----------------------------------------------------------------//
-bool MOAIGlobalEventSource::PushListenerTable ( USLuaState& state ) {
+bool MOAIGlobalEventSource::PushListenerTable ( MOAILuaState& state ) {
 
 	if ( this->mListenerTable ) {
 		return this->mListenerTable.PushRef ( state );

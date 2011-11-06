@@ -202,7 +202,7 @@ MOAIHttpTask::MOAIHttpTask () :
 	mBuffer ( 0 ),
 	mSize ( 0 ) {
 
-	RTTI_SINGLE ( USLuaObject )
+	RTTI_SINGLE ( MOAIObject )
 }
 
 //----------------------------------------------------------------//
@@ -225,7 +225,7 @@ void MOAIHttpTask::OnHttpFinish ( USHttpTask* task ) {
 	
 	if ( this->mOnFinish ) {
 	
-		USLuaStateHandle state = USLuaRuntime::Get ().State ();
+		MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 		this->PushLocal ( state, this->mOnFinish );
 		this->PushLuaUserdata ( state );
 		state.Push ( task->GetResponseCode ());
@@ -239,12 +239,12 @@ void MOAIHttpTask::OnHttpFinish ( USHttpTask* task ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIHttpTask::RegisterLuaClass ( USLuaState& state ) {
+void MOAIHttpTask::RegisterLuaClass ( MOAILuaState& state ) {
 	UNUSED ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAIHttpTask::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAIHttpTask::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "getSize",			_getSize },

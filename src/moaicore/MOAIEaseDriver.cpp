@@ -141,13 +141,13 @@ void MOAIEaseDriver::OnUpdate ( float step ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIEaseDriver::RegisterLuaClass ( USLuaState& state ) {
+void MOAIEaseDriver::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAIAction::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAIEaseDriver::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAIEaseDriver::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	MOAIAction::RegisterLuaFuncs ( state );
 	

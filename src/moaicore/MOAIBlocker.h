@@ -4,11 +4,13 @@
 #ifndef	MOAIBLOCKER_H
 #define	MOAIBLOCKER_H
 
+#include <moaicore/MOAILua.h>
+
 //================================================================//
 // MOAIBlocker
 //================================================================//
 class MOAIBlocker :
-	public virtual USLuaObject {
+	public virtual MOAIObject {
 private:
 
 	MOAIBlocker*		mBlocker;

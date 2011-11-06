@@ -1,16 +1,16 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef LUASTATE_IMPL_H
-#define LUASTATE_IMPL_H
+#ifndef MOAILUASTATE_IMPL_H
+#define MOAILUASTATE_IMPL_H
 
 //================================================================//
-// USLuaState
+// MOAILuaState
 //================================================================//
 
 //----------------------------------------------------------------//
 template < typename TYPE >
-TYPE USLuaState::GetField ( int idx, int key, TYPE value ) {
+TYPE MOAILuaState::GetField ( int idx, int key, TYPE value ) {
 
 	this->GetField ( idx, key );
 	value = this->GetValue ( -1, value );
@@ -21,7 +21,7 @@ TYPE USLuaState::GetField ( int idx, int key, TYPE value ) {
 
 //----------------------------------------------------------------//
 template < typename TYPE >
-TYPE USLuaState::GetField ( int idx, cc8* key, TYPE value ) {
+TYPE MOAILuaState::GetField ( int idx, cc8* key, TYPE value ) {
 
 	this->GetField ( idx, key );
 	value = this->GetValue ( -1, value );
@@ -32,12 +32,12 @@ TYPE USLuaState::GetField ( int idx, cc8* key, TYPE value ) {
 
 //----------------------------------------------------------------//
 template < typename TYPE >
-TYPE* USLuaState::GetLuaObject ( int idx ) {
+TYPE* MOAILuaState::GetLuaObject ( int idx ) {
 	
 	if ( this->GetTop () < idx ) return 0;
 	if ( !this->IsType ( idx, LUA_TUSERDATA )) return 0;
 	
-	USLuaObject* luaData = ( USLuaObject* )this->GetPtrUserData ( idx );
+	MOAIObject* luaData = ( MOAIObject* )this->GetPtrUserData ( idx );
 	if ( luaData ) {
 		return luaData->AsType < TYPE >();
 	}
@@ -46,11 +46,11 @@ TYPE* USLuaState::GetLuaObject ( int idx ) {
 
 //----------------------------------------------------------------//
 template < typename TYPE >
-TYPE* USLuaState::GetLuaObject ( int idx, cc8* name ) {
+TYPE* MOAILuaState::GetLuaObject ( int idx, cc8* name ) {
 	
 	if ( this->GetField ( idx, name, LUA_TUSERDATA )) {
 		
-		USLuaObject* luaData = ( USLuaObject* )this->GetPtrUserData ( idx );
+		MOAIObject* luaData = ( MOAIObject* )this->GetPtrUserData ( idx );
 		this->Pop ( 1 );
 		
 		if ( luaData ) {
@@ -62,7 +62,7 @@ TYPE* USLuaState::GetLuaObject ( int idx, cc8* name ) {
 
 //----------------------------------------------------------------//
 //template < typename TYPE >
-//STLSet < TYPE* > USLuaState::GetLuaDataSet ( int idx ) {
+//STLSet < TYPE* > MOAILuaState::GetLuaDataSet ( int idx ) {
 //	
 //	idx = this->AbsIndex ( idx );
 //	
@@ -82,7 +82,7 @@ TYPE* USLuaState::GetLuaObject ( int idx, cc8* name ) {
 
 //----------------------------------------------------------------//
 template < typename TYPE >
-USMetaRect < TYPE > USLuaState::GetRect ( int idx ) {
+USMetaRect < TYPE > MOAILuaState::GetRect ( int idx ) {
 
 	USMetaRect < TYPE > rect;
 	
@@ -96,7 +96,7 @@ USMetaRect < TYPE > USLuaState::GetRect ( int idx ) {
 
 //----------------------------------------------------------------//
 template < typename TYPE >
-TYPE USLuaState::GetValue ( int idx, TYPE value ) {
+TYPE MOAILuaState::GetValue ( int idx, TYPE value ) {
 	UNUSED ( idx );
 
 	assert ( false ); // unsupported type
@@ -105,7 +105,7 @@ TYPE USLuaState::GetValue ( int idx, TYPE value ) {
 
 //----------------------------------------------------------------//
 template < typename TYPE >
-USMetaVec2D < TYPE > USLuaState::GetVec2D ( int idx ) {
+USMetaVec2D < TYPE > MOAILuaState::GetVec2D ( int idx ) {
 
 	USMetaVec2D < TYPE > vec;
 	
@@ -117,7 +117,7 @@ USMetaVec2D < TYPE > USLuaState::GetVec2D ( int idx ) {
 
 //----------------------------------------------------------------//
 template < typename TYPE >
-USMetaVec3D < TYPE > USLuaState::GetVec3D ( int idx ) {
+USMetaVec3D < TYPE > MOAILuaState::GetVec3D ( int idx ) {
 
 	USMetaVec3D < TYPE > vec;
 	
@@ -130,7 +130,7 @@ USMetaVec3D < TYPE > USLuaState::GetVec3D ( int idx ) {
 
 //----------------------------------------------------------------//
 template < typename TYPE >
-TYPE USLuaState::PopValue ( TYPE value ) {
+TYPE MOAILuaState::PopValue ( TYPE value ) {
 
 	TYPE value = this->GetValue < TYPE >( -1, value );
 	this->Pop ( 1 );
@@ -139,7 +139,7 @@ TYPE USLuaState::PopValue ( TYPE value ) {
 
 //----------------------------------------------------------------//
 template < typename TYPE >
-void USLuaState::ReadArray ( int size, TYPE* values, TYPE value ) {
+void MOAILuaState::ReadArray ( int size, TYPE* values, TYPE value ) {
 
 	for ( int i = 0; i < size; ++i ) {
 		values [ i ] = this->GetField ( -1, i + 1, value );
@@ -148,7 +148,7 @@ void USLuaState::ReadArray ( int size, TYPE* values, TYPE value ) {
 
 //----------------------------------------------------------------//
 template < typename TYPE >
-void USLuaState::SetField ( int idx, cc8* key, TYPE value ) {
+void MOAILuaState::SetField ( int idx, cc8* key, TYPE value ) {
 	
 	if ( this->IsTableOrUserdata ( idx )) {
 		idx = this->AbsIndex ( idx );
@@ -159,7 +159,7 @@ void USLuaState::SetField ( int idx, cc8* key, TYPE value ) {
 
 //----------------------------------------------------------------//
 template < typename TYPE >
-void USLuaState::SetFieldByIndex ( int idx, int key, TYPE value ) {
+void MOAILuaState::SetFieldByIndex ( int idx, int key, TYPE value ) {
 	
 	if ( this->IsTableOrUserdata ( idx )) {
 		idx = this->AbsIndex ( idx );
@@ -171,7 +171,7 @@ void USLuaState::SetFieldByIndex ( int idx, int key, TYPE value ) {
 
 //----------------------------------------------------------------//
 template < typename TYPE >
-void USLuaState::WriteArray ( int size, TYPE* values ) {
+void MOAILuaState::WriteArray ( int size, TYPE* values ) {
 
 	for ( int i = 0; i < size; ++i ) {
 		this->SetFieldByIndex ( -1, i + 1, values [ i ]);

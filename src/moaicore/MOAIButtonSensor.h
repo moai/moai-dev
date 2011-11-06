@@ -4,6 +4,7 @@
 #ifndef MOAIBUTTONSETSENSOR_H
 #define MOAIBUTTONSETSENSOR_H
 
+#include <moaicore/MOAILua.h>
 #include <moaicore/MOAISensor.h>
 
 //================================================================//
@@ -24,7 +25,7 @@ private:
 
 	u32	mState;
 
-	USLuaRef	mOnButton;
+	MOAILuaRef	mOnButton;
 
 	//----------------------------------------------------------------//
 	static int		_down				( lua_State* L );
@@ -45,8 +46,8 @@ public:
 	void			HandleEvent				( USStream& eventStream );
 					MOAIButtonSensor		();
 					~MOAIButtonSensor		();
-	void			RegisterLuaClass		( USLuaState& state );
-	void			RegisterLuaFuncs		( USLuaState& state );
+	void			RegisterLuaClass		( MOAILuaState& state );
+	void			RegisterLuaFuncs		( MOAILuaState& state );
 	void			Reset					();
 	static void		WriteEvent				( USStream& eventStream, bool down );
 };

@@ -184,7 +184,7 @@ void MOAIKeyboardSensor::HandleEvent ( USStream& eventStream ) {
 	}
 	
 	if ( this->mOnKey ) {
-		USLuaStateHandle state = this->mOnKey.GetSelf ();
+		MOAILuaStateHandle state = this->mOnKey.GetSelf ();
 		lua_pushnumber ( state, keyCode );
 		lua_pushboolean ( state, down );
 		state.DebugCall ( 2, 0 );
@@ -234,7 +234,7 @@ MOAIKeyboardSensor::~MOAIKeyboardSensor () {
 }
 
 //----------------------------------------------------------------//
-void MOAIKeyboardSensor::RegisterLuaClass ( USLuaState& state ) {
+void MOAIKeyboardSensor::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAISensor::RegisterLuaClass ( state );
 
@@ -244,7 +244,7 @@ void MOAIKeyboardSensor::RegisterLuaClass ( USLuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIKeyboardSensor::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAIKeyboardSensor::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "keyDown",				_keyDown },

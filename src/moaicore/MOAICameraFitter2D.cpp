@@ -639,14 +639,14 @@ void MOAICameraFitter2D::UpdateTarget () {
 }
 
 //----------------------------------------------------------------//
-void MOAICameraFitter2D::RegisterLuaClass ( USLuaState& state ) {
+void MOAICameraFitter2D::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAIAction::RegisterLuaClass ( state );
 	MOAINode::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAICameraFitter2D::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAICameraFitter2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	MOAIAction::RegisterLuaFuncs ( state );
 	MOAINode::RegisterLuaFuncs ( state );

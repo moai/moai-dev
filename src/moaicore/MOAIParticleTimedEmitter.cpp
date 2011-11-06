@@ -69,13 +69,13 @@ void MOAIParticleTimedEmitter::OnUpdate ( float step ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleTimedEmitter::RegisterLuaClass ( USLuaState& state ) {
+void MOAIParticleTimedEmitter::RegisterLuaClass ( MOAILuaState& state ) {
 
 	this->MOAIParticleEmitter::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleTimedEmitter::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAIParticleTimedEmitter::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	this->MOAIParticleEmitter::RegisterLuaFuncs ( state );
 	

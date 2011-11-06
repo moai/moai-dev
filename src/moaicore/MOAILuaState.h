@@ -1,33 +1,28 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef LUASTATE_H
-#define LUASTATE_H
-
-#include <uslscore/STLString.h>
-#include <uslscore/USRect.h>
-#include <uslscore/USVec2D.h>
-#include <uslscore/USVec3D.h>
+#ifndef MOAILUASTATE_H
+#define MOAILUASTATE_H
 
 class USCipher;
-class USLuaRef;
-class USLuaObject;
+class MOAILuaRef;
+class MOAIObject;
 class USStreamFormatter;
 
 #define LUA_SETUP(type,str) \
-	USLuaState state ( L );	\
+	MOAILuaState state ( L );	\
 	if ( !state.CheckParams ( 1, str )) return 0; \
 	type* self = state.GetLuaObject < type >( 1 ); \
 	if ( !self ) return 0;
 
 #define LUA_SETUP_STATIC(str) \
-	USLuaState state ( L );	\
+	MOAILuaState state ( L );	\
 	if ( !state.CheckParams ( 1, str )) return 0;
 
 //================================================================//
-// USLuaState
+// MOAILuaState
 //================================================================//
-class USLuaState {
+class MOAILuaState {
 private:
 
 	lua_State*	mState;
@@ -39,7 +34,7 @@ private:
 
 public:
 
-	friend class USLuaStateHandle;
+	friend class MOAILuaStateHandle;
 
 	//----------------------------------------------------------------//
 	int				AbsIndex				( int idx );
@@ -57,12 +52,12 @@ public:
 	bool			GetFieldWithType		( int idx, int key, int type );
 	void*			GetPtrUserData			( int idx );
 	STLString		GetStackTrace			( int level );
-	USLuaRef		GetStrongRef			( int idx );
+	MOAILuaRef		GetStrongRef			( int idx );
 	int				GetTop					();
 	void*			GetUserData				( int idx, void* value );
 	void*			GetUserData				( int idx, cc8* name, void* value );
 	STLString		GetValue				( int idx, cc8* value );
-	USLuaRef		GetWeakRef				( int idx );
+	MOAILuaRef		GetWeakRef				( int idx );
 	bool			HasField				( int idx, cc8* name );
 	bool			HasField				( int idx, int key );
 	bool			HasField				( int idx, cc8* name, int type );
@@ -89,8 +84,8 @@ public:
 	void			Push					( u64 value );
 	void			Push					( uintptr value );
 	void			Push					( lua_CFunction value );
-	void			Push					( USLuaObject* luaObject );
-	void			Push					( USLuaRef& ref );
+	void			Push					( MOAIObject* luaObject );
+	void			Push					( MOAILuaRef& ref );
 	void			PushPtrUserData			( void* ptr );
 	int				PushTableItr			( int idx );
 	void			RegisterModule			( cc8* name, lua_CFunction loader, bool autoLoad );
@@ -98,9 +93,9 @@ public:
 	void			SetPath					( cc8* path );
 	void			SetTop					( int top );
 	bool			TableItrNext			( int itr );
-					USLuaState				();
-					USLuaState				( lua_State* state );
-	virtual			~USLuaState				();
+					MOAILuaState				();
+					MOAILuaState				( lua_State* state );
+	virtual			~MOAILuaState				();
 	int				YieldThread				( int nResults );
 	
 	//----------------------------------------------------------------//
@@ -140,15 +135,15 @@ public:
 };
 
 //----------------------------------------------------------------//
-template <> bool		USLuaState::GetValue < bool >		( int idx, bool value );
-template <> cc8*		USLuaState::GetValue < cc8* >		( int idx, cc8* value );
-template <> double		USLuaState::GetValue < double >		( int idx, double value );
-template <> float		USLuaState::GetValue < float >		( int idx, float value );
-template <> int			USLuaState::GetValue < int >		( int idx, int value );
-template <> u8			USLuaState::GetValue < u8 >			( int idx, u8 value );
-template <> u16			USLuaState::GetValue < u16 >		( int idx, u16 value );
-template <> u32			USLuaState::GetValue < u32 >		( int idx, u32 value );
-template <> u64			USLuaState::GetValue < u64 >		( int idx, u64 value );
-template <> uintptr		USLuaState::GetValue < uintptr >	( int idx, uintptr value );
+template <> bool		MOAILuaState::GetValue < bool >		( int idx, bool value );
+template <> cc8*		MOAILuaState::GetValue < cc8* >		( int idx, cc8* value );
+template <> double		MOAILuaState::GetValue < double >		( int idx, double value );
+template <> float		MOAILuaState::GetValue < float >		( int idx, float value );
+template <> int			MOAILuaState::GetValue < int >		( int idx, int value );
+template <> u8			MOAILuaState::GetValue < u8 >			( int idx, u8 value );
+template <> u16			MOAILuaState::GetValue < u16 >		( int idx, u16 value );
+template <> u32			MOAILuaState::GetValue < u32 >		( int idx, u32 value );
+template <> u64			MOAILuaState::GetValue < u64 >		( int idx, u64 value );
+template <> uintptr		MOAILuaState::GetValue < uintptr >	( int idx, uintptr value );
 
 #endif

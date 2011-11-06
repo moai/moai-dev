@@ -6,6 +6,7 @@
 
 #include <moaicore/MOAIBlendMode.h>
 #include <moaicore/MOAIEventSource.h>
+#include <moaicore/MOAILua.h>
 
 class MOAIFrameBuffer;
 class MOAIGfxResource;
@@ -183,7 +184,7 @@ public:
 							MOAIGfxDevice			();
 							~MOAIGfxDevice			();
 	
-	void					RegisterLuaClass		( USLuaState& state );
+	void					RegisterLuaClass		( MOAILuaState& state );
 	void					ReleaseResources		();
 	void					RenewResources			();
 	

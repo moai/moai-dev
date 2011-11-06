@@ -19,7 +19,6 @@ class USUrlMgr :
 private:
 
 	USUrlMgrOpaque*		mOpaque;
-	USTaskThread		mDataIOThread;
 
 	//----------------------------------------------------------------//
 	void			AddHandle			( USHttpTask& task );

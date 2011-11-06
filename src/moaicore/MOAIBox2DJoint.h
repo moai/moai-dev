@@ -41,8 +41,8 @@ public:
 	void				Destroy					();
 						MOAIBox2DJoint			();
 						~MOAIBox2DJoint			();
-	void				RegisterLuaClass		( USLuaState& state );
-	void				RegisterLuaFuncs		( USLuaState& state );
+	void				RegisterLuaClass		( MOAILuaState& state );
+	void				RegisterLuaFuncs		( MOAILuaState& state );
 };
 
 #endif

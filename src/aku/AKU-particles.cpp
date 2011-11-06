@@ -19,7 +19,7 @@ void AKUNewParticlePlugin ( lua_State* L, AKUParticleInitFunc initFunc, AKUParti
 	UNUSED ( renderFunc );
 	UNUSED ( size );
 	
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	
 	MOAIParticlePlugin* plugin = new MOAIParticlePlugin ();
 	plugin->Init ( initFunc, renderFunc, size );

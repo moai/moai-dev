@@ -5,6 +5,7 @@
 #define MOAICAMERAFITTER2D_H
 
 #include <moaicore/MOAIAction.h>
+#include <moaicore/MOAILua.h>
 #include <moaicore/MOAINode.h>
 
 class MOAICameraAnchor2D;
@@ -30,8 +31,8 @@ class MOAICameraFitter2D :
 	public MOAINode {
 private:
 
-	USLuaSharedPtr < MOAITransform >	mCamera;
-	USLuaSharedPtr < MOAIViewport >		mViewport;
+	MOAILuaSharedPtr < MOAITransform >	mCamera;
+	MOAILuaSharedPtr < MOAIViewport >		mViewport;
 
 	typedef STLSet < MOAICameraAnchor2D* >::iterator AnchorIt;
 	STLSet < MOAICameraAnchor2D* > mAnchors;
@@ -102,8 +103,8 @@ public:
 	bool			IsDone					();
 					MOAICameraFitter2D		();
 					~MOAICameraFitter2D		();
-	void			RegisterLuaClass		( USLuaState& state );
-	void			RegisterLuaFuncs		( USLuaState& state );
+	void			RegisterLuaClass		( MOAILuaState& state );
+	void			RegisterLuaFuncs		( MOAILuaState& state );
 	void			RemoveAnchor			( MOAICameraAnchor2D& anchor );
 };
 

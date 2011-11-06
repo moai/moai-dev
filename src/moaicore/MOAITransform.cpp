@@ -903,7 +903,7 @@ void MOAITransform::OnDepNodeUpdate () {
 }
 
 //----------------------------------------------------------------//
-void MOAITransform::RegisterLuaClass ( USLuaState& state ) {
+void MOAITransform::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	MOAITransformBase::RegisterLuaClass ( state );
 	
@@ -920,7 +920,7 @@ void MOAITransform::RegisterLuaClass ( USLuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITransform::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAITransform::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	MOAITransformBase::RegisterLuaFuncs ( state );
 	
@@ -957,7 +957,7 @@ void MOAITransform::RegisterLuaFuncs ( USLuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITransform::SerializeIn ( USLuaState& state, USLuaSerializer& serializer ) {
+void MOAITransform::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
 	UNUSED ( serializer );
 	
 	this->mPiv.mX = state.GetField < float >( -1, "mPiv.mX", 0.0f );
@@ -973,7 +973,7 @@ void MOAITransform::SerializeIn ( USLuaState& state, USLuaSerializer& serializer
 }
 
 //----------------------------------------------------------------//
-void MOAITransform::SerializeOut ( USLuaState& state, USLuaSerializer& serializer ) {
+void MOAITransform::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
 	UNUSED ( serializer );
 
 	state.SetField ( -1, "mPiv.mX", this->mPiv.mX );

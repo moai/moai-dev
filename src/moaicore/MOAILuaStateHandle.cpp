@@ -2,67 +2,66 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <uslscore/USLuaObject.h>
-#include <uslscore/USLuaState.h>
-#include <uslscore/USLuaStateHandle.h>
-#include <uslscore/USLuaRuntime.h>
-
-#include <uslscore/USLuaState-impl.h>
+#include <moaicore/MOAIObject.h>
+#include <moaicore/MOAILuaState.h>
+#include <moaicore/MOAILuaStateHandle.h>
+#include <moaicore/MOAILuaRuntime.h>
+#include <moaicore/MOAILuaState-impl.h>
 
 //================================================================//
-// USLuaStateHandle
+// MOAILuaStateHandle
 //================================================================//
 
 //----------------------------------------------------------------//
-void USLuaStateHandle::PinTop () {
+void MOAILuaStateHandle::PinTop () {
 
 	this->PinTop ( this->GetTop ());
 }
 
 //----------------------------------------------------------------//
-void USLuaStateHandle::PinTop ( int top ) {
+void MOAILuaStateHandle::PinTop ( int top ) {
 
 	this->mRestoreTop = this->AbsIndex ( top );
 }
 
 //----------------------------------------------------------------//
-void USLuaStateHandle::Take ( const USLuaStateHandle& assign ) {
+void MOAILuaStateHandle::Take ( const MOAILuaStateHandle& assign ) {
 
 	this->mState = assign.mState;
 	this->mRestoreTop = assign.mRestoreTop;
 
-	(( USLuaStateHandle& )assign ).mState = 0;
-	(( USLuaStateHandle& )assign ).mRestoreTop = 0;
+	(( MOAILuaStateHandle& )assign ).mState = 0;
+	(( MOAILuaStateHandle& )assign ).mRestoreTop = 0;
 }
 
 //----------------------------------------------------------------//
-USLuaStateHandle::USLuaStateHandle () :
+MOAILuaStateHandle::MOAILuaStateHandle () :
 	mRestoreTop ( 0 ) {
 }
 
 //----------------------------------------------------------------//
-USLuaStateHandle::USLuaStateHandle ( lua_State* L ) {
+MOAILuaStateHandle::MOAILuaStateHandle ( lua_State* L ) {
 
 	this->mState = L;
 	this->mRestoreTop = lua_gettop ( this->mState );
 }
 
 //----------------------------------------------------------------//
-USLuaStateHandle::USLuaStateHandle ( USLuaState& state ) {
+MOAILuaStateHandle::MOAILuaStateHandle ( MOAILuaState& state ) {
 
 	this->mState = state.mState;
 	this->mRestoreTop = lua_gettop ( this->mState );
 }
 
 //----------------------------------------------------------------//
-USLuaStateHandle::USLuaStateHandle ( const USLuaStateHandle& assign ) :
-	USLuaState () {
+MOAILuaStateHandle::MOAILuaStateHandle ( const MOAILuaStateHandle& assign ) :
+	MOAILuaState () {
 
 	this->Take ( assign );
 }
 
 //----------------------------------------------------------------//
-USLuaStateHandle::~USLuaStateHandle () {
+MOAILuaStateHandle::~MOAILuaStateHandle () {
 
 	if ( this->mState ) {
 		if ( lua_gettop ( this->mState ) != this->mRestoreTop ) {

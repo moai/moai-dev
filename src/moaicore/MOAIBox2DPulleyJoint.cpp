@@ -152,12 +152,12 @@ MOAIBox2DPulleyJoint::~MOAIBox2DPulleyJoint () {
 }
 
 //----------------------------------------------------------------//
-void MOAIBox2DPulleyJoint::RegisterLuaClass ( USLuaState& state ) {
+void MOAIBox2DPulleyJoint::RegisterLuaClass ( MOAILuaState& state ) {
 	MOAIBox2DJoint::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAIBox2DPulleyJoint::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAIBox2DPulleyJoint::RegisterLuaFuncs ( MOAILuaState& state ) {
 	MOAIBox2DJoint::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {

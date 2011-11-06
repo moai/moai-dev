@@ -32,7 +32,7 @@
 	@out	nil
 */
 int MOAISim::_clearLoopFlags ( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	MOAISim::Get ().mLoopFlags &= ~state.GetValue < u32 >( 1, 0xffffffff );
 	return 0;
 }
@@ -45,7 +45,7 @@ int MOAISim::_clearLoopFlags ( lua_State* L ) {
 */
 int MOAISim::_clearRenderStack ( lua_State* L ) {
 
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	
 	MOAISim& device = MOAISim::Get ();
 	device.Clear ();
@@ -61,7 +61,7 @@ int MOAISim::_clearRenderStack ( lua_State* L ) {
 */
 int MOAISim::_enterFullscreenMode ( lua_State* L ) {
 
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 
 	AKUEnterFullscreenModeFunc enterFullscreenMode = AKUGetFunc_EnterFullscreenMode ();
 	if ( enterFullscreenMode ) {
@@ -79,7 +79,7 @@ int MOAISim::_enterFullscreenMode ( lua_State* L ) {
 */
 int MOAISim::_exitFullscreenMode ( lua_State* L ) {
 
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 
 	AKUEnterFullscreenModeFunc exitFullscreenMode = AKUGetFunc_ExitFullscreenMode ();
 	if ( exitFullscreenMode ) {
@@ -91,7 +91,7 @@ int MOAISim::_exitFullscreenMode ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name forceGarbageCollection
-	@text	Runs the garbage collector repeatedly until no more USLuaObjects
+	@text	Runs the garbage collector repeatedly until no more MOAIObjects
 			can be collected.
 
 	@out	nil
@@ -100,7 +100,7 @@ int MOAISim::_forceGarbageCollection ( lua_State* L ) {
 	UNUSED ( L );
 
 	MOAINodeMgr::Get ().Update ();
-	USLuaRuntime::Get ().ForceGarbageCollection ();
+	MOAILuaRuntime::Get ().ForceGarbageCollection ();
 	return 0;
 }
 
@@ -113,7 +113,7 @@ int MOAISim::_forceGarbageCollection ( lua_State* L ) {
 */
 int MOAISim::_framesToTime ( lua_State* L ) {
 
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	if ( !state.CheckParams ( 1, "N" )) return 0;
 	
 	float frames = state.GetValue < float >( 1, 0.0f );
@@ -191,13 +191,13 @@ int MOAISim::_getLoopFlags ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	getLuaObjectCount
-	@text	Gets the total number of objects in memory that inherit USLuaObject. Count includes
+	@text	Gets the total number of objects in memory that inherit MOAIObject. Count includes
 			objects that are not bound to the Lua runtime.
 
 	@out	number count
 */
 int MOAISim::_getLuaObjectCount ( lua_State* L ) {
-	lua_pushnumber ( L, USLuaRuntime::Get ().GetObjectCount ());
+	lua_pushnumber ( L, MOAILuaRuntime::Get ().GetObjectCount ());
 	return 1;
 }
 
@@ -232,7 +232,7 @@ int MOAISim::_getMemoryUsage ( lua_State* L ) {
 	
 	size_t count;
 	
-	count = USLuaRuntime::Get().GetMemoryUsage ();
+	count = MOAILuaRuntime::Get().GetMemoryUsage ();
 	lua_pushnumber(L, count / divisor);
 	lua_setfield(L, -2, "lua");
 	total += count;
@@ -321,7 +321,7 @@ int MOAISim::_getStep ( lua_State* L ) {
 */
 int MOAISim::_openWindow ( lua_State* L ) {
 	
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	if ( !state.CheckParams ( 1, "SNN" )) return 0;
 	
 	cc8* title = lua_tostring ( state, 1 );
@@ -347,7 +347,7 @@ int MOAISim::_openWindow ( lua_State* L ) {
 */
 int MOAISim::_pauseTimer ( lua_State* L ) {
 	
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	bool pause = state.GetValue < bool >( 1, true );
 	
 	if ( pause ) {
@@ -383,7 +383,7 @@ int MOAISim::_popRenderPass ( lua_State* L ) {
 */
 int MOAISim::_pushRenderPass ( lua_State* L ) {
 
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	if ( !state.CheckParams ( 1, "U" )) return 0;
 	
 	MOAIProp2D* prop = state.GetLuaObject < MOAIProp2D >( 1 );
@@ -397,13 +397,13 @@ int MOAISim::_pushRenderPass ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	reportHistogram
-	@text	Generates a histogram of active USLuaObjects.
+	@text	Generates a histogram of active MOAIObjects.
 
 	@out	nil
 */
 int MOAISim::_reportHistogram ( lua_State* L ) {
-	USLuaState state ( L );
-	USLuaRuntime::Get ().ReportHistogram ( MOAILogMgr::Get ().GetFile ());
+	MOAILuaState state ( L );
+	MOAILuaRuntime::Get ().ReportHistogram ( MOAILogMgr::Get ().GetFile ());
 	return 0;
 }
 
@@ -426,10 +426,10 @@ int MOAISim::_reportHistogram ( lua_State* L ) {
 */
 int MOAISim::_reportLeaks ( lua_State* L ) {
 	
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	bool clearAfter = state.GetValue < bool >( 1, false );
 	
-	USLuaRuntime& luaRuntime = USLuaRuntime::Get ();
+	MOAILuaRuntime& luaRuntime = MOAILuaRuntime::Get ();
 	luaRuntime.ReportLeaksFormatted ( MOAILogMgr::Get ().GetFile ());
 
 	if ( clearAfter ) {
@@ -450,7 +450,7 @@ int MOAISim::_reportLeaks ( lua_State* L ) {
 	@out	nil
 */
 int MOAISim::_setBoostThreshold ( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	MOAISim::Get ().mBoostThreshold = state.GetValue < double >( 1, DEFAULT_BOOST_THRESHOLD );
 	return 0;
 }
@@ -467,7 +467,7 @@ int MOAISim::_setBoostThreshold ( lua_State* L ) {
 */
 int MOAISim::_setClearColor ( lua_State* L ) {
 
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	MOAISim& sim = MOAISim::Get ();
 	
 	if ( state.GetTop () == 0 ) {
@@ -496,7 +496,7 @@ int MOAISim::_setClearColor ( lua_State* L ) {
 */
 int MOAISim::_setClearDepth ( lua_State* L ) {
 
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	MOAISim& sim = MOAISim::Get ();
 	
 	bool clearDepth = state.GetValue < bool >( 1, false );
@@ -519,22 +519,22 @@ int MOAISim::_setClearDepth ( lua_State* L ) {
 	@out	nil
 */
 int MOAISim::_setCpuBudget ( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	MOAISim::Get ().mCpuBudget = state.GetValue < u32 >( 1, DEFAULT_CPU_BUDGET );
 	return 0;
 }
 
 //----------------------------------------------------------------//
 /**	@name	setHistogramEnabled
-	@text	Enable tracking of every USLuaObject so that an object count
+	@text	Enable tracking of every MOAIObject so that an object count
 			histogram may be generated.
  
 	@opt	bool enable		Default value is false.
 	@out	nil
 */
 int MOAISim::_setHistogramEnabled ( lua_State* L ) {
-	USLuaState state ( L );
-	USLuaRuntime::Get ().EnableHistogram ( state.GetValue < bool >( 1, false ));
+	MOAILuaState state ( L );
+	MOAILuaRuntime::Get ().EnableHistogram ( state.GetValue < bool >( 1, false ));
 	return 0;
 }
 
@@ -551,8 +551,8 @@ int MOAISim::_setHistogramEnabled ( lua_State* L ) {
 	@out	nil
 */
 int MOAISim::_setLeakTrackingEnabled ( lua_State* L ) {
-	USLuaState state ( L );
-	USLuaRuntime::Get ().EnableLeakTracking ( state.GetValue < bool >( 1, false ));
+	MOAILuaState state ( L );
+	MOAILuaRuntime::Get ().EnableLeakTracking ( state.GetValue < bool >( 1, false ));
 	return 0;
 }
 
@@ -575,7 +575,7 @@ int MOAISim::_setLeakTrackingEnabled ( lua_State* L ) {
 	@out	nil	
 */
 int MOAISim::_setLoopFlags ( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	MOAISim::Get ().mLoopFlags |= state.GetValue < u32 >( 1, 0 );
 	return 0;
 }
@@ -588,8 +588,8 @@ int MOAISim::_setLoopFlags ( lua_State* L ) {
 	@out	nil
 */
 int MOAISim::_setLuaAllocLogEnabled ( lua_State* L ) {
-	USLuaState state ( L );
-	USLuaRuntime::Get ().SetAllocLogEnabled ( state.GetValue < bool >( 1, false ));
+	MOAILuaState state ( L );
+	MOAILuaRuntime::Get ().SetAllocLogEnabled ( state.GetValue < bool >( 1, false ));
 	return 0;
 }
 
@@ -601,7 +601,7 @@ int MOAISim::_setLuaAllocLogEnabled ( lua_State* L ) {
 	@out	nil
 */
 int MOAISim::_setStep ( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	MOAISim::Get ().SetStep ( state.GetValue < double >( 1, 1.0 / ( double )DEFAULT_STEPS_PER_SECOND ));
 	return 0;
 }
@@ -617,7 +617,7 @@ int MOAISim::_setStep ( lua_State* L ) {
 	@out	nil
 */
 int MOAISim::_setStepMultiplier ( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	MOAISim::Get ().mStepMultiplier = state.GetValue < u32 >( 1, DEFAULT_STEP_MULTIPLIER );
 	return 0;
 }
@@ -631,7 +631,7 @@ int MOAISim::_setStepMultiplier ( lua_State* L ) {
 	@out	nil
 */
 int MOAISim::_setTimerError ( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	MOAISim::Get ().mTimerError = state.GetValue < double >( 1, 0.0 );
 	return 0;
 }
@@ -645,7 +645,7 @@ int MOAISim::_setTimerError ( lua_State* L ) {
 */
 int MOAISim::_timeToFrames ( lua_State* L ) {
 
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	if ( !state.CheckParams ( 1, "N" )) return 0;
 	
 	float time = state.GetValue < float >( 1, 0.0f );
@@ -766,7 +766,7 @@ void MOAISim::PushRenderPass ( MOAIProp2D* prop ) {
 }
 
 //----------------------------------------------------------------//
-void MOAISim::RegisterLuaClass ( USLuaState& state ) {
+void MOAISim::RegisterLuaClass ( MOAILuaState& state ) {
 
 	state.SetField ( -1, "EVENT_FINALIZE", ( u32 )EVENT_FINALIZE );
 
@@ -828,7 +828,7 @@ void MOAISim::RegisterLuaClass ( USLuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAISim::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAISim::RegisterLuaFuncs ( MOAILuaState& state ) {
 	UNUSED ( state );
 }
 
@@ -879,7 +879,7 @@ void MOAISim::RunFile ( cc8* filename ) {
 	if ( !USFileSys::CheckFileExists ( filename )) return;
 
 	int status;
-	USLuaStateHandle state = USLuaRuntime::Get ().State ();
+	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 	
 	status = luaL_loadfile ( state, filename );
 	if ( state.PrintErrors ( USLog::CONSOLE, status )) return;
@@ -891,7 +891,7 @@ void MOAISim::RunFile ( cc8* filename ) {
 void MOAISim::RunString ( cc8* script ) {
 
 	int status;
-	USLuaStateHandle state = USLuaRuntime::Get ().State ();
+	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 	
 	status = luaL_loadstring ( state, script );
 	if ( state.PrintErrors ( USLog::CONSOLE, status )) return;
@@ -902,7 +902,7 @@ void MOAISim::RunString ( cc8* script ) {
 //----------------------------------------------------------------//
 void MOAISim::SendFinalizeEvent () {
 
-	USLuaStateHandle state = USLuaRuntime::Get ().State ();
+	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 	if ( this->PushListener ( EVENT_FINALIZE, state )) {
 		state.DebugCall ( 0, 0 );
 	}

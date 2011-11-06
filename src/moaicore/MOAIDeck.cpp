@@ -124,7 +124,7 @@ void MOAIDeck::LoadShader () {
 MOAIDeck::MOAIDeck () :
 	mContentMask ( 0xffffffff ) {
 	
-	RTTI_SINGLE ( USLuaObject )
+	RTTI_SINGLE ( MOAIObject )
 }
 
 //----------------------------------------------------------------//
@@ -134,12 +134,12 @@ MOAIDeck::~MOAIDeck () {
 }
 
 //----------------------------------------------------------------//
-void MOAIDeck::RegisterLuaClass ( USLuaState& state ) {
+void MOAIDeck::RegisterLuaClass ( MOAILuaState& state ) {
 	UNUSED ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAIDeck::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAIDeck::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "setShader",				_setShader },

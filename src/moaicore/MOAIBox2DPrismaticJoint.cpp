@@ -339,12 +339,12 @@ MOAIBox2DPrismaticJoint::~MOAIBox2DPrismaticJoint () {
 }
 
 //----------------------------------------------------------------//
-void MOAIBox2DPrismaticJoint::RegisterLuaClass ( USLuaState& state ) {
+void MOAIBox2DPrismaticJoint::RegisterLuaClass ( MOAILuaState& state ) {
 	MOAIBox2DJoint::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAIBox2DPrismaticJoint::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAIBox2DPrismaticJoint::RegisterLuaFuncs ( MOAILuaState& state ) {
 	MOAIBox2DJoint::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {

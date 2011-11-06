@@ -328,12 +328,12 @@ MOAIBox2DRevoluteJoint::~MOAIBox2DRevoluteJoint () {
 }
 
 //----------------------------------------------------------------//
-void MOAIBox2DRevoluteJoint::RegisterLuaClass ( USLuaState& state ) {
+void MOAIBox2DRevoluteJoint::RegisterLuaClass ( MOAILuaState& state ) {
 	MOAIBox2DJoint::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAIBox2DRevoluteJoint::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAIBox2DRevoluteJoint::RegisterLuaFuncs ( MOAILuaState& state ) {
 	MOAIBox2DJoint::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {

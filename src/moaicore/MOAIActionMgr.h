@@ -4,6 +4,8 @@
 #ifndef	MOAIACTIONMGR_H
 #define	MOAIACTIONMGR_H
 
+#include <moaicore/MOAILua.h>
+
 class MOAIAction;
 
 //================================================================//
@@ -13,7 +15,7 @@ class MOAIAction;
 	@text Manager class for MOAIActions.
 */
 class MOAIActionMgr :
-	public USGlobalClass < MOAIActionMgr, USLuaObject > {
+	public USGlobalClass < MOAIActionMgr, MOAIObject > {
 private:
 
 	static const u32 RESET_PASS	= 0xffffffff;
@@ -52,7 +54,7 @@ public:
 	void				Clear					();
 						MOAIActionMgr			();
 						~MOAIActionMgr			();
-	void				RegisterLuaClass		( USLuaState& state );
+	void				RegisterLuaClass		( MOAILuaState& state );
 	void				StartAction				( MOAIAction& action );
 	void				Update					( float step );
 };

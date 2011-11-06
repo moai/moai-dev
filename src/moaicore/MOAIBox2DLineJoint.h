@@ -6,6 +6,7 @@
 #if USE_BOX2D
 
 #include <moaicore/MOAIBox2DJoint.h>
+#include <moaicore/MOAILua.h>
 
 //================================================================//
 // MOAIBox2DLineJoint
@@ -39,8 +40,8 @@ public:
 	//----------------------------------------------------------------//
 					MOAIBox2DLineJoint		();
 					~MOAIBox2DLineJoint		();
-	void			RegisterLuaClass		( USLuaState& state );
-	void			RegisterLuaFuncs		( USLuaState& state );
+	void			RegisterLuaClass		( MOAILuaState& state );
+	void			RegisterLuaFuncs		( MOAILuaState& state );
 };
 
 #endif

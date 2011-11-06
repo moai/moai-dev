@@ -67,7 +67,7 @@ int MOAIViewport::_setRotation ( lua_State* L ) {
 */
 int MOAIViewport::_setScale ( lua_State* L ) {
 
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	if ( !state.CheckParams ( 1, "UNN" )) return 0;
 	
 	MOAIViewport* self = state.GetLuaObject < MOAIViewport >( 1 );
@@ -104,7 +104,7 @@ int MOAIViewport::_setScale ( lua_State* L ) {
 */
 int MOAIViewport::_setSize ( lua_State* L ) {
 
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	if ( !state.CheckParams ( 1, "UNN" )) return 0;
 	
 	MOAIViewport* self = state.GetLuaObject < MOAIViewport >( 1 );
@@ -349,7 +349,7 @@ MOAIViewport::MOAIViewport () :
 	mOffset ( 0.0f, 0.0f ),
 	mRotation ( 0.0f ) {
 	
-	RTTI_SINGLE ( USLuaObject )
+	RTTI_SINGLE ( MOAIObject )
 	
 	this->Init ( 0.0f, 0.0f, 1.0f, 1.0f );
 }
@@ -359,12 +359,12 @@ MOAIViewport::~MOAIViewport () {
 }
 
 //----------------------------------------------------------------//
-void MOAIViewport::RegisterLuaClass ( USLuaState& state ) {
+void MOAIViewport::RegisterLuaClass ( MOAILuaState& state ) {
 	UNUSED ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAIViewport::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAIViewport::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "setOffset",		_setOffset },

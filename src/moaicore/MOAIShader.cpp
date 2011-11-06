@@ -475,7 +475,7 @@ void MOAIShader::OnUnload () {
 }
 
 //----------------------------------------------------------------//
-void MOAIShader::RegisterLuaClass ( USLuaState& state ) {
+void MOAIShader::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	MOAINode::RegisterLuaClass ( state );
 	MOAIGfxResource::RegisterLuaClass ( state );
@@ -489,7 +489,7 @@ void MOAIShader::RegisterLuaClass ( USLuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIShader::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAIShader::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	MOAINode::RegisterLuaFuncs ( state );
 	MOAIGfxResource::RegisterLuaFuncs ( state );

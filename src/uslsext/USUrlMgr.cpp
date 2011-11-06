@@ -65,8 +65,6 @@ void USUrlMgr::Process () {
 	STLMap < CURL*, USHttpTask* >& handleMap = this->mOpaque->mHandleMap;
 	CURLM* multiHandle = this->mOpaque->mMultiHandle;
 
-	this->mDataIOThread.Publish ();
-
 	if ( !this->mOpaque->mMore ) return;
 	this->mOpaque->mMore = false;
 

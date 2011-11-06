@@ -12,6 +12,8 @@
 //----------------------------------------------------------------//
 void moaicore::InitGlobals ( USGlobals* globals ) {
 
+	uslsext::InitGlobals ( globals );
+
 	static bool sysInit = true;
 	if ( sysInit ) {
 		cpInitChipmunk ();
@@ -31,12 +33,10 @@ void moaicore::InitGlobals ( USGlobals* globals ) {
 	MOAIDebugLines::Affirm ();
 	MOAIPartitionResultMgr::Affirm ();
 	MOAISim::Affirm ();
-	
-	// after for now; USLuaState should be highest level object
-	uslsext::InitGlobals ( globals );
+	MOAILuaRuntime::Affirm ();
 	
 	// Start Lua
-	USLuaRuntime& luaRuntime = USLuaRuntime::Get ();
+	MOAILuaRuntime& luaRuntime = MOAILuaRuntime::Get ();
 	luaRuntime.Open ();
 	luaRuntime.LoadLibs ( "moai" );
 	
@@ -56,6 +56,7 @@ void moaicore::InitGlobals ( USGlobals* globals ) {
 	REGISTER_LUA_CLASS ( MOAIDataIOAction )
 	REGISTER_LUA_CLASS ( MOAIDebugLines )
 	REGISTER_LUA_CLASS ( MOAIDeckRemapper )
+	REGISTER_LUA_CLASS ( MOAIDeserializer )
 	REGISTER_LUA_CLASS ( MOAIDraw )
 	REGISTER_LUA_CLASS ( MOAIEnvironment )
 	REGISTER_LUA_CLASS ( MOAIEaseDriver )

@@ -6,6 +6,7 @@
 
 #include <moaicore/MOAIGfxResource.h>
 #include <moaicore/MOAINode.h>
+#include <moaicore/MOAILua.h>
 
 class MOAITransformBase;
 	
@@ -36,7 +37,7 @@ private:
 	u32		mSrc;
 	
 	STLString mName;
-	USLuaSharedPtr < MOAITransformBase > mTransform;
+	MOAILuaSharedPtr < MOAITransformBase > mTransform;
 
 	//----------------------------------------------------------------//
 	void		BindAttributes				( const float* attributes );
@@ -106,8 +107,8 @@ public:
 	bool			IsValid					();
 					MOAIShader				();
 					~MOAIShader				();
-	void			RegisterLuaClass		( USLuaState& state );
-	void			RegisterLuaFuncs		( USLuaState& state );
+	void			RegisterLuaClass		( MOAILuaState& state );
+	void			RegisterLuaFuncs		( MOAILuaState& state );
 	void			ReserveAttributes		( u32 nAttributes );
 	void			ReserveUniforms			( u32 nUniforms );
 	void			SetSource				( cc8* vshSource, cc8* fshSource );

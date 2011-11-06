@@ -24,7 +24,6 @@ private:
 public:
 
 	friend class USCanary;
-	friend class USGcCollector;
 
 	//----------------------------------------------------------------//
 	USCanary*		AffirmCanary		();

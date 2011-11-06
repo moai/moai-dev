@@ -29,8 +29,8 @@ public:
 	void			GatherSurfaces		( MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1, MOAISurfaceSampler2D& sampler );
 					MOAIDeck2D			();
 					~MOAIDeck2D			();
-	void			RegisterLuaClass	( USLuaState& state );
-	void			RegisterLuaFuncs	( USLuaState& state );
+	void			RegisterLuaClass	( MOAILuaState& state );
+	void			RegisterLuaFuncs	( MOAILuaState& state );
 };
 
 #endif

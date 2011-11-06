@@ -153,13 +153,13 @@ void MOAIParticleDistanceEmitter::OnUpdate ( float step ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleDistanceEmitter::RegisterLuaClass ( USLuaState& state ) {
+void MOAIParticleDistanceEmitter::RegisterLuaClass ( MOAILuaState& state ) {
 
 	this->MOAIParticleEmitter::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleDistanceEmitter::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAIParticleDistanceEmitter::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	this->MOAIParticleEmitter::RegisterLuaFuncs ( state );
 	

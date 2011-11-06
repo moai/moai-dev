@@ -73,7 +73,7 @@ void MOAIDebugLine::SetVerts ( float x0, float y0, float x1, float y1 ) {
 */
 int MOAIDebugLines::_setStyle ( lua_State* L ) {
 	
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	if ( !state.CheckParams ( 1, "N" )) return 0;
 	
 	u32 styleID		= state.GetValue < u32 >( 1, 0 );
@@ -100,7 +100,7 @@ int MOAIDebugLines::_setStyle ( lua_State* L ) {
 */
 int MOAIDebugLines::_showStyle ( lua_State* L ) {
 
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	if ( !state.CheckParams ( 1, "N" )) return 0;
 	
 	u32 styleID		= state.GetValue < u32 >( 1, 0 );
@@ -235,7 +235,7 @@ bool MOAIDebugLines::IsVisible ( u32 styleID ) {
 //----------------------------------------------------------------//
 MOAIDebugLines::MOAIDebugLines () {
 
-	RTTI_SINGLE ( USLuaObject )
+	RTTI_SINGLE ( MOAIObject )
 	
 	this->Reset ();
 }
@@ -258,7 +258,7 @@ MOAIDebugLine* MOAIDebugLines::NextLine () {
 }
 
 //----------------------------------------------------------------//
-void MOAIDebugLines::RegisterLuaClass ( USLuaState& state ) {
+void MOAIDebugLines::RegisterLuaClass ( MOAILuaState& state ) {
 
 	luaL_Reg regTable[] = {
 		{ "setStyle",			_setStyle },

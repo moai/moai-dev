@@ -96,7 +96,7 @@ int MOAIFont::_getTexture ( lua_State* L ) {
 */
 int MOAIFont::_load ( lua_State* L ) {
 
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	if ( !state.CheckParams ( 1, "U" )) return 0;
 	
 	MOAIFont* self = state.GetLuaObject < MOAIFont >( 1 );
@@ -317,7 +317,7 @@ MOAIFont::MOAIFont () :
 	mScale ( 1.0f ),
 	mLineSpacing ( 1.0f ) {
 	
-	RTTI_SINGLE ( USLuaObject )
+	RTTI_SINGLE ( MOAIObject )
 }
 
 //----------------------------------------------------------------//
@@ -364,12 +364,12 @@ void MOAIFont::LoadFontFromTTF ( cc8* filename, cc8* charCodes, float points, u3
 }
 
 //----------------------------------------------------------------//
-void MOAIFont::RegisterLuaClass ( USLuaState& state ) {
+void MOAIFont::RegisterLuaClass ( MOAILuaState& state ) {
 	UNUSED ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAIFont::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAIFont::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	luaL_Reg regTable [] = {
 		{ "getImage",			_getImage },
@@ -387,7 +387,7 @@ void MOAIFont::RegisterLuaFuncs ( USLuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIFont::SerializeIn ( USLuaState& state, USLuaSerializer& serializer ) {
+void MOAIFont::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
 	UNUSED ( serializer );
 	
 	if ( state.GetFieldWithType ( -1, "mByteGlyphs", LUA_TTABLE )) {
@@ -449,7 +449,7 @@ void MOAIFont::SerializeIn ( USLuaState& state, USLuaSerializer& serializer ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIFont::SerializeOut ( USLuaState& state, USLuaSerializer& serializer ) {
+void MOAIFont::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
 	UNUSED ( serializer );
 	
 	if ( this->mByteGlyphs.Size ()) {

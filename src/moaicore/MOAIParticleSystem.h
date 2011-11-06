@@ -6,6 +6,7 @@
 
 #include <aku/AKU-particles.h>
 #include <moaicore/MOAIAction.h>
+#include <moaicore/MOAILua.h>
 #include <moaicore/MOAIParticle.h>
 #include <moaicore/MOAIProp2D.h>
 
@@ -80,14 +81,14 @@ public:
 	bool			PushParticle			( float x, float y );
 	bool			PushParticle			( float x, float y, float dx, float dy );
 	bool			PushSprite				( const AKUParticleSprite& sprite );
-	void			RegisterLuaClass		( USLuaState& state );
-	void			RegisterLuaFuncs		( USLuaState& state );
+	void			RegisterLuaClass		( MOAILuaState& state );
+	void			RegisterLuaFuncs		( MOAILuaState& state );
 	void			ReserveParticles		( u32 maxParticles, u32 particleSize );
 	void			ReserveRects			( u32 total );
 	void			ReserveSprites			( u32 maxSprites );
 	void			ReserveStates			( u32 total );
-	void			SerializeIn				( USLuaState& state, USLuaSerializer& serializer );
-	void			SerializeOut			( USLuaState& state, USLuaSerializer& serializer );
+	void			SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
+	void			SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
 	void			SetConstant				( u32 idx, float value );
 	void			SetRect					( u32 idx, USRect& rect );
 };

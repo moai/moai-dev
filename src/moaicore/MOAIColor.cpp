@@ -225,7 +225,7 @@ void MOAIColor::OnDepNodeUpdate () {
 }
 
 //----------------------------------------------------------------//
-void MOAIColor::RegisterLuaClass ( USLuaState& state ) {
+void MOAIColor::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	MOAINode::RegisterLuaClass ( state );
 	
@@ -239,7 +239,7 @@ void MOAIColor::RegisterLuaClass ( USLuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIColor::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAIColor::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	MOAINode::RegisterLuaFuncs ( state );
 	

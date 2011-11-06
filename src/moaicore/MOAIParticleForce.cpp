@@ -219,7 +219,7 @@ void MOAIParticleForce::OnDepNodeUpdate () {
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleForce::RegisterLuaClass ( USLuaState& state ) {
+void MOAIParticleForce::RegisterLuaClass ( MOAILuaState& state ) {
 
 	this->MOAITransform::RegisterLuaClass ( state );
 	
@@ -229,7 +229,7 @@ void MOAIParticleForce::RegisterLuaClass ( USLuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleForce::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAIParticleForce::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	this->MOAITransform::RegisterLuaFuncs ( state );
 

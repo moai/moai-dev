@@ -4,6 +4,7 @@
 #ifndef	MOAIANIMCURVE_H
 #define	MOAIANIMCURVE_H
 
+#include <moaicore/MOAILua.h>
 #include <moaicore/MOAINode.h>
 
 //================================================================//
@@ -45,8 +46,8 @@ public:
 					MOAIAnimCurve		();
 					~MOAIAnimCurve		();
 	void			OnDepNodeUpdate		();
-	void			RegisterLuaClass	( USLuaState& state );
-	void			RegisterLuaFuncs	( USLuaState& state );
+	void			RegisterLuaClass	( MOAILuaState& state );
+	void			RegisterLuaFuncs	( MOAILuaState& state );
 };
 
 #endif

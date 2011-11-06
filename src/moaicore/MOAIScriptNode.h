@@ -4,6 +4,7 @@
 #ifndef	MOAISCRIPTNODE_H
 #define	MOAISCRIPTNODE_H
 
+#include <moaicore/MOAILua.h>
 #include <moaicore/MOAINode.h>
 
 //================================================================//
@@ -18,7 +19,7 @@ class MOAIScriptNode :
 	public MOAINode {
 private:
 
-	USLuaLocal mOnUpdate;
+	MOAILuaLocal mOnUpdate;
 	USLeanArray < float > mAttributes;
 
 	//----------------------------------------------------------------//
@@ -39,8 +40,8 @@ public:
 	bool			ApplyAttrOp				( u32 attrID, MOAIAttrOp& attrOp, u32 op );
 					MOAIScriptNode			();
 					~MOAIScriptNode			();
-	void			RegisterLuaClass		( USLuaState& state );
-	void			RegisterLuaFuncs		( USLuaState& state );
+	void			RegisterLuaClass		( MOAILuaState& state );
+	void			RegisterLuaFuncs		( MOAILuaState& state );
 };
 
 #endif

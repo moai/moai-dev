@@ -7,6 +7,7 @@
 
 #include <Box2D/Box2D.h>
 #include <moaicore/MOAIAction.h>
+#include <moaicore/MOAILua.h>
 
 class b2World;
 class MOAIBox2DArbiter;
@@ -20,7 +21,7 @@ class MOAIBox2DWorld;
 // MOAIBox2DPrim
 //================================================================//
 class MOAIBox2DPrim :
-	public virtual USLuaObject  {
+	public virtual MOAIObject  {
 protected:
 
 	MOAIBox2DWorld* mWorld;
@@ -63,7 +64,7 @@ private:
 	b2World*					mWorld;
 	MOAIBox2DDebugDraw*			mDebugDraw;
 	
-	USLuaSharedPtr < MOAIBox2DArbiter > mArbiter;
+	MOAILuaSharedPtr < MOAIBox2DArbiter > mArbiter;
 
 	u32		mVelocityIterations;
 	u32		mPositionIterations;
@@ -123,8 +124,8 @@ public:
 					MOAIBox2DWorld			();
 					~MOAIBox2DWorld			();
 	void			OnUpdate				( float step );
-	void			RegisterLuaClass		( USLuaState& state );
-	void			RegisterLuaFuncs		( USLuaState& state );
+	void			RegisterLuaClass		( MOAILuaState& state );
+	void			RegisterLuaFuncs		( MOAILuaState& state );
 };
 
 #endif

@@ -5,6 +5,7 @@
 #define	MOAISCRIPTDECK_H
 
 #include <moaicore/MOAIDeck2D.h>
+#include <moaicore/MOAILua.h>
 
 //================================================================//
 // MOAIScriptDeck
@@ -18,8 +19,8 @@ private:
 
 	USRect			mRect;
 
-	USLuaLocal		mOnDraw;
-	USLuaLocal		mOnRect;
+	MOAILuaLocal		mOnDraw;
+	MOAILuaLocal		mOnRect;
 
 	//----------------------------------------------------------------//
 	static int		_setDrawCallback	( lua_State* L );
@@ -37,8 +38,8 @@ public:
 	void			LoadShader				();
 					MOAIScriptDeck			();
 					~MOAIScriptDeck			();
-	void			RegisterLuaClass		( USLuaState& state );
-	void			RegisterLuaFuncs		( USLuaState& state );
+	void			RegisterLuaClass		( MOAILuaState& state );
+	void			RegisterLuaFuncs		( MOAILuaState& state );
 };
 
 #endif

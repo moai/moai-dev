@@ -4,6 +4,7 @@
 #ifndef	MOAICOLOR_H
 #define	MOAICOLOR_H
 
+#include <moaicore/MOAILua.h>
 #include <moaicore/MOAINode.h>
 
 class MOAIDeck;
@@ -51,8 +52,8 @@ public:
 					MOAIColor			();
 					~MOAIColor			();
 	void			OnDepNodeUpdate		();
-	void			RegisterLuaClass	( USLuaState& state );
-	void			RegisterLuaFuncs	( USLuaState& state );
+	void			RegisterLuaClass	( MOAILuaState& state );
+	void			RegisterLuaFuncs	( MOAILuaState& state );
 };
 
 #endif

@@ -4,6 +4,7 @@
 #ifndef MOAILOCATIONSENSOR_H
 #define MOAILOCATIONSENSOR_H
 
+#include <moaicore/MOAILua.h>
 #include <moaicore/MOAISensor.h>
 
 //================================================================//
@@ -25,7 +26,7 @@ private:
 
 	float mSpeed;
 
-	USLuaRef mCallback;
+	MOAILuaRef mCallback;
 
 	//----------------------------------------------------------------//
 	static int	_getLocation	( lua_State* L );
@@ -39,8 +40,8 @@ public:
 	void			HandleEvent				( USStream& eventStream );
 					MOAILocationSensor		();
 					~MOAILocationSensor		();
-	void			RegisterLuaClass		( USLuaState& state );
-	void			RegisterLuaFuncs		( USLuaState& state );
+	void			RegisterLuaClass		( MOAILuaState& state );
+	void			RegisterLuaFuncs		( MOAILuaState& state );
 	static void		WriteEvent				( USStream& eventStream, double longitude, double latitude, double altitude, float hAccuracy, float vAccuracy, float speed );
 };
 

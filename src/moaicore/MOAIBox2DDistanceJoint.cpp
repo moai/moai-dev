@@ -170,12 +170,12 @@ MOAIBox2DDistanceJoint::~MOAIBox2DDistanceJoint () {
 }
 
 //----------------------------------------------------------------//
-void MOAIBox2DDistanceJoint::RegisterLuaClass ( USLuaState& state ) {
+void MOAIBox2DDistanceJoint::RegisterLuaClass ( MOAILuaState& state ) {
 	MOAIBox2DJoint::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAIBox2DDistanceJoint::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAIBox2DDistanceJoint::RegisterLuaFuncs ( MOAILuaState& state ) {
 	MOAIBox2DJoint::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {

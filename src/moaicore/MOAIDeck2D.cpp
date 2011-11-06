@@ -122,13 +122,13 @@ MOAIDeck2D::~MOAIDeck2D () {
 }
 
 //----------------------------------------------------------------//
-void MOAIDeck2D::RegisterLuaClass ( USLuaState& state ) {
+void MOAIDeck2D::RegisterLuaClass ( MOAILuaState& state ) {
 
 	this->MOAIDeck::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAIDeck2D::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAIDeck2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	this->MOAIDeck::RegisterLuaFuncs ( state );
 }

@@ -850,13 +850,13 @@ void MOAIBox2DWorld::OnUpdate ( float step ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIBox2DWorld::RegisterLuaClass ( USLuaState& state ) {
+void MOAIBox2DWorld::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAIAction::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAIBox2DWorld::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAIBox2DWorld::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	MOAIAction::RegisterLuaFuncs ( state );
 

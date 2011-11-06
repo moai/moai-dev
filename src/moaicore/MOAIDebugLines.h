@@ -5,6 +5,7 @@
 #define	MOAIDEBUGLINES_H
 
 #include <moaicore/MOAILineBrush.h>
+#include <moaicore/MOAILua.h>
 
 //================================================================//
 // MOAIDebugLineStyle
@@ -54,7 +55,7 @@ private:
 	@const	TEXT_BOX
 */
 class MOAIDebugLines :
-	public USGlobalClass < MOAIDebugLines, USLuaObject > {
+	public USGlobalClass < MOAIDebugLines, MOAIObject > {
 public:
 
 	enum {
@@ -111,7 +112,7 @@ public:
 	bool			IsVisible				( u32 styleID );
 					MOAIDebugLines			();
 					~MOAIDebugLines			();
-	void			RegisterLuaClass		( USLuaState& state );
+	void			RegisterLuaClass		( MOAILuaState& state );
 	void			Reset					();
 	void			SetPen					( u32 penColor, float penWidth, u32 penSpace = MODEL_SPACE );
 	void			SetStyle				( u32 styleID, u32 size, u32 color );

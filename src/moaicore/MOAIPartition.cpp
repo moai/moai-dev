@@ -368,7 +368,7 @@ MOAIPartition::MOAIPartition () :
 	mPriorityCounter ( 0 ) {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( USLuaObject )
+		RTTI_EXTEND ( MOAIObject )
 	RTTI_END
 }
 
@@ -378,12 +378,12 @@ MOAIPartition::~MOAIPartition () {
 }
 
 //----------------------------------------------------------------//
-void MOAIPartition::RegisterLuaClass ( USLuaState& state ) {
+void MOAIPartition::RegisterLuaClass ( MOAILuaState& state ) {
 	UNUSED ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAIPartition::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAIPartition::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	luaL_Reg regTable [] = {
 		{ "clear",						_clear },

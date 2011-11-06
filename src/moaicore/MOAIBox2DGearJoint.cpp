@@ -111,12 +111,12 @@ MOAIBox2DGearJoint::~MOAIBox2DGearJoint () {
 }
 
 //----------------------------------------------------------------//
-void MOAIBox2DGearJoint::RegisterLuaClass ( USLuaState& state ) {
+void MOAIBox2DGearJoint::RegisterLuaClass ( MOAILuaState& state ) {
 	MOAIBox2DJoint::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAIBox2DGearJoint::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAIBox2DGearJoint::RegisterLuaFuncs ( MOAILuaState& state ) {
 	MOAIBox2DJoint::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {

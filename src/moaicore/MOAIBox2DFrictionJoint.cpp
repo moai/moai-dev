@@ -125,12 +125,12 @@ MOAIBox2DFrictionJoint::~MOAIBox2DFrictionJoint () {
 }
 
 //----------------------------------------------------------------//
-void MOAIBox2DFrictionJoint::RegisterLuaClass ( USLuaState& state ) {
+void MOAIBox2DFrictionJoint::RegisterLuaClass ( MOAILuaState& state ) {
 	MOAIBox2DJoint::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAIBox2DFrictionJoint::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAIBox2DFrictionJoint::RegisterLuaFuncs ( MOAILuaState& state ) {
 	MOAIBox2DJoint::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {

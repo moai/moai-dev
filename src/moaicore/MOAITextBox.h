@@ -5,6 +5,7 @@
 #define	MOAITEXTBOX_H
 
 #include <moaicore/MOAIAction.h>
+#include <moaicore/MOAILua.h>
 #include <moaicore/MOAIProp2D.h>
 #include <moaicore/MOAITextFrame.h>
 #include <moaicore/MOAITextLayout.h>
@@ -31,7 +32,7 @@ private:
 	static const u32 REVEAL_ALL = 0xffffffff;
 	static const float DEFAULT_SPOOL_SPEED;
 
-	USLuaSharedPtr < MOAIFont > mFont;
+	MOAILuaSharedPtr < MOAIFont > mFont;
 	
 	USRect				mFrame;
 
@@ -96,11 +97,11 @@ public:
 	bool			More					();
 	void			NextPage				( bool reveal );
 	void			OnUpdate				( float step );
-	void			RegisterLuaClass		( USLuaState& state );
-	void			RegisterLuaFuncs		( USLuaState& state );
+	void			RegisterLuaClass		( MOAILuaState& state );
+	void			RegisterLuaFuncs		( MOAILuaState& state );
 	void			ReserveCurves			( u32 total );
-	void			SerializeIn				( USLuaState& state, USLuaSerializer& serializer );
-	void			SerializeOut			( USLuaState& state, USLuaSerializer& serializer );
+	void			SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
+	void			SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
 	void			SetColor				( float r, float g, float b, float a );
 	void			SetCurve				( u32 idx, MOAIAnimCurve* curve );
 	void			SetFont					( MOAIFont* font );
