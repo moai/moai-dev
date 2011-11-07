@@ -51,7 +51,6 @@ private:
 		}
 		
 		data->BindToLuaWithTable ( state );
-		data->PushLuaUserdata ( state );
 		USLuaRuntime::Get ().SetObjectStackTrace ( data );
 
 		return 1;
