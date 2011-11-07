@@ -10,7 +10,7 @@
 #define AUDIOMIXER_H_
 
 #include "Untz.h"
-#include <Threading/Threading.h>
+#include <threading/Threading.h>
 #include <vector>
 
 class AudioMixer

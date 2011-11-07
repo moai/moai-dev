@@ -4,8 +4,8 @@
 // http://getmoai.com
 //----------------------------------------------------------------//
 
-#import <aku/aku.h>
-#import <aku/aku-iphone.h>
+#import <aku/AKU.h>
+#import <aku/AKU-iphone.h>
 #import <moaiext-iphone/MOAIApp.h>
 #import <moaiext-iphone/MOAIStoreKitListener.h>
 

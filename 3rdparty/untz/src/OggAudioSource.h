@@ -10,7 +10,7 @@
 #define OGGAUDIOSOURCE_H_
 
 #include "BufferedAudioSource.h"
-#include <Threading/Threading.h>
+#include <threading/Threading.h>
 #include <vorbis/codec.h>
 #include <vorbis/vorbisfile.h>
 #include <vector>
