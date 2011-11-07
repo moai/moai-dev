@@ -49,7 +49,6 @@ private:
 		}
 		
 		data->BindToLuaWithTable ( state );
-		data->PushLuaUserdata ( state );
 		MOAILuaRuntime::Get ().SetObjectStackTrace ( data );
 
 		return 1;

@@ -210,6 +210,9 @@ void MOAIObject::BindToLuaWithTable ( MOAILuaState& state ) {
 		this->mUserdata.SetStrongRef ( state, -1 );
 	}
 	
+	// overwrite the member table
+	lua_replace ( state, -2 );
+	
 	assert ( !lua_isnil ( state, -1 ));
 }
 
