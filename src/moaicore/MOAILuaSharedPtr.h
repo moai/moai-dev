@@ -4,7 +4,7 @@
 #ifndef	USLUASHAREDPTR_H
 #define	USLUASHAREDPTR_H
 
-class MOAILuaObject;
+#include <moaicore/MOAILuaObject.h>
 
 //================================================================//
 // MOAILuaSharedPtr

@@ -7,10 +7,11 @@
 #include <moaicore/MOAILuaRef.h>
 #include <moaicore/MOAIObject.h>
 
+class MOAIDeserializer;
 class MOAILuaClass;
-class MOAISerializer;
 class MOAILuaState;
 class MOAILuaStateHandle;
+class MOAISerializer;
 
 //================================================================//
 // MOAILuaLocal
@@ -89,8 +90,8 @@ public:
 	static void             ReportLeaks				( FILE *f, bool clearAfter );
 	virtual	void			SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
 	virtual	void			SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
-							MOAILuaObject				();
-	virtual					~MOAILuaObject				();
+							MOAILuaObject			();
+	virtual					~MOAILuaObject			();
 };
 
 //================================================================//
@@ -114,7 +115,7 @@ public:
 	friend class MOAILuaObject;
 
 	//----------------------------------------------------------------//
-	virtual MOAILuaObject*		GetSingleton			();
+	virtual MOAILuaObject*	GetSingleton			();
 	bool					IsSingleton				();
 	virtual void			Register				() = 0;
 							MOAILuaClass			();

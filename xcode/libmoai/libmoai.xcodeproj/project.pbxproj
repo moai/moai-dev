@@ -859,8 +859,6 @@
 		0324E75513564BC8000ADC60 /* USBase64Cipher.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5B613564BC8000ADC60 /* USBase64Cipher.h */; };
 		0324E75613564BC8000ADC60 /* USByteStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5B713564BC8000ADC60 /* USByteStream.cpp */; };
 		0324E75713564BC8000ADC60 /* USByteStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5B813564BC8000ADC60 /* USByteStream.h */; };
-		0324E75813564BC8000ADC60 /* USCanary.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5B913564BC8000ADC60 /* USCanary.cpp */; };
-		0324E75913564BC8000ADC60 /* USCanary.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5BA13564BC8000ADC60 /* USCanary.h */; };
 		0324E75A13564BC8000ADC60 /* USCipher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5BB13564BC8000ADC60 /* USCipher.cpp */; };
 		0324E75B13564BC8000ADC60 /* USCipher.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5BC13564BC8000ADC60 /* USCipher.h */; };
 		0324E75C13564BC8000ADC60 /* USCipherStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5BD13564BC8000ADC60 /* USCipherStream.cpp */; };
@@ -880,8 +878,6 @@
 		0324E76C13564BC8000ADC60 /* USFileSys.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5CD13564BC8000ADC60 /* USFileSys.cpp */; };
 		0324E76D13564BC8000ADC60 /* USFileSys.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5CE13564BC8000ADC60 /* USFileSys.h */; };
 		0324E76E13564BC8000ADC60 /* USFloat.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5CF13564BC8000ADC60 /* USFloat.h */; };
-		0324E76F13564BC8000ADC60 /* USGlobals.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5D013564BC8000ADC60 /* USGlobals.cpp */; };
-		0324E77013564BC8000ADC60 /* USGlobals.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5D113564BC8000ADC60 /* USGlobals.h */; };
 		0324E77113564BC8000ADC60 /* USInflater.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5D213564BC8000ADC60 /* USInflater.cpp */; };
 		0324E77213564BC8000ADC60 /* USInflater.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5D313564BC8000ADC60 /* USInflater.h */; };
 		0324E77313564BC8000ADC60 /* USLeanArray.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5D413564BC8000ADC60 /* USLeanArray.h */; };
@@ -891,28 +887,9 @@
 		0324E77713564BC8000ADC60 /* USList.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5D813564BC8000ADC60 /* USList.h */; };
 		0324E77813564BC8000ADC60 /* uslscore.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5D913564BC8000ADC60 /* uslscore.cpp */; };
 		0324E77913564BC8000ADC60 /* uslscore.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5DA13564BC8000ADC60 /* uslscore.h */; };
-		0324E77A13564BC8000ADC60 /* USLua.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5DB13564BC8000ADC60 /* USLua.h */; };
-		0324E77B13564BC8000ADC60 /* USLuaObject-impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5DC13564BC8000ADC60 /* USLuaObject-impl.h */; };
-		0324E77C13564BC8000ADC60 /* USLuaObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5DD13564BC8000ADC60 /* USLuaObject.cpp */; };
-		0324E77D13564BC8000ADC60 /* USLuaObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5DE13564BC8000ADC60 /* USLuaObject.h */; };
-		0324E77E13564BC8000ADC60 /* USLuaRef.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5DF13564BC8000ADC60 /* USLuaRef.cpp */; };
-		0324E77F13564BC8000ADC60 /* USLuaRef.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5E013564BC8000ADC60 /* USLuaRef.h */; };
-		0324E78013564BC8000ADC60 /* USLuaRuntime.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5E113564BC8000ADC60 /* USLuaRuntime.cpp */; };
-		0324E78113564BC8000ADC60 /* USLuaRuntime.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5E213564BC8000ADC60 /* USLuaRuntime.h */; };
-		0324E78213564BC8000ADC60 /* USLuaSerializer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5E313564BC8000ADC60 /* USLuaSerializer.cpp */; };
-		0324E78313564BC8000ADC60 /* USLuaSerializer.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5E413564BC8000ADC60 /* USLuaSerializer.h */; };
-		0324E78413564BC8000ADC60 /* USLuaState-impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5E513564BC8000ADC60 /* USLuaState-impl.h */; };
-		0324E78513564BC8000ADC60 /* USLuaState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5E613564BC8000ADC60 /* USLuaState.cpp */; };
-		0324E78613564BC8000ADC60 /* USLuaState.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5E713564BC8000ADC60 /* USLuaState.h */; };
-		0324E78713564BC8000ADC60 /* USLuaStateHandle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5E813564BC8000ADC60 /* USLuaStateHandle.cpp */; };
-		0324E78813564BC8000ADC60 /* USLuaStateHandle.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5E913564BC8000ADC60 /* USLuaStateHandle.h */; };
 		0324E78913564BC8000ADC60 /* USMemStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5EA13564BC8000ADC60 /* USMemStream.cpp */; };
 		0324E78A13564BC8000ADC60 /* USMemStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5EB13564BC8000ADC60 /* USMemStream.h */; };
-		0324E78B13564BC8000ADC60 /* USObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5EC13564BC8000ADC60 /* USObject.cpp */; };
-		0324E78C13564BC8000ADC60 /* USObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5ED13564BC8000ADC60 /* USObject.h */; };
 		0324E78D13564BC8000ADC60 /* USRect.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5EE13564BC8000ADC60 /* USRect.h */; };
-		0324E78F13564BC8000ADC60 /* USRtti.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5F013564BC8000ADC60 /* USRtti.cpp */; };
-		0324E79013564BC8000ADC60 /* USRtti.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5F113564BC8000ADC60 /* USRtti.h */; };
 		0324E79113564BC8000ADC60 /* USStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5F213564BC8000ADC60 /* USStream.cpp */; };
 		0324E79213564BC8000ADC60 /* USStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5F313564BC8000ADC60 /* USStream.h */; };
 		0324E79313564BC8000ADC60 /* USStreamFormatter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5F413564BC8000ADC60 /* USStreamFormatter.cpp */; };
@@ -930,8 +907,6 @@
 		0324E7A113564BC8000ADC60 /* USAdapterInfo_posix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E60313564BC8000ADC60 /* USAdapterInfo_posix.cpp */; };
 		0324E7A213564BC8000ADC60 /* USAdapterInfo_win32.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E60413564BC8000ADC60 /* USAdapterInfo_win32.cpp */; };
 		0324E7A313564BC8000ADC60 /* USAffine2D.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E60513564BC8000ADC60 /* USAffine2D.h */; };
-		0324E7A413564BC8000ADC60 /* USAnimCurve.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E60613564BC8000ADC60 /* USAnimCurve.cpp */; };
-		0324E7A513564BC8000ADC60 /* USAnimCurve.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E60713564BC8000ADC60 /* USAnimCurve.h */; };
 		0324E7AC13564BC8000ADC60 /* USBinarySearch.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E60E13564BC8000ADC60 /* USBinarySearch.h */; };
 		0324E7AF13564BC8000ADC60 /* USBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E61113564BC8000ADC60 /* USBox.cpp */; };
 		0324E7B013564BC8000ADC60 /* USBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E61213564BC8000ADC60 /* USBox.h */; };
@@ -948,10 +923,6 @@
 		0324E7BF13564BC8000ADC60 /* USDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E62113564BC8000ADC60 /* USDelegate.h */; };
 		0324E7C013564BC8000ADC60 /* USDistance.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E62213564BC8000ADC60 /* USDistance.cpp */; };
 		0324E7C113564BC8000ADC60 /* USDistance.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E62313564BC8000ADC60 /* USDistance.h */; };
-		0324E7D213564BC8000ADC60 /* USHttpTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E63413564BC8000ADC60 /* USHttpTask.cpp */; };
-		0324E7D313564BC8000ADC60 /* USHttpTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E63513564BC8000ADC60 /* USHttpTask.h */; };
-		0324E7D413564BC8000ADC60 /* USHttpTask_impl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E63613564BC8000ADC60 /* USHttpTask_impl.cpp */; };
-		0324E7D513564BC8000ADC60 /* USHttpTask_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E63713564BC8000ADC60 /* USHttpTask_impl.h */; };
 		0324E7D813564BC8000ADC60 /* USInterpolate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E63A13564BC8000ADC60 /* USInterpolate.cpp */; };
 		0324E7D913564BC8000ADC60 /* USInterpolate.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E63B13564BC8000ADC60 /* USInterpolate.h */; };
 		0324E7DA13564BC8000ADC60 /* USIntersect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E63C13564BC8000ADC60 /* USIntersect.cpp */; };
@@ -1016,8 +987,6 @@
 		0324E82313564BC8000ADC60 /* USTrig.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E68513564BC8000ADC60 /* USTrig.h */; };
 		0324E82413564BC8000ADC60 /* USTypedPtr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E68613564BC8000ADC60 /* USTypedPtr.cpp */; };
 		0324E82513564BC8000ADC60 /* USTypedPtr.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E68713564BC8000ADC60 /* USTypedPtr.h */; };
-		0324E82613564BC8000ADC60 /* USUrlMgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E68813564BC8000ADC60 /* USUrlMgr.cpp */; };
-		0324E82713564BC8000ADC60 /* USUrlMgr.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E68913564BC8000ADC60 /* USUrlMgr.h */; };
 		0324E83013564BC8000ADC60 /* USXmlReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E69213564BC8000ADC60 /* USXmlReader.cpp */; };
 		0324E83113564BC8000ADC60 /* USXmlReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E69313564BC8000ADC60 /* USXmlReader.h */; };
 		0324E83213564BC8000ADC60 /* AKU.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E4F313564BC7000ADC60 /* AKU.cpp */; };
@@ -1198,8 +1167,6 @@
 		0324E8F313564BC9000ADC60 /* USBase64Cipher.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5B613564BC8000ADC60 /* USBase64Cipher.h */; };
 		0324E8F413564BC9000ADC60 /* USByteStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5B713564BC8000ADC60 /* USByteStream.cpp */; };
 		0324E8F513564BC9000ADC60 /* USByteStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5B813564BC8000ADC60 /* USByteStream.h */; };
-		0324E8F613564BC9000ADC60 /* USCanary.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5B913564BC8000ADC60 /* USCanary.cpp */; };
-		0324E8F713564BC9000ADC60 /* USCanary.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5BA13564BC8000ADC60 /* USCanary.h */; };
 		0324E8F813564BC9000ADC60 /* USCipher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5BB13564BC8000ADC60 /* USCipher.cpp */; };
 		0324E8F913564BC9000ADC60 /* USCipher.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5BC13564BC8000ADC60 /* USCipher.h */; };
 		0324E8FA13564BC9000ADC60 /* USCipherStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5BD13564BC8000ADC60 /* USCipherStream.cpp */; };
@@ -1219,8 +1186,6 @@
 		0324E90A13564BC9000ADC60 /* USFileSys.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5CD13564BC8000ADC60 /* USFileSys.cpp */; };
 		0324E90B13564BC9000ADC60 /* USFileSys.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5CE13564BC8000ADC60 /* USFileSys.h */; };
 		0324E90C13564BC9000ADC60 /* USFloat.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5CF13564BC8000ADC60 /* USFloat.h */; };
-		0324E90D13564BC9000ADC60 /* USGlobals.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5D013564BC8000ADC60 /* USGlobals.cpp */; };
-		0324E90E13564BC9000ADC60 /* USGlobals.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5D113564BC8000ADC60 /* USGlobals.h */; };
 		0324E90F13564BC9000ADC60 /* USInflater.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5D213564BC8000ADC60 /* USInflater.cpp */; };
 		0324E91013564BC9000ADC60 /* USInflater.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5D313564BC8000ADC60 /* USInflater.h */; };
 		0324E91113564BC9000ADC60 /* USLeanArray.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5D413564BC8000ADC60 /* USLeanArray.h */; };
@@ -1230,28 +1195,9 @@
 		0324E91513564BC9000ADC60 /* USList.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5D813564BC8000ADC60 /* USList.h */; };
 		0324E91613564BC9000ADC60 /* uslscore.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5D913564BC8000ADC60 /* uslscore.cpp */; };
 		0324E91713564BC9000ADC60 /* uslscore.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5DA13564BC8000ADC60 /* uslscore.h */; };
-		0324E91813564BC9000ADC60 /* USLua.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5DB13564BC8000ADC60 /* USLua.h */; };
-		0324E91913564BC9000ADC60 /* USLuaObject-impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5DC13564BC8000ADC60 /* USLuaObject-impl.h */; };
-		0324E91A13564BC9000ADC60 /* USLuaObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5DD13564BC8000ADC60 /* USLuaObject.cpp */; };
-		0324E91B13564BC9000ADC60 /* USLuaObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5DE13564BC8000ADC60 /* USLuaObject.h */; };
-		0324E91C13564BC9000ADC60 /* USLuaRef.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5DF13564BC8000ADC60 /* USLuaRef.cpp */; };
-		0324E91D13564BC9000ADC60 /* USLuaRef.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5E013564BC8000ADC60 /* USLuaRef.h */; };
-		0324E91E13564BC9000ADC60 /* USLuaRuntime.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5E113564BC8000ADC60 /* USLuaRuntime.cpp */; };
-		0324E91F13564BC9000ADC60 /* USLuaRuntime.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5E213564BC8000ADC60 /* USLuaRuntime.h */; };
-		0324E92013564BC9000ADC60 /* USLuaSerializer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5E313564BC8000ADC60 /* USLuaSerializer.cpp */; };
-		0324E92113564BC9000ADC60 /* USLuaSerializer.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5E413564BC8000ADC60 /* USLuaSerializer.h */; };
-		0324E92213564BC9000ADC60 /* USLuaState-impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5E513564BC8000ADC60 /* USLuaState-impl.h */; };
-		0324E92313564BC9000ADC60 /* USLuaState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5E613564BC8000ADC60 /* USLuaState.cpp */; };
-		0324E92413564BC9000ADC60 /* USLuaState.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5E713564BC8000ADC60 /* USLuaState.h */; };
-		0324E92513564BC9000ADC60 /* USLuaStateHandle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5E813564BC8000ADC60 /* USLuaStateHandle.cpp */; };
-		0324E92613564BC9000ADC60 /* USLuaStateHandle.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5E913564BC8000ADC60 /* USLuaStateHandle.h */; };
 		0324E92713564BC9000ADC60 /* USMemStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5EA13564BC8000ADC60 /* USMemStream.cpp */; };
 		0324E92813564BC9000ADC60 /* USMemStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5EB13564BC8000ADC60 /* USMemStream.h */; };
-		0324E92913564BC9000ADC60 /* USObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5EC13564BC8000ADC60 /* USObject.cpp */; };
-		0324E92A13564BC9000ADC60 /* USObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5ED13564BC8000ADC60 /* USObject.h */; };
 		0324E92B13564BC9000ADC60 /* USRect.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5EE13564BC8000ADC60 /* USRect.h */; };
-		0324E92D13564BC9000ADC60 /* USRtti.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5F013564BC8000ADC60 /* USRtti.cpp */; };
-		0324E92E13564BC9000ADC60 /* USRtti.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5F113564BC8000ADC60 /* USRtti.h */; };
 		0324E92F13564BC9000ADC60 /* USStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5F213564BC8000ADC60 /* USStream.cpp */; };
 		0324E93013564BC9000ADC60 /* USStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E5F313564BC8000ADC60 /* USStream.h */; };
 		0324E93113564BC9000ADC60 /* USStreamFormatter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E5F413564BC8000ADC60 /* USStreamFormatter.cpp */; };
@@ -1269,8 +1215,6 @@
 		0324E93F13564BC9000ADC60 /* USAdapterInfo_posix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E60313564BC8000ADC60 /* USAdapterInfo_posix.cpp */; };
 		0324E94013564BC9000ADC60 /* USAdapterInfo_win32.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E60413564BC8000ADC60 /* USAdapterInfo_win32.cpp */; };
 		0324E94113564BC9000ADC60 /* USAffine2D.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E60513564BC8000ADC60 /* USAffine2D.h */; };
-		0324E94213564BC9000ADC60 /* USAnimCurve.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E60613564BC8000ADC60 /* USAnimCurve.cpp */; };
-		0324E94313564BC9000ADC60 /* USAnimCurve.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E60713564BC8000ADC60 /* USAnimCurve.h */; };
 		0324E94A13564BC9000ADC60 /* USBinarySearch.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E60E13564BC8000ADC60 /* USBinarySearch.h */; };
 		0324E94D13564BC9000ADC60 /* USBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E61113564BC8000ADC60 /* USBox.cpp */; };
 		0324E94E13564BC9000ADC60 /* USBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E61213564BC8000ADC60 /* USBox.h */; };
@@ -1287,10 +1231,6 @@
 		0324E95D13564BC9000ADC60 /* USDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E62113564BC8000ADC60 /* USDelegate.h */; };
 		0324E95E13564BC9000ADC60 /* USDistance.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E62213564BC8000ADC60 /* USDistance.cpp */; };
 		0324E95F13564BC9000ADC60 /* USDistance.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E62313564BC8000ADC60 /* USDistance.h */; };
-		0324E97013564BC9000ADC60 /* USHttpTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E63413564BC8000ADC60 /* USHttpTask.cpp */; };
-		0324E97113564BC9000ADC60 /* USHttpTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E63513564BC8000ADC60 /* USHttpTask.h */; };
-		0324E97213564BC9000ADC60 /* USHttpTask_impl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E63613564BC8000ADC60 /* USHttpTask_impl.cpp */; };
-		0324E97313564BC9000ADC60 /* USHttpTask_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E63713564BC8000ADC60 /* USHttpTask_impl.h */; };
 		0324E97613564BC9000ADC60 /* USInterpolate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E63A13564BC8000ADC60 /* USInterpolate.cpp */; };
 		0324E97713564BC9000ADC60 /* USInterpolate.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E63B13564BC8000ADC60 /* USInterpolate.h */; };
 		0324E97813564BC9000ADC60 /* USIntersect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E63C13564BC8000ADC60 /* USIntersect.cpp */; };
@@ -1355,8 +1295,6 @@
 		0324E9C113564BC9000ADC60 /* USTrig.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E68513564BC8000ADC60 /* USTrig.h */; };
 		0324E9C213564BC9000ADC60 /* USTypedPtr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E68613564BC8000ADC60 /* USTypedPtr.cpp */; };
 		0324E9C313564BC9000ADC60 /* USTypedPtr.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E68713564BC8000ADC60 /* USTypedPtr.h */; };
-		0324E9C413564BC9000ADC60 /* USUrlMgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E68813564BC8000ADC60 /* USUrlMgr.cpp */; };
-		0324E9C513564BC9000ADC60 /* USUrlMgr.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E68913564BC8000ADC60 /* USUrlMgr.h */; };
 		0324E9CE13564BC9000ADC60 /* USXmlReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0324E69213564BC8000ADC60 /* USXmlReader.cpp */; };
 		0324E9CF13564BC9000ADC60 /* USXmlReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 0324E69313564BC8000ADC60 /* USXmlReader.h */; };
 		033B1E6013C4EC8A00CE21D2 /* MOAIActionMgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 033B1E5E13C4EC8A00CE21D2 /* MOAIActionMgr.cpp */; };
@@ -1728,6 +1666,70 @@
 		CD07C50113A191D800C9386C /* MOAIUntzSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD07C32013A1756300C9386C /* MOAIUntzSystem.cpp */; };
 		CD07C50213A191D800C9386C /* MOAIUntzSystem.h in Headers */ = {isa = PBXBuildFile; fileRef = CD07C32113A1756300C9386C /* MOAIUntzSystem.h */; };
 		CD07C53113A1954600C9386C /* Untz-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = CD07C53013A1954600C9386C /* Untz-Prefix.pch */; };
+		CD18CEA414693BC100990FE1 /* MOAICanary.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD18CE8414693BC100990FE1 /* MOAICanary.cpp */; };
+		CD18CEA514693BC100990FE1 /* MOAICanary.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD18CE8414693BC100990FE1 /* MOAICanary.cpp */; };
+		CD18CEA614693BC100990FE1 /* MOAICanary.h in Headers */ = {isa = PBXBuildFile; fileRef = CD18CE8514693BC100990FE1 /* MOAICanary.h */; };
+		CD18CEA714693BC100990FE1 /* MOAICanary.h in Headers */ = {isa = PBXBuildFile; fileRef = CD18CE8514693BC100990FE1 /* MOAICanary.h */; };
+		CD18CEA814693BC100990FE1 /* MOAIDeserializer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD18CE8614693BC100990FE1 /* MOAIDeserializer.cpp */; };
+		CD18CEA914693BC100990FE1 /* MOAIDeserializer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD18CE8614693BC100990FE1 /* MOAIDeserializer.cpp */; };
+		CD18CEAA14693BC100990FE1 /* MOAIDeserializer.h in Headers */ = {isa = PBXBuildFile; fileRef = CD18CE8714693BC100990FE1 /* MOAIDeserializer.h */; };
+		CD18CEAB14693BC100990FE1 /* MOAIDeserializer.h in Headers */ = {isa = PBXBuildFile; fileRef = CD18CE8714693BC100990FE1 /* MOAIDeserializer.h */; };
+		CD18CEAC14693BC100990FE1 /* MOAIGlobals.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD18CE8814693BC100990FE1 /* MOAIGlobals.cpp */; };
+		CD18CEAD14693BC100990FE1 /* MOAIGlobals.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD18CE8814693BC100990FE1 /* MOAIGlobals.cpp */; };
+		CD18CEAE14693BC100990FE1 /* MOAIGlobals.h in Headers */ = {isa = PBXBuildFile; fileRef = CD18CE8914693BC100990FE1 /* MOAIGlobals.h */; };
+		CD18CEAF14693BC100990FE1 /* MOAIGlobals.h in Headers */ = {isa = PBXBuildFile; fileRef = CD18CE8914693BC100990FE1 /* MOAIGlobals.h */; };
+		CD18CEB014693BC100990FE1 /* MOAIHttpTaskInfo_curl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD18CE8A14693BC100990FE1 /* MOAIHttpTaskInfo_curl.cpp */; };
+		CD18CEB114693BC100990FE1 /* MOAIHttpTaskInfo_curl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD18CE8A14693BC100990FE1 /* MOAIHttpTaskInfo_curl.cpp */; };
+		CD18CEB214693BC100990FE1 /* MOAIHttpTaskInfo_curl.h in Headers */ = {isa = PBXBuildFile; fileRef = CD18CE8B14693BC100990FE1 /* MOAIHttpTaskInfo_curl.h */; };
+		CD18CEB314693BC100990FE1 /* MOAIHttpTaskInfo_curl.h in Headers */ = {isa = PBXBuildFile; fileRef = CD18CE8B14693BC100990FE1 /* MOAIHttpTaskInfo_curl.h */; };
+		CD18CEB414693BC100990FE1 /* MOAILua.h in Headers */ = {isa = PBXBuildFile; fileRef = CD18CE8C14693BC100990FE1 /* MOAILua.h */; };
+		CD18CEB514693BC100990FE1 /* MOAILua.h in Headers */ = {isa = PBXBuildFile; fileRef = CD18CE8C14693BC100990FE1 /* MOAILua.h */; };
+		CD18CEB614693BC100990FE1 /* MOAILuaObject-impl.h in Headers */ = {isa = PBXBuildFile; fileRef = CD18CE8D14693BC100990FE1 /* MOAILuaObject-impl.h */; };
+		CD18CEB714693BC100990FE1 /* MOAILuaObject-impl.h in Headers */ = {isa = PBXBuildFile; fileRef = CD18CE8D14693BC100990FE1 /* MOAILuaObject-impl.h */; };
+		CD18CEB814693BC100990FE1 /* MOAILuaObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD18CE8E14693BC100990FE1 /* MOAILuaObject.cpp */; };
+		CD18CEB914693BC100990FE1 /* MOAILuaObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD18CE8E14693BC100990FE1 /* MOAILuaObject.cpp */; };
+		CD18CEBA14693BC100990FE1 /* MOAILuaObject.h in Headers */ = {isa = PBXBuildFile; fileRef = CD18CE8F14693BC100990FE1 /* MOAILuaObject.h */; };
+		CD18CEBB14693BC100990FE1 /* MOAILuaObject.h in Headers */ = {isa = PBXBuildFile; fileRef = CD18CE8F14693BC100990FE1 /* MOAILuaObject.h */; };
+		CD18CEBC14693BC100990FE1 /* MOAILuaRef.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD18CE9014693BC100990FE1 /* MOAILuaRef.cpp */; };
+		CD18CEBD14693BC100990FE1 /* MOAILuaRef.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD18CE9014693BC100990FE1 /* MOAILuaRef.cpp */; };
+		CD18CEBE14693BC100990FE1 /* MOAILuaRef.h in Headers */ = {isa = PBXBuildFile; fileRef = CD18CE9114693BC100990FE1 /* MOAILuaRef.h */; };
+		CD18CEBF14693BC100990FE1 /* MOAILuaRef.h in Headers */ = {isa = PBXBuildFile; fileRef = CD18CE9114693BC100990FE1 /* MOAILuaRef.h */; };
+		CD18CEC014693BC100990FE1 /* MOAILuaRuntime.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD18CE9214693BC100990FE1 /* MOAILuaRuntime.cpp */; };
+		CD18CEC114693BC100990FE1 /* MOAILuaRuntime.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD18CE9214693BC100990FE1 /* MOAILuaRuntime.cpp */; };
+		CD18CEC214693BC100990FE1 /* MOAILuaRuntime.h in Headers */ = {isa = PBXBuildFile; fileRef = CD18CE9314693BC100990FE1 /* MOAILuaRuntime.h */; };
+		CD18CEC314693BC100990FE1 /* MOAILuaRuntime.h in Headers */ = {isa = PBXBuildFile; fileRef = CD18CE9314693BC100990FE1 /* MOAILuaRuntime.h */; };
+		CD18CEC414693BC100990FE1 /* MOAILuaSharedPtr.h in Headers */ = {isa = PBXBuildFile; fileRef = CD18CE9414693BC100990FE1 /* MOAILuaSharedPtr.h */; };
+		CD18CEC514693BC100990FE1 /* MOAILuaSharedPtr.h in Headers */ = {isa = PBXBuildFile; fileRef = CD18CE9414693BC100990FE1 /* MOAILuaSharedPtr.h */; };
+		CD18CEC614693BC100990FE1 /* MOAILuaState-impl.h in Headers */ = {isa = PBXBuildFile; fileRef = CD18CE9514693BC100990FE1 /* MOAILuaState-impl.h */; };
+		CD18CEC714693BC100990FE1 /* MOAILuaState-impl.h in Headers */ = {isa = PBXBuildFile; fileRef = CD18CE9514693BC100990FE1 /* MOAILuaState-impl.h */; };
+		CD18CEC814693BC100990FE1 /* MOAILuaState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD18CE9614693BC100990FE1 /* MOAILuaState.cpp */; };
+		CD18CEC914693BC100990FE1 /* MOAILuaState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD18CE9614693BC100990FE1 /* MOAILuaState.cpp */; };
+		CD18CECA14693BC100990FE1 /* MOAILuaState.h in Headers */ = {isa = PBXBuildFile; fileRef = CD18CE9714693BC100990FE1 /* MOAILuaState.h */; };
+		CD18CECB14693BC100990FE1 /* MOAILuaState.h in Headers */ = {isa = PBXBuildFile; fileRef = CD18CE9714693BC100990FE1 /* MOAILuaState.h */; };
+		CD18CECC14693BC100990FE1 /* MOAILuaStateHandle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD18CE9814693BC100990FE1 /* MOAILuaStateHandle.cpp */; };
+		CD18CECD14693BC100990FE1 /* MOAILuaStateHandle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD18CE9814693BC100990FE1 /* MOAILuaStateHandle.cpp */; };
+		CD18CECE14693BC100990FE1 /* MOAILuaStateHandle.h in Headers */ = {isa = PBXBuildFile; fileRef = CD18CE9914693BC100990FE1 /* MOAILuaStateHandle.h */; };
+		CD18CECF14693BC100990FE1 /* MOAILuaStateHandle.h in Headers */ = {isa = PBXBuildFile; fileRef = CD18CE9914693BC100990FE1 /* MOAILuaStateHandle.h */; };
+		CD18CED014693BC100990FE1 /* MOAIObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD18CE9A14693BC100990FE1 /* MOAIObject.cpp */; };
+		CD18CED114693BC100990FE1 /* MOAIObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD18CE9A14693BC100990FE1 /* MOAIObject.cpp */; };
+		CD18CED214693BC100990FE1 /* MOAIObject.h in Headers */ = {isa = PBXBuildFile; fileRef = CD18CE9B14693BC100990FE1 /* MOAIObject.h */; };
+		CD18CED314693BC100990FE1 /* MOAIObject.h in Headers */ = {isa = PBXBuildFile; fileRef = CD18CE9B14693BC100990FE1 /* MOAIObject.h */; };
+		CD18CED414693BC100990FE1 /* MOAIRtti.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD18CE9C14693BC100990FE1 /* MOAIRtti.cpp */; };
+		CD18CED514693BC100990FE1 /* MOAIRtti.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD18CE9C14693BC100990FE1 /* MOAIRtti.cpp */; };
+		CD18CED614693BC100990FE1 /* MOAIRtti.h in Headers */ = {isa = PBXBuildFile; fileRef = CD18CE9D14693BC100990FE1 /* MOAIRtti.h */; };
+		CD18CED714693BC100990FE1 /* MOAIRtti.h in Headers */ = {isa = PBXBuildFile; fileRef = CD18CE9D14693BC100990FE1 /* MOAIRtti.h */; };
+		CD18CED814693BC100990FE1 /* MOAISerializerBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD18CE9E14693BC100990FE1 /* MOAISerializerBase.cpp */; };
+		CD18CED914693BC100990FE1 /* MOAISerializerBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD18CE9E14693BC100990FE1 /* MOAISerializerBase.cpp */; };
+		CD18CEDA14693BC100990FE1 /* MOAISerializerBase.h in Headers */ = {isa = PBXBuildFile; fileRef = CD18CE9F14693BC100990FE1 /* MOAISerializerBase.h */; };
+		CD18CEDB14693BC100990FE1 /* MOAISerializerBase.h in Headers */ = {isa = PBXBuildFile; fileRef = CD18CE9F14693BC100990FE1 /* MOAISerializerBase.h */; };
+		CD18CEDC14693BC100990FE1 /* MOAISharedPtr.h in Headers */ = {isa = PBXBuildFile; fileRef = CD18CEA014693BC100990FE1 /* MOAISharedPtr.h */; };
+		CD18CEDD14693BC100990FE1 /* MOAISharedPtr.h in Headers */ = {isa = PBXBuildFile; fileRef = CD18CEA014693BC100990FE1 /* MOAISharedPtr.h */; };
+		CD18CEDE14693BC100990FE1 /* MOAIUrlMgr_curl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD18CEA114693BC100990FE1 /* MOAIUrlMgr_curl.cpp */; };
+		CD18CEDF14693BC100990FE1 /* MOAIUrlMgr_curl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD18CEA114693BC100990FE1 /* MOAIUrlMgr_curl.cpp */; };
+		CD18CEE014693BC100990FE1 /* MOAIUrlMgr.h in Headers */ = {isa = PBXBuildFile; fileRef = CD18CEA214693BC100990FE1 /* MOAIUrlMgr.h */; };
+		CD18CEE114693BC100990FE1 /* MOAIUrlMgr.h in Headers */ = {isa = PBXBuildFile; fileRef = CD18CEA214693BC100990FE1 /* MOAIUrlMgr.h */; };
+		CD18CEE214693BC100990FE1 /* MOAIWeakPtr.h in Headers */ = {isa = PBXBuildFile; fileRef = CD18CEA314693BC100990FE1 /* MOAIWeakPtr.h */; };
+		CD18CEE314693BC100990FE1 /* MOAIWeakPtr.h in Headers */ = {isa = PBXBuildFile; fileRef = CD18CEA314693BC100990FE1 /* MOAIWeakPtr.h */; };
 		CD1D0BA413599FD200802A3C /* AKU-iphone.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1D0BA213599FD200802A3C /* AKU-iphone.h */; };
 		CD1D0BA513599FD200802A3C /* AKU-iphone.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD1D0BA313599FD200802A3C /* AKU-iphone.mm */; };
 		CD218F7213A7FC79008337E7 /* USLog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD218F7013A7FC79008337E7 /* USLog.cpp */; };
@@ -3004,12 +3006,6 @@
 		CDEFB42A13E37F3C000A9523 /* MOAITileFlags.h in Headers */ = {isa = PBXBuildFile; fileRef = CDEFB3F413E37F3C000A9523 /* MOAITileFlags.h */; };
 		CDEFB42B13E37F3C000A9523 /* MOAIVertexFormatMgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDEFB3F513E37F3C000A9523 /* MOAIVertexFormatMgr.cpp */; };
 		CDEFB42C13E37F3C000A9523 /* MOAIVertexFormatMgr.h in Headers */ = {isa = PBXBuildFile; fileRef = CDEFB3F613E37F3C000A9523 /* MOAIVertexFormatMgr.h */; };
-		CDF053931453AA0400FA4CB2 /* USLuaSharedPtr.h in Headers */ = {isa = PBXBuildFile; fileRef = CDF053901453AA0400FA4CB2 /* USLuaSharedPtr.h */; };
-		CDF053941453AA0400FA4CB2 /* USLuaSharedPtr.h in Headers */ = {isa = PBXBuildFile; fileRef = CDF053901453AA0400FA4CB2 /* USLuaSharedPtr.h */; };
-		CDF053951453AA0400FA4CB2 /* USSharedPtr.h in Headers */ = {isa = PBXBuildFile; fileRef = CDF053911453AA0400FA4CB2 /* USSharedPtr.h */; };
-		CDF053961453AA0400FA4CB2 /* USSharedPtr.h in Headers */ = {isa = PBXBuildFile; fileRef = CDF053911453AA0400FA4CB2 /* USSharedPtr.h */; };
-		CDF053971453AA0400FA4CB2 /* USWeakPtr.h in Headers */ = {isa = PBXBuildFile; fileRef = CDF053921453AA0400FA4CB2 /* USWeakPtr.h */; };
-		CDF053981453AA0400FA4CB2 /* USWeakPtr.h in Headers */ = {isa = PBXBuildFile; fileRef = CDF053921453AA0400FA4CB2 /* USWeakPtr.h */; };
 		CDF7130F141EBC5C00D650CA /* MOAIGfxResource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDF7130D141EBC5C00D650CA /* MOAIGfxResource.cpp */; };
 		CDF71310141EBC5C00D650CA /* MOAIGfxResource.h in Headers */ = {isa = PBXBuildFile; fileRef = CDF7130E141EBC5C00D650CA /* MOAIGfxResource.h */; };
 		CDF71311141EBC5C00D650CA /* MOAIGfxResource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDF7130D141EBC5C00D650CA /* MOAIGfxResource.cpp */; };
@@ -3590,8 +3586,6 @@
 		0324E5B613564BC8000ADC60 /* USBase64Cipher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USBase64Cipher.h; sourceTree = "<group>"; };
 		0324E5B713564BC8000ADC60 /* USByteStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USByteStream.cpp; sourceTree = "<group>"; };
 		0324E5B813564BC8000ADC60 /* USByteStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USByteStream.h; sourceTree = "<group>"; };
-		0324E5B913564BC8000ADC60 /* USCanary.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USCanary.cpp; sourceTree = "<group>"; };
-		0324E5BA13564BC8000ADC60 /* USCanary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USCanary.h; sourceTree = "<group>"; };
 		0324E5BB13564BC8000ADC60 /* USCipher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USCipher.cpp; sourceTree = "<group>"; };
 		0324E5BC13564BC8000ADC60 /* USCipher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USCipher.h; sourceTree = "<group>"; };
 		0324E5BD13564BC8000ADC60 /* USCipherStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USCipherStream.cpp; sourceTree = "<group>"; };
@@ -3611,8 +3605,6 @@
 		0324E5CD13564BC8000ADC60 /* USFileSys.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USFileSys.cpp; sourceTree = "<group>"; };
 		0324E5CE13564BC8000ADC60 /* USFileSys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USFileSys.h; sourceTree = "<group>"; };
 		0324E5CF13564BC8000ADC60 /* USFloat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USFloat.h; sourceTree = "<group>"; };
-		0324E5D013564BC8000ADC60 /* USGlobals.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USGlobals.cpp; sourceTree = "<group>"; };
-		0324E5D113564BC8000ADC60 /* USGlobals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USGlobals.h; sourceTree = "<group>"; };
 		0324E5D213564BC8000ADC60 /* USInflater.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USInflater.cpp; sourceTree = "<group>"; };
 		0324E5D313564BC8000ADC60 /* USInflater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USInflater.h; sourceTree = "<group>"; };
 		0324E5D413564BC8000ADC60 /* USLeanArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USLeanArray.h; sourceTree = "<group>"; };
@@ -3622,28 +3614,9 @@
 		0324E5D813564BC8000ADC60 /* USList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USList.h; sourceTree = "<group>"; };
 		0324E5D913564BC8000ADC60 /* uslscore.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = uslscore.cpp; sourceTree = "<group>"; };
 		0324E5DA13564BC8000ADC60 /* uslscore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = uslscore.h; sourceTree = "<group>"; };
-		0324E5DB13564BC8000ADC60 /* USLua.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USLua.h; sourceTree = "<group>"; };
-		0324E5DC13564BC8000ADC60 /* USLuaObject-impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "USLuaObject-impl.h"; sourceTree = "<group>"; };
-		0324E5DD13564BC8000ADC60 /* USLuaObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USLuaObject.cpp; sourceTree = "<group>"; };
-		0324E5DE13564BC8000ADC60 /* USLuaObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USLuaObject.h; sourceTree = "<group>"; };
-		0324E5DF13564BC8000ADC60 /* USLuaRef.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USLuaRef.cpp; sourceTree = "<group>"; };
-		0324E5E013564BC8000ADC60 /* USLuaRef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USLuaRef.h; sourceTree = "<group>"; };
-		0324E5E113564BC8000ADC60 /* USLuaRuntime.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USLuaRuntime.cpp; sourceTree = "<group>"; };
-		0324E5E213564BC8000ADC60 /* USLuaRuntime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USLuaRuntime.h; sourceTree = "<group>"; };
-		0324E5E313564BC8000ADC60 /* USLuaSerializer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USLuaSerializer.cpp; sourceTree = "<group>"; };
-		0324E5E413564BC8000ADC60 /* USLuaSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USLuaSerializer.h; sourceTree = "<group>"; };
-		0324E5E513564BC8000ADC60 /* USLuaState-impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "USLuaState-impl.h"; sourceTree = "<group>"; };
-		0324E5E613564BC8000ADC60 /* USLuaState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USLuaState.cpp; sourceTree = "<group>"; };
-		0324E5E713564BC8000ADC60 /* USLuaState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USLuaState.h; sourceTree = "<group>"; };
-		0324E5E813564BC8000ADC60 /* USLuaStateHandle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USLuaStateHandle.cpp; sourceTree = "<group>"; };
-		0324E5E913564BC8000ADC60 /* USLuaStateHandle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USLuaStateHandle.h; sourceTree = "<group>"; };
 		0324E5EA13564BC8000ADC60 /* USMemStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USMemStream.cpp; sourceTree = "<group>"; };
 		0324E5EB13564BC8000ADC60 /* USMemStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USMemStream.h; sourceTree = "<group>"; };
-		0324E5EC13564BC8000ADC60 /* USObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USObject.cpp; sourceTree = "<group>"; };
-		0324E5ED13564BC8000ADC60 /* USObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USObject.h; sourceTree = "<group>"; };
 		0324E5EE13564BC8000ADC60 /* USRect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USRect.h; sourceTree = "<group>"; };
-		0324E5F013564BC8000ADC60 /* USRtti.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USRtti.cpp; sourceTree = "<group>"; };
-		0324E5F113564BC8000ADC60 /* USRtti.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USRtti.h; sourceTree = "<group>"; };
 		0324E5F213564BC8000ADC60 /* USStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USStream.cpp; sourceTree = "<group>"; };
 		0324E5F313564BC8000ADC60 /* USStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USStream.h; sourceTree = "<group>"; };
 		0324E5F413564BC8000ADC60 /* USStreamFormatter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USStreamFormatter.cpp; sourceTree = "<group>"; };
@@ -3661,8 +3634,6 @@
 		0324E60313564BC8000ADC60 /* USAdapterInfo_posix.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USAdapterInfo_posix.cpp; sourceTree = "<group>"; };
 		0324E60413564BC8000ADC60 /* USAdapterInfo_win32.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USAdapterInfo_win32.cpp; sourceTree = "<group>"; };
 		0324E60513564BC8000ADC60 /* USAffine2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USAffine2D.h; sourceTree = "<group>"; };
-		0324E60613564BC8000ADC60 /* USAnimCurve.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USAnimCurve.cpp; sourceTree = "<group>"; };
-		0324E60713564BC8000ADC60 /* USAnimCurve.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USAnimCurve.h; sourceTree = "<group>"; };
 		0324E60E13564BC8000ADC60 /* USBinarySearch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USBinarySearch.h; sourceTree = "<group>"; };
 		0324E61113564BC8000ADC60 /* USBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USBox.cpp; sourceTree = "<group>"; };
 		0324E61213564BC8000ADC60 /* USBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USBox.h; sourceTree = "<group>"; };
@@ -3679,10 +3650,6 @@
 		0324E62113564BC8000ADC60 /* USDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USDelegate.h; sourceTree = "<group>"; };
 		0324E62213564BC8000ADC60 /* USDistance.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USDistance.cpp; sourceTree = "<group>"; };
 		0324E62313564BC8000ADC60 /* USDistance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USDistance.h; sourceTree = "<group>"; };
-		0324E63413564BC8000ADC60 /* USHttpTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USHttpTask.cpp; sourceTree = "<group>"; };
-		0324E63513564BC8000ADC60 /* USHttpTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USHttpTask.h; sourceTree = "<group>"; };
-		0324E63613564BC8000ADC60 /* USHttpTask_impl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USHttpTask_impl.cpp; sourceTree = "<group>"; };
-		0324E63713564BC8000ADC60 /* USHttpTask_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USHttpTask_impl.h; sourceTree = "<group>"; };
 		0324E63A13564BC8000ADC60 /* USInterpolate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USInterpolate.cpp; sourceTree = "<group>"; };
 		0324E63B13564BC8000ADC60 /* USInterpolate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USInterpolate.h; sourceTree = "<group>"; };
 		0324E63C13564BC8000ADC60 /* USIntersect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USIntersect.cpp; sourceTree = "<group>"; };
@@ -3747,8 +3714,6 @@
 		0324E68513564BC8000ADC60 /* USTrig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USTrig.h; sourceTree = "<group>"; };
 		0324E68613564BC8000ADC60 /* USTypedPtr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USTypedPtr.cpp; sourceTree = "<group>"; };
 		0324E68713564BC8000ADC60 /* USTypedPtr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USTypedPtr.h; sourceTree = "<group>"; };
-		0324E68813564BC8000ADC60 /* USUrlMgr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USUrlMgr.cpp; sourceTree = "<group>"; };
-		0324E68913564BC8000ADC60 /* USUrlMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USUrlMgr.h; sourceTree = "<group>"; };
 		0324E69213564BC8000ADC60 /* USXmlReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USXmlReader.cpp; sourceTree = "<group>"; };
 		0324E69313564BC8000ADC60 /* USXmlReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USXmlReader.h; sourceTree = "<group>"; };
 		033B1E5E13C4EC8A00CE21D2 /* MOAIActionMgr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIActionMgr.cpp; sourceTree = "<group>"; };
@@ -3771,7 +3736,7 @@
 		0765874D145CD06900723A7D /* tlsfbits.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tlsfbits.h; path = "../../3rdparty/tlsf-2.0/tlsfbits.h"; sourceTree = "<group>"; };
 		0767117A13F3414000121E13 /* ReachabilityListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ReachabilityListener.h; path = "moaiext-iphone/ReachabilityListener.h"; sourceTree = "<group>"; };
 		0767117B13F3414000121E13 /* ReachabilityListener.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ReachabilityListener.mm; path = "moaiext-iphone/ReachabilityListener.mm"; sourceTree = "<group>"; };
-		0780B1D514463B71006626CF /* MOAITapjoy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAITapjoy.h; path = "moaiext-iphone/MOAITapjoy.h"; sourceTree = "<group>"; };
+		0780B1D514463B71006626CF /* MOAITapjoy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = MOAITapjoy.h; path = "moaiext-iphone/MOAITapjoy.h"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		0780B1D614463B71006626CF /* MOAITapjoy.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAITapjoy.mm; path = "moaiext-iphone/MOAITapjoy.mm"; sourceTree = "<group>"; };
 		0795290F1447902700143A72 /* MOAIImage-jpg.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "MOAIImage-jpg.cpp"; sourceTree = "<group>"; };
 		079529101447902700143A72 /* MOAIImage-png.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "MOAIImage-png.cpp"; sourceTree = "<group>"; };
@@ -3841,7 +3806,7 @@
 		07D1A8A013EDFD8300604979 /* MOAIFrameBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIFrameBuffer.cpp; sourceTree = "<group>"; };
 		07D1A8A113EDFD8300604979 /* MOAIFrameBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIFrameBuffer.h; sourceTree = "<group>"; };
 		07E6C62A140C4462004D1227 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
-		07E6C62E140C490B004D1227 /* MOAIGameCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIGameCenter.h; path = "moaiext-iphone/MOAIGameCenter.h"; sourceTree = "<group>"; };
+		07E6C62E140C490B004D1227 /* MOAIGameCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; name = MOAIGameCenter.h; path = "moaiext-iphone/MOAIGameCenter.h"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		07E6C62F140C490B004D1227 /* MOAIGameCenter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIGameCenter.mm; path = "moaiext-iphone/MOAIGameCenter.mm"; sourceTree = "<group>"; };
 		07E885BB13BE3E78008D75AA /* MOAIParticleDistanceEmitter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIParticleDistanceEmitter.cpp; sourceTree = "<group>"; };
 		07E885BC13BE3E78008D75AA /* MOAIParticleDistanceEmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIParticleDistanceEmitter.h; sourceTree = "<group>"; };
@@ -3957,10 +3922,42 @@
 		CD07C31E13A1756300C9386C /* MOAIUntzSound.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIUntzSound.cpp; path = "../../src/moaiext-untz/MOAIUntzSound.cpp"; sourceTree = SOURCE_ROOT; };
 		CD07C31F13A1756300C9386C /* MOAIUntzSound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIUntzSound.h; path = "../../src/moaiext-untz/MOAIUntzSound.h"; sourceTree = SOURCE_ROOT; };
 		CD07C32013A1756300C9386C /* MOAIUntzSystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIUntzSystem.cpp; path = "../../src/moaiext-untz/MOAIUntzSystem.cpp"; sourceTree = SOURCE_ROOT; };
-		CD07C32113A1756300C9386C /* MOAIUntzSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIUntzSystem.h; path = "../../src/moaiext-untz/MOAIUntzSystem.h"; sourceTree = SOURCE_ROOT; };
+		CD07C32113A1756300C9386C /* MOAIUntzSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; name = MOAIUntzSystem.h; path = "../../src/moaiext-untz/MOAIUntzSystem.h"; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		CD07C3CD13A182AA00C9386C /* libmoai-ios-untz.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-untz.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD07C4E513A1918600C9386C /* libmoai-osx-untz.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-untz.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD07C53013A1954600C9386C /* Untz-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Untz-Prefix.pch"; path = "../../3rdparty/untz/src/native/ios/Untz-Prefix.pch"; sourceTree = SOURCE_ROOT; };
+		CD18CE8414693BC100990FE1 /* MOAICanary.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAICanary.cpp; sourceTree = "<group>"; };
+		CD18CE8514693BC100990FE1 /* MOAICanary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAICanary.h; sourceTree = "<group>"; };
+		CD18CE8614693BC100990FE1 /* MOAIDeserializer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIDeserializer.cpp; sourceTree = "<group>"; };
+		CD18CE8714693BC100990FE1 /* MOAIDeserializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIDeserializer.h; sourceTree = "<group>"; };
+		CD18CE8814693BC100990FE1 /* MOAIGlobals.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIGlobals.cpp; sourceTree = "<group>"; };
+		CD18CE8914693BC100990FE1 /* MOAIGlobals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIGlobals.h; sourceTree = "<group>"; };
+		CD18CE8A14693BC100990FE1 /* MOAIHttpTaskInfo_curl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIHttpTaskInfo_curl.cpp; sourceTree = "<group>"; };
+		CD18CE8B14693BC100990FE1 /* MOAIHttpTaskInfo_curl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIHttpTaskInfo_curl.h; sourceTree = "<group>"; };
+		CD18CE8C14693BC100990FE1 /* MOAILua.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAILua.h; sourceTree = "<group>"; };
+		CD18CE8D14693BC100990FE1 /* MOAILuaObject-impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MOAILuaObject-impl.h"; sourceTree = "<group>"; };
+		CD18CE8E14693BC100990FE1 /* MOAILuaObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAILuaObject.cpp; sourceTree = "<group>"; };
+		CD18CE8F14693BC100990FE1 /* MOAILuaObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAILuaObject.h; sourceTree = "<group>"; };
+		CD18CE9014693BC100990FE1 /* MOAILuaRef.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAILuaRef.cpp; sourceTree = "<group>"; };
+		CD18CE9114693BC100990FE1 /* MOAILuaRef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAILuaRef.h; sourceTree = "<group>"; };
+		CD18CE9214693BC100990FE1 /* MOAILuaRuntime.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAILuaRuntime.cpp; sourceTree = "<group>"; };
+		CD18CE9314693BC100990FE1 /* MOAILuaRuntime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAILuaRuntime.h; sourceTree = "<group>"; };
+		CD18CE9414693BC100990FE1 /* MOAILuaSharedPtr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAILuaSharedPtr.h; sourceTree = "<group>"; };
+		CD18CE9514693BC100990FE1 /* MOAILuaState-impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MOAILuaState-impl.h"; sourceTree = "<group>"; };
+		CD18CE9614693BC100990FE1 /* MOAILuaState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAILuaState.cpp; sourceTree = "<group>"; };
+		CD18CE9714693BC100990FE1 /* MOAILuaState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAILuaState.h; sourceTree = "<group>"; };
+		CD18CE9814693BC100990FE1 /* MOAILuaStateHandle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAILuaStateHandle.cpp; sourceTree = "<group>"; };
+		CD18CE9914693BC100990FE1 /* MOAILuaStateHandle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAILuaStateHandle.h; sourceTree = "<group>"; };
+		CD18CE9A14693BC100990FE1 /* MOAIObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIObject.cpp; sourceTree = "<group>"; };
+		CD18CE9B14693BC100990FE1 /* MOAIObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIObject.h; sourceTree = "<group>"; };
+		CD18CE9C14693BC100990FE1 /* MOAIRtti.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIRtti.cpp; sourceTree = "<group>"; };
+		CD18CE9D14693BC100990FE1 /* MOAIRtti.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIRtti.h; sourceTree = "<group>"; };
+		CD18CE9E14693BC100990FE1 /* MOAISerializerBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAISerializerBase.cpp; sourceTree = "<group>"; };
+		CD18CE9F14693BC100990FE1 /* MOAISerializerBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAISerializerBase.h; sourceTree = "<group>"; };
+		CD18CEA014693BC100990FE1 /* MOAISharedPtr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAISharedPtr.h; sourceTree = "<group>"; };
+		CD18CEA114693BC100990FE1 /* MOAIUrlMgr_curl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIUrlMgr_curl.cpp; sourceTree = "<group>"; };
+		CD18CEA214693BC100990FE1 /* MOAIUrlMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIUrlMgr.h; sourceTree = "<group>"; };
+		CD18CEA314693BC100990FE1 /* MOAIWeakPtr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIWeakPtr.h; sourceTree = "<group>"; };
 		CD1D0BA213599FD200802A3C /* AKU-iphone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "AKU-iphone.h"; path = "aku/AKU-iphone.h"; sourceTree = "<group>"; };
 		CD1D0BA313599FD200802A3C /* AKU-iphone.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "AKU-iphone.mm"; path = "aku/AKU-iphone.mm"; sourceTree = "<group>"; };
 		CD218F7013A7FC79008337E7 /* USLog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = USLog.cpp; path = ../../src/uslscore/USLog.cpp; sourceTree = SOURCE_ROOT; };
@@ -4942,7 +4939,7 @@
 		CDD06DAD1398838D00AB0420 /* usocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = usocket.h; path = "../../3rdparty/luasocket-2.0.2/src/usocket.h"; sourceTree = SOURCE_ROOT; };
 		CDD06E521398B5A500AB0420 /* AKU-luaext.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "AKU-luaext.cpp"; path = "aku/AKU-luaext.cpp"; sourceTree = "<group>"; };
 		CDD06E531398B5A500AB0420 /* AKU-luaext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "AKU-luaext.h"; path = "aku/AKU-luaext.h"; sourceTree = "<group>"; };
-		CDD06EC81398BA6200AB0420 /* MOAIApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIApp.h; path = "../../src/moaiext-iphone/MOAIApp.h"; sourceTree = SOURCE_ROOT; };
+		CDD06EC81398BA6200AB0420 /* MOAIApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; name = MOAIApp.h; path = "../../src/moaiext-iphone/MOAIApp.h"; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		CDD06EC91398BA6200AB0420 /* MOAIApp.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIApp.mm; path = "../../src/moaiext-iphone/MOAIApp.mm"; sourceTree = SOURCE_ROOT; };
 		CDD06ECA1398BA6200AB0420 /* moaiext-iphone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "moaiext-iphone.h"; path = "../../src/moaiext-iphone/moaiext-iphone.h"; sourceTree = SOURCE_ROOT; };
 		CDD06ECB1398BA6200AB0420 /* MOAIStoreKitListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIStoreKitListener.h; path = "../../src/moaiext-iphone/MOAIStoreKitListener.h"; sourceTree = SOURCE_ROOT; };
@@ -5096,9 +5093,6 @@
 		CDEFB3F413E37F3C000A9523 /* MOAITileFlags.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAITileFlags.h; sourceTree = "<group>"; };
 		CDEFB3F513E37F3C000A9523 /* MOAIVertexFormatMgr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIVertexFormatMgr.cpp; sourceTree = "<group>"; };
 		CDEFB3F613E37F3C000A9523 /* MOAIVertexFormatMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIVertexFormatMgr.h; sourceTree = "<group>"; };
-		CDF053901453AA0400FA4CB2 /* USLuaSharedPtr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USLuaSharedPtr.h; sourceTree = "<group>"; };
-		CDF053911453AA0400FA4CB2 /* USSharedPtr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USSharedPtr.h; sourceTree = "<group>"; };
-		CDF053921453AA0400FA4CB2 /* USWeakPtr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USWeakPtr.h; sourceTree = "<group>"; };
 		CDF7130D141EBC5C00D650CA /* MOAIGfxResource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIGfxResource.cpp; path = ../../src/moaicore/MOAIGfxResource.cpp; sourceTree = SOURCE_ROOT; };
 		CDF7130E141EBC5C00D650CA /* MOAIGfxResource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIGfxResource.h; path = ../../src/moaicore/MOAIGfxResource.h; sourceTree = SOURCE_ROOT; };
 		CDF86DEA13F09B6D00D2FFFF /* USMatrix3x3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = USMatrix3x3.h; path = ../../src/uslsext/USMatrix3x3.h; sourceTree = SOURCE_ROOT; };
@@ -5794,11 +5788,14 @@
 				CD148EF41395AE9A00A3F501 /* grid */,
 				CD148EF31395AE9200A3F501 /* input */,
 				CD148EF21395AE8B00A3F501 /* layer */,
+				CD18CE8314693B7200990FE1 /* lifecycle */,
 				CD148EF11395AE8200A3F501 /* log */,
+				CD18CEE414693BC900990FE1 /* lua */,
 				CD148EF01395AE7D00A3F501 /* node */,
 				CD148EEF1395AE7200A3F501 /* particles */,
 				CD148EEE1395AE6A00A3F501 /* partition */,
 				CD148EED1395AE6300A3F501 /* prop */,
+				CD18CEE514693CBC00990FE1 /* serializer */,
 				CD148EEC1395AE5A00A3F501 /* sim */,
 				CD148EEB1395AE4000A3F501 /* textbox */,
 				CD148EE91395AE2D00A3F501 /* transform */,
@@ -5818,8 +5815,6 @@
 			children = (
 				07FAC91713B8F1E000AFD0B3 /* uslscore-pch.cpp */,
 				CD148F071395B2B100A3F501 /* cipher */,
-				CD148F061395B2AA00A3F501 /* lifecycle */,
-				CD148F051395B2A400A3F501 /* lua */,
 				CD148F041395B29B00A3F501 /* math */,
 				CD148F031395B28D00A3F501 /* stl */,
 				CD148F021395B26D00A3F501 /* stream */,
@@ -5838,7 +5833,6 @@
 			isa = PBXGroup;
 			children = (
 				07FAC91913B8F1F000AFD0B3 /* uslsext-pch.cpp */,
-				CD148F161395B40700A3F501 /* animCurve */,
 				CD148F111395B3E400A3F501 /* gfxObjects */,
 				CD148F101395B3DE00A3F501 /* grid */,
 				CD148F0F1395B3DA00A3F501 /* io */,
@@ -5847,7 +5841,6 @@
 				CD148F0C1395B3CC00A3F501 /* sql */,
 				CD148F0B1395B3C800A3F501 /* thread */,
 				CD148F0A1395B3C300A3F501 /* util */,
-				CD148F091395B3BD00A3F501 /* web */,
 				CD148F081395B3B900A3F501 /* xml */,
 				0324E60113564BC8000ADC60 /* pch.h */,
 				0324E64213564BC8000ADC60 /* uslsext.cpp */,
@@ -6202,6 +6195,10 @@
 			children = (
 				0324E54513564BC7000ADC60 /* MOAIHttpTask.cpp */,
 				0324E54613564BC7000ADC60 /* MOAIHttpTask.h */,
+				CD18CE8A14693BC100990FE1 /* MOAIHttpTaskInfo_curl.cpp */,
+				CD18CE8B14693BC100990FE1 /* MOAIHttpTaskInfo_curl.h */,
+				CD18CEA114693BC100990FE1 /* MOAIUrlMgr_curl.cpp */,
+				CD18CEA214693BC100990FE1 /* MOAIUrlMgr.h */,
 			);
 			name = web;
 			sourceTree = "<group>";
@@ -6221,8 +6218,6 @@
 				CD62D6CB13A991BA002286EB /* MOAIJsonParser.h */,
 				0324E56413564BC7000ADC60 /* MOAIParser.cpp */,
 				0324E56513564BC7000ADC60 /* MOAIParser.h */,
-				0324E58213564BC7000ADC60 /* MOAISerializer.cpp */,
-				0324E58313564BC7000ADC60 /* MOAISerializer.h */,
 				0324E5A613564BC8000ADC60 /* MOAIXmlParser.cpp */,
 				0324E5A713564BC8000ADC60 /* MOAIXmlParser.h */,
 			);
@@ -6670,46 +6665,6 @@
 			name = math;
 			sourceTree = "<group>";
 		};
-		CD148F051395B2A400A3F501 /* lua */ = {
-			isa = PBXGroup;
-			children = (
-				0324E5DB13564BC8000ADC60 /* USLua.h */,
-				CDF053901453AA0400FA4CB2 /* USLuaSharedPtr.h */,
-				0324E5DC13564BC8000ADC60 /* USLuaObject-impl.h */,
-				0324E5DD13564BC8000ADC60 /* USLuaObject.cpp */,
-				0324E5DE13564BC8000ADC60 /* USLuaObject.h */,
-				0324E5DF13564BC8000ADC60 /* USLuaRef.cpp */,
-				0324E5E013564BC8000ADC60 /* USLuaRef.h */,
-				0324E5E113564BC8000ADC60 /* USLuaRuntime.cpp */,
-				0324E5E213564BC8000ADC60 /* USLuaRuntime.h */,
-				0324E5E313564BC8000ADC60 /* USLuaSerializer.cpp */,
-				0324E5E413564BC8000ADC60 /* USLuaSerializer.h */,
-				0324E5E513564BC8000ADC60 /* USLuaState-impl.h */,
-				0324E5E613564BC8000ADC60 /* USLuaState.cpp */,
-				0324E5E713564BC8000ADC60 /* USLuaState.h */,
-				0324E5E813564BC8000ADC60 /* USLuaStateHandle.cpp */,
-				0324E5E913564BC8000ADC60 /* USLuaStateHandle.h */,
-			);
-			name = lua;
-			sourceTree = "<group>";
-		};
-		CD148F061395B2AA00A3F501 /* lifecycle */ = {
-			isa = PBXGroup;
-			children = (
-				0324E5B913564BC8000ADC60 /* USCanary.cpp */,
-				0324E5BA13564BC8000ADC60 /* USCanary.h */,
-				0324E5D013564BC8000ADC60 /* USGlobals.cpp */,
-				0324E5D113564BC8000ADC60 /* USGlobals.h */,
-				0324E5EC13564BC8000ADC60 /* USObject.cpp */,
-				0324E5ED13564BC8000ADC60 /* USObject.h */,
-				0324E5F013564BC8000ADC60 /* USRtti.cpp */,
-				0324E5F113564BC8000ADC60 /* USRtti.h */,
-				CDF053911453AA0400FA4CB2 /* USSharedPtr.h */,
-				CDF053921453AA0400FA4CB2 /* USWeakPtr.h */,
-			);
-			name = lifecycle;
-			sourceTree = "<group>";
-		};
 		CD148F071395B2B100A3F501 /* cipher */ = {
 			isa = PBXGroup;
 			children = (
@@ -6730,19 +6685,6 @@
 				0324E69313564BC8000ADC60 /* USXmlReader.h */,
 			);
 			name = xml;
-			sourceTree = "<group>";
-		};
-		CD148F091395B3BD00A3F501 /* web */ = {
-			isa = PBXGroup;
-			children = (
-				0324E63413564BC8000ADC60 /* USHttpTask.cpp */,
-				0324E63513564BC8000ADC60 /* USHttpTask.h */,
-				0324E63613564BC8000ADC60 /* USHttpTask_impl.cpp */,
-				0324E63713564BC8000ADC60 /* USHttpTask_impl.h */,
-				0324E68813564BC8000ADC60 /* USUrlMgr.cpp */,
-				0324E68913564BC8000ADC60 /* USUrlMgr.h */,
-			);
-			name = web;
 			sourceTree = "<group>";
 		};
 		CD148F0A1395B3C300A3F501 /* util */ = {
@@ -6885,13 +6827,55 @@
 			name = gfxObjects;
 			sourceTree = "<group>";
 		};
-		CD148F161395B40700A3F501 /* animCurve */ = {
+		CD18CE8314693B7200990FE1 /* lifecycle */ = {
 			isa = PBXGroup;
 			children = (
-				0324E60613564BC8000ADC60 /* USAnimCurve.cpp */,
-				0324E60713564BC8000ADC60 /* USAnimCurve.h */,
+				CD18CE8414693BC100990FE1 /* MOAICanary.cpp */,
+				CD18CE8514693BC100990FE1 /* MOAICanary.h */,
+				CD18CE8814693BC100990FE1 /* MOAIGlobals.cpp */,
+				CD18CE8914693BC100990FE1 /* MOAIGlobals.h */,
+				CD18CE9A14693BC100990FE1 /* MOAIObject.cpp */,
+				CD18CE9B14693BC100990FE1 /* MOAIObject.h */,
+				CD18CE9C14693BC100990FE1 /* MOAIRtti.cpp */,
+				CD18CE9D14693BC100990FE1 /* MOAIRtti.h */,
+				CD18CEA014693BC100990FE1 /* MOAISharedPtr.h */,
+				CD18CEA314693BC100990FE1 /* MOAIWeakPtr.h */,
 			);
-			name = animCurve;
+			name = lifecycle;
+			sourceTree = "<group>";
+		};
+		CD18CEE414693BC900990FE1 /* lua */ = {
+			isa = PBXGroup;
+			children = (
+				CD18CE8C14693BC100990FE1 /* MOAILua.h */,
+				CD18CE8D14693BC100990FE1 /* MOAILuaObject-impl.h */,
+				CD18CE8E14693BC100990FE1 /* MOAILuaObject.cpp */,
+				CD18CE8F14693BC100990FE1 /* MOAILuaObject.h */,
+				CD18CE9014693BC100990FE1 /* MOAILuaRef.cpp */,
+				CD18CE9114693BC100990FE1 /* MOAILuaRef.h */,
+				CD18CE9214693BC100990FE1 /* MOAILuaRuntime.cpp */,
+				CD18CE9314693BC100990FE1 /* MOAILuaRuntime.h */,
+				CD18CE9414693BC100990FE1 /* MOAILuaSharedPtr.h */,
+				CD18CE9514693BC100990FE1 /* MOAILuaState-impl.h */,
+				CD18CE9614693BC100990FE1 /* MOAILuaState.cpp */,
+				CD18CE9714693BC100990FE1 /* MOAILuaState.h */,
+				CD18CE9814693BC100990FE1 /* MOAILuaStateHandle.cpp */,
+				CD18CE9914693BC100990FE1 /* MOAILuaStateHandle.h */,
+			);
+			name = lua;
+			sourceTree = "<group>";
+		};
+		CD18CEE514693CBC00990FE1 /* serializer */ = {
+			isa = PBXGroup;
+			children = (
+				CD18CE8614693BC100990FE1 /* MOAIDeserializer.cpp */,
+				CD18CE8714693BC100990FE1 /* MOAIDeserializer.h */,
+				0324E58213564BC7000ADC60 /* MOAISerializer.cpp */,
+				0324E58313564BC7000ADC60 /* MOAISerializer.h */,
+				CD18CE9E14693BC100990FE1 /* MOAISerializerBase.cpp */,
+				CD18CE9F14693BC100990FE1 /* MOAISerializerBase.h */,
+			);
+			name = serializer;
 			sourceTree = "<group>";
 		};
 		CD218F8213A7FD18008337E7 /* luacurl */ = {
@@ -8928,7 +8912,6 @@
 				0324E8F113564BC9000ADC60 /* USAccessors.h in Headers */,
 				0324E8F313564BC9000ADC60 /* USBase64Cipher.h in Headers */,
 				0324E8F513564BC9000ADC60 /* USByteStream.h in Headers */,
-				0324E8F713564BC9000ADC60 /* USCanary.h in Headers */,
 				0324E8F913564BC9000ADC60 /* USCipher.h in Headers */,
 				0324E8FB13564BC9000ADC60 /* USCipherStream.h in Headers */,
 				0324E8FD13564BC9000ADC60 /* USDeflater.h in Headers */,
@@ -8939,7 +8922,6 @@
 				0324E90913564BC9000ADC60 /* USFileStream.h in Headers */,
 				0324E90B13564BC9000ADC60 /* USFileSys.h in Headers */,
 				0324E90C13564BC9000ADC60 /* USFloat.h in Headers */,
-				0324E90E13564BC9000ADC60 /* USGlobals.h in Headers */,
 				0324E91013564BC9000ADC60 /* USInflater.h in Headers */,
 				0324E91113564BC9000ADC60 /* USLeanArray.h in Headers */,
 				0324E91213564BC9000ADC60 /* USLeanList.h in Headers */,
@@ -8947,19 +8929,8 @@
 				0324E91413564BC9000ADC60 /* USLeanStack.h in Headers */,
 				0324E91513564BC9000ADC60 /* USList.h in Headers */,
 				0324E91713564BC9000ADC60 /* uslscore.h in Headers */,
-				0324E91813564BC9000ADC60 /* USLua.h in Headers */,
-				0324E91913564BC9000ADC60 /* USLuaObject-impl.h in Headers */,
-				0324E91B13564BC9000ADC60 /* USLuaObject.h in Headers */,
-				0324E91D13564BC9000ADC60 /* USLuaRef.h in Headers */,
-				0324E91F13564BC9000ADC60 /* USLuaRuntime.h in Headers */,
-				0324E92113564BC9000ADC60 /* USLuaSerializer.h in Headers */,
-				0324E92213564BC9000ADC60 /* USLuaState-impl.h in Headers */,
-				0324E92413564BC9000ADC60 /* USLuaState.h in Headers */,
-				0324E92613564BC9000ADC60 /* USLuaStateHandle.h in Headers */,
 				0324E92813564BC9000ADC60 /* USMemStream.h in Headers */,
-				0324E92A13564BC9000ADC60 /* USObject.h in Headers */,
 				0324E92B13564BC9000ADC60 /* USRect.h in Headers */,
-				0324E92E13564BC9000ADC60 /* USRtti.h in Headers */,
 				0324E93013564BC9000ADC60 /* USStream.h in Headers */,
 				0324E93213564BC9000ADC60 /* USStreamFormatter.h in Headers */,
 				0324E93313564BC9000ADC60 /* USTypeID.h in Headers */,
@@ -8971,7 +8942,6 @@
 				0324E93D13564BC9000ADC60 /* pch.h in Headers */,
 				0324E93E13564BC9000ADC60 /* USAdapterInfo.h in Headers */,
 				0324E94113564BC9000ADC60 /* USAffine2D.h in Headers */,
-				0324E94313564BC9000ADC60 /* USAnimCurve.h in Headers */,
 				0324E94A13564BC9000ADC60 /* USBinarySearch.h in Headers */,
 				0324E94E13564BC9000ADC60 /* USBox.h in Headers */,
 				0324E95213564BC9000ADC60 /* USCgt.h in Headers */,
@@ -8981,8 +8951,6 @@
 				0324E95A13564BC9000ADC60 /* USDataIOTask.h in Headers */,
 				0324E95D13564BC9000ADC60 /* USDelegate.h in Headers */,
 				0324E95F13564BC9000ADC60 /* USDistance.h in Headers */,
-				0324E97113564BC9000ADC60 /* USHttpTask.h in Headers */,
-				0324E97313564BC9000ADC60 /* USHttpTask_impl.h in Headers */,
 				0324E97713564BC9000ADC60 /* USInterpolate.h in Headers */,
 				0324E97913564BC9000ADC60 /* USIntersect.h in Headers */,
 				0324E97B13564BC9000ADC60 /* USLexStream.h in Headers */,
@@ -9018,7 +8986,6 @@
 				0324E9BD13564BC9000ADC60 /* USThread_win32.h in Headers */,
 				0324E9C113564BC9000ADC60 /* USTrig.h in Headers */,
 				0324E9C313564BC9000ADC60 /* USTypedPtr.h in Headers */,
-				0324E9C513564BC9000ADC60 /* USUrlMgr.h in Headers */,
 				0324E9CF13564BC9000ADC60 /* USXmlReader.h in Headers */,
 				CDEB91491360A78800AAC558 /* MOAIEventSource.h in Headers */,
 				CDEB914D1360A78800AAC558 /* MOAIImage.h in Headers */,
@@ -9071,12 +9038,28 @@
 				CDBD3D291425DC2600BC33D4 /* MOAIBox2DPulleyJoint.h in Headers */,
 				CDBD3D2B1425DC2600BC33D4 /* MOAIBox2DRevoluteJoint.h in Headers */,
 				CDBD3D2D1425DC2600BC33D4 /* MOAIBox2DWeldJoint.h in Headers */,
-				CDF053941453AA0400FA4CB2 /* USLuaSharedPtr.h in Headers */,
-				CDF053961453AA0400FA4CB2 /* USSharedPtr.h in Headers */,
-				CDF053981453AA0400FA4CB2 /* USWeakPtr.h in Headers */,
 				CDDA3DA61458D70700755FB4 /* MOAIAttrOp.h in Headers */,
 				CDEBDE54146909ED00C86DF9 /* MOAIBox2DRopeJoint.h in Headers */,
 				CDEBDE58146909ED00C86DF9 /* MOAIBox2DWheelJoint.h in Headers */,
+				CD18CEA714693BC100990FE1 /* MOAICanary.h in Headers */,
+				CD18CEAB14693BC100990FE1 /* MOAIDeserializer.h in Headers */,
+				CD18CEAF14693BC100990FE1 /* MOAIGlobals.h in Headers */,
+				CD18CEB314693BC100990FE1 /* MOAIHttpTaskInfo_curl.h in Headers */,
+				CD18CEB514693BC100990FE1 /* MOAILua.h in Headers */,
+				CD18CEB714693BC100990FE1 /* MOAILuaObject-impl.h in Headers */,
+				CD18CEBB14693BC100990FE1 /* MOAILuaObject.h in Headers */,
+				CD18CEBF14693BC100990FE1 /* MOAILuaRef.h in Headers */,
+				CD18CEC314693BC100990FE1 /* MOAILuaRuntime.h in Headers */,
+				CD18CEC514693BC100990FE1 /* MOAILuaSharedPtr.h in Headers */,
+				CD18CEC714693BC100990FE1 /* MOAILuaState-impl.h in Headers */,
+				CD18CECB14693BC100990FE1 /* MOAILuaState.h in Headers */,
+				CD18CECF14693BC100990FE1 /* MOAILuaStateHandle.h in Headers */,
+				CD18CED314693BC100990FE1 /* MOAIObject.h in Headers */,
+				CD18CED714693BC100990FE1 /* MOAIRtti.h in Headers */,
+				CD18CEDB14693BC100990FE1 /* MOAISerializerBase.h in Headers */,
+				CD18CEDD14693BC100990FE1 /* MOAISharedPtr.h in Headers */,
+				CD18CEE114693BC100990FE1 /* MOAIUrlMgr.h in Headers */,
+				CD18CEE314693BC100990FE1 /* MOAIWeakPtr.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9556,7 +9539,6 @@
 				0324E75313564BC8000ADC60 /* USAccessors.h in Headers */,
 				0324E75513564BC8000ADC60 /* USBase64Cipher.h in Headers */,
 				0324E75713564BC8000ADC60 /* USByteStream.h in Headers */,
-				0324E75913564BC8000ADC60 /* USCanary.h in Headers */,
 				0324E75B13564BC8000ADC60 /* USCipher.h in Headers */,
 				0324E75D13564BC8000ADC60 /* USCipherStream.h in Headers */,
 				0324E75F13564BC8000ADC60 /* USDeflater.h in Headers */,
@@ -9567,7 +9549,6 @@
 				0324E76B13564BC8000ADC60 /* USFileStream.h in Headers */,
 				0324E76D13564BC8000ADC60 /* USFileSys.h in Headers */,
 				0324E76E13564BC8000ADC60 /* USFloat.h in Headers */,
-				0324E77013564BC8000ADC60 /* USGlobals.h in Headers */,
 				0324E77213564BC8000ADC60 /* USInflater.h in Headers */,
 				0324E77313564BC8000ADC60 /* USLeanArray.h in Headers */,
 				0324E77413564BC8000ADC60 /* USLeanList.h in Headers */,
@@ -9575,19 +9556,8 @@
 				0324E77613564BC8000ADC60 /* USLeanStack.h in Headers */,
 				0324E77713564BC8000ADC60 /* USList.h in Headers */,
 				0324E77913564BC8000ADC60 /* uslscore.h in Headers */,
-				0324E77A13564BC8000ADC60 /* USLua.h in Headers */,
-				0324E77B13564BC8000ADC60 /* USLuaObject-impl.h in Headers */,
-				0324E77D13564BC8000ADC60 /* USLuaObject.h in Headers */,
-				0324E77F13564BC8000ADC60 /* USLuaRef.h in Headers */,
-				0324E78113564BC8000ADC60 /* USLuaRuntime.h in Headers */,
-				0324E78313564BC8000ADC60 /* USLuaSerializer.h in Headers */,
-				0324E78413564BC8000ADC60 /* USLuaState-impl.h in Headers */,
-				0324E78613564BC8000ADC60 /* USLuaState.h in Headers */,
-				0324E78813564BC8000ADC60 /* USLuaStateHandle.h in Headers */,
 				0324E78A13564BC8000ADC60 /* USMemStream.h in Headers */,
-				0324E78C13564BC8000ADC60 /* USObject.h in Headers */,
 				0324E78D13564BC8000ADC60 /* USRect.h in Headers */,
-				0324E79013564BC8000ADC60 /* USRtti.h in Headers */,
 				0324E79213564BC8000ADC60 /* USStream.h in Headers */,
 				0324E79413564BC8000ADC60 /* USStreamFormatter.h in Headers */,
 				0324E79513564BC8000ADC60 /* USTypeID.h in Headers */,
@@ -9599,7 +9569,6 @@
 				0324E79F13564BC8000ADC60 /* pch.h in Headers */,
 				0324E7A013564BC8000ADC60 /* USAdapterInfo.h in Headers */,
 				0324E7A313564BC8000ADC60 /* USAffine2D.h in Headers */,
-				0324E7A513564BC8000ADC60 /* USAnimCurve.h in Headers */,
 				0324E7AC13564BC8000ADC60 /* USBinarySearch.h in Headers */,
 				0324E7B013564BC8000ADC60 /* USBox.h in Headers */,
 				0324E7B413564BC8000ADC60 /* USCgt.h in Headers */,
@@ -9609,8 +9578,6 @@
 				0324E7BC13564BC8000ADC60 /* USDataIOTask.h in Headers */,
 				0324E7BF13564BC8000ADC60 /* USDelegate.h in Headers */,
 				0324E7C113564BC8000ADC60 /* USDistance.h in Headers */,
-				0324E7D313564BC8000ADC60 /* USHttpTask.h in Headers */,
-				0324E7D513564BC8000ADC60 /* USHttpTask_impl.h in Headers */,
 				0324E7D913564BC8000ADC60 /* USInterpolate.h in Headers */,
 				0324E7DB13564BC8000ADC60 /* USIntersect.h in Headers */,
 				0324E7DD13564BC8000ADC60 /* USLexStream.h in Headers */,
@@ -9646,7 +9613,6 @@
 				0324E81F13564BC8000ADC60 /* USThread_win32.h in Headers */,
 				0324E82313564BC8000ADC60 /* USTrig.h in Headers */,
 				0324E82513564BC8000ADC60 /* USTypedPtr.h in Headers */,
-				0324E82713564BC8000ADC60 /* USUrlMgr.h in Headers */,
 				0324E83113564BC8000ADC60 /* USXmlReader.h in Headers */,
 				CD1D0BA413599FD200802A3C /* AKU-iphone.h in Headers */,
 				CDEB91481360A78800AAC558 /* MOAIEventSource.h in Headers */,
@@ -9724,12 +9690,28 @@
 				CDBD3D3F1425DC2600BC33D4 /* MOAIBox2DWeldJoint.h in Headers */,
 				C359A149143A81BA005E7829 /* RAudioBuffer.h in Headers */,
 				0780B1D714463B71006626CF /* MOAITapjoy.h in Headers */,
-				CDF053931453AA0400FA4CB2 /* USLuaSharedPtr.h in Headers */,
-				CDF053951453AA0400FA4CB2 /* USSharedPtr.h in Headers */,
-				CDF053971453AA0400FA4CB2 /* USWeakPtr.h in Headers */,
 				CDDA3DA51458D70700755FB4 /* MOAIAttrOp.h in Headers */,
 				CDEBDE53146909ED00C86DF9 /* MOAIBox2DRopeJoint.h in Headers */,
 				CDEBDE57146909ED00C86DF9 /* MOAIBox2DWheelJoint.h in Headers */,
+				CD18CEA614693BC100990FE1 /* MOAICanary.h in Headers */,
+				CD18CEAA14693BC100990FE1 /* MOAIDeserializer.h in Headers */,
+				CD18CEAE14693BC100990FE1 /* MOAIGlobals.h in Headers */,
+				CD18CEB214693BC100990FE1 /* MOAIHttpTaskInfo_curl.h in Headers */,
+				CD18CEB414693BC100990FE1 /* MOAILua.h in Headers */,
+				CD18CEB614693BC100990FE1 /* MOAILuaObject-impl.h in Headers */,
+				CD18CEBA14693BC100990FE1 /* MOAILuaObject.h in Headers */,
+				CD18CEBE14693BC100990FE1 /* MOAILuaRef.h in Headers */,
+				CD18CEC214693BC100990FE1 /* MOAILuaRuntime.h in Headers */,
+				CD18CEC414693BC100990FE1 /* MOAILuaSharedPtr.h in Headers */,
+				CD18CEC614693BC100990FE1 /* MOAILuaState-impl.h in Headers */,
+				CD18CECA14693BC100990FE1 /* MOAILuaState.h in Headers */,
+				CD18CECE14693BC100990FE1 /* MOAILuaStateHandle.h in Headers */,
+				CD18CED214693BC100990FE1 /* MOAIObject.h in Headers */,
+				CD18CED614693BC100990FE1 /* MOAIRtti.h in Headers */,
+				CD18CEDA14693BC100990FE1 /* MOAISerializerBase.h in Headers */,
+				CD18CEDC14693BC100990FE1 /* MOAISharedPtr.h in Headers */,
+				CD18CEE014693BC100990FE1 /* MOAIUrlMgr.h in Headers */,
+				CD18CEE214693BC100990FE1 /* MOAIWeakPtr.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10487,7 +10469,6 @@
 				0324E8EF13564BC9000ADC60 /* STLString.cpp in Sources */,
 				0324E8F213564BC9000ADC60 /* USBase64Cipher.cpp in Sources */,
 				0324E8F413564BC9000ADC60 /* USByteStream.cpp in Sources */,
-				0324E8F613564BC9000ADC60 /* USCanary.cpp in Sources */,
 				0324E8F813564BC9000ADC60 /* USCipher.cpp in Sources */,
 				0324E8FA13564BC9000ADC60 /* USCipherStream.cpp in Sources */,
 				0324E8FC13564BC9000ADC60 /* USDeflater.cpp in Sources */,
@@ -10497,25 +10478,15 @@
 				0324E90613564BC9000ADC60 /* USFilename.cpp in Sources */,
 				0324E90813564BC9000ADC60 /* USFileStream.cpp in Sources */,
 				0324E90A13564BC9000ADC60 /* USFileSys.cpp in Sources */,
-				0324E90D13564BC9000ADC60 /* USGlobals.cpp in Sources */,
 				0324E90F13564BC9000ADC60 /* USInflater.cpp in Sources */,
 				0324E91613564BC9000ADC60 /* uslscore.cpp in Sources */,
-				0324E91A13564BC9000ADC60 /* USLuaObject.cpp in Sources */,
-				0324E91C13564BC9000ADC60 /* USLuaRef.cpp in Sources */,
-				0324E91E13564BC9000ADC60 /* USLuaRuntime.cpp in Sources */,
-				0324E92013564BC9000ADC60 /* USLuaSerializer.cpp in Sources */,
-				0324E92313564BC9000ADC60 /* USLuaState.cpp in Sources */,
-				0324E92513564BC9000ADC60 /* USLuaStateHandle.cpp in Sources */,
 				0324E92713564BC9000ADC60 /* USMemStream.cpp in Sources */,
-				0324E92913564BC9000ADC60 /* USObject.cpp in Sources */,
-				0324E92D13564BC9000ADC60 /* USRtti.cpp in Sources */,
 				0324E92F13564BC9000ADC60 /* USStream.cpp in Sources */,
 				0324E93113564BC9000ADC60 /* USStreamFormatter.cpp in Sources */,
 				0324E93813564BC9000ADC60 /* USZip.cpp in Sources */,
 				0324E93A13564BC9000ADC60 /* USZipFile.cpp in Sources */,
 				0324E93F13564BC9000ADC60 /* USAdapterInfo_posix.cpp in Sources */,
 				0324E94013564BC9000ADC60 /* USAdapterInfo_win32.cpp in Sources */,
-				0324E94213564BC9000ADC60 /* USAnimCurve.cpp in Sources */,
 				0324E94D13564BC9000ADC60 /* USBox.cpp in Sources */,
 				0324E95113564BC9000ADC60 /* USCgt.cpp in Sources */,
 				0324E95313564BC9000ADC60 /* USColor.cpp in Sources */,
@@ -10523,8 +10494,6 @@
 				0324E95713564BC9000ADC60 /* USData.cpp in Sources */,
 				0324E95913564BC9000ADC60 /* USDataIOTask.cpp in Sources */,
 				0324E95E13564BC9000ADC60 /* USDistance.cpp in Sources */,
-				0324E97013564BC9000ADC60 /* USHttpTask.cpp in Sources */,
-				0324E97213564BC9000ADC60 /* USHttpTask_impl.cpp in Sources */,
 				0324E97613564BC9000ADC60 /* USInterpolate.cpp in Sources */,
 				0324E97813564BC9000ADC60 /* USIntersect.cpp in Sources */,
 				0324E97A13564BC9000ADC60 /* USLexStream.cpp in Sources */,
@@ -10554,7 +10523,6 @@
 				0324E9BC13564BC9000ADC60 /* USThread_win32.cpp in Sources */,
 				0324E9C013564BC9000ADC60 /* USTrig.cpp in Sources */,
 				0324E9C213564BC9000ADC60 /* USTypedPtr.cpp in Sources */,
-				0324E9C413564BC9000ADC60 /* USUrlMgr.cpp in Sources */,
 				0324E9CE13564BC9000ADC60 /* USXmlReader.cpp in Sources */,
 				CDEB91471360A78800AAC558 /* MOAIEventSource.cpp in Sources */,
 				CDEB914B1360A78800AAC558 /* MOAIImage.cpp in Sources */,
@@ -10604,6 +10572,19 @@
 				079529141447902700143A72 /* MOAIImage-png.cpp in Sources */,
 				CDEBDE52146909ED00C86DF9 /* MOAIBox2DRopeJoint.cpp in Sources */,
 				CDEBDE56146909ED00C86DF9 /* MOAIBox2DWheelJoint.cpp in Sources */,
+				CD18CEA514693BC100990FE1 /* MOAICanary.cpp in Sources */,
+				CD18CEA914693BC100990FE1 /* MOAIDeserializer.cpp in Sources */,
+				CD18CEAD14693BC100990FE1 /* MOAIGlobals.cpp in Sources */,
+				CD18CEB114693BC100990FE1 /* MOAIHttpTaskInfo_curl.cpp in Sources */,
+				CD18CEB914693BC100990FE1 /* MOAILuaObject.cpp in Sources */,
+				CD18CEBD14693BC100990FE1 /* MOAILuaRef.cpp in Sources */,
+				CD18CEC114693BC100990FE1 /* MOAILuaRuntime.cpp in Sources */,
+				CD18CEC914693BC100990FE1 /* MOAILuaState.cpp in Sources */,
+				CD18CECD14693BC100990FE1 /* MOAILuaStateHandle.cpp in Sources */,
+				CD18CED114693BC100990FE1 /* MOAIObject.cpp in Sources */,
+				CD18CED514693BC100990FE1 /* MOAIRtti.cpp in Sources */,
+				CD18CED914693BC100990FE1 /* MOAISerializerBase.cpp in Sources */,
+				CD18CEDF14693BC100990FE1 /* MOAIUrlMgr_curl.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11602,7 +11583,6 @@
 				0324E75113564BC8000ADC60 /* STLString.cpp in Sources */,
 				0324E75413564BC8000ADC60 /* USBase64Cipher.cpp in Sources */,
 				0324E75613564BC8000ADC60 /* USByteStream.cpp in Sources */,
-				0324E75813564BC8000ADC60 /* USCanary.cpp in Sources */,
 				0324E75A13564BC8000ADC60 /* USCipher.cpp in Sources */,
 				0324E75C13564BC8000ADC60 /* USCipherStream.cpp in Sources */,
 				0324E75E13564BC8000ADC60 /* USDeflater.cpp in Sources */,
@@ -11612,25 +11592,15 @@
 				0324E76813564BC8000ADC60 /* USFilename.cpp in Sources */,
 				0324E76A13564BC8000ADC60 /* USFileStream.cpp in Sources */,
 				0324E76C13564BC8000ADC60 /* USFileSys.cpp in Sources */,
-				0324E76F13564BC8000ADC60 /* USGlobals.cpp in Sources */,
 				0324E77113564BC8000ADC60 /* USInflater.cpp in Sources */,
 				0324E77813564BC8000ADC60 /* uslscore.cpp in Sources */,
-				0324E77C13564BC8000ADC60 /* USLuaObject.cpp in Sources */,
-				0324E77E13564BC8000ADC60 /* USLuaRef.cpp in Sources */,
-				0324E78013564BC8000ADC60 /* USLuaRuntime.cpp in Sources */,
-				0324E78213564BC8000ADC60 /* USLuaSerializer.cpp in Sources */,
-				0324E78513564BC8000ADC60 /* USLuaState.cpp in Sources */,
-				0324E78713564BC8000ADC60 /* USLuaStateHandle.cpp in Sources */,
 				0324E78913564BC8000ADC60 /* USMemStream.cpp in Sources */,
-				0324E78B13564BC8000ADC60 /* USObject.cpp in Sources */,
-				0324E78F13564BC8000ADC60 /* USRtti.cpp in Sources */,
 				0324E79113564BC8000ADC60 /* USStream.cpp in Sources */,
 				0324E79313564BC8000ADC60 /* USStreamFormatter.cpp in Sources */,
 				0324E79A13564BC8000ADC60 /* USZip.cpp in Sources */,
 				0324E79C13564BC8000ADC60 /* USZipFile.cpp in Sources */,
 				0324E7A113564BC8000ADC60 /* USAdapterInfo_posix.cpp in Sources */,
 				0324E7A213564BC8000ADC60 /* USAdapterInfo_win32.cpp in Sources */,
-				0324E7A413564BC8000ADC60 /* USAnimCurve.cpp in Sources */,
 				0324E7AF13564BC8000ADC60 /* USBox.cpp in Sources */,
 				0324E7B313564BC8000ADC60 /* USCgt.cpp in Sources */,
 				0324E7B513564BC8000ADC60 /* USColor.cpp in Sources */,
@@ -11638,8 +11608,6 @@
 				0324E7B913564BC8000ADC60 /* USData.cpp in Sources */,
 				0324E7BB13564BC8000ADC60 /* USDataIOTask.cpp in Sources */,
 				0324E7C013564BC8000ADC60 /* USDistance.cpp in Sources */,
-				0324E7D213564BC8000ADC60 /* USHttpTask.cpp in Sources */,
-				0324E7D413564BC8000ADC60 /* USHttpTask_impl.cpp in Sources */,
 				0324E7D813564BC8000ADC60 /* USInterpolate.cpp in Sources */,
 				0324E7DA13564BC8000ADC60 /* USIntersect.cpp in Sources */,
 				0324E7DC13564BC8000ADC60 /* USLexStream.cpp in Sources */,
@@ -11669,7 +11637,6 @@
 				0324E81E13564BC8000ADC60 /* USThread_win32.cpp in Sources */,
 				0324E82213564BC8000ADC60 /* USTrig.cpp in Sources */,
 				0324E82413564BC8000ADC60 /* USTypedPtr.cpp in Sources */,
-				0324E82613564BC8000ADC60 /* USUrlMgr.cpp in Sources */,
 				0324E83013564BC8000ADC60 /* USXmlReader.cpp in Sources */,
 				CD1D0BA513599FD200802A3C /* AKU-iphone.mm in Sources */,
 				CDEB91461360A78800AAC558 /* MOAIEventSource.cpp in Sources */,
@@ -11739,6 +11706,19 @@
 				079529121447902700143A72 /* MOAIImage-png.cpp in Sources */,
 				CDEBDE51146909ED00C86DF9 /* MOAIBox2DRopeJoint.cpp in Sources */,
 				CDEBDE55146909ED00C86DF9 /* MOAIBox2DWheelJoint.cpp in Sources */,
+				CD18CEA414693BC100990FE1 /* MOAICanary.cpp in Sources */,
+				CD18CEA814693BC100990FE1 /* MOAIDeserializer.cpp in Sources */,
+				CD18CEAC14693BC100990FE1 /* MOAIGlobals.cpp in Sources */,
+				CD18CEB014693BC100990FE1 /* MOAIHttpTaskInfo_curl.cpp in Sources */,
+				CD18CEB814693BC100990FE1 /* MOAILuaObject.cpp in Sources */,
+				CD18CEBC14693BC100990FE1 /* MOAILuaRef.cpp in Sources */,
+				CD18CEC014693BC100990FE1 /* MOAILuaRuntime.cpp in Sources */,
+				CD18CEC814693BC100990FE1 /* MOAILuaState.cpp in Sources */,
+				CD18CECC14693BC100990FE1 /* MOAILuaStateHandle.cpp in Sources */,
+				CD18CED014693BC100990FE1 /* MOAIObject.cpp in Sources */,
+				CD18CED414693BC100990FE1 /* MOAIRtti.cpp in Sources */,
+				CD18CED814693BC100990FE1 /* MOAISerializerBase.cpp in Sources */,
+				CD18CEDE14693BC100990FE1 /* MOAIUrlMgr_curl.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

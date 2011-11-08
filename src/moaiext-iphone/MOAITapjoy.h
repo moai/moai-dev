@@ -23,7 +23,7 @@
 */
 
 class MOAITapjoy :
-	public USGlobalClass < MOAITapjoy, MOAIGlobalEventSource > {
+	public MOAIGlobalClass < MOAITapjoy, MOAIGlobalEventSource > {
 private:
 
 	MoaiTapjoyVideoAdDelegate* mVideoAdDelegate;
@@ -45,7 +45,7 @@ public:
 
 					MOAITapjoy						();
 					~MOAITapjoy						();
-	void			RegisterLuaClass				( USLuaState& state );
+	void			RegisterLuaClass				( MOAILuaState& state );
 	void			SendVideoAdBeginEvent			();
 	void			SendVideoAdCloseEvent			();
 };
