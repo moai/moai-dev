@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moaicore/MOAIObject.h>
+#include <moaicore/MOAILuaObject.h>
 #include <moaicore/MOAILuaState.h>
 #include <moaicore/MOAILuaStateHandle.h>
 #include <moaicore/MOAILuaRuntime.h>
@@ -214,7 +214,7 @@ static int _deleteLuaData ( lua_State* L ) {
 
 	MOAILuaState state ( L );
 
-	MOAIObject* self = state.GetLuaObject < MOAIObject >( 1 );
+	MOAILuaObject* self = state.GetLuaObject < MOAILuaObject >( 1 );
 	delete self;
 
 	return 0;
@@ -291,7 +291,7 @@ static int _register ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAILuaRuntime::ClearObjectStackTrace ( MOAIObject* object ) {
+void MOAILuaRuntime::ClearObjectStackTrace ( MOAILuaObject* object ) {
 
 	if ( object ) {
 		this->mLeaks.erase ( object );
@@ -309,7 +309,7 @@ void MOAILuaRuntime::Close () {
 }
 
 //----------------------------------------------------------------//
-void MOAILuaRuntime::DeregisterObject ( MOAIObject& object ) {
+void MOAILuaRuntime::DeregisterObject ( MOAILuaObject& object ) {
 
 	this->mObjectCount--;
 	
@@ -537,7 +537,7 @@ void MOAILuaRuntime::RegisterModule ( cc8* name, lua_CFunction loader, bool auto
 }
 
 //----------------------------------------------------------------//
-void MOAILuaRuntime::RegisterObject ( MOAIObject& object ) {
+void MOAILuaRuntime::RegisterObject ( MOAILuaObject& object ) {
 
 	this->mObjectCount++;
 	
@@ -556,7 +556,7 @@ void MOAILuaRuntime::ReportHistogram ( FILE *f ) {
 	HistSet::iterator histSetIt = this->mHistSet.begin ();
 	for ( ; histSetIt != this->mHistSet.end (); ++histSetIt ) {
 	
-		MOAIObject* obj = *histSetIt;
+		MOAILuaObject* obj = *histSetIt;
 		cc8* name = obj->TypeName ();
 	
 		if ( !histogram.contains ( name )) {
@@ -603,7 +603,7 @@ void MOAILuaRuntime::ReportLeaksFormatted ( FILE *f ) {
 		
 		const LeakPtrList& list = i->second;
 		
-		MOAIObject *o = list.front ();
+		MOAILuaObject *o = list.front ();
 		fprintf ( f, "Allocation: %lu x %s\n", list.size (), o->TypeName ()); 
 		for( LeakPtrList::const_iterator j = list.begin (); j != list.end (); ++j ) {
 			fprintf ( f, "\t(%6d) %p\n", ( *j )->GetRefCount (), *j );
@@ -646,7 +646,7 @@ void MOAILuaRuntime::ResetLeakTracking () {
 }
 
 //----------------------------------------------------------------//
-void MOAILuaRuntime::SetObjectStackTrace ( MOAIObject* object ) {
+void MOAILuaRuntime::SetObjectStackTrace ( MOAILuaObject* object ) {
 
 	if ( object && this->mLeakTrackingEnabled ) {
 	

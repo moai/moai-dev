@@ -41,7 +41,7 @@ void MOAIInputDevice::HandleEvent ( u8 sensorID, USStream& eventStream ) {
 MOAIInputDevice::MOAIInputDevice () :
 	mIsActive ( true ) {
 	
-	RTTI_SINGLE ( MOAIObject )
+	RTTI_SINGLE ( MOAILuaObject )
 }
 
 //----------------------------------------------------------------//

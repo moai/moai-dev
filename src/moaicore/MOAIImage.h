@@ -41,7 +41,7 @@ namespace MOAIImageTransform {
 	@flag	COLOR_FMT_RGBA_8888
 */
 class MOAIImage :
-	public virtual MOAIObject {
+	public virtual MOAILuaObject {
 private:
 
 	USPixel::Format		mPixelFormat;

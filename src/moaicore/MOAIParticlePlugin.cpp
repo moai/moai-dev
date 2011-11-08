@@ -42,7 +42,7 @@ MOAIParticlePlugin::MOAIParticlePlugin () :
 	mInitFunc ( 0 ),
 	mRenderFunc ( 0 ) {
 
-	RTTI_SINGLE ( MOAIObject )
+	RTTI_SINGLE ( MOAILuaObject )
 }
 
 //----------------------------------------------------------------//

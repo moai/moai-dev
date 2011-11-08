@@ -15,7 +15,7 @@ class MOAISensor;
 	@text	Manager class for input bindings. Has no public methods.
 */
 class MOAIInputDevice :
-	public virtual MOAIObject {
+	public virtual MOAILuaObject {
 private:
 
 	STLString	mName;

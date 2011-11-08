@@ -34,8 +34,8 @@ class MOAIProp2D;
 	const DEFAULT_STEP_MULTIPLIER		Value is 1
 */
 class MOAISim :
-	public USGlobalClass < MOAISim, MOAIGlobalEventSource >,
-	public USGlobalClassFinalizer {
+	public MOAIGlobalClass < MOAISim, MOAIGlobalEventSource >,
+	public MOAIGlobalClassFinalizer {
 private:
 
 	// timer state

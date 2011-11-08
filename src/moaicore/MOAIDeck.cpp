@@ -124,7 +124,7 @@ void MOAIDeck::LoadShader () {
 MOAIDeck::MOAIDeck () :
 	mContentMask ( 0xffffffff ) {
 	
-	RTTI_SINGLE ( MOAIObject )
+	RTTI_SINGLE ( MOAILuaObject )
 }
 
 //----------------------------------------------------------------//

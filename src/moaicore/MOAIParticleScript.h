@@ -34,7 +34,7 @@ class MOAIParticleSystem;
 	@const	SPRITE_IDX
 */
 class MOAIParticleScript :
-	public virtual MOAIObject {
+	public virtual MOAILuaObject {
 private:
 	
 	friend class MOAIParticleState;

@@ -35,7 +35,7 @@ struct AKUContext {
 	AKU_DEFINE_FUNC_CONTEXT ( OpenWindow );
 	AKU_DEFINE_FUNC_CONTEXT ( SetSimStep );
 	
-	USGlobals*			mGlobals;
+	MOAIGlobals*			mGlobals;
 	void*				mUserdata;
 };
 
@@ -73,7 +73,7 @@ AKU_DEFINE_FUNC_ACCESSORS ( SetSimStep, _SetSimStep )
 static void _deleteContext ( AKUContext* context ) {
 	
 	if ( context->mGlobals ) {
-		USGlobalsMgr::Delete ( context->mGlobals );
+		MOAIGlobalsMgr::Delete ( context->mGlobals );
 	}
 	free ( context );
 }
@@ -108,7 +108,7 @@ AKUContextID AKUCreateContext () {
 	
 	gContext->mUserdata = 0;
 	
-	gContext->mGlobals = USGlobalsMgr::Create ();
+	gContext->mGlobals = MOAIGlobalsMgr::Create ();
 	moaicore::InitGlobals ( gContext->mGlobals );
 
 	if ( sysInit ) {
@@ -313,10 +313,10 @@ void AKUSetContext ( AKUContextID contextID ) {
 		gContext = gContextMap->value_for_key ( contextID );
 		
 		if ( gContext ) {
-			USGlobalsMgr::Set ( gContext->mGlobals );
+			MOAIGlobalsMgr::Set ( gContext->mGlobals );
 		}
 		else {
-			USGlobalsMgr::Set ( 0 );
+			MOAIGlobalsMgr::Set ( 0 );
 		}
 	}
 }

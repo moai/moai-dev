@@ -127,7 +127,7 @@ MOAIGfxResource::MOAIGfxResource () :
 	mState ( STATE_CLEAR ),
 	mLastRenderCount ( 0 ) {
 
-	RTTI_SINGLE ( MOAIObject )
+	RTTI_SINGLE ( MOAILuaObject )
 
 	this->mLink.Data ( this );
 	

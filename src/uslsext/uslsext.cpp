@@ -38,9 +38,9 @@ static void _cleanup () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void uslsext::InitGlobals ( USGlobals* globals ) {
+void uslsext::Init () {
 
-	uslscore::InitGlobals ( globals );
+	uslscore::Init ();
 
 	static bool sysInit = true;
 	if ( sysInit ) {;

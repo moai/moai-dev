@@ -461,7 +461,7 @@ void MOAIProp2D::Draw () {
 	}
 	
 	// TODO
-	//MOAILayoutFrame* parentFrame = USCast < MOAILayoutFrame >( this->mParent );
+	//MOAILayoutFrame* parentFrame = MOAICast < MOAILayoutFrame >( this->mParent );
 	//if ( parentFrame ) {
 	//	gfxDevice.SetScissorRect ();
 	//}
@@ -657,7 +657,7 @@ void MOAIProp2D::LoadShader () {
 	}
 	
 	// TODO
-	//MOAILayoutFrame* parent = USCast < MOAILayoutFrame >( this->mParent );
+	//MOAILayoutFrame* parent = MOAICast < MOAILayoutFrame >( this->mParent );
 	//if ( parent ) {
 	//	USRect scissorRect = parent->GetScissorRect ();			
 	//	gfxDevice.SetScissorRect ( scissorRect );

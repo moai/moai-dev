@@ -19,7 +19,7 @@ class MOAISurfaceSampler2D;
 	@text	Base class for decks.
 */
 class MOAIDeck :
-	public virtual MOAIObject {
+	public virtual MOAILuaObject {
 protected:
 
 	enum {

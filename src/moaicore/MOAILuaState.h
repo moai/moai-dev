@@ -6,7 +6,7 @@
 
 class USCipher;
 class MOAILuaRef;
-class MOAIObject;
+class MOAILuaObject;
 class USStreamFormatter;
 
 #define LUA_SETUP(type,str) \
@@ -84,7 +84,7 @@ public:
 	void			Push					( u64 value );
 	void			Push					( uintptr value );
 	void			Push					( lua_CFunction value );
-	void			Push					( MOAIObject* luaObject );
+	void			Push					( MOAILuaObject* luaObject );
 	void			Push					( MOAILuaRef& ref );
 	void			PushPtrUserData			( void* ptr );
 	int				PushTableItr			( int idx );

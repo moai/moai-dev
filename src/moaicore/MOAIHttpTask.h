@@ -14,7 +14,7 @@ class MOAIHttpTaskInfo;
 // MOAIHttpTask
 //================================================================//
 class MOAIHttpTask :
-	public virtual MOAIObject {
+	public virtual MOAILuaObject {
 private:
 
 	MOAIHttpTaskInfo*	mInfo;

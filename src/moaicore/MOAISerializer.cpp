@@ -5,7 +5,7 @@
 #include <moaicore/MOAISerializer.h>
 #include <moaicore/MOAILuaState.h>
 #include <moaicore/MOAILuaStateHandle.h>
-#include <moaicore/MOAIObject.h>
+#include <moaicore/MOAILuaObject.h>
 #include <moaicore/MOAILuaRuntime.h>
 #include <moaicore/MOAILuaRef.h>
 #include <moaicore/MOAILuaState-impl.h>
@@ -60,13 +60,13 @@ int MOAISerializer::_exportToString ( lua_State* L ) {
 	@overload
 
 		@in		MOAISerializer self
-		@in		MOAIObject data			The object to serialize.
+		@in		MOAILuaObject data			The object to serialize.
 		@out	nil
 */
 int MOAISerializer::_serialize ( lua_State* L ) {
 	LUA_SETUP ( MOAISerializer, "U" )
 
-	MOAIObject* object = state.GetLuaObject < MOAIObject >( 2 );
+	MOAILuaObject* object = state.GetLuaObject < MOAILuaObject >( 2 );
 	if ( object ) {
 		self->AddLuaReturn ( object );
 	}
@@ -90,7 +90,7 @@ int MOAISerializer::_serialize ( lua_State* L ) {
 	@overload
 
 		@in		string filename			The file to create.
-		@in		MOAIObject data			The object to serialize.
+		@in		MOAILuaObject data			The object to serialize.
 		@out	nil
 */
 int MOAISerializer::_serializeToFile ( lua_State* L ) {
@@ -119,7 +119,7 @@ int MOAISerializer::_serializeToFile ( lua_State* L ) {
 	
 	@overload
 
-		@in		MOAIObject data			The object to serialize.
+		@in		MOAILuaObject data			The object to serialize.
 		@out	string serialized		The serialized string.
 */
 int MOAISerializer::_serializeToString ( lua_State* L ) {
@@ -161,7 +161,7 @@ static STLString _escapeString ( cc8* str ) {
 }
 
 //----------------------------------------------------------------//
-void MOAISerializer::AddLuaReturn ( MOAIObject* object ) {
+void MOAISerializer::AddLuaReturn ( MOAILuaObject* object ) {
 
 	uintptr memberID = this->AffirmMemberID ( object );
 
@@ -181,7 +181,7 @@ void MOAISerializer::AddLuaReturn ( MOAILuaState& state, int idx ) {
 }
 
 //----------------------------------------------------------------//
-uintptr MOAISerializer::AffirmMemberID ( MOAIObject* object ) {
+uintptr MOAISerializer::AffirmMemberID ( MOAILuaObject* object ) {
 
 	uintptr memberID = this->GetID ( object );
 	
@@ -205,7 +205,7 @@ uintptr MOAISerializer::AffirmMemberID ( MOAILuaState& state, int idx ) {
 
 	// if we're an object, affirm as such...
 	if ( state.IsType ( idx, LUA_TUSERDATA )) {
-		return this->AffirmMemberID ( state.GetLuaObject < MOAIObject >( -1 ));
+		return this->AffirmMemberID ( state.GetLuaObject < MOAILuaObject >( -1 ));
 	}
 
 	// bail if we're not a table
@@ -344,7 +344,7 @@ void MOAISerializer::WriteObjectDecls ( USStream& stream ) {
 	objectIt = this->mObjectMap.begin ();
 	for ( ; objectIt != this->mObjectMap.end (); ++objectIt ) {
 		
-		MOAIObject* object = objectIt->second;
+		MOAILuaObject* object = objectIt->second;
 		if ( !object ) continue;
 		
 		uintptr id = this->GetID ( object );
@@ -364,7 +364,7 @@ void MOAISerializer::WriteObjectInits ( USStream& stream ) {
 	
 	while ( this->mPending.size ()) {
 	
-		MOAIObject* object = this->mPending.front ();
+		MOAILuaObject* object = this->mPending.front ();
 		assert ( object );
 		this->mPending.pop_front ();
 		
@@ -588,7 +588,7 @@ u32 MOAISerializer::WriteTableInitializer ( USStream& stream, MOAILuaState& stat
 				break;
 			}
 			case LUA_TUSERDATA: {
-				MOAIObject* object = state.GetLuaObject < MOAIObject >( -1 );
+				MOAILuaObject* object = state.GetLuaObject < MOAILuaObject >( -1 );
 				u32 instanceID = this->GetID ( object );
 				stream.Print ( "objects [ 0x%08X ]\n", instanceID );
 				break;

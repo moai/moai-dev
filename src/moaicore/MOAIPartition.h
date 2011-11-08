@@ -16,7 +16,7 @@
 			Configure for performance; default behavior is a simple list.
 */
 class MOAIPartition :
-	public virtual MOAIObject {
+	public virtual MOAILuaObject {
 private:
 
 	friend class MOAIPartitionCell;

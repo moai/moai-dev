@@ -21,7 +21,7 @@
 	@const OS_BRAND_UNAVAILABLE		Signifies that the operating system cannot be determined
 */
 class MOAIEnvironment :
-	public USGlobalClass < MOAIEnvironment, MOAIObject > {
+	public MOAIGlobalClass < MOAIEnvironment, MOAILuaObject > {
 private:
 	STLString			mAppDisplayName;
 	STLString			mAppID;

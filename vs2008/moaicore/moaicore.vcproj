@@ -1476,6 +1476,18 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\moaicore\MOAILuaObject-impl.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAILuaObject.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAILuaObject.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\moaicore\MOAILuaRef.cpp"
 				>
 			</File>
@@ -1515,18 +1527,6 @@
 				RelativePath="..\..\src\moaicore\MOAILuaStateHandle.h"
 				>
 			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIObject-impl.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIObject.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIObject.h"
-				>
-			</File>
 		</Filter>
 		<Filter
 			Name="serializer"
@@ -1553,6 +1553,50 @@
 			</File>
 			<File
 				RelativePath="..\..\src\moaicore\MOAISerializerBase.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="lifecycle"
+			>
+			<File
+				RelativePath="..\..\src\moaicore\MOAICanary.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAICanary.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIGlobals.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIGlobals.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIObject.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIObject.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIRtti.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIRtti.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAISharedPtr.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIWeakPtr.h"
 				>
 			</File>
 		</Filter>

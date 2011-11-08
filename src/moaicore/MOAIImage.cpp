@@ -878,7 +878,7 @@ MOAIImage::MOAIImage () :
 	mPalette ( 0 ),
 	mBitmap ( 0 ) {
 	
-	RTTI_SINGLE ( MOAIObject )
+	RTTI_SINGLE ( MOAILuaObject )
 }
 
 //----------------------------------------------------------------//

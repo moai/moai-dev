@@ -21,7 +21,7 @@
 	@flag	ALL
 */
 class MOAIBox2DArbiter :
-	public virtual MOAIObject,
+	public virtual MOAILuaObject,
 	public b2ContactListener {
 private:
 

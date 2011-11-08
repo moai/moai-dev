@@ -161,7 +161,7 @@ MOAICpArbiter::MOAICpArbiter () :
 	mArbiter ( 0 ) {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIObject )
+		RTTI_EXTEND ( MOAILuaObject )
 	RTTI_END
 }
 

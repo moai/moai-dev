@@ -4,6 +4,7 @@
 #ifndef	MOAILOGMGR_H
 #define	MOAILOGMGR_H
 
+#include <moaicore/MOAIGlobals.h>
 #include <moaicore/MOAILua.h>
 
 //================================================================//
@@ -30,7 +31,7 @@ class MOAILogMessage {
 	@const LOG_STATUS
 */
 class MOAILogMgr :
-	public USGlobalClass < MOAILogMgr, MOAIObject > {
+	public MOAIGlobalClass < MOAILogMgr, MOAILuaObject > {
 private:
 
 	typedef STLMap < u32, MOAILogMessage >::iterator MessageMapIt;

@@ -16,7 +16,7 @@
 	@text	Chipmunk Shape.
 */
 class MOAICpShape :
-	public virtual MOAIObject,
+	public virtual MOAILuaObject,
 	public MOAICpPrim {
 private:
 

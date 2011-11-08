@@ -6,7 +6,7 @@
 #include <moaicore/MOAISerializer.h>
 #include <moaicore/MOAILuaState.h>
 #include <moaicore/MOAILuaStateHandle.h>
-#include <moaicore/MOAIObject.h>
+#include <moaicore/MOAILuaObject.h>
 #include <moaicore/MOAILuaRuntime.h>
 #include <moaicore/MOAILuaRef.h>
 
@@ -21,7 +21,7 @@
 int MOAIDeserializer::_initObject ( lua_State* L ) {
 	LUA_SETUP ( MOAIDeserializer, "UUTT" );
 
-	MOAIObject* object = state.GetLuaObject < MOAIObject >( 2 );
+	MOAILuaObject* object = state.GetLuaObject < MOAILuaObject >( 2 );
 	if ( !object ) return 0;
 
 	object->SetMemberTable ( state, 3 );
@@ -34,7 +34,7 @@ int MOAIDeserializer::_initObject ( lua_State* L ) {
 int MOAIDeserializer::_registerObjectID ( lua_State* L ) {
 	LUA_SETUP ( MOAIDeserializer, "UUN" );
 
-	MOAIObject* object = state.GetLuaObject < MOAIObject >( 2 );
+	MOAILuaObject* object = state.GetLuaObject < MOAILuaObject >( 2 );
 	if ( !object ) return 0;
 
 	uintptr memberID = state.GetValue < uintptr >( 3, 0 );
@@ -65,7 +65,7 @@ u32 MOAIDeserializer::IsLuaFile ( cc8* filename ) {
 }
 
 //----------------------------------------------------------------//
-MOAIObject* MOAIDeserializer::MemberIDToObject ( uintptr objectID ) {
+MOAILuaObject* MOAIDeserializer::MemberIDToObject ( uintptr objectID ) {
 
 	if ( this->mObjectMap.contains ( objectID )) {
 		return this->mObjectMap [ objectID ];

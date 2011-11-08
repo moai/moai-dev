@@ -16,7 +16,7 @@ class MOAISensor;
 	@text	Input device class. Has no public methods.
 */
 class MOAIInputMgr :
-	public USGlobalClass < MOAIInputMgr, MOAIObject > {
+	public MOAIGlobalClass < MOAIInputMgr, MOAILuaObject > {
 private:
 
 	USMemStream	mInput;

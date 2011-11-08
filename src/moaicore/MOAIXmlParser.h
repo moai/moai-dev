@@ -17,7 +17,7 @@ class TiXmlNode;
 			XML not advised at all - use JSON or Lua.)
 */
 class MOAIXmlParser :
-	public USGlobalClass < MOAIXmlParser, MOAIObject > {
+	public MOAIGlobalClass < MOAIXmlParser, MOAILuaObject > {
 private:
 
 	//----------------------------------------------------------------//

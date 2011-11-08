@@ -10,7 +10,7 @@
 // MOAIGfxResource
 //================================================================//
 class MOAIGfxResource :
-	public virtual MOAIObject {
+	public virtual MOAILuaObject {
 private:
 
 	enum {

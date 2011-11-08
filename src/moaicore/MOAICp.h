@@ -15,7 +15,7 @@
 	@text	Singleton for Chipmunk global configuration.
 */
 class MOAICp :
-	public USGlobalClass < MOAICp, MOAIObject > {
+	public MOAIGlobalClass < MOAICp, MOAILuaObject > {
 private:
 
 	//----------------------------------------------------------------//

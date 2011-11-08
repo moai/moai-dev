@@ -23,7 +23,7 @@ class MOAIVertexFormat;
 	@const	GL_TRIANGLE_STRIP
 */
 class MOAIVertexBuffer :
-	public MOAIObject {
+	public MOAILuaObject {
 private:
 
 	USLeanArray < u8 > mBuffer;

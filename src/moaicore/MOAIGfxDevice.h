@@ -22,7 +22,7 @@ class MOAIViewport;
 	@text	Interface to the graphics singleton.
 */
 class MOAIGfxDevice :
-	public USGlobalClass < MOAIGfxDevice, MOAIGlobalEventSource > {
+	public MOAIGlobalClass < MOAIGfxDevice, MOAIGlobalEventSource > {
 public:
 	
 	enum {

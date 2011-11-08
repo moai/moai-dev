@@ -14,7 +14,7 @@
 	@text	Allows custom particle processing via C language callbacks.
 */
 class MOAIParticlePlugin :
-	public virtual MOAIObject {
+	public virtual MOAILuaObject {
 private:
 
 	int							mSize;

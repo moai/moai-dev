@@ -4,25 +4,26 @@
 #ifndef MOAILUARUNTIME_H
 #define MOAILUARUNTIME_H
 
+#include <moaicore/MOAIGlobals.h>
 #include <moaicore/MOAILuaRef.h>
 #include <moaicore/MOAILuaState.h>
 #include <moaicore/MOAILuaStateHandle.h>
 
-class MOAIObject;
+class MOAILuaObject;
 
 //================================================================//
 // MOAILuaRuntime
 //================================================================//
 class MOAILuaRuntime :
-	public USGlobalClass < MOAILuaRuntime > {
+	public MOAIGlobalClass < MOAILuaRuntime > {
 private:
 
-	typedef STLMap < MOAIObject*, STLString >	LeakMap;
-	typedef STLArray < MOAIObject* >			LeakPtrList;
+	typedef STLMap < MOAILuaObject*, STLString >	LeakMap;
+	typedef STLArray < MOAILuaObject* >			LeakPtrList;
 	typedef STLMap < STLString, LeakPtrList >	LeakStackMap;
 
 	typedef STLMap < STLString, size_t >		HistMap;
-	typedef STLSet < MOAIObject* >				HistSet;
+	typedef STLSet < MOAILuaObject* >				HistSet;
 
 	bool				mHistogramEnabled;
 	HistSet				mHistSet;
@@ -46,14 +47,14 @@ private:
 	static void*			_tracking_alloc			( void *ud, void *ptr, size_t osize, size_t nsize );
 
 	//----------------------------------------------------------------//
-	void					DeregisterObject		( MOAIObject& object );
+	void					DeregisterObject		( MOAILuaObject& object );
 	void					FindAndPrintLuaRefs		( int idx, cc8* prefix, FILE *f, const LeakPtrList& objects );
 	static bool				IsLuaIdentifier			( const char *str );
-	void					RegisterObject			( MOAIObject& object );
+	void					RegisterObject			( MOAILuaObject& object );
 
 public:
 
-	friend class MOAIObject;
+	friend class MOAILuaObject;
 	friend class MOAILuaRef;
 	friend class MOAILuaState;
 
@@ -61,7 +62,7 @@ public:
 	GET_SET ( bool, AllocLogEnabled, mAllocLogEnabled )
 
 	//----------------------------------------------------------------//
-	void					ClearObjectStackTrace		( MOAIObject* object );
+	void					ClearObjectStackTrace		( MOAILuaObject* object );
 	void					Close						();
 	void					EnableHistogram				( bool enable );
 	void					EnableLeakTracking			( bool enable );
@@ -76,7 +77,7 @@ public:
 	void					ReportLeaksRaw				( FILE *f );
 	void					ReportLuaRefs				( FILE *f );
 	void					ResetLeakTracking			();
-	void					SetObjectStackTrace			( MOAIObject* object );
+	void					SetObjectStackTrace			( MOAILuaObject* object );
 	void					SetPath						( cc8* path );
 	MOAILuaStateHandle		State						();
 							MOAILuaRuntime				();

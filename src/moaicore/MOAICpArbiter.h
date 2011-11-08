@@ -17,7 +17,7 @@ class MOAICpSpace;
 	@text	Chipmunk Arbiter.
 */
 class MOAICpArbiter :
-	public virtual MOAIObject {
+	public virtual MOAILuaObject {
 private:
 
 	cpArbiter*	mArbiter;

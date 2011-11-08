@@ -339,7 +339,7 @@ u32 MOAIGrid::GetTile ( int xTile, int yTile ) {
 MOAIGrid::MOAIGrid () {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIObject )
+		RTTI_EXTEND ( MOAILuaObject )
 	RTTI_END
 }
 

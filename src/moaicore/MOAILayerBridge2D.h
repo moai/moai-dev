@@ -20,8 +20,8 @@ class MOAILayerBridge2D :
 	public MOAITransform {
 private:
 
-	USWeakPtr < MOAILayer2D > mSourceScene;
-	USWeakPtr < MOAILayer2D > mTargetScene;
+	MOAIWeakPtr < MOAILayer2D > mSourceScene;
+	MOAIWeakPtr < MOAILayer2D > mTargetScene;
 
 	//----------------------------------------------------------------//
 	static int			_init					( lua_State* L );

@@ -244,7 +244,7 @@ MOAIBox2DFixture::MOAIBox2DFixture () :
 	mCollisionCategoryMask ( 0 ) {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIObject )
+		RTTI_EXTEND ( MOAILuaObject )
 	RTTI_END
 }
 

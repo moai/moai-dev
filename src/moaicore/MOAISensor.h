@@ -11,7 +11,7 @@
 	@text	Base class for sensors.
 */
 class MOAISensor :
-	public MOAIObject {
+	public MOAILuaObject {
 protected:
 
 	u32	mType;

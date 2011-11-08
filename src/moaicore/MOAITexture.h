@@ -28,7 +28,7 @@ class MOAITextureLoader;
 	@const	GL_NEAREST_MIPMAP_NEAREST
 */
 class MOAITexture :
-	public virtual MOAIObject,
+	public virtual MOAILuaObject,
 	public MOAIGfxResource {
 private:
 

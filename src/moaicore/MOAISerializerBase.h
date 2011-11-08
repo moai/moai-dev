@@ -4,19 +4,19 @@
 #ifndef MOAISERIALIZERBASE_H
 #define MOAISERIALIZERBASE_H
 
-#include <moaicore/MOAIObject.h>
-#include <moaicore/MOAIObject-impl.h>
+#include <moaicore/MOAILuaObject.h>
+#include <moaicore/MOAILuaObject-impl.h>
 
 //================================================================//
 // MOAISerializerBase
 //================================================================//
 class MOAISerializerBase :
-	public virtual MOAIObject {
+	public virtual MOAILuaObject {
 protected:
 
 	// maps IDs onto objects
-	typedef STLMap < uintptr, MOAIObject* >::iterator ObjectMapIt;
-	STLMap < uintptr, MOAIObject* > mObjectMap;
+	typedef STLMap < uintptr, MOAILuaObject* >::iterator ObjectMapIt;
+	STLMap < uintptr, MOAILuaObject* > mObjectMap;
 
 	// maps IDs onto tables
 	typedef STLMap < uintptr, MOAILuaRef >::iterator TableMapIt;
@@ -24,7 +24,7 @@ protected:
 
 	//----------------------------------------------------------------//
 	virtual cc8*	GetFileMagic			();
-	uintptr			GetID					( MOAIObject* object );
+	uintptr			GetID					( MOAILuaObject* object );
 	uintptr			GetID					( MOAILuaState& state, int idx );
 
 public:

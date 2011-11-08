@@ -18,7 +18,7 @@
 			http://www.devincook.com/goldparser
 */
 class MOAIParser :
-	virtual public MOAIObject {
+	virtual public MOAILuaObject {
 private:
 
 	USCgt			mCGT;

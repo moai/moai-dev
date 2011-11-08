@@ -6,6 +6,7 @@
 
 #include <moaicore/MOAIAction.h>
 #include <moaicore/MOAILua.h>
+#include <moaicore/MOAIWeakPtr.h>
 
 class MOAINode;
 
@@ -14,10 +15,10 @@ class MOAINode;
 //================================================================//
 class MOAIEaseDriverLink {
 public:
-	USWeakPtr < MOAINode >		mTarget;
-	u32						mAttrID;
-	float					mValue;
-	u32						mMode;
+	MOAIWeakPtr < MOAINode >	mTarget;
+	u32							mAttrID;
+	float						mValue;
+	u32							mMode;
 };
 
 //================================================================//

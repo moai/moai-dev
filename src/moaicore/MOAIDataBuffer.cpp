@@ -254,7 +254,7 @@ int MOAIDataBuffer::_setString ( lua_State* L ) {
 //----------------------------------------------------------------//
 MOAIDataBuffer::MOAIDataBuffer () {
 	
-	RTTI_SINGLE ( MOAIObject )
+	RTTI_SINGLE ( MOAILuaObject )
 }
 
 //----------------------------------------------------------------//

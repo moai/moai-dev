@@ -13,7 +13,7 @@
 	@text	Index buffer class. Unused at this time.
 */
 class MOAIIndexBuffer :
-	public MOAIObject {
+	public MOAILuaObject {
 private:
 
 	u16*	mBuffer;

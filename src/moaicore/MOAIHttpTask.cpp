@@ -235,7 +235,7 @@ MOAIHttpTask::MOAIHttpTask () :
 	mVerbose ( false ),
 	mResponseCode ( 0 ) {
 	
-	RTTI_SINGLE ( MOAIObject )
+	RTTI_SINGLE ( MOAILuaObject )
 }
 
 //----------------------------------------------------------------//

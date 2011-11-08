@@ -13,7 +13,7 @@
 	@text	Viewport object.
 */
 class MOAIViewport :
-	public virtual MOAIObject,
+	public virtual MOAILuaObject,
 	public USRect {
 private:
 

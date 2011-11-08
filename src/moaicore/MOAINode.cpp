@@ -518,7 +518,7 @@ MOAINode::MOAINode () :
 	mPrev ( 0 ),
 	mNext ( 0 ) {
 	
-	RTTI_SINGLE ( MOAIObject )
+	RTTI_SINGLE ( MOAILuaObject )
 }
 
 //----------------------------------------------------------------//

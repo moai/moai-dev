@@ -3,7 +3,7 @@
 
 #include "pch.h"
 
-#include <moaicore/MOAIObject.h>
+#include <moaicore/MOAILuaObject.h>
 #include <moaicore/MOAILuaRef.h>
 #include <moaicore/MOAILuaRuntime.h>
 #include <moaicore/MOAILuaState.h>
@@ -705,7 +705,7 @@ void MOAILuaState::Push ( lua_CFunction value ) {
 }
 
 //----------------------------------------------------------------//
-void MOAILuaState::Push ( MOAIObject* luaObject ) {
+void MOAILuaState::Push ( MOAILuaObject* luaObject ) {
 
 	if ( luaObject ) {
 		luaObject->PushLuaUserdata ( *this );

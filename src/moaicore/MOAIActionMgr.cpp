@@ -114,7 +114,7 @@ MOAIActionMgr::MOAIActionMgr () :
 	mRoot ( 0 ),
 	mCurrentAction ( 0 ) {
 	
-	RTTI_SINGLE ( MOAIObject )
+	RTTI_SINGLE ( MOAILuaObject )
 }
 
 //----------------------------------------------------------------//

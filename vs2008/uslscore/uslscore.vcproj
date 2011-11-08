@@ -371,50 +371,6 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="lifecycle"
-			>
-			<File
-				RelativePath="..\..\src\uslscore\USCanary.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslscore\USCanary.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslscore\USGlobals.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslscore\USGlobals.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslscore\USObject.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslscore\USObject.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslscore\USRtti.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslscore\USRtti.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslscore\USSharedPtr.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslscore\USWeakPtr.h"
-				>
-			</File>
-		</Filter>
-		<Filter
 			Name="stl"
 			>
 			<File

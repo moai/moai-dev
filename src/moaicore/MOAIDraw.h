@@ -12,7 +12,7 @@ class MOAITexture;
 // MOAIDraw
 //================================================================//
 class MOAIDraw :
-	public USGlobalClass < MOAIDraw, MOAIObject > {
+	public MOAIGlobalClass < MOAIDraw, MOAILuaObject > {
 private:
 
 	//----------------------------------------------------------------//

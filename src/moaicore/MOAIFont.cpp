@@ -317,7 +317,7 @@ MOAIFont::MOAIFont () :
 	mScale ( 1.0f ),
 	mLineSpacing ( 1.0f ) {
 	
-	RTTI_SINGLE ( MOAIObject )
+	RTTI_SINGLE ( MOAILuaObject )
 }
 
 //----------------------------------------------------------------//

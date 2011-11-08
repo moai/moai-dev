@@ -14,7 +14,7 @@
 			and have an event table.
 */
 class MOAIEventSource :
-	public virtual MOAIObject {
+	public virtual MOAILuaObject {
 protected:
 
 	//----------------------------------------------------------------//

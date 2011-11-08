@@ -387,7 +387,7 @@ MOAIEnvironment::MOAIEnvironment () :
 	mScreenWidth ( 0 ),
 	mScreenHeight ( 0 ) {
 
-	RTTI_SINGLE ( MOAIObject )
+	RTTI_SINGLE ( MOAILuaObject )
 }
 
 //----------------------------------------------------------------//

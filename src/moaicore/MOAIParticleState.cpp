@@ -246,7 +246,7 @@ MOAIParticleState::MOAIParticleState () :
 	mDamping ( 0.0f ) {
 
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIObject )
+		RTTI_EXTEND ( MOAILuaObject )
 	RTTI_END
 	
 	this->mMassRange [ 0 ] = 1.0f;

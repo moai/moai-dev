@@ -18,7 +18,7 @@ struct cpConstraint;
 	@text	Chipmunk Constraint.
 */
 class MOAICpConstraint :
-	public virtual MOAIObject,
+	public virtual MOAILuaObject,
 	public MOAICpPrim {
 private:
 

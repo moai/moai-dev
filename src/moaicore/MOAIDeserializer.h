@@ -36,7 +36,7 @@ public:
 
 	//----------------------------------------------------------------//
 	u32				IsLuaFile					( cc8* filename );
-	MOAIObject*		MemberIDToObject			( uintptr memberID );
+	MOAILuaObject*		MemberIDToObject			( uintptr memberID );
 	u32				SerializeFromFile			( cc8* filename );
 					MOAIDeserializer			();
 	virtual			~MOAIDeserializer			();
@@ -45,7 +45,7 @@ public:
 	template < typename TYPE >
 	TYPE* MemberIDToObject ( uintptr memberID ) {
 	
-		MOAIObject* object = this->MemberIDToObject ( memberID );
+		MOAILuaObject* object = this->MemberIDToObject ( memberID );
 		if ( object ) {
 			return object->AsType < TYPE >();
 		}

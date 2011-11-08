@@ -11,7 +11,7 @@ class MOAIUrlMgrOpaque;
 // MOAIUrlMgr
 //================================================================//
 class MOAIUrlMgr :
-	public USGlobalClass < MOAIUrlMgr > {
+	public MOAIGlobalClass < MOAIUrlMgr > {
 private:
 
 	MOAIUrlMgrOpaque*	mOpaque;

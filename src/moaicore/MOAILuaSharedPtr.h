@@ -4,7 +4,7 @@
 #ifndef	USLUASHAREDPTR_H
 #define	USLUASHAREDPTR_H
 
-class MOAIObject;
+class MOAILuaObject;
 
 //================================================================//
 // MOAILuaSharedPtr
@@ -57,7 +57,7 @@ public:
 	};
 
 	//----------------------------------------------------------------//
-	inline void Set ( MOAIObject& owner, TYPE* assign ) {
+	inline void Set ( MOAILuaObject& owner, TYPE* assign ) {
 
 		if ( this->mObject != assign ) {
 

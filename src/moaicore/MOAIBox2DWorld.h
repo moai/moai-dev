@@ -21,7 +21,7 @@ class MOAIBox2DWorld;
 // MOAIBox2DPrim
 //================================================================//
 class MOAIBox2DPrim :
-	public virtual MOAIObject  {
+	public virtual MOAILuaObject  {
 protected:
 
 	MOAIBox2DWorld* mWorld;

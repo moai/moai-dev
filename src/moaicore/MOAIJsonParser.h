@@ -13,7 +13,7 @@
 	@text	Converts between Lua and JSON.
 */
 class MOAIJsonParser :
-	public USGlobalClass < MOAIJsonParser, MOAIObject > {
+	public MOAIGlobalClass < MOAIJsonParser, MOAILuaObject > {
 private:
 
 	//----------------------------------------------------------------//

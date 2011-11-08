@@ -349,7 +349,7 @@ MOAIViewport::MOAIViewport () :
 	mOffset ( 0.0f, 0.0f ),
 	mRotation ( 0.0f ) {
 	
-	RTTI_SINGLE ( MOAIObject )
+	RTTI_SINGLE ( MOAILuaObject )
 	
 	this->Init ( 0.0f, 0.0f, 1.0f, 1.0f );
 }

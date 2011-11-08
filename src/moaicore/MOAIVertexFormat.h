@@ -40,7 +40,7 @@ private:
 	@text	Vertex format class.
 */
 class MOAIVertexFormat :
-	public virtual MOAIObject {
+	public virtual MOAILuaObject {
 public:
 
 	enum {

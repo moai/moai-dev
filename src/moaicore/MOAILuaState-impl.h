@@ -37,7 +37,7 @@ TYPE* MOAILuaState::GetLuaObject ( int idx ) {
 	if ( this->GetTop () < idx ) return 0;
 	if ( !this->IsType ( idx, LUA_TUSERDATA )) return 0;
 	
-	MOAIObject* luaData = ( MOAIObject* )this->GetPtrUserData ( idx );
+	MOAILuaObject* luaData = ( MOAILuaObject* )this->GetPtrUserData ( idx );
 	if ( luaData ) {
 		return luaData->AsType < TYPE >();
 	}
@@ -50,7 +50,7 @@ TYPE* MOAILuaState::GetLuaObject ( int idx, cc8* name ) {
 	
 	if ( this->GetField ( idx, name, LUA_TUSERDATA )) {
 		
-		MOAIObject* luaData = ( MOAIObject* )this->GetPtrUserData ( idx );
+		MOAILuaObject* luaData = ( MOAILuaObject* )this->GetPtrUserData ( idx );
 		this->Pop ( 1 );
 		
 		if ( luaData ) {

@@ -61,7 +61,7 @@
 namespace uslsext {
 
 	//----------------------------------------------------------------//
-	void			InitGlobals			( USGlobals* globals );
+	void			Init			();
 }
 
 #endif

@@ -279,7 +279,7 @@ MOAIVertexFormat::MOAIVertexFormat () :
 	mTotalAttributes ( 0 ),
 	mVertexSize ( 0 ) {
 	
-	RTTI_SINGLE ( MOAIObject )
+	RTTI_SINGLE ( MOAILuaObject )
 	
 	this->mAttributes.Init ( TOTAL_ARRAY_TYPES );
 	

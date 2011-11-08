@@ -31,7 +31,7 @@
 	@const	TILE_TOP_CENTER
 */
 class MOAIGrid :
-	public MOAIObject,
+	public MOAILuaObject,
 	public MOAIGridSpace {
 private:
 

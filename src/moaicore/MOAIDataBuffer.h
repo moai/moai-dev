@@ -17,7 +17,7 @@ class MOAIDataIOAction;
 			between Lua and C.
 */
 class MOAIDataBuffer :
-	public virtual MOAIObject,
+	public virtual MOAILuaObject,
 	public USData {
 private:
 	

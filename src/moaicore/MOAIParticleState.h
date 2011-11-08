@@ -6,6 +6,7 @@
 
 #include <moaicore/MOAILua.h>
 #include <moaicore/MOAIParticle.h>
+#include <moaicore/MOAIWeakPtr.h>
 
 class MOAIParticleForce;
 class MOAIParticlePlugin;
@@ -19,7 +20,7 @@ class MOAIParticleSystem;
 	@text	Particle state.
 */
 class MOAIParticleState :
-	public virtual MOAIObject {
+	public virtual MOAILuaObject {
 private:
 	friend class MOAIParticleScript;
 	friend class MOAIParticleSystem;
@@ -36,7 +37,7 @@ private:
 	MOAILuaSharedPtr < MOAIParticleScript > mRender;
 	MOAILuaSharedPtr < MOAIParticlePlugin > mPlugin;
 	
-	USWeakPtr < MOAIParticleState > mNext;
+	MOAIWeakPtr < MOAIParticleState > mNext;
 
 	//----------------------------------------------------------------//
 	static int		_clearForces			( lua_State* L );

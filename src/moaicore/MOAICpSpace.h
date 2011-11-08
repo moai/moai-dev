@@ -18,7 +18,7 @@ class MOAICpCollisionHandler;
 // MOAICpPrim
 //================================================================//
 class MOAICpPrim :
-	public virtual MOAIObject  {
+	public virtual MOAILuaObject  {
 protected:
 
 	USLeanLink < MOAICpPrim* > mLinkInSpace;

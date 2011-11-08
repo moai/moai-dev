@@ -208,7 +208,7 @@ MOAILogMgr::MOAILogMgr () :
 	mFile ( stdout ),
 	mOwnsFileHandle ( false ) {
 
-	RTTI_SINGLE ( MOAIObject )
+	RTTI_SINGLE ( MOAILuaObject )
 }
 
 //----------------------------------------------------------------//

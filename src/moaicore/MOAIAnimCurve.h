@@ -6,6 +6,7 @@
 
 #include <moaicore/MOAILua.h>
 #include <moaicore/MOAINode.h>
+#include <moaicore/MOAIWeakPtr.h>
 
 //================================================================//
 // MOAIAnimCurve

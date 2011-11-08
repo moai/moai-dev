@@ -18,7 +18,7 @@ class MOAITexture;
 	@text	Font class.
 */
 class MOAIFont :
-	public virtual MOAIObject {
+	public virtual MOAILuaObject {
 private:
 
 	USLeanArray < MOAIGlyph >	mByteGlyphs;

@@ -55,7 +55,7 @@ private:
 	@const	TEXT_BOX
 */
 class MOAIDebugLines :
-	public USGlobalClass < MOAIDebugLines, MOAIObject > {
+	public MOAIGlobalClass < MOAIDebugLines, MOAILuaObject > {
 public:
 
 	enum {

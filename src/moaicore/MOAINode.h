@@ -6,6 +6,8 @@
 
 #include <moaicore/MOAIAttrOp.h>
 #include <moaicore/MOAILua.h>
+#include <moaicore/MOAISharedPtr.h>
+#include <moaicore/MOAIWeakPtr.h>
 
 #define PACK_ATTR(type,attrID)	\
 	( MOAINode::PackAttrID < type >( type::attrID ))
@@ -31,7 +33,7 @@ class MOAIDepLink;
 			graph nodes.
 */
 class MOAINode :
-	public virtual MOAIObject {
+	public virtual MOAILuaObject {
 private:
 
 	enum {
@@ -129,7 +131,7 @@ protected:
 
 	//----------------------------------------------------------------//
 	template < typename TYPE >
-	void SetDependentMember ( USSharedPtr < TYPE >& member, TYPE* ref ) {
+	void SetDependentMember ( MOAISharedPtr < TYPE >& member, TYPE* ref ) {
 		
 		if ( member == ref ) return;
 	
@@ -148,7 +150,7 @@ protected:
 
 	//----------------------------------------------------------------//
 	template < typename TYPE >
-	void SetDependentMember ( USWeakPtr < TYPE >& member, TYPE* ref ) {
+	void SetDependentMember ( MOAIWeakPtr < TYPE >& member, TYPE* ref ) {
 		
 		if ( member == ref ) return;
 		

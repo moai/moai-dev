@@ -22,7 +22,7 @@ cc8* MOAISerializerBase::GetFileMagic () {
 }
 
 //----------------------------------------------------------------//
-uintptr MOAISerializerBase::GetID ( MOAIObject* object ) {
+uintptr MOAISerializerBase::GetID ( MOAILuaObject* object ) {
 
 	return ( uintptr )object;
 }
@@ -37,7 +37,7 @@ uintptr MOAISerializerBase::GetID ( MOAILuaState& state, int idx ) {
 MOAISerializerBase::MOAISerializerBase () {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIObject )
+		RTTI_EXTEND ( MOAILuaObject )
 	RTTI_END
 }
 

@@ -120,7 +120,7 @@ MOAIBox2DArbiter::MOAIBox2DArbiter () :
 	mImpulse ( 0 ) {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIObject )
+		RTTI_EXTEND ( MOAILuaObject )
 	RTTI_END
 }
 

@@ -127,7 +127,7 @@ MOAISensor* MOAIInputMgr::GetSensor ( u8 deviceID, u8 sensorID ) {
 //----------------------------------------------------------------//
 MOAIInputMgr::MOAIInputMgr () {
 	
-	RTTI_SINGLE ( MOAIObject )
+	RTTI_SINGLE ( MOAILuaObject )
 	
 	this->mInput.SetChunkSize ( 1024 );
 }

@@ -190,7 +190,7 @@ MOAIBox2DJoint::MOAIBox2DJoint () :
 	mJoint ( 0 ) {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIObject )
+		RTTI_EXTEND ( MOAILuaObject )
 	RTTI_END
 }
 

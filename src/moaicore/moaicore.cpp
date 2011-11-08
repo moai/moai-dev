@@ -9,6 +9,8 @@
 static void _cleanup () {
 
 	curl_global_cleanup ();
+	
+	MOAIGlobalsMgr::Finalize ();
 }
 
 //================================================================//
@@ -16,9 +18,9 @@ static void _cleanup () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void moaicore::InitGlobals ( USGlobals* globals ) {
+void moaicore::InitGlobals ( MOAIGlobals* globals ) {
 
-	uslsext::InitGlobals ( globals );
+	uslsext::Init ();
 
 	static bool sysInit = true;
 	if ( sysInit ) {
@@ -30,6 +32,8 @@ void moaicore::InitGlobals ( USGlobals* globals ) {
 		atexit ( _cleanup );
 		sysInit = false;
 	}
+
+	MOAIGlobalsMgr::Set ( globals );
 
 	MOAIUrlMgr::Affirm ();
 	MOAIXmlParser::Affirm ();

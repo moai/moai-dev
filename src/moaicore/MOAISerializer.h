@@ -21,8 +21,8 @@ class MOAISerializer :
 private:
 
 	// list of instances waiting to be processed
-	typedef STLList < MOAIObject* >::iterator PendingIt;
-	STLList < MOAIObject* > mPending;
+	typedef STLList < MOAILuaObject* >::iterator PendingIt;
+	STLList < MOAILuaObject* > mPending;
 
 	// return list for Lua runtime
 	typedef STLList < u32 >::iterator ReturnListIt;
@@ -58,9 +58,9 @@ public:
 	DECL_LUA_FACTORY ( MOAISerializer )
 
 	//----------------------------------------------------------------//
-	void			AddLuaReturn				( MOAIObject* object );
+	void			AddLuaReturn				( MOAILuaObject* object );
 	void			AddLuaReturn				( MOAILuaState& state, int idx );
-	uintptr			AffirmMemberID				( MOAIObject* object );
+	uintptr			AffirmMemberID				( MOAILuaObject* object );
 	uintptr			AffirmMemberID				( MOAILuaState& state, int idx );
 	void			Clear						();
 	STLString		SerializeToString			();

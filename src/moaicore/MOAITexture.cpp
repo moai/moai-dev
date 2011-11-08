@@ -746,7 +746,7 @@ MOAITexture::MOAITexture () :
 	mTransform ( DEFAULT_TRANSFORM ) {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIObject )
+		RTTI_EXTEND ( MOAILuaObject )
 		RTTI_EXTEND ( MOAIGfxResource )
 	RTTI_END
 }

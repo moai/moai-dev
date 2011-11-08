@@ -2,357 +2,46 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <moaicore/MOAICanary.h>
 #include <moaicore/MOAIObject.h>
-#include <moaicore/MOAILuaRef.h>
-#include <moaicore/MOAILuaState.h>
-#include <moaicore/MOAILuaRuntime.h>
-#include <moaicore/MOAISerializer.h>
-#include <moaicore/MOAILuaState-impl.h>
-
-#define LUA_MEMBER_TABLE_NAME "_m"
-
-//================================================================//
-// MOAILuaLocal
-//================================================================//
-	
-//----------------------------------------------------------------//
-MOAILuaLocal::MOAILuaLocal () :
-	mRef ( LUA_NOREF ) {
-}
-
-//----------------------------------------------------------------//
-MOAILuaLocal::~MOAILuaLocal () {
-}
-
-//================================================================//
-// local
-//================================================================//
-
-//----------------------------------------------------------------//
-int MOAIObject::_gc ( lua_State* L ) {
-
-	MOAILuaState state ( L );
-	
-	MOAIObject* data = ( MOAIObject* )state.GetPtrUserData ( 1 );
-
-	bool cleanup = ( data->GetRefCount () == 0 ); // ready to cleanup if no references
-
-	// in any event, let's get rid of the userdata and lua refs we know about
-	data->ClearLocal ( data->mContain );
-	data->mUserdata.Clear ();
-	data->mInstanceTable.Clear ();
-	
-	// check to see if gc is being invoked during finalization
-	if ( MOAILuaRuntime::IsValid ()) {
-		MOAILuaRuntime::Get ().ClearObjectStackTrace ( data );
-	}
-
-	// delete if no references
-	if ( cleanup ) {
-		delete data;
-	}
-	return 0;
-}
-
-//----------------------------------------------------------------//
-int MOAIObject::_getClass ( lua_State* L ) {
-
-	MOAILuaState state ( L );
-	MOAIObject* object = ( MOAIObject* )state.GetPtrUserData ( 1 );
-
-	if ( object ) {
-		object->PushLuaClassTable ( state );
-		return 1;
-	}
-	return 0;
-}
-
-//----------------------------------------------------------------//
-int MOAIObject::_getClassName ( lua_State* L ) {
-
-	MOAILuaState state ( L );
-	MOAIObject* object = ( MOAIObject* )state.GetPtrUserData ( 1 );
-
-	if ( object ) {
-		lua_pushstring ( L, object->TypeName ());
-		return 1;
-	}
-	return 0;
-}
-
-//----------------------------------------------------------------//
-int MOAIObject::_index ( lua_State* L ) {
-
-	// push the instance table
-	lua_getmetatable ( L, 1 );
-
-	// push the member table
-	lua_pushstring ( L, LUA_MEMBER_TABLE_NAME );
-	lua_rawget ( L, -2 );
-	
-	// try to get the value
-	lua_pushvalue ( L, 2 ); 
-	lua_gettable ( L, -2 );
-	
-	// if nil...
-	if ( lua_isnil ( L, -1 )) {
-	
-		// pop the nil and the member table
-		lua_pop ( L, 2 );
-		
-		// get the instance table's metatable (the interface table)
-		lua_getmetatable ( L, -1 );
-		
-		// and try to get the value from the interface table directly
-		lua_pushvalue ( L, 2 );
-		lua_rawget ( L, -2 );
-	}
-	return 1;
-}
-
-//----------------------------------------------------------------//
-int MOAIObject::_newindex ( lua_State* L ) {
-
-	// push the instance table
-	lua_getmetatable ( L, 1 );
-
-	// push the private table
-	lua_pushstring ( L, LUA_MEMBER_TABLE_NAME );
-	lua_rawget ( L, -2 );
-
-	// set the index into the private table
-	lua_pushvalue ( L, 2 );
-	lua_pushvalue ( L, 3 );
-	
-	lua_settable ( L, -3 );
-
-	return 0;
-}
-
-//----------------------------------------------------------------//
-int MOAIObject::_tombstone ( lua_State* L ) {
-
-	MOAILuaState state ( L );
-	
-	USLog::Print ( "----------------------------------------------------------------\n" );
-	USLog::Print ( "ERROR: Attempt to access missing object instance.\n" );
-	state.PrintStackTrace ( USLog::CONSOLE, 0 );
-	USLog::Print ( "\n" );
-	
-	return 0;
-}
-
-//----------------------------------------------------------------//
-int MOAIObject::_tostring ( lua_State* L ) {
-
-	MOAILuaState state ( L );
-
-	MOAIObject* data = ( MOAIObject* )state.GetPtrUserData ( 1 );
-	if ( data ) {
-	
-		STLString str;
-		str.write ( "0x%p <%s>", data, data->TypeName ()); // TODO: 64-bit
-		state.Push ( str );
-		return 1;
-	}
-	return 0;
-}
 
 //================================================================//
 // MOAIObject
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIObject::BindToLuaWithTable ( MOAILuaState& state ) {
+MOAICanary* MOAIObject::AffirmCanary () {
 
-	assert ( !this->mUserdata );
-	assert ( state.IsType ( -1, LUA_TTABLE ));
-	
-	MOAILuaClass* type = this->GetLuaClass ();
-	assert ( type );
-	
-	// create and initialize a new userdata
-	state.PushPtrUserData ( this );
-	
-	// create and initialize the private table
-	lua_newtable ( state );
-	
-	// set the ref to the private table
-	lua_pushvalue ( state, -3 );
-	lua_setfield ( state, -2, LUA_MEMBER_TABLE_NAME );
-	
-	// initialize the private table
-	lua_pushcfunction ( state, MOAIObject::_gc );
-	lua_setfield ( state, -2, "__gc" );
-	
-	lua_pushcfunction ( state, MOAIObject::_tostring );
-	lua_setfield ( state, -2, "__tostring" );
-	
-	lua_pushcfunction ( state, MOAIObject::_index );
-	lua_setfield ( state, -2, "__index" );
-	
-	lua_pushcfunction ( state, MOAIObject::_newindex );
-	lua_setfield ( state, -2, "__newindex" );
-	
-	// make the interface table the instance table's meta
-	type->PushInterfaceTable ( state );
-	lua_setmetatable ( state, -2 );
-	
-	// grab a ref to the instance table; attach it to the userdata
-	this->mInstanceTable = state.GetWeakRef ( -1 );
-	lua_setmetatable ( state, -2 );
-	
-	// and take a ref back to the userdata	
-	if ( this->GetRefCount () == 0 ) {
-		this->mUserdata.SetWeakRef ( state, -1 );
+	if ( !this->mCanary ) {
+		this->mCanary = new MOAICanary ();
+		this->mCanary->mObject = this;
 	}
-	else {
-		this->mUserdata.SetStrongRef ( state, -1 );
-	}
-	
-	// overwrite the member table
-	lua_replace ( state, -2 );
-	
-	assert ( !lua_isnil ( state, -1 ));
+	return this->mCanary;
 }
 
 //----------------------------------------------------------------//
-void MOAIObject::ClearLocal ( MOAILuaLocal& ref ) {
-	
-	if ( MOAILuaRuntime::IsValid ()) {
-		MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
-		
-		if ( this->mInstanceTable.PushRef ( state )) {
-		
-			lua_pushnumber ( state, ref.mRef );
-			lua_pushnil ( state );
-			lua_settable ( state, -3 );
-			lua_pop ( state, 1 );
-		}
+u32 MOAIObject::GetRefCount () {
+
+	if ( this->mCanary ) {
+		return this->mCanary->mStrongRefs;
 	}
-	ref.mRef = LUA_NOREF;
-}
-
-//----------------------------------------------------------------//
-MOAILuaClass* MOAIObject::GetLuaClass () {
-
-	// no implementation
-	assert ( false );
 	return 0;
 }
 
 //----------------------------------------------------------------//
-MOAILuaStateHandle MOAIObject::GetSelf () {
+bool MOAIObject::IsInScope () {
 
-	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
-	this->PushLuaUserdata ( state );
-	return state;
-}
-
-//----------------------------------------------------------------//
-bool MOAIObject::IsBound () {
-
-	return ( this->mUserdata != 0 );
-}
-
-//----------------------------------------------------------------//
-void MOAIObject::LockToRefCount () {
-
-	this->mUserdata.MakeStrong ();
-}
-
-//----------------------------------------------------------------//
-void MOAIObject::LuaRelease ( MOAIObject& object ) {
-
-	if ( this->mContain && MOAILuaRuntime::IsValid ()) {
-	
-		MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
-	
-		if ( this->PushLocal ( state, this->mContain )) {
-			
-			object.PushLuaUserdata ( state );
-			lua_pushnil ( state );
-			lua_rawset ( state, -3 );
-		}
-		lua_pop ( state, 1 );
+	if ( this->mCanary ) {
+		return ( this->mCanary->mStrongRefs > 0 );
 	}
-	object.Release ();
-}
-
-//----------------------------------------------------------------//
-void MOAIObject::LuaRetain ( MOAIObject& object ) {
-
-	if ( this->mInstanceTable ) {
-		MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
-
-		// affirm container table
-		if ( this->mContain ) {
-			this->PushLocal ( state, this->mContain );
-		}
-		else {
-			lua_newtable ( state );
-			this->SetLocal ( state, -1, this->mContain );
-		}
-		
-		lua_pop ( state, 1 );
-		this->PushLocal ( state, this->mContain );
-		
-		object.PushLuaUserdata ( state );
-		lua_pushvalue ( state, -1 );
-		lua_rawset ( state, -3 );
-		
-		lua_pop ( state, 1 );
-	}
-	object.Retain ();
-}
-
-//----------------------------------------------------------------//
-void MOAIObject::LuaUnbind () {
-	
-	if ( this->mUserdata && MOAILuaRuntime::IsValid ()) {
-		
-		MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
-		
-		this->mUserdata.PushRef ( state );
-		
-		void* userdata = lua_touserdata ( state, -1 );
-		memset ( userdata, 0, sizeof ( void* ));
-		
-		lua_newtable ( state );
-		
-		lua_pushvalue ( state, -1 );
-		lua_setmetatable ( state, -2 );
-		
-		lua_pushcfunction ( state, MOAIObject::_tombstone );
-		lua_setfield ( state, -2, "__index" );
-		
-		lua_pushcfunction ( state, MOAIObject::_tombstone );
-		lua_setfield ( state, -2, "__newindex" );
-		
-		lua_pushcfunction ( state, MOAIObject::_tombstone );
-		lua_setfield ( state, -2, "__tostring" );
-		
-		lua_setmetatable ( state, -2 );
-
-		lua_pop ( state, 1 );
-
-		this->mUserdata.Clear ();
-	}
+	return false;
 }
 
 //----------------------------------------------------------------//
 void MOAIObject::OnRelease ( u32 refCount ) {
 
 	if ( refCount == 0 ) {
-	
-		if ( this->mUserdata ) {
-			this->mUserdata.MakeWeak ();
-		}
-		else {
-			// no Lua binding and no references, so
-			// go ahead and kill this turkey
-			delete this;
-		}
+		delete this;
 	}
 }
 
@@ -362,238 +51,29 @@ void MOAIObject::OnRetain ( u32 refCount ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIObject::PushLuaClassTable ( MOAILuaState& state ) {
+void MOAIObject::Release () {
 
-	MOAILuaClass* luaType = this->GetLuaClass ();
-	luaType->mClassTable.PushRef ( state );
-}
-
-//----------------------------------------------------------------//
-void MOAIObject::PushLuaUserdata ( MOAILuaState& state ) {
-
-	bool hasUserdata = !this->mUserdata.IsNil ();
-
-	// create the handle userdata for reference counting
-	if ( !this->mUserdata.PushRef ( state )) {
-		
-		// pop the 'nil' pushed by PushRef
-		state.Pop ( 1 );
-		
-		// this is a nasty edge case where the userdata has been tagged for garbage
-		// collection, but not actually collected. the result is that the ref hasn't
-		// be cleared yet, but when we push it we get nil. this should only happen to
-		// refs to userdata. it's tempting to try and clear out the ref here, but if
-		// the ref is to a MOAIObject's userdata, the next step may be to recreate
-		// the object... which means when it is garbage collected the wrong (new)
-		// userdata will be cleaned up! so all we can do is force a full collection
-		// step, set ourselves to nil and return failure.
-		if ( hasUserdata ) {
-			USLog::Print ( "Attempt to access MOAIObject userdata tagged for garbage collection; running a full cycle of GC prior to reallocation.\n" );
-			MOAILuaRuntime::Get ().ForceGarbageCollection ();
-		}
-		
-		// create an empty instance table
-		lua_newtable ( state );
-		
-		// initialize and bind the userdata
-		this->BindToLuaWithTable ( state );
+	if ( this->mCanary ) {
+		this->mCanary->Release ( true );
 	}
-	assert ( !lua_isnil ( state, -1 ));
 }
 
 //----------------------------------------------------------------//
-bool MOAIObject::PushLocal ( MOAILuaState& state, MOAILuaLocal& ref ) {
+void MOAIObject::Retain () {
 
-	if ( ref ) {
-		
-		assert ( this->mInstanceTable );
-		
-		this->mInstanceTable.PushRef ( state );
-		lua_rawgeti ( state, -1, ref.mRef );
-		lua_replace ( state, -2 );
-		return true;
-	}
-	lua_pushnil ( state );
-	return false;
+	this->AffirmCanary ();
+	this->mCanary->Retain ( true );
 }
 
 //----------------------------------------------------------------//
-void MOAIObject::PushMemberTable ( MOAILuaState& state ) {
-
-	this->mInstanceTable.PushRef ( state );
-	
-	lua_pushstring ( state, LUA_MEMBER_TABLE_NAME );
-	lua_rawget ( state, -2 );
-	lua_remove ( state, -2 );
-}
-
-//----------------------------------------------------------------//
-void MOAIObject::RegisterLuaClass ( MOAILuaState& state ) {
-	UNUSED ( state );
-}
-
-//----------------------------------------------------------------//
-void MOAIObject::RegisterLuaFuncs ( MOAILuaState& state ) {
-	UNUSED ( state );
-}
-
-//----------------------------------------------------------------//
-void MOAIObject::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
-	UNUSED ( state );
-	UNUSED ( serializer );
-}
-
-//----------------------------------------------------------------//
-void MOAIObject::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
-	UNUSED ( state );
-	UNUSED ( serializer );
-}
-
-//----------------------------------------------------------------//
-void MOAIObject::SetLocal ( MOAILuaState& state, int idx, MOAILuaLocal& ref ) {
-
-	idx = state.AbsIndex ( idx );
-
-	assert ( this->mInstanceTable );
-
-	this->mInstanceTable.PushRef ( state );
-	
-	if ( ref ) {
-		luaL_unref ( state, -1, ref.mRef );
-		ref.mRef = LUA_NOREF;
-	}
-	
-	state.CopyToTop ( idx );
-	ref.mRef = luaL_ref ( state, -2 );
-	
-	lua_pop ( state, 1 );
-}
-
-//----------------------------------------------------------------//
-void MOAIObject::SetMemberTable ( MOAILuaState& state, int idx ) {
-
-	this->mInstanceTable.PushRef ( state );
-	
-	lua_pushstring ( state, LUA_MEMBER_TABLE_NAME );
-	lua_pushvalue ( state, idx );
-	lua_rawset ( state, -3 );
-	
-	lua_pop ( state, 1 );
-}
-
-//----------------------------------------------------------------//
-MOAIObject::MOAIObject () {
-	RTTI_SINGLE ( RTTIBase )
-	
-	if ( MOAILuaRuntime::IsValid ()) {
-		MOAILuaRuntime::Get ().RegisterObject ( *this );
-	}
+MOAIObject::MOAIObject () :
+	mCanary ( 0 ) {
 }
 
 //----------------------------------------------------------------//
 MOAIObject::~MOAIObject () {
-	
-	if ( MOAILuaRuntime::IsValid ()) {
-		
-		MOAILuaRuntime::Get ().ClearObjectStackTrace ( this );
-		
-		this->LuaUnbind ();
-		
-		MOAILuaRuntime::Get ().DeregisterObject ( *this );
+
+	if ( this->mCanary ) {
+		this->mCanary->mObject = 0;
 	}
 }
-
-//================================================================//
-// MOAILuaClass
-//================================================================//
-
-//----------------------------------------------------------------//
-MOAIObject* MOAILuaClass::GetSingleton () {
-	return 0;
-}
-
-//----------------------------------------------------------------//
-void MOAILuaClass::InitLuaFactoryClass ( MOAIObject& data, MOAILuaState& state ) {
-
-	int top = lua_gettop ( state );
-
-	lua_newtable ( state );
-	
-	lua_pushcfunction ( state, MOAIObject::_getClass );
-	lua_setfield ( state, -2, "getClass" );
-	
-	lua_pushcfunction ( state, MOAIObject::_getClassName );
-	lua_setfield ( state, -2, "getClassName" );
-
-	data.RegisterLuaFuncs ( state );
-
-	lua_pushvalue ( state, -1 );
-	lua_setfield ( state, -2, "__index" );
-
-	lua_pushnil ( state );
-	lua_setfield ( state, -2, "__newindex" );
-
-	this->mInterfaceTable = state.GetStrongRef ( -1 );
-	
-	lua_settop ( state, top );
-
-	lua_newtable ( state );
-	this->RegisterLuaClass ( state );
-	data.RegisterLuaClass ( state );
-	this->mClassTable = state.GetStrongRef ( -1 );
-
-	lua_setglobal ( state, data.TypeName ());
-
-	lua_settop ( state, top );
-}
-
-//----------------------------------------------------------------//
-void MOAILuaClass::InitLuaSingletonClass ( MOAIObject& data, MOAILuaState& state ) {
-
-	int top = lua_gettop ( state );
-
-	state.PushPtrUserData ( &data );
-
-	lua_newtable ( state );
-	this->RegisterLuaClass ( state );
-	data.RegisterLuaClass ( state );
-	this->mClassTable = state.GetStrongRef ( -1 );
-	
-	lua_pushvalue ( state, -1 );
-	lua_setfield ( state, -2, "__index" );
-
-	lua_pushnil ( state );
-	lua_setfield ( state, -2, "__newindex" );
-
-	lua_setmetatable ( state, -2 );
-
-	lua_setglobal ( state, data.TypeName ());
-
-	// set up the instance table so we can use lua retain/release
-	lua_newtable ( state );
-	data.mInstanceTable.SetStrongRef ( state, -1 );
-	lua_pop ( state, 1 );
-
-	lua_settop ( state, top );
-}
-
-//----------------------------------------------------------------//
-bool MOAILuaClass::IsSingleton () {
-
-	return ( this->GetSingleton () != 0 );
-}
-
-//----------------------------------------------------------------//
-void MOAILuaClass::PushInterfaceTable ( MOAILuaState& state ) {
-
-	state.Push ( this->mInterfaceTable );
-}
-
-//----------------------------------------------------------------//
-MOAILuaClass::MOAILuaClass () {
-}
-
-//----------------------------------------------------------------//
-MOAILuaClass::~MOAILuaClass () {
-}
-

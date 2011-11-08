@@ -192,7 +192,7 @@ int MOAISim::_getLoopFlags ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	getLuaObjectCount
-	@text	Gets the total number of objects in memory that inherit MOAIObject. Count includes
+	@text	Gets the total number of objects in memory that inherit MOAILuaObject. Count includes
 			objects that are not bound to the Lua runtime.
 
 	@out	number count
@@ -527,7 +527,7 @@ int MOAISim::_setCpuBudget ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	setHistogramEnabled
-	@text	Enable tracking of every MOAIObject so that an object count
+	@text	Enable tracking of every MOAILuaObject so that an object count
 			histogram may be generated.
  
 	@opt	bool enable		Default value is false.

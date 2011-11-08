@@ -12,7 +12,6 @@ extern "C" {
 //----------------------------------------------------------------//
 static void _cleanup () {
 
-	USGlobalsMgr::Finalize ();
 	zipfs_cleanup ();
 }
 
@@ -40,7 +39,7 @@ static void _typeCheck () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void uslscore::InitGlobals ( USGlobals* globals ) {
+void uslscore::Init () {
 
 	static bool sysInit = true;
 	if ( sysInit ) {
@@ -57,6 +56,4 @@ void uslscore::InitGlobals ( USGlobals* globals ) {
 		zipfs_init ();
 		sysInit = false;
 	}
-
-	USGlobalsMgr::Set ( globals );
 }
