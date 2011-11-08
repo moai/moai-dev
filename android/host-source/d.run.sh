@@ -4,8 +4,6 @@
 # http://getmoai.com
 #================================================================#
 
-	set -e
-	
 	# define package
 	package=@SETTING_PACKAGE@
 	package_path=@SETTING_PACKAGE_PATH@
@@ -37,7 +35,7 @@
 		echo -e "*** Please specify a valid path to Android SDK in \"settings-local.sh\""
 		echo -e "*** Add this file to the ignore list of your version control system."
 		echo
-		exit
+		exit 1
 	fi
 
 	# create build directory
