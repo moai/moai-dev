@@ -327,18 +327,6 @@
 	</References>
 	<Files>
 		<Filter
-			Name="animCurve"
-			>
-			<File
-				RelativePath="..\..\src\uslsext\USAnimCurve.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USAnimCurve.h"
-				>
-			</File>
-		</Filter>
-		<Filter
 			Name="gfxObjects"
 			>
 			<File

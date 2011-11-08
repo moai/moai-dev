@@ -54,8 +54,7 @@ private:
 	MOAITextCursor		mNextPage;
 	MOAITextLayout		mLayout;
 	
-	USLeanArray < MOAIAnimCurve* >	mMOAICurves;
-	USLeanArray < USAnimCurve* >	mCurves;
+	USLeanArray < MOAIAnimCurve* >	mCurves;
 	
 	//----------------------------------------------------------------//
 	static int	_clearCurves		( lua_State* L );

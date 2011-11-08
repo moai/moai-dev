@@ -108,6 +108,191 @@ bool MOAIAnimCurve::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 }
 
 //----------------------------------------------------------------//
+u32 MOAIAnimCurve::FindKeyID ( float time ) {
+
+	u32 keyID = 0;
+	for ( u32 i = 0; i < this->Size (); ++i ) {
+		if (( *this )[ i ].mTime > time ) break;
+		keyID = i;
+	}
+	return keyID;
+}
+
+//----------------------------------------------------------------//
+bool MOAIAnimCurve::GetBoolValue ( float time ) {
+
+	float value = this->GetFloatValue ( time );
+	return ( value > 0.5f ) ? true : false;
+}
+
+//----------------------------------------------------------------//
+float MOAIAnimCurve::GetFloatDelta ( float t0, float t1 ) {
+
+	u32 total = this->Size ();
+	if ( total < 2 ) return 0.0f;
+	if ( t0 == t1 ) return 0.0f;
+
+	float length = this->GetLength ();
+
+	float step = t1 - t0;	
+	float delta = 0.0f;	
+	if ( step > 0.0f ) {
+		
+		u32 endID = total - 1;
+		u32 keyID = this->FindKeyID ( t0 );
+		
+		bool more = true;
+		while ( more ) {
+			
+			if ( keyID == endID ) {
+				keyID = 0;
+				t0 -= length;
+				t1 -= length;
+			}
+			
+			MOAIAnimKey k0 = ( *this )[ keyID ];
+			MOAIAnimKey k1 = ( *this )[ keyID + 1 ];
+			
+			float v0 = k0.mValue;
+			float v1 = k1.mValue;
+			
+			float span = k1.mTime - k0.mTime;
+		
+			if ( span == 0.0f ) {
+				continue;
+			}
+			
+			float r0 = v0;
+			float r1 = v1;
+			
+			if ( t0 > k0.mTime ) {
+				r0 = USInterpolate::Interpolate ( k0.mMode, v0, v1, ( t0 - k0.mTime ) / span, k0.mWeight );
+			}
+			
+			if ( t1 <= k1.mTime ) {
+				r1 = USInterpolate::Interpolate ( k0.mMode, v0, v1, ( t1 - k0.mTime ) / span, k0.mWeight );
+				more = false;
+			}
+			
+			delta += r1 - r0;
+			keyID++;
+		}
+	}
+	else {
+		
+		step = -step;
+		
+		u32 endID = total - 1;
+		u32 keyID = this->FindKeyID ( t0 ) + 1;
+		if ( keyID > endID ) {
+			keyID = endID;
+		}
+		
+		bool more = true;
+		while ( more ) {
+			
+			if ( keyID == 0 ) {
+				keyID = endID;
+				t0 += length;
+				t1 += length;
+			}
+			
+			MOAIAnimKey k0 = ( *this )[ keyID - 1 ];
+			MOAIAnimKey k1 = ( *this )[ keyID ];
+			
+			float v0 = k0.mValue;
+			float v1 = k1.mValue;
+			
+			float span = k1.mTime - k0.mTime;
+		
+			if ( span == 0.0f ) {
+				continue;
+			}
+			
+			float r0 = v0;
+			float r1 = v1;
+			
+			if ( t0 < k1.mTime ) {
+				r1 = USInterpolate::Interpolate ( k0.mMode, v0, v1, ( t0 - k0.mTime ) / span, k0.mWeight );
+			}
+			
+			if ( t1 >= k0.mTime ) {
+				r0 = USInterpolate::Interpolate ( k0.mMode, v0, v1, ( t1 - k0.mTime ) / span, k0.mWeight );
+				more = false;
+			}
+			
+			delta -= r1 - r0;
+			keyID--;
+		}
+	}
+
+	return delta;
+}
+
+//----------------------------------------------------------------//
+float MOAIAnimCurve::GetFloatValue ( float time ) {
+
+	u32 total = this->Size ();
+	if ( total == 0 ) return 0.0f;
+	u32 endID = total - 1;
+	
+	u32 keyID = this->FindKeyID ( time );
+	MOAIAnimKey k0 = ( *this )[ keyID ];
+	
+	if ( keyID == endID ) {
+		return k0.mValue;
+	}
+	
+	if ( k0.mMode == USInterpolate::kFlat ) {
+		return k0.mValue;
+	}
+
+	if ( k0.mTime == time ) {
+		return k0.mValue;
+	}
+
+	MOAIAnimKey k1 = ( *this )[ keyID + 1 ];
+
+	float v0 = k0.mValue;
+	float v1 = k1.mValue;
+
+	if ( v0 == v1 ) {
+		return v0;
+	}
+	
+	float span = k1.mTime - k0.mTime;
+	
+	if ( span == 0.0f ) {
+		return v0;
+	}
+	
+	float t = ( time - k0.mTime ) / span;
+	return USInterpolate::Interpolate ( k0.mMode, v0, v1, t, k0.mWeight );
+}
+
+//----------------------------------------------------------------//
+u32 MOAIAnimCurve::GetIndexValue ( float time ) {
+
+	float value = this->GetFloatValue ( time );
+	return ( value < 0.0f ) ? 0 : ( u32 )value;
+}
+
+//----------------------------------------------------------------//
+int MOAIAnimCurve::GetIntValue ( float time ) {
+
+	float value = this->GetFloatValue ( time );
+	return ( int ) value;
+}
+
+//----------------------------------------------------------------//
+float MOAIAnimCurve::GetLength () {
+
+	u32 total = this->Size ();
+	if ( total == 0 ) return 0.0f;
+	return ( *this )[ total - 1 ].mTime - ( *this )[ 0 ].mTime;
+}
+
+//----------------------------------------------------------------//
 MOAIAnimCurve::MOAIAnimCurve () :
 	mTime ( 0.0f ),
 	mValue ( 0.0f ) {
@@ -148,3 +333,13 @@ void MOAIAnimCurve::RegisterLuaFuncs ( MOAILuaState& state ) {
 	luaL_register ( state, 0, regTable );
 }
 
+//----------------------------------------------------------------//
+void MOAIAnimCurve::SetKey ( u32 id, float time, float value, u32 mode, float weight ) {
+
+	if ( id < this->Size ()) {
+		( *this )[ id ].mTime = time;
+		( *this )[ id ].mValue = value;
+		( *this )[ id ].mMode = mode;
+		( *this )[ id ].mWeight = weight;
+	}
+}

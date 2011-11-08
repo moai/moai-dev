@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include <contrib/utf8.h>
-#include <uslsext/USAnimCurve.h>
+#include <moaicore/MOAIAnimCurve.h>
 #include <moaicore/MOAIFont.h>
 #include <moaicore/MOAITextFrame.h>
 #include <moaicore/MOAITextLayout.h>
@@ -70,7 +70,7 @@ void MOAITextFrame::FlushLine () {
 			x = this->mFrame.mXMax - this->mLineXMax;
 	}
 	
-	USAnimCurve* curve = 0;
+	MOAIAnimCurve* curve = 0;
 	if ( this->mCurves ) {
 		curve = this->mCurves [ this->mLineCount % this->mTotalCurves ];
 	}
@@ -455,7 +455,7 @@ void MOAITextFrame::SaveCursor () {
 }
 
 //----------------------------------------------------------------//
-void MOAITextFrame::SetCurves ( USAnimCurve** curves, u32 totalCurves ) {
+void MOAITextFrame::SetCurves ( MOAIAnimCurve** curves, u32 totalCurves ) {
 
 	this->mCurves = curves;
 	this->mTotalCurves = totalCurves;

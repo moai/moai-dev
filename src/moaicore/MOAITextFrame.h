@@ -70,7 +70,6 @@ private:
 	u32					mRGBA;
 	MOAITextCursor*		mCursor;
 	
-	
 	u32					mLineBottom;
 	u32					mLineTop;
 	
@@ -91,7 +90,7 @@ private:
 	MOAITextLayout*		mLayout;
 	const MOAIGlyph*	mGlyph;
 	
-	USAnimCurve**		mCurves;
+	MOAIAnimCurve**		mCurves;
 	u32					mTotalCurves;
 
 	//----------------------------------------------------------------//
@@ -121,7 +120,7 @@ public:
 
 	//----------------------------------------------------------------//
 	void			Layout				( MOAITextLayout& layout, cc8* str, MOAITextCursor& cursor );
-	void			SetCurves			( USAnimCurve** curves, u32 totalCurves );
+	void			SetCurves			( MOAIAnimCurve** curves, u32 totalCurves );
 					MOAITextFrame			();
 	virtual			~MOAITextFrame		();
 };

@@ -303,7 +303,7 @@ void MOAITimer::GenerateCallbacks ( float t0, float t1, bool end ) {
 			if ( t0 < t1 ) {
 			
 				for ( ; keyID < size; ++keyID ) {
-					USAnimKey& key = ( *this->mCurve )[ keyID ];
+					MOAIAnimKey& key = ( *this->mCurve )[ keyID ];
 					
 					if (( end && ( key.mTime >= t1 )) || (( key.mTime >= t0 ) && ( key.mTime < t1 ))) {
 						this->OnKeyframe ( keyID, key.mTime, key.mValue );
@@ -315,7 +315,7 @@ void MOAITimer::GenerateCallbacks ( float t0, float t1, bool end ) {
 			else {
 			
 				for ( ; ( int )keyID >= -1; --keyID ) {
-					USAnimKey& key = ( *this->mCurve )[ keyID ];
+					MOAIAnimKey& key = ( *this->mCurve )[ keyID ];
 				
 					if (( end && ( key.mTime <= t1 )) || (( key.mTime <= t0 ) && ( key.mTime > t1 ))) {
 						this->OnKeyframe ( keyID, key.mTime, key.mValue );
