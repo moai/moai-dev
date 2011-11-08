@@ -10,7 +10,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIEaseType::RegisterLuaClass ( USLuaState& state ) {
+void MOAIEaseType::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	state.SetField ( -1, "EASE_IN", ( u32 )USInterpolate::kEaseIn );
 	state.SetField ( -1, "EASE_OUT", ( u32 )USInterpolate::kEaseOut );

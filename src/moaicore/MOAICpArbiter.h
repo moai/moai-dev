@@ -6,6 +6,7 @@
 #if USE_CHIPMUNK
 
 #include <chipmunk/chipmunk.h>
+#include <moaicore/MOAILua.h>
 
 class MOAICpSpace;
 
@@ -16,7 +17,7 @@ class MOAICpSpace;
 	@text	Chipmunk Arbiter.
 */
 class MOAICpArbiter :
-	public virtual USLuaObject {
+	public virtual MOAIObject {
 private:
 
 	cpArbiter*	mArbiter;
@@ -41,8 +42,8 @@ public:
 	//----------------------------------------------------------------//
 					MOAICpArbiter			();
 					~MOAICpArbiter			();
-	void			RegisterLuaClass		( USLuaState& state );
-	void			RegisterLuaFuncs		( USLuaState& state );
+	void			RegisterLuaClass		( MOAILuaState& state );
+	void			RegisterLuaFuncs		( MOAILuaState& state );
 };
 
 #endif

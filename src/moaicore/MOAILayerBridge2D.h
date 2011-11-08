@@ -4,6 +4,7 @@
 #ifndef	MOAILAYERBRIDGE2D_H
 #define	MOAILAYERBRIDGE2D_H
 
+#include <moaicore/MOAILua.h>
 #include <moaicore/MOAITransform.h>
 
 class MOAILayer2D;
@@ -35,8 +36,8 @@ public:
 	//----------------------------------------------------------------//
 					MOAILayerBridge2D			();
 					~MOAILayerBridge2D			();
-	void			RegisterLuaClass			( USLuaState& state );
-	void			RegisterLuaFuncs			( USLuaState& state );
+	void			RegisterLuaClass			( MOAILuaState& state );
+	void			RegisterLuaFuncs			( MOAILuaState& state );
 };
 
 #endif

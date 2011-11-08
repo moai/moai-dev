@@ -5,6 +5,7 @@
 #define	MOAISTRETCHPATCH2D_H
 
 #include <moaicore/MOAIDeck.h>
+#include <moaicore/MOAILua.h>
 
 class MOAITexture;
 
@@ -31,7 +32,7 @@ class MOAIStretchPatch2D :
 	virtual public MOAIDeck {
 private:
 
-	USLuaSharedPtr < MOAITexture > mTexture; // source texture for patch
+	MOAILuaSharedPtr < MOAITexture > mTexture; // source texture for patch
 
 	USLeanArray < MOAIStretchPatchSpan >	mRows;
 	USLeanArray < MOAIStretchPatchSpan >	mCols;
@@ -73,10 +74,10 @@ public:
 	USRect				GetBounds				( u32 idx, MOAIDeckRemapper* remapper );
 						MOAIStretchPatch2D		();
 						~MOAIStretchPatch2D		();
-	void				SerializeIn				( USLuaState& state, USLuaSerializer& serializer );
-	void				SerializeOut			( USLuaState& state, USLuaSerializer& serializer );
-	void				RegisterLuaClass		( USLuaState& state );
-	void				RegisterLuaFuncs		( USLuaState& state );
+	void				SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
+	void				SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
+	void				RegisterLuaClass		( MOAILuaState& state );
+	void				RegisterLuaFuncs		( MOAILuaState& state );
 };
 
 #endif

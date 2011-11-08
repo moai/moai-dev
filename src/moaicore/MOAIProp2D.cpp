@@ -758,7 +758,7 @@ void MOAIProp2D::OnDepNodeUpdate () {
 }
 
 //----------------------------------------------------------------//
-void MOAIProp2D::RegisterLuaClass ( USLuaState& state ) {
+void MOAIProp2D::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	MOAIProp::RegisterLuaClass ( state );
 	MOAIColor::RegisterLuaClass ( state );
@@ -790,7 +790,7 @@ void MOAIProp2D::RegisterLuaClass ( USLuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIProp2D::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAIProp2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	MOAIProp::RegisterLuaFuncs ( state );
 	MOAIColor::RegisterLuaFuncs ( state );
@@ -819,14 +819,14 @@ void MOAIProp2D::RegisterLuaFuncs ( USLuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIProp2D::SerializeIn ( USLuaState& state, USLuaSerializer& serializer ) {
+void MOAIProp2D::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
 	
 	this->mDeck.Set ( *this, serializer.MemberIDToObject < MOAIDeck >( state.GetField < uintptr >( -1, "mDeck", 0 )));
 	this->mGrid.Set ( *this, serializer.MemberIDToObject < MOAIGrid >( state.GetField < uintptr >( -1, "mGrid", 0 )));
 }
 
 //----------------------------------------------------------------//
-void MOAIProp2D::SerializeOut ( USLuaState& state, USLuaSerializer& serializer ) {
+void MOAIProp2D::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
 	
 	state.SetField ( -1, "mDeck", serializer.AffirmMemberID ( this->mDeck ));
 	state.SetField ( -1, "mGrid", serializer.AffirmMemberID ( this->mGrid ));

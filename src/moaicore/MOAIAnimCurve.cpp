@@ -126,14 +126,14 @@ void MOAIAnimCurve::OnDepNodeUpdate () {
 }
 
 //----------------------------------------------------------------//
-void MOAIAnimCurve::RegisterLuaClass ( USLuaState& state ) {
+void MOAIAnimCurve::RegisterLuaClass ( MOAILuaState& state ) {
 
 	state.SetField ( -1, "ATTR_TIME", MOAIAnimCurveAttr::Pack ( ATTR_TIME ));
 	state.SetField ( -1, "ATTR_VALUE", MOAIAnimCurveAttr::Pack ( ATTR_VALUE ));
 }
 
 //----------------------------------------------------------------//
-void MOAIAnimCurve::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAIAnimCurve::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	MOAINode::RegisterLuaFuncs ( state );
 

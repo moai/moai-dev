@@ -4,6 +4,7 @@
 #ifndef	MOAIPARTICLEFORCE_H
 #define	MOAIPARTICLEFORCE_H
 
+#include <moaicore/MOAILua.h>
 #include <moaicore/MOAITransform.h>
 
 class MOAIParticle;
@@ -67,8 +68,8 @@ public:
 					MOAIParticleForce		();
 					~MOAIParticleForce		();
 	void			OnDepNodeUpdate			();
-	void			RegisterLuaClass		( USLuaState& state );
-	void			RegisterLuaFuncs		( USLuaState& state );
+	void			RegisterLuaClass		( MOAILuaState& state );
+	void			RegisterLuaFuncs		( MOAILuaState& state );
 };
 
 #endif

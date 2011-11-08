@@ -554,7 +554,7 @@ void MOAITextBox::OnUpdate ( float step ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITextBox::RegisterLuaClass ( USLuaState& state ) {
+void MOAITextBox::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAIProp2D::RegisterLuaClass ( state );
 	MOAIAction::RegisterLuaClass ( state );
@@ -565,7 +565,7 @@ void MOAITextBox::RegisterLuaClass ( USLuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITextBox::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAITextBox::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	MOAIProp2D::RegisterLuaFuncs ( state );
 	MOAIAction::RegisterLuaFuncs ( state );
@@ -610,14 +610,14 @@ void MOAITextBox::ReserveCurves ( u32 total ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITextBox::SerializeIn ( USLuaState& state, USLuaSerializer& serializer ) {
+void MOAITextBox::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
 
 	MOAIProp2D::SerializeIn ( state, serializer );
 	MOAIAction::SerializeIn ( state, serializer );
 }
 
 //----------------------------------------------------------------//
-void MOAITextBox::SerializeOut ( USLuaState& state, USLuaSerializer& serializer ) {
+void MOAITextBox::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
 
 	MOAIProp2D::SerializeOut ( state, serializer );
 	MOAIAction::SerializeOut ( state, serializer );

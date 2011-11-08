@@ -3,29 +3,21 @@
 
 #include "pch.h"
 
-#include <uslscore/USBase64Cipher.h>
-#include <uslscore/USByteStream.h>
-#include <uslscore/USCipherStream.h>
-#include <uslscore/USDeflater.h>
-#include <uslscore/USFileStream.h>
-#include <uslscore/USInflater.h>
-#include <uslscore/USLog.h>
-#include <uslscore/USLuaObject.h>
-#include <uslscore/USLuaRef.h>
-#include <uslscore/USLuaRuntime.h>
-#include <uslscore/USLuaState.h>
-#include <uslscore/USLuaState-impl.h>
-#include <uslscore/USMemStream.h>
+#include <moaicore/MOAIObject.h>
+#include <moaicore/MOAILuaRef.h>
+#include <moaicore/MOAILuaRuntime.h>
+#include <moaicore/MOAILuaState.h>
+#include <moaicore/MOAILuaState-impl.h>
 
 #define LEVELS1	12	// size of the first part of the stack
 #define LEVELS2	10	// size of the second part of the stack
 
 //================================================================//
-// USLuaState
+// MOAILuaState
 //================================================================//
 
 //----------------------------------------------------------------//
-int USLuaState::AbsIndex ( int idx ) {
+int MOAILuaState::AbsIndex ( int idx ) {
 
 	if ( idx < 0 ) {
 		return lua_gettop ( this->mState ) + idx + 1;
@@ -34,21 +26,21 @@ int USLuaState::AbsIndex ( int idx ) {
 }
 
 //----------------------------------------------------------------//
-bool USLuaState::Base64Decode ( int idx ) {
+bool MOAILuaState::Base64Decode ( int idx ) {
 
 	USBase64Cipher base64;
 	return this->Decode ( idx, base64 );
 }
 
 //----------------------------------------------------------------//
-bool USLuaState::Base64Encode ( int idx ) {
+bool MOAILuaState::Base64Encode ( int idx ) {
 
 	USBase64Cipher base64;
 	return this->Encode ( idx, base64 );
 }
 
 //----------------------------------------------------------------//
-bool USLuaState::CheckParams ( int idx, cc8* format ) {
+bool MOAILuaState::CheckParams ( int idx, cc8* format ) {
 
 	idx = this->AbsIndex ( idx );
 
@@ -118,19 +110,19 @@ bool USLuaState::CheckParams ( int idx, cc8* format ) {
 }
 
 //----------------------------------------------------------------//
-void USLuaState::CopyToTop ( int idx ) {
+void MOAILuaState::CopyToTop ( int idx ) {
 
 	lua_pushvalue ( this->mState, idx );
 }
 
 //----------------------------------------------------------------//
-int USLuaState::DebugCall ( int nArgs, int nResults ) {
+int MOAILuaState::DebugCall ( int nArgs, int nResults ) {
 	
 	#ifdef _DEBUG
 	
 		int errIdx = this->AbsIndex ( -( nArgs + 1 ));
 		
-		this->Push ( USLuaRuntime::Get ().mTraceback );
+		this->Push ( MOAILuaRuntime::Get ().mTraceback );
 		lua_insert ( this->mState, errIdx );
 
 		int status = lua_pcall ( this->mState, nArgs, nResults, errIdx );
@@ -153,7 +145,7 @@ int USLuaState::DebugCall ( int nArgs, int nResults ) {
 }
 
 //----------------------------------------------------------------//
-bool USLuaState::Decode ( int idx, USCipher& cipher ) {
+bool MOAILuaState::Decode ( int idx, USCipher& cipher ) {
 
 	if ( !this->IsType ( idx, LUA_TSTRING )) return false;
 
@@ -187,7 +179,7 @@ bool USLuaState::Decode ( int idx, USCipher& cipher ) {
 }
 
 //----------------------------------------------------------------//
-bool USLuaState::Deflate ( int idx, int level, int windowBits ) {
+bool MOAILuaState::Deflate ( int idx, int level, int windowBits ) {
 
 	USDeflater deflater;
 	deflater.SetCompressionLevel ( level );
@@ -197,7 +189,7 @@ bool USLuaState::Deflate ( int idx, int level, int windowBits ) {
 }
 
 //----------------------------------------------------------------//
-bool USLuaState::Encode ( int idx, USCipher& cipher ) {
+bool MOAILuaState::Encode ( int idx, USCipher& cipher ) {
 
 	if ( !this->IsType ( idx, LUA_TSTRING )) return false;
 
@@ -226,13 +218,13 @@ bool USLuaState::Encode ( int idx, USCipher& cipher ) {
 }
 
 //----------------------------------------------------------------//
-void USLuaState::GetField ( int idx, cc8* name ) {
+void MOAILuaState::GetField ( int idx, cc8* name ) {
 
 	lua_getfield ( this->mState, idx, name );
 }
 
 //----------------------------------------------------------------//
-void USLuaState::GetField ( int idx, int key ) {
+void MOAILuaState::GetField ( int idx, int key ) {
 
 	idx = this->AbsIndex ( idx );
 
@@ -241,7 +233,7 @@ void USLuaState::GetField ( int idx, int key ) {
 }
 
 //----------------------------------------------------------------//
-STLString USLuaState::GetField ( int idx, cc8* key, cc8* value ) {
+STLString MOAILuaState::GetField ( int idx, cc8* key, cc8* value ) {
 
 	STLString str;
 	if ( this->GetFieldWithType ( idx, key, LUA_TSTRING )) {
@@ -255,7 +247,7 @@ STLString USLuaState::GetField ( int idx, cc8* key, cc8* value ) {
 }
 
 //----------------------------------------------------------------//
-STLString USLuaState::GetField ( int idx, int key, cc8* value ) {
+STLString MOAILuaState::GetField ( int idx, int key, cc8* value ) {
 
 	STLString str;
 	if ( this->GetFieldWithType ( idx, key, LUA_TSTRING )) {
@@ -269,7 +261,7 @@ STLString USLuaState::GetField ( int idx, int key, cc8* value ) {
 }
 
 //----------------------------------------------------------------//
-bool USLuaState::GetFieldWithType ( int idx, cc8* name, int type ) {
+bool MOAILuaState::GetFieldWithType ( int idx, cc8* name, int type ) {
 
 	lua_getfield ( this->mState, idx, name );
 	if ( lua_type ( this->mState, -1 ) != type ) {
@@ -280,7 +272,7 @@ bool USLuaState::GetFieldWithType ( int idx, cc8* name, int type ) {
 }
 
 //----------------------------------------------------------------//
-bool USLuaState::GetFieldWithType ( int idx, int key, int type ) {
+bool MOAILuaState::GetFieldWithType ( int idx, int key, int type ) {
 
 	this->GetField ( idx, key );
 	if ( lua_type ( this->mState, -1 ) != type ) {
@@ -291,7 +283,7 @@ bool USLuaState::GetFieldWithType ( int idx, int key, int type ) {
 }
 
 //----------------------------------------------------------------//
-void* USLuaState::GetPtrUserData ( int idx ) {
+void* MOAILuaState::GetPtrUserData ( int idx ) {
 
 	void* ptr = 0;
 
@@ -302,7 +294,7 @@ void* USLuaState::GetPtrUserData ( int idx ) {
 }
 
 //----------------------------------------------------------------//
-STLString USLuaState::GetStackTrace ( int level ) {
+STLString MOAILuaState::GetStackTrace ( int level ) {
 
 	int firstpart = 1;  /* still before eventual `...' */
 	lua_Debug ar;
@@ -364,21 +356,21 @@ STLString USLuaState::GetStackTrace ( int level ) {
 }
 
 //----------------------------------------------------------------//
-USLuaRef USLuaState::GetStrongRef ( int idx ) {
+MOAILuaRef MOAILuaState::GetStrongRef ( int idx ) {
 
-	USLuaRef ref;
+	MOAILuaRef ref;
 	ref.SetStrongRef ( *this, idx );
 	return ref;
 }
 
 //----------------------------------------------------------------//
-int USLuaState::GetTop () {
+int MOAILuaState::GetTop () {
 
 	return lua_gettop ( this->mState );
 }
 
 //----------------------------------------------------------------//
-void* USLuaState::GetUserData ( int idx, void* value ) {
+void* MOAILuaState::GetUserData ( int idx, void* value ) {
 
 	if ( lua_type ( this->mState, idx ) == LUA_TLIGHTUSERDATA ) {
 		return lua_touserdata ( this->mState, idx );
@@ -387,7 +379,7 @@ void* USLuaState::GetUserData ( int idx, void* value ) {
 }
 
 //----------------------------------------------------------------//
-void* USLuaState::GetUserData ( int idx, cc8* name, void* value ) {
+void* MOAILuaState::GetUserData ( int idx, cc8* name, void* value ) {
 
 	if ( this->GetFieldWithType ( idx, name, LUA_TLIGHTUSERDATA )) {
 		value = lua_touserdata ( this->mState, -1 );
@@ -398,7 +390,7 @@ void* USLuaState::GetUserData ( int idx, cc8* name, void* value ) {
 
 //----------------------------------------------------------------//
 template <>
-bool USLuaState::GetValue < bool >( int idx, bool value ) {
+bool MOAILuaState::GetValue < bool >( int idx, bool value ) {
 
 	if ( this->IsType ( idx, LUA_TBOOLEAN )) {
 		return ( lua_toboolean ( this->mState, idx ) != 0 );
@@ -408,7 +400,7 @@ bool USLuaState::GetValue < bool >( int idx, bool value ) {
 
 //----------------------------------------------------------------//
 template <>
-cc8* USLuaState::GetValue < cc8* >( int idx, cc8* value ) {
+cc8* MOAILuaState::GetValue < cc8* >( int idx, cc8* value ) {
 
 	if ( this->IsType ( idx, LUA_TSTRING )) {
 		return lua_tostring ( this->mState, idx );
@@ -417,7 +409,7 @@ cc8* USLuaState::GetValue < cc8* >( int idx, cc8* value ) {
 }
 
 //----------------------------------------------------------------//
-STLString USLuaState::GetValue ( int idx, cc8* value ) {
+STLString MOAILuaState::GetValue ( int idx, cc8* value ) {
 
 	STLString str;
 	if ( lua_type ( this->mState, idx ) == LUA_TSTRING ) {
@@ -431,7 +423,7 @@ STLString USLuaState::GetValue ( int idx, cc8* value ) {
 
 //----------------------------------------------------------------//
 template <>
-double USLuaState::GetValue < double >( int idx, double value ) {
+double MOAILuaState::GetValue < double >( int idx, double value ) {
 
 	if ( this->IsType ( idx, LUA_TNUMBER )) {
 		return lua_tonumber ( this->mState, idx );
@@ -441,7 +433,7 @@ double USLuaState::GetValue < double >( int idx, double value ) {
 
 //----------------------------------------------------------------//
 template <>
-float USLuaState::GetValue < float >( int idx, float value ) {
+float MOAILuaState::GetValue < float >( int idx, float value ) {
 
 	if ( this->IsType ( idx, LUA_TNUMBER )) {
 		return ( float )lua_tonumber ( this->mState, idx );
@@ -451,7 +443,7 @@ float USLuaState::GetValue < float >( int idx, float value ) {
 
 //----------------------------------------------------------------//
 template <>
-int USLuaState::GetValue < int >( int idx, int value ) {
+int MOAILuaState::GetValue < int >( int idx, int value ) {
 
 	if ( this->IsType ( idx, LUA_TNUMBER )) {
 		return ( int )lua_tonumber ( this->mState, idx );
@@ -461,7 +453,7 @@ int USLuaState::GetValue < int >( int idx, int value ) {
 
 //----------------------------------------------------------------//
 template <>
-u8 USLuaState::GetValue < u8 >( int idx, u8 value ) {
+u8 MOAILuaState::GetValue < u8 >( int idx, u8 value ) {
 
 	if ( this->IsType ( idx, LUA_TNUMBER )) {
 		return ( u8 )lua_tonumber ( this->mState, idx );
@@ -471,7 +463,7 @@ u8 USLuaState::GetValue < u8 >( int idx, u8 value ) {
 
 //----------------------------------------------------------------//
 template <>
-u16 USLuaState::GetValue < u16 >( int idx, u16 value ) {
+u16 MOAILuaState::GetValue < u16 >( int idx, u16 value ) {
 
 	if ( this->IsType ( idx, LUA_TNUMBER )) {
 		return ( u16 )lua_tonumber ( this->mState, idx );
@@ -481,7 +473,7 @@ u16 USLuaState::GetValue < u16 >( int idx, u16 value ) {
 
 //----------------------------------------------------------------//
 template <>
-u32 USLuaState::GetValue < u32 >( int idx, u32 value ) {
+u32 MOAILuaState::GetValue < u32 >( int idx, u32 value ) {
 
 	if ( this->IsType ( idx, LUA_TNUMBER )) {
 		return ( u32 )lua_tonumber ( this->mState, idx );
@@ -491,7 +483,7 @@ u32 USLuaState::GetValue < u32 >( int idx, u32 value ) {
 
 //----------------------------------------------------------------//
 template <>
-u64 USLuaState::GetValue < u64 >( int idx, u64 value ) {
+u64 MOAILuaState::GetValue < u64 >( int idx, u64 value ) {
 
 	if ( this->IsType ( idx, LUA_TNUMBER )) {
 		return ( u64 )lua_tonumber ( this->mState, idx );
@@ -501,7 +493,7 @@ u64 USLuaState::GetValue < u64 >( int idx, u64 value ) {
 
 //----------------------------------------------------------------//
 template <>
-uintptr USLuaState::GetValue < uintptr >( int idx, uintptr value ) {
+uintptr MOAILuaState::GetValue < uintptr >( int idx, uintptr value ) {
 
 	if ( this->IsType ( idx, LUA_TLIGHTUSERDATA )) {
 		return ( uintptr )lua_touserdata ( this->mState, idx );
@@ -510,15 +502,15 @@ uintptr USLuaState::GetValue < uintptr >( int idx, uintptr value ) {
 }
 
 //----------------------------------------------------------------//
-USLuaRef USLuaState::GetWeakRef ( int idx ) {
+MOAILuaRef MOAILuaState::GetWeakRef ( int idx ) {
 
-	USLuaRef ref;
+	MOAILuaRef ref;
 	ref.SetWeakRef ( *this, idx );
 	return ref;
 }
 
 //----------------------------------------------------------------//
-bool USLuaState::HasField ( int idx, cc8* name ) {
+bool MOAILuaState::HasField ( int idx, cc8* name ) {
 
 	lua_getfield ( this->mState, idx, name );
 	bool hasField = ( lua_isnil ( this->mState, -1 ) == false );
@@ -528,7 +520,7 @@ bool USLuaState::HasField ( int idx, cc8* name ) {
 }
 
 //----------------------------------------------------------------//
-bool USLuaState::HasField ( int idx, int key ) {
+bool MOAILuaState::HasField ( int idx, int key ) {
 
 	this->GetField ( idx, key );
 	bool hasField = ( lua_isnil ( this->mState, -1 ) == false );
@@ -538,7 +530,7 @@ bool USLuaState::HasField ( int idx, int key ) {
 }
 
 //----------------------------------------------------------------//
-bool USLuaState::HasField ( int idx, cc8* name, int type ) {
+bool MOAILuaState::HasField ( int idx, cc8* name, int type ) {
 
 	lua_getfield ( this->mState, idx, name );
 	bool hasField = ( lua_type ( this->mState, -1 ) == type );
@@ -548,7 +540,7 @@ bool USLuaState::HasField ( int idx, cc8* name, int type ) {
 }
 
 //----------------------------------------------------------------//
-bool USLuaState::HasField ( int idx, int key, int type ) {
+bool MOAILuaState::HasField ( int idx, int key, int type ) {
 
 	this->GetField ( idx, key );
 	bool hasField = ( lua_type ( this->mState, -1 ) == type );
@@ -558,7 +550,7 @@ bool USLuaState::HasField ( int idx, int key, int type ) {
 }
 
 //----------------------------------------------------------------//
-bool USLuaState::Inflate ( int idx, int windowBits ) {
+bool MOAILuaState::Inflate ( int idx, int windowBits ) {
 
 	USInflater inflater;
 	inflater.SetWindowBits ( windowBits );
@@ -567,44 +559,44 @@ bool USLuaState::Inflate ( int idx, int windowBits ) {
 }
 
 //----------------------------------------------------------------//
-bool USLuaState::IsNil () {
+bool MOAILuaState::IsNil () {
 
 	return ( !this->mState );
 }
 
 //----------------------------------------------------------------//
-bool USLuaState::IsNil ( int idx ) {
+bool MOAILuaState::IsNil ( int idx ) {
 
 	return lua_isnil ( this->mState, idx );
 }
 
 //----------------------------------------------------------------//
-bool USLuaState::IsTableOrUserdata ( int idx ) {
+bool MOAILuaState::IsTableOrUserdata ( int idx ) {
 
 	int check = lua_type ( this->mState, idx );
 	return (( check == LUA_TTABLE ) || ( check == LUA_TUSERDATA ));
 }
 
 //----------------------------------------------------------------//
-bool USLuaState::IsType ( int idx, int type ) {
+bool MOAILuaState::IsType ( int idx, int type ) {
 
 	return ( lua_type ( this->mState, idx ) == type );
 }
 
 //----------------------------------------------------------------//
-bool USLuaState::IsType ( int idx, cc8* name, int type ) {
+bool MOAILuaState::IsType ( int idx, cc8* name, int type ) {
 	
 	return this->HasField ( idx, name, type );
 }
 
 //----------------------------------------------------------------//
-void USLuaState::LoadLibs () {
+void MOAILuaState::LoadLibs () {
 
 	luaL_openlibs ( this->mState );
 }
 
 //----------------------------------------------------------------//
-void USLuaState::MoveToTop ( int idx ) {
+void MOAILuaState::MoveToTop ( int idx ) {
 
 	// moves a stack element to the top (removing it from the previous location)
 	idx = this->AbsIndex ( idx );				// adjusted index after copying element to top
@@ -613,13 +605,13 @@ void USLuaState::MoveToTop ( int idx ) {
 }
 
 //----------------------------------------------------------------//
-void USLuaState::Pop ( int n ) {
+void MOAILuaState::Pop ( int n ) {
 
 	lua_pop ( this->mState, n );
 }
 
 //----------------------------------------------------------------//
-bool USLuaState::PrepMemberFunc ( int idx, cc8* name ) {
+bool MOAILuaState::PrepMemberFunc ( int idx, cc8* name ) {
 
 	idx = this->AbsIndex ( idx );
 	
@@ -630,7 +622,7 @@ bool USLuaState::PrepMemberFunc ( int idx, cc8* name ) {
 }
 
 //----------------------------------------------------------------//
-bool USLuaState::PrintErrors ( FILE* file, int status ) {
+bool MOAILuaState::PrintErrors ( FILE* file, int status ) {
 
 	if ( status != 0 ) {
 	
@@ -646,74 +638,74 @@ bool USLuaState::PrintErrors ( FILE* file, int status ) {
 }
 
 //----------------------------------------------------------------//
-void USLuaState::PrintStackTrace ( FILE* file, int level ) {
+void MOAILuaState::PrintStackTrace ( FILE* file, int level ) {
 
 	STLString stackTrace = this->GetStackTrace ( level );
 	USLog::Print ( file, stackTrace.str ());
 }
 
 //----------------------------------------------------------------//
-void USLuaState::Push ( bool value ) {
+void MOAILuaState::Push ( bool value ) {
 
 	lua_pushboolean ( this->mState, value ? 1 : 0 );
 }
 
 //----------------------------------------------------------------//
-void USLuaState::Push ( cc8* value ) {
+void MOAILuaState::Push ( cc8* value ) {
 
 	lua_pushstring ( this->mState, value );
 }
 
 //----------------------------------------------------------------//
-void USLuaState::Push ( double value ) {
+void MOAILuaState::Push ( double value ) {
 
 	lua_pushnumber ( this->mState, value );
 }
 
 //----------------------------------------------------------------//
-void USLuaState::Push ( float value ) {
+void MOAILuaState::Push ( float value ) {
 
 	lua_pushnumber ( this->mState, value );
 }
 
 //----------------------------------------------------------------//
-void USLuaState::Push ( int value ) {
+void MOAILuaState::Push ( int value ) {
 
 	lua_pushnumber ( this->mState, value );
 }
 
 //----------------------------------------------------------------//
-void USLuaState::Push ( u16 value ) {
+void MOAILuaState::Push ( u16 value ) {
 
 	lua_pushnumber ( this->mState, value );
 }
 
 //----------------------------------------------------------------//
-void USLuaState::Push ( u32 value ) {
+void MOAILuaState::Push ( u32 value ) {
 
 	lua_pushnumber ( this->mState, value );
 }
 
 //----------------------------------------------------------------//
-void USLuaState::Push ( u64 value ) {
+void MOAILuaState::Push ( u64 value ) {
 
 	lua_pushnumber ( this->mState, ( double )value );
 }
 
 //----------------------------------------------------------------//
-void USLuaState::Push ( uintptr value ) {
+void MOAILuaState::Push ( uintptr value ) {
 
 	lua_pushlightuserdata ( this->mState, ( void* )value );
 }
 
 //----------------------------------------------------------------//
-void USLuaState::Push ( lua_CFunction value ) {
+void MOAILuaState::Push ( lua_CFunction value ) {
 
 	lua_pushcfunction ( this->mState, value );
 }
 
 //----------------------------------------------------------------//
-void USLuaState::Push ( USLuaObject* luaObject ) {
+void MOAILuaState::Push ( MOAIObject* luaObject ) {
 
 	if ( luaObject ) {
 		luaObject->PushLuaUserdata ( *this );
@@ -723,13 +715,13 @@ void USLuaState::Push ( USLuaObject* luaObject ) {
 }
 
 //----------------------------------------------------------------//
-void USLuaState::Push ( USLuaRef& ref ) {
+void MOAILuaState::Push ( MOAILuaRef& ref ) {
 
 	ref.PushRef ( *this );
 }
 
 //----------------------------------------------------------------//
-void USLuaState::PushPtrUserData ( void* ptr ) {
+void MOAILuaState::PushPtrUserData ( void* ptr ) {
 
 	void** handle = ( void** )lua_newuserdata ( this->mState, sizeof ( void* ));
 	assert ( handle );
@@ -737,7 +729,7 @@ void USLuaState::PushPtrUserData ( void* ptr ) {
 }
 
 //----------------------------------------------------------------//
-int USLuaState::PushTableItr ( int idx ) {
+int MOAILuaState::PushTableItr ( int idx ) {
 
 	int itr = this->AbsIndex ( idx );
 
@@ -749,7 +741,7 @@ int USLuaState::PushTableItr ( int idx ) {
 }
 
 //----------------------------------------------------------------//
-void USLuaState::RegisterModule ( cc8* name, lua_CFunction loader, bool autoLoad ) {
+void MOAILuaState::RegisterModule ( cc8* name, lua_CFunction loader, bool autoLoad ) {
 
 	lua_getglobal ( this->mState, "package" );
 	lua_getfield ( this->mState, -1, "preload" );
@@ -785,7 +777,7 @@ void USLuaState::RegisterModule ( cc8* name, lua_CFunction loader, bool autoLoad
 }
 
 //----------------------------------------------------------------//
-int USLuaState::RelIndex ( int idx ) {
+int MOAILuaState::RelIndex ( int idx ) {
 
 	if ( idx > 0 ) {
 		return idx - lua_gettop ( this->mState );
@@ -794,7 +786,7 @@ int USLuaState::RelIndex ( int idx ) {
 }
 
 //----------------------------------------------------------------//
-void USLuaState::SetPath ( cc8* path ) {
+void MOAILuaState::SetPath ( cc8* path ) {
 
 	int top = lua_gettop ( this->mState );
 
@@ -809,13 +801,13 @@ void USLuaState::SetPath ( cc8* path ) {
 }
 
 //----------------------------------------------------------------//
-void USLuaState::SetTop ( int top ) {
+void MOAILuaState::SetTop ( int top ) {
 
 	lua_settop ( this->mState, top );
 }
 
 //----------------------------------------------------------------//
-bool USLuaState::TableItrNext ( int itr ) {
+bool MOAILuaState::TableItrNext ( int itr ) {
 
 	// pop the prev key/value; leave the key
 	lua_pop ( this->mState, 2 );
@@ -829,7 +821,7 @@ bool USLuaState::TableItrNext ( int itr ) {
 }
 
 //----------------------------------------------------------------//
-bool USLuaState::Transform ( int idx, USStreamFormatter& formatter ) {
+bool MOAILuaState::Transform ( int idx, USStreamFormatter& formatter ) {
 
 	if ( !this->IsType ( idx, LUA_TSTRING )) return false;
 
@@ -857,21 +849,21 @@ bool USLuaState::Transform ( int idx, USStreamFormatter& formatter ) {
 }
 
 //----------------------------------------------------------------//
-USLuaState::USLuaState () :
+MOAILuaState::MOAILuaState () :
 	mState ( 0 ) {
 }
 
 //----------------------------------------------------------------//
-USLuaState::USLuaState ( lua_State* state ) :
+MOAILuaState::MOAILuaState ( lua_State* state ) :
 	mState ( state ) {
 }
 
 //----------------------------------------------------------------//
-USLuaState::~USLuaState () {
+MOAILuaState::~MOAILuaState () {
 }
 
 //----------------------------------------------------------------//
-int USLuaState::YieldThread ( int nResults ) {
+int MOAILuaState::YieldThread ( int nResults ) {
 
 	return lua_yield ( this->mState, nResults );
 }

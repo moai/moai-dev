@@ -35,12 +35,12 @@ MOAIBox2DWeldJoint::~MOAIBox2DWeldJoint () {
 }
 
 //----------------------------------------------------------------//
-void MOAIBox2DWeldJoint::RegisterLuaClass ( USLuaState& state ) {
+void MOAIBox2DWeldJoint::RegisterLuaClass ( MOAILuaState& state ) {
 	MOAIBox2DJoint::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAIBox2DWeldJoint::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAIBox2DWeldJoint::RegisterLuaFuncs ( MOAILuaState& state ) {
 	MOAIBox2DJoint::RegisterLuaFuncs ( state );
 }
 

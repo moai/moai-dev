@@ -4,6 +4,7 @@
 #ifndef	MOAIPARTITION_H
 #define	MOAIPARTITION_H
 
+#include <moaicore/MOAILua.h>
 #include <moaicore/MOAIPartitionCell.h>
 #include <moaicore/MOAIPartitionLayer.h>
 
@@ -15,7 +16,7 @@
 			Configure for performance; default behavior is a simple list.
 */
 class MOAIPartition :
-	public virtual USLuaObject {
+	public virtual MOAIObject {
 private:
 
 	friend class MOAIPartitionCell;
@@ -58,8 +59,8 @@ public:
 	void			InsertProp				( MOAIProp& prop );
 					MOAIPartition			();
 					~MOAIPartition			();
-	void			RegisterLuaClass		( USLuaState& state );
-	void			RegisterLuaFuncs		( USLuaState& state );
+	void			RegisterLuaClass		( MOAILuaState& state );
+	void			RegisterLuaFuncs		( MOAILuaState& state );
 	void			RemoveProp				( MOAIProp& prop );
 	void			ReserveLayers			( int totalLayers );
 	void			SetLayer				( int layerID, float cellSize, int width, int height );

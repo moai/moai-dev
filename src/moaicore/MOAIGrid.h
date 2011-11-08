@@ -5,6 +5,7 @@
 #define	MOAIGRID_H
 
 #include <moaicore/MOAIGridSpace.h>
+#include <moaicore/MOAILua.h>
 #include <moaicore/MOAITileFlags.h>
 
 //================================================================//
@@ -30,7 +31,7 @@
 	@const	TILE_TOP_CENTER
 */
 class MOAIGrid :
-	public USLuaObject,
+	public MOAIObject,
 	public MOAIGridSpace {
 private:
 
@@ -58,12 +59,12 @@ public:
 	u32				GetTile				( int xTile, int yTile );
 					MOAIGrid			();
 					~MOAIGrid			();
-	void			RegisterLuaClass	( USLuaState& state );
-	void			RegisterLuaFuncs	( USLuaState& state );
+	void			RegisterLuaClass	( MOAILuaState& state );
+	void			RegisterLuaFuncs	( MOAILuaState& state );
 	void			RowFromString		( u32 rowID, cc8* str );
 	STLString		RowToString			( u32 rowID );
-	void			SerializeIn			( USLuaState& state, USLuaSerializer& serializer );
-	void			SerializeOut		( USLuaState& state, USLuaSerializer& serializer );
+	void			SerializeIn			( MOAILuaState& state, MOAIDeserializer& serializer );
+	void			SerializeOut		( MOAILuaState& state, MOAISerializer& serializer );
 	void			SetTile				( u32 addr, u32 tile );
 	void			SetTile				( int xTile, int yTile, u32 tile );
 	u32				Size				();

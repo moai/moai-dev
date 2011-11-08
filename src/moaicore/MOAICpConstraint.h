@@ -7,6 +7,7 @@
 
 #include <chipmunk/chipmunk.h>
 #include <moaicore/MOAICpSpace.h>
+#include <moaicore/MOAILua.h>
 
 struct cpConstraint;
 
@@ -17,7 +18,7 @@ struct cpConstraint;
 	@text	Chipmunk Constraint.
 */
 class MOAICpConstraint :
-	public virtual USLuaObject,
+	public virtual MOAIObject,
 	public MOAICpPrim {
 private:
 
@@ -54,8 +55,8 @@ public:
 	//----------------------------------------------------------------//
 					MOAICpConstraint		();
 					~MOAICpConstraint		();
-	void			RegisterLuaClass		( USLuaState& state );
-	void			RegisterLuaFuncs		( USLuaState& state );
+	void			RegisterLuaClass		( MOAILuaState& state );
+	void			RegisterLuaFuncs		( MOAILuaState& state );
 };
 
 #endif

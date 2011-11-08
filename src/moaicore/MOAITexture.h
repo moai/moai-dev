@@ -5,8 +5,9 @@
 #define	MOAITEXTURE2D_H
 
 #include <moaicore/MOAIDeck.h>
-#include <moaicore/MOAIImage.h>
 #include <moaicore/MOAIGfxResource.h>
+#include <moaicore/MOAIImage.h>
+#include <moaicore/MOAILua.h>
 
 class MOAIDataBuffer;
 class MOAIFrameBuffer;
@@ -27,7 +28,7 @@ class MOAITextureLoader;
 	@const	GL_NEAREST_MIPMAP_NEAREST
 */
 class MOAITexture :
-	public virtual USLuaObject,
+	public virtual MOAIObject,
 	public MOAIGfxResource {
 private:
 
@@ -94,7 +95,7 @@ public:
 	GET ( MOAIFrameBuffer*, FrameBuffer, mFrameBuffer )
 	
 	//----------------------------------------------------------------//
-	static MOAITexture*		AffirmTexture			( USLuaState& state, int idx );
+	static MOAITexture*		AffirmTexture			( MOAILuaState& state, int idx );
 	u32						GetHeight				();
 	u32						GetWidth				();
 	void					Init					( MOAIImage& image, cc8* debugname = 0 );
@@ -106,13 +107,13 @@ public:
 	bool					IsValid					();
 							MOAITexture				();
 							~MOAITexture			();
-	void					SerializeIn				( USLuaState& state, USLuaSerializer& serializer );
-	void					SerializeOut			( USLuaState& state, USLuaSerializer& serializer );
+	void					SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
+	void					SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
 	void					SetFilter				( int filter );
 	void					SetFilter				( int min, int mag );
 	void					SetWrap					( int wrap );
-	void					RegisterLuaClass		( USLuaState& state );
-	void					RegisterLuaFuncs		( USLuaState& state );
+	void					RegisterLuaClass		( MOAILuaState& state );
+	void					RegisterLuaFuncs		( MOAILuaState& state );
 };
 
 #endif

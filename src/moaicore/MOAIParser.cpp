@@ -128,7 +128,7 @@ MOAIParser::MOAIParser () :
 	mAST ( 0 ) {
 
 	RTTI_BEGIN
-		RTTI_EXTEND ( USLuaObject )
+		RTTI_EXTEND ( MOAIObject )
 	RTTI_END
 }
 
@@ -142,7 +142,7 @@ MOAIParser::~MOAIParser () {
 void MOAIParser::OnEndNonterminal ( USSyntaxNode* node ) {
 
 	if ( !this->mOnEndNonterminal ) return;
-	USLuaStateHandle state = USLuaRuntime::Get ().State ();
+	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 	this->PushLocal ( state, this->mOnEndNonterminal );
 	
 	state.Push ( node->GetID () );
@@ -153,7 +153,7 @@ void MOAIParser::OnEndNonterminal ( USSyntaxNode* node ) {
 void MOAIParser::OnStartNonterminal ( USSyntaxNode* node ) {
 
 	if ( !this->mOnStartNonterminal ) return;
-	USLuaStateHandle state = USLuaRuntime::Get ().State ();
+	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 	this->PushLocal ( state, this->mOnStartNonterminal );
 	
 	state.Push ( node->GetID ());
@@ -167,7 +167,7 @@ void MOAIParser::OnStartNonterminal ( USSyntaxNode* node ) {
 void MOAIParser::OnTerminal ( USSyntaxNode* node ) {
 
 	if ( !this->mOnTerminal ) return;
-	USLuaStateHandle state = USLuaRuntime::Get ().State ();
+	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 	this->PushLocal ( state, this->mOnTerminal );
 	
 	state.Push ( node->GetID ());
@@ -178,12 +178,12 @@ void MOAIParser::OnTerminal ( USSyntaxNode* node ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIParser::RegisterLuaClass ( USLuaState& state ) {
+void MOAIParser::RegisterLuaClass ( MOAILuaState& state ) {
 	UNUSED ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAIParser::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAIParser::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable[] = {
 		{ "loadFile",			_loadFile },

@@ -848,14 +848,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAISerializer.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAISerializer.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\moaicore\MOAIXmlParser.cpp"
 				>
 			</File>
@@ -873,6 +865,22 @@
 			</File>
 			<File
 				RelativePath="..\..\src\moaicore\MOAIHttpTask.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIHttpTaskInfo_curl.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIHttpTaskInfo_curl.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIUrlMgr.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIUrlMgr_curl.cpp"
 				>
 			</File>
 		</Filter>
@@ -1457,6 +1465,94 @@
 			</File>
 			<File
 				RelativePath="..\..\src\moaicore\MOAIQuadBrush.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="lua"
+			>
+			<File
+				RelativePath="..\..\src\moaicore\MOAILua.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAILuaRef.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAILuaRef.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAILuaRuntime.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAILuaRuntime.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAILuaSharedPtr.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAILuaState-impl.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAILuaState.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAILuaState.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAILuaStateHandle.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAILuaStateHandle.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIObject-impl.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIObject.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIObject.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="serializer"
+			>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIDeserializer.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIDeserializer.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAISerializer.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAISerializer.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAISerializerBase.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAISerializerBase.h"
 				>
 			</File>
 		</Filter>

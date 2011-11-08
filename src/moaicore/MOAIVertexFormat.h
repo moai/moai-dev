@@ -4,6 +4,8 @@
 #ifndef	MOAIVERTEXFORMAT_H
 #define	MOAIVERTEXFORMAT_H
 
+#include <moaicore/MOAILua.h>
+
 //================================================================//
 // MOAIVertexAttributeUse
 //================================================================//
@@ -38,7 +40,7 @@ private:
 	@text	Vertex format class.
 */
 class MOAIVertexFormat :
-	public virtual USLuaObject {
+	public virtual MOAIObject {
 public:
 
 	enum {
@@ -90,8 +92,8 @@ public:
 	void			DeclareAttribute				( GLint index, GLenum type, GLint size, GLenum use, GLboolean normalized );
 					MOAIVertexFormat				();
 					~MOAIVertexFormat				();
-	void			RegisterLuaClass				( USLuaState& state );
-	void			RegisterLuaFuncs				( USLuaState& state );
+	void			RegisterLuaClass				( MOAILuaState& state );
+	void			RegisterLuaFuncs				( MOAILuaState& state );
 };
 
 #endif

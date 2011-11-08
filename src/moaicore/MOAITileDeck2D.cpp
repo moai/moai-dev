@@ -161,13 +161,13 @@ MOAITileDeck2D::~MOAITileDeck2D () {
 }
 
 //----------------------------------------------------------------//
-void MOAITileDeck2D::RegisterLuaClass ( USLuaState& state ) {
+void MOAITileDeck2D::RegisterLuaClass ( MOAILuaState& state ) {
 
 	this->MOAIDeck2D::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAITileDeck2D::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAITileDeck2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	this->MOAIDeck2D::RegisterLuaFuncs ( state );
 
@@ -182,7 +182,7 @@ void MOAITileDeck2D::RegisterLuaFuncs ( USLuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITileDeck2D::SerializeIn ( USLuaState& state, USLuaSerializer& serializer ) {
+void MOAITileDeck2D::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
 
 	MOAIGridSpace::SerializeIn ( state );
 	
@@ -190,7 +190,7 @@ void MOAITileDeck2D::SerializeIn ( USLuaState& state, USLuaSerializer& serialize
 }
 
 //----------------------------------------------------------------//
-void MOAITileDeck2D::SerializeOut ( USLuaState& state, USLuaSerializer& serializer ) {
+void MOAITileDeck2D::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
 
 	MOAIGridSpace::SerializeOut ( state );
 	

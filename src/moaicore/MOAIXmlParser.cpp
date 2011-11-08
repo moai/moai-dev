@@ -20,7 +20,7 @@
 */
 int MOAIXmlParser::_parseFile ( lua_State* L ) {
 
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	if ( !state.CheckParams ( 1, "S" )) return 0;
 	
 	cc8* filename = lua_tostring ( state, 1 );
@@ -44,7 +44,7 @@ int MOAIXmlParser::_parseFile ( lua_State* L ) {
 */
 int MOAIXmlParser::_parseString ( lua_State* L ) {
 
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	if ( !state.CheckParams ( 1, "S" )) return 0;
 	
 	cc8* xml = lua_tostring ( state, 1 );
@@ -69,7 +69,7 @@ MOAIXmlParser::~MOAIXmlParser () {
 }
 
 //----------------------------------------------------------------//
-void MOAIXmlParser::Parse ( USLuaState& state, TiXmlNode* node ) {
+void MOAIXmlParser::Parse ( MOAILuaState& state, TiXmlNode* node ) {
 
 	if ( !node ) return;
 	
@@ -132,7 +132,7 @@ void MOAIXmlParser::Parse ( USLuaState& state, TiXmlNode* node ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIXmlParser::RegisterLuaClass ( USLuaState& state ) {
+void MOAIXmlParser::RegisterLuaClass ( MOAILuaState& state ) {
 
 	luaL_Reg regTable[] = {
 		{ "parseFile",				_parseFile },
@@ -144,7 +144,7 @@ void MOAIXmlParser::RegisterLuaClass ( USLuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIXmlParser::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAIXmlParser::RegisterLuaFuncs ( MOAILuaState& state ) {
 	UNUSED ( state );
 }
 

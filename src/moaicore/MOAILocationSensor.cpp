@@ -65,7 +65,7 @@ void MOAILocationSensor::HandleEvent ( USStream& eventStream ) {
 	this->mSpeed		= eventStream.Read < float >();
 	
 	if ( this->mCallback ) {
-		USLuaStateHandle state = this->mCallback.GetSelf ();
+		MOAILuaStateHandle state = this->mCallback.GetSelf ();
 		lua_pushnumber ( state, this->mLongitude );
 		lua_pushnumber ( state, this->mLatitude );
 		lua_pushnumber ( state, this->mHAccuracy );
@@ -93,13 +93,13 @@ MOAILocationSensor::~MOAILocationSensor () {
 }
 
 //----------------------------------------------------------------//
-void MOAILocationSensor::RegisterLuaClass ( USLuaState& state ) {
+void MOAILocationSensor::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAISensor::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAILocationSensor::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAILocationSensor::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "getLocation",		_getLocation },

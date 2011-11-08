@@ -213,7 +213,7 @@ MOAIAction::MOAIAction () :
 	this->mLink.Data ( this );
 
 	RTTI_BEGIN
-		RTTI_EXTEND ( USLuaObject )
+		RTTI_EXTEND ( MOAIObject )
 		RTTI_EXTEND ( MOAIInstanceEventSource )
 	RTTI_END
 }
@@ -231,8 +231,8 @@ void MOAIAction::OnStart () {
 //----------------------------------------------------------------//
 void MOAIAction::OnStop () {
 
-	if ( USLuaRuntime::IsValid ()) {
-		USLuaStateHandle state = USLuaRuntime::Get ().State ();
+	if ( MOAILuaRuntime::IsValid ()) {
+		MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 		if ( this->PushListenerAndSelf ( EVENT_STOP, state )) {
 			state.DebugCall ( 1, 0 );
 		}
@@ -254,7 +254,7 @@ void MOAIAction::OnUpdate ( float step ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIAction::RegisterLuaClass ( USLuaState& state ) {
+void MOAIAction::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAIInstanceEventSource::RegisterLuaClass ( state );
 
@@ -262,7 +262,7 @@ void MOAIAction::RegisterLuaClass ( USLuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIAction::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAIAction::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	MOAIInstanceEventSource::RegisterLuaFuncs ( state );
 

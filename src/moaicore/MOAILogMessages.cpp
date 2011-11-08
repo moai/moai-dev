@@ -101,7 +101,7 @@ void MOAILogMessages::RegisterDefaultLogMessages () {
 }
 
 //----------------------------------------------------------------//
-void MOAILogMessages::RegisterLogMessageIDs ( USLuaState& state ) {
+void MOAILogMessages::RegisterLogMessageIDs ( MOAILuaState& state ) {
 	UNUSED ( state );
 	
 	REGISTER_LOG_MESSAGE ( MOAI_FileNotFound_S )

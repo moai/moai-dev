@@ -219,7 +219,7 @@ void* AKUGetUserdata () {
 lua_State* AKUGetLuaState () {
 
 	lua_State* lua_state = NULL;
-	lua_state = USLuaRuntime::Get ().State ();
+	lua_state = MOAILuaRuntime::Get ().State ();
 
 	return lua_state;
 }

@@ -387,7 +387,7 @@ MOAIEnvironment::MOAIEnvironment () :
 	mScreenWidth ( 0 ),
 	mScreenHeight ( 0 ) {
 
-	RTTI_SINGLE ( USLuaObject )
+	RTTI_SINGLE ( MOAIObject )
 }
 
 //----------------------------------------------------------------//
@@ -395,7 +395,7 @@ MOAIEnvironment::~MOAIEnvironment () {
 }
 
 //----------------------------------------------------------------//
-void MOAIEnvironment::RegisterLuaClass ( USLuaState& state ) {
+void MOAIEnvironment::RegisterLuaClass ( MOAILuaState& state ) {
 
 	state.SetField ( -1, "CONNECTION_TYPE_NONE", ( u32 )CONNECTION_TYPE_NONE );
 	state.SetField ( -1, "CONNECTION_TYPE_WIFI", ( u32 )CONNECTION_TYPE_WIFI );

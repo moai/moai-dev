@@ -518,7 +518,7 @@ MOAINode::MOAINode () :
 	mPrev ( 0 ),
 	mNext ( 0 ) {
 	
-	RTTI_SINGLE ( USLuaObject )
+	RTTI_SINGLE ( MOAIObject )
 }
 
 //----------------------------------------------------------------//
@@ -576,7 +576,7 @@ bool MOAINode::PullLinkedAttr ( u32 attrID, MOAIAttrOp& attrOp ) {
 }
 
 //----------------------------------------------------------------//
-void MOAINode::RegisterLuaClass ( USLuaState& state ) {
+void MOAINode::RegisterLuaClass ( MOAILuaState& state ) {
 	UNUSED ( state );
 }
 
@@ -616,7 +616,7 @@ void MOAINode::RemoveDepLink ( MOAIDepLink& link ) {
 }
 
 //----------------------------------------------------------------//
-void MOAINode::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAINode::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	luaL_Reg regTable [] = {
 		{ "clearAttrLink",			_clearAttrLink },

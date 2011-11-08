@@ -4,6 +4,8 @@
 #ifndef	MOAIDECK_H
 #define	MOAIDECK_H
 
+#include <moaicore/MOAILua.h>
+
 class MOAIDeckRemapper;
 class MOAICellCoord;
 class MOAIGrid;
@@ -17,14 +19,14 @@ class MOAISurfaceSampler2D;
 	@text	Base class for decks.
 */
 class MOAIDeck :
-	public virtual USLuaObject {
+	public virtual MOAIObject {
 protected:
 
 	enum {
 		NO_CONTENT = 0xffffffff,
 	};
 
-	USLuaSharedPtr < MOAIShader > mShader;
+	MOAILuaSharedPtr < MOAIShader > mShader;
 	u32 mContentMask;
 
 	SET ( u32, ContentMask, mContentMask )
@@ -49,8 +51,8 @@ public:
 	virtual void		LoadShader					();
 						MOAIDeck					();
 						~MOAIDeck					();
-	void				RegisterLuaClass			( USLuaState& state );
-	void				RegisterLuaFuncs			( USLuaState& state );
+	void				RegisterLuaClass			( MOAILuaState& state );
+	void				RegisterLuaFuncs			( MOAILuaState& state );
 };
 
 #endif

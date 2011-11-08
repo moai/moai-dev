@@ -4,6 +4,7 @@
 #ifndef	MOAIDECKREMAPPER_H
 #define	MOAIDECKREMAPPER_H
 
+#include <moaicore/MOAILua.h>
 #include <moaicore/MOAINode.h>
 
 class MOAIDeck;
@@ -37,8 +38,8 @@ public:
 	bool			ApplyAttrOp				( u32 attrID, MOAIAttrOp& attrOp, u32 op );
 					MOAIDeckRemapper		();
 					~MOAIDeckRemapper		();
-	void			RegisterLuaClass		( USLuaState& state );
-	void			RegisterLuaFuncs		( USLuaState& state );
+	void			RegisterLuaClass		( MOAILuaState& state );
+	void			RegisterLuaFuncs		( MOAILuaState& state );
 	u32				Remap					( u32 idx );
 };
 

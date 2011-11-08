@@ -18,7 +18,7 @@ function onFinish ( task, responseCode )
 	end
 end
 
-task = MOAIHttpTask.new ( "GSLHttpTask" )
+task = MOAIHttpTask.new ()
 
 task:setCallback ( onFinish )
 task:httpGet ( "www.cnn.com" )

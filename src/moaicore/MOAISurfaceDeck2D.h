@@ -5,6 +5,7 @@
 #define	MOAISURFACEDECK2D_H
 
 #include <moaicore/MOAIDeck2D.h>
+#include <moaicore/MOAILua.h>
 
 //================================================================//
 // MOAISurfaceBrush2D
@@ -53,8 +54,8 @@ public:
 	USRect					GetBounds				( u32 idx, MOAIDeckRemapper* remapper );
 							MOAISurfaceDeck2D		();
 							~MOAISurfaceDeck2D		();
-	void					RegisterLuaClass		( USLuaState& state );
-	void					RegisterLuaFuncs		( USLuaState& state );
+	void					RegisterLuaClass		( MOAILuaState& state );
+	void					RegisterLuaFuncs		( MOAILuaState& state );
 };
 
 #endif

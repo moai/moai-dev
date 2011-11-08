@@ -7,6 +7,7 @@
 
 #include <chipmunk/chipmunk.h>
 #include <moaicore/MOAICpSpace.h>
+#include <moaicore/MOAILua.h>
 
 //================================================================//
 // MOAICpShape
@@ -15,7 +16,7 @@
 	@text	Chipmunk Shape.
 */
 class MOAICpShape :
-	public virtual USLuaObject,
+	public virtual MOAIObject,
 	public MOAICpPrim {
 private:
 
@@ -53,7 +54,7 @@ private:
 	//----------------------------------------------------------------//
 	void			CpAddToSpace			( cpSpace* space );
 	void			CpRemoveFromSpace		( cpSpace* space );
-	static u32		LoadVerts				( USLuaState& state, int idx, cpVect* verts, u32 max  );
+	static u32		LoadVerts				( MOAILuaState& state, int idx, cpVect* verts, u32 max  );
 
 public:
 	
@@ -65,8 +66,8 @@ public:
 	//----------------------------------------------------------------//
 					MOAICpShape				();
 					~MOAICpShape			();
-	void			RegisterLuaClass		( USLuaState& state );
-	void			RegisterLuaFuncs		( USLuaState& state );
+	void			RegisterLuaClass		( MOAILuaState& state );
+	void			RegisterLuaFuncs		( MOAILuaState& state );
 };
 
 #endif

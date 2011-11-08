@@ -4,6 +4,7 @@
 #ifndef	MOAICAMERAANCHOR2D_H
 #define	MOAICAMERAANCHOR2D_H
 
+#include <moaicore/MOAILua.h>
 #include <moaicore/MOAINode.h>
 
 class MOAITransformBase;
@@ -45,8 +46,8 @@ public:
 	//----------------------------------------------------------------//
 					MOAICameraAnchor2D		();
 	virtual			~MOAICameraAnchor2D		();
-	void			RegisterLuaClass		( USLuaState& state );
-	void			RegisterLuaFuncs		( USLuaState& state );
+	void			RegisterLuaClass		( MOAILuaState& state );
+	void			RegisterLuaFuncs		( MOAILuaState& state );
 };
 
 #endif

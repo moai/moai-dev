@@ -3,13 +3,12 @@
 
 #include "pch.h"
 
-#include <uslsext/USData.h>
-#include <uslsext/USHttpTask.h>
-#include <uslsext/USHttpTask_impl.h>
-#include <uslsext/USUrlMgr.h>
+#include <moaicore/MOAIHttpTask.h>
+#include <moaicore/MOAIHttpTaskInfo_curl.h>
+#include <moaicore/MOAIUrlMgr.h>
 
 //----------------------------------------------------------------//
-void USHttpTaskInfo::_printError ( CURLcode error ) {
+void MOAIHttpTaskInfo::_printError ( CURLcode error ) {
 
 	if ( error ) {
 		USLog::Print ( "%s\n", curl_easy_strerror ( error ));
@@ -17,9 +16,9 @@ void USHttpTaskInfo::_printError ( CURLcode error ) {
 }
 
 //----------------------------------------------------------------//
-u32 USHttpTaskInfo::_writeData ( char* data, u32 n, u32 l, void* s ) {
+u32 MOAIHttpTaskInfo::_writeData ( char* data, u32 n, u32 l, void* s ) {
 	
-	USHttpTaskInfo* self = ( USHttpTaskInfo* )s;
+	MOAIHttpTaskInfo* self = ( MOAIHttpTaskInfo* )s;
 	u32 size = n * l;
 	
 	self->mStream->WriteBytes ( data, size );
@@ -27,9 +26,9 @@ u32 USHttpTaskInfo::_writeData ( char* data, u32 n, u32 l, void* s ) {
 }
 
 //----------------------------------------------------------------//
-u32 USHttpTaskInfo::_writeHeader ( char* data, u32 n, u32 l, void* s ) {
+u32 MOAIHttpTaskInfo::_writeHeader ( char* data, u32 n, u32 l, void* s ) {
 	
-	USHttpTaskInfo* self = ( USHttpTaskInfo* )s;
+	MOAIHttpTaskInfo* self = ( MOAIHttpTaskInfo* )s;
 	u32 size = n * l;
 	
 	STLString key = "content-length";
@@ -54,7 +53,7 @@ u32 USHttpTaskInfo::_writeHeader ( char* data, u32 n, u32 l, void* s ) {
 }
 
 //----------------------------------------------------------------//
-void USHttpTaskInfo::Clear () {
+void MOAIHttpTaskInfo::Clear () {
 
 	this->mUrl.clear ();
 	this->mData.Clear ();
@@ -68,7 +67,7 @@ void USHttpTaskInfo::Clear () {
 }
 
 //----------------------------------------------------------------//
-void USHttpTaskInfo::Finish () {
+void MOAIHttpTaskInfo::Finish () {
 
 	if ( this->mEasyHandle ) {
 		long response;
@@ -90,7 +89,7 @@ void USHttpTaskInfo::Finish () {
 }
 
 //----------------------------------------------------------------//
-void USHttpTaskInfo::InitForGet ( cc8* url, cc8* useragent, bool verbose ) {
+void MOAIHttpTaskInfo::InitForGet ( cc8* url, cc8* useragent, bool verbose ) {
 
 	this->Clear ();
 	
@@ -139,7 +138,7 @@ void USHttpTaskInfo::InitForGet ( cc8* url, cc8* useragent, bool verbose ) {
 }
 
 //----------------------------------------------------------------//
-void USHttpTaskInfo::InitForPost ( cc8* url, cc8* useragent, const void* buffer, u32 size, bool verbose ) {
+void MOAIHttpTaskInfo::InitForPost ( cc8* url, cc8* useragent, const void* buffer, u32 size, bool verbose ) {
 
 	this->Clear ();
 	
@@ -207,14 +206,14 @@ void USHttpTaskInfo::InitForPost ( cc8* url, cc8* useragent, const void* buffer,
 }
 
 //----------------------------------------------------------------//
-USHttpTaskInfo::USHttpTaskInfo () :
+MOAIHttpTaskInfo::MOAIHttpTaskInfo () :
 	mEasyHandle ( 0 ) {
 	
 	this->mStream = &this->mMemStream;
 }
 
 //----------------------------------------------------------------//
-USHttpTaskInfo::~USHttpTaskInfo () {
+MOAIHttpTaskInfo::~MOAIHttpTaskInfo () {
 
 	this->Clear ();
 }

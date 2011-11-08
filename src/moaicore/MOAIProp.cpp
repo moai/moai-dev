@@ -145,13 +145,13 @@ MOAIProp::~MOAIProp () {
 }
 
 //----------------------------------------------------------------//
-void MOAIProp::RegisterLuaClass ( USLuaState& state ) {
+void MOAIProp::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	MOAITransform::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAIProp::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAIProp::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	MOAITransform::RegisterLuaFuncs ( state );
 

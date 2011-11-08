@@ -4,6 +4,7 @@
 #ifndef	MOAILAYOUTFRAME_H
 #define	MOAILAYOUTFRAME_H
 
+#include <moaicore/MOAILua.h>
 #include <moaicore/MOAITransform.h>
 
 //================================================================//
@@ -85,8 +86,8 @@ public:
 	USRect			GetScissorRect			();
 					MOAILayoutFrame			();
 					~MOAILayoutFrame		();
-	void			RegisterLuaClass		( USLuaState& state );
-	void			RegisterLuaFuncs		( USLuaState& state );
+	void			RegisterLuaClass		( MOAILuaState& state );
+	void			RegisterLuaFuncs		( MOAILuaState& state );
 	void			SetParent				( MOAITransformBase* parent );
 };
 

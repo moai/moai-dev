@@ -878,7 +878,7 @@ MOAIImage::MOAIImage () :
 	mPalette ( 0 ),
 	mBitmap ( 0 ) {
 	
-	RTTI_SINGLE ( USLuaObject )
+	RTTI_SINGLE ( MOAIObject )
 }
 
 //----------------------------------------------------------------//
@@ -900,7 +900,7 @@ void MOAIImage::PadToPow2 ( const MOAIImage& image ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIImage::RegisterLuaClass ( USLuaState& state ) {
+void MOAIImage::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	state.SetField ( -1, "POW_TWO", ( u32 )MOAIImageTransform::POW_TWO );
 	state.SetField ( -1, "QUANTIZE", ( u32 )MOAIImageTransform::QUANTIZE );
@@ -920,7 +920,7 @@ void MOAIImage::RegisterLuaClass ( USLuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIImage::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAIImage::RegisterLuaFuncs ( MOAILuaState& state ) {
 	UNUSED ( state );
 
 	luaL_Reg regTable [] = {
@@ -1028,13 +1028,13 @@ void MOAIImage::ResizeCanvas ( const MOAIImage& image, USIntRect rect ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIImage::SerializeIn ( USLuaState& state, USLuaSerializer& serializer ) {
+void MOAIImage::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
 	UNUSED ( state );
 	UNUSED ( serializer );
 }
 
 //----------------------------------------------------------------//
-void MOAIImage::SerializeOut ( USLuaState& state, USLuaSerializer& serializer ) {
+void MOAIImage::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
 	UNUSED ( state );
 	UNUSED ( serializer );
 }

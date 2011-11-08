@@ -18,7 +18,7 @@
 */
 int MOAIActionMgr::_getRoot ( lua_State* L ) {
 	
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	
 	MOAIAction* root = MOAIActionMgr::Get ().AffirmRoot ();
 	root->PushLuaUserdata ( state );
@@ -35,7 +35,7 @@ int MOAIActionMgr::_getRoot ( lua_State* L ) {
 */
 int MOAIActionMgr::_setProfilingEnabled ( lua_State* L ) {
 	
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	bool enable = state.GetValue < bool >( -1, false );
 	MOAIActionMgr::Get ().SetProfilingEnabled ( enable );
 
@@ -51,7 +51,7 @@ int MOAIActionMgr::_setProfilingEnabled ( lua_State* L ) {
 */
 int MOAIActionMgr::_setRoot ( lua_State* L ) {
 	
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	
 	MOAIAction* root = state.GetLuaObject < MOAIAction >( -1 );
 	MOAIActionMgr::Get ().mRoot = root;
@@ -68,7 +68,7 @@ int MOAIActionMgr::_setRoot ( lua_State* L ) {
 */
 int MOAIActionMgr::_setThreadInfoEnabled ( lua_State* L ) {
 	
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	bool enable = state.GetValue < bool >( -1, false );
 	MOAIActionMgr::Get ().SetThreadInfoEnabled ( enable );
 
@@ -114,7 +114,7 @@ MOAIActionMgr::MOAIActionMgr () :
 	mRoot ( 0 ),
 	mCurrentAction ( 0 ) {
 	
-	RTTI_SINGLE ( USLuaObject )
+	RTTI_SINGLE ( MOAIObject )
 }
 
 //----------------------------------------------------------------//
@@ -124,7 +124,7 @@ MOAIActionMgr::~MOAIActionMgr () {
 }
 
 //----------------------------------------------------------------//
-void MOAIActionMgr::RegisterLuaClass ( USLuaState& state ) {
+void MOAIActionMgr::RegisterLuaClass ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "getRoot",				_getRoot },

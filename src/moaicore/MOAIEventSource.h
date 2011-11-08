@@ -4,6 +4,8 @@
 #ifndef	MOAIEVENTSOURCE_H
 #define	MOAIEVENTSOURCE_H
 
+#include <moaicore/MOAILua.h>
+
 //================================================================//
 // MOAIEventSource
 //================================================================//
@@ -12,14 +14,14 @@
 			and have an event table.
 */
 class MOAIEventSource :
-	public virtual USLuaObject {
+	public virtual MOAIObject {
 protected:
 
 	//----------------------------------------------------------------//
-	virtual void	AffirmListenerTable		( USLuaState& state ) = 0;
-	bool			PushListener			( u32 eventID, USLuaState& state );
-	bool			PushListenerAndSelf		( u32 eventID, USLuaState& state );
-	virtual bool	PushListenerTable		( USLuaState& state ) = 0;
+	virtual void	AffirmListenerTable		( MOAILuaState& state ) = 0;
+	bool			PushListener			( u32 eventID, MOAILuaState& state );
+	bool			PushListenerAndSelf		( u32 eventID, MOAILuaState& state );
+	virtual bool	PushListenerTable		( MOAILuaState& state ) = 0;
 	void			SetListener				( lua_State* L, u32 idx );
 
 public:
@@ -40,7 +42,7 @@ class MOAIInstanceEventSource :
 	public virtual MOAIEventSource {
 private:
 
-	USLuaLocal		mListenerTable;
+	MOAILuaLocal		mListenerTable;
 
 	//----------------------------------------------------------------//
 	static int		_setListener				( lua_State* L );
@@ -48,15 +50,15 @@ private:
 protected:
 
 	//----------------------------------------------------------------//
-	void			AffirmListenerTable			( USLuaState& state );
-	bool			PushListenerTable			( USLuaState& state );
+	void			AffirmListenerTable			( MOAILuaState& state );
+	bool			PushListenerTable			( MOAILuaState& state );
 
 public:
 
 	//----------------------------------------------------------------//
 					MOAIInstanceEventSource		();
 	virtual			~MOAIInstanceEventSource	();
-	void			RegisterLuaFuncs			( USLuaState& state );
+	void			RegisterLuaFuncs			( MOAILuaState& state );
 };
 
 //================================================================//
@@ -69,7 +71,7 @@ class MOAIGlobalEventSource :
 	public virtual MOAIEventSource {
 private:
 
-	USLuaRef		mListenerTable;
+	MOAILuaRef		mListenerTable;
 
 	//----------------------------------------------------------------//
 	static int		_setListener				( lua_State* L );
@@ -82,7 +84,7 @@ protected:
 	
 		u32 idx = 1;
 		
-		USLuaState state ( L );
+		MOAILuaState state ( L );
 		if ( !state.IsType ( idx, LUA_TNUMBER )) {
 			idx = 2;
 		}
@@ -96,8 +98,8 @@ protected:
 	}
 
 	//----------------------------------------------------------------//
-	void			AffirmListenerTable			( USLuaState& state );
-	bool			PushListenerTable			( USLuaState& state );
+	void			AffirmListenerTable			( MOAILuaState& state );
+	bool			PushListenerTable			( MOAILuaState& state );
 
 public:
 

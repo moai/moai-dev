@@ -126,12 +126,12 @@ MOAIIndexBuffer::~MOAIIndexBuffer () {
 }
 
 //----------------------------------------------------------------//
-void MOAIIndexBuffer::RegisterLuaClass ( USLuaState& state ) {
+void MOAIIndexBuffer::RegisterLuaClass ( MOAILuaState& state ) {
 	UNUSED ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAIIndexBuffer::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAIIndexBuffer::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "release",			_release },

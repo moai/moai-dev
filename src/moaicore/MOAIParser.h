@@ -4,6 +4,8 @@
 #ifndef	MOAIPARSER_H
 #define	MOAIPARSER_H
 
+#include <moaicore/MOAILua.h>
+
 //================================================================//
 // MOAIParser
 //================================================================//
@@ -16,15 +18,15 @@
 			http://www.devincook.com/goldparser
 */
 class MOAIParser :
-	virtual public USLuaObject {
+	virtual public MOAIObject {
 private:
 
 	USCgt			mCGT;
 	USSyntaxNode*	mAST;
 
-	USLuaLocal		mOnStartNonterminal;
-	USLuaLocal		mOnEndNonterminal;
-	USLuaLocal		mOnTerminal;
+	MOAILuaLocal		mOnStartNonterminal;
+	MOAILuaLocal		mOnEndNonterminal;
+	MOAILuaLocal		mOnTerminal;
 
 	//----------------------------------------------------------------//
 	static int		_loadFile				( lua_State* L );
@@ -47,8 +49,8 @@ public:
 	//----------------------------------------------------------------//
 					MOAIParser				();
 					~MOAIParser				();
-	void			RegisterLuaClass		( USLuaState& state );
-	void			RegisterLuaFuncs		( USLuaState& state );
+	void			RegisterLuaClass		( MOAILuaState& state );
+	void			RegisterLuaFuncs		( MOAILuaState& state );
 };
 
 #endif

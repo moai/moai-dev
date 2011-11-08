@@ -6,6 +6,7 @@
 #if USE_BOX2D
 
 #include <moaicore/MOAIBox2DWorld.h>
+#include <moaicore/MOAILua.h>
 
 class b2Fixture;
 class MOAIBox2DArbiter;
@@ -24,7 +25,7 @@ private:
 
 	b2Fixture*		mFixture;
 
-	USLuaLocal		mCollisionHandler;
+	MOAILuaLocal	mCollisionHandler;
 	u32				mCollisionPhaseMask;
 	u32				mCollisionCategoryMask;
 
@@ -39,7 +40,7 @@ private:
 	
 	//----------------------------------------------------------------//
 	void			HandleCollision		( u32 eventType, MOAIBox2DFixture* other, MOAIBox2DArbiter* arbiter );
-	static u32		LoadVerts			( USLuaState& state, int idx, b2Vec2* verts, u32 max, float unitsToMeters  );
+	static u32		LoadVerts			( MOAILuaState& state, int idx, b2Vec2* verts, u32 max, float unitsToMeters  );
 	void			SetFixture			( b2Fixture* fixture );
 
 
@@ -55,8 +56,8 @@ public:
 	void			Destroy					();
 					MOAIBox2DFixture		();
 					~MOAIBox2DFixture		();
-	void			RegisterLuaClass		( USLuaState& state );
-	void			RegisterLuaFuncs		( USLuaState& state );
+	void			RegisterLuaClass		( MOAILuaState& state );
+	void			RegisterLuaFuncs		( MOAILuaState& state );
 };
 
 #endif

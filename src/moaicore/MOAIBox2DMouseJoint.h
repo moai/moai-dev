@@ -6,6 +6,7 @@
 #if USE_BOX2D
 
 #include <moaicore/MOAIBox2DJoint.h>
+#include <moaicore/MOAILua.h>
 
 //================================================================//
 // MOAIBox2DMouseJoint
@@ -34,8 +35,8 @@ public:
 	//----------------------------------------------------------------//
 					MOAIBox2DMouseJoint		();
 					~MOAIBox2DMouseJoint	();
-	void			RegisterLuaClass		( USLuaState& state );
-	void			RegisterLuaFuncs		( USLuaState& state );
+	void			RegisterLuaClass		( MOAILuaState& state );
+	void			RegisterLuaFuncs		( MOAILuaState& state );
 };
 
 #endif

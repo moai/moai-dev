@@ -200,7 +200,7 @@ void MOAIBox2DFixture::HandleCollision ( u32 eventType, MOAIBox2DFixture* other,
 		
 			if ( this->mCollisionHandler ) {
 			
-				USLuaStateHandle state = USLuaRuntime::Get ().State ();
+				MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 				if ( this->PushLocal ( state, this->mCollisionHandler )) {
 					
 					state.Push ( eventType );
@@ -216,7 +216,7 @@ void MOAIBox2DFixture::HandleCollision ( u32 eventType, MOAIBox2DFixture* other,
 }
 
 //----------------------------------------------------------------//
-u32 MOAIBox2DFixture::LoadVerts ( USLuaState& state, int idx, b2Vec2* verts, u32 max, float unitsToMeters  ) {
+u32 MOAIBox2DFixture::LoadVerts ( MOAILuaState& state, int idx, b2Vec2* verts, u32 max, float unitsToMeters  ) {
 	
 	int itr = state.PushTableItr ( idx );
 	idx = 0;
@@ -244,7 +244,7 @@ MOAIBox2DFixture::MOAIBox2DFixture () :
 	mCollisionCategoryMask ( 0 ) {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( USLuaObject )
+		RTTI_EXTEND ( MOAIObject )
 	RTTI_END
 }
 
@@ -255,12 +255,12 @@ MOAIBox2DFixture::~MOAIBox2DFixture () {
 }
 
 //----------------------------------------------------------------//
-void MOAIBox2DFixture::RegisterLuaClass ( USLuaState& state ) {
+void MOAIBox2DFixture::RegisterLuaClass ( MOAILuaState& state ) {
 	UNUSED ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAIBox2DFixture::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAIBox2DFixture::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	luaL_Reg regTable [] = {
 		{ "destroy",				_destroy },

@@ -3,9 +3,14 @@
 
 #include <moaicore/moaicore.h>
 #include <moaiext-debugger/MOAIHarness.h>
+
 #ifdef WIN32
-#include <winsock.h>
+	#include <winsock.h>
 #endif
+
+extern "C" {
+	extern int Curl_inet_pton ( int, const char*, void* );
+}
 
 //================================================================//
 // MOAIHarness
@@ -88,7 +93,7 @@ void MOAIHarness::HookLua(lua_State* L, const char* target, int port)
 	memset(&MOAIHarness::mSocketAddr, 0, sizeof(MOAIHarness::mSocketAddr));
     MOAIHarness::mSocketAddr.sin_family = AF_INET;
     MOAIHarness::mSocketAddr.sin_port = htons(port);
-    int res = inet_pton(AF_INET, target, &MOAIHarness::mSocketAddr.sin_addr);
+    int res = Curl_inet_pton(AF_INET, target, &MOAIHarness::mSocketAddr.sin_addr);
 	if (res < 0)
 	{
 		printf("debug harness: Unable to connect socket for debugging (invalid address family)! [winsock error %i]\n", WSAGetLastError());

@@ -6,6 +6,7 @@
 
 #include <moaicore/MOAIBlocker.h>
 #include <moaicore/MOAIEventSource.h>
+#include <moaicore/MOAILua.h>
 
 //================================================================//
 // MOAIAction
@@ -74,8 +75,8 @@ public:
 	virtual bool		IsDone					();
 						MOAIAction				();
 						~MOAIAction				();
-	void				RegisterLuaClass		( USLuaState& state );
-	void				RegisterLuaFuncs		( USLuaState& state );
+	void				RegisterLuaClass		( MOAILuaState& state );
+	void				RegisterLuaFuncs		( MOAILuaState& state );
 	void				RemoveChild				( MOAIAction& action );
 	void				Start					();
 	void				Start					( MOAIAction& parent );

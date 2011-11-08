@@ -6,6 +6,13 @@
 
 #include <moaicore/pch.h>
 
+#include <moaicore/MOAILuaSharedPtr.h>
+#include <moaicore/MOAILuaState.h>
+#include <moaicore/MOAILuaStateHandle.h>
+#include <moaicore/MOAIObject.h>
+#include <moaicore/MOAILuaRuntime.h>
+#include <moaicore/MOAILuaRef.h>
+
 #include <moaicore/MOAIAction.h>
 #include <moaicore/MOAIActionMgr.h>
 #include <moaicore/MOAIAnim.h>
@@ -24,6 +31,7 @@
 #include <moaicore/MOAIDeck.h>
 #include <moaicore/MOAIDeck2D.h>
 #include <moaicore/MOAIDeckRemapper.h>
+#include <moaicore/MOAIDeserializer.h>
 #include <moaicore/MOAIDraw.h>
 #include <moaicore/MOAIEnvironment.h>
 #include <moaicore/MOAIEaseDriver.h>
@@ -41,6 +49,7 @@
 #include <moaicore/MOAIGrid.h>
 #include <moaicore/MOAIGridSpace.h>
 #include <moaicore/MOAIHttpTask.h>
+#include <moaicore/MOAIHttpTaskInfo_curl.h>
 #include <moaicore/MOAIImage.h>
 #include <moaicore/MOAIIndexBuffer.h>
 #include <moaicore/MOAIInputDevice.h>
@@ -83,6 +92,7 @@
 #include <moaicore/MOAIScriptNode.h>
 #include <moaicore/MOAISensor.h>
 #include <moaicore/MOAISerializer.h>
+#include <moaicore/MOAISerializerBase.h>
 #include <moaicore/MOAIShader.h>
 #include <moaicore/MOAIShaderMgr.h>
 #include <moaicore/MOAISim.h>
@@ -99,6 +109,7 @@
 #include <moaicore/MOAITouchSensor.h>
 #include <moaicore/MOAITransform.h>
 #include <moaicore/MOAITransformBase.h>
+#include <moaicore/MOAIUrlMgr.h>
 #include <moaicore/MOAIVertexBuffer.h>
 #include <moaicore/MOAIVertexFormat.h>
 #include <moaicore/MOAIVertexFormatMgr.h>
@@ -132,6 +143,8 @@
 	#include <moaicore/MOAICpShape.h>
 	#include <moaicore/MOAICpSpace.h>
 #endif
+
+#include <moaicore/MOAILuaState-impl.h>
 
 //================================================================//
 // moaicore

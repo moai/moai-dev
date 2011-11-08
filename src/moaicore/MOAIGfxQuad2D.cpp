@@ -125,7 +125,7 @@ MOAIGfxQuad2D::~MOAIGfxQuad2D () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxQuad2D::RegisterLuaClass ( USLuaState& state ) {
+void MOAIGfxQuad2D::RegisterLuaClass ( MOAILuaState& state ) {
 
 	this->MOAIDeck2D::RegisterLuaClass ( state );
 	
@@ -134,7 +134,7 @@ void MOAIGfxQuad2D::RegisterLuaClass ( USLuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxQuad2D::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAIGfxQuad2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	this->MOAIDeck2D::RegisterLuaFuncs ( state );
 

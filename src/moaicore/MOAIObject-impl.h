@@ -1,30 +1,28 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	USLUAOBJECT_IMPL_H
-#define	USLUAOBJECT_IMPL_H
-
-#include <uslscore/USGlobals.h>
+#ifndef	MOAILUAOBJECT_IMPL_H
+#define	MOAILUAOBJECT_IMPL_H
 
 #define DECL_LUA_FACTORY(type) \
-	USLuaClass* GetLuaClass () { return &USLuaFactoryClass < type >::Get (); } \
-	static void RegisterLuaType () { USLuaFactoryClass < type >::Get ().Register (); } \
+	MOAILuaClass* GetLuaClass () { return &MOAILuaFactoryClass < type >::Get (); } \
+	static void RegisterLuaType () { MOAILuaFactoryClass < type >::Get ().Register (); } \
 	cc8* TypeName () const { return #type; }
 
 #define DECL_LUA_SINGLETON(type) \
-	USLuaClass* GetLuaClass () { return &USLuaSingletonClass < type >::Get (); } \
-	static void RegisterLuaType () { USLuaSingletonClass < type >::Get ().Register (); } \
+	MOAILuaClass* GetLuaClass () { return &MOAILuaSingletonClass < type >::Get (); } \
+	static void RegisterLuaType () { MOAILuaSingletonClass < type >::Get ().Register (); } \
 	cc8* TypeName () const { return #type; }
 
 #define REGISTER_LUA_CLASS(type) \
 	type::RegisterLuaType ();
 
 //================================================================//
-// USLuaFactoryClass
+// MOAILuaFactoryClass
 //================================================================//
 template < typename TYPE >
-class USLuaFactoryClass :
-	public USLuaClass {
+class MOAILuaFactoryClass :
+	public MOAILuaClass {
 private:
 
 	//----------------------------------------------------------------//
@@ -39,8 +37,8 @@ private:
 	//----------------------------------------------------------------//
 	static int _new ( lua_State* L ) {
 
-		USLuaState state ( L );
-		USLuaObject* data = new TYPE ();
+		MOAILuaState state ( L );
+		MOAIObject* data = new TYPE ();
 		
 		// make sure a suitable table is at the top of the stack
 		if ( state.IsType ( 1, LUA_TTABLE )) {
@@ -51,13 +49,13 @@ private:
 		}
 		
 		data->BindToLuaWithTable ( state );
-		USLuaRuntime::Get ().SetObjectStackTrace ( data );
+		MOAILuaRuntime::Get ().SetObjectStackTrace ( data );
 
 		return 1;
 	}
 
 	//----------------------------------------------------------------//
-	void RegisterLuaClass ( USLuaState& state ) {
+	void RegisterLuaClass ( MOAILuaState& state ) {
 		
 		luaL_Reg regTable [] = {
 			{ "getClassName",			_getClassName },
@@ -71,14 +69,14 @@ private:
 public:
 
 	//----------------------------------------------------------------//
-	static USLuaFactoryClass& Get () {
-		return *USGlobalsMgr::Get ()->AffirmGlobal < USLuaFactoryClass >();
+	static MOAILuaFactoryClass& Get () {
+		return *USGlobalsMgr::Get ()->AffirmGlobal < MOAILuaFactoryClass >();
 	}
 
 	//----------------------------------------------------------------//
 	void Register () {
 		
-		USLuaStateHandle state = USLuaRuntime::Get ().State ();
+		MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 
 		TYPE type;
 		this->InitLuaFactoryClass ( type, state );
@@ -86,36 +84,36 @@ public:
 };
 
 //================================================================//
-// USLuaSingletonClass
+// MOAILuaSingletonClass
 //================================================================//
 template < typename TYPE >
-class USLuaSingletonClass :
-	public USLuaClass {
+class MOAILuaSingletonClass :
+	public MOAILuaClass {
 private:
 
 	//----------------------------------------------------------------//
-	void RegisterLuaClass ( USLuaState& state ) {
+	void RegisterLuaClass ( MOAILuaState& state ) {
 		UNUSED ( state );
 	}
 
 public:
 	
 	//----------------------------------------------------------------//
-	static USLuaSingletonClass& Get () {
-		return *USGlobalsMgr::Get ()->AffirmGlobal < USLuaSingletonClass >();
+	static MOAILuaSingletonClass& Get () {
+		return *USGlobalsMgr::Get ()->AffirmGlobal < MOAILuaSingletonClass >();
 	}
 
 	//----------------------------------------------------------------//
-	USLuaObject* GetSingleton () {
+	MOAIObject* GetSingleton () {
 		return USGlobalsMgr::Get ()->AffirmGlobal < TYPE >();
 	}
 
 	//----------------------------------------------------------------//
 	void Register () {
 
-		USLuaStateHandle state = USLuaRuntime::Get ().State ();
+		MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 		
-		USLuaObject* type = this->GetSingleton ();
+		MOAIObject* type = this->GetSingleton ();
 		this->InitLuaSingletonClass ( *type, state );
 	}
 };

@@ -71,7 +71,7 @@ void MOAIScriptNode::OnDepNodeUpdate () {
 
 	if ( this->mOnUpdate ) {
 		
-		USLuaStateHandle state = USLuaRuntime::Get ().State ();
+		MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 		
 		this->PushLocal ( state, this->mOnUpdate );
 		this->PushLuaUserdata ( state );
@@ -81,13 +81,13 @@ void MOAIScriptNode::OnDepNodeUpdate () {
 }
 
 //----------------------------------------------------------------//
-void MOAIScriptNode::RegisterLuaClass ( USLuaState& state ) {
+void MOAIScriptNode::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAINode::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAIScriptNode::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAIScriptNode::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	MOAINode::RegisterLuaFuncs ( state );
 	

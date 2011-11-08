@@ -5,6 +5,7 @@
 #define	MOAITRANSFORM_H
 
 #include <moaicore/MOAIEaseDriver.h>
+#include <moaicore/MOAILua.h>
 #include <moaicore/MOAITransformBase.h>
 
 //================================================================//
@@ -92,10 +93,10 @@ public:
 	const USAffine2D&	GetWorldToLocalMtx				();
 						MOAITransform					();
 						~MOAITransform					();
-	void				RegisterLuaClass				( USLuaState& state );
-	void				RegisterLuaFuncs				( USLuaState& state );
-	void				SerializeIn						( USLuaState& state, USLuaSerializer& serializer );
-	void				SerializeOut					( USLuaState& state, USLuaSerializer& serializer );
+	void				RegisterLuaClass				( MOAILuaState& state );
+	void				RegisterLuaFuncs				( MOAILuaState& state );
+	void				SerializeIn						( MOAILuaState& state, MOAIDeserializer& serializer );
+	void				SerializeOut					( MOAILuaState& state, MOAISerializer& serializer );
 	void				SetLoc							( float x, float y );
 	void				SetPiv							( float x, float y );
 	void				SetScl							( float x, float y );

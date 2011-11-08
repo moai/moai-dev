@@ -5,6 +5,7 @@
 #define MOAIEASEDRIVER_H
 
 #include <moaicore/MOAIAction.h>
+#include <moaicore/MOAILua.h>
 
 class MOAINode;
 
@@ -53,8 +54,8 @@ public:
 					MOAIEaseDriver		();
 					~MOAIEaseDriver		();
 	void			OnUpdate			( float step );
-	void			RegisterLuaClass	( USLuaState& state );
-	void			RegisterLuaFuncs	( USLuaState& state );
+	void			RegisterLuaClass	( MOAILuaState& state );
+	void			RegisterLuaFuncs	( MOAILuaState& state );
 	void			ReserveLinks		( u32 total );
 	void			SetLink				( u32 idx, MOAINode* target, u32 attrID, float force, u32 mode );
 	void			SetLink				( u32 mode );

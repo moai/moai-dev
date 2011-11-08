@@ -76,7 +76,7 @@ int MOAICpConstraint::_getMaxForce ( lua_State* L ) {
 	@out	MOAICpConstraint spring		The new spring.
 */
 int MOAICpConstraint::_newDampedRotarySpring ( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	if ( !state.CheckParams ( 1, "UUNNN" )) return 0;
 	
 	MOAICpBody* a = state.GetLuaObject < MOAICpBody >( 1 );
@@ -115,7 +115,7 @@ int MOAICpConstraint::_newDampedRotarySpring ( lua_State* L ) {
 	@out	MOAICpConstraint spring		The new spring.
 */
 int MOAICpConstraint::_newDampedSpring ( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	if ( !state.CheckParams ( 1, "UUNNNNNNN" )) return 0;
 	
 	MOAICpBody* a = state.GetLuaObject < MOAICpBody >( 1 );
@@ -157,7 +157,7 @@ int MOAICpConstraint::_newDampedSpring ( lua_State* L ) {
 	@out	MOAICpConstraint gear		The new gear joint.
 */
 int MOAICpConstraint::_newGearJoint ( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	if ( !state.CheckParams ( 1, "UUNN" )) return 0;
 	
 	MOAICpBody* a = state.GetLuaObject < MOAICpBody >( 1 );
@@ -194,7 +194,7 @@ int MOAICpConstraint::_newGearJoint ( lua_State* L ) {
 	@out	MOAICpConstraint groove		The new groove joint.
 */
 int MOAICpConstraint::_newGrooveJoint ( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	if ( !state.CheckParams ( 1, "UUNNNNNN" )) return 0;
 	
 	MOAICpBody* a = state.GetLuaObject < MOAICpBody >( 1 );
@@ -238,7 +238,7 @@ int MOAICpConstraint::_newGrooveJoint ( lua_State* L ) {
 	@out	MOAICpConstraint pin		The new pin joint.
 */
 int MOAICpConstraint::_newPinJoint ( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	if ( !state.CheckParams ( 1, "UUNNNN" )) return 0;
 	
 	MOAICpBody* a = state.GetLuaObject < MOAICpBody >( 1 );
@@ -278,7 +278,7 @@ int MOAICpConstraint::_newPinJoint ( lua_State* L ) {
 	@out	MOAICpConstraint pivot		The new pivot joint.
 */
 int MOAICpConstraint::_newPivotJoint ( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	if ( !state.CheckParams ( 1, "UUNN" )) return 0;
 	
 	MOAICpBody* a = state.GetLuaObject < MOAICpBody >( 1 );
@@ -324,7 +324,7 @@ int MOAICpConstraint::_newPivotJoint ( lua_State* L ) {
 	@out	MOAICpConstraint ratchet	The new pivot joint.
 */
 int MOAICpConstraint::_newRatchetJoint ( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	if ( !state.CheckParams ( 1, "UUNN" )) return 0;
 	
 	MOAICpBody* a = state.GetLuaObject < MOAICpBody >( 1 );
@@ -357,7 +357,7 @@ int MOAICpConstraint::_newRatchetJoint ( lua_State* L ) {
 	@out	MOAICpConstraint limit		The new rotary limit joint.
 */
 int MOAICpConstraint::_newRotaryLimitJoint ( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	if ( !state.CheckParams ( 1, "UUNN" )) return 0;
 	
 	MOAICpBody* a = state.GetLuaObject < MOAICpBody >( 1 );
@@ -389,7 +389,7 @@ int MOAICpConstraint::_newRotaryLimitJoint ( lua_State* L ) {
 	@out	MOAICpConstraint motor		The new simple motor joint.
 */
 int MOAICpConstraint::_newSimpleMotor ( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	if ( !state.CheckParams ( 1, "UUN" )) return 0;
 	
 	MOAICpBody* a = state.GetLuaObject < MOAICpBody >( 1 );
@@ -425,7 +425,7 @@ int MOAICpConstraint::_newSimpleMotor ( lua_State* L ) {
 	@out	MOAICpConstraint motor		The new slide joint.
 */
 int MOAICpConstraint::_newSlideJoint ( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	if ( !state.CheckParams ( 1, "UUNNNNNN" )) return 0;
 	
 	MOAICpBody* a = state.GetLuaObject < MOAICpBody >( 1 );
@@ -546,7 +546,7 @@ MOAICpConstraint::~MOAICpConstraint () {
 }
 
 //----------------------------------------------------------------//
-void MOAICpConstraint::RegisterLuaClass ( USLuaState& state ) {
+void MOAICpConstraint::RegisterLuaClass ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "newDampedRotarySpring",		_newDampedRotarySpring },
@@ -566,7 +566,7 @@ void MOAICpConstraint::RegisterLuaClass ( USLuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAICpConstraint::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAICpConstraint::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	luaL_Reg regTable [] = {
 		{ "getBiasCoef",				_getBiasCoef },

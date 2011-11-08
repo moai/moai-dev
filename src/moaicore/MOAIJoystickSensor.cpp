@@ -62,7 +62,7 @@ void MOAIJoystickSensor::HandleEvent ( USStream& eventStream ) {
 	this->mY = eventStream.Read < float >();
 	
 	if ( this->mOnStick ) {
-		USLuaStateHandle state = this->mOnStick.GetSelf ();
+		MOAILuaStateHandle state = this->mOnStick.GetSelf ();
 		lua_pushnumber ( state, this->mX );
 		lua_pushnumber ( state, this->mY );
 		state.DebugCall ( 2, 0 );
@@ -80,13 +80,13 @@ MOAIJoystickSensor::~MOAIJoystickSensor () {
 }
 
 //----------------------------------------------------------------//
-void MOAIJoystickSensor::RegisterLuaClass ( USLuaState& state ) {
+void MOAIJoystickSensor::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAISensor::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAIJoystickSensor::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAIJoystickSensor::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "getVector",		_getVector },

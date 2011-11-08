@@ -320,7 +320,7 @@ bool MOAIGridSpace::IsValidCoord ( MOAICellCoord cellCoord ) const {
 }
 
 //----------------------------------------------------------------//
-void MOAIGridSpace::SerializeIn ( USLuaState& state ) {
+void MOAIGridSpace::SerializeIn ( MOAILuaState& state ) {
 	
 	this->mXOff			= state.GetField ( -1, "mXOff", this->mXOff );
 	this->mYOff			= state.GetField ( -1, "mYOff", this->mYOff );
@@ -336,7 +336,7 @@ void MOAIGridSpace::SerializeIn ( USLuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGridSpace::SerializeOut ( USLuaState& state ) {
+void MOAIGridSpace::SerializeOut ( MOAILuaState& state ) {
 	
 	state.SetField ( -1, "mXOff", this->mXOff );
 	state.SetField ( -1, "mYOff", this->mYOff );

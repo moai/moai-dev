@@ -11,7 +11,7 @@
 	@text	Base class for sensors.
 */
 class MOAISensor :
-	public USLuaObject {
+	public MOAIObject {
 protected:
 
 	u32	mType;
@@ -37,7 +37,7 @@ public:
 	virtual void	HandleEvent			( USStream& eventStream ) = 0;
 					MOAISensor			();
 					~MOAISensor			();
-	void			RegisterLuaClass	( USLuaState& state );
+	void			RegisterLuaClass	( MOAILuaState& state );
 	virtual void	Reset				() {}
 };
 
