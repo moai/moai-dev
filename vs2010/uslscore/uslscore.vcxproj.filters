@@ -7,9 +7,6 @@
     <Filter Include="src\math">
       <UniqueIdentifier>{20eaeb26-e2bc-4e6e-bf63-b303f599bb84}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\lua">
-      <UniqueIdentifier>{a1cb3a8f-0e2f-42e9-918d-4d236f8dd7a0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\lifecycle">
       <UniqueIdentifier>{492dbbde-ead5-4fb0-8b1f-78da6db4c3a8}</UniqueIdentifier>
     </Filter>
@@ -59,27 +56,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\uslscore\USRtti.h">
       <Filter>src\lifecycle</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\uslscore\USLua.h">
-      <Filter>src\lua</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\uslscore\USLuaRef.h">
-      <Filter>src\lua</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\uslscore\USLuaRuntime.h">
-      <Filter>src\lua</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\uslscore\USLuaSerializer.h">
-      <Filter>src\lua</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\uslscore\USLuaState-impl.h">
-      <Filter>src\lua</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\uslscore\USLuaState.h">
-      <Filter>src\lua</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\uslscore\USLuaStateHandle.h">
-      <Filter>src\lua</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\uslscore\STLArray.h">
       <Filter>src\stl</Filter>
@@ -180,12 +156,6 @@
     <ClInclude Include="..\..\src\uslscore\USZip.h">
       <Filter>src\zip</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\uslscore\USLuaObject.h">
-      <Filter>src\lua</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\uslscore\USLuaObject-impl.h">
-      <Filter>src\lua</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\uslscore\USLog.h">
       <Filter>src\util</Filter>
     </ClInclude>
@@ -197,9 +167,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\uslscore\USWeakPtr.h">
       <Filter>src\lifecycle</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\uslscore\USLuaSharedPtr.h">
-      <Filter>src\lua</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -217,21 +184,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\uslscore\USRtti.cpp">
       <Filter>src\lifecycle</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\uslscore\USLuaRef.cpp">
-      <Filter>src\lua</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\uslscore\USLuaRuntime.cpp">
-      <Filter>src\lua</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\uslscore\USLuaSerializer.cpp">
-      <Filter>src\lua</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\uslscore\USLuaState.cpp">
-      <Filter>src\lua</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\uslscore\USLuaStateHandle.cpp">
-      <Filter>src\lua</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\uslscore\STLString.cpp">
       <Filter>src\stl</Filter>
@@ -277,9 +229,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\uslscore\USZipFile.cpp">
       <Filter>src\zip</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\uslscore\USLuaObject.cpp">
-      <Filter>src\lua</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\uslscore\USLog.cpp">
       <Filter>src\util</Filter>

@@ -25,9 +25,6 @@
     <Filter Include="src\util">
       <UniqueIdentifier>{df25416e-bd9d-45ed-9aa4-86e0111078c7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\web">
-      <UniqueIdentifier>{7f97408f-8b62-44d3-bd03-7b21098f7a69}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\xml">
       <UniqueIdentifier>{bfb53393-2460-4e4b-963a-20554ec6ccc5}</UniqueIdentifier>
     </Filter>
@@ -134,15 +131,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\uslsext\USTypedPtr.cpp">
       <Filter>src\util</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\uslsext\USHttpTask.cpp">
-      <Filter>src\web</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\uslsext\USHttpTask_impl.cpp">
-      <Filter>src\web</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\uslsext\USUrlMgr.cpp">
-      <Filter>src\web</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\uslsext\USXmlReader.cpp">
       <Filter>src\xml</Filter>
@@ -280,15 +268,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\uslsext\USTypedPtr.h">
       <Filter>src\util</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\uslsext\USHttpTask.h">
-      <Filter>src\web</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\uslsext\USHttpTask_impl.h">
-      <Filter>src\web</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\uslsext\USUrlMgr.h">
-      <Filter>src\web</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\uslsext\USXmlReader.h">
       <Filter>src\xml</Filter>

@@ -40,8 +40,8 @@ public:
 	//----------------------------------------------------------------//
 					MOAIBox2DWheelJoint		();
 					~MOAIBox2DWheelJoint	();
-	void			RegisterLuaClass		( USLuaState& state );
-	void			RegisterLuaFuncs		( USLuaState& state );
+	void			RegisterLuaClass		( MOAILuaState& state );
+	void			RegisterLuaFuncs		( MOAILuaState& state );
 };
 
 #endif

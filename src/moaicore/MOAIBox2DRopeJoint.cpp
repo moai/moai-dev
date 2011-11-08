@@ -95,12 +95,12 @@ MOAIBox2DRopeJoint::~MOAIBox2DRopeJoint () {
 }
 
 //----------------------------------------------------------------//
-void MOAIBox2DRopeJoint::RegisterLuaClass ( USLuaState& state ) {
+void MOAIBox2DRopeJoint::RegisterLuaClass ( MOAILuaState& state ) {
 	MOAIBox2DJoint::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAIBox2DRopeJoint::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAIBox2DRopeJoint::RegisterLuaFuncs ( MOAILuaState& state ) {
 	MOAIBox2DJoint::RegisterLuaFuncs ( state );
 	luaL_Reg regTable [] = {
 		{ "getLimitState",			_getLimitState },

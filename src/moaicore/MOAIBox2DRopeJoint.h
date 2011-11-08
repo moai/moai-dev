@@ -29,8 +29,8 @@ public:
 	//----------------------------------------------------------------//
 					MOAIBox2DRopeJoint		();
 					~MOAIBox2DRopeJoint		();
-	void			RegisterLuaClass		( USLuaState& state );
-	void			RegisterLuaFuncs		( USLuaState& state );
+	void			RegisterLuaClass		( MOAILuaState& state );
+	void			RegisterLuaFuncs		( MOAILuaState& state );
 };
 
 #endif

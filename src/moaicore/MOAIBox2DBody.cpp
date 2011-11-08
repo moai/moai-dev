@@ -77,7 +77,7 @@ int MOAIBox2DBody::_addEdges ( lua_State* L ) {
 		int numVerts = MOAIBox2DFixture::LoadVerts( state, 2, verts, totalVerts, unitsToMeters );
 		
 		if ( numVerts ) {
-			USLuaState retstate ( L );
+			MOAILuaState retstate ( L );
 			lua_createtable ( retstate, numVerts, 0 );
 			int idx = 1;
 			b2EdgeShape edgeShape;

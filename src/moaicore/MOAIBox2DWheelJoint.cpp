@@ -326,12 +326,12 @@ MOAIBox2DWheelJoint::~MOAIBox2DWheelJoint () {
 }
 
 //----------------------------------------------------------------//
-void MOAIBox2DWheelJoint::RegisterLuaClass ( USLuaState& state ) {
+void MOAIBox2DWheelJoint::RegisterLuaClass ( MOAILuaState& state ) {
 	MOAIBox2DJoint::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAIBox2DWheelJoint::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAIBox2DWheelJoint::RegisterLuaFuncs ( MOAILuaState& state ) {
 	MOAIBox2DJoint::RegisterLuaFuncs ( state );
 	luaL_Reg regTable [] = {
 		{ "getJointTranslation",		_getJointTranslation },
