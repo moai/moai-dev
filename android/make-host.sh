@@ -21,9 +21,13 @@
 	fi
 
 	# build libmoai for the specified package
-	pushd libmoai > /dev/null
-		bash build.sh $packageName
-	popd > /dev/null
+	read existing_package < libmoai/libs/armeabi/package.txt
+	
+	if [ "$existing_package" != "$packageName" ] || [ ! -f libmoai/libs/armeabi/libmoai.so ]; then
+		pushd libmoai > /dev/null
+			bash build.sh $packageName
+		popd > /dev/null
+	fi
 
 	# copy libmoai into new host template dir
 	new_host_lib_dir=$new_host_dir/host-source/project/libs/armeabi

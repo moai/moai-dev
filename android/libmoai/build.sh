@@ -40,3 +40,7 @@
 	
 	# remove packaged-moai.cpp so it doesn't accidentaly get edited
 	rm -f jni/src/packaged-moai.cpp
+	
+	# create text file that shows the package libmoai.so was built with (this time)
+	rm -f libs/armeabi/package.txt
+	echo $packageName > libs/armeabi/package.txt

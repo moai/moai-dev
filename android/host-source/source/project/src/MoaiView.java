@@ -242,6 +242,7 @@ public class MoaiView extends GLSurfaceView {
 			mIsValid = true; 
 
 			setWorkingDirectory ( mAppRoot + "/@WORKING_DIR@" );
+			Run ( "@RUN_INIT_DIR@/init.lua", mWidth, mHeight );
 			@RUN@
 		}
 	}
