@@ -22,7 +22,7 @@
 struct b2Color
 {
 	b2Color() {}
-	b2Color(float32 r, float32 g, float32 b) : r(r), g(g), b(b) {}
+	b2Color(float32 r0, float32 g0, float32 b0) : r(r0), g(g0), b(b0) {}
 	void Set(float32 ri, float32 gi, float32 bi) { r = ri; g = gi; b = bi; }
 	float32 r, g, b;
 };

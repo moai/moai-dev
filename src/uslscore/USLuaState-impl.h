@@ -132,7 +132,7 @@ USMetaVec3D < TYPE > USLuaState::GetVec3D ( int idx ) {
 template < typename TYPE >
 TYPE USLuaState::PopValue ( TYPE value ) {
 
-	TYPE value = this->GetValue < TYPE >( -1, value );
+	value = this->GetValue < TYPE >( -1, value );
 	this->Pop ( 1 );
 	return value;
 }
