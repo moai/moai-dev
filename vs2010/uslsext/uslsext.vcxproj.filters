@@ -7,9 +7,6 @@
     <Filter Include="src\math">
       <UniqueIdentifier>{1470e4f3-2803-4706-a36e-371c960a17e5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\animCurve">
-      <UniqueIdentifier>{5a4c71c9-66f7-4fb6-abfa-8f29e115eb83}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\gfxObjects">
       <UniqueIdentifier>{24dc16d5-28ae-493a-adcf-e99b0c8cb51b}</UniqueIdentifier>
     </Filter>
@@ -36,9 +33,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\uslsext\USAnimCurve.cpp">
-      <Filter>src\animCurve</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\uslsext\USColor.cpp">
       <Filter>src\gfxObjects</Filter>
     </ClCompile>
@@ -158,9 +152,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\src\uslsext\USAnimCurve.h">
-      <Filter>src\animCurve</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\uslsext\USColor.h">
       <Filter>src\gfxObjects</Filter>
     </ClInclude>

@@ -256,6 +256,7 @@
     <ClCompile Include="..\..\src\moaicore\MOAIBox2DWorld.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAICameraAnchor2D.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAICameraFitter2D.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAICanary.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAICpArbiter.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAICpDebugDraw.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIDataBuffer.cpp" />
@@ -277,6 +278,7 @@
     <ClCompile Include="..\..\src\moaicore\MOAIGfxQuadDeck2D.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIGfxQuadListDeck2D.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIGfxResource.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAIGlobals.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIGlyph.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIGridSpace.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIHttpTaskInfo_curl.cpp" />
@@ -289,6 +291,7 @@
     <ClCompile Include="..\..\src\moaicore\MOAILineBrush.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAILogMessages.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAILogMgr.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAILuaObject.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAILuaRef.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAILuaRuntime.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAILuaState.cpp" />
@@ -312,6 +315,7 @@
     <ClCompile Include="..\..\src\moaicore\MOAIProp.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIProp2D.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIQuadBrush.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAIRtti.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIScriptDeck.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIScriptNode.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAISerializerBase.cpp" />
@@ -398,6 +402,7 @@
     <ClInclude Include="..\..\src\moaicore\MOAIBox2DWorld.h" />
     <ClInclude Include="..\..\src\moaicore\MOAICameraAnchor2D.h" />
     <ClInclude Include="..\..\src\moaicore\MOAICameraFitter2D.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAICanary.h" />
     <ClInclude Include="..\..\src\moaicore\MOAICpArbiter.h" />
     <ClInclude Include="..\..\src\moaicore\MOAICpDebugDraw.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIDataBuffer.h" />
@@ -419,6 +424,7 @@
     <ClInclude Include="..\..\src\moaicore\MOAIGfxQuadDeck2D.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIGfxQuadListDeck2D.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIGfxResource.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAIGlobals.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIGlyph.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIGridSpace.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIHttpTaskInfo_curl.h" />
@@ -430,6 +436,7 @@
     <ClInclude Include="..\..\src\moaicore\MOAILogMessages.h" />
     <ClInclude Include="..\..\src\moaicore\MOAILogMgr.h" />
     <ClInclude Include="..\..\src\moaicore\MOAILua.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAILuaObject.h" />
     <ClInclude Include="..\..\src\moaicore\MOAILuaRef.h" />
     <ClInclude Include="..\..\src\moaicore\MOAILuaRuntime.h" />
     <ClInclude Include="..\..\src\moaicore\MOAILuaSharedPtr.h" />
@@ -458,10 +465,12 @@
     <ClInclude Include="..\..\src\moaicore\MOAIProp2D.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIPvrHeader.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIQuadBrush.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAIRtti.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIScriptDeck.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIScriptNode.h" />
     <ClInclude Include="..\..\src\moaicore\MOAISerializerBase.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIShaderMgr.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAISharedPtr.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIStretchPatch2D.h" />
     <ClInclude Include="..\..\src\moaicore\MOAISurfaceDeck2D.h" />
     <ClInclude Include="..\..\src\moaicore\MOAITextFrame.h" />
@@ -502,6 +511,7 @@
     <ClInclude Include="..\..\src\moaicore\MOAINodeMgr.h" />
     <ClInclude Include="..\..\src\moaicore\MOAISerializer.h" />
     <ClInclude Include="..\..\src\moaicore\MOAISim.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAIWeakPtr.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIXmlParser.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIHttpTask.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIFont.h" />

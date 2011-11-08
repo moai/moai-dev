@@ -228,12 +228,7 @@
     <ClInclude Include="..\..\src\uslscore\USFileSys.h" />
     <ClInclude Include="..\..\src\uslscore\USInflater.h" />
     <ClInclude Include="..\..\src\uslscore\USLog.h" />
-    <ClInclude Include="..\..\src\uslscore\USSharedPtr.h" />
     <ClInclude Include="..\..\src\uslscore\USTypeID.h" />
-    <ClInclude Include="..\..\src\uslscore\USCanary.h" />
-    <ClInclude Include="..\..\src\uslscore\USGlobals.h" />
-    <ClInclude Include="..\..\src\uslscore\USObject.h" />
-    <ClInclude Include="..\..\src\uslscore\USRtti.h" />
     <ClInclude Include="..\..\src\uslscore\STLArray.h" />
     <ClInclude Include="..\..\src\uslscore\STLIteration.h" />
     <ClInclude Include="..\..\src\uslscore\STLList.h" />
@@ -263,7 +258,6 @@
     <ClInclude Include="..\..\src\uslscore\USCipherStream.h" />
     <ClInclude Include="..\..\src\uslscore\pch.h" />
     <ClInclude Include="..\..\src\uslscore\uslscore.h" />
-    <ClInclude Include="..\..\src\uslscore\USWeakPtr.h" />
     <ClInclude Include="..\..\src\uslscore\USZip.h" />
     <ClInclude Include="..\..\src\uslscore\USZipFile.h" />
   </ItemGroup>
@@ -272,12 +266,8 @@
     <ClCompile Include="..\..\src\uslscore\USDirectoryItr.cpp" />
     <ClCompile Include="..\..\src\uslscore\USFilename.cpp" />
     <ClCompile Include="..\..\src\uslscore\USFileSys.cpp" />
-    <ClCompile Include="..\..\src\uslscore\USCanary.cpp" />
-    <ClCompile Include="..\..\src\uslscore\USGlobals.cpp" />
     <ClCompile Include="..\..\src\uslscore\USInflater.cpp" />
     <ClCompile Include="..\..\src\uslscore\USLog.cpp" />
-    <ClCompile Include="..\..\src\uslscore\USObject.cpp" />
-    <ClCompile Include="..\..\src\uslscore\USRtti.cpp" />
     <ClCompile Include="..\..\src\uslscore\STLString.cpp" />
     <ClCompile Include="..\..\src\uslscore\USByteStream.cpp" />
     <ClCompile Include="..\..\src\uslscore\USFileStream.cpp" />

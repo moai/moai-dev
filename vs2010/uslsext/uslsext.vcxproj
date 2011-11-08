@@ -223,7 +223,6 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\uslsext\USAnimCurve.cpp" />
     <ClCompile Include="..\..\src\uslsext\USCgt.cpp" />
     <ClCompile Include="..\..\src\uslsext\USColor.cpp" />
     <ClCompile Include="..\..\src\uslsext\USLexStream.cpp" />
@@ -281,7 +280,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\uslsext\USAffine2D.h" />
-    <ClInclude Include="..\..\src\uslsext\USAnimCurve.h" />
     <ClInclude Include="..\..\src\uslsext\USBinarySearch.h" />
     <ClInclude Include="..\..\src\uslsext\USCgt.h" />
     <ClInclude Include="..\..\src\uslsext\USColor.h" />

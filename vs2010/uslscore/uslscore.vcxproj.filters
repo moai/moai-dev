@@ -7,9 +7,6 @@
     <Filter Include="src\math">
       <UniqueIdentifier>{20eaeb26-e2bc-4e6e-bf63-b303f599bb84}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\lifecycle">
-      <UniqueIdentifier>{492dbbde-ead5-4fb0-8b1f-78da6db4c3a8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\cipher">
       <UniqueIdentifier>{bde758d5-06ed-4803-a3ae-76dd0150da2d}</UniqueIdentifier>
     </Filter>
@@ -44,18 +41,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\uslscore\USTypeID.h">
       <Filter>src\util</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\uslscore\USCanary.h">
-      <Filter>src\lifecycle</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\uslscore\USGlobals.h">
-      <Filter>src\lifecycle</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\uslscore\USObject.h">
-      <Filter>src\lifecycle</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\uslscore\USRtti.h">
-      <Filter>src\lifecycle</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\uslscore\STLArray.h">
       <Filter>src\stl</Filter>
@@ -162,28 +147,10 @@
     <ClInclude Include="..\..\src\uslscore\USFilename.h">
       <Filter>src\util</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\uslscore\USSharedPtr.h">
-      <Filter>src\lifecycle</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\uslscore\USWeakPtr.h">
-      <Filter>src\lifecycle</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\uslscore\USFileSys.cpp">
       <Filter>src\util</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\uslscore\USCanary.cpp">
-      <Filter>src\lifecycle</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\uslscore\USGlobals.cpp">
-      <Filter>src\lifecycle</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\uslscore\USObject.cpp">
-      <Filter>src\lifecycle</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\uslscore\USRtti.cpp">
-      <Filter>src\lifecycle</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\uslscore\STLString.cpp">
       <Filter>src\stl</Filter>

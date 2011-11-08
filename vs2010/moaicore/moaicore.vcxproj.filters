@@ -82,6 +82,9 @@
     <Filter Include="src\lua">
       <UniqueIdentifier>{9f48728c-c870-43e0-bcf6-965c7a0d2a6d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\lifecycle">
+      <UniqueIdentifier>{96fd06bd-a903-429c-ad52-774b518de09b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\moaicore\MOAIAction.cpp">
@@ -474,9 +477,6 @@
     <ClCompile Include="..\..\src\moaicore\MOAILuaStateHandle.cpp">
       <Filter>src\lua</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAIObject.cpp">
-      <Filter>src\lua</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAIUrlMgr_curl.cpp">
       <Filter>src\web</Filter>
     </ClCompile>
@@ -491,6 +491,21 @@
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAISerializer.cpp">
       <Filter>src\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAICanary.cpp">
+      <Filter>src\lifecycle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIObject.cpp">
+      <Filter>src\lifecycle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAILuaObject.cpp">
+      <Filter>src\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIGlobals.cpp">
+      <Filter>src\lifecycle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIRtti.cpp">
+      <Filter>src\lifecycle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -899,9 +914,6 @@
     <ClInclude Include="..\..\src\moaicore\MOAILuaState-impl.h">
       <Filter>src\lua</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\MOAIObject.h">
-      <Filter>src\lua</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIObject-impl.h">
       <Filter>src\lua</Filter>
     </ClInclude>
@@ -919,6 +931,27 @@
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAISerializer.h">
       <Filter>src\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAICanary.h">
+      <Filter>src\lifecycle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIObject.h">
+      <Filter>src\lifecycle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAILuaObject.h">
+      <Filter>src\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAISharedPtr.h">
+      <Filter>src\lifecycle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIWeakPtr.h">
+      <Filter>src\lifecycle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIGlobals.h">
+      <Filter>src\lifecycle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIRtti.h">
+      <Filter>src\lifecycle</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
