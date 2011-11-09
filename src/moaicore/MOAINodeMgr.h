@@ -10,7 +10,7 @@ class MOAINode;
 // MOAINodeMgr
 //================================================================//
 class MOAINodeMgr :
-	public USGlobalClass < MOAINodeMgr > {
+	public MOAIGlobalClass < MOAINodeMgr > {
 private:
 
 	MOAINode* mUpdateListHead;

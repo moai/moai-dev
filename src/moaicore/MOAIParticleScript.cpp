@@ -82,7 +82,7 @@ MOAIParticleScript::Instruction::Instruction () :
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleScript::Instruction::Parse ( USLuaState& state, u32 idx ) {
+void MOAIParticleScript::Instruction::Parse ( MOAILuaState& state, u32 idx ) {
 
 	u64 bits;
 	u8 type;
@@ -309,7 +309,7 @@ int MOAIParticleScript::_mul ( lua_State* L ) {
 	@out	nil
 */
 int MOAIParticleScript::_packConst ( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 
 	float val = state.GetValue < float >( 1, 0.0f );
 	u32 bits;
@@ -328,7 +328,7 @@ int MOAIParticleScript::_packConst ( lua_State* L ) {
 	@out	nil
 */
 int MOAIParticleScript::_packReg ( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 
 	u8 val = state.GetValue < u8 >( 1, 0 ) + MOAIParticle::TOTAL_PARTICLE_REG - 1;
 	state.Push ( Pack64 ( val, PARAM_TYPE_PARTICLE_REG ));
@@ -491,7 +491,7 @@ MOAIParticleScript::MOAIParticleScript () :
 	mCompiled ( false ) {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( USLuaObject )
+		RTTI_EXTEND ( MOAILuaObject )
 	RTTI_END
 }
 
@@ -550,7 +550,7 @@ void MOAIParticleScript::PushSprite ( MOAIParticleSystem& system, float* registe
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleScript::RegisterLuaClass ( USLuaState& state ) {
+void MOAIParticleScript::RegisterLuaClass ( MOAILuaState& state ) {
 
 	state.SetField ( -1, "PARTICLE_X",			Pack64 ( MOAIParticle::PARTICLE_X, PARAM_TYPE_PARTICLE_REG ));
 	state.SetField ( -1, "PARTICLE_Y",			Pack64 ( MOAIParticle::PARTICLE_Y, PARAM_TYPE_PARTICLE_REG ));
@@ -579,7 +579,7 @@ void MOAIParticleScript::RegisterLuaClass ( USLuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleScript::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAIParticleScript::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	luaL_Reg regTable [] = {
 		{ "add",				_add },

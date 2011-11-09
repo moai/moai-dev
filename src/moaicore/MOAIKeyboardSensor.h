@@ -4,6 +4,7 @@
 #ifndef MOAIKEYBOARDSENSOR_H
 #define MOAIKEYBOARDSENSOR_H
 
+#include <moaicore/MOAILua.h>
 #include <moaicore/MOAISensor.h>
 
 //================================================================//
@@ -39,7 +40,7 @@ private:
 	u32 mClearCount;
 	u32 mClearQueue [ MOAIKeyCodes::TOTAL ];
 	
-	USLuaRef		mOnKey;
+	MOAILuaRef		mOnKey;
 
 	//----------------------------------------------------------------//
 	static int		_keyDown				( lua_State* L );
@@ -60,8 +61,8 @@ public:
 	bool			KeyUp					( u32 keyID );
 					MOAIKeyboardSensor		();
 					~MOAIKeyboardSensor		();
-	void			RegisterLuaClass		( USLuaState& state );
-	void			RegisterLuaFuncs		( USLuaState& state );
+	void			RegisterLuaClass		( MOAILuaState& state );
+	void			RegisterLuaFuncs		( MOAILuaState& state );
 	void			Reset					();
 	static void		WriteEvent				( USStream& eventStream, u32 key, bool down );
 };

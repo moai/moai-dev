@@ -8,7 +8,6 @@
 
 #include <uslsext/USAdapterInfo.h>
 #include <uslsext/USAffine2D.h>
-#include <uslsext/USAnimCurve.h>
 #include <uslsext/USBinarySearch.h>
 #include <uslsext/USBox.h>
 #include <uslsext/USCgt.h>
@@ -18,8 +17,6 @@
 #include <uslsext/USDataIOTask.h>
 #include <uslsext/USDelegate.h>
 #include <uslsext/USDistance.h>
-#include <uslsext/USHttpTask.h>
-#include <uslsext/USHttpTask_impl.h>
 #include <uslsext/USInterpolate.h>
 #include <uslsext/USIntersect.h>
 #include <uslsext/USLexStream.h>
@@ -55,7 +52,6 @@
 #include <uslsext/USThread_win32.h>
 #include <uslsext/USTrig.h>
 #include <uslsext/USTypedPtr.h>
-#include <uslsext/USUrlMgr.h>
 #include <uslsext/USXmlReader.h>
 
 //================================================================//
@@ -64,7 +60,7 @@
 namespace uslsext {
 
 	//----------------------------------------------------------------//
-	void			InitGlobals			( USGlobals* globals );
+	void			Init			();
 }
 
 #endif

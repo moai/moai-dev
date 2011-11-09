@@ -4,13 +4,14 @@
 #ifndef	MOAIPARTITIONRESULTMGR_H
 #define	MOAIPARTITIONRESULTMGR_H
 
+#include <moaicore/MOAIGlobals.h>
 #include <moaicore/MOAIPartitionResultBuffer.h>
 
 //================================================================//
 // MOAIPartitionResultMgr
 //================================================================//
 class MOAIPartitionResultMgr :
-	public USGlobalClass < MOAIPartitionResultMgr > {
+	public MOAIGlobalClass < MOAIPartitionResultMgr > {
 private:
 	
 	MOAIPartitionResultBuffer	mBuffer;

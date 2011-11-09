@@ -18,8 +18,6 @@
 
 //----------------------------------------------------------------//
 static void _cleanup () {
-
-	curl_global_cleanup ();
 	
 	#ifndef OPENSSL_NO_ENGINE
 		ENGINE_cleanup ();
@@ -40,9 +38,9 @@ static void _cleanup () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void uslsext::InitGlobals ( USGlobals* globals ) {
+void uslsext::Init () {
 
-	uslscore::InitGlobals ( globals );
+	uslscore::Init ();
 
 	static bool sysInit = true;
 	if ( sysInit ) {;
@@ -50,11 +48,7 @@ void uslsext::InitGlobals ( USGlobals* globals ) {
 		SSL_load_error_strings ();
 		SSL_library_init ();
 
-		curl_global_init ( CURL_GLOBAL_WIN32 | CURL_GLOBAL_SSL );
-
 		atexit ( _cleanup );
 		sysInit = false;
 	}
-
-	USUrlMgr::Affirm ();
 }

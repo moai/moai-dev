@@ -16,7 +16,7 @@
 //----------------------------------------------------------------//
 MOAISensor::MOAISensor () {
 
-	RTTI_SINGLE ( USLuaObject )
+	RTTI_SINGLE ( MOAILuaObject )
 }
 
 //----------------------------------------------------------------//
@@ -24,7 +24,7 @@ MOAISensor::~MOAISensor () {
 }
 
 //----------------------------------------------------------------//
-void MOAISensor::RegisterLuaClass ( USLuaState& state ) {
+void MOAISensor::RegisterLuaClass ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "new",					MOAILogMessages::_alertNewIsUnsupported },

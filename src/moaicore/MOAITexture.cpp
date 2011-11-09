@@ -266,7 +266,7 @@ int MOAITexture::_setWrap ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAITexture* MOAITexture::AffirmTexture ( USLuaState& state, int idx ) {
+MOAITexture* MOAITexture::AffirmTexture ( MOAILuaState& state, int idx ) {
 
 	MOAITexture* texture = state.GetLuaObject < MOAITexture >( idx );
 	if ( !texture ) {
@@ -746,7 +746,7 @@ MOAITexture::MOAITexture () :
 	mTransform ( DEFAULT_TRANSFORM ) {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( USLuaObject )
+		RTTI_EXTEND ( MOAILuaObject )
 		RTTI_EXTEND ( MOAIGfxResource )
 	RTTI_END
 }
@@ -882,7 +882,7 @@ void MOAITexture::OnUnload () {
 }
 
 //----------------------------------------------------------------//
-void MOAITexture::RegisterLuaClass ( USLuaState& state ) {
+void MOAITexture::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	MOAIGfxResource::RegisterLuaClass ( state );
 	
@@ -912,7 +912,7 @@ void MOAITexture::RegisterLuaClass ( USLuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITexture::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAITexture::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	MOAIGfxResource::RegisterLuaFuncs ( state );
 
@@ -931,7 +931,7 @@ void MOAITexture::RegisterLuaFuncs ( USLuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITexture::SerializeIn ( USLuaState& state, USLuaSerializer& serializer ) {
+void MOAITexture::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
 	UNUSED ( serializer );
 
 	STLString path = state.GetField ( -1, "mPath", "" );
@@ -942,7 +942,7 @@ void MOAITexture::SerializeIn ( USLuaState& state, USLuaSerializer& serializer )
 }
 
 //----------------------------------------------------------------//
-void MOAITexture::SerializeOut ( USLuaState& state, USLuaSerializer& serializer ) {
+void MOAITexture::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
 	UNUSED ( serializer );
 
 	STLString path = USFileSys::GetRelativePath ( this->mFilename );

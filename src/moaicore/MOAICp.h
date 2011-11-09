@@ -6,6 +6,7 @@
 #if USE_CHIPMUNK
 
 #include <chipmunk/chipmunk.h>
+#include <moaicore/MOAILua.h>
 
 //================================================================//
 // MOAICp
@@ -14,7 +15,7 @@
 	@text	Singleton for Chipmunk global configuration.
 */
 class MOAICp :
-	public USGlobalClass < MOAICp, USLuaObject > {
+	public MOAIGlobalClass < MOAICp, MOAILuaObject > {
 private:
 
 	//----------------------------------------------------------------//
@@ -34,7 +35,7 @@ public:
 	//----------------------------------------------------------------//
 					MOAICp					();
 					~MOAICp					();
-	void			RegisterLuaClass		( USLuaState& state );
+	void			RegisterLuaClass		( MOAILuaState& state );
 };
 
 #endif

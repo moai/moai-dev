@@ -5,6 +5,7 @@
 #define	MOAIGFXQUADDECK2D_H
 
 #include <moaicore/MOAIDeck2D.h>
+#include <moaicore/MOAILua.h>
 #include <moaicore/MOAIQuadBrush.h>
 
 class MOAITexture;
@@ -19,7 +20,7 @@ class MOAIGfxQuadDeck2D :
 	public MOAIDeck2D {
 private:
 
-	USLuaSharedPtr < MOAITexture >	mTexture;
+	MOAILuaSharedPtr < MOAITexture >	mTexture;
 	USLeanArray < MOAIQuadBrush >	mQuads;
 	
 	//----------------------------------------------------------------//
@@ -40,8 +41,8 @@ public:
 	USRect		GetBounds				( u32 idx, MOAIDeckRemapper* remapper );
 				MOAIGfxQuadDeck2D		();
 				~MOAIGfxQuadDeck2D		();
-	void		RegisterLuaClass		( USLuaState& state );
-	void		RegisterLuaFuncs		( USLuaState& state );
+	void		RegisterLuaClass		( MOAILuaState& state );
+	void		RegisterLuaFuncs		( MOAILuaState& state );
 	void		ScaleScreenCoords		( float xScale, float yScale );
 	void		ScaleUVCoords			( float xScale, float yScale );
 };

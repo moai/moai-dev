@@ -4,6 +4,8 @@
 #ifndef	MOAIGLYPH_H
 #define	MOAIGLYPH_H
 
+#include <moaicore/MOAILua.h>
+
 //================================================================//
 // MOAIKernVec
 //================================================================//
@@ -52,8 +54,8 @@ public:
 					MOAIGlyph			();
 					~MOAIGlyph			();
 	void			ReserveKernTable	( u32 total );
-	void			SerializeIn			( USLuaState& state );
-	void			SerializeOut		( USLuaState& state );
+	void			SerializeIn			( MOAILuaState& state );
+	void			SerializeOut		( MOAILuaState& state );
 	void			SetKernVec			( u32 id, const MOAIKernVec& kernVec );
 	void			SetScreenRect		( float width, float height, float yOff );
 };

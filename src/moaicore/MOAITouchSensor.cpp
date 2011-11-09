@@ -195,7 +195,7 @@ void MOAITouchSensor::HandleEvent ( USStream& eventStream ) {
 		this->Clear ();
 		
 		if ( this->mCallback ) {
-			USLuaStateHandle state = this->mCallback.GetSelf ();
+			MOAILuaStateHandle state = this->mCallback.GetSelf ();
 			lua_pushnumber ( state, eventType );
 			state.DebugCall ( 1, 0 );
 		}
@@ -241,7 +241,7 @@ void MOAITouchSensor::HandleEvent ( USStream& eventStream ) {
 			
 			if (( idx != UNKNOWN_TOUCH ) && ( this->mCallback )) {
 				
-				USLuaStateHandle state = this->mCallback.GetSelf ();
+				MOAILuaStateHandle state = this->mCallback.GetSelf ();
 				lua_pushnumber ( state, eventType );
 				lua_pushnumber ( state, idx );
 				lua_pushnumber ( state, touch.mX );
@@ -305,7 +305,7 @@ void MOAITouchSensor::PrintStacks () {
 }
 
 //----------------------------------------------------------------//
-void MOAITouchSensor::RegisterLuaClass ( USLuaState& state ) {
+void MOAITouchSensor::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAISensor::RegisterLuaClass ( state );
 
@@ -316,7 +316,7 @@ void MOAITouchSensor::RegisterLuaClass ( USLuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITouchSensor::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAITouchSensor::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "down",				_down },

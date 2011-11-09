@@ -4,7 +4,7 @@
 #ifndef MOAIGRIDSPACE_H
 #define MOAIGRIDSPACE_H
 
-#include <uslsext/USMatrix3x3.h>
+#include <moaicore/MOAILua.h>
 
 //================================================================//
 // MOAICellCoord
@@ -120,10 +120,10 @@ public:
 	
 	USVec2D				GridToWorld				( USVec2D loc ) const;
 	bool				IsValidCoord			( MOAICellCoord cellCoord ) const;
-	void				SerializeIn				( USLuaState& state );
-	void				SerializeOut			( USLuaState& state );
+	void				SerializeIn				( MOAILuaState& state );
+	void				SerializeOut			( MOAILuaState& state );
 	
-						MOAIGridSpace				();
+						MOAIGridSpace			();
 						~MOAIGridSpace			();
 	MOAICellCoord		WrapCellCoord			( MOAICellCoord coord ) const;
 	USVec2D				WorldToCell				( MOAICellCoord cellCoord, USVec2D loc ) const;

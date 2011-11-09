@@ -903,7 +903,7 @@ void MOAITransform::OnDepNodeUpdate () {
 }
 
 //----------------------------------------------------------------//
-void MOAITransform::RegisterLuaClass ( USLuaState& state ) {
+void MOAITransform::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	MOAITransformBase::RegisterLuaClass ( state );
 	
@@ -920,7 +920,7 @@ void MOAITransform::RegisterLuaClass ( USLuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITransform::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAITransform::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	MOAITransformBase::RegisterLuaFuncs ( state );
 	
@@ -954,6 +954,38 @@ void MOAITransform::RegisterLuaFuncs ( USLuaState& state ) {
 	};
 	
 	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAITransform::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
+	UNUSED ( serializer );
+	
+	this->mPiv.mX = state.GetField < float >( -1, "mPiv.mX", 0.0f );
+	this->mPiv.mY = state.GetField < float >( -1, "mPiv.mY", 0.0f );
+	
+	this->mLoc.mX = state.GetField < float >( -1, "mLoc.mX", 0.0f );
+	this->mLoc.mY = state.GetField < float >( -1, "mLoc.mY", 0.0f );
+	
+	this->mScale.mX = state.GetField < float >( -1, "mScale.mX", 1.0f );
+	this->mScale.mY = state.GetField < float >( -1, "mScale.mY", 1.0f );
+	
+	this->mDegrees = state.GetField < float >( -1, "mDegrees", 0.0f );
+}
+
+//----------------------------------------------------------------//
+void MOAITransform::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
+	UNUSED ( serializer );
+
+	state.SetField ( -1, "mPiv.mX", this->mPiv.mX );
+	state.SetField ( -1, "mPiv.mY", this->mPiv.mY );
+	
+	state.SetField ( -1, "mLoc.mX", this->mLoc.mX );
+	state.SetField ( -1, "mLoc.mY", this->mLoc.mY );
+	
+	state.SetField ( -1, "mScale.mX", this->mScale.mX );
+	state.SetField ( -1, "mScale.mY", this->mScale.mY );
+	
+	state.SetField ( -1, "mDegrees", this->mDegrees );
 }
 
 //----------------------------------------------------------------//

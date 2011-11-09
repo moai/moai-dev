@@ -347,7 +347,7 @@ void MOAILayer2D::AffirmPartition () {
 	if ( !this->mPartition ) {
 		this->mPartition.Set ( *this, new MOAIPartition ());
 		
-		USLuaStateHandle state = USLuaRuntime::Get ().State ();
+		MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 		this->mPartition->PushLuaUserdata ( state );
 		state.Pop ( 1 );
 	}
@@ -531,13 +531,13 @@ MOAILayer2D::~MOAILayer2D () {
 }
 
 //----------------------------------------------------------------//
-void MOAILayer2D::RegisterLuaClass ( USLuaState& state ) {
+void MOAILayer2D::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAIProp2D::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAILayer2D::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAILayer2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	MOAIProp2D::RegisterLuaFuncs ( state );
 	

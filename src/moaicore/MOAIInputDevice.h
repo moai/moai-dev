@@ -4,6 +4,8 @@
 #ifndef MOAIINPUTDEVICE_H
 #define MOAIINPUTDEVICE_H
 
+#include <moaicore/MOAILua.h>
+
 class MOAISensor;
 
 //================================================================//
@@ -13,7 +15,7 @@ class MOAISensor;
 	@text	Manager class for input bindings. Has no public methods.
 */
 class MOAIInputDevice :
-	public virtual USLuaObject {
+	public virtual MOAILuaObject {
 private:
 
 	STLString	mName;
@@ -37,8 +39,8 @@ public:
 	void			HandleEvent			( u8 sensorID, USStream& eventStream );
 					MOAIInputDevice		();
 					~MOAIInputDevice	();
-	void			RegisterLuaClass	( USLuaState& state );
-	void			RegisterLuaFuncs	( USLuaState& state );
+	void			RegisterLuaClass	( MOAILuaState& state );
+	void			RegisterLuaFuncs	( MOAILuaState& state );
 	void			ReserveSensors		( u8 total );
 	void			Reset				();
 	void			SetSensor			( u8 sensorID, cc8* name, u32 type );

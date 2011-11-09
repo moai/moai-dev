@@ -377,7 +377,7 @@ int MOAIWebView::_loadRequest ( lua_State* L ) {
 */
 int MOAIWebView::_openUrlInSafari ( lua_State* L ) {
 	
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	if ( !state.CheckParams ( 1, "S" )) return 0;
 	
 	cc8* urlStr = lua_tostring ( state, 1 );
@@ -526,7 +526,7 @@ MOAIWebView::~MOAIWebView () {
 //----------------------------------------------------------------//
 void MOAIWebView::RaiseDidFailLoadWithErrorEvent ( NSError* error ) {
 	
-	USLuaStateHandle state = USLuaRuntime::Get ().State ();
+	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 		if ( this->PushListenerAndSelf ( DID_FAIL_LOAD_WITH_ERROR, state )) {
 			[ error toLua:state ];
 			state.DebugCall ( 2, 0 );
@@ -540,7 +540,7 @@ BOOL MOAIWebView::RaiseShouldStartLoadWithRequestEvent ( NSURLRequest* request, 
 	int nav = navType;
 	bool result = true;
 	
-	USLuaStateHandle state = USLuaRuntime::Get ().State ();
+	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 	if ( this->PushListenerAndSelf ( SHOULD_START_LOAD_WITH_REQUEST, state )) {
 			lua_pushstring ( state, urlString );
 			lua_pushinteger ( state, nav );			
@@ -554,7 +554,7 @@ BOOL MOAIWebView::RaiseShouldStartLoadWithRequestEvent ( NSURLRequest* request, 
 //----------------------------------------------------------------//
 void MOAIWebView::RaiseWebViewDidFinishLoadEvent () {
 
-	USLuaStateHandle state = USLuaRuntime::Get ().State ();
+	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 	if ( this->PushListenerAndSelf ( WEB_VIEW_DID_FINISH_LOAD, state )) {
 			state.DebugCall ( 1, 0 );
 		}
@@ -563,14 +563,14 @@ void MOAIWebView::RaiseWebViewDidFinishLoadEvent () {
 //----------------------------------------------------------------//
 void MOAIWebView::RaiseWebViewDidStartLoadEvent () {
 
-	USLuaStateHandle state = USLuaRuntime::Get ().State ();
+	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 	if ( this->PushListenerAndSelf ( WEB_VIEW_DID_START_LOAD, state )) {
 			state.DebugCall ( 1, 0 );
 		}
 }
 
 //----------------------------------------------------------------//
-void MOAIWebView::RegisterLuaClass ( USLuaState& state ) {
+void MOAIWebView::RegisterLuaClass ( MOAILuaState& state ) {
 
 	// Event IDs
 	state.SetField ( -1, "DID_FAIL_LOAD_WITH_ERROR", ( u32 )DID_FAIL_LOAD_WITH_ERROR );
@@ -595,7 +595,7 @@ void MOAIWebView::RegisterLuaClass ( USLuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIWebView::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAIWebView::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	MOAIInstanceEventSource::RegisterLuaFuncs ( state );
 

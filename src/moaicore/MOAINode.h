@@ -5,6 +5,9 @@
 #define	MOAINODE_H
 
 #include <moaicore/MOAIAttrOp.h>
+#include <moaicore/MOAILua.h>
+#include <moaicore/MOAISharedPtr.h>
+#include <moaicore/MOAIWeakPtr.h>
 
 #define PACK_ATTR(type,attrID)	\
 	( MOAINode::PackAttrID < type >( type::attrID ))
@@ -30,7 +33,7 @@ class MOAIDepLink;
 			graph nodes.
 */
 class MOAINode :
-	public virtual USLuaObject {
+	public virtual MOAILuaObject {
 private:
 
 	enum {
@@ -109,7 +112,7 @@ protected:
 
 	//----------------------------------------------------------------//
 	template < typename TYPE >
-	void SetDependentMember ( USLuaSharedPtr < TYPE >& member, TYPE* ref ) {
+	void SetDependentMember ( MOAILuaSharedPtr < TYPE >& member, TYPE* ref ) {
 		
 		if ( member == ref ) return;
 	
@@ -128,7 +131,7 @@ protected:
 
 	//----------------------------------------------------------------//
 	template < typename TYPE >
-	void SetDependentMember ( USSharedPtr < TYPE >& member, TYPE* ref ) {
+	void SetDependentMember ( MOAISharedPtr < TYPE >& member, TYPE* ref ) {
 		
 		if ( member == ref ) return;
 	
@@ -147,7 +150,7 @@ protected:
 
 	//----------------------------------------------------------------//
 	template < typename TYPE >
-	void SetDependentMember ( USWeakPtr < TYPE >& member, TYPE* ref ) {
+	void SetDependentMember ( MOAIWeakPtr < TYPE >& member, TYPE* ref ) {
 		
 		if ( member == ref ) return;
 		
@@ -189,8 +192,8 @@ public:
 	u32				GetAttrFlags			( u32 attrID );
 					MOAINode				();
 					~MOAINode				();
-	void			RegisterLuaClass		( USLuaState& state );
-	void			RegisterLuaFuncs		( USLuaState& state );
+	void			RegisterLuaClass		( MOAILuaState& state );
+	void			RegisterLuaFuncs		( MOAILuaState& state );
 	void			ScheduleUpdate			();
 	void			SetAttrLink				( int attrID, MOAINode* srcNode, int srcAttrID );
 	void			SetNodeLink				( MOAINode& srcNode );

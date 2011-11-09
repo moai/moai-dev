@@ -4,7 +4,21 @@
 #ifndef	MOAIANIMCURVE_H
 #define	MOAIANIMCURVE_H
 
+#include <moaicore/MOAILua.h>
 #include <moaicore/MOAINode.h>
+#include <moaicore/MOAIWeakPtr.h>
+
+//================================================================//
+// MOAIAnimKey
+//================================================================//
+class MOAIAnimKey {
+public:
+
+	float		mTime;
+	float		mValue;
+	u32			mMode;
+	float		mWeight;
+};
 
 //================================================================//
 // MOAIAnimCurve
@@ -17,7 +31,7 @@
 */
 class MOAIAnimCurve :
 	public virtual MOAINode,
-	public USAnimCurve {
+	public USLeanArray < MOAIAnimKey > {
 private:
 
 	float	mTime;
@@ -42,11 +56,19 @@ public:
 	
 	//----------------------------------------------------------------//
 	bool			ApplyAttrOp			( u32 attrID, MOAIAttrOp& attrOp, u32 op );
+	u32				FindKeyID			( float time );
+	bool			GetBoolValue		( float time );
+	float			GetFloatDelta		( float t0, float t1 );
+	float			GetFloatValue		( float time );
+	u32				GetIndexValue		( float time );
+	int				GetIntValue			( float time );
+	float			GetLength			();
 					MOAIAnimCurve		();
 					~MOAIAnimCurve		();
 	void			OnDepNodeUpdate		();
-	void			RegisterLuaClass	( USLuaState& state );
-	void			RegisterLuaFuncs	( USLuaState& state );
+	void			RegisterLuaClass	( MOAILuaState& state );
+	void			RegisterLuaFuncs	( MOAILuaState& state );
+	void			SetKey				( u32 id, float time, float value, u32 mode, float weight = 1.0f );
 };
 
 #endif

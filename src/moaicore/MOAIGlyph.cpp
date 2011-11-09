@@ -90,7 +90,7 @@ void MOAIGlyph::ReserveKernTable ( u32 total ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGlyph::SerializeIn ( USLuaState& state ) {
+void MOAIGlyph::SerializeIn ( MOAILuaState& state ) {
 	
 	this->mCode = state.GetField ( -1, "mCode", this->mCode );
 	
@@ -131,7 +131,7 @@ void MOAIGlyph::SerializeIn ( USLuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGlyph::SerializeOut ( USLuaState& state ) {
+void MOAIGlyph::SerializeOut ( MOAILuaState& state ) {
 
 	state.SetField ( -1, "mCode", this->mCode );
 

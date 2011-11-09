@@ -53,7 +53,7 @@ int MOAICp::_getContactPersistence ( lua_State* L ) {
 	@out	nil
 */
 int MOAICp::_setBiasCoefficient ( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	
 	cp_bias_coef =	state.GetValue < cpFloat >( 1, cp_bias_coef );
 	return 0;
@@ -66,7 +66,7 @@ int MOAICp::_setBiasCoefficient ( lua_State* L ) {
 	@out	nil
 */
 int MOAICp::_setCollisionSlop ( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	
 	cp_collision_slop =	state.GetValue < cpFloat >( 1, cp_collision_slop );
 	return 0;
@@ -79,7 +79,7 @@ int MOAICp::_setCollisionSlop ( lua_State* L ) {
 	@out	nil
 */
 int MOAICp::_setContactPersistence ( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	
 	cp_contact_persistence =	state.GetValue < cpTimestamp >( 1, cp_contact_persistence );
 	return 0;
@@ -92,7 +92,7 @@ int MOAICp::_setContactPersistence ( lua_State* L ) {
 //----------------------------------------------------------------//
 MOAICp::MOAICp () {
 
-	RTTI_SINGLE ( USLuaObject )
+	RTTI_SINGLE ( MOAILuaObject )
 }
 
 //----------------------------------------------------------------//
@@ -100,7 +100,7 @@ MOAICp::~MOAICp () {
 }
 
 //----------------------------------------------------------------//
-void MOAICp::RegisterLuaClass ( USLuaState& state ) {
+void MOAICp::RegisterLuaClass ( MOAILuaState& state ) {
 
 	state.SetField ( -1, "INFINITY",	INFINITY );
 

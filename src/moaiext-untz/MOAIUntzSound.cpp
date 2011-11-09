@@ -370,7 +370,7 @@ MOAIUntzSound::~MOAIUntzSound () {
 	}
 }
 //----------------------------------------------------------------//
-void MOAIUntzSound::RegisterLuaClass ( USLuaState& state ) {
+void MOAIUntzSound::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAINode::RegisterLuaClass ( state );
 
@@ -378,7 +378,7 @@ void MOAIUntzSound::RegisterLuaClass ( USLuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIUntzSound::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAIUntzSound::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	MOAINode::RegisterLuaFuncs ( state );
 

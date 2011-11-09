@@ -6,6 +6,7 @@
 #if USE_BOX2D
 
 #include <moaicore/MOAIBox2DWorld.h>
+#include <moaicore/MOAILua.h>
 #include <moaicore/MOAITransformBase.h>
 
 class b2Body;
@@ -29,6 +30,7 @@ private:
 
 	//----------------------------------------------------------------//
 	static int		_addCircle				( lua_State* L );
+	static int      _addEdges               ( lua_State* L );
 	static int		_addPolygon				( lua_State* L );
 	static int		_addRect				( lua_State* L );
 	static int		_applyAngularImpulse	( lua_State* L );
@@ -74,8 +76,8 @@ public:
 	void			Destroy					();
 					MOAIBox2DBody			();
 					~MOAIBox2DBody			();
-	void			RegisterLuaClass		( USLuaState& state );
-	void			RegisterLuaFuncs		( USLuaState& state );
+	void			RegisterLuaClass		( MOAILuaState& state );
+	void			RegisterLuaFuncs		( MOAILuaState& state );
 };
 
 #endif

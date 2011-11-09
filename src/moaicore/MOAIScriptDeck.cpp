@@ -89,7 +89,7 @@ void MOAIScriptDeck::DrawPatch ( u32 idx, float xOff, float yOff, float xScale, 
 	
 	if ( this->mOnDraw ) {
 	
-		USLuaStateHandle state = USLuaRuntime::Get ().State ();
+		MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 		this->PushLocal ( state, this->mOnDraw );
 		
 		lua_pushnumber ( state, idx );
@@ -108,7 +108,7 @@ USRect MOAIScriptDeck::GetBounds ( u32 idx, MOAIDeckRemapper* remapper ) {
 	
 		idx = remapper ? remapper->Remap ( idx ) : idx;
 	
-		USLuaStateHandle state = USLuaRuntime::Get ().State ();
+		MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 		this->PushLocal ( state, this->mOnRect );
 		
 		lua_pushnumber ( state, idx );
@@ -148,13 +148,13 @@ MOAIScriptDeck::~MOAIScriptDeck () {
 }
 
 //----------------------------------------------------------------//
-void MOAIScriptDeck::RegisterLuaClass ( USLuaState& state ) {
+void MOAIScriptDeck::RegisterLuaClass ( MOAILuaState& state ) {
 
 	this->MOAIDeck2D::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAIScriptDeck::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAIScriptDeck::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	this->MOAIDeck2D::RegisterLuaFuncs ( state );
 

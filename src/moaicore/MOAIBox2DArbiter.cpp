@@ -120,7 +120,7 @@ MOAIBox2DArbiter::MOAIBox2DArbiter () :
 	mImpulse ( 0 ) {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( USLuaObject )
+		RTTI_EXTEND ( MOAILuaObject )
 	RTTI_END
 }
 
@@ -178,7 +178,7 @@ void MOAIBox2DArbiter::PreSolve ( b2Contact* contact, const b2Manifold* oldManif
 }
 
 //----------------------------------------------------------------//
-void MOAIBox2DArbiter::RegisterLuaClass ( USLuaState& state ) {
+void MOAIBox2DArbiter::RegisterLuaClass ( MOAILuaState& state ) {
 
 	state.SetField ( -1, "ALL", ( u32 )ALL );
 	state.SetField ( -1, "BEGIN", ( u32 )BEGIN );
@@ -195,7 +195,7 @@ void MOAIBox2DArbiter::RegisterLuaClass ( USLuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIBox2DArbiter::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAIBox2DArbiter::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "getContactNormal",			_getContactNormal },

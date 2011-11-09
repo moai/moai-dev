@@ -56,7 +56,7 @@ void MOAIMotionSensor::HandleEvent ( USStream& eventStream ) {
 	this->mZ = eventStream.Read < float >();
 	
 	if ( this->mCallback ) {
-		USLuaStateHandle state = this->mCallback.GetSelf ();
+		MOAILuaStateHandle state = this->mCallback.GetSelf ();
 		lua_pushnumber ( state, this->mX );
 		lua_pushnumber ( state, this->mY );
 		lua_pushnumber ( state, this->mZ );
@@ -78,13 +78,13 @@ MOAIMotionSensor::~MOAIMotionSensor () {
 }
 
 //----------------------------------------------------------------//
-void MOAIMotionSensor::RegisterLuaClass ( USLuaState& state ) {
+void MOAIMotionSensor::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAISensor::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAIMotionSensor::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAIMotionSensor::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "getLevel",			_getLevel },

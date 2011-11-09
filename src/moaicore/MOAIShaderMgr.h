@@ -10,7 +10,7 @@ class MOAIShader;
 // MOAIShaderMgr
 //================================================================//
 class MOAIShaderMgr :
-	public USGlobalClass < MOAIShaderMgr > {
+	public MOAIGlobalClass < MOAIShaderMgr > {
 public:
 
 	enum {

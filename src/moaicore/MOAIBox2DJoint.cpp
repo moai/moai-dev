@@ -190,7 +190,7 @@ MOAIBox2DJoint::MOAIBox2DJoint () :
 	mJoint ( 0 ) {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( USLuaObject )
+		RTTI_EXTEND ( MOAILuaObject )
 	RTTI_END
 }
 
@@ -210,12 +210,12 @@ MOAIBox2DJoint::~MOAIBox2DJoint () {
 }
 
 //----------------------------------------------------------------//
-void MOAIBox2DJoint::RegisterLuaClass ( USLuaState& state ) {
+void MOAIBox2DJoint::RegisterLuaClass ( MOAILuaState& state ) {
 	MOAIBox2DPrim::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAIBox2DJoint::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAIBox2DJoint::RegisterLuaFuncs ( MOAILuaState& state ) {
 	MOAIBox2DPrim::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {

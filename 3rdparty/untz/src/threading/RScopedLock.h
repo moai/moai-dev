@@ -9,7 +9,7 @@
 #ifndef RSCOPEDLOCK_H_
 #define RSCOPEDLOCK_H_
 
-#include <Threading/Threading.h>
+#include <threading/Threading.h>
 
 class RScopedLock
 {	

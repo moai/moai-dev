@@ -6,6 +6,7 @@
 #if USE_BOX2D
 
 #include <moaicore/MOAIBox2DJoint.h>
+#include <moaicore/MOAILua.h>
 
 //================================================================//
 // MOAIBox2DPulleyJoint
@@ -31,8 +32,8 @@ public:
 	//----------------------------------------------------------------//
 					MOAIBox2DPulleyJoint	();
 					~MOAIBox2DPulleyJoint	();
-	void			RegisterLuaClass		( USLuaState& state );
-	void			RegisterLuaFuncs		( USLuaState& state );
+	void			RegisterLuaClass		( MOAILuaState& state );
+	void			RegisterLuaFuncs		( MOAILuaState& state );
 };
 
 #endif

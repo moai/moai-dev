@@ -56,7 +56,7 @@ void MOAIPointerSensor::HandleEvent ( USStream& eventStream ) {
 	this->mY = y;
 	
 	if ( this->mOnMove ) {
-		USLuaStateHandle state = this->mOnMove.GetSelf ();
+		MOAILuaStateHandle state = this->mOnMove.GetSelf ();
 		lua_pushnumber ( state, this->mX );
 		lua_pushnumber ( state, this->mY );
 		state.DebugCall ( 2, 0 );
@@ -74,13 +74,13 @@ MOAIPointerSensor::~MOAIPointerSensor () {
 }
 
 //----------------------------------------------------------------//
-void MOAIPointerSensor::RegisterLuaClass ( USLuaState& state ) {
+void MOAIPointerSensor::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAISensor::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAIPointerSensor::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAIPointerSensor::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "getLoc",			_getLoc },

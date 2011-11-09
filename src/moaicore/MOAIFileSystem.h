@@ -4,6 +4,8 @@
 #ifndef	MOAIOFILESYSTEM_H
 #define	MOAIOFILESYSTEM_H
 
+#include <moaicore/MOAILua.h>
+
 //================================================================//
 // MOAIFileSystem
 //================================================================//
@@ -11,7 +13,7 @@
 	@text	Functions for manipulating the file system.
 */
 class MOAIFileSystem :
-	public USLuaObject {
+	public MOAILuaObject {
 private:
 
 	//----------------------------------------------------------------//
@@ -35,7 +37,7 @@ public:
 	DECL_LUA_SINGLETON ( MOAIFileSystem )
 	
 	//----------------------------------------------------------------//
-	void				RegisterLuaClass		( USLuaState& state );
+	void				RegisterLuaClass		( MOAILuaState& state );
 };
 
 #endif

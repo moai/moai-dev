@@ -23,7 +23,7 @@
 	@out	nil
 */
 int MOAITapjoy::_initVideoAds ( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 
 	[ TapjoyConnect initVideoAdWithDelegate:MOAITapjoy::Get ().mVideoAdDelegate ];
 	
@@ -46,7 +46,7 @@ int MOAITapjoy::_initVideoAds ( lua_State* L ) {
 	@out	nil
 */
 int MOAITapjoy::_requestTapjoyConnect ( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 
 	cc8* appId = lua_tostring ( state, 1 );
 	cc8* secretKey = lua_tostring ( state, 2 );
@@ -98,7 +98,7 @@ MOAITapjoy::~MOAITapjoy () {
 }
 
 //----------------------------------------------------------------//
-void MOAITapjoy::RegisterLuaClass ( USLuaState& state ) {
+void MOAITapjoy::RegisterLuaClass ( MOAILuaState& state ) {
 
 	state.SetField ( -1, "TAPJOY_VIDEO_AD_BEGIN", ( u32 )TAPJOY_VIDEO_AD_BEGIN );
 	state.SetField ( -1, "TAPJOY_VIDEO_AD_CLOSE", ( u32 )TAPJOY_VIDEO_AD_CLOSE );
@@ -118,7 +118,7 @@ void MOAITapjoy::RegisterLuaClass ( USLuaState& state ) {
 //----------------------------------------------------------------//
 void MOAITapjoy::SendVideoAdBeginEvent () {	
 
-	USLuaStateHandle state = USLuaRuntime::Get ().State ();
+	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 	
 	if ( this->PushListener ( TAPJOY_VIDEO_AD_BEGIN, state )) {
 	
@@ -129,7 +129,7 @@ void MOAITapjoy::SendVideoAdBeginEvent () {
 //----------------------------------------------------------------//
 void MOAITapjoy::SendVideoAdCloseEvent () {
 
-	USLuaStateHandle state = USLuaRuntime::Get ().State ();
+	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 	
 	if ( this->PushListener ( TAPJOY_VIDEO_AD_CLOSE, state )) {
 	

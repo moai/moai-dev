@@ -412,13 +412,13 @@ MOAIGfxQuadListDeck2D::~MOAIGfxQuadListDeck2D () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxQuadListDeck2D::RegisterLuaClass ( USLuaState& state ) {
+void MOAIGfxQuadListDeck2D::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	MOAIDeck2D::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxQuadListDeck2D::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAIGfxQuadListDeck2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	MOAIDeck2D::RegisterLuaFuncs ( state );
 

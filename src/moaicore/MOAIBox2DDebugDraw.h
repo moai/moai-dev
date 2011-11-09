@@ -27,7 +27,7 @@ struct b2AABB;
 
 // This class implements debug drawing callbacks that are invoked
 // inside b2World::Step.
-class MOAIBox2DDebugDraw : public b2DebugDraw {
+class MOAIBox2DDebugDraw : public b2Draw {
 
 	friend class MOAIBox2DWorld;
 

@@ -18,7 +18,7 @@
 // TODO: harebrained
 @interface LuaAlertView : UIAlertView < UIAlertViewDelegate > {
 @public
-	USLuaRef callback;
+	MOAILuaRef callback;
 };
 
 	//----------------------------------------------------------------//
@@ -43,7 +43,7 @@
 	@const	REMOTE_NOTIFICATION_ALERT	Bitmask for alert notification.
 */
 class MOAIApp :
-	public USGlobalClass < MOAIApp, USLuaObject > {
+	public MOAIGlobalClass < MOAIApp, MOAILuaObject > {
 private:
 
 	enum {
@@ -78,7 +78,7 @@ private:
 	};
 	
 	UIApplication*			mApplication;
-	USLuaRef				mListeners [ TOTAL ];
+	MOAILuaRef				mListeners [ TOTAL ];
 	NSDictionary*			mAppNotificationPayload;
 	MOAIStoreKitListener*	mStoreKitListener;
 
@@ -127,7 +127,7 @@ public:
 	void		OnInit														();
 	void		PaymentQueueUpdatedTransactions								( SKPaymentQueue* queue, NSArray* transactions );
 	void		ProductsRequestDidReceiveResponse							( SKProductsRequest* request, SKProductsResponse* response );
-	void		RegisterLuaClass											( USLuaState& state );
+	void		RegisterLuaClass											( MOAILuaState& state );
 	void		Reset														();
 	void		SetRemoteNotificationPayload								( NSDictionary* remoteNotificationPayload );
 	void		WillEndSession												();

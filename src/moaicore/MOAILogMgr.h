@@ -4,6 +4,9 @@
 #ifndef	MOAILOGMGR_H
 #define	MOAILOGMGR_H
 
+#include <moaicore/MOAIGlobals.h>
+#include <moaicore/MOAILua.h>
+
 //================================================================//
 // MOAILogMessage
 //================================================================//
@@ -28,7 +31,7 @@ class MOAILogMessage {
 	@const LOG_STATUS
 */
 class MOAILogMgr :
-	public USGlobalClass < MOAILogMgr, USLuaObject > {
+	public MOAIGlobalClass < MOAILogMgr, MOAILuaObject > {
 private:
 
 	typedef STLMap < u32, MOAILogMessage >::iterator MessageMapIt;
@@ -69,7 +72,7 @@ public:
 	void			Print					( cc8* message, ... );
 	void			PrintVar				( cc8* message, va_list args );
 	void			RegisterLogMessage		( u32 messageID, u32 level, cc8* formatString );
-	void			RegisterLuaClass		( USLuaState& state );
+	void			RegisterLuaClass		( MOAILuaState& state );
 };
 
 //================================================================//

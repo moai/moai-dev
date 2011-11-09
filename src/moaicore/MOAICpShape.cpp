@@ -29,7 +29,7 @@ SUPPRESS_EMPTY_FILE_WARNING
 		@out	number area
 */ 
 int MOAICpShape::_areaForCircle ( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	if ( !state.CheckParams ( 1, "N" )) return 0;
 
 	cpFloat r1;
@@ -57,7 +57,7 @@ int MOAICpShape::_areaForCircle ( lua_State* L ) {
 	@out	number area
 */ 
 int MOAICpShape::_areaForPolygon ( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	if ( !state.CheckParams ( 1, "T" )) return 0;
 
 	cpVect verts [ MAX_POLY_VERTS ];
@@ -83,7 +83,7 @@ int MOAICpShape::_areaForPolygon ( lua_State* L ) {
 	@out	number area			The calculated area.
 */
 int MOAICpShape::_areaForRect ( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	if ( !state.CheckParams ( 1, "NNNN" )) return 0;
 
 	USMetaRect < cpFloat > rect = state.GetRect < cpFloat >( 1 );
@@ -105,7 +105,7 @@ int MOAICpShape::_areaForRect ( lua_State* L ) {
 	@out	number area			The calculated area.
 */
 int MOAICpShape::_areaForSegment ( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	if ( !state.CheckParams ( 1, "UUNNNN" )) return 0;
 	
 	cpVect a;
@@ -296,7 +296,7 @@ int MOAICpShape::_isSensor ( lua_State* L ) {
 	@out	number moment
 */
 int MOAICpShape::_momentForCircle ( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	if ( !state.CheckParams ( 1, "NN" )) return 0;
 	int p = 1;
 
@@ -330,7 +330,7 @@ int MOAICpShape::_momentForCircle ( lua_State* L ) {
 	@out	number moment
 */
 int MOAICpShape::_momentForPolygon ( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	if ( !state.CheckParams ( 1, "NT" )) return 0;
 
 	cpFloat m = state.GetValue < cpFloat >( 1, 0 );
@@ -351,7 +351,7 @@ int MOAICpShape::_momentForPolygon ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	momentForRectangle
+/**	@name	momentForRect
 	@text	Returns the moment of intertia for the rect.
 
 	@in		number m
@@ -362,7 +362,7 @@ int MOAICpShape::_momentForPolygon ( lua_State* L ) {
 	@out	number moment
 */
 int MOAICpShape::_momentForRect ( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	if ( !state.CheckParams ( 1, "NNNNN" )) return 0;
 
 	cpFloat m = state.GetValue < cpFloat >( 1, 0 );
@@ -386,7 +386,7 @@ int MOAICpShape::_momentForRect ( lua_State* L ) {
 	@out	number moment
 */
 int MOAICpShape::_momentForSegment ( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	if ( !state.CheckParams ( 1, "UUNNNNN" )) return 0;
 	
 	cpFloat m = state.GetValue < cpFloat >( 1, 0 );
@@ -547,7 +547,7 @@ void MOAICpShape::CpRemoveFromSpace ( cpSpace* space ) {
 }
 
 //----------------------------------------------------------------//
-u32 MOAICpShape::LoadVerts ( USLuaState& state, int idx, cpVect* verts, u32 max  ) {
+u32 MOAICpShape::LoadVerts ( MOAILuaState& state, int idx, cpVect* verts, u32 max  ) {
 	
 	int itr = state.PushTableItr ( idx );
 	idx = 0;
@@ -588,7 +588,7 @@ MOAICpShape::~MOAICpShape () {
 }
 
 //----------------------------------------------------------------//
-void MOAICpShape::RegisterLuaClass ( USLuaState& state ) {
+void MOAICpShape::RegisterLuaClass ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "areaForCircle",		_areaForCircle },
@@ -607,7 +607,7 @@ void MOAICpShape::RegisterLuaClass ( USLuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAICpShape::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAICpShape::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	luaL_Reg regTable [] = {
 		{ "getBody",			_getBody },

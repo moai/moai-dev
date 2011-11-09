@@ -4,6 +4,7 @@
 #ifndef	MOAILAYERBRIDGE2D_H
 #define	MOAILAYERBRIDGE2D_H
 
+#include <moaicore/MOAILua.h>
 #include <moaicore/MOAITransform.h>
 
 class MOAILayer2D;
@@ -19,8 +20,8 @@ class MOAILayerBridge2D :
 	public MOAITransform {
 private:
 
-	USWeakPtr < MOAILayer2D > mSourceScene;
-	USWeakPtr < MOAILayer2D > mTargetScene;
+	MOAIWeakPtr < MOAILayer2D > mSourceScene;
+	MOAIWeakPtr < MOAILayer2D > mTargetScene;
 
 	//----------------------------------------------------------------//
 	static int			_init					( lua_State* L );
@@ -35,8 +36,8 @@ public:
 	//----------------------------------------------------------------//
 					MOAILayerBridge2D			();
 					~MOAILayerBridge2D			();
-	void			RegisterLuaClass			( USLuaState& state );
-	void			RegisterLuaFuncs			( USLuaState& state );
+	void			RegisterLuaClass			( MOAILuaState& state );
+	void			RegisterLuaFuncs			( MOAILuaState& state );
 };
 
 #endif

@@ -6,6 +6,7 @@
 
 #include <moaicore/MOAIBlendMode.h>
 #include <moaicore/MOAIColor.h>
+#include <moaicore/MOAILua.h>
 #include <moaicore/MOAIProp.h>
 
 class MOAICellCoord;
@@ -56,16 +57,16 @@ protected:
 		REPEAT_Y	= 0x00000002,
 	};
 	
-	USLuaSharedPtr < MOAIDeck >			mDeck;
-	USLuaSharedPtr < MOAIDeckRemapper >	mRemapper;
+	MOAILuaSharedPtr < MOAIDeck >			mDeck;
+	MOAILuaSharedPtr < MOAIDeckRemapper >	mRemapper;
 	u32									mIndex;
 	
-	USLuaSharedPtr < MOAIGrid >			mGrid;
+	MOAILuaSharedPtr < MOAIGrid >			mGrid;
 	u32									mRepeat;
 	USVec2D								mGridScale;
 	
-	USLuaSharedPtr < MOAIShader >			mShader;
-	USLuaSharedPtr < MOAITransformBase >	mUVTransform;
+	MOAILuaSharedPtr < MOAIShader >			mShader;
+	MOAILuaSharedPtr < MOAITransformBase >	mUVTransform;
 	
 	USRect						mFrame;
 	bool						mFitToFrame;
@@ -128,10 +129,10 @@ public:
 									MOAIProp2D				();
 									~MOAIProp2D				();
 	void							OnDepNodeUpdate			();
-	void							RegisterLuaClass		( USLuaState& state );
-	void							RegisterLuaFuncs		( USLuaState& state );
-	void							SerializeIn				( USLuaState& state, USLuaSerializer& serializer );
-	void							SerializeOut			( USLuaState& state, USLuaSerializer& serializer );
+	void							RegisterLuaClass		( MOAILuaState& state );
+	void							RegisterLuaFuncs		( MOAILuaState& state );
+	void							SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
+	void							SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
 };
 
 #endif

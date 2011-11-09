@@ -20,7 +20,7 @@ int MOAIUntzSystem::_getDeviceCount ( lua_State* L ) {
 //----------------------------------------------------------------//
 // placeholder
 int MOAIUntzSystem::_getDeviceInfo ( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	
 	//u32 deviceIndex = state.GetValue ( 1, 0 );
 	//UNTZ::DeviceInfo info = UNTZ::System::get ()->getDeviceInfo ( deviceIndex );
@@ -49,7 +49,7 @@ int MOAIUntzSystem::_getOptions ( lua_State* L ) {
 	@out	number sampleRate
 */
 int MOAIUntzSystem::_getSampleRate ( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	
 	UInt32 sampleRate = UNTZ::System::get ()->getSampleRate ();
 	lua_pushnumber ( L, sampleRate );
@@ -60,7 +60,7 @@ int MOAIUntzSystem::_getSampleRate ( lua_State* L ) {
 //----------------------------------------------------------------//
 // placeholder
 int MOAIUntzSystem::_getSupportedFormats ( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	
 	//RStringArray& formats = UNTZ::System::get ()->getSupportedFormats ();
 	//
@@ -81,7 +81,7 @@ int MOAIUntzSystem::_getSupportedFormats ( lua_State* L ) {
 	@out	nil
 */
 int MOAIUntzSystem::_initialize ( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	
 	u32 sampleRate = state.GetValue ( 1, DEFAULT_SAMPLE_RATE );
 	u32 numFrames = state.GetValue ( 2, DEFAULT_FRAMES_PER_BUFFER );
@@ -95,7 +95,7 @@ int MOAIUntzSystem::_initialize ( lua_State* L ) {
 //----------------------------------------------------------------//
 // placeholder
 int MOAIUntzSystem::_setInputDevice ( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	
 	//u32 deviceIndex = state.GetValue ( 1, 0 );
 	//UNTZ::System::get ()->setInputDevice ( deviceIndex );
@@ -106,7 +106,7 @@ int MOAIUntzSystem::_setInputDevice ( lua_State* L ) {
 //----------------------------------------------------------------//
 // placeholder
 int MOAIUntzSystem::_setOptions ( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	
 	//u32 options = state.GetValue ( 1, DEFAULT_OPTIONS );
 	//UNTZ::System::get ()->_setOptions ( options );
@@ -117,7 +117,7 @@ int MOAIUntzSystem::_setOptions ( lua_State* L ) {
 //----------------------------------------------------------------//
 // placeholder
 int MOAIUntzSystem::_setOutputDevice ( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	
 	//u32 deviceIndex = state.GetValue ( 1, 0 );
 	//UNTZ::System::get ()->setOutputDevice ( deviceIndex );
@@ -133,7 +133,7 @@ int MOAIUntzSystem::_setOutputDevice ( lua_State* L ) {
 	@out	nil
 */
 int MOAIUntzSystem::_setSampleRate ( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	
 	u32 sampleRate = state.GetValue ( 1, DEFAULT_SAMPLE_RATE );
 	UNTZ::System::get ()->setSampleRate ( sampleRate );
@@ -149,7 +149,7 @@ int MOAIUntzSystem::_setSampleRate ( lua_State* L ) {
 	@out	nil
 */
 int MOAIUntzSystem::_setVolume ( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	
 	float volume = ( float )state.GetValue ( 1, 1.0 );
 	UNTZ::System::get ()->setVolume ( volume );
@@ -164,7 +164,7 @@ int MOAIUntzSystem::_setVolume ( lua_State* L ) {
 	@out	number volume
 */
 int MOAIUntzSystem::_getVolume ( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	
 	float volume = UNTZ::System::get ()->getVolume ();
 	lua_pushnumber ( L, volume );
@@ -179,7 +179,7 @@ int MOAIUntzSystem::_getVolume ( lua_State* L ) {
 //----------------------------------------------------------------//
 MOAIUntzSystem::MOAIUntzSystem () {
 
-	RTTI_SINGLE ( USLuaObject )
+	RTTI_SINGLE ( MOAILuaObject )
 }
 
 //----------------------------------------------------------------//
@@ -187,7 +187,7 @@ MOAIUntzSystem::~MOAIUntzSystem () {
 }
 
 //----------------------------------------------------------------//
-void MOAIUntzSystem::RegisterLuaClass ( USLuaState& state ) {
+void MOAIUntzSystem::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	luaL_Reg regTable [] = {
 		//{ "getDeviceCount",			_getDeviceCount },
@@ -209,7 +209,7 @@ void MOAIUntzSystem::RegisterLuaClass ( USLuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIUntzSystem::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAIUntzSystem::RegisterLuaFuncs ( MOAILuaState& state ) {
 	UNUSED ( state );
 }
 

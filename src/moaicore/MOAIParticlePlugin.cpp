@@ -42,7 +42,7 @@ MOAIParticlePlugin::MOAIParticlePlugin () :
 	mInitFunc ( 0 ),
 	mRenderFunc ( 0 ) {
 
-	RTTI_SINGLE ( USLuaObject )
+	RTTI_SINGLE ( MOAILuaObject )
 }
 
 //----------------------------------------------------------------//
@@ -50,12 +50,12 @@ MOAIParticlePlugin::~MOAIParticlePlugin () {
 }
 
 //----------------------------------------------------------------//
-void MOAIParticlePlugin::RegisterLuaClass ( USLuaState& state ) {
+void MOAIParticlePlugin::RegisterLuaClass ( MOAILuaState& state ) {
 	UNUSED ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAIParticlePlugin::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAIParticlePlugin::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable[] = {
 		{ "getSize",			_getSize },

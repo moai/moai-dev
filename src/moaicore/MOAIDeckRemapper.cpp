@@ -101,13 +101,13 @@ MOAIDeckRemapper::~MOAIDeckRemapper () {
 }
 
 //----------------------------------------------------------------//
-void MOAIDeckRemapper::RegisterLuaClass ( USLuaState& state ) {
+void MOAIDeckRemapper::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAINode::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAIDeckRemapper::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAIDeckRemapper::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	MOAINode::RegisterLuaFuncs ( state );
 	

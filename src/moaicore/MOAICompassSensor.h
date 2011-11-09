@@ -4,6 +4,7 @@
 #ifndef MOAICOMPASSSENSOR_H
 #define MOAICOMPASSSENSOR_H
 
+#include <moaicore/MOAILua.h>
 #include <moaicore/MOAISensor.h>
 
 //================================================================//
@@ -18,7 +19,7 @@ private:
 
 	float mHeading;
 
-	USLuaRef mCallback;
+	MOAILuaRef mCallback;
 
 	//----------------------------------------------------------------//
 	static int	_getHeading		( lua_State* L );
@@ -32,8 +33,8 @@ public:
 	void			HandleEvent				( USStream& eventStream );
 					MOAICompassSensor		();
 					~MOAICompassSensor		();
-	void			RegisterLuaClass		( USLuaState& state );
-	void			RegisterLuaFuncs		( USLuaState& state );
+	void			RegisterLuaClass		( MOAILuaState& state );
+	void			RegisterLuaFuncs		( MOAILuaState& state );
 	static void		WriteEvent				( USStream& eventStream, float heading );
 };
 

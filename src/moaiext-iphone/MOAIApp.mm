@@ -35,7 +35,7 @@
 		UNUSED ( alertView );
 		
 		if ( self->callback ) {
-			USLuaStateHandle state = self->callback.GetSelf ();
+			MOAILuaStateHandle state = self->callback.GetSelf ();
 			state.Push (( int )buttonIndex + 1 );
 			state.DebugCall ( 1, 0 );
 		}
@@ -63,7 +63,7 @@
 */
 int MOAIApp::_alert( lua_State* L ) {
 	
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	
 	cc8* title = state.GetValue< cc8* >(1, "Alert");
 	cc8* message = state.GetValue< cc8* >(2, "");
@@ -110,7 +110,7 @@ int MOAIApp::_alert( lua_State* L ) {
 	@out	bool canMakePayments
 */
 int MOAIApp::_canMakePayments ( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	
 	BOOL result = [ SKPaymentQueue canMakePayments ];
 	lua_pushboolean ( state, result );
@@ -125,7 +125,7 @@ int MOAIApp::_canMakePayments ( lua_State* L ) {
 	@out	number badgeNumber
 */
 int MOAIApp::_getAppIconBadgeNumber ( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	
 	UIApplication* application = [ UIApplication sharedApplication ];
 	lua_pushnumber ( state, application.applicationIconBadgeNumber );
@@ -142,7 +142,7 @@ int MOAIApp::_getAppIconBadgeNumber ( lua_State* L ) {
 	@out	string directory	The directory associated with the given domain.
 */
 int MOAIApp::_getDirectoryInDomain ( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	
 	u32 dirCode = state.GetValue<u32>( 1, 0 ); 
 	
@@ -191,7 +191,7 @@ int MOAIApp::_getNotificationThatStartedApp ( lua_State* L ) {
 	@out	nil
 */
 int MOAIApp::_openURL ( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	
 	cc8* url	= state.GetValue < cc8* >( 1, "" );
 	
@@ -211,7 +211,7 @@ int MOAIApp::_openURL ( lua_State* L ) {
 	@out	bool success
 */
 int MOAIApp::_openURLWithParams ( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	
 	NSString* baseURL = [[ NSString alloc ] initWithLua: state stackIndex: 1 ];
 	NSMutableDictionary* params = [[ NSMutableDictionary alloc ] initWithCapacity:5 ];
@@ -245,7 +245,7 @@ int MOAIApp::_openURLWithParams ( lua_State* L ) {
 	@out	nil
 */
 int MOAIApp::_presentLocalNotification ( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	
 	cc8* alertBody					  = state.GetValue < cc8* >( 1, "" );
 	cc8* alertAction				  = state.GetValue < cc8* >( 2, "" );
@@ -273,7 +273,7 @@ int MOAIApp::_presentLocalNotification ( lua_State* L ) {
 	@out	nil
 */
 int MOAIApp::_registerForRemoteNotifications ( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	
 	u32 types = state.GetValue < u32 >( 1, ( u32 )UIRemoteNotificationTypeNone );
 	
@@ -292,7 +292,7 @@ int MOAIApp::_registerForRemoteNotifications ( lua_State* L ) {
 	@out	nil
 */
 int MOAIApp::_requestPaymentForProduct ( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	
 	cc8* identifier = state.GetValue < cc8* >( 1, "" );
 	int quantity = state.GetValue < int >( 2, 1 );
@@ -314,7 +314,7 @@ int MOAIApp::_requestPaymentForProduct ( lua_State* L ) {
 	@out	nil
 */
 int MOAIApp::_requestProductIdentifiers ( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	
 	NSMutableSet* productSet = [[[ NSMutableSet alloc ] init ] autorelease ];
 	
@@ -362,7 +362,7 @@ int MOAIApp::_restoreCompletedTransactions( lua_State* L ) {
 //----------------------------------------------------------------//
 // TODO: test me
 int MOAIApp::_scheduleLocalNotification ( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	
 	cc8* userInfo				= state.GetValue < cc8* >( 1, "" );
 	cc8* fireDate				= state.GetValue < cc8* >( 2, "" ); // ISO8601
@@ -407,7 +407,7 @@ int MOAIApp::_scheduleLocalNotification ( lua_State* L ) {
 	@out	nil
 */
 int MOAIApp::_setAppIconBadgeNumber ( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	
 	UIApplication* application = [ UIApplication sharedApplication ];
 	application.applicationIconBadgeNumber = state.GetValue < int >( 1, 0 );
@@ -425,7 +425,7 @@ int MOAIApp::_setAppIconBadgeNumber ( lua_State* L ) {
 	@out	nil
 */
 int MOAIApp::_setListener ( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	
 	u32 idx = state.GetValue < u32 >( 1, TOTAL );
 	
@@ -442,10 +442,10 @@ int MOAIApp::_setListener ( lua_State* L ) {
 //----------------------------------------------------------------//
 void MOAIApp::AppOpenedFromURL ( NSURL* url ) {
 	
-	USLuaRef& callback = this->mListeners [ APP_OPENED_FROM_URL ];
+	MOAILuaRef& callback = this->mListeners [ APP_OPENED_FROM_URL ];
 	
 	if ( callback ) {
-		USLuaStateHandle state = callback.GetSelf ();
+		MOAILuaStateHandle state = callback.GetSelf ();
 		
 		[[ url absoluteString ] toLua:state ];
 		
@@ -456,10 +456,10 @@ void MOAIApp::AppOpenedFromURL ( NSURL* url ) {
 //----------------------------------------------------------------//
 void MOAIApp::DidFailToRegisterForRemoteNotificationsWithError ( NSError* error ) {
 	
-	USLuaRef& callback = this->mListeners [ ERROR ];
+	MOAILuaRef& callback = this->mListeners [ ERROR ];
 	
 	if ( callback ) {
-		USLuaStateHandle state = callback.GetSelf ();
+		MOAILuaStateHandle state = callback.GetSelf ();
 		
 		[ error toLua:state ];
 		
@@ -470,10 +470,10 @@ void MOAIApp::DidFailToRegisterForRemoteNotificationsWithError ( NSError* error 
 //----------------------------------------------------------------//
 void MOAIApp::DidReceiveLocalNotification ( UILocalNotification* notification ) {
 
-	USLuaRef& callback = this->mListeners [ LOCAL_NOTIFICATION ];
+	MOAILuaRef& callback = this->mListeners [ LOCAL_NOTIFICATION ];
 	
 	if ( callback ) {
-		USLuaStateHandle state = callback.GetSelf ();
+		MOAILuaStateHandle state = callback.GetSelf ();
 		
 		NSDictionary* userInfo = notification.userInfo;
 		if ( userInfo ) {
@@ -491,10 +491,10 @@ void MOAIApp::DidReceiveLocalNotification ( UILocalNotification* notification ) 
 //----------------------------------------------------------------//
 void MOAIApp::DidReceivePaymentQueueError ( NSError* error, cc8* extraInfo ) {
 	
-	USLuaRef& callback = this->mListeners [ PAYMENT_QUEUE_ERROR ];
+	MOAILuaRef& callback = this->mListeners [ PAYMENT_QUEUE_ERROR ];
 	
 	if ( callback ) {
-		USLuaStateHandle state = callback.GetSelf ();
+		MOAILuaStateHandle state = callback.GetSelf ();
 		
 		[ error toLua:state ];
 		lua_pushstring(state, extraInfo);
@@ -506,10 +506,10 @@ void MOAIApp::DidReceivePaymentQueueError ( NSError* error, cc8* extraInfo ) {
 //----------------------------------------------------------------//
 void MOAIApp::DidReceiveRemoteNotification ( NSDictionary* userInfo ) {
 
-	USLuaRef& callback = this->mListeners [ REMOTE_NOTIFICATION ];
+	MOAILuaRef& callback = this->mListeners [ REMOTE_NOTIFICATION ];
 	
 	if ( callback ) {
-		USLuaStateHandle state = callback.GetSelf ();
+		MOAILuaStateHandle state = callback.GetSelf ();
 		
 		[ userInfo toLua:state ];
 		
@@ -520,14 +520,14 @@ void MOAIApp::DidReceiveRemoteNotification ( NSDictionary* userInfo ) {
 //----------------------------------------------------------------//
 void MOAIApp::DidRegisterForRemoteNotificationsWithDeviceToken	( NSData* deviceToken ) {
 	
-	USLuaRef& callback = this->mListeners [ DID_REGISTER ];
+	MOAILuaRef& callback = this->mListeners [ DID_REGISTER ];
 	
 	if ( callback ) {
 		
 		STLString tokenStr;
 		tokenStr.hex_encode ([ deviceToken bytes ], [ deviceToken length ]);
 			
-		USLuaStateHandle state = callback.GetSelf ();
+		MOAILuaStateHandle state = callback.GetSelf ();
 		lua_pushstring ( state, tokenStr );
 		state.DebugCall ( 1, 0 );
 	}
@@ -536,10 +536,10 @@ void MOAIApp::DidRegisterForRemoteNotificationsWithDeviceToken	( NSData* deviceT
 //----------------------------------------------------------------//
 void MOAIApp::DidResolveHostName( NSString* hostname, cc8* ipAddress ) {
 
-	USLuaRef& callback = this->mListeners [ ASYNC_NAME_RESOLVE ];
+	MOAILuaRef& callback = this->mListeners [ ASYNC_NAME_RESOLVE ];
 	
 	if ( callback ) {
-		USLuaStateHandle state = callback.GetSelf ();
+		MOAILuaStateHandle state = callback.GetSelf ();
 		
 		[ hostname toLua:state ];
 		state.Push ( ipAddress );
@@ -550,10 +550,10 @@ void MOAIApp::DidResolveHostName( NSString* hostname, cc8* ipAddress ) {
 //----------------------------------------------------------------//
 void MOAIApp::DidStartSession( ) {
 
-	USLuaRef& callback = this->mListeners [ SESSION_START ];
+	MOAILuaRef& callback = this->mListeners [ SESSION_START ];
 	
 	if ( callback ) {
-		USLuaStateHandle state = callback.GetSelf ();
+		MOAILuaStateHandle state = callback.GetSelf ();
 		
 		state.DebugCall ( 0, 0 );
 	}
@@ -562,7 +562,7 @@ void MOAIApp::DidStartSession( ) {
 //----------------------------------------------------------------//
 MOAIApp::MOAIApp () {
 
-	RTTI_SINGLE ( USLuaObject )
+	RTTI_SINGLE ( MOAILuaObject )
 	
 	mAppNotificationPayload = NULL;
 	
@@ -588,13 +588,13 @@ void MOAIApp::OnInit () {
 void MOAIApp::PaymentQueueUpdatedTransactions ( SKPaymentQueue* queue, NSArray* transactions ) {
 	UNUSED ( queue );
 
-	USLuaRef& callback = this->mListeners [ PAYMENT_QUEUE_TRANSACTION ];
+	MOAILuaRef& callback = this->mListeners [ PAYMENT_QUEUE_TRANSACTION ];
 
 	for ( SKPaymentTransaction* transaction in transactions ) {
 	
 		if ( callback ) {
 		
-			USLuaStateHandle state = callback.GetSelf ();
+			MOAILuaStateHandle state = callback.GetSelf ();
 			this->PushPaymentTransaction ( state, transaction );
 			state.DebugCall ( 1, 0 );
 		}
@@ -608,10 +608,10 @@ void MOAIApp::PaymentQueueUpdatedTransactions ( SKPaymentQueue* queue, NSArray* 
 //----------------------------------------------------------------//
 void MOAIApp::ProductsRequestDidReceiveResponse ( SKProductsRequest* request, SKProductsResponse* response ) {
 
-	USLuaRef& callback = this->mListeners [ PRODUCT_REQUEST_RESPONSE ];
+	MOAILuaRef& callback = this->mListeners [ PRODUCT_REQUEST_RESPONSE ];
 	if ( callback ) {
 		
-		USLuaStateHandle state = callback.GetSelf ();
+		MOAILuaStateHandle state = callback.GetSelf ();
 		lua_newtable ( state );
 		
 		int count = 1;
@@ -735,7 +735,7 @@ void MOAIApp::PushPaymentTransaction ( lua_State* L, SKPaymentTransaction* trans
 }
 
 //----------------------------------------------------------------//
-void MOAIApp::RegisterLuaClass ( USLuaState& state ) {
+void MOAIApp::RegisterLuaClass ( MOAILuaState& state ) {
 
 	state.SetField ( -1, "REMOTE_NOTIFICATION_NONE",	( u32 )UIRemoteNotificationTypeNone );
 	state.SetField ( -1, "REMOTE_NOTIFICATION_BADGE",	( u32 )UIRemoteNotificationTypeBadge );
@@ -802,10 +802,10 @@ void MOAIApp::SetRemoteNotificationPayload ( NSDictionary* remoteNotificationPay
 //----------------------------------------------------------------//
 void MOAIApp::WillEndSession( ) {
 
-	USLuaRef& callback = this->mListeners [ SESSION_END ];
+	MOAILuaRef& callback = this->mListeners [ SESSION_END ];
 	
 	if ( callback ) {
-		USLuaStateHandle state = callback.GetSelf ();
+		MOAILuaStateHandle state = callback.GetSelf ();
 		
 		state.DebugCall ( 0, 0 );
 	}

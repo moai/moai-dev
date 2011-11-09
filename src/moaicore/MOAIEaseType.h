@@ -4,6 +4,8 @@
 #ifndef	MOAIEASETYPE_H
 #define	MOAIEASETYPE_H
 
+#include <moaicore/MOAILua.h>
+
 //================================================================//
 // MOAIEaseType
 //================================================================//
@@ -22,13 +24,13 @@
 	@const	SOFT_SMOOTH		Quadratic smooth.
 */
 class MOAIEaseType :
-	public USLuaObject {
+	public MOAILuaObject {
 public:
 	
 	DECL_LUA_SINGLETON ( MOAIEaseType )
 	
 	//----------------------------------------------------------------//
-	void				RegisterLuaClass		( USLuaState& state );
+	void				RegisterLuaClass		( MOAILuaState& state );
 };
 
 #endif

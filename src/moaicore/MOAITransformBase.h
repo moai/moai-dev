@@ -55,8 +55,8 @@ public:
 	const USAffine2D&		GetWorldToLocalMtx			();
 							MOAITransformBase			();
 							~MOAITransformBase			();
-	void					RegisterLuaClass			( USLuaState& state );
-	void					RegisterLuaFuncs			( USLuaState& state );
+	void					RegisterLuaClass			( MOAILuaState& state );
+	void					RegisterLuaFuncs			( MOAILuaState& state );
 };
 
 #endif

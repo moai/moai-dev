@@ -4,7 +4,9 @@
 #ifndef	MOAIPARTICLESTATE_H
 #define	MOAIPARTICLESTATE_H
 
+#include <moaicore/MOAILua.h>
 #include <moaicore/MOAIParticle.h>
+#include <moaicore/MOAIWeakPtr.h>
 
 class MOAIParticleForce;
 class MOAIParticlePlugin;
@@ -18,7 +20,7 @@ class MOAIParticleSystem;
 	@text	Particle state.
 */
 class MOAIParticleState :
-	public virtual USLuaObject {
+	public virtual MOAILuaObject {
 private:
 	friend class MOAIParticleScript;
 	friend class MOAIParticleSystem;
@@ -31,11 +33,11 @@ private:
 
 	float mDamping;
 
-	USLuaSharedPtr < MOAIParticleScript > mInit;
-	USLuaSharedPtr < MOAIParticleScript > mRender;
-	USLuaSharedPtr < MOAIParticlePlugin > mPlugin;
+	MOAILuaSharedPtr < MOAIParticleScript > mInit;
+	MOAILuaSharedPtr < MOAIParticleScript > mRender;
+	MOAILuaSharedPtr < MOAIParticlePlugin > mPlugin;
 	
-	USWeakPtr < MOAIParticleState > mNext;
+	MOAIWeakPtr < MOAIParticleState > mNext;
 
 	//----------------------------------------------------------------//
 	static int		_clearForces			( lua_State* L );
@@ -62,8 +64,8 @@ public:
 					MOAIParticleState		();
 					~MOAIParticleState		();
 	void			PushForce				( MOAIParticleForce& force );
-	void			RegisterLuaClass		( USLuaState& state );
-	void			RegisterLuaFuncs		( USLuaState& state );
+	void			RegisterLuaClass		( MOAILuaState& state );
+	void			RegisterLuaFuncs		( MOAILuaState& state );
 };
 
 #endif

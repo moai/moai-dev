@@ -4,6 +4,7 @@
 #ifndef	MOAIANIM_H
 #define	MOAIANIM_H
 
+#include <moaicore/MOAILua.h>
 #include <moaicore/MOAITimer.h>
 
 class MOAIAnimCurve;
@@ -14,8 +15,8 @@ class MOAIAnimCurve;
 class MOAIAnimLink {
 public:
 
-	USLuaSharedPtr < MOAIAnimCurve >	mCurve;
-	USWeakPtr < MOAINode >				mTarget;
+	MOAILuaSharedPtr < MOAIAnimCurve >	mCurve;
+	MOAIWeakPtr < MOAINode >				mTarget;
 	u32									mAttrID;
 	bool								mRelative;
 };
@@ -54,8 +55,8 @@ public:
 					MOAIAnim			();
 					~MOAIAnim			();
 	void			OnUpdate			( float step );
-	void			RegisterLuaClass	( USLuaState& state );
-	void			RegisterLuaFuncs	( USLuaState& state );
+	void			RegisterLuaClass	( MOAILuaState& state );
+	void			RegisterLuaFuncs	( MOAILuaState& state );
 	void			ReserveLinks		( u32 totalLinks );
 	void			SetLink				( u32 linkID, MOAIAnimCurve* curve, MOAINode* target, u32 attrID, bool relative );
 };

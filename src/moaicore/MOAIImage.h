@@ -4,6 +4,8 @@
 #ifndef	MOAIIMAGE_H
 #define	MOAIIMAGE_H
 
+#include <moaicore/MOAILua.h>
+
 //================================================================//
 // MOAIImageTransform
 //================================================================//
@@ -39,7 +41,7 @@ namespace MOAIImageTransform {
 	@flag	COLOR_FMT_RGBA_8888
 */
 class MOAIImage :
-	public virtual USLuaObject {
+	public virtual MOAILuaObject {
 private:
 
 	USPixel::Format		mPixelFormat;
@@ -123,11 +125,11 @@ public:
 						MOAIImage				();
 						~MOAIImage				();
 	void				PadToPow2				( const MOAIImage& image );
-	void				RegisterLuaClass		( USLuaState& state );
-	void				RegisterLuaFuncs		( USLuaState& state );
+	void				RegisterLuaClass		( MOAILuaState& state );
+	void				RegisterLuaFuncs		( MOAILuaState& state );
 	void				ResizeCanvas			( const MOAIImage& image, USIntRect rect );
-	void				SerializeIn				( USLuaState& state, USLuaSerializer& serializer );
-	void				SerializeOut			( USLuaState& state, USLuaSerializer& serializer );
+	void				SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
+	void				SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
 	void				SetColor				( u32 x, u32 y, u32 color );
 	void				SetPaletteColor			( u32 idx, u32 rgba );
 	void				SetPixel				( u32 x, u32 y, u32 pixel );

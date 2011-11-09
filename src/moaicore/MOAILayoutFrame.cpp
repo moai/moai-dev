@@ -454,7 +454,7 @@ MOAILayoutFrame::~MOAILayoutFrame () {
 }
 
 //----------------------------------------------------------------//
-void MOAILayoutFrame::RegisterLuaClass ( USLuaState& state ) {
+void MOAILayoutFrame::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	MOAITransform::RegisterLuaClass ( state );
 	
@@ -472,7 +472,7 @@ void MOAILayoutFrame::RegisterLuaClass ( USLuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAILayoutFrame::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAILayoutFrame::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	MOAITransform::RegisterLuaFuncs ( state );
 	

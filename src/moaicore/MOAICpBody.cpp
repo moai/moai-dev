@@ -453,7 +453,7 @@ int MOAICpBody::_localToWorld ( lua_State* L ) {
 	@out	MOAICpBody body		The new body.
 */
 int MOAICpBody::_new ( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	
 	cpFloat m = state.GetValue < cpFloat >( 1, 1 );
 	cpFloat i = state.GetValue < cpFloat >( 2, 1 );
@@ -473,7 +473,7 @@ int MOAICpBody::_new ( lua_State* L ) {
 	@out	MOAICpBody body		The new static body.
 */
 int MOAICpBody::_newStatic ( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	
 	MOAICpBody* body = new MOAICpBody ();
 	body->mBody = cpBodyNewStatic ();
@@ -829,7 +829,7 @@ void MOAICpBody::OnDepNodeUpdate () {
 }
 
 //----------------------------------------------------------------//
-void MOAICpBody::RegisterLuaClass ( USLuaState& state ) {
+void MOAICpBody::RegisterLuaClass ( MOAILuaState& state ) {
 
 	state.SetField ( -1, "NONE", ( u32 )NONE );
 	state.SetField ( -1, "REMOVE_BODY", ( u32 )REMOVE_BODY );
@@ -845,7 +845,7 @@ void MOAICpBody::RegisterLuaClass ( USLuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAICpBody::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAICpBody::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	luaL_Reg regTable [] = {
 		{ "activate",			_activate },

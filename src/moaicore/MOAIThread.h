@@ -5,6 +5,7 @@
 #define	MOAITHREAD_H
 
 #include <moaicore/MOAIAction.h>
+#include <moaicore/MOAILua.h>
 
 //================================================================//
 // MOAIThread
@@ -16,7 +17,7 @@ class MOAIThread :
 	public MOAIAction {
 private:
 
-	USLuaLocal		mRef; // reference to the coroutine
+	MOAILuaLocal		mRef; // reference to the coroutine
 	lua_State*		mState;
 	u32				mNarg;
 	STLString		mFuncName;
@@ -41,8 +42,8 @@ public:
 					~MOAIThread				();
 	bool			IsDone					();
 	void			OnUpdate				( float step );
-	void			RegisterLuaClass		( USLuaState& state );
-	void			RegisterLuaFuncs		( USLuaState& state );
+	void			RegisterLuaClass		( MOAILuaState& state );
+	void			RegisterLuaFuncs		( MOAILuaState& state );
 };
 
 #endif

@@ -4,11 +4,13 @@
 #ifndef	MOAIGFXRESOURCE_H
 #define	MOAIGFXRESOURCE_H
 
+#include <moaicore/MOAILua.h>
+
 //================================================================//
 // MOAIGfxResource
 //================================================================//
 class MOAIGfxResource :
-	public virtual USLuaObject {
+	public virtual MOAILuaObject {
 private:
 
 	enum {
@@ -21,7 +23,7 @@ private:
 	u32				mState;
 	u32				mLastRenderCount;
 	
-	USLuaLocal		mOnRenew;
+	MOAILuaLocal		mOnRenew;
 
 	USLeanLink < MOAIGfxResource* > mLink;
 
@@ -55,8 +57,8 @@ public:
 	virtual bool	IsValid						() = 0;
 					MOAIGfxResource				();
 	virtual			~MOAIGfxResource			();
-	void			RegisterLuaClass			( USLuaState& state );
-	void			RegisterLuaFuncs			( USLuaState& state );
+	void			RegisterLuaClass			( MOAILuaState& state );
+	void			RegisterLuaFuncs			( MOAILuaState& state );
 	void			ReleaseGfxResource			();
 	void			RenewGfxResource			();
 	bool			SoftReleaseGfxResource		( u32 age );

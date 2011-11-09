@@ -90,13 +90,13 @@ void MOAICameraAnchor2D::OnDepNodeUpdate () {
 }
 
 //----------------------------------------------------------------//
-void MOAICameraAnchor2D::RegisterLuaClass ( USLuaState& state ) {
+void MOAICameraAnchor2D::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	MOAINode::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAICameraAnchor2D::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAICameraAnchor2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	MOAINode::RegisterLuaFuncs ( state );
 

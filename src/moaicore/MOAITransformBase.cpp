@@ -176,7 +176,7 @@ MOAITransformBase::~MOAITransformBase () {
 }
 
 //----------------------------------------------------------------//
-void MOAITransformBase::RegisterLuaClass ( USLuaState& state ) {
+void MOAITransformBase::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	MOAINode::RegisterLuaClass ( state );
 	
@@ -189,7 +189,7 @@ void MOAITransformBase::RegisterLuaClass ( USLuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITransformBase::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAITransformBase::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	MOAINode::RegisterLuaFuncs ( state );
 	

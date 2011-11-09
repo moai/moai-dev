@@ -6,6 +6,7 @@
 #if USE_BOX2D
 
 #include <moaicore/MOAIBox2DJoint.h>
+#include <moaicore/MOAILua.h>
 
 class b2Joint;
 
@@ -32,8 +33,8 @@ public:
 	//----------------------------------------------------------------//
 					MOAIBox2DFrictionJoint		();
 					~MOAIBox2DFrictionJoint		();
-	void			RegisterLuaClass			( USLuaState& state );
-	void			RegisterLuaFuncs			( USLuaState& state );
+	void			RegisterLuaClass			( MOAILuaState& state );
+	void			RegisterLuaFuncs			( MOAILuaState& state );
 };
 
 #endif

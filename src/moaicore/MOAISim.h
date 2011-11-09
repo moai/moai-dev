@@ -5,6 +5,7 @@
 #define	MOAISIM_H
 
 #include <moaicore/MOAIEaseDriver.h>
+#include <moaicore/MOAILua.h>
 
 class MOAIProp2D;
 
@@ -33,8 +34,8 @@ class MOAIProp2D;
 	const DEFAULT_STEP_MULTIPLIER		Value is 1
 */
 class MOAISim :
-	public USGlobalClass < MOAISim, MOAIGlobalEventSource >,
-	public USGlobalClassFinalizer {
+	public MOAIGlobalClass < MOAISim, MOAIGlobalEventSource >,
+	public MOAIGlobalClassFinalizer {
 private:
 
 	// timer state
@@ -160,8 +161,8 @@ public:
 	void			PauseMOAI					();
 	void			PopRenderPass				();
 	void			PushRenderPass				( MOAIProp2D* prop );
-	void			RegisterLuaClass			( USLuaState& state );
-	void			RegisterLuaFuncs			( USLuaState& state );
+	void			RegisterLuaClass			( MOAILuaState& state );
+	void			RegisterLuaFuncs			( MOAILuaState& state );
 	void			Render						();
 	void			ResumeMOAI					();
 	void			RunFile						( cc8* filename );

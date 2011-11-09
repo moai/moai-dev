@@ -22,7 +22,7 @@
 	@out	nil
 */
 int MOAIGameCenter::_authenticatePlayer ( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	
 	// Check for presence of GKLocalPlayer class.
     BOOL localPlayerClassAvailable = ( NSClassFromString ( @"GKLocalPlayer" )) != nil;
@@ -66,7 +66,7 @@ int MOAIGameCenter::_authenticatePlayer ( lua_State* L ) {
 */
 int MOAIGameCenter::_getScores ( lua_State* L ) {
 	if ( !MOAIGameCenter::Get ().mIsGameCenterSupported ) return 0;
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 		
 	cc8* category = state.GetValue < cc8* >( 1, NULL );
 	int playerScope = state.GetValue < int >( 2, PLAYERSCOPE_GLOBAL );
@@ -104,7 +104,7 @@ int MOAIGameCenter::_getScores ( lua_State* L ) {
 	@out	bool isSupported
 */
 int MOAIGameCenter::_isSupported ( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 
 	lua_pushboolean ( state, MOAIGameCenter::Get ().mIsGameCenterSupported );
 	return 1;
@@ -120,7 +120,7 @@ int MOAIGameCenter::_isSupported ( lua_State* L ) {
 */
 int MOAIGameCenter::_reportAchievementProgress ( lua_State* L ) {
 	if ( !MOAIGameCenter::Get ().mIsGameCenterSupported ) return 0;
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 
 	cc8* identifier = lua_tostring ( state, 1 );
 	float percent =  ( float )lua_tonumber ( state, 2 );
@@ -140,7 +140,7 @@ int MOAIGameCenter::_reportAchievementProgress ( lua_State* L ) {
 */
 int MOAIGameCenter::_reportScore ( lua_State* L ) {
 	if ( !MOAIGameCenter::Get ().mIsGameCenterSupported ) return 0;
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 
 	s64 score =  ( s64 )lua_tonumber ( state, 1 );
 	cc8* category = lua_tostring ( state, 2 );
@@ -158,7 +158,7 @@ int MOAIGameCenter::_reportScore ( lua_State* L ) {
 	@out	nil
 */
 int MOAIGameCenter::_setGetScoresCallback ( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 
 	MOAIGameCenter::Get ().mGetScoresCallback.SetStrongRef ( state, 1 );
 		
@@ -173,7 +173,7 @@ int MOAIGameCenter::_setGetScoresCallback ( lua_State* L ) {
 	@out	nil
 */
 int MOAIGameCenter::_showDefaultAchievements ( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 
 	UIWindow* window = [[ UIApplication sharedApplication ] keyWindow ];
 	UIViewController* rootVC = [ window rootViewController ];	
@@ -199,7 +199,7 @@ int MOAIGameCenter::_showDefaultAchievements ( lua_State* L ) {
 	@out	nil
 */
 int MOAIGameCenter::_showDefaultLeaderboard ( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 
 	UIWindow* window = [[ UIApplication sharedApplication ] keyWindow ];
 	UIViewController* rootVC = [ window rootViewController ];	
@@ -225,7 +225,7 @@ void MOAIGameCenter::CallScoresCallback ( NSArray* scores ) {
 
 	if ( mGetScoresCallback && [ scores count ] > 0 ) {
 	
-		USLuaStateHandle state = mGetScoresCallback.GetSelf ();
+		MOAILuaStateHandle state = mGetScoresCallback.GetSelf ();
 		lua_newtable ( state );
 		
 		for ( id score in scores ) {
@@ -294,7 +294,7 @@ void MOAIGameCenter::GetAchievements () {
 MOAIGameCenter::MOAIGameCenter () :
 	mIsGameCenterSupported ( false ) {
 
-	RTTI_SINGLE ( USLuaObject )		
+	RTTI_SINGLE ( MOAILuaObject )		
 	
 	mLeaderboardDelegate = [ MoaiLeaderboardDelegate alloc ];
 	mAchievementDelegate = [ MoaiAchievementDelegate alloc ];
@@ -309,7 +309,7 @@ MOAIGameCenter::~MOAIGameCenter () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGameCenter::RegisterLuaClass ( USLuaState& state ) {
+void MOAIGameCenter::RegisterLuaClass ( MOAILuaState& state ) {
 
 	state.SetField ( -1, "TIMESCOPE_TODAY",		( u32 )TIMESCOPE_TODAY );
 	state.SetField ( -1, "TIMESCOPE_WEEK",		( u32 )TIMESCOPE_WEEK );

@@ -7,6 +7,7 @@
 
 #include <Box2D/Box2D.h>
 #include <moaicore/MOAIAction.h>
+#include <moaicore/MOAILua.h>
 
 class b2World;
 class MOAIBox2DArbiter;
@@ -20,7 +21,7 @@ class MOAIBox2DWorld;
 // MOAIBox2DPrim
 //================================================================//
 class MOAIBox2DPrim :
-	public virtual USLuaObject  {
+	public virtual MOAILuaObject  {
 protected:
 
 	MOAIBox2DWorld* mWorld;
@@ -63,7 +64,7 @@ private:
 	b2World*					mWorld;
 	MOAIBox2DDebugDraw*			mDebugDraw;
 	
-	USLuaSharedPtr < MOAIBox2DArbiter > mArbiter;
+	MOAILuaSharedPtr < MOAIBox2DArbiter > mArbiter;
 
 	u32		mVelocityIterations;
 	u32		mPositionIterations;
@@ -79,12 +80,13 @@ private:
 	static int		_addDistanceJoint			( lua_State* L );
 	static int		_addFrictionJoint			( lua_State* L );
 	static int		_addGearJoint				( lua_State* L );
-	static int		_addLineJoint				( lua_State* L );
 	static int		_addMouseJoint				( lua_State* L );
 	static int		_addPrismaticJoint			( lua_State* L );
 	static int		_addPulleyJoint				( lua_State* L );
 	static int		_addRevoluteJoint			( lua_State* L );
+	static int		_addRopeJoint				( lua_State* L );
 	static int		_addWeldJoint				( lua_State* L );
+	static int		_addWheelJoint				( lua_State* L );
 	static int		_getAngularSleepTolerance	( lua_State* L );
 	static int		_getAutoClearForces			( lua_State* L );
 	static int		_getGravity					( lua_State* L );
@@ -123,8 +125,8 @@ public:
 					MOAIBox2DWorld			();
 					~MOAIBox2DWorld			();
 	void			OnUpdate				( float step );
-	void			RegisterLuaClass		( USLuaState& state );
-	void			RegisterLuaFuncs		( USLuaState& state );
+	void			RegisterLuaClass		( MOAILuaState& state );
+	void			RegisterLuaFuncs		( MOAILuaState& state );
 };
 
 #endif

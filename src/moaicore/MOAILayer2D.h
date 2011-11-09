@@ -4,6 +4,7 @@
 #ifndef	MOAILAYER2D_H
 #define	MOAILAYER2D_H
 
+#include <moaicore/MOAILua.h>
 #include <moaicore/MOAIPartition.h>
 #include <moaicore/MOAIProp2D.h>
 #include <moaicore/MOAIViewport.h>
@@ -23,18 +24,18 @@ class MOAILayer2D :
 	public virtual MOAIProp2D {
 private:
 
-	USLuaSharedPtr < MOAITransformBase >	mCamera;
-	USLuaSharedPtr < MOAIViewport >			mViewport;
-	USLuaSharedPtr < MOAIPartition >		mPartition;
+	MOAILuaSharedPtr < MOAITransformBase >	mCamera;
+	MOAILuaSharedPtr < MOAIViewport >		mViewport;
+	MOAILuaSharedPtr < MOAIPartition >		mPartition;
 
-	USLuaSharedPtr < MOAITexture >			mFrameBuffer;
+	MOAILuaSharedPtr < MOAITexture >		mFrameBuffer;
 
 	#if USE_CHIPMUNK
-		USLuaSharedPtr < MOAICpSpace >		mCpSpace;
+		MOAILuaSharedPtr < MOAICpSpace >	mCpSpace;
 	#endif
 	
 	#if USE_BOX2D
-		USLuaSharedPtr < MOAIBox2DWorld >	mBox2DWorld;
+		MOAILuaSharedPtr < MOAIBox2DWorld >	mBox2DWorld;
 	#endif
 
 	USVec2D							mParallax;
@@ -74,8 +75,8 @@ public:
 	void			GetWorldToWndMtx		( USAffine2D& worldToWnd );
 					MOAILayer2D				();
 					~MOAILayer2D			();
-	void			RegisterLuaClass		( USLuaState& state );
-	void			RegisterLuaFuncs		( USLuaState& state );
+	void			RegisterLuaClass		( MOAILuaState& state );
+	void			RegisterLuaFuncs		( MOAILuaState& state );
 };
 
 #endif

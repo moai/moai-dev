@@ -4,6 +4,8 @@
 #ifndef	MOAIXMLPARSER_H
 #define	MOAIXMLPARSER_H
 
+#include <moaicore/MOAILua.h>
+
 class TiXmlNode;
 
 //================================================================//
@@ -15,7 +17,7 @@ class TiXmlNode;
 			XML not advised at all - use JSON or Lua.)
 */
 class MOAIXmlParser :
-	public USGlobalClass < MOAIXmlParser, USLuaObject > {
+	public MOAIGlobalClass < MOAIXmlParser, MOAILuaObject > {
 private:
 
 	//----------------------------------------------------------------//
@@ -31,9 +33,9 @@ public:
 	//----------------------------------------------------------------//
 					MOAIXmlParser			();
 					~MOAIXmlParser			();
-	static void		Parse					( USLuaState& state, TiXmlNode* node );
-	void			RegisterLuaClass		( USLuaState& state );
-	void			RegisterLuaFuncs		( USLuaState& state );
+	static void		Parse					( MOAILuaState& state, TiXmlNode* node );
+	void			RegisterLuaClass		( MOAILuaState& state );
+	void			RegisterLuaFuncs		( MOAILuaState& state );
 };
 
 #endif

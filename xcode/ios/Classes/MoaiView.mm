@@ -13,7 +13,7 @@
 //	#include <lualib.h>
 //}
 
-#import <aku/aku-iphone.h>
+#import <aku/AKU-iphone.h>
 #include <aku/AKU-luaext.h>
 #include <aku/AKU-untz.h>
 
@@ -215,7 +215,6 @@ void _AKUStartGameLoopFunc () {
 		AKUSetFunc_EnterFullscreenMode	( _AKUEnterFullscreenModeFunc );
 		AKUSetFunc_ExitFullscreenMode	( _AKUExitFullscreenModeFunc );
 		AKUSetFunc_OpenWindow			( _AKUOpenWindowFunc );
-		AKUSetFunc_StartGameLoop		( _AKUStartGameLoopFunc );
 		
 		AKUSetDefaultFrameBuffer ( mFramebuffer );
 		AKUDetectGfxContext ();
