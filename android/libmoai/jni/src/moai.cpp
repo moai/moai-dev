@@ -468,6 +468,20 @@ void Java_@PACKAGE_UNDERSCORED@_MoaiView_onDraw ( JNIEnv *env, jclass clazz, jin
 }
 
 extern "C"
+void Java_@PACKAGE_UNDERSCORED@_MoaiView_onUpdateAccelerometer
+	(JNIEnv *env, jclass clazz, jfloat axisX, jfloat axisY, jfloat axisZ )
+{
+	
+	AKUEnqueueLevelEvent (
+		MoaiInputDeviceID::DEVICE,
+		MoaiInputDeviceSensorID::LEVEL,
+		axisX,
+		axisY,
+		axisZ
+	);
+}
+
+extern "C"
 void Java_@PACKAGE_UNDERSCORED@_MoaiView_onUpdateAnim
 	(JNIEnv *env, jclass clazz)
 {
@@ -476,6 +490,7 @@ void Java_@PACKAGE_UNDERSCORED@_MoaiView_onUpdateAnim
 	AKUUpdate ();
 	//_DrawView();
 }
+
 extern "C"
 void Java_@PACKAGE_UNDERSCORED@_MoaiView_onUpdateHeading
 (JNIEnv *env, jclass clazz, jint heading)

@@ -7,8 +7,9 @@
 	set -e
 	
 	# check for command line switches
+	usage="usage: build.sh -p package [-thumb]"
 	arm_mode=arm
-	packageName=com.getmoai.samples
+	packageName=
 	
 	while [ $# -gt 0 ];	do
 	    case "$1" in
@@ -16,13 +17,18 @@
 			-p)  packageName="$2"; shift;;
 			-*)
 		    	echo >&2 \
-		    		"usage: $0 [-p package] [-thumb]"
+		    		$usage
 		    	exit 1;;
 			*)  break;;	# terminate while loop
 	    esac
 	    shift
 	done
 
+	if [ "$packageName" = "" ]; then
+		echo $usage
+		exit 1
+	fi
+	
 	# echo message about what we are doing
 	echo "Building libmoai.so using package \"$packageName\" for $arm_mode"
 
