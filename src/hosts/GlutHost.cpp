@@ -272,10 +272,6 @@ int GlutHost ( int argc, char** argv ) {
 		AKUUntzInit ();
 	#endif
 	
-	#ifdef GLUTHOST_USE_DEBUGGER
-		AKUDebugHarnessInit ();
-	#endif
-	
 	#ifdef GLUTHOST_USE_PARTICLE_PRESETS
 		ParticlePresets ();
 	#endif
