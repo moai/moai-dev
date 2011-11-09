@@ -65,6 +65,10 @@
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/libogg-1.2.2/include
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/libvorbis-1.3.2/include
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/lua/include
+	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/luacrypto-0.2.0/src
+	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/luacurl-1.2.1
+	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/luasocket-2.0.2/src
+	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/luasql-2.2.0/src
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/openssl-1.0.0d/include-android
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/lpng140
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/sqlite-3.6.16
@@ -81,7 +85,7 @@
 	LOCAL_SRC_FILES 	+= src/packaged-moai.cpp
 	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/src/aku/pch.cpp
 	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/src/aku/AKU.cpp
-	# LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/src/aku/AKU-luaext.cpp
+	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/src/aku/AKU-luaext.cpp
 	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/src/aku/AKU-untz.cpp
 
 #----------------------------------------------------------------#
@@ -92,6 +96,9 @@
 	LOCAL_STATIC_LIBRARIES += libuslsext
 	LOCAL_STATIC_LIBRARIES += libuslscore
 
+	LOCAL_STATIC_LIBRARIES += libmoaiext-luaext
+	LOCAL_STATIC_LIBRARIES += libmoaiext-untz
+
 	LOCAL_STATIC_LIBRARIES += libbox2D
 	LOCAL_STATIC_LIBRARIES += libchipmunk
 	LOCAL_STATIC_LIBRARIES += libcontrib
@@ -101,7 +108,6 @@
 	LOCAL_STATIC_LIBRARIES += libjpg
 	LOCAL_STATIC_LIBRARIES += libjson
 	LOCAL_STATIC_LIBRARIES += liblua
-	LOCAL_STATIC_LIBRARIES += libmoaiext-untz
 	LOCAL_STATIC_LIBRARIES += libpng
 	LOCAL_STATIC_LIBRARIES += libsqlite
 	LOCAL_STATIC_LIBRARIES += libssl
@@ -123,6 +129,7 @@
 	include jpg/Android.mk
 	include json/Android.mk
 	include lua/Android.mk
+	include moaiext-luaext/Android.mk
 	include moaiext-untz/Android.mk
 	include png/Android.mk
 	include sqlite/Android.mk
