@@ -4,6 +4,8 @@
 # http://getmoai.com
 #================================================================#
 
+	set -e
+
 	# define package
 	package=@SETTING_PACKAGE@
 	package_path=@SETTING_PACKAGE_PATH@
@@ -56,7 +58,12 @@
 	mkdir -p build/res/drawable-mdpi
 	mkdir -p build/res/raw
 	mkdir -p build/res/values
-	
+
+	# copy keystore
+	if [ "$key_store" != "" ] && [ -f $key_store ]; then
+		cp -f $key_store build/`basename $key_store`
+	fi
+		
 	# copy libmoai
 	cp -f	host-source/project/libs/armeabi/libmoai.so	build/libs/armeabi/libmoai.so
 
@@ -67,7 +74,6 @@
 	
 	# copy project files that do not need editing
 	cp -f 	host-source/project/.classpath 				build/.classpath
-	cp -f 	host-source/project/ant.properties 			build/ant.properties
 	cp -f 	host-source/project/proguard.cfg			build/proguard.cfg
 	cp -f 	host-source/project/project.properties		build/project.properties
 	
@@ -88,8 +94,14 @@
 
 	# copy AndroidManifest.xml file and replace text inside
 	cp -f	host-source/project/AndroidManifest.xml		build/AndroidManifest.xml
-	fr build/AndroidManifest.xml	@NAME@		$project_name
-	fr build/AndroidManifest.xml	@PACKAGE@	$package
+	fr build/AndroidManifest.xml	@NAME@			$project_name
+	fr build/AndroidManifest.xml	@PACKAGE@		$package
+	fr build/AndroidManifest.xml	@DEBUGGABLE@	$debug
+
+	# copy ant.properties file and replace text inside
+	cp -f	host-source/project/ant.properties	build/ant.properties
+	fr build/ant.properties		@KEY_STORE@		$key_store
+	fr build/ant.properties		@KEY_ALIAS@		$key_alias
 
 	# copy build.xml file and replace text inside
 	cp -f	host-source/project/build.xml	build/build.xml
@@ -170,11 +182,17 @@
 	popd > /dev/null
 	
 	# install release mode of the project
+	if [ "$debug" == "true" ]; then
+		install_cmd="ant debug install"
+	else
+		install_cmd="ant release install"		
+	fi
+	
 	if [ $OSTYPE != cygwin ]; then
 		pushd build > /dev/null
 			ant uninstall
 			ant clean
-			ant debug install
+			$install_cmd
 			adb shell am start -a android.intent.action.MAIN -n $package/$package.MoaiActivity
 			# adb logcat MoaiJNI:V MoaiLog:V *:S
 			adb logcat MoaiLog:V *:S

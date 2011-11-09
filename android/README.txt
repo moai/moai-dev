@@ -2,7 +2,7 @@
 -- ALL PLATFORMS
 ----------------------------------------------------------------
 
-	-To create an Android host, execute "make-host.sh" and pass it the package for your application. For example: bash make-host.sh com.getmoai.samples
+	-To create an Android host, execute "make-host.sh" and pass it the package for your application. For example: bash make-host.sh -p com.getmoai.samples
 	-You will need to have the libmoai build working before "make-host.sh" will work. Check libmoai/README.txt for details.
 	-Once "make-host.sh" has executed successfully, it will create a "untitled-host" directory. This directory contains everything you need to run your Moai project on Android.
 	-The Android host uses a template project to dynamically generate a host for you when you run it. To edit this template, examine and edit the contents of untitled-host/host-source.

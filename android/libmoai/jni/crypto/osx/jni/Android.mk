@@ -6,9 +6,11 @@
 
 	LOCAL_PATH := $(call my-dir)
 	include $(CLEAR_VARS)
+
+	include ../../../ArmModeDefined.mk
 	
 	LOCAL_MODULE 	:= crypto
-	LOCAL_ARM_MODE 	:= arm
+	LOCAL_ARM_MODE 	:= $(MY_ARM_MODE)
 	LOCAL_CFLAGS 	:= -w -DL_ENDIAN -DOPENSSL_NO_GMP -DOPENSSL_NO_JPAKE -DOPENSSL_NO_MD2 -DOPENSSL_NO_RC5 -DOPENSSL_NO_RFC3779 -DOPENSSL_NO_STORE
 	
 	MY_MOAI_ROOT 		:= ../../../../../..

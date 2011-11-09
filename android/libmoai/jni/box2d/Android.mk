@@ -7,7 +7,7 @@
 	include $(CLEAR_VARS)
 
 	LOCAL_MODULE 		:= box2D
-	LOCAL_ARM_MODE 		:= arm
+	LOCAL_ARM_MODE 		:= $(MY_ARM_MODE)
 
 	LOCAL_C_INCLUDES 	:= $(MY_HEADER_SEARCH_PATHS)
 	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/3rdparty/box2d-2.1.2/Box2D/Box2D/Collision/Shapes/b2CircleShape.cpp

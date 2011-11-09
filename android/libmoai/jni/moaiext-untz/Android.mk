@@ -7,7 +7,7 @@
 	include $(CLEAR_VARS)
 
 	LOCAL_MODULE 		:= moaiext-untz
-	LOCAL_ARM_MODE 		:= arm
+	LOCAL_ARM_MODE 		:= $(MY_ARM_MODE)
 
 	LOCAL_C_INCLUDES 	:= $(MY_HEADER_SEARCH_PATHS)
 	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/3rdparty/untz/src/AudioMixer.cpp

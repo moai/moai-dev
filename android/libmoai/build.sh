@@ -6,17 +6,25 @@
 
 	set -e
 	
-	# check for package name provided on command line
-	packageName=$1
+	# check for command line switches
+	arm_mode=arm
+	packageName=com.getmoai.samples
 	
-	if [ "$packageName" = "" ]; then
-		echo "No package name provided. Defaulting to \"com.getmoai.samples\""
-		echo "To specify a different package name, pass it on the command line."
-		packageName="com.getmoai.samples"
-	fi
+	while [ $# -gt 0 ];	do
+	    case "$1" in
+	        -thumb)  arm_mode=thumb;;
+			-p)  packageName="$2"; shift;;
+			-*)
+		    	echo >&2 \
+		    		"usage: $0 [-p package] [-thumb]"
+		    	exit 1;;
+			*)  break;;	# terminate while loop
+	    esac
+	    shift
+	done
 
 	# echo message about what we are doing
-	echo "Building libmoai.so for package $packageName"
+	echo "Building libmoai.so using package \"$packageName\" for $arm_mode"
 
 	# create package underscored value
 	package_underscored=$( echo $packageName | sed 's/\./_/g' )
@@ -28,6 +36,13 @@
 		rm -f packaged-moai.cpp.backup
 	popd > /dev/null
 	
+	# if selected, configure compiling for thumb
+	pushd jni > /dev/null
+		cp -f ArmMode.mk ArmModeDefined.mk
+		sed -i.backup s%@ARM_MODE@%"$arm_mode"%g ArmModeDefined.mk
+		rm -f ArmModeDefined.mk.backup
+	popd > /dev/null
+	
 	# build libcrypto
 	pushd jni/crypto > /dev/null
 		bash build.sh
@@ -37,7 +52,10 @@
 	pushd jni > /dev/null
 		ndk-build
 	popd > /dev/null
-	
+
+	# remove ArmModeDefined.mk file
+	rm -f jni/ArmModeDefined.mk
+		
 	# remove packaged-moai.cpp so it doesn't accidentaly get edited
 	rm -f jni/src/packaged-moai.cpp
 	

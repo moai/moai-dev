@@ -8,7 +8,7 @@
 	
 	<application 
 		android:icon="@drawable/icon" 
-		android:debuggable="false" 
+		android:debuggable="@DEBUGGABLE@" 
 		android:enabled="true" 
 		android:persistent="false" 
 		android:label="@NAME@" 

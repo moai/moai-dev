@@ -4,12 +4,26 @@
 # http://getmoai.com
 #================================================================#
 
-	# check for package name provided on command line
-	packageName=$1
+	# check for command line switches
+	usage="usage: $0 -p package [-thumb]"
+	thumb=
+	packageName=
 	
+	while [ $# -gt 0 ];	do
+	    case "$1" in
+	        -thumb)  thumb=-thumb;;
+			-p)  packageName="$2"; shift;;
+			-*)
+		    	echo >&2 \
+		    		$usage
+		    	exit 1;;
+			*)  break;;	# terminate while loop
+	    esac
+	    shift
+	done
+		
 	if [ "$packageName" = "" ]; then
-		echo "Usage: make-host.sh packageName"
-		echo "Example: ./make-host.sh com.getmoai.samples"
+		echo $usage
 		exit 1
 	fi
 
@@ -21,11 +35,13 @@
 	fi
 
 	# build libmoai for the specified package
-	read existing_package < libmoai/libs/armeabi/package.txt
+	if [ -f libmoai/libs/armeabi/package.txt ]; then
+		read existing_package < libmoai/libs/armeabi/package.txt
+	fi
 	
 	if [ "$existing_package" != "$packageName" ] || [ ! -f libmoai/libs/armeabi/libmoai.so ]; then
 		pushd libmoai > /dev/null
-			bash build.sh $packageName
+			bash build.sh -p $packageName $thumb
 		popd > /dev/null
 	fi
 
