@@ -15,6 +15,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.opengl.GLSurfaceView; 
 import android.os.SystemClock;
+import android.util.Log;
 import android.view.MotionEvent; 
 
 import android.os.Build;
@@ -37,7 +38,7 @@ public class MoaiView extends GLSurfaceView {
 	String mPackageName = null;
 	String mUDID = null;
 	ConnectivityManager mConMan = null;
-	
+
 	//----------------------------------------------------------------//
 	public void cleanup () {
 		
@@ -57,11 +58,12 @@ public class MoaiView extends GLSurfaceView {
 		return true;
 	}
 	
-	
     //----------------------------------------------------------------//
 	public MoaiView ( Context context ) {
 		
 		super ( context );
+
+		Log.e( "MoaiLog", "This is the one that should work!");
 	
 		if ( mThread == null ) {
 			mThread = new MoaiThread ();
@@ -72,8 +74,10 @@ public class MoaiView extends GLSurfaceView {
 	
     //----------------------------------------------------------------//
 	public MoaiView ( Context context, int w, int h ) {
-		
+
 		super ( context );
+
+		Log.e( "MoaiLog", "This is the one that should FAIL!");
 				
 		if ( mThread == null ) {
 			mThread = new MoaiThread ();
@@ -86,6 +90,8 @@ public class MoaiView extends GLSurfaceView {
 		mPackageName = context.getPackageName ();
 		mUDID = Secure.getString ( context.getContentResolver (), Secure.ANDROID_ID );
 		mConMan = ( ConnectivityManager )context.getSystemService ( Context.CONNECTIVITY_SERVICE );
+		
+		InitializeAku ( this );
 	}
 	
 	//================================================================//
@@ -204,6 +210,12 @@ public class MoaiView extends GLSurfaceView {
 		
 		mAppRoot = path;
 	}
+	
+    //----------------------------------------------------------------//
+	public void UpdateAccelerometer ( float axisX, float axisY, float axisZ ) {
+		
+		onUpdateAccelerometer ( axisX, axisY, axisZ );
+	}
  	
 	//================================================================//
 	// MoaiRenderer
@@ -278,6 +290,7 @@ public class MoaiView extends GLSurfaceView {
 	protected static native void DetectAkuContext ();
 	public static native void onDraw ( int width, int height );
 	public static native void onUpdateAnim ();
+	public static native void onUpdateAccelerometer ( float axisX, float axisY, float axisZ );
 	public static native void onUpdateHeading ( int heading );
 	public static native void onUpdateLocation ( int longitude, int latitude, int altitude, float hAccuracy, float vAccuracy, float speed );
 	public static native void handleTouches (int touch, boolean down, int locX, int locY, int tapCount );

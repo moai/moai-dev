@@ -20,6 +20,10 @@ import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.pm.ConfigurationInfo;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,10 +34,13 @@ import android.view.WindowManager;
 //================================================================//
 // MoaiActivity
 //================================================================//
-public class MoaiActivity extends Activity {
+public class MoaiActivity extends Activity implements SensorEventListener {
 	
 	private File		mAppRoot; 
 	private MoaiView	mView;
+
+	private SensorManager mSensorManager;
+	private Sensor mAccelerometer;
     
     //----------------------------------------------------------------//
     @Override
@@ -44,6 +51,9 @@ public class MoaiActivity extends Activity {
     	super.onCreate ( savedInstanceState );
 		Display display = (( WindowManager ) getSystemService ( Context.WINDOW_SERVICE )).getDefaultDisplay(); 
  
+		mSensorManager = ( SensorManager ) getSystemService ( Context.SENSOR_SERVICE );
+		mAccelerometer = mSensorManager.getDefaultSensor ( Sensor.TYPE_ACCELEROMETER );
+
         requestWindowFeature ( Window.FEATURE_NO_TITLE );
 	    
 	    getWindow().setFlags( WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN ); 
@@ -64,13 +74,52 @@ public class MoaiActivity extends Activity {
 
 	    mView.SetDirectory ( mAppRoot.getAbsolutePath ());
     }
-    
+
+    //----------------------------------------------------------------//    
     private boolean detectOpenGLES20 () {
-        ActivityManager am =
-            (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-        ConfigurationInfo info = am.getDeviceConfigurationInfo();
-        return (info.reqGlEsVersion >= 0x20000);
+        
+		ActivityManager am = ( ActivityManager ) getSystemService ( Context.ACTIVITY_SERVICE );
+        ConfigurationInfo info = am.getDeviceConfigurationInfo ();
+        boolean retVal = ( info.reqGlEsVersion >= 0x20000 );
+		
+		if ( retVal ) {
+			Log.e ( "MoaiLog", "OpenGL 2.0" );
+		}
+		else {
+			Log.e ( "MoaiLog", "OpenGL 1.0" );
+		}
+		
+		return retVal;
     }
+
+	//----------------------------------------------------------------//
+	protected void onResume () {
+		
+		super.onResume ();
+		mSensorManager.registerListener ( this, mAccelerometer, SensorManager.SENSOR_DELAY_NORMAL );
+	}
+
+	//----------------------------------------------------------------//
+	protected void onPause () {
+		
+		super.onPause();
+		mSensorManager.unregisterListener ( this );
+	}
+
+	//----------------------------------------------------------------//
+	public void onAccuracyChanged ( Sensor sensor, int accuracy ) {
+	}
+
+	//----------------------------------------------------------------//
+	public void onSensorChanged ( SensorEvent event ) {
+		
+		mView.UpdateAccelerometer ( 
+			event.values [ 0 ], 
+			event.values [ 1 ], 
+			event.values [ 2 ]
+		);
+	}
+
 
 //    @Override
 //    protected void onResume() {

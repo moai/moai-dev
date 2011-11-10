@@ -135,6 +135,21 @@ enum {
 };
 
 //================================================================//
+// Utility functions
+//================================================================//
+
+	define JSTRING_TO_CSTR
+
+	//----------------------------------------------------------------//
+	string toNativeString ( JNIEnv* env, jstring jstr ) {
+	
+		const char* str = env->GetStringUTFChars ( jstr, NULL );
+		string retStr ( str );
+		env->ReleaseStringUTFChars ( jstr, str );
+		return retStr;
+	}
+
+//================================================================//
 // AKU callbacks
 //================================================================//
 
@@ -352,9 +367,6 @@ const char* _GenerateGUID () {
 
 
 // -------------------------------------------------------------//
-void _DrawView()
-{
-}
 
 int JNI_OnLoad(JavaVM* vm, void* reserved)
 {
@@ -416,28 +428,14 @@ void Java_@PACKAGE_UNDERSCORED@_MoaiView_InitializeAku
 	
 }
 
-extern "C"
-void Java_@PACKAGE_UNDERSCORED@_MoaiView_Run
-	(JNIEnv *env, jclass clazz, jstring fileName, jint width, jint height)
-{
-	__android_log_write(ANDROID_LOG_INFO,"MoaiJNI","Entering Run Func");
-	char buf[512];
-    const char *str;
-    str = env->GetStringUTFChars(fileName, NULL);
-     if (str == NULL) {
-         return; /* OutOfMemoryError already thrown */
-     }
+//----------------------------------------------------------------//
+extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_Run	( JNIEnv* env, jclass clazz, jstring fileName, jint width, jint height ) {
 
-
-	 strcpy(buf, str);
-    env->ReleaseStringUTFChars(fileName, str);
-
-	//USDeviceTime::ResetTime();
 	AKUSetContext ( mAku );
-	AKUResize(width, height);
-	AKURunScript (buf);
-	
+	AKUResize ( width, height );
+	AKURunScript ( toNativeString ( env, fileName ).c_str () );
 }
+
 extern "C"
 void Java_@PACKAGE_UNDERSCORED@_MoaiView_FinalizeAku
 	(JNIEnv *env, jclass clazz)
@@ -469,15 +467,15 @@ void Java_@PACKAGE_UNDERSCORED@_MoaiView_onDraw ( JNIEnv *env, jclass clazz, jin
 
 extern "C"
 void Java_@PACKAGE_UNDERSCORED@_MoaiView_onUpdateAccelerometer
-	(JNIEnv *env, jclass clazz, jfloat axisX, jfloat axisY, jfloat axisZ )
+	(JNIEnv *env, jclass clazz, jfloat x, jfloat y, jfloat z )
 {
 	
 	AKUEnqueueLevelEvent (
 		MoaiInputDeviceID::DEVICE,
 		MoaiInputDeviceSensorID::LEVEL,
-		axisX,
-		axisY,
-		axisZ
+		x,
+		y,
+		z
 	);
 }
 
@@ -488,7 +486,6 @@ void Java_@PACKAGE_UNDERSCORED@_MoaiView_onUpdateAnim
 	
 	AKUSetContext ( mAku );
 	AKUUpdate ();
-	//_DrawView();
 }
 
 extern "C"
