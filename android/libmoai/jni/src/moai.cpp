@@ -28,86 +28,6 @@ jmethodID 		m_AKUStartGameLoopFunc;
 jmethodID 		m_GetConnectivityFunc;
 jmethodID 		m_GenerateGuidFunc;
 
-#define IMPORTGL_NO_FNPTR_DEFS
-#define IMPORTGL_API
-#define IMPORTGL_FNPTRINIT = NULL
-
-//----------------------------------------------------------------//
-/* Imports function pointers to selected function calls in OpenGL ES Common
- * or Common Lite profile DLL or shared object. The function pointers are
- * stored as global symbols with equivalent function name but prefixed with
- * "funcPtr_". Standard gl/egl calls are redirected to the function pointers
- * with preprocessor macros (see importgl.h).
- */
-//----------------------------------------------------------------//
-int importGLInit () {
-
-    int result = 1;
-
-	#ifndef DISABLE_IMPORTGL
-
-		#undef IMPORT_FUNC
-
-		sGLESSO = dlopen ( "libGLESv2.so", RTLD_NOW );
-
-		if ( sGLESSO == NULL ) {
-		    return 0;   // Cannot find OpenGL ES Common or Common Lite SO.
-		}
-	
-		sGLESSO = dlopen ( "libGLESv1_CM.so", RTLD_NOW );
-
-		if ( sGLESSO == NULL ) {
-		    return 0;   // Cannot find OpenGL ES Common or Common Lite SO.
-		}
-
-		#define IMPORT_FUNC ( funcName ) do { \
-		    void *procAddress = (void *)dlsym(sGLESSO, #funcName); \
-		    if (procAddress == NULL) result = 0; \
-		    *((void **)&FNPTR(funcName)) = procAddress; } while (0)
-
-	    IMPORT_FUNC ( glBlendFunc );
-	    IMPORT_FUNC ( glClear );
-	    IMPORT_FUNC ( glClearColorx );
-	    IMPORT_FUNC ( glColor4x );
-	    IMPORT_FUNC ( glColorPointer );
-	    IMPORT_FUNC ( glDisable );
-	    IMPORT_FUNC ( glDisableClientState );
-	    IMPORT_FUNC ( glDrawArrays );
-	    IMPORT_FUNC ( glEnable );
-	    IMPORT_FUNC ( glEnableClientState );
-	    IMPORT_FUNC ( glFrustumx );
-	    IMPORT_FUNC ( glGetError );
-	    IMPORT_FUNC ( glLightxv );
-	    IMPORT_FUNC ( glLoadIdentity );
-	    IMPORT_FUNC ( glMaterialx );
-	    IMPORT_FUNC ( glMaterialxv );
-	    IMPORT_FUNC ( glMatrixMode );
-	    IMPORT_FUNC ( glMultMatrixx );
-	    IMPORT_FUNC ( glNormalPointer );
-	    IMPORT_FUNC ( glPopMatrix );
-	    IMPORT_FUNC ( glPushMatrix );
-	    IMPORT_FUNC ( glRotatex );
-	    IMPORT_FUNC ( glScalex );
-	    IMPORT_FUNC ( glShadeModel );
-	    IMPORT_FUNC ( glTranslatex );
-	    IMPORT_FUNC ( glVertexPointer );
-	    IMPORT_FUNC ( glViewport );
-
-	#endif
-
-    return result;
-}
-
-//----------------------------------------------------------------//
-void importGLDeinit () {
-
-	#ifndef DISABLE_IMPORTGL
-		#ifdef LINUX
-	    	dlclose ( sGLESSO );
-		#endif	
-	#endif
-}
-
 //----------------------------------------------------------------//
 namespace MoaiInputDeviceID {
 	enum {
@@ -135,20 +55,18 @@ enum {
 };
 
 //================================================================//
-// Utility functions
+// Utility macros
 //================================================================//
 
-	define JSTRING_TO_CSTR
+	#define GET_STRING(jstr, cstr) \
+		const char* cstr = env->GetStringUTFChars( jstr, NULL );
 
-	//----------------------------------------------------------------//
-	string toNativeString ( JNIEnv* env, jstring jstr ) {
-	
-		const char* str = env->GetStringUTFChars ( jstr, NULL );
-		string retStr ( str );
-		env->ReleaseStringUTFChars ( jstr, str );
-		return retStr;
-	}
-
+	#define RELEASE_STRING(jstr, cstr) \
+		env->ReleaseStringUTFChars ( jstr, cstr );
+		
+	#define PRINT(str) \
+		__android_log_write ( ANDROID_LOG_INFO, "MoaiLog", "str" );
+		
 //================================================================//
 // AKU callbacks
 //================================================================//
@@ -377,7 +295,7 @@ int JNI_OnLoad(JavaVM* vm, void* reserved)
 
 extern "C"
 void Java_@PACKAGE_UNDERSCORED@_MoaiView_RestartAku
-(JNIEnv *env, jclass clazz, jobject thizz) 
+(JNIEnv *env, jclass obj, jobject thizz) 
 {
 	jclass classic = env->GetObjectClass(javaObject);
 
@@ -417,58 +335,56 @@ void Java_@PACKAGE_UNDERSCORED@_MoaiView_RestartAku
 }
 extern "C"
 void Java_@PACKAGE_UNDERSCORED@_MoaiView_InitializeAku
-  (JNIEnv *env, jclass clazz, jobject thizz) 
+  (JNIEnv *env, jclass obj, jobject thizz) 
 {
 
-	importGLInit();
-  
 	javaObject = (jobject)env->NewGlobalRef(thizz);
 	
-	Java_@PACKAGE_UNDERSCORED@_MoaiView_RestartAku(env, clazz, thizz);
+	Java_@PACKAGE_UNDERSCORED@_MoaiView_RestartAku(env, obj, thizz);
 	
 }
 
 //----------------------------------------------------------------//
-extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_Run	( JNIEnv* env, jclass clazz, jstring fileName, jint width, jint height ) {
+extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_Run ( JNIEnv* env, jclass obj, jstring jfilename, jint width, jint height ) {
+	
+	GET_STRING ( jfilename, filename );
 
 	AKUSetContext ( mAku );
 	AKUResize ( width, height );
-	AKURunScript ( toNativeString ( env, fileName ).c_str () );
+	AKURunScript ( filename );
+	
+	RELEASE_STRING ( jfilename, filename );
 }
 
-extern "C"
-void Java_@PACKAGE_UNDERSCORED@_MoaiView_FinalizeAku
-	(JNIEnv *env, jclass clazz)
-{
-	AKUFinalize();
-	importGLDeinit();
+//----------------------------------------------------------------//
+extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUFinalize	( JNIEnv* env, jclass obj ) {
+	
+	AKUFinalize ();
 }
 
-extern "C"
-void Java_@PACKAGE_UNDERSCORED@_MoaiView_DeinitializeAku
-(JNIEnv *env, jclass clazz)
-{
+//----------------------------------------------------------------//
+extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUDeleteContext ( JNIEnv* env, jclass obj ) {
+	
 	AKUDeleteContext ( mAku );
 }
 
-extern "C"
-void Java_@PACKAGE_UNDERSCORED@_MoaiView_DetectAkuContext
-(JNIEnv *env, jclass clazz)
-{
-	AKUDetectGfxContext ( );
+//----------------------------------------------------------------//
+extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_DetectAkuContext ( JNIEnv* env, jclass obj ) {
+	
+	AKUDetectGfxContext ();
 }
 
-extern "C"
-void Java_@PACKAGE_UNDERSCORED@_MoaiView_onDraw ( JNIEnv *env, jclass clazz, jint width, jint height ) {
+//----------------------------------------------------------------//
+extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_onDraw ( JNIEnv* env, jclass obj, jint width, jint height ) {
+	
 	AKUSetContext ( mAku );
 	AKUResize ( width, height);
 	AKURender();
 }
 
-extern "C"
-void Java_@PACKAGE_UNDERSCORED@_MoaiView_onUpdateAccelerometer
-	(JNIEnv *env, jclass clazz, jfloat x, jfloat y, jfloat z )
-{
+//----------------------------------------------------------------//
+extern "C" 
+void Java_@PACKAGE_UNDERSCORED@_MoaiActivity_AKUEnqueueLevelEvent ( JNIEnv* env, jclass obj, jfloat x, jfloat y, jfloat z ) {
 	
 	AKUEnqueueLevelEvent (
 		MoaiInputDeviceID::DEVICE,
@@ -479,190 +395,112 @@ void Java_@PACKAGE_UNDERSCORED@_MoaiView_onUpdateAccelerometer
 	);
 }
 
-extern "C"
-void Java_@PACKAGE_UNDERSCORED@_MoaiView_onUpdateAnim
-	(JNIEnv *env, jclass clazz)
-{
+//----------------------------------------------------------------//
+extern "C" 
+void Java_@PACKAGE_UNDERSCORED@_MoaiView_onUpdateAnim ( JNIEnv* env, jclass obj ) {
 	
 	AKUSetContext ( mAku );
 	AKUUpdate ();
 }
 
+//----------------------------------------------------------------//
 extern "C"
-void Java_@PACKAGE_UNDERSCORED@_MoaiView_onUpdateHeading
-(JNIEnv *env, jclass clazz, jint heading)
-{
+void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUEnqueueCompassEvent ( JNIEnv* env, jclass obj, jint heading ) {
 	
-		AKUEnqueueCompassEvent (
-			MoaiInputDeviceID::DEVICE,
-			MoaiInputDeviceSensorID::COMPASS,
-			heading
-		);
+	AKUEnqueueCompassEvent (
+		MoaiInputDeviceID::DEVICE,
+		MoaiInputDeviceSensorID::COMPASS,
+		heading
+	);
 }
+
+//----------------------------------------------------------------//
 extern "C"	
-void Java_@PACKAGE_UNDERSCORED@_MoaiView_onUpdateLocation
-(JNIEnv *env, jclass clazz, jint longitude, jint latitude, jint altitude,
-jfloat hAccuracy, jfloat vAccuracy, jfloat speed )
-{
+void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUEnqueueLocationEvent ( JNIEnv* env, jclass obj, jint longitude, jint latitude, jint altitude, jfloat hAccuracy, jfloat vAccuracy, jfloat speed ) {
 	
-		AKUEnqueueLocationEvent (
-			MoaiInputDeviceID::DEVICE,
-			MoaiInputDeviceSensorID::LOCATION,
-			longitude,
-			latitude,
-			altitude,
-			hAccuracy,
-			vAccuracy,
-			speed
-		);
-}
-extern "C"
-void Java_@PACKAGE_UNDERSCORED@_MoaiView_handleTouches
-(JNIEnv *env, jclass clazz, jint touch, jboolean down, jint locX, jint locY, jint tapCount)
-{
-			AKUEnqueueTouchEvent (
-				MoaiInputDeviceID::DEVICE,
-				MoaiInputDeviceSensorID::TOUCH,
-				touch,
-				down,
-				locX,
-				locY,
-				tapCount
-			);
-		
+	AKUEnqueueLocationEvent (
+		MoaiInputDeviceID::DEVICE,
+		MoaiInputDeviceSensorID::LOCATION,
+		longitude,
+		latitude,
+		altitude,
+		hAccuracy,
+		vAccuracy,
+		speed
+	);
 }
 
+//----------------------------------------------------------------//
 extern "C"
-void Java_@PACKAGE_UNDERSCORED@_MoaiView_setWorkingDirectory
-(JNIEnv *env, jclass clazz, jstring path)
-{
-	char buf[512];
-    const char *str;
-    str = env->GetStringUTFChars(path, NULL);
-     if (str == NULL) {
-         return; /* OutOfMemoryError already thrown */
-     }
-	 strcpy(buf, str);
-    env->ReleaseStringUTFChars(path, str);
-	USFileSys::SetCurrentPath(buf);
-	USLuaRuntime::Get().SetPath(buf);
+void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUEnqueueTouchEvent ( JNIEnv* env, jclass obj, jint touchId, jboolean down, jint x, jint y, jint tapCount ) {
+
+	AKUEnqueueTouchEvent (
+		MoaiInputDeviceID::DEVICE,
+		MoaiInputDeviceSensorID::TOUCH,
+		touchId,
+		down,
+		x,
+		y,
+		tapCount
+	);
 }
 
+//----------------------------------------------------------------//
+extern "C" 
+void Java_@PACKAGE_UNDERSCORED@_MoaiView_setWorkingDirectory ( JNIEnv* env, jclass obj, jstring jpath ) {
 
-//Device properties
+	GET_STRING ( jpath, path );
 
+	USFileSys::SetCurrentPath ( path );
+	USLuaRuntime::Get ().SetPath ( path );
+	
+	RELEASE_STRING ( jpath, path );
+}
+
+//----------------------------------------------------------------//
 extern "C"
-void Java_@PACKAGE_UNDERSCORED@_MoaiView_setDeviceProperties
-(JNIEnv *env, jclass clazz, 
-	jstring appName, 
-	jstring abi,
-	jstring devBrand,
-	jstring devDes, 
-	jstring ma,
-	jstring devModel,
-	jstring devProduct,
-	jstring osName,
-	jstring osVersion,
-	jstring UDID )
-{
-	__android_log_write(ANDROID_LOG_INFO,"MoaiJNI-Props","Setting Properties...");
+void Java_@PACKAGE_UNDERSCORED@_MoaiView_setDeviceProperties ( JNIEnv* env, jclass obj, jstring jappName, jstring jabi,	jstring jdevBrand, jstring jdevName, jstring jdevManufacturer, jstring jdevModel,	jstring jdevProduct, jstring josBrand, jstring josVersion, jstring jUDID ) {
+
+	// get the environment
+	MOAIEnvironment& moaiEnv = MOAIEnvironment::Get ();
 	
-	MOAIEnvironment& devInfo = MOAIEnvironment::Get ();	
+	// set environment callbacks
+	moaiEnv.SetGUIDFunc ( &_GenerateGUID );
+	moaiEnv.SetConnectivityFunc ( &_GetConnectivity );
+
+	// convert jstrings to cstrings
+	GET_STRING ( jappName, appName );
+	GET_STRING ( jabi, abi );
+	GET_STRING ( jdevBrand, devBrand );
+	GET_STRING ( jdevName, devName );
+	GET_STRING ( jdevManufacturer, devManufacturer );
+	GET_STRING ( jdevModel, devModel );
+	GET_STRING ( jdevProduct, devProduct );
+	GET_STRING ( josBrand, osBrand );
+	GET_STRING ( josVersion, osVersion );
+	GET_STRING ( jUDID, UDID );
 	
-	//Set callbacks
-	devInfo.SetGUIDFunc ( &_GenerateGUID );
-	devInfo.SetConnectivityFunc ( &_GetConnectivity );
-	
-	char buf[512];
-    const char *str;
-	
-	//App name
-    str = env->GetStringUTFChars( appName, NULL );
-    if ( str == NULL ) {
-        return; /* OutOfMemoryError already thrown */
-    }	
-	strcpy ( buf, str);
-	env->ReleaseStringUTFChars( appName, str );
-	devInfo.SetAppDisplayName ( buf );
-	
-	//abi
-	str = env->GetStringUTFChars( abi, NULL );
-    if ( str == NULL ) {
-        return; /* OutOfMemoryError already thrown */
-    }	
-	strcpy ( buf, str);
-	env->ReleaseStringUTFChars( abi, str );
-	devInfo.SetCPUABI ( buf );
-	
-	//devBrand
-	str = env->GetStringUTFChars( devBrand, NULL );
-    if ( str == NULL ) {
-        return; /* OutOfMemoryError already thrown */
-    }	
-	strcpy ( buf, str);
-	env->ReleaseStringUTFChars( devBrand, str );
-	devInfo.SetDevBrand ( buf );
-		
-	//devDes
-	str = env->GetStringUTFChars( devDes, NULL );
-    if ( str == NULL ) {
-        return; /* OutOfMemoryError already thrown */
-    }	
-	strcpy ( buf, str);
-	env->ReleaseStringUTFChars( devDes, str );
-	devInfo.SetDevName ( buf );
-		
-	//ma
-	str = env->GetStringUTFChars( ma, NULL );
-    if ( str == NULL ) {
-        return; /* OutOfMemoryError already thrown */
-    }	
-	strcpy ( buf, str);
-	env->ReleaseStringUTFChars( ma, str );
-	devInfo.SetDevManufacturer ( buf );
-		
-	//devModel
-	str = env->GetStringUTFChars( devModel, NULL );
-    if ( str == NULL ) {
-        return; /* OutOfMemoryError already thrown */
-    }	
-	strcpy ( buf, str);
-	env->ReleaseStringUTFChars( devModel, str );	
-	devInfo.SetDevModel ( buf );
-		
-	//devProduct
-	str = env->GetStringUTFChars( devProduct, NULL );
-    if ( str == NULL ) {
-        return; /* OutOfMemoryError already thrown */
-    }	
-	strcpy ( buf, str);
-	env->ReleaseStringUTFChars( devProduct, str );	
-	devInfo.SetDevProduct ( buf );
-		
-	//osName
-	str = env->GetStringUTFChars( osName, NULL );
-    if ( str == NULL ) {
-        return; /* OutOfMemoryError already thrown */
-    }	
-	strcpy ( buf, str);
-	env->ReleaseStringUTFChars( osName, str );	
-	devInfo.SetOSBrand ( buf );
-		
-	//osVersion
-	str = env->GetStringUTFChars( osVersion, NULL );
-    if ( str == NULL ) {
-        return; /* OutOfMemoryError already thrown */
-    }	
-	strcpy ( buf, str);
-	env->ReleaseStringUTFChars( osVersion, str );	
-	devInfo.SetOSVersion ( buf );
-	
-	//UDID
-	str = env->GetStringUTFChars( UDID, NULL );
-    if ( str == NULL ) {
-        return; /* OutOfMemoryError already thrown */
-    }	
-	strcpy ( buf, str);
-	env->ReleaseStringUTFChars( UDID, str );	
-	devInfo.SetUDID ( buf );	
+	// set environment properties
+	moaiEnv.SetAppDisplayName 	( appName );
+	moaiEnv.SetCPUABI 			( abi );
+	moaiEnv.SetDevBrand 		( devBrand );
+	moaiEnv.SetDevName 			( devName );
+	moaiEnv.SetDevManufacturer	( devManufacturer );
+	moaiEnv.SetDevModel			( devModel );
+	moaiEnv.SetDevProduct		( devProduct );
+	moaiEnv.SetOSBrand			( osBrand );
+	moaiEnv.SetOSVersion		( osVersion );
+	moaiEnv.SetUDID				( UDID );
+
+	// release jstrings
+	RELEASE_STRING ( jappName, appName );
+	RELEASE_STRING ( jabi, abi );
+	RELEASE_STRING ( jdevBrand, devBrand );
+	RELEASE_STRING ( jdevName, devName );
+	RELEASE_STRING ( jdevManufacturer, devManufacturer );
+	RELEASE_STRING ( jdevModel, devModel );
+	RELEASE_STRING ( jdevProduct, devProduct );
+	RELEASE_STRING ( josBrand, osBrand );
+	RELEASE_STRING ( josVersion, osVersion );
+	RELEASE_STRING ( jUDID, UDID );
 }
