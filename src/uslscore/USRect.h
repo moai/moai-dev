@@ -586,6 +586,18 @@ public:
 	}
 
 	//----------------------------------------------------------------//
+	bool IsXFlipped () {
+	
+		return ( this->mXMax < this->mXMin );
+	}
+	
+	//----------------------------------------------------------------//
+	bool IsYFlipped () {
+	
+		return ( this->mYMax < this->mYMin );
+	}
+
+	//----------------------------------------------------------------//
 	void Offset ( TYPE xOff, TYPE yOff ) {
 		
 		this->mXMin += xOff;

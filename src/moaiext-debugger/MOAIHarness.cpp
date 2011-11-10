@@ -238,7 +238,7 @@ void MOAIHarness::ReceiveBreakSetAlways(lua_State *L, json_t* node)
 
 	// Store breakpoint data.
 	std::string file = std::string(json_string_value(np_file));
-	int line = json_integer_value(np_line);
+	int line = ( int )json_integer_value(np_line);
 
 	// Add the breakpoint.
 	mBreakpoints.insert(mBreakpoints.begin(), MOAIBreakpoint(file, line));

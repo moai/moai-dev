@@ -59,6 +59,7 @@ private:
 	static int		_convertColors		( lua_State* L );
 	static int		_copy				( lua_State* L );
 	static int		_copyBits			( lua_State* L );
+	static int		_copyRect			( lua_State* L );
 	static int		_getColor32			( lua_State* L );
 	static int		_getFormat			( lua_State* L );
 	static int		_getRGBA			( lua_State* L );
@@ -103,6 +104,7 @@ public:
 	void				ConvertColors			( const MOAIImage& image, USColor::Format colorFmt );
 	void				Copy					( const MOAIImage& image );
 	void				CopyBits				( const MOAIImage& image, int srcX, int srcY, int destX, int destY, int width, int height );
+	void				CopyRect				( const MOAIImage& image, USIntRect srcRect, USIntRect destRest );
 	u32					GetBitmapSize			() const;
 	u32					GetColor				( u32 i ) const;
 	u32					GetColor				( u32 x, u32 y ) const;
