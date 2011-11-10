@@ -288,7 +288,7 @@ int MOAIImage::_load ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	copy
+/**	@name	padToPow2
 	@text	Copies an image and returns a new image padded to the next
 			power of 2 along each dimension. Original image will be
 			in the upper left hand corner of the new image.
@@ -302,6 +302,38 @@ int MOAIImage::_padToPow2 ( lua_State* L ) {
 	
 	MOAIImage* image = new MOAIImage ();
 	image->PadToPow2 ( *self );
+	image->PushLuaUserdata ( state );
+	
+	return 1;
+}
+
+//----------------------------------------------------------------//
+/**	@name	resize
+	@text	Copies the image to an image with a new size.
+
+	@in		MOAIImage self
+	@in		number width		New width of the image.
+	@in		number height		New height of the image.
+	@opt	number filter		One of MOAIImage.FILTER_LINEAR, MOAIImage.FILTER_NEAREST.
+								Default value is MOAIImage.FILTER_LINEAR.
+	@out	MOAIImage image
+*/
+int MOAIImage::_resize ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIImage, "UNN" )
+	
+	u32 width	= state.GetValue < u32 >( 2, 0 );
+	u32 height	= state.GetValue < u32 >( 3, 0 );
+	u32 filter	= state.GetValue < u32 >( 4, MOAIImage::FILTER_LINEAR );
+	
+	USIntRect srcRect;
+	USIntRect destRect;
+	
+	srcRect.Init ( 0, 0, self->mWidth, self->mHeight );
+	destRect.Init ( 0, 0, width, height );
+	
+	MOAIImage* image = new MOAIImage ();
+	image->Init ( width, height, self->mColorFormat, self->mPixelFormat );
+	image->CopyRect ( *self, srcRect, destRect, filter );
 	image->PushLuaUserdata ( state );
 	
 	return 1;
@@ -1164,6 +1196,7 @@ void MOAIImage::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "init",				_init },
 		{ "load",				_load },
 		{ "padToPow2",			_padToPow2 },
+		{ "resize",				_resize },
 		{ "resizeCanvas",		_resizeCanvas },
 		{ "setColor32",			_setColor32 },
 		{ "setRGBA",			_setRGBA },
