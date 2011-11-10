@@ -54,53 +54,6 @@ namespace MoaiInputDeviceSensorID {
 @end
 
 //================================================================//
-// AKU callbacks
-//================================================================//
-
-void	_AKUEnterFullscreenModeFunc		();
-void	_AKUExitFullscreenModeFunc		();
-void	_AKUHideLoadingScreenFunc		();
-void	_AKUOpenWindowFunc				( const char* title, int width, int height );
-void	_AKUShowLoadingScreenFunc		();
-void	_AKUShowSoftwareKeyboardFunc	();
-void	_AKUStartGameLoopFunc			();
-
-//----------------------------------------------------------------//
-void _AKUEnterFullscreenModeFunc () {
-}
-
-//----------------------------------------------------------------//
-void _AKUExitFullscreenModeFunc () {
-}
-
-//----------------------------------------------------------------//
-void _AKUHideLoadingScreenFunc () {
-}
-
-//----------------------------------------------------------------//
-void _AKUOpenWindowFunc ( const char* title, int width, int height ) {
-	( void )title;
-	( void )width;
-	( void )height;
-	
-}
-
-//----------------------------------------------------------------//
-void _AKUShowLoadingScreenFunc () {
-}
-
-//----------------------------------------------------------------//
-void _AKUShowSoftwareKeyboardFunc () {
-}
-
-//----------------------------------------------------------------//
-void _AKUStartGameLoopFunc () {
-	
-	MoaiView* moaiView = ( MoaiView* )AKUGetUserdata ();
-	[ moaiView startAnimation ];
-}
-
-//================================================================//
 // MoaiView
 //================================================================//
 @implementation MoaiView
@@ -132,7 +85,6 @@ void _AKUStartGameLoopFunc () {
 		[ self beginDrawing ];
 		
 		AKUSetContext ( mAku );
-		AKUResize ( mWidth, mHeight );
 		AKURender ();
 
 		[ self endDrawing ];
@@ -212,9 +164,12 @@ void _AKUStartGameLoopFunc () {
 		AKUSetInputDeviceLocation		( MoaiInputDeviceID::DEVICE, MoaiInputDeviceSensorID::LOCATION,		"location" );
 		AKUSetInputDeviceTouch			( MoaiInputDeviceID::DEVICE, MoaiInputDeviceSensorID::TOUCH,		"touch" );
 		
-		AKUSetFunc_EnterFullscreenMode	( _AKUEnterFullscreenModeFunc );
-		AKUSetFunc_ExitFullscreenMode	( _AKUExitFullscreenModeFunc );
-		AKUSetFunc_OpenWindow			( _AKUOpenWindowFunc );
+		CGRect screenRect = [[ UIScreen mainScreen ] bounds ];
+		CGFloat scale = [[ UIScreen mainScreen ] scale ];
+		CGFloat screenWidth = screenRect.size.width * scale;
+		CGFloat screenHeight = screenRect.size.height * scale;
+		
+		AKUSetScreenSize ( screenWidth, screenHeight );
 		
 		AKUSetDefaultFrameBuffer ( mFramebuffer );
 		AKUDetectGfxContext ();

@@ -286,17 +286,6 @@ void AKUReserveInputDeviceSensors ( int deviceID, int total ) {
 	MOAIInputMgr::Get ().ReserveSensors (( u8 )deviceID, ( u8 )total );
 }
 
-//----------------------------------------------------------------//
-void AKUResize ( int width, int height ) {
-
-	MOAIGfxDevice::Get ().SetSize ( width, height );
-}
-
-//----------------------------------------------------------------//
-int AKUSetWorkingDirectory ( char const* path ) {
-
-	return zipfs_chdir ( path );
-}
 
 //----------------------------------------------------------------//
 void AKURunScript ( const char* filename ) {
@@ -318,14 +307,6 @@ void AKUSetContext ( AKUContextID contextID ) {
 		else {
 			MOAIGlobalsMgr::Set ( 0 );
 		}
-	}
-}
-
-//----------------------------------------------------------------//
-void AKUSetUserdata ( void* userdata ) {
-
-	if ( gContext ) {
-		gContext->mUserdata = userdata;
 	}
 }
 
@@ -387,6 +368,26 @@ void AKUSetInputDevicePointer ( int deviceID, int sensorID, char const* name ) {
 void AKUSetInputDeviceTouch ( int deviceID, int sensorID, char const* name ) {
 
 	MOAIInputMgr::Get ().SetSensor (( u8 )deviceID, ( u8 )sensorID, name, MOAISensor::TOUCH );
+}
+
+//----------------------------------------------------------------//
+void AKUSetUserdata ( void* userdata ) {
+
+	if ( gContext ) {
+		gContext->mUserdata = userdata;
+	}
+}
+
+//----------------------------------------------------------------//
+void AKUSetScreenSize ( int width, int height ) {
+
+	MOAIEnvironment::Get ().SetScreenSize ( width, height );
+}
+
+//----------------------------------------------------------------//
+int AKUSetWorkingDirectory ( char const* path ) {
+
+	return zipfs_chdir ( path );
 }
 
 //----------------------------------------------------------------//

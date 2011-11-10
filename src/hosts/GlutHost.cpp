@@ -151,7 +151,7 @@ static void _onReshape( int w, int h ) {
 	}
 
 	glutReshapeWindow ( w, h );
-	AKUResize ( w, h );
+	AKUSetScreenSize ( w, h );
 }
 
 //----------------------------------------------------------------//
@@ -176,7 +176,6 @@ static void _onTimer ( int millisec ) {
 void	_AKUEnterFullscreenModeFunc		();
 void	_AKUExitFullscreenModeFunc		();
 void	_AKUOpenWindowFunc				( const char* title, int width, int height );
-void	_AKUStartGameLoopFunc			();
 
 //----------------------------------------------------------------//
 void _AKUEnterFullscreenModeFunc () {

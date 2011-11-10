@@ -52,7 +52,6 @@ private:
 	long ( *getConnectivityFunc )( void );
 	cc8* ( *getGUIDfunc ) ( void );
 	
-
 	//----------------------------------------------------------------//
 	static int			_generateGUID					( lua_State* L );
 	static int			_getAppDisplayName				( lua_State* L );
@@ -76,9 +75,9 @@ private:
 	static int			_getOSBrand						( lua_State* L );
 	static int			_getOSVersion					( lua_State* L );
 	static int			_getResourceDirectory			( lua_State* L );
+	static int			_getScreenSize					( lua_State* L );
 	static int			_getUDID						( lua_State* L );
 	static int			_getViewSize					( lua_State* L );
-	static int			_getDeviceSize					( lua_State* L );
 	static int			_isRetinaDisplay				( lua_State* L );
 
 public:	

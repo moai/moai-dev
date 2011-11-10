@@ -286,6 +286,23 @@ int MOAIEnvironment::_getResourceDirectory ( lua_State* L  ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	getScreenSize
+	@text	Gets the dimensions of the device screen as two return values (width, height).
+
+	@out	number width		The width of the device screen.
+	@out	number height		The height of the device screen.
+*/
+int MOAIEnvironment::_getScreenSize ( lua_State* L ) {
+
+	MOAIEnvironment& env = MOAIEnvironment::Get ();
+	
+	lua_pushnumber ( L, env.mScreenWidth );
+	lua_pushnumber ( L, env.mScreenHeight );
+
+	return 2;
+}
+
+//----------------------------------------------------------------//
 /**	@name	getUDID
 	@text	Returns the device unique identifier
 
@@ -311,23 +328,6 @@ int MOAIEnvironment::_getViewSize ( lua_State* L  ) {
 	lua_pushnumber ( L, gfxDevice.GetWidth ());
 	lua_pushnumber ( L, gfxDevice.GetHeight ());
 	
-	return 2;
-}
-
-//----------------------------------------------------------------//
-/**	@name	getDeviceSize
-	@text	Gets the dimensions of the device screen as two return values (width, height).
-
-	@out	number width		The width of the device screen.
-	@out	number height		The height of the device screen.
-*/
-int MOAIEnvironment::_getDeviceSize ( lua_State* L ) {
-
-	MOAIEnvironment& env = MOAIEnvironment::Get ();
-	
-	lua_pushnumber ( L, env.mScreenWidth );
-	lua_pushnumber ( L, env.mScreenHeight );
-
 	return 2;
 }
 
@@ -428,9 +428,9 @@ void MOAIEnvironment::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "getOSBrand",						_getOSBrand						},
 		{ "getOSVersion",					_getOSVersion					},
 		{ "getResourceDirectory",			_getResourceDirectory			},
+		{ "getScreenSize",					_getScreenSize					},
 		{ "getUDID",						_getUDID						},
 		{ "getViewSize",					_getViewSize					},
-		{ "getDeviceSize",					_getDeviceSize					},
 		{ "isRetinaDisplay",				_isRetinaDisplay				},
 		{ NULL, NULL }
 	};

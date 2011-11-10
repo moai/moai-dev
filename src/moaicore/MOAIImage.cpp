@@ -111,7 +111,10 @@ int MOAIImage::_copyBits ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	copyRect
-	@text	Copy a section of one image to another.
+	@text	Copy a section of one image to another. Accepts two rectangles.
+			Rectangles may be of different size and proportion. Section of
+			image may also be flipped horizontally or vertically by
+			reversing min/max of either rectangle.
 
 	@in		MOAIImage self
 	@in		MOAIImage source	Source image.
