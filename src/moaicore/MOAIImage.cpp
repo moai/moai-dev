@@ -123,6 +123,8 @@ int MOAIImage::_copyBits ( lua_State* L ) {
 	@in		number destYMin
 	@opt	number destXMax		Default value is destXMin + srcXMax - srcXMin;
 	@opt	number destYMax		Default value is destYMin + srcYMax - srcYMin;
+	@opt	number filter		One of MOAIImage.FILTER_LINEAR, MOAIImage.FILTER_NEAREST.
+								Default value is MOAIImage.FILTER_LINEAR.
 	@out	nil
 */
 int MOAIImage::_copyRect ( lua_State* L ) {
@@ -145,7 +147,9 @@ int MOAIImage::_copyRect ( lua_State* L ) {
 	destRect.mXMax = state.GetValue < int >( 9, destRect.mXMin + srcRect.Width ());
 	destRect.mYMax = state.GetValue < int >( 10, destRect.mYMin + srcRect.Height ());
 	
-	self->CopyRect ( *image, srcRect, destRect );
+	u32 filter = state.GetValue < u32 >( 11, MOAIImage::FILTER_LINEAR );
+	
+	self->CopyRect ( *image, srcRect, destRect, filter );
 	
 	return 0;
 }
@@ -649,7 +653,7 @@ void MOAIImage::CopyBits ( const MOAIImage& image, int srcX, int srcY, int destX
 }
 
 //----------------------------------------------------------------//
-void MOAIImage::CopyRect ( const MOAIImage& image, USIntRect srcRect, USIntRect destRect ) {
+void MOAIImage::CopyRect ( const MOAIImage& image, USIntRect srcRect, USIntRect destRect, u32 filter ) {
 
 	float scale;
 
@@ -813,7 +817,14 @@ void MOAIImage::CopyRect ( const MOAIImage& image, USIntRect srcRect, USIntRect 
 			u8 xt = ( u8 )(( xSample - ( float )x0 ) * 255.0f );
 			u8 yt = ( u8 )(( ySample - ( float )y0 ) * 255.0f );
 			
-			u32 result = USColor::BilerpFixed ( c0, c1, c2, c3, xt, yt );
+			u32 result;
+			
+			if ( filter == FILTER_LINEAR ) {
+				result = USColor::BilerpFixed ( c0, c1, c2, c3, xt, yt );
+			}
+			else {
+				result = USColor::NearestNeighbor ( c0, c1, c2, c3, xt, yt );
+			}
 			
 			this->SetColor ( xDest, yDest, result );
 		}
@@ -1115,6 +1126,9 @@ void MOAIImage::PadToPow2 ( const MOAIImage& image ) {
 
 //----------------------------------------------------------------//
 void MOAIImage::RegisterLuaClass ( MOAILuaState& state ) {
+	
+	state.SetField ( -1, "FILTER_LINEAR", ( u32 )MOAIImage::FILTER_LINEAR );
+	state.SetField ( -1, "FILTER_NEAREST", ( u32 )MOAIImage::FILTER_NEAREST );
 	
 	state.SetField ( -1, "POW_TWO", ( u32 )MOAIImageTransform::POW_TWO );
 	state.SetField ( -1, "QUANTIZE", ( u32 )MOAIImageTransform::QUANTIZE );

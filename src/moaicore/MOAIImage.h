@@ -24,6 +24,9 @@ namespace MOAIImageTransform {
 /**	@name	MOAIImage
 	@text	Image/bitmap class.
 	
+	@const	FILTER_LINEAR
+	@const	FILTER_NEAREST
+	
 	@flag	POW_TWO
 	@flag	QUANTIZE
 	@flag	TRUECOLOR
@@ -97,6 +100,11 @@ public:
 	GET ( void*, Palette, mPalette )
 	GET ( void*, Bitmap, mBitmap )
 	
+	enum {
+		FILTER_LINEAR,
+		FILTER_NEAREST,
+	};
+	
 	//----------------------------------------------------------------//
 	void				BleedRect				( int xMin, int yMin, int xMax, int yMax );
 	void				Clear					();
@@ -104,7 +112,7 @@ public:
 	void				ConvertColors			( const MOAIImage& image, USColor::Format colorFmt );
 	void				Copy					( const MOAIImage& image );
 	void				CopyBits				( const MOAIImage& image, int srcX, int srcY, int destX, int destY, int width, int height );
-	void				CopyRect				( const MOAIImage& image, USIntRect srcRect, USIntRect destRest );
+	void				CopyRect				( const MOAIImage& image, USIntRect srcRect, USIntRect destRest, u32 filter );
 	u32					GetBitmapSize			() const;
 	u32					GetColor				( u32 i ) const;
 	u32					GetColor				( u32 x, u32 y ) const;

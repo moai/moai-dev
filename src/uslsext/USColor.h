@@ -30,6 +30,7 @@ namespace USColor {
 	u32			GetMask				( Format format );
 	u32			GetSize				( Format format );
 	u32			LerpFixed			( u32 c0, u32 c1, u8 t );
+	u32			NearestNeighbor		( u32 c0, u32 c1, u32 c2, u32 c3, u8 xt, u8 yt );
 	u32			PackRGBA			( int r, int g, int b, int a );
 	u32			PackRGBA			( float r, float g, float b, float a );
 	void		PremultiplyAlpha	( void* colors, Format format, u32 nColors );

@@ -351,6 +351,21 @@ u32 USColor::LerpFixed ( u32 c0, u32 c1, u8 t ) {
 }
 
 //----------------------------------------------------------------//
+u32 USColor::NearestNeighbor ( u32 c0, u32 c1, u32 c2, u32 c3, u8 xt, u8 yt ) {
+
+	if ( xt < 128 ) {
+		if ( yt < 128 ) {
+			return c0;
+		}
+		return c2;
+	}
+	if ( yt < 128 ) {
+		return c1;
+	}
+	return c3;
+}
+
+//----------------------------------------------------------------//
 u32 USColor::PackRGBA ( int r, int g, int b, int a ) {
 
 	return	( r << 0x00 ) +
