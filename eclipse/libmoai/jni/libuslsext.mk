@@ -38,7 +38,6 @@ $(SRC_PATH)/3rdparty/openssl-1.0.0d/include-android \
 LOCAL_SRC_FILES := $(SRC_PATH)/src/uslsext/uslsext-pch.cpp \
 $(SRC_PATH)/src/uslsext/USAdapterInfo_posix.cpp \
 $(SRC_PATH)/src/uslsext/USAdapterInfo_win32.cpp \
-$(SRC_PATH)/src/uslsext/USAnimCurve.cpp \
 $(SRC_PATH)/src/uslsext/USBox.cpp \
 $(SRC_PATH)/src/uslsext/USCgt.cpp \
 $(SRC_PATH)/src/uslsext/USColor.cpp \
@@ -46,8 +45,6 @@ $(SRC_PATH)/src/uslsext/USCurve.cpp \
 $(SRC_PATH)/src/uslsext/USData.cpp \
 $(SRC_PATH)/src/uslsext/USDataIOTask.cpp \
 $(SRC_PATH)/src/uslsext/USDistance.cpp \
-$(SRC_PATH)/src/uslsext/USHttpTask.cpp \
-$(SRC_PATH)/src/uslsext/USHttpTask_impl.cpp \
 $(SRC_PATH)/src/uslsext/USInterpolate.cpp \
 $(SRC_PATH)/src/uslsext/USIntersect.cpp \
 $(SRC_PATH)/src/uslsext/USLexStream.cpp \
@@ -77,7 +74,6 @@ $(SRC_PATH)/src/uslsext/USThread_posix.cpp \
 $(SRC_PATH)/src/uslsext/USThread_win32.cpp \
 $(SRC_PATH)/src/uslsext/USTrig.cpp \
 $(SRC_PATH)/src/uslsext/USTypedPtr.cpp \
-$(SRC_PATH)/src/uslsext/USUrlMgr.cpp \
 $(SRC_PATH)/src/uslsext/USXmlReader.cpp \
 
 include $(BUILD_STATIC_LIBRARY)

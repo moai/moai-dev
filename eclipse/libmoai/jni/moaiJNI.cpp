@@ -388,7 +388,6 @@ void Java_com_getmoai_samples_MoaiView_RestartAku
 	AKUSetFunc_EnterFullscreenMode ( _AKUEnterFullscreenModeFunc );
 	AKUSetFunc_ExitFullscreenMode ( _AKUExitFullscreenModeFunc );
 	AKUSetFunc_OpenWindow ( _AKUOpenWindowFunc );
-	AKUSetFunc_StartGameLoop ( _AKUStartGameLoopFunc );
 
 	m_AKUEnterFullscreenModeFunc  = env->GetMethodID(classic,"AKUEnterFullscreenModeFunc", "()V");
 	m_AKUExitFullscreenModeFunc  = env->GetMethodID(classic,"AKUExitFullscreenModeFunc", "()V");
@@ -536,7 +535,7 @@ void Java_com_getmoai_samples_MoaiView_setWorkingDirectory
 	 strcpy(buf, str);
     env->ReleaseStringUTFChars(path, str);
 	USFileSys::SetCurrentPath(buf);
-	USLuaRuntime::Get().SetPath(buf);
+	MOAILuaRuntime::Get().SetPath(buf);
 }
 
 

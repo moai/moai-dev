@@ -38,14 +38,14 @@ APP_STL := gnustl_static
 # header search paths
 #----------------------------------------------------------------#
 LOCAL_C_INCLUDES :=  $(SRC_PATH) \
-$(SRC_PATH)/3rdparty/box2d-2.1.2/Box2D \
-$(SRC_PATH)/3rdparty/box2d-2.1.2/Box2D/Box2D \
-$(SRC_PATH)/3rdparty/box2d-2.1.2/Box2D/Box2D/Collision/Shapes \
-$(SRC_PATH)/3rdparty/box2d-2.1.2/Box2D/Box2D/Collision \
-$(SRC_PATH)/3rdparty/box2d-2.1.2/Box2D/Box2D/Common \
-$(SRC_PATH)/3rdparty/box2d-2.1.2/Box2D/Box2D/Dynamics \
-$(SRC_PATH)/3rdparty/box2d-2.1.2/Box2D/Box2D/Dynamics/Contacts \
-$(SRC_PATH)/3rdparty/box2d-2.1.2/Box2D/Box2D/Dynamics/Joints \
+$(SRC_PATH)/3rdparty/box2d-2.2.1 \
+$(SRC_PATH)/3rdparty/box2d-2.2.1/Box2D \
+$(SRC_PATH)/3rdparty/box2d-2.2.1/Box2D/Collision/Shapes \
+$(SRC_PATH)/3rdparty/box2d-2.2.1/Box2D/Collision \
+$(SRC_PATH)/3rdparty/box2d-2.2.1/Box2D/Common \
+$(SRC_PATH)/3rdparty/box2d-2.2.1/Box2D/Dynamics \
+$(SRC_PATH)/3rdparty/box2d-2.2.1/Box2D/Dynamics/Contacts \
+$(SRC_PATH)/3rdparty/box2d-2.2.1/Box2D/Dynamics/Joints \
 $(SRC_PATH)/3rdparty/chipmunk-5.3.4/include \
 $(SRC_PATH)/3rdparty/chipmunk-5.3.4/include/chipmunk \
 $(SRC_PATH)/3rdparty/chipmunk-5.3.4/include/chipmunk/constraints \

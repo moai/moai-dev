@@ -22,11 +22,11 @@
     <!-- ================================================================ -->
 	<target name="build" depends="os-selector">
 		
-		<antcall target="build-libmoai-osx"/>
-		<antcall target="build-libmoai-windows"/>
-
 		<antcall target="pack-osx"/>
 		<antcall target="pack-windows"/>
+
+		<antcall target="build-libmoai-osx"/>
+		<antcall target="build-libmoai-windows"/>
 	</target>
 
     <!-- ================================================================ -->

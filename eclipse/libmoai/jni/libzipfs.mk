@@ -10,6 +10,7 @@ LOCAL_MODULE := libzipfs
 #----------------------------------------------------------------#
 LOCAL_C_INCLUDES := $(SRC_PATH)/src \
 $(SRC_PATH)/src/zipfs \
+$(SRC_PATH)/3rdparty/tlsf-2.0 \
 $(SRC_PATH)/3rdparty/zlib-1.2.3 \
 
 #----------------------------------------------------------------#
@@ -22,5 +23,6 @@ $(SRC_PATH)/src/zipfs/zipfs_vfscanf.c \
 $(SRC_PATH)/src/zipfs/ZIPFSString.c \
 $(SRC_PATH)/src/zipfs/ZIPFSVirtualPath.c \
 $(SRC_PATH)/src/zipfs/ZIPFSZipFile.c \
+$(SRC_PATH)/3rdparty/tlsf-2.0/tlsf.c \
 
 include $(BUILD_STATIC_LIBRARY)

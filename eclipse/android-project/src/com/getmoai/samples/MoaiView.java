@@ -117,11 +117,7 @@ public class MoaiView extends GLSurfaceView {
 	}
 
 	//----------------------------------------------------------------//
-	public void AKUStartGameLoopFunc () {
-		
-		if ( !mThread.isAlive () ) {
-			mThread.start ();
-		}
+	public void AKUStartGameLoopFunc () {		
 	}
 	
 	//================================================================//
@@ -245,6 +241,10 @@ public class MoaiView extends GLSurfaceView {
 			setWorkingDirectory ( mAppRoot );
 			Run ( "config-android.lua", mWidth, mHeight );
 			Run ( "main.lua", mWidth, mHeight );
+
+			if ( !mThread.isAlive () ) {
+				mThread.start ();
+			}
 		}
 	}
 	
