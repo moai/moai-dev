@@ -21,16 +21,20 @@
 	@param targetLayer (in)
 */
 int MOAILayerBridge2D::_init ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAILayerBridge2D, "UUU" );
+	MOAI_LUA_SETUP ( MOAILayerBridge2D, "UUUU" );
 	
-	MOAILayer2D* sourceScene = state.GetLuaObject < MOAILayer2D >( 2 );
-	if ( !sourceScene ) return 0;
+	MOAITransformBase* sourceTransform = state.GetLuaObject < MOAITransformBase >( 2 );
+	if ( !sourceTransform ) return 0;
 	
-	MOAILayer2D* targetScene = state.GetLuaObject < MOAILayer2D >( 3 );
-	if ( !targetScene ) return 0;
+	MOAILayer2D* sourceLayer = state.GetLuaObject < MOAILayer2D >( 3 );
+	if ( !sourceLayer ) return 0;
 	
-	self->mSourceScene = sourceScene;
-	self->mTargetScene = targetScene;
+	MOAILayer2D* destLayer = state.GetLuaObject < MOAILayer2D >( 4 );
+	if ( !destLayer ) return 0;
+	
+	self->SetDependentMember ( self->mSourceTransform, sourceTransform );
+	self->SetDependentMember ( self->mSourceLayer, sourceLayer );
+	self->SetDependentMember ( self->mDestLayer, destLayer );
 	
 	return 0;
 }
@@ -52,23 +56,24 @@ MOAILayerBridge2D::~MOAILayerBridge2D () {
 //----------------------------------------------------------------//
 void MOAILayerBridge2D::OnDepNodeUpdate () {
 	
-	if ( !( this->mSourceScene && this->mTargetScene )) return; 
+	if ( !( this->mSourceTransform && this->mSourceLayer && this->mDestLayer )) return; 
 	
-	//this->mSourceScene->DepNodeUpdate ();
-	//this->mTargetScene->DepNodeUpdate ();
+	this->mLocalToWorldMtx = this->mSourceTransform->GetLocalToWorldMtx ();
 	
-	this->mSourceScene->GetWorldToWndMtx ( this->mLocalToWorldMtx );
+	USAffine2D mtx;
 	
-	USAffine2D targetWndToWorld;
-	this->mTargetScene->GetWndToWorldMtx ( targetWndToWorld );
-	this->mLocalToWorldMtx.Append ( targetWndToWorld );
+	this->mSourceLayer->GetWorldToWndMtx ( mtx );
+	this->mLocalToWorldMtx.Append ( mtx );
+	
+	this->mDestLayer->GetWndToWorldMtx ( mtx );
+	this->mLocalToWorldMtx.Append ( mtx );
 	
 	this->mWorldToLocalMtx.Inverse ( this->mLocalToWorldMtx );
 }
 
 //----------------------------------------------------------------//
 void MOAILayerBridge2D::RegisterLuaClass ( MOAILuaState& state ) {
-	UNUSED ( state );
+	MOAITransform::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//

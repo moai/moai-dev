@@ -59,11 +59,11 @@ protected:
 	
 	MOAILuaSharedPtr < MOAIDeck >			mDeck;
 	MOAILuaSharedPtr < MOAIDeckRemapper >	mRemapper;
-	u32									mIndex;
+	u32										mIndex;
 	
 	MOAILuaSharedPtr < MOAIGrid >			mGrid;
-	u32									mRepeat;
-	USVec2D								mGridScale;
+	u32										mRepeat;
+	USVec2D									mGridScale;
 	
 	MOAILuaSharedPtr < MOAIShader >			mShader;
 	MOAILuaSharedPtr < MOAITransformBase >	mUVTransform;
