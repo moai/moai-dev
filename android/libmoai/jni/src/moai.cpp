@@ -13,38 +13,6 @@
 #include <aku/AKU-untz.h>
 #include <aku/AKU-luaext.h>
 
-//----------------------------------------------------------------//
-JavaVM* 		jvm;
-jobject			javaObject;
-AKUContextID	mAku;
-
-jmethodID 		m_GetConnectivityFunc;
-jmethodID 		m_GenerateGuidFunc;
-
-//----------------------------------------------------------------//
-enum {
-	CONNECTION_TYPE_NONE,
-	CONNECTION_TYPE_WIFI,
-	CONNECTION_TYPE_WWAN
-};
-
-namespace MoaiInputDeviceID {
-	enum {
-		DEVICE,
-		TOTAL,
-	};
-}
-
-namespace MoaiInputDeviceSensorID {
-	enum {
-		COMPASS,
-		LEVEL,
-		LOCATION,
-		TOUCH,
-		TOTAL,
-	};
-}
-
 //================================================================//
 // Utility macros
 //================================================================//
@@ -58,87 +26,102 @@ namespace MoaiInputDeviceSensorID {
 	#define PRINT(str) \
 		__android_log_write ( ANDROID_LOG_INFO, "MoaiLog", str );
 		
-// -------------------------------------------------------------//
-long _GetConnectivity () {
+//================================================================//
+// JNI set up
+//================================================================//
 
-	JNIEnv *env;
-	if(jvm == NULL)
-		return NULL;
-	
-	jvm->GetEnv((void**)&env, JNI_VERSION_1_4);
-	if(env == NULL)
-		return NULL;
-
-    jstring conn = (jstring)env->CallObjectMethod(javaObject, m_GetConnectivityFunc);
-	char buf[512];
-    const char *str, *ret;
-    str = env->GetStringUTFChars(conn, NULL);
-    if (str == NULL) {
-        return NULL; /* OutOfMemoryError already thrown */
-    }
-	strcpy(buf, str);
-	ret = buf;
-    env->ReleaseStringUTFChars(conn, str);
-    
-    if ( strcmp ( buf, "WIFI" ))
-    	return ( long )CONNECTION_TYPE_WIFI;
-    else if (strcmp ( buf, "MOBILE" ))
-    	return ( long )CONNECTION_TYPE_WWAN;
-	else
-		return ( long )CONNECTION_TYPE_NONE;
-}
-
-// -------------------------------------------------------------//
-const char* _GenerateGUID () {
-
-	JNIEnv *env;
-	if(jvm == NULL)
-		return NULL;
-	
-	jvm->GetEnv((void**)&env, JNI_VERSION_1_4);
-	if(env == NULL)
-		return NULL;
-
-    jstring guid = (jstring)env->CallObjectMethod(javaObject, m_GenerateGuidFunc);
-	char buf[512];
-    const char *str, *ret;
-    str = env->GetStringUTFChars(guid, NULL);
-    if (str == NULL) {
-        return NULL; /* OutOfMemoryError already thrown */
-    }
-	strcpy(buf, str);
-	ret = buf;
-    env->ReleaseStringUTFChars(guid, str);
-	return ret;
-}
-
-
-// -------------------------------------------------------------//
-int JNI_OnLoad ( JavaVM* vm, void* reserved ) {
-    
-	jvm = vm;
-	return JNI_VERSION_1_4;
-}
-
-//----------------------------------------------------------------//
-extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_setWorkingDirectory ( JNIEnv* env, jclass obj, jstring jpath ) {
-
-	GET_STRING ( jpath, path );
-
-	USFileSys::SetCurrentPath ( path );
-	USLuaRuntime::Get ().SetPath ( path );
-	
-	RELEASE_STRING ( jpath, path );
-}
-
-	// //----------------------------------------------------------------//
-	// extern "C" int Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUCreateContext ( JNIEnv* env, jclass obj ) {
-	// 	return AKUCreateContext ();
-	// }
+	JavaVM* 		jvm;
+	jobject			javaObject;
+	jmethodID 		m_GetConnectivityFunc;
+	jmethodID 		m_GenerateGuidFunc;
 
 	//----------------------------------------------------------------//
-	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUDeleteContext ( JNIEnv* env, jclass obj ) {
-		AKUDeleteContext ( mAku );
+	int JNI_OnLoad ( JavaVM* vm, void* reserved ) {
+    
+		jvm = vm;
+		return JNI_VERSION_1_4;
+	}
+		
+//================================================================//
+// Connectivity callback
+//================================================================//
+
+	enum {
+		CONNECTION_TYPE_NONE,
+		CONNECTION_TYPE_WIFI,
+		CONNECTION_TYPE_WWAN
+	};
+
+	//----------------------------------------------------------------//
+	long _GetConnectivity () {
+
+		JNIEnv *env;
+		if(jvm == NULL)
+			return NULL;
+	
+		jvm->GetEnv((void**)&env, JNI_VERSION_1_4);
+		if(env == NULL)
+			return NULL;
+
+	    jstring conn = (jstring)env->CallObjectMethod(javaObject, m_GetConnectivityFunc);
+		char buf[512];
+	    const char *str, *ret;
+	    str = env->GetStringUTFChars(conn, NULL);
+	    if (str == NULL) {
+	        return NULL; /* OutOfMemoryError already thrown */
+	    }
+		strcpy(buf, str);
+		ret = buf;
+	    env->ReleaseStringUTFChars(conn, str);
+    
+	    if ( strcmp ( buf, "WIFI" ))
+	    	return ( long )CONNECTION_TYPE_WIFI;
+	    else if (strcmp ( buf, "MOBILE" ))
+	    	return ( long )CONNECTION_TYPE_WWAN;
+		else
+			return ( long )CONNECTION_TYPE_NONE;
+	}
+
+//================================================================//
+// Generate GUID callback
+//================================================================//
+
+	//----------------------------------------------------------------//
+	const char* _GenerateGUID () {
+
+		JNIEnv *env;
+		if(jvm == NULL)
+			return NULL;
+	
+		jvm->GetEnv((void**)&env, JNI_VERSION_1_4);
+		if(env == NULL)
+			return NULL;
+
+	    jstring guid = (jstring)env->CallObjectMethod(javaObject, m_GenerateGuidFunc);
+		char buf[512];
+	    const char *str, *ret;
+	    str = env->GetStringUTFChars(guid, NULL);
+	    if (str == NULL) {
+	        return NULL; /* OutOfMemoryError already thrown */
+	    }
+		strcpy(buf, str);
+		ret = buf;
+	    env->ReleaseStringUTFChars(guid, str);
+		return ret;
+	}
+
+//================================================================//
+// JNI Functions
+//================================================================//
+
+	//----------------------------------------------------------------//
+	extern "C" int Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUCreateContext ( JNIEnv* env, jclass obj ) {
+		return AKUCreateContext ();
+	}
+
+	//----------------------------------------------------------------//
+	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUDeleteContext ( JNIEnv* env, jclass obj, jint akuContextId ) {
+		AKUDeleteContext ( akuContextId );
 	}
 
 	//----------------------------------------------------------------//
@@ -147,50 +130,23 @@ extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_setWorkingDirectory ( JNIEnv
 	}
 
 	//----------------------------------------------------------------//
-	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiActivity_AKUEnqueueCompassEvent ( JNIEnv* env, jclass obj, jint heading ) {
-		AKUEnqueueCompassEvent ( 
-			MoaiInputDeviceID::DEVICE, 
-			MoaiInputDeviceSensorID::COMPASS,
-			heading 
-		);
+	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiActivity_AKUEnqueueCompassEvent ( JNIEnv* env, jclass obj, jint deviceId, jint sensorId, jint heading ) {
+		AKUEnqueueCompassEvent ( deviceId, sensorId, heading );
 	}
 
 	//----------------------------------------------------------------//
-	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiActivity_AKUEnqueueLevelEvent ( JNIEnv* env, jclass obj, jfloat x, jfloat y, jfloat z ) {
-		AKUEnqueueLevelEvent ( 
-			MoaiInputDeviceID::DEVICE, 
-			MoaiInputDeviceSensorID::LEVEL,
-			x, 
-			y, 
-			z 
-		);
+	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiActivity_AKUEnqueueLevelEvent ( JNIEnv* env, jclass obj, jint deviceId, jint sensorId, jfloat x, jfloat y, jfloat z ) {
+		AKUEnqueueLevelEvent ( deviceId, sensorId, x, y, z );
 	}
 
 	//----------------------------------------------------------------//
-	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiActivity_AKUEnqueueLocationEvent ( JNIEnv* env, jclass obj, jint longitude, jint latitude, jint altitude, jfloat hAccuracy, jfloat vAccuracy, jfloat speed ) {
-		AKUEnqueueLocationEvent ( 
-			MoaiInputDeviceID::DEVICE, 
-			MoaiInputDeviceSensorID::LOCATION,
-			longitude, 
-			latitude, 
-			altitude, 
-			hAccuracy, 
-			vAccuracy, 
-			speed 
-		);
+	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiActivity_AKUEnqueueLocationEvent ( JNIEnv* env, jclass obj, jint deviceId, jint sensorId, jint longitude, jint latitude, jint altitude, jfloat hAccuracy, jfloat vAccuracy, jfloat speed ) {
+		AKUEnqueueLocationEvent ( deviceId, sensorId, longitude, latitude, altitude, hAccuracy, vAccuracy, speed );
 	}
 
 	//----------------------------------------------------------------//
-	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUEnqueueTouchEvent ( JNIEnv* env, jclass obj, jint touchId, jboolean down, jint x, jint y, jint tapCount ) {
-		AKUEnqueueTouchEvent ( 
-			MoaiInputDeviceID::DEVICE, 
-			MoaiInputDeviceSensorID::TOUCH,
-			touchId, 
-			down, 
-			x, 
-			y, 
-			tapCount 
-		);
+	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUEnqueueTouchEvent ( JNIEnv* env, jclass obj, jint deviceId, jint sensorId, jint touchId, jboolean down, jint x, jint y, jint tapCount ) {
+		AKUEnqueueTouchEvent ( deviceId, sensorId, touchId, down, x, y, tapCount );
 	}
 
 	//----------------------------------------------------------------//
@@ -213,6 +169,7 @@ extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_setWorkingDirectory ( JNIEnv
 		AKUExtLoadLuasql ();
 	}
 
+
 	//----------------------------------------------------------------//
 	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUFinalize	( JNIEnv* env, jclass obj ) {
 		AKUFinalize ();
@@ -222,45 +179,10 @@ extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_setWorkingDirectory ( JNIEnv
 	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUInit ( JNIEnv* env, jclass obj, jobject thizz ) {
 
 		javaObject = ( jobject ) env->NewGlobalRef ( thizz );
-
-		mAku = AKUCreateContext ();
-		
-		// AKUExtLoadLuasql ();
-		// AKUExtLoadLuacurl ();
-		// AKUExtLoadLuacrypto ();
-		// AKUExtLoadLuasocket ();
-		
-		AKUSetInputConfigurationName 	( "Android" );
-
-		AKUReserveInputDevices			( MoaiInputDeviceID::TOTAL );
-		AKUSetInputDevice				( MoaiInputDeviceID::DEVICE, "device" );
-		
-		AKUReserveInputDeviceSensors	( MoaiInputDeviceID::DEVICE, MoaiInputDeviceSensorID::TOTAL );
-		AKUSetInputDeviceCompass		( MoaiInputDeviceID::DEVICE, MoaiInputDeviceSensorID::COMPASS,		"compass" );
-		AKUSetInputDeviceLevel			( MoaiInputDeviceID::DEVICE, MoaiInputDeviceSensorID::LEVEL,		"level" );
-		AKUSetInputDeviceLocation		( MoaiInputDeviceID::DEVICE, MoaiInputDeviceSensorID::LOCATION,		"location" );
-		AKUSetInputDeviceTouch			( MoaiInputDeviceID::DEVICE, MoaiInputDeviceSensorID::TOUCH,		"touch" );
-
-		AKUUntzInit ();
-
-		// register java callbacks
 		jclass classic = env->GetObjectClass ( javaObject );
 
 		m_GetConnectivityFunc = env->GetMethodID ( classic, "getConnectivity", "()Ljava/lang/String;");
 		m_GenerateGuidFunc = env->GetMethodID ( classic, "getGUID", "()Ljava/lang/String;" );
-	}
-
-	//----------------------------------------------------------------//
-	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUOnDraw ( JNIEnv* env, jclass obj, jint width, jint height ) {
-		AKUSetContext ( mAku );
-		AKUResize ( width, height );
-		AKURender ();
-	}
-
-	//----------------------------------------------------------------//
-	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUOnUpdateAnim ( JNIEnv* env, jclass obj ) {
-		AKUSetContext ( mAku );
-		AKUUpdate ();
 	}
 
 	//----------------------------------------------------------------//
@@ -287,26 +209,19 @@ extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_setWorkingDirectory ( JNIEnv
 	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUResize ( JNIEnv* env, jclass obj, jint width, jint height ) {
 		AKUResize ( width, height );
 	}
-
+	
 	//----------------------------------------------------------------//
-	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKURun ( JNIEnv* env, jclass obj, jstring jfilename, jint width, jint height ) {
+	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKURunScript ( JNIEnv* env, jclass obj, jstring jfilename ) {
 		GET_STRING ( jfilename, filename );
-
-		AKUSetContext ( mAku );
-		AKUResize ( width, height );
 		AKURunScript ( filename );
-		
 		RELEASE_STRING ( jfilename, filename );
 	}
 
-
-	// //----------------------------------------------------------------//
-	// extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKURunScript ( JNIEnv* env, jclass obj, jstring jfilename ) {
-	// 	GET_STRING ( jfilename, filename );
-	// 	AKURunScript ( filename );
-	// 	RELEASE_STRING ( jfilename, filename );
-	// }
-
+	//----------------------------------------------------------------//
+	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUSetContext ( JNIEnv* env, jclass obj, jint akuContextId ) {
+		AKUSetContext ( akuContextId );
+	}
+	
 	//----------------------------------------------------------------//
 	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUSetDeviceProperties ( JNIEnv* env, jclass obj, jstring jappName, jstring jabi, jstring jdevBrand, jstring jdevName, jstring jdevManufacturer, jstring jdevModel, jstring jdevProduct, jstring josBrand, jstring josVersion, jstring judid ) {
 
@@ -395,7 +310,18 @@ extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_setWorkingDirectory ( JNIEnv
 		AKUSetInputDeviceTouch ( deviceId, sensorId, name );
 		RELEASE_STRING ( jname, name );
 	}
+
+	//----------------------------------------------------------------//
+	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUSetWorkingDirectory ( JNIEnv* env, jclass obj, jstring jpath ) {
+
+		GET_STRING ( jpath, path );
+
+		USFileSys::SetCurrentPath ( path );
+		USLuaRuntime::Get ().SetPath ( path );
 	
+		RELEASE_STRING ( jpath, path );
+	}
+
 	//----------------------------------------------------------------//
 	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUUntzInit ( JNIEnv* env, jclass obj ) {
 		AKUUntzInit ();
