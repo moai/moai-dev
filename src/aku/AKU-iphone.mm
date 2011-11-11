@@ -115,7 +115,7 @@ void AKUIphoneInit ( UIApplication* application ) {
 	MOAIEnvironment::Get ().SetDevModel ( [[ UIDevice currentDevice ].model UTF8String ] );
 
 	CGRect screenRect = [[UIScreen mainScreen] bounds];
-	MOAIEnvironment::Get ().SetScreenSize( screenRect.size.width, screenRect.size.height );
+	MOAIEnvironment::Get ().SetScreenSize( ( int ) screenRect.size.width, ( int ) screenRect.size.height );
 
 	if ([[ UIScreen mainScreen ] scale ] == 2.0 ) {
 		//this is retina
