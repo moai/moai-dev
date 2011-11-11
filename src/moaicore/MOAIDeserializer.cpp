@@ -32,7 +32,7 @@ int MOAIDeserializer::_initObject ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 int MOAIDeserializer::_registerObjectID ( lua_State* L ) {
-	LUA_SETUP ( MOAIDeserializer, "UUN" );
+	LUA_SETUP ( MOAIDeserializer, "UU" );
 
 	MOAILuaObject* object = state.GetLuaObject < MOAILuaObject >( 2 );
 	if ( !object ) return 0;
