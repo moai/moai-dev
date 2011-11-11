@@ -1268,6 +1268,14 @@
 			Name="transform"
 			>
 			<File
+				RelativePath="..\..\src\moaicore\MOAISeeker.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAISeeker.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\moaicore\MOAITransform.cpp"
 				>
 			</File>

@@ -77,6 +77,8 @@ MOAIGlyph::MOAIGlyph () :
 	mYOff ( 0.0f ),
 	mAdvanceX ( 0.0f ),
 	mBearingX ( 0.0f ) {
+	
+	this->mUVRect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
 }
 
 //----------------------------------------------------------------//
