@@ -64,8 +64,11 @@ fi
 # android host
 mkdir -p moai-sdk/hosts/android
 cd ../android
-cp -R . ../distribute/moai-sdk/hosts/android
-cd ../distribute
+./libmoai/clean.sh
+./make-host.sh -p com.getmoai.samples -q
+cd untitled-host
+cp -R . ../../distribute/moai-sdk/hosts/android
+cd ../../distribute
 
 # ios host
 mkdir -p moai-sdk/hosts/xcode-ios/Classes
