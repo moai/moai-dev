@@ -2,6 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <moaicore/MOAIColor.h>
 #include <moaicore/MOAIEaseDriver.h>
 #include <moaicore/MOAIGfxDevice.h>
 #include <moaicore/MOAILogMessages.h>
@@ -28,10 +29,20 @@ void MOAIShaderUniform::BindAttributes ( const float* attributes ) {
 			glUniform1fv ( this->mAddr, this->mSize, &attributes [ this->mSrc ]);
 			break;
 		}
+		case UNIFORM_COLOR: {
+			
+			if ( this->mNode ) {
+				MOAIColor* color = this->mNode->AsType < MOAIColor >();
+				assert ( color );
+				this->BindColor ( *color );
+			}
+			break;
+		}
 		case UNIFORM_TRANSFORM: {
 			
-			if ( this->mTransform ) {
-				const USAffine2D& affine = this->mTransform->GetLocalToWorldMtx ();
+			if ( this->mNode ) {
+				MOAITransformBase* transform = this->mNode->AsType < MOAITransformBase >();
+				const USAffine2D& affine = transform->GetLocalToWorldMtx ();
 				USMatrix4x4 matrix;
 				matrix.Init ( affine );
 				this->BindMatrix ( matrix );
@@ -39,6 +50,12 @@ void MOAIShaderUniform::BindAttributes ( const float* attributes ) {
 			break;
 		}
 	}
+}
+
+//----------------------------------------------------------------//
+void MOAIShaderUniform::BindColor ( const MOAIColor& color ) {
+	
+	glUniform4f ( this->mAddr, color.mR, color.mG, color.mB, color.mA );
 }
 
 //----------------------------------------------------------------//
@@ -219,7 +236,7 @@ int MOAIShader::_reserveUniforms ( lua_State* L ) {
 	
 		@in		MOAIShader self
 		@opt	number index				Default value is 1.
-		@opt	MOAITransform transform		Transform to map onto uniform.
+		@opt	MOAINode transform			MOAITransformBase or MOAIColor.
 	
 	@out	nil
 */
@@ -238,8 +255,14 @@ int MOAIShader::_setUniform ( lua_State* L ) {
 				uniform.mSrc	= state.GetValue < u32 >( 3, 0 );
 				uniform.mSize	= state.GetValue < u32 >( 4, 0 );
 				break;
+			case MOAIShaderUniform::UNIFORM_COLOR: {
+				MOAIColor* color = state.GetLuaObject < MOAIColor >( 3 );
+				uniform.mNode.Set ( *self, color );
+				break;
+			}
 			case MOAIShaderUniform::UNIFORM_TRANSFORM: {
-				uniform.mTransform.Set ( *self,	state.GetLuaObject < MOAITransformBase >( 3 ));
+				MOAITransformBase* transform = state.GetLuaObject < MOAITransformBase >( 3 );
+				uniform.mNode.Set ( *self, transform );
 				break;
 			}
 		}
@@ -278,7 +301,7 @@ void MOAIShader::ClearUniform ( u32 idx ) {
 		MOAIShaderUniform& uniform = this->mUniforms [ idx ];
 		uniform.mName.clear ();
 		uniform.mType = MOAIShaderUniform::UNIFORM_NONE;
-		uniform.mTransform.Set ( *this, 0 );
+		uniform.mNode.Set ( *this, 0 );
 	}
 }
 
@@ -287,7 +310,7 @@ void MOAIShader::ClearUniforms ( ) {
 
 	for ( u32 i = 0; i < this->mUniforms.Size (); ++i ) {
 		MOAIShaderUniform& uniform = this->mUniforms [ i ];
-		uniform.mTransform.Set ( *this, 0 );
+		uniform.mNode.Set ( *this, 0 );
 	}
 	this->mUniforms.Clear ();
 }
@@ -374,7 +397,7 @@ MOAIShader::~MOAIShader () {
 
 //----------------------------------------------------------------//
 void MOAIShader::OnBind () {
-		
+
 	// use shader program.
 	glUseProgram ( this->mProgram );
 
@@ -482,6 +505,7 @@ void MOAIShader::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	state.SetField ( -1, "UNIFORM_INT",					( u32 )MOAIShaderUniform::UNIFORM_INT );
 	state.SetField ( -1, "UNIFORM_FLOAT",				( u32 )MOAIShaderUniform::UNIFORM_FLOAT );
+	state.SetField ( -1, "UNIFORM_COLOR",				( u32 )MOAIShaderUniform::UNIFORM_COLOR );
 	state.SetField ( -1, "UNIFORM_TRANSFORM",			( u32 )MOAIShaderUniform::UNIFORM_TRANSFORM );
 	state.SetField ( -1, "UNIFORM_VIEW_PROJ",			( u32 )MOAIShaderUniform::UNIFORM_VIEW_PROJ );
 	state.SetField ( -1, "UNIFORM_WORLD",				( u32 )MOAIShaderUniform::UNIFORM_WORLD );
@@ -551,7 +575,7 @@ void MOAIShader::SetUniform ( u32 idx, MOAITransformBase* transform ) {
 		MOAIShaderUniform& uniform = this->mUniforms [ idx ];
 		if ( uniform.mType != MOAIShaderUniform::UNIFORM_TRANSFORM ) return;
 		
-		uniform.mTransform.Set ( *this,	transform );
+		uniform.mNode.Set ( *this,	transform );
 	}
 }
 

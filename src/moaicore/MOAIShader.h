@@ -8,6 +8,7 @@
 #include <moaicore/MOAINode.h>
 #include <moaicore/MOAILua.h>
 
+class MOAIColor;
 class MOAITransformBase;
 	
 #define		OPENGL_PREPROC		"#define LOWP\n #define MEDP\n"
@@ -23,6 +24,7 @@ private:
 
 	enum {
 		UNIFORM_NONE,
+		UNIFORM_COLOR,
 		UNIFORM_INT,
 		UNIFORM_FLOAT,
 		UNIFORM_TRANSFORM,
@@ -37,10 +39,11 @@ private:
 	u32		mSrc;
 	
 	STLString mName;
-	MOAILuaSharedPtr < MOAITransformBase > mTransform;
+	MOAILuaSharedPtr < MOAINode > mNode;
 
 	//----------------------------------------------------------------//
 	void		BindAttributes				( const float* attributes );
+	void		BindColor					( const MOAIColor& color );
 	void		BindMatrix					( const USMatrix4x4& matrix );
 	void		BindPipelineTransforms		( const USMatrix4x4& world, const USMatrix4x4& view, const USMatrix4x4& proj );
 
