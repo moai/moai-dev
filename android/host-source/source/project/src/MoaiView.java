@@ -17,7 +17,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.opengl.GLSurfaceView;
 import android.os.Build;
-import android.os.SystemClock;
 import android.provider.Settings.Secure;
 import android.view.MotionEvent;
 

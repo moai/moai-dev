@@ -140,7 +140,7 @@
 	
 	# create run commands for the host
 	for file in "${run[@]}"; do
-		run_command=`echo -e $run_command"AKURunScript\(\""$file"\"\)\;\n"`
+		run_command=`echo -e $run_command"run\(\""$file"\"\)\;\n"`
 	done
 
 	fr 	build/$package_path/MoaiView.java	@RUN@ 	$run_command
