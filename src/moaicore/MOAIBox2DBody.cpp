@@ -121,7 +121,7 @@ int MOAIBox2DBody::_addPolygon ( lua_State* L ) {
 
 	b2Vec2 verts [ MOAIBox2DFixture::MAX_POLY_VERTS ];
 	int numVerts = MOAIBox2DFixture::LoadVerts ( state, 2, verts, MOAIBox2DFixture::MAX_POLY_VERTS, unitsToMeters );
-			
+	
 	if ( numVerts ) {
 		
 		b2PolygonShape polyShape;

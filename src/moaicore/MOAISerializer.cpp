@@ -440,9 +440,9 @@ u32 MOAISerializer::WriteTable ( USStream& stream, MOAILuaState& state, int idx,
 	u32 itr = state.PushTableItr ( idx );
 	while ( state.TableItrNext ( itr )) {
 		
-		cc8* keyName = lua_tostring ( state, -2 );
 		int keyType = lua_type ( state, -2 );
 		int valType = lua_type ( state, -1 );
+		cc8* keyName = lua_tostring ( state, -2 );
 		
 		switch ( valType ) {
 			case LUA_TNONE:
@@ -538,9 +538,9 @@ u32 MOAISerializer::WriteTableInitializer ( USStream& stream, MOAILuaState& stat
 	u32 itr = state.PushTableItr ( idx );
 	while ( state.TableItrNext ( itr )) {
 		
-		cc8* keyName = lua_tostring ( state, -2 );
 		int keyType = lua_type ( state, -2 );
 		int valType = lua_type ( state, -1 );
+		cc8* keyName = lua_tostring ( state, -2 );
 		
 		switch ( valType ) {
 			case LUA_TNONE:

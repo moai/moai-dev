@@ -7,6 +7,6 @@ varying MEDP vec2 uvVarying;
 uniform sampler2D sampler;
 uniform vec4 maskColor;
 
-void main() {
-	gl_FragColor = texture2D ( sampler, uvVarying ) * colorVarying * maskColor;
+void main() { 
+	gl_FragColor = ( texture2D ( sampler, uvVarying ) * colorVarying ) + maskColor;
 }

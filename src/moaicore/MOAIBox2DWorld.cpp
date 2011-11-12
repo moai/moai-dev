@@ -973,7 +973,6 @@ void MOAIBox2DWorld::ScheduleDestruction ( MOAIBox2DBody& body ) {
 		body.mDestroyNext = this->mDestroyBodies;
 		this->mDestroyBodies = &body;
 		body.mDestroy = true;
-		//body.Retain ();
 	}
 	this->Destroy ();
 }
@@ -985,7 +984,6 @@ void MOAIBox2DWorld::ScheduleDestruction ( MOAIBox2DFixture& fixture ) {
 		fixture.mDestroyNext = this->mDestroyFixtures;
 		this->mDestroyFixtures = &fixture;
 		fixture.mDestroy = true;
-		//fixture.Retain ();
 	}
 	this->Destroy ();
 }
@@ -997,7 +995,6 @@ void MOAIBox2DWorld::ScheduleDestruction ( MOAIBox2DJoint& joint ) {
 		joint.mDestroyNext = this->mDestroyJoints;
 		this->mDestroyJoints = &joint;
 		joint.mDestroy = true;
-		//joint.Retain ();
 	}
 	this->Destroy ();
 }

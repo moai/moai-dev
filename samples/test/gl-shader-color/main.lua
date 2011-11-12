@@ -35,7 +35,7 @@ prop:moveRot ( 360, 1.5 )
 layer:insertProp ( prop )
 
 color = MOAIColor.new ()
-color:setColor ( 1, 0, 0, 1 )
+color:setColor ( 0, 0, 0, 0 )
 
 shader = MOAIShader.new ()
 shader:reserveUniforms ( 1 )
