@@ -6,6 +6,8 @@
 
 #!/bin/bash
 
+set -e
+
 xcodebuild -configuration Release -target libmoai-osx-3rdparty -sdk macosx clean
 xcodebuild -configuration Release -target libmoai-osx -sdk macosx clean
 xcodebuild -configuration Release -target libmoai-osx-luaext -sdk macosx clean
