@@ -8,7 +8,6 @@
 
 # general files
 mkdir -p moai-sdk/3rdparty/glut-3.7.6
-
 cd ../3rdparty/glut-3.7.6-bin
 cp -R * ../../distribute/moai-sdk/3rdparty/glut-3.7.6
 cd ../../distribute
@@ -52,23 +51,27 @@ cd ../../distribute
 
 # docs
 mkdir moai-sdk/docs
-cd doxygen/html-lua/html
-cp -R * ../../../moai-sdk/docs
-cd ../../..
+if [ -d doxygen/html-lua/html ]; then
+	cd doxygen/html-lua/html
+	cp -R * ../../../moai-sdk/docs
+	cd ../../..
+else
+	echo "*** Required documentation has not yet been generated."
+	echo "*** Run ../doxygen/make-docs-lua.bat to generate the required "
+	echo "*** documentation and then re-run this script to remake the SDK."
+fi
 
 # android host
-mkdir -p moai-sdk/hosts/eclipse/android-project
-
-cd ../eclipse/android-project
-cp -R . ../../distribute/moai-sdk/hosts/eclipse/android-project
+mkdir -p moai-sdk/hosts/android
+cd ../android
+./libmoai/clean.sh
+./make-host.sh -p com.getmoai.samples -q
+cd untitled-host
+cp -R . ../../distribute/moai-sdk/hosts/android
 cd ../../distribute
-
-cp -f moai-sdk/hosts/eclipse/packager/moai-target.default moai-sdk/hosts/eclipse/android-project/moai-target
-cp -f moai-sdk/hosts/eclipse/packager/default.project moai-sdk/hosts/eclipse/android-project/.project
 
 # ios host
 mkdir -p moai-sdk/hosts/xcode-ios/Classes
-
 cd ../xcode/ios/Classes
 cp -R * ../../../distribute/moai-sdk/hosts/xcode-ios/Classes
 cd ../../../distribute
