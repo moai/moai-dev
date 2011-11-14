@@ -385,6 +385,12 @@ void AKUSetScreenSize ( int width, int height ) {
 }
 
 //----------------------------------------------------------------//
+void AKUSetViewSize ( int width, int height ) {
+	
+	MOAIGfxDevice::Get ().SetSize ( width, height );
+}
+
+//----------------------------------------------------------------//
 int AKUSetWorkingDirectory ( char const* path ) {
 
 	return zipfs_chdir ( path );

@@ -68,6 +68,7 @@ AKU_API void			AKUReleaseGfxContext			();
 AKU_API void			AKURender						();
 AKU_API void			AKURunScript					( const char* filename );
 AKU_API void			AKUSetScreenSize				( int width, int height );
+AKU_API void			AKUSetViewSize					( int width, int height );
 AKU_API void			AKUSoftReleaseGfxResources		( int age );
 AKU_API int				AKUSetWorkingDirectory			( char const* path );
 AKU_API void			AKUUpdate						();
