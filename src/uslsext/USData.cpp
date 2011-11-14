@@ -116,7 +116,7 @@ bool USData::Load ( cc8* filename ) {
 }
 
 //----------------------------------------------------------------//
-void USData::Load ( void* bytes, u32 size ) {
+void USData::Load ( void* bytes, size_t size ) {
 
 	this->mMutex.Lock ();
 	
@@ -127,7 +127,7 @@ void USData::Load ( void* bytes, u32 size ) {
 }
 
 //----------------------------------------------------------------//
-void USData::Lock ( void** bytes, u32* size ) {
+void USData::Lock ( void** bytes, size_t* size ) {
 
 	this->mMutex.Lock ();
 	( *bytes ) = this->mBytes;

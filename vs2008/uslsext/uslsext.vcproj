@@ -686,6 +686,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\uslsext\USHexDump.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\uslsext\USHexDump.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\uslsext\USRadixSort16.h"
 				>
 			</File>

@@ -247,6 +247,61 @@ int MOAIDataBuffer::_setString ( lua_State* L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
+/**	@name	toCppHeader
+	@text	Convert data to CPP header file.
+
+	@overload
+
+		@in		string data				The string data to encode
+		@in		string name
+		@opt	number columns			Default value is 12
+		@out	string output
+	
+	@overload
+
+		@in		MOAIDataBuffer data		The data buffer to encode
+		@in		string name
+		@opt	number columns			Default value is 12
+		@out	string output
+*/
+int MOAIDataBuffer::_toCppHeader ( lua_State* L ) {
+	MOAILuaState state ( L );
+	
+	cc8* name		= state.GetValue < cc8* >( 2, "" );
+	u32 columns		= state.GetValue < u32 >( 3, 12 );
+	
+	if ( !strlen ( name )) return 0;
+	
+	USMemStream memStream;
+	
+	if ( state.IsType ( 1, LUA_TSTRING )) {
+		
+		size_t size;
+		const void* bytes = lua_tolstring ( state, 1, &size );
+		USHexDump::DumpAsCPPHeader ( memStream, name, bytes, size, columns );
+	}
+	
+	MOAIDataBuffer* dataBuffer = state.GetLuaObject < MOAIDataBuffer >( 1 );
+	if ( dataBuffer ) {
+		
+		size_t size;
+		void* bytes;
+		dataBuffer->Lock ( &bytes, &size );
+		USHexDump::DumpAsCPPHeader ( memStream, name, bytes, size, columns );
+	}
+	
+	if ( memStream.GetLength ()) {
+		
+		memStream.Seek ( 0, SEEK_SET );
+		STLString result = memStream.ToString ( memStream.GetLength ());
+		
+		lua_pushstring ( state, result );
+		return 1;
+	}
+	return 0;
+}
+
 //================================================================//
 // MOAIDataBuffer
 //================================================================//
@@ -269,6 +324,7 @@ void MOAIDataBuffer::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "base64Encode",	_base64Encode },
 		{ "deflate",		_deflate },
 		{ "inflate",		_inflate },
+		{ "toCppHeader",	_toCppHeader },
 		{ NULL, NULL }
 	};
 

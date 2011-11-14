@@ -17,6 +17,7 @@
 #include <uslsext/USDataIOTask.h>
 #include <uslsext/USDelegate.h>
 #include <uslsext/USDistance.h>
+#include <uslsext/USHexDump.h>
 #include <uslsext/USInterpolate.h>
 #include <uslsext/USIntersect.h>
 #include <uslsext/USLexStream.h>
