@@ -270,6 +270,13 @@
 	}
 
 	//----------------------------------------------------------------//
+	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiActivity_AKUSetDocumentDirectory ( JNIEnv* env, jclass obj, jstring jpath ) {
+		GET_STRING ( jpath, path );
+		MOAIEnvironment::Get ().SetDocumentDirectory ( path );
+		RELEASE_STRING ( jpath, path );
+	}
+
+	//----------------------------------------------------------------//
 	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUSetInputConfigurationName ( JNIEnv* env, jclass obj, jstring jname ) {
 		GET_STRING ( jname, name );
 		AKUSetInputConfigurationName ( name );

@@ -97,7 +97,9 @@
 	fr build/AndroidManifest.xml	@NAME@			$project_name
 	fr build/AndroidManifest.xml	@PACKAGE@		$package
 	fr build/AndroidManifest.xml	@DEBUGGABLE@	$debug
-
+	fr build/AndroidManifest.xml	@VERSION_CODE@	$versionCode
+	fr build/AndroidManifest.xml	@VERSION_NAME@	$versionName
+	
 	# copy ant.properties file and replace text inside
 	cp -f	host-source/project/ant.properties	build/ant.properties
 	fr build/ant.properties		@KEY_STORE@		$key_store
