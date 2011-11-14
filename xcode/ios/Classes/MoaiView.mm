@@ -85,6 +85,7 @@ namespace MoaiInputDeviceSensorID {
 		[ self beginDrawing ];
 		
 		AKUSetContext ( mAku );
+        AKUSetViewSize ( mWidth, mHeight );
 		AKURender ();
 
 		[ self endDrawing ];
