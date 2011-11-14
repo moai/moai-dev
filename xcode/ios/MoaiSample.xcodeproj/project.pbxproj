@@ -628,6 +628,7 @@
 		1D6058940D05DD3E006BFB54 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_NAME = MoaiSample;
 			};
 			name = Debug;
@@ -635,6 +636,7 @@
 		1D6058950D05DD3E006BFB54 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_NAME = MoaiSample;
 			};
 			name = Release;
