@@ -1,8 +1,8 @@
 Project structure: 
 
 3rdparty - All of the 3rd party libraries we use.
+android - The Android reference projects.
 distribute - The files and set up used to create the SDK installers and other distributable packages
-eclipse - The android-ndk/eclipse reference projects.
 samples - Lua and tools samples as well as some development test/experiment scripts.
 src - Moai source code and headers.
 test - Lua stress tests for Moai. These were written to crash Moai. We'll be fixing Moai to handle more user errors gracefully (instead of crash) as the project develops.
