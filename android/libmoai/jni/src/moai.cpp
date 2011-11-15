@@ -197,6 +197,15 @@
 	}
 
 	//----------------------------------------------------------------//
+	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiActivity_AKUMountVirtualDirectory ( JNIEnv* env, jclass obj, jstring jvirtualPath, jstring jarchive ) {
+		GET_STRING ( jvirtualPath, virtualPath );
+		GET_STRING ( jarchive, archive );
+		AKUMountVirtualDirectory ( virtualPath, archive );
+		RELEASE_STRING ( jvirtualPath, virtualPath );
+		RELEASE_STRING ( jarchive, archive );
+	}
+
+	//----------------------------------------------------------------//
 	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUPause ( JNIEnv* env, jclass obj, jboolean paused ) {
 		AKUPause ( paused );
 	}
