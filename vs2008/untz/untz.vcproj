@@ -484,6 +484,26 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\3rdparty\rtaudio-4.0.8\include\iasiothiscallresolver.cpp"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
 				RelativePath="..\..\3rdparty\rtaudio-4.0.8\include\iasiothiscallresolver.h"
 				>
 			</File>

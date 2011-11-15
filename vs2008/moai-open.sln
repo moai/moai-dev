@@ -21,7 +21,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "glew", "glew\glew.vcproj", 
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "glewinfo", "glewinfo\glewinfo.vcproj", "{D898C9F0-C6D3-4A22-ADCE-763394B7F9E3}"
 	ProjectSection(ProjectDependencies) = postProject
+		{E6C55A0C-B5B7-4963-8F77-19F1624B9F47} = {E6C55A0C-B5B7-4963-8F77-19F1624B9F47}
 		{48580411-0A48-46F9-87A6-CF5C9B81D146} = {48580411-0A48-46F9-87A6-CF5C9B81D146}
+		{A92A8C1C-C62D-43F8-98A9-C418A786BE56} = {A92A8C1C-C62D-43F8-98A9-C418A786BE56}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "hexdump", "hexdump\hexdump.vcproj", "{F83A5925-1AD8-4D5D-A134-85AFF1466766}"
@@ -128,7 +130,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "uslsext", "uslsext\uslsext.
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "visualinfo", "visualinfo\visualinfo.vcproj", "{CC196C96-AE3D-4E3A-A405-620F83104EB7}"
 	ProjectSection(ProjectDependencies) = postProject
+		{E6C55A0C-B5B7-4963-8F77-19F1624B9F47} = {E6C55A0C-B5B7-4963-8F77-19F1624B9F47}
 		{48580411-0A48-46F9-87A6-CF5C9B81D146} = {48580411-0A48-46F9-87A6-CF5C9B81D146}
+		{A92A8C1C-C62D-43F8-98A9-C418A786BE56} = {A92A8C1C-C62D-43F8-98A9-C418A786BE56}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "zlib", "zlib\zlib.vcproj", "{E6C55A0C-B5B7-4963-8F77-19F1624B9F47}"
@@ -459,8 +463,8 @@ Global
 		{1E78302D-CF63-4922-8113-DCCD24F94087} = {9F8AD78A-95B2-4E97-8070-087F82AA848D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		AMDCaPersistentConfig = Debug|Win32
-		AMDCaPersistentStartup = moai (Utilities\moai)
 		AMDCaProjectFile = C:\Documents and Settings\Patrick\My Documents\git\moai\vs2008\CodeAnalyst\moai-open.caw
+		AMDCaPersistentStartup = moai (Utilities\moai)
+		AMDCaPersistentConfig = Debug|Win32
 	EndGlobalSection
 EndGlobal
