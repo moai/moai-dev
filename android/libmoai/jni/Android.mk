@@ -33,7 +33,6 @@
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/src
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/src/aku
-	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/src/moai-lua-5.1.3/src
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/src/moaicore
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/src/moaiext-untz
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/src/uslsext
@@ -66,13 +65,13 @@
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/jpeg-8c
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/libogg-1.2.2/include
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/libvorbis-1.3.2/include
-	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/lua/include
+	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/lpng140
+	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/lua-5.1.3/src
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/luacrypto-0.2.0/src
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/luacurl-1.2.1
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/luasocket-2.0.2/src
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/luasql-2.2.0/src
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/openssl-1.0.0d/include-android
-	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/lpng140
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/sqlite-3.6.16
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/tinyxml
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/tlsf-2.0
