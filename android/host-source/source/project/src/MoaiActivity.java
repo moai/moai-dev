@@ -97,12 +97,14 @@ public class MoaiActivity extends Activity implements SensorEventListener {
 		mAccelerometer = mSensorManager.getDefaultSensor ( Sensor.TYPE_ACCELEROMETER );
 		
 		// set documents directory
-		File externalFilesDir = new File ( getExternalFilesDir ( null ), "" );
-		AKUSetDocumentDirectory ( externalFilesDir.getAbsolutePath () );
-		
+		String filesDir = getFilesDir ().getAbsolutePath ();
+		AKUSetDocumentDirectory ( filesDir );
+
 		// unpack assets
-    	unpackAssets ( externalFilesDir );
-	    mMoaiView.setDirectory ( externalFilesDir.getAbsolutePath () );
+    	unpackAssets ( filesDir );
+ 		mMoaiView.setDirectory ( filesDir );
+
+		// mMoaiView.setDirectory ( "android.resource://@PACKAGE@/raw" );
     }
 
 	//----------------------------------------------------------------//
@@ -163,12 +165,12 @@ public class MoaiActivity extends Activity implements SensorEventListener {
 	}
 		
     //----------------------------------------------------------------//
-	private void unpackAssets ( File rootDir ) {
+	private void unpackAssets ( String rootDir ) {
 		
 		log ( "MoaiActivity unpackingAssets . . ." );
 		
 		InputStream is = getResources ().openRawResource ( R.raw.bundle );
-		File extractTo = new File ( rootDir.getAbsolutePath () + "/" );
+		File extractTo = new File ( rootDir + "/" );
 		ZipInputStream zis;
 		
 		try {

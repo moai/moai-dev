@@ -261,7 +261,7 @@ public class MoaiView extends GLSurfaceView {
 			AKUSetWorkingDirectory ( mAppRoot + "/@WORKING_DIR@" );
 			run ( "@RUN_INIT_DIR@/init.lua" );
 			@RUN@
-		//	MoaiActivity.startSession ();
+			MoaiActivity.startSession ();
 		}
 	}
 }
