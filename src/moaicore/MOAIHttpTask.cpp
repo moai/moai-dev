@@ -109,7 +109,7 @@ int MOAIHttpTask::_httpPost ( lua_State* L ) {
 		if ( data ) {
 		
 			void* bytes;
-			u32 size;
+			size_t size;
 			data->Lock ( &bytes, &size );
 			self->HttpPost ( url, useragent, bytes, size, verbose );
 			data->Unlock ();

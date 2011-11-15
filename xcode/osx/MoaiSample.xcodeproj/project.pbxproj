@@ -134,7 +134,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0300CF70140DC56200ABCC5B /* moai-untz */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "moai-untz"; sourceTree = BUILT_PRODUCTS_DIR; };
+		0300CF70140DC56200ABCC5B /* moai-untz */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; name = "moai-untz"; path = moai; sourceTree = BUILT_PRODUCTS_DIR; };
 		0300CF7A140DC61000ABCC5B /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = /System/Library/Frameworks/AudioToolbox.framework; sourceTree = "<absolute>"; };
 		0300CF93140DC65100ABCC5B /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = /System/Library/Frameworks/AudioUnit.framework; sourceTree = "<absolute>"; };
 		0324CC63135643FD000ADC60 /* libSystem.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libSystem.dylib; path = /usr/lib/libSystem.dylib; sourceTree = "<absolute>"; };

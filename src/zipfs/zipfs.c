@@ -485,11 +485,13 @@ ZIPFSFILE* zipfs_fopen ( const char* filename, const char* mode ) {
 }
 
 //----------------------------------------------------------------//
-errno_t zipfs_fopen_s ( ZIPFSFILE** fp, const char* filename, const char* mode ) {
+#ifdef MOAI_COMPILER_MSVC
+	errno_t zipfs_fopen_s ( ZIPFSFILE** fp, const char* filename, const char* mode ) {
 
-	*fp = fopen ( filename, mode );
-	return errno;
-}
+		*fp = fopen ( filename, mode );
+		return errno;
+	}
+#endif
 
 //----------------------------------------------------------------//
 int zipfs_fprintf ( ZIPFSFILE * fp, const char * format, ... ) {
@@ -612,11 +614,13 @@ int	zipfs_fseek ( ZIPFSFILE* fp, long offset, int origin ) {
 }
 
 //----------------------------------------------------------------//
-int zipfs_fseeki64 ( ZIPFSFILE* fp, __int64 offset, int origin ) {
+#ifdef MOAI_COMPILER_MSVC
+	int zipfs_fseeki64 ( ZIPFSFILE* fp, __int64 offset, int origin ) {
 
-	// TODO:
-	return zipfs_fseek ( fp, ( long )offset, origin );
-}
+		// TODO:
+		return zipfs_fseek ( fp, ( long )offset, origin );
+	}
+#endif
 
 //----------------------------------------------------------------//
 int zipfs_fsetpos ( ZIPFSFILE* fp, const fpos_t * pos ) {

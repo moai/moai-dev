@@ -663,7 +663,7 @@ void MOAITexture::Init ( cc8* filename, u32 transform ) {
 void MOAITexture::Init ( MOAIDataBuffer& data, u32 transform, cc8* debugname ) {
 
 	void* bytes;
-	u32 size;
+	size_t size;
 	data.Lock ( &bytes, &size );
 
 	this->Init ( bytes, size, transform, debugname );

@@ -61,7 +61,6 @@ extern int					zipfs_fgetc					( ZIPFSFILE* fp );
 extern int					zipfs_fgetpos				( ZIPFSFILE* fp, fpos_t* position );
 extern char* 				zipfs_fgets					( char* string, int length, ZIPFSFILE* fp );
 extern ZIPFSFILE* 			zipfs_fopen 				( const char* filename, const char* mode );
-extern errno_t	 			zipfs_fopen_s 				( ZIPFSFILE** fp, const char* filename, const char* mode );
 extern int					zipfs_fprintf				( ZIPFSFILE* fp, const char * format, ... );
 extern int 					zipfs_fputc					( int c, ZIPFSFILE* fp );
 extern int					zipfs_fputs					( const char* string, ZIPFSFILE* fp );
@@ -69,7 +68,6 @@ extern size_t				zipfs_fread					( void* buffer, size_t size, size_t count, ZIPF
 extern ZIPFSFILE*			zipfs_freopen				( const char* filename, const char* mode, ZIPFSFILE* fp );
 extern int					zipfs_fscanf				( ZIPFSFILE* fp, const char* format, ... );
 extern int					zipfs_fseek					( ZIPFSFILE* fp, long offset, int origin );
-extern int					zipfs_fseeki64				( ZIPFSFILE* fp, __int64 offset, int origin );
 extern int					zipfs_fsetpos				( ZIPFSFILE* fp, const fpos_t * pos );
 extern long					zipfs_ftell					( ZIPFSFILE* fp );
 extern size_t				zipfs_fwrite				( const void* data, size_t size, size_t count, ZIPFSFILE* fp );
@@ -84,6 +82,11 @@ extern ZIPFSFILE*			zipfs_tmpfile				();
 extern int					zipfs_ungetc				( int character, ZIPFSFILE* fp );
 extern int					zipfs_vfprintf				( ZIPFSFILE* fp, const char* format, va_list arg );
 extern int					zipfs_vfscanf				( ZIPFSFILE* fp, const char* format, va_list arg );
+
+#ifdef MOAI_COMPILER_MSVC
+	extern errno_t	 			zipfs_fopen_s 				( ZIPFSFILE** fp, const char* filename, const char* mode );
+	extern int					zipfs_fseeki64				( ZIPFSFILE* fp, __int64 offset, int origin );
+#endif
 
 //================================================================//
 // extra

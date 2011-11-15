@@ -92,7 +92,7 @@ int MOAIDataBuffer::_getSize ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIDataBuffer, "U" );
 
 	void* bytes;
-	u32 size;
+	size_t size;
 	self->Lock ( &bytes, &size );
 	
 	lua_pushnumber ( state, size );
@@ -112,7 +112,7 @@ int MOAIDataBuffer::_getSize ( lua_State* L ) {
 int MOAIDataBuffer::_getString ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIDataBuffer, "U" );
 
-	u32 size;
+	size_t size;
 	void* buffer;
 	
 	self->Lock ( &buffer, &size );

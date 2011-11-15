@@ -1078,7 +1078,7 @@ bool MOAIImage::IsPng ( const void* buffer, u32 size ) {
 void MOAIImage::Load ( USData& data, u32 transform ) {
 
 	void* bytes;
-	u32 size;
+	size_t size;
 	data.Lock ( &bytes, &size );
 
 	this->Load ( bytes, size, transform );
