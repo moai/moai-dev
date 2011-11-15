@@ -156,6 +156,7 @@ static void _onReshape( int w, int h ) {
 
 //----------------------------------------------------------------//
 static void _onTimer ( int millisec ) {
+	UNUSED ( millisec );
 
 	int timerInterval = ( int )( AKUGetSimStep () * 1000.0 );
 	glutTimerFunc ( timerInterval, _onTimer, timerInterval );
