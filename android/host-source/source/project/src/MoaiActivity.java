@@ -40,9 +40,12 @@ public class MoaiActivity extends Activity implements SensorEventListener {
 	private MoaiView			mMoaiView;
 	private SensorManager 		mSensorManager;
 	
+	protected static native void AKUAppDidStartSession 		();
 	protected static native void AKUEnqueueCompassEvent 	( int heading );
 	protected static native void AKUEnqueueLevelEvent 		( int deviceId, int sensorId, float x, float y, float z );
 	protected static native void AKUEnqueueLocationEvent 	( int deviceId, int sensorId, int longitude, int latitude, int altitude, float hAccuracy, float vAccuracy, float speed );
+	protected static native void AKUSetDocumentDirectory 	( String path );
+	protected static native void AKUAppWillEndSession 		();
 
 	//----------------------------------------------------------------//
 	public static void log ( String message ) {
@@ -93,12 +96,13 @@ public class MoaiActivity extends Activity implements SensorEventListener {
 		mSensorManager = ( SensorManager ) getSystemService ( Context.SENSOR_SERVICE );
 		mAccelerometer = mSensorManager.getDefaultSensor ( Sensor.TYPE_ACCELEROMETER );
 		
-		// unpack assets
+		// set documents directory
 		File externalFilesDir = new File ( getExternalFilesDir ( null ), "" );
+		AKUSetDocumentDirectory ( externalFilesDir.getAbsolutePath () );
+		
+		// unpack assets
     	unpackAssets ( externalFilesDir );
 	    mMoaiView.setDirectory ( externalFilesDir.getAbsolutePath () );
-	
-		// run Lua scripts
     }
 
 	//----------------------------------------------------------------//
@@ -129,6 +133,11 @@ public class MoaiActivity extends Activity implements SensorEventListener {
 
 		// call super
 		super.onStart ();
+		//AKUAppDidStartSession ();
+	}
+	
+	public static void startSession () {
+		AKUAppDidStartSession ();
 	}
 	
 	//----------------------------------------------------------------//
@@ -138,6 +147,7 @@ public class MoaiActivity extends Activity implements SensorEventListener {
 
 		// call super
 		super.onStop ();
+		AKUAppWillEndSession ();
 	}
 	
 	//----------------------------------------------------------------//

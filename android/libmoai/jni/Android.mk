@@ -98,6 +98,7 @@
 	LOCAL_STATIC_LIBRARIES += libuslsext
 	LOCAL_STATIC_LIBRARIES += libuslscore
 
+	LOCAL_STATIC_LIBRARIES += libmoaiext-android
 	LOCAL_STATIC_LIBRARIES += libmoaiext-luaext
 	LOCAL_STATIC_LIBRARIES += libmoaiext-untz
 
@@ -131,6 +132,7 @@
 	include jpg/Android.mk
 	include json/Android.mk
 	include lua/Android.mk
+	include moaiext-android/Android.mk
 	include moaiext-luaext/Android.mk
 	include moaiext-untz/Android.mk
 	include png/Android.mk

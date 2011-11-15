@@ -9,6 +9,7 @@
 #include <string.h>
 
 #include <moaicore/moaicore.h>
+#include <moaiext-android/moaiext-android.h>
 #include <aku/AKU.h>
 #include <aku/AKU-untz.h>
 #include <aku/AKU-luaext.h>
@@ -130,6 +131,11 @@
 	}
 
 	//----------------------------------------------------------------//
+	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiActivity_AKUAppDidStartSession ( JNIEnv* env, jclass obj ) {
+		MOAIApp::Get ().DidStartSession ();
+	}
+
+	//----------------------------------------------------------------//
 	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiActivity_AKUEnqueueCompassEvent ( JNIEnv* env, jclass obj, jint deviceId, jint sensorId, jint heading ) {
 		AKUEnqueueCompassEvent ( deviceId, sensorId, heading );
 	}
@@ -178,6 +184,11 @@
 	//----------------------------------------------------------------//
 	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUInit ( JNIEnv* env, jclass obj, jobject thizz ) {
 
+		// create MOAIApp class
+		MOAIApp::Affirm ();
+		REGISTER_LUA_CLASS ( MOAIApp );
+
+		// register callbacks into Java
 		javaObject = ( jobject ) env->NewGlobalRef ( thizz );
 		jclass classic = env->GetObjectClass ( javaObject );
 
@@ -337,4 +348,9 @@
 	//----------------------------------------------------------------//
 	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUUpdate ( JNIEnv* env, jclass obj ) {
 		AKUUpdate ();
+	}
+
+	//----------------------------------------------------------------//
+	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiActivity_AKUAppWillEndSession ( JNIEnv* env, jclass obj ) {
+		MOAIApp::Get ().WillEndSession ();
 	}

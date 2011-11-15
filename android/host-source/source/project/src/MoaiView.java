@@ -122,8 +122,8 @@ public class MoaiView extends GLSurfaceView {
 		mSensorsEnabled = false;
 		mWidth = width;
 		
-		AKUInit ( this );
 		moaiInit ();
+		AKUInit ( this );
 	}
 
 	//----------------------------------------------------------------//
@@ -131,10 +131,10 @@ public class MoaiView extends GLSurfaceView {
 	
 		mAku = AKUCreateContext ();
 		
-		// AKUExtLoadLuasql ();
-		// AKUExtLoadLuacurl ();
-		// AKUExtLoadLuacrypto ();
-		// AKUExtLoadLuasocket ();
+		AKUExtLoadLuasql ();
+		AKUExtLoadLuacurl ();
+		AKUExtLoadLuacrypto ();
+		AKUExtLoadLuasocket ();
 		
 		AKUSetInputConfigurationName 	( "Android" );
 
@@ -182,7 +182,7 @@ public class MoaiView extends GLSurfaceView {
 				isDown, 
 				Math.round ( event.getX () ), 
 				Math.round ( event.getY () ), 
-				1 
+				1
 			);
 		}
 		
@@ -261,6 +261,7 @@ public class MoaiView extends GLSurfaceView {
 			AKUSetWorkingDirectory ( mAppRoot + "/@WORKING_DIR@" );
 			run ( "@RUN_INIT_DIR@/init.lua" );
 			@RUN@
+		//	MoaiActivity.startSession ();
 		}
 	}
 }
