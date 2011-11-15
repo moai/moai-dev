@@ -23,7 +23,7 @@ extern char*			ZIPFSString_Append		( ZIPFSString* self, const char* str );
 extern void				ZIPFSString_Clear		( ZIPFSString* self );
 extern void				ZIPFSString_Delete		( ZIPFSString* self );
 extern char*			ZIPFSString_Grow		( ZIPFSString* self, size_t size );
-extern ZIPFSString*		ZIPFSString_New			();
+extern ZIPFSString*		ZIPFSString_New			( void );
 extern char				ZIPFSString_PopChar		( ZIPFSString* self );
 extern void				ZIPFSString_PushChar	( ZIPFSString* self, char c );
 extern char*			ZIPFSString_Set			( ZIPFSString* self, const char* str );

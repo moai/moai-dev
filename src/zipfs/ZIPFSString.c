@@ -66,7 +66,7 @@ char* ZIPFSString_Grow ( ZIPFSString* self, size_t size ) {
 }
 
 //----------------------------------------------------------------//
-ZIPFSString* ZIPFSString_New () {
+ZIPFSString* ZIPFSString_New ( void ) {
 
 	return ( ZIPFSString* )calloc ( 1, sizeof ( ZIPFSString ));
 }

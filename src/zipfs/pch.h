@@ -65,7 +65,6 @@
 	#endif
 
 	#include <crtdbg.h>
-	#include <ctype.h>
 	#include <direct.h>
 
 	#ifndef PATH_MAX
@@ -87,6 +86,7 @@
 #define _USE_MATH_DEFINES
 
 #include <assert.h>
+#include <ctype.h>
 #include <math.h>
 #include <stdarg.h>
 #include <stdio.h>

@@ -53,6 +53,9 @@
 #undef fgets
 #define fgets zipfs_fgets
 
+#undef fileno
+#define fileno zipfs_fileno
+
 #undef fopen
 #define fopen zipfs_fopen
 
@@ -98,6 +101,9 @@
 #undef getwc
 #define getwc zipfs_getwc
 
+#undef putc
+#define putc zipfs_putc
+
 #undef remove
 #define remove zipfs_remove
 
@@ -115,6 +121,9 @@
 
 #undef tmpfile
 #define tmpfile zipfs_tmpfile
+
+#undef tmpnam
+#define tmpnam zipfs_tmpnam
 
 #undef ungetc
 #define ungetc zipfs_ungetc

@@ -185,7 +185,7 @@ FT_BEGIN_HEADER
   /*   Do not #undef this macro here since the build system might define   */
   /*   it for certain configurations only.                                 */
   /*                                                                       */
-/* #define FT_CONFIG_OPTION_SYSTEM_ZLIB */
+#define FT_CONFIG_OPTION_SYSTEM_ZLIB
 
 
   /*************************************************************************/

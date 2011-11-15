@@ -33,7 +33,7 @@ const char* ZIPFSVirtualPath_GetLocalPath ( ZIPFSVirtualPath* self, const char* 
 }
 
 //----------------------------------------------------------------//
-ZIPFSVirtualPath* ZIPFSVirtualPath_New () {
+ZIPFSVirtualPath* ZIPFSVirtualPath_New ( void ) {
 
 	return ( ZIPFSVirtualPath* )calloc ( 1, sizeof ( ZIPFSVirtualPath ));
 }

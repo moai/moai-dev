@@ -22,9 +22,9 @@
 		0300CF66140DC53C00ABCC5B /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07CC7AF913DF7E9B00F2DEDE /* CoreFoundation.framework */; };
 		0300CF67140DC53C00ABCC5B /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07CC7AFF13DF7EF200F2DEDE /* Carbon.framework */; };
 		0300CF68140DC53C00ABCC5B /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07CC7B0613DF7F0F00F2DEDE /* IOKit.framework */; };
-		0300CF69140DC53C00ABCC5B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 66D9680B14047B7100017919 /* libz.dylib */; };
 		0300CF7B140DC61000ABCC5B /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0300CF7A140DC61000ABCC5B /* AudioToolbox.framework */; };
 		0300CF94140DC65100ABCC5B /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0300CF93140DC65100ABCC5B /* AudioUnit.framework */; };
+		CD36B30314726436004F5BB4 /* libmoai-osx-zipfs.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD36B302147263F7004F5BB4 /* libmoai-osx-zipfs.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -105,6 +105,20 @@
 			remoteGlobalIDString = CDD06D87139882D900AB0420;
 			remoteInfo = "libmoai-osx-luaext";
 		};
+		CD36B2FF147263F7004F5BB4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = CD04ACB414725568009C20E5;
+			remoteInfo = "libmoai-ios-zipfs";
+		};
+		CD36B301147263F7004F5BB4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = CD04AE7F1472557F009C20E5;
+			remoteInfo = "libmoai-osx-zipfs";
+		};
 		CDA21FED145F7A2B00B92D2F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0324CC6913564429000ADC60 /* libmoai.xcodeproj */;
@@ -160,6 +174,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CD36B30314726436004F5BB4 /* libmoai-osx-zipfs.a in Frameworks */,
 				0300CF5D140DC53C00ABCC5B /* OpenGL.framework in Frameworks */,
 				0300CF5E140DC53C00ABCC5B /* GLUT.framework in Frameworks */,
 				0300CF5F140DC53C00ABCC5B /* libSystem.dylib in Frameworks */,
@@ -172,7 +187,6 @@
 				0300CF66140DC53C00ABCC5B /* CoreFoundation.framework in Frameworks */,
 				0300CF67140DC53C00ABCC5B /* Carbon.framework in Frameworks */,
 				0300CF68140DC53C00ABCC5B /* IOKit.framework in Frameworks */,
-				0300CF69140DC53C00ABCC5B /* libz.dylib in Frameworks */,
 				0300CF7B140DC61000ABCC5B /* AudioToolbox.framework in Frameworks */,
 				0300CF94140DC65100ABCC5B /* AudioUnit.framework in Frameworks */,
 			);
@@ -189,10 +203,12 @@
 				CD07C41313A185E200C9386C /* libmoai-ios-luaext.a */,
 				CDA21FEE145F7A2B00B92D2F /* libmoai-ios-tapjoy.a */,
 				CD07C41513A185E200C9386C /* libmoai-ios-untz.a */,
+				CD36B300147263F7004F5BB4 /* libmoai-ios-zipfs.a */,
 				0324E2C21356485F000ADC60 /* libmoai-osx.a */,
 				0324E2C01356485F000ADC60 /* libmoai-osx-3rdparty.a */,
 				CD07C41713A185E200C9386C /* libmoai-osx-luaext.a */,
 				CDBDAEBF13A2F6C700FD5641 /* libmoai-osx-untz.a */,
+				CD36B302147263F7004F5BB4 /* libmoai-osx-zipfs.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -366,6 +382,20 @@
 			remoteRef = CD07C41613A185E200C9386C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		CD36B300147263F7004F5BB4 /* libmoai-ios-zipfs.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libmoai-ios-zipfs.a";
+			remoteRef = CD36B2FF147263F7004F5BB4 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		CD36B302147263F7004F5BB4 /* libmoai-osx-zipfs.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libmoai-osx-zipfs.a";
+			remoteRef = CD36B301147263F7004F5BB4 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		CDA21FEE145F7A2B00B92D2F /* libmoai-ios-tapjoy.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -505,6 +535,10 @@
 					"\"../../src/hosts\"",
 					"\"../../src\"",
 				);
+				OTHER_CFLAGS = (
+					"-include",
+					"\"zipfs/zipfs_replace.h\"",
+				);
 				SKIP_INSTALL = YES;
 				WARNING_CFLAGS = "-Wall";
 			};
@@ -554,6 +588,10 @@
 				HEADER_SEARCH_PATHS = (
 					"\"../../src/hosts\"",
 					"\"../../src\"",
+				);
+				OTHER_CFLAGS = (
+					"-include",
+					"\"zipfs/zipfs_replace.h\"",
 				);
 				SKIP_INSTALL = YES;
 				WARNING_CFLAGS = "-Wall";
