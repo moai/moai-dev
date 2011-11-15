@@ -220,6 +220,11 @@
   <ItemGroup>
     <ClInclude Include="..\..\src\zipfs\pch.h" />
     <ClInclude Include="..\..\src\zipfs\zipfs.h" />
+    <ClInclude Include="..\..\src\zipfs\zipfs_replace.h" />
+    <ClInclude Include="..\..\src\zipfs\zipfs_replace_locale.h" />
+    <ClInclude Include="..\..\src\zipfs\zipfs_replace_new_delete.h" />
+    <ClInclude Include="..\..\src\zipfs\zipfs_replace_stdio.h" />
+    <ClInclude Include="..\..\src\zipfs\zipfs_replace_stdlib.h" />
     <ClInclude Include="..\..\src\zipfs\zipfs_util.h" />
     <ClInclude Include="..\..\src\zipfs\ZIPFSString.h" />
     <ClInclude Include="..\..\src\zipfs\ZIPFSVirtualPath.h" />

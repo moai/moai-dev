@@ -150,6 +150,9 @@
     <ClCompile Include="..\..\src\uslsext\uslsext-pch.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\USHexDump.cpp">
+      <Filter>src\util</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\uslsext\USColor.h">
@@ -298,6 +301,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\uslsext\USMatrix4x4.h">
       <Filter>src\math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USHexDump.h">
+      <Filter>src\util</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

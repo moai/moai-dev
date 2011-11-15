@@ -363,6 +363,22 @@
 			>
 		</File>
 		<File
+			RelativePath="..\..\src\zipfs\zipfs_replace_locale.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\zipfs\zipfs_replace_new_delete.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\zipfs\zipfs_replace_stdio.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\zipfs\zipfs_replace_stdlib.h"
+			>
+		</File>
+		<File
 			RelativePath="..\..\src\zipfs\zipfs_util.c"
 			>
 		</File>

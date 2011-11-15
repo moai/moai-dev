@@ -99,6 +99,7 @@
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <ShowIncludes>false</ShowIncludes>
+      <ForcedIncludeFiles>"zipfs/zipfs_replace.h"</ForcedIncludeFiles>
     </ClCompile>
     <PostBuildEvent>
       <Command>
@@ -125,6 +126,7 @@
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>
       </DebugInformationFormat>
+      <ForcedIncludeFiles>"zipfs/zipfs_replace.h"</ForcedIncludeFiles>
     </ClCompile>
     <PostBuildEvent>
       <Command>

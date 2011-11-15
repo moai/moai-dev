@@ -82,7 +82,7 @@ int MOAILogMgr::_log ( lua_State* L ) {
 	if ( !state.CheckParams ( 1, "S" )) return 0;
 
 	cc8* msg = state.GetValue < cc8* >( 1, "" );
-	USLog::Print ( USLog::CONSOLE, msg );
+	USLog::PrintFile ( USLog::CONSOLE, msg );
 	
 	return 0;
 }

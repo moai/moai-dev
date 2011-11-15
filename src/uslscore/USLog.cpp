@@ -36,7 +36,7 @@ void USLog::Print ( cc8* format, ... ) {
 }
 
 //----------------------------------------------------------------//
-void USLog::Print ( FILE* file, cc8* format, ... ) {
+void USLog::PrintFile ( FILE* file, cc8* format, ... ) {
 
 	va_list args;
 	va_start ( args, format );	

@@ -97,6 +97,7 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <ShowIncludes>false</ShowIncludes>
       <PrecompiledHeader>Use</PrecompiledHeader>
+      <ForcedIncludeFiles>"zipfs/zipfs_replace.h"</ForcedIncludeFiles>
     </ClCompile>
     <Lib>
       <AdditionalDependencies>
@@ -168,6 +169,7 @@
       <DebugInformationFormat>
       </DebugInformationFormat>
       <PrecompiledHeader>Use</PrecompiledHeader>
+      <ForcedIncludeFiles>"zipfs/zipfs_replace.h"</ForcedIncludeFiles>
     </ClCompile>
     <ProjectReference />
     <Lib>

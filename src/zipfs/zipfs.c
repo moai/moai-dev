@@ -485,6 +485,13 @@ ZIPFSFILE* zipfs_fopen ( const char* filename, const char* mode ) {
 }
 
 //----------------------------------------------------------------//
+errno_t zipfs_fopen_s ( ZIPFSFILE** fp, const char* filename, const char* mode ) {
+
+	*fp = fopen ( filename, mode );
+	return errno;
+}
+
+//----------------------------------------------------------------//
 int zipfs_fprintf ( ZIPFSFILE * fp, const char * format, ... ) {
 
 	int result;
@@ -605,6 +612,13 @@ int	zipfs_fseek ( ZIPFSFILE* fp, long offset, int origin ) {
 }
 
 //----------------------------------------------------------------//
+int zipfs_fseeki64 ( ZIPFSFILE* fp, __int64 offset, int origin ) {
+
+	// TODO:
+	return zipfs_fseek ( fp, ( long )offset, origin );
+}
+
+//----------------------------------------------------------------//
 int zipfs_fsetpos ( ZIPFSFILE* fp, const fpos_t * pos ) {
 	(( void )fp );
 	(( void )pos );
@@ -639,6 +653,14 @@ size_t zipfs_fwrite ( const void* data, size_t size, size_t count, ZIPFSFILE* fp
 int zipfs_getc ( ZIPFSFILE* fp ) {
 
 	return zipfs_fgetc ( fp );
+}
+
+//----------------------------------------------------------------//
+int zipfs_getwc ( ZIPFSFILE* fp ) {
+	UNUSED ( fp );
+
+	assert ( 0 ); // TODO:
+	return -1;
 }
 
 //----------------------------------------------------------------//

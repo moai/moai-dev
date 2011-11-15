@@ -125,6 +125,7 @@
 				DebugInformationFormat="0"
 				CompileAs="1"
 				DisableSpecificWarnings="4068"
+				ForcedIncludeFiles="&quot;zipfs/zipfs_replace.h&quot;"
 				ForcedUsingFiles="&quot;zipfs/zipfs_replace.h&quot;"
 			/>
 			<Tool

@@ -629,7 +629,7 @@ bool MOAILuaState::PrintErrors ( FILE* file, int status ) {
 		cc8* error = lua_tostring ( this->mState, -1 );
 		if ( error ) {
 			STLString msg = lua_tostring ( this->mState, -1 );
-			USLog::Print ( file, "-- %s\n", msg.c_str ());
+			USLog::PrintFile ( file, "-- %s\n", msg.c_str ());
 		}
 		lua_pop ( this->mState, 1 ); // pop error message
 		return true;
@@ -641,7 +641,7 @@ bool MOAILuaState::PrintErrors ( FILE* file, int status ) {
 void MOAILuaState::PrintStackTrace ( FILE* file, int level ) {
 
 	STLString stackTrace = this->GetStackTrace ( level );
-	USLog::Print ( file, stackTrace.str ());
+	USLog::PrintFile ( file, stackTrace.str ());
 }
 
 //----------------------------------------------------------------//

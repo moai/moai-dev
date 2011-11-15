@@ -64,11 +64,9 @@
 		#define STRSAFE_NO_DEPRECATE
 	#endif
 
-	#include <stdlib.h>
 	#include <crtdbg.h>
 	#include <ctype.h>
 	#include <direct.h>
-	#include <string.h>
 
 	#ifndef PATH_MAX
 		#define PATH_MAX 1024
@@ -77,8 +75,6 @@
 #endif
 
 #ifdef MOAI_OS_LINUX
-	#include <stdlib.h>
-	#include <string.h>
 	#include <unistd.h>
 #endif
 
@@ -92,9 +88,19 @@
 
 #include <assert.h>
 #include <math.h>
-#include <stdio.h>
 #include <stdarg.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include <time.h>
+
+#ifdef __cplusplus
+	#include <cstdio>
+	#include <cstdlib>
+	#include <string>
+ 	#include <iostream>
+	#include <sstream>
+#endif
 
 //----------------------------------------------------------------//
 

@@ -6,6 +6,10 @@
 
 #include <zipfs/pch.h>
 
+#ifdef  __cplusplus
+	extern "C" {
+#endif
+
 //================================================================//
 // zipfs_stat
 //================================================================//
@@ -57,17 +61,20 @@ extern int					zipfs_fgetc					( ZIPFSFILE* fp );
 extern int					zipfs_fgetpos				( ZIPFSFILE* fp, fpos_t* position );
 extern char* 				zipfs_fgets					( char* string, int length, ZIPFSFILE* fp );
 extern ZIPFSFILE* 			zipfs_fopen 				( const char* filename, const char* mode );
-extern int					zipfs_fprintf				( ZIPFSFILE * fp, const char * format, ... );
+extern errno_t	 			zipfs_fopen_s 				( ZIPFSFILE** fp, const char* filename, const char* mode );
+extern int					zipfs_fprintf				( ZIPFSFILE* fp, const char * format, ... );
 extern int 					zipfs_fputc					( int c, ZIPFSFILE* fp );
 extern int					zipfs_fputs					( const char* string, ZIPFSFILE* fp );
 extern size_t				zipfs_fread					( void* buffer, size_t size, size_t count, ZIPFSFILE* fp );
 extern ZIPFSFILE*			zipfs_freopen				( const char* filename, const char* mode, ZIPFSFILE* fp );
 extern int					zipfs_fscanf				( ZIPFSFILE* fp, const char* format, ... );
 extern int					zipfs_fseek					( ZIPFSFILE* fp, long offset, int origin );
+extern int					zipfs_fseeki64				( ZIPFSFILE* fp, __int64 offset, int origin );
 extern int					zipfs_fsetpos				( ZIPFSFILE* fp, const fpos_t * pos );
 extern long					zipfs_ftell					( ZIPFSFILE* fp );
 extern size_t				zipfs_fwrite				( const void* data, size_t size, size_t count, ZIPFSFILE* fp );
 extern int					zipfs_getc					( ZIPFSFILE* fp );
+extern int					zipfs_getwc					( ZIPFSFILE* fp );
 extern int					zipfs_remove				( const char* path );
 extern int					zipfs_rename				( const char* oldname, const char* newname );
 extern void					zipfs_rewind				( ZIPFSFILE* fp );
@@ -107,5 +114,9 @@ extern int					zipfs_mkdir						( const char* path );
 extern int					zipfs_mount_virtual				( const char* path, const char* archive );
 extern char*				zipfs_normalize_path			( const char* path );
 extern int					zipfs_rmdir						( const char* path );
+
+#ifdef  __cplusplus
+	}
+#endif
 
 #endif
