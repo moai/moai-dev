@@ -349,7 +349,7 @@ extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_Run ( JNIEnv* env, jclass ob
 	GET_STRING ( jfilename, filename );
 
 	AKUSetContext ( mAku );
-	AKUResize ( width, height );
+	AKUSetScreenSize ( width, height );
 	AKURunScript ( filename );
 	
 	RELEASE_STRING ( jfilename, filename );
@@ -377,7 +377,7 @@ extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_DetectAkuContext ( JNIEnv* e
 extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_onDraw ( JNIEnv* env, jclass obj, jint width, jint height ) {
 	
 	AKUSetContext ( mAku );
-	AKUResize ( width, height);
+	AKUSetScreenSize ( width, height);
 	AKURender();
 }
 

@@ -655,7 +655,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
 					"-force_load",
-					"\"$BUILT_PRODUCTS_DIR/libmoai-ios-tapjoy.a\"",
+					"$(BUILT_PRODUCTS_DIR)/libmoai-ios-tapjoy.a",
 				);
 				SDKROOT = iphoneos;
 				SRC_PATH = ../..;
@@ -682,7 +682,7 @@
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				OTHER_LDFLAGS = (
 					"-force_load",
-					"\"$BUILT_PRODUCTS_DIR/libmoai-ios-tapjoy.a\"",
+					"$(BUILT_PRODUCTS_DIR)/libmoai-ios-tapjoy.a",
 				);
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
