@@ -61,10 +61,13 @@
 
 		// convert jstring to cstring
 		GET_STRING ( jguid, guid );
-		const char* retVal;
-		copystr ( retVal, guid );
+
+		char buf [ 512 ];
+		strcpy ( buf, guid );
+		const char* retVal = buf;
+		
 		RELEASE_STRING ( jguid, guid );
-	
+
 		// return guid string
 		return retVal;
 	}
