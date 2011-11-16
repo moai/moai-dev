@@ -22,8 +22,7 @@
 			call ant clean
 			call %install_cmd%
 			call adb shell am start -a android.intent.action.MAIN -n @SETTING_PACKAGE@/@SETTING_PACKAGE@.MoaiActivity
-			:: call adb logcat MoaiJNI:V MoaiLog:V *:S
-			call adb logcat MoaiLog:V *:S
+			call adb logcat MoaiLog:V AndroidRuntime:V *:S
 		popd
 	)
 

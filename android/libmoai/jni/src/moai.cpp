@@ -56,31 +56,54 @@
 	//----------------------------------------------------------------//
 	long _GetConnectivity () {
 
+PRINT ( "_GetConnectivity called" );
+
 		JNIEnv *env;
+PRINT ( "_GetConnectivity line 1" );
 		if(jvm == NULL)
 			return NULL;
 	
+PRINT ( "_GetConnectivity line 2" );
 		jvm->GetEnv((void**)&env, JNI_VERSION_1_4);
-		if(env == NULL)
+		if(env == NULL) {
+PRINT ( "_GetConnectivity line 3" );
 			return NULL;
+		}
 
+PRINT ( "_GetConnectivity line 4" );
 	    jstring conn = (jstring)env->CallObjectMethod(javaObject, m_GetConnectivityFunc);
+PRINT ( "_GetConnectivity line 5" );
 		char buf[512];
+PRINT ( "_GetConnectivity line 6" );
 	    const char *str, *ret;
+PRINT ( "_GetConnectivity line 7" );
 	    str = env->GetStringUTFChars(conn, NULL);
+PRINT ( "_GetConnectivity line 8" );
 	    if (str == NULL) {
+PRINT ( "_GetConnectivity line 9" );
 	        return NULL; /* OutOfMemoryError already thrown */
 	    }
+PRINT ( "_GetConnectivity line 10" );
 		strcpy(buf, str);
+PRINT ( "_GetConnectivity line 11" );
 		ret = buf;
+PRINT ( "_GetConnectivity line 12" );
 	    env->ReleaseStringUTFChars(conn, str);
+PRINT ( "_GetConnectivity line 13" );
     
-	    if ( strcmp ( buf, "WIFI" ))
+	    if ( strcmp ( buf, "WIFI" )) {
+PRINT ( "_GetConnectivity line 14" );
 	    	return ( long )CONNECTION_TYPE_WIFI;
-	    else if (strcmp ( buf, "MOBILE" ))
+		}
+	    else if (strcmp ( buf, "MOBILE" )) {
+PRINT ( "_GetConnectivity line 15" );
 	    	return ( long )CONNECTION_TYPE_WWAN;
+		}
 		else
+PRINT ( "_GetConnectivity line 16" ); {
 			return ( long )CONNECTION_TYPE_NONE;
+		}
+PRINT ( "_GetConnectivity line 17" );
 	}
 
 //================================================================//
@@ -89,6 +112,8 @@
 
 	//----------------------------------------------------------------//
 	const char* _GenerateGUID () {
+
+PRINT ( "_GenerateGUID called" );
 
 		JNIEnv *env;
 		if(jvm == NULL)
@@ -235,6 +260,11 @@
 		GET_STRING ( jfilename, filename );
 		AKURunScript ( filename );
 		RELEASE_STRING ( jfilename, filename );
+	}
+
+	//----------------------------------------------------------------//
+	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiActivity_AKUSetConnectionType ( JNIEnv* env, jclass obj, jlong connectionType ) {
+		MOAIEnvironment::Get ().SetConnectionType ( connectionType );
 	}
 
 	//----------------------------------------------------------------//
