@@ -47,10 +47,8 @@ private:
 	long				mScreenWidth;
 	long				mScreenHeight;
 	
-	long ( *getConnectivityFunc )( void );
 	cc8* ( *getGUIDfunc ) ( void );
 	
-
 	//----------------------------------------------------------------//
 	static int			_generateGUID					( lua_State* L );
 	static int			_getAppDisplayName				( lua_State* L );

@@ -1,7 +1,6 @@
 #include <jni.h>
 #include <time.h>
 #include <android/log.h>
-// #include <android/bitmap.h>
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -18,6 +17,10 @@
 // Utility macros
 //================================================================//
 
+	#define GET_ENV() 	\
+		JNIEnv* env; 	\
+		jvm->GetEnv ( ( void** )&env, JNI_VERSION_1_4 );
+
 	#define GET_STRING(jstr, cstr) \
 		const char* cstr = env->GetStringUTFChars( jstr, NULL );
 
@@ -32,9 +35,9 @@
 //================================================================//
 
 	JavaVM* 		jvm;
-	jobject			javaObject;
-	jmethodID 		m_GetConnectivityFunc;
-	jmethodID 		m_GenerateGuidFunc;
+
+	jmethodID 		mGenerateGuidFunc;
+	jobject			mMoaiView;
 
 	//----------------------------------------------------------------//
 	int JNI_OnLoad ( JavaVM* vm, void* reserved ) {
@@ -44,96 +47,26 @@
 	}
 		
 //================================================================//
-// Connectivity callback
-//================================================================//
-
-	enum {
-		CONNECTION_TYPE_NONE,
-		CONNECTION_TYPE_WIFI,
-		CONNECTION_TYPE_WWAN
-	};
-
-	//----------------------------------------------------------------//
-	long _GetConnectivity () {
-
-PRINT ( "_GetConnectivity called" );
-
-		JNIEnv *env;
-PRINT ( "_GetConnectivity line 1" );
-		if(jvm == NULL)
-			return NULL;
-	
-PRINT ( "_GetConnectivity line 2" );
-		jvm->GetEnv((void**)&env, JNI_VERSION_1_4);
-		if(env == NULL) {
-PRINT ( "_GetConnectivity line 3" );
-			return NULL;
-		}
-
-PRINT ( "_GetConnectivity line 4" );
-	    jstring conn = (jstring)env->CallObjectMethod(javaObject, m_GetConnectivityFunc);
-PRINT ( "_GetConnectivity line 5" );
-		char buf[512];
-PRINT ( "_GetConnectivity line 6" );
-	    const char *str, *ret;
-PRINT ( "_GetConnectivity line 7" );
-	    str = env->GetStringUTFChars(conn, NULL);
-PRINT ( "_GetConnectivity line 8" );
-	    if (str == NULL) {
-PRINT ( "_GetConnectivity line 9" );
-	        return NULL; /* OutOfMemoryError already thrown */
-	    }
-PRINT ( "_GetConnectivity line 10" );
-		strcpy(buf, str);
-PRINT ( "_GetConnectivity line 11" );
-		ret = buf;
-PRINT ( "_GetConnectivity line 12" );
-	    env->ReleaseStringUTFChars(conn, str);
-PRINT ( "_GetConnectivity line 13" );
-    
-	    if ( strcmp ( buf, "WIFI" )) {
-PRINT ( "_GetConnectivity line 14" );
-	    	return ( long )CONNECTION_TYPE_WIFI;
-		}
-	    else if (strcmp ( buf, "MOBILE" )) {
-PRINT ( "_GetConnectivity line 15" );
-	    	return ( long )CONNECTION_TYPE_WWAN;
-		}
-		else
-PRINT ( "_GetConnectivity line 16" ); {
-			return ( long )CONNECTION_TYPE_NONE;
-		}
-PRINT ( "_GetConnectivity line 17" );
-	}
-
-//================================================================//
 // Generate GUID callback
 //================================================================//
 
 	//----------------------------------------------------------------//
-	const char* _GenerateGUID () {
+	const char* GenerateGUID () {
 
-PRINT ( "_GenerateGUID called" );
+		// get environment
+		GET_ENV ();
 
-		JNIEnv *env;
-		if(jvm == NULL)
-			return NULL;
+	    // call generate guid method in java
+		jstring jguid = ( jstring )env->CallObjectMethod ( mMoaiView, mGenerateGuidFunc );
+
+		// convert jstring to cstring
+		GET_STRING ( jguid, guid );
+		const char* retVal;
+		copystr ( retVal, guid );
+		RELEASE_STRING ( jguid, guid );
 	
-		jvm->GetEnv((void**)&env, JNI_VERSION_1_4);
-		if(env == NULL)
-			return NULL;
-
-	    jstring guid = (jstring)env->CallObjectMethod(javaObject, m_GenerateGuidFunc);
-		char buf[512];
-	    const char *str, *ret;
-	    str = env->GetStringUTFChars(guid, NULL);
-	    if (str == NULL) {
-	        return NULL; /* OutOfMemoryError already thrown */
-	    }
-		strcpy(buf, str);
-		ret = buf;
-	    env->ReleaseStringUTFChars(guid, str);
-		return ret;
+		// return guid string
+		return retVal;
 	}
 
 //================================================================//
@@ -207,18 +140,17 @@ PRINT ( "_GenerateGUID called" );
 	}
 
 	//----------------------------------------------------------------//
-	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUInit ( JNIEnv* env, jclass obj, jobject thizz ) {
+	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUInit ( JNIEnv* env, jclass obj, jobject moaiView ) {
 
 		// create MOAIApp class
 		MOAIApp::Affirm ();
 		REGISTER_LUA_CLASS ( MOAIApp );
 
 		// register callbacks into Java
-		javaObject = ( jobject ) env->NewGlobalRef ( thizz );
-		jclass classic = env->GetObjectClass ( javaObject );
-
-		m_GetConnectivityFunc = env->GetMethodID ( classic, "getConnectivity", "()Ljava/lang/String;");
-		m_GenerateGuidFunc = env->GetMethodID ( classic, "getGUID", "()Ljava/lang/String;" );
+		mMoaiView = ( jobject ) env->NewGlobalRef ( moaiView );
+		jclass moaiViewClass = env->GetObjectClass ( mMoaiView );
+		
+		mGenerateGuidFunc = env->GetMethodID ( moaiViewClass, "getGUID", "()Ljava/lang/String;" );
 	}
 
 	//----------------------------------------------------------------//
@@ -279,8 +211,7 @@ PRINT ( "_GenerateGUID called" );
 		MOAIEnvironment& moaiEnv = MOAIEnvironment::Get ();
 	
 		// set up environment callbacks
-		moaiEnv.SetGUIDFunc ( &_GenerateGUID );
-		moaiEnv.SetConnectivityFunc ( &_GetConnectivity );
+		moaiEnv.SetGUIDFunc ( &GenerateGUID );
 
 		// convert jstrings to cstrings
 		GET_STRING ( jappName, appName );
