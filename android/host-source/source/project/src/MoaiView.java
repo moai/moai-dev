@@ -6,15 +6,10 @@
 
 package @PACKAGE@;
  
-import static android.opengl.GLES20.glFlush;
-import static android.opengl.GLES20.glViewport;
-
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
 import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.opengl.GLSurfaceView;
 import android.os.Build;
 import android.provider.Settings.Secure;
@@ -24,7 +19,7 @@ import android.view.MotionEvent;
 enum CONNECTION_TYPE {
 	NONE,
 	WIFI,
-	WWAN
+	WWAN,
 };
 
 //----------------------------------------------------------------//
@@ -49,10 +44,8 @@ public class MoaiView extends GLSurfaceView {
 
 	private int 					mAku;
 	private String 					mAppRoot;
-	private ConnectivityManager 	mConMgr;
 	private Context					mContext;
 	private int 					mHeight;
-	private boolean					mIsValid;
 	private MoaiRenderer 			mRenderer;
 	private boolean					mSensorsEnabled;
 	private int 					mWidth; 
@@ -88,14 +81,15 @@ public class MoaiView extends GLSurfaceView {
 	//----------------------------------------------------------------//
 	public String getConnectivity () {
 		
-		NetworkInfo networkInfo = mConMgr.getActiveNetworkInfo ();
-		
-		if ( networkInfo != null ) {
-			return networkInfo.getTypeName ();
-		}
-		else {
-			return "NOT CONNECTED";
-		}
+		// NetworkInfo networkInfo = mConMgr.getActiveNetworkInfo ();
+		// 
+		// if ( networkInfo != null ) {
+		// 	return networkInfo.getTypeName ();
+		// }
+		// else {
+		// 	return "NOT CONNECTED";
+		// }
+		return "BALG!";
 	}		
 
 	//----------------------------------------------------------------//
@@ -115,10 +109,8 @@ public class MoaiView extends GLSurfaceView {
 
 		super ( context );
 
-		mConMgr = ( ConnectivityManager )context.getSystemService ( Context.CONNECTIVITY_SERVICE );
 		mContext = context;
 		mHeight = height;
-		mIsValid = false;
 		mSensorsEnabled = false;
 		mWidth = width;
 		
@@ -163,6 +155,10 @@ public class MoaiView extends GLSurfaceView {
 		String devProduct 		= Build.PRODUCT;
 		String osVersion 		= Build.VERSION.RELEASE;
 		
+		if ( udid == null ) {
+			udid = "UNKNOWN";
+		}
+		
 		AKUSetDeviceProperties ( appName, abi, devBrand, devName, devManufacturer, devModel, devProduct, osBrand, osVersion, udid );
 	}
 
@@ -170,21 +166,19 @@ public class MoaiView extends GLSurfaceView {
 	@Override
 	public boolean onTouchEvent ( MotionEvent event ) {
 
-		if ( mIsValid ) {
-
-			boolean isDown = ( event.getAction () == MotionEvent.ACTION_DOWN );
-			isDown |= ( event.getAction() == MotionEvent.ACTION_MOVE );
+		boolean isDown = ( event.getAction () == MotionEvent.ACTION_DOWN );
+		isDown |= ( event.getAction() == MotionEvent.ACTION_MOVE );
+		int pointerId = ( event.getAction() >> MotionEvent.ACTION_POINTER_ID_SHIFT ) + 1;
 		
-			AKUEnqueueTouchEvent (
-				MoaiInputDeviceID.DEVICE.ordinal (),
-				MoaiInputDeviceSensorID.TOUCH.ordinal (),
-				event.getActionIndex (), 
-				isDown, 
-				Math.round ( event.getX () ), 
-				Math.round ( event.getY () ), 
-				1
-			);
-		}
+		AKUEnqueueTouchEvent (
+			MoaiInputDeviceID.DEVICE.ordinal (),
+			MoaiInputDeviceSensorID.TOUCH.ordinal (),
+			pointerId, 
+			isDown, 
+			Math.round ( event.getX () ), 
+			Math.round ( event.getY () ), 
+			1
+		);
 		
 		return true;
 	}
@@ -219,23 +213,20 @@ public class MoaiView extends GLSurfaceView {
 	//================================================================//
 	// MoaiRenderer
 	//================================================================//
-	class MoaiRenderer implements GLSurfaceView.Renderer {
+	public class MoaiRenderer implements GLSurfaceView.Renderer {
 
 	    //----------------------------------------------------------------//
 		@Override
 		public void onDrawFrame ( GL10 gl ) {
 
-			if ( mIsValid ) {
-				
-				AKUSetContext ( mAku );
-				AKUResize ( mWidth, mHeight );
-				AKURender ();
+			AKUSetContext ( mAku );
+			AKUResize ( mWidth, mHeight );
+			AKURender ();
 
-				glFlush ();
-			
-				AKUSetContext ( mAku );
-				AKUUpdate ();
-			}
+			gl.glFlush ();
+		
+			AKUSetContext ( mAku );
+			AKUUpdate ();
 		}
 
 	    //----------------------------------------------------------------//
@@ -244,7 +235,7 @@ public class MoaiView extends GLSurfaceView {
 
 			MoaiActivity.log ( "MoaiRenderer onSurfaceChanged called" );
 
-			glViewport ( 0, 0, width, height );
+			gl.glViewport ( 0, 0, width, height );
 			mWidth = width;
 			mHeight = height;
 		}
@@ -256,11 +247,11 @@ public class MoaiView extends GLSurfaceView {
 			MoaiActivity.log ( "MoaiRenderer onSurfaceCreated called" );
    
 			AKUDetectGfxContext ();
-			mIsValid = true;
 
 			AKUSetWorkingDirectory ( mAppRoot + "/@WORKING_DIR@" );
 			run ( "@RUN_INIT_DIR@/init.lua" );
 			@RUN@
+			
 			MoaiActivity.startSession ();
 		}
 	}

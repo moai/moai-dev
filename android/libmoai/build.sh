@@ -77,3 +77,5 @@
 	# create text file that shows the package libmoai.so was built with (this time)
 	rm -f libs/armeabi/package.txt
 	echo $packageName > libs/armeabi/package.txt
+	echo $arm_mode >> libs/armeabi/package.txt		
+	echo $app_platform >> libs/armeabi/package.txt

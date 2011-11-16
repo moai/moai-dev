@@ -17,35 +17,45 @@ import java.util.zip.ZipInputStream;
 import @PACKAGE@.R;
 
 import android.app.Activity; 
-import android.app.ActivityManager;
 import android.content.Context;
-import android.content.pm.ConfigurationInfo;
+import android.content.BroadcastReceiver;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
 import android.view.Window;
 import android.view.WindowManager;
+
+// OpenGL 2.0
+import android.app.ActivityManager;
+import android.content.pm.ConfigurationInfo;
  
 //================================================================//
 // MoaiActivity
 //================================================================//
 public class MoaiActivity extends Activity implements SensorEventListener {
 
-	private Sensor 				mAccelerometer;
-	private MoaiView			mMoaiView;
-	private SensorManager 		mSensorManager;
+	private Sensor 							mAccelerometer;
+	private ConnectivityBroadcastReceiver 	mConnectivityReceiver;
+	private MoaiView						mMoaiView;
+	private SensorManager 					mSensorManager;
 	
 	protected static native void AKUAppDidStartSession 		();
+	protected static native void AKUAppWillEndSession 		();
 	protected static native void AKUEnqueueCompassEvent 	( int heading );
 	protected static native void AKUEnqueueLevelEvent 		( int deviceId, int sensorId, float x, float y, float z );
 	protected static native void AKUEnqueueLocationEvent 	( int deviceId, int sensorId, int longitude, int latitude, int altitude, float hAccuracy, float vAccuracy, float speed );
+	protected static native void AKUMountVirtualDirectory 	( String virtualPath, String archive );
+	protected static native void AKUSetConnectionType 		( long connectionType );
 	protected static native void AKUSetDocumentDirectory 	( String path );
-	protected static native void AKUAppWillEndSession 		();
 
 	//----------------------------------------------------------------//
 	public static void log ( String message ) {
@@ -73,14 +83,14 @@ public class MoaiActivity extends Activity implements SensorEventListener {
 		Display display = (( WindowManager ) getSystemService ( Context.WINDOW_SERVICE )).getDefaultDisplay ();
 		int displayWidth = display.getWidth ();
 		int displayHeight = display.getHeight ();
-		
+
 		// create Moai view
 	    mMoaiView = new MoaiView ( this, displayWidth, displayHeight );
 
 		// detect OpenGL 2.0
 		ActivityManager am = ( ActivityManager ) getSystemService ( Context.ACTIVITY_SERVICE );
-        ConfigurationInfo info = am.getDeviceConfigurationInfo ();
-	    
+		ConfigurationInfo info = am.getDeviceConfigurationInfo ();
+			    
 		if ( info.reqGlEsVersion >= 0x20000 ) {
 			mMoaiView.setEGLContextClientVersion ( 2 );
 		}
@@ -95,16 +105,14 @@ public class MoaiActivity extends Activity implements SensorEventListener {
 		// get access to the accelerometer sensor
 		mSensorManager = ( SensorManager ) getSystemService ( Context.SENSOR_SERVICE );
 		mAccelerometer = mSensorManager.getDefaultSensor ( Sensor.TYPE_ACCELEROMETER );
-		
+
 		// set documents directory
 		String filesDir = getFilesDir ().getAbsolutePath ();
 		AKUSetDocumentDirectory ( filesDir );
 
 		// unpack assets
-    	unpackAssets ( filesDir );
+ 		unpackAssets ( filesDir );
  		mMoaiView.setDirectory ( filesDir );
-
-		// mMoaiView.setDirectory ( "android.resource://@PACKAGE@/raw" );
     }
 
 	//----------------------------------------------------------------//
@@ -114,6 +122,9 @@ public class MoaiActivity extends Activity implements SensorEventListener {
 		
 		// call super
 		super.onDestroy ();
+		
+		// unregister to receive connectivity actions
+		stopConnectivityReceiver ();
 	}
 
 	//----------------------------------------------------------------//
@@ -135,6 +146,7 @@ public class MoaiActivity extends Activity implements SensorEventListener {
 
 		// call super
 		super.onStart ();
+		
 		//AKUAppDidStartSession ();
 	}
 	
@@ -162,6 +174,28 @@ public class MoaiActivity extends Activity implements SensorEventListener {
 		
 		// register for accelerometer events
 		mSensorManager.registerListener ( this, mAccelerometer, SensorManager.SENSOR_DELAY_NORMAL );
+		
+		startConnectivityReceiver ();
+	}
+		
+	//----------------------------------------------------------------//
+	private void startConnectivityReceiver () {
+		
+		if ( mConnectivityReceiver == null ) {
+			
+			mConnectivityReceiver = new ConnectivityBroadcastReceiver ();
+
+			IntentFilter filter = new IntentFilter ();
+			filter.addAction ( ConnectivityManager.CONNECTIVITY_ACTION );
+			this.registerReceiver ( mConnectivityReceiver, filter );
+		}
+	}
+	
+	//----------------------------------------------------------------//
+	private void stopConnectivityReceiver () {
+		
+		this.unregisterReceiver ( mConnectivityReceiver );
+		mConnectivityReceiver = null;
 	}
 		
     //----------------------------------------------------------------//
@@ -238,4 +272,37 @@ public class MoaiActivity extends Activity implements SensorEventListener {
 		
 		AKUEnqueueLevelEvent ( deviceId, sensorId, x, y, z );
 	}
+	
+	//================================================================//
+	// ConnectivityBroadcastReceiver
+	//================================================================//
+	private class ConnectivityBroadcastReceiver extends BroadcastReceiver {
+
+		//----------------------------------------------------------------//
+		@Override
+		public void onReceive ( Context context, Intent intent ) {
+			
+			ConnectivityManager conMgr = ( ConnectivityManager )context.getSystemService ( Context.CONNECTIVITY_SERVICE );
+			NetworkInfo networkInfo = conMgr.getActiveNetworkInfo ();
+					
+			CONNECTION_TYPE connectionType = CONNECTION_TYPE.NONE;
+					
+			if ( networkInfo != null ) {
+				 switch ( networkInfo.getType () ) {
+					 								
+				 	case ConnectivityManager.TYPE_MOBILE: {
+				 		connectionType = CONNECTION_TYPE.WWAN;
+				 		break;
+				 	}
+					 									
+				 	case ConnectivityManager.TYPE_WIFI: {
+				 		connectionType = CONNECTION_TYPE.WIFI;
+				 		break;
+				 	}
+				 }
+			}
+							 
+			AKUSetConnectionType ( ( long )connectionType.ordinal () );
+		}
+	};
 }

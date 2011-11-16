@@ -8,11 +8,13 @@
 	usage="usage: $0 -p package [-thumb]"
 	thumb=
 	packageName=
+	appPlatform=android-8
 	
 	while [ $# -gt 0 ];	do
 	    case "$1" in
 	        -thumb)  thumb=-thumb;;
 			-p)  packageName="$2"; shift;;
+			-l)  appPlatform="$2"; shift;;
 			-*)
 		    	echo >&2 \
 		    		$usage
@@ -36,12 +38,32 @@
 
 	# build libmoai for the specified package
 	if [ -f libmoai/libs/armeabi/package.txt ]; then
-		read existing_package < libmoai/libs/armeabi/package.txt
+		existing_package=$( sed -n '1p' libmoai/libs/armeabi/package.txt )
+		existing_thumb=$( sed -n '2p' libmoai/libs/armeabi/package.txt )
+		existing_app_platform=$( sed -n '3p' libmoai/libs/armeabi/package.txt )
 	fi
 	
-	if [ "$existing_package" != "$packageName" ] || [ ! -f libmoai/libs/armeabi/libmoai.so ]; then
+	shouldBuild=false
+
+	if [ "$existing_package" != "$packageName" ]; then
+		shouldBuild=true
+	fi
+
+	if [ "$existing_thumb" == "thumb" ] && [ "$thumb" == "" ]; then
+		shouldBuild=true
+	fi
+
+	if [ "$existing_thumb" == "arm" ] && [ "$thumb" == "-thumb" ]; then
+		shouldBuild=true
+	fi
+
+	if [ "$existing_app_platform" != "$appPlatform" ]; then
+		shouldBuild=true
+	fi
+
+	if [ "$shouldBuild" == "true" ] || [ ! -f libmoai/libs/armeabi/libmoai.so ]; then
 		pushd libmoai > /dev/null
-			bash build.sh -p $packageName $thumb
+			bash build.sh -p $packageName -l $appPlatform $thumb
 		popd > /dev/null
 	fi
 
