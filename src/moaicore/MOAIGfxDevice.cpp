@@ -1054,14 +1054,16 @@ void MOAIGfxDevice::SetVertexTransform ( u32 id, const USMatrix4x4& transform ) 
 		else {
 			this->UpdateGpuVertexMtx ();
 		}
-		
-		if ( this->mShader ) {
-			this->mShader->UpdatePipelineTransforms (
-				this->mVertexTransforms [ VTX_WORLD_TRANSFORM ],
-				this->mVertexTransforms [ VTX_VIEW_TRANSFORM ],
-				this->mVertexTransforms [ VTX_PROJ_TRANSFORM ]
-			);
-		}
+	}
+	
+	// update any transforms in the shader that rely on the pipeline
+	// the shader caches the state of each uniform; only reloads when changed
+	if ( this->mShader ) {
+		this->mShader->UpdatePipelineTransforms (
+			this->mVertexTransforms [ VTX_WORLD_TRANSFORM ],
+			this->mVertexTransforms [ VTX_VIEW_TRANSFORM ],
+			this->mVertexTransforms [ VTX_PROJ_TRANSFORM ]
+		);
 	}
 }
 
