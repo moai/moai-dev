@@ -8,7 +8,7 @@
 
 set -e
 
-xcodebuild -configuration Release -target libmoai-osx-3rdparty -sdk macosx clean
-xcodebuild -configuration Release -target libmoai-osx -sdk macosx clean
-xcodebuild -configuration Release -target libmoai-osx-luaext -sdk macosx clean
-xcodebuild -configuration Release -target libmoai-osx-untz -sdk macosx clean
+xcodebuild -configuration Release -workspace libmoai.xcodeproj/project.xcworkspace -scheme libmoai-osx-3rdparty -sdk macosx clean OBJROOT=build SYMROOT=build
+xcodebuild -configuration Release -workspace libmoai.xcodeproj/project.xcworkspace -scheme libmoai-osx -sdk macosx clean OBJROOT=build SYMROOT=build
+xcodebuild -configuration Release -workspace libmoai.xcodeproj/project.xcworkspace -scheme libmoai-osx-luaext -sdk macosx clean OBJROOT=build SYMROOT=build
+xcodebuild -configuration Release -workspace libmoai.xcodeproj/project.xcworkspace -scheme libmoai-osx-untz -sdk macosx clean OBJROOT=build SYMROOT=build
