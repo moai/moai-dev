@@ -2,16 +2,16 @@
 
 <manifest 
 	xmlns:android="http://schemas.android.com/apk/res/android" 
-	android:versionCode="@VERSION_CODE@" 
-	android:versionName="@VERSION_NAME@" 
-	package="@PACKAGE@">
+	android:versionCode="1" 
+	android:versionName="0.5" 
+	package="com.distinctdev.tmt2">
 	
 	<application 
 		android:icon="@drawable/icon" 
-		android:debuggable="@DEBUGGABLE@" 
+		android:debuggable="true" 
 		android:enabled="true" 
 		android:persistent="false" 
-		android:label="@NAME@" 
+		android:label="tmt2" 
 		android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
 		
 		<activity 
@@ -30,6 +30,8 @@
 	</application>
 	
     <uses-sdk android:minSdkVersion="8"/>
+
+  	<uses-permission android:name="com.android.vending.BILLING" />
  	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 	<uses-permission android:name="android.permission.INTERNET" />
 	
