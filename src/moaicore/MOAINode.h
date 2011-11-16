@@ -206,6 +206,17 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
+	float GetAttributeValue ( u32 attrID, float value ) {
+		
+		if ( attrID != NULL_ATTR ) {
+			MOAIAttrOp getter;
+			this->ApplyAttrOp ( attrID, getter, MOAIAttrOp::GET );
+			value = getter.GetValue ();
+		}
+		return value;
+	}
+	
+	//----------------------------------------------------------------//
 	template < typename TYPE >
 	TYPE GetAttributeValue ( u32 attrID, TYPE value ) {
 		
