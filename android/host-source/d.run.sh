@@ -196,7 +196,8 @@
 			ant clean
 			$install_cmd
 			adb shell am start -a android.intent.action.MAIN -n $package/$package.MoaiActivity
-			adb logcat -c MoaiLog:V AndroidRuntime:E *:S
+			adb logcat -c
+			adb logcat MoaiLog:V AndroidRuntime:E *:S
 		popd > /dev/null
 	fi
 	
