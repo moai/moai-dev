@@ -117,18 +117,18 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	inline u32 GetFlags () {
+	inline u32 GetFlags () const {
 		return this->mFlags;
 	}
 	
 	//----------------------------------------------------------------//
-	float GetValue () {
+	float GetValue () const {
 		return this->mType == TYPE_NUMBER ? this->mNumber : 0.0f;
 	}
 	
 	//----------------------------------------------------------------//
 	template < typename TYPE >
-	inline TYPE* GetValue () {
+	inline TYPE* GetValue () const {
 
 		if (( this->mType == TYPE_COMPLEX ) && ( this->mComplexType == USTypeID < TYPE >::GetID ())) {
 			return ( TYPE* )this->mPtr;
@@ -138,7 +138,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	template < typename TYPE >
-	inline bool GetValue ( TYPE& value ) {
+	inline bool GetValue ( TYPE& value ) const {
 
 		if (( this->mType == TYPE_COMPLEX ) && ( this->mComplexType == USTypeID < TYPE >::GetID ())) {
 			memcpy ( &value, this->mBuffer, sizeof ( TYPE ));
@@ -148,12 +148,12 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	inline bool IsNumber () {
+	inline bool IsNumber () const {
 		return ( this->mType == TYPE_NUMBER );
 	}
 	
 	//----------------------------------------------------------------//
-	inline bool IsValid () {
+	inline bool IsValid () const {
 		return ( this->mType != TYPE_UNKNOWN );
 	}
 
@@ -193,6 +193,13 @@ public:
 		this->mType = TYPE_COMPLEX;
 		this->mComplexType = USTypeID < TYPE >::GetID ();
 		memcpy ( &this->mBuffer, &value, sizeof ( TYPE ));
+	}
+	
+	//----------------------------------------------------------------//
+	inline void SetValid ( bool isValid, u32 flags ) {
+	
+		this->mFlags = flags;
+		this->mType = isValid ? TYPE_VALID : TYPE_UNKNOWN;
 	}
 };
 

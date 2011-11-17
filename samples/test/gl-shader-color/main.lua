@@ -27,7 +27,7 @@ file:close ()
 gfxQuad = MOAIGfxQuad2D.new ()
 gfxQuad:setTexture ( "cathead.png" )
 gfxQuad:setRect ( -64, -64, 64, 64 )
-gfxQuad:setUVRect ( 0, 0, 1, 1 )
+gfxQuad:setUVRect ( 0, 1, 1, 0 )
 
 prop = MOAIProp2D.new ()
 prop:setDeck ( gfxQuad )
@@ -40,7 +40,8 @@ color:setColor ( 0, 0, 0, 0 )
 shader = MOAIShader.new ()
 shader:reserveUniforms ( 1 )
 shader:declareUniform ( 1, 'maskColor', MOAIShader.UNIFORM_COLOR )
-shader:setUniform ( 1, color )
+
+shader:setAttrLink ( 1, color, MOAIColor.COLOR_TRAIT )
 
 shader:setVertexAttribute ( 1, 'position' )
 shader:setVertexAttribute ( 2, 'uv' )
