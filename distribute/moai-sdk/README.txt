@@ -1,19 +1,18 @@
 Moai SDK
 
-Welcome to the Moai SDK beta.  
+Welcome to the Moai SDK.
 
-Contact us at http://getmoai.com/forums or at support@getmoai.com if you need support. The Moai team is here to help.
+Documentation for Moai is available on the Moai website at http://getmoai.com/wiki and the Moai FAQ is available at http://getmoai.com/get-started/moai-faq/
+
+Join the Moai forums at http://getmoai.com/forums if you need support. The Moai team is here to help.
 
 Happy game-making with Moai.  
 
 Sample code:
 Samples are included in \samples.  In each sample subfolder, there is a run.bat and run.sh file for running on Windows and Mac respectively.
 
-Documentation:
-You can view the doxygen-generated docs in the docs folder. Open index.html.
-
-FAQ:
-The Moai FAQ is available at http://getmoai.com/get-started/moai-faq/
+Object model documentation:
+You can view the object model documentation in the docs folder. Open index.html.
 
 Moai Cloud:
 You already have a Moai Cloud account and you can upload Lua scripts to be hosted and run as web services via your Moai Cloud Dashboard.   
