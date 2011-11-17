@@ -56,7 +56,7 @@
 				WarningLevel="0"
 				CompileAs="0"
 				ForcedIncludeFiles="&quot;zipfs/zipfs_replace.h&quot;"
-				ForcedUsingFiles="&quot;zipfs/zipfs_replace.h&quot;"
+				ForcedUsingFiles=""
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
