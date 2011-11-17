@@ -36,8 +36,6 @@ mkdir -p moai-sdk/include/aku
 cp -R ../src/aku/*.h moai-sdk/include/aku
 
 cp ../version.txt moai-sdk/version.txt
-cp ../docs/GettingStartedWithMoai.pdf moai-sdk/GettingStartedWithMoai.pdf
-cp ../docs/MoaiProjectSetup.pdf moai-sdk/MoaiProjectSetup.pdf
 
 mkdir -p moai-sdk/hosts/src
 cd ../src/hosts
