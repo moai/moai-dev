@@ -573,6 +573,9 @@
     <ProjectReference Include="..\tinyxml\tinyxml.vcxproj">
       <Project>{991ebc54-28ff-44a1-863e-e70617782825}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\tlsf\tlsf.vcxproj">
+      <Project>{1e78302d-cf63-4922-8113-dccd24f94087}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\uslscore\uslscore.vcxproj">
       <Project>{86e29f0a-83d1-4001-9e1a-b20c6aece6f7}</Project>
     </ProjectReference>
