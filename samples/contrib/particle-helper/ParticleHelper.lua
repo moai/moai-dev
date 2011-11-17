@@ -69,12 +69,13 @@ local function getReg(script,name)
 					r=item
 					r.name=name
 					r.flag=nil
+					break
 				end
 			end
 
 			if not r then
 				size=size+1
-				if size>MAXREG then error('too many registers..') end
+				if size>MAXREG then error('too many registers..:'..name) end
 				r=newNode{id='reg', idx=REG(size), name=name}
 				list[size]=r
 			end
@@ -88,6 +89,7 @@ local function getReg(script,name)
 			if not item.name and item.flag~=tmpflag then --collectable register
 				r=item
 				r.flag=tmpflag
+				break
 			end
 		end
 
@@ -99,7 +101,6 @@ local function getReg(script,name)
 		end
 		
 	end
-	-- print('reg',name or '_tmp')
 	return r
 end
 

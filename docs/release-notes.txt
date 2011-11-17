@@ -1,5 +1,35 @@
 ================================================================
 = Moai SDK
+= Version 0.9 Beta
+= Revision 1
+================================================================
+- MOAIFont loadFromTTF - dpi param now optional
+- MOAIFont loadFromTTF - now also loads OTF (it's a secret!)
+- MOAIFont, MOAITextBox - exposed additional metrics
+- MOAIFont - fixed serialization bugs (uninitialized values)
+- Box2D - converted sleep constants to world members
+- Box2D - exposed contact normal through arbiter
+- Box2D - Update to Box2D 2.2.1 and new features (thank you, Byron Wright!)
+- MOAICameraFitter2D - Improved functionality; added fitting modes
+- MOAIImage - Added resize, copyRect (with scaling and filtering)
+- MOAIJsonParser - Fixed encode bug (nested arrays exported improperly)
+- MOAILayerBridge2D - Updated/fixed and added an example
+- MOAIShader - Improved uniform binding (now uses attribute system)
+- MOAIEaseDriver - Improved to allow targeted attributes (i.e. chasing)
+- MOAISerializer - Support for custom fields on Lua objects
+- MOAITransform - Added pivot point
+- Overhaul of traits system (trait inheritance now handled by attributes system)
+- Integration with TLSF memory manager (via zipfs)
+- Improved substitution model for stdio, stlib via header injection (all libraries)
+- Reverted to 'pristine' Lua-5.1.3 (modifications no longer due to header injection)
+- Code organization, refactor: moved all Lua binding, contexts, lifecycle code into moaicore
+- Added Tapjoy SDK, binaries and video support (ios)
+- Improved Android build and host
+- Added Lua contributions from community (cpRect, ParticleHelper - thanks to Andrew Scott and Tommo Zhou!)
+- Lots of little bug fixes and API tweaks; integrated bug fixes from community
+
+================================================================
+= Moai SDK
 = Version 0.8 Beta
 = Revision 4
 ================================================================

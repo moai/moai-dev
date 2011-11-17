@@ -6,6 +6,8 @@
 #include <aku/AKU.h>
 #include <GlutHost.h>
 
+#define UNUSED(p) (( void )p)
+
 #ifdef GLUTHOST_USE_DEBUGGER
 	#include <aku/AKU-debugger.h>
 #endif

@@ -15,12 +15,6 @@ rm -rf moai-sdk/flash
 rm -rf moai-sdk/include
 
 #----------------------------------------------------------------#
-# clean out docs
-#----------------------------------------------------------------#
-rm -f moai-sdk/GettingStartedWithMoai.pdf
-rm -f moai-sdk/MoaiProjectSetup.pdf
-
-#----------------------------------------------------------------#
 # clean version text file
 #----------------------------------------------------------------#
 rm -f moai-sdk/version.txt
