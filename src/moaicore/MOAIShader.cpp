@@ -162,10 +162,9 @@ void MOAIShaderUniform::SetValue ( const MOAIAttrOp& attrOp ) {
 	switch ( this->mType ) {
 	
 		case UNIFORM_COLOR: {
-			MOAIColor* color = attrOp.GetValue < MOAIColor >();
-			if ( color ) {
-				this->SetValue ( *color );
-			}
+			USColorVec color;
+			attrOp.GetValue < USColorVec >( color );
+			this->SetValue ( color );
 			break;
 		}	
 		case UNIFORM_FLOAT: {

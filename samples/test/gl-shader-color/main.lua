@@ -40,7 +40,8 @@ color:setColor ( 0, 0, 0, 0 )
 shader = MOAIShader.new ()
 shader:reserveUniforms ( 1 )
 shader:declareUniform ( 1, 'maskColor', MOAIShader.UNIFORM_COLOR )
-shader:setUniform ( 1, color )
+
+shader:setAttrLink ( 1, color, MOAIColor.COLOR_TRAIT )
 
 shader:setVertexAttribute ( 1, 'position' )
 shader:setVertexAttribute ( 2, 'uv' )
