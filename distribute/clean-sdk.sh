@@ -27,22 +27,22 @@ rm -rf moai-sdk/hosts/src
 #----------------------------------------------------------------#
 # clean eclipse host
 #----------------------------------------------------------------#
-rm -rf moai-sdk/hosts/eclipse/android-project
+rm -rf moai-sdk/hosts/android
 
 #----------------------------------------------------------------#
 # clean xcode host
 #----------------------------------------------------------------#
-rm -rf moai-sdk/hosts/xcode/ios/Classes
-rm -f moai-sdk/hosts/xcode/ios/Entitlements.plist
-rm -f moai-sdk/hosts/xcode/ios/Icon.png
-rm -f moai-sdk/hosts/xcode/ios/Icon@2x.png
-rm -f moai-sdk/hosts/xcode/ios/Icon-72.png
-rm -f moai-sdk/hosts/xcode/ios/Icon-Small.png
-rm -f moai-sdk/hosts/xcode/ios/Icon-Small@2x.png
-rm -f moai-sdk/hosts/xcode/ios/Icon-Small-50.png
-rm -f moai-sdk/hosts/xcode/ios/Info.plist
-rm -f moai-sdk/hosts/xcode/ios/MainWindow-iPad.xib
-rm -f moai-sdk/hosts/xcode/ios/MainWindow-iPhone.xib
-rm -f moai-sdk/hosts/xcode/ios/main.mm
-rm -f moai-sdk/hosts/xcode/ios/mt.default
-rm -f moai-sdk/hosts/xcode/ios/package.sh
+rm -rf moai-sdk/hosts/xcode-ios/Classes
+rm -f moai-sdk/hosts/xcode-ios/Entitlements.plist
+rm -f moai-sdk/hosts/xcode-ios/Icon.png
+rm -f moai-sdk/hosts/xcode-ios/Icon@2x.png
+rm -f moai-sdk/hosts/xcode-ios/Icon-72.png
+rm -f moai-sdk/hosts/xcode-ios/Icon-Small.png
+rm -f moai-sdk/hosts/xcode-ios/Icon-Small@2x.png
+rm -f moai-sdk/hosts/xcode-ios/Icon-Small-50.png
+rm -f moai-sdk/hosts/xcode-ios/Info.plist
+rm -f moai-sdk/hosts/xcode-ios/MainWindow-iPad.xib
+rm -f moai-sdk/hosts/xcode-ios/MainWindow-iPhone.xib
+rm -f moai-sdk/hosts/xcode-ios/main.mm
+rm -f moai-sdk/hosts/xcode-ios/mt.default
+rm -f moai-sdk/hosts/xcode-ios/package.sh

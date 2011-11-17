@@ -4,6 +4,8 @@
 #ifndef	MOAIENVIRONMENT_H
 #define	MOAIENVIRONMENT_H
 
+#include <moaicore/MOAILua.h>
+
 //================================================================//
 // MOAIEnvironment
 //================================================================//
@@ -19,7 +21,7 @@
 	@const OS_BRAND_UNAVAILABLE		Signifies that the operating system cannot be determined
 */
 class MOAIEnvironment :
-	public USGlobalClass < MOAIEnvironment, USLuaObject > {
+	public MOAIGlobalClass < MOAIEnvironment, MOAILuaObject > {
 private:
 	STLString			mAppDisplayName;
 	STLString			mAppID;
@@ -72,9 +74,9 @@ private:
 	static int			_getOSBrand						( lua_State* L );
 	static int			_getOSVersion					( lua_State* L );
 	static int			_getResourceDirectory			( lua_State* L );
+	static int			_getScreenSize					( lua_State* L );
 	static int			_getUDID						( lua_State* L );
 	static int			_getViewSize					( lua_State* L );
-	static int			_getDeviceSize					( lua_State* L );
 	static int			_isRetinaDisplay				( lua_State* L );
 
 public:	
@@ -99,7 +101,7 @@ public:
 	STLString			GetResourceDirectory		( );
 						MOAIEnvironment				( );
 						~MOAIEnvironment			( );
-	void				RegisterLuaClass			( USLuaState& state );
+	void				RegisterLuaClass			( MOAILuaState& state );
 	void				SetAppDisplayName			( cc8* displayName );
 	void				SetAppID					( cc8* appID );
 	void				SetAppVersion				( cc8* appVersion );

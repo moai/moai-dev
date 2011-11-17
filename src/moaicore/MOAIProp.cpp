@@ -145,13 +145,13 @@ MOAIProp::~MOAIProp () {
 }
 
 //----------------------------------------------------------------//
-void MOAIProp::RegisterLuaClass ( USLuaState& state ) {
+void MOAIProp::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	MOAITransform::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAIProp::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAIProp::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	MOAITransform::RegisterLuaFuncs ( state );
 
@@ -187,11 +187,13 @@ void MOAIProp::SetBounds ( const USRect& bounds ) {
 //----------------------------------------------------------------//
 void MOAIProp::SetPartition ( MOAIPartition* partition ) {
 
-	if ( partition ) {
-		partition->InsertProp ( *this );
-	}
-	else if ( this->mPartition ) {
-		this->mPartition->RemoveProp ( *this );
+	if ( partition != this->mPartition ) {
+		if ( partition ) {
+			partition->InsertProp ( *this );
+		}
+		else if ( this->mPartition ) {
+			this->mPartition->RemoveProp ( *this );
+		}
 	}
 }
 

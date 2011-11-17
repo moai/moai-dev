@@ -4,6 +4,8 @@
 #ifndef	MOAIVERTEXBUFFER_H
 #define	MOAIVERTEXBUFFER_H
 
+#include <moaicore/MOAILua.h>
+
 class MOAIVertexFormat;
 
 //================================================================//
@@ -21,13 +23,13 @@ class MOAIVertexFormat;
 	@const	GL_TRIANGLE_STRIP
 */
 class MOAIVertexBuffer :
-	public USLuaObject {
+	public MOAILuaObject {
 private:
 
 	USLeanArray < u8 > mBuffer;
 	USByteStream mStream;
 
-	USLuaSharedPtr < MOAIVertexFormat > mFormat;
+	MOAILuaSharedPtr < MOAIVertexFormat > mFormat;
 	u32 mPrimType;
 	
 	float	mPenWidth;
@@ -67,8 +69,8 @@ public:
 	bool			IsValid					();
 					MOAIVertexBuffer		();
 					~MOAIVertexBuffer		();
-	void			RegisterLuaClass		( USLuaState& state );
-	void			RegisterLuaFuncs		( USLuaState& state );
+	void			RegisterLuaClass		( MOAILuaState& state );
+	void			RegisterLuaFuncs		( MOAILuaState& state );
 	void			Reserve					( u32 size );
 	void			SetPrimType				( u32 primType );
 };

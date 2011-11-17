@@ -5,7 +5,8 @@
 #================================================================#
 
 	# check for command line switches
-	usage="usage: $0 -p package [-thumb]"
+	usage="usage: $0 -p package [-l appPlatform ] [-thumb] [-q]"
+	quiet="false"
 	thumb=
 	packageName=
 	appPlatform=android-8
@@ -15,6 +16,7 @@
 	        -thumb)  thumb=-thumb;;
 			-p)  packageName="$2"; shift;;
 			-l)  appPlatform="$2"; shift;;
+			-q)  quiet="true";;
 			-*)
 		    	echo >&2 \
 		    		$usage
@@ -36,7 +38,7 @@
 		rm -rf $new_host_dir
 	fi
 
-	# build libmoai for the specified package
+	# if libmoai already exists, find out which package it was build for
 	if [ -f libmoai/libs/armeabi/package.txt ]; then
 		existing_package=$( sed -n '1p' libmoai/libs/armeabi/package.txt )
 		existing_thumb=$( sed -n '2p' libmoai/libs/armeabi/package.txt )
@@ -70,11 +72,18 @@
 	# copy libmoai into new host template dir
 	new_host_lib_dir=$new_host_dir/host-source/project/libs/armeabi
 	mkdir -p $new_host_lib_dir
-	cp -f libmoai/libs/armeabi/libmoai.so $new_host_lib_dir/libmoai.so
+	
+	# copy libmoai into new host template dir
+	if [ "$existing_package" != "$packageName" ] || [ ! -f libmoai/libs/armeabi/libmoai.so ]; then
+		echo "*** libmoai.so has not been built for $packageName. Android host will be incomplete!"
+	else
+		cp -f libmoai/libs/armeabi/libmoai.so $new_host_lib_dir/libmoai.so
+	fi
 	
 	# copy default project files into new host dir
-	cp -f host-source/d.run.sh $new_host_dir/run.sh
-	cp -f host-source/d.run.bat $new_host_dir/run.bat
+	cp -f host-source/d.README.txt $new_host_dir/README.txt
+	cp -f host-source/d.run-host.sh $new_host_dir/run-host.sh
+	cp -f host-source/d.run-host.bat $new_host_dir/run-host.bat
 	cp -f host-source/d.settings-global.sh $new_host_dir/settings-global.sh
 	rsync -r --exclude=.svn --exclude=.DS_Store host-source/d.res/. $new_host_dir/res
 
@@ -95,33 +104,38 @@
 	rsync -r --exclude=.svn --exclude=.DS_Store host-source/source/project/src/. $new_host_dir/host-source/project/$package_path
 
 	# inject the package path into the run script
-	sed -i.backup s%@SETTING_PACKAGE_PATH@%"$package_path"%g $new_host_dir/run.sh
-	rm -f $new_host_dir/run.sh.backup
+	sed -i.backup s%@SETTING_PACKAGE_PATH@%"$package_path"%g $new_host_dir/run-host.sh
+	rm -f $new_host_dir/run-host.sh.backup
 	
 	# inject the package name into the run script
-	sed -i.backup s%@SETTING_PACKAGE@%"$packageName"%g $new_host_dir/run.sh
-	rm -f $new_host_dir/run.sh.backup
+	sed -i.backup s%@SETTING_PACKAGE@%"$packageName"%g $new_host_dir/run-host.sh
+	rm -f $new_host_dir/run-host.sh.backup
 
 	# inject the package name into the run batch file
-	sed -i.backup s%@SETTING_PACKAGE@%"$packageName"%g $new_host_dir/run.bat
-	rm -f $new_host_dir/run.bat.backup
+	sed -i.backup s%@SETTING_PACKAGE@%"$packageName"%g $new_host_dir/run-host.bat
+	rm -f $new_host_dir/run-host.bat.backup
 	
 	# echo descriptive messages about this host
-	echo ""
-	echo "****************************************************************"
-	echo "* Android host successfully created."
-	echo "****************************************************************"
-	echo ""
-	echo "-The host is in the \"untitled-host\" directory. Rename it to anything you'd like."
-	echo ""
-	echo "-Edit \"settings-global.sh\" to configure your project."
-	echo ""
-	echo "-This is a standalone Android host. You can copy it anywhere on your system. However, you'll need to edit \"settings-global.sh\" to specify the new paths to your Lua resource files."
-	echo ""
-	echo "-The first time you run the host, the file \"settings-local.sh\" is created. This file should not be checked into your version control system."
-	echo ""
-	echo "-This host is tied to the package name you specified when it was created. If you wish to change the package name, simply recreate the project with the new package name and copy over your settings files (and any resource files) into the new project."
-	echo ""
-	echo "****************************************************************"
-	echo ""
+	if [ "$quiet" != "true" ]; then
+		echo "********************************************************************************"
+		echo "* Android host successfully created.                                           *"
+		echo "********************************************************************************"
+		echo ""
+		echo "- The new host is in the \"untitled-host\" directory. Every time this script is"
+		echo "  run, it will clobber the contents of the \"untitled-host\" directory so you"
+		echo "  will probably want to move this folder elsewhere and rename it."
+		echo ""
+		echo "- Edit \"settings-global.sh\" to configure your project and point it to your lua"
+		echo "  scripts and other resources."
+		echo ""
+		echo "- The first time you run the host, the file \"settings-local.sh\" is created."
+		echo "  You will need to configure the path to your Android SDK therein."
+		echo ""
+		echo "- Note that host is tied to the package name you specified when it was created."
+		echo "  If you wish to change the package name, simply recreate the host with the new"
+		echo "  package name and re-apply your settings files (and any resource files) into the"
+		echo "  new project."
+		echo ""
+		echo "********************************************************************************"
+	fi
 	

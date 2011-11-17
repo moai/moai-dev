@@ -11,6 +11,7 @@
 
 	LOCAL_C_INCLUDES 	:= $(MY_HEADER_SEARCH_PATHS)
 	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/3rdparty/contrib/utf8.c
+	LOCAL_CFLAGS		:= -include $(MY_MOAI_ROOT)/src/zipfs/zipfs_replace.h
 
 	include $(BUILD_STATIC_LIBRARY)
  

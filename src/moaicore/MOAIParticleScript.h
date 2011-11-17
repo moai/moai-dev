@@ -4,6 +4,8 @@
 #ifndef	MOAIPARTICLESCRIPT_H
 #define	MOAIPARTICLESCRIPT_H
 
+#include <moaicore/MOAILua.h>
+
 class MOAIParticle;
 class MOAIParticleState;
 class MOAIParticleSystem;
@@ -32,7 +34,7 @@ class MOAIParticleSystem;
 	@const	SPRITE_IDX
 */
 class MOAIParticleScript :
-	public virtual USLuaObject {
+	public virtual MOAILuaObject {
 private:
 	
 	friend class MOAIParticleState;
@@ -89,7 +91,7 @@ private:
 		u32		GetSize			();
 		void	Init			( u32 opcode, cc8* format );
 				Instruction		();
-		void	Parse			( USLuaState& state, u32 idx );
+		void	Parse			( MOAILuaState& state, u32 idx );
 		u8*		Write			( u8* cursor );
 	};
 
@@ -141,8 +143,8 @@ public:
 	u8*				Compile					();
 					MOAIParticleScript		();
 					~MOAIParticleScript		();
-	void			RegisterLuaClass		( USLuaState& state );
-	void			RegisterLuaFuncs		( USLuaState& state );
+	void			RegisterLuaClass		( MOAILuaState& state );
+	void			RegisterLuaFuncs		( MOAILuaState& state );
 	void			Run						( MOAIParticleSystem& system, MOAIParticle& particle, float t0, float t1 );
 };
 

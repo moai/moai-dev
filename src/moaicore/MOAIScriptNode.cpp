@@ -47,10 +47,10 @@ int MOAIScriptNode::_setCallback ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIScriptNode::ApplyAttrOp ( u32 attrID, USAttrOp& attrOp, u32 op ) {
+bool MOAIScriptNode::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 
 	if ( attrID < this->mAttributes.Size ()) {
-		this->mAttributes [ attrID ] = attrOp.Apply ( this->mAttributes [ attrID ], op );
+		this->mAttributes [ attrID ] = attrOp.Apply ( this->mAttributes [ attrID ], op, MOAINode::ATTR_READ_WRITE );
 		return true;
 	}
 	return false;
@@ -71,7 +71,7 @@ void MOAIScriptNode::OnDepNodeUpdate () {
 
 	if ( this->mOnUpdate ) {
 		
-		USLuaStateHandle state = USLuaRuntime::Get ().State ();
+		MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 		
 		this->PushLocal ( state, this->mOnUpdate );
 		this->PushLuaUserdata ( state );
@@ -81,13 +81,13 @@ void MOAIScriptNode::OnDepNodeUpdate () {
 }
 
 //----------------------------------------------------------------//
-void MOAIScriptNode::RegisterLuaClass ( USLuaState& state ) {
+void MOAIScriptNode::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAINode::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAIScriptNode::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAIScriptNode::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	MOAINode::RegisterLuaFuncs ( state );
 	

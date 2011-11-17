@@ -65,6 +65,7 @@ public:
 
 	GET_SET ( u32, Mask, mMask )
 	GET ( s32, Priority, mPriority )
+	GET ( MOAIPartition*, Partition, mPartition )
 
 	//----------------------------------------------------------------//
 	virtual void	Draw				();
@@ -75,8 +76,8 @@ public:
 	bool			GetCellRect			( USRect* cellRect, USRect* paddedRect = 0 );
 					MOAIProp			();
 	virtual			~MOAIProp			();
-	void			RegisterLuaClass	( USLuaState& state );
-	void			RegisterLuaFuncs	( USLuaState& state );
+	void			RegisterLuaClass	( MOAILuaState& state );
+	void			RegisterLuaFuncs	( MOAILuaState& state );
 	void			SetPartition		( MOAIPartition* partition );
 	void			UpdateBounds		( u32 status );
 	void			UpdateBounds		( const USRect& bounds, u32 status );

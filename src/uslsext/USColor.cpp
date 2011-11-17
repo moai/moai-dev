@@ -17,6 +17,15 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+u32 USColor::BilerpFixed ( u32 c0, u32 c1, u32 c2, u32 c3, u8 xt, u8 yt ) {
+
+	u32 s0 = USColor::LerpFixed ( c0, c1, xt );
+	u32 s1 = USColor::LerpFixed ( c2, c3, xt );
+	
+	return USColor::LerpFixed ( s0, s1, yt );
+}
+
+//----------------------------------------------------------------//
 void USColor::Convert ( void* dest, Format destFmt, const void* src, Format srcFmt, u32 nColors ) {
 
 	static const u32 MAX_COLORS = 2048;
@@ -318,6 +327,42 @@ u32 USColor::GetSize ( Format format ) {
 		default:			break;
 	}
 	return 0;
+}
+
+//----------------------------------------------------------------//
+u32 USColor::LerpFixed ( u32 c0, u32 c1, u8 t ) {
+	
+	u32 r0 = ( c0 ) & 0xFF;
+	u32 g0 = ( c0 >> 0x08 ) & 0xFF;
+	u32 b0 = ( c0 >> 0x10 ) & 0xFF;
+	u32 a0 = ( c0 >> 0x18 ) & 0xFF;
+	
+	u32 r1 = ( c1 ) & 0xFF;
+	u32 g1 = ( c1 >> 0x08 ) & 0xFF;
+	u32 b1 = ( c1 >> 0x10 ) & 0xFF;
+	u32 a1 = ( c1 >> 0x18 ) & 0xFF;
+	
+	u32 r = r0 + ((( r1 - r0 ) * t ) >> 0x08 );
+	u32 g = g0 + ((( g1 - g0 ) * t ) >> 0x08 );
+	u32 b = b0 + ((( b1 - b0 ) * t ) >> 0x08 );
+	u32 a = a0 + ((( a1 - a0 ) * t ) >> 0x08 );
+	
+	return r + ( g << 0x08 ) + ( b << 0x10 ) + ( a << 0x18 );
+}
+
+//----------------------------------------------------------------//
+u32 USColor::NearestNeighbor ( u32 c0, u32 c1, u32 c2, u32 c3, u8 xt, u8 yt ) {
+
+	if ( xt < 128 ) {
+		if ( yt < 128 ) {
+			return c0;
+		}
+		return c2;
+	}
+	if ( yt < 128 ) {
+		return c1;
+	}
+	return c3;
 }
 
 //----------------------------------------------------------------//

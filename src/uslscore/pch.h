@@ -9,10 +9,8 @@ extern "C" {
 }
 
 // vfs
-extern "C" {
-	#include <zipfs/pch.h>
-	#include <zipfs/zipfs.h>
-}
+#include <zipfs/pch.h>
+#include <zipfs/zipfs.h>
 
 // stl
 #include <memory>

@@ -5,6 +5,7 @@
 #define	MOAITIMER_H
 
 #include <moaicore/MOAIAction.h>
+#include <moaicore/MOAILua.h>
 #include <moaicore/MOAINode.h>
 
 class MOAIAnimCurve;
@@ -31,7 +32,7 @@ class MOAITimer :
 	public MOAIAction {
 protected:
 
-	USLuaSharedPtr < MOAIAnimCurve > mCurve;
+	MOAILuaSharedPtr < MOAIAnimCurve > mCurve;
 
 	float	mStartTime;
 	float	mEndTime;
@@ -83,15 +84,15 @@ public:
 	};
 	
 	//----------------------------------------------------------------//
-	bool			ApplyAttrOp			( u32 attrID, USAttrOp& attrOp, u32 op );
+	bool			ApplyAttrOp			( u32 attrID, MOAIAttrOp& attrOp, u32 op );
 	bool			IsDone				();
 					MOAITimer			();
 					~MOAITimer			();
 	void			OnDepNodeUpdate		();
 	void			OnStart				();
 	void			OnUpdate			( float step );
-	void			RegisterLuaClass	( USLuaState& state );
-	void			RegisterLuaFuncs	( USLuaState& state );
+	void			RegisterLuaClass	( MOAILuaState& state );
+	void			RegisterLuaFuncs	( MOAILuaState& state );
 	void			SetTime				( float time );
 };
 

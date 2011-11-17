@@ -4,6 +4,8 @@
 #ifndef MOAIDATABUFFER_H
 #define MOAIDATABUFFER_H
 
+#include <moaicore/MOAILua.h>
+
 class MOAIDataIOAction;
 
 //================================================================//
@@ -15,7 +17,7 @@ class MOAIDataIOAction;
 			between Lua and C.
 */
 class MOAIDataBuffer :
-	public virtual USLuaObject,
+	public virtual MOAILuaObject,
 	public USData {
 private:
 	
@@ -31,6 +33,7 @@ private:
 	static int		_save			( lua_State* L );
 	static int		_saveAsync		( lua_State* L );
 	static int		_setString		( lua_State* L );
+	static int		_toCppHeader	( lua_State* L );
 
 public:
 	
@@ -39,8 +42,8 @@ public:
 	//----------------------------------------------------------------//
 					MOAIDataBuffer			();
 					~MOAIDataBuffer			();
-	void			RegisterLuaClass	( USLuaState& state );
-	void			RegisterLuaFuncs	( USLuaState& state );
+	void			RegisterLuaClass	( MOAILuaState& state );
+	void			RegisterLuaFuncs	( MOAILuaState& state );
 };
 
 #endif

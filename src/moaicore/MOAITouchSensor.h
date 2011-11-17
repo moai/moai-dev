@@ -4,6 +4,7 @@
 #ifndef MOAITOUCHSENSOR_H
 #define MOAITOUCHSENSOR_H
 
+#include <moaicore/MOAILua.h>
 #include <moaicore/MOAISensor.h>
 
 //================================================================//
@@ -52,7 +53,7 @@ private:
 	u32			mActiveStack [ MAX_TOUCHES ];
 	u32			mTop;
 
-	USLuaRef	mCallback;
+	MOAILuaRef	mCallback;
 
 	//----------------------------------------------------------------//
 	static int		_down					( lua_State* L );
@@ -84,8 +85,8 @@ public:
 	void			HandleEvent				( USStream& eventStream );
 					MOAITouchSensor			();
 					~MOAITouchSensor		();
-	void			RegisterLuaClass		( USLuaState& state );
-	void			RegisterLuaFuncs		( USLuaState& state );
+	void			RegisterLuaClass		( MOAILuaState& state );
+	void			RegisterLuaFuncs		( MOAILuaState& state );
 	void			Reset					();
 	static void		WriteEvent				( USStream& eventStream, u32 touchID, bool down, float x, float y, u32 tapCount );
 	static void		WriteEventCancel		( USStream& eventStream );

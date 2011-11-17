@@ -48,6 +48,7 @@
 
 #ifdef MOAI_OS_WINDOWS
 
+	#pragma warning ( disable : 4290 )
 	#pragma warning ( disable : 4995 )
 	#pragma warning ( disable : 4996 )
 
@@ -63,11 +64,8 @@
 		#define STRSAFE_NO_DEPRECATE
 	#endif
 
-	#include <stdlib.h>
-	//#include <crtdbg.h>
-	#include <ctype.h>
+	#include <crtdbg.h>
 	#include <direct.h>
-	#include <string.h>
 
 	#ifndef PATH_MAX
 		#define PATH_MAX 1024
@@ -76,8 +74,6 @@
 #endif
 
 #ifdef MOAI_OS_LINUX
-	#include <stdlib.h>
-	#include <string.h>
 	#include <unistd.h>
 #endif
 
@@ -90,11 +86,21 @@
 #define _USE_MATH_DEFINES
 
 #include <assert.h>
+#include <ctype.h>
 #include <math.h>
-#include <stdio.h>
 #include <stdarg.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include <time.h>
-#include <zlib.h>
+
+#ifdef __cplusplus
+	#include <cstdio>
+	#include <cstdlib>
+	#include <string>
+ 	#include <iostream>
+	#include <sstream>
+#endif
 
 //----------------------------------------------------------------//
 

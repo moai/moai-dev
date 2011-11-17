@@ -6,6 +6,7 @@
 #if USE_BOX2D
 
 #include <Box2D/Box2D.h>
+#include <moaicore/MOAILua.h>
 
 //================================================================//
 // MOAIBox2DArbiter
@@ -20,17 +21,19 @@
 	@flag	ALL
 */
 class MOAIBox2DArbiter :
-	public virtual USLuaObject,
+	public virtual MOAILuaObject,
 	public b2ContactListener {
 private:
 
 	b2Contact*					mContact;
 	const b2ContactImpulse*		mImpulse;
 
+	b2Vec2  mContactNormal;
 	float	mNormalImpulse;
 	float	mTangentImpulse;
 
 	//----------------------------------------------------------------//
+	static int		_getContactNormal		( lua_State* L );
 	static int		_getNormalImpulse		( lua_State* L );
 	static int		_getTangentImpulse		( lua_State* L );
 	static int		_setContactEnabled		( lua_State* L );
@@ -56,8 +59,8 @@ public:
 	//----------------------------------------------------------------//
 					MOAIBox2DArbiter		();
 					~MOAIBox2DArbiter		();
-	void			RegisterLuaClass		( USLuaState& state );
-	void			RegisterLuaFuncs		( USLuaState& state );
+	void			RegisterLuaClass		( MOAILuaState& state );
+	void			RegisterLuaFuncs		( MOAILuaState& state );
 };
 
 #endif

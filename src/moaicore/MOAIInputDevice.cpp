@@ -41,7 +41,7 @@ void MOAIInputDevice::HandleEvent ( u8 sensorID, USStream& eventStream ) {
 MOAIInputDevice::MOAIInputDevice () :
 	mIsActive ( true ) {
 	
-	RTTI_SINGLE ( USLuaObject )
+	RTTI_SINGLE ( MOAILuaObject )
 }
 
 //----------------------------------------------------------------//
@@ -55,7 +55,7 @@ MOAIInputDevice::~MOAIInputDevice () {
 }
 
 //----------------------------------------------------------------//
-void MOAIInputDevice::RegisterLuaClass ( USLuaState& state ) {
+void MOAIInputDevice::RegisterLuaClass ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "new",					MOAILogMessages::_alertNewIsUnsupported },
@@ -66,7 +66,7 @@ void MOAIInputDevice::RegisterLuaClass ( USLuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIInputDevice::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAIInputDevice::RegisterLuaFuncs ( MOAILuaState& state ) {
 	UNUSED ( state );
 }
 
@@ -142,7 +142,7 @@ void MOAIInputDevice::SetSensor ( u8 sensorID, cc8* name, u32 type ) {
 	this->mSensors [ sensorID ] = sensor;
 	this->LuaRetain ( *sensor );
 	
-	USLuaStateHandle state = USLuaRuntime::Get ().State ();
+	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 	this->PushLuaUserdata ( state );
 	
 	sensor->PushLuaUserdata ( state );

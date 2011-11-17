@@ -4,6 +4,7 @@
 #ifndef	MOAIPARTICLETIMEDEMITTER_H
 #define	MOAIPARTICLETIMEDEMITTER_H
 
+#include <moaicore/MOAILua.h>
 #include <moaicore/MOAIParticleEmitter.h>
 
 //================================================================//
@@ -37,8 +38,8 @@ public:
 	//----------------------------------------------------------------//
 					MOAIParticleTimedEmitter	();
 					~MOAIParticleTimedEmitter	();
-	void			RegisterLuaClass			( USLuaState& state );
-	void			RegisterLuaFuncs			( USLuaState& state );
+	void			RegisterLuaClass			( MOAILuaState& state );
+	void			RegisterLuaFuncs			( MOAILuaState& state );
 	void			SetFrequencyRange			( float min, float max );
 };
 

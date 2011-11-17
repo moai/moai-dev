@@ -109,7 +109,7 @@ static void _onReshape( int w, int h ) {
 	}
 
 	glutReshapeWindow ( w, h );
-	AKUResize ( w, h );
+	AKUSetScreenSize ( w, h );
 }
 
 //----------------------------------------------------------------//
@@ -225,7 +225,6 @@ int work_moai_zipfs ( int argc, char** argv ) {
 	AKUSetFunc_EnterFullscreenMode ( _AKUEnterFullscreenModeFunc );
 	AKUSetFunc_ExitFullscreenMode ( _AKUExitFullscreenModeFunc );
 	AKUSetFunc_OpenWindow ( _AKUOpenWindowFunc );
-	AKUSetFunc_StartGameLoop ( _AKUStartGameLoopFunc );
 
 	AKUMountVirtualDirectory ( "test", "anim-basic.zip" );
 	AKUSetWorkingDirectory ( "test/anim-basic" );

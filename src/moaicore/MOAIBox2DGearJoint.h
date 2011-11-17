@@ -6,6 +6,7 @@
 #if USE_BOX2D
 
 #include <moaicore/MOAIBox2DJoint.h>
+#include <moaicore/MOAILua.h>
 
 //================================================================//
 // MOAIBox2DGearJoint
@@ -19,8 +20,8 @@ private:
 
 	friend class MOAIBox2DWorld;
 
-	USLuaSharedPtr < MOAIBox2DJoint > mJointA;
-	USLuaSharedPtr < MOAIBox2DJoint > mJointB;
+	MOAILuaSharedPtr < MOAIBox2DJoint > mJointA;
+	MOAILuaSharedPtr < MOAIBox2DJoint > mJointB;
 
 	//----------------------------------------------------------------//
 	static int		_getJointA				( lua_State* L );
@@ -35,8 +36,8 @@ public:
 	//----------------------------------------------------------------//
 					MOAIBox2DGearJoint		();
 					~MOAIBox2DGearJoint		();
-	void			RegisterLuaClass		( USLuaState& state );
-	void			RegisterLuaFuncs		( USLuaState& state );
+	void			RegisterLuaClass		( MOAILuaState& state );
+	void			RegisterLuaFuncs		( MOAILuaState& state );
 };
 
 #endif

@@ -45,7 +45,7 @@ private:
 
 	// pausing and waiting
 	static bool     mEnginePaused;
-	static void		Pause();
+	static void		Pause(lua_State *L);
 
 	// callbacks
 	static void		Callback(lua_State *L, lua_Debug *ar);
@@ -53,19 +53,27 @@ private:
 	// message sending
 	static void     SendWait();
 	static void     SendBreak(std::string func, unsigned int line, std::string file);
+	static void     SendResult(json_t* result);
 	static void     SendMessage(std::string data);
 
 	// message receiving
-	static void		ReceiveContinue(json_t* node);
-	static void		ReceivePause(json_t* node);
-	static void		ReceiveStop(json_t* node);
-	static void		ReceiveBreakSetAlways(json_t* node);
-	static void		ReceiveBreakSetConditional(json_t* node);
-	static void		ReceiveBreakClear(json_t* node);
-	static void		ReceiveVariableGet(json_t* node);
-	static void		ReceiveVariableSet(json_t* node);
-	static void		ReceiveEvaluate(json_t* node);
-	static void		ReceiveMessage();
+	static void		ReceiveContinue(lua_State *L, json_t* node);
+	static void		ReceivePause(lua_State *L, json_t* node);
+	static void		ReceiveStop(lua_State *L, json_t* node);
+	static void		ReceiveBreakSetAlways(lua_State *L, json_t* node);
+	static void		ReceiveBreakSetConditional(lua_State *L, json_t* node);
+	static void		ReceiveBreakClear(lua_State *L, json_t* node);
+	static void		ReceiveVariableGet(lua_State *L, json_t* node);
+	static void		ReceiveVariableSet(lua_State *L, json_t* node);
+	static void		ReceiveEvaluate(lua_State *L, json_t* node);
+	static void		ReceiveMessage(lua_State *L);
+
+	// value encoding
+	static json_t*  json_datapair(const char* name, json_t* data);
+	static json_t*  ConvertStackToJSON(lua_State * L);
+	static json_t*  ConvertStackPartialToJSON(lua_State * L, int start, int end);
+	static json_t*  ConvertStackIndexToJSON(lua_State * L, int idx);
+	static json_t*  ConvertStackIndexToJSON(lua_State * L, int idx, std::vector<const void*> * carried_references);
 
 public:
 

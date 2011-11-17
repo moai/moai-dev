@@ -24,7 +24,7 @@
 			OutputDirectory="$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="4"
-			CharacterSet="2"
+			CharacterSet="0"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -45,7 +45,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/vmg"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\src;&quot;..\..\src\moai-lua-5.1.3\src&quot;;&quot;..\..\3rdparty\zlib-1.2.3&quot;"
+				AdditionalIncludeDirectories="..\..\src;&quot;..\..\3rdparty\lua-5.1.3\src&quot;;&quot;..\..\3rdparty\zlib-1.2.3&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;AKU_STATIC;XML_STATIC"
 				StringPooling="true"
 				MinimalRebuild="true"
@@ -58,6 +58,7 @@
 				PrecompiledHeaderThrough="pch.h"
 				WarningLevel="4"
 				DebugInformationFormat="3"
+				ForcedIncludeFiles="&quot;zipfs/zipfs_replace.h&quot;"
 				ShowIncludes="false"
 			/>
 			<Tool
@@ -95,7 +96,7 @@
 			OutputDirectory="$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="4"
-			CharacterSet="2"
+			CharacterSet="0"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -120,7 +121,7 @@
 				EnableIntrinsicFunctions="false"
 				FavorSizeOrSpeed="1"
 				OmitFramePointers="false"
-				AdditionalIncludeDirectories="..\..\src;&quot;..\..\src\moai-lua-5.1.3\src&quot;;&quot;..\..\3rdparty\zlib-1.2.3&quot;"
+				AdditionalIncludeDirectories="..\..\src;&quot;..\..\3rdparty\lua-5.1.3\src&quot;;&quot;..\..\3rdparty\zlib-1.2.3&quot;"
 				PreprocessorDefinitions="WIN32;_LIB;_USE_32BIT_TIME_T;_CRT_SECURE_NO_WARNINGS;AKU_STATIC;XML_STATIC"
 				StringPooling="true"
 				ExceptionHandling="1"
@@ -134,6 +135,7 @@
 				PrecompiledHeaderThrough="pch.h"
 				WarningLevel="4"
 				DebugInformationFormat="0"
+				ForcedIncludeFiles="&quot;zipfs/zipfs_replace.h&quot;"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -365,118 +367,6 @@
 			</File>
 			<File
 				RelativePath="..\..\src\uslscore\USTypeID.h"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="lifecycle"
-			>
-			<File
-				RelativePath="..\..\src\uslscore\USCanary.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslscore\USCanary.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslscore\USGlobals.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslscore\USGlobals.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslscore\USObject.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslscore\USObject.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslscore\USRtti.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslscore\USRtti.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslscore\USSharedPtr.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslscore\USWeakPtr.h"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="lua"
-			>
-			<File
-				RelativePath="..\..\src\uslscore\USLua.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslscore\USLuaObject-impl.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslscore\USLuaObject.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslscore\USLuaObject.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslscore\USLuaRef.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslscore\USLuaRef.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslscore\USLuaRuntime.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslscore\USLuaRuntime.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslscore\USLuaSerializer.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslscore\USLuaSerializer.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslscore\USLuaSharedPtr.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslscore\USLuaState-impl.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslscore\USLuaState.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslscore\USLuaState.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslscore\USLuaStateHandle.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslscore\USLuaStateHandle.h"
 				>
 			</File>
 		</Filter>

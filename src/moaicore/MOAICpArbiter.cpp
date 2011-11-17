@@ -161,7 +161,7 @@ MOAICpArbiter::MOAICpArbiter () :
 	mArbiter ( 0 ) {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( USLuaObject )
+		RTTI_EXTEND ( MOAILuaObject )
 	RTTI_END
 }
 
@@ -170,7 +170,7 @@ MOAICpArbiter::~MOAICpArbiter () {
 }
 
 //----------------------------------------------------------------//
-void MOAICpArbiter::RegisterLuaClass ( USLuaState& state ) {
+void MOAICpArbiter::RegisterLuaClass ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "new",							MOAILogMessages::_alertNewIsUnsupported },
@@ -181,7 +181,7 @@ void MOAICpArbiter::RegisterLuaClass ( USLuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAICpArbiter::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAICpArbiter::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "countContacts",					_countContacts },

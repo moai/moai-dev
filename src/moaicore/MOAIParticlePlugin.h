@@ -4,6 +4,7 @@
 #ifndef	MOAIPARTICLEPLUGIN_H
 #define	MOAIPARTICLEPLUGIN_H
 
+#include <moaicore/MOAILua.h>
 #include <aku/AKU-particles.h>
 
 //================================================================//
@@ -13,7 +14,7 @@
 	@text	Allows custom particle processing via C language callbacks.
 */
 class MOAIParticlePlugin :
-	public virtual USLuaObject {
+	public virtual MOAILuaObject {
 private:
 
 	int							mSize;
@@ -33,8 +34,8 @@ public:
 	void			Init						( AKUParticleInitFunc initFunc, AKUParticleRenderFunc renderFunc, int size );
 					MOAIParticlePlugin			();
 					~MOAIParticlePlugin			();
-	void			RegisterLuaClass			( USLuaState& state );
-	void			RegisterLuaFuncs			( USLuaState& state );
+	void			RegisterLuaClass			( MOAILuaState& state );
+	void			RegisterLuaFuncs			( MOAILuaState& state );
 };
 
 #endif

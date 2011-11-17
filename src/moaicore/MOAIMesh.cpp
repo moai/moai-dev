@@ -116,13 +116,13 @@ MOAIMesh::~MOAIMesh () {
 }
 
 //----------------------------------------------------------------//
-void MOAIMesh::RegisterLuaClass ( USLuaState& state ) {
+void MOAIMesh::RegisterLuaClass ( MOAILuaState& state ) {
 
 	this->MOAIDeck::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAIMesh::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAIMesh::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	this->MOAIDeck::RegisterLuaFuncs ( state );
 

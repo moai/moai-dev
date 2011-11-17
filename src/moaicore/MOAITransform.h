@@ -5,6 +5,7 @@
 #define	MOAITRANSFORM_H
 
 #include <moaicore/MOAIEaseDriver.h>
+#include <moaicore/MOAILua.h>
 #include <moaicore/MOAITransformBase.h>
 
 //================================================================//
@@ -13,6 +14,8 @@
 /**	@name	MOAITransform
 	@text	2D transformation hierarchy node.
 
+	@attr	ATTR_X_PIV
+	@attr	ATTR_Y_PIV
 	@attr	ATTR_X_LOC
 	@attr	ATTR_Y_LOC
 	@attr	ATTR_Z_ROT
@@ -23,34 +26,40 @@ class MOAITransform :
 	public MOAITransformBase {
 protected:
 
+	USVec2D			mPiv;
 	USVec2D			mLoc;
 	USVec2D			mScale;
 	float			mDegrees;
 
 	//----------------------------------------------------------------//
 	static int	_addLoc			( lua_State* L );
+	static int	_addPiv			( lua_State* L );
 	static int	_addRot			( lua_State* L );
 	static int	_addScl			( lua_State* L );
 	static int	_getLoc			( lua_State* L );
+	static int	_getPiv			( lua_State* L );
 	static int	_getRot			( lua_State* L );
 	static int	_getScl			( lua_State* L );
 	static int	_modelToWorld	( lua_State* L );
 	static int	_move			( lua_State* L );
 	static int	_moveLoc		( lua_State* L );
+	static int	_movePiv		( lua_State* L );
 	static int	_moveRot		( lua_State* L );
 	static int	_moveScl		( lua_State* L );
 	static int	_seek			( lua_State* L );
 	static int	_seekLoc		( lua_State* L );
+	static int	_seekPiv		( lua_State* L );
 	static int	_seekRot		( lua_State* L );
 	static int	_seekScl		( lua_State* L );
 	static int	_setLoc			( lua_State* L );
 	static int	_setParent		( lua_State* L );
+	static int	_setPiv			( lua_State* L );
 	static int	_setRot			( lua_State* L );
 	static int	_setScl			( lua_State* L );
 	static int	_worldToModel	( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void	BuildTransforms			( MOAITraitsBuffer* traits, float xOff, float yOff, float xStretch, float yStretch );
+	void	BuildTransforms			( float xOff, float yOff, float xStretch, float yStretch );
 	void	OnDepNodeUpdate			();
 
 public:
@@ -59,28 +68,37 @@ public:
 	DECL_ATTR_HELPER ( MOAITransform )
 
 	enum {
+		ATTR_X_PIV,
+		ATTR_Y_PIV,
 		ATTR_X_LOC,
 		ATTR_Y_LOC,
 		ATTR_Z_ROT,
 		ATTR_X_SCL,
 		ATTR_Y_SCL,
+		
+		INHERIT_LOC,
+		INHERIT_TRANSFORM,
+		
 		TOTAL_ATTR,
 	};
 	
+	GET_SET ( USVec2D, Piv, mPiv )
 	GET_SET ( USVec2D, Loc, mLoc )
 	GET_SET ( USVec2D, Scl, mScale )
 	GET_SET ( float, Rot, mDegrees )
 	
 	//----------------------------------------------------------------//
-	bool				ApplyAttrOp						( u32 attrID, USAttrOp& attrOp, u32 op );
+	bool				ApplyAttrOp						( u32 attrID, MOAIAttrOp& attrOp, u32 op );
 	const USAffine2D&	GetLocalToWorldMtx				();
 	const USAffine2D&	GetWorldToLocalMtx				();
 						MOAITransform					();
 						~MOAITransform					();
-	void				RegisterLuaClass				( USLuaState& state );
-	void				RegisterLuaFuncs				( USLuaState& state );
+	void				RegisterLuaClass				( MOAILuaState& state );
+	void				RegisterLuaFuncs				( MOAILuaState& state );
+	void				SerializeIn						( MOAILuaState& state, MOAIDeserializer& serializer );
+	void				SerializeOut					( MOAILuaState& state, MOAISerializer& serializer );
 	void				SetLoc							( float x, float y );
-	virtual void		SetParent						( MOAITransformBase* parent );
+	void				SetPiv							( float x, float y );
 	void				SetScl							( float x, float y );
 };
 

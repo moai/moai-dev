@@ -4,6 +4,7 @@
 #ifndef MOAIPOINTERSENSOR_H
 #define MOAIPOINTERSENSOR_H
 
+#include <moaicore/MOAILua.h>
 #include <moaicore/MOAISensor.h>
 
 //================================================================//
@@ -19,7 +20,7 @@ private:
 	int mX;
 	int mY;
 
-	USLuaRef	mOnMove;
+	MOAILuaRef	mOnMove;
 
 	//----------------------------------------------------------------//
 	static int		_getLoc					( lua_State* L );
@@ -33,8 +34,8 @@ public:
 	void			HandleEvent				( USStream& eventStream );
 					MOAIPointerSensor		();
 					~MOAIPointerSensor		();
-	void			RegisterLuaClass		( USLuaState& state );
-	void			RegisterLuaFuncs		( USLuaState& state );
+	void			RegisterLuaClass		( MOAILuaState& state );
+	void			RegisterLuaFuncs		( MOAILuaState& state );
 	static void		WriteEvent				( USStream& eventStream, int x, int y );
 };
 

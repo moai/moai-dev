@@ -7,6 +7,8 @@
 #ifndef AKU_H
 #define AKU_H
 
+#include <stddef.h>
+
 #ifdef WIN32
 
 	#ifdef AKU_EXPORT
@@ -34,35 +36,39 @@
 typedef void ( *AKUEnterFullscreenModeFunc )	();
 typedef void ( *AKUExitFullscreenModeFunc )		();
 typedef void ( *AKUOpenWindowFunc )				( const char* title, int width, int height );
-typedef void ( *AKUStartGameLoopFunc )			();
+typedef void ( *AKUSetSimStepFunc )				( double step );
 
 AKU_DECLARE_FUNC_ACCESSORS ( EnterFullscreenMode )
 AKU_DECLARE_FUNC_ACCESSORS ( ExitFullscreenMode )
 AKU_DECLARE_FUNC_ACCESSORS ( OpenWindow )
-AKU_DECLARE_FUNC_ACCESSORS ( StartGameLoop )
+AKU_DECLARE_FUNC_ACCESSORS ( SetSimStep )
 
 struct lua_State;
 typedef int AKUContextID;
 
 // context api
+AKU_API void			AKUClearMemPool					();
 AKU_API AKUContextID	AKUCreateContext				();
 AKU_API void			AKUDeleteContext				( AKUContextID context );
 AKU_API AKUContextID	AKUGetContext					();
 AKU_API void*			AKUGetUserdata					();
 AKU_API void			AKUFinalize						();
+AKU_API void			AKUInitMemPool					( size_t sizeInBytes );
 AKU_API void			AKUSetContext					( AKUContextID context );
 AKU_API void			AKUSetUserdata					( void* user );
 
 // management api
 AKU_API void			AKUDetectGfxContext				();
 AKU_API lua_State*		AKUGetLuaState					();
+AKU_API double			AKUGetSimStep					();
 AKU_API char const*		AKUGetWorkingDirectory			();
 AKU_API int				AKUMountVirtualDirectory		( char const* virtualPath, char const* archive );
 AKU_API void			AKUPause						( bool pause );
 AKU_API void			AKUReleaseGfxContext			();
 AKU_API void			AKURender						();
-AKU_API void			AKUResize						( int width, int height );
 AKU_API void			AKURunScript					( const char* filename );
+AKU_API void			AKUSetScreenSize				( int width, int height );
+AKU_API void			AKUSetViewSize					( int width, int height );
 AKU_API void			AKUSoftReleaseGfxResources		( int age );
 AKU_API int				AKUSetWorkingDirectory			( char const* path );
 AKU_API void			AKUUpdate						();

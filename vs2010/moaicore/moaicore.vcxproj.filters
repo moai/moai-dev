@@ -70,9 +70,6 @@
     <Filter Include="src\camera">
       <UniqueIdentifier>{9acdb11e-3d7c-4894-b6a0-f0328e270421}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\traits">
-      <UniqueIdentifier>{ec27eb1a-e73d-4f9e-92ca-e6ca544f87db}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\aku">
       <UniqueIdentifier>{e69e8559-adbe-447a-80a1-93a23dc7b196}</UniqueIdentifier>
     </Filter>
@@ -81,6 +78,12 @@
     </Filter>
     <Filter Include="src\box2D\joints">
       <UniqueIdentifier>{1e8b7ec0-b40a-4ac2-9ad5-b1212013fe89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\lua">
+      <UniqueIdentifier>{9f48728c-c870-43e0-bcf6-965c7a0d2a6d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\lifecycle">
+      <UniqueIdentifier>{96fd06bd-a903-429c-ad52-774b518de09b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -258,9 +261,6 @@
     <ClCompile Include="..\..\src\moaicore\MOAIScriptNode.cpp">
       <Filter>src\node</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAISerializer.cpp">
-      <Filter>src\util</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAIDataBuffer.cpp">
       <Filter>src\util</Filter>
     </ClCompile>
@@ -335,9 +335,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAICameraFitter2D.cpp">
       <Filter>src\camera</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAITraits.cpp">
-      <Filter>src\traits</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\aku\AKU.cpp">
       <Filter>src\aku</Filter>
@@ -441,9 +438,6 @@
     <ClCompile Include="..\..\src\moaicore\MOAIBox2DGearJoint.cpp">
       <Filter>src\box2D\joints</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAIBox2DLineJoint.cpp">
-      <Filter>src\box2D\joints</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAIBox2DMouseJoint.cpp">
       <Filter>src\box2D\joints</Filter>
     </ClCompile>
@@ -464,6 +458,54 @@
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAIImage-png.cpp">
       <Filter>src\gfx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIBox2DWheelJoint.cpp">
+      <Filter>src\box2D\joints</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIBox2DRopeJoint.cpp">
+      <Filter>src\box2D\joints</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAILuaRef.cpp">
+      <Filter>src\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAILuaRuntime.cpp">
+      <Filter>src\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAILuaState.cpp">
+      <Filter>src\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAILuaStateHandle.cpp">
+      <Filter>src\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIUrlMgr_curl.cpp">
+      <Filter>src\web</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIHttpTaskInfo_curl.cpp">
+      <Filter>src\web</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIDeserializer.cpp">
+      <Filter>src\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAISerializerBase.cpp">
+      <Filter>src\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAISerializer.cpp">
+      <Filter>src\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAICanary.cpp">
+      <Filter>src\lifecycle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIObject.cpp">
+      <Filter>src\lifecycle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAILuaObject.cpp">
+      <Filter>src\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIGlobals.cpp">
+      <Filter>src\lifecycle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIRtti.cpp">
+      <Filter>src\lifecycle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -644,9 +686,6 @@
     <ClInclude Include="..\..\src\moaicore\MOAIScriptNode.h">
       <Filter>src\node</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\MOAISerializer.h">
-      <Filter>src\util</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIDataBuffer.h">
       <Filter>src\util</Filter>
     </ClInclude>
@@ -730,9 +769,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAICameraFitter2D.h">
       <Filter>src\camera</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\MOAITraits.h">
-      <Filter>src\traits</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\aku\AKU.h">
       <Filter>src\aku</Filter>
@@ -833,9 +869,6 @@
     <ClInclude Include="..\..\src\moaicore\MOAIBox2DGearJoint.h">
       <Filter>src\box2D\joints</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\MOAIBox2DLineJoint.h">
-      <Filter>src\box2D\joints</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIBox2DMouseJoint.h">
       <Filter>src\box2D\joints</Filter>
     </ClInclude>
@@ -850,6 +883,75 @@
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIBox2DWeldJoint.h">
       <Filter>src\box2D\joints</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIAttrOp.h">
+      <Filter>src\node</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIBox2DWheelJoint.h">
+      <Filter>src\box2D\joints</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIBox2DRopeJoint.h">
+      <Filter>src\box2D\joints</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAILua.h">
+      <Filter>src\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAILuaRef.h">
+      <Filter>src\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAILuaRuntime.h">
+      <Filter>src\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAILuaSharedPtr.h">
+      <Filter>src\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAILuaState.h">
+      <Filter>src\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAILuaStateHandle.h">
+      <Filter>src\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAILuaState-impl.h">
+      <Filter>src\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIObject-impl.h">
+      <Filter>src\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIHttpTaskInfo_curl.h">
+      <Filter>src\web</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIUrlMgr.h">
+      <Filter>src\web</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIDeserializer.h">
+      <Filter>src\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAISerializerBase.h">
+      <Filter>src\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAISerializer.h">
+      <Filter>src\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAICanary.h">
+      <Filter>src\lifecycle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIObject.h">
+      <Filter>src\lifecycle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAILuaObject.h">
+      <Filter>src\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAISharedPtr.h">
+      <Filter>src\lifecycle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIWeakPtr.h">
+      <Filter>src\lifecycle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIGlobals.h">
+      <Filter>src\lifecycle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIRtti.h">
+      <Filter>src\lifecycle</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

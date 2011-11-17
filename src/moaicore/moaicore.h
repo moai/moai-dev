@@ -6,15 +6,24 @@
 
 #include <moaicore/pch.h>
 
+#include <moaicore/MOAILuaSharedPtr.h>
+#include <moaicore/MOAILuaState.h>
+#include <moaicore/MOAILuaStateHandle.h>
+#include <moaicore/MOAILuaObject.h>
+#include <moaicore/MOAILuaRuntime.h>
+#include <moaicore/MOAILuaRef.h>
+
 #include <moaicore/MOAIAction.h>
 #include <moaicore/MOAIActionMgr.h>
 #include <moaicore/MOAIAnim.h>
 #include <moaicore/MOAIAnimCurve.h>
+#include <moaicore/MOAIAttrOp.h>
 #include <moaicore/MOAIBitmapFontRipper.h>
 #include <moaicore/MOAIBlendMode.h>
 #include <moaicore/MOAIButtonSensor.h>
 #include <moaicore/MOAICameraAnchor2D.h>
 #include <moaicore/MOAICameraFitter2D.h>
+#include <moaicore/MOAICanary.h>
 #include <moaicore/MOAIColor.h>
 #include <moaicore/MOAICompassSensor.h>
 #include <moaicore/MOAIDataBuffer.h>
@@ -23,6 +32,7 @@
 #include <moaicore/MOAIDeck.h>
 #include <moaicore/MOAIDeck2D.h>
 #include <moaicore/MOAIDeckRemapper.h>
+#include <moaicore/MOAIDeserializer.h>
 #include <moaicore/MOAIDraw.h>
 #include <moaicore/MOAIEnvironment.h>
 #include <moaicore/MOAIEaseDriver.h>
@@ -36,10 +46,12 @@
 #include <moaicore/MOAIGfxQuad2D.h>
 #include <moaicore/MOAIGfxQuadDeck2D.h>
 #include <moaicore/MOAIGfxQuadListDeck2D.h>
+#include <moaicore/MOAIGlobals.h>
 #include <moaicore/MOAIGlyph.h>
 #include <moaicore/MOAIGrid.h>
 #include <moaicore/MOAIGridSpace.h>
 #include <moaicore/MOAIHttpTask.h>
+#include <moaicore/MOAIHttpTaskInfo_curl.h>
 #include <moaicore/MOAIImage.h>
 #include <moaicore/MOAIIndexBuffer.h>
 #include <moaicore/MOAIInputDevice.h>
@@ -58,6 +70,7 @@
 #include <moaicore/MOAIMotionSensor.h>
 #include <moaicore/MOAINode.h>
 #include <moaicore/MOAINodeMgr.h>
+#include <moaicore/MOAIObject.h>
 #include <moaicore/MOAIParser.h>
 #include <moaicore/MOAIParticle.h>
 #include <moaicore/MOAIParticleDistanceEmitter.h>
@@ -78,12 +91,15 @@
 #include <moaicore/MOAIProp2D.h>
 #include <moaicore/MOAIPvrHeader.h>
 #include <moaicore/MOAIQuadBrush.h>
+#include <moaicore/MOAIRtti.h>
 #include <moaicore/MOAIScriptDeck.h>
 #include <moaicore/MOAIScriptNode.h>
 #include <moaicore/MOAISensor.h>
 #include <moaicore/MOAISerializer.h>
+#include <moaicore/MOAISerializerBase.h>
 #include <moaicore/MOAIShader.h>
 #include <moaicore/MOAIShaderMgr.h>
+#include <moaicore/MOAISharedPtr.h>
 #include <moaicore/MOAISim.h>
 #include <moaicore/MOAIStretchPatch2D.h>
 #include <moaicore/MOAISurfaceDeck2D.h>
@@ -96,13 +112,14 @@
 #include <moaicore/MOAITileFlags.h>
 #include <moaicore/MOAITimer.h>
 #include <moaicore/MOAITouchSensor.h>
-#include <moaicore/MOAITraits.h>
 #include <moaicore/MOAITransform.h>
 #include <moaicore/MOAITransformBase.h>
+#include <moaicore/MOAIUrlMgr.h>
 #include <moaicore/MOAIVertexBuffer.h>
 #include <moaicore/MOAIVertexFormat.h>
 #include <moaicore/MOAIVertexFormatMgr.h>
 #include <moaicore/MOAIViewport.h>
+#include <moaicore/MOAIWeakPtr.h>
 #include <moaicore/MOAIXmlParser.h>
 
 #if USE_BOX2D
@@ -114,12 +131,12 @@
 	#include <moaicore/MOAIBox2DFrictionJoint.h>
 	#include <moaicore/MOAIBox2DGearJoint.h>
 	#include <moaicore/MOAIBox2DJoint.h>
-	#include <moaicore/MOAIBox2DLineJoint.h>
 	#include <moaicore/MOAIBox2DMouseJoint.h>
 	#include <moaicore/MOAIBox2DPrismaticJoint.h>
 	#include <moaicore/MOAIBox2DPulleyJoint.h>
 	#include <moaicore/MOAIBox2DRevoluteJoint.h>
 	#include <moaicore/MOAIBox2DWeldJoint.h>
+	#include <moaicore/MOAIBox2DWheelJoint.h>
 	#include <moaicore/MOAIBox2DWorld.h>
 #endif
 
@@ -133,13 +150,15 @@
 	#include <moaicore/MOAICpSpace.h>
 #endif
 
+#include <moaicore/MOAILuaState-impl.h>
+
 //================================================================//
 // moaicore
 //================================================================//
 namespace moaicore {
 
 	//----------------------------------------------------------------//
-	void			InitGlobals			( USGlobals* globals );
+	void			InitGlobals			( MOAIGlobals* globals );
 }
 
 #endif

@@ -12,6 +12,11 @@
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAITexture.h>
 
+#define WIDE_ID_BIT			0x80000000
+#define WIDE_ID_MASK		0x7fffffff
+#define INVALID_ID			0xffffffff
+#define INVALID_BYTE_ID		0xff
+
 //================================================================//
 // local
 //================================================================//
@@ -35,6 +40,20 @@ int MOAIFont::_getImage ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	getLineScale
+	@text	Returns the default size of a line (in pixels).
+
+	@in		MOAIFont self
+	@out	number lineScale		The default size of the line in pixels.
+*/
+int MOAIFont::_getLineScale ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIFont, "U" )
+	
+	lua_pushnumber ( state, self->GetScale () * self->GetLineSpacing ());
+	return 1;
+}
+
+//----------------------------------------------------------------//
 /**	@name	getScale
 	@text	Returns the default size of this font for use with the MOAITextbox:setTextSize function.
 
@@ -42,12 +61,7 @@ int MOAIFont::_getImage ( lua_State* L ) {
 	@out	number size				The default point size of the font.
 */
 int MOAIFont::_getScale ( lua_State* L ) {
-
-	USLuaState state ( L );
-	if ( !state.CheckParams ( 1, "U" )) return 0;
-	
-	MOAIFont* self = state.GetLuaObject < MOAIFont >( 1 );
-	if ( !self ) return 0;
+	MOAI_LUA_SETUP ( MOAIFont, "U" )
 	
 	lua_pushnumber ( state, self->GetScale ());
 	return 1;
@@ -82,7 +96,7 @@ int MOAIFont::_getTexture ( lua_State* L ) {
 */
 int MOAIFont::_load ( lua_State* L ) {
 
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	if ( !state.CheckParams ( 1, "U" )) return 0;
 	
 	MOAIFont* self = state.GetLuaObject < MOAIFont >( 1 );
@@ -112,7 +126,7 @@ int MOAIFont::_load ( lua_State* L ) {
 	@in		string filename			The path to the TTF file to load.
 	@in		string charCodes		A string which defines the characters found in the font.
 	@in		number points			The point size to be rendered onto the internal texture.
-	@in		number dpi				The device DPI (dots per inch of device screen).
+	@opt	number dpi				The device DPI (dots per inch of device screen). Default value is 72 (points same as pixels).
 	@out	nil
 */
 int MOAIFont::_loadFromTTF ( lua_State* L ) {
@@ -122,8 +136,8 @@ int MOAIFont::_loadFromTTF ( lua_State* L ) {
 	cc8* charCodes	= state.GetValue < cc8* >( 3, "" );
 	float points	= state.GetValue < float >( 4, 0 );
 	u32 dpi			= state.GetValue < u32 >( 5, 72 );
-
-	if ( points && dpi ) {
+	
+	if (( points > 0.0f ) && dpi ) {
 		self->LoadFontFromTTF ( filename, charCodes, points, dpi );
 	}
 	return 0;
@@ -201,19 +215,25 @@ MOAIGlyph& MOAIFont::GetGlyphForID ( u32 id ) {
 	}
 
 	if ( id & WIDE_ID_BIT ) {
-		return this->mWideGlyphs [ id & WIDE_ID_MASK ];
+		id = id & WIDE_ID_MASK;
+		assert ( id < this->mWideGlyphs.Size ());
+		return this->mWideGlyphs [ id ];
 	}
+	
+	assert ( id < this->mByteGlyphs.Size ());
 	return this->mByteGlyphs [ id ];
 }
 
 //----------------------------------------------------------------//
 u32 MOAIFont::GetIDForChar ( u32 c ) {
 
+	u32 id = INVALID_ID;
+
 	if ( this->IsWideChar ( c )) {
 		
 		// TODO: replace sorted lookup w/ AVL tree
 		u32 size = this->mWideGlyphMap.Size ();
-		u32 id = USBinarySearch < u32 >( this->mWideGlyphMap, c, size );
+		id = USBinarySearch < u32 >( this->mWideGlyphMap, c, size );
 		if ( id < size ) {
 			return id | WIDE_ID_BIT;
 		}
@@ -222,11 +242,14 @@ u32 MOAIFont::GetIDForChar ( u32 c ) {
 		if ( this->mByteGlyphMapBase <= c ) {
 			c -= this->mByteGlyphMapBase;
 			if ( c < this->mByteGlyphMap.Size ()) {
-				return this->mByteGlyphMap [ c ];
+				id = this->mByteGlyphMap [ c ];
+				if ( id == INVALID_BYTE_ID ) {
+					id = INVALID_ID;
+				}
 			}
 		}
 	}
-	return INVALID_ID;
+	return id;
 }
 
 //----------------------------------------------------------------//
@@ -263,6 +286,9 @@ void MOAIFont::Init ( cc8* charCodes ) {
 	this->mWideGlyphs.Init ( totalWideChars );
 	this->mWideGlyphMap.Init ( totalWideChars );
 	
+	this->mByteGlyphMap.Fill ( INVALID_BYTE_ID );
+	this->mWideGlyphMap.Fill ( INVALID_ID );
+	
 	u32 b = 0;
 	u32 w = 0;
 	for ( int i = 0; charCodes [ i ]; ) {
@@ -291,7 +317,7 @@ MOAIFont::MOAIFont () :
 	mScale ( 1.0f ),
 	mLineSpacing ( 1.0f ) {
 	
-	RTTI_SINGLE ( USLuaObject )
+	RTTI_SINGLE ( MOAILuaObject )
 }
 
 //----------------------------------------------------------------//
@@ -338,15 +364,16 @@ void MOAIFont::LoadFontFromTTF ( cc8* filename, cc8* charCodes, float points, u3
 }
 
 //----------------------------------------------------------------//
-void MOAIFont::RegisterLuaClass ( USLuaState& state ) {
+void MOAIFont::RegisterLuaClass ( MOAILuaState& state ) {
 	UNUSED ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAIFont::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAIFont::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	luaL_Reg regTable [] = {
 		{ "getImage",			_getImage },
+		{ "getLineScale",		_getLineScale },
 		{ "getScale",			_getScale },
 		{ "getTexture",			_getTexture },
 		{ "load",				_load },
@@ -360,7 +387,7 @@ void MOAIFont::RegisterLuaFuncs ( USLuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIFont::SerializeIn ( USLuaState& state, USLuaSerializer& serializer ) {
+void MOAIFont::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
 	UNUSED ( serializer );
 	
 	if ( state.GetFieldWithType ( -1, "mByteGlyphs", LUA_TTABLE )) {
@@ -422,7 +449,7 @@ void MOAIFont::SerializeIn ( USLuaState& state, USLuaSerializer& serializer ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIFont::SerializeOut ( USLuaState& state, USLuaSerializer& serializer ) {
+void MOAIFont::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
 	UNUSED ( serializer );
 	
 	if ( this->mByteGlyphs.Size ()) {
@@ -478,7 +505,6 @@ void MOAIFont::SetGlyph ( const MOAIGlyph& glyph ) {
 		if ( glyph.mAdvanceX > this->mDummy.mAdvanceX ) {
 			this->mDummy.mAdvanceX = glyph.mAdvanceX;
 		}
-	
 		this->GetGlyphForID ( id ) = glyph;
 	}
 }

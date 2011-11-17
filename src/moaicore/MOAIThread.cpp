@@ -16,7 +16,7 @@
 	@out	nil
 */
 int MOAIThread::_blockOnAction ( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	if ( !state.CheckParams ( 1, "U" )) return 0;
 
 	MOAIAction* current = MOAIActionMgr::Get ().GetCurrentAction ();
@@ -37,7 +37,7 @@ int MOAIThread::_blockOnAction ( lua_State* L ) {
 	@out	MOAIThread currentThread	Current thread or nil.
 */
 int MOAIThread::_currentThread ( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 
 	MOAIAction* current = MOAIActionMgr::Get ().GetCurrentAction ();
 	if ( !current ) return 0;
@@ -144,7 +144,7 @@ void MOAIThread::OnUpdate ( float step ) {
 					USLog::Print ( "%s\n", msg );
 					lua_pop ( this->mState, 1 );
 					
-					USLuaStateHandle state ( this->mState );
+					MOAILuaStateHandle state ( this->mState );
 					state.PrintStackTrace ( USLog::CONSOLE, 0 );
 				}
 				this->Stop ();
@@ -169,7 +169,7 @@ void MOAIThread::OnStop () {
 }
 
 //----------------------------------------------------------------//
-void MOAIThread::RegisterLuaClass ( USLuaState& state ) {
+void MOAIThread::RegisterLuaClass ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "blockOnAction",		_blockOnAction },
@@ -181,7 +181,7 @@ void MOAIThread::RegisterLuaClass ( USLuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIThread::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAIThread::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	MOAIAction::RegisterLuaFuncs ( state );
 

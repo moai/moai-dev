@@ -131,7 +131,7 @@ void MOAIAnim::Apply ( float t0, float t1 ) {
 		return;
 	}
 	
-	USAttrOp adder;
+	MOAIAttrOp adder;
 	
 	u32 total = this->mLinks.Size ();
 	for ( u32 i = 0; i < total; ++i ) {
@@ -145,7 +145,7 @@ void MOAIAnim::Apply ( float t0, float t1 ) {
 			if ( link.mRelative ) {
 				float value = curve->GetFloatDelta ( t0, t1 );
 				adder.SetValue ( value );
-				target->ApplyAttrOp ( link.mAttrID, adder, USAttrOp::ADD );
+				target->ApplyAttrOp ( link.mAttrID, adder, MOAIAttrOp::ADD );
 			}
 			else {
 				float value = curve->GetFloatValue ( t1 );
@@ -196,13 +196,13 @@ void MOAIAnim::OnUpdate ( float step ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIAnim::RegisterLuaClass ( USLuaState& state ) {
+void MOAIAnim::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAITimer::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAIAnim::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAIAnim::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	MOAITimer::RegisterLuaFuncs ( state );
 
@@ -229,7 +229,7 @@ void MOAIAnim::SetLink ( u32 linkID, MOAIAnimCurve* curve, MOAINode* target, u32
 
 	if ( linkID >= this->mLinks.Size ()) return;
 	if ( !target ) return;
-	if ( !target->AttrExists ( attrID )) return;
+	if ( !target->CheckAttrExists ( attrID )) return;
 
 	MOAIAnimLink& link = this->mLinks [ linkID ];
 	link.mCurve.Set ( *this, curve );

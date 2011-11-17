@@ -7,12 +7,6 @@
     <Filter Include="src\math">
       <UniqueIdentifier>{1470e4f3-2803-4706-a36e-371c960a17e5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\animCurve">
-      <UniqueIdentifier>{5a4c71c9-66f7-4fb6-abfa-8f29e115eb83}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\attributed">
-      <UniqueIdentifier>{a1b9c515-1bf7-400e-b282-b0d3e92258a2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\gfxObjects">
       <UniqueIdentifier>{24dc16d5-28ae-493a-adcf-e99b0c8cb51b}</UniqueIdentifier>
     </Filter>
@@ -28,9 +22,6 @@
     <Filter Include="src\util">
       <UniqueIdentifier>{df25416e-bd9d-45ed-9aa4-86e0111078c7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\web">
-      <UniqueIdentifier>{7f97408f-8b62-44d3-bd03-7b21098f7a69}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\xml">
       <UniqueIdentifier>{bfb53393-2460-4e4b-963a-20554ec6ccc5}</UniqueIdentifier>
     </Filter>
@@ -42,15 +33,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\uslsext\USAnimCurve.cpp">
-      <Filter>src\animCurve</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\uslsext\USAttributed.cpp">
-      <Filter>src\attributed</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\uslsext\USAttrOp.cpp">
-      <Filter>src\attributed</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\uslsext\USColor.cpp">
       <Filter>src\gfxObjects</Filter>
     </ClCompile>
@@ -144,15 +126,6 @@
     <ClCompile Include="..\..\src\uslsext\USTypedPtr.cpp">
       <Filter>src\util</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\uslsext\USHttpTask.cpp">
-      <Filter>src\web</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\uslsext\USHttpTask_impl.cpp">
-      <Filter>src\web</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\uslsext\USUrlMgr.cpp">
-      <Filter>src\web</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\uslsext\USXmlReader.cpp">
       <Filter>src\xml</Filter>
     </ClCompile>
@@ -177,17 +150,11 @@
     <ClCompile Include="..\..\src\uslsext\uslsext-pch.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\uslsext\USHexDump.cpp">
+      <Filter>src\util</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\src\uslsext\USAnimCurve.h">
-      <Filter>src\animCurve</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\uslsext\USAttributed.h">
-      <Filter>src\attributed</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\uslsext\USAttrOp.h">
-      <Filter>src\attributed</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\uslsext\USColor.h">
       <Filter>src\gfxObjects</Filter>
     </ClInclude>
@@ -296,15 +263,6 @@
     <ClInclude Include="..\..\src\uslsext\USTypedPtr.h">
       <Filter>src\util</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\uslsext\USHttpTask.h">
-      <Filter>src\web</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\uslsext\USHttpTask_impl.h">
-      <Filter>src\web</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\uslsext\USUrlMgr.h">
-      <Filter>src\web</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\uslsext\USXmlReader.h">
       <Filter>src\xml</Filter>
     </ClInclude>
@@ -343,6 +301,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\uslsext\USMatrix4x4.h">
       <Filter>src\math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uslsext\USHexDump.h">
+      <Filter>src\util</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -17,5 +17,6 @@
 	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/src/zipfs/ZIPFSString.c
 	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/src/zipfs/ZIPFSVirtualPath.c
 	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/src/zipfs/ZIPFSZipFile.c
+	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/3rdparty/tlsf-2.0/tlsf.c
 
 	include $(BUILD_STATIC_LIBRARY)

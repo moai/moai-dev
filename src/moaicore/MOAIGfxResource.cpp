@@ -83,7 +83,7 @@ bool MOAIGfxResource::Affirm () {
 		this->mState = STATE_CLEAR;
 	
 		if ( this->mOnRenew ) {
-			USLuaStateHandle state = USLuaRuntime::Get ().State ();
+			MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 			this->PushLocal ( state, this->mOnRenew );
 			this->PushLuaUserdata ( state );
 			state.DebugCall ( 1, 0 );
@@ -127,7 +127,7 @@ MOAIGfxResource::MOAIGfxResource () :
 	mState ( STATE_CLEAR ),
 	mLastRenderCount ( 0 ) {
 
-	RTTI_SINGLE ( USLuaObject )
+	RTTI_SINGLE ( MOAILuaObject )
 
 	this->mLink.Data ( this );
 	
@@ -143,12 +143,12 @@ MOAIGfxResource::~MOAIGfxResource () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxResource::RegisterLuaClass ( USLuaState& state ) {
+void MOAIGfxResource::RegisterLuaClass ( MOAILuaState& state ) {
 	UNUSED ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxResource::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAIGfxResource::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "clear",					_clear },

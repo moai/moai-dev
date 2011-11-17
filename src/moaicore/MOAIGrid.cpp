@@ -339,7 +339,7 @@ u32 MOAIGrid::GetTile ( int xTile, int yTile ) {
 MOAIGrid::MOAIGrid () {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( USLuaObject )
+		RTTI_EXTEND ( MOAILuaObject )
 	RTTI_END
 }
 
@@ -348,7 +348,7 @@ MOAIGrid::~MOAIGrid () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGrid::RegisterLuaClass ( USLuaState& state ) {
+void MOAIGrid::RegisterLuaClass ( MOAILuaState& state ) {
 
 	state.SetField ( -1, "TILE_X_FLIP", ( u32 )MOAITileFlags::XFLIP );
 	state.SetField ( -1, "TILE_Y_FLIP", ( u32 )MOAITileFlags::YFLIP );
@@ -369,7 +369,7 @@ void MOAIGrid::RegisterLuaClass ( USLuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGrid::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAIGrid::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "clearTileFlags",		_clearTileFlags },
@@ -391,7 +391,7 @@ void MOAIGrid::RegisterLuaFuncs ( USLuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGrid::SerializeIn ( USLuaState& state, USLuaSerializer& serializer ) {
+void MOAIGrid::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
 	UNUSED ( serializer );
 
 	this->MOAIGridSpace::SerializeIn ( state );
@@ -421,7 +421,7 @@ void MOAIGrid::SerializeIn ( USLuaState& state, USLuaSerializer& serializer ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGrid::SerializeOut ( USLuaState& state, USLuaSerializer& serializer ) {
+void MOAIGrid::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
 	UNUSED ( serializer );
 
 	this->MOAIGridSpace::SerializeOut ( state );

@@ -42,11 +42,11 @@ MOAIUntzSampleBuffer::~MOAIUntzSampleBuffer () {
 		delete [] mBuffer;
 }
 //----------------------------------------------------------------//
-void MOAIUntzSampleBuffer::RegisterLuaClass ( USLuaState& state ) {
+void MOAIUntzSampleBuffer::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIUntzSampleBuffer::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAIUntzSampleBuffer::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "load",				_load },

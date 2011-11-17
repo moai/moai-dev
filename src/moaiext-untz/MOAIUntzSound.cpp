@@ -105,7 +105,7 @@ int MOAIUntzSound::_load ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIUntzSound, "U" )
 
 	if ( self->mSound ) {
-		delete self->mSound;
+		UNTZ::Sound::dispose ( self->mSound );
 		self->mSound = 0;
 	}
 
@@ -337,13 +337,13 @@ int MOAIUntzSound::_stop ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIUntzSound::ApplyAttrOp ( u32 attrID, USAttrOp& attrOp, u32 op ) {
+bool MOAIUntzSound::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 
 	if ( MOAIUntzSoundAttr::Check ( attrID )) {
 		attrID = UNPACK_ATTR ( attrID );
 
 		if ( attrID == ATTR_VOLUME ) {
-			this->mSound->setVolume ( attrOp.Apply ( this->mSound->getVolume (), op ));
+			this->mSound->setVolume ( attrOp.Apply ( this->mSound->getVolume (), op, MOAINode::ATTR_READ_WRITE ));
 			return true;
 		}
 	}
@@ -366,11 +366,11 @@ MOAIUntzSound::~MOAIUntzSound () {
 		//printf ( "deleteing sound: %s - %s\n", mFilename.str(), (mInMemory) ? "in memory" : "not in memory" );
 		
 	if ( this->mSound ) {
-		delete this->mSound;
+		UNTZ::Sound::dispose ( this->mSound );
 	}
 }
 //----------------------------------------------------------------//
-void MOAIUntzSound::RegisterLuaClass ( USLuaState& state ) {
+void MOAIUntzSound::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAINode::RegisterLuaClass ( state );
 
@@ -378,7 +378,7 @@ void MOAIUntzSound::RegisterLuaClass ( USLuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIUntzSound::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAIUntzSound::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	MOAINode::RegisterLuaFuncs ( state );
 

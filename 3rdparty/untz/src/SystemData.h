@@ -12,7 +12,7 @@
 #include "AudioMixer.h"
 #include "Untz.h"
 #include "SoundData.h"
-#include <Threading/Threading.h>
+#include <threading/Threading.h>
 #include <map>
 
 namespace UNTZ

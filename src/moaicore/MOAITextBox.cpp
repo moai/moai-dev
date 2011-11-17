@@ -32,6 +32,23 @@ int MOAITextBox::_clearCurves ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	getLineSize
+	@text	Returns the size of a line (in pixels).
+
+	@in		MOAIFont self
+	@out	number lineScale		The size of the line in pixels.
+*/
+int MOAITextBox::_getLineSize ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextBox, "U" )
+	
+	if ( self->mFont ) {
+		lua_pushnumber ( state, self->mPoints * self->mFont->GetLineSpacing ());
+		return 1;
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	getStringBounds
 	@text	Returns the bounding rectange of a given substring on a
 			single line in the local space of the text box.
@@ -186,25 +203,6 @@ int MOAITextBox::_setFont ( lua_State* L ) {
 	if ( !font ) return 0;
 	
 	self->SetFont ( font );
-
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@name	setParent
-	@text	Sets this text object as a child of the specified parent transform, prim or layout.
-
-	@in		MOAITextBox self
-	@in		MOAITransform parent		The MOAITransform that will be the parent of this text object.
-	@out	nil
-*/
-int MOAITextBox::_setParent ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITextBox, "UU" )
-
-	MOAITransform* parent = state.GetLuaObject < MOAITransform >( 2 );
-	if ( !parent ) return 0;
-	
-	self->SetParent ( parent );
 
 	return 0;
 }
@@ -377,12 +375,11 @@ const float MOAITextBox::DEFAULT_SPOOL_SPEED = 24.0f;
 //----------------------------------------------------------------//
 void MOAITextBox::ClearCurves () {
 
-	for ( u32 i = 0; i < this->mMOAICurves.Size (); ++i ) {
-		if ( this->mMOAICurves [ i ]) {
-			this->LuaRelease ( *this->mMOAICurves [ i ]);
+	for ( u32 i = 0; i < this->mCurves.Size (); ++i ) {
+		if ( this->mCurves [ i ]) {
+			this->LuaRelease ( *this->mCurves [ i ]);
 		}
 	}
-	this->mMOAICurves.Clear ();
 	this->mCurves.Clear ();
 	
 	this->mNeedsLayout = true;
@@ -556,7 +553,7 @@ void MOAITextBox::OnUpdate ( float step ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITextBox::RegisterLuaClass ( USLuaState& state ) {
+void MOAITextBox::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAIProp2D::RegisterLuaClass ( state );
 	MOAIAction::RegisterLuaClass ( state );
@@ -567,13 +564,14 @@ void MOAITextBox::RegisterLuaClass ( USLuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITextBox::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAITextBox::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	MOAIProp2D::RegisterLuaFuncs ( state );
 	MOAIAction::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
 		{ "clearCurves",		_clearCurves },
+		{ "getLineSize",		_getLineSize },
 		{ "getStringBounds",	_getStringBounds },
 		{ "more",				_more },
 		{ "nextPage",			_nextPage },
@@ -601,9 +599,6 @@ void MOAITextBox::ReserveCurves ( u32 total ) {
 
 	this->ClearCurves ();
 	
-	this->mMOAICurves.Init ( total );
-	this->mMOAICurves.Fill ( 0 );
-	
 	this->mCurves.Init ( total );
 	this->mCurves.Fill ( 0 );
 	
@@ -611,14 +606,14 @@ void MOAITextBox::ReserveCurves ( u32 total ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITextBox::SerializeIn ( USLuaState& state, USLuaSerializer& serializer ) {
+void MOAITextBox::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
 
 	MOAIProp2D::SerializeIn ( state, serializer );
 	MOAIAction::SerializeIn ( state, serializer );
 }
 
 //----------------------------------------------------------------//
-void MOAITextBox::SerializeOut ( USLuaState& state, USLuaSerializer& serializer ) {
+void MOAITextBox::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
 
 	MOAIProp2D::SerializeOut ( state, serializer );
 	MOAIAction::SerializeOut ( state, serializer );
@@ -627,16 +622,14 @@ void MOAITextBox::SerializeOut ( USLuaState& state, USLuaSerializer& serializer 
 //----------------------------------------------------------------//
 void MOAITextBox::SetCurve ( u32 idx, MOAIAnimCurve* curve ) {
 
-	if ( idx > this->mMOAICurves.Size ()) return;
-	if ( this->mMOAICurves [ idx ] == curve ) return;
+	if ( idx > this->mCurves.Size ()) return;
+	if ( this->mCurves [ idx ] == curve ) return;
 
 	this->LuaRetain ( *curve );
 	
-	if ( this->mMOAICurves [ idx ]) {
-		this->LuaRelease ( *this->mMOAICurves [ idx ]);
+	if ( this->mCurves [ idx ]) {
+		this->LuaRelease ( *this->mCurves [ idx ]);
 	}
-	
-	this->mMOAICurves [ idx ] = curve;
 	this->mCurves [ idx ] = curve;
 	
 	this->mNeedsLayout = true;

@@ -6,7 +6,7 @@
 
 #import <QuartzCore/QuartzCore.h>
 #import <OpenGLES/EAGLDrawable.h>
-#import <aku/aku.h>
+#import <aku/AKU.h>
 
 #import "OpenGLView.h"
 

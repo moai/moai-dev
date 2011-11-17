@@ -524,14 +524,14 @@ bool MOAIParticleSystem::PushSprite ( const AKUParticleSprite& sprite ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleSystem::RegisterLuaClass ( USLuaState& state ) {
+void MOAIParticleSystem::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAIProp2D::RegisterLuaClass ( state );
 	MOAIAction::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleSystem::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAIParticleSystem::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	MOAIProp2D::RegisterLuaFuncs ( state );
 	MOAIAction::RegisterLuaFuncs ( state );
@@ -599,14 +599,14 @@ void MOAIParticleSystem::ReserveStates ( u32 total ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleSystem::SerializeIn ( USLuaState& state, USLuaSerializer& serializer ) {
+void MOAIParticleSystem::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
 
 	MOAIProp2D::SerializeIn ( state, serializer );
 	MOAIAction::SerializeIn ( state, serializer );
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleSystem::SerializeOut ( USLuaState& state, USLuaSerializer& serializer ) {
+void MOAIParticleSystem::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
 
 	MOAIProp2D::SerializeOut ( state, serializer );
 	MOAIAction::SerializeOut ( state, serializer );

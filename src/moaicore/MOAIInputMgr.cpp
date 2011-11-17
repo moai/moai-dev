@@ -127,7 +127,7 @@ MOAISensor* MOAIInputMgr::GetSensor ( u8 deviceID, u8 sensorID ) {
 //----------------------------------------------------------------//
 MOAIInputMgr::MOAIInputMgr () {
 	
-	RTTI_SINGLE ( USLuaObject )
+	RTTI_SINGLE ( MOAILuaObject )
 	
 	this->mInput.SetChunkSize ( 1024 );
 }
@@ -143,7 +143,7 @@ MOAIInputMgr::~MOAIInputMgr () {
 }
 
 //----------------------------------------------------------------//
-void MOAIInputMgr::RegisterLuaClass ( USLuaState& state ) {
+void MOAIInputMgr::RegisterLuaClass ( MOAILuaState& state ) {
 	UNUSED ( state );
 }
 
@@ -178,7 +178,7 @@ void MOAIInputMgr::Reset () {
 //----------------------------------------------------------------//
 void MOAIInputMgr::SetConfigurationName ( cc8* name ) {
 
-	USLuaStateHandle state = USLuaRuntime::Get ().State ();
+	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 	this->PushLuaClassTable ( state );
 	
 	state.SetField ( -1, LUAVAR_CONFIGURATION, name );
@@ -199,7 +199,7 @@ void MOAIInputMgr::SetDevice ( u8 deviceID, cc8* name ) {
 	this->mDevices [ deviceID ] = device;
 	this->LuaRetain ( *device );
 	
-	USLuaStateHandle state = USLuaRuntime::Get ().State ();
+	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 	this->PushLuaClassTable ( state );
 	
 	device->PushLuaUserdata ( state );

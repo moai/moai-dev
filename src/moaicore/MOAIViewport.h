@@ -4,6 +4,8 @@
 #ifndef	MOAIVIEWPORT_H
 #define	MOAIVIEWPORT_H
 
+#include <moaicore/MOAILua.h>
+
 //================================================================//
 // MOAIViewport
 //================================================================//
@@ -11,7 +13,7 @@
 	@text	Viewport object.
 */
 class MOAIViewport :
-	public virtual USLuaObject,
+	public virtual MOAILuaObject,
 	public USRect {
 private:
 
@@ -46,8 +48,8 @@ public:
 	USAffine2D		GetWorldToWndMtx		( const USAffine2D& view ) const;
 					MOAIViewport			();
 					~MOAIViewport			();
-	void			RegisterLuaClass		( USLuaState& state );
-	void			RegisterLuaFuncs		( USLuaState& state );
+	void			RegisterLuaClass		( MOAILuaState& state );
+	void			RegisterLuaFuncs		( MOAILuaState& state );
 	void			SetOffset				( float xOffset, float yOffset );
 	void			SetRotation				( float degrees );
 	void			SetScale				( float xScale, float yScale );

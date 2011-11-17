@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
 #include "pch.h"
@@ -356,7 +356,7 @@ ZIPFSZipFileEntry* ZIPFSZipFile_FindEntry ( ZIPFSZipFile* self, char const* file
 
 	ZIPFSZipFileDir* dir;
 	ZIPFSZipFileEntry* entry;
-	size_t i;
+	int i;
 	
 	i = strlen ( filename ) - 1;
 	if ( filename [ i ] == '/' ) return 0;

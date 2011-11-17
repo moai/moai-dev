@@ -357,14 +357,14 @@ MOAIStretchPatch2D::~MOAIStretchPatch2D () {
 }
 
 //----------------------------------------------------------------//
-void MOAIStretchPatch2D::RegisterLuaClass ( USLuaState& state ) {
+void MOAIStretchPatch2D::RegisterLuaClass ( MOAILuaState& state ) {
 	UNUSED ( state );
 
 	this->MOAIDeck::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAIStretchPatch2D::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAIStretchPatch2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	this->MOAIDeck::RegisterLuaFuncs ( state );
 
@@ -384,7 +384,7 @@ void MOAIStretchPatch2D::RegisterLuaFuncs ( USLuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIStretchPatch2D::SerializeIn ( USLuaState& state, USLuaSerializer& serializer ) {
+void MOAIStretchPatch2D::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
 	UNUSED ( state );
 	UNUSED ( serializer );
 
@@ -398,7 +398,7 @@ void MOAIStretchPatch2D::SerializeIn ( USLuaState& state, USLuaSerializer& seria
 }
 
 //----------------------------------------------------------------//
-void MOAIStretchPatch2D::SerializeOut ( USLuaState& state, USLuaSerializer& serializer ) {
+void MOAIStretchPatch2D::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
 	UNUSED ( state );
 	UNUSED ( serializer );
 

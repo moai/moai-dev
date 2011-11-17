@@ -33,10 +33,10 @@ struct AKUContext {
 	AKU_DEFINE_FUNC_CONTEXT ( EnterFullscreenMode );
 	AKU_DEFINE_FUNC_CONTEXT ( ExitFullscreenMode );
 	AKU_DEFINE_FUNC_CONTEXT ( OpenWindow );
-	AKU_DEFINE_FUNC_CONTEXT ( StartGameLoop );
+	AKU_DEFINE_FUNC_CONTEXT ( SetSimStep );
 	
-	USGlobals*	mGlobals;
-	void*		mUserdata;
+	MOAIGlobals*			mGlobals;
+	void*				mUserdata;
 };
 
 typedef STLMap < AKUContextID, AKUContext* >::iterator ContextMapIt;
@@ -64,14 +64,16 @@ static void _OpenWindow ( const char* title, int width, int height ) {
 AKU_DEFINE_FUNC_ACCESSORS ( OpenWindow, _OpenWindow )
 
 //----------------------------------------------------------------//
-static void _StartGameLoop () {}
-AKU_DEFINE_FUNC_ACCESSORS ( StartGameLoop, _StartGameLoop )
+static void _SetSimStep ( double step ) {
+	UNUSED ( step );
+}
+AKU_DEFINE_FUNC_ACCESSORS ( SetSimStep, _SetSimStep )
 
 //----------------------------------------------------------------//
 static void _deleteContext ( AKUContext* context ) {
 	
 	if ( context->mGlobals ) {
-		USGlobalsMgr::Delete ( context->mGlobals );
+		MOAIGlobalsMgr::Delete ( context->mGlobals );
 	}
 	free ( context );
 }
@@ -79,6 +81,17 @@ static void _deleteContext ( AKUContext* context ) {
 //================================================================//
 // AKU
 //================================================================//
+
+//----------------------------------------------------------------//
+void AKUClearMemPool () {
+
+	ZIPFS_TLSF_POOL* pool = zipfs_tlsf_get_pool ();
+	zipfs_tlsf_set_pool ( 0 );
+	
+	if ( pool ) {
+		zipfs_tlsf_destroy_pool ( pool );
+	}
+}
 
 //----------------------------------------------------------------//
 AKUContextID AKUCreateContext () {
@@ -95,7 +108,7 @@ AKUContextID AKUCreateContext () {
 	
 	gContext->mUserdata = 0;
 	
-	gContext->mGlobals = USGlobalsMgr::Create ();
+	gContext->mGlobals = MOAIGlobalsMgr::Create ();
 	moaicore::InitGlobals ( gContext->mGlobals );
 
 	if ( sysInit ) {
@@ -108,10 +121,10 @@ AKUContextID AKUCreateContext () {
 //----------------------------------------------------------------//
 void AKUDeleteContext ( AKUContextID contextID ) {
 	
-	AKUContext* context = gContextMap->value_for_key ( contextID );
-	if ( !context ) return;
+	AKUSetContext ( contextID );
+	if ( !gContext ) return;
 	
-	_deleteContext ( context );
+	_deleteContext ( gContext );
 	gContextMap->erase ( contextID );
 	
 	AKUSetContext ( 0 );
@@ -206,15 +219,30 @@ void* AKUGetUserdata () {
 lua_State* AKUGetLuaState () {
 
 	lua_State* lua_state = NULL;
-	lua_state = USLuaRuntime::Get ().State ();
+	lua_state = MOAILuaRuntime::Get ().State ();
 
 	return lua_state;
+}
+
+//----------------------------------------------------------------//
+double AKUGetSimStep () {
+
+	return MOAISim::Get ().GetStep ();
 }
 
 //----------------------------------------------------------------//
 char const* AKUGetWorkingDirectory () {
 
 	return zipfs_get_working_path ();
+}
+
+//----------------------------------------------------------------//
+void AKUInitMemPool ( size_t bytes ) {
+
+	assert ( !zipfs_tlsf_get_pool ());
+
+	ZIPFS_TLSF_POOL* pool = zipfs_tlsf_create_pool ( bytes );
+	zipfs_tlsf_set_pool ( pool );
 }
 
 //----------------------------------------------------------------//
@@ -258,17 +286,6 @@ void AKUReserveInputDeviceSensors ( int deviceID, int total ) {
 	MOAIInputMgr::Get ().ReserveSensors (( u8 )deviceID, ( u8 )total );
 }
 
-//----------------------------------------------------------------//
-void AKUResize ( int width, int height ) {
-
-	MOAIGfxDevice::Get ().SetSize ( width, height );
-}
-
-//----------------------------------------------------------------//
-int AKUSetWorkingDirectory ( char const* path ) {
-
-	return zipfs_chdir ( path );
-}
 
 //----------------------------------------------------------------//
 void AKURunScript ( const char* filename ) {
@@ -285,19 +302,11 @@ void AKUSetContext ( AKUContextID contextID ) {
 		gContext = gContextMap->value_for_key ( contextID );
 		
 		if ( gContext ) {
-			USGlobalsMgr::Set ( gContext->mGlobals );
+			MOAIGlobalsMgr::Set ( gContext->mGlobals );
 		}
 		else {
-			USGlobalsMgr::Set ( 0 );
+			MOAIGlobalsMgr::Set ( 0 );
 		}
-	}
-}
-
-//----------------------------------------------------------------//
-void AKUSetUserdata ( void* userdata ) {
-
-	if ( gContext ) {
-		gContext->mUserdata = userdata;
 	}
 }
 
@@ -359,6 +368,32 @@ void AKUSetInputDevicePointer ( int deviceID, int sensorID, char const* name ) {
 void AKUSetInputDeviceTouch ( int deviceID, int sensorID, char const* name ) {
 
 	MOAIInputMgr::Get ().SetSensor (( u8 )deviceID, ( u8 )sensorID, name, MOAISensor::TOUCH );
+}
+
+//----------------------------------------------------------------//
+void AKUSetUserdata ( void* userdata ) {
+
+	if ( gContext ) {
+		gContext->mUserdata = userdata;
+	}
+}
+
+//----------------------------------------------------------------//
+void AKUSetScreenSize ( int width, int height ) {
+
+	MOAIEnvironment::Get ().SetScreenSize ( width, height );
+}
+
+//----------------------------------------------------------------//
+void AKUSetViewSize ( int width, int height ) {
+	
+	MOAIGfxDevice::Get ().SetSize ( width, height );
+}
+
+//----------------------------------------------------------------//
+int AKUSetWorkingDirectory ( char const* path ) {
+
+	return zipfs_chdir ( path );
 }
 
 //----------------------------------------------------------------//

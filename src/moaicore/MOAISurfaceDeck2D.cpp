@@ -288,13 +288,13 @@ MOAISurfaceDeck2D::~MOAISurfaceDeck2D () {
 }
 
 //----------------------------------------------------------------//
-void MOAISurfaceDeck2D::RegisterLuaClass ( USLuaState& state ) {
+void MOAISurfaceDeck2D::RegisterLuaClass ( MOAILuaState& state ) {
 
 	this->MOAIDeck::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAISurfaceDeck2D::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAISurfaceDeck2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	this->MOAIDeck::RegisterLuaFuncs ( state );
 	

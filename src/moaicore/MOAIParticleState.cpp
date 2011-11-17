@@ -246,7 +246,7 @@ MOAIParticleState::MOAIParticleState () :
 	mDamping ( 0.0f ) {
 
 	RTTI_BEGIN
-		RTTI_EXTEND ( USLuaObject )
+		RTTI_EXTEND ( MOAILuaObject )
 	RTTI_END
 	
 	this->mMassRange [ 0 ] = 1.0f;
@@ -278,12 +278,12 @@ void MOAIParticleState::PushForce ( MOAIParticleForce& force ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleState::RegisterLuaClass ( USLuaState& state ) {
+void MOAIParticleState::RegisterLuaClass ( MOAILuaState& state ) {
 	UNUSED ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleState::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAIParticleState::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "clearForces",			_clearForces },

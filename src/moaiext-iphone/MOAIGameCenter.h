@@ -25,7 +25,7 @@
 */
 
 class MOAIGameCenter :
-	public USGlobalClass < MOAIGameCenter, USLuaObject > {
+	public MOAIGlobalClass < MOAIGameCenter, MOAILuaObject > {
 private:
 
 	enum {
@@ -39,7 +39,7 @@ private:
 		PLAYERSCOPE_FRIENDS
 	};
 	
-	USLuaRef					mGetScoresCallback;
+	MOAILuaRef					mGetScoresCallback;
 	BOOL						mIsGameCenterSupported;
 	MoaiLeaderboardDelegate*	mLeaderboardDelegate;
 	MoaiAchievementDelegate*	mAchievementDelegate;
@@ -66,7 +66,7 @@ public:
 	GKAchievement*	GetAchievementFromDictionary	( cc8* identifier );
 					MOAIGameCenter					();
 					~MOAIGameCenter					();
-	void			RegisterLuaClass				( USLuaState& state );
+	void			RegisterLuaClass				( MOAILuaState& state );
 	void			ReportAchievementProgress		( cc8* identifier, float percent );
 	void			ReportScore						( s64 score, cc8* category );
 	

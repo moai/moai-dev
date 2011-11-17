@@ -133,7 +133,7 @@ json_t* _luaToJSON ( lua_State* L, int idx ) {
 //----------------------------------------------------------------//
 json_t* _luaToJSONArray ( lua_State* L, int idx ) {
 
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	json_t* arr = json_array ();
 	
 	bool more = true;
@@ -144,7 +144,7 @@ json_t* _luaToJSONArray ( lua_State* L, int idx ) {
 		lua_pop ( state, 1 );
 		
 		if ( value ) {
-			json_array_set_new ( arr, key, value );
+			json_array_append_new ( arr, value );
 		}
 		else {
 			more = false;
@@ -156,7 +156,7 @@ json_t* _luaToJSONArray ( lua_State* L, int idx ) {
 //----------------------------------------------------------------//
 json_t* _luaToJSONObject ( lua_State* L, int idx ) {
 
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	json_t* object = json_object ();
 	
 	u32 itr = state.PushTableItr ( idx );
@@ -189,7 +189,7 @@ json_t* _luaToJSONObject ( lua_State* L, int idx ) {
 int MOAIJsonParser::_decode ( lua_State* L ) {
 	UNUSED ( L );
 
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	if ( state.IsType ( 1, LUA_TSTRING )) {
 		
 		size_t bufflen;
@@ -216,7 +216,7 @@ int MOAIJsonParser::_decode ( lua_State* L ) {
 */
 int MOAIJsonParser::_encode ( lua_State* L ) {
 
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	
 	if ( state.IsType ( 1, LUA_TTABLE )) {
 	
@@ -250,7 +250,7 @@ MOAIJsonParser::~MOAIJsonParser () {
 }
 
 //----------------------------------------------------------------//
-void MOAIJsonParser::RegisterLuaClass ( USLuaState& state ) {
+void MOAIJsonParser::RegisterLuaClass ( MOAILuaState& state ) {
 
 	lua_pushlightuserdata ( state, 0 );
 	lua_setfield ( state, -2, "JSON_NULL" );
@@ -272,7 +272,7 @@ void MOAIJsonParser::RegisterLuaClass ( USLuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIJsonParser::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAIJsonParser::RegisterLuaFuncs ( MOAILuaState& state ) {
 	UNUSED ( state );
 }
 

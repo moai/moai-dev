@@ -4,6 +4,7 @@
 #ifndef MOAIJOYSTICKSENSOR_H
 #define MOAIJOYSTICKSENSOR_H
 
+#include <moaicore/MOAILua.h>
 #include <moaicore/MOAISensor.h>
 
 //================================================================//
@@ -19,7 +20,7 @@ private:
 	float mX;
 	float mY;
 	
-	USLuaRef	mOnStick;
+	MOAILuaRef	mOnStick;
 
 	//----------------------------------------------------------------//
 	static int		_getVector				( lua_State* L );
@@ -33,8 +34,8 @@ public:
 	void			HandleEvent				( USStream& eventStream );
 					MOAIJoystickSensor		();
 					~MOAIJoystickSensor		();
-	void			RegisterLuaClass		( USLuaState& state );
-	void			RegisterLuaFuncs		( USLuaState& state );
+	void			RegisterLuaClass		( MOAILuaState& state );
+	void			RegisterLuaFuncs		( MOAILuaState& state );
 	static void		WriteEvent				( USStream& eventStream, float x, float y );
 };
 

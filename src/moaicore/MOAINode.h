@@ -4,40 +4,26 @@
 #ifndef	MOAINODE_H
 #define	MOAINODE_H
 
+#include <moaicore/MOAIAttrOp.h>
+#include <moaicore/MOAILua.h>
+#include <moaicore/MOAISharedPtr.h>
+#include <moaicore/MOAIWeakPtr.h>
+
+#define PACK_ATTR(type,attrID)	\
+	( MOAINode::PackAttrID < type >( type::attrID ))
+
+#define UNPACK_ATTR(attrID)	\
+	( attrID & MOAINode::ATTR_ID_MASK )
+
+#define DECL_ATTR_HELPER(type)																				\
+	class type##Attr {																						\
+	public:																									\
+		static inline bool	Check	( u32 attrID ) { return MOAINode::CheckAttrID < type >( attrID ); }		\
+		static inline u32	Pack	( u32 attrID ) { return MOAINode::PackAttrID < type >( attrID ); }		\
+	};
+
 class MOAINode;
-
-// refactor into link set for dependencies plus individual
-// links for attributes and traits
-// figure out how to differentiate between attributes and traits to
-// prevent improper bindings
-
-//================================================================//
-// MOAIAttrLink
-//================================================================//
-class MOAIAttrLink {
-private:
-
-	USWeakPtr < MOAINode >			mSourceNode;		// don't think we need a smart ptr here...
-	u32							mSourceAttrID;
-
-	MOAINode*					mDestNode;
-	u32							mDestAttrID;
-	bool						mDestAttrExists;	// do we really need this?
-
-	// sibling pointers for the two singly linked lists
-	MOAIAttrLink*				mNextInSource;
-	MOAIAttrLink*				mNextInDest;
-
-	//----------------------------------------------------------------//
-
-public:
-
-	friend class MOAINode;
-
-	//----------------------------------------------------------------//
-			MOAIAttrLink		();
-			~MOAIAttrLink		();
-};
+class MOAIDepLink;
 
 //================================================================//
 // MOAINode
@@ -47,8 +33,7 @@ public:
 			graph nodes.
 */
 class MOAINode :
-	public virtual USLuaObject,
-	public USAttributed {
+	public virtual MOAILuaObject {
 private:
 
 	enum {
@@ -57,55 +42,88 @@ private:
 		STATE_SCHEDULED,	// in list and scheduled
 	};
 	
-	MOAIAttrLink*	mPullAttrLinks;
-	MOAIAttrLink*	mPushAttrLinks;
+	MOAIDepLink*	mPullLinks;
+	MOAIDepLink*	mPushLinks;
 
 	u32				mState;
 	MOAINode*		mPrev;
 	MOAINode*		mNext;
 
 	//----------------------------------------------------------------//
-	static int	_clearAttrLink		( lua_State* L );
-	static int	_clearDependency	( lua_State* L );
-	static int	_forceUpdate		( lua_State* L );
-	static int	_getAttr			( lua_State* L );
-	static int	_moveAttr			( lua_State* L );
-	static int	_scheduleUpdate		( lua_State* L );
-	static int	_seekAttr			( lua_State* L );
-	static int	_setAttrLink		( lua_State* L );
-	static int	_setAttr			( lua_State* L );
-	static int	_setDependency		( lua_State* L );
+	static int		_clearAttrLink		( lua_State* L );
+	static int		_clearNodeLink		( lua_State* L );
+	static int		_forceUpdate		( lua_State* L );
+	static int		_getAttr			( lua_State* L );
+	static int		_getAttrLink		( lua_State* L );
+	static int		_moveAttr			( lua_State* L );
+	static int		_scheduleUpdate		( lua_State* L );
+	static int		_seekAttr			( lua_State* L );
+	static int		_setAttrLink		( lua_State* L );
+	static int		_setAttr			( lua_State* L );
+	static int		_setNodeLink		( lua_State* L );
 	
 	//----------------------------------------------------------------//
-	void			ActivateOnLink			( MOAINode& srcNode );
-	MOAIAttrLink*	AffirmAttrLink			( int attrID, MOAINode* srcNode, int srcAttrID );
-	MOAIAttrLink*	AffirmDependency		( MOAINode& srcNode );
-	MOAIAttrLink*	AffirmPullLink			( int attrID );
-	void			AffirmPushLink			( MOAIAttrLink& link, int attrID );
-	void			ClearPullLink			( int attrID );
-	void			ClearPullLink			( MOAIAttrLink& link );
-	void			ClearPushLink			( MOAIAttrLink& link );
-	void			DepNodeUpdate			();
-	void			ExtendUpdate			();
-	bool			IsNodeUpstream			( MOAINode* node );
-	void			PullAttributes			();
+	void			ActivateOnLink		( MOAINode& srcNode );
+	void			DepNodeUpdate		();
+	void			ExtendUpdate		();
+	MOAIDepLink*	FindAttrLink		( int attrID );
+	MOAIDepLink*	FindNodeLink		( MOAINode& srcNode );
+	bool			IsNodeUpstream		( MOAINode* node );
+	void			PullAttributes		();
+	void			RemoveDepLink		( MOAIDepLink& link );
 
 protected:
 
 	//----------------------------------------------------------------//
+	virtual void	OnDepNodeUpdate		();
+	bool			PullLinkedAttr		( u32 attrID, MOAIAttrOp& attrOp );
+
+	//----------------------------------------------------------------//
+	float GetLinkedValue ( u32 attrID, float value ) {
+		
+		MOAIAttrOp attrOp;
+		if ( this->PullLinkedAttr ( attrID, attrOp )) {
+			return attrOp.IsNumber () ? attrOp.GetValue () : value;
+		}
+		return value;
+	}
+
+	//----------------------------------------------------------------//
 	template < typename TYPE >
-	void SetDependentMember ( USLuaSharedPtr < TYPE >& member, TYPE* ref ) {
+	TYPE* GetLinkedValue ( u32 attrID ) {
+		
+		MOAIAttrOp attrOp;
+		if ( this->PullLinkedAttr ( attrID, attrOp )) {
+			return attrOp.GetValue < TYPE >();
+		}
+		return 0;
+	}
+
+	//----------------------------------------------------------------//
+	template < typename TYPE >
+	bool GetLinkedValue ( u32 attrID, TYPE& value ) {
+		
+		MOAIAttrOp attrOp;
+		if ( this->PullLinkedAttr ( attrID, attrOp )) {
+			return attrOp.GetValue < TYPE >( value );
+		}
+		return false;
+	}
+
+	//----------------------------------------------------------------//
+	template < typename TYPE >
+	void SetDependentMember ( MOAILuaSharedPtr < TYPE >& member, TYPE* ref ) {
 		
 		if ( member == ref ) return;
 	
 		if ( member ) {
-			this->ClearDependency ( *member );
+			this->ClearNodeLink ( *member );
 		}
 		
 		member.Set ( *this, ref );
 		
 		if ( ref ) {
-			this->SetDependency ( *ref );
+			this->SetNodeLink ( *ref );
 		}
 		
 		this->ScheduleUpdate ();
@@ -113,18 +131,18 @@ protected:
 
 	//----------------------------------------------------------------//
 	template < typename TYPE >
-	void SetDependentMember ( USSharedPtr < TYPE >& member, TYPE* ref ) {
+	void SetDependentMember ( MOAISharedPtr < TYPE >& member, TYPE* ref ) {
 		
 		if ( member == ref ) return;
 	
 		if ( member ) {
-			this->ClearDependency ( *member );
+			this->ClearNodeLink ( *member );
 		}
 		
 		member = ref;
 		
 		if ( ref ) {
-			this->SetDependency ( *ref );
+			this->SetNodeLink ( *ref );
 		}
 		
 		this->ScheduleUpdate ();
@@ -132,25 +150,22 @@ protected:
 
 	//----------------------------------------------------------------//
 	template < typename TYPE >
-	void SetDependentMember ( USWeakPtr < TYPE >& member, TYPE* ref ) {
+	void SetDependentMember ( MOAIWeakPtr < TYPE >& member, TYPE* ref ) {
 		
 		if ( member == ref ) return;
 		
 		if ( member ) {
-			this->ClearDependency ( *member );
+			this->ClearNodeLink ( *member );
 		}
 		
 		member = ref;
 		
 		if ( ref ) {
-			this->SetDependency ( *ref );
+			this->SetNodeLink ( *ref );
 		}
 		
 		this->ScheduleUpdate ();
 	}
-
-	//----------------------------------------------------------------//
-	virtual void	OnDepNodeUpdate		();
 
 public:
 	
@@ -158,20 +173,84 @@ public:
 	
 	DECL_LUA_FACTORY ( MOAINode )
 	
-	static const u32 NULL_ATTR = 0xffffffff;
+	static const u32	NULL_ATTR			= 0x3fffffff;
+	static const u32	ATTR_ID_MASK		= 0x0000ffff;
+	static const u32	CLASS_ID_MASK		= 0x3fff0000;
+	static const u32	ATTR_FLAGS_MASK		= 0xC0000000;
+	
+	static const u32	ATTR_READ			= 0x40000000;
+	static const u32	ATTR_WRITE			= 0x80000000;
+	static const u32	ATTR_READ_WRITE		= 0xC0000000;
 	
 	//----------------------------------------------------------------//
 	void			Activate				( MOAINode& activator );
-	void			ClearDependency			( MOAINode& srcNode );
+	virtual bool	ApplyAttrOp				( u32 attrID, MOAIAttrOp& attrOp, u32 op );
+	bool			CheckAttrExists			( u32 attrID );
 	void			ClearAttrLink			( int attrID );
+	void			ClearNodeLink			( MOAINode& srcNode );
 	void			ForceUpdate				();
+	u32				GetAttrFlags			( u32 attrID );
 					MOAINode				();
 					~MOAINode				();
-	void			RegisterLuaClass		( USLuaState& state );
-	void			RegisterLuaFuncs		( USLuaState& state );
+	void			RegisterLuaClass		( MOAILuaState& state );
+	void			RegisterLuaFuncs		( MOAILuaState& state );
 	void			ScheduleUpdate			();
 	void			SetAttrLink				( int attrID, MOAINode* srcNode, int srcAttrID );
-	void			SetDependency			( MOAINode& srcNode );
+	void			SetNodeLink				( MOAINode& srcNode );
+	
+	//----------------------------------------------------------------//
+	template < typename TYPE >
+	static inline bool CheckAttrID ( u32 attrID ) {
+	
+		return (( USTypeID < TYPE >::GetID ()) == (( attrID & CLASS_ID_MASK ) >> 16 ));
+	}
+	
+	//----------------------------------------------------------------//
+	float GetAttributeValue ( u32 attrID, float value ) {
+		
+		if ( attrID != NULL_ATTR ) {
+			MOAIAttrOp getter;
+			this->ApplyAttrOp ( attrID, getter, MOAIAttrOp::GET );
+			value = getter.GetValue ();
+		}
+		return value;
+	}
+	
+	//----------------------------------------------------------------//
+	template < typename TYPE >
+	TYPE GetAttributeValue ( u32 attrID, TYPE value ) {
+		
+		if ( attrID != NULL_ATTR ) {
+			MOAIAttrOp getter;
+			this->ApplyAttrOp ( attrID, getter, MOAIAttrOp::GET );
+			value = getter.GetValue < TYPE >();
+		}
+		return value;
+	}
+	
+	//----------------------------------------------------------------//
+	template < typename TYPE >
+	static inline u32 PackAttrID ( u32 attrID ) {
+	
+		return (( USTypeID < TYPE >::GetID () << 16 ) & CLASS_ID_MASK ) | ( attrID & ATTR_ID_MASK );
+	}
+	
+	//----------------------------------------------------------------//
+	template < typename TYPE >
+	void SetAttributeValue ( u32 attrID, TYPE value ) {
+		if ( attrID != NULL_ATTR ) {
+			MOAIAttrOp setter;
+			setter.SetValue ( value );
+			this->ApplyAttrOp ( attrID, setter, MOAIAttrOp::SET );
+		}
+	}
+	
+	//----------------------------------------------------------------//
+	template < typename TYPE >
+	static inline u32 UnpackAttrID ( u32 attrID ) {
+		
+		return attrID & ATTR_ID_MASK;
+	}
 };
 
 #endif

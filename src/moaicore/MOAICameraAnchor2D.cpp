@@ -21,8 +21,8 @@
 int MOAICameraAnchor2D::_setParent ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICameraAnchor2D, "U" )
 	
-	MOAITransformBase* parent = state.GetLuaObject < MOAITransformBase >( 2 );
-	self->SetParent ( parent );
+	MOAINode* parent = state.GetLuaObject < MOAINode >( 2 );
+	self->SetAttrLink ( PACK_ATTR ( MOAICameraAnchor2D, INHERIT_LOC ), parent, PACK_ATTR ( MOAITransformBase, TRANSFORM_TRAIT ));
 	
 	return 0;
 }
@@ -83,23 +83,24 @@ MOAICameraAnchor2D::~MOAICameraAnchor2D () {
 //----------------------------------------------------------------//
 void MOAICameraAnchor2D::OnDepNodeUpdate () {
 	
-	if ( this->mParent ) {
-		
-		const USAffine2D& worldMtx = this->mParent->GetLocalToWorldMtx ();
-		this->mLoc = worldMtx.GetTranslation ();
+	const USAffine2D* inherit = this->GetLinkedValue < USAffine2D >( MOAICameraAnchor2DAttr::Pack ( INHERIT_LOC ));
+	if ( inherit ) {
+		this->mLoc = inherit->GetTranslation ();
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAICameraAnchor2D::RegisterLuaClass ( USLuaState& state ) {
+void MOAICameraAnchor2D::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	MOAINode::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAICameraAnchor2D::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAICameraAnchor2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	MOAINode::RegisterLuaFuncs ( state );
+
+	state.SetField ( -1, "INHERIT_LOC", MOAICameraAnchor2DAttr::Pack ( INHERIT_LOC ));
 
 	luaL_Reg regTable [] = {
 		{ "setParent",			_setParent },
@@ -110,20 +111,3 @@ void MOAICameraAnchor2D::RegisterLuaFuncs ( USLuaState& state ) {
 	luaL_register ( state, 0, regTable );
 }
 
-//----------------------------------------------------------------//
-void MOAICameraAnchor2D::SetParent ( MOAITransformBase* parent ) {
-
-	if ( this->mParent == parent ) return;
-	
-	if ( this->mParent ) {
-		this->ClearDependency ( *this->mParent );
-	}
-
-	this->mParent = parent;
-	
-	if ( parent ) {
-		this->SetDependency ( *parent );
-	}
-
-	this->ScheduleUpdate ();
-}

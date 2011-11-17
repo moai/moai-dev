@@ -2,8 +2,11 @@
 // http://getmoai.com
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <aku/AKU.h>
 #include <GlutHost.h>
+
+#define UNUSED(p) (( void )p)
 
 #ifdef GLUTHOST_USE_DEBUGGER
 	#include <aku/AKU-debugger.h>
@@ -56,8 +59,6 @@ static int sWinX;
 static int sWinY;
 static int sWinWidth;
 static int sWinHeight;
-
-static const int GLUT_TIMER_INTERVAL = 16;
 
 //================================================================//
 // glut callbacks
@@ -152,13 +153,15 @@ static void _onReshape( int w, int h ) {
 	}
 
 	glutReshapeWindow ( w, h );
-	AKUResize ( w, h );
+	AKUSetScreenSize ( w, h );
 }
 
 //----------------------------------------------------------------//
 static void _onTimer ( int millisec ) {
+	UNUSED ( millisec );
 
-	glutTimerFunc ( GLUT_TIMER_INTERVAL, _onTimer, GLUT_TIMER_INTERVAL );
+	int timerInterval = ( int )( AKUGetSimStep () * 1000.0 );
+	glutTimerFunc ( timerInterval, _onTimer, timerInterval );
 	
 	AKUUpdate ();
 	
@@ -176,7 +179,6 @@ static void _onTimer ( int millisec ) {
 void	_AKUEnterFullscreenModeFunc		();
 void	_AKUExitFullscreenModeFunc		();
 void	_AKUOpenWindowFunc				( const char* title, int width, int height );
-void	_AKUStartGameLoopFunc			();
 
 //----------------------------------------------------------------//
 void _AKUEnterFullscreenModeFunc () {
@@ -230,17 +232,7 @@ void _AKUOpenWindowFunc ( const char* title, int width, int height ) {
 	glutDisplayFunc ( _onPaint );
 	glutReshapeFunc ( _onReshape );
 	
-	glutTimerFunc ( GLUT_TIMER_INTERVAL, _onTimer, GLUT_TIMER_INTERVAL );
-	
 	AKUDetectGfxContext ();
-}
-
-//----------------------------------------------------------------//
-void _AKUStartGameLoopFunc () {
-
-	if ( sHasWindow ) {
-		glutMainLoop ();
-	}
 }
 
 //================================================================//
@@ -248,7 +240,20 @@ void _AKUStartGameLoopFunc () {
 //================================================================//
 
 //----------------------------------------------------------------//
+static void _cleanup () {
+
+	// TODO:
+	// don't call this on windows; atexit conflict with untz
+	// possible to fix?
+	//AKUClearMemPool ();
+}
+
+//----------------------------------------------------------------//
 int GlutHost ( int argc, char** argv ) {
+
+	// TODO: integrate this nicely with host
+	//AKUInitMemPool ( 100 * 1024 * 1024 );
+	atexit ( _cleanup );
 
 	glutInit ( &argc, argv );
 
@@ -269,15 +274,10 @@ int GlutHost ( int argc, char** argv ) {
 		AKUUntzInit ();
 	#endif
 	
-	#ifdef GLUTHOST_USE_DEBUGGER
-		AKUDebugHarnessInit ();
-	#endif
-	
 	#ifdef GLUTHOST_USE_PARTICLE_PRESETS
 		ParticlePresets ();
 	#endif
 
-	
 	AKUSetInputConfigurationName ( "AKUGlut" );
 
 	AKUReserveInputDevices			( GlutInputDeviceID::TOTAL );
@@ -293,16 +293,19 @@ int GlutHost ( int argc, char** argv ) {
 	AKUSetFunc_EnterFullscreenMode ( _AKUEnterFullscreenModeFunc );
 	AKUSetFunc_ExitFullscreenMode ( _AKUExitFullscreenModeFunc );
 	AKUSetFunc_OpenWindow ( _AKUOpenWindowFunc );
-	AKUSetFunc_StartGameLoop ( _AKUStartGameLoopFunc );
+
+	#ifdef GLUTHOST_USE_DEBUGGER
+		AKUDebugHarnessInit ();
+	#endif
 
 	for ( int i = 1; i < argc; ++i ) {
 		AKURunScript ( argv [ i ]);
 	}
 	
-	#ifdef GLUTHOST_USE_DEBUGGER
-		AKUDebugHarnessInit ();
-	#endif
-	
+	if ( sHasWindow ) {
+		glutTimerFunc ( 0, _onTimer, 0 );
+		glutMainLoop ();
+	}
 	return 0;
 }
 

@@ -110,6 +110,54 @@ int MOAIImage::_copyBits ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	copyRect
+	@text	Copy a section of one image to another. Accepts two rectangles.
+			Rectangles may be of different size and proportion. Section of
+			image may also be flipped horizontally or vertically by
+			reversing min/max of either rectangle.
+
+	@in		MOAIImage self
+	@in		MOAIImage source	Source image.
+	@in		number srcXMin
+	@in		number srcYMin
+	@in		number srcXMax
+	@in		number srcYMax
+	@in		number destXMin
+	@in		number destYMin
+	@opt	number destXMax		Default value is destXMin + srcXMax - srcXMin;
+	@opt	number destYMax		Default value is destYMin + srcYMax - srcYMin;
+	@opt	number filter		One of MOAIImage.FILTER_LINEAR, MOAIImage.FILTER_NEAREST.
+								Default value is MOAIImage.FILTER_LINEAR.
+	@out	nil
+*/
+int MOAIImage::_copyRect ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIImage, "UUNNNNNN" )
+	
+	MOAIImage* image = state.GetLuaObject < MOAIImage >( 2 );
+	if ( !image ) {
+		return 0;
+	}
+	
+	USIntRect srcRect;
+	srcRect.mXMin = state.GetValue < int >( 3, 0 );
+	srcRect.mYMin = state.GetValue < int >( 4, 0 );
+	srcRect.mXMax = state.GetValue < int >( 5, 0 );
+	srcRect.mYMax = state.GetValue < int >( 6, 0 );
+	
+	USIntRect destRect;
+	destRect.mXMin = state.GetValue < int >( 7, 0 );
+	destRect.mYMin = state.GetValue < int >( 8, 0 );
+	destRect.mXMax = state.GetValue < int >( 9, destRect.mXMin + srcRect.Width ());
+	destRect.mYMax = state.GetValue < int >( 10, destRect.mYMin + srcRect.Height ());
+	
+	u32 filter = state.GetValue < u32 >( 11, MOAIImage::FILTER_LINEAR );
+	
+	self->CopyRect ( *image, srcRect, destRect, filter );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	getColor32
 	@text	Returns a 32-bit packed RGBA value from the image for a
 			given pixel coordinate.
@@ -205,7 +253,8 @@ int MOAIImage::_getSize ( lua_State* L ) {
 	@in		number width
 	@in		number height
 	@opt	colorFmt		One of MOAIImage.COLOR_FMT_A_8, MOAIImage.COLOR_FMT_RGB_888, MOAIImage.COLOR_FMT_RGB_565,
-							MOAIImage.COLOR_FMT_RGBA_5551, MOAIImage.COLOR_FMT_RGBA_4444, COLOR_FMT_RGBA_8888
+							MOAIImage.COLOR_FMT_RGBA_5551, MOAIImage.COLOR_FMT_RGBA_4444, MOAIImage.COLOR_FMT_RGBA_8888.
+							Default valus is MOAIImage.COLOR_FMT_RGBA_8888.
 	@out	nil
 */
 int MOAIImage::_init ( lua_State* L ) {
@@ -242,7 +291,7 @@ int MOAIImage::_load ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	copy
+/**	@name	padToPow2
 	@text	Copies an image and returns a new image padded to the next
 			power of 2 along each dimension. Original image will be
 			in the upper left hand corner of the new image.
@@ -256,6 +305,38 @@ int MOAIImage::_padToPow2 ( lua_State* L ) {
 	
 	MOAIImage* image = new MOAIImage ();
 	image->PadToPow2 ( *self );
+	image->PushLuaUserdata ( state );
+	
+	return 1;
+}
+
+//----------------------------------------------------------------//
+/**	@name	resize
+	@text	Copies the image to an image with a new size.
+
+	@in		MOAIImage self
+	@in		number width		New width of the image.
+	@in		number height		New height of the image.
+	@opt	number filter		One of MOAIImage.FILTER_LINEAR, MOAIImage.FILTER_NEAREST.
+								Default value is MOAIImage.FILTER_LINEAR.
+	@out	MOAIImage image
+*/
+int MOAIImage::_resize ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIImage, "UNN" )
+	
+	u32 width	= state.GetValue < u32 >( 2, 0 );
+	u32 height	= state.GetValue < u32 >( 3, 0 );
+	u32 filter	= state.GetValue < u32 >( 4, MOAIImage::FILTER_LINEAR );
+	
+	USIntRect srcRect;
+	USIntRect destRect;
+	
+	srcRect.Init ( 0, 0, self->mWidth, self->mHeight );
+	destRect.Init ( 0, 0, width, height );
+	
+	MOAIImage* image = new MOAIImage ();
+	image->Init ( width, height, self->mColorFormat, self->mPixelFormat );
+	image->CopyRect ( *self, srcRect, destRect, filter );
 	image->PushLuaUserdata ( state );
 	
 	return 1;
@@ -607,6 +688,185 @@ void MOAIImage::CopyBits ( const MOAIImage& image, int srcX, int srcY, int destX
 }
 
 //----------------------------------------------------------------//
+void MOAIImage::CopyRect ( const MOAIImage& image, USIntRect srcRect, USIntRect destRect, u32 filter ) {
+
+	float scale;
+
+	bool xFlip = srcRect.IsXFlipped () != destRect.IsXFlipped ();
+	bool yFlip = srcRect.IsYFlipped () != destRect.IsYFlipped ();
+
+	srcRect.Bless ();
+	destRect.Bless ();
+
+	if ( !( xFlip || yFlip )) {
+		if (( this->mPixelFormat == image.mPixelFormat ) && ( this->mColorFormat == image.mColorFormat )) {
+			if (( srcRect.Width () == destRect.Width ()) && ( srcRect.Height () == destRect.Height ())) {
+				this->CopyBits ( image, srcRect.mXMin, srcRect.mYMin, destRect.mXMin, destRect.mYMin, srcRect.Width (), srcRect.Height ());
+				return;
+			}
+		}
+	}
+
+	// prepare the rectangles
+	USIntRect srcBounds;
+	srcBounds.Init ( 0, 0, image.mWidth, image.mHeight );
+	
+	USIntRect destBounds;
+	destBounds.Init ( 0, 0, this->mWidth, this->mHeight );
+
+	if ( !srcRect.Overlap ( srcBounds )) return;
+	if ( !destRect.Overlap ( destBounds )) return;
+	
+	USIntRect srcClipA = srcRect;
+	USIntRect srcClipB = srcRect;
+	
+	USIntRect destClipA = destRect;
+	USIntRect destClipB = destRect;
+
+	// get the rects clipped against their respective bounds
+	srcBounds.Clip ( srcClipA );
+	destBounds.Clip ( destClipA );
+	
+	// now we need to get each rect's subrect adjust for the *other* rect's clip
+	scale = ( float )srcClipA.Width () / ( float )srcRect.Width ();
+	if ( scale < 1.0f ) {
+		
+		int offset = ( int )floor (( srcClipA.mXMin - srcRect.mXMin ) / scale );
+		int width = ( int )floor ( destClipB.Width () * scale );
+		
+		if ( xFlip ) {
+			destClipB.mXMax -= offset;
+			destClipB.mXMin = destClipB.mXMax - width;
+		}
+		else {
+			destClipB.mXMin += offset;
+			destClipB.mXMax = destClipB.mXMin + width;
+		}
+	}
+	
+	scale = ( float )srcClipA.Height () / ( float )srcRect.Height ();
+	if ( scale < 1.0f ) {
+	
+		int offset = ( int )floor (( srcClipA.mYMin - srcRect.mYMin ) / scale );
+		int height = ( int )floor ( destClipB.Height () * scale );
+	
+		if ( yFlip ) {
+			destClipB.mYMax -= offset;
+			destClipB.mYMin = destClipB.mYMax - height;
+		}
+		else {
+			destClipB.mYMin += offset;
+			destClipB.mYMax = destClipB.mYMin + height;
+		}
+	}
+	
+	scale = ( float )destClipA.Width () / ( float )destRect.Width ();
+	if ( scale < 1.0f ) {
+	
+		int offset = ( int )floor (( destClipA.mXMin - destRect.mXMin ) / scale );
+		int width = ( int )floor ( srcClipB.Width () * scale );
+	
+		if ( xFlip ) {
+			srcClipB.mXMax -= offset;
+			srcClipB.mXMin = srcClipB.mXMax - width;
+		}
+		else {
+			srcClipB.mXMin += offset;
+			srcClipB.mXMax = srcClipB.mXMin + width;
+		}
+	}
+	
+	scale = ( float )destClipA.Height () / ( float )destRect.Height ();
+	if ( scale < 1.0f ) {
+	
+		int offset = ( int )floor (( destClipA.mYMin - destRect.mYMin ) / scale );
+		int height = ( int )floor ( srcClipB.Height () * scale );
+	
+		if ( yFlip ) {
+			srcClipB.mYMax -= offset;
+			srcClipB.mYMin = srcClipB.mYMax - height;
+		}
+		else {
+			srcClipB.mYMin += offset;
+			srcClipB.mYMax = srcClipB.mYMin + height;
+		}
+	}
+	
+	// the final rects are the intersection of clipA and clipB
+	srcRect = srcClipA;
+	if ( !srcRect.Intersect ( srcClipB, srcRect )) return;
+	
+	destRect = destClipA;
+	if ( !destRect.Intersect ( destClipB, destRect )) return;
+
+	// now set up the copy
+	int srcWidth = srcRect.Width ();
+	int srcHeight = srcRect.Height ();
+	
+	int destWidth = destRect.Width ();
+	int destHeight = destRect.Height ();
+	
+	float xSrcStep = ( float )srcWidth / ( float )destWidth;
+	float ySrcStep = ( float )srcHeight / ( float )destHeight;
+	
+	float xSrcOrigin = ( float )srcRect.mXMin;
+	float ySrcOrigin = ( float )srcRect.mYMin;
+	
+	if ( xFlip ) {
+		xSrcOrigin = ( float )srcRect.mXMax;
+		xSrcStep = -xSrcStep;
+	}
+	
+	if ( yFlip ) {
+		ySrcOrigin = ( float )srcRect.mYMax;
+		ySrcStep = -ySrcStep;
+	}
+	
+	int yDest = destRect.mYMin;
+	float ySample = ySrcOrigin;
+	for ( int i = 0; i < destHeight; ++i, ySample += ySrcStep, yDest++ ) {
+		
+		int xDest = destRect.mXMin;
+		float xSample = xSrcOrigin;
+		for ( int j = 0; j < destWidth; ++j, xSample += xSrcStep, xDest++ ) {
+			
+			u32 x0 = ( u32 )floorf ( xSample );
+			u32 y0 = ( u32 )floorf ( ySample );
+			
+			u32 x1 = x0 + 1;
+			u32 y1 = y0 + 1;
+			
+			if ( x1 >= this->mWidth ) {
+				x1 = this->mWidth - 1;
+			}
+			
+			if ( y1 >= this->mHeight ) {
+				y1 = this->mHeight - 1;
+			}
+			
+			u32 c0 = image.GetColor ( x0, y0 );
+			u32 c1 = image.GetColor ( x1, y0 );
+			u32 c2 = image.GetColor ( x0, y1 );
+			u32 c3 = image.GetColor ( x1, y1 );
+
+			u8 xt = ( u8 )(( xSample - ( float )x0 ) * 255.0f );
+			u8 yt = ( u8 )(( ySample - ( float )y0 ) * 255.0f );
+			
+			u32 result;
+			
+			if ( filter == FILTER_LINEAR ) {
+				result = USColor::BilerpFixed ( c0, c1, c2, c3, xt, yt );
+			}
+			else {
+				result = USColor::NearestNeighbor ( c0, c1, c2, c3, xt, yt );
+			}
+			
+			this->SetColor ( xDest, yDest, result );
+		}
+	}
+}
+
+//----------------------------------------------------------------//
 u32 MOAIImage::GetBitmapSize () const {
 
 	return this->GetRowSize () * this->mHeight;
@@ -818,7 +1078,7 @@ bool MOAIImage::IsPng ( const void* buffer, u32 size ) {
 void MOAIImage::Load ( USData& data, u32 transform ) {
 
 	void* bytes;
-	u32 size;
+	size_t size;
 	data.Lock ( &bytes, &size );
 
 	this->Load ( bytes, size, transform );
@@ -878,7 +1138,7 @@ MOAIImage::MOAIImage () :
 	mPalette ( 0 ),
 	mBitmap ( 0 ) {
 	
-	RTTI_SINGLE ( USLuaObject )
+	RTTI_SINGLE ( MOAILuaObject )
 }
 
 //----------------------------------------------------------------//
@@ -900,7 +1160,10 @@ void MOAIImage::PadToPow2 ( const MOAIImage& image ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIImage::RegisterLuaClass ( USLuaState& state ) {
+void MOAIImage::RegisterLuaClass ( MOAILuaState& state ) {
+	
+	state.SetField ( -1, "FILTER_LINEAR", ( u32 )MOAIImage::FILTER_LINEAR );
+	state.SetField ( -1, "FILTER_NEAREST", ( u32 )MOAIImage::FILTER_NEAREST );
 	
 	state.SetField ( -1, "POW_TWO", ( u32 )MOAIImageTransform::POW_TWO );
 	state.SetField ( -1, "QUANTIZE", ( u32 )MOAIImageTransform::QUANTIZE );
@@ -920,7 +1183,7 @@ void MOAIImage::RegisterLuaClass ( USLuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIImage::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAIImage::RegisterLuaFuncs ( MOAILuaState& state ) {
 	UNUSED ( state );
 
 	luaL_Reg regTable [] = {
@@ -928,6 +1191,7 @@ void MOAIImage::RegisterLuaFuncs ( USLuaState& state ) {
 		{ "convertColors",		_convertColors },
 		{ "copy",				_copy },
 		{ "copyBits",			_copyBits },
+		{ "copyRect",			_copyRect },
 		{ "getColor32",			_getColor32 },
 		{ "getFormat",			_getFormat },
 		{ "getRGBA",			_getRGBA },
@@ -935,6 +1199,7 @@ void MOAIImage::RegisterLuaFuncs ( USLuaState& state ) {
 		{ "init",				_init },
 		{ "load",				_load },
 		{ "padToPow2",			_padToPow2 },
+		{ "resize",				_resize },
 		{ "resizeCanvas",		_resizeCanvas },
 		{ "setColor32",			_setColor32 },
 		{ "setRGBA",			_setRGBA },
@@ -1028,13 +1293,13 @@ void MOAIImage::ResizeCanvas ( const MOAIImage& image, USIntRect rect ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIImage::SerializeIn ( USLuaState& state, USLuaSerializer& serializer ) {
+void MOAIImage::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
 	UNUSED ( state );
 	UNUSED ( serializer );
 }
 
 //----------------------------------------------------------------//
-void MOAIImage::SerializeOut ( USLuaState& state, USLuaSerializer& serializer ) {
+void MOAIImage::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
 	UNUSED ( state );
 	UNUSED ( serializer );
 }

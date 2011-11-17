@@ -19,7 +19,7 @@
 	@out	string output			If passed a string, returns either a string or nil depending on whether it could be decoded.  Otherwise the decoding occurs inline on the existing data buffer in this object, and nil is returned.
 */
 int MOAIDataBuffer::_base64Decode ( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	
 	if ( state.IsType ( 1, LUA_TSTRING )) {
 		return state.Base64Decode ( 1 ) ? 1 : 0;
@@ -41,7 +41,7 @@ int MOAIDataBuffer::_base64Decode ( lua_State* L ) {
 	@out	string output			If passed a string, returns either a string or nil depending on whether it could be encoded.  Otherwise the encoding occurs inline on the existing data buffer in this object, and nil is returned.
 */
 int MOAIDataBuffer::_base64Encode ( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	
 	if ( state.IsType ( 1, LUA_TSTRING )) {
 		return state.Base64Encode ( 1 ) ? 1 : 0;
@@ -65,7 +65,7 @@ int MOAIDataBuffer::_base64Encode ( lua_State* L ) {
 	@out	string output			If passed a string, returns either a string or nil depending on whether it could be compressed.  Otherwise the compression occurs inline on the existing data buffer in this object, and nil is returned.
 */
 int MOAIDataBuffer::_deflate ( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 
 	int level = state.GetValue < int >( 2, USDeflater::DEFAULT_LEVEL );
 	int windowBits = state.GetValue < int >( 3, USDeflater::DEFAULT_WBITS );
@@ -92,7 +92,7 @@ int MOAIDataBuffer::_getSize ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIDataBuffer, "U" );
 
 	void* bytes;
-	u32 size;
+	size_t size;
 	self->Lock ( &bytes, &size );
 	
 	lua_pushnumber ( state, size );
@@ -112,7 +112,7 @@ int MOAIDataBuffer::_getSize ( lua_State* L ) {
 int MOAIDataBuffer::_getString ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIDataBuffer, "U" );
 
-	u32 size;
+	size_t size;
 	void* buffer;
 	
 	self->Lock ( &buffer, &size );
@@ -132,7 +132,7 @@ int MOAIDataBuffer::_getString ( lua_State* L ) {
 	@out	string output			If passed a string, returns either a string or nil depending on whether it could be decompressed.  Otherwise the decompression occurs inline on the existing data buffer in this object, and nil is returned.
 */
 int MOAIDataBuffer::_inflate ( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 
 	int windowBits = state.GetValue < int >( 2, USDeflater::DEFAULT_WBITS );
 
@@ -247,6 +247,61 @@ int MOAIDataBuffer::_setString ( lua_State* L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
+/**	@name	toCppHeader
+	@text	Convert data to CPP header file.
+
+	@overload
+
+		@in		string data				The string data to encode
+		@in		string name
+		@opt	number columns			Default value is 12
+		@out	string output
+	
+	@overload
+
+		@in		MOAIDataBuffer data		The data buffer to encode
+		@in		string name
+		@opt	number columns			Default value is 12
+		@out	string output
+*/
+int MOAIDataBuffer::_toCppHeader ( lua_State* L ) {
+	MOAILuaState state ( L );
+	
+	cc8* name		= state.GetValue < cc8* >( 2, "" );
+	u32 columns		= state.GetValue < u32 >( 3, 12 );
+	
+	if ( !strlen ( name )) return 0;
+	
+	USMemStream memStream;
+	
+	if ( state.IsType ( 1, LUA_TSTRING )) {
+		
+		size_t size;
+		const void* bytes = lua_tolstring ( state, 1, &size );
+		USHexDump::DumpAsCPPHeader ( memStream, name, bytes, size, columns );
+	}
+	
+	MOAIDataBuffer* dataBuffer = state.GetLuaObject < MOAIDataBuffer >( 1 );
+	if ( dataBuffer ) {
+		
+		size_t size;
+		void* bytes;
+		dataBuffer->Lock ( &bytes, &size );
+		USHexDump::DumpAsCPPHeader ( memStream, name, bytes, size, columns );
+	}
+	
+	if ( memStream.GetLength ()) {
+		
+		memStream.Seek ( 0, SEEK_SET );
+		STLString result = memStream.ToString ( memStream.GetLength ());
+		
+		lua_pushstring ( state, result );
+		return 1;
+	}
+	return 0;
+}
+
 //================================================================//
 // MOAIDataBuffer
 //================================================================//
@@ -254,7 +309,7 @@ int MOAIDataBuffer::_setString ( lua_State* L ) {
 //----------------------------------------------------------------//
 MOAIDataBuffer::MOAIDataBuffer () {
 	
-	RTTI_SINGLE ( USLuaObject )
+	RTTI_SINGLE ( MOAILuaObject )
 }
 
 //----------------------------------------------------------------//
@@ -262,13 +317,14 @@ MOAIDataBuffer::~MOAIDataBuffer () {
 }
 
 //----------------------------------------------------------------//
-void MOAIDataBuffer::RegisterLuaClass ( USLuaState& state ) {
+void MOAIDataBuffer::RegisterLuaClass ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "base64Decode",	_base64Decode },
 		{ "base64Encode",	_base64Encode },
 		{ "deflate",		_deflate },
 		{ "inflate",		_inflate },
+		{ "toCppHeader",	_toCppHeader },
 		{ NULL, NULL }
 	};
 
@@ -276,7 +332,7 @@ void MOAIDataBuffer::RegisterLuaClass ( USLuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIDataBuffer::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAIDataBuffer::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "base64Decode",	_base64Decode },

@@ -31,8 +31,8 @@ public:
 	bool			Deflate				( int level, int windowBits );
 	bool			Inflate				( int windowBits );
 	bool			Load				( cc8* filename );
-	void			Load				( void* bytes, u32 size );
-	void			Lock				( void** bytes, u32* size );
+	void			Load				( void* bytes, size_t size );
+	void			Lock				( void** bytes, size_t* size );
 	bool			Save				( cc8* filename, bool affirm_path = true );
 	void			Unlock				();
 					USData				();

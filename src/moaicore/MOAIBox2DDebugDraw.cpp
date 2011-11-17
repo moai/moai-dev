@@ -150,7 +150,7 @@ void MOAIBox2DDebugDraw::DrawTransform ( const b2Transform& xf ) {
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 
-	b2Vec2 p1 = xf.position, p2;
+	b2Vec2 p1 = xf.p, p2;
 	const float32 k_axisScale = 0.4f;
 	
 	gfxDevice.BeginPrim(GL_LINES);
@@ -158,7 +158,7 @@ void MOAIBox2DDebugDraw::DrawTransform ( const b2Transform& xf ) {
 		gfxDevice.SetPenColor(1.0f, 0.0f, 0.0f, 1.0f);
 		this->WriteVtx(gfxDevice, p1.x, p1.y);
 		
-		p2 = p1 + k_axisScale * xf.R.col1;
+		p2 = p1 + k_axisScale * xf.q.GetXAxis();
 		this->WriteVtx(gfxDevice, p2.x, p2.y);
 
 	gfxDevice.EndPrim();
@@ -168,7 +168,7 @@ void MOAIBox2DDebugDraw::DrawTransform ( const b2Transform& xf ) {
 		gfxDevice.SetPenColor(0.0f, 1.0f, 0.0f, 1.0f);
 		this->WriteVtx(gfxDevice, p1.x, p1.y);
 		
-		p2 = p1 + k_axisScale * xf.R.col2;
+		p2 = p1 + k_axisScale * xf.q.GetYAxis();
 		this->WriteVtx(gfxDevice, p2.x, p2.y);
 
 	gfxDevice.EndPrim();

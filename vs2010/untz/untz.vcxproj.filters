@@ -116,9 +116,6 @@
     <ClCompile Include="..\..\3rdparty\rtaudio-4.0.8\include\asiolist.cpp">
       <Filter>RTAudio</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\3rdparty\rtaudio-4.0.8\include\iasiothiscallresolver.cpp">
-      <Filter>RTAudio</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\3rdparty\rtaudio-4.0.8\RtAudio.cpp">
       <Filter>RTAudio</Filter>
     </ClCompile>
@@ -148,6 +145,9 @@
     </ClCompile>
     <ClCompile Include="..\..\3rdparty\untz\src\UserAudioSource.cpp">
       <Filter>Source\Audio Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\rtaudio-4.0.8\include\iasiothiscallresolver.cpp">
+      <Filter>RTAudio</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

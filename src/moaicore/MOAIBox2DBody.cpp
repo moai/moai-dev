@@ -57,10 +57,10 @@ int MOAIBox2DBody::_addCircle ( lua_State* L ) {
  @text	Create and add a polygon fixture to the body.
  
  @in		MOAIBox2DBody self
- @in		table verts Array containing vertex coordinate components ( t[1] = x0, t[2] = y0, t[3] = x1, t[4] = y1 )
- @out	    MOAIBox2DFixture fixture	Returns nil on failure.
+ @in		table verts Array containing vertex coordinate components ( t[1] = x0, t[2] = y0, t[3] = x1, t[4] = y1... )
+ @out	    table Array containing MOAIBox2DFixture fixtures Returns nil on failure.
  */
-int MOAIBox2DBody::_addEdge ( lua_State* L ) {
+int MOAIBox2DBody::_addEdges ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DBody, "U" )
 	
 	if ( !self->mBody ) {
@@ -69,26 +69,35 @@ int MOAIBox2DBody::_addEdge ( lua_State* L ) {
 	}
 	
 	float unitsToMeters = self->GetUnitsToMeters ();
+	u32 totalVerts = lua_objlen ( state, -1 ) / 2;
 	
-	b2Vec2 verts[2];
-	int numVerts = MOAIBox2DFixture::LoadVerts( state, 2, verts, 2, unitsToMeters );
-	
-	if ( numVerts ) {
+	if (totalVerts) {
 		
-		b2PolygonShape polyShape;
-		polyShape.SetAsEdge( verts[0], verts[1] );
+		b2Vec2 * verts = (b2Vec2 *)alloca(sizeof(b2Vec2) * totalVerts);
+		int numVerts = MOAIBox2DFixture::LoadVerts( state, 2, verts, totalVerts, unitsToMeters );
 		
-		b2FixtureDef fixtureDef;
-		fixtureDef.shape = &polyShape;
-		
-		MOAIBox2DFixture* fixture = new MOAIBox2DFixture ();
-		fixture->SetFixture ( self->mBody->CreateFixture ( &fixtureDef ));
-		fixture->SetWorld ( self->mWorld );
-		self->mWorld->LuaRetain ( *fixture );
-		
-		fixture->PushLuaUserdata ( state );
-		return 1;
-	}
+		if ( numVerts ) {
+			MOAILuaState retstate ( L );
+			lua_createtable ( retstate, numVerts, 0 );
+			int idx = 1;
+			b2EdgeShape edgeShape;
+			for ( u32 i = 0; i < totalVerts; i+=2) {
+				edgeShape.Set(verts[i], verts[i+1]);
+				b2FixtureDef fixtureDef;
+				fixtureDef.shape = &edgeShape;
+				MOAIBox2DFixture* fixture = new MOAIBox2DFixture ();
+				fixture->SetFixture ( self->mBody->CreateFixture ( &fixtureDef ));
+				fixture->SetWorld ( self->mWorld );
+				self->mWorld->LuaRetain ( *fixture );
+				lua_pushnumber ( retstate, idx );
+				fixture->PushLuaUserdata ( retstate );				
+				lua_settable ( retstate, -3 );
+				idx++;
+			}
+			
+			return 1;
+		}
+	}	
 	return 0;
 }
 
@@ -112,7 +121,7 @@ int MOAIBox2DBody::_addPolygon ( lua_State* L ) {
 
 	b2Vec2 verts [ MOAIBox2DFixture::MAX_POLY_VERTS ];
 	int numVerts = MOAIBox2DFixture::LoadVerts ( state, 2, verts, MOAIBox2DFixture::MAX_POLY_VERTS, unitsToMeters );
-			
+	
 	if ( numVerts ) {
 		
 		b2PolygonShape polyShape;
@@ -879,21 +888,21 @@ void MOAIBox2DBody::OnDepNodeUpdate () {
 		
 		float* m = this->mLocalToWorldMtx.m;
 		
-		m [ USAffine2D::C0_R0 ] = ( float )transform.R.col1.x;
-		m [ USAffine2D::C0_R1 ] = ( float )transform.R.col1.y;
+		m [ USAffine2D::C0_R0 ] = ( float )transform.q.GetXAxis().x;
+		m [ USAffine2D::C0_R1 ] = ( float )transform.q.GetXAxis().y;
 
-		m [ USAffine2D::C1_R0 ] = ( float )transform.R.col2.x;
-		m [ USAffine2D::C1_R1 ] = ( float )transform.R.col2.y;
+		m [ USAffine2D::C1_R0 ] = ( float )transform.q.GetYAxis().x;
+		m [ USAffine2D::C1_R1 ] = ( float )transform.q.GetYAxis().y;
 
-		m [ USAffine2D::C2_R0 ] = ( float )transform.position.x * scale;
-		m [ USAffine2D::C2_R1 ] = ( float )transform.position.y * scale;
+		m [ USAffine2D::C2_R0 ] = ( float )transform.p.x * scale;
+		m [ USAffine2D::C2_R1 ] = ( float )transform.p.y * scale;
 		
 		this->mWorldToLocalMtx.Inverse ( this->mLocalToWorldMtx );
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAIBox2DBody::RegisterLuaClass ( USLuaState& state ) {
+void MOAIBox2DBody::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAITransformBase::RegisterLuaClass ( state );
 	
@@ -903,13 +912,13 @@ void MOAIBox2DBody::RegisterLuaClass ( USLuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIBox2DBody::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAIBox2DBody::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	MOAITransformBase::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
 		{ "addCircle",				_addCircle },
-		{ "addEdge",                _addEdge },
+		{ "addEdges",               _addEdges },
 		{ "addPolygon",				_addPolygon },
 		{ "addRect",				_addRect },
 		{ "applyAngularImpulse",	_applyAngularImpulse },

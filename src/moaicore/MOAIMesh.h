@@ -5,6 +5,7 @@
 #define	MOAIMESH_H
 
 #include <moaicore/MOAIDeck.h>
+#include <moaicore/MOAILua.h>
 
 class MOAITexture;
 class MOAIVertexBuffer;
@@ -20,8 +21,8 @@ class MOAIMesh :
 	public MOAIDeck {
 private:
 
-	USLuaSharedPtr < MOAITexture	>		mTexture;
-	USLuaSharedPtr < MOAIVertexBuffer >		mVertexBuffer;
+	MOAILuaSharedPtr < MOAITexture	>		mTexture;
+	MOAILuaSharedPtr < MOAIVertexBuffer >		mVertexBuffer;
 
 	//----------------------------------------------------------------//
 	static int		_setTexture			( lua_State* L );
@@ -38,8 +39,8 @@ public:
     USRect			GetBounds				( u32 idx, MOAIDeckRemapper* remapper );
 					MOAIMesh				();
 					~MOAIMesh				();
-	void			RegisterLuaClass		( USLuaState& state );
-	void			RegisterLuaFuncs		( USLuaState& state );
+	void			RegisterLuaClass		( MOAILuaState& state );
+	void			RegisterLuaFuncs		( MOAILuaState& state );
 };
 
 #endif

@@ -20,7 +20,7 @@ SUPPRESS_EMPTY_FILE_WARNING
 /**	@name	destroy
 	@text	Schedule fixture for destruction.
 	
-	@in		MOAIBox2DBody self
+	@in		MOAIBox2DFixture self
 	@out	nil
 */
 int MOAIBox2DFixture::_destroy ( lua_State* L ) {
@@ -28,6 +28,29 @@ int MOAIBox2DFixture::_destroy ( lua_State* L ) {
 	
 	if ( self->mWorld ) {
 		self->mWorld->ScheduleDestruction ( *self );
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	getBody
+	@text	Returns the body that owns the fixture.
+	
+	@in		MOAIBox2DFixture self
+	@out	MOAIBox2DBody body
+*/
+int MOAIBox2DFixture::_getBody ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIBox2DFixture, "U" )
+	
+	if ( !self->mFixture ) return 0;
+	
+	b2Body* body = self->mFixture->GetBody ();
+	if ( body ) {
+		MOAIBox2DBody* moaiBody = ( MOAIBox2DBody* )body->GetUserData ();
+		if ( moaiBody ) {
+			moaiBody->PushLuaUserdata ( state );
+			return 1;
+		}
 	}
 	return 0;
 }
@@ -200,7 +223,7 @@ void MOAIBox2DFixture::HandleCollision ( u32 eventType, MOAIBox2DFixture* other,
 		
 			if ( this->mCollisionHandler ) {
 			
-				USLuaStateHandle state = USLuaRuntime::Get ().State ();
+				MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 				if ( this->PushLocal ( state, this->mCollisionHandler )) {
 					
 					state.Push ( eventType );
@@ -216,7 +239,7 @@ void MOAIBox2DFixture::HandleCollision ( u32 eventType, MOAIBox2DFixture* other,
 }
 
 //----------------------------------------------------------------//
-u32 MOAIBox2DFixture::LoadVerts ( USLuaState& state, int idx, b2Vec2* verts, u32 max, float unitsToMeters  ) {
+u32 MOAIBox2DFixture::LoadVerts ( MOAILuaState& state, int idx, b2Vec2* verts, u32 max, float unitsToMeters  ) {
 	
 	int itr = state.PushTableItr ( idx );
 	idx = 0;
@@ -244,7 +267,7 @@ MOAIBox2DFixture::MOAIBox2DFixture () :
 	mCollisionCategoryMask ( 0 ) {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( USLuaObject )
+		RTTI_EXTEND ( MOAILuaObject )
 	RTTI_END
 }
 
@@ -255,15 +278,16 @@ MOAIBox2DFixture::~MOAIBox2DFixture () {
 }
 
 //----------------------------------------------------------------//
-void MOAIBox2DFixture::RegisterLuaClass ( USLuaState& state ) {
+void MOAIBox2DFixture::RegisterLuaClass ( MOAILuaState& state ) {
 	UNUSED ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAIBox2DFixture::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAIBox2DFixture::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	luaL_Reg regTable [] = {
 		{ "destroy",				_destroy },
+		{ "getBody",				_getBody },
 		{ "setCollisionHandler",	_setCollisionHandler },
 		{ "setDensity",				_setDensity },
 		{ "setFilter",				_setFilter },

@@ -132,7 +132,7 @@ void MOAIButtonSensor::HandleEvent ( USStream& eventStream ) {
 	}
 	
 	if ( this->mOnButton ) {
-		USLuaStateHandle state = this->mOnButton.GetSelf ();
+		MOAILuaStateHandle state = this->mOnButton.GetSelf ();
 		lua_pushboolean ( state, down );
 		state.DebugCall ( 1, 0 );
 	}
@@ -150,13 +150,13 @@ MOAIButtonSensor::~MOAIButtonSensor () {
 }
 
 //----------------------------------------------------------------//
-void MOAIButtonSensor::RegisterLuaClass ( USLuaState& state ) {
+void MOAIButtonSensor::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAISensor::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAIButtonSensor::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAIButtonSensor::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "down",				_down },

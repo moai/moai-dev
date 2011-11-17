@@ -169,11 +169,11 @@ int MOAILayer2D::_setBox2DWorld ( lua_State* L ) {
 			identity transform.
 	
 	@in		MOAILayer2D self
-	@in		MOAITransformBase camera
+	@opt	MOAITransformBase camera	Default value is nil.
 	@out	nil
 */
 int MOAILayer2D::_setCamera ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAILayer2D, "UU" )
+	MOAI_LUA_SETUP ( MOAILayer2D, "U" )
 
 	self->mCamera.Set ( *self, state.GetLuaObject < MOAITransformBase >( 2 ));
 
@@ -347,7 +347,7 @@ void MOAILayer2D::AffirmPartition () {
 	if ( !this->mPartition ) {
 		this->mPartition.Set ( *this, new MOAIPartition ());
 		
-		USLuaStateHandle state = USLuaRuntime::Get ().State ();
+		MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 		this->mPartition->PushLuaUserdata ( state );
 		state.Pop ( 1 );
 	}
@@ -531,13 +531,13 @@ MOAILayer2D::~MOAILayer2D () {
 }
 
 //----------------------------------------------------------------//
-void MOAILayer2D::RegisterLuaClass ( USLuaState& state ) {
+void MOAILayer2D::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAIProp2D::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAILayer2D::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAILayer2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	MOAIProp2D::RegisterLuaFuncs ( state );
 	

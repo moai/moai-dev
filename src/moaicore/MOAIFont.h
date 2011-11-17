@@ -5,6 +5,7 @@
 #define	MOAIFONT_H
 
 #include <moaicore/MOAIGlyph.h>
+#include <moaicore/MOAILua.h>
 
 class MOAIDataBuffer;
 class MOAIImage;
@@ -17,12 +18,8 @@ class MOAITexture;
 	@text	Font class.
 */
 class MOAIFont :
-	public virtual USLuaObject {
+	public virtual MOAILuaObject {
 private:
-
-	static const u32 WIDE_ID_BIT	= 0x80000000;
-	static const u32 WIDE_ID_MASK	= 0x7fffffff;
-	static const u32 INVALID_ID		= 0xffffffff;
 
 	USLeanArray < MOAIGlyph >	mByteGlyphs;
 	USLeanArray < u8 >			mByteGlyphMap;
@@ -36,11 +33,12 @@ private:
 	
 	MOAIGlyph mDummy;
 
-	USLuaSharedPtr < MOAITexture >	mTexture;
-	USLuaSharedPtr < MOAIImage >	mImage;
+	MOAILuaSharedPtr < MOAITexture >	mTexture;
+	MOAILuaSharedPtr < MOAIImage >	mImage;
 
 	//----------------------------------------------------------------//
 	static int		_getImage			( lua_State* L );
+	static int		_getLineScale		( lua_State* L );
 	static int		_getScale			( lua_State* L );
 	static int		_getTexture			( lua_State* L );
 	static int		_load				( lua_State* L );
@@ -78,11 +76,11 @@ public:
 	void			LoadFont			( MOAIDataBuffer& fontImageData, cc8* charCodes );
 	void			LoadFont			( cc8* fontImageFileName, cc8* charCodes );
 	void			LoadFontFromTTF		( cc8* filename, cc8* charCodes, float points, u32 dpi );
-	void			RegisterLuaClass	( USLuaState& state );
-	void			RegisterLuaFuncs	( USLuaState& state );
+	void			RegisterLuaClass	( MOAILuaState& state );
+	void			RegisterLuaFuncs	( MOAILuaState& state );
 	void			Render				();
-	void			SerializeIn			( USLuaState& state, USLuaSerializer& serializer );
-	void			SerializeOut		( USLuaState& state, USLuaSerializer& serializer );
+	void			SerializeIn			( MOAILuaState& state, MOAIDeserializer& serializer );
+	void			SerializeOut		( MOAILuaState& state, MOAISerializer& serializer );
 	void			SetGlyph			( const MOAIGlyph& glyph );
 	void			SetImage			( MOAIImage* image );
 	void			SetTexture			( MOAITexture* texture );

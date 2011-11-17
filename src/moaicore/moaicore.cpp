@@ -5,33 +5,37 @@
 #include <chipmunk/chipmunk.h>
 #include <moaicore/moaicore.h>
 
-//================================================================//
-// MOAIGlobalsFinalizer
-//================================================================//
-class MOAIGlobalsFinalizer :
-	public USGlobalsFinalizer {
-public:
+//----------------------------------------------------------------//
+static void _cleanup () {
 
-	//----------------------------------------------------------------//
-	void OnFinalize () {
-		MOAISim::Get ().SendFinalizeEvent ();
-	}
-};
+	curl_global_cleanup ();
+	
+	MOAIGlobalsMgr::Finalize ();
+}
 
 //================================================================//
 // moaicore
 //================================================================//
 
 //----------------------------------------------------------------//
-void moaicore::InitGlobals ( USGlobals* globals ) {
+void moaicore::InitGlobals ( MOAIGlobals* globals ) {
+
+	uslsext::Init ();
 
 	static bool sysInit = true;
 	if ( sysInit ) {
+		
 		cpInitChipmunk ();
 		
+		curl_global_init ( CURL_GLOBAL_WIN32 | CURL_GLOBAL_SSL );
+		
+		atexit ( _cleanup );
 		sysInit = false;
 	}
 
+	MOAIGlobalsMgr::Set ( globals );
+
+	MOAIUrlMgr::Affirm ();
 	MOAIXmlParser::Affirm ();
 	MOAIActionMgr::Affirm ();
 	MOAIInputMgr::Affirm ();
@@ -44,12 +48,10 @@ void moaicore::InitGlobals ( USGlobals* globals ) {
 	MOAIDebugLines::Affirm ();
 	MOAIPartitionResultMgr::Affirm ();
 	MOAISim::Affirm ();
-	
-	// after for now; USLuaState should be highest level object
-	uslsext::InitGlobals ( globals );
+	MOAILuaRuntime::Affirm ();
 	
 	// Start Lua
-	USLuaRuntime& luaRuntime = USLuaRuntime::Get ();
+	MOAILuaRuntime& luaRuntime = MOAILuaRuntime::Get ();
 	luaRuntime.Open ();
 	luaRuntime.LoadLibs ( "moai" );
 	
@@ -69,6 +71,7 @@ void moaicore::InitGlobals ( USGlobals* globals ) {
 	REGISTER_LUA_CLASS ( MOAIDataIOAction )
 	REGISTER_LUA_CLASS ( MOAIDebugLines )
 	REGISTER_LUA_CLASS ( MOAIDeckRemapper )
+	REGISTER_LUA_CLASS ( MOAIDeserializer )
 	REGISTER_LUA_CLASS ( MOAIDraw )
 	REGISTER_LUA_CLASS ( MOAIEnvironment )
 	REGISTER_LUA_CLASS ( MOAIEaseDriver )
@@ -119,7 +122,6 @@ void moaicore::InitGlobals ( USGlobals* globals ) {
 	REGISTER_LUA_CLASS ( MOAITileDeck2D )
 	REGISTER_LUA_CLASS ( MOAITimer )
 	REGISTER_LUA_CLASS ( MOAITouchSensor )
-	REGISTER_LUA_CLASS ( MOAITraits )
 	REGISTER_LUA_CLASS ( MOAITransform )
 	REGISTER_LUA_CLASS ( MOAIVertexBuffer )
 	REGISTER_LUA_CLASS ( MOAIVertexFormat )
@@ -133,12 +135,12 @@ void moaicore::InitGlobals ( USGlobals* globals ) {
 		REGISTER_LUA_CLASS ( MOAIBox2DFixture )
 		REGISTER_LUA_CLASS ( MOAIBox2DFrictionJoint )
 		REGISTER_LUA_CLASS ( MOAIBox2DGearJoint )
-		REGISTER_LUA_CLASS ( MOAIBox2DLineJoint )
 		REGISTER_LUA_CLASS ( MOAIBox2DMouseJoint )
 		REGISTER_LUA_CLASS ( MOAIBox2DPrismaticJoint )
 		REGISTER_LUA_CLASS ( MOAIBox2DPulleyJoint )
 		REGISTER_LUA_CLASS ( MOAIBox2DRevoluteJoint )
 		REGISTER_LUA_CLASS ( MOAIBox2DWeldJoint )
+		REGISTER_LUA_CLASS ( MOAIBox2DWheelJoint )
 		REGISTER_LUA_CLASS ( MOAIBox2DWorld )
 	#endif
 	
@@ -153,6 +155,4 @@ void moaicore::InitGlobals ( USGlobals* globals ) {
 		REGISTER_LUA_CLASS ( MOAICpShape )
 		REGISTER_LUA_CLASS ( MOAICpSpace )
 	#endif
-	
-	globals->PushFinalizer < MOAIGlobalsFinalizer >();
 }

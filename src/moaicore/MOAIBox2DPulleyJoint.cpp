@@ -87,7 +87,8 @@ int MOAIBox2DPulleyJoint::_getLength1 ( lua_State* L ) {
 	}
 
 	b2PulleyJoint* joint = ( b2PulleyJoint* )self->mJoint;
-	state.Push ( joint->GetLength1 () / unitsToMeters );
+
+	state.Push ( joint->GetLengthA () / unitsToMeters );
 	
 	return 1;
 }
@@ -109,7 +110,7 @@ int MOAIBox2DPulleyJoint::_getLength2 ( lua_State* L ) {
 	}
 
 	b2PulleyJoint* joint = ( b2PulleyJoint* )self->mJoint;
-	state.Push ( joint->GetLength2 () / unitsToMeters );
+	state.Push ( joint->GetLengthB () / unitsToMeters );
 	
 	return 1;
 }
@@ -152,12 +153,12 @@ MOAIBox2DPulleyJoint::~MOAIBox2DPulleyJoint () {
 }
 
 //----------------------------------------------------------------//
-void MOAIBox2DPulleyJoint::RegisterLuaClass ( USLuaState& state ) {
+void MOAIBox2DPulleyJoint::RegisterLuaClass ( MOAILuaState& state ) {
 	MOAIBox2DJoint::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAIBox2DPulleyJoint::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAIBox2DPulleyJoint::RegisterLuaFuncs ( MOAILuaState& state ) {
 	MOAIBox2DJoint::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {

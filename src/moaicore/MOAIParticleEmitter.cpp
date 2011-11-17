@@ -242,14 +242,14 @@ MOAIParticleEmitter::~MOAIParticleEmitter () {
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleEmitter::RegisterLuaClass ( USLuaState& state ) {
+void MOAIParticleEmitter::RegisterLuaClass ( MOAILuaState& state ) {
 
 	this->MOAITransform::RegisterLuaClass ( state );
 	this->MOAIAction::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleEmitter::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAIParticleEmitter::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	this->MOAITransform::RegisterLuaFuncs ( state );
 	this->MOAIAction::RegisterLuaFuncs ( state );
@@ -266,6 +266,20 @@ void MOAIParticleEmitter::RegisterLuaFuncs ( USLuaState& state ) {
 	};
 	
 	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAIParticleEmitter::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
+
+	MOAITransform::SerializeIn ( state, serializer );
+	MOAIAction::SerializeIn ( state, serializer );
+}
+
+//----------------------------------------------------------------//
+void MOAIParticleEmitter::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
+
+	MOAITransform::SerializeOut ( state, serializer );
+	MOAIAction::SerializeOut ( state, serializer );
 }
 
 //----------------------------------------------------------------//

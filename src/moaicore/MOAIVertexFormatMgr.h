@@ -10,7 +10,7 @@
 // MOAIVertexFormatMgr
 //================================================================//
 class MOAIVertexFormatMgr :
-	public USGlobalClass < MOAIVertexFormatMgr > {
+	public MOAIGlobalClass < MOAIVertexFormatMgr > {
 public:
 
 	enum {

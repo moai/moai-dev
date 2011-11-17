@@ -10,7 +10,7 @@
 
 #ifdef _DEBUG
 	#define MOAI_LUA_SETUP(type,str)									\
-		USLuaState state ( L );											\
+		MOAILuaState state ( L );										\
 		if ( !state.CheckParams ( 1, str )) {							\
 			MOAILog ( L, MOAILogMessages::MOAI_ParamTypeMismatch );		\
 			return 0;													\
@@ -19,7 +19,7 @@
 		if ( !self ) return 0;
 #else
 	#define MOAI_LUA_SETUP(type,str)									\
-		USLuaState state ( L );											\
+		MOAILuaState state ( L );										\
 		type* self = state.GetLuaObject < type >( 1 );					\
 		if ( !self ) return 0;
 #endif
@@ -32,6 +32,7 @@ public:
 
 	enum {
 		MOAI_FileNotFound_S,
+		MOAI_FunctionDeprecated_S,
 		MOAI_IndexNoReserved,
 		MOAI_IndexOutOfRange_DDD,
 		MOAI_NewIsUnsupported,
@@ -59,7 +60,7 @@ public:
 	static bool		CheckIndexPlusOne				( u32 idx, u32 size, lua_State* L = 0 );
 	static bool		CheckReserve					( u32 idx, u32 size, lua_State* L = 0 );
 	static void		RegisterDefaultLogMessages		();
-	static void		RegisterLogMessageIDs			( USLuaState& state );
+	static void		RegisterLogMessageIDs			( MOAILuaState& state );
 };
 
 #endif

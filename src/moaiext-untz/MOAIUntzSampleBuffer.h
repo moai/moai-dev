@@ -15,7 +15,7 @@
 			multiple MOAIUntzSound objects.
 */
 class MOAIUntzSampleBuffer :
-	public virtual USLuaObject {
+	public virtual MOAILuaObject {
 private:
 	float* mBuffer;
 	UNTZ::SoundInfo mInfo;
@@ -30,8 +30,8 @@ public:
 	//----------------------------------------------------------------//
 					MOAIUntzSampleBuffer		();
 					~MOAIUntzSampleBuffer		();
-	void			RegisterLuaClass			( USLuaState& state );
-	void			RegisterLuaFuncs			( USLuaState& state );		
+	void			RegisterLuaClass			( MOAILuaState& state );
+	void			RegisterLuaFuncs			( MOAILuaState& state );		
 
 	UNTZ::SoundInfo GetSoundInfo() { return mInfo; }
 	float* GetSampleBuffer() { return mBuffer; } 

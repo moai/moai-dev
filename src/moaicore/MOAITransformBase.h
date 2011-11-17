@@ -4,7 +4,7 @@
 #ifndef	MOAITRANSFORMBASE_H
 #define	MOAITRANSFORMBASE_H
 
-#include <moaicore/MOAITraits.h>
+#include <moaicore/MOAINode.h>
 
 //================================================================//
 // MOAITransformBase
@@ -19,7 +19,7 @@
 	@attr	ATTR_WORLD_Y_SCL
 */
 class MOAITransformBase :
-	public virtual MOAITraits {
+	public virtual MOAINode {
 protected:
 	
 	USAffine2D		mLocalToWorldMtx;
@@ -41,19 +41,22 @@ public:
 		ATTR_WORLD_Z_ROT,
 		ATTR_WORLD_X_SCL,
 		ATTR_WORLD_Y_SCL,
+		
+		TRANSFORM_TRAIT,
+		
 		TOTAL_ATTR,
 	};
 	
 	//----------------------------------------------------------------//
-	bool					ApplyAttrOp					( u32 attrID, USAttrOp& attrOp, u32 op );
+	bool					ApplyAttrOp					( u32 attrID, MOAIAttrOp& attrOp, u32 op );
 	const USAffine2D&		GetLocalToWorldMtx			();
 	const USAffine2D*		GetLocTrait					();
 	const USAffine2D*		GetTransformTrait			();
 	const USAffine2D&		GetWorldToLocalMtx			();
 							MOAITransformBase			();
 							~MOAITransformBase			();
-	void					RegisterLuaClass			( USLuaState& state );
-	void					RegisterLuaFuncs			( USLuaState& state );
+	void					RegisterLuaClass			( MOAILuaState& state );
+	void					RegisterLuaFuncs			( MOAILuaState& state );
 };
 
 #endif

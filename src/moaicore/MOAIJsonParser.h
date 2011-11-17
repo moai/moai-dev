@@ -4,6 +4,8 @@
 #ifndef	MOAIJSONPARSER_H
 #define	MOAIJSONPARSER_H
 
+#include <moaicore/MOAILua.h>
+
 //================================================================//
 // MOAIXmlParser
 //================================================================//
@@ -11,7 +13,7 @@
 	@text	Converts between Lua and JSON.
 */
 class MOAIJsonParser :
-	public USGlobalClass < MOAIJsonParser, USLuaObject > {
+	public MOAIGlobalClass < MOAIJsonParser, MOAILuaObject > {
 private:
 
 	//----------------------------------------------------------------//
@@ -25,8 +27,8 @@ public:
 	//----------------------------------------------------------------//
 						MOAIJsonParser			();
 						~MOAIJsonParser			();
-	void				RegisterLuaClass		( USLuaState& state );
-	void				RegisterLuaFuncs		( USLuaState& state );
+	void				RegisterLuaClass		( MOAILuaState& state );
+	void				RegisterLuaFuncs		( MOAILuaState& state );
 };
 
 #endif

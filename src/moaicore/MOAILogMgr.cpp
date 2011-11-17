@@ -58,7 +58,7 @@ int MOAILogMgr::_closeFile ( lua_State* L ) {
 */
 int MOAILogMgr::_isDebugBuild ( lua_State* L ) {
 
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	
 	#ifdef _DEBUG
 		lua_pushboolean ( state, true );
@@ -78,11 +78,11 @@ int MOAILogMgr::_isDebugBuild ( lua_State* L ) {
 */
 int MOAILogMgr::_log ( lua_State* L ) {
 
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	if ( !state.CheckParams ( 1, "S" )) return 0;
 
 	cc8* msg = state.GetValue < cc8* >( 1, "" );
-	USLog::Print ( USLog::CONSOLE, msg );
+	USLog::PrintFile ( USLog::CONSOLE, msg );
 	
 	return 0;
 }
@@ -96,7 +96,7 @@ int MOAILogMgr::_log ( lua_State* L ) {
 */
 int MOAILogMgr::_openFile ( lua_State* L ) {
 
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	if ( !state.CheckParams ( 1, "S" )) return 0;
 	
 	cc8* filename = state.GetValue < cc8* >( 1, "" );
@@ -119,7 +119,7 @@ int MOAILogMgr::_openFile ( lua_State* L ) {
 int MOAILogMgr::_registerLogMessage ( lua_State* L ) {
 	UNUSED ( L );
 
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	if ( !state.CheckParams ( 1, "N" )) return 0;
 
 	u32 messageID		= state.GetValue < u32 >( 1, 0 );
@@ -140,7 +140,7 @@ int MOAILogMgr::_registerLogMessage ( lua_State* L ) {
 */
 int MOAILogMgr::_setLogLevel ( lua_State* L ) {
 
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 
 	u32 level = state.GetValue < u32 >( 1, LOG_NONE );
 	MOAILogMgr::Get ().mLevel = level;
@@ -193,7 +193,7 @@ void MOAILogMgr::LogVar ( lua_State *L, u32 messageID, va_list args ) {
 				this->Print ( "\n" );
 				
 				if ( L ) {
-					USLuaState state ( L );
+					MOAILuaState state ( L );
 					state.PrintStackTrace ( this->mFile, 0 );
 					this->Print ( "\n" );
 				}
@@ -208,7 +208,7 @@ MOAILogMgr::MOAILogMgr () :
 	mFile ( stdout ),
 	mOwnsFileHandle ( false ) {
 
-	RTTI_SINGLE ( USLuaObject )
+	RTTI_SINGLE ( MOAILuaObject )
 }
 
 //----------------------------------------------------------------//
@@ -248,14 +248,20 @@ void MOAILogMgr::PrintVar ( cc8* message, va_list args ) {
 //----------------------------------------------------------------//
 void MOAILogMgr::RegisterLogMessage ( u32 messageID, u32 level, cc8* formatString ) {
 
-	MOAILogMessage& message = MOAILogMgr::Get ().mMessageMap [ messageID ];
+	if ( strlen ( formatString )) {
+
+		MOAILogMessage& message = MOAILogMgr::Get ().mMessageMap [ messageID ];
 	
-	message.mLevel = level;
-	message.mFormatString = formatString;
+		message.mLevel = level;
+		message.mFormatString = formatString;
+	}
+	else {
+		MOAILogMgr::Get ().mMessageMap.erase ( messageID );
+	}
 }
 
 //----------------------------------------------------------------//
-void MOAILogMgr::RegisterLuaClass ( USLuaState& state ) {
+void MOAILogMgr::RegisterLuaClass ( MOAILuaState& state ) {
 
 	state.SetField ( -1, "LOG_NONE",			( u32 )LOG_NONE );
 	state.SetField ( -1, "LOG_ERROR",			( u32 )LOG_ERROR );

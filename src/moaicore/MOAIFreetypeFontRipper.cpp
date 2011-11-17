@@ -138,9 +138,9 @@ void MOAIFreetypeFontRipper::RipFromTTF ( cc8* filename, MOAIFont& font, MOAIIma
 	FT_Init_FreeType( &library );
 
 	FT_Face face;
-	if (FT_New_Face( library, filename, 0, &face )) {
+	if ( FT_New_Face( library, filename, 0, &face )) {
 		FT_Done_FreeType ( library );
-		fprintf(stderr, "Error loading font: %s\n", filename);
+		fprintf ( stderr, "Error loading font: %s\n", filename );
 		return;
 	}
 	

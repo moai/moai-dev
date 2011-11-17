@@ -186,12 +186,12 @@ public:
 			rect.mYMax = rect.mYMin + fitHeight;
 			
 			// translate rect along y axis
-			if ( rect.mXMin < this->mXMin ) {
+			if ( rect.mYMin < this->mYMin ) {
 			
 				rect.mYMin = this->mYMin;
 				rect.mYMax = this->mYMin + fitHeight;
 			}
-			else if ( rect.mXMax > this->mXMax ) {
+			else if ( rect.mYMax > this->mYMax ) {
 			
 				rect.mYMin = this->mYMax - fitHeight;
 				rect.mYMax = this->mYMax;
@@ -586,6 +586,18 @@ public:
 	}
 
 	//----------------------------------------------------------------//
+	bool IsXFlipped () {
+	
+		return ( this->mXMax < this->mXMin );
+	}
+	
+	//----------------------------------------------------------------//
+	bool IsYFlipped () {
+	
+		return ( this->mYMax < this->mYMin );
+	}
+
+	//----------------------------------------------------------------//
 	void Offset ( TYPE xOff, TYPE yOff ) {
 		
 		this->mXMin += xOff;
@@ -638,13 +650,26 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	void Scale ( float xScale, float yScale ) {
+	void Scale ( TYPE xScale, TYPE yScale ) {
 		
 		this->mXMin *= xScale;
 		this->mXMax *= xScale;
 		
 		this->mYMin *= yScale;
 		this->mYMax *= yScale;
+	}
+	
+	//----------------------------------------------------------------//
+	void SetCenter ( TYPE xLoc, TYPE yLoc ) {
+		
+		TYPE width = this->mXMax - this->mXMin;
+		TYPE height = this->mYMax - this->mYMin;
+		
+		this->mXMin = xLoc - width * 0.5f;
+		this->mXMax = this->mXMin + width;
+		
+		this->mYMin = yLoc - height * 0.5f;
+		this->mYMax = this->mYMin + height;
 	}
 	
 	//----------------------------------------------------------------//

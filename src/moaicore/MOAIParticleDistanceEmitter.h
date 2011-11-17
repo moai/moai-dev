@@ -4,6 +4,7 @@
 #ifndef	MOAIPARTICLEDISTANCEEMITTER_H
 #define	MOAIPARTICLEDISTANCEEMITTER_H
 
+#include <moaicore/MOAILua.h>
 #include <moaicore/MOAIParticleEmitter.h>
 
 //================================================================//
@@ -41,8 +42,8 @@ public:
 	//----------------------------------------------------------------//
 					MOAIParticleDistanceEmitter		();
 					~MOAIParticleDistanceEmitter	();
-	void			RegisterLuaClass				( USLuaState& state );
-	void			RegisterLuaFuncs				( USLuaState& state );
+	void			RegisterLuaClass				( MOAILuaState& state );
+	void			RegisterLuaFuncs				( MOAILuaState& state );
 	void			SetDistanceRange				( float min, float max );
 };
 

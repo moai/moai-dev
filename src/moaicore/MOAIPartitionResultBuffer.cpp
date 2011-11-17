@@ -59,7 +59,7 @@ void MOAIPartitionResultBuffer::PushResult ( MOAIProp& result ) {
 
 //----------------------------------------------------------------//
 void MOAIPartitionResultBuffer::PushResultsList ( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 
 	u32 total = this->mTotalResults;
 	

@@ -60,8 +60,8 @@ if MOAIGfxDevice.isProgrammable () then
 	shader = MOAIShader.new ()
 
 	shader:reserveUniforms ( 1 )
-	shader:declareUniform ( 1, 'transform', MOAIShader.UNIFORM_WORLD_VIEW_PROJ )
-
+	shader:declareUniform ( 1, 'transform', MOAIShader.UNIFORM_TRANSFORM )
+	
 	shader:setVertexAttribute ( 1, 'position' )
 	shader:setVertexAttribute ( 2, 'color' )
 	shader:setVertexAttribute ( 3, 'uv' )

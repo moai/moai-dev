@@ -13,14 +13,6 @@
 #include <uslscore/STLSet.h>
 #include <uslscore/STLString.h>
 
-#include <uslscore/USLuaSerializer.h>
-#include <uslscore/USLuaSharedPtr.h>
-#include <uslscore/USLuaState.h>
-#include <uslscore/USLuaStateHandle.h>
-#include <uslscore/USLuaObject.h>
-#include <uslscore/USLuaRuntime.h>
-#include <uslscore/USLuaRef.h>
-
 #include <uslscore/USAccessors.h>
 #include <uslscore/USBase64Cipher.h>
 #include <uslscore/USByteStream.h>
@@ -34,7 +26,6 @@
 #include <uslscore/USFileStream.h>
 #include <uslscore/USFileSys.h>
 #include <uslscore/USFloat.h>
-#include <uslscore/USGlobals.h>
 #include <uslscore/USInflater.h>
 #include <uslscore/USLeanArray.h>
 #include <uslscore/USLeanList.h>
@@ -44,19 +35,14 @@
 #include <uslscore/USLog.h>
 #include <uslscore/USMemStream.h>
 #include <uslscore/USRect.h>
-#include <uslscore/USSharedPtr.h>
-#include <uslscore/USRtti.h>
 #include <uslscore/USStream.h>
 #include <uslscore/USStreamFormatter.h>
 #include <uslscore/USTypeID.h>
 #include <uslscore/USUnion.h>
 #include <uslscore/USVec2D.h>
 #include <uslscore/USVec3D.h>
-#include <uslscore/USWeakPtr.h>
 #include <uslscore/USZip.h>
 #include <uslscore/USZipFile.h>
-
-#include <uslscore/USLuaState-impl.h>
 
 //================================================================//
 // uslscore
@@ -64,7 +50,7 @@
 namespace uslscore {
 
 	//----------------------------------------------------------------//
-	void			InitGlobals			( USGlobals* globals );
+	void			Init			();
 }
 
 #endif

@@ -7,6 +7,7 @@
 
 #include <chipmunk/chipmunk.h>
 #include <moaicore/MOAIAction.h>
+#include <moaicore/MOAILua.h>
 
 class MOAICpArbiter;
 class MOAICpBody;
@@ -17,7 +18,7 @@ class MOAICpCollisionHandler;
 // MOAICpPrim
 //================================================================//
 class MOAICpPrim :
-	public virtual USLuaObject  {
+	public virtual MOAILuaObject  {
 protected:
 
 	USLeanLink < MOAICpPrim* > mLinkInSpace;
@@ -55,8 +56,8 @@ class MOAICpSpace :
 private:
 
 	cpSpace*							mSpace;
-	USLuaSharedPtr < MOAICpBody >		mStaticBody;
-	USLuaSharedPtr < MOAICpArbiter >	mArbiter;
+	MOAILuaSharedPtr < MOAICpBody >		mStaticBody;
+	MOAILuaSharedPtr < MOAICpArbiter >	mArbiter;
 	
 	MOAICpCollisionHandler*	mCollisionHandlers;
 	MOAICpCollisionHandler* mDefaultHandler;
@@ -116,8 +117,8 @@ public:
 					MOAICpSpace				();
 					~MOAICpSpace			();
 	void			OnUpdate				( float step );
-	void			RegisterLuaClass		( USLuaState& state );
-	void			RegisterLuaFuncs		( USLuaState& state );
+	void			RegisterLuaClass		( MOAILuaState& state );
+	void			RegisterLuaFuncs		( MOAILuaState& state );
 	void			RemovePrim				( MOAICpPrim& prim );
 };
 

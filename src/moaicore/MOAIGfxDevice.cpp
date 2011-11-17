@@ -48,7 +48,7 @@ int MOAIGfxDevice::_isProgrammable ( lua_State* L ) {
 */
 int MOAIGfxDevice::_setPenColor ( lua_State* L ) {
 
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 
 	float r = state.GetValue < float >( 1, 1.0f );
 	float g = state.GetValue < float >( 2, 1.0f );
@@ -67,7 +67,7 @@ int MOAIGfxDevice::_setPenColor ( lua_State* L ) {
 */
 int MOAIGfxDevice::_setPenWidth ( lua_State* L ) {
 
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 
 	float width = state.GetValue < float >( 1, 1.0f );
 	MOAIGfxDevice::Get ().SetPenWidth ( width );
@@ -82,7 +82,7 @@ int MOAIGfxDevice::_setPenWidth ( lua_State* L ) {
 */
 int MOAIGfxDevice::_setPointSize ( lua_State* L ) {
 
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 
 	float size = state.GetValue < float >( 1, 1.0f );
 	MOAIGfxDevice::Get ().SetPointSize ( size );
@@ -600,7 +600,7 @@ MOAIGfxDevice::~MOAIGfxDevice () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::RegisterLuaClass ( USLuaState& state ) {
+void MOAIGfxDevice::RegisterLuaClass ( MOAILuaState& state ) {
 
 	state.SetField ( -1, "EVENT_RESIZE", ( u32 )EVENT_RESIZE );
 
@@ -902,7 +902,7 @@ void MOAIGfxDevice::SetSize ( u32 width, u32 height ) {
 	this->mWidth = width;
 	this->mHeight = height;
 	
-	USLuaStateHandle state = USLuaRuntime::Get ().State ();
+	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 	if ( this->PushListener ( EVENT_RESIZE, state )) {
 		lua_pushnumber ( state, width );
 		lua_pushnumber ( state, height );
@@ -1054,14 +1054,16 @@ void MOAIGfxDevice::SetVertexTransform ( u32 id, const USMatrix4x4& transform ) 
 		else {
 			this->UpdateGpuVertexMtx ();
 		}
-		
-		if ( this->mShader ) {
-			this->mShader->UpdatePipelineTransforms (
-				this->mVertexTransforms [ VTX_WORLD_TRANSFORM ],
-				this->mVertexTransforms [ VTX_VIEW_TRANSFORM ],
-				this->mVertexTransforms [ VTX_PROJ_TRANSFORM ]
-			);
-		}
+	}
+	
+	// update any transforms in the shader that rely on the pipeline
+	// the shader caches the state of each uniform; only reloads when changed
+	if ( this->mShader ) {
+		this->mShader->UpdatePipelineTransforms (
+			this->mVertexTransforms [ VTX_WORLD_TRANSFORM ],
+			this->mVertexTransforms [ VTX_VIEW_TRANSFORM ],
+			this->mVertexTransforms [ VTX_PROJ_TRANSFORM ]
+		);
 	}
 }
 

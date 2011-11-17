@@ -99,7 +99,8 @@ int MOAIBox2DPrismaticJoint::_getMotorForce ( lua_State* L ) {
 	}
 
 	b2PrismaticJoint* joint = ( b2PrismaticJoint* )self->mJoint;
-	state.Push ( joint->GetMotorForce () / unitsToMeters );
+
+	state.Push ( joint->GetMotorForce (1.0f) / unitsToMeters );
 	
 	return 1;
 }
@@ -339,12 +340,12 @@ MOAIBox2DPrismaticJoint::~MOAIBox2DPrismaticJoint () {
 }
 
 //----------------------------------------------------------------//
-void MOAIBox2DPrismaticJoint::RegisterLuaClass ( USLuaState& state ) {
+void MOAIBox2DPrismaticJoint::RegisterLuaClass ( MOAILuaState& state ) {
 	MOAIBox2DJoint::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAIBox2DPrismaticJoint::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAIBox2DPrismaticJoint::RegisterLuaFuncs ( MOAILuaState& state ) {
 	MOAIBox2DJoint::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
