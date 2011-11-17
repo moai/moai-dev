@@ -15,6 +15,14 @@ class MOAILayer2D;
 //================================================================//
 /**	@name	MOAIColor
 	@text	Color vector with animation helper methods.
+	
+	@attr	ATTR_R_COL
+	@attr	ATTR_G_COL
+	@attr	ATTR_B_COL
+	@attr	ATTR_A_COL
+	
+	@attr	INHERIT_COLOR
+	@attr	COLOR_TRAIT
 */
 class MOAIColor :
 	public virtual MOAINode,

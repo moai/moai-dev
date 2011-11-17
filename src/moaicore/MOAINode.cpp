@@ -137,7 +137,7 @@ int MOAINode::_getAttr ( lua_State* L ) {
 	@in		MOAINode self
 	@in		number attrID
 	@out	MOAINode sourceNode
-	@out	number aourceAttrID
+	@out	number sourceAttrID
 */
 int MOAINode::_getAttrLink ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAINode, "UN" );
