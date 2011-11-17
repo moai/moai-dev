@@ -4,6 +4,8 @@
 #include <aku/AKU-particles.h>
 #include <ParticlePresets.h>
 
+#define UNUSED(p) (( void )p)
+
 //----------------------------------------------------------------//
 static float	_lerp				( float x0, float x1, float t );
 static void		_testRender			( float* particle, float* registers, AKUParticleSprite* sprite, float t0, float t1 );
