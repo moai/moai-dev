@@ -750,6 +750,9 @@ void MOAIApp::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "PAYMENT_QUEUE_ERROR",			( u32 )PAYMENT_QUEUE_ERROR );
 	state.SetField ( -1, "REMOTE_NOTIFICATION",			( u32 )REMOTE_NOTIFICATION );
 	state.SetField ( -1, "ASYNC_NAME_RESOLVE",			( u32 )ASYNC_NAME_RESOLVE );
+	state.SetField ( -1, "APP_OPENED_FROM_URL",			( u32 )APP_OPENED_FROM_URL );
+	state.SetField ( -1, "SESSION_START",				( u32 )SESSION_START );
+	state.SetField ( -1, "SESSION_END",					( u32 )SESSION_END );
 	
 	state.SetField ( -1, "DOMAIN_DOCUMENTS",			( u32 )DOMAIN_DOCUMENTS );
 	state.SetField ( -1, "DOMAIN_APP_SUPPORT",			( u32 )DOMAIN_APP_SUPPORT );
@@ -759,10 +762,6 @@ void MOAIApp::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "TRANSACTION_STATE_FAILED",    ( u32 )TRANSACTION_STATE_FAILED );
 	state.SetField ( -1, "TRANSACTION_STATE_RESTORED",  ( u32 )TRANSACTION_STATE_RESTORED );
 	state.SetField ( -1, "TRANSACTION_STATE_CANCELLED", ( u32 )TRANSACTION_STATE_CANCELLED );
-			
-	state.SetField ( -1, "APP_OPENED_FROM_URL",	( u32 )APP_OPENED_FROM_URL );
-	state.SetField ( -1, "SESSION_START",	    ( u32 )SESSION_START );
-	state.SetField ( -1, "SESSION_END",		    ( u32 )SESSION_END );
 	
 	luaL_Reg regTable[] = {
 		{ "alert",								_alert },

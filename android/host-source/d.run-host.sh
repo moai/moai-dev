@@ -97,7 +97,9 @@
 	fr build/AndroidManifest.xml	@NAME@			$project_name
 	fr build/AndroidManifest.xml	@PACKAGE@		$package
 	fr build/AndroidManifest.xml	@DEBUGGABLE@	$debug
-
+	fr build/AndroidManifest.xml	@VERSION_CODE@	$versionCode
+	fr build/AndroidManifest.xml	@VERSION_NAME@	$versionName
+	
 	# copy ant.properties file and replace text inside
 	cp -f	host-source/project/ant.properties	build/ant.properties
 	fr build/ant.properties		@KEY_STORE@		$key_store
@@ -140,7 +142,7 @@
 	
 	# create run commands for the host
 	for file in "${run[@]}"; do
-		run_command=`echo -e $run_command"Run\(\""$file"\"\,mWidth\,mHeight\)\;\n"`
+		run_command=`echo -e $run_command"run\(\""$file"\"\)\;\n"`
 	done
 
 	fr 	build/$package_path/MoaiView.java	@RUN@ 	$run_command
@@ -194,8 +196,8 @@
 			ant clean
 			$install_cmd
 			adb shell am start -a android.intent.action.MAIN -n $package/$package.MoaiActivity
-			# adb logcat MoaiJNI:V MoaiLog:V *:S
-			adb logcat MoaiLog:V *:S
+			adb logcat -c
+			adb logcat MoaiLog:V AndroidRuntime:E *:S
 		popd > /dev/null
 	fi
 	

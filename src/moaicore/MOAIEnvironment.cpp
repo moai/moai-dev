@@ -479,11 +479,6 @@ void MOAIEnvironment::SetCarrierName ( cc8* name ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIEnvironment::SetConnectivityFunc ( long (*connFunc)(void) ) {
-	getConnectivityFunc = connFunc;
-}
-
-//----------------------------------------------------------------//
 void MOAIEnvironment::SetConnectionType ( long connType ) {
 	mConnectionType = connType;
 }
