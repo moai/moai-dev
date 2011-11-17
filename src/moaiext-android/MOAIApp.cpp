@@ -10,7 +10,7 @@
 
 //----------------------------------------------------------------//
 int MOAIApp::_setListener ( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	
 	u32 idx = state.GetValue < u32 >( 1, TOTAL );
 	
@@ -28,10 +28,10 @@ int MOAIApp::_setListener ( lua_State* L ) {
 //----------------------------------------------------------------//
 void MOAIApp::DidStartSession( ) {
 
-	USLuaRef& callback = this->mListeners [ SESSION_START ];
+	MOAILuaRef& callback = this->mListeners [ SESSION_START ];
 	
 	if ( callback ) {
-		USLuaStateHandle state = callback.GetSelf ();
+		MOAILuaStateHandle state = callback.GetSelf ();
 		
 		state.DebugCall ( 0, 0 );
 	}
@@ -40,7 +40,7 @@ void MOAIApp::DidStartSession( ) {
 //----------------------------------------------------------------//
 MOAIApp::MOAIApp () {
 
-	RTTI_SINGLE ( USLuaObject )
+	RTTI_SINGLE ( MOAILuaObject )
 }
 
 //----------------------------------------------------------------//
@@ -52,7 +52,7 @@ void MOAIApp::OnInit () {
 }
 
 //----------------------------------------------------------------//
-void MOAIApp::RegisterLuaClass ( USLuaState& state ) {
+void MOAIApp::RegisterLuaClass ( MOAILuaState& state ) {
 
 	state.SetField ( -1, "SESSION_START",	    ( u32 )SESSION_START );
 	state.SetField ( -1, "SESSION_END",		    ( u32 )SESSION_END );
@@ -75,10 +75,10 @@ void MOAIApp::Reset () {
 //----------------------------------------------------------------//
 void MOAIApp::WillEndSession( ) {
 
-	USLuaRef& callback = this->mListeners [ SESSION_END ];
+	MOAILuaRef& callback = this->mListeners [ SESSION_END ];
 	
 	if ( callback ) {
-		USLuaStateHandle state = callback.GetSelf ();
+		MOAILuaStateHandle state = callback.GetSelf ();
 		
 		state.DebugCall ( 0, 0 );
 	}

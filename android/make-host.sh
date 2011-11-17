@@ -74,8 +74,9 @@
 	mkdir -p $new_host_lib_dir
 	
 	# copy libmoai into new host template dir
-	if [ "$existing_package" != "$packageName" ] || [ ! -f libmoai/libs/armeabi/libmoai.so ]; then
+	if [ ! -f libmoai/libs/armeabi/libmoai.so ]; then
 		echo "*** libmoai.so has not been built for $packageName. Android host will be incomplete!"
+		quiet="true"
 	else
 		cp -f libmoai/libs/armeabi/libmoai.so $new_host_lib_dir/libmoai.so
 	fi

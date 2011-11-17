@@ -10,7 +10,7 @@
 // MOAIApp
 //================================================================//
 class MOAIApp :
-	public USGlobalClass < MOAIApp, USLuaObject > {
+	public MOAIGlobalClass < MOAIApp, MOAILuaObject > {
 private:
 
 	enum {
@@ -19,7 +19,7 @@ private:
 		TOTAL,
 	};
 	
-	USLuaRef		mListeners [ TOTAL ];
+	MOAILuaRef		mListeners [ TOTAL ];
 	
 	//----------------------------------------------------------------//
 	static int		_setListener				( lua_State* L );
@@ -33,7 +33,7 @@ public:
 				MOAIApp							();
 				~MOAIApp						();
 	void		OnInit							();
-	void		RegisterLuaClass				( USLuaState& state );
+	void		RegisterLuaClass				( MOAILuaState& state );
 	void		Reset							();
 	void		WillEndSession					();
 };

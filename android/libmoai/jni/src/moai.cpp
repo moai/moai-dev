@@ -186,8 +186,8 @@
 	}
 
 	//----------------------------------------------------------------//
-	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUResize ( JNIEnv* env, jclass obj, jint width, jint height ) {
-		AKUResize ( width, height );
+	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUSetScreenSize ( JNIEnv* env, jclass obj, jint width, jint height ) {
+		AKUSetScreenSize ( width, height );
 	}
 	
 	//----------------------------------------------------------------//
@@ -308,7 +308,7 @@
 		GET_STRING ( jpath, path );
 
 		USFileSys::SetCurrentPath ( path );
-		USLuaRuntime::Get ().SetPath ( path );
+		MOAILuaRuntime::Get ().SetPath ( path );
 	
 		RELEASE_STRING ( jpath, path );
 	}

@@ -64,7 +64,7 @@ public class MoaiView extends GLSurfaceView {
 	protected static native void AKURender	 					();
 	protected static native void AKUReserveInputDevices			( int total );
 	protected static native void AKUReserveInputDeviceSensors	( int deviceId, int total );
-	protected static native void AKUResize	 					( int width, int height );
+	protected static native void AKUSetScreenSize				( int width, int height );
 	protected static native void AKURunScript 					( String filename );
 	protected static native void AKUSetContext 					( int akuContextId );
 	protected static native void AKUSetDeviceProperties 		( String appName, String abi, String devBrand, String devName, String devManufacturer, String devModel, String devProduct, String osBrand, String osVersion, String udid );	
@@ -200,7 +200,7 @@ public class MoaiView extends GLSurfaceView {
 	public void run ( String filename ) {
 	
 		AKUSetContext ( mAku );
-		AKUResize ( mWidth, mHeight );
+		AKUSetScreenSize ( mWidth, mHeight );
 		AKURunScript ( filename );
 	}
 	
@@ -220,7 +220,7 @@ public class MoaiView extends GLSurfaceView {
 		public void onDrawFrame ( GL10 gl ) {
 
 			AKUSetContext ( mAku );
-			AKUResize ( mWidth, mHeight );
+			AKUSetScreenSize ( mWidth, mHeight );
 			AKURender ();
 
 			gl.glFlush ();
