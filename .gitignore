@@ -7,6 +7,11 @@ Thumbs.db
 /ide/bin
 /ide/obj
 
+build/
+xcuserdata/
+*.pbxuser
+*.perspectivev3
+
 # Artifacts when building with CMake
 CMakeFiles
 CMakeCache.txt
