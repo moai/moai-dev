@@ -34,9 +34,9 @@ import android.view.Display;
 import android.view.Window;
 import android.view.WindowManager;
 
-// // OpenGL 2.0
-// import android.app.ActivityManager;
-// import android.content.pm.ConfigurationInfo;
+// OpenGL 2.0
+import android.app.ActivityManager;
+import android.content.pm.ConfigurationInfo;
  
 //================================================================//
 // MoaiActivity
@@ -87,13 +87,13 @@ public class MoaiActivity extends Activity implements SensorEventListener {
 		// create Moai view
 	    mMoaiView = new MoaiView ( this, displayWidth, displayHeight );
 
-		// // OpenGL 2.0
-		// ActivityManager am = ( ActivityManager ) getSystemService ( Context.ACTIVITY_SERVICE );
-		//         ConfigurationInfo info = am.getDeviceConfigurationInfo ();
-		// 	    
-		// if ( info.reqGlEsVersion >= 0x20000 ) {
-		// 	mMoaiView.setEGLContextClientVersion ( 2 );
-		// }
+		// OpenGL 2.0
+		ActivityManager am = ( ActivityManager ) getSystemService ( Context.ACTIVITY_SERVICE );
+		        ConfigurationInfo info = am.getDeviceConfigurationInfo ();
+			    
+		if ( info.reqGlEsVersion >= 0x20000 ) {
+			mMoaiView.setEGLContextClientVersion ( 2 );
+		}
 
 		// create custom renderer for the Moai view
         mMoaiView.setRenderer ( mMoaiView.new MoaiRenderer () );
