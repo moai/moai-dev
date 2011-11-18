@@ -56,7 +56,7 @@ void MOAITextFrame::FlushLine () {
 
 	float x = this->mFrame.mXMin;
 	float width = this->mFrame.Width ();
-	float lineHeight = this->mFont->GetLineSpacing () * this->mPoints;
+	float lineHeight = this->mFont->GetLineSpacing () * this->mPoints * this->mLineSpacing;
 
 	switch ( this->mJustify ) {
 		
@@ -173,8 +173,8 @@ void MOAITextFrame::Parse () {
 	
 	float points = this->mPoints;
 	
-	this->mLineHeight = this->mFont->GetLineSpacing () * this->mPoints;
-	this->mTotalLines = ( u32 )floorf ( this->mFrame.Height () / this->mLineHeight );
+	float lineHeight = this->mFont->GetLineSpacing () * this->mPoints * this->mLineSpacing;
+	this->mTotalLines = ( u32 )floorf ( this->mFrame.Height () / lineHeight );
 	if ( !this->mTotalLines ) return;
 
 	this->mPen.Init ( 0.0f, this->mFrame.mYMin );
@@ -466,6 +466,7 @@ MOAITextFrame::MOAITextFrame () :
 	mIdx ( 0 ),
 	mStr ( 0 ),
 	mFont ( 0 ),
+	mLineSpacing ( 1.0f ),
 	mJustify ( LEFT_JUSTIFY ),
 	mCurves ( 0 ),
 	mTotalCurves ( 0 ) {
