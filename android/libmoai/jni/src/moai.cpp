@@ -186,11 +186,6 @@
 	}
 
 	//----------------------------------------------------------------//
-	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUSetScreenSize ( JNIEnv* env, jclass obj, jint width, jint height ) {
-		AKUSetScreenSize ( width, height );
-	}
-	
-	//----------------------------------------------------------------//
 	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKURunScript ( JNIEnv* env, jclass obj, jstring jfilename ) {
 		GET_STRING ( jfilename, filename );
 		AKURunScript ( filename );
@@ -300,6 +295,16 @@
 		GET_STRING ( jname, name );
 		AKUSetInputDeviceTouch ( deviceId, sensorId, name );
 		RELEASE_STRING ( jname, name );
+	}
+
+	//----------------------------------------------------------------//
+	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUSetScreenSize ( JNIEnv* env, jclass obj, jint width, jint height ) {
+		AKUSetScreenSize ( width, height );
+	}
+
+	//----------------------------------------------------------------//
+	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUSetViewSize ( JNIEnv* env, jclass obj, jint width, jint height ) {
+		AKUSetViewSize ( width, height );
 	}
 
 	//----------------------------------------------------------------//
