@@ -64,7 +64,6 @@ public class MoaiView extends GLSurfaceView {
 	protected static native void AKURender	 					();
 	protected static native void AKUReserveInputDevices			( int total );
 	protected static native void AKUReserveInputDeviceSensors	( int deviceId, int total );
-	protected static native void AKUSetScreenSize				( int width, int height );
 	protected static native void AKURunScript 					( String filename );
 	protected static native void AKUSetContext 					( int akuContextId );
 	protected static native void AKUSetDeviceProperties 		( String appName, String abi, String devBrand, String devName, String devManufacturer, String devModel, String devProduct, String osBrand, String osVersion, String udid );	
@@ -74,6 +73,8 @@ public class MoaiView extends GLSurfaceView {
 	protected static native void AKUSetInputDeviceLevel 		( int deviceId, int sensorId, String name );
 	protected static native void AKUSetInputDeviceLocation 		( int deviceId, int sensorId, String name );
 	protected static native void AKUSetInputDeviceTouch 		( int deviceId, int sensorId, String name );
+	protected static native void AKUSetScreenSize				( int width, int height );
+	protected static native void AKUSetViewSize					( int width, int height );
 	protected static native void AKUSetWorkingDirectory 		( String path ); 
 	protected static native void AKUUntzInit			 		();
 	protected static native void AKUUpdate				 		();
@@ -140,7 +141,8 @@ public class MoaiView extends GLSurfaceView {
 		AKUSetInputDeviceTouch			( MoaiInputDeviceID.DEVICE.ordinal (), MoaiInputDeviceSensorID.TOUCH.ordinal (),		"touch" );
 
 		AKUUntzInit ();
-		
+		AKUSetScreenSize ( mWidth, mHeight );
+
 		mSensorsEnabled = true;
 
 		// set device properties
@@ -200,7 +202,7 @@ public class MoaiView extends GLSurfaceView {
 	public void run ( String filename ) {
 	
 		AKUSetContext ( mAku );
-		AKUSetScreenSize ( mWidth, mHeight );
+		AKUSetViewSize ( mWidth, mHeight );
 		AKURunScript ( filename );
 	}
 	
@@ -220,7 +222,7 @@ public class MoaiView extends GLSurfaceView {
 		public void onDrawFrame ( GL10 gl ) {
 
 			AKUSetContext ( mAku );
-			AKUSetScreenSize ( mWidth, mHeight );
+			AKUSetViewSize ( mWidth, mHeight );
 			AKURender ();
 
 			gl.glFlush ();
