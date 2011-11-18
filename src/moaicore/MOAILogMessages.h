@@ -38,6 +38,7 @@ public:
 		MOAI_NewIsUnsupported,
 		MOAI_ParamTypeMismatch,
 		MOAIAction_Profile_PSFF,
+		MOAIBox2DBody_InvalidVertexCount_D,
 		MOAIBox2DBody_MissingInstance,
 		MOAIBox2DFixture_MissingInstance,
 		MOAIBox2DJoint_MissingInstance,
