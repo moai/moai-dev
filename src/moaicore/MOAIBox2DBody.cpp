@@ -122,6 +122,11 @@ int MOAIBox2DBody::_addPolygon ( lua_State* L ) {
 	b2Vec2 verts [ MOAIBox2DFixture::MAX_POLY_VERTS ];
 	int numVerts = MOAIBox2DFixture::LoadVerts ( state, 2, verts, MOAIBox2DFixture::MAX_POLY_VERTS, unitsToMeters );
 	
+	if (( numVerts < 3 ) || ( numVerts >= b2_maxPolygonVertices )) {
+		MOAILog ( state, MOAILogMessages::MOAIBox2DBody_InvalidVertexCount_D, numVerts );
+		return 0;
+	}
+	
 	if ( numVerts ) {
 		
 		b2PolygonShape polyShape;
