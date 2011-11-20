@@ -66,6 +66,7 @@
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/jpeg-8c
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/libogg-1.2.2/include
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/libvorbis-1.3.2/include
+	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/libvorbis-1.3.2/lib
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/lpng140
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/lua-5.1.3/src
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/luacrypto-0.2.0/src
@@ -112,10 +113,12 @@
 	LOCAL_STATIC_LIBRARIES += libjpg
 	LOCAL_STATIC_LIBRARIES += libjson
 	LOCAL_STATIC_LIBRARIES += liblua
+	LOCAL_STATIC_LIBRARIES += libogg
 	LOCAL_STATIC_LIBRARIES += libpng
 	LOCAL_STATIC_LIBRARIES += libsqlite
 	LOCAL_STATIC_LIBRARIES += libssl
 	LOCAL_STATIC_LIBRARIES += libtinyxml
+	LOCAL_STATIC_LIBRARIES += libvorbis
 	LOCAL_STATIC_LIBRARIES += libzipfs
 
 	include $(BUILD_SHARED_LIBRARY)
@@ -136,10 +139,12 @@
 	include moaiext-android/Android.mk
 	include moaiext-luaext/Android.mk
 	include moaiext-untz/Android.mk
+	include ogg/Android.mk
 	include png/Android.mk
 	include sqlite/Android.mk
 	include ssl/Android.mk
 	include tinyxml/Android.mk
+	include vorbis/Android.mk
 	include zipfs/Android.mk
 
 	include moaicore/Android.mk
