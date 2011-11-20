@@ -439,7 +439,7 @@ void MOAIProp2D::Draw () {
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 
 	if ( this->mUVTransform ) {
-		USAffine2D uvMtx = this->mUVTransform->GetLocalToWorldMtx ();
+		USAffine3D uvMtx = this->mUVTransform->GetLocalToWorldMtx ();
 		gfxDevice.SetUVTransform ( uvMtx );
 	}
 	else {
@@ -583,10 +583,12 @@ void MOAIProp2D::GetBoundsInRect ( const USRect& rect, MOAICellCoord& c0, MOAICe
 //----------------------------------------------------------------//
 void MOAIProp2D::GetBoundsInView ( MOAICellCoord& c0, MOAICellCoord& c1 ) {
 
-	const USAffine2D& invWorldMtx = this->GetWorldToLocalMtx ();
+	const USAffine3D& invWorldMtx = this->GetWorldToLocalMtx ();
 
 	// view quad in world space
 	USQuad viewQuad = MOAIGfxDevice::Get ().GetViewQuad ();
+	
+	// TODO:
 	viewQuad.Transform ( invWorldMtx );
 	
 	USRect viewRect = viewQuad.GetBounds ();
@@ -615,7 +617,7 @@ u32 MOAIProp2D::GetLocalFrame ( USRect& frame ) {
 //----------------------------------------------------------------//
 bool MOAIProp2D::Inside ( USVec2D vec, float pad ) {
 
-	const USAffine2D& worldToLocal = this->GetWorldToLocalMtx ();
+	const USAffine3D& worldToLocal = this->GetWorldToLocalMtx ();
 	worldToLocal.Transform ( vec );
 
 	USRect rect;

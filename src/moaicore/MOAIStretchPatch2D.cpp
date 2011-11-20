@@ -199,12 +199,12 @@ bool MOAIStretchPatch2D::Bind () {
 }
 
 //----------------------------------------------------------------//
-void MOAIStretchPatch2D::Draw ( const USAffine2D& transform, u32 idx, MOAIDeckRemapper* remapper ) {
+void MOAIStretchPatch2D::Draw ( const USAffine3D& transform, u32 idx, MOAIDeckRemapper* remapper ) {
 	
-	USVec2D stretch = transform.GetStretch ();
+	USVec3D stretch = transform.GetStretch ();
 	
-	USAffine2D noStretch;
-	noStretch.Scale ( 1.0f / stretch.mX, 1.0f / stretch.mY );
+	USAffine3D noStretch;
+	noStretch.Scale ( 1.0f / stretch.mX, 1.0f / stretch.mY, 1.0f / stretch.mZ );
 	noStretch.Append ( transform );
 	
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
@@ -321,7 +321,7 @@ void MOAIStretchPatch2D::Draw ( u32 idx, MOAIDeckRemapper* remapper, float xStre
 }
 
 //----------------------------------------------------------------//
-void MOAIStretchPatch2D::Draw ( const USAffine2D& transform, MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1 ) {
+void MOAIStretchPatch2D::Draw ( const USAffine3D& transform, MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1 ) {
 	UNUSED ( transform );
 	UNUSED ( grid );
 	UNUSED ( remapper );

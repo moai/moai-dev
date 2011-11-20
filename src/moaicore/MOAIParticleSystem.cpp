@@ -327,8 +327,8 @@ void MOAIParticleSystem::Draw () {
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 
-	USAffine2D drawingMtx;
-	USAffine2D spriteMtx;
+	USAffine3D drawingMtx;
+	USAffine3D spriteMtx;
 	
 	u32 maxSprites = this->mSprites.Size ();
 	u32 total = this->mSpriteTop;
@@ -345,7 +345,7 @@ void MOAIParticleSystem::Draw () {
 		AKUParticleSprite& sprite = this->mSprites [ idx ];
 		gfxDevice.SetPenColor ( sprite.mRed, sprite.mGreen, sprite.mBlue, sprite.mAlpha );
 		
-		spriteMtx.ScRoTr ( sprite.mXScl, sprite.mYScl, sprite.mZRot * ( float )D2R, sprite.mXLoc, sprite.mYLoc );
+		spriteMtx.ScRoTr ( sprite.mXScl, sprite.mYScl, 1.0f, 0.0f, 0.0f, sprite.mZRot * ( float )D2R, sprite.mXLoc, sprite.mYLoc, 0.0f );
 		
 		drawingMtx = this->GetLocalToWorldMtx ();
 		drawingMtx.Append ( spriteMtx );

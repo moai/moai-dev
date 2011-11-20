@@ -73,7 +73,7 @@ MOAICameraAnchor2D::MOAICameraAnchor2D () {
 	RTTI_END
 	
 	this->mRect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
-	this->mLoc.Init ( 0.0f, 0.0f );
+	this->mLoc.Init ( 0.0f, 0.0f, 0.0f );
 }
 
 //----------------------------------------------------------------//
@@ -83,7 +83,7 @@ MOAICameraAnchor2D::~MOAICameraAnchor2D () {
 //----------------------------------------------------------------//
 void MOAICameraAnchor2D::OnDepNodeUpdate () {
 	
-	const USAffine2D* inherit = this->GetLinkedValue < USAffine2D >( MOAICameraAnchor2DAttr::Pack ( INHERIT_LOC ));
+	const USAffine3D* inherit = this->GetLinkedValue < USAffine3D >( MOAICameraAnchor2DAttr::Pack ( INHERIT_LOC ));
 	if ( inherit ) {
 		this->mLoc = inherit->GetTranslation ();
 	}

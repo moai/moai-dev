@@ -213,7 +213,7 @@ public:
 	
 	void					SetUVMtxMode			( u32 input, u32 output );
 	void					SetUVTransform			();
-	void					SetUVTransform			( const USAffine2D& transform );
+	void					SetUVTransform			( const USAffine3D& transform );
 	void					SetUVTransform			( const USMatrix4x4& transform );
 	
 	void					SetVertexFormat			();
@@ -221,7 +221,7 @@ public:
 	void					SetVertexMtxMode		( u32 input, u32 output );
 	void					SetVertexPreset			( u32 preset );
 	void					SetVertexTransform		( u32 id );
-	void					SetVertexTransform		( u32 id, const USAffine2D& transform );
+	void					SetVertexTransform		( u32 id, const USAffine3D& transform );
 	void					SetVertexTransform		( u32 id, const USMatrix4x4& transform );
 	
 	void					SetViewport				();

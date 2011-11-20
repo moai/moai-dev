@@ -352,7 +352,7 @@ int MOAILayer2D::_wndToWorld ( lua_State* L ) {
 	loc.mX = state.GetValue < float >( 2, 0.0f );
 	loc.mY = state.GetValue < float >( 3, 0.0f );
 
-	USAffine2D wndToWorld;
+	USAffine3D wndToWorld;
 	self->GetWndToWorldMtx ( wndToWorld );
 	wndToWorld.Transform ( loc );
 
@@ -379,7 +379,7 @@ int MOAILayer2D::_worldToWnd ( lua_State* L ) {
 	loc.mX = state.GetValue < float >( 2, 0.0f );
 	loc.mY = state.GetValue < float >( 3, 0.0f );
 
-	USAffine2D worldToWnd;
+	USAffine3D worldToWnd;
 	self->GetWorldToWndMtx ( worldToWnd );
 	worldToWnd.Transform ( loc );
 
@@ -417,16 +417,17 @@ void MOAILayer2D::Draw () {
 	gfxDevice.SetFrameBuffer ( this->mFrameBuffer );
 	
 	USRect viewportRect = viewport;
-	
-	if ( !this->IsOffscreen ()) {
-		USMatrix4x4 mtx;
-		mtx.Init ( this->mLocalToWorldMtx );
-		mtx.Append ( gfxDevice.GetWorldToWndMtx ( 1.0f, 1.0f ));
-		mtx.Transform ( viewportRect );
-	}
+
+	// TODO:	
+	//if ( !this->IsOffscreen ()) {
+	//	USMatrix4x4 mtx;
+	//	mtx.Init ( this->mLocalToWorldMtx );
+	//	mtx.Append ( gfxDevice.GetWorldToWndMtx ( 1.0f, 1.0f ));
+	//	mtx.Transform ( viewportRect );
+	//}
 	gfxDevice.SetViewport ( viewportRect );
 	
-	USAffine2D camera;
+	USAffine3D camera;
 	this->GetCameraMtx ( camera );
 	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_VIEW_TRANSFORM, camera );
 	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_PROJ_TRANSFORM, viewport.GetProjMtx ());
@@ -462,7 +463,7 @@ void MOAILayer2D::Draw () {
 		u32 totalResults = this->mPartition->GatherProps ( buffer, viewBounds, 0, MOAIProp::CAN_DRAW | MOAIProp::CAN_DRAW_DEBUG );
 		if ( !totalResults ) return;
 		
-		buffer.Sort ( this->mSortMode, camera );
+		buffer.Sort ( this->mSortMode );
 
 		// render the sorted list
 		for ( u32 i = 0; i < totalResults; ++i ) {
@@ -480,13 +481,13 @@ void MOAILayer2D::Draw () {
 }
 
 //----------------------------------------------------------------//
-void MOAILayer2D::GetCameraMtx ( USAffine2D& camera ) {
+void MOAILayer2D::GetCameraMtx ( USAffine3D& camera ) {
 
 	if ( this->mCamera ) {
 		camera = this->mCamera->GetLocalToWorldMtx ();
 		
-		camera.m [ USAffine2D::C2_R0 ] *= this->mParallax.mX;
-		camera.m [ USAffine2D::C2_R1 ] *= this->mParallax.mY;
+		camera.m [ USAffine3D::C2_R0 ] *= this->mParallax.mX;
+		camera.m [ USAffine3D::C2_R1 ] *= this->mParallax.mY;
 		
 		camera.Inverse ();
 	}
@@ -519,11 +520,11 @@ u32 MOAILayer2D::GetLocalFrame ( USRect& frame ) {
 }
 
 //----------------------------------------------------------------//
-void MOAILayer2D::GetWndToWorldMtx ( USAffine2D& wndToWorld ) {
+void MOAILayer2D::GetWndToWorldMtx ( USAffine3D& wndToWorld ) {
 
 	if ( this->mViewport ) {
 		
-		USAffine2D camera;
+		USAffine3D camera;
 		this->GetCameraMtx ( camera );
 		wndToWorld = this->mViewport->GetWndToWorldMtx ( camera );
 	}
@@ -533,11 +534,11 @@ void MOAILayer2D::GetWndToWorldMtx ( USAffine2D& wndToWorld ) {
 }
 
 //----------------------------------------------------------------//
-void MOAILayer2D::GetWorldToWndMtx ( USAffine2D& worldToWnd ) {
+void MOAILayer2D::GetWorldToWndMtx ( USAffine3D& worldToWnd ) {
 
 	if ( this->mViewport ) {
 		
-		USAffine2D camera;
+		USAffine3D camera;
 		this->GetCameraMtx ( camera );
 		worldToWnd = this->mViewport->GetWorldToWndMtx ( camera );
 	}

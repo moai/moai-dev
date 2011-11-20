@@ -41,10 +41,10 @@ public:
 	//----------------------------------------------------------------//
 	virtual bool		Bind						();
 	virtual bool		Contains					( u32 idx, MOAIDeckRemapper* remapper, const USVec2D& vec );
-	virtual void		Draw						( const USAffine2D& transform, u32 idx, MOAIDeckRemapper* remapper );
-	virtual void		Draw						( const USAffine2D& transform, MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1 );
-	virtual void		DrawDebug					( const USAffine2D& transform, u32 idx, MOAIDeckRemapper* remapper );
-	virtual void		DrawDebug					( const USAffine2D& transform, MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1 );
+	virtual void		Draw						( const USAffine3D& transform, u32 idx, MOAIDeckRemapper* remapper );
+	virtual void		Draw						( const USAffine3D& transform, MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1 );
+	virtual void		DrawDebug					( const USAffine3D& transform, u32 idx, MOAIDeckRemapper* remapper );
+	virtual void		DrawDebug					( const USAffine3D& transform, MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1 );
 	virtual void		GatherSurfaces				( u32 idx, MOAIDeckRemapper* remapper, MOAISurfaceSampler2D& sampler );
 	virtual void		GatherSurfaces				( MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1, MOAISurfaceSampler2D& sampler );
 	virtual USRect		GetBounds					( u32 idx, MOAIDeckRemapper* remapper );

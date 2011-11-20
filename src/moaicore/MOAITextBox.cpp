@@ -553,9 +553,9 @@ void MOAITextBox::OnDepNodeUpdate () {
 
 	if ( this->mYFlip ) {
 		
-		USAffine2D mtx;
+		USAffine3D mtx;
 		
-		mtx.ScRoTr ( 1.0f, -1.0f, 0.0f, 0.0f, ( this->mFrame.mYMin + this->mFrame.mYMax ));
+		mtx.ScRoTr ( 1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, ( this->mFrame.mYMin + this->mFrame.mYMax ), 0.0f );
 		this->mLocalToWorldMtx.Prepend ( mtx );
 		
 		this->mWorldToLocalMtx.Inverse ( this->mLocalToWorldMtx );

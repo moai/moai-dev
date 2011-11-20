@@ -5,6 +5,7 @@
 #define	USQUAD_H
 
 #include <uslsext/USAffine2D.h>
+#include <uslsext/USAffine3D.h>
 #include <uslsext/USMatrix3x3.h>
 #include <uslsext/USPlane.h>
 
@@ -36,6 +37,7 @@ public:
 	void		ReverseWinding		();
 	void		Scale				( float xScale, float yScale );
 	void		Transform			( const USAffine2D& transform );
+	void		Transform			( const USAffine3D& transform );
 	void		Transform			( const USMatrix3x3& transform );
 };
 

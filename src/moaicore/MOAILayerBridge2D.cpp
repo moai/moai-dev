@@ -60,7 +60,7 @@ void MOAILayerBridge2D::OnDepNodeUpdate () {
 	
 	this->mLocalToWorldMtx = this->mSourceTransform->GetLocalToWorldMtx ();
 	
-	USAffine2D mtx;
+	USAffine3D mtx;
 	
 	this->mSourceLayer->GetWorldToWndMtx ( mtx );
 	this->mLocalToWorldMtx.Append ( mtx );

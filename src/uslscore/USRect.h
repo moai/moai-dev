@@ -383,7 +383,7 @@ public:
 
 	//----------------------------------------------------------------//
 	template < typename PARAM_TYPE >
-	void GetCenter ( USMetaVec3D < TYPE >& center ) const {
+	void GetCenter ( USMetaVec3D < PARAM_TYPE >& center ) const {
 
 		center.mX = ( PARAM_TYPE )this->mXMin + (( PARAM_TYPE )( this->mXMax - this->mXMin ) / 2 );
 		center.mY = ( PARAM_TYPE )this->mYMin + (( PARAM_TYPE )( this->mYMax - this->mYMin ) / 2 );

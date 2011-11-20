@@ -26,9 +26,9 @@ class MOAITransform :
 	public MOAITransformBase {
 protected:
 
-	USVec2D			mPiv;
-	USVec2D			mLoc;
-	USVec2D			mScale;
+	USVec3D			mPiv;
+	USVec3D			mLoc;
+	USVec3D			mScale;
 	float			mDegrees;
 
 	//----------------------------------------------------------------//
@@ -82,9 +82,9 @@ public:
 		TOTAL_ATTR,
 	};
 	
-	GET_SET ( USVec2D, Piv, mPiv )
-	GET_SET ( USVec2D, Loc, mLoc )
-	GET_SET ( USVec2D, Scl, mScale )
+	GET_SET ( USVec3D, Piv, mPiv )
+	GET_SET ( USVec3D, Loc, mLoc )
+	GET_SET ( USVec3D, Scl, mScale )
 	GET_SET ( float, Rot, mDegrees )
 	
 	GET_SET ( float, XLoc, mLoc.mX )
@@ -92,8 +92,8 @@ public:
 	
 	//----------------------------------------------------------------//
 	bool				ApplyAttrOp						( u32 attrID, MOAIAttrOp& attrOp, u32 op );
-	const USAffine2D&	GetLocalToWorldMtx				();
-	const USAffine2D&	GetWorldToLocalMtx				();
+	const USAffine3D&	GetLocalToWorldMtx				();
+	const USAffine3D&	GetWorldToLocalMtx				();
 						MOAITransform					();
 						~MOAITransform					();
 	void				RegisterLuaClass				( MOAILuaState& state );

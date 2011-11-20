@@ -79,7 +79,7 @@ private:
 
 	u32								mTop;
 	USLeanArray < MOAIDebugLine >	mLineBuffer;
-	USAffine2D						mModelToWorldMtx;
+	USAffine3D						mModelToWorldMtx;
 
 	//----------------------------------------------------------------//
 	static int		_setStyle				( lua_State* L );
@@ -117,7 +117,7 @@ public:
 	void			SetPen					( u32 penColor, float penWidth, u32 penSpace = MODEL_SPACE );
 	void			SetStyle				( u32 styleID, u32 size, u32 color );
 	void			SetWorldMtx				();
-	void			SetWorldMtx				( const USAffine2D& mtx );
+	void			SetWorldMtx				( const USAffine3D& mtx );
 	void			ShowStyle				( u32 styleID, bool show );
 };
 

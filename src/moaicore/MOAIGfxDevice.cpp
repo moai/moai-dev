@@ -955,7 +955,7 @@ void MOAIGfxDevice::SetUVTransform () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::SetUVTransform ( const USAffine2D& transform ) {
+void MOAIGfxDevice::SetUVTransform ( const USAffine3D& transform ) {
 
 	USMatrix4x4 mtx;
 	mtx.Init ( transform );
@@ -1033,7 +1033,7 @@ void MOAIGfxDevice::SetVertexTransform ( u32 id ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::SetVertexTransform ( u32 id, const USAffine2D& transform ) {
+void MOAIGfxDevice::SetVertexTransform ( u32 id, const USAffine3D& transform ) {
 
 	USMatrix4x4 mtx;
 	mtx.Init ( transform );

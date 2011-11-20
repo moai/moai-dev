@@ -182,11 +182,11 @@ static void drawCircleShape(cpBody *body, cpCircleShape *circle, cpSpace *space)
 
 	cpVect center = circle->tc;
 	
-	USAffine2D mtx;
+	USAffine3D mtx;
 	mtx.ScRoTr (
-		( float )circle->r, ( float )circle->r,
-		( float )( body->a * 180.0 / M_PI ),
-		( float )center.x, ( float )center.y
+		( float )circle->r, ( float )circle->r, 1.0f,
+		0.0f, 0.0f, ( float )( body->a * 180.0 / M_PI ),
+		( float )center.x, ( float )center.y, 0.0f
 	);
 	
 	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, mtx );

@@ -37,15 +37,15 @@ public:
 	//----------------------------------------------------------------//
 	float			GetAspect				() const;
 	float			GetInvAspect			() const;
-	void			GetNormToWndMtx			( USAffine2D& normToWnd ) const;
-	USAffine2D		GetProjMtx				() const;
-	USAffine2D		GetProjMtxInv			() const;
+	void			GetNormToWndMtx			( USAffine3D& normToWnd ) const;
+	USAffine3D		GetProjMtx				() const;
+	USAffine3D		GetProjMtxInv			() const;
 	USRect			GetRect					() const;
 	USVec2D			GetScale				() const;
 	USVec2D			GetUnits				() const;
-	void			GetWndToNormMtx			( USAffine2D& wndToNorm ) const;
-	USAffine2D		GetWndToWorldMtx		( const USAffine2D& view ) const;
-	USAffine2D		GetWorldToWndMtx		( const USAffine2D& view ) const;
+	void			GetWndToNormMtx			( USAffine3D& wndToNorm ) const;
+	USAffine3D		GetWndToWorldMtx		( const USAffine3D& view ) const;
+	USAffine3D		GetWorldToWndMtx		( const USAffine3D& view ) const;
 					MOAIViewport			();
 					~MOAIViewport			();
 	void			RegisterLuaClass		( MOAILuaState& state );

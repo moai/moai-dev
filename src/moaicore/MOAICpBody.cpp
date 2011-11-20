@@ -815,14 +815,14 @@ void MOAICpBody::OnDepNodeUpdate () {
 		
 		float* m = this->mLocalToWorldMtx.m;
 		
-		m [ USAffine2D::C0_R0 ] = ( float )rot.x;
-		m [ USAffine2D::C0_R1 ] = ( float )rot.y;
+		m [ USAffine3D::C0_R0 ] = ( float )rot.x;
+		m [ USAffine3D::C0_R1 ] = ( float )rot.y;
 
-		m [ USAffine2D::C1_R0 ] = -( float )rot.y;
-		m [ USAffine2D::C1_R1 ] = ( float )rot.x;
+		m [ USAffine3D::C1_R0 ] = -( float )rot.y;
+		m [ USAffine3D::C1_R1 ] = ( float )rot.x;
 
-		m [ USAffine2D::C2_R0 ] = ( float )pos.x;
-		m [ USAffine2D::C2_R1 ] = ( float )pos.y;
+		m [ USAffine3D::C2_R0 ] = ( float )pos.x;
+		m [ USAffine3D::C2_R1 ] = ( float )pos.y;
 		
 		this->mWorldToLocalMtx.Inverse ( this->mLocalToWorldMtx );
 	}

@@ -39,6 +39,12 @@ public:
 	}
 
 	//----------------------------------------------------------------//
+	TYPE Determinant () const {
+
+		return	m [ C0_R0 ] * m [ C1_R1 ] - m [ C0_R1 ] * m [ C1_R0 ];
+	}
+
+	//----------------------------------------------------------------//
 	void GetBasis ( USMetaVec2D < TYPE >& xAxis, USMetaVec2D < TYPE >& yAxis ) const {
 	
 		xAxis.mX = m [ C0_R0 ];
@@ -49,13 +55,7 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	TYPE Determinant () const {
-
-		return	m [ C0_R0 ] * m [ C1_R1 ] - m [ C0_R1 ] * m [ C1_R0 ];
-	}
-
-	//----------------------------------------------------------------//
-	TYPE GetElement ( int c, int r ) const {
+	inline TYPE GetElement ( int c, int r ) const {
 
 		return m [ ( c * 3 ) + r ];
 	}
@@ -63,7 +63,7 @@ public:
 	//----------------------------------------------------------------//
 	USMetaVec2D < TYPE > GetHeading () const {
 
-		USVec2D heading;
+		USMetaVec2D < TYPE > heading;
 	
 		heading.mX = m [ C0_R0 ];
 		heading.mY = m [ C0_R1 ];
@@ -140,14 +140,7 @@ public:
 	template < typename PARAM_TYPE >
 	void Init ( const USMetaAffine2D < PARAM_TYPE >& mtx ) {
 
-		m [ C0_R0 ]	= ( TYPE )mtx.m [ C0_R0 ];
-		m [ C0_R1 ]	= ( TYPE )mtx.m [ C0_R1 ];
-		
-		m [ C1_R0 ]	= ( TYPE )mtx.m [ C1_R0 ];
-		m [ C1_R1 ]	= ( TYPE )mtx.m [ C1_R1 ];
-		
-		m [ C2_R0 ]	= ( TYPE )mtx.m [ C2_R0 ];
-		m [ C2_R1 ]	= ( TYPE )mtx.m [ C2_R1 ];
+		memcpy ( m, mtx.m, sizeof ( m ));
 	}
 
 	//----------------------------------------------------------------//
@@ -530,9 +523,9 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	inline TYPE TransformY ( TYPE x ) const {
+	inline TYPE TransformY ( TYPE y ) const {
 		
-		return ( m [ C1_R1 ] * x ) + ( m [ C2_R1 ]);
+		return ( m [ C1_R1 ] * y ) + ( m [ C2_R1 ]);
 	}
 
 	//----------------------------------------------------------------//

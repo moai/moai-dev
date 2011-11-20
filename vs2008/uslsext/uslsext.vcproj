@@ -370,6 +370,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\uslsext\USAffine3D.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\uslsext\USBox.cpp"
 				>
 			</File>

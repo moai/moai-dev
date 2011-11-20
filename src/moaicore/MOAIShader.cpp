@@ -128,7 +128,7 @@ void MOAIShaderUniform::SetType ( u32 type ) {
 		case UNIFORM_TRANSFORM: {
 			this->mBuffer.Init ( 16 );
 			
-			USAffine2D mtx;
+			USAffine3D mtx;
 			mtx.Ident ();
 			this->SetValue ( mtx );
 			break;
@@ -176,7 +176,7 @@ void MOAIShaderUniform::SetValue ( const MOAIAttrOp& attrOp ) {
 			break;
 		}
 		case UNIFORM_TRANSFORM: {
-			USAffine2D* affine = attrOp.GetValue < USAffine2D >();
+			USAffine3D* affine = attrOp.GetValue < USAffine3D >();
 			if ( affine ) {
 				this->SetValue ( *affine );
 			}
@@ -199,7 +199,7 @@ void MOAIShaderUniform::SetValue ( const USColorVec& value ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIShaderUniform::SetValue ( const USAffine2D& value ) {
+void MOAIShaderUniform::SetValue ( const USAffine3D& value ) {
 	
 	float m [ 16 ];
 	

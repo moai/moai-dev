@@ -56,7 +56,7 @@ private:
 	void		SetValue					( int value);
 	void		SetValue					( const MOAIAttrOp& attrOp );
 	void		SetValue					( const USColorVec& value );
-	void		SetValue					( const USAffine2D& value );
+	void		SetValue					( const USAffine3D& value );
 	void		SetValue					( const USMatrix4x4& value );
 
 public:

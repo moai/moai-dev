@@ -73,7 +73,7 @@ private:
 	
 	//----------------------------------------------------------------//
 	void			AffirmPartition			();
-	void			GetCameraMtx			( USAffine2D& camera );
+	void			GetCameraMtx			( USAffine3D& camera );
 	bool			IsOffscreen				();
 
 public:
@@ -84,8 +84,8 @@ public:
 	void			Draw					();
 	float			GetFitting				( USRect& worldRect, float hPad, float vPad );
 	u32				GetLocalFrame			( USRect& frame );
-	void			GetWndToWorldMtx		( USAffine2D& wndToWorld );
-	void			GetWorldToWndMtx		( USAffine2D& worldToWnd );
+	void			GetWndToWorldMtx		( USAffine3D& wndToWorld );
+	void			GetWorldToWndMtx		( USAffine3D& worldToWnd );
 					MOAILayer2D				();
 					~MOAILayer2D			();
 	void			RegisterLuaClass		( MOAILuaState& state );

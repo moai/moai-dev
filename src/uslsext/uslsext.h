@@ -8,6 +8,7 @@
 
 #include <uslsext/USAdapterInfo.h>
 #include <uslsext/USAffine2D.h>
+#include <uslsext/USAffine3D.h>
 #include <uslsext/USBinarySearch.h>
 #include <uslsext/USBox.h>
 #include <uslsext/USCgt.h>

@@ -308,7 +308,7 @@ void MOAIDebugLines::SetWorldMtx () {
 }
 
 //----------------------------------------------------------------//
-void MOAIDebugLines::SetWorldMtx ( const USAffine2D& mtx ) {
+void MOAIDebugLines::SetWorldMtx ( const USAffine3D& mtx ) {
 
 	this->mModelToWorldMtx = mtx;
 }

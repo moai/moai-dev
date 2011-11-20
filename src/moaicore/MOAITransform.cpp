@@ -21,7 +21,7 @@
 int MOAITransform::_addLoc ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITransform, "UNN" )
 	
-	USVec2D loc = self->GetLoc ();
+	USVec3D loc = self->GetLoc ();
 	
 	loc.mX += state.GetValue < float >( 2, 0.0f );
 	loc.mY += state.GetValue < float >( 3, 0.0f );
@@ -44,7 +44,7 @@ int MOAITransform::_addLoc ( lua_State* L ) {
 int MOAITransform::_addPiv ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITransform, "UNN" )
 	
-	USVec2D piv = self->GetLoc ();
+	USVec3D piv = self->GetLoc ();
 	
 	piv.mX += state.GetValue < float >( 2, 0.0f );
 	piv.mY += state.GetValue < float >( 3, 0.0f );
@@ -87,7 +87,7 @@ int MOAITransform::_addRot ( lua_State* L ) {
 int MOAITransform::_addScl ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITransform, "UNN" )
 	
-	USVec2D scl = self->GetScl ();
+	USVec3D scl = self->GetScl ();
 	
 	scl.mX += state.GetValue < float >( 2, 0.0f );
 	scl.mY += state.GetValue < float >( 3, 0.0f );
@@ -177,11 +177,11 @@ int	MOAITransform::_getScl ( lua_State* L ) {
 int MOAITransform::_modelToWorld ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITransform, "UNN" )
 
-	USVec2D loc;
+	USVec3D loc;
 	loc.mX = state.GetValue < float >( 2, 0.0f );
 	loc.mY = state.GetValue < float >( 3, 0.0f );
 
-	USAffine2D modelToWorld = self->GetLocalToWorldMtx ();
+	USAffine3D modelToWorld = self->GetLocalToWorldMtx ();
 	modelToWorld.Transform ( loc );
 
 	lua_pushnumber ( state, loc.mX );
@@ -673,7 +673,7 @@ int MOAITransform::_seekScl ( lua_State* L ) {
 int MOAITransform::_setLoc ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITransform, "UNN" )
 	
-	USVec2D loc;
+	USVec3D loc;
 	
 	loc.mX = state.GetValue < float >( 2, 0.0f );
 	loc.mY = state.GetValue < float >( 3, 0.0f );
@@ -716,7 +716,7 @@ int MOAITransform::_setParent ( lua_State* L ) {
 int MOAITransform::_setPiv ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITransform, "UNN" )
 	
-	USVec2D piv;
+	USVec3D piv;
 	
 	piv.mX = state.GetValue < float >( 2, 0.0f );
 	piv.mY = state.GetValue < float >( 3, 0.0f );
@@ -758,7 +758,7 @@ int MOAITransform::_setRot ( lua_State* L ) {
 int MOAITransform::_setScl ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITransform, "UNN" )
 	
-	USVec2D scl;
+	USVec3D scl;
 	
 	scl.mX = state.GetValue < float >( 2, 0.0f );
 	scl.mY = state.GetValue < float >( 3, 0.0f );
@@ -782,11 +782,11 @@ int MOAITransform::_setScl ( lua_State* L ) {
 int MOAITransform::_worldToModel ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITransform, "UNN" )
 
-	USVec2D loc;
+	USVec3D loc;
 	loc.mX = state.GetValue < float >( 2, 0.0f );
 	loc.mY = state.GetValue < float >( 3, 0.0f );
 
-	USAffine2D worldToModel = self->GetWorldToLocalMtx ();
+	USAffine3D worldToModel = self->GetWorldToLocalMtx ();
 	worldToModel.Transform ( loc );
 
 	lua_pushnumber ( state, loc.mX );
@@ -837,54 +837,59 @@ void MOAITransform::BuildTransforms ( float xOff, float yOff, float xStretch, fl
 	this->mLocalToWorldMtx.ScRoTr (
 		this->mScale.mX * xStretch,
 		this->mScale.mY * yStretch,
+		1.0f,
+		0.0f,
+		0.0f,
 		( float )D2R * this->mDegrees,
 		this->mLoc.mX + xOff,
-		this->mLoc.mY + yOff
+		this->mLoc.mY + yOff,
+		0.0f
 	);
 	
-	const USAffine2D* inherit = this->GetLinkedValue < USAffine2D >( MOAITransformAttr::Pack ( INHERIT_TRANSFORM ));
+	const USAffine3D* inherit = this->GetLinkedValue < USAffine3D >( MOAITransformAttr::Pack ( INHERIT_TRANSFORM ));
 	if ( inherit ) {
 		this->mLocalToWorldMtx.Append ( *inherit );
 	}
 	else {
 	
-		inherit = this->GetLinkedValue < USAffine2D >( MOAITransformAttr::Pack ( INHERIT_LOC ));
+		inherit = this->GetLinkedValue < USAffine3D >( MOAITransformAttr::Pack ( INHERIT_LOC ));
 		if ( inherit ) {
 			
-			USVec2D loc = this->mLoc;
+			USVec3D loc = this->mLoc;
 			inherit->Transform ( loc );
 			
-			this->mLocalToWorldMtx.m [ USAffine2D::C2_R0 ] = loc.mX;
-			this->mLocalToWorldMtx.m [ USAffine2D::C2_R1 ] = loc.mY;
+			this->mLocalToWorldMtx.m [ USAffine3D::C3_R0 ] = loc.mX;
+			this->mLocalToWorldMtx.m [ USAffine3D::C3_R1 ] = loc.mY;
+			this->mLocalToWorldMtx.m [ USAffine3D::C3_R2 ] = loc.mZ;
 		}
 	}
 	
 	if (( this->mPiv.mX != 0.0f ) || ( this->mPiv.mY != 0.0f )) {
 		
-		USAffine2D pivot;
-		pivot.Translate ( -this->mPiv.mX, -this->mPiv.mY );
+		USAffine3D pivot;
+		pivot.Translate ( -this->mPiv.mX, -this->mPiv.mY, 0.0f );
 		this->mLocalToWorldMtx.Prepend ( pivot );
 	}
 	this->mWorldToLocalMtx.Inverse ( this->mLocalToWorldMtx );
 }
 
 //----------------------------------------------------------------//
-const USAffine2D& MOAITransform::GetLocalToWorldMtx () {
+const USAffine3D& MOAITransform::GetLocalToWorldMtx () {
 
 	return this->mLocalToWorldMtx;
 }
 
 //----------------------------------------------------------------//
-const USAffine2D& MOAITransform::GetWorldToLocalMtx () {
+const USAffine3D& MOAITransform::GetWorldToLocalMtx () {
 
 	return this->mWorldToLocalMtx;
 }
 
 //----------------------------------------------------------------//
 MOAITransform::MOAITransform () :
-	mPiv ( 0.0f, 0.0f ),
-	mLoc ( 0.0f, 0.0f ),
-	mScale ( 1.0f, 1.0f ),
+	mPiv ( 0.0f, 0.0f, 0.0f ),
+	mLoc ( 0.0f, 0.0f, 0.0f ),
+	mScale ( 1.0f, 1.0f, 1.0f ),
 	mDegrees ( 0.0f ) {
 	
 	RTTI_BEGIN

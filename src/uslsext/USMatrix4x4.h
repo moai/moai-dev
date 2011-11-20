@@ -196,6 +196,31 @@ public:
 
 	//----------------------------------------------------------------//
 	template < typename PARAM_TYPE >
+	void Init (	const USMetaAffine3D < PARAM_TYPE >& mtx ) {
+
+		m[C0_R0]	= ( TYPE )mtx.m[AffineElem3D::C0_R0];
+		m[C0_R1]	= ( TYPE )mtx.m[AffineElem3D::C0_R1];
+		m[C0_R2]	= ( TYPE )mtx.m[AffineElem3D::C0_R2];
+		m[C0_R3]	= 0;
+		
+		m[C1_R0]	= ( TYPE )mtx.m[AffineElem3D::C1_R0];
+		m[C1_R1]	= ( TYPE )mtx.m[AffineElem3D::C1_R1];
+		m[C1_R2]	= ( TYPE )mtx.m[AffineElem3D::C1_R2];
+		m[C1_R3]	= 0;
+		
+		m[C2_R0]	= ( TYPE )mtx.m[AffineElem3D::C2_R0];
+		m[C2_R1]	= ( TYPE )mtx.m[AffineElem3D::C2_R1];
+		m[C2_R2]	= ( TYPE )mtx.m[AffineElem3D::C2_R2];
+		m[C2_R3]	= 0;
+		
+		m[C3_R0]	= ( TYPE )mtx.m[AffineElem3D::C3_R0];
+		m[C3_R1]	= ( TYPE )mtx.m[AffineElem3D::C3_R1];
+		m[C3_R2]	= ( TYPE )mtx.m[AffineElem3D::C3_R2];
+		m[C3_R3]	= 1;
+	}
+
+	//----------------------------------------------------------------//
+	template < typename PARAM_TYPE >
 	void Init (	const USMetaMatrix3x3 < PARAM_TYPE >& mtx ) {
 
 		m[C0_R0]	= ( TYPE )mtx.m[MatrixElem2D::C0_R0];
@@ -673,79 +698,6 @@ public:
 		m[C3_R0]	= 1;
 		m[C3_R1]	= 0;
 		m[C3_R2]	= 0;
-		m[C3_R3]	= 0;
-	}
-
-	//----------------------------------------------------------------//
-	void ShearX ( TYPE yx, TYPE zx ) {
-
-		m[C0_R0]	= 1;
-		m[C0_R1]	= 0;
-		m[C0_R2]	= 0;
-		m[C0_R3]	= 0;
-		
-		m[C1_R0]	= yx;
-		m[C1_R1]	= 0;
-		m[C1_R2]	= 0;
-		m[C1_R3]	= 0;
-		
-		m[C2_R0]	= zx;
-		m[C2_R1]	= 0;
-		m[C2_R2]	= 0;
-		m[C2_R3]	= 0;
-		
-		m[C3_R0]	= 1;
-		m[C3_R1]	= 0;
-		m[C3_R2]	= 0;
-		m[C3_R3]	= 0;
-	}
-
-	//----------------------------------------------------------------//
-	void ShearY ( TYPE xy, TYPE zy ) {
-
-		m[C0_R0]	= 1;
-		m[C0_R1]	= xy;
-		m[C0_R2]	= 0;
-		m[C0_R3]	= 0;
-		
-		m[C1_R0]	= 1;
-		m[C1_R1]	= 0;
-		m[C1_R2]	= 0;
-		m[C1_R3]	= 0;
-		
-		m[C2_R0]	= 1;
-		m[C2_R1]	= zy;
-		m[C2_R2]	= 0;
-		m[C2_R3]	= 0;
-		
-		m[C3_R0]	= 1;
-		m[C3_R1]	= 0;
-		m[C3_R2]	= 0;
-		m[C3_R3]	= 0;
-	}
-
-	//----------------------------------------------------------------//
-	void ShearZ ( TYPE xz, TYPE yz ) {
-
-		m[C0_R0]	= 1;
-		m[C0_R1]	= 0;
-		m[C0_R2]	= xz;
-		m[C0_R3]	= 0;
-		
-		m[C1_R0]	= 1;
-		m[C1_R1]	= 0;
-		m[C1_R2]	= yz;
-		m[C1_R3]	= 0;
-		
-		m[C2_R0]	= 1;
-		m[C2_R1]	= 0;
-		m[C2_R2]	= 0;
-		m[C2_R3]	= 0;
-		
-		m[C3_R0]	= 1;
-		m[C3_R1]	= 0;
-		m[C3_R2]	= 0;
-		m[C3_R3]	= 0;
 	}
 
 	//----------------------------------------------------------------//
@@ -944,7 +896,7 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	void Translate ( TYPE x, TYPE	y, TYPE z ) {
+	void Translate ( TYPE x, TYPE y, TYPE z ) {
 
 		m[C0_R0]	= 1;
 		m[C0_R1]	= 0;

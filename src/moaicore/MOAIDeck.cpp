@@ -49,14 +49,14 @@ bool MOAIDeck::Contains ( u32 idx, MOAIDeckRemapper* remapper, const USVec2D& ve
 }
 
 //----------------------------------------------------------------//
-void MOAIDeck::Draw ( const USAffine2D& transform, u32 idx, MOAIDeckRemapper* remapper ) {
+void MOAIDeck::Draw ( const USAffine3D& transform, u32 idx, MOAIDeckRemapper* remapper ) {
 	UNUSED ( transform );
 	UNUSED ( idx );
 	UNUSED ( remapper );
 }
 
 //----------------------------------------------------------------//
-void MOAIDeck::Draw ( const USAffine2D& transform, MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1 ) {
+void MOAIDeck::Draw ( const USAffine3D& transform, MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1 ) {
 	UNUSED ( transform );
 	UNUSED ( grid );
 	UNUSED ( remapper );
@@ -66,14 +66,14 @@ void MOAIDeck::Draw ( const USAffine2D& transform, MOAIGrid& grid, MOAIDeckRemap
 }
 
 //----------------------------------------------------------------//
-void MOAIDeck::DrawDebug ( const USAffine2D& transform, u32 idx, MOAIDeckRemapper* remapper ) {
+void MOAIDeck::DrawDebug ( const USAffine3D& transform, u32 idx, MOAIDeckRemapper* remapper ) {
 	UNUSED ( transform );
 	UNUSED ( idx );
 	UNUSED ( remapper );
 }
 
 //----------------------------------------------------------------//
-void MOAIDeck::DrawDebug ( const USAffine2D& transform, MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1 ) {
+void MOAIDeck::DrawDebug ( const USAffine3D& transform, MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1 ) {
 	UNUSED ( transform );
 	UNUSED ( grid );
 	UNUSED ( remapper );

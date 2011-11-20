@@ -22,7 +22,7 @@
 int MOAITransformBase::_getWorldDir ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITransformBase, "U" )
 
-	USVec2D direction = self->mLocalToWorldMtx.GetHeading ();
+	USVec3D direction = self->mLocalToWorldMtx.GetHeading ();
 
 	lua_pushnumber ( state, direction.mX );
 	lua_pushnumber ( state, direction.mY );
@@ -41,7 +41,7 @@ int MOAITransformBase::_getWorldDir ( lua_State* L ) {
 int MOAITransformBase::_getWorldLoc ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITransformBase, "U" )
 
-	USVec2D loc = self->mLocalToWorldMtx.GetTranslation ();
+	USVec3D loc = self->mLocalToWorldMtx.GetTranslation ();
 
 	lua_pushnumber ( state, loc.mX );
 	lua_pushnumber ( state, loc.mY );
@@ -77,7 +77,7 @@ int MOAITransformBase::_getWorldRot ( lua_State* L ) {
 int MOAITransformBase::_getWorldScl ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITransformBase, "U" )
 
-	USVec2D scale = self->mLocalToWorldMtx.GetStretch ();
+	USVec3D scale = self->mLocalToWorldMtx.GetStretch ();
 	
 	lua_pushnumber ( state, scale.mX );
 	lua_pushnumber ( state, scale.mY );
@@ -98,15 +98,15 @@ bool MOAITransformBase::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 		switch ( UNPACK_ATTR ( attrID )) {
 			
 			case ATTR_WORLD_X_LOC:
-				attrOp.Apply ( this->mLocalToWorldMtx.m [ USAffine2D::C2_R0 ], op, MOAINode::ATTR_READ );
+				attrOp.Apply ( this->mLocalToWorldMtx.m [ USAffine3D::C2_R0 ], op, MOAINode::ATTR_READ );
 				return true;
 			
 			case ATTR_WORLD_Y_LOC:
-				attrOp.Apply ( this->mLocalToWorldMtx.m [ USAffine2D::C2_R1 ], op, MOAINode::ATTR_READ );
+				attrOp.Apply ( this->mLocalToWorldMtx.m [ USAffine3D::C2_R1 ], op, MOAINode::ATTR_READ );
 				return true;
 				
 			case ATTR_WORLD_Z_ROT: {
-				float rot = ( float )( atan2 ( this->mLocalToWorldMtx.m [ USAffine2D::C0_R0 ], this->mLocalToWorldMtx.m [ USAffine2D::C0_R1 ]) * R2D );
+				float rot = ( float )( atan2 ( this->mLocalToWorldMtx.m [ USAffine3D::C0_R0 ], this->mLocalToWorldMtx.m [ USAffine3D::C0_R1 ]) * R2D );
 				attrOp.Apply ( rot, op, MOAINode::ATTR_READ );
 				return true;
 			}
@@ -114,8 +114,8 @@ bool MOAITransformBase::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 				
 				USVec2D axis;
 			
-				axis.mX =	this->mLocalToWorldMtx.m [ USAffine2D::C0_R0 ];
-				axis.mY =	this->mLocalToWorldMtx.m [ USAffine2D::C0_R1 ];
+				axis.mX =	this->mLocalToWorldMtx.m [ USAffine3D::C0_R0 ];
+				axis.mY =	this->mLocalToWorldMtx.m [ USAffine3D::C0_R1 ];
 			
 				attrOp.Apply ( axis.Length (), op, MOAINode::ATTR_READ );
 				return true;
@@ -124,14 +124,14 @@ bool MOAITransformBase::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 				
 				USVec2D axis;
 			
-				axis.mX =	this->mLocalToWorldMtx.m [ USAffine2D::C1_R0 ];
-				axis.mY =	this->mLocalToWorldMtx.m [ USAffine2D::C1_R1 ];
+				axis.mX =	this->mLocalToWorldMtx.m [ USAffine3D::C1_R0 ];
+				axis.mY =	this->mLocalToWorldMtx.m [ USAffine3D::C1_R1 ];
 				
 				attrOp.Apply ( axis.Length (), op, MOAINode::ATTR_READ );
 				return true;
 			}
 			case TRANSFORM_TRAIT:
-				attrOp.Apply < USAffine2D >( &this->mLocalToWorldMtx, op, MOAINode::ATTR_READ );
+				attrOp.Apply < USAffine3D >( &this->mLocalToWorldMtx, op, MOAINode::ATTR_READ );
 				return true;
 		}
 	}
@@ -139,25 +139,25 @@ bool MOAITransformBase::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 }
 
 //----------------------------------------------------------------//
-const USAffine2D& MOAITransformBase::GetLocalToWorldMtx () {
+const USAffine3D& MOAITransformBase::GetLocalToWorldMtx () {
 
 	return this->mLocalToWorldMtx;
 }
 
 //----------------------------------------------------------------//
-const USAffine2D* MOAITransformBase::GetLocTrait () {
+const USAffine3D* MOAITransformBase::GetLocTrait () {
 
 	return &this->mLocalToWorldMtx;
 }
 
 //----------------------------------------------------------------//
-const USAffine2D* MOAITransformBase::GetTransformTrait () {
+const USAffine3D* MOAITransformBase::GetTransformTrait () {
 
 	return &this->mLocalToWorldMtx;
 }
 
 //----------------------------------------------------------------//
-const USAffine2D& MOAITransformBase::GetWorldToLocalMtx () {
+const USAffine3D& MOAITransformBase::GetWorldToLocalMtx () {
 
 	return this->mWorldToLocalMtx;
 }
