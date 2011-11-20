@@ -1207,6 +1207,30 @@ void MOAIGfxDevice::UpdateUVMtx () {
 //----------------------------------------------------------------//
 void MOAIGfxDevice::WriteQuad ( USVec2D* vtx, USVec2D* uv ) {
 
+	USVec3D vtx3D [ 4 ];
+	
+	vtx3D [ 0 ].mX = vtx [ 0 ].mX;
+	vtx3D [ 0 ].mY = vtx [ 0 ].mY;
+	vtx3D [ 0 ].mZ = 0.0f;
+
+	vtx3D [ 1 ].mX = vtx [ 1 ].mX;
+	vtx3D [ 1 ].mY = vtx [ 1 ].mY;
+	vtx3D [ 1 ].mZ = 0.0f;
+	
+	vtx3D [ 2 ].mX = vtx [ 2 ].mX;
+	vtx3D [ 2 ].mY = vtx [ 2 ].mY;
+	vtx3D [ 2 ].mZ = 0.0f;
+	
+	vtx3D [ 3 ].mX = vtx [ 3 ].mX;
+	vtx3D [ 3 ].mY = vtx [ 3 ].mY;
+	vtx3D [ 3 ].mZ = 0.0f;
+
+	this->WriteQuad ( vtx3D, uv );
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDevice::WriteQuad ( USVec3D* vtx, USVec2D* uv ) {
+
 	if ( this->mCpuVertexTransform ) {
 		this->mCpuVertexTransformMtx.TransformQuad ( vtx );
 	}

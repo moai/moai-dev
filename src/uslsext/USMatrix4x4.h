@@ -848,6 +848,16 @@ public:
 	}
 
 	//----------------------------------------------------------------//
+	template < typename PARAM_TYPE>
+	void TransformQuad ( USMetaVec3D < PARAM_TYPE >* quad ) const {
+	
+		this->Transform ( quad [ 0 ]);
+		this->Transform ( quad [ 1 ]);
+		this->Transform ( quad [ 2 ]);
+		this->Transform ( quad [ 3 ]);
+	}
+
+	//----------------------------------------------------------------//
 	// Transforms w/o translation
 	template < typename PARAM_TYPE >
 	void TransformVec (	USMetaVec2D < PARAM_TYPE >& point ) const {

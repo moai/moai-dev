@@ -204,9 +204,10 @@ void MOAIBox2DDebugDraw::DrawAABB ( b2AABB* aabb, const b2Color& c ) {
 //----------------------------------------------------------------//
 void MOAIBox2DDebugDraw::WriteVtx ( MOAIGfxDevice& gfxDevice, float x, float y ) {
 
-	USVec2D vtx;
+	USVec3D vtx;
 	vtx.mX = x * this->mScale;
 	vtx.mY = y * this->mScale;
+	vtx.mZ = 0.0f;
 	gfxDevice.WriteVtx ( vtx );
 	gfxDevice.WritePenColor4b ();
 }

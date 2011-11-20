@@ -37,32 +37,32 @@ SUPPRESS_EMPTY_FILE_WARNING
 #define CONSTRAINT_COLOR 0.5f, 1.0f, 0.5f
 
 static const float circleVAR[] = {
-	 0.0000f,  1.0000f,
-	 0.2588f,  0.9659f,
-	 0.5000f,  0.8660f,
-	 0.7071f,  0.7071f,
-	 0.8660f,  0.5000f,
-	 0.9659f,  0.2588f,
-	 1.0000f,  0.0000f,
-	 0.9659f, -0.2588f,
-	 0.8660f, -0.5000f,
-	 0.7071f, -0.7071f,
-	 0.5000f, -0.8660f,
-	 0.2588f, -0.9659f,
-	 0.0000f, -1.0000f,
-	-0.2588f, -0.9659f,
-	-0.5000f, -0.8660f,
-	-0.7071f, -0.7071f,
-	-0.8660f, -0.5000f,
-	-0.9659f, -0.2588f,
-	-1.0000f, -0.0000f,
-	-0.9659f,  0.2588f,
-	-0.8660f,  0.5000f,
-	-0.7071f,  0.7071f,
-	-0.5000f,  0.8660f,
-	-0.2588f,  0.9659f,
-	 0.0000f,  1.0000f,
-	 0.0f, 0.0f, // For an extra line to see the rotation.
+	 0.0000f,  1.0000f, 0.0f,
+	 0.2588f,  0.9659f, 0.0f,
+	 0.5000f,  0.8660f, 0.0f,
+	 0.7071f,  0.7071f, 0.0f,
+	 0.8660f,  0.5000f, 0.0f,
+	 0.9659f,  0.2588f, 0.0f,
+	 1.0000f,  0.0000f, 0.0f,
+	 0.9659f, -0.2588f, 0.0f,
+	 0.8660f, -0.5000f, 0.0f,
+	 0.7071f, -0.7071f, 0.0f,
+	 0.5000f, -0.8660f, 0.0f,
+	 0.2588f, -0.9659f, 0.0f,
+	 0.0000f, -1.0000f, 0.0f,
+	-0.2588f, -0.9659f, 0.0f,
+	-0.5000f, -0.8660f, 0.0f,
+	-0.7071f, -0.7071f, 0.0f,
+	-0.8660f, -0.5000f, 0.0f,
+	-0.9659f, -0.2588f, 0.0f,
+	-1.0000f, -0.0000f, 0.0f,
+	-0.9659f,  0.2588f, 0.0f,
+	-0.8660f,  0.5000f, 0.0f,
+	-0.7071f,  0.7071f, 0.0f,
+	-0.5000f,  0.8660f, 0.0f,
+	-0.2588f,  0.9659f, 0.0f,
+	 0.0000f,  1.0000f, 0.0f,
+	 0.0f, 0.0f, 0.0f, // For an extra line to see the rotation.
 };
 
 static const float pillVAR[] = {
@@ -96,26 +96,26 @@ static const float pillVAR[] = {
 };
 
 static const GLfloat springVAR[] = {
-	0.00f, 0.0f,
-	0.20f, 0.0f,
-	0.25f, 3.0f,
-	0.30f,-6.0f,
-	0.35f, 6.0f,
-	0.40f,-6.0f,
-	0.45f, 6.0f,
-	0.50f,-6.0f,
-	0.55f, 6.0f,
-	0.60f,-6.0f,
-	0.65f, 6.0f,
-	0.70f,-3.0f,
-	0.75f, 6.0f,
-	0.80f, 0.0f,
-	1.00f, 0.0f,
+	0.00f, 0.0f, 0.0f,
+	0.20f, 0.0f, 0.0f,
+	0.25f, 3.0f, 0.0f,
+	0.30f,-6.0f, 0.0f,
+	0.35f, 6.0f, 0.0f,
+	0.40f,-6.0f, 0.0f,
+	0.45f, 6.0f, 0.0f,
+	0.50f,-6.0f, 0.0f,
+	0.55f, 6.0f, 0.0f,
+	0.60f,-6.0f, 0.0f,
+	0.65f, 6.0f, 0.0f,
+	0.70f,-3.0f, 0.0f,
+	0.75f, 6.0f, 0.0f,
+	0.80f, 0.0f, 0.0f,
+	1.00f, 0.0f, 0.0f,
 };
 
-static const int circleVAR_count = sizeof(circleVAR)/sizeof(GLfloat)/2;
+static const int circleVAR_count = sizeof(circleVAR)/sizeof(GLfloat)/3;
 static const int pillVAR_count = sizeof(pillVAR)/sizeof(GLfloat)/3;
-static const int springVAR_count = sizeof(springVAR)/sizeof(GLfloat)/2;
+static const int springVAR_count = sizeof(springVAR)/sizeof(GLfloat)/3;
 
 //----------------------------------------------------------------//
 static void draw_shape_verts ( const float* verts, u32 count, u32 color, bool drawFilled ) {
@@ -247,10 +247,10 @@ static void drawSegmentShape ( cpBody* body, cpSegmentShape* seg, cpSpace* space
 		gfxDevice.SetPrimType ( GL_LINES );
 		gfxDevice.SetPenColor ( USColor::PackRGBA ( LINE_COLOR, 1.0f ));
 		
-		gfxDevice.WriteVtx (( float )a.x, ( float )a.y );
+		gfxDevice.WriteVtx (( float )a.x, ( float )a.y, 0.0f );
 		gfxDevice.WritePenColor4b ();
 		
-		gfxDevice.WriteVtx (( float )b.x, ( float )b.y );
+		gfxDevice.WriteVtx (( float )b.x, ( float )b.y, 0.0f );
 		gfxDevice.WritePenColor4b ();
 		
 		gfxDevice.Flush ();
@@ -434,16 +434,16 @@ static void drawBB ( cpShape *shape, void *unused ) {
 	gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_WORLD, MOAIGfxDevice::VTX_STAGE_PROJ );
 	gfxDevice.SetPrimType ( GL_LINE_LOOP );
 
-	gfxDevice.WriteVtx (( float )shape->bb.l, ( float )shape->bb.b );
+	gfxDevice.WriteVtx (( float )shape->bb.l, ( float )shape->bb.b, 0.0f );
 	gfxDevice.WritePenColor4b ();
 	
-	gfxDevice.WriteVtx (( float )shape->bb.l, ( float )shape->bb.t );
+	gfxDevice.WriteVtx (( float )shape->bb.l, ( float )shape->bb.t, 0.0f );
 	gfxDevice.WritePenColor4b ();
 	
-	gfxDevice.WriteVtx (( float )shape->bb.r, ( float )shape->bb.t );
+	gfxDevice.WriteVtx (( float )shape->bb.r, ( float )shape->bb.t, 0.0f );
 	gfxDevice.WritePenColor4b ();
 	
-	gfxDevice.WriteVtx (( float )shape->bb.r, ( float )shape->bb.b );
+	gfxDevice.WriteVtx (( float )shape->bb.r, ( float )shape->bb.b, 0.0f );
 	gfxDevice.WritePenColor4b ();
 
 	gfxDevice.Flush ();

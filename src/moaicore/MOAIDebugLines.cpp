@@ -50,9 +50,11 @@ void MOAIDebugLine::SetVerts ( float x0, float y0, float x1, float y1 ) {
 
 	this->mVtx [ 0 ].mX = x0;
 	this->mVtx [ 0 ].mY = y0;
+	this->mVtx [ 0 ].mZ = 0.0f;
 	
 	this->mVtx [ 1 ].mX = x1;
 	this->mVtx [ 1 ].mY = y1;
+	this->mVtx [ 1 ].mZ = 0.0f;
 }
 
 //================================================================//
@@ -140,7 +142,7 @@ void MOAIDebugLines::Draw () {
 	gfxDevice.SetShaderPreset ( MOAIShaderMgr::LINE_SHADER );
 	
 	gfxDevice.SetPrimType ( GL_LINES );
-	gfxDevice.SetVertexPreset ( MOAIVertexFormatMgr::XYC );
+	gfxDevice.SetVertexPreset ( MOAIVertexFormatMgr::XYZC );
 	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM );
 	
 	for ( u32 i = 0; i < this->mTop; ++i ) {

@@ -230,6 +230,7 @@ public:
 	void					SoftReleaseResources	( u32 age );
 	
 	void					WriteQuad				( USVec2D* vtx, USVec2D* uv );
+	void					WriteQuad				( USVec3D* vtx, USVec2D* uv );
 	
 	//----------------------------------------------------------------//
 	template < typename TYPE >
@@ -284,9 +285,24 @@ public:
 	//----------------------------------------------------------------//
 	inline void WriteVtx ( float x, float y ) {
 		
-		USVec2D vtx;
+		USVec3D vtx;
 		vtx.mX = x;
 		vtx.mY = y;
+		vtx.mZ = 0.0f;
+		
+		if ( this->mCpuVertexTransform ) {
+			this->mCpuVertexTransformMtx.Transform ( vtx );	
+		}
+		this->Write ( vtx );
+	}
+	
+	//----------------------------------------------------------------//
+	inline void WriteVtx ( float x, float y, float z ) {
+		
+		USVec3D vtx;
+		vtx.mX = x;
+		vtx.mY = y;
+		vtx.mZ = z;
 		
 		if ( this->mCpuVertexTransform ) {
 			this->mCpuVertexTransformMtx.Transform ( vtx );	
@@ -296,6 +312,15 @@ public:
 	
 	//----------------------------------------------------------------//
 	inline void WriteVtx ( USVec2D vtx ) {
+		
+		if ( this->mCpuVertexTransform ) {
+			this->mCpuVertexTransformMtx.Transform ( vtx );	
+		}
+		this->WriteVtx ( vtx.mX, vtx.mY, 0.0f );
+	}
+	
+	//----------------------------------------------------------------//
+	inline void WriteVtx ( USVec3D vtx ) {
 		
 		if ( this->mCpuVertexTransform ) {
 			this->mCpuVertexTransformMtx.Transform ( vtx );	

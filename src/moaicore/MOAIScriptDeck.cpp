@@ -79,7 +79,7 @@ bool MOAIScriptDeck::Bind () {
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	
 	gfxDevice.SetTexture ();
-	gfxDevice.SetVertexPreset ( MOAIVertexFormatMgr::XYC );
+	gfxDevice.SetVertexPreset ( MOAIVertexFormatMgr::XYZC );
 
 	return true;
 }

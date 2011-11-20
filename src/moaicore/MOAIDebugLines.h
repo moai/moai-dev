@@ -33,7 +33,7 @@ private:
 
 	friend class MOAIDebugLines;
 
-	USVec2D		mVtx [ 2 ];
+	USVec3D		mVtx [ 2 ];
 	u32			mColor;
 	float		mWidth;
 	

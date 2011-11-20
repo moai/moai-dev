@@ -419,12 +419,12 @@ void MOAILayer2D::Draw () {
 	USRect viewportRect = viewport;
 
 	// TODO:	
-	//if ( !this->IsOffscreen ()) {
-	//	USMatrix4x4 mtx;
-	//	mtx.Init ( this->mLocalToWorldMtx );
-	//	mtx.Append ( gfxDevice.GetWorldToWndMtx ( 1.0f, 1.0f ));
-	//	mtx.Transform ( viewportRect );
-	//}
+	if ( !this->IsOffscreen ()) {
+		USMatrix4x4 mtx;
+		mtx.Init ( this->mLocalToWorldMtx );
+		mtx.Append ( gfxDevice.GetWorldToWndMtx ( 1.0f, 1.0f ));
+		mtx.Transform ( viewportRect );
+	}
 	gfxDevice.SetViewport ( viewportRect );
 	
 	USAffine3D camera;
@@ -464,7 +464,7 @@ void MOAILayer2D::Draw () {
 		if ( !totalResults ) return;
 		
 		buffer.Sort ( this->mSortMode );
-
+		
 		// render the sorted list
 		for ( u32 i = 0; i < totalResults; ++i ) {
 			MOAIProp* prop = buffer.GetResultUnsafe ( i );

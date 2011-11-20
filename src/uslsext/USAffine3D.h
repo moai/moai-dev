@@ -250,7 +250,6 @@ public:
 		m[C0_R2]	=	( mtx1.m[C0_R2] * mtx2.m[C0_R0] )	+
 						( mtx1.m[C1_R2] * mtx2.m[C0_R1] )	+
 						( mtx1.m[C2_R2] * mtx2.m[C0_R2] );
-		
 
 		m[C1_R0]	=	( mtx1.m[C0_R0] * mtx2.m[C1_R0] )	+
 						( mtx1.m[C1_R0] * mtx2.m[C1_R1] )	+
@@ -278,15 +277,18 @@ public:
 		
 		m[C3_R0]	=	( mtx1.m[C0_R0] * mtx2.m[C3_R0] )	+
 						( mtx1.m[C1_R0] * mtx2.m[C3_R1] )	+
-						( mtx1.m[C2_R0] * mtx2.m[C3_R2] );
+						( mtx1.m[C2_R0] * mtx2.m[C3_R2] )	+
+						( mtx1.m[C3_R0] );
 		
 		m[C3_R1]	=	( mtx1.m[C0_R1] * mtx2.m[C3_R0] )	+
 						( mtx1.m[C1_R1] * mtx2.m[C3_R1] )	+
-						( mtx1.m[C2_R1] * mtx2.m[C3_R2] );
+						( mtx1.m[C2_R1] * mtx2.m[C3_R2] )	+
+						( mtx1.m[C3_R1] );
 		
 		m[C3_R2]	=	( mtx1.m[C0_R2] * mtx2.m[C3_R0] )	+
 						( mtx1.m[C1_R2] * mtx2.m[C3_R1] )	+
-						( mtx1.m[C2_R2] * mtx2.m[C3_R2] );
+						( mtx1.m[C2_R2] * mtx2.m[C3_R2] )	+
+						( mtx1.m[C3_R2] );
 	}
 
 	//----------------------------------------------------------------//
