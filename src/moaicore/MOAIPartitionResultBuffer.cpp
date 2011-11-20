@@ -82,13 +82,12 @@ void MOAIPartitionResultBuffer::Reset () {
 //----------------------------------------------------------------//
 void MOAIPartitionResultBuffer::Sort ( u32 mode ) {
 
-	USAffine2D ident;
-	ident.Ident ();
+	USVec3D scale ( 1.0f, 1.0f, 1.0f );
 	this->Sort ( mode, ident );
 }
 
 //----------------------------------------------------------------//
-void MOAIPartitionResultBuffer::Sort ( u32 mode, const USAffine2D& mtx ) {
+void MOAIPartitionResultBuffer::Sort ( u32 mode, const USVec3D& scale ) {
 
 	switch ( mode ) {
 		
@@ -108,28 +107,28 @@ void MOAIPartitionResultBuffer::Sort ( u32 mode, const USAffine2D& mtx ) {
 		
 		case SORT_X_ASCENDING:
 			for ( u32 i = 0; i < this->mTotalResults; ++i ) {
-				float x = mtx.TransformX ( this->mMainBuffer [ i ].mData->GetWorldXLoc ());
+				float x = this->mMainBuffer [ i ].mData->GetWorldXLoc ();
 				this->mMainBuffer [ i ].mKey = USFloat::FloatToIntKey ( x );
 			}
 			break;
 		
 		case SORT_X_DESCENDING:
 			for ( u32 i = 0; i < this->mTotalResults; ++i ) {
-				float x = mtx.TransformX ( this->mMainBuffer [ i ].mData->GetWorldXLoc ());
+				float x = this->mMainBuffer [ i ].mData->GetWorldXLoc ();
 				this->mMainBuffer [ i ].mKey = USFloat::FloatToIntKey ( -x );
 			}
 			break;
 		
 		case SORT_Y_ASCENDING:
 			for ( u32 i = 0; i < this->mTotalResults; ++i ) {
-				float y = mtx.TransformY ( this->mMainBuffer [ i ].mData->GetWorldYLoc ());
+				float y = this->mMainBuffer [ i ].mData->GetWorldYLoc ();
 				this->mMainBuffer [ i ].mKey = USFloat::FloatToIntKey ( y );
 			}
 			break;
 		
 		case SORT_Y_DESCENDING:
 			for ( u32 i = 0; i < this->mTotalResults; ++i ) {
-				float y = mtx.TransformY ( this->mMainBuffer [ i ].mData->GetWorldYLoc ());
+				float y = this->mMainBuffer [ i ].mData->GetWorldYLoc ();
 				this->mMainBuffer [ i ].mKey = USFloat::FloatToIntKey ( -y );
 			}
 			break;

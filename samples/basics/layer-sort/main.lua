@@ -10,12 +10,8 @@ viewport = MOAIViewport.new ()
 viewport:setSize ( 320, 480 )
 viewport:setScale ( 320, 480 )
 
-camera = MOAITransform.new ()
-camera:moveRot ( 180, 3 )
-
 layer = MOAILayer2D.new ()
 layer:setViewport ( viewport )
-layer:setCamera ( camera )
 MOAISim.pushRenderPass ( layer )
 
 gfxQuad = MOAIGfxQuad2D.new ()

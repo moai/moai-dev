@@ -54,7 +54,7 @@ public:
 	void			PushResultsList					( lua_State* L );
 	void			Reset							();
 	void			Sort							( u32 mode );
-	void			Sort							( u32 mode, const USAffine2D& mtx );
+	void			Sort							( u32 mode, const USVec3D& scale );
 	
 	//----------------------------------------------------------------//
 	inline MOAIProp* GetResult ( u32 idx ) {
