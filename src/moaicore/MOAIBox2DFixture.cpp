@@ -247,7 +247,7 @@ u32 MOAIBox2DFixture::LoadVerts ( MOAILuaState& state, int idx, b2Vec2* verts, u
 	u32 total = 0;
 	for ( ; state.TableItrNext ( itr ) && ( total < max ); ++idx ) {
 		
-		float val = state.GetValue < float >( -1, 0 );
+		float val = state.GetValue < float >( -1, 0 ); // TODO: add error checking
 		
 		if ( idx & 0x01 ) {
 			verts [ total ].y = val * unitsToMeters;

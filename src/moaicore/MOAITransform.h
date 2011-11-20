@@ -87,6 +87,9 @@ public:
 	GET_SET ( USVec2D, Scl, mScale )
 	GET_SET ( float, Rot, mDegrees )
 	
+	GET_SET ( float, XLoc, mLoc.mX )
+	GET_SET ( float, YLoc, mLoc.mY )
+	
 	//----------------------------------------------------------------//
 	bool				ApplyAttrOp						( u32 attrID, MOAIAttrOp& attrOp, u32 op );
 	const USAffine2D&	GetLocalToWorldMtx				();

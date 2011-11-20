@@ -524,6 +524,18 @@ public:
 	}
 
 	//----------------------------------------------------------------//
+	inline TYPE TransformX ( TYPE x ) const {
+		
+		return ( m [ C0_R0 ] * x ) + ( m [ C2_R0 ]);
+	}
+
+	//----------------------------------------------------------------//
+	inline TYPE TransformY ( TYPE x ) const {
+		
+		return ( m [ C1_R1 ] * x ) + ( m [ C2_R1 ]);
+	}
+
+	//----------------------------------------------------------------//
 	void Translate ( const USMetaVec2D < TYPE >& trn ) {
 
 		this->Translate ( trn.mX, trn.mY );

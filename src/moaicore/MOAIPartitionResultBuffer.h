@@ -35,9 +35,12 @@ public:
 
 	enum {
 		SORT_NONE,
-		SORT_PRIORITY,
-		SORT_X_AXIS,
-		SORT_Y_AXIS,
+		SORT_PRIORITY_ASCENDING,
+		SORT_PRIORITY_DESCENDING,
+		SORT_X_ASCENDING,
+		SORT_X_DESCENDING,
+		SORT_Y_ASCENDING,
+		SORT_Y_DESCENDING,
 	};
 
 	GET ( u32, TotalResults, mTotalResults )
@@ -51,6 +54,7 @@ public:
 	void			PushResultsList					( lua_State* L );
 	void			Reset							();
 	void			Sort							( u32 mode );
+	void			Sort							( u32 mode, const USAffine2D& mtx );
 	
 	//----------------------------------------------------------------//
 	inline MOAIProp* GetResult ( u32 idx ) {

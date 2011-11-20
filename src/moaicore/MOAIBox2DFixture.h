@@ -21,8 +21,6 @@ class MOAIBox2DFixture :
 	public MOAIBox2DPrim {
 private:
 
-	static const u32 MAX_POLY_VERTS = 1024;
-
 	b2Fixture*		mFixture;
 
 	MOAILuaLocal	mCollisionHandler;
