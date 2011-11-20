@@ -225,8 +225,6 @@ public class MoaiView extends GLSurfaceView {
 			AKUSetViewSize ( mWidth, mHeight );
 			AKURender ();
 
-			gl.glFlush ();
-		
 			AKUSetContext ( mAku );
 			AKUUpdate ();
 		}
@@ -237,7 +235,6 @@ public class MoaiView extends GLSurfaceView {
 
 			MoaiActivity.log ( "MoaiRenderer onSurfaceChanged called" );
 
-			gl.glViewport ( 0, 0, width, height );
 			mWidth = width;
 			mHeight = height;
 		}
