@@ -203,7 +203,7 @@
 	}
 	
 	//----------------------------------------------------------------//
-	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUSetDeviceProperties ( JNIEnv* env, jclass obj, jstring jappName, jstring jabi, jstring jdevBrand, jstring jdevName, jstring jdevManufacturer, jstring jdevModel, jstring jdevProduct, jstring josBrand, jstring josVersion, jstring judid ) {
+	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUSetDeviceProperties ( JNIEnv* env, jclass obj, jstring jappName, jstring jappId, jstring jappVersion, jstring jabi, jstring jdevBrand, jstring jdevName, jstring jdevManufacturer, jstring jdevModel, jstring jdevProduct, jstring josBrand, jstring josVersion, jstring judid ) {
 
 		// get the environment
 		MOAIEnvironment& moaiEnv = MOAIEnvironment::Get ();
@@ -213,6 +213,8 @@
 
 		// convert jstrings to cstrings
 		GET_STRING ( jappName, appName );
+		GET_STRING ( jappId, appId );
+		GET_STRING ( jappVersion, appVersion );
 		GET_STRING ( jabi, abi );
 		GET_STRING ( jdevBrand, devBrand );
 		GET_STRING ( jdevName, devName );
@@ -225,6 +227,8 @@
 	
 		// set environment properties
 		moaiEnv.SetAppDisplayName 	( appName );
+		moaiEnv.SetAppID 			( appId );
+		moaiEnv.SetAppVersion		( appVersion );
 		moaiEnv.SetCPUABI 			( abi );
 		moaiEnv.SetDevBrand 		( devBrand );
 		moaiEnv.SetDevName 			( devName );
@@ -237,6 +241,8 @@
 
 		// release jstrings
 		RELEASE_STRING ( jappName, appName );
+		RELEASE_STRING ( jappId, appId );
+		RELEASE_STRING ( jappVersion, appVersion );
 		RELEASE_STRING ( jabi, abi );
 		RELEASE_STRING ( jdevBrand, devBrand );
 		RELEASE_STRING ( jdevName, devName );
