@@ -88,7 +88,9 @@ private:
 
 	//----------------------------------------------------------------//
 	static int		_alert									( lua_State* L );
+	static int		_composeTweet							( lua_State* L );
 	static int		_canMakePayments						( lua_State* L );
+	static int		_canTweet								( lua_State* L );
 	static int		_getAppIconBadgeNumber					( lua_State* L );
 	static int		_getDirectoryInDomain					( lua_State* L );
 	static int		_getNotificationThatStartedApp			( lua_State* L );

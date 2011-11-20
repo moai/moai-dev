@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #import <StoreKit/StoreKit.h>
+#import <Twitter/Twitter.h>
 #import <moaiext-iphone/MOAIApp.h>
 #import <moaiext-iphone/MOAIStoreKitListener.h>
 #import <moaiext-iphone/NSData+MOAILib.h>
@@ -116,6 +117,68 @@ int MOAIApp::_canMakePayments ( lua_State* L ) {
 	lua_pushboolean ( state, result );
 	
 	return 1;
+}
+
+//----------------------------------------------------------------//
+/**	@name	canTweet
+ @text	Verify that app has permission to Tweet.
+ 
+ @out	bool canTweet
+ */
+int MOAIApp::_canTweet ( lua_State* L ) {
+	MOAILuaState state ( L );
+	
+	BOOL result = [ TWTweetComposeViewController canSendTweet ];
+	lua_pushboolean ( state, result );
+	
+	return 1;
+}
+
+//----------------------------------------------------------------//
+/**	@name	composeTweet
+	@text	Opens a view to compose a tweet
+ 
+	@opt	string text
+	@opt	string url
+	@out	bool canMakePayments
+ */
+int MOAIApp::_composeTweet ( lua_State* L ) {	
+	
+	MOAILuaState state ( L );
+	
+	cc8* text	= state.GetValue < cc8* >( 1, "" );
+	cc8* url	= state.GetValue < cc8* >( 2, "" );
+	
+	if ( ![ TWTweetComposeViewController canSendTweet ]) return 0;
+	
+	UIWindow* window = [[ UIApplication sharedApplication ] keyWindow ];
+	UIViewController* rootVC = [ window rootViewController ];
+	
+	// Set up the built-in twitter composition view controller.
+    TWTweetComposeViewController *tweetViewController = [[ TWTweetComposeViewController alloc ] init ];
+    
+    // Set the initial tweet text. See the framework for additional properties that can be set.
+	if ( text )
+		[ tweetViewController setInitialText: [ NSString stringWithUTF8String:text ]];
+	
+	if ( url )
+		[ tweetViewController addURL: [ NSURL URLWithString:[ NSString stringWithUTF8String:url ]]]; 
+    
+    // Create the completion handler block.
+    [ tweetViewController setCompletionHandler:^( TWTweetComposeViewControllerResult result ) {
+	                
+        // Dismiss the tweet composition view controller.
+		if  ( rootVC != nil ) {
+			[ rootVC dismissModalViewControllerAnimated:YES ];
+		}
+    }];
+    
+    // Present the tweet composition view controller modally.
+	if  ( rootVC != nil ) {
+		[ rootVC presentModalViewController:tweetViewController animated:YES ];
+	}
+	
+	return 0;
 }
 
 //----------------------------------------------------------------//
@@ -767,6 +830,8 @@ void MOAIApp::RegisterLuaClass ( MOAILuaState& state ) {
 	luaL_Reg regTable[] = {
 		{ "alert",								_alert },
 		{ "canMakePayments",					_canMakePayments },
+		{ "canTweet",							_canTweet },
+		{ "composeTweet",						_composeTweet },
 		{ "getAppIconBadgeNumber",				_getAppIconBadgeNumber },
 		{ "getDirectoryInDomain",				_getDirectoryInDomain },
 		{ "getNotificationThatStartedApp",		_getNotificationThatStartedApp },
