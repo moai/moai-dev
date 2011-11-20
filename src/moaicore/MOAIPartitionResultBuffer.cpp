@@ -83,7 +83,7 @@ void MOAIPartitionResultBuffer::Reset () {
 void MOAIPartitionResultBuffer::Sort ( u32 mode ) {
 
 	USVec3D scale ( 1.0f, 1.0f, 1.0f );
-	this->Sort ( mode, ident );
+	this->Sort ( mode, scale );
 }
 
 //----------------------------------------------------------------//

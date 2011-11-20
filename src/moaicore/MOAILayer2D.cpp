@@ -462,7 +462,7 @@ void MOAILayer2D::Draw () {
 		u32 totalResults = this->mPartition->GatherProps ( buffer, viewBounds, 0, MOAIProp::CAN_DRAW | MOAIProp::CAN_DRAW_DEBUG );
 		if ( !totalResults ) return;
 		
-		buffer.Sort ( this->mSortMode, camera );
+		buffer.Sort ( this->mSortMode );
 
 		// render the sorted list
 		for ( u32 i = 0; i < totalResults; ++i ) {
