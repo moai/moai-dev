@@ -765,7 +765,8 @@ MOAITexture::MOAITexture () :
 	mFrameBuffer ( 0 ),
 	mDataSize ( 0 ),
 	mIsRenewable ( false ),
-	mTransform ( DEFAULT_TRANSFORM ) {
+	mTransform ( DEFAULT_TRANSFORM ),
+	mIsDirty ( false ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAILuaObject )
@@ -785,17 +786,21 @@ void MOAITexture::OnBind () {
 	if ( !this->mGLTexID ) return;
 
 	glBindTexture ( GL_TEXTURE_2D, this->mGLTexID );
-	glEnable ( GL_TEXTURE_2D );
 	
-	if ( !MOAIGfxDevice::Get ().IsProgrammable ()) {
-		glTexEnvf ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
+	if ( this->mIsDirty ) {
+	
+		if ( !MOAIGfxDevice::Get ().IsProgrammable ()) {
+			glTexEnvf ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
+		}
+		
+		glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, this->mWrap );
+		glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, this->mWrap );
+		
+		glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, this->mMinFilter );
+		glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, this->mMagFilter );
+		
+		this->mIsDirty = false;
 	}
-	
-	glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, this->mWrap );
-	glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, this->mWrap );
-	
-	glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, this->mMinFilter );
-	glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, this->mMagFilter );
 }
 
 //----------------------------------------------------------------//
@@ -877,6 +882,9 @@ void MOAITexture::OnLoad () {
 			// done with the loader entirely
 			delete this->mLoader;
 			this->mLoader = 0;
+			
+			// refresh tex params on next bind
+			this->mIsDirty = true;
 		}
 	}
 }
@@ -982,10 +990,13 @@ void MOAITexture::SetFilter ( int min, int mag ) {
 
 	this->mMinFilter = min;
 	this->mMagFilter = mag;
+	
+	this->mIsDirty = true;
 }
 
 //----------------------------------------------------------------//
 void MOAITexture::SetWrap ( int wrap ) {
 
 	this->mWrap = wrap;
+	this->mIsDirty = true;
 }
