@@ -760,7 +760,7 @@ MOAITexture::MOAITexture () :
 	mHeight ( 0 ),
 	mMinFilter ( GL_LINEAR ),
 	mMagFilter ( GL_NEAREST ),
-	mWrap ( GL_REPEAT ),
+	mWrap ( GL_CLAMP_TO_EDGE ),
 	mLoader ( 0 ),
 	mFrameBuffer ( 0 ),
 	mDataSize ( 0 ),
