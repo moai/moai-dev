@@ -142,7 +142,7 @@ void MOAIDebugLines::Draw () {
 	gfxDevice.SetShaderPreset ( MOAIShaderMgr::LINE_SHADER );
 	
 	gfxDevice.SetPrimType ( GL_LINES );
-	gfxDevice.SetVertexPreset ( MOAIVertexFormatMgr::XYZC );
+	gfxDevice.SetVertexPreset ( MOAIVertexFormatMgr::XYZWC );
 	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM );
 	
 	for ( u32 i = 0; i < this->mTop; ++i ) {

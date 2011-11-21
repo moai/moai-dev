@@ -29,7 +29,7 @@ protected:
 	USVec3D			mPiv;
 	USVec3D			mLoc;
 	USVec3D			mScale;
-	float			mDegrees;
+	USVec3D			mRot;		// Euler angles, in degrees
 
 	//----------------------------------------------------------------//
 	static int	_addLoc			( lua_State* L );
@@ -59,7 +59,7 @@ protected:
 	static int	_worldToModel	( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void	BuildTransforms			( float xOff, float yOff, float xStretch, float yStretch );
+	void	BuildTransforms			( float xOff, float yOff, float zOff, float xStretch, float yStretch, float zStretch );
 	void	OnDepNodeUpdate			();
 
 public:
@@ -85,10 +85,11 @@ public:
 	GET_SET ( USVec3D, Piv, mPiv )
 	GET_SET ( USVec3D, Loc, mLoc )
 	GET_SET ( USVec3D, Scl, mScale )
-	GET_SET ( float, Rot, mDegrees )
+	GET_SET ( USVec3D, Rot, mRot )
 	
 	GET_SET ( float, XLoc, mLoc.mX )
 	GET_SET ( float, YLoc, mLoc.mY )
+	GET_SET ( float, ZLoc, mLoc.mZ )
 	
 	//----------------------------------------------------------------//
 	bool				ApplyAttrOp						( u32 attrID, MOAIAttrOp& attrOp, u32 op );
@@ -100,9 +101,10 @@ public:
 	void				RegisterLuaFuncs				( MOAILuaState& state );
 	void				SerializeIn						( MOAILuaState& state, MOAIDeserializer& serializer );
 	void				SerializeOut					( MOAILuaState& state, MOAISerializer& serializer );
-	void				SetLoc							( float x, float y );
-	void				SetPiv							( float x, float y );
-	void				SetScl							( float x, float y );
+	void				SetLoc							( float x, float y, float z );
+	void				SetPiv							( float x, float y, float z );
+	void				SetRot							( float x, float y, float z );
+	void				SetScl							( float x, float y, float z );
 };
 
 #endif

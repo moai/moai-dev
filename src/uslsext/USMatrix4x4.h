@@ -437,39 +437,88 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	template < typename PARAM_TYPE >
-	PARAM_TYPE Project ( USMetaVec3D < PARAM_TYPE >& vec ) const {
+	void Perspective ( TYPE xfov, TYPE aspect, TYPE zn, TYPE zf ) {
 
-		PARAM_TYPE x;
-		PARAM_TYPE y;
-		PARAM_TYPE z;
-		PARAM_TYPE w;
+		float xScale = Cot ( xfov / 2.0f );
+		float yScale = xScale * aspect;
 		
-		x =		(( PARAM_TYPE )m[C0_R0] *	vec.mX ) +
-				(( PARAM_TYPE )m[C1_R0] *	vec.mY ) +
-				(( PARAM_TYPE )m[C2_R0] *	vec.mZ ) +
-				(( PARAM_TYPE )m[C3_R0] );
+		// xScale      0           0                  0
+		// 0         yScale        0                  0
+		// 0           0    (zf+zn)/(zn-zf)  (2*zn*zf)/(zn-zf)
+		// 0           0          -1                  0
 		
-		y =		(( PARAM_TYPE )m[C0_R1] *	vec.mX ) +
-				(( PARAM_TYPE )m[C1_R1] *	vec.mY ) +
-				(( PARAM_TYPE )m[C2_R1] *	vec.mZ ) +
-				(( PARAM_TYPE )m[C3_R1] );
+		m [ C0_R0 ] = xScale;
+		m [ C0_R1 ] = 0;
+		m [ C0_R2 ] = 0;
+		m [ C0_R3 ] = 0;
 		
-		z =		(( PARAM_TYPE )m[C0_R2] *	vec.mX ) +
-				(( PARAM_TYPE )m[C1_R2] *	vec.mY ) +
-				(( PARAM_TYPE )m[C2_R2] *	vec.mZ ) +
-				(( PARAM_TYPE )m[C3_R2] );
+		m [ C1_R0 ] = 0;
+		m [ C1_R1 ] = yScale;
+		m [ C1_R2 ] = 0;
+		m [ C1_R3 ] = 0;
 		
-		w =		(( PARAM_TYPE )m[C0_R3] *	vec.mX ) +
-				(( PARAM_TYPE )m[C1_R3] *	vec.mY ) +
-				(( PARAM_TYPE )m[C2_R3] *	vec.mZ ) +
-				(( PARAM_TYPE )m[C3_R3] );
+		m [ C2_R0 ] = 0;
+		m [ C2_R1 ] = 0;
+		m [ C2_R2 ] = ( zf + zn ) / ( zn - zf );
+		m [ C2_R3 ] = -1;
 		
-		vec.mX = x;
-		vec.mY = y;
-		vec.mZ = z;
-
-		return w;
+		m [ C3_R0 ] = 0;
+		m [ C3_R1 ] = 0;
+		m [ C3_R2 ] = ( 2 * zn * zf ) / ( zn - zf );
+		m [ C3_R3 ] = 0;
+		
+		
+		
+		
+		//// xScale     0          0              0
+		//// 0        yScale       0              0
+		//// 0        0        zf/(zn-zf)        -1
+		//// 0        0        zn*zf/(zn-zf)      0
+		//
+		//m [ C0_R0 ] = xScale;
+		//m [ C1_R0 ] = 0.0f;
+		//m [ C2_R0 ] = 0.0f;
+		//m [ C3_R0 ] = 0.0f;
+		//
+		//m [ C0_R1 ] = 0.0f;
+		//m [ C1_R1 ] = yScale;
+		//m [ C2_R1 ] = 0.0f;
+		//m [ C3_R1 ] = 0.0f;
+		//
+		//m [ C0_R2 ] = 0.0f;
+		//m [ C1_R2 ] = 0.0f;
+		//m [ C2_R2 ] = zf / ( zn - zf );
+		//m [ C3_R2 ] = ( zn * zf ) / ( zn - zf );
+		//
+		//m [ C0_R3 ] = 0.0f;
+		//m [ C1_R3 ] = 0.0f;
+		//m [ C2_R3 ] = -1.0f;
+		//m [ C3_R3 ] = 0.0f;
+		
+		//// xScale     0          0              0
+		//// 0        yScale       0              0
+		//// 0        0        zf/(zn-zf)        -1
+		//// 0        0        zn*zf/(zn-zf)      0
+		//
+		//m [ C0_R0 ] = xScale;
+		//m [ C0_R1 ] = 0.0f;
+		//m [ C0_R2 ] = 0.0f;
+		//m [ C0_R3 ] = 0.0f;
+		//
+		//m [ C1_R0 ] = 0.0f;
+		//m [ C1_R1 ] = yScale;
+		//m [ C1_R2 ] = 0.0f;
+		//m [ C1_R3 ] = 0.0f;
+		//
+		//m [ C2_R0 ] = 0.0f;
+		//m [ C2_R1 ] = 0.0f;
+		//m [ C2_R2 ] = zf / ( zn - zf );
+		//m [ C2_R3 ] = ( zn * zf ) / ( zn - zf );
+		//
+		//m [ C3_R0 ] = 0.0f;
+		//m [ C3_R1 ] = 0.0f;
+		//m [ C3_R2 ] = -1.0f;
+		//m [ C3_R3 ] = 0.0f;
 	}
 
 	//----------------------------------------------------------------//
@@ -747,6 +796,41 @@ public:
 
 	//----------------------------------------------------------------//
 	template < typename PARAM_TYPE >
+	void Transform ( USMetaVec4D < PARAM_TYPE >& vec ) const {
+
+		PARAM_TYPE x;
+		PARAM_TYPE y;
+		PARAM_TYPE z;
+		PARAM_TYPE w;
+		
+		x =		(( PARAM_TYPE )m[C0_R0] * vec.mX ) +
+				(( PARAM_TYPE )m[C1_R0] * vec.mY ) +
+				(( PARAM_TYPE )m[C2_R0] * vec.mZ ) +
+				(( PARAM_TYPE )m[C3_R0] * vec.mW );
+		
+		y =		(( PARAM_TYPE )m[C0_R1] * vec.mX ) +
+				(( PARAM_TYPE )m[C1_R1] * vec.mY ) +
+				(( PARAM_TYPE )m[C2_R1] * vec.mZ ) +
+				(( PARAM_TYPE )m[C3_R1] * vec.mW );
+		
+		z =		(( PARAM_TYPE )m[C0_R2] * vec.mX ) +
+				(( PARAM_TYPE )m[C1_R2] * vec.mY ) +
+				(( PARAM_TYPE )m[C2_R2] * vec.mZ ) +
+				(( PARAM_TYPE )m[C3_R2] * vec.mW );
+		
+		w =		(( PARAM_TYPE )m[C0_R3] * vec.mX ) +
+				(( PARAM_TYPE )m[C1_R3] * vec.mY ) +
+				(( PARAM_TYPE )m[C2_R3] * vec.mZ ) +
+				(( PARAM_TYPE )m[C3_R3] * vec.mW );
+		
+		vec.mX = x;
+		vec.mY = y;
+		vec.mZ = z;
+		vec.mW = w;
+	}
+
+	//----------------------------------------------------------------//
+	template < typename PARAM_TYPE >
 	void Transform ( USMetaRect < PARAM_TYPE >& rect ) const {
 
 		USVec2D point;
@@ -849,7 +933,7 @@ public:
 
 	//----------------------------------------------------------------//
 	template < typename PARAM_TYPE>
-	void TransformQuad ( USMetaVec3D < PARAM_TYPE >* quad ) const {
+	void TransformQuad ( USMetaVec4D < PARAM_TYPE >* quad ) const {
 	
 		this->Transform ( quad [ 0 ]);
 		this->Transform ( quad [ 1 ]);

@@ -430,7 +430,10 @@ void MOAILayer2D::Draw () {
 	USAffine3D camera;
 	this->GetCameraMtx ( camera );
 	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_VIEW_TRANSFORM, camera );
-	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_PROJ_TRANSFORM, viewport.GetProjMtx ());
+	
+	USMatrix4x4 proj;
+	this->GetProjectionMtx ( proj );
+	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_PROJ_TRANSFORM, proj );
 	
 	if ( this->mShowDebugLines ) {
 		
@@ -451,7 +454,7 @@ void MOAILayer2D::Draw () {
 	
 	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM );
 	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_VIEW_TRANSFORM, camera );
-	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_PROJ_TRANSFORM, viewport.GetProjMtx ());
+	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_PROJ_TRANSFORM, proj );
 	
 	if ( this->mPartition ) {
 		
@@ -517,6 +520,18 @@ u32 MOAILayer2D::GetLocalFrame ( USRect& frame ) {
 		return MOAIProp::BOUNDS_OK;
 	}
 	return MOAIProp::BOUNDS_EMPTY;
+}
+
+//----------------------------------------------------------------//
+void MOAILayer2D::GetProjectionMtx ( USMatrix4x4& proj ) {
+
+	proj.Perspective ( 90.0f * ( float )D2R, 1.0f, 0.0f, 1000.0f );
+
+	if ( this->mViewport ) {
+		USMatrix4x4 mtx;
+		mtx.Init ( this->mViewport->GetProjMtx ());
+		proj.Append ( mtx );
+	}
 }
 
 //----------------------------------------------------------------//

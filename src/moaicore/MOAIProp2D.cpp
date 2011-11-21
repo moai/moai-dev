@@ -709,8 +709,8 @@ void MOAIProp2D::OnDepNodeUpdate () {
 		frameStatus = BOUNDS_EMPTY;
 	}
 	
-	USVec2D offset ( 0.0f, 0.0f );
-	USVec2D stretch ( 1.0f, 1.0f );
+	USVec3D offset ( 0.0f, 0.0f, 0.0f );
+	USVec3D stretch ( 1.0f, 1.0f, 1.0f );
 	
 	// select the frame
 	USRect frame = this->mFrame;
@@ -741,7 +741,7 @@ void MOAIProp2D::OnDepNodeUpdate () {
 	}
 	
 	// inherit parent and offset transforms (and compute the inverse)
-	this->BuildTransforms ( offset.mX, offset.mY, stretch.mX, stretch.mY );
+	this->BuildTransforms ( offset.mX, offset.mY, offset.mZ, stretch.mX, stretch.mY, stretch.mZ );
 	
 	// update the prop location in the partition
 	// use the local frame; world transform will match it to target frame

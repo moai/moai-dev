@@ -66,10 +66,10 @@ int MOAITransform::_addPiv ( lua_State* L ) {
 int MOAITransform::_addRot ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITransform, "UN" )
 	
-	float d = self->GetRot ();
-	d += state.GetValue < float >( 2, 0.0f );
+	USVec3D rot = self->GetRot ();
+	rot.mZ += state.GetValue < float >( 2, 0.0f );
 	
-	self->SetRot ( d );
+	self->SetRot ( rot );
 	self->ScheduleUpdate ();
 	
 	return 0;
@@ -142,7 +142,7 @@ int	MOAITransform::_getPiv ( lua_State* L ) {
 int	MOAITransform::_getRot ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITransform, "U" )
 	
-	lua_pushnumber ( state, self->mDegrees );
+	lua_pushnumber ( state, self->mRot.mZ );
 
 	return 1;
 }
@@ -239,7 +239,7 @@ int MOAITransform::_move ( lua_State* L ) {
 
 	self->mLoc.mX += xLoc;
 	self->mLoc.mY += yLoc;
-	self->mDegrees += zRot;
+	self->mRot.mZ += zRot;
 	self->mScale.mX += xScl;
 	self->mScale.mY += yScl;
 	self->ScheduleUpdate ();
@@ -372,7 +372,7 @@ int MOAITransform::_moveRot ( lua_State* L ) {
 		return 1;
 	}
 	
-	self->mDegrees += zRot;
+	self->mRot.mZ += zRot;
 	self->ScheduleUpdate ();
 	
 	return 0;
@@ -460,7 +460,7 @@ int MOAITransform::_seek ( lua_State* L ) {
 
 		action->SetLink ( 0, self, MOAITransformAttr::Pack ( ATTR_X_LOC ), xLoc - self->mLoc.mX, mode );
 		action->SetLink ( 1, self, MOAITransformAttr::Pack ( ATTR_Y_LOC ), yLoc - self->mLoc.mY, mode );
-		action->SetLink ( 2, self, MOAITransformAttr::Pack ( ATTR_Z_ROT ), zRot - self->mDegrees, mode );
+		action->SetLink ( 2, self, MOAITransformAttr::Pack ( ATTR_Z_ROT ), zRot - self->mRot.mZ, mode );
 		action->SetLink ( 3, self, MOAITransformAttr::Pack ( ATTR_X_SCL ), xScl - self->mScale.mX, mode );
 		action->SetLink ( 4, self, MOAITransformAttr::Pack ( ATTR_Y_SCL ), yScl - self->mScale.mY, mode );
 		
@@ -473,7 +473,7 @@ int MOAITransform::_seek ( lua_State* L ) {
 	
 	self->mLoc.mX = xLoc;
 	self->mLoc.mY = yLoc;
-	self->mDegrees = zRot;
+	self->mRot.mZ = zRot;
 	self->mScale.mX = xScl;
 	self->mScale.mY = yScl;
 	self->ScheduleUpdate ();
@@ -600,7 +600,7 @@ int MOAITransform::_seekRot ( lua_State* L ) {
 		MOAIEaseDriver* action = new MOAIEaseDriver ();
 		action->ReserveLinks ( 1 );
 		
-		action->SetLink ( 0, self, MOAITransformAttr::Pack ( ATTR_Z_ROT ), zRot - self->mDegrees, mode );
+		action->SetLink ( 0, self, MOAITransformAttr::Pack ( ATTR_Z_ROT ), zRot - self->mRot.mZ, mode );
 		
 		action->SetLength ( delay );
 		action->Start ();
@@ -609,7 +609,7 @@ int MOAITransform::_seekRot ( lua_State* L ) {
 		return 1;
 	}
 	
-	self->mDegrees = zRot;
+	self->mRot.mZ = zRot;
 	self->ScheduleUpdate ();
 	
 	return 0;
@@ -671,12 +671,13 @@ int MOAITransform::_seekScl ( lua_State* L ) {
 	@out	nil
 */
 int MOAITransform::_setLoc ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITransform, "UNN" )
+	MOAI_LUA_SETUP ( MOAITransform, "U" )
 	
 	USVec3D loc;
 	
 	loc.mX = state.GetValue < float >( 2, 0.0f );
 	loc.mY = state.GetValue < float >( 3, 0.0f );
+	loc.mZ = state.GetValue < float >( 4, 0.0f );
 	
 	self->SetLoc ( loc );
 	self->ScheduleUpdate ();
@@ -738,9 +739,10 @@ int MOAITransform::_setPiv ( lua_State* L ) {
 int MOAITransform::_setRot ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITransform, "UN" )
 	
-	float d = state.GetValue < float >( 2, 0.0f );
+	USVec3D rot = self->GetRot ();
+	rot.mZ = state.GetValue < float >( 2, 0.0f );
 	
-	self->SetRot ( d );
+	self->SetRot ( rot );
 	self->ScheduleUpdate ();
 	
 	return 0;
@@ -818,7 +820,7 @@ bool MOAITransform::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 				this->mLoc.mY = attrOp.Apply ( this->mLoc.mY, op, MOAINode::ATTR_READ_WRITE );
 				return true;
 			case ATTR_Z_ROT:
-				this->mDegrees = attrOp.Apply ( this->mDegrees, op, MOAINode::ATTR_READ_WRITE );
+				this->mRot.mZ = attrOp.Apply ( this->mRot.mZ, op, MOAINode::ATTR_READ_WRITE );
 				return true;
 			case ATTR_X_SCL:
 				this->mScale.mX = attrOp.Apply ( this->mScale.mX, op, MOAINode::ATTR_READ_WRITE );
@@ -832,18 +834,18 @@ bool MOAITransform::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITransform::BuildTransforms ( float xOff, float yOff, float xStretch, float yStretch ) {
+void MOAITransform::BuildTransforms ( float xOff, float yOff, float zOff, float xStretch, float yStretch, float zStretch ) {
 	
 	this->mLocalToWorldMtx.ScRoTr (
 		this->mScale.mX * xStretch,
 		this->mScale.mY * yStretch,
-		1.0f,
-		0.0f,
-		0.0f,
-		( float )D2R * this->mDegrees,
+		this->mScale.mZ * zStretch,
+		this->mRot.mX * ( float )D2R,
+		this->mRot.mY * ( float )D2R,
+		this->mRot.mZ * ( float )D2R,
 		this->mLoc.mX + xOff,
 		this->mLoc.mY + yOff,
-		0.0f
+		this->mLoc.mZ + zOff
 	);
 	
 	const USAffine3D* inherit = this->GetLinkedValue < USAffine3D >( MOAITransformAttr::Pack ( INHERIT_TRANSFORM ));
@@ -864,10 +866,10 @@ void MOAITransform::BuildTransforms ( float xOff, float yOff, float xStretch, fl
 		}
 	}
 	
-	if (( this->mPiv.mX != 0.0f ) || ( this->mPiv.mY != 0.0f )) {
+	if (( this->mPiv.mX != 0.0f ) || ( this->mPiv.mY != 0.0f ) || ( this->mPiv.mZ != 0.0f )) {
 		
 		USAffine3D pivot;
-		pivot.Translate ( -this->mPiv.mX, -this->mPiv.mY, 0.0f );
+		pivot.Translate ( -this->mPiv.mX, -this->mPiv.mY, -this->mPiv.mZ );
 		this->mLocalToWorldMtx.Prepend ( pivot );
 	}
 	this->mWorldToLocalMtx.Inverse ( this->mLocalToWorldMtx );
@@ -890,7 +892,7 @@ MOAITransform::MOAITransform () :
 	mPiv ( 0.0f, 0.0f, 0.0f ),
 	mLoc ( 0.0f, 0.0f, 0.0f ),
 	mScale ( 1.0f, 1.0f, 1.0f ),
-	mDegrees ( 0.0f ) {
+	mRot ( 0.0f, 0.0f, 0.0f ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAITransformBase )
@@ -904,7 +906,7 @@ MOAITransform::~MOAITransform () {
 //----------------------------------------------------------------//
 void MOAITransform::OnDepNodeUpdate () {
 	
-	this->BuildTransforms ( 0.0f, 0.0f, 1.0f, 1.0f );
+	this->BuildTransforms ( 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f );
 }
 
 //----------------------------------------------------------------//
@@ -974,7 +976,7 @@ void MOAITransform::SerializeIn ( MOAILuaState& state, MOAIDeserializer& seriali
 	this->mScale.mX = state.GetField < float >( -1, "mScale.mX", 1.0f );
 	this->mScale.mY = state.GetField < float >( -1, "mScale.mY", 1.0f );
 	
-	this->mDegrees = state.GetField < float >( -1, "mDegrees", 0.0f );
+	this->mRot.mZ = state.GetField < float >( -1, "mDegrees", 0.0f );
 }
 
 //----------------------------------------------------------------//
@@ -990,27 +992,38 @@ void MOAITransform::SerializeOut ( MOAILuaState& state, MOAISerializer& serializ
 	state.SetField ( -1, "mScale.mX", this->mScale.mX );
 	state.SetField ( -1, "mScale.mY", this->mScale.mY );
 	
-	state.SetField ( -1, "mDegrees", this->mDegrees );
+	state.SetField ( -1, "mDegrees", this->mRot.mZ );
 }
 
 //----------------------------------------------------------------//
-void MOAITransform::SetLoc ( float x, float y ) {
+void MOAITransform::SetLoc ( float x, float y, float z ) {
 
 	this->mLoc.mX = x;
 	this->mLoc.mY = y;
+	this->mLoc.mZ = z;
 }
 
 //----------------------------------------------------------------//
-void MOAITransform::SetPiv ( float x, float y ) {
+void MOAITransform::SetPiv ( float x, float y, float z ) {
 
 	this->mPiv.mX = x;
 	this->mPiv.mY = y;
+	this->mPiv.mZ = z;
 }
 
 //----------------------------------------------------------------//
-void MOAITransform::SetScl ( float x, float y ) {
+void MOAITransform::SetRot ( float x, float y, float z ) {
+
+	this->mRot.mX = x;
+	this->mRot.mY = y;
+	this->mRot.mZ = z;
+}
+
+//----------------------------------------------------------------//
+void MOAITransform::SetScl ( float x, float y, float z ) {
 
 	this->mScale.mX = x;
 	this->mScale.mY = y;
+	this->mScale.mZ = z;
 }
 

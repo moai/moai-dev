@@ -622,7 +622,7 @@ void MOAICameraFitter2D::UpdateTarget () {
 		
 		// get the camera's target position and scale
 		USAffine3D cameraMtx;
-		float rot = this->mCamera ? this->mCamera->GetRot () : 0.0f;
+		float rot = this->mCamera ? this->mCamera->GetRot ().mZ : 0.0f;
 		cameraMtx.ScRoTr ( this->mFitScale, this->mFitScale, 1.0f, 0.0f, 0.0f, rot * ( float )D2R, this->mFitLoc.mX, this->mFitLoc.mY, 0.0f );
 		
 		// get the camera rect

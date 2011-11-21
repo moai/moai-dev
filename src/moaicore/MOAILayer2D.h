@@ -74,6 +74,7 @@ private:
 	//----------------------------------------------------------------//
 	void			AffirmPartition			();
 	void			GetCameraMtx			( USAffine3D& camera );
+	void			GetProjectionMtx		( USMatrix4x4& proj );
 	bool			IsOffscreen				();
 
 public:

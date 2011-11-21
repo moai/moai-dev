@@ -1207,29 +1207,33 @@ void MOAIGfxDevice::UpdateUVMtx () {
 //----------------------------------------------------------------//
 void MOAIGfxDevice::WriteQuad ( USVec2D* vtx, USVec2D* uv ) {
 
-	USVec3D vtx3D [ 4 ];
+	USVec4D vtx4D [ 4 ];
 	
-	vtx3D [ 0 ].mX = vtx [ 0 ].mX;
-	vtx3D [ 0 ].mY = vtx [ 0 ].mY;
-	vtx3D [ 0 ].mZ = 0.0f;
+	vtx4D [ 0 ].mX = vtx [ 0 ].mX;
+	vtx4D [ 0 ].mY = vtx [ 0 ].mY;
+	vtx4D [ 0 ].mZ = 0.0f;
+	vtx4D [ 0 ].mW = 1.0f;
 
-	vtx3D [ 1 ].mX = vtx [ 1 ].mX;
-	vtx3D [ 1 ].mY = vtx [ 1 ].mY;
-	vtx3D [ 1 ].mZ = 0.0f;
+	vtx4D [ 1 ].mX = vtx [ 1 ].mX;
+	vtx4D [ 1 ].mY = vtx [ 1 ].mY;
+	vtx4D [ 1 ].mZ = 0.0f;
+	vtx4D [ 1 ].mW = 1.0f;
 	
-	vtx3D [ 2 ].mX = vtx [ 2 ].mX;
-	vtx3D [ 2 ].mY = vtx [ 2 ].mY;
-	vtx3D [ 2 ].mZ = 0.0f;
+	vtx4D [ 2 ].mX = vtx [ 2 ].mX;
+	vtx4D [ 2 ].mY = vtx [ 2 ].mY;
+	vtx4D [ 2 ].mZ = 0.0f;
+	vtx4D [ 2 ].mW = 1.0f;
 	
-	vtx3D [ 3 ].mX = vtx [ 3 ].mX;
-	vtx3D [ 3 ].mY = vtx [ 3 ].mY;
-	vtx3D [ 3 ].mZ = 0.0f;
+	vtx4D [ 3 ].mX = vtx [ 3 ].mX;
+	vtx4D [ 3 ].mY = vtx [ 3 ].mY;
+	vtx4D [ 3 ].mZ = 0.0f;
+	vtx4D [ 3 ].mW = 1.0f;
 
-	this->WriteQuad ( vtx3D, uv );
+	this->WriteQuad ( vtx4D, uv );
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::WriteQuad ( USVec3D* vtx, USVec2D* uv ) {
+void MOAIGfxDevice::WriteQuad ( USVec4D* vtx, USVec2D* uv ) {
 
 	if ( this->mCpuVertexTransform ) {
 		this->mCpuVertexTransformMtx.TransformQuad ( vtx );
@@ -1239,13 +1243,22 @@ void MOAIGfxDevice::WriteQuad ( USVec3D* vtx, USVec2D* uv ) {
 		this->mUVTransform.TransformQuad ( uv );
 	}
 	
+	float x = vtx [ 0 ].mX;
+	float y = vtx [ 0 ].mY;
+	float z = vtx [ 0 ].mZ;
+	float w = vtx [ 0 ].mW;
+	
+	x /= w;
+	y /= w;
+	z /= w;
+	
 	this->BeginPrim ();
 	
-		this->Write ( vtx[ 3 ]);
+		this->Write ( vtx [ 3 ]);
 		this->Write ( uv [ 3 ]);
 		this->WritePenColor4b ();
 		
-		this->Write ( vtx[ 1 ]);
+		this->Write ( vtx [ 1 ]);
 		this->Write ( uv [ 1 ]);
 		this->WritePenColor4b ();	
 	
@@ -1257,15 +1270,15 @@ void MOAIGfxDevice::WriteQuad ( USVec3D* vtx, USVec2D* uv ) {
 	
 	this->BeginPrim ();
 	
-		this->Write ( vtx[ 3 ]);
+		this->Write ( vtx [ 3 ]);
 		this->Write ( uv [ 3 ]);
 		this->WritePenColor4b ();	
 	
-		this->Write ( vtx[ 2 ]);
+		this->Write ( vtx [ 2 ]);
 		this->Write ( uv [ 2 ]);
 		this->WritePenColor4b ();	
 	
-		this->Write ( vtx[ 1 ]);
+		this->Write ( vtx [ 1 ]);
 		this->Write ( uv [ 1 ]);
 		this->WritePenColor4b ();
 		

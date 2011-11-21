@@ -230,7 +230,7 @@ public:
 	void					SoftReleaseResources	( u32 age );
 	
 	void					WriteQuad				( USVec2D* vtx, USVec2D* uv );
-	void					WriteQuad				( USVec3D* vtx, USVec2D* uv );
+	void					WriteQuad				( USVec4D* vtx, USVec2D* uv );
 	
 	//----------------------------------------------------------------//
 	template < typename TYPE >

@@ -473,6 +473,10 @@
 				RelativePath="..\..\src\uslscore\USVec3D.h"
 				>
 			</File>
+			<File
+				RelativePath="..\..\src\uslscore\USVec4D.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="cipher"

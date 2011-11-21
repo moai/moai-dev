@@ -235,7 +235,7 @@ void MOAIDraw::Bind () {
 	
 	gfxDevice.SetTexture ();
 	gfxDevice.SetShaderPreset ( MOAIShaderMgr::LINE_SHADER );
-	gfxDevice.SetVertexPreset ( MOAIVertexFormatMgr::XYZC );
+	gfxDevice.SetVertexPreset ( MOAIVertexFormatMgr::XYZWC );
 }
 
 //----------------------------------------------------------------//

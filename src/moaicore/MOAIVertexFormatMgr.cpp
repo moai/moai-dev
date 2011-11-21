@@ -22,16 +22,16 @@ MOAIVertexFormatMgr::MOAIVertexFormatMgr () {
 	
 	MOAIVertexFormat* format;
 	
-	format = &this->mFormats [ XYZC ];
+	format = &this->mFormats [ XYZWC ];
 		
-	format->DeclareAttribute ( XYZC_POSITION, GL_FLOAT, 3, GL_VERTEX_ARRAY, false );
-	format->DeclareAttribute ( XYZC_COLOR, GL_UNSIGNED_BYTE, 4, GL_COLOR_ARRAY, true );
+	format->DeclareAttribute ( XYZWC_POSITION, GL_FLOAT, 4, GL_VERTEX_ARRAY, false );
+	format->DeclareAttribute ( XYZWC_COLOR, GL_UNSIGNED_BYTE, 4, GL_COLOR_ARRAY, true );
 	
-	format = &this->mFormats [ XYZUVC ];
+	format = &this->mFormats [ XYZWUVC ];
 
-	format->DeclareAttribute ( XYZUVC_POSITION, GL_FLOAT, 3, GL_VERTEX_ARRAY, false );
-	format->DeclareAttribute ( XYZUVC_TEXCOORD, GL_FLOAT, 2, GL_TEXTURE_COORD_ARRAY, false );
-	format->DeclareAttribute ( XYZUVC_COLOR, GL_UNSIGNED_BYTE, 4, GL_COLOR_ARRAY, true );
+	format->DeclareAttribute ( XYZWUVC_POSITION, GL_FLOAT, 4, GL_VERTEX_ARRAY, false );
+	format->DeclareAttribute ( XYZWUVC_TEXCOORD, GL_FLOAT, 2, GL_TEXTURE_COORD_ARRAY, false );
+	format->DeclareAttribute ( XYZWUVC_COLOR, GL_UNSIGNED_BYTE, 4, GL_COLOR_ARRAY, true );
 }
 
 //----------------------------------------------------------------//
