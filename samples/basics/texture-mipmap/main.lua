@@ -28,4 +28,4 @@ prop:setDeck ( gfxQuad )
 layer:insertProp ( prop )
 
 prop:setScl ( 0, 0 )
-prop:moveScl ( 4, 4, 3 )
+prop:moveScl ( 4, 4, 6, MOAIEaseType.LINEAR )

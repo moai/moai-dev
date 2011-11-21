@@ -65,6 +65,8 @@ private:
 
 	bool				mIsRenewable;
 	u32					mTransform;
+	
+	bool				mIsDirty;
 
 	//----------------------------------------------------------------//
 	static int		_bind					( lua_State* L );

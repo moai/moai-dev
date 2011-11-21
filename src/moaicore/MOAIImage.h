@@ -133,6 +133,7 @@ public:
 	void				Load					( cc8* filename, u32 transform = 0 );
 	void				Load					( const void* buffer, u32 size, u32 transform = 0 );
 	bool				IsOK					();
+	bool				MipReduce				();
 						MOAIImage				();
 						~MOAIImage				();
 	void				PadToPow2				( const MOAIImage& image );

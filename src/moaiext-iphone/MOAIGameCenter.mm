@@ -40,12 +40,11 @@ int MOAIGameCenter::_authenticatePlayer ( lua_State* L ) {
 				MOAIGameCenter::Get ().mIsGameCenterSupported = FALSE;
 			}
 			else if ([ GKLocalPlayer localPlayer ].isAuthenticated) {
-				MOAIGameCenter::Get ().mIsGameCenterSupported = TRUE;							
+				MOAIGameCenter::Get ().mIsGameCenterSupported = TRUE;	
+				MOAIGameCenter::Get ().GetAchievements ();						
 			}
 		 }];
-	}
-	
-	MOAIGameCenter::Get ().GetAchievements ();
+	}	
 	
 	return 0;
 }
@@ -275,6 +274,8 @@ GKAchievement* MOAIGameCenter::GetAchievementFromDictionary ( cc8* identifier ) 
         [ mAchievementsDictionary setObject:achievement forKey:achievement.identifier  ];
     }
 	
+	if ( achievement.completed ) achievement.showsCompletionBanner = NO;
+	
     return [[ achievement retain ] autorelease ];
 }
 
@@ -338,33 +339,22 @@ void MOAIGameCenter::ReportAchievementProgress ( cc8* identifier, float percent 
 
 	GKAchievement *achievement = GetAchievementFromDictionary ( identifier );
 	
-    if ( achievement ) {
-	
-		if ( achievement.percentComplete >= 100 ) return;
-				
-		achievement.percentComplete = percent;
+    if ( achievement != nil && achievement.percentComplete < percent ) {
 		
-        [ achievement reportAchievementWithCompletionHandler: ^(NSError *error) {
-			if ( error != nil )
-			{
-				printf ( "Error in achievement reporting: %d", [ error code ]);
-				// TODO: Save off achievement for later if network error
-			}
-		}];
-				
-		if ( percent >= 100 ) {
+		if ( !achievement.isCompleted ) {
 			
-			 UIAlertView *alert = [[ UIAlertView alloc ] 
-				initWithTitle: @"Achievement Earned!"
-                      message: achievement.identifier
-                     delegate: nil
-			cancelButtonTitle: @"OK"
-            otherButtonTitles: nil ];
+			achievement.showsCompletionBanner = YES;
+			achievement.percentComplete = percent;
 			
-            [alert show];
-            [alert release];
+			[ achievement reportAchievementWithCompletionHandler: ^(NSError *error) {
+				if ( error != nil )
+				{
+					printf ( "Error in achievement reporting: %d", [ error code ]);
+					// TODO: Save off achievement for later if network error
+				}
+			}];
 		}
-    }
+	}
 }
 
 //----------------------------------------------------------------//

@@ -464,7 +464,7 @@ void MOAILayer2D::Draw () {
 		if ( !totalResults ) return;
 		
 		buffer.Sort ( this->mSortMode );
-		
+
 		// render the sorted list
 		for ( u32 i = 0; i < totalResults; ++i ) {
 			MOAIProp* prop = buffer.GetResultUnsafe ( i );
