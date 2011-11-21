@@ -1129,6 +1129,67 @@ bool MOAIImage::IsOK () {
 }
 
 //----------------------------------------------------------------//
+bool MOAIImage::MipReduce () {
+
+	if (( this->mWidth == 0 ) || ( this->mHeight == 0 )) return false;
+	if (( this->mWidth <= 1 ) && ( this->mHeight <= 1 )) return false;
+
+	u32 width = this->mWidth & ~1;
+	u32 height = this->mHeight & ~1;
+
+	MOAIImage nextMip;
+
+	if ( width == 0 ) {
+	
+		nextMip.Init ( 1, height >> 1, this->mColorFormat, this->mPixelFormat );
+		
+		for ( u32 y = 0; y < height; y += 2 ) {
+			
+			u32 c0 = this->GetColor ( 0, y );
+			u32 c1 = this->GetColor ( 0, y + 1 );
+
+			u32 result = USColor::Average ( c0, c1 );
+			nextMip.SetColor ( 0, y >> 1, result );
+		}
+	}
+	else if ( height == 0 ) {
+	
+		nextMip.Init ( width >> 1, 1, this->mColorFormat, this->mPixelFormat );
+	
+		for ( u32 x = 0; x < width; x += 2 ) {
+			
+			u32 c0 = this->GetColor ( x, 0 );
+			u32 c1 = this->GetColor ( x + 1, 0 );
+
+			u32 result = USColor::Average ( c0, c1 );
+			nextMip.SetColor ( x >> 1, 0, result );
+		}
+	}
+	else {
+		
+		nextMip.Init ( width >> 1, height >> 1, this->mColorFormat, this->mPixelFormat );
+
+		for ( u32 y0 = 0; y0 < height; y0 += 2 ) {
+			for ( u32 x0 = 0; x0 < width; x0 += 2 ) {
+				
+				u32 x1 = x0 + 1;
+				u32 y1 = y0 + 1;
+				
+				u32 c0 = this->GetColor ( x0, y0 );
+				u32 c1 = this->GetColor ( x1, y0 );
+				u32 c2 = this->GetColor ( x0, y1 );
+				u32 c3 = this->GetColor ( x1, y1 );
+
+				u32 result = USColor::Average ( c0, c1, c2, c3 );
+				nextMip.SetColor ( x0 >> 1, y0 >> 1, result );
+			}
+		}
+	}
+	this->Take ( nextMip );
+	return true;
+}
+
+//----------------------------------------------------------------//
 MOAIImage::MOAIImage () :
 	mPixelFormat ( USPixel::PXL_FMT_UNKNOWN ),
 	mColorFormat ( USColor::CLR_FMT_UNKNOWN ),
