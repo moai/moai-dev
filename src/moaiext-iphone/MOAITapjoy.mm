@@ -15,6 +15,18 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+/**	@name	getUserId
+ @text	Gets the tapjoy user id
+ 
+ @out	string userID
+ */
+int MOAITapjoy::_getUserId ( lua_State *L ) {
+	
+	lua_pushstring ( L, [[TapjoyConnect getUserID] UTF8String ]);
+	return 1;
+}
+
+//----------------------------------------------------------------//
 /**	@name	initVideoAds
 	@text	Initializes TapjoyConnect interface for video ads. Optionally
 			provide a number of how many to cache.
@@ -104,7 +116,8 @@ void MOAITapjoy::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "TAPJOY_VIDEO_AD_CLOSE", ( u32 )TAPJOY_VIDEO_AD_CLOSE );
 
 	luaL_Reg regTable[] = {
-	
+		
+		{ "getUserId",					_getUserId },
 		{ "initVideoAds",				_initVideoAds },
 		{ "requestTapjoyConnect",		_requestTapjoyConnect },
 		{ "setListener",				&MOAIGlobalEventSource::_setListener < MOAITapjoy >  },
