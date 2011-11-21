@@ -14,9 +14,11 @@
 	
 	@attr	ATTR_WORLD_X_LOC
 	@attr	ATTR_WORLD_Y_LOC
+	@attr	ATTR_WORLD_Z_LOC
 	@attr	ATTR_WORLD_Z_ROT
 	@attr	ATTR_WORLD_X_SCL
 	@attr	ATTR_WORLD_Y_SCL
+	@attr	ATTR_WORLD_Z_SCL
 */
 class MOAITransformBase :
 	public virtual MOAINode {
@@ -40,8 +42,6 @@ public:
 		ATTR_WORLD_Y_LOC,
 		ATTR_WORLD_Z_LOC,
 		
-		ATTR_WORLD_X_ROT,
-		ATTR_WORLD_Y_ROT,
 		ATTR_WORLD_Z_ROT,
 		
 		ATTR_WORLD_X_SCL,

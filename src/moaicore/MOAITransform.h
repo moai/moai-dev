@@ -16,11 +16,17 @@
 
 	@attr	ATTR_X_PIV
 	@attr	ATTR_Y_PIV
+	@attr	ATTR_Z_PIV
+	
 	@attr	ATTR_X_LOC
 	@attr	ATTR_Y_LOC
+	@attr	ATTR_Z_LOC
+	
 	@attr	ATTR_Z_ROT
+	
 	@attr	ATTR_X_SCL
 	@attr	ATTR_Y_SCL
+	@attr	ATTR_Z_SCL
 */
 class MOAITransform :
 	public MOAITransformBase {
@@ -70,11 +76,17 @@ public:
 	enum {
 		ATTR_X_PIV,
 		ATTR_Y_PIV,
+		ATTR_Z_PIV,
+		
 		ATTR_X_LOC,
 		ATTR_Y_LOC,
+		ATTR_Z_LOC,
+		
 		ATTR_Z_ROT,
+		
 		ATTR_X_SCL,
 		ATTR_Y_SCL,
+		ATTR_Z_SCL,
 		
 		INHERIT_LOC,
 		INHERIT_TRANSFORM,

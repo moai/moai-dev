@@ -105,14 +105,16 @@ int MOAITransform::_addScl ( lua_State* L ) {
 	@in		MOAITransform self
 	@out	number xLoc
 	@out	number yLoc
+	@out	number zLoc
 */
 int	MOAITransform::_getLoc ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITransform, "U" )
 	
 	lua_pushnumber ( state, self->mLoc.mX );
 	lua_pushnumber ( state, self->mLoc.mY );
+	lua_pushnumber ( state, self->mLoc.mZ );
 
-	return 2;
+	return 3;
 }
 
 //----------------------------------------------------------------//
@@ -122,14 +124,16 @@ int	MOAITransform::_getLoc ( lua_State* L ) {
 	@in		MOAITransform self
 	@out	number xPiv
 	@out	number yPiv
+	@out	number zPiv
 */
 int	MOAITransform::_getPiv ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITransform, "U" )
 	
 	lua_pushnumber ( state, self->mPiv.mX );
 	lua_pushnumber ( state, self->mPiv.mY );
+	lua_pushnumber ( state, self->mPiv.mZ );
 
-	return 2;
+	return 3;
 }
 
 //----------------------------------------------------------------//
@@ -154,14 +158,16 @@ int	MOAITransform::_getRot ( lua_State* L ) {
 	@in		MOAITransform self
 	@out	number xScl
 	@out	number yScl
+	@out	number zScl
 */
 int	MOAITransform::_getScl ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITransform, "U" )
 	
 	lua_pushnumber ( state, self->mScale.mX );
 	lua_pushnumber ( state, self->mScale.mY );
+	lua_pushnumber ( state, self->mScale.mZ );
 
-	return 2;
+	return 3;
 }
 
 //----------------------------------------------------------------//
@@ -169,25 +175,29 @@ int	MOAITransform::_getScl ( lua_State* L ) {
 	@text	Transform a point in model space to world space.
 	
 	@in		MOAITransform self
-	@in		number x
-	@in		number y
+	@opt	number x			Default value is 0.
+	@opt	number y			Default value is 0.
+	@opt	number z			Default value is 0.
 	@out	number x
 	@out	number y
+	@out	number z
 */
 int MOAITransform::_modelToWorld ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITransform, "UNN" )
+	MOAI_LUA_SETUP ( MOAITransform, "U" )
 
 	USVec3D loc;
 	loc.mX = state.GetValue < float >( 2, 0.0f );
 	loc.mY = state.GetValue < float >( 3, 0.0f );
+	loc.mZ = state.GetValue < float >( 4, 0.0f );
 
 	USAffine3D modelToWorld = self->GetLocalToWorldMtx ();
 	modelToWorld.Transform ( loc );
 
 	lua_pushnumber ( state, loc.mX );
 	lua_pushnumber ( state, loc.mY );
+	lua_pushnumber ( state, loc.mZ );
 
-	return 2;
+	return 3;
 }
 
 //----------------------------------------------------------------//
@@ -666,8 +676,9 @@ int MOAITransform::_seekScl ( lua_State* L ) {
 	@text	Sets the transform's location.
 	
 	@in		MOAITransform self
-	@in		number x
-	@in		number y
+	@opt	number x				Default value is 0.
+	@opt	number y				Default value is 0.
+	@opt	number z				Default value is 0.
 	@out	nil
 */
 int MOAITransform::_setLoc ( lua_State* L ) {
@@ -710,17 +721,19 @@ int MOAITransform::_setParent ( lua_State* L ) {
 	@text	Sets the transform's pivot.
 	
 	@in		MOAITransform self
-	@in		number xPiv
-	@in		number yPiv
+	@opt	number xPiv			Default value is 0.
+	@opt	number yPiv			Default value is 0.
+	@opt	number zPiv			Default value is 0.
 	@out	nil
 */
 int MOAITransform::_setPiv ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITransform, "UNN" )
+	MOAI_LUA_SETUP ( MOAITransform, "U" )
 	
 	USVec3D piv;
 	
 	piv.mX = state.GetValue < float >( 2, 0.0f );
 	piv.mY = state.GetValue < float >( 3, 0.0f );
+	piv.mZ = state.GetValue < float >( 4, 0.0f );
 	
 	self->SetPiv ( piv );
 	self->ScheduleUpdate ();
@@ -753,17 +766,19 @@ int MOAITransform::_setRot ( lua_State* L ) {
 	@text	Sets the transform's scale.
 	
 	@in		MOAITransform self
-	@in		number xScl
-	@in		number yScl
+	@opt	number xScl			Default value is 1.
+	@opt	number yScl			Default value is 1.
+	@opt	number zScl			Default value is 1.
 	@out	nil
 */
 int MOAITransform::_setScl ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITransform, "UNN" )
+	MOAI_LUA_SETUP ( MOAITransform, "U" )
 	
 	USVec3D scl;
 	
-	scl.mX = state.GetValue < float >( 2, 0.0f );
-	scl.mY = state.GetValue < float >( 3, 0.0f );
+	scl.mX = state.GetValue < float >( 2, 1.0f );
+	scl.mY = state.GetValue < float >( 3, 1.0f );
+	scl.mZ = state.GetValue < float >( 4, 1.0f );
 	
 	self->SetScl ( scl );
 	self->ScheduleUpdate ();
@@ -776,25 +791,29 @@ int MOAITransform::_setScl ( lua_State* L ) {
 	@text	Transform a point in world space to model space.
 	
 	@in		MOAITransform self
-	@in		number x
-	@in		number y
+	@opt	number x			Default value is 0.
+	@opt	number y			Default value is 0.
+	@opt	number z			Default value is 0.
 	@out	number x
 	@out	number y
+	@out	number z
 */
 int MOAITransform::_worldToModel ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITransform, "UNN" )
+	MOAI_LUA_SETUP ( MOAITransform, "U" )
 
 	USVec3D loc;
 	loc.mX = state.GetValue < float >( 2, 0.0f );
 	loc.mY = state.GetValue < float >( 3, 0.0f );
+	loc.mZ = state.GetValue < float >( 4, 0.0f );
 
 	USAffine3D worldToModel = self->GetWorldToLocalMtx ();
 	worldToModel.Transform ( loc );
 
 	lua_pushnumber ( state, loc.mX );
 	lua_pushnumber ( state, loc.mY );
+	lua_pushnumber ( state, loc.mZ );
 
-	return 2;
+	return 3;
 }
 
 //================================================================//
@@ -813,11 +832,17 @@ bool MOAITransform::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 			case ATTR_Y_PIV:
 				this->mPiv.mY = attrOp.Apply ( this->mPiv.mY, op, MOAINode::ATTR_READ_WRITE );
 				return true;
+			case ATTR_Z_PIV:
+				this->mPiv.mZ = attrOp.Apply ( this->mPiv.mZ, op, MOAINode::ATTR_READ_WRITE );
+				return true;
 			case ATTR_X_LOC:
 				this->mLoc.mX = attrOp.Apply ( this->mLoc.mX, op, MOAINode::ATTR_READ_WRITE );
 				return true;
 			case ATTR_Y_LOC:
 				this->mLoc.mY = attrOp.Apply ( this->mLoc.mY, op, MOAINode::ATTR_READ_WRITE );
+				return true;
+			case ATTR_Z_LOC:
+				this->mLoc.mZ = attrOp.Apply ( this->mLoc.mZ, op, MOAINode::ATTR_READ_WRITE );
 				return true;
 			case ATTR_Z_ROT:
 				this->mRot.mZ = attrOp.Apply ( this->mRot.mZ, op, MOAINode::ATTR_READ_WRITE );
@@ -827,6 +852,9 @@ bool MOAITransform::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 				return true;
 			case ATTR_Y_SCL:
 				this->mScale.mY = attrOp.Apply ( this->mScale.mY, op, MOAINode::ATTR_READ_WRITE );
+				return true;
+			case ATTR_Z_SCL:
+				this->mScale.mZ = attrOp.Apply ( this->mScale.mZ, op, MOAINode::ATTR_READ_WRITE );
 				return true;
 		}
 	}
@@ -916,11 +944,14 @@ void MOAITransform::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	state.SetField ( -1, "ATTR_X_PIV",			MOAITransformAttr::Pack ( ATTR_X_PIV ));
 	state.SetField ( -1, "ATTR_Y_PIV",			MOAITransformAttr::Pack ( ATTR_Y_PIV ));
+	state.SetField ( -1, "ATTR_Z_PIV",			MOAITransformAttr::Pack ( ATTR_Z_PIV ));
 	state.SetField ( -1, "ATTR_X_LOC",			MOAITransformAttr::Pack ( ATTR_X_LOC ));
 	state.SetField ( -1, "ATTR_Y_LOC",			MOAITransformAttr::Pack ( ATTR_Y_LOC ));
+	state.SetField ( -1, "ATTR_Z_LOC",			MOAITransformAttr::Pack ( ATTR_Z_LOC ));
 	state.SetField ( -1, "ATTR_Z_ROT",			MOAITransformAttr::Pack ( ATTR_Z_ROT ));
 	state.SetField ( -1, "ATTR_X_SCL",			MOAITransformAttr::Pack ( ATTR_X_SCL ));
 	state.SetField ( -1, "ATTR_Y_SCL",			MOAITransformAttr::Pack ( ATTR_Y_SCL ));
+	state.SetField ( -1, "ATTR_Z_SCL",			MOAITransformAttr::Pack ( ATTR_Z_SCL ));
 	
 	state.SetField ( -1, "INHERIT_LOC",			MOAITransformAttr::Pack ( INHERIT_LOC ));
 	state.SetField ( -1, "INHERIT_TRANSFORM",	MOAITransformAttr::Pack ( INHERIT_TRANSFORM ));

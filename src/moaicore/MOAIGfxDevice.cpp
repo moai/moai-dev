@@ -1243,15 +1243,6 @@ void MOAIGfxDevice::WriteQuad ( USVec4D* vtx, USVec2D* uv ) {
 		this->mUVTransform.TransformQuad ( uv );
 	}
 	
-	float x = vtx [ 0 ].mX;
-	float y = vtx [ 0 ].mY;
-	float z = vtx [ 0 ].mZ;
-	float w = vtx [ 0 ].mW;
-	
-	x /= w;
-	y /= w;
-	z /= w;
-	
 	this->BeginPrim ();
 	
 		this->Write ( vtx [ 3 ]);
