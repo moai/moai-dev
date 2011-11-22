@@ -37,6 +37,7 @@ private:
 	static int			_setThreadInfoEnabled	( lua_State* L );
 
 	//----------------------------------------------------------------//
+	MOAIAction*			AffirmRoot				();
 	u32					GetNextPass				();
 
 public:
@@ -51,8 +52,6 @@ public:
 	GET_SET ( bool, ThreadInfoEnabled, mThreadInfoEnabled )
 
 	//----------------------------------------------------------------//
-	MOAIAction*			AffirmRoot				();
-	void				Clear					();
 						MOAIActionMgr			();
 						~MOAIActionMgr			();
 	void				RegisterLuaClass		( MOAILuaState& state );

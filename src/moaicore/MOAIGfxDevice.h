@@ -5,6 +5,7 @@
 #define	MOAIGFXDEVICE_H
 
 #include <moaicore/MOAIBlendMode.h>
+#include <moaicore/MOAIColor.h>
 #include <moaicore/MOAIEventSource.h>
 #include <moaicore/MOAILua.h>
 
@@ -110,8 +111,14 @@ private:
 	typedef USLeanList < MOAIGfxResource* >::Iterator ResourceIt;
 	USLeanList < MOAIGfxResource* > mResources;
 
+	GLbitfield		mClearFlags;
+	u32				mClearColor;
+	MOAIColor*		mClearColorNode;
+
 	//----------------------------------------------------------------//
 	static int				_isProgrammable			( lua_State* L );
+	static int				_setClearColor			( lua_State* L );
+	static int				_setClearDepth			( lua_State* L );
 	static int				_setPenColor			( lua_State* L );
 	static int				_setPenWidth			( lua_State* L );
 	static int				_setPointSize			( lua_State* L );
@@ -195,6 +202,7 @@ public:
 	void					SetBlendMode			( const MOAIBlendMode& blendMode );
 	void					SetBlendMode			( int srcFactor, int dstFactor );
 	
+	void					SetClearColor			( MOAIColor* color );
 	void					SetDefaultFrameBuffer	( GLuint frameBuffer );
 	void					SetFrameBuffer			( MOAITexture* texture );
 	void					SetPenColor				( u32 color );

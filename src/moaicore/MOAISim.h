@@ -74,9 +74,6 @@ private:
 	STLString		mInitFromFilename;
 	STLString		mInitFromString;
 	
-	GLbitfield		mClearFlags;
-	u32				mClearColor;
-	
 	USTaskThread	mDataIOThread;
 	
 	u32				mLoopFlags;
@@ -109,8 +106,6 @@ private:
 	static int		_reportHistogram			( lua_State* L );
 	static int		_reportLeaks				( lua_State* L );
 	static int		_setBoostThreshold			( lua_State* L );
-	static int		_setClearColor				( lua_State* L );
-	static int		_setClearDepth				( lua_State* L );
 	static int		_setCpuBudget				( lua_State* L );
 	static int		_setHistogramEnabled		( lua_State* L );
 	static int		_setLeakTrackingEnabled		( lua_State* L );

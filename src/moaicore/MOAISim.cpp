@@ -457,61 +457,6 @@ int MOAISim::_setBoostThreshold ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setClearColor
-	@text	At the start of each frame the device will by default automatically render a background color.  Using this function you can set the background color that is drawn each frame.  If you specify no arguments to this function, then automatic redraw of the background color will be turned off (i.e. the previous render will be used as the background).
-
-	@opt	number red			The red value of the color.
-	@opt	number green		The green value of the color.
-	@opt	number blue			The blue value of the color.
-	@opt	number alpha		The alpha value of the color.
-	@out	nil
-*/
-int MOAISim::_setClearColor ( lua_State* L ) {
-
-	MOAILuaState state ( L );
-	MOAISim& sim = MOAISim::Get ();
-	
-	if ( state.GetTop () == 0 ) {
-		sim.mClearFlags &= ~GL_COLOR_BUFFER_BIT;
-	}
-	else {
-		float r = state.GetValue < float >( 1, 0.0f );
-		float g = state.GetValue < float >( 2, 0.0f );
-		float b = state.GetValue < float >( 3, 0.0f );
-		float a = state.GetValue < float >( 4, 1.0f );
-		
-		sim.mClearColor = USColor::PackRGBA ( r, g, b, a );
-		sim.mClearFlags |= GL_COLOR_BUFFER_BIT;
-	}
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@name	setClearDepth
-	@text	At the start of each frame the device will by default automatically
-			clear the depth buffer.  This function sets whether or not the depth
-			buffer should be cleared at the start of each frame.
-
-	@in		boolean clearDepth	Whether to clear the depth buffer each frame.
-	@out	nil
-*/
-int MOAISim::_setClearDepth ( lua_State* L ) {
-
-	MOAILuaState state ( L );
-	MOAISim& sim = MOAISim::Get ();
-	
-	bool clearDepth = state.GetValue < bool >( 1, false );
-	
-	if ( clearDepth ) {
-		sim.mClearFlags |= GL_DEPTH_BUFFER_BIT;
-	}
-	else {
-		sim.mClearFlags &= ~GL_DEPTH_BUFFER_BIT;
-	}
-	return 0;
-}
-
-//----------------------------------------------------------------//
 /**	@name	setCpuBudget
 	@text	Sets the amount of time (given in simulation steps) to allow
 			for updating the simulation.
@@ -679,8 +624,6 @@ MOAISim::MOAISim () :
 	mRenderCounter ( 0 ),
 	mFrameRate ( 0.0f ),
 	mFrameRateIdx ( 0 ),
-	mClearFlags ( GL_COLOR_BUFFER_BIT ),
-	mClearColor ( 0xff000000 ),
 	mLoopFlags ( LOOP_FLAGS_DEFAULT ),
 	mBoostThreshold ( DEFAULT_BOOST_THRESHOLD ),
 	mCpuBudget ( DEFAULT_CPU_BUDGET ),
@@ -810,8 +753,6 @@ void MOAISim::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "reportHistogram",			_reportHistogram },
 		{ "reportLeaks",				_reportLeaks },
 		{ "setBoostThreshold",			_setBoostThreshold },
-		{ "setClearColor",				_setClearColor },
-		{ "setClearDepth",				_setClearDepth },
 		{ "setCpuBudget",				_setCpuBudget},
 		{ "setHistogramEnabled",		_setHistogramEnabled },
 		{ "setLeakTrackingEnabled",		_setLeakTrackingEnabled },
@@ -837,23 +778,6 @@ void MOAISim::RegisterLuaFuncs ( MOAILuaState& state ) {
 void MOAISim::Render () {
 
 	this->mRenderCounter++;
-
-	if ( this->mClearFlags & GL_COLOR_BUFFER_BIT ) {
-	
-		USColorVec clearColor;
-		clearColor.SetRGBA ( this->mClearColor );
-	
-		glClearColor (
-			clearColor.mR,
-			clearColor.mG,
-			clearColor.mB,
-			clearColor.mA 
-		);
-	}
-
-	if ( this->mClearFlags ) {
-		glClear ( this->mClearFlags );
-	}
 
 	RenderPassIt passIt = this->mRenderPasses.Head ();
 	for ( ; passIt; passIt = passIt->Next ()) {
