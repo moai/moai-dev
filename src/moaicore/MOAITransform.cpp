@@ -265,6 +265,7 @@ int MOAITransform::_move ( lua_State* L ) {
 	@in		MOAITransform self
 	@in		number xDelta		Delta to be added to x.
 	@in		number yDelta		Delta to be added to y.
+	@in		number zDelta		Delta to be added to z.
 	@in		number length		Length of animation in seconds.
 	@opt	number mode			The ease mode. One of MOAIEaseType.EASE_IN, MOAIEaseType.EASE_OUT, MOAIEaseType.FLAT MOAIEaseType.LINEAR,
 								MOAIEaseType.SMOOTH, MOAIEaseType.SOFT_EASE_IN, MOAIEaseType.SOFT_EASE_OUT, MOAIEaseType.SOFT_SMOOTH. Defaults to MOAIEaseType.SMOOTH.
@@ -272,21 +273,23 @@ int MOAITransform::_move ( lua_State* L ) {
 	@out	MOAIEaseDriver easeDriver
 */
 int MOAITransform::_moveLoc ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITransform, "UNNN" )
+	MOAI_LUA_SETUP ( MOAITransform, "UNNNN" )
 	
 	float xLoc		= state.GetValue < float >( 2, 0.0f );
 	float yLoc		= state.GetValue < float >( 3, 0.0f );
-	float delay		= state.GetValue < float >( 4, 0.0f );
+	float zLoc		= state.GetValue < float >( 4, 0.0f );
+	float delay		= state.GetValue < float >( 5, 0.0f );
 	
 	if ( delay > 0.0f ) {
 	
 		u32 mode = state.GetValue < u32 >( 5, USInterpolate::kSmooth );
 		
 		MOAIEaseDriver* action = new MOAIEaseDriver ();
-		action->ReserveLinks ( 2 );
+		action->ReserveLinks ( 3 );
 		
 		action->SetLink ( 0, self, MOAITransformAttr::Pack ( ATTR_X_LOC ), xLoc, mode );
 		action->SetLink ( 1, self, MOAITransformAttr::Pack ( ATTR_Y_LOC ), yLoc, mode );
+		action->SetLink ( 2, self, MOAITransformAttr::Pack ( ATTR_Y_LOC ), zLoc, mode );
 		
 		action->SetLength ( delay );
 		action->Start ();
@@ -297,6 +300,7 @@ int MOAITransform::_moveLoc ( lua_State* L ) {
 	
 	self->mLoc.mX += xLoc;
 	self->mLoc.mY += yLoc;
+	self->mLoc.mZ += zLoc;
 	self->ScheduleUpdate ();
 
 	return 0;
@@ -310,6 +314,7 @@ int MOAITransform::_moveLoc ( lua_State* L ) {
 	@in		MOAITransform self
 	@in		number xDelta		Delta to be added to xPiv.
 	@in		number yDelta		Delta to be added to yPiv.
+	@in		number zDelta		Delta to be added to zPiv.
 	@in		number length		Length of animation in seconds.
 	@opt	number mode			The ease mode. One of MOAIEaseType.EASE_IN, MOAIEaseType.EASE_OUT, MOAIEaseType.FLAT MOAIEaseType.LINEAR,
 								MOAIEaseType.SMOOTH, MOAIEaseType.SOFT_EASE_IN, MOAIEaseType.SOFT_EASE_OUT, MOAIEaseType.SOFT_SMOOTH. Defaults to MOAIEaseType.SMOOTH.
@@ -317,11 +322,12 @@ int MOAITransform::_moveLoc ( lua_State* L ) {
 	@out	MOAIEaseDriver easeDriver
 */
 int MOAITransform::_movePiv ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITransform, "UNNN" )
+	MOAI_LUA_SETUP ( MOAITransform, "UNNNN" )
 	
 	float xPiv		= state.GetValue < float >( 2, 0.0f );
 	float yPiv		= state.GetValue < float >( 3, 0.0f );
-	float delay		= state.GetValue < float >( 4, 0.0f );
+	float zPiv		= state.GetValue < float >( 4, 0.0f );
+	float delay		= state.GetValue < float >( 5, 0.0f );
 	
 	if ( delay > 0.0f ) {
 	
@@ -332,6 +338,7 @@ int MOAITransform::_movePiv ( lua_State* L ) {
 		
 		action->SetLink ( 0, self, MOAITransformAttr::Pack ( ATTR_X_PIV ), xPiv, mode );
 		action->SetLink ( 1, self, MOAITransformAttr::Pack ( ATTR_Y_PIV ), yPiv, mode );
+		action->SetLink ( 2, self, MOAITransformAttr::Pack ( ATTR_Z_PIV ), zPiv, mode );
 		
 		action->SetLength ( delay );
 		action->Start ();
@@ -342,6 +349,7 @@ int MOAITransform::_movePiv ( lua_State* L ) {
 	
 	self->mPiv.mX += xPiv;
 	self->mPiv.mY += yPiv;
+	self->mPiv.mZ += zPiv;
 	self->ScheduleUpdate ();
 
 	return 0;
@@ -353,7 +361,9 @@ int MOAITransform::_movePiv ( lua_State* L ) {
 			a MOAIEaseDriver initialized to apply the delta.
 	
 	@in		MOAITransform self
-	@in		number rDelta		Delta to be added to r (in degrees).
+	@in		number xDelta		Delta to be added to xRot (in degrees).
+	@in		number yDelta		Delta to be added to yRot (in degrees).
+	@in		number zDelta		Delta to be added to zRot (in degrees).
 	@in		number length		Length of animation in seconds.
 	@opt	number mode			The ease mode. One of MOAIEaseType.EASE_IN, MOAIEaseType.EASE_OUT, MOAIEaseType.FLAT MOAIEaseType.LINEAR,
 								MOAIEaseType.SMOOTH, MOAIEaseType.SOFT_EASE_IN, MOAIEaseType.SOFT_EASE_OUT, MOAIEaseType.SOFT_SMOOTH. Defaults to MOAIEaseType.SMOOTH.
@@ -361,19 +371,23 @@ int MOAITransform::_movePiv ( lua_State* L ) {
 	@out	MOAIEaseDriver easeDriver
 */
 int MOAITransform::_moveRot ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITransform, "UNN" )
+	MOAI_LUA_SETUP ( MOAITransform, "UNNN" )
 	
-	float zRot		= state.GetValue < float >( 2, 0.0f );
-	float delay		= state.GetValue < float >( 3, 0.0f );
+	float xRot		= state.GetValue < float >( 2, 0.0f );
+	float yRot		= state.GetValue < float >( 3, 0.0f );
+	float zRot		= state.GetValue < float >( 4, 0.0f );
+	float delay		= state.GetValue < float >( 5, 0.0f );
 	
 	if ( delay > 0.0f ) {
 	
-		u32 mode = state.GetValue < u32 >( 4, USInterpolate::kSmooth );
+		u32 mode = state.GetValue < u32 >( 5, USInterpolate::kSmooth );
 		
 		MOAIEaseDriver* action = new MOAIEaseDriver ();
-		action->ReserveLinks ( 1 );
+		action->ReserveLinks ( 2 );
 		
-		action->SetLink ( 0, self, MOAITransformAttr::Pack ( ATTR_Z_ROT ), zRot, mode );
+		action->SetLink ( 0, self, MOAITransformAttr::Pack ( ATTR_X_ROT ), xRot, mode );
+		action->SetLink ( 1, self, MOAITransformAttr::Pack ( ATTR_Y_ROT ), yRot, mode );
+		action->SetLink ( 2, self, MOAITransformAttr::Pack ( ATTR_Z_ROT ), zRot, mode );
 		
 		action->SetLength ( delay );
 		action->Start ();
@@ -382,9 +396,11 @@ int MOAITransform::_moveRot ( lua_State* L ) {
 		return 1;
 	}
 	
+	self->mRot.mX += xRot;
+	self->mRot.mY += yRot;
 	self->mRot.mZ += zRot;
 	self->ScheduleUpdate ();
-	
+
 	return 0;
 }
 
@@ -396,6 +412,7 @@ int MOAITransform::_moveRot ( lua_State* L ) {
 	@in		MOAITransform self
 	@in		number xSclDelta	Delta to be added to x scale.
 	@in		number ySclDelta	Delta to be added to y scale.
+	@in		number zSclDelta	Delta to be added to z scale.
 	@in		number length		Length of animation in seconds.
 	@opt	number mode			The ease mode. One of MOAIEaseType.EASE_IN, MOAIEaseType.EASE_OUT, MOAIEaseType.FLAT MOAIEaseType.LINEAR,
 								MOAIEaseType.SMOOTH, MOAIEaseType.SOFT_EASE_IN, MOAIEaseType.SOFT_EASE_OUT, MOAIEaseType.SOFT_SMOOTH. Defaults to MOAIEaseType.SMOOTH.
@@ -407,6 +424,7 @@ int MOAITransform::_moveScl ( lua_State* L ) {
 
 	float xScl		= state.GetValue < float >( 2, 0.0f );
 	float yScl		= state.GetValue < float >( 3, 0.0f );
+	float zScl		= state.GetValue < float >( 3, 0.0f );
 	float delay		= state.GetValue < float >( 4, 0.0f );
 
 	if ( delay > 0.0f ) {
@@ -418,6 +436,7 @@ int MOAITransform::_moveScl ( lua_State* L ) {
 		
 		action->SetLink ( 0, self, MOAITransformAttr::Pack ( ATTR_X_SCL ), xScl, mode );
 		action->SetLink ( 1, self, MOAITransformAttr::Pack ( ATTR_Y_SCL ), yScl, mode );
+		action->SetLink ( 2, self, MOAITransformAttr::Pack ( ATTR_Z_SCL ), zScl, mode );
 		
 		action->SetLength ( delay );
 		action->Start ();
@@ -428,6 +447,7 @@ int MOAITransform::_moveScl ( lua_State* L ) {
 	
 	self->mScale.mX += xScl;
 	self->mScale.mY += yScl;
+	self->mScale.mZ += zScl;
 	self->ScheduleUpdate ();
 	
 	return 0;
@@ -849,6 +869,12 @@ bool MOAITransform::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 			case ATTR_Z_LOC:
 				this->mLoc.mZ = attrOp.Apply ( this->mLoc.mZ, op, MOAINode::ATTR_READ_WRITE );
 				return true;
+			case ATTR_X_ROT:
+				this->mRot.mX = attrOp.Apply ( this->mRot.mX, op, MOAINode::ATTR_READ_WRITE );
+				return true;
+			case ATTR_Y_ROT:
+				this->mRot.mY = attrOp.Apply ( this->mRot.mY, op, MOAINode::ATTR_READ_WRITE );
+				return true;
 			case ATTR_Z_ROT:
 				this->mRot.mZ = attrOp.Apply ( this->mRot.mZ, op, MOAINode::ATTR_READ_WRITE );
 				return true;
@@ -953,6 +979,8 @@ void MOAITransform::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "ATTR_X_LOC",			MOAITransformAttr::Pack ( ATTR_X_LOC ));
 	state.SetField ( -1, "ATTR_Y_LOC",			MOAITransformAttr::Pack ( ATTR_Y_LOC ));
 	state.SetField ( -1, "ATTR_Z_LOC",			MOAITransformAttr::Pack ( ATTR_Z_LOC ));
+	state.SetField ( -1, "ATTR_X_ROT",			MOAITransformAttr::Pack ( ATTR_X_ROT ));
+	state.SetField ( -1, "ATTR_Y_ROT",			MOAITransformAttr::Pack ( ATTR_Y_ROT ));
 	state.SetField ( -1, "ATTR_Z_ROT",			MOAITransformAttr::Pack ( ATTR_Z_ROT ));
 	state.SetField ( -1, "ATTR_X_SCL",			MOAITransformAttr::Pack ( ATTR_X_SCL ));
 	state.SetField ( -1, "ATTR_Y_SCL",			MOAITransformAttr::Pack ( ATTR_Y_SCL ));

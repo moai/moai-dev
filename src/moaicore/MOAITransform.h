@@ -82,6 +82,8 @@ public:
 		ATTR_Y_LOC,
 		ATTR_Z_LOC,
 		
+		ATTR_X_ROT,
+		ATTR_Y_ROT,
 		ATTR_Z_ROT,
 		
 		ATTR_X_SCL,

@@ -437,23 +437,15 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	void Perspective ( TYPE xfov, TYPE aspect, TYPE zn, TYPE zf ) {
-
-		float xScale = Cot ( xfov / 2.0f );
-		float yScale = xScale * aspect;
+	void Perspective ( TYPE xs, TYPE ys, TYPE zn, TYPE zf ) {
 		
-		// xScale      0           0                  0
-		// 0         yScale        0                  0
-		// 0           0    (zf+zn)/(zn-zf)  (2*zn*zf)/(zn-zf)
-		// 0           0          -1                  0
-		
-		m [ C0_R0 ] = xScale;
+		m [ C0_R0 ] = xs;
 		m [ C0_R1 ] = 0;
 		m [ C0_R2 ] = 0;
 		m [ C0_R3 ] = 0;
 		
 		m [ C1_R0 ] = 0;
-		m [ C1_R1 ] = yScale;
+		m [ C1_R1 ] = ys;
 		m [ C1_R2 ] = 0;
 		m [ C1_R3 ] = 0;
 		

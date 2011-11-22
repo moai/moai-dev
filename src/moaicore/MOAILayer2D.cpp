@@ -525,62 +525,16 @@ u32 MOAILayer2D::GetLocalFrame ( USRect& frame ) {
 //----------------------------------------------------------------//
 void MOAILayer2D::GetProjectionMtx ( USMatrix4x4& proj ) {
 
-	//proj.Perspective ( 90.0f * ( float )D2R, 1.0f, 0.0f, 1000.0f );
-
-	float zn = 1.0f;
-	float zf = 1000.0f;
-
-	float scl = ( zn + zf ) / ( zn - zf );
-	float trn = ( 2.0f * zn * zf ) / ( zn - zf );
-	float off = -1.0f;
-
-	//USMatrix4x4 trn;
-	//trn.Translate ( 0.0f, 0.0f, -1.0f );
-
-	proj.m [ USMatrix4x4::C0_R0 ] = 1.0f;
-	proj.m [ USMatrix4x4::C0_R1 ] = 0.0f;
-	proj.m [ USMatrix4x4::C0_R2 ] = 0.0f;
-	proj.m [ USMatrix4x4::C0_R3 ] = 0.0f;
+	// do the camera translation
+	float xs = Cot (( 60.0f * ( float )D2R ) / 2.0f );
+	float ys = xs * this->mViewport->GetAspect ();
 	
-	proj.m [ USMatrix4x4::C1_R0 ] = 0.0f;
-	proj.m [ USMatrix4x4::C1_R1 ] = 1.0f;
-	proj.m [ USMatrix4x4::C1_R2 ] = 0.0f;
-	proj.m [ USMatrix4x4::C1_R3 ] = 0.0f;
-	
-	proj.m [ USMatrix4x4::C2_R0 ] = 0.0f;
-	proj.m [ USMatrix4x4::C2_R1 ] = 0.0f;
-	proj.m [ USMatrix4x4::C2_R2 ] = scl;
-	proj.m [ USMatrix4x4::C2_R3 ] = -1.0f; // projection
-	
-	proj.m [ USMatrix4x4::C3_R0 ] = 0.0f;
-	proj.m [ USMatrix4x4::C3_R1 ] = 0.0f;
-	proj.m [ USMatrix4x4::C3_R2 ] = ( scl * off ) + trn;
-	proj.m [ USMatrix4x4::C3_R3 ] = -off;
+	float d = this->mViewport->Width () * 0.5f * xs;
+	proj.Translate ( 0.0f, 0.0f, -d );
 
-	//////proj.Prepend ( trn );
-
-	//////for ( u32 i = 0; i <= 99; ++i ) {
-
-	//	USVec4D test;
-	//	test.mX = 0.0f;
-	//	test.mY = 100.0f;
-	//	test.mZ = -100.0f;
-	//	test.mW = 1.0f;
-	//	
-	//	proj.Transform ( test );
-	//	
-	//	printf ( "z: %f\n", test.mZ  / test.mW );
-	//////}
-	////
-	//test.mX /= test.mW;
-	//test.mY /= test.mW;
-	//test.mZ /= test.mW;
-
-	if ( this->mViewport ) {
-		USMatrix4x4 mtx;
-		mtx.Init ( this->mViewport->GetProjMtx ());
-		proj.Append ( mtx );
-	}
+	USMatrix4x4 mtx;
+	mtx.Perspective ( xs, ys, 1.0f, 1000.0f );
+	proj.Append ( mtx );
 }
 
 //----------------------------------------------------------------//
