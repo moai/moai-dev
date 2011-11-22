@@ -153,6 +153,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	void					BeginDrawing			();
+	void					BeginLayer				();
 	void					BeginPrim				();
 	void					BeginPrim				( u32 primType );
 	void					ClearColorBuffer		( u32 color );

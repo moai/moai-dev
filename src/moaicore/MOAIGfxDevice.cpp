@@ -189,6 +189,10 @@ void MOAIGfxDevice::BeginDrawing () {
 	if ( this->mClearFlags ) {
 		glClear ( this->mClearFlags );
 	}
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDevice::BeginLayer () {
 
 	float width = ( float )this->mWidth;
 	float height = ( float )this->mHeight;

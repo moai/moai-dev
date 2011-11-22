@@ -779,11 +779,13 @@ void MOAISim::Render () {
 
 	this->mRenderCounter++;
 
+	MOAIGfxDevice::Get ().BeginDrawing ();
+
 	RenderPassIt passIt = this->mRenderPasses.Head ();
 	for ( ; passIt; passIt = passIt->Next ()) {
 		MOAIProp2D* renderPass = passIt->Data ();
 		
-		MOAIGfxDevice::Get ().BeginDrawing ();
+		MOAIGfxDevice::Get ().BeginLayer ();
 		renderPass->Draw ();
 	}
 	
