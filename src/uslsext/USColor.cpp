@@ -590,6 +590,15 @@ void USPixel::WritePixel ( void* stream, u32 pixel, u32 nBytes ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+void USColorVec::Add ( const USColorVec& c ) {
+
+	this->mR += c.mR;
+	this->mG += c.mG;
+	this->mB += c.mB;
+	this->mA += c.mA;
+}
+
+//----------------------------------------------------------------//
 void USColorVec::FromYUV ( float y, float u, float v ) {
 
 	this->mR = y + ( v * (( 1.0f - WR ) / V_MAX ));

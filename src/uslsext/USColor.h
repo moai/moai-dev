@@ -74,6 +74,7 @@ public:
 	float	mA;
 	
 	//----------------------------------------------------------------//
+	void			Add					( const USColorVec& c );
 	void			FromYUV				( float y, float u, float v );
 	float			GetLuma				();
 	void			Lerp				( const USColorVec& v0, const USColorVec& v1, float t );

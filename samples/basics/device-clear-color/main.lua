@@ -27,5 +27,5 @@ prop:moveRot ( 360, 1.5 )
 
 color = MOAIColor.new ()
 color:setColor ( 0, 0, 0, 1 )
-color:seekColor ( 1, 0, 0, 1, 1.5 )
+color:seekColor ( 0, 1, 0, 1, 1.5 )
 MOAIGfxDevice.setClearColor ( color )
