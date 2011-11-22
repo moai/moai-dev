@@ -74,6 +74,7 @@ public:
 	MOAIPartition*	GetPartitionTrait	();
 	USRect			GetBounds			();
 	bool			GetCellRect			( USRect* cellRect, USRect* paddedRect = 0 );
+	virtual bool	Inside				( USVec2D vec, float pad ) = 0;
 					MOAIProp			();
 	virtual			~MOAIProp			();
 	void			RegisterLuaClass	( MOAILuaState& state );
