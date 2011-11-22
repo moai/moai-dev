@@ -746,14 +746,19 @@ int MOAITransform::_setPiv ( lua_State* L ) {
 	@text	Sets the transform's rotation.
 	
 	@in		MOAITransform self
-	@in		number rot			Rotation in degrees.
+	@opt	number xRot			Default value is 0.
+	@opt	number yRot			Default value is 0.
+	@opt	number zRot			Default value is 0.
 	@out	nil
 */
 int MOAITransform::_setRot ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITransform, "UN" )
+	MOAI_LUA_SETUP ( MOAITransform, "U" )
 	
-	USVec3D rot = self->GetRot ();
-	rot.mZ = state.GetValue < float >( 2, 0.0f );
+	USVec3D rot;
+	
+	rot.mX = state.GetValue < float >( 2, 0.0f );
+	rot.mY = state.GetValue < float >( 3, 0.0f );
+	rot.mZ = state.GetValue < float >( 4, 0.0f );
 	
 	self->SetRot ( rot );
 	self->ScheduleUpdate ();

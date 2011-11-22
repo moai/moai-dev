@@ -528,12 +528,11 @@ void MOAILayer2D::GetProjectionMtx ( USMatrix4x4& proj ) {
 	//proj.Perspective ( 90.0f * ( float )D2R, 1.0f, 0.0f, 1000.0f );
 
 	float zn = 1.0f;
-	float zf = 100.0f;
-	//float d = 100.0f;
+	float zf = 1000.0f;
 
 	float scl = ( zn + zf ) / ( zn - zf );
 	float trn = ( 2.0f * zn * zf ) / ( zn - zf );
-	float off = -zn;
+	float off = -1.0f;
 
 	//USMatrix4x4 trn;
 	//trn.Translate ( 0.0f, 0.0f, -1.0f );
@@ -558,24 +557,24 @@ void MOAILayer2D::GetProjectionMtx ( USMatrix4x4& proj ) {
 	proj.m [ USMatrix4x4::C3_R2 ] = ( scl * off ) + trn;
 	proj.m [ USMatrix4x4::C3_R3 ] = -off;
 
-	////proj.Prepend ( trn );
+	//////proj.Prepend ( trn );
 
-	////for ( u32 i = 0; i <= 99; ++i ) {
+	//////for ( u32 i = 0; i <= 99; ++i ) {
 
-		USVec4D test;
-		test.mX = 0.0f;
-		test.mY = 0.0f;
-		test.mZ = 0.0f;
-		test.mW = 1.0f;
-		
-		proj.Transform ( test );
-		
-		printf ( "z: %f\n", test.mZ  / test.mW );
-	////}
-	//
-	////test.mX /= test.mW;
-	////test.mY /= test.mW;
-	////test.mZ /= test.mW;
+	//	USVec4D test;
+	//	test.mX = 0.0f;
+	//	test.mY = 100.0f;
+	//	test.mZ = -100.0f;
+	//	test.mW = 1.0f;
+	//	
+	//	proj.Transform ( test );
+	//	
+	//	printf ( "z: %f\n", test.mZ  / test.mW );
+	//////}
+	////
+	//test.mX /= test.mW;
+	//test.mY /= test.mW;
+	//test.mZ /= test.mW;
 
 	if ( this->mViewport ) {
 		USMatrix4x4 mtx;
