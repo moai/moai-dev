@@ -452,6 +452,22 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\moaicore\MOAICamera.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAICamera.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAICamera3D.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAICamera3D.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\moaicore\MOAIColor.cpp"
 				>
 			</File>
