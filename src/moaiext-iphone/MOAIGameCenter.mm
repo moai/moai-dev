@@ -36,7 +36,7 @@ int MOAIGameCenter::_authenticatePlayer ( lua_State* L ) {
 		// If Game Center is available, attempt to authenticate the local player
 		GKLocalPlayer *localPlayer = [ GKLocalPlayer localPlayer ];
 		[ localPlayer authenticateWithCompletionHandler: ^( NSError *error ) {
-			if ( [ error code ] == GKErrorNotSupported ) {
+			if ( [ error code ] == GKErrorNotSupported || [ error  code ] == GKErrorGameUnrecognized ) {
 				MOAIGameCenter::Get ().mIsGameCenterSupported = FALSE;
 			}
 			else if ([ GKLocalPlayer localPlayer ].isAuthenticated) {
