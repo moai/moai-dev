@@ -239,17 +239,29 @@ int MOAIWebView::_initWebView ( lua_State* L ) {
 	if ( self->mHasToolBar ) {
 				
 		self->mWebView = [[[ UIWebView alloc ] initWithFrame:CGRectMake ( left, top + TOOL_BAR_HEIGHT , width, height - TOOL_BAR_HEIGHT )] autorelease ];					
-		self->mWebView.transform = CGAffineTransformConcat ([ rootVC.view transform ], CGAffineTransformMakeRotation (( float )( M_PI / 2 + M_PI )));
-		
+		self->mWebView.transform = CGAffineTransformConcat ([ rootVC.view transform ], CGAffineTransformMakeRotation (( float )( -M_PI / 2 )));
+				
 		self->mToolBar.frame = CGRectMake( left, top, width, TOOL_BAR_HEIGHT );	
-		self->mToolBar.transform = CGAffineTransformConcat ([ rootVC.view transform ], CGAffineTransformMakeRotation(( float )( M_PI / 2 + M_PI )));
+		if ( rootVC.interfaceOrientation == UIInterfaceOrientationLandscapeLeft ) {
+			self->mToolBar.transform = CGAffineTransformConcat ([ rootVC.view transform ], CGAffineTransformMakeRotation(( float )( M_PI / 2 )));				
+			self->mWebView.transform = CGAffineTransformConcat ([ rootVC.view transform ], CGAffineTransformMakeRotation (( float )( M_PI / 2 )));
+		}
+		else {
+			self->mToolBar.transform = CGAffineTransformConcat ([ rootVC.view transform ], CGAffineTransformMakeRotation(( float )( -M_PI / 2 )));				
+			self->mWebView.transform = CGAffineTransformConcat ([ rootVC.view transform ], CGAffineTransformMakeRotation (( float )( -M_PI / 2 )));
+		}
 		self->mToolBar.hidden = hidden;		
 		[ rootVC.view addSubview:self->mToolBar ];	
 	}
 	else {
 	
-		self->mWebView = [[[ UIWebView alloc ] initWithFrame:CGRectMake ( left, top, width, height )] autorelease ];					
-		self->mWebView.transform = CGAffineTransformConcat ([ rootVC.view transform ], CGAffineTransformMakeRotation(( float )( M_PI / 2 + M_PI )));
+		self->mWebView = [[[ UIWebView alloc ] initWithFrame:CGRectMake ( left, top, width, height )] autorelease ];
+		if ( rootVC.interfaceOrientation == UIInterfaceOrientationLandscapeLeft ) {					
+			self->mWebView.transform = CGAffineTransformConcat ([ rootVC.view transform ], CGAffineTransformMakeRotation(( float )( -M_PI / 2 )));
+		}
+		else {
+			self->mWebView.transform = CGAffineTransformConcat ([ rootVC.view transform ], CGAffineTransformMakeRotation(( float )( -M_PI / 2 )));
+		}			
 	}
 		
 	[ self->mWebView setDelegate:self->mWebViewDelegate ];
