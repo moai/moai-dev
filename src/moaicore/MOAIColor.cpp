@@ -219,8 +219,13 @@ void MOAIColor::OnDepNodeUpdate () {
 	this->mColor = *this;
 
 	USColorVec color;
+	
 	if ( this->GetLinkedValue < USColorVec >( MOAIColorAttr::Pack ( INHERIT_COLOR ), color )) {
 		this->mColor.Modulate ( color );
+	}
+	
+	if ( this->GetLinkedValue < USColorVec >( MOAIColorAttr::Pack ( ADD_COLOR ), color )) {
+		this->mColor.Add ( color );
 	}
 }
 
@@ -234,6 +239,7 @@ void MOAIColor::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "ATTR_B_COL", MOAIColorAttr::Pack ( ATTR_B_COL ));
 	state.SetField ( -1, "ATTR_A_COL", MOAIColorAttr::Pack ( ATTR_A_COL ));
 	
+	state.SetField ( -1, "ADD_COLOR", MOAIColorAttr::Pack ( ADD_COLOR ));
 	state.SetField ( -1, "INHERIT_COLOR", MOAIColorAttr::Pack ( INHERIT_COLOR ));
 	state.SetField ( -1, "COLOR_TRAIT", MOAIColorAttr::Pack ( COLOR_TRAIT ));
 }

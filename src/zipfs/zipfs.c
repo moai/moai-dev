@@ -510,7 +510,7 @@ ZIPFSFILE* zipfs_fopen ( const char* filename, const char* mode ) {
 #ifdef MOAI_COMPILER_MSVC
 	errno_t zipfs_fopen_s ( ZIPFSFILE** fp, const char* filename, const char* mode ) {
 
-		*fp = fopen ( filename, mode );
+		*fp = zipfs_fopen ( filename, mode );
 		return errno;
 	}
 #endif

@@ -90,16 +90,6 @@ MOAIAction* MOAIActionMgr::AffirmRoot () {
 }
 
 //----------------------------------------------------------------//
-void MOAIActionMgr::Clear () {
-
-	if ( this->mRoot ) {
-		this->LuaRelease ( *this->mRoot );
-		this->mRoot = 0;
-	}
-	this->AffirmRoot ();
-}
-
-//----------------------------------------------------------------//
 u32 MOAIActionMgr::GetNextPass () {
 
 	this->mTotalPasses = this->mPass + 2;
@@ -120,7 +110,10 @@ MOAIActionMgr::MOAIActionMgr () :
 //----------------------------------------------------------------//
 MOAIActionMgr::~MOAIActionMgr () {
 
-	this->Clear ();
+	if ( this->mRoot ) {
+		this->LuaRelease ( *this->mRoot );
+		this->mRoot = 0;
+	}
 }
 
 //----------------------------------------------------------------//
