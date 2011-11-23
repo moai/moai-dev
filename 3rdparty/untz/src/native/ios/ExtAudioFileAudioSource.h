@@ -28,6 +28,7 @@ public:
     virtual void close();
 	virtual Int64 decodeData(float* buffer, UInt32 size);
 	virtual void setDecoderPosition(Int64 startFrame);
+	virtual void doneDecoding();
     
 protected:
     void setUpBuffers(float *buffer, UInt32 numChannels, UInt32 numFrames);

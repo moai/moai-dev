@@ -50,6 +50,7 @@ bool BufferedAudioSource::init(const RString& path, bool loadIntoMemory)
 		}
 		while(framesRead > 0);
 		mLoadedInMemory = loadIntoMemory; 
+		doneDecoding();
 	}
 	else
 	{

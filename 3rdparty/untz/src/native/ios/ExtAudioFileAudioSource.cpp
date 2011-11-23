@@ -33,6 +33,11 @@ ExtAudioFileAudioSource::~ExtAudioFileAudioSource()
 	close();
 }
 
+void ExtAudioFileAudioSource::doneDecoding()
+{
+	mReadBuffer.clear();
+}
+
 double ExtAudioFileAudioSource::getLength() 
 { 
     return (double)mTotalFrames / mClientFormat.mSampleRate;
