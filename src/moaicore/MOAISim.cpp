@@ -503,6 +503,21 @@ int MOAISim::_setLeakTrackingEnabled ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	setLongDelayThreshold
+	@text	Sets the long delay threshold. If the sim step falls behind
+			the given threshold, the deficit will be dropped: sim will
+			neither spin nor boost to catch up.
+
+	@opt	number longDelayThreshold		Default value is DEFAULT_LONG_DELAY_THRESHOLD.
+	@out	nil
+*/
+int MOAISim::_setLongDelayThreshold ( lua_State* L ) {
+	MOAILuaState state ( L );
+	MOAISim::Get ().mLongDelayThreshold = state.GetValue < double >( 1, DEFAULT_LONG_DELAY_THRESHOLD );
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	setLoopFlags
 	@text	Fine tune behavior of the simulation loop. MOAISim.SIM_LOOP_ALLOW_SPIN
 			will allow the simulation step to run multiple times per update to try
@@ -626,6 +641,7 @@ MOAISim::MOAISim () :
 	mFrameRateIdx ( 0 ),
 	mLoopFlags ( LOOP_FLAGS_DEFAULT ),
 	mBoostThreshold ( DEFAULT_BOOST_THRESHOLD ),
+	mLongDelayThreshold ( DEFAULT_LONG_DELAY_THRESHOLD ),
 	mCpuBudget ( DEFAULT_CPU_BUDGET ),
 	mStepMultiplier ( DEFAULT_STEP_MULTIPLIER ),
 	mTimerError ( 0.0 ) {
@@ -727,6 +743,7 @@ void MOAISim::RegisterLuaClass ( MOAILuaState& state ) {
 
 	state.SetField ( -1, "DEFAULT_STEPS_PER_SECOND", ( u32 )DEFAULT_STEPS_PER_SECOND );
 	state.SetField ( -1, "DEFAULT_BOOST_THRESHOLD", ( u32 )DEFAULT_BOOST_THRESHOLD );
+	state.SetField ( -1, "DEFAULT_LONG_DELAY_THRESHOLD", ( u32 )DEFAULT_LONG_DELAY_THRESHOLD );
 	state.SetField ( -1, "DEFAULT_CPU_BUDGET", ( u32 )DEFAULT_CPU_BUDGET );
 	state.SetField ( -1, "DEFAULT_STEP_MULTIPLIER", ( u32 )DEFAULT_STEP_MULTIPLIER );
 
@@ -757,6 +774,7 @@ void MOAISim::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "setHistogramEnabled",		_setHistogramEnabled },
 		{ "setLeakTrackingEnabled",		_setLeakTrackingEnabled },
 		{ "setListener",				&MOAIGlobalEventSource::_setListener < MOAISim > },
+		{ "setLongDelayThreshold",		_setLongDelayThreshold },
 		{ "setLoopFlags",				_setLoopFlags },
 		{ "setLuaAllocLogEnabled",		_setLuaAllocLogEnabled },
 		{ "setStep",					_setStep },
@@ -922,6 +940,13 @@ void MOAISim::Update () {
 	// 'gap' is the time left to make up between sim time and real time
 	// i.e. the time deficit
 	double gap = this->mRealTime - this->mSimTime;
+
+	// long delay lets us ignore gaps bigger than a certain threshold
+	if (( this->mLoopFlags & SIM_LOOP_LONG_DELAY ) && ( gap > ( this->mStep * this->mLongDelayThreshold ))) {
+		budget -= this->StepSim ( gap, 1 );
+		gap = 0.0f;
+		this->mRealTime = this->mSimTime;
+	}
 
 	// boost mode allows the sim to perform a large, variable-sized step to
 	// make up the entire time deficit - but only if the sim has fallen behind

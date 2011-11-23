@@ -28,10 +28,11 @@ class MOAIProp2D;
 	const LOOP_FLAGS_FIXED
 	const LOOP_FLAGS_MULTISTEP
 	
-	const DEFAULT_STEPS_PER_SECOND		Value is 60
-	const DEFAULT_BOOST_THRESHOLD		Value is 3
-	const DEFAULT_CPU_BUDGET			Value is 2
-	const DEFAULT_STEP_MULTIPLIER		Value is 1
+	const DEFAULT_STEPS_PER_SECOND			Value is 60
+	const DEFAULT_BOOST_THRESHOLD			Value is 3
+	const DEFAULT_LONG_DELAY_THRESHOLD		Value is 4
+	const DEFAULT_CPU_BUDGET				Value is 2
+	const DEFAULT_STEP_MULTIPLIER			Value is 1
 */
 class MOAISim :
 	public MOAIGlobalClass < MOAISim, MOAIGlobalEventSource >,
@@ -78,6 +79,7 @@ private:
 	
 	u32				mLoopFlags;
 	double			mBoostThreshold;
+	double			mLongDelayThreshold;
 	double			mCpuBudget;
 	u32				mStepMultiplier;
 	double			mTimerError;
@@ -109,6 +111,7 @@ private:
 	static int		_setCpuBudget				( lua_State* L );
 	static int		_setHistogramEnabled		( lua_State* L );
 	static int		_setLeakTrackingEnabled		( lua_State* L );
+	static int		_setLongDelayThreshold		( lua_State* L );
 	static int		_setLoopFlags				( lua_State* L );
 	static int		_setLuaAllocLogEnabled		( lua_State* L );
 	static int		_setStep					( lua_State* L );
@@ -131,7 +134,8 @@ public:
 		SIM_LOOP_ALLOW_SPIN			= 0x04,		// spins the update loop to use up any excess time available
 		SIM_LOOP_NO_DEFICIT			= 0x08,		// sim time never falls behind real time
 		SIM_LOOP_NO_SURPLUS			= 0x10,		// real time never falls behind sim time
-		SIM_LOOP_RESET_CLOCK		= 0x20,		// resets the time deficit then autoclears self (use after long load)
+		SIM_LOOP_LONG_DELAY			= 0x20,		// does not boost or skip in the event of a long delay
+		SIM_LOOP_RESET_CLOCK		= 0x40,		// resets the time deficit then autoclears self (use after long load)
 	};
 	
 	DECL_LUA_SINGLETON ( MOAISim )
@@ -140,12 +144,13 @@ public:
 	GET ( u32, RenderCounter, mRenderCounter )
 	GET ( double, Step, mStep )
 	
-	static const u32 LOOP_FLAGS_DEFAULT		= SIM_LOOP_ALLOW_SPIN;
+	static const u32 LOOP_FLAGS_DEFAULT		= SIM_LOOP_ALLOW_SPIN | SIM_LOOP_LONG_DELAY;
 	static const u32 LOOP_FLAGS_FIXED		= SIM_LOOP_FORCE_STEP | SIM_LOOP_NO_DEFICIT | SIM_LOOP_NO_SURPLUS;
 	static const u32 LOOP_FLAGS_MULTISTEP	= SIM_LOOP_ALLOW_SPIN | SIM_LOOP_NO_SURPLUS;
 	
 	static const u32 DEFAULT_STEPS_PER_SECOND		= 60;	// default sim step to 60hz
 	static const u32 DEFAULT_BOOST_THRESHOLD		= 3;	// sim must fall 3 steps behind before variable rate boost
+	static const u32 DEFAULT_LONG_DELAY_THRESHOLD	= 4;	// sim will not try to correct gaps longer than 4 steps
 	static const u32 DEFAULT_CPU_BUDGET				= 2;	// sim may spend up to 2 steps attempting to catch up during spin
 	static const u32 DEFAULT_STEP_MULTIPLIER		= 1;
 	
