@@ -229,7 +229,7 @@ u32 USColor::ConvertFromRGBA ( u32 color, Format format ) {
 	switch ( format ) {
 		
 		case A_8:
-			return ( color >> 18 ) & 0x000000FF;
+			return ( color >> 0x18 ) & 0x000000FF;
 		
 		case RGB_888:
 			return color & 0x00FFFFFF;
@@ -270,7 +270,7 @@ u32 USColor::ConvertToRGBA ( u32 color, Format format ) {
 	switch ( format ) {
 		
 		case A_8:
-			return ( color << 18 ) & 0xFF000000;
+			return ( color << 0x18 ) & 0xFF000000;
 		
 		case RGB_888:
 			return color | 0xFF000000;

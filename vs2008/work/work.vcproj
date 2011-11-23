@@ -367,6 +367,14 @@
 			>
 		</File>
 		<File
+			RelativePath="..\..\src\work\work-font-mipmap.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\work\work-font-mipmap.h"
+			>
+		</File>
+		<File
 			RelativePath="..\..\src\work\work-moai-zipfs.cpp"
 			>
 		</File>
