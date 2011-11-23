@@ -23,6 +23,7 @@ public:
 	//----------------------------------------------------------------//
 	virtual USMatrix4x4		GetProjMtx			( const MOAIViewport& viewport ) const = 0;
 	virtual USMatrix4x4		GetProjMtxInv		( const MOAIViewport& viewport ) const = 0;
+	USMatrix4x4				GetViewMtx			();
 							MOAICamera			();
 							~MOAICamera			();
 	void					RegisterLuaClass	( MOAILuaState& state );

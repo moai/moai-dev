@@ -427,9 +427,9 @@ void MOAILayer2D::Draw () {
 	}
 	gfxDevice.SetViewport ( viewportRect );
 	
-	USAffine3D camera;
-	this->GetCameraMtx ( camera );
-	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_VIEW_TRANSFORM, camera );
+	USMatrix4x4 view;
+	this->GetViewMtx ( view );
+	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_VIEW_TRANSFORM, view );
 	
 	USMatrix4x4 proj;
 	this->GetProjectionMtx ( proj );
@@ -453,7 +453,7 @@ void MOAILayer2D::Draw () {
 	}
 	
 	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM );
-	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_VIEW_TRANSFORM, camera );
+	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_VIEW_TRANSFORM, view );
 	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_PROJ_TRANSFORM, proj );
 	
 	if ( this->mPartition ) {
@@ -481,22 +481,6 @@ void MOAILayer2D::Draw () {
 		MOAIDebugLines::Get ().Draw ();
 	}
 	gfxDevice.Flush ();
-}
-
-//----------------------------------------------------------------//
-void MOAILayer2D::GetCameraMtx ( USAffine3D& camera ) {
-
-	if ( this->mCamera ) {
-		camera = this->mCamera->GetLocalToWorldMtx ();
-		
-		camera.m [ USAffine3D::C2_R0 ] *= this->mParallax.mX;
-		camera.m [ USAffine3D::C2_R1 ] *= this->mParallax.mY;
-		
-		camera.Inverse ();
-	}
-	else {
-		camera.Ident ();
-	}
 }
 
 //----------------------------------------------------------------//
@@ -538,13 +522,29 @@ void MOAILayer2D::GetProjectionMtx ( USMatrix4x4& proj ) {
 }
 
 //----------------------------------------------------------------//
+void MOAILayer2D::GetViewMtx ( USMatrix4x4& view ) {
+
+	if ( this->mCamera ) {
+		view.Init( this->mCamera->GetLocalToWorldMtx ());
+		
+		view.m [ USMatrix4x4::C2_R0 ] *= this->mParallax.mX;
+		view.m [ USMatrix4x4::C2_R1 ] *= this->mParallax.mY;
+		
+		view.Inverse ();
+	}
+	else {
+		view.Ident ();
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAILayer2D::GetWndToWorldMtx ( USAffine3D& wndToWorld ) {
 
 	if ( this->mViewport ) {
 		
-		USAffine3D camera;
-		this->GetCameraMtx ( camera );
-		wndToWorld = this->mViewport->GetWndToWorldMtx ( camera );
+		USMatrix4x4 view;
+		this->GetViewMtx ( view );
+		wndToWorld = this->mViewport->GetWndToWorldMtx ( view );
 	}
 	else {
 		wndToWorld.Ident ();
@@ -556,9 +556,9 @@ void MOAILayer2D::GetWorldToWndMtx ( USAffine3D& worldToWnd ) {
 
 	if ( this->mViewport ) {
 		
-		USAffine3D camera;
-		this->GetCameraMtx ( camera );
-		worldToWnd = this->mViewport->GetWorldToWndMtx ( camera );
+		USMatrix4x4 view;
+		this->GetViewMtx ( view );
+		worldToWnd = this->mViewport->GetWorldToWndMtx ( view );
 	}
 	else {
 		worldToWnd.Ident ();
