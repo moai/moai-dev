@@ -289,7 +289,7 @@ int MOAITransform::_moveLoc ( lua_State* L ) {
 		
 		action->SetLink ( 0, self, MOAITransformAttr::Pack ( ATTR_X_LOC ), xLoc, mode );
 		action->SetLink ( 1, self, MOAITransformAttr::Pack ( ATTR_Y_LOC ), yLoc, mode );
-		action->SetLink ( 2, self, MOAITransformAttr::Pack ( ATTR_Y_LOC ), zLoc, mode );
+		action->SetLink ( 2, self, MOAITransformAttr::Pack ( ATTR_Z_LOC ), zLoc, mode );
 		
 		action->SetLength ( delay );
 		action->Start ();

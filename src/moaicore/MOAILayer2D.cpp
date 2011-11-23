@@ -352,7 +352,7 @@ int MOAILayer2D::_wndToWorld ( lua_State* L ) {
 	loc.mX = state.GetValue < float >( 2, 0.0f );
 	loc.mY = state.GetValue < float >( 3, 0.0f );
 
-	USAffine3D wndToWorld;
+	USMatrix4x4 wndToWorld;
 	self->GetWndToWorldMtx ( wndToWorld );
 	wndToWorld.Transform ( loc );
 
@@ -379,7 +379,7 @@ int MOAILayer2D::_worldToWnd ( lua_State* L ) {
 	loc.mX = state.GetValue < float >( 2, 0.0f );
 	loc.mY = state.GetValue < float >( 3, 0.0f );
 
-	USAffine3D worldToWnd;
+	USMatrix4x4 worldToWnd;
 	self->GetWorldToWndMtx ( worldToWnd );
 	worldToWnd.Transform ( loc );
 
@@ -538,7 +538,7 @@ void MOAILayer2D::GetViewMtx ( USMatrix4x4& view ) {
 }
 
 //----------------------------------------------------------------//
-void MOAILayer2D::GetWndToWorldMtx ( USAffine3D& wndToWorld ) {
+void MOAILayer2D::GetWndToWorldMtx ( USMatrix4x4& wndToWorld ) {
 
 	if ( this->mViewport ) {
 		
@@ -552,7 +552,7 @@ void MOAILayer2D::GetWndToWorldMtx ( USAffine3D& wndToWorld ) {
 }
 
 //----------------------------------------------------------------//
-void MOAILayer2D::GetWorldToWndMtx ( USAffine3D& worldToWnd ) {
+void MOAILayer2D::GetWorldToWndMtx ( USMatrix4x4& worldToWnd ) {
 
 	if ( this->mViewport ) {
 		

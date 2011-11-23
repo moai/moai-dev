@@ -85,8 +85,8 @@ public:
 	void			Draw					();
 	float			GetFitting				( USRect& worldRect, float hPad, float vPad );
 	u32				GetLocalFrame			( USRect& frame );
-	void			GetWndToWorldMtx		( USAffine3D& wndToWorld );
-	void			GetWorldToWndMtx		( USAffine3D& worldToWnd );
+	void			GetWndToWorldMtx		( USMatrix4x4& wndToWorld );
+	void			GetWorldToWndMtx		( USMatrix4x4& worldToWnd );
 					MOAILayer2D				();
 					~MOAILayer2D			();
 	void			RegisterLuaClass		( MOAILuaState& state );

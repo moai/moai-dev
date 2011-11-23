@@ -58,17 +58,17 @@ void MOAILayerBridge2D::OnDepNodeUpdate () {
 	
 	if ( !( this->mSourceTransform && this->mSourceLayer && this->mDestLayer )) return; 
 	
-	this->mLocalToWorldMtx = this->mSourceTransform->GetLocalToWorldMtx ();
-	
-	USAffine3D mtx;
-	
-	this->mSourceLayer->GetWorldToWndMtx ( mtx );
-	this->mLocalToWorldMtx.Append ( mtx );
-	
-	this->mDestLayer->GetWndToWorldMtx ( mtx );
-	this->mLocalToWorldMtx.Append ( mtx );
-	
-	this->mWorldToLocalMtx.Inverse ( this->mLocalToWorldMtx );
+	//this->mLocalToWorldMtx = this->mSourceTransform->GetLocalToWorldMtx ();
+	//
+	//USAffine3D mtx;
+	//
+	//this->mSourceLayer->GetWorldToWndMtx ( mtx );
+	//this->mLocalToWorldMtx.Append ( mtx );
+	//
+	//this->mDestLayer->GetWndToWorldMtx ( mtx );
+	//this->mLocalToWorldMtx.Append ( mtx );
+	//
+	//this->mWorldToLocalMtx.Inverse ( this->mLocalToWorldMtx );
 }
 
 //----------------------------------------------------------------//

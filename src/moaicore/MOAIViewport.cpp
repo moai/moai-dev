@@ -142,9 +142,9 @@ float MOAIViewport::GetInvAspect () const {
 }
 
 //----------------------------------------------------------------//
-void MOAIViewport::GetNormToWndMtx ( USAffine3D& normToWnd ) const {
+void MOAIViewport::GetNormToWndMtx ( USMatrix4x4& normToWnd ) const {
 
-	USAffine3D mtx;
+	USMatrix4x4 mtx;
 	USRect rect = this->GetRect ();
 
 	float hWidth = rect.Width () * 0.5f;
@@ -158,11 +158,11 @@ void MOAIViewport::GetNormToWndMtx ( USAffine3D& normToWnd ) const {
 }
 
 //----------------------------------------------------------------//
-USAffine3D MOAIViewport::GetProjMtx () const {
+USMatrix4x4 MOAIViewport::GetProjMtx () const {
 
-	USAffine3D proj;
+	USMatrix4x4 proj;
 
-	USAffine3D mtx;
+	USMatrix4x4 mtx;
 	USRect rect = this->GetRect ();
 
 	// rotate
@@ -184,11 +184,11 @@ USAffine3D MOAIViewport::GetProjMtx () const {
 }
 
 //----------------------------------------------------------------//
-USAffine3D MOAIViewport::GetProjMtxInv () const {
+USMatrix4x4 MOAIViewport::GetProjMtxInv () const {
 
-	USAffine3D projInv;
+	USMatrix4x4 projInv;
 
-	USAffine3D mtx;
+	USMatrix4x4 mtx;
 	USRect rect = this->GetRect ();
 
 	// Inv Project
@@ -274,9 +274,9 @@ USVec2D MOAIViewport::GetUnits () const {
 }
 
 //----------------------------------------------------------------//
-void MOAIViewport::GetWndToNormMtx ( USAffine3D& wndToNorm ) const {
+void MOAIViewport::GetWndToNormMtx ( USMatrix4x4& wndToNorm ) const {
 
-	USAffine3D mtx;
+	USMatrix4x4 mtx;
 	USRect rect = this->GetRect ();
 
 	float hWidth = rect.Width () * 0.5f;
@@ -290,11 +290,11 @@ void MOAIViewport::GetWndToNormMtx ( USAffine3D& wndToNorm ) const {
 }
 
 //----------------------------------------------------------------//
-USAffine3D MOAIViewport::GetWndToWorldMtx ( const USAffine3D& view ) const {
+USMatrix4x4 MOAIViewport::GetWndToWorldMtx ( const USMatrix4x4& view ) const {
 
-	USAffine3D wndToWorld;
+	USMatrix4x4 wndToWorld;
 
-	USAffine3D mtx;
+	USMatrix4x4 mtx;
 	USRect rect = this->GetRect ();
 
 	float hWidth = rect.Width () * 0.5f;
@@ -316,11 +316,11 @@ USAffine3D MOAIViewport::GetWndToWorldMtx ( const USAffine3D& view ) const {
 }
 
 //----------------------------------------------------------------//
-USAffine3D MOAIViewport::GetWorldToWndMtx ( const USAffine3D& view ) const {
+USMatrix4x4 MOAIViewport::GetWorldToWndMtx ( const USMatrix4x4& view ) const {
 
-	USAffine3D worldToWnd;
+	USMatrix4x4 worldToWnd;
 
-	USAffine3D mtx;
+	USMatrix4x4 mtx;
 	USRect rect		= this->GetRect ();
 	
 	float hWidth	= this->Width () * 0.5f;
