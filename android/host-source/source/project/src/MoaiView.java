@@ -59,7 +59,7 @@ public class MoaiView extends GLSurfaceView {
 	protected static native void AKUExtLoadLuasocket			();
 	protected static native void AKUExtLoadLuasql				();
 	protected static native void AKUFinalize 					();
-	protected static native void AKUInit 						( MoaiView view );
+	protected static native void AKUInit 						( MoaiView view, MoaiActivity activity );
 	protected static native void AKUPause 						( boolean paused );
 	protected static native void AKURender	 					();
 	protected static native void AKUReserveInputDevices			( int total );
@@ -106,7 +106,7 @@ public class MoaiView extends GLSurfaceView {
 	}
 	
     //----------------------------------------------------------------//
-	public MoaiView ( Context context, int width, int height ) {
+	public MoaiView ( Context context, MoaiActivity activity, int width, int height ) {
 
 		super ( context );
 
@@ -116,7 +116,7 @@ public class MoaiView extends GLSurfaceView {
 		mWidth = width;
 		
 		moaiInit ();
-		AKUInit ( this );
+		AKUInit ( this, activity );
 	}
 
 	//----------------------------------------------------------------//

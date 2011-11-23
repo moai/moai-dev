@@ -117,15 +117,22 @@
 	cp -f 	host-source/project/res/values/strings.xml	build/res/values/strings.xml
 	fr build/res/values/strings.xml	@NAME@		$project_name
 
-	# copy MoaiActivity.java file and replace text inside
-	cp -f 	host-source/project/$package_path/MoaiActivity.java	build/$package_path/MoaiActivity.java
-	fr build/$package_path/MoaiActivity.java	@PACKAGE@	$package
+	# copy all src files
+	cp -rf	host-source/project/src build/
 
-	# copy MoaiView.java file and replace text inside
-	cp -f 	host-source/project/$package_path/MoaiView.java	build/$package_path/MoaiView.java
-	fr build/$package_path/MoaiView.java	@PACKAGE@		$package
-	fr build/$package_path/MoaiView.java	@WORKING_DIR@	$working_dir
-
+	# replace text inside required src files
+	fr build/$package_path/MoaiActivity.java				@PACKAGE@		$package
+	fr build/$package_path/MoaiBillingConstants.java		@PACKAGE@		$package
+	fr build/$package_path/MoaiBillingPurchaseObserver.java	@PACKAGE@		$package
+	fr build/$package_path/MoaiBillingReceiver.java			@PACKAGE@		$package
+	fr build/$package_path/MoaiBillingResponseHandler.java	@PACKAGE@		$package
+	fr build/$package_path/MoaiBillingSecurity.java			@PACKAGE@		$package
+	fr build/$package_path/MoaiBillingService.java			@PACKAGE@		$package
+	fr build/$package_path/MoaiView.java					@PACKAGE@		$package
+	fr build/$package_path/MoaiView.java					@WORKING_DIR@	$working_dir
+	fr build/$package_path/Base64.java						@PACKAGE@		$package
+	fr build/$package_path/Base64DecoderException.java		@PACKAGE@		$package
+	
 	# create run command for the init.lua file
 	working_dir_depth=`grep -o "\/" <<<"$working_dir" | wc -l`
 	(( working_dir_depth += 1 ))

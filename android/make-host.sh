@@ -89,7 +89,7 @@
 	rsync -r --exclude=.svn --exclude=.DS_Store host-source/d.res/. $new_host_dir/res
 
 	# copy source dir into new host dir
-	rsync -r --exclude=.svn --exclude=.DS_Store --exclude=src/ host-source/source/. $new_host_dir/host-source
+	rsync -r --exclude=.svn --exclude=.DS_Store --exclude=src/ --exclude=ext/ host-source/source/. $new_host_dir/host-source
 
 	# create package src directories
 	OLD_IFS=$IFS
@@ -103,6 +103,9 @@
 
 	# copy classes into new host dir
 	rsync -r --exclude=.svn --exclude=.DS_Store host-source/source/project/src/. $new_host_dir/host-source/project/$package_path
+
+	# copy external classes into new host dir
+	rsync -r --exclude=.svn --exclude=.DS_Store host-source/source/project/ext/. $new_host_dir/host-source/project/src
 
 	# inject the package path into the run script
 	sed -i.backup s%@SETTING_PACKAGE_PATH@%"$package_path"%g $new_host_dir/run-host.sh
