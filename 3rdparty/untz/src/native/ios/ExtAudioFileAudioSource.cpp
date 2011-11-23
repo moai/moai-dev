@@ -36,6 +36,7 @@ ExtAudioFileAudioSource::~ExtAudioFileAudioSource()
 void ExtAudioFileAudioSource::doneDecoding()
 {
 	mReadBuffer.clear();
+	std::vector<float>().swap(mReadBuffer);
 }
 
 double ExtAudioFileAudioSource::getLength() 
