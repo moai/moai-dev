@@ -33,7 +33,7 @@ private:
 	
 public:
 
-	enum {
+	enum SORT {
 		SORT_NONE,
 		SORT_PRIORITY_ASCENDING,
 		SORT_PRIORITY_DESCENDING,
