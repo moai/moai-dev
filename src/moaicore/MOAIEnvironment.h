@@ -49,7 +49,6 @@ private:
 	long				mScreenWidth;
 	long				mScreenHeight;
 	
-	long ( *getConnectivityFunc )( void );
 	cc8* ( *getGUIDfunc ) ( void );
 	
 	//----------------------------------------------------------------//

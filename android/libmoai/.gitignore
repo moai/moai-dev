@@ -3,3 +3,4 @@ libs/
 *.stackdump
 jni/src/packaged-moai.cpp
 jni/ArmModeDefined.mk
+jni/AppPlatformDefined.mk

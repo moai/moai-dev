@@ -15,3 +15,12 @@
 #----------------------------------------------------------------#
 
 	android_sdk_root=""
+	
+#----------------------------------------------------------------#
+# debug & release settings
+# you must define key store data in order to build for release
+#----------------------------------------------------------------#
+
+	debug=true
+	key_store=
+	key_alias=

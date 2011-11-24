@@ -7,14 +7,12 @@
 	project_name="untitled"
 
 #----------------------------------------------------------------#
-# debug & release settings
-# you must define key store data in order to build for release
+# version numbers
 #----------------------------------------------------------------#
 
-	debug=true
-	key_store=
-	key_alias=
-
+	versionCode="1"
+	versionName="0.5"
+	
 #----------------------------------------------------------------#
 # list of icon files
 #----------------------------------------------------------------#
