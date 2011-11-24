@@ -30,7 +30,7 @@ class MOAIProp2D;
 	
 	const DEFAULT_STEPS_PER_SECOND			Value is 60
 	const DEFAULT_BOOST_THRESHOLD			Value is 3
-	const DEFAULT_LONG_DELAY_THRESHOLD		Value is 4
+	const DEFAULT_LONG_DELAY_THRESHOLD		Value is 10
 	const DEFAULT_CPU_BUDGET				Value is 2
 	const DEFAULT_STEP_MULTIPLIER			Value is 1
 */
@@ -150,7 +150,7 @@ public:
 	
 	static const u32 DEFAULT_STEPS_PER_SECOND		= 60;	// default sim step to 60hz
 	static const u32 DEFAULT_BOOST_THRESHOLD		= 3;	// sim must fall 3 steps behind before variable rate boost
-	static const u32 DEFAULT_LONG_DELAY_THRESHOLD	= 4;	// sim will not try to correct gaps longer than 4 steps
+	static const u32 DEFAULT_LONG_DELAY_THRESHOLD	= 10;	// sim will not try to correct for long gaps
 	static const u32 DEFAULT_CPU_BUDGET				= 2;	// sim may spend up to 2 steps attempting to catch up during spin
 	static const u32 DEFAULT_STEP_MULTIPLIER		= 1;
 	
