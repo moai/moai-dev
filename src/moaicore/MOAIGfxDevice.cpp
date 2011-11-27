@@ -38,6 +38,77 @@ int MOAIGfxDevice::_isProgrammable ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	setClearColor
+	@text	At the start of each frame the device will by default automatically render a background color.  Using this function you can set the background color that is drawn each frame.  If you specify no arguments to this function, then automatic redraw of the background color will be turned off (i.e. the previous render will be used as the background).
+
+	@overload
+
+		@opt	number red			The red value of the color.
+		@opt	number green		The green value of the color.
+		@opt	number blue			The blue value of the color.
+		@opt	number alpha		The alpha value of the color.
+		@out	nil
+	
+	@overload
+	
+		@in		MOAIColor color
+		@out	nil
+*/
+int MOAIGfxDevice::_setClearColor ( lua_State* L ) {
+
+	MOAILuaState state ( L );
+	MOAIGfxDevice& device = MOAIGfxDevice::Get ();
+	
+	MOAIColor* color = state.GetLuaObject < MOAIColor >( 1 );
+	if ( color ) {
+		device.SetClearColor ( color );
+		device.mClearFlags |= GL_COLOR_BUFFER_BIT;
+		return 0;
+	}
+	
+	// don't clear the color
+	device.mClearFlags &= ~GL_COLOR_BUFFER_BIT;
+	device.SetClearColor ( 0 );
+
+	if ( state.GetTop () > 0 ) {
+	
+		float r = state.GetValue < float >( 1, 0.0f );
+		float g = state.GetValue < float >( 2, 0.0f );
+		float b = state.GetValue < float >( 3, 0.0f );
+		float a = state.GetValue < float >( 4, 1.0f );
+		
+		device.mClearColor = USColor::PackRGBA ( r, g, b, a );
+		device.mClearFlags |= GL_COLOR_BUFFER_BIT;
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	setClearDepth
+	@text	At the start of each frame the device will by default automatically
+			clear the depth buffer.  This function sets whether or not the depth
+			buffer should be cleared at the start of each frame.
+
+	@in		boolean clearDepth	Whether to clear the depth buffer each frame.
+	@out	nil
+*/
+int MOAIGfxDevice::_setClearDepth ( lua_State* L ) {
+
+	MOAILuaState state ( L );
+	MOAIGfxDevice& device = MOAIGfxDevice::Get ();
+	
+	bool clearDepth = state.GetValue < bool >( 1, false );
+	
+	if ( clearDepth ) {
+		device.mClearFlags |= GL_DEPTH_BUFFER_BIT;
+	}
+	else {
+		device.mClearFlags &= ~GL_DEPTH_BUFFER_BIT;
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	setPenColor
 
 	@in		number r
@@ -95,6 +166,33 @@ int MOAIGfxDevice::_setPointSize ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 void MOAIGfxDevice::BeginDrawing () {
+
+	if ( this->mClearFlags & GL_COLOR_BUFFER_BIT ) {
+	
+		USColorVec clearColor;
+		
+		if ( this->mClearColorNode ) {
+			clearColor = this->mClearColorNode->GetColorTrait ();
+		}
+		else {
+			clearColor.SetRGBA ( this->mClearColor );
+		}
+		
+		glClearColor (
+			clearColor.mR,
+			clearColor.mG,
+			clearColor.mB,
+			clearColor.mA 
+		);
+	}
+
+	if ( this->mClearFlags ) {
+		glClear ( this->mClearFlags );
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDevice::BeginLayer () {
 
 	float width = ( float )this->mWidth;
 	float height = ( float )this->mHeight;
@@ -168,6 +266,8 @@ void MOAIGfxDevice::Clear () {
 		this->mSize = 0;
 		this->mTop = 0;
 	}
+	
+	this->SetClearColor ( 0 );
 }
 
 //----------------------------------------------------------------//
@@ -576,7 +676,10 @@ MOAIGfxDevice::MOAIGfxDevice () :
 	mIsProgrammable ( false ),
 	mIsFramebufferSupported ( 0 ),
 	mDefaultFrameBuffer ( 0 ),
-	mTextureMemoryUsage ( 0 ) {
+	mTextureMemoryUsage ( 0 ),
+	mClearFlags ( GL_COLOR_BUFFER_BIT ),
+	mClearColor ( 0xff000000 ),
+	mClearColorNode ( 0 ) {
 	
 	RTTI_SINGLE ( MOAIGlobalEventSource )
 	
@@ -606,6 +709,8 @@ void MOAIGfxDevice::RegisterLuaClass ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "isProgrammable",				_isProgrammable },
+		{ "setClearColor",				_setClearColor },
+		{ "setClearDepth",				_setClearDepth },
 		{ "setListener",				&MOAIGlobalEventSource::_setListener < MOAIGfxDevice > },
 		{ "setPenColor",				_setPenColor },
 		{ "setPenWidth",				_setPenWidth },
@@ -740,6 +845,21 @@ void MOAIGfxDevice::SetBlendMode ( int srcFactor, int dstFactor ) {
 	blendMode.SetBlend ( srcFactor, dstFactor );
 	
 	this->SetBlendMode ( blendMode );
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDevice::SetClearColor ( MOAIColor* color ) {
+
+	if ( this->mClearColorNode != color ) {
+
+		if ( this->mClearColorNode ) {
+			this->LuaRelease ( *this->mClearColorNode );
+		}
+		if ( color ) {
+			this->LuaRetain ( *color );
+		}
+		this->mClearColorNode = color;
+	}
 }
 
 //----------------------------------------------------------------//

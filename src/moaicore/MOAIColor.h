@@ -48,6 +48,7 @@ public:
 		ATTR_B_COL,
 		ATTR_A_COL,
 		
+		ADD_COLOR,
 		INHERIT_COLOR,
 		COLOR_TRAIT,
 		

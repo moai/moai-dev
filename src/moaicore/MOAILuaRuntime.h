@@ -19,11 +19,11 @@ class MOAILuaRuntime :
 private:
 
 	typedef STLMap < MOAILuaObject*, STLString >	LeakMap;
-	typedef STLArray < MOAILuaObject* >			LeakPtrList;
-	typedef STLMap < STLString, LeakPtrList >	LeakStackMap;
+	typedef STLArray < MOAILuaObject* >				LeakPtrList;
+	typedef STLMap < STLString, LeakPtrList >		LeakStackMap;
 
 	typedef STLMap < STLString, size_t >		HistMap;
-	typedef STLSet < MOAILuaObject* >				HistSet;
+	typedef STLSet < MOAILuaObject* >			HistSet;
 
 	bool				mHistogramEnabled;
 	HistSet				mHistSet;
@@ -35,7 +35,7 @@ private:
 	MOAILuaRefTable		mStrongRefTable;
 
 	MOAILuaRef			mTraceback;
-	MOAILuaState			mMainState;
+	MOAILuaState		mMainState;
 
 	size_t				mTotalBytes;
 	size_t				mObjectCount;			// All MOAIObjects, whether or not bound to Lua

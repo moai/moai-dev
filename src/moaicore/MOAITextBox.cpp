@@ -208,6 +208,21 @@ int MOAITextBox::_setFont ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	setLineSpacing
+	@text	Sets the scale of spacing between lines. '1' uses the fon't default spacing.
+
+	@in		MOAITextBox self
+	@in		number lineSpacing		Default value is 1.
+*/
+int MOAITextBox::_setLineSpacing ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextBox, "U" )
+	
+	self->mLineSpacing = state.GetValue < float >( 2, 1.0f );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	setRect
 	@text	Sets the rectangular area for this text box.
 
@@ -453,9 +468,10 @@ void MOAITextBox::Layout () {
 	MOAITextFrame textFrame;
 	
 	textFrame.SetAlignment ( this->mJustify );
-	textFrame.SetPoints ( this->mPoints );
 	textFrame.SetFrame ( this->mFrame );
 	textFrame.SetFont ( this->mFont );
+	textFrame.SetPoints ( this->mPoints );
+	textFrame.SetLineSpacing ( this->mLineSpacing );
 	
 	textFrame.SetCurves ( this->mCurves, this->mCurves.Size ());
 	
@@ -471,6 +487,7 @@ void MOAITextBox::Layout () {
 
 //----------------------------------------------------------------//
 MOAITextBox::MOAITextBox () :
+	mLineSpacing ( 1.0f ),
 	mText ( "" ),
 	mTextLength ( 0 ),
 	mJustify ( MOAIFont::LEFT_JUSTIFY ),
@@ -570,24 +587,25 @@ void MOAITextBox::RegisterLuaFuncs ( MOAILuaState& state ) {
 	MOAIAction::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
-		{ "clearCurves",		_clearCurves },
-		{ "getLineSize",		_getLineSize },
-		{ "getStringBounds",	_getStringBounds },
-		{ "more",				_more },
-		{ "nextPage",			_nextPage },
-		{ "reserveCurves",		_reserveCurves },
-		{ "revealAll",			_revealAll },
-		{ "setAlignment",		_setAlignment },
-		{ "setStringColor",		_setStringColor },
-		{ "setCurve",			_setCurve },
-		{ "setFont",			_setFont },
-		{ "setRect",			_setRect },
-		{ "setReveal",			_setReveal },
-		{ "setSpeed",			_setSpeed },
-		{ "setString",			_setString },
-		{ "setTextSize",		_setTextSize },
-		{ "setYFlip",			_setYFlip },
-		{ "spool",				_spool },
+		{ "clearCurves",			_clearCurves },
+		{ "getLineSize",			_getLineSize },
+		{ "getStringBounds",		_getStringBounds },
+		{ "more",					_more },
+		{ "nextPage",				_nextPage },
+		{ "reserveCurves",			_reserveCurves },
+		{ "revealAll",				_revealAll },
+		{ "setAlignment",			_setAlignment },
+		{ "setCurve",				_setCurve },
+		{ "setFont",				_setFont },
+		{ "setLineSpacing",			_setLineSpacing },
+		{ "setRect",				_setRect },
+		{ "setReveal",				_setReveal },
+		{ "setSpeed",				_setSpeed },
+		{ "setString",				_setString },
+		{ "setStringColor",			_setStringColor },
+		{ "setTextSize",			_setTextSize },
+		{ "setYFlip",				_setYFlip },
+		{ "spool",					_spool },
 		{ NULL, NULL }
 	};
 	

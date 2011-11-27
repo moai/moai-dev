@@ -17,6 +17,28 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+u32 USColor::Average ( u32 c0, u32 c1 ) {
+	
+	u32 r = (( c0 & 0xFF ) + ( c1 & 0xFF )) >> 1;
+	u32 g = ((( c0 >> 0x08 ) & 0xFF ) + (( c1 >> 0x08 ) & 0xFF )) >> 1;
+	u32 b = ((( c0 >> 0x10 ) & 0xFF ) + (( c1 >> 0x10 ) & 0xFF )) >> 1;
+	u32 a = ((( c0 >> 0x18 ) & 0xFF ) + (( c1 >> 0x18 ) & 0xFF )) >> 1;
+	
+	return r + ( g << 0x08 ) + ( b << 0x10 ) + ( a << 0x18 );
+}
+
+//----------------------------------------------------------------//
+u32 USColor::Average ( u32 c0, u32 c1, u32 c2, u32 c3 ) {
+	
+	u32 r = (( c0 & 0xFF ) + ( c1 & 0xFF ) + ( c2 & 0xFF ) + ( c3 & 0xFF )) >> 2;
+	u32 g = ((( c0 >> 0x08 ) & 0xFF ) + (( c1 >> 0x08 ) & 0xFF ) + (( c2 >> 0x08 ) & 0xFF ) + (( c3 >> 0x08 ) & 0xFF )) >> 2;
+	u32 b = ((( c0 >> 0x10 ) & 0xFF ) + (( c1 >> 0x10 ) & 0xFF ) + (( c2 >> 0x10 ) & 0xFF ) + (( c3 >> 0x10 ) & 0xFF )) >> 2;
+	u32 a = ((( c0 >> 0x18 ) & 0xFF ) + (( c1 >> 0x18 ) & 0xFF ) + (( c2 >> 0x18 ) & 0xFF ) + (( c3 >> 0x18 ) & 0xFF )) >> 2;
+	
+	return r + ( g << 0x08 ) + ( b << 0x10 ) + ( a << 0x18 );
+}
+
+//----------------------------------------------------------------//
 u32 USColor::BilerpFixed ( u32 c0, u32 c1, u32 c2, u32 c3, u8 xt, u8 yt ) {
 
 	u32 s0 = USColor::LerpFixed ( c0, c1, xt );
@@ -207,7 +229,7 @@ u32 USColor::ConvertFromRGBA ( u32 color, Format format ) {
 	switch ( format ) {
 		
 		case A_8:
-			return ( color >> 18 ) & 0x000000FF;
+			return ( color >> 0x18 ) & 0x000000FF;
 		
 		case RGB_888:
 			return color & 0x00FFFFFF;
@@ -248,7 +270,7 @@ u32 USColor::ConvertToRGBA ( u32 color, Format format ) {
 	switch ( format ) {
 		
 		case A_8:
-			return ( color << 18 ) & 0xFF000000;
+			return ( color << 0x18 ) & 0xFF000000;
 		
 		case RGB_888:
 			return color | 0xFF000000;
@@ -566,6 +588,15 @@ void USPixel::WritePixel ( void* stream, u32 pixel, u32 nBytes ) {
 //================================================================//
 // USColorVec
 //================================================================//
+
+//----------------------------------------------------------------//
+void USColorVec::Add ( const USColorVec& c ) {
+
+	this->mR += c.mR;
+	this->mG += c.mG;
+	this->mB += c.mB;
+	this->mA += c.mA;
+}
 
 //----------------------------------------------------------------//
 void USColorVec::FromYUV ( float y, float u, float v ) {

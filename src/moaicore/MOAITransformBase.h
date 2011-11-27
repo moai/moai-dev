@@ -47,6 +47,9 @@ public:
 		TOTAL_ATTR,
 	};
 	
+	GET ( float, WorldXLoc, mLocalToWorldMtx.m [ USAffine2D::C2_R0 ])
+	GET ( float, WorldYLoc, mLocalToWorldMtx.m [ USAffine2D::C2_R1 ])
+	
 	//----------------------------------------------------------------//
 	bool					ApplyAttrOp					( u32 attrID, MOAIAttrOp& attrOp, u32 op );
 	const USAffine2D&		GetLocalToWorldMtx			();

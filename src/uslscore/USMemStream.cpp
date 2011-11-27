@@ -185,6 +185,8 @@ USMemStream::~USMemStream () {
 //----------------------------------------------------------------//
 u32 USMemStream::WriteBytes ( const void* buffer, u32 size ) {
 
+	if ( !size ) return 0;
+
 	u32 cursor0 = this->mCursor;
 	u32 cursor1 = cursor0 + size;
 

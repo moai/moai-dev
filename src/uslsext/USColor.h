@@ -22,6 +22,8 @@ namespace USColor {
 	};
 	
 	//----------------------------------------------------------------//
+	u32			Average				( u32 c0, u32 c1 );
+	u32			Average				( u32 c0, u32 c1, u32 c2, u32 c3 );
 	u32			BilerpFixed			( u32 c0, u32 c1, u32 c2, u32 c3, u8 xt, u8 yt );
 	void		Convert				( void* dest, Format destFmt, const void* src, Format srcFmt, u32 nColors );
 	u32			ConvertFromRGBA		( u32 color, Format format );
@@ -72,6 +74,7 @@ public:
 	float	mA;
 	
 	//----------------------------------------------------------------//
+	void			Add					( const USColorVec& c );
 	void			FromYUV				( float y, float u, float v );
 	float			GetLuma				();
 	void			Lerp				( const USColorVec& v0, const USColorVec& v1, float t );

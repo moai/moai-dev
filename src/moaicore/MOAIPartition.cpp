@@ -231,7 +231,7 @@ int MOAIPartition::_sortedPropListForPoint ( lua_State* L ) {
 	
 	u32 total = self->GatherProps ( buffer, vec, 0 );
 	if ( total ) {
-		buffer.Sort ( MOAIPartitionResultBuffer::SORT_PRIORITY ); // TODO: pass in as param
+		buffer.Sort ( MOAIPartitionResultBuffer::SORT_PRIORITY_ASCENDING ); // TODO: pass in as param
 		buffer.PushResultsList ( L );
 		return 1;
 	}
@@ -263,7 +263,7 @@ int MOAIPartition::_sortedPropListForRect ( lua_State* L ) {
 	
 	u32 total = self->GatherProps ( buffer, rect, 0 );
 	if ( total ) {
-		buffer.Sort ( MOAIPartitionResultBuffer::SORT_PRIORITY ); // TODO: pass in as param
+		buffer.Sort ( MOAIPartitionResultBuffer::SORT_PRIORITY_ASCENDING ); // TODO: pass in as param
 		buffer.PushResultsList ( L );
 		return 1;
 	}

@@ -19,6 +19,14 @@ class MOAITexture;
 //================================================================//
 /**	@name	MOAILayer2D
 	@text	2D scene controls class.
+	
+	@const	SORT_NONE
+	@const	SORT_PRIORITY_ASCENDING
+	@const	SORT_PRIORITY_DESCENDING
+	@const	SORT_X_ASCENDING
+	@const	SORT_X_DESCENDING
+	@const	SORT_Y_ASCENDING
+	@const	SORT_Y_DESCENDING
 */
 class MOAILayer2D :
 	public virtual MOAIProp2D {
@@ -27,7 +35,6 @@ private:
 	MOAILuaSharedPtr < MOAITransformBase >	mCamera;
 	MOAILuaSharedPtr < MOAIViewport >		mViewport;
 	MOAILuaSharedPtr < MOAIPartition >		mPartition;
-
 	MOAILuaSharedPtr < MOAITexture >		mFrameBuffer;
 
 	#if USE_CHIPMUNK
@@ -38,13 +45,17 @@ private:
 		MOAILuaSharedPtr < MOAIBox2DWorld >	mBox2DWorld;
 	#endif
 
-	USVec2D							mParallax;
-	bool							mShowDebugLines;
+	USVec2D		mParallax;
+	bool		mShowDebugLines;
+	u32			mSortMode;
+
+	USVec3D		mSortScale;
 
 	//----------------------------------------------------------------//
 	static int	_clear				( lua_State* L );
 	static int	_getFitting			( lua_State* L );
 	static int	_getPartition		( lua_State* L );
+	static int	_getSortMode		( lua_State* L );
 	static int	_insertProp			( lua_State* L );
 	static int	_removeProp			( lua_State* L );
 	static int	_setBox2DWorld		( lua_State* L );
@@ -53,6 +64,8 @@ private:
 	static int	_setFrameBuffer		( lua_State* L );
 	static int	_setParallax		( lua_State* L );
 	static int	_setPartition		( lua_State* L );
+	static int	_setSortMode		( lua_State* L );
+	static int	_setSortScale		( lua_State* L );
 	static int	_setViewport		( lua_State* L );
 	static int	_showDebugLines		( lua_State* L );
 	static int	_wndToWorld			( lua_State* L );

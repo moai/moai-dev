@@ -52,7 +52,9 @@ void MOAIPartitionCell::GatherProps ( MOAIPartitionResultBuffer& results, MOAIPr
 			if ( prop->mCellSize > 0.0f ) {
 		
 				if ( prop->mBounds.Contains ( point )) {
-					results.PushResult ( *prop );
+					if ( prop->Inside ( point, 0.0f )) {
+						results.PushResult ( *prop );
+					}
 				}
 			}
 			else {

@@ -33,6 +33,7 @@ private:
 	static const float DEFAULT_SPOOL_SPEED;
 
 	MOAILuaSharedPtr < MOAIFont > mFont;
+	float				mLineSpacing;
 	
 	USRect				mFrame;
 
@@ -57,24 +58,25 @@ private:
 	USLeanArray < MOAIAnimCurve* >	mCurves;
 	
 	//----------------------------------------------------------------//
-	static int	_clearCurves		( lua_State* L );
-	static int	_getLineSize		( lua_State* L );
-	static int	_getStringBounds	( lua_State* L );
-	static int	_more				( lua_State* L );
-	static int	_nextPage			( lua_State* L );
-	static int	_revealAll			( lua_State* L );
-	static int	_reserveCurves		( lua_State* L );
-	static int	_setAlignment		( lua_State* L );
-	static int	_setCurve			( lua_State* L );
-	static int	_setFont			( lua_State* L );
-	static int	_setRect			( lua_State* L );
-	static int	_setReveal			( lua_State* L );
-	static int	_setSpeed			( lua_State* L );
-	static int	_setString			( lua_State* L );
-	static int	_setStringColor		( lua_State* L );
-	static int	_setTextSize		( lua_State* L );
-	static int	_setYFlip			( lua_State* L );
-	static int	_spool				( lua_State* L );
+	static int	_clearCurves			( lua_State* L );
+	static int	_getLineSize			( lua_State* L );
+	static int	_getStringBounds		( lua_State* L );
+	static int	_more					( lua_State* L );
+	static int	_nextPage				( lua_State* L );
+	static int	_revealAll				( lua_State* L );
+	static int	_reserveCurves			( lua_State* L );
+	static int	_setAlignment			( lua_State* L );
+	static int	_setCurve				( lua_State* L );
+	static int	_setFont				( lua_State* L );
+	static int	_setLineSpacing			( lua_State* L );
+	static int	_setRect				( lua_State* L );
+	static int	_setReveal				( lua_State* L );
+	static int	_setSpeed				( lua_State* L );
+	static int	_setString				( lua_State* L );
+	static int	_setStringColor			( lua_State* L );
+	static int	_setTextSize			( lua_State* L );
+	static int	_setYFlip				( lua_State* L );
+	static int	_spool					( lua_State* L );
 	
 	//----------------------------------------------------------------//
 	void			Layout					();

@@ -1,4 +1,5 @@
 #include <work/work-bundled-lua.h>
+#include <work/work-font-mipmap.h>
 #include <work/work-moai-zipfs.h>
 #include <work/work-zipfs.h>
 #include <work/work-zipfs-fscanf.h>
@@ -7,5 +8,5 @@
 //----------------------------------------------------------------//
 int main ( int argc, char** argv ) {
 
-	return work_bundled_lua ( argc, argv );
+	return work_font_mipmap ( argc, argv );
 }

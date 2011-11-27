@@ -19,13 +19,16 @@
 
 	#define GET_ENV() 	\
 		JNIEnv* env; 	\
-		jvm->GetEnv ( ( void** )&env, JNI_VERSION_1_4 );
+		jvm->GetEnv (( void** )&env, JNI_VERSION_1_4 );
 
-	#define GET_STRING(jstr, cstr) \
-		const char* cstr = env->GetStringUTFChars( jstr, NULL );
+	#define GET_CSTRING(jstr, cstr) \
+		const char* cstr = env->GetStringUTFChars ( jstr, NULL );
 
-	#define RELEASE_STRING(jstr, cstr) \
+	#define RELEASE_CSTRING(jstr, cstr) \
 		env->ReleaseStringUTFChars ( jstr, cstr );
+		
+	#define GET_JSTRING(cstr, jstr) \
+		jstring jstr = env->NewStringUTF (( const char* )cstr );
 		
 	#define PRINT(str) \
 		__android_log_write ( ANDROID_LOG_INFO, "MoaiLog", str );
@@ -36,9 +39,16 @@
 
 	JavaVM* 		jvm;
 
-	jmethodID 		mGenerateGuidFunc;
 	jobject			mMoaiView;
-
+	jmethodID 		mGenerateGuidFunc;
+	
+	jobject			mMoaiActivity;
+	jmethodID 		mCheckBillingSupportedFunc;
+	jmethodID		mRequestPurchaseFunc;
+	jmethodID		mConfirmNotificationFunc;
+	jmethodID		mRestoreTransactionsFunc;
+	jmethodID		mSetMarketPublicKeyFunc;
+	
 	//----------------------------------------------------------------//
 	int JNI_OnLoad ( JavaVM* vm, void* reserved ) {
     
@@ -46,6 +56,59 @@
 		return JNI_VERSION_1_4;
 	}
 		
+//================================================================//
+// In-App Billing callbacks
+//================================================================//
+
+	bool CheckBillingSupported () {
+		// get environment
+		GET_ENV ();
+
+		bool retVal = ( bool )env->CallObjectMethod ( mMoaiActivity , mCheckBillingSupportedFunc );
+
+		return retVal;
+	}
+	
+	bool RequestPurchase ( const char * identifier ) {
+		// get environment
+		GET_ENV ();
+
+		GET_JSTRING(identifier, jstr);
+
+		bool retVal = ( bool )env->CallObjectMethod ( mMoaiActivity , mRequestPurchaseFunc, jstr );
+
+		return retVal;
+	}	
+
+	bool ConfirmNotification ( const char * notification ) {
+		// get environment
+		GET_ENV ();
+
+		GET_JSTRING(notification, jstr);
+
+		bool retVal = ( bool )env->CallObjectMethod ( mMoaiActivity , mConfirmNotificationFunc, jstr );
+
+		return retVal;
+	}
+		
+	bool RestoreTransactions () {
+		// get environment
+		GET_ENV ();
+
+		bool retVal = ( bool )env->CallObjectMethod ( mMoaiActivity , mRestoreTransactionsFunc );
+
+		return retVal;
+	}
+	
+	void SetMarketPublicKey ( const char * key ) {
+		// get environment
+		GET_ENV ();
+
+		GET_JSTRING(key, jstr);
+
+		env->CallObjectMethod ( mMoaiActivity , mSetMarketPublicKeyFunc, jstr );
+	}
+	
 //================================================================//
 // Generate GUID callback
 //================================================================//
@@ -60,13 +123,13 @@
 		jstring jguid = ( jstring )env->CallObjectMethod ( mMoaiView, mGenerateGuidFunc );
 
 		// convert jstring to cstring
-		GET_STRING ( jguid, guid );
+		GET_CSTRING ( jguid, guid );
 
 		char buf [ 512 ];
 		strcpy ( buf, guid );
 		const char* retVal = buf;
 		
-		RELEASE_STRING ( jguid, guid );
+		RELEASE_CSTRING ( jguid, guid );
 
 		// return guid string
 		return retVal;
@@ -143,7 +206,7 @@
 	}
 
 	//----------------------------------------------------------------//
-	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUInit ( JNIEnv* env, jclass obj, jobject moaiView ) {
+	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUInit ( JNIEnv* env, jclass obj, jobject moaiView, jobject moaiActivity ) {
 
 		// create MOAIApp class
 		MOAIApp::Affirm ();
@@ -154,15 +217,30 @@
 		jclass moaiViewClass = env->GetObjectClass ( mMoaiView );
 		
 		mGenerateGuidFunc = env->GetMethodID ( moaiViewClass, "getGUID", "()Ljava/lang/String;" );
+
+		MOAIApp::Get ().SetCheckBillingSupportedFunc( &CheckBillingSupported );
+		MOAIApp::Get ().SetRequestPurchaseFunc( &RequestPurchase );
+		MOAIApp::Get ().SetConfirmNotificationFunc( &ConfirmNotification );
+		MOAIApp::Get ().SetRestoreTransactionsFunc( &RestoreTransactions );
+		MOAIApp::Get ().SetMarketPublicKeyFunc( &SetMarketPublicKey );
+
+		mMoaiActivity = ( jobject ) env->NewGlobalRef ( moaiActivity );
+		jclass moaiActivityClass = env->GetObjectClass ( mMoaiActivity );
+
+		mCheckBillingSupportedFunc = env->GetMethodID ( moaiActivityClass, "checkBillingSupported", "()Z" );
+		mRequestPurchaseFunc = env->GetMethodID ( moaiActivityClass, "requestPurchase", "(Ljava/lang/String;)Z" );
+		mConfirmNotificationFunc = env->GetMethodID ( moaiActivityClass, "confirmNotification", "(Ljava/lang/String;)Z" );
+		mRestoreTransactionsFunc = env->GetMethodID ( moaiActivityClass, "restoreTransactions", "()Z" );
+		mSetMarketPublicKeyFunc = env->GetMethodID ( moaiActivityClass, "setMarketPublicKey", "(Ljava/lang/String;)V" );
 	}
 
 	//----------------------------------------------------------------//
 	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiActivity_AKUMountVirtualDirectory ( JNIEnv* env, jclass obj, jstring jvirtualPath, jstring jarchive ) {
-		GET_STRING ( jvirtualPath, virtualPath );
-		GET_STRING ( jarchive, archive );
+		GET_CSTRING ( jvirtualPath, virtualPath );
+		GET_CSTRING ( jarchive, archive );
 		AKUMountVirtualDirectory ( virtualPath, archive );
-		RELEASE_STRING ( jvirtualPath, virtualPath );
-		RELEASE_STRING ( jarchive, archive );
+		RELEASE_CSTRING ( jvirtualPath, virtualPath );
+		RELEASE_CSTRING ( jarchive, archive );
 	}
 
 	//----------------------------------------------------------------//
@@ -187,9 +265,9 @@
 
 	//----------------------------------------------------------------//
 	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKURunScript ( JNIEnv* env, jclass obj, jstring jfilename ) {
-		GET_STRING ( jfilename, filename );
+		GET_CSTRING ( jfilename, filename );
 		AKURunScript ( filename );
-		RELEASE_STRING ( jfilename, filename );
+		RELEASE_CSTRING ( jfilename, filename );
 	}
 
 	//----------------------------------------------------------------//
@@ -212,18 +290,18 @@
 		moaiEnv.SetGUIDFunc ( &GenerateGUID );
 
 		// convert jstrings to cstrings
-		GET_STRING ( jappName, appName );
-		GET_STRING ( jappId, appId );
-		GET_STRING ( jappVersion, appVersion );
-		GET_STRING ( jabi, abi );
-		GET_STRING ( jdevBrand, devBrand );
-		GET_STRING ( jdevName, devName );
-		GET_STRING ( jdevManufacturer, devManufacturer );
-		GET_STRING ( jdevModel, devModel );
-		GET_STRING ( jdevProduct, devProduct );
-		GET_STRING ( josBrand, osBrand );
-		GET_STRING ( josVersion, osVersion );
-		GET_STRING ( judid, udid );
+		GET_CSTRING ( jappName, appName );
+		GET_CSTRING ( jappId, appId );
+		GET_CSTRING ( jappVersion, appVersion );
+		GET_CSTRING ( jabi, abi );
+		GET_CSTRING ( jdevBrand, devBrand );
+		GET_CSTRING ( jdevName, devName );
+		GET_CSTRING ( jdevManufacturer, devManufacturer );
+		GET_CSTRING ( jdevModel, devModel );
+		GET_CSTRING ( jdevProduct, devProduct );
+		GET_CSTRING ( josBrand, osBrand );
+		GET_CSTRING ( josVersion, osVersion );
+		GET_CSTRING ( judid, udid );
 	
 		// set environment properties
 		moaiEnv.SetAppDisplayName 	( appName );
@@ -240,67 +318,67 @@
 		moaiEnv.SetUDID				( udid );
 
 		// release jstrings
-		RELEASE_STRING ( jappName, appName );
-		RELEASE_STRING ( jappId, appId );
-		RELEASE_STRING ( jappVersion, appVersion );
-		RELEASE_STRING ( jabi, abi );
-		RELEASE_STRING ( jdevBrand, devBrand );
-		RELEASE_STRING ( jdevName, devName );
-		RELEASE_STRING ( jdevManufacturer, devManufacturer );
-		RELEASE_STRING ( jdevModel, devModel );
-		RELEASE_STRING ( jdevProduct, devProduct );
-		RELEASE_STRING ( josBrand, osBrand );
-		RELEASE_STRING ( josVersion, osVersion );
-		RELEASE_STRING ( judid, udid );
+		RELEASE_CSTRING ( jappName, appName );
+		RELEASE_CSTRING ( jappId, appId );
+		RELEASE_CSTRING ( jappVersion, appVersion );
+		RELEASE_CSTRING ( jabi, abi );
+		RELEASE_CSTRING ( jdevBrand, devBrand );
+		RELEASE_CSTRING ( jdevName, devName );
+		RELEASE_CSTRING ( jdevManufacturer, devManufacturer );
+		RELEASE_CSTRING ( jdevModel, devModel );
+		RELEASE_CSTRING ( jdevProduct, devProduct );
+		RELEASE_CSTRING ( josBrand, osBrand );
+		RELEASE_CSTRING ( josVersion, osVersion );
+		RELEASE_CSTRING ( judid, udid );
 	}
 
 	//----------------------------------------------------------------//
 	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiActivity_AKUSetDocumentDirectory ( JNIEnv* env, jclass obj, jstring jpath ) {
-		GET_STRING ( jpath, path );
+		GET_CSTRING ( jpath, path );
 		MOAIEnvironment::Get ().SetDocumentDirectory ( path );
-		RELEASE_STRING ( jpath, path );
+		RELEASE_CSTRING ( jpath, path );
 	}
 
 	//----------------------------------------------------------------//
 	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUSetInputConfigurationName ( JNIEnv* env, jclass obj, jstring jname ) {
-		GET_STRING ( jname, name );
+		GET_CSTRING ( jname, name );
 		AKUSetInputConfigurationName ( name );
-		RELEASE_STRING ( jname, name );
+		RELEASE_CSTRING ( jname, name );
 	}
 
 	//----------------------------------------------------------------//
 	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUSetInputDevice ( JNIEnv* env, jclass obj, jint deviceId, jstring jname ) {
-		GET_STRING ( jname, name );
+		GET_CSTRING ( jname, name );
 		AKUSetInputDevice ( deviceId, name );
-		RELEASE_STRING ( jname, name );
+		RELEASE_CSTRING ( jname, name );
 	}
 
 	//----------------------------------------------------------------//
 	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUSetInputDeviceCompass ( JNIEnv* env, jclass obj, jint deviceId, jint sensorId, jstring jname ) {
-		GET_STRING ( jname, name );
+		GET_CSTRING ( jname, name );
 		AKUSetInputDeviceCompass ( deviceId, sensorId, name );
-		RELEASE_STRING ( jname, name );
+		RELEASE_CSTRING ( jname, name );
 	}
 
 	//----------------------------------------------------------------//
 	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUSetInputDeviceLevel ( JNIEnv* env, jclass obj, jint deviceId, jint sensorId, jstring jname ) {
-		GET_STRING ( jname, name );
+		GET_CSTRING ( jname, name );
 		AKUSetInputDeviceLevel ( deviceId, sensorId, name );
-		RELEASE_STRING ( jname, name );
+		RELEASE_CSTRING ( jname, name );
 	}
 
 	//----------------------------------------------------------------//
 	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUSetInputDeviceLocation ( JNIEnv* env, jclass obj, jint deviceId, jint sensorId, jstring jname ) {
-		GET_STRING ( jname, name );
+		GET_CSTRING ( jname, name );
 		AKUSetInputDeviceLocation ( deviceId, sensorId, name );
-		RELEASE_STRING ( jname, name );
+		RELEASE_CSTRING ( jname, name );
 	}
 	
 	//----------------------------------------------------------------//
 	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUSetInputDeviceTouch ( JNIEnv* env, jclass obj, jint deviceId, jint sensorId, jstring jname ) {
-		GET_STRING ( jname, name );
+		GET_CSTRING ( jname, name );
 		AKUSetInputDeviceTouch ( deviceId, sensorId, name );
-		RELEASE_STRING ( jname, name );
+		RELEASE_CSTRING ( jname, name );
 	}
 
 	//----------------------------------------------------------------//
@@ -316,12 +394,12 @@
 	//----------------------------------------------------------------//
 	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUSetWorkingDirectory ( JNIEnv* env, jclass obj, jstring jpath ) {
 
-		GET_STRING ( jpath, path );
+		GET_CSTRING ( jpath, path );
 
 		USFileSys::SetCurrentPath ( path );
 		MOAILuaRuntime::Get ().SetPath ( path );
 	
-		RELEASE_STRING ( jpath, path );
+		RELEASE_CSTRING ( jpath, path );
 	}
 
 	//----------------------------------------------------------------//
@@ -337,4 +415,34 @@
 	//----------------------------------------------------------------//
 	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiActivity_AKUAppWillEndSession ( JNIEnv* env, jclass obj ) {
 		MOAIApp::Get ().WillEndSession ();
+	}
+	
+	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiActivity_AKUNotifyBillingSupported ( JNIEnv* env, jclass obj, jboolean supported ) {
+		MOAIApp::Get ().NotifyBillingSupported ( supported );
+	}
+	
+	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiActivity_AKUNotifyPurchaseResponseReceived ( JNIEnv* env, jclass obj, jstring jidentifier, jint code ) {
+		GET_CSTRING ( jidentifier, identifier );
+
+		MOAIApp::Get ().NotifyPurchaseResponseReceived ( identifier, code );
+
+		RELEASE_CSTRING ( jidentifier, identifier );
+	}
+
+	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiActivity_AKUNotifyPurchaseStateChanged ( JNIEnv* env, jclass obj, jstring jidentifier, jint code, jstring jorder, jstring jnotification, jstring jpayload ) {
+		GET_CSTRING ( jidentifier, identifier );
+		GET_CSTRING ( jorder, order );
+		GET_CSTRING ( jnotification, notification );
+		GET_CSTRING ( jpayload, payload );
+		
+		MOAIApp::Get ().NotifyPurchaseStateChanged ( identifier, code, order, notification, payload );
+
+		RELEASE_CSTRING ( jidentifier, identifier );
+		RELEASE_CSTRING ( jorder, order );
+		RELEASE_CSTRING ( jnotification, notification );
+		RELEASE_CSTRING ( jpayload, payload );
+	}
+		
+	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiActivity_AKUNotifyRestoreResponseReceived ( JNIEnv* env, jclass obj, jint code ) {
+		MOAIApp::Get ().NotifyRestoreResponseReceived ( code );
 	}

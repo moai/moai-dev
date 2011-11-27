@@ -98,6 +98,19 @@ int	MOAILayer2D::_getPartition ( lua_State* L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
+/**	@name	getSortMode
+	@text	Get the sort mode for rendering.
+	
+	@in		MOAILayer2D self
+	@out	number sortMode
+*/
+int MOAILayer2D::_getSortMode ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAILayer2D, "U" )
+	
+	lua_pushnumber ( state, self->mSortMode );
+	return 1;
+}
 
 //----------------------------------------------------------------//
 /**	@name	insertProp
@@ -252,6 +265,45 @@ int MOAILayer2D::_setPartition ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	setSortMode
+	@text	Set the sort mode for rendering.
+	
+	@in		MOAILayer2D self
+	@in		number sortMode		One of MOAILayer2D.SORT_NONE, MOAILayer2D.SORT_PRIORITY_ASCENDING,
+								MOAILayer2D.SORT_PRIORITY_DESCENDING, MOAILayer2D.SORT_X_ASCENDING,
+								MOAILayer2D.SORT_X_DESCENDING, MOAILayer2D.SORT_Y_ASCENDING,
+								MOAILayer2D.SORT_Y_DESCENDING
+	@out	nil
+*/
+int MOAILayer2D::_setSortMode ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAILayer2D, "U" )
+	
+	self->mSortMode = state.GetValue < u32 >( 2, MOAIPartitionResultBuffer::SORT_PRIORITY_ASCENDING );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	setSortScale
+	@text	Set the scalar applied to axis sorts.
+	
+	@in		MOAILayer2D self
+	@opt	number xScale		Default valie is 1.
+	@opt	number yScale		Default valie is 1.
+	@opt	number zScale		Default valie is 1.
+	@out	nil
+*/
+int	MOAILayer2D::_setSortScale ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAILayer2D, "U" )
+
+	self->mSortScale.mX = state.GetValue < float >( 2, 1.0f );
+	self->mSortScale.mY = state.GetValue < float >( 3, 1.0f );
+	self->mSortScale.mZ = state.GetValue < float >( 4, 1.0f );
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	setViewport
 	@text	Set the layer's viewport.
 	
@@ -369,7 +421,7 @@ void MOAILayer2D::Draw () {
 	if ( !this->IsOffscreen ()) {
 		USMatrix4x4 mtx;
 		mtx.Init ( this->mLocalToWorldMtx );
-		mtx.Append (gfxDevice. GetWorldToWndMtx ( 1.0f, 1.0f ));
+		mtx.Append ( gfxDevice.GetWorldToWndMtx ( 1.0f, 1.0f ));
 		mtx.Transform ( viewportRect );
 	}
 	gfxDevice.SetViewport ( viewportRect );
@@ -410,8 +462,7 @@ void MOAILayer2D::Draw () {
 		u32 totalResults = this->mPartition->GatherProps ( buffer, viewBounds, 0, MOAIProp::CAN_DRAW | MOAIProp::CAN_DRAW_DEBUG );
 		if ( !totalResults ) return;
 		
-		// TODO: allow configurable sort
-		buffer.Sort ( MOAIPartitionResultBuffer::SORT_PRIORITY );
+		buffer.Sort ( this->mSortMode );
 
 		// render the sorted list
 		for ( u32 i = 0; i < totalResults; ++i ) {
@@ -504,7 +555,8 @@ bool MOAILayer2D::IsOffscreen () {
 //----------------------------------------------------------------//
 MOAILayer2D::MOAILayer2D () :
 	mParallax ( 1.0f, 1.0f ),
-	mShowDebugLines ( true ) {
+	mShowDebugLines ( true ),
+	mSortMode ( MOAIPartitionResultBuffer::SORT_PRIORITY_ASCENDING ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIProp2D )
@@ -534,6 +586,14 @@ MOAILayer2D::~MOAILayer2D () {
 void MOAILayer2D::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAIProp2D::RegisterLuaClass ( state );
+	
+	state.SetField ( -1, "SORT_NONE",					MOAIPartitionResultBuffer::SORT_NONE );
+	state.SetField ( -1, "SORT_PRIORITY_ASCENDING",		MOAIPartitionResultBuffer::SORT_PRIORITY_ASCENDING );
+	state.SetField ( -1, "SORT_PRIORITY_DESCENDING",	MOAIPartitionResultBuffer::SORT_PRIORITY_DESCENDING );
+	state.SetField ( -1, "SORT_X_ASCENDING",			MOAIPartitionResultBuffer::SORT_X_ASCENDING );
+	state.SetField ( -1, "SORT_X_DESCENDING",			MOAIPartitionResultBuffer::SORT_X_DESCENDING );
+	state.SetField ( -1, "SORT_Y_ASCENDING",			MOAIPartitionResultBuffer::SORT_Y_ASCENDING );
+	state.SetField ( -1, "SORT_Y_DESCENDING",			MOAIPartitionResultBuffer::SORT_Y_DESCENDING );
 }
 
 //----------------------------------------------------------------//
@@ -545,6 +605,7 @@ void MOAILayer2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "clear",					_clear },
 		{ "getFitting",				_getFitting },
 		{ "getPartition",			_getPartition },
+		{ "getSortMode",			_getSortMode },
 		{ "insertProp",				_insertProp },
 		{ "removeProp",				_removeProp },
 		{ "setBox2DWorld",			_setBox2DWorld },
@@ -553,6 +614,8 @@ void MOAILayer2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setFrameBuffer",			_setFrameBuffer },
 		{ "setParallax",			_setParallax },
 		{ "setPartition",			_setPartition },
+		{ "setSortMode",			_setSortMode },
+		{ "setSortScale",			_setSortScale },
 		{ "setViewport",			_setViewport },
 		{ "showDebugLines",			_showDebugLines },
 		{ "wndToWorld",				_wndToWorld },

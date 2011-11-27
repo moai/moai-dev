@@ -56,6 +56,7 @@
 		07E9F73F13B50582006396F3 /* libmoai-ios-3rdparty.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CC90BF13B3C39D00B2724C /* libmoai-ios-3rdparty.a */; };
 		07E9F74013B50582006396F3 /* libmoai-ios-luaext.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CC90C113B3C39D00B2724C /* libmoai-ios-luaext.a */; };
 		07E9F74113B50582006396F3 /* libmoai-ios-untz.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CC90C313B3C39D00B2724C /* libmoai-ios-untz.a */; };
+		07EF3E44147BAAA5006CFDCE /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07EF3E43147BAAA5006CFDCE /* Twitter.framework */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
@@ -228,6 +229,7 @@
 		079530671447A0D800143A72 /* TJCVGView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = TJCVGView.xib; path = Libraries/TapjoyConnect/Components/TJCVirtualGoods/TJCVG_Views/TJCVGView.xib; sourceTree = "<group>"; };
 		079530CD1447A0FF00143A72 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		07E6C6A0140C5EBD004D1227 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
+		07EF3E43147BAAA5006CFDCE /* Twitter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Twitter.framework; path = System/Library/Frameworks/Twitter.framework; sourceTree = SDKROOT; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D6058910D05DD3D006BFB54 /* MoaiSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MoaiSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -261,6 +263,7 @@
 				03CC912C13B3C4C000B2724C /* StoreKit.framework in Frameworks */,
 				07E6C6A1140C5EBD004D1227 /* GameKit.framework in Frameworks */,
 				079530CE1447A0FF00143A72 /* MediaPlayer.framework in Frameworks */,
+				07EF3E44147BAAA5006CFDCE /* Twitter.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -385,6 +388,7 @@
 				03CC912B13B3C4C000B2724C /* StoreKit.framework */,
 				03CC911B13B3C49400B2724C /* SystemConfiguration.framework */,
 				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
+				07EF3E43147BAAA5006CFDCE /* Twitter.framework */,
 				0711070413C637F000EE7C53 /* CoreTelephony.framework */,
 				07E6C6A0140C5EBD004D1227 /* GameKit.framework */,
 				079530CD1447A0FF00143A72 /* MediaPlayer.framework */,

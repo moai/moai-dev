@@ -34,7 +34,7 @@ private:
 	MOAIGlyph mDummy;
 
 	MOAILuaSharedPtr < MOAITexture >	mTexture;
-	MOAILuaSharedPtr < MOAIImage >	mImage;
+	MOAILuaSharedPtr < MOAIImage >		mImage;
 
 	//----------------------------------------------------------------//
 	static int		_getImage			( lua_State* L );

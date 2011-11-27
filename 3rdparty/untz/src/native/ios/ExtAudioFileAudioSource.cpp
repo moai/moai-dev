@@ -33,6 +33,12 @@ ExtAudioFileAudioSource::~ExtAudioFileAudioSource()
 	close();
 }
 
+void ExtAudioFileAudioSource::doneDecoding()
+{
+	mReadBuffer.clear();
+	std::vector<float>().swap(mReadBuffer);
+}
+
 double ExtAudioFileAudioSource::getLength() 
 { 
     return (double)mTotalFrames / mClientFormat.mSampleRate;

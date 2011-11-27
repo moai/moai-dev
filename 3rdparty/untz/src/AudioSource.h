@@ -35,6 +35,7 @@ public:
 	virtual double getSampleRate() { return 0; }
 	virtual UInt32 getNumChannels() { return 0; }
 	virtual double getLength() { return 0; }
+	virtual void clear() {};
 
 	double convertSamplesToSeconds(Int64 samples) 
 	{

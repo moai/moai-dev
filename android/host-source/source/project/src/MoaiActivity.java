@@ -6,17 +6,23 @@
 
 package @PACKAGE@;
 
-import java.io.BufferedInputStream;   
+import @PACKAGE@.MoaiBillingService.RequestPurchase;
+import @PACKAGE@.MoaiBillingService.RestoreTransactions;
+import @PACKAGE@.MoaiBillingConstants.PurchaseState;
+import @PACKAGE@.MoaiBillingConstants.ResponseCode;
+
+import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream; 
+import java.util.zip.ZipInputStream;
+import java.util.ArrayList;
 
 import @PACKAGE@.R;
 
-import android.app.Activity; 
+import android.app.Activity;
 import android.content.Context;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
@@ -29,6 +35,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Display;
 import android.view.Window;
@@ -47,15 +54,21 @@ public class MoaiActivity extends Activity implements SensorEventListener {
 	private ConnectivityBroadcastReceiver 	mConnectivityReceiver;
 	private MoaiView						mMoaiView;
 	private SensorManager 					mSensorManager;
+    private PurchaseObserver 				mPurchaseObserver;
+	private MoaiBillingService 				mBillingService;
 	
-	protected static native void AKUAppDidStartSession 		();
-	protected static native void AKUAppWillEndSession 		();
-	protected static native void AKUEnqueueCompassEvent 	( int heading );
-	protected static native void AKUEnqueueLevelEvent 		( int deviceId, int sensorId, float x, float y, float z );
-	protected static native void AKUEnqueueLocationEvent 	( int deviceId, int sensorId, int longitude, int latitude, int altitude, float hAccuracy, float vAccuracy, float speed );
-	protected static native void AKUMountVirtualDirectory 	( String virtualPath, String archive );
-	protected static native void AKUSetConnectionType 		( long connectionType );
-	protected static native void AKUSetDocumentDirectory 	( String path );
+	protected static native void AKUAppDidStartSession 				();
+	protected static native void AKUAppWillEndSession 				();
+	protected static native void AKUEnqueueCompassEvent 			( int heading );
+	protected static native void AKUEnqueueLevelEvent 				( int deviceId, int sensorId, float x, float y, float z );
+	protected static native void AKUEnqueueLocationEvent 			( int deviceId, int sensorId, int longitude, int latitude, int altitude, float hAccuracy, float vAccuracy, float speed );
+	protected static native void AKUMountVirtualDirectory 			( String virtualPath, String archive );
+	protected static native void AKUSetConnectionType 				( long connectionType );
+	protected static native void AKUSetDocumentDirectory 			( String path );
+	protected static native void AKUNotifyBillingSupported			( boolean supported );
+	protected static native void AKUNotifyPurchaseResponseReceived	( String productId, int responseCode );
+	protected static native void AKUNotifyPurchaseStateChanged		( String productId, int purchaseState, String orderId, String notificationId, String developerPayload );
+	protected static native void AKUNotifyRestoreResponseReceived	( int responseCode );
 
 	//----------------------------------------------------------------//
 	public static void log ( String message ) {
@@ -85,7 +98,7 @@ public class MoaiActivity extends Activity implements SensorEventListener {
 		int displayHeight = display.getHeight ();
 
 		// create Moai view
-	    mMoaiView = new MoaiView ( this, displayWidth, displayHeight );
+	    mMoaiView = new MoaiView ( this, this, displayWidth, displayHeight );
 
 		// OpenGL 2.0
 		ActivityManager am = ( ActivityManager ) getSystemService ( Context.ACTIVITY_SERVICE );
@@ -113,6 +126,12 @@ public class MoaiActivity extends Activity implements SensorEventListener {
 		// unpack assets
  		unpackAssets ( filesDir );
  		mMoaiView.setDirectory ( filesDir );
+
+		mPurchaseObserver = new PurchaseObserver ( null );
+        MoaiBillingResponseHandler.register ( mPurchaseObserver );
+        
+		mBillingService = new MoaiBillingService();
+        mBillingService.setContext(this);
     }
 
 	//----------------------------------------------------------------//
@@ -125,6 +144,8 @@ public class MoaiActivity extends Activity implements SensorEventListener {
 		
 		// unregister to receive connectivity actions
 		stopConnectivityReceiver ();
+		
+		mBillingService.unbind();
 	}
 
 	//----------------------------------------------------------------//
@@ -147,6 +168,8 @@ public class MoaiActivity extends Activity implements SensorEventListener {
 		// call super
 		super.onStart ();
 		
+        MoaiBillingResponseHandler.register ( mPurchaseObserver );
+
 		//AKUAppDidStartSession ();
 	}
 	
@@ -161,6 +184,9 @@ public class MoaiActivity extends Activity implements SensorEventListener {
 
 		// call super
 		super.onStop ();
+
+        MoaiBillingResponseHandler.unregister ( mPurchaseObserver );
+
 		AKUAppWillEndSession ();
 	}
 	
@@ -274,6 +300,36 @@ public class MoaiActivity extends Activity implements SensorEventListener {
 	}
 	
 	//================================================================//
+	// In-App Billing JNI callback methods
+	//================================================================//
+
+	//----------------------------------------------------------------//
+	public boolean checkBillingSupported () {
+		return mBillingService.checkBillingSupported ();
+	}
+	
+	public boolean requestPurchase ( String productId )	{
+		return mBillingService.requestPurchase ( productId, null );
+	}
+	
+	public boolean confirmNotification ( String notificationId ) {
+		ArrayList<String> notifyList = new ArrayList<String> ();
+        notifyList.add ( notificationId );
+
+		String[] notifyIds = notifyList.toArray ( new String[notifyList.size ()] );
+
+		return mBillingService.confirmNotifications ( notifyIds );
+	}
+	
+	public boolean restoreTransactions () {
+		return mBillingService.restoreTransactions ();
+	}
+	
+	public void setMarketPublicKey ( String key ) {
+		MoaiBillingSecurity.setPublicKey ( key );
+	}
+	
+	//================================================================//
 	// ConnectivityBroadcastReceiver
 	//================================================================//
 	private class ConnectivityBroadcastReceiver extends BroadcastReceiver {
@@ -305,4 +361,48 @@ public class MoaiActivity extends Activity implements SensorEventListener {
 			AKUSetConnectionType ( ( long )connectionType.ordinal () );
 		}
 	};
+	
+	private class PurchaseObserver extends MoaiBillingPurchaseObserver {
+	    private static final String TAG = "MoaiBillingPurchaseObserver";
+
+		public PurchaseObserver ( Handler handler ) {
+	        super ( MoaiActivity.this, handler );
+	    }
+
+	    @Override
+	    public void onBillingSupported ( boolean supported ) {
+	        if ( MoaiBillingConstants.DEBUG ) {
+	            Log.i ( TAG, "onBillingSupported: " + supported );
+	        }
+	
+			AKUNotifyBillingSupported ( supported );
+	    }
+
+	    @Override
+	    public void onPurchaseStateChange ( PurchaseState purchaseState, String itemId, String orderId, String notificationId, String developerPayload ) {
+        	if ( MoaiBillingConstants.DEBUG ) {
+	            Log.i ( TAG, "onPurchaseStateChange: " + itemId + ", " + purchaseState );
+	        }
+	        
+			AKUNotifyPurchaseStateChanged ( itemId, purchaseState.ordinal(), orderId, notificationId, developerPayload );
+	    }
+
+		@Override
+	    public void onRequestPurchaseResponse ( RequestPurchase request, ResponseCode responseCode ) {
+	        if ( MoaiBillingConstants.DEBUG ) {
+	            Log.d ( TAG, "onRequestPurchaseResponse: " + request.mProductId + ", " + responseCode );
+	        }
+	
+			AKUNotifyPurchaseResponseReceived ( request.mProductId, responseCode.ordinal() );
+	    }
+
+	    @Override
+	    public void onRestoreTransactionsResponse ( RestoreTransactions request, ResponseCode responseCode ) {
+	        if ( MoaiBillingConstants.DEBUG ) {
+	            Log.d ( TAG, "onRestoreTransactionsResponse: " + responseCode );
+	        }
+
+			AKUNotifyRestoreResponseReceived ( responseCode.ordinal() );
+		}
+	}
 }

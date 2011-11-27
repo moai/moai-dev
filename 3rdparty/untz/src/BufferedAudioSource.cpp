@@ -50,6 +50,7 @@ bool BufferedAudioSource::init(const RString& path, bool loadIntoMemory)
 		}
 		while(framesRead > 0);
 		mLoadedInMemory = loadIntoMemory; 
+		doneDecoding();
 	}
 	else
 	{
@@ -137,7 +138,7 @@ Int64 BufferedAudioSource::readFrames(float* buffer, UInt32 numChannels, UInt32 
 		{
 			mBuffer.erase(0, framesRead);
 			framesAvailable = mBuffer.size() / getNumChannels();
-			UInt32 minimumFrames = getSampleRate() * 2; // 2 seconds 
+			UInt32 minimumFrames = getSampleRate() / 3;  // 1/3 of a second 
 			if(framesAvailable <= minimumFrames)
 			{
 				BufferedAudioSourceThread::getInstance()->readMore();

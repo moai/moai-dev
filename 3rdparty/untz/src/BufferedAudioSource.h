@@ -12,7 +12,7 @@
 #include "AudioSource.h"
 #include <threading/Threading.h>
 
-#define SECONDS_TO_BUFFER (4)
+#define SECONDS_TO_BUFFER (1)
 
 class BufferedAudioSourceThread;
 
@@ -33,6 +33,7 @@ public:
     virtual void close();
 	virtual Int64 decodeData(float* buffer, UInt32 numFrames) { return 0; }
 	virtual void setDecoderPosition(Int64 startFrame) {};
+	virtual void doneDecoding() {};
 
 protected:
 	RCriticalSection mLock;
