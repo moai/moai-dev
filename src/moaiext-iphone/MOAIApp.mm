@@ -166,7 +166,14 @@ int MOAIApp::_composeTweet ( lua_State* L ) {
     
     // Create the completion handler block.
     [ tweetViewController setCompletionHandler:^( TWTweetComposeViewControllerResult result ) {
-	                
+				
+		if ( result == TWTweetComposeViewControllerResultCancelled ) {
+			MOAIApp::Get ().DidSendTweet ( false );
+		}
+		else if ( result == TWTweetComposeViewControllerResultDone ) {
+			MOAIApp::Get ().DidSendTweet ( true );
+		}
+		
         // Dismiss the tweet composition view controller.
 		if  ( rootVC != nil ) {
 			[ rootVC dismissModalViewControllerAnimated:YES ];
@@ -611,6 +618,31 @@ void MOAIApp::DidResolveHostName( NSString* hostname, cc8* ipAddress ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIApp::DidSendTweet( bool success ) {
+
+	if ( success ) {
+		
+		MOAILuaRef& callback = this->mListeners [ TWEET_SUCCESSFUL ];
+		
+		if ( callback ) {
+			MOAILuaStateHandle state = callback.GetSelf ();
+			
+			state.DebugCall ( 0, 0 );
+		}
+	}
+	else {
+		
+		MOAILuaRef& callback = this->mListeners [ TWEET_CANCELLED ];
+		
+		if ( callback ) {
+			MOAILuaStateHandle state = callback.GetSelf ();
+			
+			state.DebugCall ( 0, 0 );
+		}
+	}	
+}
+
+//----------------------------------------------------------------//
 void MOAIApp::DidStartSession( ) {
 
 	MOAILuaRef& callback = this->mListeners [ SESSION_START ];
@@ -816,6 +848,8 @@ void MOAIApp::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "APP_OPENED_FROM_URL",			( u32 )APP_OPENED_FROM_URL );
 	state.SetField ( -1, "SESSION_START",				( u32 )SESSION_START );
 	state.SetField ( -1, "SESSION_END",					( u32 )SESSION_END );
+	state.SetField ( -1, "TWEET_SUCCESSFUL",			( u32 )TWEET_SUCCESSFUL );
+	state.SetField ( -1, "TWEET_CANCELLED",				( u32 )TWEET_CANCELLED );
 	
 	state.SetField ( -1, "DOMAIN_DOCUMENTS",			( u32 )DOMAIN_DOCUMENTS );
 	state.SetField ( -1, "DOMAIN_APP_SUPPORT",			( u32 )DOMAIN_APP_SUPPORT );
