@@ -13,18 +13,15 @@
 // Audio sources
 #include "UserAudioSource.h"
 #include "MemoryAudioSource.h"
-#ifndef __ANDROID__
-	#include "OggAudioSource.h"
-#endif
+#include "OggAudioSource.h"
 #if defined(WIN32)
 	#include <Native/Win/DShowAudioSource.h>
 #else
-#ifdef __APPLE__
-	#include "ExtAudioFileAudioSource.h"
-#endif
-#ifdef __ANDROID__
-	#include "WaveFileAudioSource.h"
-#endif
+	#if defined(__APPLE__)
+		#include "ExtAudioFileAudioSource.h"
+	#else
+		#include "WaveFileAudioSource.h"
+	#endif
 #endif
 
 using namespace UNTZ;
@@ -38,7 +35,6 @@ Sound* Sound::create(const RString& path, bool loadIntoMemory)
 
 	if (path.find(OGG_FILE_EXT) != RString::npos)
 	{
-#ifndef __ANDROID__
 		OggAudioSource* source;
 		if(prevSound && loadIntoMemory && prevSound->getData()->getSource()->isLoadedInMemory())
 			// Use the existing AudioSource
@@ -66,9 +62,6 @@ Sound* Sound::create(const RString& path, bool loadIntoMemory)
 			delete newSound;
 			return 0;
 		}
-#else
-		return 0;
-#endif
 	}
 	else
 	{
@@ -84,7 +77,7 @@ Sound* Sound::create(const RString& path, bool loadIntoMemory)
 			source = (ExtAudioFileAudioSource*)prevSound->getData()->getSource().get();
 		else
 			source = new ExtAudioFileAudioSource();
-#elif defined(__ANDROID__)
+#else
         WaveFileAudioSource *source = 0;
 		if(prevSound && loadIntoMemory && prevSound->getData()->getSource()->isLoadedInMemory())
 			source = (WaveFileAudioSource*)prevSound->getData()->getSource().get();
@@ -164,12 +157,10 @@ bool Sound::decode(const RString& path, SoundInfo& info, float** data)
 	AudioSource* source = 0;
 	if (path.find(OGG_FILE_EXT) != RString::npos)
 	{
-#ifndef __ANDROID__
 		OggAudioSource* as = new OggAudioSource();
 		source = as;
 		if(as->init(path, true))
 			decoded = true;
-#endif			
 	}
 	else
 	{

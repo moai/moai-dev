@@ -1,95 +1,79 @@
-#include <assert.h>
+//
+//  WaveFile.cpp
+//  Part of UNTZ
+//
+//  Created by Zach Saul (zach@retronyms.com) on 06/01/2011.
+//  Copyright 2011 Retronyms. All rights reserved.
+//
+
 #include "WaveFile.h"
-
-WaveFile *WaveFile::create(const char *path)
-{
-   // Get our WaveFile.
-   WaveFile *w = new WaveFile();
-   if(!w)
-      return NULL;
-
-   // Open the underlying RiffFile
-   w->mpRiff = RiffFile::create(path);
-   if(!w->mpRiff)
-   {
-      delete w;
-      return NULL;
-   }
-
-   // Grab the format info.
-   w->mpRiff->push(STR2FOURCC("fmt "));
-   int header_size = sizeof(WaveHeader);
-   if(w->mpRiff->readData(&(w->mHeader), header_size) != header_size)
-   {
-      delete w;
-      return NULL;
-   }
-
-   assert(w->mHeader.compressionCode == 1); // only uncompressed files are supported 
-
-   // Some writers put a bad block align and/or avgBytesPerSecond value.
-   // Let's recalculate it.
-   w->mHeader.bytesPerFrame = w->mHeader.significantBitsPerSample / 8 * w->mHeader.numChannels;
-   w->mHeader.averageBytesPerSecond = w->mHeader.bytesPerFrame * w->mHeader.sampleRate;
-
-   w->mpRiff->pop();
-   w->mpRiff->push(STR2FOURCC("data"));
-
-   return w;
-}
+#include <assert.h>
 
 WaveFile::WaveFile()
 {
-   mpRiff = NULL;
 }
 
 WaveFile::~WaveFile()
 {
-   if(mpRiff)
-      delete mpRiff;
 }
 
-UInt16 WaveFile::compressionCode()
+int WaveFile::open(const char *path)
 {
-   return mHeader.compressionCode;
+	int status = RiffFile::open(path);
+	if(status != 0)
+		return status;
+	
+	char s[5];
+	FOURCC2STR(formatCode(), s);
+	printf("type = %s\n", s);
+
+	if(formatCode() != STR2FOURCC("WAVE"))
+	{
+		return 1; // error
+	}
+
+	// Jump into the "fmt " chunk
+	if(push(STR2FOURCC("fmt ")))
+	{
+		memset(&mHeader, 0, sizeof(mHeader));
+
+		UInt32 fmtSize = chunkSize();
+		if(RiffFile::readData(&mHeader, fmtSize) != fmtSize)
+		{
+			return 1; // error
+		}
+
+		assert(mHeader.formatTag == 1); // only uncompressed files are supported 
+
+		// Some writers put a bad block align and/or avgBytesPerSecond value.
+		// Let's recalculate it.
+		mHeader.bytesPerFrame = mHeader.bitsPerSample / 8 * mHeader.numChannels;
+		mHeader.averageBytesPerSecond = mHeader.bytesPerFrame * mHeader.samplesPerSecond;
+	}
+
+	// Jump out of the "fmt " chunk
+	pop();
+
+	// Jump into the "data" chunk
+	if(!push(STR2FOURCC("data")))
+	{
+		return 1; // error, couldn't find the data chunk
+	}
+
+	return 0; // success
 }
 
-UInt16 WaveFile::numChannels()
+WaveHeader WaveFile::getHeader() const
 {
-   return mHeader.numChannels;
+	return mHeader;
 }
 
-UInt32 WaveFile::sampleRate()
+UInt32 WaveFile::getNumberOfFrames()
 {
-   return mHeader.sampleRate;
+   return chunkSize() / mHeader.bytesPerFrame;
 }
 
-UInt32 WaveFile::averageBytesPerSecond()
+void WaveFile::setPosition(UInt32 byteOffset)
 {
-   return mHeader.averageBytesPerSecond;
-}
-
-UInt16 WaveFile::bytesPerFrame()
-{
-   return mHeader.bytesPerFrame;
-}
-
-UInt16 WaveFile::significantBitsPerSample()
-{
-   return mHeader.significantBitsPerSample;
-}
-
-void WaveFile::rewind()
-{
-   mpRiff->rewind();
-}
-
-double WaveFile::numberOfFrames()
-{
-   return mpRiff->chunkSize()/mHeader.bytesPerFrame;
-}
-
-UInt32 WaveFile::readSamples(void *buf, UInt32 numBytes)
-{
-    return mpRiff->readData(buf, numBytes);
+	fseek(mpFile, dataStart() + byteOffset, SEEK_SET);
 }
