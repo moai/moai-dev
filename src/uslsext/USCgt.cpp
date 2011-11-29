@@ -53,7 +53,7 @@ void USCgt::Load ( cc8* filename ) {
 	u32 length = stream.GetLength ();
 	while ( stream.GetCursor () < length ) {
 		
-		char recordType = stream.Read < u8 >();
+		char recordType __attribute__((unused)) = stream.Read < u8 >();
 		assert ( recordType == 'M' );
 		
 		u16 totalEntries = stream.Read < u16 >();
@@ -202,7 +202,7 @@ void USCgt::Load ( cc8* filename ) {
 //----------------------------------------------------------------//
 bool USCgt::ReadBoolEntry ( USStream& stream ) {
 
-	char entryType = stream.Read < char >();
+	char entryType __attribute__((unused)) = stream.Read < char >();
 	assert ( entryType == 'B' );
 
 	u8 result = stream.Read < char >();
@@ -212,7 +212,7 @@ bool USCgt::ReadBoolEntry ( USStream& stream ) {
 //----------------------------------------------------------------//
 u8 USCgt::ReadByteEntry( USStream& stream ) {
 
-	char entryType = stream.Read < char >();
+	char entryType __attribute__((unused)) = stream.Read < char >();
 	assert ( entryType == 'b' );
 
 	u8 result = stream.Read < u8 >();
@@ -222,14 +222,14 @@ u8 USCgt::ReadByteEntry( USStream& stream ) {
 //----------------------------------------------------------------//
 void USCgt::ReadEmptyEntry ( USStream& stream ) {
 
-	char entryType = stream.Read < char >();
+	char entryType __attribute__((unused)) = stream.Read < char >();
 	assert ( entryType == 'E' );
 }
 
 //----------------------------------------------------------------//
 u16 USCgt::ReadIntEntry ( USStream& stream ) {
 
-	char entryType = stream.Read < char >();
+	char entryType __attribute__((unused)) = stream.Read < char >();
 	assert ( entryType == 'I' );
 
 	u16 result = stream.Read < u16 >();
@@ -239,7 +239,7 @@ u16 USCgt::ReadIntEntry ( USStream& stream ) {
 //----------------------------------------------------------------//
 STLString USCgt::ReadStringEntry ( USStream& stream ) {
 
-	char entryType = stream.Read < char >();
+	char entryType __attribute__((unused)) = stream.Read < char >();
 	assert ( entryType == 'S' );
 	
 	return ReadUnicodeAsASCII ( stream );

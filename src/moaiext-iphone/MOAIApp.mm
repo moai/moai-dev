@@ -166,7 +166,8 @@ int MOAIApp::_composeTweet ( lua_State* L ) {
     
     // Create the completion handler block.
     [ tweetViewController setCompletionHandler:^( TWTweetComposeViewControllerResult result ) {
-	                
+	    UNUSED ( result );
+		            
         // Dismiss the tweet composition view controller.
 		if  ( rootVC != nil ) {
 			[ rootVC dismissModalViewControllerAnimated:YES ];
