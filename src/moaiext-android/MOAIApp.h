@@ -20,6 +20,8 @@ private:
 		PURCHASE_RESPONSE_RECEIVED,
 		PURCHASE_STATE_CHANGED,
 		RESTORE_RESPONSE_RECEIVED,
+		BACK_BUTTON_PRESSED,
+		DIALOG_DISMISSED,
 		TOTAL,
 	};
 	
@@ -39,6 +41,13 @@ private:
         BILLING_STATE_ITEM_REFUNDED,
 	};
 	
+	enum {
+        DIALOG_RESULT_POSITIVE,
+        DIALOG_RESULT_NEUTRAL,
+        DIALOG_RESULT_NEGATIVE,
+        DIALOG_RESULT_CANCEL,
+	};
+	
 	MOAILuaRef		mListeners [ TOTAL ];
 	
 	//----------------------------------------------------------------//
@@ -48,12 +57,14 @@ private:
 	static int		_confirmNotification		( lua_State* L );
 	static int		_restoreTransactions		( lua_State* L );
 	static int		_setMarketPublicKey			( lua_State* L );
+	static int		_showDialog					( lua_State* L );
 
 	bool ( *checkBillingSupportedFunc )	( void );
 	bool ( *requestPurchaseFunc ) 		( cc8* );
 	bool ( *confirmNotificationFunc ) 	( cc8* );
 	bool ( *restoreTransactionsFunc )	( void );
 	void ( *setMarketPublicKeyFunc )	( cc8* );
+	void ( *showDialogFunc )			( cc8*, cc8*, cc8*, cc8*, cc8*, bool );
 
 public:
 	
@@ -72,10 +83,13 @@ public:
 	void		SetConfirmNotificationFunc		( bool ( *confirmFunc ) ( cc8* ));
 	void		SetRestoreTransactionsFunc		( bool ( *restoreFunc ) () );
 	void		SetMarketPublicKeyFunc			( void ( *setKeyFunc ) ( cc8* ));
+	void		SetShowDialogFunc				( void ( *dialogFunc ) ( cc8*, cc8*, cc8*, cc8*, cc8*, bool ));
 	void		NotifyBillingSupported			( bool supported );
 	void		NotifyPurchaseResponseReceived	( cc8* identifier, int code );
 	void		NotifyPurchaseStateChanged		( cc8* identifier, int code, cc8* order, cc8* notification, cc8* payload );
 	void		NotifyRestoreResponseReceived	( int code );
+	bool		NotifyBackButtonPressed			();
+	void		NotifyDialogDismissed			( int code );
 };
 
 #endif
