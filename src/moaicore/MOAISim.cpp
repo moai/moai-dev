@@ -943,7 +943,7 @@ void MOAISim::Update () {
 
 	// long delay lets us ignore gaps bigger than a certain threshold
 	if (( this->mLoopFlags & SIM_LOOP_LONG_DELAY ) && ( gap > ( this->mStep * this->mLongDelayThreshold ))) {
-		budget -= this->StepSim ( gap, 1 );
+		budget -= this->StepSim ( this->mStep, 1 );
 		gap = 0.0f;
 		this->mRealTime = this->mSimTime;
 	}
