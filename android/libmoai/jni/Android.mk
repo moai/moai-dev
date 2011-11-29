@@ -24,7 +24,7 @@
 	LOCAL_MODULE 	:= moai
 	LOCAL_ARM_MODE 	:= $(MY_ARM_MODE)
 	LOCAL_CFLAGS	:= -DUSE_OPENSSL -DUSE_SSLEAY -DUSE_SSL -DBUILDING_LIBCURL -DPOSIX -DSQLITE_ENABLE_COLUMN_METADATA -DTIXML_USE_STL -DHAVE_MEMMOVE -DXML_STATIC -DFT2_BUILD_LIBRARY -DDARWIN_NO_CARBON -DL_ENDIAN -DOPENSSL_NO_GMP -DOPENSSL_NO_JPAKE -DOPENSSL_NO_MD2 -DOPENSSL_NO_RC5 -DOPENSSL_NO_RFC3779 -DOPENSSL_NO_STORE
-	LOCAL_LDLIBS 	:= -llog -lGLESv1_CM -lGLESv2 -lz crypto/libs/armeabi/libcrypto.a
+	LOCAL_LDLIBS 	:= -llog -lGLESv1_CM -lGLESv2 -lz crypto/libs/armeabi/libcrypto.a -lz ../obj/local/armeabi/libogg.a
 	LOCAL_CFLAGS	+= -include $(MY_MOAI_ROOT)/src/zipfs/zipfs_replace.h
 
 #----------------------------------------------------------------#
