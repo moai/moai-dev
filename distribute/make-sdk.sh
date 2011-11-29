@@ -12,6 +12,11 @@ cd ../3rdparty/glut-3.7.6-bin
 cp -R * ../../distribute/moai-sdk/3rdparty/glut-3.7.6
 cd ../../distribute
 
+mkdir -p moai-sdk/samples/android
+cd ../samples/android
+cp -R * ../../distribute/moai-sdk/samples/android
+cd ../../distribute
+
 mkdir -p moai-sdk/samples/basics
 cd ../samples/basics
 cp -R * ../../distribute/moai-sdk/samples/basics

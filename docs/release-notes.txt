@@ -19,6 +19,7 @@
 - MOAISim - added 'long delay' flag and threshold for automatically handling long loads; etc.
 - untz - lowered streaming buffer size for better memory performance
 - untz - improved memoty use; release temporary buffers used during audio decoding
+- Google In-App Billing support exposed in Lua (Android) - see samples/android/app-billing
 
 ================================================================
 = Moai SDK
