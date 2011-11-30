@@ -66,7 +66,7 @@ public class MoaiView extends GLSurfaceView {
 	protected static native void AKUReserveInputDeviceSensors	( int deviceId, int total );
 	protected static native void AKURunScript 					( String filename );
 	protected static native void AKUSetContext 					( int akuContextId );
-	protected static native void AKUSetDeviceProperties 		( String appName, String abi, String devBrand, String devName, String devManufacturer, String devModel, String devProduct, String osBrand, String osVersion, String udid );	
+	protected static native void AKUSetDeviceProperties 		( String appName, String appId, String appVersion, String abi, String devBrand, String devName, String devManufacturer, String devModel, String devProduct, String osBrand, String osVersion, String udid );	
 	protected static native void AKUSetInputConfigurationName	( String name );
 	protected static native void AKUSetInputDevice		 		( int deviceId, String name );
 	protected static native void AKUSetInputDeviceCompass 		( int deviceId, int sensorId, String name );
@@ -79,32 +79,6 @@ public class MoaiView extends GLSurfaceView {
 	protected static native void AKUUntzInit			 		();
 	protected static native void AKUUpdate				 		();
 
-	//----------------------------------------------------------------//
-	public String getConnectivity () {
-		
-		// NetworkInfo networkInfo = mConMgr.getActiveNetworkInfo ();
-		// 
-		// if ( networkInfo != null ) {
-		// 	return networkInfo.getTypeName ();
-		// }
-		// else {
-		// 	return "NOT CONNECTED";
-		// }
-		return "BALG!";
-	}		
-
-	//----------------------------------------------------------------//
-	public String getGUID () {
-	
-		return java.util.UUID.randomUUID ().toString ();
-	}
-
-    //----------------------------------------------------------------//
-	public boolean getSensorsEnabled () {
-	
-		return mSensorsEnabled;
-	}
-	
     //----------------------------------------------------------------//
 	public MoaiView ( Context context, MoaiActivity activity, int width, int height ) {
 
@@ -119,6 +93,62 @@ public class MoaiView extends GLSurfaceView {
 		AKUInit ( this, activity );
 	}
 
+	//----------------------------------------------------------------//
+	private void defineDeviceProperties () {
+
+		// get appId
+		String appId = mContext.getPackageName ();
+		
+		// get appName
+		String appName = appId;
+
+		String[] packNameParts = appId.split ( "." );
+
+		if ( packNameParts.length > 1 ) {
+			appName = packNameParts [ packNameParts.length - 1 ];
+		}
+		
+		// get appVersion
+		String appVersion;
+		try {
+			appVersion = mContext.getPackageManager ().getPackageInfo ( appId, 0 ).versionName;
+		}
+		catch ( Exception e ) {
+			appVersion = "UNKNOWN";
+		}
+		
+		// get udid
+		String udid	= Secure.getString ( mContext.getContentResolver (), Secure.ANDROID_ID );
+		if ( udid == null ) {
+			udid = "UNKNOWN";
+		}
+
+		// get other
+		String osBrand 			= "Android";
+		String abi 				= Build.CPU_ABI;
+		String devBrand 		= Build.BRAND;
+		String devName			= Build.DEVICE;
+		String devManufacturer 	= Build.MANUFACTURER;
+		String devModel 		= Build.MODEL;
+		String devProduct 		= Build.PRODUCT;
+		String osVersion 		= Build.VERSION.RELEASE;
+		
+		// tell Moai the device properties
+		AKUSetDeviceProperties ( appName, appId, appVersion, abi, devBrand, devName, devManufacturer, devModel, devProduct, osBrand, osVersion, udid );
+	}
+	
+	//----------------------------------------------------------------//
+	public String getGUID () {
+	
+		return java.util.UUID.randomUUID ().toString ();
+	}
+
+    //----------------------------------------------------------------//
+	public boolean getSensorsEnabled () {
+	
+		return mSensorsEnabled;
+	}
+	
 	//----------------------------------------------------------------//
 	private void moaiInit () {
 	
@@ -144,24 +174,7 @@ public class MoaiView extends GLSurfaceView {
 		AKUSetScreenSize ( mWidth, mHeight );
 
 		mSensorsEnabled = true;
-
-		// set device properties
-		String osBrand 			= "Android";
-		String appName 			= mContext.getPackageName ();
-		String udid 			= Secure.getString ( mContext.getContentResolver (), Secure.ANDROID_ID );
-		String abi 				= Build.CPU_ABI;
-		String devBrand 		= Build.BRAND;
-		String devName			= Build.DEVICE;
-		String devManufacturer 	= Build.MANUFACTURER;
-		String devModel 		= Build.MODEL;
-		String devProduct 		= Build.PRODUCT;
-		String osVersion 		= Build.VERSION.RELEASE;
-		
-		if ( udid == null ) {
-			udid = "UNKNOWN";
-		}
-		
-		AKUSetDeviceProperties ( appName, abi, devBrand, devName, devManufacturer, devModel, devProduct, osBrand, osVersion, udid );
+		defineDeviceProperties ();
 	}
 
     //----------------------------------------------------------------//
