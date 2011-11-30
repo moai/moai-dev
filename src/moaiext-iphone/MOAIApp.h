@@ -58,6 +58,8 @@ private:
 		APP_OPENED_FROM_URL,
 		SESSION_START,
 		SESSION_END,
+		TWEET_SUCCESSFUL,
+		TWEET_CANCELLED,
 		TOTAL,
 	};
 	
@@ -119,6 +121,7 @@ public:
 	void		DidReceiveRemoteNotification								( NSDictionary* userInfo );
 	void		DidRegisterForRemoteNotificationsWithDeviceToken			( NSData* deviceToken );
 	void		DidResolveHostName											( NSString* hostname, cc8* ipAddress );
+	void		DidSendTweet												( bool success );
 	void		DidStartSession												();
 	void		InitStoreKit												();
 				MOAIApp														();
