@@ -598,7 +598,8 @@ void MOAILuaRuntime::ReportLeaksFormatted ( FILE *f ) {
 	
 	// Then, print out each unique allocation spot along with all references
 	// (including multiple references) followed by the alloction stack
-	int top __attribute__((unused)) = lua_gettop ( L );
+	int top = lua_gettop ( L );
+	UNUSED ( top );
 	for ( LeakStackMap::const_iterator i = stacks.begin (); i != stacks.end (); ++i ) {
 		
 		const LeakPtrList& list = i->second;
