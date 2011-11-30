@@ -92,6 +92,7 @@ private:
 	
 	MOAIAnimCurve**		mCurves;
 	u32					mTotalCurves;
+	bool				mRightToLeft;
 
 	//----------------------------------------------------------------//
 	u32				DecodeChar			();
@@ -118,6 +119,7 @@ public:
 	SET ( float, LineSpacing, mLineSpacing )
 	SET ( float, Points, mPoints )
 	SET ( u32, Alignment, mJustify )
+	SET ( bool, RightToLeft, mRightToLeft )
 
 	//----------------------------------------------------------------//
 	void			Layout				( MOAITextLayout& layout, cc8* str, MOAITextCursor& cursor );

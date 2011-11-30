@@ -49,6 +49,7 @@ private:
 	u32					mReveal;
 	
 	bool				mYFlip;
+	bool				mRightToLeft;
 	
 	bool				mNeedsLayout;
 	MOAITextCursor		mCurrentPage;
@@ -71,6 +72,7 @@ private:
 	static int	_setLineSpacing			( lua_State* L );
 	static int	_setRect				( lua_State* L );
 	static int	_setReveal				( lua_State* L );
+	static int	_setRightToLeft			( lua_State* L );
 	static int	_setSpeed				( lua_State* L );
 	static int	_setString				( lua_State* L );
 	static int	_setStringColor			( lua_State* L );

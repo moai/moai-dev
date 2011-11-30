@@ -264,6 +264,22 @@ int MOAITextBox::_setReveal ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	setRightToLeft
+	@text	Reverses the order or characters rendered.
+
+	@in		MOAITextBox self
+	@opt	boolean rightToLeft			Default value is false.
+	@out	nil
+*/
+int MOAITextBox::_setRightToLeft ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextBox, "U" )
+	
+	self->mRightToLeft = state.GetValue < bool >( 2, false );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	setSpeed
 	@text	Sets the base spool speed used when creating a spooling MOAIAction with the spool() function.
 
@@ -472,6 +488,7 @@ void MOAITextBox::Layout () {
 	textFrame.SetFont ( this->mFont );
 	textFrame.SetPoints ( this->mPoints );
 	textFrame.SetLineSpacing ( this->mLineSpacing );
+	textFrame.SetRightToLeft ( this->mRightToLeft );
 	
 	textFrame.SetCurves ( this->mCurves, this->mCurves.Size ());
 	
@@ -496,6 +513,7 @@ MOAITextBox::MOAITextBox () :
 	mSpeed ( DEFAULT_SPOOL_SPEED ),
 	mReveal ( REVEAL_ALL ),
 	mYFlip ( false ),
+	mRightToLeft ( false ),
 	mNeedsLayout ( false ) {
 	
 	RTTI_BEGIN
@@ -600,6 +618,7 @@ void MOAITextBox::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setLineSpacing",			_setLineSpacing },
 		{ "setRect",				_setRect },
 		{ "setReveal",				_setReveal },
+		{ "setRightToLeft",			_setRightToLeft },
 		{ "setSpeed",				_setSpeed },
 		{ "setString",				_setString },
 		{ "setStringColor",			_setStringColor },
