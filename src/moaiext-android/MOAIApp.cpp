@@ -214,7 +214,7 @@ void MOAIApp::SetShowDialogFunc ( void ( *dialogFunc ) ( cc8*, cc8*, cc8*, cc8*,
 }
 
 //----------------------------------------------------------------//
-void MOAIApp::NotifyBillingSupported (bool supported) {	
+void MOAIApp::NotifyBillingSupported ( bool supported ) {	
 	MOAILuaRef& callback = this->mListeners [ CHECK_BILLING_SUPPORTED ];
 	
 	if ( callback ) {

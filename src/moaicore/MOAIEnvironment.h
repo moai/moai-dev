@@ -23,6 +23,14 @@
 class MOAIEnvironment :
 	public MOAIGlobalClass < MOAIEnvironment, MOAILuaObject > {
 private:
+	
+	enum {
+		CONNECTIVITY_CHANGED,
+		TOTAL,
+	};
+	
+	MOAILuaRef			mListeners [ TOTAL ];
+	
 	STLString			mAppDisplayName;
 	STLString			mAppID;
 	STLString			mAppVersion;
@@ -52,6 +60,7 @@ private:
 	cc8* ( *getGUIDfunc ) ( void );
 	
 	//----------------------------------------------------------------//
+	static int			_setListener					( lua_State* L );
 	static int			_generateGUID					( lua_State* L );
 	static int			_getAppDisplayName				( lua_State* L );
 	static int			_getAppID						( lua_State* L );
