@@ -39,6 +39,7 @@ protected:
     AudioBufferList *mpBufferList;
     SInt64 mTotalFrames;
     std::vector<float>mReadBuffer;
+	RCriticalSection mDecodeLock;
 };
 
 #endif
