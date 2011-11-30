@@ -18,7 +18,9 @@
 typedef std::string RString;
 typedef std::vector<RString> RStringArray;
 typedef long long Int64;
+typedef int Int32;
 typedef short Int16;
+typedef char Int8;
 typedef unsigned long ULong;
 
 #if defined(__APPLE__)

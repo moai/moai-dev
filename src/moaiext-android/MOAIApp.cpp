@@ -76,6 +76,21 @@ int MOAIApp::_setMarketPublicKey ( lua_State* L ) {
 	return 0;
 }
 
+int MOAIApp::_showDialog ( lua_State* L ) {
+	MOAILuaState state ( L );
+	
+	cc8* title = state.GetValue < cc8* >( 1, "" );
+	cc8* message = state.GetValue < cc8* >( 2, "" );
+	cc8* positive = state.GetValue < cc8* >( 3, "" );
+	cc8* neutral = state.GetValue < cc8* >( 4, "" );
+	cc8* negative = state.GetValue < cc8* >( 5, "" );
+	bool cancelable = state.GetValue < bool >( 6, "" );
+	
+	MOAIApp::Get ().showDialogFunc ( title, message, positive, neutral, negative, cancelable );
+	
+	return 0;
+}
+
 //================================================================//
 // MOAIApp
 //================================================================//
@@ -115,6 +130,8 @@ void MOAIApp::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "PURCHASE_RESPONSE_RECEIVED",			( u32 )PURCHASE_RESPONSE_RECEIVED );
 	state.SetField ( -1, "PURCHASE_STATE_CHANGED",				( u32 )PURCHASE_STATE_CHANGED );
 	state.SetField ( -1, "RESTORE_RESPONSE_RECEIVED",			( u32 )RESTORE_RESPONSE_RECEIVED );
+	state.SetField ( -1, "BACK_BUTTON_PRESSED",					( u32 )BACK_BUTTON_PRESSED );
+	state.SetField ( -1, "DIALOG_DISMISSED",					( u32 )DIALOG_DISMISSED );
 
 	state.SetField ( -1, "BILLING_RESULT_OK",					( u32 )BILLING_RESULT_OK );
 	state.SetField ( -1, "BILLING_RESULT_USER_CANCELED",		( u32 )BILLING_RESULT_USER_CANCELED );
@@ -128,6 +145,11 @@ void MOAIApp::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "BILLING_STATE_PURCHASE_CANCELED",		( u32 )BILLING_STATE_PURCHASE_CANCELED );
 	state.SetField ( -1, "BILLING_STATE_ITEM_REFUNDED",			( u32 )BILLING_STATE_ITEM_REFUNDED );
 
+	state.SetField ( -1, "DIALOG_RESULT_POSITIVE",				( u32 )DIALOG_RESULT_POSITIVE );
+	state.SetField ( -1, "DIALOG_RESULT_NEUTRAL",				( u32 )DIALOG_RESULT_NEUTRAL );
+	state.SetField ( -1, "DIALOG_RESULT_NEGATIVE",				( u32 )DIALOG_RESULT_NEGATIVE );
+	state.SetField ( -1, "DIALOG_RESULT_CANCEL",				( u32 )DIALOG_RESULT_CANCEL );
+
 	luaL_Reg regTable[] = {
 		{ "setListener",						_setListener },
 		{ "checkBillingSupported",				_checkBillingSupported },
@@ -135,6 +157,7 @@ void MOAIApp::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "confirmNotification",				_confirmNotification },
 		{ "restoreTransactions",				_restoreTransactions },
 		{ "setMarketPublicKey",					_setMarketPublicKey },
+		{ "showDialog",							_showDialog },
 		{ NULL, NULL }
 	};
 
@@ -186,7 +209,12 @@ void MOAIApp::SetMarketPublicKeyFunc ( void ( *setKeyFunc ) ( cc8* )) {
 }
 
 //----------------------------------------------------------------//
-void MOAIApp::NotifyBillingSupported (bool supported) {	
+void MOAIApp::SetShowDialogFunc ( void ( *dialogFunc ) ( cc8*, cc8*, cc8*, cc8*, cc8*, bool )) {
+	showDialogFunc = dialogFunc;
+}
+
+//----------------------------------------------------------------//
+void MOAIApp::NotifyBillingSupported ( bool supported ) {	
 	MOAILuaRef& callback = this->mListeners [ CHECK_BILLING_SUPPORTED ];
 	
 	if ( callback ) {
@@ -232,6 +260,34 @@ void MOAIApp::NotifyPurchaseStateChanged ( cc8* identifier, int code, cc8* order
 //----------------------------------------------------------------//
 void MOAIApp::NotifyRestoreResponseReceived ( int code ) {
 	MOAILuaRef& callback = this->mListeners [ RESTORE_RESPONSE_RECEIVED ];
+	
+	if ( callback ) {
+		MOAILuaStateHandle state = callback.GetSelf ();
+
+		lua_pushinteger ( state, code );	
+		
+		state.DebugCall ( 1, 0 );
+	}
+}
+
+//----------------------------------------------------------------//
+bool MOAIApp::NotifyBackButtonPressed () {
+	MOAILuaRef& callback = this->mListeners [ BACK_BUTTON_PRESSED ];
+	
+	if ( callback ) {
+		MOAILuaStateHandle state = callback.GetSelf ();
+
+		state.DebugCall ( 0, 1 );
+		
+		return lua_toboolean ( state, 1 );
+	} else {
+		return false;
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIApp::NotifyDialogDismissed ( int code ) {
+	MOAILuaRef& callback = this->mListeners [ DIALOG_DISMISSED ];
 	
 	if ( callback ) {
 		MOAILuaStateHandle state = callback.GetSelf ();

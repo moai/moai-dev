@@ -23,8 +23,10 @@ import java.util.ArrayList;
 import @PACKAGE@.R;
 
 import android.app.Activity;
-import android.content.Context;
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.hardware.Sensor;
@@ -38,6 +40,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.Display;
+import android.view.KeyEvent;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -56,7 +59,15 @@ public class MoaiActivity extends Activity implements SensorEventListener {
 	private SensorManager 					mSensorManager;
     private PurchaseObserver 				mPurchaseObserver;
 	private MoaiBillingService 				mBillingService;
+	private Handler							mHandler;
 	
+	static enum DIALOG_RESULT {
+		POSITIVE,
+		NEUTRAL,
+		NEGATIVE,
+		CANCEL,
+	}
+
 	protected static native void AKUAppDidStartSession 				();
 	protected static native void AKUAppWillEndSession 				();
 	protected static native void AKUEnqueueCompassEvent 			( int heading );
@@ -69,6 +80,8 @@ public class MoaiActivity extends Activity implements SensorEventListener {
 	protected static native void AKUNotifyPurchaseResponseReceived	( String productId, int responseCode );
 	protected static native void AKUNotifyPurchaseStateChanged		( String productId, int purchaseState, String orderId, String notificationId, String developerPayload );
 	protected static native void AKUNotifyRestoreResponseReceived	( int responseCode );
+	protected static native boolean AKUNotifyBackButtonPressed		();
+	protected static native void AKUNotifyDialogDismissed			( int dialogResult );
 
 	//----------------------------------------------------------------//
 	public static void log ( String message ) {
@@ -126,6 +139,8 @@ public class MoaiActivity extends Activity implements SensorEventListener {
 		// unpack assets
  		unpackAssets ( filesDir );
  		mMoaiView.setDirectory ( filesDir );
+
+		mHandler = new Handler ();
 
 		mPurchaseObserver = new PurchaseObserver ( null );
         MoaiBillingResponseHandler.register ( mPurchaseObserver );
@@ -202,6 +217,19 @@ public class MoaiActivity extends Activity implements SensorEventListener {
 		mSensorManager.registerListener ( this, mAccelerometer, SensorManager.SENSOR_DELAY_NORMAL );
 		
 		startConnectivityReceiver ();
+	}
+	
+	public boolean onKeyDown ( int keyCode, KeyEvent event )
+	{
+	    if (keyCode == KeyEvent.KEYCODE_BACK)
+	    {
+	        if ( AKUNotifyBackButtonPressed () )
+			{
+				return true;
+			}
+	    }
+	    
+	    return super.onKeyDown(keyCode, event);
 	}
 		
 	//----------------------------------------------------------------//
@@ -297,6 +325,65 @@ public class MoaiActivity extends Activity implements SensorEventListener {
 		int sensorId = MoaiInputDeviceSensorID.LEVEL.ordinal ();
 		
 		AKUEnqueueLevelEvent ( deviceId, sensorId, x, y, z );
+	}
+
+	//================================================================//
+	// Misc JNI callback methods
+	//================================================================//
+	
+	public void showDialog ( final String title, final String message, final String positiveButton, final String neutralButton, final String negativeButton, final boolean cancelable ) {
+		mHandler.post ( new Runnable() {
+			public void run() {
+				AlertDialog.Builder builder = new AlertDialog.Builder ( MoaiActivity.this );
+
+				if ( title != null ) {
+					builder.setTitle ( title );
+				}
+
+				if ( message != null ) {
+					builder.setMessage ( message );
+				}
+
+				if ( positiveButton != null ) {
+					builder.setPositiveButton ( positiveButton, new DialogInterface.OnClickListener () {
+							public void onClick ( DialogInterface arg0, int arg1 ) 
+							{
+								AKUNotifyDialogDismissed ( DIALOG_RESULT.POSITIVE.ordinal () );
+							}
+						});
+				}
+
+				if ( neutralButton != null ) {
+					builder.setNeutralButton ( neutralButton, new DialogInterface.OnClickListener () {
+							public void onClick ( DialogInterface arg0, int arg1 ) 
+							{
+								AKUNotifyDialogDismissed ( DIALOG_RESULT.NEUTRAL.ordinal () );
+							}
+						});
+				}
+
+				if ( negativeButton != null ) {
+					builder.setNegativeButton ( negativeButton, new DialogInterface.OnClickListener () {
+							public void onClick ( DialogInterface arg0, int arg1 ) 
+							{
+								AKUNotifyDialogDismissed ( DIALOG_RESULT.NEGATIVE.ordinal () );
+							}
+						});
+				}
+
+				builder.setCancelable ( cancelable );
+				if ( cancelable ) {
+					builder.setOnCancelListener ( new DialogInterface.OnCancelListener () {
+							public void onCancel ( DialogInterface arg0 ) 
+							{
+								AKUNotifyDialogDismissed ( DIALOG_RESULT.CANCEL.ordinal () );
+							}
+						});
+				}
+
+				builder.create().show();			
+			}
+		});
 	}
 	
 	//================================================================//

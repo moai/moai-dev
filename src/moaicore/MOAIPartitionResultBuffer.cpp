@@ -89,6 +89,8 @@ void MOAIPartitionResultBuffer::Sort ( u32 mode ) {
 //----------------------------------------------------------------//
 void MOAIPartitionResultBuffer::Sort ( u32 mode, const USVec3D& scale ) {
 
+    UNUSED ( scale );
+    
 	switch ( mode ) {
 		
 		case SORT_PRIORITY_ASCENDING:

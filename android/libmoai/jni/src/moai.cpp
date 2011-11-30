@@ -48,6 +48,7 @@
 	jmethodID		mConfirmNotificationFunc;
 	jmethodID		mRestoreTransactionsFunc;
 	jmethodID		mSetMarketPublicKeyFunc;
+	jmethodID		mShowDialogFunc;
 	
 	//----------------------------------------------------------------//
 	int JNI_OnLoad ( JavaVM* vm, void* reserved ) {
@@ -107,6 +108,19 @@
 		GET_JSTRING(key, jstr);
 
 		env->CallObjectMethod ( mMoaiActivity , mSetMarketPublicKeyFunc, jstr );
+	}
+	
+	void ShowDialog ( const char * title , const char * message , const char * positive , const char * neutral , const char * negative , bool cancelable ) {
+		// get environment
+		GET_ENV ();
+
+		GET_JSTRING(title, jtitle);
+		GET_JSTRING(message, jmessage);
+		GET_JSTRING(positive, jpositive);
+		GET_JSTRING(neutral, jneutral);
+		GET_JSTRING(negative, jnegative);
+
+		env->CallObjectMethod ( mMoaiActivity , mShowDialogFunc, jtitle, jmessage, jpositive, jneutral, jnegative, cancelable );
 	}
 	
 //================================================================//
@@ -223,6 +237,7 @@
 		MOAIApp::Get ().SetConfirmNotificationFunc( &ConfirmNotification );
 		MOAIApp::Get ().SetRestoreTransactionsFunc( &RestoreTransactions );
 		MOAIApp::Get ().SetMarketPublicKeyFunc( &SetMarketPublicKey );
+		MOAIApp::Get ().SetShowDialogFunc( &ShowDialog );
 
 		mMoaiActivity = ( jobject ) env->NewGlobalRef ( moaiActivity );
 		jclass moaiActivityClass = env->GetObjectClass ( mMoaiActivity );
@@ -232,6 +247,7 @@
 		mConfirmNotificationFunc = env->GetMethodID ( moaiActivityClass, "confirmNotification", "(Ljava/lang/String;)Z" );
 		mRestoreTransactionsFunc = env->GetMethodID ( moaiActivityClass, "restoreTransactions", "()Z" );
 		mSetMarketPublicKeyFunc = env->GetMethodID ( moaiActivityClass, "setMarketPublicKey", "(Ljava/lang/String;)V" );
+		mShowDialogFunc = env->GetMethodID ( moaiActivityClass, "showDialog", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)V" );
 	}
 
 	//----------------------------------------------------------------//
@@ -281,7 +297,7 @@
 	}
 	
 	//----------------------------------------------------------------//
-	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUSetDeviceProperties ( JNIEnv* env, jclass obj, jstring jappName, jstring jabi, jstring jdevBrand, jstring jdevName, jstring jdevManufacturer, jstring jdevModel, jstring jdevProduct, jstring josBrand, jstring josVersion, jstring judid ) {
+	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUSetDeviceProperties ( JNIEnv* env, jclass obj, jstring jappName, jstring jappId, jstring jappVersion, jstring jabi, jstring jdevBrand, jstring jdevName, jstring jdevManufacturer, jstring jdevModel, jstring jdevProduct, jstring josBrand, jstring josVersion, jstring judid ) {
 
 		// get the environment
 		MOAIEnvironment& moaiEnv = MOAIEnvironment::Get ();
@@ -291,6 +307,8 @@
 
 		// convert jstrings to cstrings
 		GET_CSTRING ( jappName, appName );
+		GET_CSTRING ( jappId, appId );
+		GET_CSTRING ( jappVersion, appVersion );
 		GET_CSTRING ( jabi, abi );
 		GET_CSTRING ( jdevBrand, devBrand );
 		GET_CSTRING ( jdevName, devName );
@@ -303,6 +321,8 @@
 	
 		// set environment properties
 		moaiEnv.SetAppDisplayName 	( appName );
+		moaiEnv.SetAppID 			( appId );
+		moaiEnv.SetAppVersion		( appVersion );
 		moaiEnv.SetCPUABI 			( abi );
 		moaiEnv.SetDevBrand 		( devBrand );
 		moaiEnv.SetDevName 			( devName );
@@ -315,6 +335,8 @@
 
 		// release jstrings
 		RELEASE_CSTRING ( jappName, appName );
+		RELEASE_CSTRING ( jappId, appId );
+		RELEASE_CSTRING ( jappVersion, appVersion );
 		RELEASE_CSTRING ( jabi, abi );
 		RELEASE_CSTRING ( jdevBrand, devBrand );
 		RELEASE_CSTRING ( jdevName, devName );
@@ -439,4 +461,12 @@
 		
 	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiActivity_AKUNotifyRestoreResponseReceived ( JNIEnv* env, jclass obj, jint code ) {
 		MOAIApp::Get ().NotifyRestoreResponseReceived ( code );
+	}
+
+	extern "C" bool Java_@PACKAGE_UNDERSCORED@_MoaiActivity_AKUNotifyBackButtonPressed ( JNIEnv* env, jclass obj ) {
+		return MOAIApp::Get ().NotifyBackButtonPressed ();
+	}
+	
+	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiActivity_AKUNotifyDialogDismissed ( JNIEnv* env, jclass obj, jint code ) {
+		MOAIApp::Get ().NotifyDialogDismissed ( code );
 	}

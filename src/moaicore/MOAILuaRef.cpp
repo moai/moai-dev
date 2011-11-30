@@ -268,7 +268,7 @@ void MOAILuaRef::SetRef ( MOAILuaState& state, int idx, bool weak ) {
 	this->Clear ();
 	this->mWeak = weak;
 
-	int top = state.GetTop ();
+	int top __attribute__((unused)) = state.GetTop ();
 
 	if ( lua_isnil ( state, idx ) == false ) {
 
