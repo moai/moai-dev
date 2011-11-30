@@ -1,6 +1,16 @@
 ================================================================
 = Moai SDK
 = Version 0.9 Beta
+= Revision 8
+================================================================
+- Add Lua callbacks to determine the success or failure of a Tweet (iPhone)
+- Add Lua callbacks for connectivity change notifications
+- Add a Lua callback to trap 'back' button presses (Android)
+- Add Lua methods for simple AlertDialog creation and response (Android)
+
+================================================================
+= Moai SDK
+= Version 0.9 Beta
 = Revision 7
 ================================================================
 - MOAITextBox - exposed set line spacing
