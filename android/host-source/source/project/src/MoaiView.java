@@ -89,12 +89,23 @@ public class MoaiView extends GLSurfaceView {
 		mSensorsEnabled = false;
 		mWidth = width;
 		
-		moaiInit ();
-		AKUInit ( this, activity );
+		initMoai ( activity );
+	}
+	
+	//----------------------------------------------------------------//
+	public String getGUID () {
+	
+		return java.util.UUID.randomUUID ().toString ();
+	}
+
+    //----------------------------------------------------------------//
+	public boolean getSensorsEnabled () {
+	
+		return mSensorsEnabled;
 	}
 
 	//----------------------------------------------------------------//
-	private void defineDeviceProperties () {
+	private void initDeviceProperties () {
 
 		// get appId
 		String appId = mContext.getPackageName ();
@@ -136,21 +147,9 @@ public class MoaiView extends GLSurfaceView {
 		// tell Moai the device properties
 		AKUSetDeviceProperties ( appName, appId, appVersion, abi, devBrand, devName, devManufacturer, devModel, devProduct, osBrand, osVersion, udid );
 	}
-	
+		
 	//----------------------------------------------------------------//
-	public String getGUID () {
-	
-		return java.util.UUID.randomUUID ().toString ();
-	}
-
-    //----------------------------------------------------------------//
-	public boolean getSensorsEnabled () {
-	
-		return mSensorsEnabled;
-	}
-	
-	//----------------------------------------------------------------//
-	private void moaiInit () {
+	private void initMoai ( MoaiActivity activity ) {
 	
 		mAku = AKUCreateContext ();
 		
@@ -173,8 +172,10 @@ public class MoaiView extends GLSurfaceView {
 		AKUUntzInit ();
 		AKUSetScreenSize ( mWidth, mHeight );
 
+		initDeviceProperties ();
+		
+		AKUInit ( this, activity );
 		mSensorsEnabled = true;
-		defineDeviceProperties ();
 	}
 
     //----------------------------------------------------------------//

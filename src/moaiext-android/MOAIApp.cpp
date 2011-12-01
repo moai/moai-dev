@@ -17,6 +17,58 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+int MOAIApp::_checkBillingSupported ( lua_State* L ) {
+	MOAILuaState state ( L );
+	
+	bool result = MOAIApp::Get ().checkBillingSupportedFunc ();
+	lua_pushboolean ( state, result );
+	
+	return 1;
+}
+
+//----------------------------------------------------------------//
+int MOAIApp::_confirmNotification ( lua_State* L ) {
+	MOAILuaState state ( L );
+	
+	cc8* notification = state.GetValue < cc8* >( 1, "" );
+	bool result = MOAIApp::Get ().confirmNotificationFunc ( notification );
+	lua_pushboolean ( state, result );
+	
+	return 1;
+}
+
+//----------------------------------------------------------------//
+int MOAIApp::_openURL ( lua_State* L ) {
+	MOAILuaState state ( L );
+	
+	cc8* url = state.GetValue < cc8* >( 1, "" );
+	MOAIApp::Get ().openURLFunc ( url );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+int MOAIApp::_requestPurchase ( lua_State* L ) {
+	MOAILuaState state ( L );
+	
+	cc8* identifier = state.GetValue < cc8* >( 1, "" );
+	bool result = MOAIApp::Get ().requestPurchaseFunc ( identifier );
+	lua_pushboolean ( state, result );
+	
+	return 1;
+}
+
+//----------------------------------------------------------------//
+int MOAIApp::_restoreTransactions ( lua_State* L ) {
+	MOAILuaState state ( L );
+	
+	bool result = MOAIApp::Get ().restoreTransactionsFunc ();
+	lua_pushboolean ( state, result );
+	
+	return 1;
+}
+
+//----------------------------------------------------------------//
 int MOAIApp::_setListener ( lua_State* L ) {
 	MOAILuaState state ( L );
 	
@@ -29,44 +81,7 @@ int MOAIApp::_setListener ( lua_State* L ) {
 	return 0;
 }
 
-int MOAIApp::_checkBillingSupported ( lua_State* L ) {
-	MOAILuaState state ( L );
-	
-	bool result = MOAIApp::Get ().checkBillingSupportedFunc ();
-	lua_pushboolean ( state, result );
-	
-	return 1;
-}
-
-int MOAIApp::_requestPurchase ( lua_State* L ) {
-	MOAILuaState state ( L );
-	
-	cc8* identifier = state.GetValue < cc8* >( 1, "" );
-	bool result = MOAIApp::Get ().requestPurchaseFunc ( identifier );
-	lua_pushboolean ( state, result );
-	
-	return 1;
-}
-
-int MOAIApp::_confirmNotification ( lua_State* L ) {
-	MOAILuaState state ( L );
-	
-	cc8* notification = state.GetValue < cc8* >( 1, "" );
-	bool result = MOAIApp::Get ().confirmNotificationFunc ( notification );
-	lua_pushboolean ( state, result );
-	
-	return 1;
-}
-
-int MOAIApp::_restoreTransactions ( lua_State* L ) {
-	MOAILuaState state ( L );
-	
-	bool result = MOAIApp::Get ().restoreTransactionsFunc ();
-	lua_pushboolean ( state, result );
-	
-	return 1;
-}
-
+//----------------------------------------------------------------//
 int MOAIApp::_setMarketPublicKey ( lua_State* L ) {
 	MOAILuaState state ( L );
 	
@@ -76,6 +91,7 @@ int MOAIApp::_setMarketPublicKey ( lua_State* L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
 int MOAIApp::_showDialog ( lua_State* L ) {
 	MOAILuaState state ( L );
 	
@@ -151,11 +167,12 @@ void MOAIApp::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "DIALOG_RESULT_CANCEL",				( u32 )DIALOG_RESULT_CANCEL );
 
 	luaL_Reg regTable[] = {
-		{ "setListener",						_setListener },
 		{ "checkBillingSupported",				_checkBillingSupported },
-		{ "requestPurchase",					_requestPurchase },
 		{ "confirmNotification",				_confirmNotification },
+		{ "openURL",							_openURL },
+		{ "requestPurchase",					_requestPurchase },
 		{ "restoreTransactions",				_restoreTransactions },
+		{ "setListener",						_setListener },
 		{ "setMarketPublicKey",					_setMarketPublicKey },
 		{ "showDialog",							_showDialog },
 		{ NULL, NULL }
@@ -172,45 +189,38 @@ void MOAIApp::Reset () {
 }
 
 //----------------------------------------------------------------//
-void MOAIApp::WillEndSession( ) {
-
-	MOAILuaRef& callback = this->mListeners [ SESSION_END ];
-	
-	if ( callback ) {
-		MOAILuaStateHandle state = callback.GetSelf ();
-		
-		state.DebugCall ( 0, 0 );
-	}
+void MOAIApp::SetCheckBillingSupportedFunc ( bool ( *func ) ( void )) {
+	checkBillingSupportedFunc = func;
 }
 
 //----------------------------------------------------------------//
-void MOAIApp::SetCheckBillingSupportedFunc ( bool ( *billingSupportedFunc ) ( void )) {
-	checkBillingSupportedFunc = billingSupportedFunc;
+void MOAIApp::SetConfirmNotificationFunc ( bool ( *func ) ( cc8* )) {
+	confirmNotificationFunc = func;
 }
 
 //----------------------------------------------------------------//
-void MOAIApp::SetRequestPurchaseFunc ( bool ( *purchaseFunc ) ( cc8* )) {
-	requestPurchaseFunc = purchaseFunc;
+void MOAIApp::SetOpenURLFunc ( void ( *func ) ( cc8* )) {
+	openURLFunc = func;
 }
 
 //----------------------------------------------------------------//
-void MOAIApp::SetConfirmNotificationFunc ( bool ( *confirmFunc ) ( cc8* )) {
-	confirmNotificationFunc = confirmFunc;
+void MOAIApp::SetRequestPurchaseFunc ( bool ( *func ) ( cc8* )) {
+	requestPurchaseFunc = func;
 }
 
 //----------------------------------------------------------------//
-void MOAIApp::SetRestoreTransactionsFunc ( bool ( *restoreFunc ) ( void )) {
-	restoreTransactionsFunc = restoreFunc;
+void MOAIApp::SetRestoreTransactionsFunc ( bool ( *func ) ( void )) {
+	restoreTransactionsFunc = func;
 }
 
 //----------------------------------------------------------------//
-void MOAIApp::SetMarketPublicKeyFunc ( void ( *setKeyFunc ) ( cc8* )) {
-	setMarketPublicKeyFunc = setKeyFunc;
+void MOAIApp::SetMarketPublicKeyFunc ( void ( *func ) ( cc8* )) {
+	setMarketPublicKeyFunc = func;
 }
 
 //----------------------------------------------------------------//
-void MOAIApp::SetShowDialogFunc ( void ( *dialogFunc ) ( cc8*, cc8*, cc8*, cc8*, cc8*, bool )) {
-	showDialogFunc = dialogFunc;
+void MOAIApp::SetShowDialogFunc ( void ( *func ) ( cc8*, cc8*, cc8*, cc8*, cc8*, bool )) {
+	showDialogFunc = func;
 }
 
 //----------------------------------------------------------------//
@@ -295,5 +305,17 @@ void MOAIApp::NotifyDialogDismissed ( int code ) {
 		lua_pushinteger ( state, code );	
 		
 		state.DebugCall ( 1, 0 );
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIApp::WillEndSession( ) {
+
+	MOAILuaRef& callback = this->mListeners [ SESSION_END ];
+	
+	if ( callback ) {
+		MOAILuaStateHandle state = callback.GetSelf ();
+		
+		state.DebugCall ( 0, 0 );
 	}
 }

@@ -35,6 +35,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.os.Handler;
@@ -54,12 +55,12 @@ import android.content.pm.ConfigurationInfo;
 public class MoaiActivity extends Activity implements SensorEventListener {
 
 	private Sensor 							mAccelerometer;
-	private ConnectivityBroadcastReceiver 	mConnectivityReceiver;
-	private MoaiView						mMoaiView;
-	private SensorManager 					mSensorManager;
-    private PurchaseObserver 				mPurchaseObserver;
 	private MoaiBillingService 				mBillingService;
+	private ConnectivityBroadcastReceiver 	mConnectivityReceiver;
 	private Handler							mHandler;
+	private MoaiView						mMoaiView;
+    private PurchaseObserver 				mPurchaseObserver;
+	private SensorManager 					mSensorManager;
 	
 	static enum DIALOG_RESULT {
 		POSITIVE,
@@ -68,20 +69,20 @@ public class MoaiActivity extends Activity implements SensorEventListener {
 		CANCEL,
 	}
 
-	protected static native void AKUAppDidStartSession 				();
-	protected static native void AKUAppWillEndSession 				();
-	protected static native void AKUEnqueueCompassEvent 			( int heading );
-	protected static native void AKUEnqueueLevelEvent 				( int deviceId, int sensorId, float x, float y, float z );
-	protected static native void AKUEnqueueLocationEvent 			( int deviceId, int sensorId, int longitude, int latitude, int altitude, float hAccuracy, float vAccuracy, float speed );
-	protected static native void AKUMountVirtualDirectory 			( String virtualPath, String archive );
-	protected static native void AKUSetConnectionType 				( long connectionType );
-	protected static native void AKUSetDocumentDirectory 			( String path );
-	protected static native void AKUNotifyBillingSupported			( boolean supported );
-	protected static native void AKUNotifyPurchaseResponseReceived	( String productId, int responseCode );
-	protected static native void AKUNotifyPurchaseStateChanged		( String productId, int purchaseState, String orderId, String notificationId, String developerPayload );
-	protected static native void AKUNotifyRestoreResponseReceived	( int responseCode );
-	protected static native boolean AKUNotifyBackButtonPressed		();
-	protected static native void AKUNotifyDialogDismissed			( int dialogResult );
+	protected static native void 		AKUAppDidStartSession 				();
+	protected static native void 		AKUAppWillEndSession 				();
+	protected static native void 		AKUEnqueueCompassEvent 				( int heading );
+	protected static native void 		AKUEnqueueLevelEvent 				( int deviceId, int sensorId, float x, float y, float z );
+	protected static native void 		AKUEnqueueLocationEvent 			( int deviceId, int sensorId, int longitude, int latitude, int altitude, float hAccuracy, float vAccuracy, float speed );
+	protected static native void 		AKUMountVirtualDirectory 			( String virtualPath, String archive );
+	protected static native boolean 	AKUNotifyBackButtonPressed			();
+	protected static native void 		AKUNotifyBillingSupported			( boolean supported );
+	protected static native void 		AKUNotifyDialogDismissed			( int dialogResult );
+	protected static native void 		AKUNotifyPurchaseResponseReceived	( String productId, int responseCode );
+	protected static native void 		AKUNotifyPurchaseStateChanged		( String productId, int purchaseState, String orderId, String notificationId, String developerPayload );
+	protected static native void 		AKUNotifyRestoreResponseReceived	( int responseCode );
+	protected static native void 		AKUSetConnectionType 				( long connectionType );
+	protected static native void 		AKUSetDocumentDirectory 			( String path );
 
 	//----------------------------------------------------------------//
 	public static void log ( String message ) {
@@ -164,6 +165,19 @@ public class MoaiActivity extends Activity implements SensorEventListener {
 	}
 
 	//----------------------------------------------------------------//
+	public boolean onKeyDown ( int keyCode, KeyEvent event ) {
+
+	    if ( keyCode == KeyEvent.KEYCODE_BACK ) {
+	        
+			if ( AKUNotifyBackButtonPressed () ) {
+				return true;
+			}
+	    }
+	    
+	    return super.onKeyDown ( keyCode, event );
+	}
+	
+	//----------------------------------------------------------------//
 	protected void onPause () {
 
 		log ( "MoaiActivity onPause called" );
@@ -219,19 +233,6 @@ public class MoaiActivity extends Activity implements SensorEventListener {
 		startConnectivityReceiver ();
 	}
 	
-	public boolean onKeyDown ( int keyCode, KeyEvent event )
-	{
-	    if (keyCode == KeyEvent.KEYCODE_BACK)
-	    {
-	        if ( AKUNotifyBackButtonPressed () )
-			{
-				return true;
-			}
-	    }
-	    
-	    return super.onKeyDown(keyCode, event);
-	}
-		
 	//----------------------------------------------------------------//
 	private void startConnectivityReceiver () {
 		
@@ -331,9 +332,13 @@ public class MoaiActivity extends Activity implements SensorEventListener {
 	// Misc JNI callback methods
 	//================================================================//
 	
+	//----------------------------------------------------------------//
 	public void showDialog ( final String title, final String message, final String positiveButton, final String neutralButton, final String negativeButton, final boolean cancelable ) {
-		mHandler.post ( new Runnable() {
-			public void run() {
+
+		mHandler.post ( new Runnable () {
+
+			public void run () {
+
 				AlertDialog.Builder builder = new AlertDialog.Builder ( MoaiActivity.this );
 
 				if ( title != null ) {
@@ -385,6 +390,18 @@ public class MoaiActivity extends Activity implements SensorEventListener {
 			}
 		});
 	}
+
+	//================================================================//
+	// Open Url JNI callback methods
+	//================================================================//
+
+	//----------------------------------------------------------------//
+	public void openURL ( String url ) {
+
+		Uri uri = Uri.parse ( url );
+		Intent intent = new Intent ( Intent.ACTION_VIEW, uri );
+		startActivity ( intent );
+	}
 	
 	//================================================================//
 	// In-App Billing JNI callback methods
@@ -392,14 +409,13 @@ public class MoaiActivity extends Activity implements SensorEventListener {
 
 	//----------------------------------------------------------------//
 	public boolean checkBillingSupported () {
+		
 		return mBillingService.checkBillingSupported ();
 	}
-	
-	public boolean requestPurchase ( String productId )	{
-		return mBillingService.requestPurchase ( productId, null );
-	}
-	
+
+	//----------------------------------------------------------------//
 	public boolean confirmNotification ( String notificationId ) {
+		
 		ArrayList<String> notifyList = new ArrayList<String> ();
         notifyList.add ( notificationId );
 
@@ -407,12 +423,22 @@ public class MoaiActivity extends Activity implements SensorEventListener {
 
 		return mBillingService.confirmNotifications ( notifyIds );
 	}
+		
+	//----------------------------------------------------------------//
+	public boolean requestPurchase ( String productId )	{
+		
+		return mBillingService.requestPurchase ( productId, null );
+	}
 	
+	//----------------------------------------------------------------//
 	public boolean restoreTransactions () {
+		
 		return mBillingService.restoreTransactions ();
 	}
 	
+	//----------------------------------------------------------------//
 	public void setMarketPublicKey ( String key ) {
+		
 		MoaiBillingSecurity.setPublicKey ( key );
 	}
 	
@@ -449,42 +475,55 @@ public class MoaiActivity extends Activity implements SensorEventListener {
 		}
 	};
 	
+	//================================================================//
+	// PurchaseObserver
+	//================================================================//
 	private class PurchaseObserver extends MoaiBillingPurchaseObserver {
-	    private static final String TAG = "MoaiBillingPurchaseObserver";
+	    
+		private static final String TAG = "MoaiBillingPurchaseObserver";
 
+		//----------------------------------------------------------------//
 		public PurchaseObserver ( Handler handler ) {
 	        super ( MoaiActivity.this, handler );
 	    }
 
-	    @Override
+		//----------------------------------------------------------------//
+		@Override
 	    public void onBillingSupported ( boolean supported ) {
-	        if ( MoaiBillingConstants.DEBUG ) {
+	        
+			if ( MoaiBillingConstants.DEBUG ) {
 	            Log.i ( TAG, "onBillingSupported: " + supported );
 	        }
 	
 			AKUNotifyBillingSupported ( supported );
 	    }
 
+		//----------------------------------------------------------------//
 	    @Override
 	    public void onPurchaseStateChange ( PurchaseState purchaseState, String itemId, String orderId, String notificationId, String developerPayload ) {
-        	if ( MoaiBillingConstants.DEBUG ) {
+        	
+			if ( MoaiBillingConstants.DEBUG ) {
 	            Log.i ( TAG, "onPurchaseStateChange: " + itemId + ", " + purchaseState );
 	        }
 	        
 			AKUNotifyPurchaseStateChanged ( itemId, purchaseState.ordinal(), orderId, notificationId, developerPayload );
 	    }
 
+		//----------------------------------------------------------------//
 		@Override
 	    public void onRequestPurchaseResponse ( RequestPurchase request, ResponseCode responseCode ) {
-	        if ( MoaiBillingConstants.DEBUG ) {
+	        
+			if ( MoaiBillingConstants.DEBUG ) {
 	            Log.d ( TAG, "onRequestPurchaseResponse: " + request.mProductId + ", " + responseCode );
 	        }
 	
 			AKUNotifyPurchaseResponseReceived ( request.mProductId, responseCode.ordinal() );
 	    }
 
+		//----------------------------------------------------------------//
 	    @Override
 	    public void onRestoreTransactionsResponse ( RestoreTransactions request, ResponseCode responseCode ) {
+
 	        if ( MoaiBillingConstants.DEBUG ) {
 	            Log.d ( TAG, "onRestoreTransactionsResponse: " + responseCode );
 	        }
