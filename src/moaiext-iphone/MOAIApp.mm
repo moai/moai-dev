@@ -128,6 +128,13 @@ int MOAIApp::_canMakePayments ( lua_State* L ) {
 int MOAIApp::_canTweet ( lua_State* L ) {
 	MOAILuaState state ( L );
 	
+	Class tweetClass = NSClassFromString ( @"TWTweetComposeViewController" );
+	if ( tweetClass == nil ) {
+		
+		lua_pushboolean ( state, false );
+		return 1;
+	}
+	
 	BOOL result = [ TWTweetComposeViewController canSendTweet ];
 	lua_pushboolean ( state, result );
 	
@@ -148,6 +155,9 @@ int MOAIApp::_composeTweet ( lua_State* L ) {
 	
 	cc8* text	= state.GetValue < cc8* >( 1, "" );
 	cc8* url	= state.GetValue < cc8* >( 2, "" );
+	
+	Class tweetClass = NSClassFromString ( @"TWTweetComposeViewController" );
+	if ( tweetClass == nil ) return 0;
 	
 	if ( ![ TWTweetComposeViewController canSendTweet ]) return 0;
 	
@@ -184,6 +194,8 @@ int MOAIApp::_composeTweet ( lua_State* L ) {
 	if  ( rootVC != nil ) {
 		[ rootVC presentModalViewController:tweetViewController animated:YES ];
 	}
+	
+	[ tweetViewController release ];
 	
 	return 0;
 }
