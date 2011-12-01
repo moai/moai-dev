@@ -17,7 +17,7 @@ class MemoryAudioSource : public BufferedAudioSource
 public:
 	MemoryAudioSource(UNTZ::SoundInfo& info, float* interleavedData, bool ownsData);
 //	MemoryAudioSource(UInt32 sampleRate, UInt32 numChannels, UInt32 numFrames, Int16 *interleavedData);
-    ~MemoryAudioSource() {};
+    virtual ~MemoryAudioSource() {};
     
     // AudioSource
 	double getSampleRate();
