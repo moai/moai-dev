@@ -34,6 +34,7 @@ long			AKUGetIphoneNetworkReachability					    	();
 void			AKUIphoneInit											( UIApplication* application );
 void			AKUSetConnectionType									( long type );
 void			AKUSetDefaultFrameBuffer								( GLuint frameBuffer );
+void			AKUViewDidRotateFromInterfaceOrientation				( UIInterfaceOrientation orientation );
 void			AKUWasLaunchedWithRemoteNotification					( NSDictionary* remoteNotificationPayload );
 
 #endif

@@ -8,6 +8,9 @@
 #import <CoreTelephony/CTTelephonyNetworkInfo.h>
 #import <CoreTelephony/CTCarrier.h>
 
+#import <TapjoyConnect.h>
+
+
 //----------------------------------------------------------------//
 void AKUAppDidFailToRegisterForRemoteNotificationsWithError ( NSError* error ) {
 
@@ -152,6 +155,12 @@ void AKUSetConnectionType ( long type ) {
 void AKUSetDefaultFrameBuffer ( GLuint frameBuffer ) {
 
 	MOAIGfxDevice::Get ().SetDefaultFrameBuffer ( frameBuffer );
+}
+
+//-----------------------------------------------------------------//
+void AKUViewDidRotateFromInterfaceOrientation ( UIInterfaceOrientation orientation ) {
+		
+	[ TapjoyConnect updateViewsWithOrientation:orientation ];
 }
 
 //-----------------------------------------------------------------//
