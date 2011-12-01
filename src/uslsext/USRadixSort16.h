@@ -5,19 +5,28 @@
 #define	RADIXSORT16_H
 
 //================================================================//
-// USRadixKey16
+// USRadixKey16Base
 //================================================================//
-template < typename TYPE >
-class USRadixKey16 {
+class USRadixKey16Base {
 public:
 
 	u16		mKey;
-	TYPE	mData;
 	
 	//----------------------------------------------------------------//
 	inline operator u16 () {
 		return mKey;
 	}
+};
+
+//================================================================//
+// USRadixKey16
+//================================================================//
+template < typename TYPE >
+class USRadixKey16 :
+	public USRadixKey16Base {
+public:
+
+	TYPE	mData;
 };
 
 //================================================================//

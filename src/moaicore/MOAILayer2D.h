@@ -81,7 +81,7 @@ public:
 	DECL_LUA_FACTORY ( MOAILayer2D )
 	
 	//----------------------------------------------------------------//
-	void			Draw					();
+	void			Draw					( int subPrimID, bool reload );
 	float			GetFitting				( USRect& worldRect, float hPad, float vPad );
 	u32				GetLocalFrame			( USRect& frame );
 	void			GetWndToWorldMtx		( USAffine2D& wndToWorld );

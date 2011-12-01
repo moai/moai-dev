@@ -804,7 +804,7 @@ void MOAISim::Render () {
 		MOAIProp2D* renderPass = passIt->Data ();
 		
 		MOAIGfxDevice::Get ().BeginLayer ();
-		renderPass->Draw ();
+		renderPass->Draw ( MOAIProp::NO_SUBPRIM_ID, true );
 	}
 	
 	MOAIGfxDevice::Get ().Flush ();

@@ -406,7 +406,9 @@ void MOAILayer2D::AffirmPartition () {
 }
 
 //----------------------------------------------------------------//
-void MOAILayer2D::Draw () {
+void MOAILayer2D::Draw ( int subPrimID, bool reload ) {
+	UNUSED ( subPrimID );
+	UNUSED ( reload );
 
 	if ( !this->mViewport ) return;
 	
@@ -462,13 +464,21 @@ void MOAILayer2D::Draw () {
 		u32 totalResults = this->mPartition->GatherProps ( buffer, viewBounds, 0, MOAIProp::CAN_DRAW | MOAIProp::CAN_DRAW_DEBUG );
 		if ( !totalResults ) return;
 		
-		buffer.Sort ( this->mSortMode );
+		totalResults = buffer.PrepareResults ( this->mSortMode, true, 1.0f, 1.0f, 1.0f );
+
+		MOAIProp* prevProp = 0;
 
 		// render the sorted list
 		for ( u32 i = 0; i < totalResults; ++i ) {
-			MOAIProp* prop = buffer.GetResultUnsafe ( i );
-			prop->Draw ();
-			prop->DrawDebug ();
+			MOAIPartitionResult* result = buffer.GetResultUnsafe ( i );
+			
+			MOAIProp* prop = result->mProp;
+			bool reload = prop != prevProp;
+			
+			prop->Draw ( result->mSubPrimID, reload );
+			prop->DrawDebug ( result->mSubPrimID );
+			
+			prevProp = prop;
 		}
 	}
 	

@@ -7,6 +7,22 @@
 class MOAIProp;
 
 //================================================================//
+// MOAIPartitionResult
+//================================================================//
+class MOAIPartitionResult :
+	public USRadixKey32Base {
+public:
+
+	MOAIProp*	mProp;
+	int			mSubPrimID;
+	s32			mPriority;
+	
+	float		mX;
+	float		mY;
+	float		mZ;
+};
+
+//================================================================//
 // MOAIPartitionResultBuffer
 //================================================================//
 /**	@name	MOAIPartitionResultBuffer
@@ -19,56 +35,62 @@ private:
 	friend class MOAIPartition;
 	friend class MOAIPartitionCell;
 
-	typedef USRadixKey32 < MOAIProp* > QueryEntry;
-
 	static const u32 BLOCK_SIZE = 512;
 
-	USLeanArray < QueryEntry >		mMainBuffer;
-	USLeanArray < QueryEntry >		mSwapBuffer;
-	QueryEntry*						mResults;
-	u32								mTotalResults;
-
-	//----------------------------------------------------------------//
-	void			FinishQuery						();
+	USLeanArray < MOAIPartitionResult >		mMainBuffer;
+	USLeanArray < MOAIPartitionResult >		mSwapBuffer;
+	MOAIPartitionResult*					mResults;
+	u32										mTotalResults;
+	
+	USLeanArray < MOAIProp* >				mProps;
+	u32										mTotalProps;
 	
 public:
 
+	static const u32 SORT_FLAG_DESCENDING		= 0x80000000;
+	static const u32 SORT_MODE_MASK				= 0x7fffffff;
+
 	enum {
 		SORT_NONE,
+		
 		SORT_PRIORITY_ASCENDING,
-		SORT_PRIORITY_DESCENDING,
 		SORT_X_ASCENDING,
-		SORT_X_DESCENDING,
 		SORT_Y_ASCENDING,
-		SORT_Y_DESCENDING,
+		SORT_MULTI_AXIS_ASCENDING,
+		
+		SORT_PRIORITY_DESCENDING		= SORT_PRIORITY_ASCENDING | SORT_FLAG_DESCENDING,
+		SORT_X_DESCENDING				= SORT_X_ASCENDING | SORT_FLAG_DESCENDING,
+		SORT_Y_DESCENDING				= SORT_Y_ASCENDING | SORT_FLAG_DESCENDING,
+		SORT_MULTI_AXIS_DESCENDING		= SORT_MULTI_AXIS_ASCENDING | SORT_FLAG_DESCENDING,
 	};
 
 	GET ( u32, TotalResults, mTotalResults )
 	
 	//----------------------------------------------------------------//
-	void			Clear							();
-					MOAIPartitionResultBuffer		();
-					~MOAIPartitionResultBuffer		();
-	MOAIProp*		PopResult						();
-	void			PushResult						( MOAIProp& result );
-	void			PushResultsList					( lua_State* L );
-	void			Reset							();
-	void			Sort							( u32 mode );
-	void			Sort							( u32 mode, const USVec3D& scale );
+	void					Clear							();
+							MOAIPartitionResultBuffer		();
+							~MOAIPartitionResultBuffer		();
+	MOAIPartitionResult*	PopResult						();
+	u32						PrepareResults					( u32 mode );
+	u32						PrepareResults					( u32 mode, bool expand, float xScale, float yScale, float zScale );
+	void					PushProp						( MOAIProp& prop );
+	void					PushResult						( MOAIProp& prop, int subPrimID, s32 priority, float x, float y, float z );
+	void					PushResultProps					( lua_State* L );
+	void					Reset							();
 	
 	//----------------------------------------------------------------//
-	inline MOAIProp* GetResult ( u32 idx ) {
+	inline MOAIPartitionResult* GetResult ( u32 idx ) {
 
 		if ( this->mResults && ( idx < this->mTotalResults )) {
-			return this->mResults [ idx ].mData;
+			return &this->mResults [ idx ];
 		}
 		return 0;
 	}
 	
 	//----------------------------------------------------------------//
-	inline MOAIProp* GetResultUnsafe ( u32 idx ) {
+	inline MOAIPartitionResult* GetResultUnsafe ( u32 idx ) {
 		
-		return this->mResults [ idx ].mData;
+		return &this->mResults [ idx ];
 	}
 };
 

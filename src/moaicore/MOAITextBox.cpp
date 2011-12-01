@@ -417,7 +417,9 @@ void MOAITextBox::ClearCurves () {
 }
 
 //----------------------------------------------------------------//
-void MOAITextBox::Draw () {
+void MOAITextBox::Draw ( int subPrimID, bool reload ) {
+	UNUSED ( subPrimID ); 
+	UNUSED ( reload );
 	
 	if ( !this->mFont ) return;
 	
@@ -442,7 +444,8 @@ void MOAITextBox::Draw () {
 }
 
 //----------------------------------------------------------------//
-void MOAITextBox::DrawDebug () {
+void MOAITextBox::DrawDebug ( int subPrimID ) {
+	UNUSED ( subPrimID ); 
 
 	MOAIDebugLines& debugLines = MOAIDebugLines::Get ();
 	if ( debugLines.Bind ( MOAIDebugLines::TEXT_BOX )) {

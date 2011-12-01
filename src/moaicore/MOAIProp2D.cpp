@@ -10,6 +10,7 @@
 #include <moaicore/MOAILayoutFrame.h>
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIPartition.h>
+#include <moaicore/MOAIPartitionResultBuffer.h>
 #include <moaicore/MOAIProp2D.h>
 #include <moaicore/MOAIShader.h>
 #include <moaicore/MOAIShaderMgr.h>
@@ -175,6 +176,29 @@ int MOAIProp2D::_setDeck ( lua_State* L ) {
 		self->SetMask ( 0 );
 	}
 	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	setExpandForSort
+	@text	Used when drawing with a layout scheme (i.e. MOAIGrid).
+			Expanding for sort causes the prop to emit a sub-prim
+			for each component of the layout. For example, when
+			attaching a MOAIGrid to a prop, each cell of the grid
+			will be added to the render queue for sorting against
+			all other props and sub-prims. This is obviously less
+			efficient, but still more efficient then using an
+			separate prop for each cell or object.
+	
+	@in		MOAIProp2D self
+	@in		boolean expandForSort	Default value is false.
+	@out	nil
+*/
+int MOAIProp2D::_setExpandForSort ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIProp2D, "U" )
+
+	self->mExpandForSort = state.GetValue < bool >( 2, false );
+
 	return 0;
 }
 
@@ -431,7 +455,8 @@ bool MOAIProp2D::BindDeck () {
 }
 
 //----------------------------------------------------------------//
-void MOAIProp2D::Draw () {
+void MOAIProp2D::Draw ( int subPrimID, bool reload ) {
+	UNUSED ( subPrimID );
 
 	if ( !this->mVisible ) return;
 	if ( !this->BindDeck ()) return;
@@ -450,11 +475,17 @@ void MOAIProp2D::Draw () {
 	
 	if ( this->mGrid ) {
 	
-		MOAICellCoord c0;
-		MOAICellCoord c1;
-		
-		this->GetBoundsInView ( c0, c1 );
-		this->mDeck->Draw ( this->GetLocalToWorldMtx (), *this->mGrid, this->mRemapper, this->mGridScale, c0, c1 );
+		if ( subPrimID == MOAIProp::NO_SUBPRIM_ID ) {
+	
+			MOAICellCoord c0;
+			MOAICellCoord c1;
+			
+			this->GetBoundsInView ( c0, c1 );
+			this->mDeck->Draw ( this->GetLocalToWorldMtx (), *this->mGrid, this->mRemapper, this->mGridScale, c0, c1 );
+		}
+		else {
+			this->mDeck->Draw ( this->GetLocalToWorldMtx (), reload, *this->mGrid, this->mRemapper, this->mGridScale, subPrimID );
+		}
 	}
 	else {
 		this->mDeck->Draw ( this->GetLocalToWorldMtx (), this->mIndex, this->mRemapper );
@@ -468,7 +499,8 @@ void MOAIProp2D::Draw () {
 }
 
 //----------------------------------------------------------------//
-void MOAIProp2D::DrawDebug () {
+void MOAIProp2D::DrawDebug ( int subPrimID ) {
+	UNUSED ( subPrimID );
 
 	MOAIDebugLines& debugLines = MOAIDebugLines::Get ();
 	
@@ -530,6 +562,42 @@ void MOAIProp2D::DrawDebug () {
 				}
 			}
 		}
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIProp2D::ExpandForSort ( MOAIPartitionResultBuffer& buffer ) {
+
+	if ( this->mExpandForSort && this->mGrid ) {
+	
+		// add a sub-prim for each visible grid cell
+		const USAffine2D& mtx = this->GetLocalToWorldMtx ();
+		
+		MOAIGrid* grid = this->mGrid;
+		
+		MOAICellCoord c0;
+		MOAICellCoord c1;
+		
+		this->GetBoundsInView ( c0, c1 );
+
+		for ( int y = c0.mY; y <= c1.mY; ++y ) {
+			for ( int x = c0.mX; x <= c1.mX; ++x ) {
+				
+				u32 idx = grid->GetTile ( x, y );
+				if ( !idx || ( idx & MOAITileFlags::HIDDEN )) continue;
+				
+				MOAICellCoord coord ( x, y );
+				int subPrimID = grid->GetCellAddr ( coord );
+				
+				USVec2D loc = grid->GetTilePoint ( coord, MOAIGridSpace::TILE_CENTER );
+				mtx.Transform ( loc );
+				
+				buffer.PushResult ( *this, subPrimID, this->GetPriority (), loc.mX, loc.mY, 0.0f );
+			}
+		}
+	}
+	else {
+		MOAIProp::ExpandForSort ( buffer );
 	}
 }
 
@@ -673,7 +741,8 @@ MOAIProp2D::MOAIProp2D () :
 	mRepeat ( 0 ),
 	mGridScale ( 1.0f, 1.0f ),
 	mFitToFrame ( false ),
-	mVisible ( true ) {
+	mVisible ( true ),
+	mExpandForSort ( false ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIProp )
@@ -802,6 +871,7 @@ void MOAIProp2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "inside",				_inside },
 		{ "setBlendMode",		_setBlendMode },
 		{ "setDeck",			_setDeck },
+		{ "setExpandForSort",	_setExpandForSort },
 		{ "setFrame",			_setFrame },
 		{ "setGrid",			_setGrid },
 		{ "setGridScale",		_setGridScale },

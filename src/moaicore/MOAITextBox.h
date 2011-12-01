@@ -91,8 +91,8 @@ public:
 	
 	//----------------------------------------------------------------//
 	void			ClearCurves				();
-	void			Draw					();
-	void			DrawDebug				();
+	void			Draw					( int subPrimID, bool reload );
+	void			DrawDebug				( int subPrimID );
 	u32				GetLocalFrame			( USRect& frame );
 	bool			IsDone					();
 					MOAITextBox				();
