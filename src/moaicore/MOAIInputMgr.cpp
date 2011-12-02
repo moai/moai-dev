@@ -15,6 +15,7 @@
 #include <moaicore/MOAIPointerSensor.h>
 #include <moaicore/MOAISensor.h>
 #include <moaicore/MOAITouchSensor.h>
+#include <moaicore/MOAIWheelSensor.h>
 
 #define LUAVAR_CONFIGURATION	"configuration"
 
@@ -102,6 +103,15 @@ void MOAIInputMgr::EnqueueTouchEventCancel ( u8 deviceID, u8 sensorID ) {
 	if ( this->CheckSensor ( deviceID, sensorID, MOAISensor::TOUCH )) {
 		this->WriteEventHeader ( deviceID, sensorID, MOAISensor::TOUCH );
 		MOAITouchSensor::WriteEventCancel ( this->mInput );
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIInputMgr::EnqueueWheelEvent ( u8 deviceID, u8 sensorID, float value ) {
+
+	if ( this->CheckSensor ( deviceID, sensorID, MOAISensor::WHEEL )) {
+		this->WriteEventHeader ( deviceID, sensorID, MOAISensor::WHEEL );
+		MOAIWheelSensor::WriteEvent ( this->mInput, value );
 	}
 }
 

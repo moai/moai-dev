@@ -507,6 +507,9 @@
     <ClCompile Include="..\..\src\moaicore\MOAIRtti.cpp">
       <Filter>src\lifecycle</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIWheelSensor.cpp">
+      <Filter>src\input</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\moaicore\MOAIAction.h">
@@ -952,6 +955,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIRtti.h">
       <Filter>src\lifecycle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIWheelSensor.h">
+      <Filter>src\input</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

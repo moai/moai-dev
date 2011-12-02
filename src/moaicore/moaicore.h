@@ -120,6 +120,7 @@
 #include <moaicore/MOAIVertexFormatMgr.h>
 #include <moaicore/MOAIViewport.h>
 #include <moaicore/MOAIWeakPtr.h>
+#include <moaicore/MOAIWheelSensor.h>
 #include <moaicore/MOAIXmlParser.h>
 
 #if USE_BOX2D

@@ -14,6 +14,7 @@
 #include <moaicore/MOAIPointerSensor.h>
 #include <moaicore/MOAITouchSensor.h>
 #include <moaicore/MOAISensor.h>
+#include <moaicore/MOAIWheelSensor.h>
 
 //================================================================//
 // MOAIInputDevice
@@ -110,6 +111,10 @@ void MOAIInputDevice::SetSensor ( u8 sensorID, cc8* name, u32 type ) {
 		}
 		case MOAISensor::KEYBOARD: {
 			sensor = new MOAIKeyboardSensor ();
+			break;
+		}
+		case MOAISensor::WHEEL: {
+			sensor = new MOAIWheelSensor ();
 			break;
 		}
 		case MOAISensor::LEVEL: {

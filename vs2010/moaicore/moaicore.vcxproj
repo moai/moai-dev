@@ -362,6 +362,7 @@
     <ClCompile Include="..\..\src\moaicore\MOAINodeMgr.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAISerializer.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAISim.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAIWheelSensor.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIXmlParser.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIHttpTask.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIFont.cpp" />
@@ -514,6 +515,7 @@
     <ClInclude Include="..\..\src\moaicore\MOAISerializer.h" />
     <ClInclude Include="..\..\src\moaicore\MOAISim.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIWeakPtr.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAIWheelSensor.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIXmlParser.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIHttpTask.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIFont.h" />
