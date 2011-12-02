@@ -11,13 +11,6 @@ import @PACKAGE@.MoaiBillingService.RestoreTransactions;
 import @PACKAGE@.MoaiBillingConstants.PurchaseState;
 import @PACKAGE@.MoaiBillingConstants.ResponseCode;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
 import java.util.ArrayList;
 
 import @PACKAGE@.R;
@@ -44,6 +37,10 @@ import android.view.Display;
 import android.view.KeyEvent;
 import android.view.Window;
 import android.view.WindowManager;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.ConfigurationInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 
 // OpenGL 2.0
 import android.app.ActivityManager;
@@ -137,10 +134,18 @@ public class MoaiActivity extends Activity implements SensorEventListener {
 		String filesDir = getFilesDir ().getAbsolutePath ();
 		AKUSetDocumentDirectory ( filesDir );
 
-		// unpack assets
- 		unpackAssets ( filesDir );
- 		mMoaiView.setDirectory ( filesDir );
+		PackageManager  pm = getPackageManager();
+		try {
+			ApplicationInfo myApp = pm.getApplicationInfo(getPackageName(), 0);
 
+			AKUMountVirtualDirectory ( "bundle", myApp.publicSourceDir );
+
+			mMoaiView.setDirectory ( "bundle/assets" );
+		} catch (NameNotFoundException e) {
+			// This should obviously never, ever happen.
+			log ( "Unable to locate the application bundle" );
+		}
+				
 		mHandler = new Handler ();
 
 		mPurchaseObserver = new PurchaseObserver ( null );
@@ -252,57 +257,7 @@ public class MoaiActivity extends Activity implements SensorEventListener {
 		this.unregisterReceiver ( mConnectivityReceiver );
 		mConnectivityReceiver = null;
 	}
-		
-    //----------------------------------------------------------------//
-	private void unpackAssets ( String rootDir ) {
-		
-		log ( "MoaiActivity unpackingAssets . . ." );
-		
-		InputStream is = getResources ().openRawResource ( R.raw.bundle );
-		File extractTo = new File ( rootDir + "/" );
-		ZipInputStream zis;
-		
-		try {
-			
-			zis = new ZipInputStream ( new BufferedInputStream ( is ));
-			
-			ZipEntry ze; 
-			byte [] buffer = new byte [ 4096 ];
-			
-			while (( ze = zis.getNextEntry ()) != null ) {
-				
-				File file = new File ( extractTo, ze.getName ());
-				
-				if ( ze.isDirectory () && !file.exists ()) {
-					file.mkdirs();
-					
-					while ( zis.read ( buffer ) != -1 );
-				}
-				else {
-					if ( !file.getParentFile().exists()) {
-						file.getParentFile().mkdirs();
-					}
-					
-					BufferedOutputStream out = new BufferedOutputStream ( new FileOutputStream ( file ));
-					
-					int count;
-					while (( count = zis.read ( buffer )) != -1) {
-						out.write ( buffer, 0, count ); 
-					}
-					out.close();
-				}
-			}
-			zis.close();
-		}
-		catch ( Exception e ) {
-			Log.e ( "MoaiActivity", "Unable to read or write to SD card");
-		}
-		finally {
-		}
-		
-		log ( "MoaiActivity unpackingAssets complete" );
-	}
-
+	
 	//================================================================//
 	// SensorEventListener methods
 	//================================================================//

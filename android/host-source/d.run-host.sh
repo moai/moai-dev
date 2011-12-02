@@ -121,6 +121,8 @@
 	cp -rf	host-source/project/src build/
 
 	# replace text inside required src files
+	fr build/$package_path/Base64.java						@PACKAGE@		$package
+	fr build/$package_path/Base64DecoderException.java		@PACKAGE@		$package
 	fr build/$package_path/MoaiActivity.java				@PACKAGE@		$package
 	fr build/$package_path/MoaiBillingConstants.java		@PACKAGE@		$package
 	fr build/$package_path/MoaiBillingPurchaseObserver.java	@PACKAGE@		$package
@@ -130,8 +132,6 @@
 	fr build/$package_path/MoaiBillingService.java			@PACKAGE@		$package
 	fr build/$package_path/MoaiView.java					@PACKAGE@		$package
 	fr build/$package_path/MoaiView.java					@WORKING_DIR@	$working_dir
-	fr build/$package_path/Base64.java						@PACKAGE@		$package
-	fr build/$package_path/Base64DecoderException.java		@PACKAGE@		$package
 	
 	# create run command for the init.lua file
 	working_dir_depth=`grep -o "\/" <<<"$working_dir" | wc -l`
@@ -149,47 +149,26 @@
 	
 	# create run commands for the host
 	for file in "${run[@]}"; do
-		run_command=`echo -e $run_command"run\(\""$file"\"\)\;\n"`
+		run_command=`echo -e $run_command"run\(\""$file"\"\)\;"`
 	done
-
+	
 	fr 	build/$package_path/MoaiView.java	@RUN@ 	$run_command
 
-	# create bundle directory
-	bundle_file_name=bundle
-	bundle_dir=build/$bundle_file_name
-
-	if [ -d $bundle_dir ]; then
-		rm -rf $bundle_dir
-	fi
-	
-	mkdir -p $bundle_dir
-
 	# bundle android-init file
-	cp -f host-source/init.lua $bundle_dir/init.lua
+	cp -f host-source/init.lua build/assets/init.lua
 
 	# bundle source folders
-	function copyFolderIntoBundle () {
+	function copyFolder () {
 		mkdir -p $2
 		rsync -r --exclude=.svn --exclude=.DS_Store --exclude=*.bat --exclude=*.sh $1/. $2
 	}
 	
 	i=0
 	for src_dir in "${src_dirs[@]}"; do
-		copyFolderIntoBundle $src_dir $bundle_dir/${dest_dirs[i]}
+		copyFolder $src_dir build/assets/${dest_dirs[i]}
 		i=$i+1
 	done
 
-	# create final bundle file
-	rm -f build/res/raw/$bundle_file_name
-	
-	pushd $bundle_dir > /dev/null
-		zip -9 -r -q ../res/raw/$bundle_file_name . *.*
-	popd > /dev/null
-	
-	pushd build/res/raw > /dev/null
-		mv $bundle_file_name.zip $bundle_file_name
-	popd > /dev/null
-	
 	# install release mode of the project
 	if [ "$debug" == "true" ]; then
 		install_cmd="ant debug install"
