@@ -34,7 +34,7 @@ void MOAIPartitionCell::GatherProps ( MOAIPartitionResultBuffer& results, MOAIPr
 		if ( prop == ignore ) continue;
 		
 		if (( mask == 0 ) || ( prop->mMask & mask )) {
-			results.PushResult ( *prop );
+			results.PushProp ( *prop );
 		}
 	}
 }
@@ -53,12 +53,12 @@ void MOAIPartitionCell::GatherProps ( MOAIPartitionResultBuffer& results, MOAIPr
 		
 				if ( prop->mBounds.Contains ( point )) {
 					if ( prop->Inside ( point, 0.0f )) {
-						results.PushResult ( *prop );
+						results.PushProp ( *prop );
 					}
 				}
 			}
 			else {
-				results.PushResult ( *prop );
+				results.PushProp ( *prop );
 			}
 		}
 	}
@@ -78,11 +78,11 @@ void MOAIPartitionCell::GatherProps ( MOAIPartitionResultBuffer& results, MOAIPr
 			if ( prop->mCellSize > 0.0f ) {
 				
 				if ( prop->mBounds.Overlap ( rect )) {
-					results.PushResult ( *prop );
+					results.PushProp ( *prop );
 				}
 			}
 			else {
-				results.PushResult ( *prop );
+				results.PushProp ( *prop );
 			}
 		}
 	}

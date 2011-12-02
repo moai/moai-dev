@@ -157,6 +157,12 @@ void AKUSetDefaultFrameBuffer ( GLuint frameBuffer ) {
 }
 
 //-----------------------------------------------------------------//
+void AKUViewDidRotateFromInterfaceOrientation ( UIInterfaceOrientation orientation ) {
+		
+	[ TapjoyConnect updateViewsWithOrientation:orientation ];
+}
+
+//-----------------------------------------------------------------//
 void AKUWasLaunchedWithRemoteNotification ( NSDictionary* remoteNotificationPayload ) {
 
 	if ( remoteNotificationPayload ) {

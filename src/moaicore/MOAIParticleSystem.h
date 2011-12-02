@@ -73,7 +73,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIParticleSystem )
 
 	//----------------------------------------------------------------//
-	void			Draw					();
+	void			Draw					( int subPrimID, bool reload );
 	u32				GetLocalFrame			( USRect& frame );
 	bool			IsDone					();
 					MOAIParticleSystem		();

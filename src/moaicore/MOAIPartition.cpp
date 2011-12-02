@@ -72,10 +72,12 @@ int MOAIPartition::_propForPoint ( lua_State* L ) {
 	u32 total = self->GatherProps ( buffer, vec, 0 );
 	if ( total ) {
 	
-		MOAIProp* prop = buffer.PopResult ();
-		while ( MOAIProp* test = buffer.PopResult ()) {
-			if ( test->GetPriority () > prop->GetPriority ()) {
-				prop = test;
+		buffer.PrepareResults ( MOAIPartitionResultBuffer::SORT_NONE );
+		
+		MOAIProp* prop = buffer.PopResult ()->mProp;
+		while ( MOAIPartitionResult* test = buffer.PopResult ()) {
+			if ( test->mProp->GetPriority () > prop->GetPriority ()) {
+				prop = test->mProp;
 			}
 		}
 		prop->PushLuaUserdata ( state );
@@ -104,7 +106,8 @@ int MOAIPartition::_propListForPoint ( lua_State* L ) {
 
 	u32 total = self->GatherProps ( buffer, vec, 0 );
 	if ( total ) {
-		buffer.PushResultsList ( L );
+		buffer.PrepareResults ( MOAIPartitionResultBuffer::SORT_NONE );
+		buffer.PushResultProps ( L );
 		return 1;
 	}
 	return 0;
@@ -134,7 +137,8 @@ int MOAIPartition::_propListForRect ( lua_State* L ) {
 
 	u32 total = self->GatherProps ( buffer, rect, 0 );
 	if ( total ) {
-		buffer.PushResultsList ( L );
+		buffer.PrepareResults ( MOAIPartitionResultBuffer::SORT_NONE );
+		buffer.PushResultProps ( L );
 		return 1;
 	}
 	return 0;
@@ -231,8 +235,8 @@ int MOAIPartition::_sortedPropListForPoint ( lua_State* L ) {
 	
 	u32 total = self->GatherProps ( buffer, vec, 0 );
 	if ( total ) {
-		buffer.Sort ( MOAIPartitionResultBuffer::SORT_PRIORITY_ASCENDING ); // TODO: pass in as param
-		buffer.PushResultsList ( L );
+		buffer.PrepareResults ( MOAIPartitionResultBuffer::SORT_PRIORITY_ASCENDING ); // TODO: pass in as param
+		buffer.PushResultProps ( L );
 		return 1;
 	}
 	return 0;
@@ -263,8 +267,8 @@ int MOAIPartition::_sortedPropListForRect ( lua_State* L ) {
 	
 	u32 total = self->GatherProps ( buffer, rect, 0 );
 	if ( total ) {
-		buffer.Sort ( MOAIPartitionResultBuffer::SORT_PRIORITY_ASCENDING ); // TODO: pass in as param
-		buffer.PushResultsList ( L );
+		buffer.PrepareResults ( MOAIPartitionResultBuffer::SORT_PRIORITY_ASCENDING ); // TODO: pass in as param
+		buffer.PushResultProps ( L );
 		return 1;
 	}
 	return 0;
@@ -306,8 +310,7 @@ u32 MOAIPartition::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* i
 	this->mGlobals.GatherProps ( results, ignore, mask );
 	this->mEmpties.GatherProps ( results, ignore, mask );
 	
-	results.FinishQuery ();
-	return results.mTotalResults;
+	return results.mTotalProps;
 }
 
 //----------------------------------------------------------------//
@@ -321,8 +324,7 @@ u32 MOAIPartition::GatherProps ( MOAIPartitionResultBuffer& results, USVec2D& po
 	}
 	this->mGlobals.GatherProps ( results, ignore, point, mask );
 	
-	results.FinishQuery ();
-	return results.mTotalResults;
+	return results.mTotalProps;
 }
 
 //----------------------------------------------------------------//
@@ -336,8 +338,7 @@ u32 MOAIPartition::GatherProps ( MOAIPartitionResultBuffer& results, USRect& rec
 	}
 	this->mGlobals.GatherProps ( results, ignore, rect, mask );
 	
-	results.FinishQuery ();
-	return results.mTotalResults;
+	return results.mTotalProps;
 }
 
 //----------------------------------------------------------------//

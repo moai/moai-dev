@@ -8,5 +8,5 @@
 //----------------------------------------------------------------//
 int main ( int argc, char** argv ) {
 
-	return work_font_mipmap ( argc, argv );
+	return work_zipfs ( argc, argv );
 }

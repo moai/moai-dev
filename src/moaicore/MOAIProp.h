@@ -9,7 +9,7 @@
 class MOAIPartition;
 class MOAIPartitionCell;
 class MOAIPartitionLayer;
-
+class MOAIPartitionResultBuffer;
 class MOAISurfaceSampler2D;
 
 //================================================================//
@@ -48,7 +48,8 @@ private:
 
 public:
 
-	static const s32 UNKNOWN_PRIORITY = 0x80000000;
+	static const s32 UNKNOWN_PRIORITY	= 0x80000000;
+	static const u32 NO_SUBPRIM_ID		= 0xffffffff;
 
 	enum {
 		BOUNDS_EMPTY,
@@ -68,8 +69,9 @@ public:
 	GET ( MOAIPartition*, Partition, mPartition )
 
 	//----------------------------------------------------------------//
-	virtual void	Draw				();
-	virtual void	DrawDebug			();
+	virtual void	Draw				( int subPrimID, bool reload );
+	virtual void	DrawDebug			( int subPrimID );
+	virtual void	ExpandForSort		( MOAIPartitionResultBuffer& buffer );
 	virtual void	GatherSurfaces		( MOAISurfaceSampler2D& sampler );
 	MOAIPartition*	GetPartitionTrait	();
 	USRect			GetBounds			();

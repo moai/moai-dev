@@ -5,19 +5,28 @@
 #define	RADIXSORT32_H
 
 //================================================================//
-// USRadixKey32
+// USRadixKey32Base
 //================================================================//
-template < typename TYPE >
-class USRadixKey32 {
+class USRadixKey32Base {
 public:
 
 	u32		mKey;
-	TYPE	mData;
 	
 	//----------------------------------------------------------------//
 	inline operator u32 () {
 		return mKey;
 	}
+};
+
+//================================================================//
+// USRadixKey32
+//================================================================//
+template < typename TYPE >
+class USRadixKey32 :
+	public USRadixKey32Base {
+public:
+
+	TYPE	mData;
 };
 
 //================================================================//

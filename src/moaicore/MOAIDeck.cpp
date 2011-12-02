@@ -56,6 +56,16 @@ void MOAIDeck::Draw ( const USAffine2D& transform, u32 idx, MOAIDeckRemapper* re
 }
 
 //----------------------------------------------------------------//
+void MOAIDeck::Draw ( const USAffine2D& transform, bool reload, MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, int cellAddr ) {
+	UNUSED ( transform );
+	UNUSED ( reload );
+	UNUSED ( grid );
+	UNUSED ( remapper );
+	UNUSED ( gridScale );
+	UNUSED ( cellAddr );
+}
+
+//----------------------------------------------------------------//
 void MOAIDeck::Draw ( const USAffine2D& transform, MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1 ) {
 	UNUSED ( transform );
 	UNUSED ( grid );
