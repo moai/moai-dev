@@ -1589,6 +1589,10 @@
 		07FAC91613B8F1CA00AFD0B3 /* moaicore-pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07FAC91513B8F1CA00AFD0B3 /* moaicore-pch.cpp */; };
 		07FAC91813B8F1E000AFD0B3 /* uslscore-pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07FAC91713B8F1E000AFD0B3 /* uslscore-pch.cpp */; };
 		07FAC91A13B8F1F000AFD0B3 /* uslsext-pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07FAC91913B8F1F000AFD0B3 /* uslsext-pch.cpp */; };
+		668E165914887A0A00897ED6 /* MOAIWheelSensor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 668E165714887A0A00897ED6 /* MOAIWheelSensor.cpp */; };
+		668E165A14887A0A00897ED6 /* MOAIWheelSensor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 668E165714887A0A00897ED6 /* MOAIWheelSensor.cpp */; };
+		668E165B14887A0A00897ED6 /* MOAIWheelSensor.h in Headers */ = {isa = PBXBuildFile; fileRef = 668E165814887A0A00897ED6 /* MOAIWheelSensor.h */; };
+		668E165C14887A0A00897ED6 /* MOAIWheelSensor.h in Headers */ = {isa = PBXBuildFile; fileRef = 668E165814887A0A00897ED6 /* MOAIWheelSensor.h */; };
 		66D967FC14047A2500017919 /* MOAIScriptDeck.h in Headers */ = {isa = PBXBuildFile; fileRef = 66D967F914047A2500017919 /* MOAIScriptDeck.h */; };
 		66D967FD14047A2500017919 /* MOAIScriptDeck.h in Headers */ = {isa = PBXBuildFile; fileRef = 66D967F914047A2500017919 /* MOAIScriptDeck.h */; };
 		C359A149143A81BA005E7829 /* RAudioBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = C359A148143A81BA005E7829 /* RAudioBuffer.h */; };
@@ -4021,6 +4025,8 @@
 		07FAC91513B8F1CA00AFD0B3 /* moaicore-pch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "moaicore-pch.cpp"; sourceTree = "<group>"; };
 		07FAC91713B8F1E000AFD0B3 /* uslscore-pch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "uslscore-pch.cpp"; sourceTree = "<group>"; };
 		07FAC91913B8F1F000AFD0B3 /* uslsext-pch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "uslsext-pch.cpp"; sourceTree = "<group>"; };
+		668E165714887A0A00897ED6 /* MOAIWheelSensor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIWheelSensor.cpp; sourceTree = "<group>"; };
+		668E165814887A0A00897ED6 /* MOAIWheelSensor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIWheelSensor.h; sourceTree = "<group>"; };
 		66D967F4140479DF00017919 /* MOAILogMessages.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAILogMessages.cpp; sourceTree = "<group>"; };
 		66D967F814047A2500017919 /* MOAIScriptDeck.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIScriptDeck.cpp; sourceTree = "<group>"; };
 		66D967F914047A2500017919 /* MOAIScriptDeck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIScriptDeck.h; sourceTree = "<group>"; };
@@ -6776,6 +6782,8 @@
 		CD148EF31395AE9200A3F501 /* input */ = {
 			isa = PBXGroup;
 			children = (
+				668E165714887A0A00897ED6 /* MOAIWheelSensor.cpp */,
+				668E165814887A0A00897ED6 /* MOAIWheelSensor.h */,
 				0324E50E13564BC7000ADC60 /* MOAIButtonSensor.cpp */,
 				0324E50F13564BC7000ADC60 /* MOAIButtonSensor.h */,
 				0324E51213564BC7000ADC60 /* MOAICompassSensor.cpp */,
@@ -9240,6 +9248,7 @@
 				CD18CEE114693BC100990FE1 /* MOAIUrlMgr.h in Headers */,
 				CD18CEE314693BC100990FE1 /* MOAIWeakPtr.h in Headers */,
 				CD0B7D0A1472495000B3F662 /* USHexDump.h in Headers */,
+				668E165C14887A0A00897ED6 /* MOAIWheelSensor.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9897,6 +9906,7 @@
 				CD18CEE014693BC100990FE1 /* MOAIUrlMgr.h in Headers */,
 				CD18CEE214693BC100990FE1 /* MOAIWeakPtr.h in Headers */,
 				CD0B7D091472495000B3F662 /* USHexDump.h in Headers */,
+				668E165B14887A0A00897ED6 /* MOAIWheelSensor.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10858,6 +10868,7 @@
 				CD18CED914693BC100990FE1 /* MOAISerializerBase.cpp in Sources */,
 				CD18CEDF14693BC100990FE1 /* MOAIUrlMgr_curl.cpp in Sources */,
 				CD0B7D081472495000B3F662 /* USHexDump.cpp in Sources */,
+				668E165A14887A0A00897ED6 /* MOAIWheelSensor.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11998,6 +12009,7 @@
 				CD18CED814693BC100990FE1 /* MOAISerializerBase.cpp in Sources */,
 				CD18CEDE14693BC100990FE1 /* MOAIUrlMgr_curl.cpp in Sources */,
 				CD0B7D071472495000B3F662 /* USHexDump.cpp in Sources */,
+				668E165914887A0A00897ED6 /* MOAIWheelSensor.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
