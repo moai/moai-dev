@@ -72,8 +72,6 @@ u32 MOAIPartitionResultBuffer::PrepareResults ( u32 mode, bool expand, float xSc
 	float sign = mode & SORT_FLAG_DESCENDING ? -1.0f : 1.0f;
 	s32 intSign = ( int )sign;
 
-    UNUSED ( scale );
-    
 	switch ( mode & SORT_MODE_MASK ) {
 		
 		case SORT_PRIORITY_ASCENDING:
