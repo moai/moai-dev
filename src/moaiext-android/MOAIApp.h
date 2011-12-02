@@ -63,7 +63,7 @@ private:
 	bool ( *checkBillingSupportedFunc )			( void );
 	bool ( *confirmNotificationFunc ) 			( cc8* );
 	void ( *openURLFunc ) 						( cc8* );
-	bool ( *requestPurchaseFunc ) 				( cc8* );
+	bool ( *requestPurchaseFunc ) 				( cc8*, cc8* );
 	bool ( *restoreTransactionsFunc )			( void );
 	void ( *setMarketPublicKeyFunc )			( cc8* );
 	void ( *showDialogFunc )					( cc8*, cc8*, cc8*, cc8*, cc8*, bool );
@@ -88,7 +88,7 @@ public:
 	void		SetCheckBillingSupportedFunc	( bool ( *func ) ());
 	void		SetConfirmNotificationFunc		( bool ( *func ) ( cc8* ));
 	void		SetOpenURLFunc					( void ( *func ) ( cc8* ));
-	void		SetRequestPurchaseFunc			( bool ( *func ) ( cc8* ));
+	void		SetRequestPurchaseFunc			( bool ( *func ) ( cc8*, cc8* ));
 	void		SetRestoreTransactionsFunc		( bool ( *func ) () );
 	void		SetMarketPublicKeyFunc			( void ( *func ) ( cc8* ));
 	void		SetShowDialogFunc				( void ( *func ) ( cc8*, cc8*, cc8*, cc8*, cc8*, bool ));

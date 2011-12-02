@@ -52,7 +52,8 @@ int MOAIApp::_requestPurchase ( lua_State* L ) {
 	MOAILuaState state ( L );
 	
 	cc8* identifier = state.GetValue < cc8* >( 1, "" );
-	bool result = MOAIApp::Get ().requestPurchaseFunc ( identifier );
+	cc8* payload = state.GetValue < cc8* >( 2, "" );
+	bool result = MOAIApp::Get ().requestPurchaseFunc ( identifier, payload );
 	lua_pushboolean ( state, result );
 	
 	return 1;
@@ -204,7 +205,7 @@ void MOAIApp::SetOpenURLFunc ( void ( *func ) ( cc8* )) {
 }
 
 //----------------------------------------------------------------//
-void MOAIApp::SetRequestPurchaseFunc ( bool ( *func ) ( cc8* )) {
+void MOAIApp::SetRequestPurchaseFunc ( bool ( *func ) ( cc8*, cc8* )) {
 	requestPurchaseFunc = func;
 }
 

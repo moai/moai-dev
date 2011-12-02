@@ -425,9 +425,9 @@ public class MoaiActivity extends Activity implements SensorEventListener {
 	}
 		
 	//----------------------------------------------------------------//
-	public boolean requestPurchase ( String productId )	{
+	public boolean requestPurchase ( String productId, String developerPayload ) {
 		
-		return mBillingService.requestPurchase ( productId, null );
+		return mBillingService.requestPurchase ( productId, developerPayload );
 	}
 	
 	//----------------------------------------------------------------//
