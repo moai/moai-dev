@@ -1,7 +1,7 @@
 #include <uslscore/uslscore.h>
 
 //----------------------------------------------------------------//
-int work_zipfs ( int argc, char **argv ) {
+int _test () {
 
 	ZIPFSFILE* file;
 	char buffer [ 4096 ];
@@ -55,5 +55,19 @@ int work_zipfs ( int argc, char **argv ) {
 	zipfs_fclose ( file );
 	
 	zipfs_cleanup ();
+	return 0;
+}
+
+//----------------------------------------------------------------//
+int work_zipfs ( int argc, char **argv ) {
+
+	//ZIPFSFILE* file;
+	//char buffer [ 4096 ];
+
+	zipfs_init ();
+
+	// mount some virtual paths
+	zipfs_mount_virtual ( "test1", "untitled-debug.zip" );
+	
 	return 0;
 }
