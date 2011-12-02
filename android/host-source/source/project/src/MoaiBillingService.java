@@ -269,9 +269,10 @@ public class MoaiBillingService extends Service implements ServiceConnection {
     }
 
     @Override
-    public void onStart ( Intent intent, int startId ) {
-        handleCommand ( intent, startId );
-    }
+   	public int onStartCommand ( Intent intent, int flags, int startId ) {
+		if ( intent != null ) handleCommand ( intent, startId );
+		return START_STICKY;
+	}
 
     public void handleCommand ( Intent intent, int startId ) {
         String action = intent.getAction ();

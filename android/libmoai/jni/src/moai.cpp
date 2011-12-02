@@ -82,12 +82,13 @@
 	}
 
 	//----------------------------------------------------------------//
-	bool RequestPurchase ( const char* identifier ) {
+	bool RequestPurchase ( const char* identifier, const char* payload ) {
 
 		GET_ENV ();
-		GET_JSTRING ( identifier, jstr );
+		GET_JSTRING ( identifier, jidentifier );
+		GET_JSTRING ( payload, jpayload );
 
-		bool retVal = ( bool )env->CallObjectMethod ( mMoaiActivity , mRequestPurchaseFunc, jstr );
+		bool retVal = ( bool )env->CallObjectMethod ( mMoaiActivity , mRequestPurchaseFunc, jidentifier, jpayload );
 		return retVal;
 	}	
 		
@@ -264,7 +265,7 @@
 		mCheckBillingSupportedFunc = env->GetMethodID ( moaiActivityClass, "checkBillingSupported", "()Z" );
 		mConfirmNotificationFunc = env->GetMethodID ( moaiActivityClass, "confirmNotification", "(Ljava/lang/String;)Z" );
 		mOpenURLFunc = env->GetMethodID ( moaiActivityClass, "openURL", "(Ljava/lang/String;)V" );
-		mRequestPurchaseFunc = env->GetMethodID ( moaiActivityClass, "requestPurchase", "(Ljava/lang/String;)Z" );
+		mRequestPurchaseFunc = env->GetMethodID ( moaiActivityClass, "requestPurchase", "(Ljava/lang/String;Ljava/lang/String;)Z" );
 		mRestoreTransactionsFunc = env->GetMethodID ( moaiActivityClass, "restoreTransactions", "()Z" );
 		mSetMarketPublicKeyFunc = env->GetMethodID ( moaiActivityClass, "setMarketPublicKey", "(Ljava/lang/String;)V" );
 		mShowDialogFunc = env->GetMethodID ( moaiActivityClass, "showDialog", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)V" );

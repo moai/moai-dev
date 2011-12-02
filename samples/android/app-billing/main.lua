@@ -12,13 +12,13 @@ function onBillingSupported ( supported )
 	if ( supported ) then
 		print ( "billing is supported" )
 		
---		if MOAIApp.requestPurchase ( 'sword_001' ) then
-		if MOAIApp.restoreTransactions () then
---			print ( "purchase successfully requested" )
-			print ( "restore transactions successfully requested" )
+		if MOAIApp.requestPurchase ( 'sword_001', 'this is a payload available to developers that is returned as part of the purchase state changed callback' ) then
+--		if MOAIApp.restoreTransactions () then
+			print ( "purchase successfully requested" )
+--			print ( "restore transactions successfully requested" )
 		else
---			print ( "requesting purchase failed" )
-			print ( "requesting transaction restore failed" )
+			print ( "requesting purchase failed" )
+--			print ( "requesting transaction restore failed" )
 		end
 	else
 		print ( "billing is not supported" )
@@ -39,7 +39,7 @@ end
 
 function onPurchaseStateChanged ( id, code, order, notification, payload )
 	print ( "onPurchaseStateChanged: " .. id )
-	
+
 	if ( code == MOAIApp.BILLING_STATE_ITEM_PURCHASED ) then
 		print ( "item has been purchased" )
 	elseif ( code == MOAIApp.BILLING_STATE_ITEM_REFUNDED ) then
