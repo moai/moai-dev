@@ -49,7 +49,7 @@ private:
 	bool		mShowDebugLines;
 	u32			mSortMode;
 
-	USVec3D		mSortScale;
+	float		mSortScale [ 4 ]; // TODO: replace with USVec4D
 
 	//----------------------------------------------------------------//
 	static int	_clear				( lua_State* L );

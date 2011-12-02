@@ -44,11 +44,11 @@ MOAIPartitionResult* MOAIPartitionResultBuffer::PopResult () {
 //----------------------------------------------------------------//
 u32 MOAIPartitionResultBuffer::PrepareResults ( u32 mode ) {
 
-	return this->PrepareResults ( mode, false, 1.0f, 1.0f, 1.0f );
+	return this->PrepareResults ( mode, false, 0.0f, 0.0f, 0.0f, 1.0f );
 }
 
 //----------------------------------------------------------------//
-u32 MOAIPartitionResultBuffer::PrepareResults ( u32 mode, bool expand, float xScale, float yScale, float zScale ) {
+u32 MOAIPartitionResultBuffer::PrepareResults ( u32 mode, bool expand, float xScale, float yScale, float zScale, float priority ) {
 	UNUSED ( zScale );
 
 	// make sure the main results buffer is at least as big as the props buffer
@@ -73,7 +73,7 @@ u32 MOAIPartitionResultBuffer::PrepareResults ( u32 mode, bool expand, float xSc
 	s32 intSign = ( int )sign;
 
 	switch ( mode & SORT_MODE_MASK ) {
-		
+  
 		case SORT_PRIORITY_ASCENDING:
 			for ( u32 i = 0; i < this->mTotalResults; ++i ) {
 				s32 priority = this->mMainBuffer [ i ].mPriority * intSign;
@@ -95,9 +95,10 @@ u32 MOAIPartitionResultBuffer::PrepareResults ( u32 mode, bool expand, float xSc
 			}
 			break;
 		
-		case SORT_MULTI_AXIS_ASCENDING:
+		case SORT_VECTOR_ASCENDING:
 			for ( u32 i = 0; i < this->mTotalResults; ++i ) {
-				float axis = ( this->mMainBuffer [ i ].mX * xScale ) + ( this->mMainBuffer [ i ].mY * yScale );
+				MOAIPartitionResult& result = this->mMainBuffer [ i ];
+				float axis = ( result.mX * xScale ) + ( result.mY * yScale ) + (( float )result.mPriority * priority );
 				this->mMainBuffer [ i ].mKey = USFloat::FloatToIntKey ( axis * sign );
 			}
 			break;

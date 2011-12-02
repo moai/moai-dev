@@ -1,35 +1,57 @@
-#ifndef __RIFFFILE_H__
-#define __RIFFFILE_H__
+//
+//  RiffFile.h
+//  Part of UNTZ
+//
+//  Created by Zach Saul (zach@retronyms.com) on 06/01/2011.
+//  Copyright 2011 Retronyms. All rights reserved.
+//
+
+#ifndef RIFFFILE_H_
+#define RIFFFILE_H_
 
 #include "UntzSystem.h"
 
-typedef struct {                    // Chunk structure
-    UInt32 chunkId;                 // Chunk type identifier
-    UInt32 chunkSize;               // Chunk size field (size of chunkData)
-    UInt32 formatCode;              // Only used for RIFF and LIST chunks
-   long dataStart;
+typedef UInt32 FourCC;
+
+#define STR2FOURCC(str) ( *((UInt32 *)(str)) )
+
+static void FOURCC2STR(FourCC fcc, char* str) {
+	str[0] = fcc & 0xFF;
+	str[1] = (fcc >>  8) & 0xFF;
+	str[2] = (fcc >> 16) & 0xFF;
+	str[3] = (fcc >> 24) & 0xFF;
+	str[4] = 0;
+}
+
+typedef struct {			// Chunk structure
+	FourCC chunkId;			// Chunk type identifier
+	UInt32 chunkSize;		// Chunk size field (size of chunkData)
+	UInt32 formatCode;		// Only used for RIFF and LIST chunks	
+	long dataStart;
 } RiffChunkHeader;
 
 class RiffFile
 {
 public:
-    RiffFile();
-    ~RiffFile();
-    static RiffFile *create(const char *path);
-    void    rewind();
-    UInt32  formatCode();
-    bool    push(UInt32 chunkId);
-    bool    pop();
-    UInt32  chunkSize();
-    UInt32  chunkId();
-    UInt32  readData(void *buf, UInt32 bytes);
-    UInt32  rawRead(void *buf, UInt32 bytes);
+	RiffFile();
+	virtual ~RiffFile();
 
-private:
-    FILE                            *mpFile;
-    std::vector<RiffChunkHeader *>  mChunkStack;
+	virtual int open(const char* path);
+	virtual void close();
+
+	void rewind();
+	bool push(UInt32 chunkId);
+	bool pop();
+	UInt32 chunkId();
+	UInt32 chunkSize();
+	UInt32 formatCode();
+	UInt32 dataStart();
+	UInt32 readData(void *buffer, UInt32 bytes);
+	UInt32 rawRead(void *buffer, UInt32 bytes);
+
+protected:
+	FILE* mpFile;
+	std::vector<RiffChunkHeader> mChunkStack;
 };
 
-#define FOURCC2STR(str, fourcc) ( memcpy(str, (char *)(&(fourcc)), 4), (str)[4]=0 )
-#define STR2FOURCC(str) ( *((UInt32 *)(str)) )
-#endif
+#endif // RIFFFILE_H_

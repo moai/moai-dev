@@ -81,7 +81,6 @@ static int read_archive_header ( FILE* file, ArchiveHeader* header ) {
 	size_t filelen;
 	size_t cursor;
 	char buffer [ SCAN_BUFFER_SIZE ];
-	size_t stepsize;
 	size_t scansize;
 	int i;
 	
@@ -91,16 +90,15 @@ static int read_archive_header ( FILE* file, ArchiveHeader* header ) {
 	filelen = ftell ( file );
 	
 	cursor = filelen;
-	stepsize = SCAN_BUFFER_SIZE - 4;
     while ( cursor ) {
 		
-		cursor = ( cursor > stepsize ) ? cursor - stepsize : 0;
+		cursor = ( cursor > SCAN_BUFFER_SIZE ) ? cursor - SCAN_BUFFER_SIZE : 0;
 		scansize = (( cursor + SCAN_BUFFER_SIZE ) > filelen ) ? filelen - cursor : SCAN_BUFFER_SIZE;
 		
 		fseek ( file, cursor, SEEK_SET );
 		fread ( buffer, scansize, 1, file );
 
-        for ( i = scansize - 4; i > 0; --i ) {
+        for ( i = scansize - 4; i >= 0; --i ) {
 			
 			// maybe found it
 			if ( *( unsigned long* )&buffer [ i ] == ARCHIVE_HEADER_SIGNATURE ) {
@@ -422,6 +420,10 @@ ZIPFSZipFile* ZIPFSZipFile_New ( const char* filename ) {
 		
 		fread ( nameBuffer, entryHeader.mNameLength, 1, file );
 		nameBuffer [ entryHeader.mNameLength ] = 0;
+		
+		// skip the extra field, etc.
+		result = fseek ( file, entryHeader.mCommentLength + entryHeader.mExtraFieldLength, SEEK_CUR );
+		if ( result ) goto error;
 		
 		ZIPFSZipFile_AddEntry ( self, &entryHeader, nameBuffer );
 	}

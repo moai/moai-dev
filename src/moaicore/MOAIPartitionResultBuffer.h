@@ -56,12 +56,12 @@ public:
 		SORT_PRIORITY_ASCENDING,
 		SORT_X_ASCENDING,
 		SORT_Y_ASCENDING,
-		SORT_MULTI_AXIS_ASCENDING,
+		SORT_VECTOR_ASCENDING,
 		
-		SORT_PRIORITY_DESCENDING		= SORT_PRIORITY_ASCENDING | SORT_FLAG_DESCENDING,
-		SORT_X_DESCENDING				= SORT_X_ASCENDING | SORT_FLAG_DESCENDING,
-		SORT_Y_DESCENDING				= SORT_Y_ASCENDING | SORT_FLAG_DESCENDING,
-		SORT_MULTI_AXIS_DESCENDING		= SORT_MULTI_AXIS_ASCENDING | SORT_FLAG_DESCENDING,
+		SORT_PRIORITY_DESCENDING	= SORT_PRIORITY_ASCENDING | SORT_FLAG_DESCENDING,
+		SORT_X_DESCENDING			= SORT_X_ASCENDING | SORT_FLAG_DESCENDING,
+		SORT_Y_DESCENDING			= SORT_Y_ASCENDING | SORT_FLAG_DESCENDING,
+		SORT_VECTOR_DESCENDING		= SORT_VECTOR_ASCENDING | SORT_FLAG_DESCENDING,
 	};
 
 	GET ( u32, TotalResults, mTotalResults )
@@ -72,7 +72,7 @@ public:
 							~MOAIPartitionResultBuffer		();
 	MOAIPartitionResult*	PopResult						();
 	u32						PrepareResults					( u32 mode );
-	u32						PrepareResults					( u32 mode, bool expand, float xScale, float yScale, float zScale );
+	u32						PrepareResults					( u32 mode, bool expand, float xScale, float yScale, float zScale, float priority );
 	void					PushProp						( MOAIProp& prop );
 	void					PushResult						( MOAIProp& prop, int subPrimID, s32 priority, float x, float y, float z );
 	void					PushResultProps					( lua_State* L );
