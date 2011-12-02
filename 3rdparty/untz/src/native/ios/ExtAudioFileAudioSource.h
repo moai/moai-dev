@@ -16,7 +16,7 @@ class ExtAudioFileAudioSource : public BufferedAudioSource
 {
 public:
 	ExtAudioFileAudioSource();
-    ~ExtAudioFileAudioSource();
+    virtual ~ExtAudioFileAudioSource();
 
 	// AudioSource
 	double getSampleRate();

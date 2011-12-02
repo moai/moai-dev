@@ -731,6 +731,14 @@
 				RelativePath="..\..\src\moaicore\MOAITouchSensor.h"
 				>
 			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIWheelSensor.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIWheelSensor.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="partition"

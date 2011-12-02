@@ -50,7 +50,6 @@ protected:
     // RThread
     void run();
 
-
 private:
     PlaybackThread();
     ~PlaybackThread();
@@ -103,7 +102,9 @@ void PlaybackThread::setData(AndroidSystemData *d)
 
 void PlaybackThread::run()
 {  	
-    // Set up our environment
+    __android_log_write(ANDROID_LOG_DEBUG, "UntzJNI", "Started audio push thread");
+
+	// Set up our environment
     JNIEnv* env;
     jvm->AttachCurrentThread(&env, NULL);
     env->PushLocalFrame(2);
@@ -163,7 +164,7 @@ void PlaybackThread::run()
 
     char str[500];
     long nsec_per_buffer = ((double)framesPerBuffer / sampleRateInHz ) * 1000000000;
-
+	int bufferCount = 0;
     while (!shouldThreadExit())
     {
         // Grab the float samples from the mixer.
@@ -199,18 +200,23 @@ void PlaybackThread::run()
             __android_log_write(ANDROID_LOG_ERROR,"UntzJNI","Failed to get pointer to array bytes");
         }
 
-        // Calculate when the next callback should happen (based on buffer size)
-        long next_nsecs = nextCallTime.tv_nsec+nsec_per_buffer;
-        nextCallTime.tv_nsec = next_nsecs % 1000000000;
-        nextCallTime.tv_sec = nextCallTime.tv_sec + next_nsecs / 1000000000;
+		if(++bufferCount == 2)
+		{
+			// Calculate when the next callback should happen (based on buffer size)
+			long next_nsecs = nextCallTime.tv_nsec+nsec_per_buffer;
+			nextCallTime.tv_nsec = next_nsecs % 1000000000;
+			nextCallTime.tv_sec = nextCallTime.tv_sec + next_nsecs / 1000000000;
 
-        // Sleep until the next callback should come in.
-        clock_gettime(CLOCK_MONOTONIC, &now);
-        sleepTime.tv_nsec = (nextCallTime.tv_sec-now.tv_sec)*1000000000+(nextCallTime.tv_nsec-now.tv_nsec);
-        while(sleepTime.tv_nsec < 0)
-            sleepTime.tv_nsec += nsec_per_buffer;
+			// Sleep until the next callback should come in.
+			clock_gettime(CLOCK_MONOTONIC, &now);
+			sleepTime.tv_nsec = (nextCallTime.tv_sec-now.tv_sec)*1000000000+(nextCallTime.tv_nsec-now.tv_nsec);
+			while(sleepTime.tv_nsec < 0)
+				sleepTime.tv_nsec += nsec_per_buffer;
 
-        while(nanosleep(&sleepTime, &timeLeft) < 0);
+			while(nanosleep(&sleepTime, &timeLeft) < 0);
+
+			--bufferCount;
+		}
     }
 
     env->CallNonvirtualVoidMethod(track, audioTrackClass, stopMethod);
@@ -225,7 +231,7 @@ System* System::msInstance = 0;
 
 System* System::initialize(UInt32 sampleRate, UInt32 numFrames, UInt32 options)
 {
-    __android_log_write(ANDROID_LOG_ERROR,"UntzJNI","Initializing System");
+    __android_log_write(ANDROID_LOG_DEBUG, "UntzJNI", "Initializing System");
 	if(!msInstance)
     {
 		msInstance = new System(sampleRate, numFrames, options);
@@ -275,7 +281,6 @@ UInt32 System::getSampleRate()
     AndroidSystemData *d = (AndroidSystemData *)mpData;
     return d->mSampleRate;
 }
-
 
 void System::setSampleRate(UInt32 sampleRate)
 {

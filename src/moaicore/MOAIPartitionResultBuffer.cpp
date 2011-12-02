@@ -73,7 +73,7 @@ u32 MOAIPartitionResultBuffer::PrepareResults ( u32 mode, bool expand, float xSc
 	s32 intSign = ( int )sign;
 
 	switch ( mode & SORT_MODE_MASK ) {
-		
+  
 		case SORT_PRIORITY_ASCENDING:
 			for ( u32 i = 0; i < this->mTotalResults; ++i ) {
 				s32 priority = this->mMainBuffer [ i ].mPriority * intSign;

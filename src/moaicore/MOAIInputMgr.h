@@ -43,6 +43,8 @@ public:
 	void				EnqueuePointerEvent			( u8 deviceID, u8 sensorID, int x, int y );
 	void				EnqueueTouchEvent			( u8 deviceID, u8 sensorID, u32 touchID, bool down, float x, float y, u32 tapCount );
 	void				EnqueueTouchEventCancel		( u8 deviceID, u8 sensorID );
+	void				EnqueueWheelEvent			( u8 deviceID, u8 sensorID, float value );
+
 						MOAIInputMgr				();
 						~MOAIInputMgr				();
 	void				RegisterLuaClass			( MOAILuaState& state );

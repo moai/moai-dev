@@ -17,7 +17,7 @@
 	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/3rdparty/untz/src/UserAudioSource.cpp
 	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/3rdparty/untz/src/BufferedAudioSource.cpp
 	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/3rdparty/untz/src/BufferedAudioSourceThread.cpp
-	# LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/3rdparty/untz/src/OggAudioSource.cpp 
+	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/3rdparty/untz/src/OggAudioSource.cpp 
 	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/3rdparty/untz/src/native/android/UntzSystem.cpp
 	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/3rdparty/untz/src/native/android/WaveFileAudioSource.cpp
 	LOCAL_SRC_FILES 	+= $(MY_MOAI_ROOT)/3rdparty/untz/src/native/android/WaveFile.cpp

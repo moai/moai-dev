@@ -126,6 +126,7 @@ void moaicore::InitGlobals ( MOAIGlobals* globals ) {
 	REGISTER_LUA_CLASS ( MOAIVertexBuffer )
 	REGISTER_LUA_CLASS ( MOAIVertexFormat )
 	REGISTER_LUA_CLASS ( MOAIViewport )
+	REGISTER_LUA_CLASS ( MOAIWheelSensor )
 	REGISTER_LUA_CLASS ( MOAIXmlParser )
 	
 	#if USE_BOX2D

@@ -31,6 +31,24 @@
 		03E280A713C7D22600EE3B0D /* lua in Resources */ = {isa = PBXBuildFile; fileRef = 03E280A513C7D22600EE3B0D /* lua */; };
 		03E280BA13C7D31C00EE3B0D /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03E280B913C7D31C00EE3B0D /* CoreTelephony.framework */; };
 		07A9779D13F60EEE00FD50FE /* ParticlePresets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07A9779B13F60EEE00FD50FE /* ParticlePresets.cpp */; };
+		07B0C74814885D5E0071AC46 /* close_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 07B0C73614885D5E0071AC46 /* close_button.png */; };
+		07B0C74914885D5E0071AC46 /* TJCLoadingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07B0C73714885D5E0071AC46 /* TJCLoadingViewController.xib */; };
+		07B0C74A14885D5E0071AC46 /* featured_app.sql in Resources */ = {isa = PBXBuildFile; fileRef = 07B0C73814885D5E0071AC46 /* featured_app.sql */; };
+		07B0C74B14885D5E0071AC46 /* back_default.png in Resources */ = {isa = PBXBuildFile; fileRef = 07B0C73914885D5E0071AC46 /* back_default.png */; };
+		07B0C74C14885D5E0071AC46 /* button_highlight.png in Resources */ = {isa = PBXBuildFile; fileRef = 07B0C73A14885D5E0071AC46 /* button_highlight.png */; };
+		07B0C74D14885D5E0071AC46 /* done_default.png in Resources */ = {isa = PBXBuildFile; fileRef = 07B0C73B14885D5E0071AC46 /* done_default.png */; };
+		07B0C74E14885D5E0071AC46 /* tapjoy_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 07B0C73C14885D5E0071AC46 /* tapjoy_icon.png */; };
+		07B0C74F14885D5E0071AC46 /* tapjoy_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 07B0C73D14885D5E0071AC46 /* tapjoy_logo.png */; };
+		07B0C75014885D5E0071AC46 /* TJCVideoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07B0C73E14885D5E0071AC46 /* TJCVideoView.xib */; };
+		07B0C75114885D5E0071AC46 /* standard-black-button-1.png in Resources */ = {isa = PBXBuildFile; fileRef = 07B0C73F14885D5E0071AC46 /* standard-black-button-1.png */; };
+		07B0C75214885D5E0071AC46 /* standard-black-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 07B0C74014885D5E0071AC46 /* standard-black-button.png */; };
+		07B0C75314885D5E0071AC46 /* viewstyle_icon_page.png in Resources */ = {isa = PBXBuildFile; fileRef = 07B0C74114885D5E0071AC46 /* viewstyle_icon_page.png */; };
+		07B0C75414885D5E0071AC46 /* viewstyle_icon_table.png in Resources */ = {isa = PBXBuildFile; fileRef = 07B0C74214885D5E0071AC46 /* viewstyle_icon_table.png */; };
+		07B0C75514885D5E0071AC46 /* TJCVGItemButton.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07B0C74314885D5E0071AC46 /* TJCVGItemButton.xib */; };
+		07B0C75614885D5E0071AC46 /* TJCVGItemDetail.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07B0C74414885D5E0071AC46 /* TJCVGItemDetail.xib */; };
+		07B0C75714885D5E0071AC46 /* TJCVGPageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07B0C74514885D5E0071AC46 /* TJCVGPageView.xib */; };
+		07B0C75814885D5E0071AC46 /* TJCVGTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07B0C74614885D5E0071AC46 /* TJCVGTableViewCell.xib */; };
+		07B0C75914885D5E0071AC46 /* TJCVGView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07B0C74714885D5E0071AC46 /* TJCVGView.xib */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
@@ -79,6 +97,24 @@
 		03E280C213C7D35D00EE3B0D /* moai-target */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "moai-target"; sourceTree = "<group>"; };
 		07A9779B13F60EEE00FD50FE /* ParticlePresets.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ParticlePresets.cpp; path = ../src/ParticlePresets.cpp; sourceTree = SOURCE_ROOT; };
 		07A9779C13F60EEE00FD50FE /* ParticlePresets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ParticlePresets.h; path = ../src/ParticlePresets.h; sourceTree = SOURCE_ROOT; };
+		07B0C73614885D5E0071AC46 /* close_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = close_button.png; path = Libraries/TapjoyConnect/Components/TJCCore/Views/close_button.png; sourceTree = "<group>"; };
+		07B0C73714885D5E0071AC46 /* TJCLoadingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TJCLoadingViewController.xib; path = Libraries/TapjoyConnect/Components/TJCCore/Views/TJCLoadingViewController.xib; sourceTree = "<group>"; };
+		07B0C73814885D5E0071AC46 /* featured_app.sql */ = {isa = PBXFileReference; lastKnownFileType = file; name = featured_app.sql; path = Libraries/TapjoyConnect/Components/TJCFeaturedApp/featured_app.sql; sourceTree = "<group>"; };
+		07B0C73914885D5E0071AC46 /* back_default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = back_default.png; path = Libraries/TapjoyConnect/Components/TJCVideoAds/back_default.png; sourceTree = "<group>"; };
+		07B0C73A14885D5E0071AC46 /* button_highlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = button_highlight.png; path = Libraries/TapjoyConnect/Components/TJCVideoAds/button_highlight.png; sourceTree = "<group>"; };
+		07B0C73B14885D5E0071AC46 /* done_default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = done_default.png; path = Libraries/TapjoyConnect/Components/TJCVideoAds/done_default.png; sourceTree = "<group>"; };
+		07B0C73C14885D5E0071AC46 /* tapjoy_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = tapjoy_icon.png; path = Libraries/TapjoyConnect/Components/TJCVideoAds/tapjoy_icon.png; sourceTree = "<group>"; };
+		07B0C73D14885D5E0071AC46 /* tapjoy_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = tapjoy_logo.png; path = Libraries/TapjoyConnect/Components/TJCVideoAds/tapjoy_logo.png; sourceTree = "<group>"; };
+		07B0C73E14885D5E0071AC46 /* TJCVideoView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TJCVideoView.xib; path = Libraries/TapjoyConnect/Components/TJCVideoAds/TJCVideoView.xib; sourceTree = "<group>"; };
+		07B0C73F14885D5E0071AC46 /* standard-black-button-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "standard-black-button-1.png"; path = "Libraries/TapjoyConnect/Components/TJCVirtualGoods/TJCVG_Resources/standard-black-button-1.png"; sourceTree = "<group>"; };
+		07B0C74014885D5E0071AC46 /* standard-black-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "standard-black-button.png"; path = "Libraries/TapjoyConnect/Components/TJCVirtualGoods/TJCVG_Resources/standard-black-button.png"; sourceTree = "<group>"; };
+		07B0C74114885D5E0071AC46 /* viewstyle_icon_page.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = viewstyle_icon_page.png; path = Libraries/TapjoyConnect/Components/TJCVirtualGoods/TJCVG_Resources/viewstyle_icon_page.png; sourceTree = "<group>"; };
+		07B0C74214885D5E0071AC46 /* viewstyle_icon_table.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = viewstyle_icon_table.png; path = Libraries/TapjoyConnect/Components/TJCVirtualGoods/TJCVG_Resources/viewstyle_icon_table.png; sourceTree = "<group>"; };
+		07B0C74314885D5E0071AC46 /* TJCVGItemButton.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TJCVGItemButton.xib; path = Libraries/TapjoyConnect/Components/TJCVirtualGoods/TJCVG_Views/TJCVGItemButton.xib; sourceTree = "<group>"; };
+		07B0C74414885D5E0071AC46 /* TJCVGItemDetail.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TJCVGItemDetail.xib; path = Libraries/TapjoyConnect/Components/TJCVirtualGoods/TJCVG_Views/TJCVGItemDetail.xib; sourceTree = "<group>"; };
+		07B0C74514885D5E0071AC46 /* TJCVGPageView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TJCVGPageView.xib; path = Libraries/TapjoyConnect/Components/TJCVirtualGoods/TJCVG_Views/TJCVGPageView.xib; sourceTree = "<group>"; };
+		07B0C74614885D5E0071AC46 /* TJCVGTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TJCVGTableViewCell.xib; path = Libraries/TapjoyConnect/Components/TJCVirtualGoods/TJCVG_Views/TJCVGTableViewCell.xib; sourceTree = "<group>"; };
+		07B0C74714885D5E0071AC46 /* TJCVGView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TJCVGView.xib; path = Libraries/TapjoyConnect/Components/TJCVirtualGoods/TJCVG_Views/TJCVGView.xib; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D6058910D05DD3D006BFB54 /* MoaiSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MoaiSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -131,6 +167,31 @@
 				03E280A513C7D22600EE3B0D /* lua */,
 			);
 			name = build;
+			sourceTree = "<group>";
+		};
+		07B0C73414885CF10071AC46 /* Tapjoy */ = {
+			isa = PBXGroup;
+			children = (
+				07B0C73614885D5E0071AC46 /* close_button.png */,
+				07B0C73714885D5E0071AC46 /* TJCLoadingViewController.xib */,
+				07B0C73814885D5E0071AC46 /* featured_app.sql */,
+				07B0C73914885D5E0071AC46 /* back_default.png */,
+				07B0C73A14885D5E0071AC46 /* button_highlight.png */,
+				07B0C73B14885D5E0071AC46 /* done_default.png */,
+				07B0C73C14885D5E0071AC46 /* tapjoy_icon.png */,
+				07B0C73D14885D5E0071AC46 /* tapjoy_logo.png */,
+				07B0C73E14885D5E0071AC46 /* TJCVideoView.xib */,
+				07B0C73F14885D5E0071AC46 /* standard-black-button-1.png */,
+				07B0C74014885D5E0071AC46 /* standard-black-button.png */,
+				07B0C74114885D5E0071AC46 /* viewstyle_icon_page.png */,
+				07B0C74214885D5E0071AC46 /* viewstyle_icon_table.png */,
+				07B0C74314885D5E0071AC46 /* TJCVGItemButton.xib */,
+				07B0C74414885D5E0071AC46 /* TJCVGItemDetail.xib */,
+				07B0C74514885D5E0071AC46 /* TJCVGPageView.xib */,
+				07B0C74614885D5E0071AC46 /* TJCVGTableViewCell.xib */,
+				07B0C74714885D5E0071AC46 /* TJCVGView.xib */,
+			);
+			name = Tapjoy;
 			sourceTree = "<group>";
 		};
 		080E96DDFE201D6D7F000001 /* Classes */ = {
@@ -193,6 +254,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				07B0C73414885CF10071AC46 /* Tapjoy */,
 				03E280A413C7D16200EE3B0D /* build */,
 				03CC90AA13B3C38800B2724C /* Entitlements.plist */,
 				03CC904F13B3C1B700B2724C /* Icon-72.png */,
@@ -288,6 +350,24 @@
 				03CC905F13B3C1B700B2724C /* MainWindow-iPad.xib in Resources */,
 				03CC906013B3C1B700B2724C /* MainWindow-iPhone.xib in Resources */,
 				03E280A713C7D22600EE3B0D /* lua in Resources */,
+				07B0C74814885D5E0071AC46 /* close_button.png in Resources */,
+				07B0C74914885D5E0071AC46 /* TJCLoadingViewController.xib in Resources */,
+				07B0C74A14885D5E0071AC46 /* featured_app.sql in Resources */,
+				07B0C74B14885D5E0071AC46 /* back_default.png in Resources */,
+				07B0C74C14885D5E0071AC46 /* button_highlight.png in Resources */,
+				07B0C74D14885D5E0071AC46 /* done_default.png in Resources */,
+				07B0C74E14885D5E0071AC46 /* tapjoy_icon.png in Resources */,
+				07B0C74F14885D5E0071AC46 /* tapjoy_logo.png in Resources */,
+				07B0C75014885D5E0071AC46 /* TJCVideoView.xib in Resources */,
+				07B0C75114885D5E0071AC46 /* standard-black-button-1.png in Resources */,
+				07B0C75214885D5E0071AC46 /* standard-black-button.png in Resources */,
+				07B0C75314885D5E0071AC46 /* viewstyle_icon_page.png in Resources */,
+				07B0C75414885D5E0071AC46 /* viewstyle_icon_table.png in Resources */,
+				07B0C75514885D5E0071AC46 /* TJCVGItemButton.xib in Resources */,
+				07B0C75614885D5E0071AC46 /* TJCVGItemDetail.xib in Resources */,
+				07B0C75714885D5E0071AC46 /* TJCVGPageView.xib in Resources */,
+				07B0C75814885D5E0071AC46 /* TJCVGTableViewCell.xib in Resources */,
+				07B0C75914885D5E0071AC46 /* TJCVGView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
