@@ -12,19 +12,29 @@ cd ../3rdparty/glut-3.7.6-bin
 cp -R * ../../distribute/moai-sdk/3rdparty/glut-3.7.6
 cd ../../distribute
 
+mkdir -p moai-sdk/samples/android
+cd ../samples/android
+cp -R * ../../distribute/moai-sdk/samples/android
+cd ../../distribute
+
 mkdir -p moai-sdk/samples/basics
 cd ../samples/basics
 cp -R * ../../distribute/moai-sdk/samples/basics
 cd ../../distribute
 
-mkdir -p moai-sdk/samples/flash
-cd ../samples/flash
-cp -R * ../../distribute/moai-sdk/samples/flash
-cd ../../distribute
-
 mkdir -p moai-sdk/samples/config
 cd ../samples/config
 cp -R * ../../distribute/moai-sdk/samples/config
+cd ../../distribute
+
+mkdir -p moai-sdk/samples/contrib
+cd ../samples/contrib
+cp -R * ../../distribute/moai-sdk/samples/contrib
+cd ../../distribute
+
+mkdir -p moai-sdk/samples/flash
+cd ../samples/flash
+cp -R * ../../distribute/moai-sdk/samples/flash
 cd ../../distribute
 
 mkdir -p moai-sdk/samples/iphone

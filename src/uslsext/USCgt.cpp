@@ -54,6 +54,7 @@ void USCgt::Load ( cc8* filename ) {
 	while ( stream.GetCursor () < length ) {
 		
 		char recordType = stream.Read < u8 >();
+		UNUSED ( recordType );
 		assert ( recordType == 'M' );
 		
 		u16 totalEntries = stream.Read < u16 >();
@@ -203,6 +204,7 @@ void USCgt::Load ( cc8* filename ) {
 bool USCgt::ReadBoolEntry ( USStream& stream ) {
 
 	char entryType = stream.Read < char >();
+	UNUSED ( entryType );
 	assert ( entryType == 'B' );
 
 	u8 result = stream.Read < char >();
@@ -213,6 +215,7 @@ bool USCgt::ReadBoolEntry ( USStream& stream ) {
 u8 USCgt::ReadByteEntry( USStream& stream ) {
 
 	char entryType = stream.Read < char >();
+	UNUSED ( entryType );
 	assert ( entryType == 'b' );
 
 	u8 result = stream.Read < u8 >();
@@ -223,6 +226,7 @@ u8 USCgt::ReadByteEntry( USStream& stream ) {
 void USCgt::ReadEmptyEntry ( USStream& stream ) {
 
 	char entryType = stream.Read < char >();
+	UNUSED ( entryType );
 	assert ( entryType == 'E' );
 }
 
@@ -230,6 +234,7 @@ void USCgt::ReadEmptyEntry ( USStream& stream ) {
 u16 USCgt::ReadIntEntry ( USStream& stream ) {
 
 	char entryType = stream.Read < char >();
+	UNUSED ( entryType );
 	assert ( entryType == 'I' );
 
 	u16 result = stream.Read < u16 >();
@@ -240,6 +245,7 @@ u16 USCgt::ReadIntEntry ( USStream& stream ) {
 STLString USCgt::ReadStringEntry ( USStream& stream ) {
 
 	char entryType = stream.Read < char >();
+	UNUSED ( entryType );
 	assert ( entryType == 'S' );
 	
 	return ReadUnicodeAsASCII ( stream );

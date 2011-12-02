@@ -21,7 +21,7 @@ class BufferedAudioSource : public AudioSource
 	friend class BufferedAudioSourceThread;
 public:
 	BufferedAudioSource();
-    ~BufferedAudioSource();
+	virtual ~BufferedAudioSource();
 
 	// AudioSource
 	virtual Int64 readFrames(float* buffer, UInt32 numChannels, UInt32 numFrames, AudioSourceState& state);

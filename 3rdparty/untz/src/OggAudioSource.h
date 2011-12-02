@@ -21,7 +21,7 @@ class OggAudioSource : public BufferedAudioSource
 {
 public:
 	OggAudioSource();
-	~OggAudioSource();
+	virtual ~OggAudioSource();
 
 	// AudioSource
 	double getSampleRate();

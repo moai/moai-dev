@@ -54,7 +54,7 @@ void OggAudioSource::close()
 	if(mInFile)
 	{
 		ov_clear(&mOggFile);
-		fclose(mInFile);    
+		mInFile = 0;
 	}
 }
 
