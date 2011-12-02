@@ -449,7 +449,7 @@ genericIndicator, itemTypeLabel, currencyLabel, shouldReloadAvailableItemsPages,
 		}
 		
 		// Just in case any views didn't recieve this message (such as if the alpha was zero when orientation changed).
-		[self didRotateFromInterfaceOrientation:lastOrientation];
+		[self updateViewWithOrientation:lastOrientation];
 	}
 	else
 	{
@@ -914,7 +914,7 @@ genericIndicator, itemTypeLabel, currencyLabel, shouldReloadAvailableItemsPages,
 }
 
 
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+- (void)updateViewWithOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
 	lastOrientation = fromInterfaceOrientation;
 	

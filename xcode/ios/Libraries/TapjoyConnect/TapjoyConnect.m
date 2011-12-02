@@ -94,25 +94,25 @@ static NSString *orignalRequest = TJC_SERVICE_URL;
 	NSString *macID = [TapjoyConnect getMACAddress];
 	
 	NSMutableDictionary * genericDict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
-													 identifier, TJC_UDID,
-													 macID, TJC_UNIQUE_MAC_ID,
-													 model, TJC_DEVICE_TYPE_NAME,
-													 systemVersion, TJC_DEVICE_OS_VERSION_NAME,
-													 appID_, TJC_APP_ID_NAME,
-													 bundleVersion, TJC_APP_VERSION_NAME,
-													 TJC_LIBRARY_VERSION_NUMBER, TJC_CONNECT_LIBRARY_VERSION_NAME,
-													 countryCode, TJC_DEVICE_COUNTRY_CODE,
-													 language, TJC_DEVICE_LANGUAGE,
-													 lad, TJC_DEVICE_LAD,
-													 timeStamp, TJC_TIMESTAMP,
-													 verifier, TJC_VERIFIER,
-													 multStr, TJC_URL_PARAM_CURRENCY_MULTIPLIER,
-													 TJC_PLATFORM_IOS, TJC_PLATFORM,
+                                         identifier, TJC_UDID,
+                                         macID, TJC_UNIQUE_MAC_ID,
+                                         model, TJC_DEVICE_TYPE_NAME,
+                                         systemVersion, TJC_DEVICE_OS_VERSION_NAME,
+                                         appID_, TJC_APP_ID_NAME,
+                                         bundleVersion, TJC_APP_VERSION_NAME,
+                                         TJC_LIBRARY_VERSION_NUMBER, TJC_CONNECT_LIBRARY_VERSION_NAME,
+                                         countryCode, TJC_DEVICE_COUNTRY_CODE,
+                                         language, TJC_DEVICE_LANGUAGE,
+                                         lad, TJC_DEVICE_LAD,
+                                         timeStamp, TJC_TIMESTAMP,
+                                         verifier, TJC_VERIFIER,
+                                         multStr, TJC_URL_PARAM_CURRENCY_MULTIPLIER,
+                                         TJC_PLATFORM_IOS, TJC_PLATFORM,
 #if !defined (TJC_CONNECT_SDK)
-													 device_name, TJC_DEVICE_NAME,
-													 connectionType, TJC_CONNECTION_TYPE_NAME,
+                                         device_name, TJC_DEVICE_NAME,
+                                         connectionType, TJC_CONNECTION_TYPE_NAME,
 #endif
-													 nil];
+                                         nil];
 	
 	
 #if __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_4_0
@@ -133,9 +133,9 @@ static NSString *orignalRequest = TJC_SERVICE_URL;
 		}
 		
 		[genericDict setObject:allowsVOIP forKey:TJC_ALLOWS_VOIP];
-
+        
 	}
-		
+    
 	NSString *isoCountryCode = [carrier isoCountryCode];
 	
 	if (isoCountryCode)
@@ -173,19 +173,19 @@ static NSString *orignalRequest = TJC_SERVICE_URL;
 #endif
 		paramDict = [[TapjoyConnect sharedTapjoyConnect] genericParameters];
 	}
-
+    
 	NSMutableArray *parts = [NSMutableArray array];
 	for (id key in [paramDict allKeys])
 	{
 		id value = [paramDict objectForKey: key];
-
+        
 		// Encode string to a legal URL string.
 		NSString *encodedString = (NSString*)CFURLCreateStringByAddingPercentEscapes(NULL,
-																											  (CFStringRef)value,
-																											  NULL,
-																											  (CFStringRef)@"!*'();:@&=+$,/?%#[]",
-																											  kCFStringEncodingUTF8);
-
+                                                                                     (CFStringRef)value,
+                                                                                     NULL,
+                                                                                     (CFStringRef)@"!*'();:@&=+$,/?%#[]",
+                                                                                     kCFStringEncodingUTF8);
+        
 		NSString *part = [NSString stringWithFormat: @"%@=%@", key, encodedString];
 		
 		[encodedString release];
@@ -208,9 +208,22 @@ static NSString *orignalRequest = TJC_SERVICE_URL;
 	
 	NSURL * myURL = [[NSURL alloc] initWithString:requestString];
 	NSMutableURLRequest *myRequest = [NSMutableURLRequest requestWithURL: myURL
-																				cachePolicy: NSURLRequestReloadIgnoringLocalAndRemoteCacheData
-																		  timeoutInterval: 30];
+                                                             cachePolicy: NSURLRequestReloadIgnoringLocalAndRemoteCacheData
+                                                         timeoutInterval: 30];
 	[myURL release];
+	
+	if (data_)
+	{
+		[data_ release];
+		data_ = nil;
+	}
+	
+	if (connection_)
+	{
+		[connection_ cancel];
+		[connection_ release];
+		connection_ = nil;
+	}
 	
 	connection_ = [[NSURLConnection alloc] initWithRequest: myRequest delegate: self];
 	connectAttempts_++;	
@@ -219,13 +232,28 @@ static NSString *orignalRequest = TJC_SERVICE_URL;
 
 - (void)setUserIDWithParam:(NSMutableDictionary*)genericDict
 {
+	// Set user ID in the dictionary before creating the URL.
+	[genericDict setObject:[TapjoyConnect getUserID] forKey:TJC_URL_PARAM_USER_ID];
 	NSString *requestString = [NSString stringWithFormat:@"%@%@?%@", orignalRequest, TJC_SET_USER_ID_API, [self createQueryStringFromDict:genericDict]];
 	
 	NSURL * myURL = [[NSURL alloc] initWithString:requestString];
 	NSMutableURLRequest *myRequest = [NSMutableURLRequest requestWithURL: myURL
-																				cachePolicy: NSURLRequestReloadIgnoringLocalAndRemoteCacheData
-																		  timeoutInterval: 30];
+                                                             cachePolicy: NSURLRequestReloadIgnoringLocalAndRemoteCacheData
+                                                         timeoutInterval: 30];
 	[myURL release];
+	
+	if (data_)
+	{
+		[data_ release];
+		data_ = nil;
+	}
+	
+	if (connection_)
+	{
+		[connection_ cancel];
+		[connection_ release];
+		connection_ = nil;
+	}
 	
 	connection_ = [[NSURLConnection alloc] initWithRequest: myRequest delegate: self];
 	connectAttempts_++;	
@@ -283,8 +311,12 @@ static const char* jailbreak_apps[] =
 {
 	appID_ = [appID retain];
 	secretKey_ = [secretKey retain];
-	connection_ = nil;
-	connectAttempts_ = 0;	
+	connectAttempts_ = 0;
+	if (connection_)
+	{
+		[connection_ release];
+		connection_ = nil;
+	}
 }
 
 
@@ -308,6 +340,13 @@ static const char* jailbreak_apps[] =
 	{
 		//[[TJCOffersWebView sharedTJCOffersWebView] loadView];
 		[[TJCOffersWebView sharedTJCOffersWebView] refreshWebView];
+	}
+
+    // iOS5 apparently automatically pauses videos on app resume.
+    // If a video is currently playing, ensure that it continues when the application is brought back to the foreground.
+	if ([[[TJCVideoManager sharedTJCVideoManager] videoView] videoAdCurrentlyPlaying])
+	{
+		[[[TJCVideoManager sharedTJCVideoManager] videoView] videoActionFromAppResume];
 	}
 	
 #if !defined (TJC_GAME_STATE_SDK)
@@ -358,15 +397,15 @@ static const char* jailbreak_apps[] =
 #if defined (TJC_GAME_STATE_SDK)
 	// Set the application pausing notification.
 	[[NSNotificationCenter defaultCenter] addObserver:self 
-														  selector:@selector(forceGameStateSave) 
-																name:UIApplicationWillResignActiveNotification
-															 object:nil];
+                                             selector:@selector(forceGameStateSave) 
+                                                 name:UIApplicationWillResignActiveNotification
+                                               object:nil];
 	
 	// We want to make sure that if the app is set to not run in the background (quit), we also force a save.
 	[[NSNotificationCenter defaultCenter] addObserver:self 
-														  selector:@selector(forceGameStateSave) 
-																name:UIApplicationWillTerminateNotification
-															 object:nil];
+                                             selector:@selector(forceGameStateSave) 
+                                                 name:UIApplicationWillTerminateNotification
+                                               object:nil];
 #endif
 	
 	// Only the Offers and VG SDKs will need to grab tap points upon init.
@@ -375,8 +414,24 @@ static const char* jailbreak_apps[] =
 	[TapjoyConnect getTapPoints];
 #endif
 	
+#if !defined (TJC_CONNECT_SDK)
+	[[NSNotificationCenter defaultCenter] addObserver:self
+														  selector:@selector(orientationChanged:)
+																name:UIApplicationDidChangeStatusBarFrameNotification
+															 object:nil];
+#endif
+	
 	return [TapjoyConnect sharedTapjoyConnect];
 }
+
+
+#if !defined (TJC_CONNECT_SDK)
++ (void)orientationChanged:(NSNotification*)notifyObj
+{
+	//UIInterfaceOrientation orientation = [[notifyObj userInfo] objectForKey:UIApplicationStatusBarOrientationUserInfoKey];
+	[TapjoyConnect updateViewsWithOrientation:[UIApplication sharedApplication].statusBarOrientation];
+}
+#endif
 
 
 + (TapjoyConnect*)actionComplete:(NSString*)actionID
@@ -459,10 +514,10 @@ static const char* jailbreak_apps[] =
 	NSString *udid = [[NSString stringWithString:[[UIDevice currentDevice] uniqueIdentifier]] lowercaseString];
 	
 	NSString *verifierStr = [NSString stringWithFormat:@"%@:%@:%@:%@",
-									 appID,
-									 udid,
-									 timeStamp,
-									 keyStr];
+                             appID,
+                             udid,
+                             timeStamp,
+                             keyStr];
 	
 	NSString *hashStr = [TapjoyConnect TJCSHA256WithString:verifierStr];    
 	
@@ -481,12 +536,12 @@ static const char* jailbreak_apps[] =
 	NSString *amountStr = [NSString stringWithFormat:@"%d", points];
 	
 	NSString *verifierStr = [NSString stringWithFormat:@"%@:%@:%@:%@:%@:%@",
-									 appID,
-									 udid,
-									 timeStamp,
-									 keyStr,
-									 amountStr,
-									 guid];
+                             appID,
+                             udid,
+                             timeStamp,
+                             keyStr,
+                             amountStr,
+                             guid];
 	
 	NSString *hashStr = [TapjoyConnect TJCSHA256WithString:verifierStr];    
 	
@@ -499,11 +554,11 @@ static const char* jailbreak_apps[] =
 	unsigned char SHAStr[CC_SHA256_DIGEST_LENGTH];
 	
 	CC_SHA256([dataStr UTF8String],
-				 [dataStr lengthOfBytesUsingEncoding:NSUTF8StringEncoding],
-				 SHAStr);
+              [dataStr lengthOfBytesUsingEncoding:NSUTF8StringEncoding],
+              SHAStr);
 	
 	NSData *SHAData = [[NSData alloc] initWithBytes:SHAStr
-														  length:sizeof(SHAStr)];
+                                             length:sizeof(SHAStr)];
 	
 	//NSString *result = [HMAC TJCBase64EncodedString];
 	NSString *result = [[SHAData description] stringByReplacingOccurrencesOfString:@" " withString:@""];
@@ -518,14 +573,14 @@ static const char* jailbreak_apps[] =
 + (NSString*)generateUUID
 {
 	// Create a new UUID
-   CFUUIDRef uuidObj = CFUUIDCreate(nil);
-   
+	CFUUIDRef uuidObj = CFUUIDCreate(nil);
+    
 	// Get the string representation of the UUID, making it lower-case.
-   NSString	*uuidString = [[NSString stringWithString:(NSString*)CFUUIDCreateString(nil, uuidObj)] lowercaseString];
-   
+	NSString	*uuidString = [[NSString stringWithString:(NSString*)CFUUIDCreateString(nil, uuidObj)] lowercaseString];
+    
 	CFRelease(uuidObj);
 	
-   return [uuidString autorelease];
+	return [uuidString autorelease];
 }
 
 
@@ -556,21 +611,13 @@ static const char* jailbreak_apps[] =
 
 
 - (void)connection:(NSURLConnection*) myConnection didReceiveData:(NSData*) myData;
-{   
-	if (data_) 
+{
+	if (!data_) 
 	{
-		if (![data_ isKindOfClass: [NSMutableData class]]) 
-		{
-			data_ = [data_ mutableCopy];
-			[data_ release];
-		}
-		
-		[(NSMutableData *) data_ appendData: myData];
+		data_ = [[NSMutableData alloc] init];
 	}
-	else 
-	{
-		data_ = [myData mutableCopy];
-	}
+
+	[data_ appendData: myData];
 }
 
 
@@ -693,7 +740,7 @@ didStartElement:(NSString*)elementName
 	sdl = (struct sockaddr_dl *)(ifm + 1);
 	ptr = (unsigned char *)LLADDR(sdl);
 	NSString *macAddress = [NSString stringWithFormat:@"%02X%02X%02X%02X%02X%02X", 
-								  *ptr, *(ptr+1), *(ptr+2), *(ptr+3), *(ptr+4), *(ptr+5)];
+                            *ptr, *(ptr+1), *(ptr+2), *(ptr+3), *(ptr+4), *(ptr+5)];
 	macAddress = [macAddress lowercaseString];
 	free(buf);
 	

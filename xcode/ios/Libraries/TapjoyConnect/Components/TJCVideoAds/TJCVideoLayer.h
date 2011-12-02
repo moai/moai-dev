@@ -69,6 +69,7 @@
 	BOOL isVideoPlaying_;						/*!< Video ad play status. */
 	NSString *offerID_;							/*!< The offer Id for the video currently being played. */
 	BOOL didIconDownload_;						/*!< Flag that indicates whether the video ad icon was downloaded. */
+	BOOL didLogoDownload_;						/*!< Flag that indicates whether the video ad logo was downloaded. */
 	BOOL isFinishedWatching_;					/*!< Flag that indicates whether a video has finished playing once through. */
 }
 
@@ -243,6 +244,14 @@
  */
 - (void)loadIconImage;
 
+/*!	\fn loadLogoImage
+ *	\brief Loads the video ad logo.
+ *
+ *	\param n/a
+ *	\return n/a
+ */
+- (void)loadLogoImage;
+
 /*!	\fn displayIcon:(UIImage*)iconImage
  *	\brief Sets and displays the video ad icon.
  *
@@ -251,5 +260,12 @@
  */
 - (void)displayIcon:(UIImage*)iconImage;
 
+/*!	\fn displayLogo:(UIImage*)logoImage
+ *	\brief Sets and displays the Tapjoy logo during video playback.
+ *
+ *	\param logoImage The image to display.
+ *	\return n/a
+ */
+- (void)displayLogo:(UIImage*)logoImage;
 
 @end

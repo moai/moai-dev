@@ -17,11 +17,18 @@ static TJCCallsWrapper *_sharedTJCCallsWrapperInstance;
 
 @implementation TJCCallsWrapper
 
+@synthesize currentInterfaceOrientation;
+
+
 + (TJCCallsWrapper*) sharedTJCCallsWrapper;
 {
 	if (!_sharedTJCCallsWrapperInstance) 
 	{
 		_sharedTJCCallsWrapperInstance = [[TJCCallsWrapper alloc] init];
+		[[NSNotificationCenter defaultCenter] addObserver:_sharedTJCCallsWrapperInstance
+															  selector:@selector(showBoxCloseNotification:) 
+																	name:TJC_VIEW_CLOSED_NOTIFICATION
+																 object:nil];
 	}
 	return _sharedTJCCallsWrapperInstance;
 }
@@ -59,20 +66,15 @@ static TJCCallsWrapper *_sharedTJCCallsWrapperInstance;
 }
 
 
-- (void) viewDidLoad
+- (void)viewDidLoad
 {
 	[super viewDidLoad];
-	
-	[[NSNotificationCenter defaultCenter] addObserver:self
-														  selector:@selector(showBoxCloseNotification:) 
-																name:TJC_VIEW_CLOSED_NOTIFICATION
-															 object:nil];
-	
+
 	[self.view setBackgroundColor:[UIColor blackColor]];
 }
 
 
-- (void) showBoxCloseNotification:(NSNotification *)notifierObj
+- (void)showBoxCloseNotification:(NSNotification *)notifierObj
 {
 	// We never want to get rid of the view controller's view if there are still subviews left.
 	if ([[self.view subviews] count] <= 0)
@@ -83,7 +85,7 @@ static TJCCallsWrapper *_sharedTJCCallsWrapperInstance;
 
 
 // Override to allow rotation.
-- (BOOL) shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
 	UIInterfaceOrientation currentOrientation = [[UIApplication sharedApplication] statusBarOrientation];
 	
@@ -91,18 +93,17 @@ static TJCCallsWrapper *_sharedTJCCallsWrapperInstance;
 }
 
 
-- (void) didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+- (void)updateViewsWithOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-	[self updateViewsWithOrientation:fromInterfaceOrientation];
-}
-
-
-- (void) updateViewsWithOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-	[[TJCFeaturedAppView sharedTJCFeaturedAppView] didRotateFromInterfaceOrientation:interfaceOrientation];
+	[[TJCFeaturedAppView sharedTJCFeaturedAppView] updateViewWithOrientation:interfaceOrientation];
 	
 #if defined (TJC_VIRTUAL_GOODS_SDK)
-	[[TJCVGViewHandler sharedTJCVGViewHandler] didRotateFromInterfaceOrientation:interfaceOrientation];
+	[[TJCVGViewHandler sharedTJCVGViewHandler] updateViewWithOrientation:interfaceOrientation];
+#endif
+	
+#if !defined (TJC_CONNECT_SDK)
+	// Videos always need to rotate to current 
+	[[TJCVideoManager sharedTJCVideoManager] updateViewWithOrientation:interfaceOrientation];
 #endif
 }
 
@@ -123,7 +124,6 @@ static TJCCallsWrapper *_sharedTJCCallsWrapperInstance;
 
 - (void) dealloc 
 {
-	[[NSNotificationCenter defaultCenter]removeObserver:TJC_VIEW_CLOSED_NOTIFICATION];
 	[super dealloc];
 }
 

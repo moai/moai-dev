@@ -18,14 +18,25 @@
 #import "TJCLog.h"
 #import "TJCSqliteController.h"
 
-@implementation TJCVGViewHandler
 
+static NSString *globalDBSavePath = nil;
+static TJCVGViewHandler *sharedTJCVGViewHandler_ = nil;
+
+
+@implementation TJCVGViewHandler
 
 @synthesize fileDownloadHandler = fileDownloadHandler_, scrollToRow = scrollToRow_;
 
-static NSString *globalDBSavePath = nil;
++ (TJCVGViewHandler*)sharedTJCVGViewHandler
+{
+	if (!sharedTJCVGViewHandler_)
+	{
+		sharedTJCVGViewHandler_ = [[super alloc] init];
+	}
+	
+	return sharedTJCVGViewHandler_;
+}
 
-SYNTHESIZE_SINGLETON_FOR_CLASS(TJCVGViewHandler)
 
 - (id)init
 {
@@ -287,11 +298,11 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TJCVGViewHandler)
 }
 
 
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+- (void)updateViewWithOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
 	if ([TJCVGView sharedTJCVGView])
 	{
-		[[TJCVGView sharedTJCVGView] didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+		[[TJCVGView sharedTJCVGView] updateViewWithOrientation:fromInterfaceOrientation];
 	}
 }
 

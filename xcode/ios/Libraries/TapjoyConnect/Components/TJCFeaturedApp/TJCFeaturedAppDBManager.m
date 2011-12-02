@@ -14,9 +14,20 @@
 #import "SynthesizeSingleton.h"
 #import "TJCFeaturedAppModel.h"
 
+static TJCFeaturedAppDBManager *sharedTJCFeaturedAppDBManager_ = nil;
+
 @implementation TJCFeaturedAppDBManager
 
-SYNTHESIZE_SINGLETON_FOR_CLASS(TJCFeaturedAppDBManager);
+
++ (TJCFeaturedAppDBManager*)sharedTJCFeaturedAppDBManager
+{
+    if (!sharedTJCFeaturedAppDBManager_)
+    {
+        sharedTJCFeaturedAppDBManager_ = [[super alloc] init];
+    }
+    
+    return sharedTJCFeaturedAppDBManager_;
+}
 
 
 -(id)init 
@@ -24,8 +35,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TJCFeaturedAppDBManager);
 	
 	if((self = [super init]))
 	{
-		NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, 
-																			  NSUserDomainMask, YES) ;
+		NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
 		NSString *documentsPath = [paths objectAtIndex:0]; 
 		currentDBPath_ = [[NSString alloc] initWithString:[documentsPath stringByAppendingPathComponent:TJC_FEATURE_APP_DB_NAME]];
 		

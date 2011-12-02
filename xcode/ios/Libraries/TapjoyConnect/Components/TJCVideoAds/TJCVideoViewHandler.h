@@ -50,13 +50,13 @@
  */
 + (UIView*)showVideoAdWithFrame:(CGRect)frame offerID:(NSString *)offerID;
 
-/*!	\fn showVideoAdWithFrame:(NSString*)offerID
+/*!	\fn showVideoAdWithOfferID:(NSString*)offerID
  *	\brief Shows a video ad.
  *
  *	\param offerID The ID of the video to play. Doubles as the filename.
  *	\return The UIView of the video ad.
  */
-+ (UIView*)showVideoAdWithOfferID:(NSString*)offerID;
++ (void)showVideoAdWithOfferID:(NSString*)offerID;
 
 /*!	\fn showVideoAdWithViewController(UIViewController *vController, NSString *offerID)
  *	\brief Shows a video ad within the given view controller.
@@ -81,7 +81,7 @@
 @interface TJCCallsWrapper (TJCVideoViewHandler)
 
 - (UIView*)showVideoAdWithFrame:(CGRect)frame offerID:(NSString*)offerID;
-- (UIView*)showVideoAdWithOfferID:(NSString*)offerID;
+- (void)showVideoAdWithOfferID:(NSString*)offerID;
 - (void)showVideoAdWithViewController:(UIViewController*)vController offerID:(NSString*)offerID;
 
 @end

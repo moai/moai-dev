@@ -10,6 +10,7 @@
 #import <Foundation/Foundation.h>
 #import "TJCFetchResponseProtocol.h"
 #import "SynthesizeSingleton.h"
+#import "TapjoyConnect.h"
 
 typedef enum 
 {
@@ -108,5 +109,12 @@ typedef enum
 -(void) releaseRequestHandlersAllItems;
 -(void) releaseRequestHandlersPurchasedItems;
 -(void) releaseRequestHandlersBuyItem;
+
+@end
+
+
+@interface TapjoyConnect (TJCVGStoreManager)
+
++ (int)getNumVGItemsToBeDownloaded;
 
 @end

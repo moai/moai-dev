@@ -69,3 +69,5 @@
 #import "TJCNetReachability.h"
 #import "TJCVideoViewHandler.h"
 #import "TJCVideoView.h"
+#import "TJCVideoView.h"
+#import "TJCVideoManager.h"

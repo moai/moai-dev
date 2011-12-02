@@ -22,6 +22,8 @@
 	UIInterfaceOrientation currentInterfaceOrientation;
 }
 
+@property (assign) UIInterfaceOrientation currentInterfaceOrientation;
+
 /*!	\fn sharedTJCCallsWrapper
  *	\brief Returns a globally accessible #TJCCallsWrapper.
  *  

@@ -112,6 +112,8 @@
 	{
 		clickSuccessful_ = YES;
 	}
+	
+	[dataString release];
 }
 
 

@@ -15,9 +15,10 @@
 
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIkit.h>
 
 
-#define TJC_LIBRARY_VERSION_NUMBER			@"8.1.1"					/*!< The SDK version number. */
+#define TJC_LIBRARY_VERSION_NUMBER			@"8.1.5"					/*!< The SDK version number. */
 
 #define TJC_SERVICE_URL							@"https://ws.tapjoyads.com/"
 #define TJC_SERVICE_URL_ALTERNATE			@"https://ws1.tapjoyads.com/"
@@ -46,6 +47,8 @@
 #define TJC_MOBILE_NETWORK_CODE				@"mobile_network_code"	/*!< The mobile network code (MNC) for the user’s cellular service provider. */
 #define TJC_PLATFORM								@"platform"				/*!< The name of the platform. */
 #define TJC_PLATFORM_IOS						@"iOS"
+// The user ID.
+#define TJC_URL_PARAM_USER_ID					@"publisher_user_id"
 // NOTE: This doesn't actually affect currency earned, just the value displayed on the offer wall.
 #define TJC_URL_PARAM_CURRENCY_MULTIPLIER	@"display_multiplier"	/*!< Currency multiplier value. */
 #define TJC_CONNECTION_TYPE_NAME				@"connection_type"	/*!< The type of data connection that is being used. */
@@ -69,7 +72,7 @@
 	NSString *secretKey_;				/*!< The Tapjoy secret key for this applicaiton. */
 	NSString *userID_;					/*!< The user ID, used to display ads. This is the UDID by default. */
 	float currencyMultiplier_;			/*!< The currency multiplier value, used to adjust currency earned. */
-	NSData *data_;							/*!< Holds data for any data that comes back from a URL request. */
+	NSMutableData *data_;				/*!< Holds data for any data that comes back from a URL request. */
 	NSURLConnection *connection_;		/*!< Used to provide support to perform the loading of a URL request. Delegate methods are defined to handle when a response is receive with associated data. This is used for asynchronous requests only. */
 	NSString *currentXMLElement_;		/*!< Contains @"Success when a connection is successfully made, nil otherwise. */
 	int connectAttempts_;				/*!< The connect attempts is used to determine whether the alternate URL will be used. */

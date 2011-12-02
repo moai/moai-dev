@@ -14,11 +14,23 @@
 #import "TJCUserAccountModel.h"
 #import "TapjoyConnect.h"
 
+static TJCUserAccountManager *sharedTJCUserAccountManager_ = nil;
+
 @implementation TJCUserAccountManager
 
-SYNTHESIZE_SINGLETON_FOR_CLASS(TJCUserAccountManager)
 
 @synthesize userAccountModelObj = userAccountModelObj_;
+
++ (TJCUserAccountManager*)sharedTJCUserAccountManager
+{
+    if (!sharedTJCUserAccountManager_)
+    {
+        sharedTJCUserAccountManager_ = [[super alloc] init];
+    }
+    
+    return sharedTJCUserAccountManager_;
+}
+
 
 - (id)init
 {

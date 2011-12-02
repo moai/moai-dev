@@ -15,7 +15,7 @@
 #import "TJCVideoLayer.h"
 
 
-@class TJCLoadingViewController;
+@class TJCLoadingView;
 
 
 /*!	\interface TJCVideoView
@@ -26,9 +26,9 @@
 {
 @private
 	id<TJCVideoAdDelegate> adDelegate_;				/*!< The delegate that implements the TJCVideoAdProtocol. */
-	NSTimer *videoQueryTimer_;							/*!< Timer object for querying video loading status. */
 	BOOL isVideoReady_;									/*!< Set to YES only when a video is ready to be viewed. This prevents playing unloaded videos. */
-	TJCLoadingViewController *loadingViewController_;	/*!< The loading view overlay. */							
+	TJCLoadingView *loadingView_;	/*!< The loading view overlay. */
+	BOOL isAlertShowing_;
 @public
 	IBOutlet UIView *mainView_;						/*!< The parent view for all videos. */
 	IBOutlet TJCVideoLayer *mainVideoLayer_;		/*!< The main video object that contains the video to be initially loaded and viewed. */
@@ -56,6 +56,9 @@
  */
 - (void)loadStateChanged:(NSNotification*)notification;
 
+
+- (void)refreshViewWithViewController:(UIViewController*)vController;
+
 /*!	\fn refreshViewWithFrame:(CGRect)frame
  *	\brief Sets video view bounds with the give CGRect and makes sure that the video is always displayed in landscape mode.
  *
@@ -63,6 +66,8 @@
  *	\return n/a
  */
 - (void)refreshViewWithFrame:(CGRect)frame;
+
+- (void)refreshViewWithInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation;
 
 /*!	\fn initVideoAdWithDelegate:(id<TJCVideoAdDelegate>)delegate
  *	\brief Initiates a request to start buffering a video ad.
@@ -95,6 +100,14 @@
  *	\return n/a
  */
 - (IBAction)closeVideoView;
+
+/*!	\fn videoActionFromAppResume
+ *	\brief This method is called when the application returns to the foreground.
+ *
+ *	\param n/a
+ *	\return n/a
+ */
+- (void)videoActionFromAppResume;
 
 /*!	\fn cancelVideo:(id)sender
  *	\brief Cancels a video ad before it finishes playing. If canceling before first playthrough is done, no currency is awarded.

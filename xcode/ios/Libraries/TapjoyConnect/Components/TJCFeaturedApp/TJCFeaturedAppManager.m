@@ -15,15 +15,26 @@
 #import "TJCFeaturedAppModel.h"
 #import "TapjoyConnect.h"
 
+static TJCFeaturedAppManager *sharedTJCFeaturedAppManager_ = nil;
 
 @implementation TJCFeaturedAppManager
 
 @synthesize featuredAppModelObj = featuredAppModelObj_;
 @synthesize featuredAppDisplayCount = featuredAppDisplayCount_;
 
-SYNTHESIZE_SINGLETON_FOR_CLASS(TJCFeaturedAppManager)
 
--(id) init
++ (TJCFeaturedAppManager*)sharedTJCFeaturedAppManager
+{
+    if (!sharedTJCFeaturedAppManager_)
+    {
+        sharedTJCFeaturedAppManager_ = [[super alloc] init];
+    }
+    
+    return sharedTJCFeaturedAppManager_;
+}
+
+
+- (id) init
 {
 	if ((self = [super init]))
 	{

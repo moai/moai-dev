@@ -44,7 +44,7 @@ isFinishedWatching = isFinishedWatching_;
 	[self bringSubviewToFront:tapjoyLogo_];
 	[self addSubview:closeButton_];
 	[self bringSubviewToFront:closeButton_];
-
+	
 	// Apply some UI customization.
 	float cornerRadiusSize = TJC_VIDEO_CORNER_RADIUS;
 	float borderWidth = TJC_VIDEO_BORDER_WIDTH;
@@ -87,7 +87,7 @@ isFinishedWatching = isFinishedWatching_;
 		[buttons_ release];
 	}
 	buttons_ = [[NSArray alloc] initWithObjects:customButton1_, customButton2_, nil];
-		
+	
 	
 	if (buttonURLs_)
 	{
@@ -129,7 +129,7 @@ isFinishedWatching = isFinishedWatching_;
 			[buttonURLs_ addObject:buttonURL];
 		}
 	}
-
+	
 	NSString *currencyAmt = [videoObjDict objectForKey:TJC_VIDEO_OBJ_CURRENCY_AMOUNT];
 	NSString *currencyName = [videoObjDict objectForKey:TJC_VIDEO_OBJ_CURRENCY_NAME];
 	NSString *adText = [videoObjDict objectForKey:TJC_VIDEO_OBJ_NAME];
@@ -143,14 +143,16 @@ isFinishedWatching = isFinishedWatching_;
 - (void)buttonAction1
 {
 	[self loadWebViewWithURL:[buttonURLs_ objectAtIndex:0]];
-	[self transitionToWebView];
+	// JC: NOTE: Web pages are loaded externally now.
+	//	[self transitionToWebView];
 }
 
 
 - (void)buttonAction2
 {
 	[self loadWebViewWithURL:[buttonURLs_ objectAtIndex:1]];
-	[self transitionToWebView];	
+	// JC: NOTE: Web pages are loaded externally now.
+	//	[self transitionToWebView];	
 }
 
 
@@ -190,7 +192,7 @@ isFinishedWatching = isFinishedWatching_;
 {
 	[webView_ setAlpha:0];
 	[self sendSubviewToBack:webView_];
-
+	
 	[doneButton_ setAlpha:1];
 	[self sendSubviewToBack:backToVideoButton_];
 	[backToVideoButton_ setAlpha:0];
@@ -204,7 +206,7 @@ isFinishedWatching = isFinishedWatching_;
 {
 	delegate_ = delegate;
 	
-	isVideoPlaying_ = NO;
+	isVideoPlaying_ = YES;
 	
 	// Load locally from the device.
 	NSURL *contentURL = [NSURL fileURLWithPath:URLString];
@@ -241,6 +243,7 @@ isFinishedWatching = isFinishedWatching_;
 															 object:nil];
 	
 	didIconDownload_ = NO;
+	didLogoDownload_ = NO;
 }
 
 
@@ -359,18 +362,20 @@ isFinishedWatching = isFinishedWatching_;
 
 - (void)loadWebViewWithURL:(NSString*)URLString
 {
-	NSURL *webPageURL = [NSURL URLWithString:URLString];
-
-	// Ensure proper scheme.
-	if (!([[webPageURL scheme] isEqualToString:@"http"]) && !([[webPageURL scheme] isEqualToString:@"https"]))
-	{
-		NSString *URLStringFixed = [NSString stringWithFormat:@"http://%@", URLString];
-		webPageURL = [NSURL URLWithString:URLStringFixed];
-	}
+	//	NSURL *webPageURL = [NSURL URLWithString:URLString];
+	//   
+	//	// Ensure proper scheme.
+	//	if (!([[webPageURL scheme] isEqualToString:@"http"]) && !([[webPageURL scheme] isEqualToString:@"https"]))
+	//	{
+	//		NSString *URLStringFixed = [NSString stringWithFormat:@"http://%@", URLString];
+	//		webPageURL = [NSURL URLWithString:URLStringFixed];
+	//	}
+	//	
+	//	NSURLRequest *request = [NSURLRequest requestWithURL:webPageURL];
+	//	
+	//	[webView_ loadRequest:request];
 	
-	NSURLRequest *request = [NSURLRequest requestWithURL:webPageURL];
-	
-	[webView_ loadRequest:request];
+	[[UIApplication sharedApplication] openURL:[NSURL URLWithString:URLString]];
 }
 
 
@@ -381,7 +386,7 @@ isFinishedWatching = isFinishedWatching_;
 	[self enableShowBackToVideoButton:NO];
 	
 	// Stop and play from the beginning.
-	[videoFeed_ stop];
+	//[videoFeed_ stop];
 	[videoFeed_ play];
 	
 	// Fade status label in.
@@ -396,7 +401,7 @@ isFinishedWatching = isFinishedWatching_;
 	
 	isVideoPlaying_ = YES;
 	
-	// Begin download of video icon.
+	// Begin download of video icon and tapjoy logo.
 	if (offerID_)
 	{
 		if (!didIconDownload_)
@@ -408,7 +413,16 @@ isFinishedWatching = isFinishedWatching_;
 			[queue addOperation:operation];
 			[operation release];
 		}
-
+	}
+	
+	if (!didLogoDownload_)
+	{
+		NSOperationQueue *queue = [[[NSOperationQueue alloc] init] autorelease];
+		NSInvocationOperation *operation = [[NSInvocationOperation alloc] initWithTarget:self 
+																										selector:@selector(loadLogoImage)
+																										  object:nil];
+		[queue addOperation:operation];
+		[operation release];
 	}
 }
 
@@ -422,15 +436,34 @@ isFinishedWatching = isFinishedWatching_;
 	if ([iconURLString isEqualToString:TJC_VIDEO_NO_ICON] || [iconURLString isEqualToString:@""])
 	{
 		[iconImageView_ setImage:[UIImage imageNamed:@"tapjoy_icon.png"]];
-		return;
 	}
-	
-	NSURL *iconURL = [NSURL URLWithString:[videoObjDict objectForKey:TJC_VIDEO_OBJ_ICON_URL]];
-	NSData *iconData = [[NSData alloc] initWithContentsOfURL:iconURL];
-	UIImage *iconImg = [[[UIImage alloc] initWithData:iconData] autorelease];
-	[iconData release];
-	
-	[self performSelectorOnMainThread:@selector(displayIcon:) withObject:iconImg waitUntilDone:NO];
+	else
+	{
+		NSURL *iconURL = [NSURL URLWithString:[videoObjDict objectForKey:TJC_VIDEO_OBJ_ICON_URL]];
+		NSData *iconData = [[NSData alloc] initWithContentsOfURL:iconURL];
+		UIImage *iconImg = [[[UIImage alloc] initWithData:iconData] autorelease];
+		[iconData release];
+		
+		[self performSelectorOnMainThread:@selector(displayIcon:) withObject:iconImg waitUntilDone:NO];
+	}
+}
+
+
+- (void)loadLogoImage
+{
+	// Now download Tapjoy logo, located in the lower right hand corner of the video.
+	NSString *cachesDirectory = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+	// Set video file path.
+	NSString *videoPath = [cachesDirectory stringByAppendingFormat:@"/VideoAds/tapjoy_logo_transparent.png"];
+	if (![[NSFileManager defaultManager] fileExistsAtPath:videoPath])
+	{
+		NSURL *logoURL = [NSURL URLWithString:TJC_VIDEO_LOGO_IMAGE_URL];
+		NSData *logoData = [[NSData alloc] initWithContentsOfURL:logoURL];
+		UIImage *logoImg = [[[UIImage alloc] initWithData:logoData] autorelease];
+		[logoData release];
+		
+		[self performSelectorOnMainThread:@selector(displayLogo:) withObject:logoImg waitUntilDone:NO];
+	}
 }
 
 
@@ -441,8 +474,24 @@ isFinishedWatching = isFinishedWatching_;
 }
 
 
+- (void)displayLogo:(UIImage*)logoImage
+{
+	didLogoDownload_ = YES;
+	[tapjoyLogo_ setAlpha:0];
+	
+	[tapjoyLogo_ setImage:logoImage];
+	
+	[UIView beginAnimations:nil context:nil];
+	[UIView setAnimationDuration:TJC_VIDEO_STATUS_TEXT_FADE_DURATION];
+	[tapjoyLogo_ setAlpha:1];
+	[UIView commitAnimations];
+}
+
+
 - (void)stopVideo
 {
+	isVideoPlaying_ = NO;
+	
 	[[NSNotificationCenter defaultCenter] removeObserver:self name:MPMovieDurationAvailableNotification object:nil];
 	[[NSNotificationCenter defaultCenter] removeObserver:self name:MPMoviePlayerPlaybackDidFinishNotification object:nil];
 	[videoFeed_ stop];

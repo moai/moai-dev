@@ -23,6 +23,7 @@
 	
 	[[TJCVideoManager sharedTJCVideoManager].videoView.mainView removeFromSuperview];
 	[[TJCVideoManager sharedTJCVideoManager].videoView refreshViewWithFrame:frame];
+	[[TJCVideoManager sharedTJCVideoManager].videoView refreshViewWithInterfaceOrientation:[UIApplication sharedApplication].statusBarOrientation];
 	
 	[[TJCVideoManager sharedTJCVideoManager].videoView playVideoWithOfferID:offerID];
 
@@ -51,7 +52,8 @@
 	
 	// Remove any offers view that might possibly exist.
 	[[TJCVideoManager sharedTJCVideoManager].videoView.mainView removeFromSuperview];
-	[[TJCVideoManager sharedTJCVideoManager].videoView refreshViewWithFrame:vController.view.bounds];
+	[[TJCVideoManager sharedTJCVideoManager].videoView refreshViewWithViewController:vController];
+	[[TJCVideoManager sharedTJCVideoManager].videoView refreshViewWithInterfaceOrientation:[UIApplication sharedApplication].statusBarOrientation];
 	
 	[[TJCVideoManager sharedTJCVideoManager].videoView playVideoWithOfferID:offerID];
 	
@@ -80,9 +82,9 @@
 }
 
 
-+ (UIView*)showVideoAdWithOfferID:(NSString*)offerID
++ (void)showVideoAdWithOfferID:(NSString*)offerID
 {
-	return [[TJCCallsWrapper sharedTJCCallsWrapper] showVideoAdWithOfferID:offerID];
+	[[TJCCallsWrapper sharedTJCCallsWrapper] showVideoAdWithOfferID:offerID];
 }
 
 
@@ -120,9 +122,9 @@
 }
 
 
-- (UIView*)showVideoAdWithOfferID:(NSString*)offerID
+- (void)showVideoAdWithOfferID:(NSString*)offerID
 {
-	return [self showVideoAdWithFrame:self.view.bounds offerID:offerID];
+	[self showVideoAdWithFrame:self.view.bounds offerID:offerID];
 }
 
 

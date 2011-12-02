@@ -309,6 +309,22 @@ itemFullImageFilePath = itemFullImageFilePath_;
 #pragma mark -
 @implementation StoreItem
 
+
+@synthesize storeItemID = storeItemID_, 
+appleProductID = appleProductID_, 
+storeItemType = storeItemType_, 
+title = title_, 
+description = description_, 
+thumbImageFilePath = thumbImageFilePath_, 
+fullImageFilePath = fullImageFilePath_, 
+datafileLocation = datafileLocation_, 
+currencyName = currencyName_,
+attributeValues = attributeValues_, 
+thumbImage = thumbImage_, 
+fullImage = fullImage_, 
+price = price_;
+
+
 - (id)initWithObject:(TJCVGStoreItem*)localObj
 {
 	if ((self = [super init]))
@@ -324,8 +340,8 @@ itemFullImageFilePath = itemFullImageFilePath_;
 		
 		for (int i=0; i < [localObj.itemAttributes count]; i++) 
 		{
-			NSString * type = [[NSString alloc] initWithString:[[localObj.itemAttributes objectAtIndex:i] attributeType]];
-			NSString * value = [[NSString alloc] initWithString:[[localObj.itemAttributes objectAtIndex:i] attributeValue]];
+			NSString *type = [[NSString alloc] initWithString:[[localObj.itemAttributes objectAtIndex:i] attributeType]];
+			NSString *value = [[NSString alloc] initWithString:[[localObj.itemAttributes objectAtIndex:i] attributeValue]];
 			NSString *index = [[NSNumber numberWithInt:(i+1)] stringValue];
 			NSString *attributeI = [[NSString alloc] initWithString:[ATTRIBUTE_TYPE_PREFIX stringByAppendingString:index]];
 			NSString *valueI = [[NSString alloc] initWithString:[ATTRIBUTE_VALUE_PREFIX stringByAppendingString:index]];
@@ -357,109 +373,12 @@ itemFullImageFilePath = itemFullImageFilePath_;
 	[fullImageFilePath_ release];
 	[datafileLocation_ release];
 	[currencyName_ release];
-	
 	[attributeValues_ removeAllObjects];
 	[attributeValues_ release];
 	[thumbImage_ release];
 	[fullImage_ release];
 	
 	[super dealloc];
-}
-/**
- * Returns store item ID
- */
-- (NSString *)getStoreItemID
-{
-	return storeItemID_;
-}
-
-/**
- * Returns
- t ID
- */
-- (NSString *)getAppleProductID
-{
-	return appleProductID_;
-}
-
-/**
- * Returns the title of the store item type
- */
-- (NSString *)getStoreItemType
-{
-	return storeItemType_;
-}
-
-/**
- * Returns the item price
- */
-- (int)getPrice
-{
-	return price_;
-}
-
--(NSString*) getCurrencyName
-{
-	return currencyName_;
-}
-/**
- * Returns store item title
- */
-- (NSString *)getTitle
-{
-	return title_;
-}
-
-/**
- * Returns item description
- */
-- (NSString *)getDescription
-{
-	return description_;
-}
-
-/**
- * Returns a map with attribute types for keys and attribute values for values (ie. {AttributeType1 => AttributeValue1, ...})
- */
-- (NSMutableDictionary *)getAttributeValues
-{
-	return attributeValues_;
-}
-
-/**
- * Returns thumb image
- */
-- (UIImage *)getThumbImage
-{
-	if ([thumbImageFilePath_ isEqualToString:@""]) {
-		return nil;
-	}
-	if (thumbImage_) {
-		return thumbImage_;
-	}
-	return [[UIImage imageWithContentsOfFile:thumbImageFilePath_] retain];
-}
-
-/**
- * Returns full image
- */
-- (UIImage *)getFullImage
-{
-	if ([fullImageFilePath_ isEqualToString:@""]) {
-		return nil;
-	}
-	if (fullImage_) {
-		return fullImage_;
-	}
-	return [[UIImage imageWithContentsOfFile:fullImageFilePath_] retain];
-}
-
-/**
- * Returns the path to where the data zip file has been uncompressed
- */
-- (NSString *)getDatafileLocation
-{
-	return datafileLocation_;
 }
 
 @end

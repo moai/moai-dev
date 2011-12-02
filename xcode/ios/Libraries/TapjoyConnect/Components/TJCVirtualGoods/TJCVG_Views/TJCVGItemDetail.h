@@ -14,6 +14,7 @@
 
 #import <Foundation/Foundation.h>
 #import <QuartzCore/QuartzCore.h>
+#import <UIKit/UIKit.h>
 
 @class TJCVGItemButton;
 @class TJCVGStoreItem;

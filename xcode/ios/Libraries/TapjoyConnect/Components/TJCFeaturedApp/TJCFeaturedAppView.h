@@ -67,6 +67,6 @@ static const float FULLSCREEN_AD_BORDER_SIZE = 3.0f;
 
 - (void) backtoGameAction:(id) sender;
 
-- (void) didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation;
+- (void) updateViewWithOrientation:(UIInterfaceOrientation)fromInterfaceOrientation;
 
 @end

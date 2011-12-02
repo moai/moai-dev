@@ -26,17 +26,17 @@
 @private
 	TJCVideoRequestHandler *requestHandler_;	/*!< The video request handler. */
 	TJCVideoView *videoView_;						/*!< The video view. */
-	NSString *currencyID_;							/*!< The name of the currency to load in the offer wall. */
 	NSURLConnection *connection_;					/*!< The connection used for initiating and handling the download of video data. */
 	NSMutableData *videoData_;						/*!< Used to hold video data as it's downloaded from the server. */
 	int videoCacheCount_;							/*!< The number of videos to cache on the device. */
 	int downloadIndex_;								/*!< The counter for caching video ads in order. */
 	NSArray *unCachedVideoObjects_;				/*!< The video data dictionary in array form for caching purposes. */
+	UIInterfaceOrientation currentOrientation_;	/*!< The current orientation of the video view. */
 }
 
 @property (nonatomic, retain) TJCVideoRequestHandler *requestHandler;
 @property (nonatomic, retain) TJCVideoView *videoView;
-@property (copy) NSString *currencyID;
+@property (assign) UIInterfaceOrientation currentOrientation;
 
 
 + (TJCVideoManager*)sharedTJCVideoManager;
@@ -47,6 +47,9 @@
 
 - (void)fetchResponseError:(TJCResponseError)errorType errorDescription:(id)errorDescObj requestTag:(int) aTag;
 
+// Returns the offer IDs of all cached videos on the device.
+- (NSArray*)getCachedVideoIDs;
+
 // Gets the cached dictionary from user defaults.
 - (NSMutableDictionary*)getCachedVideoDictonary;
 
@@ -54,6 +57,8 @@
 - (void)setCachedVideoObjectDict:(NSDictionary*)videoObjectDict withKey:(NSString*)key;
 
 - (void)beginVideoCaching;
+
+- (void)updateViewWithOrientation:(UIInterfaceOrientation)interfaceOrientation;
 
 - (void)setVideoCacheCount:(int)count;
 

@@ -19,7 +19,7 @@ static TJCVideoManager *sharedTJCVideoManager_ = nil;
 
 @implementation TJCVideoManager
 
-@synthesize videoView, currencyID, requestHandler = requestHandler_;
+@synthesize videoView = videoView_, requestHandler = requestHandler_, currentOrientation = currentOrientation_;
 
 
 + (TJCVideoManager*)sharedTJCVideoManager
@@ -54,7 +54,30 @@ static TJCVideoManager *sharedTJCVideoManager_ = nil;
 	// Initiate video request.
 	[requestHandler_ requestVideoData];
 	
-	[TJCVideoManager sharedTJCVideoManager].videoView = [[TJCVideoView alloc] initWithDelegate:delegate];
+	// Since this can be called more than once to initiate video caching at any point, make sure we do unnecessary allocation.
+	// We also don't want to release and reallocate here since it would possibly screw up any currently playing video.
+	if (!videoView_)
+	{
+		videoView_ = [[TJCVideoView alloc] initWithDelegate:delegate];
+	}
+}
+
+
+- (NSArray*)getCachedVideoIDs
+{
+	NSString *cachesDirectory = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+	NSString *videoDirectory = [cachesDirectory stringByAppendingFormat:@"/VideoAds"];
+	NSArray *dirContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:videoDirectory error:nil];
+
+	NSMutableArray *formattedContents = [[[NSMutableArray alloc] init] autorelease];
+	
+	for (NSString *fileName in dirContents)
+	{
+		NSString *formattedName = [fileName stringByReplacingOccurrencesOfString:@".mp4" withString:@""];
+		[formattedContents addObject:formattedName];
+	}
+	
+	return formattedContents;
 }
 
 
@@ -97,24 +120,28 @@ static TJCVideoManager *sharedTJCVideoManager_ = nil;
 	}
 	
 	// Now clear out any old videos, ones that are not part of the list received.
-	for (NSDictionary *videoObjKey in [self getCachedVideoDictonary])
+	for (NSString *videoObjKey in [self getCachedVideoIDs])
 	{
+		// Get the video object from the cached dictionary.
 		NSDictionary *videoObjDict = [[self getCachedVideoDictonary] objectForKey:videoObjKey];
-		NSMutableDictionary *tmpObjDict = [[NSMutableDictionary alloc] initWithDictionary:[videoDict objectForKey:[videoObjDict objectForKey:TJC_VIDEO_OBJ_OFFER_ID]]];
+		
+		// Create a temporary video object dictionary from the newly received list from the server using the cached offer ID as the key.
+		NSString *videoOfferID = [videoObjDict objectForKey:TJC_VIDEO_OBJ_OFFER_ID];
+		NSMutableDictionary *tmpObjDict = [[NSMutableDictionary alloc] initWithDictionary:[videoDict objectForKey:videoOfferID]];
 		
 		// If the video exists in the newly received list, it's still valid. Skip to next one.
 		if ((tmpObjDict) && ([tmpObjDict count] > 0))
 		{
-			NSString *docsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+			NSString *cachesDirectory = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
 			// Set video file path.
-			//NSString *pathDir = [docsDirectory stringByAppendingFormat:@"/VideoAds"];
-			[tmpObjDict setObject:[docsDirectory stringByAppendingFormat:@"/VideoAds/%@", [tmpObjDict objectForKey:TJC_VIDEO_OBJ_FILENAME]] 
+			[tmpObjDict setObject:[cachesDirectory stringByAppendingFormat:@"/VideoAds/%@", [tmpObjDict objectForKey:TJC_VIDEO_OBJ_FILENAME]] 
 								  forKey:TJC_VIDEO_OBJ_DATA_LOCATION];
 			// Save to user defaults to be pulled up later for app restart.
 			[self setCachedVideoObjectDict:tmpObjDict withKey:[tmpObjDict objectForKey:TJC_VIDEO_OBJ_OFFER_ID]];
 			
 			// Remove this object from uncached dictionary.
 			[videoDict removeObjectForKey:[videoObjDict objectForKey:TJC_VIDEO_OBJ_OFFER_ID]];
+			[tmpObjDict release];
 			continue;
 		}
 		else
@@ -123,12 +150,23 @@ static TJCVideoManager *sharedTJCVideoManager_ = nil;
 			NSError *error;
 			[[NSFileManager defaultManager] removeItemAtPath:[videoObjDict objectForKey:TJC_VIDEO_OBJ_DATA_LOCATION] error:&error];
 			
-			// Now removed video object from cached video dictionary and re-save it.
+			// Now remove the video object from cached video dictionary and re-save it.
 			NSMutableDictionary *cachedVideoDict = [[NSMutableDictionary alloc] initWithDictionary:[self getCachedVideoDictonary]];
-			[cachedVideoDict removeObjectForKey:[videoObjDict objectForKey:TJC_VIDEO_OBJ_OFFER_ID]];
+			if (videoObjDict)
+			{
+				NSString *videoOfferID = [videoObjDict objectForKey:TJC_VIDEO_OBJ_OFFER_ID];
+				if (videoOfferID)
+				{
+					// Clean up here by removing the video object since it's stale.
+					[cachedVideoDict removeObjectForKey:videoOfferID];
+				}
+			}
+
+			// Re-save the cached video dictionary.
 			[[NSUserDefaults standardUserDefaults] setObject:cachedVideoDict forKey:TJC_CACHED_VIDEO_DICT];
 			[cachedVideoDict release];
 		}
+		[tmpObjDict release];
 	}
 	
 	// Save uncached dictionary.
@@ -161,7 +199,8 @@ static TJCVideoManager *sharedTJCVideoManager_ = nil;
 
 - (void)beginVideoCaching
 {
-	NSLog(@"TJCVideoManager: Video caching begun with download index:%d", downloadIndex_);
+    [TJCLog logWithLevel:LOG_DEBUG format:@"TJCVideoManager: Video caching begun with download index:%d", downloadIndex_];
+    
 	if (connection_)
 	{
 		[connection_ release];
@@ -207,7 +246,7 @@ static TJCVideoManager *sharedTJCVideoManager_ = nil;
 	[connection_ release];
 	connection_ = nil;
 	
-	NSString *docsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+	NSString *docsDirectory = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
 	
 	// Set video file path.
 	NSString *pathDir = [docsDirectory stringByAppendingFormat:@"/VideoAds"];
@@ -246,6 +285,15 @@ static TJCVideoManager *sharedTJCVideoManager_ = nil;
 	if (count > 0)
 	{
 		videoCacheCount_ = count;
+	}
+}
+
+
+- (void)updateViewWithOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+	if ((interfaceOrientation == UIInterfaceOrientationLandscapeLeft) || (interfaceOrientation == UIInterfaceOrientationLandscapeRight))
+	{
+		[videoView_ refreshViewWithInterfaceOrientation:interfaceOrientation];
 	}
 }
 

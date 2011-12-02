@@ -46,7 +46,7 @@ static const float LOADING_PAGE_FADE_TIME = 0.25f;		/*!< The amount of time in s
 @end 
 
 
-@class TJCLoadingViewController;
+@class TJCLoadingView;
 
 /*!	\interface TJCUIWebPageView
  *	\brief The Tapjoy Connect Web Page class.
@@ -59,7 +59,7 @@ static const float LOADING_PAGE_FADE_TIME = 0.25f;		/*!< The amount of time in s
 	id delegate_;											/*!< The delegate object is used to receive actions by classes that implement #tjcUIWebPageViewwebRequestCompleted and #tjcUIWebPageViewwebRequestCanceled. */
 	BOOL webPageRendered_;								/*!< Used to make sure the web UIView is not reinitialized needlessly. */
 	NSString *lastURL_;									/*!< This is used if data connection is lost and the user presses the retry button. */
-	TJCLoadingViewController *loadingViewCtrl_;
+	TJCLoadingView *loadingView_;
 }
 
 @property (nonatomic, retain) NSString* alertErrorMessage;

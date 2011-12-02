@@ -154,6 +154,8 @@
 @property (nonatomic,retain) NSString *message;
 @property BOOL success;
 
+- (id)initWithXMLElement:(TBXMLElement *)anInfo;
+
 @end
 
 
@@ -186,62 +188,21 @@
 	int price_;
 }
 
+@property (copy) NSString *storeItemID;
+@property (copy) NSString *appleProductID;
+@property (copy) NSString *storeItemType;
+@property (copy) NSString *title;
+@property (copy) NSString *description;
+@property (copy) NSString *thumbImageFilePath;
+@property (copy) NSString *fullImageFilePath;
+@property (copy) NSString *datafileLocation;
+@property (copy) NSString *currencyName;
+@property (nonatomic, retain) NSMutableDictionary *attributeValues;
+@property (nonatomic, retain) UIImage *thumbImage;
+@property (nonatomic, retain) UIImage *fullImage;
+@property (assign) int price;
+
 - (id)initWithObject:(TJCVGStoreItem*)localObj;
-
-
-/**
- * Returns store item ID
- */
-- (NSString*) getStoreItemID;
-
-/**
- * Returns apple product ID
- */
-- (NSString*) getAppleProductID;
-
-/**
- * Returns the title of the store item type
- */
-- (NSString*) getStoreItemType;
-
-/**
- * Returns the item price
- */
-- (int) getPrice;
-
-/**
- * Returns the Currency Name Against which the Item was purchased
- */
-- (NSString*) getCurrencyName;
-/**
- * Returns store item title
- */
-- (NSString*) getTitle;
-
-/**
- * Returns item description
- */
-- (NSString*) getDescription;
-
-/**
- * Returns a map with attribute types for keys and attribute values for values (ie. {AttributeType1 => AttributeValue1, ...})
- */
-- (NSMutableDictionary*) getAttributeValues;
-
-/**
- * Returns thumb image
- */
-- (UIImage*) getThumbImage;
-
-/**
- * Returns large image
- */
-- (UIImage*) getFullImage;
-
-/**
- * Returns the path to where the data zip file has been uncompressed
- */
-- (NSString*) getDatafileLocation;
 
 @end
 

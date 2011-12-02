@@ -12,7 +12,7 @@
 #import "TJCLog.h"
 #import "TJCConstants.h"
 #import "TapjoyConnect.h"
-#import "TJCLoadingViewController.h"
+#import "TJCLoadingView.h"
 
 @implementation TJCUIWebPageView
 
@@ -33,10 +33,14 @@
 		alertErrorMessage_ = nil;
 		
 		// Init loading view.
-		loadingViewCtrl_ = [[TJCLoadingViewController alloc] initWithFrame:frame];
-		[self addSubview: loadingViewCtrl_.view];
+		if (loadingView_)
+		{
+			[loadingView_ release];
+		}
+		loadingView_ = [[TJCLoadingView alloc] initWithFrame:frame];
+		[self addSubview: loadingView_.mainView];
 		// This will make the loading view not visible.
-		[loadingViewCtrl_ disable];
+		[loadingView_ disable];
 	}
 	return self;
 }
@@ -115,13 +119,13 @@
 
 - (void)webViewDidStartLoad:(UIWebView *)webView
 {
-	[loadingViewCtrl_ fadeIn];
+	[loadingView_ fadeIn];
 }
 
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
-	[loadingViewCtrl_ fadeOut];
+	[loadingView_ fadeOut];
 	
 	[webView stringByEvaluatingJavaScriptFromString:@"document.body.setAttribute('orientation', 90);"];
 }
@@ -157,12 +161,12 @@
 
 -(void) dealloc
 {
-	[TJCLog logWithLevel:LOG_DEBUG format:@"TJCUIWebPageView Dealloc"];
 	delegate_ = nil; // set delegate to nil; 
 	//stop the web view 
 	[cWebView_ release];
 	[alertErrorMessage_ release];
 	[lastURL_ release];
+	[loadingView_ release];
 	[super dealloc];
 }
 

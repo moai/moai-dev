@@ -6,7 +6,7 @@
 //
 //The Tapjoy SDK is bound by the Tapjoy SDK License Agreement and can be found here: https://www.tapjoy.com/sdk/license
 
-#import <UIKit/UIKit.h>
+
 
 #import "TJCVGItemDetail.h"
 #import "TJCVGConstants.h"

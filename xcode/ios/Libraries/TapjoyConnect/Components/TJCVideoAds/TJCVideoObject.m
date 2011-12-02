@@ -51,9 +51,13 @@ videoFilename = videoFilename_;
 		{
 			NSString *buttonLabel = [TBXML textForElement:[TBXML childElementNamed:@"Name" parentElement:buttonElement]];
 			NSString *buttonURL = [TBXML textForElement:[TBXML childElementNamed:@"URL" parentElement:buttonElement]];
+			
+			// TBXML fucks up encoding so & comes in as &amp;. Fix that here.
+			NSString *fixedButtonURL = [buttonURL stringByReplacingOccurrencesOfString:@"&amp;" withString:@"&"];
+			
 			NSMutableDictionary *buttonDict = [[NSMutableDictionary alloc] init];
 			[buttonDict setObject:buttonLabel forKey:TJC_VIDEO_BUTTON_LABEL_KEY];
-			[buttonDict setObject:buttonURL forKey:TJC_VIDEO_BUTTON_URL_KEY];
+			[buttonDict setObject:fixedButtonURL forKey:TJC_VIDEO_BUTTON_URL_KEY];
 			[buttons_ addObject:buttonDict];
 			[buttonDict release];
 			

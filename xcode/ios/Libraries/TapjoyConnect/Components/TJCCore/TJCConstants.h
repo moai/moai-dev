@@ -21,10 +21,6 @@
 // Uncached video objects dictionary.
 #define TJC_UNCACHED_VIDEO_DICT				@"TJC_UNCACHED_VIDEO_DICT"
 
-
-// The user ID.
-#define TJC_URL_PARAM_USER_ID				@"publisher_user_id"
-
 // Set User ID API.
 #define TJC_URL_PARAM_SET_USER_ID		@"set_user_id"
 
@@ -71,13 +67,14 @@
 #define TJC_VIDEO_AD_CLICK_API				@"click/video"		// Video begins playing.
 #define TJC_VIDEO_AD_COMPLETE_API			@"offer_complete"	// Video is finished playing.
 #define TJC_URL_PARAM_VIDEO_IDS				@"video_offer_ids"	// List of video ids.
-#define TJC_VIDEO_CACHE_COUNT	5	// The default number of videos to cache on the device.
-#define TJC_VIDEO_CLICK_PROTOCOL	@"tjvideo"
+#define TJC_VIDEO_CACHE_COUNT					5	// The default number of videos to cache on the device.
+#define TJC_VIDEO_CLICK_PROTOCOL				@"tjvideo"
 #define TJC_VIDEO_CLICK_PROTOCOL_COMPLETE	@"tjvideo://"
-#define TJC_VIDEO_CLICK_ID		@"video_id="
-#define TJC_VIDEO_CLICK_URL	@"click_url="
+#define TJC_VIDEO_CLICK_ID						@"video_id="
+#define TJC_VIDEO_CLICK_URL					@"click_url="
 #define TJC_VIDEO_CLICK_CURRENCY_AMOUNT	@"amount="
 #define TJC_VIDEO_CLICK_CURRENCY_NAME		@"currency_name="
+#define TJC_VIDEO_LOGO_IMAGE_URL				@"https://s3.amazonaws.com/tapjoy/videos/assets/tapjoy_logo_transparent.png"
 
 
 // Display Ad URL size parameter.

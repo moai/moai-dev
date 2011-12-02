@@ -19,9 +19,21 @@
 #import "TapjoyConnect.h"
 #import "TJCFileDownloadHandler.h"
 
+static TJCVGStoreManager *sharedTJCVGStoreManager_ = nil;
+
+
 @implementation TJCVGStoreManager
 
-SYNTHESIZE_SINGLETON_FOR_CLASS(TJCVGStoreManager)
++ (TJCVGStoreManager*)sharedTJCVGStoreManager
+{
+	if (!sharedTJCVGStoreManager_)
+	{
+		sharedTJCVGStoreManager_ = [[super alloc] init];
+	}
+	
+	return sharedTJCVGStoreManager_;
+}
+
 
 @synthesize vgStoreModelObj = vgStore_ ;
 @synthesize startingIndex = startingIndex_, moreDataValue =moreDataValue_;
@@ -681,6 +693,17 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TJCVGStoreManager)
 		vgStore_ = nil;
 	}
 	[super dealloc];
+}
+
+@end
+
+
+
+@implementation TapjoyConnect (TJCVGStoreManager)
+
++ (int)getNumVGItemsToBeDownloaded
+{
+	return [[TJCVGStoreManager sharedTJCVGStoreManager] numItemsToBeDownloaded];
 }
 
 @end

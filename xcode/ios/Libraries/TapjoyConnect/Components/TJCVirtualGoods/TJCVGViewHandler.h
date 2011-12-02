@@ -68,7 +68,7 @@
 
 + (NSString*)getGlobalDBSavePath;
 
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation;
+- (void)updateViewWithOrientation:(UIInterfaceOrientation)fromInterfaceOrientation;
 
 @end
 

@@ -173,7 +173,7 @@ typedef enum eTJCVGViewStyle
 - (void)hideLoadingViews;
 - (void)hideLoadingViewsEnded:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context;
 
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation;
+- (void)updateViewWithOrientation:(UIInterfaceOrientation)fromInterfaceOrientation;
 
 // Returns the enum value that tells whether the available items or the purchased items is currently visible.
 - (eTJCVGActiveItemsView)getCurrentActiveView;

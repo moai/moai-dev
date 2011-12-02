@@ -14,10 +14,22 @@
 #import "TJCLog.h"
 
 
+static TJCFeaturedAppViewHandler *sharedTJCFeaturedAppViewHandler_ = nil;
+
 @implementation TJCFeaturedAppViewHandler
 
 
-SYNTHESIZE_SINGLETON_FOR_CLASS(TJCFeaturedAppViewHandler)
+
++ (TJCFeaturedAppViewHandler*)sharedTJCFeaturedAppViewHandler
+{
+    if (!sharedTJCFeaturedAppViewHandler_)
+    {
+        sharedTJCFeaturedAppViewHandler_ = [[super alloc] init];
+    }
+    
+    return sharedTJCFeaturedAppViewHandler_;
+}
+
 
 - (id)initWithFrame:(CGRect)frame 
 {
@@ -27,6 +39,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TJCFeaturedAppViewHandler)
 	}
 	return self;
 }
+
 
 + (UIView*)showFullScreenAdWithURL:(NSString*)adURL
 {

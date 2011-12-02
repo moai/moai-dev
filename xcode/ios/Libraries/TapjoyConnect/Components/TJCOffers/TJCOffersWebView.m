@@ -15,7 +15,7 @@
 #import "TJCLog.h"
 #import "TJCUtil.h"
 #import "TJCViewCommons.h"
-#import "TJCLoadingViewController.h"
+#import "TJCLoadingView.h"
 #import "TJCVideoManager.h"
 #import "TJCVideoRequestHandler.h"
 #import "TJCVideoViewHandler.h"
@@ -58,7 +58,7 @@ static NSString *currentServiceURL = nil;
 - (void)refreshWithFrame:(CGRect)frame enableNavBar:(BOOL)enableNavigationBar
 {
 	[self setFrame:frame];
-	[loadingViewCtrl_.view setFrame:frame];
+	[loadingView_.mainView setFrame:frame];
 	
 	currentServiceURL = [self setUpOffersURLWithServiceURL:
 								[NSString stringWithFormat:@"%@%@?", TJC_SERVICE_URL, TJC_WEB_OFFERS_URL_NAME]];
@@ -145,7 +145,7 @@ static NSString *currentServiceURL = nil;
 	// The retry button action.
 	if(buttonIndex == 1)
 	{
-		[loadingViewCtrl_ fadeIn];
+		[loadingView_ fadeIn];
 		[cWebView_ stopLoading];
 		
 		// Load the last url that was attempted.
@@ -183,7 +183,7 @@ static NSString *currentServiceURL = nil;
 	else if(buttonIndex == 0) 
 	{
 		//Stop Activity Indicator
-		[loadingViewCtrl_ fadeOut];
+		[loadingView_ fadeOut];
 		
 		// Re-enable user touch interaction so that they may click on another link to try again if so desired.
 		[cWebView_ setUserInteractionEnabled:YES];
@@ -265,7 +265,7 @@ static NSString *currentServiceURL = nil;
 		[alertview release];
 		
 		//Stop Activity Indicator
-		[loadingViewCtrl_ fadeOut];
+		[loadingView_ fadeOut];
 		
 		// Disable user touch interaction.
 		[webView setUserInteractionEnabled:NO];
@@ -397,7 +397,7 @@ static NSString *currentServiceURL = nil;
 {
 	isViewVisible_ = YES;
 	
-	[loadingViewCtrl_ fadeIn];	
+	[loadingView_ fadeIn];	
 	
 	// Disable user touch interaction.
 	[webView setUserInteractionEnabled:NO];
@@ -410,7 +410,7 @@ static NSString *currentServiceURL = nil;
 {
 	webPageRendered_ = true;
 	
-	[loadingViewCtrl_ fadeOut];
+	[loadingView_ fadeOut];
 	
 	// Re-enable user touch interaction.
 	[webView setUserInteractionEnabled:YES];
@@ -433,7 +433,7 @@ static NSString *currentServiceURL = nil;
 {
 	[TJCLog logWithLevel:LOG_DEBUG format:@"OPENING EXTERNAL URL NOW ::::::%@", [request URL]];
 	
-	[loadingViewCtrl_ fadeOut];
+	[loadingView_ fadeOut];
 	
 	// Open up itunes. This will effectively place this app in the background.
 	[[UIApplication sharedApplication] openURL:[request URL]];
@@ -470,7 +470,7 @@ static NSString *currentServiceURL = nil;
 	[alertview release];
 	
 	//Stop Activity Indicator
-	[loadingViewCtrl_ fadeOut];
+	[loadingView_ fadeOut];
 	
 	// Disable user touch interaction.
 	[cWebView_ setUserInteractionEnabled:NO];
