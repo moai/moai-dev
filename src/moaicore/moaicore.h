@@ -51,7 +51,11 @@
 #include <moaicore/MOAIGrid.h>
 #include <moaicore/MOAIGridSpace.h>
 #include <moaicore/MOAIHttpTask.h>
+#ifndef MOAI_OS_NACL
 #include <moaicore/MOAIHttpTaskInfo_curl.h>
+#else
+#include <moaicore/MOAIHttpTaskInfo_nacl.h>
+#endif
 #include <moaicore/MOAIImage.h>
 #include <moaicore/MOAIIndexBuffer.h>
 #include <moaicore/MOAIInputDevice.h>

@@ -9,11 +9,11 @@
 #include <moaicore/MOAIUrlMgr.h>
 #include <moaicore/MOAIXmlParser.h>
 
-//#ifdef MOAI_OS_NACL
-//	#include <uslsext/USHttpTaskInfo_nacl.h>
-//#else
+#ifdef MOAI_OS_NACL
+	#include <moaicore/MOAIHttpTaskInfo_nacl.h>
+#else
 	#include <moaicore/MOAIHttpTaskInfo_curl.h>
-//#endif
+#endif
 
 //================================================================//
 // local

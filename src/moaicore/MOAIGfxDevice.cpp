@@ -218,6 +218,7 @@ void MOAIGfxDevice::BeginLayer () {
 	this->mVertexTransforms [ VTX_PROJ_TRANSFORM ] = projMtx;
 	
 	// fixed function reset
+#if USE_OPENGLES1
 	if ( !this->IsProgrammable ()) {
 		
 		// load identity matrix
@@ -236,6 +237,7 @@ void MOAIGfxDevice::BeginLayer () {
 		// reset the point size
 		glPointSize (( GLfloat )this->mPointSize );
 	}
+#endif
 }
 
 //----------------------------------------------------------------//
@@ -448,14 +450,22 @@ void MOAIGfxDevice::Flush () {
 }
 
 //----------------------------------------------------------------//
+float MOAIGfxDevice::GetDeviceScale () {
+
+	return this->mDeviceScale;
+}
+
+//----------------------------------------------------------------//
 cc8* MOAIGfxDevice::GetErrorString ( int error ) const {
 
 	switch ( error ) {
 		case GL_INVALID_ENUM:		return "GL_INVALID_ENUM";
 		case GL_INVALID_VALUE:		return "GL_INVALID_VALUE";
 		case GL_INVALID_OPERATION:	return "GL_INVALID_OPERATION";
+#if USE_OPENGLES1
 		case GL_STACK_OVERFLOW:		return "GL_STACK_OVERFLOW";
 		case GL_STACK_UNDERFLOW:	return "GL_STACK_UNDERFLOW";
+#endif
 		case GL_OUT_OF_MEMORY:		return "GL_OUT_OF_MEMORY";
 	}
 	return "";
@@ -615,14 +625,16 @@ USMatrix4x4 MOAIGfxDevice::GetWorldToWndMtx ( float xScale, float yScale ) const
 
 //----------------------------------------------------------------//
 void MOAIGfxDevice::GpuLoadMatrix ( const USMatrix4x4& mtx ) const {
-
+#if USE_OPENGLES1
 	glLoadMatrixf ( mtx.m );
+#endif
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxDevice::GpuMultMatrix ( const USMatrix4x4& mtx ) const {
-
+#if USE_OPENGLES1
 	glMultMatrixf ( mtx.m );
+#endif
 }
 
 //----------------------------------------------------------------//
@@ -646,40 +658,42 @@ u32 MOAIGfxDevice::LogErrors () {
 
 //----------------------------------------------------------------//
 MOAIGfxDevice::MOAIGfxDevice () :
-	mVertexFormat ( 0 ),
+	
+	mBlendEnabled ( 0 ),
 	mBuffer ( 0 ),
-	mSize ( 0 ),
-	mTop ( 0 ),
-	mPrimTop ( 0 ),
-	mPrimType ( GL_POINTS ),
-	mPrimSize ( 0 ),
-	mPrimCount ( 0 ),
+	mClearFlags ( GL_COLOR_BUFFER_BIT ),
+	mClearColor ( 0xff000000 ),
+	mClearColorNode ( 0 ),
+	mCpuVertexTransform ( false ),
+	mCpuUVTransform ( false ),
+	mDefaultFrameBuffer ( 0 ),
+	mDeviceScale ( 1.0f ),
+	mHasContext ( false ),
+	mHeight ( 0 ),
+	mIsFramebufferSupported ( 0 ),
+	mIsOpenGLES ( false ),
+	mIsProgrammable ( false ),
+	mMajorVersion ( 0 ),
 	mMaxPrims ( 0 ),
-	mTexture ( 0 ),
-	mShader ( 0 ),
+	mMinorVersion ( 0 ),
 	mPackedColor ( 0xffffffff ),
 	mPenWidth ( 1.0f ),
 	mPointSize ( 1.0f ),
-	mBlendEnabled ( 0 ),
-	mWidth ( 0 ),
-	mHeight ( 0 ),
+	mPrimCount ( 0 ),
+	mPrimSize ( 0 ),
+	mPrimTop ( 0 ),
+	mPrimType ( GL_POINTS ),
+	mShader ( 0 ),
+	mSize ( 0 ),
+	mTexture ( 0 ),	
+	mTextureMemoryUsage ( 0 ),
+	mTop ( 0 ),
 	mUVMtxInput ( UV_STAGE_MODEL ),
 	mUVMtxOutput ( UV_STAGE_MODEL ),
+	mVertexFormat ( 0 ),
 	mVertexMtxInput ( VTX_STAGE_MODEL ),
 	mVertexMtxOutput ( VTX_STAGE_MODEL ),
-	mCpuVertexTransform ( false ),
-	mCpuUVTransform ( false ),
-	mHasContext ( false ),
-	mIsOpenGLES ( false ),
-	mMajorVersion ( 0 ),
-	mMinorVersion ( 0 ),
-	mIsProgrammable ( false ),
-	mIsFramebufferSupported ( 0 ),
-	mDefaultFrameBuffer ( 0 ),
-	mTextureMemoryUsage ( 0 ),
-	mClearFlags ( GL_COLOR_BUFFER_BIT ),
-	mClearColor ( 0xff000000 ),
-	mClearColorNode ( 0 ) {
+	mWidth ( 0 ) {
 	
 	RTTI_SINGLE ( MOAIGlobalEventSource )
 	
@@ -804,7 +818,7 @@ void MOAIGfxDevice::ResetState () {
 	USRect scissorRect = device.GetRect ();
 	glScissor (( int )scissorRect.mXMin, ( int )scissorRect.mYMin, ( int )scissorRect.Width (), ( int )scissorRect.Height ());
 	this->mScissorRect = scissorRect;
-	
+#if USE_OPENGLES1
 	// fixed function reset
 	if ( !this->IsProgrammable ()) {
 		
@@ -814,6 +828,7 @@ void MOAIGfxDevice::ResetState () {
 		// reset the point size
 		glPointSize (( GLfloat )this->mPointSize );
 	}
+#endif
 }
 
 //----------------------------------------------------------------//
@@ -862,6 +877,12 @@ void MOAIGfxDevice::SetClearColor ( MOAIColor* color ) {
 	}
 }
 
+//----------------------------------------------------------------//
+void MOAIGfxDevice::SetDeviceScale ( float scale ) {
+
+	this->mDeviceScale = scale;
+
+}
 //----------------------------------------------------------------//
 void MOAIGfxDevice::SetDefaultFrameBuffer ( GLuint frameBuffer ) {
 
@@ -917,12 +938,14 @@ void MOAIGfxDevice::SetPenWidth ( float penWidth ) {
 
 //----------------------------------------------------------------//
 void MOAIGfxDevice::SetPointSize ( float pointSize ) {
-
+#if USE_OPENGLES1
 	if ( this->mPointSize != pointSize ) {
 		this->Flush ();
 		this->mPointSize = pointSize;
+
 		glPointSize (( GLfloat )pointSize );
 	}
+#endif
 }
 
 //----------------------------------------------------------------//
@@ -1212,7 +1235,7 @@ void MOAIGfxDevice::SetViewport ( const USRect& viewport ) {
 	GLsizei w = ( GLsizei )( viewport.Width () + 0.5f );
 	GLsizei h = ( GLsizei )( viewport.Height () + 0.5f );
 	
-	glViewport ( x, y, w, h );
+	glViewport ( x * this->mDeviceScale , y * this->mDeviceScale, w * this->mDeviceScale, h * this->mDeviceScale );
 
 	this->mViewRect = viewport;
 }
@@ -1249,6 +1272,7 @@ void MOAIGfxDevice::UpdateGpuVertexMtx () {
 
 	if ( this->IsProgrammable ()) return;
 
+#if USE_OPENGLES1
 	this->Flush ();
 
 	// update the gpu matrices
@@ -1295,6 +1319,7 @@ void MOAIGfxDevice::UpdateGpuVertexMtx () {
 		
 			break;
 	}
+#endif
 }
 
 //----------------------------------------------------------------//
@@ -1303,24 +1328,28 @@ void MOAIGfxDevice::UpdateUVMtx () {
 	if ( this->mUVMtxOutput == UV_STAGE_TEXTURE ) {
 		
 		this->mCpuUVTransform = !this->mUVTransform.IsIdent ();
-		
+
+#if USE_OPENGLES1
 		// flush and load gl UV transform
 		if ( !this->mIsProgrammable ) {
 			this->Flush ();
 			glMatrixMode ( GL_TEXTURE );
 			glLoadIdentity ();
 		}
+#endif
 	}
 	else {
 		
 		this->mCpuUVTransform = false;
-		
+
+#if USE_OPENGLES1
 		// flush and load gl UV transform
 		if ( !this->mIsProgrammable ) {
 			this->Flush ();
 			glMatrixMode ( GL_TEXTURE );
 			this->GpuLoadMatrix ( this->mUVTransform );
 		}
+#endif
 	}
 }
 

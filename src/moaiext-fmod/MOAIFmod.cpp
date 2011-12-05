@@ -4,6 +4,13 @@
 #include <moaiext-fmod/MOAIFmod.h>
 #include <fmod.hpp>
 
+#ifdef MOAI_OS_NACL
+#include <fmodnacl.h>
+#include "moai_nacl.h"
+#include "ppapi/c/ppb.h"
+#include "ppapi/cpp/instance.h"
+#endif
+
 //================================================================//
 // local
 //================================================================//
@@ -17,7 +24,7 @@
 	@out	number maxAlloc
 */
 int	MOAIFmod::_getMemoryStats( lua_State* L ) {
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	
 	bool blocking = state.GetValue < bool >( 1, false );
 	
@@ -40,11 +47,24 @@ int	MOAIFmod::_getMemoryStats( lua_State* L ) {
 */
 int MOAIFmod::_init ( lua_State* L ) {
 
-	USLuaState state ( L );
+	MOAILuaState state ( L );
 	
+#ifdef MOAI_OS_NACL
+	printf ( "Cannot initialize fmod on background thread\n" );
+	return -1;
+#endif
+
 	MOAIFmod::Get ().OpenSoundSystem ();
 
 	return 0;
+}
+
+int MOAIFmod::_mute ( lua_State* L ) {
+	MOAILuaState state ( L );
+	
+	bool mute = state.GetValue < bool >( 1, false );
+
+	MOAIFmod::Get().MuteChannels ( mute );
 }
 
 //================================================================//
@@ -83,10 +103,24 @@ void MOAIFmod::OpenSoundSystem () {
 
 	FMOD_RESULT result;
 
+	//FMOD::Debug_SetLevel(FMOD_DEBUG_ALL);
+	//FMOD::Debug_SetLevel(FMOD_DEBUG_LEVEL_ERROR);
+
 	result = FMOD::System_Create ( &this->mSoundSys ); // Create the main system object.
 	if ( result != FMOD_OK ) return;
-	
-	result = this->mSoundSys->init ( 100, FMOD_INIT_NORMAL, 0 ); // Initialize FMOD.
+
+#ifdef MOAI_OS_NACL
+
+	FMOD_NACL_EXTRADRIVERDATA extraDriverData;
+	memset(&extraDriverData, 0, sizeof(FMOD_NACL_EXTRADRIVERDATA)); 
+	extraDriverData.instance = g_instance->pp_instance();
+
+	this->mSoundSys->setDSPBufferSize( 1024, 4 );
+	result = this->mSoundSys->init ( 100, FMOD_INIT_NORMAL, &extraDriverData );
+#else
+	result = this->mSoundSys->init ( 100, FMOD_INIT_NORMAL, 0 );
+#endif
+
 	if ( result != FMOD_OK ) return;
 	
 	result = this->mSoundSys->getMasterChannelGroup ( &this->mMainChannelGroup );
@@ -94,11 +128,12 @@ void MOAIFmod::OpenSoundSystem () {
 }
 
 //----------------------------------------------------------------//
-void MOAIFmod::RegisterLuaClass ( USLuaState& state ) {
+void MOAIFmod::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	luaL_Reg regTable [] = {
 		{ "getMemoryStats",		_getMemoryStats },
 		{ "init",				_init },
+		{ "mute",				_mute },
 		{ NULL, NULL }
 	};
 	
@@ -106,7 +141,7 @@ void MOAIFmod::RegisterLuaClass ( USLuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIFmod::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAIFmod::RegisterLuaFuncs ( MOAILuaState& state ) {
 	UNUSED ( state );
 }
 
@@ -118,12 +153,3 @@ void MOAIFmod::Update () {
 	}
 }
 
-//----------------------------------------------------------------//
-STLString MOAIFmod::ToString () {
-
-	STLString repr;
-
-	PRETTY_PRINT ( repr, mSoundSys )
-
-	return repr;
-}

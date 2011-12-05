@@ -86,6 +86,7 @@ AKU_API void			AKUSetInputDeviceLevel			( int deviceID, int sensorID, char const
 AKU_API void			AKUSetInputDeviceLocation		( int deviceID, int sensorID, char const* name );
 AKU_API void			AKUSetInputDevicePointer		( int deviceID, int sensorID, char const* name );
 AKU_API void			AKUSetInputDeviceTouch			( int deviceID, int sensorID, char const* name );
+AKU_API void			AKUSetInputDeviceWheel			( int deviceID, int sensorID, char const* name );
 
 // input events api
 AKU_API void			AKUEnqueueButtonEvent			( int deviceID, int sensorID, bool down );
@@ -96,5 +97,6 @@ AKU_API void			AKUEnqueueLocationEvent			( int deviceID, int sensorID, double lo
 AKU_API void			AKUEnqueuePointerEvent			( int deviceID, int sensorID, int x, int y );
 AKU_API void			AKUEnqueueTouchEvent			( int deviceID, int sensorID, int touchID, bool down, float x, float y, int tapCount );
 AKU_API void			AKUEnqueueTouchEventCancel		( int deviceID, int sensorID );
+AKU_API void			AKUEnqueueWheelEvent			( int deviceID, int sensorID, float value );
 
 #endif

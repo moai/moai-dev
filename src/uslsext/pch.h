@@ -39,9 +39,18 @@
 #endif
 
 #ifdef MOAI_OS_LINUX
+	#ifndef MOAI_OS_NACL
 	#ifndef ANDROID
 		#include <GL/glew.h>
 	#endif
+	#endif
+#endif
+
+#ifdef MOAI_OS_NACL
+	#include <GLES2/gl2.h>
+	#include <GLES2/gl2ext.h>
+
+	#define GL_RGBA8 GL_RGBA8_OES
 #endif
 
 #ifdef _ARM_ARCH_7

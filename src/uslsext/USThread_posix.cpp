@@ -68,10 +68,10 @@ void USThreadImpl::Sleep () {
 #if defined( __APPLE__ )
 	pthread_yield_np ();
 #elif defined( __linux )
-	#ifndef ANDROID
-		pthread_yield ();
-	#else
+	#if defined( ANDROID ) | defined( NACL )
 		sched_yield ();
+	#else
+		pthread_yield ();
 	#endif
 #else
 	#error "No pthread yield function defined for this platform."

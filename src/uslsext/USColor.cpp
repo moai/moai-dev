@@ -624,7 +624,9 @@ void USColorVec::Lerp ( const USColorVec& v0, const USColorVec& v1, float t ) {
 //----------------------------------------------------------------//
 void USColorVec::LoadGfxState () const {
 
+#if USE_OPENGLES1
 	glColor4f ( this->mR, this->mG, this->mB, this->mA );
+#endif
 }
 
 //----------------------------------------------------------------//

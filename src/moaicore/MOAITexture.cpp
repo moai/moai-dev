@@ -789,9 +789,11 @@ void MOAITexture::OnBind () {
 	
 	if ( this->mIsDirty ) {
 	
+#if USE_OPENGLES1	
 		if ( !MOAIGfxDevice::Get ().IsProgrammable ()) {
 			glTexEnvf ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
 		}
+#endif
 		
 		glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, this->mWrap );
 		glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, this->mWrap );

@@ -150,7 +150,7 @@ void MOAIDebugLines::Draw () {
 
 //----------------------------------------------------------------//
 void MOAIDebugLines::DrawEllipse ( USVec2D& loc, float xRad, float yRad, u32 steps ) {
-
+#if USE_OPENGLES1
 	static const u32 MAX = 64;
 	if ( steps > MAX ) steps = MAX;
 	USVec2D vtx [ MAX * 2 ];
@@ -174,6 +174,7 @@ void MOAIDebugLines::DrawEllipse ( USVec2D& loc, float xRad, float yRad, u32 ste
 		
 		this->DrawLine ( v0.mX, v0.mY, v1.mX, v1.mY );
 	}
+#endif
 }
 
 //----------------------------------------------------------------//
