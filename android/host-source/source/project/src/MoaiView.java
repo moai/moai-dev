@@ -50,6 +50,8 @@ public class MoaiView extends GLSurfaceView {
 	private boolean					mSensorsEnabled;
 	private int 					mWidth; 
 	
+	public static final  Object		LOCK_OBJECT					= new Object ();
+	
 	protected static native int	 AKUCreateContext 				();
 	protected static native void AKUDeleteContext 				( int akuContextId );
 	protected static native void AKUDetectGfxContext 			();
@@ -83,13 +85,13 @@ public class MoaiView extends GLSurfaceView {
 	public MoaiView ( Context context, MoaiActivity activity, int width, int height ) {
 
 		super ( context );
-
+		
 		mContext = context;
 		mHeight = height;
 		mSensorsEnabled = false;
 		mWidth = width;
 		
-		initMoai ( activity );
+		initMoai ( activity );		
 	}
 	
 	//----------------------------------------------------------------//
@@ -182,19 +184,22 @@ public class MoaiView extends GLSurfaceView {
 	@Override
 	public boolean onTouchEvent ( MotionEvent event ) {
 
-		boolean isDown = ( event.getAction () == MotionEvent.ACTION_DOWN );
-		isDown |= ( event.getAction() == MotionEvent.ACTION_MOVE );
-		int pointerId = ( event.getAction() >> MotionEvent.ACTION_POINTER_ID_SHIFT ) + 1;
+		synchronized ( MoaiView.LOCK_OBJECT ) {
 		
-		AKUEnqueueTouchEvent (
-			MoaiInputDeviceID.DEVICE.ordinal (),
-			MoaiInputDeviceSensorID.TOUCH.ordinal (),
-			pointerId, 
-			isDown, 
-			Math.round ( event.getX () ), 
-			Math.round ( event.getY () ), 
-			1
-		);
+			boolean isDown = ( event.getAction () == MotionEvent.ACTION_DOWN );
+			isDown |= ( event.getAction() == MotionEvent.ACTION_MOVE );
+			int pointerId = ( event.getAction() >> MotionEvent.ACTION_POINTER_ID_SHIFT ) + 1;
+			
+			AKUEnqueueTouchEvent (
+				MoaiInputDeviceID.DEVICE.ordinal (),
+				MoaiInputDeviceSensorID.TOUCH.ordinal (),
+				pointerId, 
+				isDown, 
+				Math.round ( event.getX () ), 
+				Math.round ( event.getY () ), 
+				1
+			);
+		}
 		
 		return true;
 	}
@@ -235,12 +240,15 @@ public class MoaiView extends GLSurfaceView {
 		@Override
 		public void onDrawFrame ( GL10 gl ) {
 
-			AKUSetContext ( mAku );
-			AKUSetViewSize ( mWidth, mHeight );
-			AKURender ();
-
-			AKUSetContext ( mAku );
-			AKUUpdate ();
+			synchronized ( MoaiView.LOCK_OBJECT ) {
+			
+				AKUSetContext ( mAku );
+				AKUSetViewSize ( mWidth, mHeight );
+				AKURender ();
+	
+				AKUSetContext ( mAku );
+				AKUUpdate ();
+			}
 		}
 
 	    //----------------------------------------------------------------//

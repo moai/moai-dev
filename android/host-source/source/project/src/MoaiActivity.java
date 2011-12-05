@@ -273,14 +273,17 @@ public class MoaiActivity extends Activity implements SensorEventListener {
 			return;
 		}
 		
-		float x = event.values [ 0 ];
-		float y = event.values [ 1 ];
-		float z = event.values [ 2 ];
+		synchronized ( MoaiView.LOCK_OBJECT ) {
 		
-		int deviceId = MoaiInputDeviceID.DEVICE.ordinal ();
-		int sensorId = MoaiInputDeviceSensorID.LEVEL.ordinal ();
-		
-		AKUEnqueueLevelEvent ( deviceId, sensorId, x, y, z );
+			float x = event.values [ 0 ];
+			float y = event.values [ 1 ];
+			float z = event.values [ 2 ];
+			
+			int deviceId = MoaiInputDeviceID.DEVICE.ordinal ();
+			int sensorId = MoaiInputDeviceSensorID.LEVEL.ordinal ();
+			
+			AKUEnqueueLevelEvent ( deviceId, sensorId, x, y, z );
+		}
 	}
 
 	//================================================================//
