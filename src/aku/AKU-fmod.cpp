@@ -13,11 +13,15 @@
 //----------------------------------------------------------------//
 void AKUFmodInit () {
 
-	MOAIFmod::Get ();
+	MOAIFmod::Affirm ();
 	
 	REGISTER_LUA_CLASS ( MOAIFmod )
 	REGISTER_LUA_CLASS ( MOAIFmodChannel )
 	REGISTER_LUA_CLASS ( MOAIFmodSound )
+
+#ifdef MOAI_OS_NACL
+	MOAIFmod::Get ().OpenSoundSystem ();
+#endif
 }
 
 //----------------------------------------------------------------//

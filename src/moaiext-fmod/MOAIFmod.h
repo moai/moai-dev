@@ -20,7 +20,7 @@ namespace FMOD {
 	@text	FMOD singleton. Unsupported, legacy.
 */
 class MOAIFmod :
-	public USGlobalClass < MOAIFmod, USLuaObject > {
+	public MOAIGlobalClass < MOAIFmod, MOAILuaObject > {
 private:
 
 	FMOD::System* mSoundSys;
@@ -29,6 +29,7 @@ private:
 	//----------------------------------------------------------------//
 	static int	_getMemoryStats		( lua_State* L );
 	static int	_init				( lua_State* L );
+	static int _mute				( lua_State* L );
 
 public:
 
@@ -43,8 +44,8 @@ public:
 					~MOAIFmod			();
 	void			MuteChannels		( bool mute );
 	void			OpenSoundSystem		();
-	void			RegisterLuaClass	( USLuaState& state );
-	void			RegisterLuaFuncs	( USLuaState& state );
+	void			RegisterLuaClass	( MOAILuaState& state );
+	void			RegisterLuaFuncs	( MOAILuaState& state );
 	void			Update				();
 	STLString		ToString			();
 };

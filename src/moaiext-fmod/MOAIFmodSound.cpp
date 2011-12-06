@@ -5,6 +5,10 @@
 #include <moaiext-fmod/MOAIFmodSound.h>
 #include <fmod.hpp>
 
+#ifdef MOAI_OS_NACL
+#include <NaClFileSystem.h>
+#include <moai_nacl.h>
+#endif
 //================================================================//
 // local
 //================================================================//
@@ -43,6 +47,8 @@ int MOAIFmodSound::_load ( lua_State* L ) {
 	else if ( state.IsType( 2, LUA_TSTRING ) ) {
 
 		cc8* filename	= state.GetValue < cc8* >( 2, "" );
+		memcpy( self->mFileName, filename, strlen ( filename ));
+
 		self->Load ( filename, streaming, async );
 	}
 
@@ -70,6 +76,9 @@ int	MOAIFmodSound::_loadBGM ( lua_State* L ) {
 	else if ( state.IsType( 2, LUA_TSTRING ) ) {
 
 		cc8* filename	= state.GetValue < cc8* >( 2, "" );
+
+		memcpy( self->mFileName, filename, strlen ( filename ));
+
 		self->Load ( filename, true, false );
 	}
 
@@ -97,6 +106,9 @@ int	MOAIFmodSound::_loadSFX ( lua_State* L ) {
 	else if ( state.IsType( 2, LUA_TSTRING ) ) {
 
 		cc8* filename	= state.GetValue < cc8* >( 2, "" );
+
+		memcpy( self->mFileName, filename, strlen ( filename ));
+
 		self->Load ( filename, false, true );
 	}
 
@@ -127,7 +139,9 @@ MOAIFmodSound::MOAIFmodSound () :
 	mSound ( 0 ),
 	mLoopCount ( 0 ) {
 
-	RTTI_SINGLE ( USLuaObject )
+	RTTI_SINGLE ( MOAILuaObject )
+
+	memset ( mFileName, 0, 128 );
 }
 
 //----------------------------------------------------------------//
@@ -192,15 +206,40 @@ void MOAIFmodSound::Load ( cc8* filename, bool streaming, bool async ) {
 		info.audioqueuepolicy = FMOD_AUDIOQUEUE_CODECPOLICY_SOFTWAREONLY;
 	#endif
 
+#ifdef MOAI_OS_NACL
+
+	mode = FMOD_OPENMEMORY | FMOD_CREATESAMPLE;
+
+	memset( &info, 0, sizeof( FMOD_CREATESOUNDEXINFO ) );
+	info.cbsize = sizeof( FMOD_CREATESOUNDEXINFO );
+
+	NaClFile *file = g_FileSystem->fopen ( filename, "r" );
+
+	if ( file ) {
+		
+		info.length = file->mSize;
+
+		result = soundSys->createSound (( cc8* )file->mData, FMOD_SOFTWARE | mode, &info, &sound );
+
+		g_FileSystem->fclose ( file );
+	}
+	else {
+		info.length = 0;
+		result = soundSys->createSound (( cc8* )NULL, FMOD_SOFTWARE | mode, &info, &sound );
+	}
+#else
 	if ( streaming ) {
-		result = soundSys->createStream ( filename, FMOD_SOFTWARE, &info, &sound );
+		result = soundSys->createStream ( filename, FMOD_SOFTWARE | mode, &info, &sound );
 	}
 	else {
 		result = soundSys->createSound ( filename, FMOD_SOFTWARE | mode, &info, &sound );
 	}
+#endif
 	
-	if ( result != FMOD_OK ) return;
-	
+	if ( result != FMOD_OK ) {
+		return;
+	}
+
 	this->mSound = sound;
 }
 
@@ -216,12 +255,12 @@ void MOAIFmodSound::Release () {
 }
 
 //----------------------------------------------------------------//
-void MOAIFmodSound::RegisterLuaClass ( USLuaState& state ) {
+void MOAIFmodSound::RegisterLuaClass ( MOAILuaState& state ) {
 	UNUSED ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAIFmodSound::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAIFmodSound::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "load",			_load },
@@ -234,13 +273,3 @@ void MOAIFmodSound::RegisterLuaFuncs ( USLuaState& state ) {
 	luaL_register ( state, 0, regTable );
 }
 
-//----------------------------------------------------------------//
-STLString MOAIFmodSound::ToString () {
-
-	STLString repr;
-
-	PRETTY_PRINT ( repr, mSound )
-	PRETTY_PRINT ( repr, mLoopCount )
-
-	return repr;
-}

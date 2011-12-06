@@ -8,7 +8,9 @@
 //----------------------------------------------------------------//
 static void _cleanup () {
 
+#if USE_CURL
 	curl_global_cleanup ();
+#endif
 	
 	MOAIGlobalsMgr::Finalize ();
 }
@@ -25,9 +27,12 @@ void moaicore::InitGlobals ( MOAIGlobals* globals ) {
 	static bool sysInit = true;
 	if ( sysInit ) {
 		
+#if USE_CHIPMUNK
 		cpInitChipmunk ();
-		
+#endif
+#if USE_CURL
 		curl_global_init ( CURL_GLOBAL_WIN32 | CURL_GLOBAL_SSL );
+#endif
 		
 		atexit ( _cleanup );
 		sysInit = false;

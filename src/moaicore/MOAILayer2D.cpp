@@ -605,15 +605,15 @@ void MOAILayer2D::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAIProp2D::RegisterLuaClass ( state );
 	
-	state.SetField ( -1, "SORT_NONE",					MOAIPartitionResultBuffer::SORT_NONE );
-	state.SetField ( -1, "SORT_PRIORITY_ASCENDING",		MOAIPartitionResultBuffer::SORT_PRIORITY_ASCENDING );
-	state.SetField ( -1, "SORT_PRIORITY_DESCENDING",	MOAIPartitionResultBuffer::SORT_PRIORITY_DESCENDING );
-	state.SetField ( -1, "SORT_X_ASCENDING",			MOAIPartitionResultBuffer::SORT_X_ASCENDING );
-	state.SetField ( -1, "SORT_X_DESCENDING",			MOAIPartitionResultBuffer::SORT_X_DESCENDING );
-	state.SetField ( -1, "SORT_Y_ASCENDING",			MOAIPartitionResultBuffer::SORT_Y_ASCENDING );
-	state.SetField ( -1, "SORT_Y_DESCENDING",			MOAIPartitionResultBuffer::SORT_Y_DESCENDING );
-	state.SetField ( -1, "SORT_VECTOR_ASCENDING",		MOAIPartitionResultBuffer::SORT_VECTOR_ASCENDING );
-	state.SetField ( -1, "SORT_VECTOR_DESCENDING",		MOAIPartitionResultBuffer::SORT_VECTOR_DESCENDING );
+	state.SetField ( -1, "SORT_NONE",					( u32 ) MOAIPartitionResultBuffer::SORT_NONE );
+	state.SetField ( -1, "SORT_PRIORITY_ASCENDING",		( u32 ) MOAIPartitionResultBuffer::SORT_PRIORITY_ASCENDING );
+	state.SetField ( -1, "SORT_PRIORITY_DESCENDING",	( u32 ) MOAIPartitionResultBuffer::SORT_PRIORITY_DESCENDING );
+	state.SetField ( -1, "SORT_X_ASCENDING",			( u32 ) MOAIPartitionResultBuffer::SORT_X_ASCENDING );
+	state.SetField ( -1, "SORT_X_DESCENDING",			( u32 ) MOAIPartitionResultBuffer::SORT_X_DESCENDING );
+	state.SetField ( -1, "SORT_Y_ASCENDING",			( u32 ) MOAIPartitionResultBuffer::SORT_Y_ASCENDING );
+	state.SetField ( -1, "SORT_Y_DESCENDING",			( u32 ) MOAIPartitionResultBuffer::SORT_Y_DESCENDING );
+	state.SetField ( -1, "SORT_VECTOR_ASCENDING",		( u32 ) MOAIPartitionResultBuffer::SORT_VECTOR_ASCENDING );
+	state.SetField ( -1, "SORT_VECTOR_DESCENDING",		( u32 ) MOAIPartitionResultBuffer::SORT_VECTOR_DESCENDING );
 }
 
 //----------------------------------------------------------------//

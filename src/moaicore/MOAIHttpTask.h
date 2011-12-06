@@ -51,14 +51,15 @@ public:
 	DECL_LUA_FACTORY ( MOAIHttpTask )
 	
 	//----------------------------------------------------------------//
-	void			Clear					();	
-	void			GetData					( void* buffer, u32 size );
-	void			HttpGet					( cc8* url, cc8* useragent, bool verbose );
-	void			HttpPost				( cc8* url, cc8* useragent, const void* buffer, u32 size, bool verbose );
-					MOAIHttpTask			();
-					~MOAIHttpTask			();
-	void			RegisterLuaClass		( MOAILuaState& state );
-	void			RegisterLuaFuncs		( MOAILuaState& state );
+	void				Clear					();	
+	void				GetData					( void* buffer, u32 size );
+	MOAIHttpTaskInfo*	GetInfo					() { return mInfo; }
+	void				HttpGet					( cc8* url, cc8* useragent, bool verbose );
+	void				HttpPost				( cc8* url, cc8* useragent, const void* buffer, u32 size, bool verbose );
+						MOAIHttpTask			();
+						~MOAIHttpTask			();
+	void				RegisterLuaClass		( MOAILuaState& state );
+	void				RegisterLuaFuncs		( MOAILuaState& state );
 };
 
 #endif
