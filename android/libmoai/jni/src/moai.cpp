@@ -50,6 +50,7 @@
 	jmethodID		mRestoreTransactionsFunc;
 	jmethodID		mSetMarketPublicKeyFunc;
 	jmethodID		mShowDialogFunc;
+	jmethodID		mShareFunc;
 	
 	//----------------------------------------------------------------//
 	int JNI_OnLoad ( JavaVM* vm, void* reserved ) {
@@ -122,6 +123,18 @@
 		GET_JSTRING ( negative, jnegative );
 
 		env->CallObjectMethod ( mMoaiActivity , mShowDialogFunc, jtitle, jmessage, jpositive, jneutral, jnegative, cancelable );
+	}
+	
+	//----------------------------------------------------------------//
+	void Share ( const char* prompt , const char* subject , const char* text ) {
+
+		GET_ENV ();
+
+		GET_JSTRING ( prompt, jprompt );
+		GET_JSTRING ( subject, jsubject );
+		GET_JSTRING ( text, jtext );
+
+		env->CallObjectMethod ( mMoaiActivity , mShareFunc, jprompt, jsubject, jtext );
 	}
 	
 //================================================================//
@@ -260,6 +273,7 @@
 		MOAIApp::Get ().SetRequestPurchaseFunc( &RequestPurchase );
 		MOAIApp::Get ().SetRestoreTransactionsFunc( &RestoreTransactions );
 		MOAIApp::Get ().SetShowDialogFunc( &ShowDialog );
+		MOAIApp::Get ().SetShareFunc( &Share );
 
 		mMoaiActivity = ( jobject ) env->NewGlobalRef ( moaiActivity );
 		jclass moaiActivityClass = env->GetObjectClass ( mMoaiActivity );
@@ -271,6 +285,7 @@
 		mRestoreTransactionsFunc = env->GetMethodID ( moaiActivityClass, "restoreTransactions", "()Z" );
 		mSetMarketPublicKeyFunc = env->GetMethodID ( moaiActivityClass, "setMarketPublicKey", "(Ljava/lang/String;)V" );
 		mShowDialogFunc = env->GetMethodID ( moaiActivityClass, "showDialog", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)V" );
+		mShareFunc = env->GetMethodID ( moaiActivityClass, "share", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V" );
 	}
 
 	//----------------------------------------------------------------//

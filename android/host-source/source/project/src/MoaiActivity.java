@@ -45,7 +45,6 @@ import android.content.pm.PackageManager.NameNotFoundException;
 // Tapjoy
 import com.tapjoy.TapjoyConnect;
 import com.tapjoy.TapjoyVideoNotifier;
-import com.tapjoy.TapjoyVideoStatus;
 
 // OpenGL 2.0
 import android.app.ActivityManager;
@@ -356,6 +355,18 @@ public class MoaiActivity extends Activity implements SensorEventListener, Tapjo
 			}
 		});
 	}
+	
+	//----------------------------------------------------------------//
+	public void share ( String prompt, String subject, String text ) {
+
+		Intent intent = new Intent ( Intent.ACTION_SEND );
+		intent.setType ( "text/plain" );
+		
+		if ( subject != null ) intent.putExtra ( Intent.EXTRA_SUBJECT, subject );
+		if ( text != null ) intent.putExtra ( Intent.EXTRA_TEXT, text );
+		
+		this.startActivity ( Intent.createChooser ( intent, prompt ));
+	}
 
 	//================================================================//
 	// Open Url JNI callback methods
@@ -383,7 +394,7 @@ public class MoaiActivity extends Activity implements SensorEventListener, Tapjo
 		
 		return TapjoyConnect.getTapjoyConnectInstance ().getUserID ();
 	}
-	
+	 
 	public void initVideoAds () {
 		
 		TapjoyConnect.getTapjoyConnectInstance ().initVideoAd ( this );
