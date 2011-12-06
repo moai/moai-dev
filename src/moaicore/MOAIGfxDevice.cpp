@@ -1235,7 +1235,12 @@ void MOAIGfxDevice::SetViewport ( const USRect& viewport ) {
 	GLsizei w = ( GLsizei )( viewport.Width () + 0.5f );
 	GLsizei h = ( GLsizei )( viewport.Height () + 0.5f );
 	
-	glViewport ( x * this->mDeviceScale , y * this->mDeviceScale, w * this->mDeviceScale, h * this->mDeviceScale );
+	glViewport (
+		( GLint )( x * this->mDeviceScale ),
+		( GLint )( y * this->mDeviceScale ),
+		( GLsizei )( w * this->mDeviceScale ),
+		( GLsizei )( h * this->mDeviceScale )
+	);
 
 	this->mViewRect = viewport;
 }
