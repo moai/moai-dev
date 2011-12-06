@@ -119,6 +119,7 @@ public:
 	USMatrix3x3			GetWorldToGridMtx		() const;
 	
 	USVec2D				GridToWorld				( USVec2D loc ) const;
+	void				Init					( int width, int height, float tileWidth, float tileHeight );
 	bool				IsValidCoord			( MOAICellCoord cellCoord ) const;
 	void				SerializeIn				( MOAILuaState& state );
 	void				SerializeOut			( MOAILuaState& state );
