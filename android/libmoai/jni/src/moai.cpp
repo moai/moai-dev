@@ -54,7 +54,7 @@
 	//----------------------------------------------------------------//
 	int JNI_OnLoad ( JavaVM* vm, void* reserved ) {
     
-		jvm = vm;
+		jvm = vm;		
 		return JNI_VERSION_1_4;
 	}
 		
@@ -131,7 +131,6 @@
 	//----------------------------------------------------------------//
 	const char* GenerateGUID () {
 
-		// get environment
 		GET_ENV ();
 
 	    // call generate guid method in java
@@ -245,6 +244,9 @@
 		MOAIApp::Affirm ();
 		REGISTER_LUA_CLASS ( MOAIApp );
 
+		MOAITapjoy::Affirm ();
+		REGISTER_LUA_CLASS ( MOAITapjoy );
+
 		// register callbacks into Java
 		mMoaiView = ( jobject ) env->NewGlobalRef ( moaiView );
 		jclass moaiViewClass = env->GetObjectClass ( mMoaiView );
@@ -322,6 +324,21 @@
 	//----------------------------------------------------------------//
 	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiActivity_AKUNotifyDialogDismissed ( JNIEnv* env, jclass obj, jint code ) {
 		MOAIApp::Get ().NotifyDialogDismissed ( code );
+	}
+
+	//----------------------------------------------------------------//
+	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiActivity_AKUNotifyVideoAdBegin ( JNIEnv* env, jclass obj ) {
+		MOAITapjoy::Get ().NotifyVideoAdBegin ();
+	}
+
+	//----------------------------------------------------------------//
+	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiActivity_AKUNotifyVideoAdError ( JNIEnv* env, jclass obj, jint code ) {
+		MOAITapjoy::Get ().NotifyVideoAdError ( code );
+	}
+	
+	//----------------------------------------------------------------//
+	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiActivity_AKUNotifyVideoAdClose ( JNIEnv* env, jclass obj ) {
+		MOAITapjoy::Get ().NotifyVideoAdClose ();
 	}
 	
 	//----------------------------------------------------------------//

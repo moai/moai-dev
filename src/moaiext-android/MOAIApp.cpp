@@ -311,7 +311,6 @@ void MOAIApp::NotifyDialogDismissed ( int code ) {
 
 //----------------------------------------------------------------//
 void MOAIApp::WillEndSession( ) {
-
 	MOAILuaRef& callback = this->mListeners [ SESSION_END ];
 	
 	if ( callback ) {

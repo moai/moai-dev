@@ -89,8 +89,19 @@
 	rsync -r --exclude=.svn --exclude=.DS_Store host-source/d.res/. $new_host_dir/res
 
 	# copy source dir into new host dir
-	rsync -r --exclude=.svn --exclude=.DS_Store --exclude=src/ --exclude=ext/ host-source/source/. $new_host_dir/host-source
+	rsync -r --exclude=.svn --exclude=.DS_Store --exclude=src/ --exclude=external/ host-source/source/. $new_host_dir/host-source
 
+	# create function for easy find and replace
+	backup_ext=.backup
+	
+	function fr () { 
+		sed -i$backup_ext s%$2%"$3"%g $1
+		rm -f $1$backup_ext
+	}
+
+	# set the app platform in the project properties
+	fr $new_host_dir/host-source/project/project.properties	@APP_PLATFORM@ $appPlatform
+	
 	# create package src directories
 	OLD_IFS=$IFS
 	IFS='.'
@@ -104,8 +115,9 @@
 	# copy classes into new host dir
 	rsync -r --exclude=.svn --exclude=.DS_Store host-source/source/project/src/. $new_host_dir/host-source/project/$package_path
 
-	# copy external classes into new host dir
-	rsync -r --exclude=.svn --exclude=.DS_Store host-source/source/project/ext/. $new_host_dir/host-source/project/src
+	# copy external classes and resources into new host dir
+	rsync -r --exclude=.svn --exclude=.DS_Store host-source/source/project/external/src/. $new_host_dir/host-source/project/src
+	rsync -r --exclude=.svn --exclude=.DS_Store host-source/source/project/external/res/. $new_host_dir/host-source/project/res
 
 	# inject the package path into the run script
 	sed -i.backup s%@SETTING_PACKAGE_PATH@%"$package_path"%g $new_host_dir/run-host.sh

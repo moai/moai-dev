@@ -42,6 +42,11 @@ import android.content.pm.ConfigurationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 
+// Tapjoy
+import com.tapjoy.TapjoyConnect;
+import com.tapjoy.TapjoyVideoNotifier;
+import com.tapjoy.TapjoyVideoStatus;
+
 // OpenGL 2.0
 import android.app.ActivityManager;
 import android.content.pm.ConfigurationInfo;
@@ -49,7 +54,7 @@ import android.content.pm.ConfigurationInfo;
 //================================================================//
 // MoaiActivity
 //================================================================//
-public class MoaiActivity extends Activity implements SensorEventListener {
+public class MoaiActivity extends Activity implements SensorEventListener, TapjoyVideoNotifier {
 
 	private Sensor 							mAccelerometer;
 	private MoaiBillingService 				mBillingService;
@@ -78,6 +83,9 @@ public class MoaiActivity extends Activity implements SensorEventListener {
 	protected static native void 		AKUNotifyPurchaseResponseReceived	( String productId, int responseCode );
 	protected static native void 		AKUNotifyPurchaseStateChanged		( String productId, int purchaseState, String orderId, String notificationId, String developerPayload );
 	protected static native void 		AKUNotifyRestoreResponseReceived	( int responseCode );
+	protected static native void		AKUNotifyVideoAdBegin				();
+	protected static native void		AKUNotifyVideoAdError				( int statusCode );
+	protected static native void		AKUNotifyVideoAdClose				();
 	protected static native void 		AKUSetConnectionType 				( long connectionType );
 	protected static native void 		AKUSetDocumentDirectory 			( String path );
 
@@ -359,6 +367,54 @@ public class MoaiActivity extends Activity implements SensorEventListener {
 		Uri uri = Uri.parse ( url );
 		Intent intent = new Intent ( Intent.ACTION_VIEW, uri );
 		startActivity ( intent );
+	}
+	
+	//================================================================//
+	// Tapjoy JNI callback methods
+	//================================================================//
+
+	//----------------------------------------------------------------//
+	public void requestTapjoyConnect ( String appId, String appSecret ) {
+	
+		TapjoyConnect.requestTapjoyConnect ( this, appId, appSecret );
+	}
+	
+	public String getUserId () {
+		
+		return TapjoyConnect.getTapjoyConnectInstance ().getUserID ();
+	}
+	
+	public void initVideoAds () {
+		
+		TapjoyConnect.getTapjoyConnectInstance ().initVideoAd ( this );
+	}
+	
+	public void setVideoAdCacheCount ( int count ) {
+		
+		TapjoyConnect.getTapjoyConnectInstance ().setVideoCacheCount ( count );
+	}
+	
+	public void showOffers () {
+		
+		TapjoyConnect.getTapjoyConnectInstance ().showOffers ();
+	}
+	
+	//================================================================//
+	// Tapjoy video delegate callback methods
+	//================================================================//	
+	public void videoReady () {
+		
+		AKUNotifyVideoAdBegin ();
+	}
+
+	public void videoError ( int statusCode ) {
+
+		AKUNotifyVideoAdError ( statusCode );
+	}
+
+	public void videoComplete () {
+		
+		AKUNotifyVideoAdClose ();
 	}
 	
 	//================================================================//
