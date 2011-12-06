@@ -60,7 +60,6 @@ public class MoaiView extends GLSurfaceView {
 	protected static native void AKUExtLoadLuacurl				();
 	protected static native void AKUExtLoadLuasocket			();
 	protected static native void AKUExtLoadLuasql				();
-	protected static native void AKUFinalize 					();
 	protected static native void AKUInit 						( MoaiView view, MoaiActivity activity );
 	protected static native void AKUPause 						( boolean paused );
 	protected static native void AKURender	 					();

@@ -220,6 +220,11 @@
 	}
 
 	//----------------------------------------------------------------//
+	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiActivity_AKUFinalize	( JNIEnv* env, jclass obj ) {
+		AKUFinalize ();
+	}
+
+	//----------------------------------------------------------------//
 	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUEnqueueTouchEvent ( JNIEnv* env, jclass obj, jint deviceId, jint sensorId, jint touchId, jboolean down, jint x, jint y, jint tapCount ) {
 		AKUEnqueueTouchEvent ( deviceId, sensorId, touchId, down, x, y, tapCount );
 	}
@@ -242,12 +247,6 @@
 	//----------------------------------------------------------------//
 	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUExtLoadLuasql ( JNIEnv* env, jclass obj ) {
 		AKUExtLoadLuasql ();
-	}
-
-
-	//----------------------------------------------------------------//
-	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUFinalize	( JNIEnv* env, jclass obj ) {
-		AKUFinalize ();
 	}
 
 	//----------------------------------------------------------------//

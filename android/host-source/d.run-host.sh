@@ -102,8 +102,10 @@
 	
 	# copy ant.properties file and replace text inside
 	cp -f	host-source/project/ant.properties	build/ant.properties
-	fr build/ant.properties		@KEY_STORE@		$key_store
-	fr build/ant.properties		@KEY_ALIAS@		$key_alias
+	fr build/ant.properties		@KEY_STORE@				$key_store
+	fr build/ant.properties		@KEY_ALIAS@				$key_alias
+	fr build/ant.properties		@KEY_STORE_PASSWORD@	$key_store_password
+	fr build/ant.properties		@KEY_ALIAS_PASSWORD@	$key_alias_password
 
 	# copy build.xml file and replace text inside
 	cp -f	host-source/project/build.xml	build/build.xml
