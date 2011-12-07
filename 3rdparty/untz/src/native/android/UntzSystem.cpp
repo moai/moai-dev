@@ -126,7 +126,7 @@ void PlaybackThread::run()
     static jmethodID releaseMethod = env->GetMethodID(audioTrackClass, "release", "()V");
     static jmethodID writeMethod = env->GetMethodID(audioTrackClass, "write", "([BII)I");
 
-    int sampleRateInHz = 44100;
+	int sampleRateInHz = mpSystemData->mSampleRate;//44100;
     int channelConfig = CHANNEL_OUT_STEREO;
     const int numChannels = 2;
     int audioFormat = ENCODING_PCM_16BIT;
@@ -169,9 +169,6 @@ void PlaybackThread::run()
     {
         // Grab the float samples from the mixer.
         mpSystemData->mMixer.process(0, NULL, numChannels, float_buf, framesPerBuffer);
-        sprintf(str, "f[3]: %f", float_buf[3]);
-        __android_log_write(ANDROID_LOG_ERROR,"UntzJNI",str);
-
 
         /*
         // Clip nicely.
@@ -200,7 +197,7 @@ void PlaybackThread::run()
             __android_log_write(ANDROID_LOG_ERROR,"UntzJNI","Failed to get pointer to array bytes");
         }
 
-		if(++bufferCount == 2)
+		if(++bufferCount == 3)
 		{
 			// Calculate when the next callback should happen (based on buffer size)
 			long next_nsecs = nextCallTime.tv_nsec+nsec_per_buffer;
