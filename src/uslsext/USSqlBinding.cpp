@@ -12,6 +12,9 @@
 // USSqlBinding
 //================================================================//
 
+SUPPRESS_EMPTY_FILE_WARNING
+#if USE_SQL
+
 //----------------------------------------------------------------//
 bool USSqlBinding::SqlAffirmRecord ( sqlite3* connection, cc8* where, ... ) {
 
@@ -139,3 +142,5 @@ USSqlBinding::USSqlBinding () {
 //----------------------------------------------------------------//
 USSqlBinding::~USSqlBinding () {
 }
+
+#endif

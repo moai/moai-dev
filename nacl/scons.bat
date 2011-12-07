@@ -6,7 +6,7 @@
 
 setlocal
 
-set NACL_SDK_ROOT=C:\NaCl
+set NACL_SDK_ROOT=C:\nacl_sdk
 
 :: NACL_TARGET_PLATFORM is really the name of a folder with the base dir -
 :: usually NACL_SDK_ROOT - within which the toolchain for the target platform
@@ -15,7 +15,7 @@ set NACL_SDK_ROOT=C:\NaCl
 :: build applications that target the pepper_15 API, set
 ::   NACL_TARGET_PLATFORM=pepper_15
 if not defined NACL_TARGET_PLATFORM (
-  set NACL_TARGET_PLATFORM=pepper_15
+  set NACL_TARGET_PLATFORM=pepper_16
 )
 
 set NACL_PLATFORM_DIR=%NACL_SDK_ROOT%\%NACL_TARGET_PLATFORM%

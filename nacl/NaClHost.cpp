@@ -486,17 +486,11 @@ void MoaiInstance::DrawSelf() {
 
 	if ( !opengl_context->flush_pending () ) {
 
-		static NaClMoaiTimer renderTimer ( "Main_Render" );
-		renderTimer.Start ();
 		opengl_context->MakeContextCurrent(this);
 		
 		AKURender ();
-		renderTimer.FinishAndPrint ();
 
-		static NaClMoaiTimer finishTimer ( "Main_Finsh" );
-		finishTimer.Start ();
 		glFinish ();
-		finishTimer.FinishAndPrint ();
 
 		opengl_context->FlushContext();
 	}

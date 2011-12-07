@@ -21,4 +21,12 @@
 	#define USE_OPENGLES1 1
 #endif
 
+#ifndef USE_SQL
+	#define USE_SQL 1
+#endif
+
+#ifndef USE_OPENSSL
+	#define USE_OPENSSL 1
+#endif
+
 #endif

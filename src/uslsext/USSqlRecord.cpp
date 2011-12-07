@@ -10,6 +10,9 @@
 // USSqlCell
 //================================================================//
 
+SUPPRESS_EMPTY_FILE_WARNING
+#if USE_SQL
+
 //----------------------------------------------------------------//
 bool USSqlCell::Init ( sqlite3* connection, sqlite3_stmt* statement, int iCol ) {
 
@@ -526,3 +529,5 @@ USSqlRecord::USSqlRecord () :
 //----------------------------------------------------------------//
 USSqlRecord::~USSqlRecord () {
 }
+
+#endif
