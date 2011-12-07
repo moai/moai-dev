@@ -383,6 +383,14 @@
 			>
 		</File>
 		<File
+			RelativePath="..\..\src\work\work-pathfinding.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\work\work-pathfinding.h"
+			>
+		</File>
+		<File
 			RelativePath="..\..\src\work\work-zipfs-fscanf.cpp"
 			>
 		</File>

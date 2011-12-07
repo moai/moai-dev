@@ -27,6 +27,8 @@ class MOAITexture;
 	@const	SORT_X_DESCENDING
 	@const	SORT_Y_ASCENDING
 	@const	SORT_Y_DESCENDING
+	@const	SORT_VECTOR_ASCENDING
+	@const	SORT_VECTOR_DESCENDING
 */
 class MOAILayer2D :
 	public virtual MOAIProp2D {

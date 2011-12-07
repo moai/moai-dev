@@ -308,6 +308,22 @@ USVec2D MOAIGridSpace::GridToWorld ( USVec2D loc ) const {
 }
 
 //----------------------------------------------------------------//
+void MOAIGridSpace::Init ( int width, int height, float tileWidth, float tileHeight ) {
+
+	this->mXOff = 0.0f;
+	this->mYOff = 0.0f;
+	
+	this->mWidth = width;
+	this->mHeight = height;
+	
+	this->mTileWidth = tileWidth;
+	this->mTileHeight = tileHeight;
+	
+	this->mCellWidth = tileWidth;
+	this->mCellHeight = tileHeight;
+}
+
+//----------------------------------------------------------------//
 bool MOAIGridSpace::IsValidCoord ( MOAICellCoord cellCoord ) const {
 
 	if ( cellCoord.mX < 0 ) return false;

@@ -290,8 +290,7 @@ int MOAILayer2D::_setSortMode ( lua_State* L ) {
 	@in		MOAILayer2D self
 	@opt	number x			Default value is 0.
 	@opt	number y			Default value is 0.
-	@opt	number z			Default value is 0.
-	@opt	number priority		Default value is 0.
+	@opt	number priority		Default value is 1.
 	@out	nil
 */
 int	MOAILayer2D::_setSortScale ( lua_State* L ) {
@@ -299,8 +298,8 @@ int	MOAILayer2D::_setSortScale ( lua_State* L ) {
 
 	self->mSortScale [ 0 ] = state.GetValue < float >( 2, 0.0f );
 	self->mSortScale [ 1 ] = state.GetValue < float >( 3, 0.0f );
-	self->mSortScale [ 2 ] = state.GetValue < float >( 4, 0.0f );
-	self->mSortScale [ 3 ] = state.GetValue < float >( 5, 1.0f );
+	self->mSortScale [ 2 ] = 0.0f;
+	self->mSortScale [ 3 ] = state.GetValue < float >( 4, 1.0f );
 
 	return 0;
 }
