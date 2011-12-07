@@ -187,17 +187,22 @@ public class MoaiView extends GLSurfaceView {
 		
 			boolean isDown = ( event.getAction () == MotionEvent.ACTION_DOWN );
 			isDown |= ( event.getAction() == MotionEvent.ACTION_MOVE );
-			int pointerId = ( event.getAction() >> MotionEvent.ACTION_POINTER_ID_SHIFT ) + 1;
 			
-			AKUEnqueueTouchEvent (
-				MoaiInputDeviceID.DEVICE.ordinal (),
-				MoaiInputDeviceSensorID.TOUCH.ordinal (),
-				pointerId, 
-				isDown, 
-				Math.round ( event.getX () ), 
-				Math.round ( event.getY () ), 
-				1
-			);
+			final int pointerCount = event.getPointerCount();
+			for ( int pointerIndex = 0; pointerIndex < pointerCount; ++pointerIndex ) {
+				
+				int pointerId = event.getPointerId ( pointerIndex );
+								
+				AKUEnqueueTouchEvent (
+					MoaiInputDeviceID.DEVICE.ordinal (),
+					MoaiInputDeviceSensorID.TOUCH.ordinal (),
+					pointerId, 
+					isDown, 
+					Math.round ( event.getX ( pointerIndex )), 
+					Math.round ( event.getY ( pointerIndex )), 
+					1
+				);
+			}			
 		}
 		
 		return true;
@@ -240,14 +245,14 @@ public class MoaiView extends GLSurfaceView {
 		public void onDrawFrame ( GL10 gl ) {
 
 			synchronized ( MoaiView.LOCK_OBJECT ) {
-			
+
+				AKUSetContext ( mAku );
+				AKUUpdate ();
+		
 				AKUSetContext ( mAku );
 				AKUSetViewSize ( mWidth, mHeight );
 				AKURender ();
-	
-				AKUSetContext ( mAku );
-				AKUUpdate ();
-			}
+			}			
 		}
 
 	    //----------------------------------------------------------------//
