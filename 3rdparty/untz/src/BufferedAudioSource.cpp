@@ -19,7 +19,6 @@ BufferedAudioSource::BufferedAudioSource()
 
 BufferedAudioSource::~BufferedAudioSource()
 {
-	close();
 }
 
 bool BufferedAudioSource::init(float* interleavedData, Int64 numSamples)
@@ -38,19 +37,26 @@ bool BufferedAudioSource::init(const RString& path, bool loadIntoMemory)
 { 
 	if(loadIntoMemory)
 	{
-		//RPRINT("loading sound into memory...\n");
+		RPRINT("loading sound into memory...\n");
         int channels = getNumChannels();
         double length = getLength();
-		mBuffer.resize(getNumChannels(), getSampleRate() * getLength());
+		double srate = getSampleRate();
+		UInt32 totalFrames = getSampleRate() * getLength();
+		mBuffer.resize(getNumChannels(), totalFrames);//getSampleRate() * getLength());
 		float *pWritePos = mBuffer.getData();
 		UInt32 numFrames = (UInt32)(getSampleRate());
 		UInt32 framesRead = 0;
+		UInt32 remainingFrames = totalFrames;
+		UInt32 tf = 0;
 		do
 		{
-			framesRead = decodeData(pWritePos, numFrames);
+			framesRead = decodeData(pWritePos, remainingFrames >= numFrames ? numFrames : remainingFrames);
 			pWritePos += framesRead * getNumChannels();
+			tf += framesRead;
+			remainingFrames -= framesRead;
 		}
-		while(framesRead > 0);
+		while(remainingFrames > 0);
+
 		mLoadedInMemory = loadIntoMemory; 
 		doneDecoding();
 	}
