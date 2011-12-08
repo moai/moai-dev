@@ -41,6 +41,9 @@ namespace UNTZ
 		void setVolume(float volume);
 		float getVolume() const;
 
+		void suspend();
+		void resume();
+
 		SystemData* getData() const { return mpData; }
 	private:
         System(UInt32 sampleRate, UInt32 numFrames, UInt32 options);
