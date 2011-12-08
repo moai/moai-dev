@@ -21,6 +21,8 @@
 	#include <mach/mach.h>
 #endif
 
+#include <android/log.h>
+
 //================================================================//
 // local
 //================================================================//
@@ -872,9 +874,10 @@ double MOAISim::StepSim ( double step, u32 multiplier ) {
 	double time = USDeviceTime::GetTimeInSeconds ();
 
 	for ( u32 s = 0; s < multiplier; ++s ) {
-		MOAIDebugLines::Get ().Reset ();
+		
+		MOAIDebugLines::Get ().Reset ();		
 		MOAIInputMgr::Get ().Update ();
-		MOAIActionMgr::Get ().Update (( float )step );
+		MOAIActionMgr::Get ().Update (( float )step );		
 		MOAINodeMgr::Get ().Update ();
 	}
 	
@@ -974,8 +977,11 @@ void MOAISim::Update () {
 		// we may never catch up...
 		if ( this->mLoopFlags & SIM_LOOP_ALLOW_SPIN ) {
 			while (( this->mStep <= gap ) && ( budget > 0.0 )) {
-				budget -= this->StepSim ( this->mStep, this->mStepMultiplier );
-				gap -= this->mStep * ( double )this->mStepMultiplier;
+				//budget -= this->StepSim ( this->mStep, this->mStepMultiplier );
+				//gap -= this->mStep * ( double )this->mStepMultiplier;
+				//TODO make the following official
+				budget -= 1.0f / 1000.0f;
+				sleep ( 1.0f / 1000.0f );
 			}
 		}
 	}

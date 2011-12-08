@@ -184,8 +184,8 @@
 	
 	if [ $OSTYPE != cygwin ]; then
 		pushd build > /dev/null
-			#ant uninstall
-			#ant clean
+			ant uninstall
+			ant clean
 			$install_cmd
 			adb shell am start -a android.intent.action.MAIN -n $package/$package.MoaiActivity
 			adb logcat -c
