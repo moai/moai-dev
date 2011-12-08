@@ -83,7 +83,7 @@ public class MoaiActivity extends Activity implements SensorEventListener, Tapjo
 	protected static native void 		AKUNotifyPurchaseResponseReceived	( String productId, int responseCode );
 	protected static native void 		AKUNotifyPurchaseStateChanged		( String productId, int purchaseState, String orderId, String notificationId, String developerPayload );
 	protected static native void 		AKUNotifyRestoreResponseReceived	( int responseCode );
-	protected static native void		AKUNotifyVideoAdBegin				();
+	protected static native void		AKUNotifyVideoAdReady				();
 	protected static native void		AKUNotifyVideoAdError				( int statusCode );
 	protected static native void		AKUNotifyVideoAdClose				();
 	protected static native void 		AKUSetConnectionType 				( long connectionType );
@@ -168,10 +168,8 @@ public class MoaiActivity extends Activity implements SensorEventListener, Tapjo
 
 		log ( "MoaiActivity onDestroy called" );
 		
-		// call super
 		super.onDestroy ();
 		
-		// unregister to receive connectivity actions
 		stopConnectivityReceiver ();
 		
 		mBillingService.unbind();
@@ -197,11 +195,11 @@ public class MoaiActivity extends Activity implements SensorEventListener, Tapjo
 
 		log ( "MoaiActivity onPause called" );
 		
-		// call super
 		super.onPause ();
 		
-		// unregister for accelerometer events
 		mSensorManager.unregisterListener ( this );
+		
+		mMoaiView.pause ( true );
 	}
 
 	//----------------------------------------------------------------//
@@ -209,15 +207,13 @@ public class MoaiActivity extends Activity implements SensorEventListener, Tapjo
 
 		log ( "MoaiActivity onStart called" );
 
-		// call super
 		super.onStart ();
 		
         MoaiBillingResponseHandler.register ( mPurchaseObserver );
-
-		//AKUAppDidStartSession ();
 	}
 	
 	public static void startSession () {
+
 		AKUAppDidStartSession ();
 	}
 	
@@ -226,7 +222,6 @@ public class MoaiActivity extends Activity implements SensorEventListener, Tapjo
 
 		log ( "MoaiActivity onStop called" );
 
-		// call super
 		super.onStop ();
 
         MoaiBillingResponseHandler.unregister ( mPurchaseObserver );
@@ -239,11 +234,11 @@ public class MoaiActivity extends Activity implements SensorEventListener, Tapjo
 
 		log ( "MoaiActivity onResume called" );
 
-		// call super
 		super.onResume ();
 		
-		// register for accelerometer events
 		mSensorManager.registerListener ( this, mAccelerometer, SensorManager.SENSOR_DELAY_NORMAL );
+		
+		mMoaiView.pause ( false );
 		
 		startConnectivityReceiver ();
 	}
@@ -417,8 +412,8 @@ public class MoaiActivity extends Activity implements SensorEventListener, Tapjo
 	// Tapjoy video delegate callback methods
 	//================================================================//	
 	public void videoReady () {
-		
-		AKUNotifyVideoAdBegin ();
+
+		AKUNotifyVideoAdReady ();
 	}
 
 	public void videoError ( int statusCode ) {
@@ -427,7 +422,7 @@ public class MoaiActivity extends Activity implements SensorEventListener, Tapjo
 	}
 
 	public void videoComplete () {
-		
+
 		AKUNotifyVideoAdClose ();
 	}
 	

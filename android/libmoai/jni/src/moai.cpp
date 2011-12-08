@@ -341,8 +341,8 @@
 	}
 
 	//----------------------------------------------------------------//
-	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiActivity_AKUNotifyVideoAdBegin ( JNIEnv* env, jclass obj ) {
-		MOAITapjoy::Get ().NotifyVideoAdBegin ();
+	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiActivity_AKUNotifyVideoAdReady ( JNIEnv* env, jclass obj ) {
+		MOAITapjoy::Get ().NotifyVideoAdReady ();
 	}
 
 	//----------------------------------------------------------------//
@@ -358,6 +358,16 @@
 	//----------------------------------------------------------------//
 	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUPause ( JNIEnv* env, jclass obj, jboolean paused ) {
 		AKUPause ( paused );
+		
+		// if ( paused ) {
+		// 
+		// 	UNTZ::System::get ()->suspend ();
+		// } else {
+		// 
+		// 	UNTZ::System::get ()->resume ();
+		// }
+		// 
+		// PRINT ( "PAUSE called..." );
 	}
 
 	//----------------------------------------------------------------//

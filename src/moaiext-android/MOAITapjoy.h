@@ -27,7 +27,7 @@ public:
 	DECL_LUA_SINGLETON ( MOAITapjoy );
 	
 	enum {
-		TAPJOY_VIDEO_AD_BEGIN,
+		TAPJOY_VIDEO_AD_READY,
 		TAPJOY_VIDEO_AD_ERROR,
 		TAPJOY_VIDEO_AD_CLOSE,
 		TOTAL
@@ -45,7 +45,7 @@ public:
 					MOAITapjoy						();
 					~MOAITapjoy						();
 	void			RegisterLuaClass				( MOAILuaState& state );
-	void			NotifyVideoAdBegin				();
+	void			NotifyVideoAdReady				();
 	void			NotifyVideoAdError				( int code );
 	void			NotifyVideoAdClose				();
 };

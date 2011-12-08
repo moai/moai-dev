@@ -168,7 +168,7 @@ MOAITapjoy::~MOAITapjoy () {
 //----------------------------------------------------------------//
 void MOAITapjoy::RegisterLuaClass ( MOAILuaState& state ) {
 
-	state.SetField ( -1, "TAPJOY_VIDEO_AD_BEGIN", 								( u32 )TAPJOY_VIDEO_AD_BEGIN );
+	state.SetField ( -1, "TAPJOY_VIDEO_AD_READY", 								( u32 )TAPJOY_VIDEO_AD_READY );
 	state.SetField ( -1, "TAPJOY_VIDEO_AD_ERROR", 								( u32 )TAPJOY_VIDEO_AD_ERROR );
 	state.SetField ( -1, "TAPJOY_VIDEO_AD_CLOSE", 								( u32 )TAPJOY_VIDEO_AD_CLOSE );
 
@@ -190,8 +190,8 @@ void MOAITapjoy::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITapjoy::NotifyVideoAdBegin () {	
-	MOAILuaRef& callback = this->mListeners [ TAPJOY_VIDEO_AD_BEGIN ];
+void MOAITapjoy::NotifyVideoAdReady () {	
+	MOAILuaRef& callback = this->mListeners [ TAPJOY_VIDEO_AD_READY ];
 	
 	if ( callback ) {
 		MOAILuaStateHandle state = callback.GetSelf ();
