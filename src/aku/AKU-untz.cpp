@@ -37,3 +37,15 @@ void AKUUntzInit () {
 	REGISTER_LUA_CLASS ( MOAIUntzSound )
 	REGISTER_LUA_CLASS ( MOAIUntzSystem )
 }
+
+//----------------------------------------------------------------//
+void AKUUntzResume () {
+	
+	MOAIUntzSystem::Get ().Resume ();
+}
+
+//----------------------------------------------------------------//
+void AKUUntzSuspend () {
+
+	MOAIUntzSystem::Get ().Suspend ();
+}

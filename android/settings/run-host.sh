@@ -166,7 +166,7 @@
 	# bundle source folders
 	function copyFolder () {
 		mkdir -p $2
-		rsync -r --exclude=.svn --exclude=.DS_Store --exclude=*.bat --exclude=*.sh $1/. $2
+		rsync -r --exclude=.svn --exclude=.DS_Store --exclude=*.bat --exclude=*.sh --exclude=*.mp3 $1/. $2
 	}
 	
 	i=0

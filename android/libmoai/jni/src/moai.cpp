@@ -358,16 +358,14 @@
 	//----------------------------------------------------------------//
 	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUPause ( JNIEnv* env, jclass obj, jboolean paused ) {
 		AKUPause ( paused );
+
+		if ( paused ) {
 		
-		// if ( paused ) {
-		// 
-		// 	UNTZ::System::get ()->suspend ();
-		// } else {
-		// 
-		// 	UNTZ::System::get ()->resume ();
-		// }
-		// 
-		// PRINT ( "PAUSE called..." );
+			AKUUntzSuspend ();
+		} else {
+		
+			AKUUntzResume ();
+		}		
 	}
 
 	//----------------------------------------------------------------//
