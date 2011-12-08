@@ -207,18 +207,20 @@ void PlaybackThread::run()
 
 		if(++bufferCount == 3)
 		{
-			// Calculate when the next callback should happen (based on buffer size)
-			long next_nsecs = nextCallTime.tv_nsec+nsec_per_buffer;
-			nextCallTime.tv_nsec = next_nsecs % 1000000000;
-			nextCallTime.tv_sec = nextCallTime.tv_sec + next_nsecs / 1000000000;
+			do
+			{
+				// Calculate when the next callback should happen (based on buffer size)
+				long next_nsecs = nextCallTime.tv_nsec+nsec_per_buffer;
+				nextCallTime.tv_nsec = next_nsecs % 1000000000;
+				nextCallTime.tv_sec = nextCallTime.tv_sec + next_nsecs / 1000000000;
 
-			// Sleep until the next callback should come in.
-			clock_gettime(CLOCK_MONOTONIC, &now);
-			sleepTime.tv_nsec = (nextCallTime.tv_sec-now.tv_sec)*1000000000+(nextCallTime.tv_nsec-now.tv_nsec);
-			while(sleepTime.tv_nsec < 0)
-				sleepTime.tv_nsec += nsec_per_buffer;
-
-			while( nanosleep(&sleepTime, &timeLeft) < 0 && !mpSystemData->isActive());
+				// Sleep until the next callback should come in.
+				clock_gettime(CLOCK_MONOTONIC, &now);
+				sleepTime.tv_nsec = (nextCallTime.tv_sec-now.tv_sec)*1000000000+(nextCallTime.tv_nsec-now.tv_nsec);
+				while(sleepTime.tv_nsec < 0)
+					sleepTime.tv_nsec += nsec_per_buffer;			
+			}
+			while(nanosleep(&sleepTime, &timeLeft) < 0 || !mpSystemData->isActive());
 
 			--bufferCount;
 		}
@@ -304,9 +306,11 @@ float System::getVolume() const
 void System::suspend()
 {
 	msInstance->mpData->setActive(false);
+	__android_log_write(ANDROID_LOG_DEBUG, "UntzJNI", "suspending...");
 }
 
 void System::resume()
 {
 	msInstance->mpData->setActive(true);
+	__android_log_write(ANDROID_LOG_DEBUG, "UntzJNI", "resuming...");
 }
