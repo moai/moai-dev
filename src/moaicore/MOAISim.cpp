@@ -21,7 +21,6 @@
 	#include <mach/mach.h>
 #endif
 
-#include <android/log.h>
 
 //================================================================//
 // local
@@ -977,11 +976,12 @@ void MOAISim::Update () {
 		// we may never catch up...
 		if ( this->mLoopFlags & SIM_LOOP_ALLOW_SPIN ) {
 			while (( this->mStep <= gap ) && ( budget > 0.0 )) {
-				//budget -= this->StepSim ( this->mStep, this->mStepMultiplier );
-				//gap -= this->mStep * ( double )this->mStepMultiplier;
+				budget -= this->StepSim ( this->mStep, this->mStepMultiplier );
+				gap -= this->mStep * ( double )this->mStepMultiplier;
+				
 				//TODO make the following official
-				budget -= 1.0f / 1000.0f;
-				sleep ( 1.0f / 1000.0f );
+				//budget -= 1.0f / 1000.0f;
+				//sleep ( 1.0f / 1000.0f );
 			}
 		}
 	}
