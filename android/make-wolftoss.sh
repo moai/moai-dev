@@ -6,14 +6,14 @@
 
 	# build Moai
 	pushd libmoai > /dev/null
-	bash build.sh -p com.ziplinegames.wolftoss -l android-9
+	bash build.sh -p com.ziplinegames.wolftoss -l android-10
 	popd > /dev/null
 	
 	# remove old host
 	#rmdir wolftoss-host
 	
 	# make the host
-	bash make-host.sh -p com.ziplinegames.wolftoss -l android-9
+	bash make-host.sh -p com.ziplinegames.wolftoss -l android-10
 	
 	# rename host folder
 	#mv untitled-host wolftoss-host

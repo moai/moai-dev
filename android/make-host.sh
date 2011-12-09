@@ -9,7 +9,7 @@
 	quiet="false"
 	thumb=
 	packageName=
-	appPlatform=android-8
+	appPlatform=android-10
 	
 	while [ $# -gt 0 ];	do
 	    case "$1" in
@@ -100,7 +100,7 @@
 	}
 
 	# set the app platform in the project properties
-	fr $new_host_dir/host-source/project/project.properties	@APP_PLATFORM@ $appPlatform
+	fr $new_host_dir/host-source/project/project.properties	@APP_PLATFORM@ "$appPlatform"
 	
 	# create package src directories
 	OLD_IFS=$IFS
