@@ -1608,6 +1608,34 @@
 				>
 			</File>
 		</Filter>
+		<Filter
+			Name="pathfinding"
+			>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIGridPathGraph.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIGridPathGraph.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIPathFinder.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIPathFinder.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIPathGraph.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIPathGraph.h"
+				>
+			</File>
+		</Filter>
 		<File
 			RelativePath="..\..\src\moaicore\moaiconf.h"
 			>

@@ -10,20 +10,6 @@ public:
 };
 
 //================================================================//
-// MOAIGridPathGraph
-//================================================================//
-class MOAIGridPathGraph :
-	public MOAILuaObject,
-	public MOAIGridSpace {
-public:
-
-	USLeanArray < bool >	mPathMask;
-	USLeanArray < float >	mPathVectors;
-	
-	//----------------------------------------------------------------//
-};
-
-//================================================================//
 // MOAIPathState
 //================================================================//
 class MOAIPathState {

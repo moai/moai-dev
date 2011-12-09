@@ -34,6 +34,150 @@ MOAICellCoord::~MOAICellCoord () {
 }
 
 //================================================================//
+// local
+//================================================================//
+
+//----------------------------------------------------------------//
+/**	@name	getSize
+	@text	Returns the dimensions of the grid (in tiles).
+
+	@in		MOAIGridSpace self
+	@out	number width
+	@out	number height
+*/
+int MOAIGridSpace::_getSize ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGridSpace, "U" )
+
+	state.Push ( self->mWidth );
+	state.Push ( self->mHeight );
+	
+	return 2;
+}
+
+//----------------------------------------------------------------//
+/**	@name	getTileLoc
+	@text	Returns the grid space coordinate of the tile. The optional 'position'
+			flag determines the location of the coordinate within the tile.
+
+	@in		MOAIGridSpace self
+	@in		number xTile
+	@in		number yTile
+	@opt	number position		See MOAIGridSpace for list of positions. Default it MOAIGridSpace.TILE_CENTER.
+	@out	number x
+	@out	number y
+*/
+int MOAIGridSpace::_getTileLoc ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGridSpace, "UNN" )
+	
+	MOAICellCoord coord;
+	
+	coord.mX		= state.GetValue < int >( 2, 1 ) - 1;
+	coord.mY		= state.GetValue < int >( 3, 1 ) - 1;
+	u32 position	= state.GetValue < u32 >( 4, MOAIGridSpace::TILE_CENTER );
+	
+	USVec2D loc = self->GetTilePoint ( coord, position );
+	state.Push ( loc.mX );
+	state.Push ( loc.mY );
+	return 2;
+}
+
+//----------------------------------------------------------------//
+/**	@name	locToCoord
+	@text	Transforms a coordinate in grid space into a tile index.
+
+	@in		MOAIGridSpace self
+	@in		number x
+	@in		number y
+	@out	number xTile
+	@out	number yTile
+*/
+int MOAIGridSpace::_locToCoord ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGridSpace, "UNN" )
+
+	USVec2D loc;
+	loc.mX = state.GetValue < float >( 2, 0 );
+	loc.mY = state.GetValue < float >( 3, 0 );
+	
+	MOAICellCoord coord;
+	coord = self->GetCellCoord ( loc );
+
+	state.Push ( coord.mX + 1 );
+	state.Push ( coord.mY + 1);
+	return 2;
+}
+
+//----------------------------------------------------------------//
+/**	@name	setSize
+	@text	Initializes dimensions of grid and reserves storage for tiles.
+
+	@in		MOAIGridSpace self
+	@in		number width
+	@in		number height
+	@in		number cellWidth	Default value is 1.
+	@in		number cellHeight	Default value is 1.
+	@opt	number xOff			X offset of the tile from the cell.
+	@opt	number yOff			Y offset of the tile from the cell.
+	@opt	number tileWidth	Default value is cellWidth.
+	@opt	number tileHeight	Default value is cellHeight.
+	@out	nil
+*/
+int MOAIGridSpace::_setSize ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGridSpace, "UNN" )
+
+	u32 width			= state.GetValue < u32 >( 2, 0 );
+	u32 height			= state.GetValue < u32 >( 3, 0 );
+	
+	float cellWidth		= state.GetValue < float >( 4, 1.0f );
+	float cellHeight	= state.GetValue < float >( 5, 1.0f );
+
+	float xOff			= state.GetValue < float >( 6, 0.0f );
+	float yOff			= state.GetValue < float >( 7, 0.0f );
+	
+	float tileWidth		= state.GetValue < float >( 8, cellWidth );
+	float tileHeight	= state.GetValue < float >( 9, cellHeight );
+	
+	self->SetWidth ( width );
+	self->SetHeight ( height );
+	
+	self->SetCellWidth ( cellWidth );
+	self->SetCellHeight ( cellHeight );
+	
+	self->SetXOff ( xOff );
+	self->SetYOff ( yOff );
+	
+	self->SetTileWidth ( tileWidth );
+	self->SetTileHeight ( tileHeight );
+	
+	self->OnResize ();
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	wrapCoord
+	@text	Wraps a tile index to the range of the grid.
+
+	@in		MOAIGridSpace self
+	@in		number xTile
+	@in		number yTile
+	@out	number xTile
+	@out	number yTile
+*/
+int MOAIGridSpace::_wrapCoord ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGridSpace, "UNN" )
+	
+	MOAICellCoord coord;
+	coord.mX = state.GetValue < int >( 2, 1 ) - 1;
+	coord.mY = state.GetValue < int >( 3, 1 ) - 1;
+
+	self->WrapCellCoord ( coord );
+	
+	state.Push ( coord.mX + 1 );
+	state.Push ( coord.mY + 1 );
+	return 2;
+}
+
+//================================================================//
 // MOAIGridSpace
 //================================================================//
 
@@ -130,15 +274,21 @@ USMatrix3x3 MOAIGridSpace::GetGridToWorldMtx () const {
 //----------------------------------------------------------------//
 int MOAIGridSpace::GetCellAddr ( MOAICellCoord cellCoord ) const {
 
+	return this->GetCellAddr ( cellCoord.mX, cellCoord.mY );
+}
+
+//----------------------------------------------------------------//
+int MOAIGridSpace::GetCellAddr ( int xCell, int yCell ) const {
+
 	if ( !( this->mWidth && this->mHeight )) return 0;
 
-	cellCoord.mX = cellCoord.mX % this->mWidth;
-	if ( cellCoord.mX < 0 ) cellCoord.mX += this->mWidth;
+	xCell = xCell % this->mWidth;
+	if ( xCell < 0 ) xCell += this->mWidth;
 
-	cellCoord.mY = cellCoord.mY % this->mHeight;
-	if ( cellCoord.mY < 0 ) cellCoord.mY += this->mHeight;
+	yCell = yCell % this->mHeight;
+	if ( yCell < 0 ) yCell += this->mHeight;
 
-	return ( cellCoord.mY * this->mWidth ) + cellCoord.mX;
+	return ( yCell* this->mWidth ) + xCell;
 }
 
 //----------------------------------------------------------------//
@@ -336,6 +486,28 @@ bool MOAIGridSpace::IsValidCoord ( MOAICellCoord cellCoord ) const {
 }
 
 //----------------------------------------------------------------//
+MOAIGridSpace::MOAIGridSpace () :
+	mXOff ( 0.0f ),
+	mYOff ( 0.0f ),
+	mCellWidth ( 1.0f ),
+	mCellHeight ( 1.0f ),
+	mTileWidth ( 0.0f ),
+	mTileHeight ( 0.0f ),
+	mWidth ( 0 ),
+	mHeight ( 0 ) {
+	
+	RTTI_SINGLE ( MOAILuaObject )
+}
+
+//----------------------------------------------------------------//
+MOAIGridSpace::~MOAIGridSpace () {
+}
+
+//----------------------------------------------------------------//
+void MOAIGridSpace::OnResize () {
+}
+
+//----------------------------------------------------------------//
 void MOAIGridSpace::SerializeIn ( MOAILuaState& state ) {
 	
 	this->mXOff			= state.GetField ( -1, "mXOff", this->mXOff );
@@ -368,19 +540,39 @@ void MOAIGridSpace::SerializeOut ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-MOAIGridSpace::MOAIGridSpace () :
-	mXOff ( 0.0f ),
-	mYOff ( 0.0f ),
-	mCellWidth ( 1.0f ),
-	mCellHeight ( 1.0f ),
-	mTileWidth ( 0.0f ),
-	mTileHeight ( 0.0f ),
-	mWidth ( 0 ),
-	mHeight ( 0 ) {
+void MOAIGridSpace::RegisterLuaClass ( MOAILuaState& state ) {
+
+	state.SetField ( -1, "TILE_X_FLIP", ( u32 )MOAITileFlags::XFLIP );
+	state.SetField ( -1, "TILE_Y_FLIP", ( u32 )MOAITileFlags::YFLIP );
+	state.SetField ( -1, "TILE_XY_FLIP", ( u32 )MOAITileFlags::FLIP_MASK );
+	state.SetField ( -1, "TILE_HIDE", ( u32 )MOAITileFlags::HIDDEN );
+	
+	state.SetField ( -1, "TILE_LEFT_TOP", ( u32 )MOAIGridSpace::TILE_LEFT_TOP );
+	state.SetField ( -1, "TILE_RIGHT_TOP", ( u32 )MOAIGridSpace::TILE_RIGHT_TOP );
+	state.SetField ( -1, "TILE_LEFT_BOTTOM", ( u32 )MOAIGridSpace::TILE_LEFT_BOTTOM );
+	state.SetField ( -1, "TILE_RIGHT_BOTTOM", ( u32 )MOAIGridSpace::TILE_RIGHT_BOTTOM );
+	
+	state.SetField ( -1, "TILE_LEFT_CENTER", ( u32 )MOAIGridSpace::TILE_LEFT_CENTER );
+	state.SetField ( -1, "TILE_RIGHT_CENTER", ( u32 )MOAIGridSpace::TILE_RIGHT_CENTER );
+	state.SetField ( -1, "TILE_TOP_CENTER", ( u32 )MOAIGridSpace::TILE_TOP_CENTER );
+	state.SetField ( -1, "TILE_BOTTOM_CENTER", ( u32 )MOAIGridSpace::TILE_BOTTOM_CENTER );
+	
+	state.SetField ( -1, "TILE_CENTER", ( u32 )MOAIGridSpace::TILE_CENTER );
 }
 
 //----------------------------------------------------------------//
-MOAIGridSpace::~MOAIGridSpace () {
+void MOAIGridSpace::RegisterLuaFuncs ( MOAILuaState& state ) {
+
+	luaL_Reg regTable [] = {
+		{ "getSize",			_getSize },
+		{ "getTileLoc",			_getTileLoc },
+		{ "locToCoord",			_locToCoord },
+		{ "setSize",			_setSize },
+		{ "wrapCoord",			_wrapCoord },
+		{ NULL, NULL }
+	};
+
+	luaL_register ( state, 0, regTable );
 }
 
 //----------------------------------------------------------------//
