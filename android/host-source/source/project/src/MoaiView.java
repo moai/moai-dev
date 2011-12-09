@@ -112,12 +112,11 @@ public class MoaiView extends GLSurfaceView {
 		String appId = mContext.getPackageName ();
 		
 		// get appName
-		String appName = appId;
-
-		String[] packNameParts = appId.split ( "." );
-
-		if ( packNameParts.length > 1 ) {
-			appName = packNameParts [ packNameParts.length - 1 ];
+		String appName;
+		try {
+		    appName = mContext.getPackageManager ().getApplicationLabel( mContext.getPackageManager ().getApplicationInfo ( appId, 0 )).toString ();
+		} catch ( Exception e ) {
+			appName = "UNKNOWN";
 		}
 		
 		// get appVersion
@@ -176,7 +175,7 @@ public class MoaiView extends GLSurfaceView {
 		initDeviceProperties ();
 		
 		AKUInit ( this, activity );
-		mSensorsEnabled = true;
+//		mSensorsEnabled = true;
 	}
 
     //----------------------------------------------------------------//

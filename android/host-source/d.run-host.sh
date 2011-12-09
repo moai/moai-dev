@@ -90,50 +90,49 @@
 	
 	# copy .project file and replace text inside
 	cp -f	host-source/project/.project	build/.project 
-	fr build/.project 	@NAME@	$project_name
+	fr build/.project 				@NAME@					"$project_name"
 
 	# copy AndroidManifest.xml file and replace text inside
 	cp -f	host-source/project/AndroidManifest.xml		build/AndroidManifest.xml
-	fr build/AndroidManifest.xml	@NAME@			$project_name
-	fr build/AndroidManifest.xml	@PACKAGE@		$package
-	fr build/AndroidManifest.xml	@DEBUGGABLE@	$debug
-	fr build/AndroidManifest.xml	@VERSION_CODE@	$versionCode
-	fr build/AndroidManifest.xml	@VERSION_NAME@	$versionName
+	fr build/AndroidManifest.xml	@PACKAGE@				"$package"
+	fr build/AndroidManifest.xml	@DEBUGGABLE@			"$debug"
+	fr build/AndroidManifest.xml	@VERSION_CODE@			"$versionCode"
+	fr build/AndroidManifest.xml	@VERSION_NAME@			"$versionName"
 	
 	# copy ant.properties file and replace text inside
 	cp -f	host-source/project/ant.properties	build/ant.properties
-	fr build/ant.properties		@KEY_STORE@				$key_store
-	fr build/ant.properties		@KEY_ALIAS@				$key_alias
-	fr build/ant.properties		@KEY_STORE_PASSWORD@	$key_store_password
-	fr build/ant.properties		@KEY_ALIAS_PASSWORD@	$key_alias_password
+	fr build/ant.properties			@KEY_STORE@				"$key_store"
+	fr build/ant.properties			@KEY_ALIAS@				"$key_alias"
+	fr build/ant.properties			@KEY_STORE_PASSWORD@	"$key_store_password"
+	fr build/ant.properties			@KEY_ALIAS_PASSWORD@	"$key_alias_password"
 
 	# copy build.xml file and replace text inside
 	cp -f	host-source/project/build.xml	build/build.xml
-	fr build/build.xml		@NAME@		$project_name
+	fr build/build.xml				@NAME@					"$project_name"
 
 	# copy local.properties file and replace text inside
 	cp -f	host-source/project/local.properties	build/local.properties
-	fr build/local.properties		@SDK_ROOT@		$android_sdk_root
+	fr build/local.properties		@SDK_ROOT@				"$android_sdk_root"
 
 	# copy local.properties file and replace text inside
 	cp -f 	host-source/project/res/values/strings.xml	build/res/values/strings.xml
-	fr build/res/values/strings.xml	@NAME@		$project_name
+	fr build/res/values/strings.xml	@NAME@					"$app_name"
 
 	# copy all src files
 	cp -rf	host-source/project/src build/
 
 	# replace text inside required src files
-	fr build/$package_path/Base64.java						@PACKAGE@		$package
-	fr build/$package_path/Base64DecoderException.java		@PACKAGE@		$package
-	fr build/$package_path/MoaiActivity.java				@PACKAGE@		$package
-	fr build/$package_path/MoaiBillingConstants.java		@PACKAGE@		$package
-	fr build/$package_path/MoaiBillingPurchaseObserver.java	@PACKAGE@		$package
-	fr build/$package_path/MoaiBillingReceiver.java			@PACKAGE@		$package
-	fr build/$package_path/MoaiBillingResponseHandler.java	@PACKAGE@		$package
-	fr build/$package_path/MoaiBillingSecurity.java			@PACKAGE@		$package
-	fr build/$package_path/MoaiBillingService.java			@PACKAGE@		$package
-	fr build/$package_path/MoaiView.java					@PACKAGE@		$package
-	fr build/$package_path/MoaiView.java					@WORKING_DIR@	$working_dir
+	fr build/$package_path/Base64.java						@PACKAGE@		"$package"
+	fr build/$package_path/Base64DecoderException.java		@PACKAGE@		"$package"
+	fr build/$package_path/MoaiActivity.java				@PACKAGE@		"$package"
+	fr build/$package_path/MoaiBillingConstants.java		@PACKAGE@		"$package"
+	fr build/$package_path/MoaiBillingPurchaseObserver.java	@PACKAGE@		"$package"
+	fr build/$package_path/MoaiBillingReceiver.java			@PACKAGE@		"$package"
+	fr build/$package_path/MoaiBillingResponseHandler.java	@PACKAGE@		"$package"
+	fr build/$package_path/MoaiBillingSecurity.java			@PACKAGE@		"$package"
+	fr build/$package_path/MoaiBillingService.java			@PACKAGE@		"$package"
+	fr build/$package_path/MoaiView.java					@PACKAGE@		"$package"
+	fr build/$package_path/MoaiView.java					@WORKING_DIR@	"$working_dir"
 	
 	# create run command for the init.lua file
 	working_dir_depth=`grep -o "\/" <<<"$working_dir" | wc -l`
@@ -147,14 +146,14 @@
 		fi
 	done
 
-	fr 	build/$package_path/MoaiView.java	@RUN_INIT_DIR@ 	$init_dir
+	fr 	build/$package_path/MoaiView.java	@RUN_INIT_DIR@ 	"$init_dir"
 	
 	# create run commands for the host
 	for file in "${run[@]}"; do
 		run_command=`echo -e $run_command"run\(\""$file"\"\)\;"`
 	done
 	
-	fr 	build/$package_path/MoaiView.java	@RUN@ 	$run_command
+	fr 	build/$package_path/MoaiView.java	@RUN@ 	"$run_command"
 
 	# bundle android-init file
 	cp -f host-source/init.lua build/assets/init.lua

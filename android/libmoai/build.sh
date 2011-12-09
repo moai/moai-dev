@@ -9,7 +9,7 @@
 	# check for command line switches
 	usage="usage: build.sh -p package [-thumb] [-l appPlatform]"
 	arm_mode=arm
-	app_platform=android-8
+	app_platform=android-10
 	packageName=
 	
 	while [ $# -gt 0 ];	do
