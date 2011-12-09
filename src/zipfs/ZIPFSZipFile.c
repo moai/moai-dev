@@ -632,7 +632,6 @@ int ZIPFSZipStream_ResetZipStream ( ZIPFSZipStream* self ) {
 	( *stream ) = newStream;
 
 	self->mCompressedCursor = 0;
-	self->mUncompressedCursor = 0;
 	self->mPrevBlockID = -1;
 	
 	return 0;
