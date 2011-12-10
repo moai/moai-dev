@@ -27,7 +27,7 @@
 # destination directories in the bundle
 #----------------------------------------------------------------#
 
-	src_dirs=( "../../../../SVN-Repositories/zipline-dev-trunk/projects/WolfToss/lua" )
+	src_dirs=( "../../../../SVN-Repositories/zipline-dev-trunk/projects/WolfToss/lua-iphone/lua" )
 	dest_dirs=(	"lua" )
 	
 #----------------------------------------------------------------#

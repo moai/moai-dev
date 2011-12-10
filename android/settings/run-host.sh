@@ -6,9 +6,9 @@
 
 	set -e
 
-	pushd ../../../../SVN-Repositories/zipline-dev-trunk/projects/WolfToss/ > /dev/null
-	bash only-build.sh
-	popd > /dev/null
+	#pushd ../../../../SVN-Repositories/zipline-dev-trunk/projects/WolfToss/ > /dev/null
+	#bash only-build.sh
+	#popd > /dev/null
 	
 	# define package
 	package=com.ziplinegames.wolftoss
@@ -165,7 +165,7 @@
 	# bundle source folders
 	function copyFolder () {
 		mkdir -p $2
-		rsync -r --exclude=.svn --exclude=.DS_Store --exclude=*.bat --exclude=*.sh $1/. $2
+		rsync -r --exclude=.svn --exclude=.DS_Store --exclude=*.bat --exclude=*.sh --exclude=*.mp3 $1/. $2
 	}
 	
 	i=0
