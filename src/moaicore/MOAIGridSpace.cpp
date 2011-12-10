@@ -38,6 +38,46 @@ MOAICellCoord::~MOAICellCoord () {
 //================================================================//
 
 //----------------------------------------------------------------//
+/**	@name	cellAddrToCoord
+	@text	Returns the coordinate of a cell given an address.
+
+	@in		MOAIGridSpace self
+	@in		number xTile
+	@in		number yTile
+	@out	number cellAddr
+*/
+int MOAIGridSpace::_cellAddrToCoord	( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGridSpace, "UN" )
+
+	u32 addr = state.GetValue < u32 >( 2, 1 ) - 1;
+	
+	MOAICellCoord coord = self->GetCellCoord ( addr );
+	
+	state.Push ( coord.mX + 1 );
+	state.Push ( coord.mY + 1 );
+	return 2;
+}
+
+//----------------------------------------------------------------//
+/**	@name	getCellAddr
+	@text	Returns the address of a cell given a coordinate (in tiles).
+
+	@in		MOAIGridSpace self
+	@in		number xTile
+	@in		number yTile
+	@out	number cellAddr
+*/
+int MOAIGridSpace::_getCellAddr ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGridSpace, "UNN" )
+
+	int xTile		= state.GetValue < int >( 2, 1 ) - 1;
+	int yTile		= state.GetValue < int >( 3, 1 ) - 1;
+	
+	lua_pushnumber ( state, self->GetCellAddr ( xTile, yTile ) + 1 );
+	return 1;
+}
+
+//----------------------------------------------------------------//
 /**	@name	getSize
 	@text	Returns the dimensions of the grid (in tiles).
 
@@ -82,6 +122,29 @@ int MOAIGridSpace::_getTileLoc ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	locToCellAddr
+	@text	Returns the address of a cell given a a coordinate in grid space.
+
+	@in		MOAIGridSpace self
+	@in		number x
+	@in		number y
+	@out	number cellAddr
+*/
+int MOAIGridSpace::_locToCellAddr ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGridSpace, "UNN" )
+
+	USVec2D loc;
+	loc.mX = state.GetValue < float >( 2, 0 );
+	loc.mY = state.GetValue < float >( 3, 0 );
+	
+	MOAICellCoord coord;
+	coord = self->GetCellCoord ( loc );
+
+	state.Push ( self->GetCellAddr ( coord ) + 1 );
+	return 1;
+}
+
+//----------------------------------------------------------------//
 /**	@name	locToCoord
 	@text	Transforms a coordinate in grid space into a tile index.
 
@@ -102,7 +165,7 @@ int MOAIGridSpace::_locToCoord ( lua_State* L ) {
 	coord = self->GetCellCoord ( loc );
 
 	state.Push ( coord.mX + 1 );
-	state.Push ( coord.mY + 1);
+	state.Push ( coord.mY + 1 );
 	return 2;
 }
 
@@ -564,8 +627,11 @@ void MOAIGridSpace::RegisterLuaClass ( MOAILuaState& state ) {
 void MOAIGridSpace::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
+		{ "cellAddrToCoord",	_cellAddrToCoord },
+		{ "getCellAddr",		_getCellAddr },
 		{ "getSize",			_getSize },
 		{ "getTileLoc",			_getTileLoc },
+		{ "locToCellAddr",		_locToCellAddr },
 		{ "locToCoord",			_locToCoord },
 		{ "setSize",			_setSize },
 		{ "wrapCoord",			_wrapCoord },

@@ -49,6 +49,7 @@
 #include <moaicore/MOAIGlobals.h>
 #include <moaicore/MOAIGlyph.h>
 #include <moaicore/MOAIGrid.h>
+#include <moaicore/MOAIGridPathGraph.h>
 #include <moaicore/MOAIGridSpace.h>
 #include <moaicore/MOAIHttpTask.h>
 #ifndef MOAI_OS_NACL
@@ -90,6 +91,8 @@
 #include <moaicore/MOAIPartitionLayer.h>
 #include <moaicore/MOAIPartitionResultBuffer.h>
 #include <moaicore/MOAIPartitionResultMgr.h>
+#include <moaicore/MOAIPathFinder.h>
+#include <moaicore/MOAIPathTerrainDeck.h>
 #include <moaicore/MOAIPointerSensor.h>
 #include <moaicore/MOAIProp.h>
 #include <moaicore/MOAIProp2D.h>

@@ -78,8 +78,11 @@ protected:
 	int			mHeight;
 
 	//----------------------------------------------------------------//
+	static int		_cellAddrToCoord	( lua_State* L );
+	static int		_getCellAddr		( lua_State* L );
 	static int		_getSize			( lua_State* L );
 	static int		_getTileLoc			( lua_State* L );
+	static int		_locToCellAddr		( lua_State* L );
 	static int		_locToCoord			( lua_State* L );
 	static int		_setSize			( lua_State* L );
 	static int		_wrapCoord			( lua_State* L );

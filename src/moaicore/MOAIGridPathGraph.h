@@ -4,40 +4,29 @@
 #ifndef	MOAIGRIDPATHGRAPH_H
 #define	MOAIGRIDPATHGRAPH_H
 
-#include <moaicore/MOAIGridSpace.h>
-#include <moaicore/MOAIPathGraph.h>
+#include <moaicore/MOAIGrid.h>
+#include <moaicore/MOAIPathFinder.h>
 
 //================================================================//
 // MOAIGridPathGraph
 //================================================================//
 class MOAIGridPathGraph :
-	public MOAIGridSpace,
 	public MOAIPathGraph {
 private:
 
-	USLeanArray < float >	mVectors;
-	u32						mVectorSize;
+	friend class MOAIPathFinder;
+
+	MOAIGrid*	mGrid;
 
 	//----------------------------------------------------------------//
-	static int		_getVector					( lua_State* L );
-	static int		_setVector					( lua_State* L );
-	static int		_setVectorSize				( lua_State* L );
-
-	//----------------------------------------------------------------//
-	void			OnResize					();
+	void			PushNeighbor				( MOAIPathFinder& pathFinder, u32 tile0, int xTile, int yTile, float moveCost );
+	void			PushNeighbors				( MOAIPathFinder& pathFinder, int nodeID );
 
 public:
 	
-	DECL_LUA_FACTORY ( MOAIGridPathGraph )
-	
-	GET ( u32, VectorSize, mVectorSize )
-	
 	//----------------------------------------------------------------//
-	float*			GetVector					( int xTile, int yTile );
 					MOAIGridPathGraph			();
 					~MOAIGridPathGraph			();
-	void			RegisterLuaClass			( MOAILuaState& state );
-	void			RegisterLuaFuncs			( MOAILuaState& state );
 };
 
 #endif

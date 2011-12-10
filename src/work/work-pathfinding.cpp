@@ -1,23 +1,23 @@
 #include <moaicore/moaicore.h>
 
 //================================================================//
-// MOAIPathNode
+// PathNode
 //================================================================//
-class MOAIPathNode {
+class PathNode {
 public:
 
 	bool	mIsOpen;
 };
 
 //================================================================//
-// MOAIPathState
+// PathState
 //================================================================//
-class MOAIPathState {
+class PathState {
 public:
 
 	int				mAddr;
-	MOAIPathState*	mParent;
-	MOAIPathState*	mNext;
+	PathState*	mParent;
+	PathState*	mNext;
 	
 	float			mMoveCost;
 	float			mHeuristic;
@@ -34,35 +34,35 @@ public:
 };
 
 //================================================================//
-// MOAIPathFinder
+// PathFinder
 //================================================================//
-class MOAIPathFinder {
+class PathFinder {
 public:
 
-	MOAIPathState*		mOpen;
-	MOAIPathState*		mClosed;
-	MOAIPathState*		mPath;
+	PathState*		mOpen;
+	PathState*		mClosed;
+	PathState*		mPath;
 	
 	int					mTargetAddr;
 	MOAICellCoord		mTargetCoord;
 	
-	MOAIGridSpace					mGridSpace;
-	USLeanArray < MOAIPathNode >	mNodes;
+	MOAIGridSpace				mGridSpace;
+	USLeanArray < PathNode >	mNodes;
 	
 	//----------------------------------------------------------------//
-	void BuildPath ( MOAIPathState* step ) {
+	void BuildPath ( PathState* step ) {
 	
 		this->mPath = step;
 	}
 	
 	//----------------------------------------------------------------//
-	void CloseStep ( MOAIPathState* stepToClose ) {
+	void CloseStep ( PathState* stepToClose ) {
 		
-		MOAIPathState* cursor = this->mOpen;
+		PathState* cursor = this->mOpen;
 		this->mOpen = 0;
 		
 		while ( cursor ) {
-			MOAIPathState* step = cursor;
+			PathState* step = cursor;
 			cursor = cursor->mNext;
 			
 			if ( step == stepToClose ) {
@@ -77,14 +77,14 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	float ComputeHeuristic ( MOAIPathState* step ) {
+	float ComputeHeuristic ( PathState* step ) {
 	
 		// manhattan
 		return ( float )(( this->mTargetCoord.mX - step->mCoord.mX ) + ( this->mTargetCoord.mY - step->mCoord.mY ));
 	}
 	
 	//----------------------------------------------------------------//
-	float ComputeMoveCost ( MOAIPathState* parent, MOAIPathState* step, bool diagonal ) {
+	float ComputeMoveCost ( PathState* parent, PathState* step, bool diagonal ) {
 	
 		if ( parent ) {
 			return diagonal ? 1.4f : 1.0f;
@@ -93,10 +93,10 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	MOAIPathState* FindBestStep () {
+	PathState* FindBestStep () {
 
-		MOAIPathState* step = this->mOpen;
-		MOAIPathState* best = step;
+		PathState* step = this->mOpen;
+		PathState* best = step;
 		step = step->mNext;
 
 		for ( ; step; step = step->mNext ) {
@@ -112,11 +112,11 @@ public:
 		
 		if ( this->mNodes [ addr ].mIsOpen ) {
 		
-			for ( MOAIPathState* step = this->mOpen; step; step = step->mNext ) {
+			for ( PathState* step = this->mOpen; step; step = step->mNext ) {
 				if ( step->mAddr == addr ) return false;
 			}
 			
-			for ( MOAIPathState* step = this->mClosed; step; step = step->mNext ) {
+			for ( PathState* step = this->mClosed; step; step = step->mNext ) {
 				if ( step->mAddr == addr ) return false;
 			}
 			
@@ -128,7 +128,7 @@ public:
 	//----------------------------------------------------------------//
 	bool IsClosed ( int addr ) {
 			
-		for ( MOAIPathState* step = this->mClosed; step; step = step->mNext ) {
+		for ( PathState* step = this->mClosed; step; step = step->mNext ) {
 			if ( step->mAddr == addr ) return true;
 		}
 		return false;
@@ -137,7 +137,7 @@ public:
 	//----------------------------------------------------------------//
 	bool IsInPath ( int addr ) {
 	
-		for ( MOAIPathState* step = this->mPath; step; step = step->mParent ) {
+		for ( PathState* step = this->mPath; step; step = step->mParent ) {
 			if ( step->mAddr == addr ) return true;
 		}
 		return false;
@@ -146,7 +146,7 @@ public:
 	//----------------------------------------------------------------//
 	bool IsOpen ( int addr ) {
 			
-		for ( MOAIPathState* step = this->mOpen; step; step = step->mNext ) {
+		for ( PathState* step = this->mOpen; step; step = step->mNext ) {
 			if ( step->mAddr == addr ) return true;
 		}
 		return false;
@@ -171,7 +171,7 @@ public:
 				}
 				else {
 				
-					MOAIPathNode& node = this->mNodes [ addr ];
+					PathNode& node = this->mNodes [ addr ];
 				
 					if ( node.mIsOpen ) {
 						printf ( ". " );
@@ -186,7 +186,7 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	void Push ( int xTile, int yTile, MOAIPathState* parent, bool diagonal ) {
+	void Push ( int xTile, int yTile, PathState* parent, bool diagonal ) {
 	
 		MOAICellCoord coord = this->mGridSpace.GetCellCoord ( xTile, yTile );
 	
@@ -196,7 +196,7 @@ public:
 			
 			if ( this->IsCandidate ( addr )) {
 				
-				MOAIPathState* step = new MOAIPathState ();
+				PathState* step = new PathState ();
 				step->mAddr = addr;
 				step->mParent = parent;
 				step->mCoord = coord;
@@ -211,7 +211,7 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	void PushNeighbors ( MOAIPathState* step ) {
+	void PushNeighbors ( PathState* step ) {
 		
 		int xTile = step->mCoord.mX;
 		int yTile = step->mCoord.mY;
@@ -236,7 +236,7 @@ public:
 		
 		this->mGridSpace.Init ( 8, 8, 32.0f, 32.0f );
 		
-		MOAIPathNode node;
+		PathNode node;
 		node.mIsOpen = true;
 		
 		this->mNodes.Init ( this->mGridSpace.GetTotalCells ());
@@ -263,7 +263,7 @@ public:
 		
 		while ( this->mOpen ) {
 			
-			MOAIPathState* step = this->FindBestStep ();
+			PathState* step = this->FindBestStep ();
 			this->CloseStep ( step );
 			
 			if ( step->mAddr == this->mTargetAddr ) {
@@ -279,7 +279,7 @@ public:
 //----------------------------------------------------------------//
 int work_pathfinding ( int argc, char **argv ) {
 	
-	MOAIPathFinder pathFinder;
+	PathFinder pathFinder;
 	pathFinder.Test ();
 	
 	return 0;
