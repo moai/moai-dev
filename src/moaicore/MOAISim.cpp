@@ -741,6 +741,8 @@ void MOAISim::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "LOOP_FLAGS_DEFAULT", ( u32 )LOOP_FLAGS_DEFAULT );
 	state.SetField ( -1, "LOOP_FLAGS_FIXED", ( u32 )LOOP_FLAGS_FIXED );
 	state.SetField ( -1, "LOOP_FLAGS_MULTISTEP", ( u32 )LOOP_FLAGS_MULTISTEP );
+	state.SetField ( -1, "LOOP_FLAGS_SOAK", ( u32 )LOOP_FLAGS_SOAK );
+
 
 	state.SetField ( -1, "DEFAULT_STEPS_PER_SECOND", ( u32 )DEFAULT_STEPS_PER_SECOND );
 	state.SetField ( -1, "DEFAULT_BOOST_THRESHOLD", ( u32 )DEFAULT_BOOST_THRESHOLD );
@@ -979,9 +981,16 @@ void MOAISim::Update () {
 				budget -= this->StepSim ( this->mStep, this->mStepMultiplier );
 				gap -= this->mStep * ( double )this->mStepMultiplier;
 				
-				//TODO make the following official
-				//budget -= 1.0f / 1000.0f;
-				//sleep ( 1.0f / 1000.0f );
+			}
+		}
+
+		// TODO
+		if ( this->mLoopFlags & SIM_LOOP_ALLOW_SOAK ) {
+			
+			//TODO make the following official
+			while (( this->mStep <= gap ) && ( budget > 0.0 )) {
+				budget -= 1.0f / 1000.0f;
+				sleep ( 1.0f / 1000.0f );
 			}
 		}
 	}
