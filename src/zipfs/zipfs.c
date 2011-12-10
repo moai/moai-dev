@@ -26,6 +26,10 @@
 	#define S_ISDIR(B) (((B)&_S_IFDIR)!=0)
 #endif
 
+#ifdef NACL
+#include "NaClFile.h"
+#endif
+
 //================================================================//
 // ZIPFSFile
 //================================================================//
@@ -1129,7 +1133,15 @@ char* zipfs_get_rel_path ( char const* path ) {
 //----------------------------------------------------------------//
 int zipfs_get_stat ( char const* path, zipfs_stat* filestat ) {
 
+#ifdef NACL
+#define stat stat
+#endif
 	struct stat s;
+#ifdef NACL
+#define stat nacl_stat
+#endif
+
+	//struct stat s;
 	int result;
 	ZIPFSVirtualPath* mount;
 	char* abspath;
@@ -1227,12 +1239,10 @@ void zipfs_init ( void ) {
 
 	ZIPFSFile* file;
 
-#ifndef NACL
 	sWorkingPath = ZIPFSString_New ();
 	sBuffer = ZIPFSString_New ();
-	
+
 	zipfs_get_working_path ();
-#endif
 	
 	file = ( ZIPFSFile* )calloc ( 1, sizeof ( ZIPFSFile ));
 	file->mPtr.mFile = stderr;

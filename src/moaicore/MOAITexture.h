@@ -98,6 +98,8 @@ public:
 	
 	//----------------------------------------------------------------//
 	static MOAITexture*		AffirmTexture			( MOAILuaState& state, int idx );
+	void					CreateTexture			();
+	void					DeleteTexture			();
 	u32						GetHeight				();
 	u32						GetWidth				();
 	void					Init					( MOAIImage& image, cc8* debugname = 0 );

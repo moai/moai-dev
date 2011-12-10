@@ -16,6 +16,7 @@
 #undef ungetc
 #undef fseek
 #undef ftell
+#undef getcwd
 //#undef stat
 
 #define FILE void
@@ -36,6 +37,7 @@ int nacl_ungetc ( int c, FILE *void_file );
 int nacl_fseek ( FILE * stream, long int offset, int origin );
 long int nacl_ftell ( FILE * stream );
 int nacl_stat ( const char *path, struct stat *buf );
+char *nacl_getcwd(char *buf, size_t size);
 
 #ifdef __cplusplus
 }
@@ -54,6 +56,7 @@ int nacl_stat ( const char *path, struct stat *buf );
 #define fseek nacl_fseek
 #define ftell nacl_ftell
 #define stat nacl_stat
+#define getcwd nacl_getcwd
 #endif
 
 #endif

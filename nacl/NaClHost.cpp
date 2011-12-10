@@ -333,6 +333,9 @@ void* moai_main ( void *_instance ) {
 	NACL_LOG ( "File System Initialized\n" );
 
 	AKURunScript ( "main.lua" );
+
+	NACL_LOG ( "Main Lua\n" );
+
 	AKURunScript ( "config.lua" );
 	AKURunScript ( "game.lua" );
 
