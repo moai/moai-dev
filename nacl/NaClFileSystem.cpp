@@ -84,14 +84,13 @@ NaClFile * NaClFileSystem::fopen ( const char * path, const char *mode ) {
 	//int modeLen = strlen ( mode );
 
 	//AJV hack to differentiate local files from hosted
-	char *NaClFilePath = strstr ( path, "NaClFileSys" );
+	char *NaClFilePath = strstr ( path, "/NaClFileSys" );
 	const char *redirectPath = path;
 	bool isOnDisk = false;
 
 	if ( NaClFilePath ) {
-		redirectPath = path + strlen ( "NaClFileSys" );
+		redirectPath = path + strlen ( "/NaClFileSys" );
 		isOnDisk = true;
-
 	}
 
 	NaClFile * newFile = new NaClFile ();

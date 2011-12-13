@@ -179,8 +179,10 @@ void PostMessageThenDeleteMainThread ( void * userData, int32_t result ) {
 void NaClPostMessage ( char *str ) {
 
 	int size = strlen ( str );
-	char *message = new char [ size ];
+	char *message = new char [ size + 1];
 	strcpy ( message, str );
+
+	message [ size ] = 0;
 
 	pp::CompletionCallback cc ( PostMessageThenDeleteMainThread, message );
 
@@ -333,6 +335,9 @@ void* moai_main ( void *_instance ) {
 	NACL_LOG ( "File System Initialized\n" );
 
 	AKURunScript ( "main.lua" );
+
+	NACL_LOG ( "Main Lua\n" );
+
 	AKURunScript ( "config.lua" );
 	AKURunScript ( "game.lua" );
 
@@ -486,17 +491,11 @@ void MoaiInstance::DrawSelf() {
 
 	if ( !opengl_context->flush_pending () ) {
 
-		static NaClMoaiTimer renderTimer ( "Main_Render" );
-		renderTimer.Start ();
 		opengl_context->MakeContextCurrent(this);
 		
 		AKURender ();
-		renderTimer.FinishAndPrint ();
 
-		static NaClMoaiTimer finishTimer ( "Main_Finsh" );
-		finishTimer.Start ();
 		glFinish ();
-		finishTimer.FinishAndPrint ();
 
 		opengl_context->FlushContext();
 	}

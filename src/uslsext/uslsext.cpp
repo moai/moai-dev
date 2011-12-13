@@ -3,6 +3,8 @@
 
 #include "pch.h"
 #include <uslsext/uslsext.h>
+
+#if USE_OPENSSL
 #include <openssl/conf.h>
 #include <openssl/crypto.h>
 
@@ -16,9 +18,12 @@
 
 #include <openssl/ssl.h>
 
+#endif
+
 //----------------------------------------------------------------//
 static void _cleanup () {
 	
+#if USE_OPENSSL
 	#ifndef OPENSSL_NO_ENGINE
 		ENGINE_cleanup ();
 	#endif
@@ -31,6 +36,7 @@ static void _cleanup () {
 	
 	EVP_cleanup ();
 	CRYPTO_cleanup_all_ex_data ();
+#endif
 }
 
 //================================================================//
@@ -45,8 +51,10 @@ void uslsext::Init () {
 	static bool sysInit = true;
 	if ( sysInit ) {;
 
+#if USE_OPENSSL
 		SSL_load_error_strings ();
 		SSL_library_init ();
+#endif
 
 		atexit ( _cleanup );
 		sysInit = false;

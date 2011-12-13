@@ -130,3 +130,14 @@ int nacl_stat ( const char *path, struct stat *s ) {
 
 	return -1;
 }
+
+char *nacl_getcwd(char *buf, size_t size) {
+
+	for ( int i = 0; i < size; ++i ) {
+		buf [ i ] = ( char ) 0;
+	}
+
+	buf [ 0 ] = '/';
+
+	return buf;
+}

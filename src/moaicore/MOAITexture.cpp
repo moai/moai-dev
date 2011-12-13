@@ -11,6 +11,34 @@
 #include <moaicore/MOAISim.h>
 #include <moaicore/MOAITexture.h>
 
+#if MOAI_OS_NACL
+#include "moai_nacl.h"
+
+bool g_blockOnMainThreadTexLoad;
+bool g_blockOnMainThreadTexUnload;
+
+//----------------------------------------------------------------//
+void NaClLoadTexture ( void* userData, int32_t result ) {
+
+	MOAITexture *texture = ( MOAITexture * ) userData;
+
+	texture->CreateTexture ();
+
+	g_blockOnMainThreadTexLoad = false;
+}
+
+//----------------------------------------------------------------//
+void NaClUnLoadTexture ( void* userData, int32_t result ) {
+
+	MOAITexture *texture = ( MOAITexture * ) userData;
+
+	texture->DeleteTexture ();
+
+	g_blockOnMainThreadTexUnload = false;
+}
+
+#endif
+
 //================================================================//
 // MOAITextureLoader
 //================================================================//
@@ -303,10 +331,30 @@ MOAITexture* MOAITexture::AffirmTexture ( MOAILuaState& state, int idx ) {
 }
 
 //----------------------------------------------------------------//
+void MOAITexture::CreateTexture	() {
+
+	switch ( this->mLoader->mType ) {
+			
+		case MOAITextureLoader::TYPE_MOAI_IMAGE: {
+			this->CreateTextureFromImage ( this->mLoader->mImage );
+			break;
+		}
+		case MOAITextureLoader::TYPE_PVR: {
+			this->CreateTextureFromPVR ( this->mLoader->mFileData, this->mLoader->mFileDataSize );
+			break;
+		}
+		default:
+			delete this->mLoader;
+			this->mLoader = 0;
+			this->SetError ();
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAITexture::CreateTextureFromImage ( MOAIImage& image ) {
 
 	bool error = false;
-
+	printf( "load texture\n" );
 	if ( !image.IsOK ()) return;
 	if ( !MOAIGfxDevice::Get ().GetHasContext ()) return;
 
@@ -637,6 +685,11 @@ void MOAITexture::CreateTextureFromPVR ( void* data, size_t size ) {
 }
 
 //----------------------------------------------------------------//
+void MOAITexture::DeleteTexture	() {
+	glDeleteTextures ( 1, &this->mGLTexID );
+}
+
+//----------------------------------------------------------------//
 u32 MOAITexture::GetHeight () {
 	return this->mHeight;
 }
@@ -854,22 +907,22 @@ void MOAITexture::OnLoad () {
 		//	transform.ConvertToTrueColor ();
 		//}
 		this->mLoader->Load ();
-		
-		switch ( this->mLoader->mType ) {
-			
-			case MOAITextureLoader::TYPE_MOAI_IMAGE: {
-				this->CreateTextureFromImage ( this->mLoader->mImage );
-				break;
-			}
-			case MOAITextureLoader::TYPE_PVR: {
-				this->CreateTextureFromPVR ( this->mLoader->mFileData, this->mLoader->mFileDataSize );
-				break;
-			}
-			default:
-				delete this->mLoader;
-				this->mLoader = 0;
-				this->SetError ();
+
+#ifdef MOAI_OS_NACL
+		if ( g_core->IsMainThread () ) {
+			printf ( "ERROR: Texture Cannot perform blocking file I/O on main thread\n" );
 		}
+
+		g_blockOnMainThreadTexLoad = true;
+		pp::CompletionCallback cc ( NaClLoadTexture, this );
+		g_core->CallOnMainThread ( 0, cc , 0 );
+
+		while ( g_blockOnMainThreadTexLoad ) {
+			sleep ( 0.0001f );
+		}
+#else
+		this->CreateTexture ();
+#endif
 
 		if ( this->mGLTexID ) {
 
@@ -908,7 +961,24 @@ void MOAITexture::OnUnload () {
 		if ( MOAIGfxDevice::IsValid ()) {
 			MOAIGfxDevice::Get ().ReportTextureFree ( this->mFilename, this->mDataSize );
 		}
-		glDeleteTextures ( 1, &this->mGLTexID );
+#ifdef MOAI_OS_NACL
+		g_blockOnMainThreadTexUnload = true;
+
+		if ( g_core->IsMainThread () ) {
+			this->DeleteTexture ();
+			g_blockOnMainThreadTexUnload = false;
+		}
+		else {
+			pp::CompletionCallback cc ( NaClUnLoadTexture, this );
+			g_core->CallOnMainThread ( 0, cc , 0 );
+		}
+
+		while ( g_blockOnMainThreadTexUnload ) {
+			sleep ( 0.0001f );
+		}
+#else
+		this->DeleteTexture ();
+#endif
 		this->mGLTexID = 0;
 	}
 }

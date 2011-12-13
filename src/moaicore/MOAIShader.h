@@ -118,6 +118,7 @@ public:
 	void			BindUniforms			();
 	void			ClearUniform			( u32 idx );
 	void			ClearUniforms			();
+	void			DeleteShaders			();
 	void			DeclareUniform			( u32 idx, cc8* name, u32 type );
 	bool			IsValid					();
 					MOAIShader				();

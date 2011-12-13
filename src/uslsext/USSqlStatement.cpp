@@ -8,6 +8,9 @@
 // USSqlStatement
 //================================================================//
 
+SUPPRESS_EMPTY_FILE_WARNING
+#if USE_SQL
+
 //----------------------------------------------------------------//
 bool USSqlStatement::BindDouble ( u32 idx, double value ) {
 
@@ -296,3 +299,5 @@ USSqlStatement::~USSqlStatement () {
 
 	this->Clear ();
 }
+
+#endif

@@ -33,12 +33,6 @@ namespace {
 	int g_USDeviceTimeInit = 0;
 }
 
-//void SetClocksPerSecond	( int clocksPerSecond ) {
-//	g_CLOCKS_PER_SECOND = clocksPerSecond;
-//	g_startClock = ( clock () / ( double ) ( g_CLOCKS_PER_SECOND ) );
-//	g_prevClock = g_startClock;
-//}
-
 //================================================================//
 // USDeviceTime
 //================================================================//
