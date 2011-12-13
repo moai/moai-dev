@@ -963,11 +963,14 @@ void MOAITexture::OnUnload () {
 		}
 #ifdef MOAI_OS_NACL
 		g_blockOnMainThreadTexUnload = true;
-		pp::CompletionCallback cc ( NaClUnLoadTexture, this );
-		g_core->CallOnMainThread ( 0, cc , 0 );
 
 		if ( g_core->IsMainThread () ) {
-			printf ( "ERROR: Texture Cannot perform blocking file I/O on main thread\n" );
+			this->DeleteTexture ();
+			g_blockOnMainThreadTexUnload = false;
+		}
+		else {
+			pp::CompletionCallback cc ( NaClUnLoadTexture, this );
+			g_core->CallOnMainThread ( 0, cc , 0 );
 		}
 
 		while ( g_blockOnMainThreadTexUnload ) {

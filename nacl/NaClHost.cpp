@@ -179,8 +179,10 @@ void PostMessageThenDeleteMainThread ( void * userData, int32_t result ) {
 void NaClPostMessage ( char *str ) {
 
 	int size = strlen ( str );
-	char *message = new char [ size ];
+	char *message = new char [ size + 1];
 	strcpy ( message, str );
+
+	message [ size ] = 0;
 
 	pp::CompletionCallback cc ( PostMessageThenDeleteMainThread, message );
 
