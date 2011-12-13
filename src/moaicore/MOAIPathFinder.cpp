@@ -31,6 +31,23 @@ int MOAIPathFinder::_findPath ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	getGraph
+	@text	Returns the attached graph (if any).
+
+	@in		MOAIPathFinder self
+	@out	MOAIPathGraph graph
+*/
+int MOAIPathFinder::_getGraph ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIPathFinder, "U" )
+	
+	if ( self->mGraph ) {
+		state.Push ( self->mGraph );
+		return 1;
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	getPathEntry
 	@text	Returns a path entry. This is a node ID that may be
 			passed back to the graph to get a location.
@@ -105,35 +122,74 @@ int MOAIPathFinder::_reserveTerrainWeights ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	setFlags
+	@text	Set flags to use for pathfinding. These are graph specific
+			flags provided by the graph implementation.
+
+	@in		MOAIPathFinder self
+	@opt	number heuristic
+	@out	nil
+*/
+int MOAIPathFinder::_setFlags ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIPathFinder, "U" )
+
+	self->mFlags = state.GetValue < u32 >( 2, 0 );
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	setGraph
 	@text	Set graph data to use for pathfinding. 
 
 	@overload
 
 		@in		MOAIPathFinder self
-		@opt	MOAIGrid graphData				Default value is nil.
+		@opt	MOAIGrid grid						Default value is nil.
 		@out	nil
 	
 	@overload
 	
 		@in		MOAIPathFinder self
-		@opt	MOAISparseGraph graphData		Default value is nil.
+		@opt	MOAIGridPathGraph gridPathGraph		Default value is nil.
 		@out	nil
 */
 int MOAIPathFinder::_setGraph ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIPathFinder, "U" )
 
-	self->ClearGraph ();
+	self->mGraph.Set ( *self, 0 );
 
 	MOAIGrid* grid = state.GetLuaObject < MOAIGrid >( 2 );
 	if ( grid ) {
-		MOAIGridPathGraph* graph = new MOAIGridPathGraph ();
-		graph->mGrid = grid;
-		self->mGraph = graph;
-		
-		self->mGraphData.Set ( *self, grid );
+		MOAIGridPathGraph* gridPathGraph = new MOAIGridPathGraph ();
+		gridPathGraph->SetGrid ( grid );
+		self->mGraph.Set ( *self, gridPathGraph );
+		return 0;
 	}
 	
+	MOAIGridPathGraph* gridPathGraph = state.GetLuaObject < MOAIGridPathGraph >( 2 );
+	if ( gridPathGraph ) {
+		self->mGraph.Set ( *self, gridPathGraph );
+		return 0;
+	}
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	setHeuristic
+	@text	Set heuristic to use for pathfinding. This is a const provided
+			by the graph implementation being used.
+
+	@in		MOAIPathFinder self
+	@opt	number heuristic
+	@out	nil
+*/
+int MOAIPathFinder::_setHeuristic ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIPathFinder, "U" )
+
+	self->mHeuristic = state.GetValue < u32 >( 2, 0 );
+
 	return 0;
 }
 
@@ -154,16 +210,16 @@ int MOAIPathFinder::_setTerrainDeck ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setTerrainWeight
-	@text	Set a component of the terrain weight vector.
+/**	@name	setTerrainScale
+	@text	Set a component of the terrain scale vector.
 
 	@in		MOAIPathFinder self
 	@in		number index
-	@opt	number deltaScalar			Default value is 0.
-	@opt	number penaltyScalar		Default value is 0.
+	@opt	number deltaScale			Default value is 0.
+	@opt	number penaltyScale			Default value is 0.
 	@out	nil
 */
-int MOAIPathFinder::_setTerrainWeight ( lua_State* L ) {
+int MOAIPathFinder::_setTerrainScale ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIPathFinder, "UNNN" )
 	
 	u32 index = state.GetValue < u32 >( 2, 1 ) - 1;
@@ -171,9 +227,27 @@ int MOAIPathFinder::_setTerrainWeight ( lua_State* L ) {
 	if ( index < self->mWeights.Size ()) {
 	
 		MOAIPathWeight& weight = self->mWeights [ index ];
-		weight.mDeltaScalar = state.GetValue < float >( 3, 0.0f );
-		weight.mPenaltyScalar = state.GetValue < float >( 4, 0.0f );
+		weight.mDeltaScale = state.GetValue < float >( 3, 0.0f );
+		weight.mPenaltyScale = state.GetValue < float >( 4, 0.0f );
 	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	setWeight
+	@text	Sets weights to be applied to G and H.
+
+	@in		MOAIPathFinder self
+	@opt	number gWeight				Default value is 1.0.
+	@opt	number hWeight				Default value is 1.0.
+	@out	nil
+*/
+int MOAIPathFinder::_setWeight ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIPathFinder, "U" )
+	
+	self->mGWeight = state.GetValue < float >( 2, 1.0f );
+	self->mHWeight = state.GetValue < float >( 3, 1.0f );
+	
 	return 0;
 }
 
@@ -193,17 +267,6 @@ void MOAIPathFinder::BuildPath ( MOAIPathState* state ) {
 	}
 	
 	this->ClearVisitation ();
-}
-
-//----------------------------------------------------------------//
-void MOAIPathFinder::ClearGraph () {
-
-	if ( this->mGraph ) {
-		delete this->mGraph;
-	}
-	
-	this->mGraph = 0;
-	this->mGraphData.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//
@@ -275,8 +338,8 @@ float MOAIPathFinder::ComputeTerrainCost ( float moveCost, u32 terrain0, u32 ter
 		float c0 = v0 [ i ];
 		float c1 = v1 [ i ];
 		
-		float delta = ( c1 - c0 ) * weight.mDeltaScalar;
-		float penalty = ( c1 + c0 ) * 0.5f * weight.mPenaltyScalar;
+		float delta = ( c1 - c0 ) * weight.mDeltaScale;
+		float penalty = ( c1 + c0 ) * 0.5f * weight.mPenaltyScale;
 		
 		terrainCost += ( moveCost * delta ) + ( moveCost * penalty );
 	}
@@ -327,8 +390,11 @@ MOAIPathFinder::MOAIPathFinder () :
 	mStartNodeID ( 0 ),
 	mTargetNodeID ( 0 ),
 	mState ( 0 ),
-	mGraph ( 0 ),
-	mMask ( 0xffffffff ) {
+	mMask ( 0xffffffff ),
+	mHeuristic ( 0 ),
+	mFlags ( 0 ),
+	mGWeight ( 1.0f ),
+	mHWeight ( 1.0f ) {
 	
 	RTTI_SINGLE ( MOAILuaObject )
 }
@@ -336,9 +402,9 @@ MOAIPathFinder::MOAIPathFinder () :
 //----------------------------------------------------------------//
 MOAIPathFinder::~MOAIPathFinder () {
 
-	this->ClearGraph ();
 	this->ClearVisitation ();
 	
+	this->mGraph.Set ( *this, 0 );
 	this->mTerrainDeck.Set ( *this, 0 );
 }
 
@@ -377,17 +443,20 @@ void MOAIPathFinder::RegisterLuaClass ( MOAILuaState& state ) {
 
 //----------------------------------------------------------------//
 void MOAIPathFinder::RegisterLuaFuncs ( MOAILuaState& state ) {
-	UNUSED ( state );
-	
+
 	luaL_Reg regTable [] = {
 		{ "findPath",					_findPath },
+		{ "getGraph",					_getGraph },
 		{ "getPathEntry",				_getPathEntry },
 		{ "getPathSize",				_getPathSize },
 		{ "init",						_init },
 		{ "reserveTerrainWeights",		_reserveTerrainWeights },
+		{ "setFlags",					_setFlags },
 		{ "setGraph",					_setGraph },
+		{ "setHeuristic",				_setHeuristic },
 		{ "setTerrainDeck",				_setTerrainDeck },
-		{ "setTerrainWeight",			_setTerrainWeight },
+		{ "setTerrainScale",			_setTerrainScale },
+		{ "setWeight",					_setWeight },
 		{ NULL, NULL }
 	};
 

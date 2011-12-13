@@ -1628,6 +1628,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\moaicore\MOAIPathGraph.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIPathGraph.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\moaicore\MOAIPathTerrainDeck.cpp"
 				>
 			</File>
