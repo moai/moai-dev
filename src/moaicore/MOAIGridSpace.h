@@ -77,6 +77,8 @@ protected:
 	int			mWidth;
 	int			mHeight;
 
+	u32			mType;
+
 	//----------------------------------------------------------------//
 	static int		_cellAddrToCoord	( lua_State* L );
 	static int		_getCellAddr		( lua_State* L );
@@ -108,8 +110,8 @@ public:
 	};
 	
 	enum {
-		GRID_RECT,
-		GRID_ISO,
+		GRID_SQUARE,
+		GRID_DIAMOND,
 		GRID_OBLIQUE,
 		GRID_HEX,
 	};
@@ -125,6 +127,8 @@ public:
 	
 	GET_SET ( int, Width, mWidth )
 	GET_SET ( int, Height, mHeight )
+	
+	GET_SET ( u32, Type, mType )
 	
 	//----------------------------------------------------------------//
 	USVec2D				CellToWorld				( MOAICellCoord cellCoord, USVec2D loc ) const;

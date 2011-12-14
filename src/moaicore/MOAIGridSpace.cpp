@@ -557,7 +557,8 @@ MOAIGridSpace::MOAIGridSpace () :
 	mTileWidth ( 0.0f ),
 	mTileHeight ( 0.0f ),
 	mWidth ( 0 ),
-	mHeight ( 0 ) {
+	mHeight ( 0 ),
+	mType ( GRID_SQUARE ) {
 	
 	RTTI_SINGLE ( MOAILuaObject )
 }
