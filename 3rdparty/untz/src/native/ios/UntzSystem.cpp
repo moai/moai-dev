@@ -81,8 +81,15 @@ static OSStatus playbackCallback(void *userData,
                                  UInt32 framesPerBuffer, 
                                  AudioBufferList *outBuffer)
 {  	
+	// Don't do anything if the system is NOT active (zero buffer)
+	if(!UNTZ::System::get()->getData()->isActive())
+	{	
+		SInt16 *outbuf = (SInt16 *) outBuffer->mBuffers[0].mData;
+		memset(outbuf, 0, sizeof(SInt16) * framesPerBuffer * UNTZ::System::get()->getData()->getNumOutputChannels());
+		return 0;
+	}
+		
     IosSystemData *sysData = (IosSystemData *)((System *)userData)->getData();
-    
     if(sysData->mOutputBuffer.size() == 0)
     {
         sysData->mOutputBuffer.resize(outBuffer->mBuffers[0].mNumberChannels*framesPerBuffer);
@@ -347,6 +354,17 @@ float System::getVolume() const
 {
 	return msInstance->mpData->mMixer.getVolume();
 }
+
+void System::suspend()
+{
+	msInstance->mpData->setActive(false);
+}
+
+void System::resume()
+{
+	msInstance->mpData->setActive(true);
+}
+
 
 
 #pragma mark Helper functions

@@ -108,12 +108,25 @@ int MOAIApp::_showDialog ( lua_State* L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
+int MOAIApp::_share ( lua_State* L ) {
+	MOAILuaState state ( L );
+	
+	cc8* prompt = state.GetValue < cc8* >( 1, "" );
+	cc8* subject = state.GetValue < cc8* >( 2, "" );
+	cc8* text = state.GetValue < cc8* >( 3, "" );
+	
+	MOAIApp::Get ().shareFunc ( prompt, subject, text );
+	
+	return 0;
+}
+
 //================================================================//
 // MOAIApp
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIApp::DidStartSession( ) {
+void MOAIApp::DidStartSession () {
 
 	MOAILuaRef& callback = this->mListeners [ SESSION_START ];
 	
@@ -176,6 +189,7 @@ void MOAIApp::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "setListener",						_setListener },
 		{ "setMarketPublicKey",					_setMarketPublicKey },
 		{ "showDialog",							_showDialog },
+		{ "share",								_share },
 		{ NULL, NULL }
 	};
 
@@ -222,6 +236,11 @@ void MOAIApp::SetMarketPublicKeyFunc ( void ( *func ) ( cc8* )) {
 //----------------------------------------------------------------//
 void MOAIApp::SetShowDialogFunc ( void ( *func ) ( cc8*, cc8*, cc8*, cc8*, cc8*, bool )) {
 	showDialogFunc = func;
+}
+
+//----------------------------------------------------------------//
+void MOAIApp::SetShareFunc ( void ( *func ) ( cc8*, cc8*, cc8* )) {
+	shareFunc = func;
 }
 
 //----------------------------------------------------------------//
@@ -311,7 +330,6 @@ void MOAIApp::NotifyDialogDismissed ( int code ) {
 
 //----------------------------------------------------------------//
 void MOAIApp::WillEndSession( ) {
-
 	MOAILuaRef& callback = this->mListeners [ SESSION_END ];
 	
 	if ( callback ) {
