@@ -45,13 +45,6 @@ cd ../../distribute
 mkdir -p moai-sdk/include/aku
 cp -R ../src/aku/*.h moai-sdk/include/aku
 
-cp ../version.txt moai-sdk/version.txt
-
-mkdir -p moai-sdk/hosts/src
-cd ../src/hosts
-cp -R * ../../distribute/moai-sdk/hosts/src
-cd ../../distribute
-
 mkdir -p moai-sdk/include/lua-modules
 cd ../src/lua-modules
 cp -R * ../../distribute/moai-sdk/include/lua-modules
@@ -68,6 +61,11 @@ else
 	echo "*** Run ../doxygen/make-docs-lua.bat to generate the required "
 	echo "*** documentation and then re-run this script to remake the SDK."
 fi
+
+mkdir -p moai-sdk/hosts/src
+cd ../src/hosts
+cp -R * ../../distribute/moai-sdk/hosts/src
+cd ../../distribute
 
 # android host
 mkdir -p moai-sdk/hosts/android
@@ -96,6 +94,13 @@ cp ../xcode/ios/MainWindow-iPhone.xib moai-sdk/hosts/xcode-ios/MainWindow-iPhone
 cp ../xcode/ios/main.mm moai-sdk/hosts/xcode-ios/main.mm
 cp ../xcode/ios/mt.default moai-sdk/hosts/xcode-ios/mt.default
 cp ../xcode/ios/package.sh moai-sdk/hosts/xcode-ios/package.sh
+
+mkdir -p moai-sdk/hosts/xcode-ios/Libraries/TapjoyConnect
+for file in `find ../xcode/ios/Libraries/TapjoyConnect/ -name "*.xib"` ; do cp $file moai-sdk/hosts/xcode-ios/Libraries/TapjoyConnect ; done
+for file in `find ../xcode/ios/Libraries/TapjoyConnect/ -name "*.png"` ; do cp $file moai-sdk/hosts/xcode-ios/Libraries/TapjoyConnect ; done
+for file in `find ../xcode/ios/Libraries/TapjoyConnect/ -name "*.sql"` ; do cp $file moai-sdk/hosts/xcode-ios/Libraries/TapjoyConnect ; done
+
+cp ../version.txt moai-sdk/version.txt
 
 # replace run scripts
 cd moai-sdk-run-scripts
