@@ -236,7 +236,7 @@ void NaClGetUID () {
 			MOAIApp::HandleStoreMessage ( message );
 		}
 
-		sleep ( 0.0001f );
+		usleep ( 1000 );
 	}
 }
 
@@ -256,7 +256,7 @@ void NaClRender () {
 	g_swapping = true;
 
 	while ( g_instance->GetOpenGLContext ()->flush_pending ()) {
-		sleep ( 0.0001f );
+		usleep ( 1000 );
 	}
 
 	pp::CompletionCallback cc ( RenderMainThread, g_instance );
@@ -264,7 +264,7 @@ void NaClRender () {
 
 	while ( g_swapping ) {
 
-		sleep ( 0.0001f );
+		usleep ( 1000 );
 	}
 }
 
@@ -289,7 +289,7 @@ void NaClInput () {
 
 	while ( g_handlingInput ) {
 
-		sleep ( 0.0001f );
+		usleep ( 1000 );
 	}
 }
 

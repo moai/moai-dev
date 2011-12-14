@@ -45,7 +45,7 @@ void NaClFileSystem::Init () {
 
 	while ( !mFileSystemOpened ) {
 
-		sleep ( 0.0001f );
+		usleep ( 1000 );
 	}
 }
 
@@ -120,7 +120,7 @@ NaClFile * NaClFileSystem::fopen ( const char * path, const char *mode ) {
 
 			while ( !newFile->mIsHttpLoaded ) {
 
-				sleep ( 0.0001f );
+				usleep ( 1000 );
 			}
 		}
 	} 
@@ -153,7 +153,7 @@ NaClFile * NaClFileSystem::fopen ( const char * path, const char *mode ) {
 
 		while ( newFile->mIsFileLocked ) {
 
-			sleep ( 0.0001f );
+			usleep ( 1000 );
 		}
 
 		if ( newFile->mIsFileOpen ) {
@@ -177,7 +177,7 @@ NaClFile * NaClFileSystem::fopen ( const char * path, const char *mode ) {
 			}
 
 			while ( newFile->mIsFileLocked ) {
-				sleep ( 0.0001f );
+				usleep ( 1000 );
 			}
 
 			newFile->mSize = newFile->mFileInfo.size;
@@ -197,7 +197,7 @@ NaClFile * NaClFileSystem::fopen ( const char * path, const char *mode ) {
 			}
 
 			while ( newFile->mIsFileLocked ) {
-				sleep ( 0.0001f );
+				usleep ( 1000 );
 			}
 
 			newFile->mOffset = 0;
@@ -273,7 +273,7 @@ int NaClFileSystem::stat ( const char *path, struct stat *buf ) {
 
 	while ( !newFile->mIsHttpLoaded ) {
 
-		sleep ( 0.0001f );
+		usleep ( 1000 );
 	}
 
 	if ( newFile->mIsFileExist ) {
@@ -328,7 +328,7 @@ int NaClFileSystem::fclose ( NaClFile *file ) {
 	}
 
 	while ( file->mIsFileLocked ) {
-		sleep ( 0.0001f );
+		usleep ( 1000 );
 	}
 
 	delete file;
@@ -390,7 +390,7 @@ size_t NaClFileSystem::fread ( void *ptr, size_t size, size_t count, NaClFile *f
 		}
 
 		while ( file->mIsFileLocked ) {
-			sleep ( 0.0001f );
+			usleep ( 1000 );
 		}
 
 		file->mExternalBuffer = NULL;
@@ -423,7 +423,7 @@ size_t NaClFileSystem::fwrite ( const void *ptr, size_t size, size_t count, NaCl
 		}
 
 		while ( file->mIsFileLocked ) {
-			sleep ( 0.0001f );
+			usleep ( 1000 );
 		}
 
 		file->mExternalBuffer = NULL;
