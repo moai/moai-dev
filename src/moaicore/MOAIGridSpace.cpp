@@ -170,6 +170,24 @@ int MOAIGridSpace::_locToCoord ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	setShape
+	@text	Set the shape of the grid tiles.
+
+	@in		MOAIGridSpace self
+	@opt	number shape		One of MOAIGridSpace.SQUARE_SHAPE, MOAIGridSpace.DIAMOND_SHAPE,
+								MOAIGridSpace.OBLIQUE_SHAPE, MOAIGridSpace.HEX_SHAPE.
+								Default value is MOAIGridSpace.SQUARE_SHAPE.
+	@out	nil
+*/
+int MOAIGridSpace::_setShape ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGridSpace, "U" )
+
+	self->mShape = state.GetValue < u32 >( 2, SQUARE_SHAPE );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	setSize
 	@text	Initializes dimensions of grid and reserves storage for tiles.
 
@@ -373,15 +391,83 @@ MOAICellCoord MOAIGridSpace::GetCellCoord ( USVec2D loc ) const {
 
 //----------------------------------------------------------------//
 MOAICellCoord MOAIGridSpace::GetCellCoord ( float x, float y ) const {
+	
+	int xTile = 0;
+	int yTile = 0;
+	
+	switch ( this->mShape ) {
+	
+		case SQUARE_SHAPE: {
+	
+			xTile = ( int )floorf ( x / this->mCellWidth );
+			yTile = ( int )floorf ( y / this->mCellHeight );
 
-	MOAICellCoord cellCoord;
+			break;
+		}
+		
+		case DIAMOND_SHAPE: {
+			
+			// get the coord in tiles
+			float xUnit = ( x / this->mCellWidth );
+			float yUnit = ( y / this->mCellHeight );
+			
+			// get the y tile index
+			yTile = ( int )floorf ( yUnit );
+			
+			int stepRight = 0;
+			int stepLeft = -1;
+			
+			// need to offset x into the previous tile if y is odd
+			if ( yTile & 0x01 ) {
+				xUnit -= 0.5f;
+				
+				stepRight = 1;
+				stepLeft = 0;
+			}
+			
+			// get the x tile index
+			xTile = ( int )floorf ( xUnit );
+			
+			// now get the local tile coord
+			// to make the math easy, local tile is 4 x 2
+			float xLocal = ( xUnit - ( float )xTile ) * 4.0f;
+			float yLocal = (( yUnit - ( float )yTile ) * 2.0f ) - 1.0f;
+			
+			// check the position of the coord depending on tile quadrant
+			// offset the tile index if out of bounds on any corner
+			if ( xLocal < 1.0f ) {
+
+				if ( yLocal < 0.0f ) {
+					if ( xLocal < -yLocal ) {
+						xTile = xTile + stepLeft;
+						yTile = yTile - 1;
+					} 
+				}
+				else if ( xLocal < yLocal ) {
+					xTile = xTile + stepLeft;
+					yTile = yTile + 1;
+				}
+			}
+			else if ( xLocal > 3.0f ) {
+				
+				xLocal = -( xLocal - 4.0f );
+				
+				if ( yLocal < 0.0f ) {
+					if ( xLocal < -yLocal ) {
+						xTile = xTile + stepRight;
+						yTile = yTile - 1;
+					} 
+				}
+				else if ( xLocal < yLocal ) {
+					xTile = xTile + stepRight;
+					yTile = yTile + 1;
+				}
+			}
+			break;
+		}
+	}
 	
-	cellCoord.mX = ( int )( x / this->mCellWidth );
-	cellCoord.mY = ( int )( y / this->mCellHeight );
-	
-	if ( x < 0.0f ) cellCoord.mX--;
-	if ( y < 0.0f ) cellCoord.mY--;
-	
+	MOAICellCoord cellCoord ( xTile, yTile );
 	return cellCoord;
 }
 
@@ -558,7 +644,7 @@ MOAIGridSpace::MOAIGridSpace () :
 	mTileHeight ( 0.0f ),
 	mWidth ( 0 ),
 	mHeight ( 0 ),
-	mType ( GRID_SQUARE ) {
+	mShape ( SQUARE_SHAPE ) {
 	
 	RTTI_SINGLE ( MOAILuaObject )
 }
@@ -622,6 +708,11 @@ void MOAIGridSpace::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "TILE_BOTTOM_CENTER", ( u32 )MOAIGridSpace::TILE_BOTTOM_CENTER );
 	
 	state.SetField ( -1, "TILE_CENTER", ( u32 )MOAIGridSpace::TILE_CENTER );
+	
+	state.SetField ( -1, "SQUARE_SHAPE", SQUARE_SHAPE );
+	state.SetField ( -1, "DIAMOND_SHAPE", DIAMOND_SHAPE );
+	state.SetField ( -1, "OBLIQUE_SHAPE", OBLIQUE_SHAPE );
+	state.SetField ( -1, "HEX_SHAPE", HEX_SHAPE );
 }
 
 //----------------------------------------------------------------//
@@ -634,6 +725,7 @@ void MOAIGridSpace::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "getTileLoc",			_getTileLoc },
 		{ "locToCellAddr",		_locToCellAddr },
 		{ "locToCoord",			_locToCoord },
+		{ "setShape",			_setShape },
 		{ "setSize",			_setSize },
 		{ "wrapCoord",			_wrapCoord },
 		{ NULL, NULL }

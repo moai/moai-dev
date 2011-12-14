@@ -60,6 +60,11 @@ public:
 	@const	TILE_RIGHT_CENTER
 	@const	TILE_RIGHT_TOP
 	@const	TILE_TOP_CENTER
+	
+	@const	SQUARE_SHAPE
+	@const	DIAMOND_SHAPE
+	@const	OBLIQUE_SHAPE
+	@const	HEX_SHAPE
 */
 class MOAIGridSpace :
 	public virtual MOAILuaObject {
@@ -77,7 +82,7 @@ protected:
 	int			mWidth;
 	int			mHeight;
 
-	u32			mType;
+	u32			mShape;
 
 	//----------------------------------------------------------------//
 	static int		_cellAddrToCoord	( lua_State* L );
@@ -86,6 +91,7 @@ protected:
 	static int		_getTileLoc			( lua_State* L );
 	static int		_locToCellAddr		( lua_State* L );
 	static int		_locToCoord			( lua_State* L );
+	static int		_setShape			( lua_State* L );
 	static int		_setSize			( lua_State* L );
 	static int		_wrapCoord			( lua_State* L );
 
@@ -94,6 +100,8 @@ protected:
 	virtual void	OnResize			();
 
 public:
+	
+	DECL_LUA_FACTORY ( MOAIGridSpace )
 	
 	enum {
 		TILE_LEFT_TOP,
@@ -110,10 +118,10 @@ public:
 	};
 	
 	enum {
-		GRID_SQUARE,
-		GRID_DIAMOND,
-		GRID_OBLIQUE,
-		GRID_HEX,
+		SQUARE_SHAPE,
+		DIAMOND_SHAPE,
+		OBLIQUE_SHAPE,
+		HEX_SHAPE,
 	};
 	
 	GET_SET ( float, XOff, mXOff )
@@ -128,7 +136,7 @@ public:
 	GET_SET ( int, Width, mWidth )
 	GET_SET ( int, Height, mHeight )
 	
-	GET_SET ( u32, Type, mType )
+	GET_SET ( u32, Shape, mShape )
 	
 	//----------------------------------------------------------------//
 	USVec2D				CellToWorld				( MOAICellCoord cellCoord, USVec2D loc ) const;
