@@ -227,6 +227,7 @@ Sound::~Sound()
 
 	if(mpData)
 		delete mpData;
+	mpData = 0;
 }
 
 void Sound::setVolume(float volume)

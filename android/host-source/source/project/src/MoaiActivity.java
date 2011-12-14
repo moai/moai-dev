@@ -11,13 +11,6 @@ import @PACKAGE@.MoaiBillingService.RestoreTransactions;
 import @PACKAGE@.MoaiBillingConstants.PurchaseState;
 import @PACKAGE@.MoaiBillingConstants.ResponseCode;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
 import java.util.ArrayList;
 
 import @PACKAGE@.R;
@@ -44,6 +37,14 @@ import android.view.Display;
 import android.view.KeyEvent;
 import android.view.Window;
 import android.view.WindowManager;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.ConfigurationInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
+
+// Tapjoy
+import com.tapjoy.TapjoyConnect;
+import com.tapjoy.TapjoyVideoNotifier;
 
 // OpenGL 2.0
 import android.app.ActivityManager;
@@ -52,7 +53,7 @@ import android.content.pm.ConfigurationInfo;
 //================================================================//
 // MoaiActivity
 //================================================================//
-public class MoaiActivity extends Activity implements SensorEventListener {
+public class MoaiActivity extends Activity implements SensorEventListener, TapjoyVideoNotifier {
 
 	private Sensor 							mAccelerometer;
 	private MoaiBillingService 				mBillingService;
@@ -74,6 +75,7 @@ public class MoaiActivity extends Activity implements SensorEventListener {
 	protected static native void 		AKUEnqueueCompassEvent 				( int heading );
 	protected static native void 		AKUEnqueueLevelEvent 				( int deviceId, int sensorId, float x, float y, float z );
 	protected static native void 		AKUEnqueueLocationEvent 			( int deviceId, int sensorId, int longitude, int latitude, int altitude, float hAccuracy, float vAccuracy, float speed );
+	protected static native void 		AKUFinalize 						();
 	protected static native void 		AKUMountVirtualDirectory 			( String virtualPath, String archive );
 	protected static native boolean 	AKUNotifyBackButtonPressed			();
 	protected static native void 		AKUNotifyBillingSupported			( boolean supported );
@@ -81,6 +83,9 @@ public class MoaiActivity extends Activity implements SensorEventListener {
 	protected static native void 		AKUNotifyPurchaseResponseReceived	( String productId, int responseCode );
 	protected static native void 		AKUNotifyPurchaseStateChanged		( String productId, int purchaseState, String orderId, String notificationId, String developerPayload );
 	protected static native void 		AKUNotifyRestoreResponseReceived	( int responseCode );
+	protected static native void		AKUNotifyVideoAdReady				();
+	protected static native void		AKUNotifyVideoAdError				( int statusCode );
+	protected static native void		AKUNotifyVideoAdClose				();
 	protected static native void 		AKUSetConnectionType 				( long connectionType );
 	protected static native void 		AKUSetDocumentDirectory 			( String path );
 
@@ -137,10 +142,18 @@ public class MoaiActivity extends Activity implements SensorEventListener {
 		String filesDir = getFilesDir ().getAbsolutePath ();
 		AKUSetDocumentDirectory ( filesDir );
 
-		// unpack assets
- 		unpackAssets ( filesDir );
- 		mMoaiView.setDirectory ( filesDir );
+		PackageManager  pm = getPackageManager();
+		try {
+			ApplicationInfo myApp = pm.getApplicationInfo(getPackageName(), 0);
 
+			AKUMountVirtualDirectory ( "bundle", myApp.publicSourceDir );
+
+			mMoaiView.setDirectory ( "bundle/assets" );
+		} catch (NameNotFoundException e) {
+			// This should obviously never, ever happen.
+			log ( "Unable to locate the application bundle" );
+		}
+				
 		mHandler = new Handler ();
 
 		mPurchaseObserver = new PurchaseObserver ( null );
@@ -155,13 +168,13 @@ public class MoaiActivity extends Activity implements SensorEventListener {
 
 		log ( "MoaiActivity onDestroy called" );
 		
-		// call super
 		super.onDestroy ();
 		
-		// unregister to receive connectivity actions
 		stopConnectivityReceiver ();
 		
 		mBillingService.unbind();
+		
+		AKUFinalize();
 	}
 
 	//----------------------------------------------------------------//
@@ -182,11 +195,11 @@ public class MoaiActivity extends Activity implements SensorEventListener {
 
 		log ( "MoaiActivity onPause called" );
 		
-		// call super
 		super.onPause ();
 		
-		// unregister for accelerometer events
 		mSensorManager.unregisterListener ( this );
+		
+		mMoaiView.pause ( true );
 	}
 
 	//----------------------------------------------------------------//
@@ -194,15 +207,13 @@ public class MoaiActivity extends Activity implements SensorEventListener {
 
 		log ( "MoaiActivity onStart called" );
 
-		// call super
 		super.onStart ();
 		
         MoaiBillingResponseHandler.register ( mPurchaseObserver );
-
-		//AKUAppDidStartSession ();
 	}
 	
 	public static void startSession () {
+
 		AKUAppDidStartSession ();
 	}
 	
@@ -211,7 +222,6 @@ public class MoaiActivity extends Activity implements SensorEventListener {
 
 		log ( "MoaiActivity onStop called" );
 
-		// call super
 		super.onStop ();
 
         MoaiBillingResponseHandler.unregister ( mPurchaseObserver );
@@ -224,11 +234,11 @@ public class MoaiActivity extends Activity implements SensorEventListener {
 
 		log ( "MoaiActivity onResume called" );
 
-		// call super
 		super.onResume ();
 		
-		// register for accelerometer events
 		mSensorManager.registerListener ( this, mAccelerometer, SensorManager.SENSOR_DELAY_NORMAL );
+		
+		mMoaiView.pause ( false );
 		
 		startConnectivityReceiver ();
 	}
@@ -252,57 +262,7 @@ public class MoaiActivity extends Activity implements SensorEventListener {
 		this.unregisterReceiver ( mConnectivityReceiver );
 		mConnectivityReceiver = null;
 	}
-		
-    //----------------------------------------------------------------//
-	private void unpackAssets ( String rootDir ) {
-		
-		log ( "MoaiActivity unpackingAssets . . ." );
-		
-		InputStream is = getResources ().openRawResource ( R.raw.bundle );
-		File extractTo = new File ( rootDir + "/" );
-		ZipInputStream zis;
-		
-		try {
-			
-			zis = new ZipInputStream ( new BufferedInputStream ( is ));
-			
-			ZipEntry ze; 
-			byte [] buffer = new byte [ 4096 ];
-			
-			while (( ze = zis.getNextEntry ()) != null ) {
-				
-				File file = new File ( extractTo, ze.getName ());
-				
-				if ( ze.isDirectory () && !file.exists ()) {
-					file.mkdirs();
-					
-					while ( zis.read ( buffer ) != -1 );
-				}
-				else {
-					if ( !file.getParentFile().exists()) {
-						file.getParentFile().mkdirs();
-					}
-					
-					BufferedOutputStream out = new BufferedOutputStream ( new FileOutputStream ( file ));
-					
-					int count;
-					while (( count = zis.read ( buffer )) != -1) {
-						out.write ( buffer, 0, count ); 
-					}
-					out.close();
-				}
-			}
-			zis.close();
-		}
-		catch ( Exception e ) {
-			Log.e ( "MoaiActivity", "Unable to read or write to SD card");
-		}
-		finally {
-		}
-		
-		log ( "MoaiActivity unpackingAssets complete" );
-	}
-
+	
 	//================================================================//
 	// SensorEventListener methods
 	//================================================================//
@@ -317,15 +277,18 @@ public class MoaiActivity extends Activity implements SensorEventListener {
 		if ( ! mMoaiView.getSensorsEnabled () ) {
 			return;
 		}
+
+		synchronized ( MoaiView.LOCK_OBJECT ) {
 		
-		float x = event.values [ 0 ];
-		float y = event.values [ 1 ];
-		float z = event.values [ 2 ];
-		
-		int deviceId = MoaiInputDeviceID.DEVICE.ordinal ();
-		int sensorId = MoaiInputDeviceSensorID.LEVEL.ordinal ();
-		
-		AKUEnqueueLevelEvent ( deviceId, sensorId, x, y, z );
+			float x = event.values [ 0 ];
+			float y = event.values [ 1 ];
+			float z = event.values [ 2 ];
+			
+			int deviceId = MoaiInputDeviceID.DEVICE.ordinal ();
+			int sensorId = MoaiInputDeviceSensorID.LEVEL.ordinal ();
+			
+			AKUEnqueueLevelEvent ( deviceId, sensorId, x, y, z );
+		}
 	}
 
 	//================================================================//
@@ -390,6 +353,18 @@ public class MoaiActivity extends Activity implements SensorEventListener {
 			}
 		});
 	}
+	
+	//----------------------------------------------------------------//
+	public void share ( String prompt, String subject, String text ) {
+
+		Intent intent = new Intent ( Intent.ACTION_SEND );
+		intent.setType ( "text/plain" );
+		
+		if ( subject != null ) intent.putExtra ( Intent.EXTRA_SUBJECT, subject );
+		if ( text != null ) intent.putExtra ( Intent.EXTRA_TEXT, text );
+		
+		this.startActivity ( Intent.createChooser ( intent, prompt ));
+	}
 
 	//================================================================//
 	// Open Url JNI callback methods
@@ -401,6 +376,54 @@ public class MoaiActivity extends Activity implements SensorEventListener {
 		Uri uri = Uri.parse ( url );
 		Intent intent = new Intent ( Intent.ACTION_VIEW, uri );
 		startActivity ( intent );
+	}
+	
+	//================================================================//
+	// Tapjoy JNI callback methods
+	//================================================================//
+
+	//----------------------------------------------------------------//
+	public void requestTapjoyConnect ( String appId, String appSecret ) {
+	
+		TapjoyConnect.requestTapjoyConnect ( this, appId, appSecret );
+	}
+	
+	public String getUserId () {
+		
+		return TapjoyConnect.getTapjoyConnectInstance ().getUserID ();
+	}
+	 
+	public void initVideoAds () {
+		
+		TapjoyConnect.getTapjoyConnectInstance ().initVideoAd ( this );
+	}
+	
+	public void setVideoAdCacheCount ( int count ) {
+		
+		TapjoyConnect.getTapjoyConnectInstance ().setVideoCacheCount ( count );
+	}
+	
+	public void showOffers () {
+		
+		TapjoyConnect.getTapjoyConnectInstance ().showOffers ();
+	}
+	
+	//================================================================//
+	// Tapjoy video delegate callback methods
+	//================================================================//	
+	public void videoReady () {
+
+		AKUNotifyVideoAdReady ();
+	}
+
+	public void videoError ( int statusCode ) {
+
+		AKUNotifyVideoAdError ( statusCode );
+	}
+
+	public void videoComplete () {
+
+		AKUNotifyVideoAdClose ();
 	}
 	
 	//================================================================//

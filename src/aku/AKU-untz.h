@@ -17,5 +17,7 @@
 //AKU_API void	AKUUntzShutdown		();
 
 AKU_API void	AKUUntzInit			();
+AKU_API void	AKUUntzResume		();
+AKU_API void	AKUUntzSuspend		();
 
 #endif

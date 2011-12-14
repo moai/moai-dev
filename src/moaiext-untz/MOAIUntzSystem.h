@@ -43,6 +43,8 @@ public:
 					~MOAIUntzSystem		();
 	void			RegisterLuaClass	( MOAILuaState& state );
 	void			RegisterLuaFuncs	( MOAILuaState& state );
+	void			Resume				();
+	void			Suspend				();
 };
 
 #endif

@@ -59,6 +59,7 @@ private:
 	static int		_setListener				( lua_State* L );
 	static int		_setMarketPublicKey			( lua_State* L );
 	static int		_showDialog					( lua_State* L );
+	static int		_share						( lua_State* L );
 
 	bool ( *checkBillingSupportedFunc )			( void );
 	bool ( *confirmNotificationFunc ) 			( cc8* );
@@ -67,6 +68,7 @@ private:
 	bool ( *restoreTransactionsFunc )			( void );
 	void ( *setMarketPublicKeyFunc )			( cc8* );
 	void ( *showDialogFunc )					( cc8*, cc8*, cc8*, cc8*, cc8*, bool );
+	void ( *shareFunc )							( cc8*, cc8*, cc8* );
 
 public:
 	
@@ -92,6 +94,7 @@ public:
 	void		SetRestoreTransactionsFunc		( bool ( *func ) () );
 	void		SetMarketPublicKeyFunc			( void ( *func ) ( cc8* ));
 	void		SetShowDialogFunc				( void ( *func ) ( cc8*, cc8*, cc8*, cc8*, cc8*, bool ));
+	void		SetShareFunc					( void ( *func ) ( cc8*, cc8*, cc8* ));
 	void		WillEndSession					();
 };
 

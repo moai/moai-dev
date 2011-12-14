@@ -274,7 +274,9 @@ GKAchievement* MOAIGameCenter::GetAchievementFromDictionary ( cc8* identifier ) 
         [ mAchievementsDictionary setObject:achievement forKey:achievement.identifier  ];
     }
 	
-	if ( achievement.completed ) achievement.showsCompletionBanner = NO;
+	if ( achievement.completed && [ achievement respondsToSelector:@selector( showsCompletionBanner )]) { 
+		achievement.showsCompletionBanner = NO;
+	}
 	
     return [[ achievement retain ] autorelease ];
 }
@@ -343,7 +345,9 @@ void MOAIGameCenter::ReportAchievementProgress ( cc8* identifier, float percent 
 		
 		if ( !achievement.isCompleted ) {
 			
-			achievement.showsCompletionBanner = YES;
+			if ([ achievement respondsToSelector:@selector( showsCompletionBanner )]) {
+				achievement.showsCompletionBanner = YES;
+			}
 			achievement.percentComplete = percent;
 			
 			[ achievement reportAchievementWithCompletionHandler: ^(NSError *error) {

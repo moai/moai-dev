@@ -50,11 +50,12 @@
 	jmethodID		mRestoreTransactionsFunc;
 	jmethodID		mSetMarketPublicKeyFunc;
 	jmethodID		mShowDialogFunc;
+	jmethodID		mShareFunc;
 	
 	//----------------------------------------------------------------//
 	int JNI_OnLoad ( JavaVM* vm, void* reserved ) {
     
-		jvm = vm;
+		jvm = vm;		
 		return JNI_VERSION_1_4;
 	}
 		
@@ -124,6 +125,18 @@
 		env->CallObjectMethod ( mMoaiActivity , mShowDialogFunc, jtitle, jmessage, jpositive, jneutral, jnegative, cancelable );
 	}
 	
+	//----------------------------------------------------------------//
+	void Share ( const char* prompt , const char* subject , const char* text ) {
+
+		GET_ENV ();
+
+		GET_JSTRING ( prompt, jprompt );
+		GET_JSTRING ( subject, jsubject );
+		GET_JSTRING ( text, jtext );
+
+		env->CallObjectMethod ( mMoaiActivity , mShareFunc, jprompt, jsubject, jtext );
+	}
+	
 //================================================================//
 // Generate GUID callback
 //================================================================//
@@ -131,7 +144,6 @@
 	//----------------------------------------------------------------//
 	const char* GenerateGUID () {
 
-		// get environment
 		GET_ENV ();
 
 	    // call generate guid method in java
@@ -208,6 +220,11 @@
 	}
 
 	//----------------------------------------------------------------//
+	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiActivity_AKUFinalize	( JNIEnv* env, jclass obj ) {
+		AKUFinalize ();
+	}
+
+	//----------------------------------------------------------------//
 	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUEnqueueTouchEvent ( JNIEnv* env, jclass obj, jint deviceId, jint sensorId, jint touchId, jboolean down, jint x, jint y, jint tapCount ) {
 		AKUEnqueueTouchEvent ( deviceId, sensorId, touchId, down, x, y, tapCount );
 	}
@@ -232,18 +249,15 @@
 		AKUExtLoadLuasql ();
 	}
 
-
-	//----------------------------------------------------------------//
-	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUFinalize	( JNIEnv* env, jclass obj ) {
-		AKUFinalize ();
-	}
-
 	//----------------------------------------------------------------//
 	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUInit ( JNIEnv* env, jclass obj, jobject moaiView, jobject moaiActivity ) {
 
 		// create MOAIApp class
 		MOAIApp::Affirm ();
 		REGISTER_LUA_CLASS ( MOAIApp );
+
+		MOAITapjoy::Affirm ();
+		REGISTER_LUA_CLASS ( MOAITapjoy );
 
 		// register callbacks into Java
 		mMoaiView = ( jobject ) env->NewGlobalRef ( moaiView );
@@ -258,6 +272,7 @@
 		MOAIApp::Get ().SetRequestPurchaseFunc( &RequestPurchase );
 		MOAIApp::Get ().SetRestoreTransactionsFunc( &RestoreTransactions );
 		MOAIApp::Get ().SetShowDialogFunc( &ShowDialog );
+		MOAIApp::Get ().SetShareFunc( &Share );
 
 		mMoaiActivity = ( jobject ) env->NewGlobalRef ( moaiActivity );
 		jclass moaiActivityClass = env->GetObjectClass ( mMoaiActivity );
@@ -269,6 +284,7 @@
 		mRestoreTransactionsFunc = env->GetMethodID ( moaiActivityClass, "restoreTransactions", "()Z" );
 		mSetMarketPublicKeyFunc = env->GetMethodID ( moaiActivityClass, "setMarketPublicKey", "(Ljava/lang/String;)V" );
 		mShowDialogFunc = env->GetMethodID ( moaiActivityClass, "showDialog", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)V" );
+		mShareFunc = env->GetMethodID ( moaiActivityClass, "share", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V" );
 	}
 
 	//----------------------------------------------------------------//
@@ -323,10 +339,33 @@
 	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiActivity_AKUNotifyDialogDismissed ( JNIEnv* env, jclass obj, jint code ) {
 		MOAIApp::Get ().NotifyDialogDismissed ( code );
 	}
+
+	//----------------------------------------------------------------//
+	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiActivity_AKUNotifyVideoAdReady ( JNIEnv* env, jclass obj ) {
+		MOAITapjoy::Get ().NotifyVideoAdReady ();
+	}
+
+	//----------------------------------------------------------------//
+	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiActivity_AKUNotifyVideoAdError ( JNIEnv* env, jclass obj, jint code ) {
+		MOAITapjoy::Get ().NotifyVideoAdError ( code );
+	}
+	
+	//----------------------------------------------------------------//
+	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiActivity_AKUNotifyVideoAdClose ( JNIEnv* env, jclass obj ) {
+		MOAITapjoy::Get ().NotifyVideoAdClose ();
+	}
 	
 	//----------------------------------------------------------------//
 	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUPause ( JNIEnv* env, jclass obj, jboolean paused ) {
 		AKUPause ( paused );
+
+		if ( paused ) {
+		
+			AKUUntzSuspend ();
+		} else {
+		
+			AKUUntzResume ();
+		}		
 	}
 
 	//----------------------------------------------------------------//

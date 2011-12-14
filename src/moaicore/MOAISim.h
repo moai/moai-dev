@@ -23,6 +23,7 @@ class MOAIProp2D;
 	const SIM_LOOP_NO_DEFICIT
 	const SIM_LOOP_NO_SURPLUS
 	const SIM_LOOP_RESET_CLOCK
+	const SIM_LOOP_ALLOW_SOAK
 	
 	const LOOP_FLAGS_DEFAULT
 	const LOOP_FLAGS_FIXED
@@ -136,6 +137,7 @@ public:
 		SIM_LOOP_NO_SURPLUS			= 0x10,		// real time never falls behind sim time
 		SIM_LOOP_LONG_DELAY			= 0x20,		// does not boost or skip in the event of a long delay
 		SIM_LOOP_RESET_CLOCK		= 0x40,		// resets the time deficit then autoclears self (use after long load)
+		SIM_LOOP_ALLOW_SOAK			= 0x80,		// TODO
 	};
 	
 	DECL_LUA_SINGLETON ( MOAISim )
@@ -147,6 +149,7 @@ public:
 	static const u32 LOOP_FLAGS_DEFAULT		= SIM_LOOP_ALLOW_SPIN | SIM_LOOP_LONG_DELAY;
 	static const u32 LOOP_FLAGS_FIXED		= SIM_LOOP_FORCE_STEP | SIM_LOOP_NO_DEFICIT | SIM_LOOP_NO_SURPLUS;
 	static const u32 LOOP_FLAGS_MULTISTEP	= SIM_LOOP_ALLOW_SPIN | SIM_LOOP_NO_SURPLUS;
+	static const u32 LOOP_FLAGS_SOAK		= SIM_LOOP_LONG_DELAY | SIM_LOOP_ALLOW_SOAK;
 	
 	static const u32 DEFAULT_STEPS_PER_SECOND		= 60;	// default sim step to 60hz
 	static const u32 DEFAULT_BOOST_THRESHOLD		= 3;	// sim must fall 3 steps behind before variable rate boost

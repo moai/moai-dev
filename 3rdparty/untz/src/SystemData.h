@@ -20,12 +20,15 @@ namespace UNTZ
 	class SystemData
 	{
 	public:
-		SystemData() : mError(0) {};
+		SystemData() : mError(0), mIsActive(true) {};
 
 		virtual UInt32 getNumFrames() = 0;
 		virtual UInt32 getNumOutputChannels() = 0;
 		bool getError() const { return mError; }
 		void setError(bool error) { mError = error; }
+		void setActive(bool active) { mIsActive = active; }
+		bool isActive() const { return mIsActive; }
+
 		UNTZ::Sound* getSound(const RString& url)
 		{
 			RScopedLock sl(&mMixer.mLock);
@@ -53,6 +56,7 @@ namespace UNTZ
 
 	protected:
 		bool mError;
+		bool mIsActive;
 	};
 
 };
