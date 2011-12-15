@@ -213,3 +213,19 @@ void MOAIUntzSystem::RegisterLuaFuncs ( MOAILuaState& state ) {
 	UNUSED ( state );
 }
 
+//----------------------------------------------------------------//
+void MOAIUntzSystem::Resume () {
+	
+	if ( UNTZ::System::get () ) {
+		UNTZ::System::get ()->resume ();
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIUntzSystem::Suspend () {
+
+	if ( UNTZ::System::get () ) {
+		UNTZ::System::get ()->suspend ();
+	}
+}
+

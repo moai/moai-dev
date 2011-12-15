@@ -163,7 +163,7 @@ int MOAILuaObject::_tostring ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAILuaObject::BindToLuaWithTable ( MOAILuaState& state ) {
+void MOAILuaObject::BindToLuaWithMemberTable ( MOAILuaState& state ) {
 
 	assert ( !this->mUserdata );
 	assert ( state.IsType ( -1, LUA_TTABLE ));
@@ -174,14 +174,16 @@ void MOAILuaObject::BindToLuaWithTable ( MOAILuaState& state ) {
 	// create and initialize a new userdata
 	state.PushPtrUserData ( this );
 	
-	// create and initialize the private table
+	// create and initialize the instance table
 	lua_newtable ( state );
 	
-	// set the ref to the private table
+	// copy the member table to the top of the stack
 	lua_pushvalue ( state, -3 );
+	
+	// set the ref to the member table from the instance table
 	lua_setfield ( state, -2, LUA_MEMBER_TABLE_NAME );
 	
-	// initialize the private table
+	// initialize the instance table
 	lua_pushcfunction ( state, MOAILuaObject::_gc );
 	lua_setfield ( state, -2, "__gc" );
 	
@@ -194,7 +196,7 @@ void MOAILuaObject::BindToLuaWithTable ( MOAILuaState& state ) {
 	lua_pushcfunction ( state, MOAILuaObject::_newindex );
 	lua_setfield ( state, -2, "__newindex" );
 	
-	// make the interface table the instance table's meta
+	// make the interface table the instance table's metatable
 	type->PushInterfaceTable ( state );
 	lua_setmetatable ( state, -2 );
 	
@@ -210,7 +212,7 @@ void MOAILuaObject::BindToLuaWithTable ( MOAILuaState& state ) {
 		this->mUserdata.SetStrongRef ( state, -1 );
 	}
 	
-	// overwrite the member table
+	// overwrite the member table with the userdata
 	lua_replace ( state, -2 );
 	
 	assert ( !lua_isnil ( state, -1 ));
@@ -396,7 +398,7 @@ void MOAILuaObject::PushLuaUserdata ( MOAILuaState& state ) {
 		lua_newtable ( state );
 		
 		// initialize and bind the userdata
-		this->BindToLuaWithTable ( state );
+		this->BindToLuaWithMemberTable ( state );
 	}
 	assert ( !lua_isnil ( state, -1 ));
 }

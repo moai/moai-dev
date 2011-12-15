@@ -282,6 +282,7 @@
     <ClCompile Include="..\..\src\moaicore\MOAIGfxResource.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIGlobals.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIGlyph.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAIGridPathGraph.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIGridSpace.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIHttpTaskInfo_curl.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIImage-jpg.cpp" />
@@ -314,6 +315,9 @@
     <ClCompile Include="..\..\src\moaicore\MOAIPartitionLayer.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIPartitionResultBuffer.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIPartitionResultMgr.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAIPathFinder.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAIPathGraph.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAIPathTerrainDeck.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIProp.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIProp2D.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIQuadBrush.cpp" />
@@ -429,6 +433,7 @@
     <ClInclude Include="..\..\src\moaicore\MOAIGfxResource.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIGlobals.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIGlyph.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAIGridPathGraph.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIGridSpace.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIHttpTaskInfo_curl.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIImage.h" />
@@ -464,6 +469,9 @@
     <ClInclude Include="..\..\src\moaicore\MOAIPartitionLayer.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIPartitionResultBuffer.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIPartitionResultMgr.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAIPathFinder.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAIPathGraph.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAIPathTerrainDeck.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIProp.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIProp2D.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIPvrHeader.h" />

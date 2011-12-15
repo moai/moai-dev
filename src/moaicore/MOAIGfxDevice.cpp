@@ -284,10 +284,11 @@ void MOAIGfxDevice::ClearColorBuffer ( u32 color ) {
 
 //----------------------------------------------------------------//
 void MOAIGfxDevice::ClearErrors () {
-
+#ifndef MOAI_OS_NACL
 	if ( this->mHasContext ) {
 		while ( glGetError () != GL_NO_ERROR );
 	}
+#endif
 }
 
 //----------------------------------------------------------------//
@@ -647,12 +648,13 @@ void MOAIGfxDevice::InsertGfxResource ( MOAIGfxResource& resource ) {
 u32 MOAIGfxDevice::LogErrors () {
 
 	u32 count = 0;
-
+#ifndef MOAI_OS_NACL
 	if ( this->mHasContext ) {
 		for ( int error = glGetError (); error != GL_NO_ERROR; error = glGetError (), ++count ) {
 			MOAILog ( 0, MOAILogMessages::MOAIGfxDevice_OpenGLError_S, this->GetErrorString ( error ));
 		}
 	}
+#endif
 	return count;
 }
 
@@ -1064,14 +1066,18 @@ bool MOAIGfxDevice::SetTexture ( MOAITexture* texture ) {
 	
 	if ( texture ) {
 		if ( !this->mTexture ) {
+#if USE_OPENGLES1
 			glEnable ( GL_TEXTURE_2D );
+#endif
 		}
 		this->mTexture = texture;
 		return texture->Bind ();
 	}
 
 	if ( this->mTexture ) {
+#if USE_OPENGLES1
 		glDisable ( GL_TEXTURE_2D );
+#endif
 		this->mTexture = 0;
 	}
 	return false;

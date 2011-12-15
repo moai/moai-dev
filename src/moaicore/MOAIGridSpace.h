@@ -5,6 +5,7 @@
 #define MOAIGRIDSPACE_H
 
 #include <moaicore/MOAILua.h>
+#include <moaicore/MOAITileFlags.h>
 
 //================================================================//
 // MOAICellCoord
@@ -38,7 +39,35 @@ public:
 //================================================================//
 // MOAIGridSpace
 //================================================================//
-class MOAIGridSpace {
+/**	@name	MOAIGridSpace
+	@text	Represents spatial configuration of a grid. The grid is made
+			up of cells. Inside of each cell is a tile. The tile can be
+			larger or smaller than the cell and also offset from the cell.
+			By default, tiles are the same size of their cells and are
+			no offset.
+
+	@flag	TILE_X_FLIP
+	@flag	TILE_Y_FLIP
+	@flag	TILE_XY_FLIP
+	@flag	TILE_HIDE
+
+	@const	TILE_BOTTOM_CENTER
+	@const	TILE_CENTER
+	@const	TILE_LEFT_BOTTOM
+	@const	TILE_LEFT_CENTER
+	@const	TILE_LEFT_TOP
+	@const	TILE_RIGHT_BOTTOM
+	@const	TILE_RIGHT_CENTER
+	@const	TILE_RIGHT_TOP
+	@const	TILE_TOP_CENTER
+	
+	@const	SQUARE_SHAPE
+	@const	DIAMOND_SHAPE
+	@const	OBLIQUE_SHAPE
+	@const	HEX_SHAPE
+*/
+class MOAIGridSpace :
+	public virtual MOAILuaObject {
 protected:
 
 	float		mXOff;
@@ -53,10 +82,26 @@ protected:
 	int			mWidth;
 	int			mHeight;
 
+	u32			mShape;
+
+	//----------------------------------------------------------------//
+	static int		_cellAddrToCoord	( lua_State* L );
+	static int		_getCellAddr		( lua_State* L );
+	static int		_getSize			( lua_State* L );
+	static int		_getTileLoc			( lua_State* L );
+	static int		_locToCellAddr		( lua_State* L );
+	static int		_locToCoord			( lua_State* L );
+	static int		_setShape			( lua_State* L );
+	static int		_setSize			( lua_State* L );
+	static int		_wrapCoord			( lua_State* L );
+
 	//----------------------------------------------------------------//
 	USVec2D			GetRectPoint		( float x, float y, float width, float height, u32 position ) const;
+	virtual void	OnResize			();
 
 public:
+	
+	DECL_LUA_FACTORY ( MOAIGridSpace )
 	
 	enum {
 		TILE_LEFT_TOP,
@@ -73,10 +118,10 @@ public:
 	};
 	
 	enum {
-		GRID_RECT,
-		GRID_ISO,
-		GRID_OBLIQUE,
-		GRID_HEX,
+		SQUARE_SHAPE,
+		DIAMOND_SHAPE,
+		OBLIQUE_SHAPE,
+		HEX_SHAPE,
 	};
 	
 	GET_SET ( float, XOff, mXOff )
@@ -91,6 +136,8 @@ public:
 	GET_SET ( int, Width, mWidth )
 	GET_SET ( int, Height, mHeight )
 	
+	GET_SET ( u32, Shape, mShape )
+	
 	//----------------------------------------------------------------//
 	USVec2D				CellToWorld				( MOAICellCoord cellCoord, USVec2D loc ) const;
 	
@@ -103,6 +150,7 @@ public:
 	USMatrix3x3			GetGridToWorldMtx		() const;
 	
 	int					GetCellAddr				( MOAICellCoord cellCoord ) const;
+	int					GetCellAddr				( int xCell, int yCell ) const;
 	MOAICellCoord		GetCellCoord			( int cellAddr ) const;
 	MOAICellCoord		GetCellCoord			( USVec2D loc ) const;
 	MOAICellCoord		GetCellCoord			( float x, float y ) const;
@@ -121,11 +169,12 @@ public:
 	USVec2D				GridToWorld				( USVec2D loc ) const;
 	void				Init					( int width, int height, float tileWidth, float tileHeight );
 	bool				IsValidCoord			( MOAICellCoord cellCoord ) const;
-	void				SerializeIn				( MOAILuaState& state );
-	void				SerializeOut			( MOAILuaState& state );
-	
 						MOAIGridSpace			();
 						~MOAIGridSpace			();
+	void				RegisterLuaClass		( MOAILuaState& state );
+	void				RegisterLuaFuncs		( MOAILuaState& state );
+	void				SerializeIn				( MOAILuaState& state );
+	void				SerializeOut			( MOAILuaState& state );
 	MOAICellCoord		WrapCellCoord			( MOAICellCoord coord ) const;
 	USVec2D				WorldToCell				( MOAICellCoord cellCoord, USVec2D loc ) const;
 	USVec2D				WorldToGrid				( USVec2D loc ) const;

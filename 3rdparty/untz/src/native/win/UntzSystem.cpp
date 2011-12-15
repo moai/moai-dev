@@ -19,6 +19,12 @@ using namespace UNTZ;
 int RtInOut( void* outputBuffer, void* inputBuffer, unsigned int framesPerBuffer, 
 			double streamTime, RtAudioStreamStatus status, void *userdata )
 {
+	if(!UNTZ::System::get()->getData()->isActive())
+	{
+		memset(outputBuffer, 0, sizeof(float) * framesPerBuffer * UNTZ::System::get()->getData()->getNumOutputChannels());
+		return 0;
+	}
+
 	if(status)
 		std::cout << "Stream underflow detected!" << std::endl;	
 	AudioMixer *mixer = (AudioMixer*)userdata;
@@ -131,4 +137,14 @@ void System::setVolume(float volume)
 float System::getVolume() const
 {
 	return msInstance->mpData->mMixer.getVolume();
+}
+
+void System::suspend()
+{
+	msInstance->mpData->setActive(false);
+}
+
+void System::resume()
+{
+	msInstance->mpData->setActive(true);
 }
