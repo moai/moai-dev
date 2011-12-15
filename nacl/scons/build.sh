@@ -1,8 +1,10 @@
 #!/bin/bash
-#
-# Copyright (c) 2011 The Native Client Authors. All rights reserved.
-# Use of this source code is governed by a BSD-style license that can be
-# found in the LICENSE file.
+
+#================================================================#
+# Copyright (c) 2010-2011 Zipline Games, Inc.
+# All Rights Reserved.
+# http://getmoai.com
+#================================================================#
 
 	set -e
 
@@ -42,8 +44,12 @@
 	# what is provided by the OS.  The custom variable name won't be overwritten.
 	export PYMOX="${NACL_SDK_ROOT}/third_party/pymox"
 
-	echo "Building Moai Native Client binaries for $platform"
-
+	if [ "$clean" != "" ]; then
+		echo "Cleaning"
+	else
+		echo "Building Moai Native Client binaries for $platform"
+	fi
+	
 	python -O -OO $NACL_PLATFORM_DIR/third_party/scons-2.0.1/script/scons \
 		--warn no-visual-c-missing \
 		$clean \
