@@ -990,11 +990,7 @@ void MOAISim::Update () {
 			//TODO make the following official
 			while (( this->mStep <= gap ) && ( budget > 0.0 )) {
 				budget -= 1.0f / 1000.0f;
-#if MOAI_OS_NACL
-				usleep ( 1000 );
-#else
 				sleep ( 1.0f / 1000.0f );
-#endif
 			}
 		}
 	}
