@@ -10,7 +10,10 @@ import shutil
 import os
 
 nacl_env = make_nacl_env.NaClEnvironment(
-    use_c_plus_plus_libs=True, nacl_platform=os.getenv('NACL_TARGET_PLATFORM'))
+    use_c_plus_plus_libs=True, 
+	nacl_platform=os.getenv('NACL_TARGET_PLATFORM'))
+	
+fmod_include = os.getenv('FMOD_SDK_ROOT') + '/api/inc';
 
 Repository ( "../../3rdparty", "../../src", ".." )
 
@@ -69,7 +72,7 @@ tinyxml_sources = [ os.path.join( 'tinyxml', src_file ) for src_file in [
 					'tinyxmlparser.cpp',
 ]]
 
-jansson_sources = [ os.path.join( 'jansson-2.1\src', src_file ) for src_file in [
+jansson_sources = [ os.path.join( 'jansson-2.1/src', src_file ) for src_file in [
 					'dump.c',
 					'error.c',
 					'hashtable.c',
@@ -81,7 +84,7 @@ jansson_sources = [ os.path.join( 'jansson-2.1\src', src_file ) for src_file in 
 					'value.c',
 ]]
 
-expat_sources = [ os.path.join( 'expat-2.0.1\lib', src_file ) for src_file in [
+expat_sources = [ os.path.join( 'expat-2.0.1/lib', src_file ) for src_file in [
 					'xmlparse.c',
 					'xmlrole.c',
 					'xmltok.c',
@@ -176,51 +179,51 @@ zipfs_sources = [ os.path.join( 'zipfs', src_file ) for src_file in [
 
 box2d_path = os.path.join( 'box2d-2.2.1', 'Box2D' )
 box2d_sources = [ os.path.join( box2d_path, src_file ) for src_file in [
-					'Collision\\b2BroadPhase.cpp',
-					'Collision\\b2CollideCircle.cpp',
-					'Collision\\b2CollideEdge.cpp',
-					'Collision\\b2CollidePolygon.cpp',
-					'Collision\\b2Collision.cpp',
-					'Collision\\b2Distance.cpp',
-					'Collision\\b2DynamicTree.cpp',
-					'Collision\\b2TimeOfImpact.cpp',
-					'Collision\\Shapes\\b2ChainShape.cpp',
-					'Collision\\Shapes\\b2CircleShape.cpp',
-					'Collision\\Shapes\\b2EdgeShape.cpp',
-					'Collision\\Shapes\\b2PolygonShape.cpp',
-					'Common\\b2BlockAllocator.cpp',
-					'Common\\b2Draw.cpp',
-					'Common\\b2Math.cpp',
-					'Common\\b2Settings.cpp',
-					'Common\\b2StackAllocator.cpp',
-					'Common\\b2Timer.cpp',
-					'Dynamics\\b2Body.cpp',
-					'Dynamics\\b2ContactManager.cpp',
-					'Dynamics\\b2Fixture.cpp',
-					'Dynamics\\b2Island.cpp',
-					'Dynamics\\b2World.cpp',
-					'Dynamics\\b2WorldCallbacks.cpp',
-					'Dynamics\\Joints\\b2DistanceJoint.cpp',
-					'Dynamics\\Joints\\b2FrictionJoint.cpp',
-					'Dynamics\\Joints\\b2GearJoint.cpp',
-					'Dynamics\\Joints\\b2Joint.cpp',
-					'Dynamics\\Joints\\b2MouseJoint.cpp',
-					'Dynamics\\Joints\\b2PrismaticJoint.cpp',
-					'Dynamics\\Joints\\b2PulleyJoint.cpp',
-					'Dynamics\\Joints\\b2RevoluteJoint.cpp',
-					'Dynamics\\Joints\\b2RopeJoint.cpp',
-					'Dynamics\\Joints\\b2WeldJoint.cpp',
-					'Dynamics\\Joints\\b2WheelJoint.cpp',
-					'Dynamics\\Contacts\\b2ChainAndCircleContact.cpp',
-					'Dynamics\\Contacts\\b2ChainAndPolygonContact.cpp',
-					'Dynamics\\Contacts\\b2CircleContact.cpp',
-					'Dynamics\\Contacts\\b2Contact.cpp',
-					'Dynamics\\Contacts\\b2ContactSolver.cpp',
-					'Dynamics\\Contacts\\b2EdgeAndCircleContact.cpp',
-					'Dynamics\\Contacts\\b2EdgeAndPolygonContact.cpp',
-					'Dynamics\\Contacts\\b2PolygonAndCircleContact.cpp',
-					'Dynamics\\Contacts\\b2PolygonContact.cpp',
-					'Rope\\b2Rope.cpp',
+					'Collision/b2BroadPhase.cpp',
+					'Collision/b2CollideCircle.cpp',
+					'Collision/b2CollideEdge.cpp',
+					'Collision/b2CollidePolygon.cpp',
+					'Collision/b2Collision.cpp',
+					'Collision/b2Distance.cpp',
+					'Collision/b2DynamicTree.cpp',
+					'Collision/b2TimeOfImpact.cpp',
+					'Collision/Shapes/b2ChainShape.cpp',
+					'Collision/Shapes/b2CircleShape.cpp',
+					'Collision/Shapes/b2EdgeShape.cpp',
+					'Collision/Shapes/b2PolygonShape.cpp',
+					'Common/b2BlockAllocator.cpp',
+					'Common/b2Draw.cpp',
+					'Common/b2Math.cpp',
+					'Common/b2Settings.cpp',
+					'Common/b2StackAllocator.cpp',
+					'Common/b2Timer.cpp',
+					'Dynamics/b2Body.cpp',
+					'Dynamics/b2ContactManager.cpp',
+					'Dynamics/b2Fixture.cpp',
+					'Dynamics/b2Island.cpp',
+					'Dynamics/b2World.cpp',
+					'Dynamics/b2WorldCallbacks.cpp',
+					'Dynamics/Joints/b2DistanceJoint.cpp',
+					'Dynamics/Joints/b2FrictionJoint.cpp',
+					'Dynamics/Joints/b2GearJoint.cpp',
+					'Dynamics/Joints/b2Joint.cpp',
+					'Dynamics/Joints/b2MouseJoint.cpp',
+					'Dynamics/Joints/b2PrismaticJoint.cpp',
+					'Dynamics/Joints/b2PulleyJoint.cpp',
+					'Dynamics/Joints/b2RevoluteJoint.cpp',
+					'Dynamics/Joints/b2RopeJoint.cpp',
+					'Dynamics/Joints/b2WeldJoint.cpp',
+					'Dynamics/Joints/b2WheelJoint.cpp',
+					'Dynamics/Contacts/b2ChainAndCircleContact.cpp',
+					'Dynamics/Contacts/b2ChainAndPolygonContact.cpp',
+					'Dynamics/Contacts/b2CircleContact.cpp',
+					'Dynamics/Contacts/b2Contact.cpp',
+					'Dynamics/Contacts/b2ContactSolver.cpp',
+					'Dynamics/Contacts/b2EdgeAndCircleContact.cpp',
+					'Dynamics/Contacts/b2EdgeAndPolygonContact.cpp',
+					'Dynamics/Contacts/b2PolygonAndCircleContact.cpp',
+					'Dynamics/Contacts/b2PolygonContact.cpp',
+					'Rope/b2Rope.cpp',
 ]]
 
 uslcore_sources = [ os.path.join( 'uslscore', src_file ) for src_file in [
@@ -230,8 +233,8 @@ uslcore_sources = [ os.path.join( 'uslscore', src_file ) for src_file in [
 					'USCipher.cpp'            ,
 					'USCipherStream.cpp'      ,
 					'USDeflater.cpp'          ,
-					'USDeviceTime_nacl.cpp'  ,
-					'USDirectoryItr.cpp',
+					'USDeviceTime_nacl.cpp'   ,
+					'USDirectoryItr.cpp'	  ,
 					'USFilename.cpp'          ,
 					'USFileStream.cpp'        ,
 					'USFileSys.cpp'           ,
@@ -312,7 +315,7 @@ moai_sources = [ os.path.join('moaicore', src_file) for src_file in [
 				'MOAIBox2DPrismaticJoint.cpp'    ,
 				'MOAIBox2DPulleyJoint.cpp'       ,
 				'MOAIBox2DRevoluteJoint.cpp'     ,
-				'MOAIBox2DRopeJoint.cpp'     ,
+				'MOAIBox2DRopeJoint.cpp'     	 ,
 				'MOAIBox2DWeldJoint.cpp'         ,
 				'MOAIBox2DWheelJoint.cpp'		 ,
 				'MOAIBox2DWorld.cpp'             ,
@@ -337,7 +340,7 @@ moai_sources = [ os.path.join('moaicore', src_file) for src_file in [
 				'MOAIDeck.cpp'                   ,
 				'MOAIDeck2D.cpp'                 ,
 				'MOAIDeckRemapper.cpp'           ,
-				'MOAIDeserializer.cpp'             ,
+				'MOAIDeserializer.cpp'           ,
 				'MOAIDraw.cpp'                   ,
 				'MOAIEaseDriver.cpp'             ,
 				'MOAIEaseType.cpp'               ,
@@ -359,8 +362,8 @@ moai_sources = [ os.path.join('moaicore', src_file) for src_file in [
 				'MOAIHttpTask.cpp'               ,
 				'MOAIHttpTaskInfo_nacl.cpp' 	 ,
 				'MOAIImage.cpp'                  ,
-				'MOAIImage-jpg.cpp'                  ,
-				'MOAIImage-png.cpp'                  ,
+				'MOAIImage-jpg.cpp'              ,
+				'MOAIImage-png.cpp'              ,
 				'MOAIIndexBuffer.cpp'            ,
 				'MOAIInputDevice.cpp'            ,
 				'MOAIInputMgr.cpp'               ,
@@ -469,7 +472,7 @@ nacl_env["CPPPATH"] = [ 'lua-5.1.3/src',
 						'zlib-1.2.3',
 						'hmac_sha1',
 						'jansson-2.1/src',
-						'fmodapi43800nacl/api/inc',
+						fmod_include,
 						'openssl-1.0.0d/include-android',
 						'openssl-1.0.0d/crypto',
 						'tlsf-2.0',
@@ -477,7 +480,7 @@ nacl_env["CPPPATH"] = [ 'lua-5.1.3/src',
 						'zipfs',
 						'.' ]
 
-nacl_env.Append ( LIBPATH = ['lib-x86-32\opt','lib-x86-64\opt', 'x86-32','x86-64'] )
+nacl_env.Append ( LIBPATH = ['lib-x86-32/opt','lib-x86-64/opt', 'x86-32','x86-64'] )
 #nacl_env.Append ( LIBPATH = [ 'x86-32','x86-64'] )
 
 nacl_env.NaClStaticLibraries ( zlib_sources, 'zlib', is_debug=False )
@@ -507,7 +510,7 @@ nacl_env.GenerateNmf(target='%s.nmf' % module_name,
 			  nexes={'x86-32': '%s_x86_32.nexe' % module_name,
 					 'x86-64': '%s_x86_64.nexe' % module_name})
 					 
-shutil.copyfile("moai_x86_32.nexe", "../../chrome/moai_x86_32.nexe")
-shutil.copyfile("moai_x86_64.nexe", "../../chrome/moai_x86_64.nexe")
-shutil.copyfile("moai.nmf", "../../chrome/moai.nmf")
+#shutil.copyfile("moai_x86_32.nexe", "../../chrome/moai_x86_32.nexe")
+#shutil.copyfile("moai_x86_64.nexe", "../../chrome/moai_x86_64.nexe")
+#shutil.copyfile("moai.nmf", "../../chrome/moai.nmf")
 						 

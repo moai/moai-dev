@@ -4,20 +4,53 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+	set -e
 
-readonly SCRIPT_DIR="$(dirname "$0")"
-readonly SCRIPT_DIR_ABS="$(cd "${SCRIPT_DIR}" ; pwd -P)"
+	usage="usage: scons.sh [-p platform] [-clean]"
+	platform=pepper_16
+	clean=
 
-export NACL_SDK_ROOT=C:/NaCl/native_client_sdk_0_5_1052
+	# check for valid NACL SDK root
+	if [ "$NACL_SDK_ROOT" = "" ] || [ ! -d $NACL_SDK_ROOT ]; then
+	
+		echo -e "*** Please specify a valid path to the NACL SDK in the NACL_SDK_ROOT"
+		echo -e "*** environment variable before running this script."
+		echo
+		exit 1
+	fi
 
-readonly BASE_SCRIPT="${NACL_SDK_ROOT}/third_party/scons-2.0.1/script/scons"
+	while [ $# -gt 0 ];	do
+    	case "$1" in
+			-p)  platform="$2"; shift;;
+			-clean) clean="--clean";;
+			-*)
+	    		echo >&2 \
+	    			$usage
+	    		exit 1;;
+				*)  break;;	# terminate while loop
+    		esac
+    		shift
+		done
 
-export PYTHONPATH="${NACL_SDK_ROOT}/third_party/scons-2.0.1/engine"
-# We have to do this because scons overrides PYTHONPATH and does not preserve
-# what is provided by the OS.  The custom variable name won't be overwritten.
-export PYMOX="${NACL_SDK_ROOT}/third_party/pymox"
+	export NACL_TARGET_PLATFORM=$platform
+	export NACL_PLATFORM_DIR=$NACL_SDK_ROOT/$platform
 
-"${BASE_SCRIPT}" --file=build.scons \
-                 --site-dir="${NACL_SDK_ROOT}/build_tools/nacl_sdk_scons" \
-                 $*
+	export SCONS_LIB_DIR="${NACL_PLATFORM_DIR}/third_party/scons-2.0.1/engine"
+	export PYTHONPATH="${NACL_PLATFORM_DIR}/third_party/scons-2.0.1/engine"
 
+	# We have to do this because scons overrides PYTHONPATH and does not preserve
+	# what is provided by the OS.  The custom variable name won't be overwritten.
+	export PYMOX="${NACL_SDK_ROOT}/third_party/pymox"
+
+	echo "Building Moai Native Client binaries for $platform"
+
+	python -O -OO $NACL_PLATFORM_DIR/third_party/scons-2.0.1/script/scons \
+		--warn no-visual-c-missing \
+		$clean \
+		--file=build.scons \
+		--site-dir="${NACL_PLATFORM_DIR}/build_tools/nacl_sdk_scons" \
+		$*
+
+	if [ "$clean" != "" ]; then
+		rm -rf lib*
+	fi
