@@ -20,7 +20,7 @@
 */
 
 #include "pch.h"
-#ifdef __linux
+#ifdef MOAI_OS_NACL
 
 #include <uslscore/USDeviceTime.h>
 #include <time.h>
