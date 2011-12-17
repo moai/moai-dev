@@ -56,7 +56,7 @@ bool BufferedAudioSource::init(const RString& path, bool loadIntoMemory)
 			remainingFrames -= framesRead;
 		}
 		while(remainingFrames > 0);
-
+		mEOF = true;
 		mLoadedInMemory = loadIntoMemory; 
 		doneDecoding();
 	}
@@ -146,7 +146,7 @@ Int64 BufferedAudioSource::readFrames(float* buffer, UInt32 numChannels, UInt32 
 		{
 			mBuffer.erase(0, framesRead);
 			framesAvailable = mBuffer.size() / getNumChannels();
-			UInt32 minimumFrames = getSampleRate() / 3;  // 1/3 of a second 
+			UInt32 minimumFrames = getSampleRate() * SECONDS_TO_BUFFER / 2;
 			if(framesAvailable <= minimumFrames)
 			{
 				BufferedAudioSourceThread::getInstance()->readMore();
@@ -171,9 +171,11 @@ Int64 BufferedAudioSource::readFrames(float* buffer, UInt32 numChannels, UInt32 
             
             return 0; // signal that we are done
         }
-		else
-            if(!isLoadedInMemory())
-                BufferedAudioSourceThread::getInstance()->readMore();
+		else if(!isLoadedInMemory())
+		{
+//			printf("cache miss\n");
+			BufferedAudioSourceThread::getInstance()->readMore();
+		}
     }
     
 	return framesRead;
