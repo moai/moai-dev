@@ -792,7 +792,9 @@ void MOAIGfxDevice::ResetState () {
 	this->mPrimCount = 0;
 
 	// turn off texture
+#if USE_OPENGLES1
 	glDisable ( GL_TEXTURE_2D );
+#endif
 	this->mTexture = 0;
 	
 	// turn off blending

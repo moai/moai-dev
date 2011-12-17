@@ -354,7 +354,6 @@ void MOAITexture::CreateTexture	() {
 void MOAITexture::CreateTextureFromImage ( MOAIImage& image ) {
 
 	bool error = false;
-	printf( "load texture\n" );
 	if ( !image.IsOK ()) return;
 	if ( !MOAIGfxDevice::Get ().GetHasContext ()) return;
 
