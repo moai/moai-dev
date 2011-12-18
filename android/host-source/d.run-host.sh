@@ -1,3 +1,5 @@
+#!/bin/bash
+
 #================================================================#
 # Copyright (c) 2010-2011 Zipline Games, Inc.
 # All Rights Reserved.
@@ -14,7 +16,7 @@
 	rm -rf build
 
 	# load global settings
-	source settings-global.sh
+	source ./settings-global.sh
 
 	# load local settings
 	local_settings_created=false
@@ -26,7 +28,7 @@
 		echo -e "*** Local file \"settings-local.sh\" created"
 	fi
 
-	source settings-local.sh
+	source ./settings-local.sh
 
 	# check for valid Android SDK root
 	if [ "$android_sdk_root" = "" ] || [ ! -d $android_sdk_root ]; then

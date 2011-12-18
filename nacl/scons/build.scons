@@ -513,8 +513,3 @@ nacl_env.GenerateNmf(target='%s.nmf' % module_name,
 			  source=opt_nexes,
 			  nexes={'x86-32': '%s_x86_32.nexe' % module_name,
 					 'x86-64': '%s_x86_64.nexe' % module_name})
-					 
-#shutil.copyfile("moai_x86_32.nexe", "../../chrome/moai_x86_32.nexe")
-#shutil.copyfile("moai_x86_64.nexe", "../../chrome/moai_x86_64.nexe")
-#shutil.copyfile("moai.nmf", "../../chrome/moai.nmf")
-						 
