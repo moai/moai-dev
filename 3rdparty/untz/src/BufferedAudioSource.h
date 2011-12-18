@@ -12,7 +12,7 @@
 #include "AudioSource.h"
 #include <threading/Threading.h>
 
-#define SECONDS_TO_BUFFER (1)
+#define SECONDS_TO_BUFFER (2)
 
 class BufferedAudioSourceThread;
 

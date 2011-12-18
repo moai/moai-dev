@@ -81,15 +81,16 @@ static OSStatus playbackCallback(void *userData,
                                  UInt32 framesPerBuffer, 
                                  AudioBufferList *outBuffer)
 {  	
+    IosSystemData *sysData = (IosSystemData *)userData;
+
 	// Don't do anything if the system is NOT active (zero buffer)
-	if(!UNTZ::System::get()->getData()->isActive())
+	if(!sysData->isActive())
 	{	
 		SInt16 *outbuf = (SInt16 *) outBuffer->mBuffers[0].mData;
-		memset(outbuf, 0, sizeof(SInt16) * framesPerBuffer * UNTZ::System::get()->getData()->getNumOutputChannels());
+		memset(outbuf, 0, sizeof(SInt16) * framesPerBuffer * sysData->getNumOutputChannels());
 		return 0;
 	}
 		
-    IosSystemData *sysData = (IosSystemData *)((System *)userData)->getData();
     if(sysData->mOutputBuffer.size() == 0)
     {
         sysData->mOutputBuffer.resize(outBuffer->mBuffers[0].mNumberChannels*framesPerBuffer);
@@ -288,7 +289,7 @@ System::System(UInt32 sampleRate, UInt32 numFrames, UInt32 options)
     // Set output callback
     AURenderCallbackStruct callbackStruct;
     callbackStruct.inputProc = playbackCallback;
-    callbackStruct.inputProcRefCon = this;
+    callbackStruct.inputProcRefCon = mpData;
     status = AudioUnitSetProperty(data->mAudioUnit, 
                                   kAudioUnitProperty_SetRenderCallback, 
                                   kAudioUnitScope_Global, 

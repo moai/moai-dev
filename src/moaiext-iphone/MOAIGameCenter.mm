@@ -40,6 +40,7 @@ int MOAIGameCenter::_authenticatePlayer ( lua_State* L ) {
 				MOAIGameCenter::Get ().mIsGameCenterSupported = FALSE;
 			}
 			else if ([ GKLocalPlayer localPlayer ].isAuthenticated) {
+				MOAIGameCenter::Get ().mLocalPlayer = localPlayer;
 				MOAIGameCenter::Get ().mIsGameCenterSupported = TRUE;	
 				MOAIGameCenter::Get ().GetAchievements ();						
 			}
@@ -47,6 +48,22 @@ int MOAIGameCenter::_authenticatePlayer ( lua_State* L ) {
 	}	
 	
 	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	getPlayerAlias
+	@text	Returns the user visible player name string from Game Center.
+
+	@in nil
+	@out string playerAlias
+ */
+int MOAIGameCenter::_getPlayerAlias ( lua_State* L ) {
+	MOAILuaState state ( L );
+	
+	cc8* alias = [ MOAIGameCenter::Get ().mLocalPlayer.alias UTF8String ];
+	lua_pushstring ( state, alias );
+	
+	return 1;
 }
 
 //----------------------------------------------------------------//
@@ -274,9 +291,9 @@ GKAchievement* MOAIGameCenter::GetAchievementFromDictionary ( cc8* identifier ) 
         [ mAchievementsDictionary setObject:achievement forKey:achievement.identifier  ];
     }
 	
-	if ( achievement.completed && [ achievement respondsToSelector:@selector( showsCompletionBanner )]) { 
+	/*if ( achievement.completed && [ achievement respondsToSelector:@selector( showsCompletionBanner )]) { 
 		achievement.showsCompletionBanner = NO;
-	}
+	}*/
 	
     return [[ achievement retain ] autorelease ];
 }
@@ -323,6 +340,7 @@ void MOAIGameCenter::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	luaL_Reg regTable[] = {
 		{ "authenticatePlayer",			_authenticatePlayer },
+		{ "getPlayerAlias",					_getPlayerAlias },
 		{ "getScores",					_getScores },
 		{ "isSupported",				_isSupported },
 		{ "reportAchievementProgress",	_reportAchievementProgress },
@@ -345,9 +363,9 @@ void MOAIGameCenter::ReportAchievementProgress ( cc8* identifier, float percent 
 		
 		if ( !achievement.isCompleted ) {
 			
-			if ([ achievement respondsToSelector:@selector( showsCompletionBanner )]) {
+			/*if ([ achievement respondsToSelector:@selector( showsCompletionBanner )]) {
 				achievement.showsCompletionBanner = YES;
-			}
+			}*/
 			achievement.percentComplete = percent;
 			
 			[ achievement reportAchievementWithCompletionHandler: ^(NSError *error) {
