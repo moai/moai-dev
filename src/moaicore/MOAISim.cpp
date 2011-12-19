@@ -880,9 +880,8 @@ double MOAISim::StepSim ( double step, u32 multiplier ) {
 		MOAIInputMgr::Get ().Update ();
 		MOAIActionMgr::Get ().Update (( float )step );		
 		MOAINodeMgr::Get ().Update ();
+		this->mSimTime += step;
 	}
-	
-	this->mSimTime += step * ( double )multiplier;
 	
 	return USDeviceTime::GetTimeInSeconds () - time;
 }
