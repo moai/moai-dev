@@ -5,6 +5,8 @@
 #include <chipmunk/chipmunk.h>
 #include <moaicore/moaicore.h>
 
+static bool gSysInit = true;
+
 //----------------------------------------------------------------//
 static void _cleanup () {
 
@@ -13,6 +15,8 @@ static void _cleanup () {
 #endif
 	
 	MOAIGlobalsMgr::Finalize ();
+	
+	gSysInit = true;
 }
 
 //================================================================//
@@ -24,8 +28,7 @@ void moaicore::InitGlobals ( MOAIGlobals* globals ) {
 
 	uslsext::Init ();
 
-	static bool sysInit = true;
-	if ( sysInit ) {
+	if ( gSysInit ) {
 		
 #if USE_CHIPMUNK
 		cpInitChipmunk ();
@@ -35,7 +38,7 @@ void moaicore::InitGlobals ( MOAIGlobals* globals ) {
 #endif
 		
 		atexit ( _cleanup );
-		sysInit = false;
+		gSysInit = false;
 	}
 
 	MOAIGlobalsMgr::Set ( globals );

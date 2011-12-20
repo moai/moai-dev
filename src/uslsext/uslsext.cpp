@@ -20,6 +20,8 @@
 
 #endif
 
+static bool gSysInit = true;
+
 //----------------------------------------------------------------//
 static void _cleanup () {
 	
@@ -37,6 +39,8 @@ static void _cleanup () {
 	EVP_cleanup ();
 	CRYPTO_cleanup_all_ex_data ();
 #endif
+	
+	gSysInit = true;
 }
 
 //================================================================//
@@ -48,8 +52,7 @@ void uslsext::Init () {
 
 	uslscore::Init ();
 
-	static bool sysInit = true;
-	if ( sysInit ) {;
+	if ( gSysInit ) {;
 
 #if USE_OPENSSL
 		SSL_load_error_strings ();
@@ -57,6 +60,6 @@ void uslsext::Init () {
 #endif
 
 		atexit ( _cleanup );
-		sysInit = false;
+		gSysInit = false;
 	}
 }

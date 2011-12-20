@@ -14,6 +14,15 @@ AKU##funcname##Func m##funcname;
 AKU##funcname##Func AKUGetFunc_##funcname () { if ( gContext ) return gContext->m##funcname; else return fallback;  } \
 void AKUSetFunc_##funcname ( AKU##funcname##Func func ) { if ( gContext ) gContext->m##funcname = func; }
 
+#include <android/log.h>
+
+//================================================================//
+// Utility macros
+//================================================================//
+
+#define PRINT(str) \
+__android_log_write ( ANDROID_LOG_INFO, "MoaiLog", str );
+
 //================================================================//
 // local
 //================================================================//
@@ -21,6 +30,7 @@ void AKUSetFunc_##funcname ( AKU##funcname##Func func ) { if ( gContext ) gConte
 //----------------------------------------------------------------//
 static void _cleanup () {
 
+	PRINT ( "cleanup -> AKUFinalize" )
 	AKUFinalize ();
 }
 
@@ -42,6 +52,7 @@ struct AKUContext {
 typedef STLMap < AKUContextID, AKUContext* >::iterator ContextMapIt;
 typedef STLMap < AKUContextID, AKUContext* > ContextMap;
 
+static bool			gSysInit = true;
 static ContextMap*	gContextMap = 0;
 static AKUContextID	gContextIDCounter = 0;
 static AKUContextID	gContextID = 0;
@@ -96,8 +107,7 @@ void AKUClearMemPool () {
 //----------------------------------------------------------------//
 AKUContextID AKUCreateContext () {
 	
-	static bool sysInit = true;
-	if ( sysInit ) {
+	if ( gSysInit ) {
 		gContextMap = new ContextMap;
 	}
 
@@ -111,9 +121,9 @@ AKUContextID AKUCreateContext () {
 	gContext->mGlobals = MOAIGlobalsMgr::Create ();
 	moaicore::InitGlobals ( gContext->mGlobals );
 
-	if ( sysInit ) {
+	if ( gSysInit ) {
 		atexit ( _cleanup );
-		sysInit = false;
+		gSysInit = false;
 	}
 	return gContextIDCounter;
 }
@@ -203,6 +213,7 @@ void AKUFinalize () {
 		
 		delete gContextMap;
 		gContextMap = 0;
+		gSysInit = true;
 	}
 }
 
