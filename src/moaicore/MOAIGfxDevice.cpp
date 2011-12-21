@@ -914,6 +914,10 @@ void MOAIGfxDevice::SetPenColor ( u32 color ) {
 
 	this->mPenColor.SetRGBA ( color );
 	this->mPackedColor = color;
+	
+	if ( this->mShader ) {
+		this->mShader->UpdatePenColor ( this->mPenColor.mR, this->mPenColor.mG, this->mPenColor.mB, this->mPenColor.mA );
+	}
 }
 
 //----------------------------------------------------------------//
@@ -921,6 +925,10 @@ void MOAIGfxDevice::SetPenColor ( const USColorVec& colorVec ) {
 
 	this->mPenColor = colorVec;
 	this->mPackedColor = this->mPenColor.PackRGBA ();
+	
+	if ( this->mShader ) {
+		this->mShader->UpdatePenColor ( this->mPenColor.mR, this->mPenColor.mG, this->mPenColor.mB, this->mPenColor.mA );
+	}
 }
 
 //----------------------------------------------------------------//
@@ -928,6 +936,10 @@ void MOAIGfxDevice::SetPenColor ( float r, float g, float b, float a ) {
 
 	this->mPenColor.Set ( r, g, b, a );
 	this->mPackedColor = this->mPenColor.PackRGBA ();
+	
+	if ( this->mShader ) {
+		this->mShader->UpdatePenColor ( this->mPenColor.mR, this->mPenColor.mG, this->mPenColor.mB, this->mPenColor.mA );
+	}
 }
 
 //----------------------------------------------------------------//
