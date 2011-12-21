@@ -27,10 +27,27 @@
 #include "moai_nacl.h"
 
 namespace {
-	int g_CLOCKS_PER_SECOND = 1000000;
+	int g_CLOCKS_PER_SECOND = CLOCKS_PER_SEC;
 	double g_startClock;
 	double g_prevClock;
 	int g_USDeviceTimeInit = 0;
+	bool useTimeOfDay = false;
+	double getTimeOfDay () {
+
+		timeval _time;
+		gettimeofday ( &_time, NULL );
+
+		return ( _time.tv_sec + ( _time.tv_usec / 1000000.0 ));
+	}
+
+	double getClock () {
+		if ( useTimeOfDay ) {
+			return getTimeOfDay ();
+		}
+		else {
+			return ( clock () / ( double ) ( g_CLOCKS_PER_SECOND ) );
+		}
+	}
 }
 
 //================================================================//
@@ -43,34 +60,44 @@ namespace {
 		
 		if ( !g_USDeviceTimeInit ) {
 
-			///AJV extremely ugly hack to 'detect' unix systems or any other system where the default clock is wrong
+			//AJV extremely ugly hack to 'detect' unix systems or any other system where the default clock is wrong
 			//check out "clock() issues with beta SDK, chrome 15 vs 16" in the native client discuss Google group
-			double beforeClock = ( clock () / ( double ) ( g_CLOCKS_PER_SECOND ) );
-			double beforeTime = g_core->GetTime ();
+			//TODO: gettimeofday will produce high precision results in Chrom 17, switch to this in pepper_17
+			for ( int i = 0; i < 2; ++i ) {
 
-			while (( g_core->GetTime () - beforeTime ) < 1.0f ) {
-				sleep ( 0.1f );
+				double beforeTime = getTimeOfDay ();
+				double currentTime = beforeTime;
+
+				double beforeClock = ( clock () / ( double ) ( g_CLOCKS_PER_SECOND ) );
+
+				while (( currentTime - beforeTime ) < 0.25f ) {
+					
+					currentTime = getTimeOfDay ();
+					usleep ( 1000 );
+				}
+
+
+				double afterClock = ( clock () / ( double ) ( g_CLOCKS_PER_SECOND ) );
+				double diff = afterClock - beforeClock;
+
+				if ( diff < .23 || diff > 0.27 ) {
+					useTimeOfDay = true;
+				}
+				else {
+					useTimeOfDay = false;
+				}
+
 			}
 
-			double afterClock = ( clock () / ( double ) ( g_CLOCKS_PER_SECOND ) );
-
-			if (( afterClock - beforeClock ) < 0.1f ) {
-				//SetClocksPerSecond ( 1000 );
-				g_CLOCKS_PER_SECOND = 1000;
-			}
-			else {
-				//SetClocksPerSecond ( 1000000 );
-				g_CLOCKS_PER_SECOND = 1000000;
-			}
-
-			g_startClock = ( clock () / ( double ) ( g_CLOCKS_PER_SECOND ) );
+			g_startClock = getClock ();
 			g_prevClock = g_startClock;
 			//AJV End extremely ugly hack
 
 			g_USDeviceTimeInit = 1;
 		}
 
-		double curclock = ( clock () / ( double ) ( g_CLOCKS_PER_SECOND ) );
+		double curclock = getClock ();
+		
 		
 		double clockDelta = curclock - g_prevClock;
 

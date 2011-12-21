@@ -60,6 +60,7 @@ private:
 	enum {
 		END = 0,
 		ADD,
+		ATAN2ROT,
 		CYCLE,
 		DIV,
 		EASE,
@@ -103,6 +104,7 @@ private:
 
 	//----------------------------------------------------------------//
 	static int		_add				( lua_State* L );
+	static int		_atan2rot			( lua_State* L );
 	static int		_cycle				( lua_State* L );
 	static int		_div				( lua_State* L );
 	static int		_ease				( lua_State* L );

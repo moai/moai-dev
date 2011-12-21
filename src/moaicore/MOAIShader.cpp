@@ -615,7 +615,7 @@ void MOAIShader::OnUnload () {
 	}
 
 	while ( g_blockOnMainThreadShaderUnload ) {
-		sleep ( 0.0001f );
+		usleep ( 100 );
 	}
 #else
 	this->DeleteShaders ();

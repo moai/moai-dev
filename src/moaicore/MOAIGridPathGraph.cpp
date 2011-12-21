@@ -157,11 +157,11 @@ void MOAIGridPathGraph::PushNeighbors ( MOAIPathFinder& pathFinder, int nodeID )
 //----------------------------------------------------------------//
 void MOAIGridPathGraph::RegisterLuaClass ( MOAILuaState& state ) {
 
-	state.SetField ( -1, "MANHATTAN_DISTANCE", MANHATTAN_DISTANCE );
-	state.SetField ( -1, "DIAGONAL_DISTANCE", DIAGONAL_DISTANCE );
-	state.SetField ( -1, "EUCLIDEAN_DISTANCE", EUCLIDEAN_DISTANCE );
+	state.SetField ( -1, "MANHATTAN_DISTANCE", ( u32 )MANHATTAN_DISTANCE );
+	state.SetField ( -1, "DIAGONAL_DISTANCE", ( u32 )DIAGONAL_DISTANCE );
+	state.SetField ( -1, "EUCLIDEAN_DISTANCE", ( u32 )EUCLIDEAN_DISTANCE );
 	
-	state.SetField ( -1, "NO_DIAGONALS", NO_DIAGONALS );
+	state.SetField ( -1, "NO_DIAGONALS", ( u32 )NO_DIAGONALS );
 }
 
 //----------------------------------------------------------------//
