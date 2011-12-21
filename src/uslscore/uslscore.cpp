@@ -9,10 +9,13 @@ extern "C" {
 	#include <zipfs/ZIPFSZipFile.h>
 }
 
+static bool gSysInit = true;
+
 //----------------------------------------------------------------//
 static void _cleanup () {
 
 	zipfs_cleanup ();
+	gSysInit = true;
 }
 
 //----------------------------------------------------------------//
@@ -41,8 +44,7 @@ static void _typeCheck () {
 //----------------------------------------------------------------//
 void uslscore::Init () {
 
-	static bool sysInit = true;
-	if ( sysInit ) {
+	if ( gSysInit ) {
 
 		_typeCheck ();
 
@@ -54,6 +56,6 @@ void uslscore::Init () {
 		atexit ( _cleanup );
 		
 		zipfs_init ();
-		sysInit = false;
+		gSysInit = false;
 	}
 }
