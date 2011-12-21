@@ -20,25 +20,6 @@ MemoryAudioSource::MemoryAudioSource(UNTZ::SoundInfo& info, float* interleavedDa
 	mLoadedInMemory = true;
 	mEOF = true;
 }
-/*
-MemoryAudioSource::MemoryAudioSource(UInt32 sampleRate, UInt32 numChannels, UInt32 numSamples, Int16* buffer)
-{
-	mInfo.mChannels = numChannels;
-	mInfo.mSampleRate = sampleRate;
-	mInfo.mLength = (double)numSamples * sampleRate; 
-	mInfo.mBitsPerSample = 4;
-    
-    std::vector<float> data(numSamples, 0);    
-    for(UInt32 i = 0; i < numSamples; i++)
-    {
-        data[i] = *(buffer++)/32767.0;
-    }
-
-	mBuffer = RAudioBuffer(numChannels, numSamples / numChannels, &data[0], true);
-	mLoadedInMemory = true;
-	mEOF = true;
-}
-*/
 
 double MemoryAudioSource::getSampleRate()
 {
