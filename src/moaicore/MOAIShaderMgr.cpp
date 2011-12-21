@@ -77,7 +77,7 @@ MOAIShader& MOAIShaderMgr::GetShader ( u32 shaderID ) {
 
 				shader->ReserveUniforms ( 2 );
 				shader->DeclareUniform ( 0, "transform", MOAIShaderUniform::UNIFORM_WORLD_VIEW_PROJ );
-				shader->DeclareUniform ( 1, "ucolor", MOAIShaderUniform::UNIFORM_COLOR );
+				shader->DeclareUniform ( 1, "ucolor", MOAIShaderUniform::UNIFORM_PEN_COLOR );
 
 				break;
 		}
