@@ -21,18 +21,12 @@ BufferedAudioSource::~BufferedAudioSource()
 {
 }
 
+/*
 bool BufferedAudioSource::init(float* interleavedData, Int64 numSamples)
 {
-/*
-	mLoadedInMemory = true;
-    mEOF = false;
-    
-    mBuffer.resize(numSamples);
-    memcpy(mBuffer.getData(), interleavedData, sizeof(float) * numSamples);
-*/
     return true;
 }
-
+*/
 bool BufferedAudioSource::init(const RString& path, bool loadIntoMemory) 
 { 
 	if(loadIntoMemory)
@@ -166,14 +160,10 @@ Int64 BufferedAudioSource::readFrames(float* buffer, UInt32 numChannels, UInt32 
 		Int64 totalFrames = convertSecondsToSamples(getLength());
         if(state.mCurrentFrame >= totalFrames)
         {
-            if(!isLoadedInMemory())
-                BufferedAudioSourceThread::getInstance()->removeSource(this);
-            
             return 0; // signal that we are done
         }
 		else if(!isLoadedInMemory())
 		{
-//			printf("cache miss\n");
 			BufferedAudioSourceThread::getInstance()->readMore();
 		}
     }

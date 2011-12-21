@@ -29,7 +29,7 @@ public:
 
 	// BufferedAudioSource
 	virtual bool init(const RString& path, bool loadIntoMemory);
-	virtual bool init(float* interleavedData, Int64 numSamples);
+//	virtual bool init(float* interleavedData, Int64 numSamples);
     virtual void close();
 	virtual Int64 decodeData(float* buffer, UInt32 numFrames) { return 0; }
 	virtual void setDecoderPosition(Int64 startFrame) {};

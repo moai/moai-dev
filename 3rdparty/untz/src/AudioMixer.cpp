@@ -81,12 +81,14 @@ int AudioMixer::process(UInt32 numInputChannels, float* inputBuffer, UInt32 numO
 {
     mLock.lock();
 
+	int z = 0;
     memset(outputBuffer, 0, sizeof(float) * numFrames * numOutputChannels);  
 	for(UInt32 i = 0; i < mSounds.size(); ++i)
 	{		
 		UNTZ::Sound *s = mSounds[i];
 		if(s->getData()->getState() == kPlayStatePlaying)
 		{
+			++z;
 			Int64 totalFramesRead = 0;
 			Int64 framesRead = 0;
 			do
@@ -112,6 +114,8 @@ int AudioMixer::process(UInt32 numInputChannels, float* inputBuffer, UInt32 numO
             }
 		}
 	}
+	
+	RPRINT("processed %d sources\n", z);
 
     mLock.unlock();
 
