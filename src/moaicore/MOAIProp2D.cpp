@@ -438,6 +438,8 @@ void MOAIProp2D::Draw ( int subPrimID, bool reload ) {
 	if ( !this->mVisible ) return;
 	if ( !this->BindDeck ()) return;
 
+	this->LoadShader ();
+
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 
 	if ( this->mUVTransform ) {
@@ -447,8 +449,6 @@ void MOAIProp2D::Draw ( int subPrimID, bool reload ) {
 	else {
 		gfxDevice.SetUVTransform ();
 	}
-
-	this->LoadShader ();
 	
 	if ( this->mGrid ) {
 	
@@ -664,15 +664,15 @@ void MOAIProp2D::LoadShader () {
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 
-	gfxDevice.SetPenColor ( this->mColor );
-	gfxDevice.SetBlendMode ( this->mBlendMode );
-
 	if ( this->mShader ) {
 		gfxDevice.SetShader ( this->mShader );
 	}
 	else if ( this->mDeck ) {
 		this->mDeck->LoadShader ();
 	}
+
+	gfxDevice.SetPenColor ( this->mColor );
+	gfxDevice.SetBlendMode ( this->mBlendMode );
 	
 	// TODO
 	//MOAILayoutFrame* parent = MOAICast < MOAILayoutFrame >( this->mParent );
