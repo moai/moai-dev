@@ -81,7 +81,9 @@ void MOAIDeck2D::Draw ( const USAffine2D& transform, MOAIGrid& grid, MOAIDeckRem
 	for ( int y = c0.mY; y <= c1.mY; ++y ) {
 		for ( int x = c0.mX; x <= c1.mX; ++x ) {
 			
-			u32 idx = grid.GetTile ( x, y );
+			MOAICellCoord wrap = grid.WrapCellCoord ( x, y );
+			
+			u32 idx = grid.GetTile ( wrap.mX, wrap.mY );
 			idx = remapper ? remapper->Remap ( idx ) : idx;
 			
 			if ( !idx || ( idx & MOAITileFlags::HIDDEN )) continue;

@@ -4,34 +4,54 @@
 -- http://getmoai.com
 ----------------------------------------------------------------
 
+MOAISim.openWindow ( "test", 512, 512 )
 
-grid = MOAIGridSpace.new ()
-grid:setSize ( 4, 4, 16, 8 )
-grid:setShape ( MOAIGridSpace.DIAMOND_SHAPE )
+viewport = MOAIViewport.new ()
+viewport:setSize ( 512, 512 )
+viewport:setScale ( 512, 512 )
 
-function test ( x, y, xExpected, yExpected )
-	x, y = grid:locToCoord ( x, y )
-	
-	if x == xExpected and y == yExpected then
-		print ( x, y, 'OK!' )
-	else
-		print ( x, y, 'NOT OK!' )
-	end
+layer = MOAILayer2D.new ()
+layer:setViewport ( viewport )
+MOAISim.pushRenderPass ( layer )
+
+grid = MOAIGrid.new ()
+grid:initDiamondGrid ( 4, 4, 128, 128 )
+grid:setRepeat ( true )
+
+grid:setRow ( 1, 	0x01, 0x02, 0x01, 0x02 )
+grid:setRow ( 2,	0x03, 0x04, 0x03, 0x04 )
+grid:setRow ( 3,	0x01, 0x02, 0x01, 0x02 )
+grid:setRow ( 4,	0x03, 0x04, 0x03, 0x04 )
+
+gfxQuadDeck = MOAIGfxQuadDeck2D.new ()
+gfxQuadDeck:setTexture ( "cathead.png" )
+gfxQuadDeck:reserve ( 1 )
+
+tileDeck = MOAITileDeck2D.new ()
+tileDeck:setTexture ( "diamond-tiles.png" )
+tileDeck:setSize ( 4, 4 )
+
+prop = MOAIProp2D.new ()
+prop:setDeck ( tileDeck )
+prop:setGrid ( grid )
+prop:setLoc ( -256, -256 )
+layer:insertProp ( prop )
+
+prop:moveRot ( 360, 10 )
+prop:moveLoc ( 512, 0, 10 )
+
+----------------------------------------------------------------
+local xCoord = 0
+local yCoord = 0
+
+function onPointerEvent ( x, y )
+
+	grid:clearTileFlags ( xCoord, yCoord, MOAIGrid.TILE_HIDE )
+	x, y = layer:wndToWorld ( x, y )
+	x, y = prop:worldToModel ( x, y )
+	xCoord, yCoord = grid:locToCoord ( x, y )
+	xCoord, yCoord = grid:wrapCoord ( xCoord, yCoord )
+	grid:setTileFlags ( xCoord, yCoord, MOAIGrid.TILE_HIDE )
 end
 
-test ( 1, 1,	0, 0 )
-test ( 3, 3,	1, 1 )
-test ( 3, 5,	1, 1 )
-test ( 1, 7,	0, 2 )
-test ( 15, 1,	1, 0 )
-test ( 13, 3,	1, 1 )
-test ( 13, 5,	1, 1 )
-test ( 15, 7,	1, 2 )
-test ( 7, 9,	1, 1 )
-test ( 5, 11,	0, 2 )
-test ( 5, 13,	0, 2 )
-test ( 7, 15,	1, 3 )
-test ( 9, 9,	1, 1 )
-test ( 11, 11,	1, 2 )
-test ( 11, 13,	1, 2 )
-test ( 9, 15,	1, 3 )
+MOAIInputMgr.device.pointer:setCallback ( onPointerEvent )

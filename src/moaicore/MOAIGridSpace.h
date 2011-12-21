@@ -83,14 +83,20 @@ protected:
 	int			mHeight;
 
 	u32			mShape;
+	u32			mRepeat;
 
 	//----------------------------------------------------------------//
 	static int		_cellAddrToCoord	( lua_State* L );
 	static int		_getCellAddr		( lua_State* L );
 	static int		_getSize			( lua_State* L );
 	static int		_getTileLoc			( lua_State* L );
+	static int		_initDiamondGrid	( lua_State* L );
+	static int		_initHexGrid		( lua_State* L );
+	static int		_initObliqueGrid	( lua_State* L );
+	static int		_initRectGrid		( lua_State* L );
 	static int		_locToCellAddr		( lua_State* L );
 	static int		_locToCoord			( lua_State* L );
+	static int		_setRepeat			( lua_State* L );
 	static int		_setShape			( lua_State* L );
 	static int		_setSize			( lua_State* L );
 	static int		_wrapCoord			( lua_State* L );
@@ -118,11 +124,23 @@ public:
 	};
 	
 	enum {
-		SQUARE_SHAPE,
-		DIAMOND_SHAPE,
-		OBLIQUE_SHAPE,
-		HEX_SHAPE,
+		RECT_SHAPE_ID,
+		DIAMOND_SHAPE_ID,
+		OBLIQUE_SHAPE_ID,
+		HEX_SHAPE_ID,
 	};
+	
+	static const u32 REPEAT_X			= 0x00000001;
+	static const u32 REPEAT_Y			= 0x00000002;
+	
+	static const u32 STAGGER_FLAG	= 0x80000000;
+	static const u32 STAGGER_MASK	= 0x80000000;
+	static const u32 SHAPE_MASK		= 0x7FFFFFFF;
+	
+	static const u32 RECT_SHAPE		= RECT_SHAPE_ID;
+	static const u32 DIAMOND_SHAPE	= DIAMOND_SHAPE_ID | STAGGER_FLAG;
+	static const u32 OBLIQUE_SHAPE	= OBLIQUE_SHAPE_ID;
+	static const u32 HEX_SHAPE		= HEX_SHAPE_ID | STAGGER_FLAG;
 	
 	GET_SET ( float, XOff, mXOff )
 	GET_SET ( float, YOff, mYOff )
@@ -137,6 +155,7 @@ public:
 	GET_SET ( int, Height, mHeight )
 	
 	GET_SET ( u32, Shape, mShape )
+	GET_SET ( u32, Repeat, mRepeat )
 	
 	//----------------------------------------------------------------//
 	USVec2D				CellToWorld				( MOAICellCoord cellCoord, USVec2D loc ) const;
@@ -144,8 +163,10 @@ public:
 	MOAICellCoord		Clamp					( MOAICellCoord cellCoord ) const;
 	MOAICellCoord		ClampX					( MOAICellCoord cellCoord ) const;
 	MOAICellCoord		ClampY					( MOAICellCoord cellCoord ) const;
+	
 	USRect				GetBounds				() const;
 	USRect				GetBounds				( MOAICellCoord c0, MOAICellCoord c1 ) const;
+	void				GetBoundsInRect			( USRect rect, MOAICellCoord& c0, MOAICellCoord& c1 ) const;
 	
 	USMatrix3x3			GetGridToWorldMtx		() const;
 	
@@ -175,7 +196,7 @@ public:
 	void				RegisterLuaFuncs		( MOAILuaState& state );
 	void				SerializeIn				( MOAILuaState& state );
 	void				SerializeOut			( MOAILuaState& state );
-	MOAICellCoord		WrapCellCoord			( MOAICellCoord coord ) const;
+	MOAICellCoord		WrapCellCoord			( int xCell, int yCell ) const;
 	USVec2D				WorldToCell				( MOAICellCoord cellCoord, USVec2D loc ) const;
 	USVec2D				WorldToGrid				( USVec2D loc ) const;
 };
