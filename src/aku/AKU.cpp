@@ -14,15 +14,6 @@ AKU##funcname##Func m##funcname;
 AKU##funcname##Func AKUGetFunc_##funcname () { if ( gContext ) return gContext->m##funcname; else return fallback;  } \
 void AKUSetFunc_##funcname ( AKU##funcname##Func func ) { if ( gContext ) gContext->m##funcname = func; }
 
-#include <android/log.h>
-
-//================================================================//
-// Utility macros
-//================================================================//
-
-#define PRINT(str) \
-__android_log_write ( ANDROID_LOG_INFO, "MoaiLog", str );
-
 //================================================================//
 // local
 //================================================================//
@@ -30,7 +21,6 @@ __android_log_write ( ANDROID_LOG_INFO, "MoaiLog", str );
 //----------------------------------------------------------------//
 static void _cleanup () {
 
-	PRINT ( "cleanup -> AKUFinalize" )
 	AKUFinalize ();
 }
 
