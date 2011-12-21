@@ -10,7 +10,7 @@ std::string g_productID;
 
 void MOAIApp::HttpLoaded ( GetURLHandler *handler, const char *buffer, int32_t size ) {
 
-	printf ( "MOAIApp_HttpLoaded code %d, data %s\n", handler->GetStatusCode (), buffer );
+	NACL_LOG ( "MOAIApp_HttpLoaded code %d, data %s\n", handler->GetStatusCode (), buffer );
 
 	if ( handler->GetStatusCode () == 200 ) {
 		NACL_LOG ( "payment success\n" );

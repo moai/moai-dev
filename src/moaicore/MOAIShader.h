@@ -22,17 +22,6 @@ private:
 
 	friend class MOAIShader;
 
-	enum {
-		UNIFORM_NONE,
-		UNIFORM_COLOR,
-		UNIFORM_FLOAT,
-		UNIFORM_INT,
-		UNIFORM_TRANSFORM,
-		UNIFORM_VIEW_PROJ,
-		UNIFORM_WORLD,
-		UNIFORM_WORLD_VIEW_PROJ,
-	};
-
 	STLString mName;
 	
 	u32		mAddr;		// this is resolved when linking the shader
@@ -62,6 +51,17 @@ private:
 public:
 
 	//----------------------------------------------------------------//
+	enum {
+		UNIFORM_NONE,
+		UNIFORM_COLOR,
+		UNIFORM_FLOAT,
+		UNIFORM_INT,
+		UNIFORM_TRANSFORM,
+		UNIFORM_VIEW_PROJ,
+		UNIFORM_WORLD,
+		UNIFORM_WORLD_VIEW_PROJ,
+	};
+
 				MOAIShaderUniform			();
 				~MOAIShaderUniform			();
 };
