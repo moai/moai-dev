@@ -193,6 +193,12 @@ public class MoaiActivity extends Activity implements SensorEventListener, Tapjo
 		
 		mSensorManager.unregisterListener ( this );
 		
+		// If we've been paused, then we're assuming we've lost focus. 
+		// This handles the case where the user presses the lock button
+		// very quickly twice, in which case we do not receive the 
+		// expected windows focus events.
+		mWindowFocusLost = true;
+		
 		mMoaiView.pause ( true );
 	}
 
