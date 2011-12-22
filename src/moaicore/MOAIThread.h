@@ -24,6 +24,7 @@ private:
 	
 	bool			mIsUpdating;
 	bool			mIsActive;
+	bool			mIsFirstRun;
 	
 	//----------------------------------------------------------------//
 	static int		_blockOnAction			( lua_State* L );

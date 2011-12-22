@@ -92,6 +92,7 @@ int MOAIThread::_run ( lua_State* L ) {
 		}
 	}
 
+	self->mIsFirstRun = true;
 	self->mNarg = lua_gettop ( state ) - 2;
 	self->mState = lua_newthread ( state );
 	self->SetLocal ( state, -1, self->mRef );
@@ -117,7 +118,8 @@ bool MOAIThread::IsDone () {
 //----------------------------------------------------------------//
 MOAIThread::MOAIThread () :
 	mState ( 0 ),
-	mNarg ( 0 ) {
+	mNarg ( 0 ),
+	mIsFirstRun(true) {
 
 	RTTI_SINGLE ( MOAIAction )
 }
@@ -131,9 +133,19 @@ void MOAIThread::OnUpdate ( float step ) {
 	UNUSED ( step );
 	
 	if ( this->mState ) {
+
+		int result;
 		
-		int result = lua_resume ( this->mState, this->mNarg );
-		this->mNarg = 0;
+		if ( this->mIsFirstRun ) {
+			result = lua_resume ( this->mState, this->mNarg );
+			this->mNarg = 0;
+			this->mIsFirstRun = false;
+		}
+		else {
+			// Pass the step value as the return result from coroutine.yield()
+			lua_pushnumber( this->mState, step );
+			result = lua_resume ( this->mState, 1 );
+		}
 		
 		if ( this->IsActive ()) {
 			if (( result != LUA_YIELD )) {
