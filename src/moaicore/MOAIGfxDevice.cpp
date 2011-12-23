@@ -1022,7 +1022,7 @@ void MOAIGfxDevice::SetScreenSpace ( MOAIViewport& viewport ) {
 //----------------------------------------------------------------//
 void MOAIGfxDevice::SetShader ( MOAIShader* shader ) {
 
-	if ( this->mShader != shader ) {
+	if ( this->mShader != shader && mIsProgrammable ) {
 	
 		this->Flush ();
 		this->mShader = shader;
