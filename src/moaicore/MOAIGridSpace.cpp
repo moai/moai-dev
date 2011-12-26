@@ -78,6 +78,40 @@ int MOAIGridSpace::_getCellAddr ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	getCellSize
+	@text	Returns the dimensions of a single grid cell.
+
+	@in		MOAIGridSpace self
+	@out	number width
+	@out	number height
+*/
+int MOAIGridSpace::_getCellSize ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGridSpace, "U" )
+
+	state.Push ( self->mCellWidth );
+	state.Push ( self->mCellHeight );
+	
+	return 2;
+}
+
+//----------------------------------------------------------------//
+/**	@name	getOffset
+	@text	Returns the offset of tiles from cells.
+
+	@in		MOAIGridSpace self
+	@out	number xOff
+	@out	number yOff
+*/
+int MOAIGridSpace::_getOffset ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGridSpace, "U" )
+
+	state.Push ( self->mXOff );
+	state.Push ( self->mYOff );
+	
+	return 2;
+}
+
+//----------------------------------------------------------------//
 /**	@name	getSize
 	@text	Returns the dimensions of the grid (in tiles).
 
@@ -118,6 +152,23 @@ int MOAIGridSpace::_getTileLoc ( lua_State* L ) {
 	USVec2D loc = self->GetTilePoint ( coord, position );
 	state.Push ( loc.mX );
 	state.Push ( loc.mY );
+	return 2;
+}
+
+//----------------------------------------------------------------//
+/**	@name	getTileSize
+	@text	Returns the dimensions of a single grid tile.
+
+	@in		MOAIGridSpace self
+	@out	number width
+	@out	number height
+*/
+int MOAIGridSpace::_getTileSize ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGridSpace, "U" )
+
+	state.Push ( self->mTileWidth );
+	state.Push ( self->mTileHeight );
+	
 	return 2;
 }
 
@@ -1032,8 +1083,11 @@ void MOAIGridSpace::RegisterLuaFuncs ( MOAILuaState& state ) {
 	luaL_Reg regTable [] = {
 		{ "cellAddrToCoord",	_cellAddrToCoord },
 		{ "getCellAddr",		_getCellAddr },
+		{ "getCellSize",		_getCellSize },
+		{ "getOffset",			_getOffset },
 		{ "getSize",			_getSize },
 		{ "getTileLoc",			_getTileLoc },
+		{ "getTileSize",		_getTileSize },
 		{ "initDiamondGrid",	_initDiamondGrid },
 		{ "initHexGrid",		_initHexGrid },
 		{ "initObliqueGrid",	_initObliqueGrid },

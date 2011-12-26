@@ -88,8 +88,11 @@ protected:
 	//----------------------------------------------------------------//
 	static int		_cellAddrToCoord	( lua_State* L );
 	static int		_getCellAddr		( lua_State* L );
+	static int		_getCellSize		( lua_State* L );
+	static int		_getOffset			( lua_State* L );
 	static int		_getSize			( lua_State* L );
 	static int		_getTileLoc			( lua_State* L );
+	static int		_getTileSize		( lua_State* L );
 	static int		_initDiamondGrid	( lua_State* L );
 	static int		_initHexGrid		( lua_State* L );
 	static int		_initObliqueGrid	( lua_State* L );

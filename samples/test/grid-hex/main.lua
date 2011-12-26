@@ -35,12 +35,16 @@ prop = MOAIProp2D.new ()
 prop:setDeck ( tileDeck )
 prop:setGrid ( grid )
 prop:setLoc ( -256, -256 )
+prop:forceUpdate ()
 layer:insertProp ( prop )
 
-prop:moveRot ( 360, 10 )
-prop:moveLoc ( 512, 0, 10 )
-
 ----------------------------------------------------------------
+cursor = MOAIProp2D.new ()
+cursor:setDeck ( tileDeck )
+cursor:setScl ( grid:getTileSize ())
+cursor:addScl ( -32 )
+layer:insertProp ( cursor )
+
 local xCoord = 0
 local yCoord = 0
 
@@ -50,7 +54,14 @@ function onPointerEvent ( x, y )
 	x, y = layer:wndToWorld ( x, y )
 	x, y = prop:worldToModel ( x, y )
 	xCoord, yCoord = grid:locToCoord ( x, y )
+	
+	x, y = grid:getTileLoc ( xCoord, yCoord, MOAIGrid.TILE_CENTER )
+	x, y = prop:modelToWorld ( x, y )
+	cursor:setLoc ( x, y )
+	
 	xCoord, yCoord = grid:wrapCoord ( xCoord, yCoord )
+	cursor:setIndex ( grid:getTile ( xCoord, yCoord ))
+	
 	grid:setTileFlags ( xCoord, yCoord, MOAIGrid.TILE_HIDE )
 end
 
