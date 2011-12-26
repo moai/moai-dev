@@ -102,8 +102,10 @@ protected:
 	static int		_wrapCoord			( lua_State* L );
 
 	//----------------------------------------------------------------//
-	USVec2D			GetRectPoint		( float x, float y, float width, float height, u32 position ) const;
-	virtual void	OnResize			();
+	MOAICellCoord	GetHexCellCoord			( float x, float y, float a, float b ) const;
+	MOAICellCoord	GetObliqueCellCoord		( float x, float y ) const;
+	USVec2D			GetRectPoint			( float x, float y, float width, float height, u32 position ) const;
+	virtual void	OnResize				();
 
 public:
 	
@@ -130,8 +132,8 @@ public:
 		HEX_SHAPE_ID,
 	};
 	
-	static const u32 REPEAT_X			= 0x00000001;
-	static const u32 REPEAT_Y			= 0x00000002;
+	static const u32 REPEAT_X		= 0x00000001;
+	static const u32 REPEAT_Y		= 0x00000002;
 	
 	static const u32 STAGGER_FLAG	= 0x80000000;
 	static const u32 STAGGER_MASK	= 0x80000000;

@@ -14,12 +14,32 @@
 #define LOG2E		M_LOG2E
 #define LOG10E		M_LOG10E
 
+#ifndef ABS
+	#define ABS(a) (a < 0 ? -a : a)
+#endif
+
 #ifndef MIN
 	#define MIN(a,b) (a < b ? a : b)
 #endif
 
 #ifndef MAX
 	#define MAX(a,b) (a > b ? a : b)
+#endif
+
+#ifndef M_SQRT1_2
+	#define M_SQRT1_2     0.70710678118654752440084436210
+#endif
+
+#ifndef M_SQRT2
+	#define M_SQRT2       1.41421356237309504880168872421
+#endif
+
+#ifndef M_SQRT3
+	#define M_SQRT3       1.73205080756887729352744634151
+#endif
+
+#ifndef M_SQRTPI
+	#define M_SQRTPI      1.77245385090551602729816748334
 #endif
 
 #endif

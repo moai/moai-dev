@@ -172,8 +172,7 @@ int MOAIGridSpace::_initDiamondGrid ( lua_State* L ) {
 	@in		MOAIGridSpace self
 	@in		number width
 	@in		number height
-	@opt	number tileWidth		Default valus is 1.
-	@opt	number tileHeight		Default valus is 1.
+	@opt	number radius			Default valus is 1.
 	@opt	number xGutter			Default valus is 0.
 	@opt	number yGutter			Default value is 0.
 	@out	nil
@@ -184,11 +183,13 @@ int MOAIGridSpace::_initHexGrid ( lua_State* L ) {
 	u32 width			= state.GetValue < u32 >( 2, 0 );
 	u32 height			= state.GetValue < u32 >( 3, 0 );
 	
-	float tileWidth		= state.GetValue < float >( 4, 1.0f );
-	float tileHeight	= state.GetValue < float >( 5, 1.0f );
+	float hRad			= state.GetValue < float >( 4, 1.0f ) * 0.5f;
 
-	float xGutter		= state.GetValue < float >( 6, 0.0f );
-	float yGutter		= state.GetValue < float >( 7, 0.0f );
+	float xGutter		= state.GetValue < float >( 5, 0.0f );
+	float yGutter		= state.GetValue < float >( 6, 0.0f );
+
+	float tileWidth = hRad * 6.0f;
+	float tileHeight = hRad * ( float )( M_SQRT3 * 2.0 );
 
 	self->mShape = HEX_SHAPE;
 
@@ -198,10 +199,10 @@ int MOAIGridSpace::_initHexGrid ( lua_State* L ) {
 	self->mCellWidth = tileWidth;
 	self->mCellHeight = tileHeight * 0.5f;
 	
-	self->mXOff = xGutter * 0.5f;
+	self->mXOff = hRad + ( xGutter * 0.5f );
 	self->mYOff = ( yGutter * 0.5f ) - ( tileHeight * 0.25f );
 	
-	self->mTileWidth = tileWidth - xGutter;
+	self->mTileWidth = ( hRad * 4.0f ) - xGutter;
 	self->mTileHeight = tileHeight - yGutter;
 	
 	self->OnResize ();
@@ -637,82 +638,25 @@ MOAICellCoord MOAIGridSpace::GetCellCoord ( USVec2D loc ) const {
 //----------------------------------------------------------------//
 MOAICellCoord MOAIGridSpace::GetCellCoord ( float x, float y ) const {
 	
-	int xTile = 0;
-	int yTile = 0;
+	MOAICellCoord cellCoord ( 0, 0 );
 	
 	switch ( this->mShape & SHAPE_MASK ) {
-	
-		case RECT_SHAPE_ID: {
-	
-			xTile = ( int )floorf ( x / this->mCellWidth );
-			yTile = ( int )floorf ( y / this->mCellHeight );
-
-			break;
-		}
 		
-		case DIAMOND_SHAPE_ID: {
+		case DIAMOND_SHAPE_ID:
+			return this->GetHexCellCoord ( x, y, 0.0f, 4.0f );
+		
+		case HEX_SHAPE_ID:
+			return this->GetHexCellCoord ( x, y, 2.0f, 10.0f );
 			
-			// get the coord in tiles
-			float xUnit = ( x / this->mCellWidth );
-			float yUnit = ( y / this->mCellHeight );
-			
-			// get the y tile index
-			yTile = ( int )floorf ( yUnit );
-			
-			int stepRight = 0;
-			int stepLeft = -1;
-			
-			// need to offset x into the previous tile if y is odd
-			if ( yTile & 0x01 ) {
-				xUnit -= 0.5f;
-				
-				stepRight = 1;
-				stepLeft = 0;
-			}
-			
-			// get the x tile index
-			xTile = ( int )floorf ( xUnit );
-			
-			// now get the local tile coord
-			// to make the math easy, local tile is 4 x 2
-			float xLocal = ( xUnit - ( float )xTile ) * 4.0f;
-			float yLocal = (( yUnit - ( float )yTile ) * 2.0f ) - 1.0f;
-			
-			// check the position of the coord depending on tile quadrant
-			// offset the tile index if out of bounds on any corner
-			if ( xLocal < 1.0f ) {
-
-				if ( yLocal < 0.0f ) {
-					if ( xLocal < -yLocal ) {
-						xTile = xTile + stepLeft;
-						yTile = yTile - 1;
-					} 
-				}
-				else if ( xLocal < yLocal ) {
-					xTile = xTile + stepLeft;
-					yTile = yTile + 1;
-				}
-			}
-			else if ( xLocal > 3.0f ) {
-				
-				xLocal = -( xLocal - 4.0f );
-				
-				if ( yLocal < 0.0f ) {
-					if ( xLocal < -yLocal ) {
-						xTile = xTile + stepRight;
-						yTile = yTile - 1;
-					}
-				}
-				else if ( xLocal < yLocal ) {
-					xTile = xTile + stepRight;
-					yTile = yTile + 1;
-				}
-			}
+		case OBLIQUE_SHAPE_ID:
+			return this->GetObliqueCellCoord ( x, y );
+		
+		case RECT_SHAPE_ID:
+			cellCoord.mX = ( int )floorf ( x / this->mCellWidth );
+			cellCoord.mY = ( int )floorf ( y / this->mCellHeight );
 			break;
-		}
 	}
 	
-	MOAICellCoord cellCoord ( xTile, yTile );
 	return cellCoord;
 }
 
@@ -761,6 +705,97 @@ USRect MOAIGridSpace::GetCellRect ( MOAICellCoord cellCoord ) const {
 	rect.mYMax = rect.mYMin + this->mCellHeight;
 	
 	return rect;
+}
+
+//----------------------------------------------------------------//
+MOAICellCoord MOAIGridSpace::GetHexCellCoord ( float x, float y, float a, float b ) const {
+
+	// get the coord in tiles
+	float xUnit = ( x / this->mCellWidth );
+	float yUnit = ( y / this->mCellHeight );
+	
+	// get the y tile index
+	int yTile = ( int )floorf ( yUnit );
+	
+	int stepRight = 0;
+	int stepLeft = -1;
+	
+	// need to offset x into the previous tile if y is odd
+	if ( yTile & 0x01 ) {
+		xUnit -= 0.5f;
+		
+		stepRight = 1;
+		stepLeft = 0;
+	}
+	
+	// get the x tile index
+	int xTile = ( int )floorf ( xUnit );
+	
+	// now get the local coord
+	float xLocal = ( xUnit - ( float )xTile ) * ( a + b );
+	float yLocal = (( yUnit - ( float )yTile ) * 2.0f ) - 1.0f;
+
+	// check the position of the coord depending on tile quadrant
+	// offset the tile index if out of bounds on any corner
+	if ( xLocal < ( a + 1.0f )) {
+	
+		if ( yLocal < 0.0f ) {
+			if ( yLocal < ( a - xLocal )) {
+				xTile = xTile + stepLeft;
+				yTile = yTile - 1;
+			}
+		}
+		else if ( yLocal > ( xLocal - a )) {
+			xTile = xTile + stepLeft;
+			yTile = yTile + 1;
+		}
+	}
+	else if ( xLocal > ( b - 1.0f )) {
+		
+		if ( yLocal < 0.0f ) {
+			if ( yLocal < ( xLocal - b )) {
+				xTile = xTile + stepRight;
+				yTile = yTile - 1;
+			}
+		}
+		else if ( yLocal > ( b - xLocal )) {
+			xTile = xTile + stepRight;
+			yTile = yTile + 1;
+		}
+	}
+	
+	MOAICellCoord cellCoord ( xTile, yTile );
+	return cellCoord;
+}
+
+//----------------------------------------------------------------//
+MOAICellCoord MOAIGridSpace::GetObliqueCellCoord ( float x, float y ) const {
+
+	// get the coord in tiles
+	float xUnit = ( x / this->mCellWidth );
+	float yUnit = ( y / this->mCellHeight );
+	
+	// get the y tile index
+	int yTile = ( int )floorf ( yUnit );
+	
+	// need to offset x into the previous tile if y is odd
+	if ( yTile & 0x01 ) {
+		xUnit -= 0.5f;
+	}
+	
+	// get the x tile index
+	int xTile = ( int )floorf ( xUnit );
+	
+	// now get the local coord
+	float xLocal = ( xUnit - ( float )xTile );
+	float yLocal = ( yUnit - ( float )yTile );
+	
+	if ( yLocal < ( 1.0f - xLocal )) {
+		xTile = xTile - 1;
+	}
+	
+	MOAICellCoord cellCoord ( xTile, yTile );
+	return cellCoord;
 }
 
 //----------------------------------------------------------------//
@@ -846,7 +881,7 @@ USRect MOAIGridSpace::GetTileRect ( MOAICellCoord cellCoord ) const {
 	USRect rect;
 	
 	rect.mXMin = ( cellCoord.mX * this->mCellWidth ) + this->mXOff + xOff;
-	rect.mYMin = ( cellCoord.mY * this->mCellHeight ) + this->mXOff;
+	rect.mYMin = ( cellCoord.mY * this->mCellHeight ) + this->mYOff;
 	
 	rect.mXMax = rect.mXMin + this->mTileWidth;
 	rect.mYMax = rect.mYMin + this->mTileHeight;

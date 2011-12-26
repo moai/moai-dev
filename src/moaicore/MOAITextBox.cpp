@@ -313,7 +313,7 @@ int MOAITextBox::_setString ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getStringBounds
+/**	@name	setStringColor
 	@text	Sets the color of a sub string in the text. Only affects
 			text displayed on the current page.
 
