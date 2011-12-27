@@ -272,7 +272,6 @@ int MOAIGridSpace::_initHexGrid ( lua_State* L ) {
 	@opt	number tileHeight		Default valus is 1.
 	@opt	number xGutter			Default valus is 0.
 	@opt	number yGutter			Default value is 0.
-	@opt	boolean staggered		Default value is false.
 	@out	nil
 */
 int MOAIGridSpace::_initObliqueGrid ( lua_State* L ) {
@@ -287,9 +286,7 @@ int MOAIGridSpace::_initObliqueGrid ( lua_State* L ) {
 	float xGutter		= state.GetValue < float >( 6, 0.0f );
 	float yGutter		= state.GetValue < float >( 7, 0.0f );
 	
-	bool staggered		= state.GetValue < bool >( 8, false );
-	
-	self->mShape = OBLIQUE_SHAPE_ID | ( staggered ? STAGGER_FLAG : 0 );
+	self->mShape = OBLIQUE_SHAPE;
 
 	self->mWidth = width;
 	self->mHeight = height;
@@ -300,7 +297,7 @@ int MOAIGridSpace::_initObliqueGrid ( lua_State* L ) {
 	self->mXOff = xGutter * 0.5f;
 	self->mYOff = yGutter * 0.5f;
 	
-	self->mTileWidth = tileWidth - xGutter;
+	self->mTileWidth = ( tileWidth * 2.0f ) - xGutter;
 	self->mTileHeight = tileHeight - yGutter;
 	
 	self->OnResize ();
@@ -319,7 +316,6 @@ int MOAIGridSpace::_initObliqueGrid ( lua_State* L ) {
 	@opt	number tileHeight		Default valus is 1.
 	@opt	number xGutter			Default valus is 0.
 	@opt	number yGutter			Default value is 0.
-	@opt	boolean staggered		Default value is false.
 	@out	nil
 */
 int MOAIGridSpace::_initRectGrid ( lua_State* L ) {
@@ -334,9 +330,7 @@ int MOAIGridSpace::_initRectGrid ( lua_State* L ) {
 	float xGutter		= state.GetValue < float >( 6, 0.0f );
 	float yGutter		= state.GetValue < float >( 7, 0.0f );
 	
-	bool staggered		= state.GetValue < bool >( 8, false );
-	
-	self->mShape = RECT_SHAPE_ID | ( staggered ? STAGGER_FLAG : 0 );
+	self->mShape = RECT_SHAPE;
 
 	self->mWidth = width;
 	self->mHeight = height;
@@ -630,6 +624,10 @@ void MOAIGridSpace::GetBoundsInRect ( USRect rect, MOAICellCoord& c0, MOAICellCo
 		c1.mY++;
 	}
 	
+	if ( this->mShape == OBLIQUE_SHAPE ) {
+		c0.mX--;
+	}
+	
 	if ( !( this->mRepeat & REPEAT_X )) {
 		c0 = this->ClampX ( c0 );
 		c1 = this->ClampX ( c1 );
@@ -691,18 +689,18 @@ MOAICellCoord MOAIGridSpace::GetCellCoord ( float x, float y ) const {
 	
 	MOAICellCoord cellCoord ( 0, 0 );
 	
-	switch ( this->mShape & SHAPE_MASK ) {
+	switch ( this->mShape ) {
 		
-		case DIAMOND_SHAPE_ID:
+		case DIAMOND_SHAPE:
 			return this->GetHexCellCoord ( x, y, 0.0f, 4.0f );
 		
-		case HEX_SHAPE_ID:
+		case HEX_SHAPE:
 			return this->GetHexCellCoord ( x, y, 2.0f, 10.0f );
 			
-		case OBLIQUE_SHAPE_ID:
+		case OBLIQUE_SHAPE:
 			return this->GetObliqueCellCoord ( x, y );
 		
-		case RECT_SHAPE_ID:
+		case RECT_SHAPE:
 			cellCoord.mX = ( int )floorf ( x / this->mCellWidth );
 			cellCoord.mY = ( int )floorf ( y / this->mCellHeight );
 			break;
@@ -826,22 +824,15 @@ MOAICellCoord MOAIGridSpace::GetObliqueCellCoord ( float x, float y ) const {
 	float xUnit = ( x / this->mCellWidth );
 	float yUnit = ( y / this->mCellHeight );
 	
-	// get the y tile index
-	int yTile = ( int )floorf ( yUnit );
-	
-	// need to offset x into the previous tile if y is odd
-	if ( yTile & 0x01 ) {
-		xUnit -= 0.5f;
-	}
-	
-	// get the x tile index
+	// get the tile index
 	int xTile = ( int )floorf ( xUnit );
+	int yTile = ( int )floorf ( yUnit );
 	
 	// now get the local coord
 	float xLocal = ( xUnit - ( float )xTile );
 	float yLocal = ( yUnit - ( float )yTile );
 	
-	if ( yLocal < ( 1.0f - xLocal )) {
+	if ( yLocal > xLocal ) {
 		xTile = xTile - 1;
 	}
 	

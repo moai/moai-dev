@@ -15,7 +15,7 @@ layer:setViewport ( viewport )
 MOAISim.pushRenderPass ( layer )
 
 grid = MOAIGrid.new ()
-grid:initDiamondGrid ( 4, 4, 128, 64 )
+grid:initObliqueGrid ( 4, 4, 64, 64 )
 grid:setRepeat ( true )
 
 grid:setRow ( 1, 	0x01, 0x02, 0x01, 0x02 )
@@ -28,8 +28,8 @@ gfxQuadDeck:setTexture ( "cathead.png" )
 gfxQuadDeck:reserve ( 1 )
 
 tileDeck = MOAITileDeck2D.new ()
-tileDeck:setTexture ( "diamond-tiles.png" )
-tileDeck:setSize ( 4, 4 )
+tileDeck:setTexture ( "oblique-tiles.png" )
+tileDeck:setSize ( 4, 8 )
 
 prop = MOAIProp2D.new ()
 prop:setDeck ( tileDeck )

@@ -14,6 +14,7 @@ public:
 	float mHCost;
 	float mVCost;
 	float mDCost;
+	float mZCost;
 
 	float mGWeight;
 	float mHWeight;
@@ -122,10 +123,6 @@ void MOAIGridPathGraph::PushNeighbors ( MOAIPathFinder& pathFinder, int nodeID )
 	
 	MOAIGridPathGraphParams params;
 	
-	params.mHCost = this->mGrid->GetCellWidth ();
-	params.mVCost = this->mGrid->GetCellHeight ();
-	params.mDCost = sqrtf (( params.mHCost * params.mHCost ) + ( params.mVCost * params.mVCost ));
-	
 	params.mGWeight = pathFinder.GetGWeight ();
 	params.mHWeight = pathFinder.GetHWeight ();
 	
@@ -140,17 +137,106 @@ void MOAIGridPathGraph::PushNeighbors ( MOAIPathFinder& pathFinder, int nodeID )
 	
 	u32 tile0 = this->mGrid->GetTile ( xTile, yTile );
 	
-	this->PushNeighbor ( pathFinder, params, tile0, xTile - 1, yTile, params.mHCost );
-	this->PushNeighbor ( pathFinder, params, tile0, xTile + 1, yTile, params.mHCost );
-	this->PushNeighbor ( pathFinder, params, tile0, xTile, yTile + 1, params.mVCost );
-	this->PushNeighbor ( pathFinder, params, tile0, xTile, yTile - 1, params.mVCost );
+	switch ( this->mGrid->GetShape ()) {
 	
-	if (( flags & NO_DIAGONALS ) == 0 ) {
-	
-		this->PushNeighbor ( pathFinder, params, tile0, xTile - 1, yTile - 1, params.mDCost );
-		this->PushNeighbor ( pathFinder, params, tile0, xTile - 1, yTile + 1, params.mDCost );
-		this->PushNeighbor ( pathFinder, params, tile0, xTile + 1, yTile - 1, params.mDCost );
-		this->PushNeighbor ( pathFinder, params, tile0, xTile + 1, yTile + 1, params.mDCost );
+		case MOAIGridSpace::RECT_SHAPE: {
+			
+			params.mHCost = this->mGrid->GetCellWidth ();
+			params.mVCost = this->mGrid->GetCellHeight ();
+			params.mDCost = sqrtf (( params.mHCost * params.mHCost ) + ( params.mVCost * params.mVCost ));
+			params.mZCost = 0.0f;
+			
+			this->PushNeighbor ( pathFinder, params, tile0, xTile - 1, yTile, params.mHCost );
+			this->PushNeighbor ( pathFinder, params, tile0, xTile + 1, yTile, params.mHCost );
+			this->PushNeighbor ( pathFinder, params, tile0, xTile, yTile + 1, params.mVCost );
+			this->PushNeighbor ( pathFinder, params, tile0, xTile, yTile - 1, params.mVCost );
+			
+			if (( flags & NO_DIAGONALS ) == 0 ) {
+				
+				this->PushNeighbor ( pathFinder, params, tile0, xTile - 1, yTile - 1, params.mDCost );
+				this->PushNeighbor ( pathFinder, params, tile0, xTile - 1, yTile + 1, params.mDCost );
+				this->PushNeighbor ( pathFinder, params, tile0, xTile + 1, yTile - 1, params.mDCost );
+				this->PushNeighbor ( pathFinder, params, tile0, xTile + 1, yTile + 1, params.mDCost );
+			}
+			break;
+		}
+		case MOAIGridSpace::DIAMOND_SHAPE: {
+			
+			params.mHCost = this->mGrid->GetCellWidth ();
+			params.mVCost = this->mGrid->GetCellHeight () * 2.0f;
+			params.mDCost = sqrtf (( params.mHCost * params.mHCost ) + ( params.mVCost * params.mVCost )) * 0.5f;
+			params.mZCost = 0.0f;
+		
+			int stepRight = 0;
+			int stepLeft = -1;
+			
+			// need to offset x into the previous tile if y is odd
+			if ( yTile & 0x01 ) {
+				stepRight = 1;
+				stepLeft = 0;
+			}
+			
+			this->PushNeighbor ( pathFinder, params, tile0, xTile + stepLeft,	yTile - 1, params.mDCost );
+			this->PushNeighbor ( pathFinder, params, tile0, xTile + stepRight,	yTile - 1, params.mDCost );
+			this->PushNeighbor ( pathFinder, params, tile0, xTile + stepLeft,	yTile + 1, params.mDCost );
+			this->PushNeighbor ( pathFinder, params, tile0, xTile + stepRight,	yTile + 1, params.mDCost );
+			
+			if (( flags & NO_DIAGONALS ) == 0 ) {
+			
+				this->PushNeighbor ( pathFinder, params, tile0, xTile - 1, yTile, params.mHCost );
+				this->PushNeighbor ( pathFinder, params, tile0, xTile + 1, yTile, params.mHCost );
+				this->PushNeighbor ( pathFinder, params, tile0, xTile, yTile - 2, params.mVCost );
+				this->PushNeighbor ( pathFinder, params, tile0, xTile, yTile + 2, params.mVCost );
+			}
+			break;
+		}
+		case MOAIGridSpace::OBLIQUE_SHAPE: {
+			
+			params.mHCost = this->mGrid->GetCellWidth ();
+			params.mVCost = this->mGrid->GetCellHeight ();
+			params.mDCost = sqrtf (( params.mHCost * params.mHCost ) + ( params.mVCost * params.mVCost ));
+			params.mZCost = sqrtf (( params.mHCost * params.mHCost * 0.4f ) + ( params.mVCost * params.mVCost ));
+			
+			this->PushNeighbor ( pathFinder, params, tile0, xTile - 1, yTile, params.mHCost );
+			this->PushNeighbor ( pathFinder, params, tile0, xTile + 1, yTile, params.mHCost );
+			this->PushNeighbor ( pathFinder, params, tile0, xTile - 1, yTile - 1, params.mDCost );
+			this->PushNeighbor ( pathFinder, params, tile0, xTile + 1, yTile + 1, params.mDCost );
+			
+			if (( flags & NO_DIAGONALS ) == 0 ) {
+				
+				this->PushNeighbor ( pathFinder, params, tile0, xTile, yTile - 1, params.mVCost );
+				this->PushNeighbor ( pathFinder, params, tile0, xTile, yTile + 1, params.mVCost );
+				this->PushNeighbor ( pathFinder, params, tile0, xTile - 2, yTile - 1, params.mZCost );
+				this->PushNeighbor ( pathFinder, params, tile0, xTile + 2, yTile + 1, params.mZCost );
+			}
+			break;
+		}
+		case MOAIGridSpace::HEX_SHAPE: {
+			
+			params.mHCost = this->mGrid->GetCellWidth ();
+			params.mVCost = this->mGrid->GetCellHeight () * 2.0f;
+			params.mDCost = sqrtf (( params.mHCost * params.mHCost ) + ( params.mVCost * params.mVCost )) * 0.5f;
+			params.mZCost = 0.0f;
+			
+			int stepRight = 0;
+			int stepLeft = -1;
+			
+			// need to offset x into the previous tile if y is odd
+			if ( yTile & 0x01 ) {
+				stepRight = 1;
+				stepLeft = 0;
+			}
+			
+			this->PushNeighbor ( pathFinder, params, tile0, xTile, yTile - 2, params.mVCost );
+			this->PushNeighbor ( pathFinder, params, tile0, xTile, yTile + 2, params.mVCost );
+			
+			this->PushNeighbor ( pathFinder, params, tile0, xTile + stepLeft,	yTile - 1, params.mDCost );
+			this->PushNeighbor ( pathFinder, params, tile0, xTile + stepRight,	yTile - 1, params.mDCost );
+			this->PushNeighbor ( pathFinder, params, tile0, xTile + stepLeft,	yTile + 1, params.mDCost );
+			this->PushNeighbor ( pathFinder, params, tile0, xTile + stepRight,	yTile + 1, params.mDCost );
+			
+			break;
+		}
 	}
 }
 

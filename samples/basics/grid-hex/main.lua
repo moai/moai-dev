@@ -66,3 +66,4 @@ function onPointerEvent ( x, y )
 end
 
 MOAIInputMgr.device.pointer:setCallback ( onPointerEvent )
+onPointerEvent ( 0, 0 )

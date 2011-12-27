@@ -128,13 +128,6 @@ public:
 		TILE_CENTER,
 	};
 	
-	enum {
-		RECT_SHAPE_ID,
-		DIAMOND_SHAPE_ID,
-		OBLIQUE_SHAPE_ID,
-		HEX_SHAPE_ID,
-	};
-	
 	static const u32 REPEAT_X		= 0x00000001;
 	static const u32 REPEAT_Y		= 0x00000002;
 	
@@ -142,10 +135,10 @@ public:
 	static const u32 STAGGER_MASK	= 0x80000000;
 	static const u32 SHAPE_MASK		= 0x7FFFFFFF;
 	
-	static const u32 RECT_SHAPE		= RECT_SHAPE_ID;
-	static const u32 DIAMOND_SHAPE	= DIAMOND_SHAPE_ID | STAGGER_FLAG;
-	static const u32 OBLIQUE_SHAPE	= OBLIQUE_SHAPE_ID;
-	static const u32 HEX_SHAPE		= HEX_SHAPE_ID | STAGGER_FLAG;
+	static const u32 RECT_SHAPE		= 0x00000000;
+	static const u32 DIAMOND_SHAPE	= 0x00000001 | STAGGER_FLAG;
+	static const u32 OBLIQUE_SHAPE	= 0x00000002;
+	static const u32 HEX_SHAPE		= 0x00000003 | STAGGER_FLAG;
 	
 	GET_SET ( float, XOff, mXOff )
 	GET_SET ( float, YOff, mYOff )
