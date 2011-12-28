@@ -11,7 +11,8 @@
 // MOAIThread
 //================================================================//
 /**	@name MOAIThread
-	@text Binds a Lua coroutine to a MOAIAction.
+	@text Binds a Lua coroutine to a MOAIAction. MOAIThread just integrates
+	Lua's coroutines with the Moai action tree - no system thread is created.
 */
 class MOAIThread :
 	public MOAIAction {

@@ -23,6 +23,7 @@ int MOAIDraw::_drawAxisGrid ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	drawCircle
+	@text	Draw a circle.
 	
 	@in		number x
 	@in		number y
@@ -45,6 +46,7 @@ int MOAIDraw::_drawCircle ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	drawEllipse
+	@text	Draw an ellipse.
 	
 	@in		number x
 	@in		number y
@@ -77,6 +79,7 @@ int MOAIDraw::_drawGrid ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	drawLine
+	@text	Draw a line.
 	
 	@in		...		List of vertices (x, y)
 	@out	nil
@@ -89,6 +92,7 @@ int MOAIDraw::_drawLine ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	drawPoints
+	@text	Draw a list of points.
 	
 	@in		...		List of vertices (x, y)
 	@out	nil
@@ -109,6 +113,7 @@ int MOAIDraw::_drawPoints ( lua_State* L ) {
 	@out	nil
 */
 int MOAIDraw::_drawRay ( lua_State* L ) {
+	@text	Draw a ray.
 
 	MOAILuaState state ( L );
 	
@@ -123,6 +128,7 @@ int MOAIDraw::_drawRay ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	drawRect
+	@text	Draw a rectangle.
 	
 	@in		number x0
 	@in		number y0
@@ -145,6 +151,7 @@ int MOAIDraw::_drawRect ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	fillCircle
+	@text	Draw a filled circle.
 	
 	@in		number x
 	@in		number y
@@ -167,6 +174,7 @@ int MOAIDraw::_fillCircle ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	fillEllipse
+	@text	Draw a filled ellipse.
 	
 	@in		number x
 	@in		number y
@@ -192,6 +200,7 @@ int MOAIDraw::_fillEllipse ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	fillFan
+	@text	Draw a filled fan.
 	
 	@in		...		List of vertices (x, y)
 	@out	nil
@@ -204,6 +213,7 @@ int MOAIDraw::_fillFan ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	fillRect
+	@text	Draw a filled rectangle.
 	
 	@in		number x0
 	@in		number y0

@@ -13,6 +13,9 @@ class MOAIHttpTaskInfo;
 //================================================================//
 // MOAIHttpTask
 //================================================================//
+/**	@name	MOAIHttpTask
+	@text	Object for performing asynchronous HTTP/HTTPS tasks.
+*/
 class MOAIHttpTask :
 	public virtual MOAILuaObject {
 private:

@@ -11,6 +11,10 @@ class MOAITexture;
 //================================================================//
 // MOAIDraw
 //================================================================//
+/**	@name	MOAIDraw
+	@text	Singleton for performing immediate mode drawing operations.
+			See MOAIScriptDeck.
+*/
 class MOAIDraw :
 	public MOAIGlobalClass < MOAIDraw, MOAILuaObject > {
 private:
