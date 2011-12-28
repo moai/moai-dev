@@ -105,6 +105,7 @@ int MOAIDraw::_drawPoints ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	drawRay
+	@text	Draw a ray.
 	
 	@in		number x
 	@in		number y
@@ -113,7 +114,6 @@ int MOAIDraw::_drawPoints ( lua_State* L ) {
 	@out	nil
 */
 int MOAIDraw::_drawRay ( lua_State* L ) {
-	@text	Draw a ray.
 
 	MOAILuaState state ( L );
 	

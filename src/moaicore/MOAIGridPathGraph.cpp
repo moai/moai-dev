@@ -66,12 +66,13 @@ float MOAIGridPathGraph::ComputeHeuristic ( MOAIGridPathGraphParams& params, con
 			}
 			return ( vMove * params.mDCost ) + (( hMove - vMove ) * params.mHCost );
 		
-		case EUCLIDEAN_DISTANCE:
+		case EUCLIDEAN_DISTANCE: {
 			
-			float hDist = hMove * params.mHCost;
-			float vDist = vMove * params.mVCost;
+			USVec2D v0 = this->mGrid->GetCellPoint ( c0, MOAIGridSpace::TILE_CENTER );
+			USVec2D v1 = this->mGrid->GetCellPoint ( c1, MOAIGridSpace::TILE_CENTER );
 			
-			return sqrtf (( hDist * hDist ) + ( vDist * vDist ));
+			return v0.Dist ( v1 );
+		}
 	};
 	return 0.0f;
 }

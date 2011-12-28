@@ -23,10 +23,6 @@ grid:setRow ( 2,	0x03, 0x04, 0x03, 0x04 )
 grid:setRow ( 3,	0x01, 0x02, 0x01, 0x02 )
 grid:setRow ( 4,	0x03, 0x04, 0x03, 0x04 )
 
-gfxQuadDeck = MOAIGfxQuadDeck2D.new ()
-gfxQuadDeck:setTexture ( "cathead.png" )
-gfxQuadDeck:reserve ( 1 )
-
 tileDeck = MOAITileDeck2D.new ()
 tileDeck:setTexture ( "diamond-tiles.png" )
 tileDeck:setSize ( 4, 4 )
