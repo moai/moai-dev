@@ -1,2 +1,2 @@
 #include <uslsext/uslsext.h>
-#include <moaicore/moaiconf.h>
+#include <moaicore-config.h>

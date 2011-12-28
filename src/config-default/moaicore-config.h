@@ -1,5 +1,5 @@
-#ifndef MOAICONF_H
-#define MOAICONF_H
+#ifndef MOAICORE_CONFIG_H
+#define MOAICORE_CONFIG_H
 
 #ifndef USE_BOX2D
 	#define USE_BOX2D 1

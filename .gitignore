@@ -7,6 +7,8 @@ Thumbs.db
 /ide/bin
 /ide/obj
 
+/src/config
+
 build/
 xcuserdata/
 *.pbxuser

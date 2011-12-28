@@ -677,7 +677,7 @@ void MOAIParticleScript::Run ( MOAIParticleSystem& system, MOAIParticle& particl
 				READ_VALUE  ( v1, bytecode );
 				
 				if ( r0 ) {
-					*r0 = (float)atan2(v0, v1) * R2D;
+					*r0 = ( float )( atan2 ( v0, v1 ) * R2D );
 				}
 				break;
 
