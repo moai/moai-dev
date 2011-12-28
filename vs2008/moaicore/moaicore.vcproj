@@ -356,11 +356,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAIThread.cpp"
+				RelativePath="..\..\src\moaicore\MOAICoroutine.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAIThread.h"
+				RelativePath="..\..\src\moaicore\MOAICoroutine.h"
 				>
 			</File>
 			<File
