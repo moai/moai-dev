@@ -246,6 +246,8 @@ static void _cleanup () {
 	// don't call this on windows; atexit conflict with untz
 	// possible to fix?
 	//AKUClearMemPool ();
+	
+	AKUFinalize ();
 }
 
 //----------------------------------------------------------------//

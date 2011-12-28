@@ -26,33 +26,6 @@ extern "C" {
 #endif
 
 //----------------------------------------------------------------//
-static void _cleanup () {
-
-	MOAIGlobalsMgr::Finalize ();
-	
-	#if USE_CURL
-		curl_global_cleanup ();
-	#endif
-	
-	#if USE_OPENSSL
-		#ifndef OPENSSL_NO_ENGINE
-			ENGINE_cleanup ();
-		#endif
-		
-		CONF_modules_unload ( 1 );
-		
-		#ifndef OPENSSL_NO_ERR
-			ERR_free_strings ();
-		#endif
-		
-		EVP_cleanup ();
-		CRYPTO_cleanup_all_ex_data ();
-	#endif
-	
-	zipfs_cleanup ();
-}
-
-//----------------------------------------------------------------//
 // TODO: this should be part of the unit tests
 static void _typeCheck () {
 
@@ -77,31 +50,6 @@ static void _typeCheck () {
 
 //----------------------------------------------------------------//
 void moaicore::InitGlobals ( MOAIGlobals* globals ) {
-
-	static bool sysInit = true;
-	if ( sysInit ) {
-		
-		_typeCheck ();
-		
-		srand (( u32 )time ( 0 ));
-		zipfs_init ();
-		
-		#if USE_OPENSSL
-			SSL_load_error_strings ();
-			SSL_library_init ();
-		#endif
-
-		#if USE_CURL
-			curl_global_init ( CURL_GLOBAL_WIN32 | CURL_GLOBAL_SSL );
-		#endif
-		
-		#if USE_CHIPMUNK
-			cpInitChipmunk ();
-		#endif
-		
-		atexit ( _cleanup );
-		sysInit = false;
-	}
 
 	MOAIGlobalsMgr::Set ( globals );
 
@@ -229,5 +177,54 @@ void moaicore::InitGlobals ( MOAIGlobals* globals ) {
 		REGISTER_LUA_CLASS ( MOAICpConstraint )
 		REGISTER_LUA_CLASS ( MOAICpShape )
 		REGISTER_LUA_CLASS ( MOAICpSpace )
+	#endif
+}
+
+//----------------------------------------------------------------//
+void moaicore::SystemFinalize () {
+
+	MOAIGlobalsMgr::Finalize ();
+	
+	#if USE_CURL
+		curl_global_cleanup ();
+	#endif
+	
+	#if USE_OPENSSL
+		#ifndef OPENSSL_NO_ENGINE
+			ENGINE_cleanup ();
+		#endif
+		
+		CONF_modules_unload ( 1 );
+		
+		#ifndef OPENSSL_NO_ERR
+			ERR_free_strings ();
+		#endif
+		
+		EVP_cleanup ();
+		CRYPTO_cleanup_all_ex_data ();
+	#endif
+	
+	zipfs_cleanup ();
+}
+
+//----------------------------------------------------------------//
+void moaicore::SystemInit () {
+
+	_typeCheck ();
+		
+	srand (( u32 )time ( 0 ));
+	zipfs_init ();
+	
+	#if USE_OPENSSL
+		SSL_load_error_strings ();
+		SSL_library_init ();
+	#endif
+
+	#if USE_CURL
+		curl_global_init ( CURL_GLOBAL_WIN32 | CURL_GLOBAL_SSL );
+	#endif
+	
+	#if USE_CHIPMUNK
+		cpInitChipmunk ();
 	#endif
 }
