@@ -38,11 +38,6 @@
 #include <uslsext/USQuadCoord.h>
 #include <uslsext/USRadixSort16.h>
 #include <uslsext/USRadixSort32.h>
-#include <uslsext/USSqlBinding.h>
-#include <uslsext/USSqlColumn.h>
-#include <uslsext/USSqlRecord.h>
-#include <uslsext/USSqlStatement.h>
-#include <uslsext/USSqlValue.h>
 #include <uslsext/USSurface2D.h>
 #include <uslsext/USSyntaxNode.h>
 #include <uslsext/USSyntaxScanner.h>

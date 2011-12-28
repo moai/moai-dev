@@ -487,58 +487,6 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="sql"
-			>
-			<File
-				RelativePath="..\..\src\uslsext\USSqlBinding.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USSqlBinding.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USSqlColumn.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USSqlColumn.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USSqlConnection.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USSqlConnection.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USSqlRecord.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USSqlRecord.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USSqlStatement.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USSqlStatement.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USSqlValue.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslsext\USSqlValue.h"
-				>
-			</File>
-		</Filter>
-		<Filter
 			Name="thread"
 			>
 			<File
