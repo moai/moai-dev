@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <uslsext/USBinarySearch.h>
+#include <uslscore/USBinarySearch.h>
 #include <moaicore/MOAIFont.h>
 #include <moaicore/MOAIGfxDevice.h>
 #include <moaicore/MOAIQuadBrush.h>

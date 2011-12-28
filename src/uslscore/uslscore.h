@@ -44,13 +44,49 @@
 #include <uslscore/USZip.h>
 #include <uslscore/USZipFile.h>
 
-//================================================================//
-// uslscore
-//================================================================//
-namespace uslscore {
-
-	//----------------------------------------------------------------//
-	void			Init			();
-}
+// from uslsext
+#include <uslscore/USAdapterInfo.h>
+#include <uslscore/USAffine2D.h>
+#include <uslscore/USBinarySearch.h>
+#include <uslscore/USBox.h>
+#include <uslscore/USCgt.h>
+#include <uslscore/USColor.h>
+#include <uslscore/USCurve.h>
+#include <uslscore/USData.h>
+#include <uslscore/USDataIOTask.h>
+#include <uslscore/USDelegate.h>
+#include <uslscore/USDistance.h>
+#include <uslscore/USHexDump.h>
+#include <uslscore/USInterpolate.h>
+#include <uslscore/USIntersect.h>
+#include <uslscore/USLexStream.h>
+#include <uslscore/USMathConsts.h>
+#include <uslscore/USMatrix.h>
+#include <uslscore/USMatrix3x3.h>
+#include <uslscore/USMatrix4x4.h>
+#include <uslscore/USMercator.h>
+#include <uslscore/USMutex.h>
+#include <uslscore/USMutex_posix.h>
+#include <uslscore/USMutex_win32.h>
+#include <uslscore/USParser.h>
+#include <uslscore/USPlane.h>
+#include <uslscore/USPolar.h>
+#include <uslscore/USPolygon2D.h>
+#include <uslscore/USPolyScanner.h>
+#include <uslscore/USQuad.h>
+#include <uslscore/USQuadCoord.h>
+#include <uslscore/USRadixSort16.h>
+#include <uslscore/USRadixSort32.h>
+#include <uslscore/USSurface2D.h>
+#include <uslscore/USSyntaxNode.h>
+#include <uslscore/USSyntaxScanner.h>
+#include <uslscore/USTask.h>
+#include <uslscore/USTaskThread.h>
+#include <uslscore/USThread.h>
+#include <uslscore/USThread_posix.h>
+#include <uslscore/USThread_win32.h>
+#include <uslscore/USTrig.h>
+#include <uslscore/USTypedPtr.h>
+#include <uslscore/USXmlReader.h>
 
 #endif

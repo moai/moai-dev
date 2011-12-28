@@ -5,14 +5,70 @@
 #include <chipmunk/chipmunk.h>
 #include <moaicore/moaicore.h>
 
+extern "C" {
+	#include <zlib.h>
+	#include <zipfs/ZIPFSZipFile.h>
+}
+
+#if USE_OPENSSL
+	#include <openssl/conf.h>
+	#include <openssl/crypto.h>
+
+	#ifndef OPENSSL_NO_ENGINE
+		#include <openssl/engine.h>
+	#endif
+
+	#ifndef OPENSSL_NO_ERR
+		#include <openssl/err.h>
+	#endif
+
+	#include <openssl/ssl.h>
+#endif
+
 //----------------------------------------------------------------//
 static void _cleanup () {
 
-#if USE_CURL
-	curl_global_cleanup ();
-#endif
-	
 	MOAIGlobalsMgr::Finalize ();
+	
+	#if USE_CURL
+		curl_global_cleanup ();
+	#endif
+	
+	#if USE_OPENSSL
+		#ifndef OPENSSL_NO_ENGINE
+			ENGINE_cleanup ();
+		#endif
+		
+		CONF_modules_unload ( 1 );
+		
+		#ifndef OPENSSL_NO_ERR
+			ERR_free_strings ();
+		#endif
+		
+		EVP_cleanup ();
+		CRYPTO_cleanup_all_ex_data ();
+	#endif
+	
+	zipfs_cleanup ();
+}
+
+//----------------------------------------------------------------//
+// TODO: this should be part of the unit tests
+static void _typeCheck () {
+
+	// make sure our fixed size typedefs are what we think
+	// they are on the current platform/compiler
+	assert ( sizeof ( cc8 )	== 1 );
+
+	assert ( sizeof ( u8 )	== 1 );
+	assert ( sizeof ( u16 )	== 2 );
+	assert ( sizeof ( u32 )	== 4 );
+	assert ( sizeof ( u64 )	== 8 );
+	
+	assert ( sizeof ( s8 )	== 1 );
+	assert ( sizeof ( s16 )	== 2 );
+	assert ( sizeof ( s32 )	== 4 );
+	assert ( sizeof ( s64 )	== 8 );
 }
 
 //================================================================//
@@ -22,17 +78,26 @@ static void _cleanup () {
 //----------------------------------------------------------------//
 void moaicore::InitGlobals ( MOAIGlobals* globals ) {
 
-	uslsext::Init ();
-
 	static bool sysInit = true;
 	if ( sysInit ) {
 		
-#if USE_CHIPMUNK
-		cpInitChipmunk ();
-#endif
-#if USE_CURL
-		curl_global_init ( CURL_GLOBAL_WIN32 | CURL_GLOBAL_SSL );
-#endif
+		_typeCheck ();
+		
+		srand (( u32 )time ( 0 ));
+		zipfs_init ();
+		
+		#if USE_OPENSSL
+			SSL_load_error_strings ();
+			SSL_library_init ();
+		#endif
+
+		#if USE_CURL
+			curl_global_init ( CURL_GLOBAL_WIN32 | CURL_GLOBAL_SSL );
+		#endif
+		
+		#if USE_CHIPMUNK
+			cpInitChipmunk ();
+		#endif
 		
 		atexit ( _cleanup );
 		sysInit = false;
