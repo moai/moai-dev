@@ -268,6 +268,7 @@ int GlutHost ( int argc, char** argv ) {
 	#ifdef GLUTHOST_USE_LUAEXT
 		AKUExtLoadLuacrypto ();
 		AKUExtLoadLuacurl ();
+		AKUExtLoadLuafilesystem ();
 		AKUExtLoadLuasocket ();
 		AKUExtLoadLuasql ();
 	#endif
