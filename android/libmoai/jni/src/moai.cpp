@@ -256,8 +256,10 @@
 		MOAIApp::Affirm ();
 		REGISTER_LUA_CLASS ( MOAIApp );
 
+#ifndef DISABLE_TAPJOY
 		MOAITapjoy::Affirm ();
 		REGISTER_LUA_CLASS ( MOAITapjoy );
+#endif
 
 		// register callbacks into Java
 		mMoaiView = ( jobject ) env->NewGlobalRef ( moaiView );

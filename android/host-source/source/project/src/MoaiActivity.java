@@ -62,6 +62,8 @@ public class MoaiActivity extends Activity implements SensorEventListener, Tapjo
 	private MoaiView						mMoaiView;
     private PurchaseObserver 				mPurchaseObserver;
 	private SensorManager 					mSensorManager;
+	private boolean							mWaitingToResume;
+	private boolean							mWindowFocusLost;
 	
 	static enum DIALOG_RESULT {
 		POSITIVE,
@@ -156,11 +158,16 @@ public class MoaiActivity extends Activity implements SensorEventListener, Tapjo
 				
 		mHandler = new Handler ();
 
+		mWaitingToResume = false;
+		mWindowFocusLost = false;
+
 		mPurchaseObserver = new PurchaseObserver ( null );
         MoaiBillingResponseHandler.register ( mPurchaseObserver );
         
 		mBillingService = new MoaiBillingService();
         mBillingService.setContext(this);
+
+		startConnectivityReceiver ();
     }
 
 	//----------------------------------------------------------------//
@@ -178,19 +185,6 @@ public class MoaiActivity extends Activity implements SensorEventListener, Tapjo
 	}
 
 	//----------------------------------------------------------------//
-	public boolean onKeyDown ( int keyCode, KeyEvent event ) {
-
-	    if ( keyCode == KeyEvent.KEYCODE_BACK ) {
-	        
-			if ( AKUNotifyBackButtonPressed () ) {
-				return true;
-			}
-	    }
-	    
-	    return super.onKeyDown ( keyCode, event );
-	}
-	
-	//----------------------------------------------------------------//
 	protected void onPause () {
 
 		log ( "MoaiActivity onPause called" );
@@ -198,6 +192,12 @@ public class MoaiActivity extends Activity implements SensorEventListener, Tapjo
 		super.onPause ();
 		
 		mSensorManager.unregisterListener ( this );
+		
+		// If we've been paused, then we're assuming we've lost focus. 
+		// This handles the case where the user presses the lock button
+		// very quickly twice, in which case we do not receive the 
+		// expected windows focus events.
+		mWindowFocusLost = true;
 		
 		mMoaiView.pause ( true );
 	}
@@ -210,11 +210,6 @@ public class MoaiActivity extends Activity implements SensorEventListener, Tapjo
 		super.onStart ();
 		
         MoaiBillingResponseHandler.register ( mPurchaseObserver );
-	}
-	
-	public static void startSession () {
-
-		AKUAppDidStartSession ();
 	}
 	
 	//----------------------------------------------------------------//
@@ -238,10 +233,31 @@ public class MoaiActivity extends Activity implements SensorEventListener, Tapjo
 		
 		mSensorManager.registerListener ( this, mAccelerometer, SensorManager.SENSOR_DELAY_NORMAL );
 		
-		mMoaiView.pause ( false );
+		// If we have not lost Window focus, then resume immediately; 
+		// otherwise, wait to regain focus before we resume. All of 
+		// this nonsense is to properly handle the lock screen...
+		mWaitingToResume = mWindowFocusLost;
+		if ( !mWaitingToResume ) {
+			
+			log ( "Resuming now..." );
 		
-		startConnectivityReceiver ();
+			mMoaiView.pause ( false );
+		}
 	}
+	
+	//================================================================//
+	// Public methods
+	//================================================================//
+	
+	//----------------------------------------------------------------//
+	public static void startSession () {
+
+		AKUAppDidStartSession ();
+	}
+	
+	//================================================================//
+	// Private methods
+	//================================================================//
 	
 	//----------------------------------------------------------------//
 	private void startConnectivityReceiver () {
@@ -263,6 +279,46 @@ public class MoaiActivity extends Activity implements SensorEventListener, Tapjo
 		mConnectivityReceiver = null;
 	}
 	
+	//================================================================//
+	// KeyEvent methods
+	//================================================================//
+	
+	//----------------------------------------------------------------//
+	public boolean onKeyDown ( int keyCode, KeyEvent event ) {
+
+	    if ( keyCode == KeyEvent.KEYCODE_BACK ) {
+	        
+			if ( AKUNotifyBackButtonPressed () ) {
+				return true;
+			}
+	    }
+	    
+	    return super.onKeyDown ( keyCode, event );
+	}
+	
+	//================================================================//
+	// WindowEvent methods
+	//================================================================//
+
+	public void onWindowFocusChanged ( boolean hasFocus ) {
+		
+		log ( "MoaiActivity onWindowFocusChanged called" );
+		
+		super.onWindowFocusChanged ( hasFocus );
+				
+		// If we are waiting to resume and just got the window focus back, 
+		// it's time to resume. All of this nonsense is to properly handle
+		// the lock screen...
+		mWindowFocusLost = !hasFocus;
+		if ( mWaitingToResume && !mWindowFocusLost ) {
+		
+			log ( "Resuming now..." );
+		
+			mWaitingToResume = false;
+			mMoaiView.pause ( false );
+		}
+	}
+
 	//================================================================//
 	// SensorEventListener methods
 	//================================================================//

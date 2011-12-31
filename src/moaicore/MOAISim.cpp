@@ -994,9 +994,10 @@ void MOAISim::Update () {
 			//TODO make the following official
 			while (( this->mStep <= gap ) && ( budget > 0.0 )) {
 				budget -= 1.0f / 1000.0f;
+
 				#ifndef MOAI_OS_WINDOWS
-					sleep ( 1.0f / 1000.0f );
-				#endif
+					usleep ( 1000 );
+				#endif			
 			}
 		}
 	}

@@ -40,7 +40,7 @@ private:
 
 public:
 	
-	enum {
+	enum DISTANCE {
 		MANHATTAN_DISTANCE,
 		DIAGONAL_DISTANCE,
 		EUCLIDEAN_DISTANCE,

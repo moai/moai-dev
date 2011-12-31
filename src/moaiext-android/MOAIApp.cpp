@@ -308,8 +308,8 @@ bool MOAIApp::NotifyBackButtonPressed () {
 		MOAILuaStateHandle state = callback.GetSelf ();
 
 		state.DebugCall ( 0, 1 );
-		
-		return lua_toboolean ( state, 1 );
+
+		return lua_toboolean ( state, -1 );
 	} else {
 		return false;
 	}

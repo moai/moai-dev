@@ -20,7 +20,7 @@
 */
 
 #include "pch.h"
-#ifdef __linux
+#ifdef NACL
 
 #include <uslscore/USDeviceTime.h>
 #include <time.h>

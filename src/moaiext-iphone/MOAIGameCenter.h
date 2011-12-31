@@ -44,9 +44,11 @@ private:
 	MoaiLeaderboardDelegate*	mLeaderboardDelegate;
 	MoaiAchievementDelegate*	mAchievementDelegate;
 	NSMutableDictionary*        mAchievementsDictionary;
+	GKLocalPlayer*				mLocalPlayer;
 	
 	//----------------------------------------------------------------//
 	static int		_authenticatePlayer			( lua_State* L );
+	static int		_getPlayerAlias				( lua_State* L );
 	static int		_getScores					( lua_State* L );
 	static int		_isSupported				( lua_State* L );
 	static int		_reportAchievementProgress	( lua_State* L );

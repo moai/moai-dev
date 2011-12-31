@@ -42,6 +42,7 @@ struct AKUContext {
 typedef STLMap < AKUContextID, AKUContext* >::iterator ContextMapIt;
 typedef STLMap < AKUContextID, AKUContext* > ContextMap;
 
+static bool			gSysInit = true;
 static ContextMap*	gContextMap = 0;
 static AKUContextID	gContextIDCounter = 0;
 static AKUContextID	gContextID = 0;
@@ -203,6 +204,7 @@ void AKUFinalize () {
 		
 		delete gContextMap;
 		gContextMap = 0;
+		gSysInit = true;
 	}
 	
 	if ( !gSysInit ) {
