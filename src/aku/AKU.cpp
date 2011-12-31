@@ -83,8 +83,6 @@ static void _deleteContext ( AKUContext* context ) {
 // AKU
 //================================================================//
 
-static bool gSysInit = true;
-
 //----------------------------------------------------------------//
 void AKUClearMemPool () {
 
