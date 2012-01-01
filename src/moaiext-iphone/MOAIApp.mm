@@ -128,6 +128,13 @@ int MOAIApp::_canMakePayments ( lua_State* L ) {
 int MOAIApp::_canTweet ( lua_State* L ) {
 	MOAILuaState state ( L );
 	
+	Class tweetClass = NSClassFromString ( @"TWTweetComposeViewController" );
+	if ( tweetClass == nil ) {
+		
+		lua_pushboolean ( state, false );
+		return 1;
+	}
+	
 	BOOL result = [ TWTweetComposeViewController canSendTweet ];
 	lua_pushboolean ( state, result );
 	
@@ -149,6 +156,9 @@ int MOAIApp::_composeTweet ( lua_State* L ) {
 	cc8* text	= state.GetValue < cc8* >( 1, "" );
 	cc8* url	= state.GetValue < cc8* >( 2, "" );
 	
+	Class tweetClass = NSClassFromString ( @"TWTweetComposeViewController" );
+	if ( tweetClass == nil ) return 0;
+	
 	if ( ![ TWTweetComposeViewController canSendTweet ]) return 0;
 	
 	UIWindow* window = [[ UIApplication sharedApplication ] keyWindow ];
@@ -166,7 +176,14 @@ int MOAIApp::_composeTweet ( lua_State* L ) {
     
     // Create the completion handler block.
     [ tweetViewController setCompletionHandler:^( TWTweetComposeViewControllerResult result ) {
-	                
+				
+		if ( result == TWTweetComposeViewControllerResultCancelled ) {
+			MOAIApp::Get ().DidSendTweet ( false );
+		}
+		else if ( result == TWTweetComposeViewControllerResultDone ) {
+			MOAIApp::Get ().DidSendTweet ( true );
+		}
+		
         // Dismiss the tweet composition view controller.
 		if  ( rootVC != nil ) {
 			[ rootVC dismissModalViewControllerAnimated:YES ];
@@ -177,6 +194,8 @@ int MOAIApp::_composeTweet ( lua_State* L ) {
 	if  ( rootVC != nil ) {
 		[ rootVC presentModalViewController:tweetViewController animated:YES ];
 	}
+	
+	[ tweetViewController release ];
 	
 	return 0;
 }
@@ -611,6 +630,31 @@ void MOAIApp::DidResolveHostName( NSString* hostname, cc8* ipAddress ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIApp::DidSendTweet( bool success ) {
+
+	if ( success ) {
+		
+		MOAILuaRef& callback = this->mListeners [ TWEET_SUCCESSFUL ];
+		
+		if ( callback ) {
+			MOAILuaStateHandle state = callback.GetSelf ();
+			
+			state.DebugCall ( 0, 0 );
+		}
+	}
+	else {
+		
+		MOAILuaRef& callback = this->mListeners [ TWEET_CANCELLED ];
+		
+		if ( callback ) {
+			MOAILuaStateHandle state = callback.GetSelf ();
+			
+			state.DebugCall ( 0, 0 );
+		}
+	}	
+}
+
+//----------------------------------------------------------------//
 void MOAIApp::DidStartSession( ) {
 
 	MOAILuaRef& callback = this->mListeners [ SESSION_START ];
@@ -813,6 +857,11 @@ void MOAIApp::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "PAYMENT_QUEUE_ERROR",			( u32 )PAYMENT_QUEUE_ERROR );
 	state.SetField ( -1, "REMOTE_NOTIFICATION",			( u32 )REMOTE_NOTIFICATION );
 	state.SetField ( -1, "ASYNC_NAME_RESOLVE",			( u32 )ASYNC_NAME_RESOLVE );
+	state.SetField ( -1, "APP_OPENED_FROM_URL",			( u32 )APP_OPENED_FROM_URL );
+	state.SetField ( -1, "SESSION_START",				( u32 )SESSION_START );
+	state.SetField ( -1, "SESSION_END",					( u32 )SESSION_END );
+	state.SetField ( -1, "TWEET_SUCCESSFUL",			( u32 )TWEET_SUCCESSFUL );
+	state.SetField ( -1, "TWEET_CANCELLED",				( u32 )TWEET_CANCELLED );
 	
 	state.SetField ( -1, "DOMAIN_DOCUMENTS",			( u32 )DOMAIN_DOCUMENTS );
 	state.SetField ( -1, "DOMAIN_APP_SUPPORT",			( u32 )DOMAIN_APP_SUPPORT );
@@ -822,10 +871,6 @@ void MOAIApp::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "TRANSACTION_STATE_FAILED",    ( u32 )TRANSACTION_STATE_FAILED );
 	state.SetField ( -1, "TRANSACTION_STATE_RESTORED",  ( u32 )TRANSACTION_STATE_RESTORED );
 	state.SetField ( -1, "TRANSACTION_STATE_CANCELLED", ( u32 )TRANSACTION_STATE_CANCELLED );
-			
-	state.SetField ( -1, "APP_OPENED_FROM_URL",	( u32 )APP_OPENED_FROM_URL );
-	state.SetField ( -1, "SESSION_START",	    ( u32 )SESSION_START );
-	state.SetField ( -1, "SESSION_END",		    ( u32 )SESSION_END );
 	
 	luaL_Reg regTable[] = {
 		{ "alert",								_alert },

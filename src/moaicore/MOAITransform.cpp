@@ -81,16 +81,19 @@ int MOAITransform::_addRot ( lua_State* L ) {
 	
 	@in		MOAITransform self
 	@in		number xSclDelta
-	@in		number ySclDelta
+	@opt	number ySclDelta		Default value is xSclDelta.
 	@out	nil
 */
 int MOAITransform::_addScl ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITransform, "UNN" )
+	MOAI_LUA_SETUP ( MOAITransform, "UN" )
 	
 	USVec3D scl = self->GetScl ();
 	
-	scl.mX += state.GetValue < float >( 2, 0.0f );
-	scl.mY += state.GetValue < float >( 3, 0.0f );
+	float xSclDelta = state.GetValue < float >( 2, 0.0f );
+	float ySclDelta = state.GetValue < float >( 3, xSclDelta );
+	
+	scl.mX += xSclDelta;
+	scl.mY += ySclDelta;
 	
 	self->SetScl ( scl );
 	self->ScheduleUpdate ();
@@ -791,18 +794,18 @@ int MOAITransform::_setRot ( lua_State* L ) {
 	@text	Sets the transform's scale.
 	
 	@in		MOAITransform self
-	@opt	number xScl			Default value is 1.
-	@opt	number yScl			Default value is 1.
+	@in		number xScl
+	@opt	number yScl			Default value is xScl.
 	@opt	number zScl			Default value is 1.
 	@out	nil
 */
 int MOAITransform::_setScl ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITransform, "U" )
+	MOAI_LUA_SETUP ( MOAITransform, "UN" )
 	
 	USVec3D scl;
 	
-	scl.mX = state.GetValue < float >( 2, 1.0f );
-	scl.mY = state.GetValue < float >( 3, 1.0f );
+	scl.mX = state.GetValue < float >( 2, 0.0f );
+	scl.mY = state.GetValue < float >( 3, scl.mX );
 	scl.mZ = state.GetValue < float >( 4, 1.0f );
 	
 	self->SetScl ( scl );

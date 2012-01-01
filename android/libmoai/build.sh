@@ -1,3 +1,5 @@
+#!/bin/bash
+
 #================================================================#
 # Copyright (c) 2010-2011 Zipline Games, Inc.
 # All Rights Reserved.
@@ -7,14 +9,16 @@
 	set -e
 	
 	# check for command line switches
-	usage="usage: build.sh -p package [-thumb]"
+	usage="usage: build.sh -p package [-thumb] [-l appPlatform]"
 	arm_mode=arm
+	app_platform=android-10
 	packageName=
 	
 	while [ $# -gt 0 ];	do
 	    case "$1" in
 	        -thumb)  arm_mode=thumb;;
 			-p)  packageName="$2"; shift;;
+			-l)  app_platform="$2"; shift;;
 			-*)
 		    	echo >&2 \
 		    		$usage
@@ -30,7 +34,7 @@
 	fi
 	
 	# echo message about what we are doing
-	echo "Building libmoai.so using package \"$packageName\" for $arm_mode"
+	echo "Building libmoai.so for $packageName, $arm_mode, $app_platform"
 
 	# create package underscored value
 	package_underscored=$( echo $packageName | sed 's/\./_/g' )
@@ -40,6 +44,13 @@
 		cp -f moai.cpp packaged-moai.cpp
 		sed -i.backup s%@PACKAGE_UNDERSCORED@%"$package_underscored"%g packaged-moai.cpp
 		rm -f packaged-moai.cpp.backup
+	popd > /dev/null
+
+	# set app platform for library
+	pushd jni > /dev/null
+		cp -f AppPlatform.mk AppPlatformDefined.mk
+		sed -i.backup s%@APP_PLATFORM@%"$app_platform"%g AppPlatformDefined.mk
+		rm -f AppPlatformDefined.mk.backup
 	popd > /dev/null
 	
 	# if selected, configure compiling for thumb
@@ -68,3 +79,5 @@
 	# create text file that shows the package libmoai.so was built with (this time)
 	rm -f libs/armeabi/package.txt
 	echo $packageName > libs/armeabi/package.txt
+	echo $arm_mode >> libs/armeabi/package.txt		
+	echo $app_platform >> libs/armeabi/package.txt

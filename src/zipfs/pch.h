@@ -73,6 +73,12 @@
 
 #endif
 
+#ifdef MOAI_OS_NACL
+	#ifndef PATH_MAX
+		#define PATH_MAX 1024
+	#endif
+#endif
+
 #ifdef MOAI_OS_LINUX
 	#include <unistd.h>
 #endif

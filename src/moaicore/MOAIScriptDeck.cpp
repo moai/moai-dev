@@ -141,6 +141,8 @@ void MOAIScriptDeck::LoadShader () {
 MOAIScriptDeck::MOAIScriptDeck () {
 	
 	RTTI_SINGLE ( MOAIDeck2D )
+	
+	this->mRect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
 }
 
 //----------------------------------------------------------------//

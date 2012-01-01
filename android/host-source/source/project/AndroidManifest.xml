@@ -2,8 +2,9 @@
 
 <manifest 
 	xmlns:android="http://schemas.android.com/apk/res/android" 
-	android:versionCode="1" 
-	android:versionName="1.0" 
+    android:installLocation="auto"
+	android:versionCode="@VERSION_CODE@" 
+	android:versionName="@VERSION_NAME@" 
 	package="@PACKAGE@">
 	
 	<application 
@@ -11,15 +12,14 @@
 		android:debuggable="@DEBUGGABLE@" 
 		android:enabled="true" 
 		android:persistent="false" 
-		android:label="@NAME@" 
+		android:label="@string/app_name"
 		android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
 		
 		<activity 
 			android:name="MoaiActivity" 
 			android:label="@string/app_name" 
-			android:screenOrientation="landscape" 
-			android:launchMode="singleInstance" 
-			android:installLocation="preferExternal" 
+			android:screenOrientation= "landscape"
+			android:launchMode="singleTask"
 			android:configChanges="keyboard|keyboardHidden|orientation">
 			
 			<intent-filter>
@@ -27,11 +27,46 @@
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 		</activity>
+		
+		<service android:name="MoaiBillingService" />
+
+	    <receiver android:name="MoaiBillingReceiver">
+	      <intent-filter>
+	        <action android:name="com.android.vending.billing.IN_APP_NOTIFY" />
+	        <action android:name="com.android.vending.billing.RESPONSE_CODE" />
+	        <action android:name="com.android.vending.billing.PURCHASE_STATE_CHANGED" />
+	      </intent-filter>
+	    </receiver>
+		
+		<activity android:name="com.tapjoy.TJCVirtualGoods" android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" android:configChanges="keyboardHidden|orientation" />
+		<activity android:name="com.tapjoy.DownloadVirtualGood" android:theme="@android:style/Theme.Dialog" android:configChanges="keyboardHidden|orientation" android:launchMode="singleTask" />
+		<activity android:name="com.tapjoy.TJCOffersWebView" android:configChanges="keyboardHidden|orientation" />
+		<activity android:name="com.tapjoy.TapjoyFeaturedAppWebView" android:configChanges="keyboardHidden|orientation" />
+		<activity android:name="com.tapjoy.TapjoyVideoView" android:configChanges="keyboardHidden|orientation" />
+		<receiver android:name="com.tapjoy.TapjoyReferralTracker" android:exported="true">    
+		    <intent-filter>
+		        <action android:name="com.android.vending.INSTALL_REFERRER" />
+		    </intent-filter>
+		</receiver>
 	</application>
 	
     <uses-sdk android:minSdkVersion="8"/>
+
+  	<uses-permission android:name="com.android.vending.BILLING" />
  	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 	<uses-permission android:name="android.permission.INTERNET" />
+	<uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 	
+	<supports-screens 
+	    	android:smallScreens="false"
+	    	android:normalScreens="true"
+	    	android:largeScreens="true"
+			android:xlargeScreens="true"
+	    	android:anyDensity="true" />
+	
+	<uses-configuration android:reqTouchScreen="finger" />
+	
+	<uses-feature android:name="android.hardware.screen.landscape" android:required="true" />
+	<uses-feature android:name="android.hardware.touchscreen.multitouch" android:required="true" />
 </manifest>   

@@ -10,6 +10,7 @@
 #include <moaicore/MOAILayoutFrame.h>
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIPartition.h>
+#include <moaicore/MOAIPartitionResultBuffer.h>
 #include <moaicore/MOAIProp2D.h>
 #include <moaicore/MOAIShader.h>
 #include <moaicore/MOAIShaderMgr.h>
@@ -179,6 +180,29 @@ int MOAIProp2D::_setDeck ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	setExpandForSort
+	@text	Used when drawing with a layout scheme (i.e. MOAIGrid).
+			Expanding for sort causes the prop to emit a sub-prim
+			for each component of the layout. For example, when
+			attaching a MOAIGrid to a prop, each cell of the grid
+			will be added to the render queue for sorting against
+			all other props and sub-prims. This is obviously less
+			efficient, but still more efficient then using an
+			separate prop for each cell or object.
+	
+	@in		MOAIProp2D self
+	@in		boolean expandForSort	Default value is false.
+	@out	nil
+*/
+int MOAIProp2D::_setExpandForSort ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIProp2D, "U" )
+
+	self->mExpandForSort = state.GetValue < bool >( 2, false );
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	setFrame
 	@text	Sets the fitting frame of the prop.
 	
@@ -312,29 +336,6 @@ int MOAIProp2D::_setRemapper ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setRepeat
-	@text	Repeats a grid indexer along X or Y. Only used when a grid
-			is attached.
-	
-	@in		MOAIProp2D self
-	@opt	boolean repeatX		Default value is true.
-	@opt	boolean repeatY		Default value is repeatX.
-	@out	nil
-*/
-int MOAIProp2D::_setRepeat ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIProp2D, "U" )
-
-	bool repeatX = state.GetValue < bool >( 2, true );
-	bool repeatY = state.GetValue < bool >( 3, repeatX );
-
-	self->mRepeat = 0;
-	self->mRepeat |= repeatX ? REPEAT_X : 0;
-	self->mRepeat |= repeatY ? REPEAT_Y : 0;
-
-	return 0;
-}
-
-//----------------------------------------------------------------//
 /**	@name	setShader
 	@text	Sets or clears the prop's shader. The prop's shader takes
 			precedence over any shader specified by the deck or its
@@ -431,10 +432,13 @@ bool MOAIProp2D::BindDeck () {
 }
 
 //----------------------------------------------------------------//
-void MOAIProp2D::Draw () {
+void MOAIProp2D::Draw ( int subPrimID, bool reload ) {
+	UNUSED ( subPrimID );
 
 	if ( !this->mVisible ) return;
 	if ( !this->BindDeck ()) return;
+
+	this->LoadShader ();
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 
@@ -445,16 +449,20 @@ void MOAIProp2D::Draw () {
 	else {
 		gfxDevice.SetUVTransform ();
 	}
-
-	this->LoadShader ();
 	
 	if ( this->mGrid ) {
 	
-		MOAICellCoord c0;
-		MOAICellCoord c1;
-		
-		this->GetBoundsInView ( c0, c1 );
-		this->mDeck->Draw ( this->GetLocalToWorldMtx (), *this->mGrid, this->mRemapper, this->mGridScale, c0, c1 );
+		if ( subPrimID == MOAIProp::NO_SUBPRIM_ID ) {
+	
+			MOAICellCoord c0;
+			MOAICellCoord c1;
+			
+			this->GetGridBoundsInView ( c0, c1 );
+			this->mDeck->Draw ( this->GetLocalToWorldMtx (), *this->mGrid, this->mRemapper, this->mGridScale, c0, c1 );
+		}
+		else {
+			this->mDeck->Draw ( this->GetLocalToWorldMtx (), reload, *this->mGrid, this->mRemapper, this->mGridScale, subPrimID );
+		}
 	}
 	else {
 		this->mDeck->Draw ( this->GetLocalToWorldMtx (), this->mIndex, this->mRemapper );
@@ -468,7 +476,8 @@ void MOAIProp2D::Draw () {
 }
 
 //----------------------------------------------------------------//
-void MOAIProp2D::DrawDebug () {
+void MOAIProp2D::DrawDebug ( int subPrimID ) {
+	UNUSED ( subPrimID );
 
 	MOAIDebugLines& debugLines = MOAIDebugLines::Get ();
 	
@@ -489,7 +498,7 @@ void MOAIProp2D::DrawDebug () {
 				MOAICellCoord c0;
 				MOAICellCoord c1;
 				
-				this->GetBoundsInView ( c0, c1 );
+				this->GetGridBoundsInView ( c0, c1 );
 				this->mDeck->DrawDebug ( this->GetLocalToWorldMtx (), *this->mGrid, this->mRemapper, this->mGridScale, c0, c1 );
 			}
 		}
@@ -534,6 +543,42 @@ void MOAIProp2D::DrawDebug () {
 }
 
 //----------------------------------------------------------------//
+void MOAIProp2D::ExpandForSort ( MOAIPartitionResultBuffer& buffer ) {
+
+	if ( this->mExpandForSort && this->mGrid ) {
+	
+		// add a sub-prim for each visible grid cell
+		const USAffine3D& mtx = this->GetLocalToWorldMtx ();
+		
+		MOAIGrid* grid = this->mGrid;
+		
+		MOAICellCoord c0;
+		MOAICellCoord c1;
+		
+		this->GetGridBoundsInView ( c0, c1 );
+
+		for ( int y = c0.mY; y <= c1.mY; ++y ) {
+			for ( int x = c0.mX; x <= c1.mX; ++x ) {
+				
+				u32 idx = grid->GetTile ( x, y );
+				if ( !idx || ( idx & MOAITileFlags::HIDDEN )) continue;
+				
+				MOAICellCoord coord ( x, y );
+				int subPrimID = grid->GetCellAddr ( coord );
+				
+				USVec2D loc = grid->GetTilePoint ( coord, MOAIGridSpace::TILE_CENTER );
+				mtx.Transform ( loc );
+				
+				buffer.PushResult ( *this, subPrimID, this->GetPriority (), loc.mX, loc.mY, 0.0f );
+			}
+		}
+	}
+	else {
+		MOAIProp::ExpandForSort ( buffer );
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAIProp2D::GatherSurfaces ( MOAISurfaceSampler2D& sampler ) {
 
 	if ( !this->mDeck ) return;
@@ -547,7 +592,7 @@ void MOAIProp2D::GatherSurfaces ( MOAISurfaceSampler2D& sampler ) {
 		MOAICellCoord c0;
 		MOAICellCoord c1;
 		
-		this->GetBoundsInRect ( localRect, c0, c1 );
+		this->mGrid->GetBoundsInRect ( localRect, c0, c1 );
 		this->mDeck->GatherSurfaces ( *this->mGrid, this->mRemapper, this->mGridScale, c0, c1, sampler );
 	}
 	else {
@@ -556,32 +601,7 @@ void MOAIProp2D::GatherSurfaces ( MOAISurfaceSampler2D& sampler ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIProp2D::GetBoundsInRect ( const USRect& rect, MOAICellCoord& c0, MOAICellCoord& c1 ) {
-
-	if ( this->mGrid ) {
-
-		c0 = this->mGrid->GetCellCoord ( rect.mXMin, rect.mYMin );
-		c1 = this->mGrid->GetCellCoord ( rect.mXMax, rect.mYMax );
-		
-		if ( !( this->mRepeat & REPEAT_X )) {
-			c0 = this->mGrid->ClampX ( c0 );
-			c1 = this->mGrid->ClampX ( c1 );
-		}
-		
-		if ( !( this->mRepeat & REPEAT_Y )) {
-			c0 = this->mGrid->ClampY ( c0 );
-			c1 = this->mGrid->ClampY ( c1 );
-		}
-	}
-	else {
-		
-		c0.Init ( 0, 0 );
-		c1.Init ( 0, 0 );
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIProp2D::GetBoundsInView ( MOAICellCoord& c0, MOAICellCoord& c1 ) {
+void MOAIProp2D::GetGridBoundsInView ( MOAICellCoord& c0, MOAICellCoord& c1 ) {
 
 	const USAffine3D& invWorldMtx = this->GetWorldToLocalMtx ();
 
@@ -592,9 +612,7 @@ void MOAIProp2D::GetBoundsInView ( MOAICellCoord& c0, MOAICellCoord& c1 ) {
 	viewQuad.Transform ( invWorldMtx );
 	
 	USRect viewRect = viewQuad.GetBounds ();
-	viewRect.Bless ();
-	
-	this->GetBoundsInRect ( viewRect, c0, c1 );
+	this->mGrid->GetBoundsInRect ( viewRect, c0, c1 );
 }
 
 //----------------------------------------------------------------//
@@ -603,7 +621,7 @@ u32 MOAIProp2D::GetLocalFrame ( USRect& frame ) {
 	if ( this->mGrid ) {
 	
 		frame = this->mGrid->GetBounds ();
-		return this->mRepeat ? BOUNDS_GLOBAL : BOUNDS_OK;
+		return this->mGrid->GetRepeat () ? BOUNDS_GLOBAL : BOUNDS_OK;
 	}
 	else if ( this->mDeck ) {
 	
@@ -648,15 +666,15 @@ void MOAIProp2D::LoadShader () {
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 
-	gfxDevice.SetPenColor ( this->mColor );
-	gfxDevice.SetBlendMode ( this->mBlendMode );
-
 	if ( this->mShader ) {
 		gfxDevice.SetShader ( this->mShader );
 	}
 	else if ( this->mDeck ) {
 		this->mDeck->LoadShader ();
 	}
+
+	gfxDevice.SetPenColor ( this->mColor );
+	gfxDevice.SetBlendMode ( this->mBlendMode );
 	
 	// TODO
 	//MOAILayoutFrame* parent = MOAICast < MOAILayoutFrame >( this->mParent );
@@ -672,10 +690,10 @@ void MOAIProp2D::LoadShader () {
 //----------------------------------------------------------------//
 MOAIProp2D::MOAIProp2D () :
 	mIndex( 1 ),
-	mRepeat ( 0 ),
 	mGridScale ( 1.0f, 1.0f ),
 	mFitToFrame ( false ),
-	mVisible ( true ) {
+	mVisible ( true ),
+	mExpandForSort ( false ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIProp )
@@ -804,13 +822,13 @@ void MOAIProp2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "inside",				_inside },
 		{ "setBlendMode",		_setBlendMode },
 		{ "setDeck",			_setDeck },
+		{ "setExpandForSort",	_setExpandForSort },
 		{ "setFrame",			_setFrame },
 		{ "setGrid",			_setGrid },
 		{ "setGridScale",		_setGridScale },
 		{ "setIndex",			_setIndex },
 		{ "setParent",			_setParent },
 		{ "setRemapper",		_setRemapper },
-		{ "setRepeat",			_setRepeat },
 		{ "setShader",			_setShader },
 		{ "setUVTransform",		_setUVTransform },
 		{ "setVisible",			_setVisible },

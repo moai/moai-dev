@@ -28,6 +28,7 @@
 #include <moaicore/MOAICanary.h>
 #include <moaicore/MOAIColor.h>
 #include <moaicore/MOAICompassSensor.h>
+#include <moaicore/MOAICoroutine.h>
 #include <moaicore/MOAIDataBuffer.h>
 #include <moaicore/MOAIDataIOAction.h>
 #include <moaicore/MOAIDebugLines.h>
@@ -51,9 +52,14 @@
 #include <moaicore/MOAIGlobals.h>
 #include <moaicore/MOAIGlyph.h>
 #include <moaicore/MOAIGrid.h>
+#include <moaicore/MOAIGridPathGraph.h>
 #include <moaicore/MOAIGridSpace.h>
 #include <moaicore/MOAIHttpTask.h>
+#ifndef MOAI_OS_NACL
 #include <moaicore/MOAIHttpTaskInfo_curl.h>
+#else
+#include <moaicore/MOAIHttpTaskInfo_nacl.h>
+#endif
 #include <moaicore/MOAIImage.h>
 #include <moaicore/MOAIIndexBuffer.h>
 #include <moaicore/MOAIInputDevice.h>
@@ -88,6 +94,8 @@
 #include <moaicore/MOAIPartitionLayer.h>
 #include <moaicore/MOAIPartitionResultBuffer.h>
 #include <moaicore/MOAIPartitionResultMgr.h>
+#include <moaicore/MOAIPathFinder.h>
+#include <moaicore/MOAIPathTerrainDeck.h>
 #include <moaicore/MOAIPointerSensor.h>
 #include <moaicore/MOAIProp.h>
 #include <moaicore/MOAIProp2D.h>
@@ -109,7 +117,6 @@
 #include <moaicore/MOAITextFrame.h>
 #include <moaicore/MOAITextLayout.h>
 #include <moaicore/MOAITexture.h>
-#include <moaicore/MOAIThread.h>
 #include <moaicore/MOAITileDeck2D.h>
 #include <moaicore/MOAITileFlags.h>
 #include <moaicore/MOAITimer.h>
@@ -122,6 +129,7 @@
 #include <moaicore/MOAIVertexFormatMgr.h>
 #include <moaicore/MOAIViewport.h>
 #include <moaicore/MOAIWeakPtr.h>
+#include <moaicore/MOAIWheelSensor.h>
 #include <moaicore/MOAIXmlParser.h>
 
 #if USE_BOX2D
@@ -160,7 +168,9 @@
 namespace moaicore {
 
 	//----------------------------------------------------------------//
-	void			InitGlobals			( MOAIGlobals* globals );
+	void			InitGlobals			( MOAIGlobals* globals ); // initialize a Moai context
+	void			SystemFinalize		(); // call *once* at exit
+	void			SystemInit			(); // call *once* at program startup
 }
 
 #endif

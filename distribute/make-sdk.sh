@@ -1,3 +1,5 @@
+#!/bin/bash
+
 #================================================================#
 # Copyright (c) 2010-2011 Zipline Games, Inc.
 # All Rights Reserved.
@@ -12,19 +14,29 @@ cd ../3rdparty/glut-3.7.6-bin
 cp -R * ../../distribute/moai-sdk/3rdparty/glut-3.7.6
 cd ../../distribute
 
+mkdir -p moai-sdk/samples/android
+cd ../samples/android
+cp -R * ../../distribute/moai-sdk/samples/android
+cd ../../distribute
+
 mkdir -p moai-sdk/samples/basics
 cd ../samples/basics
 cp -R * ../../distribute/moai-sdk/samples/basics
 cd ../../distribute
 
-mkdir -p moai-sdk/samples/flash
-cd ../samples/flash
-cp -R * ../../distribute/moai-sdk/samples/flash
-cd ../../distribute
-
 mkdir -p moai-sdk/samples/config
 cd ../samples/config
 cp -R * ../../distribute/moai-sdk/samples/config
+cd ../../distribute
+
+mkdir -p moai-sdk/samples/contrib
+cd ../samples/contrib
+cp -R * ../../distribute/moai-sdk/samples/contrib
+cd ../../distribute
+
+mkdir -p moai-sdk/samples/flash
+cd ../samples/flash
+cp -R * ../../distribute/moai-sdk/samples/flash
 cd ../../distribute
 
 mkdir -p moai-sdk/samples/iphone
@@ -34,13 +46,6 @@ cd ../../distribute
 
 mkdir -p moai-sdk/include/aku
 cp -R ../src/aku/*.h moai-sdk/include/aku
-
-cp ../version.txt moai-sdk/version.txt
-
-mkdir -p moai-sdk/hosts/src
-cd ../src/hosts
-cp -R * ../../distribute/moai-sdk/hosts/src
-cd ../../distribute
 
 mkdir -p moai-sdk/include/lua-modules
 cd ../src/lua-modules
@@ -58,6 +63,11 @@ else
 	echo "*** Run ../doxygen/make-docs-lua.bat to generate the required "
 	echo "*** documentation and then re-run this script to remake the SDK."
 fi
+
+mkdir -p moai-sdk/hosts/src
+cd ../src/hosts
+cp -R * ../../distribute/moai-sdk/hosts/src
+cd ../../distribute
 
 # android host
 mkdir -p moai-sdk/hosts/android
@@ -86,6 +96,13 @@ cp ../xcode/ios/MainWindow-iPhone.xib moai-sdk/hosts/xcode-ios/MainWindow-iPhone
 cp ../xcode/ios/main.mm moai-sdk/hosts/xcode-ios/main.mm
 cp ../xcode/ios/mt.default moai-sdk/hosts/xcode-ios/mt.default
 cp ../xcode/ios/package.sh moai-sdk/hosts/xcode-ios/package.sh
+
+mkdir -p moai-sdk/hosts/xcode-ios/Libraries/TapjoyConnect
+for file in `find ../xcode/ios/Libraries/TapjoyConnect/ -name "*.xib"` ; do cp $file moai-sdk/hosts/xcode-ios/Libraries/TapjoyConnect ; done
+for file in `find ../xcode/ios/Libraries/TapjoyConnect/ -name "*.png"` ; do cp $file moai-sdk/hosts/xcode-ios/Libraries/TapjoyConnect ; done
+for file in `find ../xcode/ios/Libraries/TapjoyConnect/ -name "*.sql"` ; do cp $file moai-sdk/hosts/xcode-ios/Libraries/TapjoyConnect ; done
+
+cp ../version.txt moai-sdk/version.txt
 
 # replace run scripts
 cd moai-sdk-run-scripts

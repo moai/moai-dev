@@ -433,8 +433,8 @@ void MOAILuaRuntime::FindAndPrintLuaRefs ( int idx, cc8* prefix, FILE *f, const 
 		for ( LeakPtrList::const_iterator i = objects.begin (); i != objects.end (); ++i ) {
 			if( *i == ud ) {
 				fprintf ( f, "\tLua Ref: %s = %s <%p>\n", prefix, ( *i )->TypeName (), ud );
-//				if ( strcmp((*i)->TypeName(), "MOAIThread") == 0 ) {
-//					MOAIThread *t = (MOAIThread*)ud;
+//				if ( strcmp((*i)->TypeName(), "MOAICoroutine") == 0 ) {
+//					MOAICoroutine *t = (MOAICoroutine*)ud;
 //				}
 			}
 		}
@@ -599,6 +599,7 @@ void MOAILuaRuntime::ReportLeaksFormatted ( FILE *f ) {
 	// Then, print out each unique allocation spot along with all references
 	// (including multiple references) followed by the alloction stack
 	int top = lua_gettop ( L );
+	UNUSED ( top );
 	for ( LeakStackMap::const_iterator i = stacks.begin (); i != stacks.end (); ++i ) {
 		
 		const LeakPtrList& list = i->second;

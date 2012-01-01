@@ -16,7 +16,7 @@ class ExtAudioFileAudioSource : public BufferedAudioSource
 {
 public:
 	ExtAudioFileAudioSource();
-    ~ExtAudioFileAudioSource();
+    virtual ~ExtAudioFileAudioSource();
 
 	// AudioSource
 	double getSampleRate();
@@ -28,6 +28,7 @@ public:
     virtual void close();
 	virtual Int64 decodeData(float* buffer, UInt32 size);
 	virtual void setDecoderPosition(Int64 startFrame);
+	virtual void doneDecoding();
     
 protected:
     void setUpBuffers(float *buffer, UInt32 numChannels, UInt32 numFrames);
@@ -38,6 +39,7 @@ protected:
     AudioBufferList *mpBufferList;
     SInt64 mTotalFrames;
     std::vector<float>mReadBuffer;
+	RCriticalSection mDecodeLock;
 };
 
 #endif

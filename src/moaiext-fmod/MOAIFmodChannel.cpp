@@ -26,6 +26,26 @@ int MOAIFmodChannel::_getVolume ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	getVolume
+ @text	Returns the current volume of the channel.
+ 
+ @in	MOAIFmodChannel self
+ @out	float Volume - the volume currently set in this channel.
+ */
+int MOAIFmodChannel::_isPlaying ( lua_State* L ) {
+	
+	MOAI_LUA_SETUP ( MOAIFmodChannel, "U" )
+	
+	bool isPlaying = self->mPlayState == PLAYING;
+
+	if ( self->mSound ) {
+		lua_pushboolean ( state, isPlaying );
+		return 1; 
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	moveVolume
 	@text	Creates a new MOAIAction that will move the volume from it's current value to the value specified.
 
@@ -66,6 +86,7 @@ int MOAIFmodChannel::_moveVolume ( lua_State* L ) {
 int MOAIFmodChannel::_play ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIFmodChannel, "UU" )
 
+	self->mPlayState = PLAYING;
 	MOAIFmodSound* sound = state.GetLuaObject < MOAIFmodSound >( 2 );
 	if ( !sound ) return 0;
 
@@ -106,24 +127,7 @@ int MOAIFmodChannel::_seekVolume ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setPaused
-	@text	Sets whether this channel is paused and hence does not play any sounds.
-
-	@in		MOAIFmodChannel self
-	@in		boolean paused			Whether this channel is paused.
-	@out	nil
-*/
-int MOAIFmodChannel::_setPaused ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIFmodChannel, "UB" )
-
-	bool paused = state.GetValue < bool >( 2, false );
-	self->SetPaused ( paused );
-
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@name	setVolume
+/**	@name	setLooping
 	@text	Immediately sets the volume of this channel.
 
 	@in		MOAIFmodChannel self
@@ -140,6 +144,42 @@ int MOAIFmodChannel::_setVolume ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	setPaused
+	@text	Sets whether this channel is paused and hence does not play any sounds.
+
+	@in		MOAIFmodChannel self
+	@in		boolean paused			Whether this channel is paused.
+	@out	nil
+*/
+int MOAIFmodChannel::_setPaused ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIFmodChannel, "UB" )
+
+	self->mPlayState = PAUSED;
+	bool paused = state.GetValue < bool >( 2, false );
+	self->SetPaused ( paused );
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	setVolume
+	@text	Immediately sets the volume of this channel.
+
+	@in		MOAIFmodChannel self
+	@in		number volume			The volume of this channel.
+	@out	nil
+*/
+int MOAIFmodChannel::_setLooping ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIFmodChannel, "UB" )
+
+	float looping = state.GetValue < bool >( 2, false );
+
+	self->mLooping = looping;
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	stop
 	@text	Stops playing the sound on this channel.
 
@@ -149,6 +189,7 @@ int MOAIFmodChannel::_setVolume ( lua_State* L ) {
 int MOAIFmodChannel::_stop ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIFmodChannel, "U" )
 	
+	self->mPlayState = STOPPED;
 	self->Stop ();
 
 	return 0;
@@ -159,13 +200,13 @@ int MOAIFmodChannel::_stop ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIFmodChannel::ApplyAttrOp ( u32 attrID, USAttrOp& attrOp ) {
+bool MOAIFmodChannel::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 
 	if ( MOAIFmodChannelAttr::Check ( attrID )) {
 		attrID = UNPACK_ATTR ( attrID );
 
 		if ( attrID == ATTR_VOLUME ) {
-			this->mVolume = attrOp.Op ( this->mVolume );
+			this->mVolume = attrOp.Apply ( this->mVolume, op, MOAINode::ATTR_READ_WRITE );
 			this->SetVolume ( this->mVolume );
 			return true;
 		}
@@ -182,7 +223,8 @@ float MOAIFmodChannel::GetVolume () {
 MOAIFmodChannel::MOAIFmodChannel () :
 	mChannel ( 0 ),
 	mVolume ( 1.0f ),
-	mPaused ( false ) {
+	mPaused ( false ) ,
+	mLooping ( false ) {
 	
 	RTTI_SINGLE ( MOAINode )
 }
@@ -207,32 +249,44 @@ void MOAIFmodChannel::Play ( MOAIFmodSound* sound, int loopCount ) {
 	FMOD_RESULT result;
 	FMOD::Channel* channel = 0;
 	
+	//printf ( "PLAY SOUND %s, @ %f\n", sound->GetFileName (), USDeviceTime::GetTimeInSeconds () );
 	result = soundSys->playSound ( FMOD_CHANNEL_FREE, sound->mSound, true, &channel );
-	if ( result != FMOD_OK ) return;
+	if ( result != FMOD_OK ) {
+		printf (" FMOD ERROR: Sound did not play\n" );
+		return;
+	}
 	
 	this->mChannel = channel;
 	this->mChannel->setMode ( FMOD_LOOP_NORMAL );
-	this->mChannel->setLoopCount ( loopCount );
+
+	if ( mLooping ) {
+		this->mChannel->setLoopCount ( -1 );
+	}
+	else {
+		this->mChannel->setLoopCount ( 0 );
+	}
 	
 	this->SetVolume ( this->mVolume );
 	this->SetPaused ( this->mPaused );
 }
 
 //----------------------------------------------------------------//
-void MOAIFmodChannel::RegisterLuaClass ( USLuaState& state ) {
+void MOAIFmodChannel::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	state.SetField ( -1, "ATTR_VOLUME", MOAIFmodChannelAttr::Pack ( ATTR_VOLUME ));
 }
 
 //----------------------------------------------------------------//
-void MOAIFmodChannel::RegisterLuaFuncs ( USLuaState& state ) {
+void MOAIFmodChannel::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "getVolume",		_getVolume },
+		{ "isPlaying",		_isPlaying },
 		{ "moveVolume",		_moveVolume },
 		{ "play",			_play },
 		{ "seekVolume",		_seekVolume },
 		{ "setPaused",		_setPaused },
+		{ "setLooping",		_setLooping },
 		{ "setVolume",		_setVolume },
 		{ "stop",			_stop },
 		{ NULL, NULL }
@@ -262,17 +316,4 @@ void MOAIFmodChannel::Stop () {
 
 	if ( !this->mChannel ) return;
 	this->mChannel->stop();
-}
-
-//----------------------------------------------------------------//
-STLString MOAIFmodChannel::ToString () {
-
-	STLString repr;
-
-	PRETTY_PRINT ( repr, mVolume )
-	PRETTY_PRINT ( repr, mPaused )
-	PRETTY_PRINT ( repr, mChannel )
-	PRETTY_PRINT ( repr, mSound )
-
-	return repr;
 }

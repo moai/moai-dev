@@ -21,5 +21,7 @@ public:
     virtual void setDecoderPosition(Int64 startFrame);
 
 protected:
-    WaveFile *mpWaveFile;
+	RString mPath;
+    WaveFile mWaveFile;
+	std::vector<UInt8> mRawBuffer;
 };

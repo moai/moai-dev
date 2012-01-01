@@ -75,23 +75,23 @@ public:
 	friend class MOAISerializer;
 
 	//----------------------------------------------------------------//
-	void					BindToLuaWithTable		( MOAILuaState& state ); // push table at top of stack!
-	virtual MOAILuaClass*	GetLuaClass				();
-	MOAILuaStateHandle		GetSelf					();
-	bool					IsBound					();
-	void					LockToRefCount			();
-	void					LuaRelease				( MOAILuaObject& object );
-	void					LuaRetain				( MOAILuaObject& object );
-	void					LuaUnbind				();
-	void					PushLuaClassTable		( MOAILuaState& state );
-	void					PushLuaUserdata			( MOAILuaState& state );
-	virtual void			RegisterLuaClass		( MOAILuaState& state );
-	virtual void			RegisterLuaFuncs		( MOAILuaState& state );
-	static void             ReportLeaks				( FILE *f, bool clearAfter );
-	virtual	void			SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
-	virtual	void			SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
-							MOAILuaObject			();
-	virtual					~MOAILuaObject			();
+	void					BindToLuaWithMemberTable	( MOAILuaState& state ); // push table at top of stack!
+	virtual MOAILuaClass*	GetLuaClass					();
+	MOAILuaStateHandle		GetSelf						();
+	bool					IsBound						();
+	void					LockToRefCount				();
+	void					LuaRelease					( MOAILuaObject& object );
+	void					LuaRetain					( MOAILuaObject& object );
+	void					LuaUnbind					();
+	void					PushLuaClassTable			( MOAILuaState& state );
+	void					PushLuaUserdata				( MOAILuaState& state );
+	virtual void			RegisterLuaClass			( MOAILuaState& state );
+	virtual void			RegisterLuaFuncs			( MOAILuaState& state );
+	static void             ReportLeaks					( FILE *f, bool clearAfter );
+	virtual	void			SerializeIn					( MOAILuaState& state, MOAIDeserializer& serializer );
+	virtual	void			SerializeOut				( MOAILuaState& state, MOAISerializer& serializer );
+							MOAILuaObject				();
+	virtual					~MOAILuaObject				();
 };
 
 //================================================================//

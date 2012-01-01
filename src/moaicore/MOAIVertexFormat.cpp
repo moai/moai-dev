@@ -48,7 +48,7 @@ int MOAIVertexFormat::_declareColor ( lua_State* L ) {
 	u32 index			= state.GetValue < u32 >( 2, 1 ) - 1;
 	u32 type			= state.GetValue < u32 >( 3, 0 );
 	
-	self->DeclareAttribute ( index, type, COLOR_SIZE, GL_COLOR_ARRAY, true );
+	self->DeclareAttribute ( index, type, COLOR_SIZE, ARRAY_COLOR, true );
 
 	return 0;
 }
@@ -69,7 +69,7 @@ int MOAIVertexFormat::_declareCoord ( lua_State* L ) {
 	u32 type			= state.GetValue < u32 >( 3, 0 );
 	u32 size			= state.GetValue < u32 >( 4, 0 );
 	
-	self->DeclareAttribute ( index, type, size, GL_VERTEX_ARRAY, false );
+	self->DeclareAttribute ( index, type, size, ARRAY_VERTEX, false );
 
 	return 0;
 }
@@ -88,7 +88,7 @@ int MOAIVertexFormat::_declareNormal ( lua_State* L ) {
 	u32 index			= state.GetValue < u32 >( 2, 1 ) - 1;
 	u32 type			= state.GetValue < u32 >( 3, 0 );
 	
-	self->DeclareAttribute ( index, type, NORMAL_SIZE, GL_NORMAL_ARRAY, false );
+	self->DeclareAttribute ( index, type, NORMAL_SIZE, ARRAY_NORMAL, false );
 
 	return 0;
 }
@@ -109,7 +109,7 @@ int MOAIVertexFormat::_declareUV ( lua_State* L ) {
 	u32 type			= state.GetValue < u32 >( 3, 0 );
 	u32 size			= state.GetValue < u32 >( 4, 0 );
 	
-	self->DeclareAttribute ( index, type, size, GL_TEXTURE_COORD_ARRAY, false );
+	self->DeclareAttribute ( index, type, size, ARRAY_TEX_COORD, false );
 
 	return 0;
 }
@@ -121,6 +121,7 @@ int MOAIVertexFormat::_declareUV ( lua_State* L ) {
 //----------------------------------------------------------------//
 void MOAIVertexFormat::BindFixed ( void* buffer ) const {
 
+#if USE_OPENGLES1
 	for ( u32 i = 0; i < TOTAL_ARRAY_TYPES; ++i ) {
 	
 		const MOAIVertexAttributeUse& attrUse = this->mAttributeUseTable [ i ];
@@ -153,6 +154,7 @@ void MOAIVertexFormat::BindFixed ( void* buffer ) const {
 			glEnableClientState ( attrUse.mUse );
 		}
 	}
+#endif
 }
 
 //----------------------------------------------------------------//
@@ -213,7 +215,8 @@ void MOAIVertexFormat::DeclareAttribute ( GLint index, GLenum type, GLint size, 
 	
 	this->mVertexSize += MOAIVertexFormat::GetComponentSize ( size, type );
 	
-	u32 useIdx = MOAIVertexFormat::GetIndexForUse ( use );
+	//u32 useIdx = MOAIVertexFormat::GetIndexForUse ( use );
+	u32 useIdx = use;
 	if ( useIdx < TOTAL_ARRAY_TYPES ) {
 		this->mAttributeUseTable [ useIdx ].mAttrID = attrID;
 	}
@@ -251,6 +254,7 @@ u32 MOAIVertexFormat::GetComponentSize ( GLint size, GLenum type ) {
 //----------------------------------------------------------------//
 u32 MOAIVertexFormat::GetIndexForUse ( GLenum use ) {
 
+#if USE_OPENGLES1
 	switch ( use ) {
 		case GL_COLOR_ARRAY:			return ARRAY_COLOR;
 		case GL_NORMAL_ARRAY:			return ARRAY_NORMAL;
@@ -258,12 +262,14 @@ u32 MOAIVertexFormat::GetIndexForUse ( GLenum use ) {
 		case GL_VERTEX_ARRAY:			return ARRAY_VERTEX;
 		default:						break;
 	}
+#endif
 	return NULL_INDEX;
 }
 
 //----------------------------------------------------------------//
 GLenum MOAIVertexFormat::GetUseForIndex ( u32 idx ) {
 
+#if USE_OPENGLES1
 	switch ( idx ) {
 		case ARRAY_COLOR:			return GL_COLOR_ARRAY;
 		case ARRAY_NORMAL:			return GL_NORMAL_ARRAY;
@@ -271,6 +277,7 @@ GLenum MOAIVertexFormat::GetUseForIndex ( u32 idx ) {
 		case ARRAY_VERTEX:			return GL_VERTEX_ARRAY;
 		default:					break;
 	}
+#endif
 	return 0;
 }
 
@@ -321,9 +328,11 @@ void MOAIVertexFormat::RegisterLuaFuncs ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIVertexFormat::UnbindFixed () const {
 
+#if USE_OPENGLES1
 	for ( u32 i = 0; i < TOTAL_ARRAY_TYPES; ++i ) {
 		glDisableClientState ( this->mAttributeUseTable [ i ].mUse );
 	}
+#endif
 }
 
 //----------------------------------------------------------------//

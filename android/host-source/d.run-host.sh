@@ -1,3 +1,5 @@
+#!/bin/bash
+
 #================================================================#
 # Copyright (c) 2010-2011 Zipline Games, Inc.
 # All Rights Reserved.
@@ -14,7 +16,7 @@
 	rm -rf build
 
 	# load global settings
-	source settings-global.sh
+	source ./settings-global.sh
 
 	# load local settings
 	local_settings_created=false
@@ -26,7 +28,7 @@
 		echo -e "*** Local file \"settings-local.sh\" created"
 	fi
 
-	source settings-local.sh
+	source ./settings-local.sh
 
 	# check for valid Android SDK root
 	if [ "$android_sdk_root" = "" ] || [ ! -d $android_sdk_root ]; then
@@ -90,40 +92,50 @@
 	
 	# copy .project file and replace text inside
 	cp -f	host-source/project/.project	build/.project 
-	fr build/.project 	@NAME@	$project_name
+	fr build/.project 				@NAME@					"$project_name"
 
 	# copy AndroidManifest.xml file and replace text inside
 	cp -f	host-source/project/AndroidManifest.xml		build/AndroidManifest.xml
-	fr build/AndroidManifest.xml	@NAME@			$project_name
-	fr build/AndroidManifest.xml	@PACKAGE@		$package
-	fr build/AndroidManifest.xml	@DEBUGGABLE@	$debug
-
+	fr build/AndroidManifest.xml	@PACKAGE@				"$package"
+	fr build/AndroidManifest.xml	@DEBUGGABLE@			"$debug"
+	fr build/AndroidManifest.xml	@VERSION_CODE@			"$versionCode"
+	fr build/AndroidManifest.xml	@VERSION_NAME@			"$versionName"
+	
 	# copy ant.properties file and replace text inside
 	cp -f	host-source/project/ant.properties	build/ant.properties
-	fr build/ant.properties		@KEY_STORE@		$key_store
-	fr build/ant.properties		@KEY_ALIAS@		$key_alias
+	fr build/ant.properties			@KEY_STORE@				"$key_store"
+	fr build/ant.properties			@KEY_ALIAS@				"$key_alias"
+	fr build/ant.properties			@KEY_STORE_PASSWORD@	"$key_store_password"
+	fr build/ant.properties			@KEY_ALIAS_PASSWORD@	"$key_alias_password"
 
 	# copy build.xml file and replace text inside
 	cp -f	host-source/project/build.xml	build/build.xml
-	fr build/build.xml		@NAME@		$project_name
+	fr build/build.xml				@NAME@					"$project_name"
 
 	# copy local.properties file and replace text inside
 	cp -f	host-source/project/local.properties	build/local.properties
-	fr build/local.properties		@SDK_ROOT@		$android_sdk_root
+	fr build/local.properties		@SDK_ROOT@				"$android_sdk_root"
 
 	# copy local.properties file and replace text inside
 	cp -f 	host-source/project/res/values/strings.xml	build/res/values/strings.xml
-	fr build/res/values/strings.xml	@NAME@		$project_name
+	fr build/res/values/strings.xml	@NAME@					"$app_name"
 
-	# copy MoaiActivity.java file and replace text inside
-	cp -f 	host-source/project/$package_path/MoaiActivity.java	build/$package_path/MoaiActivity.java
-	fr build/$package_path/MoaiActivity.java	@PACKAGE@	$package
+	# copy all src files
+	cp -rf	host-source/project/src build/
 
-	# copy MoaiView.java file and replace text inside
-	cp -f 	host-source/project/$package_path/MoaiView.java	build/$package_path/MoaiView.java
-	fr build/$package_path/MoaiView.java	@PACKAGE@		$package
-	fr build/$package_path/MoaiView.java	@WORKING_DIR@	$working_dir
-
+	# replace text inside required src files
+	fr build/$package_path/Base64.java						@PACKAGE@		"$package"
+	fr build/$package_path/Base64DecoderException.java		@PACKAGE@		"$package"
+	fr build/$package_path/MoaiActivity.java				@PACKAGE@		"$package"
+	fr build/$package_path/MoaiBillingConstants.java		@PACKAGE@		"$package"
+	fr build/$package_path/MoaiBillingPurchaseObserver.java	@PACKAGE@		"$package"
+	fr build/$package_path/MoaiBillingReceiver.java			@PACKAGE@		"$package"
+	fr build/$package_path/MoaiBillingResponseHandler.java	@PACKAGE@		"$package"
+	fr build/$package_path/MoaiBillingSecurity.java			@PACKAGE@		"$package"
+	fr build/$package_path/MoaiBillingService.java			@PACKAGE@		"$package"
+	fr build/$package_path/MoaiView.java					@PACKAGE@		"$package"
+	fr build/$package_path/MoaiView.java					@WORKING_DIR@	"$working_dir"
+	
 	# create run command for the init.lua file
 	working_dir_depth=`grep -o "\/" <<<"$working_dir" | wc -l`
 	(( working_dir_depth += 1 ))
@@ -136,51 +148,30 @@
 		fi
 	done
 
-	fr 	build/$package_path/MoaiView.java	@RUN_INIT_DIR@ 	$init_dir
+	fr 	build/$package_path/MoaiView.java	@RUN_INIT_DIR@ 	"$init_dir"
 	
 	# create run commands for the host
 	for file in "${run[@]}"; do
-		run_command=`echo -e $run_command"Run\(\""$file"\"\,mWidth\,mHeight\)\;\n"`
+		run_command=`echo -e $run_command"run\(\""$file"\"\)\;"`
 	done
-
-	fr 	build/$package_path/MoaiView.java	@RUN@ 	$run_command
-
-	# create bundle directory
-	bundle_file_name=bundle
-	bundle_dir=build/$bundle_file_name
-
-	if [ -d $bundle_dir ]; then
-		rm -rf $bundle_dir
-	fi
 	
-	mkdir -p $bundle_dir
+	fr 	build/$package_path/MoaiView.java	@RUN@ 	"$run_command"
 
 	# bundle android-init file
-	cp -f host-source/init.lua $bundle_dir/init.lua
+	cp -f host-source/init.lua build/assets/init.lua
 
 	# bundle source folders
-	function copyFolderIntoBundle () {
+	function copyFolder () {
 		mkdir -p $2
 		rsync -r --exclude=.svn --exclude=.DS_Store --exclude=*.bat --exclude=*.sh $1/. $2
 	}
 	
 	i=0
 	for src_dir in "${src_dirs[@]}"; do
-		copyFolderIntoBundle $src_dir $bundle_dir/${dest_dirs[i]}
+		copyFolder $src_dir build/assets/${dest_dirs[i]}
 		i=$i+1
 	done
 
-	# create final bundle file
-	rm -f build/res/raw/$bundle_file_name
-	
-	pushd $bundle_dir > /dev/null
-		zip -9 -r -q ../res/raw/$bundle_file_name . *.*
-	popd > /dev/null
-	
-	pushd build/res/raw > /dev/null
-		mv $bundle_file_name.zip $bundle_file_name
-	popd > /dev/null
-	
 	# install release mode of the project
 	if [ "$debug" == "true" ]; then
 		install_cmd="ant debug install"
@@ -194,8 +185,8 @@
 			ant clean
 			$install_cmd
 			adb shell am start -a android.intent.action.MAIN -n $package/$package.MoaiActivity
-			# adb logcat MoaiJNI:V MoaiLog:V *:S
-			adb logcat MoaiLog:V *:S
+			adb logcat -c
+			adb logcat MoaiLog:V AndroidRuntime:E *:S
 		popd > /dev/null
 	fi
 	

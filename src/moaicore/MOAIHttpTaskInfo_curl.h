@@ -41,8 +41,9 @@ private:
 	void			Finish					();
 	void			InitForGet				( cc8* url, cc8* useragent, bool verbose );
 	void			InitForPost				( cc8* url, cc8* useragent, const void* buffer, u32 size, bool verbose );
-					MOAIHttpTaskInfo			();
-					~MOAIHttpTaskInfo			();
+					MOAIHttpTaskInfo		();
+					~MOAIHttpTaskInfo		();
+	void			PerformSync				();
 };
 
 #endif

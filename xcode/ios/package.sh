@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # extend path to include system folders. on some machines, this is necessary
 PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:$PATH
 

@@ -19,8 +19,8 @@ void printCode(const char *tag, OSStatus s)
     } else
         // no, format it as an integer
         sprintf(str, "%d", (int)s);
-    //fprintf(stderr, "%s%s\n", tag, str);
-	RPRINT("%s%s\n", tag, str);
+    fprintf(stderr, "%s%s\n", tag, str);
+	//RPRINT("%s%s\n", tag, str);
 }
 
 ExtAudioFileAudioSource::ExtAudioFileAudioSource()
@@ -31,6 +31,14 @@ ExtAudioFileAudioSource::ExtAudioFileAudioSource()
 ExtAudioFileAudioSource::~ExtAudioFileAudioSource()
 {
 	close();
+}
+
+void ExtAudioFileAudioSource::doneDecoding()
+{
+	RPRINT("freeing decoder memory.\n");
+	
+	mReadBuffer.clear();
+	std::vector<float>().swap(mReadBuffer);
 }
 
 double ExtAudioFileAudioSource::getLength() 
@@ -104,6 +112,8 @@ void ExtAudioFileAudioSource::close()
  
 void ExtAudioFileAudioSource::setDecoderPosition(Int64 startFrame)
 {
+	RScopedLock l(&mDecodeLock);
+
 	RPRINT("setting decoder position\n");
     ExtAudioFileSeek(mAudioFile, startFrame);  
 	if(startFrame < getLength() * getSampleRate())
@@ -123,7 +133,16 @@ Int64 ExtAudioFileAudioSource::decodeData(float* buffer, UInt32 numFrames)
     
     // Read the data out of our file, filling our output buffer
     UInt32 framesRead = numFrames;
-    err = ExtAudioFileRead (mAudioFile, &framesRead, mpBufferList);
+	if(!isLoadedInMemory())
+	{
+		RScopedLock l(&mDecodeLock);
+		err = ExtAudioFileRead (mAudioFile, &framesRead, mpBufferList);
+	}
+	else
+	{
+		err = ExtAudioFileRead (mAudioFile, &framesRead, mpBufferList);
+	}
+		
     if(err || framesRead == 0)
     {
         mEOF = true;

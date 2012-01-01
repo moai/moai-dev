@@ -53,67 +53,68 @@ public:
 private:
 	
 	static const u32 DEFAULT_BUFFER_SIZE	= 0x8000;
-	
-	const MOAIVertexFormat*	mVertexFormat;
-	
-	void*			mBuffer;
-	u32				mSize;
-	u32				mTop;
-	u32				mPrimTop;
-	
-	GLenum			mPrimType;
-	u32				mPrimSize;
-	u32				mPrimCount;
-	u32				mMaxPrims;
-	
-	MOAITexture*	mTexture;
-	MOAIShader*		mShader;
-	
-	USMatrix4x4		mUVTransform;
-	USMatrix4x4		mVertexTransforms [ TOTAL_VTX_TRANSFORMS ];
-	
-	USColorVec		mPenColor;
-	u32				mPackedColor;
-	float			mPenWidth;
-	float			mPointSize;
-	
+		
 	MOAIBlendMode	mBlendMode;
 	bool			mBlendEnabled;
-	
-	USRect			mScissorRect;
-	USRect			mViewRect;
-	
-	u32				mWidth;
-	u32				mHeight;
 
-	u32				mUVMtxInput;
-	u32				mUVMtxOutput;
+	void*			mBuffer;
 
-	u32				mVertexMtxInput;
-	u32				mVertexMtxOutput;
+	GLbitfield		mClearFlags;
+	u32				mClearColor;
+	MOAIColor*		mClearColorNode;
 
 	bool			mCpuVertexTransform;
 	USMatrix4x4		mCpuVertexTransformMtx; // composition of matrices to be applied via CPU
 	
 	bool			mCpuUVTransform;
 	
-	bool			mHasContext;
-	bool			mIsOpenGLES;
-	u32				mMajorVersion;
-	u32				mMinorVersion;
-	bool			mIsProgrammable;
-	
-	bool			mIsFramebufferSupported;
 	GLuint			mDefaultFrameBuffer;
-	
-	size_t			mTextureMemoryUsage;
+	float			mDeviceScale;
 
+	bool			mHasContext;
+	u32				mHeight;
+
+	bool			mIsFramebufferSupported;
+	bool			mIsOpenGLES;
+	bool			mIsProgrammable;	
+
+	u32				mMajorVersion;
+	u32				mMaxPrims;
+	u32				mMinorVersion;
+	
+	USColorVec		mPenColor;
+	u32				mPackedColor;
+	float			mPenWidth;
+	float			mPointSize;
+	
+	u32				mPrimCount;
+	u32				mPrimSize;
+	u32				mPrimTop;
+	GLenum			mPrimType;
+	
 	typedef USLeanList < MOAIGfxResource* >::Iterator ResourceIt;
 	USLeanList < MOAIGfxResource* > mResources;
 
-	GLbitfield		mClearFlags;
-	u32				mClearColor;
-	MOAIColor*		mClearColorNode;
+	USRect			mScissorRect;
+	MOAIShader*		mShader;	
+	u32				mSize;
+	
+	MOAITexture*	mTexture;
+	size_t			mTextureMemoryUsage;
+	u32				mTop;
+	
+	u32				mUVMtxInput;
+	u32				mUVMtxOutput;
+	USMatrix4x4		mUVTransform;
+
+	const MOAIVertexFormat*	mVertexFormat;
+
+	u32				mVertexMtxInput;
+	u32				mVertexMtxOutput;
+	USMatrix4x4		mVertexTransforms [ TOTAL_VTX_TRANSFORMS ];
+	USRect			mViewRect;
+
+	u32				mWidth;
 
 	//----------------------------------------------------------------//
 	static int				_isProgrammable			( lua_State* L );
@@ -164,6 +165,7 @@ public:
 	void					EndPrim					();
 	void					Flush					();
 	
+	float					GetDeviceScale			();
 	cc8*					GetErrorString			( int error ) const;
 	
 	u32						GetHeight				() const;
@@ -205,6 +207,7 @@ public:
 	
 	void					SetClearColor			( MOAIColor* color );
 	void					SetDefaultFrameBuffer	( GLuint frameBuffer );
+	void					SetDeviceScale			( float scale );
 	void					SetFrameBuffer			( MOAITexture* texture );
 	void					SetPenColor				( u32 color );
 	void					SetPenColor				( const USColorVec& colorVec );

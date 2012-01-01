@@ -288,17 +288,18 @@ int MOAILayer2D::_setSortMode ( lua_State* L ) {
 	@text	Set the scalar applied to axis sorts.
 	
 	@in		MOAILayer2D self
-	@opt	number xScale		Default valie is 1.
-	@opt	number yScale		Default valie is 1.
-	@opt	number zScale		Default valie is 1.
+	@opt	number x			Default value is 0.
+	@opt	number y			Default value is 0.
+	@opt	number priority		Default value is 1.
 	@out	nil
 */
 int	MOAILayer2D::_setSortScale ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAILayer2D, "U" )
 
-	self->mSortScale.mX = state.GetValue < float >( 2, 1.0f );
-	self->mSortScale.mY = state.GetValue < float >( 3, 1.0f );
-	self->mSortScale.mZ = state.GetValue < float >( 4, 1.0f );
+	self->mSortScale [ 0 ] = state.GetValue < float >( 2, 0.0f );
+	self->mSortScale [ 1 ] = state.GetValue < float >( 3, 0.0f );
+	self->mSortScale [ 2 ] = 0.0f;
+	self->mSortScale [ 3 ] = state.GetValue < float >( 4, 1.0f );
 
 	return 0;
 }
@@ -406,7 +407,9 @@ void MOAILayer2D::AffirmPartition () {
 }
 
 //----------------------------------------------------------------//
-void MOAILayer2D::Draw () {
+void MOAILayer2D::Draw ( int subPrimID, bool reload ) {
+	UNUSED ( subPrimID );
+	UNUSED ( reload );
 
 	if ( !this->mViewport ) return;
 	
@@ -466,13 +469,28 @@ void MOAILayer2D::Draw () {
 		u32 totalResults = this->mPartition->GatherProps ( buffer, viewBounds, 0, MOAIProp::CAN_DRAW | MOAIProp::CAN_DRAW_DEBUG );
 		if ( !totalResults ) return;
 		
-		buffer.Sort ( this->mSortMode );
+		totalResults = buffer.PrepareResults (
+			this->mSortMode,
+			true,
+			this->mSortScale [ 0 ],
+			this->mSortScale [ 1 ],
+			this->mSortScale [ 2 ],
+			this->mSortScale [ 3 ]
+		);
 
+		MOAIProp* prevProp = 0;
+		
 		// render the sorted list
 		for ( u32 i = 0; i < totalResults; ++i ) {
-			MOAIProp* prop = buffer.GetResultUnsafe ( i );
-			prop->Draw ();
-			prop->DrawDebug ();
+			MOAIPartitionResult* result = buffer.GetResultUnsafe ( i );
+			
+			MOAIProp* prop = result->mProp;
+			bool reload = prop != prevProp;
+			
+			prop->Draw ( result->mSubPrimID, reload );
+			prop->DrawDebug ( result->mSubPrimID );
+			
+			prevProp = prop;
 		}
 	}
 	
@@ -606,13 +624,15 @@ void MOAILayer2D::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAIProp2D::RegisterLuaClass ( state );
 	
-	state.SetField ( -1, "SORT_NONE",					MOAIPartitionResultBuffer::SORT_NONE );
-	state.SetField ( -1, "SORT_PRIORITY_ASCENDING",		MOAIPartitionResultBuffer::SORT_PRIORITY_ASCENDING );
-	state.SetField ( -1, "SORT_PRIORITY_DESCENDING",	MOAIPartitionResultBuffer::SORT_PRIORITY_DESCENDING );
-	state.SetField ( -1, "SORT_X_ASCENDING",			MOAIPartitionResultBuffer::SORT_X_ASCENDING );
-	state.SetField ( -1, "SORT_X_DESCENDING",			MOAIPartitionResultBuffer::SORT_X_DESCENDING );
-	state.SetField ( -1, "SORT_Y_ASCENDING",			MOAIPartitionResultBuffer::SORT_Y_ASCENDING );
-	state.SetField ( -1, "SORT_Y_DESCENDING",			MOAIPartitionResultBuffer::SORT_Y_DESCENDING );
+	state.SetField ( -1, "SORT_NONE",					( u32 ) MOAIPartitionResultBuffer::SORT_NONE );
+	state.SetField ( -1, "SORT_PRIORITY_ASCENDING",		( u32 ) MOAIPartitionResultBuffer::SORT_PRIORITY_ASCENDING );
+	state.SetField ( -1, "SORT_PRIORITY_DESCENDING",	( u32 ) MOAIPartitionResultBuffer::SORT_PRIORITY_DESCENDING );
+	state.SetField ( -1, "SORT_X_ASCENDING",			( u32 ) MOAIPartitionResultBuffer::SORT_X_ASCENDING );
+	state.SetField ( -1, "SORT_X_DESCENDING",			( u32 ) MOAIPartitionResultBuffer::SORT_X_DESCENDING );
+	state.SetField ( -1, "SORT_Y_ASCENDING",			( u32 ) MOAIPartitionResultBuffer::SORT_Y_ASCENDING );
+	state.SetField ( -1, "SORT_Y_DESCENDING",			( u32 ) MOAIPartitionResultBuffer::SORT_Y_DESCENDING );
+	state.SetField ( -1, "SORT_VECTOR_ASCENDING",		( u32 ) MOAIPartitionResultBuffer::SORT_VECTOR_ASCENDING );
+	state.SetField ( -1, "SORT_VECTOR_DESCENDING",		( u32 ) MOAIPartitionResultBuffer::SORT_VECTOR_DESCENDING );
 }
 
 //----------------------------------------------------------------//

@@ -5,12 +5,43 @@
 #include <chipmunk/chipmunk.h>
 #include <moaicore/moaicore.h>
 
-//----------------------------------------------------------------//
-static void _cleanup () {
+extern "C" {
+	#include <zlib.h>
+	#include <zipfs/ZIPFSZipFile.h>
+}
 
-	curl_global_cleanup ();
+#if USE_OPENSSL
+	#include <openssl/conf.h>
+	#include <openssl/crypto.h>
+
+	#ifndef OPENSSL_NO_ENGINE
+		#include <openssl/engine.h>
+	#endif
+
+	#ifndef OPENSSL_NO_ERR
+		#include <openssl/err.h>
+	#endif
+
+	#include <openssl/ssl.h>
+#endif
+
+//----------------------------------------------------------------//
+// TODO: this should be part of the unit tests
+static void _typeCheck () {
+
+	// make sure our fixed size typedefs are what we think
+	// they are on the current platform/compiler
+	assert ( sizeof ( cc8 )	== 1 );
+
+	assert ( sizeof ( u8 )	== 1 );
+	assert ( sizeof ( u16 )	== 2 );
+	assert ( sizeof ( u32 )	== 4 );
+	assert ( sizeof ( u64 )	== 8 );
 	
-	MOAIGlobalsMgr::Finalize ();
+	assert ( sizeof ( s8 )	== 1 );
+	assert ( sizeof ( s16 )	== 2 );
+	assert ( sizeof ( s32 )	== 4 );
+	assert ( sizeof ( s64 )	== 8 );
 }
 
 //================================================================//
@@ -19,19 +50,6 @@ static void _cleanup () {
 
 //----------------------------------------------------------------//
 void moaicore::InitGlobals ( MOAIGlobals* globals ) {
-
-	uslsext::Init ();
-
-	static bool sysInit = true;
-	if ( sysInit ) {
-		
-		cpInitChipmunk ();
-		
-		curl_global_init ( CURL_GLOBAL_WIN32 | CURL_GLOBAL_SSL );
-		
-		atexit ( _cleanup );
-		sysInit = false;
-	}
 
 	MOAIGlobalsMgr::Set ( globals );
 
@@ -68,6 +86,7 @@ void moaicore::InitGlobals ( MOAIGlobals* globals ) {
 	REGISTER_LUA_CLASS ( MOAICameraFitter2D )
 	REGISTER_LUA_CLASS ( MOAIColor )
 	REGISTER_LUA_CLASS ( MOAICompassSensor )
+	REGISTER_LUA_CLASS ( MOAICoroutine )
 	REGISTER_LUA_CLASS ( MOAIDataBuffer )
 	REGISTER_LUA_CLASS ( MOAIDataIOAction )
 	REGISTER_LUA_CLASS ( MOAIDebugLines )
@@ -84,6 +103,8 @@ void moaicore::InitGlobals ( MOAIGlobals* globals ) {
 	REGISTER_LUA_CLASS ( MOAIGfxQuadDeck2D )
 	REGISTER_LUA_CLASS ( MOAIGfxQuadListDeck2D )
 	REGISTER_LUA_CLASS ( MOAIGrid )
+	REGISTER_LUA_CLASS ( MOAIGridSpace )
+	REGISTER_LUA_CLASS ( MOAIGridPathGraph )
 	REGISTER_LUA_CLASS ( MOAIHttpTask )
 	REGISTER_LUA_CLASS ( MOAIImage )
 	REGISTER_LUA_CLASS ( MOAIIndexBuffer )
@@ -107,6 +128,8 @@ void moaicore::InitGlobals ( MOAIGlobals* globals ) {
 	REGISTER_LUA_CLASS ( MOAIParticleSystem )
 	REGISTER_LUA_CLASS ( MOAIParticleTimedEmitter )
 	REGISTER_LUA_CLASS ( MOAIPartition )
+	REGISTER_LUA_CLASS ( MOAIPathFinder )
+	REGISTER_LUA_CLASS ( MOAIPathTerrainDeck )
 	REGISTER_LUA_CLASS ( MOAIPointerSensor )
 	REGISTER_LUA_CLASS ( MOAIProp )
 	REGISTER_LUA_CLASS ( MOAIProp2D )
@@ -119,7 +142,6 @@ void moaicore::InitGlobals ( MOAIGlobals* globals ) {
 	REGISTER_LUA_CLASS ( MOAISurfaceDeck2D )
 	REGISTER_LUA_CLASS ( MOAITextBox )
 	REGISTER_LUA_CLASS ( MOAITexture )
-	REGISTER_LUA_CLASS ( MOAIThread )
 	REGISTER_LUA_CLASS ( MOAITileDeck2D )
 	REGISTER_LUA_CLASS ( MOAITimer )
 	REGISTER_LUA_CLASS ( MOAITouchSensor )
@@ -127,6 +149,7 @@ void moaicore::InitGlobals ( MOAIGlobals* globals ) {
 	REGISTER_LUA_CLASS ( MOAIVertexBuffer )
 	REGISTER_LUA_CLASS ( MOAIVertexFormat )
 	REGISTER_LUA_CLASS ( MOAIViewport )
+	REGISTER_LUA_CLASS ( MOAIWheelSensor )
 	REGISTER_LUA_CLASS ( MOAIXmlParser )
 	
 	#if USE_BOX2D
@@ -155,5 +178,54 @@ void moaicore::InitGlobals ( MOAIGlobals* globals ) {
 		REGISTER_LUA_CLASS ( MOAICpConstraint )
 		REGISTER_LUA_CLASS ( MOAICpShape )
 		REGISTER_LUA_CLASS ( MOAICpSpace )
+	#endif
+}
+
+//----------------------------------------------------------------//
+void moaicore::SystemFinalize () {
+
+	MOAIGlobalsMgr::Finalize ();
+	
+	#if USE_CURL
+		curl_global_cleanup ();
+	#endif
+	
+	#if USE_OPENSSL
+		#ifndef OPENSSL_NO_ENGINE
+			ENGINE_cleanup ();
+		#endif
+		
+		CONF_modules_unload ( 1 );
+		
+		#ifndef OPENSSL_NO_ERR
+			ERR_free_strings ();
+		#endif
+		
+		EVP_cleanup ();
+		CRYPTO_cleanup_all_ex_data ();
+	#endif
+	
+	zipfs_cleanup ();
+}
+
+//----------------------------------------------------------------//
+void moaicore::SystemInit () {
+
+	_typeCheck ();
+		
+	srand (( u32 )time ( 0 ));
+	zipfs_init ();
+	
+	#if USE_OPENSSL
+		SSL_load_error_strings ();
+		SSL_library_init ();
+	#endif
+
+	#if USE_CURL
+		curl_global_init ( CURL_GLOBAL_WIN32 | CURL_GLOBAL_SSL );
+	#endif
+	
+	#if USE_CHIPMUNK
+		cpInitChipmunk ();
 	#endif
 }

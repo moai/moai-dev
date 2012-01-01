@@ -1,3 +1,5 @@
+#!/bin/bash
+
 #================================================================#
 # Copyright (c) 2010-2011 Zipline Games, Inc.
 # All Rights Reserved.
@@ -5,15 +7,17 @@
 #================================================================#
 
 	# check for command line switches
-	usage="usage: $0 -p package [-thumb] [-q]"
+	usage="usage: $0 -p package [-l appPlatform ] [-thumb] [-q]"
 	quiet="false"
 	thumb=
 	packageName=
+	appPlatform=android-10
 	
 	while [ $# -gt 0 ];	do
 	    case "$1" in
 	        -thumb)  thumb=-thumb;;
 			-p)  packageName="$2"; shift;;
+			-l)  appPlatform="$2"; shift;;
 			-q)  quiet="true";;
 			-*)
 		    	echo >&2 \
@@ -38,15 +42,43 @@
 
 	# if libmoai already exists, find out which package it was build for
 	if [ -f libmoai/libs/armeabi/package.txt ]; then
-		read existing_package < libmoai/libs/armeabi/package.txt
+		existing_package=$( sed -n '1p' libmoai/libs/armeabi/package.txt )
+		existing_thumb=$( sed -n '2p' libmoai/libs/armeabi/package.txt )
+		existing_app_platform=$( sed -n '3p' libmoai/libs/armeabi/package.txt )
 	fi
 	
+	shouldBuild=false
+
+	if [ "$existing_package" != "$packageName" ]; then
+		shouldBuild=true
+	fi
+
+	if [ "$existing_thumb" == "thumb" ] && [ "$thumb" == "" ]; then
+		shouldBuild=true
+	fi
+
+	if [ "$existing_thumb" == "arm" ] && [ "$thumb" == "-thumb" ]; then
+		shouldBuild=true
+	fi
+
+	if [ "$existing_app_platform" != "$appPlatform" ]; then
+		shouldBuild=true
+	fi
+
+	if [ "$shouldBuild" == "true" ] || [ ! -f libmoai/libs/armeabi/libmoai.so ]; then
+		pushd libmoai > /dev/null
+			bash build.sh -p $packageName -l $appPlatform $thumb
+		popd > /dev/null
+	fi
+
+	# copy libmoai into new host template dir
 	new_host_lib_dir=$new_host_dir/host-source/project/libs/armeabi
 	mkdir -p $new_host_lib_dir
 	
 	# copy libmoai into new host template dir
-	if [ "$existing_package" != "$packageName" ] || [ ! -f libmoai/libs/armeabi/libmoai.so ]; then
+	if [ ! -f libmoai/libs/armeabi/libmoai.so ]; then
 		echo "*** libmoai.so has not been built for $packageName. Android host will be incomplete!"
+		quiet="true"
 	else
 		cp -f libmoai/libs/armeabi/libmoai.so $new_host_lib_dir/libmoai.so
 	fi
@@ -59,8 +91,19 @@
 	rsync -r --exclude=.svn --exclude=.DS_Store host-source/d.res/. $new_host_dir/res
 
 	# copy source dir into new host dir
-	rsync -r --exclude=.svn --exclude=.DS_Store --exclude=src/ host-source/source/. $new_host_dir/host-source
+	rsync -r --exclude=.svn --exclude=.DS_Store --exclude=src/ --exclude=external/ host-source/source/. $new_host_dir/host-source
 
+	# create function for easy find and replace
+	backup_ext=.backup
+	
+	function fr () { 
+		sed -i$backup_ext s%$2%"$3"%g $1
+		rm -f $1$backup_ext
+	}
+
+	# set the app platform in the project properties
+	fr $new_host_dir/host-source/project/project.properties	@APP_PLATFORM@ "$appPlatform"
+	
 	# create package src directories
 	OLD_IFS=$IFS
 	IFS='.'
@@ -73,6 +116,10 @@
 
 	# copy classes into new host dir
 	rsync -r --exclude=.svn --exclude=.DS_Store host-source/source/project/src/. $new_host_dir/host-source/project/$package_path
+
+	# copy external classes and resources into new host dir
+	rsync -r --exclude=.svn --exclude=.DS_Store host-source/source/project/external/src/. $new_host_dir/host-source/project/src
+	rsync -r --exclude=.svn --exclude=.DS_Store host-source/source/project/external/res/. $new_host_dir/host-source/project/res
 
 	# inject the package path into the run script
 	sed -i.backup s%@SETTING_PACKAGE_PATH@%"$package_path"%g $new_host_dir/run-host.sh

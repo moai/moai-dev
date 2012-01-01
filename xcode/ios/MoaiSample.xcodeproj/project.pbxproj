@@ -32,7 +32,6 @@
 		074C46A014240A250066B1EB /* moai-target in Resources */ = {isa = PBXBuildFile; fileRef = 074C469F14240A250066B1EB /* moai-target */; };
 		078D630113BA9EA30072F273 /* MoaiVC.mm in Sources */ = {isa = PBXBuildFile; fileRef = 078D630013BA9EA30072F273 /* MoaiVC.mm */; };
 		079530891447A0D800143A72 /* close_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 07952FFF1447A0D800143A72 /* close_button.png */; };
-		0795308C1447A0D800143A72 /* TJCLoadingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 079530041447A0D800143A72 /* TJCLoadingViewController.xib */; };
 		079530921447A0D800143A72 /* featured_app.sql in Resources */ = {isa = PBXBuildFile; fileRef = 079530121447A0D800143A72 /* featured_app.sql */; };
 		0795309E1447A0D800143A72 /* back_default.png in Resources */ = {isa = PBXBuildFile; fileRef = 0795302C1447A0D800143A72 /* back_default.png */; };
 		0795309F1447A0D800143A72 /* button_highlight.png in Resources */ = {isa = PBXBuildFile; fileRef = 0795302D1447A0D800143A72 /* button_highlight.png */; };
@@ -56,6 +55,7 @@
 		07E9F73F13B50582006396F3 /* libmoai-ios-3rdparty.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CC90BF13B3C39D00B2724C /* libmoai-ios-3rdparty.a */; };
 		07E9F74013B50582006396F3 /* libmoai-ios-luaext.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CC90C113B3C39D00B2724C /* libmoai-ios-luaext.a */; };
 		07E9F74113B50582006396F3 /* libmoai-ios-untz.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CC90C313B3C39D00B2724C /* libmoai-ios-untz.a */; };
+		07EDFE8F14885A500001D62A /* TJCLoadingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 07EDFE8E14885A500001D62A /* TJCLoadingView.xib */; };
 		07EF3E44147BAAA5006CFDCE /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07EF3E43147BAAA5006CFDCE /* Twitter.framework */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
@@ -209,7 +209,6 @@
 		078D62FF13BA9EA30072F273 /* MoaiVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoaiVC.h; sourceTree = "<group>"; };
 		078D630013BA9EA30072F273 /* MoaiVC.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MoaiVC.mm; sourceTree = "<group>"; };
 		07952FFF1447A0D800143A72 /* close_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = close_button.png; path = Libraries/TapjoyConnect/Components/TJCCore/Views/close_button.png; sourceTree = "<group>"; };
-		079530041447A0D800143A72 /* TJCLoadingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = TJCLoadingViewController.xib; path = Libraries/TapjoyConnect/Components/TJCCore/Views/TJCLoadingViewController.xib; sourceTree = "<group>"; };
 		079530121447A0D800143A72 /* featured_app.sql */ = {isa = PBXFileReference; lastKnownFileType = file; name = featured_app.sql; path = Libraries/TapjoyConnect/Components/TJCFeaturedApp/featured_app.sql; sourceTree = "<group>"; };
 		0795302C1447A0D800143A72 /* back_default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = back_default.png; path = Libraries/TapjoyConnect/Components/TJCVideoAds/back_default.png; sourceTree = "<group>"; };
 		0795302D1447A0D800143A72 /* button_highlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = button_highlight.png; path = Libraries/TapjoyConnect/Components/TJCVideoAds/button_highlight.png; sourceTree = "<group>"; };
@@ -229,6 +228,7 @@
 		079530671447A0D800143A72 /* TJCVGView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = TJCVGView.xib; path = Libraries/TapjoyConnect/Components/TJCVirtualGoods/TJCVG_Views/TJCVGView.xib; sourceTree = "<group>"; };
 		079530CD1447A0FF00143A72 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		07E6C6A0140C5EBD004D1227 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
+		07EDFE8E14885A500001D62A /* TJCLoadingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TJCLoadingView.xib; path = Libraries/TapjoyConnect/Components/TJCCore/Views/TJCLoadingView.xib; sourceTree = "<group>"; };
 		07EF3E43147BAAA5006CFDCE /* Twitter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Twitter.framework; path = System/Library/Frameworks/Twitter.framework; sourceTree = SDKROOT; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D6058910D05DD3D006BFB54 /* MoaiSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MoaiSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -399,6 +399,7 @@
 		CDB607BA14527D39006EBFB5 /* Tapjoy */ = {
 			isa = PBXGroup;
 			children = (
+				07EDFE8E14885A500001D62A /* TJCLoadingView.xib */,
 				079530571447A0D800143A72 /* TJCVGItemButton.xib */,
 				0795305C1447A0D800143A72 /* TJCVGItemDetail.xib */,
 				079530611447A0D800143A72 /* TJCVGPageView.xib */,
@@ -412,7 +413,6 @@
 				0795303C1447A0D800143A72 /* TJCVideoView.xib */,
 				079530121447A0D800143A72 /* featured_app.sql */,
 				07952FFF1447A0D800143A72 /* close_button.png */,
-				079530041447A0D800143A72 /* TJCLoadingViewController.xib */,
 				0795304D1447A0D800143A72 /* localVGStore.sql */,
 				0795304E1447A0D800143A72 /* standard-black-button-1.png */,
 				0795304F1447A0D800143A72 /* standard-black-button.png */,
@@ -576,7 +576,6 @@
 				074C469E14240A180066B1EB /* lua in Resources */,
 				074C46A014240A250066B1EB /* moai-target in Resources */,
 				079530891447A0D800143A72 /* close_button.png in Resources */,
-				0795308C1447A0D800143A72 /* TJCLoadingViewController.xib in Resources */,
 				079530921447A0D800143A72 /* featured_app.sql in Resources */,
 				0795309E1447A0D800143A72 /* back_default.png in Resources */,
 				0795309F1447A0D800143A72 /* button_highlight.png in Resources */,
@@ -594,6 +593,7 @@
 				079530BC1447A0D800143A72 /* TJCVGPageView.xib in Resources */,
 				079530BE1447A0D800143A72 /* TJCVGTableViewCell.xib in Resources */,
 				079530C01447A0D800143A72 /* TJCVGView.xib in Resources */,
+				07EDFE8F14885A500001D62A /* TJCLoadingView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

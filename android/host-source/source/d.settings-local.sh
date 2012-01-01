@@ -1,3 +1,5 @@
+#!/bin/bash
+
 #================================================================#
 # Copyright (c) 2010-2011 Zipline Games, Inc.
 # All Rights Reserved.
@@ -15,3 +17,14 @@
 #----------------------------------------------------------------#
 
 	android_sdk_root=""
+	
+#----------------------------------------------------------------#
+# debug & release settings
+# you must define key store data in order to build for release
+#----------------------------------------------------------------#
+
+	debug=true
+	key_store=
+	key_alias=
+	key_store_password=
+	key_alias_password=

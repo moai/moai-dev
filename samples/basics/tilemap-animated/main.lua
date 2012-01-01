@@ -24,6 +24,7 @@ tileDeck:setRect ( -0.5, 0.5, 0.5, -0.5 )
 
 grid = MOAIGrid.new ()
 grid:setSize ( 8, 8, 32, 32 )
+grid:setRepeat ( true ) -- wrap the grid when drawing
 
 grid:setRow ( 1, 	0x00000001, 0x00000002, 0x00000003, 0x00000004, 0x00000005, 0x00000006, 0x00000007, 0x20000001 )
 grid:setRow ( 2, 	0x00000009, 0x00000001, 0x0000000b, 0x0000000c, 0x0000000d, 0x0000000e, 0x20000001, 0x00000010 )
@@ -43,7 +44,6 @@ prop:setGrid ( grid )
 prop:setRemapper ( remapper )
 prop:setLoc ( -128, 128 )
 prop:setScl ( 1, -1 )
-prop:setRepeat ( true ) -- wrap the tilemap when drawing
 layer:insertProp ( prop )
 
 curve = MOAIAnimCurve.new ()

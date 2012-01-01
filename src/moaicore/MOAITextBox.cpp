@@ -264,6 +264,22 @@ int MOAITextBox::_setReveal ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	setRightToLeft
+	@text	Reverses the order or characters rendered.
+
+	@in		MOAITextBox self
+	@opt	boolean rightToLeft			Default value is false.
+	@out	nil
+*/
+int MOAITextBox::_setRightToLeft ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextBox, "U" )
+	
+	self->mRightToLeft = state.GetValue < bool >( 2, false );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	setSpeed
 	@text	Sets the base spool speed used when creating a spooling MOAIAction with the spool() function.
 
@@ -297,7 +313,7 @@ int MOAITextBox::_setString ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getStringBounds
+/**	@name	setStringColor
 	@text	Sets the color of a sub string in the text. Only affects
 			text displayed on the current page.
 
@@ -401,7 +417,9 @@ void MOAITextBox::ClearCurves () {
 }
 
 //----------------------------------------------------------------//
-void MOAITextBox::Draw () {
+void MOAITextBox::Draw ( int subPrimID, bool reload ) {
+	UNUSED ( subPrimID ); 
+	UNUSED ( reload );
 	
 	if ( !this->mFont ) return;
 	
@@ -426,7 +444,8 @@ void MOAITextBox::Draw () {
 }
 
 //----------------------------------------------------------------//
-void MOAITextBox::DrawDebug () {
+void MOAITextBox::DrawDebug ( int subPrimID ) {
+	UNUSED ( subPrimID ); 
 
 	MOAIDebugLines& debugLines = MOAIDebugLines::Get ();
 	if ( debugLines.Bind ( MOAIDebugLines::TEXT_BOX )) {
@@ -472,6 +491,7 @@ void MOAITextBox::Layout () {
 	textFrame.SetFont ( this->mFont );
 	textFrame.SetPoints ( this->mPoints );
 	textFrame.SetLineSpacing ( this->mLineSpacing );
+	textFrame.SetRightToLeft ( this->mRightToLeft );
 	
 	textFrame.SetCurves ( this->mCurves, this->mCurves.Size ());
 	
@@ -496,6 +516,7 @@ MOAITextBox::MOAITextBox () :
 	mSpeed ( DEFAULT_SPOOL_SPEED ),
 	mReveal ( REVEAL_ALL ),
 	mYFlip ( false ),
+	mRightToLeft ( false ),
 	mNeedsLayout ( false ) {
 	
 	RTTI_BEGIN
@@ -600,6 +621,7 @@ void MOAITextBox::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setLineSpacing",			_setLineSpacing },
 		{ "setRect",				_setRect },
 		{ "setReveal",				_setReveal },
+		{ "setRightToLeft",			_setRightToLeft },
 		{ "setSpeed",				_setSpeed },
 		{ "setString",				_setString },
 		{ "setStringColor",			_setStringColor },

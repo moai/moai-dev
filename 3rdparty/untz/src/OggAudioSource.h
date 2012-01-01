@@ -38,6 +38,7 @@ public:
 private:
 	void setDecoderPosition(double position);
 
+	RCriticalSection mDecodeLock;
 	RString mPath;
 	FILE* mInFile;
 	vorbis_info* mpOggInfo;

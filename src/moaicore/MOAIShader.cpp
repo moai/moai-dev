@@ -9,6 +9,23 @@
 #include <moaicore/MOAIShader.h>
 #include <moaicore/MOAITransformBase.h>
 
+#if MOAI_OS_NACL
+#include "moai_nacl.h"
+
+bool g_blockOnMainThreadShaderUnload;
+
+//----------------------------------------------------------------//
+void NaClUnLoadShader ( void* userData, int32_t result ) {
+
+	MOAIShader *shader = ( MOAIShader * ) userData;
+
+	shader->DeleteShaders ();
+
+	g_blockOnMainThreadShaderUnload = false;
+}
+
+#endif
+
 //================================================================//
 // MOAIShaderUniform
 //================================================================//
@@ -31,6 +48,7 @@ void MOAIShaderUniform::Bind () {
 				break;
 				
 			case UNIFORM_COLOR:
+			case UNIFORM_PEN_COLOR:
 				glUniform4fv ( this->mAddr, 1, this->mBuffer );
 				break;
 			
@@ -41,6 +59,17 @@ void MOAIShaderUniform::Bind () {
 				glUniformMatrix4fv ( this->mAddr, 1, false, this->mBuffer );
 				break;
 		}
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIShaderUniform::BindPenColor ( float r, float g, float b, float a ) {
+
+	if ( this->mType == UNIFORM_PEN_COLOR ) {
+		
+		USColorVec color ( r, g, b, a );
+		this->SetValue ( color );
+		this->Bind ();
 	}
 }
 
@@ -114,7 +143,8 @@ void MOAIShaderUniform::SetType ( u32 type ) {
 	
 	switch ( type ) {
 		
-		case UNIFORM_COLOR: {
+		case UNIFORM_COLOR:
+		case UNIFORM_PEN_COLOR: {
 			this->mBuffer.Init ( 4 );
 			
 			USColorVec color;
@@ -283,8 +313,9 @@ int MOAIShader::_clearUniform ( lua_State* L ) {
 	@in		MOAIShader self
 	@in		number idx
 	@in		string name
-	@opt	number type		One of MOAIShader.UNIFORM_FLOAT, MOAIShader.UNIFORM_TRANSFORM,
-							MOAIShader.UNIFORM_VIEW_PROJ, MOAIShader.UNIFORM_WORLD, MOAIShader.UNIFORM_WORLD_VIEW_PROJ
+	@opt	number type		One of MOAIShader.UNIFORM_COLOR, MOAIShader.UNIFORM_FLOAT, MOAIShader.UNIFORM_INT,
+							MOAIShader.UNIFORM_TRANSFORM, MOAIShader.UNIFORM_PEN_COLOR, MOAIShader.UNIFORM_VIEW_PROJ,
+							MOAIShader.UNIFORM_WORLD, MOAIShader.UNIFORM_WORLD_VIEW_PROJ
 	@out	nil
 */
 int MOAIShader::_declareUniform ( lua_State* L ) {
@@ -451,6 +482,24 @@ void MOAIShader::DeclareUniform ( u32 idx, cc8* name, u32 type ) {
 	}
 }
 
+void MOAIShader::DeleteShaders () {
+
+	if ( this->mVertexShader ) {
+		glDeleteShader ( this->mVertexShader );
+		this->mVertexShader = 0;
+	}
+	
+	if ( this->mFragmentShader ) {
+		glDeleteShader ( this->mFragmentShader );
+		this->mFragmentShader = 0;
+	}
+	
+	if ( this->mProgram ) {
+		glDeleteProgram ( this->mProgram );
+		this->mProgram = 0;
+	}
+}
+
 //----------------------------------------------------------------//
 bool MOAIShader::IsRenewable () {
 
@@ -567,20 +616,25 @@ void MOAIShader::OnRenew () {
 //----------------------------------------------------------------//
 void MOAIShader::OnUnload () {
 
-	if ( this->mVertexShader ) {
-		glDeleteShader ( this->mVertexShader );
-		this->mVertexShader = 0;
-	}
+#ifdef MOAI_OS_NACL
+	g_blockOnMainThreadShaderUnload = true;
 	
-	if ( this->mFragmentShader ) {
-		glDeleteShader ( this->mFragmentShader );
-		this->mFragmentShader = 0;
+	if ( g_core->IsMainThread () ) {
+		this->DeleteShaders ();
+		g_blockOnMainThreadShaderUnload = false;
 	}
+	else {
+		pp::CompletionCallback cc ( NaClUnLoadShader, this );
+		g_core->CallOnMainThread ( 0, cc , 0 );
+	}
+
+	while ( g_blockOnMainThreadShaderUnload ) {
+		usleep ( 100 );
+	}
+#else
+	this->DeleteShaders ();
+#endif
 	
-	if ( this->mProgram ) {
-		glDeleteProgram ( this->mProgram );
-		this->mProgram = 0;
-	}
 }
 
 //----------------------------------------------------------------//
@@ -589,9 +643,10 @@ void MOAIShader::RegisterLuaClass ( MOAILuaState& state ) {
 	MOAINode::RegisterLuaClass ( state );
 	MOAIGfxResource::RegisterLuaClass ( state );
 	
-	state.SetField ( -1, "UNIFORM_INT",					( u32 )MOAIShaderUniform::UNIFORM_INT );
-	state.SetField ( -1, "UNIFORM_FLOAT",				( u32 )MOAIShaderUniform::UNIFORM_FLOAT );
 	state.SetField ( -1, "UNIFORM_COLOR",				( u32 )MOAIShaderUniform::UNIFORM_COLOR );
+	state.SetField ( -1, "UNIFORM_FLOAT",				( u32 )MOAIShaderUniform::UNIFORM_FLOAT );
+	state.SetField ( -1, "UNIFORM_INT",					( u32 )MOAIShaderUniform::UNIFORM_INT );
+	state.SetField ( -1, "UNIFORM_PEN_COLOR",			( u32 )MOAIShaderUniform::UNIFORM_PEN_COLOR );
 	state.SetField ( -1, "UNIFORM_TRANSFORM",			( u32 )MOAIShaderUniform::UNIFORM_TRANSFORM );
 	state.SetField ( -1, "UNIFORM_VIEW_PROJ",			( u32 )MOAIShaderUniform::UNIFORM_VIEW_PROJ );
 	state.SetField ( -1, "UNIFORM_WORLD",				( u32 )MOAIShaderUniform::UNIFORM_WORLD );
@@ -636,6 +691,15 @@ void MOAIShader::SetVertexAttribute ( u32 idx, cc8* attribute ) {
 
 	if ( attribute ) {
 		this->mAttributeMap [ idx ] = attribute;
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIShader::UpdatePenColor ( float r, float g, float b, float a ) {
+
+	// reload the uniform values
+	for ( u32 i = 0; i < this->mUniforms.Size (); ++i ) {
+		this->mUniforms [ i ].BindPenColor ( r, g, b, a );
 	}
 }
 

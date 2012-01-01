@@ -50,7 +50,6 @@ protected:
     // RThread
     void run();
 
-
 private:
     PlaybackThread();
     ~PlaybackThread();
@@ -103,7 +102,9 @@ void PlaybackThread::setData(AndroidSystemData *d)
 
 void PlaybackThread::run()
 {  	
-    // Set up our environment
+    __android_log_write(ANDROID_LOG_DEBUG, "UntzJNI", "Started audio push thread");
+
+	// Set up our environment
     JNIEnv* env;
     jvm->AttachCurrentThread(&env, NULL);
     env->PushLocalFrame(2);
@@ -124,8 +125,9 @@ void PlaybackThread::run()
     static jmethodID stopMethod = env->GetMethodID(audioTrackClass, "stop", "()V");
     static jmethodID releaseMethod = env->GetMethodID(audioTrackClass, "release", "()V");
     static jmethodID writeMethod = env->GetMethodID(audioTrackClass, "write", "([BII)I");
+	static jmethodID setPlaybackRateMethod = env->GetMethodID(audioTrackClass, "setPlaybackRate", "(I)I");
 
-    int sampleRateInHz = 44100;
+	int sampleRateInHz = mpSystemData->mSampleRate;//44100;
     int channelConfig = CHANNEL_OUT_STEREO;
     const int numChannels = 2;
     int audioFormat = ENCODING_PCM_16BIT;
@@ -147,6 +149,12 @@ void PlaybackThread::run()
                                    MODE_STREAM);
     env->CallNonvirtualVoidMethod(track, audioTrackClass, playMethod);
 
+	// Set the playback rate
+//  int error = env->CallNonvirtualIntMethod(track, audioTrackClass, setPlaybackRateMethod, mpSystemData->mSampleRate);
+//	if(error != 0)
+//		__android_log_write(ANDROID_LOG_ERROR, "UntzJNI", "Failed to set playback rate");
+    
+
     // Get our buffer
     jarray buffer = env->NewByteArray(bufferSizeInBytes);
 
@@ -163,14 +171,11 @@ void PlaybackThread::run()
 
     char str[500];
     long nsec_per_buffer = ((double)framesPerBuffer / sampleRateInHz ) * 1000000000;
-
+	int bufferCount = 0;
     while (!shouldThreadExit())
-    {
+    {			
         // Grab the float samples from the mixer.
         mpSystemData->mMixer.process(0, NULL, numChannels, float_buf, framesPerBuffer);
-        sprintf(str, "f[3]: %f", float_buf[3]);
-        __android_log_write(ANDROID_LOG_ERROR,"UntzJNI",str);
-
 
         /*
         // Clip nicely.
@@ -193,24 +198,32 @@ void PlaybackThread::run()
             }
             env->ReleasePrimitiveArrayCritical(buffer, pBuffer, 0);
             env->CallNonvirtualIntMethod(track, audioTrackClass, writeMethod, buffer, 0, bufferSizeInBytes);
+//			__android_log_write(ANDROID_LOG_DEBUG, "UntzJNI", "pushed buffer.");
         }
         else
         {
             __android_log_write(ANDROID_LOG_ERROR,"UntzJNI","Failed to get pointer to array bytes");
         }
 
-        // Calculate when the next callback should happen (based on buffer size)
-        long next_nsecs = nextCallTime.tv_nsec+nsec_per_buffer;
-        nextCallTime.tv_nsec = next_nsecs % 1000000000;
-        nextCallTime.tv_sec = nextCallTime.tv_sec + next_nsecs / 1000000000;
+		if(++bufferCount == 3)
+		{
+			do
+			{
+				// Calculate when the next callback should happen (based on buffer size)
+				long next_nsecs = nextCallTime.tv_nsec+nsec_per_buffer;
+				nextCallTime.tv_nsec = next_nsecs % 1000000000;
+				nextCallTime.tv_sec = nextCallTime.tv_sec + next_nsecs / 1000000000;
 
-        // Sleep until the next callback should come in.
-        clock_gettime(CLOCK_MONOTONIC, &now);
-        sleepTime.tv_nsec = (nextCallTime.tv_sec-now.tv_sec)*1000000000+(nextCallTime.tv_nsec-now.tv_nsec);
-        while(sleepTime.tv_nsec < 0)
-            sleepTime.tv_nsec += nsec_per_buffer;
+				// Sleep until the next callback should come in.
+				clock_gettime(CLOCK_MONOTONIC, &now);
+				sleepTime.tv_nsec = (nextCallTime.tv_sec-now.tv_sec)*1000000000+(nextCallTime.tv_nsec-now.tv_nsec);
+				while(sleepTime.tv_nsec < 0)
+					sleepTime.tv_nsec += nsec_per_buffer;			
+			}
+			while(nanosleep(&sleepTime, &timeLeft) < 0 || !mpSystemData->isActive());
 
-        while(nanosleep(&sleepTime, &timeLeft) < 0);
+			--bufferCount;
+		}
     }
 
     env->CallNonvirtualVoidMethod(track, audioTrackClass, stopMethod);
@@ -225,7 +238,7 @@ System* System::msInstance = 0;
 
 System* System::initialize(UInt32 sampleRate, UInt32 numFrames, UInt32 options)
 {
-    __android_log_write(ANDROID_LOG_ERROR,"UntzJNI","Initializing System");
+    __android_log_write(ANDROID_LOG_DEBUG, "UntzJNI", "Initializing System");
 	if(!msInstance)
     {
 		msInstance = new System(sampleRate, numFrames, options);
@@ -276,7 +289,6 @@ UInt32 System::getSampleRate()
     return d->mSampleRate;
 }
 
-
 void System::setSampleRate(UInt32 sampleRate)
 {
 }
@@ -289,4 +301,16 @@ void System::setVolume(float volume)
 float System::getVolume() const
 {
 	return msInstance->mpData->mMixer.getVolume();
+}
+
+void System::suspend()
+{
+	msInstance->mpData->setActive(false);
+	__android_log_write(ANDROID_LOG_DEBUG, "UntzJNI", "suspending...");
+}
+
+void System::resume()
+{
+	msInstance->mpData->setActive(true);
+	__android_log_write(ANDROID_LOG_DEBUG, "UntzJNI", "resuming...");
 }

@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # remove existing run.bat files, and replace with sdk run scripts
 for f in $(find ../moai-sdk -type f -name *.bat); do 
 	

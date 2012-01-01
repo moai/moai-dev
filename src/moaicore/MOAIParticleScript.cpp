@@ -226,6 +226,20 @@ int MOAIParticleScript::_add ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	atan2rot
+ @text	r0 = atan2(v0, v1) * 180 / PI
+ 
+ @in		MOAIParticleScript self
+ @in		number r0
+ @in		number v0
+ @in		number v1
+ @out	nil
+ */
+int MOAIParticleScript::_atan2rot ( lua_State* L ) {
+	IMPL_LUA_PARTICLE_OP ( ATAN2ROT, "RVV" )
+}
+
+//----------------------------------------------------------------//
 /**	@name	cycle
 	@text	Cycle v0 between v1 and v2.
 	
@@ -472,6 +486,7 @@ u8* MOAIParticleScript::Compile () {
 	u8* cursor = this->mBytecode;
 	
 	u8* top = ( u8* )(( uintptr )cursor + size );
+	UNUSED ( top );
 	
 	FOREACH ( InstructionIt, instructionIt, this->mInstructions ) {
 		Instruction& instruction = *instructionIt;
@@ -583,6 +598,7 @@ void MOAIParticleScript::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	luaL_Reg regTable [] = {
 		{ "add",				_add },
+		{ "atan2rot",			_atan2rot },
 		{ "cycle",				_cycle },
 		{ "div",				_div },
 		{ "ease",				_ease },
@@ -654,7 +670,17 @@ void MOAIParticleScript::Run ( MOAIParticleSystem& system, MOAIParticle& particl
 					*r0 = v0 + v1;
 				}
 				break;
-			
+
+			case ATAN2ROT: // RVV
+				READ_ADDR   ( r0, bytecode );
+				READ_VALUE  ( v0, bytecode );
+				READ_VALUE  ( v1, bytecode );
+				
+				if ( r0 ) {
+					*r0 = ( float )( atan2 ( v0, v1 ) * R2D );
+				}
+				break;
+
 			case CYCLE: // RVVV
 				
 				READ_ADDR	( r0, bytecode );

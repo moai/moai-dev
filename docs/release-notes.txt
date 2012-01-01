@@ -1,6 +1,39 @@
 ================================================================
 = Moai SDK
 = Version 0.9 Beta
+= Revision 8
+================================================================
+- Add Lua callbacks to determine the success or failure of a Tweet (iPhone)
+- Add Lua callbacks for connectivity change notifications
+- Add a Lua callback to trap 'back' button presses (Android)
+- Add Lua methods for simple AlertDialog creation and response (Android)
+
+================================================================
+= Moai SDK
+= Version 0.9 Beta
+= Revision 7
+================================================================
+- MOAITextBox - exposed set line spacing
+- MOAIApp - exposed basic Twitter API
+- MOAILayer2D - added user configurable sort
+- MOAITexture - CPU based mipmap generation (previously using OpenGL's)
+- MOAITexture - changed default wrap mode to GL_CLAMP_TO_EDGE
+- MOAIImage - fixed USColor alpha-only color conversion bug
+- USMemStream - fixed crash bug (crash when writing 0 bytes)
+- MOAIGfxDevice - moved setClearColor, setClearDepth from MOAISim
+- MOAIGfxDevice - can set MOAIColor as clear color
+- MOAIColor - added additive color inheritance attribute
+- MOAIPartitionCell - gather props for point now checks local bounds as well as global
+- MOAIXmlParser - fixed crash on file open
+- MOAIWebView - improved alignment
+- MOAISim - added 'long delay' flag and threshold for automatically handling long loads; etc.
+- untz - lowered streaming buffer size for better memory performance
+- untz - improved memoty use; release temporary buffers used during audio decoding
+- Google In-App Billing support exposed in Lua (Android) - see samples/android/app-billing
+
+================================================================
+= Moai SDK
+= Version 0.9 Beta
 = Revision 1
 ================================================================
 - MOAIFont loadFromTTF - dpi param now optional

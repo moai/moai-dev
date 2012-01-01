@@ -13,6 +13,18 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+int MOAIEnvironment::_setListener ( lua_State* L ) {
+	MOAILuaState state ( L );
+	
+	u32 idx = state.GetValue < u32 >( 1, TOTAL );
+
+	if ( idx < TOTAL ) {
+		MOAIEnvironment::Get ().mListeners [ idx ].SetStrongRef ( state, 2 );
+	}
+	
+	return 0;
+}
+//----------------------------------------------------------------//
 /**	@name	generateGUID
 	@text	Generates a globally unique identifier
 
@@ -397,6 +409,8 @@ MOAIEnvironment::~MOAIEnvironment () {
 //----------------------------------------------------------------//
 void MOAIEnvironment::RegisterLuaClass ( MOAILuaState& state ) {
 
+	state.SetField ( -1, "CONNECTIVITY_CHANGED", ( u32 )CONNECTIVITY_CHANGED );
+
 	state.SetField ( -1, "CONNECTION_TYPE_NONE", ( u32 )CONNECTION_TYPE_NONE );
 	state.SetField ( -1, "CONNECTION_TYPE_WIFI", ( u32 )CONNECTION_TYPE_WIFI );
 	state.SetField ( -1, "CONNECTION_TYPE_WWAN", ( u32 )CONNECTION_TYPE_WWAN );
@@ -406,6 +420,7 @@ void MOAIEnvironment::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "OS_BRAND_UNAVAILABLE", ( u32 )OS_BRAND_UNAVAILABLE );
 
 	luaL_Reg regTable [] = {
+		{ "setListener",					_setListener 					},
 		{ "generateGUID",					_generateGUID					},
 		{ "getAppDisplayName",				_getAppDisplayName				},
 		{ "getAppID",						_getAppID						},
@@ -479,13 +494,18 @@ void MOAIEnvironment::SetCarrierName ( cc8* name ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIEnvironment::SetConnectivityFunc ( long (*connFunc)(void) ) {
-	getConnectivityFunc = connFunc;
-}
-
-//----------------------------------------------------------------//
 void MOAIEnvironment::SetConnectionType ( long connType ) {
 	mConnectionType = connType;
+	
+	MOAILuaRef& callback = this->mListeners [ CONNECTIVITY_CHANGED ];
+
+	if ( callback ) {
+		MOAILuaStateHandle state = callback.GetSelf ();
+
+		lua_pushnumber ( state, connType );
+
+		state.DebugCall ( 1, 0 );
+	}
 }
 
 //----------------------------------------------------------------//

@@ -38,12 +38,32 @@ void MOAIDeck2D::Draw ( const USAffine3D& transform, u32 idx, MOAIDeckRemapper* 
 }
 
 //----------------------------------------------------------------//
-void MOAIDeck2D::DrawPatch ( u32 idx, float xOff, float yOff, float xScale, float yScale ) {
-	UNUSED ( idx );
-	UNUSED ( xOff );
-	UNUSED ( yOff );
-	UNUSED ( xScale );
-	UNUSED ( yScale );
+void MOAIDeck2D::Draw ( const USAffine3D& transform, bool reload, MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, int cellAddr ) {
+
+	if ( reload ) {
+		MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+		gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, transform );
+		gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
+		gfxDevice.SetUVMtxMode ( MOAIGfxDevice::UV_STAGE_MODEL, MOAIGfxDevice::UV_STAGE_TEXTURE );
+	}
+
+	float width = grid.GetTileWidth () * gridScale.mX;
+	float height = grid.GetTileHeight () * gridScale.mY;
+			
+	MOAICellCoord coord;
+	coord = grid.GetCellCoord ( cellAddr );
+	
+	u32 idx = grid.GetTile ( coord.mX, coord.mY );
+	idx = remapper ? remapper->Remap ( idx ) : idx;
+	
+	if ( !idx || ( idx & MOAITileFlags::HIDDEN )) return;
+	
+	USVec2D loc = grid.GetTilePoint ( coord, MOAIGridSpace::TILE_CENTER );
+	
+	float xScale = ( idx & MOAITileFlags::XFLIP ) ? -width : width;
+	float yScale = ( idx & MOAITileFlags::YFLIP ) ? -height : height;
+	
+	this->DrawPatch ( idx & MOAITileFlags::CODE_MASK, loc.mX, loc.mY, xScale, yScale );
 }
 
 //----------------------------------------------------------------//
@@ -61,7 +81,9 @@ void MOAIDeck2D::Draw ( const USAffine3D& transform, MOAIGrid& grid, MOAIDeckRem
 	for ( int y = c0.mY; y <= c1.mY; ++y ) {
 		for ( int x = c0.mX; x <= c1.mX; ++x ) {
 			
-			u32 idx = grid.GetTile ( x, y );
+			MOAICellCoord wrap = grid.WrapCellCoord ( x, y );
+			
+			u32 idx = grid.GetTile ( wrap.mX, wrap.mY );
 			idx = remapper ? remapper->Remap ( idx ) : idx;
 			
 			if ( !idx || ( idx & MOAITileFlags::HIDDEN )) continue;
@@ -92,6 +114,15 @@ void MOAIDeck2D::DrawDebug ( const USAffine3D& transform, MOAIGrid& grid, MOAIDe
 	UNUSED ( gridScale );
 	UNUSED ( c0 );
 	UNUSED ( c1 );
+}
+
+//----------------------------------------------------------------//
+void MOAIDeck2D::DrawPatch ( u32 idx, float xOff, float yOff, float xScale, float yScale ) {
+	UNUSED ( idx );
+	UNUSED ( xOff );
+	UNUSED ( yOff );
+	UNUSED ( xScale );
+	UNUSED ( yScale );
 }
 
 //----------------------------------------------------------------//

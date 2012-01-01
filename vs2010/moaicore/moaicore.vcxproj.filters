@@ -85,6 +85,9 @@
     <Filter Include="src\lifecycle">
       <UniqueIdentifier>{96fd06bd-a903-429c-ad52-774b518de09b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\pathfinding">
+      <UniqueIdentifier>{61832aec-ac77-4f89-ab2d-c5b38e43a6f2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\moaicore\MOAIAction.cpp">
@@ -506,6 +509,21 @@
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAIRtti.cpp">
       <Filter>src\lifecycle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIWheelSensor.cpp">
+      <Filter>src\input</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIGridPathGraph.cpp">
+      <Filter>src\pathfinding</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIPathFinder.cpp">
+      <Filter>src\pathfinding</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIPathGraph.cpp">
+      <Filter>src\pathfinding</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIPathTerrainDeck.cpp">
+      <Filter>src\pathfinding</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -952,6 +970,21 @@
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIRtti.h">
       <Filter>src\lifecycle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIWheelSensor.h">
+      <Filter>src\input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIPathTerrainDeck.h">
+      <Filter>src\pathfinding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIGridPathGraph.h">
+      <Filter>src\pathfinding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIPathFinder.h">
+      <Filter>src\pathfinding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIPathGraph.h">
+      <Filter>src\pathfinding</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -56,23 +56,29 @@ void MOAITextFrame::FlushLine () {
 
 	float x = this->mFrame.mXMin;
 	float width = this->mFrame.Width ();
+	
+	float lineWidth = this->mRightToLeft ? -this->mLineXMax : this->mLineXMax;
 	float lineHeight = this->mFont->GetLineSpacing () * this->mPoints * this->mLineSpacing;
 
 	switch ( this->mJustify ) {
 		
 		case CENTER_JUSTIFY:
-			x = ( x + ( width * 0.5f )) - ( this->mLineXMax * 0.5f );
+			x = ( x + ( width * 0.5f )) - ( lineWidth * 0.5f );
 			
 		case LEFT_JUSTIFY:
 			break;
 
 		case RIGHT_JUSTIFY:
-			x = this->mFrame.mXMax - this->mLineXMax;
+			x = this->mFrame.mXMax - lineWidth;
 	}
 	
 	MOAIAnimCurve* curve = 0;
 	if ( this->mCurves ) {
 		curve = this->mCurves [ this->mLineCount % this->mTotalCurves ];
+	}
+	
+	if ( this->mRightToLeft ) {
+		x -= this->mLineXMax;
 	}
 	
 	for ( u32 i = this->mLineBottom; i < this->mLineTop; ++i ) {
@@ -102,7 +108,6 @@ void MOAITextFrame::FlushLine () {
 		sprite.mX -= this->mTokenXMin;
 	}
 
-	//this->mPen.mX -= this->mTokenXMin;
 	this->mPen.mX -= this->mTokenXMin;
 	this->mTokenXMax -= this->mTokenXMin;
 	this->mTokenXMin = 0.0f;
@@ -112,8 +117,9 @@ void MOAITextFrame::FlushLine () {
 void MOAITextFrame::FlushToken () {
 	
 	float width = this->mFrame.Width ();
+	float tokenMax = this->mRightToLeft ? -this->mTokenXMax : this->mTokenXMax;
 	
-	if (( this->mLineXMax > 0.0f ) && ( this->mTokenXMax >= width )) {
+	if (( this->mLineXMax != 0.0f ) && ( tokenMax >= width )) {
 		this->FlushLine ();
 	}
 	
@@ -162,6 +168,8 @@ void MOAITextFrame::Layout ( MOAITextLayout& layout, cc8* str, MOAITextCursor& c
 
 //----------------------------------------------------------------//
 void MOAITextFrame::Parse () {
+	
+	float xScaleAdvance = this->mRightToLeft ? -1.0f : 1.0f;
 	
 	this->mLineBottom = 0;
 	this->mLineTop = 0;
@@ -266,7 +274,7 @@ void MOAITextFrame::Parse () {
 				// apply kerning
 				if ( prevGlyph ) {
 					MOAIKernVec kernVec = prevGlyph->GetKerning ( glyph->mCode );
-					this->mPen.mX += kernVec.mX * points;
+					this->mPen.mX += kernVec.mX * points * xScaleAdvance;
 				}
 				
 				if ( hasWidth ) {
@@ -283,8 +291,11 @@ void MOAITextFrame::Parse () {
 					}
 					
 					// push the glyph
-					this->mLayout->PushGlyph ( glyph, resetIdx, this->mPen.mX, 0.0f, points, this->mRGBA );
-					this->mTokenXMax = this->mPen.mX + (( glyph->mWidth + glyph->mBearingX ) * points );
+					float penX = this->mPen.mX + (( glyph->mWidth + glyph->mBearingX ) * points * xScaleAdvance );
+					float glyphX = this->mRightToLeft ? penX : this->mPen.mX;
+					
+					this->mLayout->PushGlyph ( glyph, resetIdx, glyphX, 0.0f, points, this->mRGBA );
+					this->mTokenXMax = penX;
 				}
 				else if ( inToken ) {
 				
@@ -298,7 +309,7 @@ void MOAITextFrame::Parse () {
 				}
 				
 				// advance the pen
-				this->mPen.mX += glyph->mAdvanceX * points;
+				this->mPen.mX += glyph->mAdvanceX * points * xScaleAdvance;
 				
 				// back to start
 				TRANSITION ( META_START );
@@ -469,7 +480,8 @@ MOAITextFrame::MOAITextFrame () :
 	mLineSpacing ( 1.0f ),
 	mJustify ( LEFT_JUSTIFY ),
 	mCurves ( 0 ),
-	mTotalCurves ( 0 ) {
+	mTotalCurves ( 0 ),
+	mRightToLeft ( false ) {
 	
 	this->mFrame.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
 }

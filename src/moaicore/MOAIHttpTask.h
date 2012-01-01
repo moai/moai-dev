@@ -13,6 +13,9 @@ class MOAIHttpTaskInfo;
 //================================================================//
 // MOAIHttpTask
 //================================================================//
+/**	@name	MOAIHttpTask
+	@text	Object for performing asynchronous HTTP/HTTPS tasks.
+*/
 class MOAIHttpTask :
 	public virtual MOAILuaObject {
 private:
@@ -51,14 +54,15 @@ public:
 	DECL_LUA_FACTORY ( MOAIHttpTask )
 	
 	//----------------------------------------------------------------//
-	void			Clear					();	
-	void			GetData					( void* buffer, u32 size );
-	void			HttpGet					( cc8* url, cc8* useragent, bool verbose );
-	void			HttpPost				( cc8* url, cc8* useragent, const void* buffer, u32 size, bool verbose );
-					MOAIHttpTask			();
-					~MOAIHttpTask			();
-	void			RegisterLuaClass		( MOAILuaState& state );
-	void			RegisterLuaFuncs		( MOAILuaState& state );
+	void				Clear					();	
+	void				GetData					( void* buffer, u32 size );
+	MOAIHttpTaskInfo*	GetInfo					() { return mInfo; }
+	void				HttpGet					( cc8* url, cc8* useragent, bool verbose, bool blocking );
+	void				HttpPost				( cc8* url, cc8* useragent, const void* buffer, u32 size, bool verbose, bool blocking );
+						MOAIHttpTask			();
+						~MOAIHttpTask			();
+	void				RegisterLuaClass		( MOAILuaState& state );
+	void				RegisterLuaFuncs		( MOAILuaState& state );
 };
 
 #endif

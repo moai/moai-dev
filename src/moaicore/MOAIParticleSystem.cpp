@@ -320,7 +320,9 @@ void MOAIParticleSystem::ClearQueue () {
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleSystem::Draw () {
+void MOAIParticleSystem::Draw ( int subPrimID, bool reload ) {
+	UNUSED ( subPrimID );
+	UNUSED ( reload );
 
 	if ( !this->BindDeck ()) return;
 	this->LoadShader ();

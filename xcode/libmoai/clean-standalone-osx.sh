@@ -1,10 +1,10 @@
+#!/bin/bash
+
 #----------------------------------------------------------------#
 # Copyright (c) 2010-2011 Zipline Games, Inc.
 # All Rights Reserved.
 # http://getmoai.com
 #----------------------------------------------------------------#
-
-#!/bin/bash
 
 set -e
 
@@ -12,3 +12,4 @@ xcodebuild -configuration Release -workspace libmoai.xcodeproj/project.xcworkspa
 xcodebuild -configuration Release -workspace libmoai.xcodeproj/project.xcworkspace -scheme libmoai-osx -sdk macosx clean OBJROOT=build SYMROOT=build
 xcodebuild -configuration Release -workspace libmoai.xcodeproj/project.xcworkspace -scheme libmoai-osx-luaext -sdk macosx clean OBJROOT=build SYMROOT=build
 xcodebuild -configuration Release -workspace libmoai.xcodeproj/project.xcworkspace -scheme libmoai-osx-untz -sdk macosx clean OBJROOT=build SYMROOT=build
+xcodebuild -configuration Release -workspace libmoai.xcodeproj/project.xcworkspace -scheme libmoai-osx-zipfs -sdk macosx clean OBJROOT=build SYMROOT=build

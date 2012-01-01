@@ -4,6 +4,7 @@
 #include "pch.h"
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIPartition.h>
+#include <moaicore/MOAIPartitionResultBuffer.h>
 #include <moaicore/MOAIProp.h>
 #include <moaicore/MOAISurfaceSampler2D.h>
 
@@ -59,11 +60,20 @@ int MOAIProp::_setPriority ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIProp::Draw () {
+void MOAIProp::Draw ( int subPrimID, bool reload ) {
+	UNUSED ( subPrimID );
+	UNUSED ( reload );
 }
 
 //----------------------------------------------------------------//
-void MOAIProp::DrawDebug () {
+void MOAIProp::DrawDebug ( int subPrimID ) {
+	UNUSED ( subPrimID );
+}
+
+//----------------------------------------------------------------//
+void MOAIProp::ExpandForSort ( MOAIPartitionResultBuffer& buffer ) {
+
+	buffer.PushResult ( *this, NO_SUBPRIM_ID, this->mPriority, this->GetWorldXLoc (), this->GetWorldYLoc (), 0.0f );
 }
 
 //----------------------------------------------------------------//

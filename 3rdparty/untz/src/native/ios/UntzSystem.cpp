@@ -81,8 +81,16 @@ static OSStatus playbackCallback(void *userData,
                                  UInt32 framesPerBuffer, 
                                  AudioBufferList *outBuffer)
 {  	
-    IosSystemData *sysData = (IosSystemData *)((System *)userData)->getData();
-    
+    IosSystemData *sysData = (IosSystemData *)userData;
+
+	// Don't do anything if the system is NOT active (zero buffer)
+	if(!sysData->isActive())
+	{	
+		SInt16 *outbuf = (SInt16 *) outBuffer->mBuffers[0].mData;
+		memset(outbuf, 0, sizeof(SInt16) * framesPerBuffer * sysData->getNumOutputChannels());
+		return 0;
+	}
+		
     if(sysData->mOutputBuffer.size() == 0)
     {
         sysData->mOutputBuffer.resize(outBuffer->mBuffers[0].mNumberChannels*framesPerBuffer);
@@ -192,7 +200,7 @@ System::System(UInt32 sampleRate, UInt32 numFrames, UInt32 options)
     AudioSessionSetActive(true);
     checkStatus(status);
     //UInt32 category = kAudioSessionCategory_PlayAndRecord;
-    UInt32 category = kAudioSessionCategory_SoloAmbientSound;
+    UInt32 category = kAudioSessionCategory_AmbientSound;
     status = AudioSessionSetProperty(kAudioSessionProperty_AudioCategory, 4, &category);
     checkStatus(status);
     
@@ -281,7 +289,7 @@ System::System(UInt32 sampleRate, UInt32 numFrames, UInt32 options)
     // Set output callback
     AURenderCallbackStruct callbackStruct;
     callbackStruct.inputProc = playbackCallback;
-    callbackStruct.inputProcRefCon = this;
+    callbackStruct.inputProcRefCon = mpData;
     status = AudioUnitSetProperty(data->mAudioUnit, 
                                   kAudioUnitProperty_SetRenderCallback, 
                                   kAudioUnitScope_Global, 
@@ -347,6 +355,17 @@ float System::getVolume() const
 {
 	return msInstance->mpData->mMixer.getVolume();
 }
+
+void System::suspend()
+{
+	msInstance->mpData->setActive(false);
+}
+
+void System::resume()
+{
+	msInstance->mpData->setActive(true);
+}
+
 
 
 #pragma mark Helper functions

@@ -52,17 +52,11 @@ class MOAIProp2D :
 	public MOAIColor {
 protected:
 	
-	enum {
-		REPEAT_X	= 0x00000001,
-		REPEAT_Y	= 0x00000002,
-	};
-	
 	MOAILuaSharedPtr < MOAIDeck >			mDeck;
 	MOAILuaSharedPtr < MOAIDeckRemapper >	mRemapper;
 	u32										mIndex;
 	
 	MOAILuaSharedPtr < MOAIGrid >			mGrid;
-	u32										mRepeat;
 	USVec2D									mGridScale;
 	
 	MOAILuaSharedPtr < MOAIShader >			mShader;
@@ -74,6 +68,8 @@ protected:
 	MOAIBlendMode				mBlendMode;
 	bool						mVisible;
 	
+	bool						mExpandForSort;
+	
 	//----------------------------------------------------------------//
 	static int		_getGrid			( lua_State* L );
 	static int		_getIndex			( lua_State* L );
@@ -81,21 +77,21 @@ protected:
 	static int		_inside				( lua_State* L );
 	static int		_setBlendMode		( lua_State* L );
 	static int		_setDeck			( lua_State* L );
+	static int		_setExpandForSort	( lua_State* L );
 	static int		_setFrame			( lua_State* L );
 	static int		_setGrid			( lua_State* L );
 	static int		_setGridScale		( lua_State* L );
 	static int		_setIndex			( lua_State* L );
 	static int		_setParent			( lua_State* L );
 	static int		_setRemapper		( lua_State* L );
-	static int		_setRepeat			( lua_State* L );
 	static int		_setShader			( lua_State* L );
 	static int		_setUVTransform		( lua_State* L );
 	static int		_setVisible			( lua_State* L );
 	
 	//----------------------------------------------------------------//
 	bool				BindDeck				();
-	void				GetBoundsInRect			( const USRect& rect, MOAICellCoord& c0, MOAICellCoord& c1 );
-	void				GetBoundsInView			( MOAICellCoord& c0, MOAICellCoord& c1 );
+	void				ExpandForSort			( MOAIPartitionResultBuffer& buffer );
+	void				GetGridBoundsInView		( MOAICellCoord& c0, MOAICellCoord& c1 );
 	void				LoadShader				();
 
 public:
@@ -120,8 +116,8 @@ public:
 	
 	//----------------------------------------------------------------//
 	bool							ApplyAttrOp				( u32 attrID, MOAIAttrOp& attrOp, u32 op );
-	virtual void					Draw					();
-	virtual void					DrawDebug				();
+	virtual void					Draw					( int subPrimID, bool reload );
+	virtual void					DrawDebug				( int subPrimID );
 	virtual void					GatherSurfaces			( MOAISurfaceSampler2D& sampler );
 	virtual u32						GetLocalFrame			( USRect& frame );
 	bool							Inside					( USVec2D vec, float pad );

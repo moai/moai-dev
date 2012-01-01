@@ -55,6 +55,11 @@ private:
 		PRODUCT_REQUEST_RESPONSE,
 		REMOTE_NOTIFICATION,
 		ASYNC_NAME_RESOLVE,
+		APP_OPENED_FROM_URL,
+		SESSION_START,
+		SESSION_END,
+		TWEET_SUCCESSFUL,
+		TWEET_CANCELLED,
 		TOTAL,
 	};
 	
@@ -69,12 +74,6 @@ private:
 	enum {
 		DOMAIN_DOCUMENTS   = NSDocumentDirectory,
 		DOMAIN_APP_SUPPORT = NSApplicationSupportDirectory,
-	};
-	
-	enum {
-		APP_OPENED_FROM_URL,
-		SESSION_START,
-		SESSION_END
 	};
 	
 	UIApplication*			mApplication;
@@ -122,6 +121,7 @@ public:
 	void		DidReceiveRemoteNotification								( NSDictionary* userInfo );
 	void		DidRegisterForRemoteNotificationsWithDeviceToken			( NSData* deviceToken );
 	void		DidResolveHostName											( NSString* hostname, cc8* ipAddress );
+	void		DidSendTweet												( bool success );
 	void		DidStartSession												();
 	void		InitStoreKit												();
 				MOAIApp														();

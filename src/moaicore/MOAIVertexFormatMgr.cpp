@@ -24,14 +24,14 @@ MOAIVertexFormatMgr::MOAIVertexFormatMgr () {
 	
 	format = &this->mFormats [ XYZWC ];
 		
-	format->DeclareAttribute ( XYZWC_POSITION, GL_FLOAT, 4, GL_VERTEX_ARRAY, false );
-	format->DeclareAttribute ( XYZWC_COLOR, GL_UNSIGNED_BYTE, 4, GL_COLOR_ARRAY, true );
+	format->DeclareAttribute ( XYZWC_POSITION, GL_FLOAT, 4, MOAIVertexFormat::ARRAY_VERTEX, false );
+	format->DeclareAttribute ( XYZWC_COLOR, GL_UNSIGNED_BYTE, 4, MOAIVertexFormat::ARRAY_COLOR, true );
 	
 	format = &this->mFormats [ XYZWUVC ];
 
-	format->DeclareAttribute ( XYZWUVC_POSITION, GL_FLOAT, 4, GL_VERTEX_ARRAY, false );
-	format->DeclareAttribute ( XYZWUVC_TEXCOORD, GL_FLOAT, 2, GL_TEXTURE_COORD_ARRAY, false );
-	format->DeclareAttribute ( XYZWUVC_COLOR, GL_UNSIGNED_BYTE, 4, GL_COLOR_ARRAY, true );
+	format->DeclareAttribute ( XYZWUVC_POSITION, GL_FLOAT, 4, MOAIVertexFormat::ARRAY_VERTEX, false );
+	format->DeclareAttribute ( XYZWUVC_TEXCOORD, GL_FLOAT, 2, MOAIVertexFormat::ARRAY_TEX_COORD, false );
+	format->DeclareAttribute ( XYZWUVC_COLOR, GL_UNSIGNED_BYTE, 4, MOAIVertexFormat::ARRAY_COLOR, true );
 }
 
 //----------------------------------------------------------------//

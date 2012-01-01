@@ -13,6 +13,8 @@
 #include <moaicore/shaders/MOAIFontShader-vsh.h>
 #include <moaicore/shaders/MOAILineShader-fsh.h>
 #include <moaicore/shaders/MOAILineShader-vsh.h>
+#include <moaicore/shaders/MOAIMeshShader-fsh.h>
+#include <moaicore/shaders/MOAIMeshShader-vsh.h>
 
 //================================================================//
 // MOAIShaderMgr
@@ -64,6 +66,19 @@ MOAIShader& MOAIShaderMgr::GetShader ( u32 shaderID ) {
 				shader->SetSource ( _lineShaderVSH, _lineShaderFSH );
 				shader->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWC_POSITION, "position" );
 				shader->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWC_COLOR, "color" );
+				break;
+
+			case MESH_SHADER:
+
+				shader->SetSource ( _meshShaderVSH, _meshShaderFSH );
+				shader->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_POSITION, "position" );
+				shader->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_TEXCOORD, "uv" );
+				shader->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_COLOR, "color" );
+
+				shader->ReserveUniforms ( 2 );
+				shader->DeclareUniform ( 0, "transform", MOAIShaderUniform::UNIFORM_WORLD_VIEW_PROJ );
+				shader->DeclareUniform ( 1, "ucolor", MOAIShaderUniform::UNIFORM_PEN_COLOR );
+
 				break;
 		}
 		
