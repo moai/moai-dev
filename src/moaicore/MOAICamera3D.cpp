@@ -28,16 +28,35 @@ int MOAICamera3D::_getFarPlane ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getHFOV
+/**	@name	getFieldOfView
 	@text	Returns the camera's horizontal field of view.
 
 	@in		MOAICamera3D self
 	@out	number hfov
 */
-int MOAICamera3D::_getHFOV ( lua_State* L ) {
+int MOAICamera3D::_getFieldOfView ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICamera3D, "U" )
-	lua_pushnumber ( state, self->mHFOV );
+	lua_pushnumber ( state, self->mFieldOfView );
 	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	getFocalLength
+	@text	Returns the camera's focal length given the width of
+			the view plane.
+
+	@in		MOAICamera3D self
+	@in		number width
+	@out	nil
+*/
+int MOAICamera3D::_getFocalLength ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAICamera3D, "UN" )
+
+	float width = state.GetValue < float >( 2, 0.0f );
+	float c = Cot ( self->mFieldOfView * 0.5f * ( float )D2R );
+	lua_pushnumber ( state, width * c * 0.5f );
+
+	return 1;
 }
 
 //----------------------------------------------------------------//
@@ -68,16 +87,16 @@ int MOAICamera3D::_setFarPlane ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setHFOV
+/**	@name	setFieldOfView
 	@text	Sets the camera's horizontal field of view.
 
 	@in		MOAICamera3D self
 	@opt	number hfow			Default value is 60.
 	@out	nil
 */
-int MOAICamera3D::_setHFOV ( lua_State* L ) {
+int MOAICamera3D::_setFieldOfView( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICamera3D, "U" )
-	self->mHFOV = state.GetValue < float >( 2, DEFAULT_HFOV );
+	self->mFieldOfView = state.GetValue < float >( 2, DEFAULT_HFOV );
 	return 0;
 }
 
@@ -104,7 +123,7 @@ USMatrix4x4 MOAICamera3D::GetProjMtx ( const MOAIViewport& viewport ) const {
 	UNUSED ( viewport );
 	
 	// do the camera translation
-	float xs = Cot (( this->mHFOV * ( float )D2R ) / 2.0f );
+	float xs = Cot (( this->mFieldOfView * ( float )D2R ) / 2.0f );
 	float ys = xs * viewport.GetAspect ();
 
 	USMatrix4x4 mtx;
@@ -124,7 +143,7 @@ USMatrix4x4 MOAICamera3D::GetProjMtxInv ( const MOAIViewport& viewport ) const {
 
 //----------------------------------------------------------------//
 MOAICamera3D::MOAICamera3D () :
-	mHFOV ( DEFAULT_HFOV ),
+	mFieldOfView ( DEFAULT_HFOV ),
 	mNearPlane ( DEFAULT_NEAR_PLANE ),
 	mFarPlane ( DEFAULT_FAR_PLANE ) {
 
@@ -146,10 +165,11 @@ void MOAICamera3D::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "getFarPlane",		_getFarPlane },
-		{ "getHFOV",			_getHFOV },
+		{ "getFieldOfView",		_getFieldOfView },
+		{ "getFocalLength",		_getFocalLength },
 		{ "getNearPlane",		_getNearPlane },
 		{ "setFarPlane",		_setFarPlane },
-		{ "setHFOV",			_setHFOV },
+		{ "setFieldOfView",		_setFieldOfView },
 		{ "setNearPlane",		_setNearPlane },
 		{ NULL, NULL }
 	};

@@ -10,6 +10,7 @@
 #include <moaicore/MOAIViewport.h>
 
 class MOAIBox2DWorld;
+class MOAICamera;
 class MOAICpSpace;
 class MOAIFrameBuffer;
 class MOAITexture;
@@ -34,7 +35,7 @@ class MOAILayer2D :
 	public virtual MOAIProp2D {
 private:
 
-	MOAILuaSharedPtr < MOAITransformBase >	mCamera;
+	MOAILuaSharedPtr < MOAICamera >			mCamera;
 	MOAILuaSharedPtr < MOAIViewport >		mViewport;
 	MOAILuaSharedPtr < MOAIPartition >		mPartition;
 	MOAILuaSharedPtr < MOAITexture >		mFrameBuffer;

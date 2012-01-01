@@ -5,8 +5,7 @@
 #define	BOX_H
 
 #include <uslscore/USMatrix4x4.h>
-#include <uslscore/USPlane.h>
-#include <uslscore/USRect.h>
+#include <uslscore/USVec3D.h>
 
 //================================================================//
 // USBox
@@ -39,44 +38,6 @@ class USBox {
 	void	Pad			( float pad ); // Add padding to all sides; so dim += pad * 2 for all axes
 	void	Scale		( float scale );
 	void	Transform	( USMatrix4x4& mtx ); // Gets AABB of transformed box
-};
-
-//================================================================//
-// USRhombus
-//================================================================//
-class USRhombus {
-	public:
-
-	USVec3D		mLoc;
-	USVec3D		mXAxis;
-	USVec3D		mYAxis;
-
-	//----------------------------------------------------------------//
-	void	GetAABB		( USBox& box );
-	void	GetCenter	( USVec3D& center );
-	void	GetPlane	( USPlane3D& plane );
-	void	InitXY		( USRect& rect, float zOff );
-	void	InitXZ		( USRect& rect, float yOff );
-	void	InitZY		( USRect& rect, float xOff );
-	void	Transform	( USMatrix4x4& mtx );
-};
-
-//================================================================//
-// USPrism
-//================================================================//
-class USPrism {
-	public:
-
-	USVec3D		mLoc;
-	USVec3D		mXAxis;
-	USVec3D		mYAxis;
-	USVec3D		mZAxis;
-
-	//----------------------------------------------------------------//
-	void	GetAABB		( USBox& box );
-	void	GetCenter	( USVec3D& center );
-	void	Init		( USBox& box );
-	void	Transform	( USMatrix4x4& mtx );
 };
 
 #endif

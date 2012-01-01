@@ -19,16 +19,17 @@ class MOAICamera3D :
 	public virtual MOAICamera {
 private:
 
-	float		mHFOV;
+	float		mFieldOfView;
 	float		mNearPlane;
 	float		mFarPlane;
 
 	//----------------------------------------------------------------//
 	static int		_getFarPlane		( lua_State* L );
-	static int		_getHFOV			( lua_State* L );
+	static int		_getFieldOfView		( lua_State* L );
+	static int		_getFocalLength		( lua_State* L );
 	static int		_getNearPlane		( lua_State* L );
 	static int		_setFarPlane		( lua_State* L );
-	static int		_setHFOV			( lua_State* L );
+	static int		_setFieldOfView		( lua_State* L );
 	static int		_setNearPlane		( lua_State* L );
 
 public:

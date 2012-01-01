@@ -3,9 +3,10 @@
 
 #include "pch.h"
 #include <moaicore/MOAIBox2DWorld.h>
-#include <moaicore/MOAIDeck.h>
+#include <moaicore/MOAICamera.h>
 #include <moaicore/MOAICpSpace.h>
 #include <moaicore/MOAIDebugLines.h>
+#include <moaicore/MOAIDeck.h>
 #include <moaicore/MOAIFrameBuffer.h>
 #include <moaicore/MOAIGfxDevice.h>
 #include <moaicore/MOAILayer2D.h>
@@ -176,19 +177,17 @@ int MOAILayer2D::_setBox2DWorld ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	setCamera
-	@text	Sets a camera transform. This is just a regular transform.
-			Its inverse is used as the view transform. If no camera
-			transform is set, the layer will render using the
-			identity transform.
+	@text	Sets a camera for the layer. If no camera is supplied,
+			layer will render using the identity matrix as view/proj.
 	
 	@in		MOAILayer2D self
-	@opt	MOAITransformBase camera	Default value is nil.
+	@opt	MOAICamera camera	Default value is nil.
 	@out	nil
 */
 int MOAILayer2D::_setCamera ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAILayer2D, "U" )
 
-	self->mCamera.Set ( *self, state.GetLuaObject < MOAITransformBase >( 2 ));
+	self->mCamera.Set ( *self, state.GetLuaObject < MOAICamera >( 2 ));
 
 	return 0;
 }
@@ -461,12 +460,14 @@ void MOAILayer2D::Draw ( int subPrimID, bool reload ) {
 	
 	if ( this->mPartition ) {
 		
-		USQuad viewQuad = gfxDevice.GetViewQuad ();
-		USRect viewBounds = viewQuad.GetBounds ();
+		//USQuad viewQuad = gfxDevice.GetViewQuad ();
+		//USRect viewBounds = viewQuad.GetBounds ();
 		
 		MOAIPartitionResultBuffer& buffer = MOAIPartitionResultMgr::Get ().GetBuffer ();
 		
-		u32 totalResults = this->mPartition->GatherProps ( buffer, viewBounds, 0, MOAIProp::CAN_DRAW | MOAIProp::CAN_DRAW_DEBUG );
+		// TODO: use view volume
+		//u32 totalResults = this->mPartition->GatherProps ( buffer, viewBounds, 0, MOAIProp::CAN_DRAW | MOAIProp::CAN_DRAW_DEBUG );
+		u32 totalResults = this->mPartition->GatherProps ( buffer, 0, MOAIProp::CAN_DRAW | MOAIProp::CAN_DRAW_DEBUG );
 		if ( !totalResults ) return;
 		
 		totalResults = buffer.PrepareResults (
@@ -526,29 +527,21 @@ u32 MOAILayer2D::GetLocalFrame ( USRect& frame ) {
 
 //----------------------------------------------------------------//
 void MOAILayer2D::GetProjectionMtx ( USMatrix4x4& proj ) {
-
-	// do the camera translation
-	float xs = Cot (( 60.0f * ( float )D2R ) / 2.0f );
-	float ys = xs * this->mViewport->GetAspect ();
 	
-	float d = this->mViewport->Width () * 0.5f * xs;
-	proj.Translate ( 0.0f, 0.0f, -d );
-
-	USMatrix4x4 mtx;
-	mtx.Perspective ( xs, ys, 1.0f, 1000.0f );
-	proj.Append ( mtx );
+	if ( this->mCamera ) {
+		proj.Init( this->mCamera->GetProjMtx ( *this->mViewport ));
+	}
+	else {
+		proj.Init ( this->mViewport->GetProjMtx ());
+	}
 }
 
 //----------------------------------------------------------------//
 void MOAILayer2D::GetViewMtx ( USMatrix4x4& view ) {
-
+	
 	if ( this->mCamera ) {
-		view.Init( this->mCamera->GetLocalToWorldMtx ());
 		
-		view.m [ USMatrix4x4::C2_R0 ] *= this->mParallax.mX;
-		view.m [ USMatrix4x4::C2_R1 ] *= this->mParallax.mY;
-		
-		view.Inverse ();
+		view.Init( this->mCamera->GetViewMtx ());
 	}
 	else {
 		view.Ident ();

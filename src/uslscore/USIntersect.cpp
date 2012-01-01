@@ -2,9 +2,15 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <uslscore/USDistance.h>
 #include <uslscore/USIntersect.h>
 #include <uslscore/USTrig.h>
-#include <uslscore/USDistance.h>
+#include <uslscore/USPrism.h>
+#include <uslscore/USRhombus.h>
+
+//================================================================//
+// USSect
+//================================================================//
 
 //----------------------------------------------------------------//
 // Return:
@@ -165,6 +171,22 @@ u32 USSect::VecToPlane ( USVec3D& loc, USVec3D& vec, USPlane3D& p, float& t ) {
 	if ( d == 0.0f ) return SECT_TANGENT; // ray is parallel
 	
 	t = ( loc.Dot ( p.mNorm ) + p.mDist ) / -d;
+	return SECT_HIT;
+}
+
+//----------------------------------------------------------------//
+u32 USSect::VecToPlane ( USVec3D& loc, USVec3D& vec, USPlane3D& p, float& t, USVec3D& result ) {
+
+	float d;
+	d = vec.Dot ( p.mNorm );
+	if ( d == 0.0f ) return SECT_TANGENT; // ray is parallel
+	
+	t = ( loc.Dot ( p.mNorm ) + p.mDist ) / -d;
+	
+	result = vec;
+	result.Scale ( t );
+	result.Add ( loc );
+	
 	return SECT_HIT;
 }
 
