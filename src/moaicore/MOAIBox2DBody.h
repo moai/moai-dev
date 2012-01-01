@@ -20,6 +20,7 @@ class b2Body;
 	@const	DYNAMIC
 	@const	KINEMATIC
 	@const	STATIC
+
 */
 class MOAIBox2DBody :
 	public MOAIBox2DPrim,
@@ -63,6 +64,7 @@ private:
 	static int		_setTransform			( lua_State* L );
 	
 	//----------------------------------------------------------------//
+	bool			ApplyAttrOp				( u32 attrID, MOAIAttrOp& attrOp, u32 op );
 	void			SetBody					( b2Body* body );
 	void			OnDepNodeUpdate			();
 
