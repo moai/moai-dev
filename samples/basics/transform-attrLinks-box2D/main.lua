@@ -49,7 +49,7 @@ world:setUnitsToMeters ( 2 )
 world:start ()
 layer:setBox2DWorld ( world )
 
-body = world:addBody ( MOAIBox2DBody.DYNAMIC )
+body = world:addBody ( MOAIBox2DBody.KINEMATIC )
 
 poly = {
 	0, -1,
@@ -59,9 +59,11 @@ poly = {
 }
 
 fixture = body:addPolygon ( poly )
+
 fixture:setDensity ( 1 )
 fixture:setFriction ( 0.3 )
 fixture:setFilter ( 0x01 )
+fixture:setSensor(true)
 fixture:setCollisionHandler ( onCollide, MOAIBox2DArbiter.BEGIN + MOAIBox2DArbiter.END, 0x02 )
 
 body:resetMassData ()
@@ -70,6 +72,7 @@ body:applyAngularImpulse ( 2 )
 body2 = world:addBody ( MOAIBox2DBody.STATIC )
 fixture2 = body2:addRect ( -5, -5, 5, -3 )
 fixture2:setFilter ( 0x02 )
+
 fixture2:setCollisionHandler ( onCollide, MOAIBox2DArbiter.BEGIN + MOAIBox2DArbiter.END, 0x00 )
 
 texture = MOAIGfxQuad2D.new ()
@@ -78,7 +81,6 @@ texture:setRect ( -0.5, -0.5, 0.5, 0.5 )
 
 sprite = MOAIProp2D.new ()
 sprite:setDeck ( texture )
-sprite:setParent ( body )
 layer:insertProp ( sprite )
 
 curve = MOAIAnimCurve.new ()
@@ -86,12 +88,12 @@ curve:reserveKeys ( 2 )
 curve:setKey ( 1, 0, -5 )
 curve:setKey ( 2, 1.5, 5 )
 
-sprite:setAttrLink ( MOAIProp2D.ATTR_X_LOC, curve, MOAIAnimCurve.ATTR_VALUE )
-sprite:setAttrLink ( MOAIProp2D.ATTR_Z_ROT, curve, MOAIAnimCurve.ATTR_VALUE )
-sprite:setAttrLink ( MOAIProp2D.ATTR_Y_LOC, curve, MOAIAnimCurve.ATTR_VALUE )
-body:setAttrLink ( MOAITransform.ATTR_WORLD_Z_ROT, sprite, MOAITransform.ATTR_WORLD_Z_ROT )
-body:setAttrLink ( MOAITransform.ATTR_WORLD_X_LOC, sprite, MOAITransform.ATTR_WORLD_X_LOC )
-body:setAttrLink ( MOAITransform.ATTR_WORLD_Y_LOC, sprite, MOAITransform.ATTR_WORLD_Y_LOC )
+sprite:setAttrLink ( MOAITransform.ATTR_X_LOC, curve, MOAIAnimCurve.ATTR_VALUE )
+sprite:setAttrLink ( MOAITransform.ATTR_Z_ROT, curve, MOAIAnimCurve.ATTR_VALUE )
+sprite:setAttrLink ( MOAITransform.ATTR_Y_LOC, curve, MOAIAnimCurve.ATTR_VALUE )
+body:setAttrLink ( MOAITransform.ATTR_Z_ROT, curve, MOAIAnimCurve.ATTR_VALUE )
+body:setAttrLink ( MOAITransform.ATTR_X_LOC, curve, MOAIAnimCurve.ATTR_VALUE )
+body:setAttrLink ( MOAITransform.ATTR_Y_LOC, curve, MOAIAnimCurve.ATTR_VALUE )
 
 timer = MOAITimer.new ()
 timer:setSpan ( 0, curve:getLength ())

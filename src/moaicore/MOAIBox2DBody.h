@@ -73,7 +73,7 @@ public:
 	friend class MOAIBox2DWorld;
 	
 	DECL_LUA_FACTORY ( MOAIBox2DBody )
-	
+
 	//----------------------------------------------------------------//
 	void			Destroy					();
 					MOAIBox2DBody			();
