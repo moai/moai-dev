@@ -10,7 +10,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void USPrism::GetAABB ( USBox& box ) {
+void USPrism::GetAABB ( USBox& box ) const {
 
 	USVec3D walker = mLoc;
 	box.Init ( walker );
@@ -38,7 +38,7 @@ void USPrism::GetAABB ( USBox& box ) {
 }
 
 //----------------------------------------------------------------//
-void USPrism::GetCenter ( USVec3D& center ) {
+void USPrism::GetCenter ( USVec3D& center ) const {
 
 	center = this->mXAxis;
 	center.Add ( this->mYAxis );
@@ -48,7 +48,7 @@ void USPrism::GetCenter ( USVec3D& center ) {
 }
 
 //----------------------------------------------------------------//
-void USPrism::Init ( USBox& box ) {
+void USPrism::Init ( const USBox& box ) {
 
 	this->mLoc = box.mMin;
 	
@@ -66,7 +66,7 @@ void USPrism::Init ( USBox& box ) {
 }
 
 //----------------------------------------------------------------//
-void USPrism::Transform ( USMatrix4x4& mtx ) {
+void USPrism::Transform ( const USMatrix4x4& mtx ) {
 
 	mtx.Transform ( mLoc );
 	mtx.TransformVec ( mXAxis );

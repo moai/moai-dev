@@ -17,27 +17,28 @@ class USBox {
 	USVec3D		mMax;
 
 	//----------------------------------------------------------------//
+	float	Area		() const;
 	void	Bless		();
-	void	Clip		( USBox& box );
-	bool	Contains	( USVec3D& loc );
-	bool	ContainsX	( float x );
-	bool	ContainsY	( float y );
-	bool	ContainsZ	( float z );
-	float	GetRadius	();
-	void	GetRectXY	( USRect& rect );
-	void	GetRectXZ	( USRect& rect );
-	void	GetRectZY	( USRect& rect );
-	void	Grow		( USBox& box );
-	void	Grow		( USVec3D& vec );
-	void	Init		( USBox& box );
-	void	Init		( USVec3D& vec );
-	bool	Overlap		( USBox& box ); // True if boxes overlap
-	bool	OverlapXY	( USBox& box ); // True if boxes overlap in XY plane
-	bool	OverlapXZ	( USBox& box ); // True if boxes overlap in XZ plane
-	bool	OverlapZY	( USBox& box ); // True if boxes overlap in ZY plane
+	void	Clip		( const USBox& box );
+	bool	Contains	( const USVec3D& loc ) const;
+	bool	ContainsX	( float x ) const;
+	bool	ContainsY	( float y ) const;
+	bool	ContainsZ	( float z ) const;
+	float	GetRadius	() const;
+	void	GetRectXY	( USRect& rect ) const;
+	void	GetRectXZ	( USRect& rect ) const;
+	void	GetRectZY	( USRect& rect ) const;
+	void	Grow		( const USBox& box );
+	void	Grow		( const USVec3D& vec );
+	void	Init		( const USBox& box );
+	void	Init		( const USVec3D& vec );
+	bool	Overlap		( const USBox& box ) const; // True if boxes overlap
+	bool	OverlapXY	( const USBox& box ) const; // True if boxes overlap in XY plane
+	bool	OverlapXZ	( const USBox& box ) const; // True if boxes overlap in XZ plane
+	bool	OverlapZY	( const USBox& box ) const; // True if boxes overlap in ZY plane
 	void	Pad			( float pad ); // Add padding to all sides; so dim += pad * 2 for all axes
 	void	Scale		( float scale );
-	void	Transform	( USMatrix4x4& mtx ); // Gets AABB of transformed box
+	void	Transform	( const USMatrix4x4& mtx ); // Gets AABB of transformed box
 };
 
 #endif

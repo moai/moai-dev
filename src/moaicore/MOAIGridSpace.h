@@ -15,10 +15,10 @@ class MOAICellCoord :
 public:
 	
 	//----------------------------------------------------------------//
-	u32			GetID			();
-	bool		IsEqual			( MOAICellCoord cellCoord );
+	u32			GetID				();
+	bool		IsEqual				( MOAICellCoord cellCoord );
 				MOAICellCoord		();
-				~MOAICellCoord	();
+				~MOAICellCoord		();
 	
 	//----------------------------------------------------------------//
 	inline MOAICellCoord ( int x, int y ) :

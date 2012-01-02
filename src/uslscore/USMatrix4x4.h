@@ -464,6 +464,36 @@ public:
 	}
 
 	//----------------------------------------------------------------//
+	template < typename PARAM_TYPE >
+	void Project ( USMetaVec3D < PARAM_TYPE >& vec ) const {
+		
+		PARAM_TYPE w =	(( PARAM_TYPE )m[C0_R3] * vec.mX ) +
+						(( PARAM_TYPE )m[C1_R3] * vec.mY ) +
+						(( PARAM_TYPE )m[C2_R3] * vec.mZ ) +
+						(( PARAM_TYPE )m[C3_R3]);
+		
+		this->Transform ( vec );
+		
+		vec.mX /= w;
+		vec.mY /= w;
+		vec.mZ /= w;
+	}
+
+	//----------------------------------------------------------------//
+	template < typename PARAM_TYPE >
+	void Project ( USMetaVec4D < PARAM_TYPE >& vec ) const {
+
+		this->Transform ( vec );
+		
+		PARAM_TYPE w = vec.mW;
+		
+		vec.mX /= w;
+		vec.mY /= w;
+		vec.mZ /= w;
+		vec.mW /= w;
+	}
+
+	//----------------------------------------------------------------//
 	void Rotate	( USMetaVec3D < TYPE >& axis, TYPE radians ) {
 	
 		TYPE c	= Cos (	radians	);

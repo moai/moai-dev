@@ -300,8 +300,9 @@ USRect MOAILayoutFrame::GetScissorRect () {
 	
 	USMatrix4x4 mtx;
 	
+	// TODO:
 	mtx.Init ( this->mLocalToWorldMtx );
-	mtx.Append ( MOAIGfxDevice::Get ().GetWorldToWndMtx ( 1.0f, 1.0f ));
+	//mtx.Append ( MOAIGfxDevice::Get ().GetWorldToWndMtx ( 1.0f, 1.0f ));
 	mtx.Transform ( scissorRect );
 	
 	return scissorRect;

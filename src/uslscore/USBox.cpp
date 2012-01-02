@@ -10,6 +10,12 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+float USBox::Area () const {
+
+	return ( this->mMax.mX - this->mMin.mX ) * ( this->mMax.mY - this->mMin.mY ) * ( this->mMax.mZ - this->mMin.mZ );
+}
+
+//----------------------------------------------------------------//
 void USBox::Bless () {
 
 	if ( this->mMin.mX > this->mMax.mX ) {
@@ -32,7 +38,7 @@ void USBox::Bless () {
 }
 
 //----------------------------------------------------------------//
-void USBox::Clip ( USBox& box ) {
+void USBox::Clip ( const USBox& box ) {
 
 	// Clamp XMin
 	if ( this->mMin.mX < box.mMin.mX ) this->mMin.mX = box.mMin.mX;
@@ -62,7 +68,7 @@ void USBox::Clip ( USBox& box ) {
 }
 
 //----------------------------------------------------------------//
-bool USBox::Contains ( USVec3D& loc ) {
+bool USBox::Contains ( const USVec3D& loc ) const {
 
 	if (( loc.mX < mMin.mX ) || ( loc.mX > mMax.mX )) return false;
 	if (( loc.mY < mMin.mY ) || ( loc.mY > mMax.mY )) return false;
@@ -72,7 +78,7 @@ bool USBox::Contains ( USVec3D& loc ) {
 }
 
 //----------------------------------------------------------------//
-bool USBox::ContainsX ( float x ) {
+bool USBox::ContainsX ( float x ) const {
 	
 	if ( x < this->mMin.mX ) return false;
 	if ( x > this->mMax.mX ) return false;
@@ -81,7 +87,7 @@ bool USBox::ContainsX ( float x ) {
 }
 
 //----------------------------------------------------------------//
-bool USBox::ContainsY ( float y ) {
+bool USBox::ContainsY ( float y ) const {
 	
 	if ( y < this->mMin.mY ) return false;
 	if ( y > this->mMax.mY ) return false;
@@ -90,7 +96,7 @@ bool USBox::ContainsY ( float y ) {
 }
 
 //----------------------------------------------------------------//
-bool USBox::ContainsZ ( float z ) {
+bool USBox::ContainsZ ( float z ) const {
 	
 	if ( z < this->mMin.mZ ) return false;
 	if ( z > this->mMax.mZ ) return false;
@@ -99,7 +105,7 @@ bool USBox::ContainsZ ( float z ) {
 }
 
 //----------------------------------------------------------------//
-float USBox::GetRadius () {
+float USBox::GetRadius () const {
 
 	USVec3D spans = mMax;
 	spans.Sub ( mMin );
@@ -108,7 +114,7 @@ float USBox::GetRadius () {
 }
 
 //----------------------------------------------------------------//
-void USBox::GetRectXY ( USRect& rect ) {
+void USBox::GetRectXY ( USRect& rect ) const {
 	
 	rect.mXMin = this->mMin.mX;
 	rect.mXMax = this->mMax.mX;
@@ -118,7 +124,7 @@ void USBox::GetRectXY ( USRect& rect ) {
 }
 
 //----------------------------------------------------------------//
-void USBox::GetRectXZ ( USRect& rect ) {
+void USBox::GetRectXZ ( USRect& rect ) const {
 
 	rect.mXMin = this->mMin.mX;
 	rect.mXMax = this->mMax.mX;
@@ -128,7 +134,7 @@ void USBox::GetRectXZ ( USRect& rect ) {
 }
 
 //----------------------------------------------------------------//
-void USBox::GetRectZY ( USRect& rect ) {
+void USBox::GetRectZY ( USRect& rect ) const {
 
 	rect.mXMin = this->mMin.mZ;
 	rect.mXMax = this->mMax.mZ;
@@ -138,7 +144,7 @@ void USBox::GetRectZY ( USRect& rect ) {
 }
 
 //----------------------------------------------------------------//
-void USBox::Grow ( USBox& box ) {
+void USBox::Grow ( const USBox& box ) {
 
 	if ( mMin.mX > box.mMin.mX ) mMin.mX = box.mMin.mX;
 	if ( mMax.mX < box.mMax.mX ) mMax.mX = box.mMax.mX;
@@ -151,7 +157,7 @@ void USBox::Grow ( USBox& box ) {
 }
 
 //----------------------------------------------------------------//
-void USBox::Grow ( USVec3D& vec ) {
+void USBox::Grow ( const USVec3D& vec ) {
 
 	if ( mMin.mX > vec.mX ) mMin.mX = vec.mX;
 	else if ( mMax.mX < vec.mX ) mMax.mX = vec.mX;
@@ -164,13 +170,13 @@ void USBox::Grow ( USVec3D& vec ) {
 }
 
 //----------------------------------------------------------------//
-void USBox::Init ( USBox& box ) {
+void USBox::Init ( const USBox& box ) {
 
 	*this = box;
 }
 
 //----------------------------------------------------------------//
-void USBox::Init ( USVec3D& vec ) {
+void USBox::Init ( const USVec3D& vec ) {
 
 	mMin.mX = mMax.mX = vec.mX;
 	mMin.mY = mMax.mY = vec.mY;
@@ -178,7 +184,7 @@ void USBox::Init ( USVec3D& vec ) {
 }
 
 //----------------------------------------------------------------//
-bool USBox::Overlap ( USBox& box ) {
+bool USBox::Overlap ( const USBox& box ) const {
 
 	if ( mMin.mX > box.mMax.mX ) return false;
 	if ( mMax.mX < box.mMin.mX ) return false;
@@ -193,7 +199,7 @@ bool USBox::Overlap ( USBox& box ) {
 }
 
 //----------------------------------------------------------------//
-bool USBox::OverlapXY ( USBox& box ) {
+bool USBox::OverlapXY ( const USBox& box ) const {
 
 	if ( mMin.mX > box.mMax.mX ) return false;
 	if ( mMax.mX < box.mMin.mX ) return false;
@@ -205,7 +211,7 @@ bool USBox::OverlapXY ( USBox& box ) {
 }
 
 //----------------------------------------------------------------//
-bool USBox::OverlapXZ	( USBox& box ) {
+bool USBox::OverlapXZ ( const USBox& box ) const {
 
 	if ( mMin.mX > box.mMax.mX ) return false;
 	if ( mMax.mX < box.mMin.mX ) return false;
@@ -217,7 +223,7 @@ bool USBox::OverlapXZ	( USBox& box ) {
 }
 
 //----------------------------------------------------------------//
-bool USBox::OverlapZY ( USBox& box ) {
+bool USBox::OverlapZY ( const USBox& box ) const {
 	
 	if ( mMin.mY > box.mMax.mY ) return false;
 	if ( mMax.mY < box.mMin.mY ) return false;
@@ -254,7 +260,7 @@ void USBox::Scale ( float scale ) {
 }
 
 //----------------------------------------------------------------//
-void USBox::Transform ( USMatrix4x4& mtx ) {
+void USBox::Transform ( const USMatrix4x4& mtx ) {
 
 	USPrism prism;
 	prism.Init ( *this );

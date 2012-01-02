@@ -530,14 +530,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\uslscore\USFrustFitter.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\uslscore\USFrustFitter.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\uslscore\USFrustum.cpp"
 				>
 			</File>

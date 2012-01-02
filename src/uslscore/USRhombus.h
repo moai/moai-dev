@@ -22,13 +22,13 @@ class USRhombus {
 	USVec3D		mYAxis;
 
 	//----------------------------------------------------------------//
-	void	GetAABB		( USBox& box );
-	void	GetCenter	( USVec3D& center );
-	void	GetPlane	( USPlane3D& plane );
-	void	InitXY		( USRect& rect, float zOff );
-	void	InitXZ		( USRect& rect, float yOff );
-	void	InitZY		( USRect& rect, float xOff );
-	void	Transform	( USMatrix4x4& mtx );
+	void	GetAABB		( USBox& box ) const;
+	void	GetCenter	( USVec3D& center ) const;
+	void	GetPlane	( USPlane3D& plane ) const;
+	void	InitXY		( const USRect& rect, float zOff );
+	void	InitXZ		( const USRect& rect, float yOff );
+	void	InitZY		( const USRect& rect, float xOff );
+	void	Transform	( const USMatrix4x4& mtx );
 };
 
 #endif

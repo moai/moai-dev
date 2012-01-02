@@ -6,7 +6,10 @@
 
 #include <uslscore/USMathConsts.h>
 #include <uslscore/USMatrix.h>
+#include <uslscore/USRect.h>
 #include <uslscore/USTrig.h>
+#include <uslscore/USVec2D.h>
+#include <uslscore/USVec3D.h>
 
 //================================================================//
 // USMetaAffine3D
@@ -186,7 +189,7 @@ public:
 		TYPE fA3 = mtx.m[C1_R0]*mtx.m[C2_R1] - mtx.m[C2_R0]*mtx.m[C1_R1];
 		TYPE fA4 = mtx.m[C1_R0]*mtx.m[C3_R1] - mtx.m[C3_R0]*mtx.m[C1_R1];
 		TYPE fA5 = mtx.m[C2_R0]*mtx.m[C3_R1] - mtx.m[C3_R0]*mtx.m[C2_R1];
-		TYPE fB2 = mtx.m[C0_R2] ;
+		TYPE fB2 = mtx.m[C0_R2];
 		TYPE fB4 = mtx.m[C1_R2];
 		TYPE fB5 = mtx.m[C2_R2];
 
@@ -205,12 +208,15 @@ public:
 		m[C0_R0] = ( + mtx.m[C1_R1]*fB5 - mtx.m[C2_R1]*fB4 ) * invDet;
 		m[C0_R1] = ( - mtx.m[C0_R1]*fB5 + mtx.m[C2_R1]*fB2 ) * invDet;
 		m[C0_R2] = ( + mtx.m[C0_R1]*fB4 - mtx.m[C1_R1]*fB2 ) * invDet;
+		
 		m[C1_R0] = ( - mtx.m[C1_R0]*fB5 + mtx.m[C2_R0]*fB4 ) * invDet;
 		m[C1_R1] = ( + mtx.m[C0_R0]*fB5 - mtx.m[C2_R0]*fB2 ) * invDet;
 		m[C1_R2] = ( - mtx.m[C0_R0]*fB4 + mtx.m[C1_R0]*fB2 ) * invDet;
+		
 		m[C2_R0] = fA3 * invDet;
-		m[C2_R1] = fA1 * invDet;
+		m[C2_R1] = -fA1 * invDet;
 		m[C2_R2] = fA0 * invDet;
+		
 		m[C3_R0] = ( - mtx.m[C1_R2]*fA5 + mtx.m[C2_R2]*fA4 - mtx.m[C3_R2]*fA3 ) * invDet;
 		m[C3_R1] = ( + mtx.m[C0_R2]*fA5 - mtx.m[C2_R2]*fA2 + mtx.m[C3_R2]*fA1 ) * invDet;
 		m[C3_R2] = ( - mtx.m[C0_R2]*fA4 + mtx.m[C1_R2]*fA2 - mtx.m[C3_R2]*fA0 ) * invDet;
@@ -536,15 +542,18 @@ public:
 		
 		x =			(( PARAM_TYPE )m[C0_R0] *	vec.mX ) +
 					(( PARAM_TYPE )m[C1_R0] *	vec.mY ) +
-					(( PARAM_TYPE )m[C2_R0] *	vec.mZ );
+					(( PARAM_TYPE )m[C2_R0] *	vec.mZ ) +
+					(( PARAM_TYPE )m[C3_R0]);
 		
 		y =			(( PARAM_TYPE )m[C0_R1] *	vec.mX ) +
 					(( PARAM_TYPE )m[C1_R1] *	vec.mY ) +
-					(( PARAM_TYPE )m[C2_R1] *	vec.mZ );
+					(( PARAM_TYPE )m[C2_R1] *	vec.mZ ) +
+					(( PARAM_TYPE )m[C3_R1]);
 		
 		vec.mZ =	(( PARAM_TYPE )m[C0_R2] *	vec.mX ) +
 					(( PARAM_TYPE )m[C1_R2] *	vec.mY ) +
-					(( PARAM_TYPE )m[C2_R2] *	vec.mZ );
+					(( PARAM_TYPE )m[C2_R2] *	vec.mZ ) +
+					(( PARAM_TYPE )m[C3_R2]);
 		
 		vec.mX = x;
 		vec.mY = y;

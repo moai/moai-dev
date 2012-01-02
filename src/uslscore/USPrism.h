@@ -22,10 +22,10 @@ class USPrism {
 	USVec3D		mZAxis;
 
 	//----------------------------------------------------------------//
-	void	GetAABB		( USBox& box );
-	void	GetCenter	( USVec3D& center );
-	void	Init		( USBox& box );
-	void	Transform	( USMatrix4x4& mtx );
+	void	GetAABB		( USBox& box ) const;
+	void	GetCenter	( USVec3D& center ) const;
+	void	Init		( const USBox& box );
+	void	Transform	( const USMatrix4x4& mtx );
 };
 
 #endif

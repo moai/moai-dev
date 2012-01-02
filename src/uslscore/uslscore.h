@@ -37,7 +37,6 @@
 #include <uslscore/USFileStream.h>
 #include <uslscore/USFileSys.h>
 #include <uslscore/USFloat.h>
-#include <uslscore/USFrustFitter.h>
 #include <uslscore/USFrustum.h>
 #include <uslscore/USHexDump.h>
 #include <uslscore/USInflater.h>

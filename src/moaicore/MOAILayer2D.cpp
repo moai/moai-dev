@@ -424,7 +424,8 @@ void MOAILayer2D::Draw ( int subPrimID, bool reload ) {
 	if ( !this->IsOffscreen ()) {
 		USMatrix4x4 mtx;
 		mtx.Init ( this->mLocalToWorldMtx );
-		mtx.Append ( gfxDevice.GetWorldToWndMtx ( 1.0f, 1.0f ));
+		// TODO:
+		//mtx.Append ( gfxDevice.GetWorldToWndMtx ( 1.0f, 1.0f ));
 		mtx.Transform ( viewportRect );
 	}
 	gfxDevice.SetViewport ( viewportRect );
@@ -460,8 +461,12 @@ void MOAILayer2D::Draw ( int subPrimID, bool reload ) {
 	
 	if ( this->mPartition ) {
 		
-		//USQuad viewQuad = gfxDevice.GetViewQuad ();
-		//USRect viewBounds = viewQuad.GetBounds ();
+		USMatrix4x4 invViewProj = view;
+		invViewProj.Append ( proj );
+		invViewProj.Inverse ();
+		
+		USFrustum frustum;
+		frustum.Init ( invViewProj );
 		
 		MOAIPartitionResultBuffer& buffer = MOAIPartitionResultMgr::Get ().GetBuffer ();
 		
@@ -481,6 +486,8 @@ void MOAILayer2D::Draw ( int subPrimID, bool reload ) {
 
 		MOAIProp* prevProp = 0;
 		
+		gfxDevice.SetViewVolume ( &frustum );
+		
 		// render the sorted list
 		for ( u32 i = 0; i < totalResults; ++i ) {
 			MOAIPartitionResult* result = buffer.GetResultUnsafe ( i );
@@ -493,6 +500,8 @@ void MOAILayer2D::Draw ( int subPrimID, bool reload ) {
 			
 			prevProp = prop;
 		}
+		
+		gfxDevice.SetViewVolume ( 0 );
 	}
 	
 	// render the debug lines
@@ -529,7 +538,7 @@ u32 MOAILayer2D::GetLocalFrame ( USRect& frame ) {
 void MOAILayer2D::GetProjectionMtx ( USMatrix4x4& proj ) {
 	
 	if ( this->mCamera ) {
-		proj.Init( this->mCamera->GetProjMtx ( *this->mViewport ));
+		proj.Init ( this->mCamera->GetProjMtx ( *this->mViewport ));
 	}
 	else {
 		proj.Init ( this->mViewport->GetProjMtx ());
@@ -539,9 +548,8 @@ void MOAILayer2D::GetProjectionMtx ( USMatrix4x4& proj ) {
 //----------------------------------------------------------------//
 void MOAILayer2D::GetViewMtx ( USMatrix4x4& view ) {
 	
-	if ( this->mCamera ) {
-		
-		view.Init( this->mCamera->GetViewMtx ());
+	if ( this->mCamera ) {	
+		view.Init ( this->mCamera->GetViewMtx ());
 	}
 	else {
 		view.Ident ();

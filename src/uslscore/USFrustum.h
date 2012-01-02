@@ -4,7 +4,9 @@
 #ifndef USFRUSTUM_H
 #define	USFRUSTUM_H
 
+#include <uslscore/USAffine3D.h>
 #include <uslscore/USBox.h>
+#include <uslscore/USMatrix4x4.h>
 #include <uslscore/USPlane.h>
 #include <uslscore/USVec3D.h>
 
@@ -15,14 +17,7 @@ class USRhombus;
 // USFrustum
 //================================================================//
 class USFrustum {
-private:
-	
-	//----------------------------------------------------------------//
-	void	UpdateAABB		();
-	
 public:
-
-	friend class USFrustFitter;
 
 	enum {
 		LEFT_PLANE = 0,
@@ -46,19 +41,21 @@ public:
 		TOTAL_POINTS,
 	};
 
-	USVec3D		mLoc;
 	USBox		mAABB;
 	USVec3D		mPoints [ TOTAL_POINTS ];
 	USPlane3D	mPlanes [ TOTAL_PLANES ];
+	bool		mUsePlanes;
 
 	//----------------------------------------------------------------//
-	bool	Cull		( USVec3D& vec ); // Culls by all planes
-	bool	Cull		( USBox& box ); // Culls by all planes
-	bool	Cull		( USPrism& prism ); // Culls by all planes
-	bool	Cull		( USRhombus& rhombus ); // Culls by all planes
-	void	Init		( USVec3D& loc, USRhombus& rhombus, USPlane3D& near, USPlane3D& far );
-	void	Init		( USVec3D& loc, USVec3D& viewAxis, USVec3D& worldUp, float nearD, float farD, float hFOV, float vFOV );
-			USFrustum	();
+	bool	Cull			( const USVec3D& vec ) const;
+	bool	Cull			( const USBox& box ) const;
+	bool	Cull			( const USPrism& prism ) const;
+	bool	Cull			( const USRhombus& rhombus ) const;
+	bool	GetXYSectRect	( const USAffine3D& mtx, USRect& rect ) const;
+	void	Init			( const USMatrix4x4& mtx );
+	//void	Init			( USVec3D& loc, USRhombus rhombus, USPlane3D& near, USPlane3D& far );
+	//void	Init			( USVec3D& loc, USVec3D& viewAxis, USVec3D& worldUp, float nearD, float farD, float hFOV, float vFOV );
+			USFrustum		();
 };
 
 #endif

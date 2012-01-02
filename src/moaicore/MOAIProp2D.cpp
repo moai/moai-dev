@@ -603,16 +603,14 @@ void MOAIProp2D::GatherSurfaces ( MOAISurfaceSampler2D& sampler ) {
 //----------------------------------------------------------------//
 void MOAIProp2D::GetGridBoundsInView ( MOAICellCoord& c0, MOAICellCoord& c1 ) {
 
-	const USAffine3D& invWorldMtx = this->GetWorldToLocalMtx ();
-
-	// view quad in world space
-	USQuad viewQuad = MOAIGfxDevice::Get ().GetViewQuad ();
+	USFrustum* frustum = MOAIGfxDevice::Get ().GetViewVolume ();
+	if ( frustum ) {
 	
-	// TODO:
-	viewQuad.Transform ( invWorldMtx );
-	
-	USRect viewRect = viewQuad.GetBounds ();
-	this->mGrid->GetBoundsInRect ( viewRect, c0, c1 );
+		USRect viewRect;
+		if ( frustum->GetXYSectRect ( this->GetWorldToLocalMtx (), viewRect )) {
+			this->mGrid->GetBoundsInRect ( viewRect, c0, c1 );
+		}
+	}
 }
 
 //----------------------------------------------------------------//

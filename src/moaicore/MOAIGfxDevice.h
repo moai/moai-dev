@@ -116,6 +116,8 @@ private:
 
 	u32				mWidth;
 
+	USFrustum*		mViewVolume; // TODO: autogenerate?
+	
 	//----------------------------------------------------------------//
 	static int				_isProgrammable			( lua_State* L );
 	static int				_setClearColor			( lua_State* L );
@@ -152,6 +154,8 @@ public:
 	GET_BOOL ( IsProgrammable, mIsProgrammable )
 	GET_BOOL ( IsFramebufferSupported, mIsFramebufferSupported )
 	
+	GET_SET ( USFrustum*, ViewVolume, mViewVolume )
+	
 	//----------------------------------------------------------------//
 	void					BeginDrawing			();
 	void					BeginLayer				();
@@ -170,8 +174,8 @@ public:
 	
 	u32						GetHeight				() const;
 	
-	USMatrix4x4				GetModelToWndMtx		() const;
-	USMatrix4x4				GetModelToWorldMtx		() const;
+	//USMatrix4x4				GetModelToWndMtx		() const;
+	//USMatrix4x4				GetModelToWorldMtx		() const;
 	
 	USColorVec				GetPenColor				() const;
 	USRect					GetRect					() const;
@@ -179,15 +183,15 @@ public:
 	USMatrix4x4				GetVertexTransform		( u32 id ) const;
 	
 	USMatrix4x4				GetViewProjMtx			() const;
-	USQuad					GetViewQuad				() const;
-	USRect					GetViewRect				() const;
+	//USQuad					GetViewQuad				() const;
+	//USRect					GetViewRect				() const;
 	
 	u32						GetWidth				() const;
 
-	USMatrix4x4				GetWorldToModelMtx		() const;
-	USMatrix4x4				GetWorldToWndMtx		( float xScale = 1.0f, float yScale = 1.0f ) const;
-	USMatrix4x4				GetWndToModelMtx		() const;
-	USMatrix4x4				GetWndToWorldMtx		() const;
+	//USMatrix4x4				GetWorldToModelMtx		() const;
+	//USMatrix4x4				GetWorldToWndMtx		( float xScale = 1.0f, float yScale = 1.0f ) const;
+	//USMatrix4x4				GetWndToModelMtx		() const;
+	//USMatrix4x4				GetWndToWorldMtx		() const;
 	
 	u32						LogErrors				();
 	

@@ -23,10 +23,9 @@ prop = MOAIProp2D.new ()
 prop:setDeck ( gfxQuad )
 layer:insertProp ( prop )
 
-prop:moveRot ( 360, 180, 360, 3 )
+prop:moveRot ( 360, 180, 0, 3 )
 prop:moveLoc ( 0, 0, 128, 3 )
 
 camera = MOAICamera3D.new ()
-camera:setFieldOfView ( 60 )
 camera:setLoc ( 0, 0, camera:getFocalLength ( 320 ))
 layer:setCamera ( camera )

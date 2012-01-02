@@ -11,7 +11,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void USRhombus::GetAABB ( USBox& box ) {
+void USRhombus::GetAABB ( USBox& box ) const {
 
 	USVec3D walker = mLoc;
 	box.Init ( walker );
@@ -30,7 +30,7 @@ void USRhombus::GetAABB ( USBox& box ) {
 }
 
 //----------------------------------------------------------------//
-void USRhombus::GetCenter ( USVec3D& center ) {
+void USRhombus::GetCenter ( USVec3D& center ) const {
 
 	center = this->mXAxis;
 	center.Add ( this->mYAxis );
@@ -39,7 +39,7 @@ void USRhombus::GetCenter ( USVec3D& center ) {
 }
 
 //----------------------------------------------------------------//
-void USRhombus::GetPlane ( USPlane3D& plane ) {
+void USRhombus::GetPlane ( USPlane3D& plane ) const {
 
 	USVec3D norm;
 	norm.Cross ( this->mXAxis, this->mYAxis );
@@ -48,7 +48,7 @@ void USRhombus::GetPlane ( USPlane3D& plane ) {
 }
 
 //----------------------------------------------------------------//
-void USRhombus::InitXY ( USRect& rect, float zOff ) {
+void USRhombus::InitXY ( const USRect& rect, float zOff ) {
 
 	this->mLoc.mX = rect.mXMin;
 	this->mLoc.mY = rect.mYMin;
@@ -64,7 +64,7 @@ void USRhombus::InitXY ( USRect& rect, float zOff ) {
 }
 
 //----------------------------------------------------------------//
-void USRhombus::InitXZ ( USRect& rect, float yOff ) {
+void USRhombus::InitXZ ( const USRect& rect, float yOff ) {
 
 	this->mLoc.mX = rect.mXMin;
 	this->mLoc.mY = yOff;
@@ -80,7 +80,7 @@ void USRhombus::InitXZ ( USRect& rect, float yOff ) {
 }
 
 //----------------------------------------------------------------//
-void USRhombus::InitZY ( USRect& rect, float xOff ) {
+void USRhombus::InitZY ( const USRect& rect, float xOff ) {
 
 	this->mLoc.mX = xOff;
 	this->mLoc.mY = rect.mYMin;
@@ -96,7 +96,7 @@ void USRhombus::InitZY ( USRect& rect, float xOff ) {
 }
 
 //----------------------------------------------------------------//
-void USRhombus::Transform ( USMatrix4x4& mtx ) {
+void USRhombus::Transform ( const USMatrix4x4& mtx ) {
 
 	mtx.Transform ( mLoc );
 	mtx.TransformVec ( mXAxis );

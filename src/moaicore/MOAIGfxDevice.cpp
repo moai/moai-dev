@@ -479,18 +479,18 @@ u32 MOAIGfxDevice::GetHeight () const {
 }
 
 //----------------------------------------------------------------//
-USMatrix4x4 MOAIGfxDevice::GetModelToWorldMtx () const {
-
-	return this->mVertexTransforms [ VTX_WORLD_TRANSFORM ];
-}
+//USMatrix4x4 MOAIGfxDevice::GetModelToWorldMtx () const {
+//
+//	return this->mVertexTransforms [ VTX_WORLD_TRANSFORM ];
+//}
 
 //----------------------------------------------------------------//
-USMatrix4x4 MOAIGfxDevice::GetModelToWndMtx () const {
-
-	USMatrix4x4 modelToWnd = this->GetModelToWorldMtx ();
-	modelToWnd.Append ( this->GetWorldToWndMtx ());
-	return modelToWnd;
-}
+//USMatrix4x4 MOAIGfxDevice::GetModelToWndMtx () const {
+//
+//	USMatrix4x4 modelToWnd = this->GetModelToWorldMtx ();
+//	modelToWnd.Append ( this->GetWorldToWndMtx ());
+//	return modelToWnd;
+//}
 
 //----------------------------------------------------------------//
 USColorVec MOAIGfxDevice::GetPenColor () const {
@@ -531,27 +531,27 @@ USMatrix4x4 MOAIGfxDevice::GetViewProjMtx () const {
 }
 
 //----------------------------------------------------------------//
-USQuad MOAIGfxDevice::GetViewQuad () const {
-
-	USQuad quad;
-
-	USMatrix4x4 invMtx;
-	invMtx.Inverse ( this->GetViewProjMtx ());
-	
-	quad.mV [ 0 ].Init ( -1.0f, 1.0f );
-	quad.mV [ 1 ].Init ( 1.0f, 1.0f );
-	quad.mV [ 2 ].Init ( 1.0f, -1.0f );
-	quad.mV [ 3 ].Init ( -1.0f, -1.0f );
-	
-	invMtx.TransformQuad ( quad.mV );
-	return quad;
-}
+//USQuad MOAIGfxDevice::GetViewQuad () const {
+//
+//	USQuad quad;
+//
+//	USMatrix4x4 invMtx;
+//	invMtx.Inverse ( this->GetViewProjMtx ());
+//	
+//	quad.mV [ 0 ].Init ( -1.0f, 1.0f );
+//	quad.mV [ 1 ].Init ( 1.0f, 1.0f );
+//	quad.mV [ 2 ].Init ( 1.0f, -1.0f );
+//	quad.mV [ 3 ].Init ( -1.0f, -1.0f );
+//	
+//	invMtx.TransformQuad ( quad.mV );
+//	return quad;
+//}
 
 //----------------------------------------------------------------//
-USRect MOAIGfxDevice::GetViewRect () const {
-
-	return this->mViewRect;
-}
+//USRect MOAIGfxDevice::GetViewRect () const {
+//
+//	return this->mViewRect;
+//}
 
 //----------------------------------------------------------------//
 u32 MOAIGfxDevice::GetWidth () const {
@@ -560,69 +560,69 @@ u32 MOAIGfxDevice::GetWidth () const {
 }
 
 //----------------------------------------------------------------//
-USMatrix4x4 MOAIGfxDevice::GetWndToModelMtx () const {
-
-	USMatrix4x4 wndToModel;
-	wndToModel.Inverse ( this->GetModelToWndMtx ());
-	return wndToModel;
-}
-
-//----------------------------------------------------------------//
-USMatrix4x4 MOAIGfxDevice::GetWndToWorldMtx () const {
-
-	USMatrix4x4 wndToWorld;
-	USMatrix4x4 mtx;
-
-	USRect rect = this->GetViewRect ();
-	
-	float hWidth = rect.Width () * 0.5f;
-	float hHeight = rect.Height () * 0.5f;
-
-	// Inv Wnd
-	wndToWorld.Translate ( -hWidth - rect.mXMin, -hHeight - rect.mYMin, 0.0f );
-		
-	mtx.Scale (( 1.0f / hWidth ), -( 1.0f / hHeight ), 1.0f );
-	wndToWorld.Append ( mtx );
-	
-	// inv viewproj
-	mtx = this->GetViewProjMtx ();
-	mtx.Inverse ();
-	wndToWorld.Append ( mtx );
-	
-	return wndToWorld;
-}
+//USMatrix4x4 MOAIGfxDevice::GetWndToModelMtx () const {
+//
+//	USMatrix4x4 wndToModel;
+//	wndToModel.Inverse ( this->GetModelToWndMtx ());
+//	return wndToModel;
+//}
 
 //----------------------------------------------------------------//
-USMatrix4x4 MOAIGfxDevice::GetWorldToModelMtx () const {
-	
-	USMatrix4x4 worldToModel;
-	worldToModel.Inverse ( this->mVertexTransforms [ VTX_WORLD_TRANSFORM ]);
-	return worldToModel;
-}
+//USMatrix4x4 MOAIGfxDevice::GetWndToWorldMtx () const {
+//
+//	USMatrix4x4 wndToWorld;
+//	USMatrix4x4 mtx;
+//
+//	USRect rect = this->GetViewRect ();
+//	
+//	float hWidth = rect.Width () * 0.5f;
+//	float hHeight = rect.Height () * 0.5f;
+//
+//	// Inv Wnd
+//	wndToWorld.Translate ( -hWidth - rect.mXMin, -hHeight - rect.mYMin, 0.0f );
+//		
+//	mtx.Scale (( 1.0f / hWidth ), -( 1.0f / hHeight ), 1.0f );
+//	wndToWorld.Append ( mtx );
+//	
+//	// inv viewproj
+//	mtx = this->GetViewProjMtx ();
+//	mtx.Inverse ();
+//	wndToWorld.Append ( mtx );
+//	
+//	return wndToWorld;
+//}
 
 //----------------------------------------------------------------//
-USMatrix4x4 MOAIGfxDevice::GetWorldToWndMtx ( float xScale, float yScale ) const {
+//USMatrix4x4 MOAIGfxDevice::GetWorldToModelMtx () const {
+//	
+//	USMatrix4x4 worldToModel;
+//	worldToModel.Inverse ( this->mVertexTransforms [ VTX_WORLD_TRANSFORM ]);
+//	return worldToModel;
+//}
 
-	USMatrix4x4 worldToWnd;
-	USMatrix4x4 mtx;
-
-	USRect rect = this->GetViewRect ();
-	
-	float hWidth = rect.Width () * 0.5f;
-	float hHeight = rect.Height () * 0.5f;
-
-	// viewproj
-	worldToWnd = this->GetViewProjMtx ();
-	
-	// wnd
-	mtx.Scale ( hWidth * xScale, hHeight * yScale, 1.0f );
-	worldToWnd.Append ( mtx );
-		
-	mtx.Translate ( hWidth + rect.mXMin, hHeight + rect.mYMin, 0.0f );
-	worldToWnd.Append ( mtx );
-	
-	return worldToWnd;
-}
+//----------------------------------------------------------------//
+//USMatrix4x4 MOAIGfxDevice::GetWorldToWndMtx ( float xScale, float yScale ) const {
+//
+//	USMatrix4x4 worldToWnd;
+//	USMatrix4x4 mtx;
+//
+//	USRect rect = this->GetViewRect ();
+//	
+//	float hWidth = rect.Width () * 0.5f;
+//	float hHeight = rect.Height () * 0.5f;
+//
+//	// viewproj
+//	worldToWnd = this->GetViewProjMtx ();
+//	
+//	// wnd
+//	mtx.Scale ( hWidth * xScale, hHeight * yScale, 1.0f );
+//	worldToWnd.Append ( mtx );
+//		
+//	mtx.Translate ( hWidth + rect.mXMin, hHeight + rect.mYMin, 0.0f );
+//	worldToWnd.Append ( mtx );
+//	
+//	return worldToWnd;
+//}
 
 //----------------------------------------------------------------//
 void MOAIGfxDevice::GpuLoadMatrix ( const USMatrix4x4& mtx ) const {
@@ -660,7 +660,6 @@ u32 MOAIGfxDevice::LogErrors () {
 
 //----------------------------------------------------------------//
 MOAIGfxDevice::MOAIGfxDevice () :
-	
 	mBlendEnabled ( 0 ),
 	mBuffer ( 0 ),
 	mClearFlags ( GL_COLOR_BUFFER_BIT ),
@@ -695,7 +694,8 @@ MOAIGfxDevice::MOAIGfxDevice () :
 	mVertexFormat ( 0 ),
 	mVertexMtxInput ( VTX_STAGE_MODEL ),
 	mVertexMtxOutput ( VTX_STAGE_MODEL ),
-	mWidth ( 0 ) {
+	mWidth ( 0 ),
+	mViewVolume ( 0 ) {
 	
 	RTTI_SINGLE ( MOAIGlobalEventSource )
 	
@@ -790,6 +790,8 @@ void MOAIGfxDevice::ResetState () {
 
 	this->mTop = 0;
 	this->mPrimCount = 0;
+
+	this->mViewVolume = 0;
 
 	// turn off texture
 #if USE_OPENGLES1

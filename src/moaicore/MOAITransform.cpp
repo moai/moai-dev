@@ -337,7 +337,7 @@ int MOAITransform::_movePiv ( lua_State* L ) {
 		u32 mode = state.GetValue < u32 >( 5, USInterpolate::kSmooth );
 		
 		MOAIEaseDriver* action = new MOAIEaseDriver ();
-		action->ReserveLinks ( 2 );
+		action->ReserveLinks ( 3 );
 		
 		action->SetLink ( 0, self, MOAITransformAttr::Pack ( ATTR_X_PIV ), xPiv, mode );
 		action->SetLink ( 1, self, MOAITransformAttr::Pack ( ATTR_Y_PIV ), yPiv, mode );
@@ -386,7 +386,7 @@ int MOAITransform::_moveRot ( lua_State* L ) {
 		u32 mode = state.GetValue < u32 >( 5, USInterpolate::kSmooth );
 		
 		MOAIEaseDriver* action = new MOAIEaseDriver ();
-		action->ReserveLinks ( 2 );
+		action->ReserveLinks ( 3 );
 		
 		action->SetLink ( 0, self, MOAITransformAttr::Pack ( ATTR_X_ROT ), xRot, mode );
 		action->SetLink ( 1, self, MOAITransformAttr::Pack ( ATTR_Y_ROT ), yRot, mode );
@@ -435,7 +435,7 @@ int MOAITransform::_moveScl ( lua_State* L ) {
 		u32 mode = state.GetValue < u32 >( 5, USInterpolate::kSmooth );
 		
 		MOAIEaseDriver* action = new MOAIEaseDriver ();
-		action->ReserveLinks ( 2 );
+		action->ReserveLinks ( 3 );
 		
 		action->SetLink ( 0, self, MOAITransformAttr::Pack ( ATTR_X_SCL ), xScl, mode );
 		action->SetLink ( 1, self, MOAITransformAttr::Pack ( ATTR_Y_SCL ), yScl, mode );
