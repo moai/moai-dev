@@ -157,6 +157,22 @@ int MOAIProp2D::_setBlendMode ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	setCullMode
+	@text	Sets and enables face culling.
+	
+	@in		MOAIProp2D self
+	@opt	number cullMode			Default value is MOAIProp2D.CULL_NONE.
+	@out	nil
+*/
+int MOAIProp2D::_setCullMode ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIProp2D, "U" )
+	
+	self->mCullMode = state.GetValue < int >( 2, 0 );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	setDeck
 	@text	Sets or clears the deck to be indexed by the prop.
 	
@@ -175,6 +191,38 @@ int MOAIProp2D::_setDeck ( lua_State* L ) {
 	else {
 		self->SetMask ( 0 );
 	}
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	setDepthMask
+	@text	Disables or enables depth writing.
+	
+	@in		MOAIProp2D self
+	@opt	boolean depthMask		Default value is true.
+	@out	nil
+*/
+int MOAIProp2D::_setDepthMask ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIProp2D, "U" )
+	
+	self->mDepthMask = state.GetValue < bool >( 2, true );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	setDepthTest
+	@text	Sets and enables depth testing (assuming depth buffer is present).
+	
+	@in		MOAIProp2D self
+	@opt	number depthFunc		Default value is MOAIProp2D.DEPTH_TEST_DISABLE.
+	@out	nil
+*/
+int MOAIProp2D::_setDepthTest ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIProp2D, "U" )
+	
+	self->mDepthTest = state.GetValue < int >( 2, 0 );
 	
 	return 0;
 }
@@ -676,6 +724,9 @@ void MOAIProp2D::LoadShader () {
 	}
 
 	gfxDevice.SetPenColor ( this->mColor );
+	gfxDevice.SetCullFunc ( this->mCullMode );
+	gfxDevice.SetDepthFunc ( this->mDepthTest );
+	gfxDevice.SetDepthMask ( this->mDepthMask );
 	gfxDevice.SetBlendMode ( this->mBlendMode );
 	
 	// TODO
@@ -694,6 +745,9 @@ MOAIProp2D::MOAIProp2D () :
 	mIndex( 1 ),
 	mGridScale ( 1.0f, 1.0f ),
 	mFitToFrame ( false ),
+	mCullMode ( 0 ),
+	mDepthTest ( 0 ),
+	mDepthMask ( true ),
 	mVisible ( true ),
 	mExpandForSort ( false ) {
 	
@@ -809,6 +863,21 @@ void MOAIProp2D::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "GL_ONE_MINUS_SRC_COLOR", ( u32 )GL_ONE_MINUS_SRC_COLOR );
 	state.SetField ( -1, "GL_SRC_ALPHA", ( u32 )GL_SRC_ALPHA );
 	state.SetField ( -1, "GL_SRC_ALPHA_SATURATE", ( u32 )GL_SRC_ALPHA_SATURATE );
+	
+	state.SetField ( -1, "DEPTH_TEST_DISABLE", ( u32 )0 );
+	state.SetField ( -1, "DEPTH_TEST_NEVER", ( u32 )GL_NEVER );
+	state.SetField ( -1, "DEPTH_TEST_LESS", ( u32 )GL_LESS );
+	state.SetField ( -1, "DEPTH_TEST_EQUAL", ( u32 )GL_EQUAL );
+	state.SetField ( -1, "DEPTH_TEST_LEQUAL", ( u32 )GL_LEQUAL );
+	state.SetField ( -1, "DEPTH_TEST_GREATER", ( u32 )GL_GREATER );
+	state.SetField ( -1, "DEPTH_TEST_NOTEQUAL", ( u32 )GL_NOTEQUAL );
+	state.SetField ( -1, "DEPTH_TEST_GEQUAL", ( u32 )GL_GEQUAL );
+	state.SetField ( -1, "DEPTH_TEST_ALWAYS", ( u32 )GL_ALWAYS );
+	
+	state.SetField ( -1, "CULL_NONE", ( u32 )0 );
+	state.SetField ( -1, "CULL_ALL", ( u32 )GL_FRONT_AND_BACK );
+	state.SetField ( -1, "CULL_BACK", ( u32 )GL_BACK );
+	state.SetField ( -1, "CULL_FRONT", ( u32 )GL_FRONT );
 }
 
 //----------------------------------------------------------------//
@@ -823,7 +892,10 @@ void MOAIProp2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "getRect",			_getRect },
 		{ "inside",				_inside },
 		{ "setBlendMode",		_setBlendMode },
+		{ "setCullMode",		_setCullMode },
 		{ "setDeck",			_setDeck },
+		{ "setDepthMask",		_setDepthMask },
+		{ "setDepthTest",		_setDepthTest },
 		{ "setExpandForSort",	_setExpandForSort },
 		{ "setFrame",			_setFrame },
 		{ "setGrid",			_setGrid },

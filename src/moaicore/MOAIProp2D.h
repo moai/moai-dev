@@ -46,6 +46,21 @@ class MOAISurfaceSampler2D;
 	@const	GL_ONE_MINUS_SRC_COLOR
 	@const	GL_SRC_ALPHA
 	@const	GL_SRC_ALPHA_SATURATE
+	
+	@const	DEPTH_TEST_DISABLE
+	@const	DEPTH_TEST_NEVER
+	@const	DEPTH_TEST_LESS
+	@const	DEPTH_TEST_EQUAL
+	@const	DEPTH_TEST_LEQUAL
+	@const	DEPTH_TEST_GREATER
+	@const	DEPTH_TEST_NOTEQUAL
+	@const	DEPTH_TEST_GEQUAL
+	@const	DEPTH_TEST_ALWAYS
+	
+	@const	CULL_NONE
+	@const	CULL_ALL
+	@const	CULL_BACK
+	@const	CULL_FRONT
 */
 class MOAIProp2D :
 	public MOAIProp,
@@ -65,6 +80,9 @@ protected:
 	USRect						mFrame;
 	bool						mFitToFrame;
 	
+	int							mCullMode;
+	int							mDepthTest;
+	bool						mDepthMask;
 	MOAIBlendMode				mBlendMode;
 	bool						mVisible;
 	
@@ -76,7 +94,10 @@ protected:
 	static int		_getRect			( lua_State* L );
 	static int		_inside				( lua_State* L );
 	static int		_setBlendMode		( lua_State* L );
+	static int		_setCullMode		( lua_State* L );
 	static int		_setDeck			( lua_State* L );
+	static int		_setDepthMask		( lua_State* L );
+	static int		_setDepthTest		( lua_State* L );
 	static int		_setExpandForSort	( lua_State* L );
 	static int		_setFrame			( lua_State* L );
 	static int		_setGrid			( lua_State* L );

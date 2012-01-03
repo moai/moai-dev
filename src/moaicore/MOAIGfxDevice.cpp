@@ -660,6 +660,9 @@ u32 MOAIGfxDevice::LogErrors () {
 
 //----------------------------------------------------------------//
 MOAIGfxDevice::MOAIGfxDevice () :
+	mCullFunc ( 0 ),
+	mDepthFunc ( 0 ),
+	mDepthMask ( true ),
 	mBlendEnabled ( 0 ),
 	mBuffer ( 0 ),
 	mClearFlags ( GL_COLOR_BUFFER_BIT ),
@@ -803,14 +806,23 @@ void MOAIGfxDevice::ResetState () {
 	glDisable ( GL_BLEND );
 	this->mBlendEnabled = false;
 	
+	// disable backface culling
+	glDisable ( GL_CULL_FACE );
+	this->mCullFunc = 0;
+	
+	// disable depth test
+	glDisable ( GL_DEPTH_TEST );
+	this->mDepthFunc = 0;
+	
+	// enable depth write
+	glDepthMask ( true );
+	this->mDepthMask = true;
+	
 	// clear the vertex format
 	this->SetVertexFormat ();
 
 	// clear the shader
 	this->mShader = 0;
-	
-	// disable backface culling
-	glDisable ( GL_CULL_FACE );
 	
 	// reset the pen width
 	this->mPenWidth = 1.0f;
@@ -850,12 +862,17 @@ void MOAIGfxDevice::SetBlendMode () {
 //----------------------------------------------------------------//
 void MOAIGfxDevice::SetBlendMode ( const MOAIBlendMode& blendMode ) {
 
-	if ( !( this->mBlendEnabled && this->mBlendMode.IsSame ( blendMode ))) {
+	if ( !this->mBlendEnabled ) {
 		this->Flush ();
-		glBlendFunc ( blendMode.mSourceFactor, blendMode.mDestFactor );
 		glEnable ( GL_BLEND );
-		this->mBlendEnabled = true;
 		this->mBlendMode = blendMode;
+		glBlendFunc ( this->mBlendMode.mSourceFactor, this->mBlendMode.mDestFactor );
+		this->mBlendEnabled = true;
+	}
+	else if ( !this->mBlendMode.IsSame ( blendMode )) {
+		this->Flush ();
+		this->mBlendMode = blendMode;
+		glBlendFunc ( this->mBlendMode.mSourceFactor, this->mBlendMode.mDestFactor );
 	}
 }
 
@@ -884,6 +901,30 @@ void MOAIGfxDevice::SetClearColor ( MOAIColor* color ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIGfxDevice::SetCullFunc () {
+
+	this->SetCullFunc ( 0 );
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDevice::SetCullFunc ( int cullFunc ) {
+
+	if ( this->mCullFunc != cullFunc ) {
+	
+		this->Flush ();
+		this->mCullFunc = cullFunc;
+	
+		if ( cullFunc ) {
+			glEnable ( GL_CULL_FACE );
+			glCullFace ( this->mCullFunc );
+		}
+		else {
+			glDisable ( GL_CULL_FACE );
+		}
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAIGfxDevice::SetDeviceScale ( float scale ) {
 
 	this->mDeviceScale = scale;
@@ -893,6 +934,40 @@ void MOAIGfxDevice::SetDeviceScale ( float scale ) {
 void MOAIGfxDevice::SetDefaultFrameBuffer ( GLuint frameBuffer ) {
 
 	this->mDefaultFrameBuffer = frameBuffer;
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDevice::SetDepthFunc () {
+
+	this->SetDepthFunc ( 0 );
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDevice::SetDepthFunc ( int depthFunc ) {
+
+	if ( this->mDepthFunc != depthFunc ) {
+	
+		this->Flush ();
+		this->mDepthFunc = depthFunc;
+	
+		if ( depthFunc ) {
+			glEnable ( GL_DEPTH_TEST );
+			glDepthFunc ( this->mDepthFunc );
+		}
+		else {
+			glDisable ( GL_DEPTH_TEST );
+		}
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDevice::SetDepthMask ( bool depthMask ) {
+
+	if ( this->mDepthMask != depthMask ) {
+		this->Flush ();
+		this->mDepthMask = depthMask;
+		glDepthMask ( this->mDepthMask );
+	}
 }
 
 //----------------------------------------------------------------//
@@ -1421,30 +1496,36 @@ void MOAIGfxDevice::WriteQuad ( USVec4D* vtx, USVec2D* uv ) {
 	
 	this->BeginPrim ();
 	
-		this->Write ( vtx [ 3 ]);
-		this->Write ( uv [ 3 ]);
+		// left top
+		this->Write ( vtx [ 0 ]);
+		this->Write ( uv [ 0 ]);
 		this->WritePenColor4b ();
 		
-		this->Write ( vtx [ 1 ]);
-		this->Write ( uv [ 1 ]);
+		// left bottom
+		this->Write ( vtx [ 3 ]);
+		this->Write ( uv [ 3 ]);
 		this->WritePenColor4b ();	
 	
-		this->Write ( vtx[ 0 ]);
-		this->Write ( uv [ 0 ]);
+		// right bottom
+		this->Write ( vtx[ 2 ]);
+		this->Write ( uv [ 2 ]);
 		this->WritePenColor4b ();
 		
 	this->EndPrim ();
 	
 	this->BeginPrim ();
 	
-		this->Write ( vtx [ 3 ]);
-		this->Write ( uv [ 3 ]);
+		// left top
+		this->Write ( vtx [ 0 ]);
+		this->Write ( uv [ 0 ]);
 		this->WritePenColor4b ();	
 	
+		// right bottom
 		this->Write ( vtx [ 2 ]);
 		this->Write ( uv [ 2 ]);
 		this->WritePenColor4b ();	
 	
+		// right top
 		this->Write ( vtx [ 1 ]);
 		this->Write ( uv [ 1 ]);
 		this->WritePenColor4b ();

@@ -53,7 +53,11 @@ public:
 private:
 	
 	static const u32 DEFAULT_BUFFER_SIZE	= 0x8000;
-		
+	
+	int				mCullFunc;	
+	int				mDepthFunc;
+	bool			mDepthMask;
+
 	MOAIBlendMode	mBlendMode;
 	bool			mBlendEnabled;
 
@@ -210,7 +214,16 @@ public:
 	void					SetBlendMode			( int srcFactor, int dstFactor );
 	
 	void					SetClearColor			( MOAIColor* color );
+	
+	void					SetCullFunc				();
+	void					SetCullFunc				( int cullFunc );
+	
 	void					SetDefaultFrameBuffer	( GLuint frameBuffer );
+
+	void					SetDepthFunc			();
+	void					SetDepthFunc			( int depthFunc );
+	void					SetDepthMask			( bool depthMask );
+	
 	void					SetDeviceScale			( float scale );
 	void					SetFrameBuffer			( MOAITexture* texture );
 	void					SetPenColor				( u32 color );
