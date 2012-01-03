@@ -110,6 +110,34 @@ bool MOAILuaState::CheckParams ( int idx, cc8* format ) {
 }
 
 //----------------------------------------------------------------//
+void MOAILuaState::CloneTable ( int idx ) {
+	
+	lua_pushvalue ( this->mState, idx );
+	idx = lua_gettop ( this->mState );
+
+	if ( !this->IsType ( idx, LUA_TTABLE )) {
+		lua_pushnil ( this->mState );
+		return;
+	}
+	
+	lua_newtable ( this->mState );
+	int tableIdx = idx + 1;
+	
+	u32 itr = this->PushTableItr ( idx );
+	while ( this->TableItrNext ( itr )) {
+		lua_pushvalue ( this->mState, -2 );
+		lua_pushvalue ( this->mState, -2 );
+		lua_settable ( this->mState, tableIdx );
+	}
+	
+	if ( lua_getmetatable ( this->mState, idx )) {
+		lua_setmetatable ( this->mState, tableIdx );
+	}
+	
+	lua_replace ( this->mState, idx );
+}
+
+//----------------------------------------------------------------//
 void MOAILuaState::CopyToTop ( int idx ) {
 
 	lua_pushvalue ( this->mState, idx );

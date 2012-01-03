@@ -50,9 +50,7 @@ protected:
 
 	//----------------------------------------------------------------//
 	virtual cc8*	GetDeserializerTypeName		();
-	void			RegisterLuaClass			( MOAILuaState& state );
-	void			RegisterLuaFuncs			( MOAILuaState& state );
-
+	
 public:
 
 	DECL_LUA_FACTORY ( MOAISerializer )
@@ -63,6 +61,8 @@ public:
 	uintptr			AffirmMemberID				( MOAILuaObject* object );
 	uintptr			AffirmMemberID				( MOAILuaState& state, int idx );
 	void			Clear						();
+	void			RegisterLuaClass			( MOAILuaState& state );
+	void			RegisterLuaFuncs			( MOAILuaState& state );
 	STLString		SerializeToString			();
 	void			SerializeToFile				( cc8* filename );
 	void			SerializeToStream			( USStream& stream );

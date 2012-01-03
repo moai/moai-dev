@@ -40,17 +40,7 @@ private:
 		MOAILuaState state ( L );
 		MOAILuaObject* data = new TYPE ();
 		
-		// make sure a suitable table is at the top of the stack
-		// this will be the *member* table; the public table the user can
-		// add their own members to
-		if ( state.IsType ( 1, LUA_TTABLE )) {
-			lua_pushvalue ( state, 1 ); // copy the member table (or nil) to the top of the stack
-		}
-		else {
-			lua_newtable ( state ); // push an empty member table
-		}
-		
-		data->BindToLuaWithMemberTable ( state );
+		data->BindToLua ( state );
 		MOAILuaRuntime::Get ().SetObjectStackTrace ( data );
 
 		return 1;
