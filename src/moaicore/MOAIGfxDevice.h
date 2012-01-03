@@ -169,7 +169,7 @@ public:
 	
 	void					ClearErrors				();
 	void					DetectContext			();
-	void					DrawPrims				( const MOAIVertexFormat& format, GLenum primType, void* buffer, u32 size ); 
+	//void					DrawPrims				( const MOAIVertexFormat& format, GLenum primType, void* buffer, void* indices, u32 size ); 
 	void					EndPrim					();
 	void					Flush					();
 	

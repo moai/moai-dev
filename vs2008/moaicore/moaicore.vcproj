@@ -626,6 +626,14 @@
 					RelativePath="..\..\src\moaicore\shaders\MOAILineShader-vsh.h"
 					>
 				</File>
+				<File
+					RelativePath="..\..\src\moaicore\shaders\MOAIMeshShader-fsh.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\moaicore\shaders\MOAIMeshShader-vsh.h"
+					>
+				</File>
 			</Filter>
 		</Filter>
 		<Filter

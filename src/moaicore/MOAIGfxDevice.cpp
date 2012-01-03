@@ -382,50 +382,27 @@ void MOAIGfxDevice::DrawPrims () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::DrawPrims ( const MOAIVertexFormat& format, GLenum primType, void* buffer, u32 size ) {
-
-	if ( !( buffer && size )) return;
-	
-	this->Flush ();
-	this->SetVertexFormat ();
-	
-	// load the software render state
-	//glColor4f ( this->mPenColor.mR, this->mPenColor.mG, this->mPenColor.mB, this->mPenColor.mA );
-	
-	// TODO
-	//glMatrixMode ( GL_MODELVIEW );
-	//MOAIGfxDevice::LoadMatrix ( this->mModelToWorldMtx );
-	//
-	//glMatrixMode ( GL_TEXTURE );
-	//MOAIGfxDevice::LoadMatrix ( this->mUVTransform );
-	
-	// draw the prims
-	u32 nVerts = ( u32 )( size / format.GetVertexSize ());
-	if ( nVerts ) {
-		
-		if ( this->mIsProgrammable ) {
-		
-			format.BindProgrammable ( buffer );
-			glDrawArrays ( primType, 0, nVerts );
-			format.UnbindProgrammable ();
-		}
-		else {
-		
-			format.BindFixed ( buffer );
-			glDrawArrays ( primType, 0, nVerts );
-			format.UnbindFixed ();
-		}
-	}
-	
-	// reset
-	//glColor4f ( 1.0f, 1.0f, 1.0f, 1.0f );
-	
-	//glMatrixMode ( GL_MODELVIEW );
-	//glLoadIdentity ();
-	
-	//glMatrixMode ( GL_TEXTURE );
-	// glLoadIdentity ();
-}
+//void MOAIGfxDevice::DrawPrims ( const MOAIVertexFormat& format, GLenum primType, void* buffer, void* indices, u32 size ) {
+//
+//	if ( !( buffer && size )) return;
+//
+//	this->SetVertexFormat ();
+//	
+//	// draw the prims
+//	u32 nVerts = ( u32 )( size / format.GetVertexSize ());
+//	if ( nVerts ) {
+//		
+//		format.Bind ( buffer );
+//
+//		if ( indices ) {
+//			glDrawElements ( primType, nVerts, GL_UNSIGNED_SHORT, indices );
+//		}
+//		else {
+//			glDrawArrays ( primType, 0, nVerts );
+//		}
+//		format.Unbind ();
+//	}
+//}
 
 //----------------------------------------------------------------//
 void MOAIGfxDevice::EndPrim () {
@@ -1217,13 +1194,7 @@ void MOAIGfxDevice::SetVertexFormat () {
 	this->Flush ();
 	
 	if ( this->mVertexFormat ) {
-		
-		if ( this->mIsProgrammable ) {
-			this->mVertexFormat->UnbindProgrammable ();
-		}
-		else {
-			this->mVertexFormat->UnbindFixed ();
-		}
+		this->mVertexFormat->Unbind ();
 	}
 	this->mVertexFormat = 0;
 }
@@ -1235,13 +1206,7 @@ void MOAIGfxDevice::SetVertexFormat ( const MOAIVertexFormat& format ) {
 
 		this->SetVertexFormat ();
 		this->mVertexFormat = &format;
-
-		if ( this->mIsProgrammable ) {
-			this->mVertexFormat->BindProgrammable ( this->mBuffer );
-		}
-		else {
-			this->mVertexFormat->BindFixed ( this->mBuffer );
-		}
+		this->mVertexFormat->Bind ( this->mBuffer );
 	}
 }
 

@@ -23,7 +23,7 @@ MOAIVertexFormatMgr::MOAIVertexFormatMgr () {
 	MOAIVertexFormat* format;
 	
 	format = &this->mFormats [ XYZWC ];
-		
+	
 	format->DeclareAttribute ( XYZWC_POSITION, GL_FLOAT, 4, MOAIVertexFormat::ARRAY_VERTEX, false );
 	format->DeclareAttribute ( XYZWC_COLOR, GL_UNSIGNED_BYTE, 4, MOAIVertexFormat::ARRAY_COLOR, true );
 	

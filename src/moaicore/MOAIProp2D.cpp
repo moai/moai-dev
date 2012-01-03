@@ -868,10 +868,10 @@ void MOAIProp2D::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "DEPTH_TEST_NEVER", ( u32 )GL_NEVER );
 	state.SetField ( -1, "DEPTH_TEST_LESS", ( u32 )GL_LESS );
 	state.SetField ( -1, "DEPTH_TEST_EQUAL", ( u32 )GL_EQUAL );
-	state.SetField ( -1, "DEPTH_TEST_LEQUAL", ( u32 )GL_LEQUAL );
+	state.SetField ( -1, "DEPTH_TEST_LESS_EQUAL", ( u32 )GL_LEQUAL );
 	state.SetField ( -1, "DEPTH_TEST_GREATER", ( u32 )GL_GREATER );
 	state.SetField ( -1, "DEPTH_TEST_NOTEQUAL", ( u32 )GL_NOTEQUAL );
-	state.SetField ( -1, "DEPTH_TEST_GEQUAL", ( u32 )GL_GEQUAL );
+	state.SetField ( -1, "DEPTH_TEST_GREATER_EQUAL", ( u32 )GL_GEQUAL );
 	state.SetField ( -1, "DEPTH_TEST_ALWAYS", ( u32 )GL_ALWAYS );
 	
 	state.SetField ( -1, "CULL_NONE", ( u32 )0 );

@@ -119,6 +119,21 @@ int MOAIVertexFormat::_declareUV ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+bool MOAIVertexFormat::Bind ( void* buffer ) const {
+
+	if ( buffer ) {
+		if ( MOAIGfxDevice::Get ().IsProgrammable ()) {
+			this->BindProgrammable ( buffer );
+		}
+		else {
+			this->BindFixed ( buffer );
+		}
+		return true;
+	}
+	return false;
+}
+
+//----------------------------------------------------------------//
 void MOAIVertexFormat::BindFixed ( void* buffer ) const {
 
 #if USE_OPENGLES1
@@ -323,6 +338,17 @@ void MOAIVertexFormat::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ NULL, NULL }
 	};
 	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAIVertexFormat::Unbind () const {
+
+	if ( MOAIGfxDevice::Get ().IsProgrammable ()) {
+		this->UnbindProgrammable ();
+	}
+	else {
+		this->UnbindFixed ();
+	}
 }
 
 //----------------------------------------------------------------//

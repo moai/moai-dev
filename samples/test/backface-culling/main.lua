@@ -4,9 +4,8 @@
 -- http://getmoai.com
 ----------------------------------------------------------------
 
-MOAIGfxDevice.setClearDepth ( true )
-
 MOAISim.openWindow ( "test", 320, 480 )
+MOAIGfxDevice.setClearDepth ( true )
 
 viewport = MOAIViewport.new ()
 viewport:setSize ( 320, 480 )
