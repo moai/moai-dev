@@ -51,13 +51,14 @@ protected:
 	
 
 	//----------------------------------------------------------------//
-	static int				_gc						( lua_State* L );
-	static int				_getClass				( lua_State* L );
-	static int				_getClassName			( lua_State* L );
-	static int				_index					( lua_State* L );
-	static int				_newindex				( lua_State* L );
-	static int				_tombstone				( lua_State* L );
-	static int				_tostring				( lua_State* L );
+	static int				_gc					( lua_State* L );
+	static int				_getClass			( lua_State* L );
+	static int				_getClassName		( lua_State* L );
+	static int				_index				( lua_State* L );
+	static int				_newindex			( lua_State* L );
+	static int				_setInterface		( lua_State* L );
+	static int				_tombstone			( lua_State* L );
+	static int				_tostring			( lua_State* L );
 
 	//----------------------------------------------------------------//
 	void					ClearLocal			( MOAILuaLocal& ref );
@@ -66,6 +67,7 @@ protected:
 	bool					PushLocal			( MOAILuaState& state, MOAILuaLocal& ref );
 	void					PushMemberTable		( MOAILuaState& state );
 	void					SetLocal			( MOAILuaState& state, int idx, MOAILuaLocal& ref );
+	void					SetInterfaceTable	( MOAILuaState& state, int idx );
 	void					SetMemberTable		( MOAILuaState& state, int idx );
 
 public:
@@ -75,7 +77,7 @@ public:
 	friend class MOAISerializer;
 
 	//----------------------------------------------------------------//
-	void					BindToLuaWithMemberTable	( MOAILuaState& state ); // push table at top of stack!
+	void					BindToLua					( MOAILuaState& state );
 	virtual MOAILuaClass*	GetLuaClass					();
 	MOAILuaStateHandle		GetSelf						();
 	bool					IsBound						();
@@ -105,8 +107,16 @@ protected:
 	MOAILuaRef	mInterfaceTable;	// interface shared by all instances of type
 
 	//----------------------------------------------------------------//
+	static int			_extendFactory				( lua_State* L );
+	static int			_extendSingleton			( lua_State* L );
+	static int			_new						( lua_State* L );
+
+	//----------------------------------------------------------------//
 	void				InitLuaFactoryClass			( MOAILuaObject& data, MOAILuaState& state );
 	void				InitLuaSingletonClass		( MOAILuaObject& data, MOAILuaState& state );
+	//MOAILuaObject*		New							() = 0;
+	//void				PushFactoryExtend			( MOAILuaState& state );
+	//void				PushFactoryNew				( MOAILuaState& state );
 	void				PushInterfaceTable			( MOAILuaState& state );
 	virtual void		RegisterLuaClass			( MOAILuaState& state ) = 0;
 
