@@ -114,9 +114,6 @@ protected:
 	//----------------------------------------------------------------//
 	void				InitLuaFactoryClass			( MOAILuaObject& data, MOAILuaState& state );
 	void				InitLuaSingletonClass		( MOAILuaObject& data, MOAILuaState& state );
-	//MOAILuaObject*		New							() = 0;
-	//void				PushFactoryExtend			( MOAILuaState& state );
-	//void				PushFactoryNew				( MOAILuaState& state );
 	void				PushInterfaceTable			( MOAILuaState& state );
 	virtual void		RegisterLuaClass			( MOAILuaState& state ) = 0;
 
