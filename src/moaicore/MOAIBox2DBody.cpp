@@ -7,6 +7,7 @@
 #include <moaicore/MOAIBox2DFixture.h>
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIBox2DWorld.h>
+#include <moaicore/MOAITransform.h>
 
 SUPPRESS_EMPTY_FILE_WARNING
 #if USE_BOX2D
@@ -960,6 +961,37 @@ void MOAIBox2DBody::RegisterLuaFuncs ( MOAILuaState& state ) {
 	};
 	
 	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+bool MOAIBox2DBody::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
+	// TODO: these values may need to be cached for performance reasons
+	if ( MOAITransform::MOAITransformAttr::Check ( attrID )) {
+		const b2Transform & xform = mBody->GetTransform();
+		
+		switch ( UNPACK_ATTR ( attrID )) {
+			case MOAITransform::ATTR_X_LOC: {
+				float x = attrOp.Apply ( xform.p.x, op, MOAINode::ATTR_READ_WRITE ) * this->GetUnitsToMeters ();
+				mBody->SetTransform ( b2Vec2( x, xform.p.y), xform.q.GetAngle() );
+				return true;
+			}
+
+			case MOAITransform::ATTR_Y_LOC: {
+				float y = attrOp.Apply ( xform.p.y, op, MOAINode::ATTR_READ_WRITE ) * this->GetUnitsToMeters ();
+				mBody->SetTransform ( b2Vec2( xform.p.x, y ), xform.q.GetAngle() );
+				return true;	
+			}
+
+			case MOAITransform::ATTR_Z_ROT: {
+				float angle = attrOp.Apply ( xform.q.GetAngle(), op, MOAINode::ATTR_READ_WRITE );				
+				mBody->SetTransform ( xform.p,  (angle * D2R) + M_PI_4 );
+				return true;	
+			}
+
+
+		}
+	}
+	return MOAITransformBase::ApplyAttrOp (attrID, attrOp, op );
 }
 
 //----------------------------------------------------------------//
