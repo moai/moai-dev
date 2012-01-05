@@ -34,7 +34,7 @@ private:
 	MOAIProp*					mNextResult;
 
 	u32				mMask;
-	USRect			mBounds;
+	USBox			mBounds;
 	float			mCellSize;
 	s32				mPriority;
 	

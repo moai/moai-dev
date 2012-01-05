@@ -559,8 +559,8 @@ public:
 		this->mXMin = left;
 		this->mXMax = right;
 
-		this->mYMin = top;
-		this->mYMax = bottom;
+		this->mYMax = top;
+		this->mYMin = bottom;
 	}
 
 	//----------------------------------------------------------------//

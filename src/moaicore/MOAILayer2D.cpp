@@ -470,9 +470,7 @@ void MOAILayer2D::Draw ( int subPrimID, bool reload ) {
 		
 		MOAIPartitionResultBuffer& buffer = MOAIPartitionResultMgr::Get ().GetBuffer ();
 		
-		// TODO: use view volume
-		//u32 totalResults = this->mPartition->GatherProps ( buffer, viewBounds, 0, MOAIProp::CAN_DRAW | MOAIProp::CAN_DRAW_DEBUG );
-		u32 totalResults = this->mPartition->GatherProps ( buffer, 0, MOAIProp::CAN_DRAW | MOAIProp::CAN_DRAW_DEBUG );
+		u32 totalResults = this->mPartition->GatherProps ( buffer, 0, frustum, MOAIProp::CAN_DRAW | MOAIProp::CAN_DRAW_DEBUG );
 		if ( !totalResults ) return;
 		
 		totalResults = buffer.PrepareResults (

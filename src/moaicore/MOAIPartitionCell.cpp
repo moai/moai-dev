@@ -25,7 +25,7 @@ void MOAIPartitionCell::Clear () {
 }
 
 //----------------------------------------------------------------//
-void MOAIPartitionCell::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignore, u32 mask ) {
+void MOAIPartitionCell::GatherProps ( MOAIPartitionResultBuffer& results, const MOAIProp* ignore, u32 mask ) {
 	
 	PrimIt primIt = this->mPrims.Head ();
 	for ( ; primIt; primIt = primIt->Next ()) {
@@ -40,7 +40,7 @@ void MOAIPartitionCell::GatherProps ( MOAIPartitionResultBuffer& results, MOAIPr
 }
 
 //----------------------------------------------------------------//
-void MOAIPartitionCell::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignore, USVec2D& point, u32 mask ) {
+void MOAIPartitionCell::GatherProps ( MOAIPartitionResultBuffer& results, const MOAIProp* ignore, const USVec2D& point, u32 mask ) {
 
 	PrimIt primIt = this->mPrims.Head ();
 	for ( ; primIt; primIt = primIt->Next ()) {
@@ -51,7 +51,7 @@ void MOAIPartitionCell::GatherProps ( MOAIPartitionResultBuffer& results, MOAIPr
 		if (( mask == 0 ) || ( prop->mMask & mask )) {
 			if ( prop->mCellSize > 0.0f ) {
 		
-				if ( prop->mBounds.Contains ( point )) {
+				if ( prop->mBounds.ContainsX ( point.mX ) && prop->mBounds.ContainsY ( point.mY )) {
 					if ( prop->Inside ( point, 0.0f )) {
 						results.PushProp ( *prop );
 					}
@@ -65,7 +65,9 @@ void MOAIPartitionCell::GatherProps ( MOAIPartitionResultBuffer& results, MOAIPr
 }
 
 //----------------------------------------------------------------//
-void MOAIPartitionCell::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignore, USRect& rect, u32 mask ) {
+void MOAIPartitionCell::GatherProps ( MOAIPartitionResultBuffer& results, const MOAIProp* ignore, const USRect& rect, u32 mask ) {
+
+	USRect bounds;
 
 	PrimIt primIt = this->mPrims.Head ();
 	for ( ; primIt; primIt = primIt->Next ()) {
@@ -74,10 +76,34 @@ void MOAIPartitionCell::GatherProps ( MOAIPartitionResultBuffer& results, MOAIPr
 		if ( prop == ignore ) continue;
 		
 		if (( mask == 0 ) || ( prop->mMask & mask )) {
-		
 			if ( prop->mCellSize > 0.0f ) {
 				
-				if ( prop->mBounds.Overlap ( rect )) {
+				prop->mBounds.GetRectXY ( bounds );
+				
+				if ( bounds.Overlap ( rect )) {
+					results.PushProp ( *prop );
+				}
+			}
+			else {
+				results.PushProp ( *prop );
+			}
+		}
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIPartitionCell::GatherProps ( MOAIPartitionResultBuffer& results, const MOAIProp* ignore, const USFrustum& frustum, u32 mask ) {
+
+	PrimIt primIt = this->mPrims.Head ();
+	for ( ; primIt; primIt = primIt->Next ()) {
+		MOAIProp* prop = primIt->Data ();
+		
+		if ( prop == ignore ) continue;
+		
+		if (( mask == 0 ) || ( prop->mMask & mask )) {
+			if ( prop->mCellSize > 0.0f ) {
+				
+				if ( !frustum.Cull ( prop->mBounds )) {
 					results.PushProp ( *prop );
 				}
 			}

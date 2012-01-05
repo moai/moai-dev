@@ -54,8 +54,9 @@ public:
 	//----------------------------------------------------------------//
 	void			Clear					();
 	u32				GatherProps				( MOAIPartitionResultBuffer& results, MOAIProp* ignore, u32 mask = 0xffffffff );
-	u32				GatherProps				( MOAIPartitionResultBuffer& results, USVec2D& point, MOAIProp* ignore, u32 mask = 0xffffffff );
-	u32				GatherProps				( MOAIPartitionResultBuffer& results, USRect& rect, MOAIProp* ignore, u32 mask = 0xffffffff );
+	u32				GatherProps				( MOAIPartitionResultBuffer& results, MOAIProp* ignore, const USVec2D& point, u32 mask = 0xffffffff );
+	u32				GatherProps				( MOAIPartitionResultBuffer& results, MOAIProp* ignore, const USRect& rect, u32 mask = 0xffffffff );
+	u32				GatherProps				( MOAIPartitionResultBuffer& results, MOAIProp* ignore, const USFrustum& frustum, u32 mask = 0xffffffff );
 	void			InsertProp				( MOAIProp& prop );
 					MOAIPartition			();
 					~MOAIPartition			();

@@ -105,6 +105,14 @@ bool USBox::ContainsZ ( float z ) const {
 }
 
 //----------------------------------------------------------------//
+void USBox::GetCenter ( USVec3D& center ) const {
+	
+	center.mX = this->mMin.mX + (( this->mMax.mX - this->mMin.mX ) * 0.5f );
+	center.mY = this->mMin.mY + (( this->mMax.mY - this->mMin.mY ) * 0.5f );
+	center.mY = this->mMin.mZ + (( this->mMax.mZ - this->mMin.mZ ) * 0.5f );
+}
+
+//----------------------------------------------------------------//
 float USBox::GetRadius () const {
 
 	USVec3D spans = mMax;
@@ -181,6 +189,19 @@ void USBox::Init ( const USVec3D& vec ) {
 	mMin.mX = mMax.mX = vec.mX;
 	mMin.mY = mMax.mY = vec.mY;
 	mMin.mZ = mMax.mZ = vec.mZ;
+}
+
+//----------------------------------------------------------------//
+void USBox::Init ( float left, float top, float right, float bottom, float back, float front ) {
+
+	this->mMin.mX = left;
+	this->mMax.mX = right;
+
+	this->mMax.mY = top;
+	this->mMin.mY = bottom;
+	
+	this->mMin.mZ = back;
+	this->mMax.mZ = front;
 }
 
 //----------------------------------------------------------------//

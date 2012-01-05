@@ -88,10 +88,10 @@ bool MOAIProp::GetCellRect ( USRect* cellRect, USRect* paddedRect ) {
 	
 	if ( this->mLayer ) {
 	
-		USVec2D center;
+		USVec3D center;
 		this->mBounds.GetCenter ( center );
 		
-		MOAICellCoord coord = this->mLayer->mGridSpace.GetCellCoord ( center );
+		MOAICellCoord coord = this->mLayer->mGridSpace.GetCellCoord ( center.mX, center.mY );
 		USRect rect = this->mLayer->mGridSpace.GetCellRect ( coord );
 		
 		if ( cellRect ) {
@@ -119,7 +119,9 @@ bool MOAIProp::GetCellRect ( USRect* cellRect, USRect* paddedRect ) {
 //----------------------------------------------------------------//
 USRect MOAIProp::GetBounds () {
 
-	return this->mBounds;
+	USRect bounds;
+	this->mBounds.GetRectXY ( bounds );
+	return bounds;
 }
 
 //----------------------------------------------------------------//
@@ -143,7 +145,7 @@ MOAIProp::MOAIProp () :
 	RTTI_END
 	
 	this->mLinkInCell.Data ( this );
-	this->mBounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
+	this->mBounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f );
 }
 
 //----------------------------------------------------------------//
@@ -179,17 +181,17 @@ void MOAIProp::SetBounds () {
 
 	this->mLayer = 0;
 	this->mCellSize = 0.0f;
-	this->mBounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
+	this->mBounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f );
 }
 
 //----------------------------------------------------------------//
 void MOAIProp::SetBounds ( const USRect& bounds ) {
 
-	this->mBounds = bounds;
+	this->mBounds.Init ( bounds.mXMin, bounds.mYMax, bounds.mXMax, bounds.mYMin, 0.0f, 0.0f );
 	this->mBounds.Bless ();
 
-	float width = this->mBounds.Width ();
-	float height = this->mBounds.Height ();
+	float width = bounds.Width ();
+	float height = bounds.Height ();
 	
 	this->mCellSize = ( width > height ) ? width : height;
 }
