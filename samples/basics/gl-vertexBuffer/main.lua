@@ -16,9 +16,10 @@ MOAISim.pushRenderPass ( layer )
 
 vertexFormat = MOAIVertexFormat.new ()
 
+-- Moai's default shaders expect loc, uv, color
 vertexFormat:declareCoord ( 1, MOAIVertexFormat.GL_FLOAT, 2 )
-vertexFormat:declareColor ( 2, MOAIVertexFormat.GL_UNSIGNED_BYTE )
-vertexFormat:declareUV ( 3, MOAIVertexFormat.GL_FLOAT, 2 )
+vertexFormat:declareUV ( 2, MOAIVertexFormat.GL_FLOAT, 2 )
+vertexFormat:declareColor ( 3, MOAIVertexFormat.GL_UNSIGNED_BYTE )
 
 vbo = MOAIVertexBuffer.new ()
 vbo:setFormat ( vertexFormat )
@@ -26,20 +27,20 @@ vbo:reserveVerts ( 4 )
 vbo:setPrimType ( MOAIVertexBuffer.GL_TRIANGLE_FAN )
 
 vbo:writeFloat ( -64, -64 )
-vbo:writeColor32 ( 1, 0, 0 )
 vbo:writeFloat ( 0, 1 )
+vbo:writeColor32 ( 1, 0, 0 )
 
 vbo:writeFloat ( 64, -64 )
-vbo:writeColor32 ( 1, 1, 0 )
 vbo:writeFloat ( 1, 1 )
+vbo:writeColor32 ( 1, 1, 0 )
 
 vbo:writeFloat ( 64, 64 )
-vbo:writeColor32 ( 0, 1, 0 )
 vbo:writeFloat ( 1, 0 )
+vbo:writeColor32 ( 0, 1, 0 )
 
 vbo:writeFloat ( -64, 64 )
-vbo:writeColor32 ( 0, 0, 1 )
 vbo:writeFloat ( 0, 0 )
+vbo:writeColor32 ( 0, 0, 1 )
 
 vbo:bless ()
 
@@ -60,11 +61,11 @@ if MOAIGfxDevice.isProgrammable () then
 	shader = MOAIShader.new ()
 
 	shader:reserveUniforms ( 1 )
-	shader:declareUniform ( 1, 'transform', MOAIShader.UNIFORM_TRANSFORM )
+	shader:declareUniform ( 1, 'transform', MOAIShader.UNIFORM_WORLD_VIEW_PROJ )
 	
 	shader:setVertexAttribute ( 1, 'position' )
-	shader:setVertexAttribute ( 2, 'color' )
-	shader:setVertexAttribute ( 3, 'uv' )
+	shader:setVertexAttribute ( 2, 'uv' )
+	shader:setVertexAttribute ( 3, 'color' )
 
 	shader:load ( vsh, fsh )
 	
