@@ -723,7 +723,7 @@ int MOAITransform::_setLoc ( lua_State* L ) {
 /**	@name	setParent
 	@text	This method has been deprecated. Use MOAINode setAttrLink instead.
 	
-	@in		MOAIProp2D self
+	@in		MOAIProp self
 	@opt	MOAINode parent		Default value is nil.
 	@out	nil
 */

@@ -352,7 +352,7 @@ void MOAIParticleSystem::Draw ( int subPrimID, bool reload ) {
 		drawingMtx = this->GetLocalToWorldMtx ();
 		drawingMtx.Append ( spriteMtx );
 		
-		this->mDeck->Draw ( drawingMtx, ( u32 )sprite.mGfxID, this->mRemapper );
+		this->GetDeck ()->Draw ( drawingMtx, ( u32 )sprite.mGfxID, this->GetRemapper ());
 	}
 }
 
@@ -413,7 +413,7 @@ MOAIParticleSystem::MOAIParticleSystem () :
 	mSpriteTop ( 0 ) {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIProp2D )
+		RTTI_EXTEND ( MOAIProp )
 		RTTI_EXTEND ( MOAIAction )
 	RTTI_END
 }
@@ -528,14 +528,14 @@ bool MOAIParticleSystem::PushSprite ( const AKUParticleSprite& sprite ) {
 //----------------------------------------------------------------//
 void MOAIParticleSystem::RegisterLuaClass ( MOAILuaState& state ) {
 
-	MOAIProp2D::RegisterLuaClass ( state );
+	MOAIProp::RegisterLuaClass ( state );
 	MOAIAction::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAIParticleSystem::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
-	MOAIProp2D::RegisterLuaFuncs ( state );
+	MOAIProp::RegisterLuaFuncs ( state );
 	MOAIAction::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
@@ -603,13 +603,13 @@ void MOAIParticleSystem::ReserveStates ( u32 total ) {
 //----------------------------------------------------------------//
 void MOAIParticleSystem::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
 
-	MOAIProp2D::SerializeIn ( state, serializer );
+	MOAIProp::SerializeIn ( state, serializer );
 	MOAIAction::SerializeIn ( state, serializer );
 }
 
 //----------------------------------------------------------------//
 void MOAIParticleSystem::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
 
-	MOAIProp2D::SerializeOut ( state, serializer );
+	MOAIProp::SerializeOut ( state, serializer );
 	MOAIAction::SerializeOut ( state, serializer );
 }

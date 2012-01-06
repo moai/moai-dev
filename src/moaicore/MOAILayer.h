@@ -1,12 +1,12 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAILAYER2D_H
-#define	MOAILAYER2D_H
+#ifndef	MOAILAYER_H
+#define	MOAILAYER_H
 
 #include <moaicore/MOAILua.h>
 #include <moaicore/MOAIPartition.h>
-#include <moaicore/MOAIProp2D.h>
+#include <moaicore/MOAIProp.h>
 #include <moaicore/MOAIViewport.h>
 
 class MOAIBox2DWorld;
@@ -16,10 +16,10 @@ class MOAIFrameBuffer;
 class MOAITexture;
 
 //================================================================//
-// MOAILayer2D
+// MOAILayer
 //================================================================//
-/**	@name	MOAILayer2D
-	@text	2D scene controls class.
+/**	@name	MOAILayer
+	@text	Scene controls class.
 	
 	@const	SORT_NONE
 	@const	SORT_PRIORITY_ASCENDING
@@ -31,8 +31,8 @@ class MOAITexture;
 	@const	SORT_VECTOR_ASCENDING
 	@const	SORT_VECTOR_DESCENDING
 */
-class MOAILayer2D :
-	public virtual MOAIProp2D {
+class MOAILayer :
+	public virtual MOAIProp {
 private:
 
 	MOAILuaSharedPtr < MOAICamera >			mCamera;
@@ -82,7 +82,7 @@ private:
 
 public:
 	
-	DECL_LUA_FACTORY ( MOAILayer2D )
+	DECL_LUA_FACTORY ( MOAILayer )
 	
 	//----------------------------------------------------------------//
 	void			Draw					( int subPrimID, bool reload );
@@ -90,8 +90,8 @@ public:
 	u32				GetLocalFrame			( USRect& frame );
 	void			GetWndToWorldMtx		( USMatrix4x4& wndToWorld );
 	void			GetWorldToWndMtx		( USMatrix4x4& worldToWnd );
-					MOAILayer2D				();
-					~MOAILayer2D			();
+					MOAILayer				();
+					~MOAILayer			();
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 };

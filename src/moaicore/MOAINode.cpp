@@ -8,7 +8,7 @@
 #include <moaicore/MOAINodeMgr.h>
 
 // TODO: remove when setParent is removed
-#include <moaicore/MOAIProp2D.h>
+#include <moaicore/MOAIProp.h>
 
 //================================================================//
 // MOAIDepLink

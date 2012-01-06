@@ -67,8 +67,8 @@
 #include <moaicore/MOAIJoystickSensor.h>
 #include <moaicore/MOAIJsonParser.h>
 #include <moaicore/MOAIKeyboardSensor.h>
-#include <moaicore/MOAILayer2D.h>
-#include <moaicore/MOAILayerBridge2D.h>
+#include <moaicore/MOAILayer.h>
+#include <moaicore/MOAILayerBridge.h>
 #include <moaicore/MOAILayoutFrame.h>
 #include <moaicore/MOAILineBrush.h>
 #include <moaicore/MOAILocationSensor.h>
@@ -98,7 +98,6 @@
 #include <moaicore/MOAIPathTerrainDeck.h>
 #include <moaicore/MOAIPointerSensor.h>
 #include <moaicore/MOAIProp.h>
-#include <moaicore/MOAIProp2D.h>
 #include <moaicore/MOAIPvrHeader.h>
 #include <moaicore/MOAIQuadBrush.h>
 #include <moaicore/MOAIRtti.h>

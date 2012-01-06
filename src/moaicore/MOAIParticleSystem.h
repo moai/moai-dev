@@ -8,7 +8,7 @@
 #include <moaicore/MOAIAction.h>
 #include <moaicore/MOAILua.h>
 #include <moaicore/MOAIParticle.h>
-#include <moaicore/MOAIProp2D.h>
+#include <moaicore/MOAIProp.h>
 
 class MOAIDeck;
 class MOAIParticleScript;
@@ -21,7 +21,7 @@ class MOAIParticleState;
 	@text	Particle system.
 */
 class MOAIParticleSystem :
-	public MOAIProp2D,
+	public MOAIProp,
 	public MOAIAction {
 private:
 

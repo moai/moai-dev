@@ -8,7 +8,7 @@
 #include <moaicore/MOAIInputMgr.h>
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAINodeMgr.h>
-#include <moaicore/MOAIProp2D.h>
+#include <moaicore/MOAIProp.h>
 #include <moaicore/MOAISim.h>
 #include <moaicore/MOAITexture.h>
 #include <moaicore/MOAIUrlMgr.h>
@@ -380,7 +380,7 @@ int MOAISim::_popRenderPass ( lua_State* L ) {
 /**	@name	pushRenderPass
 	@text	Pushes the specified prim onto the render stack.
 
-	@in		MOAIProp2D prop		The viewport of the render prim.
+	@in		MOAIProp prop		The viewport of the render prim.
 	@out	nil
 */
 int MOAISim::_pushRenderPass ( lua_State* L ) {
@@ -388,7 +388,7 @@ int MOAISim::_pushRenderPass ( lua_State* L ) {
 	MOAILuaState state ( L );
 	if ( !state.CheckParams ( 1, "U" )) return 0;
 	
-	MOAIProp2D* prop = state.GetLuaObject < MOAIProp2D >( 1 );
+	MOAIProp* prop = state.GetLuaObject < MOAIProp >( 1 );
 	if ( !prop ) return 0;
 	
 	MOAISim& device = MOAISim::Get ();
@@ -709,14 +709,14 @@ void MOAISim::PauseMOAI () {
 void MOAISim::PopRenderPass () {
 
 	if ( this->mRenderPasses.Count ()) {
-		MOAIProp2D* prop = this->mRenderPasses.Back ();
+		MOAIProp* prop = this->mRenderPasses.Back ();
 		this->mRenderPasses.PopBack ();
 		this->LuaRelease ( *prop );
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAISim::PushRenderPass ( MOAIProp2D* prop ) {
+void MOAISim::PushRenderPass ( MOAIProp* prop ) {
 
 	if ( prop ) {
 		if ( !this->mRenderPasses.Contains ( prop )) {
@@ -804,7 +804,7 @@ void MOAISim::Render () {
 
 	RenderPassIt passIt = this->mRenderPasses.Head ();
 	for ( ; passIt; passIt = passIt->Next ()) {
-		MOAIProp2D* renderPass = passIt->Data ();
+		MOAIProp* renderPass = passIt->Data ();
 		
 		MOAIGfxDevice::Get ().BeginLayer ();
 		renderPass->Draw ( MOAIProp::NO_SUBPRIM_ID, true );

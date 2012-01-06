@@ -1,28 +1,28 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAILAYERBRIDGE2D_H
-#define	MOAILAYERBRIDGE2D_H
+#ifndef	MOAILAYERBRIDGE_H
+#define	MOAILAYERBRIDGE_H
 
 #include <moaicore/MOAILua.h>
 #include <moaicore/MOAITransform.h>
 
-class MOAILayer2D;
+class MOAILayer;
 
 //================================================================//
-// MOAILayerBridge2D
+// MOAILayerBridge
 //================================================================//
-/**	@name	MOAILayerBridge2D
+/**	@name	MOAILayerBridge
 	@text	2D transform for connecting transforms across scenes. Useful for
 			HUD overlay items and map pins.
 */
-class MOAILayerBridge2D :
+class MOAILayerBridge :
 	public MOAITransform {
 private:
 
 	MOAIWeakPtr < MOAITransformBase > mSourceTransform;
-	MOAIWeakPtr < MOAILayer2D > mSourceLayer;
-	MOAIWeakPtr < MOAILayer2D > mDestLayer;
+	MOAIWeakPtr < MOAILayer > mSourceLayer;
+	MOAIWeakPtr < MOAILayer > mDestLayer;
 
 	//----------------------------------------------------------------//
 	static int			_init					( lua_State* L );
@@ -32,11 +32,11 @@ private:
 
 public:
 	
-	DECL_LUA_FACTORY ( MOAILayerBridge2D )
+	DECL_LUA_FACTORY ( MOAILayerBridge )
 	
 	//----------------------------------------------------------------//
-					MOAILayerBridge2D			();
-					~MOAILayerBridge2D			();
+					MOAILayerBridge			();
+					~MOAILayerBridge			();
 	void			RegisterLuaClass			( MOAILuaState& state );
 	void			RegisterLuaFuncs			( MOAILuaState& state );
 };

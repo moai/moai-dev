@@ -6,7 +6,7 @@
 
 #include <moaicore/MOAIAction.h>
 #include <moaicore/MOAILua.h>
-#include <moaicore/MOAIProp2D.h>
+#include <moaicore/MOAIProp.h>
 #include <moaicore/MOAITextFrame.h>
 #include <moaicore/MOAITextLayout.h>
 #include <moaicore/MOAITransform.h>
@@ -25,7 +25,7 @@ class MOAIFont;
 	@const	RIGHT_JUSTIFY
 */
 class MOAITextBox :
-	public MOAIProp2D,
+	public MOAIProp,
 	public MOAIAction {
 private:
 

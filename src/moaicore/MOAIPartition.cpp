@@ -18,7 +18,7 @@
 /**	@name	clear
 	@text	Remove all props from the partition.
 	
-	@in		MOAILayer2D self
+	@in		MOAILayer self
 	@out	nil
 */
 int MOAIPartition::_clear ( lua_State* L ) {

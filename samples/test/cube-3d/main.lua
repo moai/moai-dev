@@ -125,10 +125,10 @@ mesh:setVertexBuffer ( vbo )
 mesh:setIndexBuffer ( ibo )
 mesh:setPrimType ( MOAIMesh.GL_TRIANGLES )
 
-prop = MOAIProp2D.new ()
+prop = MOAIProp.new ()
 prop:setDeck ( mesh )
-prop:setCullMode ( MOAIProp2D.CULL_BACK )
-prop:setDepthTest ( MOAIProp2D.DEPTH_TEST_LESS_EQUAL )
+prop:setCullMode ( MOAIProp.CULL_BACK )
+prop:setDepthTest ( MOAIProp.DEPTH_TEST_LESS_EQUAL )
 prop:moveRot ( 360, 180, 90, 3 )
 layer:insertProp ( prop )
 

@@ -9,11 +9,11 @@
 #include <moaicore/MOAIDeck.h>
 #include <moaicore/MOAIFrameBuffer.h>
 #include <moaicore/MOAIGfxDevice.h>
-#include <moaicore/MOAILayer2D.h>
+#include <moaicore/MOAILayer.h>
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIPartitionResultBuffer.h>
 #include <moaicore/MOAIPartitionResultMgr.h>
-#include <moaicore/MOAIProp2D.h>
+#include <moaicore/MOAIProp.h>
 #include <moaicore/MOAITexture.h>
 #include <moaicore/MOAITransform.h>
 
@@ -25,11 +25,11 @@
 /**	@name	clear
 	@text	Remove all props from the layer's partition.
 	
-	@in		MOAILayer2D self
+	@in		MOAILayer self
 	@out	nil
 */
-int MOAILayer2D::_clear ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAILayer2D, "U" )
+int MOAILayer::_clear ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAILayer, "U" )
 
 	if ( self->mPartition ) {
 		self->mPartition->Clear ();
@@ -45,7 +45,7 @@ int MOAILayer2D::_clear ( lua_State* L ) {
 			this method to get the fitting, then animate the camera
 			to match.
 	
-	@in		MOAILayer2D self
+	@in		MOAILayer self
 	@in		number xMin
 	@in		number yMin
 	@in		number xMax
@@ -56,8 +56,8 @@ int MOAILayer2D::_clear ( lua_State* L ) {
 	@out	number y		Y center of fitting (use for camera location).
 	@out	number s		Scale of fitting (use for camera scale).
 */
-int MOAILayer2D::_getFitting ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAILayer2D, "UNNNN" )
+int MOAILayer::_getFitting ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAILayer, "UNNNN" )
 
 	USRect worldRect;
 	worldRect.mXMin = state.GetValue < float >( 2, 0.0f );
@@ -86,11 +86,11 @@ int MOAILayer2D::_getFitting ( lua_State* L ) {
 /**	@name	getPartition
 	@text	Returns the partition (if any) currently attached to this layer.
 	
-	@in		MOAILayer2D self
+	@in		MOAILayer self
 	@out	MOAIPartition partition
 */
-int	MOAILayer2D::_getPartition ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAILayer2D, "U" )
+int	MOAILayer::_getPartition ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAILayer, "U" )
 
 	if ( self->mPartition ) {
 		self->mPartition->PushLuaUserdata ( state );
@@ -103,11 +103,11 @@ int	MOAILayer2D::_getPartition ( lua_State* L ) {
 /**	@name	getSortMode
 	@text	Get the sort mode for rendering.
 	
-	@in		MOAILayer2D self
+	@in		MOAILayer self
 	@out	number sortMode
 */
-int MOAILayer2D::_getSortMode ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAILayer2D, "U" )
+int MOAILayer::_getSortMode ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAILayer, "U" )
 	
 	lua_pushnumber ( state, self->mSortMode );
 	return 1;
@@ -117,14 +117,14 @@ int MOAILayer2D::_getSortMode ( lua_State* L ) {
 /**	@name	insertProp
 	@text	Adds a prop to the layer's partition.
 	
-	@in		MOAILayer2D self
+	@in		MOAILayer self
 	@in		MOAIProp prop
 	@out	nil
 */
-int	MOAILayer2D::_insertProp ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAILayer2D, "UU" )
+int	MOAILayer::_insertProp ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAILayer, "UU" )
 
-	MOAIProp2D* prop = state.GetLuaObject < MOAIProp2D >( 2 );
+	MOAIProp* prop = state.GetLuaObject < MOAIProp >( 2 );
 	if ( !prop ) return 0;
 	if ( prop == self ) return 0;
 
@@ -139,14 +139,14 @@ int	MOAILayer2D::_insertProp ( lua_State* L ) {
 /**	@name	removeProp
 	@text	Removes a prop from the layer's partition.
 	
-	@in		MOAILayer2D self
+	@in		MOAILayer self
 	@in		MOAIProp prop
 	@out	nil
 */
-int	MOAILayer2D::_removeProp ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAILayer2D, "UU" )
+int	MOAILayer::_removeProp ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAILayer, "UU" )
 
-	MOAIProp2D* prop = state.GetLuaObject < MOAIProp2D >( 2 );
+	MOAIProp* prop = state.GetLuaObject < MOAIProp >( 2 );
 	if ( !prop ) return 0;
 	if ( prop == self ) return 0;
 
@@ -162,12 +162,12 @@ int	MOAILayer2D::_removeProp ( lua_State* L ) {
 /**	@name	setBox2DWorld
 	@text	Sets a Box2D world for debug drawing.
 	
-	@in		MOAILayer2D self
+	@in		MOAILayer self
 	@in		MOAIBox2DWorld world
 	@out	nil
 */
-int MOAILayer2D::_setBox2DWorld ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAILayer2D, "UU" )
+int MOAILayer::_setBox2DWorld ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAILayer, "UU" )
 	
 	#if USE_BOX2D
 		self->mBox2DWorld.Set ( *self, state.GetLuaObject < MOAIBox2DWorld >( 2 ));
@@ -180,12 +180,12 @@ int MOAILayer2D::_setBox2DWorld ( lua_State* L ) {
 	@text	Sets a camera for the layer. If no camera is supplied,
 			layer will render using the identity matrix as view/proj.
 	
-	@in		MOAILayer2D self
+	@in		MOAILayer self
 	@opt	MOAICamera camera	Default value is nil.
 	@out	nil
 */
-int MOAILayer2D::_setCamera ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAILayer2D, "U" )
+int MOAILayer::_setCamera ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAILayer, "U" )
 
 	self->mCamera.Set ( *self, state.GetLuaObject < MOAICamera >( 2 ));
 
@@ -196,12 +196,12 @@ int MOAILayer2D::_setCamera ( lua_State* L ) {
 /**	@name	setCpSpace
 	@text	Sets a Chipmunk space for debug drawing.
 	
-	@in		MOAILayer2D self
+	@in		MOAILayer self
 	@in		MOAICpSpace space
 	@out	nil
 */
-int MOAILayer2D::_setCpSpace ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAILayer2D, "UU" )
+int MOAILayer::_setCpSpace ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAILayer, "UU" )
 	
 	#if USE_CHIPMUNK
 		self->mCpSpace.Set ( *self, state.GetLuaObject < MOAICpSpace >( 2 ));
@@ -214,12 +214,12 @@ int MOAILayer2D::_setCpSpace ( lua_State* L ) {
 	@text	Attach a frame buffer. Layer will render to frame buffer
 			instead of the main view.
 	
-	@in		MOAILayer2D self
+	@in		MOAILayer self
 	@in		MOAITexture frameBuffer
 	@out	nil
 */
-int MOAILayer2D::_setFrameBuffer ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAILayer2D, "UU" )
+int MOAILayer::_setFrameBuffer ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAILayer, "UU" )
 
 	self->mFrameBuffer.Set ( *self, state.GetLuaObject < MOAITexture >( 2 ));
 
@@ -231,13 +231,13 @@ int MOAILayer2D::_setFrameBuffer ( lua_State* L ) {
 	@text	Sets the parallax scale for this layer. This is simply a
 			scalar applied to the view transform before rendering.
 	
-	@in		MOAILayer2D self
+	@in		MOAILayer self
 	@in		number xParallax
 	@in		number yParallax
 	@out	nil
 */
-int MOAILayer2D::_setParallax ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAILayer2D, "UNN" )
+int MOAILayer::_setParallax ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAILayer, "UNN" )
 
 	self->mParallax.mX = state.GetValue < float >( 2, self->mParallax.mX );
 	self->mParallax.mY = state.GetValue < float >( 3, self->mParallax.mY );
@@ -251,12 +251,12 @@ int MOAILayer2D::_setParallax ( lua_State* L ) {
 			create a partition when the first prop is added if no partition
 			has been set.
 	
-	@in		MOAILayer2D self
+	@in		MOAILayer self
 	@in		MOAIPartition partition
 	@out	nil
 */
-int MOAILayer2D::_setPartition ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAILayer2D, "UU" )
+int MOAILayer::_setPartition ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAILayer, "UU" )
 
 	self->mPartition.Set ( *self, state.GetLuaObject < MOAIPartition >( 2 ));
 
@@ -267,15 +267,15 @@ int MOAILayer2D::_setPartition ( lua_State* L ) {
 /**	@name	setSortMode
 	@text	Set the sort mode for rendering.
 	
-	@in		MOAILayer2D self
-	@in		number sortMode		One of MOAILayer2D.SORT_NONE, MOAILayer2D.SORT_PRIORITY_ASCENDING,
-								MOAILayer2D.SORT_PRIORITY_DESCENDING, MOAILayer2D.SORT_X_ASCENDING,
-								MOAILayer2D.SORT_X_DESCENDING, MOAILayer2D.SORT_Y_ASCENDING,
-								MOAILayer2D.SORT_Y_DESCENDING
+	@in		MOAILayer self
+	@in		number sortMode		One of MOAILayer.SORT_NONE, MOAILayer.SORT_PRIORITY_ASCENDING,
+								MOAILayer.SORT_PRIORITY_DESCENDING, MOAILayer.SORT_X_ASCENDING,
+								MOAILayer.SORT_X_DESCENDING, MOAILayer.SORT_Y_ASCENDING,
+								MOAILayer.SORT_Y_DESCENDING
 	@out	nil
 */
-int MOAILayer2D::_setSortMode ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAILayer2D, "U" )
+int MOAILayer::_setSortMode ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAILayer, "U" )
 	
 	self->mSortMode = state.GetValue < u32 >( 2, MOAIPartitionResultBuffer::SORT_PRIORITY_ASCENDING );
 	
@@ -286,14 +286,14 @@ int MOAILayer2D::_setSortMode ( lua_State* L ) {
 /**	@name	setSortScale
 	@text	Set the scalar applied to axis sorts.
 	
-	@in		MOAILayer2D self
+	@in		MOAILayer self
 	@opt	number x			Default value is 0.
 	@opt	number y			Default value is 0.
 	@opt	number priority		Default value is 1.
 	@out	nil
 */
-int	MOAILayer2D::_setSortScale ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAILayer2D, "U" )
+int	MOAILayer::_setSortScale ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAILayer, "U" )
 
 	self->mSortScale [ 0 ] = state.GetValue < float >( 2, 0.0f );
 	self->mSortScale [ 1 ] = state.GetValue < float >( 3, 0.0f );
@@ -307,12 +307,12 @@ int	MOAILayer2D::_setSortScale ( lua_State* L ) {
 /**	@name	setViewport
 	@text	Set the layer's viewport.
 	
-	@in		MOAILayer2D self
+	@in		MOAILayer self
 	@in		MOAIViewport viewport
 	@out	nil
 */
-int MOAILayer2D::_setViewport ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAILayer2D, "UU" )
+int MOAILayer::_setViewport ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAILayer, "UU" )
 
 	self->mViewport.Set ( *self, state.GetLuaObject < MOAIViewport >( 2 ));
 
@@ -323,12 +323,12 @@ int MOAILayer2D::_setViewport ( lua_State* L ) {
 /**	@name	showDebugLines
 	@text	Display debug lines for props in this layer.
 	
-	@in		MOAILayer2D self
+	@in		MOAILayer self
 	@opt	bool showDebugLines		Default value is 'true'.
 	@out	nil
 */
-int	MOAILayer2D::_showDebugLines ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAILayer2D, "U" )
+int	MOAILayer::_showDebugLines ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAILayer, "U" )
 	
 	self->mShowDebugLines = state.GetValue < bool >( 2, true );
 	
@@ -339,14 +339,14 @@ int	MOAILayer2D::_showDebugLines ( lua_State* L ) {
 /**	@name	wndToWorld
 	@text	Transform a point from window space to world space.
 	
-	@in		MOAILayer2D self
+	@in		MOAILayer self
 	@in		number x
 	@in		number y
 	@out	number x
 	@out	number y
 */
-int MOAILayer2D::_wndToWorld ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAILayer2D, "UNN" )
+int MOAILayer::_wndToWorld ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAILayer, "UNN" )
 
 	USVec2D loc;
 	loc.mX = state.GetValue < float >( 2, 0.0f );
@@ -366,14 +366,14 @@ int MOAILayer2D::_wndToWorld ( lua_State* L ) {
 /**	@name	wndToWorld
 	@text	Transform a point from world space to window space.
 	
-	@in		MOAILayer2D self
+	@in		MOAILayer self
 	@in		number x
 	@in		number y
 	@out	number x
 	@out	number y
 */
-int MOAILayer2D::_worldToWnd ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAILayer2D, "UNN" )
+int MOAILayer::_worldToWnd ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAILayer, "UNN" )
 
 	USVec2D loc;
 	loc.mX = state.GetValue < float >( 2, 0.0f );
@@ -394,7 +394,7 @@ int MOAILayer2D::_worldToWnd ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAILayer2D::AffirmPartition () {
+void MOAILayer::AffirmPartition () {
 
 	if ( !this->mPartition ) {
 		this->mPartition.Set ( *this, new MOAIPartition ());
@@ -406,7 +406,7 @@ void MOAILayer2D::AffirmPartition () {
 }
 
 //----------------------------------------------------------------//
-void MOAILayer2D::Draw ( int subPrimID, bool reload ) {
+void MOAILayer::Draw ( int subPrimID, bool reload ) {
 	UNUSED ( subPrimID );
 	UNUSED ( reload );
 
@@ -510,7 +510,7 @@ void MOAILayer2D::Draw ( int subPrimID, bool reload ) {
 }
 
 //----------------------------------------------------------------//
-float MOAILayer2D::GetFitting ( USRect& worldRect, float hPad, float vPad ) {
+float MOAILayer::GetFitting ( USRect& worldRect, float hPad, float vPad ) {
 
 	if ( !( this->mCamera && this->mViewport )) return 1.0f;
 
@@ -523,7 +523,7 @@ float MOAILayer2D::GetFitting ( USRect& worldRect, float hPad, float vPad ) {
 }
 
 //----------------------------------------------------------------//
-u32 MOAILayer2D::GetLocalFrame ( USRect& frame ) {
+u32 MOAILayer::GetLocalFrame ( USRect& frame ) {
 	
 	if ( this->mViewport ) {
 		frame = this->mViewport->GetRect ();
@@ -533,7 +533,7 @@ u32 MOAILayer2D::GetLocalFrame ( USRect& frame ) {
 }
 
 //----------------------------------------------------------------//
-void MOAILayer2D::GetProjectionMtx ( USMatrix4x4& proj ) {
+void MOAILayer::GetProjectionMtx ( USMatrix4x4& proj ) {
 	
 	if ( this->mCamera ) {
 		proj.Init ( this->mCamera->GetProjMtx ( *this->mViewport ));
@@ -544,7 +544,7 @@ void MOAILayer2D::GetProjectionMtx ( USMatrix4x4& proj ) {
 }
 
 //----------------------------------------------------------------//
-void MOAILayer2D::GetViewMtx ( USMatrix4x4& view ) {
+void MOAILayer::GetViewMtx ( USMatrix4x4& view ) {
 	
 	if ( this->mCamera ) {	
 		view.Init ( this->mCamera->GetViewMtx ());
@@ -555,7 +555,7 @@ void MOAILayer2D::GetViewMtx ( USMatrix4x4& view ) {
 }
 
 //----------------------------------------------------------------//
-void MOAILayer2D::GetWndToWorldMtx ( USMatrix4x4& wndToWorld ) {
+void MOAILayer::GetWndToWorldMtx ( USMatrix4x4& wndToWorld ) {
 
 	if ( this->mViewport ) {
 		
@@ -569,7 +569,7 @@ void MOAILayer2D::GetWndToWorldMtx ( USMatrix4x4& wndToWorld ) {
 }
 
 //----------------------------------------------------------------//
-void MOAILayer2D::GetWorldToWndMtx ( USMatrix4x4& worldToWnd ) {
+void MOAILayer::GetWorldToWndMtx ( USMatrix4x4& worldToWnd ) {
 
 	if ( this->mViewport ) {
 		
@@ -583,26 +583,26 @@ void MOAILayer2D::GetWorldToWndMtx ( USMatrix4x4& worldToWnd ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAILayer2D::IsOffscreen () {
+bool MOAILayer::IsOffscreen () {
 
 	return this->mFrameBuffer ? this->mFrameBuffer->GetFrameBuffer () != 0 : false;
 }
 
 //----------------------------------------------------------------//
-MOAILayer2D::MOAILayer2D () :
+MOAILayer::MOAILayer () :
 	mParallax ( 1.0f, 1.0f ),
 	mShowDebugLines ( true ),
 	mSortMode ( MOAIPartitionResultBuffer::SORT_PRIORITY_ASCENDING ) {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIProp2D )
+		RTTI_EXTEND ( MOAIProp )
 	RTTI_END
 	
 	this->SetMask ( MOAIProp::CAN_DRAW | MOAIProp::CAN_DRAW_DEBUG );
 }
 
 //----------------------------------------------------------------//
-MOAILayer2D::~MOAILayer2D () {
+MOAILayer::~MOAILayer () {
 
 	this->mCamera.Set ( *this, 0 );
 	this->mViewport.Set ( *this, 0 );
@@ -619,9 +619,9 @@ MOAILayer2D::~MOAILayer2D () {
 }
 
 //----------------------------------------------------------------//
-void MOAILayer2D::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAILayer::RegisterLuaClass ( MOAILuaState& state ) {
 
-	MOAIProp2D::RegisterLuaClass ( state );
+	MOAIProp::RegisterLuaClass ( state );
 	
 	state.SetField ( -1, "SORT_NONE",					( u32 ) MOAIPartitionResultBuffer::SORT_NONE );
 	state.SetField ( -1, "SORT_PRIORITY_ASCENDING",		( u32 ) MOAIPartitionResultBuffer::SORT_PRIORITY_ASCENDING );
@@ -635,9 +635,9 @@ void MOAILayer2D::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAILayer2D::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAILayer::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
-	MOAIProp2D::RegisterLuaFuncs ( state );
+	MOAIProp::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
 		{ "clear",					_clear },

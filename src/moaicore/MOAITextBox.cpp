@@ -520,7 +520,7 @@ MOAITextBox::MOAITextBox () :
 	mNeedsLayout ( false ) {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIProp2D )
+		RTTI_EXTEND ( MOAIProp )
 		RTTI_EXTEND ( MOAIAction )
 	RTTI_END
 	
@@ -570,7 +570,7 @@ void MOAITextBox::NextPage ( bool reveal ) {
 //----------------------------------------------------------------//
 void MOAITextBox::OnDepNodeUpdate () {
 
-	MOAIProp2D::OnDepNodeUpdate ();
+	MOAIProp::OnDepNodeUpdate ();
 
 	if ( this->mYFlip ) {
 		
@@ -593,7 +593,7 @@ void MOAITextBox::OnUpdate ( float step ) {
 //----------------------------------------------------------------//
 void MOAITextBox::RegisterLuaClass ( MOAILuaState& state ) {
 
-	MOAIProp2D::RegisterLuaClass ( state );
+	MOAIProp::RegisterLuaClass ( state );
 	MOAIAction::RegisterLuaClass ( state );
 
 	state.SetField ( -1, "LEFT_JUSTIFY", ( u32 )MOAIFont::LEFT_JUSTIFY );
@@ -604,7 +604,7 @@ void MOAITextBox::RegisterLuaClass ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAITextBox::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
-	MOAIProp2D::RegisterLuaFuncs ( state );
+	MOAIProp::RegisterLuaFuncs ( state );
 	MOAIAction::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
@@ -648,14 +648,14 @@ void MOAITextBox::ReserveCurves ( u32 total ) {
 //----------------------------------------------------------------//
 void MOAITextBox::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
 
-	MOAIProp2D::SerializeIn ( state, serializer );
+	MOAIProp::SerializeIn ( state, serializer );
 	MOAIAction::SerializeIn ( state, serializer );
 }
 
 //----------------------------------------------------------------//
 void MOAITextBox::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
 
-	MOAIProp2D::SerializeOut ( state, serializer );
+	MOAIProp::SerializeOut ( state, serializer );
 	MOAIAction::SerializeOut ( state, serializer );
 }
 

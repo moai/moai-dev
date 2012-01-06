@@ -7,7 +7,7 @@
 #include <moaicore/MOAIEaseDriver.h>
 #include <moaicore/MOAILua.h>
 
-class MOAIProp2D;
+class MOAIProp;
 
 //================================================================//
 // MOAISim
@@ -66,8 +66,8 @@ private:
 	float			mFrameRateBuffer [ FPS_BUFFER_SIZE ];
 	u32				mFrameRateIdx;
 
-	typedef USList < MOAIProp2D* >::Iterator RenderPassIt;
-	USList < MOAIProp2D* > mRenderPasses;
+	typedef USList < MOAIProp* >::Iterator RenderPassIt;
+	USList < MOAIProp* > mRenderPasses;
 	
 	USCallback < int > mLoadingScreenCallback;
 	USCallback < int > mTextInputCallback;
@@ -163,7 +163,7 @@ public:
 					~MOAISim					();
 	void			PauseMOAI					();
 	void			PopRenderPass				();
-	void			PushRenderPass				( MOAIProp2D* prop );
+	void			PushRenderPass				( MOAIProp* prop );
 	void			RegisterLuaClass			( MOAILuaState& state );
 	void			RegisterLuaFuncs			( MOAILuaState& state );
 	void			Render						();

@@ -901,8 +901,8 @@ void MOAIBox2DBody::OnDepNodeUpdate () {
 		m [ USAffine3D::C1_R0 ] = ( float )transform.q.GetYAxis().x;
 		m [ USAffine3D::C1_R1 ] = ( float )transform.q.GetYAxis().y;
 
-		m [ USAffine3D::C2_R0 ] = ( float )transform.p.x * scale;
-		m [ USAffine3D::C2_R1 ] = ( float )transform.p.y * scale;
+		m [ USAffine3D::C3_R0 ] = ( float )transform.p.x * scale;
+		m [ USAffine3D::C3_R1 ] = ( float )transform.p.y * scale;
 		
 		this->mWorldToLocalMtx.Inverse ( this->mLocalToWorldMtx );
 	}
