@@ -59,7 +59,9 @@ int g_bInitialized = 0;
 bool g_handlingInput;
 MoaiInstance *g_instance = NULL;
 pp::Core* g_core = NULL;
-
+bool g_pauseUpdate;
+int g_expectedWidth = 0;
+int g_expectedHeight = 0;
 #include <stdint.h>
 
 extern "C" {
@@ -132,6 +134,7 @@ void NaClHandleInputEvent ( const pp::InputEvent & event ) {
 		case PP_INPUTEVENT_TYPE_MOUSEMOVE: {
 			pp::MouseInputEvent mouse_event ( event );
 			AKUEnqueuePointerEvent ( NaClInputDeviceID::DEVICE, NaClInputDeviceSensorID::POINTER, mouse_event.GetPosition ().x () / MOAIGfxDevice::Get ().GetDeviceScale (), mouse_event.GetPosition ().y () / MOAIGfxDevice::Get ().GetDeviceScale () );
+			//AKUEnqueuePointerEvent ( NaClInputDeviceID::DEVICE, NaClInputDeviceSensorID::POINTER, mouse_event.GetPosition ().x () , mouse_event.GetPosition ().y ());
 			break;
 		}
 
@@ -236,7 +239,7 @@ void NaClGetUID () {
 			MOAIApp::HandleStoreMessage ( message );
 		}
 
-		sleep ( 0.0001f );
+		usleep ( 1000 );
 	}
 }
 
@@ -256,7 +259,7 @@ void NaClRender () {
 	g_swapping = true;
 
 	while ( g_instance->GetOpenGLContext ()->flush_pending ()) {
-		sleep ( 0.0001f );
+		usleep ( 1000 );
 	}
 
 	pp::CompletionCallback cc ( RenderMainThread, g_instance );
@@ -264,7 +267,7 @@ void NaClRender () {
 
 	while ( g_swapping ) {
 
-		sleep ( 0.0001f );
+		usleep ( 1000 );
 	}
 }
 
@@ -289,7 +292,7 @@ void NaClInput () {
 
 	while ( g_handlingInput ) {
 
-		sleep ( 0.0001f );
+		usleep ( 1000 );
 	}
 }
 
@@ -317,7 +320,17 @@ void _AKUExitFullscreenModeFunc () {
 //----------------------------------------------------------------//
 void _AKUOpenWindowFunc ( const char* title, int width, int height ) {
 	
-	NACL_LOG ( "Moai_NaCl: unimplemented _AKUOpenWindowFunc\n" );
+	g_expectedWidth = width;
+	g_expectedHeight = height;
+
+	NACL_LOG ( "AKUOpenWindowFunc: %d, %d\n", g_expectedWidth, g_expectedHeight );
+
+	if ( g_expectedWidth && g_width ) {
+		MOAIGfxDevice::Get ().SetDeviceScale ( g_width / ( float )g_expectedWidth );
+	}
+	else {
+		MOAIGfxDevice::Get ().SetDeviceScale ( 1.0f );
+	}
 }
 
 //----------------------------------------------------------------//
@@ -344,6 +357,10 @@ void* moai_main ( void *_instance ) {
 	//NaClGetUID ();
 
 	while ( true ) {
+
+		while ( g_pauseUpdate ) {
+			usleep ( 1000 );
+		}
 
 		//handle messages
 		std::string message;
@@ -386,6 +403,7 @@ bool MoaiInstance::HandleInputEvent	( const pp::InputEvent & event ) {
 
 void MoaiInstance::DidChangeFocus (	bool has_focus ) {
 	NACL_LOG ( "NaCl DidChangeFocus %d\n", has_focus );
+	g_pauseUpdate = !has_focus;
 }
 
 //----------------------------------------------------------------//
@@ -477,13 +495,24 @@ void MoaiInstance::DidChangeView ( const pp::Rect& position, const pp::Rect& cli
 		REGISTER_LUA_CLASS ( MOAIApp )
 
 		pthread_create( &gThreadId, NULL, moai_main, g_instance );
-		NACL_LOG ( "Main Thread Created\n" );
+		NACL_LOG ( "Main Thread Created.\n" );
 
 		g_bInitialized = 1;
 	}
 
 	//TODO remove hardcode
-	MOAIGfxDevice::Get ().SetDeviceScale ( g_width / 960.0f );
+	//AKUSetScreenSize ( g_width, g_height );
+	//AKUSetViewSize ( g_width, g_height );
+	//MOAIGfxDevice::Get ().SetDeviceScale ( g_width / MOAIGfxDevice::Get ().GetWidth ());
+
+	NACL_LOG ( "AKUOpenWindowFunc: %d, %d\n", g_expectedWidth, g_width );
+
+	if ( g_expectedWidth && g_width ) {
+		MOAIGfxDevice::Get ().SetDeviceScale ( g_width / ( float )g_expectedWidth );
+	}
+	else {
+		MOAIGfxDevice::Get ().SetDeviceScale ( 1.0f );
+	}
 }
 
 //----------------------------------------------------------------//
@@ -495,7 +524,7 @@ void MoaiInstance::DrawSelf() {
 		
 		AKURender ();
 
-		glFinish ();
+		//glFinish ();
 
 		opengl_context->FlushContext();
 	}

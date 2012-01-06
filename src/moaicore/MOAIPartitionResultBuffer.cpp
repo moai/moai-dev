@@ -158,8 +158,8 @@ void MOAIPartitionResultBuffer::PushResultProps ( lua_State* L ) {
 	
 	lua_createtable ( state, total, 0 );
 	
-	for ( u32 i = 1; i <= total; ++i ) {
-		lua_pushnumber ( state, i );
+	for ( u32 i = 0; i < total; ++i ) {
+		lua_pushnumber ( state, i + 1 );
 		this->mResults [ i ].mProp->PushLuaUserdata ( state );
 		lua_settable ( state, -3 );
 	}

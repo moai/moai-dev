@@ -217,3 +217,11 @@ MOAIHttpTaskInfo::~MOAIHttpTaskInfo () {
 
 	this->Clear ();
 }
+
+//----------------------------------------------------------------//
+void MOAIHttpTaskInfo::PerformSync () {
+
+	if ( this->mEasyHandle ) {
+		curl_easy_perform ( this->mEasyHandle );
+	}
+}

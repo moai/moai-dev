@@ -41,6 +41,7 @@ public:
 	bool			Base64Decode			( int idx );
 	bool			Base64Encode			( int idx );
 	bool			CheckParams				( int idx, cc8* format ); // "BCFLNSTU"
+	void			CloneTable				( int idx );
 	void			CopyToTop				( int idx );
 	int				DebugCall				( int nArgs, int nResults );
 	bool			Deflate					( int idx, int level, int windowBits );
@@ -93,9 +94,9 @@ public:
 	void			SetPath					( cc8* path );
 	void			SetTop					( int top );
 	bool			TableItrNext			( int itr );
-					MOAILuaState				();
-					MOAILuaState				( lua_State* state );
-	virtual			~MOAILuaState				();
+					MOAILuaState			();
+					MOAILuaState			( lua_State* state );
+	virtual			~MOAILuaState			();
 	int				YieldThread				( int nResults );
 	
 	//----------------------------------------------------------------//

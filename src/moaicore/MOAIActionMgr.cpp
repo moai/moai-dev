@@ -61,7 +61,7 @@ int MOAIActionMgr::_setRoot ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	setThreadInfoEnabled
-	@text	Enables function name and line number info for MOAIThread.
+	@text	Enables function name and line number info for MOAICoroutine.
 
 	@opt	boolean enable		Default value is false.
 	@out	nil

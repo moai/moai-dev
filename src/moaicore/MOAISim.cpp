@@ -891,6 +891,10 @@ double MOAISim::StepSim ( double step, u32 multiplier ) {
 void MOAISim::Update () {
 
 	double interval = this->MeasureFrameRate ();
+
+	// these stay out of the sim step for now
+	MOAIUrlMgr::Get ().Process ();
+	this->mDataIOThread.Publish ();
 	
 	// try to account for timer error
 	if ( this->mTimerError != 0.0 ) {
@@ -990,7 +994,10 @@ void MOAISim::Update () {
 			//TODO make the following official
 			while (( this->mStep <= gap ) && ( budget > 0.0 )) {
 				budget -= 1.0f / 1000.0f;
-				usleep ( 1000 );
+
+				#ifndef MOAI_OS_WINDOWS
+					usleep ( 1000 );
+				#endif			
 			}
 		}
 	}
@@ -1004,8 +1011,4 @@ void MOAISim::Update () {
 	if (( this->mLoopFlags & SIM_LOOP_NO_SURPLUS ) && ( this->mRealTime < this->mSimTime )) {
 		this->mRealTime = this->mSimTime;
 	}
-
-	// these stay out of the sim step for now
-	MOAIUrlMgr::Get ().Process ();
-	this->mDataIOThread.Publish ();
 }

@@ -40,15 +40,7 @@ private:
 		MOAILuaState state ( L );
 		MOAILuaObject* data = new TYPE ();
 		
-		// make sure a suitable table is at the top of the stack
-		if ( state.IsType ( 1, LUA_TTABLE )) {
-			lua_pushvalue ( state, 1 ); // copy the instance table (or nil) to the top of the stack
-		}
-		else {
-			lua_newtable ( state ); // push an empty instance table
-		}
-		
-		data->BindToLuaWithTable ( state );
+		data->BindToLua ( state );
 		MOAILuaRuntime::Get ().SetObjectStackTrace ( data );
 
 		return 1;

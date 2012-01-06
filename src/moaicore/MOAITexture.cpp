@@ -354,7 +354,6 @@ void MOAITexture::CreateTexture	() {
 void MOAITexture::CreateTextureFromImage ( MOAIImage& image ) {
 
 	bool error = false;
-	printf( "load texture\n" );
 	if ( !image.IsOK ()) return;
 	if ( !MOAIGfxDevice::Get ().GetHasContext ()) return;
 
@@ -918,7 +917,7 @@ void MOAITexture::OnLoad () {
 		g_core->CallOnMainThread ( 0, cc , 0 );
 
 		while ( g_blockOnMainThreadTexLoad ) {
-			sleep ( 0.0001f );
+			usleep ( 1000 );
 		}
 #else
 		this->CreateTexture ();
@@ -974,7 +973,7 @@ void MOAITexture::OnUnload () {
 		}
 
 		while ( g_blockOnMainThreadTexUnload ) {
-			sleep ( 0.0001f );
+			usleep ( 1000 );
 		}
 #else
 		this->DeleteTexture ();

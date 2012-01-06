@@ -98,7 +98,10 @@ void AKUClearMemPool () {
 AKUContextID AKUCreateContext () {
 	
 	if ( gSysInit ) {
+		moaicore::SystemInit ();
 		gContextMap = new ContextMap;
+		atexit ( _cleanup );
+		gSysInit = false;
 	}
 
 	gContext = ( AKUContext* )calloc ( 1, sizeof ( AKUContext ));
@@ -111,10 +114,6 @@ AKUContextID AKUCreateContext () {
 	gContext->mGlobals = MOAIGlobalsMgr::Create ();
 	moaicore::InitGlobals ( gContext->mGlobals );
 
-	if ( gSysInit ) {
-		atexit ( _cleanup );
-		gSysInit = false;
-	}
 	return gContextIDCounter;
 }
 
@@ -203,6 +202,11 @@ void AKUFinalize () {
 		
 		delete gContextMap;
 		gContextMap = 0;
+		gSysInit = true;
+	}
+	
+	if ( !gSysInit ) {
+		moaicore::SystemFinalize ();
 		gSysInit = true;
 	}
 }

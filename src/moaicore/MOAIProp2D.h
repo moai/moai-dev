@@ -52,17 +52,11 @@ class MOAIProp2D :
 	public MOAIColor {
 protected:
 	
-	enum {
-		REPEAT_X	= 0x00000001,
-		REPEAT_Y	= 0x00000002,
-	};
-	
 	MOAILuaSharedPtr < MOAIDeck >			mDeck;
 	MOAILuaSharedPtr < MOAIDeckRemapper >	mRemapper;
 	u32										mIndex;
 	
 	MOAILuaSharedPtr < MOAIGrid >			mGrid;
-	u32										mRepeat;
 	USVec2D									mGridScale;
 	
 	MOAILuaSharedPtr < MOAIShader >			mShader;
@@ -90,7 +84,6 @@ protected:
 	static int		_setIndex			( lua_State* L );
 	static int		_setParent			( lua_State* L );
 	static int		_setRemapper		( lua_State* L );
-	static int		_setRepeat			( lua_State* L );
 	static int		_setShader			( lua_State* L );
 	static int		_setUVTransform		( lua_State* L );
 	static int		_setVisible			( lua_State* L );
@@ -98,8 +91,7 @@ protected:
 	//----------------------------------------------------------------//
 	bool				BindDeck				();
 	void				ExpandForSort			( MOAIPartitionResultBuffer& buffer );
-	void				GetBoundsInRect			( const USRect& rect, MOAICellCoord& c0, MOAICellCoord& c1 );
-	void				GetBoundsInView			( MOAICellCoord& c0, MOAICellCoord& c1 );
+	void				GetGridBoundsInView		( MOAICellCoord& c0, MOAICellCoord& c1 );
 	void				LoadShader				();
 
 public:

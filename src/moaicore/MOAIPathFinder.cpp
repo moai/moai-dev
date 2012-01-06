@@ -41,7 +41,7 @@ int MOAIPathFinder::_getGraph ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIPathFinder, "U" )
 	
 	if ( self->mGraph ) {
-		self->mGraph->PushLuaUserdata ( state );
+		state.Push (( MOAIPathGraph * )self->mGraph );
 		return 1;
 	}
 	return 0;
