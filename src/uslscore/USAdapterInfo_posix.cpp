@@ -27,7 +27,7 @@
 
 #ifndef _WIN32
 
-#include <uslsext/USAdapterInfo.h>
+#include <uslscore/USAdapterInfo.h>
 
 
 //================================================================//

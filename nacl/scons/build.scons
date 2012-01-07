@@ -229,42 +229,32 @@ box2d_sources = [ os.path.join( box2d_path, src_file ) for src_file in [
 
 uslcore_sources = [ os.path.join( 'uslscore', src_file ) for src_file in [
 					'STLString.cpp'           ,
+					'USAdapterInfo_posix.cpp' ,					
 					'USBase64Cipher.cpp'      ,
+					'USBox.cpp'               ,
 					'USByteStream.cpp'        ,
+					'USCgt.cpp'               ,
 					'USCipher.cpp'            ,
 					'USCipherStream.cpp'      ,
-					'USDeflater.cpp'          ,
-					'USDeviceTime_nacl.cpp'   ,
-					'USDirectoryItr.cpp'	  ,
-					'USFilename.cpp'          ,
-					'USFileStream.cpp'        ,
-					'USFileSys.cpp'           ,
-					'USInflater.cpp'          ,
-					'USLog.cpp'               ,
-					'uslscore-pch.cpp'        ,
-					'uslscore.cpp'            ,
-					'USMemStream.cpp'         ,
-					'USStream.cpp'            ,
-					'USStreamFormatter.cpp'   ,
-					'USZip.cpp'               ,
-					'USZipFile.cpp'           ,
-]]
-
-uslext_sources = [ os.path.join('uslsext', src_file) for src_file in [
-					'USAdapterInfo_posix.cpp' ,
-					'USBox.cpp'               ,
-					'USCgt.cpp'               ,
 					'USColor.cpp'             ,
 					'USCurve.cpp'             ,
 					'USData.cpp'              ,
 					'USDataIOTask.cpp'        ,
+					'USDeflater.cpp'          ,
+					'USDeviceTime_nacl.cpp'   ,
+					'USDirectoryItr.cpp'	  ,
 					'USDistance.cpp'          ,
+					'USFilename.cpp'          ,
+					'USFileStream.cpp'        ,
+					'USFileSys.cpp'           ,
 					'USHexDump.cpp'			  ,
+					'USInflater.cpp'          ,
 					'USInterpolate.cpp'       ,
 					'USIntersect.cpp'         ,
 					'USLexStream.cpp'         ,
-					'uslsext-pch.cpp'         ,
-					'uslsext.cpp'             ,
+					'USLog.cpp'               ,
+					'uslscore-pch.cpp'        ,					
+					'USMemStream.cpp'         ,
 					'USMercator.cpp'          ,
 					'USMutex.cpp'             ,
 					'USMutex_posix.cpp'       ,
@@ -273,12 +263,8 @@ uslext_sources = [ os.path.join('uslsext', src_file) for src_file in [
 					'USPolar.cpp'             ,
 					'USQuad.cpp'              ,
 					'USQuadCoord.cpp'         ,
-					'USSqlBinding.cpp'        ,
-					'USSqlColumn.cpp'         ,
-					'USSqlConnection.cpp'     ,
-					'USSqlRecord.cpp'         ,
-					'USSqlStatement.cpp'      ,
-					'USSqlValue.cpp'          ,
+					'USStream.cpp'            ,
+					'USStreamFormatter.cpp'   ,
 					'USSurface2D.cpp'         ,
 					'USSyntaxNode.cpp'        ,
 					'USSyntaxScanner.cpp'     ,
@@ -288,7 +274,9 @@ uslext_sources = [ os.path.join('uslsext', src_file) for src_file in [
 					'USThread_posix.cpp'      ,
 					'USTrig.cpp'              ,
 					'USTypedPtr.cpp'          ,
-					'USXmlReader.cpp'         ,
+					'USXmlReader.cpp'         ,					
+					'USZip.cpp'               ,
+					'USZipFile.cpp'           ,
 ]]
 
 aku_sources = [ os.path.join('aku', src_file) for src_file in [
@@ -426,7 +414,7 @@ moai_sources = [ os.path.join('moaicore', src_file) for src_file in [
 				'MOAITextFrame.cpp'              ,
 				'MOAITextLayout.cpp'             ,
 				'MOAITexture.cpp'                ,
-				'MOAIThread.cpp'                 ,
+				'MOAICoroutine.cpp'              ,
 				'MOAITileDeck2D.cpp'             ,
 				'MOAITileFlags.cpp'              ,
 				'MOAITimer.cpp'                  ,
@@ -460,7 +448,7 @@ nacl_moai_sources = [  'NaClHost.cpp',
 				 'MOAIApp.cpp',
 				 ]
 
-sources = nacl_moai_sources + zlib_sources + tinyxml_sources + libjpg_sources + jansson_sources + tlsf_sources + expat_sources + libpng_sources + contrib_sources + zipfs_sources + box2d_sources + uslcore_sources + uslext_sources + aku_sources + moaiextfmod_sources + moai_sources
+sources = nacl_moai_sources + zlib_sources + tinyxml_sources + libjpg_sources + jansson_sources + tlsf_sources + expat_sources + libpng_sources + contrib_sources + zipfs_sources + box2d_sources + uslcore_sources + aku_sources + moaiextfmod_sources + moai_sources
 
 nacl_env.Append ( LIBS=['m','nacl_dyncode','c', 'g', 'nacl', 'ppapi_gles2','fmodex', 'ppapi', 'ppapi_cpp', 'pthread', 'nosys' ] )
 
@@ -483,6 +471,7 @@ nacl_env["CPPPATH"] = [ 'lua-5.1.3/src',
 						'tlsf-2.0',
 						'jpeg-8c',
 						'zipfs',
+						'config-default',
 						'.' ]
 
 nacl_env.Append ( LIBPATH = ['lib-x86-32/opt','lib-x86-64/opt','x86-32','x86-64',fmod_library+'32', fmod_library+'64'] )
@@ -507,7 +496,7 @@ nacl_env.FilterOut( LIBS=['nosys'] )
 nacl_env.Append ( LIBS=['zlib','box2d','lua','tinyxml','libjpg','jansson','expat','libpng','contrib','lua','nosys'] )
 
 module_name = 'moai'
-opt_nexes = nacl_env.NaClModules( tlsf_sources + zipfs_sources + uslcore_sources + uslext_sources + aku_sources + moaiextfmod_sources + moai_sources + nacl_moai_sources , module_name, is_debug=False )
+opt_nexes = nacl_env.NaClModules( tlsf_sources + zipfs_sources + uslcore_sources + aku_sources + moaiextfmod_sources + moai_sources + nacl_moai_sources , module_name, is_debug=False )
 
 nacl_env.GenerateNmf(target='%s.nmf' % module_name,
 			  source=opt_nexes,

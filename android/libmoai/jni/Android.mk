@@ -32,9 +32,9 @@
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/src
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/src/aku
+	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/src/config-default
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/src/moaicore
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/src/moaiext-untz
-	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/src/uslsext
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/src/uslscore
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/src/zipfs
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty
@@ -69,6 +69,7 @@
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/lua-5.1.3/src
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/luacrypto-0.2.0/src
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/luacurl-1.2.1
+	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/luafilesystem-1.5.0/src
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/luasocket-2.0.2/src
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/luasql-2.2.0/src
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/openssl-1.0.0d/include-android
@@ -147,4 +148,3 @@
 
 	include moaicore/Android.mk
 	include uslscore/Android.mk
-	include uslsext/Android.mk
