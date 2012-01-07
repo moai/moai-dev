@@ -984,7 +984,7 @@ bool MOAIBox2DBody::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 
 			case MOAITransform::ATTR_Z_ROT: {
 				float angle = attrOp.Apply ( xform.q.GetAngle(), op, MOAINode::ATTR_READ_WRITE );				
-				mBody->SetTransform ( xform.p,  (angle * D2R) + M_PI_4 );
+				mBody->SetTransform ( xform.p,  ( float )((angle * D2R) + M_PI_4 ));
 				return true;	
 			}
 
