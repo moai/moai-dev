@@ -40,15 +40,15 @@ MOAIBox2DWheelJoint::MOAIBox2DWheelJoint () {
  */
 int MOAIBox2DWheelJoint::_getJointTranslation ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWheelJoint, "U" )
+	float unitsToMeters = self->GetUnitsToMeters ();
 	
 	if ( !self->mJoint ) {
 		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
 		return 0;
 	}
 	
-	float speed	= state.GetValue < float >( 2, 0.0f ) * ( float )D2R;
 	b2WheelJoint* joint = ( b2WheelJoint* )self->mJoint;
-	joint->SetMotorSpeed(speed);
+	state.Push ( joint->GetJointTranslation () / unitsToMeters );
 	
 	return 0;
 }
