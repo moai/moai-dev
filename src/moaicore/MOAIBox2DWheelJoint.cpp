@@ -217,11 +217,13 @@ int MOAIBox2DWheelJoint::_setMotorSpeed ( lua_State* L ) {
 		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
 		return 0;
 	}
-	
+
+	float speed = state.GetValue < float >( 2, 0.0f ) * ( float )D2R;
+
 	b2WheelJoint* joint = ( b2WheelJoint* )self->mJoint;
-	state.Push ( joint->GetSpringFrequencyHz() );
-	
-	return 1;
+	joint->SetMotorSpeed ( speed );
+
+	return 0;
 }
 
 //----------------------------------------------------------------//
