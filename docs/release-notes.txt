@@ -7,6 +7,7 @@
 - Added moaigui to samples/contrib folder
 - Added proof-of-concept implementation of Moai class extension model (extend () method)
 - Added attributes for box2D objects; can now be linked and animated (thank you, Byron!)
+- Many fixes to MOAIBox2DWheel joint binding and coordinate converstions (thank you, Thomas!)
 - Updated sample for TexturePacker (thanks, Paul!)
 - Added blocking (synchronous) option for MOAIHttpTask
 - Fixed cycle handling in dep graph update
