@@ -50,7 +50,7 @@ int MOAIBox2DWheelJoint::_getJointTranslation ( lua_State* L ) {
 	b2WheelJoint* joint = ( b2WheelJoint* )self->mJoint;
 	joint->SetMotorSpeed(speed);
 	
-	return 1;
+	return 0;
 }
 
 //----------------------------------------------------------------//
@@ -136,7 +136,7 @@ int MOAIBox2DWheelJoint::_getSpringDampingRatio ( lua_State* L ) {
 	b2WheelJoint* joint = ( b2WheelJoint* )self->mJoint;
 	state.Push ( joint->GetSpringDampingRatio() );
 	
-	return 0;
+	return 1;
 }
 
 //----------------------------------------------------------------//
