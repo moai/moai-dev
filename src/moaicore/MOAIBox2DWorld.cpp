@@ -308,8 +308,8 @@ int	MOAIBox2DWorld::_addPrismaticJoint ( lua_State* L ) {
 	anchor.y	= state.GetValue < float >( 5, 0 ) * self->mUnitsToMeters;
 	
 	b2Vec2 axis;
-	axis.x		= state.GetValue < float >( 6, 0 ) * self->mUnitsToMeters;
-	axis.y		= state.GetValue < float >( 7, 0 ) * self->mUnitsToMeters;
+	axis.x		= state.GetValue < float >( 6, 0 );
+	axis.y		= state.GetValue < float >( 7, 0 );
 	
 	b2PrismaticJointDef jointDef;
 	jointDef.Initialize ( bodyA->mBody, bodyB->mBody, anchor, axis );
@@ -552,8 +552,8 @@ int	MOAIBox2DWorld::_addWheelJoint ( lua_State* L ) {
 	anchor.y	= state.GetValue < float >( 5, 0 ) * self->mUnitsToMeters;
 	
 	b2Vec2 axis;
-	axis.x		= state.GetValue < float >( 6, 0 ) * self->mUnitsToMeters;
-	axis.y      = state.GetValue < float >( 7, 0 ) * self->mUnitsToMeters;
+	axis.x		= state.GetValue < float >( 6, 0 );
+	axis.y      = state.GetValue < float >( 7, 0 );
 	
 	b2WheelJointDef jointDef;
 	jointDef.Initialize ( bodyA->mBody, bodyB->mBody, anchor, axis );
