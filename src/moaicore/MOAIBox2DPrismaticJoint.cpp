@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <Box2D/Box2D.h>
+#include <moaicore/MOAISim.h>
 #include <moaicore/MOAIBox2DArbiter.h>
 #include <moaicore/MOAIBox2DBody.h>
 #include <moaicore/MOAIBox2DPrismaticJoint.h>
@@ -100,7 +101,8 @@ int MOAIBox2DPrismaticJoint::_getMotorForce ( lua_State* L ) {
 
 	b2PrismaticJoint* joint = ( b2PrismaticJoint* )self->mJoint;
 
-	state.Push ( joint->GetMotorForce (1.0f) / unitsToMeters );
+	float step = ( float )( 1.0 / MOAISim::Get ().GetStep ());
+	state.Push ( joint->GetMotorForce (step) / unitsToMeters );
 	
 	return 1;
 }
