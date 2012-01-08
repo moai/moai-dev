@@ -78,7 +78,7 @@ int MOAIBox2DFrictionJoint::_setMaxForce ( lua_State* L ) {
 		return 0;
 	}
 
-	float maxForce = state.GetValue < float >( 1, 0.0f ) * unitsToMeters;
+	float maxForce = state.GetValue < float >( 2, 0.0f ) * unitsToMeters;
 
 	b2FrictionJoint* joint = ( b2FrictionJoint* )self->mJoint;
 	joint->SetMaxForce ( maxForce );
@@ -104,7 +104,7 @@ int MOAIBox2DFrictionJoint::_setMaxTorque ( lua_State* L ) {
 
 	float unitsToMeters = self->GetUnitsToMeters();
 	/* Convert to/from N-m (kg m / s^2) * m from/to (kg unit / s^2) * unit */
-	float maxTorque = state.GetValue < float >( 1, 0.0f ) * unitsToMeters * unitsToMeters;
+	float maxTorque = state.GetValue < float >( 2, 0.0f ) * unitsToMeters * unitsToMeters;
 
 	b2FrictionJoint* joint = ( b2FrictionJoint* )self->mJoint;
 	joint->SetMaxTorque ( maxTorque );

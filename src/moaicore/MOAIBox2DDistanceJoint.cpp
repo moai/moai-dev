@@ -96,7 +96,7 @@ int MOAIBox2DDistanceJoint::_setDampingRatio ( lua_State* L ) {
 		return 0;
 	}
 
-	float dampingRatio = state.GetValue < float >( 1, 0.0f );
+	float dampingRatio = state.GetValue < float >( 2, 0.0f );
 
 	b2DistanceJoint* joint = ( b2DistanceJoint* )self->mJoint;
 	joint->SetDampingRatio ( dampingRatio );
@@ -120,7 +120,7 @@ int MOAIBox2DDistanceJoint::_setFrequency ( lua_State* L ) {
 		return 0;
 	}
 
-	float frequency = state.GetValue < float >( 1, 0.0f );
+	float frequency = state.GetValue < float >( 2, 0.0f );
 
 	b2DistanceJoint* joint = ( b2DistanceJoint* )self->mJoint;
 	joint->SetFrequency ( frequency );
@@ -145,7 +145,7 @@ int MOAIBox2DDistanceJoint::_setLength ( lua_State* L ) {
 		return 0;
 	}
 
-	float length = state.GetValue < float >( 1, 0.0f ) * unitsToMeters;
+	float length = state.GetValue < float >( 2, 0.0f ) * unitsToMeters;
 
 	b2DistanceJoint* joint = ( b2DistanceJoint* )self->mJoint;
 	joint->SetFrequency ( length );

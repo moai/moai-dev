@@ -257,7 +257,7 @@ int MOAIBox2DRevoluteJoint::_setMaxMotorTorque ( lua_State* L ) {
 
 	float unitsToMeters = self->GetUnitsToMeters ();
 	/* Convert to N-m (kg m / s^2) * m from (kg unit / s^2) * unit */
-	float maxMotorTorque = state.GetValue < float >( 1, 0.0f ) * unitsToMeters * unitsToMeters;
+	float maxMotorTorque = state.GetValue < float >( 2, 0.0f ) * unitsToMeters * unitsToMeters;
 
 	b2RevoluteJoint* joint = ( b2RevoluteJoint* )self->mJoint;
 	joint->SetMaxMotorTorque ( maxMotorTorque );

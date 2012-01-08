@@ -83,7 +83,7 @@ int MOAIBox2DGearJoint::_setRatio ( lua_State* L ) {
 		return 0;
 	}
 
-	float ratio = state.GetValue < float >( 1, 0.0f );
+	float ratio = state.GetValue < float >( 2, 0.0f );
 
 	b2GearJoint* joint = ( b2GearJoint* )self->mJoint;
 	joint->SetRatio ( ratio );

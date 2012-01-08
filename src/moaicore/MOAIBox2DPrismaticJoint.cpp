@@ -261,7 +261,7 @@ int MOAIBox2DPrismaticJoint::_setMaxMotorForce ( lua_State* L ) {
 		return 0;
 	}
 
-	float maxMotorForce = state.GetValue < float >( 1, 0.0f );
+	float maxMotorForce = state.GetValue < float >( 2, 0.0f );
 
 	b2PrismaticJoint* joint = ( b2PrismaticJoint* )self->mJoint;
 	joint->SetMaxMotorForce ( maxMotorForce * unitsToMeters );
