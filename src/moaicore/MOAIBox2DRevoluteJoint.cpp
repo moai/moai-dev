@@ -106,7 +106,7 @@ int MOAIBox2DRevoluteJoint::_getMotorSpeed ( lua_State* L ) {
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DRevoluteJoint self
-	@out	number motorTorque
+	@out	number motorTorque		Converted from N-m.
 */
 int MOAIBox2DRevoluteJoint::_getMotorTorque ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DRevoluteJoint, "U" )
@@ -116,9 +116,11 @@ int MOAIBox2DRevoluteJoint::_getMotorTorque ( lua_State* L ) {
 		return 0;
 	}
 
+	float unitsToMeters = self->GetUnitsToMeters ();
 	b2RevoluteJoint* joint = ( b2RevoluteJoint* )self->mJoint;
 	float step = ( float )( 1.0 / MOAISim::Get ().GetStep ());
-	state.Push ( joint->GetMotorTorque (step) * ( float )R2D );
+	/* Convert from N-m (kg m / s^2) * m => (kg unit / s^2) * unit */
+	state.Push ( joint->GetMotorTorque (step) / (unitsToMeters * unitsToMeters));
 	
 	return 1;
 }
@@ -242,7 +244,7 @@ int MOAIBox2DRevoluteJoint::_setLimitEnabled ( lua_State* L ) {
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DRevoluteJoint self
-	@opt	number maxMotorTorque		Default value is 0.
+	@opt	number maxMotorTorque		Converted to N-m. Default value is 0.
 	@out	nil
 */
 int MOAIBox2DRevoluteJoint::_setMaxMotorTorque ( lua_State* L ) {
@@ -253,7 +255,9 @@ int MOAIBox2DRevoluteJoint::_setMaxMotorTorque ( lua_State* L ) {
 		return 0;
 	}
 
-	float maxMotorTorque = state.GetValue < float >( 1, 0.0f ) * ( float )D2R;
+	float unitsToMeters = self->GetUnitsToMeters ();
+	/* Convert to N-m (kg m / s^2) * m from (kg unit / s^2) * unit */
+	float maxMotorTorque = state.GetValue < float >( 1, 0.0f ) * unitsToMeters * unitsToMeters;
 
 	b2RevoluteJoint* joint = ( b2RevoluteJoint* )self->mJoint;
 	joint->SetMaxMotorTorque ( maxMotorTorque );
@@ -267,7 +271,7 @@ int MOAIBox2DRevoluteJoint::_setMaxMotorTorque ( lua_State* L ) {
 	
 	@in		MOAIBox2DRevoluteJoint self
 	@opt	number speed			Default value is 0.
-	@opt	number max				Default value is 0.
+	@opt	number maxMotorTorque		Converted to N-m. Default value is 0.
 	@out	nil
 */
 int MOAIBox2DRevoluteJoint::_setMotor ( lua_State* L ) {
@@ -278,12 +282,14 @@ int MOAIBox2DRevoluteJoint::_setMotor ( lua_State* L ) {
 		return 0;
 	}
 	
+	float unitsToMeters = self->GetUnitsToMeters ();
 	float speed	= state.GetValue < float >( 2, 0.0f );
 	float max	= state.GetValue < float >( 3, 0.0f );
 	
 	b2RevoluteJoint* joint = ( b2RevoluteJoint* )self->mJoint;
 	joint->SetMotorSpeed ( speed * ( float )D2R );
-	joint->SetMaxMotorTorque ( max * ( float )D2R );
+	/* Convert from N-m (kg m / s^2) * m => (kg unit / s^2) * unit */
+	joint->SetMaxMotorTorque ( max * unitsToMeters * unitsToMeters );
 	joint->EnableMotor ( speed != 0.0f );
 	
 	return 0;
