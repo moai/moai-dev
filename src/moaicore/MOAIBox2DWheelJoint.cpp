@@ -40,17 +40,17 @@ MOAIBox2DWheelJoint::MOAIBox2DWheelJoint () {
  */
 int MOAIBox2DWheelJoint::_getJointTranslation ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWheelJoint, "U" )
+	float unitsToMeters = self->GetUnitsToMeters ();
 	
 	if ( !self->mJoint ) {
 		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
 		return 0;
 	}
 	
-	float speed	= state.GetValue < float >( 2, 0.0f ) * ( float )D2R;
 	b2WheelJoint* joint = ( b2WheelJoint* )self->mJoint;
-	joint->SetMotorSpeed(speed);
+	state.Push ( joint->GetJointTranslation () / unitsToMeters );
 	
-	return 1;
+	return 0;
 }
 
 //----------------------------------------------------------------//
@@ -104,7 +104,6 @@ int MOAIBox2DWheelJoint::_isMotorEnabled ( lua_State* L ) {
  */
 int MOAIBox2DWheelJoint::_getMotorSpeed ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWheelJoint, "U" )
-	float unitsToMeters = self->GetUnitsToMeters ();
 	
 	if ( !self->mJoint ) {
 		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
@@ -112,7 +111,7 @@ int MOAIBox2DWheelJoint::_getMotorSpeed ( lua_State* L ) {
 	}
 	
 	b2WheelJoint* joint = ( b2WheelJoint* )self->mJoint;
-	state.Push ( joint->GetMotorSpeed () / unitsToMeters );
+	state.Push ( joint->GetMotorSpeed () * ( float ) R2D );
 	
 	return 1;
 }
@@ -127,7 +126,6 @@ int MOAIBox2DWheelJoint::_getMotorSpeed ( lua_State* L ) {
  */
 int MOAIBox2DWheelJoint::_getSpringDampingRatio ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWheelJoint, "U" )
-	float unitsToMeters = self->GetUnitsToMeters ();
 	
 	if ( !self->mJoint ) {
 		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
@@ -135,9 +133,9 @@ int MOAIBox2DWheelJoint::_getSpringDampingRatio ( lua_State* L ) {
 	}
 	
 	b2WheelJoint* joint = ( b2WheelJoint* )self->mJoint;
-	state.Push ( joint->GetSpringDampingRatio() / unitsToMeters);
+	state.Push ( joint->GetSpringDampingRatio() );
 	
-	return 0;
+	return 1;
 }
 
 //----------------------------------------------------------------//
@@ -149,14 +147,15 @@ int MOAIBox2DWheelJoint::_getSpringDampingRatio ( lua_State* L ) {
  */
 int MOAIBox2DWheelJoint::_getMaxMotorTorque ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWheelJoint, "U" )
-	
+	float unitsToMeters = self->GetUnitsToMeters ();
+
 	if ( !self->mJoint ) {
 		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
 		return 0;
 	}
 	
 	b2WheelJoint* joint = ( b2WheelJoint* )self->mJoint;	
-	state.Push ( joint->GetMaxMotorTorque () * ( float )R2D );
+	state.Push ( joint->GetMaxMotorTorque () / unitsToMeters );
 	
 	return 1;
 }
@@ -170,7 +169,8 @@ int MOAIBox2DWheelJoint::_getMaxMotorTorque ( lua_State* L ) {
  */
 int MOAIBox2DWheelJoint::_getMotorTorque ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWheelJoint, "U" )
-	
+	float unitsToMeters = self->GetUnitsToMeters ();
+
 	if ( !self->mJoint ) {
 		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
 		return 0;
@@ -178,7 +178,7 @@ int MOAIBox2DWheelJoint::_getMotorTorque ( lua_State* L ) {
 	
 	b2WheelJoint* joint = ( b2WheelJoint* )self->mJoint;
 	float step = ( float )( 1.0 / MOAISim::Get ().GetStep ());	
-	state.Push ( joint->GetMotorTorque (step) * ( float )R2D );
+	state.Push ( joint->GetMotorTorque (step) / unitsToMeters );
 	
 	return 1;
 }
@@ -218,11 +218,13 @@ int MOAIBox2DWheelJoint::_setMotorSpeed ( lua_State* L ) {
 		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
 		return 0;
 	}
-	
+
+	float speed = state.GetValue < float >( 2, 0.0f ) * ( float )D2R;
+
 	b2WheelJoint* joint = ( b2WheelJoint* )self->mJoint;
-	state.Push ( joint->GetSpringFrequencyHz() );
-	
-	return 1;
+	joint->SetMotorSpeed ( speed );
+
+	return 0;
 }
 
 //----------------------------------------------------------------//
@@ -259,13 +261,14 @@ int MOAIBox2DWheelJoint::_setMotorEnabled ( lua_State* L ) {
  */
 int MOAIBox2DWheelJoint::_setMaxMotorTorque ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWheelJoint, "U" )
-	
+	float unitsToMeters = self->GetUnitsToMeters ();
+
 	if ( !self->mJoint ) {
 		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
 		return 0;
 	}
 	
-	float maxMotorTorque = state.GetValue < float >( 1, 0.0f ) * ( float )D2R;
+	float maxMotorTorque = state.GetValue < float >( 2, 0.0f ) * unitsToMeters;
 	
 	b2WheelJoint* joint = ( b2WheelJoint* )self->mJoint;
 	joint->SetMaxMotorTorque ( maxMotorTorque );
@@ -289,7 +292,7 @@ int MOAIBox2DWheelJoint::_setSpringDampingRatio ( lua_State* L ) {
 		return 0;
 	}
 	
-	float dampingRatio = state.GetValue < float >( 1, 0.0f );
+	float dampingRatio = state.GetValue < float >( 2, 0.0f );
 	
 	b2WheelJoint* joint = ( b2WheelJoint* )self->mJoint;
 	joint->SetSpringDampingRatio( dampingRatio );
@@ -313,7 +316,7 @@ int MOAIBox2DWheelJoint::_setSpringFrequencyHz ( lua_State* L ) {
 		return 0;
 	}
 	
-	float springFrequencyHz = state.GetValue < float >( 1, 0.0f );
+	float springFrequencyHz = state.GetValue < float >( 2, 0.0f );
 	
 	b2WheelJoint* joint = ( b2WheelJoint* )self->mJoint;
 	joint->SetSpringFrequencyHz( springFrequencyHz );
