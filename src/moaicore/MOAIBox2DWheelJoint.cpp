@@ -104,7 +104,6 @@ int MOAIBox2DWheelJoint::_isMotorEnabled ( lua_State* L ) {
  */
 int MOAIBox2DWheelJoint::_getMotorSpeed ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWheelJoint, "U" )
-	float unitsToMeters = self->GetUnitsToMeters ();
 	
 	if ( !self->mJoint ) {
 		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
@@ -112,7 +111,7 @@ int MOAIBox2DWheelJoint::_getMotorSpeed ( lua_State* L ) {
 	}
 	
 	b2WheelJoint* joint = ( b2WheelJoint* )self->mJoint;
-	state.Push ( joint->GetMotorSpeed () / unitsToMeters );
+	state.Push ( joint->GetMotorSpeed () * ( float ) R2D );
 	
 	return 1;
 }
