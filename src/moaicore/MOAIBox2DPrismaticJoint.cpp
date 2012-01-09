@@ -325,6 +325,32 @@ int MOAIBox2DPrismaticJoint::_setMotorEnabled ( lua_State* L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
+/**	@name	setMotorSpeed
+ @text	See Box2D documentation.
+
+ @in	MOAIBox2DPrismaticJoint self
+ @opt	number motorSpeed		Converted from units of distance/s to m/s. Default value is 0.
+
+ */
+int MOAIBox2DPrismaticJoint::_setMotorSpeed ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIBox2DPrismaticJoint, "U" )
+
+	if ( !self->mJoint ) {
+		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		return 0;
+	}
+
+	float unitsToMeters = self->GetUnitsToMeters ();
+	float speed = state.GetValue < float >( 2, 0.0f ) * unitsToMeters;
+
+	b2PrismaticJoint* joint = ( b2PrismaticJoint* )self->mJoint;
+	joint->SetMotorSpeed ( speed );
+
+	return 0;
+}
+
+
 //================================================================//
 // MOAIBox2DPrismaticJoint
 //================================================================//
@@ -363,6 +389,7 @@ void MOAIBox2DPrismaticJoint::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setLimitEnabled",			_setLimitEnabled },
 		{ "setMaxMotorForce",			_setMaxMotorForce },
 		{ "setMotor",					_setMotor },
+		{ "setMotorSpeed",				_setMotorSpeed },
 		{ "setMotorEnabled",			_setMotorEnabled },
 		{ NULL, NULL }
 	};

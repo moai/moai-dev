@@ -31,6 +31,7 @@ private:
 	static int		_setLimitEnabled		( lua_State* L );
 	static int		_setMaxMotorForce		( lua_State* L );
 	static int		_setMotor				( lua_State* L );
+	static int		_setMotorSpeed			( lua_State* L );
 	static int		_setMotorEnabled		( lua_State* L );
 
 public:
