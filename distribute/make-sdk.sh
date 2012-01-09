@@ -44,6 +44,11 @@ cd ../samples/iphone
 cp -R * ../../distribute/moai-sdk/samples/iphone
 cd ../../distribute
 
+mkdir -p moai-sdk/samples/nacl
+cd ../samples/nacl
+cp -R * ../../distribute/moai-sdk/samples/nacl
+cd ../../distribute
+
 mkdir -p moai-sdk/include/aku
 cp -R ../src/aku/*.h moai-sdk/include/aku
 

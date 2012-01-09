@@ -3089,34 +3089,6 @@
 			remoteGlobalIDString = 0324E2A81356485F000ADC60;
 			remoteInfo = "libmoai-osx-3rdparty";
 		};
-		073D585F14592F8200289D5C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 073D52EC1459269600289D5C;
-			remoteInfo = "libmoai-ios-tapjoy";
-		};
-		CD07C3A513A182AA00C9386C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 03C2F6F3104DE130009A2D5D;
-			remoteInfo = "libmoai-iphone";
-		};
-		CD07C3EB13A1847000C9386C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 0379C3D51333ECD800E89DDC;
-			remoteInfo = "libmoai-iphone-3rdparty";
-		};
-		CD07C3ED13A1847D00C9386C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 0379C3D51333ECD800E89DDC;
-			remoteInfo = "libmoai-iphone-3rdparty";
-		};
 		CD07C3EF13A1848800C9386C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -3138,26 +3110,12 @@
 			remoteGlobalIDString = 0324E2A81356485F000ADC60;
 			remoteInfo = "libmoai-osx-3rdparty";
 		};
-		CD3A548E13995F570034C103 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 03C2F6F3104DE130009A2D5D;
-			remoteInfo = "libmoai-iphone";
-		};
 		CD3A549013995F650034C103 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 0324E2B11356485F000ADC60;
 			remoteInfo = "libmoai-osx";
-		};
-		CDFCFE3513995A9A00E43A41 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 0379C3D51333ECD800E89DDC;
-			remoteInfo = "libmoai-iphone-3rdparty";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -10085,8 +10043,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				073D586014592F8200289D5C /* PBXTargetDependency */,
-				CDFCFE3613995A9A00E43A41 /* PBXTargetDependency */,
 			);
 			name = "libmoai-ios";
 			productName = OpenUSLS;
@@ -10155,8 +10111,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				CD07C3A413A182AA00C9386C /* PBXTargetDependency */,
-				CD07C3EC13A1847000C9386C /* PBXTargetDependency */,
 			);
 			name = "libmoai-ios-untz";
 			productName = OpenUSLS;
@@ -10193,8 +10147,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				CD3A548F13995F570034C103 /* PBXTargetDependency */,
-				CD07C3EE13A1847D00C9386C /* PBXTargetDependency */,
 			);
 			name = "libmoai-ios-luaext";
 			productName = OpenUSLS;
@@ -12168,26 +12120,6 @@
 			target = 0324E2A81356485F000ADC60 /* libmoai-osx-3rdparty */;
 			targetProxy = 0324E30513564A00000ADC60 /* PBXContainerItemProxy */;
 		};
-		073D586014592F8200289D5C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 073D52EC1459269600289D5C /* libmoai-ios-tapjoy */;
-			targetProxy = 073D585F14592F8200289D5C /* PBXContainerItemProxy */;
-		};
-		CD07C3A413A182AA00C9386C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 03C2F6F3104DE130009A2D5D /* libmoai-ios */;
-			targetProxy = CD07C3A513A182AA00C9386C /* PBXContainerItemProxy */;
-		};
-		CD07C3EC13A1847000C9386C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 0379C3D51333ECD800E89DDC /* libmoai-ios-3rdparty */;
-			targetProxy = CD07C3EB13A1847000C9386C /* PBXContainerItemProxy */;
-		};
-		CD07C3EE13A1847D00C9386C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 0379C3D51333ECD800E89DDC /* libmoai-ios-3rdparty */;
-			targetProxy = CD07C3ED13A1847D00C9386C /* PBXContainerItemProxy */;
-		};
 		CD07C3F013A1848800C9386C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 0324E2A81356485F000ADC60 /* libmoai-osx-3rdparty */;
@@ -12203,20 +12135,10 @@
 			target = 0324E2A81356485F000ADC60 /* libmoai-osx-3rdparty */;
 			targetProxy = CD07C4BD13A1918600C9386C /* PBXContainerItemProxy */;
 		};
-		CD3A548F13995F570034C103 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 03C2F6F3104DE130009A2D5D /* libmoai-ios */;
-			targetProxy = CD3A548E13995F570034C103 /* PBXContainerItemProxy */;
-		};
 		CD3A549113995F650034C103 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 0324E2B11356485F000ADC60 /* libmoai-osx */;
 			targetProxy = CD3A549013995F650034C103 /* PBXContainerItemProxy */;
-		};
-		CDFCFE3613995A9A00E43A41 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 0379C3D51333ECD800E89DDC /* libmoai-ios-3rdparty */;
-			targetProxy = CDFCFE3513995A9A00E43A41 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -12348,6 +12270,11 @@
 		0379C5941333ECD800E89DDC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"ARCHS[sdk=iphoneos*]" = (
+					armv6,
+					"$(ARCHS_STANDARD_32_BIT)",
+				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -12379,6 +12306,11 @@
 		0379C5951333ECD800E89DDC /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"ARCHS[sdk=iphoneos*]" = (
+					armv6,
+					"$(ARCHS_STANDARD_32_BIT)",
+				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -12525,6 +12457,11 @@
 		03C2F6F6104DE131009A2D5D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"ARCHS[sdk=iphoneos*]" = (
+					armv6,
+					"$(ARCHS_STANDARD_32_BIT)",
+				);
 				PRODUCT_NAME = "moai-ios";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv6 armv7";
@@ -12534,6 +12471,11 @@
 		03C2F6F7104DE131009A2D5D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"ARCHS[sdk=iphoneos*]" = (
+					armv6,
+					"$(ARCHS_STANDARD_32_BIT)",
+				);
 				PRODUCT_NAME = "moai-ios";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv6 armv7";
@@ -12543,6 +12485,11 @@
 		073D58571459269600289D5C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"ARCHS[sdk=iphoneos*]" = (
+					armv6,
+					"$(ARCHS_STANDARD_32_BIT)",
+				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -12574,6 +12521,11 @@
 		073D58581459269600289D5C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"ARCHS[sdk=iphoneos*]" = (
+					armv6,
+					"$(ARCHS_STANDARD_32_BIT)",
+				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -12725,6 +12677,11 @@
 		CD04ACB214725568009C20E5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"ARCHS[sdk=iphoneos*]" = (
+					armv6,
+					"$(ARCHS_STANDARD_32_BIT)",
+				);
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-ios-zipfs";
 				SDKROOT = iphoneos;
@@ -12736,6 +12693,11 @@
 		CD04ACB314725568009C20E5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"ARCHS[sdk=iphoneos*]" = (
+					armv6,
+					"$(ARCHS_STANDARD_32_BIT)",
+				);
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-ios-zipfs";
 				SDKROOT = iphoneos;
@@ -12779,6 +12741,11 @@
 		CD07C3CB13A182AA00C9386C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"ARCHS[sdk=iphoneos*]" = (
+					armv6,
+					"$(ARCHS_STANDARD_32_BIT)",
+				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -12810,6 +12777,11 @@
 		CD07C3CC13A182AA00C9386C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"ARCHS[sdk=iphoneos*]" = (
+					armv6,
+					"$(ARCHS_STANDARD_32_BIT)",
+				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -12913,6 +12885,11 @@
 		CDD06BCE1398822500AB0420 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"ARCHS[sdk=iphoneos*]" = (
+					armv6,
+					"$(ARCHS_STANDARD_32_BIT)",
+				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
@@ -12944,6 +12921,11 @@
 		CDD06BCF1398822500AB0420 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"ARCHS[sdk=iphoneos*]" = (
+					armv6,
+					"$(ARCHS_STANDARD_32_BIT)",
+				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
