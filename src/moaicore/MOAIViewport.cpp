@@ -173,7 +173,7 @@ USMatrix4x4 MOAIViewport::GetProjMtx () const {
 	float xScale = ( 2.0f / rect.Width ()) * viewScale.mX;
 	float yScale = ( 2.0f / rect.Height ()) * viewScale.mY;
 	
-	mtx.Scale ( xScale, yScale, -1.0f );
+	mtx.Scale ( xScale, yScale, 1.0f );
 	proj.Append ( mtx );
 	
 	// offset
@@ -201,7 +201,7 @@ USMatrix4x4 MOAIViewport::GetProjMtxInv () const {
 	float invXScale = 1.0f / (( 2.0f / rect.Width () * viewScale.mX ));
 	float invYScale = 1.0f / (( 2.0f / rect.Height () * viewScale.mY ));
 	
-	mtx.Scale ( invXScale, invYScale, -1.0f );
+	mtx.Scale ( invXScale, invYScale, 1.0f );
 	projInv.Append ( mtx );
 	
 	// rotate

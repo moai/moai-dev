@@ -10,7 +10,7 @@ viewport = MOAIViewport.new ()
 viewport:setSize ( 320, 480 )
 viewport:setScale ( 320, 480 )
 
-layer = MOAILayer2D.new ()
+layer = MOAILayer.new ()
 layer:setViewport ( viewport )
 MOAISim.pushRenderPass ( layer )
 
@@ -19,7 +19,7 @@ gfxQuad:setTexture ( "cathead.png" )
 gfxQuad:setRect ( -64, -64, 64, 64 )
 gfxQuad:setUVRect ( 0, 1, 1, 0 )
 
-prop = MOAIProp2D.new ()
+prop = MOAIProp.new ()
 prop:setDeck ( gfxQuad )
 layer:insertProp ( prop )
 
