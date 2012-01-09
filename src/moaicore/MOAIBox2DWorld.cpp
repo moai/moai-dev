@@ -147,8 +147,8 @@ int	MOAIBox2DWorld::_addDistanceJoint ( lua_State* L ) {
 	@in		MOAIBox2DBody bodyB
 	@in		number anchorX
 	@in		number anchorY
-	@opt	number maxForce				Default value determined by Box2D
-	@opt	number maxTorque			Default value determined by Box2D
+	@opt	number maxForce			Converted to N. 	Default value determined by Box2D
+	@opt	number maxTorque		Converted to N-m.	Default value determined by Box2D
 	@out	MOAIBox2DJoint joint
 */
 int	MOAIBox2DWorld::_addFrictionJoint ( lua_State* L ) {
@@ -170,9 +170,12 @@ int	MOAIBox2DWorld::_addFrictionJoint ( lua_State* L ) {
 	
 	b2FrictionJointDef jointDef;
 	jointDef.Initialize ( bodyA->mBody, bodyB->mBody, anchor );
-	
-	jointDef.maxForce	= state.GetValue < float >( 6, jointDef.maxForce / self->mUnitsToMeters ) * self->mUnitsToMeters;
-	jointDef.maxTorque	= state.GetValue < float >( 7, jointDef.maxTorque * ( float )R2D ) * ( float )D2R;
+
+	float unitsToMeters = self->GetUnitsToMeters();
+
+	jointDef.maxForce	= state.GetValue < float >( 6, jointDef.maxForce / unitsToMeters ) * unitsToMeters;
+	/* Convert to/from N-m (kg m / s^2) * m from/to (kg unit / s^2) * unit */
+	jointDef.maxTorque	= state.GetValue < float >( 7, jointDef.maxTorque / ( unitsToMeters * unitsToMeters ) ) * unitsToMeters * unitsToMeters;
 	
 	MOAIBox2DFrictionJoint* joint = new MOAIBox2DFrictionJoint ();
 	joint->SetJoint ( self->mWorld->CreateJoint ( &jointDef ));
@@ -305,8 +308,8 @@ int	MOAIBox2DWorld::_addPrismaticJoint ( lua_State* L ) {
 	anchor.y	= state.GetValue < float >( 5, 0 ) * self->mUnitsToMeters;
 	
 	b2Vec2 axis;
-	axis.x		= state.GetValue < float >( 6, 0 ) * self->mUnitsToMeters;
-	axis.y		= state.GetValue < float >( 7, 0 ) * self->mUnitsToMeters;
+	axis.x		= state.GetValue < float >( 6, 0 );
+	axis.y		= state.GetValue < float >( 7, 0 );
 	
 	b2PrismaticJointDef jointDef;
 	jointDef.Initialize ( bodyA->mBody, bodyB->mBody, anchor, axis );
@@ -549,8 +552,8 @@ int	MOAIBox2DWorld::_addWheelJoint ( lua_State* L ) {
 	anchor.y	= state.GetValue < float >( 5, 0 ) * self->mUnitsToMeters;
 	
 	b2Vec2 axis;
-	axis.x		= state.GetValue < float >( 6, 0 ) * self->mUnitsToMeters;
-	axis.y      = state.GetValue < float >( 7, 0 ) * self->mUnitsToMeters;
+	axis.x		= state.GetValue < float >( 6, 0 );
+	axis.y      = state.GetValue < float >( 7, 0 );
 	
 	b2WheelJointDef jointDef;
 	jointDef.Initialize ( bodyA->mBody, bodyB->mBody, anchor, axis );

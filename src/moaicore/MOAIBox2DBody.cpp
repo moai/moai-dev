@@ -287,7 +287,7 @@ int MOAIBox2DBody::_applyLinearImpulse ( lua_State* L ) {
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DBody self
-	@in		number torque	Torque in degrees.
+	@opt	number torque	Converted to N-m. Default value is 0.
 	@out	nil
 */
 int MOAIBox2DBody::_applyTorque ( lua_State* L ) {
@@ -297,8 +297,9 @@ int MOAIBox2DBody::_applyTorque ( lua_State* L ) {
 		MOAILog ( state, MOAILogMessages::MOAIBox2DBody_MissingInstance );
 		return 0;
 	}
-	
-	float torque = state.GetValue < float >( 2, 0.0f ) * ( float )D2R;
+	float unitsToMeters = self->GetUnitsToMeters();
+	/* Convert from N-m (kg m / s^2) * m => (kg unit / s^2) * unit */
+	float torque = state.GetValue < float >( 2, 0.0f ) * unitsToMeters * unitsToMeters;
 	self->mBody->ApplyTorque ( torque );
 	
 	return 0;

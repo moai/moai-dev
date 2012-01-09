@@ -126,7 +126,7 @@
 # include submodules
 #----------------------------------------------------------------#
 
-	include box2D/Android.mk
+	include box2d/Android.mk
 	include chipmunk/Android.mk
 	include contrib/Android.mk
 	include curl/Android.mk
