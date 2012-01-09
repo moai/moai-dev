@@ -206,6 +206,40 @@ int MOAIBox2DWheelJoint::_getSpringFrequencyHz ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	setMotor
+	@text	See Box2D documentation.
+			If speed is determined to be zero, the motor is disabled, unless forceEnable is set.
+
+	@in		MOAIBox2DWheelJoint self
+	@opt	number speed			Default value is 0.
+	@opt	number maxMotorTorque		Converted to N-m. Default value is 0.
+	@opt	boolean forceEnable		Default value is false.
+	@out	nil
+*/
+int MOAIBox2DWheelJoint::_setMotor ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIBox2DWheelJoint, "U" )
+	
+	if ( !self->mJoint ) {
+		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		return 0;
+	}
+	
+	float unitsToMeters = self->GetUnitsToMeters ();
+	float speed	= state.GetValue < float >( 2, 0.0f );
+	float max	= state.GetValue < float >( 3, 0.0f );
+	bool forceEnable = state.GetValue < bool >( 4, false );
+	
+	b2WheelJoint* joint = ( b2WheelJoint* )self->mJoint;
+	joint->SetMotorSpeed ( speed * ( float )D2R );
+	/* Convert from N-m (kg m / s^2) * m => (kg unit / s^2) * unit */
+	joint->SetMaxMotorTorque ( max * unitsToMeters * unitsToMeters );
+	joint->EnableMotor ( forceEnable ? true : ( speed != 0.0f ) );
+	
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	setMotorSpeed
  @text	See Box2D documentation.
  
@@ -348,6 +382,7 @@ void MOAIBox2DWheelJoint::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "getMaxMotorTorque",			_getMaxMotorTorque },
 		{ "getMotorTorque",				_getMotorTorque },
 		{ "getSpringFrequencyHz",		_getSpringFrequencyHz },
+		{ "setMotor",					_setMotor },
 		{ "setMotorEnabled",			_setMotorEnabled },
 		{ "setMotorSpeed",				_setMotorSpeed },
 		{ "setMaxMotorTorque",			_setMaxMotorTorque },
