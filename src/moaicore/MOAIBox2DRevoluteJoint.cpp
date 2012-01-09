@@ -296,6 +296,30 @@ int MOAIBox2DRevoluteJoint::_setMotor ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	setMotorSpeed
+ @text	See Box2D documentation.
+
+ @in	MOAIBox2DRevoluteJoint self
+ @opt	number motorSpeed		Converted from Deg/s to Rad/s. Default value is 0.
+
+ */
+int MOAIBox2DRevoluteJoint::_setMotorSpeed ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIBox2DRevoluteJoint, "U" )
+
+	if ( !self->mJoint ) {
+		MOAILog ( state, MOAILogMessages::MOAIBox2DJoint_MissingInstance );
+		return 0;
+	}
+
+	float speed = state.GetValue < float >( 2, 0.0f ) * ( float )D2R;
+
+	b2RevoluteJoint* joint = ( b2RevoluteJoint* )self->mJoint;
+	joint->SetMotorSpeed ( speed );
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	setMotorEnabled
 	@text	See Box2D documentation.
 	
@@ -357,6 +381,7 @@ void MOAIBox2DRevoluteJoint::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setLimitEnabled",			_setLimitEnabled },
 		{ "setMaxMotorTorque",			_setMaxMotorTorque },
 		{ "setMotor",					_setMotor },
+		{ "setMotorSpeed",				_setMotorSpeed },
 		{ "setMotorEnabled",			_setMotorEnabled },
 		{ NULL, NULL }
 	};
