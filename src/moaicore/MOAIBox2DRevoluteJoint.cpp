@@ -268,10 +268,12 @@ int MOAIBox2DRevoluteJoint::_setMaxMotorTorque ( lua_State* L ) {
 //----------------------------------------------------------------//
 /**	@name	setMotor
 	@text	See Box2D documentation.
-	
+			If speed is determined to be zero, the motor is disabled, unless forceEnable is set.
+
 	@in		MOAIBox2DRevoluteJoint self
 	@opt	number speed			Default value is 0.
 	@opt	number maxMotorTorque		Converted to N-m. Default value is 0.
+	@opt	boolean forceEnable		Default value is false.
 	@out	nil
 */
 int MOAIBox2DRevoluteJoint::_setMotor ( lua_State* L ) {
@@ -285,12 +287,13 @@ int MOAIBox2DRevoluteJoint::_setMotor ( lua_State* L ) {
 	float unitsToMeters = self->GetUnitsToMeters ();
 	float speed	= state.GetValue < float >( 2, 0.0f );
 	float max	= state.GetValue < float >( 3, 0.0f );
-	
+	bool forceEnable = state.GetValue < bool >( 4, false );
+
 	b2RevoluteJoint* joint = ( b2RevoluteJoint* )self->mJoint;
 	joint->SetMotorSpeed ( speed * ( float )D2R );
 	/* Convert from N-m (kg m / s^2) * m => (kg unit / s^2) * unit */
 	joint->SetMaxMotorTorque ( max * unitsToMeters * unitsToMeters );
-	joint->EnableMotor ( speed != 0.0f );
+	joint->EnableMotor ( forceEnable ? true : ( speed != 0.0f ) );
 	
 	return 0;
 }
