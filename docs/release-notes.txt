@@ -38,6 +38,7 @@
 - Untz - many fixes and improvements (all platforms)
 - iOS - added an AKU call for rotation event
 - Tapjoy - updated to 8.1.5
+- Native Client - added a sample host
 
 ================================================================
 = Moai SDK
