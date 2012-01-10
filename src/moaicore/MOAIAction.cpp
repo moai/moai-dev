@@ -16,17 +16,17 @@
 
 	@in		MOAIAction self
 	@in		MOAIAction child
-	@out	nil
+	@out	MOAIAction self
 */
 int MOAIAction::_addChild ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAction, "UU" )
 	
 	MOAIAction* action = state.GetLuaObject < MOAIAction >( 2 );
-	if ( !action ) return 0;
+	if ( !action ) return 1;
 	
 	self->AddChild ( *action );
 
-	return 0;
+	return 1;
 }
 
 //----------------------------------------------------------------//
@@ -34,14 +34,14 @@ int MOAIAction::_addChild ( lua_State* L ) {
 	@text	Removes all child actions.
 
 	@in		MOAIAction self
-	@out	nil
+	@out	MOAIAction self
 */
 int MOAIAction::_clear ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAction, "U" )
 
 	self->ClearChildren ();
 	
-	return 0;
+	return 1;
 }
 
 //----------------------------------------------------------------//
@@ -119,14 +119,14 @@ int MOAIAction::_start ( lua_State* L ) {
 			stop being updated.
 
 	@in		MOAIAction self
-	@out	nil
+	@out	MOAIAction self
 */
 int MOAIAction::_stop ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAction, "U" )
 
 	self->Stop ();
 
-	return 0;
+	return 1;
 }
 
 //----------------------------------------------------------------//
@@ -136,14 +136,14 @@ int MOAIAction::_stop ( lua_State* L ) {
 	
 	@in		MOAIAction self
 	@opt	number throttle	Default value is 1.
-	@out	nil
+	@out	MOAIAction self
 */
 int MOAIAction::_throttle ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAction, "U" )
 
 	self->mThrottle = state.GetValue < float >( 2, 1.0f );
 	
-	return 0;
+	return 1;
 }
 
 //================================================================//
