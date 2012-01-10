@@ -76,8 +76,8 @@ u32 MOAIPartitionResultBuffer::PrepareResults ( u32 mode, bool expand, float xSc
   
 		case SORT_PRIORITY_ASCENDING:
 			for ( u32 i = 0; i < this->mTotalResults; ++i ) {
-				s32 priority = this->mMainBuffer [ i ].mPriority * intSign;
-				this->mMainBuffer [ i ].mKey = ( u32 )(( priority ^ 0x80000000 ) | ( priority & 0x7fffffff ));
+				s32 p = this->mMainBuffer [ i ].mPriority * intSign;
+				this->mMainBuffer [ i ].mKey = ( u32 )(( p ^ 0x80000000 ) | ( p & 0x7fffffff ));
 			}
 			break;
 

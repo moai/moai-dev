@@ -161,8 +161,8 @@ public:
 						~MOAIGridSpace			();
 	void				RegisterLuaClass		( MOAILuaState& state );
 	void				RegisterLuaFuncs		( MOAILuaState& state );
-	virtual void		SerializeIn				( MOAILuaState& state );
-	virtual void		SerializeOut			( MOAILuaState& state );
+	void				SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
+	void				SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
 	MOAICellCoord		WrapCellCoord			( MOAICellCoord coord ) const;
 	USVec2D				WorldToCell				( MOAICellCoord cellCoord, USVec2D loc ) const;
 	USVec2D				WorldToGrid				( USVec2D loc ) const;

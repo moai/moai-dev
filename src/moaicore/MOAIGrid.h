@@ -44,8 +44,8 @@ public:
 	void			RegisterLuaFuncs	( MOAILuaState& state );
 	void			RowFromString		( u32 rowID, cc8* str );
 	STLString		RowToString			( u32 rowID );
-	virtual void	SerializeIn			( MOAILuaState& state, MOAIDeserializer& serializer );
-	virtual void	SerializeOut		( MOAILuaState& state, MOAISerializer& serializer );
+	void			SerializeIn			( MOAILuaState& state, MOAIDeserializer& serializer );
+	void			SerializeOut		( MOAILuaState& state, MOAISerializer& serializer );
 	void			SetTile				( u32 addr, u32 tile );
 	void			SetTile				( int xTile, int yTile, u32 tile );
 };

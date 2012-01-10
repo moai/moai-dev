@@ -60,7 +60,11 @@ private:
 	static int			_setUVRect				( lua_State* L );
 
 	//----------------------------------------------------------------//
+// Gag a erroneous(?) warning in XCode 4
+#pragma clang diagnostic push 
+#pragma clang diagnostic ignored "-Woverloaded-virtual"
 	void				Draw					( u32 idx, MOAIDeckRemapper* remapper, float xStretch, float yStretch );
+#pragma clang diagnostic pop
 	void				UpdateParams			();
 
 public:

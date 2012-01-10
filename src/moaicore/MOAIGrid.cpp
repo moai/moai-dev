@@ -240,7 +240,7 @@ void MOAIGrid::RegisterLuaFuncs ( MOAILuaState& state ) {
 void MOAIGrid::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
 	UNUSED ( serializer );
 
-	this->MOAIGridSpace::SerializeIn ( state );
+	this->MOAIGridSpace::SerializeIn ( state, serializer );
 	this->mTiles.Init ( this->MOAIGridSpace::GetTotalCells ());
 
 	state.GetField ( -1, "mData" );
@@ -270,7 +270,7 @@ void MOAIGrid::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer )
 void MOAIGrid::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
 	UNUSED ( serializer );
 
-	this->MOAIGridSpace::SerializeOut ( state );
+	this->MOAIGridSpace::SerializeOut ( state, serializer );
 
 	USLeanArray < u8 > zip;
 	USZip::Deflate ( this->mTiles, this->mTiles.Size () * sizeof ( u32 ), zip );
