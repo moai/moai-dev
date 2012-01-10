@@ -25,6 +25,7 @@ int MOAIAction::_addChild ( lua_State* L ) {
 	if ( !action ) return 1;
 	
 	self->AddChild ( *action );
+	state.CopyToTop ( 1 );
 
 	return 1;
 }
@@ -40,6 +41,7 @@ int MOAIAction::_clear ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAction, "U" )
 
 	self->ClearChildren ();
+	state.CopyToTop ( 1 );
 	
 	return 1;
 }
@@ -125,6 +127,7 @@ int MOAIAction::_stop ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAction, "U" )
 
 	self->Stop ();
+	state.CopyToTop ( 1 );
 
 	return 1;
 }
@@ -142,6 +145,7 @@ int MOAIAction::_throttle ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAction, "U" )
 
 	self->mThrottle = state.GetValue < float >( 2, 1.0f );
+	state.CopyToTop ( 1 );
 	
 	return 1;
 }
