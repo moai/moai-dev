@@ -147,7 +147,7 @@ int MOAIColor::_setColor ( lua_State* L ) {
 /**	@name	setParent
 	@text	This method has been deprecated. Use MOAINode setAttrLink instead.
 	
-	@in		MOAIProp2D self
+	@in		MOAIColor self
 	@opt	MOAINode parent		Default value is nil.
 	@out	nil
 */
