@@ -52,7 +52,9 @@ private:
 	bool		mShowDebugLines;
 	u32			mSortMode;
 
-	float		mSortScale [ 4 ]; // TODO: replace with USVec4D
+	float		mSortScale [ 4 ];
+
+	bool		mPartitionCull2D;
 
 	//----------------------------------------------------------------//
 	static int	_clear				( lua_State* L );
@@ -67,6 +69,7 @@ private:
 	static int	_setFrameBuffer		( lua_State* L );
 	static int	_setParallax		( lua_State* L );
 	static int	_setPartition		( lua_State* L );
+	static int	_setPartitionCull2D	( lua_State* L );
 	static int	_setSortMode		( lua_State* L );
 	static int	_setSortScale		( lua_State* L );
 	static int	_setViewport		( lua_State* L );

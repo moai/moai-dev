@@ -120,7 +120,7 @@ private:
 
 	u32				mWidth;
 
-	USFrustum*		mViewVolume; // TODO: autogenerate?
+	USFrustum		mViewVolume;
 	
 	//----------------------------------------------------------------//
 	static int				_isProgrammable			( lua_State* L );
@@ -158,7 +158,7 @@ public:
 	GET_BOOL ( IsProgrammable, mIsProgrammable )
 	GET_BOOL ( IsFramebufferSupported, mIsFramebufferSupported )
 	
-	GET_SET ( USFrustum*, ViewVolume, mViewVolume )
+	GET ( const USFrustum&, ViewVolume, mViewVolume )
 	
 	//----------------------------------------------------------------//
 	void					BeginDrawing			();
@@ -257,6 +257,8 @@ public:
 	void					SetViewport				( const USRect& viewport );
 	
 	void					SoftReleaseResources	( u32 age );
+	
+	void					UpdateViewVolume		();
 	
 	void					WriteQuad				( USVec2D* vtx, USVec2D* uv );
 	void					WriteQuad				( USVec4D* vtx, USVec2D* uv );

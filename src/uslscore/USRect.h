@@ -554,13 +554,13 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	void Init ( TYPE left, TYPE top, TYPE right, TYPE bottom ) {
+	void Init ( TYPE xMin, TYPE yMin, TYPE xMax, TYPE yMax ) {
 
-		this->mXMin = left;
-		this->mXMax = right;
+		this->mXMin = xMin;
+		this->mXMax = xMax;
 
-		this->mYMax = top;
-		this->mYMin = bottom;
+		this->mYMin = yMin;
+		this->mYMax = yMax;
 	}
 
 	//----------------------------------------------------------------//

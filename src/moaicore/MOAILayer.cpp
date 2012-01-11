@@ -264,6 +264,23 @@ int MOAILayer::_setPartition ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	setPartitionCull2D
+	@text	Enables 2D partition cull (projection of frustum AABB will
+			be used instead of AABB or frustum).
+	
+	@in		MOAILayer self
+	@in		boolean partitionCull2D		Default value is false.
+	@out	nil
+*/
+int	MOAILayer::_setPartitionCull2D ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAILayer, "U" )
+
+	self->mPartitionCull2D = state.GetValue < bool >( 2, false );
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	setSortMode
 	@text	Set the sort mode for rendering.
 	
@@ -289,6 +306,7 @@ int MOAILayer::_setSortMode ( lua_State* L ) {
 	@in		MOAILayer self
 	@opt	number x			Default value is 0.
 	@opt	number y			Default value is 0.
+	@opt	number z			Default value is 0.
 	@opt	number priority		Default value is 1.
 	@out	nil
 */
@@ -297,8 +315,8 @@ int	MOAILayer::_setSortScale ( lua_State* L ) {
 
 	self->mSortScale [ 0 ] = state.GetValue < float >( 2, 0.0f );
 	self->mSortScale [ 1 ] = state.GetValue < float >( 3, 0.0f );
-	self->mSortScale [ 2 ] = 0.0f;
-	self->mSortScale [ 3 ] = state.GetValue < float >( 4, 1.0f );
+	self->mSortScale [ 2 ] = state.GetValue < float >( 4, 0.0f );
+	self->mSortScale [ 3 ] = state.GetValue < float >( 5, 1.0f );
 
 	return 0;
 }
@@ -337,56 +355,88 @@ int	MOAILayer::_showDebugLines ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	wndToWorld
-	@text	Transform a point from window space to world space.
+	@text	Project a point from window space into world space and return
+			a normal vector representing a ray cast from the point into
+			the world away from the camera (suitable for 3D picking).
 	
 	@in		MOAILayer self
 	@in		number x
 	@in		number y
+	@in		number z
 	@out	number x
 	@out	number y
+	@out	number z
+	@out	number xn
+	@out	number yn
+	@out	number zn
 */
 int MOAILayer::_wndToWorld ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAILayer, "UNN" )
 
-	USVec2D loc;
+	USVec4D loc;
 	loc.mX = state.GetValue < float >( 2, 0.0f );
 	loc.mY = state.GetValue < float >( 3, 0.0f );
+	loc.mZ = state.GetValue < float >( 4, 0.0f );
+	loc.mW = 1.0f;
+
+	USVec4D vec = loc;
+	vec.mZ += 0.1f;
 
 	USMatrix4x4 wndToWorld;
 	self->GetWndToWorldMtx ( wndToWorld );
-	wndToWorld.Transform ( loc );
+	
+	wndToWorld.Project ( loc );
+	wndToWorld.Project ( vec );
 
 	lua_pushnumber ( state, loc.mX );
 	lua_pushnumber ( state, loc.mY );
+	lua_pushnumber ( state, loc.mZ );
 
-	return 2;
+	USVec3D norm;
+
+	norm.mX = vec.mX - loc.mX;
+	norm.mY = vec.mY - loc.mY;
+	norm.mZ = vec.mZ - loc.mZ;
+	
+	norm.Norm ();
+	
+	lua_pushnumber ( state, norm.mX );
+	lua_pushnumber ( state, norm.mY );
+	lua_pushnumber ( state, norm.mZ );
+
+	return 6;
 }
 
 //----------------------------------------------------------------//
-/**	@name	wndToWorld
+/**	@name	worldToWnd
 	@text	Transform a point from world space to window space.
 	
 	@in		MOAILayer self
 	@in		number x
 	@in		number y
+	@in		number Z
 	@out	number x
 	@out	number y
+	@out	number z
 */
 int MOAILayer::_worldToWnd ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAILayer, "UNN" )
 
-	USVec2D loc;
+	USVec4D loc;
 	loc.mX = state.GetValue < float >( 2, 0.0f );
 	loc.mY = state.GetValue < float >( 3, 0.0f );
+	loc.mZ = state.GetValue < float >( 4, 0.0f );
+	loc.mW = 1.0f;
 
 	USMatrix4x4 worldToWnd;
 	self->GetWorldToWndMtx ( worldToWnd );
-	worldToWnd.Transform ( loc );
+	worldToWnd.Project ( loc );
 
 	lua_pushnumber ( state, loc.mX );
 	lua_pushnumber ( state, loc.mY );
+	lua_pushnumber ( state, loc.mZ );
 
-	return 2;
+	return 3;
 }
 
 //================================================================//
@@ -438,6 +488,9 @@ void MOAILayer::Draw ( int subPrimID, bool reload ) {
 	this->GetProjectionMtx ( proj );
 	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_PROJ_TRANSFORM, proj );
 	
+	// recompute the frustum
+	gfxDevice.UpdateViewVolume ();
+	
 	if ( this->mShowDebugLines ) {
 		
 		#if USE_CHIPMUNK
@@ -461,16 +514,20 @@ void MOAILayer::Draw ( int subPrimID, bool reload ) {
 	
 	if ( this->mPartition ) {
 		
-		USMatrix4x4 invViewProj = view;
-		invViewProj.Append ( proj );
-		invViewProj.Inverse ();
-		
-		USFrustum frustum;
-		frustum.Init ( invViewProj );
-		
 		MOAIPartitionResultBuffer& buffer = MOAIPartitionResultMgr::Get ().GetBuffer ();
+		const USFrustum& viewVolume = gfxDevice.GetViewVolume ();
 		
-		u32 totalResults = this->mPartition->GatherProps ( buffer, 0, frustum, MOAIProp::CAN_DRAW | MOAIProp::CAN_DRAW_DEBUG );
+		u32 totalResults = 0;
+		
+		if ( this->mPartitionCull2D ) {
+			USRect rect;
+			viewVolume.mAABB.GetRectXY ( rect );
+			totalResults = this->mPartition->GatherProps ( buffer, 0, rect, MOAIProp::CAN_DRAW | MOAIProp::CAN_DRAW_DEBUG );
+		}
+		else {
+			totalResults = this->mPartition->GatherProps ( buffer, 0, viewVolume, MOAIProp::CAN_DRAW | MOAIProp::CAN_DRAW_DEBUG );
+		}
+		
 		if ( !totalResults ) return;
 		
 		totalResults = buffer.PrepareResults (
@@ -484,8 +541,6 @@ void MOAILayer::Draw ( int subPrimID, bool reload ) {
 
 		MOAIProp* prevProp = 0;
 		
-		gfxDevice.SetViewVolume ( &frustum );
-		
 		// render the sorted list
 		for ( u32 i = 0; i < totalResults; ++i ) {
 			MOAIPartitionResult* result = buffer.GetResultUnsafe ( i );
@@ -498,8 +553,6 @@ void MOAILayer::Draw ( int subPrimID, bool reload ) {
 			
 			prevProp = prop;
 		}
-		
-		gfxDevice.SetViewVolume ( 0 );
 	}
 	
 	// render the debug lines
@@ -559,9 +612,8 @@ void MOAILayer::GetWndToWorldMtx ( USMatrix4x4& wndToWorld ) {
 
 	if ( this->mViewport ) {
 		
-		USMatrix4x4 view;
-		this->GetViewMtx ( view );
-		wndToWorld = this->mViewport->GetWndToWorldMtx ( view );
+		this->GetWorldToWndMtx ( wndToWorld );
+		wndToWorld.Inverse ();
 	}
 	else {
 		wndToWorld.Ident ();
@@ -575,7 +627,16 @@ void MOAILayer::GetWorldToWndMtx ( USMatrix4x4& worldToWnd ) {
 		
 		USMatrix4x4 view;
 		this->GetViewMtx ( view );
-		worldToWnd = this->mViewport->GetWorldToWndMtx ( view );
+
+		USMatrix4x4 proj;
+		this->GetProjectionMtx ( proj );
+		
+		USMatrix4x4 wnd;
+		this->mViewport->GetNormToWndMtx ( wnd );
+		
+		worldToWnd = view;
+		worldToWnd.Append ( proj );
+		worldToWnd.Append ( wnd );
 	}
 	else {
 		worldToWnd.Ident ();
@@ -592,7 +653,8 @@ bool MOAILayer::IsOffscreen () {
 MOAILayer::MOAILayer () :
 	mParallax ( 1.0f, 1.0f ),
 	mShowDebugLines ( true ),
-	mSortMode ( MOAIPartitionResultBuffer::SORT_PRIORITY_ASCENDING ) {
+	mSortMode ( MOAIPartitionResultBuffer::SORT_PRIORITY_ASCENDING ),
+	mPartitionCull2D ( false ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIProp )
@@ -652,6 +714,7 @@ void MOAILayer::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setFrameBuffer",			_setFrameBuffer },
 		{ "setParallax",			_setParallax },
 		{ "setPartition",			_setPartition },
+		{ "setPartitionCull2D",		_setPartitionCull2D },
 		{ "setSortMode",			_setSortMode },
 		{ "setSortScale",			_setSortScale },
 		{ "setViewport",			_setViewport },

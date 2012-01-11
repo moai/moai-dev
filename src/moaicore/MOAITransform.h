@@ -27,6 +27,9 @@
 	@attr	ATTR_X_SCL
 	@attr	ATTR_Y_SCL
 	@attr	ATTR_Z_SCL
+	
+	@attr	INHERIT_LOC
+	@attr	INHERIT_TRANSFORM
 */
 class MOAITransform :
 	public MOAITransformBase {

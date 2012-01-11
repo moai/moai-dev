@@ -11,9 +11,9 @@ viewport = MOAIViewport.new ()
 viewport:setSize ( 320, 480 )
 viewport:setScale ( 320, 480 )
 
-layer = MOAILayer2D.new ()
+layer = MOAILayer.new ()
 layer:setViewport ( viewport )
-layer:setSortMode ( MOAILayer2D.SORT_NONE ) -- don't need layer sort
+layer:setSortMode ( MOAILayer.SORT_NONE ) -- don't need layer sort
 MOAISim.pushRenderPass ( layer )
 
 vertexFormat = MOAIVertexFormat.new ()

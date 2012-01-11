@@ -297,6 +297,15 @@ void USFrustum::Init ( const USMatrix4x4& mtx ) {
 	this->mPlanes [ NEAR_PLANE ].Init ( nrt, nlt, nlb );
 	this->mPlanes [ FAR_PLANE ].Init ( flt, frt, frb );
 	
+	USVec3D center;
+	mtx.GetTranslation ( center );
+	
+	for ( u32 i = 0; i < TOTAL_PLANES; ++i ) {
+		if ( USDist::VecToPlane ( center, this->mPlanes [ i ]) > 0.0f ) {
+			this->mPlanes [ i ].Flip ();
+		}
+	}
+	
 	double frustArea = _frustArea ( *this );
 	double boxArea = this->mAABB.Area ();
 	

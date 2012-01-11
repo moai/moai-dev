@@ -32,6 +32,7 @@ class USPlane3D {
 	float	mDist;
 
 	//----------------------------------------------------------------//
+	void	Flip			();
 	void	Init			( const USVec3D& p, const USVec3D& n );							// From a point and a normal
 	void	Init			( const USVec3D& p1, const USVec3D& p2, const USVec3D& p3 );	// From a triangle; N = |( p2 - p1 ) x ( p3 - p1 )|
 			USPlane3D		() {};

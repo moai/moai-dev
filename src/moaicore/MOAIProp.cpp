@@ -737,17 +737,15 @@ USRect MOAIProp::GetBounds () {
 //----------------------------------------------------------------//
 void MOAIProp::GetGridBoundsInView ( MOAICellCoord& c0, MOAICellCoord& c1 ) {
 
-	USFrustum* frustum = MOAIGfxDevice::Get ().GetViewVolume ();
-	if ( frustum ) {
+	const USFrustum& frustum = MOAIGfxDevice::Get ().GetViewVolume ();
 	
-		USRect viewRect;
-		if ( frustum->GetXYSectRect ( this->GetWorldToLocalMtx (), viewRect )) {
-		
-			// TODO: need to take into account perspective and truncate rect based on horizon
-			// TODO: consider bringing back poly to tile scanline converter...
-		
-			this->mGrid->GetBoundsInRect ( viewRect, c0, c1 );
-		}
+	USRect viewRect;
+	if ( frustum.GetXYSectRect ( this->GetWorldToLocalMtx (), viewRect )) {
+	
+		// TODO: need to take into account perspective and truncate rect based on horizon
+		// TODO: consider bringing back poly to tile scanline converter...
+	
+		this->mGrid->GetBoundsInRect ( viewRect, c0, c1 );
 	}
 }
 

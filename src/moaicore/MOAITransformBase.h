@@ -19,6 +19,7 @@
 	@attr	ATTR_WORLD_X_SCL
 	@attr	ATTR_WORLD_Y_SCL
 	@attr	ATTR_WORLD_Z_SCL
+	@attr	TRANSFORM_TRAIT
 */
 class MOAITransformBase :
 	public virtual MOAINode {

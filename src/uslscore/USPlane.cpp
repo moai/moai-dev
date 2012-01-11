@@ -32,7 +32,15 @@ void USPlane2D::Init ( const USVec2D& p1, const USVec2D& p2 ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+void USPlane3D::Flip () {
+
+	this->mNorm.Invert ();
+	this->mDist = -this->mDist;
+}
+
+//----------------------------------------------------------------//
 void USPlane3D::Init ( const USVec3D& p, const USVec3D& n ) {
+
 	mNorm = n;
 	mDist = -p.Dot ( n );
 }

@@ -537,14 +537,6 @@ int MOAILuaClass::_extendFactory ( lua_State* L ) {
 	// clone the class table
 	state.CloneTable ( lua_upvalueindex ( 1 ));
 	
-	// call the class extender
-	if ( state.IsType ( 2, LUA_TFUNCTION )) {
-		lua_pushvalue ( L, 2 );
-		lua_pushvalue ( L, -2 );
-		lua_pushvalue ( L, lua_upvalueindex ( 1 ));
-		state.DebugCall ( 2, 0 );
-	}
-	
 	// clone the interface table
 	state.CloneTable ( lua_upvalueindex ( 2 ));
 	
@@ -582,6 +574,14 @@ int MOAILuaClass::_extendFactory ( lua_State* L ) {
 	
 	// done with the extended interface table
 	lua_pop ( L, 1 );
+
+	// call the class extender
+	if ( state.IsType ( 2, LUA_TFUNCTION )) {
+		lua_pushvalue ( L, 2 );
+		lua_pushvalue ( L, -2 );
+		lua_pushvalue ( L, lua_upvalueindex ( 1 ));
+		state.DebugCall ( 2, 0 );
+	}
 
 	// and we're done
 	return 1;

@@ -4,6 +4,8 @@
 -- http://getmoai.com
 ----------------------------------------------------------------
 
+require ( 'moai2D' )
+
 MOAISim.openWindow ( "test", 320, 480 )
 
 MOAIDebugLines.setStyle ( MOAIDebugLines.PROP_MODEL_BOUNDS, 2, 1, 1, 1 )

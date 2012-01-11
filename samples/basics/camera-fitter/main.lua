@@ -4,6 +4,8 @@
 -- http://getmoai.com
 ----------------------------------------------------------------
 
+require ( 'moai2D' )
+
 MOAISim.openWindow ( "test", 320, 480 )
 
 viewport = MOAIViewport.new ()

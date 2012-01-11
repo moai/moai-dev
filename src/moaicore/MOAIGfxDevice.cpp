@@ -674,8 +674,7 @@ MOAIGfxDevice::MOAIGfxDevice () :
 	mVertexFormat ( 0 ),
 	mVertexMtxInput ( VTX_STAGE_MODEL ),
 	mVertexMtxOutput ( VTX_STAGE_MODEL ),
-	mWidth ( 0 ),
-	mViewVolume ( 0 ) {
+	mWidth ( 0 ) {
 	
 	RTTI_SINGLE ( MOAIGlobalEventSource )
 	
@@ -770,8 +769,6 @@ void MOAIGfxDevice::ResetState () {
 
 	this->mTop = 0;
 	this->mPrimCount = 0;
-
-	this->mViewVolume = 0;
 
 	// turn off texture
 #if USE_OPENGLES1
@@ -1418,6 +1415,14 @@ void MOAIGfxDevice::UpdateUVMtx () {
 		}
 #endif
 	}
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDevice::UpdateViewVolume () {
+
+	USMatrix4x4 invViewProj;
+	invViewProj.Inverse ( this->GetViewProjMtx ());
+	this->mViewVolume.Init ( invViewProj );
 }
 
 //----------------------------------------------------------------//

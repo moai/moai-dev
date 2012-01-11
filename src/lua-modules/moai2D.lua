@@ -75,6 +75,12 @@ MOAILayer2D = MOAILayer.extend (
 	
 	-- extend the class
 	function ( class, super )
+
+		function class.new ()
+			local self = super.new ()
+			self:setPartitionCull2D ( true )
+			return self
+		end
 	end
 )
 
