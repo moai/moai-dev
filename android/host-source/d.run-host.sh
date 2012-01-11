@@ -50,8 +50,8 @@
 	# create assets directory
 	mkdir -p build/assets
 
-	# create libs directory (and subdirectories)
-	mkdir -p build/libs/armeabi
+	# create libs directory
+	mkdir -p build/libs
 	
 	# create res directory (and subdirectories)
 	mkdir -p build/res
@@ -67,7 +67,7 @@
 	fi
 		
 	# copy libmoai
-	cp -f	host-source/project/libs/armeabi/libmoai.so	build/libs/armeabi/libmoai.so
+	cp -fR	host-source/project/libs/*	build/libs
 
 	# copy icon files
 	cp -f	$icon_ldpi		build/res/drawable-ldpi/icon.png

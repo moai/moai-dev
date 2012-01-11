@@ -37,8 +37,8 @@
 	fi
 
 	# copy libcrypto to output directory
-	OUTDIR=../libs/armeabi
+	OUTDIR=../libs
 	if [ ! -d $OUTDIR ]; then mkdir -p $OUTDIR; fi
-	mv -f obj/local/armeabi/libcrypto.a $OUTDIR/libcrypto.a
+	cp -fR obj/local/* $OUTDIR
 
 	popd > /dev/null

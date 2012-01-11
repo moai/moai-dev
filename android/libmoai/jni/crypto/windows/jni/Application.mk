@@ -4,5 +4,9 @@
 # http://getmoai.com
 #================================================================#
 
-	APP_ABI 		:= armeabi
+	include ../../../ArmModeDefined.mk
+	include ../../../AppPlatformDefined.mk
+
+	APP_ABI 		:= $(MY_ARM_ARCH)
+	APP_PLATFORM 	:= $(MY_APP_PLATFORM)
 	APP_MODULES 	:= libcrypto-a libcrypto-b libcrypto-c libcrypto-d
