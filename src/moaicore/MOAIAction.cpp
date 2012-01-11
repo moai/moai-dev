@@ -22,10 +22,11 @@ int MOAIAction::_addChild ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAction, "UU" )
 	
 	MOAIAction* action = state.GetLuaObject < MOAIAction >( 2 );
-	if ( !action ) return 1;
 	
-	self->AddChild ( *action );
 	state.CopyToTop ( 1 );
+	
+	if ( !action ) return 1;
+	self->AddChild ( *action );
 
 	return 1;
 }
