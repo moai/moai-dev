@@ -54,7 +54,7 @@ int MOAIBox2DBody::_addCircle ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	addEdge
+/**	@name	addEdges
  @text	Create and add a polygon fixture to the body.
  
  @in		MOAIBox2DBody self
@@ -453,7 +453,7 @@ int MOAIBox2DBody::_getMass ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getPostion
+/**	@name	getPosition
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DBody self

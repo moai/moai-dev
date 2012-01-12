@@ -229,7 +229,7 @@ int MOAIDataBuffer::_saveAsync ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getString
+/**	@name	setString
 	@text	Replaces the contents of this object with the string specified.
 
 	@in		MOAIDataBuffer self

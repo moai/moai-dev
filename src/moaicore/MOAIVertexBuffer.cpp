@@ -167,7 +167,7 @@ int MOAIVertexBuffer::_setPrimType ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	writeColor
+/**	@name	writeColor32
 	@text	Write a packed 32-bit color to the vertex buffer.
 	
 	@in		MOAIVertexBuffer self

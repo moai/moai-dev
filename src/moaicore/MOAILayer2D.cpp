@@ -364,7 +364,7 @@ int MOAILayer2D::_wndToWorld ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	wndToWorld
+/**	@name	worldToWnd
 	@text	Transform a point from world space to window space.
 	
 	@in		MOAILayer2D self
