@@ -17,7 +17,7 @@
 
 static double	_frustArea		( const USFrustum& frust );
 static double	_quadArea		( const USVec3D& v0, const USVec3D& v1, const USVec3D& v2, const USVec3D& v3 );
-static bool		_vecToXYPlane	( const USVec3D& loc, const USVec3D& vec, USVec3D& result );
+static bool		_vecToXYPlane	( const USVec3D& v0, const USVec3D& v1, USVec2D& result );
 
 //----------------------------------------------------------------//
 double _frustArea ( const USFrustum& frust ) {
