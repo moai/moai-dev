@@ -7,6 +7,7 @@
 #include <moaicore/MOAIBox2DFixture.h>
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIBox2DWorld.h>
+#include <moaicore/MOAITransform.h>
 
 SUPPRESS_EMPTY_FILE_WARNING
 #if USE_BOX2D
@@ -286,7 +287,7 @@ int MOAIBox2DBody::_applyLinearImpulse ( lua_State* L ) {
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DBody self
-	@in		number torque	Torque in degrees.
+	@opt	number torque	Converted to N-m. Default value is 0.
 	@out	nil
 */
 int MOAIBox2DBody::_applyTorque ( lua_State* L ) {
@@ -296,8 +297,9 @@ int MOAIBox2DBody::_applyTorque ( lua_State* L ) {
 		MOAILog ( state, MOAILogMessages::MOAIBox2DBody_MissingInstance );
 		return 0;
 	}
-	
-	float torque = state.GetValue < float >( 2, 0.0f ) * ( float )D2R;
+	float unitsToMeters = self->GetUnitsToMeters();
+	/* Convert from N-m (kg m / s^2) * m => (kg unit / s^2) * unit */
+	float torque = state.GetValue < float >( 2, 0.0f ) * unitsToMeters * unitsToMeters;
 	self->mBody->ApplyTorque ( torque );
 	
 	return 0;
@@ -960,6 +962,37 @@ void MOAIBox2DBody::RegisterLuaFuncs ( MOAILuaState& state ) {
 	};
 	
 	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+bool MOAIBox2DBody::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
+	// TODO: these values may need to be cached for performance reasons
+	if ( MOAITransform::MOAITransformAttr::Check ( attrID )) {
+		const b2Transform & xform = mBody->GetTransform();
+		
+		switch ( UNPACK_ATTR ( attrID )) {
+			case MOAITransform::ATTR_X_LOC: {
+				float x = attrOp.Apply ( xform.p.x, op, MOAINode::ATTR_READ_WRITE ) * this->GetUnitsToMeters ();
+				mBody->SetTransform ( b2Vec2( x, xform.p.y), xform.q.GetAngle() );
+				return true;
+			}
+
+			case MOAITransform::ATTR_Y_LOC: {
+				float y = attrOp.Apply ( xform.p.y, op, MOAINode::ATTR_READ_WRITE ) * this->GetUnitsToMeters ();
+				mBody->SetTransform ( b2Vec2( xform.p.x, y ), xform.q.GetAngle() );
+				return true;	
+			}
+
+			case MOAITransform::ATTR_Z_ROT: {
+				float angle = attrOp.Apply ( xform.q.GetAngle(), op, MOAINode::ATTR_READ_WRITE );				
+				mBody->SetTransform ( xform.p,  ( float )((angle * D2R) + M_PI_4 ));
+				return true;	
+			}
+
+
+		}
+	}
+	return MOAITransformBase::ApplyAttrOp (attrID, attrOp, op );
 }
 
 //----------------------------------------------------------------//

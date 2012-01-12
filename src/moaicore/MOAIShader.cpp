@@ -31,6 +31,34 @@ void NaClUnLoadShader ( void* userData, int32_t result ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIShaderUniform::AddValue ( const MOAIAttrOp& attrOp ) {
+
+	switch ( this->mType ) {
+	
+		case UNIFORM_FLOAT: {
+		
+			float value = attrOp.GetValue ();
+			
+			if ( value != 0.0f ) {
+				this->mFloat += value;
+				this->mIsDirty = true;
+			}
+			break;
+		}
+		case UNIFORM_INT: {
+		
+			int value = ( int )attrOp.GetValue ();
+			
+			if ( value != 0.0f ) {
+				this->mInt += value;
+				this->mIsDirty = true;
+			}
+			break;
+		}
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAIShaderUniform::Bind () {
 
 	if ( this->mIsDirty ) {
@@ -116,6 +144,9 @@ MOAIShaderUniform::MOAIShaderUniform () :
 	mAddr ( 0 ),
 	mType ( UNIFORM_NONE ),
 	mIsDirty ( false ) {
+	
+	this->mFloat = 0.0f;
+	this->mInt = 0;
 }
 
 //----------------------------------------------------------------//
@@ -142,9 +173,10 @@ void MOAIShaderUniform::SetType ( u32 type ) {
 	this->mType = type;
 	
 	switch ( type ) {
-		
+	
 		case UNIFORM_COLOR:
 		case UNIFORM_PEN_COLOR: {
+		
 			this->mBuffer.Init ( 4 );
 			
 			USColorVec color;
@@ -156,6 +188,7 @@ void MOAIShaderUniform::SetType ( u32 type ) {
 		case UNIFORM_WORLD:
 		case UNIFORM_WORLD_VIEW_PROJ:
 		case UNIFORM_TRANSFORM: {
+		
 			this->mBuffer.Init ( 16 );
 			
 			USAffine3D mtx;
@@ -404,10 +437,15 @@ bool MOAIShader::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 	}
 	
 	if ( op == MOAIAttrOp::SET ) {
-		
 		this->mUniforms [ attrID ].SetValue ( attrOp );
 		return true;
 	}
+	
+	if ( op == MOAIAttrOp::ADD ) {
+		this->mUniforms [ attrID ].AddValue ( attrOp );
+		return true;
+	}
+	
 	return false;
 }
 
@@ -482,6 +520,7 @@ void MOAIShader::DeclareUniform ( u32 idx, cc8* name, u32 type ) {
 	}
 }
 
+//----------------------------------------------------------------//
 void MOAIShader::DeleteShaders () {
 
 	if ( this->mVertexShader ) {

@@ -34,7 +34,7 @@ UInt32 AndroidSystemData::getNumOutputChannels()
 }
 
 
-#include <Threading/Threading.h>
+#include <threading/Threading.h>
 #include <vector>
 
 class PlaybackThread : public RThread

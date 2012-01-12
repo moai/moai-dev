@@ -1047,10 +1047,10 @@ void MOAIImage::Init ( const void* bitmap, u32 width, u32 height, USColor::Forma
 //----------------------------------------------------------------//
 bool MOAIImage::IsJpg ( const void* buffer, u32 size ) {
 
-	u8 magic [] = { 0xFF, 0xD8, 0xFF, 0xE0 }; // <?> <?> <?> <?>
+	u8 magic [] = { 0xFF, 0xD8, 0xFF }; // <?> <?> <?> <?>
 
 	if ( size < 4 ) return false;
-	return ( memcmp ( buffer, magic, 4 ) == 0 );
+	return ( memcmp ( buffer, magic, 3 ) == 0 )  &&  (((unsigned char*)buffer)[3] >= 0xe0  &&  ((unsigned char*)buffer)[3] <= 0xef);
 }
 
 //----------------------------------------------------------------//

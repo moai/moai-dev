@@ -11,6 +11,7 @@ Thumbs.db
 
 build/
 xcuserdata/
+DerivedData/
 *.pbxuser
 *.perspectivev3
 

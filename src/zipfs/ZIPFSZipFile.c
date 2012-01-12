@@ -63,9 +63,9 @@ typedef struct FileHeader {
 	unsigned short	mCompression;			// 2	Compression method
 	unsigned short	mLastModTime;			// 2	File last modification time
 	unsigned short	mLastModDate;			// 2	File last modification date
-	unsigned long	mCrc32;					// 4	CRC-32
-	unsigned long	mCompressedSize;		// 4	Compressed size
-	unsigned long	mUncompressedSize;		// 4	Uncompressed size
+	unsigned long	mCrc32;					// 4	CRC-32 (*not* to be trusted - Android)
+	unsigned long	mCompressedSize;		// 4	Compressed size (*not* to be trusted - Android)
+	unsigned long	mUncompressedSize;		// 4	Uncompressed size (*not* to be trusted - Android)
 	unsigned short	mNameLength;			// 2	File name length
 	unsigned short	mExtraFieldLength;		// 2	Extra field length
 
@@ -160,9 +160,9 @@ static int read_file_header ( FILE* file, FileHeader* header ) {
 	fread ( &header->mCompression, 2, 1, file );
 	fread ( &header->mLastModTime, 2, 1, file );
 	fread ( &header->mLastModDate, 2, 1, file );
-	fread ( &header->mCrc32, 4, 1, file );
-	fread ( &header->mCompressedSize, 4, 1, file );
-	fread ( &header->mUncompressedSize, 4, 1, file );
+	fread ( &header->mCrc32, 4, 1, file );				// *not* to be trusted (Android)
+	fread ( &header->mCompressedSize, 4, 1, file );		// *not* to be trusted (Android)
+	fread ( &header->mUncompressedSize, 4, 1, file );	// *not* to be trusted (Android)
 	fread ( &header->mNameLength, 2, 1, file );
 	fread ( &header->mExtraFieldLength, 2, 1, file );
 	
@@ -697,9 +697,6 @@ ZIPFSZipStream* ZIPFSZipStream_Open ( ZIPFSZipFile* archive, const char* entryna
 	// read local header
 	result = read_file_header ( file, &fileHeader );
 	if ( result ) goto error;
-	
-	// sanity check
-	if ( fileHeader.mCrc32 != entry->mCrc32 ) goto error;
 
 	// skip the extra field, etc.
 	result = fseek ( file, fileHeader.mNameLength + fileHeader.mExtraFieldLength, SEEK_CUR );

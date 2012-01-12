@@ -212,11 +212,11 @@ void MOAIStretchPatch2D::Draw ( const USAffine3D& transform, u32 idx, MOAIDeckRe
 	gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
 	
 	this->UpdateParams ();
-	this->Draw ( idx, remapper, stretch.mX, stretch.mY );
+	this->DrawPatch ( idx, remapper, stretch.mX, stretch.mY );
 }
 
 //----------------------------------------------------------------//
-void MOAIStretchPatch2D::Draw ( u32 idx, MOAIDeckRemapper* remapper, float xStretch, float yStretch ) {
+void MOAIStretchPatch2D::DrawPatch ( u32 idx, MOAIDeckRemapper* remapper, float xStretch, float yStretch ) {
 
 	USRect uvRect;
 	u32 totalUVRects = this->mUVRects.Size ();

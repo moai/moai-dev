@@ -26,6 +26,7 @@ private:
 	static int		_getMaxMotorTorque		( lua_State* L );
 	static int		_getMotorTorque			( lua_State* L );	
 	static int		_getSpringFrequencyHz	( lua_State* L );
+	static int		_setMotor				( lua_State* L );
 	static int		_setMotorSpeed			( lua_State* L );
 	static int		_setMotorEnabled		( lua_State* L );
 	static int		_setMaxMotorTorque		( lua_State* L );	

@@ -447,12 +447,13 @@ void MOAINode::DepNodeUpdate () {
 	
 	if ( this->mState == STATE_SCHEDULED ) {
 	
-		this->mState = STATE_ACTIVE;
+		
 	
 		this->PullAttributes ();
 		this->OnDepNodeUpdate ();
 		this->ExtendUpdate ();
 	}
+	this->mState = STATE_ACTIVE;
 }
 
 //----------------------------------------------------------------//
@@ -653,6 +654,7 @@ void MOAINode::ScheduleUpdate () {
 			link->mSourceNode->Activate ( *this );
 		}
 	}
+	this->mState = STATE_SCHEDULED;
 }
 
 //----------------------------------------------------------------//

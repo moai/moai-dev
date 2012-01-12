@@ -96,9 +96,6 @@
     <ClCompile Include="..\..\src\moaicore\MOAIBlocker.cpp">
       <Filter>src\action</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAIThread.cpp">
-      <Filter>src\action</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAIAnim.cpp">
       <Filter>src\anim</Filter>
     </ClCompile>
@@ -525,15 +522,15 @@
     <ClCompile Include="..\..\src\moaicore\MOAIPathTerrainDeck.cpp">
       <Filter>src\pathfinding</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAICoroutine.cpp">
+      <Filter>src\action</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\moaicore\MOAIAction.h">
       <Filter>src\action</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIBlocker.h">
-      <Filter>src\action</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\MOAIThread.h">
       <Filter>src\action</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIAnim.h">
@@ -985,6 +982,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIPathGraph.h">
       <Filter>src\pathfinding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAICoroutine.h">
+      <Filter>src\action</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
