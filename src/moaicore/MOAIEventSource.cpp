@@ -89,9 +89,9 @@ int MOAIInstanceEventSource::_setListener ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIInstanceEventSource, "UN" );
 
 	self->SetListener ( state, 2 );
-	state.CopyToTop( 1 );
+	//state.CopyToTop( 1 );
 
-	return 1;
+	return 0;
 }
 
 //================================================================//
