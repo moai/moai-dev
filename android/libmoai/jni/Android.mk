@@ -23,7 +23,7 @@
 
 	LOCAL_MODULE 	:= moai
 	LOCAL_ARM_MODE 	:= $(MY_ARM_MODE)
-	LOCAL_LDLIBS 	:= -llog -lGLESv1_CM -lGLESv2 -lz crypto/libs/armeabi/libcrypto.a -lz ../obj/local/armeabi/libogg.a
+	LOCAL_LDLIBS 	:= -llog -lGLESv1_CM -lGLESv2 -lz crypto/libs/$(TARGET_ARCH_ABI)/libcrypto.a ../obj/local/$(TARGET_ARCH_ABI)/libogg.a
 	
 #----------------------------------------------------------------#
 # header search paths

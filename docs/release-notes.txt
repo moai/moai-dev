@@ -34,11 +34,11 @@
 - Android - improved multi-touch performance and input stability
 - Android - added keystore and alias password support
 - Android - added simple support for sharing
-- Android - added armeabi flag to build (no floating point emulation; faster physics code execution)
 - Android - added openURL to host
 - Untz - many fixes and improvements (all platforms)
 - iOS - added an AKU call for rotation event
 - Tapjoy - updated to 8.1.5
+- Native Client - added a sample host
 
 ================================================================
 = Moai SDK
