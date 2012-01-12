@@ -481,9 +481,9 @@ void MOAILayer2D::Draw ( int subPrimID, bool reload ) {
 			MOAIPartitionResult* result = buffer.GetResultUnsafe ( i );
 			
 			MOAIProp* prop = result->mProp;
-			bool reload = prop != prevProp;
+			bool reloadProp = prop != prevProp;
 			
-			prop->Draw ( result->mSubPrimID, reload );
+			prop->Draw ( result->mSubPrimID, reloadProp );
 			prop->DrawDebug ( result->mSubPrimID );
 			
 			prevProp = prop;
