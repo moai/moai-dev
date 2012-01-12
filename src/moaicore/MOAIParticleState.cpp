@@ -66,7 +66,7 @@ int MOAIParticleState::_setDamping ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setRenderScript
+/**	@name	setInitScript
 	@text	Sets the particle script to use for initializing new particles.
 	
 	@in		MOAIParticleState self

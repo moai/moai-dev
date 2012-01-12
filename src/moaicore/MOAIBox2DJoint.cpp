@@ -21,7 +21,7 @@ SUPPRESS_EMPTY_FILE_WARNING
 /**	@name	destroy
 	@text	Schedule joint for destruction.
 	
-	@in		MOAIBox2DBody self
+	@in		MOAIBox2DJoint self
 	@out	nil
 */
 int MOAIBox2DJoint::_destroy ( lua_State* L ) {
@@ -149,7 +149,7 @@ int MOAIBox2DJoint::_getReactionForce ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getReactionForce
+/**	@name	getReactionTorque
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DJoint self

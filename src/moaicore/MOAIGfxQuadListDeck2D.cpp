@@ -234,7 +234,7 @@ int MOAIGfxQuadListDeck2D::_setTexture ( lua_State* L ) {
 	@text	Set UV space quad given a valid deck index. Vertex order is
 			clockwise from upper left (xMin, yMax)
 	
-	@in		MOAIGfxQuadDeck2D self
+	@in		MOAIGfxQuadListDeck2D self
 	@in		number idx	Index of the quad.
 	@in		number x0
 	@in		number y0

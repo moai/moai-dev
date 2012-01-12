@@ -18,7 +18,7 @@
 /**	@name	clear
 	@text	Remove all props from the partition.
 	
-	@in		MOAILayer2D self
+	@in		MOAIPartition self
 	@out	nil
 */
 int MOAIPartition::_clear ( lua_State* L ) {
@@ -243,7 +243,7 @@ int MOAIPartition::_sortedPropListForPoint ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	propListForRect
+/**	@name	sortedPropListForRect
 	@text	Returns all props under a given world space rect sorted
 			by priority.
 	
