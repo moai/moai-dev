@@ -15,7 +15,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	exportToString
+/**	@name	exportToFile
 	@text	Exports the contents of the serializer to a file.
 
 	@in		MOAISerializer self

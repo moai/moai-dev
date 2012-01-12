@@ -272,7 +272,7 @@ int MOAITexture::_setFilter ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setFilter
+/**	@name	setWrap
 	@text	Set wrapping mode for texture.
 	
 	@in		MOAITexture self

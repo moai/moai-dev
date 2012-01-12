@@ -20,7 +20,7 @@ SUPPRESS_EMPTY_FILE_WARNING
 /**	@name	getMaxForce
 	@text	See Box2D documentation.
 	
-	@in		MOAIBoxFrictionJoint self
+	@in		MOAIBox2DFrictionJoint self
 	@out	number maxForce
 */
 int MOAIBox2DFrictionJoint::_getMaxForce ( lua_State* L ) {
@@ -42,7 +42,7 @@ int MOAIBox2DFrictionJoint::_getMaxForce ( lua_State* L ) {
 /**	@name	getMaxTorque
 	@text	See Box2D documentation.
 	
-	@in		MOAIBoxFrictionJoint self
+	@in		MOAIBox2DFrictionJoint self
 	@out	number maxTorque		Converted from N-m.
 */
 int MOAIBox2DFrictionJoint::_getMaxTorque ( lua_State* L ) {
@@ -65,7 +65,7 @@ int MOAIBox2DFrictionJoint::_getMaxTorque ( lua_State* L ) {
 /**	@name	setMaxForce
 	@text	See Box2D documentation.
 	
-	@in		MOAIBoxFrictionJoint self
+	@in		MOAIBox2DFrictionJoint self
 	@opt	number maxForce		Default value is 0.
 	@out	nil
 */
@@ -90,7 +90,7 @@ int MOAIBox2DFrictionJoint::_setMaxForce ( lua_State* L ) {
 /**	@name	setMaxTorque
 	@text	See Box2D documentation.
 	
-	@in		MOAIBoxFrictionJoint self
+	@in		MOAIBox2DFrictionJoint self
 	@opt	number maxTorque		Converted to N-m. Default value is 0.
 	@out	nil
 */

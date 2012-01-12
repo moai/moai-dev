@@ -30,7 +30,7 @@ public:
 /**	@name	setGrid
 	@text	Set graph data to use for pathfinding. 
 
-	@in		MOAIPathFinder self
+	@in		MOAIGridPathGraph self
 	@opt	MOAIGrid grid					Default value is nil.
 	@out	nil
 */
