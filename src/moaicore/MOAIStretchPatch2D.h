@@ -60,7 +60,7 @@ private:
 	static int			_setUVRect				( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void				Draw					( u32 idx, MOAIDeckRemapper* remapper, float xStretch, float yStretch );
+	void				DrawPatch				( u32 idx, MOAIDeckRemapper* remapper, float xStretch, float yStretch );
 	void				UpdateParams			();
 
 public:
