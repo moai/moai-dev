@@ -16,7 +16,7 @@ nacl_env = make_nacl_env.NaClEnvironment(
 fmod_include = os.getenv('FMOD_SDK_ROOT') + '/api/inc';
 fmod_library = os.getenv('FMOD_SDK_ROOT') + '/api/lib/' + os.getenv('NACL_TARGET_PLATFORM') + '/x86-';
 
-Repository ( "../../3rdparty", "../../src", ".." )
+Repository ( "../3rdparty", "../src", "src" )
 
 lua_sources = [ os.path.join( 'lua-5.1.3/src', src_file ) for src_file in [
 				  'lapi.c',

@@ -27,10 +27,9 @@ variable in your shell to the location of the root of the SDK. For example:
 
 export FMOD_SDK_ROOT=/Chrome/fmodapi43805nacl
 
-To build Moai for Native client, run the "build.sh" or "build.bat" script in 
-the scons/ directory. Note that if you are building on Windows, you will need
-to install cygwin and ensure that the cygwin binaries are in your executable
-path.
+To build Moai for Native client, run the "build.sh" or "build.bat" script. 
+Note that if you are building on Windows, you will need to install cygwin and 
+ensure that the cygwin binaries are in your executable path.
 
 The build script takes two optional command line parameters:
 
