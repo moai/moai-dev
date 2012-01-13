@@ -123,9 +123,9 @@ int MOAIColor::_seekColor ( lua_State* L ) {
 	@text	Initialize the color.
 	
 	@in		MOAIColor self
-	@in		number r
-	@in		number g
-	@in		number b
+	@in		number r	Default value is 0.
+	@in		number g	Default value is 0.
+	@in		number b	Default value is 0.
 	@opt	number a	Default value is 1.
 	@out	nil
 */

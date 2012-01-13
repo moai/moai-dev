@@ -45,6 +45,8 @@ public:
 	void			CopyToTop				( int idx );
 	int				DebugCall				( int nArgs, int nResults );
 	bool			Deflate					( int idx, int level, int windowBits );
+	USColorVec		GetColor				( int idx, float r, float g, float b, float a );
+	u32				GetColor32				( int idx, float r, float g, float b, float a );
 	void			GetField				( int idx, cc8* name );
 	void			GetField				( int idx, int key );
 	STLString		GetField				( int idx, cc8* key, cc8* value );
@@ -136,15 +138,15 @@ public:
 };
 
 //----------------------------------------------------------------//
-template <> bool		MOAILuaState::GetValue < bool >		( int idx, bool value );
-template <> cc8*		MOAILuaState::GetValue < cc8* >		( int idx, cc8* value );
+template <> bool		MOAILuaState::GetValue < bool >			( int idx, bool value );
+template <> cc8*		MOAILuaState::GetValue < cc8* >			( int idx, cc8* value );
 template <> double		MOAILuaState::GetValue < double >		( int idx, double value );
 template <> float		MOAILuaState::GetValue < float >		( int idx, float value );
-template <> int			MOAILuaState::GetValue < int >		( int idx, int value );
+template <> int			MOAILuaState::GetValue < int >			( int idx, int value );
 template <> u8			MOAILuaState::GetValue < u8 >			( int idx, u8 value );
-template <> u16			MOAILuaState::GetValue < u16 >		( int idx, u16 value );
-template <> u32			MOAILuaState::GetValue < u32 >		( int idx, u32 value );
-template <> u64			MOAILuaState::GetValue < u64 >		( int idx, u64 value );
-template <> uintptr		MOAILuaState::GetValue < uintptr >	( int idx, uintptr value );
+template <> u16			MOAILuaState::GetValue < u16 >			( int idx, u16 value );
+template <> u32			MOAILuaState::GetValue < u32 >			( int idx, u32 value );
+template <> u64			MOAILuaState::GetValue < u64 >			( int idx, u64 value );
+template <> uintptr		MOAILuaState::GetValue < uintptr >		( int idx, uintptr value );
 
 #endif

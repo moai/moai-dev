@@ -63,6 +63,7 @@ private:
 	static int		_copy				( lua_State* L );
 	static int		_copyBits			( lua_State* L );
 	static int		_copyRect			( lua_State* L );
+	static int		_fillRect			( lua_State* L );
 	static int		_getColor32			( lua_State* L );
 	static int		_getFormat			( lua_State* L );
 	static int		_getRGBA			( lua_State* L );
@@ -110,11 +111,14 @@ public:
 	void				BleedRect				( int xMin, int yMin, int xMax, int yMax );
 	void				Clear					();
 	void				ClearBitmap				();
+	void				ClearRect				( USIntRect rect );
 	void				ConvertColors			( const MOAIImage& image, USColor::Format colorFmt );
 	void				Copy					( const MOAIImage& image );
 	void				CopyBits				( const MOAIImage& image, int srcX, int srcY, int destX, int destY, int width, int height );
 	void				CopyRect				( const MOAIImage& image, USIntRect srcRect, USIntRect destRest, u32 filter );
+	void				FillRect				( USIntRect rect, u32 color );
 	u32					GetBitmapSize			() const;
+	USIntRect			GetBounds				();
 	u32					GetColor				( u32 i ) const;
 	u32					GetColor				( u32 x, u32 y ) const;
 	u32					GetDataSize				() const;

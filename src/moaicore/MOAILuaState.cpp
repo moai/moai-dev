@@ -217,6 +217,25 @@ bool MOAILuaState::Deflate ( int idx, int level, int windowBits ) {
 }
 
 //----------------------------------------------------------------//
+USColorVec MOAILuaState::GetColor ( int idx, float r, float g, float b, float a ) {
+
+	USColorVec color;
+	color.mR = this->GetValue < float >( idx++, r );
+	color.mG = this->GetValue < float >( idx++, g );
+	color.mB = this->GetValue < float >( idx++, b );
+	color.mA = this->GetValue < float >( idx++, a );
+	
+	return color;
+}
+
+//----------------------------------------------------------------//
+u32 MOAILuaState::GetColor32 ( int idx, float r, float g, float b, float a ) {
+
+	USColorVec color = this->GetColor ( idx, r, g, b, a );
+	return color.PackRGBA ();
+}
+
+//----------------------------------------------------------------//
 bool MOAILuaState::Encode ( int idx, USCipher& cipher ) {
 
 	if ( !this->IsType ( idx, LUA_TSTRING )) return false;
