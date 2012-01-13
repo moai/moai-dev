@@ -49,7 +49,7 @@ void MOAIBox2DDebugDraw::DrawPolygon ( const b2Vec2* vertices, int32 vertexCount
 
 //----------------------------------------------------------------//
 void MOAIBox2DDebugDraw::DrawSolidPolygon ( const b2Vec2* vertices, int32 vertexCount, const b2Color& color ) {
-
+	
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	
 	gfxDevice.SetBlendMode ( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );

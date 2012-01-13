@@ -678,6 +678,26 @@ int MOAIBox2DWorld::_setAutoClearForces ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	setDebugDrawFlags
+	@text	Sets mask for debug drawing.
+	
+	@in		MOAIBox2DWorld self
+	@opt	number flags		One of MOAIBox2DWorld.DEBUG_DRAW_SHAPES, MOAIBox2DWorld.DEBUG_DRAW_JOINTS,
+								MOAIBox2DWorld.DEBUG_DRAW_BOUNDS, MOAIBox2DWorld.DEBUG_DRAW_PAIRS,
+								MOAIBox2DWorld.DEBUG_DRAW_CENTERS. Default value is MOAIBox2DWorld.DEBUG_DRAW_DEFAULT.
+	@out	nil
+*/
+int MOAIBox2DWorld::_setDebugDrawFlags ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIBox2DWorld, "U" )
+	
+	u32 flags = state.GetValue < u32 >( 2, DEBUG_DRAW_DEFAULT );
+	if ( self->mDebugDraw ) {
+		self->mDebugDraw->SetFlags ( flags );
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	setGravity
 	@text	See Box2D documentation.
 	
@@ -859,13 +879,7 @@ MOAIBox2DWorld::MOAIBox2DWorld () :
 	this->mDebugDraw = new MOAIBox2DDebugDraw ();
 	this->mWorld->SetDebugDraw ( this->mDebugDraw );
 	
-	this->mDebugDraw->SetFlags (
-		b2Draw::e_shapeBit			|
-		b2Draw::e_jointBit			|
-		//b2DebugDraw::e_aabbBit			|
-		//b2DebugDraw::e_pairBit			|
-		b2Draw::e_centerOfMassBit
-	);
+	this->mDebugDraw->SetFlags ( DEBUG_DRAW_DEFAULT );
 }
 
 //----------------------------------------------------------------//
@@ -910,6 +924,14 @@ void MOAIBox2DWorld::OnUpdate ( float step ) {
 void MOAIBox2DWorld::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAIAction::RegisterLuaClass ( state );
+	
+	state.SetField ( -1, "DEBUG_DRAW_SHAPES", ( u32 )DEBUG_DRAW_SHAPES );
+	state.SetField ( -1, "DEBUG_DRAW_JOINTS", ( u32 )DEBUG_DRAW_JOINTS );
+	state.SetField ( -1, "DEBUG_DRAW_BOUNDS", ( u32 )DEBUG_DRAW_BOUNDS );
+	state.SetField ( -1, "DEBUG_DRAW_PAIRS", ( u32 )DEBUG_DRAW_PAIRS );
+	state.SetField ( -1, "DEBUG_DRAW_CENTERS", ( u32 )DEBUG_DRAW_CENTERS );
+	
+	state.SetField ( -1, "DEBUG_DRAW_DEFAULT", ( u32 )DEBUG_DRAW_DEFAULT );
 }
 
 //----------------------------------------------------------------//
@@ -936,6 +958,7 @@ void MOAIBox2DWorld::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "getTimeToSleep",				_getTimeToSleep },
 		{ "setAngularSleepTolerance",	_setAngularSleepTolerance },
 		{ "setAutoClearForces",			_setAutoClearForces },
+		{ "setDebugDrawFlags",			_setDebugDrawFlags },
 		{ "setGravity",					_setGravity },
 		{ "setIterations",				_setIterations },
 		{ "setLinearSleepTolerance",	_setLinearSleepTolerance },
