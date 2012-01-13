@@ -7,12 +7,12 @@
 #================================================================#
 
 	# check for command line switches
-	usage="usage: $0 -p <package> [-i thumb | arm] [-a all | armeabi | armeabi-v7a] [-l appPlatform ] [-q]"
+	usage="usage: $0 -p <package> [-i thumb | arm] [-a all | armeabi | armeabi-v7a] [-l appPlatform ] [-s]"
 	package_name=
 	arm_mode=arm
 	arm_arch=armeabi-v7a
 	app_platform=android-10
-	quiet="false"
+	skip_build="false"
 	
 	while [ $# -gt 0 ];	do
 	    case "$1" in
@@ -20,7 +20,7 @@
 	        -i)  arm_mode="$2"; shift;;
 	        -a)  arm_arch="$2"; shift;;
 			-l)  app_platform="$2"; shift;;
-			-q)  quiet="true";;
+			-s)  skip_build="true";;
 			-*)
 		    	echo >&2 \
 		    		$usage
@@ -79,27 +79,38 @@
 	if [ x"$existing_app_platform" != x"$app_platform" ]; then
 		shouldBuild=true
 	fi
-
-	if [ x"$shouldBuild" == xtrue ]; then
-		pushd libmoai > /dev/null
-			bash build.sh -p $package_name -i $arm_mode -a $arm_arch -l $app_platform
-		popd > /dev/null
-	elif [ ! -f libmoai/libs/armeabi/libmoai.so ] && [ x"$arm_arch" = xarmeabi ] || [ x"$arm_arch" = xall ]; then
-		pushd libmoai > /dev/null
-			bash build.sh -p $package_name -i $arm_mode -a $arm_arch -l $app_platform
-		popd > /dev/null
-	elif [ ! -f libmoai/libs/armeabi-v7a/libmoai.so ] && [ x"$arm_arch" = xarmeabi-v7a ] || [ x"$arm_arch" = xall ]; then
-		pushd libmoai > /dev/null
-			bash build.sh -p $package_name -i $arm_mode -a $arm_arch -l $app_platform
-		popd > /dev/null
+	
+	# if the caller has not explicitly told us to skip a libmoai build, check
+	# to see if we should build libmoai first.
+	if [ x"$skip_build" != xtrue ]; then
+		if [ x"$shouldBuild" == xtrue ]; then
+			pushd libmoai > /dev/null
+				bash build.sh -p $package_name -i $arm_mode -a $arm_arch -l $app_platform
+			popd > /dev/null
+		elif [ ! -f libmoai/libs/armeabi/libmoai.so ] && [ x"$arm_arch" = xarmeabi ] || [ x"$arm_arch" = xall ]; then
+			pushd libmoai > /dev/null
+				bash build.sh -p $package_name -i $arm_mode -a $arm_arch -l $app_platform
+			popd > /dev/null
+		elif [ ! -f libmoai/libs/armeabi-v7a/libmoai.so ] && [ x"$arm_arch" = xarmeabi-v7a ] || [ x"$arm_arch" = xall ]; then
+			pushd libmoai > /dev/null
+				bash build.sh -p $package_name -i $arm_mode -a $arm_arch -l $app_platform
+			popd > /dev/null
+		fi
 	fi
 
 	# copy libmoai into new host template dir
 	new_host_lib_dir=$new_host_dir/host-source/project/libs
 	mkdir -p $new_host_lib_dir
 	
-	cp -fR libmoai/libs/* $new_host_lib_dir
-	rm -f $new_host_lib_dir/package.txt
+	if [ -d libmoai/libs ]; then
+		cp -fR libmoai/libs/* $new_host_lib_dir
+		rm -f $new_host_lib_dir/package.txt
+	else
+		echo "*** libmoai has not been built. This host will be incomplete until a version"
+		echo "*** of libmoai.so is placed in $new_host_dir/host-source/project/libs/armeabi"
+		echo "*** or $new_host_dir/host-source/project/libs/armeabi-v7a."
+		echo ""
+	fi
 	
 	# copy default project files into new host dir
 	cp -f host-source/d.README.txt $new_host_dir/README.txt
@@ -152,26 +163,24 @@
 	rm -f $new_host_dir/run-host.bat.backup
 	
 	# echo descriptive messages about this host
-	if [ "$quiet" != "true" ]; then
-		echo "********************************************************************************"
-		echo "* Android host successfully created.                                           *"
-		echo "********************************************************************************"
-		echo ""
-		echo "- The new host is in the \"untitled-host\" directory. Every time this script is"
-		echo "  run, it will clobber the contents of the \"untitled-host\" directory so you"
-		echo "  will probably want to move this folder elsewhere and rename it."
-		echo ""
-		echo "- Edit \"settings-global.sh\" to configure your project and point it to your lua"
-		echo "  scripts and other resources."
-		echo ""
-		echo "- The first time you run the host, the file \"settings-local.sh\" is created."
-		echo "  You will need to configure the path to your Android SDK therein."
-		echo ""
-		echo "- Note that host is tied to the package name you specified when it was created."
-		echo "  If you wish to change the package name, simply recreate the host with the new"
-		echo "  package name and re-apply your settings files (and any resource files) into the"
-		echo "  new project."
-		echo ""
-		echo "********************************************************************************"
-	fi
+	echo "********************************************************************************"
+	echo "* Android host successfully created.                                           *"
+	echo "********************************************************************************"
+	echo ""
+	echo "- The new host is in the \"untitled-host\" directory. Every time this script is"
+	echo "  run, it will clobber the contents of the \"untitled-host\" directory so you"
+	echo "  will probably want to move this folder elsewhere and rename it."
+	echo ""
+	echo "- Edit \"settings-global.sh\" to configure your project and point it to your lua"
+	echo "  scripts and other resources."
+	echo ""
+	echo "- The first time you run the host, the file \"settings-local.sh\" is created."
+	echo "  You will need to configure the path to your Android SDK therein."
+	echo ""
+	echo "- Note that host is tied to the package name you specified when it was created."
+	echo "  If you wish to change the package name, simply recreate the host with the new"
+	echo "  package name and re-apply your settings files (and any resource files) into the"
+	echo "  new project."
+	echo ""
+	echo "********************************************************************************"
 	
