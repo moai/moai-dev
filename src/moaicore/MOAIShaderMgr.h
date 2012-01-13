@@ -10,7 +10,7 @@ class MOAIShader;
 // MOAIShaderMgr
 //================================================================//
 class MOAIShaderMgr :
-	public MOAIGlobalClass < MOAIShaderMgr > {
+	public MOAIGlobalClass < MOAIShaderMgr, MOAILuaObject > {
 public:
 
 	enum {
@@ -25,13 +25,20 @@ private:
 	
 	MOAIShader* mShaders [ TOTAL_SHADERS ];
 	
+	//----------------------------------------------------------------//
+	static int			_getShader			( lua_State* L );
+	
 public:
+	
+	DECL_LUA_SINGLETON ( MOAIShaderMgr )
 	
 	//----------------------------------------------------------------//
 	void				BindShader			( u32 shaderID );
 	MOAIShader&			GetShader			( u32 shaderID );
 						MOAIShaderMgr		();
 						~MOAIShaderMgr		();
+	void				RegisterLuaClass	( MOAILuaState& state );
+	void				RegisterLuaFuncs	( MOAILuaState& state );
 };
 
 #endif
