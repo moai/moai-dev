@@ -398,6 +398,27 @@ int MOAISim::_pushRenderPass ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	removeRenderPass
+	@text	Removes the specified prim from the render stack.
+
+	@in		MOAIProp2D prop		The viewport of the render prim.
+	@out	nil
+*/
+int MOAISim::_removeRenderPass ( lua_State* L ) {
+
+	MOAILuaState state ( L );
+	if ( !state.CheckParams ( 1, "U" )) return 0;
+	
+	MOAIProp2D* prop = state.GetLuaObject < MOAIProp2D >( 1 );
+	if ( !prop ) return 0;
+	
+	MOAISim& device = MOAISim::Get ();
+	device.RemoveRenderPass ( prop );
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	reportHistogram
 	@text	Generates a histogram of active MOAIObjects.
 
@@ -770,6 +791,7 @@ void MOAISim::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "pauseTimer",					_pauseTimer },
 		{ "popRenderPass",				_popRenderPass },
 		{ "pushRenderPass",				_pushRenderPass },
+		{ "removeRenderPass",			_removeRenderPass },
 		{ "reportHistogram",			_reportHistogram },
 		{ "reportLeaks",				_reportLeaks },
 		{ "setBoostThreshold",			_setBoostThreshold },
@@ -793,6 +815,17 @@ void MOAISim::RegisterLuaClass ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAISim::RegisterLuaFuncs ( MOAILuaState& state ) {
 	UNUSED ( state );
+}
+
+//----------------------------------------------------------------//
+void MOAISim::RemoveRenderPass ( MOAIProp2D* prop ) {
+
+	if ( prop ) {
+		if ( this->mRenderPasses.Contains ( prop )) {
+			this->mRenderPasses.Remove ( prop );
+			this->LuaRelease ( *prop );
+		}
+	}
 }
 
 //----------------------------------------------------------------//
