@@ -33,7 +33,7 @@ int MOAITimer::_getTime( lua_State* L ) {
 	@out	number nTimes
 */
 int MOAITimer::_getTimesExecuted ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITimer, "UN" )
+	MOAI_LUA_SETUP ( MOAITimer, "U" )
 
 	lua_pushnumber ( L, self->mTimesExecuted );
 	return 1;

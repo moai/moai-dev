@@ -160,7 +160,7 @@ int MOAILuaObject::_tostring ( lua_State* L ) {
 	if ( data ) {
 	
 		STLString str;
-		str.write ( "0x%p <%s>", data, data->TypeName ()); // TODO: 64-bit
+		str.write ( "%p <%s>", data, data->TypeName ());
 		state.Push ( str );
 		return 1;
 	}
