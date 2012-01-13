@@ -12,7 +12,6 @@ rm -rf moai-sdk/include
 rm -rf moai-sdk/docs
 
 rm -rf moai-sdk/hosts/src
-rm -rf moai-sdk/hosts/ant
 rm -rf moai-sdk/hosts/xcode/ios/Classes
 rm -f moai-sdk/hosts/xcode/ios/Entitlements.plist
 rm -f moai-sdk/hosts/xcode/ios/Icon.png
