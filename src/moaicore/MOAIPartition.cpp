@@ -58,7 +58,11 @@ int MOAIPartition::_insertProp ( lua_State* L ) {
 	@in		MOAIPartition self
 	@in		number x
 	@in		number y
-	@out	MOAIProp prop	The prop under the point or nil if no prop found.
+	@opt	number sortMode			One of the MOAILayer sort modes. Default value is SORT_PRIORITY_ASCENDING.
+	@opt	number xScale			X scale for vector sort. Default value is 0.
+	@opt	number yScale			Y scale for vector sort. Default value is 0.
+	@opt	number priorityScale	Priority scale for vector sort. Default value is 1.
+	@out	MOAIProp prop		The prop under the point or nil if no prop found.
 */
 int MOAIPartition::_propForPoint ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIPartition, "UNN" )
@@ -74,14 +78,17 @@ int MOAIPartition::_propForPoint ( lua_State* L ) {
 	
 		buffer.PrepareResults ( MOAIPartitionResultBuffer::SORT_NONE );
 		
-		MOAIProp* prop = buffer.PopResult ()->mProp;
-		while ( MOAIPartitionResult* test = buffer.PopResult ()) {
-			if ( test->mProp->GetPriority () > prop->GetPriority ()) {
-				prop = test->mProp;
-			}
+		u32 sortMode = state.GetValue < u32 >( 4, MOAIPartitionResultBuffer::SORT_PRIORITY_ASCENDING );
+		float xScale = state.GetValue < float >( 5, 0.0f );
+		float yScale = state.GetValue < float >( 6, 0.0f );
+		float priorityScale = state.GetValue < float >( 7, 1.0f );
+		
+		buffer.PrepareResults ( MOAIPartitionResultBuffer::SORT_NONE );
+		MOAIProp* prop = buffer.FindBest ( sortMode, xScale, yScale, 0.0f, priorityScale );
+		if ( prop ) {
+			prop->PushLuaUserdata ( state );
+			return 1;
 		}
-		prop->PushLuaUserdata ( state );
-		return 1;
 	}
 	return 0;
 }
@@ -93,7 +100,11 @@ int MOAIPartition::_propForPoint ( lua_State* L ) {
 	@in		MOAIPartition self
 	@in		number x
 	@in		number y
-	@out	...				The props under the point, all pushed onto the stack.
+	@opt	number sortMode			One of the MOAILayer sort modes. Default value is SORT_NONE.
+	@opt	number xScale			X scale for vector sort. Default value is 0.
+	@opt	number yScale			Y scale for vector sort. Default value is 0.
+	@opt	number priorityScale	Priority scale for vector sort. Default value is 1.
+	@out	...						The props under the point, all pushed onto the stack.
 */
 int MOAIPartition::_propListForPoint ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIPartition, "UNN" )
@@ -106,9 +117,15 @@ int MOAIPartition::_propListForPoint ( lua_State* L ) {
 
 	u32 total = self->GatherProps ( buffer, vec, 0 );
 	if ( total ) {
-		buffer.PrepareResults ( MOAIPartitionResultBuffer::SORT_NONE );
+	
+		u32 sortMode = state.GetValue < u32 >( 4, MOAIPartitionResultBuffer::SORT_NONE );
+		float xScale = state.GetValue < float >( 5, 0.0f );
+		float yScale = state.GetValue < float >( 6, 0.0f );
+		float priorityScale = state.GetValue < float >( 7, 1.0f );
+	
+		buffer.PrepareResults ( sortMode, false, xScale, yScale, 0.0f, priorityScale );
 		buffer.PushResultProps ( L );
-		return 1;
+		return total;
 	}
 	return 0;
 }
@@ -122,24 +139,30 @@ int MOAIPartition::_propListForPoint ( lua_State* L ) {
 	@in		number yMin
 	@in		number xMax
 	@in		number yMax
-	@out	...				The props under the rect, all pushed onto the stack.
+	@opt	number sortMode			One of the MOAILayer sort modes. Default value is SORT_NONE.
+	@opt	number xScale			X scale for vector sort. Default value is 0.
+	@opt	number yScale			Y scale for vector sort. Default value is 0.
+	@opt	number priorityScale	Priority scale for vector sort. Default value is 1.
+	@out	...						The props under the rect, all pushed onto the stack.
 */
 int MOAIPartition::_propListForRect ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIPartition, "UNNNN" )
 
-	USRect rect;
-	rect.mXMin = state.GetValue < float >( 2, 0.0f );
-	rect.mYMin = state.GetValue < float >( 3, 0.0f );
-	rect.mXMax = state.GetValue < float >( 4, 0.0f );
-	rect.mYMax = state.GetValue < float >( 5, 0.0f );
-
+	USRect rect = state.GetRect < float >( 2 );
+	
 	MOAIPartitionResultBuffer& buffer = MOAIPartitionResultMgr::Get ().GetBuffer ();
 
 	u32 total = self->GatherProps ( buffer, rect, 0 );
 	if ( total ) {
-		buffer.PrepareResults ( MOAIPartitionResultBuffer::SORT_NONE );
+	
+		u32 sortMode = state.GetValue < u32 >( 6, MOAIPartitionResultBuffer::SORT_NONE );
+		float xScale = state.GetValue < float >( 7, 0.0f );
+		float yScale = state.GetValue < float >( 8, 0.0f );
+		float priorityScale = state.GetValue < float >( 9, 1.0f );
+	
+		buffer.PrepareResults ( sortMode, false, xScale, yScale, 0.0f, priorityScale );
 		buffer.PushResultProps ( L );
-		return 1;
+		return total;
 	}
 	return 0;
 }
@@ -211,66 +234,6 @@ int MOAIPartition::_setLayer ( lua_State* L ) {
 
 	self->SetLayer ( layerID, cellSize, width, height );
 
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@name	propListForPoint
-	@text	Returns all props under a given world space point sorted
-			by priority.
-	
-	@in		MOAIPartition self
-	@in		number x
-	@in		number y
-	@out	...				The props under the point, sorted and pushed onto the stack.
-*/
-int MOAIPartition::_sortedPropListForPoint ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIPartition, "UNN" )
-
-	USVec2D vec;
-	vec.mX = state.GetValue < float >( 2, 0.0f );
-	vec.mY = state.GetValue < float >( 3, 0.0f );
-	
-	MOAIPartitionResultBuffer& buffer = MOAIPartitionResultMgr::Get ().GetBuffer ();
-	
-	u32 total = self->GatherProps ( buffer, vec, 0 );
-	if ( total ) {
-		buffer.PrepareResults ( MOAIPartitionResultBuffer::SORT_PRIORITY_ASCENDING ); // TODO: pass in as param
-		buffer.PushResultProps ( L );
-		return 1;
-	}
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@name	sortedPropListForRect
-	@text	Returns all props under a given world space rect sorted
-			by priority.
-	
-	@in		MOAIPartition self
-	@in		number xMin
-	@in		number yMin
-	@in		number xMax
-	@in		number yMax
-	@out	...				The props under the rect, sorted and pushed onto the stack.
-*/
-int MOAIPartition::_sortedPropListForRect ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIPartition, "UNNNN" )
-
-	USRect rect;
-	rect.mXMin = state.GetValue < float >( 2, 0.0f );
-	rect.mYMin = state.GetValue < float >( 3, 0.0f );
-	rect.mXMax = state.GetValue < float >( 4, 0.0f );
-	rect.mYMax = state.GetValue < float >( 5, 0.0f );
-	
-	MOAIPartitionResultBuffer& buffer = MOAIPartitionResultMgr::Get ().GetBuffer ();
-	
-	u32 total = self->GatherProps ( buffer, rect, 0 );
-	if ( total ) {
-		buffer.PrepareResults ( MOAIPartitionResultBuffer::SORT_PRIORITY_ASCENDING ); // TODO: pass in as param
-		buffer.PushResultProps ( L );
-		return 1;
-	}
 	return 0;
 }
 
@@ -395,8 +358,6 @@ void MOAIPartition::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "removeProp",					_removeProp },
 		{ "reserveLayers",				_reserveLayers },
 		{ "setLayer",					_setLayer },
-		{ "sortedPropListForPoint",		_sortedPropListForPoint },
-		{ "sortedPropListForRect",		_sortedPropListForRect },
 		{ NULL, NULL }
 	};
 	

@@ -39,8 +39,6 @@ private:
 	static int		_removeProp					( lua_State* L );
 	static int		_reserveLayers				( lua_State* L );
 	static int		_setLayer					( lua_State* L );
-	static int		_sortedPropListForPoint		( lua_State* L );
-	static int		_sortedPropListForRect		( lua_State* L );
 
 	//----------------------------------------------------------------//
 	void			AffirmPriority			( MOAIProp& prop );
