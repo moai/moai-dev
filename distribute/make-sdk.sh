@@ -6,8 +6,6 @@
 # http://getmoai.com
 #================================================================#
 
-./clean-sdk.sh
-
 # general files
 mkdir -p moai-sdk/3rdparty/glut-3.7.6
 cd ../3rdparty/glut-3.7.6-bin
