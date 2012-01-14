@@ -131,13 +131,6 @@ void MOAIActionMgr::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIActionMgr::StartAction ( MOAIAction& action ) {
-
-	MOAIAction* root = this->AffirmRoot ();
-	root->AddChild ( action );
-}
-
-//----------------------------------------------------------------//
 void MOAIActionMgr::Update ( float step ) {
 
 	MOAIAction* root = this->mRoot;
