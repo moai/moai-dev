@@ -429,11 +429,13 @@ void MOAITextBox::Draw ( int subPrimID, bool reload ) {
 	
 		MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 
-		gfxDevice.SetPenColor ( this->mColor );
-		gfxDevice.SetBlendMode ( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
-		gfxDevice.SetScissorRect ();
+		this->LoadShader ();
 
-		MOAIShaderMgr::Get ().BindShader ( MOAIShaderMgr::FONT_SHADER );
+		if ( !this->mShader ) {
+			// TODO: this should really come from MOAIFont, which should really be a
+			// specialized implementation of MOAIDeck...
+			gfxDevice.SetShaderPreset ( MOAIShaderMgr::FONT_SHADER );
+		}
 
 		gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, this->GetLocalToWorldMtx ());
 		gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
@@ -526,6 +528,8 @@ MOAITextBox::MOAITextBox () :
 	
 	this->mFrame.Init ( 0.0f, 0.0f, 0.0f, 0.0f ); 
 	this->SetMask ( MOAIProp::CAN_DRAW | MOAIProp::CAN_DRAW_DEBUG );
+	
+	this->mBlendMode.SetBlend ( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
 }
 
 //----------------------------------------------------------------//
