@@ -68,7 +68,7 @@ MOAIProp* MOAIPartitionResultBuffer::FindBest ( u32 mode, float xScale, float yS
 		
 		case SORT_Y_ASCENDING:
 		
-			bestFloat = best->mX * floatSign;
+			bestFloat = best->mY * floatSign;
 		
 			for ( u32 i = 1; i < this->mTotalProps; ++i ) {
 				MOAIPartitionResult* compare = &this->mResults [ i ];
