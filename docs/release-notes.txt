@@ -1,6 +1,25 @@
 ================================================================
 = Moai SDK
 = Version 0.95 Beta
+= Revision 3
+================================================================
+- Added method chaining on MOAIActions (thanks, Pygy!)
+- Fixed a bug in ZipFS affecting un-zipaligned APKs (and therefore, debugging in Eclipse)
+- Fixed build warnings in Xcode
+- Allow Android builds to target armeabi, armeabi-v7a (default) or both
+- Rename 'android' top-level source directory to 'ant' for consistency with other SDK organization
+- Rename 'nacl' top-level source directory to 'scons' for consistency with other SDK organization
+- Rename 'android' sample host directory to 'ant' for consistency with other SDK organization
+- Rename 'nacl' sample host directory to 'chrome' for consistency with other SDK organization
+- Rename 'xcode-ios' sample host directory to 'xcode/ios' for consistency with other SDK organization
+- Rename 'xcode-osx' sample host directory to 'xcode/osx' for consistency with other SDK organization
+- Reorganize the 'scons' top-level source directory to more closely match other build organizations
+- Added 'sdk-setup' scripts to 'ant' (Android) and 'chrome' (Native Client) sample hosts to copy necessary resources
+- A handful of documentation fixes (thanks again, Pygy!)
+
+================================================================
+= Moai SDK
+= Version 0.95 Beta
 = Revision 1
 ================================================================
 - Added luafilesystem to luaext; enabled in glut host
