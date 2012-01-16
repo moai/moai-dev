@@ -4,8 +4,6 @@
 -- http://getmoai.com
 ----------------------------------------------------------------
 
-require ( 'moai2D' )
-
 MOAISim.openWindow ( "test", 320, 480 )
 
 MOAIDebugLines.setStyle ( MOAIDebugLines.PARTITION_CELLS, 2, 1, 1, 1 )

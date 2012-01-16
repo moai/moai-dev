@@ -4,8 +4,6 @@
 -- http://getmoai.com
 ----------------------------------------------------------------
 
-require ( 'moai2D' )
-
 print ( "hello, moai!" )
 
 MOAILogMgr.registerLogMessage ( MOAILogMgr.MOAI_FileNotFound_S,			'CUSTOM %s NOT FOUND MESSAGE', MOAILogMgr.LOG_ERROR )

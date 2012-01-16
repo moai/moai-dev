@@ -1660,6 +1660,14 @@
 				>
 			</File>
 		</Filter>
+		<Filter
+			Name="lua-headers"
+			>
+			<File
+				RelativePath="..\..\src\lua-headers\moai2D_lua.h"
+				>
+			</File>
+		</Filter>
 		<File
 			RelativePath="..\..\src\config\moaicore-config.h"
 			>

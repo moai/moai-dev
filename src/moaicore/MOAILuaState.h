@@ -89,10 +89,14 @@ public:
 	void			Push					( lua_CFunction value );
 	void			Push					( MOAILuaObject* luaObject );
 	void			Push					( MOAILuaRef& ref );
+	void			Push					( void* data, size_t size );
 	void			PushPtrUserData			( void* ptr );
 	int				PushTableItr			( int idx );
-	void			RegisterModule			( cc8* name, lua_CFunction loader, bool autoLoad );
+	void			RegisterModule			( int idx, cc8* name, bool autoLoad );
+	void			RegisterModule			( lua_CFunction loader, cc8* name, bool autoload );
+	void			RegisterModule			( void* data, size_t size, cc8* name, bool autoload );
 	int				RelIndex				( int idx );
+	int				Run						( void* data, size_t size, int nArgs, int nResults );
 	void			SetPath					( cc8* path );
 	void			SetTop					( int top );
 	bool			TableItrNext			( int itr );

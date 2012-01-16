@@ -4,8 +4,6 @@
 -- http://getmoai.com
 ----------------------------------------------------------------
 
-require ( 'moai2D' )
-
 -- build the font
 charcodes = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 .,:;!?()&/-'
 text = 'The quick brown fox jumps over the lazy dog.'

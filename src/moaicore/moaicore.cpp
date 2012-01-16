@@ -4,6 +4,7 @@
 #include "pch.h"
 #include <chipmunk/chipmunk.h>
 #include <moaicore/moaicore.h>
+#include <lua-headers/moai2D_lua.h>
 
 extern "C" {
 	#include <zlib.h>
@@ -181,10 +182,9 @@ void moaicore::InitGlobals ( MOAIGlobals* globals ) {
 		REGISTER_LUA_CLASS ( MOAICpSpace )
 	#endif
 	
-	// TODO: for back compat; remove in next release
+	// run bundled init scripts for back compat and Lua framework extensions
 	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
-	lua_getglobal ( state, "MOAICoroutine" );
-	lua_setglobal ( state, "MOAIThread" );
+	state.Run ( moai2D_lua, moai2D_lua_SIZE, 0, 0 );
 }
 
 //----------------------------------------------------------------//
