@@ -640,7 +640,7 @@ void MOAIDraw::DrawVertexArray ( const USVec3D* verts, u32 count, u32 color, u32
 }
 
 //----------------------------------------------------------------//
-void MOAIDraw::DrawVertexArray ( const float* verts, u32 count, u32 color, u32 primType ) {
+void MOAIDraw::DrawVertexArray2D ( const float* verts, u32 count, u32 color, u32 primType ) {
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 
@@ -651,7 +651,7 @@ void MOAIDraw::DrawVertexArray ( const float* verts, u32 count, u32 color, u32 p
 	
 	for ( u32 i = 0; i < count; ++i ) {
 		u32 v = i << 1;
-		gfxDevice.WriteVtx ( verts [ v ], verts [ v + 1 ], verts [ v + 2 ]);
+		gfxDevice.WriteVtx ( verts [ v ], verts [ v + 1 ], 0.0f );
 		gfxDevice.WritePenColor4b ();
 	}
 

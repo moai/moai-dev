@@ -59,7 +59,7 @@ public:
 	static void			DrawRectOutline			( USRect& rect );
 	static void			DrawRectOutline			( float left, float top, float right, float bottom );
 	static void			DrawVertexArray			( const USVec3D* verts, u32 count, u32 color, u32 primType );
-	static void			DrawVertexArray			( const float* verts, u32 count, u32 color, u32 primType );
+	static void			DrawVertexArray2D		( const float* verts, u32 count, u32 color, u32 primType );
 						MOAIDraw				();
 						~MOAIDraw				();
 	void				RegisterLuaClass		( MOAILuaState& state );

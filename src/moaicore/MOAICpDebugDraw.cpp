@@ -121,11 +121,11 @@ static const int springVAR_count = sizeof(springVAR)/sizeof(GLfloat)/3;
 static void draw_shape_verts ( const float* verts, u32 count, u32 color, bool drawFilled ) {
 
 	if ( drawFilled ) {
-		MOAIDraw::DrawVertexArray ( verts, count, color, GL_TRIANGLE_FAN );
+		MOAIDraw::DrawVertexArray2D ( verts, count, color, GL_TRIANGLE_FAN );
 	}
 	
 	color = USColor::PackRGBA ( LINE_COLOR, 1.0f );
-	MOAIDraw::DrawVertexArray ( verts, count, color, GL_LINE_LOOP );
+	MOAIDraw::DrawVertexArray2D ( verts, count, color, GL_LINE_LOOP );
 }
 
 //----------------------------------------------------------------//
@@ -352,7 +352,7 @@ static void drawSpring ( cpDampedSpring* spring, cpBody* body_a, cpBody* body_b 
 	gfxDevice.SetPrimType ( GL_LINE_STRIP );
 	gfxDevice.SetPenColor ( USColor::PackRGBA ( LINE_COLOR, 1.0f ));
 	
-	MOAIDraw::DrawVertexArray ( springVAR, springVAR_count, USColor::PackRGBA ( LINE_COLOR, 1.0f ), GL_LINE_STRIP );
+	MOAIDraw::DrawVertexArray2D ( springVAR, springVAR_count, USColor::PackRGBA ( LINE_COLOR, 1.0f ), GL_LINE_STRIP );
 	
 	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM );
 }

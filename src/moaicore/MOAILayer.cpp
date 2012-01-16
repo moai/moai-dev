@@ -501,10 +501,12 @@ void MOAILayer::Draw ( int subPrimID, bool reload ) {
 	
 	USMatrix4x4 view;
 	this->GetViewMtx ( view );
-	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_VIEW_TRANSFORM, view );
 	
 	USMatrix4x4 proj;
 	this->GetProjectionMtx ( proj );
+	
+	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM );
+	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_VIEW_TRANSFORM, view );
 	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_PROJ_TRANSFORM, proj );
 	
 	// recompute the frustum
