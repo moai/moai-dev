@@ -97,8 +97,8 @@ cp ../xcode/ios/Info.plist moai-sdk/hosts/xcode/ios/Info.plist
 cp ../xcode/ios/MainWindow-iPad.xib moai-sdk/hosts/xcode/ios/MainWindow-iPad.xib
 cp ../xcode/ios/MainWindow-iPhone.xib moai-sdk/hosts/xcode/ios/MainWindow-iPhone.xib
 cp ../xcode/ios/main.mm moai-sdk/hosts/xcode/ios/main.mm
-cp ../xcode/ios/mt.default moai-sdk/hosts/xcode/ios/mt.default
 cp ../xcode/ios/package.sh moai-sdk/hosts/xcode/ios/package.sh
+echo "../../../samples/basics/anim-basic" > moai-sdk/hosts/xcode/ios/mt.default
 
 mkdir -p moai-sdk/hosts/xcode/ios/Libraries/TapjoyConnect
 for file in `find ../xcode/ios/Libraries/TapjoyConnect/ -name "*.xib"` ; do cp $file moai-sdk/hosts/xcode/ios/Libraries/TapjoyConnect ; done

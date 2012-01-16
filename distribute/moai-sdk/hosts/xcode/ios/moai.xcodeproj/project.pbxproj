@@ -97,8 +97,8 @@
 		03E280A513C7D22600EE3B0D /* lua */ = {isa = PBXFileReference; lastKnownFileType = folder; path = lua; sourceTree = "<group>"; };
 		03E280B913C7D31C00EE3B0D /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		03E280C213C7D35D00EE3B0D /* moai-target */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "moai-target"; sourceTree = "<group>"; };
-		07A9779B13F60EEE00FD50FE /* ParticlePresets.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ParticlePresets.cpp; path = ../src/ParticlePresets.cpp; sourceTree = SOURCE_ROOT; };
-		07A9779C13F60EEE00FD50FE /* ParticlePresets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ParticlePresets.h; path = ../src/ParticlePresets.h; sourceTree = SOURCE_ROOT; };
+		07A9779B13F60EEE00FD50FE /* ParticlePresets.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ParticlePresets.cpp; path = ../../src/ParticlePresets.cpp; sourceTree = SOURCE_ROOT; };
+		07A9779C13F60EEE00FD50FE /* ParticlePresets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ParticlePresets.h; path = ../../src/ParticlePresets.h; sourceTree = SOURCE_ROOT; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D6058910D05DD3D006BFB54 /* MoaiSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MoaiSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -231,9 +231,6 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
-				E9881F111498456600882720 /* Twitter.framework */,
-				CD164CE81474FBA2007734B2 /* MediaPlayer.framework */,
-				CD164CE51474FB8D007734B2 /* GameKit.framework */,
 				CD164CC21474FAE8007734B2 /* libmoai-ios-3rdparty.a */,
 				CD164CC31474FAE8007734B2 /* libmoai-ios-luaext.a */,
 				CD164CC41474FAE8007734B2 /* libmoai-ios-tapjoy.a */,
@@ -291,6 +288,9 @@
 				03CC911B13B3C49400B2724C /* SystemConfiguration.framework */,
 				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
 				03E280B913C7D31C00EE3B0D /* CoreTelephony.framework */,
+				E9881F111498456600882720 /* Twitter.framework */,
+				CD164CE81474FBA2007734B2 /* MediaPlayer.framework */,
+				CD164CE51474FB8D007734B2 /* GameKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -419,10 +419,15 @@
 		1D6058940D05DD3E006BFB54 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				HEADER_SEARCH_PATHS = ../../../include/;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../../bin/ios\"",
-					"\"$(SRCROOT)/../../bin/ios/universal\"",
+					"\"$(SRCROOT)/../../../bin/ios\"",
+					"\"$(SRCROOT)/../../../bin/ios/universal\"",
+				);
+				OTHER_LDFLAGS = (
+					"-force_load",
+					"../../../bin/ios/universal/libmoai-ios-tapjoy.a",
 				);
 				PRODUCT_NAME = MoaiSample;
 			};
@@ -431,10 +436,15 @@
 		1D6058950D05DD3E006BFB54 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				HEADER_SEARCH_PATHS = ../../../include/;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../../bin/ios\"",
-					"\"$(SRCROOT)/../../bin/ios/universal\"",
+					"\"$(SRCROOT)/../../../bin/ios\"",
+					"\"$(SRCROOT)/../../../bin/ios/universal\"",
+				);
+				OTHER_LDFLAGS = (
+					"-force_load",
+					"../../../bin/ios/universal/libmoai-ios-tapjoy.a",
 				);
 				PRODUCT_NAME = MoaiSample;
 			};
@@ -447,10 +457,10 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				GCC_C_LANGUAGE_STANDARD = c99;
-				HEADER_SEARCH_PATHS = ../../include/;
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
-				LIBRARY_SEARCH_PATHS = ../../bin/ios/;
+				LIBRARY_SEARCH_PATHS = "";
 				OTHER_LDFLAGS = (
 					"-force_load",
 					"../../bin/ios/universal/libmoai-ios-tapjoy.a",
@@ -468,10 +478,10 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				GCC_C_LANGUAGE_STANDARD = c99;
-				HEADER_SEARCH_PATHS = ../../include/;
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
-				LIBRARY_SEARCH_PATHS = ../../bin/ios/;
+				LIBRARY_SEARCH_PATHS = "";
 				OTHER_LDFLAGS = (
 					"-force_load",
 					"../../bin/ios/universal/libmoai-ios-tapjoy.a",
