@@ -36,6 +36,7 @@ private:
 	};
 
 	//----------------------------------------------------------------//
+	void		AddValue					( const MOAIAttrOp& attrOp );
 	void		Bind						();
 	void		BindPenColor				( float r, float g, float b, float a );
 	void		BindPipelineTransforms		( const USMatrix4x4& world, const USMatrix4x4& view, const USMatrix4x4& proj );
@@ -43,7 +44,7 @@ private:
 	void		SetBuffer					( void* buffer, size_t size );
 	void		SetType						( u32 type );
 	void		SetValue					( float value );
-	void		SetValue					( int value);
+	void		SetValue					( int value );
 	void		SetValue					( const MOAIAttrOp& attrOp );
 	void		SetValue					( const USColorVec& value );
 	void		SetValue					( const USAffine3D& value );

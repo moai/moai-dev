@@ -158,6 +158,32 @@ int MOAIImage::_copyRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	fillRect
+	@text	Fill a rectangle in the image with a solid color.
+
+	@in		MOAIImage self
+	@in		number xMin
+	@in		number yMin
+	@in		number xMax
+	@in		number yMax
+	@opt	number r			Default value is 0.
+	@opt	number g			Default value is 0.
+	@opt	number b			Default value is 0.
+	@opt	number a			Default value is 0.
+	@out	nil
+*/
+int MOAIImage::_fillRect ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIImage, "U" )
+
+	USIntRect rect = state.GetRect < int >( 2 );
+	u32 color = state.GetColor32 ( 6, 0.0f, 0.0f, 0.0f, 0.0f );
+
+	self->FillRect ( rect, color );
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	getColor32
 	@text	Returns a 32-bit packed RGBA value from the image for a
 			given pixel coordinate.
@@ -574,6 +600,69 @@ void MOAIImage::ClearBitmap () {
 }
 
 //----------------------------------------------------------------//
+void MOAIImage::ClearRect ( USIntRect rect ) {
+
+	rect.Bless ();
+	
+	USIntRect bounds = this->GetBounds ();
+	bounds.Clip ( rect );
+	
+	int width = rect.Width ();
+	
+	if ( !width ) return;
+	if ( !rect.Height ()) return;
+
+	u32 depth = USPixel::GetDepth ( this->mPixelFormat, this->mColorFormat );
+	
+	size_t offset;
+	size_t size;
+	
+	if ( depth == 4 ) {
+		offset = rect.mXMin >> 1;
+		size = width >> 1; // this will omit the last column of pixels if width is odd
+		
+		if ( rect.mXMin & 0x01 ) {
+			
+			offset++;
+			
+			if ( size ) {
+				size--;
+			}
+			
+			// go ahead and set the pixels for the first column here
+			for ( int y = rect.mYMin; y < rect.mYMax; ++y ) {
+				this->SetPixel ( rect.mXMin, y, 0 );
+			}
+		}
+		
+		// fill in the last column of pixels if odd
+		if ( rect.mXMax & 0x01 ) {
+			int x = rect.mXMax - 1;
+			for ( int y = rect.mYMin; y < rect.mYMax; ++y ) {
+				this->SetPixel ( x, y, 0 );
+			}
+		}
+	}
+	else {
+		size_t pixelSize = depth >> 3;
+		offset = rect.mXMin * pixelSize;
+		size = width * pixelSize;
+	}
+	
+	if ( size ) {
+		
+		size_t rowSize = this->GetRowSize ();
+		
+		for ( int y = rect.mYMin; y < rect.mYMax; ++y ) {
+			for ( int x = rect.mXMin; x < rect.mXMax; ++x ) {
+				void* addr = ( void* )(( uintptr )this->mBitmap + ( rowSize * y ) + offset );
+				memset ( addr, 0, size );
+			}
+		}
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAIImage::ConvertColors ( const MOAIImage& image, USColor::Format colorFmt ) {
 	
 	if ( colorFmt == image.mColorFormat ) {
@@ -867,9 +956,40 @@ void MOAIImage::CopyRect ( const MOAIImage& image, USIntRect srcRect, USIntRect 
 }
 
 //----------------------------------------------------------------//
+void MOAIImage::FillRect ( USIntRect rect, u32 color ) {
+
+	if ( !color ) {
+		this->ClearRect ( rect );
+		return;
+	}
+
+	rect.Bless ();
+	
+	USIntRect bounds = this->GetBounds ();
+	bounds.Clip ( rect );
+	
+	if ( !rect.Width ()) return;
+	if ( !rect.Height ()) return;
+	
+	for ( int y = rect.mYMin; y < rect.mYMax; ++y ) {
+		for ( int x = rect.mXMin; x < rect.mXMax; ++x ) {
+			this->SetColor ( x, y, color );
+		}
+	}
+}
+
+//----------------------------------------------------------------//
 u32 MOAIImage::GetBitmapSize () const {
 
 	return this->GetRowSize () * this->mHeight;
+}
+
+//----------------------------------------------------------------//
+USIntRect MOAIImage::GetBounds () {
+
+	USIntRect bounds;
+	bounds.Init ( 0, 0, this->mWidth, this->mHeight );
+	return bounds;
 }
 
 //----------------------------------------------------------------//
@@ -1047,10 +1167,10 @@ void MOAIImage::Init ( const void* bitmap, u32 width, u32 height, USColor::Forma
 //----------------------------------------------------------------//
 bool MOAIImage::IsJpg ( const void* buffer, u32 size ) {
 
-	u8 magic [] = { 0xFF, 0xD8, 0xFF, 0xE0 }; // <?> <?> <?> <?>
+	u8 magic [] = { 0xFF, 0xD8, 0xFF }; // <?> <?> <?> <?>
 
 	if ( size < 4 ) return false;
-	return ( memcmp ( buffer, magic, 4 ) == 0 );
+	return ( memcmp ( buffer, magic, 3 ) == 0 )  &&  (((unsigned char*)buffer)[3] >= 0xe0  &&  ((unsigned char*)buffer)[3] <= 0xef);
 }
 
 //----------------------------------------------------------------//
@@ -1253,6 +1373,7 @@ void MOAIImage::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "copy",				_copy },
 		{ "copyBits",			_copyBits },
 		{ "copyRect",			_copyRect },
+		{ "fillRect",			_fillRect },
 		{ "getColor32",			_getColor32 },
 		{ "getFormat",			_getFormat },
 		{ "getRGBA",			_getRGBA },

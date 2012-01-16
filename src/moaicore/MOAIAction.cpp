@@ -16,17 +16,38 @@
 
 	@in		MOAIAction self
 	@in		MOAIAction child
-	@out	nil
+	@out	MOAIAction self
 */
 int MOAIAction::_addChild ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAction, "UU" )
 	
 	MOAIAction* action = state.GetLuaObject < MOAIAction >( 2 );
-	if ( !action ) return 0;
 	
-	self->AddChild ( *action );
+	if ( action ) {
+		action->Attach ( self );
+	}
+	state.CopyToTop ( 1 );
 
-	return 0;
+	return 1;
+}
+
+//----------------------------------------------------------------//
+/**	@name	attach
+	@text	Attaches a child to a parent action. The child will receive
+			updates from the parent only if the parent is in the action tree.
+
+	@in		MOAIAction self
+	@opt	MOAIAction parent		Default value is nil; same effect as calling detach ().
+	@out	MOAIAction self
+*/
+int MOAIAction::_attach ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAction, "UU" )
+	
+	MOAIAction* parent = state.GetLuaObject < MOAIAction >( 2 );
+	self->Attach ( parent );
+	state.CopyToTop ( 1 );
+	
+	return 1;
 }
 
 //----------------------------------------------------------------//
@@ -34,14 +55,32 @@ int MOAIAction::_addChild ( lua_State* L ) {
 	@text	Removes all child actions.
 
 	@in		MOAIAction self
-	@out	nil
+	@out	MOAIAction self
 */
 int MOAIAction::_clear ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAction, "U" )
 
 	self->ClearChildren ();
+	state.CopyToTop ( 1 );
 	
-	return 0;
+	return 1;
+}
+
+//----------------------------------------------------------------//
+/**	@name	detach
+	@text	Detaches an action from its parent (if any) thereby removing
+			it from the action tree. Same effect as calling stop ().
+
+	@in		MOAIAction self
+	@out	MOAIAction self
+*/
+int MOAIAction::_detach ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAction, "U" )
+	
+	self->Attach ();
+	state.CopyToTop ( 1 );
+	
+	return 1;
 }
 
 //----------------------------------------------------------------//
@@ -101,13 +140,11 @@ int MOAIAction::_start ( lua_State* L ) {
 
 	MOAIAction* action = state.GetLuaObject < MOAIAction >( 2 );
 	
-	if ( action ) {
-		self->Start ( *action );
-	}
-	else {
-		self->Start ();
+	if ( !action ) {
+		action = MOAIActionMgr::Get ().AffirmRoot ();
 	}
 
+	self->Attach ( action );
 	state.CopyToTop ( 1 );
 
 	return 1;
@@ -119,14 +156,15 @@ int MOAIAction::_start ( lua_State* L ) {
 			stop being updated.
 
 	@in		MOAIAction self
-	@out	nil
+	@out	MOAIAction self
 */
 int MOAIAction::_stop ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAction, "U" )
 
-	self->Stop ();
+	self->Attach ();
+	state.CopyToTop ( 1 );
 
-	return 0;
+	return 1;
 }
 
 //----------------------------------------------------------------//
@@ -136,14 +174,15 @@ int MOAIAction::_stop ( lua_State* L ) {
 	
 	@in		MOAIAction self
 	@opt	number throttle	Default value is 1.
-	@out	nil
+	@out	MOAIAction self
 */
 int MOAIAction::_throttle ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAction, "U" )
 
 	self->mThrottle = state.GetValue < float >( 2, 1.0f );
+	state.CopyToTop ( 1 );
 	
-	return 0;
+	return 1;
 }
 
 //================================================================//
@@ -151,27 +190,66 @@ int MOAIAction::_throttle ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIAction::AddChild ( MOAIAction& action ) {
+void MOAIAction::Attach ( MOAIAction* parent ) {
 
-	if ( action.mParent == this ) return;
+	MOAIAction* oldParent = this->mParent;
+	if ( oldParent == parent ) return;
 
-	this->LuaRetain ( action );
-	action.Stop ();
+	this->Retain ();
+
+	if ( parent ) {
+		parent->LuaRetain ( *this );
+	}
 	
-	this->mChildren.PushBack ( action.mLink );
-	action.mParent = this;
+	if ( oldParent ) {
+		
+		// if we're detaching the action while the parent action is updating
+		// then we need to handle the edge case where the action is referenced
+		// by mChildIt
+		if ( oldParent->mChildIt == &this->mLink ) {
+			oldParent->mChildIt = oldParent->mChildIt->Next ();
+			if ( oldParent->mChildIt ) {
+				oldParent->mChildIt->Data ()->Retain ();
+			}
+			this->Release ();
+		}
+		
+		oldParent->mChildren.Remove ( this->mLink );
+		
+		this->UnblockSelf ();
+		this->UnblockAll ();
+		this->mParent = 0;
+		
+		oldParent->LuaRelease ( *this );
+	}
 	
-	action.mNew = true;
-	action.mPass = MOAIActionMgr::Get ().GetNextPass ();
+	if ( oldParent && ( !parent )) {
+		this->OnStop ();
+	}
 	
-	action.OnStart ();
+	if ( parent ) {
+		// TODO: there are some edge cases that may lead to the action
+		// getting two updates in a frame or missing an update. additional
+		// state may need to be introduced to handle this. the TODO is
+		// to investigate the edge cases and (possibly) provide a fix.
+		parent->mChildren.PushBack ( this->mLink );
+		this->mParent = parent;
+	}
+	
+	if (( !oldParent ) && parent ) {
+		this->mNew = true;
+		this->mPass = MOAIActionMgr::Get ().GetNextPass ();
+		this->OnStart ();
+	}
+	
+	this->Release ();
 }
 
 //----------------------------------------------------------------//
 void MOAIAction::ClearChildren () {
 
 	while ( ChildIt actionIt = this->mChildren.Head ()) {
-		this->RemoveChild ( *actionIt->Data ());
+		actionIt->Data ()->Attach ();
 	}
 }
 
@@ -268,7 +346,9 @@ void MOAIAction::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "addChild",			_addChild },
+		{ "attach",				_attach },
 		{ "clear",				_clear },
+		{ "detach",				_detach },
 		{ "isActive",			_isActive },
 		{ "isBusy",				_isBusy },
 		{ "isDone",				_isDone },
@@ -279,54 +359,6 @@ void MOAIAction::RegisterLuaFuncs ( MOAILuaState& state ) {
 	};
 	
 	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAIAction::RemoveChild ( MOAIAction& action ) {
-
-	if ( action.mParent == this ) {
-	
-		if ( this->mChildIt == &action.mLink ) {
-			this->mChildIt = this->mChildIt->Next ();
-			if ( this->mChildIt ) {
-				this->mChildIt->Data ()->Retain ();
-			}
-			action.Release ();
-		}
-		
-		this->mChildren.Remove ( action.mLink );
-		
-		action.UnblockSelf ();
-		action.UnblockAll ();
-		action.mParent = 0;
-		action.OnStop ();
-		
-		this->LuaRelease ( action );
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIAction::Start () {
-
-	MOAIActionMgr::Get ().StartAction ( *this );
-}
-
-//----------------------------------------------------------------//
-void MOAIAction::Start ( MOAIAction& parent ) {
-
-	if ( !this->mParent ) {
-		parent.AddChild ( *this );
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIAction::Stop () {
-
-	if ( this->mParent ) {
-		this->Retain ();
-		this->mParent->RemoveChild ( *this );
-		this->Release ();
-	}
 }
 
 //----------------------------------------------------------------//
@@ -399,6 +431,19 @@ void MOAIAction::Update ( float step, u32 pass, bool checkPass ) {
 	this->mChildIt = 0;
 	
 	if ( this->IsDone ()) {
-		this->Stop ();
+		this->Attach ();
 	}
+}
+
+//----------------------------------------------------------------//
+void MOAIAction::Start () {
+
+	MOAIAction* root = MOAIActionMgr::Get ().AffirmRoot ();
+	this->Attach ( root );
+}
+
+//----------------------------------------------------------------//
+void MOAIAction::Stop () {
+
+	this->Attach ( 0 );
 }

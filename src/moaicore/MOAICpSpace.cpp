@@ -368,7 +368,7 @@ int MOAICpSpace::_resizeActiveHash ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	resizeActiveHash
+/**	@name	resizeStaticHash
 	@text	Sets the dimenstions of the static object hash.
 
 	@in		MOAICpSpace self
@@ -465,7 +465,7 @@ int MOAICpSpace::_setCollisionHandler ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setCollisionHandler
+/**	@name	setDamping
 	@text	Sets the current damping in the space.
 
 	@in		MOAICpSpace self
@@ -665,7 +665,7 @@ int MOAICpSpace::_shapeListForPoint ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	shapeListForPoint
+/**	@name	shapeListForRect
 	@text	Retrieves a list of shaps that overlap the rect specified, that exists
 			on the specified layer (or any layer if nil) and is part of the
 			specified group (or any group if nil).
@@ -710,7 +710,7 @@ int MOAICpSpace::_shapeListForRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	shapeForSegment
+/**	@name	shapeListForSegment
 	@text	Retrieves a list of shaps that overlap the segment specified, that exists
 			on the specified layer (or any layer if nil) and is part of the
 			specified group (or any group if nil).

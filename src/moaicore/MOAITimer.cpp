@@ -33,7 +33,7 @@ int MOAITimer::_getTime( lua_State* L ) {
 	@out	number nTimes
 */
 int MOAITimer::_getTimesExecuted ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITimer, "UN" )
+	MOAI_LUA_SETUP ( MOAITimer, "U" )
 
 	lua_pushnumber ( L, self->mTimesExecuted );
 	return 1;
@@ -43,8 +43,8 @@ int MOAITimer::_getTimesExecuted ( lua_State* L ) {
 /**	@name	setCurve
 	@text	Set or clear the curve to use for event generation.
 	
-	@in		MOAIAnimCurveListener self
-	@opt	MOAIAnimCurveListener curve		Default value is nil.
+	@in		MOAITimer self
+	@opt	MOAIAnimCurve curve		Default value is nil.
 	@out	nil
 */
 int MOAITimer::_setCurve ( lua_State* L ) {

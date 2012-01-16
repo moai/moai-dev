@@ -147,8 +147,8 @@ int	MOAIBox2DWorld::_addDistanceJoint ( lua_State* L ) {
 	@in		MOAIBox2DBody bodyB
 	@in		number anchorX
 	@in		number anchorY
-	@opt	number maxForce				Default value determined by Box2D
-	@opt	number maxTorque			Default value determined by Box2D
+	@opt	number maxForce			Converted to N. 	Default value determined by Box2D
+	@opt	number maxTorque		Converted to N-m.	Default value determined by Box2D
 	@out	MOAIBox2DJoint joint
 */
 int	MOAIBox2DWorld::_addFrictionJoint ( lua_State* L ) {
@@ -170,9 +170,12 @@ int	MOAIBox2DWorld::_addFrictionJoint ( lua_State* L ) {
 	
 	b2FrictionJointDef jointDef;
 	jointDef.Initialize ( bodyA->mBody, bodyB->mBody, anchor );
-	
-	jointDef.maxForce	= state.GetValue < float >( 6, jointDef.maxForce / self->mUnitsToMeters ) * self->mUnitsToMeters;
-	jointDef.maxTorque	= state.GetValue < float >( 7, jointDef.maxTorque * ( float )R2D ) * ( float )D2R;
+
+	float unitsToMeters = self->GetUnitsToMeters();
+
+	jointDef.maxForce	= state.GetValue < float >( 6, jointDef.maxForce / unitsToMeters ) * unitsToMeters;
+	/* Convert to/from N-m (kg m / s^2) * m from/to (kg unit / s^2) * unit */
+	jointDef.maxTorque	= state.GetValue < float >( 7, jointDef.maxTorque / ( unitsToMeters * unitsToMeters ) ) * unitsToMeters * unitsToMeters;
 	
 	MOAIBox2DFrictionJoint* joint = new MOAIBox2DFrictionJoint ();
 	joint->SetJoint ( self->mWorld->CreateJoint ( &jointDef ));
@@ -305,8 +308,8 @@ int	MOAIBox2DWorld::_addPrismaticJoint ( lua_State* L ) {
 	anchor.y	= state.GetValue < float >( 5, 0 ) * self->mUnitsToMeters;
 	
 	b2Vec2 axis;
-	axis.x		= state.GetValue < float >( 6, 0 ) * self->mUnitsToMeters;
-	axis.y		= state.GetValue < float >( 7, 0 ) * self->mUnitsToMeters;
+	axis.x		= state.GetValue < float >( 6, 0 );
+	axis.y		= state.GetValue < float >( 7, 0 );
 	
 	b2PrismaticJointDef jointDef;
 	jointDef.Initialize ( bodyA->mBody, bodyB->mBody, anchor, axis );
@@ -549,8 +552,8 @@ int	MOAIBox2DWorld::_addWheelJoint ( lua_State* L ) {
 	anchor.y	= state.GetValue < float >( 5, 0 ) * self->mUnitsToMeters;
 	
 	b2Vec2 axis;
-	axis.x		= state.GetValue < float >( 6, 0 ) * self->mUnitsToMeters;
-	axis.y      = state.GetValue < float >( 7, 0 ) * self->mUnitsToMeters;
+	axis.x		= state.GetValue < float >( 6, 0 );
+	axis.y      = state.GetValue < float >( 7, 0 );
 	
 	b2WheelJointDef jointDef;
 	jointDef.Initialize ( bodyA->mBody, bodyB->mBody, anchor, axis );
@@ -671,6 +674,26 @@ int MOAIBox2DWorld::_setAutoClearForces ( lua_State* L ) {
 	
 	self->mWorld->SetAutoClearForces ( autoClearForces );
 	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	setDebugDrawFlags
+	@text	Sets mask for debug drawing.
+	
+	@in		MOAIBox2DWorld self
+	@opt	number flags		One of MOAIBox2DWorld.DEBUG_DRAW_SHAPES, MOAIBox2DWorld.DEBUG_DRAW_JOINTS,
+								MOAIBox2DWorld.DEBUG_DRAW_BOUNDS, MOAIBox2DWorld.DEBUG_DRAW_PAIRS,
+								MOAIBox2DWorld.DEBUG_DRAW_CENTERS. Default value is MOAIBox2DWorld.DEBUG_DRAW_DEFAULT.
+	@out	nil
+*/
+int MOAIBox2DWorld::_setDebugDrawFlags ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIBox2DWorld, "U" )
+	
+	u32 flags = state.GetValue < u32 >( 2, DEBUG_DRAW_DEFAULT );
+	if ( self->mDebugDraw ) {
+		self->mDebugDraw->SetFlags ( flags );
+	}
 	return 0;
 }
 
@@ -856,13 +879,7 @@ MOAIBox2DWorld::MOAIBox2DWorld () :
 	this->mDebugDraw = new MOAIBox2DDebugDraw ();
 	this->mWorld->SetDebugDraw ( this->mDebugDraw );
 	
-	this->mDebugDraw->SetFlags (
-		b2Draw::e_shapeBit			|
-		b2Draw::e_jointBit			|
-		//b2DebugDraw::e_aabbBit			|
-		//b2DebugDraw::e_pairBit			|
-		b2Draw::e_centerOfMassBit
-	);
+	this->mDebugDraw->SetFlags ( DEBUG_DRAW_DEFAULT );
 }
 
 //----------------------------------------------------------------//
@@ -907,6 +924,14 @@ void MOAIBox2DWorld::OnUpdate ( float step ) {
 void MOAIBox2DWorld::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAIAction::RegisterLuaClass ( state );
+	
+	state.SetField ( -1, "DEBUG_DRAW_SHAPES", ( u32 )DEBUG_DRAW_SHAPES );
+	state.SetField ( -1, "DEBUG_DRAW_JOINTS", ( u32 )DEBUG_DRAW_JOINTS );
+	state.SetField ( -1, "DEBUG_DRAW_BOUNDS", ( u32 )DEBUG_DRAW_BOUNDS );
+	state.SetField ( -1, "DEBUG_DRAW_PAIRS", ( u32 )DEBUG_DRAW_PAIRS );
+	state.SetField ( -1, "DEBUG_DRAW_CENTERS", ( u32 )DEBUG_DRAW_CENTERS );
+	
+	state.SetField ( -1, "DEBUG_DRAW_DEFAULT", ( u32 )DEBUG_DRAW_DEFAULT );
 }
 
 //----------------------------------------------------------------//
@@ -933,6 +958,7 @@ void MOAIBox2DWorld::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "getTimeToSleep",				_getTimeToSleep },
 		{ "setAngularSleepTolerance",	_setAngularSleepTolerance },
 		{ "setAutoClearForces",			_setAutoClearForces },
+		{ "setDebugDrawFlags",			_setDebugDrawFlags },
 		{ "setGravity",					_setGravity },
 		{ "setIterations",				_setIterations },
 		{ "setLinearSleepTolerance",	_setLinearSleepTolerance },

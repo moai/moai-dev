@@ -898,6 +898,9 @@ void MOAITexture::OnLoad () {
 			glBindTexture ( GL_TEXTURE_2D, this->mGLTexID );
 			glTexImage2D ( GL_TEXTURE_2D, 0, GL_RGBA, this->mWidth, this->mHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0 );
 			glFramebufferTexture2D ( GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, this->mGLTexID, 0 );
+			
+			// refresh tex params on next bind
+			this->mIsDirty = true;
 		}
 	}
 	else if ( this->mLoader ) {

@@ -106,6 +106,7 @@ private:
 	static int		_pauseTimer					( lua_State* L );
 	static int		_popRenderPass				( lua_State* L );
 	static int		_pushRenderPass				( lua_State* L );
+	static int		_removeRenderPass			( lua_State* L );
 	static int		_reportHistogram			( lua_State* L );
 	static int		_reportLeaks				( lua_State* L );
 	static int		_setBoostThreshold			( lua_State* L );
@@ -166,6 +167,7 @@ public:
 	void			PushRenderPass				( MOAIProp* prop );
 	void			RegisterLuaClass			( MOAILuaState& state );
 	void			RegisterLuaFuncs			( MOAILuaState& state );
+	void			RemoveRenderPass			( MOAIProp* prop );
 	void			Render						();
 	void			ResumeMOAI					();
 	void			RunFile						( cc8* filename );

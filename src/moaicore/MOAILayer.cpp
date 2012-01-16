@@ -114,6 +114,25 @@ int MOAILayer::_getSortMode ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	getSortScale
+	@text	Return the scalar applied to axis sorts.
+	
+	@in		MOAILayer2D self
+	@out	number x
+	@out	number y
+	@out	number priority
+*/
+int	MOAILayer::_getSortScale ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAILayer, "U" )
+
+	lua_pushnumber ( state, self->mSortScale [ 0 ]);
+	lua_pushnumber ( state, self->mSortScale [ 1 ]);
+	lua_pushnumber ( state, self->mSortScale [ 3 ]);
+
+	return 3;
+}
+
+//----------------------------------------------------------------//
 /**	@name	insertProp
 	@text	Adds a prop to the layer's partition.
 	
@@ -546,9 +565,9 @@ void MOAILayer::Draw ( int subPrimID, bool reload ) {
 			MOAIPartitionResult* result = buffer.GetResultUnsafe ( i );
 			
 			MOAIProp* prop = result->mProp;
-			bool reload = prop != prevProp;
+			bool reloadProp = prop != prevProp;
 			
-			prop->Draw ( result->mSubPrimID, reload );
+			prop->Draw ( result->mSubPrimID, reloadProp );
 			prop->DrawDebug ( result->mSubPrimID );
 			
 			prevProp = prop;
@@ -706,6 +725,7 @@ void MOAILayer::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "getFitting",				_getFitting },
 		{ "getPartition",			_getPartition },
 		{ "getSortMode",			_getSortMode },
+		{ "getSortScale",			_getSortScale },
 		{ "insertProp",				_insertProp },
 		{ "removeProp",				_removeProp },
 		{ "setBox2DWorld",			_setBox2DWorld },

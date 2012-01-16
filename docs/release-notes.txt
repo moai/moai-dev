@@ -1,5 +1,47 @@
 ================================================================
 = Moai SDK
+= Version 0.95 Beta
+= Revision 1
+================================================================
+- Added luafilesystem to luaext; enabled in glut host
+- Added moaigui to samples/contrib folder
+- Added proof-of-concept implementation of Moai class extension model (extend () method)
+- Added attributes for box2D objects; can now be linked and animated (thank you, Byron!)
+- Many fixes to MOAIBox2DWheel joint binding and coordinate converstions (thank you, Thomas!)
+- Updated sample for TexturePacker (thanks, Paul!)
+- Added blocking (synchronous) option for MOAIHttpTask
+- Fixed cycle handling in dep graph update
+- Fixed crash bug in propListForPoint
+- Fixed gl-vertexBuffer sample to work with default mesh shader
+- Moved Moai http and data IO event handler to top of sim loop (callbacks now execute *before* action manager update)
+- Moved uslsext into uslscore; got rid of some unused source files
+- MOAIProp2D - Added expandForSort flag to enable axis sorting of individual map tiles
+- MOAILayer2D - Added additional sort modes
+- MOAIThread - renamed to MOAICoroutine (left alias in place for back compat)
+- MOAIImage - fixed detection of JPEG images (thanks, Joshua!)
+- MOAIShader - added UNIFORM_PEN_COLOR (bind global pen color to shader)
+- MOAIMesh - added default shader
+- MOAIGrid - support for 'fancy' tile shapes (hex, diamond, oblique)
+- MOAITextBox - added flag to reverse LTR order of characters
+- MOAIPathFinder - proof-of-concept implementation of A* pathfinding
+- MOAIWheelSensor - wheel input sensor
+- zipfs - fixed crashes on entry reading and seek 
+- Android - host mounts APK as vfs (no more unpacking to SD card)
+- Android - imroved handling of back button
+- Android - min SDK is now API level-8 (Froyo, 2.2)
+- Android - allow project name to differ from app name
+- Android - expose proper app name through MOAIEnvironment
+- Android - improved multi-touch performance and input stability
+- Android - added keystore and alias password support
+- Android - added simple support for sharing
+- Android - added openURL to host
+- Untz - many fixes and improvements (all platforms)
+- iOS - added an AKU call for rotation event
+- Tapjoy - updated to 8.1.5
+- Native Client - added a sample host
+
+================================================================
+= Moai SDK
 = Version 0.9 Beta
 = Revision 8
 ================================================================

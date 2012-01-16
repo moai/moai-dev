@@ -15,7 +15,7 @@
 			This value is returned in world space so includes parent
 			transforms (if any).
 	
-	@in		MOAITransform self
+	@in		MOAITransformBase self
 	@out	number xDirection
 	@out	number yDirection
 	@out	number zDirection

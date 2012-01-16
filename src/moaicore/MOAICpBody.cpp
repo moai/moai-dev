@@ -224,7 +224,7 @@ int MOAICpBody::_applyImpulse ( lua_State* L ) {
 /**	@name	getAngle
 	@text	Returns the angle of the body.
 
-	@in		MOAICpShape self
+	@in		MOAICpBody self
 	@out	number angle		The current angle.
 */
 int MOAICpBody::_getAngle ( lua_State* L ) {
@@ -239,7 +239,7 @@ int MOAICpBody::_getAngle ( lua_State* L ) {
 /**	@name	getAngVel
 	@text	Returns the angular velocity of the body.
 
-	@in		MOAICpShape self
+	@in		MOAICpBody self
 	@out	number angle		The current angular velocity.
 */
 int MOAICpBody::_getAngVel ( lua_State* L ) {
@@ -255,7 +255,7 @@ int MOAICpBody::_getAngVel ( lua_State* L ) {
 /**	@name	getForce
 	@text	Returns the force of the body.
 
-	@in		MOAICpShape self
+	@in		MOAICpBody self
 	@out	number x			The X component of the current force being applied.
 	@out	number y			The Y component of the current force being applied.
 */
@@ -273,7 +273,7 @@ int MOAICpBody::_getForce ( lua_State* L ) {
 /**	@name	getMass
 	@text	Returns the mass of the body.
 
-	@in		MOAICpShape self
+	@in		MOAICpBody self
 	@out	number mass			The current mass.
 */
 int MOAICpBody::_getMass ( lua_State* L ) {
@@ -289,7 +289,7 @@ int MOAICpBody::_getMass ( lua_State* L ) {
 /**	@name	getMoment
 	@text	Returns the moment of the body.
 
-	@in		MOAICpShape self
+	@in		MOAICpBody self
 	@out	number moment		The current moment.
 */
 int MOAICpBody::_getMoment ( lua_State* L ) {
@@ -305,7 +305,7 @@ int MOAICpBody::_getMoment ( lua_State* L ) {
 /**	@name	getPos
 	@text	Returns the position of the body.
 
-	@in		MOAICpShape self
+	@in		MOAICpBody self
 	@out	number x			The X position.
 	@out	number y			The Y position.
 */
@@ -323,7 +323,7 @@ int MOAICpBody::_getPos ( lua_State* L ) {
 /**	@name	getRot
 	@text	Returns the rotation of the body.
 
-	@in		MOAICpShape self
+	@in		MOAICpBody self
 	@out	number x			The X position.
 	@out	number y			The Y position.
 */
@@ -341,7 +341,7 @@ int MOAICpBody::_getRot ( lua_State* L ) {
 /**	@name	getTorque
 	@text	Returns the torque of the body.
 
-	@in		MOAICpShape self
+	@in		MOAICpBody self
 	@out	number torque		The current torque.
 */
 int MOAICpBody::_getTorque ( lua_State* L ) {
@@ -357,7 +357,7 @@ int MOAICpBody::_getTorque ( lua_State* L ) {
 /**	@name	getVel
 	@text	Returns the velocity of the body.
 
-	@in		MOAICpShape self
+	@in		MOAICpBody self
 	@out	number x			The X component of the current velocity.
 	@out	number y			The Y component of the current velocity.
 */
@@ -375,7 +375,7 @@ int MOAICpBody::_getVel ( lua_State* L ) {
 /**	@name	isSleeping
 	@text	Returns whether the body is currently sleeping.
 
-	@in		MOAICpShape self
+	@in		MOAICpBody self
 	@out	boolean sleeping	Whether the body is sleeping.
 */
 int MOAICpBody::_isSleeping ( lua_State* L ) {
@@ -391,7 +391,7 @@ int MOAICpBody::_isSleeping ( lua_State* L ) {
 /**	@name	isStatic
 	@text	Returns whether the body is static.
 
-	@in		MOAICpShape self
+	@in		MOAICpBody self
 	@out	boolean static		Whether the body static.
 */
 int MOAICpBody::_isStatic ( lua_State* L ) {
@@ -407,7 +407,7 @@ int MOAICpBody::_isStatic ( lua_State* L ) {
 /**	@name	isRogue
 	@text	Returns whether the body is not yet currently associated with a space.
 
-	@in		MOAICpShape self
+	@in		MOAICpBody self
 	@out	boolean static		Whether the body is not associated with a space.
 */
 int MOAICpBody::_isRogue ( lua_State* L ) {
@@ -423,7 +423,7 @@ int MOAICpBody::_isRogue ( lua_State* L ) {
 /**	@name	localToWorld
 	@text	Converts the relative position to an absolute position based on position of the object being (0, 0) for the relative position.
 
-	@in		MOAICpShape self
+	@in		MOAICpBody self
 	@in		number rx			The relative X position.
 	@in		number ry			The relative Y position.
 	@out	number ax			The absolute X position.
@@ -697,7 +697,7 @@ int MOAICpBody::_sleepWithGroup ( lua_State* L ) {
 	@text	Converts the absolute position to a relative position based on
 			position of the object being (0, 0) for the relative position.
 
-	@in		MOAICpShape self
+	@in		MOAICpBody self
 	@in		number ax			The absolute X position.
 	@in		number ay			The absolute Y position.
 	@out	number rx			The relative X position.

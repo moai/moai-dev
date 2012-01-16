@@ -33,7 +33,7 @@ int MOAISurfaceDeck2D::_reserveSurfaceLists ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	reserveSurfaceLists
+/**	@name	reserveSurfaces
 	@text	Reserve surfaces for a given list in deck.
 	
 	@in		MOAISurfaceDeck2D self

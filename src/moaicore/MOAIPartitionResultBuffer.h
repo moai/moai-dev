@@ -56,11 +56,13 @@ public:
 		SORT_PRIORITY_ASCENDING,
 		SORT_X_ASCENDING,
 		SORT_Y_ASCENDING,
+		SORT_Z_ASCENDING,
 		SORT_VECTOR_ASCENDING,
 		
 		SORT_PRIORITY_DESCENDING	= SORT_PRIORITY_ASCENDING | SORT_FLAG_DESCENDING,
 		SORT_X_DESCENDING			= SORT_X_ASCENDING | SORT_FLAG_DESCENDING,
 		SORT_Y_DESCENDING			= SORT_Y_ASCENDING | SORT_FLAG_DESCENDING,
+		SORT_Z_DESCENDING			= SORT_Z_ASCENDING | SORT_FLAG_DESCENDING,
 		SORT_VECTOR_DESCENDING		= SORT_VECTOR_ASCENDING | SORT_FLAG_DESCENDING,
 	};
 
@@ -68,6 +70,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	void					Clear							();
+	MOAIProp*				FindBest						( u32 mode, float xScale, float yScale, float zScale, float priority );
 							MOAIPartitionResultBuffer		();
 							~MOAIPartitionResultBuffer		();
 	MOAIPartitionResult*	PopResult						();

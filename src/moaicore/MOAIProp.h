@@ -87,27 +87,6 @@ private:
 	float			mCellSize;
 	s32				mPriority;
 	
-	MOAILuaSharedPtr < MOAIDeck >			mDeck;
-	MOAILuaSharedPtr < MOAIDeckRemapper >	mRemapper;
-	u32										mIndex;
-	
-	MOAILuaSharedPtr < MOAIGrid >			mGrid;
-	USVec2D									mGridScale;
-	
-	MOAILuaSharedPtr < MOAIShader >			mShader;
-	MOAILuaSharedPtr < MOAITransformBase >	mUVTransform;
-	
-	USRect						mFrame;
-	bool						mFitToFrame;
-	
-	int							mCullMode;
-	int							mDepthTest;
-	bool						mDepthMask;
-	MOAIBlendMode				mBlendMode;
-	bool						mVisible;
-	
-	bool						mExpandForSort;
-	
 	//----------------------------------------------------------------//
 	static int		_getGrid			( lua_State* L );
 	static int		_getIndex			( lua_State* L );
@@ -137,6 +116,27 @@ private:
 
 protected:
 
+	MOAILuaSharedPtr < MOAIDeck >			mDeck;
+	MOAILuaSharedPtr < MOAIDeckRemapper >	mRemapper;
+	u32										mIndex;
+	
+	MOAILuaSharedPtr < MOAIGrid >			mGrid;
+	USVec2D									mGridScale;
+	
+	MOAILuaSharedPtr < MOAIShader >			mShader;
+	MOAILuaSharedPtr < MOAITransformBase >	mUVTransform;
+	
+	USRect						mFrame;
+	bool						mFitToFrame;
+	
+	int							mCullMode;
+	int							mDepthTest;
+	bool						mDepthMask;
+	MOAIBlendMode				mBlendMode;
+	bool						mVisible;
+	
+	bool						mExpandForSort;
+
 	//----------------------------------------------------------------//
 	bool			BindDeck				();
 	void			GetGridBoundsInView		( MOAICellCoord& c0, MOAICellCoord& c1 );
@@ -148,7 +148,7 @@ public:
 	DECL_ATTR_HELPER ( MOAIProp )
 
 	static const s32 UNKNOWN_PRIORITY	= 0x80000000;
-	static const u32 NO_SUBPRIM_ID		= 0xffffffff;
+	static const int NO_SUBPRIM_ID		= 0xffffffff;
 
 	enum {
 		BOUNDS_EMPTY,

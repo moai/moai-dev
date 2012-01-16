@@ -137,6 +137,7 @@ void moaicore::InitGlobals ( MOAIGlobals* globals ) {
 	REGISTER_LUA_CLASS ( MOAIScriptNode )
 	REGISTER_LUA_CLASS ( MOAISerializer )
 	REGISTER_LUA_CLASS ( MOAIShader )
+	REGISTER_LUA_CLASS ( MOAIShaderMgr )
 	REGISTER_LUA_CLASS ( MOAISim )
 	REGISTER_LUA_CLASS ( MOAIStretchPatch2D )
 	REGISTER_LUA_CLASS ( MOAISurfaceDeck2D )
@@ -179,6 +180,11 @@ void moaicore::InitGlobals ( MOAIGlobals* globals ) {
 		REGISTER_LUA_CLASS ( MOAICpShape )
 		REGISTER_LUA_CLASS ( MOAICpSpace )
 	#endif
+	
+	// TODO: for back compat; remove in next release
+	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+	lua_getglobal ( state, "MOAICoroutine" );
+	lua_setglobal ( state, "MOAIThread" );
 }
 
 //----------------------------------------------------------------//

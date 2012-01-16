@@ -1005,7 +1005,8 @@ void MOAIGridSpace::OnResize () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGridSpace::SerializeIn ( MOAILuaState& state ) {
+void MOAIGridSpace::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
+	UNUSED ( serializer );
 	
 	this->mXOff			= state.GetField ( -1, "mXOff", this->mXOff );
 	this->mYOff			= state.GetField ( -1, "mYOff", this->mYOff );
@@ -1024,7 +1025,8 @@ void MOAIGridSpace::SerializeIn ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGridSpace::SerializeOut ( MOAILuaState& state ) {
+void MOAIGridSpace::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
+	UNUSED ( serializer );
 	
 	state.SetField ( -1, "mXOff", this->mXOff );
 	state.SetField ( -1, "mYOff", this->mYOff );

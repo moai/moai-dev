@@ -14,8 +14,12 @@ layer = MOAILayer2D.new ()
 layer:setViewport ( viewport )
 MOAISim.pushRenderPass ( layer )
 
+texture = MOAITexture.new ()
+texture:load ( "cathead.png" )
+texture:setWrap ( true )
+
 gfxQuad = MOAIGfxQuad2D.new ()
-gfxQuad:setTexture ( "cathead.png" )
+gfxQuad:setTexture ( texture )
 gfxQuad:setRect ( -64, -64, 64, 64 )
 
 uvTransform = MOAITransform.new ()

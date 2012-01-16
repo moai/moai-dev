@@ -32,6 +32,14 @@ lipo -create -output ./Release/libmoai-ios-tapjoy.a ./Release-iphoneos/libmoai-i
 lipo -create -output ./Release/libmoai-ios-untz.a ./Release-iphoneos/libmoai-ios-untz.a ./Release-iphonesimulator/libmoai-ios-untz.a
 lipo -create -output ./Release/libmoai-ios-zipfs.a ./Release-iphoneos/libmoai-ios-zipfs.a ./Release-iphonesimulator/libmoai-ios-zipfs.a
 
+mkdir -p Release-armv6
+lipo -thin armv6 -output ./Release-armv6/libmoai-ios.a ./Release/libmoai-ios.a
+lipo -thin armv6 -output ./Release-armv6/libmoai-ios-3rdparty.a ./Release/libmoai-ios-3rdparty.a
+lipo -thin armv6 -output ./Release-armv6/libmoai-ios-luaext.a ./Release/libmoai-ios-luaext.a
+lipo -thin armv6 -output ./Release-armv6/libmoai-ios-tapjoy.a ./Release/libmoai-ios-tapjoy.a
+lipo -thin armv6 -output ./Release-armv6/libmoai-ios-untz.a ./Release/libmoai-ios-untz.a
+lipo -thin armv6 -output ./Release-armv6/libmoai-ios-zipfs.a ./Release/libmoai-ios-zipfs.a
+
 mkdir -p Release-armv7
 lipo -thin armv7 -output ./Release-armv7/libmoai-ios.a ./Release/libmoai-ios.a
 lipo -thin armv7 -output ./Release-armv7/libmoai-ios-3rdparty.a ./Release/libmoai-ios-3rdparty.a

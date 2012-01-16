@@ -34,6 +34,11 @@ cd ../samples/contrib
 cp -R * ../../distribute/moai-sdk/samples/contrib
 cd ../../distribute
 
+mkdir -p moai-sdk/samples/chrome
+cd ../samples/chrome
+cp -R * ../../distribute/moai-sdk/samples/chrome
+cd ../../distribute
+
 mkdir -p moai-sdk/samples/flash
 cd ../samples/flash
 cp -R * ../../distribute/moai-sdk/samples/flash
@@ -70,37 +75,37 @@ cp -R * ../../distribute/moai-sdk/hosts/src
 cd ../../distribute
 
 # android host
-mkdir -p moai-sdk/hosts/android
-cd ../android
-./make-host.sh -p com.getmoai.samples -q
+mkdir -p moai-sdk/hosts/ant
+cd ../ant
+./make-host.sh -p com.getmoai.samples -s
 cd untitled-host
-cp -R . ../../distribute/moai-sdk/hosts/android
+cp -R . ../../distribute/moai-sdk/hosts/ant
 cd ../../distribute
 
 # ios host
-mkdir -p moai-sdk/hosts/xcode-ios/Classes
+mkdir -p moai-sdk/hosts/xcode/ios/Classes
 cd ../xcode/ios/Classes
-cp -R * ../../../distribute/moai-sdk/hosts/xcode-ios/Classes
+cp -R * ../../../distribute/moai-sdk/hosts/xcode/ios/Classes
 cd ../../../distribute
 
-cp ../xcode/ios/Entitlements.plist moai-sdk/hosts/xcode-ios/Entitlements.plist
-cp ../xcode/ios/Icon.png moai-sdk/hosts/xcode-ios/Icon.png
-cp ../xcode/ios/Icon@2x.png moai-sdk/hosts/xcode-ios/Icon@2x.png
-cp ../xcode/ios/Icon-72.png moai-sdk/hosts/xcode-ios/Icon-72.png
-cp ../xcode/ios/Icon-Small.png moai-sdk/hosts/xcode-ios/Icon-Small.png
-cp ../xcode/ios/Icon-Small@2x.png moai-sdk/hosts/xcode-ios/Icon-Small@2x.png
-cp ../xcode/ios/Icon-Small-50.png moai-sdk/hosts/xcode-ios/Icon-Small-50.png
-cp ../xcode/ios/Info.plist moai-sdk/hosts/xcode-ios/Info.plist
-cp ../xcode/ios/MainWindow-iPad.xib moai-sdk/hosts/xcode-ios/MainWindow-iPad.xib
-cp ../xcode/ios/MainWindow-iPhone.xib moai-sdk/hosts/xcode-ios/MainWindow-iPhone.xib
-cp ../xcode/ios/main.mm moai-sdk/hosts/xcode-ios/main.mm
-cp ../xcode/ios/mt.default moai-sdk/hosts/xcode-ios/mt.default
-cp ../xcode/ios/package.sh moai-sdk/hosts/xcode-ios/package.sh
+cp ../xcode/ios/Entitlements.plist moai-sdk/hosts/xcode/ios/Entitlements.plist
+cp ../xcode/ios/Icon.png moai-sdk/hosts/xcode/ios/Icon.png
+cp ../xcode/ios/Icon@2x.png moai-sdk/hosts/xcode/ios/Icon@2x.png
+cp ../xcode/ios/Icon-72.png moai-sdk/hosts/xcode/ios/Icon-72.png
+cp ../xcode/ios/Icon-Small.png moai-sdk/hosts/xcode/ios/Icon-Small.png
+cp ../xcode/ios/Icon-Small@2x.png moai-sdk/hosts/xcode/ios/Icon-Small@2x.png
+cp ../xcode/ios/Icon-Small-50.png moai-sdk/hosts/xcode/ios/Icon-Small-50.png
+cp ../xcode/ios/Info.plist moai-sdk/hosts/xcode/ios/Info.plist
+cp ../xcode/ios/MainWindow-iPad.xib moai-sdk/hosts/xcode/ios/MainWindow-iPad.xib
+cp ../xcode/ios/MainWindow-iPhone.xib moai-sdk/hosts/xcode/ios/MainWindow-iPhone.xib
+cp ../xcode/ios/main.mm moai-sdk/hosts/xcode/ios/main.mm
+cp ../xcode/ios/mt.default moai-sdk/hosts/xcode/ios/mt.default
+cp ../xcode/ios/package.sh moai-sdk/hosts/xcode/ios/package.sh
 
-mkdir -p moai-sdk/hosts/xcode-ios/Libraries/TapjoyConnect
-for file in `find ../xcode/ios/Libraries/TapjoyConnect/ -name "*.xib"` ; do cp $file moai-sdk/hosts/xcode-ios/Libraries/TapjoyConnect ; done
-for file in `find ../xcode/ios/Libraries/TapjoyConnect/ -name "*.png"` ; do cp $file moai-sdk/hosts/xcode-ios/Libraries/TapjoyConnect ; done
-for file in `find ../xcode/ios/Libraries/TapjoyConnect/ -name "*.sql"` ; do cp $file moai-sdk/hosts/xcode-ios/Libraries/TapjoyConnect ; done
+mkdir -p moai-sdk/hosts/xcode/ios/Libraries/TapjoyConnect
+for file in `find ../xcode/ios/Libraries/TapjoyConnect/ -name "*.xib"` ; do cp $file moai-sdk/hosts/xcode/ios/Libraries/TapjoyConnect ; done
+for file in `find ../xcode/ios/Libraries/TapjoyConnect/ -name "*.png"` ; do cp $file moai-sdk/hosts/xcode/ios/Libraries/TapjoyConnect ; done
+for file in `find ../xcode/ios/Libraries/TapjoyConnect/ -name "*.sql"` ; do cp $file moai-sdk/hosts/xcode/ios/Libraries/TapjoyConnect ; done
 
 cp ../version.txt moai-sdk/version.txt
 

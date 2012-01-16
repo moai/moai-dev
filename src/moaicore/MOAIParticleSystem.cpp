@@ -352,7 +352,7 @@ void MOAIParticleSystem::Draw ( int subPrimID, bool reload ) {
 		drawingMtx = this->GetLocalToWorldMtx ();
 		drawingMtx.Append ( spriteMtx );
 		
-		this->GetDeck ()->Draw ( drawingMtx, ( u32 )sprite.mGfxID, this->GetRemapper ());
+		this->mDeck->Draw ( drawingMtx, this->mIndex + ( u32 )sprite.mGfxID, this->mRemapper );
 	}
 }
 
@@ -416,6 +416,10 @@ MOAIParticleSystem::MOAIParticleSystem () :
 		RTTI_EXTEND ( MOAIProp )
 		RTTI_EXTEND ( MOAIAction )
 	RTTI_END
+	
+	// prop's index is *added* to particle's index;
+	// should be initialized to 0 instead of 1
+	this->mIndex = 0;
 }
 
 //----------------------------------------------------------------//

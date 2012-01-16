@@ -81,8 +81,7 @@ int MOAIBox2DRopeJoint::_setMaxLength ( lua_State* L ) {
 		return 0;
 	}
 	
-	float length = state.GetValue < float >( 1, 0.0f ) * unitsToMeters;
-	printf("\n\n\nmax length = %f", length);
+	float length = state.GetValue < float >( 2, 0.0f ) * unitsToMeters;
 	b2RopeJoint* joint = ( b2RopeJoint* )self->mJoint;
 	joint->SetMaxLength ( length );
 	
