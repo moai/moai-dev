@@ -989,7 +989,8 @@ void MOAISim::Update () {
 			//TODO make the following official
 			while (( this->mStep <= gap ) && ( budget > 0.0 )) {
 				budget -= 1.0f / 1000.0f;
-				sleep ( 1.0f / 1000.0f );
+				// NOTE: This is broken on windows, and equivalent to sleep(0) on others?
+				//sleep ( 1.0f / 1000.0f );
 			}
 		}
 	}

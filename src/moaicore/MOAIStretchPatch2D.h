@@ -61,10 +61,14 @@ private:
 
 	//----------------------------------------------------------------//
 // Gag a erroneous(?) warning in XCode 4
+#ifdef __clang__
 #pragma clang diagnostic push 
 #pragma clang diagnostic ignored "-Woverloaded-virtual"
+#endif
 	void				Draw					( u32 idx, MOAIDeckRemapper* remapper, float xStretch, float yStretch );
+#ifdef __clang__
 #pragma clang diagnostic pop
+#endif
 	void				UpdateParams			();
 
 public:
