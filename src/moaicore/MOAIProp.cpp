@@ -618,14 +618,14 @@ void MOAIProp::DrawDebug ( int subPrimID ) {
 			
 			if ( cellRect.Area () != 0.0f ) {
 				if ( debugLines.Bind ( MOAIDebugLines::PARTITION_CELLS )) {
-					debugLines.SetPenSpace ( MOAIDebugLines::PARTITION_CELLS );
+					debugLines.SetPenSpace ( MOAIDebugLines::WORLD_SPACE );
 					debugLines.DrawRect ( cellRect );
 				}
 			}
 			
 			if ( paddedRect.Area () != 0.0f ) {
 				if ( debugLines.Bind ( MOAIDebugLines::PARTITION_PADDED_CELLS )) {
-					debugLines.SetPenSpace ( MOAIDebugLines::PARTITION_PADDED_CELLS );
+					debugLines.SetPenSpace ( MOAIDebugLines::WORLD_SPACE );
 					debugLines.DrawRect ( paddedRect );
 				}
 			}

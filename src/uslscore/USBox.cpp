@@ -109,7 +109,7 @@ void USBox::GetCenter ( USVec3D& center ) const {
 	
 	center.mX = this->mMin.mX + (( this->mMax.mX - this->mMin.mX ) * 0.5f );
 	center.mY = this->mMin.mY + (( this->mMax.mY - this->mMin.mY ) * 0.5f );
-	center.mY = this->mMin.mZ + (( this->mMax.mZ - this->mMin.mZ ) * 0.5f );
+	center.mZ = this->mMin.mZ + (( this->mMax.mZ - this->mMin.mZ ) * 0.5f );
 }
 
 //----------------------------------------------------------------//
