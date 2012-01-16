@@ -15,15 +15,15 @@
 //================================================================//
 // LuaAlertView
 //================================================================//
-// TODO: harebrained
 @interface LuaAlertView : UIAlertView < UIAlertViewDelegate > {
 @public
+	int positiveButtonIndex;
+	int neutralButtonIndex;
+	int negativeButtonIndex;
 	MOAILuaRef callback;
 };
 
-	//----------------------------------------------------------------//
-	- (id)initWithTitle:(NSString *)title message:(NSString *)message cancelButtonTitle:(NSString *)cancelButtonTitle;
-	//- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex;
+- ( id ) initWithTitle:( NSString * )title message:( NSString * )message cancelButtonTitle:( NSString * )cancelButtonTitle;
 
 @end
 
@@ -86,7 +86,6 @@ private:
 	ReachabilityListener*	mReachabilityListener;
 
 	//----------------------------------------------------------------//
-	static int		_alert									( lua_State* L );
 	static int		_composeTweet							( lua_State* L );
 	static int		_canMakePayments						( lua_State* L );
 	static int		_canTweet								( lua_State* L );
@@ -103,11 +102,20 @@ private:
 	static int		_scheduleLocalNotification				( lua_State* L );
 	static int		_setAppIconBadgeNumber					( lua_State* L );
 	static int		_setListener							( lua_State* L );
+	static int		_showDialog								( lua_State* L );
 
 	//----------------------------------------------------------------//
 	void			PushPaymentTransaction					( lua_State* L, SKPaymentTransaction* transaction );
 
 public:
+	
+	// MUST be public - accessed by LuaAlertView.
+	enum {
+        DIALOG_RESULT_POSITIVE,
+        DIALOG_RESULT_NEUTRAL,
+        DIALOG_RESULT_NEGATIVE,
+        DIALOG_RESULT_CANCEL,
+	};
 	
 	DECL_LUA_SINGLETON ( MOAIApp )
 	

@@ -6,17 +6,23 @@
 
 print ( "hello, iPhone!" )
 
-function onDialogDismissed ( index )
-	print ( "onDialogDismissed: " )	
-
-	-- NOTE: Indexes are 1 based in the order that the buttons are specified in 
-	-- the call to alert, INCLUDING the cancel button. If nil is passed for the
-	-- cancel button, then the index of the first button title provided is one;
-	-- otherwise, it is two.
-	print ( "button at index " .. index .. " clicked" )
+function onDialogDismissed ( code )
+	print ( "onDialogDismissed: " )
+	
+	if ( code == MOAIApp.DIALOG_RESULT_POSITIVE ) then
+		print ( "dialog result: YES" )
+	elseif ( code == MOAIApp.DIALOG_RESULT_NEUTRAL ) then
+		print ( "dialog result: MAYBE" )
+	elseif ( code == MOAIApp.DIALOG_RESULT_NEGATIVE ) then
+		print ( "dialog result: NO" )
+	elseif ( code == MOAIApp.DIALOG_RESULT_CANCEL ) then
+		print ( "dialog result: CANCELED" )
+	else
+		print ( "dialog result: UNKNOWN" )
+	end
 end
 
-MOAIApp.alert ( "A title", "A meaningful message", onDialogDismissed, nil, "Yes", "Later", "Never" )
+MOAIApp.showDialog ( "A title", "A meaningful message", "Yes", "Maybe", "No", true, onDialogDismissed )
 
 ----------------------------------------------------------------
 
