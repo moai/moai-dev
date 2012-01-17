@@ -17,7 +17,7 @@ layer:setViewport ( viewport )
 partition = MOAIPartition.new ()
 layer:setPartition ( partition )
 
-camera = MOAICamera3D.new ()
+camera = MOAICamera.new ()
 camera:setLoc ( 0, 0, camera:getFocalLength ( 320 ))
 camera:forceUpdate ()
 layer:setCamera ( camera )

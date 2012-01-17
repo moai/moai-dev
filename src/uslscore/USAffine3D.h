@@ -498,18 +498,18 @@ public:
 	void Shear ( TYPE yx, TYPE zx, TYPE xy, TYPE zy, TYPE xz, TYPE yz ) {
 
 		m[C0_R0]	= 1;
-		m[C0_R1]	= xy;
-		m[C0_R2]	= xz;
+		m[C0_R1]	= yx;
+		m[C0_R2]	= zx;
 		
-		m[C1_R0]	= yx;
-		m[C1_R1]	= 0;
-		m[C1_R2]	= yz;
+		m[C1_R0]	= xy;
+		m[C1_R1]	= 1;
+		m[C1_R2]	= zy;
 		
-		m[C2_R0]	= zx;
-		m[C2_R1]	= zy;
-		m[C2_R2]	= 0;
+		m[C2_R0]	= xz;
+		m[C2_R1]	= yz;
+		m[C2_R2]	= 1;
 		
-		m[C3_R0]	= 1;
+		m[C3_R0]	= 0;
 		m[C3_R1]	= 0;
 		m[C3_R2]	= 0;
 	}

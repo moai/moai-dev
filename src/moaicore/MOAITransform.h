@@ -35,6 +35,15 @@ class MOAITransform :
 	public MOAITransformBase {
 protected:
 
+	float			mShearYX;
+	float			mShearZX;
+
+	float			mShearXY;
+	float			mShearZY;
+	
+	float			mShearXZ;
+	float			mShearYZ;
+
 	USVec3D			mPiv;
 	USVec3D			mLoc;
 	USVec3D			mScale;
@@ -65,6 +74,9 @@ protected:
 	static int	_setPiv			( lua_State* L );
 	static int	_setRot			( lua_State* L );
 	static int	_setScl			( lua_State* L );
+	static int	_setShearByX	( lua_State* L );
+	static int	_setShearByY	( lua_State* L );
+	static int	_setShearByZ	( lua_State* L );
 	static int	_worldToModel	( lua_State* L );
 
 	//----------------------------------------------------------------//

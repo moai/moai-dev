@@ -890,6 +890,60 @@ int MOAITransform::_setScl ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	setShearByX
+	@text	Sets the shear for the Y and Z axes by X.
+	
+	@in		MOAITransform self
+	@in		number yx			Default value is 0.
+	@opt	number zx			Default value is 0.
+	@out	nil
+*/
+int MOAITransform::_setShearByX ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITransform, "U" )
+
+	self->mShearYX = state.GetValue < float >( 2, 0.0f );
+	self->mShearZX = state.GetValue < float >( 3, 0.0f );
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	setShearByY
+	@text	Sets the shear for the X and Z axes by Y.
+	
+	@in		MOAITransform self
+	@in		number xy			Default value is 0.
+	@opt	number zy			Default value is 0.
+	@out	nil
+*/
+int MOAITransform::_setShearByY ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITransform, "U" )
+
+	self->mShearXY = state.GetValue < float >( 2, 0.0f );
+	self->mShearZY = state.GetValue < float >( 3, 0.0f );
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	setShearByZ
+	@text	Sets the shear for the X and Y axes by Z.
+	
+	@in		MOAITransform self
+	@in		number xz			Default value is 0.
+	@opt	number yz			Default value is 0.
+	@out	nil
+*/
+int MOAITransform::_setShearByZ ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITransform, "U" )
+
+	self->mShearXZ = state.GetValue < float >( 2, 0.0f );
+	self->mShearYZ = state.GetValue < float >( 3, 0.0f );
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	worldToModel
 	@text	Transform a point in world space to model space.
 	
@@ -985,6 +1039,10 @@ void MOAITransform::BuildTransforms ( float xOff, float yOff, float zOff, float 
 		this->mLoc.mZ + zOff
 	);
 	
+	USAffine3D shear;
+	shear.Shear ( this->mShearYX, this->mShearZX, this->mShearXY, this->mShearZY, this->mShearXZ, this->mShearYZ );
+	this->mLocalToWorldMtx.Prepend ( shear );
+	
 	const USAffine3D* inherit = this->GetLinkedValue < USAffine3D >( MOAITransformAttr::Pack ( INHERIT_TRANSFORM ));
 	if ( inherit ) {
 		this->mLocalToWorldMtx.Append ( *inherit );
@@ -1026,6 +1084,12 @@ const USAffine3D& MOAITransform::GetWorldToLocalMtx () {
 
 //----------------------------------------------------------------//
 MOAITransform::MOAITransform () :
+	mShearYX ( 0.0f ),
+	mShearZX ( 0.0f ),
+	mShearXY ( 0.0f ),
+	mShearZY ( 0.0f ),
+	mShearXZ ( 0.0f ),
+	mShearYZ ( 0.0f ),
 	mPiv ( 0.0f, 0.0f, 0.0f ),
 	mLoc ( 0.0f, 0.0f, 0.0f ),
 	mScale ( 1.0f, 1.0f, 1.0f ),
@@ -1098,6 +1162,9 @@ void MOAITransform::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setPiv",				_setPiv },
 		{ "setRot",				_setRot },
 		{ "setScl",				_setScl },
+		{ "setShearByX",		_setShearByX },
+		{ "setShearByY",		_setShearByY },
+		{ "setShearByZ",		_setShearByZ },
 		{ "worldToModel",		_worldToModel },
 		{ NULL, NULL }
 	};

@@ -21,7 +21,7 @@
 #include <moaicore/MOAIBitmapFontRipper.h>
 #include <moaicore/MOAIBlendMode.h>
 #include <moaicore/MOAIButtonSensor.h>
-#include <moaicore/MOAICamera3D.h>
+#include <moaicore/MOAICamera.h>
 #include <moaicore/MOAICameraAnchor2D.h>
 #include <moaicore/MOAICameraFitter2D.h>
 #include <moaicore/MOAICanary.h>

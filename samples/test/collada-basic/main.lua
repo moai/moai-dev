@@ -145,7 +145,7 @@ prop:setDepthTest ( MOAIProp.DEPTH_TEST_LESS_EQUAL )
 prop:setLoc( 0, 100)
 layer:insertProp ( prop )
 
-camera = MOAICamera3D.new ()
+camera = MOAICamera.new ()
 camera:setLoc ( 0, 0, camera:getFocalLength ( 320 ))
 layer:setCamera ( camera )
 

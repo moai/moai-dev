@@ -13,21 +13,40 @@ class MOAIViewport;
 // MOAICamera
 //================================================================//
 /**	@name	MOAICamera
-	@text	Abstract base class for camera objects. Plugs into
-			MOAILayer to project geometry being rendered.
+	@text	Perspective or orthographic camera.
 */
 class MOAICamera :
 	public virtual MOAITransform {
+private:
+
+	float		mFieldOfView;
+	float		mNearPlane;
+	float		mFarPlane;
+
+	bool		mOrtho;
+
+	//----------------------------------------------------------------//
+	static int		_getFarPlane		( lua_State* L );
+	static int		_getFieldOfView		( lua_State* L );
+	static int		_getFocalLength		( lua_State* L );
+	static int		_getNearPlane		( lua_State* L );
+	static int		_setFarPlane		( lua_State* L );
+	static int		_setFieldOfView		( lua_State* L );
+	static int		_setNearPlane		( lua_State* L );
+	static int		_setOrtho			( lua_State* L );
+	
 public:
 	
+	DECL_LUA_FACTORY ( MOAICamera )
+	
 	//----------------------------------------------------------------//
-	virtual USMatrix4x4		GetProjMtx			( const MOAIViewport& viewport ) const = 0;
-	virtual USMatrix4x4		GetProjMtxInv		( const MOAIViewport& viewport ) const = 0;
-	USMatrix4x4				GetViewMtx			();
-							MOAICamera			();
-							~MOAICamera			();
-	void					RegisterLuaClass	( MOAILuaState& state );
-	void					RegisterLuaFuncs	( MOAILuaState& state );
+	USMatrix4x4		GetProjMtx			( const MOAIViewport& viewport ) const;
+	USMatrix4x4		GetProjMtxInv		( const MOAIViewport& viewport ) const;
+	USMatrix4x4		GetViewMtx			();
+					MOAICamera			();
+					~MOAICamera			();
+	void			RegisterLuaClass	( MOAILuaState& state );
+	void			RegisterLuaFuncs	( MOAILuaState& state );
 };
 
 #endif

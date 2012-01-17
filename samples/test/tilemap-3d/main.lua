@@ -44,6 +44,6 @@ layer:insertProp ( prop )
 prop:moveRot ( 360, 180, 0, 3 )
 prop:moveLoc ( 0, 0, 128, 3 )
 
-camera = MOAICamera3D.new ()
+camera = MOAICamera.new ()
 camera:setLoc ( 0, 0, camera:getFocalLength ( 512 ))
 layer:setCamera ( camera )
