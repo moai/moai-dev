@@ -177,7 +177,8 @@ USMatrix4x4 MOAICamera::GetViewMtx () {
 MOAICamera::MOAICamera () :
 	mFieldOfView ( DEFAULT_HFOV ),
 	mNearPlane ( DEFAULT_NEAR_PLANE ),
-	mFarPlane ( DEFAULT_FAR_PLANE ) {
+	mFarPlane ( DEFAULT_FAR_PLANE ),
+	mOrtho ( false ) {
 
 	RTTI_SINGLE ( MOAITransform )
 }
