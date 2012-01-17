@@ -307,12 +307,6 @@ u32 MOAIPartition::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* i
 //----------------------------------------------------------------//
 u32 MOAIPartition::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignore, const USFrustum& frustum, u32 mask ) {
 	
-	// TODO:
-	//USRect rect;
-	//frustum.mAABB.GetRectXY ( rect );
-	//
-	//return this->GatherProps ( results, ignore, rect, mask );
-	
 	results.Reset ();
 	
 	u32 totalLayers = this->mLayers.Size ();

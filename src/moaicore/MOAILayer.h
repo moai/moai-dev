@@ -95,7 +95,7 @@ public:
 	void			GetWndToWorldMtx		( USMatrix4x4& wndToWorld );
 	void			GetWorldToWndMtx		( USMatrix4x4& worldToWnd );
 					MOAILayer				();
-					~MOAILayer			();
+					~MOAILayer				();
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 };
