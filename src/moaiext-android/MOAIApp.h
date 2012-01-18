@@ -21,7 +21,6 @@ private:
 		PURCHASE_STATE_CHANGED,
 		RESTORE_RESPONSE_RECEIVED,
 		BACK_BUTTON_PRESSED,
-		DIALOG_DISMISSED,
 		TOTAL,
 	};
 	
@@ -49,6 +48,7 @@ private:
 	};
 	
 	MOAILuaRef		mListeners [ TOTAL ];
+	MOAILuaRef 		mDialogCallback;
 	
 	//----------------------------------------------------------------//
 	static int		_checkBillingSupported		( lua_State* L );
@@ -58,8 +58,8 @@ private:
 	static int		_restoreTransactions		( lua_State* L );
 	static int		_setListener				( lua_State* L );
 	static int		_setMarketPublicKey			( lua_State* L );
-	static int		_showDialog					( lua_State* L );
 	static int		_share						( lua_State* L );
+	static int		_showDialog					( lua_State* L );
 
 	bool ( *checkBillingSupportedFunc )			( void );
 	bool ( *confirmNotificationFunc ) 			( cc8* );
@@ -93,8 +93,8 @@ public:
 	void		SetRequestPurchaseFunc			( bool ( *func ) ( cc8*, cc8* ));
 	void		SetRestoreTransactionsFunc		( bool ( *func ) () );
 	void		SetMarketPublicKeyFunc			( void ( *func ) ( cc8* ));
-	void		SetShowDialogFunc				( void ( *func ) ( cc8*, cc8*, cc8*, cc8*, cc8*, bool ));
 	void		SetShareFunc					( void ( *func ) ( cc8*, cc8*, cc8* ));
+	void		SetShowDialogFunc				( void ( *func ) ( cc8*, cc8*, cc8*, cc8*, cc8*, bool ));
 	void		WillEndSession					();
 };
 

@@ -103,6 +103,16 @@ int MOAIApp::_showDialog ( lua_State* L ) {
 	cc8* negative = state.GetValue < cc8* >( 5, "" );
 	bool cancelable = state.GetValue < bool >( 6, "" );
 	
+	if ( state.IsType ( 7, LUA_TFUNCTION )) {
+		// NOTE: This is fragile. We're storing the callback function in a global variable,
+		// effectively. Invoking the showDialog method multiple times in succession can
+		// therefore lead to unpredictable results. In fact, it's unknown how Android itself
+		// handles multiple invocations - are they queued? On iOS, UIAlertView is LIFO and
+		// new invocations supersede previous ones, but once dismissed, the system continues
+		// down the alert stack... 
+		MOAIApp::Get ().mDialogCallback.SetStrongRef ( state, 7 );
+	}	
+		
 	MOAIApp::Get ().showDialogFunc ( title, message, positive, neutral, negative, cancelable );
 	
 	return 0;
@@ -161,7 +171,6 @@ void MOAIApp::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "PURCHASE_STATE_CHANGED",				( u32 )PURCHASE_STATE_CHANGED );
 	state.SetField ( -1, "RESTORE_RESPONSE_RECEIVED",			( u32 )RESTORE_RESPONSE_RECEIVED );
 	state.SetField ( -1, "BACK_BUTTON_PRESSED",					( u32 )BACK_BUTTON_PRESSED );
-	state.SetField ( -1, "DIALOG_DISMISSED",					( u32 )DIALOG_DISMISSED );
 
 	state.SetField ( -1, "BILLING_RESULT_OK",					( u32 )BILLING_RESULT_OK );
 	state.SetField ( -1, "BILLING_RESULT_USER_CANCELED",		( u32 )BILLING_RESULT_USER_CANCELED );
@@ -316,15 +325,15 @@ bool MOAIApp::NotifyBackButtonPressed () {
 }
 
 //----------------------------------------------------------------//
-void MOAIApp::NotifyDialogDismissed ( int code ) {
-	MOAILuaRef& callback = this->mListeners [ DIALOG_DISMISSED ];
-	
-	if ( callback ) {
-		MOAILuaStateHandle state = callback.GetSelf ();
+void MOAIApp::NotifyDialogDismissed ( int dialogResult ) {
 
-		lua_pushinteger ( state, code );	
+	if ( ! mDialogCallback.IsNil() ) {
+		MOAILuaStateHandle state = mDialogCallback.GetSelf ();
 		
+		state.Push ( dialogResult );
 		state.DebugCall ( 1, 0 );
+		
+		mDialogCallback.Clear();
 	}
 }
 
