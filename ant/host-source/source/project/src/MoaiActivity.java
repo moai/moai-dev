@@ -334,7 +334,7 @@ public class MoaiActivity extends Activity implements SensorEventListener, Tapjo
 			return;
 		}
 
-		synchronized ( MoaiView.LOCK_OBJECT ) {
+		//synchronized ( MoaiView.LOCK_OBJECT ) {
 		
 			float x = event.values [ 0 ];
 			float y = event.values [ 1 ];
@@ -344,7 +344,7 @@ public class MoaiActivity extends Activity implements SensorEventListener, Tapjo
 			int sensorId = MoaiInputDeviceSensorID.LEVEL.ordinal ();
 			
 			AKUEnqueueLevelEvent ( deviceId, sensorId, x, y, z );
-		}
+		//}
 	}
 
 	//================================================================//

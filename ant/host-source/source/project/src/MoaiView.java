@@ -182,7 +182,7 @@ public class MoaiView extends GLSurfaceView {
 	@Override
 	public boolean onTouchEvent ( MotionEvent event ) {
 
-		synchronized ( MoaiView.LOCK_OBJECT ) {
+		//synchronized ( MoaiView.LOCK_OBJECT ) {
 		
 			boolean isDown = ( event.getAction () == MotionEvent.ACTION_DOWN );
 			isDown |= ( event.getAction() == MotionEvent.ACTION_MOVE );
@@ -202,7 +202,7 @@ public class MoaiView extends GLSurfaceView {
 					1
 				);
 			}			
-		}
+		//}
 		
 		return true;
 	}
@@ -243,7 +243,7 @@ public class MoaiView extends GLSurfaceView {
 		@Override
 		public void onDrawFrame ( GL10 gl ) {
 
-			synchronized ( MoaiView.LOCK_OBJECT ) {
+			//synchronized ( MoaiView.LOCK_OBJECT ) {
 
 				AKUSetContext ( mAku );
 				AKUUpdate ();
@@ -251,7 +251,7 @@ public class MoaiView extends GLSurfaceView {
 				AKUSetContext ( mAku );
 				AKUSetViewSize ( mWidth, mHeight );
 				AKURender ();
-			}			
+			//}			
 		}
 
 	    //----------------------------------------------------------------//

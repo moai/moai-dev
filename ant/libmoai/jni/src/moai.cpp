@@ -13,6 +13,102 @@
 #include <aku/AKU-untz.h>
 #include <aku/AKU-luaext.h>
 
+
+template <class T>
+class LockingQueue {
+public:
+	pthread_mutex_t mutex;
+	int tail;
+	int num;
+
+	static const int kMaxMessages = 100;
+
+	T messages [ kMaxMessages ];
+
+	//----------------------------------------------------------------//
+	void Push ( const T &message ) {
+
+		pthread_mutex_lock( &mutex );
+
+		if ( num >= LockingQueue::kMaxMessages ) {
+			printf ("ERROR: g_MessageQueue, kMaxMessages (%d) exceeded\n", LockingQueue::kMaxMessages );
+		} 
+		else {
+			int head = ( tail + num) % LockingQueue::kMaxMessages;
+
+			 messages [ head ] = message;
+			++num;
+
+			if ( num >= LockingQueue::kMaxMessages )  {
+				 num -= LockingQueue::kMaxMessages;
+			}
+
+		}
+
+		pthread_mutex_unlock( &mutex );
+	}
+
+	int PopMessage ( T &message ) {
+
+		pthread_mutex_lock( &mutex );
+
+		int result = 0;
+
+		if ( num > 0) {
+
+			result = 1;
+			message = messages [ tail ];
+			++tail;
+
+			if ( tail >=  LockingQueue::kMaxMessages) {
+				tail -=  LockingQueue::kMaxMessages;
+			}
+			--num;
+		}
+
+		pthread_mutex_unlock( &mutex );
+
+		return result;
+	}
+};
+
+struct InputEvent {
+
+	enum {
+		INPUTEVENT_LEVEL,
+		INPUTEVENT_COMPASS,
+		INPUTEVENT_LOCATION,
+		INPUTEVENT_TOUCH,
+	};
+
+	int m_type;
+	int m_deviceId;
+	int m_sensorId;
+
+	float m_x;
+	float m_y;
+	float m_z;
+
+
+	//compass
+	int m_heading;
+
+	//touch
+	int m_touchId;
+	bool m_down;
+	int m_tapCount;
+	
+	//location
+	int m_longitude;
+	int m_latitude;
+	int m_altitude;
+	float m_hAccuracy;
+	float m_vAccuracy;
+	float m_speed;
+};
+
+LockingQueue<InputEvent> *g_InputQueue = NULL;
+
 //================================================================//
 // Utility macros
 //================================================================//
@@ -206,17 +302,57 @@
 	
 	//----------------------------------------------------------------//
 	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiActivity_AKUEnqueueCompassEvent ( JNIEnv* env, jclass obj, jint deviceId, jint sensorId, jint heading ) {
-		AKUEnqueueCompassEvent ( deviceId, sensorId, heading );
-	}
+		//AJV TODO enqueue in event queue
+		InputEvent ievent;
 
+		ievent.m_type = InputEvent::INPUTEVENT_COMPASS;
+
+		ievent.m_deviceId = deviceId;
+		ievent.m_sensorId = sensorId;
+
+		ievent.m_heading = heading;
+
+		g_InputQueue->Push ( ievent );
+		//AKUEnqueueCompassEvent ( deviceId, sensorId, heading );
+	}
+	#include <android/log.h>
 	//----------------------------------------------------------------//
 	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiActivity_AKUEnqueueLevelEvent ( JNIEnv* env, jclass obj, jint deviceId, jint sensorId, jfloat x, jfloat y, jfloat z ) {
-		AKUEnqueueLevelEvent ( deviceId, sensorId, x, y, z );
+		
+		InputEvent ievent;
+
+		ievent.m_type = InputEvent::INPUTEVENT_LEVEL;
+
+		ievent.m_deviceId = deviceId;
+		ievent.m_sensorId = sensorId;
+
+		ievent.m_x = x;
+		ievent.m_y = y;
+		ievent.m_z = z;
+
+		g_InputQueue->Push ( ievent );
+		//AKUEnqueueLevelEvent ( deviceId, sensorId, x, y, z );
 	}
 
 	//----------------------------------------------------------------//
 	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiActivity_AKUEnqueueLocationEvent ( JNIEnv* env, jclass obj, jint deviceId, jint sensorId, jint longitude, jint latitude, jint altitude, jfloat hAccuracy, jfloat vAccuracy, jfloat speed ) {
-		AKUEnqueueLocationEvent ( deviceId, sensorId, longitude, latitude, altitude, hAccuracy, vAccuracy, speed );
+		
+		InputEvent ievent;
+
+		ievent.m_type = InputEvent::INPUTEVENT_LOCATION;
+
+		ievent.m_deviceId = deviceId;
+		ievent.m_sensorId = sensorId;
+
+		ievent.m_longitude = longitude;
+		ievent.m_latitude = latitude;
+		ievent.m_altitude = altitude;
+		ievent.m_hAccuracy = hAccuracy;
+		ievent.m_vAccuracy = vAccuracy;
+		ievent.m_speed = speed ;
+		
+		g_InputQueue->Push ( ievent );
+		//AKUEnqueueLocationEvent ( deviceId, sensorId, longitude, latitude, altitude, hAccuracy, vAccuracy, speed );
 	}
 
 	//----------------------------------------------------------------//
@@ -226,7 +362,21 @@
 
 	//----------------------------------------------------------------//
 	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUEnqueueTouchEvent ( JNIEnv* env, jclass obj, jint deviceId, jint sensorId, jint touchId, jboolean down, jint x, jint y, jint tapCount ) {
-		AKUEnqueueTouchEvent ( deviceId, sensorId, touchId, down, x, y, tapCount );
+		InputEvent ievent;
+
+		ievent.m_type = InputEvent::INPUTEVENT_TOUCH;
+
+		ievent.m_deviceId = deviceId;
+		ievent.m_sensorId = sensorId;
+
+		ievent.m_touchId = touchId;
+		ievent.m_down = down;
+		ievent.m_x = x;
+		ievent.m_y = y;
+		ievent.m_tapCount = tapCount;
+
+		g_InputQueue->Push ( ievent );
+		//AKUEnqueueTouchEvent ( deviceId, sensorId, touchId, down, x, y, tapCount );
 	}
 
 	//----------------------------------------------------------------//
@@ -265,6 +415,7 @@
 		mMoaiView = ( jobject ) env->NewGlobalRef ( moaiView );
 		jclass moaiViewClass = env->GetObjectClass ( mMoaiView );
 		
+		g_InputQueue = new LockingQueue<InputEvent> ();
 		mGenerateGuidFunc = env->GetMethodID ( moaiViewClass, "getGUID", "()Ljava/lang/String;" );
 
 		MOAIApp::Get ().SetCheckBillingSupportedFunc( &CheckBillingSupported );
@@ -531,5 +682,25 @@
 	
 	//----------------------------------------------------------------//
 	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUUpdate ( JNIEnv* env, jclass obj ) {
+
+		//AJV move events to main queue
+		InputEvent ievent;
+		while ( g_InputQueue->PopMessage ( ievent )) {
+			switch ( ievent.m_type ) {
+			case InputEvent::INPUTEVENT_TOUCH:
+				AKUEnqueueTouchEvent ( ievent.m_deviceId, ievent.m_sensorId, ievent.m_touchId, ievent.m_down, ievent.m_x, ievent.m_y, ievent.m_tapCount );
+				break;
+			case InputEvent::INPUTEVENT_LEVEL:
+				AKUEnqueueLevelEvent ( ievent.m_deviceId, ievent.m_sensorId, ievent.m_x, ievent.m_y, ievent.m_z );
+				break;
+			case InputEvent::INPUTEVENT_COMPASS:
+				AKUEnqueueCompassEvent ( ievent.m_deviceId, ievent.m_sensorId, ievent.m_heading );
+				break;
+			case InputEvent::INPUTEVENT_LOCATION:
+				AKUEnqueueLocationEvent ( ievent.m_deviceId, ievent.m_sensorId, ievent.m_longitude, ievent.m_latitude, ievent.m_altitude, ievent.m_hAccuracy, ievent.m_vAccuracy, ievent.m_speed );
+				break;
+			}
+		}
+
 		AKUUpdate ();
 	}
