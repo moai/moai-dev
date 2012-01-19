@@ -6,7 +6,7 @@
 
 MOAISim.openWindow ( "test", 320, 480 )
 
-layer = MOAILayer.new ()
+layer = MOAILayer2D.new ()
 MOAISim.pushRenderPass ( layer )
 
 viewport = MOAIViewport.new ()
@@ -17,19 +17,12 @@ layer:setViewport ( viewport )
 partition = MOAIPartition.new ()
 layer:setPartition ( partition )
 
-camera = MOAICamera.new ()
-camera:setLoc ( 0, 0, camera:getFocalLength ( 320 ))
-camera:forceUpdate ()
-layer:setCamera ( camera )
-
-x, y, z = layer:worldToWnd ( 0, 0, 0 )
-
 gfxQuad = MOAIGfxQuad2D.new ()
 gfxQuad:setTexture ( "cathead.png" )
 gfxQuad:setRect ( -64, -64, 64, 64 )
 
 function addSprite ( x, y, xScl, yScl, name )
-	local prop = MOAIProp.new ()
+	local prop = MOAIProp2D.new ()
 	prop:setDeck ( gfxQuad )
 	prop:setPriority ( priority )
 	prop:setLoc ( x, y )
@@ -58,13 +51,13 @@ function pointerCallback ( x, y )
 	local oldX = mouseX
 	local oldY = mouseY
 	
-	mouseX, mouseY = layer:wndToWorld ( x, y, z )
+	mouseX, mouseY = layer:wndToWorld ( x, y )
 	
 	if pick then
 		pick:addLoc ( mouseX - oldX, mouseY - oldY )
 	end
 end
-
+		
 function clickCallback ( down )
 	
 	if down then
@@ -75,11 +68,11 @@ function clickCallback ( down )
 			print ( pick.name )
 			pick:setPriority ( priority )
 			priority = priority + 1
-			pick:moveLoc ( 0, 0, 64, MOAIEaseType.EASE_IN )
+			pick:moveScl ( 0.25, 0.25, 0.125, MOAIEaseType.EASE_IN )
 		end
 	else
 		if pick then
-			pick:moveLoc ( 0, 0, -64, MOAIEaseType.EASE_IN )
+			pick:moveScl ( -0.25, -0.25, 0.125, MOAIEaseType.EASE_IN )
 			pick = nil
 		end
 	end
@@ -107,4 +100,3 @@ else
 		end
 	)
 end
-
