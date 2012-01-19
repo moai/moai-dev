@@ -12,6 +12,7 @@ import @PACKAGE@.MoaiBillingConstants.PurchaseState;
 import @PACKAGE@.MoaiBillingConstants.ResponseCode;
 
 import java.util.ArrayList;
+import java.util.concurrent.CountDownLatch;
 
 import @PACKAGE@.R;
 
@@ -64,6 +65,13 @@ public class MoaiActivity extends Activity implements SensorEventListener, Tapjo
 	private SensorManager 					mSensorManager;
 	private boolean							mWaitingToResume;
 	private boolean							mWindowFocusLost;
+	
+	// Used for threading between the render thread and the main thread.
+	private String							mTapjoyUserId;
+	private boolean							mBillingSupported;
+	private boolean							mBillingNotificationsConfirmed;
+	private boolean							mBillingPurchaseRequested;
+	private boolean							mBillingTransactionsRestored;
 	
 	static enum DIALOG_RESULT {
 		POSITIVE,
@@ -198,7 +206,6 @@ public class MoaiActivity extends Activity implements SensorEventListener, Tapjo
 		// very quickly twice, in which case we do not receive the 
 		// expected windows focus events.
 		mWindowFocusLost = true;
-		
 		mMoaiView.pause ( true );
 	}
 
@@ -411,15 +418,20 @@ public class MoaiActivity extends Activity implements SensorEventListener, Tapjo
 	}
 	
 	//----------------------------------------------------------------//
-	public void share ( String prompt, String subject, String text ) {
+	public void share ( final String prompt, final String subject, final String text ) {
 
-		Intent intent = new Intent ( Intent.ACTION_SEND );
-		intent.setType ( "text/plain" );
+		mHandler.post ( new Runnable () {
+
+			public void run () {
+				Intent intent = new Intent ( Intent.ACTION_SEND );
+				intent.setType ( "text/plain" );
 		
-		if ( subject != null ) intent.putExtra ( Intent.EXTRA_SUBJECT, subject );
-		if ( text != null ) intent.putExtra ( Intent.EXTRA_TEXT, text );
+				if ( subject != null ) intent.putExtra ( Intent.EXTRA_SUBJECT, subject );
+				if ( text != null ) intent.putExtra ( Intent.EXTRA_TEXT, text );
 		
-		this.startActivity ( Intent.createChooser ( intent, prompt ));
+				MoaiActivity.this.startActivity ( Intent.createChooser ( intent, prompt ));
+			}
+		});
 	}
 
 	//================================================================//
@@ -427,11 +439,17 @@ public class MoaiActivity extends Activity implements SensorEventListener, Tapjo
 	//================================================================//
 
 	//----------------------------------------------------------------//
-	public void openURL ( String url ) {
+	public void openURL ( final String url ) {
 
-		Uri uri = Uri.parse ( url );
-		Intent intent = new Intent ( Intent.ACTION_VIEW, uri );
-		startActivity ( intent );
+		mHandler.post ( new Runnable () {
+
+			public void run () {
+
+				Uri uri = Uri.parse ( url );
+				Intent intent = new Intent ( Intent.ACTION_VIEW, uri );
+				MoaiActivity.this.startActivity ( intent );
+			}
+		});
 	}
 	
 	//================================================================//
@@ -439,29 +457,77 @@ public class MoaiActivity extends Activity implements SensorEventListener, Tapjo
 	//================================================================//
 
 	//----------------------------------------------------------------//
-	public void requestTapjoyConnect ( String appId, String appSecret ) {
-	
-		TapjoyConnect.requestTapjoyConnect ( this, appId, appSecret );
+	public void requestTapjoyConnect ( final String appId, final String appSecret ) {
+		
+		mHandler.post ( new Runnable () {
+
+			public void run () {
+		
+				TapjoyConnect.requestTapjoyConnect ( MoaiActivity.this, appId, appSecret );
+			}
+		});
 	}
 	
 	public String getUserId () {
+
+		// We need to proxy this call over to the main thread, but we need to fiegn
+		// synchronicity. So, we'll use a CountDownLatch to allow the execution on
+		// the main thread to signal when it's finished so we can return the value
+		// retrieved back to the caller.
+		final CountDownLatch latch = new CountDownLatch ( 1 );
+		mTapjoyUserId = null;
 		
-		return TapjoyConnect.getTapjoyConnectInstance ().getUserID ();
+		mHandler.post ( new Runnable () {
+
+			public void run () {
+
+				mTapjoyUserId = TapjoyConnect.getTapjoyConnectInstance ().getUserID ();
+				latch.countDown ();
+			}
+		});
+
+		try {
+			
+			latch.await ();
+		} catch ( InterruptedException e ) {
+			
+			e.printStackTrace();
+		}
+		
+		return mTapjoyUserId;
 	}
 	 
 	public void initVideoAds () {
 		
-		TapjoyConnect.getTapjoyConnectInstance ().initVideoAd ( this );
+		mHandler.post ( new Runnable () {
+
+			public void run () {
+		
+				TapjoyConnect.getTapjoyConnectInstance ().initVideoAd ( MoaiActivity.this );
+			}
+		});
 	}
 	
-	public void setVideoAdCacheCount ( int count ) {
+	public void setVideoAdCacheCount ( final int count ) {
 		
-		TapjoyConnect.getTapjoyConnectInstance ().setVideoCacheCount ( count );
+		mHandler.post ( new Runnable () {
+
+			public void run () {
+		
+				TapjoyConnect.getTapjoyConnectInstance ().setVideoCacheCount ( count );
+			}
+		});
 	}
 	
 	public void showOffers () {
 		
-		TapjoyConnect.getTapjoyConnectInstance ().showOffers ();
+		mHandler.post ( new Runnable () {
+
+			public void run () {
+		
+				TapjoyConnect.getTapjoyConnectInstance ().showOffers ();
+			}
+		});
 	}
 	
 	//================================================================//
@@ -489,36 +555,138 @@ public class MoaiActivity extends Activity implements SensorEventListener, Tapjo
 	//----------------------------------------------------------------//
 	public boolean checkBillingSupported () {
 		
-		return mBillingService.checkBillingSupported ();
+		// We need to proxy this call over to the main thread, but we need to fiegn
+		// synchronicity. So, we'll use a CountDownLatch to allow the execution on
+		// the main thread to signal when it's finished so we can return the value
+		// retrieved back to the caller.
+		final CountDownLatch latch = new CountDownLatch ( 1 );
+		mBillingSupported = false;
+		
+		mHandler.post ( new Runnable () {
+
+			public void run () {
+
+				mBillingSupported = mBillingService.checkBillingSupported ();
+				latch.countDown ();
+			}
+		});
+
+		try {
+			
+			latch.await ();
+		} catch ( InterruptedException e ) {
+			
+			e.printStackTrace();
+		}
+		
+		return mBillingSupported;
 	}
 
 	//----------------------------------------------------------------//
-	public boolean confirmNotification ( String notificationId ) {
+	public boolean confirmNotification ( final String notificationId ) {
 		
-		ArrayList<String> notifyList = new ArrayList<String> ();
-        notifyList.add ( notificationId );
+		// We need to proxy this call over to the main thread, but we need to fiegn
+		// synchronicity. So, we'll use a CountDownLatch to allow the execution on
+		// the main thread to signal when it's finished so we can return the value
+		// retrieved back to the caller.
+		final CountDownLatch latch = new CountDownLatch ( 1 );
+		mBillingNotificationsConfirmed = false;
+		
+		mHandler.post ( new Runnable () {
 
-		String[] notifyIds = notifyList.toArray ( new String[notifyList.size ()] );
+			public void run () {
 
-		return mBillingService.confirmNotifications ( notifyIds );
+				ArrayList<String> notifyList = new ArrayList<String> ();
+        		notifyList.add ( notificationId );
+
+				String[] notifyIds = notifyList.toArray ( new String[notifyList.size ()] );
+
+				mBillingNotificationsConfirmed = mBillingService.confirmNotifications ( notifyIds );
+				latch.countDown ();
+			}
+		});
+
+		try {
+			
+			latch.await ();
+		} catch ( InterruptedException e ) {
+			
+			e.printStackTrace();
+		}
+		
+		return mBillingNotificationsConfirmed;
 	}
 		
 	//----------------------------------------------------------------//
-	public boolean requestPurchase ( String productId, String developerPayload ) {
+	public boolean requestPurchase ( final String productId, final String developerPayload ) {
+	
+		// We need to proxy this call over to the main thread, but we need to fiegn
+		// synchronicity. So, we'll use a CountDownLatch to allow the execution on
+		// the main thread to signal when it's finished so we can return the value
+		// retrieved back to the caller.
+		final CountDownLatch latch = new CountDownLatch ( 1 );
+		mBillingPurchaseRequested = false;
 		
-		return mBillingService.requestPurchase ( productId, developerPayload );
+		mHandler.post ( new Runnable () {
+
+			public void run () {
+
+				mBillingPurchaseRequested = mBillingService.requestPurchase ( productId, developerPayload );
+				latch.countDown ();
+			}
+		});
+
+		try {
+			
+			latch.await ();
+		} catch ( InterruptedException e ) {
+			
+			e.printStackTrace();
+		}
+		
+		return mBillingPurchaseRequested;
 	}
 	
 	//----------------------------------------------------------------//
 	public boolean restoreTransactions () {
+
+		// We need to proxy this call over to the main thread, but we need to fiegn
+		// synchronicity. So, we'll use a CountDownLatch to allow the execution on
+		// the main thread to signal when it's finished so we can return the value
+		// retrieved back to the caller.
+		final CountDownLatch latch = new CountDownLatch ( 1 );
+		mBillingTransactionsRestored = false;
 		
-		return mBillingService.restoreTransactions ();
+		mHandler.post ( new Runnable () {
+
+			public void run () {
+
+				mBillingTransactionsRestored = mBillingService.restoreTransactions ();
+				latch.countDown ();
+			}
+		});
+
+		try {
+			
+			latch.await ();
+		} catch ( InterruptedException e ) {
+			
+			e.printStackTrace();
+		}
+		
+		return mBillingTransactionsRestored;
 	}
 	
 	//----------------------------------------------------------------//
-	public void setMarketPublicKey ( String key ) {
+	public void setMarketPublicKey ( final String key ) {
+	
+		mHandler.post ( new Runnable () {
+
+			public void run () {
 		
-		MoaiBillingSecurity.setPublicKey ( key );
+				MoaiBillingSecurity.setPublicKey ( key );
+			}
+		});
 	}
 	
 	//================================================================//
