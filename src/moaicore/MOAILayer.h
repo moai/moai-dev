@@ -90,8 +90,8 @@ public:
 	
 	//----------------------------------------------------------------//
 	void			Draw					( int subPrimID, bool reload );
+	u32				GetDeckBounds			( USBox& bounds );
 	float			GetFitting				( USRect& worldRect, float hPad, float vPad );
-	u32				GetLocalFrame			( USRect& frame );
 	void			GetWndToWorldMtx		( USMatrix4x4& wndToWorld );
 	void			GetWorldToWndMtx		( USMatrix4x4& worldToWnd );
 					MOAILayer				();

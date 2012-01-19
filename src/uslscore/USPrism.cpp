@@ -66,6 +66,15 @@ void USPrism::Init ( const USBox& box ) {
 }
 
 //----------------------------------------------------------------//
+void USPrism::Transform ( const USAffine3D& mtx ) {
+
+	mtx.Transform ( mLoc );
+	mtx.TransformVec ( mXAxis );
+	mtx.TransformVec ( mYAxis );
+	mtx.TransformVec ( mZAxis );
+}
+
+//----------------------------------------------------------------//
 void USPrism::Transform ( const USMatrix4x4& mtx ) {
 
 	mtx.Transform ( mLoc );

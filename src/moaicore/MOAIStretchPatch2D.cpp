@@ -333,11 +333,13 @@ void MOAIStretchPatch2D::Draw ( const USAffine3D& transform, MOAIGrid& grid, MOA
 }
 
 //----------------------------------------------------------------//
-USRect MOAIStretchPatch2D::GetBounds ( u32 idx, MOAIDeckRemapper* remapper ) {
+USBox MOAIStretchPatch2D::GetBounds ( u32 idx, MOAIDeckRemapper* remapper ) {
 	UNUSED ( idx );
 	UNUSED ( remapper );
 	
-	return this->mRect;
+	USBox bounds;
+	bounds.Init ( this->mRect.mXMin, this->mRect.mYMax, this->mRect.mXMax, this->mRect.mYMin, 0.0f, 0.0f );
+	return bounds;
 }
 
 //----------------------------------------------------------------//

@@ -34,13 +34,13 @@ public:
 	DECL_LUA_FACTORY ( MOAIGfxQuad2D )
 	
 	//----------------------------------------------------------------//
-	bool					Bind					();
-	void					DrawPatch				( u32 idx, float xOff, float yOff, float xScale, float yScale );
-	USRect					GetBounds				( u32 idx, MOAIDeckRemapper* remapper );
-							MOAIGfxQuad2D			();
-							~MOAIGfxQuad2D			();
-	void					RegisterLuaClass		( MOAILuaState& state );
-	void					RegisterLuaFuncs		( MOAILuaState& state );
+	bool			Bind					();
+	void			DrawPatch				( u32 idx, float xOff, float yOff, float xScale, float yScale );
+	USRect			GetRect					( u32 idx, MOAIDeckRemapper* remapper );
+					MOAIGfxQuad2D			();
+					~MOAIGfxQuad2D			();
+	void			RegisterLuaClass		( MOAILuaState& state );
+	void			RegisterLuaFuncs		( MOAILuaState& state );
 };
 
 #endif

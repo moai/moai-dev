@@ -113,6 +113,26 @@ void USBox::GetCenter ( USVec3D& center ) const {
 }
 
 //----------------------------------------------------------------//
+void USBox::GetFitting ( const USBox& target, USVec3D& offset, USVec3D& scale ) const {
+
+	float w = this->Width ();
+	float h = this->Height ();
+	float d = this->Depth ();
+
+	float tw = target.Width ();
+	float th = target.Height ();
+	float td = target.Depth ();
+
+	scale.mX = w != 0.0f ? tw / w : 0.0f;
+	scale.mY = h != 0.0f ? th / h : 0.0f;
+	scale.mZ = d != 0.0f ? td / d : 0.0f;
+	
+	offset.mX = target.mMin.mX - ( this->mMin.mX * scale.mX );
+	offset.mY = target.mMin.mY - ( this->mMin.mY * scale.mY );
+	offset.mZ = target.mMin.mZ - ( this->mMin.mZ * scale.mZ );
+}
+
+//----------------------------------------------------------------//
 float USBox::GetRadius () const {
 
 	USVec3D spans = mMax;
@@ -122,33 +142,45 @@ float USBox::GetRadius () const {
 }
 
 //----------------------------------------------------------------//
-void USBox::GetRectXY ( USRect& rect ) const {
+USRect USBox::GetRectXY () const {
+	
+	USRect rect;
 	
 	rect.mXMin = this->mMin.mX;
 	rect.mXMax = this->mMax.mX;
 	
 	rect.mYMin = this->mMin.mY;
 	rect.mYMax = this->mMax.mY;
+	
+	return rect;
 }
 
 //----------------------------------------------------------------//
-void USBox::GetRectXZ ( USRect& rect ) const {
+USRect USBox::GetRectXZ () const {
+
+	USRect rect;
 
 	rect.mXMin = this->mMin.mX;
 	rect.mXMax = this->mMax.mX;
 	
 	rect.mYMin = this->mMin.mZ;
 	rect.mYMax = this->mMax.mZ;
+	
+	return rect;
 }
 
 //----------------------------------------------------------------//
-void USBox::GetRectZY ( USRect& rect ) const {
+USRect USBox::GetRectZY () const {
+
+	USRect rect;
 
 	rect.mXMin = this->mMin.mZ;
 	rect.mXMax = this->mMax.mZ;
 	
 	rect.mYMin = this->mMin.mY;
 	rect.mYMax = this->mMax.mY;
+	
+	return rect;
 }
 
 //----------------------------------------------------------------//
@@ -178,9 +210,58 @@ void USBox::Grow ( const USVec3D& vec ) {
 }
 
 //----------------------------------------------------------------//
+void USBox::Inflate ( float size ) {
+
+	this->mMin.mX -= size;
+	this->mMin.mY -= size;
+	this->mMin.mZ -= size;
+	
+	this->mMax.mX += size;
+	this->mMax.mY += size;
+	this->mMax.mZ += size;
+}
+
+//----------------------------------------------------------------//
 void USBox::Init ( const USBox& box ) {
 
 	*this = box;
+}
+
+//----------------------------------------------------------------//
+void USBox::Init ( const USPrism& prism ) {
+	
+	this->mMin = prism.mLoc;
+	this->mMax = prism.mLoc;
+	
+	// X Axis
+	if ( prism.mXAxis.mX < 0.0f )	this->mMin.mX += prism.mXAxis.mX;
+	else							this->mMax.mX += prism.mXAxis.mX;
+	
+	if ( prism.mYAxis.mX < 0.0f )	this->mMin.mX += prism.mYAxis.mX;
+	else							this->mMax.mX += prism.mYAxis.mX;
+	
+	if ( prism.mZAxis.mX < 0.0f )	this->mMin.mX += prism.mZAxis.mX;
+	else							this->mMax.mX += prism.mZAxis.mX;
+	
+	// Y Axis
+	if ( prism.mXAxis.mY < 0.0f )	this->mMin.mY += prism.mXAxis.mY;
+	else							this->mMax.mY += prism.mXAxis.mY;
+	
+	if ( prism.mYAxis.mY < 0.0f )	this->mMin.mY += prism.mYAxis.mY;
+	else							this->mMax.mY += prism.mYAxis.mY;
+	
+	if ( prism.mZAxis.mY < 0.0f )	this->mMin.mY += prism.mZAxis.mY;
+	else							this->mMax.mY += prism.mZAxis.mY;
+	
+	// Z Axis
+	if ( prism.mXAxis.mZ < 0.0f )	this->mMin.mZ += prism.mXAxis.mZ;
+	else							this->mMax.mZ += prism.mXAxis.mZ;
+	
+	if ( prism.mYAxis.mZ < 0.0f )	this->mMin.mZ += prism.mYAxis.mZ;
+	else							this->mMax.mZ += prism.mYAxis.mZ;
+	
+	if ( prism.mZAxis.mZ < 0.0f )	this->mMin.mZ += prism.mZAxis.mZ;
+	else							this->mMax.mZ += prism.mZAxis.mZ;
 }
 
 //----------------------------------------------------------------//
@@ -202,6 +283,16 @@ void USBox::Init ( float left, float top, float right, float bottom, float back,
 	
 	this->mMin.mZ = back;
 	this->mMax.mZ = front;
+}
+
+//----------------------------------------------------------------//
+bool USBox::IsPoint () {
+
+	if ( this->mMin.mX != this->mMax.mX ) return false;
+	if ( this->mMin.mY != this->mMax.mY ) return false;
+	if ( this->mMin.mZ != this->mMax.mZ ) return false;
+	
+	return true;
 }
 
 //----------------------------------------------------------------//
@@ -281,42 +372,21 @@ void USBox::Scale ( float scale ) {
 }
 
 //----------------------------------------------------------------//
+void USBox::Transform ( const USAffine3D& mtx ) {
+
+	USPrism prism;
+	prism.Init ( *this );
+	prism.Transform ( mtx );
+	
+	this->Init ( prism );
+}
+
+//----------------------------------------------------------------//
 void USBox::Transform ( const USMatrix4x4& mtx ) {
 
 	USPrism prism;
 	prism.Init ( *this );
 	prism.Transform ( mtx );
 	
-	this->mMin = prism.mLoc;
-	this->mMax = prism.mLoc;
-	
-	// X Axis
-	if ( prism.mXAxis.mX < 0.0f )	this->mMin.mX += prism.mXAxis.mX;
-	else							this->mMax.mX += prism.mXAxis.mX;
-	
-	if ( prism.mYAxis.mX < 0.0f )	this->mMin.mX += prism.mYAxis.mX;
-	else							this->mMax.mX += prism.mYAxis.mX;
-	
-	if ( prism.mZAxis.mX < 0.0f )	this->mMin.mX += prism.mZAxis.mX;
-	else							this->mMax.mX += prism.mZAxis.mX;
-	
-	// Y Axis
-	if ( prism.mXAxis.mY < 0.0f )	this->mMin.mY += prism.mXAxis.mY;
-	else							this->mMax.mY += prism.mXAxis.mY;
-	
-	if ( prism.mYAxis.mY < 0.0f )	this->mMin.mY += prism.mYAxis.mY;
-	else							this->mMax.mY += prism.mYAxis.mY;
-	
-	if ( prism.mZAxis.mY < 0.0f )	this->mMin.mY += prism.mZAxis.mY;
-	else							this->mMax.mY += prism.mZAxis.mY;
-	
-	// Z Axis
-	if ( prism.mXAxis.mZ < 0.0f )	this->mMin.mZ += prism.mXAxis.mZ;
-	else							this->mMax.mZ += prism.mXAxis.mZ;
-	
-	if ( prism.mYAxis.mZ < 0.0f )	this->mMin.mZ += prism.mYAxis.mZ;
-	else							this->mMax.mZ += prism.mYAxis.mZ;
-	
-	if ( prism.mZAxis.mZ < 0.0f )	this->mMin.mZ += prism.mZAxis.mZ;
-	else							this->mMax.mZ += prism.mZAxis.mZ;
+	this->Init ( prism );
 }

@@ -320,8 +320,11 @@ void MOAIParticleState::ProcessParticle ( MOAIParticleSystem& system, MOAIPartic
 	
 	loc.mX = r [ MOAIParticle::PARTICLE_X ];
 	loc.mY = r [ MOAIParticle::PARTICLE_Y ];
+	loc.mZ = 0.0f;
+	
 	vel.mX = r [ MOAIParticle::PARTICLE_DX ];
 	vel.mY = r [ MOAIParticle::PARTICLE_DY ];
+	vel.mZ = 0.0f;
 	
 	this->GatherForces ( loc, vel, particle.mMass, step );
 	

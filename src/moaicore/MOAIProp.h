@@ -88,10 +88,10 @@ private:
 	s32				mPriority;
 	
 	//----------------------------------------------------------------//
+	static int		_getBounds			( lua_State* L );
 	static int		_getGrid			( lua_State* L );
 	static int		_getIndex			( lua_State* L );
 	static int		_getPriority		( lua_State* L );
-	static int		_getRect			( lua_State* L );
 	static int		_inside				( lua_State* L );
 	static int		_setBlendMode		( lua_State* L );
 	static int		_setCullMode		( lua_State* L );
@@ -112,7 +112,7 @@ private:
 
 	//----------------------------------------------------------------//
 	void			SetBounds				();
-	void			SetBounds				( const USRect& bounds );
+	void			SetBounds				( const USBox& bounds );
 
 protected:
 
@@ -126,7 +126,7 @@ protected:
 	MOAILuaSharedPtr < MOAIShader >			mShader;
 	MOAILuaSharedPtr < MOAITransformBase >	mUVTransform;
 	
-	USRect						mFrame;
+	USBox						mFrame;
 	bool						mFitToFrame;
 	
 	int							mCullMode;
@@ -139,8 +139,12 @@ protected:
 
 	//----------------------------------------------------------------//
 	bool			BindDeck				();
+	virtual u32		GetDeckBounds			( USBox& bounds ); // get the deck bounds in model space
 	void			GetGridBoundsInView		( MOAICellCoord& c0, MOAICellCoord& c1 );
+	u32				GetModelBounds			( USBox& bounds ); // get the prop bounds in model space
 	void			LoadShader				();
+	void			UpdateBounds			( u32 status );
+	void			UpdateBounds			( const USBox& bounds, u32 status );
 
 public:
 
@@ -183,18 +187,17 @@ public:
 	
 	GET ( MOAIDeck*, Deck, mDeck )
 	GET ( MOAIDeckRemapper*, Remapper, mRemapper )
+	GET ( USBox, Bounds, mBounds )
 
 	//----------------------------------------------------------------//
 	bool				ApplyAttrOp				( u32 attrID, MOAIAttrOp& attrOp, u32 op );
 	virtual void		Draw					( int subPrimID, bool reload );
 	virtual void		DrawDebug				( int subPrimID );
 	virtual void		ExpandForSort			( MOAIPartitionResultBuffer& buffer );
-	virtual u32			GetLocalFrame			( USRect& frame );
 	virtual void		GatherSurfaces			( MOAISurfaceSampler2D& sampler );
 	MOAIPartition*		GetPartitionTrait		();
-	USRect				GetBounds				();
 	bool				GetCellRect				( USRect* cellRect, USRect* paddedRect = 0 );
-	virtual bool		Inside					( USVec2D vec, float pad );
+	virtual bool		Inside					( USVec3D vec, float pad );
 						MOAIProp				();
 	virtual				~MOAIProp				();
 	void				OnDepNodeUpdate			();
@@ -203,9 +206,6 @@ public:
 	void				SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
 	void				SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
 	void				SetPartition			( MOAIPartition* partition );
-	void				UpdateBounds			( u32 status );
-	void				UpdateBounds			( const USRect& bounds, u32 status );
-	
 };
 
 #endif

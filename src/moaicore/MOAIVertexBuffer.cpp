@@ -22,7 +22,7 @@
 int MOAIVertexBuffer::_bless ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVertexBuffer, "U" )
 	
-	self->mBounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
+	self->mBounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f );
 	
 	if ( self->mFormat ) {
 		self->mFormat->ComputeBounds ( self->mBuffer, self->mStream.GetLength (), self->mBounds );
@@ -259,7 +259,7 @@ MOAIVertexBuffer::MOAIVertexBuffer () {
 	
 	RTTI_SINGLE ( MOAIVertexBuffer )
 	
-	this->mBounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
+	this->mBounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f );
 }
 
 //----------------------------------------------------------------//

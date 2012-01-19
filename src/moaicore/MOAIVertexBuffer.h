@@ -22,7 +22,7 @@ private:
 
 	USLeanArray < u8 >	mBuffer;
 	USByteStream		mStream;
-	USRect				mBounds;
+	USBox				mBounds;
 	
 	//----------------------------------------------------------------//
 	static int		_bless					( lua_State* L );
@@ -44,7 +44,7 @@ public:
 	
 	DECL_LUA_FACTORY ( MOAIVertexBuffer )
 	
-	GET ( const USRect&, Bounds, mBounds )
+	GET ( const USBox&, Bounds, mBounds )
 	GET ( MOAIVertexFormat*, Format, mFormat )
 	
 	//----------------------------------------------------------------//

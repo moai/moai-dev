@@ -217,6 +217,22 @@ bool MOAILuaState::Deflate ( int idx, int level, int windowBits ) {
 }
 
 //----------------------------------------------------------------//
+USBox MOAILuaState::GetBox ( int idx ) {
+
+	USBox box;
+
+	box.mMin.mX = this->GetValue < float >( idx++, 0.0f );
+	box.mMin.mY = this->GetValue < float >( idx++, 0.0f );
+	box.mMin.mZ = this->GetValue < float >( idx++, 0.0f );
+	
+	box.mMax.mX = this->GetValue < float >( idx++, 0.0f );
+	box.mMax.mY = this->GetValue < float >( idx++, 0.0f );
+	box.mMax.mZ = this->GetValue < float >( idx++, 0.0f );
+	
+	return box;
+}
+
+//----------------------------------------------------------------//
 USColorVec MOAILuaState::GetColor ( int idx, float r, float g, float b, float a ) {
 
 	USColorVec color;

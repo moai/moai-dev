@@ -38,7 +38,7 @@ public:
 	//----------------------------------------------------------------//
 	bool		Bind					();
 	void		DrawPatch				( u32 idx, float xOff, float yOff, float xScale, float yScale );
-	USRect		GetBounds				( u32 idx, MOAIDeckRemapper* remapper );
+	USRect		GetRect					( u32 idx, MOAIDeckRemapper* remapper );
 				MOAIGfxQuadDeck2D		();
 				~MOAIGfxQuadDeck2D		();
 	void		RegisterLuaClass		( MOAILuaState& state );

@@ -66,6 +66,7 @@ end
 ----------------------------------------------------------------
 
 MOAIThread = MOAICoroutine
+MOAILayerBridge2D = MOAILayerBridge
 
 MOAILayer2D = MOAILayer.extend (
 
@@ -101,6 +102,10 @@ MOAIProp2D = MOAIProp.extend (
 	-- extend the instance interface
 	function ( interface, super )
 		initTransform2DInterface ( interface, super )
+		
+		function interface.setFrame ( self, xMin, yMin, xMax, yMax )
+			super.setFrame ( self, xMin, yMin, 0, xMax, yMax, 0 )
+		end
 	end,
 	
 	-- extend the class

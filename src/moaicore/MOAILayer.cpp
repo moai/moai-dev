@@ -541,8 +541,7 @@ void MOAILayer::Draw ( int subPrimID, bool reload ) {
 		u32 totalResults = 0;
 		
 		if ( this->mPartitionCull2D ) {
-			USRect rect;
-			viewVolume.mAABB.GetRectXY ( rect );
+			USRect rect = viewVolume.mAABB.GetRectXY ();
 			totalResults = this->mPartition->GatherProps ( buffer, 0, rect, MOAIProp::CAN_DRAW | MOAIProp::CAN_DRAW_DEBUG );
 		}
 		else {
@@ -597,10 +596,11 @@ float MOAILayer::GetFitting ( USRect& worldRect, float hPad, float vPad ) {
 }
 
 //----------------------------------------------------------------//
-u32 MOAILayer::GetLocalFrame ( USRect& frame ) {
+u32 MOAILayer::GetDeckBounds ( USBox& bounds ) {
 	
 	if ( this->mViewport ) {
-		frame = this->mViewport->GetRect ();
+		USRect frame = this->mViewport->GetRect ();
+		bounds.Init ( frame.mXMin, frame.mYMax, frame.mXMax, frame.mYMin, 0.0f, 0.0f );
 		return MOAIProp::BOUNDS_OK;
 	}
 	return MOAIProp::BOUNDS_EMPTY;

@@ -460,9 +460,9 @@ void MOAITextBox::DrawDebug ( int subPrimID ) {
 }
 
 //----------------------------------------------------------------//
-u32 MOAITextBox::GetLocalFrame ( USRect& frame ) {
+u32 MOAITextBox::GetDeckBounds ( USBox& bounds ) {
 
-	frame = this->mFrame;
+	bounds.Init ( this->mFrame.mXMin, this->mFrame.mYMax, this->mFrame.mXMax, this->mFrame.mYMin, 0.0f, 0.0f );
 	return MOAIProp::BOUNDS_OK;
 }
 

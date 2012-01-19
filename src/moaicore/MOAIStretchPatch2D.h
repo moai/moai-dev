@@ -71,7 +71,7 @@ public:
 	bool				Bind					();
 	void				Draw					( const USAffine3D& transform, u32 idx, MOAIDeckRemapper* remapper );
 	void				Draw					( const USAffine3D& transform, MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1 );
-	USRect				GetBounds				( u32 idx, MOAIDeckRemapper* remapper );
+	USBox				GetBounds				( u32 idx, MOAIDeckRemapper* remapper );
 						MOAIStretchPatch2D		();
 						~MOAIStretchPatch2D		();
 	void				SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );

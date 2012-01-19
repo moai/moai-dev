@@ -186,7 +186,7 @@ void MOAIVertexFormat::BindProgrammable ( void* buffer ) const {
 }
 
 //----------------------------------------------------------------//
-bool MOAIVertexFormat::ComputeBounds ( void* buffer, u32 size, USRect& bounds ) {
+bool MOAIVertexFormat::ComputeBounds ( void* buffer, u32 size, USBox& bounds ) {
 
 	u32 total = this->mVertexSize ? ( size / this->mVertexSize ) : 0;
 	if ( !total ) return false;
@@ -200,15 +200,19 @@ bool MOAIVertexFormat::ComputeBounds ( void* buffer, u32 size, USRect& bounds ) 
 	
 	buffer = ( void* )(( size_t )buffer + coordAttr.mOffset );
 	
-	USVec2D* coord = ( USVec2D* )buffer;
-	bounds.Init ( *coord );
+	float* components = ( float* )buffer;
+	
+	USVec3D coord ( components [ 0 ], components [ 1 ], ( this->mVertexSize > 2 ? components [ 2 ] : 0.0f ));
+	
+	bounds.Init ( coord );
 	bounds.Inflate ( 0.0000001f ); // prevent 'empty' bounds on cardinal direction lines or single vertex objects
 	
 	for ( u32 i = 1; i < total; ++i ) {
 		
 		buffer = ( void* )(( size_t )buffer + this->mVertexSize );
-		coord = ( USVec2D* )buffer;
-		bounds.Grow ( *coord );
+		components = ( float* )buffer;
+		coord.Init ( components [ 0 ], components [ 1 ], ( this->mVertexSize > 2 ? components [ 2 ] : 0.0f ));
+		bounds.Grow ( coord );
 	}
 	return true;
 }

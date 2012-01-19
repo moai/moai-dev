@@ -20,7 +20,7 @@ private:
 	//----------------------------------------------------------------//
 	void					Clear				();
 	void					GatherProps			( MOAIPartitionResultBuffer& results, MOAIProp* ignore, u32 mask );
-	void					GatherProps			( MOAIPartitionResultBuffer& results, MOAIProp* ignore, USVec2D point, u32 mask );
+	void					GatherProps			( MOAIPartitionResultBuffer& results, MOAIProp* ignore, USVec3D point, u32 mask );
 	void					GatherProps			( MOAIPartitionResultBuffer& results, MOAIProp* ignore, USRect rect, u32 mask );
 	void					GatherProps			( MOAIPartitionResultBuffer& results, MOAIProp* ignore, const USFrustum& frustum, u32 mask );
 	MOAIPartitionCell*		GetCell				( MOAIProp& prop );

@@ -89,7 +89,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	bool			Bind							( void* buffer ) const;
-	bool			ComputeBounds					( void* buffer, u32 size, USRect& bounds );
+	bool			ComputeBounds					( void* buffer, u32 size, USBox& bounds );
 	void			DeclareAttribute				( GLint index, GLenum type, GLint size, GLenum use, GLboolean normalized );
 					MOAIVertexFormat				();
 					~MOAIVertexFormat				();

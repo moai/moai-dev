@@ -172,15 +172,15 @@ void MOAIMesh::Draw ( const USAffine3D& transform, MOAIGrid& grid, MOAIDeckRemap
 }
 
 //----------------------------------------------------------------//
-USRect MOAIMesh::GetBounds ( u32 idx, MOAIDeckRemapper* remapper ) {
+USBox MOAIMesh::GetBounds ( u32 idx, MOAIDeckRemapper* remapper ) {
 	UNUSED ( idx );
 	UNUSED ( remapper );
 	
 	if ( this->mVertexBuffer ) {
 		return this->mVertexBuffer->GetBounds ();
 	}
-	USRect bounds;
-	bounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
+	USBox bounds;
+	bounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f );
 	return bounds;
 }
 

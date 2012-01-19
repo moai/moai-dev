@@ -30,13 +30,13 @@ void MOAIPartitionLayer::GatherProps ( MOAIPartitionResultBuffer& results, MOAIP
 }
 
 //----------------------------------------------------------------//
-void MOAIPartitionLayer::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignore, USVec2D point, u32 mask ) {
+void MOAIPartitionLayer::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignore, USVec3D point, u32 mask ) {
 
 	float halfSize = this->mCellSize * 0.5f;
 	point.mX = point.mX - halfSize;
 	point.mY = point.mY - halfSize;
 
-	MOAICellCoord coord = this->mGridSpace.GetCellCoord ( point );
+	MOAICellCoord coord = this->mGridSpace.GetCellCoord ( point.mX, point.mY );
 	
 	int width = this->mGridSpace.GetWidth ();
 	int height = this->mGridSpace.GetWidth ();
@@ -86,8 +86,7 @@ void MOAIPartitionLayer::GatherProps ( MOAIPartitionResultBuffer& results, MOAIP
 
 	float halfSize = this->mCellSize * 0.5f;
 
-	USRect rect;
-	frustum.mAABB.GetRectXY ( rect );
+	USRect rect = frustum.mAABB.GetRectXY ();
 
 	MOAICellCoord coord = this->mGridSpace.GetCellCoord ( rect.mXMin - halfSize, rect.mYMax + halfSize );
 

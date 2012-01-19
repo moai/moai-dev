@@ -262,7 +262,7 @@ void MOAISurfaceDeck2D::GatherSurfaces ( u32 idx, float xOff, float yOff, bool x
 }
 
 //----------------------------------------------------------------//
-USRect MOAISurfaceDeck2D::GetBounds ( u32 idx, MOAIDeckRemapper* remapper ) {
+USRect MOAISurfaceDeck2D::GetRect ( u32 idx, MOAIDeckRemapper* remapper ) {
 	
 	idx = remapper ? remapper->Remap ( idx ) : idx;
 	idx = idx - 1;

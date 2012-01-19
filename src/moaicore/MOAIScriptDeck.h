@@ -17,7 +17,7 @@ class MOAIScriptDeck :
 	public MOAIDeck2D {
 private:
 
-	USRect			mRect;
+	USRect				mRect;
 
 	MOAILuaLocal		mOnDraw;
 	MOAILuaLocal		mOnRect;
@@ -34,7 +34,7 @@ public:
 	//----------------------------------------------------------------//
 	bool			Bind					();
 	void			DrawPatch				( u32 idx, float xOff, float yOff, float xScale, float yScale );
-	USRect			GetBounds				( u32 idx, MOAIDeckRemapper* remapper );
+	USRect			GetRect					( u32 idx, MOAIDeckRemapper* remapper );
 	void			LoadShader				();
 					MOAIScriptDeck			();
 					~MOAIScriptDeck			();

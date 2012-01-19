@@ -45,6 +45,7 @@ public:
 	void			CopyToTop				( int idx );
 	int				DebugCall				( int nArgs, int nResults );
 	bool			Deflate					( int idx, int level, int windowBits );
+	USBox			GetBox					( int idx );
 	USColorVec		GetColor				( int idx, float r, float g, float b, float a );
 	u32				GetColor32				( int idx, float r, float g, float b, float a );
 	void			GetField				( int idx, cc8* name );

@@ -93,7 +93,7 @@ public:
 	void			ClearCurves				();
 	void			Draw					( int subPrimID, bool reload );
 	void			DrawDebug				( int subPrimID );
-	u32				GetLocalFrame			( USRect& frame );
+	u32				GetDeckBounds			( USBox& bounds );
 	bool			IsDone					();
 					MOAITextBox				();
 					~MOAITextBox			();

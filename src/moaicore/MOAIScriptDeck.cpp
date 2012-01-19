@@ -102,7 +102,7 @@ void MOAIScriptDeck::DrawPatch ( u32 idx, float xOff, float yOff, float xScale, 
 }
 
 //----------------------------------------------------------------//
-USRect MOAIScriptDeck::GetBounds ( u32 idx, MOAIDeckRemapper* remapper ) {
+USRect MOAIScriptDeck::GetRect ( u32 idx, MOAIDeckRemapper* remapper ) {
 	
 	if ( this->mOnRect ) {
 	

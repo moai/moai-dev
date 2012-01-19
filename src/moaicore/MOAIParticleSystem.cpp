@@ -371,9 +371,10 @@ void MOAIParticleSystem::EnqueueParticle ( MOAIParticle& particle ) {
 }
 
 //----------------------------------------------------------------//
-u32 MOAIParticleSystem::GetLocalFrame ( USRect& frame ) {
+u32 MOAIParticleSystem::GetDeckBounds ( USBox& bounds ) {
 
-	frame.Init ( -32.0f, -32.0f, 32.0f, 32.0f );
+	// TODO: this needs to be computed correctly in PushSprite and not returned as BOUNDS_GLOBAL
+	bounds.Init ( -32.0f, -32.0f, 32.0f, 32.0f, 0.0f, 0.0f );
 	return MOAIProp::BOUNDS_GLOBAL;
 }
 

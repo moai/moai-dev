@@ -52,24 +52,27 @@ int MOAIPartition::_insertProp ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	propForPoint
-	@text	Returns the prop with the highest priority underneath
+	@text	Returns the prop with the highest priority that contains
 			the given world space point.
 	
 	@in		MOAIPartition self
 	@in		number x
 	@in		number y
+	@in		number z
 	@opt	number sortMode			One of the MOAILayer sort modes. Default value is SORT_PRIORITY_ASCENDING.
 	@opt	number xScale			X scale for vector sort. Default value is 0.
 	@opt	number yScale			Y scale for vector sort. Default value is 0.
+	@opt	number zScale			Z scale for vector sort. Default value is 0.
 	@opt	number priorityScale	Priority scale for vector sort. Default value is 1.
 	@out	MOAIProp prop		The prop under the point or nil if no prop found.
 */
 int MOAIPartition::_propForPoint ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIPartition, "UNN" )
 
-	USVec2D vec;
+	USVec3D vec;
 	vec.mX = state.GetValue < float >( 2, 0.0f );
 	vec.mY = state.GetValue < float >( 3, 0.0f );
+	vec.mZ = state.GetValue < float >( 4, 0.0f );
 
 	MOAIPartitionResultBuffer& buffer = MOAIPartitionResultMgr::Get ().GetBuffer ();
 
@@ -78,13 +81,14 @@ int MOAIPartition::_propForPoint ( lua_State* L ) {
 	
 		buffer.PrepareResults ( MOAIPartitionResultBuffer::SORT_NONE );
 		
-		u32 sortMode = state.GetValue < u32 >( 4, MOAIPartitionResultBuffer::SORT_PRIORITY_ASCENDING );
-		float xScale = state.GetValue < float >( 5, 0.0f );
-		float yScale = state.GetValue < float >( 6, 0.0f );
-		float priorityScale = state.GetValue < float >( 7, 1.0f );
+		u32 sortMode = state.GetValue < u32 >( 5, MOAIPartitionResultBuffer::SORT_PRIORITY_ASCENDING );
+		float xScale = state.GetValue < float >( 6, 0.0f );
+		float yScale = state.GetValue < float >( 7, 0.0f );
+		float zScale = state.GetValue < float >( 8, 0.0f );
+		float priorityScale = state.GetValue < float >( 9, 1.0f );
 		
 		buffer.PrepareResults ( MOAIPartitionResultBuffer::SORT_NONE );
-		MOAIProp* prop = buffer.FindBest ( sortMode, xScale, yScale, 0.0f, priorityScale );
+		MOAIProp* prop = buffer.FindBest ( sortMode, xScale, yScale, zScale, priorityScale );
 		if ( prop ) {
 			prop->PushLuaUserdata ( state );
 			return 1;
@@ -100,30 +104,34 @@ int MOAIPartition::_propForPoint ( lua_State* L ) {
 	@in		MOAIPartition self
 	@in		number x
 	@in		number y
+	@in		number z
 	@opt	number sortMode			One of the MOAILayer sort modes. Default value is SORT_NONE.
 	@opt	number xScale			X scale for vector sort. Default value is 0.
 	@opt	number yScale			Y scale for vector sort. Default value is 0.
+	@opt	number zScale			Z scale for vector sort. Default value is 0.
 	@opt	number priorityScale	Priority scale for vector sort. Default value is 1.
 	@out	...						The props under the point, all pushed onto the stack.
 */
 int MOAIPartition::_propListForPoint ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIPartition, "UNN" )
 
-	USVec2D vec;
+	USVec3D vec;
 	vec.mX = state.GetValue < float >( 2, 0.0f );
 	vec.mY = state.GetValue < float >( 3, 0.0f );
+	vec.mZ = state.GetValue < float >( 4, 0.0f );
 
 	MOAIPartitionResultBuffer& buffer = MOAIPartitionResultMgr::Get ().GetBuffer ();
 
 	u32 total = self->GatherProps ( buffer, 0, vec );
 	if ( total ) {
 	
-		u32 sortMode = state.GetValue < u32 >( 4, MOAIPartitionResultBuffer::SORT_NONE );
-		float xScale = state.GetValue < float >( 5, 0.0f );
-		float yScale = state.GetValue < float >( 6, 0.0f );
-		float priorityScale = state.GetValue < float >( 7, 1.0f );
+		u32 sortMode = state.GetValue < u32 >( 5, MOAIPartitionResultBuffer::SORT_NONE );
+		float xScale = state.GetValue < float >( 6, 0.0f );
+		float yScale = state.GetValue < float >( 7, 0.0f );
+		float zScale = state.GetValue < float >( 8, 0.0f );
+		float priorityScale = state.GetValue < float >( 9, 1.0f );
 	
-		buffer.PrepareResults ( sortMode, false, xScale, yScale, 0.0f, priorityScale );
+		buffer.PrepareResults ( sortMode, false, xScale, yScale, zScale, priorityScale );
 		buffer.PushResultProps ( L );
 		return total;
 	}
@@ -142,6 +150,7 @@ int MOAIPartition::_propListForPoint ( lua_State* L ) {
 	@opt	number sortMode			One of the MOAILayer sort modes. Default value is SORT_NONE.
 	@opt	number xScale			X scale for vector sort. Default value is 0.
 	@opt	number yScale			Y scale for vector sort. Default value is 0.
+	@opt	number zScale			Z scale for vector sort. Default value is 0.
 	@opt	number priorityScale	Priority scale for vector sort. Default value is 1.
 	@out	...						The props under the rect, all pushed onto the stack.
 */
@@ -158,9 +167,10 @@ int MOAIPartition::_propListForRect ( lua_State* L ) {
 		u32 sortMode = state.GetValue < u32 >( 6, MOAIPartitionResultBuffer::SORT_NONE );
 		float xScale = state.GetValue < float >( 7, 0.0f );
 		float yScale = state.GetValue < float >( 8, 0.0f );
-		float priorityScale = state.GetValue < float >( 9, 1.0f );
+		float zScale = state.GetValue < float >( 9, 0.0f );
+		float priorityScale = state.GetValue < float >( 10, 1.0f );
 	
-		buffer.PrepareResults ( sortMode, false, xScale, yScale, 0.0f, priorityScale );
+		buffer.PrepareResults ( sortMode, false, xScale, yScale, zScale, priorityScale );
 		buffer.PushResultProps ( L );
 		return total;
 	}
@@ -277,7 +287,7 @@ u32 MOAIPartition::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* i
 }
 
 //----------------------------------------------------------------//
-u32 MOAIPartition::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignore, const USVec2D& point, u32 mask ) {
+u32 MOAIPartition::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignore, const USVec3D& point, u32 mask ) {
 	
 	results.Reset ();
 	
@@ -406,8 +416,10 @@ void MOAIPartition::SetLayer ( int layerID, float cellSize, int width, int heigh
 //----------------------------------------------------------------//
 void MOAIPartition::UpdateProp ( MOAIProp& prop, u32 status ) {
 
+	// clear out the bounds
 	prop.SetBounds ();
 
+	// status is not 'OK' so prop is either global or empty
 	if ( status == MOAIProp::BOUNDS_GLOBAL ) {
 		this->mGlobals.InsertProp ( prop );
 	}
@@ -417,7 +429,7 @@ void MOAIPartition::UpdateProp ( MOAIProp& prop, u32 status ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIPartition::UpdateProp ( MOAIProp& prop, const USRect& bounds, u32 status ) {
+void MOAIPartition::UpdateProp ( MOAIProp& prop, const USBox& bounds, u32 status ) {
 
 	if ( status != MOAIProp::BOUNDS_OK ) {
 	
@@ -449,16 +461,16 @@ void MOAIPartition::UpdateProp ( MOAIProp& prop, const USRect& bounds, u32 statu
 		prop.mLayer = layer;
 		
 		if ( layer ) {
-			//printf ( "layer %d ", ( int )layerID );
+			// layer prop
 			layer->PlaceProp ( prop );
 		}
 		else {
-			//printf ( "global cell\n" );
+			// global prop - has dimension but too big to fit in any layer (or is flagged as global)
 			this->mGlobals.InsertProp ( prop );
 		}
 	}
 	else {
-		//printf ( "empty cell\n" );
+		// empty prop
 		prop.mLayer = 0;
 		this->mEmpties.InsertProp ( prop );
 	}

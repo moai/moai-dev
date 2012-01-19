@@ -44,7 +44,7 @@ bool MOAIDeck::Bind () {
 //----------------------------------------------------------------//
 bool MOAIDeck::Contains ( u32 idx, MOAIDeckRemapper* remapper, const USVec2D& vec ) {
 	
-	USRect bounds = this->GetBounds ( idx, remapper );
+	USRect bounds = this->GetBounds ( idx, remapper ).GetRectXY ();
 	return bounds.Contains ( vec );
 }
 
@@ -110,13 +110,13 @@ void MOAIDeck::GatherSurfaces ( MOAIGrid& grid, MOAIDeckRemapper* remapper, USVe
 }
 
 //----------------------------------------------------------------//
-USRect MOAIDeck::GetBounds ( u32 idx, MOAIDeckRemapper* remapper ) {
+USBox MOAIDeck::GetBounds ( u32 idx, MOAIDeckRemapper* remapper ) {
 	UNUSED ( idx );
 	UNUSED ( remapper );
 
-	USRect rect;
-	rect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
-	return rect;
+	USBox bounds;
+	bounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f );
+	return bounds;
 }
 
 //----------------------------------------------------------------//

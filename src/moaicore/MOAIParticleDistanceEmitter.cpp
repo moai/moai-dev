@@ -106,12 +106,19 @@ void MOAIParticleDistanceEmitter::OnDepNodeUpdate () {
 			
 			offset.m [ USAffine3D::C0_R0 ] = moveVec.mY;
 			offset.m [ USAffine3D::C0_R1 ] = -moveVec.mX;
+			offset.m [ USAffine3D::C0_R2 ] = 0.0f;
 			
 			offset.m [ USAffine3D::C1_R0 ] = moveVec.mX;
 			offset.m [ USAffine3D::C1_R1 ] = moveVec.mY;
+			offset.m [ USAffine3D::C1_R2 ] = 0.0f;
 			
 			offset.m [ USAffine3D::C2_R0 ] = 0.0f;
 			offset.m [ USAffine3D::C2_R1 ] = 0.0f;
+			offset.m [ USAffine3D::C2_R2 ] = 1.0f;
+			
+			offset.m [ USAffine3D::C3_R0 ] = 0.0f;
+			offset.m [ USAffine3D::C3_R1 ] = 0.0f;
+			offset.m [ USAffine3D::C3_R2 ] = 0.0f;
 			
 			offset.Append ( this->mLocalToWorldMtx );
 			

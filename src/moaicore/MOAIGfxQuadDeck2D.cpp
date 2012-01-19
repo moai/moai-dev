@@ -221,7 +221,7 @@ void MOAIGfxQuadDeck2D::DrawPatch ( u32 idx, float xOff, float yOff, float xScal
 }
 
 //----------------------------------------------------------------//
-USRect MOAIGfxQuadDeck2D::GetBounds ( u32 idx, MOAIDeckRemapper* remapper ) {
+USRect MOAIGfxQuadDeck2D::GetRect ( u32 idx, MOAIDeckRemapper* remapper ) {
 	
 	u32 size = this->mQuads.Size ();
 	if ( size ) {

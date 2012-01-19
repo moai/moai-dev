@@ -363,7 +363,7 @@ void MOAIGfxQuadListDeck2D::DrawPatch ( u32 idx, float xOff, float yOff, float x
 }
 
 //----------------------------------------------------------------//
-USRect MOAIGfxQuadListDeck2D::GetBounds ( u32 idx, MOAIDeckRemapper* remapper ) {
+USRect MOAIGfxQuadListDeck2D::GetRect ( u32 idx, MOAIDeckRemapper* remapper ) {
 
 	USRect rect;
 	rect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
