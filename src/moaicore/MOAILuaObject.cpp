@@ -80,8 +80,19 @@ int MOAILuaObject::_getClassName ( lua_State* L ) {
 	return 0;
 }
 
+#ifdef ANDROID
+#include <android/log.h>
+#endif
 //----------------------------------------------------------------//
 int MOAILuaObject::_index ( lua_State* L ) {
+
+	MOAILuaState state ( L );
+	MOAILuaObject* data = ( MOAILuaObject* )state.GetPtrUserData ( 1 );
+	if ( data ) {
+	
+		//AJV for debugging
+		//__android_log_print(ANDROID_LOG_INFO, "MoaiLog", "0x%p <%s>", data, data->TypeName ());
+	}
 
 	// push the instance table
 	lua_getmetatable ( L, 1 );
