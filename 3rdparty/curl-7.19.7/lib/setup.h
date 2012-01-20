@@ -464,11 +464,4 @@ int netware_init(void);
 #include "setup_once.h"
 #endif
 
-// force synchronous dns lookup
-// TODO: use c-ares
-// TODO: wrap in #ifdefs
-#define CURLRES_SYNCH
-#undef USE_THREADING_GETHOSTBYNAME
-#undef USE_THREADING_GETADDRINFO
-
 #endif /* __LIB_CURL_SETUP_H */
