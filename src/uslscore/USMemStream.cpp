@@ -91,7 +91,7 @@ void USMemStream::Reserve ( u32 length ) {
 
 	if ( length <= this->mLength ) return; 
 
-	u32 totalChunks = ( u32 )ceil (( float )length / ( float )this->mChunkSize );
+	u32 totalChunks = ( length / this->mChunkSize ) + 1;
 	if ( totalChunks <= this->mTotalChunks ) return;
 		
 	void** chunks = ( void** )malloc ( totalChunks * sizeof ( void* ));
