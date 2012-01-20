@@ -177,9 +177,15 @@ void PlaybackThread::run()
     while (!shouldThreadExit())
     {			
 		if(!mpSystemData->isActive() && isPlaying)
+		{
 		    env->CallNonvirtualVoidMethod(track, audioTrackClass, pauseMethod);
+			isPlaying = false;
+		}
 		else if(mpSystemData->isActive() && !isPlaying)
+		{
 		    env->CallNonvirtualVoidMethod(track, audioTrackClass, playMethod);
+			isPlaying = true;
+		}
 		
         // Grab the float samples from the mixer.
         mpSystemData->mMixer.process(0, NULL, numChannels, float_buf, framesPerBuffer);
