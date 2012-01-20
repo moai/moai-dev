@@ -559,6 +559,9 @@
     <ProjectReference Include="..\jansson\jansson.vcxproj">
       <Project>{52496c82-2edb-4649-8509-451891f6a3de}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\libcares\libcares.vcxproj">
+      <Project>{61df1cb3-8aae-4fdd-8471-297fe355165c}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\libcrypto\libcrypto.vcxproj">
       <Project>{7a77895d-638a-4494-b60d-51b74efc386f}</Project>
     </ProjectReference>
