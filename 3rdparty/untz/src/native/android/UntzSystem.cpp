@@ -26,7 +26,7 @@ public:
 
 UInt32 AndroidSystemData::getNumFrames()
 {
-    return 4096;
+	return 8192;//4096;
 }
 UInt32 AndroidSystemData::getNumOutputChannels()
 {
@@ -123,6 +123,7 @@ void PlaybackThread::run()
     static jmethodID getMinBufferSizeMethod = env->GetStaticMethodID(audioTrackClass, "getMinBufferSize", "(III)I");
     static jmethodID playMethod = env->GetMethodID(audioTrackClass, "play", "()V");
     static jmethodID stopMethod = env->GetMethodID(audioTrackClass, "stop", "()V");
+    static jmethodID pauseMethod = env->GetMethodID(audioTrackClass, "pause", "()V");
     static jmethodID releaseMethod = env->GetMethodID(audioTrackClass, "release", "()V");
     static jmethodID writeMethod = env->GetMethodID(audioTrackClass, "write", "([BII)I");
 	static jmethodID setPlaybackRateMethod = env->GetMethodID(audioTrackClass, "setPlaybackRate", "(I)I");
@@ -148,6 +149,7 @@ void PlaybackThread::run()
                                    bufferSizeInBytes,
                                    MODE_STREAM);
     env->CallNonvirtualVoidMethod(track, audioTrackClass, playMethod);
+	bool isPlaying = true;
 
 	// Set the playback rate
 //  int error = env->CallNonvirtualIntMethod(track, audioTrackClass, setPlaybackRateMethod, mpSystemData->mSampleRate);
@@ -174,6 +176,11 @@ void PlaybackThread::run()
 	int bufferCount = 0;
     while (!shouldThreadExit())
     {			
+		if(!mpSystemData->isActive() && isPlaying)
+		    env->CallNonvirtualVoidMethod(track, audioTrackClass, pauseMethod);
+		else if(mpSystemData->isActive() && !isPlaying)
+		    env->CallNonvirtualVoidMethod(track, audioTrackClass, playMethod);
+		
         // Grab the float samples from the mixer.
         mpSystemData->mMixer.process(0, NULL, numChannels, float_buf, framesPerBuffer);
 
