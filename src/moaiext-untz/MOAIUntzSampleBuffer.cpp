@@ -23,6 +23,68 @@ int MOAIUntzSampleBuffer::_load ( lua_State* L ) {
 	if(!UNTZ::Sound::decode(filename, self->mInfo, (float**)&self->mBuffer))
 		printf ( "error creating sample buffer\n" );
 
+	
+	return 0;
+}
+int MOAIUntzSampleBuffer::_getInfo( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIUntzSampleBuffer, "U" );
+
+	lua_pushnumber(L, self->mInfo.mBitsPerSample);
+	lua_pushnumber(L, self->mInfo.mChannels);
+	lua_pushnumber(L, self->mInfo.mTotalFrames);
+	lua_pushnumber(L, self->mInfo.mSampleRate);
+	lua_pushnumber(L, self->mInfo.mLength);
+	return 5;			
+}
+
+
+int MOAIUntzSampleBuffer::_getData( lua_State* L ) {
+	MOAI_LUA_SETUP( MOAIUntzSampleBuffer, "U" );
+	u32 arynum = self->mInfo.mTotalFrames * self->mInfo.mChannels;
+	lua_createtable(L, arynum, 0);
+	for(u32 i=0;i<arynum;i++ ) {
+		lua_pushnumber(L, self->mBuffer[i]);
+		lua_rawseti(L, -2, i+1);
+	}
+	return 1;
+}
+int MOAIUntzSampleBuffer::_setData( lua_State* L ) {
+	MOAI_LUA_SETUP( MOAIUntzSampleBuffer, "UTN" );
+	u32 startDataIndex = state.GetValue<u32>(3,1);
+	int itr = state.PushTableItr(2);
+	int idx = 0;
+	u32 total = 0;
+	int maxindex = self->mInfo.mChannels * self->mInfo.mTotalFrames;
+
+	idx = startDataIndex - 1;
+	
+	for(; state.TableItrNext(itr) && idx< maxindex; ++idx ) {
+		float val = state.GetValue<float>(-1,0);
+		self->mBuffer[idx] = val;		
+//		fprintf(stderr, "value %d: %f\n", idx, val );
+	}
+	return 0;
+}
+int MOAIUntzSampleBuffer::_prepareBuffer( lua_State* L ) {
+	MOAI_LUA_SETUP(MOAIUntzSampleBuffer, "UNNN" );
+	
+	u32 bitsPerSample = 32;
+	u32 channels = state.GetValue<u32>(2,1);
+	u32 totalFrames = state.GetValue<u32>(3,0);
+	u32 sampleRate = state.GetValue<u32>(4,44100);
+	double length = (double) totalFrames / sampleRate;
+	size_t memSize = totalFrames * channels * 4;	
+	
+	// Allocate space and copy the buffer
+	self->mBuffer = (float*)new char[memSize];
+	memset( self->mBuffer, 0, memSize );
+
+	self->mInfo.mBitsPerSample = bitsPerSample;
+	self->mInfo.mChannels = channels;
+	self->mInfo.mTotalFrames = totalFrames;
+	self->mInfo.mSampleRate = sampleRate;
+	self->mInfo.mLength = length;
+		
 	return 0;
 }
 
@@ -50,6 +112,10 @@ void MOAIUntzSampleBuffer::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "load",				_load },
+		{ "getInfo",  _getInfo },
+		{ "getData",  _getData },
+		{ "setData",  _setData },
+		{ "prepareBuffer", _prepareBuffer },
 		{ NULL, NULL }
 	};
 
