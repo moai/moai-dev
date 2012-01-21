@@ -26,6 +26,16 @@ int MOAIUntzSampleBuffer::_load ( lua_State* L ) {
 	
 	return 0;
 }
+/**	@name	getInfo
+ @text	Returns attributes of sample buffer.
+ 
+ @in		MOAIUntzSampleBuffer self
+ @out		number bits per sample 
+ @out		number num of channels (mono=1, stereo=2)
+ @out		number num of total frames contained
+ @out		number sample rate (44100, 22050, etc )
+ @out		number seconds of sound length 
+ */
 int MOAIUntzSampleBuffer::_getInfo( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIUntzSampleBuffer, "U" );
 
@@ -37,7 +47,12 @@ int MOAIUntzSampleBuffer::_getInfo( lua_State* L ) {
 	return 5;			
 }
 
-
+/**	@name	getData
+ @text	Retrieve every sample data in buffer
+ 
+ @in		MOAIUntzSampleBuffer self
+ @out		table array of sample data number ( -1 ~ 1 as sample level)
+ */
 int MOAIUntzSampleBuffer::_getData( lua_State* L ) {
 	MOAI_LUA_SETUP( MOAIUntzSampleBuffer, "U" );
 	u32 arynum = self->mInfo.mTotalFrames * self->mInfo.mChannels;
@@ -48,6 +63,15 @@ int MOAIUntzSampleBuffer::_getData( lua_State* L ) {
 	}
 	return 1;
 }
+/**	@name	setData
+ @text	Write sample data into buffer
+ 
+ @in		MOAIUntzSampleBuffer self
+ @in		table array of sample data number ( -1 ~ 1 as sample level )
+ @in		number index of sample buffer start copying from (1 for the first sample)
+ @out		nil
+ */
+
 int MOAIUntzSampleBuffer::_setData( lua_State* L ) {
 	MOAI_LUA_SETUP( MOAIUntzSampleBuffer, "UTN" );
 	u32 startDataIndex = state.GetValue<u32>(3,1);
@@ -65,6 +89,15 @@ int MOAIUntzSampleBuffer::_setData( lua_State* L ) {
 	}
 	return 0;
 }
+/**	@name	preparBuffer
+ @text	Allocate internal memory for sample buffer
+ 
+ @in		MOAIUntzSampleBuffer self
+ @in		number num of channels (mono=1, stereo=2)
+ @in		number num of total frames of sample
+ @in		number sample rate in Hz (44100 or else)
+ @out		nil
+ */
 int MOAIUntzSampleBuffer::_prepareBuffer( lua_State* L ) {
 	MOAI_LUA_SETUP(MOAIUntzSampleBuffer, "UNNN" );
 	
