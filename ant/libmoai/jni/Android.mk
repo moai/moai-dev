@@ -23,7 +23,7 @@
 
 	LOCAL_MODULE 	:= moai
 	LOCAL_ARM_MODE 	:= $(MY_ARM_MODE)
-	LOCAL_LDLIBS 	:= -llog -lGLESv1_CM -lGLESv2 -lz crypto/libs/$(TARGET_ARCH_ABI)/libcrypto.a ../obj/local/$(TARGET_ARCH_ABI)/libogg.a
+	LOCAL_LDLIBS 	:= -llog -lGLESv1_CM -lGLESv2 -lz crypto/libs/$(TARGET_ARCH_ABI)/libcrypto.a ../obj/local/$(TARGET_ARCH_ABI)/libogg.a ../obj/local/$(TARGET_ARCH_ABI)/libcares.a
 	
 #----------------------------------------------------------------#
 # header search paths
@@ -46,6 +46,8 @@
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/box2d-2.2.1/Box2D/Dynamics
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/box2d-2.2.1/Box2D/Dynamics/Contacts
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/box2d-2.2.1/Box2D/Dynamics/Joints
+	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/c-ares-1.7.5
+	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/c-ares-1.7.5/include-android
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/chipmunk-5.3.4/include
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/chipmunk-5.3.4/include/chipmunk
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/chipmunk-5.3.4/include/chipmunk/constraints
@@ -104,6 +106,7 @@
 	LOCAL_STATIC_LIBRARIES += libmoaiext-untz
 
 	LOCAL_STATIC_LIBRARIES += libbox2D
+	LOCAL_STATIC_LIBRARIES += libcares
 	LOCAL_STATIC_LIBRARIES += libchipmunk
 	LOCAL_STATIC_LIBRARIES += libcontrib
 	LOCAL_STATIC_LIBRARIES += libcurl
@@ -127,6 +130,7 @@
 #----------------------------------------------------------------#
 
 	include box2d/Android.mk
+	include c-ares/Android.mk
 	include chipmunk/Android.mk
 	include contrib/Android.mk
 	include curl/Android.mk
