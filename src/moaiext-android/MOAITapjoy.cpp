@@ -82,7 +82,7 @@ int MOAITapjoy::_initVideoAds ( lua_State* L ) {
 		mInitVideoAdsFunc = env->GetMethodID ( moaiActivityClass, "initVideoAds", "()V" );
 	}
 
-	env->CallObjectMethod ( mMoaiActivity , mInitVideoAdsFunc );
+	env->CallVoidMethod ( mMoaiActivity , mInitVideoAdsFunc );
 
 	u32 count = state.GetValue < u32 >( 1, 0 );
 	if ( count > 0 ) {
@@ -93,7 +93,7 @@ int MOAITapjoy::_initVideoAds ( lua_State* L ) {
 			mSetVideoAdCacheCount = env->GetMethodID ( moaiActivityClass, "setVideoAdCacheCount", "(I)V" );
 		}
 
-		env->CallObjectMethod ( mMoaiActivity , mSetVideoAdCacheCount, count );
+		env->CallVoidMethod ( mMoaiActivity , mSetVideoAdCacheCount, count );
 	}
 	
 	return 0;
@@ -116,7 +116,7 @@ int MOAITapjoy::_requestTapjoyConnect ( lua_State* L ) {
 		mRequestTapjoyFunc = env->GetMethodID ( moaiActivityClass, "requestTapjoyConnect", "(Ljava/lang/String;Ljava/lang/String;)V" );
 	}
 
-	env->CallObjectMethod ( mMoaiActivity , mRequestTapjoyFunc, jidentifier, jsecret );
+	env->CallVoidMethod ( mMoaiActivity , mRequestTapjoyFunc, jidentifier, jsecret );
 		
 	return 0;
 }
@@ -145,7 +145,7 @@ int MOAITapjoy::_showOffers ( lua_State* L ) {
 		mShowOffersFunc = env->GetMethodID ( moaiActivityClass, "showOffers", "()V" );
 	}
 
-	env->CallObjectMethod ( mMoaiActivity , mShowOffersFunc );
+	env->CallVoidMethod ( mMoaiActivity , mShowOffersFunc );
 		
 	return 0;
 }

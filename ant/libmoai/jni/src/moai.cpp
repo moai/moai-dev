@@ -167,9 +167,10 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 
 		GET_ENV ();
 
-		PRINT("CheckBillingSupported");
+		PRINT("CheckBillingSupportedTest");
 
-		bool retVal = ( bool )env->CallObjectMethod ( mMoaiActivity , mCheckBillingSupportedFunc );
+		
+		bool retVal = env->CallBooleanMethod ( mMoaiActivity , mCheckBillingSupportedFunc );
 
 		PRINT("CheckBillingSupported DONE");
 
@@ -182,7 +183,7 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 		GET_ENV ();
 		GET_JSTRING ( notification, jstr );
 		
-		bool retVal = ( bool )env->CallObjectMethod ( mMoaiActivity , mConfirmNotificationFunc, jstr );
+		bool retVal = ( bool )env->CallBooleanMethod ( mMoaiActivity , mConfirmNotificationFunc, jstr );
 		return retVal;
 	}
 
@@ -193,7 +194,7 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 		GET_JSTRING ( identifier, jidentifier );
 		GET_JSTRING ( payload, jpayload );
 
-		bool retVal = ( bool )env->CallObjectMethod ( mMoaiActivity , mRequestPurchaseFunc, jidentifier, jpayload );
+		bool retVal = ( bool )env->CallBooleanMethod ( mMoaiActivity , mRequestPurchaseFunc, jidentifier, jpayload );
 		return retVal;
 	}	
 		
@@ -202,7 +203,7 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 
 		GET_ENV ();
 		
-		bool retVal = ( bool )env->CallObjectMethod ( mMoaiActivity , mRestoreTransactionsFunc );
+		bool retVal = ( bool )env->CallBooleanMethod ( mMoaiActivity , mRestoreTransactionsFunc );
 		return retVal;
 	}
 	
@@ -212,7 +213,7 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 		GET_ENV ();
 		GET_JSTRING ( key, jstr );
 		
-		env->CallObjectMethod ( mMoaiActivity, mSetMarketPublicKeyFunc, jstr );
+		env->CallVoidMethod ( mMoaiActivity, mSetMarketPublicKeyFunc, jstr );
 	}
 	
 	//----------------------------------------------------------------//
@@ -226,7 +227,7 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 		GET_JSTRING ( neutral, jneutral );
 		GET_JSTRING ( negative, jnegative );
 
-		env->CallObjectMethod ( mMoaiActivity , mShowDialogFunc, jtitle, jmessage, jpositive, jneutral, jnegative, cancelable );
+		env->CallVoidMethod ( mMoaiActivity , mShowDialogFunc, jtitle, jmessage, jpositive, jneutral, jnegative, cancelable );
 	}
 	
 	//----------------------------------------------------------------//
@@ -238,7 +239,7 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 		GET_JSTRING ( subject, jsubject );
 		GET_JSTRING ( text, jtext );
 
-		env->CallObjectMethod ( mMoaiActivity , mShareFunc, jprompt, jsubject, jtext );
+		env->CallVoidMethod ( mMoaiActivity , mShareFunc, jprompt, jsubject, jtext );
 	}
 	
 //================================================================//
@@ -276,7 +277,7 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 		GET_ENV ();
 		GET_JSTRING ( url, jstr );
 		
-		env->CallObjectMethod ( mMoaiActivity, mOpenURLFunc, jstr );
+		env->CallVoidMethod ( mMoaiActivity, mOpenURLFunc, jstr );
 	}
 
 //================================================================//
@@ -449,8 +450,8 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 		mShowDialogFunc = env->GetMethodID ( moaiActivityClass, "showDialog", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)V" );
 		mShareFunc = env->GetMethodID ( moaiActivityClass, "share", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V" );
 		
-//		jclass moaiActivityClass = env->GetObjectClass ( mMoaiActivity );		
-//		env->CallObjectMethod ( mMoaiActivity ,  env->GetMethodID ( moaiActivityClass, "requestTapjoyConnect", "(Ljava/lang/String;Ljava/lang/String;)V" ), NULL, NULL );		
+		//jclass moaiActivityClass = env->GetObjectClass ( mMoaiActivity );		
+		//env->CallVoidMethod ( mMoaiActivity ,  env->GetMethodID ( moaiActivityClass, "requestTapjoyConnect", "(Ljava/lang/String;Ljava/lang/String;)V" ), NULL, NULL );		
 	}
 
 	//----------------------------------------------------------------//
