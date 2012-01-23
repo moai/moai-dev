@@ -92,14 +92,14 @@ public:
 	//----------------------------------------------------------------//
 	void Grow ( u32 size, u32 chunkSize ) {
 		
-		u32 chunks = ( u32 )ceilf (( float )size / ( float )chunkSize );
+		u32 chunks = ( size / chunkSize ) + 1;
 		this->Grow ( chunks * chunkSize );
 	}
 
 	//----------------------------------------------------------------//
 	void Grow ( u32 size, u32 chunkSize, const TYPE& value ) {
 		
-		u32 chunks = ( u32 )ceilf (( float )size / ( float )chunkSize );
+		u32 chunks = ( size / chunkSize ) + 1;
 		u32 newSize = chunks * chunkSize;
 		
 		if ( newSize > this->mSize ) {

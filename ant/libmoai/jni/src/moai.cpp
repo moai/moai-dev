@@ -115,8 +115,10 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 
 	#define GET_ENV() 	\
 		JNIEnv* env; 	\
-		jvm->GetEnv (( void** )&env, JNI_VERSION_1_4 );
-
+		jvm->GetEnv (( void** )&env, JNI_VERSION_1_4 ); \
+		if (env != gEnv) { PRINT(__FUNCTION__); } \
+		assert(env == gEnv);
+		
 	#define GET_CSTRING(jstr, cstr) \
 		const char* cstr = env->GetStringUTFChars ( jstr, NULL );
 
@@ -134,6 +136,7 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 //================================================================//
 
 	JavaVM* 		jvm;
+	JNIEnv* 		gEnv;
 
 	jobject			mMoaiActivity;
 	jobject			mMoaiView;
@@ -164,7 +167,12 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 
 		GET_ENV ();
 
+		PRINT("CheckBillingSupported");
+
 		bool retVal = ( bool )env->CallObjectMethod ( mMoaiActivity , mCheckBillingSupportedFunc );
+
+		PRINT("CheckBillingSupported DONE");
+
 		return retVal;
 	}
 
@@ -411,6 +419,8 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 		REGISTER_LUA_CLASS ( MOAITapjoy );
 #endif
 
+		gEnv = env;
+
 		// register callbacks into Java
 		mMoaiView = ( jobject ) env->NewGlobalRef ( moaiView );
 		jclass moaiViewClass = env->GetObjectClass ( mMoaiView );
@@ -438,6 +448,9 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 		mSetMarketPublicKeyFunc = env->GetMethodID ( moaiActivityClass, "setMarketPublicKey", "(Ljava/lang/String;)V" );
 		mShowDialogFunc = env->GetMethodID ( moaiActivityClass, "showDialog", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)V" );
 		mShareFunc = env->GetMethodID ( moaiActivityClass, "share", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V" );
+		
+//		jclass moaiActivityClass = env->GetObjectClass ( mMoaiActivity );		
+//		env->CallObjectMethod ( mMoaiActivity ,  env->GetMethodID ( moaiActivityClass, "requestTapjoyConnect", "(Ljava/lang/String;Ljava/lang/String;)V" ), NULL, NULL );		
 	}
 
 	//----------------------------------------------------------------//
