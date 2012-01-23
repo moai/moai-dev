@@ -22,27 +22,6 @@ prop:moveRot(360,10)
 
 -------------------
 
-function dumpSampleBuffer(sb)
-   local data = sb:getData()
-   local meter={}
-   for i,v in ipairs(data) do
-      if (i%100)==0 then
-         table.insert(meter,v*1000)
-      end
-   end
-   for i,v in ipairs(meter) do
-      local n = math.abs(v)
-      local s = "" .. n
-      for j=1,n do
-         s = s .. "."
-      end
-      print(s)
-   end
-end
-
-
--------------------
-
 MOAIUntzSystem.initialize ()
 
 -- get wav data from file
@@ -73,7 +52,8 @@ local wavedata = generateSinTone( note, freq*nChan*duration, level )
 sampleOnMemory:setData( wavedata,1 ) -- 1: use data from first index of wavedata
 note = note + 1 -- get lower sounds
 wavedata = generateSinTone( note, freq*nChan*duration, level )
-sampleOnMemory:setData( wavedata, freq*nChan*duration + 1, level ) -- append the data
+
+sampleOnMemory:setData( wavedata, freq*nChan*duration + 1 ) 
 
 
 -- to mix wav file and on-mem sounds
@@ -86,8 +66,15 @@ memsound:play()
 filesound = MOAIUntzSound.new()
 filesound:load(sampleFromFile)
 filesound:setVolume(1)
-filesound:setLooping(true)
+filesound:setLooping(false)
 filesound:play()
 
 
 
+th = MOAIThread.new()
+th:run(function()
+          while true do
+             print("st:", filesound:isPlaying() )
+             coroutine.yield()
+          end          
+       end)

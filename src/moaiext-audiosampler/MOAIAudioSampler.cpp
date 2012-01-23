@@ -43,7 +43,7 @@ int MOAIAudioSampler::_setFrequency ( lua_State* L ) {
 int	MOAIAudioSampler::_setNumChannels ( lua_State* L ) {
     MOAI_LUA_SETUP ( MOAIAudioSampler, "UN" )
         ;
-    self->mNumFrequency = state.GetValue < u32 >(2, 2 );
+    self->mNumChannels = state.GetValue < u32 >(2, 2 );
     return 0;
 }
 
@@ -128,24 +128,23 @@ void MOAIAudioSampler::globalCallback( void *inUserData,
     //    fprintf(stderr, "callback. nPkt:%d active:%d buf:%p sz:%d curWI:%d\n",
     //            inNumPackets, (int)sampler->isActive, inBuffer->mAudioData, inBuffer->mAudioDataByteSize, sampler->currentWriteIndex  );
     
-    if( sampler->isActive ){
-        OSStatus result = AudioQueueEnqueueBuffer( inAQ, inBuffer, 0, NULL );
-        if(result) printf("cannot enque buffer\n" );
-    }
+    OSStatus result = AudioQueueEnqueueBuffer( inAQ, inBuffer, 0, NULL );
+    if(result) printf("cannot enque buffer\n" );
 
-    short *outbuf = sampler->mBufferAry[ sampler->currentWriteIndex];
-    short *inbuf = (short*) inBuffer->mAudioData;
-    for(u32 i=0;i<inNumPackets;i++){
-        outbuf[i] = inbuf[i];
-    }
-    sampler->mBufferReadSizeInBytes[ sampler->currentWriteIndex] = inBuffer->mAudioDataByteSize;
+    if( sampler->isActive ){        
+        short *outbuf = sampler->mBufferAry[ sampler->currentWriteIndex];
+        short *inbuf = (short*) inBuffer->mAudioData;
+        for(u32 i=0;i<inNumPackets;i++){
+            outbuf[i] = inbuf[i];
+        }
+        sampler->mBufferReadSizeInBytes[ sampler->currentWriteIndex] = inBuffer->mAudioDataByteSize;
     
-    sampler->currentWriteIndex ++;
-    if( sampler->currentWriteIndex >= sampler->mBufferAryLen ){
-        sampler->currentWriteIndex = 0;
+        sampler->currentWriteIndex ++;
+        if( sampler->currentWriteIndex >= sampler->mBufferAryLen ){
+            sampler->currentWriteIndex = 0;
+        }
     }
 }
-
 
 int	MOAIAudioSampler::_prepareBuffer ( lua_State* L ) {
     MOAI_LUA_SETUP ( MOAIAudioSampler, "UNN" )
@@ -154,9 +153,10 @@ int	MOAIAudioSampler::_prepareBuffer ( lua_State* L ) {
     self->mBufferAryLen = state.GetValue < u32> (3, 5 );
 
     memset( &self->recFmt, 0, sizeof(self->recFmt));
-    MyGetDefaultInputDeviceSampleRate( &self->recFmt.mSampleRate );
-    fprintf(stderr, "Default sample rate: %f\n", self->recFmt.mSampleRate );
-    self->recFmt.mChannelsPerFrame = 1; // 2 for stereo
+    //    MyGetDefaultInputDeviceSampleRate( &self->recFmt.mSampleRate );
+    //    fprintf(stderr, "Default sample rate: %f\n", self->recFmt.mSampleRate );
+    self->recFmt.mSampleRate = self->mNumFrequency; 
+    self->recFmt.mChannelsPerFrame = self->mNumChannels; // 2 for stereo
     self->recFmt.mFormatID = kAudioFormatLinearPCM;
     self->recFmt.mFormatFlags = kLinearPCMFormatFlagIsSignedInteger | kLinearPCMFormatFlagIsPacked;
     self->recFmt.mBitsPerChannel = 16;
@@ -224,6 +224,7 @@ int MOAIAudioSampler::_start ( lua_State* L ) {
     return 0; 
 }
 
+// @out data: array table
 int	MOAIAudioSampler::_read ( lua_State* L ) {
     MOAI_LUA_SETUP ( MOAIAudioSampler, "U" )
         ;
@@ -237,9 +238,13 @@ int	MOAIAudioSampler::_read ( lua_State* L ) {
 
             lua_createtable(L,datanum,0);
             for(int j=0;j< datanum;j++){
-                double val = (double)( data[j]) / 32768.0;
-                lua_pushnumber(L,val);
-                lua_rawseti(L,-2,i+1);
+                short sval = ntohs(data[j] );
+                //                if((j%937)==0){fprintf(stderr, "%4d ", (int)sval);}
+                double val = (double)( sval / 32768.0 );
+                
+                //double val = (double)(short)ntohs(data[j]);
+                lua_pushnumber(L, val );
+                lua_rawseti(L,-2,j+1);
             }
             self->mBufferReadSizeInBytes[useInd ] = 0; // set 0 after read
             self->currentReadIndex ++;
@@ -262,7 +267,18 @@ int MOAIAudioSampler::_stop ( lua_State* L ) {
 
     return 0;
 }
-
+int MOAIAudioSampler::_pause ( lua_State* L ) {
+    MOAI_LUA_SETUP ( MOAIAudioSampler, "U" )
+        ;
+    self->isActive = false;
+    return 0;
+}
+int MOAIAudioSampler::_resume ( lua_State* L ) {
+    MOAI_LUA_SETUP ( MOAIAudioSampler, "U" )
+        ;
+    self->isActive = true;
+    return 0;
+}
 
 void MOAIAudioSampler::RegisterLuaClass ( MOAILuaState& state ) {
 
@@ -283,6 +299,8 @@ void MOAIAudioSampler::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "start",				_start },
 		{ "read",				_read },
 		{ "stop",				_stop },
+		{ "pause",				_pause },
+		{ "resume",				_resume },                
 		{ NULL, NULL }
 	};
 
