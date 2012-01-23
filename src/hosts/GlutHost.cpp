@@ -24,6 +24,10 @@
 	#include <aku/AKU-untz.h>
 #endif
 
+#ifdef GLUTHOST_USE_AUDIOSAMPLER
+	#include <aku/AKU-audiosampler.h>
+#endif
+
 #ifdef GLUTHOST_USE_PARTICLE_PRESETS
 	#include <ParticlePresets.h>
 #endif
@@ -275,6 +279,10 @@ int GlutHost ( int argc, char** argv ) {
 	
 	#ifdef GLUTHOST_USE_UNTZ
 		AKUUntzInit ();
+	#endif
+	
+	#ifdef GLUTHOST_USE_AUDIOSAMPLER
+        AKUAudioSamplerInit();	
 	#endif
 	
 	#ifdef GLUTHOST_USE_PARTICLE_PRESETS

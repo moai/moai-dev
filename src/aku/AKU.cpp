@@ -387,6 +387,7 @@ void AKUSetInputDeviceWheel ( int deviceID, int sensorID, char const* name ) {
 	MOAIInputMgr::Get ().SetSensor (( u8 )deviceID, ( u8 )sensorID, name, MOAISensor::WHEEL );
 }
 
+
 //----------------------------------------------------------------//
 void AKUSetUserdata ( void* userdata ) {
 
