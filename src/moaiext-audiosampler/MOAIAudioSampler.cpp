@@ -200,7 +200,19 @@ int MOAIAudioSampler::_start ( lua_State* L ) {
 int	MOAIAudioSampler::_read ( lua_State* L ) {
     MOAI_LUA_SETUP ( MOAIAudioSampler, "U" )
         ;
-
+    cc8 *tn = state.GetValue < cc8 * > ( 2, "float" );    
+    int tnid = -1;
+    if( strcmp( tn, "float" ) == 0 ){
+        tnid = 0;
+    } else if( strcmp( tn, "char" ) == 0 ){
+        tnid = 8;
+    } else if( strcmp( tn, "short" ) == 0 ){
+        tnid = 16;
+    } else {
+        lua_pushnil(L);
+        return 1;
+    }
+    
     for(u32 i=0;i< self->mBufferAryLen;i++){
         u32 useInd = ( self->currentReadIndex + i ) % self->mBufferAryLen;
         if( self->mBufferReadSizeInBytes[useInd] > 0 ){
@@ -211,11 +223,17 @@ int	MOAIAudioSampler::_read ( lua_State* L ) {
             lua_createtable(L,datanum,0);
             for(int j=0;j< datanum;j++){
                 short sval = ntohs(data[j] );
-                //                if((j%937)==0){fprintf(stderr, "%4d ", (int)sval);}
-                double val = (double)( sval / 32768.0 );
-                
-                //double val = (double)(short)ntohs(data[j]);
-                lua_pushnumber(L, val );
+                switch(tnid){
+                case 0:
+                    lua_pushnumber(L, (double)( sval / 32768.0 ) );
+                    break;
+                case 8:
+                    lua_pushinteger(L,(char)( sval / 256 ) );
+                    break;
+                case 16:
+                    lua_pushinteger(L, sval );
+                    break;
+                } 
                 lua_rawseti(L,-2,j+1);
             }
             self->mBufferReadSizeInBytes[useInd ] = 0; // set 0 after read

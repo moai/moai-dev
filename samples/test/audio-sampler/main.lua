@@ -21,9 +21,9 @@ layer:insertProp ( prop )
 prop:moveRot(360,10)
 
 
-
-MOAIUntzSystem.initialize ( 44100, 8192, MOAIUntzSystem.RECORDABLE ) 
---MOAIUntzSystem.initialize ( 44100, 8192 )
+local freq = 44100 --5000 --11025 --22050 --44100
+MOAIUntzSystem.initialize ( freq, 8192, MOAIUntzSystem.RECORDABLE ) 
+--MOAIUntzSystem.initialize ( freq, 8192 )
 
 function minmax(data)
    local min,max=99999,-9999999
@@ -62,7 +62,7 @@ end
 -- common factors
 local unit = 0.3
 local nChannels = 1
-local freq = 44100
+
 
 -- setup recorder
 local sampler = MOAIAudioSampler.new()
@@ -105,7 +105,12 @@ th:run( function()
 
               -- record it!
               if toRec then
-                 local data = sampler:read()
+                 local data = sampler:read( "short" ) -- float:-1~1 char:-127~127 short:-32767~32767
+                 if data then
+                    print( data[1], data[2] )
+                    for i,v in ipairs(data) do data[i] = v / 32767 end
+                 end
+                 
                  if data and type(data)=="table" then
                     local min,max = minmax(data)
                     print( string.format( "RC %d                   %s", #tape, levelstring(min,max)))
