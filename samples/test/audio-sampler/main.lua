@@ -2,6 +2,29 @@
 
 MOAISim.openWindow( "test", 400,400)
 
+viewport = MOAIViewport.new ()
+viewport:setSize ( 320, 480 )
+viewport:setScale ( 320, -480 )
+
+layer = MOAILayer2D.new ()
+layer:setViewport ( viewport )
+MOAISim.pushRenderPass ( layer )
+
+gfxQuad = MOAIGfxQuad2D.new ()
+gfxQuad:setTexture ( "cathead.png" )
+gfxQuad:setRect ( -64, -64, 64, 64 )
+gfxQuad:setUVRect ( 0, 0, 1, 1 )
+
+prop = MOAIProp2D.new ()
+prop:setDeck(gfxQuad)
+layer:insertProp ( prop )
+prop:moveRot(360,10)
+
+
+
+MOAIUntzSystem.initialize ( 44100, 8192, MOAIUntzSystem.RECORDABLE ) 
+--MOAIUntzSystem.initialize ( 44100, 8192 )
+
 function minmax(data)
    local min,max=99999,-9999999
    for i=1,#data do
@@ -10,8 +33,7 @@ function minmax(data)
    end
    return min,max
 end
-function levelstring(data)
-   local min,max = minmax(data)
+function levelstring(min,max)
    local total = math.abs(min) + math.abs(max)
    if total < 0.01 then
       return " "
@@ -28,28 +50,36 @@ end
 -- common factors
 local unit = 0.3
 local nChannels = 1
+local freq = 44100
 
 -- setup recorder
 local sampler = MOAIAudioSampler.new()
-sampler:setFrequency(44100)
+sampler:setFrequency(freq)
 sampler:setNumChannels(nChannels)
 sampler:prepareBuffer(unit,10)
 sampler:start()
 
 -- setup player
-MOAIUntzSystem.initialize ()
-local playbuf = MOAIUntzSampleBuffer.new()
-playbuf:prepareBuffer( nChannels, 44100 * unit, 44100 )
 
+
+local playbuf = MOAIUntzSampleBuffer.new()
+playbuf:prepareBuffer( nChannels, freq * unit, freq )
+
+print("sound new")
 local snd = MOAIUntzSound.new()
+print("sound load")
 snd:load(playbuf)
+print("sound loaded")
 snd:setVolume(1)
 snd:setLooping(false)
 snd:play()
 
+
 -- setup tape
 local tape={}
 local toPlay,toRec=true, true
+
+
 
 local delayAdjuster = 0.85 -- because of 60Hz MOAI thread timing, it slightly delays to play.
 
@@ -65,7 +95,7 @@ th:run( function()
               if toRec then
                  local data = sampler:read()
                  if data and type(data)=="table" then
---                    print( string.format( "RC %d                   %s", #tape, levelstring(data)) )
+                    print( string.format( "RC %d                   %s", #tape, levelstring(minmax(data)) ))
                     table.insert( tape, data )
                  end
               end
@@ -78,7 +108,10 @@ th:run( function()
                     
                     local data = tape[1]
                     if data then
-                       print( string.format( "PL %d %s", #tape, levelstring(data) ) )
+                       local min,max = minmax(data)
+                       local ls = levelstring(min,max)
+                       print( string.format( "PL %d %s", #tape, ls ) )
+                       prop:seekLoc( 0 + max * 50 , 0, 0.5 )
                        
                        playbuf:setData( data, 1 )
                        snd:setPosition(0)

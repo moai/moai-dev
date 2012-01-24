@@ -13,7 +13,6 @@ mNumFrequency(0),
     isQueueInitialized(false)
 {
     fprintf(stderr,"MOAIAudioSampler construct. %p\n", this );
-    
     RTTI_SINGLE ( MOAINode )
 }
 
@@ -49,32 +48,6 @@ int	MOAIAudioSampler::_setNumChannels ( lua_State* L ) {
 
 
 
-// copied from apple's aqrecord sample
-// @out number like 44100
-static OSStatus	MyGetDefaultInputDeviceSampleRate(Float64 *outSampleRate)
-{
-	OSStatus err;
-	AudioDeviceID deviceID = 0;
-
-	// get the default input device
-	AudioObjectPropertyAddress addr;
-	UInt32 size;
-	addr.mSelector = kAudioHardwarePropertyDefaultInputDevice;
-	addr.mScope = kAudioObjectPropertyScopeGlobal;
-	addr.mElement = 0;
-	size = sizeof(AudioDeviceID);
-	err = AudioHardwareServiceGetPropertyData(kAudioObjectSystemObject, &addr, 0, NULL, &size, &deviceID);
-	if (err) return err;
-
-	// get its sample rate
-	addr.mSelector = kAudioDevicePropertyNominalSampleRate;
-	addr.mScope = kAudioObjectPropertyScopeGlobal;
-	addr.mElement = 0;
-	size = sizeof(Float64);
-	err = AudioHardwareServiceGetPropertyData(deviceID, &addr, 0, NULL, &size, outSampleRate);
-
-	return err;
-}
 
 
 // Determine the size, in bytes, of a buffer necessary to represent the supplied number
@@ -125,8 +98,8 @@ void MOAIAudioSampler::globalCallback( void *inUserData,
 
     MOAIAudioSampler *sampler = (MOAIAudioSampler*) inUserData;
 
-    //    fprintf(stderr, "callback. nPkt:%d active:%d buf:%p sz:%d curWI:%d\n",
-    //            inNumPackets, (int)sampler->isActive, inBuffer->mAudioData, inBuffer->mAudioDataByteSize, sampler->currentWriteIndex  );
+        fprintf(stderr, "callback. nPkt:%d active:%d buf:%p sz:%d curWI:%d\n",
+                inNumPackets, (int)sampler->isActive, inBuffer->mAudioData, inBuffer->mAudioDataByteSize, sampler->currentWriteIndex  );
     
     OSStatus result = AudioQueueEnqueueBuffer( inAQ, inBuffer, 0, NULL );
     if(result) printf("cannot enque buffer\n" );
@@ -153,8 +126,7 @@ int	MOAIAudioSampler::_prepareBuffer ( lua_State* L ) {
     self->mBufferAryLen = state.GetValue < u32> (3, 5 );
 
     memset( &self->recFmt, 0, sizeof(self->recFmt));
-    //    MyGetDefaultInputDeviceSampleRate( &self->recFmt.mSampleRate );
-    //    fprintf(stderr, "Default sample rate: %f\n", self->recFmt.mSampleRate );
+
     self->recFmt.mSampleRate = self->mNumFrequency; 
     self->recFmt.mChannelsPerFrame = self->mNumChannels; // 2 for stereo
     self->recFmt.mFormatID = kAudioFormatLinearPCM;
