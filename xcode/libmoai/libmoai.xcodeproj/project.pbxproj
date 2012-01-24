@@ -1434,6 +1434,13 @@
 		C37D422813B16955009600BB /* RScopedLock.h in Headers */ = {isa = PBXBuildFile; fileRef = C37D422513B16955009600BB /* RScopedLock.h */; };
 		C37D422913B16955009600BB /* RSyncEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = C37D422613B16955009600BB /* RSyncEvent.h */; };
 		C37D422A13B16955009600BB /* Threading.h in Headers */ = {isa = PBXBuildFile; fileRef = C37D422713B16955009600BB /* Threading.h */; };
+		C7B9D23E14CD44A30022B46F /* AKU-audiosampler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7B9D23C14CD44A30022B46F /* AKU-audiosampler.cpp */; };
+		C7B9D23F14CD44A30022B46F /* AKU-audiosampler.h in Headers */ = {isa = PBXBuildFile; fileRef = C7B9D23D14CD44A30022B46F /* AKU-audiosampler.h */; };
+		C7B9D24214CD46000022B46F /* AKU-audiosampler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7B9D23C14CD44A30022B46F /* AKU-audiosampler.cpp */; };
+		C7B9D24514CD4AA30022B46F /* MOAIAudioSampler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7B9D24314CD4AA30022B46F /* MOAIAudioSampler.cpp */; };
+		C7B9D24614CD4AA30022B46F /* MOAIAudioSampler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7B9D24314CD4AA30022B46F /* MOAIAudioSampler.cpp */; };
+		C7B9D24714CD4AA30022B46F /* MOAIAudioSampler.h in Headers */ = {isa = PBXBuildFile; fileRef = C7B9D24414CD4AA30022B46F /* MOAIAudioSampler.h */; };
+		C7B9D24814CD4AA30022B46F /* MOAIAudioSampler.h in Headers */ = {isa = PBXBuildFile; fileRef = C7B9D24414CD4AA30022B46F /* MOAIAudioSampler.h */; };
 		CD04AE921472568C009C20E5 /* pch.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AE801472568C009C20E5 /* pch.h */; };
 		CD04AE931472568C009C20E5 /* pch.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AE801472568C009C20E5 /* pch.h */; };
 		CD04AE941472568C009C20E5 /* zipfs_replace_locale.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AE811472568C009C20E5 /* zipfs_replace_locale.h */; };
@@ -3887,6 +3894,10 @@
 		C37D422513B16955009600BB /* RScopedLock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RScopedLock.h; path = ../../3rdparty/untz/src/threading/RScopedLock.h; sourceTree = "<group>"; };
 		C37D422613B16955009600BB /* RSyncEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RSyncEvent.h; path = ../../3rdparty/untz/src/threading/RSyncEvent.h; sourceTree = "<group>"; };
 		C37D422713B16955009600BB /* Threading.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Threading.h; path = ../../3rdparty/untz/src/threading/Threading.h; sourceTree = "<group>"; };
+		C7B9D23C14CD44A30022B46F /* AKU-audiosampler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "AKU-audiosampler.cpp"; path = "aku/AKU-audiosampler.cpp"; sourceTree = "<group>"; };
+		C7B9D23D14CD44A30022B46F /* AKU-audiosampler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "AKU-audiosampler.h"; path = "aku/AKU-audiosampler.h"; sourceTree = "<group>"; };
+		C7B9D24314CD4AA30022B46F /* MOAIAudioSampler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIAudioSampler.cpp; path = "moaiext-audiosampler/MOAIAudioSampler.cpp"; sourceTree = "<group>"; };
+		C7B9D24414CD4AA30022B46F /* MOAIAudioSampler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIAudioSampler.h; path = "moaiext-audiosampler/MOAIAudioSampler.h"; sourceTree = "<group>"; };
 		CD04ACB414725568009C20E5 /* libmoai-ios-zipfs.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-zipfs.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD04AE7F1472557F009C20E5 /* libmoai-osx-zipfs.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-zipfs.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD04AE801472568C009C20E5 /* pch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pch.h; path = zipfs/pch.h; sourceTree = "<group>"; };
@@ -5810,6 +5821,7 @@
 				0324E4F913564BC7000ADC60 /* moaicore */,
 				CD524476135982480086DA15 /* moaiext-iphone */,
 				CD07C31713A174EB00C9386C /* moaiext-luaext */,
+				C7B9D24114CD44DF0022B46F /* moaiext-audiosampler */,
 				CD07C31613A174CD00C9386C /* moaiext-untz */,
 				0324E5AA13564BC8000ADC60 /* uslscore */,
 				CD49003F141AB69900913D80 /* zipfs */,
@@ -6265,6 +6277,17 @@
 			name = CustomTemplate;
 			sourceTree = "<group>";
 			usesTabs = 1;
+		};
+		C7B9D24114CD44DF0022B46F /* moaiext-audiosampler */ = {
+			isa = PBXGroup;
+			children = (
+				C7B9D23C14CD44A30022B46F /* AKU-audiosampler.cpp */,
+				C7B9D23D14CD44A30022B46F /* AKU-audiosampler.h */,
+				C7B9D24314CD4AA30022B46F /* MOAIAudioSampler.cpp */,
+				C7B9D24414CD4AA30022B46F /* MOAIAudioSampler.h */,
+			);
+			name = "moaiext-audiosampler";
+			sourceTree = "<group>";
 		};
 		CD04AEB6147256B0009C20E5 /* zlib */ = {
 			isa = PBXGroup;
@@ -9134,6 +9157,7 @@
 				E9940E4114B7A4A0006465CC /* USTrig.h in Headers */,
 				E9940E4514B7A4A0006465CC /* USTypedPtr.h in Headers */,
 				E9940E4914B7A4A0006465CC /* USXmlReader.h in Headers */,
+				C7B9D24814CD4AA30022B46F /* MOAIAudioSampler.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9784,6 +9808,8 @@
 				E9940E4014B7A4A0006465CC /* USTrig.h in Headers */,
 				E9940E4414B7A4A0006465CC /* USTypedPtr.h in Headers */,
 				E9940E4814B7A4A0006465CC /* USXmlReader.h in Headers */,
+				C7B9D23F14CD44A30022B46F /* AKU-audiosampler.h in Headers */,
+				C7B9D24714CD4AA30022B46F /* MOAIAudioSampler.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10736,6 +10762,8 @@
 				E9940E3F14B7A4A0006465CC /* USTrig.cpp in Sources */,
 				E9940E4314B7A4A0006465CC /* USTypedPtr.cpp in Sources */,
 				E9940E4714B7A4A0006465CC /* USXmlReader.cpp in Sources */,
+				C7B9D24214CD46000022B46F /* AKU-audiosampler.cpp in Sources */,
+				C7B9D24614CD4AA30022B46F /* MOAIAudioSampler.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11868,6 +11896,8 @@
 				E9940E3E14B7A4A0006465CC /* USTrig.cpp in Sources */,
 				E9940E4214B7A4A0006465CC /* USTypedPtr.cpp in Sources */,
 				E9940E4614B7A4A0006465CC /* USXmlReader.cpp in Sources */,
+				C7B9D23E14CD44A30022B46F /* AKU-audiosampler.cpp in Sources */,
+				C7B9D24514CD4AA30022B46F /* MOAIAudioSampler.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
