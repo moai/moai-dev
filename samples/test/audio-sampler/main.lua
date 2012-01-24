@@ -41,12 +41,24 @@ function levelstring(min,max)
       return "."
    elseif total < 0.15 then
       return ".."
+   elseif total < 0.5 then
+      return "..." .. max
    else
-      return "..."
+      return "****" .. max
    end
 end
 
-                       
+function lowpass(data,alpha)
+   local out = {}
+   local y_old = 0
+   for i,x in ipairs(data) do
+      local y = alpha * x + ( 1.0 - alpha ) * y_old
+      out[i] = y
+      y_old = y
+   end
+   return out
+end
+
 -- common factors
 local unit = 0.3
 local nChannels = 1
@@ -95,7 +107,9 @@ th:run( function()
               if toRec then
                  local data = sampler:read()
                  if data and type(data)=="table" then
-                    print( string.format( "RC %d                   %s", #tape, levelstring(minmax(data)) ))
+                    local min,max = minmax(data)
+                    print( string.format( "RC %d                   %s", #tape, levelstring(min,max)))
+                    local data = lowpass(data,0.01) -- to avoid howling
                     table.insert( tape, data )
                  end
               end
