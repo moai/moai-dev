@@ -75,9 +75,7 @@ public class MoaiActivity extends Activity implements SensorEventListener, Tapjo
 
 	protected static native void 		AKUAppDidStartSession 				();
 	protected static native void 		AKUAppWillEndSession 				();
-	protected static native void 		AKUEnqueueCompassEvent 				( int heading );
 	protected static native void 		AKUEnqueueLevelEvent 				( int deviceId, int sensorId, float x, float y, float z );
-	protected static native void 		AKUEnqueueLocationEvent 			( int deviceId, int sensorId, int longitude, int latitude, int altitude, float hAccuracy, float vAccuracy, float speed );
 	protected static native void 		AKUFinalize 						();
 	protected static native void 		AKUMountVirtualDirectory 			( String virtualPath, String archive );
 	protected static native boolean 	AKUNotifyBackButtonPressed			();

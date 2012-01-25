@@ -99,9 +99,9 @@ struct InputEvent {
 	int m_tapCount;
 	
 	//location
-	int m_longitude;
-	int m_latitude;
-	int m_altitude;
+	double m_longitude;
+	double m_latitude;
+	double m_altitude;
 	float m_hAccuracy;
 	float m_vAccuracy;
 	float m_speed;
@@ -115,9 +115,7 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 
 	#define GET_ENV() 	\
 		JNIEnv* env; 	\
-		jvm->GetEnv (( void** )&env, JNI_VERSION_1_4 ); \
-		if (env != gEnv) { PRINT(__FUNCTION__); } \
-		assert(env == gEnv);
+		jvm->GetEnv (( void** )&env, JNI_VERSION_1_4 );
 		
 	#define GET_CSTRING(jstr, cstr) \
 		const char* cstr = env->GetStringUTFChars ( jstr, NULL );
@@ -167,13 +165,7 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 
 		GET_ENV ();
 
-		PRINT("CheckBillingSupportedTest");
-
-		
 		bool retVal = env->CallBooleanMethod ( mMoaiActivity , mCheckBillingSupportedFunc );
-
-		PRINT("CheckBillingSupported DONE");
-
 		return retVal;
 	}
 
@@ -311,7 +303,7 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 	
 	//----------------------------------------------------------------//
 	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiActivity_AKUEnqueueCompassEvent ( JNIEnv* env, jclass obj, jint deviceId, jint sensorId, jint heading ) {
-		//AJV TODO enqueue in event queue
+
 		InputEvent ievent;
 
 		ievent.m_type = InputEvent::INPUTEVENT_COMPASS;
@@ -324,7 +316,7 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 		g_InputQueue->Push ( ievent );
 		//AKUEnqueueCompassEvent ( deviceId, sensorId, heading );
 	}
-	#include <android/log.h>
+
 	//----------------------------------------------------------------//
 	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiActivity_AKUEnqueueLevelEvent ( JNIEnv* env, jclass obj, jint deviceId, jint sensorId, jfloat x, jfloat y, jfloat z ) {
 		
@@ -344,7 +336,7 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 	}
 
 	//----------------------------------------------------------------//
-	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiActivity_AKUEnqueueLocationEvent ( JNIEnv* env, jclass obj, jint deviceId, jint sensorId, jint longitude, jint latitude, jint altitude, jfloat hAccuracy, jfloat vAccuracy, jfloat speed ) {
+	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiActivity_AKUEnqueueLocationEvent ( JNIEnv* env, jclass obj, jint deviceId, jint sensorId, jdouble longitude, jdouble latitude, jdouble altitude, jfloat hAccuracy, jfloat vAccuracy, jfloat speed ) {
 		
 		InputEvent ievent;
 
@@ -420,8 +412,6 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 		REGISTER_LUA_CLASS ( MOAITapjoy );
 #endif
 
-		gEnv = env;
-
 		// register callbacks into Java
 		mMoaiView = ( jobject ) env->NewGlobalRef ( moaiView );
 		jclass moaiViewClass = env->GetObjectClass ( mMoaiView );
@@ -449,9 +439,6 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 		mSetMarketPublicKeyFunc = env->GetMethodID ( moaiActivityClass, "setMarketPublicKey", "(Ljava/lang/String;)V" );
 		mShowDialogFunc = env->GetMethodID ( moaiActivityClass, "showDialog", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)V" );
 		mShareFunc = env->GetMethodID ( moaiActivityClass, "share", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V" );
-		
-		//jclass moaiActivityClass = env->GetObjectClass ( mMoaiActivity );		
-		//env->CallVoidMethod ( mMoaiActivity ,  env->GetMethodID ( moaiActivityClass, "requestTapjoyConnect", "(Ljava/lang/String;Ljava/lang/String;)V" ), NULL, NULL );		
 	}
 
 	//----------------------------------------------------------------//
@@ -697,7 +684,6 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 	//----------------------------------------------------------------//
 	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUUpdate ( JNIEnv* env, jclass obj ) {
 
-		//AJV move events to main queue
 		InputEvent ievent;
 		while ( g_InputQueue->PopMessage ( ievent )) {
 			switch ( ievent.m_type ) {
