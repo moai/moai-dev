@@ -541,7 +541,7 @@ void MOAILayer::Draw ( int subPrimID, bool reload ) {
 		u32 totalResults = 0;
 		
 		if ( this->mPartitionCull2D ) {
-			USRect rect = viewVolume.mAABB.GetRectXY ();
+			USRect rect = viewVolume.mAABB.GetRect ( USBox::PLANE_XY );
 			totalResults = this->mPartition->GatherProps ( buffer, 0, rect, MOAIProp::CAN_DRAW | MOAIProp::CAN_DRAW_DEBUG );
 		}
 		else {

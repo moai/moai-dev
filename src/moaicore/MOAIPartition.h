@@ -14,6 +14,10 @@
 /**	@name	MOAIPartition
 	@text	Class for optimizing spatial queries against sets of primitives.
 			Configure for performance; default behavior is a simple list.
+	
+	@const PLANE_XY
+	@const PLANE_XZ
+	@const PLANE_YZ
 */
 class MOAIPartition :
 	public virtual MOAILuaObject {
@@ -30,6 +34,8 @@ private:
 	s32					mPriorityCounter;
 	static const s32	PRIORITY_MASK = 0x7fffffff;
 
+	u32 mPlaneID; // One of USBox::PLANE_XY, USBox::PLANE_XZ, USBox::PLANE_YZ
+
 	//----------------------------------------------------------------//
 	static int		_clear						( lua_State* L );
 	static int		_insertProp					( lua_State* L );
@@ -39,6 +45,7 @@ private:
 	static int		_removeProp					( lua_State* L );
 	static int		_reserveLayers				( lua_State* L );
 	static int		_setLayer					( lua_State* L );
+	static int		_setPlane					( lua_State* L );
 
 	//----------------------------------------------------------------//
 	void			AffirmPriority			( MOAIProp& prop );
@@ -63,6 +70,7 @@ public:
 	void			RemoveProp				( MOAIProp& prop );
 	void			ReserveLayers			( int totalLayers );
 	void			SetLayer				( int layerID, float cellSize, int width, int height );
+	void			SetPlane				( u32 planeID );
 };
 
 #endif

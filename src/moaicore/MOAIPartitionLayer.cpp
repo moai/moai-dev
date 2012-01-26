@@ -86,7 +86,7 @@ void MOAIPartitionLayer::GatherProps ( MOAIPartitionResultBuffer& results, MOAIP
 
 	float halfSize = this->mCellSize * 0.5f;
 
-	USRect rect = frustum.mAABB.GetRectXY ();
+	USRect rect = frustum.mAABB.GetRect ( USBox::PLANE_XY );
 
 	MOAICellCoord coord = this->mGridSpace.GetCellCoord ( rect.mXMin - halfSize, rect.mYMax + halfSize );
 

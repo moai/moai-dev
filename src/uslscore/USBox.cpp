@@ -78,28 +78,26 @@ bool USBox::Contains ( const USVec3D& loc ) const {
 }
 
 //----------------------------------------------------------------//
-bool USBox::ContainsX ( float x ) const {
-	
-	if ( x < this->mMin.mX ) return false;
-	if ( x > this->mMax.mX ) return false;
-	
-	return true;
-}
+bool USBox::Contains ( const USVec3D& loc, u32 plane ) const {
 
-//----------------------------------------------------------------//
-bool USBox::ContainsY ( float y ) const {
-	
-	if ( y < this->mMin.mY ) return false;
-	if ( y > this->mMax.mY ) return false;
-	
-	return true;
-}
-
-//----------------------------------------------------------------//
-bool USBox::ContainsZ ( float z ) const {
-	
-	if ( z < this->mMin.mZ ) return false;
-	if ( z > this->mMax.mZ ) return false;
+	switch ( plane ) {
+		
+		default:
+		case PLANE_XY:
+			if (( loc.mX < mMin.mX ) || ( loc.mX > mMax.mX )) return false;
+			if (( loc.mY < mMin.mY ) || ( loc.mY > mMax.mY )) return false;
+			break;
+		
+		case PLANE_XZ:
+			if (( loc.mX < mMin.mX ) || ( loc.mX > mMax.mX )) return false;
+			if (( loc.mZ < mMin.mZ ) || ( loc.mZ > mMax.mZ )) return false;
+			break;
+		
+		case PLANE_YZ:
+			if (( loc.mY < mMin.mY ) || ( loc.mY > mMax.mY )) return false;
+			if (( loc.mZ < mMin.mZ ) || ( loc.mZ > mMax.mZ )) return false;
+			break;
+	}
 	
 	return true;
 }
@@ -142,43 +140,34 @@ float USBox::GetRadius () const {
 }
 
 //----------------------------------------------------------------//
-USRect USBox::GetRectXY () const {
+USRect USBox::GetRect ( u32 plane ) const {
 	
 	USRect rect;
 	
-	rect.mXMin = this->mMin.mX;
-	rect.mXMax = this->mMax.mX;
-	
-	rect.mYMin = this->mMin.mY;
-	rect.mYMax = this->mMax.mY;
-	
-	return rect;
-}
-
-//----------------------------------------------------------------//
-USRect USBox::GetRectXZ () const {
-
-	USRect rect;
-
-	rect.mXMin = this->mMin.mX;
-	rect.mXMax = this->mMax.mX;
-	
-	rect.mYMin = this->mMin.mZ;
-	rect.mYMax = this->mMax.mZ;
-	
-	return rect;
-}
-
-//----------------------------------------------------------------//
-USRect USBox::GetRectZY () const {
-
-	USRect rect;
-
-	rect.mXMin = this->mMin.mZ;
-	rect.mXMax = this->mMax.mZ;
-	
-	rect.mYMin = this->mMin.mY;
-	rect.mYMax = this->mMax.mY;
+	switch ( plane ) {
+		
+		default:
+		case PLANE_XY:
+			rect.mXMin = this->mMin.mX;
+			rect.mXMax = this->mMax.mX;
+			rect.mYMin = this->mMin.mY;
+			rect.mYMax = this->mMax.mY;
+			break;
+		
+		case PLANE_XZ:
+			rect.mXMin = this->mMin.mX;
+			rect.mXMax = this->mMax.mX;
+			rect.mYMin = this->mMin.mZ;
+			rect.mYMax = this->mMax.mZ;
+			break;
+		
+		case PLANE_YZ:
+			rect.mXMin = this->mMin.mZ;
+			rect.mXMax = this->mMax.mZ;
+			rect.mYMin = this->mMin.mY;
+			rect.mYMax = this->mMax.mY;
+			break;
+	}
 	
 	return rect;
 }
@@ -298,50 +287,34 @@ bool USBox::IsPoint () {
 //----------------------------------------------------------------//
 bool USBox::Overlap ( const USBox& box ) const {
 
-	if ( mMin.mX > box.mMax.mX ) return false;
-	if ( mMax.mX < box.mMin.mX ) return false;
-	
-	if ( mMin.mY > box.mMax.mY ) return false;
-	if ( mMax.mY < box.mMin.mY ) return false;
-	
-	if ( mMin.mZ > box.mMax.mZ ) return false;
-	if ( mMax.mZ < box.mMin.mZ ) return false;
+	if (( mMin.mX > box.mMax.mX ) || ( mMax.mX < box.mMin.mX )) return false;
+	if (( mMin.mY > box.mMax.mY ) || ( mMax.mY < box.mMin.mY )) return false;
+	if (( mMin.mZ > box.mMax.mZ ) || ( mMax.mZ < box.mMin.mZ )) return false;
 	
 	return true;
 }
 
 //----------------------------------------------------------------//
-bool USBox::OverlapXY ( const USBox& box ) const {
+bool USBox::Overlap ( const USBox& box, u32 plane ) const {
 
-	if ( mMin.mX > box.mMax.mX ) return false;
-	if ( mMax.mX < box.mMin.mX ) return false;
-	
-	if ( mMin.mY > box.mMax.mY ) return false;
-	if ( mMax.mY < box.mMin.mY ) return false;
-	
-	return true;
-}
-
-//----------------------------------------------------------------//
-bool USBox::OverlapXZ ( const USBox& box ) const {
-
-	if ( mMin.mX > box.mMax.mX ) return false;
-	if ( mMax.mX < box.mMin.mX ) return false;
-	
-	if ( mMin.mZ > box.mMax.mZ ) return false;
-	if ( mMax.mZ < box.mMin.mZ ) return false;
-	
-	return true;
-}
-
-//----------------------------------------------------------------//
-bool USBox::OverlapZY ( const USBox& box ) const {
-	
-	if ( mMin.mY > box.mMax.mY ) return false;
-	if ( mMax.mY < box.mMin.mY ) return false;
-	
-	if ( mMin.mZ > box.mMax.mZ ) return false;
-	if ( mMax.mZ < box.mMin.mZ ) return false;
+	switch ( plane ) {
+		
+		default:
+		case PLANE_XY:
+			if (( mMin.mX > box.mMax.mX ) || ( mMax.mX < box.mMin.mX )) return false;
+			if (( mMin.mY > box.mMax.mY ) || ( mMax.mY < box.mMin.mY )) return false;
+			break;
+		
+		case PLANE_XZ:
+			if (( mMin.mX > box.mMax.mX ) || ( mMax.mX < box.mMin.mX )) return false;
+			if (( mMin.mZ > box.mMax.mZ ) || ( mMax.mZ < box.mMin.mZ )) return false;
+			break;
+		
+		case PLANE_YZ:
+			if (( mMin.mY > box.mMax.mY ) || ( mMax.mY < box.mMin.mY )) return false;
+			if (( mMin.mZ > box.mMax.mZ ) || ( mMax.mZ < box.mMin.mZ )) return false;
+			break;
+	}
 	
 	return true;
 }

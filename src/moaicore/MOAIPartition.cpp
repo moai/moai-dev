@@ -247,6 +247,24 @@ int MOAIPartition::_setLayer ( lua_State* L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
+/**	@name	setPlane
+	@text	Selects the plane the partition will use. If this is different
+			from the current plane then all non-global props will be redistributed.
+	
+	@in		MOAIPartition self
+	@in		number planeID		One of MOAIPartition::PLANE_XY, MOAIPartition::PLANE_XZ, MOAIPartition::PLANE_YZ. Default value is MOAIPartition::PLANE_XY.
+	@out	nil
+*/
+int MOAIPartition::_setPlane ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIPartition, "U" )
+
+	u32 planeID	= state.GetValue < u32 >( 2, USBox::PLANE_XY );
+	self->SetPlane ( planeID );
+
+	return 0;
+}
+
 //================================================================//
 // MOAIPartition
 //================================================================//
@@ -353,7 +371,8 @@ void MOAIPartition::InsertProp ( MOAIProp& prop ) {
 
 //----------------------------------------------------------------//
 MOAIPartition::MOAIPartition () :
-	mPriorityCounter ( 0 ) {
+	mPriorityCounter ( 0 ),
+	mPlaneID ( USBox::PLANE_XY ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAILuaObject )
@@ -367,7 +386,10 @@ MOAIPartition::~MOAIPartition () {
 
 //----------------------------------------------------------------//
 void MOAIPartition::RegisterLuaClass ( MOAILuaState& state ) {
-	UNUSED ( state );
+	
+	state.SetField ( -1, "PLANE_XY",	( u32 )USBox::PLANE_XY );
+	state.SetField ( -1, "PLANE_XZ",	( u32 )USBox::PLANE_XZ );
+	state.SetField ( -1, "PLANE_YZ",	( u32 )USBox::PLANE_YZ );
 }
 
 //----------------------------------------------------------------//
@@ -382,6 +404,7 @@ void MOAIPartition::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "removeProp",					_removeProp },
 		{ "reserveLayers",				_reserveLayers },
 		{ "setLayer",					_setLayer },
+		{ "setPlane",					_setPlane },
 		{ NULL, NULL }
 	};
 	
@@ -476,11 +499,9 @@ void MOAIPartition::UpdateProp ( MOAIProp& prop, const USBox& bounds, u32 status
 	}
 }
 
+//----------------------------------------------------------------//
+void MOAIPartition::SetPlane ( u32 planeID ) {
 
-
-
-
-
-
-
+	if ( this->mPlaneID == planeID ) return;
+}
 

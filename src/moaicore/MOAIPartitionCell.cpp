@@ -53,7 +53,7 @@ void MOAIPartitionCell::GatherProps ( MOAIPartitionResultBuffer& results, const 
 		if (( mask == 0 ) || ( prop->mMask & mask )) {
 			if ( prop->mCellSize > 0.0f ) {
 				
-				bounds = prop->mBounds.GetRectXY ();
+				bounds = prop->mBounds.GetRect ( USBox::PLANE_XY );
 				
 				if ( bounds.Contains ( point )) {
 					if ( prop->Inside ( point, 0.0f )) {
@@ -82,7 +82,7 @@ void MOAIPartitionCell::GatherProps ( MOAIPartitionResultBuffer& results, const 
 		if (( mask == 0 ) || ( prop->mMask & mask )) {
 			if ( prop->mCellSize > 0.0f ) {
 				
-				bounds = prop->mBounds.GetRectXY ();
+				bounds = prop->mBounds.GetRect ( USBox::PLANE_XY );
 				
 				if ( bounds.Overlap ( rect )) {
 					results.PushProp ( *prop );

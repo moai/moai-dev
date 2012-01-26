@@ -582,7 +582,7 @@ void MOAIProp::DrawDebug ( int subPrimID ) {
 			debugLines.SetPenSpace ( MOAIDebugLines::MODEL_SPACE );
 			
 			USBox bounds = this->mDeck->GetBounds ( this->mIndex, this->mRemapper );
-			debugLines.DrawRect ( bounds.GetRectXY ());
+			debugLines.DrawRect ( bounds.GetRect ( USBox::PLANE_XY ));
 			
 			if ( this->mGrid ) {
 		
@@ -600,7 +600,7 @@ void MOAIProp::DrawDebug ( int subPrimID ) {
 	
 	if ( debugLines.Bind ( MOAIDebugLines::PROP_WORLD_BOUNDS )) {
 		debugLines.SetPenSpace ( MOAIDebugLines::WORLD_SPACE );
-		debugLines.DrawRect ( this->GetBounds ().GetRectXY ());
+		debugLines.DrawRect ( this->GetBounds ().GetRect ( USBox::PLANE_XY ));
 	}
 	
 	debugLines.SetPenColor ( 0x40ffffff );
@@ -1040,7 +1040,7 @@ void MOAIProp::SetBounds ( const USBox& bounds ) {
 	this->mBounds = bounds;
 	this->mBounds.Bless ();
 
-	USRect rect = this->mBounds.GetRectXY ();
+	USRect rect = this->mBounds.GetRect ( USBox::PLANE_XY );
 
 	float width = rect.Width ();
 	float height = rect.Height ();

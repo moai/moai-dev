@@ -44,7 +44,7 @@ bool MOAIDeck::Bind () {
 //----------------------------------------------------------------//
 bool MOAIDeck::Contains ( u32 idx, MOAIDeckRemapper* remapper, const USVec2D& vec ) {
 	
-	USRect bounds = this->GetBounds ( idx, remapper ).GetRectXY ();
+	USRect bounds = this->GetBounds ( idx, remapper ).GetRect ( USBox::PLANE_XY );
 	return bounds.Contains ( vec );
 }
 
