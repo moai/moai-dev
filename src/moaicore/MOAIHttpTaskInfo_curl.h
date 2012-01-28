@@ -27,6 +27,8 @@ private:
 	USStream*			mStream;
 
 	u32					mResponseCode;
+	
+	void*				mBody;
 
 	friend class MOAIHttpTask;
 	friend class MOAIUrlMgr;

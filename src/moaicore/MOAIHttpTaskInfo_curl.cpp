@@ -60,6 +60,11 @@ void MOAIHttpTaskInfo::Clear () {
 	
 	this->mResponseCode = 0;
 	
+	if ( this->mBody ) {
+		free ( this->mBody );
+		this->mBody = 0;
+	}
+	
 	if ( this->mEasyHandle ) {
 		curl_easy_cleanup ( this->mEasyHandle );
 		this->mEasyHandle = 0;
@@ -142,13 +147,16 @@ void MOAIHttpTaskInfo::InitForPost ( cc8* url, cc8* useragent, const void* buffe
 
 	this->Clear ();
 	
+	this->mBody = malloc ( size );
+	memcpy ( this->mBody, buffer, size );
+	
 	CURLcode result;
 	CURL* easyHandle = curl_easy_init ();
 
 	result = curl_easy_setopt ( easyHandle, CURLOPT_URL, url );
 	_printError ( result );
 	
-	result = curl_easy_setopt ( easyHandle, CURLOPT_POSTFIELDS, buffer );
+	result = curl_easy_setopt ( easyHandle, CURLOPT_POSTFIELDS, this->mBody );
 	_printError ( result );
 	
     result = curl_easy_setopt ( easyHandle, CURLOPT_POSTFIELDSIZE, ( long )size );
@@ -207,7 +215,8 @@ void MOAIHttpTaskInfo::InitForPost ( cc8* url, cc8* useragent, const void* buffe
 
 //----------------------------------------------------------------//
 MOAIHttpTaskInfo::MOAIHttpTaskInfo () :
-	mEasyHandle ( 0 ) {
+	mEasyHandle ( 0 ),
+	mBody ( 0 ) {
 	
 	this->mStream = &this->mMemStream;
 }
