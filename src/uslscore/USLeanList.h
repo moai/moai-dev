@@ -95,15 +95,6 @@ public:
 
 	//----------------------------------------------------------------//
 	void Clear () {
-	
-		Iterator iterator = this->Head ();
-		while ( iterator ) {
-			Iterator clear = iterator;
-			iterator = iterator->Next ();
-			clear->mPrev = 0;
-			clear->mNext = 0;
-			clear->mList = 0;
-		}
 		
 		this->mCount = 0;
 		this->mHead = 0;
@@ -143,6 +134,34 @@ public:
 	inline TYPE& Front () {
 		assert ( this->mHead );
 		return this->mHead->Data ();
+	}
+
+	//----------------------------------------------------------------//
+	void Join ( USLeanList < TYPE >& a, USLeanList < TYPE >& b ) {
+	
+		USLeanLink < TYPE >* headA = a.mHead;
+		USLeanLink < TYPE >* tailA = a.mTail;
+		
+		USLeanLink < TYPE >* headB = b.mHead;
+		USLeanLink < TYPE >* tailB = b.mTail;
+		
+		u32 count = a.mCount + b.mCount;
+		
+		this->Clear ();
+		a.Clear ();
+		b.Clear ();
+		
+		if ( tailA ) {
+			tailA->mNext = headB;
+		}
+		
+		if ( headB ) {
+			headB->mPrev = tailA;
+		}
+		
+		this->mHead = headA ? headA : headB;
+		this->mTail = tailB ? tailB : tailA;
+		this->mCount = count;
 	}
 
 	//----------------------------------------------------------------//

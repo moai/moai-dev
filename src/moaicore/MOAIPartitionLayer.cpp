@@ -21,6 +21,15 @@ void MOAIPartitionLayer::Clear () {
 }
 
 //----------------------------------------------------------------//
+void MOAIPartitionLayer::ExtractProps ( USLeanList < MOAIProp* >& props ) {
+
+	u32 totalCells = this->mCells.Size ();
+	for ( u32 i = 0; i < totalCells; ++i ) {
+		this->mCells [ i ].ExtractProps ( props );
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAIPartitionLayer::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignore, u32 mask ) {
 
 	u32 totalCells = this->mCells.Size ();

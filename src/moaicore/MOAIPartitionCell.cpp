@@ -16,20 +16,26 @@
 //----------------------------------------------------------------//
 void MOAIPartitionCell::Clear () {
 
-	PrimIt primIt = this->mPrims.Head ();
-	while ( primIt ) {
-		MOAIProp* prop = primIt->Data ();
-		primIt = primIt->Next ();
+	PropIt propIt = this->mProps.Head ();
+	while ( propIt ) {
+		MOAIProp* prop = propIt->Data ();
+		propIt = propIt->Next ();
 		prop->SetPartition ( 0 );
 	}
 }
 
 //----------------------------------------------------------------//
+void MOAIPartitionCell::ExtractProps ( USLeanList < MOAIProp* >& props ) {
+
+	props.Join ( props, this->mProps );
+}
+
+//----------------------------------------------------------------//
 void MOAIPartitionCell::GatherProps ( MOAIPartitionResultBuffer& results, const MOAIProp* ignore, u32 mask ) {
 	
-	PrimIt primIt = this->mPrims.Head ();
-	for ( ; primIt; primIt = primIt->Next ()) {
-		MOAIProp* prop = primIt->Data ();
+	PropIt propIt = this->mProps.Head ();
+	for ( ; propIt; propIt = propIt->Next ()) {
+		MOAIProp* prop = propIt->Data ();
 		
 		if ( prop == ignore ) continue;
 		
@@ -44,9 +50,9 @@ void MOAIPartitionCell::GatherProps ( MOAIPartitionResultBuffer& results, const 
 
 	USRect bounds;
 
-	PrimIt primIt = this->mPrims.Head ();
-	for ( ; primIt; primIt = primIt->Next ()) {
-		MOAIProp* prop = primIt->Data ();
+	PropIt propIt = this->mProps.Head ();
+	for ( ; propIt; propIt = propIt->Next ()) {
+		MOAIProp* prop = propIt->Data ();
 		
 		if ( prop == ignore ) continue;
 		
@@ -73,9 +79,9 @@ void MOAIPartitionCell::GatherProps ( MOAIPartitionResultBuffer& results, const 
 
 	USRect bounds;
 
-	PrimIt primIt = this->mPrims.Head ();
-	for ( ; primIt; primIt = primIt->Next ()) {
-		MOAIProp* prop = primIt->Data ();
+	PropIt propIt = this->mProps.Head ();
+	for ( ; propIt; propIt = propIt->Next ()) {
+		MOAIProp* prop = propIt->Data ();
 		
 		if ( prop == ignore ) continue;
 		
@@ -98,9 +104,9 @@ void MOAIPartitionCell::GatherProps ( MOAIPartitionResultBuffer& results, const 
 //----------------------------------------------------------------//
 void MOAIPartitionCell::GatherProps ( MOAIPartitionResultBuffer& results, const MOAIProp* ignore, const USFrustum& frustum, u32 mask ) {
 
-	PrimIt primIt = this->mPrims.Head ();
-	for ( ; primIt; primIt = primIt->Next ()) {
-		MOAIProp* prop = primIt->Data ();
+	PropIt propIt = this->mProps.Head ();
+	for ( ; propIt; propIt = propIt->Next ()) {
+		MOAIProp* prop = propIt->Data ();
 		
 		if ( prop == ignore ) continue;
 		
@@ -126,7 +132,7 @@ void MOAIPartitionCell::InsertProp ( MOAIProp& prop ) {
 	if ( prop.mCell ) {
 		prop.mCell->RemoveProp ( prop );
 	}
-	this->mPrims.PushBack ( prop.mLinkInCell );
+	this->mProps.PushBack ( prop.mLinkInCell );
 	prop.mCell = this;
 }
 
@@ -144,7 +150,16 @@ void MOAIPartitionCell::RemoveProp ( MOAIProp& prop ) {
 
 	if ( prop.mCell != this ) return;
 	
-	this->mPrims.Remove ( prop.mLinkInCell );
+	this->mProps.Remove ( prop.mLinkInCell );
 	prop.mCell = 0;
 }
 
+//----------------------------------------------------------------//
+void MOAIPartitionCell::ScheduleProps () {
+
+	PropIt propIt = this->mProps.Head ();
+	for ( ; propIt; propIt = propIt->Next ()) {
+		MOAIProp* prop = propIt->Data ();
+		prop->ScheduleUpdate ();
+	}
+}

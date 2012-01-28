@@ -37,18 +37,20 @@ private:
 	u32 mPlaneID; // One of USBox::PLANE_XY, USBox::PLANE_XZ, USBox::PLANE_YZ
 
 	//----------------------------------------------------------------//
-	static int		_clear						( lua_State* L );
-	static int		_insertProp					( lua_State* L );
-	static int		_propForPoint				( lua_State* L );
-	static int		_propListForPoint			( lua_State* L );
-	static int		_propListForRect			( lua_State* L );
-	static int		_removeProp					( lua_State* L );
-	static int		_reserveLayers				( lua_State* L );
-	static int		_setLayer					( lua_State* L );
-	static int		_setPlane					( lua_State* L );
+	static int		_clear					( lua_State* L );
+	static int		_insertProp				( lua_State* L );
+	static int		_propForPoint			( lua_State* L );
+	static int		_propListForPoint		( lua_State* L );
+	static int		_propListForRect		( lua_State* L );
+	static int		_removeProp				( lua_State* L );
+	static int		_reserveLayers			( lua_State* L );
+	static int		_setLayer				( lua_State* L );
+	static int		_setPlane				( lua_State* L );
 
 	//----------------------------------------------------------------//
 	void			AffirmPriority			( MOAIProp& prop );
+	void			PrepareRebuild			();
+	void			Rebuild					();
 	void			UpdateProp				( MOAIProp& prop, u32 status );
 	void			UpdateProp				( MOAIProp& prop, const USBox& bounds, u32 status );
 

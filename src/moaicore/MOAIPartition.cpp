@@ -200,7 +200,8 @@ int MOAIPartition::_removeProp ( lua_State* L ) {
 //----------------------------------------------------------------//
 /**	@name	reserveLayers
 	@text	Reserves a stack of layers in the partition. Layers must be
-			initialize with setLayer ().
+			initialize with setLayer (). This will trigger a full rebuild
+			of the partition if it contains any props.
 	
 	@in		MOAIPartition self
 	@in		number nLayers
@@ -218,8 +219,9 @@ int MOAIPartition::_reserveLayers ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	setLayer
-	@text	Initializes a layer previously created by reserveLayers (). Each
-			layer is a loose grid. Props of a given size may be placed by
+	@text	Initializes a layer previously created by reserveLayers ().
+			This will trigger a full rebuild of the partition if it contains any props.
+			Each layer is a loose grid. Props of a given size may be placed by
 			the system into any layer with cells large enough to accomodate them.
 			The dimensions of a layer control how many cells the layer contains.
 			If an object goes off of the edge of a layer, it will wrap around
@@ -251,6 +253,9 @@ int MOAIPartition::_setLayer ( lua_State* L ) {
 /**	@name	setPlane
 	@text	Selects the plane the partition will use. If this is different
 			from the current plane then all non-global props will be redistributed.
+			Redistribution works by moving all props to the 'empties' cell and then
+			scheduling them all for a dep node update (which refreshes the prop's
+			bounds and may also flag it as global).
 	
 	@in		MOAIPartition self
 	@in		number planeID		One of MOAIPartition::PLANE_XY, MOAIPartition::PLANE_XZ, MOAIPartition::PLANE_YZ. Default value is MOAIPartition::PLANE_XY.
@@ -385,6 +390,24 @@ MOAIPartition::~MOAIPartition () {
 }
 
 //----------------------------------------------------------------//
+// This moves all props to the 'empties' cell
+void MOAIPartition::PrepareRebuild () {
+
+	u32 totalLayers = this->mLayers.Size ();
+	for ( u32 i = 0; i < totalLayers; ++i ) {
+		this->mLayers [ i ].ExtractProps ( this->mEmpties.mProps );
+	}
+	this->mGlobals.ExtractProps ( this->mEmpties.mProps );
+}
+
+//----------------------------------------------------------------//
+// This schedules all props in the 'empties' cell for an update
+void MOAIPartition::Rebuild () {
+
+	this->mEmpties.ScheduleProps ();
+}
+
+//----------------------------------------------------------------//
 void MOAIPartition::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	state.SetField ( -1, "PLANE_XY",	( u32 )USBox::PLANE_XY );
@@ -427,13 +450,17 @@ void MOAIPartition::RemoveProp ( MOAIProp& prop ) {
 //----------------------------------------------------------------//
 void MOAIPartition::ReserveLayers ( int totalLayers ) {
 
+	this->PrepareRebuild ();
 	this->mLayers.Init ( totalLayers );
+	this->Rebuild ();
 }
 
 //----------------------------------------------------------------//
 void MOAIPartition::SetLayer ( int layerID, float cellSize, int width, int height ) {
 
+	this->PrepareRebuild ();
 	this->mLayers [ layerID ].Init ( cellSize, width, height );
+	this->Rebuild ();
 }
 
 //----------------------------------------------------------------//
@@ -503,5 +530,7 @@ void MOAIPartition::UpdateProp ( MOAIProp& prop, const USBox& bounds, u32 status
 void MOAIPartition::SetPlane ( u32 planeID ) {
 
 	if ( this->mPlaneID == planeID ) return;
+	this->PrepareRebuild ();
+	this->mPlaneID = planeID;
+	this->Rebuild ();
 }
-
