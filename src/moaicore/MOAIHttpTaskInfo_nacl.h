@@ -3,8 +3,11 @@
 
 #ifndef MOAIHTTPTASKINFO_NACL_H
 #define MOAIHTTPTASKINFO_NACL_H
+
 #ifdef MOAI_OS_NACL
+
 #include "geturl_handler.h"
+
 //================================================================//
 // MOAIHttpTaskInfo
 //================================================================//

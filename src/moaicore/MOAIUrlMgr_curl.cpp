@@ -3,8 +3,8 @@
 
 #include "pch.h"
 
-#include <moaicore/MOAIHttpTask.h>
-#include <moaicore/MOAIHttpTaskInfo_curl.h>
+#include <moaicore/MOAIHttpTaskBase.h>
+#include <moaicore/MOAIHttpTask_curl.h>
 #include <moaicore/MOAIUrlMgr.h>
 
 //================================================================//
@@ -41,9 +41,7 @@ public:
 //----------------------------------------------------------------//
 void MOAIUrlMgr::AddHandle ( MOAIHttpTask& task ) {
 
-	if ( !task.mInfo ) return;
-
-	CURL* handle = task.mInfo->mEasyHandle;
+	CURL* handle = task.mEasyHandle;
 	if ( !handle ) return;
 	
 	task.Retain ();
@@ -88,7 +86,7 @@ void MOAIUrlMgr::Process () {
 				MOAIHttpTask* task = handleMap [ handle ];
 				handleMap.erase ( handle );
 				
-				task->Finish ();
+				task->CurlFinish ();
 				task->Release ();
 			}
 		}

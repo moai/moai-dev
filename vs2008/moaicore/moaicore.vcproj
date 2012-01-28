@@ -876,19 +876,31 @@
 			Name="web"
 			>
 			<File
-				RelativePath="..\..\src\moaicore\MOAIHttpTask.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\moaicore\MOAIHttpTask.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAIHttpTaskInfo_curl.cpp"
+				RelativePath="..\..\src\moaicore\MOAIHttpTask_curl.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAIHttpTaskInfo_curl.h"
+				RelativePath="..\..\src\moaicore\MOAIHttpTask_curl.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIHttpTaskBase.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIHttpTaskBase.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIHttpTaskInfo_nacl.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIHttpTaskInfo_nacl.h"
 				>
 			</File>
 			<File
@@ -897,6 +909,10 @@
 			</File>
 			<File
 				RelativePath="..\..\src\moaicore\MOAIUrlMgr_curl.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIUrlMgr_nacl.cpp"
 				>
 			</File>
 		</Filter>
