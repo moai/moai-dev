@@ -96,6 +96,15 @@ public:
 	//----------------------------------------------------------------//
 	void Clear () {
 		
+		Iterator iterator = this->Head ();
+		while ( iterator ) {
+			Iterator clear = iterator;
+			iterator = iterator->Next ();
+			clear->mPrev = 0;
+			clear->mNext = 0;
+			clear->mList = 0;
+		}
+		
 		this->mCount = 0;
 		this->mHead = 0;
 		this->mTail = 0;
