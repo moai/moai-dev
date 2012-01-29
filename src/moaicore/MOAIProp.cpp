@@ -834,11 +834,10 @@ void MOAIProp::LoadShader () {
 //----------------------------------------------------------------//
 MOAIProp::MOAIProp () :
 	mPartition ( 0 ),
-	mLayer ( 0 ),
 	mCell ( 0 ),
+	mLayer ( 0 ),
 	mNextResult ( 0 ),
 	mMask ( 0xffffffff ),
-	mCellSize ( 0.0f ),
 	mPriority ( UNKNOWN_PRIORITY ),
 	mIndex( 1 ),
 	mGridScale ( 1.0f, 1.0f ),
@@ -1027,28 +1026,6 @@ void MOAIProp::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) 
 }
 
 //----------------------------------------------------------------//
-void MOAIProp::SetBounds () {
-
-	this->mLayer = 0;
-	this->mCellSize = 0.0f;
-	this->mBounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f );
-}
-
-//----------------------------------------------------------------//
-void MOAIProp::SetBounds ( const USBox& bounds ) {
-
-	this->mBounds = bounds;
-	this->mBounds.Bless ();
-
-	USRect rect = this->mBounds.GetRect ( USBox::PLANE_XY );
-
-	float width = rect.Width ();
-	float height = rect.Height ();
-	
-	this->mCellSize = ( width > height ) ? width : height;
-}
-
-//----------------------------------------------------------------//
 void MOAIProp::SetPartition ( MOAIPartition* partition ) {
 
 	if ( partition != this->mPartition ) {
@@ -1064,21 +1041,22 @@ void MOAIProp::SetPartition ( MOAIPartition* partition ) {
 //----------------------------------------------------------------//
 void MOAIProp::UpdateBounds ( u32 status ) {
 
-	if ( this->mPartition ) {
-		this->mPartition->UpdateProp ( *this, status );
+	USBox bounds;
+	bounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f );
+
+	if ( status == BOUNDS_OK ) {
+		status = BOUNDS_EMPTY;
 	}
-	else {
-		this->SetBounds ();
-	}
+	this->UpdateBounds ( bounds, status );
 }
 
 //----------------------------------------------------------------//
 void MOAIProp::UpdateBounds ( const USBox& bounds, u32 status ) {
 
+	this->mBounds = bounds;
+	this->mBounds.Bless ();
+
 	if ( this->mPartition ) {
-		this->mPartition->UpdateProp ( *this, bounds, status );
-	}
-	else {
-		this->SetBounds ( bounds );
+		this->mPartition->UpdateProp ( *this, status );
 	}
 }

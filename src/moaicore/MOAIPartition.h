@@ -30,6 +30,7 @@ private:
 	USLeanArray < MOAIPartitionLayer >	mLayers;
 	MOAIPartitionCell					mEmpties;
 	MOAIPartitionCell					mGlobals;
+	MOAIPartitionCell					mBiggies;
 
 	s32					mPriorityCounter;
 	static const s32	PRIORITY_MASK = 0x7fffffff;
@@ -52,7 +53,6 @@ private:
 	void			PrepareRebuild			();
 	void			Rebuild					();
 	void			UpdateProp				( MOAIProp& prop, u32 status );
-	void			UpdateProp				( MOAIProp& prop, const USBox& bounds, u32 status );
 
 public:
 	
@@ -62,7 +62,7 @@ public:
 	void			Clear					();
 	u32				GatherProps				( MOAIPartitionResultBuffer& results, MOAIProp* ignore, u32 mask = 0xffffffff );
 	u32				GatherProps				( MOAIPartitionResultBuffer& results, MOAIProp* ignore, const USVec3D& point, u32 mask = 0xffffffff );
-	u32				GatherProps				( MOAIPartitionResultBuffer& results, MOAIProp* ignore, const USRect& rect, u32 mask = 0xffffffff );
+	u32				GatherProps				( MOAIPartitionResultBuffer& results, MOAIProp* ignore, USBox box, u32 mask = 0xffffffff );
 	u32				GatherProps				( MOAIPartitionResultBuffer& results, MOAIProp* ignore, const USFrustum& frustum, u32 mask = 0xffffffff );
 	void			InsertProp				( MOAIProp& prop );
 					MOAIPartition			();

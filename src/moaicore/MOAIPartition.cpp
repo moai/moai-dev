@@ -156,12 +156,20 @@ int MOAIPartition::_propListForPoint ( lua_State* L ) {
 */
 int MOAIPartition::_propListForRect ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIPartition, "UNNNN" )
-
-	USRect rect = state.GetRect < float >( 2 );
+	
+	USBox box;
+	
+	box.mMin.mX = state.GetValue < float >( 2, 0.0f );
+	box.mMin.mY = state.GetValue < float >( 3, 0.0f );
+	box.mMin.mZ = 0.0f;
+	
+	box.mMax.mX = state.GetValue < float >( 4, 0.0f );
+	box.mMax.mY = state.GetValue < float >( 5, 0.0f );
+	box.mMax.mZ = 0.0f;
 	
 	MOAIPartitionResultBuffer& buffer = MOAIPartitionResultMgr::Get ().GetBuffer ();
-
-	u32 total = self->GatherProps ( buffer, 0, rect );
+	
+	u32 total = self->GatherProps ( buffer, 0, box );
 	if ( total ) {
 	
 		u32 sortMode = state.GetValue < u32 >( 6, MOAIPartitionResultBuffer::SORT_NONE );
@@ -290,6 +298,7 @@ void MOAIPartition::Clear () {
 	for ( u32 i = 0; i < totalLayers; ++i ) {
 		this->mLayers [ i ].Clear ();
 	}
+	this->mBiggies.Clear ();
 	this->mGlobals.Clear ();
 	this->mEmpties.Clear ();
 }
@@ -303,6 +312,7 @@ u32 MOAIPartition::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* i
 	for ( u32 i = 0; i < totalLayers; ++i ) {
 		this->mLayers [ i ].GatherProps ( results, ignore, mask );
 	}
+	this->mBiggies.GatherProps ( results, ignore, mask );
 	this->mGlobals.GatherProps ( results, ignore, mask );
 	this->mEmpties.GatherProps ( results, ignore, mask );
 	
@@ -316,23 +326,26 @@ u32 MOAIPartition::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* i
 	
 	u32 totalLayers = this->mLayers.Size ();
 	for ( u32 i = 0; i < totalLayers; ++i ) {
-		this->mLayers [ i ].GatherProps ( results, ignore, point, mask );
+		this->mLayers [ i ].GatherProps ( results, ignore, point, this->mPlaneID, mask );
 	}
-	this->mGlobals.GatherProps ( results, ignore, point, mask );
+	this->mBiggies.GatherProps ( results, ignore, point, mask );
+	this->mGlobals.GatherProps ( results, ignore, mask );
 	
 	return results.mTotalProps;
 }
 
 //----------------------------------------------------------------//
-u32 MOAIPartition::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignore, const USRect& rect, u32 mask ) {
+u32 MOAIPartition::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignore, USBox box, u32 mask ) {
 	
 	results.Reset ();
+	box.Bless ();
 	
 	u32 totalLayers = this->mLayers.Size ();
 	for ( u32 i = 0; i < totalLayers; ++i ) {
-		this->mLayers [ i ].GatherProps ( results, ignore, rect, mask );
+		this->mLayers [ i ].GatherProps ( results, ignore, box, this->mPlaneID, mask );
 	}
-	this->mGlobals.GatherProps ( results, ignore, rect, mask );
+	this->mBiggies.GatherProps ( results, ignore, box, mask );
+	this->mGlobals.GatherProps ( results, ignore, mask );
 	
 	return results.mTotalProps;
 }
@@ -344,9 +357,10 @@ u32 MOAIPartition::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* i
 	
 	u32 totalLayers = this->mLayers.Size ();
 	for ( u32 i = 0; i < totalLayers; ++i ) {
-		this->mLayers [ i ].GatherProps ( results, ignore, frustum, mask );
+		this->mLayers [ i ].GatherProps ( results, ignore, frustum, this->mPlaneID, mask );
 	}
-	this->mGlobals.GatherProps ( results, ignore, frustum, mask );
+	this->mBiggies.GatherProps ( results, ignore, frustum, mask );
+	this->mGlobals.GatherProps ( results, ignore, mask );
 	
 	return results.mTotalProps;
 }
@@ -397,6 +411,7 @@ void MOAIPartition::PrepareRebuild () {
 	for ( u32 i = 0; i < totalLayers; ++i ) {
 		this->mLayers [ i ].ExtractProps ( this->mEmpties.mProps );
 	}
+	this->mBiggies.ExtractProps ( this->mEmpties.mProps );
 	this->mGlobals.ExtractProps ( this->mEmpties.mProps );
 }
 
@@ -466,38 +481,36 @@ void MOAIPartition::SetLayer ( int layerID, float cellSize, int width, int heigh
 //----------------------------------------------------------------//
 void MOAIPartition::UpdateProp ( MOAIProp& prop, u32 status ) {
 
-	// clear out the bounds
-	prop.SetBounds ();
+	// clear out the layer; layer will be re-calculated below
+	// also: prop.mLayer is *only* for debug drawing 
+	prop.mLayer = 0;
 
 	// status is not 'OK' so prop is either global or empty
-	if ( status == MOAIProp::BOUNDS_GLOBAL ) {
-		this->mGlobals.InsertProp ( prop );
-	}
-	else {
-		this->mEmpties.InsertProp ( prop );
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIPartition::UpdateProp ( MOAIProp& prop, const USBox& bounds, u32 status ) {
-
 	if ( status != MOAIProp::BOUNDS_OK ) {
-	
-		this->UpdateProp ( prop, status );
+		
+		if ( status == MOAIProp::BOUNDS_GLOBAL ) {
+			this->mGlobals.InsertProp ( prop );
+		}
+		else {
+			this->mEmpties.InsertProp ( prop );
+		}
 		return;
 	}
 
-	u32 layerID;
-	prop.SetBounds ( bounds );
+	USRect rect = prop.mBounds.GetRect ( this->mPlaneID );
 
-	float cellSize = prop.mCellSize;
+	float width = rect.Width ();
+	float height = rect.Height ();
+	float cellSize = ( width > height ) ? width : height;
+	
+	u32 layerID;
 	if ( cellSize > 0.0f ) {
 		
 		MOAIPartitionLayer* layer = 0;
 		
 		u32 totalLayers = this->mLayers.Size ();
 		for ( u32 i = 0; i < totalLayers; ++i ) {
-		
+			
 			MOAIPartitionLayer* testLayer = &this->mLayers [ i ];
 			
 			if ( cellSize <= testLayer->mCellSize ) {
@@ -508,20 +521,18 @@ void MOAIPartition::UpdateProp ( MOAIProp& prop, const USBox& bounds, u32 status
 			}
 		}
 		
-		prop.mLayer = layer;
-		
 		if ( layer ) {
 			// layer prop
 			layer->PlaceProp ( prop );
+			prop.mLayer = layer;
 		}
 		else {
-			// global prop - has dimension but too big to fit in any layer (or is flagged as global)
-			this->mGlobals.InsertProp ( prop );
+			// biggie prop - has dimension but too big to fit in any layer
+			this->mBiggies.InsertProp ( prop );
 		}
 	}
 	else {
 		// empty prop
-		prop.mLayer = 0;
 		this->mEmpties.InsertProp ( prop );
 	}
 }

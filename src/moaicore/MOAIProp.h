@@ -75,16 +75,17 @@ private:
 	friend class MOAIPartitionCell;
 	friend class MOAIPartitionLayer;
 
-	MOAIPartition*				mPartition;	
-	MOAIPartitionLayer*			mLayer;
+	MOAIPartition*				mPartition;
 	MOAIPartitionCell*			mCell;
+	
+	// this is only for debug draw
+	MOAIPartitionLayer*			mLayer;
 	
 	USLeanLink < MOAIProp* >	mLinkInCell;
 	MOAIProp*					mNextResult;
 
 	u32				mMask;
 	USBox			mBounds;
-	float			mCellSize;
 	s32				mPriority;
 	
 	//----------------------------------------------------------------//
@@ -109,10 +110,6 @@ private:
 	static int		_setShader			( lua_State* L );
 	static int		_setUVTransform		( lua_State* L );
 	static int		_setVisible			( lua_State* L );
-
-	//----------------------------------------------------------------//
-	void			SetBounds				();
-	void			SetBounds				( const USBox& bounds );
 
 protected:
 
