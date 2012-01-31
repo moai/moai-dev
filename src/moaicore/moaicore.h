@@ -70,6 +70,7 @@
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIMesh.h>
 #include <moaicore/MOAIMotionSensor.h>
+#include <moaicore/MOAIMultiTexture.h>
 #include <moaicore/MOAINode.h>
 #include <moaicore/MOAINodeMgr.h>
 #include <moaicore/MOAIObject.h>

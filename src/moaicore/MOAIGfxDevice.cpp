@@ -7,6 +7,7 @@
 #include <moaicore/MOAIGfxDevice.h>
 #include <moaicore/MOAIGfxResource.h>
 #include <moaicore/MOAILogMessages.h>
+#include <moaicore/MOAIMultiTexture.h>
 #include <moaicore/MOAIShader.h>
 #include <moaicore/MOAIShaderMgr.h>
 #include <moaicore/MOAISim.h>
@@ -364,6 +365,11 @@ void MOAIGfxDevice::DetectContext () {
 		}
 	#endif
 	
+	int maxTextureUnits;
+	glGetIntegerv ( GL_MAX_TEXTURE_IMAGE_UNITS, &maxTextureUnits );
+	this->mTextureUnits.Init ( maxTextureUnits );
+	this->mTextureUnits.Fill ( 0 );
+	
 	this->RenewResources ();
 }
 
@@ -666,7 +672,7 @@ MOAIGfxDevice::MOAIGfxDevice () :
 	mPrimType ( GL_POINTS ),
 	mShader ( 0 ),
 	mSize ( 0 ),
-	mTexture ( 0 ),	
+	mActiveTextures ( 0 ),
 	mTextureMemoryUsage ( 0 ),
 	mTop ( 0 ),
 	mUVMtxInput ( UV_STAGE_MODEL ),
@@ -774,7 +780,7 @@ void MOAIGfxDevice::ResetState () {
 #if USE_OPENGLES1
 	glDisable ( GL_TEXTURE_2D );
 #endif
-	this->mTexture = 0;
+	this->mTextureUnits [ 0 ] = 0;
 	
 	// turn off blending
 	glDisable ( GL_BLEND );
@@ -1121,31 +1127,104 @@ void MOAIGfxDevice::SetSize ( u32 width, u32 height ) {
 }
 
 //----------------------------------------------------------------//
+bool MOAIGfxDevice::SetTexture () {
+	
+	if ( this->mActiveTextures ) {
+	
+		this->Flush ();
+	
+		for ( u32 i = 0; i < this->mActiveTextures; ++i ) {
+			glActiveTexture ( GL_TEXTURE0 + i );
+			glDisable ( GL_TEXTURE_2D ); // TODO: comply with #if USE_OPENGLES1
+			this->mTextureUnits [ i ] = 0;
+		}
+		this->mActiveTextures = 0;
+	}
+	return true;
+}
+
+//----------------------------------------------------------------//
 bool MOAIGfxDevice::SetTexture ( MOAITexture* texture ) {
 	
-	if ( this->mTexture == texture ) {
-		return texture ? true : false;
+	if ( !texture ) {
+		return this->SetTexture ();
+	}
+	
+	// disable any active textures beyond the first unit
+	if ( this->mActiveTextures > 1 ) {
+		this->Flush ();
+	
+		for ( u32 i = 1; i < this->mActiveTextures; ++i ) {
+			glActiveTexture ( GL_TEXTURE0 + i );
+			glDisable ( GL_TEXTURE_2D ); // TODO: comply with #if USE_OPENGLES1
+			this->mTextureUnits [ i ] = 0;
+		}
+	}
+	
+	this->mActiveTextures = 1;
+	
+	if ( this->mTextureUnits [ 0 ] == texture ) {
+		return true;
 	}
 	
 	this->Flush ();
 	
-	if ( texture ) {
-		if ( !this->mTexture ) {
-#if USE_OPENGLES1
-			glEnable ( GL_TEXTURE_2D );
-#endif
-		}
-		this->mTexture = texture;
-		return texture->Bind ();
+	glActiveTexture ( GL_TEXTURE0 );
+	
+	if ( !this->mTextureUnits [ 0 ]) {
+		glEnable ( GL_TEXTURE_2D ); // TODO: comply with #if USE_OPENGLES1
 	}
+	
+	this->mTextureUnits [ 0 ] = texture;
+	return texture->Bind ();
+}
 
-	if ( this->mTexture ) {
-#if USE_OPENGLES1
-		glDisable ( GL_TEXTURE_2D );
-#endif
-		this->mTexture = 0;
+//----------------------------------------------------------------//
+bool MOAIGfxDevice::SetTexture ( MOAIMultiTexture* multi ) {
+
+	if ( !multi ) {
+		return this->SetTexture ();
 	}
-	return false;
+	
+	u32 total = 0;
+	
+	u32 multiSize = multi->mTextures.Size ();
+	for ( u32 i = 0; i < multiSize; ++i ) {
+		if ( multi->mTextures [ i ]) {
+			++total;
+		}
+	}
+	
+	if ( total > this->mTextureUnits.Size ()) {
+		total = this->mTextureUnits.Size ();
+	}
+	
+	// disable any unused textures
+	if ( total < this->mActiveTextures ) {
+		this->Flush ();
+	
+		for ( u32 i = total; i < this->mActiveTextures; ++i ) {
+			glActiveTexture ( GL_TEXTURE0 + i );
+			glDisable ( GL_TEXTURE_2D ); // TODO: comply with #if USE_OPENGLES1
+			this->mTextureUnits [ i ] = 0;
+		}
+	}
+	
+	for ( u32 i = 0; i < total; ++i ) {
+	
+		if ( this->mTextureUnits [ i ] != multi->mTextures [ i ]) {
+			
+			this->Flush ();
+			glActiveTexture ( GL_TEXTURE0 + i );
+			
+			if ( !this->mTextureUnits [ i ]) {
+				glEnable ( GL_TEXTURE_2D ); // TODO: comply with #if USE_OPENGLES1
+			}
+			this->mTextureUnits [ i ] = multi->mTextures [ i ];
+		}
+	}
+	this->mActiveTextures = total;
+	return true;this->mActiveTextures;
 }
 
 //----------------------------------------------------------------//

@@ -524,6 +524,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\moaicore\MOAIMultiTexture.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIMultiTexture.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\moaicore\MOAIPvrHeader.h"
 				>
 			</File>

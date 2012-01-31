@@ -1,8 +1,8 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAITEXTURE2D_H
-#define	MOAITEXTURE2D_H
+#ifndef	MOAITEXTURE_H
+#define	MOAITEXTURE_H
 
 #include <moaicore/MOAIDeck.h>
 #include <moaicore/MOAIGfxResource.h>

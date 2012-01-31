@@ -11,6 +11,7 @@
 
 class MOAIFrameBuffer;
 class MOAIGfxResource;
+class MOAIMultiTexture;
 class MOAIShader;
 class MOAITexture;
 class MOAIVertexFormat;
@@ -103,7 +104,8 @@ private:
 	MOAIShader*		mShader;	
 	u32				mSize;
 	
-	MOAITexture*	mTexture;
+	USLeanArray < MOAITexture* > mTextureUnits;
+	u32				mActiveTextures;
 	size_t			mTextureMemoryUsage;
 	u32				mTop;
 	
@@ -238,7 +240,9 @@ public:
 	void					SetShader				( MOAIShader* shader = 0 );
 	void					SetShaderPreset			( u32 preset );
 	void					SetSize					( u32 width, u32 height );
-	bool					SetTexture				( MOAITexture* texture = 0 );
+	bool					SetTexture				();
+	bool					SetTexture				( MOAITexture* texture );
+	bool					SetTexture				( MOAIMultiTexture* multi );
 	
 	void					SetUVMtxMode			( u32 input, u32 output );
 	void					SetUVTransform			();
