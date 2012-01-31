@@ -47,6 +47,9 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import com.tapjoy.TapjoyConnect;
 import com.tapjoy.TapjoyVideoNotifier;
 
+// Crittercism
+import com.crittercism.app.Crittercism;
+
 // OpenGL 2.0
 import android.app.ActivityManager;
 import android.content.pm.ConfigurationInfo;
@@ -134,7 +137,7 @@ public class MoaiActivity extends Activity implements SensorEventListener, Tapjo
 
 		// set activity to use Moai view
 		setContentView ( mMoaiView );
-		
+
 		// get access to the accelerometer sensor
 		mSensorManager = ( SensorManager ) getSystemService ( Context.SENSOR_SERVICE );
 		mAccelerometer = mSensorManager.getDefaultSensor ( Sensor.TYPE_ACCELEROMETER );
@@ -427,6 +430,22 @@ public class MoaiActivity extends Activity implements SensorEventListener, Tapjo
 		Uri uri = Uri.parse ( url );
 		Intent intent = new Intent ( Intent.ACTION_VIEW, uri );
 		MoaiActivity.this.startActivity ( intent );
+	}
+	
+	//================================================================//
+	// Crittercism JNI callback methods
+	//================================================================//
+
+	//----------------------------------------------------------------//
+	public void initCrittercism ( final String appId ) {
+
+		mHandler.post ( new Runnable () {
+
+			public void run () {
+		
+				Crittercism.init ( getApplicationContext(), appId );
+			}
+		});
 	}
 	
 	//================================================================//

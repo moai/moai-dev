@@ -412,6 +412,11 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 		REGISTER_LUA_CLASS ( MOAITapjoy );
 #endif
 
+#ifndef DISABLE_CRITTERCISM
+		MOAICrittercism::Affirm ();
+		REGISTER_LUA_CLASS ( MOAICrittercism );
+#endif
+
 		// register callbacks into Java
 		mMoaiView = ( jobject ) env->NewGlobalRef ( moaiView );
 		jclass moaiViewClass = env->GetObjectClass ( mMoaiView );
