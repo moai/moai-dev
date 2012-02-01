@@ -326,7 +326,7 @@
 					XML_STATIC,
 					FT2_BUILD_LIBRARY,
 					DARWIN_NO_CARBON,
-					AKUGLUT_USE_LUAEXT,
+					GLUTHOST_USE_LUAEXT,
 				);
 				HEADER_SEARCH_PATHS = (
 					"\"../../src/\"",
@@ -355,7 +355,7 @@
 					XML_STATIC,
 					FT2_BUILD_LIBRARY,
 					DARWIN_NO_CARBON,
-					AKUGLUT_USE_LUAEXT,
+					GLUTHOST_USE_LUAEXT,
 				);
 				HEADER_SEARCH_PATHS = (
 					"\"../../src/\"",
