@@ -225,7 +225,6 @@
 		07CC7B0613DF7F0F00F2DEDE /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = /System/Library/Frameworks/IOKit.framework; sourceTree = "<absolute>"; };
 		66D9680B14047B7100017919 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = ../../../../../../../usr/lib/libz.dylib; sourceTree = "<group>"; };
 		CD2D875C13B9AD3C00AF7809 /* GlutHostMain.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GlutHostMain.cpp; path = ../../src/hosts/GlutHostMain.cpp; sourceTree = SOURCE_ROOT; };
-		CD2FDEBB13542F1400B814DF /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.3.sdk/System/Library/Frameworks/AddressBook.framework; sourceTree = DEVELOPER_DIR; };
 		CD74EA2B137807E40093EE68 /* libcrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.dylib; path = /usr/lib/libcrypto.dylib; sourceTree = "<absolute>"; };
 		CD74EA311378080E0093EE68 /* libssl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libssl.dylib; path = /usr/lib/libssl.dylib; sourceTree = "<absolute>"; };
 		CD7C736713B95413006CFA19 /* GlutHost.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GlutHost.cpp; path = ../../src/hosts/GlutHost.cpp; sourceTree = SOURCE_ROOT; };
@@ -264,8 +263,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				032410EE13565FFD000ADC60 /* OpenGL.framework in Frameworks */,
-				032410EB13565FF6000ADC60 /* GLUT.framework in Frameworks */,
 				0324CC64135643FD000ADC60 /* libSystem.dylib in Frameworks */,
 				CD74EA2C137807E40093EE68 /* libcrypto.dylib in Frameworks */,
 				CD74EA321378080E0093EE68 /* libssl.dylib in Frameworks */,
@@ -274,6 +271,8 @@
 				CD07C42813A1865200C9386C /* libmoai-osx-luaext.a in Frameworks */,
 				03EB1AE913B519B200E1A6C2 /* libmoai-osx-untz.a in Frameworks */,
 				1B70C4D61475F1BE009C6869 /* libmoai-osx-zipfs.a in Frameworks */,
+				032410EE13565FFD000ADC60 /* OpenGL.framework in Frameworks */,
+				032410EB13565FF6000ADC60 /* GLUT.framework in Frameworks */,
 				07CC7AFA13DF7E9B00F2DEDE /* CoreFoundation.framework in Frameworks */,
 				07CC7B0013DF7EF200F2DEDE /* Carbon.framework in Frameworks */,
 				07CC7B0713DF7F0F00F2DEDE /* IOKit.framework in Frameworks */,
@@ -337,13 +336,12 @@
 		CD2FDE8613542E9F00B814DF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				CDEE22E613543D8600C2E04C /* OpenGL.framework */,
-				CDEE22E413543D6600C2E04C /* GLUT.framework */,
-				CD2FDEBB13542F1400B814DF /* AddressBook.framework */,
 				CD74EA2B137807E40093EE68 /* libcrypto.dylib */,
 				CD74EA311378080E0093EE68 /* libssl.dylib */,
 				0324CC63135643FD000ADC60 /* libSystem.dylib */,
 				66D9680B14047B7100017919 /* libz.dylib */,
+				CDEE22E613543D8600C2E04C /* OpenGL.framework */,
+				CDEE22E413543D6600C2E04C /* GLUT.framework */,
 				07CC7AF913DF7E9B00F2DEDE /* CoreFoundation.framework */,
 				07CC7AFF13DF7EF200F2DEDE /* Carbon.framework */,
 				07CC7B0613DF7F0F00F2DEDE /* IOKit.framework */,
@@ -828,4 +826,3 @@
 	};
 	rootObject = 29B97313FDCFA39411CA2CEA /* Project object */;
 }
-

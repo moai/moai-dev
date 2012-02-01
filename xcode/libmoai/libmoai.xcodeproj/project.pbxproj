@@ -2929,6 +2929,8 @@
 		CDF71328141EBDEE00D650CA /* MOAIScriptDeck.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66D967F814047A2500017919 /* MOAIScriptDeck.cpp */; };
 		CDF71329141EBDEF00D650CA /* MOAIScriptDeck.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66D967F814047A2500017919 /* MOAIScriptDeck.cpp */; };
 		CDF7132E141EBE7300D650CA /* MOAIGameCenter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 07E6C62F140C490B004D1227 /* MOAIGameCenter.mm */; };
+		E952725C14D89C3300B32A28 /* MOAICrittercism.h in Headers */ = {isa = PBXBuildFile; fileRef = E952725A14D89C3300B32A28 /* MOAICrittercism.h */; };
+		E952727314D8B0E000B32A28 /* MOAICrittercism.mm in Sources */ = {isa = PBXBuildFile; fileRef = E952727214D8B0E000B32A28 /* MOAICrittercism.mm */; };
 		E9940D6814B7A217006465CC /* lfs.c in Sources */ = {isa = PBXBuildFile; fileRef = E9940D6514B7A217006465CC /* lfs.c */; };
 		E9940D6914B7A217006465CC /* lfs.c in Sources */ = {isa = PBXBuildFile; fileRef = E9940D6514B7A217006465CC /* lfs.c */; };
 		E9940D6A14B7A217006465CC /* lfs.h in Headers */ = {isa = PBXBuildFile; fileRef = E9940D6714B7A217006465CC /* lfs.h */; };
@@ -5064,6 +5066,8 @@
 		CDEFB3F613E37F3C000A9523 /* MOAIVertexFormatMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIVertexFormatMgr.h; sourceTree = "<group>"; };
 		CDF7130D141EBC5C00D650CA /* MOAIGfxResource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIGfxResource.cpp; path = ../../src/moaicore/MOAIGfxResource.cpp; sourceTree = SOURCE_ROOT; };
 		CDF7130E141EBC5C00D650CA /* MOAIGfxResource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIGfxResource.h; path = ../../src/moaicore/MOAIGfxResource.h; sourceTree = SOURCE_ROOT; };
+		E952725A14D89C3300B32A28 /* MOAICrittercism.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAICrittercism.h; path = "moaiext-iphone/MOAICrittercism.h"; sourceTree = "<group>"; };
+		E952727214D8B0E000B32A28 /* MOAICrittercism.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAICrittercism.mm; path = "moaiext-iphone/MOAICrittercism.mm"; sourceTree = "<group>"; };
 		E9940D6514B7A217006465CC /* lfs.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lfs.c; sourceTree = "<group>"; };
 		E9940D6714B7A217006465CC /* lfs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lfs.h; sourceTree = "<group>"; };
 		E9940D6C14B7A414006465CC /* MOAICoroutine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAICoroutine.cpp; sourceTree = "<group>"; };
@@ -7208,6 +7212,8 @@
 				CD1D0BA313599FD200802A3C /* AKU-iphone.mm */,
 				CDD06EC81398BA6200AB0420 /* MOAIApp.h */,
 				CDD06EC91398BA6200AB0420 /* MOAIApp.mm */,
+				E952725A14D89C3300B32A28 /* MOAICrittercism.h */,
+				E952727214D8B0E000B32A28 /* MOAICrittercism.mm */,
 				07E6C62E140C490B004D1227 /* MOAIGameCenter.h */,
 				07E6C62F140C490B004D1227 /* MOAIGameCenter.mm */,
 				0780B1D514463B71006626CF /* MOAITapjoy.h */,
@@ -9784,6 +9790,7 @@
 				E9940E4014B7A4A0006465CC /* USTrig.h in Headers */,
 				E9940E4414B7A4A0006465CC /* USTypedPtr.h in Headers */,
 				E9940E4814B7A4A0006465CC /* USXmlReader.h in Headers */,
+				E952725C14D89C3300B32A28 /* MOAICrittercism.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11868,6 +11875,7 @@
 				E9940E3E14B7A4A0006465CC /* USTrig.cpp in Sources */,
 				E9940E4214B7A4A0006465CC /* USTypedPtr.cpp in Sources */,
 				E9940E4614B7A4A0006465CC /* USXmlReader.cpp in Sources */,
+				E952727314D8B0E000B32A28 /* MOAICrittercism.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12177,6 +12185,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../3rdparty/chipmunk-5.3.4/msvc/glut/lib\"",
@@ -12226,6 +12235,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../3rdparty/chipmunk-5.3.4/msvc/glut/lib\"",
@@ -12247,6 +12257,7 @@
 					"${inherited}",
 					MACOSX,
 				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx";
 				SDKROOT = "";
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
@@ -12261,6 +12272,7 @@
 					"${inherited}",
 					MACOSX,
 				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx";
 				SDKROOT = "";
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
@@ -12296,6 +12308,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios-3rdparty";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv6 armv7";
@@ -12332,6 +12345,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios-3rdparty";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv6 armv7";
@@ -12424,22 +12438,8 @@
 					"\"../../3rdparty/libvorbis-1.3.2/include\"",
 					"\"../../3rdparty/tlsf-2.0\"",
 					"\"../../3rdparty/zlib-1.2.3\"",
-					"\"../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect/Components/TJCAds\"",
-					"\"../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect/Components/TJCCore\"",
-					"\"../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect/Components/TJCCore/Utilities\"",
-					"\"../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect/Components/TJCCore/Views\"",
-					"\"../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect/Components/TJCCore/WebFetcher\"",
-					"\"../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect/Components/TJCFeaturedApp\"",
-					"\"../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect/Components/TJCOffers\"",
-					"\"../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect/Components/TJCUserAccount\"",
-					"\"../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect/Components/TJCVideoAds\"",
-					"\"../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect/Components/TJCVirtualGoods\"",
-					"\"../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect/Components/TJCVirtualGoods/TJCVG_FileDownloading\"",
-					"\"../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect/Components/TJCVirtualGoods/TJCVG_LocalDatabase\"",
-					"\"../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect/Components/TJCVirtualGoods/TJCVG_Resources\"",
-					"\"../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect/Components/TJCVirtualGoods/TJCVG_Views\"",
-					"\"../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect/Components/TJCVirtualGoods/TJCVG_ZipArchive\"",
-					"\"../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect\"",
+					"\"../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect\"/**",
+					"\"../../3rdparty/crittercismiOS-2.9.36/CrittercismSDK\"/**",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = (
@@ -12462,6 +12462,7 @@
 					armv6,
 					"$(ARCHS_STANDARD_32_BIT)",
 				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv6 armv7";
@@ -12476,6 +12477,7 @@
 					armv6,
 					"$(ARCHS_STANDARD_32_BIT)",
 				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv6 armv7";
@@ -12511,6 +12513,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios-tapjoy";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv6 armv7";
@@ -12547,6 +12550,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios-tapjoy";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv6 armv7";
@@ -12644,22 +12648,8 @@
 					"\"../../3rdparty/libvorbis-1.3.2/include\"",
 					"\"../../3rdparty/tlsf-2.0\"",
 					"\"../../3rdparty/zlib-1.2.3\"",
-					"\"../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect/Components/TJCAds\"",
-					"\"../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect/Components/TJCCore\"",
-					"\"../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect/Components/TJCCore/Utilities\"",
-					"\"../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect/Components/TJCCore/Views\"",
-					"\"../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect/Components/TJCCore/WebFetcher\"",
-					"\"../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect/Components/TJCFeaturedApp\"",
-					"\"../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect/Components/TJCOffers\"",
-					"\"../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect/Components/TJCUserAccount\"",
-					"\"../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect/Components/TJCVideoAds\"",
-					"\"../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect/Components/TJCVirtualGoods\"",
-					"\"../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect/Components/TJCVirtualGoods/TJCVG_FileDownloading\"",
-					"\"../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect/Components/TJCVirtualGoods/TJCVG_LocalDatabase\"",
-					"\"../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect/Components/TJCVirtualGoods/TJCVG_Resources\"",
-					"\"../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect/Components/TJCVirtualGoods/TJCVG_Views\"",
-					"\"../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect/Components/TJCVirtualGoods/TJCVG_ZipArchive\"",
-					"\"../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect\"",
+					"\"../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect\"/**",
+					"\"../../3rdparty/crittercismiOS-2.9.36/CrittercismSDK\"/**",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = (
@@ -12682,6 +12672,7 @@
 					armv6,
 					"$(ARCHS_STANDARD_32_BIT)",
 				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-ios-zipfs";
 				SDKROOT = iphoneos;
@@ -12698,6 +12689,7 @@
 					armv6,
 					"$(ARCHS_STANDARD_32_BIT)",
 				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-ios-zipfs";
 				SDKROOT = iphoneos;
@@ -12714,6 +12706,7 @@
 					"${inherited}",
 					MACOSX,
 				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-osx-zipfs";
 				SDKROOT = "";
@@ -12730,6 +12723,7 @@
 					"${inherited}",
 					MACOSX,
 				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-osx-zipfs";
 				SDKROOT = "";
@@ -12767,6 +12761,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios-untz";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv6 armv7";
@@ -12803,6 +12798,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios-untz";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv6 armv7";
@@ -12839,6 +12835,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx-untz";
 				SDKROOT = "";
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
@@ -12875,6 +12872,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx-untz";
 				SDKROOT = "";
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
@@ -12911,6 +12909,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios-luaext";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv6 armv7";
@@ -12947,6 +12946,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios-luaext";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv6 armv7";
@@ -12983,6 +12983,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx-luaext";
 				SDKROOT = "";
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
@@ -13019,6 +13020,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx-luaext";
 				SDKROOT = "";
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
@@ -13111,22 +13113,8 @@
 					"\"../../3rdparty/libvorbis-1.3.2/include\"",
 					"\"../../3rdparty/tlsf-2.0\"",
 					"\"../../3rdparty/zlib-1.2.3\"",
-					"\"../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect/Components/TJCAds\"",
-					"\"../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect/Components/TJCCore\"",
-					"\"../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect/Components/TJCCore/Utilities\"",
-					"\"../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect/Components/TJCCore/Views\"",
-					"\"../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect/Components/TJCCore/WebFetcher\"",
-					"\"../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect/Components/TJCFeaturedApp\"",
-					"\"../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect/Components/TJCOffers\"",
-					"\"../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect/Components/TJCUserAccount\"",
-					"\"../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect/Components/TJCVideoAds\"",
-					"\"../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect/Components/TJCVirtualGoods\"",
-					"\"../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect/Components/TJCVirtualGoods/TJCVG_FileDownloading\"",
-					"\"../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect/Components/TJCVirtualGoods/TJCVG_LocalDatabase\"",
-					"\"../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect/Components/TJCVirtualGoods/TJCVG_Resources\"",
-					"\"../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect/Components/TJCVirtualGoods/TJCVG_Views\"",
-					"\"../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect/Components/TJCVirtualGoods/TJCVG_ZipArchive\"",
-					"\"../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect\"",
+					"\"../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect\"/**",
+					"\"../../3rdparty/crittercismiOS-2.9.36/CrittercismSDK\"/**",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = (
@@ -13149,6 +13137,7 @@
 					armv6,
 					"$(ARCHS_STANDARD_32_BIT)",
 				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv6 armv7";
@@ -13184,6 +13173,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios-3rdparty";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv6 armv7";
@@ -13220,6 +13210,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios-luaext";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv6 armv7";
@@ -13256,6 +13247,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios-tapjoy";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv6 armv7";
@@ -13292,6 +13284,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios-untz";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "i386 armv6 armv7";
@@ -13307,6 +13300,7 @@
 					armv6,
 					"$(ARCHS_STANDARD_32_BIT)",
 				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-ios-zipfs";
 				SDKROOT = iphoneos;
@@ -13323,6 +13317,7 @@
 					"${inherited}",
 					MACOSX,
 				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx";
 				SDKROOT = "";
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
@@ -13365,6 +13360,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../3rdparty/chipmunk-5.3.4/msvc/glut/lib\"",
@@ -13407,6 +13403,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx-luaext";
 				SDKROOT = "";
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
@@ -13443,6 +13440,7 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx-untz";
 				SDKROOT = "";
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
@@ -13458,6 +13456,7 @@
 					"${inherited}",
 					MACOSX,
 				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-osx-zipfs";
 				SDKROOT = "";
