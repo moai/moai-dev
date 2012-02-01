@@ -84,12 +84,48 @@ u32 USStream::Print ( cc8* format, ... ) {
 //----------------------------------------------------------------//
 u32 USStream::Print ( cc8* format, va_list args ) {
 
-	char buffer [ 1024 ];
-	int size = vsprintf ( buffer, format, args );
-	if ( size > 0 ) {
-		this->WriteBytes ( buffer, ( u32 )size );
+	static const u32 BUFFER_SIZE = 1024;
+	char stackBuffer [ BUFFER_SIZE ];
+	char* buffer = stackBuffer;
+	int buffSize = BUFFER_SIZE;
+	
+	int result;
+	
+	for ( ;; ) {
+	
+		result = vsnprintf ( buffer, buffSize, format, args );
+
+		// thanks to http://perfec.to/vsnprintf/ for a discussion of vsnprintf portability issues
+		if (( result == buffSize ) || ( result == -1 ) || ( result == buffSize - 1 ))  {
+			buffSize = buffSize << 1;
+		}
+		else if ( result > buffSize ) {
+			buffSize = result;
+		}
+		else {
+			break;
+		}
+		
+		if ( buffer == stackBuffer ) {
+			buffer = 0;
+		}
+		
+		if ( buffer ) {
+			buffer = ( char* )realloc ( buffer, buffSize );
+		}
+		else {
+			buffer = ( char* )malloc ( buffSize );
+		}
 	}
-	return ( u32 )size;
+	
+	if ( result > 0 ) {
+		this->WriteBytes ( buffer, ( u32 )result );
+	}
+	
+	if ( buffer != stackBuffer ) {
+		free ( buffer );
+	}
+	return ( u32 )result;
 }
 
 //----------------------------------------------------------------//
