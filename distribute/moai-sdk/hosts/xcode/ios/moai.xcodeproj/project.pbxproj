@@ -134,7 +134,7 @@
 		E9AA1E3114D8CFA50086E9DE /* libmoai-ios-untz.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E9AA1E2B14D8CFA50086E9DE /* libmoai-ios-untz.a */; };
 		E9AA1E3214D8CFA50086E9DE /* libmoai-ios-zipfs.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E9AA1E2C14D8CFA50086E9DE /* libmoai-ios-zipfs.a */; };
 		E9AA1E3314D8CFA50086E9DE /* libmoai-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E9AA1E2D14D8CFA50086E9DE /* libmoai-ios.a */; };
-		E9AA1E3514D8CFB80086E9DE /* Crittercism_v2_9_36.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E9AA1E3414D8CFB80086E9DE /* Crittercism_v2_9_36.a */; };
+		E9AA205614D9D31A0086E9DE /* Crittercism_v2_9_37.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E9AA205514D9D3190086E9DE /* Crittercism_v2_9_37.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -277,7 +277,7 @@
 		E9AA1E2B14D8CFA50086E9DE /* libmoai-ios-untz.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-ios-untz.a"; path = "../../../bin/ios/universal/libmoai-ios-untz.a"; sourceTree = "<group>"; };
 		E9AA1E2C14D8CFA50086E9DE /* libmoai-ios-zipfs.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-ios-zipfs.a"; path = "../../../bin/ios/universal/libmoai-ios-zipfs.a"; sourceTree = "<group>"; };
 		E9AA1E2D14D8CFA50086E9DE /* libmoai-ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-ios.a"; path = "../../../bin/ios/universal/libmoai-ios.a"; sourceTree = "<group>"; };
-		E9AA1E3414D8CFB80086E9DE /* Crittercism_v2_9_36.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = Crittercism_v2_9_36.a; path = Libraries/Crittercism/Crittercism_v2_9_36.a; sourceTree = "<group>"; };
+		E9AA205514D9D3190086E9DE /* Crittercism_v2_9_37.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = Crittercism_v2_9_37.a; path = Libraries/Crittercism/Crittercism_v2_9_37.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -285,7 +285,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E9AA1E3514D8CFB80086E9DE /* Crittercism_v2_9_36.a in Frameworks */,
+				E9AA205614D9D31A0086E9DE /* Crittercism_v2_9_37.a in Frameworks */,
 				E9AA1E2E14D8CFA50086E9DE /* libmoai-ios-3rdparty.a in Frameworks */,
 				E9AA1E2F14D8CFA50086E9DE /* libmoai-ios-luaext.a in Frameworks */,
 				E9AA1E3014D8CFA50086E9DE /* libmoai-ios-tapjoy.a in Frameworks */,
@@ -419,7 +419,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				E9AA1E3414D8CFB80086E9DE /* Crittercism_v2_9_36.a */,
+				E9AA205514D9D3190086E9DE /* Crittercism_v2_9_37.a */,
 				E9AA1E2814D8CFA50086E9DE /* libmoai-ios-3rdparty.a */,
 				E9AA1E2914D8CFA50086E9DE /* libmoai-ios-luaext.a */,
 				E9AA1E2A14D8CFA50086E9DE /* libmoai-ios-tapjoy.a */,

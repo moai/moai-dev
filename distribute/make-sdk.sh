@@ -106,9 +106,9 @@ for file in `find ../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect/ -name "*.png"` ; do
 for file in `find ../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect/ -name "*.sql"` ; do cp $file moai-sdk/hosts/xcode/ios/Libraries/TapjoyConnect ; done
 
 mkdir -p moai-sdk/hosts/xcode/ios/Libraries/Crittercism
-for file in `find ../3rdparty/crittercismiOS-2.9.36/CrittercismSDK/ -name "*.xib"` ; do cp $file moai-sdk/hosts/xcode/ios/Libraries/Crittercism ; done
-for file in `find ../3rdparty/crittercismiOS-2.9.36/CrittercismSDK/ -name "*.png"` ; do cp $file moai-sdk/hosts/xcode/ios/Libraries/Crittercism ; done
-for file in `find ../3rdparty/crittercismiOS-2.9.36/CrittercismSDK/ -name "*.a"` ; do cp $file moai-sdk/hosts/xcode/ios/Libraries/Crittercism ; done
+for file in `find ../3rdparty/crittercismiOS-2.9.37/CrittercismSDK/ -name "*.xib"` ; do cp $file moai-sdk/hosts/xcode/ios/Libraries/Crittercism ; done
+for file in `find ../3rdparty/crittercismiOS-2.9.37/CrittercismSDK/ -name "*.png"` ; do cp $file moai-sdk/hosts/xcode/ios/Libraries/Crittercism ; done
+for file in `find ../3rdparty/crittercismiOS-2.9.37/CrittercismSDK/ -name "*.a"` ; do cp $file moai-sdk/hosts/xcode/ios/Libraries/Crittercism ; done
 
 cp ../version.txt moai-sdk/version.txt
 

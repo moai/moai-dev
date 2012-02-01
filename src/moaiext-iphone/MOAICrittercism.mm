@@ -31,10 +31,9 @@ int MOAICrittercism::_init ( lua_State* L ) {
 		
 	[ Crittercism initWithAppID: ID andKey: key andSecret: secret andMainViewController: rootVC ];
 
-	// Releasing these strings causes Crittercism to crash. 
-	// [ ID relase ];
-	// [ key relase ];
-	// [ secret relase ];
+	[ ID release ];
+	[ key release ];
+	[ secret release ];
 		
 	return 0;
 }

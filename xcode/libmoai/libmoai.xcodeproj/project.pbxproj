@@ -12439,7 +12439,7 @@
 					"\"../../3rdparty/tlsf-2.0\"",
 					"\"../../3rdparty/zlib-1.2.3\"",
 					"\"../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect\"/**",
-					"\"../../3rdparty/crittercismiOS-2.9.36/CrittercismSDK\"/**",
+					"\"../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK\"/**",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = (
@@ -12649,7 +12649,7 @@
 					"\"../../3rdparty/tlsf-2.0\"",
 					"\"../../3rdparty/zlib-1.2.3\"",
 					"\"../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect\"/**",
-					"\"../../3rdparty/crittercismiOS-2.9.36/CrittercismSDK\"/**",
+					"\"../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK\"/**",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = (
@@ -13114,7 +13114,7 @@
 					"\"../../3rdparty/tlsf-2.0\"",
 					"\"../../3rdparty/zlib-1.2.3\"",
 					"\"../../3rdparty/tapjoyiOS-8.1.5/TapjoyConnect\"/**",
-					"\"../../3rdparty/crittercismiOS-2.9.36/CrittercismSDK\"/**",
+					"\"../../3rdparty/crittercismiOS-2.9.37/CrittercismSDK\"/**",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = (

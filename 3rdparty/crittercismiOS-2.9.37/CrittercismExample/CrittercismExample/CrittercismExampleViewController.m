@@ -22,7 +22,7 @@
     [[Crittercism sharedInstance] addVote];    
 }
 -(IBAction) crashHit:(id) sender {
-    [NSException raise:@"crash test" format:@"in library 2.9.35"];
+    [NSException raise:@"crash test" format:@"in library 2.9.37"];
 }
 
 -(IBAction) viewDataHit:(id) sender {
