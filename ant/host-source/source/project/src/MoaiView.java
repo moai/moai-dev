@@ -169,10 +169,12 @@ public class MoaiView extends GLSurfaceView {
 	
 		if ( paused ) {
 			AKUPause ( true );
+			onPause ();
 			setRenderMode ( GLSurfaceView.RENDERMODE_WHEN_DIRTY );
 		}
 		else {
 			setRenderMode ( GLSurfaceView.RENDERMODE_CONTINUOUSLY );
+			onResume ();
 			AKUPause ( false );
 		}
 	}

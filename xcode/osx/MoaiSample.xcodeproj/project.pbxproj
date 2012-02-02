@@ -241,9 +241,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1B70C4D91475F1D9009C6869 /* libmoai-osx-zipfs.a in Frameworks */,
-				0300CF5D140DC53C00ABCC5B /* OpenGL.framework in Frameworks */,
-				0300CF5E140DC53C00ABCC5B /* GLUT.framework in Frameworks */,
 				0300CF5F140DC53C00ABCC5B /* libSystem.dylib in Frameworks */,
 				0300CF60140DC53C00ABCC5B /* libcrypto.dylib in Frameworks */,
 				0300CF61140DC53C00ABCC5B /* libssl.dylib in Frameworks */,
@@ -251,6 +248,9 @@
 				0300CF63140DC53C00ABCC5B /* libmoai-osx-3rdparty.a in Frameworks */,
 				0300CF64140DC53C00ABCC5B /* libmoai-osx-luaext.a in Frameworks */,
 				0300CF65140DC53C00ABCC5B /* libmoai-osx-untz.a in Frameworks */,
+				1B70C4D91475F1D9009C6869 /* libmoai-osx-zipfs.a in Frameworks */,
+				0300CF5D140DC53C00ABCC5B /* OpenGL.framework in Frameworks */,
+				0300CF5E140DC53C00ABCC5B /* GLUT.framework in Frameworks */,
 				0300CF66140DC53C00ABCC5B /* CoreFoundation.framework in Frameworks */,
 				0300CF67140DC53C00ABCC5B /* Carbon.framework in Frameworks */,
 				0300CF68140DC53C00ABCC5B /* IOKit.framework in Frameworks */,
@@ -603,6 +603,10 @@
 		0300CF6C140DC53C00ABCC5B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(DEVELOPER_DIR)/SDKs/MacOSX10.6.sdk/System/Library/Frameworks\"",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -627,7 +631,10 @@
 		0300CF6D140DC53C00ABCC5B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(DEVELOPER_DIR)/SDKs/MacOSX10.6.sdk/System/Library/Frameworks\"",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
