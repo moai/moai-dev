@@ -81,30 +81,32 @@ struct InputEvent {
 		INPUTEVENT_TOUCH,
 	};
 
-	int m_type;
-	int m_deviceId;
-	int m_sensorId;
+	int 	m_type;
+	int 	m_deviceId;
+	int 	m_sensorId;
 
-	float m_x;
-	float m_y;
-	float m_z;
-
-
-	//compass
-	int m_heading;
-
-	//touch
-	int m_touchId;
-	bool m_down;
-	int m_tapCount;
+	// touch, level
+	float 	m_x;
+	float 	m_y;
 	
-	//location
-	double m_longitude;
-	double m_latitude;
-	double m_altitude;
-	float m_hAccuracy;
-	float m_vAccuracy;
-	float m_speed;
+	// level
+	float 	m_z;
+
+	// compass
+	int 	m_heading;
+
+	// touch
+	int  	m_touchId;
+	bool 	m_down;
+	int  	m_tapCount;
+	
+	// location
+	double 	m_longitude;
+	double 	m_latitude;
+	double 	m_altitude;
+	float  	m_hAccuracy;
+	float  	m_vAccuracy;
+	float  	m_speed;
 };
 
 LockingQueue<InputEvent> *g_InputQueue = NULL;
@@ -357,11 +359,6 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 	}
 
 	//----------------------------------------------------------------//
-	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiActivity_AKUFinalize	( JNIEnv* env, jclass obj ) {
-		AKUFinalize ();
-	}
-
-	//----------------------------------------------------------------//
 	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUEnqueueTouchEvent ( JNIEnv* env, jclass obj, jint deviceId, jint sensorId, jint touchId, jboolean down, jint x, jint y, jint tapCount ) {
 		InputEvent ievent;
 
@@ -378,6 +375,11 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 
 		g_InputQueue->Push ( ievent );
 		//AKUEnqueueTouchEvent ( deviceId, sensorId, touchId, down, x, y, tapCount );
+	}
+
+	//----------------------------------------------------------------//
+	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiActivity_AKUFinalize	( JNIEnv* env, jclass obj ) {
+		AKUFinalize ();
 	}
 
 	//----------------------------------------------------------------//
