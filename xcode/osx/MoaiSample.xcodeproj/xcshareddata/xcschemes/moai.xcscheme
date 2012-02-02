@@ -13,7 +13,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "CDEE23131354502100C2E04C"
+               BlueprintIdentifier = "0300CF4F140DC53C00ABCC5B"
                BuildableName = "moai"
                BlueprintName = "moai"
                ReferencedContainer = "container:MoaiSample.xcodeproj">
@@ -31,7 +31,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "CDEE23131354502100C2E04C"
+            BlueprintIdentifier = "0300CF4F140DC53C00ABCC5B"
             BuildableName = "moai"
             BlueprintName = "moai"
             ReferencedContainer = "container:MoaiSample.xcodeproj">
@@ -49,7 +49,7 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "CDEE23131354502100C2E04C"
+            BlueprintIdentifier = "0300CF4F140DC53C00ABCC5B"
             BuildableName = "moai"
             BlueprintName = "moai"
             ReferencedContainer = "container:MoaiSample.xcodeproj">
@@ -67,7 +67,7 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "CDEE23131354502100C2E04C"
+            BlueprintIdentifier = "0300CF4F140DC53C00ABCC5B"
             BuildableName = "moai"
             BlueprintName = "moai"
             ReferencedContainer = "container:MoaiSample.xcodeproj">
