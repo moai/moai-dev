@@ -8,6 +8,7 @@
 #include <moaicore/MOAIGfxDevice.h>
 #include <moaicore/MOAIGrid.h>
 #include <moaicore/MOAILogMessages.h>
+#include <moaicore/MOAIShader.h>
 #include <moaicore/MOAIShaderMgr.h>
 #include <moaicore/MOAISurfaceSampler2D.h>
 #include <moaicore/MOAITransform.h>
@@ -74,20 +75,12 @@ int MOAIScriptDeck::_setRectCallback ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIScriptDeck::Bind () {
-
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-	
-	gfxDevice.SetTexture ();
-	gfxDevice.SetVertexPreset ( MOAIVertexFormatMgr::XYZWC );
-
-	return true;
-}
-
-//----------------------------------------------------------------//
 void MOAIScriptDeck::DrawPatch ( u32 idx, float xOff, float yOff, float xScale, float yScale ) {
 	
 	if ( this->mOnDraw ) {
+	
+		MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+		gfxDevice.SetVertexPreset ( MOAIVertexFormatMgr::XYZWC );
 	
 		MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 		this->PushLocal ( state, this->mOnDraw );
@@ -127,14 +120,9 @@ USRect MOAIScriptDeck::GetRect ( u32 idx, MOAIDeckRemapper* remapper ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIScriptDeck::LoadShader () {
+MOAIGfxState* MOAIScriptDeck::GetShaderDefault () {
 
-	if ( this->mShader ) {
-		MOAIGfxDevice::Get ().SetShader ( this->mShader );
-	}
-	else {
-		MOAIShaderMgr::Get ().BindShader ( MOAIShaderMgr::LINE_SHADER );
-	}
+	return &MOAIShaderMgr::Get ().GetShader ( MOAIShaderMgr::LINE_SHADER );
 }
 
 //----------------------------------------------------------------//

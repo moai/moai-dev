@@ -324,8 +324,8 @@ void MOAIParticleSystem::Draw ( int subPrimID, bool reload ) {
 	UNUSED ( subPrimID );
 	UNUSED ( reload );
 
-	if ( !this->BindDeck ()) return;
-	this->LoadShader ();
+	if ( !this->mDeck ) return;
+	this->LoadGfxState ();
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 
@@ -343,7 +343,7 @@ void MOAIParticleSystem::Draw ( int subPrimID, bool reload ) {
 	for ( u32 i = 0; i < total; ++i ) {
 		
 		u32 idx = ( base + i ) % maxSprites;
-	
+		
 		AKUParticleSprite& sprite = this->mSprites [ idx ];
 		gfxDevice.SetPenColor ( sprite.mRed, sprite.mGreen, sprite.mBlue, sprite.mAlpha );
 		

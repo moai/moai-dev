@@ -22,19 +22,16 @@ class MOAITileDeck2D :
 private:
 	
 	USRect mRect;
-	MOAILuaSharedPtr < MOAITexture > mTexture;
 	
 	//----------------------------------------------------------------//
 	static int		_setRect				( lua_State* L );
 	static int		_setSize				( lua_State* L );
-	static int		_setTexture				( lua_State* L );
 	
 public:
 	
 	DECL_LUA_FACTORY ( MOAITileDeck2D )
 	
 	//----------------------------------------------------------------//
-	bool			Bind					();
 	void			DrawPatch				( u32 idx, float xOff, float yOff, float xScale, float yScale );
 	USRect			GetRect					( u32 idx, MOAIDeckRemapper* remapper );
 					MOAITileDeck2D			();

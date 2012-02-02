@@ -134,6 +134,7 @@ public:
 	void			DeleteShaders			();
 	void			DeclareUniform			( u32 idx, cc8* name, u32 type );
 	bool			IsValid					();
+	bool			LoadGfxState			();
 					MOAIShader				();
 					~MOAIShader				();
 	void			RegisterLuaClass		( MOAILuaState& state );

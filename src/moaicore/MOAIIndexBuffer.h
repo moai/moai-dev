@@ -45,6 +45,7 @@ public:
 	GET ( u32, IndexCount, mIndexCount )
 	
 	//----------------------------------------------------------------//
+	bool		LoadGfxState			();
 				MOAIIndexBuffer			();
 				~MOAIIndexBuffer		();
 	void		RegisterLuaClass		( MOAILuaState& state );

@@ -16,7 +16,8 @@ class MOAITexture;
 	@text	Attay of textures for multi-texturing.
 */
 class MOAIMultiTexture :
-	public virtual MOAILuaObject {
+	public virtual MOAILuaObject,
+	public MOAIGfxState {
 private:
 
 	friend class MOAIGfxDevice;
@@ -35,6 +36,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIMultiTexture )
 	
 	//----------------------------------------------------------------//
+	bool			LoadGfxState			();
 					MOAIMultiTexture		();
 					~MOAIMultiTexture		();
 	void			SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );

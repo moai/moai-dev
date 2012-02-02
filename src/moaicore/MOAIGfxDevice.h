@@ -11,6 +11,7 @@
 
 class MOAIFrameBuffer;
 class MOAIGfxResource;
+class MOAIGfxState;
 class MOAIMultiTexture;
 class MOAIShader;
 class MOAITexture;
@@ -180,24 +181,14 @@ public:
 	
 	u32						GetHeight				() const;
 	
-	//USMatrix4x4				GetModelToWndMtx		() const;
-	//USMatrix4x4				GetModelToWorldMtx		() const;
-	
 	USColorVec				GetPenColor				() const;
 	USRect					GetRect					() const;
 	USMatrix4x4				GetUVTransform			() const;
 	USMatrix4x4				GetVertexTransform		( u32 id ) const;
 	
 	USMatrix4x4				GetViewProjMtx			() const;
-	//USQuad					GetViewQuad				() const;
-	//USRect					GetViewRect				() const;
-	
-	u32						GetWidth				() const;
 
-	//USMatrix4x4				GetWorldToModelMtx		() const;
-	//USMatrix4x4				GetWorldToWndMtx		( float xScale = 1.0f, float yScale = 1.0f ) const;
-	//USMatrix4x4				GetWndToModelMtx		() const;
-	//USMatrix4x4				GetWndToWorldMtx		() const;
+	u32						GetWidth				() const;
 	
 	u32						LogErrors				();
 	
@@ -228,6 +219,7 @@ public:
 	
 	void					SetDeviceScale			( float scale );
 	void					SetFrameBuffer			( MOAITexture* texture );
+	bool					SetGfxState				( MOAIGfxState* gfxState );
 	void					SetPenColor				( u32 color );
 	void					SetPenColor				( const USColorVec& colorVec );
 	void					SetPenColor				( float r, float g, float b, float a );

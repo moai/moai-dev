@@ -31,7 +31,6 @@ class MOAIMesh :
 private:
 
 	MOAILuaSharedPtr < MOAIIndexBuffer >	mIndexBuffer;
-	MOAILuaSharedPtr < MOAITexture	>		mTexture;
 	MOAILuaSharedPtr < MOAIVertexBuffer >	mVertexBuffer;
 
 	u32		mPrimType;
@@ -44,7 +43,6 @@ private:
 	static int		_setPenWidth		( lua_State* L );
 	static int		_setPointSize		( lua_State* L );
 	static int		_setPrimType		( lua_State* L );
-	static int		_setTexture			( lua_State* L );
 	static int		_setVertexBuffer	( lua_State* L );
 
 public:
@@ -52,11 +50,10 @@ public:
 	DECL_LUA_FACTORY ( MOAIMesh )
 	
 	//----------------------------------------------------------------//
-	bool			Bind					();
 	void			Draw					( const USAffine3D& transform, u32 idx, MOAIDeckRemapper* remapper );
-    void            Draw					( const USAffine3D& transform, MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1 );
-    USBox			GetBounds				( u32 idx, MOAIDeckRemapper* remapper );
-	void			LoadShader				();
+	void            Draw					( const USAffine3D& transform, MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1 );
+	USBox			GetBounds				( u32 idx, MOAIDeckRemapper* remapper );
+	MOAIGfxState*	GetShaderDefault		();
 					MOAIMesh				();
 					~MOAIMesh				();
 	void			RegisterLuaClass		( MOAILuaState& state );

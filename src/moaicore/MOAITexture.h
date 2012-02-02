@@ -32,8 +32,6 @@ class MOAITexture :
 	public MOAIGfxResource {
 private:
 
-	static const u32 DEFAULT_TRANSFORM = MOAIImageTransform::TRUECOLOR | MOAIImageTransform::PREMULTIPLY_ALPHA;
-
 	// GL texture
 	GLuint				mGLTexID;
 	
@@ -90,6 +88,8 @@ private:
 
 public:
 	
+	static const u32 DEFAULT_TRANSFORM = MOAIImageTransform::TRUECOLOR | MOAIImageTransform::PREMULTIPLY_ALPHA;
+	
 	DECL_LUA_FACTORY ( MOAITexture )
 	
 	friend class MOAIGfxDevice;
@@ -97,7 +97,7 @@ public:
 	GET ( MOAIFrameBuffer*, FrameBuffer, mFrameBuffer )
 	
 	//----------------------------------------------------------------//
-	static MOAITexture*		AffirmTexture			( MOAILuaState& state, int idx );
+	static MOAIGfxState*	AffirmTexture			( MOAILuaState& state, int idx );
 	void					CreateTexture			();
 	void					DeleteTexture			();
 	u32						GetHeight				();
@@ -109,6 +109,7 @@ public:
 	void					InitFrameBuffer			( u32 width, u32 height, GLenum colorFormat, GLenum depthFormat, GLenum stencilFormat );
 	bool					IsFrameBuffer			();
 	bool					IsValid					();
+	bool					LoadGfxState			();
 							MOAITexture				();
 							~MOAITexture			();
 	void					SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );

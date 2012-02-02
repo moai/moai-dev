@@ -2,6 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <moaicore/MOAIGfxDevice.h>
 #include <moaicore/MOAIMultiTexture.h>
 #include <moaicore/MOAITexture.h>
 
@@ -38,6 +39,12 @@ int MOAIMultiTexture::_setTexture ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 void MOAIMultiTexture::Clear () {
+}
+
+//----------------------------------------------------------------//
+bool MOAIMultiTexture::LoadGfxState () {
+
+	return MOAIGfxDevice::Get ().SetTexture ( this );
 }
 
 //----------------------------------------------------------------//

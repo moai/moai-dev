@@ -10,6 +10,7 @@
 #include <moaicore/MOAIPvrHeader.h>
 #include <moaicore/MOAISim.h>
 #include <moaicore/MOAITexture.h>
+#include <moaicore/MOAIMultiTexture.h>
 
 #if MOAI_OS_NACL
 #include "moai_nacl.h"
@@ -294,40 +295,47 @@ int MOAITexture::_setWrap ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAITexture* MOAITexture::AffirmTexture ( MOAILuaState& state, int idx ) {
+MOAIGfxState* MOAITexture::AffirmTexture ( MOAILuaState& state, int idx ) {
 
-	MOAITexture* texture = state.GetLuaObject < MOAITexture >( idx );
-	if ( !texture ) {
+	MOAIGfxState* gfxState = state.GetLuaObject < MOAITexture >( idx );
+	if ( !gfxState ) {
+		
+		gfxState = state.GetLuaObject < MOAIMultiTexture >( idx );
+		
+		if ( !gfxState ) {
+			
+			u32 transform = state.GetValue < u32 >( idx + 1, MOAITexture::DEFAULT_TRANSFORM );
 
-		u32 transform = state.GetValue < u32 >( idx + 1, DEFAULT_TRANSFORM );
-
-		if ( state.IsType ( idx, LUA_TUSERDATA )) {
-			
-			texture = state.GetLuaObject < MOAITexture >( idx );
-			MOAIImage* image = state.GetLuaObject < MOAIImage >( idx );
-			
-			if ( image ) {
-				texture = new MOAITexture ();
-				texture->Init ( *image );
-			}
-			else {
-			
-				MOAIDataBuffer* data = state.GetLuaObject < MOAIDataBuffer >( idx );
+			if ( state.IsType ( idx, LUA_TUSERDATA )) {
 				
-				if ( data ) {
-					texture = new MOAITexture ();
-					texture->Init ( *data, transform );
+				MOAIImage* image = state.GetLuaObject < MOAIImage >( idx );
+				
+				if ( image ) {
+					MOAITexture* texture = new MOAITexture ();
+					texture->Init ( *image );
+					gfxState = texture;
+				}
+				else {
+				
+					MOAIDataBuffer* data = state.GetLuaObject < MOAIDataBuffer >( idx );
+					
+					if ( data ) {
+						MOAITexture* texture = new MOAITexture ();
+						texture->Init ( *data, transform );
+						gfxState = texture;
+					}
 				}
 			}
-		}
-		else if ( state.IsType ( idx, LUA_TSTRING )) {
-			
-			cc8* filename = lua_tostring ( state, idx );
-			texture = new MOAITexture ();
-			texture->Init ( filename, transform );
+			else if ( state.IsType ( idx, LUA_TSTRING )) {
+				
+				cc8* filename = lua_tostring ( state, idx );
+				MOAITexture* texture = new MOAITexture ();
+				texture->Init ( filename, transform );
+				gfxState = texture;
+			}
 		}
 	}
-	return texture;
+	return gfxState;
 }
 
 //----------------------------------------------------------------//
@@ -803,6 +811,12 @@ bool MOAITexture::IsValid () {
 		return false;
 	}
 	return ( this->mGLTexID != 0 );
+}
+
+//----------------------------------------------------------------//
+bool MOAITexture::LoadGfxState () {
+
+	return MOAIGfxDevice::Get ().SetTexture ( this );
 }
 
 //----------------------------------------------------------------//

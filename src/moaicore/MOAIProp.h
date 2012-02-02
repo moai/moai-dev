@@ -13,6 +13,7 @@
 class MOAICellCoord;
 class MOAIDeck;
 class MOAIDeckRemapper;
+class MOAIGfxState;
 class MOAIGrid;
 class MOAILayoutFrame;
 class MOAIOverlapPrim2D;
@@ -22,6 +23,7 @@ class MOAIPartitionLayer;
 class MOAIPartitionResultBuffer;
 class MOAIShader;
 class MOAISurfaceSampler2D;
+class MOAITexture;
 
 //================================================================//
 // MOAIProp
@@ -108,6 +110,7 @@ private:
 	static int		_setPriority		( lua_State* L );
 	static int		_setRemapper		( lua_State* L );
 	static int		_setShader			( lua_State* L );
+	static int		_setTexture			( lua_State* L );
 	static int		_setUVTransform		( lua_State* L );
 	static int		_setVisible			( lua_State* L );
 
@@ -121,6 +124,7 @@ protected:
 	USVec2D									mGridScale;
 	
 	MOAILuaSharedPtr < MOAIShader >			mShader;
+	MOAILuaSharedPtr < MOAIGfxState >		mTexture;
 	MOAILuaSharedPtr < MOAITransformBase >	mUVTransform;
 	
 	USBox						mFrame;
@@ -135,11 +139,10 @@ protected:
 	bool						mExpandForSort;
 
 	//----------------------------------------------------------------//
-	bool			BindDeck				();
 	virtual u32		GetDeckBounds			( USBox& bounds ); // get the deck bounds in model space
 	void			GetGridBoundsInView		( MOAICellCoord& c0, MOAICellCoord& c1 );
 	u32				GetModelBounds			( USBox& bounds ); // get the prop bounds in model space
-	void			LoadShader				();
+	void			LoadGfxState			();
 	void			UpdateBounds			( u32 status );
 	void			UpdateBounds			( const USBox& bounds, u32 status );
 

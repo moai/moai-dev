@@ -4,11 +4,14 @@
 #include "pch.h"
 #include <moaicore/MOAIDeck.h>
 #include <moaicore/MOAIGfxDevice.h>
+#include <moaicore/MOAIGfxResource.h>
 #include <moaicore/MOAIGrid.h>
 #include <moaicore/MOAILogMessages.h>
+#include <moaicore/MOAIMultiTexture.h>
 #include <moaicore/MOAIShader.h>
 #include <moaicore/MOAIShaderMgr.h>
 #include <moaicore/MOAISurfaceSampler2D.h>
+#include <moaicore/MOAITexture.h>
 #include <moaicore/MOAITransform.h>
 
 //================================================================//
@@ -31,15 +34,31 @@ int MOAIDeck::_setShader ( lua_State* L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
+/**	@name	setTexture
+	@text	Set or load a texture for this deck.
+	
+	@in		MOAIDeck self
+	@in		variant texture		A MOAITexture, MOAIMultiTexture, MOAIDataBuffer or a path to a texture file
+	@opt	number transform	Any bitwise combination of MOAITexture.QUANTIZE, MOAITexture.TRUECOLOR, MOAITexture.PREMULTIPLY_ALPHA
+	@out	MOAIGfxState texture
+*/
+int MOAIDeck::_setTexture ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIDeck, "U" )
+
+	MOAIGfxState* texture = MOAITexture::AffirmTexture ( state, 2 );
+	self->mTexture.Set ( *self, texture );
+
+	if ( texture ) {
+		self->mTexture->PushLuaUserdata ( state );
+		return 1;
+	}
+	return 0;
+}
+
 //================================================================//
 // MOAIDeck
 //================================================================//
-
-//----------------------------------------------------------------//
-bool MOAIDeck::Bind () {
-
-	return true;
-}
 
 //----------------------------------------------------------------//
 bool MOAIDeck::Contains ( u32 idx, MOAIDeckRemapper* remapper, const USVec2D& vec ) {
@@ -120,14 +139,21 @@ USBox MOAIDeck::GetBounds ( u32 idx, MOAIDeckRemapper* remapper ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIDeck::LoadShader () {
+MOAIGfxState* MOAIDeck::GetShader () {
 
-	if ( this->mShader ) {
-		MOAIGfxDevice::Get ().SetShader ( this->mShader );
-	}
-	else {
-		MOAIShaderMgr::Get ().BindShader ( MOAIShaderMgr::DECK2D_SHADER );
-	}
+	return this->mShader ? this->mShader : this->GetShaderDefault ();
+}
+
+//----------------------------------------------------------------//
+MOAIGfxState* MOAIDeck::GetShaderDefault () {
+
+	return &MOAIShaderMgr::Get ().GetShader ( MOAIShaderMgr::DECK2D_SHADER );
+}
+
+//----------------------------------------------------------------//
+MOAIGfxState* MOAIDeck::GetTexture () {
+
+	return this->mTexture;
 }
 
 //----------------------------------------------------------------//
@@ -141,6 +167,7 @@ MOAIDeck::MOAIDeck () :
 MOAIDeck::~MOAIDeck () {
 
 	this->mShader.Set ( *this, 0 );
+	this->mTexture.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//
@@ -153,6 +180,7 @@ void MOAIDeck::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "setShader",				_setShader },
+		{ "setTexture",				_setTexture },
 		{ NULL, NULL }
 	};
 

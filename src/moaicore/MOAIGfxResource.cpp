@@ -9,6 +9,20 @@
 #include <moaicore/MOAISim.h>
 
 //================================================================//
+// MOAIGfxState
+//================================================================//
+
+//----------------------------------------------------------------//
+MOAIGfxState::MOAIGfxState () {
+
+	RTTI_SINGLE ( MOAILuaObject )
+}
+
+//----------------------------------------------------------------//
+MOAIGfxState::~MOAIGfxState () {
+}
+
+//================================================================//
 // lua
 //================================================================//
 
@@ -127,7 +141,7 @@ MOAIGfxResource::MOAIGfxResource () :
 	mState ( STATE_CLEAR ),
 	mLastRenderCount ( 0 ) {
 
-	RTTI_SINGLE ( MOAILuaObject )
+	RTTI_SINGLE ( MOAIGfxState )
 
 	this->mLink.Data ( this );
 	

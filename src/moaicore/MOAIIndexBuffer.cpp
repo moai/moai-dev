@@ -77,6 +77,12 @@ bool MOAIIndexBuffer::IsValid () {
 }
 
 //----------------------------------------------------------------//
+bool MOAIIndexBuffer::LoadGfxState () {
+
+	return this->Bind ();
+}
+
+//----------------------------------------------------------------//
 MOAIIndexBuffer::MOAIIndexBuffer () :
 	mBuffer ( 0 ),
 	mIndexCount ( 0 ),

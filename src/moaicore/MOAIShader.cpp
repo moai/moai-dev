@@ -552,6 +552,14 @@ bool MOAIShader::IsValid () {
 }
 
 //----------------------------------------------------------------//
+bool MOAIShader::LoadGfxState () {
+
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	gfxDevice.SetShader ( this );
+	return true;
+}
+
+//----------------------------------------------------------------//
 MOAIShader::MOAIShader () :
 	mProgram ( 0 ),
 	mVertexShader ( 0 ),

@@ -967,6 +967,15 @@ void MOAIGfxDevice::SetFrameBuffer ( MOAITexture* texture ) {
 }
 
 //----------------------------------------------------------------//
+bool MOAIGfxDevice::SetGfxState ( MOAIGfxState* gfxState ) {
+
+	if ( gfxState ) {
+		return gfxState->LoadGfxState ();
+	}
+	return false;
+}
+
+//----------------------------------------------------------------//
 void MOAIGfxDevice::SetPenColor ( u32 color ) {
 
 	this->mPenColor.SetRGBA ( color );
@@ -1187,12 +1196,9 @@ bool MOAIGfxDevice::SetTexture ( MOAIMultiTexture* multi ) {
 	}
 	
 	u32 total = 0;
-	
 	u32 multiSize = multi->mTextures.Size ();
-	for ( u32 i = 0; i < multiSize; ++i ) {
-		if ( multi->mTextures [ i ]) {
-			++total;
-		}
+	for ( ; total < multiSize; ++total ) {
+		if ( !multi->mTextures [ total ]) break;
 	}
 	
 	if ( total > this->mTextureUnits.Size ()) {

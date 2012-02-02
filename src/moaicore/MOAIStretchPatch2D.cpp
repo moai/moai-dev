@@ -142,26 +142,6 @@ int MOAIStretchPatch2D::_setRow ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setTexture
-	@text	Set or load a texture for this deck.
-	
-	@in		MOAIStretchPatch2D self
-	@in		variant texture		A MOAITexture, a MOAIDataBuffer or a path to a texture file
-	@opt	number transform	Any bitwise combination of MOAITexture.QUANTIZE, MOAITexture.TRUECOLOR, MOAITexture.PREMULTIPLY_ALPHA
-	@out	MOAITexture texture
-*/
-int MOAIStretchPatch2D::_setTexture ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIStretchPatch2D, "U" )
-
-	self->mTexture.Set ( *self, MOAITexture::AffirmTexture ( state, 2 ));
-	if ( self->mTexture ) {
-		self->mTexture->PushLuaUserdata ( state );
-		return 1;
-	}
-	return 0;
-}
-
-//----------------------------------------------------------------//
 /**	@name	setUVRect
 	@text	Set the UV space dimensions of the patch.
 	
@@ -189,17 +169,10 @@ int MOAIStretchPatch2D::_setUVRect ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIStretchPatch2D::Bind () {
-
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-	if ( !gfxDevice.SetTexture ( this->mTexture )) return false;
-	MOAIQuadBrush::BindVertexFormat ( gfxDevice );
-
-	return true;
-}
-
-//----------------------------------------------------------------//
 void MOAIStretchPatch2D::Draw ( const USAffine3D& transform, u32 idx, MOAIDeckRemapper* remapper ) {
+	
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	MOAIQuadBrush::BindVertexFormat ( gfxDevice );
 	
 	USVec3D stretch = transform.GetStretch ();
 	
@@ -207,7 +180,6 @@ void MOAIStretchPatch2D::Draw ( const USAffine3D& transform, u32 idx, MOAIDeckRe
 	noStretch.Scale ( 1.0f / stretch.mX, 1.0f / stretch.mY, 1.0f / stretch.mZ );
 	noStretch.Append ( transform );
 	
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, noStretch );
 	gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
 	
@@ -346,9 +318,11 @@ USBox MOAIStretchPatch2D::GetBounds ( u32 idx, MOAIDeckRemapper* remapper ) {
 MOAIStretchPatch2D::MOAIStretchPatch2D () :
 	mNeedsUpdate ( true ) {
 
-	RTTI_SINGLE ( MOAIDeck )
+	RTTI_BEGIN
+		RTTI_EXTEND ( MOAIDeck )
+	RTTI_END
+	
 	this->SetContentMask ( MOAIProp::CAN_DRAW );
-
 	this->mRect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
 }
 
@@ -362,13 +336,12 @@ MOAIStretchPatch2D::~MOAIStretchPatch2D () {
 void MOAIStretchPatch2D::RegisterLuaClass ( MOAILuaState& state ) {
 	UNUSED ( state );
 
-	this->MOAIDeck::RegisterLuaClass ( state );
+	MOAIDeck::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAIStretchPatch2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 
-	this->MOAIDeck::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
 		{ "reserveColumns",		_reserveColumns },
@@ -377,7 +350,6 @@ void MOAIStretchPatch2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setColumn",			_setColumn },
 		{ "setRect",			_setRect },
 		{ "setRow",				_setRow },
-		{ "setTexture",			_setTexture },
 		{ "setUVRect",			_setUVRect },
 		{ NULL, NULL }
 	};

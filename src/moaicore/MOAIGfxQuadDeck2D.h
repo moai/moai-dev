@@ -20,14 +20,12 @@ class MOAIGfxQuadDeck2D :
 	public MOAIDeck2D {
 private:
 
-	MOAILuaSharedPtr < MOAITexture >	mTexture;
-	USLeanArray < MOAIQuadBrush >	mQuads;
+	USLeanArray < MOAIQuadBrush >		mQuads;
 	
 	//----------------------------------------------------------------//
 	static int	_reserve				( lua_State* L );
 	static int	_setQuad				( lua_State* L );
 	static int	_setRect				( lua_State* L );
-	static int	_setTexture				( lua_State* L );
 	static int	_setUVQuad				( lua_State* L );
 	static int	_setUVRect				( lua_State* L );
 	
@@ -36,7 +34,6 @@ public:
 	DECL_LUA_FACTORY ( MOAIGfxQuadDeck2D )
 	
 	//----------------------------------------------------------------//
-	bool		Bind					();
 	void		DrawPatch				( u32 idx, float xOff, float yOff, float xScale, float yScale );
 	USRect		GetRect					( u32 idx, MOAIDeckRemapper* remapper );
 				MOAIGfxQuadDeck2D		();

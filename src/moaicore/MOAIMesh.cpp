@@ -8,6 +8,7 @@
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIMesh.h>
 #include <moaicore/MOAIProp.h>
+#include <moaicore/MOAIShader.h>
 #include <moaicore/MOAIShaderMgr.h>
 #include <moaicore/MOAITexture.h>
 #include <moaicore/MOAIVertexBuffer.h>
@@ -85,26 +86,6 @@ int MOAIMesh::_setPrimType ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setTexture
-	@text	Set or load a texture for this deck.
-	
-	@in		MOAIMesh self
-	@in		variant texture		A MOAITexture, a MOAIDataBuffer or a path to a texture file
-	@opt	number transform	Any bitwise combination of MOAITexture.QUANTIZE, MOAITexture.TRUECOLOR, MOAITexture.PREMULTIPLY_ALPHA
-	@out	MOAITexture texture
-*/
-int MOAIMesh::_setTexture ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIMesh, "U" )
-
-	self->mTexture.Set ( *self, MOAITexture::AffirmTexture ( state, 2 ));
-	if ( self->mTexture ) {
-		self->mTexture->PushLuaUserdata ( state );
-		return 1;
-	}
-	return 0;
-}
-
-//----------------------------------------------------------------//
 /**	@name	setVertexBuffer
 	@text	Set the vertex buffer to render.
 	
@@ -125,18 +106,12 @@ int MOAIMesh::_setVertexBuffer ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIMesh::Bind () {
-
-	if ( !this->mVertexBuffer ) return false;
-	if ( !this->mVertexBuffer->IsValid ()) return false;
-
-	return true;
-}
-
-//----------------------------------------------------------------//
 void MOAIMesh::Draw ( const USAffine3D& transform, u32 idx, MOAIDeckRemapper* remapper ) {
 	UNUSED ( idx );
 	UNUSED ( remapper );
+
+	if ( !this->mVertexBuffer ) return;
+	if ( !this->mVertexBuffer->IsValid ()) return;
 
 	if ( this->mVertexBuffer->Bind ()) {
 		
@@ -144,14 +119,14 @@ void MOAIMesh::Draw ( const USAffine3D& transform, u32 idx, MOAIDeckRemapper* re
 
 		gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_MODEL );
 		gfxDevice.SetUVMtxMode ( MOAIGfxDevice::UV_STAGE_MODEL, MOAIGfxDevice::UV_STAGE_TEXTURE );
-		gfxDevice.SetTexture ( this->mTexture );
+		gfxDevice.SetGfxState ( this->mTexture );
 		gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, transform );
 		
 		//gfxDevice.SetPenWidth ( this->mPenWidth );
 		//gfxDevice.SetPointSize ( this->mPointSize );
-	
+		
 		if ( this->mIndexBuffer ) {
-			if ( this->mIndexBuffer->Bind ()) {
+			if ( this->mIndexBuffer->LoadGfxState ()) {
 				glDrawElements ( this->mPrimType, this->mIndexBuffer->GetIndexCount (), GL_UNSIGNED_SHORT, 0 );
 			}
 		}
@@ -185,14 +160,9 @@ USBox MOAIMesh::GetBounds ( u32 idx, MOAIDeckRemapper* remapper ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIMesh::LoadShader () {
+MOAIGfxState* MOAIMesh::GetShaderDefault () {
 
-	if ( this->mShader ) {
-		MOAIGfxDevice::Get ().SetShader ( this->mShader );
-	}
-	else {
-		MOAIShaderMgr::Get ().BindShader ( MOAIShaderMgr::MESH_SHADER );
-	}
+	return &MOAIShaderMgr::Get ().GetShader ( MOAIShaderMgr::MESH_SHADER );
 }
 
 //----------------------------------------------------------------//
@@ -201,7 +171,10 @@ MOAIMesh::MOAIMesh () :
 	mPenWidth ( 1.0f ),
 	mPointSize ( 1.0f ) {
 
-	RTTI_SINGLE ( MOAIDeck )
+	RTTI_BEGIN
+		RTTI_EXTEND ( MOAIDeck )
+	RTTI_END
+	
 	this->SetContentMask ( MOAIProp::CAN_DRAW );
 }
 
@@ -216,7 +189,7 @@ MOAIMesh::~MOAIMesh () {
 //----------------------------------------------------------------//
 void MOAIMesh::RegisterLuaClass ( MOAILuaState& state ) {
 
-	this->MOAIDeck::RegisterLuaClass ( state );
+	MOAIDeck::RegisterLuaClass ( state );
 	
 	state.SetField ( -1, "GL_POINTS", ( u32 )GL_POINTS );
 	state.SetField ( -1, "GL_LINES", ( u32 )GL_LINES );
@@ -230,14 +203,13 @@ void MOAIMesh::RegisterLuaClass ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIMesh::RegisterLuaFuncs ( MOAILuaState& state ) {
 
-	this->MOAIDeck::RegisterLuaFuncs ( state );
+	MOAIDeck::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
 		{ "setIndexBuffer",			_setIndexBuffer },
 		{ "setPenWidth",			_setPenWidth },
 		{ "setPointSize",			_setPointSize },
 		{ "setPrimType",			_setPrimType },
-		{ "setTexture",				_setTexture },
 		{ "setVertexBuffer",		_setVertexBuffer },
 		{ NULL, NULL }
 	};

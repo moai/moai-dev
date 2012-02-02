@@ -32,10 +32,9 @@ public:
 	DECL_LUA_FACTORY ( MOAIScriptDeck )
 	
 	//----------------------------------------------------------------//
-	bool			Bind					();
 	void			DrawPatch				( u32 idx, float xOff, float yOff, float xScale, float yScale );
 	USRect			GetRect					( u32 idx, MOAIDeckRemapper* remapper );
-	void			LoadShader				();
+	MOAIGfxState*	GetShaderDefault		();
 					MOAIScriptDeck			();
 					~MOAIScriptDeck			();
 	void			RegisterLuaClass		( MOAILuaState& state );

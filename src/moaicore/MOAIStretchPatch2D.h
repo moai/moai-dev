@@ -29,10 +29,8 @@ private:
 			stretchable and non-stretchable 'bands.' Grid drawing not supported.
 */
 class MOAIStretchPatch2D :
-	virtual public MOAIDeck {
+	public MOAIDeck {
 private:
-
-	MOAILuaSharedPtr < MOAITexture > mTexture; // source texture for patch
 
 	USLeanArray < MOAIStretchPatchSpan >	mRows;
 	USLeanArray < MOAIStretchPatchSpan >	mCols;
@@ -68,7 +66,6 @@ public:
 	DECL_LUA_FACTORY ( MOAIStretchPatch2D )
 	
 	//----------------------------------------------------------------//
-	bool				Bind					();
 	void				Draw					( const USAffine3D& transform, u32 idx, MOAIDeckRemapper* remapper );
 	void				Draw					( const USAffine3D& transform, MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1 );
 	USBox				GetBounds				( u32 idx, MOAIDeckRemapper* remapper );

@@ -429,7 +429,7 @@ void MOAITextBox::Draw ( int subPrimID, bool reload ) {
 	
 		MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 
-		this->LoadShader ();
+		this->LoadGfxState ();
 
 		if ( !this->mShader ) {
 			// TODO: this should really come from MOAIFont, which should really be a

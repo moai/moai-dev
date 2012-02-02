@@ -15,6 +15,7 @@
 #include <moaicore/MOAIShader.h>
 #include <moaicore/MOAIShaderMgr.h>
 #include <moaicore/MOAISurfaceSampler2D.h>
+#include <moaicore/MOAITexture.h>
 
 //================================================================//
 // local
@@ -449,6 +450,29 @@ int MOAIProp::_setShader ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	setTexture
+	@text	Set or load a texture for this prop. The prop's texture will
+			override the deck's texture.
+	
+	@in		MOAIProp self
+	@in		variant texture		A MOAITexture, MOAIMultiTexture, MOAIDataBuffer or a path to a texture file
+	@opt	number transform	Any bitwise combination of MOAITexture.QUANTIZE, MOAITexture.TRUECOLOR, MOAITexture.PREMULTIPLY_ALPHA
+	@out	MOAIGfxState texture
+*/
+int MOAIProp::_setTexture ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIProp, "U" )
+
+	MOAIGfxState* texture = MOAITexture::AffirmTexture ( state, 2 );
+	self->mTexture.Set ( *self, texture );
+
+	if ( texture ) {
+		self->mTexture->PushLuaUserdata ( state );
+		return 1;
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	setUVTransform
 	@text	Sets or clears the prop's UV transform.
 	
@@ -517,22 +541,13 @@ bool MOAIProp::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIProp::BindDeck () {
-
-	if ( this->mDeck ) {
-		return this->mDeck->Bind ();
-	}
-	return false;
-}
-
-//----------------------------------------------------------------//
 void MOAIProp::Draw ( int subPrimID, bool reload ) {
 	UNUSED ( subPrimID );
 
 	if ( !this->mVisible ) return;
-	if ( !this->BindDeck ()) return;
+	if ( !this->mDeck ) return;
 
-	this->LoadShader ();
+	this->LoadGfxState ();
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 
@@ -803,16 +818,20 @@ bool MOAIProp::Inside ( USVec3D vec, float pad ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIProp::LoadShader () {
+void MOAIProp::LoadGfxState () {
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 
-	if ( this->mShader ) {
-		gfxDevice.SetShader ( this->mShader );
+	MOAIGfxState* shader = this->mShader;
+	MOAIGfxState* texture = this->mTexture;
+
+	if ( this->mDeck ) {
+		shader = shader ? shader : this->mDeck->GetShader ();
+		texture = texture ? texture : this->mDeck->GetTexture ();
 	}
-	else if ( this->mDeck ) {
-		this->mDeck->LoadShader ();
-	}
+
+	gfxDevice.SetGfxState ( shader );
+	gfxDevice.SetGfxState ( texture );
 
 	gfxDevice.SetPenColor ( this->mColor );
 	gfxDevice.SetCullFunc ( this->mCullMode );
@@ -1003,6 +1022,7 @@ void MOAIProp::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setPriority",		_setPriority },
 		{ "setRemapper",		_setRemapper },
 		{ "setShader",			_setShader },
+		{ "setTexture",			_setTexture },
 		{ "setUVTransform",		_setUVTransform },
 		{ "setVisible",			_setVisible },
 		{ NULL, NULL }

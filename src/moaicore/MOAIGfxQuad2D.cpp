@@ -7,6 +7,7 @@
 #include <moaicore/MOAIGfxDevice.h>
 #include <moaicore/MOAIGfxQuad2D.h>
 #include <moaicore/MOAILogMessages.h>
+#include <moaicore/MOAIMultiTexture.h>
 #include <moaicore/MOAIProp.h>
 #include <moaicore/MOAITexture.h>
 #include <moaicore/MOAITransformBase.h>
@@ -35,26 +36,6 @@ int MOAIGfxQuad2D::_setRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setTexture
-	@text	Set or load a texture for this deck.
-	
-	@in		MOAIGfxQuad2D self
-	@in		variant texture			A MOAITexture, a MOAIDataBuffer or a path to a texture file
-	@opt	number transform	Any bitwise combination of MOAITexture.QUANTIZE, MOAITexture.TRUECOLOR, MOAITexture.PREMULTIPLY_ALPHA
-	@out	MOAITexture texture
-*/
-int MOAIGfxQuad2D::_setTexture ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIGfxQuad2D, "U" )
-
-	self->mTexture.Set ( *self, MOAITexture::AffirmTexture ( state, 2 ));
-	if ( self->mTexture ) {
-		self->mTexture->PushLuaUserdata ( state );
-		return 1;
-	}
-	return 0;
-}
-
-//----------------------------------------------------------------//
 /**	@name	setUVRect
 	@text	Set the UV space dimensions of the quad.
 	
@@ -78,20 +59,11 @@ int MOAIGfxQuad2D::_setUVRect ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIGfxQuad2D::Bind () {
-
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-
-	if ( gfxDevice.SetTexture ( this->mTexture )) {
-		MOAIQuadBrush::BindVertexFormat ( gfxDevice );
-		return true;
-	}
-	return false;
-}
-
-//----------------------------------------------------------------//
 void MOAIGfxQuad2D::DrawPatch ( u32 idx, float xOff, float yOff, float xScale, float yScale ) {
 	UNUSED ( idx );
+	
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	MOAIQuadBrush::BindVertexFormat ( gfxDevice );
 	
 	MOAIQuadBrush quad;
 	quad.SetVerts ( this->mRect );
@@ -110,7 +82,10 @@ USRect MOAIGfxQuad2D::GetRect ( u32 idx, MOAIDeckRemapper* remapper ) {
 //----------------------------------------------------------------//
 MOAIGfxQuad2D::MOAIGfxQuad2D () {
 
-	RTTI_SINGLE ( MOAIDeck2D )
+	RTTI_BEGIN
+		RTTI_EXTEND ( MOAIDeck2D )
+	RTTI_END
+	
 	this->SetContentMask ( MOAIProp::CAN_DRAW );
 	
 	// set up rects to draw a unit tile centered at the origin
@@ -127,7 +102,7 @@ MOAIGfxQuad2D::~MOAIGfxQuad2D () {
 //----------------------------------------------------------------//
 void MOAIGfxQuad2D::RegisterLuaClass ( MOAILuaState& state ) {
 
-	this->MOAIDeck2D::RegisterLuaClass ( state );
+	MOAIDeck2D::RegisterLuaClass ( state );
 	
 	state.SetField ( -1, "FILTER_POINT", ( u32 )GL_NEAREST );
 	state.SetField ( -1, "FILTER_BILERP", ( u32 )GL_LINEAR );
@@ -136,11 +111,10 @@ void MOAIGfxQuad2D::RegisterLuaClass ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIGfxQuad2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 
-	this->MOAIDeck2D::RegisterLuaFuncs ( state );
+	MOAIDeck2D::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
 		{ "setRect",			_setRect },
-		{ "setTexture",			_setTexture },
 		{ "setUVRect",			_setUVRect },
 		{ NULL, NULL }
 	};
