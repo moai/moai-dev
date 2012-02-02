@@ -82,6 +82,20 @@ int MOAIParticleSystem::_getState ( lua_State* L ) {
 	return 0;
 }
 
+/**	@name	ignoreLocalTransform
+	@text	Controls whether the local transform matrix will
+			be applied to rendered sprites
+	
+	@in		MOAIParticleSystem self
+	@opt	boolean whether to ignore the local transform
+	@out	nil
+*/
+int	MOAIParticleSystem::_ignoreLocalTransform ( lua_State* L ){
+	MOAI_LUA_SETUP ( MOAIParticleSystem, "U" )
+
+	self->mIgnoreLocalTransform = state.GetValue < bool >( 2, true );
+	return 0;
+}
 //----------------------------------------------------------------//
 /**	@name	pushParticle
 	@text	Adds a particle to the system.
@@ -349,10 +363,15 @@ void MOAIParticleSystem::Draw ( int subPrimID, bool reload ) {
 		
 		spriteMtx.ScRoTr ( sprite.mXScl, sprite.mYScl, sprite.mZRot * ( float )D2R, sprite.mXLoc, sprite.mYLoc );
 		
-		drawingMtx = this->GetLocalToWorldMtx ();
-		drawingMtx.Append ( spriteMtx );
+		if(mIgnoreLocalTransform)
+			this->mDeck->Draw ( spriteMtx, ( u32 )sprite.mGfxID, this->mRemapper );
+		else
+		{
+			drawingMtx = this->GetLocalToWorldMtx ();
+			drawingMtx.Append ( spriteMtx );
 		
-		this->mDeck->Draw ( drawingMtx, ( u32 )sprite.mGfxID, this->mRemapper );
+			this->mDeck->Draw ( drawingMtx, ( u32 )sprite.mGfxID, this->mRemapper );
+		}
 	}
 }
 
@@ -407,6 +426,7 @@ MOAIParticleSystem::MOAIParticleSystem () :
 	mParticleSize ( 0 ),
 	mCapParticles ( false ),
 	mCapSprites ( false ),
+	mIgnoreLocalTransform( false ),
 	mHead ( 0 ),
 	mTail ( 0 ),
 	mFree ( 0 ),
@@ -543,6 +563,7 @@ void MOAIParticleSystem::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "capSprites",			_capSprites },
 		{ "clearSprites",		_clearSprites },
 		{ "getState",			_getState },
+		{ "ignoreLocalTransform", _ignoreLocalTransform },
 		{ "pushParticle",		_pushParticle },
 		{ "pushSprite",			_pushSprite },
 		{ "reserveParticles",	_reserveParticles },

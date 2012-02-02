@@ -32,6 +32,7 @@ private:
 	
 	bool								mCapParticles;
 	bool								mCapSprites;
+	bool								mIgnoreLocalTransform;
 	
 	MOAIParticle*						mHead;
 	MOAIParticle*						mTail;
@@ -45,6 +46,7 @@ private:
 	static int		_capSprites			( lua_State* L );
 	static int		_clearSprites		( lua_State* L );
 	static int		_getState			( lua_State* L );
+	static int		_ignoreLocalTransform ( lua_State* L );
 	static int		_pushParticle		( lua_State* L );
 	static int		_pushSprite			( lua_State* L );
 	static int		_reserveParticles	( lua_State* L );
@@ -67,6 +69,7 @@ private:
 public:
 	
 	friend class MOAIParticleEngine;
+	friend class MOAIParticlePlugin;
 	friend class MOAIParticleScript;
 	friend class MOAIParticleState;
 	

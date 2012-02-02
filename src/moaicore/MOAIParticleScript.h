@@ -38,7 +38,8 @@ class MOAIParticleScript :
 private:
 	
 	friend class MOAIParticleState;
-	
+	friend class MOAIParticlePlugin;
+
 	static const u32 MAX_PARTICLE_REGISTERS = 256;
 	static const u32 PARTICLE_REGISTER_MASK = 0x000000ff;
 	
@@ -59,18 +60,21 @@ private:
 	
 	enum {
 		END = 0,
+		ANGLE_VEC,
 		ADD,
 		CYCLE,
 		DIV,
 		EASE,
 		EASE_DELTA,
 		MUL,
+		NORM,
 		RAND,
 		RAND_VEC,
 		SET,
 		SPRITE,
 		SUB,
 		TIME,
+		TIME_DELTA,
 		VEC_ANGLE,
 		WRAP,
 	};
@@ -108,6 +112,7 @@ private:
 	static int		_ease				( lua_State* L );
 	static int		_easeDelta			( lua_State* L );
 	static int		_mul				( lua_State* L );
+	static int		_norm				( lua_State* L );
 	static int		_packConst			( lua_State* L );
 	static int		_packReg			( lua_State* L );
 	static int		_rand				( lua_State* L );
@@ -116,7 +121,9 @@ private:
 	static int		_sprite				( lua_State* L );
 	static int		_sub				( lua_State* L );
 	static int		_time				( lua_State* L );
+	static int		_timeDelta			( lua_State* L );
 	static int		_vecAngle			( lua_State* L );
+	static int		_angleVec			( lua_State* L );
 	static int		_wrap				( lua_State* L );
 	
 	//----------------------------------------------------------------//

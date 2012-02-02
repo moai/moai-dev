@@ -24,6 +24,7 @@ class MOAIParticleState :
 private:
 	friend class MOAIParticleScript;
 	friend class MOAIParticleSystem;
+	friend class MOAIParticlePlugin;
 
 	typedef USLeanLink < MOAIParticleForce* > ForceNode;
 	USLeanList < MOAIParticleForce* > mForces;
