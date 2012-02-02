@@ -146,9 +146,10 @@
 	# copy classes into new host dir
 	rsync -r --exclude=.svn --exclude=.DS_Store host-source/source/project/src/. $new_host_dir/host-source/project/$package_path
 
-	# copy external classes and resources into new host dir
+	# copy external classes, resources and libs into new host dir
 	rsync -r --exclude=.svn --exclude=.DS_Store host-source/source/project/external/src/. $new_host_dir/host-source/project/src
 	rsync -r --exclude=.svn --exclude=.DS_Store host-source/source/project/external/res/. $new_host_dir/host-source/project/res
+	rsync -r --exclude=.svn --exclude=.DS_Store host-source/source/project/external/libs/. $new_host_lib_dir
 
 	# inject the package path into the run script
 	sed -i.backup s%@SETTING_PACKAGE_PATH@%"$package_path"%g $new_host_dir/run-host.sh

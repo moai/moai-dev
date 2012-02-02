@@ -47,16 +47,48 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import com.tapjoy.TapjoyConnect;
 import com.tapjoy.TapjoyVideoNotifier;
 
+// Crittercism
+import com.crittercism.app.Crittercism;
+
 // OpenGL 2.0
 import android.app.ActivityManager;
 import android.content.pm.ConfigurationInfo;
- 
+
+enum DIALOG_RESULT {
+	POSITIVE,
+	NEUTRAL,
+	NEGATIVE,
+	CANCEL,
+	TOTAL,
+};
+
+enum CONNECTION_TYPE {
+	NONE,
+	WIFI,
+	WWAN,
+	TOTAL,
+};
+
+enum INPUT_DEVICE {
+	DEVICE,
+	TOTAL,
+};
+
+enum INPUT_SENSOR {
+	COMPASS,
+	LEVEL,
+	LOCATION,
+	TOUCH,
+	TOTAL,
+};
+
 //================================================================//
 // MoaiActivity
 //================================================================//
-public class MoaiActivity extends Activity implements SensorEventListener, TapjoyVideoNotifier {
+public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 
-	private Sensor 							mAccelerometer;
+	private AccelerometerEventListener		mAccelerometerListener;
+	private Sensor 							mAccelerometerSensor;
 	private MoaiBillingService 				mBillingService;
 	private ConnectivityBroadcastReceiver 	mConnectivityReceiver;
 	private Handler							mHandler;
@@ -66,18 +98,9 @@ public class MoaiActivity extends Activity implements SensorEventListener, Tapjo
 	private boolean							mWaitingToResume;
 	private boolean							mWindowFocusLost;
 	
-	static enum DIALOG_RESULT {
-		POSITIVE,
-		NEUTRAL,
-		NEGATIVE,
-		CANCEL,
-	}
-
 	protected static native void 		AKUAppDidStartSession 				();
 	protected static native void 		AKUAppWillEndSession 				();
-	protected static native void 		AKUEnqueueCompassEvent 				( int heading );
 	protected static native void 		AKUEnqueueLevelEvent 				( int deviceId, int sensorId, float x, float y, float z );
-	protected static native void 		AKUEnqueueLocationEvent 			( int deviceId, int sensorId, int longitude, int latitude, int altitude, float hAccuracy, float vAccuracy, float speed );
 	protected static native void 		AKUFinalize 						();
 	protected static native void 		AKUMountVirtualDirectory 			( String virtualPath, String archive );
 	protected static native boolean 	AKUNotifyBackButtonPressed			();
@@ -103,7 +126,6 @@ public class MoaiActivity extends Activity implements SensorEventListener, Tapjo
 
 		log ( "MoaiActivity onCreate called" );
 
-		// call super
     	super.onCreate ( savedInstanceState );
 
 		// load libmoai
@@ -124,7 +146,7 @@ public class MoaiActivity extends Activity implements SensorEventListener, Tapjo
 
 		// OpenGL 2.0
 		ActivityManager am = ( ActivityManager ) getSystemService ( Context.ACTIVITY_SERVICE );
-		        ConfigurationInfo info = am.getDeviceConfigurationInfo ();
+		ConfigurationInfo info = am.getDeviceConfigurationInfo ();
 			    
 		if ( info.reqGlEsVersion >= 0x20000 ) {
 			mMoaiView.setEGLContextClientVersion ( 2 );
@@ -136,10 +158,6 @@ public class MoaiActivity extends Activity implements SensorEventListener, Tapjo
 
 		// set activity to use Moai view
 		setContentView ( mMoaiView );
-		
-		// get access to the accelerometer sensor
-		mSensorManager = ( SensorManager ) getSystemService ( Context.SENSOR_SERVICE );
-		mAccelerometer = mSensorManager.getDefaultSensor ( Sensor.TYPE_ACCELEROMETER );
 
 		// set documents directory
 		String filesDir = getFilesDir ().getAbsolutePath ();
@@ -158,6 +176,7 @@ public class MoaiActivity extends Activity implements SensorEventListener, Tapjo
 		}
 				
 		mHandler = new Handler ();
+		mSensorManager = ( SensorManager ) getSystemService ( Context.SENSOR_SERVICE );
 
 		mWaitingToResume = false;
 		mWindowFocusLost = false;
@@ -166,7 +185,7 @@ public class MoaiActivity extends Activity implements SensorEventListener, Tapjo
         MoaiBillingResponseHandler.register ( mPurchaseObserver );
         
 		mBillingService = new MoaiBillingService();
-        mBillingService.setContext(this);
+        mBillingService.setContext (this);
 
 		startConnectivityReceiver ();
     }
@@ -180,7 +199,7 @@ public class MoaiActivity extends Activity implements SensorEventListener, Tapjo
 		
 		stopConnectivityReceiver ();
 		
-		mBillingService.unbind();
+		mBillingService.unbind ();
 		
 		AKUFinalize();
 	}
@@ -192,7 +211,10 @@ public class MoaiActivity extends Activity implements SensorEventListener, Tapjo
 		
 		super.onPause ();
 		
-		mSensorManager.unregisterListener ( this );
+		if ( mAccelerometerListener != null ) {
+			
+			mSensorManager.unregisterListener ( mAccelerometerListener );
+		}
 		
 		// If we've been paused, then we're assuming we've lost focus. 
 		// This handles the case where the user presses the lock button
@@ -231,7 +253,10 @@ public class MoaiActivity extends Activity implements SensorEventListener, Tapjo
 
 		super.onResume ();
 		
-		mSensorManager.registerListener ( this, mAccelerometer, SensorManager.SENSOR_DELAY_NORMAL );
+		if ( mAccelerometerListener != null ) {
+			
+			mSensorManager.registerListener ( mAccelerometerListener, mAccelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL );
+		}
 		
 		// If we have not lost Window focus, then resume immediately; 
 		// otherwise, wait to regain focus before we resume. All of 
@@ -250,9 +275,38 @@ public class MoaiActivity extends Activity implements SensorEventListener, Tapjo
 	//================================================================//
 	
 	//----------------------------------------------------------------//
-	public static void startSession () {
+	public void startSession () {
 
 		AKUAppDidStartSession ();
+	}
+	
+	public void enableAccelerometerEvents ( boolean enabled ) {
+		
+		if ( !enabled ) {
+			
+			if ( mAccelerometerListener != null ) {
+
+				mSensorManager.unregisterListener ( mAccelerometerListener );
+				mAccelerometerListener = null;
+			}
+
+			if ( mAccelerometerSensor != null ) {
+				
+				mAccelerometerSensor = null;
+			}
+		} else if ( enabled ) {
+			
+			if ( mAccelerometerSensor == null ) {
+				
+				mAccelerometerSensor = mSensorManager.getDefaultSensor ( Sensor.TYPE_ACCELEROMETER );
+			}
+			
+			if ( mAccelerometerListener == null ) {
+
+				mAccelerometerListener = new AccelerometerEventListener ();
+				mSensorManager.registerListener ( mAccelerometerListener, mAccelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL );
+			}
+		}
 	}
 	
 	//================================================================//
@@ -317,31 +371,6 @@ public class MoaiActivity extends Activity implements SensorEventListener, Tapjo
 			mWaitingToResume = false;
 			mMoaiView.pause ( false );
 		}
-	}
-
-	//================================================================//
-	// SensorEventListener methods
-	//================================================================//
-
-	//----------------------------------------------------------------//
-	public void onAccuracyChanged ( Sensor sensor, int accuracy ) {
-	}
-	
-	//----------------------------------------------------------------//
-	public void onSensorChanged ( SensorEvent event ) {
-		
-		if ( ! mMoaiView.getSensorsEnabled () ) {
-			return;
-		}
-
-		float x = event.values [ 0 ];
-		float y = event.values [ 1 ];
-		float z = event.values [ 2 ];
-			
-		int deviceId = MoaiInputDeviceID.DEVICE.ordinal ();
-		int sensorId = MoaiInputDeviceSensorID.LEVEL.ordinal ();
-			
-		AKUEnqueueLevelEvent ( deviceId, sensorId, x, y, z );
 	}
 
 	//================================================================//
@@ -429,6 +458,22 @@ public class MoaiActivity extends Activity implements SensorEventListener, Tapjo
 		Uri uri = Uri.parse ( url );
 		Intent intent = new Intent ( Intent.ACTION_VIEW, uri );
 		MoaiActivity.this.startActivity ( intent );
+	}
+	
+	//================================================================//
+	// Crittercism JNI callback methods
+	//================================================================//
+
+	//----------------------------------------------------------------//
+	public void initCrittercism ( final String appId ) {
+
+		mHandler.post ( new Runnable () {
+
+			public void run () {
+		
+				Crittercism.init ( getApplicationContext(), appId );
+			}
+		});
 	}
 	
 	//================================================================//
@@ -548,6 +593,30 @@ public class MoaiActivity extends Activity implements SensorEventListener, Tapjo
 			}
 							 
 			AKUSetConnectionType ( ( long )connectionType.ordinal () );
+		}
+	};
+	
+	//================================================================//
+	// AccelerometerEventListener
+	//================================================================//
+
+	private class AccelerometerEventListener implements SensorEventListener {
+		
+		//----------------------------------------------------------------//
+		public void onAccuracyChanged ( Sensor sensor, int accuracy ) {
+		}
+
+		//----------------------------------------------------------------//
+		public void onSensorChanged ( SensorEvent event ) {
+
+			float x = event.values [ 0 ];
+			float y = event.values [ 1 ];
+			float z = event.values [ 2 ];
+
+			int deviceId = INPUT_DEVICE.DEVICE.ordinal ();
+			int sensorId = INPUT_SENSOR.LEVEL.ordinal ();
+
+			AKUEnqueueLevelEvent ( deviceId, sensorId, x, y, z );
 		}
 	};
 	

@@ -649,6 +649,7 @@ bool MOAIProp2D::Inside ( USVec2D vec, float pad ) {
 		if ( status == BOUNDS_EMPTY ) return false;
 	}
 	
+	rect.Bless ();
 	rect.Inflate ( pad );
 	
 	return rect.Contains ( vec );

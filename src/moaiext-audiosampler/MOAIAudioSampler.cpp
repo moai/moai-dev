@@ -98,8 +98,8 @@ void MOAIAudioSampler::globalCallback( void *inUserData,
 
     MOAIAudioSampler *sampler = (MOAIAudioSampler*) inUserData;
 
-        fprintf(stderr, "callback. nPkt:%d active:%d buf:%p sz:%d curWI:%d\n",
-                inNumPackets, (int)sampler->isActive, inBuffer->mAudioData, inBuffer->mAudioDataByteSize, sampler->currentWriteIndex  );
+//        fprintf(stderr, "callback. nPkt:%d active:%d buf:%p sz:%d curWI:%d\n",
+//                inNumPackets, (int)sampler->isActive, inBuffer->mAudioData, inBuffer->mAudioDataByteSize, sampler->currentWriteIndex  );
     
     OSStatus result = AudioQueueEnqueueBuffer( inAQ, inBuffer, 0, NULL );
     if(result) printf("cannot enque buffer\n" );
