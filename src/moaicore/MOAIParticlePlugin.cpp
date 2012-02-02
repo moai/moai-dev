@@ -96,7 +96,8 @@ void MOAIParticlePlugin::Parse( MOAILuaState& state, TiXmlNode* node )
 		float rotEnd, rotEndVariance;
 		float speed, speedVariance;
 		float rotPerSecond, rotPerSecondVariance;
-		float sourcePosVariance[2];
+		float sourcePos[2];
+		float sourcePosVariance = 0;
 		float duration;
 		int curRegister = 0;
 		u32 blendFuncSrc, blendFuncDst;
@@ -190,10 +191,10 @@ void MOAIParticlePlugin::Parse( MOAILuaState& state, TiXmlNode* node )
 				rotStartVariance = (float)atof(attribute->Value());
 			else if(text == "sourcePosition")
 				for ( ; attribute; attribute = attribute->Next (), i++) {
-						sourcePosVariance[i] = (float)atof(attribute->Value());
+						sourcePos[i] = (float)atof(attribute->Value());
 					}
 			else if(text == "sourcePositionVariance")
-				rotPerSecondVariance = (float)atof(attribute->Value());
+				sourcePosVariance = (float)atof(attribute->Value());
 			else if(text == "speed")
 				speed = (float)atof(attribute->Value());
 			else if(text == "speedVariance")
@@ -526,7 +527,14 @@ void MOAIParticlePlugin::Parse( MOAILuaState& state, TiXmlNode* node )
 		emitter->SetSystem(system);
 		emitter->SetEmissionRange ( emissionCount, emissionCount );
 		emitter->SetFrequencyRange ( emissionRate, emissionRate );
-
+		USRect variation;
+		variation.mXMax = sourcePosVariance;
+		variation.mYMax = sourcePosVariance;
+		variation.mXMin = -sourcePosVariance;
+		variation.mYMin = -sourcePosVariance;
+		variation.Bless();
+		emitter->SetRect(variation);
+		emitter->SetShapeID ( MOAIParticleEmitter::RECT );
 		emitter->PushLuaUserdata( state );
 
 		// TODO: The XML exports particle size in pixels while
