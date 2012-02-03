@@ -54,7 +54,6 @@ private:
 	static int			_setColumn				( lua_State* L );
 	static int			_setRect				( lua_State* L );
 	static int			_setRow					( lua_State* L );
-	static int			_setTexture				( lua_State* L );
 	static int			_setUVRect				( lua_State* L );
 
 	//----------------------------------------------------------------//

@@ -27,8 +27,8 @@ file:close ()
 shader = MOAIShader.new ()
 
 shader:reserveUniforms ( 2 )
-shader:declareSampler ( 1, 'sampler0', 1 )
-shader:declareSampler ( 2, 'sampler1', 2 )
+shader:declareUniformSampler ( 1, 'sampler0', 1 )
+shader:declareUniformSampler ( 2, 'sampler1', 2 )
 
 shader:setVertexAttribute ( 1, 'position' )
 shader:setVertexAttribute ( 2, 'uv' )

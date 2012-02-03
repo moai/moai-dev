@@ -59,6 +59,7 @@ public:
 		UNIFORM_FLOAT,
 		UNIFORM_INT,
 		UNIFORM_PEN_COLOR,
+		UNIFORM_SAMPLER,
 		UNIFORM_TRANSFORM,
 		UNIFORM_VIEW_PROJ,
 		UNIFORM_WORLD,
@@ -79,6 +80,7 @@ public:
 	@const	UNIFORM_FLOAT
 	@const	UNIFORM_INT
 	@const	UNIFORM_PEN_COLOR
+	@const	UNIFORM_SAMPLER
 	@const	UNIFORM_TRANSFORM
 	@const	UNIFORM_VIEW_PROJ
 	@const	UNIFORM_WORLD
@@ -103,8 +105,10 @@ protected:
 	
 	//----------------------------------------------------------------//
 	static int		_clearUniform			( lua_State* L );
-	static int		_declareSampler			( lua_State* L );
 	static int		_declareUniform			( lua_State* L );
+	static int		_declareUniformFloat	( lua_State* L );
+	static int		_declareUniformInt		( lua_State* L );
+	static int		_declareUniformSampler	( lua_State* L );
 	static int		_load					( lua_State* L );
 	static int		_reserveUniforms		( lua_State* L );
 	static int		_setVertexAttribute		( lua_State* L );
@@ -133,8 +137,9 @@ public:
 	void			ClearUniform			( u32 idx );
 	void			ClearUniforms			();
 	void			DeleteShaders			();
-	void			DeclareSampler			( u32 idx, cc8* name, int value );
 	void			DeclareUniform			( u32 idx, cc8* name, u32 type );
+	void			DeclareUniform			( u32 idx, cc8* name, u32 type, float value );
+	void			DeclareUniform			( u32 idx, cc8* name, u32 type, int value );
 	bool			IsValid					();
 	bool			LoadGfxState			();
 					MOAIShader				();

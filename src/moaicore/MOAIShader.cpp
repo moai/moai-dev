@@ -74,7 +74,11 @@ void MOAIShaderUniform::Bind () {
 			case UNIFORM_FLOAT:
 				glUniform1f ( this->mAddr, this->mFloat );
 				break;
-				
+			
+			case UNIFORM_SAMPLER:
+				glUniform1i ( this->mAddr, this->mInt - 1 );
+				break;
+			
 			case UNIFORM_COLOR:
 			case UNIFORM_PEN_COLOR:
 				glUniform4fv ( this->mAddr, 1, this->mBuffer );
@@ -234,7 +238,8 @@ void MOAIShaderUniform::SetValue ( const MOAIAttrOp& attrOp ) {
 			this->SetValue (( float )attrOp.GetValue ());
 			break;
 		}
-		case UNIFORM_INT: {
+		case UNIFORM_INT:
+		case UNIFORM_SAMPLER: {
 			this->SetValue (( int )attrOp.GetValue ());
 			break;
 		}
@@ -340,28 +345,6 @@ int MOAIShader::_clearUniform ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	declareSampler
-	@text	Declares a uniform intended for use as a texture sampler index.
-
-	@in		MOAIShader self
-	@in		number idx
-	@in		string name
-	@in		number value
-	@out	nil
-*/
-int MOAIShader::_declareSampler ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIShader, "UNSN" )
-	
-	u32 idx				= state.GetValue < u32 >( 2, 1 ) - 1;
-	STLString name		= state.GetValue < cc8* >( 3, "" );
-	int value			= state.GetValue < int >( 4, 1 ) - 1;
-	
-	self->DeclareSampler ( idx, name, value );
-
-	return 0;
-}
-
-//----------------------------------------------------------------//
 /**	@name	declareUniform
 	@text	Declares a uniform mapping.
 
@@ -381,6 +364,72 @@ int MOAIShader::_declareUniform ( lua_State* L ) {
 	u32  type			= state.GetValue < u32 >( 4, MOAIShaderUniform::UNIFORM_NONE );
 	
 	self->DeclareUniform ( idx, name, type );
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	declareUniformFloat
+	@text	Declares an float uniform.
+
+	@in		MOAIShader self
+	@in		number idx
+	@in		string name
+	@opt	number value		Default value is 0.
+	@out	nil
+*/
+int MOAIShader::_declareUniformFloat ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIShader, "UNSN" )
+	
+	u32 idx				= state.GetValue < u32 >( 2, 1 ) - 1;
+	STLString name		= state.GetValue < cc8* >( 3, "" );
+	float value			= state.GetValue < float >( 4, 0.0f );
+	
+	self->DeclareUniform ( idx, name, MOAIShaderUniform::UNIFORM_FLOAT, value );
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	declareUniformInt
+	@text	Declares an integer uniform.
+
+	@in		MOAIShader self
+	@in		number idx
+	@in		string name
+	@opt	number value		Default value is 0.
+	@out	nil
+*/
+int MOAIShader::_declareUniformInt ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIShader, "UNSN" )
+	
+	u32 idx				= state.GetValue < u32 >( 2, 1 ) - 1;
+	STLString name		= state.GetValue < cc8* >( 3, "" );
+	int value			= state.GetValue < int >( 4, 0 );
+	
+	self->DeclareUniform ( idx, name, MOAIShaderUniform::UNIFORM_INT, value );
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	declareUniformSampler
+	@text	Declares an uniform to be used as a texture unit index.
+
+	@in		MOAIShader self
+	@in		number idx
+	@in		string name
+	@opt	number textureUnit		Default value is 1.
+	@out	nil
+*/
+int MOAIShader::_declareUniformSampler ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIShader, "UNSN" )
+	
+	u32 idx				= state.GetValue < u32 >( 2, 1 ) - 1;
+	STLString name		= state.GetValue < cc8* >( 3, "" );
+	int textureUnit		= state.GetValue < int >( 4, 1 );
+	
+	self->DeclareUniform ( idx, name, MOAIShaderUniform::UNIFORM_SAMPLER, textureUnit );
 
 	return 0;
 }
@@ -530,20 +579,6 @@ GLuint MOAIShader::CompileShader ( GLuint type, cc8* source ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIShader::DeclareSampler ( u32 idx, cc8* name, int value ) {
-
-	if ( idx < this->mUniforms.Size ()) {
-		
-		this->ClearUniform ( idx );
-		
-		MOAIShaderUniform& uniform = this->mUniforms [ idx ];
-		uniform.mName = name;
-		uniform.SetType ( MOAIShaderUniform::UNIFORM_INT );
-		uniform.SetValue ( value );
-	}
-}
-
-//----------------------------------------------------------------//
 void MOAIShader::DeclareUniform ( u32 idx, cc8* name, u32 type ) {
 	
 	if ( idx < this->mUniforms.Size ()) {
@@ -553,6 +588,24 @@ void MOAIShader::DeclareUniform ( u32 idx, cc8* name, u32 type ) {
 		MOAIShaderUniform& uniform = this->mUniforms [ idx ];
 		uniform.mName = name;
 		uniform.SetType ( type );
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIShader::DeclareUniform ( u32 idx, cc8* name, u32 type, float value ) {
+	
+	if ( idx < this->mUniforms.Size ()) {
+		this->DeclareUniform ( idx, name, type );
+		this->mUniforms [ idx ].SetValue ( value );
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIShader::DeclareUniform ( u32 idx, cc8* name, u32 type, int value ) {
+	
+	if ( idx < this->mUniforms.Size ()) {
+		this->DeclareUniform ( idx, name, type );
+		this->mUniforms [ idx ].SetValue ( value );
 	}
 }
 
@@ -729,6 +782,7 @@ void MOAIShader::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "UNIFORM_FLOAT",				( u32 )MOAIShaderUniform::UNIFORM_FLOAT );
 	state.SetField ( -1, "UNIFORM_INT",					( u32 )MOAIShaderUniform::UNIFORM_INT );
 	state.SetField ( -1, "UNIFORM_PEN_COLOR",			( u32 )MOAIShaderUniform::UNIFORM_PEN_COLOR );
+	state.SetField ( -1, "UNIFORM_SAMPLER",				( u32 )MOAIShaderUniform::UNIFORM_SAMPLER );
 	state.SetField ( -1, "UNIFORM_TRANSFORM",			( u32 )MOAIShaderUniform::UNIFORM_TRANSFORM );
 	state.SetField ( -1, "UNIFORM_VIEW_PROJ",			( u32 )MOAIShaderUniform::UNIFORM_VIEW_PROJ );
 	state.SetField ( -1, "UNIFORM_WORLD",				( u32 )MOAIShaderUniform::UNIFORM_WORLD );
@@ -743,8 +797,10 @@ void MOAIShader::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	luaL_Reg regTable [] = {
 		{ "clearUniform",				_clearUniform },
-		{ "declareSampler",				_declareSampler },
 		{ "declareUniform",				_declareUniform },
+		{ "declareUniformFloat",		_declareUniformFloat },
+		{ "declareUniformInt",			_declareUniformInt },
+		{ "declareUniformSampler",		_declareUniformSampler },
 		{ "load",						_load },
 		{ "reserveUniforms",			_reserveUniforms },
 		{ "setVertexAttribute",			_setVertexAttribute },

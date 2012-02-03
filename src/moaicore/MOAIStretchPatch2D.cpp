@@ -334,7 +334,6 @@ MOAIStretchPatch2D::~MOAIStretchPatch2D () {
 
 //----------------------------------------------------------------//
 void MOAIStretchPatch2D::RegisterLuaClass ( MOAILuaState& state ) {
-	UNUSED ( state );
 
 	MOAIDeck::RegisterLuaClass ( state );
 }
@@ -342,6 +341,7 @@ void MOAIStretchPatch2D::RegisterLuaClass ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIStretchPatch2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 
+	MOAIDeck::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
 		{ "reserveColumns",		_reserveColumns },
