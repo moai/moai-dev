@@ -126,6 +126,7 @@ private:
 	USFrustum		mViewVolume;
 	
 	//----------------------------------------------------------------//
+	static int				_getMaxTextureUnits		( lua_State* L );
 	static int				_isProgrammable			( lua_State* L );
 	static int				_setClearColor			( lua_State* L );
 	static int				_setClearDepth			( lua_State* L );
@@ -172,7 +173,6 @@ public:
 	
 	void					ClearErrors				();
 	void					DetectContext			();
-	//void					DrawPrims				( const MOAIVertexFormat& format, GLenum primType, void* buffer, void* indices, u32 size ); 
 	void					EndPrim					();
 	void					Flush					();
 	

@@ -414,7 +414,10 @@ int MOAIShader::_declareUniformInt ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	declareUniformSampler
-	@text	Declares an uniform to be used as a texture unit index.
+	@text	Declares an uniform to be used as a texture unit index. This uniform is
+			internally an int, but when loaded into the shader the number one subtracted
+			from its value. This allows the user to maintain consistency with Lua's
+			convention of indexing from one.
 
 	@in		MOAIShader self
 	@in		number idx

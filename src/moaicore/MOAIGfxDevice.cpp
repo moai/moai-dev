@@ -23,6 +23,21 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+/**	@name	getMaxTextureUnits
+	@text	Returns the total number of texture units available on the device.
+
+	@in		MOAIGfxDevice self
+	@out	number maxTextureUnits
+*/
+int MOAIGfxDevice::_getMaxTextureUnits ( lua_State* L ) {
+
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	lua_pushnumber ( L, gfxDevice.mTextureUnits.Size ());
+
+	return 1;
+}
+
+//----------------------------------------------------------------//
 /**	@name	isProgrammable
 	@text	Returns a boolean indicating whether or not Moai is running
 			under the programmable pipeline.
@@ -709,6 +724,7 @@ void MOAIGfxDevice::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "EVENT_RESIZE", ( u32 )EVENT_RESIZE );
 
 	luaL_Reg regTable [] = {
+		{ "getMaxTextureUnits",			_getMaxTextureUnits },
 		{ "isProgrammable",				_isProgrammable },
 		{ "setClearColor",				_setClearColor },
 		{ "setClearDepth",				_setClearDepth },
