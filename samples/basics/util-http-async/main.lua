@@ -20,6 +20,12 @@ end
 
 task = MOAIHttpTask.new ()
 
+task:setVerb ( MOAIHttpTask.HTTP_GET )
+task:setUrl ( "www.cnn.com" )
 task:setCallback ( onFinish )
-task:httpGet ( "www.cnn.com" )
-
+task:setUserAgent ( "Moai" )
+task:setHeader ( "Foo", "foo" )
+task:setHeader ( "Bar", "bar" )
+task:setHeader ( "Baz", "baz" )
+task:setVerbose ( true )
+task:performAsync ()

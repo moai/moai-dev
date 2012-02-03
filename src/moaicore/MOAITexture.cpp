@@ -697,6 +697,22 @@ void MOAITexture::DeleteTexture	() {
 }
 
 //----------------------------------------------------------------//
+u32 MOAITexture::GetTexCoordIndex ( GLenum coord ) {
+
+	switch ( coord ) {
+		case GL_S:
+			return 0;
+		case GL_T:
+			return 1;
+		case GL_R:
+			return 2;
+		case GL_Q:
+			return 3;
+	}
+	return 0xffffffff;
+}
+
+//----------------------------------------------------------------//
 u32 MOAITexture::GetHeight () {
 	return this->mHeight;
 }
@@ -855,11 +871,11 @@ void MOAITexture::OnBind () {
 	
 	if ( this->mIsDirty ) {
 	
-#if USE_OPENGLES1	
-		if ( !MOAIGfxDevice::Get ().IsProgrammable ()) {
-			glTexEnvf ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
-		}
-#endif
+		#if USE_OPENGLES1	
+			if ( !MOAIGfxDevice::Get ().IsProgrammable ()) {
+				glTexEnvf ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
+			}
+		#endif
 		
 		glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, this->mWrap );
 		glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, this->mWrap );
@@ -924,21 +940,21 @@ void MOAITexture::OnLoad () {
 		//}
 		this->mLoader->Load ();
 
-#ifdef MOAI_OS_NACL
-		if ( g_core->IsMainThread () ) {
-			printf ( "ERROR: Texture Cannot perform blocking file I/O on main thread\n" );
-		}
+		#ifdef MOAI_OS_NACL
+			if ( g_core->IsMainThread () ) {
+				printf ( "ERROR: Texture Cannot perform blocking file I/O on main thread\n" );
+			}
 
-		g_blockOnMainThreadTexLoad = true;
-		pp::CompletionCallback cc ( NaClLoadTexture, this );
-		g_core->CallOnMainThread ( 0, cc , 0 );
+			g_blockOnMainThreadTexLoad = true;
+			pp::CompletionCallback cc ( NaClLoadTexture, this );
+			g_core->CallOnMainThread ( 0, cc , 0 );
 
-		while ( g_blockOnMainThreadTexLoad ) {
-			usleep ( 1000 );
-		}
-#else
-		this->CreateTexture ();
-#endif
+			while ( g_blockOnMainThreadTexLoad ) {
+				usleep ( 1000 );
+			}
+		#else
+			this->CreateTexture ();
+		#endif
 
 		if ( this->mGLTexID ) {
 
@@ -977,24 +993,26 @@ void MOAITexture::OnUnload () {
 		if ( MOAIGfxDevice::IsValid ()) {
 			MOAIGfxDevice::Get ().ReportTextureFree ( this->mFilename, this->mDataSize );
 		}
-#ifdef MOAI_OS_NACL
-		g_blockOnMainThreadTexUnload = true;
+		
+		#ifdef MOAI_OS_NACL
+			g_blockOnMainThreadTexUnload = true;
 
-		if ( g_core->IsMainThread () ) {
+			if ( g_core->IsMainThread () ) {
+				this->DeleteTexture ();
+				g_blockOnMainThreadTexUnload = false;
+			}
+			else {
+				pp::CompletionCallback cc ( NaClUnLoadTexture, this );
+				g_core->CallOnMainThread ( 0, cc , 0 );
+			}
+
+			while ( g_blockOnMainThreadTexUnload ) {
+				usleep ( 1000 );
+			}
+		#else
 			this->DeleteTexture ();
-			g_blockOnMainThreadTexUnload = false;
-		}
-		else {
-			pp::CompletionCallback cc ( NaClUnLoadTexture, this );
-			g_core->CallOnMainThread ( 0, cc , 0 );
-		}
-
-		while ( g_blockOnMainThreadTexUnload ) {
-			usleep ( 1000 );
-		}
-#else
-		this->DeleteTexture ();
-#endif
+		#endif
+	
 		this->mGLTexID = 0;
 	}
 }

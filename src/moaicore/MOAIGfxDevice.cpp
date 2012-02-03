@@ -1227,10 +1227,11 @@ bool MOAIGfxDevice::SetTexture ( MOAIMultiTexture* multi ) {
 				glEnable ( GL_TEXTURE_2D ); // TODO: comply with #if USE_OPENGLES1
 			}
 			this->mTextureUnits [ i ] = multi->mTextures [ i ];
+			this->mTextureUnits [ i ]->Bind ();
 		}
 	}
 	this->mActiveTextures = total;
-	return true;this->mActiveTextures;
+	return true;
 }
 
 //----------------------------------------------------------------//

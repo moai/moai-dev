@@ -78,6 +78,7 @@ private:
 	//----------------------------------------------------------------//
 	void			CreateTextureFromImage	( MOAIImage& image );
 	void			CreateTextureFromPVR	( void* data, size_t size );
+	u32				GetTexCoordIndex		( GLenum coord );
 	bool			IsRenewable				();
 	void			OnBind					();
 	void			OnClear					();

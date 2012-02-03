@@ -340,6 +340,28 @@ int MOAIShader::_clearUniform ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	declareSampler
+	@text	Declares a uniform intended for use as a texture sampler index.
+
+	@in		MOAIShader self
+	@in		number idx
+	@in		string name
+	@in		number value
+	@out	nil
+*/
+int MOAIShader::_declareSampler ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIShader, "UNSN" )
+	
+	u32 idx				= state.GetValue < u32 >( 2, 1 ) - 1;
+	STLString name		= state.GetValue < cc8* >( 3, "" );
+	int value			= state.GetValue < int >( 4, 1 ) - 1;
+	
+	self->DeclareSampler ( idx, name, value );
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	declareUniform
 	@text	Declares a uniform mapping.
 
@@ -508,6 +530,20 @@ GLuint MOAIShader::CompileShader ( GLuint type, cc8* source ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIShader::DeclareSampler ( u32 idx, cc8* name, int value ) {
+
+	if ( idx < this->mUniforms.Size ()) {
+		
+		this->ClearUniform ( idx );
+		
+		MOAIShaderUniform& uniform = this->mUniforms [ idx ];
+		uniform.mName = name;
+		uniform.SetType ( MOAIShaderUniform::UNIFORM_INT );
+		uniform.SetValue ( value );
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAIShader::DeclareUniform ( u32 idx, cc8* name, u32 type ) {
 	
 	if ( idx < this->mUniforms.Size ()) {
@@ -663,25 +699,24 @@ void MOAIShader::OnRenew () {
 //----------------------------------------------------------------//
 void MOAIShader::OnUnload () {
 
-#ifdef MOAI_OS_NACL
-	g_blockOnMainThreadShaderUnload = true;
-	
-	if ( g_core->IsMainThread () ) {
-		this->DeleteShaders ();
-		g_blockOnMainThreadShaderUnload = false;
-	}
-	else {
-		pp::CompletionCallback cc ( NaClUnLoadShader, this );
-		g_core->CallOnMainThread ( 0, cc , 0 );
-	}
+	#ifdef MOAI_OS_NACL
+		g_blockOnMainThreadShaderUnload = true;
+		
+		if ( g_core->IsMainThread () ) {
+			this->DeleteShaders ();
+			g_blockOnMainThreadShaderUnload = false;
+		}
+		else {
+			pp::CompletionCallback cc ( NaClUnLoadShader, this );
+			g_core->CallOnMainThread ( 0, cc , 0 );
+		}
 
-	while ( g_blockOnMainThreadShaderUnload ) {
-		usleep ( 100 );
-	}
-#else
-	this->DeleteShaders ();
-#endif
-	
+		while ( g_blockOnMainThreadShaderUnload ) {
+			usleep ( 100 );
+		}
+	#else
+		this->DeleteShaders ();
+	#endif
 }
 
 //----------------------------------------------------------------//
@@ -708,6 +743,7 @@ void MOAIShader::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	luaL_Reg regTable [] = {
 		{ "clearUniform",				_clearUniform },
+		{ "declareSampler",				_declareSampler },
 		{ "declareUniform",				_declareUniform },
 		{ "load",						_load },
 		{ "reserveUniforms",			_reserveUniforms },

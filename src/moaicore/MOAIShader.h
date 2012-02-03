@@ -103,6 +103,7 @@ protected:
 	
 	//----------------------------------------------------------------//
 	static int		_clearUniform			( lua_State* L );
+	static int		_declareSampler			( lua_State* L );
 	static int		_declareUniform			( lua_State* L );
 	static int		_load					( lua_State* L );
 	static int		_reserveUniforms		( lua_State* L );
@@ -132,6 +133,7 @@ public:
 	void			ClearUniform			( u32 idx );
 	void			ClearUniforms			();
 	void			DeleteShaders			();
+	void			DeclareSampler			( u32 idx, cc8* name, int value );
 	void			DeclareUniform			( u32 idx, cc8* name, u32 type );
 	bool			IsValid					();
 	bool			LoadGfxState			();

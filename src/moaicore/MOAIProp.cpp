@@ -888,6 +888,7 @@ MOAIProp::~MOAIProp () {
 	this->mRemapper.Set ( *this, 0 );
 	this->mGrid.Set ( *this, 0 );
 	this->mShader.Set ( *this, 0 );
+	this->mTexture.Set ( *this, 0 );
 	this->mUVTransform.Set ( *this, 0 );
 }
 

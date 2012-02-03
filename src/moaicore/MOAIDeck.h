@@ -58,7 +58,6 @@ public:
 							~MOAIDeck				();
 	void					RegisterLuaClass		( MOAILuaState& state );
 	void					RegisterLuaFuncs		( MOAILuaState& state );
-	void					SetTexture				( MOAILuaState& state, int idx );
 };
 
 #endif
