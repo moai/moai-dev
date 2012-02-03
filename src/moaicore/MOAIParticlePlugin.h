@@ -19,7 +19,7 @@
 class MOAIParticlePlugin :
 	public virtual MOAILuaObject {
 private:
-	static enum EmitterType{
+	enum EmitterType{
 		EMITTER_GRAVITY,
 		EMITTER_RADIAL,
 	};

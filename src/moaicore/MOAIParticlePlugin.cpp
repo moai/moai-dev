@@ -608,8 +608,20 @@ void MOAIParticlePlugin::_add( MOAIParticleScript* script, u64 reg, u64 val0, u6
 	SetValue(instr, 1, val0);
 	SetValue(instr, 2, val1);
 }
-void MOAIParticlePlugin::_cycle( MOAIParticleScript* script, u64 reg, u64 val0, u64 val1, u64 val2){}
-void MOAIParticlePlugin::_div( MOAIParticleScript* script, u64 reg, u64 val0, u64 val1){}
+void MOAIParticlePlugin::_cycle( MOAIParticleScript* script, u64 reg, u64 val0, u64 val1, u64 val2){
+	UNUSED(script);
+	UNUSED(reg);
+	UNUSED(val0);
+	UNUSED(val1);
+	UNUSED(val2);
+}
+void MOAIParticlePlugin::_div( MOAIParticleScript* script, u64 reg, u64 val0, u64 val1)
+{
+	UNUSED(script);
+	UNUSED(reg);
+	UNUSED(val0);
+	UNUSED(val1);
+}
 void MOAIParticlePlugin::_ease( MOAIParticleScript* script, u64 reg, u64 val0, u64 val1, u32 ease)
 {
 	MOAIParticleScript::Instruction &instr = script->PushInstruction(MOAIParticleScript::EASE, "RVVI");
@@ -648,7 +660,14 @@ void MOAIParticlePlugin::_rand( MOAIParticleScript* script, u64 reg, u64 val0, u
 	SetValue(instr, 1, val0);
 	SetValue(instr, 2, val1);
 }
-void MOAIParticlePlugin::_randVec(MOAIParticleScript* script, u64 reg0, u64 reg1, u64 val0, u64 val1){}
+void MOAIParticlePlugin::_randVec(MOAIParticleScript* script, u64 reg0, u64 reg1, u64 val0, u64 val1)
+{
+	UNUSED(script);
+	UNUSED(reg0);
+	UNUSED(reg1);
+	UNUSED(val0);
+	UNUSED(val1);
+}
 void MOAIParticlePlugin::_set(MOAIParticleScript* script, u64 reg, u64 val0)
 {
 	MOAIParticleScript::Instruction &instr = script->PushInstruction(MOAIParticleScript::SET, "RV");
@@ -657,7 +676,7 @@ void MOAIParticlePlugin::_set(MOAIParticleScript* script, u64 reg, u64 val0)
 }
 void MOAIParticlePlugin::_sprite(MOAIParticleScript* script)
 {
-	MOAIParticleScript::Instruction &instr = script->PushInstruction(MOAIParticleScript::SPRITE, "");
+	script->PushInstruction(MOAIParticleScript::SPRITE, "");
 }
 void MOAIParticlePlugin::_sub( MOAIParticleScript* script, u64 reg, u64 val0, u64 val1 )
 {
@@ -677,7 +696,13 @@ void MOAIParticlePlugin::_timeDelta( MOAIParticleScript* script, u64 reg)
 	MOAIParticleScript::Instruction &instr = script->PushInstruction(MOAIParticleScript::TIME_DELTA, "R");
 	SetRegister(instr, 0, reg);
 }
-void MOAIParticlePlugin::_vecAngle( MOAIParticleScript* script, u64 reg, u64 val0, u64 val1){}
+void MOAIParticlePlugin::_vecAngle( MOAIParticleScript* script, u64 reg, u64 val0, u64 val1)
+{
+	UNUSED(script);
+	UNUSED(reg);
+	UNUSED(val0);
+	UNUSED(val1);
+}
 void MOAIParticlePlugin::_angleVec(MOAIParticleScript* script, u64 reg0, u64 reg1, u64 val)
 {
 	MOAIParticleScript::Instruction &instr = script->PushInstruction(MOAIParticleScript::ANGLE_VEC, "RRV");
@@ -685,7 +710,14 @@ void MOAIParticlePlugin::_angleVec(MOAIParticleScript* script, u64 reg0, u64 reg
 	SetRegister( instr, 1, reg1);
 	SetValue( instr, 2, val);
 }
-void MOAIParticlePlugin::_wrap( MOAIParticleScript* script, u64 reg, u64 val0, u64 val1, u64 val2){}
+void MOAIParticlePlugin::_wrap( MOAIParticleScript* script, u64 reg, u64 val0, u64 val1, u64 val2)
+{
+	UNUSED(script);
+	UNUSED(reg);
+	UNUSED(val0);
+	UNUSED(val1);
+	UNUSED(val2);
+}
 
 u64	MOAIParticlePlugin::_packConst( float val )
 {	

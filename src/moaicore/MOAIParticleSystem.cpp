@@ -82,7 +82,7 @@ int MOAIParticleSystem::_getState ( lua_State* L ) {
 	return 0;
 }
 
-/**	@name	ignoreLocalTransform
+/**	@name	setIgnoreLocalTransform
 	@text	Controls whether the local transform matrix will
 			be applied to rendered sprites
 	
@@ -90,7 +90,7 @@ int MOAIParticleSystem::_getState ( lua_State* L ) {
 	@opt	boolean whether to ignore the local transform
 	@out	nil
 */
-int	MOAIParticleSystem::_ignoreLocalTransform ( lua_State* L ){
+int	MOAIParticleSystem::_setIgnoreLocalTransform ( lua_State* L ){
 	MOAI_LUA_SETUP ( MOAIParticleSystem, "U" )
 
 	self->mIgnoreLocalTransform = state.GetValue < bool >( 2, true );
@@ -559,20 +559,20 @@ void MOAIParticleSystem::RegisterLuaFuncs ( MOAILuaState& state ) {
 	MOAIAction::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
-		{ "capParticles",		_capParticles },
-		{ "capSprites",			_capSprites },
-		{ "clearSprites",		_clearSprites },
-		{ "getState",			_getState },
-		{ "ignoreLocalTransform", _ignoreLocalTransform },
-		{ "pushParticle",		_pushParticle },
-		{ "pushSprite",			_pushSprite },
-		{ "reserveParticles",	_reserveParticles },
-		{ "reserveSprites",		_reserveSprites },
-		{ "reserveStates",		_reserveStates },
-		{ "setSpriteColor",		_setSpriteColor },
-		{ "setSpriteDeckIdx",	_setSpriteDeckIdx },
-		{ "setState",			_setState },
-		{ "surge",				_surge },
+		{ "capParticles",			_capParticles },
+		{ "capSprites",				_capSprites },
+		{ "clearSprites",			_clearSprites },
+		{ "getState",				_getState },
+		{ "pushParticle",			_pushParticle },
+		{ "pushSprite",				_pushSprite },
+		{ "reserveParticles",		_reserveParticles },
+		{ "reserveSprites",			_reserveSprites },
+		{ "reserveStates",			_reserveStates },
+		{ "setIgnoreLocalTransform", _setIgnoreLocalTransform },
+		{ "setSpriteColor",			_setSpriteColor },
+		{ "setSpriteDeckIdx",		_setSpriteDeckIdx },
+		{ "setState",				_setState },
+		{ "surge",					_surge },
 		{ NULL, NULL }
 	};
 	

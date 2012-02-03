@@ -433,7 +433,6 @@ bool MOAIProp2D::BindDeck () {
 
 //----------------------------------------------------------------//
 void MOAIProp2D::Draw ( int subPrimID, bool reload ) {
-	UNUSED ( subPrimID );
 
 	if ( !this->mVisible ) return;
 	if ( !this->BindDeck ()) return;
@@ -452,7 +451,7 @@ void MOAIProp2D::Draw ( int subPrimID, bool reload ) {
 	
 	if ( this->mGrid ) {
 	
-		if ( (u32)subPrimID == MOAIProp::NO_SUBPRIM_ID ) {
+		if ( subPrimID == MOAIProp::NO_SUBPRIM_ID ) {
 	
 			MOAICellCoord c0;
 			MOAICellCoord c1;
