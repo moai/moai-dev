@@ -225,7 +225,6 @@ xcopy /yr "$(OutDir)$(TargetName).pdb" "..\..\bin\$(Platform)\$(Configuration)\"
   <ItemGroup>
     <ProjectReference Include="..\uslscore\uslscore.vcxproj">
       <Project>{86e29f0a-83d1-4001-9e1a-b20c6aece6f7}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
     <ProjectReference Include="..\zipfs\zipfs.vcxproj">
       <Project>{a92a8c1c-c62d-43f8-98a9-c418a786be56}</Project>

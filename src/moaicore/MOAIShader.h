@@ -22,17 +22,6 @@ private:
 
 	friend class MOAIShader;
 
-	enum {
-		UNIFORM_NONE,
-		UNIFORM_COLOR,
-		UNIFORM_FLOAT,
-		UNIFORM_INT,
-		UNIFORM_TRANSFORM,
-		UNIFORM_VIEW_PROJ,
-		UNIFORM_WORLD,
-		UNIFORM_WORLD_VIEW_PROJ,
-	};
-
 	STLString mName;
 	
 	u32		mAddr;		// this is resolved when linking the shader
@@ -47,13 +36,15 @@ private:
 	};
 
 	//----------------------------------------------------------------//
+	void		AddValue					( const MOAIAttrOp& attrOp );
 	void		Bind						();
+	void		BindPenColor				( float r, float g, float b, float a );
 	void		BindPipelineTransforms		( const USMatrix4x4& world, const USMatrix4x4& view, const USMatrix4x4& proj );
 	void		Clear						();
 	void		SetBuffer					( void* buffer, size_t size );
 	void		SetType						( u32 type );
 	void		SetValue					( float value );
-	void		SetValue					( int value);
+	void		SetValue					( int value );
 	void		SetValue					( const MOAIAttrOp& attrOp );
 	void		SetValue					( const USColorVec& value );
 	void		SetValue					( const USAffine2D& value );
@@ -62,6 +53,18 @@ private:
 public:
 
 	//----------------------------------------------------------------//
+	enum {
+		UNIFORM_NONE,
+		UNIFORM_COLOR,
+		UNIFORM_FLOAT,
+		UNIFORM_INT,
+		UNIFORM_PEN_COLOR,
+		UNIFORM_TRANSFORM,
+		UNIFORM_VIEW_PROJ,
+		UNIFORM_WORLD,
+		UNIFORM_WORLD_VIEW_PROJ,
+	};
+
 				MOAIShaderUniform			();
 				~MOAIShaderUniform			();
 };
@@ -71,6 +74,15 @@ public:
 //================================================================//
 /**	@name	MOAIShader
 	@text	Programmable shader class.
+	
+	@const	UNIFORM_COLOR
+	@const	UNIFORM_FLOAT
+	@const	UNIFORM_INT
+	@const	UNIFORM_PEN_COLOR
+	@const	UNIFORM_TRANSFORM
+	@const	UNIFORM_VIEW_PROJ
+	@const	UNIFORM_WORLD
+	@const	UNIFORM_WORLD_VIEW_PROJ
 */
 class MOAIShader :
 	public virtual MOAINode,
@@ -104,6 +116,7 @@ protected:
 	void			OnLoad						();
 	void			OnRenew						();
 	void			OnUnload					();
+	void			UpdatePenColor				( float r, float g, float b, float a );
 	void			UpdatePipelineTransforms	( const USMatrix4x4& world, const USMatrix4x4& view, const USMatrix4x4& proj );
 	bool			Validate					();
 

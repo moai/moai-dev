@@ -364,7 +364,7 @@ int MOAILayer2D::_wndToWorld ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	wndToWorld
+/**	@name	worldToWnd
 	@text	Transform a point from world space to window space.
 	
 	@in		MOAILayer2D self
@@ -481,9 +481,9 @@ void MOAILayer2D::Draw ( int subPrimID, bool reload ) {
 			MOAIPartitionResult* result = buffer.GetResultUnsafe ( i );
 			
 			MOAIProp* prop = result->mProp;
-			bool _reload = prop != prevProp;
+			bool reloadProp = prop != prevProp;
 			
-			prop->Draw ( result->mSubPrimID, _reload );
+			prop->Draw ( result->mSubPrimID, reloadProp );
 			prop->DrawDebug ( result->mSubPrimID );
 			
 			prevProp = prop;

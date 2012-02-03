@@ -81,16 +81,19 @@ int MOAITransform::_addRot ( lua_State* L ) {
 	
 	@in		MOAITransform self
 	@in		number xSclDelta
-	@in		number ySclDelta
+	@opt	number ySclDelta		Default value is xSclDelta.
 	@out	nil
 */
 int MOAITransform::_addScl ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITransform, "UNN" )
+	MOAI_LUA_SETUP ( MOAITransform, "UN" )
 	
 	USVec2D scl = self->GetScl ();
 	
-	scl.mX += state.GetValue < float >( 2, 0.0f );
-	scl.mY += state.GetValue < float >( 3, 0.0f );
+	float xSclDelta = state.GetValue < float >( 2, 0.0f );
+	float ySclDelta = state.GetValue < float >( 3, xSclDelta );
+	
+	scl.mX += xSclDelta;
+	scl.mY += ySclDelta;
 	
 	self->SetScl ( scl );
 	self->ScheduleUpdate ();
@@ -688,7 +691,7 @@ int MOAITransform::_setLoc ( lua_State* L ) {
 /**	@name	setParent
 	@text	This method has been deprecated. Use MOAINode setAttrLink instead.
 	
-	@in		MOAIProp2D self
+	@in		MOAITransform self
 	@opt	MOAINode parent		Default value is nil.
 	@out	nil
 */
@@ -752,16 +755,16 @@ int MOAITransform::_setRot ( lua_State* L ) {
 	
 	@in		MOAITransform self
 	@in		number xScl
-	@in		number yScl
+	@opt	number yScl				Default value is xScl.
 	@out	nil
 */
 int MOAITransform::_setScl ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITransform, "UNN" )
+	MOAI_LUA_SETUP ( MOAITransform, "UN" )
 	
 	USVec2D scl;
 	
 	scl.mX = state.GetValue < float >( 2, 0.0f );
-	scl.mY = state.GetValue < float >( 3, 0.0f );
+	scl.mY = state.GetValue < float >( 3, scl.mX );
 	
 	self->SetScl ( scl );
 	self->ScheduleUpdate ();

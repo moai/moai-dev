@@ -6,9 +6,10 @@
 
 MOAISim.openWindow ( "test", 32, 32 )
 
-function onFinish ( task )
+function onFinish ( task, responseCode )
 
 	print ( "onFinish" )
+	print ( responseCode )
 
 	if ( task:getSize ()) then
 		print ( task:getString ())

@@ -157,4 +157,10 @@ MOAIHttpTaskInfo::~MOAIHttpTaskInfo () {
 	this->Clear ();
 }
 
+//----------------------------------------------------------------//
+void MOAIHttpTaskInfo::PerformSync () {
+
+	// TODO: Implement blocking HTTP connections.
+}
+
 #endif

@@ -84,7 +84,7 @@ int MOAIBox2DMouseJoint::_getMaxForce ( lua_State* L ) {
 /**	@name	getTarget
 	@text	See Box2D documentation.
 	
-	@in		MOAIBox2DPulleyJoint self
+	@in		MOAIBox2DMouseJoint self
 	@out	number x
 	@out	number y
 */

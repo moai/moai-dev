@@ -74,21 +74,22 @@ void MOAIEventSource::SetListener ( lua_State* L, u32 idx ) {
 
 	@overload
 
-		@in		MOAIEventSource self
+		@in		MOAIInstanceEventSource self
 		@in		number eventID			The ID of the event.
 		@opt	function callback		The callback to be called when the object emits the event. Default value is nil.
-		@out	nil
-	
+		@out	MOAIInstanceEventSource		self
+
 	@overload
 		
 		@in		number eventID			The ID of the event.
 		@opt	function callback		The callback to be called when the object emits the event. Default value is nil.
-		@out	nil
+		@out	MOAIInstanceEventSource		self
 */
 int MOAIInstanceEventSource::_setListener ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIInstanceEventSource, "UN" );
 
 	self->SetListener ( state, 2 );
+	//state.CopyToTop( 1 );
 
 	return 0;
 }

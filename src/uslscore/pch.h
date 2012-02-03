@@ -1,6 +1,10 @@
 #ifndef USLSCORE_PCH_H
 #define	USLSCORE_PCH_H
 
+#ifndef TIXML_USE_STL
+	#define TIXML_USE_STL
+#endif
+
 // lua
 extern "C" {
 	#include <lua.h>

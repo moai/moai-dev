@@ -35,7 +35,7 @@ int MOAITextBox::_clearCurves ( lua_State* L ) {
 /**	@name	getLineSize
 	@text	Returns the size of a line (in pixels).
 
-	@in		MOAIFont self
+	@in		MOAITextBox self
 	@out	number lineScale		The size of the line in pixels.
 */
 int MOAITextBox::_getLineSize ( lua_State* L ) {
@@ -313,7 +313,7 @@ int MOAITextBox::_setString ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getStringBounds
+/**	@name	setStringColor
 	@text	Sets the color of a sub string in the text. Only affects
 			text displayed on the current page.
 

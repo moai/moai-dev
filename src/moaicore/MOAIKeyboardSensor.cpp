@@ -20,7 +20,7 @@ public:
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	down
+/**	@name	keyDown
 	@text	Checks to see if the button was pressed during the last iteration.
 
 	@in		MOAIKeyboardSensor self

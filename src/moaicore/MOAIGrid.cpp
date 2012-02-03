@@ -187,9 +187,11 @@ int MOAIGrid::_toggleTileFlags ( lua_State* L ) {
 u32 MOAIGrid::GetTile ( int xTile, int yTile ) {
 
 	MOAICellCoord coord ( xTile, yTile );
-	u32 addr = this->GetCellAddr ( coord );
-	if ( addr < this->mTiles.Size ()) {
-		return this->mTiles [ addr ];
+	if ( this->IsValidCoord ( coord )) {
+		u32 addr = this->GetCellAddr ( coord );
+		if ( addr < this->mTiles.Size ()) {
+			return this->mTiles [ addr ];
+		}
 	}
 	return 0;
 }
@@ -296,11 +298,9 @@ void MOAIGrid::SetTile ( u32 addr, u32 tile ) {
 //----------------------------------------------------------------//
 void MOAIGrid::SetTile ( int xTile, int yTile, u32 tile ) {
 
-	u32 size = this->mTiles.Size ();
+	MOAICellCoord coord ( xTile, yTile );
+	if ( this->IsValidCoord ( coord )) {
 	
-	if ( size ) {
-
-		MOAICellCoord coord ( xTile, yTile );
 		u32 addr = this->GetCellAddr ( coord );
 		if ( addr < this->mTiles.Size ()) {
 			this->mTiles [ addr ] = tile;

@@ -26,6 +26,7 @@
 #include <moaicore/MOAICanary.h>
 #include <moaicore/MOAIColor.h>
 #include <moaicore/MOAICompassSensor.h>
+#include <moaicore/MOAICoroutine.h>
 #include <moaicore/MOAIDataBuffer.h>
 #include <moaicore/MOAIDataIOAction.h>
 #include <moaicore/MOAIDebugLines.h>
@@ -114,7 +115,6 @@
 #include <moaicore/MOAITextFrame.h>
 #include <moaicore/MOAITextLayout.h>
 #include <moaicore/MOAITexture.h>
-#include <moaicore/MOAIThread.h>
 #include <moaicore/MOAITileDeck2D.h>
 #include <moaicore/MOAITileFlags.h>
 #include <moaicore/MOAITimer.h>
@@ -166,7 +166,9 @@
 namespace moaicore {
 
 	//----------------------------------------------------------------//
-	void			InitGlobals			( MOAIGlobals* globals );
+	void			InitGlobals			( MOAIGlobals* globals ); // initialize a Moai context
+	void			SystemFinalize		(); // call *once* at exit
+	void			SystemInit			(); // call *once* at program startup
 }
 
 #endif

@@ -24,6 +24,7 @@ tileDeck:setRect ( -0.5, 0.5, 0.5, -0.5 )
 
 grid = MOAIGrid.new ()
 grid:setSize ( 8, 8, 32, 32 )
+grid:setRepeat ( true ) -- wrap the grid when drawing
 
 grid:setRow ( 1, 	0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08 )
 grid:setRow ( 2, 	0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f, 0x10 )
@@ -39,7 +40,6 @@ prop:setDeck ( tileDeck )
 prop:setGrid ( grid )
 prop:setLoc ( -128, 128 )
 prop:setScl ( 1, -1 )
-prop:setRepeat ( true ) -- wrap the tilemap when drawing
 layer:insertProp ( prop )
 
 prop:moveRot ( 360, 1.5 )

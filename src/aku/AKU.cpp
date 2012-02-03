@@ -42,6 +42,7 @@ struct AKUContext {
 typedef STLMap < AKUContextID, AKUContext* >::iterator ContextMapIt;
 typedef STLMap < AKUContextID, AKUContext* > ContextMap;
 
+static bool			gSysInit = true;
 static ContextMap*	gContextMap = 0;
 static AKUContextID	gContextIDCounter = 0;
 static AKUContextID	gContextID = 0;
@@ -96,9 +97,11 @@ void AKUClearMemPool () {
 //----------------------------------------------------------------//
 AKUContextID AKUCreateContext () {
 	
-	static bool sysInit = true;
-	if ( sysInit ) {
+	if ( gSysInit ) {
+		moaicore::SystemInit ();
 		gContextMap = new ContextMap;
+		atexit ( _cleanup );
+		gSysInit = false;
 	}
 
 	gContext = ( AKUContext* )calloc ( 1, sizeof ( AKUContext ));
@@ -111,10 +114,6 @@ AKUContextID AKUCreateContext () {
 	gContext->mGlobals = MOAIGlobalsMgr::Create ();
 	moaicore::InitGlobals ( gContext->mGlobals );
 
-	if ( sysInit ) {
-		atexit ( _cleanup );
-		sysInit = false;
-	}
 	return gContextIDCounter;
 }
 
@@ -203,6 +202,12 @@ void AKUFinalize () {
 		
 		delete gContextMap;
 		gContextMap = 0;
+		gSysInit = true;
+	}
+	
+	if ( !gSysInit ) {
+		moaicore::SystemFinalize ();
+		gSysInit = true;
 	}
 }
 

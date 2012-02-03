@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+		  
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="style1.css" />
+	<script type="text/javascript">
+    Moai = {};
+	Moai.isRelease = true;
+    </script>
+	<script language="javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+	<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
+	<script type="text/javascript" src="bind.js"></script>
+	<script type="text/javascript" src="moai_base.js"></script>
+    <script type="text/javascript">
+ 
+	moaiBase = new Moai.Base ();
+	
+    MoaiModule = null;
+
+    function moduleDidLoad() {
+      MoaiModule = document.getElementById('moai');
+      //MoaiModule.addEventListener('message', handleMessage, false);
+	  MoaiModule.addEventListener('message', moaiBase.naclMessageHandler, false);
+    }
+
+    function pageDidLoad() {
+    }
+
+  </script>
+</head>
+<body>
+
+	<div id="listener" >
+		<div id="game">
+	  
+		<script type="text/javascript">
+		   document.getElementById('listener').addEventListener('load', moduleDidLoad, true);
+		</script>
+		
+		<embed name="nacl_module"
+		   id="moai"
+		   width=0 height=0
+		   src="moai.nmf"
+		   type="application/x-nacl" />
+	   
+		</div>
+	
+		<div id="moai-banner">
+			<a href="http://GetMoai.com/" target="_blank" border="0"><img id="moai_image" src="bannerMoai.png" width="967px" height="157px"/></a>
+		</div>
+	
+	</div>
+
+</body>
+</html>

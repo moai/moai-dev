@@ -23,7 +23,7 @@ public:
 /**	@name	getVector
 	@text	Returns the joystick vector.
 
-	@in		MOAIPointerSensor self
+	@in		MOAIJoystickSensor self
 	@out	number x
 	@out	number y
 */

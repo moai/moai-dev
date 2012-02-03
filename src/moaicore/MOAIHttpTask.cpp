@@ -59,6 +59,7 @@ int MOAIHttpTask::_getString ( lua_State* L ) {
 	@in		string url				The URL on which to perform the GET request.
 	@opt	string useragent		Default value is "Moai SDK beta; support@getmoai.com"
 	@opt	boolean verbose
+	@opt	boolean blocking		Synchronous operation; block execution until complete. Default value is false.
 	@out	nil
 */
 int MOAIHttpTask::_httpGet ( lua_State* L ) {
@@ -67,8 +68,9 @@ int MOAIHttpTask::_httpGet ( lua_State* L ) {
 	cc8* url		= state.GetValue < cc8* >( 2, "" );
 	cc8* useragent	= state.GetValue < cc8* >( 3, DEFAULT_MOAI_HTTP_USERAGENT );
 	bool verbose	= state.GetValue < bool >( 4, false );
+	bool blocking	= state.GetValue < bool >( 5, false );
 	
-	self->HttpGet ( url, useragent, verbose );
+	self->HttpGet ( url, useragent, verbose, blocking );
 
 	return 0;
 }
@@ -84,6 +86,7 @@ int MOAIHttpTask::_httpGet ( lua_State* L ) {
 		@opt	string data				The string containing text to send as POST data.
 		@opt	string useragent		Default value is "Moai SDK beta; support@getmoai.com"
 		@opt	boolean verbose
+		@opt	boolean blocking		Synchronous operation; block execution until complete. Default value is false.
 		@out	nil
 	
 	@overload
@@ -93,6 +96,7 @@ int MOAIHttpTask::_httpGet ( lua_State* L ) {
 		@opt	MOAIDataBuffer data		A MOAIDataBuffer object to send as POST data.
 		@opt	string useragent
 		@opt	boolean verbose
+		@opt	boolean blocking		Synchronous operation; block execution until complete. Default value is false.
 		@out	nil
 */
 int MOAIHttpTask::_httpPost ( lua_State* L ) {
@@ -101,6 +105,7 @@ int MOAIHttpTask::_httpPost ( lua_State* L ) {
 	cc8* url		= state.GetValue < cc8* >( 2, "" );
 	cc8* useragent	= state.GetValue < cc8* >( 4, DEFAULT_MOAI_HTTP_USERAGENT );
 	bool verbose	= state.GetValue < bool >( 5, false );
+	bool blocking	= state.GetValue < bool >( 6, false );
 
 	if ( state.IsType (3, LUA_TUSERDATA) ) {
 		
@@ -111,14 +116,14 @@ int MOAIHttpTask::_httpPost ( lua_State* L ) {
 			void* bytes;
 			size_t size;
 			data->Lock ( &bytes, &size );
-			self->HttpPost ( url, useragent, bytes, size, verbose );
+			self->HttpPost ( url, useragent, bytes, size, verbose, blocking );
 			data->Unlock ();
 		}
 	}
 	else if ( state.IsType (3, LUA_TSTRING )) {
 		
 		cc8* postString = lua_tostring ( state, 3 );
-		self->HttpPost ( url, useragent, postString, ( u32 )strlen ( postString ), verbose );
+		self->HttpPost ( url, useragent, postString, ( u32 )strlen ( postString ), verbose, blocking );
 	}
 
 	return 0;
@@ -206,25 +211,37 @@ void MOAIHttpTask::GetData ( void* buffer, u32 size ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIHttpTask::HttpGet ( cc8* url, cc8* useragent, bool verbose ) {
+void MOAIHttpTask::HttpGet ( cc8* url, cc8* useragent, bool verbose, bool blocking ) {
 
 	this->Clear ();
 	
 	this->mInfo = new MOAIHttpTaskInfo ();
 	this->mInfo->InitForGet ( url, useragent, verbose );
 	
-	MOAIUrlMgr::Get ().AddHandle ( *this );
+	if ( blocking ) {
+		this->mInfo->PerformSync ();
+		this->Finish ();
+	}
+	else {
+		MOAIUrlMgr::Get ().AddHandle ( *this );
+	}
 }
 
 //----------------------------------------------------------------//
-void MOAIHttpTask::HttpPost ( cc8* url, cc8* useragent, const void* buffer, u32 size, bool verbose ) {
+void MOAIHttpTask::HttpPost ( cc8* url, cc8* useragent, const void* buffer, u32 size, bool verbose, bool blocking ) {
 
 	this->Clear ();
 	
 	this->mInfo = new MOAIHttpTaskInfo ();
 	this->mInfo->InitForPost ( url, useragent, buffer, size, verbose );
 	
-	MOAIUrlMgr::Get ().AddHandle ( *this );
+	if ( blocking ) {
+		this->mInfo->PerformSync ();
+		this->Finish ();
+	}
+	else {
+		MOAIUrlMgr::Get ().AddHandle ( *this );
+	}
 }
 
 //----------------------------------------------------------------//

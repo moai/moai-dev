@@ -15,14 +15,14 @@ function onDialogDismissed ( code )
 		print ( "dialog result: MAYBE" )
 	elseif ( code == MOAIApp.DIALOG_RESULT_NEGATIVE ) then
 		print ( "dialog result: NO" )
-	else
+	elseif ( code == MOAIApp.DIALOG_RESULT_CANCEL ) then
 		print ( "dialog result: CANCELED" )
+	else
+		print ( "dialog result: UNKNOWN" )
 	end
 end
 
-MOAIApp.setListener ( MOAIApp.DIALOG_DISMISSED, onDialogDismissed )
-
-MOAIApp.showDialog ( "A title", "A meaningful message", "OK", "Maybe", "No", false )
+MOAIApp.showDialog ( "A title", "A meaningful message", "Yes", "Maybe", "No", true, onDialogDismissed )
 
 ----------------------------------------------------------------
 

@@ -17,12 +17,6 @@ private:
 	static int		_initObject					( lua_State* L );
 	static int		_registerObjectID			( lua_State* L );
 
-protected:
-
-	//----------------------------------------------------------------//
-	void			RegisterLuaClass		( MOAILuaState& state );
-	void			RegisterLuaFuncs		( MOAILuaState& state );
-
 public:
 
 	enum {
@@ -35,11 +29,13 @@ public:
 	DECL_LUA_FACTORY ( MOAIDeserializer )
 
 	//----------------------------------------------------------------//
-	u32				IsLuaFile					( cc8* filename );
-	MOAILuaObject*		MemberIDToObject			( uintptr memberID );
-	u32				SerializeFromFile			( cc8* filename );
-					MOAIDeserializer			();
-	virtual			~MOAIDeserializer			();
+	u32					IsLuaFile				( cc8* filename );
+	MOAILuaObject*		MemberIDToObject		( uintptr memberID );
+	u32					SerializeFromFile		( cc8* filename );
+						MOAIDeserializer		();
+	virtual				~MOAIDeserializer		();
+	void				RegisterLuaClass		( MOAILuaState& state );
+	void				RegisterLuaFuncs		( MOAILuaState& state );
 	
 	//----------------------------------------------------------------//
 	template < typename TYPE >

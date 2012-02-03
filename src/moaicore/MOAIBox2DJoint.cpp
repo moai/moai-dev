@@ -21,7 +21,7 @@ SUPPRESS_EMPTY_FILE_WARNING
 /**	@name	destroy
 	@text	Schedule joint for destruction.
 	
-	@in		MOAIBox2DBody self
+	@in		MOAIBox2DJoint self
 	@out	nil
 */
 int MOAIBox2DJoint::_destroy ( lua_State* L ) {
@@ -149,11 +149,11 @@ int MOAIBox2DJoint::_getReactionForce ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getReactionForce
+/**	@name	getReactionTorque
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DJoint self
-	@out	number reactionTorque In degrees.
+	@out	number reactionTorque	Converted from N-m.
 */
 int MOAIBox2DJoint::_getReactionTorque ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DJoint, "U" )
@@ -165,8 +165,10 @@ int MOAIBox2DJoint::_getReactionTorque ( lua_State* L ) {
 	
 	float step = ( float )( 1.0 / MOAISim::Get ().GetStep ());
 	
+	/* Convert from N-m (kg m / s^2) * m to (kg unit / s^2) * unit */
+	float unitsToMeters = self->GetUnitsToMeters();
 	float torque = self->mJoint->GetReactionTorque ( step );
-	lua_pushnumber ( state, torque );
+	lua_pushnumber ( state, torque / ( unitsToMeters * unitsToMeters ) );
 	
 	return 1;
 }

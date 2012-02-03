@@ -1,0 +1,1 @@
+ompq.metrics.jsonp_callback(1);

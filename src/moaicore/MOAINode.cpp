@@ -446,11 +446,13 @@ void MOAINode::ClearNodeLink ( MOAINode& srcNode ) {
 void MOAINode::DepNodeUpdate () {
 	
 	if ( this->mState == STATE_SCHEDULED ) {
+	
+		
+	
 		this->PullAttributes ();
 		this->OnDepNodeUpdate ();
 		this->ExtendUpdate ();
 	}
-	// now we are done
 	this->mState = STATE_ACTIVE;
 }
 
@@ -641,6 +643,7 @@ void MOAINode::ScheduleUpdate () {
 	
 	// add to the list if not already in it
 	if ( this->mState == STATE_IDLE ) {
+		this->mState = STATE_SCHEDULED;
 
 		// push us at the end of the list
 		MOAINodeMgr::Get ().PushBack ( *this );

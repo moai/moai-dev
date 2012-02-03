@@ -45,7 +45,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\src;&quot;..\..\3rdparty\lua-5.1.3\src&quot;;&quot;..\..\3rdparty\sqlite-3.6.16&quot;;&quot;..\..\3rdparty\curl-7.19.7\include&quot;;&quot;..\..\3rdparty\openssl-1.0.0d\include-win32&quot;;&quot;..\..\3rdparty\luasql-2.2.0\src&quot;;&quot;..\..\3rdparty\luasocket-2.0.2\src&quot;;&quot;..\..\3rdparty\luacrypto-0.2.0\src&quot;"
+				AdditionalIncludeDirectories="..\..\src;&quot;..\..\3rdparty\lua-5.1.3\src&quot;;&quot;..\..\3rdparty\sqlite-3.6.16&quot;;&quot;..\..\3rdparty\curl-7.19.7\include&quot;;&quot;..\..\3rdparty\openssl-1.0.0d\include-win32&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;CURL_STATICLIB;AKU_STATIC"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -116,7 +116,7 @@
 				Optimization="1"
 				FavorSizeOrSpeed="2"
 				WholeProgramOptimization="false"
-				AdditionalIncludeDirectories="..\..\src;&quot;..\..\3rdparty\lua-5.1.3\src&quot;;&quot;..\..\3rdparty\sqlite-3.6.16&quot;;&quot;..\..\3rdparty\curl-7.19.7\include&quot;;&quot;..\..\3rdparty\openssl-1.0.0d\include-win32&quot;;&quot;..\..\3rdparty\luasql-2.2.0\src&quot;;&quot;..\..\3rdparty\luasocket-2.0.2\src&quot;;&quot;..\..\3rdparty\luacrypto-0.2.0\src&quot;"
+				AdditionalIncludeDirectories="..\..\src;&quot;..\..\3rdparty\lua-5.1.3\src&quot;;&quot;..\..\3rdparty\sqlite-3.6.16&quot;;&quot;..\..\3rdparty\curl-7.19.7\include&quot;;&quot;..\..\3rdparty\openssl-1.0.0d\include-win32&quot;"
 				PreprocessorDefinitions="WIN32;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;CURL_STATICLIB;AKU_STATIC"
 				RuntimeLibrary="2"
 				BufferSecurityCheck="false"
@@ -479,6 +479,18 @@
 			</File>
 			<File
 				RelativePath="..\..\3rdparty\luasql-2.2.0\src\luasql.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="luafilesystem"
+			>
+			<File
+				RelativePath="..\..\3rdparty\luafilesystem-1.5.0\src\lfs.c"
+				>
+			</File>
+			<File
+				RelativePath="..\..\3rdparty\luafilesystem-1.5.0\src\lfs.h"
 				>
 			</File>
 		</Filter>

@@ -272,7 +272,7 @@ int MOAITexture::_setFilter ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setFilter
+/**	@name	setWrap
 	@text	Set wrapping mode for texture.
 	
 	@in		MOAITexture self
@@ -354,7 +354,6 @@ void MOAITexture::CreateTexture	() {
 void MOAITexture::CreateTextureFromImage ( MOAIImage& image ) {
 
 	bool error = false;
-
 	if ( !image.IsOK ()) return;
 	if ( !MOAIGfxDevice::Get ().GetHasContext ()) return;
 
@@ -899,6 +898,9 @@ void MOAITexture::OnLoad () {
 			glBindTexture ( GL_TEXTURE_2D, this->mGLTexID );
 			glTexImage2D ( GL_TEXTURE_2D, 0, GL_RGBA, this->mWidth, this->mHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0 );
 			glFramebufferTexture2D ( GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, this->mGLTexID, 0 );
+			
+			// refresh tex params on next bind
+			this->mIsDirty = true;
 		}
 	}
 	else if ( this->mLoader ) {
@@ -918,7 +920,7 @@ void MOAITexture::OnLoad () {
 		g_core->CallOnMainThread ( 0, cc , 0 );
 
 		while ( g_blockOnMainThreadTexLoad ) {
-			sleep ( 0.0001f );
+			usleep ( 1000 );
 		}
 #else
 		this->CreateTexture ();
@@ -974,7 +976,7 @@ void MOAITexture::OnUnload () {
 		}
 
 		while ( g_blockOnMainThreadTexUnload ) {
-			sleep ( 0.0001f );
+			usleep ( 1000 );
 		}
 #else
 		this->DeleteTexture ();

@@ -14,10 +14,10 @@ SUPPRESS_EMPTY_FILE_WARNING
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	getBiasCoefficient
+/**	@name	getBiasCoef
 	@text	Returns the current bias coefficient.
 
-	@in		MOAICpShape self
+	@in		MOAICpConstraint self
 	@out	number bias			The bias coefficient.
 */
 int MOAICpConstraint::_getBiasCoef ( lua_State* L ) {
@@ -34,7 +34,7 @@ int MOAICpConstraint::_getBiasCoef ( lua_State* L ) {
 /**	@name	getMaxBias
 	@text	Returns the maximum bias coefficient.
 
-	@in		MOAICpShape self
+	@in		MOAICpConstraint self
 	@out	number bias			The maximum bias coefficient.
 */
 int MOAICpConstraint::_getMaxBias ( lua_State* L ) {
@@ -51,7 +51,7 @@ int MOAICpConstraint::_getMaxBias ( lua_State* L ) {
 /**	@name	getMaxForce
 	@text	Returns the maximum force allowed.
 
-	@in		MOAICpShape self
+	@in		MOAICpConstraint self
 	@out	number bias			The maximum force allowed.
 */
 int MOAICpConstraint::_getMaxForce ( lua_State* L ) {
@@ -456,10 +456,10 @@ int MOAICpConstraint::_newSlideJoint ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setBiasCoefficient
+/**	@name	setBiasCoef
 	@text	Sets the current bias coefficient.
 
-	@in		MOAICpShape self
+	@in		MOAICpConstraint self
 	@in		number bias			The bias coefficient.
 	@out	nil
 */
@@ -476,7 +476,7 @@ int MOAICpConstraint::_setBiasCoef ( lua_State* L ) {
 /**	@name	setMaxBias
 	@text	Sets the maximum bias coefficient.
 
-	@in		MOAICpShape self
+	@in		MOAICpConstraint self
 	@in		number bias			The maximum bias coefficient.
 	@out	nil
 */
@@ -493,7 +493,7 @@ int MOAICpConstraint::_setMaxBias ( lua_State* L ) {
 /**	@name	setMaxForce
 	@text	Sets the maximum force allowed.
 
-	@in		MOAICpShape self
+	@in		MOAICpConstraint self
 	@in		number bias			The maximum force allowed.
 	@out	nil
 */

@@ -59,9 +59,9 @@ bool BufferedAudioSourceThread::addSource(BufferedAudioSource *source)
 	{
 		if(!isRunning())
 			start();
-
-		mReadMore.signal();
 	}
+
+	mReadMore.signal();
 	
 	return true;
 }
@@ -104,48 +104,49 @@ void BufferedAudioSourceThread::run()
 		if(shouldThreadExit())
 			break;
 
-		mLock.lock();
-
-		for(UInt32 i = 0; i < mSources.size(); ++i)
-		{
-			BufferedAudioSource *pSource = mSources[i];
-            
-            pSource->mLock.lock();
-
-			Int64 totalFrames = pSource->getSampleRate() * SECONDS_TO_BUFFER;
-			Int64 framesThreshold = totalFrames / SECONDS_TO_BUFFER / 3;
-			Int64 availableFrames = pSource->mBuffer.size() / pSource->getNumChannels();
-
-            pSource->mLock.unlock();
-            
-			if(availableFrames < framesThreshold)
+		
+		{ // create a local scope for our locking object
+			RScopedLock l(&mLock);
+		
+			for(UInt32 i = 0; i < mSources.size(); ++i)
 			{
-				Int64 numFrames = totalFrames - availableFrames;                
-				Int64 framesToRead = numFrames;
-				Int64 frames = 0;
-                tempBuffer.resize(numFrames * pSource->getNumChannels());
-                float *pBuffer = &tempBuffer[0];
-				do
-				{
-					frames = pSource->decodeData(pBuffer, framesToRead);
-					framesToRead -= frames;
-					pBuffer += frames * pSource->getNumChannels();
-				}
-				while(framesToRead > 0 && !pSource->isEOF());
+				BufferedAudioSource *pSource = mSources[i];
+				
+				pSource->mLock.lock();
 
-                // Now write the data back to the buffer
-				Int64 framesRead = numFrames - framesToRead;
-				if(framesRead > 0)
+				Int64 totalFrames = pSource->getSampleRate() * SECONDS_TO_BUFFER;
+				Int64 framesThreshold = totalFrames / 2; // 
+				Int64 availableFrames = pSource->mBuffer.size() / pSource->getNumChannels();
+
+				pSource->mLock.unlock();
+				
+				if(availableFrames < framesThreshold)
 				{
-	                pSource->mLock.lock();
-					pSource->mBuffer.putData(&tempBuffer[0], framesRead * pSource->getNumChannels());
-					pSource->mLock.unlock();
+					Int64 numFrames = totalFrames - availableFrames;                
+					Int64 framesToRead = numFrames;
+					Int64 frames = 0;
+					tempBuffer.resize(numFrames * pSource->getNumChannels());
+					float *pBuffer = &tempBuffer[0];
+					do
+					{
+						frames = pSource->decodeData(pBuffer, framesToRead);
+						framesToRead -= frames;
+						pBuffer += frames * pSource->getNumChannels();
+					}
+					while(framesToRead > 0 && !pSource->isEOF());
+
+					// Now write the data back to the buffer
+					Int64 framesRead = numFrames - framesToRead;
+					if(framesRead > 0)
+					{
+						pSource->mLock.lock();
+						pSource->mBuffer.putData(&tempBuffer[0], framesRead * pSource->getNumChannels());
+						pSource->mLock.unlock();
+					}
 				}
 			}
-//			pSource->mLock.unlock();
 		}
-
-        mLock.unlock();
+		
 	}
 }
 

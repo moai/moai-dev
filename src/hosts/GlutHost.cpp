@@ -246,6 +246,8 @@ static void _cleanup () {
 	// don't call this on windows; atexit conflict with untz
 	// possible to fix?
 	//AKUClearMemPool ();
+	
+	AKUFinalize ();
 }
 
 //----------------------------------------------------------------//
@@ -266,6 +268,7 @@ int GlutHost ( int argc, char** argv ) {
 	#ifdef GLUTHOST_USE_LUAEXT
 		AKUExtLoadLuacrypto ();
 		AKUExtLoadLuacurl ();
+		AKUExtLoadLuafilesystem ();
 		AKUExtLoadLuasocket ();
 		AKUExtLoadLuasql ();
 	#endif

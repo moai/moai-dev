@@ -2,16 +2,19 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="luasocket">
-      <UniqueIdentifier>{91323c39-50a8-42d5-a4df-4cdc5adba4ee}</UniqueIdentifier>
+      <UniqueIdentifier>{a993c757-6797-43e6-94ef-feb670845be1}</UniqueIdentifier>
     </Filter>
     <Filter Include="luacrypto">
-      <UniqueIdentifier>{8a325b99-913d-4a6e-ae54-9c263386f64e}</UniqueIdentifier>
+      <UniqueIdentifier>{9c045f4c-6f39-4604-8657-8d309049a214}</UniqueIdentifier>
     </Filter>
     <Filter Include="luacurl">
-      <UniqueIdentifier>{c8410445-fea9-4821-9425-f94f64d0162b}</UniqueIdentifier>
+      <UniqueIdentifier>{5df5e269-8eb8-4fca-9eba-7dd7b354c588}</UniqueIdentifier>
     </Filter>
     <Filter Include="luasql">
-      <UniqueIdentifier>{831ab354-08f9-40a1-abf6-99cfa9ab722c}</UniqueIdentifier>
+      <UniqueIdentifier>{ee8c4cb1-7f72-4c15-bc15-7bc8fccdd168}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="luafilesystem">
+      <UniqueIdentifier>{1650d0f7-4793-4264-b300-7d8c7a82fefe}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -66,6 +69,9 @@
     <ClCompile Include="..\..\3rdparty\luasql-2.2.0\src\luasql.c">
       <Filter>luasql</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\3rdparty\luafilesystem-1.5.0\src\lfs.c">
+      <Filter>luafilesystem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\3rdparty\luasocket-2.0.2\src\auxiliar.h">
@@ -115,6 +121,9 @@
     </ClInclude>
     <ClInclude Include="..\..\3rdparty\luasql-2.2.0\src\luasql.h">
       <Filter>luasql</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\luafilesystem-1.5.0\src\lfs.h">
+      <Filter>luafilesystem</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

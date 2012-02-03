@@ -1,0 +1,43 @@
+html, body {
+  background-color: #bbbbbb;
+  background-repeat: no-repeat;
+  background-repeat-x: no-repeat;
+  background-repeat-y: no-repeat;
+  background-attachment: initial;
+  background-origin: initial;
+  background-clip: initial;
+  margin: 0px;
+  padding: 0px;
+  text-align: center;
+  height: 100%;
+  width: 100%;
+}
+
+.box {
+  background: rgba( 0, 0, 0, .5 );
+  color: #CCC;
+  font-size: 15px;
+
+  margin:0px auto;
+  width: 960px;
+  padding: 15px;
+  border-radius: 5px;
+}
+#listener {
+  padding-top: 2%;
+  position: relative;
+  z-index: 3;
+}
+
+#game {
+  border: 10px solid grey;
+  -webkit-border-radius: 10px;
+  margin:0px auto;
+  background:#000 url('logo.png') no-repeat center center;
+  width: 960px;
+  height: 640px;
+}
+
+#moai-banner {
+  padding-top: 15px;
+}
