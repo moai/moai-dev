@@ -89,6 +89,30 @@ int MOAIUntzSampleBuffer::_setData( lua_State* L ) {
 	}
 	return 0;
 }
+/** name setRawData
+ @text Write raw sample data (array of 16bit short value) into buffer
+ @in		MOAIUntzSampleBuffer self
+ @in		string raw binary data that contains array of network byte ordered 16bit short value
+ @in		number of bytes to read
+ @in		number index of sample buffer start copying from (1 for the first sample)
+ @out nil
+ */
+int MOAIUntzSampleBuffer::_setRawData( lua_State* L ) {
+	MOAI_LUA_SETUP( MOAIUntzSampleBuffer, "USNN" );
+	
+	cc8* s = state.GetValue < cc8* >( 2, "" );
+	short *buf = (short*) s;
+	u32 l = state.GetValue<u32>(3, 0);
+	u32 elemnum = l / 2;
+	int maxindex = self->mInfo.mChannels * self->mInfo.mTotalFrames;
+	u32 startDataIndex = state.GetValue<u32>(3,1);
+	
+	for(int idx=0; (idx+startDataIndex) < maxindex && idx < elemnum; ++idx ) {
+		float val = buf[idx] / 32767.0f;
+		self->mBuffer[idx] = val;
+	}	
+	return 0;
+}
 /**	@name	preparBuffer
  @text	Allocate internal memory for sample buffer
  
@@ -148,6 +172,7 @@ void MOAIUntzSampleBuffer::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "getInfo",  _getInfo },
 		{ "getData",  _getData },
 		{ "setData",  _setData },
+		{ "setRawData", _setRawData },
 		{ "prepareBuffer", _prepareBuffer },
 		{ NULL, NULL }
 	};

@@ -201,6 +201,7 @@ int	MOAIAudioSampler::_read ( lua_State* L ) {
     MOAI_LUA_SETUP ( MOAIAudioSampler, "U" )
         ;
     cc8 *tn = state.GetValue < cc8 * > ( 2, "float" );    
+
     int tnid = -1;
     if( strcmp( tn, "float" ) == 0 ){
         tnid = 0;
@@ -208,6 +209,8 @@ int	MOAIAudioSampler::_read ( lua_State* L ) {
         tnid = 8;
     } else if( strcmp( tn, "short" ) == 0 ){
         tnid = 16;
+	} else if( strcmp( tn, "raw" ) == 0 ){
+		tnid = 255;
     } else {
         lua_pushnil(L);
         return 1;
@@ -220,21 +223,28 @@ int	MOAIAudioSampler::_read ( lua_State* L ) {
             short *data = self->mBufferAry[ useInd ];
             int datanum = self->mBufferReadSizeInBytes[ useInd ] / sizeof(short);
 
-            lua_createtable(L,datanum,0);
-            for(int j=0;j< datanum;j++){
-                short sval = ntohs(data[j] );
-                switch(tnid){
-                case 0:
-                    lua_pushnumber(L, (double)( sval / 32768.0 ) );
-                    break;
-                case 8:
-                    lua_pushinteger(L,(char)( sval / 256 ) );
-                    break;
-                case 16:
-                    lua_pushinteger(L, sval );
-                    break;
-                } 
-                lua_rawseti(L,-2,j+1);
+			if(tnid==255){
+				short *outdata = (short*) malloc(sizeof(short) * datanum);
+				for(int j=0;j<datanum;j++){ outdata[j] = ntohs( data[j] ); }
+				lua_pushlstring(L, (char*)outdata, sizeof(short)*datanum);
+				free(outdata);
+			} else {
+				lua_createtable(L,datanum,0);
+				for(int j=0;j< datanum;j++){
+					short sval = ntohs(data[j] );
+					switch(tnid){
+						case 0:
+							lua_pushnumber(L, (double)( sval / 32768.0 ) );
+							break;
+						case 8:
+							lua_pushinteger(L,(char)( sval / 256 ) );
+							break;
+						case 16:
+							lua_pushinteger(L, sval );
+							break;
+					} 
+					lua_rawseti(L,-2,j+1);
+				}
             }
             self->mBufferReadSizeInBytes[useInd ] = 0; // set 0 after read
             self->currentReadIndex ++;
