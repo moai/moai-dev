@@ -8,6 +8,7 @@
 #import <CoreTelephony/CTTelephonyNetworkInfo.h>
 #import <CoreTelephony/CTCarrier.h>
 
+#import <Crittercism.h>
 #import <TapjoyConnect.h>
 
 //----------------------------------------------------------------//
@@ -131,6 +132,10 @@ void AKUIphoneInit ( UIApplication* application ) {
 			
 	#ifndef DISABLE_TAPJOY
 		REGISTER_LUA_CLASS ( MOAITapjoy )
+	#endif
+
+	#ifndef DISABLE_CRITTERCISM
+		REGISTER_LUA_CLASS ( MOAICrittercism )
 	#endif
 }
 

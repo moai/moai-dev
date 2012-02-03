@@ -813,6 +813,7 @@ bool MOAIProp::Inside ( USVec3D vec, float pad ) {
 	if ( status == BOUNDS_GLOBAL ) return true;
 	if ( status == BOUNDS_EMPTY ) return false;
 	
+	bounds.Bless ();
 	bounds.Inflate ( pad );
 	return bounds.Contains ( vec );
 }

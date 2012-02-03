@@ -43,15 +43,15 @@
 		07AB086813F715DC002FAF6E /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
 		07AB086A13F715DC002FAF6E /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = /System/Library/Frameworks/CoreFoundation.framework; sourceTree = "<absolute>"; };
 		07AB086C13F715DC002FAF6E /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = /System/Library/Frameworks/IOKit.framework; sourceTree = "<absolute>"; };
-		CD0BA88513B93D79007ECCD9 /* GlutHost.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GlutHost.cpp; path = ../src/GlutHost.cpp; sourceTree = SOURCE_ROOT; };
-		CD0BA88613B93D79007ECCD9 /* GlutHost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GlutHost.h; path = ../src/GlutHost.h; sourceTree = SOURCE_ROOT; };
-		CD0BA88713B93D79007ECCD9 /* ParticlePresets.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ParticlePresets.cpp; path = ../src/ParticlePresets.cpp; sourceTree = SOURCE_ROOT; };
-		CD0BA88813B93D79007ECCD9 /* ParticlePresets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ParticlePresets.h; path = ../src/ParticlePresets.h; sourceTree = SOURCE_ROOT; };
+		CD0BA88513B93D79007ECCD9 /* GlutHost.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GlutHost.cpp; path = ../../src/GlutHost.cpp; sourceTree = SOURCE_ROOT; };
+		CD0BA88613B93D79007ECCD9 /* GlutHost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GlutHost.h; path = ../../src/GlutHost.h; sourceTree = SOURCE_ROOT; };
+		CD0BA88713B93D79007ECCD9 /* ParticlePresets.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ParticlePresets.cpp; path = ../../src/ParticlePresets.cpp; sourceTree = SOURCE_ROOT; };
+		CD0BA88813B93D79007ECCD9 /* ParticlePresets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ParticlePresets.h; path = ../../src/ParticlePresets.h; sourceTree = SOURCE_ROOT; };
 		CD0BA88B13B93DA0007ECCD9 /* libmoai-osx-3rdparty.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-osx-3rdparty.a"; path = "../../bin/osx/libmoai-osx-3rdparty.a"; sourceTree = SOURCE_ROOT; };
 		CD0BA88D13B93DA0007ECCD9 /* libmoai-osx-luaext.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-osx-luaext.a"; path = "../../bin/osx/libmoai-osx-luaext.a"; sourceTree = SOURCE_ROOT; };
 		CD0BA88F13B93DA0007ECCD9 /* libmoai-osx-untz.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-osx-untz.a"; path = "../../bin/osx/libmoai-osx-untz.a"; sourceTree = SOURCE_ROOT; };
 		CD0BA89113B93DA0007ECCD9 /* libmoai-osx.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-osx.a"; path = "../../bin/osx/libmoai-osx.a"; sourceTree = SOURCE_ROOT; };
-		CD2D877413B9ADC300AF7809 /* GlutHostMain.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GlutHostMain.cpp; path = ../src/GlutHostMain.cpp; sourceTree = SOURCE_ROOT; };
+		CD2D877413B9ADC300AF7809 /* GlutHostMain.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GlutHostMain.cpp; path = ../../src/GlutHostMain.cpp; sourceTree = SOURCE_ROOT; };
 		CD74EA2B137807E40093EE68 /* libcrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.dylib; path = /usr/lib/libcrypto.dylib; sourceTree = "<absolute>"; };
 		CD74EA311378080E0093EE68 /* libssl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libssl.dylib; path = /usr/lib/libssl.dylib; sourceTree = "<absolute>"; };
 		CDEE22E413543D6600C2E04C /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = SDKs/MacOSX10.6.sdk/System/Library/Frameworks/GLUT.framework; sourceTree = DEVELOPER_DIR; };
@@ -120,17 +120,17 @@
 		CD2FDE8613542E9F00B814DF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				CDEE22E613543D8600C2E04C /* OpenGL.framework */,
-				CDEE22E413543D6600C2E04C /* GLUT.framework */,
 				CD74EA2B137807E40093EE68 /* libcrypto.dylib */,
-				E9314E651475CDDD005F8D20 /* libmoai-osx-zipfs.a */,
 				E99635B41475C85D00C0201C /* libz.1.1.3.dylib */,
 				CD74EA311378080E0093EE68 /* libssl.dylib */,
 				0324CC63135643FD000ADC60 /* libSystem.dylib */,
+				E9314E651475CDDD005F8D20 /* libmoai-osx-zipfs.a */,
 				CD0BA88B13B93DA0007ECCD9 /* libmoai-osx-3rdparty.a */,
 				CD0BA88D13B93DA0007ECCD9 /* libmoai-osx-luaext.a */,
 				CD0BA88F13B93DA0007ECCD9 /* libmoai-osx-untz.a */,
 				CD0BA89113B93DA0007ECCD9 /* libmoai-osx.a */,
+				CDEE22E613543D8600C2E04C /* OpenGL.framework */,
+				CDEE22E413543D6600C2E04C /* GLUT.framework */,
 				07AB086813F715DC002FAF6E /* Carbon.framework */,
 				07AB086A13F715DC002FAF6E /* CoreFoundation.framework */,
 				07AB086C13F715DC002FAF6E /* IOKit.framework */,
@@ -249,11 +249,8 @@
 				GCC_WARN_UNUSED_PARAMETER = YES;
 				GCC_WARN_UNUSED_VALUE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = (
-					"\"../src/\"",
-					"\"../../include/\"",
-				);
-				LIBRARY_SEARCH_PATHS = "\"../../bin/osx/\"";
+				HEADER_SEARCH_PATHS = "";
+				LIBRARY_SEARCH_PATHS = "";
 				SKIP_INSTALL = YES;
 				WARNING_CFLAGS = "-Wall";
 			};
@@ -304,11 +301,8 @@
 				GCC_WARN_UNUSED_PARAMETER = YES;
 				GCC_WARN_UNUSED_VALUE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = (
-					"\"../src/\"",
-					"\"../../include/\"",
-				);
-				LIBRARY_SEARCH_PATHS = "\"../../bin/osx/\"";
+				HEADER_SEARCH_PATHS = "";
+				LIBRARY_SEARCH_PATHS = "";
 				SKIP_INSTALL = YES;
 				WARNING_CFLAGS = "-Wall";
 			};
@@ -317,6 +311,7 @@
 		CDEE231A1354502100C2E04C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -331,11 +326,15 @@
 					XML_STATIC,
 					FT2_BUILD_LIBRARY,
 					DARWIN_NO_CARBON,
-					AKUGLUT_USE_LUAEXT,
+					GLUTHOST_USE_LUAEXT,
+				);
+				HEADER_SEARCH_PATHS = (
+					"\"../../src/\"",
+					"\"../../../include/\"",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../../bin/osx\"",
+					"\"$(SRCROOT)/../../../bin/osx\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -344,6 +343,7 @@
 		CDEE231B1354502100C2E04C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -355,11 +355,15 @@
 					XML_STATIC,
 					FT2_BUILD_LIBRARY,
 					DARWIN_NO_CARBON,
-					AKUGLUT_USE_LUAEXT,
+					GLUTHOST_USE_LUAEXT,
+				);
+				HEADER_SEARCH_PATHS = (
+					"\"../../src/\"",
+					"\"../../../include/\"",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../../bin/osx\"",
+					"\"$(SRCROOT)/../../../bin/osx\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

@@ -13,44 +13,22 @@ import android.content.Context;
 import android.opengl.GLSurfaceView;
 import android.os.Build;
 import android.provider.Settings.Secure;
+import android.util.Log;
 import android.view.MotionEvent;
-
-//----------------------------------------------------------------//
-enum CONNECTION_TYPE {
-	NONE,
-	WIFI,
-	WWAN,
-};
-
-//----------------------------------------------------------------//
-enum MoaiInputDeviceID {
-	DEVICE,
-	TOTAL,
-};
-
-//----------------------------------------------------------------//
-enum MoaiInputDeviceSensorID {
-	COMPASS,
-	LEVEL,
-	LOCATION,
-	TOUCH,
-	TOTAL,
-};
 
 //================================================================//
 // MoaiView
 //================================================================//
 public class MoaiView extends GLSurfaceView {
 
-	private int 					mAku;
-	private String 					mAppRoot;
-	private Context					mContext;
-	private int 					mHeight;
-	private MoaiRenderer 			mRenderer;
-	private boolean					mSensorsEnabled;
-	private int 					mWidth; 
-	
-	public static final  Object		LOCK_OBJECT					= new Object ();
+	private int 			mAku;
+	private String 			mAppRoot;
+	private Context			mContext;
+	private int 		 	mHeight;
+	private MoaiRenderer 	mRenderer;
+	private int 		 	mWidth;
+	private MoaiActivity 	mActivity;
+	private boolean			mAKUInitialized;
 	
 	protected static native int	 AKUCreateContext 				();
 	protected static native void AKUDeleteContext 				( int akuContextId );
@@ -87,39 +65,40 @@ public class MoaiView extends GLSurfaceView {
 		
 		mContext = context;
 		mHeight = height;
-		mSensorsEnabled = false;
 		mWidth = width;
+		mActivity = activity;
+		mAKUInitialized = false;
 		
-		initMoai ( activity );		
-	}
-	
-	//----------------------------------------------------------------//
-	public String getGUID () {
-	
-		return java.util.UUID.randomUUID ().toString ();
-	}
+		mAku = AKUCreateContext ();
+		
+		AKUExtLoadLuasql ();
+		AKUExtLoadLuacurl ();
+		AKUExtLoadLuacrypto ();
+		AKUExtLoadLuasocket ();
+		
+		AKUSetInputConfigurationName ( "Android" );
 
-    //----------------------------------------------------------------//
-	public boolean getSensorsEnabled () {
-	
-		return mSensorsEnabled;
-	}
+		AKUReserveInputDevices			( INPUT_DEVICE.TOTAL.ordinal () );
+		AKUSetInputDevice				( INPUT_DEVICE.DEVICE.ordinal (), "device" );
+		
+		AKUReserveInputDeviceSensors	( INPUT_DEVICE.DEVICE.ordinal (), INPUT_SENSOR.TOTAL.ordinal () );
+		AKUSetInputDeviceCompass		( INPUT_DEVICE.DEVICE.ordinal (), INPUT_SENSOR.COMPASS.ordinal (),		"compass" );
+		AKUSetInputDeviceLevel			( INPUT_DEVICE.DEVICE.ordinal (), INPUT_SENSOR.LEVEL.ordinal (),		"level" );
+		AKUSetInputDeviceLocation		( INPUT_DEVICE.DEVICE.ordinal (), INPUT_SENSOR.LOCATION.ordinal (),		"location" );
+		AKUSetInputDeviceTouch			( INPUT_DEVICE.DEVICE.ordinal (), INPUT_SENSOR.TOUCH.ordinal (),		"touch" );
 
-	//----------------------------------------------------------------//
-	private void initDeviceProperties () {
+		AKUUntzInit ();
+		AKUSetScreenSize ( mWidth, mHeight );
 
-		// get appId
 		String appId = mContext.getPackageName ();
 		
-		// get appName
 		String appName;
 		try {
-		    appName = mContext.getPackageManager ().getApplicationLabel( mContext.getPackageManager ().getApplicationInfo ( appId, 0 )).toString ();
+		    appName = mContext.getPackageManager ().getApplicationLabel ( mContext.getPackageManager ().getApplicationInfo ( appId, 0 )).toString ();
 		} catch ( Exception e ) {
 			appName = "UNKNOWN";
 		}
 		
-		// get appVersion
 		String appVersion;
 		try {
 			appVersion = mContext.getPackageManager ().getPackageInfo ( appId, 0 ).versionName;
@@ -128,7 +107,6 @@ public class MoaiView extends GLSurfaceView {
 			appVersion = "UNKNOWN";
 		}
 		
-		// get udid
 		String udid	= Secure.getString ( mContext.getContentResolver (), Secure.ANDROID_ID );
 		if ( udid == null ) {
 			udid = "UNKNOWN";
@@ -147,62 +125,41 @@ public class MoaiView extends GLSurfaceView {
 		// tell Moai the device properties
 		AKUSetDeviceProperties ( appName, appId, appVersion, abi, devBrand, devName, devManufacturer, devModel, devProduct, osBrand, osVersion, udid );
 	}
-		
-	//----------------------------------------------------------------//
-	private void initMoai ( MoaiActivity activity ) {
 	
-		mAku = AKUCreateContext ();
-		
-		AKUExtLoadLuasql ();
-		AKUExtLoadLuacurl ();
-		AKUExtLoadLuacrypto ();
-		AKUExtLoadLuasocket ();
-		
-		AKUSetInputConfigurationName 	( "Android" );
-
-		AKUReserveInputDevices			( MoaiInputDeviceID.TOTAL.ordinal () );
-		AKUSetInputDevice				( MoaiInputDeviceID.DEVICE.ordinal (), "device" );
-		
-		AKUReserveInputDeviceSensors	( MoaiInputDeviceID.DEVICE.ordinal (), MoaiInputDeviceSensorID.TOTAL.ordinal () );
-		AKUSetInputDeviceCompass		( MoaiInputDeviceID.DEVICE.ordinal (), MoaiInputDeviceSensorID.COMPASS.ordinal (),		"compass" );
-		AKUSetInputDeviceLevel			( MoaiInputDeviceID.DEVICE.ordinal (), MoaiInputDeviceSensorID.LEVEL.ordinal (),		"level" );
-		AKUSetInputDeviceLocation		( MoaiInputDeviceID.DEVICE.ordinal (), MoaiInputDeviceSensorID.LOCATION.ordinal (),		"location" );
-		AKUSetInputDeviceTouch			( MoaiInputDeviceID.DEVICE.ordinal (), MoaiInputDeviceSensorID.TOUCH.ordinal (),		"touch" );
-
-		AKUUntzInit ();
-		AKUSetScreenSize ( mWidth, mHeight );
-
-		initDeviceProperties ();
-		
-		AKUInit ( this, activity );
-//		mSensorsEnabled = true;
+	//----------------------------------------------------------------//
+	public String getGUID () {
+	
+		return java.util.UUID.randomUUID ().toString ();
 	}
-
+	
+	//----------------------------------------------------------------//
+	public static void log ( String message ) {
+		
+		Log.i ( "MoaiLog", message );
+	}
+		
     //----------------------------------------------------------------//
 	@Override
 	public boolean onTouchEvent ( MotionEvent event ) {
 
-		synchronized ( MoaiView.LOCK_OBJECT ) {
-		
-			boolean isDown = ( event.getAction () == MotionEvent.ACTION_DOWN );
-			isDown |= ( event.getAction() == MotionEvent.ACTION_MOVE );
+		boolean isDown = ( event.getAction () == MotionEvent.ACTION_DOWN );
+		isDown |= ( event.getAction() == MotionEvent.ACTION_MOVE );
 			
-			final int pointerCount = event.getPointerCount();
-			for ( int pointerIndex = 0; pointerIndex < pointerCount; ++pointerIndex ) {
+		final int pointerCount = event.getPointerCount();
+		for ( int pointerIndex = 0; pointerIndex < pointerCount; ++pointerIndex ) {
 				
-				int pointerId = event.getPointerId ( pointerIndex );
+			int pointerId = event.getPointerId ( pointerIndex );
 								
-				AKUEnqueueTouchEvent (
-					MoaiInputDeviceID.DEVICE.ordinal (),
-					MoaiInputDeviceSensorID.TOUCH.ordinal (),
-					pointerId, 
-					isDown, 
-					Math.round ( event.getX ( pointerIndex )), 
-					Math.round ( event.getY ( pointerIndex )), 
-					1
-				);
-			}			
-		}
+			AKUEnqueueTouchEvent (
+				INPUT_DEVICE.DEVICE.ordinal (),
+				INPUT_SENSOR.TOUCH.ordinal (),
+				pointerId, 
+				isDown, 
+				Math.round ( event.getX ( pointerIndex )), 
+				Math.round ( event.getY ( pointerIndex )), 
+				1
+			);
+		}			
 		
 		return true;
 	}
@@ -212,10 +169,12 @@ public class MoaiView extends GLSurfaceView {
 	
 		if ( paused ) {
 			AKUPause ( true );
+			onPause ();
 			setRenderMode ( GLSurfaceView.RENDERMODE_WHEN_DIRTY );
 		}
 		else {
 			setRenderMode ( GLSurfaceView.RENDERMODE_CONTINUOUSLY );
+			onResume ();
 			AKUPause ( false );
 		}
 	}
@@ -243,22 +202,32 @@ public class MoaiView extends GLSurfaceView {
 		@Override
 		public void onDrawFrame ( GL10 gl ) {
 
-			synchronized ( MoaiView.LOCK_OBJECT ) {
+			if ( !mAKUInitialized ) {
+				
+				AKUInit ( MoaiView.this, mActivity );
+				mAKUInitialized = true;
 
-				AKUSetContext ( mAku );
-				AKUUpdate ();
+				AKUDetectGfxContext ();
+
+				AKUSetWorkingDirectory ( mAppRoot + "/@WORKING_DIR@" );
+				run ( "@RUN_INIT_DIR@/init.lua" );
+				@RUN@
 		
-				AKUSetContext ( mAku );
-				AKUSetViewSize ( mWidth, mHeight );
-				AKURender ();
-			}			
+				mActivity.startSession ();				
+				mActivity.enableAccelerometerEvents ( false );
+			}
+
+			AKUSetContext ( mAku );
+			AKUSetViewSize ( mWidth, mHeight );
+			AKUUpdate ();
+			AKURender ();
 		}
 
 	    //----------------------------------------------------------------//
 		@Override
 		public void onSurfaceChanged ( GL10 gl, int width, int height ) {
 
-			MoaiActivity.log ( "MoaiRenderer onSurfaceChanged called" );
+			log ( "MoaiRenderer onSurfaceChanged called" );
 
 			mWidth = width;
 			mHeight = height;
@@ -268,15 +237,7 @@ public class MoaiView extends GLSurfaceView {
 		@Override
 		public void onSurfaceCreated ( GL10 gl, EGLConfig config ) {
 
-			MoaiActivity.log ( "MoaiRenderer onSurfaceCreated called" );
-   
-			AKUDetectGfxContext ();
-
-			AKUSetWorkingDirectory ( mAppRoot + "/@WORKING_DIR@" );
-			run ( "@RUN_INIT_DIR@/init.lua" );
-			@RUN@
-			
-			MoaiActivity.startSession ();
+			log ( "MoaiRenderer onSurfaceCreated called" );
 		}
 	}
 }

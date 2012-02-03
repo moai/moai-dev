@@ -26,7 +26,7 @@ public:
 
 UInt32 AndroidSystemData::getNumFrames()
 {
-    return 4096;
+	return 8192;//4096;
 }
 UInt32 AndroidSystemData::getNumOutputChannels()
 {
@@ -123,6 +123,7 @@ void PlaybackThread::run()
     static jmethodID getMinBufferSizeMethod = env->GetStaticMethodID(audioTrackClass, "getMinBufferSize", "(III)I");
     static jmethodID playMethod = env->GetMethodID(audioTrackClass, "play", "()V");
     static jmethodID stopMethod = env->GetMethodID(audioTrackClass, "stop", "()V");
+    static jmethodID pauseMethod = env->GetMethodID(audioTrackClass, "pause", "()V");
     static jmethodID releaseMethod = env->GetMethodID(audioTrackClass, "release", "()V");
     static jmethodID writeMethod = env->GetMethodID(audioTrackClass, "write", "([BII)I");
 	static jmethodID setPlaybackRateMethod = env->GetMethodID(audioTrackClass, "setPlaybackRate", "(I)I");
@@ -148,13 +149,13 @@ void PlaybackThread::run()
                                    bufferSizeInBytes,
                                    MODE_STREAM);
     env->CallNonvirtualVoidMethod(track, audioTrackClass, playMethod);
+	bool isPlaying = true;
 
 	// Set the playback rate
 //  int error = env->CallNonvirtualIntMethod(track, audioTrackClass, setPlaybackRateMethod, mpSystemData->mSampleRate);
 //	if(error != 0)
 //		__android_log_write(ANDROID_LOG_ERROR, "UntzJNI", "Failed to set playback rate");
     
-
     // Get our buffer
     jarray buffer = env->NewByteArray(bufferSizeInBytes);
 
@@ -173,7 +174,7 @@ void PlaybackThread::run()
     long nsec_per_buffer = ((double)framesPerBuffer / sampleRateInHz ) * 1000000000;
 	int bufferCount = 0;
     while (!shouldThreadExit())
-    {			
+    {		
         // Grab the float samples from the mixer.
         mpSystemData->mMixer.process(0, NULL, numChannels, float_buf, framesPerBuffer);
 
@@ -209,6 +210,19 @@ void PlaybackThread::run()
 		{
 			do
 			{
+				if(!mpSystemData->isActive() && isPlaying)
+				{
+					__android_log_write(ANDROID_LOG_INFO,"UntzJNI","Pausing audio");
+				    env->CallNonvirtualVoidMethod(track, audioTrackClass, pauseMethod);
+					isPlaying = false;
+				}
+				else if(mpSystemData->isActive() && !isPlaying)
+				{
+					__android_log_write(ANDROID_LOG_INFO,"UntzJNI","Playing audio");
+				    env->CallNonvirtualVoidMethod(track, audioTrackClass, playMethod);
+					isPlaying = true;
+				}
+				
 				// Calculate when the next callback should happen (based on buffer size)
 				long next_nsecs = nextCallTime.tv_nsec+nsec_per_buffer;
 				nextCallTime.tv_nsec = next_nsecs % 1000000000;

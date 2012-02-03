@@ -22,7 +22,8 @@
  */
 int MOAITapjoy::_getUserId ( lua_State *L ) {
 	
-	lua_pushstring ( L, [[TapjoyConnect getUserID] UTF8String ]);
+	lua_pushstring ( L, [[TapjoyConnect getUserID] UTF8String ] );
+	
 	return 1;
 }
 
@@ -65,7 +66,11 @@ int MOAITapjoy::_requestTapjoyConnect ( lua_State* L ) {
 	
 	NSString* ID = [[ NSString alloc ] initWithUTF8String:appId ];
 	NSString* key = [[ NSString alloc ] initWithUTF8String:secretKey ];
+
 	[ TapjoyConnect requestTapjoyConnect:ID secretKey:key ];
+
+	[ ID release ];
+	[ key release ];
 		
 	return 0;
 }
