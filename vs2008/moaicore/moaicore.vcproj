@@ -595,6 +595,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\src\moaicore\shaders\MOAIDeck2DTexOnlyShader-fsh.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\moaicore\shaders\MOAIDeck2DTexOnlyShader-vsh.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\moaicore\shaders\MOAIFontShader-fsh.h"
 					>
 				</File>
