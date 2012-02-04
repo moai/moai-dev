@@ -499,8 +499,12 @@ ZIPFSFILE* zipfs_fopen ( const char* filename, const char* mode ) {
 	}
 	else {
 		
+#ifdef MOAI_COMPILER_MSVC
+		FILE* stdFile = 0;
+		_set_errno(fopen_s(&stdFile, filename, mode ));
+#else
 		FILE* stdFile = fopen ( filename, mode );
-		
+#endif
 		if ( stdFile ) {
 			file = ( ZIPFSFile* )calloc ( 1, sizeof ( ZIPFSFile ));
 			file->mPtr.mFile = stdFile;
