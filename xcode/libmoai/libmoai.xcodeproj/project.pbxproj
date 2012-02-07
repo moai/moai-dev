@@ -1522,6 +1522,19 @@
 		CD04AF0C14725714009C20E5 /* zutil.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AECC14725714009C20E5 /* zutil.h */; };
 		CD04AF0D14725714009C20E5 /* zutil.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AECC14725714009C20E5 /* zutil.h */; };
 		CD04AF0E14725714009C20E5 /* zutil.h in Headers */ = {isa = PBXBuildFile; fileRef = CD04AECC14725714009C20E5 /* zutil.h */; };
+		CD06522114E0BE5600CEAB2A /* MOAILayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDDF1FC214BEC07400000FB5 /* MOAILayer.cpp */; };
+		CD06522214E0BE5600CEAB2A /* MOAILayer.h in Headers */ = {isa = PBXBuildFile; fileRef = CDDF1FC314BEC07400000FB5 /* MOAILayer.h */; };
+		CD06522314E0BE5600CEAB2A /* MOAILayerBridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDDF1FC414BEC07400000FB5 /* MOAILayerBridge.cpp */; };
+		CD06522414E0BE5600CEAB2A /* MOAILayerBridge.h in Headers */ = {isa = PBXBuildFile; fileRef = CDDF1FC514BEC07400000FB5 /* MOAILayerBridge.h */; };
+		CD06522514E0BE5F00CEAB2A /* USRhombus.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDDF1FE814BEC22400000FB5 /* USRhombus.cpp */; };
+		CD06522614E0BE5F00CEAB2A /* USRhombus.h in Headers */ = {isa = PBXBuildFile; fileRef = CDDF1FE914BEC22400000FB5 /* USRhombus.h */; };
+		CD06522714E0BE6400CEAB2A /* USVec4D.h in Headers */ = {isa = PBXBuildFile; fileRef = CDDF1FEA14BEC22400000FB5 /* USVec4D.h */; };
+		CD06522814E0BE7100CEAB2A /* USFrustum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDDF1FE414BEC22400000FB5 /* USFrustum.cpp */; };
+		CD06522914E0BE7100CEAB2A /* USFrustum.h in Headers */ = {isa = PBXBuildFile; fileRef = CDDF1FE514BEC22400000FB5 /* USFrustum.h */; };
+		CD06522A14E0BE7D00CEAB2A /* USPrism.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDDF1FE614BEC22400000FB5 /* USPrism.cpp */; };
+		CD06522B14E0BE7D00CEAB2A /* USPrism.h in Headers */ = {isa = PBXBuildFile; fileRef = CDDF1FE714BEC22400000FB5 /* USPrism.h */; };
+		CD06522C14E0BE8700CEAB2A /* MOAICamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDDF1FBC14BEC07400000FB5 /* MOAICamera.cpp */; };
+		CD06522D14E0BE8700CEAB2A /* MOAICamera.h in Headers */ = {isa = PBXBuildFile; fileRef = CDDF1FBD14BEC07400000FB5 /* MOAICamera.h */; };
 		CD07C10B13A14DAE00C9386C /* ogg.h in Headers */ = {isa = PBXBuildFile; fileRef = CD07C10713A14DAE00C9386C /* ogg.h */; };
 		CD07C10C13A14DAE00C9386C /* os_types.h in Headers */ = {isa = PBXBuildFile; fileRef = CD07C10813A14DAE00C9386C /* os_types.h */; };
 		CD07C1CE13A16CED00C9386C /* backends.h in Headers */ = {isa = PBXBuildFile; fileRef = CD07C17613A16CED00C9386C /* backends.h */; };
@@ -9835,6 +9848,13 @@
 				CD51041314DBE85A00906E46 /* MOAIHttpTaskBase.h in Headers */,
 				CD51041714DBE85A00906E46 /* MOAIMultiTexture.h in Headers */,
 				CD51041D14DBE8DC00906E46 /* MOAIHttpTask_curl.h in Headers */,
+				CD06522214E0BE5600CEAB2A /* MOAILayer.h in Headers */,
+				CD06522414E0BE5600CEAB2A /* MOAILayerBridge.h in Headers */,
+				CD06522614E0BE5F00CEAB2A /* USRhombus.h in Headers */,
+				CD06522714E0BE6400CEAB2A /* USVec4D.h in Headers */,
+				CD06522914E0BE7100CEAB2A /* USFrustum.h in Headers */,
+				CD06522B14E0BE7D00CEAB2A /* USPrism.h in Headers */,
+				CD06522D14E0BE8700CEAB2A /* MOAICamera.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11922,6 +11942,12 @@
 				CD51041114DBE85A00906E46 /* MOAIHttpTaskBase.cpp in Sources */,
 				CD51041514DBE85A00906E46 /* MOAIMultiTexture.cpp in Sources */,
 				CD51041B14DBE8DC00906E46 /* MOAIHttpTask_curl.cpp in Sources */,
+				CD06522114E0BE5600CEAB2A /* MOAILayer.cpp in Sources */,
+				CD06522314E0BE5600CEAB2A /* MOAILayerBridge.cpp in Sources */,
+				CD06522514E0BE5F00CEAB2A /* USRhombus.cpp in Sources */,
+				CD06522814E0BE7100CEAB2A /* USFrustum.cpp in Sources */,
+				CD06522A14E0BE7D00CEAB2A /* USPrism.cpp in Sources */,
+				CD06522C14E0BE8700CEAB2A /* MOAICamera.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

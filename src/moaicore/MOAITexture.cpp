@@ -697,22 +697,6 @@ void MOAITexture::DeleteTexture	() {
 }
 
 //----------------------------------------------------------------//
-u32 MOAITexture::GetTexCoordIndex ( GLenum coord ) {
-
-	switch ( coord ) {
-		case GL_S:
-			return 0;
-		case GL_T:
-			return 1;
-		case GL_R:
-			return 2;
-		case GL_Q:
-			return 3;
-	}
-	return 0xffffffff;
-}
-
-//----------------------------------------------------------------//
 u32 MOAITexture::GetHeight () {
 	return this->mHeight;
 }

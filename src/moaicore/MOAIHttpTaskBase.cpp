@@ -405,6 +405,7 @@ void MOAIHttpTaskBase::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "performAsync",		_performAsync },
 		{ "performSync",		_performSync },
 		{ "setCallback",		_setCallback },
+		{ "setBody",			_setBody },
 		{ "setHeader",			_setHeader },
 		{ "setUrl",				_setUrl },
 		{ "setUserAgent",		_setUserAgent },
