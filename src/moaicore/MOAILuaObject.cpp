@@ -196,11 +196,11 @@ void MOAILuaObject::BindToLua ( MOAILuaState& state ) {
 	// create and initialize the instance table
 	lua_newtable ( state );
 	
-	// create an empty member table
-	lua_newtable ( state );
-	
-	// set the ref to the member table from the instance table
-	lua_setfield ( state, -2, LUA_MEMBER_TABLE_NAME );
+//	// create an empty member table
+//	lua_newtable ( state );
+//	
+//	// set the ref to the member table from the instance table
+//	lua_setfield ( state, -2, LUA_MEMBER_TABLE_NAME );
 	
 	// initialize the instance table
 	lua_pushcfunction ( state, MOAILuaObject::_gc );
@@ -208,11 +208,13 @@ void MOAILuaObject::BindToLua ( MOAILuaState& state ) {
 	
 	lua_pushcfunction ( state, MOAILuaObject::_tostring );
 	lua_setfield ( state, -2, "__tostring" );
-	
-	lua_pushcfunction ( state, MOAILuaObject::_index );
+
+	lua_pushvalue( state, -1 );
+//	lua_pushcfunction ( state, MOAILuaObject::_index );
 	lua_setfield ( state, -2, "__index" );
 	
-	lua_pushcfunction ( state, MOAILuaObject::_newindex );
+	lua_pushvalue( state, -1 );
+//	lua_pushcfunction ( state, MOAILuaObject::_newindex );
 	lua_setfield ( state, -2, "__newindex" );
 	
 	// make the interface table the instance table's metatable
