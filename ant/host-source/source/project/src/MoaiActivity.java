@@ -98,6 +98,8 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 	private boolean							mWaitingToResume;
 	private boolean							mWindowFocusLost;
 	
+	private boolean							mMarketBillingSupported;
+	
 	protected static native void 		AKUAppDidStartSession 				();
 	protected static native void 		AKUAppWillEndSession 				();
 	protected static native void 		AKUEnqueueLevelEvent 				( int deviceId, int sensorId, float x, float y, float z );
@@ -262,7 +264,7 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 		// otherwise, wait to regain focus before we resume. All of 
 		// this nonsense is to properly handle the lock screen...
 		mWaitingToResume = mWindowFocusLost;
-		if ( !mWaitingToResume ) {
+		if ( !mWindowFocusLost ) {
 			
 			log ( "Resuming now..." );
 		
@@ -364,12 +366,19 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 		// it's time to resume. All of this nonsense is to properly handle
 		// the lock screen...
 		mWindowFocusLost = !hasFocus;
-		if ( mWaitingToResume && !mWindowFocusLost ) {
+		if ( mWaitingToResume && hasFocus ) {
 		
 			log ( "Resuming now..." );
 		
 			mWaitingToResume = false;
-			mMoaiView.pause ( false );
+			
+			mHandler.post ( new Runnable () {
+
+				public void run () {
+						
+					mMoaiView.pause ( false );
+				}
+			});
 		}
 	}
 
@@ -531,7 +540,39 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 	//----------------------------------------------------------------//
 	public boolean checkBillingSupported () {
 		
-		return mBillingService.checkBillingSupported ();
+		log ( "checkBillingSupported: Start" );
+		
+		final CountDownLatch signal = new CountDownLatch ( 1 );
+		
+		mHandler.post ( new Runnable () {
+
+			public void run () {
+				
+				log ( "checkBillingSupported MAIN: Start" );
+				
+				mMarketBillingSupported = mBillingService.checkBillingSupported ();
+				
+				log ( "checkBillingSupported MAIN: Notifying" );
+				
+				signal.countDown ();
+				
+				log ( "checkBillingSupported MAIN: Done" );
+			}
+		});
+
+		try {
+
+			log ( "checkBillingSupported: Waiting" );
+			
+			signal.await ();
+		} catch ( InterruptedException e ) {
+			
+			log ( "checkBillingSupported: Interrupted" );
+		}
+		
+		log ( "checkBillingSupported: Done, supported = " + (( mMarketBillingSupported ) ? "YES" : "NO" ));
+		
+		return mMarketBillingSupported;
 	}
 
 	//----------------------------------------------------------------//
