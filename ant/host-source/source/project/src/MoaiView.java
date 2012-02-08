@@ -40,6 +40,7 @@ public class MoaiView extends GLSurfaceView {
 	protected static native void AKUExtLoadLuasql				();
 	protected static native void AKUInit 						( MoaiView view, MoaiActivity activity );
 	protected static native void AKUPause 						( boolean paused );
+	protected static native void AKUReleaseGfxContext			();
 	protected static native void AKURender	 					();
 	protected static native void AKUReserveInputDevices			( int total );
 	protected static native void AKUReserveInputDeviceSensors	( int deviceId, int total );
@@ -169,6 +170,7 @@ public class MoaiView extends GLSurfaceView {
 	
 		if ( paused ) {
 			AKUPause ( true );
+			AKUReleaseGfxContext ();
 			onPause ();
 			setRenderMode ( GLSurfaceView.RENDERMODE_WHEN_DIRTY );
 		}
@@ -207,8 +209,6 @@ public class MoaiView extends GLSurfaceView {
 				AKUInit ( MoaiView.this, mActivity );
 				mAKUInitialized = true;
 
-				AKUDetectGfxContext ();
-
 				AKUSetWorkingDirectory ( mAppRoot + "/@WORKING_DIR@" );
 				run ( "@RUN_INIT_DIR@/init.lua" );
 				@RUN@
@@ -238,6 +238,8 @@ public class MoaiView extends GLSurfaceView {
 		public void onSurfaceCreated ( GL10 gl, EGLConfig config ) {
 
 			log ( "MoaiRenderer onSurfaceCreated called" );
+
+			AKUDetectGfxContext ();
 		}
 	}
 }

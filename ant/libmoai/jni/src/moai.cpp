@@ -530,6 +530,11 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 	}
 
 	//----------------------------------------------------------------//
+	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUReleaseGfxContext ( JNIEnv* env, jclass obj ) {
+		AKUReleaseGfxContext ();
+	}
+
+	//----------------------------------------------------------------//
 	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKURender ( JNIEnv* env, jclass obj ) {
 		AKURender ();
 	}

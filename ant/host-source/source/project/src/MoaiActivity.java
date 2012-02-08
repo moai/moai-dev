@@ -99,6 +99,10 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 	private boolean							mWindowFocusLost;
 	
 	private boolean							mMarketBillingSupported;
+	private boolean							mMarketNotificationsConfirmed;
+	private boolean							mMarketPurchaseRequested;
+	private boolean							mMarketTransactionsRestored;
+	private String							mTapjoyUserId;
 	
 	protected static native void 		AKUAppDidStartSession 				();
 	protected static native void 		AKUAppWillEndSession 				();
@@ -117,13 +121,7 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 	protected static native void 		AKUSetConnectionType 				( long connectionType );
 	protected static native void 		AKUSetDocumentDirectory 			( String path );
 
-	//----------------------------------------------------------------//
-	public static void log ( String message ) {
-		
-		Log.i ( "MoaiLog", message );
-	}
-	
-    //----------------------------------------------------------------//
+   	//----------------------------------------------------------------//
     protected void onCreate ( Bundle savedInstanceState ) {
 
 		log ( "MoaiActivity onCreate called" );
@@ -223,29 +221,18 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 		// very quickly twice, in which case we do not receive the 
 		// expected windows focus events.
 		mWindowFocusLost = true;
-		mMoaiView.pause ( true );
-	}
-
-	//----------------------------------------------------------------//
-	protected void onStart () {
-
-		log ( "MoaiActivity onStart called" );
-
-		super.onStart ();
 		
-        MoaiBillingResponseHandler.register ( mPurchaseObserver );
-	}
-	
-	//----------------------------------------------------------------//
-	protected void onStop () {
+		// Call pause on the main thread's next run loop to avoid flicker
+		// that occurs when we pause the Open GL surface.
+		runOnMainThread ( new Runnable () {
 
-		log ( "MoaiActivity onStop called" );
-
-		super.onStop ();
-
-        MoaiBillingResponseHandler.unregister ( mPurchaseObserver );
-
-		AKUAppWillEndSession ();
+			public void run () {
+					
+				log ( "Resuming now" );
+						
+				mMoaiView.pause ( true );
+			}
+		});
 	}
 	
 	//----------------------------------------------------------------//
@@ -262,14 +249,51 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 		
 		// If we have not lost Window focus, then resume immediately; 
 		// otherwise, wait to regain focus before we resume. All of 
-		// this nonsense is to properly handle the lock screen...
+		// this nonsense is to prevent audio from playing while the
+		// screen is locked.
 		mWaitingToResume = mWindowFocusLost;
 		if ( !mWindowFocusLost ) {
 			
-			log ( "Resuming now..." );
-		
-			mMoaiView.pause ( false );
+			// In some circumstances, resuming appears to cause the main thread
+			// to block while the render thread performs a render. If that render
+			// loop causes the lua to call back into the Java host, we can deadlock
+			// if we proxy the call to the main thread and wait. So, to avoid that
+			// possibility, we'll perform the resume on the main thread's next run
+			// loop. 
+			runOnMainThread ( new Runnable () {
+
+				public void run () {
+					
+					log ( "Resuming now" );
+						
+					mMoaiView.pause ( false );
+				}
+			});
 		}
+	}
+
+	//----------------------------------------------------------------//
+	protected void onStart () {
+
+		log ( "MoaiActivity onStart called" );
+
+		super.onStart ();
+		
+        MoaiBillingResponseHandler.register ( mPurchaseObserver );
+
+		// TODO: If a session is stopped, then restarted, we do not resume the session...
+	}
+	
+	//----------------------------------------------------------------//
+	protected void onStop () {
+
+		log ( "MoaiActivity onStop called" );
+
+		super.onStop ();
+
+        MoaiBillingResponseHandler.unregister ( mPurchaseObserver );
+
+		AKUAppWillEndSession ();
 	}
 	
 	//================================================================//
@@ -277,11 +301,6 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 	//================================================================//
 	
 	//----------------------------------------------------------------//
-	public void startSession () {
-
-		AKUAppDidStartSession ();
-	}
-	
 	public void enableAccelerometerEvents ( boolean enabled ) {
 		
 		if ( !enabled ) {
@@ -311,9 +330,80 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 		}
 	}
 	
+	//----------------------------------------------------------------//
+	public static void log ( String message ) {
+		
+		Log.i ( "MoaiLog", message );
+	}
+	
+	//----------------------------------------------------------------//
+	public void startSession () {
+
+		AKUAppDidStartSession ();
+	}
+	
 	//================================================================//
 	// Private methods
 	//================================================================//
+
+	//----------------------------------------------------------------//
+	private void runOnMainThread ( final Runnable runnable ) {
+
+		runOnMainThread ( runnable, false, 0 );
+	}
+	
+	//----------------------------------------------------------------//
+	private void runOnMainThread ( final Runnable runnable, boolean wait ) {
+	
+		runOnMainThread ( runnable, wait, 0 );
+	}
+
+	//----------------------------------------------------------------//
+	private void runOnMainThread ( final Runnable runnable, long delay ) {
+	
+		runOnMainThread ( runnable, false, delay );
+	}
+	
+	//----------------------------------------------------------------//
+	private void runOnMainThread ( final Runnable runnable, boolean wait, long delay ) {
+		
+		if ( wait ) {
+			
+			log ( "runOnMainThread: Start" );
+			
+			final CountDownLatch signal = new CountDownLatch ( 1 );
+
+			mHandler.postDelayed ( new Runnable () {
+
+				public void run () {
+
+					log ( "runOnMainThread: Running on main thread" );
+				
+					runnable.run ();
+					
+					log ( "runOnMainThread: Done running, signaling" );
+					
+					signal.countDown ();
+					
+					log ( "runOnMainThread: Done signaling" );
+				}
+			}, delay );
+
+			try {
+
+				log ( "runOnMainThread: Waiting" );
+
+				signal.await ();
+				
+				log ( "runOnMainThread: Done waiting" );
+			} catch ( InterruptedException e ) {
+
+			}
+		} else {
+			
+			mHandler.postDelayed ( runnable, delay );			
+		}
+	}
 	
 	//----------------------------------------------------------------//
 	private void startConnectivityReceiver () {
@@ -356,6 +446,7 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 	// WindowEvent methods
 	//================================================================//
 
+	//----------------------------------------------------------------//
 	public void onWindowFocusChanged ( boolean hasFocus ) {
 		
 		log ( "MoaiActivity onWindowFocusChanged called" );
@@ -363,19 +454,25 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 		super.onWindowFocusChanged ( hasFocus );
 				
 		// If we are waiting to resume and just got the window focus back, 
-		// it's time to resume. All of this nonsense is to properly handle
-		// the lock screen...
+		// it's time to resume. All of this nonsense is to prevent audio 
+		// from playing while the screen is locked.
 		mWindowFocusLost = !hasFocus;
 		if ( mWaitingToResume && hasFocus ) {
 		
-			log ( "Resuming now..." );
-		
 			mWaitingToResume = false;
 			
-			mHandler.post ( new Runnable () {
+			// In some circumstances, resuming appears to cause the main thread
+			// to block while the render thread performs a render. If that render
+			// loop causes the lua to call back into the Java host, we can deadlock
+			// if we proxy the call to the main thread and wait. So, to avoid that
+			// possibility, we'll perform the resume on the main thread's next run
+			// loop. 
+			runOnMainThread ( new Runnable () {
 
 				public void run () {
 						
+					log ( "Resuming now" );
+
 					mMoaiView.pause ( false );
 				}
 			});
@@ -389,7 +486,7 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 	//----------------------------------------------------------------//
 	public void showDialog ( final String title, final String message, final String positiveButton, final String neutralButton, final String negativeButton, final boolean cancelable ) {
 
-		mHandler.post ( new Runnable () {
+	 	runOnMainThread ( new Runnable () {
 
 			public void run () {
 
@@ -446,15 +543,21 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 	}
 	
 	//----------------------------------------------------------------//
-	public void share ( String prompt, String subject, String text ) {
+	public void share ( final String prompt, final String subject, final String text ) {
 
-		Intent intent = new Intent ( Intent.ACTION_SEND );
-		intent.setType ( "text/plain" );
+		runOnMainThread ( new Runnable () {
+
+			public void run () {
+				
+				Intent intent = new Intent ( Intent.ACTION_SEND );
+				intent.setType ( "text/plain" );
 		
-		if ( subject != null ) intent.putExtra ( Intent.EXTRA_SUBJECT, subject );
-		if ( text != null ) intent.putExtra ( Intent.EXTRA_TEXT, text );
+				if ( subject != null ) intent.putExtra ( Intent.EXTRA_SUBJECT, subject );
+				if ( text != null ) intent.putExtra ( Intent.EXTRA_TEXT, text );
 		
-		MoaiActivity.this.startActivity ( Intent.createChooser ( intent, prompt ));
+				MoaiActivity.this.startActivity ( Intent.createChooser ( intent, prompt ));
+			}
+		});
 	}
 
 	//================================================================//
@@ -462,11 +565,17 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 	//================================================================//
 
 	//----------------------------------------------------------------//
-	public void openURL ( String url ) {
+	public void openURL ( final String url ) {
 
-		Uri uri = Uri.parse ( url );
-		Intent intent = new Intent ( Intent.ACTION_VIEW, uri );
-		MoaiActivity.this.startActivity ( intent );
+		runOnMainThread ( new Runnable () {
+
+			public void run () {
+
+				Uri uri = Uri.parse ( url );
+				Intent intent = new Intent ( Intent.ACTION_VIEW, uri );
+				MoaiActivity.this.startActivity ( intent );
+			}
+		});
 	}
 	
 	//================================================================//
@@ -476,7 +585,7 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 	//----------------------------------------------------------------//
 	public void initCrittercism ( final String appId ) {
 
-		mHandler.post ( new Runnable () {
+		runOnMainThread ( new Runnable () {
 
 			public void run () {
 		
@@ -490,49 +599,72 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 	//================================================================//
 
 	//----------------------------------------------------------------//
-	public void requestTapjoyConnect ( String appId, String appSecret ) {
-		
-		TapjoyConnect.requestTapjoyConnect ( MoaiActivity.this, appId, appSecret );
-	}
-	
 	public String getUserId () {
 
- 		return TapjoyConnect.getTapjoyConnectInstance ().getUserID ();
+		log ( "getUserId: Start" );
+
+		runOnMainThread ( new Runnable () {
+
+			public void run () {
+
+ 				mTapjoyUserId = TapjoyConnect.getTapjoyConnectInstance ().getUserID ();
+			}
+		}, true );
+		
+		log ( "getUserId: Done" );
+		
+		return mTapjoyUserId;
 	}
 	 
+	//----------------------------------------------------------------//
 	public void initVideoAds () {
+
+		runOnMainThread ( new Runnable () {
+
+			public void run () {
 		
-		TapjoyConnect.getTapjoyConnectInstance ().initVideoAd ( MoaiActivity.this );
+				TapjoyConnect.getTapjoyConnectInstance ().initVideoAd ( MoaiActivity.this );
+			}
+		});
+	}
+
+	//----------------------------------------------------------------//
+	public void requestTapjoyConnect ( final String appId, final String appSecret ) {
+
+
+		runOnMainThread ( new Runnable () {
+
+			public void run () {
+				
+				TapjoyConnect.requestTapjoyConnect ( MoaiActivity.this, appId, appSecret );
+			}
+		});
+	}
+		
+	//----------------------------------------------------------------//
+	public void setVideoAdCacheCount ( final int count ) {
+
+		runOnMainThread ( new Runnable () {
+
+			public void run () {
+		
+				TapjoyConnect.getTapjoyConnectInstance ().setVideoCacheCount ( count );
+			}
+		});
 	}
 	
-	public void setVideoAdCacheCount ( int count ) {
-		
-		TapjoyConnect.getTapjoyConnectInstance ().setVideoCacheCount ( count );
-	}
-	
+	//----------------------------------------------------------------//
 	public void showOffers () {
+
+		runOnMainThread ( new Runnable () {
+
+			public void run () {
 		
-		TapjoyConnect.getTapjoyConnectInstance ().showOffers ();
+				TapjoyConnect.getTapjoyConnectInstance ().showOffers ();
+			}
+		});
 	}
-	
-	//================================================================//
-	// Tapjoy video delegate callback methods
-	//================================================================//	
-	public void videoReady () {
-
-		AKUNotifyVideoAdReady ();
-	}
-
-	public void videoError ( int statusCode ) {
-
-		AKUNotifyVideoAdError ( statusCode );
-	}
-
-	public void videoComplete () {
-
-		AKUNotifyVideoAdClose ();
-	}
-	
+		
 	//================================================================//
 	// In-App Billing JNI callback methods
 	//================================================================//
@@ -541,99 +673,147 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 	public boolean checkBillingSupported () {
 		
 		log ( "checkBillingSupported: Start" );
-		
-		final CountDownLatch signal = new CountDownLatch ( 1 );
-		
-		mHandler.post ( new Runnable () {
+
+		runOnMainThread ( new Runnable () {
 
 			public void run () {
 				
-				log ( "checkBillingSupported MAIN: Start" );
-				
-				mMarketBillingSupported = mBillingService.checkBillingSupported ();
-				
-				log ( "checkBillingSupported MAIN: Notifying" );
-				
-				signal.countDown ();
-				
-				log ( "checkBillingSupported MAIN: Done" );
+				mMarketBillingSupported = mBillingService.checkBillingSupported ();				
 			}
-		});
+		}, true);
 
-		try {
+		log ( "checkBillingSupported: Done" );
 
-			log ( "checkBillingSupported: Waiting" );
-			
-			signal.await ();
-		} catch ( InterruptedException e ) {
-			
-			log ( "checkBillingSupported: Interrupted" );
-		}
-		
-		log ( "checkBillingSupported: Done, supported = " + (( mMarketBillingSupported ) ? "YES" : "NO" ));
-		
 		return mMarketBillingSupported;
 	}
 
 	//----------------------------------------------------------------//
-	public boolean confirmNotification ( String notificationId ) {
+	public boolean confirmNotification ( final String notificationId ) {
 		
-		ArrayList<String> notifyList = new ArrayList<String> ();
-   		notifyList.add ( notificationId );
+		log ( "confirmNotification: Start" );
 
-		String[] notifyIds = notifyList.toArray ( new String[notifyList.size ()] );
+		runOnMainThread ( new Runnable () {
 
-		return mBillingService.confirmNotifications ( notifyIds );
+			public void run () {
+		
+				ArrayList<String> notifyList = new ArrayList<String> ();
+   				notifyList.add ( notificationId );
+
+				String[] notifyIds = notifyList.toArray ( new String[notifyList.size ()] );
+
+				mMarketNotificationsConfirmed = mBillingService.confirmNotifications ( notifyIds );
+			}
+		}, true );
+		
+		log ( "confirmNotification: Done" );
+		
+		return mMarketNotificationsConfirmed;
 	}
 		
 	//----------------------------------------------------------------//
-	public boolean requestPurchase ( String productId, String developerPayload ) {
+	public boolean requestPurchase ( final String productId, final String developerPayload ) {
 	
-		return mBillingService.requestPurchase ( productId, developerPayload );
+		log ( "requestPurchase: Start" );
+
+		runOnMainThread ( new Runnable () {
+
+			public void run () {
+					
+				mMarketPurchaseRequested = mBillingService.requestPurchase ( productId, developerPayload );
+			}
+		}, true );
+		
+		log ( "requestPurchase: Done" );
+		
+		return mMarketPurchaseRequested;
 	}
 	
 	//----------------------------------------------------------------//
 	public boolean restoreTransactions () {
 
-		return mBillingService.restoreTransactions ();
+		log ( "restoreTransactions: Start" );
+
+		runOnMainThread ( new Runnable () {
+
+			public void run () {
+					
+				mMarketTransactionsRestored = mBillingService.restoreTransactions ();
+			}
+		}, true );
+		
+		log ( "restoreTransactions: Done" );
+		
+		return mMarketTransactionsRestored;
 	}
 	
 	//----------------------------------------------------------------//
-	public void setMarketPublicKey ( String key ) {
+	public void setMarketPublicKey ( final String key ) {
 	
-		MoaiBillingSecurity.setPublicKey ( key );
+		runOnMainThread ( new Runnable () {
+
+			public void run () {
+					
+				MoaiBillingSecurity.setPublicKey ( key );
+			}
+		});
+	}
+	
+	//================================================================//
+	// TapjoyVideoNotifier methods
+	//================================================================//	
+
+	//----------------------------------------------------------------//
+	public void videoComplete () {
+
+		AKUNotifyVideoAdClose ();
+	}
+
+	//----------------------------------------------------------------//
+	public void videoError ( int statusCode ) {
+
+		AKUNotifyVideoAdError ( statusCode );
+	}
+
+	//----------------------------------------------------------------//
+	public void videoReady () {
+
+		AKUNotifyVideoAdReady ();
 	}
 	
 	//================================================================//
 	// ConnectivityBroadcastReceiver
 	//================================================================//
+
 	private class ConnectivityBroadcastReceiver extends BroadcastReceiver {
 
 		//----------------------------------------------------------------//
 		@Override
 		public void onReceive ( Context context, Intent intent ) {
 			
-			ConnectivityManager conMgr = ( ConnectivityManager )context.getSystemService ( Context.CONNECTIVITY_SERVICE );
-			NetworkInfo networkInfo = conMgr.getActiveNetworkInfo ();
+			ConnectivityManager manager = ( ConnectivityManager )context.getSystemService ( Context.CONNECTIVITY_SERVICE );
+			NetworkInfo networkInfo = manager.getActiveNetworkInfo ();
 					
 			CONNECTION_TYPE connectionType = CONNECTION_TYPE.NONE;
 					
 			if ( networkInfo != null ) {
+				
 				 switch ( networkInfo.getType () ) {
 					 								
 				 	case ConnectivityManager.TYPE_MOBILE: {
+					
 				 		connectionType = CONNECTION_TYPE.WWAN;
 				 		break;
 				 	}
 					 									
 				 	case ConnectivityManager.TYPE_WIFI: {
+					
 				 		connectionType = CONNECTION_TYPE.WIFI;
 				 		break;
 				 	}
 				 }
 			}
 							 
-			AKUSetConnectionType ( ( long )connectionType.ordinal () );
+			AKUSetConnectionType (( long )connectionType.ordinal ());
 		}
 	};
 	
@@ -645,6 +825,7 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 		
 		//----------------------------------------------------------------//
 		public void onAccuracyChanged ( Sensor sensor, int accuracy ) {
+			
 		}
 
 		//----------------------------------------------------------------//
@@ -664,12 +845,14 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 	//================================================================//
 	// PurchaseObserver
 	//================================================================//
+
 	private class PurchaseObserver extends MoaiBillingPurchaseObserver {
 	    
 		private static final String TAG = "MoaiBillingPurchaseObserver";
 
 		//----------------------------------------------------------------//
 		public PurchaseObserver ( Handler handler ) {
+			
 	        super ( MoaiActivity.this, handler );
 	    }
 
@@ -678,6 +861,7 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 	    public void onBillingSupported ( boolean supported ) {
 	        
 			if ( MoaiBillingConstants.DEBUG ) {
+				
 	            Log.i ( TAG, "onBillingSupported: " + supported );
 	        }
 	
@@ -689,6 +873,7 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 	    public void onPurchaseStateChange ( PurchaseState purchaseState, String itemId, String orderId, String notificationId, String developerPayload ) {
         	
 			if ( MoaiBillingConstants.DEBUG ) {
+				
 	            Log.i ( TAG, "onPurchaseStateChange: " + itemId + ", " + purchaseState );
 	        }
 	        
@@ -700,6 +885,7 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 	    public void onRequestPurchaseResponse ( RequestPurchase request, ResponseCode responseCode ) {
 	        
 			if ( MoaiBillingConstants.DEBUG ) {
+				
 	            Log.d ( TAG, "onRequestPurchaseResponse: " + request.mProductId + ", " + responseCode );
 	        }
 	
@@ -711,6 +897,7 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 	    public void onRestoreTransactionsResponse ( RestoreTransactions request, ResponseCode responseCode ) {
 
 	        if ( MoaiBillingConstants.DEBUG ) {
+		
 	            Log.d ( TAG, "onRestoreTransactionsResponse: " + responseCode );
 	        }
 
