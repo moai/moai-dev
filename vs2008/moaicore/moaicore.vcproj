@@ -925,7 +925,7 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="textbox"
+			Name="text"
 			>
 			<File
 				RelativePath="..\..\src\moaicore\MOAIBitmapFontRipper.cpp"
@@ -957,6 +957,22 @@
 			</File>
 			<File
 				RelativePath="..\..\src\moaicore\MOAIGlyph.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIGlyphCache.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIGlyphCache.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAISpanList.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAISpanList.h"
 				>
 			</File>
 			<File
