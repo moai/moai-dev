@@ -81,7 +81,9 @@ public class MoaiBillingService extends Service implements ServiceConnection {
                     return true;
                 } catch ( RemoteException e ) {
                     onRemoteException ( e );
-                }
+            	} catch ( NullPointerException e ) {
+                	onNullPointerException ( e );
+            	}
             }
             return false;
         }
@@ -91,7 +93,12 @@ public class MoaiBillingService extends Service implements ServiceConnection {
             mService = null;
         }
 
-        abstract protected long run () throws RemoteException;
+        protected void onNullPointerException ( NullPointerException e ) {
+            Log.w ( TAG, "remote billing service uninitialized" );
+            mService = null;
+        }
+
+        abstract protected long run () throws RemoteException, NullPointerException;
 
         protected void responseCodeReceived ( ResponseCode responseCode ) {
 	
@@ -119,7 +126,7 @@ public class MoaiBillingService extends Service implements ServiceConnection {
         }
 
         @Override
-        protected long run () throws RemoteException {
+        protected long run () throws RemoteException, NullPointerException {
             Bundle request = makeRequestBundle ( "CHECK_BILLING_SUPPORTED" );
             Bundle response = mService.sendBillingRequest ( request );
 
@@ -153,7 +160,7 @@ public class MoaiBillingService extends Service implements ServiceConnection {
         }
     
         @Override
-        protected long run () throws RemoteException {
+        protected long run () throws RemoteException, NullPointerException {
             Bundle request = makeRequestBundle ( "REQUEST_PURCHASE" );
             request.putString ( MoaiBillingConstants.BILLING_REQUEST_ITEM_ID, mProductId );
             if ( mDeveloperPayload != null ) {
@@ -188,7 +195,7 @@ public class MoaiBillingService extends Service implements ServiceConnection {
         }
     
         @Override
-        protected long run () throws RemoteException {
+        protected long run () throws RemoteException, NullPointerException {
             Bundle request = makeRequestBundle ( "CONFIRM_NOTIFICATIONS" );
             request.putStringArray ( MoaiBillingConstants.BILLING_REQUEST_NOTIFY_IDS, mNotifyIds );
 
@@ -207,7 +214,7 @@ public class MoaiBillingService extends Service implements ServiceConnection {
         }
     
         @Override
-        protected long run () throws RemoteException {
+        protected long run () throws RemoteException, NullPointerException {
             mNonce = MoaiBillingSecurity.generateNonce ();
     
             Bundle request = makeRequestBundle ( "GET_PURCHASE_INFORMATION" );
@@ -223,6 +230,12 @@ public class MoaiBillingService extends Service implements ServiceConnection {
             super.onRemoteException ( e );
             MoaiBillingSecurity.removeNonce ( mNonce );
         }
+
+        @Override
+        protected void onNullPointerException ( NullPointerException e ) {
+            super.onNullPointerException ( e );
+            MoaiBillingSecurity.removeNonce ( mNonce );
+        }
     }
 
     class RestoreTransactions extends BillingRequest {
@@ -233,7 +246,7 @@ public class MoaiBillingService extends Service implements ServiceConnection {
         }
     
         @Override
-        protected long run () throws RemoteException {
+        protected long run () throws RemoteException, NullPointerException {
             mNonce = MoaiBillingSecurity.generateNonce ();
     
             Bundle request = makeRequestBundle ( "RESTORE_TRANSACTIONS" );
@@ -246,6 +259,12 @@ public class MoaiBillingService extends Service implements ServiceConnection {
         @Override
         protected void onRemoteException ( RemoteException e ) {
             super.onRemoteException ( e );
+            MoaiBillingSecurity.removeNonce ( mNonce );
+        }
+
+        @Override
+        protected void onNullPointerException ( NullPointerException e ) {
+            super.onNullPointerException ( e );
             MoaiBillingSecurity.removeNonce ( mNonce );
         }
     

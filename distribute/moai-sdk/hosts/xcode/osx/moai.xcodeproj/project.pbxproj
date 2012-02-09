@@ -120,17 +120,17 @@
 		CD2FDE8613542E9F00B814DF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				CDEE22E613543D8600C2E04C /* OpenGL.framework */,
-				CDEE22E413543D6600C2E04C /* GLUT.framework */,
 				CD74EA2B137807E40093EE68 /* libcrypto.dylib */,
-				E9314E651475CDDD005F8D20 /* libmoai-osx-zipfs.a */,
 				E99635B41475C85D00C0201C /* libz.1.1.3.dylib */,
 				CD74EA311378080E0093EE68 /* libssl.dylib */,
 				0324CC63135643FD000ADC60 /* libSystem.dylib */,
+				E9314E651475CDDD005F8D20 /* libmoai-osx-zipfs.a */,
 				CD0BA88B13B93DA0007ECCD9 /* libmoai-osx-3rdparty.a */,
 				CD0BA88D13B93DA0007ECCD9 /* libmoai-osx-luaext.a */,
 				CD0BA88F13B93DA0007ECCD9 /* libmoai-osx-untz.a */,
 				CD0BA89113B93DA0007ECCD9 /* libmoai-osx.a */,
+				CDEE22E613543D8600C2E04C /* OpenGL.framework */,
+				CDEE22E413543D6600C2E04C /* GLUT.framework */,
 				07AB086813F715DC002FAF6E /* Carbon.framework */,
 				07AB086A13F715DC002FAF6E /* CoreFoundation.framework */,
 				07AB086C13F715DC002FAF6E /* IOKit.framework */,
@@ -326,7 +326,7 @@
 					XML_STATIC,
 					FT2_BUILD_LIBRARY,
 					DARWIN_NO_CARBON,
-					AKUGLUT_USE_LUAEXT,
+					GLUTHOST_USE_LUAEXT,
 				);
 				HEADER_SEARCH_PATHS = (
 					"\"../../src/\"",
@@ -355,7 +355,7 @@
 					XML_STATIC,
 					FT2_BUILD_LIBRARY,
 					DARWIN_NO_CARBON,
-					AKUGLUT_USE_LUAEXT,
+					GLUTHOST_USE_LUAEXT,
 				);
 				HEADER_SEARCH_PATHS = (
 					"\"../../src/\"",

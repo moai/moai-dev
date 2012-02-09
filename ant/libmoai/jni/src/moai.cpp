@@ -81,30 +81,32 @@ struct InputEvent {
 		INPUTEVENT_TOUCH,
 	};
 
-	int m_type;
-	int m_deviceId;
-	int m_sensorId;
+	int 	m_type;
+	int 	m_deviceId;
+	int 	m_sensorId;
 
-	float m_x;
-	float m_y;
-	float m_z;
-
-
-	//compass
-	int m_heading;
-
-	//touch
-	int m_touchId;
-	bool m_down;
-	int m_tapCount;
+	// touch, level
+	float 	m_x;
+	float 	m_y;
 	
-	//location
-	int m_longitude;
-	int m_latitude;
-	int m_altitude;
-	float m_hAccuracy;
-	float m_vAccuracy;
-	float m_speed;
+	// level
+	float 	m_z;
+
+	// compass
+	int 	m_heading;
+
+	// touch
+	int  	m_touchId;
+	bool 	m_down;
+	int  	m_tapCount;
+	
+	// location
+	double 	m_longitude;
+	double 	m_latitude;
+	double 	m_altitude;
+	float  	m_hAccuracy;
+	float  	m_vAccuracy;
+	float  	m_speed;
 };
 
 LockingQueue<InputEvent> *g_InputQueue = NULL;
@@ -115,9 +117,7 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 
 	#define GET_ENV() 	\
 		JNIEnv* env; 	\
-		jvm->GetEnv (( void** )&env, JNI_VERSION_1_4 ); \
-		if (env != gEnv) { PRINT(__FUNCTION__); } \
-		assert(env == gEnv);
+		jvm->GetEnv (( void** )&env, JNI_VERSION_1_4 );
 		
 	#define GET_CSTRING(jstr, cstr) \
 		const char* cstr = env->GetStringUTFChars ( jstr, NULL );
@@ -167,12 +167,7 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 
 		GET_ENV ();
 
-		PRINT("CheckBillingSupported");
-
-		bool retVal = ( bool )env->CallObjectMethod ( mMoaiActivity , mCheckBillingSupportedFunc );
-
-		PRINT("CheckBillingSupported DONE");
-
+		bool retVal = env->CallBooleanMethod ( mMoaiActivity , mCheckBillingSupportedFunc );
 		return retVal;
 	}
 
@@ -182,7 +177,7 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 		GET_ENV ();
 		GET_JSTRING ( notification, jstr );
 		
-		bool retVal = ( bool )env->CallObjectMethod ( mMoaiActivity , mConfirmNotificationFunc, jstr );
+		bool retVal = ( bool )env->CallBooleanMethod ( mMoaiActivity , mConfirmNotificationFunc, jstr );
 		return retVal;
 	}
 
@@ -193,7 +188,7 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 		GET_JSTRING ( identifier, jidentifier );
 		GET_JSTRING ( payload, jpayload );
 
-		bool retVal = ( bool )env->CallObjectMethod ( mMoaiActivity , mRequestPurchaseFunc, jidentifier, jpayload );
+		bool retVal = ( bool )env->CallBooleanMethod ( mMoaiActivity , mRequestPurchaseFunc, jidentifier, jpayload );
 		return retVal;
 	}	
 		
@@ -202,7 +197,7 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 
 		GET_ENV ();
 		
-		bool retVal = ( bool )env->CallObjectMethod ( mMoaiActivity , mRestoreTransactionsFunc );
+		bool retVal = ( bool )env->CallBooleanMethod ( mMoaiActivity , mRestoreTransactionsFunc );
 		return retVal;
 	}
 	
@@ -212,7 +207,7 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 		GET_ENV ();
 		GET_JSTRING ( key, jstr );
 		
-		env->CallObjectMethod ( mMoaiActivity, mSetMarketPublicKeyFunc, jstr );
+		env->CallVoidMethod ( mMoaiActivity, mSetMarketPublicKeyFunc, jstr );
 	}
 	
 	//----------------------------------------------------------------//
@@ -226,7 +221,7 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 		GET_JSTRING ( neutral, jneutral );
 		GET_JSTRING ( negative, jnegative );
 
-		env->CallObjectMethod ( mMoaiActivity , mShowDialogFunc, jtitle, jmessage, jpositive, jneutral, jnegative, cancelable );
+		env->CallVoidMethod ( mMoaiActivity , mShowDialogFunc, jtitle, jmessage, jpositive, jneutral, jnegative, cancelable );
 	}
 	
 	//----------------------------------------------------------------//
@@ -238,7 +233,7 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 		GET_JSTRING ( subject, jsubject );
 		GET_JSTRING ( text, jtext );
 
-		env->CallObjectMethod ( mMoaiActivity , mShareFunc, jprompt, jsubject, jtext );
+		env->CallVoidMethod ( mMoaiActivity , mShareFunc, jprompt, jsubject, jtext );
 	}
 	
 //================================================================//
@@ -276,7 +271,7 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 		GET_ENV ();
 		GET_JSTRING ( url, jstr );
 		
-		env->CallObjectMethod ( mMoaiActivity, mOpenURLFunc, jstr );
+		env->CallVoidMethod ( mMoaiActivity, mOpenURLFunc, jstr );
 	}
 
 //================================================================//
@@ -310,7 +305,7 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 	
 	//----------------------------------------------------------------//
 	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiActivity_AKUEnqueueCompassEvent ( JNIEnv* env, jclass obj, jint deviceId, jint sensorId, jint heading ) {
-		//AJV TODO enqueue in event queue
+
 		InputEvent ievent;
 
 		ievent.m_type = InputEvent::INPUTEVENT_COMPASS;
@@ -323,7 +318,7 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 		g_InputQueue->Push ( ievent );
 		//AKUEnqueueCompassEvent ( deviceId, sensorId, heading );
 	}
-	#include <android/log.h>
+
 	//----------------------------------------------------------------//
 	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiActivity_AKUEnqueueLevelEvent ( JNIEnv* env, jclass obj, jint deviceId, jint sensorId, jfloat x, jfloat y, jfloat z ) {
 		
@@ -343,7 +338,7 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 	}
 
 	//----------------------------------------------------------------//
-	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiActivity_AKUEnqueueLocationEvent ( JNIEnv* env, jclass obj, jint deviceId, jint sensorId, jint longitude, jint latitude, jint altitude, jfloat hAccuracy, jfloat vAccuracy, jfloat speed ) {
+	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiActivity_AKUEnqueueLocationEvent ( JNIEnv* env, jclass obj, jint deviceId, jint sensorId, jdouble longitude, jdouble latitude, jdouble altitude, jfloat hAccuracy, jfloat vAccuracy, jfloat speed ) {
 		
 		InputEvent ievent;
 
@@ -364,11 +359,6 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 	}
 
 	//----------------------------------------------------------------//
-	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiActivity_AKUFinalize	( JNIEnv* env, jclass obj ) {
-		AKUFinalize ();
-	}
-
-	//----------------------------------------------------------------//
 	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUEnqueueTouchEvent ( JNIEnv* env, jclass obj, jint deviceId, jint sensorId, jint touchId, jboolean down, jint x, jint y, jint tapCount ) {
 		InputEvent ievent;
 
@@ -385,6 +375,11 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 
 		g_InputQueue->Push ( ievent );
 		//AKUEnqueueTouchEvent ( deviceId, sensorId, touchId, down, x, y, tapCount );
+	}
+
+	//----------------------------------------------------------------//
+	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiActivity_AKUFinalize	( JNIEnv* env, jclass obj ) {
+		AKUFinalize ();
 	}
 
 	//----------------------------------------------------------------//
@@ -419,7 +414,10 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 		REGISTER_LUA_CLASS ( MOAITapjoy );
 #endif
 
-		gEnv = env;
+#ifndef DISABLE_CRITTERCISM
+		MOAICrittercism::Affirm ();
+		REGISTER_LUA_CLASS ( MOAICrittercism );
+#endif
 
 		// register callbacks into Java
 		mMoaiView = ( jobject ) env->NewGlobalRef ( moaiView );
@@ -448,9 +446,6 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 		mSetMarketPublicKeyFunc = env->GetMethodID ( moaiActivityClass, "setMarketPublicKey", "(Ljava/lang/String;)V" );
 		mShowDialogFunc = env->GetMethodID ( moaiActivityClass, "showDialog", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)V" );
 		mShareFunc = env->GetMethodID ( moaiActivityClass, "share", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V" );
-		
-//		jclass moaiActivityClass = env->GetObjectClass ( mMoaiActivity );		
-//		env->CallObjectMethod ( mMoaiActivity ,  env->GetMethodID ( moaiActivityClass, "requestTapjoyConnect", "(Ljava/lang/String;Ljava/lang/String;)V" ), NULL, NULL );		
 	}
 
 	//----------------------------------------------------------------//
@@ -532,6 +527,11 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 		
 			AKUUntzResume ();
 		}		
+	}
+
+	//----------------------------------------------------------------//
+	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUReleaseGfxContext ( JNIEnv* env, jclass obj ) {
+		AKUReleaseGfxContext ();
 	}
 
 	//----------------------------------------------------------------//
@@ -696,7 +696,6 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 	//----------------------------------------------------------------//
 	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUUpdate ( JNIEnv* env, jclass obj ) {
 
-		//AJV move events to main queue
 		InputEvent ievent;
 		while ( g_InputQueue->PopMessage ( ievent )) {
 			switch ( ievent.m_type ) {
