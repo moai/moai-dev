@@ -385,6 +385,10 @@ void MOAIGfxDevice::DetectContext () {
 	this->mTextureUnits.Init ( maxTextureUnits );
 	this->mTextureUnits.Fill ( 0 );
 	
+	int maxTextureSize;
+	glGetIntegerv ( GL_MAX_TEXTURE_SIZE, &maxTextureSize );
+	this->mMaxTextureSize = maxTextureSize;
+	
 	this->RenewResources ();
 }
 
@@ -689,6 +693,7 @@ MOAIGfxDevice::MOAIGfxDevice () :
 	mSize ( 0 ),
 	mActiveTextures ( 0 ),
 	mTextureMemoryUsage ( 0 ),
+	mMaxTextureSize ( 0 ),
 	mTop ( 0 ),
 	mUVMtxInput ( UV_STAGE_MODEL ),
 	mUVMtxOutput ( UV_STAGE_MODEL ),

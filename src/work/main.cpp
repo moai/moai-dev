@@ -1,5 +1,6 @@
 #include <work/work-bundled-lua.h>
 #include <work/work-font-mipmap.h>
+#include <work/work-glyph-cache.h>
 #include <work/work-moai-zipfs.h>
 #include <work/work-pathfinding.h>
 #include <work/work-zipfs.h>
@@ -9,5 +10,5 @@
 //----------------------------------------------------------------//
 int main ( int argc, char** argv ) {
 
-	return work_pathfinding ( argc, argv );
+	return work_glyph_cache ( argc, argv );
 }

@@ -6,6 +6,8 @@
 
 #include <moaicore/MOAILua.h>
 
+class MOAIGlyphPage;
+
 //================================================================//
 // MOAIKernVec
 //================================================================//
@@ -23,10 +25,13 @@ class MOAIGlyph {
 private:
 
 	u32			mCode;
-	USRect		mUVRect;
 
-	float		mWidth;
-	float		mHeight;
+	u32			mSrcX; // corresponds to glyph location on page
+	u32			mSrcY; // corresponds to glyph location on page
+
+	u32			mWidth; // width in pixels
+	u32			mHeight; // height in pixels
+	
 	float		mYOff;
 	
 	float		mAdvanceX;
@@ -34,13 +39,17 @@ private:
 
 	USLeanArray < MOAIKernVec > mKernTable;
 	
+	MOAIGlyphPage*	mPage; // page containing glyph texture (if any)
+	MOAIGlyph*		mNext; // for use in glyph processing list
+	
 public:
 
 	friend class MOAIFont;
+	friend class MOAIGlyphCache;
+	friend class MOAIGlyphPage;
+	friend class MOAIGlyphSet;
 	friend class MOAITextFrame;
 	friend class MOAITextLayout;
-
-	SET ( const USRect&, UVRect, mUVRect )
 	
 	SET ( float, AdvanceX, mAdvanceX )
 	SET ( float, BearingX, mBearingX )

@@ -108,6 +108,7 @@ private:
 	USLeanArray < MOAITexture* > mTextureUnits;
 	u32				mActiveTextures;
 	size_t			mTextureMemoryUsage;
+	u32				mMaxTextureSize;
 	u32				mTop;
 	
 	u32				mUVMtxInput;
@@ -156,6 +157,7 @@ public:
 	DECL_LUA_SINGLETON ( MOAIGfxDevice )
 	
 	GET ( size_t, TextureMemoryUsage, mTextureMemoryUsage )
+	GET ( u32, MaxTextureSize, mMaxTextureSize )
 	GET ( bool, HasContext, mHasContext )
 	
 	GET_BOOL ( IsOpenGLES, mIsOpenGLES )

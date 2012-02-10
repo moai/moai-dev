@@ -9,17 +9,17 @@ class MOAIImage;
 //================================================================//
 // MOAIGlyphCache
 //================================================================//
-class MOAIGlyphCache {
-private:
-
-
-	USLeanArray < MOAIImage* > mImages;
-
-public:
-	
-	//----------------------------------------------------------------//
-					MOAIGlyphCache				();
-					~MOAIGlyphCache				();
-};
+//class MOAIGlyphCache {
+//private:
+//
+//
+//	USLeanArray < MOAIImage* > mImages;
+//
+//public:
+//	
+//	//----------------------------------------------------------------//
+//					MOAIGlyphCache				();
+//					~MOAIGlyphCache				();
+//};
 
 #endif

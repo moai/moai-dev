@@ -968,10 +968,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAISpanList.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\moaicore\MOAISpanList.h"
 				>
 			</File>

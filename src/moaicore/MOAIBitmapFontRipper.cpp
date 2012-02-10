@@ -165,33 +165,33 @@ void MOAIBitmapFontRipper::MakeFont ( MOAIFont& font, cc8* charCodes ) {
 //----------------------------------------------------------------//
 void MOAIBitmapFontRipper::MakeGlyph ( MOAIBitmapGlyphRipper& glyph ) {
 
-	float imgWidth = ( float )mOutBmp.GetWidth ();
-	float imgHeight = ( float )mOutBmp.GetHeight ();
-	
-	USRect uvRect;
+	//float imgWidth = ( float )mOutBmp.GetWidth ();
+	//float imgHeight = ( float )mOutBmp.GetHeight ();
+	//
+	//USRect uvRect;
 
-	uvRect.mXMin = ( float )glyph.mDestRect.mXMin / imgWidth;
-	uvRect.mXMax = ( float )glyph.mDestRect.mXMax / imgWidth;
-		
-	uvRect.mYMin = ( float )glyph.mDestRect.mYMin / imgHeight;
-	uvRect.mYMax = ( float )glyph.mDestRect.mYMax / imgHeight;
-	
-	float fontHeight = ( float )this->mFontHeight;
-	
-	float width = ( float )glyph.mSrcRect.Width () / fontHeight;
-	float height = ( float )glyph.mSrcRect.Height () / fontHeight;
-	float yOff = ( float )( this->mFontBase - glyph.mBase ) / fontHeight;
-	
-	if ( glyph.mIsWhitespace ) {
-		glyph.mGlyph.SetScreenRect ( 0.0f, height, yOff  );
-	}
-	else {
-		glyph.mGlyph.SetUVRect ( uvRect );
-		glyph.mGlyph.SetScreenRect ( width, height, yOff  );
-	}
-	
-	glyph.mGlyph.SetAdvanceX ( width );
-	glyph.mGlyph.SetBearingX ( 0.0f );
+	//uvRect.mXMin = ( float )glyph.mDestRect.mXMin / imgWidth;
+	//uvRect.mXMax = ( float )glyph.mDestRect.mXMax / imgWidth;
+	//	
+	//uvRect.mYMin = ( float )glyph.mDestRect.mYMin / imgHeight;
+	//uvRect.mYMax = ( float )glyph.mDestRect.mYMax / imgHeight;
+	//
+	//float fontHeight = ( float )this->mFontHeight;
+	//
+	//float width = ( float )glyph.mSrcRect.Width () / fontHeight;
+	//float height = ( float )glyph.mSrcRect.Height () / fontHeight;
+	//float yOff = ( float )( this->mFontBase - glyph.mBase ) / fontHeight;
+	//
+	//if ( glyph.mIsWhitespace ) {
+	//	glyph.mGlyph.SetScreenRect ( 0.0f, height, yOff  );
+	//}
+	//else {
+	//	glyph.mGlyph.SetUVRect ( uvRect );
+	//	glyph.mGlyph.SetScreenRect ( width, height, yOff  );
+	//}
+	//
+	//glyph.mGlyph.SetAdvanceX ( width );
+	//glyph.mGlyph.SetBearingX ( 0.0f );
 }
 
 //----------------------------------------------------------------//
