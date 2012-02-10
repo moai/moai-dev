@@ -33,6 +33,7 @@ import android.net.Uri;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.Display;
 import android.view.KeyEvent;
@@ -366,26 +367,35 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 	
 	//----------------------------------------------------------------//
 	private void runOnMainThread ( final Runnable runnable, boolean wait, long delay ) {
+
+		log ( "runOnMainThread: Start" );
 		
-		if ( wait ) {
+		if ( Looper.getMainLooper ().getThread () == Thread.currentThread ())
+		{
+			log ( "runOnMainThread: Already on MAIN thread, continuing" );
+
+			runnable.run ();
 			
-			log ( "runOnMainThread: Start" );
-			
+			log ( "runOnMainThread: Done running on MAIN thread" );
+		} else if ( wait ) {
+						
 			final CountDownLatch signal = new CountDownLatch ( 1 );
+
+			log ( "runOnMainThread: Going to wait" );
 
 			mHandler.postDelayed ( new Runnable () {
 
 				public void run () {
 
-					log ( "runOnMainThread: Running on main thread" );
+					log ( "runOnMainThread: MAIN Running on main thread" );
 				
 					runnable.run ();
 					
-					log ( "runOnMainThread: Done running, signaling" );
+					log ( "runOnMainThread: MAIN Done running, signaling" );
 					
 					signal.countDown ();
 					
-					log ( "runOnMainThread: Done signaling" );
+					log ( "runOnMainThread: MAIN Done signaling" );
 				}
 			}, delay );
 
@@ -401,8 +411,14 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 			}
 		} else {
 			
-			mHandler.postDelayed ( runnable, delay );			
+			log ( "runOnMainThread: Not waiting" );
+			
+			mHandler.postDelayed ( runnable, delay );
+			
+			log ( "runOnMainThread: Kicked off to main thread, done" );
 		}
+		
+		log ( "runOnMainThread: Done" );
 	}
 	
 	//----------------------------------------------------------------//
