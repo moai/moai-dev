@@ -642,7 +642,8 @@ void MOAIShader::OnLoad () {
 	glDeleteShader ( this->mFragmentShader );
 	this->mFragmentShader = 0;
 	
-	this->mAttributeMap.clear ();
+	//AJV TODO - does the attribute map ever need to be cleared?
+	//this->mAttributeMap.clear ();
 }
 
 //----------------------------------------------------------------//
