@@ -223,6 +223,8 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 		// expected windows focus events.
 		mWindowFocusLost = true;
 		
+		log ( "onPause: Start" );
+		
 		// Call pause on the main thread's next run loop to avoid flicker
 		// that occurs when we pause the Open GL surface.
 		runOnMainThread ( new Runnable () {
@@ -234,6 +236,8 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 				mMoaiView.pause ( true );
 			}
 		});
+
+		log ( "onPause: Done" );
 	}
 	
 	//----------------------------------------------------------------//
@@ -255,6 +259,8 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 		mWaitingToResume = mWindowFocusLost;
 		if ( !mWindowFocusLost ) {
 			
+			log ( "onResume: Start" );
+
 			// In some circumstances, resuming appears to cause the main thread
 			// to block while the render thread performs a render. If that render
 			// loop causes the lua to call back into the Java host, we can deadlock
@@ -269,7 +275,9 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 						
 					mMoaiView.pause ( false );
 				}
-			});
+			}, 100 );
+
+			log ( "onResume: Done" );
 		}
 	}
 
@@ -480,6 +488,8 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 		
 			mWaitingToResume = false;
 			
+			log ( "onWindowFocusChanged: Start" );
+			
 			// In some circumstances, resuming appears to cause the main thread
 			// to block while the render thread performs a render. If that render
 			// loop causes the lua to call back into the Java host, we can deadlock
@@ -494,7 +504,9 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 
 					mMoaiView.pause ( false );
 				}
-			});
+			}, 100 );
+			
+			log ( "onWindowFocusChanged: Done" );
 		}
 	}
 
@@ -504,6 +516,8 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 	
 	//----------------------------------------------------------------//
 	public void showDialog ( final String title, final String message, final String positiveButton, final String neutralButton, final String negativeButton, final boolean cancelable ) {
+
+		log ( "showDialog: Start" );
 
 	 	runOnMainThread ( new Runnable () {
 
@@ -559,10 +573,14 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 				builder.create().show();			
 			}
 		});
+		
+		log ( "showDialog: Done" );
 	}
 	
 	//----------------------------------------------------------------//
 	public void share ( final String prompt, final String subject, final String text ) {
+
+		log ( "share: Start" );
 
 		runOnMainThread ( new Runnable () {
 
@@ -577,6 +595,8 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 				MoaiActivity.this.startActivity ( Intent.createChooser ( intent, prompt ));
 			}
 		});
+
+		log ( "share: Done" );
 	}
 
 	//================================================================//
@@ -585,6 +605,8 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 
 	//----------------------------------------------------------------//
 	public void openURL ( final String url ) {
+
+		log ( "openURL: Start" );
 
 		runOnMainThread ( new Runnable () {
 
@@ -595,6 +617,8 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 				MoaiActivity.this.startActivity ( intent );
 			}
 		});
+
+		log ( "openURL: Done" );
 	}
 	
 	//================================================================//
@@ -604,6 +628,8 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 	//----------------------------------------------------------------//
 	public void initCrittercism ( final String appId ) {
 
+		log ( "initCrittercism: Start" );
+
 		runOnMainThread ( new Runnable () {
 
 			public void run () {
@@ -611,6 +637,8 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 				Crittercism.init ( getApplicationContext(), appId );
 			}
 		});
+
+		log ( "initCrittercism: Done" );
 	}
 	
 	//================================================================//
@@ -638,6 +666,8 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 	//----------------------------------------------------------------//
 	public void initVideoAds () {
 
+		log ( "initVideoAds: Start" );
+
 		runOnMainThread ( new Runnable () {
 
 			public void run () {
@@ -645,11 +675,14 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 				TapjoyConnect.getTapjoyConnectInstance ().initVideoAd ( MoaiActivity.this );
 			}
 		});
+
+		log ( "initVideoAds: Done" );
 	}
 
 	//----------------------------------------------------------------//
 	public void requestTapjoyConnect ( final String appId, final String appSecret ) {
 
+		log ( "requestTapjoyConnect: Start" );
 
 		runOnMainThread ( new Runnable () {
 
@@ -658,10 +691,14 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 				TapjoyConnect.requestTapjoyConnect ( MoaiActivity.this, appId, appSecret );
 			}
 		});
+
+		log ( "requestTapjoyConnect: Done" );
 	}
 		
 	//----------------------------------------------------------------//
 	public void setVideoAdCacheCount ( final int count ) {
+
+		log ( "setVideoAdCacheCount: Start" );
 
 		runOnMainThread ( new Runnable () {
 
@@ -670,10 +707,14 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 				TapjoyConnect.getTapjoyConnectInstance ().setVideoCacheCount ( count );
 			}
 		});
+
+		log ( "setVideoAdCacheCount: Done" );
 	}
 	
 	//----------------------------------------------------------------//
 	public void showOffers () {
+
+		log ( "showOffers: Start" );
 
 		runOnMainThread ( new Runnable () {
 
@@ -682,6 +723,8 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 				TapjoyConnect.getTapjoyConnectInstance ().showOffers ();
 			}
 		});
+
+		log ( "showOffers: Done" );
 	}
 		
 	//================================================================//
@@ -768,6 +811,8 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 	//----------------------------------------------------------------//
 	public void setMarketPublicKey ( final String key ) {
 	
+		log ( "setMarketPublicKey: Start" );
+
 		runOnMainThread ( new Runnable () {
 
 			public void run () {
@@ -775,6 +820,8 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 				MoaiBillingSecurity.setPublicKey ( key );
 			}
 		});
+
+		log ( "setMarketPublicKey: Done" );
 	}
 	
 	//================================================================//
