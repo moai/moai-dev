@@ -75,8 +75,10 @@
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 	
 	<!-- Crittercism -->
+	<!-- Optional permissions that allow Crittercism to collect additional data.
 	<uses-permission android:name="android.permission.READ_LOGS"/>
 	<uses-permission android:name="android.permission.GET_TASKS"/>
+	-->
 	
 	<supports-screens 
 	    	android:smallScreens="false"

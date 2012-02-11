@@ -170,7 +170,6 @@ public class MoaiView extends GLSurfaceView {
 	
 		if ( paused ) {
 			AKUPause ( true );
-			AKUReleaseGfxContext ();
 			onPause ();
 			setRenderMode ( GLSurfaceView.RENDERMODE_WHEN_DIRTY );
 		}
@@ -239,6 +238,7 @@ public class MoaiView extends GLSurfaceView {
 
 			log ( "MoaiRenderer onSurfaceCreated called" );
 
+			AKUReleaseGfxContext ();
 			AKUDetectGfxContext ();
 		}
 	}

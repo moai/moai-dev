@@ -368,12 +368,15 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 	//----------------------------------------------------------------//
 	private void runOnMainThread ( final Runnable runnable, boolean wait, long delay ) {
 
-		log ( "runOnMainThread: Start" );
+		log ( "runOnMainThread: Start (Thread: " + Thread.currentThread ().toString () + ")" );
 		
-		if ( Looper.getMainLooper ().getThread () == Thread.currentThread ())
+		if ( wait && ( Thread.currentThread () == Looper.getMainLooper ().getThread () ))
 		{
 			log ( "runOnMainThread: Already on MAIN thread, continuing" );
 
+			// NOTE: If the caller has asked that we wait for the runnable to complete
+			// before returning, but we're already on the main thread, we IGNORE the
+			// delay parameter rather than forcing the main thread to sleep.
 			runnable.run ();
 			
 			log ( "runOnMainThread: Done running on MAIN thread" );
