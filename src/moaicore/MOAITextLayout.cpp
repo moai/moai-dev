@@ -2,107 +2,75 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <uslscore/USBinarySearch.h>
+#include <contrib/utf8.h>
 #include <moaicore/MOAIFont.h>
-#include <moaicore/MOAIGfxDevice.h>
-#include <moaicore/MOAIQuadBrush.h>
 #include <moaicore/MOAITextLayout.h>
+#include <moaicore/MOAITextStyle.h>
 
 //================================================================//
 // MOAITextLayout
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAITextLayout::Draw ( u32 reveal ) {
+u32 MOAITextLayout::AffirmStyle ( MOAITextStyle& style ) {
 
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-	MOAIQuadBrush::BindVertexFormat ( gfxDevice );
-
-	USColorVec baseColor = gfxDevice.GetPenColor ();
-	USColorVec blendColor;
-	u32 rgba = 0xffffffff;
-
-	u32 size = this->GetTop ();
-	for ( u32 i = 0; ( i < size ) && ( i < reveal ); ++i ) {
-		const MOAITextSprite& sprite = ( *this )[ i ];
-		
-		if ( sprite.mRGBA != rgba ) {
-			rgba = sprite.mRGBA;
-			
-			blendColor.SetRGBA ( rgba );
-			blendColor.Modulate ( baseColor );
-			gfxDevice.SetPenColor ( blendColor );
-		}
-		sprite.mGlyph->Draw ( sprite.mPoints, sprite.mX, sprite.mY );
-	}
-}
-
-//----------------------------------------------------------------//
-bool MOAITextLayout::GetBoundsForRange ( u32 idx, u32 size, USRect& rect ) {
-
-	bool result = false;
-	u32 end = idx + size;
-	float x = 0.0f;
-
-	// TODO: replace w/ binary search
-	u32 top = this->GetTop ();
+	u32 top = this->mStyles.GetTop ();
 	for ( u32 i = 0; i < top; ++i ) {
-		MOAITextSprite& sprite = ( *this )[ i ];
-		
-		if ( sprite.mIdx >= end ) break;
-
-		if ( sprite.mIdx >= idx ) {
-			
-			const MOAIGlyph* glyph = sprite.mGlyph;
-			
-			if ( glyph->mWidth ) {
-				
-				USRect glyphRect = glyph->GetRect ( sprite.mPoints, sprite.mX, sprite.mY );
-				
-				if ( result ) {
-					if ( sprite.mX < x ) break;
-					rect.Grow ( glyphRect );
-				}
-				else {
-					rect = glyphRect;
-					result = true;
-				}
-				x = sprite.mX;
-			}
+		if ( this->mStyles [ i ] == &style) {
+			return i;
 		}
 	}
-	return result;
+	this->mStyles.Push ( &style );
+	return top;
 }
 
 //----------------------------------------------------------------//
-void MOAITextLayout::PushGlyph ( const MOAIGlyph* glyph, u32 idx, float x, float y, float points, u32 rgba ) {
+void MOAITextLayout::LoadGlyphMetrics () {
 
-	MOAITextSprite textSprite;
+	u32 top = this->mStyles.GetTop ();
+	for ( u32 i = 0; i < top; ++i ) {
 	
-	textSprite.mGlyph		= glyph;
-	textSprite.mIdx			= idx;
-	textSprite.mX			= x;
-	textSprite.mY			= y;
-	textSprite.mRGBA		= rgba;
-	textSprite.mPoints		= points;
-
-	this->Push ( textSprite );
+		MOAITextStyle* style = this->mStyles [ i ];
+		MOAIFont* font = style->GetFont ();
+		font->LoadGlyphMetrics ();
+	}
 }
 
 //----------------------------------------------------------------//
-void MOAITextLayout::SetColorForRange ( u32 idx, u32 size, u32 rgba ) {
+MOAITextLayout::MOAITextLayout () {
+}
 
-	u32 end = idx + size;
+//----------------------------------------------------------------//
+MOAITextLayout::~MOAITextLayout () {
+}
 
-	// TODO: replace w/ binary search
-	u32 top = this->GetTop ();
-	for ( u32 i = 0; i < top; ++i ) {
-		MOAITextSprite& sprite = ( *this )[ i ];
+//----------------------------------------------------------------//
+void MOAITextLayout::PushToken ( cc8* str, int base, int size, u32 flags, MOAITextStyle& style ) {
+
+	MOAITextToken token;
+	
+	token.mBase			= base;
+	token.mStyle		= ( u16 )this->AffirmStyle ( style );
+	token.mFlags		= ( u16 )flags;
+
+	float points = style.GetPoints ();
+	MOAIFont* font = style.GetFont ();
+	assert ( font );
+
+	font->AffirmGlyphs ( points, &str [ base ], size );
+
+	this->Push ( token );
+	
+	printf ( "found token: \'" );
 		
-		if ( sprite.mIdx >= end ) break;
-
-		if ( sprite.mIdx >= idx ) {
-			sprite.mRGBA = rgba;
-		}
+	int idx = base;
+	for ( int i = 0; i < size; ++i ) {
+		u32 c = u8_nextchar ( str, &idx );
+		putc ( c, stdout );
 	}
+	printf ( "\'\n" );
+}
+
+//----------------------------------------------------------------//
+void MOAITextLayout::SizeTokens () {
 }

@@ -928,50 +928,6 @@
 			Name="text"
 			>
 			<File
-				RelativePath="..\..\src\moaicore\MOAIBitmapFontRipper.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIBitmapFontRipper.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIFont.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIFont.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIFreetypeFontRipper.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIFreetypeFontRipper.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIGlyph.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIGlyph.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIGlyphCache.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIGlyphCache.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAISpanList.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\moaicore\MOAITextBox.cpp"
 				>
 			</File>
@@ -980,19 +936,35 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAITextFrame.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAITextFrame.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\moaicore\MOAITextLayout.cpp"
 				>
 			</File>
 			<File
 				RelativePath="..\..\src\moaicore\MOAITextLayout.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAITextStyle.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAITextStyle.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAITextStyler.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAITextStyler.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAITextStyleSet.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAITextStyleSet.h"
 				>
 			</File>
 		</Filter>
@@ -1693,6 +1665,62 @@
 			>
 			<File
 				RelativePath="..\..\src\lua-headers\moai2D_lua.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="font"
+			>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIBitmapFontRipper.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIBitmapFontRipper.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIFont.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIFont.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIFreetypeFontRipper.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIFreetypeFontRipper.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIGlyph.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIGlyph.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIGlyphDeck.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIGlyphDeck.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIGlyphPage.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIGlyphPage.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAISpanList.h"
 				>
 			</File>
 		</Filter>

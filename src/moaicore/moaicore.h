@@ -50,6 +50,8 @@
 #include <moaicore/MOAIGfxQuadListDeck2D.h>
 #include <moaicore/MOAIGlobals.h>
 #include <moaicore/MOAIGlyph.h>
+#include <moaicore/MOAIGlyphDeck.h>
+#include <moaicore/MOAIGlyphPage.h>
 #include <moaicore/MOAIGrid.h>
 #include <moaicore/MOAIGridPathGraph.h>
 #include <moaicore/MOAIGridSpace.h>
@@ -109,7 +111,10 @@
 #include <moaicore/MOAIStretchPatch2D.h>
 #include <moaicore/MOAISurfaceDeck2D.h>
 #include <moaicore/MOAITextBox.h>
-#include <moaicore/MOAITextFrame.h>
+#include <moaicore/MOAITextLayout.h>
+#include <moaicore/MOAITextStyle.h>
+#include <moaicore/MOAITextStyler.h>
+#include <moaicore/MOAITextStyleSet.h>
 #include <moaicore/MOAITextLayout.h>
 #include <moaicore/MOAITexture.h>
 #include <moaicore/MOAITileDeck2D.h>

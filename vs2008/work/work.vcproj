@@ -375,14 +375,6 @@
 			>
 		</File>
 		<File
-			RelativePath="..\..\src\work\work-glyph-cache.cpp"
-			>
-		</File>
-		<File
-			RelativePath="..\..\src\work\work-glyph-cache.h"
-			>
-		</File>
-		<File
 			RelativePath="..\..\src\work\work-moai-zipfs.cpp"
 			>
 		</File>
@@ -396,6 +388,14 @@
 		</File>
 		<File
 			RelativePath="..\..\src\work\work-pathfinding.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\work\work-text-styler.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\src\work\work-text-styler.h"
 			>
 		</File>
 		<File

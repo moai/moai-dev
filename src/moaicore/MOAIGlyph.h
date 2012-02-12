@@ -25,6 +25,7 @@ class MOAIGlyph {
 private:
 
 	u32			mCode;
+	u32			mContents;
 
 	u32			mSrcX; // corresponds to glyph location on page
 	u32			mSrcY; // corresponds to glyph location on page
@@ -45,16 +46,21 @@ private:
 public:
 
 	friend class MOAIFont;
-	friend class MOAIGlyphCache;
+	friend class MOAIGlyphDeck;
 	friend class MOAIGlyphPage;
-	friend class MOAIGlyphSet;
-	friend class MOAITextFrame;
+	friend class MOAITextStyler;
 	friend class MOAITextLayout;
 	
 	SET ( float, AdvanceX, mAdvanceX )
 	SET ( float, BearingX, mBearingX )
 	
 	GET_SET ( u32, Code, mCode )
+
+	enum {
+		NONE,
+		METRICS_ONLY,
+		MATRICS_AND_BITMAP,
+	};
 
 	//----------------------------------------------------------------//
 	void			Draw				( float points, float x, float y ) const;

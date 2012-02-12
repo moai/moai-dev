@@ -8,530 +8,218 @@
 #include <moaicore/MOAIFreetypeFontRipper.h>
 #include <moaicore/MOAIFont.h>
 #include <moaicore/MOAIGfxDevice.h>
+#include <moaicore/MOAIGlyphPage.h>
 #include <moaicore/MOAIImage.h>
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAITexture.h>
 
-#define WIDE_ID_BIT			0x80000000
-#define WIDE_ID_MASK		0x7fffffff
-#define INVALID_ID			0xffffffff
-#define INVALID_BYTE_ID		0xff
+#include <contrib/utf8.h>
+#include <ft2build.h>
+#include FT_FREETYPE_H
+#include FT_STROKER_H
+
+#define MAX_TEXTURE_SIZE 1024
+#define DPI 300
 
 //================================================================//
-// local
+// RenderParams
 //================================================================//
+class RenderParams {
+public:
+
+	MOAIImage*	mImage;
+	int			mPenX;
+	int			mPenY;
+};
 
 //----------------------------------------------------------------//
-/**	@name	getImage
-	@text	Returns the image containing the font's glyphs. Only valid
-			before font is used (i.e. immediately after ripping).
+static void _renderSpan ( const int y, const int count, const FT_Span* const spans, void* const user ) {
 
-	@in		MOAIFont self
-	@out	MOAIImage image
-*/
-int MOAIFont::_getImage ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIFont, "U" )
+	if ( !user ) return;
+	
+	RenderParams* render = ( RenderParams* )user;
 
-	if ( self->mImage ) {
-		self->mImage->PushLuaUserdata ( state );
-		return 1;
+	int line = render->mPenY - y - 1;
+	int offset = render->mPenX;
+
+	for ( int i = 0; i < count; ++i ) {
+		
+		const FT_Span& span = spans [ i ];
+		
+		int x = offset + span.x;
+		int len = span.len;
+		
+		u32 alpha = ( u32 )span.coverage;
+		
+		for ( int j = 0; j < len; ++j ) {
+			render->mImage->SetPixel ( x + j, line, alpha );
+		}
 	}
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@name	getLineScale
-	@text	Returns the default size of a line (in pixels).
-
-	@in		MOAIFont self
-	@out	number lineScale		The default size of the line in pixels.
-*/
-int MOAIFont::_getLineScale ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIFont, "U" )
-	
-	lua_pushnumber ( state, self->GetScale () * self->GetLineSpacing ());
-	return 1;
-}
-
-//----------------------------------------------------------------//
-/**	@name	getScale
-	@text	Returns the default size of this font for use with the MOAITextbox:setTextSize function.
-
-	@in		MOAIFont self
-	@out	number size				The default point size of the font.
-*/
-int MOAIFont::_getScale ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIFont, "U" )
-	
-	lua_pushnumber ( state, self->GetScale ());
-	return 1;
-}
-
-//----------------------------------------------------------------//
-/**	@name	getTexture
-	@text	Returns the font's texture.
-
-	@in		MOAIFont self
-	@out	MOAITexture texture
-*/
-int MOAIFont::_getTexture ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIFont, "U" )
-
-	if ( self->mTexture ) {
-		self->mTexture->PushLuaUserdata ( state );
-		return 1;
-	}
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@name	load
-	@text	Attempts to load glyphs from the specified image file or MOAIDataBuffer containing image data.
-
-	@in		MOAIFont self
-	@opt	string filename			A string indicating the path to an image file.
-	@opt	MOAIDataBuffer data		A MOAIDataBuffer containing image data.  You must provide either a string or a MOAIDataBuffer, but not both.
-	@in		string charCodes		A string which defines the characters found in the font.  For example if A and B are the first letters in the image, the first characters in the string would be "AB" and so forth.
-	@out	nil
-*/
-int MOAIFont::_load ( lua_State* L ) {
-
-	MOAILuaState state ( L );
-	if ( !state.CheckParams ( 1, "U" )) return 0;
-	
-	MOAIFont* self = state.GetLuaObject < MOAIFont >( 1 );
-	if ( !self ) return 0;
-
-	STLString charCodes = state.GetValue ( 3, "0123456789 ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz.,?!" );
-
-	MOAIDataBuffer *data = state.GetLuaObject < MOAIDataBuffer >( 2 );
-	if ( data ) {
-
-		self->LoadFont ( *data, charCodes );
-	}
-	else {
-
-		STLString imageFile = state.GetValue ( 2, "" );
-		self->LoadFont ( imageFile, charCodes );
-	}
-
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@name	loadFromTTF
-	@text	Attempts to load glyphs contained in a TTF font file into an internal texture for use as a bitmap font.  Texture size is currently limited to 1024x1024.  Unicode characters are not yet supported.
-
-	@in		MOAIFont self
-	@in		string filename			The path to the TTF file to load.
-	@in		string charCodes		A string which defines the characters found in the font.
-	@in		number points			The point size to be rendered onto the internal texture.
-	@opt	number dpi				The device DPI (dots per inch of device screen). Default value is 72 (points same as pixels).
-	@out	nil
-*/
-int MOAIFont::_loadFromTTF ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIFont, "USSN" )
-
-	cc8* filename	= state.GetValue < cc8* >( 2, "" );
-	cc8* charCodes	= state.GetValue < cc8* >( 3, "" );
-	float points	= state.GetValue < float >( 4, 0 );
-	u32 dpi			= state.GetValue < u32 >( 5, 72 );
-	
-	if (( points > 0.0f ) && dpi ) {
-		self->LoadFontFromTTF ( filename, charCodes, points, dpi );
-	}
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@name	setImage
-	@text	Set an image for the font to use.
-
-	@in		MOAIFont self
-	@opt	MOAIImage image		Default value is nil.
-	@out	nil
-*/
-int MOAIFont::_setImage ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIFont, "U" )
-
-	MOAIImage* image = state.GetLuaObject < MOAIImage >( 2 );
-	self->SetImage ( image );
-	
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@name	setTexture
-	@text	Set a texture for the font to use.
-
-	@in		MOAIFont self
-	@opt	MOAITexture texture		Default value is nil.
-	@out	nil
-*/
-int MOAIFont::_setTexture ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIFont, "U" )
-
-	MOAITexture* texture = state.GetLuaObject < MOAITexture >( 2 );
-	self->SetTexture ( texture );
-	
-	return 0;
 }
 
 //================================================================//
 // MOAIFont
 //================================================================//
+	
+//----------------------------------------------------------------//
+void MOAIFont::AffirmGlyphs ( float points, cc8* chars, int size ) {
+
+	MOAIGlyphDeck& glyphSet = this->mGlyphSets [ points ];
+	glyphSet.mPoints = points;
+	
+	int i = 0;
+	while ( chars [ i ] && ( i < size )) {
+		u32 c = u8_nextchar ( chars, &i );
+		glyphSet.AffirmGlyph ( c );
+	}
+}
 
 //----------------------------------------------------------------//
-MOAIFont* MOAIFont::Bind () {
+MOAISpan < MOAIGlyph* >* MOAIFont::Alloc ( MOAIGlyph& glyph ) {
 	
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	glyph.mPage = 0;
 	
-	if ( gfxDevice.SetTexture ( this->mTexture )) {
-		this->mImage.Set ( *this, 0 );
-		return this;
+	MOAIGlyphPage* page = this->mPages;
+	for ( ; page; page = page->mNext ) {
+	
+		MOAISpan < MOAIGlyph* >* span = page->Alloc ( glyph );
+		if ( span ) {
+			return span;
+		}
 	}
+	
+	page = new MOAIGlyphPage ();
+	page->mNext = this->mPages;
+	this->mPages = page;
+	
+	return page->Alloc ( glyph );
+}
+
+//----------------------------------------------------------------//
+void MOAIFont::Init ( cc8* filename ) {
+
+	this->mFilename = filename;
+}
+
+//----------------------------------------------------------------//
+void MOAIFont::LoadGlyphMetrics () {
+}
+
+//----------------------------------------------------------------//
+MOAIGlyph* MOAIFont::GetGlyphForChar ( u32 c ) {
+
 	return 0;
 }
 
 //----------------------------------------------------------------//
-void MOAIFont::DrawGlyph ( u32 c, float points, float x, float y ) {
-
-	const MOAIGlyph& glyph = this->GetGlyphForChar ( c );
-	glyph.Draw ( points, x, y );
-}
-
-//----------------------------------------------------------------//
-MOAIGlyph& MOAIFont::GetGlyphForChar ( u32 c ) {
-
-	u32 id = this->GetIDForChar ( c );
-	return this->GetGlyphForID ( id );
-}
-
-//----------------------------------------------------------------//
-MOAIGlyph& MOAIFont::GetGlyphForID ( u32 id ) {
-
-	if ( id == INVALID_ID ) {
-		return this->mDummy;
-	}
-
-	if ( id & WIDE_ID_BIT ) {
-		id = id & WIDE_ID_MASK;
-		assert ( id < this->mWideGlyphs.Size ());
-		return this->mWideGlyphs [ id ];
-	}
-	
-	assert ( id < this->mByteGlyphs.Size ());
-	return this->mByteGlyphs [ id ];
-}
-
-//----------------------------------------------------------------//
-u32 MOAIFont::GetIDForChar ( u32 c ) {
-
-	u32 id = INVALID_ID;
-
-	if ( this->IsWideChar ( c )) {
-		
-		// TODO: replace sorted lookup w/ AVL tree
-		u32 size = this->mWideGlyphMap.Size ();
-		id = USBinarySearch < u32 >( this->mWideGlyphMap, c, size );
-		if ( id < size ) {
-			return id | WIDE_ID_BIT;
-		}
-	}
-	else {
-		if ( this->mByteGlyphMapBase <= c ) {
-			c -= this->mByteGlyphMapBase;
-			if ( c < this->mByteGlyphMap.Size ()) {
-				id = this->mByteGlyphMap [ c ];
-				if ( id == INVALID_BYTE_ID ) {
-					id = INVALID_ID;
-				}
-			}
-		}
-	}
-	return id;
-}
-
-//----------------------------------------------------------------//
-void MOAIFont::Init ( cc8* charCodes ) {
-
-	u32 byteCharTop = 0;
-	u32 byteCharBase = 0x000000ff;
-	u32 totalWideChars = 0;
-	
-	for ( int i = 0; charCodes [ i ]; ) {
-		u32 c = u8_nextchar( charCodes, &i );
-		
-		if ( this->IsWideChar ( c )) {
-			totalWideChars++;
-		}
-		else {
-			
-			if ( c < byteCharBase ) {
-				byteCharBase = c;
-			}
-			if ( c > byteCharTop ) {
-				byteCharTop = c;
-			}
-		}
-	}
-	
-	byteCharTop += 1;
-	u32 totalByteChars = ( byteCharBase < byteCharTop ) ? byteCharTop - byteCharBase : 0;
-	
-	this->mByteGlyphs.Init ( totalByteChars );
-	this->mByteGlyphMap.Init ( totalByteChars );
-	this->mByteGlyphMapBase = ( u8 )byteCharBase;
-	
-	this->mWideGlyphs.Init ( totalWideChars );
-	this->mWideGlyphMap.Init ( totalWideChars );
-	
-	this->mByteGlyphMap.Fill ( INVALID_BYTE_ID );
-	this->mWideGlyphMap.Fill ( INVALID_ID );
-	
-	u32 b = 0;
-	u32 w = 0;
-	for ( int i = 0; charCodes [ i ]; ) {
-		
-		u32 c = u8_nextchar( charCodes, &i );
-		
-		if ( this->IsWideChar ( c )) {
-			this->mWideGlyphMap [ w++ ] = c;
-		}
-		else {
-			this->mByteGlyphMap [ c - this->mByteGlyphMapBase ] = ( u8 )b++;
-		}
-	}
-	RadixSort32 < u32 >( this->mWideGlyphMap, totalWideChars );
-}
-
-//----------------------------------------------------------------//
-bool MOAIFont::IsWideChar ( u32 c ) {
-
-	return ( c & 0xffffff00 ) != 0;
-}
-
-//----------------------------------------------------------------//
 MOAIFont::MOAIFont () :
-	mByteGlyphMapBase ( 0 ),
-	mScale ( 1.0f ),
-	mLineSpacing ( 1.0f ) {
-	
-	RTTI_SINGLE ( MOAILuaObject )
+	mPages ( 0 ) {
 }
 
 //----------------------------------------------------------------//
 MOAIFont::~MOAIFont () {
-
-	this->mTexture.Set ( *this, 0 );
-	this->mImage.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//
-void MOAIFont::LoadFont ( MOAIDataBuffer& fontImageData, cc8* charCodes ) {
-
-	MOAIImage* image = new MOAIImage ();
+void MOAIFont::RenderGlyphs () {
 	
-	MOAIBitmapFontRipper ripper;
-	ripper.RipAndReturn ( fontImageData, *this, *image, charCodes );
-	this->SetImage ( image );
-}
-
-//----------------------------------------------------------------//
-void MOAIFont::LoadFont ( cc8* fontImageFileName, cc8* charCodes ) {
-
-	MOAIImage* image = new MOAIImage ();
+	RenderParams render;
+	FT_Raster_Params params;
+	memset ( &params, 0, sizeof ( params ));
+	params.flags = FT_RASTER_FLAG_AA | FT_RASTER_FLAG_DIRECT;
+	params.gray_spans = _renderSpan;
+	params.user = &render;
 	
-	MOAIBitmapFontRipper ripper;
-	ripper.RipAndReturn ( fontImageFileName, *this, *image, charCodes );
-	this->SetImage ( image );
-}
+	FT_Library library;
+	FT_Init_FreeType( &library );
 
-//----------------------------------------------------------------//
-void MOAIFont::LoadFontFromTTF ( cc8* filename, cc8* charCodes, float points, u32 dpi ) {
-
-	#if USE_FREETYPE
+	FT_Face face;
+	if ( FT_New_Face( library, this->mFilename, 0, &face )) {
+		FT_Done_FreeType ( library );
+		fprintf ( stderr, "Error loading font: %s\n", this->mFilename );
+		return;
+	}
 	
-		MOAIImage* image = new MOAIImage ();
-		MOAIFreetypeFontRipper::RipFromTTF ( filename, *this, *image, charCodes, points, dpi );
-		this->SetImage ( image );
-	#else
-		UNUSED ( filename );
-		UNUSED ( charCodes );
-		UNUSED ( points );
-		UNUSED ( dpi );
-	#endif
-}
-
-//----------------------------------------------------------------//
-void MOAIFont::RegisterLuaClass ( MOAILuaState& state ) {
-	UNUSED ( state );
-}
-
-//----------------------------------------------------------------//
-void MOAIFont::RegisterLuaFuncs ( MOAILuaState& state ) {
+	GlyphSetsIt glyphSetsIt = this->mGlyphSets.begin ();
+	for ( ; glyphSetsIt != this->mGlyphSets.end (); ++glyphSetsIt ) {
+		MOAIGlyphDeck& glyphSet = glyphSetsIt->second;
 	
-	luaL_Reg regTable [] = {
-		{ "getImage",			_getImage },
-		{ "getLineScale",		_getLineScale },
-		{ "getScale",			_getScale },
-		{ "getTexture",			_getTexture },
-		{ "load",				_load },
-		{ "loadFromTTF",		_loadFromTTF },
-		{ "setImage",			_setImage },
-		{ "setTexture",			_setTexture },
-		{ NULL, NULL }
-	};
-	
-	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAIFont::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
-	UNUSED ( serializer );
-	
-	if ( state.GetFieldWithType ( -1, "mByteGlyphs", LUA_TTABLE )) {
+		FT_Set_Char_Size ( face, 0, ( u32 )( glyphSet.mPoints * 64.0f ), DPI, DPI );
+		float pixelSize = face->size->metrics.y_ppem;
 		
-		u32 size = lua_objlen ( state, -1 );
-		this->mByteGlyphs.Init ( size );
+		int yMin = FT_MulFix ( face->bbox.yMin, face->size->metrics.y_scale ) >> 6;
+		int yMax = FT_MulFix ( face->bbox.yMax, face->size->metrics.y_scale ) >> 6;
 		
-		for ( u32 i = 0; i < size; ++i ) {
-			state.GetField ( -1, i + 1 );
-			this->mByteGlyphs [ i ].SerializeIn ( state );
-			state.Pop ( 1 );
+		int faceHeight = yMax - yMin;
+		
+		//u32 imageWidth	= image.GetWidth ();
+		//u32 imageHeight	= image.GetHeight ();
+		
+		float scale = 1.0f / pixelSize;
+		//float uScale = 1.0f / image.GetWidth ();
+		//float vScale = 1.0f / image.GetHeight ();
+		
+		//float lineSpacing = ( float )( face->size->metrics.height >> 6 ) * scale;
+		
+		//u32 x = 0;
+		//u32 y = 0;
+		
+		MOAIGlyph* glyphIt = glyphSet.mPending;
+		glyphSet.mPending = 0;
+		
+		for ( ; glyphIt; glyphIt = glyphIt->mNext ) {
+			MOAIGlyph& glyph = *glyphIt;
+			
+			u32 index = FT_Get_Char_Index ( face, glyph.mCode );
+			FT_Load_Glyph ( face, index, FT_LOAD_NO_BITMAP );
+			
+			if ( face->glyph->format!= FT_GLYPH_FORMAT_OUTLINE ) continue;
+			
+			int glyphWidth = face->glyph->metrics.width >> 6;
+			//int glyphHeight = face->glyph->metrics.height >> 6;
+			
+			int advanceX = face->glyph->metrics.horiAdvance >> 6;
+			int bearingX = face->glyph->metrics.horiBearingX >> 6;
+			
+			//u32 width = ( u32 )( glyphWidth * scale );
+			//u32 height = ( u32 )( faceHeight * scale );
+			
+			//glyph.SetScreenRect (( float )glyphWidth * scale, ( float )faceHeight * scale, 0.0f );
+			//glyph.SetAdvanceX (( float )advanceX * scale );
+			//glyph.SetBearingX (( float )bearingX * scale );
+			
+			glyph.mWidth = glyphWidth;
+			glyph.mHeight = faceHeight;
+			
+			this->Alloc ( glyph );
+			if ( glyph.mPage ) {
+				
+				render.mImage = &glyph.mPage->mImage;
+				render.mPenX = glyph.mSrcX - bearingX;
+				render.mPenY = glyph.mSrcY + yMax;
+
+				glyph.mPage->AffirmCanvas ();
+				FT_Outline_Render ( library, &face->glyph->outline, &params );
+			}
 		}
-		state.Pop ( 1 );
 	}
 	
-	if ( state.GetFieldWithType ( -1, "mByteGlyphMap", LUA_TTABLE )) {
-		
-		u32 size = lua_objlen ( state, -1 );
-		this->mByteGlyphMap.Init ( size );
-		
-		for ( u32 i = 0; i < size; ++i ) {
-			state.GetField ( -1, i + 1 );
-			this->mByteGlyphMap [ i ] = state.GetValue < u8 >( -1, 0 );
-			state.Pop ( 1 );
-		}
-		state.Pop ( 1 );
-	}
-	
-	this->mByteGlyphMapBase		= state.GetField ( -1, "mByteGlyphMapBase", this->mByteGlyphMapBase );
-	
-	if ( state.GetFieldWithType ( -1, "mWideGlyphs", LUA_TTABLE )) {
-		
-		u32 size = lua_objlen ( state, -1 );
-		this->mWideGlyphs.Init ( size );
-		
-		for ( u32 i = 0; i < size; ++i ) {
-			state.GetField ( -1, i + 1 );
-			this->mWideGlyphs [ i ].SerializeIn ( state );
-			state.Pop ( 1 );
-		}
-		state.Pop ( 1 );
-	}
-	
-	if ( state.GetFieldWithType ( -1, "mWideGlyphMap", LUA_TTABLE )) {
-		
-		u32 size = lua_objlen ( state, -1 );
-		this->mWideGlyphMap.Init ( size );
-		
-		for ( u32 i = 0; i < size; ++i ) {
-			state.GetField ( -1, i + 1 );
-			this->mWideGlyphMap [ i ] = state.GetValue < u32 >( -1, 0 );
-			state.Pop ( 1 );
-		}
-		state.Pop ( 1 );
-	}
-	
-	this->mScale				= state.GetField ( -1, "mScale", this->mScale );
-	this->mLineSpacing			= state.GetField ( -1, "mLineSpacing", this->mLineSpacing );
+	FT_Done_Face ( face );
+	FT_Done_FreeType ( library );
 }
 
 //----------------------------------------------------------------//
-void MOAIFont::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
-	UNUSED ( serializer );
+void MOAIFont::WritePages () {
 	
-	if ( this->mByteGlyphs.Size ()) {
-		lua_newtable ( state );
-		for ( u32 i = 0; i < this->mByteGlyphs.Size (); ++i ) {
-			lua_pushnumber ( state, i + 1 );
-			lua_newtable ( state );
-			this->mByteGlyphs [ i ].SerializeOut ( state );
-			lua_settable ( state, -3 );
-		}
-		lua_setfield ( state, -2, "mByteGlyphs" );
-	}
-	
-	if ( this->mByteGlyphMap.Size ()) {
-		lua_newtable ( state );
-		for ( u32 i = 0; i < this->mByteGlyphMap.Size (); ++i ) {
-			state.SetFieldByIndex ( -1, i + 1, this->mByteGlyphMap [ i ]);
-		}
-		lua_setfield ( state, -2, "mByteGlyphMap" );
-	}
+	char buffer [ 256 ];
 
-	state.SetField ( -1, "mByteGlyphMapBase", this->mByteGlyphMapBase );
+	MOAIGlyphPage* page = this->mPages;
+	for ( int i = 0; page; page = page->mNext, ++i ) {
 	
-	if ( this->mWideGlyphs.Size ()) {
-		lua_newtable ( state );
-		for ( u32 i = 0; i < this->mWideGlyphs.Size (); ++i ) {
-			lua_pushnumber ( state, i + 1 );
-			lua_newtable ( state );
-			this->mWideGlyphs [ i ].SerializeOut ( state );
-			lua_settable ( state, -3 );
-		}
-		lua_setfield ( state, -2, "mWideGlyphs" );
-	}
-	
-	if ( this->mWideGlyphMap.Size ()) {
-		lua_newtable ( state );
-		for ( u32 i = 0; i < this->mWideGlyphMap.Size (); ++i ) {
-			state.SetFieldByIndex ( -1, i + 1, this->mWideGlyphMap [ i ]);
-		}
-		lua_setfield ( state, -2, "mWideGlyphMap" );
-	}
-	
-	state.SetField ( -1, "mScale", this->mScale );
-	state.SetField ( -1, "mLineSpacing", this->mLineSpacing );
-}
-
-//----------------------------------------------------------------//
-void MOAIFont::SetGlyph ( const MOAIGlyph& glyph ) {
-
-	u32 id = this->GetIDForChar ( glyph.mCode );
-	if ( id != INVALID_ID ) {
-	
-		if ( glyph.mAdvanceX > this->mDummy.mAdvanceX ) {
-			this->mDummy.mAdvanceX = glyph.mAdvanceX;
-		}
-		this->GetGlyphForID ( id ) = glyph;
+		sprintf ( buffer, "page%d.png", i );
+		
+		USFileStream stream;
+		stream.OpenWrite ( buffer );
+		page->mImage.WritePNG ( stream );
 	}
 }
-
-//----------------------------------------------------------------//
-u32 MOAIFont::Size () {
-
-	return this->mByteGlyphs.Size () + this->mWideGlyphs.Size ();
-}
-
-//----------------------------------------------------------------//
-void MOAIFont::SetImage ( MOAIImage* image ) {
-
-	this->mImage.Set ( *this, image );
-	this->mTexture.Set ( *this, 0 );
-	
-	if ( image && MOAIGfxDevice::Get ().GetHasContext ()) {
-		this->mTexture.Set ( *this, new MOAITexture ());
-		this->mTexture->Init ( *image, "'texture from font'" );
-		this->mTexture->SetFilter ( GL_LINEAR, GL_LINEAR );
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIFont::SetTexture ( MOAITexture* texture ) {
-
-	this->mImage.Set ( *this, 0 );
-	this->mTexture.Set ( *this, texture );
-}
-

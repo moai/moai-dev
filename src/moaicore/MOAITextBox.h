@@ -7,7 +7,7 @@
 #include <moaicore/MOAIAction.h>
 #include <moaicore/MOAILua.h>
 #include <moaicore/MOAIProp.h>
-#include <moaicore/MOAITextFrame.h>
+#include <moaicore/MOAITextStyler.h>
 #include <moaicore/MOAITextLayout.h>
 #include <moaicore/MOAITransform.h>
 
@@ -32,7 +32,7 @@ private:
 	static const u32 REVEAL_ALL = 0xffffffff;
 	static const float DEFAULT_SPOOL_SPEED;
 
-	MOAILuaSharedPtr < MOAIFont > mFont;
+	//MOAILuaSharedPtr < MOAIFont > mFont;
 	float				mLineSpacing;
 	
 	USRect				mFrame;
@@ -52,8 +52,6 @@ private:
 	bool				mRightToLeft;
 	
 	bool				mNeedsLayout;
-	MOAITextCursor		mCurrentPage;
-	MOAITextCursor		mNextPage;
 	MOAITextLayout		mLayout;
 	
 	USLeanArray < MOAIAnimCurve* >	mCurves;
@@ -86,6 +84,12 @@ private:
 	void			Spool					( float step );
 	
 public:
+
+	enum {
+		LEFT_JUSTIFY,
+		CENTER_JUSTIFY,
+		RIGHT_JUSTIFY,
+	};
 
 	DECL_LUA_FACTORY ( MOAITextBox )
 	
