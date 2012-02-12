@@ -87,6 +87,21 @@ int MOAITextBox::_getStringBounds ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+int MOAITextBox::_getRect ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextBox, "U" )
+
+	USRect rect = self->mFrame;
+	rect.Bless ();
+	
+	lua_pushnumber ( state, rect.mXMin );
+	lua_pushnumber ( state, rect.mYMin );
+	lua_pushnumber ( state, rect.mXMax );
+	lua_pushnumber ( state, rect.mYMax );
+
+	return 4;
+}
+
+//----------------------------------------------------------------//
 /**	@name	more
 	@text	Returns whether there are additional pages of text below the cursor position that are not visible on the screen.
 
@@ -615,6 +630,7 @@ void MOAITextBox::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "clearCurves",			_clearCurves },
 		{ "getLineSize",			_getLineSize },
 		{ "getStringBounds",		_getStringBounds },
+		{ "getRect",				_getRect },
 		{ "more",					_more },
 		{ "nextPage",				_nextPage },
 		{ "reserveCurves",			_reserveCurves },
