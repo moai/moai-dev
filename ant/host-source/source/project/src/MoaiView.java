@@ -23,7 +23,6 @@ public class MoaiView extends GLSurfaceView {
 
 	private MoaiActivity 	mActivity;
 	private int 			mAku;
-	private String 			mAssetDirectory;
 	private Context			mContext;
 	private int 		 	mHeight;
 	private int 		 	mWidth;
@@ -31,6 +30,7 @@ public class MoaiView extends GLSurfaceView {
 	protected static native int	 AKUCreateContext 				();
 	protected static native void AKUDeleteContext 				( int akuContextId );
 	protected static native void AKUDetectGfxContext 			();
+	protected static native void AKUAppDidStartSession			();
 	protected static native void AKUEnqueueTouchEvent 			( int deviceId, int sensorId, int touchId, boolean down, int x, int y, int tapCount );
 	protected static native void AKUExtLoadLuacrypto			();
 	protected static native void AKUExtLoadLuacurl				();
@@ -53,20 +53,27 @@ public class MoaiView extends GLSurfaceView {
 	protected static native void AKUSetInputDeviceTouch 		( int deviceId, int sensorId, String name );
 	protected static native void AKUSetScreenSize				( int width, int height );
 	protected static native void AKUSetViewSize					( int width, int height );
-	protected static native void AKUSetWorkingDirectory 		( String path ); 
 	protected static native void AKUUntzInit			 		();
 	protected static native void AKUUpdate				 		();
 
     //----------------------------------------------------------------//
-	public MoaiView ( Context context, MoaiActivity activity, int width, int height, int glesVersion, String assetDirectory ) {
+	public MoaiView ( Context context, MoaiActivity activity, int width, int height, int glesVersion ) {
 
 		super ( context );
 		
 		mContext = context;
 		mActivity = activity;
-		mHeight = height;
-		mWidth = width;
-		mAssetDirectory = assetDirectory;
+		
+		// If the screen is locked when the view is created, the orientation 
+		// will initially be portrait, so we need to compensate.
+		if ( height > width ) {
+			mWidth = height;
+			mHeight = width;
+		}
+		else {
+			mWidth = width;
+			mHeight = height;
+		}
 		
 		mAku = AKUCreateContext ();
 		
@@ -178,7 +185,7 @@ public class MoaiView extends GLSurfaceView {
 	}
 
 	//----------------------------------------------------------------//
-	public void pauseGLSurface ( boolean paused ) {
+	public void pauseSurface ( boolean paused ) {
 
 		if ( paused ) {
 			setRenderMode ( GLSurfaceView.RENDERMODE_WHEN_DIRTY );
@@ -267,9 +274,6 @@ public class MoaiView extends GLSurfaceView {
 
 			AKUReleaseGfxContext ();
 			AKUDetectGfxContext ();
-
-			// TODO: startSesssion is mismatched with stopSession.
-			mActivity.startSession ();
 			
 			if ( !mRunScriptsExecuted ) {
 				
@@ -278,13 +282,19 @@ public class MoaiView extends GLSurfaceView {
 				// TODO: Move this init script to the initialization routine in the constructor
 				// as soon as the bug is fixed that will allow the virutal directory to be 
 				// mounted before the MoaiView is created.
-				AKUSetWorkingDirectory ( mAssetDirectory + "/@WORKING_DIR@" );				
 				runScript ( "@RUN_INIT_DIR@/init.lua" );
 			
 				@RUN_COMMAND@
 				
 				mRunScriptsExecuted = true;
 			}
+
+			// Since we are pausing and resuming the GL surface along with the
+			// activity lifecycle, we know that the GL surface will be destroyed
+			// and recreated every time through. So, because we want to ensure
+			// that the lua scripts have been run before notifying that the 
+			// session has started, this is the appropriate location to do so.
+			AKUAppDidStartSession ();
 		}		
 	}
 }

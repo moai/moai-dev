@@ -105,7 +105,6 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 	private boolean							mMarketTransactionsRestored;
 	private String							mTapjoyUserId;
 	
-	protected static native void 		AKUAppDidStartSession 				();
 	protected static native void 		AKUAppWillEndSession 				();
 	protected static native void 		AKUEnqueueLevelEvent 				( int deviceId, int sensorId, float x, float y, float z );
 	protected static native void 		AKUFinalize 						();
@@ -121,9 +120,7 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 	protected static native void		AKUNotifyVideoAdClose				();
 	protected static native void 		AKUSetConnectionType 				( long connectionType );
 	protected static native void 		AKUSetDocumentDirectory 			( String path );
-
-	// TODO: If game is launched with lock screen engaged, size and location
-	// is messed up.
+	protected static native void 		AKUSetWorkingDirectory 				( String path ); 
 
    	//----------------------------------------------------------------//
     protected void onCreate ( Bundle savedInstanceState ) {
@@ -139,11 +136,9 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 	    getWindow ().addFlags ( WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON );
 
 		Display display = (( WindowManager ) getSystemService ( Context.WINDOW_SERVICE )).getDefaultDisplay ();
-		int displayWidth = display.getWidth ();
-		int displayHeight = display.getHeight ();
 		ConfigurationInfo info = (( ActivityManager ) getSystemService ( Context.ACTIVITY_SERVICE )).getDeviceConfigurationInfo ();
 
-	    mMoaiView = new MoaiView ( this, this, displayWidth, displayHeight, info.reqGlEsVersion, "bundle/assets" );
+	    mMoaiView = new MoaiView ( this, this, display.getWidth (), display.getHeight (), info.reqGlEsVersion );
 
 		// TODO: Reorder AKU initialization so that the virtual directory can be
 		// mounted BEFORE creating the MoaiView.
@@ -152,6 +147,7 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 			ApplicationInfo myApp = getPackageManager ().getApplicationInfo ( getPackageName (), 0 );
 
 			AKUMountVirtualDirectory ( "bundle", myApp.publicSourceDir );
+			AKUSetWorkingDirectory ( "bundle/assets/@WORKING_DIR@" );				
 		} catch ( NameNotFoundException e ) {
 
 			log ( "Unable to locate the application bundle" );
@@ -208,11 +204,13 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 		// expected windows focus events.
 		mWindowFocusLost = true;
 
-		log ( "Pausing GL now" );
-		mMoaiView.pauseGLSurface ( true );
+		log ( "Pausing surface now" );
+		mMoaiView.pauseSurface ( true );
 
 		log ( "Pausing Aku now" );
 		mMoaiView.pauseAku ( true );
+		
+		AKUAppWillEndSession ();
 	}
 	
 	//----------------------------------------------------------------//
@@ -227,8 +225,8 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 			mSensorManager.registerListener ( mAccelerometerListener, mAccelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL );
 		}
 		
-		log ( "Resuming GL now" );
-		mMoaiView.pauseGLSurface ( false );
+		log ( "Resuming surface now" );
+		mMoaiView.pauseSurface ( false );
 
 		// If we have not lost Window focus, then resume immediately; 
 		// otherwise, wait to regain focus before we resume. All of 
@@ -260,8 +258,6 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 		super.onStop ();
 
         MoaiBillingResponseHandler.unregister ( mPurchaseObserver );
-
-		AKUAppWillEndSession ();
 	}
 	
 	//================================================================//
@@ -302,12 +298,6 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 	public static void log ( String message ) {
 		
 		Log.i ( "MoaiLog", message );
-	}
-	
-	//----------------------------------------------------------------//
-	public void startSession () {
-
-		AKUAppDidStartSession ();
 	}
 	
 	//================================================================//

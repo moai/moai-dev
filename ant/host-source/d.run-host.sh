@@ -134,7 +134,7 @@
 	fr build/$package_path/MoaiBillingSecurity.java			@PACKAGE@		"$package"
 	fr build/$package_path/MoaiBillingService.java			@PACKAGE@		"$package"
 	fr build/$package_path/MoaiView.java					@PACKAGE@		"$package"
-	fr build/$package_path/MoaiView.java					@WORKING_DIR@	"$working_dir"
+	fr build/$package_path/MoaiActivity.java				@WORKING_DIR@	"$working_dir"
 	
 	# create run command for the init.lua file
 	working_dir_depth=`grep -o "\/" <<<"$working_dir" | wc -l`
