@@ -64,10 +64,20 @@ void GetURLHandler::SetMethod ( int method ) {
 		url_request_.SetMethod ( "POST" );
 		url_request_.SetHeaders ( "Content-Type: application/x-www-form-urlencoded" );
 	}
+	else if ( method == PUT ) {
+		url_request_.SetMethod ( "PUT" );
+	}
+	else if ( method == DELETE ) {
+		url_request_.SetMethod ( "DELETE" );
+	}
 }
 void GetURLHandler::SetBody ( const void *data, int size ) {
 
 	url_request_.AppendDataToBody ( data, size );
+}
+
+void GetURLHandler::SetHeaders ( const char *string ) {
+	url_request_.SetHeaders ( string );
 }
 
 void GetURLHandler::SetUserData ( void *userData ) {
