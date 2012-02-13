@@ -8,7 +8,7 @@
 #include <moaicore/MOAILua.h>
 #include <moaicore/MOAIProp.h>
 #include <moaicore/MOAITextStyler.h>
-#include <moaicore/MOAITextLayout.h>
+#include <moaicore/MOAITextStyleMap.h>
 #include <moaicore/MOAITransform.h>
 
 class MOAIAnimCurve;
@@ -52,7 +52,7 @@ private:
 	bool				mRightToLeft;
 	
 	bool				mNeedsLayout;
-	MOAITextLayout		mLayout;
+	MOAITextStyleMap		mLayout;
 	
 	USLeanArray < MOAIAnimCurve* >	mCurves;
 	

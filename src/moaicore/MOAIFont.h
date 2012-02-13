@@ -22,11 +22,12 @@ private:
 	STLString	mFilename;
 	
 	// for now
-	typedef STLMap < float, MOAIGlyphDeck >::iterator GlyphSetsIt;
-	STLMap < float, MOAIGlyphDeck > mGlyphSets;
+	typedef STLMap < float, MOAIGlyphDeck >::iterator GlyphDecksIt;
+	STLMap < float, MOAIGlyphDeck > mGlyphDecks;
 
 	//----------------------------------------------------------------//
-	MOAISpan < MOAIGlyph* >*	Alloc	( MOAIGlyph& glyph );
+	MOAISpan < MOAIGlyph* >*	Alloc				( MOAIGlyph& glyph );
+	void						UpdateGlyphs		( u32 target );
 
 public:
 	
@@ -37,7 +38,6 @@ public:
 	MOAIGlyph*		GetGlyphForChar			( u32 c );
 					MOAIFont				();
 					~MOAIFont				();
-	void			RenderGlyphs			();
 	void			WritePages				();
 };
 

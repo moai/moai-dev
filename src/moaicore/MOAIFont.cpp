@@ -64,13 +64,13 @@ static void _renderSpan ( const int y, const int count, const FT_Span* const spa
 //----------------------------------------------------------------//
 void MOAIFont::AffirmGlyphs ( float points, cc8* chars, int size ) {
 
-	MOAIGlyphDeck& glyphSet = this->mGlyphSets [ points ];
-	glyphSet.mPoints = points;
+	MOAIGlyphDeck& glyphDeck = this->mGlyphDecks [ points ];
+	glyphDeck.mPoints = points;
 	
 	int i = 0;
 	while ( chars [ i ] && ( i < size )) {
 		u32 c = u8_nextchar ( chars, &i );
-		glyphSet.AffirmGlyph ( c );
+		glyphDeck.AffirmGlyph ( c );
 	}
 }
 
@@ -121,8 +121,11 @@ MOAIFont::~MOAIFont () {
 }
 
 //----------------------------------------------------------------//
-void MOAIFont::RenderGlyphs () {
+// iterate through the pending glyphs in each set and attempt to
+// update them to match target - i.e. metrics or metrics and bitmap
+void MOAIFont::UpdateGlyphs ( u32 target ) {
 	
+	// set up the render params in case they are needed
 	RenderParams render;
 	FT_Raster_Params params;
 	memset ( &params, 0, sizeof ( params ));
@@ -140,32 +143,22 @@ void MOAIFont::RenderGlyphs () {
 		return;
 	}
 	
-	GlyphSetsIt glyphSetsIt = this->mGlyphSets.begin ();
-	for ( ; glyphSetsIt != this->mGlyphSets.end (); ++glyphSetsIt ) {
-		MOAIGlyphDeck& glyphSet = glyphSetsIt->second;
-	
-		FT_Set_Char_Size ( face, 0, ( u32 )( glyphSet.mPoints * 64.0f ), DPI, DPI );
+	GlyphDecksIt glyphDecksIt = this->mGlyphDecks.begin ();
+	for ( ; glyphDecksIt != this->mGlyphDecks.end (); ++glyphDecksIt ) {
+		MOAIGlyphDeck& glyphDeck = glyphDecksIt->second;
+		
+		MOAIGlyph* glyphIt = glyphDeck.mPending;
+		glyphDeck.mPending = 0;
+		
+		if ( !glyphIt ) continue;
+		
+		FT_Set_Char_Size ( face, 0, ( u32 )( glyphDeck.mPoints * 64.0f ), DPI, DPI );
 		float pixelSize = face->size->metrics.y_ppem;
 		
 		int yMin = FT_MulFix ( face->bbox.yMin, face->size->metrics.y_scale ) >> 6;
 		int yMax = FT_MulFix ( face->bbox.yMax, face->size->metrics.y_scale ) >> 6;
 		
 		int faceHeight = yMax - yMin;
-		
-		//u32 imageWidth	= image.GetWidth ();
-		//u32 imageHeight	= image.GetHeight ();
-		
-		float scale = 1.0f / pixelSize;
-		//float uScale = 1.0f / image.GetWidth ();
-		//float vScale = 1.0f / image.GetHeight ();
-		
-		//float lineSpacing = ( float )( face->size->metrics.height >> 6 ) * scale;
-		
-		//u32 x = 0;
-		//u32 y = 0;
-		
-		MOAIGlyph* glyphIt = glyphSet.mPending;
-		glyphSet.mPending = 0;
 		
 		for ( ; glyphIt; glyphIt = glyphIt->mNext ) {
 			MOAIGlyph& glyph = *glyphIt;
@@ -181,26 +174,21 @@ void MOAIFont::RenderGlyphs () {
 			int advanceX = face->glyph->metrics.horiAdvance >> 6;
 			int bearingX = face->glyph->metrics.horiBearingX >> 6;
 			
-			//u32 width = ( u32 )( glyphWidth * scale );
-			//u32 height = ( u32 )( faceHeight * scale );
-			
-			//glyph.SetScreenRect (( float )glyphWidth * scale, ( float )faceHeight * scale, 0.0f );
-			//glyph.SetAdvanceX (( float )advanceX * scale );
-			//glyph.SetBearingX (( float )bearingX * scale );
-			
 			glyph.mWidth = glyphWidth;
 			glyph.mHeight = faceHeight;
+			glyph.mAdvanceX = ( float )advanceX;
+			glyph.mBearingX = ( float )bearingX;
 			
-			this->Alloc ( glyph );
-			if ( glyph.mPage ) {
-				
-				render.mImage = &glyph.mPage->mImage;
-				render.mPenX = glyph.mSrcX - bearingX;
-				render.mPenY = glyph.mSrcY + yMax;
+			//this->Alloc ( glyph );
+			//if ( glyph.mPage ) {
+			//	
+			//	render.mImage = &glyph.mPage->mImage;
+			//	render.mPenX = glyph.mSrcX - bearingX;
+			//	render.mPenY = glyph.mSrcY + yMax;
 
-				glyph.mPage->AffirmCanvas ();
-				FT_Outline_Render ( library, &face->glyph->outline, &params );
-			}
+			//	glyph.mPage->AffirmCanvas ();
+			//	FT_Outline_Render ( library, &face->glyph->outline, &params );
+			//}
 		}
 	}
 	

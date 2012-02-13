@@ -23,21 +23,19 @@ public:
 //================================================================//
 class MOAIGlyph {
 private:
-
+	
 	u32			mCode;
 	u32			mContents;
-
-	u32			mSrcX; // corresponds to glyph location on page
-	u32			mSrcY; // corresponds to glyph location on page
-
-	u32			mWidth; // width in pixels
-	u32			mHeight; // height in pixels
 	
-	float		mYOff;
-	
+	float		mWidth; // width in pixels
+	float		mHeight; // height in pixels
 	float		mAdvanceX;
 	float		mBearingX;
-
+	float		mYOff;
+	
+	u32			mSrcX; // corresponds to glyph location on page
+	u32			mSrcY; // corresponds to glyph location on page
+	
 	USLeanArray < MOAIKernVec > mKernTable;
 	
 	MOAIGlyphPage*	mPage; // page containing glyph texture (if any)
@@ -49,10 +47,7 @@ public:
 	friend class MOAIGlyphDeck;
 	friend class MOAIGlyphPage;
 	friend class MOAITextStyler;
-	friend class MOAITextLayout;
-	
-	SET ( float, AdvanceX, mAdvanceX )
-	SET ( float, BearingX, mBearingX )
+	friend class MOAITextStyleMap;
 	
 	GET_SET ( u32, Code, mCode )
 

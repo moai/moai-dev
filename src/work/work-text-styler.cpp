@@ -5,9 +5,7 @@ int work_text_styler ( int argc, char **argv ) {
 	
 	AKUCreateContext ();
 	
-	MOAITextStyler styler;
 	MOAITextStyleSet styleSet;
-	MOAITextLayout layout;
 	
 	MOAIFont* font = new MOAIFont ();
 	
@@ -26,7 +24,8 @@ int work_text_styler ( int argc, char **argv ) {
 	styleBar.SetPoints ( 16.0f );
 	styleSet.SetStyle ( "bar", &styleBar );
 	
-	styler.Style ( layout, styleSet, "<foo>   this <bar> is a te<b>st  <c>   " );
+	MOAITextStyleMap layout;
+	layout.Tokenize ( styleSet, "<foo>   this <bar> is a te<b>st  <c>   " );
 	
 	//MOAIGlyphCache glyphCache;
 	//glyphCache.Init ( "arial-rounded.TTF" );

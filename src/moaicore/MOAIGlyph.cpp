@@ -73,13 +73,13 @@ USRect MOAIGlyph::GetRect ( float points, float x, float y ) const {
 MOAIGlyph::MOAIGlyph () :
 	mCode ( 0xffffffff ),
 	mContents ( NONE ),
-	mSrcX ( 0 ),
-	mSrcY ( 0 ),
 	mWidth ( 0 ),
 	mHeight ( 0 ),
 	mYOff ( 0.0f ),
 	mAdvanceX ( 0.0f ),
-	mBearingX ( 0.0f ) {
+	mBearingX ( 0.0f ),
+	mSrcX ( 0 ),
+	mSrcY ( 0 ) {
 	
 	//this->mUVRect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
 }

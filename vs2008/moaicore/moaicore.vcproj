@@ -936,19 +936,19 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAITextLayout.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAITextLayout.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\moaicore\MOAITextStyle.cpp"
 				>
 			</File>
 			<File
 				RelativePath="..\..\src\moaicore\MOAITextStyle.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAITextStyleMap.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAITextStyleMap.h"
 				>
 			</File>
 			<File

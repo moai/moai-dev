@@ -5,9 +5,9 @@
 #include <contrib/utf8.h>
 #include <moaicore/MOAIAnimCurve.h>
 #include <moaicore/MOAIFont.h>
-#include <moaicore/MOAITextLayout.h>
 #include <moaicore/MOAITextStyle.h>
 #include <moaicore/MOAITextStyler.h>
+#include <moaicore/MOAITextStyleMap.h>
 #include <moaicore/MOAITextStyleSet.h>
 
 //================================================================//
@@ -25,17 +25,13 @@
 
 //----------------------------------------------------------------//
 void MOAITextStyler::FinishToken () {
-	
-	int size = this->mTokenTextSize + this->mTokenWhitespaceSize;
-				
-	if ( size ) {
-		assert ( this->mCurrentStyle );
-		this->mLayout->PushToken ( this->mStr, this->mTokenBase, size, 0, *this->mCurrentStyle );
+
+	if ( this->mCurrentStyle && this->mTokenSize ) {
+		this->mStyleMap->PushSpan ( this->mStr, this->mTokenBase, this->mTokenSize, *this->mCurrentStyle );
 	}
 	
 	this->mTokenBase = this->mIdx;
-	this->mTokenTextSize = 0;
-	this->mTokenWhitespaceSize = 0;
+	this->mTokenSize = 0;
 }
 
 //----------------------------------------------------------------//
@@ -154,7 +150,7 @@ void MOAITextStyler::Parse () {
 	
 	u32 c = 0;
 
-	u32 state = TOKEN_WHITESPACE;
+	u32 state = TOKEN_TEXT;
 	while ( state != DONE ) {
 		
 		switch ( state ) {
@@ -165,30 +161,6 @@ void MOAITextStyler::Parse () {
 			
 			//----------------------------------------------------------------//
 			// check to see if we've encountered a style escape
-			case TOKEN_WHITESPACE: {
-				
-				if ( this->ParseStyle ()) {
-					TRANSITION ( TOKEN_WHITESPACE );
-				}
-				
-				c = this->GetChar ();
-
-				if ( c == 0 ) {
-					this->FinishToken ();
-					TRANSITION ( DONE );
-				}
-				
-				if ( !this->IsWhitespace ( c )) {
-					this->UngetChar ();
-					this->FinishToken ();
-					TRANSITION ( TOKEN_TEXT );
-				}
-				
-				this->mTokenWhitespaceSize++;
-				TRANSITION ( TOKEN_WHITESPACE );
-			}
-			
-			//----------------------------------------------------------------//
 			case TOKEN_TEXT: {
 				
 				if ( this->ParseStyle ()) {
@@ -202,12 +174,7 @@ void MOAITextStyler::Parse () {
 					TRANSITION ( DONE );
 				}
 				
-				if ( this->IsWhitespace ( c )) {
-					this->UngetChar ();
-					TRANSITION ( TOKEN_WHITESPACE );
-				}
-				
-				this->mTokenTextSize++;
+				this->mTokenSize++;
 				TRANSITION ( TOKEN_TEXT );
 			}
 		}
@@ -334,10 +301,10 @@ bool MOAITextStyler::ParseStyle () {
 				memcpy ( name, &this->mStr [ startIdx + 1 ], namesize );
 				name [ namesize ] = 0;
 				
-				printf ( "found style: %s\n", name );
-				
 				MOAITextStyle* style = this->mStyleSet->FindStyle ( name );
 				this->PushStyle ( style );
+				
+				printf ( "found style: %s\n", name );
 				
 				TRANSITION ( DONE );
 			}
@@ -381,7 +348,7 @@ void MOAITextStyler::PopStyle () {
 		if ( this->mStyleStackTop && ( this->mStyleStackTop < STYLE_STACK_SIZE )) {
 			this->mCurrentStyle = this->mStyleStack [ this->mStyleStackTop - 1 ];
 		}
-	}	
+	}
 }
 
 //----------------------------------------------------------------//
@@ -399,7 +366,7 @@ void MOAITextStyler::PushStyle ( MOAITextStyle* style ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITextStyler::Style ( MOAITextLayout& layout, MOAITextStyleSet& styleSet, cc8* str ) {
+void MOAITextStyler::Style ( MOAITextStyleMap& layout, MOAITextStyleSet& styleSet, cc8* str ) {
 	
 	this->mStyleStack = ( MOAITextStyle** )alloca ( STYLE_STACK_SIZE * sizeof ( MOAITextStyle* ));
 	this->mStyleStackTop = 0;
@@ -410,18 +377,14 @@ void MOAITextStyler::Style ( MOAITextLayout& layout, MOAITextStyleSet& styleSet,
 	
 	this->mIdx = 0;
 	this->mPrev = 0;
-	this->mLayout = &layout;
+	this->mStyleMap = &layout;
 	this->mStr = str;
 	this->mStyleSet = &styleSet;
 	
 	this->mTokenBase = 0;
-	this->mTokenTextSize = 0;
-	this->mTokenWhitespaceSize = 0;
+	this->mTokenSize = 0;
 	
 	this->Parse ();
-	
-	layout.LoadGlyphMetrics ();
-	layout.SizeTokens ();
 }
 
 //----------------------------------------------------------------//

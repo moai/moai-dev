@@ -6,7 +6,7 @@
 
 class MOAIAnimCurve;
 class MOAIFont;
-class MOAITextLayout;
+class MOAITextStyleMap;
 class MOAITextStyle;
 class MOAITextStyleSet;
 
@@ -35,7 +35,6 @@ private:
 		STYLE_POP_FINISH,
 		
 		TOKEN_TEXT,
-		TOKEN_WHITESPACE,
 		
 		COLOR_START,
 		COLOR_BODY,
@@ -58,11 +57,10 @@ private:
 	int					mPrev;
 	
 	int					mTokenBase;
-	int					mTokenTextSize;
-	int					mTokenWhitespaceSize;
+	int					mTokenSize;
 	
 	cc8*				mStr;
-	MOAITextLayout*		mLayout;
+	MOAITextStyleMap*	mStyleMap;
 	MOAITextStyleSet*	mStyleSet;
 
 	MOAITextStyle**		mStyleStack;
@@ -82,13 +80,14 @@ private:
 	bool			ParseStyle			();
 	void			PopStyle			();
 	void			PushStyle			( MOAITextStyle* style );
+	void			Style				( MOAITextStyleMap& styleMap, MOAITextStyleSet& styleSet, cc8* str );
 	void			UngetChar			();
 
 public:
 
+	friend class MOAITextStyleMap;
+
 	//----------------------------------------------------------------//
-	void			SetCurves				( MOAIAnimCurve** curves, u32 totalCurves );
-	void			Style					( MOAITextLayout& layout, MOAITextStyleSet& styleSet, cc8* str );
 					MOAITextStyler			();
 					~MOAITextStyler			();
 };
