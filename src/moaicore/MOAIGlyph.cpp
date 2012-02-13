@@ -73,8 +73,8 @@ USRect MOAIGlyph::GetRect ( float points, float x, float y ) const {
 MOAIGlyph::MOAIGlyph () :
 	mCode ( 0xffffffff ),
 	mContents ( NONE ),
-	mWidth ( 0 ),
-	mHeight ( 0 ),
+	mWidth ( 0.0f ),
+	mHeight ( 0.0f ),
 	mYOff ( 0.0f ),
 	mAdvanceX ( 0.0f ),
 	mBearingX ( 0.0f ),

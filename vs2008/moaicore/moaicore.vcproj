@@ -936,6 +936,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\moaicore\MOAITextDesigner.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAITextDesigner.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\moaicore\MOAITextStyle.cpp"
 				>
 			</File>

@@ -23,13 +23,14 @@ private:
 	MOAIGlyph* mPending;
 	
 	//----------------------------------------------------------------//
-	void		AffirmGlyph			( u32 c );
+	void			AffirmGlyph			( u32 c );
 
 public:
 
 	//----------------------------------------------------------------//
-				MOAIGlyphDeck		();
-				~MOAIGlyphDeck		();
+	MOAIGlyph*		GetGlyph			( u32 c );
+					MOAIGlyphDeck		();
+					~MOAIGlyphDeck		();
 };
 
 #endif

@@ -58,20 +58,64 @@ static void _renderSpan ( const int y, const int count, const FT_Span* const spa
 }
 
 //================================================================//
+// local
+//================================================================//
+
+//----------------------------------------------------------------//
+/**	@name	load
+	@text	Sets the font file for use when loading glyphs.
+
+	@in		MOAIFont self
+	@in		string filename			The path to the TTF file to load.
+	@out	nil
+*/
+int MOAIFont::_load ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIFont, "US" )
+
+	cc8* filename	= state.GetValue < cc8* >( 2, "" );
+	self->Init ( filename );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	preloadGlyphs
+	@text	Loads and caches glyphs for quick access later.
+
+	@in		MOAIFont self
+	@in		string charCodes		A string which defines the characters found in the font.
+	@in		number points			The point size to be rendered onto the internal texture.
+	@opt	number dpi				The device DPI (dots per inch of device screen). Default value is 72 (points same as pixels).
+	@out	nil
+*/
+int MOAIFont::_preloadGlyphs ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIFont, "USN" )
+
+	cc8* charCodes	= state.GetValue < cc8* >( 2, "" );
+	float points	= state.GetValue < float >( 3, 0 );
+	u32 dpi			= state.GetValue < u32 >( 4, 72 );
+	
+	int idx = 0;
+	while ( charCodes [ idx ]) {
+		u32 c = u8_nextchar ( charCodes, &idx );
+		self->AffirmGlyph ( points, c );
+	}
+	
+	self->UpdateGlyphs ( 0 );
+	
+	return 0;
+}
+
+//================================================================//
 // MOAIFont
 //================================================================//
 	
 //----------------------------------------------------------------//
-void MOAIFont::AffirmGlyphs ( float points, cc8* chars, int size ) {
+void MOAIFont::AffirmGlyph ( float points, u32 c ) {
 
 	MOAIGlyphDeck& glyphDeck = this->mGlyphDecks [ points ];
 	glyphDeck.mPoints = points;
-	
-	int i = 0;
-	while ( chars [ i ] && ( i < size )) {
-		u32 c = u8_nextchar ( chars, &i );
-		glyphDeck.AffirmGlyph ( c );
-	}
+	glyphDeck.AffirmGlyph ( c );
 }
 
 //----------------------------------------------------------------//
@@ -96,6 +140,12 @@ MOAISpan < MOAIGlyph* >* MOAIFont::Alloc ( MOAIGlyph& glyph ) {
 }
 
 //----------------------------------------------------------------//
+MOAIGlyphDeck* MOAIFont::GetGlyphDeck ( float points ) {
+
+	return &this->mGlyphDecks [ points ];
+}
+
+//----------------------------------------------------------------//
 void MOAIFont::Init ( cc8* filename ) {
 
 	this->mFilename = filename;
@@ -103,21 +153,50 @@ void MOAIFont::Init ( cc8* filename ) {
 
 //----------------------------------------------------------------//
 void MOAIFont::LoadGlyphMetrics () {
-}
 
-//----------------------------------------------------------------//
-MOAIGlyph* MOAIFont::GetGlyphForChar ( u32 c ) {
-
-	return 0;
+	this->UpdateGlyphs ( 0 );
 }
 
 //----------------------------------------------------------------//
 MOAIFont::MOAIFont () :
 	mPages ( 0 ) {
+	
+	RTTI_BEGIN
+		RTTI_EXTEND ( MOAILuaObject )
+	RTTI_END
 }
 
 //----------------------------------------------------------------//
 MOAIFont::~MOAIFont () {
+}
+
+//----------------------------------------------------------------//
+void MOAIFont::RegisterLuaClass ( MOAILuaState& state ) {
+	UNUSED ( state );
+}
+
+//----------------------------------------------------------------//
+void MOAIFont::RegisterLuaFuncs ( MOAILuaState& state ) {
+	
+	luaL_Reg regTable [] = {
+		{ "load",				_load },
+		{ "preloadGlyphs",		_preloadGlyphs },
+		{ NULL, NULL }
+	};
+	
+	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAIFont::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
+	UNUSED ( state );
+	UNUSED ( serializer );
+}
+
+//----------------------------------------------------------------//
+void MOAIFont::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
+	UNUSED ( state );
+	UNUSED ( serializer );
 }
 
 //----------------------------------------------------------------//
@@ -174,8 +253,8 @@ void MOAIFont::UpdateGlyphs ( u32 target ) {
 			int advanceX = face->glyph->metrics.horiAdvance >> 6;
 			int bearingX = face->glyph->metrics.horiBearingX >> 6;
 			
-			glyph.mWidth = glyphWidth;
-			glyph.mHeight = faceHeight;
+			glyph.mWidth = ( float )glyphWidth;
+			glyph.mHeight = ( float )faceHeight;
 			glyph.mAdvanceX = ( float )advanceX;
 			glyph.mBearingX = ( float )bearingX;
 			

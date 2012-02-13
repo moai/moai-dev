@@ -26,12 +26,12 @@
 //----------------------------------------------------------------//
 void MOAITextStyler::FinishToken () {
 
-	if ( this->mCurrentStyle && this->mTokenSize ) {
-		this->mStyleMap->PushSpan ( this->mStr, this->mTokenBase, this->mTokenSize, *this->mCurrentStyle );
+	if ( this->mCurrentStyle && ( this->mTokenBase < this->mTokenTop )) {
+		this->mStyleMap->PushSpan ( this->mStr, this->mTokenBase, this->mTokenTop, *this->mCurrentStyle );
 	}
 	
 	this->mTokenBase = this->mIdx;
-	this->mTokenSize = 0;
+	this->mTokenTop = this->mIdx;
 }
 
 //----------------------------------------------------------------//
@@ -174,7 +174,7 @@ void MOAITextStyler::Parse () {
 					TRANSITION ( DONE );
 				}
 				
-				this->mTokenSize++;
+				this->mTokenTop = this->mIdx;
 				TRANSITION ( TOKEN_TEXT );
 			}
 		}
@@ -382,7 +382,7 @@ void MOAITextStyler::Style ( MOAITextStyleMap& layout, MOAITextStyleSet& styleSe
 	this->mStyleSet = &styleSet;
 	
 	this->mTokenBase = 0;
-	this->mTokenSize = 0;
+	this->mTokenTop = 0;
 	
 	this->Parse ();
 }

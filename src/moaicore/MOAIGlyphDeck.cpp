@@ -21,6 +21,12 @@ void MOAIGlyphDeck::AffirmGlyph ( u32 c ) {
 }
 
 //----------------------------------------------------------------//
+MOAIGlyph* MOAIGlyphDeck::GetGlyph ( u32 c ) {
+
+	return &this->mGlyphMap [ c ];
+}
+
+//----------------------------------------------------------------//
 MOAIGlyphDeck::MOAIGlyphDeck () :
 	mPending ( 0 ) {
 }

@@ -31,6 +31,8 @@ private:
 	
 public:
 
+	friend class MOAITextDesigner;
+
 	DECL_LUA_FACTORY ( MOAITextStyle )
 	
 	GET ( MOAIFont*, Font, mFont );

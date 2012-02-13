@@ -26,19 +26,29 @@ private:
 	STLMap < float, MOAIGlyphDeck > mGlyphDecks;
 
 	//----------------------------------------------------------------//
+	static int			_load					( lua_State* L );
+	static int			_preloadGlyphs			( lua_State* L );
+
+	//----------------------------------------------------------------//
 	MOAISpan < MOAIGlyph* >*	Alloc				( MOAIGlyph& glyph );
 	void						UpdateGlyphs		( u32 target );
 
 public:
 	
+	DECL_LUA_FACTORY ( MOAIFont )
+	
 	//----------------------------------------------------------------//
-	void			AffirmGlyphs			( float points, cc8* chars, int size );
-	void			Init					( cc8* filename );
-	void			LoadGlyphMetrics		();
-	MOAIGlyph*		GetGlyphForChar			( u32 c );
-					MOAIFont				();
-					~MOAIFont				();
-	void			WritePages				();
+	void				AffirmGlyph				( float points, u32 c );
+	MOAIGlyphDeck*		GetGlyphDeck			( float points );
+	void				Init					( cc8* filename );
+	void				LoadGlyphMetrics		();
+						MOAIFont				();
+						~MOAIFont				();
+	void				RegisterLuaClass		( MOAILuaState& state );
+	void				RegisterLuaFuncs		( MOAILuaState& state );
+	void				SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
+	void				SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
+	void				WritePages				();
 };
 
 #endif

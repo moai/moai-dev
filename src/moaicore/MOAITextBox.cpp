@@ -609,6 +609,8 @@ void MOAITextBox::OnDepNodeUpdate () {
 
 	MOAIProp::OnDepNodeUpdate ();
 
+	this->Layout ();
+
 	if ( this->mYFlip ) {
 		
 		USAffine3D mtx;

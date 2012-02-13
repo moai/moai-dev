@@ -46,6 +46,7 @@ public:
 	friend class MOAIFont;
 	friend class MOAIGlyphDeck;
 	friend class MOAIGlyphPage;
+	friend class MOAITextDesigner;
 	friend class MOAITextStyler;
 	friend class MOAITextStyleMap;
 	

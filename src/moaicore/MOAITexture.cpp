@@ -208,6 +208,13 @@ int MOAITexture::_initFrameBuffer ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAITexture::_invalidate ( lua_State* L ) {
+
+	return 1;
+}
+
+//----------------------------------------------------------------//
 /**	@name	load
 	@text	Loads a texture from a data buffer or a file. Optionally pass
 			in an image transform (affects .png images only).
@@ -270,6 +277,13 @@ int MOAITexture::_setFilter ( lua_State* L ) {
 	self->SetFilter ( min, mag );
 
 	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAITexture::_setSourceImage ( lua_State* L ) {
+
+	return 1;
 }
 
 //----------------------------------------------------------------//
@@ -697,22 +711,6 @@ void MOAITexture::DeleteTexture	() {
 }
 
 //----------------------------------------------------------------//
-u32 MOAITexture::GetTexCoordIndex ( GLenum coord ) {
-
-	switch ( coord ) {
-		case GL_S:
-			return 0;
-		case GL_T:
-			return 1;
-		case GL_R:
-			return 2;
-		case GL_Q:
-			return 3;
-	}
-	return 0xffffffff;
-}
-
-//----------------------------------------------------------------//
 u32 MOAITexture::GetHeight () {
 	return this->mHeight;
 }
@@ -848,7 +846,8 @@ MOAITexture::MOAITexture () :
 	mDataSize ( 0 ),
 	mIsRenewable ( false ),
 	mTransform ( DEFAULT_TRANSFORM ),
-	mIsDirty ( false ) {
+	mIsDirty ( false ),
+	mValid ( VALID ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAILuaObject )

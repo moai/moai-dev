@@ -32,7 +32,6 @@ private:
 	static const u32 REVEAL_ALL = 0xffffffff;
 	static const float DEFAULT_SPOOL_SPEED;
 
-	//MOAILuaSharedPtr < MOAIFont > mFont;
 	float				mLineSpacing;
 	
 	USRect				mFrame;
@@ -52,7 +51,7 @@ private:
 	bool				mRightToLeft;
 	
 	bool				mNeedsLayout;
-	MOAITextStyleMap		mLayout;
+	MOAITextStyleMap	mLayout;
 	
 	USLeanArray < MOAIAnimCurve* >	mCurves;
 	

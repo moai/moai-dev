@@ -3,11 +3,14 @@
 //----------------------------------------------------------------//
 int work_text_styler ( int argc, char **argv ) {
 	
+	cc8* str = "<foo>   this <bar> is a te<b>st  <c>   ";
+	
 	AKUCreateContext ();
 	
 	MOAITextStyleSet styleSet;
 	
 	MOAIFont* font = new MOAIFont ();
+	font->Init ( "arial-rounded.TTF" );
 	
 	MOAITextStyle styleDefault;
 	styleDefault.SetFont ( font );
@@ -24,8 +27,11 @@ int work_text_styler ( int argc, char **argv ) {
 	styleBar.SetPoints ( 16.0f );
 	styleSet.SetStyle ( "bar", &styleBar );
 	
-	MOAITextStyleMap layout;
-	layout.Tokenize ( styleSet, "<foo>   this <bar> is a te<b>st  <c>   " );
+	MOAITextStyleMap styleMap;
+	styleMap.Tokenize ( styleSet, str );
+	
+	MOAITextDesigner designer;
+	designer.Layout ( str, styleMap );
 	
 	//MOAIGlyphCache glyphCache;
 	//glyphCache.Init ( "arial-rounded.TTF" );

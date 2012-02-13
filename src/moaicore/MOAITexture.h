@@ -66,19 +66,24 @@ private:
 	
 	bool				mIsDirty;
 
+	MOAILuaSharedPtr < MOAIImage > mSourceImage;
+	u32					mValid;
+	USRect				mRegion;
+
 	//----------------------------------------------------------------//
 	static int		_bind					( lua_State* L );
 	static int		_getSize				( lua_State* L );
 	static int		_initFrameBuffer		( lua_State* L );
+	static int		_invalidate				( lua_State* L );
 	static int		_load					( lua_State* L );
 	static int		_release				( lua_State* L );
 	static int		_setFilter				( lua_State* L );
+	static int		_setSourceImage			( lua_State* L );
 	static int		_setWrap				( lua_State* L );
 
 	//----------------------------------------------------------------//
 	void			CreateTextureFromImage	( MOAIImage& image );
 	void			CreateTextureFromPVR	( void* data, size_t size );
-	u32				GetTexCoordIndex		( GLenum coord );
 	bool			IsRenewable				();
 	void			OnBind					();
 	void			OnClear					();
@@ -96,6 +101,12 @@ public:
 	friend class MOAIGfxDevice;
 	
 	GET ( MOAIFrameBuffer*, FrameBuffer, mFrameBuffer )
+	
+	enum {
+		VALID,
+		INVALID,
+		INVALID_REGION,
+	};
 	
 	//----------------------------------------------------------------//
 	static MOAIGfxState*	AffirmTexture			( MOAILuaState& state, int idx );

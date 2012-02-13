@@ -57,7 +57,7 @@ private:
 	int					mPrev;
 	
 	int					mTokenBase;
-	int					mTokenSize;
+	int					mTokenTop;
 	
 	cc8*				mStr;
 	MOAITextStyleMap*	mStyleMap;
