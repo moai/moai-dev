@@ -21,14 +21,12 @@ import android.view.MotionEvent;
 //================================================================//
 public class MoaiView extends GLSurfaceView {
 
+	private MoaiActivity 	mActivity;
 	private int 			mAku;
-	private String 			mAppRoot;
+	private String 			mAssetDirectory;
 	private Context			mContext;
 	private int 		 	mHeight;
-	private MoaiRenderer 	mRenderer;
 	private int 		 	mWidth;
-	private MoaiActivity 	mActivity;
-	private boolean			mAKUInitialized;
 	
 	protected static native int	 AKUCreateContext 				();
 	protected static native void AKUDeleteContext 				( int akuContextId );
@@ -60,15 +58,15 @@ public class MoaiView extends GLSurfaceView {
 	protected static native void AKUUpdate				 		();
 
     //----------------------------------------------------------------//
-	public MoaiView ( Context context, MoaiActivity activity, int width, int height ) {
+	public MoaiView ( Context context, MoaiActivity activity, int width, int height, int glesVersion, String assetDirectory ) {
 
 		super ( context );
 		
 		mContext = context;
+		mActivity = activity;
 		mHeight = height;
 		mWidth = width;
-		mActivity = activity;
-		mAKUInitialized = false;
+		mAssetDirectory = assetDirectory;
 		
 		mAku = AKUCreateContext ();
 		
@@ -113,7 +111,6 @@ public class MoaiView extends GLSurfaceView {
 			udid = "UNKNOWN";
 		}
 
-		// get other
 		String osBrand 			= "Android";
 		String abi 				= Build.CPU_ABI;
 		String devBrand 		= Build.BRAND;
@@ -123,22 +120,92 @@ public class MoaiView extends GLSurfaceView {
 		String devProduct 		= Build.PRODUCT;
 		String osVersion 		= Build.VERSION.RELEASE;
 		
-		// tell Moai the device properties
 		AKUSetDeviceProperties ( appName, appId, appVersion, abi, devBrand, devName, devManufacturer, devModel, devProduct, osBrand, osVersion, udid );
-	}
+		
+		if ( glesVersion >= 0x20000 ) {
+			
+			// NOTE: Must be set before the renderer is set.
+			setEGLContextClientVersion ( 2 );
+		}
+
+        setRenderer ( new MoaiRenderer ());
+		onPause (); // Pause rendering until restarted by the activity lifecycle.
+		
+		// Enqueue an initialization event on the GL thread. This will run as soon as
+		// the GL thread is active. NOTE: This method cannot be called until the 
+		// renderer has been set.
+		queueEvent ( new Runnable () {
+
+			public void run () {
+		
+				log ( "MoaiRenderer initializing" );
+		
+				AKUInit ( MoaiView.this, mActivity );
+				
+				// TODO: At the moment, enabling accelerometer events before AKU is initialized
+				// can cause a crash, so we wait until here. Once the bug is fixed, this line 
+				// of code can be moved anywhere.
+				mActivity.enableAccelerometerEvents ( false );
+			}
+		});
+	}		
+	
+	//================================================================//
+	// Public methods
+	//================================================================//
 	
 	//----------------------------------------------------------------//
 	public String getGUID () {
 	
 		return java.util.UUID.randomUUID ().toString ();
 	}
-	
+
 	//----------------------------------------------------------------//
 	public static void log ( String message ) {
 		
 		Log.i ( "MoaiLog", message );
 	}
 		
+	//----------------------------------------------------------------//
+	public void pauseAku ( boolean paused ) {
+	
+		if ( paused ) {
+			AKUPause ( true );
+		}
+		else {
+			AKUPause ( false );
+		}
+	}
+
+	//----------------------------------------------------------------//
+	public void pauseGLSurface ( boolean paused ) {
+
+		if ( paused ) {
+			setRenderMode ( GLSurfaceView.RENDERMODE_WHEN_DIRTY );
+			onPause ();
+		}
+		else {
+			onResume ();
+			setRenderMode ( GLSurfaceView.RENDERMODE_CONTINUOUSLY );
+		}
+	}
+
+	//================================================================//
+	// Private methods
+	//================================================================//
+
+    //----------------------------------------------------------------//
+	private void runScript ( String filename ) {
+
+		AKUSetContext ( mAku );
+		AKUSetViewSize ( mWidth, mHeight );
+		AKURunScript ( filename );
+	}	
+
+	//================================================================//
+	// Touch methods
+	//================================================================//
+
     //----------------------------------------------------------------//
 	@Override
 	public boolean onTouchEvent ( MotionEvent event ) {
@@ -164,57 +231,17 @@ public class MoaiView extends GLSurfaceView {
 		
 		return true;
 	}
-		
-	//----------------------------------------------------------------//
-	public void pause ( boolean paused ) {
-	
-		if ( paused ) {
-			AKUPause ( true );
-			onPause ();
-			setRenderMode ( GLSurfaceView.RENDERMODE_WHEN_DIRTY );
-		}
-		else {
-			setRenderMode ( GLSurfaceView.RENDERMODE_CONTINUOUSLY );
-			onResume ();
-			AKUPause ( false );
-		}
-	}
-	
-	//----------------------------------------------------------------//
-	public void run ( String filename ) {
-	
-		AKUSetContext ( mAku );
-		AKUSetViewSize ( mWidth, mHeight );
-		AKURunScript ( filename );
-	}
-	
-    //----------------------------------------------------------------//
-	public void setDirectory ( String path ) {
-		
-		mAppRoot = path;
-	}
 	
 	//================================================================//
 	// MoaiRenderer
 	//================================================================//
 	public class MoaiRenderer implements GLSurfaceView.Renderer {
 
+		private boolean mRunScriptsExecuted = false;
+
 	    //----------------------------------------------------------------//
 		@Override
 		public void onDrawFrame ( GL10 gl ) {
-
-			if ( !mAKUInitialized ) {
-				
-				AKUInit ( MoaiView.this, mActivity );
-				mAKUInitialized = true;
-
-				AKUSetWorkingDirectory ( mAppRoot + "/@WORKING_DIR@" );
-				run ( "@RUN_INIT_DIR@/init.lua" );
-				@RUN@
-		
-				mActivity.startSession ();				
-				mActivity.enableAccelerometerEvents ( false );
-			}
 
 			AKUSetContext ( mAku );
 			AKUSetViewSize ( mWidth, mHeight );
@@ -240,6 +267,24 @@ public class MoaiView extends GLSurfaceView {
 
 			AKUReleaseGfxContext ();
 			AKUDetectGfxContext ();
-		}
+
+			// TODO: startSesssion is mismatched with stopSession.
+			mActivity.startSession ();
+			
+			if ( !mRunScriptsExecuted ) {
+				
+				log ( "Running game scripts" );
+				
+				// TODO: Move this init script to the initialization routine in the constructor
+				// as soon as the bug is fixed that will allow the virutal directory to be 
+				// mounted before the MoaiView is created.
+				AKUSetWorkingDirectory ( mAssetDirectory + "/@WORKING_DIR@" );				
+				runScript ( "@RUN_INIT_DIR@/init.lua" );
+			
+				@RUN_COMMAND@
+				
+				mRunScriptsExecuted = true;
+			}
+		}		
 	}
 }

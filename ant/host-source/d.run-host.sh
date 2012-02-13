@@ -152,10 +152,10 @@
 	
 	# create run commands for the host
 	for file in "${run[@]}"; do
-		run_command=`echo -e $run_command"run\(\""$file"\"\)\;"`
+		run_command=`echo -e $run_command"runScript\(\""$file"\"\)\;"`
 	done
 	
-	fr 	build/$package_path/MoaiView.java	@RUN@ 	"$run_command"
+	fr 	build/$package_path/MoaiView.java	@RUN_COMMAND@ 	"$run_command"
 
 	# bundle android-init file
 	cp -f host-source/init.lua build/assets/init.lua

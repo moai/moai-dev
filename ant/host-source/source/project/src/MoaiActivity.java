@@ -122,6 +122,9 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 	protected static native void 		AKUSetConnectionType 				( long connectionType );
 	protected static native void 		AKUSetDocumentDirectory 			( String path );
 
+	// TODO: If game is launched with lock screen engaged, size and location
+	// is messed up.
+
    	//----------------------------------------------------------------//
     protected void onCreate ( Bundle savedInstanceState ) {
 
@@ -129,52 +132,32 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 
     	super.onCreate ( savedInstanceState );
 
-		// load libmoai
        	System.load ( "/data/data/@PACKAGE@/lib/libmoai.so" ); 
 
-		// configure window
         requestWindowFeature ( Window.FEATURE_NO_TITLE );
 	    getWindow ().addFlags ( WindowManager.LayoutParams.FLAG_FULLSCREEN ); 
 	    getWindow ().addFlags ( WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON );
 
-		// get display dimenstions
 		Display display = (( WindowManager ) getSystemService ( Context.WINDOW_SERVICE )).getDefaultDisplay ();
 		int displayWidth = display.getWidth ();
 		int displayHeight = display.getHeight ();
+		ConfigurationInfo info = (( ActivityManager ) getSystemService ( Context.ACTIVITY_SERVICE )).getDeviceConfigurationInfo ();
 
-		// create Moai view
-	    mMoaiView = new MoaiView ( this, this, displayWidth, displayHeight );
+	    mMoaiView = new MoaiView ( this, this, displayWidth, displayHeight, info.reqGlEsVersion, "bundle/assets" );
 
-		// OpenGL 2.0
-		ActivityManager am = ( ActivityManager ) getSystemService ( Context.ACTIVITY_SERVICE );
-		ConfigurationInfo info = am.getDeviceConfigurationInfo ();
-			    
-		if ( info.reqGlEsVersion >= 0x20000 ) {
-			mMoaiView.setEGLContextClientVersion ( 2 );
-		}
-
-		// create custom renderer for the Moai view
-        mMoaiView.setRenderer ( mMoaiView.new MoaiRenderer () );
-        mMoaiView.setRenderMode ( GLSurfaceView.RENDERMODE_CONTINUOUSLY );
-
-		// set activity to use Moai view
-		setContentView ( mMoaiView );
-
-		// set documents directory
-		String filesDir = getFilesDir ().getAbsolutePath ();
-		AKUSetDocumentDirectory ( filesDir );
-
-		PackageManager  pm = getPackageManager();
+		// TODO: Reorder AKU initialization so that the virtual directory can be
+		// mounted BEFORE creating the MoaiView.
 		try {
-			ApplicationInfo myApp = pm.getApplicationInfo(getPackageName(), 0);
+			
+			ApplicationInfo myApp = getPackageManager ().getApplicationInfo ( getPackageName (), 0 );
 
 			AKUMountVirtualDirectory ( "bundle", myApp.publicSourceDir );
+		} catch ( NameNotFoundException e ) {
 
-			mMoaiView.setDirectory ( "bundle/assets" );
-		} catch (NameNotFoundException e) {
-			// This should obviously never, ever happen.
 			log ( "Unable to locate the application bundle" );
 		}
+
+		AKUSetDocumentDirectory ( getFilesDir ().getAbsolutePath ());
 				
 		mHandler = new Handler ();
 		mSensorManager = ( SensorManager ) getSystemService ( Context.SENSOR_SERVICE );
@@ -189,6 +172,8 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
         mBillingService.setContext (this);
 
 		startConnectivityReceiver ();
+
+		setContentView ( mMoaiView );
     }
 
 	//----------------------------------------------------------------//
@@ -222,22 +207,12 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 		// very quickly twice, in which case we do not receive the 
 		// expected windows focus events.
 		mWindowFocusLost = true;
-		
-		log ( "onPause: Start" );
-		
-		// Call pause on the main thread's next run loop to avoid flicker
-		// that occurs when we pause the Open GL surface.
-		runOnMainThread ( new Runnable () {
 
-			public void run () {
-					
-				log ( "Resuming now" );
-						
-				mMoaiView.pause ( true );
-			}
-		});
+		log ( "Pausing GL now" );
+		mMoaiView.pauseGLSurface ( true );
 
-		log ( "onPause: Done" );
+		log ( "Pausing Aku now" );
+		mMoaiView.pauseAku ( true );
 	}
 	
 	//----------------------------------------------------------------//
@@ -252,6 +227,9 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 			mSensorManager.registerListener ( mAccelerometerListener, mAccelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL );
 		}
 		
+		log ( "Resuming GL now" );
+		mMoaiView.pauseGLSurface ( false );
+
 		// If we have not lost Window focus, then resume immediately; 
 		// otherwise, wait to regain focus before we resume. All of 
 		// this nonsense is to prevent audio from playing while the
@@ -259,25 +237,8 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 		mWaitingToResume = mWindowFocusLost;
 		if ( !mWindowFocusLost ) {
 			
-			log ( "onResume: Start" );
-
-			// In some circumstances, resuming appears to cause the main thread
-			// to block while the render thread performs a render. If that render
-			// loop causes the lua to call back into the Java host, we can deadlock
-			// if we proxy the call to the main thread and wait. So, to avoid that
-			// possibility, we'll perform the resume on the main thread's next run
-			// loop. 
-			runOnMainThread ( new Runnable () {
-
-				public void run () {
-					
-					log ( "Resuming now" );
-						
-					mMoaiView.pause ( false );
-				}
-			}, 100 );
-
-			log ( "onResume: Done" );
+			log ( "Resuming Aku now" );
+			mMoaiView.pauseAku ( false );
 		}
 	}
 
@@ -289,8 +250,6 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 		super.onStart ();
 		
         MoaiBillingResponseHandler.register ( mPurchaseObserver );
-
-		// TODO: If a session is stopped, then restarted, we do not resume the session...
 	}
 	
 	//----------------------------------------------------------------//
@@ -487,26 +446,9 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 		if ( mWaitingToResume && hasFocus ) {
 		
 			mWaitingToResume = false;
-			
-			log ( "onWindowFocusChanged: Start" );
-			
-			// In some circumstances, resuming appears to cause the main thread
-			// to block while the render thread performs a render. If that render
-			// loop causes the lua to call back into the Java host, we can deadlock
-			// if we proxy the call to the main thread and wait. So, to avoid that
-			// possibility, we'll perform the resume on the main thread's next run
-			// loop. 
-			runOnMainThread ( new Runnable () {
 
-				public void run () {
-						
-					log ( "Resuming now" );
-
-					mMoaiView.pause ( false );
-				}
-			}, 100 );
-			
-			log ( "onWindowFocusChanged: Done" );
+			log ( "Resuming Aku now" );
+			mMoaiView.pauseAku ( false );
 		}
 	}
 
@@ -816,7 +758,7 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 		runOnMainThread ( new Runnable () {
 
 			public void run () {
-					
+				
 				MoaiBillingSecurity.setPublicKey ( key );
 			}
 		});
@@ -907,7 +849,7 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 			AKUEnqueueLevelEvent ( deviceId, sensorId, x, y, z );
 		}
 	};
-	
+
 	//================================================================//
 	// PurchaseObserver
 	//================================================================//
