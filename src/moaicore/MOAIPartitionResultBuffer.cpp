@@ -261,11 +261,8 @@ void MOAIPartitionResultBuffer::PushResultProps ( lua_State* L ) {
 
 	u32 total = this->mTotalResults;
 	
-	lua_createtable ( state, total, 0 );
-	
 	for ( u32 i = 0; i < total; ++i ) {
 		this->mResults [ i ].mProp->PushLuaUserdata ( state );
-		lua_rawseti ( state, -2, i + 1 );
    }
 }
 
