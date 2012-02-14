@@ -135,7 +135,13 @@ int MOAICamera::_setOrtho ( lua_State* L ) {
 //----------------------------------------------------------------//
 USMatrix4x4 MOAICamera::GetProjMtx ( const MOAIViewport& viewport ) const {
 	
+	USMatrix4x4 proj;
 	USMatrix4x4 mtx;
+
+	// rotate
+	proj.RotateZ ( -viewport.mRotation * ( float )D2R );
+	
+	// project
 	
 	if ( this->mOrtho ) {
 		
@@ -151,10 +157,13 @@ USMatrix4x4 MOAICamera::GetProjMtx ( const MOAIViewport& viewport ) const {
 		mtx.Perspective ( xs, ys, this->mNearPlane, this->mFarPlane );
 	}
 	
-	USVec4D vtx ( 0.0f, 0.0f, 10.0f, 1.0f );
-	mtx.Project ( vtx );
+	proj.Append ( mtx );
 	
-	return mtx;
+	// offset
+	mtx.Translate ( viewport.mOffset.mX, viewport.mOffset.mY, 0.0f );
+	proj.Append ( mtx );
+	
+	return proj;
 }
 
 //----------------------------------------------------------------//
