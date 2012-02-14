@@ -148,12 +148,14 @@
 		fi
 	done
 
-	fr 	build/$package_path/MoaiView.java	@RUN_INIT_DIR@ 	"$init_dir"
+	run_command="\"$init_dir/init.lua\""
 	
 	# create run commands for the host
 	for file in "${run[@]}"; do
-		run_command=`echo -e $run_command"runScript\(\""$file"\"\)\;"`
+		run_command="$run_command, \"$file\""
 	done
+	
+	run_command="runScripts ( new String [] { $run_command } );"
 	
 	fr 	build/$package_path/MoaiView.java	@RUN_COMMAND@ 	"$run_command"
 
