@@ -50,30 +50,30 @@
 	# create assets directory
 	mkdir -p build/assets
 
-	# create libs directory
+	# create libs directory and copy the libmoai libraries
 	mkdir -p build/libs
-	
-	# create res directory (and subdirectories)
+	cp -fR	host-source/project/libs/*	build/libs
+
+	# create res directory and copy all resources
 	mkdir -p build/res
+	cp -fR	host-source/project/res/*	build/res
+	
+	# create res subdirectories that may be missing
 	mkdir -p build/res/drawable-hdpi
 	mkdir -p build/res/drawable-ldpi
 	mkdir -p build/res/drawable-mdpi
 	mkdir -p build/res/raw
-	mkdir -p build/res/values
 
+	# copy icon files into res
+	cp -f	$icon_ldpi		build/res/drawable-ldpi/icon.png
+	cp -f	$icon_mdpi		build/res/drawable-mdpi/icon.png
+	cp -f	$icon_hdpi		build/res/drawable-hdpi/icon.png
+	
 	# copy keystore
 	if [ "$key_store" != "" ] && [ -f $key_store ]; then
 		cp -f $key_store build/`basename $key_store`
 	fi
 		
-	# copy libmoai
-	cp -fR	host-source/project/libs/*	build/libs
-
-	# copy icon files
-	cp -f	$icon_ldpi		build/res/drawable-ldpi/icon.png
-	cp -f	$icon_mdpi		build/res/drawable-mdpi/icon.png
-	cp -f	$icon_hdpi		build/res/drawable-hdpi/icon.png
-	
 	# copy project files that do not need editing
 	cp -f 	host-source/project/.classpath 				build/.classpath
 	cp -f 	host-source/project/proguard.cfg			build/proguard.cfg
@@ -89,6 +89,9 @@
 		sed -i$backup_ext s%$2%"$3"%g $1
 		rm -f $1$backup_ext
 	}
+	
+	# replace the app name inside strings.xml
+	fr build/res/values/strings.xml	@NAME@					"$app_name"
 	
 	# copy .project file and replace text inside
 	cp -f	host-source/project/.project	build/.project 
@@ -115,10 +118,6 @@
 	# copy local.properties file and replace text inside
 	cp -f	host-source/project/local.properties	build/local.properties
 	fr build/local.properties		@SDK_ROOT@				"$android_sdk_root"
-
-	# copy local.properties file and replace text inside
-	cp -f 	host-source/project/res/values/strings.xml	build/res/values/strings.xml
-	fr build/res/values/strings.xml	@NAME@					"$app_name"
 
 	# copy all src files
 	cp -rf	host-source/project/src build/
