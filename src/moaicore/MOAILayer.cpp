@@ -14,7 +14,7 @@
 #include <moaicore/MOAIPartitionResultBuffer.h>
 #include <moaicore/MOAIPartitionResultMgr.h>
 #include <moaicore/MOAIProp.h>
-#include <moaicore/MOAITexture.h>
+#include <moaicore/MOAITextureBase.h>
 #include <moaicore/MOAITransform.h>
 
 //================================================================//
@@ -234,13 +234,13 @@ int MOAILayer::_setCpSpace ( lua_State* L ) {
 			instead of the main view.
 	
 	@in		MOAILayer self
-	@in		MOAITexture frameBuffer
+	@in		MOAIFrameBuffer frameBuffer
 	@out	nil
 */
 int MOAILayer::_setFrameBuffer ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAILayer, "UU" )
 
-	self->mFrameBuffer.Set ( *self, state.GetLuaObject < MOAITexture >( 2 ));
+	self->mFrameBuffer.Set ( *self, state.GetLuaObject < MOAIFrameBuffer >( 2 ));
 
 	return 0;
 }
@@ -666,7 +666,7 @@ void MOAILayer::GetWorldToWndMtx ( USMatrix4x4& worldToWnd ) {
 //----------------------------------------------------------------//
 bool MOAILayer::IsOffscreen () {
 
-	return this->mFrameBuffer ? this->mFrameBuffer->GetFrameBuffer () != 0 : false;
+	return ( this->mFrameBuffer == true );
 }
 
 //----------------------------------------------------------------//

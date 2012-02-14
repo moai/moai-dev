@@ -17,108 +17,108 @@ SUPPRESS_EMPTY_FILE_WARNING
 //================================================================//
 // RenderParams
 //================================================================//
-class RenderParams {
-public:
-
-	MOAIImage*	mImage;
-	int			mPenX;
-	int			mPenY;
-};
-
-//================================================================//
-// local
-//================================================================//
-
-//----------------------------------------------------------------//
-static bool		_initializeImage	( MOAIImage& image, cc8* chars, FT_Face face );
-static void		_renderSpan			( const int y, const int count, const FT_Span* const spans, void* const user );
-
-//----------------------------------------------------------------//
-static bool _initializeImage ( MOAIImage& image, cc8* chars, FT_Face face ) {
-
-	int max = 1024;
-
-	int yMin = FT_MulFix ( face->bbox.yMin, face->size->metrics.y_scale ) >> 6;
-	int yMax = FT_MulFix ( face->bbox.yMax, face->size->metrics.y_scale ) >> 6;
-	
-	int faceHeight = yMax - yMin;
-	int yStep = faceHeight + 1;
-
-	int height = 1;
-	while ( height < faceHeight ) {
-		height = height << 1;
-	}
-	int width = height;
-
-	int x = 0;
-	int y = yStep;
-
-	for ( u32 i = 0; chars [ i ]; ++i ) {
-		
-		char c = chars [ i ];
-		
-		u32 index = FT_Get_Char_Index ( face, c );
-		FT_Load_Glyph ( face, index, FT_LOAD_NO_BITMAP );
-		
-		if ( face->glyph->format == FT_GLYPH_FORMAT_OUTLINE ) {
-			
-			int glyphWidth = face->glyph->metrics.width >> 6;
-			if ( !glyphWidth ) continue;
-			
-			x += glyphWidth + 1;
-			if ( x > width ) {
-				
-				// try to embiggen width
-				if ( width < max ) {
-					width = width << 1;
-				}
-				else {
-					
-					// new row
-					x = glyphWidth;
-					y += yStep;
-					
-					if ( y > height ) {
-						height = height << 1;
-						if ( height >= max )
-							return false;
-							
-					}
-				}
-			}
-		}
-	}
-	
-	image.Init ( width, height, USColor::A_8, USPixel::TRUECOLOR );
-	image.ClearBitmap ();
-	
-	return true;
-}
-
-//----------------------------------------------------------------//
-static void _renderSpan ( const int y, const int count, const FT_Span* const spans, void* const user ) {
-
-	if ( !user ) return;
-	
-	RenderParams* render = ( RenderParams* )user;
-
-	int line = render->mPenY - y - 1;
-	int offset = render->mPenX;
-
-	for ( int i = 0; i < count; ++i ) {
-		
-		const FT_Span& span = spans [ i ];
-		
-		int x = offset + span.x;
-		int len = span.len;
-		
-		u32 alpha = ( u32 )span.coverage;
-		
-		for ( int j = 0; j < len; ++j ) {
-			render->mImage->SetPixel ( x + j, line, alpha );
-		}
-	}
-}
+//class RenderParams {
+//public:
+//
+//	MOAIImage*	mImage;
+//	int			mPenX;
+//	int			mPenY;
+//};
+//
+////================================================================//
+//// local
+////================================================================//
+//
+////----------------------------------------------------------------//
+//static bool		_initializeImage	( MOAIImage& image, cc8* chars, FT_Face face );
+//static void		_renderSpan			( const int y, const int count, const FT_Span* const spans, void* const user );
+//
+////----------------------------------------------------------------//
+//static bool _initializeImage ( MOAIImage& image, cc8* chars, FT_Face face ) {
+//
+//	int max = 1024;
+//
+//	int yMin = FT_MulFix ( face->bbox.yMin, face->size->metrics.y_scale ) >> 6;
+//	int yMax = FT_MulFix ( face->bbox.yMax, face->size->metrics.y_scale ) >> 6;
+//	
+//	int faceHeight = yMax - yMin;
+//	int yStep = faceHeight + 1;
+//
+//	int height = 1;
+//	while ( height < faceHeight ) {
+//		height = height << 1;
+//	}
+//	int width = height;
+//
+//	int x = 0;
+//	int y = yStep;
+//
+//	for ( u32 i = 0; chars [ i ]; ++i ) {
+//		
+//		char c = chars [ i ];
+//		
+//		u32 index = FT_Get_Char_Index ( face, c );
+//		FT_Load_Glyph ( face, index, FT_LOAD_NO_BITMAP );
+//		
+//		if ( face->glyph->format == FT_GLYPH_FORMAT_OUTLINE ) {
+//			
+//			int glyphWidth = face->glyph->metrics.width >> 6;
+//			if ( !glyphWidth ) continue;
+//			
+//			x += glyphWidth + 1;
+//			if ( x > width ) {
+//				
+//				// try to embiggen width
+//				if ( width < max ) {
+//					width = width << 1;
+//				}
+//				else {
+//					
+//					// new row
+//					x = glyphWidth;
+//					y += yStep;
+//					
+//					if ( y > height ) {
+//						height = height << 1;
+//						if ( height >= max )
+//							return false;
+//							
+//					}
+//				}
+//			}
+//		}
+//	}
+//	
+//	image.Init ( width, height, USColor::A_8, USPixel::TRUECOLOR );
+//	image.ClearBitmap ();
+//	
+//	return true;
+//}
+//
+////----------------------------------------------------------------//
+//static void _renderSpan ( const int y, const int count, const FT_Span* const spans, void* const user ) {
+//
+//	if ( !user ) return;
+//	
+//	RenderParams* render = ( RenderParams* )user;
+//
+//	int line = render->mPenY - y - 1;
+//	int offset = render->mPenX;
+//
+//	for ( int i = 0; i < count; ++i ) {
+//		
+//		const FT_Span& span = spans [ i ];
+//		
+//		int x = offset + span.x;
+//		int len = span.len;
+//		
+//		u32 alpha = ( u32 )span.coverage;
+//		
+//		for ( int j = 0; j < len; ++j ) {
+//			render->mImage->SetPixel ( x + j, line, alpha );
+//		}
+//	}
+//}
 
 //================================================================//
 // MOAIFreetypeFontRipper
@@ -126,6 +126,12 @@ static void _renderSpan ( const int y, const int count, const FT_Span* const spa
 
 //----------------------------------------------------------------//
 void MOAIFreetypeFontRipper::RipFromTTF ( cc8* filename, MOAIFont& font, MOAIImage& image, cc8* chars, float points, u32 dpi ) {
+	UNUSED ( filename );
+	UNUSED ( font );
+	UNUSED ( image );
+	UNUSED ( chars );
+	UNUSED ( points );
+	UNUSED ( dpi );
 
 	//USLeanArray < char > validChars;
 	//validChars.Init ( strlen ( chars ) + 1 );

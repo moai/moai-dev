@@ -8,7 +8,7 @@
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIParticleState.h>
 #include <moaicore/MOAIParticleSystem.h>
-#include <moaicore/MOAITexture.h>
+#include <moaicore/MOAITextureBase.h>
 
 class MOAIDataBuffer;
 

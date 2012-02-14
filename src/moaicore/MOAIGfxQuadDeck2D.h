@@ -8,7 +8,7 @@
 #include <moaicore/MOAILua.h>
 #include <moaicore/MOAIQuadBrush.h>
 
-class MOAITexture;
+class MOAITextureBase;
 
 //================================================================//
 // MOAIGfxQuadDeck2D

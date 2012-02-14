@@ -53,7 +53,7 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	static MOAIPvrHeader* GetHeader ( void* data, size_t size ) {
+	static MOAIPvrHeader* GetHeader ( const void* data, size_t size ) {
 	
 		if ( data && ( size >= HEADER_SIZE )) {
 			MOAIPvrHeader* header = ( MOAIPvrHeader* )data;

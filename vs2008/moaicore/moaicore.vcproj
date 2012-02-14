@@ -476,14 +476,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAIFrameBuffer.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIFrameBuffer.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\moaicore\MOAIGfxDevice.cpp"
 				>
 			</File>
@@ -549,14 +541,6 @@
 			</File>
 			<File
 				RelativePath="..\..\src\moaicore\MOAIShaderMgr.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAITexture.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAITexture.h"
 				>
 			</File>
 			<File
@@ -1729,6 +1713,42 @@
 			</File>
 			<File
 				RelativePath="..\..\src\moaicore\MOAISpanList.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="texture"
+			>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIFrameBuffer.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIFrameBuffer.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIImageTexture.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIImageTexture.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAITexture.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAITexture.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAITextureBase.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAITextureBase.h"
 				>
 			</File>
 		</Filter>

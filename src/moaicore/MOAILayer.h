@@ -13,7 +13,6 @@ class MOAIBox2DWorld;
 class MOAICamera;
 class MOAICpSpace;
 class MOAIFrameBuffer;
-class MOAITexture;
 
 //================================================================//
 // MOAILayer
@@ -38,7 +37,7 @@ private:
 	MOAILuaSharedPtr < MOAICamera >			mCamera;
 	MOAILuaSharedPtr < MOAIViewport >		mViewport;
 	MOAILuaSharedPtr < MOAIPartition >		mPartition;
-	MOAILuaSharedPtr < MOAITexture >		mFrameBuffer;
+	MOAILuaSharedPtr < MOAIFrameBuffer >	mFrameBuffer;
 
 	#if USE_CHIPMUNK
 		MOAILuaSharedPtr < MOAICpSpace >	mCpSpace;

@@ -8,7 +8,7 @@
 #include <moaicore/MOAILua.h>
 
 class MOAIIndexBuffer;
-class MOAITexture;
+class MOAITextureBase;
 class MOAIVertexBuffer;
 
 //================================================================//

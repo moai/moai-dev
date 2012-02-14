@@ -1,63 +1,49 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAITEXTURE_H
-#define	MOAITEXTURE_H
+#ifndef	MOAIIMAGETEXTURE_H
+#define	MOAIIMAGETEXTURE_H
 
 #include <moaicore/MOAIImage.h>
 #include <moaicore/MOAITextureBase.h>
 
-class MOAIDataBuffer;
-
 //================================================================//
-// MOAITexture
+// MOAIImageTexture
 //================================================================//
-/**	@name	MOAITexture
+/**	@name	MOAIImageTexture
 	@text	Texture class.
 */
-class MOAITexture :
-	public MOAITextureBase {
+class MOAIImageTexture :
+	public MOAITextureBase,
+	public MOAIImage {
 private:
 
-	// for loading from file
-	STLString			mFilename;
-	u32					mTransform;
-	
-	// for loading from image
-	MOAIImage			mImage;
-	
-	// for loading compressed data
-	void*				mData;
-	size_t				mDataSize;
-	
-	// flag to trigger load
-	bool				mReload;
+	enum {
+		VALID,
+		INVALID,
+		INVALID_REGION,
+	};
+
+	u32			mStatus;
+	USRect		mRegion;
 
 	//----------------------------------------------------------------//
-	static int			_load					( lua_State* L );
+	static int			_invalidate				( lua_State* L );
 
 	//----------------------------------------------------------------//
 	bool				IsRenewable				();
 	void				OnClear					();
 	void				OnLoad					();
-	void				OnRenew					();
 
 public:
 	
-	DECL_LUA_FACTORY ( MOAITexture )
+	DECL_LUA_FACTORY ( MOAIImageTexture )
 	
 	static const u32 DEFAULT_TRANSFORM = MOAIImageTransform::TRUECOLOR | MOAIImageTransform::PREMULTIPLY_ALPHA;
 	
 	//----------------------------------------------------------------//
-	static MOAIGfxState*	AffirmTexture			( MOAILuaState& state, int idx );
-	
-	void					Init					( MOAIImage& image, cc8* debugname = 0 );
-	void					Init					( cc8* filename, u32 transform = DEFAULT_TRANSFORM );
-	void					Init					( MOAIDataBuffer& data, u32 transform = DEFAULT_TRANSFORM, cc8* debugname = 0 );
-	void					Init					( const void* data, u32 size, u32 transform = DEFAULT_TRANSFORM, cc8* debugname = 0 );
-	
-							MOAITexture				();
-							~MOAITexture			();
+							MOAIImageTexture		();
+							~MOAIImageTexture		();
 	void					RegisterLuaClass		( MOAILuaState& state );
 	void					RegisterLuaFuncs		( MOAILuaState& state );
 	void					SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );

@@ -10,7 +10,7 @@
 #include <moaicore/MOAINodeMgr.h>
 #include <moaicore/MOAIProp.h>
 #include <moaicore/MOAISim.h>
-#include <moaicore/MOAITexture.h>
+#include <moaicore/MOAITextureBase.h>
 #include <moaicore/MOAIUrlMgr.h>
 #include <aku/AKU.h>
 
@@ -833,17 +833,20 @@ void MOAISim::Render () {
 
 	this->mRenderCounter++;
 
-	MOAIGfxDevice::Get ().BeginDrawing ();
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+
+	gfxDevice.BeginDrawing ();
 
 	RenderPassIt passIt = this->mRenderPasses.Head ();
 	for ( ; passIt; passIt = passIt->Next ()) {
 		MOAIProp* renderPass = passIt->Data ();
 		
-		MOAIGfxDevice::Get ().BeginLayer ();
+		gfxDevice.BeginLayer ();
 		renderPass->Draw ( MOAIProp::NO_SUBPRIM_ID, true );
 	}
 	
-	MOAIGfxDevice::Get ().Flush ();
+	gfxDevice.Flush ();
+	gfxDevice.ProcessDeleters ();
 }
 
 //----------------------------------------------------------------//

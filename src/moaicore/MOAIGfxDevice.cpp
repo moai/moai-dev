@@ -11,12 +11,47 @@
 #include <moaicore/MOAIShader.h>
 #include <moaicore/MOAIShaderMgr.h>
 #include <moaicore/MOAISim.h>
-#include <moaicore/MOAITexture.h>
+#include <moaicore/MOAITextureBase.h>
 #include <moaicore/MOAIVertexFormat.h>
 #include <moaicore/MOAIVertexFormatMgr.h>
 #include <moaicore/MOAIViewport.h>
 
 #define REMAP_EXTENSION_PTR(target, ext) target = target ? target : ext;
+
+//================================================================//
+// MOAIGfxDeleter
+//================================================================//
+	
+//----------------------------------------------------------------//
+void MOAIGfxDeleter::Delete () {
+
+	switch ( this->mType ) {
+		
+		case DELETE_BUFFER:
+			glDeleteBuffers ( 1, &this->mResourceID );
+			break;
+		
+		case DELETE_FRAMEBUFFER:
+			glDeleteFramebuffers ( 1, &this->mResourceID );
+			break;
+		
+		case DELETE_PROGRAM:
+			glDeleteProgram ( this->mResourceID );
+			break;
+		
+		case DELETE_SHADER:
+			glDeleteShader ( this->mResourceID );
+			break;
+		
+		case DELETE_TEXTURE:
+			glDeleteTextures ( 1, &this->mResourceID );
+			break;
+		
+		case DELETE_RENDERBUFFER:
+			glDeleteRenderbuffers ( 1, &this->mResourceID );
+			break;
+	}
+}
 
 //================================================================//
 // local
@@ -277,6 +312,8 @@ void MOAIGfxDevice::BeginPrim ( u32 primType ) {
 
 //----------------------------------------------------------------//
 void MOAIGfxDevice::Clear () {
+
+	this->ProcessDeleters ();
 
 	if ( this->mBuffer ) {
 		free ( this->mBuffer );
@@ -724,6 +761,27 @@ MOAIGfxDevice::~MOAIGfxDevice () {
 }
 
 //----------------------------------------------------------------//
+void MOAIGfxDevice::ProcessDeleters () {
+
+	u32 top = this->mDeleterStack.GetTop ();
+	for ( u32 i = 0; i < top; ++i ) {
+		MOAIGfxDeleter& deleter = this->mDeleterStack [ i ];
+		deleter.Delete ();
+	}
+	this->mDeleterStack.Reset ();
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDevice::PushDeleter ( u32 type, GLuint id ) {
+
+	MOAIGfxDeleter deleter;
+	deleter.mType = type;
+	deleter.mResourceID = id;
+	
+	this->mDeleterStack.Push ( deleter );
+}
+
+//----------------------------------------------------------------//
 void MOAIGfxDevice::RegisterLuaClass ( MOAILuaState& state ) {
 
 	state.SetField ( -1, "EVENT_RESIZE", ( u32 )EVENT_RESIZE );
@@ -972,13 +1030,12 @@ void MOAIGfxDevice::SetDepthMask ( bool depthMask ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::SetFrameBuffer ( MOAITexture* texture ) {
+void MOAIGfxDevice::SetFrameBuffer ( MOAIFrameBuffer* frameBuffer ) {
 
 	this->Flush ();
 
-	MOAIFrameBuffer* frameBuffer = texture ? texture->GetFrameBuffer () : 0;
 	if ( frameBuffer ) {
-		frameBuffer->Bind ();
+		frameBuffer->BindAsFrameBuffer ();
 	}
 	else {
 		if ( this->mIsFramebufferSupported ) {
@@ -1174,7 +1231,7 @@ bool MOAIGfxDevice::SetTexture () {
 }
 
 //----------------------------------------------------------------//
-bool MOAIGfxDevice::SetTexture ( MOAITexture* texture ) {
+bool MOAIGfxDevice::SetTexture ( MOAITextureBase* texture ) {
 	
 	if ( !texture ) {
 		return this->SetTexture ();

@@ -14,9 +14,31 @@ class MOAIGfxResource;
 class MOAIGfxState;
 class MOAIMultiTexture;
 class MOAIShader;
-class MOAITexture;
+class MOAITextureBase;
 class MOAIVertexFormat;
 class MOAIViewport;
+
+//================================================================//
+// MOAIGfxDeleter
+//================================================================//
+class MOAIGfxDeleter {
+public:
+
+	enum {
+		DELETE_BUFFER,
+		DELETE_FRAMEBUFFER,
+		DELETE_PROGRAM,
+		DELETE_SHADER,
+		DELETE_TEXTURE,
+		DELETE_RENDERBUFFER,
+	};
+
+	GLuint	mResourceID;
+	u32		mType;
+	
+	//----------------------------------------------------------------//
+	void		Delete			();
+};
 
 //================================================================//
 // MOAIGfxDevice
@@ -105,7 +127,7 @@ private:
 	MOAIShader*		mShader;	
 	u32				mSize;
 	
-	USLeanArray < MOAITexture* > mTextureUnits;
+	USLeanArray < MOAITextureBase* > mTextureUnits;
 	u32				mActiveTextures;
 	size_t			mTextureMemoryUsage;
 	u32				mMaxTextureSize;
@@ -126,6 +148,8 @@ private:
 
 	USFrustum		mViewVolume;
 	
+	USLeanStack < MOAIGfxDeleter, 32 > mDeleterStack;
+	
 	//----------------------------------------------------------------//
 	static int				_getMaxTextureUnits		( lua_State* L );
 	static int				_isProgrammable			( lua_State* L );
@@ -142,8 +166,6 @@ private:
 	void					GpuMultMatrix			( const USMatrix4x4& mtx ) const;
 	void					InsertGfxResource		( MOAIGfxResource& resource );
 	void					RemoveGfxResource		( MOAIGfxResource& resource );
-	void					ReportTextureAlloc		( cc8* name, size_t size );
-	void					ReportTextureFree		( cc8* name, size_t size );
 	void					UpdateCpuVertexMtx		();
 	void					UpdateGpuVertexMtx		();
 	void					UpdateUVMtx				();
@@ -152,7 +174,7 @@ private:
 public:
 	
 	friend class MOAIGfxResource;
-	friend class MOAITexture;
+	friend class MOAITextureBase;
 	
 	DECL_LUA_SINGLETON ( MOAIGfxDevice )
 	
@@ -197,9 +219,15 @@ public:
 							MOAIGfxDevice			();
 							~MOAIGfxDevice			();
 	
+	void					ProcessDeleters			();
+	void					PushDeleter				( u32 type, GLuint id );
+	
 	void					RegisterLuaClass		( MOAILuaState& state );
 	void					ReleaseResources		();
 	void					RenewResources			();
+	
+	void					ReportTextureAlloc		( cc8* name, size_t size );
+	void					ReportTextureFree		( cc8* name, size_t size );
 	
 	void					Reserve					( u32 size );
 	void					ResetState				();
@@ -220,7 +248,7 @@ public:
 	void					SetDepthMask			( bool depthMask );
 	
 	void					SetDeviceScale			( float scale );
-	void					SetFrameBuffer			( MOAITexture* texture );
+	void					SetFrameBuffer			( MOAIFrameBuffer* frameBuffer );
 	bool					SetGfxState				( MOAIGfxState* gfxState );
 	void					SetPenColor				( u32 color );
 	void					SetPenColor				( const USColorVec& colorVec );
@@ -235,7 +263,7 @@ public:
 	void					SetShaderPreset			( u32 preset );
 	void					SetSize					( u32 width, u32 height );
 	bool					SetTexture				();
-	bool					SetTexture				( MOAITexture* texture );
+	bool					SetTexture				( MOAITextureBase* texture );
 	bool					SetTexture				( MOAIMultiTexture* multi );
 	
 	void					SetUVMtxMode			( u32 input, u32 output );

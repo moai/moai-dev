@@ -11,7 +11,7 @@
 #include <moaicore/MOAIGlyphPage.h>
 #include <moaicore/MOAIImage.h>
 #include <moaicore/MOAILogMessages.h>
-#include <moaicore/MOAITexture.h>
+#include <moaicore/MOAITextureBase.h>
 
 #include <contrib/utf8.h>
 #include <ft2build.h>

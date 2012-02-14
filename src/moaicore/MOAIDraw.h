@@ -6,7 +6,7 @@
 
 #include <moaicore/MOAILua.h>
 
-class MOAITexture;
+class MOAITextureBase;
 
 //================================================================//
 // MOAIDraw

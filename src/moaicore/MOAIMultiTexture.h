@@ -7,7 +7,7 @@
 #include <moaicore/MOAIGfxResource.h>
 #include <moaicore/MOAILua.h>
 
-class MOAITexture;
+class MOAITextureBase;
 
 //================================================================//
 // MOAIMultiTexture
@@ -22,7 +22,7 @@ private:
 
 	friend class MOAIGfxDevice;
 
-	USLeanArray < MOAITexture* > mTextures;
+	USLeanArray < MOAITextureBase* > mTextures;
 
 	//----------------------------------------------------------------//
 	static int		_reserve				( lua_State* L );
@@ -44,7 +44,7 @@ public:
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 	void			Reserve					( u32 total );
-	void			SetTexture				( u32 idx, MOAITexture* texture );
+	void			SetTexture				( u32 idx, MOAITextureBase* texture );
 };
 
 #endif

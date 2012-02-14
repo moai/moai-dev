@@ -7,7 +7,7 @@
 #include <moaicore/MOAIDeck.h>
 #include <moaicore/MOAILua.h>
 
-class MOAITexture;
+class MOAITextureBase;
 
 //================================================================//
 // MOAIStretchPatchSpan

@@ -7,7 +7,7 @@
 #include <moaicore/MOAIDeck2D.h>
 #include <moaicore/MOAILua.h>
 
-class MOAITexture;
+class MOAITextureBase;
 
 //================================================================//
 // MOAITileDeck2D

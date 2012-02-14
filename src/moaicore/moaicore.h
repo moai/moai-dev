@@ -57,6 +57,7 @@
 #include <moaicore/MOAIGridSpace.h>
 #include <moaicore/MOAIHttpTask.h>
 #include <moaicore/MOAIImage.h>
+#include <moaicore/MOAIImageTexture.h>
 #include <moaicore/MOAIIndexBuffer.h>
 #include <moaicore/MOAIInputDevice.h>
 #include <moaicore/MOAIInputMgr.h>
@@ -117,6 +118,7 @@
 #include <moaicore/MOAITextStyleMap.h>
 #include <moaicore/MOAITextStyleSet.h>
 #include <moaicore/MOAITexture.h>
+#include <moaicore/MOAITextureBase.h>
 #include <moaicore/MOAITileDeck2D.h>
 #include <moaicore/MOAITileFlags.h>
 #include <moaicore/MOAITimer.h>

@@ -12,6 +12,7 @@
 #include <moaicore/MOAIShaderMgr.h>
 #include <moaicore/MOAISurfaceSampler2D.h>
 #include <moaicore/MOAITexture.h>
+#include <moaicore/MOAITextureBase.h>
 #include <moaicore/MOAITransform.h>
 
 //================================================================//
@@ -40,7 +41,7 @@ int MOAIDeck::_setShader ( lua_State* L ) {
 	
 	@in		MOAIDeck self
 	@in		variant texture		A MOAITexture, MOAIMultiTexture, MOAIDataBuffer or a path to a texture file
-	@opt	number transform	Any bitwise combination of MOAITexture.QUANTIZE, MOAITexture.TRUECOLOR, MOAITexture.PREMULTIPLY_ALPHA
+	@opt	number transform	Any bitwise combination of MOAITextureBase.QUANTIZE, MOAITextureBase.TRUECOLOR, MOAITextureBase.PREMULTIPLY_ALPHA
 	@out	MOAIGfxState texture
 */
 int MOAIDeck::_setTexture ( lua_State* L ) {

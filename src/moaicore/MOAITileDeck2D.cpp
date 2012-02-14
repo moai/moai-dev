@@ -8,7 +8,7 @@
 #include <moaicore/MOAIProp.h>
 #include <moaicore/MOAIQuadBrush.h>
 #include <moaicore/MOAITileDeck2D.h>
-#include <moaicore/MOAITexture.h>
+#include <moaicore/MOAITextureBase.h>
 #include <moaicore/MOAITransformBase.h>
 
 //================================================================//
@@ -160,7 +160,7 @@ void MOAITileDeck2D::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serial
 
 	MOAIGridSpace::SerializeIn ( state, serializer );
 	
-	this->mTexture.Set ( *this, serializer.MemberIDToObject < MOAITexture >( state.GetField < uintptr >( -1, "mTexture", 0 )));
+	this->mTexture.Set ( *this, serializer.MemberIDToObject < MOAITextureBase >( state.GetField < uintptr >( -1, "mTexture", 0 )));
 }
 
 //----------------------------------------------------------------//

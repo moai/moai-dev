@@ -4,13 +4,14 @@
 #include "pch.h"
 #include <moaicore/MOAIGfxDevice.h>
 #include <moaicore/MOAIMultiTexture.h>
-#include <moaicore/MOAITexture.h>
+#include <moaicore/MOAITextureBase.h>
 
 //================================================================//
 // local
 //================================================================//
 
 //----------------------------------------------------------------//
+// TODO: doxygen
 int MOAIMultiTexture::_reserve ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIMultiTexture, "U" )
 	
@@ -22,11 +23,12 @@ int MOAIMultiTexture::_reserve ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
 int MOAIMultiTexture::_setTexture ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIMultiTexture, "UN" )
 	
-	u32 idx					= state.GetValue < u32 >( 2, 1 ) - 1;
-	MOAITexture* texture	= state.GetLuaObject < MOAITexture >( 3 );
+	u32 idx						= state.GetValue < u32 >( 2, 1 ) - 1;
+	MOAITextureBase* texture	= state.GetLuaObject < MOAITextureBase >( 3 );
 	
 	self->SetTexture ( idx, texture );
 	
@@ -95,7 +97,7 @@ void MOAIMultiTexture::Reserve ( u32 total ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIMultiTexture::SetTexture ( u32 idx, MOAITexture* texture ) {
+void MOAIMultiTexture::SetTexture ( u32 idx, MOAITextureBase* texture ) {
 
 	if ( idx >= this->mTextures.Size ()) return;
 	if ( this->mTextures [ idx ] == texture ) return;

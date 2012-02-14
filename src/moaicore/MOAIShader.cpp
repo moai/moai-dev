@@ -613,25 +613,6 @@ void MOAIShader::DeclareUniform ( u32 idx, cc8* name, u32 type, int value ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIShader::DeleteShaders () {
-
-	if ( this->mVertexShader ) {
-		glDeleteShader ( this->mVertexShader );
-		this->mVertexShader = 0;
-	}
-	
-	if ( this->mFragmentShader ) {
-		glDeleteShader ( this->mFragmentShader );
-		this->mFragmentShader = 0;
-	}
-	
-	if ( this->mProgram ) {
-		glDeleteProgram ( this->mProgram );
-		this->mProgram = 0;
-	}
-}
-
-//----------------------------------------------------------------//
 bool MOAIShader::IsRenewable () {
 
 	return true;
@@ -755,24 +736,20 @@ void MOAIShader::OnRenew () {
 //----------------------------------------------------------------//
 void MOAIShader::OnUnload () {
 
-	#ifdef MOAI_OS_NACL
-		g_blockOnMainThreadShaderUnload = true;
-		
-		if ( g_core->IsMainThread () ) {
-			this->DeleteShaders ();
-			g_blockOnMainThreadShaderUnload = false;
-		}
-		else {
-			pp::CompletionCallback cc ( NaClUnLoadShader, this );
-			g_core->CallOnMainThread ( 0, cc , 0 );
-		}
-
-		while ( g_blockOnMainThreadShaderUnload ) {
-			usleep ( 100 );
-		}
-	#else
-		this->DeleteShaders ();
-	#endif
+	if ( this->mVertexShader ) {
+		MOAIGfxDevice::Get ().PushDeleter ( MOAIGfxDeleter::DELETE_SHADER, this->mVertexShader );
+		this->mVertexShader = 0;
+	}
+	
+	if ( this->mFragmentShader ) {
+		MOAIGfxDevice::Get ().PushDeleter ( MOAIGfxDeleter::DELETE_SHADER, this->mFragmentShader );
+		this->mFragmentShader = 0;
+	}
+	
+	if ( this->mProgram ) {
+		MOAIGfxDevice::Get ().PushDeleter ( MOAIGfxDeleter::DELETE_SHADER, this->mProgram );
+		this->mProgram = 0;
+	}
 }
 
 //----------------------------------------------------------------//

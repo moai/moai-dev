@@ -23,7 +23,7 @@ class MOAIPartitionLayer;
 class MOAIPartitionResultBuffer;
 class MOAIShader;
 class MOAISurfaceSampler2D;
-class MOAITexture;
+class MOAITextureBase;
 
 //================================================================//
 // MOAIProp

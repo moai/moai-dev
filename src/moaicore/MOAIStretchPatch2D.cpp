@@ -8,7 +8,7 @@
 #include <moaicore/MOAIProp.h>
 #include <moaicore/MOAIQuadBrush.h>
 #include <moaicore/MOAIStretchPatch2D.h>
-#include <moaicore/MOAITexture.h>
+#include <moaicore/MOAITextureBase.h>
 #include <moaicore/MOAITransformBase.h>
 
 //================================================================//
