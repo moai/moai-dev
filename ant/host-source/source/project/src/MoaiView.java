@@ -18,6 +18,18 @@ import android.provider.Settings.Secure;
 import android.util.Log;
 import android.view.MotionEvent;
 
+// README: Aku is a thread-unaware platform, by design. Therefore, it is important
+// for hosts in a mult-threaded environment such as Android ensure that Aku calls
+// are made on the appropriate thread. Furthermore, because some Aku callbacks
+// that occur during application run-time need to be run on the Android main (UI)
+// thread, we choose to run ALL Aku callbacks that CAN be run on the main thread 
+// on the main thread. Notable exceptions include creating and release the graphics
+// context and the call to render the scene. Otherwise, all threading decisions 
+// regarding Aku in this, and the activity class, are precisely determined in order
+// to guarantee reliable execution. WARNING: Moving ANY call to Aku MAY result in
+// its execution on a different thread and MAY affect execution and/or result in
+// thead deadlocking.
+
 //================================================================//
 // MoaiView
 //================================================================//
@@ -149,8 +161,8 @@ public class MoaiView extends GLSurfaceView {
 			setEGLContextClientVersion ( 2 );
 		}
 		
-		// Create a handler that we can use to post to the main thread and a runnable
-		// that will handle calling AKUUpdate on the main thread.
+		// Create a handler that we can use to post to the main thread and a pseudo-
+		// periodic runnable that will handle calling AKUUpdate on the main thread.
 		mHandler = new Handler ( Looper.getMainLooper ());
 		mUpdateRunnable = new Runnable () {
 

@@ -83,6 +83,8 @@ enum INPUT_SENSOR {
 	TOTAL,
 };
 
+// README: See README in MoaiView.java regarding thread safety in Java and Aku.
+
 //================================================================//
 // MoaiActivity
 //================================================================//
@@ -114,9 +116,9 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 	protected static native void 		AKUNotifyPurchaseResponseReceived	( String productId, int responseCode ); // M
 	protected static native void 		AKUNotifyPurchaseStateChanged		( String productId, int purchaseState, String orderId, String notificationId, String developerPayload ); // M
 	protected static native void 		AKUNotifyRestoreResponseReceived	( int responseCode ); // M
-	protected static native void		AKUNotifyVideoAdReady				(); // ?
-	protected static native void		AKUNotifyVideoAdError				( int statusCode ); // ?
-	protected static native void		AKUNotifyVideoAdClose				(); // ?
+	protected static native void		AKUNotifyVideoAdReady				(); // ? TBD
+	protected static native void		AKUNotifyVideoAdError				( int statusCode ); // ? TBD
+	protected static native void		AKUNotifyVideoAdClose				(); // ? TBD
 	protected static native void 		AKUSetConnectionType 				( long connectionType ); // M	
 	protected static native void 		AKUSetDocumentDirectory 			( String path ); // M
 	protected static native void 		AKUSetWorkingDirectory 				( String path ); // M
