@@ -710,7 +710,7 @@ void MOAITexture::Init ( MOAIImage& image, cc8* debugname ) {
 	
 	this->mTransform = 0;
 	
-	this->OnLoad ();
+	this->mLoader->Load ();
 }
 
 //----------------------------------------------------------------//
@@ -730,7 +730,7 @@ void MOAITexture::Init ( cc8* filename, u32 transform ) {
 	
 	this->mTransform = transform;
 	
-	this->OnLoad ();
+	this->mLoader->Load ();
 }
 
 //----------------------------------------------------------------//
@@ -759,7 +759,7 @@ void MOAITexture::Init ( const void* data, u32 size, u32 transform, cc8* debugna
 	
 	this->mTransform = transform;
 	
-	this->OnLoad ();
+	this->mLoader->Load ();
 }
 
 //----------------------------------------------------------------//
@@ -777,7 +777,7 @@ void MOAITexture::InitFrameBuffer ( u32 width, u32 height, GLenum colorFormat, G
 		this->mFrameBuffer->Init ( width, height, colorFormat, depthFormat, stencilFormat );
 		this->mIsRenewable = true;
 		
-		this->OnLoad ();
+		this->mLoader->Load ();
 	}
 	else {
 		MOAILog ( 0, MOAILogMessages::MOAITexture_NoFramebuffer );
