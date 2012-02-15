@@ -294,8 +294,8 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 	}
 
 	//----------------------------------------------------------------//
-	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUAppDidStartSession ( JNIEnv* env, jclass obj ) {
-		MOAIApp::Get ().DidStartSession ();
+	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUAppDidStartSession ( JNIEnv* env, jclass obj, jboolean resumed ) {
+		MOAIApp::Get ().DidStartSession ( resumed );
 	}
 
 	//----------------------------------------------------------------//

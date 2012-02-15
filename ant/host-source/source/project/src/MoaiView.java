@@ -53,7 +53,7 @@ public class MoaiView extends GLSurfaceView {
 	// it executes on. 
 	protected static native int	 AKUCreateContext 				(); // M
 	protected static native void AKUDetectGfxContext 			(); // R
-	protected static native void AKUAppDidStartSession			(); // M
+	protected static native void AKUAppDidStartSession			( boolean resumed ); // M
 	protected static native void AKUEnqueueTouchEvent 			( int deviceId, int sensorId, int touchId, boolean down, int x, int y, int tapCount ); // M
 	protected static native void AKUExtLoadLuacrypto			(); // M
 	protected static native void AKUExtLoadLuacurl				(); // M
@@ -306,7 +306,7 @@ public class MoaiView extends GLSurfaceView {
 						@RUN_COMMAND@
 
 						// Sessions are ended in MoaiActivity.
-						AKUAppDidStartSession ();
+						AKUAppDidStartSession ( false );
 					}
 				});
 			} else {
@@ -316,7 +316,7 @@ public class MoaiView extends GLSurfaceView {
 					public void run () {
 				
 						// Sessions are ended in MoaiActivity.
-						AKUAppDidStartSession ();
+						AKUAppDidStartSession ( true );
 					}
 				});
 			}

@@ -130,7 +130,7 @@ public:
 	void		DidRegisterForRemoteNotificationsWithDeviceToken			( NSData* deviceToken );
 	void		DidResolveHostName											( NSString* hostname, cc8* ipAddress );
 	void		DidSendTweet												( bool success );
-	void		DidStartSession												();
+	void		DidStartSession												( bool resumed );
 	void		InitStoreKit												();
 				MOAIApp														();
 				~MOAIApp													();

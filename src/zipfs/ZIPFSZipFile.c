@@ -356,6 +356,8 @@ ZIPFSZipFileEntry* ZIPFSZipFile_FindEntry ( ZIPFSZipFile* self, char const* file
 	ZIPFSZipFileEntry* entry;
 	int i;
 	
+	if ( !filename ) return 0;
+	
 	i = strlen ( filename ) - 1;
 	if ( filename [ i ] == '/' ) return 0;
 	

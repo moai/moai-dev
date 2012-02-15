@@ -26,7 +26,7 @@ void			AKUAppDidFailToRegisterForRemoteNotificationsWithError	( NSError* error )
 void			AKUAppDidReceiveLocalNotification						( UILocalNotification* notification );
 void			AKUAppDidReceiveRemoteNotification						( NSDictionary* userInfo );
 void			AKUAppDidRegisterForRemoteNotificationsWithDeviceToken	( NSData* deviceToken );
-void			AKUAppDidStartSession									();
+void			AKUAppDidStartSession									( bool resumed );
 void			AKUAppOpenFromURL										( NSURL* url );
 void			AKUAppWillEndSession									();
 const char*		AKUGetGUID												();
