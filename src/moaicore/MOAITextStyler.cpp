@@ -366,7 +366,9 @@ void MOAITextStyler::PushStyle ( MOAITextStyle* style ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITextStyler::Style ( MOAITextStyleMap& layout, MOAITextStyleSet& styleSet, cc8* str ) {
+void MOAITextStyler::Style ( MOAITextStyleMap& styleMap, MOAITextStyleSet& styleSet, cc8* str ) {
+	
+	styleMap.Reset ();
 	
 	this->mStyleStack = ( MOAITextStyle** )alloca ( STYLE_STACK_SIZE * sizeof ( MOAITextStyle* ));
 	this->mStyleStackTop = 0;
@@ -377,7 +379,7 @@ void MOAITextStyler::Style ( MOAITextStyleMap& layout, MOAITextStyleSet& styleSe
 	
 	this->mIdx = 0;
 	this->mPrev = 0;
-	this->mStyleMap = &layout;
+	this->mStyleMap = &styleMap;
 	this->mStr = str;
 	this->mStyleSet = &styleSet;
 	

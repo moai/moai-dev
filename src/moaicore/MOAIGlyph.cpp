@@ -3,6 +3,8 @@
 
 #include "pch.h"
 #include <moaicore/MOAIGlyph.h>
+#include <moaicore/MOAIGlyphPage.h>
+#include <moaicore/MOAIImageTexture.h>
 #include <moaicore/MOAIQuadBrush.h>
 
 //================================================================//
@@ -10,25 +12,41 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGlyph::Draw ( float points, float x, float y ) const {
+void MOAIGlyph::Draw ( float x, float y ) const {
 
-	//if ( this->mWidth ) {
+	MOAIGlyphPage* page = this->mPage;
 
-	//	MOAIQuadBrush glQuad;
-	//	
-	//	x += ( this->mBearingX * points );
-	//	y += ( this->mYOff * points ); 
+	if ( this->mWidth && page ) {
+		
+		MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+		gfxDevice.SetTexture ( page->mImageTexture );
+		
+		MOAIQuadBrush glQuad;
+		
+		x += ( this->mBearingX );
+		y += ( this->mYOff ); 
 
-	//	glQuad.SetVerts (
-	//		x,
-	//		y,
-	//		x + ( this->mWidth * points ),
-	//		y + ( this->mHeight * points )
-	//	);
-
-	//	glQuad.SetUVs ( this->mUVRect );
-	//	glQuad.Draw ();
-	//}
+		glQuad.SetVerts (
+			x,
+			y,
+			x + this->mWidth,
+			y + this->mHeight
+		);
+		
+		float uScale = this->mPage->mUScale;
+		float vScale = this->mPage->mVScale;
+		
+		float u = this->mSrcX * uScale;
+		float v = this->mSrcY * vScale;
+		
+		glQuad.SetUVs (
+			u,
+			v,
+			u + ( this->mWidth * uScale ),
+			v + ( this->mHeight * vScale )
+		);
+		glQuad.Draw ();
+	}
 }
 
 //----------------------------------------------------------------//
@@ -72,7 +90,7 @@ USRect MOAIGlyph::GetRect ( float points, float x, float y ) const {
 //----------------------------------------------------------------//
 MOAIGlyph::MOAIGlyph () :
 	mCode ( 0xffffffff ),
-	mContents ( NONE ),
+	mStatus ( NONE ),
 	mWidth ( 0.0f ),
 	mHeight ( 0.0f ),
 	mYOff ( 0.0f ),
@@ -96,6 +114,7 @@ void MOAIGlyph::ReserveKernTable ( u32 total ) {
 
 //----------------------------------------------------------------//
 void MOAIGlyph::SerializeIn ( MOAILuaState& state ) {
+	UNUSED ( state );
 	
 	//this->mCode = state.GetField ( -1, "mCode", this->mCode );
 	//
@@ -137,6 +156,7 @@ void MOAIGlyph::SerializeIn ( MOAILuaState& state ) {
 
 //----------------------------------------------------------------//
 void MOAIGlyph::SerializeOut ( MOAILuaState& state ) {
+	UNUSED ( state );
 
 	//state.SetField ( -1, "mCode", this->mCode );
 

@@ -928,6 +928,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\moaicore\MOAITextLayout.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAITextLayout.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\moaicore\MOAITextStyle.cpp"
 				>
 			</File>

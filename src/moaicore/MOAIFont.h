@@ -28,10 +28,11 @@ private:
 	//----------------------------------------------------------------//
 	static int			_load					( lua_State* L );
 	static int			_preloadGlyphs			( lua_State* L );
+	static int			_writePages				( lua_State* L );
 
 	//----------------------------------------------------------------//
 	MOAISpan < MOAIGlyph* >*	Alloc				( MOAIGlyph& glyph );
-	void						UpdateGlyphs		( u32 target );
+	
 
 public:
 	
@@ -41,13 +42,13 @@ public:
 	void				AffirmGlyph				( float points, u32 c );
 	MOAIGlyphDeck*		GetGlyphDeck			( float points );
 	void				Init					( cc8* filename );
-	void				LoadGlyphMetrics		();
 						MOAIFont				();
 						~MOAIFont				();
 	void				RegisterLuaClass		( MOAILuaState& state );
 	void				RegisterLuaFuncs		( MOAILuaState& state );
 	void				SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
 	void				SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
+	void				UpdateGlyphs			( u32 target );
 	void				WritePages				();
 };
 

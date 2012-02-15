@@ -25,7 +25,7 @@ class MOAIGlyph {
 private:
 	
 	u32			mCode;
-	u32			mContents;
+	u32			mStatus;
 	
 	float		mWidth; // width in pixels
 	float		mHeight; // height in pixels
@@ -46,6 +46,7 @@ public:
 	friend class MOAIFont;
 	friend class MOAIGlyphDeck;
 	friend class MOAIGlyphPage;
+	friend class MOAITextLayout;
 	friend class MOAITextDesigner;
 	friend class MOAITextStyler;
 	friend class MOAITextStyleMap;
@@ -55,11 +56,11 @@ public:
 	enum {
 		NONE,
 		METRICS_ONLY,
-		MATRICS_AND_BITMAP,
+		METRICS_AND_BITMAP,
 	};
 
 	//----------------------------------------------------------------//
-	void			Draw				( float points, float x, float y ) const;
+	void			Draw				( float x, float y ) const;
 	MOAIKernVec		GetKerning			( u32 name ) const;
 	USRect			GetRect				( float points, float x, float y ) const;
 					MOAIGlyph			();

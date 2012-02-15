@@ -7,9 +7,9 @@
 #include <moaicore/MOAIAction.h>
 #include <moaicore/MOAILua.h>
 #include <moaicore/MOAIProp.h>
-#include <moaicore/MOAITextStyler.h>
+#include <moaicore/MOAITextLayout.h>
 #include <moaicore/MOAITextStyleMap.h>
-#include <moaicore/MOAITransform.h>
+#include <moaicore/MOAITextStyleSet.h>
 
 class MOAIAnimCurve;
 class MOAIFont;
@@ -50,37 +50,40 @@ private:
 	bool				mYFlip;
 	bool				mRightToLeft;
 	
-	bool				mNeedsLayout;
-	MOAITextStyleMap	mLayout;
+	MOAITextStyle*		mDefaultStyle;
+	MOAITextStyleSet	mStyleSet;
+	MOAITextStyleMap	mStyleMap;
+	MOAITextLayout		mLayout;
 	
 	USLeanArray < MOAIAnimCurve* >	mCurves;
 	
 	//----------------------------------------------------------------//
-	static int	_clearCurves			( lua_State* L );
-	static int	_getLineSize			( lua_State* L );
-	static int	_getStringBounds		( lua_State* L );
-	static int	_more					( lua_State* L );
-	static int	_nextPage				( lua_State* L );
-	static int	_revealAll				( lua_State* L );
-	static int	_reserveCurves			( lua_State* L );
-	static int	_setAlignment			( lua_State* L );
-	static int	_setCurve				( lua_State* L );
-	static int	_setFont				( lua_State* L );
-	static int	_setLineSpacing			( lua_State* L );
-	static int	_setRect				( lua_State* L );
-	static int	_setReveal				( lua_State* L );
-	static int	_setRightToLeft			( lua_State* L );
-	static int	_setSpeed				( lua_State* L );
-	static int	_setString				( lua_State* L );
-	static int	_setStringColor			( lua_State* L );
-	static int	_setTextSize			( lua_State* L );
-	static int	_setYFlip				( lua_State* L );
-	static int	_spool					( lua_State* L );
+	static int		_clearCurves			( lua_State* L );
+	static int		_getLineSize			( lua_State* L );
+	static int		_getStringBounds		( lua_State* L );
+	static int		_more					( lua_State* L );
+	static int		_nextPage				( lua_State* L );
+	static int		_revealAll				( lua_State* L );
+	static int		_reserveCurves			( lua_State* L );
+	static int		_setAlignment			( lua_State* L );
+	static int		_setCurve				( lua_State* L );
+	static int		_setFont				( lua_State* L );
+	static int		_setLineSpacing			( lua_State* L );
+	static int		_setRect				( lua_State* L );
+	static int		_setReveal				( lua_State* L );
+	static int		_setRightToLeft			( lua_State* L );
+	static int		_setSpeed				( lua_State* L );
+	static int		_setString				( lua_State* L );
+	static int		_setStringColor			( lua_State* L );
+	static int		_setTextSize			( lua_State* L );
+	static int		_setYFlip				( lua_State* L );
+	static int		_spool					( lua_State* L );
 	
 	//----------------------------------------------------------------//
-	void			Layout					();
+	void			AffirmDefaultStyle		();
 	void			OnDepNodeUpdate			();
 	void			Spool					( float step );
+	void			ScheduleLayout			();
 	
 public:
 

@@ -4,10 +4,10 @@
 #ifndef	MOAIGLYPHPAGE_H
 #define	MOAIGLYPHPAGE_H
 
-#include <moaicore/MOAIImage.h>
 #include <moaicore/MOAISpanList.h>
 
 class MOAIGlyph;
+class MOAIImageTexture;
 
 //================================================================//
 // MOAIGlyphPage
@@ -15,6 +15,7 @@ class MOAIGlyph;
 class MOAIGlyphPage {
 private:
 
+	friend class MOAIGlyph;
 	friend class MOAIFont;
 
 	typedef MOAISpanList < MOAIGlyph* > GlyphList;
@@ -25,11 +26,14 @@ private:
 
 	RowList mRows;
 
-	MOAIImage mImage;
+	MOAIImageTexture* mImageTexture;
 	
 	MOAIGlyphPage* mNext;
 
 	float mThreshold;
+
+	float mUScale;
+	float mVScale;
 
 	//----------------------------------------------------------------//
 	void			AffirmCanvas				();

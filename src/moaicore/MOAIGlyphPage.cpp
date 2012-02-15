@@ -4,6 +4,7 @@
 #include "pch.h"
 #include <moaicore/MOAIGlyph.h>
 #include <moaicore/MOAIGlyphPage.h>
+#include <moaicore/MOAIImageTexture.h>
 
 #define MAX_TEXTURE_SIZE 1024
 #define DPI 300
@@ -15,24 +16,28 @@
 //----------------------------------------------------------------//
 void MOAIGlyphPage::AffirmCanvas () {
 	
-	if ( !this->mImage.GetHeight ()) {
-		this->mImage.Init ( MAX_TEXTURE_SIZE, MAX_TEXTURE_SIZE, USColor::A_8, USPixel::TRUECOLOR );
-		this->mImage.ClearBitmap ();
+	if ( !this->mImageTexture ) {
+		
+		this->mImageTexture = new MOAIImageTexture ();
+		this->mImageTexture->Init ( MAX_TEXTURE_SIZE, this->mRows.mSize, USColor::A_8, USPixel::TRUECOLOR );
+		this->mImageTexture->ClearBitmap ();
+	}
+	else if ( this->mImageTexture->MOAIImage::GetHeight () < this->mRows.mSize ) {
+		
+		USIntRect rect;
+		rect.Init ( 0, 0, MAX_TEXTURE_SIZE, this->mRows.mSize );
+		this->mImageTexture->ResizeCanvas ( *this->mImageTexture, rect );
 	}
 	
-	//if ( this->mImage.GetHeight () < this->mRows.mSize ) {
-	//	
-	//	USIntRect rect;
-	//	rect.Init ( 0, 0, MAX_TEXTURE_SIZE, this->mRows.mSize );
-	//	this->mImage.ResizeCanvas ( this->mImage, rect );
-	//}
+	this->mUScale = 1.0f / ( float )this->mImageTexture->MOAIImage::GetWidth ();
+	this->mVScale = 1.0f / ( float )this->mImageTexture->MOAIImage::GetHeight ();
 }
 
 //----------------------------------------------------------------//
 MOAIGlyphPage::GlyphSpan* MOAIGlyphPage::Alloc ( MOAIGlyph& glyph ) {
 	
-	u32 width = glyph.mWidth + 2;
-	u32 height = glyph.mHeight + 2;
+	u32 width = ( u32 )glyph.mWidth + 2;
+	u32 height = ( u32 )glyph.mHeight + 2;
 	
 	RowSpan* rowIt = this->mRows.mHead;
 	RowSpan* bestRowIt = 0;
@@ -120,8 +125,11 @@ bool MOAIGlyphPage::ExpandToNextPowerofTwo () {
 
 //----------------------------------------------------------------//
 MOAIGlyphPage::MOAIGlyphPage () :
+	mImageTexture ( 0 ),
 	mNext ( 0 ),
-	mThreshold ( 0.8f ) {
+	mThreshold ( 0.8f ),
+	mUScale ( 1.0f ),
+	mVScale ( 1.0f ){
 }
 
 //----------------------------------------------------------------//

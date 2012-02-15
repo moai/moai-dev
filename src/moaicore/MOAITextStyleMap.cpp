@@ -26,18 +26,6 @@ u32 MOAITextStyleMap::AffirmStyle ( MOAITextStyle& style ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITextStyleMap::LoadGlyphMetrics () {
-
-	u32 top = this->mStyles.GetTop ();
-	for ( u32 i = 0; i < top; ++i ) {
-		
-		MOAITextStyle* style = this->mStyles [ i ];
-		MOAIFont* font = style->GetFont ();
-		font->LoadGlyphMetrics ();
-	}
-}
-
-//----------------------------------------------------------------//
 MOAITextStyleMap::MOAITextStyleMap () {
 }
 
@@ -79,5 +67,11 @@ void MOAITextStyleMap::Tokenize ( MOAITextStyleSet& styleSet, cc8* str ) {
 	MOAITextStyler styler;
 	styler.Style ( *this, styleSet, str );
 	
-	this->LoadGlyphMetrics ();
+	u32 top = this->mStyles.GetTop ();
+	for ( u32 i = 0; i < top; ++i ) {
+		
+		MOAITextStyle* style = this->mStyles [ i ];
+		MOAIFont* font = style->GetFont ();
+		font->UpdateGlyphs ( MOAIGlyph::METRICS_AND_BITMAP );
+	}
 }

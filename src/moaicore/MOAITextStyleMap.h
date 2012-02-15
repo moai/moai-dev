@@ -28,7 +28,6 @@ class MOAITextStyleMap :
 	
 	//----------------------------------------------------------------//
 	u32			AffirmStyle			( MOAITextStyle& style );
-	void		LoadGlyphMetrics	();
 	void		PushSpan			( cc8* str, int base, int top, MOAITextStyle& style );
 	
 public:
@@ -39,7 +38,7 @@ public:
 	//----------------------------------------------------------------//
 				MOAITextStyleMap		();
 				~MOAITextStyleMap		();
-	void		Tokenize				( MOAITextStyleSet& styleSet, cc8* str );
+	void		Tokenize				( MOAITextStyleSet& styleSet, cc8* str );	
 };
 
 #endif

@@ -4,6 +4,7 @@
 #include "pch.h"
 #include <contrib/utf8.h>
 #include <moaicore/MOAIFont.h>
+#include <moaicore/MOAITextLayout.h>
 #include <moaicore/MOAITextDesigner.h>
 #include <moaicore/MOAITextStyle.h>
 #include <moaicore/MOAITextStyleMap.h>
@@ -104,7 +105,7 @@ bool MOAITextDesigner::IsWhitespace ( u32 c ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITextDesigner::Layout ( cc8* str, MOAITextStyleMap& styleMap ) {
+void MOAITextDesigner::Layout ( cc8* str, MOAITextStyleMap& styleMap, MOAITextLayout& layout ) {
 	
 	this->mStr = str;
 	
@@ -123,13 +124,13 @@ void MOAITextDesigner::Layout ( cc8* str, MOAITextStyleMap& styleMap ) {
 	
 	float scale = 1.0f;
 	
-	bool inWhitespace = false;
-	bool gobbleWhitespace = true;
+	//bool inWhitespace = false;
+	//bool gobbleWhitespace = true;
 	const MOAIGlyph* glyph = 0;
 	const MOAIGlyph* prevGlyph = 0;
 	
-	u32 spanIdx = 0;
-	u32 idx = 0;
+	//u32 spanIdx = 0;
+	//u32 idx = 0;
 	
 	bool more = true;
 	while ( more ) {
@@ -152,11 +153,11 @@ void MOAITextDesigner::Layout ( cc8* str, MOAITextStyleMap& styleMap ) {
 		}
 		
 		// push the glyph
-		float penX = pen.mX + (( glyph->mWidth + glyph->mBearingX ) * scale * xScaleAdvance );
+		//float penX = pen.mX + (( glyph->mWidth + glyph->mBearingX ) * scale * xScaleAdvance );
 		float glyphX = pen.mX;
 		//float glyphX = this->mRightToLeft ? penX : this->mPen.mX;
 
-		//this->mLayout->PushGlyph ( glyph, 0, glyphX, 0.0f, points, 0xffffffff );
+		layout.PushGlyph ( glyph, 0, glyphX, 0.0f, 0xffffffff );
 		//this->mTokenXMax = penX;
 
 		pen.mX += glyph->mAdvanceX * scale * xScaleAdvance;

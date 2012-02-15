@@ -9,7 +9,7 @@
 #include <moaicore/MOAIFont.h>
 #include <moaicore/MOAIGfxDevice.h>
 #include <moaicore/MOAIGlyphPage.h>
-#include <moaicore/MOAIImage.h>
+#include <moaicore/MOAIImageTexture.h>
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAITextureBase.h>
 
@@ -93,7 +93,7 @@ int MOAIFont::_preloadGlyphs ( lua_State* L ) {
 
 	cc8* charCodes	= state.GetValue < cc8* >( 2, "" );
 	float points	= state.GetValue < float >( 3, 0 );
-	u32 dpi			= state.GetValue < u32 >( 4, 72 );
+	//u32 dpi			= state.GetValue < u32 >( 4, 72 );
 	
 	int idx = 0;
 	while ( charCodes [ idx ]) {
@@ -106,10 +106,20 @@ int MOAIFont::_preloadGlyphs ( lua_State* L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIFont::_writePages ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIFont, "U" )
+
+	self->WritePages ();
+
+	return 0;
+}
+
 //================================================================//
 // MOAIFont
 //================================================================//
-	
+
 //----------------------------------------------------------------//
 void MOAIFont::AffirmGlyph ( float points, u32 c ) {
 
@@ -152,12 +162,6 @@ void MOAIFont::Init ( cc8* filename ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIFont::LoadGlyphMetrics () {
-
-	this->UpdateGlyphs ( 0 );
-}
-
-//----------------------------------------------------------------//
 MOAIFont::MOAIFont () :
 	mPages ( 0 ) {
 	
@@ -181,6 +185,7 @@ void MOAIFont::RegisterLuaFuncs ( MOAILuaState& state ) {
 	luaL_Reg regTable [] = {
 		{ "load",				_load },
 		{ "preloadGlyphs",		_preloadGlyphs },
+		{ "writePages",			_writePages },
 		{ NULL, NULL }
 	};
 	
@@ -232,7 +237,7 @@ void MOAIFont::UpdateGlyphs ( u32 target ) {
 		if ( !glyphIt ) continue;
 		
 		FT_Set_Char_Size ( face, 0, ( u32 )( glyphDeck.mPoints * 64.0f ), DPI, DPI );
-		float pixelSize = face->size->metrics.y_ppem;
+		//float pixelSize = face->size->metrics.y_ppem;
 		
 		int yMin = FT_MulFix ( face->bbox.yMin, face->size->metrics.y_scale ) >> 6;
 		int yMax = FT_MulFix ( face->bbox.yMax, face->size->metrics.y_scale ) >> 6;
@@ -241,6 +246,8 @@ void MOAIFont::UpdateGlyphs ( u32 target ) {
 		
 		for ( ; glyphIt; glyphIt = glyphIt->mNext ) {
 			MOAIGlyph& glyph = *glyphIt;
+			
+			glyph.mStatus = MOAIGlyph::NONE;
 			
 			u32 index = FT_Get_Char_Index ( face, glyph.mCode );
 			FT_Load_Glyph ( face, index, FT_LOAD_NO_BITMAP );
@@ -258,16 +265,22 @@ void MOAIFont::UpdateGlyphs ( u32 target ) {
 			glyph.mAdvanceX = ( float )advanceX;
 			glyph.mBearingX = ( float )bearingX;
 			
-			//this->Alloc ( glyph );
-			//if ( glyph.mPage ) {
-			//	
-			//	render.mImage = &glyph.mPage->mImage;
-			//	render.mPenX = glyph.mSrcX - bearingX;
-			//	render.mPenY = glyph.mSrcY + yMax;
+			glyph.mStatus = MOAIGlyph::METRICS_ONLY;
+			
+			if ( target == MOAIGlyph::METRICS_AND_BITMAP ) {
+				this->Alloc ( glyph );
+				if ( glyph.mPage ) {
+					
+					render.mImage = glyph.mPage->mImageTexture;
+					render.mPenX = glyph.mSrcX - bearingX;
+					render.mPenY = glyph.mSrcY + yMax;
 
-			//	glyph.mPage->AffirmCanvas ();
-			//	FT_Outline_Render ( library, &face->glyph->outline, &params );
-			//}
+					glyph.mPage->AffirmCanvas ();
+					FT_Outline_Render ( library, &face->glyph->outline, &params );
+					
+					glyph.mStatus = MOAIGlyph::METRICS_AND_BITMAP;
+				}
+			}
 		}
 	}
 	
@@ -282,11 +295,13 @@ void MOAIFont::WritePages () {
 
 	MOAIGlyphPage* page = this->mPages;
 	for ( int i = 0; page; page = page->mNext, ++i ) {
-	
-		sprintf ( buffer, "page%d.png", i );
-		
-		USFileStream stream;
-		stream.OpenWrite ( buffer );
-		page->mImage.WritePNG ( stream );
+		if ( page->mImageTexture ) {
+			
+			sprintf ( buffer, "page%d.png", i );
+			
+			USFileStream stream;
+			stream.OpenWrite ( buffer );
+			page->mImageTexture->WritePNG ( stream );
+		}
 	}
 }

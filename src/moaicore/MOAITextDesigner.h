@@ -4,6 +4,7 @@
 #ifndef	MOAITEXTDESIGNER_H
 #define	MOAITEXTDESIGNER_H
 
+class MOAITextLayout;
 class MOAITextStyleMap;
 class MOAITextStyleSpan;
 
@@ -65,7 +66,7 @@ public:
 	//SET ( bool, RightToLeft, mRightToLeft )
 
 	//----------------------------------------------------------------//
-	void			Layout					( cc8* str, MOAITextStyleMap& styleMap );
+	void			Layout					( cc8* str, MOAITextStyleMap& styleMap, MOAITextLayout& layout );
 	//void			SetCurves				( MOAIAnimCurve** curves, u32 totalCurves );
 					MOAITextDesigner		();
 	virtual			~MOAITextDesigner		();
