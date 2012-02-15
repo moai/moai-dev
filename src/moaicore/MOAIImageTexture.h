@@ -25,15 +25,16 @@ private:
 	};
 
 	u32			mStatus;
-	USRect		mRegion;
+	USIntRect	mRegion;
 
 	//----------------------------------------------------------------//
-	static int			_invalidate				( lua_State* L );
+	static int		_invalidate				( lua_State* L );
 
 	//----------------------------------------------------------------//
-	bool				IsRenewable				();
-	void				OnClear					();
-	void				OnLoad					();
+	bool			IsRenewable				();
+	bool			IsValid					();
+	void			OnClear					();
+	void			OnLoad					();
 
 public:
 	
@@ -42,12 +43,12 @@ public:
 	static const u32 DEFAULT_TRANSFORM = MOAIImageTransform::TRUECOLOR | MOAIImageTransform::PREMULTIPLY_ALPHA;
 	
 	//----------------------------------------------------------------//
-							MOAIImageTexture		();
-							~MOAIImageTexture		();
-	void					RegisterLuaClass		( MOAILuaState& state );
-	void					RegisterLuaFuncs		( MOAILuaState& state );
-	void					SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
-	void					SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
+					MOAIImageTexture		();
+					~MOAIImageTexture		();
+	void			RegisterLuaClass		( MOAILuaState& state );
+	void			RegisterLuaFuncs		( MOAILuaState& state );
+	void			SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
+	void			SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
 };
 
 #endif

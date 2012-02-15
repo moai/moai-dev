@@ -498,20 +498,23 @@ void MOAIImage::Alloc () {
 
 	if ( this->mData ) {
 		free ( this->mData );
+		this->mData = 0;
 	}
 
-	u32 paletteSize = this->GetPaletteSize ();
+	if ( this->mPalette ) {
+		free ( this->mPalette );
+		this->mPalette = 0;
+	}
+	
 	u32 bitmapSize = this->GetBitmapSize ();
 
-	this->mData = malloc ( paletteSize + bitmapSize );
-	this->mBitmap = ( void* )(( uintptr )this->mData + paletteSize );
+	this->mData = malloc ( bitmapSize );
+	this->mBitmap = this->mData;
 	
+	u32 paletteSize = this->GetPaletteSize ();
 	if ( paletteSize ) {
-		this->mPalette = this->mData;
+		this->mData = malloc ( paletteSize );
 		memset ( this->mPalette, 0, paletteSize );
-	}
-	else {
-		this->mPalette = 0;
 	}
 }
 
@@ -578,6 +581,10 @@ void MOAIImage::Clear () {
 
 	if ( this->mData ) {
 		free ( this->mData );
+	}
+	
+	if ( this->mPalette ) {
+		free ( this->mPalette );
 	}
 	
 	this->mColorFormat	= USColor::CLR_FMT_UNKNOWN;
@@ -1102,6 +1109,14 @@ u32 MOAIImage::GetPixel ( u32 x, u32 y ) const {
 }
 
 //----------------------------------------------------------------//
+USIntRect MOAIImage::GetRect () {
+
+	USIntRect rect;
+	rect.Init ( 0, 0, this->mWidth, this->mHeight );
+	return rect;
+}
+
+//----------------------------------------------------------------//
 void* MOAIImage::GetRowAddr ( u32 y ) {
 
 	return ( void* )(( uintptr )this->mBitmap + ( this->GetRowSize () * y ));
@@ -1121,6 +1136,23 @@ u32 MOAIImage::GetRowSize () const {
 }
 
 //----------------------------------------------------------------//
+void MOAIImage::GetSubImage ( USIntRect rect, void* buffer ) {
+
+	int width = rect.Width ();
+	int height = rect.Height ();
+	
+	MOAIImage temp;
+	temp.Init ( buffer, width, height, this->mColorFormat, false );
+	temp.CopyBits ( *this, rect.mXMin, rect.mYMin, 0, 0, width, height );
+}
+
+//----------------------------------------------------------------//
+u32 MOAIImage::GetSubImageSize ( USIntRect rect ) {
+
+	return (( rect.Width () * USPixel::GetDepth ( this->mPixelFormat, this->mColorFormat )) >> 3 ) * rect.Height ();
+}
+
+//----------------------------------------------------------------//
 void MOAIImage::Init ( u32 width, u32 height, USColor::Format colorFmt, USPixel::Format pixelFmt ) {
 
 	this->mColorFormat = colorFmt;
@@ -1134,13 +1166,13 @@ void MOAIImage::Init ( u32 width, u32 height, USColor::Format colorFmt, USPixel:
 }
 
 //----------------------------------------------------------------//
-void MOAIImage::Init ( const void* bitmap, u32 width, u32 height, USColor::Format colorFmt ) {
+void MOAIImage::Init ( void* bitmap, u32 width, u32 height, USColor::Format colorFmt ) {
 
 	this->Init ( bitmap, width, height, colorFmt, true );
 }
 
 //----------------------------------------------------------------//
-void MOAIImage::Init ( const void* bitmap, u32 width, u32 height, USColor::Format colorFmt, bool copy ) {
+void MOAIImage::Init ( void* bitmap, u32 width, u32 height, USColor::Format colorFmt, bool copy ) {
 
 	this->Clear ();
 
@@ -1155,12 +1187,10 @@ void MOAIImage::Init ( const void* bitmap, u32 width, u32 height, USColor::Forma
 	if ( copy ) {
 		this->Alloc ();
 		u32 size = this->GetBitmapSize ();
-		memcpy ( this->mBitmap, bitmap, size );
+		memcpy ( this->mData, bitmap, size );
 	}
 	else {
-		this->mData = ( void* )bitmap;
-		this->mBitmap = this->mData;
-		this->mPalette = 0;
+		this->mBitmap = ( void* )bitmap;
 	}
 }
 

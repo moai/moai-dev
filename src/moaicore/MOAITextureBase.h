@@ -76,26 +76,27 @@ protected:
 	void			OnRenew					();
 	void			OnUnload				();
 	void			ReleaseLoader			();
+	void			UpdateTextureFromImage	( MOAIImage& image, USIntRect rect );
 
 public:
 	
 	friend class MOAIGfxDevice;
 
 	//----------------------------------------------------------------//
-	void					DeleteTexture			();
-	u32						GetHeight				();
-	u32						GetWidth				();
-	bool					IsValid					();
-	bool					LoadGfxState			();
-							MOAITextureBase			();
-							~MOAITextureBase		();
-	void					SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
-	void					SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
-	void					SetFilter				( int filter );
-	void					SetFilter				( int min, int mag );
-	void					SetWrap					( int wrap );
-	void					RegisterLuaClass		( MOAILuaState& state );
-	void					RegisterLuaFuncs		( MOAILuaState& state );
+	void			DeleteTexture			();
+	u32				GetHeight				();
+	u32				GetWidth				();
+	bool			IsValid					();
+	bool			LoadGfxState			();
+					MOAITextureBase			();
+					~MOAITextureBase		();
+	void			SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
+	void			SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
+	void			SetFilter				( int filter );
+	void			SetFilter				( int min, int mag );
+	void			SetWrap					( int wrap );
+	void			RegisterLuaClass		( MOAILuaState& state );
+	void			RegisterLuaFuncs		( MOAILuaState& state );
 };
 
 #endif

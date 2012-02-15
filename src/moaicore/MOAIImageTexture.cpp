@@ -12,9 +12,41 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	invalidate
+	@text	Invalidate either a sub-region or the whole image.
+
+	@in		MOAIImage self
+	@in		number xMin
+	@in		number yMin
+	@in		number xMax
+	@in		number yMax
+	@out	nil
+*/
 int MOAIImageTexture::_invalidate ( lua_State* L ) {
-	UNUSED ( L );
+	MOAI_LUA_SETUP ( MOAIImageTexture, "U" )
+	
+	if ( self->mStatus != INVALID ) {
+	
+		if ( state.GetTop () > 1 ) {
+		
+			USIntRect rect = state.GetRect < int >( 2 );
+			
+			rect.Bless ();
+			USIntRect imageRect = self->GetRect ();
+			imageRect.Clip ( rect );
+			
+			if ( self->mStatus == VALID ) {
+				self->mRegion = rect;
+			}
+			else {
+				self->mRegion.Grow ( rect );
+			}
+			self->mStatus = INVALID_REGION;
+		}
+		else {
+			self->mStatus = INVALID;
+		}
+	}
 	return 0;
 }
 
@@ -29,10 +61,18 @@ bool MOAIImageTexture::IsRenewable () {
 }
 
 //----------------------------------------------------------------//
-MOAIImageTexture::MOAIImageTexture () {
+bool MOAIImageTexture::IsValid () {
+
+	return ( this->mGLTexID && ( this->mStatus == VALID ));
+}
+
+//----------------------------------------------------------------//
+MOAIImageTexture::MOAIImageTexture () :
+	mStatus ( INVALID ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAITextureBase )
+		RTTI_EXTEND ( MOAIImage )
 	RTTI_END
 }
 
@@ -49,6 +89,21 @@ void MOAIImageTexture::OnClear () {
 
 //----------------------------------------------------------------//
 void MOAIImageTexture::OnLoad () {
+
+	if ( !this->IsOK ()) return;
+	
+	if ( !this->mGLTexID ) {
+		this->CreateTextureFromImage ( *this );
+	}
+	else if ( this->mStatus != VALID ) {
+		
+		USIntRect rect = this->mRegion;
+		if ( this->mStatus == INVALID ) {
+			rect = this->GetRect ();
+		}
+		this->UpdateTextureFromImage ( *this, rect );
+	}
+	this->mStatus = VALID;
 }
 
 //----------------------------------------------------------------//

@@ -80,7 +80,7 @@ private:
 	//----------------------------------------------------------------//
 	void			Alloc				();
 	static u32		GetMinPowerOfTwo	( u32 size ); // gets the smallest power of two greater than size
-	void			Init				( const void* bitmap, u32 width, u32 height, USColor::Format colorFmt, bool copy );
+	void			Init				( void* bitmap, u32 width, u32 height, USColor::Format colorFmt, bool copy );
 	static bool		IsJpg				( const void* buffer, u32 size );
 	static bool		IsPng				( const void* buffer, u32 size );
 	void			LoadJpg				( USStream& stream, u32 transform );
@@ -126,11 +126,14 @@ public:
 	u32					GetPaletteColor			( u32 idx ) const;
 	u32					GetPaletteSize			() const;
 	u32					GetPixel				( u32 x, u32 y ) const;
+	USIntRect			GetRect					();
 	void*				GetRowAddr				( u32 y );
 	const void*			GetRowAddr				( u32 y ) const;
 	u32					GetRowSize				() const;
+	void				GetSubImage				( USIntRect rect, void* buffer );
+	u32					GetSubImageSize			( USIntRect rect );
 	void				Init					( u32 width, u32 height, USColor::Format colorFmt, USPixel::Format pixelFmt );
-	void				Init					( const void* bitmap, u32 width, u32 height, USColor::Format colorFmt );
+	void				Init					( void* bitmap, u32 width, u32 height, USColor::Format colorFmt );
 	bool				IsPow2					();
 	static bool			IsPow2					( u32 n );
 	void				Load					( USData& data, u32 transform = 0 );

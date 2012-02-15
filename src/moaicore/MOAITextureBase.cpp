@@ -555,3 +555,50 @@ void MOAITextureBase::SetWrap ( int wrap ) {
 	this->mWrap = wrap;
 	this->mIsDirty = true;
 }
+
+//----------------------------------------------------------------//
+void MOAITextureBase::UpdateTextureFromImage ( MOAIImage& image, USIntRect rect ) {
+
+	// if the dimensions have changed, clear out the old texture
+	if (( this->mWidth != image.GetWidth ()) || ( this->mHeight != image.GetHeight ())) {
+	
+		MOAIGfxDevice::Get ().ReportTextureFree ( this->mDebugName, this->mTextureSize );
+		MOAIGfxDevice::Get ().PushDeleter ( MOAIGfxDeleter::DELETE_TEXTURE, this->mGLTexID );
+		this->mGLTexID = 0;	
+	}
+	
+	// if no texture, create a new one from the image
+	// otherwise just update the sub-region
+	if ( this->mGLTexID ) {
+
+		rect.Bless ();
+		USIntRect imageRect = image.GetRect ();
+		imageRect.Clip ( rect );
+		
+		void* buffer = image.GetBitmap ();
+		
+		if (( this->mWidth != ( u32 )rect.Width ()) || ( this->mHeight != ( u32 )rect.Height ())) {
+			u32 size = image.GetSubImageSize ( rect );
+			buffer = alloca ( size );
+			image.GetSubImage ( rect, buffer );
+		}
+
+		glTexSubImage2D (
+			GL_TEXTURE_2D,
+			0,
+			rect.mXMin,
+			rect.mYMin,
+			rect.Width (),
+			rect.Height (),
+			this->mGLInternalFormat,
+			this->mGLPixelType,  
+			buffer
+		);
+		
+		MOAIGfxDevice::Get ().LogErrors ();
+	}
+	else {
+	
+		this->CreateTextureFromImage ( image );
+	}
+}
