@@ -50,7 +50,6 @@ private:
 	//void			Flush				();
 	//void			FlushLine			();
 	//void			FlushToken			();
-	static bool		IsWhitespace		( u32 c );
 	u32				NextChar			();
 	//void			Parse				();
 	void			UpdateStyle			();

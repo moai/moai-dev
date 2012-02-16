@@ -162,6 +162,17 @@ void MOAIFont::Init ( cc8* filename ) {
 }
 
 //----------------------------------------------------------------//
+bool MOAIFont::IsWhitespace ( u32 c ) {
+
+	if ( !c ) return true;
+	if ( c == ' ' ) return true;
+	if ( c == '\t' ) return true;
+	if ( c == '\n' ) return true;
+	
+	return false;
+}
+
+//----------------------------------------------------------------//
 MOAIFont::MOAIFont () :
 	mPages ( 0 ) {
 	

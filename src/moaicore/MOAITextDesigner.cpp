@@ -94,18 +94,9 @@
 //}
 
 //----------------------------------------------------------------//
-bool MOAITextDesigner::IsWhitespace ( u32 c ) {
-
-	if ( !c ) return true;
-	if ( c == ' ' ) return true;
-	if ( c == '\t' ) return true;
-	if ( c == '\n' ) return true;
-	
-	return false;
-}
-
-//----------------------------------------------------------------//
 void MOAITextDesigner::Layout ( cc8* str, MOAITextStyleMap& styleMap, MOAITextLayout& layout ) {
+	
+	float width = 10000.0f;
 	
 	this->mStr = str;
 	
@@ -114,55 +105,87 @@ void MOAITextDesigner::Layout ( cc8* str, MOAITextStyleMap& styleMap, MOAITextLa
 	this->mStyleSpan = &this->mStyleMap->Elem ( 0 );
 	this->mIdx = this->mStyleSpan->mBase;
 	
-	this->UpdateStyle ();
+	u32 lineStart = 0;
+	u32 lineSize = 0;
 	
-	//float xScaleAdvance = this->mRightToLeft ? -1.0f : 1.0f;
-	float xScaleAdvance = 1.0f;
+	u32 tokenStart = 0;
+	u32 tokenSize = 0;
+	
+	USRect lineRect;
+	lineRect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
+	
+	USRect growRect;
+	growRect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
+	
+	this->UpdateStyle ();
 
 	USVec2D pen;
 	pen.Init ( 0.0f, 0.0f );
 	
-	float scale = 1.0f;
-	
-	//bool inWhitespace = false;
-	//bool gobbleWhitespace = true;
 	const MOAIGlyph* glyph = 0;
 	const MOAIGlyph* prevGlyph = 0;
-	
-	//u32 spanIdx = 0;
-	//u32 idx = 0;
 	
 	bool more = true;
 	while ( more ) {
 	
 		u32 c = this->NextChar ();
 		
-		//inWhitespace = this->IsWhitespace ( c );
-		
-		if ( c == 0 ) break;
-		putc ( c, stdout );
+		if ( c == 0 ) {
+			// end line
+			lineRect = growRect;
+			break;
+		}
 		
 		prevGlyph = glyph;
 		glyph = this->mDeck->GetGlyph ( c );
 		if ( !glyph ) continue;
+		if ( glyph->mAdvanceX == 0.0f ) continue;
 		
 		// apply kerning
 		if ( prevGlyph ) {
 			MOAIKernVec kernVec = prevGlyph->GetKerning ( glyph->mCode );
-			pen.mX += kernVec.mX * scale * xScaleAdvance;
+			pen.mX += kernVec.mX;
 		}
 		
-		// push the glyph
-		//float penX = pen.mX + (( glyph->mWidth + glyph->mBearingX ) * scale * xScaleAdvance );
-		float glyphX = pen.mX;
-		//float glyphX = this->mRightToLeft ? penX : this->mPen.mX;
-
-		layout.PushGlyph ( glyph, 0, glyphX, 0.0f, 0xffffffff );
-		//this->mTokenXMax = penX;
-
-		pen.mX += glyph->mAdvanceX * scale * xScaleAdvance;
+		bool isWhitespace = MOAIFont::IsWhitespace ( c );
 		
-		//this->WriteChar ( c );
+		if ( isWhitespace ) {
+		
+			if ( tokenSize ) {
+				// accept token
+				lineRect = growRect;
+				lineSize += tokenSize;
+				tokenSize = 0;
+			}
+		}
+		else {
+			
+			// check for overrun
+			float glyphRight = glyph->mBearingX + glyph->mWidth;
+			
+			if (( pen.mX + glyphRight ) > width ) {
+				
+				// end line
+				pen.mX = 0.0f;
+				growRect.mXMax = 0.0f;
+				
+				// next line
+				lineStart = layout.GetTop ();
+				lineSize = 0;
+			}
+			
+			if ( !tokenSize ) {
+				tokenStart = layout.GetTop ();
+			}
+			tokenSize++;
+			
+			// push the glyph
+			layout.PushGlyph ( glyph, 0, pen.mX, 0.0f, 0xffffffff );
+			growRect.mXMax = pen.mX + glyphRight;
+		}
+		
+		// advance the pen
+		pen.mX += glyph->mAdvanceX;
 	}
 	
 	printf ( "\n" );

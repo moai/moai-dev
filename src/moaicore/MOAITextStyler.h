@@ -74,7 +74,6 @@ private:
 	void			FinishToken			();
 	u32				GetChar				();
 	static u8		HexToByte			( u32 c );
-	static bool		IsWhitespace		( u32 c );
 	u32				PackColor			( const u8* color, u32 colorSize );
 	void			Parse				();
 	bool			ParseStyle			();

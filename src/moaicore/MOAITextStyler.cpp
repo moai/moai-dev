@@ -56,17 +56,6 @@ u8 MOAITextStyler::HexToByte ( u32 c ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAITextStyler::IsWhitespace ( u32 c ) {
-
-	if ( !c ) return true;
-	if ( c == ' ' ) return true;
-	if ( c == '\t' ) return true;
-	if ( c == '\n' ) return true;
-	
-	return false;
-}
-
-//----------------------------------------------------------------//
 MOAITextStyler::MOAITextStyler () :
 	mIdx ( 0 ),
 	mStr ( 0 ) {
@@ -281,7 +270,7 @@ bool MOAITextStyler::ParseStyle () {
 				
 				c = this->GetChar ();
 				
-				if ( this->IsWhitespace ( c )) {
+				if ( MOAIFont::IsWhitespace ( c )) {
 					TRANSITION ( STYLE_ABORT );
 				}
 				
@@ -318,7 +307,7 @@ bool MOAITextStyler::ParseStyle () {
 				
 				c = this->GetChar ();
 				
-				if ( this->IsWhitespace ( c )) {
+				if ( MOAIFont::IsWhitespace ( c )) {
 					TRANSITION ( STYLE_ABORT );
 				}
 				

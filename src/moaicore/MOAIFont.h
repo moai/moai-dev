@@ -32,7 +32,6 @@ private:
 
 	//----------------------------------------------------------------//
 	MOAISpan < MOAIGlyph* >*	Alloc				( MOAIGlyph& glyph );
-	
 
 public:
 	
@@ -42,6 +41,7 @@ public:
 	void				AffirmGlyph				( float points, u32 c );
 	MOAIGlyphDeck*		GetGlyphDeck			( float points );
 	void				Init					( cc8* filename );
+	static bool			IsWhitespace			( u32 c );
 						MOAIFont				();
 						~MOAIFont				();
 	void				RegisterLuaClass		( MOAILuaState& state );
