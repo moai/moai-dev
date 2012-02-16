@@ -950,10 +950,14 @@ void MOAITexture::OnLoad () {
 //----------------------------------------------------------------//
 void MOAITexture::OnRenew () {
 
+	this->mGLTexID = 0;
+
 	if ( !this->mFrameBuffer ) {
 		STLString filename = this->mFilename;
 		this->Init ( filename, this->mTransform );
 	}
+	
+	this->OnLoad ();
 }
 
 //----------------------------------------------------------------//
