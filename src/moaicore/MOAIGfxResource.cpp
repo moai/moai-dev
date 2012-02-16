@@ -117,7 +117,9 @@ bool MOAIGfxResource::Bind () {
 //----------------------------------------------------------------//
 void MOAIGfxResource::Clear () {
 
-	this->OnUnload ();
+	if ( MOAIGfxDevice::IsValid ()) {
+		this->OnUnload ();
+	}
 	this->OnClear ();
 	this->mState = STATE_CLEAR;
 }

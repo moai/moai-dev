@@ -861,8 +861,6 @@ void MOAITexture::OnBind () {
 //----------------------------------------------------------------//
 void MOAITexture::OnClear () {
 
-	this->OnUnload ();
-	
 	this->mWidth = 0;
 	this->mHeight = 0;
 	
