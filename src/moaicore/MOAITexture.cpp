@@ -685,7 +685,8 @@ void MOAITexture::CreateTextureFromPVR ( void* data, size_t size ) {
 
 //----------------------------------------------------------------//
 void MOAITexture::DeleteTexture	() {
-	glDeleteTextures ( 1, &this->mGLTexID );
+	MOAIGfxDevice::Get ().PushDeleter ( MOAIGfxDeleter::DELETE_TEXTURE, this->mGLTexID );
+	this->mGLTexID = 0;
 }
 
 //----------------------------------------------------------------//

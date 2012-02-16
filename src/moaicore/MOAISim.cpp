@@ -811,6 +811,7 @@ void MOAISim::Render () {
 	}
 	
 	MOAIGfxDevice::Get ().Flush ();
+	MOAIGfxDevice::Get ().ProcessDeleters ();
 }
 
 //----------------------------------------------------------------//

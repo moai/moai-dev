@@ -18,6 +18,41 @@
 #define REMAP_EXTENSION_PTR(target, ext) target = target ? target : ext;
 
 //================================================================//
+// MOAIGfxDeleter
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIGfxDeleter::Delete () {
+
+	switch ( this->mType ) {
+
+		case DELETE_BUFFER:
+			glDeleteBuffers ( 1, &this->mResourceID );
+			break;
+
+		case DELETE_FRAMEBUFFER:
+			glDeleteFramebuffers ( 1, &this->mResourceID );
+			break;
+
+		case DELETE_PROGRAM:
+			glDeleteProgram ( this->mResourceID );
+			break;
+
+		case DELETE_SHADER:
+			glDeleteShader ( this->mResourceID );
+			break;
+
+		case DELETE_TEXTURE:
+			glDeleteTextures ( 1, &this->mResourceID );
+			break;
+
+		case DELETE_RENDERBUFFER:
+			glDeleteRenderbuffers ( 1, &this->mResourceID );
+			break;
+	}
+}
+
+//================================================================//
 // local
 //================================================================//
 
@@ -716,6 +751,27 @@ MOAIGfxDevice::MOAIGfxDevice () :
 MOAIGfxDevice::~MOAIGfxDevice () {
 
 	this->Clear ();
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDevice::ProcessDeleters () {
+
+	u32 top = this->mDeleterStack.GetTop ();
+	for ( u32 i = 0; i < top; ++i ) {
+		MOAIGfxDeleter& deleter = this->mDeleterStack [ i ];
+		deleter.Delete ();
+	}
+	this->mDeleterStack.Reset ();
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDevice::PushDeleter ( u32 type, GLuint id ) {
+
+	MOAIGfxDeleter deleter;
+	deleter.mType = type;
+	deleter.mResourceID = id;
+
+	this->mDeleterStack.Push ( deleter );
 }
 
 //----------------------------------------------------------------//

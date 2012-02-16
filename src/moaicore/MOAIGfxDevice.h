@@ -17,6 +17,28 @@ class MOAIVertexFormat;
 class MOAIViewport;
 
 //================================================================//
+// MOAIGfxDeleter
+//================================================================//
+class MOAIGfxDeleter {
+public:
+
+	enum {
+		DELETE_BUFFER,
+		DELETE_FRAMEBUFFER,
+		DELETE_PROGRAM,
+		DELETE_SHADER,
+		DELETE_TEXTURE,
+		DELETE_RENDERBUFFER,
+	};
+
+	GLuint	mResourceID;
+	u32		mType;
+
+	//----------------------------------------------------------------//
+	void		Delete			();
+};
+
+//================================================================//
 // MOAIGfxDevice
 //================================================================//
 /**	@name	MOAIGfxDevice
@@ -116,6 +138,8 @@ private:
 
 	u32				mWidth;
 
+	USLeanStack < MOAIGfxDeleter, 32 > mDeleterStack;
+
 	//----------------------------------------------------------------//
 	static int				_isProgrammable			( lua_State* L );
 	static int				_setClearColor			( lua_State* L );
@@ -194,6 +218,9 @@ public:
 							MOAIGfxDevice			();
 							~MOAIGfxDevice			();
 	
+	void					ProcessDeleters			();
+	void					PushDeleter				( u32 type, GLuint id );
+								
 	void					RegisterLuaClass		( MOAILuaState& state );
 	void					ReleaseResources		();
 	void					RenewResources			();

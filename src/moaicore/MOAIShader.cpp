@@ -524,17 +524,17 @@ void MOAIShader::DeclareUniform ( u32 idx, cc8* name, u32 type ) {
 void MOAIShader::DeleteShaders () {
 
 	if ( this->mVertexShader ) {
-		glDeleteShader ( this->mVertexShader );
+		MOAIGfxDevice::Get ().PushDeleter ( MOAIGfxDeleter::DELETE_SHADER, this->mVertexShader );
 		this->mVertexShader = 0;
 	}
-	
+
 	if ( this->mFragmentShader ) {
-		glDeleteShader ( this->mFragmentShader );
+		MOAIGfxDevice::Get ().PushDeleter ( MOAIGfxDeleter::DELETE_SHADER, this->mFragmentShader );
 		this->mFragmentShader = 0;
 	}
-	
+
 	if ( this->mProgram ) {
-		glDeleteProgram ( this->mProgram );
+		MOAIGfxDevice::Get ().PushDeleter ( MOAIGfxDeleter::DELETE_SHADER, this->mProgram );
 		this->mProgram = 0;
 	}
 }
