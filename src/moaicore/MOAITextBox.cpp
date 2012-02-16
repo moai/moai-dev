@@ -381,6 +381,32 @@ int MOAITextBox::_setStringColor ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAITextBox::_setStyle ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextBox, "U" )
+
+	MOAITextStyle* style = state.GetLuaObject < MOAITextStyle >( 2 );
+	if ( style ) {
+		style->Retain (); // TODO
+		self->mDefaultStyle = style;
+		self->mStyleSet.SetDefault ( style );
+	}
+	else {
+		cc8* styleName = state.GetValue < cc8* >( 2, "" );
+		if ( strlen ( styleName )) {
+		
+			MOAITextStyle* style = state.GetLuaObject < MOAITextStyle >( 3 );
+		
+			if ( style ) {
+				style->Retain (); // TODO
+				self->mStyleSet.SetStyle ( styleName, style );
+			}
+		}
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	setTextSize
 	@text	Sets the size of the text to be rendered.  To avoid sampling, this should be the same or smaller than the point size returned by the font (which is different to the size or scale specified when initalizing the font; they are not measured in the same units).
 
@@ -669,6 +695,7 @@ void MOAITextBox::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setSpeed",				_setSpeed },
 		{ "setString",				_setString },
 		{ "setStringColor",			_setStringColor },
+		{ "setStyle",				_setStyle },
 		{ "setTextSize",			_setTextSize },
 		{ "setYFlip",				_setYFlip },
 		{ "spool",					_spool },
@@ -728,7 +755,6 @@ void MOAITextBox::SetFont ( MOAIFont* font ) {
 
 	this->AffirmDefaultStyle ();
 	this->mDefaultStyle->SetFont ( font );
-	this->mDefaultStyle->SetPoints ( 12.0f );
 }
 
 //----------------------------------------------------------------//
@@ -750,7 +776,7 @@ void MOAITextBox::SetText ( cc8* text ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITextBox::SetTextSize( float newSize ) {
+void MOAITextBox::SetTextSize ( float newSize ) {
 
 	this->AffirmDefaultStyle ();
 	this->mDefaultStyle->SetPoints ( newSize );

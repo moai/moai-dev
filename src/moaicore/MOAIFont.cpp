@@ -101,7 +101,7 @@ int MOAIFont::_preloadGlyphs ( lua_State* L ) {
 		self->AffirmGlyph ( points, c );
 	}
 	
-	self->UpdateGlyphs ( 0 );
+	self->UpdateGlyphs ( MOAIGlyph::METRICS_AND_BITMAP );
 	
 	return 0;
 }
@@ -259,11 +259,13 @@ void MOAIFont::UpdateGlyphs ( u32 target ) {
 			
 			int advanceX = face->glyph->metrics.horiAdvance >> 6;
 			int bearingX = face->glyph->metrics.horiBearingX >> 6;
+			int bearingY = face->glyph->metrics.horiBearingY >> 6;
 			
 			glyph.mWidth = ( float )glyphWidth;
 			glyph.mHeight = ( float )faceHeight;
 			glyph.mAdvanceX = ( float )advanceX;
 			glyph.mBearingX = ( float )bearingX;
+			glyph.mBearingY = ( float )bearingY;
 			
 			glyph.mStatus = MOAIGlyph::METRICS_ONLY;
 			

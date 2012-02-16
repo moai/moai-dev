@@ -30,8 +30,9 @@ int work_text_styler ( int argc, char **argv ) {
 	MOAITextStyleMap styleMap;
 	styleMap.Tokenize ( styleSet, str );
 	
+	MOAITextLayout layout;
 	MOAITextDesigner designer;
-	designer.Layout ( str, styleMap );
+	designer.Layout ( str, styleMap, layout );
 	
 	//MOAIGlyphCache glyphCache;
 	//glyphCache.Init ( "arial-rounded.TTF" );

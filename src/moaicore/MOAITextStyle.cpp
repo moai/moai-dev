@@ -17,8 +17,19 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+// TODO: doxygen
 int MOAITextStyle::_setFont ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextStyle, "U" )
+	MOAIFont* font = state.GetLuaObject < MOAIFont >( 2 );
+	self->mFont.Set ( *self, font );
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAITextStyle::_setSize ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextStyle, "U" )
+	self->mPoints = state.GetValue < float >( 2, 0.0f );
 	return 0;
 }
 
@@ -53,6 +64,7 @@ void MOAITextStyle::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	luaL_Reg regTable [] = {
 		{ "setFont",				_setFont },
+		{ "setSize",				_setSize },
 		{ NULL, NULL }
 	};
 	

@@ -1432,7 +1432,8 @@ void MOAIImage::ResizeCanvas ( const MOAIImage& image, USIntRect rect ) {
 	int width = rect.Width ();
 	int height = rect.Height ();
 	
-	this->Init (( u32 )width, ( u32 )height, image.mColorFormat, image.mPixelFormat );
+	MOAIImage newImage;
+	newImage.Init (( u32 )width, ( u32 )height, image.mColorFormat, image.mPixelFormat );
 	
 	USIntRect srcRect;
 	srcRect.mXMin = -rect.mXMin;
@@ -1442,66 +1443,68 @@ void MOAIImage::ResizeCanvas ( const MOAIImage& image, USIntRect rect ) {
 	
 	rect.Offset ( -rect.mXMin, -rect.mYMin );
 	
-	if ( !srcRect.Overlap ( rect )) {
-		this->ClearBitmap ();
-		return;
-	}
+	if ( srcRect.Overlap ( rect )) {
 	
-	u32 beginSpan = 0;
-	u32 leftSize = 0;
-	
-	if ( srcRect.mXMin > 0 ) {
-		beginSpan = srcRect.mXMin;
-		leftSize = beginSpan;
-	}
-	
-	u32 endSpan = width;
-	u32 rightSize = 0;
-	
-	if ( srcRect.mXMax < width ) {
-		endSpan = srcRect.mXMax;
-		rightSize = width - endSpan;
-	}
-	
-	u32 spanSize = endSpan - beginSpan;
-	
-	u32 pixSize = USPixel::GetDepth ( this->mPixelFormat, this->mColorFormat ) >> 3;
-	u32 rowSize = this->GetRowSize ();
-	
-	leftSize *= pixSize;
-	spanSize *= pixSize;
-	rightSize *= pixSize;
-	
-	u32 srcRowSize = image.GetRowSize ();
-	u32 srcRowXOff = srcRect.mXMin < 0 ? -srcRect.mXMin * pixSize : 0;
-	
-	for ( int y = 0; y < height; ++y ) {
-	
-		void* row = this->GetRowAddr ( y );
-	
-		if (( y < srcRect.mYMin ) || ( y >= srcRect.mYMax )) {
-			memset ( row, 0, rowSize );
-		}
-		else {
+		u32 beginSpan = 0;
+		u32 leftSize = 0;
 		
-			if ( leftSize ) {
-				memset ( row, 0, leftSize );
-				row = ( void* )(( uintptr )row + leftSize );
+		if ( srcRect.mXMin > 0 ) {
+			beginSpan = srcRect.mXMin;
+			leftSize = beginSpan;
+		}
+		
+		u32 endSpan = width;
+		u32 rightSize = 0;
+		
+		if ( srcRect.mXMax < width ) {
+			endSpan = srcRect.mXMax;
+			rightSize = width - endSpan;
+		}
+		
+		u32 spanSize = endSpan - beginSpan;
+		
+		u32 pixSize = USPixel::GetDepth ( newImage.mPixelFormat, newImage.mColorFormat ) >> 3;
+		u32 rowSize = newImage.GetRowSize ();
+		
+		leftSize *= pixSize;
+		spanSize *= pixSize;
+		rightSize *= pixSize;
+		
+		u32 srcRowSize = image.GetRowSize ();
+		u32 srcRowXOff = srcRect.mXMin < 0 ? -srcRect.mXMin * pixSize : 0;
+		
+		for ( int y = 0; y < height; ++y ) {
+		
+			void* row = newImage.GetRowAddr ( y );
+		
+			if (( y < srcRect.mYMin ) || ( y >= srcRect.mYMax )) {
+				memset ( row, 0, rowSize );
 			}
+			else {
 			
-			if ( spanSize ) {
-			
-				void* srcRow = ( void* )(( uintptr )image.mBitmap + ( srcRowSize * ( y - srcRect.mYMin )) + srcRowXOff );
+				if ( leftSize ) {
+					memset ( row, 0, leftSize );
+					row = ( void* )(( uintptr )row + leftSize );
+				}
 				
-				memcpy ( row, srcRow, spanSize );
-				row = ( void* )(( uintptr )row + spanSize );
-			}
-			
-			if ( rightSize ) {
-				memset ( row, 0, rightSize );
+				if ( spanSize ) {
+				
+					void* srcRow = ( void* )(( uintptr )image.mBitmap + ( srcRowSize * ( y - srcRect.mYMin )) + srcRowXOff );
+					
+					memcpy ( row, srcRow, spanSize );
+					row = ( void* )(( uintptr )row + spanSize );
+				}
+				
+				if ( rightSize ) {
+					memset ( row, 0, rightSize );
+				}
 			}
 		}
 	}
+	else {
+		newImage.ClearBitmap ();
+	}
+	this->Take ( newImage );
 }
 
 //----------------------------------------------------------------//

@@ -31,7 +31,7 @@ private:
 	float		mHeight; // height in pixels
 	float		mAdvanceX;
 	float		mBearingX;
-	float		mYOff;
+	float		mBearingY;
 	
 	u32			mSrcX; // corresponds to glyph location on page
 	u32			mSrcY; // corresponds to glyph location on page

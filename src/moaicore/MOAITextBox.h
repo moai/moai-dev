@@ -75,6 +75,7 @@ private:
 	static int		_setSpeed				( lua_State* L );
 	static int		_setString				( lua_State* L );
 	static int		_setStringColor			( lua_State* L );
+	static int		_setStyle				( lua_State* L );
 	static int		_setTextSize			( lua_State* L );
 	static int		_setYFlip				( lua_State* L );
 	static int		_spool					( lua_State* L );

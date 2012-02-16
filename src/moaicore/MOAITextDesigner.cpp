@@ -181,8 +181,6 @@ u32 MOAITextDesigner::NextChar () {
 
 	if ( !this->mStyleSpan ) return 0;
 
-	u32 c = u8_nextchar ( this->mStr, &this->mIdx );
-
 	if ( this->mIdx >= this->mStyleSpan->mTop ) {
 		
 		this->mSpanIdx++;
@@ -194,7 +192,8 @@ u32 MOAITextDesigner::NextChar () {
 			this->UpdateStyle ();
 		}
 	}
-	
+
+	u32 c = u8_nextchar ( this->mStr, &this->mIdx );
 	return c;
 }
 

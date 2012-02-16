@@ -23,8 +23,8 @@ void MOAIGlyph::Draw ( float x, float y ) const {
 		
 		MOAIQuadBrush glQuad;
 		
-		x += ( this->mBearingX );
-		y += ( this->mYOff ); 
+		x += this->mBearingX;
+		y -= this->mBearingY; 
 
 		glQuad.SetVerts (
 			x,
@@ -75,7 +75,7 @@ USRect MOAIGlyph::GetRect ( float points, float x, float y ) const {
 	USRect rect;
 		
 	x += ( this->mBearingX * points );
-	y += ( this->mYOff * points ); 
+	y -= ( this->mBearingY * points ); 
 
 	rect.Init (
 		x,
@@ -93,13 +93,13 @@ MOAIGlyph::MOAIGlyph () :
 	mStatus ( NONE ),
 	mWidth ( 0.0f ),
 	mHeight ( 0.0f ),
-	mYOff ( 0.0f ),
 	mAdvanceX ( 0.0f ),
 	mBearingX ( 0.0f ),
+	mBearingY ( 0.0f ),
 	mSrcX ( 0 ),
-	mSrcY ( 0 ) {
-	
-	//this->mUVRect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
+	mSrcY ( 0 ),
+	mPage ( 0 ),
+	mNext ( 0 ) {
 }
 
 //----------------------------------------------------------------//
@@ -202,5 +202,5 @@ void MOAIGlyph::SetScreenRect ( float width, float height, float yOff ) {
 	
 	this->mWidth = width;
 	this->mHeight = height;
-	this->mYOff = yOff;
+	this->mBearingY = -yOff;
 }

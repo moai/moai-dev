@@ -28,6 +28,7 @@ private:
 
 	//----------------------------------------------------------------//
 	static int		_setFont				( lua_State* L );
+	static int		_setSize				( lua_State* L );
 	
 public:
 
