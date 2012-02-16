@@ -110,10 +110,21 @@ void MOAIParticleDistanceEmitter::OnDepNodeUpdate () {
 			offset.m [ USAffine2D::C1_R0 ] = moveVec.mX;
 			offset.m [ USAffine2D::C1_R1 ] = moveVec.mY;
 			
-			offset.m [ USAffine2D::C2_R0 ] = 0.0f;
-			offset.m [ USAffine2D::C2_R1 ] = 0.0f;
+			offset.m [ USAffine2D::C2_R0 ] = this->mLocalToWorldMtx.m[ USAffine2D::C2_R0 ];
+			offset.m [ USAffine2D::C2_R1 ] = this->mLocalToWorldMtx.m[ USAffine2D::C2_R1 ];
 			
-			offset.Append ( this->mLocalToWorldMtx );
+			//USAffine2D localMtx;
+
+			/*localMtx.m [ USAffine2D::C0_R0 ] = 1.0f;
+			localMtx.m [ USAffine2D::C0_R1 ] = 0.0f;
+			
+			localMtx.m [ USAffine2D::C1_R0 ] = 0.0f;
+			localMtx.m [ USAffine2D::C1_R1 ] = 1.0f;
+			
+			localMtx.m [ USAffine2D::C2_R0 ] = this->mLocalToWorldMtx.m[ USAffine2D::C2_R0 ];
+			localMtx.m [ USAffine2D::C2_R1 ] = this->mLocalToWorldMtx.m[ USAffine2D::C2_R1 ];
+
+			offset.Append ( localMtx );*/
 			
 			u32 emission = this->GetRandomEmission ();
 			
