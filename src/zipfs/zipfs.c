@@ -1161,9 +1161,7 @@ int zipfs_get_stat ( char const* path, zipfs_stat* filestat ) {
 		
 			result = stat ( mount->mArchive->mFilename, &s );
 			if ( result ) return -1;
-			
-			filestat->mExists = 1;
-		
+					
 			filestat->mIsDir			= 1;
 			filestat->mSize				= 0;
 			filestat->mTimeCreated		= s.st_ctime;
@@ -1173,6 +1171,7 @@ int zipfs_get_stat ( char const* path, zipfs_stat* filestat ) {
 			entry = ZIPFSZipFile_FindEntry ( mount->mArchive, localpath );
 			if ( entry ) {
 				
+				filestat->mExists		= 1;
 				filestat->mIsDir		= 0;
 				filestat->mSize			= entry->mUncompressedSize;
 			}

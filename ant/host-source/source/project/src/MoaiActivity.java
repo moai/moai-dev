@@ -154,7 +154,10 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 			log ( "Unable to locate the application bundle" );
 		}
 
-		AKUSetDocumentDirectory ( getFilesDir ().getAbsolutePath ());
+		if ( getFilesDir () != null ) {
+		 
+		 	AKUSetDocumentDirectory ( getFilesDir ().getAbsolutePath ());
+		}
 				
 		mHandler = new Handler ();
 		mSensorManager = ( SensorManager ) getSystemService ( Context.SENSOR_SERVICE );

@@ -44,7 +44,12 @@ int MOAIEnvironment::_generateGUID ( lua_State* L ) {
 */
 int MOAIEnvironment::_getAppDisplayName ( lua_State* L  ) {
 
-	lua_pushstring ( L, MOAIEnvironment::Get ().mAppDisplayName.c_str ());
+	if ( MOAIEnvironment::Get ().mAppDisplayName != NULL ) {
+		lua_pushstring ( L, MOAIEnvironment::Get ().mAppDisplayName.c_str ());
+	} else {
+		lua_pushnil ( L );
+	}
+	
 	return 1;
 }
 
@@ -56,7 +61,12 @@ int MOAIEnvironment::_getAppDisplayName ( lua_State* L  ) {
 */
 int MOAIEnvironment::_getAppID ( lua_State* L  ) {
 
-	lua_pushstring ( L, MOAIEnvironment::Get ().mAppID.c_str ());
+	if ( MOAIEnvironment::Get ().mAppID != NULL ) {
+		lua_pushstring ( L, MOAIEnvironment::Get ().mAppID.c_str ());
+	} else {
+		lua_pushnil ( L );
+	}
+
 	return 1;
 }
 
@@ -68,7 +78,12 @@ int MOAIEnvironment::_getAppID ( lua_State* L  ) {
 */
 int MOAIEnvironment::_getAppVersion ( lua_State* L  ) {
 
-	lua_pushstring ( L, MOAIEnvironment::Get ().mAppVersion.c_str ());
+	if ( MOAIEnvironment::Get ().mAppVersion != NULL ) {
+		lua_pushstring ( L, MOAIEnvironment::Get ().mAppVersion.c_str ());
+	} else {
+		lua_pushnil ( L );
+	}
+	
 	return 1;
 }
 
@@ -80,7 +95,12 @@ int MOAIEnvironment::_getAppVersion ( lua_State* L  ) {
 */
 int MOAIEnvironment::_getCacheDirectory ( lua_State* L  ) {
 
-	lua_pushstring ( L, MOAIEnvironment::Get ().mCacheDirectory.c_str ());
+	if ( MOAIEnvironment::Get ().mCacheDirectory != NULL ) {
+		lua_pushstring ( L, MOAIEnvironment::Get ().mCacheDirectory.c_str ());
+	} else {
+		lua_pushnil ( L );
+	}
+	
 	return 1;
 }
 
@@ -92,7 +112,12 @@ int MOAIEnvironment::_getCacheDirectory ( lua_State* L  ) {
 */
 int MOAIEnvironment::_getCarrierISOCountryCode ( lua_State* L  ) {
 
-	lua_pushstring ( L, MOAIEnvironment::Get ().mCarrierISOCountryCode.c_str ());
+	if ( MOAIEnvironment::Get ().mCarrierISOCountryCode != NULL ) {
+		lua_pushstring ( L, MOAIEnvironment::Get ().mCarrierISOCountryCode.c_str ());
+	} else {
+		lua_pushnil ( L );
+	}
+	
 	return 1;
 }
 
@@ -104,7 +129,12 @@ int MOAIEnvironment::_getCarrierISOCountryCode ( lua_State* L  ) {
 */
 int MOAIEnvironment::_getCarrierMobileCountryCode ( lua_State* L  ) {
 
-	lua_pushstring ( L, MOAIEnvironment::Get ().mCarrierMobileCountryCode.c_str ());
+	if ( MOAIEnvironment::Get ().mCarrierMobileCountryCode != NULL ) {
+		lua_pushstring ( L, MOAIEnvironment::Get ().mCarrierMobileCountryCode.c_str ());
+	} else {
+		lua_pushnil ( L );
+	}
+	
 	return 1;
 }
 
@@ -116,7 +146,12 @@ int MOAIEnvironment::_getCarrierMobileCountryCode ( lua_State* L  ) {
 */
 int MOAIEnvironment::_getCarrierMobileNetworkCode ( lua_State* L  ) {
 
-	lua_pushstring ( L, MOAIEnvironment::Get ().mCarrierMobileNetworkCode.c_str ());
+	if ( MOAIEnvironment::Get ().mCarrierMobileNetworkCode != NULL ) {
+		lua_pushstring ( L, MOAIEnvironment::Get ().mCarrierMobileNetworkCode.c_str ());
+	} else {
+		lua_pushnil ( L );
+	}
+	
 	return 1;
 }
 
@@ -128,7 +163,12 @@ int MOAIEnvironment::_getCarrierMobileNetworkCode ( lua_State* L  ) {
 */
 int MOAIEnvironment::_getCarrierName ( lua_State* L  ) {
 
-	lua_pushstring ( L, MOAIEnvironment::Get ().mCarrierName.c_str ());
+	if ( MOAIEnvironment::Get ().mCarrierName != NULL ) {
+		lua_pushstring ( L, MOAIEnvironment::Get ().mCarrierName.c_str ());
+	} else {
+		lua_pushnil ( L );
+	}
+	
 	return 1;
 }
 
@@ -152,7 +192,12 @@ int MOAIEnvironment::_getConnectionType ( lua_State* L ) {
 */
 int MOAIEnvironment::_getCountryCode ( lua_State* L ) {
 
-	lua_pushstring ( L, MOAIEnvironment::Get ().mCountryCode.c_str ());
+	if ( MOAIEnvironment::Get ().mCountryCode != NULL ) {
+		lua_pushstring ( L, MOAIEnvironment::Get ().mCountryCode.c_str ());
+	} else {
+		lua_pushnil ( L );
+	}
+	
 	return 1;
 }
 
@@ -164,7 +209,12 @@ int MOAIEnvironment::_getCountryCode ( lua_State* L ) {
 */
 int MOAIEnvironment::_getCPUABI ( lua_State* L  ) {
 
-	lua_pushstring ( L, MOAIEnvironment::Get ().mCPUABI.c_str ());
+	if ( MOAIEnvironment::Get ().mCPUABI != NULL ) {
+		lua_pushstring ( L, MOAIEnvironment::Get ().mCPUABI.c_str ());
+	} else {
+		lua_pushnil ( L );
+	}
+	
 	return 1;
 }
 
@@ -176,7 +226,12 @@ int MOAIEnvironment::_getCPUABI ( lua_State* L  ) {
 */
 int MOAIEnvironment::_getDevBrand ( lua_State* L  ) {
 
-	lua_pushstring ( L, MOAIEnvironment::Get ().mDevBrand.c_str ());
+	if ( MOAIEnvironment::Get ().mDevBrand != NULL ) {
+		lua_pushstring ( L, MOAIEnvironment::Get ().mDevBrand.c_str ());
+	} else {
+		lua_pushnil ( L );
+	}
+	
 	return 1;
 }
 
@@ -188,7 +243,12 @@ int MOAIEnvironment::_getDevBrand ( lua_State* L  ) {
 */
 int MOAIEnvironment::_getDevName ( lua_State* L  ) {
 
-	lua_pushstring ( L, MOAIEnvironment::Get ().mDevName.c_str ());
+	if ( MOAIEnvironment::Get ().mDevName != NULL ) {
+		lua_pushstring ( L, MOAIEnvironment::Get ().mDevName.c_str ());
+	} else {
+		lua_pushnil ( L );
+	}
+	
 	return 1;
 }
 
@@ -200,7 +260,12 @@ int MOAIEnvironment::_getDevName ( lua_State* L  ) {
 */
 int MOAIEnvironment::_getDevManufacturer ( lua_State* L  ) {
 
-	lua_pushstring ( L, MOAIEnvironment::Get ().mDevManufacturer.c_str ());
+	if ( MOAIEnvironment::Get ().mDevManufacturer != NULL ) {
+		lua_pushstring ( L, MOAIEnvironment::Get ().mDevManufacturer.c_str ());
+	} else {
+		lua_pushnil ( L );
+	}
+	
 	return 1;
 }
 
@@ -212,7 +277,12 @@ int MOAIEnvironment::_getDevManufacturer ( lua_State* L  ) {
 */
 int MOAIEnvironment::_getDevModel ( lua_State* L  ) {
 
-	lua_pushstring ( L, MOAIEnvironment::Get ().mDevModel.c_str ());
+	if ( MOAIEnvironment::Get ().mDevModel != NULL ) {
+		lua_pushstring ( L, MOAIEnvironment::Get ().mDevModel.c_str ());
+	} else {
+		lua_pushnil ( L );
+	}
+	
 	return 1;
 }
 
@@ -224,7 +294,12 @@ int MOAIEnvironment::_getDevModel ( lua_State* L  ) {
 */
 int MOAIEnvironment::_getDevProduct ( lua_State* L  ) {
 
-	lua_pushstring ( L, MOAIEnvironment::Get ().mDevProduct.c_str ());
+	if ( MOAIEnvironment::Get ().mDevProduct != NULL ) {
+		lua_pushstring ( L, MOAIEnvironment::Get ().mDevProduct.c_str ());
+	} else {
+		lua_pushnil ( L );
+	}
+	
 	return 1;
 }
 
@@ -236,7 +311,12 @@ int MOAIEnvironment::_getDevProduct ( lua_State* L  ) {
 */
 int MOAIEnvironment::_getDocumentDirectory ( lua_State* L  ) {
 
-	lua_pushstring ( L, MOAIEnvironment::Get ().mDocumentDirectory.c_str ());
+	if ( MOAIEnvironment::Get ().mDocumentDirectory != NULL ) {
+		lua_pushstring ( L, MOAIEnvironment::Get ().mDocumentDirectory.c_str ());
+	} else {
+		lua_pushnil ( L );
+	}
+	
 	return 1;
 }
 
@@ -248,7 +328,12 @@ int MOAIEnvironment::_getDocumentDirectory ( lua_State* L  ) {
 */
 int MOAIEnvironment::_getLanguageCode ( lua_State* L  ) {
 
-	lua_pushstring ( L, MOAIEnvironment::Get ().mLanguageCode.c_str ());
+	if ( MOAIEnvironment::Get ().mLanguageCode != NULL ) {
+		lua_pushstring ( L, MOAIEnvironment::Get ().mLanguageCode.c_str ());
+	} else {
+		lua_pushnil ( L );
+	}
+	
 	return 1;
 }
 
@@ -260,14 +345,14 @@ int MOAIEnvironment::_getLanguageCode ( lua_State* L  ) {
 */
 int MOAIEnvironment::_getOSBrand ( lua_State* L  ) {
 
-	cc8* brandStr = MOAIEnvironment::Get ().mOSBrand.c_str ();
-	u32 brand;
-	if ( !strcmp ( brandStr, "Android" ))
-		brand = OS_BRAND_ANDROID;
-	else if ( !strcmp ( brandStr, "iOS" ))
-		brand = OS_BRAND_IOS;
-	else
-		brand = OS_BRAND_UNAVAILABLE;
+	u32 brand = OS_BRAND_UNAVAILABLE;
+	if ( MOAIEnvironment::Get ().mOSBrand != NULL ) {
+		cc8* brandStr = MOAIEnvironment::Get ().mOSBrand.c_str ();
+		if ( !strcmp ( brandStr, "Android" ))
+			brand = OS_BRAND_ANDROID;
+		else if ( !strcmp ( brandStr, "iOS" ))
+			brand = OS_BRAND_IOS;
+	}
 
 	lua_pushinteger ( L, brand );
 	return 1;
@@ -281,7 +366,12 @@ int MOAIEnvironment::_getOSBrand ( lua_State* L  ) {
 */
 int MOAIEnvironment::_getOSVersion ( lua_State* L  ) {
 
-	lua_pushstring ( L, MOAIEnvironment::Get ().mOSVersion.c_str ());
+	if ( MOAIEnvironment::Get ().mOSVersion != NULL ) {
+		lua_pushstring ( L, MOAIEnvironment::Get ().mOSVersion.c_str ());
+	} else {
+		lua_pushnil ( L );
+	}
+	
 	return 1;
 }
 
@@ -293,7 +383,12 @@ int MOAIEnvironment::_getOSVersion ( lua_State* L  ) {
 */
 int MOAIEnvironment::_getResourceDirectory ( lua_State* L  ) {
 
-	lua_pushstring ( L, MOAIEnvironment::Get ().mResourceDirectory.c_str ());
+	if ( MOAIEnvironment::Get ().mResourceDirectory != NULL ) {
+		lua_pushstring ( L, MOAIEnvironment::Get ().mResourceDirectory.c_str ());
+	} else {
+		lua_pushnil ( L );
+	}
+	
 	return 1;
 }
 
@@ -322,7 +417,12 @@ int MOAIEnvironment::_getScreenSize ( lua_State* L ) {
 */
 int MOAIEnvironment::_getUDID ( lua_State* L  ) {
 
-	lua_pushstring ( L, MOAIEnvironment::Get ().mUDID.c_str ());
+	if ( MOAIEnvironment::Get ().mUDID != NULL ) {
+		lua_pushstring ( L, MOAIEnvironment::Get ().mUDID.c_str ());
+	} else {
+		lua_pushnil ( L );
+	}
+	
 	return 1;
 }
 
@@ -373,29 +473,29 @@ STLString MOAIEnvironment::GetResourceDirectory () {
 
 //----------------------------------------------------------------//
 MOAIEnvironment::MOAIEnvironment () :
-	mAppDisplayName ( "UNKNOWN" ),
-	mAppID ( "UNKNOWN" ),
-	mAppVersion ( "UNKNOWN" ),
-	mCacheDirectory ( "UNKNOWN" ),
-	mCarrierISOCountryCode ( "UNKNOWN" ),
-	mCarrierMobileCountryCode ( "UNKNOWN" ),
-	mCarrierMobileNetworkCode ( "UNKNOWN" ),
-	mCarrierName ( "UNKNOWN" ),
+	mAppDisplayName ( NULL ),
+	mAppID ( NULL ),
+	mAppVersion ( NULL ),
+	mCacheDirectory ( NULL ),
+	mCarrierISOCountryCode ( NULL ),
+	mCarrierMobileCountryCode ( NULL ),
+	mCarrierMobileNetworkCode ( NULL ),
+	mCarrierName ( NULL ),
 	mConnectionType ( CONNECTION_TYPE_NONE ),
-	mCountryCode ( "UNKNOWN" ),
-	mCPUABI ( "UNKNOWN" ),
-	mDevBrand ( "UNKNOWN" ),
-	mDevName ( "UNKNOWN" ),
-	mDevManufacturer ( "UNKNOWN" ),
-	mDevModel ( "UNKNOWN" ),
-	mDevProduct ( "UNKNOWN" ),
-	mDocumentDirectory ( "UNKNOWN" ),
+	mCountryCode ( NULL ),
+	mCPUABI ( NULL ),
+	mDevBrand ( NULL ),
+	mDevName ( NULL ),
+	mDevManufacturer ( NULL ),
+	mDevModel ( NULL ),
+	mDevProduct ( NULL ),
+	mDocumentDirectory ( NULL ),
 	mIsRetinaDisplay ( false ),
-	mLanguageCode ( "UNKNOWN" ),
-	mOSBrand ( "UNKNOWN" ),
-	mOSVersion ( "UNKNOWN" ),
-	mResourceDirectory ( "UNKNOWN" ),
-	mUDID ( "UNKNOWN" ),
+	mLanguageCode ( NULL ),
+	mOSBrand ( NULL ),
+	mOSVersion ( NULL ),
+	mResourceDirectory ( NULL ),
+	mUDID ( NULL ),
 	mScreenWidth ( 0 ),
 	mScreenHeight ( 0 ) {
 
