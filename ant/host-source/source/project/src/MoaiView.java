@@ -61,7 +61,6 @@ public class MoaiView extends GLSurfaceView {
 	protected static native void AKUExtLoadLuasql				(); // M
 	protected static native void AKUInit 						( MoaiView view, MoaiActivity activity ); // M
 	protected static native void AKUPause 						( boolean paused ); // M
-	protected static native void AKUReleaseGfxContext			(); // R
 	protected static native void AKURender	 					(); // R
 	protected static native void AKUReserveInputDevices			( int total ); // M 
 	protected static native void AKUReserveInputDeviceSensors	( int deviceId, int total ); // M
@@ -290,7 +289,6 @@ public class MoaiView extends GLSurfaceView {
 
 			log ( "MoaiRenderer onSurfaceCreated called" );
 
-			AKUReleaseGfxContext ();
 			AKUDetectGfxContext ();
 			
 			if ( !mRunScriptsExecuted ) {
