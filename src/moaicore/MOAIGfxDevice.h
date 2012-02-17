@@ -226,6 +226,7 @@ public:
 	void					RenewResources			();
 	
 	void					Reserve					( u32 size );
+	void					ResetResources			();
 	void					ResetState				();
 	
 	void					SetBlendMode			();

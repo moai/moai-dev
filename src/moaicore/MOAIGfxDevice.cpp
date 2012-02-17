@@ -399,7 +399,7 @@ void MOAIGfxDevice::DetectContext () {
 		}
 	#endif
 	
-	this->RenewResources ();
+	this->ResetResources ();
 }
 
 //----------------------------------------------------------------//
@@ -839,6 +839,15 @@ void MOAIGfxDevice::Reserve ( u32 size ) {
 	this->mSize = size;
 	this->mTop = 0;
 	this->mBuffer = malloc ( size );
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDevice::ResetResources () {
+
+	ResourceIt resourceIt = this->mResources.Head ();
+	for ( ; resourceIt; resourceIt = resourceIt->Next ()) {
+		resourceIt->Data ()->ResetGfxResource ();
+	}
 }
 
 //----------------------------------------------------------------//
