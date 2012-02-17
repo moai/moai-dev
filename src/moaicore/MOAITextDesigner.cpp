@@ -97,6 +97,8 @@
 //----------------------------------------------------------------//
 int MOAITextDesigner::Layout ( cc8* str, int idx, const USRect& frame, u32 hAlign, u32 vAlign, MOAITextStyleMap& styleMap, MOAITextLayout& layout ) {
 	
+	if ( !styleMap.Size ()) return idx;
+	
 	this->mStr = str;
 	this->mIdx = idx;
 	this->mStyleMap = &styleMap;
@@ -168,7 +170,7 @@ int MOAITextDesigner::Layout ( cc8* str, int idx, const USRect& frame, u32 hAlig
 				
 				// handle new token
 				if ( !tokenSize ) {
-					nextIdx = this->mIdx;
+					nextIdx = this->mIdx - 1;
 					tokenStart = layout.mSprites.GetTop ();
 					tokenRect.Init ( pen.mX, pen.mY, pen.mX, pen.mY + this->mDeck->mHeight );
 					tokenAscent = this->mDeck->mAscent;
@@ -220,7 +222,12 @@ int MOAITextDesigner::Layout ( cc8* str, int idx, const USRect& frame, u32 hAlig
 				sprite.mY = pen.mY;
 			}
 			
-			tokenRect.Init ( 0.0f, pen.mY, tokenRect.Width (), pen.mY );
+			tokenRect.Init ( 0.0f, pen.mY, tokenRect.Width (), pen.mY + tokenRect.Height ());
+		}
+		
+		if ( tokenRect.mYMax > height ) {
+			layout.mSprites.SetTop ( layout.mSprites.GetTop () - tokenSize );
+			more = false;
 		}
 	}
 	
@@ -284,12 +291,12 @@ MOAITextDesigner::~MOAITextDesigner () {
 //----------------------------------------------------------------//
 u32 MOAITextDesigner::NextChar () {
 
-	bool updateDeck = false;
+	bool newSpan = false;
 
 	if ( !this->mStyleSpan ) {
 		this->mStyleSpan = &this->mStyleMap->Elem ( 0 );
 		this->mSpanIdx = 0;
-		updateDeck = true;
+		newSpan = true;
 	}
 
 	if ( this->mIdx >= this->mStyleSpan->mTop ) {
@@ -300,13 +307,9 @@ u32 MOAITextDesigner::NextChar () {
 		for ( this->mSpanIdx++; this->mSpanIdx < totalStyles; this->mSpanIdx++ ) {
 			MOAITextStyleSpan& styleSpan = this->mStyleMap->Elem ( this->mSpanIdx );
 			
-			if ( this->mIdx <= styleSpan.mBase ) {
+			if ( this->mIdx < styleSpan.mTop ) {
 				this->mStyleSpan = &styleSpan;
-				
-				if ( this->mIdx < styleSpan.mBase ) {
-					this->mIdx = styleSpan.mBase;
-				}
-				updateDeck = true;
+				newSpan = true;
 				break;
 			}
 		}
@@ -314,7 +317,12 @@ u32 MOAITextDesigner::NextChar () {
 	
 	if ( this->mStyleSpan ) {
 	
-		if ( updateDeck ) {
+		if ( newSpan ) {
+		
+			if ( this->mIdx < this->mStyleSpan->mBase ) {
+				this->mIdx = this->mStyleSpan->mBase;
+			}
+		
 			MOAITextStyle* style = this->mStyleSpan->mStyle;
 			assert ( style );
 			

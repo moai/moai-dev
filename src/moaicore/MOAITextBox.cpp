@@ -123,6 +123,23 @@ int MOAITextBox::_getStringBounds ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAITextBox::_getStyle ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextBox, "U" )
+
+	MOAITextStyle* style = 0;
+
+	cc8* styleName = state.GetValue < cc8* >( 2, 0 );
+	style = self->mStyleSet.GetStyle ( styleName );
+
+	if ( style ) {
+		style->PushLuaUserdata ( state );
+		return 1;
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	more
 	@text	Returns whether there are additional pages of text below the cursor position that are not visible on the screen.
 
@@ -314,6 +331,9 @@ int MOAITextBox::_setString ( lua_State* L ) {
 
 	cc8* text = state.GetValue < cc8* >( 2, "" );
 	self->SetText ( text );
+	
+	self->mStyleMap.Reset ();
+	self->ScheduleLayout ();
 
 	return 0;
 }
@@ -358,9 +378,7 @@ int MOAITextBox::_setStyle ( lua_State* L ) {
 
 	MOAITextStyle* style = state.GetLuaObject < MOAITextStyle >( 2 );
 	if ( style ) {
-		style->Retain (); // TODO
-		self->mDefaultStyle = style;
-		self->mStyleSet.SetDefault ( style );
+		self->mStyleSet.SetStyle ( style );
 	}
 	else {
 		cc8* styleName = state.GetValue < cc8* >( 2, "" );
@@ -374,6 +392,10 @@ int MOAITextBox::_setStyle ( lua_State* L ) {
 			}
 		}
 	}
+	
+	self->mStyleMap.Reset ();
+	self->ScheduleLayout ();
+	
 	return 0;
 }
 
@@ -389,6 +411,7 @@ int MOAITextBox::_setYFlip ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextBox, "UB" )
 
 	self->mYFlip = state.GetValue < bool >( 2, self->mYFlip );
+	self->ScheduleUpdate ();
 
 	return 0;
 }
@@ -507,6 +530,8 @@ void MOAITextBox::Layout () {
 			this->mStyleMap.Tokenize ( this->mStyleSet, this->mText );
 		}
 		
+		this->mLayout.Reset ();
+		
 		MOAITextDesigner designer;
 		this->mNextPageIdx = designer.Layout (
 			this->mText,
@@ -533,7 +558,6 @@ MOAITextBox::MOAITextBox () :
 	mSpeed ( DEFAULT_SPOOL_SPEED ),
 	mReveal ( REVEAL_ALL ),
 	mYFlip ( false ),
-	mDefaultStyle ( 0 ),
 	mCurrentPageIdx ( 0 ),
 	mNextPageIdx ( 0 ),
 	mNeedsLayout ( false ) {
@@ -625,6 +649,7 @@ void MOAITextBox::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "clearCurves",			_clearCurves },
 		{ "getLineSize",			_getLineSize },
 		{ "getStringBounds",		_getStringBounds },
+		{ "getStyle",				_getStyle },
 		{ "more",					_more },
 		{ "nextPage",				_nextPage },
 		{ "reserveCurves",			_reserveCurves },
@@ -704,5 +729,10 @@ void MOAITextBox::SetText ( cc8* text ) {
 	
 	this->mReveal = REVEAL_ALL;
 	this->mSpool = 0.0f;
+	
+	this->mCurrentPageIdx = 0;
+	this->mNextPageIdx = 0;
+	
+	this->mStyleMap.Reset ();
 }
 

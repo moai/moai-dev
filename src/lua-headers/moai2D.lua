@@ -68,6 +68,22 @@ end
 MOAIThread = MOAICoroutine
 MOAILayerBridge2D = MOAILayerBridge
 
+MOAIFont = MOAIFont.extend (
+
+	-- extend the instance interface
+	function ( interface, super )
+		
+		function interface.loadFromTTF ( self, filename, charcodes, points, dpi )
+			self:load ( filename )
+			self:preloadGlyphs ( charcodes, points, dpi )
+		end
+	end,
+	
+	-- extend the class
+	function ( class, super )
+	end
+)
+
 MOAILayer2D = MOAILayer.extend (
 
 	-- extend the instance interface
@@ -85,18 +101,6 @@ MOAILayer2D = MOAILayer.extend (
 	end
 )
 
-MOAITransform2D = MOAITransform.extend (
-
-	-- extend the instance interface
-	function ( interface, super )
-		initTransform2DInterface ( interface, super )
-	end,
-	
-	-- extend the class
-	function ( class, super )
-	end
-)
-
 MOAIProp2D = MOAIProp.extend (
 
 	-- extend the instance interface
@@ -106,6 +110,50 @@ MOAIProp2D = MOAIProp.extend (
 		function interface.setFrame ( self, xMin, yMin, xMax, yMax )
 			super.setFrame ( self, xMin, yMin, 0, xMax, yMax, 0 )
 		end
+	end,
+	
+	-- extend the class
+	function ( class, super )
+	end
+)
+
+MOAITextBox = MOAITextBox.extend (
+
+	-- extend the instance interface
+	function ( interface, super )
+		
+		function interface.affirmStyle ( self )
+			local style = self:getStyle ()
+			if not style then
+				style = MOAITextStyle.new ()
+				self:setStyle ( style )
+			end
+			return style
+		end
+		
+		function interface.setFont ( self, font )
+			local style = self:affirmStyle ()
+			style:setFont ( font )
+		end
+		
+		function interface.setTextSize ( self, points, dpi )
+			--points = ( pix * 72 ) / ( dpi or 72 )
+			local size = ( points * ( dpi or 72 )) / 72
+			local style = self:affirmStyle ()
+			style:setSize ( size )
+		end
+	end,
+	
+	-- extend the class
+	function ( class, super )
+	end
+)
+
+MOAITransform2D = MOAITransform.extend (
+
+	-- extend the instance interface
+	function ( interface, super )
+		initTransform2DInterface ( interface, super )
 	end,
 	
 	-- extend the class

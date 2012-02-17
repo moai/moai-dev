@@ -187,8 +187,10 @@ void moaicore::InitGlobals ( MOAIGlobals* globals ) {
 	#endif
 	
 	// run bundled init scripts for back compat and Lua framework extensions
-	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
-	state.Run ( moai2D_lua, moai2D_lua_SIZE, 0, 0 );
+	if ( moai2D_lua_SIZE ) {
+		MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+		state.Run ( moai2D_lua, moai2D_lua_SIZE, 0, 0 );
+	}
 }
 
 //----------------------------------------------------------------//

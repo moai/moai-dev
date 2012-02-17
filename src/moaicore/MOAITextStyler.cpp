@@ -290,7 +290,7 @@ bool MOAITextStyler::ParseStyle () {
 				memcpy ( name, &this->mStr [ startIdx + 1 ], namesize );
 				name [ namesize ] = 0;
 				
-				MOAITextStyle* style = this->mStyleSet->FindStyle ( name );
+				MOAITextStyle* style = this->mStyleSet->GetStyle ( name );
 				this->PushStyle ( style );
 				
 				TRANSITION ( DONE );
@@ -361,7 +361,7 @@ void MOAITextStyler::Style ( MOAITextStyleMap& styleMap, MOAITextStyleSet& style
 	this->mStyleStackTop = 0;
 	this->mCurrentStyle = 0;
 	
-	this->PushStyle ( styleSet.GetDefault ());
+	this->PushStyle ( styleSet.GetStyle ());
 	if ( !this->mCurrentStyle ) return;
 	
 	this->mIdx = 0;

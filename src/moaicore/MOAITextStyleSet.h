@@ -21,11 +21,11 @@ public:
 	friend class MOAITextStyler;
 	
 	//----------------------------------------------------------------//
-	MOAITextStyle*		FindStyle				( cc8* styleName );
-	MOAITextStyle*		GetDefault				();
+	MOAITextStyle*		GetStyle				();
+	MOAITextStyle*		GetStyle				( cc8* styleName );
 						MOAITextStyleSet		();
 						~MOAITextStyleSet		();
-	void				SetDefault				( MOAITextStyle* style );
+	void				SetStyle				( MOAITextStyle* style );
 	void				SetStyle				( cc8* styleName, MOAITextStyle* style );
 };
 
