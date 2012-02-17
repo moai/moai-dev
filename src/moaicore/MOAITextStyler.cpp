@@ -27,7 +27,7 @@
 void MOAITextStyler::FinishToken () {
 
 	if ( this->mCurrentStyle && ( this->mTokenBase < this->mTokenTop )) {
-		this->mStyleMap->PushSpan ( this->mStr, this->mTokenBase, this->mTokenTop, *this->mCurrentStyle );
+		this->mStyleMap->PushSpan ( this->mTokenBase, this->mTokenTop, *this->mCurrentStyle );
 	}
 	
 	this->mTokenBase = this->mIdx;
@@ -292,8 +292,6 @@ bool MOAITextStyler::ParseStyle () {
 				
 				MOAITextStyle* style = this->mStyleSet->FindStyle ( name );
 				this->PushStyle ( style );
-				
-				printf ( "found style: %s\n", name );
 				
 				TRANSITION ( DONE );
 			}

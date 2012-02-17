@@ -248,12 +248,14 @@ void MOAIFont::UpdateGlyphs ( u32 target ) {
 		if ( !glyphIt ) continue;
 		
 		FT_Set_Char_Size ( face, 0, ( u32 )( glyphDeck.mPoints * 64.0f ), DPI, DPI );
-		//float pixelSize = face->size->metrics.y_ppem;
 		
 		int yMin = FT_MulFix ( face->bbox.yMin, face->size->metrics.y_scale ) >> 6;
 		int yMax = FT_MulFix ( face->bbox.yMax, face->size->metrics.y_scale ) >> 6;
 		
 		int faceHeight = yMax - yMin;
+		
+		glyphDeck.mAscent = ( float )( face->size->metrics.ascender >> 6 );
+		glyphDeck.mHeight = ( float )( face->size->metrics.height >> 6 );
 		
 		for ( ; glyphIt; glyphIt = glyphIt->mNext ) {
 			MOAIGlyph& glyph = *glyphIt;

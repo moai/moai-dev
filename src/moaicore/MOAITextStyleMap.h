@@ -28,7 +28,7 @@ class MOAITextStyleMap :
 	
 	//----------------------------------------------------------------//
 	u32			AffirmStyle			( MOAITextStyle& style );
-	void		PushSpan			( cc8* str, int base, int top, MOAITextStyle& style );
+	void		PushSpan			( int base, int top, MOAITextStyle& style );
 	
 public:
 

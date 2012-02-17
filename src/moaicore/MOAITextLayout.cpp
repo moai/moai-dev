@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <uslscore/USBinarySearch.h>
+#include <moaicore/MOAIDebugLines.h>
 #include <moaicore/MOAIFont.h>
 #include <moaicore/MOAIGfxDevice.h>
 #include <moaicore/MOAIQuadBrush.h>
@@ -22,9 +23,9 @@ void MOAITextLayout::Draw ( u32 reveal ) {
 	USColorVec blendColor;
 	u32 rgba = 0xffffffff;
 
-	u32 size = this->GetTop ();
+	u32 size = this->mSprites.GetTop ();
 	for ( u32 i = 0; ( i < size ) && ( i < reveal ); ++i ) {
-		const MOAITextSprite& sprite = ( *this )[ i ];
+		const MOAITextSprite& sprite = this->mSprites [ i ];
 		
 		if ( sprite.mRGBA != rgba ) {
 			rgba = sprite.mRGBA;
@@ -34,6 +35,32 @@ void MOAITextLayout::Draw ( u32 reveal ) {
 			gfxDevice.SetPenColor ( blendColor );
 		}
 		sprite.mGlyph->Draw ( sprite.mX, sprite.mY );
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAITextLayout::DrawDebugBaselines () {
+	
+	MOAIDebugLines& debugLines = MOAIDebugLines::Get ();
+	
+	u32 totalLines = this->mLines.GetTop ();
+	for ( u32 i = 0; i < totalLines; ++i ) {
+		MOAITextLine& line = this->mLines [ i ];
+		
+		float y = line.mRect.mYMin + line.mAscent;
+		debugLines.DrawLine ( line.mRect.mXMin, y, line.mRect.mXMax, y );
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAITextLayout::DrawDebugLayout () {
+	
+	MOAIDebugLines& debugLines = MOAIDebugLines::Get ();
+	
+	u32 totalLines = this->mLines.GetTop ();
+	for ( u32 i = 0; i < totalLines; ++i ) {
+		MOAITextLine& line = this->mLines [ i ];
+		debugLines.DrawRect ( line.mRect );
 	}
 }
 
@@ -75,6 +102,15 @@ bool MOAITextLayout::GetBoundsForRange ( u32 idx, u32 size, USRect& rect ) {
 }
 
 //----------------------------------------------------------------//
+bool MOAITextLayout::More ( u32 reveal ) {
+
+	if ( reveal <= this->mSprites.GetTop ()) {
+		return true;
+	}
+	return this->mMore;
+}
+
+//----------------------------------------------------------------//
 void MOAITextLayout::PushGlyph ( const MOAIGlyph* glyph, u32 idx, float x, float y, u32 rgba ) {
 
 	MOAITextSprite textSprite;
@@ -85,7 +121,28 @@ void MOAITextLayout::PushGlyph ( const MOAIGlyph* glyph, u32 idx, float x, float
 	textSprite.mY			= y;
 	textSprite.mRGBA		= rgba;
 
-	this->Push ( textSprite );
+	this->mSprites.Push ( textSprite );
+}
+
+//----------------------------------------------------------------//
+void MOAITextLayout::PushLine ( u32 start, u32 size, const USRect& rect, float ascent ) {
+
+	MOAITextLine textLine;
+	
+	textLine.mStart			= start;
+	textLine.mSize			= size;
+	textLine.mRect			= rect;
+	textLine.mAscent		= ascent;
+	
+	this->mLines.Push ( textLine );
+}
+
+//----------------------------------------------------------------//
+void MOAITextLayout::Reset () {
+
+	this->mMore = false;
+	this->mLines.Reset ();
+	this->mSprites.Reset ();
 }
 
 //----------------------------------------------------------------//
@@ -94,9 +151,9 @@ void MOAITextLayout::SetColorForRange ( u32 idx, u32 size, u32 rgba ) {
 	u32 end = idx + size;
 
 	// TODO: replace w/ binary search
-	u32 top = this->GetTop ();
+	u32 top = this->mSprites.GetTop ();
 	for ( u32 i = 0; i < top; ++i ) {
-		MOAITextSprite& sprite = ( *this )[ i ];
+		MOAITextSprite& sprite = this->mSprites [ i ];
 		
 		if ( sprite.mIdx >= end ) break;
 
@@ -104,4 +161,10 @@ void MOAITextLayout::SetColorForRange ( u32 idx, u32 size, u32 rgba ) {
 			sprite.mRGBA = rgba;
 		}
 	}
+}
+
+//----------------------------------------------------------------//
+u32 MOAITextLayout::Size () {
+
+	return this->mSprites.GetTop ();
 }

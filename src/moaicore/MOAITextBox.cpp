@@ -62,6 +62,7 @@ int MOAITextBox::_clearCurves ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextBox, "U" )
 
 	self->ClearCurves ();
+	self->ScheduleLayout ();
 
 	return 0;
 }
@@ -186,17 +187,19 @@ int MOAITextBox::_revealAll ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	setAlignment
-	@text	Sets the alignment of the text in the text box.
+	@text	Sets the horizontal and/or vertical alignment of the text in the text box.
 
 	@in		MOAITextBox self
-	@in		enum mAlignment				Can be one of LEFT_JUSTIFY, CENTER_JUSTIFY or RIGHT_JUSTIFY.
+	@in		enum hAlignment				Can be one of LEFT_JUSTIFY, CENTER_JUSTIFY or RIGHT_JUSTIFY.
+	@in		enum vAlignment				Can be one of LEFT_JUSTIFY, CENTER_JUSTIFY or RIGHT_JUSTIFY.
 	@out	nil
 */
 int MOAITextBox::_setAlignment ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextBox, "UN" )
 
-	//u32 alignment = state.GetValue < u32 >( 2, MOAIFont::LEFT_JUSTIFY );
-	//self->mJustify = alignment;
+	self->mHAlign = state.GetValue < u32 >( 2, MOAITextBox::LEFT_JUSTIFY );
+	self->mVAlign = state.GetValue < u32 >( 3, MOAITextBox::LEFT_JUSTIFY );
+	self->ScheduleLayout ();
 
 	return 0;
 }
@@ -219,25 +222,7 @@ int MOAITextBox::_setCurve ( lua_State* L ) {
 	if ( !curve ) return 0;
 
 	self->SetCurve ( index, curve );
-
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@name	setFont
-	@text	Sets the specified font to be used to render text within this text object.
-
-	@in		MOAITextBox self
-	@in		MOAIFont font				The MOAIFont to be used as the font for this text object.
-	@out	nil
-*/
-int MOAITextBox::_setFont ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITextBox, "UU" )
-
-	MOAIFont* font = state.GetLuaObject < MOAIFont >( 2 );
-	if ( !font ) return 0;
-	
-	self->SetFont ( font );
+	self->ScheduleLayout ();
 
 	return 0;
 }
@@ -253,6 +238,7 @@ int MOAITextBox::_setLineSpacing ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextBox, "U" )
 	
 	self->mLineSpacing = state.GetValue < float >( 2, 1.0f );
+	self->ScheduleLayout ();
 	
 	return 0;
 }
@@ -277,6 +263,7 @@ int MOAITextBox::_setRect ( lua_State* L ) {
 	float bottom	= state.GetValue < float >( 5, 0.0f );
 
 	self->SetRect ( left, top, right, bottom );
+	self->ScheduleLayout ();
 
 	return 0;
 }
@@ -295,22 +282,6 @@ int MOAITextBox::_setReveal ( lua_State* L ) {
 	self->mReveal = state.GetValue < u32 >( 2, self->mReveal );
 	self->mSpool = ( float )self->mReveal;
 
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@name	setRightToLeft
-	@text	Reverses the order or characters rendered.
-
-	@in		MOAITextBox self
-	@opt	boolean rightToLeft			Default value is false.
-	@out	nil
-*/
-int MOAITextBox::_setRightToLeft ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITextBox, "U" )
-	
-	self->mRightToLeft = state.GetValue < bool >( 2, false );
-	
 	return 0;
 }
 
@@ -407,23 +378,6 @@ int MOAITextBox::_setStyle ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setTextSize
-	@text	Sets the size of the text to be rendered.  To avoid sampling, this should be the same or smaller than the point size returned by the font (which is different to the size or scale specified when initalizing the font; they are not measured in the same units).
-
-	@in		MOAITextBox self
-	@in		number newTextSize			The new size of the text.
-	@out	nil
-*/
-int MOAITextBox::_setTextSize ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITextBox, "UN" )
-
-	float newTextSize = state.GetValue < float >( 2, 0.0f );
-	self->SetTextSize ( newTextSize );
-
-	return 0;
-}
-
-//----------------------------------------------------------------//
 /**	@name	setYFlip
 	@text	Sets the rendering direction for the text.  Default assumes a window style screen space (positive Y moves down the screen).  Set to true to render text for world style coordinate systems (positive Y moves up the screen).
 
@@ -465,17 +419,6 @@ int MOAITextBox::_spool ( lua_State* L ) {
 const float MOAITextBox::DEFAULT_SPOOL_SPEED = 24.0f;
 
 //----------------------------------------------------------------//
-void MOAITextBox::AffirmDefaultStyle () {
-
-	if ( !this->mDefaultStyle ) {
-	
-		// TODO: retain
-		this->mDefaultStyle = new MOAITextStyle ();
-		this->mStyleSet.SetDefault ( this->mDefaultStyle );
-	}
-}
-
-//----------------------------------------------------------------//
 void MOAITextBox::ClearCurves () {
 
 	for ( u32 i = 0; i < this->mCurves.Size (); ++i ) {
@@ -491,7 +434,7 @@ void MOAITextBox::Draw ( int subPrimID, bool reload ) {
 	UNUSED ( subPrimID ); 
 	UNUSED ( reload );
 	
-	//if ( this->mReveal ) {
+	if ( this->mReveal ) {
 	
 		MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 
@@ -507,20 +450,30 @@ void MOAITextBox::Draw ( int subPrimID, bool reload ) {
 		gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
 		
 		this->mLayout.Draw ( this->mReveal );
-	//}
+	}
 }
 
 //----------------------------------------------------------------//
 void MOAITextBox::DrawDebug ( int subPrimID ) {
 	UNUSED ( subPrimID ); 
 
+	this->Layout ();
+
 	MOAIDebugLines& debugLines = MOAIDebugLines::Get ();
+	
+	debugLines.SetWorldMtx ( this->GetLocalToWorldMtx ());
+	debugLines.SetPenSpace ( MOAIDebugLines::MODEL_SPACE );
+	
 	if ( debugLines.Bind ( MOAIDebugLines::TEXT_BOX )) {
-		
-		debugLines.SetWorldMtx ( this->GetLocalToWorldMtx ());
-		debugLines.SetPenSpace ( MOAIDebugLines::MODEL_SPACE );
-		
 		debugLines.DrawRect ( this->mFrame );
+	}
+	
+	if ( debugLines.Bind ( MOAIDebugLines::TEXT_BOX_BASELINES )) {
+		this->mLayout.DrawDebugBaselines ();
+	}
+	
+	if ( debugLines.Bind ( MOAIDebugLines::TEXT_BOX_LAYOUT )) {
+		this->mLayout.DrawDebugLayout ();
 	}
 }
 
@@ -534,10 +487,39 @@ u32 MOAITextBox::GetDeckBounds ( USBox& bounds ) {
 //----------------------------------------------------------------//
 bool MOAITextBox::IsDone () {
 
-	//if ( this->IsActive ()) {
-	//	return ( this->mReveal > this->mLayout.GetTop ());
-	//}
+	if ( this->IsActive ()) {
+		this->Layout ();
+		return ( this->mReveal > this->mLayout.Size ());
+	}
 	return true;
+}
+
+//----------------------------------------------------------------//
+void MOAITextBox::Layout () {
+
+	if ( !this->mText ) {
+		this->mStyleMap.Reset ();
+		this->mLayout.Reset ();
+	}
+	else if ( this->mNeedsLayout ) {
+		
+		if ( !this->mStyleMap.GetTop ()) {
+			this->mStyleMap.Tokenize ( this->mStyleSet, this->mText );
+		}
+		
+		MOAITextDesigner designer;
+		this->mNextPageIdx = designer.Layout (
+			this->mText,
+			this->mCurrentPageIdx,
+			this->mFrame,
+			this->mHAlign,
+			this->mVAlign,
+			this->mStyleMap,
+			this->mLayout
+		);
+	}
+	
+	this->mNeedsLayout = false;
 }
 
 //----------------------------------------------------------------//
@@ -545,14 +527,16 @@ MOAITextBox::MOAITextBox () :
 	mLineSpacing ( 1.0f ),
 	mText ( "" ),
 	mTextLength ( 0 ),
-	mJustify ( LEFT_JUSTIFY ),
-	mPoints ( 0 ),
+	mHAlign ( LEFT_JUSTIFY ),
+	mVAlign ( LEFT_JUSTIFY ),
 	mSpool ( 0.0f ),
 	mSpeed ( DEFAULT_SPOOL_SPEED ),
 	mReveal ( REVEAL_ALL ),
 	mYFlip ( false ),
-	mRightToLeft ( false ),
-	mDefaultStyle ( 0 ) {
+	mDefaultStyle ( 0 ),
+	mCurrentPageIdx ( 0 ),
+	mNextPageIdx ( 0 ),
+	mNeedsLayout ( false ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIProp )
@@ -569,38 +553,30 @@ MOAITextBox::MOAITextBox () :
 MOAITextBox::~MOAITextBox () {
 
 	this->ClearCurves ();
-	//this->mFont.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//
 bool MOAITextBox::More () {
 	
-	//this->Layout ();
-	//
-	//if ( this->mReveal <= this->mLayout.GetTop ()) {
-	//	return true;
-	//}
-	//
-	//if ( this->mNextPage.GetIndex () < this->mTextLength ) {
-	//	return true;
-	//}
-	return false;
+	this->Layout ();
+	return this->mLayout.More ( this->mReveal );
 }
 
 //----------------------------------------------------------------//
 void MOAITextBox::NextPage ( bool reveal ) {
 	UNUSED ( reveal );
 	
-	//if ( this->mNextPage.GetIndex () < this->mTextLength ) {
-	//	this->mCurrentPage = this->mNextPage;
-	//}
-	//else {
-	//	this->mCurrentPage.Reset ();
-	//}
-	//
-	//this->mNeedsLayout = true;
-	//this->mReveal = reveal ? REVEAL_ALL : 0;
-	//this->mSpool = 0.0f;
+	if ( this->mLayout.More ( REVEAL_ALL )) {
+		this->mCurrentPageIdx = this->mNextPageIdx;
+	}
+	else {
+		this->mCurrentPageIdx = 0;
+		this->mNextPageIdx = 0;
+	}
+	
+	this->mNeedsLayout = true;
+	this->mReveal = reveal ? REVEAL_ALL : 0;
+	this->mSpool = 0.0f;
 }
 
 //----------------------------------------------------------------//
@@ -608,39 +584,7 @@ void MOAITextBox::OnDepNodeUpdate () {
 
 	MOAIProp::OnDepNodeUpdate ();
 
-	if ( this->mText ) {
-
-		if ( !this->mStyleMap.GetTop ()) {
-			this->mStyleMap.Tokenize ( this->mStyleSet, this->mText );
-		}
-
-		if ( !this->mLayout.GetTop ()) {
-			MOAITextDesigner designer;
-			designer.Layout ( this->mText, this->mStyleMap, this->mLayout );
-		}
-
-		//this->mLayout.Reset ();
-		
-		//if ( !this->mTextLength ) return;
-		
-		//MOAITextStyler textFrame;
-		//
-		//textFrame.SetAlignment ( this->mJustify );
-		//textFrame.SetFrame ( this->mFrame );
-		//textFrame.SetFont ( this->mFont );
-		//textFrame.SetPoints ( this->mPoints );
-		//textFrame.SetLineSpacing ( this->mLineSpacing );
-		//textFrame.SetRightToLeft ( this->mRightToLeft );
-		//
-		//textFrame.SetCurves ( this->mCurves, this->mCurves.Size ());
-		//
-		//this->mNextPage = this->mCurrentPage;
-		//textFrame.Layout (
-		//	this->mLayout,
-		//	this->mText,
-		//	this->mNextPage
-		//);
-	}
+	this->Layout ();
 
 	if ( this->mYFlip ) {
 		
@@ -687,16 +631,13 @@ void MOAITextBox::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "revealAll",				_revealAll },
 		{ "setAlignment",			_setAlignment },
 		{ "setCurve",				_setCurve },
-		{ "setFont",				_setFont },
 		{ "setLineSpacing",			_setLineSpacing },
 		{ "setRect",				_setRect },
 		{ "setReveal",				_setReveal },
-		{ "setRightToLeft",			_setRightToLeft },
 		{ "setSpeed",				_setSpeed },
 		{ "setString",				_setString },
 		{ "setStringColor",			_setStringColor },
 		{ "setStyle",				_setStyle },
-		{ "setTextSize",			_setTextSize },
 		{ "setYFlip",				_setYFlip },
 		{ "spool",					_spool },
 		{ NULL, NULL }
@@ -717,8 +658,7 @@ void MOAITextBox::ReserveCurves ( u32 total ) {
 //----------------------------------------------------------------//
 void MOAITextBox::ScheduleLayout () {
 
-	this->mLayout.Reset ();
-	this->mStyleMap.Reset ();
+	this->mNeedsLayout = true;
 	this->ScheduleUpdate ();
 }
 
@@ -751,13 +691,6 @@ void MOAITextBox::SetCurve ( u32 idx, MOAIAnimCurve* curve ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITextBox::SetFont ( MOAIFont* font ) {
-
-	this->AffirmDefaultStyle ();
-	this->mDefaultStyle->SetFont ( font );
-}
-
-//----------------------------------------------------------------//
 void MOAITextBox::SetRect ( float left, float top, float right, float bottom ) {
 
 	this->mFrame.Init ( left, top, right, bottom );
@@ -771,13 +704,5 @@ void MOAITextBox::SetText ( cc8* text ) {
 	
 	this->mReveal = REVEAL_ALL;
 	this->mSpool = 0.0f;
-	
-	this->ScheduleLayout ();
 }
 
-//----------------------------------------------------------------//
-void MOAITextBox::SetTextSize ( float newSize ) {
-
-	this->AffirmDefaultStyle ();
-	this->mDefaultStyle->SetPoints ( newSize );
-}

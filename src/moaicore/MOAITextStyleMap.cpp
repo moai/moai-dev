@@ -34,7 +34,7 @@ MOAITextStyleMap::~MOAITextStyleMap () {
 }
 
 //----------------------------------------------------------------//
-void MOAITextStyleMap::PushSpan ( cc8* str, int base, int top, MOAITextStyle& style ) {
+void MOAITextStyleMap::PushSpan ( int base, int top, MOAITextStyle& style ) {
 
 	this->AffirmStyle ( style );
 
@@ -44,21 +44,7 @@ void MOAITextStyleMap::PushSpan ( cc8* str, int base, int top, MOAITextStyle& st
 	token.mTop			= top;
 	token.mStyle		= &style;
 
-	float points = style.GetPoints ();
-	MOAIFont* font = style.GetFont ();
-	assert ( font );
-
 	this->Push ( token );
-	
-	printf ( "found token: \'" );
-	
-	int idx = base;
-	while ( idx < top ) {
-		u32 c = u8_nextchar ( str, &idx );
-		font->AffirmGlyph ( points, c );
-		putc ( c, stdout );
-	}
-	printf ( "\'\n" );
 }
 
 //----------------------------------------------------------------//

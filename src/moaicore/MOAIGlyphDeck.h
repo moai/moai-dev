@@ -14,8 +14,11 @@ class MOAIGlyphDeck {
 private:
 
 	friend class MOAIFont;
+	friend class MOAITextDesigner;
 	
-	float mPoints;
+	float	mPoints;
+	float	mHeight;
+	float	mAscent;
 	
 	// for now
 	STLMap < u32, MOAIGlyph > mGlyphMap;

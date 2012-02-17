@@ -23,49 +23,17 @@ private:
 	
 	MOAIGlyphDeck*			mDeck;
 	
-	//u32					mLineBottom;
-	//u32					mLineTop;
-	//
-	//u32					mLineCount;
-	//u32					mTotalLines;
-	//
-	//float				mLineXMax;
-	//
-	//USVec2D				mPen;
-	//cc8*				mStr;
-	//USRect				mFrame;
-	//float				mLineSpacing;
-	//u32					mJustify;
-	//MOAITextLayout*		mLayout;
-	//
 	//MOAIAnimCurve**		mCurves;
 	//u32					mTotalCurves;
 	//bool				mRightToLeft;
 
 	//----------------------------------------------------------------//
-	//u32			DecodeChar			();
-	//void			FinishChar			( u32 c );
-	//void			FinishLine			();
-	//void			FinishWord			();
-	//void			Flush				();
-	//void			FlushLine			();
-	//void			FlushToken			();
-	u32				NextChar			();
-	//void			Parse				();
-	void			UpdateStyle			();
+	u32				NextChar				();
 
 public:
 
-	//SET ( cc8*, Text, mStr )
-	//SET ( MOAIFont*, Font, mFont )
-	//SET ( const USRect&, Frame, mFrame )
-	//SET ( float, LineSpacing, mLineSpacing )
-	//SET ( float, Points, mPoints )
-	//SET ( u32, Alignment, mJustify )
-	//SET ( bool, RightToLeft, mRightToLeft )
-
 	//----------------------------------------------------------------//
-	void			Layout					( cc8* str, MOAITextStyleMap& styleMap, MOAITextLayout& layout );
+	int				Layout					( cc8* str, int idx, const USRect& frame, u32 hAlign, u32 vAlign, MOAITextStyleMap& styleMap, MOAITextLayout& layout );
 	//void			SetCurves				( MOAIAnimCurve** curves, u32 totalCurves );
 					MOAITextDesigner		();
 	virtual			~MOAITextDesigner		();

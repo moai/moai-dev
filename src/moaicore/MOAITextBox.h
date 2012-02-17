@@ -39,8 +39,8 @@ private:
 	STLString			mText;
 	u32					mTextLength;
 
-	u32					mJustify;
-	float				mPoints;
+	u32					mHAlign;
+	u32					mVAlign;
 	
 	float				mSpool;
 	float				mSpeed;
@@ -48,12 +48,15 @@ private:
 	u32					mReveal;
 	
 	bool				mYFlip;
-	bool				mRightToLeft;
 	
 	MOAITextStyle*		mDefaultStyle;
 	MOAITextStyleSet	mStyleSet;
 	MOAITextStyleMap	mStyleMap;
 	MOAITextLayout		mLayout;
+	
+	int					mCurrentPageIdx;
+	int					mNextPageIdx;
+	bool				mNeedsLayout;
 	
 	USLeanArray < MOAIAnimCurve* >	mCurves;
 	
@@ -67,23 +70,19 @@ private:
 	static int		_reserveCurves			( lua_State* L );
 	static int		_setAlignment			( lua_State* L );
 	static int		_setCurve				( lua_State* L );
-	static int		_setFont				( lua_State* L );
 	static int		_setLineSpacing			( lua_State* L );
 	static int		_setRect				( lua_State* L );
 	static int		_setReveal				( lua_State* L );
-	static int		_setRightToLeft			( lua_State* L );
 	static int		_setSpeed				( lua_State* L );
 	static int		_setString				( lua_State* L );
 	static int		_setStringColor			( lua_State* L );
 	static int		_setStyle				( lua_State* L );
-	static int		_setTextSize			( lua_State* L );
 	static int		_setYFlip				( lua_State* L );
 	static int		_spool					( lua_State* L );
 	
 	//----------------------------------------------------------------//
-	void			AffirmDefaultStyle		();
+	void			Layout					();
 	void			OnDepNodeUpdate			();
-	void			Spool					( float step );
 	void			ScheduleLayout			();
 	
 public:
@@ -114,10 +113,8 @@ public:
 	void			SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
 	void			SetColor				( float r, float g, float b, float a );
 	void			SetCurve				( u32 idx, MOAIAnimCurve* curve );
-	void			SetFont					( MOAIFont* font );
 	void			SetRect					( float left, float top, float right, float bottom );
 	void			SetText					( cc8* text );
-	void			SetTextSize				( float newSize );
 };
 
 #endif

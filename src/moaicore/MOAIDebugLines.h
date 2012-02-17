@@ -53,6 +53,8 @@ private:
 	@const	PROP_MODEL_BOUNDS
 	@const	PROP_WORLD_BOUNDS
 	@const	TEXT_BOX
+	@const	TEXT_BOX_BASELINES
+	@const	TEXT_BOX_LAYOUT
 */
 class MOAIDebugLines :
 	public MOAIGlobalClass < MOAIDebugLines, MOAILuaObject > {
@@ -64,6 +66,8 @@ public:
 		PROP_MODEL_BOUNDS,
 		PROP_WORLD_BOUNDS,
 		TEXT_BOX,
+		TEXT_BOX_BASELINES,
+		TEXT_BOX_LAYOUT,
 		TOTAL_STYLES,
 	};
 

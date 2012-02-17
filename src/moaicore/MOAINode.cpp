@@ -523,7 +523,7 @@ MOAINode::MOAINode () :
 
 //----------------------------------------------------------------//
 MOAINode::~MOAINode () {
-
+	
 	while ( this->mPullLinks ) {
 		MOAIDepLink* link = this->mPullLinks;
 		this->mPullLinks = link->mNextInDest;

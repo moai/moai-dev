@@ -28,6 +28,9 @@ MOAIGlyph* MOAIGlyphDeck::GetGlyph ( u32 c ) {
 
 //----------------------------------------------------------------//
 MOAIGlyphDeck::MOAIGlyphDeck () :
+	mPoints ( 0.0f ),
+	mHeight ( 0.0f ),
+	mAscent ( 0.0f ),
 	mPending ( 0 ) {
 }
 
