@@ -1228,7 +1228,7 @@ char* zipfs_get_working_path ( void ) {
 //----------------------------------------------------------------//
 char* zipfs_getcwd ( char* buffer, size_t length ) {
 
-	if ( sWorkingPath->mSize < length ) return 0;
+	if ( sWorkingPath->mSize >= length ) return 0;
 	strcpy ( buffer, sWorkingPath->mMem );
 	return buffer;
 }

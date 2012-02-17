@@ -326,7 +326,9 @@ public class MoaiView extends GLSurfaceView {
 			for ( String file : filenames ) {
 				
 				synchronized ( sAkuLock ) {
-				
+					
+					log ("Running " + file + " script" );
+					
 					AKURunScript ( file );
 				}
 			}
