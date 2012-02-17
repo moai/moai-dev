@@ -329,7 +329,7 @@ u32 MOAITextDesigner::NextChar () {
 			MOAIFont* font = style->mFont;
 			assert ( this->mStyleSpan->mStyle->mFont );
 			
-			this->mDeck = font->GetGlyphDeck ( style->mPoints );
+			this->mDeck = font->GetGlyphDeck ( style->mSize );
 		}
 	
 		u32 c = u8_nextchar ( this->mStr, &this->mIdx );

@@ -10,6 +10,10 @@
 
 class MOAIGlyph;
 
+#define DPI 72
+#define POINTS_TO_PIXELS(points,dpi) (( points * dpi ) / DPI )
+#define PIXELS_TO_POINTS(pixels,dpi) (( pixels * DPI ) / dpi )
+
 //================================================================//
 // MOAIFont
 //================================================================//

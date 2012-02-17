@@ -137,10 +137,8 @@ MOAITextBox = MOAITextBox.extend (
 		end
 		
 		function interface.setTextSize ( self, points, dpi )
-			--points = ( pix * 72 ) / ( dpi or 72 )
-			local size = ( points * ( dpi or 72 )) / 72
 			local style = self:affirmStyle ()
-			style:setSize ( size )
+			style:setSize ( points, dpi )
 		end
 	end,
 	

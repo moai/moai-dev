@@ -28,8 +28,12 @@ int MOAITextStyle::_setFont ( lua_State* L ) {
 //----------------------------------------------------------------//
 // TODO: doxygen
 int MOAITextStyle::_setSize ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITextStyle, "U" )
-	self->mPoints = state.GetValue < float >( 2, 0.0f );
+	MOAI_LUA_SETUP ( MOAITextStyle, "UN" )
+	
+	float points	= state.GetValue < float >( 2, 0.0f );
+	float dpi		= state.GetValue < float >( 3, DPI );
+	
+	self->mSize = POINTS_TO_PIXELS ( points, dpi );
 	return 0;
 }
 
@@ -39,7 +43,7 @@ int MOAITextStyle::_setSize ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 MOAITextStyle::MOAITextStyle () :
-	mPoints ( 1.0f ),
+	mSize ( 0.0f ),
 	mColor ( 0xffffffff ) {
 	
 	RTTI_BEGIN

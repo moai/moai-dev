@@ -19,7 +19,6 @@
 #include FT_STROKER_H
 
 #define MAX_TEXTURE_SIZE 1024
-#define DPI 72
 
 //================================================================//
 // RenderParams
@@ -93,14 +92,14 @@ int MOAIFont::_preloadGlyphs ( lua_State* L ) {
 
 	cc8* charCodes	= state.GetValue < cc8* >( 2, "" );
 	float points	= state.GetValue < float >( 3, 0 );
-	float dpi		= state.GetValue < float >( 4, 72.0f );
+	float dpi		= state.GetValue < float >( 4, DPI );
 	
-	float size = ( points * dpi ) / 72.0f;
+	float size = POINTS_TO_PIXELS ( points, dpi );
 	
 	int idx = 0;
 	while ( charCodes [ idx ]) {
 		u32 c = u8_nextchar ( charCodes, &idx );
-		self->AffirmGlyph ( points, c );
+		self->AffirmGlyph ( size, c );
 	}
 	
 	self->UpdateGlyphs ( MOAIGlyph::METRICS_AND_BITMAP );

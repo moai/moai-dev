@@ -23,7 +23,7 @@ private:
 
 	MOAILuaSharedPtr < MOAIFont > mFont;
 	
-	float	mPoints;
+	float	mSize;
 	u32		mColor;
 
 	//----------------------------------------------------------------//
@@ -37,7 +37,7 @@ public:
 	DECL_LUA_FACTORY ( MOAITextStyle )
 	
 	GET ( MOAIFont*, Font, mFont );
-	GET_SET ( float, Points, mPoints );
+	GET_SET ( float, Size, mSize );
 	GET_SET ( u32, Color, mColor );
 	
 	//----------------------------------------------------------------//

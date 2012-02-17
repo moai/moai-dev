@@ -22,13 +22,11 @@ text1 = "a b c d e f g h i j k l m n o p q r s t u v w x y z <c:fc0>A B C D E F 
 text2 = "<c:0f0>1 2 3 4 5 6 7 8 9 0 <c:f00>a i e o u <c:00f>sa shi se su so ma mi me mu mo <c:0f0>ta chi te tsu to ka ki ke ku ko <c:fc0>ra ri re ru ro"
 
 font = MOAIFont.new ()
---font:loadFromTTF ( 'EBOLA-KI.TTF', charcodes, 16, 163 )
-font:loadFromTTF ( 'EBOLA-KI.TTF', charcodes, 32 )
+font:loadFromTTF ( 'EBOLA-KI.TTF', charcodes, 16, 163 )
 
 textbox = MOAITextBox.new ()
 textbox:setFont ( font )
---textbox:setTextSize ( 16, 163 )
-textbox:setTextSize ( 32 )
+textbox:setTextSize ( 16, 163 )
 textbox:setRect ( -150, 100, 150, 230 )
 textbox:setYFlip ( true )
 layer:insertProp ( textbox )
