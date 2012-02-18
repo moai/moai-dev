@@ -289,7 +289,10 @@ public class MoaiView extends GLSurfaceView {
 
 			log ( "MoaiRenderer onSurfaceCreated called" );
 
-			AKUDetectGfxContext ();
+			synchronized ( sAkuLock ) {
+				
+				AKUDetectGfxContext ();
+			}
 			
 			if ( !mRunScriptsExecuted ) {
 
@@ -303,8 +306,11 @@ public class MoaiView extends GLSurfaceView {
 				
 						@RUN_COMMAND@
 
-						// Sessions are ended in MoaiActivity.
-						AKUAppDidStartSession ( false );
+						synchronized ( sAkuLock ) {
+
+							// Sessions are ended in MoaiActivity.
+							AKUAppDidStartSession ( false );
+						}
 					}
 				});
 			} else {
@@ -313,8 +319,11 @@ public class MoaiView extends GLSurfaceView {
 
 					public void run () {
 				
-						// Sessions are ended in MoaiActivity.
-						AKUAppDidStartSession ( true );
+						synchronized ( sAkuLock ) {
+
+							// Sessions are ended in MoaiActivity.
+							AKUAppDidStartSession ( true );
+						}
 					}
 				});
 			}

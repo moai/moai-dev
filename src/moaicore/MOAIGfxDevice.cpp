@@ -398,7 +398,8 @@ void MOAIGfxDevice::DetectContext () {
 			}
 		}
 	#endif
-	
+
+	this->mDeleterStack.Reset ();
 	this->ResetResources ();
 }
 
