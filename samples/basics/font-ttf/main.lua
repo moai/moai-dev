@@ -25,7 +25,6 @@ font:load ( 'Dwarves.TTF' )
 font:preloadGlyphs ( charcodes, 24 )
 font:preloadGlyphs ( charcodes, 32 )
 font:preloadGlyphs ( charcodes, 42 )
-font:writePages ()
 
 function newStyle ( font, size )
 	local style = MOAITextStyle.new ()

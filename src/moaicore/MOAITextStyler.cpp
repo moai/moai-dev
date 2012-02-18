@@ -257,7 +257,6 @@ bool MOAITextStyler::ParseStyle () {
 				//u32 color = this->PackColor ( color, colorSize );
 				// TODO: push style
 				this->FinishToken ();
-				printf ( "finish color\n" );
 				TRANSITION ( DONE );
 			}
 			

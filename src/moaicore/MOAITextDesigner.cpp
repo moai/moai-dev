@@ -15,86 +15,6 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-//void MOAITextDesigner::FlushLine () {
-//
-//	if ( this->mLineCount >= this->mTotalLines ) return;
-//
-//	float x = this->mFrame.mXMin;
-//	float width = this->mFrame.Width ();
-//	
-//	float lineWidth = this->mRightToLeft ? -this->mLineXMax : this->mLineXMax;
-//	float lineHeight = this->mFont->GetLineSpacing () * this->mPoints * this->mLineSpacing;
-//
-//	switch ( this->mJustify ) {
-//		
-//		case CENTER_JUSTIFY:
-//			x = ( x + ( width * 0.5f )) - ( lineWidth * 0.5f );
-//			
-//		case LEFT_JUSTIFY:
-//			break;
-//
-//		case RIGHT_JUSTIFY:
-//			x = this->mFrame.mXMax - lineWidth;
-//	}
-//	
-//	MOAIAnimCurve* curve = 0;
-//	if ( this->mCurves ) {
-//		curve = this->mCurves [ this->mLineCount % this->mTotalCurves ];
-//	}
-//	
-//	if ( this->mRightToLeft ) {
-//		x -= this->mLineXMax;
-//	}
-//	
-//	for ( u32 i = this->mLineBottom; i < this->mLineTop; ++i ) {
-//		
-//		MOAITextSprite& sprite = ( *this->mLayout )[ i ];
-//		
-//		float yOff = 0.0f;
-//		if ( curve ) {
-//			yOff = curve->GetFloatValue ( sprite.mX / width );
-//		}
-//
-//		sprite.mX += x;
-//		sprite.mY = this->mPen.mY + yOff;
-//	}
-//	
-//	this->mLineBottom = this->mLineTop;
-//	this->mLineXMax = 0.0f;
-//	this->mPen.mY += lineHeight;
-//	this->mLineCount++;
-//	this->mGlyph = 0;
-//	
-//	// move token to origin
-//	u32 tokenTop = this->mLayout->GetTop ();
-//	for ( u32 i = this->mLineTop; i < tokenTop; ++i ) {
-//		
-//		MOAITextSprite& sprite = ( *this->mLayout )[ i ];
-//		sprite.mX -= this->mTokenXMin;
-//	}
-//
-//	this->mPen.mX -= this->mTokenXMin;
-//	this->mTokenXMax -= this->mTokenXMin;
-//	this->mTokenXMin = 0.0f;
-//}
-
-//----------------------------------------------------------------//
-//void MOAITextDesigner::FlushToken () {
-//	
-//	float width = this->mFrame.Width ();
-//	float tokenMax = this->mRightToLeft ? -this->mTokenXMax : this->mTokenXMax;
-//	
-//	if (( this->mLineXMax != 0.0f ) && ( tokenMax >= width )) {
-//		this->FlushLine ();
-//	}
-//	
-//	if ( this->mLineCount < this->mTotalLines ) {
-//		this->mLineTop = this->mLayout->GetTop ();
-//		this->mLineXMax = this->mTokenXMax;
-//	}
-//}
-
-//----------------------------------------------------------------//
 int MOAITextDesigner::Layout ( cc8* str, int idx, const USRect& frame, u32 hAlign, u32 vAlign, MOAITextStyleMap& styleMap, MOAITextLayout& layout ) {
 	
 	if ( !styleMap.Size ()) return idx;
@@ -168,28 +88,34 @@ int MOAITextDesigner::Layout ( cc8* str, int idx, const USRect& frame, u32 hAlig
 			}
 			else {
 				
+				float glyphRight = glyph->mBearingX + glyph->mWidth;
+				float glyphBottom = pen.mY + this->mDeck->mHeight;
+				
 				// handle new token
 				if ( !tokenSize ) {
 					nextIdx = this->mIdx - 1;
 					tokenStart = layout.mSprites.GetTop ();
-					tokenRect.Init ( pen.mX, pen.mY, pen.mX, pen.mY + this->mDeck->mHeight );
+
+					if (( glyphRight > width ) || ( glyphBottom > height )) {
+						more = false;
+						continue;
+					}
+					
+					tokenRect.Init ( pen.mX, pen.mY, pen.mX, glyphBottom );
 					tokenAscent = this->mDeck->mAscent;
 				}
-				tokenSize++;
 				
 				// check for overrun
-				float glyphRight = glyph->mBearingX + glyph->mWidth;
 				
-				if (( pen.mX + glyphRight ) > width ) {
-					acceptLine = true;
+				bool overrun = ( pen.mX + glyphRight ) > width;
+				acceptLine = ( lineSize && overrun );
+				
+				if ( acceptLine || !overrun ) {
+					layout.PushGlyph ( glyph, 0, pen.mX, pen.mY, 0xffffffff );
+					tokenRect.mXMax = pen.mX + glyphRight;
+					tokenSize++;
 				}
-
-				// push the glyph
-				layout.PushGlyph ( glyph, 0, pen.mX, pen.mY, 0xffffffff );
-				tokenRect.mXMax = pen.mX + glyphRight;
 			}
-			
-			// advance the pen
 			pen.mX += glyph->mAdvanceX;
 		}
 		
@@ -229,6 +155,11 @@ int MOAITextDesigner::Layout ( cc8* str, int idx, const USRect& frame, u32 hAlig
 			layout.mSprites.SetTop ( layout.mSprites.GetTop () - tokenSize );
 			more = false;
 		}
+	}
+	
+	if ( !layout.Size ()) {
+		layout.mMore = false;
+		return idx;
 	}
 	
 	float yOff = frame.mYMin;
