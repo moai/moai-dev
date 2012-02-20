@@ -82,6 +82,24 @@ int MOAIParticleSystem::_getState ( lua_State* L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
+/**	@name	isIdle
+	@text	Returns true if the current system is not currently
+			processing any particles.
+	
+	@in		MOAIParticleSystem self
+	@out	boolean whether the system is currently idle
+*/
+int  MOAIParticleSystem::_isIdle( lua_State* L ){
+
+	MOAI_LUA_SETUP ( MOAIParticleSystem, "U" )
+
+	bool result = !self->mHead;
+
+	lua_pushboolean ( state, result );
+	return 1;
+}
+
 /**	@name	setIgnoreLocalTransform
 	@text	Controls whether the local transform matrix will
 			be applied to rendered sprites
@@ -562,6 +580,7 @@ void MOAIParticleSystem::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "capParticles",			_capParticles },
 		{ "capSprites",				_capSprites },
 		{ "clearSprites",			_clearSprites },
+		{ "isIdle",					_isIdle },
 		{ "getState",				_getState },
 		{ "pushParticle",			_pushParticle },
 		{ "pushSprite",				_pushSprite },
