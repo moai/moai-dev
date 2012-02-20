@@ -13,6 +13,20 @@
 #include <moaicore/MOAITextStyle.h>
 
 //================================================================//
+// MOAITextStyleState
+//================================================================//
+	
+//----------------------------------------------------------------//
+bool MOAITextStyleState::IsMatch ( const MOAITextStyleState& compare ) const {
+
+	if ( this->mFont != compare.mFont ) return false;
+	if ( this->mColor != compare.mColor ) return false;
+	if ( this->mSize != compare.mSize ) return false;
+	
+	return true;
+}
+
+//================================================================//
 // local
 //================================================================//
 
@@ -21,7 +35,7 @@
 int MOAITextStyle::_setFont ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextStyle, "U" )
 	MOAIFont* font = state.GetLuaObject < MOAIFont >( 2 );
-	self->mFont.Set ( *self, font );
+	self->SetFont ( font );
 	return 0;
 }
 
@@ -42,9 +56,11 @@ int MOAITextStyle::_setSize ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAITextStyle::MOAITextStyle () :
-	mSize ( 0.0f ),
-	mColor ( 0xffffffff ) {
+MOAITextStyle::MOAITextStyle () {
+	
+	this->mFont = 0;
+	this->mSize = 0.0f;
+	this->mColor = 0xffffffff;
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAILuaObject )
@@ -54,7 +70,7 @@ MOAITextStyle::MOAITextStyle () :
 //----------------------------------------------------------------//
 MOAITextStyle::~MOAITextStyle () {
 
-	this->mFont.Set ( *this, 0 );
+	this->SetFont ( 0 );
 }
 
 //----------------------------------------------------------------//
@@ -90,5 +106,16 @@ void MOAITextStyle::SerializeOut ( MOAILuaState& state, MOAISerializer& serializ
 //----------------------------------------------------------------//
 void MOAITextStyle::SetFont ( MOAIFont* font ) {
 
-	this->mFont.Set ( *this, font );
+	if ( this->mFont != font ) {
+	
+		if ( font ) {
+			this->LuaRetain ( *font );
+		}
+		
+		if ( this->mFont ) {
+			this->LuaRelease ( *this->mFont );
+		}
+		
+		this->mFont = font;
+	}
 }

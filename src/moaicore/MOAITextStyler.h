@@ -6,9 +6,8 @@
 
 class MOAIAnimCurve;
 class MOAIFont;
-class MOAITextStyleMap;
+class MOAITextBox;
 class MOAITextStyle;
-class MOAITextStyleSet;
 
 //================================================================//
 // MOAITextStyler
@@ -60,8 +59,7 @@ private:
 	int					mTokenTop;
 	
 	cc8*				mStr;
-	MOAITextStyleMap*	mStyleMap;
-	MOAITextStyleSet*	mStyleSet;
+	MOAITextBox*		mTextBox;
 
 	MOAITextStyle**		mStyleStack;
 	u32					mStyleStackTop;
@@ -71,6 +69,7 @@ private:
 	static const u32 STYLE_STACK_SIZE = 256;
 
 	//----------------------------------------------------------------//
+	u32				AffirmStyle			( MOAITextStyle& style );
 	void			FinishToken			();
 	u32				GetChar				();
 	static u8		HexToByte			( u32 c );
@@ -79,16 +78,14 @@ private:
 	bool			ParseStyle			();
 	void			PopStyle			();
 	void			PushStyle			( MOAITextStyle* style );
-	void			Style				( MOAITextStyleMap& styleMap, MOAITextStyleSet& styleSet, cc8* str );
 	void			UngetChar			();
 
 public:
 
-	friend class MOAITextStyleMap;
-
 	//----------------------------------------------------------------//
-					MOAITextStyler			();
-					~MOAITextStyler			();
+	void			BuildStyleMap		( MOAITextBox& textBox );
+					MOAITextStyler		();
+					~MOAITextStyler		();
 };
 
 #endif

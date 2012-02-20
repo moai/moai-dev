@@ -4,27 +4,37 @@
 #ifndef	MOAITEXTSTYLE_H
 #define	MOAITEXTSTYLE_H
 
-#include <moaicore/MOAIAction.h>
 #include <moaicore/MOAILua.h>
-#include <moaicore/MOAIProp.h>
-#include <moaicore/MOAITextStyler.h>
-#include <moaicore/MOAITextStyleMap.h>
-#include <moaicore/MOAITransform.h>
 
-class MOAIAnimCurve;
 class MOAIFont;
+
+//================================================================//
+// MOAITextStyleState
+//================================================================//
+class MOAITextStyleState {
+protected:
+
+	friend class MOAITextBox;
+	friend class MOAITextDesigner;
+	friend class MOAITextStyler;
+
+	MOAIFont*	mFont;
+	float		mSize;
+	u32			mColor;
+
+public:
+	
+	//----------------------------------------------------------------//
+	bool		IsMatch					( const MOAITextStyleState& compare ) const;
+};
 
 //================================================================//
 // MOAITextStyle
 //================================================================//
 class MOAITextStyle :
-	public MOAILuaObject {
+	public MOAILuaObject,
+	public MOAITextStyleState {
 private:
-
-	MOAILuaSharedPtr < MOAIFont > mFont;
-	
-	float	mSize;
-	u32		mColor;
 
 	//----------------------------------------------------------------//
 	static int		_setFont				( lua_State* L );

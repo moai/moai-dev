@@ -114,9 +114,6 @@
 #include <moaicore/MOAITextBox.h>
 #include <moaicore/MOAITextDesigner.h>
 #include <moaicore/MOAITextStyle.h>
-#include <moaicore/MOAITextStyler.h>
-#include <moaicore/MOAITextStyleMap.h>
-#include <moaicore/MOAITextStyleSet.h>
 #include <moaicore/MOAITexture.h>
 #include <moaicore/MOAITextureBase.h>
 #include <moaicore/MOAITileDeck2D.h>

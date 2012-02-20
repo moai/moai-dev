@@ -928,14 +928,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAITextLayout.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAITextLayout.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\moaicore\MOAITextStyle.cpp"
 				>
 			</File>
@@ -944,27 +936,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAITextStyleMap.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAITextStyleMap.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\moaicore\MOAITextStyler.cpp"
 				>
 			</File>
 			<File
 				RelativePath="..\..\src\moaicore\MOAITextStyler.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAITextStyleSet.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAITextStyleSet.h"
 				>
 			</File>
 		</Filter>

@@ -9,10 +9,12 @@
 #include <moaicore/MOAIGfxDevice.h>
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAINodeMgr.h>
+#include <moaicore/MOAIQuadBrush.h>
 #include <moaicore/MOAIShaderMgr.h>
 #include <moaicore/MOAITextDesigner.h>
 #include <moaicore/MOAITextBox.h>
 #include <moaicore/MOAITextStyle.h>
+#include <moaicore/MOAITextStyler.h>
 
 /*
 
@@ -130,7 +132,7 @@ int MOAITextBox::_getStyle ( lua_State* L ) {
 	MOAITextStyle* style = 0;
 
 	cc8* styleName = state.GetValue < cc8* >( 2, 0 );
-	style = self->mStyleSet.GetStyle ( styleName );
+	style = self->GetStyle ( styleName );
 
 	if ( style ) {
 		style->PushLuaUserdata ( state );
@@ -332,7 +334,7 @@ int MOAITextBox::_setString ( lua_State* L ) {
 	cc8* text = state.GetValue < cc8* >( 2, "" );
 	self->SetText ( text );
 	
-	self->mStyleMap.Reset ();
+	self->ResetStyleMap ();
 	self->ScheduleLayout ();
 
 	return 0;
@@ -378,7 +380,7 @@ int MOAITextBox::_setStyle ( lua_State* L ) {
 
 	MOAITextStyle* style = state.GetLuaObject < MOAITextStyle >( 2 );
 	if ( style ) {
-		self->mStyleSet.SetStyle ( style );
+		self->SetStyle ( style );
 	}
 	else {
 		cc8* styleName = state.GetValue < cc8* >( 2, "" );
@@ -388,12 +390,12 @@ int MOAITextBox::_setStyle ( lua_State* L ) {
 		
 			if ( style ) {
 				style->Retain (); // TODO
-				self->mStyleSet.SetStyle ( styleName, style );
+				self->SetStyle ( styleName, style );
 			}
 		}
 	}
 	
-	self->mStyleMap.Reset ();
+	self->ResetStyleMap ();
 	self->ScheduleLayout ();
 	
 	return 0;
@@ -472,7 +474,25 @@ void MOAITextBox::Draw ( int subPrimID, bool reload ) {
 		gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, this->GetLocalToWorldMtx ());
 		gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
 		
-		this->mLayout.Draw ( this->mReveal );
+		MOAIQuadBrush::BindVertexFormat ( gfxDevice );
+
+		USColorVec baseColor = gfxDevice.GetPenColor ();
+		USColorVec blendColor;
+		u32 rgba = 0xffffffff;
+
+		u32 size = this->mSprites.GetTop ();
+		for ( u32 i = 0; ( i < size ) && ( i < this->mReveal ); ++i ) {
+			const MOAITextSprite& sprite = this->mSprites [ i ];
+			
+			if ( sprite.mRGBA != rgba ) {
+				rgba = sprite.mRGBA;
+				
+				blendColor.SetRGBA ( rgba );
+				blendColor.Modulate ( baseColor );
+				gfxDevice.SetPenColor ( blendColor );
+			}
+			sprite.mGlyph->Draw ( sprite.mX, sprite.mY );
+		}
 	}
 }
 
@@ -492,11 +512,23 @@ void MOAITextBox::DrawDebug ( int subPrimID ) {
 	}
 	
 	if ( debugLines.Bind ( MOAIDebugLines::TEXT_BOX_BASELINES )) {
-		this->mLayout.DrawDebugBaselines ();
+		
+		u32 totalLines = this->mLines.GetTop ();
+		for ( u32 i = 0; i < totalLines; ++i ) {
+			MOAITextLine& line = this->mLines [ i ];
+			
+			float y = line.mRect.mYMin + line.mAscent;
+			debugLines.DrawLine ( line.mRect.mXMin, y, line.mRect.mXMax, y );
+		}
 	}
 	
 	if ( debugLines.Bind ( MOAIDebugLines::TEXT_BOX_LAYOUT )) {
-		this->mLayout.DrawDebugLayout ();
+		
+		u32 totalLines = this->mLines.GetTop ();
+		for ( u32 i = 0; i < totalLines; ++i ) {
+			MOAITextLine& line = this->mLines [ i ];
+			debugLines.DrawRect ( line.mRect );
+		}
 	}
 }
 
@@ -508,11 +540,28 @@ u32 MOAITextBox::GetDeckBounds ( USBox& bounds ) {
 }
 
 //----------------------------------------------------------------//
+MOAITextStyle* MOAITextBox::GetStyle () {
+
+	return this->mDefaultStyle;
+}
+
+//----------------------------------------------------------------//
+MOAITextStyle* MOAITextBox::GetStyle ( cc8* styleName ) {
+
+	if ( styleName && strlen ( styleName )) {
+		if ( this->mStyleSet.contains ( styleName )) {
+			return this->mStyleSet [ styleName ];
+		}
+	}
+	return this->mDefaultStyle;
+}
+
+//----------------------------------------------------------------//
 bool MOAITextBox::IsDone () {
 
 	if ( this->IsActive ()) {
 		this->Layout ();
-		return ( this->mReveal > this->mLayout.Size ());
+		return ( this->mReveal >= this->mSprites.GetTop ());
 	}
 	return true;
 }
@@ -521,27 +570,20 @@ bool MOAITextBox::IsDone () {
 void MOAITextBox::Layout () {
 
 	if ( !this->mText ) {
-		this->mStyleMap.Reset ();
-		this->mLayout.Reset ();
+		this->ResetStyleMap ();
+		this->ResetLayout ();
 	}
 	else if ( this->mNeedsLayout ) {
 		
 		if ( !this->mStyleMap.GetTop ()) {
-			this->mStyleMap.Tokenize ( this->mStyleSet, this->mText );
+			MOAITextStyler styler;
+			styler.BuildStyleMap ( *this );
 		}
 		
-		this->mLayout.Reset ();
+		this->ResetLayout ();
 		
 		MOAITextDesigner designer;
-		this->mNextPageIdx = designer.Layout (
-			this->mText,
-			this->mCurrentPageIdx,
-			this->mFrame,
-			this->mHAlign,
-			this->mVAlign,
-			this->mStyleMap,
-			this->mLayout
-		);
+		designer.BuildLayout ( *this );
 	}
 	
 	this->mNeedsLayout = false;
@@ -560,7 +602,8 @@ MOAITextBox::MOAITextBox () :
 	mYFlip ( false ),
 	mCurrentPageIdx ( 0 ),
 	mNextPageIdx ( 0 ),
-	mNeedsLayout ( false ) {
+	mNeedsLayout ( false ),
+	mDefaultStyle ( 0 ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIProp )
@@ -583,14 +626,18 @@ MOAITextBox::~MOAITextBox () {
 bool MOAITextBox::More () {
 	
 	this->Layout ();
-	return this->mLayout.More ( this->mReveal );
+	
+	if ( this->mReveal <= this->mSprites.GetTop ()) {
+		return true;
+	}
+	return this->mMore;
 }
 
 //----------------------------------------------------------------//
 void MOAITextBox::NextPage ( bool reveal ) {
 	UNUSED ( reveal );
 	
-	if ( this->mLayout.More ( REVEAL_ALL )) {
+	if ( this->mMore ) {
 		this->mCurrentPageIdx = this->mNextPageIdx;
 	}
 	else {
@@ -626,6 +673,58 @@ void MOAITextBox::OnUpdate ( float step ) {
 	
 	this->mSpool += ( this->mSpeed * step );
 	this->mReveal = ( u32 )this->mSpool;
+}
+
+//----------------------------------------------------------------//
+void MOAITextBox::PushLine ( u32 start, u32 size, const USRect& rect, float ascent ) {
+
+	MOAITextLine textLine;
+	
+	textLine.mStart			= start;
+	textLine.mSize			= size;
+	textLine.mRect			= rect;
+	textLine.mAscent		= ascent;
+	
+	this->mLines.Push ( textLine );
+}
+
+//----------------------------------------------------------------//
+void MOAITextBox::PushSprite ( const MOAIGlyph* glyph, u32 idx, float x, float y, u32 rgba ) {
+
+	MOAITextSprite textSprite;
+	
+	textSprite.mGlyph		= glyph;
+	textSprite.mIdx			= idx;
+	textSprite.mX			= x;
+	textSprite.mY			= y;
+	textSprite.mRGBA		= rgba;
+
+	this->mSprites.Push ( textSprite );
+}
+
+//----------------------------------------------------------------//
+void MOAITextBox::PushStyleSpan ( int base, int top, MOAITextStyle& style ) {
+
+	u32 styleID = 0;
+	u32 totalStyles = this->mActiveStyles.GetTop ();
+	for ( ; styleID < totalStyles; ++styleID ) {
+		if ( this->mActiveStyles [ styleID ].IsMatch ( style )) {
+			break;
+		}
+	}
+	
+	if ( styleID >= totalStyles ) {
+		this->mActiveStyles.Push ( style );
+		styleID = totalStyles;
+	}
+
+	MOAITextStyleSpan span;
+	
+	span.mBase			= base;
+	span.mTop			= top;
+	span.mStyle			= &style;
+
+	this->mStyleMap.Push ( span );
 }
 
 //----------------------------------------------------------------//
@@ -681,6 +780,22 @@ void MOAITextBox::ReserveCurves ( u32 total ) {
 }
 
 //----------------------------------------------------------------//
+void MOAITextBox::ResetLayout () {
+
+	this->mMore = false;
+	this->mLines.Reset ();
+	this->mSprites.Reset ();
+}
+
+//----------------------------------------------------------------//
+void MOAITextBox::ResetStyleMap () {
+
+	// TODO: LuaRelease fonts...
+	this->mActiveStyles.Reset ();
+	this->mStyleMap.Reset ();
+}
+
+//----------------------------------------------------------------//
 void MOAITextBox::ScheduleLayout () {
 
 	this->mNeedsLayout = true;
@@ -722,6 +837,35 @@ void MOAITextBox::SetRect ( float left, float top, float right, float bottom ) {
 }
 
 //----------------------------------------------------------------//
+void MOAITextBox::SetStyle ( MOAITextStyle* style ) {
+
+	this->mDefaultStyle = style;
+}
+
+//----------------------------------------------------------------//
+void MOAITextBox::SetStyle ( cc8* styleName, MOAITextStyle* style ) {
+
+	if ( style ) {
+		style->Retain (); // TODO
+	}
+
+	if ( styleName && strlen ( styleName )) {
+	
+		if ( style ) {
+			this->mStyleSet [ styleName ] = style;
+		}
+		else {
+			if ( this->mStyleSet.contains ( styleName )) {
+				this->mStyleSet.erase ( styleName );
+			}
+		}
+	}
+	else {
+		this->mDefaultStyle = style;
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAITextBox::SetText ( cc8* text ) {
 
 	this->mText = text;
@@ -733,6 +877,6 @@ void MOAITextBox::SetText ( cc8* text ) {
 	this->mCurrentPageIdx = 0;
 	this->mNextPageIdx = 0;
 	
-	this->mStyleMap.Reset ();
+	this->ResetStyleMap ();
 }
 

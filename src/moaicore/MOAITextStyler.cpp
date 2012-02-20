@@ -5,10 +5,9 @@
 #include <contrib/utf8.h>
 #include <moaicore/MOAIAnimCurve.h>
 #include <moaicore/MOAIFont.h>
+#include <moaicore/MOAITextBox.h>
 #include <moaicore/MOAITextStyle.h>
 #include <moaicore/MOAITextStyler.h>
-#include <moaicore/MOAITextStyleMap.h>
-#include <moaicore/MOAITextStyleSet.h>
 
 //================================================================//
 // MOAITextStyler
@@ -24,10 +23,41 @@
 	}
 
 //----------------------------------------------------------------//
+void MOAITextStyler::BuildStyleMap ( MOAITextBox& textBox ) {
+
+	// throw out any existing style map
+	textBox.mStyleMap.Reset ();
+	textBox.mActiveStyles.Reset ();
+	
+	this->mIdx = 0;
+	this->mPrev = 0;
+	this->mTextBox = &textBox;
+	this->mStr = textBox.mText;
+	
+	this->mTokenBase = 0;
+	this->mTokenTop = 0;
+	
+	this->mStyleStack = ( MOAITextStyle** )alloca ( STYLE_STACK_SIZE * sizeof ( MOAITextStyle* ));
+	this->mStyleStackTop = 0;
+	this->mCurrentStyle = 0;
+	
+	this->PushStyle ( textBox.GetStyle ());
+	if ( !this->mCurrentStyle ) return;
+	
+	this->Parse ();
+	
+	u32 top = this->mTextBox->mActiveStyles.GetTop ();
+	for ( u32 i = 0; i < top; ++i ) {
+		MOAITextStyleState& style =  this->mTextBox->mActiveStyles [ i ];
+		style.mFont->UpdateGlyphs ( MOAIGlyph::METRICS_AND_BITMAP );
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAITextStyler::FinishToken () {
 
 	if ( this->mCurrentStyle && ( this->mTokenBase < this->mTokenTop )) {
-		this->mStyleMap->PushSpan ( this->mTokenBase, this->mTokenTop, *this->mCurrentStyle );
+		this->mTextBox->PushStyleSpan ( this->mTokenBase, this->mTokenTop, *this->mCurrentStyle );
 	}
 	
 	this->mTokenBase = this->mIdx;
@@ -289,7 +319,7 @@ bool MOAITextStyler::ParseStyle () {
 				memcpy ( name, &this->mStr [ startIdx + 1 ], namesize );
 				name [ namesize ] = 0;
 				
-				MOAITextStyle* style = this->mStyleSet->GetStyle ( name );
+				MOAITextStyle* style = this->mTextBox->GetStyle ( name );
 				this->PushStyle ( style );
 				
 				TRANSITION ( DONE );
@@ -349,30 +379,6 @@ void MOAITextStyler::PushStyle ( MOAITextStyle* style ) {
 		this->mCurrentStyle = style;
 	}
 	this->mStyleStackTop++;
-}
-
-//----------------------------------------------------------------//
-void MOAITextStyler::Style ( MOAITextStyleMap& styleMap, MOAITextStyleSet& styleSet, cc8* str ) {
-	
-	styleMap.Reset ();
-	
-	this->mStyleStack = ( MOAITextStyle** )alloca ( STYLE_STACK_SIZE * sizeof ( MOAITextStyle* ));
-	this->mStyleStackTop = 0;
-	this->mCurrentStyle = 0;
-	
-	this->PushStyle ( styleSet.GetStyle ());
-	if ( !this->mCurrentStyle ) return;
-	
-	this->mIdx = 0;
-	this->mPrev = 0;
-	this->mStyleMap = &styleMap;
-	this->mStr = str;
-	this->mStyleSet = &styleSet;
-	
-	this->mTokenBase = 0;
-	this->mTokenTop = 0;
-	
-	this->Parse ();
 }
 
 //----------------------------------------------------------------//

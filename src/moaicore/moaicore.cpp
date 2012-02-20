@@ -187,7 +187,8 @@ void moaicore::InitGlobals ( MOAIGlobals* globals ) {
 	#endif
 	
 	// run bundled init scripts for back compat and Lua framework extensions
-	if ( moai2D_lua_SIZE ) {
+	int size = moai2D_lua_SIZE; // avoid 'condition expression is constant' warning
+	if ( size ) {
 		MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 		state.Run ( moai2D_lua, moai2D_lua_SIZE, 0, 0 );
 	}

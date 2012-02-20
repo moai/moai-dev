@@ -46,10 +46,9 @@ public:
 	friend class MOAIFont;
 	friend class MOAIGlyphDeck;
 	friend class MOAIGlyphPage;
-	friend class MOAITextLayout;
+	friend class MOAITextBox;
 	friend class MOAITextDesigner;
 	friend class MOAITextStyler;
-	friend class MOAITextStyleMap;
 	
 	GET_SET ( u32, Code, mCode )
 
