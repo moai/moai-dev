@@ -56,6 +56,14 @@ end
 
  
 
-camera:moveLoc(10000,0,20,MOAIEaseType.LINEAR)
-
- 
+local action = camera:moveLoc(10000,0,20,MOAIEaseType.LINEAR)
+local function threadFunc ()
+	while true do
+		while action:isBusy () do
+			coroutine.yield ()
+		end
+		action = camera:moveLoc(10000,0,20,MOAIEaseType.LINEAR)
+	end
+end
+local thread = MOAIThread.new ()
+thread:run ( thradFunc ) 
