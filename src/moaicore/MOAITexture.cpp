@@ -712,6 +712,12 @@ void MOAITexture::Init ( MOAIImage& image, cc8* debugname ) {
 	this->mTransform = 0;
 	
 	this->mLoader->Load ();
+	
+	if ( this->mLoader->mType == MOAITextureLoader::TYPE_MOAI_IMAGE ) {
+		MOAIImage& image = this->mLoader->mImage;
+		this->mWidth = image.GetWidth ();
+		this->mHeight = image.GetHeight ();
+	}
 }
 
 //----------------------------------------------------------------//
@@ -732,6 +738,12 @@ void MOAITexture::Init ( cc8* filename, u32 transform ) {
 	this->mTransform = transform;
 	
 	this->mLoader->Load ();
+	
+	if ( this->mLoader->mType == MOAITextureLoader::TYPE_MOAI_IMAGE ) {
+		MOAIImage& image = this->mLoader->mImage;
+		this->mWidth = image.GetWidth ();
+		this->mHeight = image.GetHeight ();
+	}
 }
 
 //----------------------------------------------------------------//
@@ -761,6 +773,12 @@ void MOAITexture::Init ( const void* data, u32 size, u32 transform, cc8* debugna
 	this->mTransform = transform;
 	
 	this->mLoader->Load ();
+	
+	if ( this->mLoader->mType == MOAITextureLoader::TYPE_MOAI_IMAGE ) {
+		MOAIImage& image = this->mLoader->mImage;
+		this->mWidth = image.GetWidth ();
+		this->mHeight = image.GetHeight ();
+	}
 }
 
 //----------------------------------------------------------------//
