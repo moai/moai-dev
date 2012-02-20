@@ -106,7 +106,7 @@ void MOAITextDesigner::BuildLayout ( MOAITextBox& textBox ) {
 				acceptLine = ( lineSize && overrun );
 				
 				if ( acceptLine || !overrun ) {
-					textBox.PushSprite ( glyph, 0, pen.mX, pen.mY, 0xffffffff );
+					textBox.PushSprite ( glyph, 0, pen.mX, pen.mY, this->mStyleSpan->mStyle->mColor );
 					tokenRect.mXMax = pen.mX + glyphRight;
 					tokenSize++;
 				}

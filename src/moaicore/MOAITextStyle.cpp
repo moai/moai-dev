@@ -31,6 +31,23 @@ bool MOAITextStyleState::IsMatch ( const MOAITextStyleState& compare ) const {
 //================================================================//
 
 //----------------------------------------------------------------//
+/**	@name	setColor
+	@text	Initialize the style's color.
+	
+	@in		MOAITextStyle self
+	@in		number r	Default value is 0.
+	@in		number g	Default value is 0.
+	@in		number b	Default value is 0.
+	@opt	number a	Default value is 1.
+	@out	nil
+*/
+int MOAITextStyle::_setColor ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextStyle, "UNNN" )
+	self->mColor = state.GetColor32 ( 2, 0.0f, 0.0f, 0.0f, 1.0f );
+	return 0;
+}
+
+//----------------------------------------------------------------//
 // TODO: doxygen
 int MOAITextStyle::_setFont ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextStyle, "U" )
@@ -83,6 +100,7 @@ void MOAITextStyle::RegisterLuaFuncs ( MOAILuaState& state ) {
 	UNUSED ( state );
 	
 	luaL_Reg regTable [] = {
+		{ "setColor",				_setColor },
 		{ "setFont",				_setFont },
 		{ "setSize",				_setSize },
 		{ NULL, NULL }
