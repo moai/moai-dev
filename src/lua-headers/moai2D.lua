@@ -52,7 +52,7 @@ local function initTransform2DInterface ( interface, super )
 	end
 	
 	function interface.seekScl ( self, xSclGoal, ySclGoal, length, mode )
-		return super.seekScl ( self, xSclGoal, ySclGoal, 0, length, mode )
+		return super.seekScl ( self, xSclGoal, ySclGoal, 1, length, mode )
 	end
 	
 	function interface.setRot ( self, rot )
