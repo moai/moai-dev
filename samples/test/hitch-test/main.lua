@@ -39,12 +39,15 @@ local function threadFunc ()
 	while true do
 		while action:isBusy () do
 			coroutine.yield ()
-			if perfPrint == 10 then
-				print ( MOAISim.getPerformance ())
-				perfPrint = 0
-			end
-			perfPrint = perfPrint + 1
+			--if perfPrint == 10 then
+				--print ( MOAISim.getPerformance ())
+				--print ( camera:getWorldLoc ())
+			--	perfPrint = 0
+			--end
+			--perfPrint = perfPrint + 1
 		end
+		print "RESTARTING - NOT A HITCH"
+		camera:setLoc ( 0, 0 )
 		action = camera:moveLoc(10000,0,20,MOAIEaseType.LINEAR)
 	end
 end
