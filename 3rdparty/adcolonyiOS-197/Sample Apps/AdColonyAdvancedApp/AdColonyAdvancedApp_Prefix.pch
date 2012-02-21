@@ -1,0 +1,9 @@
+//
+// Prefix header for all source files of the 'AdColonyAdvancedApp' target in the 'AdColonyAdvancedApp' project
+//
+
+#ifdef __OBJC__
+    #import <Foundation/Foundation.h>
+    #import <UIKit/UIKit.h>
+	#import "Logging.h"
+#endif
