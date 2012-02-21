@@ -386,11 +386,11 @@ MOAIHttpTaskBase::~MOAIHttpTaskBase () {
 //----------------------------------------------------------------//
 void MOAIHttpTaskBase::RegisterLuaClass ( MOAILuaState& state ) {
 
-	state.SetField ( -1, "HTTP_GET",		HTTP_GET );
-	state.SetField ( -1, "HTTP_HEAD",		HTTP_HEAD );
-	state.SetField ( -1, "HTTP_POST",		HTTP_POST );
-	state.SetField ( -1, "HTTP_PUT",		HTTP_PUT );
-	state.SetField ( -1, "HTTP_DELETE",		HTTP_DELETE );
+	state.SetField ( -1, "HTTP_GET",( u32 )   HTTP_GET );
+	state.SetField ( -1, "HTTP_HEAD",( u32 )  HTTP_HEAD );
+	state.SetField ( -1, "HTTP_POST",( u32 )  HTTP_POST );
+	state.SetField ( -1, "HTTP_PUT",( u32 )	  HTTP_PUT );
+	state.SetField ( -1, "HTTP_DELETE",( u32 )HTTP_DELETE );
 }
 
 //----------------------------------------------------------------//
@@ -405,6 +405,7 @@ void MOAIHttpTaskBase::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "performAsync",		_performAsync },
 		{ "performSync",		_performSync },
 		{ "setCallback",		_setCallback },
+		{ "setBody",			_setBody },
 		{ "setHeader",			_setHeader },
 		{ "setUrl",				_setUrl },
 		{ "setUserAgent",		_setUserAgent },

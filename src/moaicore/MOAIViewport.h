@@ -34,6 +34,8 @@ public:
 	
 	DECL_LUA_FACTORY ( MOAIViewport )
 	
+	friend class MOAICamera;
+	
 	//----------------------------------------------------------------//
 	float			GetAspect				() const;
 	float			GetInvAspect			() const;

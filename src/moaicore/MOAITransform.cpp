@@ -752,7 +752,7 @@ int MOAITransform::_seekScl ( lua_State* L ) {
 
 		action->SetLink ( 0, self, MOAITransformAttr::Pack ( ATTR_X_SCL ), xScl - self->mScale.mX, mode );
 		action->SetLink ( 1, self, MOAITransformAttr::Pack ( ATTR_Y_SCL ), yScl - self->mScale.mY, mode );
-		action->SetLink ( 2, self, MOAITransformAttr::Pack ( ATTR_Z_SCL ), yScl - self->mScale.mZ, mode );
+		action->SetLink ( 2, self, MOAITransformAttr::Pack ( ATTR_Z_SCL ), zScl - self->mScale.mZ, mode );
 		
 		action->SetLength ( delay );
 		action->Start ();

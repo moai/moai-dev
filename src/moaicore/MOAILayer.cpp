@@ -251,15 +251,15 @@ int MOAILayer::_setFrameBuffer ( lua_State* L ) {
 			scalar applied to the view transform before rendering.
 	
 	@in		MOAILayer self
-	@in		number xParallax
-	@in		number yParallax
+	@in		number xParallax	Default value is 1.
+	@in		number yParallax	Default value is 1.
 	@out	nil
 */
 int MOAILayer::_setParallax ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAILayer, "UNN" )
 
-	self->mParallax.mX = state.GetValue < float >( 2, self->mParallax.mX );
-	self->mParallax.mY = state.GetValue < float >( 3, self->mParallax.mY );
+	self->mParallax.mX = state.GetValue < float >( 2, 1.0f );
+	self->mParallax.mY = state.GetValue < float >( 3, 1.0f );
 
 	return 0;
 }
@@ -621,6 +621,9 @@ void MOAILayer::GetViewMtx ( USMatrix4x4& view ) {
 	
 	if ( this->mCamera ) {	
 		view.Init ( this->mCamera->GetViewMtx ());
+		
+		view.m [ USMatrix4x4::C3_R0 ] *= this->mParallax.mX;
+		view.m [ USMatrix4x4::C3_R1 ] *= this->mParallax.mY;
 	}
 	else {
 		view.Ident ();

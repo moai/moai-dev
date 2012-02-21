@@ -1,29 +1,30 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef MOAIHTTPTASKINFO_NACL_H
-#define MOAIHTTPTASKINFO_NACL_H
+#ifndef MOAIHTTPTASK_NACL_H
+#define MOAIHTTPTASK_NACL_H
+
+#include <moaicore/MOAIHttpTaskBase.h>
 
 #ifdef MOAI_OS_NACL
 
 #include "geturl_handler.h"
 
 //================================================================//
-// MOAIHttpTaskInfo
+// MOAIHttpTask
 //================================================================//
-class MOAIHttpTaskInfo {
+class MOAIHttpTask :
+	public MOAIHttpTaskBase {
 private:
 	STLString			mUrl;
-	STLString			mBody;
+	USLeanArray < u8 >	mBody;
+	int mMethod;
 
 	USMemStream			mMemStream;
 	USByteStream		mByteStream;
-	USLeanArray < u8 >	mData;
 	
 	USStream*			mStream;
-	//USMemStream			mStream;
 
-	u32					mResponseCode;
 	bool				mReady;
 
 	bool				mLock;
@@ -31,23 +32,35 @@ private:
 	const void *		mTempBufferToCopy;
 	int					mTempBufferToCopySize;
 
-	friend class MOAIHttpTask;
 	friend class MOAIUrlMgr;
 
 	static void HttpLoaded ( GetURLHandler *handler, const char *buffer, int32_t size );
-	static void HttpPostMainThread ( void* userData, int32_t result );
 	static void HttpGetMainThread ( void* userData, int32_t result );
+
+	void Prepare ( GetURLHandler *handler );
+
 
 public:
 
+	DECL_LUA_FACTORY ( MOAIHttpTask )
+
 	//----------------------------------------------------------------//
-	void			Clear					();
-	void			Finish					();
-	void			InitForGet				( cc8* url, cc8* useragent, bool verbose );
-	void			InitForPost				( cc8* url, cc8* useragent, const void* buffer, u32 size, bool verbose );
-					MOAIHttpTaskInfo		();
-					~MOAIHttpTaskInfo		();
+					MOAIHttpTask			();
+					~MOAIHttpTask			();
+
+	void			PerformAsync			();
 	void			PerformSync				();
+	void			RegisterLuaClass		( MOAILuaState& state );
+	void			RegisterLuaFuncs		( MOAILuaState& state );
+	void			Reset					();
+	void			SetBody					( const void* buffer, u32 size );
+	void			SetUrl					( cc8* url );
+	void			SetUserAgent			( cc8* useragent );
+	void			SetVerb					( u32 verb );
+	void			SetVerbose				( bool verbose );
+
+	void			Clear					();
+	void			NaClFinish				();
 };
 
 #endif

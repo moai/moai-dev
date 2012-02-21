@@ -34,9 +34,10 @@ void MOAIUrlMgr::Process () {
 
 	for( STLList < MOAIHttpTask* >::iterator iter = sTasks.begin(); iter != sTasks.end(); ++iter )
 	{
-		if(( *iter )->GetInfo ()->mReady ) {
+		if(( *iter )->mReady ) {
 
-			( *iter )->Finish ();
+			( *iter )->NaClFinish ();
+			( *iter )->Release ();
 
 			STLList < MOAIHttpTask* >::iterator old_iter = iter;
 			old_iter--;

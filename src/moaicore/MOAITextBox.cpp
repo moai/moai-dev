@@ -87,6 +87,22 @@ int MOAITextBox::_getLineSize ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAITextBox::_getRect ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextBox, "U" )
+
+	USRect rect = self->mFrame;
+	rect.Bless ();
+	
+	lua_pushnumber ( state, rect.mXMin );
+	lua_pushnumber ( state, rect.mYMin );
+	lua_pushnumber ( state, rect.mXMax );
+	lua_pushnumber ( state, rect.mYMax );
+
+	return 4;
+}
+
+//----------------------------------------------------------------//
 /**	@name	getStringBounds
 	@text	Returns the bounding rectange of a given substring on a
 			single line in the local space of the text box.
@@ -753,6 +769,7 @@ void MOAITextBox::RegisterLuaFuncs ( MOAILuaState& state ) {
 	luaL_Reg regTable [] = {
 		{ "clearCurves",			_clearCurves },
 		{ "getLineSize",			_getLineSize },
+		{ "getRect",				_getRect },
 		{ "getStringBounds",		_getStringBounds },
 		{ "getStyle",				_getStyle },
 		{ "more",					_more },

@@ -68,6 +68,28 @@ end
 MOAIThread = MOAICoroutine
 MOAILayerBridge2D = MOAILayerBridge
 
+MOAICamera2D = MOAICamera.extend (
+
+	-- extend the instance interface
+	function ( interface, super )
+		initTransform2DInterface ( interface, super )
+	end,
+
+	-- extend the class
+	function ( class, super )
+
+		local new = class.new
+
+		function class.new ()
+			local self = new ()
+			self:setOrtho ( true )
+			self:setNearPlane ( 1 )
+			self:setFarPlane ( -1 )
+			return self
+		end
+	end
+)
+
 MOAIFont = MOAIFont.extend (
 
 	-- extend the instance interface
