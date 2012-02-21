@@ -714,9 +714,9 @@ void MOAITexture::Init ( MOAIImage& image, cc8* debugname ) {
 	this->mLoader->Load ();
 	
 	if ( this->mLoader->mType == MOAITextureLoader::TYPE_MOAI_IMAGE ) {
-		MOAIImage& image = this->mLoader->mImage;
-		this->mWidth = image.GetWidth ();
-		this->mHeight = image.GetHeight ();
+		MOAIImage& img = this->mLoader->mImage;
+		this->mWidth = img.GetWidth ();
+		this->mHeight = img.GetHeight ();
 	}
 }
 
