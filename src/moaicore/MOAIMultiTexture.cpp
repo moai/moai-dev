@@ -102,13 +102,7 @@ void MOAIMultiTexture::SetTexture ( u32 idx, MOAITextureBase* texture ) {
 	if ( idx >= this->mTextures.Size ()) return;
 	if ( this->mTextures [ idx ] == texture ) return;
 
-	if ( texture ) {
-		this->LuaRetain ( *texture );
-	}
-	
-	if ( this->mTextures [ idx ]) {
-		this->LuaRelease ( *this->mTextures [ idx ]);
-	}
-	
+	this->LuaRetain ( texture );
+	this->LuaRelease ( this->mTextures [ idx ]);
 	this->mTextures [ idx ] = texture;
 }

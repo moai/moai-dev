@@ -20,7 +20,7 @@ public:
 
 	int					mBase;		// base index of first utf-8 character in span
 	int					mTop;		// size of span
-	MOAITextStyle*		mStyle;		// style for span
+	u32					mStyleID;	// style for span
 };
 
 //================================================================//
@@ -110,7 +110,8 @@ private:
 	USLeanArray < MOAIAnimCurve* >	mCurves;
 	
 	// style set - these are the styles the texbox knows about
-	// using an STLMap for now...
+	// only need to get these during text styling, so using an STLMap for now...
+	typedef STLMap < STLString, MOAITextStyle* >::iterator StyleSetIt;
 	STLMap < STLString, MOAITextStyle* > mStyleSet;
 	MOAITextStyle* mDefaultStyle;
 	
@@ -152,9 +153,10 @@ private:
 	void			OnDepNodeUpdate			();
 	void			PushLine				( u32 start, u32 size, const USRect& rect, float ascent );
 	void			PushSprite				( const MOAIGlyph* glyph, u32 idx, float x, float y, u32 rgba );
-	void			PushStyleSpan			( int base, int top, MOAITextStyle& style );
+	void			PushStyleSpan			( int base, int top, MOAITextStyleState& styleState );
 	void			ResetLayout				();
 	void			ResetStyleMap			();
+	void			ResetStyleSet			();
 	void			ScheduleLayout			();
 	
 public:

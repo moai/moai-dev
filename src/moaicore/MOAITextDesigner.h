@@ -6,6 +6,7 @@
 
 class MOAITextBox;
 class MOAITextStyleSpan;
+class MOAITextStyleState;
 
 //================================================================//
 // MOAITextDesigner
@@ -14,6 +15,7 @@ class MOAITextDesigner {
 private:
 	
 	MOAITextStyleSpan*		mStyleSpan;
+	MOAITextStyleState*		mStyleState;
 	u32						mSpanIdx;
 	int						mIdx;
 	

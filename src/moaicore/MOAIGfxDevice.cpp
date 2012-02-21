@@ -948,13 +948,8 @@ void MOAIGfxDevice::SetBlendMode ( int srcFactor, int dstFactor ) {
 void MOAIGfxDevice::SetClearColor ( MOAIColor* color ) {
 
 	if ( this->mClearColorNode != color ) {
-
-		if ( this->mClearColorNode ) {
-			this->LuaRelease ( *this->mClearColorNode );
-		}
-		if ( color ) {
-			this->LuaRetain ( *color );
-		}
+		this->LuaRelease ( this->mClearColorNode );
+		this->LuaRetain ( color );
 		this->mClearColorNode = color;
 	}
 }

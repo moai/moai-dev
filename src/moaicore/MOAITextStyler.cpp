@@ -37,7 +37,7 @@ void MOAITextStyler::BuildStyleMap ( MOAITextBox& textBox ) {
 	this->mTokenBase = 0;
 	this->mTokenTop = 0;
 	
-	this->mStyleStack = ( MOAITextStyle** )alloca ( STYLE_STACK_SIZE * sizeof ( MOAITextStyle* ));
+	this->mStyleStack = ( MOAITextStyleState* )alloca ( STYLE_STACK_SIZE * sizeof ( MOAITextStyleState ));
 	this->mStyleStackTop = 0;
 	this->mCurrentStyle = 0;
 	
@@ -45,12 +45,6 @@ void MOAITextStyler::BuildStyleMap ( MOAITextBox& textBox ) {
 	if ( !this->mCurrentStyle ) return;
 	
 	this->Parse ();
-	
-	u32 top = this->mTextBox->mActiveStyles.GetTop ();
-	for ( u32 i = 0; i < top; ++i ) {
-		MOAITextStyleState& style =  this->mTextBox->mActiveStyles [ i ];
-		style.mFont->UpdateGlyphs ( MOAIGlyph::METRICS_AND_BITMAP );
-	}
 }
 
 //----------------------------------------------------------------//
@@ -284,9 +278,11 @@ bool MOAITextStyler::ParseStyle () {
 			//----------------------------------------------------------------//
 			case COLOR_FINISH: {
 				
-				//u32 color = this->PackColor ( color, colorSize );
-				// TODO: push style
 				this->FinishToken ();
+				
+				this->PushStyle ( this->mCurrentStyle );
+				this->mCurrentStyle->mColor = this->PackColor ( color, colorSize );
+				
 				TRANSITION ( DONE );
 			}
 			
@@ -362,21 +358,26 @@ void MOAITextStyler::PopStyle () {
 		this->mStyleStackTop--;
 		
 		if ( this->mStyleStackTop && ( this->mStyleStackTop < STYLE_STACK_SIZE )) {
-			this->mCurrentStyle = this->mStyleStack [ this->mStyleStackTop - 1 ];
+			this->mCurrentStyle = &this->mStyleStack [ this->mStyleStackTop - 1 ];
 		}
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAITextStyler::PushStyle ( MOAITextStyle* style ) {
-
-	if ( !style ) {
-		style = this->mCurrentStyle;
-	}
+void MOAITextStyler::PushStyle ( MOAITextStyleState* styleState ) {
 
 	if ( this->mStyleStackTop < STYLE_STACK_SIZE ) {
-		this->mStyleStack [ this->mStyleStackTop ] = style;
-		this->mCurrentStyle = style;
+		MOAITextStyleState& newStyle = this->mStyleStack [ this->mStyleStackTop ];
+		
+		if ( styleState ) {
+			newStyle = *styleState;
+		}
+		else {
+			assert ( this->mCurrentStyle );
+			newStyle = *this->mCurrentStyle;
+		}
+		
+		this->mCurrentStyle = &newStyle;
 	}
 	this->mStyleStackTop++;
 }

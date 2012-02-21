@@ -370,7 +370,7 @@ void MOAIPartition::InsertProp ( MOAIProp& prop ) {
 	
 	if ( prop.mPartition == this ) return;
 	
-	this->LuaRetain ( prop );
+	this->LuaRetain ( &prop );
 	
 	if ( prop.mPartition ) {
 		prop.mPartition->RemoveProp ( prop );
@@ -459,7 +459,7 @@ void MOAIPartition::RemoveProp ( MOAIProp& prop ) {
 	}
 
 	prop.mPartition = 0;
-	this->LuaRelease ( prop );
+	this->LuaRelease ( &prop );
 }
 
 //----------------------------------------------------------------//

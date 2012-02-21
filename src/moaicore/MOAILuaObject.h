@@ -82,8 +82,8 @@ public:
 	MOAILuaStateHandle		GetSelf						();
 	bool					IsBound						();
 	void					LockToRefCount				();
-	void					LuaRelease					( MOAILuaObject& object );
-	void					LuaRetain					( MOAILuaObject& object );
+	void					LuaRelease					( MOAILuaObject* object );
+	void					LuaRetain					( MOAILuaObject* object );
 	void					LuaUnbind					();
 	void					PushLuaClassTable			( MOAILuaState& state );
 	void					PushLuaUserdata				( MOAILuaState& state );

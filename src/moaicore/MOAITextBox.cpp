@@ -378,21 +378,17 @@ int MOAITextBox::_setStringColor ( lua_State* L ) {
 int MOAITextBox::_setStyle ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextBox, "U" )
 
-	MOAITextStyle* style = state.GetLuaObject < MOAITextStyle >( 2 );
-	if ( style ) {
-		self->SetStyle ( style );
+	cc8* styleName = state.GetValue < cc8* >( 2, "" );
+	
+	if ( strlen ( styleName )) {
+	
+		MOAITextStyle* style = state.GetLuaObject < MOAITextStyle >( 3 );
+		self->SetStyle ( styleName, style );
 	}
 	else {
-		cc8* styleName = state.GetValue < cc8* >( 2, "" );
-		if ( strlen ( styleName )) {
-		
-			MOAITextStyle* style = state.GetLuaObject < MOAITextStyle >( 3 );
-		
-			if ( style ) {
-				style->Retain (); // TODO
-				self->SetStyle ( styleName, style );
-			}
-		}
+	
+		MOAITextStyle* style = state.GetLuaObject < MOAITextStyle >( 2 );
+		self->SetStyle ( style );
 	}
 	
 	self->ResetStyleMap ();
@@ -447,9 +443,7 @@ const float MOAITextBox::DEFAULT_SPOOL_SPEED = 24.0f;
 void MOAITextBox::ClearCurves () {
 
 	for ( u32 i = 0; i < this->mCurves.Size (); ++i ) {
-		if ( this->mCurves [ i ]) {
-			this->LuaRelease ( *this->mCurves [ i ]);
-		}
+		this->LuaRelease ( this->mCurves [ i ]);
 	}
 	this->mCurves.Clear ();
 }
@@ -578,6 +572,13 @@ void MOAITextBox::Layout () {
 		if ( !this->mStyleMap.GetTop ()) {
 			MOAITextStyler styler;
 			styler.BuildStyleMap ( *this );
+			
+			u32 totalActiveStyles = this->mActiveStyles.GetTop ();
+			for ( u32 i = 0; i < totalActiveStyles; ++i ) {
+				MOAITextStyleState& styleState = this->mActiveStyles [ i ];
+				this->LuaRetain ( styleState.mFont );
+				styleState.mFont->UpdateGlyphs ( MOAIGlyph::METRICS_AND_BITMAP );
+			}
 		}
 		
 		this->ResetLayout ();
@@ -620,6 +621,10 @@ MOAITextBox::MOAITextBox () :
 MOAITextBox::~MOAITextBox () {
 
 	this->ClearCurves ();
+	
+	this->ResetLayout ();
+	this->ResetStyleMap ();
+	this->ResetStyleSet ();
 }
 
 //----------------------------------------------------------------//
@@ -703,18 +708,18 @@ void MOAITextBox::PushSprite ( const MOAIGlyph* glyph, u32 idx, float x, float y
 }
 
 //----------------------------------------------------------------//
-void MOAITextBox::PushStyleSpan ( int base, int top, MOAITextStyle& style ) {
+void MOAITextBox::PushStyleSpan ( int base, int top, MOAITextStyleState& styleState ) {
 
 	u32 styleID = 0;
 	u32 totalStyles = this->mActiveStyles.GetTop ();
 	for ( ; styleID < totalStyles; ++styleID ) {
-		if ( this->mActiveStyles [ styleID ].IsMatch ( style )) {
+		if ( this->mActiveStyles [ styleID ].IsMatch ( styleState )) {
 			break;
 		}
 	}
 	
 	if ( styleID >= totalStyles ) {
-		this->mActiveStyles.Push ( style );
+		this->mActiveStyles.Push ( styleState );
 		styleID = totalStyles;
 	}
 
@@ -722,7 +727,7 @@ void MOAITextBox::PushStyleSpan ( int base, int top, MOAITextStyle& style ) {
 	
 	span.mBase			= base;
 	span.mTop			= top;
-	span.mStyle			= &style;
+	span.mStyleID		= styleID;
 
 	this->mStyleMap.Push ( span );
 }
@@ -790,9 +795,27 @@ void MOAITextBox::ResetLayout () {
 //----------------------------------------------------------------//
 void MOAITextBox::ResetStyleMap () {
 
-	// TODO: LuaRelease fonts...
+	u32 totalActiveStyles = this->mActiveStyles.GetTop ();
+	for ( u32 i = 0; i < totalActiveStyles; ++i ) {
+		MOAITextStyleState& styleState = this->mActiveStyles [ i ];
+		this->LuaRelease ( styleState.mFont );
+	}
+
 	this->mActiveStyles.Reset ();
 	this->mStyleMap.Reset ();
+}
+
+//----------------------------------------------------------------//
+void MOAITextBox::ResetStyleSet () {
+
+	this->LuaRelease ( this->mDefaultStyle );
+	this->mDefaultStyle = 0;
+	
+	StyleSetIt styleSetIt = this->mStyleSet.begin ();
+	for ( ; styleSetIt != this->mStyleSet.end (); ++styleSetIt ) {
+		this->LuaRelease ( styleSetIt->second );
+	}
+	this->mStyleSet.clear ();
 }
 
 //----------------------------------------------------------------//
@@ -822,11 +845,9 @@ void MOAITextBox::SetCurve ( u32 idx, MOAIAnimCurve* curve ) {
 	if ( idx > this->mCurves.Size ()) return;
 	if ( this->mCurves [ idx ] == curve ) return;
 
-	this->LuaRetain ( *curve );
-	
-	if ( this->mCurves [ idx ]) {
-		this->LuaRelease ( *this->mCurves [ idx ]);
-	}
+	this->LuaRetain ( curve );
+	this->LuaRelease ( this->mCurves [ idx ]);
+
 	this->mCurves [ idx ] = curve;
 }
 
@@ -839,18 +860,24 @@ void MOAITextBox::SetRect ( float left, float top, float right, float bottom ) {
 //----------------------------------------------------------------//
 void MOAITextBox::SetStyle ( MOAITextStyle* style ) {
 
-	this->mDefaultStyle = style;
+	this->SetStyle ( 0, style );
 }
 
 //----------------------------------------------------------------//
 void MOAITextBox::SetStyle ( cc8* styleName, MOAITextStyle* style ) {
 
-	if ( style ) {
-		style->Retain (); // TODO
-	}
-
 	if ( styleName && strlen ( styleName )) {
-	
+		
+		MOAITextStyle* prevStyle = 0;
+		
+		if ( this->mStyleSet.contains ( styleName )) {
+			prevStyle = this->mStyleSet [ styleName ];
+			if ( prevStyle == style ) return;
+		}
+		
+		this->LuaRetain ( style );
+		this->LuaRelease ( prevStyle );
+		
 		if ( style ) {
 			this->mStyleSet [ styleName ] = style;
 		}
@@ -861,6 +888,12 @@ void MOAITextBox::SetStyle ( cc8* styleName, MOAITextStyle* style ) {
 		}
 	}
 	else {
+	
+		if ( this->mDefaultStyle == style ) return;
+		
+		this->LuaRetain ( style );
+		this->LuaRelease ( this->mDefaultStyle );
+		
 		this->mDefaultStyle = style;
 	}
 }

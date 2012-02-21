@@ -385,7 +385,7 @@ int MOAICameraFitter2D::_snapToTarget ( lua_State* L ) {
 void MOAICameraFitter2D::AddAnchor ( MOAICameraAnchor2D& anchor ) {
 
 	if ( !this->mAnchors.contains ( &anchor )) {
-		this->LuaRetain ( anchor );
+		this->LuaRetain ( &anchor );
 		this->mAnchors.insert ( &anchor );
 	}
 }
@@ -397,7 +397,7 @@ void MOAICameraFitter2D::Clear () {
 		AnchorIt anchorIt = this->mAnchors.begin ();
 		MOAICameraAnchor2D* anchor = *anchorIt;
 		this->mAnchors.erase ( anchorIt );
-		this->LuaRelease ( *anchor );
+		this->LuaRelease ( anchor );
 	}
 	
 	this->mCamera.Set ( *this, 0 );
@@ -541,7 +541,7 @@ void MOAICameraFitter2D::RemoveAnchor ( MOAICameraAnchor2D& anchor ) {
 
 	if ( this->mAnchors.contains ( &anchor )) {
 		this->mAnchors.erase ( &anchor );
-		this->LuaRelease ( anchor );
+		this->LuaRelease ( &anchor );
 	}
 }
 

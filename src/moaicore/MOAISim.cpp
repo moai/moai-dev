@@ -732,7 +732,7 @@ void MOAISim::PopRenderPass () {
 	if ( this->mRenderPasses.Count ()) {
 		MOAIProp* prop = this->mRenderPasses.Back ();
 		this->mRenderPasses.PopBack ();
-		this->LuaRelease ( *prop );
+		this->LuaRelease ( prop );
 	}
 }
 
@@ -741,7 +741,7 @@ void MOAISim::PushRenderPass ( MOAIProp* prop ) {
 
 	if ( prop ) {
 		if ( !this->mRenderPasses.Contains ( prop )) {
-			this->LuaRetain ( *prop );
+			this->LuaRetain ( prop );
 			this->mRenderPasses.PushBack ( prop );
 		}
 	}
@@ -823,7 +823,7 @@ void MOAISim::RemoveRenderPass ( MOAIProp* prop ) {
 	if ( prop ) {
 		if ( this->mRenderPasses.Contains ( prop )) {
 			this->mRenderPasses.Remove ( prop );
-			this->LuaRelease ( *prop );
+			this->LuaRelease ( prop );
 		}
 	}
 }

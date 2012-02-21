@@ -18,6 +18,7 @@ void MOAITextDesigner::BuildLayout ( MOAITextBox& textBox ) {
 	this->mStr = textBox.mText;
 	this->mIdx = textBox.mCurrentPageIdx;
 	this->mStyleSpan = 0;
+	this->mStyleState = 0;
 	
 	int nextIdx = this->mIdx;
 	
@@ -106,7 +107,7 @@ void MOAITextDesigner::BuildLayout ( MOAITextBox& textBox ) {
 				acceptLine = ( lineSize && overrun );
 				
 				if ( acceptLine || !overrun ) {
-					textBox.PushSprite ( glyph, 0, pen.mX, pen.mY, this->mStyleSpan->mStyle->mColor );
+					textBox.PushSprite ( glyph, 0, pen.mX, pen.mY, this->mStyleState->mColor );
 					tokenRect.mXMax = pen.mX + glyphRight;
 					tokenSize++;
 				}
@@ -249,13 +250,13 @@ u32 MOAITextDesigner::NextChar ( MOAITextBox& textBox ) {
 				this->mIdx = this->mStyleSpan->mBase;
 			}
 		
-			MOAITextStyle* style = this->mStyleSpan->mStyle;
-			assert ( style );
+			this->mStyleState = &textBox.mActiveStyles [ this->mStyleSpan->mStyleID ];
+			assert ( this->mStyleState );
 			
-			MOAIFont* font = style->mFont;
-			assert ( this->mStyleSpan->mStyle->mFont );
+			MOAIFont* font = this->mStyleState->mFont;
+			assert ( font );
 			
-			this->mDeck = font->GetGlyphDeck ( style->mSize );
+			this->mDeck = font->GetGlyphDeck ( this->mStyleState->mSize );
 		}
 	
 		u32 c = u8_nextchar ( this->mStr, &this->mIdx );

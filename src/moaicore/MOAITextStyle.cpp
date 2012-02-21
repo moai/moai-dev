@@ -126,14 +126,8 @@ void MOAITextStyle::SetFont ( MOAIFont* font ) {
 
 	if ( this->mFont != font ) {
 	
-		if ( font ) {
-			this->LuaRetain ( *font );
-		}
-		
-		if ( this->mFont ) {
-			this->LuaRelease ( *this->mFont );
-		}
-		
+		this->LuaRetain ( font );
+		this->LuaRelease ( this->mFont );
 		this->mFont = font;
 	}
 }

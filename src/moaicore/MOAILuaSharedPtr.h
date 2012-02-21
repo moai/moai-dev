@@ -60,15 +60,9 @@ public:
 	inline void Set ( MOAILuaObject& owner, TYPE* assign ) {
 
 		if ( this->mObject != assign ) {
-
-			if ( assign ) {
-				owner.LuaRetain ( *assign );
-			}
-
-			if ( this->mObject ) {
-				owner.LuaRelease ( *this->mObject );
-			}
-			
+		
+			owner.LuaRetain ( assign );
+			owner.LuaRelease ( this->mObject );
 			this->mObject = assign;
 		}
 	}

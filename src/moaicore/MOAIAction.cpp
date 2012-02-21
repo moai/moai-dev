@@ -198,7 +198,7 @@ void MOAIAction::Attach ( MOAIAction* parent ) {
 	this->Retain ();
 
 	if ( parent ) {
-		parent->LuaRetain ( *this );
+		parent->LuaRetain ( this );
 	}
 	
 	if ( oldParent ) {
@@ -220,7 +220,7 @@ void MOAIAction::Attach ( MOAIAction* parent ) {
 		this->UnblockAll ();
 		this->mParent = 0;
 		
-		oldParent->LuaRelease ( *this );
+		oldParent->LuaRelease ( this );
 	}
 	
 	if ( oldParent && ( !parent )) {

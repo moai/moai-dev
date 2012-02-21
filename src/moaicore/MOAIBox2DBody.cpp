@@ -47,7 +47,7 @@ int MOAIBox2DBody::_addCircle ( lua_State* L ) {
 	MOAIBox2DFixture* fixture = new MOAIBox2DFixture ();
 	fixture->SetFixture ( self->mBody->CreateFixture ( &fixtureDef ));
 	fixture->SetWorld ( self->mWorld );
-	self->mWorld->LuaRetain ( *fixture );
+	self->mWorld->LuaRetain ( fixture );
 
 	fixture->PushLuaUserdata ( state );
 	return 1;
@@ -89,7 +89,7 @@ int MOAIBox2DBody::_addEdges ( lua_State* L ) {
 				MOAIBox2DFixture* fixture = new MOAIBox2DFixture ();
 				fixture->SetFixture ( self->mBody->CreateFixture ( &fixtureDef ));
 				fixture->SetWorld ( self->mWorld );
-				self->mWorld->LuaRetain ( *fixture );
+				self->mWorld->LuaRetain ( fixture );
 				lua_pushnumber ( retstate, idx );
 				fixture->PushLuaUserdata ( retstate );				
 				lua_settable ( retstate, -3 );
@@ -141,7 +141,7 @@ int MOAIBox2DBody::_addPolygon ( lua_State* L ) {
 		MOAIBox2DFixture* fixture = new MOAIBox2DFixture ();
 		fixture->SetFixture ( self->mBody->CreateFixture ( &fixtureDef ));
 		fixture->SetWorld ( self->mWorld );
-		self->mWorld->LuaRetain ( *fixture );
+		self->mWorld->LuaRetain ( fixture );
 
 		fixture->PushLuaUserdata ( state );
 		return 1;
@@ -188,7 +188,7 @@ int MOAIBox2DBody::_addRect ( lua_State* L ) {
 	MOAIBox2DFixture* fixture = new MOAIBox2DFixture ();
 	fixture->SetFixture ( self->mBody->CreateFixture ( &fixtureDef ));
 	fixture->SetWorld ( self->mWorld );
-	self->mWorld->LuaRetain ( *fixture );
+	self->mWorld->LuaRetain ( fixture );
 
 	fixture->PushLuaUserdata ( state );
 	return 1;

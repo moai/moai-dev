@@ -280,7 +280,9 @@ void MOAILuaObject::LockToRefCount () {
 }
 
 //----------------------------------------------------------------//
-void MOAILuaObject::LuaRelease ( MOAILuaObject& object ) {
+void MOAILuaObject::LuaRelease ( MOAILuaObject* object ) {
+
+	if ( !object ) return;
 
 	if ( this->mContain && MOAILuaRuntime::IsValid ()) {
 	
@@ -288,17 +290,19 @@ void MOAILuaObject::LuaRelease ( MOAILuaObject& object ) {
 	
 		if ( this->PushLocal ( state, this->mContain )) {
 			
-			object.PushLuaUserdata ( state );
+			object->PushLuaUserdata ( state );
 			lua_pushnil ( state );
 			lua_rawset ( state, -3 );
 		}
 		lua_pop ( state, 1 );
 	}
-	object.Release ();
+	object->Release ();
 }
 
 //----------------------------------------------------------------//
-void MOAILuaObject::LuaRetain ( MOAILuaObject& object ) {
+void MOAILuaObject::LuaRetain ( MOAILuaObject* object ) {
+
+	if ( !object ) return;
 
 	if ( this->mInstanceTable ) {
 		MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
@@ -315,13 +319,13 @@ void MOAILuaObject::LuaRetain ( MOAILuaObject& object ) {
 		lua_pop ( state, 1 );
 		this->PushLocal ( state, this->mContain );
 		
-		object.PushLuaUserdata ( state );
+		object->PushLuaUserdata ( state );
 		lua_pushvalue ( state, -1 );
 		lua_rawset ( state, -3 );
 		
 		lua_pop ( state, 1 );
 	}
-	object.Retain ();
+	object->Retain ();
 }
 
 //----------------------------------------------------------------//

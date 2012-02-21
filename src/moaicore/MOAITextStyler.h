@@ -52,19 +52,19 @@ private:
 		COLOR_RGBA_256		= 8,
 	};
 
-	int					mIdx;
-	int					mPrev;
+	int						mIdx;
+	int						mPrev;
 	
-	int					mTokenBase;
-	int					mTokenTop;
+	int						mTokenBase;
+	int						mTokenTop;
 	
-	cc8*				mStr;
-	MOAITextBox*		mTextBox;
+	cc8*					mStr;
+	MOAITextBox*			mTextBox;
 
-	MOAITextStyle**		mStyleStack;
-	u32					mStyleStackTop;
+	MOAITextStyleState*		mStyleStack;
+	u32						mStyleStackTop;
 
-	MOAITextStyle*		mCurrentStyle;
+	MOAITextStyleState*		mCurrentStyle;
 
 	static const u32 STYLE_STACK_SIZE = 256;
 
@@ -77,7 +77,7 @@ private:
 	void			Parse				();
 	bool			ParseStyle			();
 	void			PopStyle			();
-	void			PushStyle			( MOAITextStyle* style );
+	void			PushStyle			( MOAITextStyleState* styleState );
 	void			UngetChar			();
 
 public:
