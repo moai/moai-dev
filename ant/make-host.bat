@@ -4,6 +4,9 @@
 :: http://getmoai.com
 ::================================================================::
 
-	bash make-host.sh %1
+	@echo off
+	setlocal
+	set CYGWIN=nodosfilewarning
+	bash make-host.sh %*
 	@pause
 	
