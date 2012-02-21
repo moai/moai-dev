@@ -1,0 +1,549 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		037A1588126630BC002201B2 /* LoggingTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 037A1587126630BC002201B2 /* LoggingTableCell.m */; };
+		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
+		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
+		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
+		26F858F7126F8B08009AFBA9 /* Logging.m in Sources */ = {isa = PBXBuildFile; fileRef = 26F858F6126F8B08009AFBA9 /* Logging.m */; };
+		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
+		3A268EE31289EF79008D3832 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A268EE21289EF79008D3832 /* Default.png */; };
+		3A268F4A1289F105008D3832 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A268F491289F105008D3832 /* Default@2x.png */; };
+		3AA2A5E81225F0BC00C655FB /* ACicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AA2A5E51225F0BC00C655FB /* ACicon.png */; };
+		3AA2A5E91225F0BC00C655FB /* ACicon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AA2A5E61225F0BC00C655FB /* ACicon@2x.png */; };
+		3AA9189C1289EECB00E6D7F0 /* brandstamp.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AA9188E1289EECB00E6D7F0 /* brandstamp.png */; };
+		3AA9189D1289EECB00E6D7F0 /* brandstamp@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AA9188F1289EECB00E6D7F0 /* brandstamp@2x.png */; };
+		3AA9189E1289EECB00E6D7F0 /* btn-grey-long.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AA918901289EECB00E6D7F0 /* btn-grey-long.png */; };
+		3AA9189F1289EECB00E6D7F0 /* btn-grey-long@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AA918911289EECB00E6D7F0 /* btn-grey-long@2x.png */; };
+		3AA918A01289EECB00E6D7F0 /* btn-grey.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AA918921289EECB00E6D7F0 /* btn-grey.png */; };
+		3AA918A11289EECB00E6D7F0 /* btn-grey@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AA918931289EECB00E6D7F0 /* btn-grey@2x.png */; };
+		3AA918A21289EECB00E6D7F0 /* header-strip.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AA918941289EECB00E6D7F0 /* header-strip.png */; };
+		3AA918A31289EECB00E6D7F0 /* header-strip@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AA918951289EECB00E6D7F0 /* header-strip@2x.png */; };
+		3AA918A41289EECB00E6D7F0 /* logo-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AA918961289EECB00E6D7F0 /* logo-hd.png */; };
+		3AA918A51289EECB00E6D7F0 /* logo-hd@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AA918971289EECB00E6D7F0 /* logo-hd@2x.png */; };
+		3AA918A61289EECB00E6D7F0 /* logo-sm.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AA918981289EECB00E6D7F0 /* logo-sm.png */; };
+		3AA918A71289EECB00E6D7F0 /* logo-sm@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AA918991289EECB00E6D7F0 /* logo-sm@2x.png */; };
+		3AA918A81289EECB00E6D7F0 /* logtable-frame.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AA9189A1289EECB00E6D7F0 /* logtable-frame.png */; };
+		3AA918A91289EECB00E6D7F0 /* logtable-frame@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AA9189B1289EECB00E6D7F0 /* logtable-frame@2x.png */; };
+		6E4A286113BA604D0096E993 /* libAdColony.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E4A286013BA604D0096E993 /* libAdColony.a */; };
+		6E4A476013959B2200B94E30 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E4A475F13959B2200B94E30 /* AVFoundation.framework */; };
+		6E9CD4A412827D6D009A84E9 /* AdColonyAdvancedAppAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E9CD4A112827D6D009A84E9 /* AdColonyAdvancedAppAppDelegate.m */; };
+		6E9CD4A512827D6D009A84E9 /* AdColonyAdvancedAppViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E9CD4A312827D6D009A84E9 /* AdColonyAdvancedAppViewController.m */; };
+		6E9CD4CC128280EC009A84E9 /* AdColonyAdvancedAppViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6E9CD4C8128280EC009A84E9 /* AdColonyAdvancedAppViewController.xib */; };
+		6E9CD4CD128280EC009A84E9 /* LoggingTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6E9CD4C9128280EC009A84E9 /* LoggingTableCell.xib */; };
+		6E9CD4CE128280EC009A84E9 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6E9CD4CA128280EC009A84E9 /* MainWindow.xib */; };
+		6EB5C79512B064BC006B5225 /* ACicon@iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = 6EB5C79412B064BC006B5225 /* ACicon@iPad.png */; };
+		6EB5C79B12B064CB006B5225 /* AdColonyAdvancedAppViewController-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6EB5C79712B064CB006B5225 /* AdColonyAdvancedAppViewController-iPad.xib */; };
+		6EB5C79C12B064CB006B5225 /* LoggingTableCell-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6EB5C79812B064CB006B5225 /* LoggingTableCell-iPad.xib */; };
+		6EB5C79D12B064CB006B5225 /* MainWindow-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6EB5C79912B064CB006B5225 /* MainWindow-iPad.xib */; };
+		6EB5C7B312B074FC006B5225 /* Default-iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = 6EB5C7B212B074FC006B5225 /* Default-iPad.png */; };
+		6EB5C7BC12B07506006B5225 /* brandstamp-iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = 6EB5C7B512B07506006B5225 /* brandstamp-iPad.png */; };
+		6EB5C7BD12B07506006B5225 /* btn-grey-long-iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = 6EB5C7B612B07506006B5225 /* btn-grey-long-iPad.png */; };
+		6EB5C7BE12B07506006B5225 /* btn-grey-iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = 6EB5C7B712B07506006B5225 /* btn-grey-iPad.png */; };
+		6EB5C7BF12B07506006B5225 /* header-strip-iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = 6EB5C7B812B07506006B5225 /* header-strip-iPad.png */; };
+		6EB5C7C012B07506006B5225 /* logo-hd-iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = 6EB5C7B912B07506006B5225 /* logo-hd-iPad.png */; };
+		6EB5C7C112B07506006B5225 /* logo-sm-iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = 6EB5C7BA12B07506006B5225 /* logo-sm-iPad.png */; };
+		6EB5C7C212B07506006B5225 /* logtable-frame-iPad.png in Resources */ = {isa = PBXBuildFile; fileRef = 6EB5C7BB12B07506006B5225 /* logtable-frame-iPad.png */; };
+		DF08FEA41176735600832B52 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF08FEA31176735600832B52 /* QuartzCore.framework */; };
+		DF644FA313F9B2EE003E19D8 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF644FA213F9B2EE003E19D8 /* CoreTelephony.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		DF86D90A113F5D2D00592401 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF86D909113F5D2D00592401 /* MediaPlayer.framework */; };
+		DFCDA005112E1587006320CD /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFCDA004112E1587006320CD /* SystemConfiguration.framework */; };
+		F33B23B5118673BC009F68FE /* SoundManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F33B23B3118673BC009F68FE /* SoundManager.m */; };
+		F33B23BF11867421009F68FE /* bgmusicloop.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F33B23BB11867421009F68FE /* bgmusicloop.mp3 */; };
+		F39C44C8118B99C7003C0F15 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F39C44C7118B99C7003C0F15 /* CFNetwork.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		037A1586126630BC002201B2 /* LoggingTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoggingTableCell.h; sourceTree = "<group>"; };
+		037A1587126630BC002201B2 /* LoggingTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoggingTableCell.m; sourceTree = "<group>"; };
+		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		1D6058910D05DD3D006BFB54 /* AdColony.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AdColony.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		26F858F5126F8B08009AFBA9 /* Logging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Logging.h; sourceTree = "<group>"; };
+		26F858F6126F8B08009AFBA9 /* Logging.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Logging.m; sourceTree = "<group>"; };
+		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		3A268EE21289EF79008D3832 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		3A268F491289F105008D3832 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		3AA2A5E51225F0BC00C655FB /* ACicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ACicon.png; sourceTree = "<group>"; };
+		3AA2A5E61225F0BC00C655FB /* ACicon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ACicon@2x.png"; sourceTree = "<group>"; };
+		3AA9188E1289EECB00E6D7F0 /* brandstamp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = brandstamp.png; sourceTree = "<group>"; };
+		3AA9188F1289EECB00E6D7F0 /* brandstamp@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "brandstamp@2x.png"; sourceTree = "<group>"; };
+		3AA918901289EECB00E6D7F0 /* btn-grey-long.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-grey-long.png"; sourceTree = "<group>"; };
+		3AA918911289EECB00E6D7F0 /* btn-grey-long@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-grey-long@2x.png"; sourceTree = "<group>"; };
+		3AA918921289EECB00E6D7F0 /* btn-grey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-grey.png"; sourceTree = "<group>"; };
+		3AA918931289EECB00E6D7F0 /* btn-grey@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-grey@2x.png"; sourceTree = "<group>"; };
+		3AA918941289EECB00E6D7F0 /* header-strip.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "header-strip.png"; sourceTree = "<group>"; };
+		3AA918951289EECB00E6D7F0 /* header-strip@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "header-strip@2x.png"; sourceTree = "<group>"; };
+		3AA918961289EECB00E6D7F0 /* logo-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo-hd.png"; sourceTree = "<group>"; };
+		3AA918971289EECB00E6D7F0 /* logo-hd@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo-hd@2x.png"; sourceTree = "<group>"; };
+		3AA918981289EECB00E6D7F0 /* logo-sm.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo-sm.png"; sourceTree = "<group>"; };
+		3AA918991289EECB00E6D7F0 /* logo-sm@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo-sm@2x.png"; sourceTree = "<group>"; };
+		3AA9189A1289EECB00E6D7F0 /* logtable-frame.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logtable-frame.png"; sourceTree = "<group>"; };
+		3AA9189B1289EECB00E6D7F0 /* logtable-frame@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logtable-frame@2x.png"; sourceTree = "<group>"; };
+		6E4A285F13BA604D0096E993 /* AdColonyPublic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AdColonyPublic.h; path = ../../Library/AdColonyPublic.h; sourceTree = "<group>"; };
+		6E4A286013BA604D0096E993 /* libAdColony.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libAdColony.a; path = ../../Library/libAdColony.a; sourceTree = "<group>"; };
+		6E4A475F13959B2200B94E30 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		6E9CD4A012827D6D009A84E9 /* AdColonyAdvancedAppAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdColonyAdvancedAppAppDelegate.h; sourceTree = "<group>"; };
+		6E9CD4A112827D6D009A84E9 /* AdColonyAdvancedAppAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdColonyAdvancedAppAppDelegate.m; sourceTree = "<group>"; };
+		6E9CD4A212827D6D009A84E9 /* AdColonyAdvancedAppViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdColonyAdvancedAppViewController.h; sourceTree = "<group>"; };
+		6E9CD4A312827D6D009A84E9 /* AdColonyAdvancedAppViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdColonyAdvancedAppViewController.m; sourceTree = "<group>"; };
+		6E9CD4C312827FEA009A84E9 /* AdColonyAdvancedApp_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdColonyAdvancedApp_Prefix.pch; sourceTree = "<group>"; };
+		6E9CD4C412827FF8009A84E9 /* AdColonyAdvancedApp-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "AdColonyAdvancedApp-Info.plist"; sourceTree = "<group>"; };
+		6E9CD4C8128280EC009A84E9 /* AdColonyAdvancedAppViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = AdColonyAdvancedAppViewController.xib; path = Resources/xib/AdColonyAdvancedAppViewController.xib; sourceTree = "<group>"; };
+		6E9CD4C9128280EC009A84E9 /* LoggingTableCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = LoggingTableCell.xib; path = Resources/xib/LoggingTableCell.xib; sourceTree = "<group>"; };
+		6E9CD4CA128280EC009A84E9 /* MainWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MainWindow.xib; path = Resources/xib/MainWindow.xib; sourceTree = "<group>"; };
+		6EB5C79412B064BC006B5225 /* ACicon@iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ACicon@iPad.png"; sourceTree = "<group>"; };
+		6EB5C79712B064CB006B5225 /* AdColonyAdvancedAppViewController-iPad.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = "AdColonyAdvancedAppViewController-iPad.xib"; sourceTree = "<group>"; };
+		6EB5C79812B064CB006B5225 /* LoggingTableCell-iPad.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = "LoggingTableCell-iPad.xib"; sourceTree = "<group>"; };
+		6EB5C79912B064CB006B5225 /* MainWindow-iPad.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = "MainWindow-iPad.xib"; sourceTree = "<group>"; };
+		6EB5C7B212B074FC006B5225 /* Default-iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-iPad.png"; sourceTree = "<group>"; };
+		6EB5C7B512B07506006B5225 /* brandstamp-iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "brandstamp-iPad.png"; sourceTree = "<group>"; };
+		6EB5C7B612B07506006B5225 /* btn-grey-long-iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-grey-long-iPad.png"; sourceTree = "<group>"; };
+		6EB5C7B712B07506006B5225 /* btn-grey-iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-grey-iPad.png"; sourceTree = "<group>"; };
+		6EB5C7B812B07506006B5225 /* header-strip-iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "header-strip-iPad.png"; sourceTree = "<group>"; };
+		6EB5C7B912B07506006B5225 /* logo-hd-iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo-hd-iPad.png"; sourceTree = "<group>"; };
+		6EB5C7BA12B07506006B5225 /* logo-sm-iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo-sm-iPad.png"; sourceTree = "<group>"; };
+		6EB5C7BB12B07506006B5225 /* logtable-frame-iPad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logtable-frame-iPad.png"; sourceTree = "<group>"; };
+		DF08FEA31176735600832B52 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		DF644FA213F9B2EE003E19D8 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		DF86D909113F5D2D00592401 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		DFCDA004112E1587006320CD /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		F33B23B2118673BC009F68FE /* SoundManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundManager.h; sourceTree = "<group>"; };
+		F33B23B3118673BC009F68FE /* SoundManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoundManager.m; sourceTree = "<group>"; };
+		F33B23BB11867421009F68FE /* bgmusicloop.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bgmusicloop.mp3; sourceTree = "<group>"; };
+		F39C44C7118B99C7003C0F15 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1D60588F0D05DD3D006BFB54 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6E4A476013959B2200B94E30 /* AVFoundation.framework in Frameworks */,
+				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
+				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
+				288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */,
+				DFCDA005112E1587006320CD /* SystemConfiguration.framework in Frameworks */,
+				DF86D90A113F5D2D00592401 /* MediaPlayer.framework in Frameworks */,
+				DF08FEA41176735600832B52 /* QuartzCore.framework in Frameworks */,
+				F39C44C8118B99C7003C0F15 /* CFNetwork.framework in Frameworks */,
+				6E4A286113BA604D0096E993 /* libAdColony.a in Frameworks */,
+				DF644FA313F9B2EE003E19D8 /* CoreTelephony.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		080E96DDFE201D6D7F000001 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				6E9CD4A012827D6D009A84E9 /* AdColonyAdvancedAppAppDelegate.h */,
+				6E9CD4A112827D6D009A84E9 /* AdColonyAdvancedAppAppDelegate.m */,
+				6E9CD4A212827D6D009A84E9 /* AdColonyAdvancedAppViewController.h */,
+				6E9CD4A312827D6D009A84E9 /* AdColonyAdvancedAppViewController.m */,
+				F33B23B2118673BC009F68FE /* SoundManager.h */,
+				F33B23B3118673BC009F68FE /* SoundManager.m */,
+				037A1586126630BC002201B2 /* LoggingTableCell.h */,
+				037A1587126630BC002201B2 /* LoggingTableCell.m */,
+				26F858F5126F8B08009AFBA9 /* Logging.h */,
+				26F858F6126F8B08009AFBA9 /* Logging.m */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		19C28FACFE9D520D11CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1D6058910D05DD3D006BFB54 /* AdColony.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
+			isa = PBXGroup;
+			children = (
+				F334436D11ADF8E8002B6F90 /* AdColony */,
+				080E96DDFE201D6D7F000001 /* Classes */,
+				29B97315FDCFA39411CA2CEA /* Other Sources */,
+				29B97317FDCFA39411CA2CEA /* Resources */,
+				6EB5C79312B064A0006B5225 /* Resources-iPad */,
+				29B97323FDCFA39411CA2CEA /* Frameworks */,
+				19C28FACFE9D520D11CA2CBB /* Products */,
+			);
+			name = CustomTemplate;
+			sourceTree = "<group>";
+		};
+		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+				6E9CD4C312827FEA009A84E9 /* AdColonyAdvancedApp_Prefix.pch */,
+				29B97316FDCFA39411CA2CEA /* main.m */,
+			);
+			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		29B97317FDCFA39411CA2CEA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				3A268EE21289EF79008D3832 /* Default.png */,
+				3A268F491289F105008D3832 /* Default@2x.png */,
+				6E9CD4C412827FF8009A84E9 /* AdColonyAdvancedApp-Info.plist */,
+				3AA2A5E51225F0BC00C655FB /* ACicon.png */,
+				3AA2A5E61225F0BC00C655FB /* ACicon@2x.png */,
+				3AA2A5EB1225F0EA00C655FB /* Images */,
+				3AA2A6001225F0F300C655FB /* xibs */,
+				F33B23BA11867421009F68FE /* sounds */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				DF644FA213F9B2EE003E19D8 /* CoreTelephony.framework */,
+				6E4A475F13959B2200B94E30 /* AVFoundation.framework */,
+				F39C44C7118B99C7003C0F15 /* CFNetwork.framework */,
+				DF86D909113F5D2D00592401 /* MediaPlayer.framework */,
+				DFCDA004112E1587006320CD /* SystemConfiguration.framework */,
+				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
+				1D30AB110D05D00D00671497 /* Foundation.framework */,
+				288765A40DF7441C002DB57D /* CoreGraphics.framework */,
+				DF08FEA31176735600832B52 /* QuartzCore.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		3AA2A5EB1225F0EA00C655FB /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				3AA9188E1289EECB00E6D7F0 /* brandstamp.png */,
+				3AA9188F1289EECB00E6D7F0 /* brandstamp@2x.png */,
+				3AA918901289EECB00E6D7F0 /* btn-grey-long.png */,
+				3AA918911289EECB00E6D7F0 /* btn-grey-long@2x.png */,
+				3AA918921289EECB00E6D7F0 /* btn-grey.png */,
+				3AA918931289EECB00E6D7F0 /* btn-grey@2x.png */,
+				3AA918941289EECB00E6D7F0 /* header-strip.png */,
+				3AA918951289EECB00E6D7F0 /* header-strip@2x.png */,
+				3AA918961289EECB00E6D7F0 /* logo-hd.png */,
+				3AA918971289EECB00E6D7F0 /* logo-hd@2x.png */,
+				3AA918981289EECB00E6D7F0 /* logo-sm.png */,
+				3AA918991289EECB00E6D7F0 /* logo-sm@2x.png */,
+				3AA9189A1289EECB00E6D7F0 /* logtable-frame.png */,
+				3AA9189B1289EECB00E6D7F0 /* logtable-frame@2x.png */,
+			);
+			name = Images;
+			path = Resources/images;
+			sourceTree = "<group>";
+		};
+		3AA2A6001225F0F300C655FB /* xibs */ = {
+			isa = PBXGroup;
+			children = (
+				6E9CD4CA128280EC009A84E9 /* MainWindow.xib */,
+				6E9CD4C8128280EC009A84E9 /* AdColonyAdvancedAppViewController.xib */,
+				6E9CD4C9128280EC009A84E9 /* LoggingTableCell.xib */,
+			);
+			name = xibs;
+			sourceTree = "<group>";
+		};
+		6EB5C79312B064A0006B5225 /* Resources-iPad */ = {
+			isa = PBXGroup;
+			children = (
+				6EB5C7B212B074FC006B5225 /* Default-iPad.png */,
+				6EB5C79412B064BC006B5225 /* ACicon@iPad.png */,
+				6EB5C79612B064CB006B5225 /* xib */,
+				6EB5C7B412B07506006B5225 /* images */,
+			);
+			name = "Resources-iPad";
+			sourceTree = "<group>";
+		};
+		6EB5C79612B064CB006B5225 /* xib */ = {
+			isa = PBXGroup;
+			children = (
+				6EB5C79712B064CB006B5225 /* AdColonyAdvancedAppViewController-iPad.xib */,
+				6EB5C79812B064CB006B5225 /* LoggingTableCell-iPad.xib */,
+				6EB5C79912B064CB006B5225 /* MainWindow-iPad.xib */,
+			);
+			name = xib;
+			path = "Resources-iPad/xib";
+			sourceTree = "<group>";
+		};
+		6EB5C7B412B07506006B5225 /* images */ = {
+			isa = PBXGroup;
+			children = (
+				6EB5C7B512B07506006B5225 /* brandstamp-iPad.png */,
+				6EB5C7B612B07506006B5225 /* btn-grey-long-iPad.png */,
+				6EB5C7B712B07506006B5225 /* btn-grey-iPad.png */,
+				6EB5C7B812B07506006B5225 /* header-strip-iPad.png */,
+				6EB5C7B912B07506006B5225 /* logo-hd-iPad.png */,
+				6EB5C7BA12B07506006B5225 /* logo-sm-iPad.png */,
+				6EB5C7BB12B07506006B5225 /* logtable-frame-iPad.png */,
+			);
+			name = images;
+			path = "Resources-iPad/images";
+			sourceTree = "<group>";
+		};
+		F334436D11ADF8E8002B6F90 /* AdColony */ = {
+			isa = PBXGroup;
+			children = (
+				6E4A285F13BA604D0096E993 /* AdColonyPublic.h */,
+				6E4A286013BA604D0096E993 /* libAdColony.a */,
+			);
+			name = AdColony;
+			sourceTree = "<group>";
+		};
+		F33B23BA11867421009F68FE /* sounds */ = {
+			isa = PBXGroup;
+			children = (
+				F33B23BB11867421009F68FE /* bgmusicloop.mp3 */,
+			);
+			name = sounds;
+			path = Resources/sounds;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		1D6058900D05DD3D006BFB54 /* AdColonyAdvancedApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "AdColonyAdvancedApp" */;
+			buildPhases = (
+				1D60588D0D05DD3D006BFB54 /* Resources */,
+				1D60588E0D05DD3D006BFB54 /* Sources */,
+				1D60588F0D05DD3D006BFB54 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AdColonyAdvancedApp;
+			productName = AdColonyBannerLibrary;
+			productReference = 1D6058910D05DD3D006BFB54 /* AdColony.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		29B97313FDCFA39411CA2CEA /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = NO;
+				LastUpgradeCheck = 0410;
+			};
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "AdColonyAdvancedApp" */;
+			compatibilityVersion = "Xcode 3.1";
+			developmentRegion = English;
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
+			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				1D6058900D05DD3D006BFB54 /* AdColonyAdvancedApp */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1D60588D0D05DD3D006BFB54 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F33B23BF11867421009F68FE /* bgmusicloop.mp3 in Resources */,
+				3AA2A5E81225F0BC00C655FB /* ACicon.png in Resources */,
+				3AA2A5E91225F0BC00C655FB /* ACicon@2x.png in Resources */,
+				6E9CD4CC128280EC009A84E9 /* AdColonyAdvancedAppViewController.xib in Resources */,
+				6E9CD4CD128280EC009A84E9 /* LoggingTableCell.xib in Resources */,
+				6E9CD4CE128280EC009A84E9 /* MainWindow.xib in Resources */,
+				3AA9189C1289EECB00E6D7F0 /* brandstamp.png in Resources */,
+				3AA9189D1289EECB00E6D7F0 /* brandstamp@2x.png in Resources */,
+				3AA9189E1289EECB00E6D7F0 /* btn-grey-long.png in Resources */,
+				3AA9189F1289EECB00E6D7F0 /* btn-grey-long@2x.png in Resources */,
+				3AA918A01289EECB00E6D7F0 /* btn-grey.png in Resources */,
+				3AA918A11289EECB00E6D7F0 /* btn-grey@2x.png in Resources */,
+				3AA918A21289EECB00E6D7F0 /* header-strip.png in Resources */,
+				3AA918A31289EECB00E6D7F0 /* header-strip@2x.png in Resources */,
+				3AA918A41289EECB00E6D7F0 /* logo-hd.png in Resources */,
+				3AA918A51289EECB00E6D7F0 /* logo-hd@2x.png in Resources */,
+				3AA918A61289EECB00E6D7F0 /* logo-sm.png in Resources */,
+				3AA918A71289EECB00E6D7F0 /* logo-sm@2x.png in Resources */,
+				3AA918A81289EECB00E6D7F0 /* logtable-frame.png in Resources */,
+				3A268EE31289EF79008D3832 /* Default.png in Resources */,
+				3AA918A91289EECB00E6D7F0 /* logtable-frame@2x.png in Resources */,
+				3A268F4A1289F105008D3832 /* Default@2x.png in Resources */,
+				6EB5C79512B064BC006B5225 /* ACicon@iPad.png in Resources */,
+				6EB5C79B12B064CB006B5225 /* AdColonyAdvancedAppViewController-iPad.xib in Resources */,
+				6EB5C79C12B064CB006B5225 /* LoggingTableCell-iPad.xib in Resources */,
+				6EB5C79D12B064CB006B5225 /* MainWindow-iPad.xib in Resources */,
+				6EB5C7B312B074FC006B5225 /* Default-iPad.png in Resources */,
+				6EB5C7BC12B07506006B5225 /* brandstamp-iPad.png in Resources */,
+				6EB5C7BD12B07506006B5225 /* btn-grey-long-iPad.png in Resources */,
+				6EB5C7BE12B07506006B5225 /* btn-grey-iPad.png in Resources */,
+				6EB5C7BF12B07506006B5225 /* header-strip-iPad.png in Resources */,
+				6EB5C7C012B07506006B5225 /* logo-hd-iPad.png in Resources */,
+				6EB5C7C112B07506006B5225 /* logo-sm-iPad.png in Resources */,
+				6EB5C7C212B07506006B5225 /* logtable-frame-iPad.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1D60588E0D05DD3D006BFB54 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
+				F33B23B5118673BC009F68FE /* SoundManager.m in Sources */,
+				037A1588126630BC002201B2 /* LoggingTableCell.m in Sources */,
+				26F858F7126F8B08009AFBA9 /* Logging.m in Sources */,
+				6E9CD4A412827D6D009A84E9 /* AdColonyAdvancedAppAppDelegate.m in Sources */,
+				6E9CD4A512827D6D009A84E9 /* AdColonyAdvancedAppViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		1D6058940D05DD3E006BFB54 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ADDITIONAL_SDKS = "";
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = AdColonyAdvancedApp_Prefix.pch;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				"GCC_VERSION[sdk=iphoneos3.0][arch=*]" = com.apple.compilers.llvm.clang.1_0;
+				INFOPLIST_FILE = "AdColonyAdvancedApp-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../Library\"",
+				);
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
+				PRODUCT_NAME = AdColony;
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				RUN_CLANG_STATIC_ANALYZER = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = NO;
+			};
+			name = Debug;
+		};
+		1D6058950D05DD3E006BFB54 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ADDITIONAL_SDKS = "";
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = AdColonyAdvancedApp_Prefix.pch;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				INFOPLIST_FILE = "AdColonyAdvancedApp-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../Library\"",
+				);
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
+				PRODUCT_NAME = AdColony;
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				RUN_CLANG_STATIC_ANALYZER = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		C01FCF4F08A954540054247B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
+				PREBINDING = NO;
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				SDKROOT = iphoneos;
+				SYMROOT = "${SYMROOT}";
+			};
+			name = Debug;
+		};
+		C01FCF5008A954540054247B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
+				PREBINDING = NO;
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				SDKROOT = iphoneos;
+				SYMROOT = "${SYMROOT}";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "AdColonyAdvancedApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1D6058940D05DD3E006BFB54 /* Debug */,
+				1D6058950D05DD3E006BFB54 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "AdColonyAdvancedApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01FCF4F08A954540054247B /* Debug */,
+				C01FCF5008A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 29B97313FDCFA39411CA2CEA /* Project object */;
+}
