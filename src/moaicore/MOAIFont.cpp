@@ -38,7 +38,7 @@ static void _renderSpan ( const int y, const int count, const FT_Span* const spa
 	
 	RenderParams* render = ( RenderParams* )user;
 
-	int line = render->mPenY - y - 1;
+	int line = render->mPenY - y;
 	int offset = render->mPenX;
 
 	for ( int i = 0; i < count; ++i ) {
@@ -269,8 +269,6 @@ void MOAIFont::UpdateGlyphs ( u32 target ) {
 			if ( face->glyph->format!= FT_GLYPH_FORMAT_OUTLINE ) continue;
 			
 			int glyphWidth = face->glyph->metrics.width >> 6;
-			//int glyphHeight = face->glyph->metrics.height >> 6;
-			
 			int advanceX = face->glyph->metrics.horiAdvance >> 6;
 			int bearingX = face->glyph->metrics.horiBearingX >> 6;
 			int bearingY = face->glyph->metrics.horiBearingY >> 6;
@@ -291,7 +289,7 @@ void MOAIFont::UpdateGlyphs ( u32 target ) {
 					
 					render.mImage = glyph.mPage->mImageTexture;
 					render.mPenX = glyph.mSrcX - bearingX;
-					render.mPenY = glyph.mSrcY + yMax;
+					render.mPenY = glyph.mSrcY + bearingY;
 
 					FT_Outline_Render ( library, &face->glyph->outline, &params );
 					

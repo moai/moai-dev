@@ -24,7 +24,7 @@ void MOAIGlyph::Draw ( float x, float y ) const {
 		MOAIQuadBrush glQuad;
 		
 		x += this->mBearingX;
-		y -= this->mBearingY; 
+		y -= this->mBearingY;
 
 		glQuad.SetVerts (
 			x,
