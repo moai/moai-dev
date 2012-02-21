@@ -235,7 +235,7 @@ int MOAITextBox::_setAlignment ( lua_State* L ) {
 int MOAITextBox::_setCurve ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextBox, "UNU" )
 	
-	u32 index = state.GetValue < u32 >( 2, 0 ) - 1;
+	u32 index = state.GetValue < u32 >( 2, 1 ) - 1;
 	
 	MOAIAnimCurve* curve = state.GetLuaObject < MOAIAnimCurve >( 3 );
 	if ( !curve ) return 0;
@@ -604,7 +604,8 @@ MOAITextBox::MOAITextBox () :
 	mCurrentPageIdx ( 0 ),
 	mNextPageIdx ( 0 ),
 	mNeedsLayout ( false ),
-	mDefaultStyle ( 0 ) {
+	mDefaultStyle ( 0 ),
+	mMore ( false ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIProp )
@@ -632,7 +633,7 @@ bool MOAITextBox::More () {
 	
 	this->Layout ();
 	
-	if ( this->mReveal <= this->mSprites.GetTop ()) {
+	if ( this->mReveal < this->mSprites.GetTop ()) {
 		return true;
 	}
 	return this->mMore;

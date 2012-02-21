@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <contrib/utf8.h>
+#include <moaicore/MOAIAnimCurve.h>
 #include <moaicore/MOAIFont.h>
 #include <moaicore/MOAITextBox.h>
 #include <moaicore/MOAITextDesigner.h>
@@ -195,12 +196,23 @@ void MOAITextDesigner::BuildLayout ( MOAITextBox& textBox ) {
 		line.mRect.Offset ( xOff, yOff );
 		float spriteYOff = yOff + line.mAscent;
 		
+		MOAIAnimCurve* curve = 0;
+		if ( textBox.mCurves ) {
+			curve = textBox.mCurves [ i % textBox.mCurves.Size ()];
+		}
+		
 		for ( u32 j = 0; j < line.mSize; ++j ) {
 			
 			MOAITextSprite& sprite = textBox.mSprites [ line.mStart + j ];
 			
 			sprite.mX += xOff;
-			sprite.mY += spriteYOff;
+			
+			if ( curve ) {
+				sprite.mY += spriteYOff + curve->GetFloatValue (( sprite.mX - textBox.mFrame.mXMin ) / width );
+			}
+			else {
+				sprite.mY += spriteYOff;
+			}
 		}
 	}
 	

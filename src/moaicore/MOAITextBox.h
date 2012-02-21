@@ -107,7 +107,7 @@ private:
 	int					mNextPageIdx;
 	bool				mNeedsLayout;
 	
-	USLeanArray < MOAIAnimCurve* >	mCurves;
+	USLeanArray < MOAIAnimCurve* > mCurves;
 	
 	// style set - these are the styles the texbox knows about
 	// only need to get these during text styling, so using an STLMap for now...
