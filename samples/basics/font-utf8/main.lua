@@ -14,7 +14,7 @@ layer = MOAILayer2D.new ()
 layer:setViewport ( viewport )
 MOAISim.pushRenderPass ( layer )
 
-charcodes = 'φωψÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿ'
+charcodes = ' φωψÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿ'
 text = 'φωψ ÀÁÂÃÄÅ ÆÇ ÈÉÊË ÌÍÎÏ ÐÑ ÒÓÔÕÖ ×Ø ÙÚÛÜ ÝÞß àáâãäå æç èéêë ìíîï ðñ òóôõö ÷ø ùúûü ýþÿ'
 
 font = MOAIFont.new ()
@@ -23,7 +23,7 @@ font:loadFromTTF ( 'times.ttf', charcodes, 12, 163 )
 textbox = MOAITextBox.new ()
 textbox:setString ( text )
 textbox:setFont ( font )
-textbox:setTextSize ( font:getScale ())
+textbox:setTextSize ( 12, 163 )
 textbox:setRect ( -150, -230, 150, 230 )
 textbox:setYFlip ( true )
 layer:insertProp ( textbox )
