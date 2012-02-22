@@ -529,6 +529,19 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 	}
 	
 	//================================================================//
+	// Google C2DM JNI callback methods
+	//================================================================//
+
+	//----------------------------------------------------------------//
+	public void registerForRemoteNotifications ( String alias ) {
+	
+//		Intent intent = new Intent ( "com.google.android.c2dm.intent.REGISTER" );
+//		intent.putExtra( "app", PendingIntent.getBroadcast ( context, 0, new Intent (), 0 ));
+//		intent.putExtra( "sender", alias );
+//		context.startService ( intent );	
+	}
+	
+	//================================================================//
 	// TapjoyVideoNotifier methods
 	//================================================================//	
 
