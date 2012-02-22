@@ -17,6 +17,7 @@ private:
 
 	friend class MOAIGlyph;
 	friend class MOAIFont;
+	friend class MOAIFreeTypeFont;
 
 	typedef MOAISpanList < MOAIGlyph* > GlyphList;
 	typedef MOAISpanList < MOAIGlyph* >::Span GlyphSpan;

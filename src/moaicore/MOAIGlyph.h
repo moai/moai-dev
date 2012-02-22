@@ -25,7 +25,6 @@ class MOAIGlyph {
 private:
 	
 	u32			mCode;
-	u32			mStatus;
 	
 	float		mWidth; // width in pixels
 	float		mHeight; // height in pixels
@@ -44,19 +43,12 @@ private:
 public:
 
 	friend class MOAIFont;
+	friend class MOAIFreeTypeFont;
 	friend class MOAIGlyphDeck;
 	friend class MOAIGlyphPage;
 	friend class MOAITextBox;
 	friend class MOAITextDesigner;
 	friend class MOAITextStyler;
-	
-	GET_SET ( u32, Code, mCode )
-
-	enum {
-		NONE,
-		METRICS_ONLY,
-		METRICS_AND_BITMAP,
-	};
 
 	//----------------------------------------------------------------//
 	void			Draw				( float x, float y ) const;

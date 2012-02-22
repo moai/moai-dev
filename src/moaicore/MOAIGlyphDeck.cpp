@@ -16,7 +16,7 @@ void MOAIGlyphDeck::AffirmGlyph ( u32 c ) {
 		MOAIGlyph& glyph = this->mGlyphMap [ c ];
 		glyph.mNext = this->mPending;
 		this->mPending = &glyph;
-		glyph.SetCode ( c );
+		glyph.mCode = c;
 	}
 }
 
@@ -31,9 +31,11 @@ MOAIGlyphDeck::MOAIGlyphDeck () :
 	mPoints ( 0.0f ),
 	mHeight ( 0.0f ),
 	mAscent ( 0.0f ),
-	mPending ( 0 ) {
+	mPending ( 0 ),
+	mGlyphs ( 0 ) {
 }
 
 //----------------------------------------------------------------//
 MOAIGlyphDeck::~MOAIGlyphDeck (){
 }
+

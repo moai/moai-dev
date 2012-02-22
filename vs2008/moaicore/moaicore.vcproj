@@ -1664,11 +1664,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAIFreetypeFontRipper.cpp"
+				RelativePath="..\..\src\moaicore\MOAIFreeTypeFont.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAIFreetypeFontRipper.h"
+				RelativePath="..\..\src\moaicore\MOAIFreeTypeFont.h"
 				>
 			</File>
 			<File

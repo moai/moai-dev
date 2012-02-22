@@ -90,21 +90,24 @@ MOAICamera2D = MOAICamera.extend (
 	end
 )
 
-MOAIFont = MOAIFont.extend (
+if MOAIFreeTypeFont then
 
 	-- extend the instance interface
-	function ( interface, super )
-		
-		function interface.loadFromTTF ( self, filename, charcodes, points, dpi )
-			self:load ( filename )
-			self:preloadGlyphs ( charcodes, points, dpi )
-		end
-	end,
+	MOAIFont = MOAIFreeTypeFont.extend (
 	
-	-- extend the class
-	function ( class, super )
-	end
-)
+		function ( interface, super )
+			
+			function interface.loadFromTTF ( self, filename, charcodes, points, dpi )
+				self:load ( filename )
+				self:preloadGlyphs ( charcodes, points, dpi )
+			end
+		end,
+		
+		-- extend the class
+		function ( class, super )
+		end
+	)
+end
 
 MOAILayer2D = MOAILayer.extend (
 

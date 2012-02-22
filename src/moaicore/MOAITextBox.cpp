@@ -16,38 +16,18 @@
 #include <moaicore/MOAITextStyle.h>
 #include <moaicore/MOAITextStyler.h>
 
-/*
-
-	Raw text -> styler -> layout -> page
-
-	From a string, we generate a text layout. A layout is a data structure optimized for
-	fast arrangement into pages. The layout is an index of all words in the original text properly
-	sized and arranged along a horizontal line. The layout may be shared by multiple pages.
-	Each page is a 'window' into the layout (and corresponding string). Ideally, the page
-	should aggregate any graphics state changes required to render the text.
-	
-	Here's the process:
-	
-	1. Load the text into a styler.
-		a. Parse the text into words and make a table of styles used.
-			i. Each word should reference its style.
-			ii. For words requiring multiple styles, break them into compound words.
-			iii. Words should not any following words that are breaks so as to not separate during page layout.
-		b. Populate the fonts used with the glyphs required by the text.
-		c. For each font, load and resolve glyph sizes (but do not rasterize glyphs).
-		d. Using the glyph sizes, scan the word table and assign a location and width to each word.
-	
-	2. Load the text into a page.
-		a. Break the text into lines. Each line gets an offset depending on justification.
-		b. Scan the text in the page and rasterize glyphs.
-		c. Update page's base text offset and character count.
-
-	A text style controls the font, size, color and transform used for a piece of text. A particle
-	system may also be attached to the style. In this case, the styled text will be spawned into the
-	particle system instead of rendered. The style may be configured to spawn particle text in either
-	local or world space. To make this work, the glyph cache for a particular font size must implement
-	the deck interface.
-*/
+// TODO: support serialized fonts
+// TODO: font garbage collection
+//			- ref count glyphs
+//			- glyph lifecycle
+//			- glyph page defragmantation
+// TODO: font serialization
+//			- bitmap font ripper
+//			- 'immutable' glyph pages
+//			- user managed glyph pages
+// TODO: textbox interactivity
+//			- hit test for lines/tokens/characters
+//			- color override & restore
 
 //================================================================//
 // local
@@ -593,7 +573,7 @@ void MOAITextBox::Layout () {
 			for ( u32 i = 0; i < totalActiveStyles; ++i ) {
 				MOAITextStyleState& styleState = this->mActiveStyles [ i ];
 				this->LuaRetain ( styleState.mFont );
-				styleState.mFont->UpdateGlyphs ( MOAIGlyph::METRICS_AND_BITMAP );
+				styleState.mFont->ProcessGlyphs ();
 			}
 		}
 		

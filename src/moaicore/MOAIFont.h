@@ -19,23 +19,29 @@ class MOAIGlyph;
 //================================================================//
 class MOAIFont :
 	public MOAILuaObject {
-private:
+protected:
+
+	static const u32 MAX_KERN_TABLE_SIZE = 256;
 
 	MOAIGlyphPage* mPages;
 
 	STLString	mFilename;
+	bool		mBuildKerningTables;
 	
 	// for now
 	typedef STLMap < float, MOAIGlyphDeck >::iterator GlyphDecksIt;
 	STLMap < float, MOAIGlyphDeck > mGlyphDecks;
 
 	//----------------------------------------------------------------//
+	static int			_getBuildKerningTables	( lua_State* L );
 	static int			_load					( lua_State* L );
 	static int			_preloadGlyphs			( lua_State* L );
+	static int			_rebuildKerningTables	( lua_State* L );
+	static int			_setBuildKerningTables	( lua_State* L );
 	static int			_writePages				( lua_State* L );
 
 	//----------------------------------------------------------------//
-	MOAISpan < MOAIGlyph* >*	Alloc				( MOAIGlyph& glyph );
+	MOAISpan < MOAIGlyph* >*	Alloc			( MOAIGlyph& glyph );
 
 public:
 	
@@ -48,11 +54,13 @@ public:
 	static bool			IsWhitespace			( u32 c );
 						MOAIFont				();
 						~MOAIFont				();
+	virtual void		ProcessGlyphs			();
+	virtual void		RebuildKerning			();
+	virtual void		RebuildKerning			( float points );
 	void				RegisterLuaClass		( MOAILuaState& state );
 	void				RegisterLuaFuncs		( MOAILuaState& state );
 	void				SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
 	void				SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
-	void				UpdateGlyphs			( u32 target );
 	void				WritePages				();
 };
 

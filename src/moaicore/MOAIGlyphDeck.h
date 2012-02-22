@@ -7,6 +7,8 @@
 #include <moaicore/MOAIGlyph.h>
 #include <moaicore/MOAILua.h>
 
+// TODO: subclass from MOAIDeck
+
 //================================================================//
 // MOAIGlyphDeck
 //================================================================//
@@ -14,16 +16,19 @@ class MOAIGlyphDeck {
 private:
 
 	friend class MOAIFont;
+	friend class MOAIFreeTypeFont;
 	friend class MOAITextDesigner;
 	
 	float	mPoints;
 	float	mHeight;
 	float	mAscent;
 	
-	// for now
+	// TODO: optimize for printable ASCII characters
+	// TODO: find better container than STLMap
 	STLMap < u32, MOAIGlyph > mGlyphMap;
 	
-	MOAIGlyph* mPending;
+	MOAIGlyph* mPending; // queue of glyphs remaining to be processed
+	MOAIGlyph* mGlyphs; // processed glyphs
 	
 	//----------------------------------------------------------------//
 	void			AffirmGlyph			( u32 c );

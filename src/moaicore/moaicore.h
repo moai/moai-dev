@@ -42,6 +42,7 @@
 #include <moaicore/MOAIEventSource.h>
 #include <moaicore/MOAIFileSystem.h>
 #include <moaicore/MOAIFont.h>
+#include <moaicore/MOAIFreeTypeFont.h>
 #include <moaicore/MOAIFrameBuffer.h>
 #include <moaicore/MOAIGfxDevice.h>
 #include <moaicore/MOAIGfxQuad2D.h>
