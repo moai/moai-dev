@@ -28,7 +28,6 @@ public:
 	
                     MOAIAdColony					();
 					~MOAIAdColony                   ();
-	static void		RegisterAdColony				();
 	void			RegisterLuaClass				( MOAILuaState& state );
 	void			SetAdColonyDelegate				( id < AdColonyDelegate > delegate );
 };

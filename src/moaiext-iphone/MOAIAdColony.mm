@@ -35,12 +35,6 @@ MOAIAdColony::~MOAIAdColony () {
 }
 
 //----------------------------------------------------------------//
-void MOAIAdColony::RegisterAdColony () {
-	
-	REGISTER_LUA_CLASS ( MOAIAdColony )
-}
-
-//----------------------------------------------------------------//
 void MOAIAdColony::RegisterLuaClass ( MOAILuaState& state ) {
     
 	luaL_Reg regTable[] = {
