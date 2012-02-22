@@ -43,7 +43,6 @@
 #include <moaicore/MOAIFileSystem.h>
 #include <moaicore/MOAIFont.h>
 #include <moaicore/MOAIFrameBuffer.h>
-#include <moaicore/MOAIFreetypeFontRipper.h>
 #include <moaicore/MOAIGfxDevice.h>
 #include <moaicore/MOAIGfxQuad2D.h>
 #include <moaicore/MOAIGfxQuadDeck2D.h>

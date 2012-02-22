@@ -5,7 +5,6 @@
 #include <contrib/utf8.h>
 #include <moaicore/MOAIBitmapFontRipper.h>
 #include <moaicore/MOAIDataBuffer.h>
-#include <moaicore/MOAIFreetypeFontRipper.h>
 #include <moaicore/MOAIFont.h>
 #include <moaicore/MOAIGfxDevice.h>
 #include <moaicore/MOAIGlyphPage.h>
@@ -17,6 +16,8 @@
 #include <ft2build.h>
 #include FT_FREETYPE_H
 #include FT_STROKER_H
+
+//#if USE_FREETYPE
 
 #define MAX_TEXTURE_SIZE 1024
 
