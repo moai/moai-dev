@@ -18,10 +18,10 @@
 
 #----------------------------------------------------------------#
 # space-delimited list of libraries (moai-supported) required
-# available: facebook
+# available: facebook, tapjoy
 #----------------------------------------------------------------#
 
-	requires=( "facebook" )
+	requires=( "facebook" "tapjoy" )
 		
 #----------------------------------------------------------------#
 # list of icon files
