@@ -11,6 +11,7 @@
 //----------------------------------------------------------------//
 void AKUAdColonyInit () {
 	
+	MOAIAdColony::Affirm();
 	REGISTER_LUA_CLASS ( MOAIAdColony )
 }
 
