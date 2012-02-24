@@ -146,7 +146,6 @@
 	# copy external classes, resources, libs and projects into new host dir
 	rsync -r --exclude=.svn --exclude=.DS_Store host-source/source/project/external/projects/. $new_host_dir/host-source/external
 	rsync -r --exclude=.svn --exclude=.DS_Store host-source/source/project/external/src/. $new_host_dir/host-source/project/src
-	rsync -r --exclude=.svn --exclude=.DS_Store host-source/source/project/external/res/. $new_host_dir/host-source/project/res
 	rsync -r --exclude=.svn --exclude=.DS_Store host-source/source/project/external/libs/. $new_host_lib_dir
 
 	# set the app platform in all project.properties files
