@@ -9,12 +9,24 @@ charcodes = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 .,:;
 text = 'The quick brown fox jumps over the lazy dog.'
 
 font = MOAIFont.new ()
-font:loadFromTTF ( 'times.ttf', charcodes, 12, 163 )
+font:load ( 'times.ttf' )
+font:preloadGlyphs ( charcodes, 8 )
+font:preloadGlyphs ( charcodes, 12 )
+font:preloadGlyphs ( charcodes, 16 )
+font:preloadGlyphs ( charcodes, 24 )
+font:preloadGlyphs ( charcodes, 32 )
+font:preloadGlyphs ( charcodes, 42 )
+font:preloadGlyphs ( charcodes, 56 )
+font:preloadGlyphs ( charcodes, 64 )
+font:preloadGlyphs ( charcodes, 72 )
+font:preloadGlyphs ( charcodes, 76 )
 
 -- yank out the font image
 image = font:getImage ()
 image:writePNG ( 'font.png' )
+font:setImage ( image );
 
+--[[
 -- add the font to the serializer
 serializer = MOAISerializer.new ()
 serializer:serialize ( font )
@@ -62,3 +74,4 @@ textbox:setTextSize ( font:getScale ())
 textbox:setRect ( -150, -230, 150, 230 )
 textbox:setYFlip ( true )
 layer:insertProp ( textbox )
+]]--

@@ -43,6 +43,8 @@ public:
 	static const u32 DEFAULT_TRANSFORM = MOAIImageTransform::TRUECOLOR | MOAIImageTransform::PREMULTIPLY_ALPHA;
 	
 	//----------------------------------------------------------------//
+	void			Invalidate				();
+	void			Invalidate				( USIntRect rect );
 					MOAIImageTexture		();
 					~MOAIImageTexture		();
 	void			RegisterLuaClass		( MOAILuaState& state );

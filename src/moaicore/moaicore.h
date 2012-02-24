@@ -50,8 +50,9 @@
 #include <moaicore/MOAIGfxQuadListDeck2D.h>
 #include <moaicore/MOAIGlobals.h>
 #include <moaicore/MOAIGlyph.h>
+#include <moaicore/MOAIGlyphCache.h>
+#include <moaicore/MOAIGlyphCachePage.h>
 #include <moaicore/MOAIGlyphDeck.h>
-#include <moaicore/MOAIGlyphPage.h>
 #include <moaicore/MOAIGrid.h>
 #include <moaicore/MOAIGridPathGraph.h>
 #include <moaicore/MOAIGridSpace.h>

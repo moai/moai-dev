@@ -516,14 +516,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAIMultiTexture.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIMultiTexture.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\moaicore\MOAIPvrHeader.h"
 				>
 			</File>
@@ -1680,19 +1672,27 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\moaicore\MOAIGlyphCache.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIGlyphCache.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIGlyphCachePage.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIGlyphCachePage.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\moaicore\MOAIGlyphDeck.cpp"
 				>
 			</File>
 			<File
 				RelativePath="..\..\src\moaicore\MOAIGlyphDeck.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIGlyphPage.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIGlyphPage.h"
 				>
 			</File>
 			<File
@@ -1717,6 +1717,14 @@
 			</File>
 			<File
 				RelativePath="..\..\src\moaicore\MOAIImageTexture.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIMultiTexture.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIMultiTexture.h"
 				>
 			</File>
 			<File

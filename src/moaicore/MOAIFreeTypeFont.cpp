@@ -7,7 +7,7 @@
 #include <moaicore/MOAIDataBuffer.h>
 #include <moaicore/MOAIFreeTypeFont.h>
 #include <moaicore/MOAIGfxDevice.h>
-#include <moaicore/MOAIGlyphPage.h>
+#include <moaicore/MOAIGlyphCache.h>
 #include <moaicore/MOAIImageTexture.h>
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAITextureBase.h>
@@ -243,17 +243,22 @@ void MOAIFreeTypeFont::ProcessGlyphs () {
 			glyph.mBearingX = ( float )bearingX;
 			glyph.mBearingY = ( float )bearingY;
 			
-			// render the glyph
-			this->Alloc ( glyph );
-			assert ( glyph.mPage );
-				
-			glyph.mPage->AffirmCanvas ();
+			// place and render the glyph
+			if ( this->mGlyphCache ) {
 			
-			render.mImage = glyph.mPage->mImageTexture;
-			render.mPenX = glyph.mSrcX - bearingX;
-			render.mPenY = glyph.mSrcY + bearingY;
-
-			FT_Outline_Render ( library, &face->glyph->outline, &params );
+				this->mGlyphCache->PlaceGlyph ( glyph );
+				
+				MOAIImage* image = this->mGlyphCache->GetGlyphImage ( glyph );
+				if ( image ) {
+					
+					render.mImage = image;
+					render.mPenX = glyph.mSrcX - bearingX;
+					render.mPenY = glyph.mSrcY + bearingY;
+					
+					FT_Outline_Render ( library, &face->glyph->outline, &params );
+					// TODO: need to invalidate glyph rect
+				}
+			}
 		}
 	}
 	

@@ -3,18 +3,18 @@
 
 #include "pch.h"
 #include <moaicore/MOAIGlyph.h>
-#include <moaicore/MOAIGlyphPage.h>
+#include <moaicore/MOAIGlyphCachePage.h>
 #include <moaicore/MOAIImageTexture.h>
 
 #define MAX_TEXTURE_SIZE 1024
 #define DPI 300
 
 //================================================================//
-// MOAIGlyphPage
+// MOAIGlyphCachePage
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGlyphPage::AffirmCanvas () {
+void MOAIGlyphCachePage::AffirmCanvas () {
 	
 	if ( !this->mImageTexture ) {
 		
@@ -27,14 +27,12 @@ void MOAIGlyphPage::AffirmCanvas () {
 		USIntRect rect;
 		rect.Init ( 0, 0, MAX_TEXTURE_SIZE, this->mRows.mSize );
 		this->mImageTexture->ResizeCanvas ( *this->mImageTexture, rect );
+		this->mImageTexture->Invalidate ();
 	}
-	
-	this->mUScale = 1.0f / ( float )this->mImageTexture->MOAIImage::GetWidth ();
-	this->mVScale = 1.0f / ( float )this->mImageTexture->MOAIImage::GetHeight ();
 }
 
 //----------------------------------------------------------------//
-MOAIGlyphPage::GlyphSpan* MOAIGlyphPage::Alloc ( MOAIGlyph& glyph ) {
+MOAIGlyphCachePage::GlyphSpan* MOAIGlyphCachePage::Alloc ( MOAIGlyph& glyph ) {
 	
 	u32 width = ( u32 )glyph.mWidth + 2;
 	u32 height = ( u32 )glyph.mHeight + 2;
@@ -89,15 +87,16 @@ MOAIGlyphPage::GlyphSpan* MOAIGlyphPage::Alloc ( MOAIGlyph& glyph ) {
 	
 	GlyphSpan* glyphSpan = bestRowIt->mData.Alloc ( width );
 	if ( glyphSpan ) {
-		glyph.mPage = this;
 		glyph.mSrcX = glyphSpan->mBase;
 		glyph.mSrcY = bestRowIt->mBase;
 	}
+	
+	this->AffirmCanvas ();
 	return glyphSpan;
 }
 
 //----------------------------------------------------------------//
-MOAIGlyphPage::RowSpan* MOAIGlyphPage::AllocRow ( u32 height ) {
+MOAIGlyphCachePage::RowSpan* MOAIGlyphCachePage::AllocRow ( u32 height ) {
 
 	RowSpan* rowIt = this->mRows.Alloc ( height );
 		
@@ -111,7 +110,16 @@ MOAIGlyphPage::RowSpan* MOAIGlyphPage::AllocRow ( u32 height ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIGlyphPage::ExpandToNextPowerofTwo () {
+void MOAIGlyphCachePage::Clear () {
+
+	if ( this->mImageTexture ) {
+		delete this->mImageTexture;
+		this->mImageTexture = 0;
+	}
+}
+
+//----------------------------------------------------------------//
+bool MOAIGlyphCachePage::ExpandToNextPowerofTwo () {
 
 	//u32 maxTextureSize = MOAIGfxDevice::Get ().GetMaxTextureSize ();
 	u32 maxTextureSize = MAX_TEXTURE_SIZE;
@@ -124,14 +132,22 @@ bool MOAIGlyphPage::ExpandToNextPowerofTwo () {
 }
 
 //----------------------------------------------------------------//
-MOAIGlyphPage::MOAIGlyphPage () :
-	mImageTexture ( 0 ),
-	mNext ( 0 ),
-	mThreshold ( 0.8f ),
-	mUScale ( 1.0f ),
-	mVScale ( 1.0f ){
+void MOAIGlyphCachePage::InitCanvas ( u32 width, u32 height, USColor::Format colorFmt, USPixel::Format pixelFmt ) {
+
+	this->Clear ();
+
+	this->mImageTexture = new MOAIImageTexture ();
+	this->mImageTexture->Init ( width, height, colorFmt, pixelFmt );
 }
 
 //----------------------------------------------------------------//
-MOAIGlyphPage::~MOAIGlyphPage () {
+MOAIGlyphCachePage::MOAIGlyphCachePage () :
+	mImageTexture ( 0 ),
+	mThreshold ( 0.8f ) {
+	
+	this->Clear ();
+}
+
+//----------------------------------------------------------------//
+MOAIGlyphCachePage::~MOAIGlyphCachePage () {
 }

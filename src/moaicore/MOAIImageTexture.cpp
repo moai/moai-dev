@@ -25,27 +25,12 @@
 int MOAIImageTexture::_invalidate ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIImageTexture, "U" )
 	
-	if ( self->mStatus != INVALID ) {
-	
-		if ( state.GetTop () > 1 ) {
-		
-			USIntRect rect = state.GetRect < int >( 2 );
-			
-			rect.Bless ();
-			USIntRect imageRect = self->GetRect ();
-			imageRect.Clip ( rect );
-			
-			if ( self->mStatus == VALID ) {
-				self->mRegion = rect;
-			}
-			else {
-				self->mRegion.Grow ( rect );
-			}
-			self->mStatus = INVALID_REGION;
-		}
-		else {
-			self->mStatus = INVALID;
-		}
+	if ( state.GetTop () > 1 ) {
+		USIntRect rect = state.GetRect < int >( 2 );
+		self->Invalidate ( rect );
+	}
+	else {
+		self->Invalidate ();
 	}
 	return 0;
 }
@@ -53,6 +38,29 @@ int MOAIImageTexture::_invalidate ( lua_State* L ) {
 //================================================================//
 // MOAIImageTexture
 //================================================================//
+
+//----------------------------------------------------------------//
+void MOAIImageTexture::Invalidate () {
+
+	this->mStatus = INVALID;
+}
+
+//----------------------------------------------------------------//
+void MOAIImageTexture::Invalidate ( USIntRect rect ) {
+
+	if ( this->mStatus == INVALID ) return;
+
+	rect.Bless ();
+	this->GetRect ().Clip ( rect );
+
+	if ( this->mStatus == VALID ) {
+		this->mRegion = rect;
+	}
+	else {
+		this->mRegion.Grow ( rect );
+	}
+	this->mStatus = INVALID_REGION;
+}
 
 //----------------------------------------------------------------//
 bool MOAIImageTexture::IsRenewable () {

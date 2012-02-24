@@ -6,7 +6,8 @@
 
 #include <moaicore/MOAILua.h>
 
-class MOAIGlyphPage;
+class MOAIGlyphCachePage;
+class MOAITextureBase;
 
 //================================================================//
 // MOAIKernVec
@@ -25,6 +26,7 @@ class MOAIGlyph {
 private:
 	
 	u32			mCode;
+	u32			mCacheKey; // opaque key for use by cache to track glyph
 	
 	float		mWidth; // width in pixels
 	float		mHeight; // height in pixels
@@ -37,21 +39,22 @@ private:
 	
 	USLeanArray < MOAIKernVec > mKernTable;
 	
-	MOAIGlyphPage*	mPage; // page containing glyph texture (if any)
-	MOAIGlyph*		mNext; // for use in glyph processing list
+	MOAIGlyph*	mNext; // for use in glyph processing list
 	
 public:
 
+	// TODO: this is a lot of friends; good idea to clean this up
 	friend class MOAIFont;
 	friend class MOAIFreeTypeFont;
 	friend class MOAIGlyphDeck;
-	friend class MOAIGlyphPage;
+	friend class MOAIGlyphCache;
+	friend class MOAIGlyphCachePage;
 	friend class MOAITextBox;
 	friend class MOAITextDesigner;
 	friend class MOAITextStyler;
 
 	//----------------------------------------------------------------//
-	void			Draw				( float x, float y ) const;
+	void			Draw				( MOAITextureBase& texture, float x, float y ) const;
 	MOAIKernVec		GetKerning			( u32 name ) const;
 	USRect			GetRect				( float points, float x, float y ) const;
 					MOAIGlyph			();

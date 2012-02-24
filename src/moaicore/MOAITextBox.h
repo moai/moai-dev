@@ -11,6 +11,7 @@
 
 class MOAIAnimCurve;
 class MOAIFont;
+class MOAIStyleState;
 
 //================================================================//
 // MOAITextStyleSpan
@@ -29,22 +30,15 @@ public:
 class MOAITextSprite {
 private:
 
-	friend class MOAITextDesigner;
 	friend class MOAITextBox;
+	friend class MOAITextDesigner;
 	
-	float				mX;
-	float				mY;
-	u32					mIdx;		// index in source text stream
-	u32					mRGBA;
-	const MOAIGlyph*	mGlyph;
-
-public:
-
-	//----------------------------------------------------------------//
-	bool operator < ( const MOAITextSprite& rhs ) const {
+	const MOAIGlyph*			mGlyph;
+	const MOAITextStyleState*	mStyle;
 	
-		return this->mIdx < rhs.mIdx;
-	}
+	float		mX;
+	float		mY;
+	u32			mRGBA;
 };
 
 //================================================================//
@@ -153,7 +147,7 @@ private:
 	void			Layout					();
 	void			OnDepNodeUpdate			();
 	void			PushLine				( u32 start, u32 size, const USRect& rect, float ascent );
-	void			PushSprite				( const MOAIGlyph* glyph, u32 idx, float x, float y, u32 rgba );
+	void			PushSprite				( const MOAIGlyph* glyph, const MOAITextStyleState* style, float x, float y, u32 rgba );
 	void			PushStyleSpan			( int base, int top, MOAITextStyleState& styleState );
 	void			ResetLayout				();
 	void			ResetStyleMap			();

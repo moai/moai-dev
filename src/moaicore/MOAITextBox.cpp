@@ -16,7 +16,6 @@
 #include <moaicore/MOAITextStyle.h>
 #include <moaicore/MOAITextStyler.h>
 
-// TODO: support serialized fonts
 // TODO: font garbage collection
 //			- ref count glyphs
 //			- glyph lifecycle
@@ -481,7 +480,7 @@ void MOAITextBox::Draw ( int subPrimID, bool reload ) {
 				blendColor.Modulate ( baseColor );
 				gfxDevice.SetPenColor ( blendColor );
 			}
-			sprite.mGlyph->Draw ( sprite.mX, sprite.mY );
+			sprite.mStyle->mFont->DrawGlyph ( *sprite.mGlyph, sprite.mX, sprite.mY );
 		}
 	}
 }
@@ -691,12 +690,12 @@ void MOAITextBox::PushLine ( u32 start, u32 size, const USRect& rect, float asce
 }
 
 //----------------------------------------------------------------//
-void MOAITextBox::PushSprite ( const MOAIGlyph* glyph, u32 idx, float x, float y, u32 rgba ) {
+void MOAITextBox::PushSprite ( const MOAIGlyph* glyph, const MOAITextStyleState* style, float x, float y, u32 rgba ) {
 
 	MOAITextSprite textSprite;
 	
 	textSprite.mGlyph		= glyph;
-	textSprite.mIdx			= idx;
+	textSprite.mStyle		= style;
 	textSprite.mX			= x;
 	textSprite.mY			= y;
 	textSprite.mRGBA		= rgba;

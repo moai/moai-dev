@@ -7,7 +7,8 @@
 #include <moaicore/MOAIDataBuffer.h>
 #include <moaicore/MOAIFont.h>
 #include <moaicore/MOAIGfxDevice.h>
-#include <moaicore/MOAIGlyphPage.h>
+#include <moaicore/MOAIGlyphCache.h>
+#include <moaicore/MOAIImage.h>
 #include <moaicore/MOAIImageTexture.h>
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAITextureBase.h>
@@ -98,16 +99,6 @@ int MOAIFont::_setBuildKerningTables ( lua_State* L ) {
 	return 0;
 }
 
-//----------------------------------------------------------------//
-// TODO: doxygen
-int MOAIFont::_writePages ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIFont, "U" )
-
-	self->WritePages ();
-
-	return 0;
-}
-
 //================================================================//
 // MOAIFont
 //================================================================//
@@ -118,27 +109,6 @@ void MOAIFont::AffirmGlyph ( float points, u32 c ) {
 	MOAIGlyphDeck& glyphDeck = this->mGlyphDecks [ points ];
 	glyphDeck.mPoints = points;
 	glyphDeck.AffirmGlyph ( c );
-}
-
-//----------------------------------------------------------------//
-MOAISpan < MOAIGlyph* >* MOAIFont::Alloc ( MOAIGlyph& glyph ) {
-	
-	glyph.mPage = 0;
-	
-	MOAIGlyphPage* page = this->mPages;
-	for ( ; page; page = page->mNext ) {
-	
-		MOAISpan < MOAIGlyph* >* span = page->Alloc ( glyph );
-		if ( span ) {
-			return span;
-		}
-	}
-	
-	page = new MOAIGlyphPage ();
-	page->mNext = this->mPages;
-	this->mPages = page;
-	
-	return page->Alloc ( glyph );
 }
 
 //----------------------------------------------------------------//
@@ -166,16 +136,22 @@ bool MOAIFont::IsWhitespace ( u32 c ) {
 
 //----------------------------------------------------------------//
 MOAIFont::MOAIFont () :
-	mPages ( 0 ),
-	mBuildKerningTables ( true ) {
+	mBuildKerningTables ( true ),
+	mGlyphCache ( 0 ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAILuaObject )
 	RTTI_END
+	
+	// TODO: create on demand
+	this->mGlyphCache = new MOAIGlyphCache ();
 }
 
 //----------------------------------------------------------------//
 MOAIFont::~MOAIFont () {
+
+	// TODO: should use a proper Lua smart pointer
+	delete this->mGlyphCache;
 }
 
 //----------------------------------------------------------------//
@@ -205,7 +181,6 @@ void MOAIFont::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "preloadGlyphs",				_preloadGlyphs },	
 		{ "rebuildKerningTables",		_rebuildKerningTables },
 		{ "setBuildKerningTables",		_setBuildKerningTables },
-		{ "writePages",					_writePages },
 		{ NULL, NULL }
 	};
 	
@@ -224,20 +199,3 @@ void MOAIFont::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) 
 	UNUSED ( serializer );
 }
 
-//----------------------------------------------------------------//
-void MOAIFont::WritePages () {
-	
-	char buffer [ 256 ];
-
-	MOAIGlyphPage* page = this->mPages;
-	for ( int i = 0; page; page = page->mNext, ++i ) {
-		if ( page->mImageTexture ) {
-			
-			sprintf ( buffer, "page%d.png", i );
-			
-			USFileStream stream;
-			stream.OpenWrite ( buffer );
-			page->mImageTexture->WritePNG ( stream );
-		}
-	}
-}

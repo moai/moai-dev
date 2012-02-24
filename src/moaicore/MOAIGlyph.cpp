@@ -3,8 +3,8 @@
 
 #include "pch.h"
 #include <moaicore/MOAIGlyph.h>
-#include <moaicore/MOAIGlyphPage.h>
-#include <moaicore/MOAIImageTexture.h>
+#include <moaicore/MOAIGlyphCachePage.h>
+#include <moaicore/MOAITextureBase.h>
 #include <moaicore/MOAIQuadBrush.h>
 
 //================================================================//
@@ -12,41 +12,36 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGlyph::Draw ( float x, float y ) const {
+void MOAIGlyph::Draw ( MOAITextureBase& texture, float x, float y ) const {
+	
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	gfxDevice.SetTexture ( &texture );
+	
+	MOAIQuadBrush glQuad;
+	
+	x += this->mBearingX;
+	y -= this->mBearingY;
 
-	MOAIGlyphPage* page = this->mPage;
-
-	if ( this->mWidth && page ) {
-		
-		MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-		gfxDevice.SetTexture ( page->mImageTexture );
-		
-		MOAIQuadBrush glQuad;
-		
-		x += this->mBearingX;
-		y -= this->mBearingY;
-
-		glQuad.SetVerts (
-			x,
-			y,
-			x + this->mWidth,
-			y + this->mHeight
-		);
-		
-		float uScale = this->mPage->mUScale;
-		float vScale = this->mPage->mVScale;
-		
-		float u = this->mSrcX * uScale;
-		float v = this->mSrcY * vScale;
-		
-		glQuad.SetUVs (
-			u,
-			v,
-			u + ( this->mWidth * uScale ),
-			v + ( this->mHeight * vScale )
-		);
-		glQuad.Draw ();
-	}
+	glQuad.SetVerts (
+		x,
+		y,
+		x + this->mWidth,
+		y + this->mHeight
+	);
+	
+	float uScale = 1.0f / texture.GetWidth ();
+	float vScale = 1.0f / texture.GetHeight ();
+	
+	float u = this->mSrcX * uScale;
+	float v = this->mSrcY * vScale;
+	
+	glQuad.SetUVs (
+		u,
+		v,
+		u + ( this->mWidth * uScale ),
+		v + ( this->mHeight * vScale )
+	);
+	glQuad.Draw ();
 }
 
 //----------------------------------------------------------------//
@@ -90,6 +85,7 @@ USRect MOAIGlyph::GetRect ( float points, float x, float y ) const {
 //----------------------------------------------------------------//
 MOAIGlyph::MOAIGlyph () :
 	mCode ( 0xffffffff ),
+	mCacheKey ( 0 ),
 	mWidth ( 0.0f ),
 	mHeight ( 0.0f ),
 	mAdvanceX ( 0.0f ),
@@ -97,7 +93,6 @@ MOAIGlyph::MOAIGlyph () :
 	mBearingY ( 0.0f ),
 	mSrcX ( 0 ),
 	mSrcY ( 0 ),
-	mPage ( 0 ),
 	mNext ( 0 ) {
 }
 

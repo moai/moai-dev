@@ -1,8 +1,8 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIGLYPHPAGE_H
-#define	MOAIGLYPHPAGE_H
+#ifndef	MOAIGLYPHCACHEPAGE_H
+#define	MOAIGLYPHCACHEPAGE_H
 
 #include <moaicore/MOAISpanList.h>
 
@@ -10,14 +10,12 @@ class MOAIGlyph;
 class MOAIImageTexture;
 
 //================================================================//
-// MOAIGlyphPage
+// MOAIGlyphCachePage
 //================================================================//
-class MOAIGlyphPage {
+class MOAIGlyphCachePage {
 private:
 
-	friend class MOAIGlyph;
-	friend class MOAIFont;
-	friend class MOAIFreeTypeFont;
+	friend class MOAIGlyphCache;
 
 	typedef MOAISpanList < MOAIGlyph* > GlyphList;
 	typedef MOAISpanList < MOAIGlyph* >::Span GlyphSpan;
@@ -28,25 +26,22 @@ private:
 	RowList mRows;
 
 	MOAIImageTexture* mImageTexture;
-	
-	MOAIGlyphPage* mNext;
 
 	float mThreshold;
-
-	float mUScale;
-	float mVScale;
 
 	//----------------------------------------------------------------//
 	void			AffirmCanvas				();
 	GlyphSpan*		Alloc						( MOAIGlyph& glyph );
 	RowSpan*		AllocRow					( u32 height );
+	void			Clear						();
 	bool			ExpandToNextPowerofTwo		();
+	void			InitCanvas					( u32 width, u32 height, USColor::Format colorFmt, USPixel::Format pixelFmt );
 
 public:
 	
 	//----------------------------------------------------------------//
-					MOAIGlyphPage				();
-					~MOAIGlyphPage				();
+					MOAIGlyphCachePage				();
+					~MOAIGlyphCachePage				();
 };
 
 #endif
