@@ -135,6 +135,8 @@
 	fr $out_dir/project/$package_path/MoaiBillingResponseHandler.java @PACKAGE@ "$package"
 	fr $out_dir/project/$package_path/MoaiBillingSecurity.java @PACKAGE@ "$package"
 	fr $out_dir/project/$package_path/MoaiBillingService.java @PACKAGE@ "$package"
+	fr $out_dir/project/$package_path/MoaiC2DMReceiver.java @PACKAGE@ "$package"
+	fr $out_dir/project/$package_path/MoaiLog.java @PACKAGE@ "$package"
 	fr $out_dir/project/$package_path/MoaiView.java @PACKAGE@ "$package"
 	fr $out_dir/project/$package_path/MoaiActivity.java @WORKING_DIR@ "$working_dir"
 	

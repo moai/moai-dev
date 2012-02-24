@@ -4,16 +4,41 @@
 // http://getmoai.com
 //----------------------------------------------------------------//
 
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
+package @PACKAGE@;
+
+import java.util.ArrayList;
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences.Editor;
-import android.util.Log;
 
 public class MoaiC2DMReceiver extends BroadcastReceiver {
+	
+	public enum RegistrationCode {
+		
+		RESULT_REGISTERED,
+		RESULT_UNREGISTERED,
+        RESULT_ERROR_SERVICE_NOT_AVAILABLE,
+        RESULT_ERROR_ACCOUNT_MISSING,
+        RESULT_ERROR_AUTHENTICATION_FAILED,
+        RESULT_ERROR_TOO_MANY_REGISTRATIONS,
+        RESULT_ERROR_INVALID_SENDER,
+        RESULT_ERROR_PHONE_REGISTRATION_ERROR;
+						
+        public static RegistrationCode valueOf ( int index ) {
+	
+            RegistrationCode [] values = RegistrationCode.values ();
+            if (( index < 0 ) || ( index >= values.length )) {
+	
+                return RESULT_ERROR_PHONE_REGISTRATION_ERROR;
+            }
+
+            return values[index];
+        }
+    }
+
+	protected static native void AKUNotifyRemoteNotificationRegistrationComplete	( int code , String registration );
+	protected static native void AKUNotifyRemoteNotificationReceived 				( String [] keys, String [] values );
 
 	@Override
 	public void onReceive ( Context context, Intent intent ) {
@@ -25,27 +50,45 @@ public class MoaiC2DMReceiver extends BroadcastReceiver {
 
 	        handleMessage ( context, intent );
 	    }
-	 }
+	}
 
 	private void handleRegistration ( Context context, Intent intent ) {
 		
 	    if ( intent.getStringExtra ( "error" ) != null ) {
 
-		    String error = intent.getStringExtra ( "error" );
-		    Log.d ( "C2DM", "Registration failed: " + error );		
+		    String errorMessage = intent.getStringExtra ( "error" );
+		    MoaiLog.e ( "MoaiC2DMReceiver handleRegistration: registration failed ( " + errorMessage + " )" );
+		
+			AKUNotifyRemoteNotificationRegistrationComplete ( RegistrationCode.valueOf ( "RESULT_ERROR_" + errorMessage ).ordinal (), null );
 	    } else if ( intent.getStringExtra ( "unregistered" ) != null ) {
 
-		    String unregistered = intent.getStringExtra ( "unregistered" );
-	    	Log.d ( "C2DM", "Unregistered successfully: " + unregistered );
+		    String packageName = intent.getStringExtra ( "unregistered" );
+	    	MoaiLog.i ( "MoaiC2DMReceiver handleRegistration: unregistered successfully ( " + packageName + " )" );
+
+			AKUNotifyRemoteNotificationRegistrationComplete ( RegistrationCode.valueOf ( "RESULT_UNREGISTERED" ).ordinal (), null );
 	    } else if ( intent.getStringExtra ( "registration_id" ) != null ) {
 
-		    String registration = intent.getStringExtra ( "registration_id" );
-	    	Log.d ( "C2DM", "Registered successfully: " + registration );
+		    String registrationId = intent.getStringExtra ( "registration_id" );
+	    	MoaiLog.i ( "MoaiC2DMReceiver handleRegistration: registered successfully ( " + registrationId + " )" );
+
+			AKUNotifyRemoteNotificationRegistrationComplete ( RegistrationCode.valueOf ( "RESULT_REGISTERED" ).ordinal (), registrationId );
 	    }
 	}
 
-	private void handleMessage ( Context context, Intent intent )
-	{
+	private void handleMessage ( Context context, Intent intent ) {
+		
+		ArrayList < String > keys = new ArrayList < String > ();
+		ArrayList < String > values = new ArrayList < String > ();
+		
+		for ( String key : intent.getExtras ().keySet ()) {
 
+			if ( intent.getExtras ().getString ( key ) != null ) {
+				
+				keys.add ( key );
+				values.add ( intent.getExtras ().getString ( key ));
+			}
+		}
+		
+		AKUNotifyRemoteNotificationReceived ( keys.toArray ( new String [ keys.size ()]), values.toArray ( new String [ values.size ()]));
 	}
 }

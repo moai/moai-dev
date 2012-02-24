@@ -120,13 +120,13 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 		jvm->GetEnv (( void** )&env, JNI_VERSION_1_4 );
 		
 	#define GET_CSTRING(jstr, cstr) \
-		const char* cstr = env->GetStringUTFChars ( jstr, NULL );
+		const char* cstr = ( jstr != NULL ) ? env->GetStringUTFChars ( jstr, NULL ) : NULL;
 
 	#define RELEASE_CSTRING(jstr, cstr) \
-		env->ReleaseStringUTFChars ( jstr, cstr );
+		if ( cstr != NULL ) env->ReleaseStringUTFChars ( jstr, cstr );
 		
 	#define GET_JSTRING(cstr, jstr) \
-		jstring jstr = env->NewStringUTF (( const char* )cstr );
+		jstring jstr = ( cstr != NULL ) ? env->NewStringUTF (( const char* )cstr ) : NULL;
 		
 	#define PRINT(str) \
 		__android_log_write ( ANDROID_LOG_INFO, "MoaiLog", str );
@@ -279,6 +279,49 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 //================================================================//
 
 	//----------------------------------------------------------------//
+	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiC2DMReceiver_AKUNotifyRemoteNotificationRegistrationComplete ( JNIEnv* env, jclass obj, jint code, jstring jregistration ) {
+		GET_CSTRING ( jregistration, registration );
+		MOAINotifications::Get ().NotifyRemoteRegistrationComplete ( code , registration );
+		RELEASE_CSTRING ( jregistration, registration );	
+	}
+
+	//----------------------------------------------------------------//
+	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiC2DMReceiver_AKUNotifyRemoteNotificationReceived ( JNIEnv* env, jclass obj, jobjectArray jkeys, jobjectArray jvalues ) {
+		if ( env->GetArrayLength ( jkeys ) != env->GetArrayLength ( jvalues )) return;
+
+		int entries = env->GetArrayLength ( jkeys );
+		cc8** keys = ( cc8** )malloc ( entries * sizeof ( cc8* ));
+		cc8** values = ( cc8** )malloc ( entries * sizeof ( cc8* ));
+		
+		for ( int i = 0; i < entries; i++ ) {
+			jstring jkey = (jstring) env->GetObjectArrayElement ( jkeys, i );
+			jstring jvalue = (jstring) env->GetObjectArrayElement ( jvalues, i );
+			
+			GET_CSTRING ( jkey, key );
+			GET_CSTRING ( jvalue, value );
+			
+			keys [ i ] = key;
+			values [ i ] = value;
+		}
+		
+		MOAINotifications::Get ().NotifyRemoteNotificationReceived ( entries, keys, values );
+
+		for ( int i = 0; i < entries; i++ ) {
+			jstring jkey = (jstring) env->GetObjectArrayElement ( jkeys, i );
+			jstring jvalue = (jstring) env->GetObjectArrayElement ( jvalues, i );
+			
+			RELEASE_CSTRING ( jkey, keys [ i ]);
+			RELEASE_CSTRING ( jvalue, values [ i ]);
+
+			keys [ i ] = NULL;
+			values [ i ] = NULL;
+		}
+		
+		free ( keys );
+		free ( values );
+	}
+
+	//----------------------------------------------------------------//
 	extern "C" int Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUCreateContext ( JNIEnv* env, jclass obj ) {
 		return AKUCreateContext ();
 	}
@@ -418,6 +461,9 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 		MOAICrittercism::Affirm ();
 		REGISTER_LUA_CLASS ( MOAICrittercism );
 #endif
+
+		MOAINotifications::Affirm ();
+		REGISTER_LUA_CLASS ( MOAINotifications );
 
 		// register callbacks into Java
 		mMoaiView = ( jobject ) env->NewGlobalRef ( moaiView );

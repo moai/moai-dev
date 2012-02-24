@@ -15,7 +15,6 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.provider.Settings.Secure;
-import android.util.Log;
 import android.view.MotionEvent;
 
 // README: Aku is a thread-unaware platform, by design. Therefore, it is important
@@ -91,10 +90,12 @@ public class MoaiView extends GLSurfaceView {
 		// course, assumes that you're locking your application to landscape
 		// mode in the manifest.
 		if ( height > width ) {
+			
 			mWidth = height;
 			mHeight = width;
 		}
 		else {
+			
 			mWidth = width;
 			mHeight = height;
 		}
@@ -109,10 +110,10 @@ public class MoaiView extends GLSurfaceView {
 		
 		AKUSetInputConfigurationName ( "Android" );
 
-		AKUReserveInputDevices			( INPUT_DEVICE.TOTAL.ordinal () );
+		AKUReserveInputDevices			( INPUT_DEVICE.TOTAL.ordinal ());
 		AKUSetInputDevice				( INPUT_DEVICE.DEVICE.ordinal (), "device" );
 		
-		AKUReserveInputDeviceSensors	( INPUT_DEVICE.DEVICE.ordinal (), INPUT_SENSOR.TOTAL.ordinal () );
+		AKUReserveInputDeviceSensors	( INPUT_DEVICE.DEVICE.ordinal (), INPUT_SENSOR.TOTAL.ordinal ());
 		AKUSetInputDeviceCompass		( INPUT_DEVICE.DEVICE.ordinal (), INPUT_SENSOR.COMPASS.ordinal (),		"compass" );
 		AKUSetInputDeviceLevel			( INPUT_DEVICE.DEVICE.ordinal (), INPUT_SENSOR.LEVEL.ordinal (),		"level" );
 		AKUSetInputDeviceLocation		( INPUT_DEVICE.DEVICE.ordinal (), INPUT_SENSOR.LOCATION.ordinal (),		"location" );
@@ -125,21 +126,26 @@ public class MoaiView extends GLSurfaceView {
 		
 		String appName;
 		try {
+			
 		    appName = mContext.getPackageManager ().getApplicationLabel ( mContext.getPackageManager ().getApplicationInfo ( appId, 0 )).toString ();
 		} catch ( Exception e ) {
+			
 			appName = "UNKNOWN";
 		}
 		
 		String appVersion;
 		try {
+			
 			appVersion = mContext.getPackageManager ().getPackageInfo ( appId, 0 ).versionName;
 		}
 		catch ( Exception e ) {
+			
 			appVersion = "UNKNOWN";
 		}
 		
 		String udid	= Secure.getString ( mContext.getContentResolver (), Secure.ANDROID_ID );
 		if ( udid == null ) {
+			
 			udid = "UNKNOWN";
 		}
 
@@ -198,12 +204,6 @@ public class MoaiView extends GLSurfaceView {
 	}
 
 	//----------------------------------------------------------------//
-	public static void log ( String message ) {
-		
-		Log.i ( "MoaiLog", message );
-	}
-		
-	//----------------------------------------------------------------//
 	public void pause ( boolean paused ) {
 	
 		if ( paused ) {
@@ -235,7 +235,7 @@ public class MoaiView extends GLSurfaceView {
 		boolean isDown = ( event.getAction () == MotionEvent.ACTION_DOWN );
 		isDown |= ( event.getAction() == MotionEvent.ACTION_MOVE );
 			
-		final int pointerCount = event.getPointerCount();
+		final int pointerCount = event.getPointerCount ();
 		for ( int pointerIndex = 0; pointerIndex < pointerCount; ++pointerIndex ) {
 				
 			int pointerId = event.getPointerId ( pointerIndex );
@@ -275,7 +275,7 @@ public class MoaiView extends GLSurfaceView {
 		@Override
 		public void onSurfaceChanged ( GL10 gl, int width, int height ) {
 
-			log ( "MoaiRenderer onSurfaceChanged called" );
+			MoaiLog.i ( "MoaiRenderer onSurfaceChanged: surface CHANGED" );
 
 			mWidth = width;
 			mHeight = height;
@@ -287,7 +287,7 @@ public class MoaiView extends GLSurfaceView {
 		@Override
 		public void onSurfaceCreated ( GL10 gl, EGLConfig config ) {
 
-			log ( "MoaiRenderer onSurfaceCreated called" );
+			MoaiLog.i ( "MoaiRenderer onSurfaceCreated: surface CREATED" );
 
 			synchronized ( sAkuLock ) {
 				
@@ -302,7 +302,7 @@ public class MoaiView extends GLSurfaceView {
 
 					public void run () {
 				
-						log ( "Running game scripts" );
+						MoaiLog.i ( "MoaiRenderer onSurfaceCreated: Running game scripts" );
 				
 						@RUN_COMMAND@
 
@@ -336,7 +336,7 @@ public class MoaiView extends GLSurfaceView {
 				
 				synchronized ( sAkuLock ) {
 					
-					log ("Running " + file + " script" );
+					MoaiLog.i ( "MoaiRenderer runScripts: Running " + file + " script" );
 					
 					AKURunScript ( file );
 				}

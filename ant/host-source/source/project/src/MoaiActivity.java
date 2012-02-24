@@ -10,14 +10,11 @@ import @PACKAGE@.MoaiBillingService.RequestPurchase;
 import @PACKAGE@.MoaiBillingService.RestoreTransactions;
 import @PACKAGE@.MoaiBillingConstants.PurchaseState;
 import @PACKAGE@.MoaiBillingConstants.ResponseCode;
-
-import java.util.ArrayList;
-import java.util.concurrent.CountDownLatch;
-
 import @PACKAGE@.R;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -34,7 +31,6 @@ import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 import android.view.Display;
 import android.view.KeyEvent;
 import android.view.Window;
@@ -43,6 +39,9 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.ConfigurationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+
+import java.util.ArrayList;
+import java.util.concurrent.CountDownLatch;
 
 // Tapjoy
 import com.tapjoy.TapjoyConnect;
@@ -126,7 +125,7 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
    	//----------------------------------------------------------------//
     protected void onCreate ( Bundle savedInstanceState ) {
 
-		log ( "MoaiActivity onCreate called" );
+		MoaiLog.i ( "MoaiActivity onCreate: activity CREATED" );
 
     	super.onCreate ( savedInstanceState );
 
@@ -151,12 +150,15 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 			AKUSetWorkingDirectory ( "bundle/assets/@WORKING_DIR@" );				
 		} catch ( NameNotFoundException e ) {
 
-			log ( "Unable to locate the application bundle" );
+			MoaiLog.e ( "MoaiActivity onCreate: Unable to locate the application bundle" );
 		}
 
 		if ( getFilesDir () != null ) {
 		 
 		 	AKUSetDocumentDirectory ( getFilesDir ().getAbsolutePath ());
+		} else {
+
+			MoaiLog.e ( "MoaiActivity onCreate: Unable to set the document directory" );
 		}
 				
 		mHandler = new Handler ();
@@ -179,7 +181,7 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 	//----------------------------------------------------------------//
 	protected void onDestroy () {
 
-		log ( "MoaiActivity onDestroy called" );
+		MoaiLog.i ( "MoaiActivity onDestroy: activity DESTROYED" );
 		
 		super.onDestroy ();
 		
@@ -193,7 +195,7 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 	//----------------------------------------------------------------//
 	protected void onPause () {
 
-		log ( "MoaiActivity onPause called" );
+		MoaiLog.i ( "MoaiActivity onPause: activity PAUSED" );
 		
 		super.onPause ();
 		
@@ -208,7 +210,7 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 		// expected windows focus events.
 		mWindowFocusLost = true;
 
-		log ( "Pausing now" );
+		MoaiLog.i ( "MoaiActivity onPause: PAUSING now" );
 		mMoaiView.pause ( true );
 		
 		// Sessions are started in MoaiView.
@@ -218,7 +220,7 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 	//----------------------------------------------------------------//
 	protected void onResume () {
 
-		log ( "MoaiActivity onResume called" );
+		MoaiLog.i ( "MoaiActivity onResume: activity RESUMED" );
 
 		super.onResume ();
 		
@@ -234,7 +236,7 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 		mWaitingToResume = mWindowFocusLost;
 		if ( !mWindowFocusLost ) {
 			
-			log ( "Resuming now" );
+			MoaiLog.i ( "MoaiActivity onResume: RESUMING now" );
 			mMoaiView.pause ( false );
 		}
 	}
@@ -242,7 +244,7 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 	//----------------------------------------------------------------//
 	protected void onStart () {
 
-		log ( "MoaiActivity onStart called" );
+		MoaiLog.i ( "MoaiActivity onStart: activity STARTED" );
 
 		super.onStart ();
 		
@@ -252,7 +254,7 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 	//----------------------------------------------------------------//
 	protected void onStop () {
 
-		log ( "MoaiActivity onStop called" );
+		MoaiLog.i ( "MoaiActivity onStop: activity STOPPED" );
 
 		super.onStop ();
 
@@ -292,13 +294,7 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 			}
 		}
 	}
-	
-	//----------------------------------------------------------------//
-	public static void log ( String message ) {
 		
-		Log.i ( "MoaiLog", message );
-	}
-	
 	//================================================================//
 	// Private methods
 	//================================================================//
@@ -347,7 +343,7 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 	//----------------------------------------------------------------//
 	public void onWindowFocusChanged ( boolean hasFocus ) {
 		
-		log ( "MoaiActivity onWindowFocusChanged called" );
+		MoaiLog.i ( "MoaiActivity onWindowFocusChanged: activity FOCUS CHANGED" );
 		
 		super.onWindowFocusChanged ( hasFocus );
 				
@@ -359,7 +355,7 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 		
 			mWaitingToResume = false;
 
-			log ( "Resuming now" );
+			MoaiLog.i ( "MoaiActivity onWindowFocusChanged: RESUMING now" );
 			mMoaiView.pause ( false );
 		}
 	}
@@ -386,8 +382,8 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 				public void onClick ( DialogInterface arg0, int arg1 ) 
 				{
 					AKUNotifyDialogDismissed ( DIALOG_RESULT.POSITIVE.ordinal () );
-					}
-				});
+				}
+			});
 		}
 
 		if ( neutralButton != null ) {
@@ -535,10 +531,17 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 	//----------------------------------------------------------------//
 	public void registerForRemoteNotifications ( String alias ) {
 	
-//		Intent intent = new Intent ( "com.google.android.c2dm.intent.REGISTER" );
-//		intent.putExtra( "app", PendingIntent.getBroadcast ( context, 0, new Intent (), 0 ));
-//		intent.putExtra( "sender", alias );
-//		context.startService ( intent );	
+		Intent intent = new Intent ( "com.google.android.c2dm.intent.REGISTER" );
+		intent.putExtra( "app", PendingIntent.getBroadcast ( getApplicationContext (), 0, new Intent (), 0 ));
+		intent.putExtra( "sender", alias );
+		getApplicationContext ().startService ( intent );
+	}
+	
+	public void unregisterForRemoteNotifications ( ) {
+	
+		Intent intent = new Intent ( "com.google.android.c2dm.intent.UNREGISTER" );
+		intent.putExtra( "app", PendingIntent.getBroadcast ( getApplicationContext (), 0, new Intent (), 0 ));
+		getApplicationContext ().startService ( intent );
 	}
 	
 	//================================================================//
@@ -631,8 +634,6 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 
 	private class PurchaseObserver extends MoaiBillingPurchaseObserver {
 	    
-		private static final String TAG = "MoaiBillingPurchaseObserver";
-
 		//----------------------------------------------------------------//
 		public PurchaseObserver ( Handler handler ) {
 			
@@ -642,11 +643,6 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 		//----------------------------------------------------------------//
 		@Override
 	    public void onBillingSupported ( boolean supported ) {
-	        
-			if ( MoaiBillingConstants.DEBUG ) {
-				
-	            Log.i ( TAG, "onBillingSupported: " + supported );
-	        }
 	
 			AKUNotifyBillingSupported ( supported );
 	    }
@@ -654,11 +650,6 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 		//----------------------------------------------------------------//
 	    @Override
 	    public void onPurchaseStateChange ( PurchaseState purchaseState, String itemId, String orderId, String notificationId, String developerPayload ) {
-        	
-			if ( MoaiBillingConstants.DEBUG ) {
-				
-	            Log.i ( TAG, "onPurchaseStateChange: " + itemId + ", " + purchaseState );
-	        }
 	        
 			AKUNotifyPurchaseStateChanged ( itemId, purchaseState.ordinal(), orderId, notificationId, developerPayload );
 	    }
@@ -666,11 +657,6 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 		//----------------------------------------------------------------//
 		@Override
 	    public void onRequestPurchaseResponse ( RequestPurchase request, ResponseCode responseCode ) {
-	        
-			if ( MoaiBillingConstants.DEBUG ) {
-				
-	            Log.d ( TAG, "onRequestPurchaseResponse: " + request.mProductId + ", " + responseCode );
-	        }
 	
 			AKUNotifyPurchaseResponseReceived ( request.mProductId, responseCode.ordinal() );
 	    }
@@ -678,11 +664,6 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 		//----------------------------------------------------------------//
 	    @Override
 	    public void onRestoreTransactionsResponse ( RestoreTransactions request, ResponseCode responseCode ) {
-
-	        if ( MoaiBillingConstants.DEBUG ) {
-		
-	            Log.d ( TAG, "onRestoreTransactionsResponse: " + responseCode );
-	        }
 
 			AKUNotifyRestoreResponseReceived ( responseCode.ordinal() );
 		}

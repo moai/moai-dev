@@ -27,16 +27,16 @@ jmethodID mShowOffersFunc;
 	#define GET_ENV() 	\
 		JNIEnv* env; 	\
 		jvm->GetEnv (( void** )&env, JNI_VERSION_1_4 );
-
+		
 	#define GET_CSTRING(jstr, cstr) \
-		const char* cstr = env->GetStringUTFChars ( jstr, NULL );
+		const char* cstr = ( jstr != NULL ) ? env->GetStringUTFChars ( jstr, NULL ) : NULL;
 
 	#define RELEASE_CSTRING(jstr, cstr) \
-		env->ReleaseStringUTFChars ( jstr, cstr );
+		if ( cstr != NULL ) env->ReleaseStringUTFChars ( jstr, cstr );
 		
 	#define GET_JSTRING(cstr, jstr) \
-		jstring jstr = env->NewStringUTF (( const char* )cstr );
-
+		jstring jstr = ( cstr != NULL ) ? env->NewStringUTF (( const char* )cstr ) : NULL;
+		
 	#define PRINT(str) \
 		__android_log_write ( ANDROID_LOG_INFO, "MoaiLog", str );
 
