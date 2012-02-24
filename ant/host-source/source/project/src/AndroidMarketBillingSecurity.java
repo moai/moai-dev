@@ -7,7 +7,7 @@
 
 package @PACKAGE@;
 
-import @PACKAGE@.MoaiBillingConstants.PurchaseState;
+import @PACKAGE@.AndroidMarketBillingConstants.PurchaseState;
 import @PACKAGE@.Base64;
 import @PACKAGE@.Base64DecoderException;
 
@@ -30,9 +30,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 //================================================================//
-// MoaiBillingSecurity
+// AndroidMarketBillingSecurity
 //================================================================//
-public class MoaiBillingSecurity {
+public class AndroidMarketBillingSecurity {
 	
     private static final String 		KEY_FACTORY_ALGORITHM = 	"RSA";
     private static final String 		SIGNATURE_ALGORITHM = 		"SHA1withRSA";
@@ -87,24 +87,24 @@ public class MoaiBillingSecurity {
 	
         if ( sBase64EncodedPublicKey == null ) {
 	
-            MoaiLog.e ( "MoaiBillingSecurity verifyPurchase: please specify your Android Market public key using MOAIApp.setMarketPublicKey ()" );
+            MoaiLog.e ( "AndroidMarketBillingSecurity verifyPurchase: please specify your Android Market public key using MOAIApp.setMarketPublicKey ()" );
             return null;
         }
 
         if ( signedData == null ) {
 	
-            MoaiLog.e ( "MoaiBillingSecurity verifyPurchase: data is null" );
+            MoaiLog.e ( "AndroidMarketBillingSecurity verifyPurchase: data is null" );
             return null;
         }
 
         boolean verified = false;
         if ( !TextUtils.isEmpty ( signature )) {
 	
-            PublicKey key = MoaiBillingSecurity.generatePublicKey ( sBase64EncodedPublicKey );
-            verified = MoaiBillingSecurity.verify ( key, signedData, signature );
+            PublicKey key = AndroidMarketBillingSecurity.generatePublicKey ( sBase64EncodedPublicKey );
+            verified = AndroidMarketBillingSecurity.verify ( key, signedData, signature );
             if ( !verified ) {
 	
-                MoaiLog.w ( "MoaiBillingSecurity verifyPurchase: signature does not match data" );
+                MoaiLog.w ( "AndroidMarketBillingSecurity verifyPurchase: signature does not match data" );
                 return null;
             }
         }
@@ -125,13 +125,13 @@ public class MoaiBillingSecurity {
             }
         } catch ( JSONException e ) {
 	
-            MoaiLog.e ( "MoaiBillingSecurity verifyPurchase: json exception", e );
+            MoaiLog.e ( "AndroidMarketBillingSecurity verifyPurchase: json exception", e );
             return null;
         }
 
-        if ( !MoaiBillingSecurity.isNonceKnown ( nonce )) {
+        if ( !AndroidMarketBillingSecurity.isNonceKnown ( nonce )) {
 	
-            MoaiLog.w ( "MoaiBillingSecurity verifyPurchase: nonce not found ( " + nonce + " )" );
+            MoaiLog.w ( "AndroidMarketBillingSecurity verifyPurchase: nonce not found ( " + nonce + " )" );
             return null;
         }
 
@@ -165,7 +165,7 @@ public class MoaiBillingSecurity {
             }
         } catch ( JSONException e ) {
 	
-            MoaiLog.e ( "MoaiBillingSecurity verifyPurchase: json exception", e );
+            MoaiLog.e ( "AndroidMarketBillingSecurity verifyPurchase: json exception", e );
             return null;
         }
 
@@ -182,15 +182,15 @@ public class MoaiBillingSecurity {
             return keyFactory.generatePublic ( new X509EncodedKeySpec ( decodedKey ));
         } catch ( NoSuchAlgorithmException e ) {
 	
-            MoaiLog.e ( "MoaiBillingSecurity generatePublicKey: no such algorithm" );
+            MoaiLog.e ( "AndroidMarketBillingSecurity generatePublicKey: no such algorithm" );
             throw new RuntimeException ( e );
         } catch ( InvalidKeySpecException e ) {
 	
-            MoaiLog.e ( "MoaiBillingSecurity generatePublicKey: invalid key" );
+            MoaiLog.e ( "AndroidMarketBillingSecurity generatePublicKey: invalid key" );
             throw new IllegalArgumentException ( e );
         } catch ( Base64DecoderException e ) {
 	
-            MoaiLog.e ( "MoaiBillingSecurity generatePublicKey: base64 decoding failed" );
+            MoaiLog.e ( "AndroidMarketBillingSecurity generatePublicKey: base64 decoding failed" );
             throw new IllegalArgumentException ( e );
         }
     }
@@ -205,23 +205,23 @@ public class MoaiBillingSecurity {
             sig.update ( signedData.getBytes ());
             if ( !sig.verify ( Base64.decode ( signature ))) {
 	
-                MoaiLog.e ( "MoaiBillingSecurity verify: signature verification failed" );
+                MoaiLog.e ( "AndroidMarketBillingSecurity verify: signature verification failed" );
                 return false;
             }
 
             return true;
         } catch ( NoSuchAlgorithmException e ) {
 	
-            MoaiLog.e ( "MoaiBillingSecurity verify: no such algorithm" );
+            MoaiLog.e ( "AndroidMarketBillingSecurity verify: no such algorithm" );
         } catch ( InvalidKeyException e ) {
 	
-            MoaiLog.e ( "MoaiBillingSecurity verify: invalid key" );
+            MoaiLog.e ( "AndroidMarketBillingSecurity verify: invalid key" );
         } catch ( SignatureException e ) {
 	
-            MoaiLog.e ( "MoaiBillingSecurity verify: invalid signature" );
+            MoaiLog.e ( "AndroidMarketBillingSecurity verify: invalid signature" );
         } catch ( Base64DecoderException e ) {
 	
-            MoaiLog.e ( "MoaiBillingSecurity verify: base64 decoding failed" );
+            MoaiLog.e ( "AndroidMarketBillingSecurity verify: base64 decoding failed" );
         }
 
         return false;

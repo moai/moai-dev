@@ -279,14 +279,14 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 //================================================================//
 
 	//----------------------------------------------------------------//
-	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiC2DMReceiver_AKUNotifyRemoteNotificationRegistrationComplete ( JNIEnv* env, jclass obj, jint code, jstring jregistration ) {
+	extern "C" void Java_@PACKAGE_UNDERSCORED@_AndroidC2DMReceiver_AKUNotifyRemoteNotificationRegistrationComplete ( JNIEnv* env, jclass obj, jint code, jstring jregistration ) {
 		GET_CSTRING ( jregistration, registration );
 		MOAINotifications::Get ().NotifyRemoteRegistrationComplete ( code , registration );
 		RELEASE_CSTRING ( jregistration, registration );	
 	}
 
 	//----------------------------------------------------------------//
-	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiC2DMReceiver_AKUNotifyRemoteNotificationReceived ( JNIEnv* env, jclass obj, jobjectArray jkeys, jobjectArray jvalues ) {
+	extern "C" void Java_@PACKAGE_UNDERSCORED@_AndroidC2DMReceiver_AKUNotifyRemoteNotificationReceived ( JNIEnv* env, jclass obj, jobjectArray jkeys, jobjectArray jvalues ) {
 		if ( env->GetArrayLength ( jkeys ) != env->GetArrayLength ( jvalues )) return;
 
 		int entries = env->GetArrayLength ( jkeys );

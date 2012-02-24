@@ -39,8 +39,8 @@
 		</service>
 		
 		<!-- Android Market IAP -->
-		<service android:name="MoaiBillingService" />
-	    <receiver android:name="MoaiBillingReceiver">
+		<service android:name="AndroidMarketBillingService" />
+	    <receiver android:name="AndroidMarketBillingReceiver">
 	      <intent-filter>
 	        <action android:name="com.android.vending.billing.IN_APP_NOTIFY" />
 	        <action android:name="com.android.vending.billing.RESPONSE_CODE" />
@@ -60,8 +60,8 @@
 		    </intent-filter>
 		</receiver>
 		
-		<!-- Google C2DM Messaging -->
-		<receiver android:name="MoaiC2DMReceiver" android:permission="com.google.android.c2dm.permission.SEND">
+		<!-- Android C2DM Messaging -->
+		<receiver android:name="AndroidC2DMReceiver" android:permission="com.google.android.c2dm.permission.SEND">
        		<intent-filter>
 				<action android:name="com.google.android.c2dm.intent.RECEIVE" />
 				<category android:name="@PACKAGE@" />

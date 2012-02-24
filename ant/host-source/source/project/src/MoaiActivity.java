@@ -6,10 +6,10 @@
 
 package @PACKAGE@;
 
-import @PACKAGE@.MoaiBillingService.RequestPurchase;
-import @PACKAGE@.MoaiBillingService.RestoreTransactions;
-import @PACKAGE@.MoaiBillingConstants.PurchaseState;
-import @PACKAGE@.MoaiBillingConstants.ResponseCode;
+import @PACKAGE@.AndroidMarketBillingService.RequestPurchase;
+import @PACKAGE@.AndroidMarketBillingService.RestoreTransactions;
+import @PACKAGE@.AndroidMarketBillingConstants.PurchaseState;
+import @PACKAGE@.AndroidMarketBillingConstants.ResponseCode;
 import @PACKAGE@.R;
 
 import android.app.Activity;
@@ -91,7 +91,7 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 
 	private AccelerometerEventListener		mAccelerometerListener;
 	private Sensor 							mAccelerometerSensor;
-	private MoaiBillingService 				mBillingService;
+	private AndroidMarketBillingService		mBillingService;
 	private ConnectivityBroadcastReceiver 	mConnectivityReceiver;
 	private Handler							mHandler;
 	private MoaiView						mMoaiView;
@@ -168,9 +168,9 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 		mWindowFocusLost = false;
 
 		mPurchaseObserver = new PurchaseObserver ( null );
-        MoaiBillingResponseHandler.register ( mPurchaseObserver );
+        AndroidMarketBillingResponseHandler.register ( mPurchaseObserver );
         
-		mBillingService = new MoaiBillingService();
+		mBillingService = new AndroidMarketBillingService();
         mBillingService.setContext (this);
 
 		startConnectivityReceiver ();
@@ -248,7 +248,7 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 
 		super.onStart ();
 		
-        MoaiBillingResponseHandler.register ( mPurchaseObserver );
+        AndroidMarketBillingResponseHandler.register ( mPurchaseObserver );
 	}
 	
 	//----------------------------------------------------------------//
@@ -258,7 +258,7 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 
 		super.onStop ();
 
-        MoaiBillingResponseHandler.unregister ( mPurchaseObserver );
+        AndroidMarketBillingResponseHandler.unregister ( mPurchaseObserver );
 	}
 	
 	//================================================================//
@@ -521,7 +521,7 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 	//----------------------------------------------------------------//
 	public void setMarketPublicKey ( String key ) {
 	
-		MoaiBillingSecurity.setPublicKey ( key );
+		AndroidMarketBillingSecurity.setPublicKey ( key );
 	}
 	
 	//================================================================//
@@ -632,7 +632,7 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 	// PurchaseObserver
 	//================================================================//
 
-	private class PurchaseObserver extends MoaiBillingPurchaseObserver {
+	private class PurchaseObserver extends AndroidMarketBillingPurchaseObserver {
 	    
 		//----------------------------------------------------------------//
 		public PurchaseObserver ( Handler handler ) {

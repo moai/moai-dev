@@ -7,10 +7,10 @@
 
 package @PACKAGE@;
 
-import @PACKAGE@.MoaiBillingConstants.PurchaseState;
-import @PACKAGE@.MoaiBillingConstants.ResponseCode;
-import @PACKAGE@.MoaiBillingService.RequestPurchase;
-import @PACKAGE@.MoaiBillingService.RestoreTransactions;
+import @PACKAGE@.AndroidMarketBillingConstants.PurchaseState;
+import @PACKAGE@.AndroidMarketBillingConstants.ResponseCode;
+import @PACKAGE@.AndroidMarketBillingService.RequestPurchase;
+import @PACKAGE@.AndroidMarketBillingService.RestoreTransactions;
 
 import android.app.Activity;
 import android.app.PendingIntent;
@@ -21,7 +21,10 @@ import android.os.Handler;
 
 import java.lang.reflect.Method;
 
-public abstract class MoaiBillingPurchaseObserver {
+//================================================================//
+// AndroidMarketBillingPurchaseObserver
+//================================================================//
+public abstract class AndroidMarketBillingPurchaseObserver {
 	
     private final Activity 	mActivity;
     private final Handler 	mHandler;
@@ -34,7 +37,7 @@ public abstract class MoaiBillingPurchaseObserver {
         IntentSender.class, Intent.class, int.class, int.class, int.class
     };
 
-    public MoaiBillingPurchaseObserver ( Activity activity, Handler handler ) {
+    public AndroidMarketBillingPurchaseObserver ( Activity activity, Handler handler ) {
 	
         mActivity = activity;
         mHandler = handler;
@@ -79,7 +82,7 @@ public abstract class MoaiBillingPurchaseObserver {
                 mStartIntentSender.invoke ( mActivity, mStartIntentSenderArgs );
             } catch ( Exception e ) {
 	
-                MoaiLog.e ( "MoaiBillingPurchaseObserver startBuyPageActivity: error starting activity", e );
+                MoaiLog.e ( "AndroidMarketBillingPurchaseObserver startBuyPageActivity: error starting activity", e );
             }
         } else {
 	
@@ -89,7 +92,7 @@ public abstract class MoaiBillingPurchaseObserver {
                 pendingIntent.send ( mActivity, 0, intent );
             } catch ( CanceledException e ) {
 	
-                MoaiLog.e ( "MoaiBillingPurchaseObserver startBuyPageActivity: error starting activity", e );
+                MoaiLog.e ( "AndroidMarketBillingPurchaseObserver startBuyPageActivity: error starting activity", e );
             }
         }
     }

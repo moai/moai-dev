@@ -9,9 +9,9 @@ package @PACKAGE@;
 
 import com.android.vending.billing.IMarketBillingService;
 
-import @PACKAGE@.MoaiBillingConstants.PurchaseState;
-import @PACKAGE@.MoaiBillingConstants.ResponseCode;
-import @PACKAGE@.MoaiBillingSecurity.VerifiedPurchase;
+import @PACKAGE@.AndroidMarketBillingConstants.PurchaseState;
+import @PACKAGE@.AndroidMarketBillingConstants.ResponseCode;
+import @PACKAGE@.AndroidMarketBillingSecurity.VerifiedPurchase;
 
 import android.app.PendingIntent;
 import android.app.Service;
@@ -28,9 +28,9 @@ import java.util.HashMap;
 import java.util.LinkedList;
 
 //================================================================//
-// MoaiBillingService
+// AndroidMarketBillingService
 //================================================================//
-public class MoaiBillingService extends Service implements ServiceConnection {
+public class AndroidMarketBillingService extends Service implements ServiceConnection {
 	
     private static IMarketBillingService 				mService;
     private static LinkedList < BillingRequest > 		mPendingRequests 	= new LinkedList < BillingRequest > ();
@@ -95,13 +95,13 @@ public class MoaiBillingService extends Service implements ServiceConnection {
 
         protected void onRemoteException ( RemoteException e ) {
 	
-            MoaiLog.w ( "MoaiBillingService onRemoteException: remote billing service crashed" );
+            MoaiLog.w ( "AndroidMarketBillingService onRemoteException: remote billing service crashed" );
             mService = null;
         }
 
         protected void onNullPointerException ( NullPointerException e ) {
 	
-            MoaiLog.w ( "MoaiBillingService onNullPointerException: remote billing service uninitialized" );
+            MoaiLog.w ( "AndroidMarketBillingService onNullPointerException: remote billing service uninitialized" );
             mService = null;
         }
 
@@ -114,9 +114,9 @@ public class MoaiBillingService extends Service implements ServiceConnection {
         protected Bundle makeRequestBundle ( String method ) {
 	
             Bundle request = new Bundle ();
-            request.putString ( MoaiBillingConstants.BILLING_REQUEST_METHOD, method );
-            request.putInt ( MoaiBillingConstants.BILLING_REQUEST_API_VERSION, 1 );
-            request.putString ( MoaiBillingConstants.BILLING_REQUEST_PACKAGE_NAME, getPackageName ());
+            request.putString ( AndroidMarketBillingConstants.BILLING_REQUEST_METHOD, method );
+            request.putInt ( AndroidMarketBillingConstants.BILLING_REQUEST_API_VERSION, 1 );
+            request.putString ( AndroidMarketBillingConstants.BILLING_REQUEST_PACKAGE_NAME, getPackageName ());
             return request;
         }
     }
@@ -125,7 +125,7 @@ public class MoaiBillingService extends Service implements ServiceConnection {
 	
         public CheckBillingSupported () {
 	
-            super (( int )MoaiBillingConstants.BILLING_RESPONSE_INVALID_REQUEST_ID );
+            super (( int )AndroidMarketBillingConstants.BILLING_RESPONSE_INVALID_REQUEST_ID );
         }
 
         @Override
@@ -135,13 +135,13 @@ public class MoaiBillingService extends Service implements ServiceConnection {
             Bundle response = mService.sendBillingRequest ( request );
 
 		 	int responseCode = ResponseCode.RESULT_ERROR.ordinal ();
-		    if ( response.containsKey ( MoaiBillingConstants.BILLING_RESPONSE_RESPONSE_CODE )) {
-		    	responseCode = response.getInt ( MoaiBillingConstants.BILLING_RESPONSE_RESPONSE_CODE );
+		    if ( response.containsKey ( AndroidMarketBillingConstants.BILLING_RESPONSE_RESPONSE_CODE )) {
+		    	responseCode = response.getInt ( AndroidMarketBillingConstants.BILLING_RESPONSE_RESPONSE_CODE );
 		    }
 
             boolean billingSupported = ( responseCode == ResponseCode.RESULT_OK.ordinal ());
-            MoaiBillingResponseHandler.checkBillingSupportedResponse ( billingSupported );
-            return MoaiBillingConstants.BILLING_RESPONSE_INVALID_REQUEST_ID;
+            AndroidMarketBillingResponseHandler.checkBillingSupportedResponse ( billingSupported );
+            return AndroidMarketBillingConstants.BILLING_RESPONSE_INVALID_REQUEST_ID;
         }
     }
 
@@ -157,7 +157,7 @@ public class MoaiBillingService extends Service implements ServiceConnection {
     
         public RequestPurchase ( String itemId, String developerPayload ) {
 	
-            super (( int )MoaiBillingConstants.BILLING_RESPONSE_INVALID_REQUEST_ID );
+            super (( int )AndroidMarketBillingConstants.BILLING_RESPONSE_INVALID_REQUEST_ID );
             mProductId = itemId;
             mDeveloperPayload = developerPayload;
         }
@@ -166,29 +166,29 @@ public class MoaiBillingService extends Service implements ServiceConnection {
         protected long run () throws RemoteException, NullPointerException {
 	
             Bundle request = makeRequestBundle ( "REQUEST_PURCHASE" );
-            request.putString ( MoaiBillingConstants.BILLING_REQUEST_ITEM_ID, mProductId );
+            request.putString ( AndroidMarketBillingConstants.BILLING_REQUEST_ITEM_ID, mProductId );
             if ( mDeveloperPayload != null ) {
 	
-                request.putString ( MoaiBillingConstants.BILLING_REQUEST_DEVELOPER_PAYLOAD, mDeveloperPayload );
+                request.putString ( AndroidMarketBillingConstants.BILLING_REQUEST_DEVELOPER_PAYLOAD, mDeveloperPayload );
             }
 
             Bundle response = mService.sendBillingRequest ( request );
 
-            PendingIntent pendingIntent = response.getParcelable ( MoaiBillingConstants.BILLING_RESPONSE_PURCHASE_INTENT );
+            PendingIntent pendingIntent = response.getParcelable ( AndroidMarketBillingConstants.BILLING_RESPONSE_PURCHASE_INTENT );
             if ( pendingIntent == null ) {
 	
-                return MoaiBillingConstants.BILLING_RESPONSE_INVALID_REQUEST_ID;
+                return AndroidMarketBillingConstants.BILLING_RESPONSE_INVALID_REQUEST_ID;
             }
     
             Intent intent = new Intent ();
-            MoaiBillingResponseHandler.buyPageIntentResponse ( pendingIntent, intent );
-            return response.getLong ( MoaiBillingConstants.BILLING_RESPONSE_REQUEST_ID, MoaiBillingConstants.BILLING_RESPONSE_INVALID_REQUEST_ID );
+            AndroidMarketBillingResponseHandler.buyPageIntentResponse ( pendingIntent, intent );
+            return response.getLong ( AndroidMarketBillingConstants.BILLING_RESPONSE_REQUEST_ID, AndroidMarketBillingConstants.BILLING_RESPONSE_INVALID_REQUEST_ID );
         }
     
         @Override
         protected void responseCodeReceived ( ResponseCode responseCode ) {
 	
-            MoaiBillingResponseHandler.responseCodeReceived ( this, responseCode );
+            AndroidMarketBillingResponseHandler.responseCodeReceived ( this, responseCode );
         }
     }
 
@@ -197,7 +197,7 @@ public class MoaiBillingService extends Service implements ServiceConnection {
         final String [] mNotifyIds;
 
         public ConfirmNotifications ( String[] notifyIds ) {
-            super (( int )MoaiBillingConstants.BILLING_RESPONSE_INVALID_REQUEST_ID );
+            super (( int )AndroidMarketBillingConstants.BILLING_RESPONSE_INVALID_REQUEST_ID );
             mNotifyIds = notifyIds;
         }
     
@@ -205,10 +205,10 @@ public class MoaiBillingService extends Service implements ServiceConnection {
         protected long run () throws RemoteException, NullPointerException {
 	
             Bundle request = makeRequestBundle ( "CONFIRM_NOTIFICATIONS" );
-            request.putStringArray ( MoaiBillingConstants.BILLING_REQUEST_NOTIFY_IDS, mNotifyIds );
+            request.putStringArray ( AndroidMarketBillingConstants.BILLING_REQUEST_NOTIFY_IDS, mNotifyIds );
 
             Bundle response = mService.sendBillingRequest ( request );
-            return response.getLong ( MoaiBillingConstants.BILLING_RESPONSE_REQUEST_ID, MoaiBillingConstants.BILLING_RESPONSE_INVALID_REQUEST_ID );
+            return response.getLong ( AndroidMarketBillingConstants.BILLING_RESPONSE_REQUEST_ID, AndroidMarketBillingConstants.BILLING_RESPONSE_INVALID_REQUEST_ID );
         }
     }
 
@@ -226,28 +226,28 @@ public class MoaiBillingService extends Service implements ServiceConnection {
         @Override
         protected long run () throws RemoteException, NullPointerException {
 	
-            mNonce = MoaiBillingSecurity.generateNonce ();
+            mNonce = AndroidMarketBillingSecurity.generateNonce ();
     
             Bundle request = makeRequestBundle ( "GET_PURCHASE_INFORMATION" );
-            request.putLong ( MoaiBillingConstants.BILLING_REQUEST_NONCE, mNonce );
-            request.putStringArray ( MoaiBillingConstants.BILLING_REQUEST_NOTIFY_IDS, mNotifyIds );
+            request.putLong ( AndroidMarketBillingConstants.BILLING_REQUEST_NONCE, mNonce );
+            request.putStringArray ( AndroidMarketBillingConstants.BILLING_REQUEST_NOTIFY_IDS, mNotifyIds );
 
             Bundle response = mService.sendBillingRequest ( request );
-            return response.getLong ( MoaiBillingConstants.BILLING_RESPONSE_REQUEST_ID, MoaiBillingConstants.BILLING_RESPONSE_INVALID_REQUEST_ID );
+            return response.getLong ( AndroidMarketBillingConstants.BILLING_RESPONSE_REQUEST_ID, AndroidMarketBillingConstants.BILLING_RESPONSE_INVALID_REQUEST_ID );
         }
     
         @Override
         protected void onRemoteException ( RemoteException e ) {
 	
             super.onRemoteException ( e );
-            MoaiBillingSecurity.removeNonce ( mNonce );
+            AndroidMarketBillingSecurity.removeNonce ( mNonce );
         }
 
         @Override
         protected void onNullPointerException ( NullPointerException e ) {
 	
             super.onNullPointerException ( e );
-            MoaiBillingSecurity.removeNonce ( mNonce );
+            AndroidMarketBillingSecurity.removeNonce ( mNonce );
         }
     }
 
@@ -257,43 +257,43 @@ public class MoaiBillingService extends Service implements ServiceConnection {
     
         public RestoreTransactions () {
 	
-            super (( int )MoaiBillingConstants.BILLING_RESPONSE_INVALID_REQUEST_ID );
+            super (( int )AndroidMarketBillingConstants.BILLING_RESPONSE_INVALID_REQUEST_ID );
         }
     
         @Override
         protected long run () throws RemoteException, NullPointerException {
 	
-            mNonce = MoaiBillingSecurity.generateNonce ();
+            mNonce = AndroidMarketBillingSecurity.generateNonce ();
     
             Bundle request = makeRequestBundle ( "RESTORE_TRANSACTIONS" );
-            request.putLong ( MoaiBillingConstants.BILLING_REQUEST_NONCE, mNonce );
+            request.putLong ( AndroidMarketBillingConstants.BILLING_REQUEST_NONCE, mNonce );
 
             Bundle response = mService.sendBillingRequest ( request );
-            return response.getLong ( MoaiBillingConstants.BILLING_RESPONSE_REQUEST_ID, MoaiBillingConstants.BILLING_RESPONSE_INVALID_REQUEST_ID );
+            return response.getLong ( AndroidMarketBillingConstants.BILLING_RESPONSE_REQUEST_ID, AndroidMarketBillingConstants.BILLING_RESPONSE_INVALID_REQUEST_ID );
         }
     
         @Override
         protected void onRemoteException ( RemoteException e ) {
 	
             super.onRemoteException ( e );
-            MoaiBillingSecurity.removeNonce ( mNonce );
+            AndroidMarketBillingSecurity.removeNonce ( mNonce );
         }
 
         @Override
         protected void onNullPointerException ( NullPointerException e ) {
 	
             super.onNullPointerException ( e );
-            MoaiBillingSecurity.removeNonce ( mNonce );
+            AndroidMarketBillingSecurity.removeNonce ( mNonce );
         }
     
         @Override
         protected void responseCodeReceived ( ResponseCode responseCode ) {
 	
-            MoaiBillingResponseHandler.responseCodeReceived ( this, responseCode );
+            AndroidMarketBillingResponseHandler.responseCodeReceived ( this, responseCode );
         }
     }
 
-    public MoaiBillingService () {
+    public AndroidMarketBillingService () {
 	
         super ();
     }
@@ -319,19 +319,19 @@ public class MoaiBillingService extends Service implements ServiceConnection {
     public void handleCommand ( Intent intent, int startId ) {
 	
         String action = intent.getAction ();
-        if ( MoaiBillingConstants.ACTION_GET_PURCHASE_INFORMATION.equals ( action )) {
+        if ( AndroidMarketBillingConstants.ACTION_GET_PURCHASE_INFORMATION.equals ( action )) {
 	
-            String notifyId = intent.getStringExtra ( MoaiBillingConstants.NOTIFICATION_ID );
+            String notifyId = intent.getStringExtra ( AndroidMarketBillingConstants.NOTIFICATION_ID );
             getPurchaseInformation ( startId, new String [] { notifyId } );
-        } else if ( MoaiBillingConstants.ACTION_PURCHASE_STATE_CHANGED.equals ( action )) {
+        } else if ( AndroidMarketBillingConstants.ACTION_PURCHASE_STATE_CHANGED.equals ( action )) {
 	
-            String signedData = intent.getStringExtra ( MoaiBillingConstants.INAPP_SIGNED_DATA );
-            String signature = intent.getStringExtra ( MoaiBillingConstants.INAPP_SIGNATURE );
+            String signedData = intent.getStringExtra ( AndroidMarketBillingConstants.INAPP_SIGNED_DATA );
+            String signature = intent.getStringExtra ( AndroidMarketBillingConstants.INAPP_SIGNATURE );
             purchaseStateChanged ( startId, signedData, signature );
-        } else if ( MoaiBillingConstants.ACTION_RESPONSE_CODE.equals ( action )) {
+        } else if ( AndroidMarketBillingConstants.ACTION_RESPONSE_CODE.equals ( action )) {
 	
-            long requestId = intent.getLongExtra ( MoaiBillingConstants.INAPP_REQUEST_ID, -1 );
-            int responseCodeIndex = intent.getIntExtra ( MoaiBillingConstants.INAPP_RESPONSE_CODE, ResponseCode.RESULT_ERROR.ordinal ());
+            long requestId = intent.getLongExtra ( AndroidMarketBillingConstants.INAPP_REQUEST_ID, -1 );
+            int responseCodeIndex = intent.getIntExtra ( AndroidMarketBillingConstants.INAPP_RESPONSE_CODE, ResponseCode.RESULT_ERROR.ordinal ());
             ResponseCode responseCode = ResponseCode.valueOf ( responseCodeIndex );
             checkResponseCode ( requestId, responseCode );
         }
@@ -343,7 +343,7 @@ public class MoaiBillingService extends Service implements ServiceConnection {
 	
             MoaiLog.i ( "MarketBillingService bindToMarketBillingService: binding to Market billing service" );
 
-            boolean bindResult = bindService ( new Intent ( MoaiBillingConstants.MARKET_BILLING_SERVICE_ACTION ), this, Context.BIND_AUTO_CREATE );
+            boolean bindResult = bindService ( new Intent ( AndroidMarketBillingConstants.MARKET_BILLING_SERVICE_ACTION ), this, Context.BIND_AUTO_CREATE );
             if ( bindResult ) {
 	
                 return true;
@@ -385,7 +385,7 @@ public class MoaiBillingService extends Service implements ServiceConnection {
 
     private void purchaseStateChanged ( int startId, String signedData, String signature ) {
 	
-        ArrayList < MoaiBillingSecurity.VerifiedPurchase > purchases = MoaiBillingSecurity.verifyPurchase ( signedData, signature );
+        ArrayList < AndroidMarketBillingSecurity.VerifiedPurchase > purchases = AndroidMarketBillingSecurity.verifyPurchase ( signedData, signature );
         if ( purchases == null ) {
 	
             return;
@@ -393,7 +393,7 @@ public class MoaiBillingService extends Service implements ServiceConnection {
     
         for ( VerifiedPurchase vp : purchases ) {
 	
-            MoaiBillingResponseHandler.purchaseResponse ( vp.purchaseState, vp.productId, vp.orderId, vp.notificationId, vp.developerPayload );
+            AndroidMarketBillingResponseHandler.purchaseResponse ( vp.purchaseState, vp.productId, vp.orderId, vp.notificationId, vp.developerPayload );
         }
     }
 
@@ -437,7 +437,7 @@ public class MoaiBillingService extends Service implements ServiceConnection {
 
     public void onServiceConnected ( ComponentName name, IBinder service ) {
 	
-        MoaiLog.d ( "MoaiBillingService onServiceConnected: Billing service connected" );
+        MoaiLog.d ( "AndroidMarketBillingService onServiceConnected: Billing service connected" );
 
         mService = IMarketBillingService.Stub.asInterface ( service );
         runPendingRequests ();
@@ -445,7 +445,7 @@ public class MoaiBillingService extends Service implements ServiceConnection {
 
     public void onServiceDisconnected ( ComponentName name ) {
 	
-        MoaiLog.w ( "MoaiBillingService onServiceDisconnected: Billing service disconnected" );
+        MoaiLog.w ( "AndroidMarketBillingService onServiceDisconnected: Billing service disconnected" );
         mService = null;
     }
 

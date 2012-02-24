@@ -8,9 +8,9 @@
 package @PACKAGE@;
 
 //================================================================//
-// MoaiBillingConstants
+// AndroidMarketBillingConstants
 //================================================================//
-public class MoaiBillingConstants {
+public class AndroidMarketBillingConstants {
 	
     public enum ResponseCode {
 	

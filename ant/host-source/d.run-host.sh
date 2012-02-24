@@ -126,19 +126,19 @@
 	cp -rf host-source/project/src $out_dir/project/
 
 	# replace text inside required src files
+	fr $out_dir/project/$package_path/AndroidC2DMReceiver.java @PACKAGE@ "$package"
+	fr $out_dir/project/$package_path/AndroidMarketBillingConstants.java @PACKAGE@ "$package"
+	fr $out_dir/project/$package_path/AndroidMarketBillingPurchaseObserver.java @PACKAGE@ "$package"
+	fr $out_dir/project/$package_path/AndroidMarketBillingReceiver.java @PACKAGE@ "$package"
+	fr $out_dir/project/$package_path/AndroidMarketBillingResponseHandler.java @PACKAGE@ "$package"
+	fr $out_dir/project/$package_path/AndroidMarketBillingSecurity.java @PACKAGE@ "$package"
+	fr $out_dir/project/$package_path/AndroidMarketBillingService.java @PACKAGE@ "$package"
 	fr $out_dir/project/$package_path/Base64.java @PACKAGE@ "$package"
 	fr $out_dir/project/$package_path/Base64DecoderException.java @PACKAGE@ "$package"
 	fr $out_dir/project/$package_path/MoaiActivity.java @PACKAGE@ "$package"
-	fr $out_dir/project/$package_path/MoaiBillingConstants.java @PACKAGE@ "$package"
-	fr $out_dir/project/$package_path/MoaiBillingPurchaseObserver.java @PACKAGE@ "$package"
-	fr $out_dir/project/$package_path/MoaiBillingReceiver.java @PACKAGE@ "$package"
-	fr $out_dir/project/$package_path/MoaiBillingResponseHandler.java @PACKAGE@ "$package"
-	fr $out_dir/project/$package_path/MoaiBillingSecurity.java @PACKAGE@ "$package"
-	fr $out_dir/project/$package_path/MoaiBillingService.java @PACKAGE@ "$package"
-	fr $out_dir/project/$package_path/MoaiC2DMReceiver.java @PACKAGE@ "$package"
+	fr $out_dir/project/$package_path/MoaiActivity.java @WORKING_DIR@ "$working_dir"
 	fr $out_dir/project/$package_path/MoaiLog.java @PACKAGE@ "$package"
 	fr $out_dir/project/$package_path/MoaiView.java @PACKAGE@ "$package"
-	fr $out_dir/project/$package_path/MoaiActivity.java @WORKING_DIR@ "$working_dir"
 	
 	# create run command for the init.lua file
 	working_dir_depth=`grep -o "\/" <<<"$working_dir" | wc -l`

@@ -12,7 +12,10 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-public class MoaiC2DMReceiver extends BroadcastReceiver {
+//================================================================//
+// AndroidC2DMReceiver
+//================================================================//
+public class AndroidC2DMReceiver extends BroadcastReceiver {
 	
 	public enum RegistrationCode {
 		
@@ -57,19 +60,19 @@ public class MoaiC2DMReceiver extends BroadcastReceiver {
 	    if ( intent.getStringExtra ( "error" ) != null ) {
 
 		    String errorMessage = intent.getStringExtra ( "error" );
-		    MoaiLog.e ( "MoaiC2DMReceiver handleRegistration: registration failed ( " + errorMessage + " )" );
+		    MoaiLog.e ( "AndroidC2DMReceiver handleRegistration: registration failed ( " + errorMessage + " )" );
 		
 			AKUNotifyRemoteNotificationRegistrationComplete ( RegistrationCode.valueOf ( "RESULT_ERROR_" + errorMessage ).ordinal (), null );
 	    } else if ( intent.getStringExtra ( "unregistered" ) != null ) {
 
 		    String packageName = intent.getStringExtra ( "unregistered" );
-	    	MoaiLog.i ( "MoaiC2DMReceiver handleRegistration: unregistered successfully ( " + packageName + " )" );
+	    	MoaiLog.i ( "AndroidC2DMReceiver handleRegistration: unregistered successfully ( " + packageName + " )" );
 
 			AKUNotifyRemoteNotificationRegistrationComplete ( RegistrationCode.valueOf ( "RESULT_UNREGISTERED" ).ordinal (), null );
 	    } else if ( intent.getStringExtra ( "registration_id" ) != null ) {
 
 		    String registrationId = intent.getStringExtra ( "registration_id" );
-	    	MoaiLog.i ( "MoaiC2DMReceiver handleRegistration: registered successfully ( " + registrationId + " )" );
+	    	MoaiLog.i ( "AndroidC2DMReceiver handleRegistration: registered successfully ( " + registrationId + " )" );
 
 			AKUNotifyRemoteNotificationRegistrationComplete ( RegistrationCode.valueOf ( "RESULT_REGISTERED" ).ordinal (), registrationId );
 	    }

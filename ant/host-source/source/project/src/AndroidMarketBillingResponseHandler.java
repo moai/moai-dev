@@ -7,25 +7,28 @@
 
 package @PACKAGE@;
 
-import @PACKAGE@.MoaiBillingConstants.PurchaseState;
-import @PACKAGE@.MoaiBillingConstants.ResponseCode;
-import @PACKAGE@.MoaiBillingService.RequestPurchase;
-import @PACKAGE@.MoaiBillingService.RestoreTransactions;
+import @PACKAGE@.AndroidMarketBillingConstants.PurchaseState;
+import @PACKAGE@.AndroidMarketBillingConstants.ResponseCode;
+import @PACKAGE@.AndroidMarketBillingService.RequestPurchase;
+import @PACKAGE@.AndroidMarketBillingService.RestoreTransactions;
 
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 
-public class MoaiBillingResponseHandler {
+//================================================================//
+// AndroidMarketBillingResponseHandler
+//================================================================//
+public class AndroidMarketBillingResponseHandler {
 	
-    private static MoaiBillingPurchaseObserver sPurchaseObserver;
+    private static AndroidMarketBillingPurchaseObserver sPurchaseObserver;
 
-    public static synchronized void register ( MoaiBillingPurchaseObserver observer ) {
+    public static synchronized void register ( AndroidMarketBillingPurchaseObserver observer ) {
 	
         sPurchaseObserver = observer;
     }
 
-    public static synchronized void unregister ( MoaiBillingPurchaseObserver observer ) {
+    public static synchronized void unregister ( AndroidMarketBillingPurchaseObserver observer ) {
 	
         sPurchaseObserver = null;
     }
