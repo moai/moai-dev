@@ -18,7 +18,6 @@
 #include <moaicore/MOAIAnim.h>
 #include <moaicore/MOAIAnimCurve.h>
 #include <moaicore/MOAIAttrOp.h>
-#include <moaicore/MOAIBitmapFontRipper.h>
 #include <moaicore/MOAIBlendMode.h>
 #include <moaicore/MOAIButtonSensor.h>
 #include <moaicore/MOAICamera.h>
@@ -42,8 +41,9 @@
 #include <moaicore/MOAIEventSource.h>
 #include <moaicore/MOAIFileSystem.h>
 #include <moaicore/MOAIFont.h>
-#include <moaicore/MOAIFreeTypeFont.h>
+#include <moaicore/MOAIFontBuilder.h>
 #include <moaicore/MOAIFrameBuffer.h>
+#include <moaicore/MOAIFreeTypeFontBuilder.h>
 #include <moaicore/MOAIGfxDevice.h>
 #include <moaicore/MOAIGfxQuad2D.h>
 #include <moaicore/MOAIGfxQuadDeck2D.h>
@@ -51,6 +51,7 @@
 #include <moaicore/MOAIGlobals.h>
 #include <moaicore/MOAIGlyph.h>
 #include <moaicore/MOAIGlyphCache.h>
+#include <moaicore/MOAIGlyphCacheBase.h>
 #include <moaicore/MOAIGlyphCachePage.h>
 #include <moaicore/MOAIGlyphDeck.h>
 #include <moaicore/MOAIGrid.h>

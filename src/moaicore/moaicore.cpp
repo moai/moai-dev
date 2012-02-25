@@ -94,6 +94,7 @@ void moaicore::InitGlobals ( MOAIGlobals* globals ) {
 	REGISTER_LUA_CLASS ( MOAIDeckRemapper )
 	REGISTER_LUA_CLASS ( MOAIDeserializer )
 	REGISTER_LUA_CLASS ( MOAIDraw )
+	REGISTER_LUA_CLASS ( MOAIGlyphCache )
 	REGISTER_LUA_CLASS ( MOAIEnvironment )
 	REGISTER_LUA_CLASS ( MOAIEaseDriver )
 	REGISTER_LUA_CLASS ( MOAIEaseType )
@@ -135,7 +136,6 @@ void moaicore::InitGlobals ( MOAIGlobals* globals ) {
 	REGISTER_LUA_CLASS ( MOAIPathFinder )
 	REGISTER_LUA_CLASS ( MOAIPathTerrainDeck )
 	REGISTER_LUA_CLASS ( MOAIPointerSensor )
-	REGISTER_LUA_CLASS ( MOAIProp )
 	REGISTER_LUA_CLASS ( MOAIProp )
 	REGISTER_LUA_CLASS ( MOAIScriptDeck )
 	REGISTER_LUA_CLASS ( MOAIScriptNode )
@@ -187,7 +187,7 @@ void moaicore::InitGlobals ( MOAIGlobals* globals ) {
 	#endif
 	
 	#if USE_FREETYPE
-		REGISTER_LUA_CLASS ( MOAIFreeTypeFont )
+		REGISTER_LUA_CLASS ( MOAIFreeTypeFontBuilder )
 	#endif
 	
 	// run bundled init scripts for back compat and Lua framework extensions

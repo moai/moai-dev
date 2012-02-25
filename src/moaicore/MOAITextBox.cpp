@@ -480,7 +480,7 @@ void MOAITextBox::Draw ( int subPrimID, bool reload ) {
 				blendColor.Modulate ( baseColor );
 				gfxDevice.SetPenColor ( blendColor );
 			}
-			sprite.mStyle->mFont->DrawGlyph ( *sprite.mGlyph, sprite.mX, sprite.mY );
+			sprite.mGlyph->Draw ( *sprite.mTexture, sprite.mX, sprite.mY );
 		}
 	}
 }
@@ -690,15 +690,17 @@ void MOAITextBox::PushLine ( u32 start, u32 size, const USRect& rect, float asce
 }
 
 //----------------------------------------------------------------//
-void MOAITextBox::PushSprite ( const MOAIGlyph* glyph, const MOAITextStyleState* style, float x, float y, u32 rgba ) {
+void MOAITextBox::PushSprite ( MOAIGlyph& glyph, MOAITextStyleState& style, float x, float y ) {
 
 	MOAITextSprite textSprite;
 	
-	textSprite.mGlyph		= glyph;
-	textSprite.mStyle		= style;
+	textSprite.mGlyph		= &glyph;
+	textSprite.mStyle		= &style;
 	textSprite.mX			= x;
 	textSprite.mY			= y;
-	textSprite.mRGBA		= rgba;
+	
+	textSprite.mRGBA		= style.mColor;
+	textSprite.mTexture		= style.mFont->GetGlyphTexture ( glyph );
 
 	this->mSprites.Push ( textSprite );
 }

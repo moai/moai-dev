@@ -33,8 +33,9 @@ private:
 	friend class MOAITextBox;
 	friend class MOAITextDesigner;
 	
-	const MOAIGlyph*			mGlyph;
-	const MOAITextStyleState*	mStyle;
+	MOAIGlyph*				mGlyph;
+	MOAITextStyleState*		mStyle;
+	MOAITextureBase*		mTexture; // caching this hear to avoid add'l virtual calls when drawing
 	
 	float		mX;
 	float		mY;
@@ -147,7 +148,7 @@ private:
 	void			Layout					();
 	void			OnDepNodeUpdate			();
 	void			PushLine				( u32 start, u32 size, const USRect& rect, float ascent );
-	void			PushSprite				( const MOAIGlyph* glyph, const MOAITextStyleState* style, float x, float y, u32 rgba );
+	void			PushSprite				( MOAIGlyph& glyph, MOAITextStyleState& style, float x, float y );
 	void			PushStyleSpan			( int base, int top, MOAITextStyleState& styleState );
 	void			ResetLayout				();
 	void			ResetStyleMap			();

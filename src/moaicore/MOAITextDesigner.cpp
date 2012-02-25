@@ -44,8 +44,8 @@ void MOAITextDesigner::BuildLayout ( MOAITextBox& textBox ) {
 	USVec2D pen;
 	pen.Init ( 0.0f, 0.0f );
 	
-	const MOAIGlyph* glyph = 0;
-	const MOAIGlyph* prevGlyph = 0;
+	MOAIGlyph* glyph = 0;
+	MOAIGlyph* prevGlyph = 0;
 	
 	textBox.mMore = true;
 	
@@ -108,7 +108,7 @@ void MOAITextDesigner::BuildLayout ( MOAITextBox& textBox ) {
 				acceptLine = ( lineSize && overrun );
 				
 				if ( acceptLine || !overrun ) {
-					textBox.PushSprite ( glyph, this->mStyleState, pen.mX, pen.mY, this->mStyleState->mColor );
+					textBox.PushSprite ( *glyph, *this->mStyleState, pen.mX, pen.mY );
 					tokenRect.mXMax = pen.mX + glyphRight;
 					tokenSize++;
 				}

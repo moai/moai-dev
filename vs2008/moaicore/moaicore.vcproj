@@ -1640,14 +1640,6 @@
 			Name="font"
 			>
 			<File
-				RelativePath="..\..\src\moaicore\MOAIBitmapFontRipper.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIBitmapFontRipper.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\moaicore\MOAIFont.cpp"
 				>
 			</File>
@@ -1656,11 +1648,19 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAIFreeTypeFont.cpp"
+				RelativePath="..\..\src\moaicore\MOAIFontBuilder.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAIFreeTypeFont.h"
+				RelativePath="..\..\src\moaicore\MOAIFontBuilder.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIFreeTypeFontBuilder.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIFreeTypeFontBuilder.h"
 				>
 			</File>
 			<File
@@ -1677,6 +1677,14 @@
 			</File>
 			<File
 				RelativePath="..\..\src\moaicore\MOAIGlyphCache.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIGlyphCacheBase.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIGlyphCacheBase.h"
 				>
 			</File>
 			<File

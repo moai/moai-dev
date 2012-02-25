@@ -7,8 +7,6 @@
 #include <moaicore/MOAIGlyph.h>
 #include <moaicore/MOAILua.h>
 
-// TODO: subclass from MOAIDeck
-
 //================================================================//
 // MOAIGlyphDeck
 //================================================================//
@@ -16,7 +14,7 @@ class MOAIGlyphDeck {
 private:
 
 	friend class MOAIFont;
-	friend class MOAIFreeTypeFont;
+	friend class MOAIFreeTypeFontBuilder;
 	friend class MOAITextDesigner;
 	
 	float	mPoints;

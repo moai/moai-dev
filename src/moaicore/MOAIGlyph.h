@@ -25,8 +25,10 @@ public:
 class MOAIGlyph {
 private:
 	
+	static const u32 NULL_PAGE_ID = 0xffffffff;
+	
 	u32			mCode;
-	u32			mCacheKey; // opaque key for use by cache to track glyph
+	u32			mPageID; // ID of texture page in glyph cache
 	
 	float		mWidth; // width in pixels
 	float		mHeight; // height in pixels
@@ -45,13 +47,15 @@ public:
 
 	// TODO: this is a lot of friends; good idea to clean this up
 	friend class MOAIFont;
-	friend class MOAIFreeTypeFont;
+	friend class MOAIFreeTypeFontBuilder;
 	friend class MOAIGlyphDeck;
-	friend class MOAIGlyphCache;
+	friend class MOAIGlyphCacheBase;
 	friend class MOAIGlyphCachePage;
 	friend class MOAITextBox;
 	friend class MOAITextDesigner;
 	friend class MOAITextStyler;
+
+	GET_SET ( u32, PageID, mPageID );
 
 	//----------------------------------------------------------------//
 	void			Draw				( MOAITextureBase& texture, float x, float y ) const;
@@ -64,6 +68,7 @@ public:
 	void			SerializeOut		( MOAILuaState& state );
 	void			SetKernVec			( u32 id, const MOAIKernVec& kernVec );
 	void			SetScreenRect		( float width, float height, float yOff );
+	void			SetSourceLoc		( u32 srcX, u32 srcY );
 };
 
 #endif

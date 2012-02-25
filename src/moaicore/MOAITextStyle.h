@@ -59,14 +59,6 @@ public:
 	void			SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
 	void			SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
 	void			SetFont					( MOAIFont* font );
-	
-	
-	//----------------------------------------------------------------//
-	inline void DrawGlyph ( MOAIGlyph& glyph, float x, float y ) {
-
-		assert ( this->mFont );
-		this->mFont->DrawGlyph ( glyph, x, y );
-	}
 };
 
 #endif

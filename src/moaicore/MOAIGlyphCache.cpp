@@ -3,11 +3,11 @@
 
 #include "pch.h"
 #include <contrib/utf8.h>
-#include <moaicore/MOAIBitmapFontRipper.h>
 #include <moaicore/MOAIDataBuffer.h>
 #include <moaicore/MOAIGlyphCache.h>
-#include <moaicore/MOAIGfxDevice.h>
 #include <moaicore/MOAIGlyphCachePage.h>
+#include <moaicore/MOAIGfxDevice.h>
+#include <moaicore/MOAIGlyph.h>
 #include <moaicore/MOAIImage.h>
 #include <moaicore/MOAIImageTexture.h>
 #include <moaicore/MOAILogMessages.h>
@@ -62,8 +62,15 @@ void MOAIGlyphCache::ClearPages () {
 //----------------------------------------------------------------//
 MOAIImage* MOAIGlyphCache::GetGlyphImage ( MOAIGlyph& glyph ) {
 
-	assert ( glyph.mCacheKey < this->mPages.Size ());
-	return this->mPages [ glyph.mCacheKey ]->mImageTexture;
+	assert ( glyph.GetPageID () < this->mPages.Size ());
+	return this->mPages [ glyph.GetPageID ()]->mImageTexture;
+}
+
+//----------------------------------------------------------------//
+MOAITextureBase* MOAIGlyphCache::GetGlyphTexture ( MOAIGlyph& glyph ) {
+
+	assert ( glyph.GetPageID () < this->mPages.Size ());
+	return this->mPages [ glyph.GetPageID ()]->mImageTexture;
 }
 
 //----------------------------------------------------------------//
@@ -105,11 +112,16 @@ MOAIImage* MOAIGlyphCache::GetImage () {
 }
 
 //----------------------------------------------------------------//
-MOAIGlyphCache::MOAIGlyphCache () :
-	mFont ( 0 ) {
+bool MOAIGlyphCache::IsDynamic () {
+
+	return true;
+}
+
+//----------------------------------------------------------------//
+MOAIGlyphCache::MOAIGlyphCache () {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAILuaObject )
+		RTTI_EXTEND ( MOAIGlyphCacheBase )
 	RTTI_END
 }
 
@@ -120,13 +132,11 @@ MOAIGlyphCache::~MOAIGlyphCache () {
 //----------------------------------------------------------------//
 void MOAIGlyphCache::PlaceGlyph ( MOAIGlyph& glyph ) {
 
-	glyph.mCacheKey = BAD_KEY;
-	
 	for ( u32 i = 0; i < this->mPages.Size (); ++i ) {
 		MOAIGlyphCachePage* page = this->mPages [ i ];
 		MOAISpan < MOAIGlyph* >* span = page->Alloc ( glyph );
 		if ( span ) {
-			glyph.mCacheKey = i;
+			glyph.SetPageID ( i );
 			return;
 		}
 	}
@@ -138,7 +148,7 @@ void MOAIGlyphCache::PlaceGlyph ( MOAIGlyph& glyph ) {
 	this->mPages [ pageID ] = page;
 
 	page->Alloc ( glyph );
-	glyph.mCacheKey = pageID;
+	glyph.SetPageID ( pageID );
 }
 
 //----------------------------------------------------------------//

@@ -85,7 +85,7 @@ USRect MOAIGlyph::GetRect ( float points, float x, float y ) const {
 //----------------------------------------------------------------//
 MOAIGlyph::MOAIGlyph () :
 	mCode ( 0xffffffff ),
-	mCacheKey ( 0 ),
+	mPageID ( NULL_PAGE_ID ),
 	mWidth ( 0.0f ),
 	mHeight ( 0.0f ),
 	mAdvanceX ( 0.0f ),
@@ -197,4 +197,11 @@ void MOAIGlyph::SetScreenRect ( float width, float height, float yOff ) {
 	this->mWidth = width;
 	this->mHeight = height;
 	this->mBearingY = -yOff;
+}
+
+//----------------------------------------------------------------//
+void MOAIGlyph::SetSourceLoc ( u32 srcX, u32 srcY ) {
+
+	this->mSrcX = srcX;
+	this->mSrcY = srcY;
 }

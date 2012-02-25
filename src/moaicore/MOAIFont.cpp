@@ -3,11 +3,12 @@
 
 #include "pch.h"
 #include <contrib/utf8.h>
-#include <moaicore/MOAIBitmapFontRipper.h>
 #include <moaicore/MOAIDataBuffer.h>
+#include <moaicore/MOAIGlyphCacheBase.h>
 #include <moaicore/MOAIFont.h>
+#include <moaicore/MOAIFontBuilder.h>
 #include <moaicore/MOAIGfxDevice.h>
-#include <moaicore/MOAIGlyphCache.h>
+#include <moaicore/MOAIGlyphCacheBase.h>
 #include <moaicore/MOAIImage.h>
 #include <moaicore/MOAIImageTexture.h>
 #include <moaicore/MOAILogMessages.h>
@@ -16,14 +17,6 @@
 //================================================================//
 // local
 //================================================================//
-
-//----------------------------------------------------------------//
-// TODO: doxygen
-int MOAIFont::_getBuildKerningTables ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIFont, "U" )
-	state.Push ( self->mBuildKerningTables );
-	return 1;
-}
 
 //----------------------------------------------------------------//
 /**	@name	load
@@ -67,7 +60,9 @@ int MOAIFont::_preloadGlyphs ( lua_State* L ) {
 		self->AffirmGlyph ( size, c );
 	}
 	
-	self->ProcessGlyphs ();
+	if ( self->mFontBuilder ) {
+		self->mFontBuilder->ProcessGlyphs ( *self );
+	}
 	
 	return 0;
 }
@@ -77,25 +72,38 @@ int MOAIFont::_preloadGlyphs ( lua_State* L ) {
 int MOAIFont::_rebuildKerningTables ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIFont, "U" )
 	
-	if ( state.IsType ( 2, LUA_TNUMBER )) {
-		
-		float points	= state.GetValue < float >( 2, 0 );
-		float dpi		= state.GetValue < float >( 3, DPI );
-		
-		float size = POINTS_TO_PIXELS ( points, dpi );
-		self->RebuildKerning ( size );
-	}
-	else {
-		self->RebuildKerning ();
+	if ( self->mFontBuilder ) {
+	
+		if ( state.IsType ( 2, LUA_TNUMBER )) {
+			
+			float points	= state.GetValue < float >( 2, 0 );
+			float dpi		= state.GetValue < float >( 3, DPI );
+			
+			float size = POINTS_TO_PIXELS ( points, dpi );
+			self->mFontBuilder->RebuildKerning ( *self, size );
+		}
+		else {
+			self->mFontBuilder->RebuildKerning ( *self );
+		}
 	}
 	return 0;
 }
 
 //----------------------------------------------------------------//
 // TODO: doxygen
-int MOAIFont::_setBuildKerningTables ( lua_State* L ) {
+int MOAIFont::_setFontBuilder ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIFont, "U" )
-	self->mBuildKerningTables = state.GetValue < bool >( 2, false );
+	
+	self->mFontBuilder.Set ( *self, state.GetLuaObject < MOAIFontBuilder >( 2 ));
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIFont::_setGlyphCache ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIFont, "U" )
+	
+	self->mGlyphCache.Set ( *self, state.GetLuaObject < MOAIGlyphCacheBase >( 2 ));
 	return 0;
 }
 
@@ -118,6 +126,13 @@ MOAIGlyphDeck* MOAIFont::GetGlyphDeck ( float points ) {
 }
 
 //----------------------------------------------------------------//
+MOAITextureBase* MOAIFont::GetGlyphTexture ( MOAIGlyph& glyph ) {
+
+	assert ( this->mGlyphCache );
+	return this->mGlyphCache->GetGlyphTexture ( glyph );
+}
+
+//----------------------------------------------------------------//
 void MOAIFont::Init ( cc8* filename ) {
 
 	this->mFilename = filename;
@@ -135,36 +150,26 @@ bool MOAIFont::IsWhitespace ( u32 c ) {
 }
 
 //----------------------------------------------------------------//
-MOAIFont::MOAIFont () :
-	mBuildKerningTables ( true ),
-	mGlyphCache ( 0 ) {
+MOAIFont::MOAIFont () {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAILuaObject )
 	RTTI_END
-	
-	// TODO: create on demand
-	this->mGlyphCache = new MOAIGlyphCache ();
 }
 
 //----------------------------------------------------------------//
 MOAIFont::~MOAIFont () {
 
-	// TODO: should use a proper Lua smart pointer
-	delete this->mGlyphCache;
+	this->mFontBuilder.Set ( *this, 0 );
+	this->mGlyphCache.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//
 void MOAIFont::ProcessGlyphs () {
-}
 
-//----------------------------------------------------------------//
-void MOAIFont::RebuildKerning () {
-}
-
-//----------------------------------------------------------------//
-void MOAIFont::RebuildKerning ( float points ) {
-	UNUSED ( points );
+	if ( this->mFontBuilder ) {
+		this->mFontBuilder->ProcessGlyphs ( *this );
+	}
 }
 
 //----------------------------------------------------------------//
@@ -176,11 +181,11 @@ void MOAIFont::RegisterLuaClass ( MOAILuaState& state ) {
 void MOAIFont::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	luaL_Reg regTable [] = {
-		{ "getBuildKerningTables",		_getBuildKerningTables },
 		{ "load",						_load },
 		{ "preloadGlyphs",				_preloadGlyphs },	
 		{ "rebuildKerningTables",		_rebuildKerningTables },
-		{ "setBuildKerningTables",		_setBuildKerningTables },
+		{ "setFontBuilder",				_setFontBuilder },
+		{ "setGlyphCache",				_setGlyphCache },
 		{ NULL, NULL }
 	};
 	

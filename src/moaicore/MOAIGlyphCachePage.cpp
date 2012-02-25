@@ -87,8 +87,7 @@ MOAIGlyphCachePage::GlyphSpan* MOAIGlyphCachePage::Alloc ( MOAIGlyph& glyph ) {
 	
 	GlyphSpan* glyphSpan = bestRowIt->mData.Alloc ( width );
 	if ( glyphSpan ) {
-		glyph.mSrcX = glyphSpan->mBase;
-		glyph.mSrcY = bestRowIt->mBase;
+		glyph.SetSourceLoc ( glyphSpan->mBase, bestRowIt->mBase );
 	}
 	
 	this->AffirmCanvas ();

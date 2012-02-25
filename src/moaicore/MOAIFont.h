@@ -4,15 +4,14 @@
 #ifndef	MOAIFONT_H
 #define	MOAIFONT_H
 
-#include <moaicore/MOAIGlyphCache.h>
 #include <moaicore/MOAIGlyphDeck.h>
 #include <moaicore/MOAILua.h>
 #include <moaicore/MOAISpanList.h>
 
+class MOAIFontBuilder;
 class MOAIGlyph;
-class MOAIGlyphCache;
-class MOAIImage;
-class MOAIImageTexture;
+class MOAIGlyphCacheBase;
+class MOAITextureBase;
 
 #define DPI 72
 #define POINTS_TO_PIXELS(points,dpi) (( points * dpi ) / DPI )
@@ -25,50 +24,44 @@ class MOAIFont :
 	public MOAILuaObject {
 protected:
 
-	static const u32 MAX_KERN_TABLE_SIZE = 256;
+	friend class MOAIFreeTypeFontBuilder;
 
-	STLString			mFilename;
-	bool				mBuildKerningTables;
-	MOAIGlyphCache*		mGlyphCache;
+	STLString mFilename;
+	
+	MOAILuaSharedPtr < MOAIFontBuilder > mFontBuilder;
+	MOAILuaSharedPtr < MOAIGlyphCacheBase > mGlyphCache;
 	
 	// for now
 	typedef STLMap < float, MOAIGlyphDeck >::iterator GlyphDecksIt;
 	STLMap < float, MOAIGlyphDeck > mGlyphDecks;
 
 	//----------------------------------------------------------------//
-	static int			_getBuildKerningTables	( lua_State* L );
 	static int			_load					( lua_State* L );
 	static int			_preloadGlyphs			( lua_State* L );
 	static int			_rebuildKerningTables	( lua_State* L );
-	static int			_setBuildKerningTables	( lua_State* L );
+	static int			_setFontBuilder			( lua_State* L );
+	static int			_setGlyphCache			( lua_State* L );
 
 public:
 	
 	DECL_LUA_FACTORY ( MOAIFont )
 	
+	GET ( cc8*, Filename, mFilename );
+	
 	//----------------------------------------------------------------//
 	void				AffirmGlyph				( float points, u32 c );
 	MOAIGlyphDeck*		GetGlyphDeck			( float points );
-	MOAIImageTexture*	GetPage					( u32 id );
+	MOAITextureBase*	GetGlyphTexture			( MOAIGlyph& glyph );
 	void				Init					( cc8* filename );
 	static bool			IsWhitespace			( u32 c );
 						MOAIFont				();
 						~MOAIFont				();
-	virtual void		ProcessGlyphs			();
-	virtual void		RebuildKerning			();
-	virtual void		RebuildKerning			( float points );
+	void				ProcessGlyphs			();
 	void				RegisterLuaClass		( MOAILuaState& state );
 	void				RegisterLuaFuncs		( MOAILuaState& state );
 	void				ResizePageList			( u32 size );
 	void				SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
 	void				SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
-	
-	//----------------------------------------------------------------//
-	inline void DrawGlyph ( const MOAIGlyph& glyph, float x, float y ) {
-
-		assert ( this->mGlyphCache );
-		this->mGlyphCache->DrawGlyph ( glyph, x, y );
-	}
 };
 
 #endif

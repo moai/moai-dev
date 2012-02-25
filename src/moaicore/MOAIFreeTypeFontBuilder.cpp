@@ -2,15 +2,11 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <contrib/utf8.h>
-#include <moaicore/MOAIBitmapFontRipper.h>
-#include <moaicore/MOAIDataBuffer.h>
-#include <moaicore/MOAIFreeTypeFont.h>
-#include <moaicore/MOAIGfxDevice.h>
-#include <moaicore/MOAIGlyphCache.h>
+#include <moaicore/MOAIFont.h>
+#include <moaicore/MOAIFreeTypeFontBuilder.h>
+#include <moaicore/MOAIGlyphCacheBase.h>
 #include <moaicore/MOAIImageTexture.h>
 #include <moaicore/MOAILogMessages.h>
-#include <moaicore/MOAITextureBase.h>
 
 SUPPRESS_EMPTY_FILE_WARNING
 #if USE_FREETYPE
@@ -52,13 +48,33 @@ static void _renderSpan ( const int y, const int count, const FT_Span* const spa
 }
 
 //================================================================//
-// MOAIFreeTypeFont
+// local
+//================================================================//
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIFreeTypeFontBuilder::_getBuildKerningTables ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIFreeTypeFontBuilder, "U" )
+	state.Push ( self->mBuildKerningTables );
+	return 1;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIFreeTypeFontBuilder::_setBuildKerningTables ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIFreeTypeFontBuilder, "U" )
+	self->mBuildKerningTables = state.GetValue < bool >( 2, false );
+	return 0;
+}
+
+//================================================================//
+// MOAIFreeTypeFontBuilder
 //================================================================//
 
 //----------------------------------------------------------------//
 // iterate through the pending glyphs in each set and attempt to
 // update them to match target - i.e. metrics or metrics and bitmap
-void MOAIFreeTypeFont::BuildKerning ( FT_Face face, MOAIGlyph* glyphs, MOAIGlyph* pendingGlyphs ) {
+void MOAIFreeTypeFontBuilder::BuildKerning ( FT_Face face, MOAIGlyph* glyphs, MOAIGlyph* pendingGlyphs ) {
 
 	MOAIKernVec kernTable [ MAX_KERN_TABLE_SIZE ];
 
@@ -151,21 +167,25 @@ void MOAIFreeTypeFont::BuildKerning ( FT_Face face, MOAIGlyph* glyphs, MOAIGlyph
 }
 
 //----------------------------------------------------------------//
-MOAIFreeTypeFont::MOAIFreeTypeFont () {
+MOAIFreeTypeFontBuilder::MOAIFreeTypeFontBuilder () :
+	mBuildKerningTables ( true ) {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIFont )
+		RTTI_EXTEND ( MOAIFontBuilder )
 	RTTI_END
 }
 
 //----------------------------------------------------------------//
-MOAIFreeTypeFont::~MOAIFreeTypeFont () {
+MOAIFreeTypeFontBuilder::~MOAIFreeTypeFontBuilder () {
 }
 
 //----------------------------------------------------------------//
 // iterate through the pending glyphs in each set and attempt to
 // update them to match target - i.e. metrics or metrics and bitmap
-void MOAIFreeTypeFont::ProcessGlyphs () {
+void MOAIFreeTypeFontBuilder::ProcessGlyphs ( MOAIFont& font ) {
+	
+	if ( !font.mGlyphCache ) return;
+	MOAIGlyphCacheBase& glyphCache = *font.mGlyphCache;
 	
 	// set up the render params in case they are needed
 	RenderParams render;
@@ -179,14 +199,14 @@ void MOAIFreeTypeFont::ProcessGlyphs () {
 	FT_Init_FreeType( &library );
 
 	FT_Face face;
-	if ( FT_New_Face( library, this->mFilename, 0, &face )) {
+	if ( FT_New_Face( library, font.mFilename, 0, &face )) {
 		FT_Done_FreeType ( library );
-		fprintf ( stderr, "Error loading font: %s\n", this->mFilename );
+		fprintf ( stderr, "Error loading font: %s\n", font.mFilename );
 		return;
 	}
 	
-	GlyphDecksIt glyphDecksIt = this->mGlyphDecks.begin ();
-	for ( ; glyphDecksIt != this->mGlyphDecks.end (); ++glyphDecksIt ) {
+	MOAIFont::GlyphDecksIt glyphDecksIt = font.mGlyphDecks.begin ();
+	for ( ; glyphDecksIt != font.mGlyphDecks.end (); ++glyphDecksIt ) {
 		MOAIGlyphDeck& glyphDeck = glyphDecksIt->second;
 		
 		// save pointers to the two glyph lists
@@ -244,20 +264,17 @@ void MOAIFreeTypeFont::ProcessGlyphs () {
 			glyph.mBearingY = ( float )bearingY;
 			
 			// place and render the glyph
-			if ( this->mGlyphCache ) {
+			glyphCache.PlaceGlyph ( glyph );
 			
-				this->mGlyphCache->PlaceGlyph ( glyph );
+			MOAIImage* image = glyphCache.GetGlyphImage ( glyph );
+			if ( image ) {
 				
-				MOAIImage* image = this->mGlyphCache->GetGlyphImage ( glyph );
-				if ( image ) {
-					
-					render.mImage = image;
-					render.mPenX = glyph.mSrcX - bearingX;
-					render.mPenY = glyph.mSrcY + bearingY;
-					
-					FT_Outline_Render ( library, &face->glyph->outline, &params );
-					// TODO: need to invalidate glyph rect
-				}
+				render.mImage = image;
+				render.mPenX = glyph.mSrcX - bearingX;
+				render.mPenY = glyph.mSrcY + bearingY;
+				
+				FT_Outline_Render ( library, &face->glyph->outline, &params );
+				// TODO: need to invalidate glyph rect
 			}
 		}
 	}
@@ -267,22 +284,22 @@ void MOAIFreeTypeFont::ProcessGlyphs () {
 }
 
 //----------------------------------------------------------------//
-void MOAIFreeTypeFont::RebuildKerning () {
+void MOAIFreeTypeFontBuilder::RebuildKerning ( MOAIFont& font ) {
 
-	if ( !this->mGlyphDecks.size ()) return;
+	if ( !font.mGlyphDecks.size ()) return;
 
 	FT_Library library;
 	FT_Init_FreeType( &library );
 
 	FT_Face face;
-	if ( FT_New_Face( library, this->mFilename, 0, &face )) {
+	if ( FT_New_Face( library, font.mFilename, 0, &face )) {
 		FT_Done_FreeType ( library );
-		fprintf ( stderr, "Error loading font: %s\n", this->mFilename );
+		fprintf ( stderr, "Error loading font: %s\n", font.mFilename );
 		return;
 	}
 	
-	GlyphDecksIt glyphDecksIt = this->mGlyphDecks.begin ();
-	for ( ; glyphDecksIt != this->mGlyphDecks.end (); ++glyphDecksIt ) {
+	MOAIFont::GlyphDecksIt glyphDecksIt = font.mGlyphDecks.begin ();
+	for ( ; glyphDecksIt != font.mGlyphDecks.end (); ++glyphDecksIt ) {
 		MOAIGlyphDeck& glyphDeck = glyphDecksIt->second;
 		this->RebuildKerning ( face, glyphDeck );
 	}
@@ -292,21 +309,21 @@ void MOAIFreeTypeFont::RebuildKerning () {
 }
 
 //----------------------------------------------------------------//
-void MOAIFreeTypeFont::RebuildKerning ( float points ) {
+void MOAIFreeTypeFontBuilder::RebuildKerning ( MOAIFont& font, float points ) {
 
-	if ( !this->mGlyphDecks.contains ( points )) return;
+	if ( !font.mGlyphDecks.contains ( points )) return;
 	
 	FT_Library library;
 	FT_Init_FreeType( &library );
 
 	FT_Face face;
-	if ( FT_New_Face( library, this->mFilename, 0, &face )) {
+	if ( FT_New_Face( library, font.mFilename, 0, &face )) {
 		FT_Done_FreeType ( library );
-		fprintf ( stderr, "Error loading font: %s\n", this->mFilename );
+		fprintf ( stderr, "Error loading font: %s\n", font.mFilename );
 		return;
 	}
 	
-	MOAIGlyphDeck& glyphDeck = this->mGlyphDecks [ points ];
+	MOAIGlyphDeck& glyphDeck = font.mGlyphDecks [ points ];
 	this->RebuildKerning ( face, glyphDeck );
 	
 	FT_Done_Face ( face );
@@ -314,7 +331,7 @@ void MOAIFreeTypeFont::RebuildKerning ( float points ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIFreeTypeFont::RebuildKerning ( FT_Face face, MOAIGlyphDeck& glyphDeck ) {
+void MOAIFreeTypeFontBuilder::RebuildKerning ( FT_Face face, MOAIGlyphDeck& glyphDeck ) {
 	
 	if ( !FT_HAS_KERNING ( face )) return;
 	
@@ -356,23 +373,33 @@ void MOAIFreeTypeFont::RebuildKerning ( FT_Face face, MOAIGlyphDeck& glyphDeck )
 }
 
 //----------------------------------------------------------------//
-void MOAIFreeTypeFont::RegisterLuaClass ( MOAILuaState& state ) {
-	MOAIFont::RegisterLuaClass ( state );
+void MOAIFreeTypeFontBuilder::RegisterLuaClass ( MOAILuaState& state ) {
+	MOAIFontBuilder::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAIFreeTypeFont::RegisterLuaFuncs ( MOAILuaState& state ) {
-	MOAIFont::RegisterLuaFuncs ( state );
+void MOAIFreeTypeFontBuilder::RegisterLuaFuncs ( MOAILuaState& state ) {
+	MOAIFontBuilder::RegisterLuaFuncs ( state );
+	
+	luaL_Reg regTable [] = {
+		{ "getBuildKerningTables",		_getBuildKerningTables },
+		{ "setBuildKerningTables",		_setBuildKerningTables },
+		{ NULL, NULL }
+	};
+	
+	luaL_register ( state, 0, regTable );
 }
 
 //----------------------------------------------------------------//
-void MOAIFreeTypeFont::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
-	MOAIFont::SerializeIn ( state, serializer );
+void MOAIFreeTypeFontBuilder::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
+	UNUSED ( state );
+	UNUSED ( serializer );
 }
 
 //----------------------------------------------------------------//
-void MOAIFreeTypeFont::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
-	MOAIFont::SerializeOut ( state, serializer );
+void MOAIFreeTypeFontBuilder::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
+	UNUSED ( state );
+	UNUSED ( serializer );
 }
 
 #endif

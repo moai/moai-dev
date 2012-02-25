@@ -40,8 +40,8 @@ private:
 public:
 	
 	//----------------------------------------------------------------//
-					MOAIGlyphCachePage				();
-					~MOAIGlyphCachePage				();
+					MOAIGlyphCachePage			();
+					~MOAIGlyphCachePage			();
 };
 
 #endif

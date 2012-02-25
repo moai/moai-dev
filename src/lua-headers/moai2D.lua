@@ -90,10 +90,10 @@ MOAICamera2D = MOAICamera.extend (
 	end
 )
 
-if MOAIFreeTypeFont then
+if MOAIFreeTypeFontBuilder then
 
 	-- extend the instance interface
-	MOAIFont = MOAIFreeTypeFont.extend (
+	MOAIFont = MOAIFont.extend (
 	
 		function ( interface, super )
 			
@@ -105,6 +105,13 @@ if MOAIFreeTypeFont then
 		
 		-- extend the class
 		function ( class, super )
+		
+			function class.new ()
+				local self = super.new ()
+				self:setFontBuilder ( MOAIFreeTypeFontBuilder.new ())
+				self:setGlyphCache ( MOAIGlyphCache.new ())
+				return self
+			end
 		end
 	)
 end
