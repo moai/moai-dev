@@ -24,7 +24,6 @@ font:preloadGlyphs ( charcodes, 76 )
 -- yank out the font image
 image = font:getImage ()
 image:writePNG ( 'font.png' )
-font:setImage ( image );
 
 --[[
 -- add the font to the serializer
@@ -42,6 +41,7 @@ font = nil
 file = nil
 
 MOAISim.forceGarbageCollection ()
+]]--
 
 -- load and show the font
 MOAISim.openWindow ( "test", 320, 480 )
@@ -54,24 +54,27 @@ layer = MOAILayer2D.new ()
 layer:setViewport ( viewport )
 MOAISim.pushRenderPass ( layer )
 
--- load the font image back in
-image = MOAIImage.new ()
-image:load ( 'font.png', 0 )
-
+--[[
 -- read the font in from the file
 file = io.open ( 'font.lua', 'r' )
 font = loadstring ( file:read ( '*all' ))()
 file:close ()
+]]--
+
+-- load the font image back in
+image = MOAIImage.new ()
+image:load ( 'font.png', 0 )
 
 -- set the font image
+font:setCache ()
+font:setReader ()
 font:setImage ( image )
 
 -- font now ready for use
 textbox = MOAITextBox.new ()
 textbox:setString ( text )
 textbox:setFont ( font )
-textbox:setTextSize ( font:getScale ())
+textbox:setTextSize ( 24 )
 textbox:setRect ( -150, -230, 150, 230 )
 textbox:setYFlip ( true )
 layer:insertProp ( textbox )
-]]--

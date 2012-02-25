@@ -138,7 +138,8 @@ void MOAIFreeTypeFontReader::RegisterLuaFuncs ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIFreeTypeFontReader::RenderGlyph ( MOAIFont& font, MOAIGlyph& glyph ) {
 
-	MOAIGlyphCacheBase* glyphCache = font.GetGlyphCache ();
+	MOAIGlyphCacheBase* glyphCache = font.GetCache ();
+	bool useCache = glyphCache && glyphCache->IsDynamic ();
 
 	FT_Face face = this->mFace;
 
@@ -168,7 +169,7 @@ void MOAIFreeTypeFontReader::RenderGlyph ( MOAIFont& font, MOAIGlyph& glyph ) {
 	glyph.mBearingY = ( float )bearingY;
 	
 	// place and render the glyph
-	if ( glyphCache ) {
+	if ( useCache ) {
 		glyphCache->PlaceGlyph ( glyph );
 		
 		MOAIImage* image = glyphCache->GetGlyphImage ( glyph );

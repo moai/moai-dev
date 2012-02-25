@@ -111,6 +111,7 @@
 #include <moaicore/MOAISharedPtr.h>
 #include <moaicore/MOAISim.h>
 #include <moaicore/MOAISpanList.h>
+#include <moaicore/MOAIStaticGlyphCache.h>
 #include <moaicore/MOAIStretchPatch2D.h>
 #include <moaicore/MOAISurfaceDeck2D.h>
 #include <moaicore/MOAITextBox.h>

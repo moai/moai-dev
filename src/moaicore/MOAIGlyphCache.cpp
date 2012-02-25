@@ -24,28 +24,6 @@ int MOAIGlyphCache::_defrag ( lua_State* L ) {
 	return 0;
 }
 
-//----------------------------------------------------------------//
-// TODO: doxygen
-int MOAIGlyphCache::_getImage ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIGlyphCache, "U" )
-
-	MOAIImage* image = self->GetImage ();
-	state.Push ( image );
-	return 1;
-}
-
-//----------------------------------------------------------------//
-// TODO: doxygen
-int MOAIGlyphCache::_setImage ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIGlyphCache, "UU" )
-
-	MOAIImage* image = state.GetLuaObject < MOAIImage >( 2 );
-	if ( image ) {
-		self->SetImage ( *image );
-	}
-	return 0;
-}
-
 //================================================================//
 // MOAIGlyphCache
 //================================================================//
@@ -127,6 +105,8 @@ MOAIGlyphCache::MOAIGlyphCache () {
 
 //----------------------------------------------------------------//
 MOAIGlyphCache::~MOAIGlyphCache () {
+
+	this->ClearPages ();
 }
 
 //----------------------------------------------------------------//
@@ -153,11 +133,12 @@ void MOAIGlyphCache::PlaceGlyph ( MOAIGlyph& glyph ) {
 
 //----------------------------------------------------------------//
 void MOAIGlyphCache::RegisterLuaClass ( MOAILuaState& state ) {
-	UNUSED ( state );
+	MOAIGlyphCacheBase::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAIGlyphCache::RegisterLuaFuncs ( MOAILuaState& state ) {
+	MOAIGlyphCacheBase::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
 		{ "defrag",						_defrag },
@@ -186,33 +167,5 @@ void MOAIGlyphCache::SerializeOut ( MOAILuaState& state, MOAISerializer& seriali
 
 //----------------------------------------------------------------//
 void MOAIGlyphCache::SetImage ( MOAIImage& image ) {
-
-	this->ClearPages ();
-
-	u32 width = image.GetWidth ();
-	u32 height = image.GetHeight ();
-
-	if ( !( width && height )) return;
-
-	u32 totalPages = ( height / width ) + 1;
-	this->mPages.Init ( totalPages );
-	
-	u32 y = 0;
-	for ( u32 i = 0; i < totalPages; ++i ) {
-		MOAIImageTexture* page = new MOAIImageTexture ();
-		
-		u32 pageHeight = height - y;
-		pageHeight = pageHeight > width ? width : pageHeight;
-		
-		page->Init (
-			width,
-			pageHeight,
-			image.GetColorFormat (),
-			image.GetPixelFormat ()
-		);
-		
-		page->CopyBits ( image, 0, y, 0, 0, width, pageHeight );
-		page->Invalidate ();
-		y += pageHeight;
-	}
+	UNUSED ( image );
 }

@@ -1707,6 +1707,14 @@
 				RelativePath="..\..\src\moaicore\MOAISpanList.h"
 				>
 			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIStaticGlyphCache.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIStaticGlyphCache.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="texture"

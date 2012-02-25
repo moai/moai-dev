@@ -52,6 +52,7 @@ public:
 	static MOAIGfxState*	AffirmTexture			( MOAILuaState& state, int idx );
 	
 	void					Init					( MOAIImage& image, cc8* debugname = 0 );
+	void					Init					( MOAIImage& image, int srcX, int srcY, int width, int height, cc8* debugname = 0 );
 	void					Init					( cc8* filename, u32 transform = DEFAULT_TRANSFORM );
 	void					Init					( MOAIDataBuffer& data, u32 transform = DEFAULT_TRANSFORM, cc8* debugname = 0 );
 	void					Init					( const void* data, u32 size, u32 transform = DEFAULT_TRANSFORM, cc8* debugname = 0 );

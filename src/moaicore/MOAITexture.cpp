@@ -102,6 +102,19 @@ void MOAITexture::Init ( MOAIImage& image, cc8* debugname ) {
 }
 
 //----------------------------------------------------------------//
+void MOAITexture::Init ( MOAIImage& image, int srcX, int srcY, int width, int height, cc8* debugname ) {
+
+	this->Clear ();
+	if ( !image.IsOK ()) return;
+
+	this->mImage.Init ( width, height, image.GetColorFormat (), image.GetPixelFormat ());
+	this->mImage.CopyBits ( image, srcX, srcY, 0, 0, width, height );
+	
+	this->mDebugName = debugname;
+	this->mReload = true;
+}
+
+//----------------------------------------------------------------//
 void MOAITexture::Init ( cc8* filename, u32 transform ) {
 
 	this->Clear ();

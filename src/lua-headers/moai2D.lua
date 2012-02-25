@@ -108,8 +108,8 @@ if MOAIFreeTypeFontReader then
 		
 			function class.new ()
 				local self = super.new ()
-				self:setFontReader ( MOAIFreeTypeFontReader.new ())
-				self:setGlyphCache ( MOAIGlyphCache.new ())
+				self:setCache ( MOAIGlyphCache.new ())
+				self:setReader ( MOAIFreeTypeFontReader.new ())
 				return self
 			end
 		end

@@ -17,8 +17,11 @@ int MOAIGlyphCacheBase::_getImage ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGlyphCacheBase, "U" )
 
 	MOAIImage* image = self->GetImage ();
-	state.Push ( image );
-	return 1;
+	if ( image ) {
+		state.Push ( image );
+		return 1;
+	}
+	return 0;
 }
 
 //----------------------------------------------------------------//

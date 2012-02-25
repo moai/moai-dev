@@ -143,6 +143,7 @@ void moaicore::InitGlobals ( MOAIGlobals* globals ) {
 	REGISTER_LUA_CLASS ( MOAIShader )
 	REGISTER_LUA_CLASS ( MOAIShaderMgr )
 	REGISTER_LUA_CLASS ( MOAISim )
+	REGISTER_LUA_CLASS ( MOAIStaticGlyphCache )
 	REGISTER_LUA_CLASS ( MOAIStretchPatch2D )
 	REGISTER_LUA_CLASS ( MOAISurfaceDeck2D )
 	REGISTER_LUA_CLASS ( MOAITextBox )

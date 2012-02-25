@@ -1,40 +1,36 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIGLYPHCACHE_H
-#define	MOAIGLYPHCACHE_H
+#ifndef	MOAISTATICGLYPHCACHE_H
+#define	MOAISTATICGLYPHCACHE_H
 
 #include <moaicore/MOAIGlyphCacheBase.h>
 
-class MOAIGlyphCachePage;
+class MOAITexture;
 
 //================================================================//
-// MOAIGlyphCache
+// MOAIStaticGlyphCache
 //================================================================//
-class MOAIGlyphCache :
+class MOAIStaticGlyphCache :
 	public MOAIGlyphCacheBase {
 protected:
 
-	MOAIFont* mFont;
-	USLeanArray < MOAIGlyphCachePage* > mPages;
+	USLeanArray < MOAITexture* > mTextures;
 
 	//----------------------------------------------------------------//
-	static int			_defrag						( lua_State* L );
-
-	//----------------------------------------------------------------//
-	void				ClearPages					();
+	void				ClearTextures				();
 	
 public:
 	
-	DECL_LUA_FACTORY ( MOAIGlyphCache )
+	DECL_LUA_FACTORY ( MOAIStaticGlyphCache )
 	
 	//----------------------------------------------------------------//
 	MOAIImage*			GetGlyphImage				( MOAIGlyph& glyph );
 	MOAITextureBase*	GetGlyphTexture				( MOAIGlyph& glyph );
 	MOAIImage*			GetImage					();
 	bool				IsDynamic					();
-						MOAIGlyphCache				();
-						~MOAIGlyphCache				();
+						MOAIStaticGlyphCache		();
+						~MOAIStaticGlyphCache		();
 	void				PlaceGlyph					( MOAIGlyph& glyph );
 	void				RegisterLuaClass			( MOAILuaState& state );
 	void				RegisterLuaFuncs			( MOAILuaState& state );
