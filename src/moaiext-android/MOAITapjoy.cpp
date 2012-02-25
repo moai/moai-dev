@@ -50,7 +50,7 @@ int MOAITapjoy::_getUserId ( lua_State *L ) {
 	
 	GET_ENV ();
 
-	if (mGetTapjoyUserIdFunc == NULL) {
+	if ( mGetTapjoyUserIdFunc == NULL ) {
 		
 		jclass moaiActivityClass = env->GetObjectClass ( mMoaiActivity );		
 		mGetTapjoyUserIdFunc = env->GetMethodID ( moaiActivityClass, "getUserId", "()Ljava/lang/String;" );
@@ -77,7 +77,7 @@ int MOAITapjoy::_initVideoAds ( lua_State* L ) {
 
 	GET_ENV ();
 
-	if (mInitTapjoyVideoAdsFunc == NULL) {
+	if ( mInitTapjoyVideoAdsFunc == NULL ) {
 		jclass moaiActivityClass = env->GetObjectClass ( mMoaiActivity );		
 		mInitTapjoyVideoAdsFunc = env->GetMethodID ( moaiActivityClass, "initVideoAds", "()V" );
 	}
@@ -87,7 +87,7 @@ int MOAITapjoy::_initVideoAds ( lua_State* L ) {
 	u32 count = state.GetValue < u32 >( 1, 0 );
 	if ( count > 0 ) {
 
-		if (mSetTapjoyVideoAdCacheCount == NULL) {
+		if ( mSetTapjoyVideoAdCacheCount == NULL ) {
 			
 			jclass moaiActivityClass = env->GetObjectClass ( mMoaiActivity );		
 			mSetTapjoyVideoAdCacheCount = env->GetMethodID ( moaiActivityClass, "setVideoAdCacheCount", "(I)V" );
@@ -110,7 +110,7 @@ int MOAITapjoy::_requestTapjoyConnect ( lua_State* L ) {
 	GET_JSTRING ( identifier, jidentifier );
 	GET_JSTRING ( secret, jsecret );
 
-	if (mRequestTapjoyFunc == NULL) {
+	if ( mRequestTapjoyFunc == NULL ) {
 		
 		jclass moaiActivityClass = env->GetObjectClass ( mMoaiActivity );		
 		mRequestTapjoyFunc = env->GetMethodID ( moaiActivityClass, "requestTapjoyConnect", "(Ljava/lang/String;Ljava/lang/String;)V" );
@@ -140,7 +140,7 @@ int MOAITapjoy::_showOffers ( lua_State* L ) {
 
 	GET_ENV ();
 
-	if (mShowTapjoyOffersFunc == NULL) {
+	if ( mShowTapjoyOffersFunc == NULL ) {
 		jclass moaiActivityClass = env->GetObjectClass ( mMoaiActivity );		
 		mShowTapjoyOffersFunc = env->GetMethodID ( moaiActivityClass, "showOffers", "()V" );
 	}

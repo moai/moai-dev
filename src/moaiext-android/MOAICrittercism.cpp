@@ -49,7 +49,7 @@ int MOAICrittercism::_init ( lua_State* L ) {
 	GET_ENV ();
 	GET_JSTRING ( identifier, jidentifier );
 
-	if (mInitCrittercismFunc == NULL) {
+	if ( mInitCrittercismFunc == NULL ) {
 		
 		jclass moaiActivityClass = env->GetObjectClass ( mMoaiActivity );		
 		mInitCrittercismFunc = env->GetMethodID ( moaiActivityClass, "initCrittercism", "(Ljava/lang/String;)V" );

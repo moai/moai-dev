@@ -53,6 +53,7 @@ import com.crittercism.app.Crittercism;
 
 // AdColony
 import com.jirbo.adcolony.AdColony;
+import com.jirbo.adcolony.AdColonyVideoAd;
 
 // OpenGL 2.0
 import android.app.ActivityManager;
@@ -476,6 +477,27 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 		parameters.add ( 0, appId );
 		
 		AdColony.configure ( this, appVersion, parameters.toArray ( new String [ parameters.size ()]));
+	}
+
+	//----------------------------------------------------------------//
+	public boolean isAdColonyVideoReady ( String zoneId ) {
+
+		return new AdColonyVideoAd ( zoneId ).isReady ();
+	}
+	
+	//----------------------------------------------------------------//
+	public void playAdColonyVideo ( String zoneId, boolean showPrompt, boolean showConfirmation ) {
+		
+		AdColonyVideoAd ad = new AdColonyVideoAd ( zoneId );
+		if ( showPrompt ) {
+			
+			ad.offerV4VC ( null, showConfirmation );
+		} else {
+			
+			ad.showV4VC ( null, showConfirmation );
+		}
+		
+		// TODO: Add listener to allow callbacks into Lua
 	}
 	
 	//================================================================//

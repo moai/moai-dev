@@ -48,7 +48,7 @@ int MOAINotifications::_registerForRemoteNotifications ( lua_State* L ) {
 	GET_ENV ();
 	GET_JSTRING ( alias, jalias );
 
-	if (mRegisterRemoteNotificationsFunc == NULL) {
+	if ( mRegisterRemoteNotificationsFunc == NULL ) {
 		
 		jclass moaiActivityClass = env->GetObjectClass ( mMoaiActivity );		
 		mRegisterRemoteNotificationsFunc = env->GetMethodID ( moaiActivityClass, "registerForRemoteNotifications", "(Ljava/lang/String;)V" );
@@ -78,7 +78,7 @@ int MOAINotifications::_unregisterForRemoteNotifications ( lua_State* L ) {
 
 	GET_ENV ();
 
-	if (mUnregisterRemoteNotificationsFunc == NULL) {
+	if ( mUnregisterRemoteNotificationsFunc == NULL ) {
 		
 		jclass moaiActivityClass = env->GetObjectClass ( mMoaiActivity );		
 		mUnregisterRemoteNotificationsFunc = env->GetMethodID ( moaiActivityClass, "unregisterForRemoteNotifications", "()V" );

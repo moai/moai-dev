@@ -100,7 +100,7 @@ int MOAIAdColony::_initAdColony ( lua_State* L ) {
 		}
 	}
 
-	if (mInitAdColonyFunc == NULL) {
+	if ( mInitAdColonyFunc == NULL ) {
 		
 		jclass moaiActivityClass = env->GetObjectClass ( mMoaiActivity );		
 		mInitAdColonyFunc = env->GetMethodID ( moaiActivityClass, "initAdColony", "(Ljava/lang/String;[Ljava/lang/String;)V" );
@@ -113,37 +113,47 @@ int MOAIAdColony::_initAdColony ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 int MOAIAdColony::_playVideo ( lua_State* L ) {
-	// MOAILuaState state ( L );
-	// 
-	// int zone = state.GetValue < int >( 1, 1 );
-	// bool prePopup = state.GetValue < bool >( 2, true );
-	// bool postPopup = state.GetValue < bool >( 3, true );
-	// 
-	// [ AdColony playVideoAdForSlot:zone 
-	// 				 withDelegate:nil /* add takeover delegate */
-	// 			 withV4VCPrePopup:prePopup 
-	//   				 andV4VCPostPopup:postPopup ];
+	MOAILuaState state ( L );
+	
+	cc8* zone = lua_tostring ( state, 1 );
+	
+	GET_ENV ();
+	GET_JSTRING ( zone, jzone );
+	
+	bool prompt = state.GetValue < bool >( 2, true );
+	bool confirmation = state.GetValue < bool >( 3, true );
+	
+	if ( mPlayAdColonyVideoFunc == NULL ) {
+		
+		jclass moaiActivityClass = env->GetObjectClass ( mMoaiActivity );		
+		mPlayAdColonyVideoFunc = env->GetMethodID ( moaiActivityClass, "playAdColonyVideo", "(Ljava/lang/String;ZZ)V" );
+	}
+
+	env->CallVoidMethod ( mMoaiActivity , mPlayAdColonyVideoFunc, jzone, prompt, confirmation );
 	
 	return 0;
 }
 
 //----------------------------------------------------------------//
 int MOAIAdColony::_videoReadyForZone ( lua_State *L ) {
-	// MOAILuaState state ( L );
-	// 
-	// int zone = state.GetValue < int >( 1, 0 );
-	// 
-	// int result = [ AdColony zoneStatusForSlot:zone ];
-	// if ( result == ADCOLONY_ZONE_STATUS_ACTIVE ) {
-	// 	
-	// 	lua_pushboolean( L, true );
-	// }
-	// else {
-	// 	
-	// 	lua_pushboolean( L, false );
-	// }
+	MOAILuaState state ( L );
 	
-	return 0;
+	cc8* zone = lua_tostring ( state, 1 );
+	
+	GET_ENV ();
+	GET_JSTRING ( zone, jzone );
+
+	if ( mAdColonyVideoReadyFunc == NULL ) {
+		
+		jclass moaiActivityClass = env->GetObjectClass ( mMoaiActivity );		
+		mAdColonyVideoReadyFunc = env->GetMethodID ( moaiActivityClass, "isAdColonyVideoReady", "(Ljava/lang/String;)Z" );
+	}
+
+	bool ready = ( bool )env->CallBooleanMethod ( mMoaiActivity , mAdColonyVideoReadyFunc, jzone );
+
+	lua_pushboolean ( L, ready );
+	
+	return 1;
 }
 	
 //================================================================//
