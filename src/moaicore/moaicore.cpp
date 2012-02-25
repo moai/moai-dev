@@ -187,7 +187,7 @@ void moaicore::InitGlobals ( MOAIGlobals* globals ) {
 	#endif
 	
 	#if USE_FREETYPE
-		REGISTER_LUA_CLASS ( MOAIFreeTypeFontBuilder )
+		REGISTER_LUA_CLASS ( MOAIFreeTypeFontReader )
 	#endif
 	
 	// run bundled init scripts for back compat and Lua framework extensions

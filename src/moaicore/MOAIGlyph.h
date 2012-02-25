@@ -25,7 +25,8 @@ public:
 class MOAIGlyph {
 private:
 	
-	static const u32 NULL_PAGE_ID = 0xffffffff;
+	static const u32 MAX_KERN_TABLE_SIZE	= 256;
+	static const u32 NULL_PAGE_ID			= 0xffffffff;
 	
 	u32			mCode;
 	u32			mPageID; // ID of texture page in glyph cache
@@ -47,8 +48,8 @@ public:
 
 	// TODO: this is a lot of friends; good idea to clean this up
 	friend class MOAIFont;
-	friend class MOAIFreeTypeFontBuilder;
-	friend class MOAIGlyphDeck;
+	friend class MOAIFreeTypeFontReader;
+	friend class MOAIGlyphSet;
 	friend class MOAIGlyphCacheBase;
 	friend class MOAIGlyphCachePage;
 	friend class MOAITextBox;

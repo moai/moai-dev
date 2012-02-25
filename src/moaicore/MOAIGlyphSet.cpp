@@ -2,14 +2,14 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moaicore/MOAIGlyphDeck.h>
+#include <moaicore/MOAIGlyphSet.h>
 
 //================================================================//
-// MOAIGlyphDeck
+// MOAIGlyphSet
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGlyphDeck::AffirmGlyph ( u32 c ) {
+void MOAIGlyphSet::AffirmGlyph ( u32 c ) {
 
 	if ( !this->mGlyphMap.contains ( c )) {
 	
@@ -21,13 +21,13 @@ void MOAIGlyphDeck::AffirmGlyph ( u32 c ) {
 }
 
 //----------------------------------------------------------------//
-MOAIGlyph* MOAIGlyphDeck::GetGlyph ( u32 c ) {
+MOAIGlyph* MOAIGlyphSet::GetGlyph ( u32 c ) {
 
 	return &this->mGlyphMap [ c ];
 }
 
 //----------------------------------------------------------------//
-MOAIGlyphDeck::MOAIGlyphDeck () :
+MOAIGlyphSet::MOAIGlyphSet () :
 	mPoints ( 0.0f ),
 	mHeight ( 0.0f ),
 	mAscent ( 0.0f ),
@@ -36,6 +36,6 @@ MOAIGlyphDeck::MOAIGlyphDeck () :
 }
 
 //----------------------------------------------------------------//
-MOAIGlyphDeck::~MOAIGlyphDeck (){
+MOAIGlyphSet::~MOAIGlyphSet (){
 }
 

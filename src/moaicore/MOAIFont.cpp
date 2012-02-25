@@ -6,7 +6,7 @@
 #include <moaicore/MOAIDataBuffer.h>
 #include <moaicore/MOAIGlyphCacheBase.h>
 #include <moaicore/MOAIFont.h>
-#include <moaicore/MOAIFontBuilder.h>
+#include <moaicore/MOAIFontReader.h>
 #include <moaicore/MOAIGfxDevice.h>
 #include <moaicore/MOAIGlyphCacheBase.h>
 #include <moaicore/MOAIImage.h>
@@ -17,6 +17,14 @@
 //================================================================//
 // local
 //================================================================//
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIFont::_getFlags ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIFont, "U" )
+	state.Push ( self->mFlags );
+	return 1;
+}
 
 //----------------------------------------------------------------//
 /**	@name	load
@@ -40,7 +48,7 @@ int MOAIFont::_load ( lua_State* L ) {
 	@text	Loads and caches glyphs for quick access later.
 
 	@in		MOAIFont self
-	@in		string charCodes		A string which defines the characters found in the font.
+	@in		string charCodes		A string which defines the characters found in the this->
 	@in		number points			The point size to be rendered onto the internal texture.
 	@opt	number dpi				The device DPI (dots per inch of device screen). Default value is 72 (points same as pixels).
 	@out	nil
@@ -59,11 +67,7 @@ int MOAIFont::_preloadGlyphs ( lua_State* L ) {
 		u32 c = u8_nextchar ( charCodes, &idx );
 		self->AffirmGlyph ( size, c );
 	}
-	
-	if ( self->mFontBuilder ) {
-		self->mFontBuilder->ProcessGlyphs ( *self );
-	}
-	
+	self->ProcessGlyphs ();
 	return 0;
 }
 
@@ -72,7 +76,7 @@ int MOAIFont::_preloadGlyphs ( lua_State* L ) {
 int MOAIFont::_rebuildKerningTables ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIFont, "U" )
 	
-	if ( self->mFontBuilder ) {
+	if ( self->mFontReader ) {
 	
 		if ( state.IsType ( 2, LUA_TNUMBER )) {
 			
@@ -80,10 +84,10 @@ int MOAIFont::_rebuildKerningTables ( lua_State* L ) {
 			float dpi		= state.GetValue < float >( 3, DPI );
 			
 			float size = POINTS_TO_PIXELS ( points, dpi );
-			self->mFontBuilder->RebuildKerning ( *self, size );
+			self->RebuildKerning ( size );
 		}
 		else {
-			self->mFontBuilder->RebuildKerning ( *self );
+			self->RebuildKerning ();
 		}
 	}
 	return 0;
@@ -91,10 +95,17 @@ int MOAIFont::_rebuildKerningTables ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 // TODO: doxygen
-int MOAIFont::_setFontBuilder ( lua_State* L ) {
+int MOAIFont::_setFlags ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIFont, "U" )
-	
-	self->mFontBuilder.Set ( *self, state.GetLuaObject < MOAIFontBuilder >( 2 ));
+	self->mFlags = state.GetValue < u32 >( 2, DEFAULT_FLAGS );
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIFont::_setFontReader ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIFont, "U" )
+	self->mFontReader.Set ( *self, state.GetLuaObject < MOAIFontReader >( 2 ));
 	return 0;
 }
 
@@ -102,7 +113,6 @@ int MOAIFont::_setFontBuilder ( lua_State* L ) {
 // TODO: doxygen
 int MOAIFont::_setGlyphCache ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIFont, "U" )
-	
 	self->mGlyphCache.Set ( *self, state.GetLuaObject < MOAIGlyphCacheBase >( 2 ));
 	return 0;
 }
@@ -114,13 +124,94 @@ int MOAIFont::_setGlyphCache ( lua_State* L ) {
 //----------------------------------------------------------------//
 void MOAIFont::AffirmGlyph ( float points, u32 c ) {
 
-	MOAIGlyphDeck& glyphDeck = this->mGlyphDecks [ points ];
+	MOAIGlyphSet& glyphDeck = this->mGlyphDecks [ points ];
 	glyphDeck.mPoints = points;
 	glyphDeck.AffirmGlyph ( c );
 }
 
 //----------------------------------------------------------------//
-MOAIGlyphDeck* MOAIFont::GetGlyphDeck ( float points ) {
+// iterate through the pending glyphs in each set and attempt to
+// update them to match target - i.e. metrics or metrics and bitmap
+void MOAIFont::BuildKerning ( MOAIGlyph* glyphs, MOAIGlyph* pendingGlyphs ) {
+
+	if ( !this->mFontReader->HasKerning ()) return;
+	MOAIKernVec kernTable [ MOAIGlyph::MAX_KERN_TABLE_SIZE ];
+
+	// iterate over the orignal glyphs and add kerning info for new glyphs
+	for ( MOAIGlyph* glyphIt = glyphs; glyphIt; glyphIt = glyphIt->mNext ) {
+		MOAIGlyph& glyph = *glyphIt;
+		
+		u32 kernTableSize = 0;
+		u32 oldTableSize = glyph.mKernTable.Size ();
+		
+		// iterate over just the new glyphs; check each one against olf glyphs for kerning info
+		for ( MOAIGlyph* glyphIt2 = pendingGlyphs; glyphIt2; glyphIt2 = glyphIt2->mNext ) {
+			MOAIGlyph& glyph2 = *glyphIt2;
+			
+			// skip if glyph is already in old glyph's kerning table
+			// may happen if glyphs are purged and then re-added
+			bool unknown = true;
+			for ( u32 i = 0; i < oldTableSize; ++i ) {
+				if ( glyph.mKernTable [ i ].mName == glyph2.mCode ) {
+					unknown = false;
+					break;
+				}
+			} 
+			
+			if ( unknown ) {
+				MOAIKernVec kernVec;
+				if ( this->mFontReader->GetKernVec ( glyph, glyph2, kernVec )) {
+					assert ( kernTableSize < MOAIGlyph::MAX_KERN_TABLE_SIZE );
+					kernTable [ kernTableSize++ ] = kernVec;
+				}
+			}
+		}
+		
+		// resize the old kerning table and copy in the new kern vecs (if any)
+		if ( kernTableSize ) {
+			glyph.mKernTable.Resize ( oldTableSize + kernTableSize );
+			memcpy ( &glyph.mKernTable [ oldTableSize ], kernTable, sizeof ( MOAIKernVec ) * kernTableSize );
+		}
+	}
+	
+	// iterate over the new glyphs and add kerning info for all glyphs
+	for ( MOAIGlyph* glyphIt = pendingGlyphs; glyphIt; glyphIt = glyphIt->mNext ) {
+		MOAIGlyph& glyph = *glyphIt;
+		
+		u32 kernTableSize = 0;
+		
+		// iterate over the original glyphs
+		for ( MOAIGlyph* glyphIt2 = glyphs; glyphIt2; glyphIt2 = glyphIt2->mNext ) {
+			MOAIGlyph& glyph2 = *glyphIt2;
+			
+			MOAIKernVec kernVec;
+			if ( this->mFontReader->GetKernVec ( glyph, glyph2, kernVec )) {
+				assert ( kernTableSize < MOAIGlyph::MAX_KERN_TABLE_SIZE );
+				kernTable [ kernTableSize++ ] = kernVec;
+			}
+		}
+		
+		// iterate over the new glyphs
+		for ( MOAIGlyph* glyphIt2 = pendingGlyphs; glyphIt2; glyphIt2 = glyphIt2->mNext ) {
+			MOAIGlyph& glyph2 = *glyphIt2;
+			
+			MOAIKernVec kernVec;
+			if ( this->mFontReader->GetKernVec ( glyph, glyph2, kernVec )) {
+				assert ( kernTableSize < MOAIGlyph::MAX_KERN_TABLE_SIZE );
+				kernTable [ kernTableSize++ ] = kernVec;
+			}
+		}
+		
+		// init the kern table
+		if ( kernTableSize ) {
+			glyph.mKernTable.Init ( kernTableSize );
+			memcpy ( glyph.mKernTable, kernTable, sizeof ( MOAIKernVec ) * kernTableSize );
+		}
+	}
+}
+
+//----------------------------------------------------------------//
+MOAIGlyphSet* MOAIFont::GetGlyphDeck ( float points ) {
 
 	return &this->mGlyphDecks [ points ];
 }
@@ -150,7 +241,8 @@ bool MOAIFont::IsWhitespace ( u32 c ) {
 }
 
 //----------------------------------------------------------------//
-MOAIFont::MOAIFont () {
+MOAIFont::MOAIFont () :
+	mFlags ( DEFAULT_FLAGS ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAILuaObject )
@@ -160,31 +252,145 @@ MOAIFont::MOAIFont () {
 //----------------------------------------------------------------//
 MOAIFont::~MOAIFont () {
 
-	this->mFontBuilder.Set ( *this, 0 );
+	this->mFontReader.Set ( *this, 0 );
 	this->mGlyphCache.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//
+// iterate through the pending glyphs in each set and attempt to
+// update them to match target - i.e. metrics or metrics and bitmap
 void MOAIFont::ProcessGlyphs () {
 
-	if ( this->mFontBuilder ) {
-		this->mFontBuilder->ProcessGlyphs ( *this );
+	if ( !this->mFontReader ) return;
+
+	this->mFontReader->OpenFont ( *this );
+	
+	MOAIFont::GlyphDecksIt glyphDecksIt = this->mGlyphDecks.begin ();
+	for ( ; glyphDecksIt != this->mGlyphDecks.end (); ++glyphDecksIt ) {
+		MOAIGlyphSet& glyphDeck = glyphDecksIt->second;
+		
+		// save pointers to the two glyph lists
+		MOAIGlyph* glyphs = glyphDeck.mGlyphs;
+		MOAIGlyph* pendingGlyphs = glyphDeck.mPending;
+		
+		// all pending glyphs will be moved to the processed glyphs list
+		// so clear the pending glyphs list
+		glyphDeck.mPending = 0;
+		
+		// if no pending glyphs, move on to the next deck
+		if ( !pendingGlyphs ) continue;
+		
+		// get the face metrics
+		this->mFontReader->SetFaceSize ( glyphDeck.mPoints );
+		this->mFontReader->GetFaceMetrics ( glyphDeck );
+		
+		// build kerning tables (if face has kerning info)
+		if (( this->mFlags & FONT_AUTOLOAD_KERNING ) && this->mFontReader->HasKerning ()) {
+			this->BuildKerning ( glyphs, pendingGlyphs );
+		}
+		
+		//----------------------------------------------------------------//
+		// render the new glyphs and move them to the processed list
+		for ( MOAIGlyph* glyphIt = pendingGlyphs; glyphIt; ) {
+			MOAIGlyph& glyph = *glyphIt;
+			glyphIt = glyphIt->mNext;
+			
+			// move the glyph into the processed glyphs list
+			glyph.mNext = glyphDeck.mGlyphs;
+			glyphDeck.mGlyphs = &glyph;
+			
+			this->mFontReader->RenderGlyph ( *this, glyph );
+		}
+	}
+
+	this->mFontReader->CloseFont ();
+}
+
+//----------------------------------------------------------------//
+void MOAIFont::RebuildKerning () {
+
+	if ( !this->mFontReader ) return;
+	if ( !this->mFontReader->HasKerning ()) return;
+	if ( !this->mGlyphDecks.size ()) return;
+
+	this->mFontReader->OpenFont ( *this );
+	
+	MOAIFont::GlyphDecksIt glyphDecksIt = this->mGlyphDecks.begin ();
+	for ( ; glyphDecksIt != this->mGlyphDecks.end (); ++glyphDecksIt ) {
+		MOAIGlyphSet& glyphDeck = glyphDecksIt->second;
+		this->RebuildKerning ( glyphDeck );
+	}
+	
+	this->mFontReader->CloseFont ();
+}
+
+//----------------------------------------------------------------//
+void MOAIFont::RebuildKerning ( float points ) {
+
+	if ( !this->mFontReader ) return;
+	if ( !this->mFontReader->HasKerning ()) return;
+	if ( !this->mGlyphDecks.contains ( points )) return;
+	
+	this->mFontReader->OpenFont ( *this );
+	
+	MOAIGlyphSet& glyphDeck = this->mGlyphDecks [ points ];
+	this->RebuildKerning ( glyphDeck );
+	
+	this->mFontReader->CloseFont ();
+}
+
+//----------------------------------------------------------------//
+void MOAIFont::RebuildKerning ( MOAIGlyphSet& glyphDeck ) {
+	
+	MOAIKernVec kernTable [ MOAIGlyph::MAX_KERN_TABLE_SIZE ];
+	
+	// get the face metrics
+	this->mFontReader->SetFaceSize ( glyphDeck.mPoints );
+
+	// iterate over the orignal glyphs and add kerning info for new glyphs
+	for ( MOAIGlyph* glyphIt = glyphDeck.mGlyphs; glyphIt; glyphIt = glyphIt->mNext ) {
+		MOAIGlyph& glyph = *glyphIt;
+
+		u32 kernTableSize = 0;
+		
+		// iterate over just the new glyphs; check each one against old glyphs for kerning info
+		for ( MOAIGlyph* glyphIt = glyphDeck.mGlyphs; glyphIt; glyphIt = glyphIt->mNext ) {
+			MOAIGlyph& glyph2 = *glyphIt;
+			
+			MOAIKernVec kernVec;
+			if ( this->mFontReader->GetKernVec ( glyph, glyph2, kernVec )) {
+				assert ( kernTableSize < MOAIGlyph::MAX_KERN_TABLE_SIZE );
+				kernTable [ kernTableSize++ ] = kernVec;
+			}
+		}
+		
+		// init (or clear) the kern table
+		glyph.mKernTable.Resize ( kernTableSize );
+		
+		// copy in the new kern vecs (if any)
+		if ( kernTableSize ) {
+			memcpy ( glyph.mKernTable, kernTable, sizeof ( MOAIKernVec ) * kernTableSize );
+		}
 	}
 }
 
 //----------------------------------------------------------------//
 void MOAIFont::RegisterLuaClass ( MOAILuaState& state ) {
-	UNUSED ( state );
+	
+	state.SetField ( -1, "DEFAULT_FLAGS",			( u32 )DEFAULT_FLAGS );
+	state.SetField ( -1, "FONT_AUTOLOAD_KERNING",	( u32 )FONT_AUTOLOAD_KERNING );
 }
 
 //----------------------------------------------------------------//
 void MOAIFont::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	luaL_Reg regTable [] = {
+		{ "getFlags",					_getFlags },
 		{ "load",						_load },
 		{ "preloadGlyphs",				_preloadGlyphs },	
 		{ "rebuildKerningTables",		_rebuildKerningTables },
-		{ "setFontBuilder",				_setFontBuilder },
+		{ "setFlags",					_setFlags },
+		{ "setFontReader",				_setFontReader },
 		{ "setGlyphCache",				_setGlyphCache },
 		{ NULL, NULL }
 	};

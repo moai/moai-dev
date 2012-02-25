@@ -1648,19 +1648,19 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAIFontBuilder.cpp"
+				RelativePath="..\..\src\moaicore\MOAIFontReader.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAIFontBuilder.h"
+				RelativePath="..\..\src\moaicore\MOAIFontReader.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAIFreeTypeFontBuilder.cpp"
+				RelativePath="..\..\src\moaicore\MOAIFreeTypeFontReader.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAIFreeTypeFontBuilder.h"
+				RelativePath="..\..\src\moaicore\MOAIFreeTypeFontReader.h"
 				>
 			</File>
 			<File
@@ -1696,11 +1696,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAIGlyphDeck.cpp"
+				RelativePath="..\..\src\moaicore\MOAIGlyphSet.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAIGlyphDeck.h"
+				RelativePath="..\..\src\moaicore\MOAIGlyphSet.h"
 				>
 			</File>
 			<File

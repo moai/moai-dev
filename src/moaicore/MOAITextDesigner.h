@@ -21,7 +21,7 @@ private:
 	
 	cc8*					mStr;
 	
-	MOAIGlyphDeck*			mDeck;
+	MOAIGlyphSet*			mDeck;
 	
 	//----------------------------------------------------------------//
 	u32				NextChar				( MOAITextBox& textBox );

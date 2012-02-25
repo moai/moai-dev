@@ -41,9 +41,9 @@
 #include <moaicore/MOAIEventSource.h>
 #include <moaicore/MOAIFileSystem.h>
 #include <moaicore/MOAIFont.h>
-#include <moaicore/MOAIFontBuilder.h>
+#include <moaicore/MOAIFontReader.h>
 #include <moaicore/MOAIFrameBuffer.h>
-#include <moaicore/MOAIFreeTypeFontBuilder.h>
+#include <moaicore/MOAIFreeTypeFontReader.h>
 #include <moaicore/MOAIGfxDevice.h>
 #include <moaicore/MOAIGfxQuad2D.h>
 #include <moaicore/MOAIGfxQuadDeck2D.h>
@@ -53,7 +53,7 @@
 #include <moaicore/MOAIGlyphCache.h>
 #include <moaicore/MOAIGlyphCacheBase.h>
 #include <moaicore/MOAIGlyphCachePage.h>
-#include <moaicore/MOAIGlyphDeck.h>
+#include <moaicore/MOAIGlyphSet.h>
 #include <moaicore/MOAIGrid.h>
 #include <moaicore/MOAIGridPathGraph.h>
 #include <moaicore/MOAIGridSpace.h>

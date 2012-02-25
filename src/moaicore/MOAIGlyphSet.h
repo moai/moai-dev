@@ -1,20 +1,19 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIGLYPHDECK_H
-#define	MOAIGLYPHDECK_H
+#ifndef	MOAIGLYPHSET_H
+#define	MOAIGLYPHSET_H
 
 #include <moaicore/MOAIGlyph.h>
 #include <moaicore/MOAILua.h>
 
 //================================================================//
-// MOAIGlyphDeck
+// MOAIGlyphSet
 //================================================================//
-class MOAIGlyphDeck {
+class MOAIGlyphSet {
 private:
 
 	friend class MOAIFont;
-	friend class MOAIFreeTypeFontBuilder;
 	friend class MOAITextDesigner;
 	
 	float	mPoints;
@@ -33,10 +32,14 @@ private:
 
 public:
 
+	GET_SET ( float, Size, mPoints );
+	GET_SET ( float, Height, mHeight );
+	GET_SET ( float, Ascent, mAscent );
+
 	//----------------------------------------------------------------//
 	MOAIGlyph*		GetGlyph			( u32 c );
-					MOAIGlyphDeck		();
-					~MOAIGlyphDeck		();
+					MOAIGlyphSet		();
+					~MOAIGlyphSet		();
 };
 
 #endif

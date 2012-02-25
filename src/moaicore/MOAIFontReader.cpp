@@ -2,14 +2,14 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moaicore/MOAIFontBuilder.h>
+#include <moaicore/MOAIFontReader.h>
 
 //================================================================//
-// MOAIFontBuilder
+// MOAIFontReader
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIFontBuilder::MOAIFontBuilder () {
+MOAIFontReader::MOAIFontReader () {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAILuaObject )
@@ -17,5 +17,5 @@ MOAIFontBuilder::MOAIFontBuilder () {
 }
 
 //----------------------------------------------------------------//
-MOAIFontBuilder::~MOAIFontBuilder () {
+MOAIFontReader::~MOAIFontReader () {
 }
