@@ -12,8 +12,8 @@
 extern JavaVM* jvm;
 extern jobject mMoaiActivity;
 
-jmethodID mRegisterRemoteFunc;
-jmethodID mUnregisterRemoteFunc;
+jmethodID mRegisterRemoteNotificationsFunc;
+jmethodID mUnregisterRemoteNotificationsFunc;
 
 //================================================================//
 // Utility macros
@@ -48,13 +48,13 @@ int MOAINotifications::_registerForRemoteNotifications ( lua_State* L ) {
 	GET_ENV ();
 	GET_JSTRING ( alias, jalias );
 
-	if (mRegisterRemoteFunc == NULL) {
+	if (mRegisterRemoteNotificationsFunc == NULL) {
 		
 		jclass moaiActivityClass = env->GetObjectClass ( mMoaiActivity );		
-		mRegisterRemoteFunc = env->GetMethodID ( moaiActivityClass, "registerForRemoteNotifications", "(Ljava/lang/String;)V" );
+		mRegisterRemoteNotificationsFunc = env->GetMethodID ( moaiActivityClass, "registerForRemoteNotifications", "(Ljava/lang/String;)V" );
 	}
 
-	env->CallVoidMethod ( mMoaiActivity, mRegisterRemoteFunc, jalias );
+	env->CallVoidMethod ( mMoaiActivity, mRegisterRemoteNotificationsFunc, jalias );
 		
 	return 0;
 }
@@ -78,13 +78,13 @@ int MOAINotifications::_unregisterForRemoteNotifications ( lua_State* L ) {
 
 	GET_ENV ();
 
-	if (mUnregisterRemoteFunc == NULL) {
+	if (mUnregisterRemoteNotificationsFunc == NULL) {
 		
 		jclass moaiActivityClass = env->GetObjectClass ( mMoaiActivity );		
-		mUnregisterRemoteFunc = env->GetMethodID ( moaiActivityClass, "unregisterForRemoteNotifications", "()V" );
+		mUnregisterRemoteNotificationsFunc = env->GetMethodID ( moaiActivityClass, "unregisterForRemoteNotifications", "()V" );
 	}
 
-	env->CallVoidMethod ( mMoaiActivity, mUnregisterRemoteFunc );
+	env->CallVoidMethod ( mMoaiActivity, mUnregisterRemoteNotificationsFunc );
 		
 	return 0;
 }

@@ -462,6 +462,11 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 		REGISTER_LUA_CLASS ( MOAICrittercism );
 #endif
 
+#ifndef DISABLE_ADCOLONY
+		MOAIAdColony::Affirm ();
+		REGISTER_LUA_CLASS ( MOAIAdColony );
+#endif
+
 		MOAINotifications::Affirm ();
 		REGISTER_LUA_CLASS ( MOAINotifications );
 

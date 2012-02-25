@@ -14,7 +14,7 @@
 extern JavaVM* jvm;
 extern jobject mMoaiActivity;
 
-jmethodID mInitFunc;
+jmethodID mInitCrittercismFunc;
 
 //================================================================//
 // Utility macros
@@ -49,13 +49,13 @@ int MOAICrittercism::_init ( lua_State* L ) {
 	GET_ENV ();
 	GET_JSTRING ( identifier, jidentifier );
 
-	if (mInitFunc == NULL) {
+	if (mInitCrittercismFunc == NULL) {
 		
 		jclass moaiActivityClass = env->GetObjectClass ( mMoaiActivity );		
-		mInitFunc = env->GetMethodID ( moaiActivityClass, "initCrittercism", "(Ljava/lang/String;)V" );
+		mInitCrittercismFunc = env->GetMethodID ( moaiActivityClass, "initCrittercism", "(Ljava/lang/String;)V" );
 	}
 
-	env->CallVoidMethod ( mMoaiActivity, mInitFunc, jidentifier );
+	env->CallVoidMethod ( mMoaiActivity, mInitCrittercismFunc, jidentifier );
 		
 	return 0;
 }

@@ -40,6 +40,7 @@ import android.content.pm.ConfigurationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 
+import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.concurrent.CountDownLatch;
 
@@ -49,6 +50,9 @@ import com.tapjoy.TapjoyVideoNotifier;
 
 // Crittercism
 import com.crittercism.app.Crittercism;
+
+// AdColony
+import com.jirbo.adcolony.AdColony;
 
 // OpenGL 2.0
 import android.app.ActivityManager;
@@ -449,6 +453,29 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 	public void initCrittercism ( String appId ) {
 
 		Crittercism.init ( getApplicationContext(), appId );
+	}
+
+	//================================================================//
+	// AdColony JNI callback methods
+	//================================================================//
+
+	//----------------------------------------------------------------//
+	public void initAdColony ( String appId, String [] zoneIds ) {
+
+		String appVersion;
+		try {
+			
+			appVersion = getApplicationContext ().getPackageManager ().getPackageInfo ( appId, 0 ).versionName;
+		}
+		catch ( Exception e ) {
+			
+			appVersion = "UNKNOWN";
+		}
+
+		ArrayList < String > parameters = new ArrayList < String > ( Arrays.asList ( zoneIds ));
+		parameters.add ( 0, appId );
+		
+		AdColony.configure ( this, appVersion, parameters.toArray ( new String [ parameters.size ()]));
 	}
 	
 	//================================================================//
