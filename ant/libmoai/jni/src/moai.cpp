@@ -419,6 +419,11 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 		REGISTER_LUA_CLASS ( MOAICrittercism );
 #endif
 
+#ifndef DISABLE_FACEBOOK
+		MOAIFacebook::Affirm ();
+		REGISTER_LUA_CLASS ( MOAIFacebook );
+#endif
+
 		// register callbacks into Java
 		mMoaiView = ( jobject ) env->NewGlobalRef ( moaiView );
 		jclass moaiViewClass = env->GetObjectClass ( mMoaiView );
@@ -457,6 +462,12 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 		RELEASE_CSTRING ( jarchive, archive );
 	}
 
+	//----------------------------Facebook ---------------------------//	
+	//----------------------------------------------------------------//
+	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiActivity_AKUNotifyFacebookLogin ( JNIEnv* env, jclass obj, jint code ) {
+		MOAIFacebook::Get ().NotifyFacebookLogin ( code );
+	}
+	
 	//----------------------------------------------------------------//
 	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiActivity_AKUNotifyBillingSupported ( JNIEnv* env, jclass obj, jboolean supported ) {
 		MOAIApp::Get ().NotifyBillingSupported ( supported );

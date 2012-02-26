@@ -4,3 +4,4 @@
 #include <moaiext-android/MOAIApp.h>
 #include <moaiext-android/MOAICrittercism.h>
 #include <moaiext-android/MOAITapjoy.h>
+#include <moaiext-android/MOAIFacebook.h>
