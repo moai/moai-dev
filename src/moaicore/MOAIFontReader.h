@@ -20,7 +20,7 @@ public:
 
 	//----------------------------------------------------------------//
 	virtual void		CloseFont				() = 0;
-	virtual void		GetFaceMetrics			( MOAIGlyphSet& glyphDeck ) = 0;
+	virtual void		GetFaceMetrics			( MOAIGlyphSet& glyphSet ) = 0;
 	virtual bool		GetKernVec				( MOAIGlyph& glyph0, MOAIGlyph& glyph1, MOAIKernVec& kernVec ) = 0;
 	virtual bool		HasKerning				() = 0;
 						MOAIFontReader			();

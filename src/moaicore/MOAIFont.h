@@ -24,8 +24,6 @@ class MOAIFont :
 	public MOAILuaObject {
 protected:
 
-	friend class MOAIFreeTypeFontReader;
-
 	STLString mFilename;
 	u32 mFlags;
 	
@@ -33,8 +31,8 @@ protected:
 	MOAILuaSharedPtr < MOAIGlyphCacheBase > mCache;
 	
 	// for now
-	typedef STLMap < float, MOAIGlyphSet >::iterator GlyphDecksIt;
-	STLMap < float, MOAIGlyphSet > mGlyphDecks;
+	typedef STLMap < float, MOAIGlyphSet >::iterator GlyphSetsIt;
+	STLMap < float, MOAIGlyphSet > mGlyphSets;
 
 	//----------------------------------------------------------------//
 	static int			_getFlags				( lua_State* L );
@@ -49,7 +47,7 @@ protected:
 
 	//----------------------------------------------------------------//
 	void				BuildKerning			( MOAIGlyph* glyphs, MOAIGlyph* pendingGlyphs );
-	void				RebuildKerning			( MOAIGlyphSet& glyphDeck );
+	void				RebuildKerning			( MOAIGlyphSet& glyphSet );
 
 public:
 	

@@ -159,9 +159,9 @@ int MOAIFont::_setReader ( lua_State* L ) {
 //----------------------------------------------------------------//
 void MOAIFont::AffirmGlyph ( float points, u32 c ) {
 
-	MOAIGlyphSet& glyphDeck = this->mGlyphDecks [ points ];
-	glyphDeck.mPoints = points;
-	glyphDeck.AffirmGlyph ( c );
+	MOAIGlyphSet& glyphSet = this->mGlyphSets [ points ];
+	glyphSet.mPoints = points;
+	glyphSet.AffirmGlyph ( c );
 }
 
 //----------------------------------------------------------------//
@@ -248,7 +248,7 @@ void MOAIFont::BuildKerning ( MOAIGlyph* glyphs, MOAIGlyph* pendingGlyphs ) {
 //----------------------------------------------------------------//
 MOAIGlyphSet* MOAIFont::GetGlyphDeck ( float points ) {
 
-	return &this->mGlyphDecks [ points ];
+	return &this->mGlyphSets [ points ];
 }
 
 //----------------------------------------------------------------//
@@ -300,24 +300,24 @@ void MOAIFont::ProcessGlyphs () {
 
 	this->mReader->OpenFont ( *this );
 	
-	MOAIFont::GlyphDecksIt glyphDecksIt = this->mGlyphDecks.begin ();
-	for ( ; glyphDecksIt != this->mGlyphDecks.end (); ++glyphDecksIt ) {
-		MOAIGlyphSet& glyphDeck = glyphDecksIt->second;
+	MOAIFont::GlyphSetsIt glyphSetsIt = this->mGlyphSets.begin ();
+	for ( ; glyphSetsIt != this->mGlyphSets.end (); ++glyphSetsIt ) {
+		MOAIGlyphSet& glyphSet = glyphSetsIt->second;
 		
 		// save pointers to the two glyph lists
-		MOAIGlyph* glyphs = glyphDeck.mGlyphs;
-		MOAIGlyph* pendingGlyphs = glyphDeck.mPending;
+		MOAIGlyph* glyphs = glyphSet.mGlyphs;
+		MOAIGlyph* pendingGlyphs = glyphSet.mPending;
 		
 		// all pending glyphs will be moved to the processed glyphs list
 		// so clear the pending glyphs list
-		glyphDeck.mPending = 0;
+		glyphSet.mPending = 0;
 		
 		// if no pending glyphs, move on to the next deck
 		if ( !pendingGlyphs ) continue;
 		
 		// get the face metrics
-		this->mReader->SetFaceSize ( glyphDeck.mPoints );
-		this->mReader->GetFaceMetrics ( glyphDeck );
+		this->mReader->SetFaceSize ( glyphSet.mPoints );
+		this->mReader->GetFaceMetrics ( glyphSet );
 		
 		// build kerning tables (if face has kerning info)
 		if (( this->mFlags & FONT_AUTOLOAD_KERNING ) && this->mReader->HasKerning ()) {
@@ -331,8 +331,8 @@ void MOAIFont::ProcessGlyphs () {
 			glyphIt = glyphIt->mNext;
 			
 			// move the glyph into the processed glyphs list
-			glyph.mNext = glyphDeck.mGlyphs;
-			glyphDeck.mGlyphs = &glyph;
+			glyph.mNext = glyphSet.mGlyphs;
+			glyphSet.mGlyphs = &glyph;
 			
 			this->mReader->RenderGlyph ( *this, glyph );
 		}
@@ -346,14 +346,14 @@ void MOAIFont::RebuildKerning () {
 
 	if ( !this->mReader ) return;
 	if ( !this->mReader->HasKerning ()) return;
-	if ( !this->mGlyphDecks.size ()) return;
+	if ( !this->mGlyphSets.size ()) return;
 
 	this->mReader->OpenFont ( *this );
 	
-	MOAIFont::GlyphDecksIt glyphDecksIt = this->mGlyphDecks.begin ();
-	for ( ; glyphDecksIt != this->mGlyphDecks.end (); ++glyphDecksIt ) {
-		MOAIGlyphSet& glyphDeck = glyphDecksIt->second;
-		this->RebuildKerning ( glyphDeck );
+	MOAIFont::GlyphSetsIt glyphSetsIt = this->mGlyphSets.begin ();
+	for ( ; glyphSetsIt != this->mGlyphSets.end (); ++glyphSetsIt ) {
+		MOAIGlyphSet& glyphSet = glyphSetsIt->second;
+		this->RebuildKerning ( glyphSet );
 	}
 	
 	this->mReader->CloseFont ();
@@ -364,32 +364,32 @@ void MOAIFont::RebuildKerning ( float points ) {
 
 	if ( !this->mReader ) return;
 	if ( !this->mReader->HasKerning ()) return;
-	if ( !this->mGlyphDecks.contains ( points )) return;
+	if ( !this->mGlyphSets.contains ( points )) return;
 	
 	this->mReader->OpenFont ( *this );
 	
-	MOAIGlyphSet& glyphDeck = this->mGlyphDecks [ points ];
-	this->RebuildKerning ( glyphDeck );
+	MOAIGlyphSet& glyphSet = this->mGlyphSets [ points ];
+	this->RebuildKerning ( glyphSet );
 	
 	this->mReader->CloseFont ();
 }
 
 //----------------------------------------------------------------//
-void MOAIFont::RebuildKerning ( MOAIGlyphSet& glyphDeck ) {
+void MOAIFont::RebuildKerning ( MOAIGlyphSet& glyphSet ) {
 	
 	MOAIKernVec kernTable [ MOAIGlyph::MAX_KERN_TABLE_SIZE ];
 	
 	// get the face metrics
-	this->mReader->SetFaceSize ( glyphDeck.mPoints );
+	this->mReader->SetFaceSize ( glyphSet.mPoints );
 
 	// iterate over the orignal glyphs and add kerning info for new glyphs
-	for ( MOAIGlyph* glyphIt = glyphDeck.mGlyphs; glyphIt; glyphIt = glyphIt->mNext ) {
+	for ( MOAIGlyph* glyphIt = glyphSet.mGlyphs; glyphIt; glyphIt = glyphIt->mNext ) {
 		MOAIGlyph& glyph = *glyphIt;
 
 		u32 kernTableSize = 0;
 		
 		// iterate over just the new glyphs; check each one against old glyphs for kerning info
-		for ( MOAIGlyph* glyphIt = glyphDeck.mGlyphs; glyphIt; glyphIt = glyphIt->mNext ) {
+		for ( MOAIGlyph* glyphIt = glyphSet.mGlyphs; glyphIt; glyphIt = glyphIt->mNext ) {
 			MOAIGlyph& glyph2 = *glyphIt;
 			
 			MOAIKernVec kernVec;
@@ -437,13 +437,42 @@ void MOAIFont::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 //----------------------------------------------------------------//
 void MOAIFont::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
-	UNUSED ( state );
 	UNUSED ( serializer );
+
+	this->mFilename = state.GetField ( -1, "mFilename", this->mFilename );
+	this->mFlags = state.GetField ( -1, "mFlags", this->mFlags );
+	
+	if ( state.GetFieldWithType ( -1, "mGlyphSets", LUA_TTABLE )) {
+
+		u32 itr = state.PushTableItr ( -1 );
+		while ( state.TableItrNext ( itr )) {
+			float size = state.GetValue < float >( -2, 0 );
+			MOAIGlyphSet& glyphSet = this->mGlyphSets [ size ];
+			glyphSet.SerializeIn ( state );
+		}
+		state.Pop ( 1 );
+	}
 }
 
 //----------------------------------------------------------------//
 void MOAIFont::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
-	UNUSED ( state );
 	UNUSED ( serializer );
+
+	state.SetField ( -1, "mFilename", this->mFilename );
+	state.SetField ( -1, "mFlags", this->mFlags );
+	
+	lua_newtable ( state );
+	GlyphSetsIt glyphSetsIt = this->mGlyphSets.begin ();
+	for ( ; glyphSetsIt != this->mGlyphSets.end (); ++glyphSetsIt ) {
+	
+		float size = glyphSetsIt->first;
+		MOAIGlyphSet& glyphSet = glyphSetsIt->second;
+	
+		lua_pushnumber ( state, size );
+		lua_newtable ( state );
+		glyphSet.SerializeOut ( state );
+		lua_settable ( state, -3 );
+	}
+	lua_setfield ( state, -2, "mGlyphSets" );
 }
 

@@ -22,6 +22,7 @@ private:
 	
 	// TODO: optimize for printable ASCII characters
 	// TODO: find better container than STLMap
+	typedef STLMap < u32, MOAIGlyph >::iterator GlyphMapIt;
 	STLMap < u32, MOAIGlyph > mGlyphMap;
 	
 	MOAIGlyph* mPending; // queue of glyphs remaining to be processed
@@ -40,6 +41,8 @@ public:
 	MOAIGlyph*		GetGlyph			( u32 c );
 					MOAIGlyphSet		();
 					~MOAIGlyphSet		();
+	void			SerializeIn			( MOAILuaState& state );
+	void			SerializeOut		( MOAILuaState& state );
 };
 
 #endif

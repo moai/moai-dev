@@ -13,7 +13,7 @@ template < typename TYPE >
 TYPE MOAILuaState::GetField ( int idx, int key, TYPE value ) {
 
 	this->GetField ( idx, key );
-	value = this->GetValue ( -1, value );
+	value = this->GetValue < TYPE >( -1, value );
 	this->Pop ( 1 );
 	
 	return value;
@@ -24,7 +24,7 @@ template < typename TYPE >
 TYPE MOAILuaState::GetField ( int idx, cc8* key, TYPE value ) {
 
 	this->GetField ( idx, key );
-	value = this->GetValue ( -1, value );
+	value = this->GetValue < TYPE >( -1, value );
 	this->Pop ( 1 );
 	
 	return value;

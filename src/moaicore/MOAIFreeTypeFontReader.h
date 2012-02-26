@@ -30,7 +30,7 @@ public:
 
 	//----------------------------------------------------------------//
 	void			CloseFont					();
-	void			GetFaceMetrics				( MOAIGlyphSet& glyphDeck );
+	void			GetFaceMetrics				( MOAIGlyphSet& glyphSet );
 	bool			GetKernVec					( MOAIGlyph& glyph0, MOAIGlyph& glyph1, MOAIKernVec& kernVec );
 	bool			HasKerning					();
 					MOAIFreeTypeFontReader		();

@@ -52,6 +52,8 @@ public:
 	void			GetField				( int idx, int key );
 	STLString		GetField				( int idx, cc8* key, cc8* value );
 	STLString		GetField				( int idx, int key, cc8* value );
+	STLString		GetField				( int idx, cc8* key, const STLString& value );
+	STLString		GetField				( int idx, int key, const STLString& value );
 	bool			GetFieldWithType		( int idx, cc8* name, int type );
 	bool			GetFieldWithType		( int idx, int key, int type );
 	void*			GetPtrUserData			( int idx );

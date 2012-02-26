@@ -324,6 +324,34 @@ STLString MOAILuaState::GetField ( int idx, int key, cc8* value ) {
 }
 
 //----------------------------------------------------------------//
+STLString MOAILuaState::GetField ( int idx, cc8* key, const STLString& value ) {
+
+	STLString str;
+	if ( this->GetFieldWithType ( idx, key, LUA_TSTRING )) {
+		str = lua_tostring ( this->mState, -1 );
+		lua_pop ( this->mState, 1 );
+	}
+	else {
+		str = value;
+	}
+	return str;
+}
+
+//----------------------------------------------------------------//
+STLString MOAILuaState::GetField ( int idx, int key, const STLString& value ) {
+
+	STLString str;
+	if ( this->GetFieldWithType ( idx, key, LUA_TSTRING )) {
+		str = lua_tostring ( this->mState, -1 );
+		lua_pop ( this->mState, 1 );
+	}
+	else {
+		str = value;
+	}
+	return str;
+}
+
+//----------------------------------------------------------------//
 bool MOAILuaState::GetFieldWithType ( int idx, cc8* name, int type ) {
 
 	lua_getfield ( this->mState, idx, name );

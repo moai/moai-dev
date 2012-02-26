@@ -64,10 +64,10 @@ void MOAIFreeTypeFontReader::CloseFont () {
 }
 
 //----------------------------------------------------------------//
-void MOAIFreeTypeFontReader::GetFaceMetrics ( MOAIGlyphSet& glyphDeck ) {
+void MOAIFreeTypeFontReader::GetFaceMetrics ( MOAIGlyphSet& glyphSet ) {
 
-	glyphDeck.SetAscent (( float )( this->mFace->size->metrics.ascender >> 6 ));
-	glyphDeck.SetHeight (( float )( this->mFace->size->metrics.height >> 6 ));
+	glyphSet.SetAscent (( float )( this->mFace->size->metrics.ascender >> 6 ));
+	glyphSet.SetHeight (( float )( this->mFace->size->metrics.height >> 6 ));
 }
 
 //----------------------------------------------------------------//
