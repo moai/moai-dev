@@ -14,7 +14,7 @@
 extern JavaVM* jvm;
 extern jobject mMoaiActivity;
 
-jmethodID mInitFunc;
+jmethodID mInitCrittercismFunc;
 
 //================================================================//
 // Utility macros
@@ -23,19 +23,19 @@ jmethodID mInitFunc;
 	#define GET_ENV() 	\
 		JNIEnv* env; 	\
 		jvm->GetEnv (( void** )&env, JNI_VERSION_1_4 );
-
+		
 	#define GET_CSTRING(jstr, cstr) \
-		const char* cstr = env->GetStringUTFChars ( jstr, NULL );
+		const char* cstr = ( jstr != NULL ) ? env->GetStringUTFChars ( jstr, NULL ) : NULL;
 
 	#define RELEASE_CSTRING(jstr, cstr) \
-		env->ReleaseStringUTFChars ( jstr, cstr );
+		if ( cstr != NULL ) env->ReleaseStringUTFChars ( jstr, cstr );
 		
 	#define GET_JSTRING(cstr, jstr) \
-		jstring jstr = env->NewStringUTF (( const char* )cstr );
-
+		jstring jstr = ( cstr != NULL ) ? env->NewStringUTF (( const char* )cstr ) : NULL;
+		
 	#define PRINT(str) \
 		__android_log_write ( ANDROID_LOG_INFO, "MoaiLog", str );
-
+		
 //================================================================//
 // lua
 //================================================================//
@@ -49,13 +49,13 @@ int MOAICrittercism::_init ( lua_State* L ) {
 	GET_ENV ();
 	GET_JSTRING ( identifier, jidentifier );
 
-	if (mInitFunc == NULL) {
+	if ( mInitCrittercismFunc == NULL ) {
 		
 		jclass moaiActivityClass = env->GetObjectClass ( mMoaiActivity );		
-		mInitFunc = env->GetMethodID ( moaiActivityClass, "initCrittercism", "(Ljava/lang/String;)V" );
+		mInitCrittercismFunc = env->GetMethodID ( moaiActivityClass, "initCrittercism", "(Ljava/lang/String;)V" );
 	}
 
-	env->CallVoidMethod ( mMoaiActivity, mInitFunc, jidentifier );
+	env->CallVoidMethod ( mMoaiActivity, mInitCrittercismFunc, jidentifier );
 		
 	return 0;
 }

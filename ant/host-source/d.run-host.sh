@@ -11,9 +11,10 @@
 	# define package
 	package=@SETTING_PACKAGE@
 	package_path=@SETTING_PACKAGE_PATH@
+	out_dir=build
 	
 	# delete build folder
-	rm -rf build
+	rm -rf $out_dir
 
 	# load global settings
 	source ./settings-global.sh
@@ -43,44 +44,44 @@
 	fi
 
 	# create build directory
-	if [ ! -d build ]; then
-		mkdir -p build
-	fi
+	mkdir -p $out_dir/project
 
 	# create assets directory
-	mkdir -p build/assets
+	mkdir -p $out_dir/project/assets
 
 	# create libs directory and copy the libmoai libraries
-	mkdir -p build/libs
-	cp -fR	host-source/project/libs/*	build/libs
+	mkdir -p $out_dir/project/libs
+	cp -fR	host-source/project/libs/*	$out_dir/project/libs
 
 	# create res directory and copy all resources
-	mkdir -p build/res
-	cp -fR	host-source/project/res/*	build/res
+	mkdir -p $out_dir/project/res
+	cp -fR	host-source/project/res/*	$out_dir/project/res
 	
 	# create res subdirectories that may be missing
-	mkdir -p build/res/drawable-hdpi
-	mkdir -p build/res/drawable-ldpi
-	mkdir -p build/res/drawable-mdpi
-	mkdir -p build/res/raw
+	mkdir -p $out_dir/project/res/drawable-hdpi
+	mkdir -p $out_dir/project/res/drawable-ldpi
+	mkdir -p $out_dir/project/res/drawable-mdpi
+	mkdir -p $out_dir/project/res/raw
 
 	# copy icon files into res
-	cp -f	$icon_ldpi		build/res/drawable-ldpi/icon.png
-	cp -f	$icon_mdpi		build/res/drawable-mdpi/icon.png
-	cp -f	$icon_hdpi		build/res/drawable-hdpi/icon.png
+	cp -f $icon_ldpi $out_dir/project/res/drawable-ldpi/icon.png
+	cp -f $icon_mdpi $out_dir/project/res/drawable-mdpi/icon.png
+	cp -f $icon_hdpi $out_dir/project/res/drawable-hdpi/icon.png
 	
 	# copy keystore
 	if [ "$key_store" != "" ] && [ -f $key_store ]; then
-		cp -f $key_store build/`basename $key_store`
+		cp -f $key_store $out_dir/project/`basename $key_store`
 	fi
+	
+	# copy external projects
+	cp -fR host-source/external/* $out_dir/
 		
 	# copy project files that do not need editing
-	cp -f 	host-source/project/.classpath 				build/.classpath
-	cp -f 	host-source/project/proguard.cfg			build/proguard.cfg
-	cp -f 	host-source/project/project.properties		build/project.properties
+	cp -f host-source/project/.classpath $out_dir/project/.classpath
+	cp -f host-source/project/proguard.cfg $out_dir/project/proguard.cfg
 	
 	# create src directories
-	mkdir -p build/$package_path
+	mkdir -p $out_dir/project/$package_path
 	
 	# create function for easy find and replace
 	backup_ext=.backup
@@ -91,49 +92,53 @@
 	}
 	
 	# replace the app name inside strings.xml
-	fr build/res/values/strings.xml	@NAME@					"$app_name"
+	fr $out_dir/project/res/values/strings.xml @NAME@ "$app_name"
 	
 	# copy .project file and replace text inside
-	cp -f	host-source/project/.project	build/.project 
-	fr build/.project 				@NAME@					"$project_name"
+	cp -f host-source/project/.project $out_dir/project/.project 
+	fr $out_dir/project/.project @NAME@ "$project_name"
 
 	# copy AndroidManifest.xml file and replace text inside
-	cp -f	host-source/project/AndroidManifest.xml		build/AndroidManifest.xml
-	fr build/AndroidManifest.xml	@PACKAGE@				"$package"
-	fr build/AndroidManifest.xml	@DEBUGGABLE@			"$debug"
-	fr build/AndroidManifest.xml	@VERSION_CODE@			"$versionCode"
-	fr build/AndroidManifest.xml	@VERSION_NAME@			"$versionName"
+	cp -f host-source/project/AndroidManifest.xml $out_dir/project/AndroidManifest.xml
+	fr $out_dir/project/AndroidManifest.xml	@PACKAGE@ "$package"
+	fr $out_dir/project/AndroidManifest.xml	@DEBUGGABLE@ "$debug"
+	fr $out_dir/project/AndroidManifest.xml	@VERSION_CODE@ "$versionCode"
+	fr $out_dir/project/AndroidManifest.xml	@VERSION_NAME@ "$versionName"	
 	
 	# copy ant.properties file and replace text inside
-	cp -f	host-source/project/ant.properties	build/ant.properties
-	fr build/ant.properties			@KEY_STORE@				"$key_store"
-	fr build/ant.properties			@KEY_ALIAS@				"$key_alias"
-	fr build/ant.properties			@KEY_STORE_PASSWORD@	"$key_store_password"
-	fr build/ant.properties			@KEY_ALIAS_PASSWORD@	"$key_alias_password"
+	cp -f host-source/project/ant.properties $out_dir/project/ant.properties
+	fr $out_dir/project/ant.properties @KEY_STORE@ "$key_store"
+	fr $out_dir/project/ant.properties @KEY_ALIAS@ "$key_alias"
+	fr $out_dir/project/ant.properties @KEY_STORE_PASSWORD@ "$key_store_password"
+	fr $out_dir/project/ant.properties @KEY_ALIAS_PASSWORD@ "$key_alias_password"
 
 	# copy build.xml file and replace text inside
-	cp -f	host-source/project/build.xml	build/build.xml
-	fr build/build.xml				@NAME@					"$project_name"
+	cp -f host-source/project/build.xml $out_dir/project/build.xml
+	fr $out_dir/project/build.xml @NAME@ "$project_name"
 
 	# copy local.properties file and replace text inside
-	cp -f	host-source/project/local.properties	build/local.properties
-	fr build/local.properties		@SDK_ROOT@				"$android_sdk_root"
+	cp -f host-source/project/local.properties $out_dir/project/local.properties
+
+	# set the sdk root in all local.properties files
+	for file in `find $out_dir/ -name "local.properties"` ; do fr $file @SDK_ROOT@ "$android_sdk_root" ; done
 
 	# copy all src files
-	cp -rf	host-source/project/src build/
+	cp -rf host-source/project/src $out_dir/project/
 
 	# replace text inside required src files
-	fr build/$package_path/Base64.java						@PACKAGE@		"$package"
-	fr build/$package_path/Base64DecoderException.java		@PACKAGE@		"$package"
-	fr build/$package_path/MoaiActivity.java				@PACKAGE@		"$package"
-	fr build/$package_path/MoaiBillingConstants.java		@PACKAGE@		"$package"
-	fr build/$package_path/MoaiBillingPurchaseObserver.java	@PACKAGE@		"$package"
-	fr build/$package_path/MoaiBillingReceiver.java			@PACKAGE@		"$package"
-	fr build/$package_path/MoaiBillingResponseHandler.java	@PACKAGE@		"$package"
-	fr build/$package_path/MoaiBillingSecurity.java			@PACKAGE@		"$package"
-	fr build/$package_path/MoaiBillingService.java			@PACKAGE@		"$package"
-	fr build/$package_path/MoaiView.java					@PACKAGE@		"$package"
-	fr build/$package_path/MoaiActivity.java				@WORKING_DIR@	"$working_dir"
+	fr $out_dir/project/$package_path/AndroidC2DMReceiver.java @PACKAGE@ "$package"
+	fr $out_dir/project/$package_path/AndroidMarketBillingConstants.java @PACKAGE@ "$package"
+	fr $out_dir/project/$package_path/AndroidMarketBillingPurchaseObserver.java @PACKAGE@ "$package"
+	fr $out_dir/project/$package_path/AndroidMarketBillingReceiver.java @PACKAGE@ "$package"
+	fr $out_dir/project/$package_path/AndroidMarketBillingResponseHandler.java @PACKAGE@ "$package"
+	fr $out_dir/project/$package_path/AndroidMarketBillingSecurity.java @PACKAGE@ "$package"
+	fr $out_dir/project/$package_path/AndroidMarketBillingService.java @PACKAGE@ "$package"
+	fr $out_dir/project/$package_path/Base64.java @PACKAGE@ "$package"
+	fr $out_dir/project/$package_path/Base64DecoderException.java @PACKAGE@ "$package"
+	fr $out_dir/project/$package_path/MoaiActivity.java @PACKAGE@ "$package"
+	fr $out_dir/project/$package_path/MoaiActivity.java @WORKING_DIR@ "$working_dir"
+	fr $out_dir/project/$package_path/MoaiLog.java @PACKAGE@ "$package"
+	fr $out_dir/project/$package_path/MoaiView.java @PACKAGE@ "$package"
 	
 	# create run command for the init.lua file
 	working_dir_depth=`grep -o "\/" <<<"$working_dir" | wc -l`
@@ -147,6 +152,13 @@
 		fi
 	done
 
+	cp -f host-source/project/project.properties $out_dir/project/project.properties
+
+	# identify all dependent libraries and add them to the project.properties file
+	for (( i=1; i<=${#requires[@]}; i++ )); do
+		echo "android.library.reference.${i}=../${requires[$i-1]}/"  >> $out_dir/project/project.properties
+	done
+	
 	run_command="\"$init_dir/init.lua\""
 	
 	# create run commands for the host
@@ -156,10 +168,10 @@
 	
 	run_command="runScripts ( new String [] { $run_command } );"
 	
-	fr 	build/$package_path/MoaiView.java	@RUN_COMMAND@ 	"$run_command"
+	fr $out_dir/project/$package_path/MoaiView.java @RUN_COMMAND@ "$run_command"
 
 	# bundle android-init file
-	cp -f host-source/init.lua build/assets/init.lua
+	cp -f host-source/init.lua $out_dir/project/assets/init.lua
 
 	# bundle source folders
 	function copyFolder () {
@@ -169,7 +181,7 @@
 	
 	i=0
 	for src_dir in "${src_dirs[@]}"; do
-		copyFolder $src_dir build/assets/${dest_dirs[i]}
+		copyFolder $src_dir $out_dir/project/assets/${dest_dirs[i]}
 		i=$i+1
 	done
 
@@ -181,7 +193,7 @@
 	fi
 	
 	if [ $OSTYPE != cygwin ]; then
-		pushd build > /dev/null
+		pushd $out_dir/project > /dev/null
 			ant uninstall
 			ant clean
 			$install_cmd
