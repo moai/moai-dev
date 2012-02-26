@@ -144,7 +144,7 @@ MOAIBox2DArbiter::MOAIBox2DArbiter ( ) :
 }
 
 //----------------------------------------------------------------//
-MOAIBox2DArbiter::MOAIBox2DArbiter ( MOAIBox2DWorld& world ) :
+MOAIBox2DArbiter::MOAIBox2DArbiter ( const MOAIBox2DWorld& world ) :
 	mContact ( 0 ),
 	mImpulse ( 0 ),
 	mWorld ( &world ) {

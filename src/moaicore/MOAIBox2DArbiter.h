@@ -36,7 +36,7 @@ private:
 	float	mTangentImpulse;
 
 	/* For reference to get the unitsToMeters value */
-	MOAIBox2DWorld*       mWorld;
+	const MOAIBox2DWorld*       mWorld;
 
 	//----------------------------------------------------------------//
 	static int		_getContactNormal		( lua_State* L );
@@ -67,7 +67,7 @@ public:
 	
 	//----------------------------------------------------------------//
 					MOAIBox2DArbiter		();
-					MOAIBox2DArbiter        ( MOAIBox2DWorld &world );
+					MOAIBox2DArbiter        ( const MOAIBox2DWorld &world );
 					~MOAIBox2DArbiter		();
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );

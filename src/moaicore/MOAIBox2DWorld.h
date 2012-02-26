@@ -117,6 +117,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIBox2DWorld )
 	
 	GET_SET ( float, UnitsToMeters, mUnitsToMeters )
+	GET_CONST ( float, UnitsToMeters, mUnitsToMeters )
 	
 	//----------------------------------------------------------------//
 	void			DrawDebug				();
