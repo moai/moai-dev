@@ -59,6 +59,10 @@ import com.jirbo.adcolony.AdColonyVideoAd;
 import android.app.ActivityManager;
 import android.content.pm.ConfigurationInfo;
 
+//Facebook
+import com.facebook.android.*;
+import com.facebook.android.Facebook.*;
+
 enum DIALOG_RESULT {
 	POSITIVE,
 	NEUTRAL,
@@ -104,6 +108,7 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 	private SensorManager 					mSensorManager;
 	private boolean							mWaitingToResume;
 	private boolean							mWindowFocusLost;
+	private Facebook 						mFacebook;
 	
 	// Threading indications; M = Runs on Main thread, R = Runs on GL thread,
 	// ? = Runs on arbitrary thread.
@@ -123,6 +128,7 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 	protected static native void		AKUNotifyVideoAdReady				(); // ? TBD
 	protected static native void		AKUNotifyVideoAdError				( int statusCode ); // ? TBD
 	protected static native void		AKUNotifyVideoAdClose				(); // ? TBD
+	protected static native void		AKUNotifyFacebookLogin				( int statusCode );
 	protected static native void 		AKUSetConnectionType 				( long connectionType ); // M	
 	protected static native void 		AKUSetDocumentDirectory 			( String path ); // M
 	protected static native void 		AKUSetWorkingDirectory 				( String path ); // M
@@ -177,6 +183,8 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
         
 		mBillingService = new AndroidMarketBillingService();
         mBillingService.setContext (this);
+
+ 		mFacebook = new Facebook("YOUR_APP_ID");
 
 		startConnectivityReceiver ();
 
@@ -266,6 +274,12 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
         AndroidMarketBillingResponseHandler.unregister ( mPurchaseObserver );
 	}
 	
+	@Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        mFacebook.authorizeCallback(requestCode, resultCode, data);
+    }
 	//================================================================//
 	// Public methods
 	//================================================================//
@@ -456,6 +470,34 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 		Crittercism.init ( getApplicationContext(), appId );
 	}
 
+	//================================================================//
+	// Facebook JNI callback methods
+	//================================================================//
+
+	//----------------------------------------------------------------//
+	
+	public void login ( String [] permissions ) {
+		mFacebook.authorize(this, permissions, new DialogListener() {
+	        @Override
+	        public void onComplete(Bundle values) {
+				AKUNotifyFacebookLogin ( 1 );
+	        }
+
+	        @Override
+	        public void onFacebookError(FacebookError error) {}
+
+	        @Override
+	        public void onError(DialogError e) {
+				AKUNotifyFacebookLogin ( 0 );
+			}
+
+	        @Override
+	        public void onCancel() {
+				AKUNotifyFacebookLogin ( 0 );
+			}
+	     });
+	}
+	
 	//================================================================//
 	// AdColony JNI callback methods
 	//================================================================//

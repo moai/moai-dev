@@ -35,6 +35,8 @@ public:
 	void 			NotifyFacebookLogin 			( int );
 	void			RegisterLuaClass				( MOAILuaState& state );
 	
+	static cc8* 	_luaParseTable 					( lua_State* L, int idx );
+	
 	
 };
 

@@ -41,7 +41,7 @@ jmethodID mFacebookLoginFunc;
 //================================================================//
 
 //----------------------------------------------------------------//
-cc8* _luaParseTable ( lua_State* L, int idx ) {
+cc8* MOAIFacebook::_luaParseTable ( lua_State* L, int idx ) {
 
 	switch ( lua_type ( L, idx )) {
 
