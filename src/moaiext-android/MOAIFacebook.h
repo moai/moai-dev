@@ -16,6 +16,7 @@ class MOAIFacebook :
 private:
 
 	//----------------------------------------------------------------//
+	static int		_init				( lua_State* L );
 	static int		_login				( lua_State* L );
 	static int		_setListener 		( lua_State* L );
 	

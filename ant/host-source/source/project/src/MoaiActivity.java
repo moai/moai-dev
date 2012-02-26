@@ -184,8 +184,6 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 		mBillingService = new AndroidMarketBillingService();
         mBillingService.setContext (this);
 
- 		mFacebook = new Facebook("YOUR_APP_ID");
-
 		startConnectivityReceiver ();
 
 		setContentView ( mMoaiView );
@@ -476,7 +474,7 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 
 	//----------------------------------------------------------------//
 	
-	public void login ( String [] permissions ) {
+	public void facebookLogin ( String [] permissions ) {
 		mFacebook.authorize(this, permissions, new DialogListener() {
 	        @Override
 	        public void onComplete(Bundle values) {
@@ -496,6 +494,10 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 				AKUNotifyFacebookLogin ( 0 );
 			}
 	     });
+	}
+	
+	public void facebookInit ( String apId ) {
+		mFacebook = new Facebook ( apId ); 
 	}
 	
 	//================================================================//

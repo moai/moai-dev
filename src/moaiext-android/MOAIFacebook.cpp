@@ -15,6 +15,7 @@ extern JavaVM* jvm;
 extern jobject mMoaiActivity;
 
 jmethodID mFacebookLoginFunc;
+jmethodID mFacebookInitFunc;
 
 //================================================================//
 // Utility macros
@@ -53,6 +54,23 @@ cc8* MOAIFacebook::_luaParseTable ( lua_State* L, int idx ) {
 	}
 
 	return NULL;
+}
+
+int MOAIFacebook::_init ( lua_State* L ) {
+	MOAILuaState state ( L );
+	
+	cc8* apId = lua_tostring ( state, 1 );
+	
+	GET_ENV ();
+	GET_JSTRING ( apId, japId );
+	
+	if ( mFacebookInitFunc == NULL ) {
+		
+		jclass moaiActivityClass = env->GetObjectClass ( mMoaiActivity );		
+		mFacebookInitFunc = env->GetMethodID ( moaiActivityClass, "facebookInit", "(Ljava/lang/String;)V" );
+	}
+
+	env->CallVoidMethod ( mMoaiActivity , mFacebookInitFunc, japId );
 }
 		
 //----------------------------------------------------------------//
@@ -142,6 +160,7 @@ void MOAIFacebook::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "FACEBOOK_LOGIN_LISTENER", ( u32 ) FACEBOOK_LOGIN_LISTENER );
 	
 	luaL_Reg regTable[] = {
+		{ "init",					_init },
 		{ "login",					_login },
 		{ "setListener",			_setListener },
 		{ NULL, NULL }
