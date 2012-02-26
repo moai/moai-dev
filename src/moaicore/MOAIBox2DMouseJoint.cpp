@@ -42,7 +42,7 @@ int MOAIBox2DMouseJoint::_getDampingRatio ( lua_State* L ) {
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DMouseJoint self
-	@out	number frequency
+	@out	number frequency in Hz
 */
 int MOAIBox2DMouseJoint::_getFrequency ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DMouseJoint, "U" )
@@ -63,7 +63,7 @@ int MOAIBox2DMouseJoint::_getFrequency ( lua_State* L ) {
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DMouseJoint self
-	@out	number macForce
+	@out	number maxForce in kg * units / s^2 converted from N [kg * m / s^2]
 */
 int MOAIBox2DMouseJoint::_getMaxForce ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DMouseJoint, "U" )
@@ -85,8 +85,8 @@ int MOAIBox2DMouseJoint::_getMaxForce ( lua_State* L ) {
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DMouseJoint self
-	@out	number x
-	@out	number y
+	@out	number x in units, world coordinates, converted from meters
+	@out	number y in units, world coordinates, converted from meters
 */
 int MOAIBox2DMouseJoint::_getTarget ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DMouseJoint, "U" )
@@ -136,7 +136,7 @@ int MOAIBox2DMouseJoint::_setDampingRatio ( lua_State* L ) {
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DMouseJoint self
-	@opt	number frequency		Default value is 0.
+	@opt	number frequency		in Hz. Default value is 0.
 	@out	nil
 */
 int MOAIBox2DMouseJoint::_setFrequency ( lua_State* L ) {
@@ -160,7 +160,7 @@ int MOAIBox2DMouseJoint::_setFrequency ( lua_State* L ) {
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DMouseJoint self
-	@opt	number maxForce		Default value is 0.
+	@opt	number maxForce		in kg * units / s^2 converted to N [kg * m / s^2]. Default value is 0.
 	@out	nil
 */
 int MOAIBox2DMouseJoint::_setMaxForce ( lua_State* L ) {
@@ -185,8 +185,8 @@ int MOAIBox2DMouseJoint::_setMaxForce ( lua_State* L ) {
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DMouseJoint self
-	@opt	number x		Default value is 0.
-	@opt	number y		Default value is 0.
+	@opt	number x		in units, world coordinates, converted to meters. Default value is 0.
+	@opt	number y		in units, world coordinates, converted to meters. Default value is 0.
 	@out	nil
 */
 int MOAIBox2DMouseJoint::_setTarget ( lua_State* L ) {

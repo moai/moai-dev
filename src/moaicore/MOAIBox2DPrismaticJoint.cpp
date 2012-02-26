@@ -22,7 +22,7 @@ SUPPRESS_EMPTY_FILE_WARNING
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DPrismaticJoint self
-	@out	number jointSpeed
+	@out	number jointSpeed in units/s, converted from m/s
 */
 int MOAIBox2DPrismaticJoint::_getJointSpeed ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DPrismaticJoint, "U" )
@@ -44,7 +44,7 @@ int MOAIBox2DPrismaticJoint::_getJointSpeed ( lua_State* L ) {
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DPrismaticJoint self
-	@out	number jointTranslation
+	@out	number jointTranslation in units, converted from meters.
 */
 int MOAIBox2DPrismaticJoint::_getJointTranslation ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DPrismaticJoint, "U" )
@@ -66,7 +66,7 @@ int MOAIBox2DPrismaticJoint::_getJointTranslation ( lua_State* L ) {
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DPrismaticJoint self
-	@out	number lowerLimit
+	@out	number lowerLimit in units, converted from meters.
 */
 int MOAIBox2DPrismaticJoint::_getLowerLimit ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DPrismaticJoint, "U" )
@@ -88,7 +88,7 @@ int MOAIBox2DPrismaticJoint::_getLowerLimit ( lua_State* L ) {
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DPrismaticJoint self
-	@out	number motorForce
+	@out	number motorForce in kg * units / s^2, converted from N [kg * m / s^2]
 */
 int MOAIBox2DPrismaticJoint::_getMotorForce ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DPrismaticJoint, "U" )
@@ -112,7 +112,7 @@ int MOAIBox2DPrismaticJoint::_getMotorForce ( lua_State* L ) {
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DPrismaticJoint self
-	@out	number motorSpeed
+	@out	number motorSpeed in units/s, converted from m/s
 */
 int MOAIBox2DPrismaticJoint::_getMotorSpeed ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DPrismaticJoint, "U" )
@@ -134,7 +134,7 @@ int MOAIBox2DPrismaticJoint::_getMotorSpeed ( lua_State* L ) {
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DPrismaticJoint self
-	@out	number upperLimit
+	@out	number upperLimit in units, converted from meters.
 */
 int MOAIBox2DPrismaticJoint::_getUpperLimit ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DPrismaticJoint, "U" )
@@ -198,8 +198,8 @@ int MOAIBox2DPrismaticJoint::_isMotorEnabled ( lua_State* L ) {
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DPrismaticJoint self
-	@opt	number lower			Default value is 0.
-	@opt	number upper			Default value is 0.
+	@opt	number lower			in units, converted to meters. Default value is 0.
+	@opt	number upper			in units, converted to meters. Default value is 0.
 	@out	nil
 */
 int MOAIBox2DPrismaticJoint::_setLimit ( lua_State* L ) {
@@ -251,7 +251,7 @@ int MOAIBox2DPrismaticJoint::_setLimitEnabled ( lua_State* L ) {
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DPrismaticJoint self
-	@opt	number maxMotorForce		Default value is 0.
+	@opt	number maxMotorForce		in kg * units / s^2, converted to N [kg * m / s^2]. Default value is 0.
 	@out	nil
 */
 int MOAIBox2DPrismaticJoint::_setMaxMotorForce ( lua_State* L ) {
@@ -277,8 +277,8 @@ int MOAIBox2DPrismaticJoint::_setMaxMotorForce ( lua_State* L ) {
 			If speed is determined to be zero, the motor is disabled, unless forceEnable is set.
 	
 	@in		MOAIBox2DPrismaticJoint self
-	@opt	number speed			Default value is 0.
-	@opt	number max				Default value is 0.
+	@opt	number speed			in units/s converted to m/s. Default value is 0.
+	@opt	number maxForce			in kg * units / s^2, converted to N [kg * m / s^2]. Default value is 0.
 	@opt	boolean forceEnable		Default value is false.
 	@out	nil
 */
@@ -333,7 +333,7 @@ int MOAIBox2DPrismaticJoint::_setMotorEnabled ( lua_State* L ) {
  @text	See Box2D documentation.
 
  @in	MOAIBox2DPrismaticJoint self
- @opt	number motorSpeed		Converted from units of distance/s to m/s. Default value is 0.
+ @opt	number motorSpeed		in units/s, converted to m/s. Default value is 0.
 
  */
 int MOAIBox2DPrismaticJoint::_setMotorSpeed ( lua_State* L ) {

@@ -22,7 +22,7 @@ SUPPRESS_EMPTY_FILE_WARNING
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DRevoluteJoint self
-	@out	number angle
+	@out	number angle in degrees, converted from radians
 */
 int MOAIBox2DRevoluteJoint::_getJointAngle ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DRevoluteJoint, "U" )
@@ -43,7 +43,7 @@ int MOAIBox2DRevoluteJoint::_getJointAngle ( lua_State* L ) {
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DRevoluteJoint self
-	@out	number jointSpeed
+	@out	number jointSpeed	in degrees/s, converted from radians/s
 */
 int MOAIBox2DRevoluteJoint::_getJointSpeed ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DRevoluteJoint, "U" )
@@ -64,7 +64,7 @@ int MOAIBox2DRevoluteJoint::_getJointSpeed ( lua_State* L ) {
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DRevoluteJoint self
-	@out	number lowerLimit
+	@out	number lowerLimit	in degrees, converted from radians
 */
 int MOAIBox2DRevoluteJoint::_getLowerLimit ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DRevoluteJoint, "U" )
@@ -85,7 +85,7 @@ int MOAIBox2DRevoluteJoint::_getLowerLimit ( lua_State* L ) {
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DRevoluteJoint self
-	@out	number motorSpeed
+	@out	number motorSpeed	in degrees/s, converted from radians/s
 */
 int MOAIBox2DRevoluteJoint::_getMotorSpeed ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DRevoluteJoint, "U" )
@@ -106,7 +106,7 @@ int MOAIBox2DRevoluteJoint::_getMotorSpeed ( lua_State* L ) {
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DRevoluteJoint self
-	@out	number motorTorque		Converted from N-m.
+	@out	number motorTorque		in (kg * units / s^2) * units, converted from N-m..
 */
 int MOAIBox2DRevoluteJoint::_getMotorTorque ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DRevoluteJoint, "U" )
@@ -130,7 +130,7 @@ int MOAIBox2DRevoluteJoint::_getMotorTorque ( lua_State* L ) {
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DRevoluteJoint self
-	@out	number upperLimit
+	@out	number upperLimit	in degrees, converted from radians
 */
 int MOAIBox2DRevoluteJoint::_getUpperLimit ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DRevoluteJoint, "U" )
@@ -193,8 +193,8 @@ int MOAIBox2DRevoluteJoint::_isMotorEnabled ( lua_State* L ) {
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DRevoluteJoint self
-	@opt	number lower			Default value is 0.
-	@opt	number upper			Default value is 0.
+	@opt	number lower			in degrees, converted to radians. Default value is 0.
+	@opt	number upper			in degrees, converted to radians. Default value is 0.
 	@out	nil
 */
 int MOAIBox2DRevoluteJoint::_setLimit ( lua_State* L ) {
@@ -244,7 +244,7 @@ int MOAIBox2DRevoluteJoint::_setLimitEnabled ( lua_State* L ) {
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DRevoluteJoint self
-	@opt	number maxMotorTorque		Converted to N-m. Default value is 0.
+	@opt	number maxMotorTorque		in (kg * units / s^2) * units, converted to N-m. Default value is 0.
 	@out	nil
 */
 int MOAIBox2DRevoluteJoint::_setMaxMotorTorque ( lua_State* L ) {
@@ -271,8 +271,8 @@ int MOAIBox2DRevoluteJoint::_setMaxMotorTorque ( lua_State* L ) {
 			If speed is determined to be zero, the motor is disabled, unless forceEnable is set.
 
 	@in		MOAIBox2DRevoluteJoint self
-	@opt	number speed			Default value is 0.
-	@opt	number maxMotorTorque		Converted to N-m. Default value is 0.
+	@opt	number speed			in degrees/s, converted to radians/s. Default value is 0.
+	@opt	number maxMotorTorque		in (kg * units / s^2) * units, converted to N-m. Default value is 0.
 	@opt	boolean forceEnable		Default value is false.
 	@out	nil
 */
@@ -303,7 +303,7 @@ int MOAIBox2DRevoluteJoint::_setMotor ( lua_State* L ) {
  @text	See Box2D documentation.
 
  @in	MOAIBox2DRevoluteJoint self
- @opt	number motorSpeed		Converted from Deg/s to Rad/s. Default value is 0.
+ @opt	number motorSpeed		in degrees/s, converted to radians/s. Default value is 0.
 
  */
 int MOAIBox2DRevoluteJoint::_setMotorSpeed ( lua_State* L ) {
