@@ -301,6 +301,20 @@ int MOAISim::_getPerformance ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	getPerformanceDrawCount
+ @text	Returns the number of draw calls last frame.
+ 
+ @out	number count Number of underlying graphics "draw" calls last frame.
+ */
+int MOAISim::_getPerformanceDrawCount ( lua_State* L ) {
+	
+	MOAISim& device = MOAISim::Get ();
+	lua_pushnumber ( L, device.mLastDrawCount );
+	
+	return 1;
+}
+
+//----------------------------------------------------------------//
 /**	@name	getStep
 	@text	Gets the amount of time (in seconds) that it takes for one frame to pass.
 
@@ -637,6 +651,7 @@ MOAISim::MOAISim () :
 	mSimTime ( 0.0 ),
 	mRealTime ( 0.0 ),
 	mFrameTime ( 0.0 ),
+	mLastDrawCount( 0 ),
 	mRenderCounter ( 0 ),
 	mFrameRate ( 0.0f ),
 	mFrameRateIdx ( 0 ),
@@ -765,6 +780,7 @@ void MOAISim::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "getLuaObjectCount",			_getLuaObjectCount },
 		{ "getMemoryUsage",				_getMemoryUsage },
 		{ "getPerformance",				_getPerformance },
+		{ "getPerformanceDrawCount",	_getPerformanceDrawCount },
 		{ "getStep",					_getStep },
 		{ "openWindow",					_openWindow },
 		{ "pauseTimer",					_pauseTimer },
@@ -798,8 +814,8 @@ void MOAISim::RegisterLuaFuncs ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAISim::Render () {
 
-	this->mRenderCounter++;
-
+	this->mRenderCounter++;	
+	
 	MOAIGfxDevice::Get ().BeginDrawing ();
 
 	RenderPassIt passIt = this->mRenderPasses.Head ();
@@ -811,6 +827,7 @@ void MOAISim::Render () {
 	}
 	
 	MOAIGfxDevice::Get ().Flush ();
+	this->mLastDrawCount = MOAIGfxDevice::Get().GetDrawCount();
 }
 
 //----------------------------------------------------------------//

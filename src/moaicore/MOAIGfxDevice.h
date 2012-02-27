@@ -91,6 +91,8 @@ private:
 	u32				mPrimSize;
 	u32				mPrimTop;
 	GLenum			mPrimType;
+		
+	u32				mDrawCount;
 	
 	typedef USLeanList < MOAIGfxResource* >::Iterator ResourceIt;
 	USLeanList < MOAIGfxResource* > mResources;
@@ -166,6 +168,7 @@ public:
 	void					Flush					();
 	
 	float					GetDeviceScale			();
+	u32						GetDrawCount			() const { return mDrawCount; }
 	cc8*					GetErrorString			( int error ) const;
 	
 	u32						GetHeight				() const;

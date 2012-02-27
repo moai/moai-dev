@@ -58,6 +58,8 @@ private:
 	double			mSimTime;		// elapsed simulation running time (in seconds)
 	double			mRealTime;		// time updated from system clock
 	double			mFrameTime;		// time last frame time was measured (in seconds)
+		
+	u32				mLastDrawCount; // Draw count for last frame.
 	
 	u32				mRenderCounter;	// increments every render
 	
@@ -101,6 +103,7 @@ private:
 	static int		_getMemoryUsage				( lua_State* L );
 	static int		_getNetworkStatus			( lua_State* L );
 	static int		_getPerformance				( lua_State* L );
+	static int		_getPerformanceDrawCount    ( lua_State* L );
 	static int		_getStep					( lua_State* L );
 	static int		_openWindow					( lua_State* L );
 	static int		_pauseTimer					( lua_State* L );
