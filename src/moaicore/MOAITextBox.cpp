@@ -20,13 +20,8 @@
 //			- ref count glyphs
 //			- glyph lifecycle
 //			- glyph page defragmantation
-// TODO: font serialization
-//			- bitmap font ripper
-//			- 'immutable' glyph pages
-//			- user managed glyph pages
-// TODO: textbox interactivity
-//			- hit test for lines/tokens/characters
-//			- color override & restore
+// TODO: bitmap font ripper
+// TODO: hit test for characters
 
 //================================================================//
 // local
@@ -97,25 +92,21 @@ int MOAITextBox::_getRect ( lua_State* L ) {
 int MOAITextBox::_getStringBounds ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextBox, "UNN" )
 	
-	//u32 index	= state.GetValue < u32 >( 2, 1 ) - 1;
-	//u32 size	= state.GetValue < u32 >( 3, 0 );
-	//
-	//if ( size ) {
-	//	self->Layout ();
-	//	
-	//	USRect rect;
-	//	if ( self->mLayout.GetBoundsForRange ( index, size, rect )) {
-	//		
-	//		rect.Bless ();
-	//		
-	//		lua_pushnumber ( state, rect.mXMin );
-	//		lua_pushnumber ( state, rect.mYMin );
-	//		lua_pushnumber ( state, rect.mXMax );
-	//		lua_pushnumber ( state, rect.mYMax );
-	//		
-	//		return 4;
-	//	}
-	//}
+	u32 index	= state.GetValue < u32 >( 2, 1 ) - 1;
+	u32 size	= state.GetValue < u32 >( 3, 0 );
+	
+	USRect rect;
+	if ( self->GetBoundsForRange ( index, size, rect )) {
+		
+		rect.Bless ();
+		
+		lua_pushnumber ( state, rect.mXMin );
+		lua_pushnumber ( state, rect.mYMin );
+		lua_pushnumber ( state, rect.mXMax );
+		lua_pushnumber ( state, rect.mYMax );
+		
+		return 4;
+	}
 	return 0;
 }
 
@@ -336,35 +327,43 @@ int MOAITextBox::_setString ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setStringColor
-	@text	Sets the color of a sub string in the text. Only affects
-			text displayed on the current page.
+/**	@name	setHighlight
+	@text	Set of clear the highlight color of a sub string in the text.
+			Only affects text displayed on the current page. Highlight
+			will automatically clear when layout or page changes.
 
-	@in		MOAITextBox self
-	@in		number index		Index of the first character in the substring.
-	@in		number size			Length of the substring.
-	@in		number r
-	@in		number g
-	@in		number b
-	@opt	number a			Default value is 1.
-*/
-int MOAITextBox::_setStringColor ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITextBox, "UNNNNN" )
+	@overload
+
+		@in		MOAITextBox self
+		@in		number index		Index of the first character in the substring.
+		@in		number size			Length of the substring.
+		@in		number r
+		@in		number g
+		@in		number b
+		@opt	number a			Default value is 1.
 	
-	//u32 index	= state.GetValue < u32 >( 2, 1 ) - 1;
-	//u32 size	= state.GetValue < u32 >( 3, 0 );
-	//
-	//if ( size ) {
-	//	self->Layout ();
-	//
-	//	float r		= state.GetValue < float >( 4, 1.0f );
-	//	float g		= state.GetValue < float >( 5, 1.0f );
-	//	float b		= state.GetValue < float >( 6, 1.0f );
-	//	float a		= state.GetValue < float >( 7, 1.0f );
-	//	
-	//	u32 rgba = USColor::PackRGBA ( r, g, b, a );
-	//	self->mLayout.SetColorForRange ( index, size, rgba );
-	//}
+	@overload
+		
+		@in		MOAITextBox self
+		@in		number index		Index of the first character in the substring.
+		@in		number size			Length of the substring.
+*/
+int MOAITextBox::_setHighlight ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextBox, "UNN" )
+	
+	u32 index	= state.GetValue < u32 >( 2, 1 ) - 1;
+	u32 size	= state.GetValue < u32 >( 3, 0 );
+	
+	if ( size ) {
+		
+		if ( state.GetTop () > 3 ) {
+			u32 rgba = state.GetColor32 ( 4, 1.0f, 1.0f, 1.0f, 1.0f );
+			self->SetHighlight ( index, size, rgba );
+		}
+		else {
+			self->SetHighlight ( index, size );
+		}
+	}
 	return 0;
 }
 
@@ -522,6 +521,75 @@ void MOAITextBox::DrawDebug ( int subPrimID ) {
 }
 
 //----------------------------------------------------------------//
+void MOAITextBox::FindSpriteSpan ( u32 idx, u32 size, u32& spanIdx, u32& spanSize ) {
+
+	spanSize = 0;
+
+	u32 top = this->mSprites.GetTop ();
+	if ( !top ) return;
+	if ( this->mSprites [ 0 ].mIdx >= ( idx + size )) return;
+	if ( this->mSprites [ top - 1 ].mIdx < idx ) return;
+	
+	for ( u32 i = 0; i < top; ++i ) {
+		MOAITextSprite& sprite = this->mSprites [ i ];
+	
+		if ( sprite.mIdx >= idx ) {
+			spanIdx = i;
+			spanSize = 1;
+			break;
+		}
+	}
+	
+	if ( spanSize ) {
+		
+		u32 max = idx + size;
+		u32 i = spanIdx + 1;
+		u32 count = 0;
+		
+		for ( ; i < top; ++i, ++count ) {
+			MOAITextSprite& sprite = this->mSprites [ i ];
+			if ( sprite.mIdx >= max ) break;
+		}
+		spanSize = count + 1;
+	}
+}
+
+//----------------------------------------------------------------//
+bool MOAITextBox::GetBoundsForRange ( u32 idx, u32 size, USRect& rect ) {
+
+	if ( !size ) return false;
+	this->Layout ();
+
+	bool result = false;
+
+	u32 spanIdx;
+	u32 spanSize;
+	
+	this->FindSpriteSpan ( idx, size, spanIdx, spanSize );
+	if ( !spanSize ) return false;
+
+	u32 end = spanIdx + spanSize;
+	for ( u32 i = spanIdx; i < end; ++i ) {
+		MOAITextSprite& sprite = this->mSprites [ i ];
+		MOAIGlyph& glyph = *sprite.mGlyph;
+
+		if ( glyph.mWidth > 0.0f ) {
+
+			USRect glyphRect = glyph.GetRect ( sprite.mX, sprite.mY );
+
+			if ( result ) {
+				rect.Grow ( glyphRect );
+			}
+			else {
+				rect = glyphRect;
+				result = true;
+			}
+		}
+	}
+	return result;
+}
+
+//----------------------------------------------------------------//
 u32 MOAITextBox::GetDeckBounds ( USBox& bounds ) {
 
 	bounds.Init ( this->mFrame.mXMin, this->mFrame.mYMax, this->mFrame.mXMax, this->mFrame.mYMin, 0.0f, 0.0f );
@@ -572,7 +640,6 @@ void MOAITextBox::Layout () {
 			for ( u32 i = 0; i < totalActiveStyles; ++i ) {
 				MOAITextStyleState& styleState = this->mActiveStyles [ i ];
 				this->LuaRetain ( styleState.mFont );
-				styleState.mFont->ProcessGlyphs ();
 			}
 		}
 		
@@ -690,10 +757,11 @@ void MOAITextBox::PushLine ( u32 start, u32 size, const USRect& rect, float asce
 }
 
 //----------------------------------------------------------------//
-void MOAITextBox::PushSprite ( MOAIGlyph& glyph, MOAITextStyleState& style, float x, float y ) {
-
+void MOAITextBox::PushSprite ( u32 idx, MOAIGlyph& glyph, MOAITextStyleState& style, float x, float y ) {
+	
 	MOAITextSprite textSprite;
 	
+	textSprite.mIdx			= idx;
 	textSprite.mGlyph		= &glyph;
 	textSprite.mStyle		= &style;
 	textSprite.mX			= x;
@@ -759,12 +827,12 @@ void MOAITextBox::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "revealAll",				_revealAll },
 		{ "setAlignment",			_setAlignment },
 		{ "setCurve",				_setCurve },
+		{ "setHighlight",			_setHighlight },
 		{ "setLineSpacing",			_setLineSpacing },
 		{ "setRect",				_setRect },
 		{ "setReveal",				_setReveal },
 		{ "setSpeed",				_setSpeed },
 		{ "setString",				_setString },
-		{ "setStringColor",			_setStringColor },
 		{ "setStyle",				_setStyle },
 		{ "setYFlip",				_setYFlip },
 		{ "spool",					_spool },
@@ -848,6 +916,42 @@ void MOAITextBox::SetCurve ( u32 idx, MOAIAnimCurve* curve ) {
 	this->LuaRelease ( this->mCurves [ idx ]);
 
 	this->mCurves [ idx ] = curve;
+}
+
+//----------------------------------------------------------------//
+void MOAITextBox::SetHighlight ( u32 idx, u32 size ) {
+
+	if ( !size ) return;
+	this->Layout ();
+	
+	u32 spanIdx;
+	u32 spanSize;
+	
+	this->FindSpriteSpan ( idx, size, spanIdx, spanSize );
+	if ( !spanSize ) return;
+	
+	for ( u32 i = 0; i < spanSize; ++i ) {
+		MOAITextSprite& sprite = this->mSprites [ spanIdx + i ];
+		sprite.mRGBA = sprite.mStyle->mColor;
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAITextBox::SetHighlight ( u32 idx, u32 size, u32 color ) {
+
+	if ( !size ) return;
+	this->Layout ();
+	
+	u32 spanIdx;
+	u32 spanSize;
+	
+	this->FindSpriteSpan ( idx, size, spanIdx, spanSize );
+	if ( !spanSize ) return;
+	
+	for ( u32 i = 0; i < spanSize; ++i ) {
+		MOAITextSprite& sprite = this->mSprites [ spanIdx + i ];
+		sprite.mRGBA = color;
+	}
 }
 
 //----------------------------------------------------------------//

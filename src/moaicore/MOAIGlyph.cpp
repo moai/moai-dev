@@ -65,18 +65,18 @@ MOAIKernVec MOAIGlyph::GetKerning ( u32 name ) const {
 }
 
 //----------------------------------------------------------------//
-USRect MOAIGlyph::GetRect ( float points, float x, float y ) const {
+USRect MOAIGlyph::GetRect ( float x, float y ) const {
 
 	USRect rect;
 		
-	x += ( this->mBearingX * points );
-	y -= ( this->mBearingY * points ); 
+	x += ( this->mBearingX );
+	y -= ( this->mBearingY ); 
 
 	rect.Init (
 		x,
 		y,
-		x + ( this->mWidth * points ),
-		y + ( this->mHeight * points )
+		x + this->mWidth,
+		y + this->mHeight
 	);
 
 	return rect;

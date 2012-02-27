@@ -37,6 +37,7 @@ private:
 	MOAITextStyleState*		mStyle;
 	MOAITextureBase*		mTexture; // caching this hear to avoid add'l virtual calls when drawing
 	
+	u32			mIdx; // index in original string
 	float		mX;
 	float		mY;
 	u32			mRGBA;
@@ -134,21 +135,22 @@ private:
 	static int		_reserveCurves			( lua_State* L );
 	static int		_setAlignment			( lua_State* L );
 	static int		_setCurve				( lua_State* L );
+	static int		_setHighlight			( lua_State* L );
 	static int		_setLineSpacing			( lua_State* L );
 	static int		_setRect				( lua_State* L );
 	static int		_setReveal				( lua_State* L );
 	static int		_setSpeed				( lua_State* L );
 	static int		_setString				( lua_State* L );
-	static int		_setStringColor			( lua_State* L );
 	static int		_setStyle				( lua_State* L );
 	static int		_setYFlip				( lua_State* L );
 	static int		_spool					( lua_State* L );
 	
 	//----------------------------------------------------------------//
+	void			FindSpriteSpan			( u32 idx, u32 size, u32& spanIdx, u32& spanSize );
 	void			Layout					();
 	void			OnDepNodeUpdate			();
 	void			PushLine				( u32 start, u32 size, const USRect& rect, float ascent );
-	void			PushSprite				( MOAIGlyph& glyph, MOAITextStyleState& style, float x, float y );
+	void			PushSprite				( u32 idx, MOAIGlyph& glyph, MOAITextStyleState& style, float x, float y );
 	void			PushStyleSpan			( int base, int top, MOAITextStyleState& styleState );
 	void			ResetLayout				();
 	void			ResetStyleMap			();
@@ -169,6 +171,7 @@ public:
 	void				ClearCurves				();
 	void				Draw					( int subPrimID, bool reload );
 	void				DrawDebug				( int subPrimID );
+	bool				GetBoundsForRange		( u32 idx, u32 size, USRect& rect );
 	u32					GetDeckBounds			( USBox& bounds );
 	MOAITextStyle*		GetStyle				();
 	MOAITextStyle*		GetStyle				( cc8* styleName );
@@ -183,8 +186,9 @@ public:
 	void				ReserveCurves			( u32 total );
 	void				SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
 	void				SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
-	void				SetColor				( float r, float g, float b, float a );
 	void				SetCurve				( u32 idx, MOAIAnimCurve* curve );
+	void				SetHighlight			( u32 idx, u32 size );
+	void				SetHighlight			( u32 idx, u32 size, u32 color );
 	void				SetRect					( float left, float top, float right, float bottom );
 	void				SetStyle				( MOAITextStyle* style );
 	void				SetStyle				( cc8* styleName, MOAITextStyle* style );

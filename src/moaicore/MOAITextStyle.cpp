@@ -15,7 +15,14 @@
 //================================================================//
 // MOAITextStyleState
 //================================================================//
-	
+
+//----------------------------------------------------------------//
+void MOAITextStyleState::AffirmGlyph ( u32 c ) {
+
+	assert ( this->mFont );
+	this->mFont->AffirmGlyph ( this->mSize, c );
+}
+
 //----------------------------------------------------------------//
 bool MOAITextStyleState::IsMatch ( const MOAITextStyleState& compare ) const {
 

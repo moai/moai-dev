@@ -25,6 +25,7 @@ protected:
 public:
 	
 	//----------------------------------------------------------------//
+	void		AffirmGlyph				( u32 c );
 	bool		IsMatch					( const MOAITextStyleState& compare ) const;
 };
 

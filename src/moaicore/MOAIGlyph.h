@@ -61,7 +61,7 @@ public:
 	//----------------------------------------------------------------//
 	void			Draw				( MOAITextureBase& texture, float x, float y ) const;
 	MOAIKernVec		GetKerning			( u32 name ) const;
-	USRect			GetRect				( float points, float x, float y ) const;
+	USRect			GetRect				( float x, float y ) const;
 					MOAIGlyph			();
 					~MOAIGlyph			();
 	void			ReserveKernTable	( u32 total );

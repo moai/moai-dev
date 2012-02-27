@@ -187,10 +187,16 @@ void MOAITextStyler::Parse () {
 					TRANSITION ( DONE );
 				}
 				
+				this->mCurrentStyle->AffirmGlyph ( c );
 				this->mTokenTop = this->mIdx;
 				TRANSITION ( TOKEN_TEXT );
 			}
 		}
+	}
+	u32 totalActiveStyles = this->mActiveStyles.GetTop ();
+	for ( u32 i = 0; i < totalActiveStyles; ++i ) {
+		MOAITextStyleState& styleState = this->mActiveStyles [ i ];
+		styleState.mFont->ProcessGlyphs ();
 	}
 }
 
@@ -365,6 +371,20 @@ void MOAITextStyler::PopStyle () {
 
 //----------------------------------------------------------------//
 void MOAITextStyler::PushStyle ( MOAITextStyleState* styleState ) {
+
+	assert ( styleState );
+
+	u32 styleID = 0;
+	u32 totalStyles = this->mActiveStyles.GetTop ();
+	for ( ; styleID < totalStyles; ++styleID ) {
+		if ( this->mActiveStyles [ styleID ].IsMatch ( *styleState )) {
+			break;
+		}
+	}
+	
+	if ( styleID >= totalStyles ) {
+		this->mActiveStyles.Push ( *styleState );
+	}
 
 	if ( this->mStyleStackTop < STYLE_STACK_SIZE ) {
 		MOAITextStyleState& newStyle = this->mStyleStack [ this->mStyleStackTop ];

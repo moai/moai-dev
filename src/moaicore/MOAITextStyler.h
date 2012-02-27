@@ -66,6 +66,8 @@ private:
 
 	MOAITextStyleState*		mCurrentStyle;
 
+	USLeanStack < MOAITextStyleState, 8 > mActiveStyles;
+
 	static const u32 STYLE_STACK_SIZE = 256;
 
 	//----------------------------------------------------------------//
