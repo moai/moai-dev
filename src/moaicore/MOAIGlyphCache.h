@@ -6,6 +6,7 @@
 
 #include <moaicore/MOAIGlyphCacheBase.h>
 
+class MOAIFont;
 class MOAIGlyphCachePage;
 
 //================================================================//
