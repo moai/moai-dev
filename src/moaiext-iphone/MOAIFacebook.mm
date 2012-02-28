@@ -5,6 +5,8 @@
 //----------------------------------------------------------------//
 
 #import <moaiext-iphone/MOAIFacebook.h>
+#import <moaiext-iphone/NSDictionary+MOAILib.h>
+#import <moaiext-iphone/NSString+MOAILib.h>
 
 //================================================================//
 // lua
@@ -31,6 +33,8 @@ int MOAIFacebook::_init ( lua_State* L ) {
 	MOAILuaState state ( L );
          
 	cc8* appID = state.GetValue < cc8* >( 1, "" );
+	MOAIFacebook::Get ().mAppId = appID;
+	
 	
 	MOAIFacebook::Get ().mFacebook = [[ Facebook alloc ] initWithAppId: [[ NSString alloc ] initWithUTF8String: appID ]
 														   andDelegate: MOAIFacebook::Get ().mFBSessionDelegate ];
@@ -42,9 +46,76 @@ int MOAIFacebook::_init ( lua_State* L ) {
 int MOAIFacebook::_login ( lua_State* L ) {
 	MOAILuaState state ( L );
 	
-	if ( ![ MOAIFacebook::Get ().mFacebook isSessionValid ]) {
-		[ MOAIFacebook::Get ().mFacebook authorize:nil ];
+	if ( state.IsType ( 1, LUA_TTABLE )) {
+		
+		NSMutableDictionary* paramsDict = [[ NSMutableDictionary alloc ] init ];
+		[ paramsDict initWithLua:state stackIndex:1 ];
+		
+		NSArray* paramsArray = [ paramsDict allValues ];
+		
+		if ( ![ MOAIFacebook::Get ().mFacebook isSessionValid ]) {
+			[ MOAIFacebook::Get ().mFacebook authorize:paramsArray ];
+		}
+		
+	} else {
+		
+		if ( ![ MOAIFacebook::Get ().mFacebook isSessionValid ]) {
+			[ MOAIFacebook::Get ().mFacebook authorize:nil ];
+		}
 	}
+	
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+int MOAIFacebook::_logout ( lua_State* L ) {
+	MOAILuaState state ( L );
+		
+	[ MOAIFacebook::Get ().mFacebook logout ];
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+int MOAIFacebook::_postToFeed ( lua_State* L ) {
+	MOAILuaState state ( L );
+	
+	NSString* link = [[ NSString alloc ] initWithUTF8String:state.GetValue < cc8* >( 1, "" ) ];
+	NSString* pic = [[ NSString alloc ] initWithUTF8String:state.GetValue < cc8* >( 2, "" ) ];
+	NSString* name = [[ NSString alloc ] initWithUTF8String:state.GetValue < cc8* >( 3, "" ) ];
+	NSString* caption = [[ NSString alloc ] initWithUTF8String:state.GetValue < cc8* >( 4, "" ) ];
+	NSString* desc = [[ NSString alloc ] initWithUTF8String:state.GetValue < cc8* >( 5, "" ) ];
+	NSString* msg = [[ NSString alloc ] initWithUTF8String:state.GetValue < cc8* >( 6, "" ) ];
+	
+	NSString* appId = [[ NSString alloc ] initWithUTF8String:MOAIFacebook::Get ().mAppId.c_str() ];
+	
+	NSMutableDictionary* params = [ NSMutableDictionary dictionaryWithObjectsAndKeys:
+									 appId, @"app_id",
+									  link, @"link",
+									   pic, @"picture",
+									  name, @"name",
+								   caption, @"caption",
+									  desc, @"description",
+									   msg, @"message",
+										nil ];
+	
+	[ MOAIFacebook::Get ().mFacebook dialog:@"feed" andParams:params andDelegate:MOAIFacebook::Get ().mFBDialogDelegate ];
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+int MOAIFacebook::_sendRequest ( lua_State* L ) {
+	MOAILuaState state ( L );
+	
+	NSString* msg = [[ NSString alloc ] initWithUTF8String:state.GetValue < cc8* >( 1, "" ) ];
+	
+	NSMutableDictionary* params = [ NSMutableDictionary dictionaryWithObjectsAndKeys:
+								       msg, @"message",
+								        nil ];
+	
+	[ MOAIFacebook::Get ().mFacebook dialog:@"apprequests" andParams:params andDelegate:MOAIFacebook::Get ().mFBDialogDelegate ];
 	
 	return 0;
 }
@@ -69,6 +140,28 @@ int MOAIFacebook::_setToken ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIFacebook::DialogDidCancel ( ) {
+	
+	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+	
+	if ( this->PushListener ( DIALOG_DID_CANCEL, state )) {
+		
+		state.DebugCall ( 0, 0 );
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIFacebook::DialogDidComplete ( ) {
+		
+	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+	
+	if ( this->PushListener ( DIALOG_DID_COMPLETE, state )) {
+		
+		state.DebugCall ( 0, 0 );
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAIFacebook::HandleOpenURL ( NSURL* url ) {
 	
 	[ mFacebook handleOpenURL:url ];
@@ -80,22 +173,30 @@ MOAIFacebook::MOAIFacebook () {
 	RTTI_SINGLE ( MOAILuaObject )
 	RTTI_SINGLE ( MOAIGlobalEventSource )	
 	
+	mFBDialogDelegate = [ MoaiFBDialogDelegate alloc ];
 	mFBSessionDelegate = [ MoaiFBSessionDelegate alloc ];
 }
 
 //----------------------------------------------------------------//
 MOAIFacebook::~MOAIFacebook () {
     
+	[ mFBDialogDelegate release ];
 	[ mFBSessionDelegate release ];
 }
 
 //----------------------------------------------------------------//
 void MOAIFacebook::RegisterLuaClass ( MOAILuaState& state ) {
     
+	state.SetField ( -1, "DIALOG_DID_CANCEL", ( u32 )DIALOG_DID_CANCEL );
+	state.SetField ( -1, "DIALOG_DID_COMPLETE", ( u32 )DIALOG_DID_COMPLETE );
+	
 	luaL_Reg regTable[] = {
 		{ "getToken",				_getToken },
 		{ "init",					_init },
 		{ "login",					_login },
+		{ "logout",					_logout },
+		{ "postToFeed",				_postToFeed },
+		{ "sendRequest",			_sendRequest },
 		{ "setToken",				_setToken },
 		{ "setListener",			&MOAIGlobalEventSource::_setListener < MOAIFacebook > },
 		{ NULL, NULL }	
@@ -105,14 +206,62 @@ void MOAIFacebook::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //================================================================//
-// MoaiLeaderboardDelegate
+// MoaiFBDialogDelegate
+//================================================================//
+@implementation MoaiFBDialogDelegate
+
+	//================================================================//
+	#pragma mark -
+	#pragma mark Protocol MoaiFBDialogDelegate
+	//================================================================//
+
+	- ( void ) dialogCompleteWithUrl:(NSURL *)url {
+		
+		if ([ url query ]) {
+
+			MOAIFacebook::Get ().DialogDidComplete ();
+		} else {
+			
+			MOAIFacebook::Get ().DialogDidCancel ();
+		}
+	}
+
+	- ( void ) dialogDidComplete: (FBDialog *)dialog {
+		
+		// NOT USED DUE TO A BUG IN FACEBOOK SDK
+		//MOAIFacebook::Get ().DialogDidComplete ();
+	}
+
+	- ( void ) dialogDidNotComplete: (FBDialog *)dialog {
+		
+		MOAIFacebook::Get ().DialogDidCancel ();
+	}
+
+@end
+
+
+//================================================================//
+// MoaiFBRequestDelegate
+//================================================================//
+@implementation MoaiFBRequestDelegate
+
+	//================================================================//
+	#pragma mark -
+	#pragma mark Protocol FBRequestDelegate
+	//================================================================//
+
+
+@end
+
+//================================================================//
+// MoaiFBSessionDelegate
 //================================================================//
 @implementation MoaiFBSessionDelegate
 
-//================================================================//
-#pragma mark -
-#pragma mark Protocol FBSessionDelegate
-//================================================================//
+	//================================================================//
+	#pragma mark -
+	#pragma mark Protocol FBSessionDelegate
+	//================================================================//
 
 
 @end
