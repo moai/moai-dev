@@ -391,14 +391,6 @@
 			>
 		</File>
 		<File
-			RelativePath="..\..\src\work\work-text-styler.cpp"
-			>
-		</File>
-		<File
-			RelativePath="..\..\src\work\work-text-styler.h"
-			>
-		</File>
-		<File
 			RelativePath="..\..\src\work\work-zipfs-fscanf.cpp"
 			>
 		</File>
