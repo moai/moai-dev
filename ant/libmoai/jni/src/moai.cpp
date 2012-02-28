@@ -769,17 +769,23 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 	//----------------------------------------------------------------//
 	extern "C" void Java_com_ziplinegames_moai_MoaiTapjoy_AKUNotifyTapjoyVideoAdReady ( JNIEnv* env, jclass obj ) {
 
+#ifndef DISABLE_TAPJOY
 		MOAITapjoy::Get ().NotifyVideoAdReady ();
+#endif
 	}
 
 	//----------------------------------------------------------------//
 	extern "C" void Java_com_ziplinegames_moai_MoaiTapjoy_AKUNotifyTapjoyVideoAdError ( JNIEnv* env, jclass obj, jint code ) {
 
+#ifndef DISABLE_TAPJOY
 		MOAITapjoy::Get ().NotifyVideoAdError ( code );
+#endif
 	}
 	
 	//----------------------------------------------------------------//
 	extern "C" void Java_com_ziplinegames_moai_MoaiTapjoy_AKUNotifyTapjoyVideoAdClose ( JNIEnv* env, jclass obj ) {
 
+#ifndef DISABLE_TAPJOY
 		MOAITapjoy::Get ().NotifyVideoAdClose ();
+#endif
 	}
