@@ -141,7 +141,6 @@ void MOAITextDesigner::BuildLayout ( MOAITextBox& textBox ) {
 			textBox.PushLine ( lineStart, lineSize, lineRect, lineAscent );
 			
 			// end line
-			pen.mX = 0.0f;
 			pen.mY += lineRect.Height ();
 			lineRect.Init ( 0.0f, pen.mY, 0.0f, pen.mY );
 			
@@ -152,8 +151,8 @@ void MOAITextDesigner::BuildLayout ( MOAITextBox& textBox ) {
 			
 			prevGlyph = 0;
 			
-			if ( tokenSize ) {
-			
+			if ( tokenSize ){
+				
 				// slide the current token (if any) back to the origin
 				for ( u32 i = 0; i < tokenSize; ++i ) {
 					MOAITextSprite& sprite = textBox.mSprites [ tokenStart + i ];
@@ -161,9 +160,11 @@ void MOAITextDesigner::BuildLayout ( MOAITextBox& textBox ) {
 					sprite.mY = pen.mY;
 				}
 				
+				pen.mX -= tokenRect.mXMin;
 				tokenRect.Init ( 0.0f, pen.mY, tokenRect.Width (), pen.mY + tokenRect.Height ());
 			}
 			else {
+				pen.mX = 0.0f;
 				tokenRect.Init ( 0.0f, pen.mY, 0.0f, pen.mY + this->mDeck->mHeight );
 			}
 		}

@@ -96,11 +96,6 @@ if MOAIFreeTypeFontReader then
 	MOAIFont = MOAIFont.extend (
 	
 		function ( interface, super )
-			
-			function interface.loadFromTTF ( self, filename, charcodes, points, dpi )
-				self:load ( filename )
-				self:preloadGlyphs ( charcodes, points, dpi )
-			end
 		end,
 		
 		-- extend the class
@@ -110,6 +105,12 @@ if MOAIFreeTypeFontReader then
 				local self = super.new ()
 				self:setCache ( MOAIGlyphCache.new ())
 				self:setReader ( MOAIFreeTypeFontReader.new ())
+				
+				function self.loadFromTTF ( self, filename, charcodes, points, dpi )
+					self:load ( filename )
+					self:preloadGlyphs ( charcodes, points, dpi )
+				end
+				
 				return self
 			end
 		end
