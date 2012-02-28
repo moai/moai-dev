@@ -56,15 +56,27 @@ void MOAITextDesigner::BuildLayout ( MOAITextBox& textBox ) {
 		bool acceptToken = false;
 		bool acceptLine = false;
 		
-		if ( c == 0 ) {
-			textBox.mMore = false;
-			acceptToken = true;
-			acceptLine = true;
-			more = false;
+		if ( MOAIFont::IsControl ( c )) {
+		
+			if ( c == '\n' ) {
+			
+				tokenStart = textBox.mSprites.GetTop ();
+				acceptToken = true;
+				acceptLine = true;
+				
+				if ( !tokenRect.Height ()) {
+					tokenRect.mYMax += this->mDeck->mHeight;
+				}	
+			}
+			else if ( c == 0 ) {
+				textBox.mMore = false;
+				acceptToken = true;
+				acceptLine = true;
+				more = false;
+			}
 		}
 		else {
-		
-			prevGlyph = glyph;
+			
 			glyph = this->mDeck->GetGlyph ( c );
 			
 			if ( !glyph ) continue;
@@ -76,9 +88,9 @@ void MOAITextDesigner::BuildLayout ( MOAITextBox& textBox ) {
 				pen.mX += kernVec.mX;
 			}
 			
-			bool isWhitespace = MOAIFont::IsWhitespace ( c );
+			prevGlyph = glyph;
 			
-			if ( isWhitespace ) {
+			if ( MOAIFont::IsWhitespace ( c )) {
 				if ( tokenSize ) {
 					acceptToken = true;
 				}
@@ -129,7 +141,7 @@ void MOAITextDesigner::BuildLayout ( MOAITextBox& textBox ) {
 			textBox.PushLine ( lineStart, lineSize, lineRect, lineAscent );
 			
 			// end line
-			pen.mX -= tokenRect.mXMin;
+			pen.mX = 0.0f;
 			pen.mY += lineRect.Height ();
 			lineRect.Init ( 0.0f, pen.mY, 0.0f, pen.mY );
 			
@@ -138,14 +150,22 @@ void MOAITextDesigner::BuildLayout ( MOAITextBox& textBox ) {
 			lineSize = 0;
 			lineAscent = 0.0f;
 			
-			// slide the current token (if any) back to the origin
-			for ( u32 i = 0; i < tokenSize; ++i ) {
-				MOAITextSprite& sprite = textBox.mSprites [ tokenStart + i ];
-				sprite.mX -= tokenRect.mXMin;
-				sprite.mY = pen.mY;
-			}
+			prevGlyph = 0;
 			
-			tokenRect.Init ( 0.0f, pen.mY, tokenRect.Width (), pen.mY + tokenRect.Height ());
+			if ( tokenSize ) {
+			
+				// slide the current token (if any) back to the origin
+				for ( u32 i = 0; i < tokenSize; ++i ) {
+					MOAITextSprite& sprite = textBox.mSprites [ tokenStart + i ];
+					sprite.mX -= tokenRect.mXMin;
+					sprite.mY = pen.mY;
+				}
+				
+				tokenRect.Init ( 0.0f, pen.mY, tokenRect.Width (), pen.mY + tokenRect.Height ());
+			}
+			else {
+				tokenRect.Init ( 0.0f, pen.mY, 0.0f, pen.mY + this->mDeck->mHeight );
+			}
 		}
 		
 		if ( tokenRect.mYMax > height ) {

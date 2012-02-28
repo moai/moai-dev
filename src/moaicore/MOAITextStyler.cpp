@@ -301,7 +301,7 @@ bool MOAITextStyler::ParseStyle () {
 				
 				c = this->GetChar ();
 				
-				if ( MOAIFont::IsWhitespace ( c )) {
+				if ( MOAIFont::IsControl ( c ) || MOAIFont::IsWhitespace ( c )) {
 					TRANSITION ( STYLE_ABORT );
 				}
 				
@@ -336,7 +336,7 @@ bool MOAITextStyler::ParseStyle () {
 				
 				c = this->GetChar ();
 				
-				if ( MOAIFont::IsWhitespace ( c )) {
+				if ( MOAIFont::IsControl ( c ) || MOAIFont::IsWhitespace ( c )) {
 					TRANSITION ( STYLE_ABORT );
 				}
 				

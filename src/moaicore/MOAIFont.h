@@ -67,6 +67,7 @@ public:
 	MOAIGlyphSet*		GetGlyphDeck			( float points );
 	MOAITextureBase*	GetGlyphTexture			( MOAIGlyph& glyph );
 	void				Init					( cc8* filename );
+	static bool			IsControl				( u32 c );
 	static bool			IsWhitespace			( u32 c );
 						MOAIFont				();
 						~MOAIFont				();

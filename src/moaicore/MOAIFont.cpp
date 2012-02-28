@@ -265,12 +265,19 @@ void MOAIFont::Init ( cc8* filename ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIFont::IsWhitespace ( u32 c ) {
+bool MOAIFont::IsControl ( u32 c ) {
 
 	if ( !c ) return true;
-	if ( c == ' ' ) return true;
 	if ( c == '\t' ) return true;
 	if ( c == '\n' ) return true;
+	
+	return false;
+}
+
+//----------------------------------------------------------------//
+bool MOAIFont::IsWhitespace ( u32 c ) {
+
+	if ( c == ' ' ) return true;
 	
 	return false;
 }
