@@ -78,16 +78,6 @@
 		echo "*** or $new_host_dir/host-source/project/libs/armeabi-v7a."
 		echo ""
 	fi
-	
-	# copy default project files into new host dir
-	cp -f host-source/d.README.txt $new_host_dir/README.txt
-	cp -f host-source/d.run-host.sh $new_host_dir/run-host.sh
-	cp -f host-source/d.run-host.bat $new_host_dir/run-host.bat
-	cp -f host-source/d.settings-global.sh $new_host_dir/settings-global.sh
-	rsync -r --exclude=.svn --exclude=.DS_Store host-source/d.res/. $new_host_dir/res
-
-	# copy source dir into new host dir
-	rsync -r --exclude=.svn --exclude=.DS_Store --exclude=src/ --exclude=external/ host-source/source/. $new_host_dir/host-source
 
 	# create function for easy find and replace
 	backup_ext=.backup
@@ -96,6 +86,24 @@
 		sed -i$backup_ext s%"$2"%"$3"%g $1
 		rm -f $1$backup_ext
 	}
+		
+	required_libs="\"facebook\""
+	
+	if [ x"$tapjoy_flags" == x ]; then
+		required_libs="$required_libs \"tapjoy\""
+	fi
+
+	cp -f host-source/d.settings-global.sh $new_host_dir/settings-global.sh
+	fr $new_host_dir/settings-global.sh @REQUIRED_LIBS@ "$required_libs"
+	
+	# copy default project files into new host dir
+	cp -f host-source/d.README.txt $new_host_dir/README.txt
+	cp -f host-source/d.run-host.sh $new_host_dir/run-host.sh
+	cp -f host-source/d.run-host.bat $new_host_dir/run-host.bat
+	rsync -r --exclude=.svn --exclude=.DS_Store host-source/d.res/. $new_host_dir/res
+
+	# copy source dir into new host dir
+	rsync -r --exclude=.svn --exclude=.DS_Store --exclude=src/ --exclude=external/ host-source/source/. $new_host_dir/host-source
 
 	# create package src directories
 	OLD_IFS=$IFS
