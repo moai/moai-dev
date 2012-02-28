@@ -9,6 +9,8 @@
 
 #include <moaicore/shaders/MOAIDeck2DShader-fsh.h>
 #include <moaicore/shaders/MOAIDeck2DShader-vsh.h>
+#include <moaicore/shaders/MOAIDeck2DTexOnlyShader-fsh.h>
+#include <moaicore/shaders/MOAIDeck2DTexOnlyShader-vsh.h>
 #include <moaicore/shaders/MOAIFontShader-fsh.h>
 #include <moaicore/shaders/MOAIFontShader-vsh.h>
 #include <moaicore/shaders/MOAILineShader-fsh.h>
@@ -72,13 +74,21 @@ MOAIShader& MOAIShaderMgr::GetShader ( u32 shaderID ) {
 		switch ( shaderID ) {
 			
 			case DECK2D_SHADER:
-			
+				
 				shader->SetSource ( _deck2DShaderVSH, _deck2DShaderFSH );
 				shader->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_POSITION, "position" );
 				shader->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_TEXCOORD, "uv" );
 				shader->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_COLOR, "color" );
 				break;
+			
+			case DECK2D_TEX_ONLY_SHADER:
 				
+				shader->SetSource ( _deck2DTexOnlyShaderVSH, _deck2DTexOnlyShaderFSH );
+				shader->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_POSITION, "position" );
+				shader->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_TEXCOORD, "uv" );
+				shader->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_COLOR, "color" );
+				break;
+			
 			case FONT_SHADER:
 				
 				shader->SetSource ( _fontShaderVSH, _fontShaderFSH );
@@ -137,10 +147,11 @@ MOAIShaderMgr::~MOAIShaderMgr () {
 //----------------------------------------------------------------//
 void MOAIShaderMgr::RegisterLuaClass ( MOAILuaState& state ) {
 
-	state.SetField ( -1, "DECK2D_SHADER", ( u32 )DECK2D_SHADER );
-	state.SetField ( -1, "FONT_SHADER", ( u32 )FONT_SHADER );
-	state.SetField ( -1, "LINE_SHADER", ( u32 )LINE_SHADER );
-	state.SetField ( -1, "MESH_SHADER", ( u32 )MESH_SHADER );
+	state.SetField ( -1, "DECK2D_SHADER",			( u32 )DECK2D_SHADER );
+	state.SetField ( -1, "DECK2D_TEX_ONLY_SHADER",	( u32 )DECK2D_TEX_ONLY_SHADER );
+	state.SetField ( -1, "FONT_SHADER",				( u32 )FONT_SHADER );
+	state.SetField ( -1, "LINE_SHADER",				( u32 )LINE_SHADER );
+	state.SetField ( -1, "MESH_SHADER",				( u32 )MESH_SHADER );
 	
 	luaL_Reg regTable [] = {
 		{ "getShader",				_getShader },

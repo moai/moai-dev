@@ -15,10 +15,10 @@ extern JavaVM* jvm;
 extern jobject mMoaiActivity;
 
 jmethodID mRequestTapjoyFunc;
-jmethodID mGetUserIdFunc;
-jmethodID mInitVideoAdsFunc;
-jmethodID mSetVideoAdCacheCount;
-jmethodID mShowOffersFunc;
+jmethodID mGetTapjoyUserIdFunc;
+jmethodID mInitTapjoyVideoAdsFunc;
+jmethodID mSetTapjoyVideoAdCacheCount;
+jmethodID mShowTapjoyOffersFunc;
 
 //================================================================//
 // Utility macros
@@ -27,16 +27,16 @@ jmethodID mShowOffersFunc;
 	#define GET_ENV() 	\
 		JNIEnv* env; 	\
 		jvm->GetEnv (( void** )&env, JNI_VERSION_1_4 );
-
+		
 	#define GET_CSTRING(jstr, cstr) \
-		const char* cstr = env->GetStringUTFChars ( jstr, NULL );
+		const char* cstr = ( jstr != NULL ) ? env->GetStringUTFChars ( jstr, NULL ) : NULL;
 
 	#define RELEASE_CSTRING(jstr, cstr) \
-		env->ReleaseStringUTFChars ( jstr, cstr );
+		if ( cstr != NULL ) env->ReleaseStringUTFChars ( jstr, cstr );
 		
 	#define GET_JSTRING(cstr, jstr) \
-		jstring jstr = env->NewStringUTF (( const char* )cstr );
-
+		jstring jstr = ( cstr != NULL ) ? env->NewStringUTF (( const char* )cstr ) : NULL;
+		
 	#define PRINT(str) \
 		__android_log_write ( ANDROID_LOG_INFO, "MoaiLog", str );
 
@@ -50,13 +50,13 @@ int MOAITapjoy::_getUserId ( lua_State *L ) {
 	
 	GET_ENV ();
 
-	if (mGetUserIdFunc == NULL) {
+	if ( mGetTapjoyUserIdFunc == NULL ) {
 		
 		jclass moaiActivityClass = env->GetObjectClass ( mMoaiActivity );		
-		mGetUserIdFunc = env->GetMethodID ( moaiActivityClass, "getUserId", "()Ljava/lang/String;" );
+		mGetTapjoyUserIdFunc = env->GetMethodID ( moaiActivityClass, "getUserId", "()Ljava/lang/String;" );
 	}
 
-	jstring jidentifier = ( jstring )env->CallObjectMethod ( mMoaiActivity , mGetUserIdFunc );
+	jstring jidentifier = ( jstring )env->CallObjectMethod ( mMoaiActivity , mGetTapjoyUserIdFunc );
 	
 	GET_CSTRING ( jidentifier, identifier );
 
@@ -77,23 +77,23 @@ int MOAITapjoy::_initVideoAds ( lua_State* L ) {
 
 	GET_ENV ();
 
-	if (mInitVideoAdsFunc == NULL) {
+	if ( mInitTapjoyVideoAdsFunc == NULL ) {
 		jclass moaiActivityClass = env->GetObjectClass ( mMoaiActivity );		
-		mInitVideoAdsFunc = env->GetMethodID ( moaiActivityClass, "initVideoAds", "()V" );
+		mInitTapjoyVideoAdsFunc = env->GetMethodID ( moaiActivityClass, "initVideoAds", "()V" );
 	}
 
-	env->CallVoidMethod ( mMoaiActivity , mInitVideoAdsFunc );
+	env->CallVoidMethod ( mMoaiActivity , mInitTapjoyVideoAdsFunc );
 
 	u32 count = state.GetValue < u32 >( 1, 0 );
 	if ( count > 0 ) {
 
-		if (mSetVideoAdCacheCount == NULL) {
+		if ( mSetTapjoyVideoAdCacheCount == NULL ) {
 			
 			jclass moaiActivityClass = env->GetObjectClass ( mMoaiActivity );		
-			mSetVideoAdCacheCount = env->GetMethodID ( moaiActivityClass, "setVideoAdCacheCount", "(I)V" );
+			mSetTapjoyVideoAdCacheCount = env->GetMethodID ( moaiActivityClass, "setVideoAdCacheCount", "(I)V" );
 		}
 
-		env->CallVoidMethod ( mMoaiActivity , mSetVideoAdCacheCount, count );
+		env->CallVoidMethod ( mMoaiActivity , mSetTapjoyVideoAdCacheCount, count );
 	}
 	
 	return 0;
@@ -110,7 +110,7 @@ int MOAITapjoy::_requestTapjoyConnect ( lua_State* L ) {
 	GET_JSTRING ( identifier, jidentifier );
 	GET_JSTRING ( secret, jsecret );
 
-	if (mRequestTapjoyFunc == NULL) {
+	if ( mRequestTapjoyFunc == NULL ) {
 		
 		jclass moaiActivityClass = env->GetObjectClass ( mMoaiActivity );		
 		mRequestTapjoyFunc = env->GetMethodID ( moaiActivityClass, "requestTapjoyConnect", "(Ljava/lang/String;Ljava/lang/String;)V" );
@@ -140,12 +140,12 @@ int MOAITapjoy::_showOffers ( lua_State* L ) {
 
 	GET_ENV ();
 
-	if (mShowOffersFunc == NULL) {
+	if ( mShowTapjoyOffersFunc == NULL ) {
 		jclass moaiActivityClass = env->GetObjectClass ( mMoaiActivity );		
-		mShowOffersFunc = env->GetMethodID ( moaiActivityClass, "showOffers", "()V" );
+		mShowTapjoyOffersFunc = env->GetMethodID ( moaiActivityClass, "showOffers", "()V" );
 	}
 
-	env->CallVoidMethod ( mMoaiActivity , mShowOffersFunc );
+	env->CallVoidMethod ( mMoaiActivity , mShowTapjoyOffersFunc );
 		
 	return 0;
 }
@@ -177,7 +177,7 @@ void MOAITapjoy::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "TAPJOY_VIDEO_STATUS_NETWORK_ERROR_ON_INIT_VIDEOS",	( u32 )TAPJOY_VIDEO_STATUS_NETWORK_ERROR_ON_INIT_VIDEOS );
 	state.SetField ( -1, "TAPJOY_VIDEO_STATUS_UNABLE_TO_PLAY_VIDEO", 			( u32 )TAPJOY_VIDEO_STATUS_UNABLE_TO_PLAY_VIDEO );
 
-	luaL_Reg regTable[] = {
+	luaL_Reg regTable [] = {
 		{ "getUserId",					_getUserId },
 		{ "initVideoAds",				_initVideoAds },
 		{ "requestTapjoyConnect",		_requestTapjoyConnect },

@@ -200,6 +200,12 @@ void MOAIGfxResource::RenewGfxResource () {
 }
 
 //----------------------------------------------------------------//
+void MOAIGfxResource::ResetGfxResource () {
+
+	this->mState = STATE_RENEW;
+}
+
+//----------------------------------------------------------------//
 void MOAIGfxResource::SetError () {
 
 	this->mState = STATE_ERROR;	

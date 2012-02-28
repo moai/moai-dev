@@ -83,6 +83,7 @@ public:
 	void			RegisterLuaFuncs			( MOAILuaState& state );
 	void			ReleaseGfxResource			();
 	void			RenewGfxResource			();
+	void			ResetGfxResource			();
 	bool			SoftReleaseGfxResource		( u32 age );
 };
 

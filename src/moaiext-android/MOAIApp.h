@@ -75,7 +75,7 @@ public:
 	DECL_LUA_SINGLETON ( MOAIApp )
 	
 	//----------------------------------------------------------------//
-	void		DidStartSession					();
+	void		DidStartSession					( bool resumed );
 				MOAIApp							();
 				~MOAIApp						();
 	bool		NotifyBackButtonPressed			();

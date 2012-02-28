@@ -672,14 +672,16 @@ void MOAIApp::DidSendTweet( bool success ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIApp::DidStartSession( ) {
+void MOAIApp::DidStartSession( bool resumed ) {
 
 	MOAILuaRef& callback = this->mListeners [ SESSION_START ];
 	
 	if ( callback ) {
 		MOAILuaStateHandle state = callback.GetSelf ();
 		
-		state.DebugCall ( 0, 0 );
+		lua_pushboolean ( state, resumed );
+			
+		state.DebugCall ( 1, 0 );
 	}
 }
 

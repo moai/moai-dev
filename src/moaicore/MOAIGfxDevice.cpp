@@ -21,7 +21,7 @@
 //================================================================//
 // MOAIGfxDeleter
 //================================================================//
-	
+
 //----------------------------------------------------------------//
 void MOAIGfxDeleter::Delete () {
 
@@ -425,8 +425,9 @@ void MOAIGfxDevice::DetectContext () {
 	int maxTextureSize;
 	glGetIntegerv ( GL_MAX_TEXTURE_SIZE, &maxTextureSize );
 	this->mMaxTextureSize = maxTextureSize;
-	
-	this->RenewResources ();
+
+	this->mDeleterStack.Reset ();
+	this->ResetResources ();
 }
 
 //----------------------------------------------------------------//
@@ -847,6 +848,15 @@ void MOAIGfxDevice::Reserve ( u32 size ) {
 	this->mSize = size;
 	this->mTop = 0;
 	this->mBuffer = malloc ( size );
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDevice::ResetResources () {
+
+	ResourceIt resourceIt = this->mResources.Head ();
+	for ( ; resourceIt; resourceIt = resourceIt->Next ()) {
+		resourceIt->Data ()->ResetGfxResource ();
+	}
 }
 
 //----------------------------------------------------------------//

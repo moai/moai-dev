@@ -36,9 +36,9 @@ void AKUAppDidRegisterForRemoteNotificationsWithDeviceToken ( NSData* deviceToke
 }
 
 //-----------------------------------------------------------------//
-void AKUAppDidStartSession () {
+void AKUAppDidStartSession ( bool resumed ) {
 
-	MOAIApp::Get ().DidStartSession ();
+	MOAIApp::Get ().DidStartSession ( resumed );
 }
 
 //-----------------------------------------------------------------//

@@ -35,7 +35,7 @@ public:
 
 	GLuint	mResourceID;
 	u32		mType;
-	
+
 	//----------------------------------------------------------------//
 	void		Delete			();
 };
@@ -149,7 +149,7 @@ private:
 	USFrustum		mViewVolume;
 	
 	USLeanStack < MOAIGfxDeleter, 32 > mDeleterStack;
-	
+
 	//----------------------------------------------------------------//
 	static int				_getMaxTextureUnits		( lua_State* L );
 	static int				_isProgrammable			( lua_State* L );
@@ -221,7 +221,7 @@ public:
 	
 	void					ProcessDeleters			();
 	void					PushDeleter				( u32 type, GLuint id );
-	
+
 	void					RegisterLuaClass		( MOAILuaState& state );
 	void					ReleaseResources		();
 	void					RenewResources			();
@@ -230,6 +230,7 @@ public:
 	void					ReportTextureFree		( cc8* name, size_t size );
 	
 	void					Reserve					( u32 size );
+	void					ResetResources			();
 	void					ResetState				();
 	
 	void					SetBlendMode			();

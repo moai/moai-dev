@@ -723,14 +723,18 @@ void MOAIShader::OnLoad () {
 	glDeleteShader ( this->mFragmentShader );
 	this->mFragmentShader = 0;
 	
-	this->mAttributeMap.clear ();
+	//AJV TODO - does the attribute map ever need to be cleared?
+	//this->mAttributeMap.clear ();
 }
 
 //----------------------------------------------------------------//
 void MOAIShader::OnRenew () {
 
-	// don't need to do anything here - vertex and fragment source should
-	// already be cached
+	this->mProgram = 0;
+	this->mVertexShader = 0;
+	this->mFragmentShader = 0;
+	
+	this->OnLoad ();
 }
 
 //----------------------------------------------------------------//

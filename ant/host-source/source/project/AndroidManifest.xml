@@ -39,8 +39,8 @@
 		</service>
 		
 		<!-- Android Market IAP -->
-		<service android:name="MoaiBillingService" />
-	    <receiver android:name="MoaiBillingReceiver">
+		<service android:name="AndroidMarketBillingService" />
+	    <receiver android:name="AndroidMarketBillingReceiver">
 	      <intent-filter>
 	        <action android:name="com.android.vending.billing.IN_APP_NOTIFY" />
 	        <action android:name="com.android.vending.billing.RESPONSE_CODE" />
@@ -59,25 +59,52 @@
 		        <action android:name="com.android.vending.INSTALL_REFERRER" />
 		    </intent-filter>
 		</receiver>
+		
+		<!-- AdColony -->
+		<activity android:name="com.jirbo.adcolony.AdColonyOverlay" android:configChanges="keyboardHidden|orientation" android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" />
+		<activity android:name="com.jirbo.adcolony.AdColonyFullscreen" android:configChanges="keyboardHidden|orientation" android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" />
+		<activity android:name="com.jirbo.adcolony.AdColonyBrowser" android:configChanges="keyboardHidden|orientation" android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" />
+		
+		<!-- Android C2DM Messaging -->
+		<receiver android:name="AndroidC2DMReceiver" android:permission="com.google.android.c2dm.permission.SEND">
+       		<intent-filter>
+				<action android:name="com.google.android.c2dm.intent.RECEIVE" />
+				<category android:name="@PACKAGE@" />
+			</intent-filter>
+			<intent-filter>
+				<action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+				<category android:name="@PACKAGE@" />
+			</intent-filter>
+		</receiver>
 	</application>
 	
     <uses-sdk android:minSdkVersion="8"/>
+		
+	<!-- Google C2DM Messaging -->
+	<permission android:name="@PACKAGE@.permission.C2D_MESSAGE" android:protectionLevel="signature" />
+	<uses-permission android:name="@PACKAGE@.permission.C2D_MESSAGE" />
+	<uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 	
-	<!-- Moai, Tapjoy, Crittercism -->
+	<!-- Moai, Tapjoy, Crittercism, AdColony -->
  	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 	<uses-permission android:name="android.permission.INTERNET" />
 
 	<!-- Android Market IAP -->
   	<uses-permission android:name="com.android.vending.BILLING" />
 	
+	<!-- Tapjoy, AdColony -->
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
 	<!-- Tapjoy -->
 	<uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+	<!-- Crittercism, AdColony -->
+	<uses-permission android:name="android.permission.GET_TASKS"/>
 	
 	<!-- Crittercism -->
-	<!-- These optional permissions will allow Crittercism to provide more granular data.
+	<!-- Optional permission to allow Crittercism to collect log data.
 	<uses-permission android:name="android.permission.READ_LOGS"/>
-	<uses-permission android:name="android.permission.GET_TASKS"/> -->
+	-->
 	
 	<supports-screens 
 	    	android:smallScreens="false"

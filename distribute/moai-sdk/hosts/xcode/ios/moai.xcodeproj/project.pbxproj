@@ -726,10 +726,7 @@
 					"\"$(SRCROOT)/../../../bin/ios/universal\"",
 					"\"$(SRCROOT)/Libraries/Crittercism\"",
 				);
-				OTHER_LDFLAGS = (
-					"-force_load",
-					"../../../bin/ios/universal/libmoai-ios-tapjoy.a",
-				);
+				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_NAME = MoaiSample;
 			};
 			name = Debug;
@@ -744,10 +741,7 @@
 					"\"$(SRCROOT)/../../../bin/ios/universal\"",
 					"\"$(SRCROOT)/Libraries/Crittercism\"",
 				);
-				OTHER_LDFLAGS = (
-					"-force_load",
-					"../../../bin/ios/universal/libmoai-ios-tapjoy.a",
-				);
+				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_NAME = MoaiSample;
 			};
 			name = Release;
