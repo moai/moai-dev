@@ -1278,6 +1278,8 @@
 		07658753145CD06900723A7D /* tlsfbits.h in Headers */ = {isa = PBXBuildFile; fileRef = 0765874D145CD06900723A7D /* tlsfbits.h */; };
 		0767117C13F3414000121E13 /* ReachabilityListener.h in Headers */ = {isa = PBXBuildFile; fileRef = 0767117A13F3414000121E13 /* ReachabilityListener.h */; };
 		0767117D13F3414000121E13 /* ReachabilityListener.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0767117B13F3414000121E13 /* ReachabilityListener.mm */; };
+		077E0F9A14FC4A91006B0B4D /* MOAIFacebook.h in Headers */ = {isa = PBXBuildFile; fileRef = 077E0F9814FC4A91006B0B4D /* MOAIFacebook.h */; };
+		077E0F9B14FC4A91006B0B4D /* MOAIFacebook.mm in Sources */ = {isa = PBXBuildFile; fileRef = 077E0F9914FC4A91006B0B4D /* MOAIFacebook.mm */; };
 		0780B1D714463B71006626CF /* MOAITapjoy.h in Headers */ = {isa = PBXBuildFile; fileRef = 0780B1D514463B71006626CF /* MOAITapjoy.h */; };
 		0780B1D814463B71006626CF /* MOAITapjoy.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0780B1D614463B71006626CF /* MOAITapjoy.mm */; };
 		079529111447902700143A72 /* MOAIImage-jpg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0795290F1447902700143A72 /* MOAIImage-jpg.cpp */; };
@@ -1421,6 +1423,19 @@
 		07E885C013BE3E78008D75AA /* MOAIParticleDistanceEmitter.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E885BC13BE3E78008D75AA /* MOAIParticleDistanceEmitter.h */; };
 		07E885C113BE3E78008D75AA /* MOAIParticleTimedEmitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07E885BD13BE3E78008D75AA /* MOAIParticleTimedEmitter.cpp */; };
 		07E885C213BE3E78008D75AA /* MOAIParticleTimedEmitter.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E885BE13BE3E78008D75AA /* MOAIParticleTimedEmitter.h */; };
+		07F4C7BE14FC449E00FB78BA /* Facebook.h in Headers */ = {isa = PBXBuildFile; fileRef = 07F4C7B114FC449E00FB78BA /* Facebook.h */; };
+		07F4C7BF14FC449E00FB78BA /* FBConnect.h in Headers */ = {isa = PBXBuildFile; fileRef = 07F4C7B214FC449E00FB78BA /* FBConnect.h */; };
+		07F4C7C014FC449E00FB78BA /* FBDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = 07F4C7B314FC449E00FB78BA /* FBDialog.h */; };
+		07F4C7C114FC449E00FB78BA /* FBFrictionlessRequestSettings.h in Headers */ = {isa = PBXBuildFile; fileRef = 07F4C7B414FC449E00FB78BA /* FBFrictionlessRequestSettings.h */; };
+		07F4C7C214FC449E00FB78BA /* FBLoginDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = 07F4C7B514FC449E00FB78BA /* FBLoginDialog.h */; };
+		07F4C7C314FC449E00FB78BA /* FBRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 07F4C7B614FC449E00FB78BA /* FBRequest.h */; };
+		07F4C7C414FC449E00FB78BA /* JSON.h in Headers */ = {isa = PBXBuildFile; fileRef = 07F4C7B714FC449E00FB78BA /* JSON.h */; };
+		07F4C7C514FC449E00FB78BA /* NSObject+SBJSON.h in Headers */ = {isa = PBXBuildFile; fileRef = 07F4C7B814FC449E00FB78BA /* NSObject+SBJSON.h */; };
+		07F4C7C614FC449E00FB78BA /* NSString+SBJSON.h in Headers */ = {isa = PBXBuildFile; fileRef = 07F4C7B914FC449E00FB78BA /* NSString+SBJSON.h */; };
+		07F4C7C714FC449E00FB78BA /* SBJSON.h in Headers */ = {isa = PBXBuildFile; fileRef = 07F4C7BA14FC449E00FB78BA /* SBJSON.h */; };
+		07F4C7C814FC449E00FB78BA /* SBJsonBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 07F4C7BB14FC449E00FB78BA /* SBJsonBase.h */; };
+		07F4C7C914FC449E00FB78BA /* SBJsonParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 07F4C7BC14FC449E00FB78BA /* SBJsonParser.h */; };
+		07F4C7CA14FC449E00FB78BA /* SBJsonWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 07F4C7BD14FC449E00FB78BA /* SBJsonWriter.h */; };
 		07F59344143E318B00C6D185 /* MOAIUntzSampleBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07F59342143E318B00C6D185 /* MOAIUntzSampleBuffer.cpp */; };
 		07F59345143E318B00C6D185 /* MOAIUntzSampleBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 07F59343143E318B00C6D185 /* MOAIUntzSampleBuffer.h */; };
 		07F59346143E318B00C6D185 /* MOAIUntzSampleBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07F59342143E318B00C6D185 /* MOAIUntzSampleBuffer.cpp */; };
@@ -3810,6 +3825,8 @@
 		0765874D145CD06900723A7D /* tlsfbits.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tlsfbits.h; path = "../../3rdparty/tlsf-2.0/tlsfbits.h"; sourceTree = "<group>"; };
 		0767117A13F3414000121E13 /* ReachabilityListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ReachabilityListener.h; path = "moaiext-iphone/ReachabilityListener.h"; sourceTree = "<group>"; };
 		0767117B13F3414000121E13 /* ReachabilityListener.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ReachabilityListener.mm; path = "moaiext-iphone/ReachabilityListener.mm"; sourceTree = "<group>"; };
+		077E0F9814FC4A91006B0B4D /* MOAIFacebook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIFacebook.h; path = "moaiext-iphone/MOAIFacebook.h"; sourceTree = "<group>"; };
+		077E0F9914FC4A91006B0B4D /* MOAIFacebook.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIFacebook.mm; path = "moaiext-iphone/MOAIFacebook.mm"; sourceTree = "<group>"; };
 		0780B1D514463B71006626CF /* MOAITapjoy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = MOAITapjoy.h; path = "moaiext-iphone/MOAITapjoy.h"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		0780B1D614463B71006626CF /* MOAITapjoy.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAITapjoy.mm; path = "moaiext-iphone/MOAITapjoy.mm"; sourceTree = "<group>"; };
 		0795290F1447902700143A72 /* MOAIImage-jpg.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "MOAIImage-jpg.cpp"; sourceTree = "<group>"; };
@@ -3888,6 +3905,20 @@
 		07E885BC13BE3E78008D75AA /* MOAIParticleDistanceEmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIParticleDistanceEmitter.h; sourceTree = "<group>"; };
 		07E885BD13BE3E78008D75AA /* MOAIParticleTimedEmitter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIParticleTimedEmitter.cpp; sourceTree = "<group>"; };
 		07E885BE13BE3E78008D75AA /* MOAIParticleTimedEmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIParticleTimedEmitter.h; sourceTree = "<group>"; };
+		07F4C7B014FC440500FB78BA /* libmoai-ios-facebook.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-facebook.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		07F4C7B114FC449E00FB78BA /* Facebook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Facebook.h; path = "../../3rdparty/facebookiOS/lib/facebook-ios-sdk/Facebook.h"; sourceTree = "<group>"; };
+		07F4C7B214FC449E00FB78BA /* FBConnect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBConnect.h; path = "../../3rdparty/facebookiOS/lib/facebook-ios-sdk/FBConnect.h"; sourceTree = "<group>"; };
+		07F4C7B314FC449E00FB78BA /* FBDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBDialog.h; path = "../../3rdparty/facebookiOS/lib/facebook-ios-sdk/FBDialog.h"; sourceTree = "<group>"; };
+		07F4C7B414FC449E00FB78BA /* FBFrictionlessRequestSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBFrictionlessRequestSettings.h; path = "../../3rdparty/facebookiOS/lib/facebook-ios-sdk/FBFrictionlessRequestSettings.h"; sourceTree = "<group>"; };
+		07F4C7B514FC449E00FB78BA /* FBLoginDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBLoginDialog.h; path = "../../3rdparty/facebookiOS/lib/facebook-ios-sdk/FBLoginDialog.h"; sourceTree = "<group>"; };
+		07F4C7B614FC449E00FB78BA /* FBRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FBRequest.h; path = "../../3rdparty/facebookiOS/lib/facebook-ios-sdk/FBRequest.h"; sourceTree = "<group>"; };
+		07F4C7B714FC449E00FB78BA /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSON.h; path = "../../3rdparty/facebookiOS/lib/facebook-ios-sdk/JSON.h"; sourceTree = "<group>"; };
+		07F4C7B814FC449E00FB78BA /* NSObject+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSObject+SBJSON.h"; path = "../../3rdparty/facebookiOS/lib/facebook-ios-sdk/NSObject+SBJSON.h"; sourceTree = "<group>"; };
+		07F4C7B914FC449E00FB78BA /* NSString+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+SBJSON.h"; path = "../../3rdparty/facebookiOS/lib/facebook-ios-sdk/NSString+SBJSON.h"; sourceTree = "<group>"; };
+		07F4C7BA14FC449E00FB78BA /* SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBJSON.h; path = "../../3rdparty/facebookiOS/lib/facebook-ios-sdk/SBJSON.h"; sourceTree = "<group>"; };
+		07F4C7BB14FC449E00FB78BA /* SBJsonBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBJsonBase.h; path = "../../3rdparty/facebookiOS/lib/facebook-ios-sdk/SBJsonBase.h"; sourceTree = "<group>"; };
+		07F4C7BC14FC449E00FB78BA /* SBJsonParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBJsonParser.h; path = "../../3rdparty/facebookiOS/lib/facebook-ios-sdk/SBJsonParser.h"; sourceTree = "<group>"; };
+		07F4C7BD14FC449E00FB78BA /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBJsonWriter.h; path = "../../3rdparty/facebookiOS/lib/facebook-ios-sdk/SBJsonWriter.h"; sourceTree = "<group>"; };
 		07F59342143E318B00C6D185 /* MOAIUntzSampleBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIUntzSampleBuffer.cpp; path = "moaiext-untz/MOAIUntzSampleBuffer.cpp"; sourceTree = "<group>"; };
 		07F59343143E318B00C6D185 /* MOAIUntzSampleBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIUntzSampleBuffer.h; path = "moaiext-untz/MOAIUntzSampleBuffer.h"; sourceTree = "<group>"; };
 		07FAC91513B8F1CA00AFD0B3 /* moaicore-pch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "moaicore-pch.cpp"; sourceTree = "<group>"; };
@@ -5205,6 +5236,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		07F4C7AB14FC440500FB78BA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CD04ACB014725568009C20E5 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -5259,6 +5297,7 @@
 				03240A7613564CAF000ADC60 /* contrib */,
 				03240A7913564CAF000ADC60 /* curl */,
 				03240B1313564CB0000ADC60 /* expat */,
+				07F4C7A314FC43C500FB78BA /* facebook */,
 				03240B2713564CB0000ADC60 /* freetype */,
 				CD218F9013A7FD8F008337E7 /* jansson */,
 				0795291A1447907100143A72 /* jpeg-8c */,
@@ -5935,6 +5974,7 @@
 				CD04ACB414725568009C20E5 /* libmoai-ios-zipfs.a */,
 				CD04AE7F1472557F009C20E5 /* libmoai-osx-zipfs.a */,
 				0705D8C014F46A6D009537C3 /* libmoai-ios-adcolony.a */,
+				07F4C7B014FC440500FB78BA /* libmoai-ios-facebook.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -6290,6 +6330,26 @@
 			name = "jpeg-8c";
 			path = "../../3rdparty/jpeg-8c";
 			sourceTree = SOURCE_ROOT;
+		};
+		07F4C7A314FC43C500FB78BA /* facebook */ = {
+			isa = PBXGroup;
+			children = (
+				07F4C7B114FC449E00FB78BA /* Facebook.h */,
+				07F4C7B214FC449E00FB78BA /* FBConnect.h */,
+				07F4C7B314FC449E00FB78BA /* FBDialog.h */,
+				07F4C7B414FC449E00FB78BA /* FBFrictionlessRequestSettings.h */,
+				07F4C7B514FC449E00FB78BA /* FBLoginDialog.h */,
+				07F4C7B614FC449E00FB78BA /* FBRequest.h */,
+				07F4C7B714FC449E00FB78BA /* JSON.h */,
+				07F4C7B814FC449E00FB78BA /* NSObject+SBJSON.h */,
+				07F4C7B914FC449E00FB78BA /* NSString+SBJSON.h */,
+				07F4C7BA14FC449E00FB78BA /* SBJSON.h */,
+				07F4C7BB14FC449E00FB78BA /* SBJsonBase.h */,
+				07F4C7BC14FC449E00FB78BA /* SBJsonParser.h */,
+				07F4C7BD14FC449E00FB78BA /* SBJsonWriter.h */,
+			);
+			name = facebook;
+			sourceTree = "<group>";
 		};
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
@@ -7256,6 +7316,8 @@
 				CDD06EC91398BA6200AB0420 /* MOAIApp.mm */,
 				E952725A14D89C3300B32A28 /* MOAICrittercism.h */,
 				E952727214D8B0E000B32A28 /* MOAICrittercism.mm */,
+				077E0F9814FC4A91006B0B4D /* MOAIFacebook.h */,
+				077E0F9914FC4A91006B0B4D /* MOAIFacebook.mm */,
 				07E6C62E140C490B004D1227 /* MOAIGameCenter.h */,
 				07E6C62F140C490B004D1227 /* MOAIGameCenter.mm */,
 				0780B1D514463B71006626CF /* MOAITapjoy.h */,
@@ -9916,6 +9978,27 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		07F4C7A614FC440500FB78BA /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				07F4C7BE14FC449E00FB78BA /* Facebook.h in Headers */,
+				07F4C7BF14FC449E00FB78BA /* FBConnect.h in Headers */,
+				07F4C7C014FC449E00FB78BA /* FBDialog.h in Headers */,
+				07F4C7C114FC449E00FB78BA /* FBFrictionlessRequestSettings.h in Headers */,
+				07F4C7C214FC449E00FB78BA /* FBLoginDialog.h in Headers */,
+				07F4C7C314FC449E00FB78BA /* FBRequest.h in Headers */,
+				07F4C7C414FC449E00FB78BA /* JSON.h in Headers */,
+				07F4C7C514FC449E00FB78BA /* NSObject+SBJSON.h in Headers */,
+				07F4C7C614FC449E00FB78BA /* NSString+SBJSON.h in Headers */,
+				07F4C7C714FC449E00FB78BA /* SBJSON.h in Headers */,
+				07F4C7C814FC449E00FB78BA /* SBJsonBase.h in Headers */,
+				07F4C7C914FC449E00FB78BA /* SBJsonParser.h in Headers */,
+				07F4C7CA14FC449E00FB78BA /* SBJsonWriter.h in Headers */,
+				077E0F9A14FC4A91006B0B4D /* MOAIFacebook.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CD04AAC014725568009C20E5 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -10142,6 +10225,23 @@
 			productReference = 073D58591459269600289D5C /* libmoai-ios-tapjoy.a */;
 			productType = "com.apple.product-type.library.static";
 		};
+		07F4C7A514FC440500FB78BA /* libmoai-ios-facebook */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 07F4C7AC14FC440500FB78BA /* Build configuration list for PBXNativeTarget "libmoai-ios-facebook" */;
+			buildPhases = (
+				07F4C7A614FC440500FB78BA /* Headers */,
+				07F4C7A914FC440500FB78BA /* Sources */,
+				07F4C7AB14FC440500FB78BA /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "libmoai-ios-facebook";
+			productName = OpenUSLS;
+			productReference = 07F4C7B014FC440500FB78BA /* libmoai-ios-facebook.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 		CD04AABB14725568009C20E5 /* libmoai-ios-zipfs */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = CD04ACB114725568009C20E5 /* Build configuration list for PBXNativeTarget "libmoai-ios-zipfs" */;
@@ -10284,6 +10384,7 @@
 				03C2F6F3104DE130009A2D5D /* libmoai-ios */,
 				0379C3D51333ECD800E89DDC /* libmoai-ios-3rdparty */,
 				0705D84214F46A6D009537C3 /* libmoai-ios-adcolony */,
+				07F4C7A514FC440500FB78BA /* libmoai-ios-facebook */,
 				CDD06A061398822500AB0420 /* libmoai-ios-luaext */,
 				073D52EC1459269600289D5C /* libmoai-ios-tapjoy */,
 				CD07C3A313A182AA00C9386C /* libmoai-ios-untz */,
@@ -12019,6 +12120,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		07F4C7A914FC440500FB78BA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				077E0F9B14FC4A91006B0B4D /* MOAIFacebook.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CD04ABD214725568009C20E5 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -12751,6 +12860,120 @@
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
+		};
+		07F4C7AD14FC440500FB78BA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"ARCHS[sdk=iphoneos*]" = (
+					armv6,
+					"$(ARCHS_STANDARD_32_BIT)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				PRODUCT_NAME = "moai-ios-facebook";
+				SDKROOT = iphoneos;
+				VALID_ARCHS = "i386 armv6 armv7";
+				WARNING_CFLAGS = "-w";
+			};
+			name = Debug;
+		};
+		07F4C7AE14FC440500FB78BA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"ARCHS[sdk=iphoneos*]" = (
+					armv6,
+					"$(ARCHS_STANDARD_32_BIT)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				PRODUCT_NAME = "moai-ios-facebook";
+				SDKROOT = iphoneos;
+				VALID_ARCHS = "i386 armv6 armv7";
+				WARNING_CFLAGS = "-w";
+			};
+			name = Release;
+		};
+		07F4C7AF14FC440500FB78BA /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"ARCHS[sdk=iphoneos*]" = (
+					armv6,
+					"$(ARCHS_STANDARD_32_BIT)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				PRODUCT_NAME = "moai-ios-facebook";
+				SDKROOT = iphoneos;
+				VALID_ARCHS = "i386 armv6 armv7";
+				WARNING_CFLAGS = "-w";
+			};
+			name = Distribution;
 		};
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -13720,6 +13943,16 @@
 				073D58571459269600289D5C /* Debug */,
 				073D58581459269600289D5C /* Release */,
 				E90D02C314D5E12700DD75AA /* Distribution */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		07F4C7AC14FC440500FB78BA /* Build configuration list for PBXNativeTarget "libmoai-ios-facebook" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				07F4C7AD14FC440500FB78BA /* Debug */,
+				07F4C7AE14FC440500FB78BA /* Release */,
+				07F4C7AF14FC440500FB78BA /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;

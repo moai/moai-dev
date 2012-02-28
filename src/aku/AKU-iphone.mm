@@ -3,6 +3,7 @@
 
 #import <aku/AKU-iphone.h>
 #import <moaiext-iphone/moaiext-iphone.h>
+#import <moaiext-iphone/MOAIFacebook.h>
 #import <moaiext-iphone/Reachability.h>
 #import <moaicore/MOAIEnvironment.h>
 #import <CoreTelephony/CTTelephonyNetworkInfo.h>
@@ -45,6 +46,7 @@ void AKUAppDidStartSession ( bool resumed ) {
 void AKUAppOpenFromURL ( NSURL* url ) {
 	
 	MOAIApp::Get ().AppOpenedFromURL ( url );
+	MOAIFacebook::Get ().HandleOpenURL ( url );
 }
 
 //-----------------------------------------------------------------//
@@ -137,6 +139,8 @@ void AKUIphoneInit ( UIApplication* application ) {
 	#ifndef DISABLE_CRITTERCISM
 		REGISTER_LUA_CLASS ( MOAICrittercism )
 	#endif
+		
+	REGISTER_LUA_CLASS ( MOAIFacebook )
 }
 
 //-----------------------------------------------------------------//
