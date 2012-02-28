@@ -4,7 +4,7 @@
 // http://getmoai.com
 //----------------------------------------------------------------//
 
-package @PACKAGE@;
+package com.ziplinegames.moai;
 
 import android.util.Log;
 

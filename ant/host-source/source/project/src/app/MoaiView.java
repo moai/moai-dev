@@ -17,6 +17,9 @@ import android.os.Looper;
 import android.provider.Settings.Secure;
 import android.view.MotionEvent;
 
+// Moai
+import com.ziplinegames.moai.*;
+
 // README: Aku is a thread-unaware platform, by design. Therefore, it is important
 // for hosts in a mult-threaded environment such as Android ensure that Aku calls
 // are made on the appropriate thread. Furthermore, because some Aku callbacks

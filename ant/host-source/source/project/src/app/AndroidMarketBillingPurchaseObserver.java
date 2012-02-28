@@ -21,6 +21,9 @@ import android.os.Handler;
 
 import java.lang.reflect.Method;
 
+// Moai
+import com.ziplinegames.moai.*;
+
 //================================================================//
 // AndroidMarketBillingPurchaseObserver
 //================================================================//

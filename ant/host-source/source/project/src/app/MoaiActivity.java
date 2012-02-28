@@ -44,9 +44,8 @@ import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.concurrent.CountDownLatch;
 
-// Tapjoy
-import com.tapjoy.TapjoyConnect;
-import com.tapjoy.TapjoyVideoNotifier;
+// Moai
+import com.ziplinegames.moai.*;
 
 // Crittercism
 import com.crittercism.app.Crittercism;
@@ -59,7 +58,7 @@ import com.jirbo.adcolony.AdColonyVideoAd;
 import android.app.ActivityManager;
 import android.content.pm.ConfigurationInfo;
 
-//Facebook
+// Facebook
 import com.facebook.android.*;
 import com.facebook.android.Facebook.*;
 
@@ -96,7 +95,7 @@ enum INPUT_SENSOR {
 //================================================================//
 // MoaiActivity
 //================================================================//
-public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
+public class MoaiActivity extends Activity {
 
 	private AccelerometerEventListener		mAccelerometerListener;
 	private Sensor 							mAccelerometerSensor;
@@ -125,9 +124,6 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 	protected static native void 		AKUNotifyPurchaseResponseReceived	( String productId, int responseCode ); // M
 	protected static native void 		AKUNotifyPurchaseStateChanged		( String productId, int purchaseState, String orderId, String notificationId, String developerPayload ); // M
 	protected static native void 		AKUNotifyRestoreResponseReceived	( int responseCode ); // M
-	protected static native void		AKUNotifyVideoAdReady				(); // ? TBD
-	protected static native void		AKUNotifyVideoAdError				( int statusCode ); // ? TBD
-	protected static native void		AKUNotifyVideoAdClose				(); // ? TBD
 	protected static native void		AKUNotifyFacebookLogin				( int statusCode );
 	protected static native void 		AKUSetConnectionType 				( long connectionType ); // M	
 	protected static native void 		AKUSetDocumentDirectory 			( String path ); // M
@@ -141,6 +137,8 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
     	super.onCreate ( savedInstanceState );
 
        	System.load ( "/data/data/@PACKAGE@/lib/libmoai.so" ); 
+
+		Moai.initialize ( this );
 
         requestWindowFeature ( Window.FEATURE_NO_TITLE );
 	    getWindow ().addFlags ( WindowManager.LayoutParams.FLAG_FULLSCREEN ); 
@@ -543,41 +541,7 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 		
 		// TODO: Add listener to allow callbacks into Lua
 	}
-	
-	//================================================================//
-	// Tapjoy JNI callback methods
-	//================================================================//
-
-	//----------------------------------------------------------------//
-	public String getUserId () {
-
-		return TapjoyConnect.getTapjoyConnectInstance ().getUserID ();
-	}
-	 
-	//----------------------------------------------------------------//
-	public void initVideoAds () {
-
-		TapjoyConnect.getTapjoyConnectInstance ().initVideoAd ( MoaiActivity.this );
-	}
-
-	//----------------------------------------------------------------//
-	public void requestTapjoyConnect ( String appId, String appSecret ) {
-
-		TapjoyConnect.requestTapjoyConnect ( MoaiActivity.this, appId, appSecret );
-	}
-		
-	//----------------------------------------------------------------//
-	public void setVideoAdCacheCount ( int count ) {
-
-		TapjoyConnect.getTapjoyConnectInstance ().setVideoCacheCount ( count );
-	}
-	
-	//----------------------------------------------------------------//
-	public void showOffers () {
-
-		TapjoyConnect.getTapjoyConnectInstance ().showOffers ();
-	}
-		
+			
 	//================================================================//
 	// In-App Billing JNI callback methods
 	//================================================================//
@@ -636,29 +600,7 @@ public class MoaiActivity extends Activity implements TapjoyVideoNotifier {
 		intent.putExtra( "app", PendingIntent.getBroadcast ( getApplicationContext (), 0, new Intent (), 0 ));
 		getApplicationContext ().startService ( intent );
 	}
-	
-	//================================================================//
-	// TapjoyVideoNotifier methods
-	//================================================================//	
-
-	//----------------------------------------------------------------//
-	public void videoComplete () {
-
-		AKUNotifyVideoAdClose ();
-	}
-
-	//----------------------------------------------------------------//
-	public void videoError ( int statusCode ) {
-
-		AKUNotifyVideoAdError ( statusCode );
-	}
-
-	//----------------------------------------------------------------//
-	public void videoReady () {
-
-		AKUNotifyVideoAdReady ();
-	}
-	
+		
 	//================================================================//
 	// ConnectivityBroadcastReceiver
 	//================================================================//

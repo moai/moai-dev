@@ -126,7 +126,7 @@
 	backup_ext=.backup
 	
 	function fr () { 
-		sed -i$backup_ext s%$2%"$3"%g $1
+		sed -i$backup_ext s%"$2"%"$3"%g $1
 		rm -f $1$backup_ext
 	}
 
@@ -139,9 +139,11 @@
 		mkdir -p $new_host_dir/host-source/project/$package_path
 	done
 	IFS=$OLD_IFS
-
+	
 	# copy classes into new host dir
-	rsync -r --exclude=.svn --exclude=.DS_Store host-source/source/project/src/. $new_host_dir/host-source/project/$package_path
+	rsync -r --exclude=.svn --exclude=.DS_Store host-source/source/project/src/app/. $new_host_dir/host-source/project/$package_path
+	rsync -r --exclude=.svn --exclude=.DS_Store --exclude=/*.java host-source/source/project/src/moai/. $new_host_dir/host-source/moai
+	rsync --exclude=.svn --exclude=.DS_Store host-source/source/project/src/moai/*.java $new_host_dir/host-source/project/src/com/ziplinegames/moai
 
 	# copy external classes, resources, libs and projects into new host dir
 	rsync -r --exclude=.svn --exclude=.DS_Store host-source/source/project/external/projects/. $new_host_dir/host-source/external
