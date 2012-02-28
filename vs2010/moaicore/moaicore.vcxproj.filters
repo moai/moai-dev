@@ -37,9 +37,6 @@
     <Filter Include="src\partition">
       <UniqueIdentifier>{db16049c-1678-43f7-96f6-5f2660b56c75}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\textbox">
-      <UniqueIdentifier>{d0fa2f5e-c44a-45ed-90f6-6f5a21f80b00}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\util">
       <UniqueIdentifier>{f18f4d87-7e6b-4612-9ba3-b5d2ac26a0e7}</UniqueIdentifier>
     </Filter>
@@ -87,6 +84,15 @@
     </Filter>
     <Filter Include="src\pathfinding">
       <UniqueIdentifier>{61832aec-ac77-4f89-ab2d-c5b38e43a6f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\text">
+      <UniqueIdentifier>{d0fa2f5e-c44a-45ed-90f6-6f5a21f80b00}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\font">
+      <UniqueIdentifier>{573df398-dbbf-4b54-8518-c0a0b8147001}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\texture">
+      <UniqueIdentifier>{a1c47757-a4f5-48bd-a285-af78c17328c5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -149,15 +155,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAIXmlParser.cpp">
       <Filter>src\util</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAIHttpTask.cpp">
-      <Filter>src\web</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAIFont.cpp">
-      <Filter>src\textbox</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAITextBox.cpp">
-      <Filter>src\textbox</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAICp.cpp">
       <Filter>src\chipmunk</Filter>
@@ -234,9 +231,6 @@
     <ClCompile Include="..\..\src\moaicore\MOAISurfaceSampler2D.cpp">
       <Filter>src\partition</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAITexture.cpp">
-      <Filter>src\gfx</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAIGfxQuad2D.cpp">
       <Filter>src\deck</Filter>
     </ClCompile>
@@ -285,9 +279,6 @@
     <ClCompile Include="..\..\src\moaicore\MOAIPartitionLayer.cpp">
       <Filter>src\partition</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAIProp2D.cpp">
-      <Filter>src\prop</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAIProp.cpp">
       <Filter>src\prop</Filter>
     </ClCompile>
@@ -306,12 +297,6 @@
     <ClCompile Include="..\..\src\moaicore\MOAIMesh.cpp">
       <Filter>src\deck</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAILayer2D.cpp">
-      <Filter>src\layer</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAILayerBridge2D.cpp">
-      <Filter>src\layer</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAIParser.cpp">
       <Filter>src\util</Filter>
     </ClCompile>
@@ -329,12 +314,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAIDeckRemapper.cpp">
       <Filter>src\deck</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAICameraAnchor2D.cpp">
-      <Filter>src\camera</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAICameraFitter2D.cpp">
-      <Filter>src\camera</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\aku\AKU.cpp">
       <Filter>src\aku</Filter>
@@ -387,29 +366,11 @@
     <ClCompile Include="..\..\src\moaicore\MOAITileFlags.cpp">
       <Filter>src\grid</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAIBitmapFontRipper.cpp">
-      <Filter>src\textbox</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAIFreetypeFontRipper.cpp">
-      <Filter>src\textbox</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAIGlyph.cpp">
-      <Filter>src\textbox</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAITextFrame.cpp">
-      <Filter>src\textbox</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAITextLayout.cpp">
-      <Filter>src\textbox</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAILineBrush.cpp">
       <Filter>src\brush</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAIQuadBrush.cpp">
       <Filter>src\brush</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAIFrameBuffer.cpp">
-      <Filter>src\gfx</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAIBlendMode.cpp">
       <Filter>src\gfx</Filter>
@@ -477,12 +438,6 @@
     <ClCompile Include="..\..\src\moaicore\MOAILuaStateHandle.cpp">
       <Filter>src\lua</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAIUrlMgr_curl.cpp">
-      <Filter>src\web</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAIHttpTaskInfo_curl.cpp">
-      <Filter>src\web</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAIDeserializer.cpp">
       <Filter>src\lua</Filter>
     </ClCompile>
@@ -524,6 +479,90 @@
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAICoroutine.cpp">
       <Filter>src\action</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIFont.cpp">
+      <Filter>src\font</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIFontReader.cpp">
+      <Filter>src\font</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIFreeTypeFontReader.cpp">
+      <Filter>src\font</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIGlyph.cpp">
+      <Filter>src\font</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIGlyphCache.cpp">
+      <Filter>src\font</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIGlyphCacheBase.cpp">
+      <Filter>src\font</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIGlyphCachePage.cpp">
+      <Filter>src\font</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIGlyphSet.cpp">
+      <Filter>src\font</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIStaticGlyphCache.cpp">
+      <Filter>src\font</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAITextBox.cpp">
+      <Filter>src\text</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAITextDesigner.cpp">
+      <Filter>src\text</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAITextStyle.cpp">
+      <Filter>src\text</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAITextStyler.cpp">
+      <Filter>src\text</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAILayer.cpp">
+      <Filter>src\layer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAILayerBridge.cpp">
+      <Filter>src\layer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIUrlMgr_nacl.cpp">
+      <Filter>src\web</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIHttpTask_curl.cpp">
+      <Filter>src\web</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIHttpTaskBase.cpp">
+      <Filter>src\web</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIHttpTaskInfo_nacl.cpp">
+      <Filter>src\web</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIUrlMgr_curl.cpp">
+      <Filter>src\web</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAICamera.cpp">
+      <Filter>src\camera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAICameraAnchor2D.cpp">
+      <Filter>src\camera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAICameraFitter2D.cpp">
+      <Filter>src\camera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIFrameBuffer.cpp">
+      <Filter>src\texture</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIImageTexture.cpp">
+      <Filter>src\texture</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAITexture.cpp">
+      <Filter>src\texture</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAITextureBase.cpp">
+      <Filter>src\texture</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIMultiTexture.cpp">
+      <Filter>src\texture</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -586,15 +625,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIXmlParser.h">
       <Filter>src\util</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\MOAIHttpTask.h">
-      <Filter>src\web</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\MOAIFont.h">
-      <Filter>src\textbox</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\MOAITextBox.h">
-      <Filter>src\textbox</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAICp.h">
       <Filter>src\chipmunk</Filter>
@@ -671,9 +701,6 @@
     <ClInclude Include="..\..\src\moaicore\MOAISurfaceSampler2D.h">
       <Filter>src\partition</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\MOAITexture.h">
-      <Filter>src\gfx</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIGfxQuad2D.h">
       <Filter>src\deck</Filter>
     </ClInclude>
@@ -731,9 +758,6 @@
     <ClInclude Include="..\..\src\moaicore\MOAIPartitionLayer.h">
       <Filter>src\partition</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\MOAIProp2D.h">
-      <Filter>src\prop</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIProp.h">
       <Filter>src\prop</Filter>
     </ClInclude>
@@ -751,12 +775,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIMesh.h">
       <Filter>src\deck</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\MOAILayer2D.h">
-      <Filter>src\layer</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\MOAILayerBridge2D.h">
-      <Filter>src\layer</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIParser.h">
       <Filter>src\util</Filter>
@@ -778,12 +796,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIDeckRemapper.h">
       <Filter>src\deck</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\MOAICameraAnchor2D.h">
-      <Filter>src\camera</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\MOAICameraFitter2D.h">
-      <Filter>src\camera</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\aku\AKU.h">
       <Filter>src\aku</Filter>
@@ -836,29 +848,11 @@
     <ClInclude Include="..\..\src\moaicore\MOAIGridSpace.h">
       <Filter>src\grid</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\MOAITextLayout.h">
-      <Filter>src\textbox</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\MOAIBitmapFontRipper.h">
-      <Filter>src\textbox</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\MOAIFreetypeFontRipper.h">
-      <Filter>src\textbox</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\MOAIGlyph.h">
-      <Filter>src\textbox</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\MOAITextFrame.h">
-      <Filter>src\textbox</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIQuadBrush.h">
       <Filter>src\brush</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAILineBrush.h">
       <Filter>src\brush</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\MOAIFrameBuffer.h">
-      <Filter>src\gfx</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIBlendMode.h">
       <Filter>src\gfx</Filter>
@@ -932,12 +926,6 @@
     <ClInclude Include="..\..\src\moaicore\MOAIObject-impl.h">
       <Filter>src\lua</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\MOAIHttpTaskInfo_curl.h">
-      <Filter>src\web</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\MOAIUrlMgr.h">
-      <Filter>src\web</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIDeserializer.h">
       <Filter>src\lua</Filter>
     </ClInclude>
@@ -985,6 +973,90 @@
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAICoroutine.h">
       <Filter>src\action</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIStaticGlyphCache.h">
+      <Filter>src\font</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIFont.h">
+      <Filter>src\font</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIFontReader.h">
+      <Filter>src\font</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIFreeTypeFontReader.h">
+      <Filter>src\font</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIGlyph.h">
+      <Filter>src\font</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIGlyphCache.h">
+      <Filter>src\font</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIGlyphCacheBase.h">
+      <Filter>src\font</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIGlyphCachePage.h">
+      <Filter>src\font</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIGlyphSet.h">
+      <Filter>src\font</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAISpanList.h">
+      <Filter>src\font</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAITextBox.h">
+      <Filter>src\text</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAITextDesigner.h">
+      <Filter>src\text</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAITextStyle.h">
+      <Filter>src\text</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAITextStyler.h">
+      <Filter>src\text</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAILayer.h">
+      <Filter>src\layer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAILayerBridge.h">
+      <Filter>src\layer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIHttpTask_curl.h">
+      <Filter>src\web</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIHttpTaskBase.h">
+      <Filter>src\web</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIHttpTaskInfo_nacl.h">
+      <Filter>src\web</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIUrlMgr.h">
+      <Filter>src\web</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAICamera.h">
+      <Filter>src\camera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAICameraAnchor2D.h">
+      <Filter>src\camera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAICameraFitter2D.h">
+      <Filter>src\camera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAITextureBase.h">
+      <Filter>src\texture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIFrameBuffer.h">
+      <Filter>src\texture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIImageTexture.h">
+      <Filter>src\texture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAITexture.h">
+      <Filter>src\texture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIMultiTexture.h">
+      <Filter>src\texture</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
