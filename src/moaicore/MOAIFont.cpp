@@ -396,8 +396,8 @@ void MOAIFont::RebuildKerning ( MOAIGlyphSet& glyphSet ) {
 		u32 kernTableSize = 0;
 		
 		// iterate over just the new glyphs; check each one against old glyphs for kerning info
-		for ( MOAIGlyph* glyphIt = glyphSet.mGlyphs; glyphIt; glyphIt = glyphIt->mNext ) {
-			MOAIGlyph& glyph2 = *glyphIt;
+		for ( MOAIGlyph* glyphIt2 = glyphSet.mGlyphs; glyphIt2; glyphIt2 = glyphIt2->mNext ) {
+			MOAIGlyph& glyph2 = *glyphIt2;
 			
 			MOAIKernVec kernVec;
 			if ( this->mReader->GetKernVec ( glyph, glyph2, kernVec )) {

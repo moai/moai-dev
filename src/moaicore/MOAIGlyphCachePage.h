@@ -29,6 +29,8 @@ private:
 
 	float mThreshold;
 
+public:
+	
 	//----------------------------------------------------------------//
 	void			AffirmCanvas				();
 	GlyphSpan*		Alloc						( MOAIGlyph& glyph );
@@ -36,10 +38,6 @@ private:
 	void			Clear						();
 	bool			ExpandToNextPowerofTwo		();
 	void			InitCanvas					( u32 width, u32 height, USColor::Format colorFmt, USPixel::Format pixelFmt );
-
-public:
-	
-	//----------------------------------------------------------------//
 					MOAIGlyphCachePage			();
 					~MOAIGlyphCachePage			();
 };
