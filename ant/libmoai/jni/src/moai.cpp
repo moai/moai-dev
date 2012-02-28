@@ -136,7 +136,6 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 //================================================================//
 
 	JavaVM* 		jvm;
-	JNIEnv* 		gEnv;
 
 	jobject			mMoaiActivity;
 	jobject			mMoaiView;
@@ -448,7 +447,6 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 	//----------------------------------------------------------------//
 	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUInit ( JNIEnv* env, jclass obj, jobject moaiView, jobject moaiActivity ) {
 
-		// create MOAIApp class
 		MOAIApp::Affirm ();
 		REGISTER_LUA_CLASS ( MOAIApp );
 
@@ -561,21 +559,6 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 	//----------------------------------------------------------------//
 	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiActivity_AKUNotifyDialogDismissed ( JNIEnv* env, jclass obj, jint code ) {
 		MOAIApp::Get ().NotifyDialogDismissed ( code );
-	}
-
-	//----------------------------------------------------------------//
-	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiActivity_AKUNotifyVideoAdReady ( JNIEnv* env, jclass obj ) {
-		MOAITapjoy::Get ().NotifyVideoAdReady ();
-	}
-
-	//----------------------------------------------------------------//
-	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiActivity_AKUNotifyVideoAdError ( JNIEnv* env, jclass obj, jint code ) {
-		MOAITapjoy::Get ().NotifyVideoAdError ( code );
-	}
-	
-	//----------------------------------------------------------------//
-	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiActivity_AKUNotifyVideoAdClose ( JNIEnv* env, jclass obj ) {
-		MOAITapjoy::Get ().NotifyVideoAdClose ();
 	}
 	
 	//----------------------------------------------------------------//
@@ -777,4 +760,32 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 		}
 
 		AKUUpdate ();
+	}
+
+	//================================================================//
+	// Tapjoy JNI methods
+	//================================================================//
+
+	//----------------------------------------------------------------//
+	extern "C" void Java_com_ziplinegames_moai_MoaiTapjoy_AKUNotifyTapjoyVideoAdReady ( JNIEnv* env, jclass obj ) {
+
+#ifndef DISABLE_TAPJOY
+		MOAITapjoy::Get ().NotifyVideoAdReady ();
+#endif
+	}
+
+	//----------------------------------------------------------------//
+	extern "C" void Java_com_ziplinegames_moai_MoaiTapjoy_AKUNotifyTapjoyVideoAdError ( JNIEnv* env, jclass obj, jint code ) {
+
+#ifndef DISABLE_TAPJOY
+		MOAITapjoy::Get ().NotifyVideoAdError ( code );
+#endif
+	}
+	
+	//----------------------------------------------------------------//
+	extern "C" void Java_com_ziplinegames_moai_MoaiTapjoy_AKUNotifyTapjoyVideoAdClose ( JNIEnv* env, jclass obj ) {
+
+#ifndef DISABLE_TAPJOY
+		MOAITapjoy::Get ().NotifyVideoAdClose ();
+#endif
 	}

@@ -9,36 +9,10 @@
 
 #include <android/log.h>
 
+#include <moaiext-android/moaiext-jni.h>
 #include <moaiext-android/MOAITapjoy.h>
 
 extern JavaVM* jvm;
-extern jobject mMoaiActivity;
-
-jmethodID mRequestTapjoyFunc;
-jmethodID mGetTapjoyUserIdFunc;
-jmethodID mInitTapjoyVideoAdsFunc;
-jmethodID mSetTapjoyVideoAdCacheCount;
-jmethodID mShowTapjoyOffersFunc;
-
-//================================================================//
-// Utility macros
-//================================================================//
-
-	#define GET_ENV() 	\
-		JNIEnv* env; 	\
-		jvm->GetEnv (( void** )&env, JNI_VERSION_1_4 );
-		
-	#define GET_CSTRING(jstr, cstr) \
-		const char* cstr = ( jstr != NULL ) ? env->GetStringUTFChars ( jstr, NULL ) : NULL;
-
-	#define RELEASE_CSTRING(jstr, cstr) \
-		if ( cstr != NULL ) env->ReleaseStringUTFChars ( jstr, cstr );
-		
-	#define GET_JSTRING(cstr, jstr) \
-		jstring jstr = ( cstr != NULL ) ? env->NewStringUTF (( const char* )cstr ) : NULL;
-		
-	#define PRINT(str) \
-		__android_log_write ( ANDROID_LOG_INFO, "MoaiLog", str );
 
 //================================================================//
 // lua
@@ -48,25 +22,33 @@ jmethodID mShowTapjoyOffersFunc;
 int MOAITapjoy::_getUserId ( lua_State *L ) {
 	MOAILuaState state ( L );
 	
-	GET_ENV ();
+	JNI_GET_ENV ( jvm, env );
 
-	if ( mGetTapjoyUserIdFunc == NULL ) {
-		
-		jclass moaiActivityClass = env->GetObjectClass ( mMoaiActivity );		
-		mGetTapjoyUserIdFunc = env->GetMethodID ( moaiActivityClass, "getUserId", "()Ljava/lang/String;" );
+	jclass tapjoy = env->FindClass ( "com/ziplinegames/moai/MoaiTapjoy" );
+    if (tapjoy == NULL) {
+	
+		USLog::Print ( "MOAITapjoy: Unable to find java class %s", "com/ziplinegames/moai/MoaiTapjoy" );
+    } else {
+
+    	jmethodID getUserId = env->GetStaticMethodID ( tapjoy, "getUserId", "()Ljava/lang/String;" );
+    	if (getUserId == NULL) {
+
+			USLog::Print ( "MOAITapjoy: Unable to find static java method %s", "getUserId" );
+    	} else {
+
+			jstring jidentifier = ( jstring )env->CallStaticObjectMethod ( tapjoy, getUserId );	
+			
+			JNI_GET_CSTRING ( jidentifier, identifier );
+
+			lua_pushstring ( L, identifier );
+
+			JNI_RELEASE_CSTRING ( jidentifier, identifier );
+			
+			return 1;
+		}
 	}
 
-	jstring jidentifier = ( jstring )env->CallObjectMethod ( mMoaiActivity , mGetTapjoyUserIdFunc );
-	
-	GET_CSTRING ( jidentifier, identifier );
-
-	char buf [ 512 ];
-	strcpy ( buf, identifier );
-	const char* retVal = buf;
-		
-	RELEASE_CSTRING ( jidentifier, identifier );
-
-	lua_pushstring ( L, retVal );
+	lua_pushnil ( L );
 	
 	return 1;
 }
@@ -75,25 +57,35 @@ int MOAITapjoy::_getUserId ( lua_State *L ) {
 int MOAITapjoy::_initVideoAds ( lua_State* L ) {
 	MOAILuaState state ( L );
 
-	GET_ENV ();
+	JNI_GET_ENV ( jvm, env );
 
-	if ( mInitTapjoyVideoAdsFunc == NULL ) {
-		jclass moaiActivityClass = env->GetObjectClass ( mMoaiActivity );		
-		mInitTapjoyVideoAdsFunc = env->GetMethodID ( moaiActivityClass, "initVideoAds", "()V" );
-	}
+	jclass tapjoy = env->FindClass ( "com/ziplinegames/moai/MoaiTapjoy" );
+    if (tapjoy == NULL) {
+	
+		USLog::Print ( "MOAITapjoy: Unable to find java class %s", "com/ziplinegames/moai/MoaiTapjoy" );
+    } else {
 
-	env->CallVoidMethod ( mMoaiActivity , mInitTapjoyVideoAdsFunc );
+    	jmethodID initVideoAds = env->GetStaticMethodID ( tapjoy, "initVideoAds", "()V" );
+    	if (initVideoAds == NULL) {
 
-	u32 count = state.GetValue < u32 >( 1, 0 );
-	if ( count > 0 ) {
+			USLog::Print ( "MOAITapjoy: Unable to find static java method %s", "initVideoAds" );
+    	} else {
 
-		if ( mSetTapjoyVideoAdCacheCount == NULL ) {
+			env->CallStaticVoidMethod ( tapjoy, initVideoAds );
 			
-			jclass moaiActivityClass = env->GetObjectClass ( mMoaiActivity );		
-			mSetTapjoyVideoAdCacheCount = env->GetMethodID ( moaiActivityClass, "setVideoAdCacheCount", "(I)V" );
-		}
+			u32 count = state.GetValue < u32 >( 1, 0 );
+			if ( count > 0 ) {
 
-		env->CallVoidMethod ( mMoaiActivity , mSetTapjoyVideoAdCacheCount, count );
+				jmethodID setVideoAdCacheCount = env->GetStaticMethodID ( tapjoy, "setVideoAdCacheCount", "(I)V" );
+	    		if (setVideoAdCacheCount == NULL) {
+
+					USLog::Print ( "MOAITapjoy: Unable to find static java method %s", "setVideoAdCacheCount" );
+	    		} else {
+
+					env->CallStaticVoidMethod ( tapjoy, setVideoAdCacheCount, count );
+				}
+			}
+		}
 	}
 	
 	return 0;
@@ -105,19 +97,28 @@ int MOAITapjoy::_requestTapjoyConnect ( lua_State* L ) {
 
 	cc8* identifier = lua_tostring ( state, 1 );
 	cc8* secret = lua_tostring ( state, 2 );
+
+	JNI_GET_ENV ( jvm, env );
+
+	JNI_GET_JSTRING ( identifier, jidentifier );
+	JNI_GET_JSTRING ( secret, jsecret );
+
+	jclass tapjoy = env->FindClass ( "com/ziplinegames/moai/MoaiTapjoy" );
+    if (tapjoy == NULL) {
 	
-	GET_ENV ();
-	GET_JSTRING ( identifier, jidentifier );
-	GET_JSTRING ( secret, jsecret );
+		USLog::Print ( "MOAITapjoy: Unable to find java class %s", "com/ziplinegames/moai/MoaiTapjoy" );
+    } else {
 
-	if ( mRequestTapjoyFunc == NULL ) {
-		
-		jclass moaiActivityClass = env->GetObjectClass ( mMoaiActivity );		
-		mRequestTapjoyFunc = env->GetMethodID ( moaiActivityClass, "requestTapjoyConnect", "(Ljava/lang/String;Ljava/lang/String;)V" );
+    	jmethodID requestTapjoyConnect = env->GetStaticMethodID ( tapjoy, "requestTapjoyConnect", "(Ljava/lang/String;Ljava/lang/String;)V" );
+    	if (requestTapjoyConnect == NULL) {
+
+			USLog::Print ( "MOAITapjoy: Unable to find static java method %s", "requestTapjoyConnect" );
+    	} else {
+
+			env->CallStaticVoidMethod ( tapjoy, requestTapjoyConnect, jidentifier, jsecret );				
+		}
 	}
-
-	env->CallVoidMethod ( mMoaiActivity , mRequestTapjoyFunc, jidentifier, jsecret );
-		
+			
 	return 0;
 }
 
@@ -138,14 +139,23 @@ int MOAITapjoy::_setListener ( lua_State* L ) {
 int MOAITapjoy::_showOffers ( lua_State* L ) {
 	MOAILuaState state ( L );
 
-	GET_ENV ();
+	JNI_GET_ENV ( jvm, env );
 
-	if ( mShowTapjoyOffersFunc == NULL ) {
-		jclass moaiActivityClass = env->GetObjectClass ( mMoaiActivity );		
-		mShowTapjoyOffersFunc = env->GetMethodID ( moaiActivityClass, "showOffers", "()V" );
+	jclass tapjoy = env->FindClass ( "com/ziplinegames/moai/MoaiTapjoy" );
+    if (tapjoy == NULL) {
+	
+		USLog::Print ( "MOAITapjoy: Unable to find java class %s", "com/ziplinegames/moai/MoaiTapjoy" );
+    } else {
+
+    	jmethodID showOffers = env->GetStaticMethodID ( tapjoy, "showOffers", "()V" );
+    	if (showOffers == NULL) {
+
+			USLog::Print ( "MOAITapjoy: Unable to find static java method %s", "showOffers" );
+    	} else {
+
+			env->CallStaticVoidMethod ( tapjoy, showOffers );				
+		}
 	}
-
-	env->CallVoidMethod ( mMoaiActivity , mShowTapjoyOffersFunc );
 		
 	return 0;
 }

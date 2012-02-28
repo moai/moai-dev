@@ -6,21 +6,25 @@
 # http://getmoai.com
 #================================================================#
 
+	set -e
+
 	# check for command line switches
-	usage="usage: $0 -p <package> [-i thumb | arm] [-a all | armeabi | armeabi-v7a] [-l appPlatform ] [-s]"
+	usage="usage: $0 -p <package> [-s] [-i thumb | arm] [-a all | armeabi | armeabi-v7a] [-l appPlatform] [--disable-tapjoy]"
+	skip_build="false"
 	package_name=
 	arm_mode=arm
 	arm_arch=armeabi-v7a
 	app_platform=android-10
-	skip_build="false"
+	tapjoy_flags=
 	
 	while [ $# -gt 0 ];	do
 	    case "$1" in
+			-s)  skip_build="true";;
 			-p)  package_name="$2"; shift;;
 	        -i)  arm_mode="$2"; shift;;
 	        -a)  arm_arch="$2"; shift;;
 			-l)  app_platform="$2"; shift;;
-			-s)  skip_build="true";;
+			--disable-tapjoy)  tapjoy_flags="--disable-tapjoy";;
 			-*)
 		    	echo >&2 \
 		    		$usage
@@ -28,7 +32,7 @@
 			*)  break;;	# terminate while loop
 	    esac
 	    shift
-	done
+	done	
 		
 	if [ x"$package_name" = x ]; then
 		echo $usage
@@ -53,49 +57,12 @@
 	if [ -d $new_host_dir ]; then
 		rm -rf $new_host_dir
 	fi
-
-	# if libmoai already exists, find out which package it was build for
-	if [ -f libmoai/libs/package.txt ]; then
-		existing_package_name=$( sed -n '1p' libmoai/libs/package.txt )
-		existing_arm_mode=$( sed -n '2p' libmoai/libs/package.txt )
-		existing_arm_arch=$( sed -n '3p' libmoai/libs/package.txt )
-		existing_app_platform=$( sed -n '4p' libmoai/libs/package.txt )
-	fi
 	
-	shouldBuild=false
-
-	if [ x"$existing_package_name" != x"$package_name" ]; then
-		shouldBuild=true
-	fi
-
-	if [ x"$existing_arm_mode" != x"$arm_mode" ]; then
-		shouldBuild=true
-	fi
-
-	if [ x"$existing_arm_arch" != x"$arm_arch" ]; then
-		shouldBuild=true
-	fi
-
-	if [ x"$existing_app_platform" != x"$app_platform" ]; then
-		shouldBuild=true
-	fi
-	
-	# if the caller has not explicitly told us to skip a libmoai build, check
-	# to see if we should build libmoai first.
+	# if the caller has not explicitly told us to skip a libmoai build, build now
 	if [ x"$skip_build" != xtrue ]; then
-		if [ x"$shouldBuild" == xtrue ]; then
-			pushd libmoai > /dev/null
-				bash build.sh -p $package_name -i $arm_mode -a $arm_arch -l $app_platform
-			popd > /dev/null
-		elif [ ! -f libmoai/libs/armeabi/libmoai.so ] && [ x"$arm_arch" = xarmeabi ] || [ x"$arm_arch" = xall ]; then
-			pushd libmoai > /dev/null
-				bash build.sh -p $package_name -i $arm_mode -a $arm_arch -l $app_platform
-			popd > /dev/null
-		elif [ ! -f libmoai/libs/armeabi-v7a/libmoai.so ] && [ x"$arm_arch" = xarmeabi-v7a ] || [ x"$arm_arch" = xall ]; then
-			pushd libmoai > /dev/null
-				bash build.sh -p $package_name -i $arm_mode -a $arm_arch -l $app_platform
-			popd > /dev/null
-		fi
+		pushd libmoai > /dev/null
+			bash build.sh -p $package_name -i $arm_mode -a $arm_arch -l $app_platform $tapjoy_flags
+		popd > /dev/null
 	fi
 
 	# copy libmoai into new host template dir
@@ -111,24 +78,32 @@
 		echo "*** or $new_host_dir/host-source/project/libs/armeabi-v7a."
 		echo ""
 	fi
-	
-	# copy default project files into new host dir
-	cp -f host-source/d.README.txt $new_host_dir/README.txt
-	cp -f host-source/d.run-host.sh $new_host_dir/run-host.sh
-	cp -f host-source/d.run-host.bat $new_host_dir/run-host.bat
-	cp -f host-source/d.settings-global.sh $new_host_dir/settings-global.sh
-	rsync -r --exclude=.svn --exclude=.DS_Store host-source/d.res/. $new_host_dir/res
-
-	# copy source dir into new host dir
-	rsync -r --exclude=.svn --exclude=.DS_Store --exclude=src/ --exclude=external/ host-source/source/. $new_host_dir/host-source
 
 	# create function for easy find and replace
 	backup_ext=.backup
 	
 	function fr () { 
-		sed -i$backup_ext s%$2%"$3"%g $1
+		sed -i$backup_ext s%"$2"%"$3"%g $1
 		rm -f $1$backup_ext
 	}
+		
+	required_libs="\"facebook\""
+	
+	if [ x"$tapjoy_flags" == x ]; then
+		required_libs="$required_libs \"tapjoy\""
+	fi
+
+	cp -f host-source/d.settings-global.sh $new_host_dir/settings-global.sh
+	fr $new_host_dir/settings-global.sh @REQUIRED_LIBS@ "$required_libs"
+	
+	# copy default project files into new host dir
+	cp -f host-source/d.README.txt $new_host_dir/README.txt
+	cp -f host-source/d.run-host.sh $new_host_dir/run-host.sh
+	cp -f host-source/d.run-host.bat $new_host_dir/run-host.bat
+	rsync -r --exclude=.svn --exclude=.DS_Store host-source/d.res/. $new_host_dir/res
+
+	# copy source dir into new host dir
+	rsync -r --exclude=.svn --exclude=.DS_Store --exclude=src/ --exclude=external/ host-source/source/. $new_host_dir/host-source
 
 	# create package src directories
 	OLD_IFS=$IFS
@@ -139,9 +114,11 @@
 		mkdir -p $new_host_dir/host-source/project/$package_path
 	done
 	IFS=$OLD_IFS
-
+	
 	# copy classes into new host dir
-	rsync -r --exclude=.svn --exclude=.DS_Store host-source/source/project/src/. $new_host_dir/host-source/project/$package_path
+	rsync -r --exclude=.svn --exclude=.DS_Store host-source/source/project/src/app/. $new_host_dir/host-source/project/$package_path
+	rsync -r --exclude=.svn --exclude=.DS_Store --exclude=/*.java host-source/source/project/src/moai/. $new_host_dir/host-source/moai
+	rsync --exclude=.svn --exclude=.DS_Store host-source/source/project/src/moai/*.java $new_host_dir/host-source/project/src/com/ziplinegames/moai
 
 	# copy external classes, resources, libs and projects into new host dir
 	rsync -r --exclude=.svn --exclude=.DS_Store host-source/source/project/external/projects/. $new_host_dir/host-source/external

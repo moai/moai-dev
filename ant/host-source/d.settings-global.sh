@@ -21,7 +21,7 @@
 # available: facebook, tapjoy
 #----------------------------------------------------------------#
 
-	requires=( "facebook" "tapjoy" )
+	requires=( @REQUIRED_LIBS@ )
 		
 #----------------------------------------------------------------#
 # list of icon files

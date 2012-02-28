@@ -29,6 +29,8 @@
 			</intent-filter>
 		</activity>
 		
+		<!-- EXTERNAL DECLARATIONS: Placeholder (DO NOT MOVE OR REMOVE) -->
+		
 		<!-- Crittercism -->
 		<activity android:name="com.crittercism.FeedbackActivity"/>
 		<activity android:name="com.crittercism.FeedbackCreateActivity"/>
@@ -47,18 +49,6 @@
 	        <action android:name="com.android.vending.billing.PURCHASE_STATE_CHANGED" />
 	      </intent-filter>
 	    </receiver>
-		
-		<!-- Tapjoy -->
-		<activity android:name="com.tapjoy.TJCVirtualGoods" android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" android:configChanges="keyboardHidden|orientation" />
-		<activity android:name="com.tapjoy.DownloadVirtualGood" android:theme="@android:style/Theme.Dialog" android:configChanges="keyboardHidden|orientation" android:launchMode="singleTask" />
-		<activity android:name="com.tapjoy.TJCOffersWebView" android:configChanges="keyboardHidden|orientation" />
-		<activity android:name="com.tapjoy.TapjoyFeaturedAppWebView" android:configChanges="keyboardHidden|orientation" />
-		<activity android:name="com.tapjoy.TapjoyVideoView" android:configChanges="keyboardHidden|orientation" />
-		<receiver android:name="com.tapjoy.TapjoyReferralTracker" android:exported="true">    
-		    <intent-filter>
-		        <action android:name="com.android.vending.INSTALL_REFERRER" />
-		    </intent-filter>
-		</receiver>
 		
 		<!-- AdColony -->
 		<activity android:name="com.jirbo.adcolony.AdColonyOverlay" android:configChanges="keyboardHidden|orientation" android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" />
@@ -79,24 +69,27 @@
 	</application>
 	
     <uses-sdk android:minSdkVersion="8"/>
+
+	<!-- Moai -->
+ 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+	<uses-permission android:name="android.permission.INTERNET" />
 		
+	<!-- EXTERNAL PERMISSIONS: Placeholder (DO NOT MOVE OR REMOVE) -->
+
 	<!-- Google C2DM Messaging -->
 	<permission android:name="@PACKAGE@.permission.C2D_MESSAGE" android:protectionLevel="signature" />
 	<uses-permission android:name="@PACKAGE@.permission.C2D_MESSAGE" />
 	<uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 	
-	<!-- Moai, Tapjoy, Crittercism, AdColony -->
+	<!-- Crittercism, AdColony -->
  	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 	<uses-permission android:name="android.permission.INTERNET" />
 
 	<!-- Android Market IAP -->
   	<uses-permission android:name="com.android.vending.BILLING" />
 	
-	<!-- Tapjoy, AdColony -->
+	<!-- AdColony -->
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
-	<!-- Tapjoy -->
-	<uses-permission android:name="android.permission.READ_PHONE_STATE"/>
 
 	<!-- Crittercism, AdColony -->
 	<uses-permission android:name="android.permission.GET_TASKS"/>

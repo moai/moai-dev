@@ -8,6 +8,7 @@
 	include $(CLEAR_VARS)
 
 	include ArmModeDefined.mk
+	include OptionalComponentsDefined.mk
 	
 	#----------------------------------------------------------------#
 	# set moai root
@@ -24,6 +25,7 @@
 	LOCAL_MODULE 	:= moai
 	LOCAL_ARM_MODE 	:= $(MY_ARM_MODE)
 	LOCAL_LDLIBS 	:= -llog -lGLESv1_CM -lGLESv2 -lz crypto/libs/$(TARGET_ARCH_ABI)/libcrypto.a ../obj/local/$(TARGET_ARCH_ABI)/libogg.a
+	LOCAL_CFLAGS	:= $(DISABLE_TAPJOY)
 	
 #----------------------------------------------------------------#
 # header search paths

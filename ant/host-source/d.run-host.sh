@@ -72,10 +72,7 @@
 	if [ "$key_store" != "" ] && [ -f $key_store ]; then
 		cp -f $key_store $out_dir/project/`basename $key_store`
 	fi
-	
-	# copy external projects
-	cp -fR host-source/external/* $out_dir/
-		
+			
 	# copy project files that do not need editing
 	cp -f host-source/project/.classpath $out_dir/project/.classpath
 	cp -f host-source/project/proguard.cfg $out_dir/project/proguard.cfg
@@ -86,59 +83,60 @@
 	# create function for easy find and replace
 	backup_ext=.backup
 	
-	function fr () { 
-		sed -i$backup_ext s%$2%"$3"%g $1
+	function fr () {
+		sed -i$backup_ext s%"$2"%"$3"%g $1
 		rm -f $1$backup_ext
 	}
 	
 	# replace the app name inside strings.xml
 	fr $out_dir/project/res/values/strings.xml @NAME@ "$app_name"
 	
-	# copy .project file and replace text inside
+	# copy .project file and replace the app name
 	cp -f host-source/project/.project $out_dir/project/.project 
 	fr $out_dir/project/.project @NAME@ "$project_name"
 
-	# copy AndroidManifest.xml file and replace text inside
+	# copy build.xml file and replace the app name
+	cp -f host-source/project/build.xml $out_dir/project/build.xml
+	fr $out_dir/project/build.xml @NAME@ "$project_name"
+
+	# copy AndroidManifest.xml file and replace text
 	cp -f host-source/project/AndroidManifest.xml $out_dir/project/AndroidManifest.xml
 	fr $out_dir/project/AndroidManifest.xml	@PACKAGE@ "$package"
 	fr $out_dir/project/AndroidManifest.xml	@DEBUGGABLE@ "$debug"
 	fr $out_dir/project/AndroidManifest.xml	@VERSION_CODE@ "$versionCode"
 	fr $out_dir/project/AndroidManifest.xml	@VERSION_NAME@ "$versionName"	
 	
-	# copy ant.properties file and replace text inside
+	# copy ant.properties file and replace text
 	cp -f host-source/project/ant.properties $out_dir/project/ant.properties
 	fr $out_dir/project/ant.properties @KEY_STORE@ "$key_store"
 	fr $out_dir/project/ant.properties @KEY_ALIAS@ "$key_alias"
 	fr $out_dir/project/ant.properties @KEY_STORE_PASSWORD@ "$key_store_password"
 	fr $out_dir/project/ant.properties @KEY_ALIAS_PASSWORD@ "$key_alias_password"
 
-	# copy build.xml file and replace text inside
-	cp -f host-source/project/build.xml $out_dir/project/build.xml
-	fr $out_dir/project/build.xml @NAME@ "$project_name"
-
-	# copy local.properties file and replace text inside
+	# copy project.properties file and add dependent libraries
+	cp -f host-source/project/project.properties $out_dir/project/project.properties
+	for (( i=1; i<=${#requires[@]}; i++ )); do
+		if [ -f "host-source/external/${requires[$i-1]}/manifest_declarations.xml" ]; then
+			awk 'FNR==NR{ _[++d]=$0; next } /EXTERNAL DECLARATIONS:/ { print; print ""; for ( i=1; i<=d; i++ ) { print _[i] } next } 1' "host-source/external/${requires[$i-1]}/manifest_declarations.xml" $out_dir/project/AndroidManifest.xml > /tmp/AndroidManifest.tmp && mv -f /tmp/AndroidManifest.tmp $out_dir/project/AndroidManifest.xml
+		fi
+		if [ -f "host-source/external/${requires[$i-1]}/manifest_permissions.xml" ]; then
+			awk 'FNR==NR{ _[++d]=$0; next } /EXTERNAL PERMISSIONS:/ { print; print ""; for ( i=1; i<=d; i++ ) { print _[i] } next } 1' "host-source/external/${requires[$i-1]}/manifest_permissions.xml" $out_dir/project/AndroidManifest.xml > /tmp/AndroidManifest.tmp && mv -f /tmp/AndroidManifest.tmp $out_dir/project/AndroidManifest.xml
+		fi
+		rsync -r "host-source/external/${requires[$i-1]}/project/" "$out_dir/${requires[$i-1]}"
+		rsync -r "host-source/moai/${requires[$i-1]}/." "$out_dir/project/src/com/ziplinegames/moai"
+		echo "android.library.reference.${i}=../${requires[$i-1]}/" >> "$out_dir/project/project.properties"
+	done
+	
+	# copy local.properties file and replace the SDK root
 	cp -f host-source/project/local.properties $out_dir/project/local.properties
-
-	# set the sdk root in all local.properties files
 	for file in `find $out_dir/ -name "local.properties"` ; do fr $file @SDK_ROOT@ "$android_sdk_root" ; done
 
 	# copy all src files
 	cp -rf host-source/project/src $out_dir/project/
 
 	# replace text inside required src files
-	fr $out_dir/project/$package_path/AndroidC2DMReceiver.java @PACKAGE@ "$package"
-	fr $out_dir/project/$package_path/AndroidMarketBillingConstants.java @PACKAGE@ "$package"
-	fr $out_dir/project/$package_path/AndroidMarketBillingPurchaseObserver.java @PACKAGE@ "$package"
-	fr $out_dir/project/$package_path/AndroidMarketBillingReceiver.java @PACKAGE@ "$package"
-	fr $out_dir/project/$package_path/AndroidMarketBillingResponseHandler.java @PACKAGE@ "$package"
-	fr $out_dir/project/$package_path/AndroidMarketBillingSecurity.java @PACKAGE@ "$package"
-	fr $out_dir/project/$package_path/AndroidMarketBillingService.java @PACKAGE@ "$package"
-	fr $out_dir/project/$package_path/Base64.java @PACKAGE@ "$package"
-	fr $out_dir/project/$package_path/Base64DecoderException.java @PACKAGE@ "$package"
-	fr $out_dir/project/$package_path/MoaiActivity.java @PACKAGE@ "$package"
 	fr $out_dir/project/$package_path/MoaiActivity.java @WORKING_DIR@ "$working_dir"
-	fr $out_dir/project/$package_path/MoaiLog.java @PACKAGE@ "$package"
-	fr $out_dir/project/$package_path/MoaiView.java @PACKAGE@ "$package"
+	for file in `find $out_dir/project/$package_path/ -name "*.java"` ; do fr $file @PACKAGE@ "$package" ; done
 	
 	# create run command for the init.lua file
 	working_dir_depth=`grep -o "\/" <<<"$working_dir" | wc -l`
@@ -150,13 +148,6 @@
 		else
 			init_dir=$init_dir\/\.\.
 		fi
-	done
-
-	cp -f host-source/project/project.properties $out_dir/project/project.properties
-
-	# identify all dependent libraries and add them to the project.properties file
-	for (( i=1; i<=${#requires[@]}; i++ )); do
-		echo "android.library.reference.${i}=../${requires[$i-1]}/"  >> $out_dir/project/project.properties
 	done
 	
 	run_command="\"$init_dir/init.lua\""

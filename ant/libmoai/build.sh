@@ -9,18 +9,22 @@
 	set -e
 	
 	# check for command line switches
-	usage="usage: build.sh -p <package> [-i thumb | arm] [-a all | armeabi | armeabi-v7a] [-l appPlatform]"
+	usage="usage: $0 -p <package> [-v] [-i thumb | arm] [-a all | armeabi | armeabi-v7a] [-l appPlatform] [--disable-tapjoy]"
+	verbose=
 	package_name=
 	arm_mode=arm
 	arm_arch=armeabi-v7a
 	app_platform=android-10
+	tapjoy_flags=
 	
 	while [ $# -gt 0 ];	do
 	    case "$1" in
+			-v)  verbose="V=1";;
 			-p)  package_name="$2"; shift;;
 	        -i)  arm_mode="$2"; shift;;
 	        -a)  arm_arch="$2"; shift;;
 			-l)  app_platform="$2"; shift;;
+			--disable-tapjoy)  tapjoy_flags="-DDISABLE_TAPJOY";;
 			-*)
 		    	echo >&2 \
 		    		$usage
@@ -47,8 +51,47 @@
 		arm_arch="armeabi armeabi-v7a"
 	fi
 
+	# if libmoai already exists, find out which package it was build for
+	if [ -f libs/package.txt ]; then
+		existing_package_name=$( sed -n '1p' libs/package.txt )
+		existing_arm_mode=$( sed -n '2p' libs/package.txt )
+		existing_arm_arch=$( sed -n '3p' libs/package.txt )
+		existing_app_platform=$( sed -n '4p' libs/package.txt )
+		existing_tapjoy_flags=$( sed -n '5p' libs/package.txt )
+	fi
+
+	should_clean=false
+
+	if [ x"$existing_package_name" != x"$package_name" ]; then
+		should_clean=false
+	fi
+
+	if [ x"$existing_arm_mode" != x"$arm_mode" ]; then
+		should_clean=true
+	fi
+
+	if [ x"$existing_arm_arch" != x"$arm_arch" ]; then
+		should_clean=true
+	fi
+
+	if [ x"$existing_app_platform" != x"$app_platform" ]; then
+		should_clean=true
+	fi
+
+	if [ x"$existing_tapjoy_flags" != x"$tapjoy_flags" ]; then
+		should_clean=true
+	fi
+	
+	if [ x"$should_clean" = xtrue ]; then
+		./clean.sh
+	fi
+
 	# echo message about what we are doing
 	echo "Building libmoai.so for $package_name, $arm_mode, $arm_arch, $app_platform"
+
+	if [ x"$tapjoy_flags" != x ]; then
+		echo "Tapjoy will be disabled"
+	fi 
 
 	# create package underscored value
 	package_underscored=$( echo $package_name | sed 's/\./_/g' )
@@ -60,19 +103,23 @@
 		rm -f packaged-moai.cpp.backup
 	popd > /dev/null
 
-	# set app platform for library
 	pushd jni > /dev/null
 		cp -f AppPlatform.mk AppPlatformDefined.mk
 		sed -i.backup s%@APP_PLATFORM@%"$app_platform"%g AppPlatformDefined.mk
 		rm -f AppPlatformDefined.mk.backup
 	popd > /dev/null
 	
-	# if selected, configure compiling for thumb
 	pushd jni > /dev/null
 		cp -f ArmMode.mk ArmModeDefined.mk
 		sed -i.backup s%@ARM_MODE@%"$arm_mode"%g ArmModeDefined.mk
 		sed -i.backup s%@ARM_ARCH@%"$arm_arch"%g ArmModeDefined.mk
 		rm -f ArmModeDefined.mk.backup
+	popd > /dev/null
+
+	pushd jni > /dev/null
+		cp -f OptionalComponents.mk OptionalComponentsDefined.mk
+		sed -i.backup s%@DISABLE_TAPJOY@%"$tapjoy_flags"%g OptionalComponentsDefined.mk
+		rm -f OptionalComponentsDefined.mk.backup
 	popd > /dev/null
 	
 	# build libcrypto
@@ -82,19 +129,21 @@
 	
 	# build libmoai
 	pushd jni > /dev/null
-		ndk-build
+		ndk-build $verbose
 	popd > /dev/null
 
-	# remove ArmModeDefined.mk file
+	# remove temp files
 	rm -f jni/ArmModeDefined.mk
 	rm -f jni/AppPlatformDefined.mk
+	rm -f jni/OptionalComponentsDefined.mk
 		
-	# remove packaged-moai.cpp so it doesn't accidentaly get edited
+	# remove packaged-moai.cpp
 	rm -f jni/src/packaged-moai.cpp
 	
-	# create text file that shows the package libmoai.so was built with (this time)
+	# create text file that shows the settings libmoai.so was built with (this time)
 	rm -f libs/armeabi/package.txt
 	echo "$package_name" > libs/package.txt
 	echo "$arm_mode" >> libs/package.txt
 	echo "$arm_arch" >> libs/package.txt
 	echo "$app_platform" >> libs/package.txt
+	echo "$tapjoy_flags" >> libs/package.txt

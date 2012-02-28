@@ -12,6 +12,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
+// Moai
+import com.ziplinegames.moai.*;
+
 //================================================================//
 // AndroidC2DMReceiver
 //================================================================//
