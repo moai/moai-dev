@@ -181,6 +181,12 @@ void MOAICoroutine::OnStop () {
 }
 
 //----------------------------------------------------------------//
+STLString MOAICoroutine::GetDebugInfo () const {
+	
+	return mFuncName;
+}
+
+//----------------------------------------------------------------//
 void MOAICoroutine::RegisterLuaClass ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {

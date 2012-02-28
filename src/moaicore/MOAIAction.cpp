@@ -335,6 +335,11 @@ void MOAIAction::Stop () {
 }
 
 //----------------------------------------------------------------//
+STLString MOAIAction::GetDebugInfo() const {
+	return TypeName();
+}
+
+//----------------------------------------------------------------//
 void MOAIAction::Update ( float step, u32 pass, bool checkPass ) {
 
 	bool profilingEnabled = MOAIActionMgr::Get ().GetProfilingEnabled ();
@@ -344,7 +349,7 @@ void MOAIAction::Update ( float step, u32 pass, bool checkPass ) {
 
 	double t0 = 0.0;
 	if ( profilingEnabled ) {
-		USDeviceTime::GetTimeInSeconds ();
+		t0 = USDeviceTime::GetTimeInSeconds ();
 	}
 
 	step *= this->mThrottle;
@@ -362,7 +367,8 @@ void MOAIAction::Update ( float step, u32 pass, bool checkPass ) {
 	if ( profilingEnabled ) {
 		double elapsed = USDeviceTime::GetTimeInSeconds () - t0;
 		if ( elapsed >= 0.005 ) {
-			MOAILog ( 0, MOAILogMessages::MOAIAction_Profile_PSFF, this, this->TypeName (), step * 1000, elapsed * 1000 );
+			STLString debugInfo = this->GetDebugInfo();
+			MOAILog ( 0, MOAILogMessages::MOAIAction_Profile_PSFF, this, TypeName(), debugInfo.c_str(), step * 1000, elapsed * 1000 );
 		}
 	}
 

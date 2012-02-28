@@ -33,6 +33,9 @@ private:
 	
 	//----------------------------------------------------------------//
 	void			OnStop					();
+		
+protected:
+	STLString		GetDebugInfo			() const;
 	
 public:
 	
