@@ -120,6 +120,16 @@ int MOAIFacebook::_sendRequest ( lua_State* L ) {
 	return 0;
 }
 
+
+//----------------------------------------------------------------//
+int MOAIFacebook::_sessionValid ( lua_State* L ) {
+	MOAILuaState state ( L );
+	
+	lua_pushboolean( state, [ MOAIFacebook::Get ().mFacebook isSessionValid ]);
+	
+	return 1;
+}
+
 //----------------------------------------------------------------//
 int MOAIFacebook::_setToken ( lua_State* L ) {
 	MOAILuaState state ( L );
@@ -189,6 +199,8 @@ void MOAIFacebook::RegisterLuaClass ( MOAILuaState& state ) {
     
 	state.SetField ( -1, "DIALOG_DID_CANCEL", ( u32 )DIALOG_DID_CANCEL );
 	state.SetField ( -1, "DIALOG_DID_COMPLETE", ( u32 )DIALOG_DID_COMPLETE );
+	state.SetField ( -1, "SESSION_DID_LOGIN", ( u32 )SESSION_DID_LOGIN );
+	state.SetField ( -1, "SESSION_DID_NOT_LOGIN", ( u32 )SESSION_DID_NOT_LOGIN );
 	
 	luaL_Reg regTable[] = {
 		{ "getToken",				_getToken },
@@ -197,12 +209,35 @@ void MOAIFacebook::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "logout",					_logout },
 		{ "postToFeed",				_postToFeed },
 		{ "sendRequest",			_sendRequest },
+		{ "sessionValid",			_sessionValid },
 		{ "setToken",				_setToken },
 		{ "setListener",			&MOAIGlobalEventSource::_setListener < MOAIFacebook > },
 		{ NULL, NULL }	
 	};
     
 	luaL_register( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAIFacebook::SessionDidLogin () {
+	
+	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+	
+	if ( this->PushListener ( SESSION_DID_LOGIN, state )) {
+		
+		state.DebugCall ( 0, 0 );
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIFacebook::SessionDidNotLogin () {
+	
+	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+	
+	if ( this->PushListener ( SESSION_DID_NOT_LOGIN, state )) {
+		
+		state.DebugCall ( 0, 0 );
+	}
 }
 
 //================================================================//
@@ -239,20 +274,6 @@ void MOAIFacebook::RegisterLuaClass ( MOAILuaState& state ) {
 
 @end
 
-
-//================================================================//
-// MoaiFBRequestDelegate
-//================================================================//
-@implementation MoaiFBRequestDelegate
-
-	//================================================================//
-	#pragma mark -
-	#pragma mark Protocol FBRequestDelegate
-	//================================================================//
-
-
-@end
-
 //================================================================//
 // MoaiFBSessionDelegate
 //================================================================//
@@ -263,5 +284,14 @@ void MOAIFacebook::RegisterLuaClass ( MOAILuaState& state ) {
 	#pragma mark Protocol FBSessionDelegate
 	//================================================================//
 
+	- ( void ) fbDidLogin {
+		
+		MOAIFacebook::Get ().SessionDidLogin ();
+	}
+
+	- ( void ) fbDidNotLogin:( BOOL )cancelled {
+		
+		MOAIFacebook::Get ().SessionDidNotLogin ();
+	}
 
 @end

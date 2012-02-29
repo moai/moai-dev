@@ -12,7 +12,6 @@
 
 // Forward declare delegates
 @class MoaiFBDialogDelegate;
-@class MoaiFBRequestDelegate;
 @class MoaiFBSessionDelegate;
 
 //================================================================//
@@ -37,6 +36,7 @@ private:
 	static int		_logout							( lua_State* L );
 	static int		_postToFeed						( lua_State* L );
 	static int		_sendRequest					( lua_State* L );
+	static int		_sessionValid					( lua_State* L );
 	static int		_setToken						( lua_State* L );
 	
 public:
@@ -46,7 +46,9 @@ public:
 	enum {
 		
 		DIALOG_DID_CANCEL,
-		DIALOG_DID_COMPLETE
+		DIALOG_DID_COMPLETE,
+		SESSION_DID_LOGIN,
+		SESSION_DID_NOT_LOGIN
 	};
 		
 	void			DialogDidCancel					();
@@ -55,20 +57,14 @@ public:
                     MOAIFacebook					();
 					~MOAIFacebook                   ();
 	void			RegisterLuaClass				( MOAILuaState& state );
+	void			SessionDidLogin					();
+	void			SessionDidNotLogin				();
 };
 
 //================================================================//
 // MoaiFBDialogDelegate
 //================================================================//
 @interface MoaiFBDialogDelegate : NSObject < FBDialogDelegate > {
-@private
-}
-@end
-
-//================================================================//
-// MoaiFBRequestDelegate
-//================================================================//
-@interface MoaiFBRequestDelegate : NSObject < FBRequestDelegate > {
 @private
 }
 @end
