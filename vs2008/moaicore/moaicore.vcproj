@@ -1768,6 +1768,18 @@
 				>
 			</File>
 		</Filter>
+		<Filter
+			Name="collision"
+			>
+			<File
+				RelativePath="..\..\src\moaicore\MOAICollisionShape.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAICollisionShape.h"
+				>
+			</File>
+		</Filter>
 		<File
 			RelativePath="..\..\src\config\moaicore-config.h"
 			>
