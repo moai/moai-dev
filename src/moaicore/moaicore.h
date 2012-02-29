@@ -24,6 +24,7 @@
 #include <moaicore/MOAICameraAnchor2D.h>
 #include <moaicore/MOAICameraFitter2D.h>
 #include <moaicore/MOAICanary.h>
+#include <moaicore/MOAICollisionShape.h>
 #include <moaicore/MOAIColor.h>
 #include <moaicore/MOAICompassSensor.h>
 #include <moaicore/MOAICoroutine.h>
