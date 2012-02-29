@@ -2,6 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <moaicore/MOAICollisionShape.h>
 #include <moaicore/MOAIDeck.h>
 #include <moaicore/MOAIDeckRemapper.h>
 #include <moaicore/MOAIDebugLines.h>
@@ -746,6 +747,11 @@ bool MOAIProp::GetCellRect ( USRect* cellRect, USRect* paddedRect ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIProp::GetCollisionShape ( MOAICollisionShape& shape ) {
+	UNUSED ( shape );
+}
+
+//----------------------------------------------------------------//
 u32 MOAIProp::GetDeckBounds ( USBox& bounds ) {
 	
 	if ( this->mGrid ) {
@@ -910,26 +916,32 @@ void MOAIProp::OnDepNodeUpdate () {
 	USVec3D offset ( 0.0f, 0.0f, 0.0f );
 	USVec3D stretch ( 1.0f, 1.0f, 1.0f );
 	
-	// select the frame
-	USBox frame = this->mFrame;
-	
-	bool fitToFrame = this->mFitToFrame;
-	const USBox* frameTrait = this->GetLinkedValue < USBox >( MOAIPropAttr::Pack ( INHERIT_FRAME ));
-	if ( frameTrait ) {
-		frame = *frameTrait;
-		fitToFrame = true;
+	if ( frameStatus == BOUNDS_EMPTY ) {
+		frameStatus = this->GetModelBounds ( bounds );
 	}
+	else {
 	
-	if ( fitToFrame ) {
-
-		// and check if the target frame is empty, too
-		if ( frame.IsPoint ()) {
-			frameStatus = BOUNDS_EMPTY;
+		// select the frame
+		USBox frame = this->mFrame;
+		
+		bool fitToFrame = this->mFitToFrame;
+		const USBox* frameTrait = this->GetLinkedValue < USBox >( MOAIPropAttr::Pack ( INHERIT_FRAME ));
+		if ( frameTrait ) {
+			frame = *frameTrait;
+			fitToFrame = true;
 		}
+		
+		if ( fitToFrame ) {
 
-		// compute the scale and offset (if any)
-		if ( frameStatus != BOUNDS_EMPTY ) {
-			bounds.GetFitting ( frame, offset, stretch );
+			// and check if the target frame is empty, too
+			if ( frame.IsPoint ()) {
+				frameStatus = BOUNDS_EMPTY;
+			}
+
+			// compute the scale and offset (if any)
+			if ( frameStatus != BOUNDS_EMPTY ) {
+				bounds.GetFitting ( frame, offset, stretch );
+			}
 		}
 	}
 	

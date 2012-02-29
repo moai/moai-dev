@@ -11,6 +11,7 @@
 #include <moaicore/MOAITransform.h>
 
 class MOAICellCoord;
+class MOAICollisionShape;
 class MOAIDeck;
 class MOAIDeckRemapper;
 class MOAIGfxState;
@@ -174,10 +175,9 @@ public:
 	};
 
 	enum {
-		CAN_DRAW				= 1 << 0x00,
-		CAN_DRAW_DEBUG			= 1 << 0x01,
-		CAN_GATHER_SURFACES		= 1 << 0x02,
-		CAN_GET_OVERLAP_PRIM	= 1 << 0x03,
+		CAN_DRAW					= 1 << 0x00,
+		CAN_DRAW_DEBUG				= 1 << 0x01,
+		CAN_GATHER_SURFACES			= 1 << 0x02,
 	};
 
 	GET_SET ( u32, Index, mIndex )
@@ -197,6 +197,7 @@ public:
 	virtual void		GatherSurfaces			( MOAISurfaceSampler2D& sampler );
 	MOAIPartition*		GetPartitionTrait		();
 	bool				GetCellRect				( USRect* cellRect, USRect* paddedRect = 0 );
+	virtual void		GetCollisionShape		( MOAICollisionShape& shape );
 	virtual bool		Inside					( USVec3D vec, float pad );
 						MOAIProp				();
 	virtual				~MOAIProp				();

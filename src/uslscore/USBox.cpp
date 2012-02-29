@@ -121,9 +121,9 @@ void USBox::GetFitting ( const USBox& target, USVec3D& offset, USVec3D& scale ) 
 	float th = target.Height ();
 	float td = target.Depth ();
 
-	scale.mX = w != 0.0f ? tw / w : 0.0f;
-	scale.mY = h != 0.0f ? th / h : 0.0f;
-	scale.mZ = d != 0.0f ? td / d : 0.0f;
+	scale.mX = w != 0.0f ? tw / w : 1.0f;
+	scale.mY = h != 0.0f ? th / h : 1.0f;
+	scale.mZ = d != 0.0f ? td / d : 1.0f;
 	
 	offset.mX = target.mMin.mX - ( this->mMin.mX * scale.mX );
 	offset.mY = target.mMin.mY - ( this->mMin.mY * scale.mY );
