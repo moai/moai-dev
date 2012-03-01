@@ -146,7 +146,7 @@ void MOAILuaState::CopyToTop ( int idx ) {
 //----------------------------------------------------------------//
 int MOAILuaState::DebugCall ( int nArgs, int nResults ) {
 	
-	#ifdef _DEBUG
+	#if 1 || defined(_DEBUG)
 	
 		int errIdx = this->AbsIndex ( -( nArgs + 1 ));
 		
