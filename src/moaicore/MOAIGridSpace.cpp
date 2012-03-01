@@ -262,6 +262,50 @@ int MOAIGridSpace::_initHexGrid ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	initIsometricGrid
+ @text	Initialize a grid with isometric tiles.
+ 
+ @in		MOAIGridSpace self
+ @in		number width
+ @in		number height
+ @opt	number tileWidth		Default valus is 1.
+ @opt	number tileHeight		Default valus is 1.
+ @opt	number xGutter			Default valus is 0.
+ @opt	number yGutter			Default value is 0.
+ @out	nil
+ */
+int MOAIGridSpace::_initIsometricGrid ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGridSpace, "UNN" )
+	
+	u32 width			= state.GetValue < u32 >( 2, 0 );
+	u32 height			= state.GetValue < u32 >( 3, 0 );
+	
+	float tileWidth		= state.GetValue < float >( 4, 1.0f );
+	float tileHeight	= state.GetValue < float >( 5, 1.0f );
+	
+	float xGutter		= state.GetValue < float >( 6, 0.0f );
+	float yGutter		= state.GetValue < float >( 7, 0.0f );
+	
+	self->mShape = ISO_SHAPE;
+
+	self->mWidth = width;
+	self->mHeight = height;
+	
+	self->mCellWidth = tileWidth;
+  self->mCellHeight = tileHeight * 0.5f;
+	
+	self->mXOff = xGutter * 0.5f;
+	self->mYOff = ( yGutter * 0.5f ) - ( tileHeight * 0.25f );
+	
+	self->mTileWidth = tileWidth - xGutter;
+	self->mTileHeight = tileHeight - yGutter;
+	
+	self->OnResize ();
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	initObliqueGrid
 	@text	Initialize a grid with oblique tiles.
 
@@ -426,7 +470,7 @@ int MOAIGridSpace::_setRepeat ( lua_State* L ) {
 
 	@in		MOAIGridSpace self
 	@opt	number shape		One of MOAIGridSpace.RECT_SHAPE, MOAIGridSpace.DIAMOND_SHAPE,
-								MOAIGridSpace.OBLIQUE_SHAPE, MOAIGridSpace.HEX_SHAPE.
+								MOAIGridSpace.OBLIQUE_SHAPE, MOAIGridSpace.HEX_SHAPE, MOAIGridSpace.ISO_SHAPE.
 								Default value is MOAIGridSpace.RECT_SHAPE.
 	@out	nil
 */
@@ -624,6 +668,20 @@ void MOAIGridSpace::GetBoundsInRect ( USRect rect, MOAICellCoord& c0, MOAICellCo
 		c1.mY++;
 	}
 	
+	if ( this->mShape & ISO_SHAPE ) {
+
+		MOAICellCoord t0 = GetIsometricCellCoord(rect.mXMin, rect.mYMin);
+		MOAICellCoord t1 = GetIsometricCellCoord(rect.mXMin, rect.mYMax);
+		MOAICellCoord t2 = GetIsometricCellCoord(rect.mXMax, rect.mYMin);
+		MOAICellCoord t3 = GetIsometricCellCoord(rect.mXMax, rect.mYMax);
+		
+		
+		c0.mX = MIN(MIN(t0.mX, t1.mX), MIN(t2.mX, t3.mX));
+		c0.mY = MIN(MIN(t0.mY, t1.mY), MIN(t2.mY, t3.mY));
+		c1.mX = MAX(MAX(t0.mX, t1.mX), MAX(t2.mX, t3.mX));
+		c1.mY = MAX(MAX(t0.mY, t1.mY), MAX(t2.mY, t3.mY));
+	}
+	
 	if ( this->mShape == OBLIQUE_SHAPE ) {
 		c0.mX--;
 	}
@@ -637,6 +695,11 @@ void MOAIGridSpace::GetBoundsInRect ( USRect rect, MOAICellCoord& c0, MOAICellCo
 		c0 = this->ClampY ( c0 );
 		c1 = this->ClampY ( c1 );
 	}
+	
+	c0.mX = 0;
+	c0.mY = 0;
+	c1.mX = this->mWidth - 1;
+	c1.mY = this->mHeight - 1;
 }
 
 //----------------------------------------------------------------//
@@ -700,6 +763,9 @@ MOAICellCoord MOAIGridSpace::GetCellCoord ( float x, float y ) const {
 		case OBLIQUE_SHAPE:
 			return this->GetObliqueCellCoord ( x, y );
 		
+		case ISO_SHAPE:
+			return this->GetIsometricCellCoord ( x, y );
+
 		case RECT_SHAPE:
 			cellCoord.mX = ( int )floorf ( x / this->mCellWidth );
 			cellCoord.mY = ( int )floorf ( y / this->mCellHeight );
@@ -841,6 +907,21 @@ MOAICellCoord MOAIGridSpace::GetObliqueCellCoord ( float x, float y ) const {
 }
 
 //----------------------------------------------------------------//
+MOAICellCoord MOAIGridSpace::GetIsometricCellCoord ( float x, float y ) const {
+	float mwh = this->mWidth * 0.5;
+	float mh = this->mHeight;
+	
+	float xtw = x / this->mCellWidth;
+	float yth = y / this->mCellHeight;
+
+	int xTile = mh + xtw - mwh - yth;
+	int yTile = mh - xtw + mwh - yth;
+
+	MOAICellCoord cellCoord ( xTile, yTile );
+	return cellCoord;
+}
+
+//----------------------------------------------------------------//
 USVec2D MOAIGridSpace::GetRectPoint ( float x, float y, float width, float height, u32 position ) const {
 
 	USVec2D origin;
@@ -902,11 +983,26 @@ USVec2D MOAIGridSpace::GetTilePoint ( MOAICellCoord cellCoord, u32 position ) co
 		xOff = this->mCellWidth * 0.5f;
 	}
 			
+	float x = 0.0f;
+	float y = 0.0f;
+	
+	if (this->mShape & ISO_SHAPE) {
+		x = this->mTileWidth/2 * (this->mWidth + cellCoord.mX - cellCoord.mY - 1);
+		y = this->mCellHeight/2 * ((this->mHeight * 2 - cellCoord.mX - cellCoord.mY) - 2);
+	}
+	else {
+		x = ( cellCoord.mX * this->mCellWidth ) + this->mXOff + xOff;
+		y = ( cellCoord.mY * this->mCellHeight ) + this->mYOff;
+	}
+	if (cellCoord.mX == 29 && cellCoord.mY == 29) {
+		int k = 3;
+		k++;
+	}
 	return this->GetRectPoint (
-		( cellCoord.mX * this->mCellWidth ) + this->mXOff + xOff,
-		( cellCoord.mY * this->mCellHeight ) + this->mYOff,
+		x,
+		y,
 		this->mTileWidth,
-		this->mTileHeight,
+		this->mCellHeight,
 		position
 	);
 }
@@ -1068,6 +1164,7 @@ void MOAIGridSpace::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "DIAMOND_SHAPE", DIAMOND_SHAPE );
 	state.SetField ( -1, "OBLIQUE_SHAPE", OBLIQUE_SHAPE );
 	state.SetField ( -1, "HEX_SHAPE", HEX_SHAPE );
+	state.SetField ( -1, "ISO_SHAPE", ISO_SHAPE );
 }
 
 //----------------------------------------------------------------//
@@ -1084,6 +1181,7 @@ void MOAIGridSpace::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "initDiamondGrid",	_initDiamondGrid },
 		{ "initHexGrid",		_initHexGrid },
 		{ "initObliqueGrid",	_initObliqueGrid },
+		{ "initIsometricGrid",	_initIsometricGrid },
 		{ "initRectGrid",		_initRectGrid },
 		{ "locToCellAddr",		_locToCellAddr },
 		{ "locToCoord",			_locToCoord },
