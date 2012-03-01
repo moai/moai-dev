@@ -43,7 +43,7 @@ int MOAIProp::_getBounds ( lua_State* L ) {
 	
 	USBox bounds;
 
-	u32 status = self->GetModelBounds ( bounds );
+	u32 status = self->GetPropBounds ( bounds );
 	if ( status != BOUNDS_OK ) return 0;
 
 	state.Push ( bounds.mMin.mX );
@@ -550,7 +550,7 @@ void MOAIProp::Draw ( int subPrimID, bool reload ) {
 	if ( !this->mDeck ) return;
 
 	this->LoadGfxState ();
-
+	
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 
 	if ( this->mUVTransform ) {
@@ -592,26 +592,27 @@ void MOAIProp::DrawDebug ( int subPrimID ) {
 
 	MOAIDebugLines& debugLines = MOAIDebugLines::Get ();
 	
-	if ( this->mDeck ) {
-		if ( debugLines.Bind ( MOAIDebugLines::PROP_MODEL_BOUNDS )) {
-			
-			debugLines.SetWorldMtx ( this->GetLocalToWorldMtx ());
-			debugLines.SetPenSpace ( MOAIDebugLines::MODEL_SPACE );
-			
-			USBox bounds = this->mDeck->GetBounds ( this->mIndex, this->mRemapper );
+	if ( debugLines.Bind ( MOAIDebugLines::PROP_MODEL_BOUNDS )) {
+		
+		debugLines.SetWorldMtx ( this->GetLocalToWorldMtx ());
+		debugLines.SetPenSpace ( MOAIDebugLines::MODEL_SPACE );
+		
+		USBox bounds;
+		u32 status = this->GetDeckBounds ( bounds );
+		if ( status == BOUNDS_OK ) {
 			debugLines.DrawRect ( bounds.GetRect ( USBox::PLANE_XY ));
+		}
+		
+		if ( this->mDeck && this->mGrid ) {
+	
+			debugLines.SetPenColor ( 0x40ffffff );
+			debugLines.SetPenWidth ( 2 );
+	
+			MOAICellCoord c0;
+			MOAICellCoord c1;
 			
-			if ( this->mGrid ) {
-		
-				debugLines.SetPenColor ( 0x40ffffff );
-				debugLines.SetPenWidth ( 2 );
-		
-				MOAICellCoord c0;
-				MOAICellCoord c1;
-				
-				this->GetGridBoundsInView ( c0, c1 );
-				this->mDeck->DrawDebug ( this->GetLocalToWorldMtx (), *this->mGrid, this->mRemapper, this->mGridScale, c0, c1 );
-			}
+			this->GetGridBoundsInView ( c0, c1 );
+			this->mDeck->DrawDebug ( this->GetLocalToWorldMtx (), *this->mGrid, this->mRemapper, this->mGridScale, c0, c1 );
 		}
 	}
 	
@@ -754,15 +755,37 @@ void MOAIProp::GetCollisionShape ( MOAICollisionShape& shape ) {
 //----------------------------------------------------------------//
 u32 MOAIProp::GetDeckBounds ( USBox& bounds ) {
 	
-	if ( this->mGrid ) {
+	u32 status = BOUNDS_EMPTY;
 	
+	if ( this->mGrid ) {
+		
 		USRect rect = this->mGrid->GetBounds ();
 		bounds.Init ( rect.mXMin, rect.mYMin, 0.0f, rect.mXMax, rect.mYMax, 0.0f );
-		return this->mGrid->GetRepeat () ? BOUNDS_GLOBAL : BOUNDS_OK;
+		status = this->mGrid->GetRepeat () ? BOUNDS_GLOBAL : BOUNDS_OK;
 	}
 	else if ( this->mDeck ) {
 	
 		bounds = this->mDeck->GetBounds ( this->mIndex, this->mRemapper );
+		status = BOUNDS_OK;
+	}
+	
+	if ( status == BOUNDS_EMPTY ) {
+		status = this->GetFrame ( bounds );
+	}
+	return status;
+}
+
+//----------------------------------------------------------------//
+u32 MOAIProp::GetFrame ( USBox& bounds ) {
+
+	const USBox* frameTrait = this->GetLinkedValue < USBox >( MOAIPropAttr::Pack ( INHERIT_FRAME ));
+	if ( frameTrait ) {
+		bounds = *frameTrait;
+		return BOUNDS_OK;
+	}
+	
+	if ( this->mFitToFrame ) {
+		bounds = this->mFrame;
 		return BOUNDS_OK;
 	}
 	
@@ -785,20 +808,17 @@ void MOAIProp::GetGridBoundsInView ( MOAICellCoord& c0, MOAICellCoord& c1 ) {
 }
 
 //----------------------------------------------------------------//
-u32 MOAIProp::GetModelBounds ( USBox& bounds ) {
+u32 MOAIProp::GetPropBounds ( USBox& bounds ) {
 	
-	if ( this->mFitToFrame ) {
-	
-		bounds = this->mFrame;
-		
-		if ( this->mGrid && this->mGrid->GetRepeat ()) {
-			return BOUNDS_GLOBAL;
-		}
-		
-		return BOUNDS_OK;
+	if ( this->mGrid && this->mGrid->GetRepeat ()) {
+		return BOUNDS_GLOBAL;
 	}
-	
-	return this->GetDeckBounds ( bounds );
+
+	u32 status = this->GetFrame ( bounds );
+	if ( status == BOUNDS_EMPTY ) {
+		return this->GetDeckBounds ( bounds );
+	}
+	return status;
 }
 
 //----------------------------------------------------------------//
@@ -815,7 +835,7 @@ bool MOAIProp::Inside ( USVec3D vec, float pad ) {
 
 	USBox bounds;
 
-	u32 status = this->GetModelBounds ( bounds );
+	u32 status = this->GetDeckBounds ( bounds );
 	
 	if ( status == BOUNDS_GLOBAL ) return true;
 	if ( status == BOUNDS_EMPTY ) return false;
@@ -905,44 +925,17 @@ void MOAIProp::OnDepNodeUpdate () {
 	
 	MOAIColor::OnDepNodeUpdate ();
 	
-	USBox bounds;
-	bounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f );
-	u32 frameStatus = this->GetDeckBounds ( bounds );
+	USBox deckBounds;
+	u32 deckBoundsStatus = this->GetDeckBounds ( deckBounds );
 	
-	if ( bounds.IsPoint ()) {
-		frameStatus = BOUNDS_EMPTY;
-	}
+	USBox propBounds;
+	u32 propBoundsStatus = this->GetPropBounds ( propBounds );
 	
 	USVec3D offset ( 0.0f, 0.0f, 0.0f );
 	USVec3D stretch ( 1.0f, 1.0f, 1.0f );
 	
-	if ( frameStatus == BOUNDS_EMPTY ) {
-		frameStatus = this->GetModelBounds ( bounds );
-	}
-	else {
-	
-		// select the frame
-		USBox frame = this->mFrame;
-		
-		bool fitToFrame = this->mFitToFrame;
-		const USBox* frameTrait = this->GetLinkedValue < USBox >( MOAIPropAttr::Pack ( INHERIT_FRAME ));
-		if ( frameTrait ) {
-			frame = *frameTrait;
-			fitToFrame = true;
-		}
-		
-		if ( fitToFrame ) {
-
-			// and check if the target frame is empty, too
-			if ( frame.IsPoint ()) {
-				frameStatus = BOUNDS_EMPTY;
-			}
-
-			// compute the scale and offset (if any)
-			if ( frameStatus != BOUNDS_EMPTY ) {
-				bounds.GetFitting ( frame, offset, stretch );
-			}
-		}
+	if (( deckBoundsStatus == BOUNDS_OK ) && ( propBoundsStatus == BOUNDS_OK )) {
+		deckBounds.GetFitting ( propBounds, offset, stretch );
 	}
 	
 	// inherit parent and offset transforms (and compute the inverse)
@@ -950,15 +943,15 @@ void MOAIProp::OnDepNodeUpdate () {
 	
 	// update the prop location in the partition
 	// use the local frame; world transform will match it to target frame
-	switch ( frameStatus ) {
+	switch ( propBoundsStatus ) {
 		case BOUNDS_EMPTY:
 		case BOUNDS_GLOBAL: {
-			this->UpdateBounds ( frameStatus );
+			this->UpdateBounds ( propBoundsStatus );
 			break;
 		}
 		case BOUNDS_OK: {
-			bounds.Transform ( this->mLocalToWorldMtx );
-			this->UpdateBounds ( bounds, frameStatus );
+			deckBounds.Transform ( this->mLocalToWorldMtx );
+			this->UpdateBounds ( deckBounds, propBoundsStatus );
 			break;
 		}
 	}
