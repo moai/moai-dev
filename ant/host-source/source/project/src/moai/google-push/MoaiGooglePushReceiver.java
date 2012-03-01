@@ -4,21 +4,18 @@
 // http://getmoai.com
 //----------------------------------------------------------------//
 
-package @PACKAGE@;
-
-import java.util.ArrayList;
+package com.ziplinegames.moai;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-// Moai
-import com.ziplinegames.moai.*;
+import java.util.ArrayList;
 
 //================================================================//
-// AndroidC2DMReceiver
+// MoaiGooglePushReceiver
 //================================================================//
-public class AndroidC2DMReceiver extends BroadcastReceiver {
+public class MoaiGooglePushReceiver extends BroadcastReceiver {
 	
 	public enum RegistrationCode {
 		
@@ -39,13 +36,14 @@ public class AndroidC2DMReceiver extends BroadcastReceiver {
                 return RESULT_ERROR_PHONE_REGISTRATION_ERROR;
             }
 
-            return values[index];
+            return values [ index ];
         }
     }
 
-	protected static native void AKUNotifyRemoteNotificationRegistrationComplete	( int code , String registration );
-	protected static native void AKUNotifyRemoteNotificationReceived 				( String [] keys, String [] values );
+	protected static native void AKUNotifyGooglePushRemoteNotificationRegistrationComplete	( int code , String registration );
+	protected static native void AKUNotifyGooglePushRemoteNotificationReceived 				( String [] keys, String [] values );
 
+	//----------------------------------------------------------------//
 	@Override
 	public void onReceive ( Context context, Intent intent ) {
 		
@@ -58,29 +56,31 @@ public class AndroidC2DMReceiver extends BroadcastReceiver {
 	    }
 	}
 
+	//----------------------------------------------------------------//
 	private void handleRegistration ( Context context, Intent intent ) {
 		
 	    if ( intent.getStringExtra ( "error" ) != null ) {
 
 		    String errorMessage = intent.getStringExtra ( "error" );
-		    MoaiLog.e ( "AndroidC2DMReceiver handleRegistration: registration failed ( " + errorMessage + " )" );
+		    MoaiLog.e ( "MoaiGooglePushReceiver handleRegistration: registration failed ( " + errorMessage + " )" );
 		
-			AKUNotifyRemoteNotificationRegistrationComplete ( RegistrationCode.valueOf ( "RESULT_ERROR_" + errorMessage ).ordinal (), null );
+			AKUNotifyGooglePushRemoteNotificationRegistrationComplete ( RegistrationCode.valueOf ( "RESULT_ERROR_" + errorMessage ).ordinal (), null );
 	    } else if ( intent.getStringExtra ( "unregistered" ) != null ) {
 
 		    String packageName = intent.getStringExtra ( "unregistered" );
-	    	MoaiLog.i ( "AndroidC2DMReceiver handleRegistration: unregistered successfully ( " + packageName + " )" );
+	    	MoaiLog.i ( "MoaiGooglePushReceiver handleRegistration: unregistered successfully ( " + packageName + " )" );
 
-			AKUNotifyRemoteNotificationRegistrationComplete ( RegistrationCode.valueOf ( "RESULT_UNREGISTERED" ).ordinal (), null );
+			AKUNotifyGooglePushRemoteNotificationRegistrationComplete ( RegistrationCode.valueOf ( "RESULT_UNREGISTERED" ).ordinal (), null );
 	    } else if ( intent.getStringExtra ( "registration_id" ) != null ) {
 
 		    String registrationId = intent.getStringExtra ( "registration_id" );
-	    	MoaiLog.i ( "AndroidC2DMReceiver handleRegistration: registered successfully ( " + registrationId + " )" );
+	    	MoaiLog.i ( "MoaiGooglePushReceiver handleRegistration: registered successfully ( " + registrationId + " )" );
 
-			AKUNotifyRemoteNotificationRegistrationComplete ( RegistrationCode.valueOf ( "RESULT_REGISTERED" ).ordinal (), registrationId );
+			AKUNotifyGooglePushRemoteNotificationRegistrationComplete ( RegistrationCode.valueOf ( "RESULT_REGISTERED" ).ordinal (), registrationId );
 	    }
 	}
 
+	//----------------------------------------------------------------//
 	private void handleMessage ( Context context, Intent intent ) {
 		
 		ArrayList < String > keys = new ArrayList < String > ();
@@ -95,6 +95,6 @@ public class AndroidC2DMReceiver extends BroadcastReceiver {
 			}
 		}
 		
-		AKUNotifyRemoteNotificationReceived ( keys.toArray ( new String [ keys.size ()]), values.toArray ( new String [ values.size ()]));
+		AKUNotifyGooglePushRemoteNotificationReceived ( keys.toArray ( new String [ keys.size ()]), values.toArray ( new String [ values.size ()]));
 	}
 }

@@ -9,13 +9,14 @@
 	set -e
 
 	# check for command line switches
-	usage="usage: $0 -p <package> [-s] [-i thumb | arm] [-a all | armeabi | armeabi-v7a] [-l appPlatform] [--disable-tapjoy]"
+	usage="usage: $0 -p <package> [-s] [-i thumb | arm] [-a all | armeabi | armeabi-v7a] [-l appPlatform] [--disable-tapjoy] [--disable-google-push]"
 	skip_build="false"
 	package_name=
 	arm_mode=arm
 	arm_arch=armeabi-v7a
 	app_platform=android-10
 	tapjoy_flags=
+	google_push_flags=
 	
 	while [ $# -gt 0 ];	do
 	    case "$1" in
@@ -25,6 +26,7 @@
 	        -a)  arm_arch="$2"; shift;;
 			-l)  app_platform="$2"; shift;;
 			--disable-tapjoy)  tapjoy_flags="--disable-tapjoy";;
+			--disable-google-push)  google_push_flags="--disable-google-push";;
 			-*)
 		    	echo >&2 \
 		    		$usage
@@ -61,7 +63,7 @@
 	# if the caller has not explicitly told us to skip a libmoai build, build now
 	if [ x"$skip_build" != xtrue ]; then
 		pushd libmoai > /dev/null
-			bash build.sh -p $package_name -i $arm_mode -a $arm_arch -l $app_platform $tapjoy_flags
+			bash build.sh -p $package_name -i $arm_mode -a $arm_arch -l $app_platform $tapjoy_flags $google_push_flags
 		popd > /dev/null
 	fi
 
@@ -93,6 +95,10 @@
 		required_libs="$required_libs \"tapjoy\""
 	fi
 
+	if [ x"$google_push_flags" == x ]; then
+		required_libs="$required_libs \"google-push\""
+	fi
+
 	cp -f host-source/d.settings-global.sh $new_host_dir/settings-global.sh
 	fr $new_host_dir/settings-global.sh @REQUIRED_LIBS@ "$required_libs"
 	
@@ -106,6 +112,7 @@
 	rsync -r --exclude=.svn --exclude=.DS_Store --exclude=src/ --exclude=external/ host-source/source/. $new_host_dir/host-source
 
 	# create package src directories
+	mkdir -p $new_host_dir/host-source/project/src/com/ziplinegames/moai
 	OLD_IFS=$IFS
 	IFS='.'
 	package_path=src

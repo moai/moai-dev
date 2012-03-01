@@ -13,7 +13,6 @@
 #include <aku/AKU-untz.h>
 #include <aku/AKU-luaext.h>
 
-
 template <class T>
 class LockingQueue {
 public:
@@ -278,49 +277,6 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 //================================================================//
 
 	//----------------------------------------------------------------//
-	extern "C" void Java_@PACKAGE_UNDERSCORED@_AndroidC2DMReceiver_AKUNotifyRemoteNotificationRegistrationComplete ( JNIEnv* env, jclass obj, jint code, jstring jregistration ) {
-		GET_CSTRING ( jregistration, registration );
-		MOAINotifications::Get ().NotifyRemoteRegistrationComplete ( code , registration );
-		RELEASE_CSTRING ( jregistration, registration );	
-	}
-
-	//----------------------------------------------------------------//
-	extern "C" void Java_@PACKAGE_UNDERSCORED@_AndroidC2DMReceiver_AKUNotifyRemoteNotificationReceived ( JNIEnv* env, jclass obj, jobjectArray jkeys, jobjectArray jvalues ) {
-		if ( env->GetArrayLength ( jkeys ) != env->GetArrayLength ( jvalues )) return;
-
-		int entries = env->GetArrayLength ( jkeys );
-		cc8** keys = ( cc8** )malloc ( entries * sizeof ( cc8* ));
-		cc8** values = ( cc8** )malloc ( entries * sizeof ( cc8* ));
-		
-		for ( int i = 0; i < entries; i++ ) {
-			jstring jkey = (jstring) env->GetObjectArrayElement ( jkeys, i );
-			jstring jvalue = (jstring) env->GetObjectArrayElement ( jvalues, i );
-			
-			GET_CSTRING ( jkey, key );
-			GET_CSTRING ( jvalue, value );
-			
-			keys [ i ] = key;
-			values [ i ] = value;
-		}
-		
-		MOAINotifications::Get ().NotifyRemoteNotificationReceived ( entries, keys, values );
-
-		for ( int i = 0; i < entries; i++ ) {
-			jstring jkey = (jstring) env->GetObjectArrayElement ( jkeys, i );
-			jstring jvalue = (jstring) env->GetObjectArrayElement ( jvalues, i );
-			
-			RELEASE_CSTRING ( jkey, keys [ i ]);
-			RELEASE_CSTRING ( jvalue, values [ i ]);
-
-			keys [ i ] = NULL;
-			values [ i ] = NULL;
-		}
-		
-		free ( keys );
-		free ( values );
-	}
-
-	//----------------------------------------------------------------//
 	extern "C" int Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUCreateContext ( JNIEnv* env, jclass obj ) {
 		return AKUCreateContext ();
 	}
@@ -455,6 +411,11 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 		REGISTER_LUA_CLASS ( MOAITapjoy );
 #endif
 
+#ifndef DISABLE_NOTIFICATIONS
+		MOAINotifications::Affirm ();
+		REGISTER_LUA_CLASS ( MOAINotifications );
+#endif
+
 #ifndef DISABLE_CRITTERCISM
 		MOAICrittercism::Affirm ();
 		REGISTER_LUA_CLASS ( MOAICrittercism );
@@ -469,9 +430,6 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 		MOAIAdColony::Affirm ();
 		REGISTER_LUA_CLASS ( MOAIAdColony );
 #endif
-
-		MOAINotifications::Affirm ();
-		REGISTER_LUA_CLASS ( MOAINotifications );
 
 		// register callbacks into Java
 		mMoaiView = ( jobject ) env->NewGlobalRef ( moaiView );
@@ -764,32 +722,4 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 		}
 
 		AKUUpdate ();
-	}
-
-	//================================================================//
-	// Tapjoy JNI methods
-	//================================================================//
-
-	//----------------------------------------------------------------//
-	extern "C" void Java_com_ziplinegames_moai_MoaiTapjoy_AKUNotifyTapjoyVideoAdReady ( JNIEnv* env, jclass obj ) {
-
-#ifndef DISABLE_TAPJOY
-		MOAITapjoy::Get ().NotifyVideoAdReady ();
-#endif
-	}
-
-	//----------------------------------------------------------------//
-	extern "C" void Java_com_ziplinegames_moai_MoaiTapjoy_AKUNotifyTapjoyVideoAdError ( JNIEnv* env, jclass obj, jint code ) {
-
-#ifndef DISABLE_TAPJOY
-		MOAITapjoy::Get ().NotifyVideoAdError ( code );
-#endif
-	}
-	
-	//----------------------------------------------------------------//
-	extern "C" void Java_com_ziplinegames_moai_MoaiTapjoy_AKUNotifyTapjoyVideoAdClose ( JNIEnv* env, jclass obj ) {
-
-#ifndef DISABLE_TAPJOY
-		MOAITapjoy::Get ().NotifyVideoAdClose ();
-#endif
 	}
