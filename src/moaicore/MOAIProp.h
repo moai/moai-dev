@@ -141,8 +141,9 @@ protected:
 
 	//----------------------------------------------------------------//
 	virtual u32		GetDeckBounds			( USBox& bounds ); // get the deck bounds in model space
+	u32				GetFrame				( USBox& bounds );
 	void			GetGridBoundsInView		( MOAICellCoord& c0, MOAICellCoord& c1 );
-	u32				GetModelBounds			( USBox& bounds ); // get the prop bounds in model space
+	u32				GetPropBounds			( USBox& bounds ); // get the prop bounds in model space
 	void			LoadGfxState			();
 	void			UpdateBounds			( u32 status );
 	void			UpdateBounds			( const USBox& bounds, u32 status );

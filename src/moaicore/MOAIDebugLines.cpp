@@ -144,6 +144,7 @@ void MOAIDebugLines::Draw () {
 	gfxDevice.SetPrimType ( GL_LINES );
 	gfxDevice.SetVertexPreset ( MOAIVertexFormatMgr::XYZWC );
 	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM );
+	gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
 	
 	for ( u32 i = 0; i < this->mTop; ++i ) {
 		this->mLineBuffer [ i ].Draw ();
