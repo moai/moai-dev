@@ -137,8 +137,7 @@ int MOAITextBox::_getStyle ( lua_State* L ) {
 int MOAITextBox::_more ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextBox, "U" )
 	
-	bool more = self->More ();
-	lua_pushboolean ( L, more );
+	lua_pushboolean ( L, self->mMore );
 	return 1;
 }
 
@@ -233,8 +232,49 @@ int MOAITextBox::_setCurve ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	setHighlight
+	@text	Set or clear the highlight color of a sub string in the text.
+			Only affects text displayed on the current page. Highlight
+			will automatically clear when layout or page changes.
+
+	@overload
+
+		@in		MOAITextBox self
+		@in		number index		Index of the first character in the substring.
+		@in		number size			Length of the substring.
+		@in		number r
+		@in		number g
+		@in		number b
+		@opt	number a			Default value is 1.
+	
+	@overload
+		
+		@in		MOAITextBox self
+		@in		number index		Index of the first character in the substring.
+		@in		number size			Length of the substring.
+*/
+int MOAITextBox::_setHighlight ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextBox, "UNN" )
+	
+	u32 index	= state.GetValue < u32 >( 2, 1 ) - 1;
+	u32 size	= state.GetValue < u32 >( 3, 0 );
+	
+	if ( size ) {
+		
+		if ( state.GetTop () > 3 ) {
+			u32 rgba = state.GetColor32 ( 4, 1.0f, 1.0f, 1.0f, 1.0f );
+			self->SetHighlight ( index, size, rgba );
+		}
+		else {
+			self->SetHighlight ( index, size );
+		}
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	setLineSpacing
-	@text	Sets the scale of spacing between lines. '1' uses the fon't default spacing.
+	@text	Sets the scale of spacing between lines. '1' uses the font default spacing.
 
 	@in		MOAITextBox self
 	@in		number lineSpacing		Default value is 1.
@@ -323,47 +363,6 @@ int MOAITextBox::_setString ( lua_State* L ) {
 	self->ResetStyleMap ();
 	self->ScheduleLayout ();
 
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@name	setHighlight
-	@text	Set of clear the highlight color of a sub string in the text.
-			Only affects text displayed on the current page. Highlight
-			will automatically clear when layout or page changes.
-
-	@overload
-
-		@in		MOAITextBox self
-		@in		number index		Index of the first character in the substring.
-		@in		number size			Length of the substring.
-		@in		number r
-		@in		number g
-		@in		number b
-		@opt	number a			Default value is 1.
-	
-	@overload
-		
-		@in		MOAITextBox self
-		@in		number index		Index of the first character in the substring.
-		@in		number size			Length of the substring.
-*/
-int MOAITextBox::_setHighlight ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITextBox, "UNN" )
-	
-	u32 index	= state.GetValue < u32 >( 2, 1 ) - 1;
-	u32 size	= state.GetValue < u32 >( 3, 0 );
-	
-	if ( size ) {
-		
-		if ( state.GetTop () > 3 ) {
-			u32 rgba = state.GetColor32 ( 4, 1.0f, 1.0f, 1.0f, 1.0f );
-			self->SetHighlight ( index, size, rgba );
-		}
-		else {
-			self->SetHighlight ( index, size );
-		}
-	}
 	return 0;
 }
 
