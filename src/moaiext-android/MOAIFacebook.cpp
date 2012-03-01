@@ -14,8 +14,13 @@
 extern JavaVM* jvm;
 extern jobject mMoaiActivity;
 
-jmethodID mFacebookLoginFunc;
+jmethodID mFacebookGetTokenFunc;
 jmethodID mFacebookInitFunc;
+jmethodID mFacebookLoginFunc;
+jmethodID mFacebookLogoutFunc;
+jmethodID mFacebookPostToFeedFunc;
+jmethodID mFacebookSessionValidFunc;
+jmethodID mFacebookSetTokenFunc;
 
 //================================================================//
 // Utility macros
@@ -56,6 +61,28 @@ cc8* MOAIFacebook::_luaParseTable ( lua_State* L, int idx ) {
 	return NULL;
 }
 
+
+//----------------------------------------------------------------//
+int MOAIFacebook::_getToken ( lua_State* L ) {
+	MOAILuaState state ( L );
+		
+	GET_ENV ();
+	
+	if ( mFacebookGetTokenFunc == NULL ) {
+		
+		jclass moaiActivityClass = env->GetObjectClass ( mMoaiActivity );		
+		mFacebookGetTokenFunc = env->GetMethodID ( moaiActivityClass, "facebookGetToken", "(V)Ljava/lang/String;" );
+	}
+
+	jstring jtoken = ( jstring )env->CallObjectMethod ( mMoaiActivity , mFacebookGetTokenFunc );
+	GET_CSTRING ( jtoken, token );
+	
+	lua_pushstring ( state, token );
+	RELEASE_CSTRING ( jtoken, token );
+	return 1;
+}
+
+//----------------------------------------------------------------//
 int MOAIFacebook::_init ( lua_State* L ) {
 	MOAILuaState state ( L );
 	
@@ -127,6 +154,58 @@ int MOAIFacebook::_login( lua_State *L ) {
 }
 
 //----------------------------------------------------------------//
+int MOAIFacebook::_logout( lua_State *L ) {
+	MOAILuaState state ( L );
+	
+	GET_ENV ();
+	
+	if ( mFacebookLogoutFunc == NULL ) {
+		
+		jclass moaiActivityClass = env->GetObjectClass ( mMoaiActivity );		
+		mFacebookLogoutFunc = env->GetMethodID ( moaiActivityClass, "facebookLogout", "(V)V" );
+	}
+
+	env->CallVoidMethod ( mMoaiActivity , mFacebookLogoutFunc );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+int MOAIFacebook::_postToFeed ( lua_State* L ) {
+	MOAILuaState state ( L );
+		
+	GET_ENV ();
+	
+	if ( mFacebookPostToFeedFunc == NULL ) {
+		
+		jclass moaiActivityClass = env->GetObjectClass ( mMoaiActivity );		
+		mFacebookPostToFeedFunc = env->GetMethodID ( moaiActivityClass, "facebookPostToFeed", "(V)V" );
+	}
+
+	env->CallVoidMethod ( mMoaiActivity , mFacebookPostToFeedFunc );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+int MOAIFacebook::_sessionValid ( lua_State* L ) {
+	MOAILuaState state ( L );
+
+	GET_ENV ();
+	
+	if ( mFacebookSessionValidFunc == NULL ) {
+		
+		jclass moaiActivityClass = env->GetObjectClass ( mMoaiActivity );		
+		mFacebookSessionValidFunc = env->GetMethodID ( moaiActivityClass, "facebookIsSessionValid", "(V)Z" );
+	}
+
+	jboolean isValid = env->CallBooleanMethod ( mMoaiActivity , mFacebookSessionValidFunc );
+	lua_pushboolean ( state, isValid );
+
+	return 1;
+}
+
+//----------------------------------------------------------------//
 int MOAIFacebook::_setListener ( lua_State* L ) {
 	MOAILuaState state ( L );
 	
@@ -137,6 +216,24 @@ int MOAIFacebook::_setListener ( lua_State* L ) {
 	}
 	
 	return 0;
+}
+
+//----------------------------------------------------------------//
+int MOAIFacebook::_setToken ( lua_State* L ) {
+	MOAILuaState state ( L );
+	
+	cc8* token = lua_tostring ( state, 1 );
+	
+	GET_ENV ();
+	GET_JSTRING ( token, jtoken );
+	
+	if ( mFacebookSetTokenFunc == NULL ) {
+		
+		jclass moaiActivityClass = env->GetObjectClass ( mMoaiActivity );		
+		mFacebookSetTokenFunc = env->GetMethodID ( moaiActivityClass, "facebookSetToken", "(Ljava/lang/String;)V" );
+	}
+
+	env->CallVoidMethod ( mMoaiActivity , mFacebookSetTokenFunc, jtoken );
 }
 
 //================================================================//
@@ -157,12 +254,20 @@ MOAIFacebook::~MOAIFacebook () {
 //----------------------------------------------------------------//
 void MOAIFacebook::RegisterLuaClass ( MOAILuaState& state ) {
 
-	state.SetField ( -1, "FACEBOOK_LOGIN_LISTENER", ( u32 ) FACEBOOK_LOGIN_LISTENER );
+	state.SetField ( -1, "DIALOG_DID_CANCEL", ( u32 ) DIALOG_DID_CANCEL );
+	state.SetField ( -1, "DIALOG_DID_COMPLETE", ( u32 ) DIALOG_DID_COMPLETE );
+	state.SetField ( -1, "SESSION_DID_LOGIN", ( u32 ) SESSION_DID_LOGIN );
+	state.SetField ( -1, "SESSION_DID_NOT_LOGIN", ( u32 ) SESSION_DID_NOT_LOGIN );
 	
 	luaL_Reg regTable[] = {
+		{ "getToken",				_getToken },
 		{ "init",					_init },
 		{ "login",					_login },
+		{ "logout",					_logout },
+		{ "postToFeed",				_postToFeed },
+		{ "sessionValid",			_sessionValid },
 		{ "setListener",			_setListener },
+		{ "setToken",				_setToken },
 		{ NULL, NULL }
 	};
 
@@ -170,15 +275,46 @@ void MOAIFacebook::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIFacebook::NotifyFacebookLogin ( int code ) {
-	MOAILuaRef& callback = this->mListeners [ FACEBOOK_LOGIN_LISTENER ];
+void MOAIFacebook::NotifyFacebookDialog ( int code ) {
 	
-	if ( callback ) {
-		MOAILuaStateHandle state = callback.GetSelf ();
+	if ( code == 1 ) {
 		
-		lua_pushinteger ( state, code );
+		MOAILuaRef& callback = this->mListeners [ DIALOG_DID_COMPLETE ];
+
+		if ( callback ) {
+			MOAILuaStateHandle state = callback.GetSelf ();
+			state.DebugCall ( 0, 0 );
+		}		
+	} else if ( code == 0 ) {
+				
+		MOAILuaRef& callback = this->mListeners [ DIALOG_DID_CANCEL ];
+
+		if ( callback ) {
+			MOAILuaStateHandle state = callback.GetSelf ();
+			state.DebugCall ( 0, 0 );
+		}
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIFacebook::NotifyFacebookLogin ( int code ) {
+	
+	if ( code == 1 ) {
 		
-		state.DebugCall ( 1, 0 );
+		MOAILuaRef& callback = this->mListeners [ SESSION_DID_LOGIN ];
+
+		if ( callback ) {
+			MOAILuaStateHandle state = callback.GetSelf ();
+			state.DebugCall ( 0, 0 );
+		}		
+	} else if ( code == 0 ) {
+				
+		MOAILuaRef& callback = this->mListeners [ SESSION_DID_NOT_LOGIN ];
+
+		if ( callback ) {
+			MOAILuaStateHandle state = callback.GetSelf ();
+			state.DebugCall ( 0, 0 );
+		}
 	}
 }
 

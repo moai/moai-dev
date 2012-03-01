@@ -16,14 +16,22 @@ class MOAIFacebook :
 private:
 
 	//----------------------------------------------------------------//
+	static int		_getToken			( lua_State* L );
 	static int		_init				( lua_State* L );
 	static int		_login				( lua_State* L );
+	static int		_logout				( lua_State* L );
+	static int		_postToFeed			( lua_State* L );
+	static int		_sessionValid 		( lua_State* L );
 	static int		_setListener 		( lua_State* L );
+	static int		_setToken	 		( lua_State* L );
 	
 	
 public:	
 	enum {
-		FACEBOOK_LOGIN_LISTENER,
+		DIALOG_DID_CANCEL,
+		DIALOG_DID_COMPLETE,
+		SESSION_DID_LOGIN,
+		SESSION_DID_NOT_LOGIN,
 		TOTAL_LISTENERS
 	};
 	
@@ -33,6 +41,7 @@ public:
 
 					MOAIFacebook					();
 					~MOAIFacebook					();
+	void 			NotifyFacebookDialog 			( int );
 	void 			NotifyFacebookLogin 			( int );
 	void			RegisterLuaClass				( MOAILuaState& state );
 	

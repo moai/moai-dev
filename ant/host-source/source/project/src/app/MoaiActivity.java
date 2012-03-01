@@ -124,6 +124,7 @@ public class MoaiActivity extends Activity {
 	protected static native void 		AKUNotifyPurchaseResponseReceived	( String productId, int responseCode ); // M
 	protected static native void 		AKUNotifyPurchaseStateChanged		( String productId, int purchaseState, String orderId, String notificationId, String developerPayload ); // M
 	protected static native void 		AKUNotifyRestoreResponseReceived	( int responseCode ); // M
+	protected static native void		AKUNotifyFacebookDialog				( int statusCode );
 	protected static native void		AKUNotifyFacebookLogin				( int statusCode );
 	protected static native void 		AKUSetConnectionType 				( long connectionType ); // M	
 	protected static native void 		AKUSetDocumentDirectory 			( String path ); // M
@@ -472,30 +473,79 @@ public class MoaiActivity extends Activity {
 
 	//----------------------------------------------------------------//
 	
+	public String facebookGetToken () {
+		return mFacebook.getAccessToken (); 
+	}
+	
 	public void facebookLogin ( String [] permissions ) {
-		mFacebook.authorize(this, permissions, new DialogListener() {
+		mFacebook.authorize ( this, permissions, new DialogListener () {
 	        @Override
-	        public void onComplete(Bundle values) {
+	        public void onComplete( Bundle values ) {
 				AKUNotifyFacebookLogin ( 1 );
 	        }
 
 	        @Override
-	        public void onFacebookError(FacebookError error) {}
-
-	        @Override
-	        public void onError(DialogError e) {
+	        public void onFacebookError ( FacebookError error ) {
 				AKUNotifyFacebookLogin ( 0 );
 			}
 
 	        @Override
-	        public void onCancel() {
+	        public void onError ( DialogError e ) {
+				AKUNotifyFacebookLogin ( 0 );
+			}
+
+	        @Override
+	        public void onCancel () {
 				AKUNotifyFacebookLogin ( 0 );
 			}
 	     });
 	}
+
+	public void facebookLogout () {
+		
+		try {
+			mFacebook.logout ( this );			
+		}
+		catch ( Throwable  e ) {
+			
+		}
+	}
 	
 	public void facebookInit ( String apId ) {
 		mFacebook = new Facebook ( apId ); 
+	}
+
+	public boolean facebookIsSessionValid () {
+		return mFacebook.isSessionValid ();
+	}
+	
+	public void facebookPostToFeed () {
+		
+		mFacebook.dialog ( this, "feed", new DialogListener () {
+	        @Override
+	        public void onComplete( Bundle values ) {
+				AKUNotifyFacebookDialog ( 1 );
+	        }
+
+	        @Override
+	        public void onFacebookError ( FacebookError error ) {
+				AKUNotifyFacebookDialog ( 0 );
+			}
+
+	        @Override
+	        public void onError ( DialogError e ) {
+				AKUNotifyFacebookDialog ( 0 );
+			}
+
+	        @Override
+	        public void onCancel () {
+				AKUNotifyFacebookDialog ( 0 );
+			}
+	     });
+	}
+	
+	public void facebookSetToken ( String token ) {
+		mFacebook.setAccessToken ( token ); 
 	}
 	
 	//================================================================//

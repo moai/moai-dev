@@ -516,6 +516,10 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiActivity_AKUNotifyFacebookLogin ( JNIEnv* env, jclass obj, jint code ) {
 		MOAIFacebook::Get ().NotifyFacebookLogin ( code );
 	}
+	//----------------------------------------------------------------//
+	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiActivity_AKUNotifyFacebookDialog ( JNIEnv* env, jclass obj, jint code ) {
+		MOAIFacebook::Get ().NotifyFacebookDialog ( code );
+	}
 	
 	//----------------------------------------------------------------//
 	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiActivity_AKUNotifyBillingSupported ( JNIEnv* env, jclass obj, jboolean supported ) {
