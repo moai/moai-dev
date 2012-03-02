@@ -500,7 +500,7 @@ void MOAIParticlePlugin::Parse( MOAILuaState& state, TiXmlNode* node )
 		// Initialize particle system
 		system->ReserveParticles(numParticles, curRegister);
 		system->ReserveSprites(numParticles);
-		system->mBlendMode.SetBlend ( blendFuncSrc, blendFuncDst+1 );
+		system->mBlendMode.SetBlend ( blendFuncSrc, blendFuncDst );
 
 		// Finialize the state with a lifespan & compile scripts
 		particleState->mTermRange[0] = lifespan - lifespanVariance < 0 ? 0 : lifespan - lifespanVariance;
