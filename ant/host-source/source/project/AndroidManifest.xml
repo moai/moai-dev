@@ -53,19 +53,7 @@
 		<!-- AdColony -->
 		<activity android:name="com.jirbo.adcolony.AdColonyOverlay" android:configChanges="keyboardHidden|orientation" android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" />
 		<activity android:name="com.jirbo.adcolony.AdColonyFullscreen" android:configChanges="keyboardHidden|orientation" android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" />
-		<activity android:name="com.jirbo.adcolony.AdColonyBrowser" android:configChanges="keyboardHidden|orientation" android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" />
-		
-		<!-- Android C2DM Messaging -->
-		<receiver android:name="AndroidC2DMReceiver" android:permission="com.google.android.c2dm.permission.SEND">
-       		<intent-filter>
-				<action android:name="com.google.android.c2dm.intent.RECEIVE" />
-				<category android:name="@PACKAGE@" />
-			</intent-filter>
-			<intent-filter>
-				<action android:name="com.google.android.c2dm.intent.REGISTRATION" />
-				<category android:name="@PACKAGE@" />
-			</intent-filter>
-		</receiver>
+		<activity android:name="com.jirbo.adcolony.AdColonyBrowser" android:configChanges="keyboardHidden|orientation" android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" />		
 	</application>
 	
     <uses-sdk android:minSdkVersion="8"/>
@@ -75,11 +63,6 @@
 	<uses-permission android:name="android.permission.INTERNET" />
 		
 	<!-- EXTERNAL PERMISSIONS: Placeholder (DO NOT MOVE OR REMOVE) -->
-
-	<!-- Google C2DM Messaging -->
-	<permission android:name="@PACKAGE@.permission.C2D_MESSAGE" android:protectionLevel="signature" />
-	<uses-permission android:name="@PACKAGE@.permission.C2D_MESSAGE" />
-	<uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 	
 	<!-- Crittercism, AdColony -->
  	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />

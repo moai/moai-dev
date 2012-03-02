@@ -14,7 +14,6 @@ import @PACKAGE@.R;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -272,11 +271,13 @@ public class MoaiActivity extends Activity {
 	}
 	
 	@Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+    public void onActivityResult ( int requestCode, int resultCode, Intent data ) {
+	
+        super.onActivityResult ( requestCode, resultCode, data );
 
-        mFacebook.authorizeCallback(requestCode, resultCode, data);
+        mFacebook.authorizeCallback ( requestCode, resultCode, data );
     }
+
 	//================================================================//
 	// Public methods
 	//================================================================//
@@ -629,26 +630,6 @@ public class MoaiActivity extends Activity {
 	public void setMarketPublicKey ( String key ) {
 	
 		AndroidMarketBillingSecurity.setPublicKey ( key );
-	}
-	
-	//================================================================//
-	// Google C2DM JNI callback methods
-	//================================================================//
-
-	//----------------------------------------------------------------//
-	public void registerForRemoteNotifications ( String alias ) {
-	
-		Intent intent = new Intent ( "com.google.android.c2dm.intent.REGISTER" );
-		intent.putExtra( "app", PendingIntent.getBroadcast ( getApplicationContext (), 0, new Intent (), 0 ));
-		intent.putExtra( "sender", alias );
-		getApplicationContext ().startService ( intent );
-	}
-	
-	public void unregisterForRemoteNotifications ( ) {
-	
-		Intent intent = new Intent ( "com.google.android.c2dm.intent.UNREGISTER" );
-		intent.putExtra( "app", PendingIntent.getBroadcast ( getApplicationContext (), 0, new Intent (), 0 ));
-		getApplicationContext ().startService ( intent );
 	}
 		
 	//================================================================//

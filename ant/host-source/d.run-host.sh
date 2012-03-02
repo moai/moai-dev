@@ -101,7 +101,6 @@
 
 	# copy AndroidManifest.xml file and replace text
 	cp -f host-source/project/AndroidManifest.xml $out_dir/project/AndroidManifest.xml
-	fr $out_dir/project/AndroidManifest.xml	@PACKAGE@ "$package"
 	fr $out_dir/project/AndroidManifest.xml	@DEBUGGABLE@ "$debug"
 	fr $out_dir/project/AndroidManifest.xml	@VERSION_CODE@ "$versionCode"
 	fr $out_dir/project/AndroidManifest.xml	@VERSION_NAME@ "$versionName"	
@@ -122,10 +121,17 @@
 		if [ -f "host-source/external/${requires[$i-1]}/manifest_permissions.xml" ]; then
 			awk 'FNR==NR{ _[++d]=$0; next } /EXTERNAL PERMISSIONS:/ { print; print ""; for ( i=1; i<=d; i++ ) { print _[i] } next } 1' "host-source/external/${requires[$i-1]}/manifest_permissions.xml" $out_dir/project/AndroidManifest.xml > /tmp/AndroidManifest.tmp && mv -f /tmp/AndroidManifest.tmp $out_dir/project/AndroidManifest.xml
 		fi
-		rsync -r "host-source/external/${requires[$i-1]}/project/" "$out_dir/${requires[$i-1]}"
-		rsync -r "host-source/moai/${requires[$i-1]}/." "$out_dir/project/src/com/ziplinegames/moai"
-		echo "android.library.reference.${i}=../${requires[$i-1]}/" >> "$out_dir/project/project.properties"
+		if [ -d "host-source/moai/${requires[$i-1]}" ]; then
+			rsync -r "host-source/moai/${requires[$i-1]}/." "$out_dir/project/src/com/ziplinegames/moai"
+		fi
+		if [ -d "host-source/external/${requires[$i-1]}/project" ]; then
+			rsync -r "host-source/external/${requires[$i-1]}/project/" "$out_dir/${requires[$i-1]}"
+			echo "android.library.reference.${i}=../${requires[$i-1]}/" >> "$out_dir/project/project.properties"
+		fi
 	done
+	
+	# replace the package name in AndroidManifest.xml
+	fr $out_dir/project/AndroidManifest.xml	@PACKAGE@ "$package"
 	
 	# copy local.properties file and replace the SDK root
 	cp -f host-source/project/local.properties $out_dir/project/local.properties

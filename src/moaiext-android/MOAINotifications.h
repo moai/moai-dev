@@ -4,6 +4,8 @@
 #ifndef	MOAINOTIFICATIONS_H
 #define	MOAINOTIFICATIONS_H
 
+#ifndef DISABLE_NOTIFICATIONS
+
 #include <moaicore/moaicore.h>
 
 //================================================================//
@@ -47,5 +49,7 @@ public:
 	void			NotifyRemoteNotificationReceived	( int entries, cc8** keys, cc8** values );
 	void			NotifyRemoteRegistrationComplete	( int code, cc8* registration );
 };
+
+#endif  //DISABLE_NOTIFICATIONS
 
 #endif  //MOAINOTIFICATIONS_H

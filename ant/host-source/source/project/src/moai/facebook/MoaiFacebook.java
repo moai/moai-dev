@@ -6,17 +6,21 @@
 
 package com.ziplinegames.moai;
 
-import android.app.Activity;
+import android.content.Context;
 
+//================================================================//
+// MoaiFacebook
+//================================================================//
 public class MoaiFacebook {
 
-	private static Activity mActivity = null;
+	private static Context mContext = null;
 
-	public static void initialize ( Activity activity ) {
+	//----------------------------------------------------------------//
+	public static void initialize ( Context context ) {
 		
 		MoaiLog.i ( "Initializing Facebook" );
 		
-		mActivity = activity;
+		mContext = context;
 	}
 
 	//================================================================//
