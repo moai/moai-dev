@@ -28,6 +28,7 @@ font1:load ( 'arial-rounded.TTF' )
 
 font2 = MOAIFont.new ()
 font2:load ( 'Dwarves.TTF' )
+font2:preloadGlyphs ( charcodes, 24 )
 
 font3 = MOAIFont.new ()
 font3:load ( 'EBOLA-KI.TTF' )
@@ -340,7 +341,7 @@ end
 function setStyleTests ()
 	running = true
 	
-	text = 'This is <green>some test</> text to <yellow><blue>print out while</> testing different styles.'
+	text = 'This is <green>some test</> text to <yellow><blue>print out while</> testing different styles.</> This is <green>some test</> text to <yellow><blue>print out while</> testing different styles.</> This is <green>some test</> text to <yellow><blue>print out while</> testing different styles.</>'
 	
 	local textbox = MOAITextBox.new ()
 	textbox:setString ( text )
@@ -375,13 +376,19 @@ function setStyleTests ()
 	
 	continue = false
 	repeat coroutine.yield () until continue
-	text = 'This is some test text to print out while testing different styles.'
-	textbox:setString ( text )
 	
+	curve = MOAIAnimCurve.new ()
+	curve:reserveKeys ( 3 )
+	curve:setKey ( 1, 0, 0 )
+	curve:setKey ( 2, .5, 16 )
+	curve:setKey ( 3, 1, 0 )
+
+	textbox:reserveCurves ( 1 )
+	textbox:setCurve ( 1, curve )
 	
-	style1:setFont ( font2 )
-	style1:setSize ( 24 )
-	textbox:setStyle ( 'red2', style1 )
+	-- style1:setFont ( font2 )
+	-- style1:setSize ( 24 )
+	-- textbox:setStyle ( 'red2', style1 )
 	-- style3:setColor ( 0, 0, 1, 1 )
 	-- style3:setFont ( font2 )
 	-- style3:setSize ( 24 )
