@@ -23,6 +23,15 @@ charcodes = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 .,:;
 font = MOAIFont.new ()
 font:loadFromTTF ( 'arial-rounded.TTF', charcodes, 12, 163 )
 
+font1 = MOAIFont.new ()
+font1:load ( 'arial-rounded.TTF' )
+
+font2 = MOAIFont.new ()
+font2:load ( 'Dwarves.TTF' )
+
+font3 = MOAIFont.new ()
+font3:load ( 'EBOLA-KI.TTF' )
+
 running = false
 continue = false
 
@@ -314,6 +323,14 @@ function spoolSpeedTests ()
 	
 	continue = false
 	repeat coroutine.yield () until continue
+	
+	text = 'Spooling with negative speed. Spooling with negative speed. Spooling with negative speed.'
+	textbox:setString ( text )
+	textbox:setSpeed ( -12 )
+	textbox:spool ()
+	
+	continue = false
+	repeat coroutine.yield () until continue
 	textbox:stop ()
 	textbox:setReveal ( 0 )
 	running = false
@@ -321,7 +338,63 @@ end
 
 -- setStyle
 function setStyleTests ()
-
+	running = true
+	
+	text = 'This is <green>some test</> text to <yellow><blue>print out while</> testing different styles.'
+	
+	local textbox = MOAITextBox.new ()
+	textbox:setString ( text )
+	textbox:setRect ( -150, 70, 150, 230 )
+	textbox:setYFlip ( true )
+	layer:insertProp ( textbox )
+	
+	local style1 = MOAITextStyle.new ()
+	style1:setColor ( 1, 0, 0, 1 )
+	style1:setFont ( font1 )
+	style1:setSize ( 12 )
+	textbox:setStyle ( style1 )
+	textbox:setStyle ( 'red', style1 )
+	
+	local style2 = MOAITextStyle.new ()
+	style2:setColor ( 0, 1, 0, 1 )
+	style2:setFont ( font2 )
+	style2:setSize ( 24 )
+	textbox:setStyle ( 'green', style2 )
+	
+	local style3 = MOAITextStyle.new ()
+	style3:setColor ( 0, 0, 1, .5 )
+	style3:setFont ( font3 )
+	style3:setSize ( 36 )
+	textbox:setStyle ( 'blue', style3 )
+	
+	local style4 = MOAITextStyle.new ()
+	style4:setColor ( 1, 1, 0, 1 )
+	style4:setFont ( font1 )
+	style4:setSize ( 12 )
+	textbox:setStyle ( 'yellow', style4 )
+	
+	continue = false
+	repeat coroutine.yield () until continue
+	text = 'This is some test text to print out while testing different styles.'
+	textbox:setString ( text )
+	
+	
+	style1:setFont ( font2 )
+	style1:setSize ( 24 )
+	textbox:setStyle ( 'red2', style1 )
+	-- style3:setColor ( 0, 0, 1, 1 )
+	-- style3:setFont ( font2 )
+	-- style3:setSize ( 24 )
+	-- style4:setFont ( font2 )
+	-- style4:setSize ( 24 )
+	
+	-- local style5 = MOAITextStyle.new ()
+	-- style5:setColor ( 
+	
+	continue = false
+	repeat coroutine.yield () until continue
+	textbox:setReveal ( 0 )
+	running = false
 end
 
 -- setYFlip
@@ -346,6 +419,14 @@ function setYFlipTests ()
 	
 	continue = false
 	repeat coroutine.yield () until continue
+	text = '1Text is not YFLipped. 2Text is not YFLipped. 3Text is not YFLipped.'
+	viewport:setScale ( 320, -480 )
+	textbox:setString ( text )
+	textbox:setYFlip ( false )
+	
+	continue = false
+	repeat coroutine.yield () until continue
+	viewport:setScale ( 320, 480 )
 	textbox:setReveal ( 0 )
 	running = false
 end
