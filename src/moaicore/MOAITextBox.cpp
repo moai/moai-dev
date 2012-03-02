@@ -433,7 +433,10 @@ void MOAITextBox::Draw ( int subPrimID, bool reload ) {
 		gfxDevice.SetBlendMode ( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
 		gfxDevice.SetScissorRect ();
 
-		MOAIShaderMgr::Get ().BindShader ( MOAIShaderMgr::FONT_SHADER );
+		if( this->mFont->GetIsRGB() )
+			MOAIShaderMgr::Get ().BindShader ( MOAIShaderMgr::FONT_RGB_SHADER );
+		else
+			MOAIShaderMgr::Get ().BindShader ( MOAIShaderMgr::FONT_SHADER );
 
 		gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, this->GetLocalToWorldMtx ());
 		gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );

@@ -30,6 +30,8 @@ private:
 
 	float mScale;
 	float mLineSpacing;
+
+	bool mIsRGB;
 	
 	MOAIGlyph mDummy;
 
@@ -42,6 +44,7 @@ private:
 	static int		_getScale			( lua_State* L );
 	static int		_getTexture			( lua_State* L );
 	static int		_load				( lua_State* L );
+	static int		_loadFromBMFont		( lua_State* L );
 	static int		_loadFromTTF		( lua_State* L );
 	static int		_setImage			( lua_State* L );
 	static int		_setTexture			( lua_State* L );
@@ -66,6 +69,7 @@ public:
 
 	GET_SET ( float, Scale, mScale )
 	GET_SET ( float, LineSpacing, mLineSpacing )
+	GET( bool, IsRGB, mIsRGB )
 	
 	//----------------------------------------------------------------//
 	MOAIFont*		Bind				();
@@ -75,6 +79,7 @@ public:
 	void			Init				( cc8* charCodes );
 	void			LoadFont			( MOAIDataBuffer& fontImageData, cc8* charCodes );
 	void			LoadFont			( cc8* fontImageFileName, cc8* charCodes );
+	void			LoadFontFromBMFont  ( cc8* filename );
 	void			LoadFontFromTTF		( cc8* filename, cc8* charCodes, float points, u32 dpi );
 	void			RegisterLuaClass	( MOAILuaState& state );
 	void			RegisterLuaFuncs	( MOAILuaState& state );

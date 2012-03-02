@@ -95,6 +95,7 @@ public:
 	friend class MOAIGfxDevice;
 	
 	GET ( MOAIFrameBuffer*, FrameBuffer, mFrameBuffer )
+	GET ( int, InternalFormat, mGLInternalFormat )
 	
 	//----------------------------------------------------------------//
 	static MOAITexture*		AffirmTexture			( MOAILuaState& state, int idx );
