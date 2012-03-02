@@ -12,6 +12,12 @@
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAITexture.h>
 
+#if defined( _WIN32 )
+	#define STR_CASECMP(str1, str2) (stricmp(str1,str2))
+#else
+	#define STR_CASECMP(str1, str2) (strcasecmp(str1,str2))
+#endif
+
 #define WIDE_ID_BIT			0x80000000
 #define WIDE_ID_MASK		0x7fffffff
 #define INVALID_ID			0xffffffff
@@ -511,7 +517,7 @@ void MOAIFont::LoadFontFromBMFont ( cc8* filename ) {
 			//info face="Cambria" size=64 bold=0 italic=0 charset="" unicode=0 stretchH=100 smooth=1 aa=1 padding=0,0,0,0 spacing=2,2
 			do {
 				p = parseKeyVal(p, &key, &val, &endl);
-				if( strcasecmp(key, "size") == 0 )
+				if( STR_CASECMP(key, "size") == 0 )
 				{
 					this->mScale = atof(val);
 					scale = 1 / this->mScale;
@@ -523,15 +529,15 @@ void MOAIFont::LoadFontFromBMFont ( cc8* filename ) {
 			//common lineHeight=75 base=61 scaleW=512 scaleH=512 pages=1 packed=0
 			do {
 				p = parseKeyVal(p, &key, &val, &endl);
-				if( strcasecmp(key, "lineHeight") == 0 )
+				if( STR_CASECMP(key, "lineHeight") == 0 )
 				{
 					this->mLineSpacing = atof(val) * scale;
 				}
-				else if( strcasecmp(key, "scaleW") == 0 )
+				else if( STR_CASECMP(key, "scaleW") == 0 )
 				{
 					scaleW = 1.0f / atof(val);
 				}
-				else if( strcasecmp(key, "scaleH") == 0 )
+				else if( STR_CASECMP(key, "scaleH") == 0 )
 				{
 					scaleH = 1.0f / atof(val);
 				}
@@ -576,7 +582,7 @@ void MOAIFont::LoadFontFromBMFont ( cc8* filename ) {
 			
 			do {
 				p = parseKeyVal(p, &key, &val, &endl);
-				if( strcasecmp(key, "id") == 0 )
+				if( STR_CASECMP(key, "id") == 0 )
 				{
 					c = atoi(val);
 					if ( this->IsWideChar ( c )) {
@@ -588,13 +594,13 @@ void MOAIFont::LoadFontFromBMFont ( cc8* filename ) {
 						this->mByteGlyphMap [ id ] = ( u8 )b++;
 					}
 				}
-				else if( strcasecmp(key, "x") == 0 ) { x = atof(val); }
-				else if( strcasecmp(key, "y") == 0 ) { y = atof(val); }
-				else if( strcasecmp(key, "width") == 0 ) { width = atof(val); }
-				else if( strcasecmp(key, "height") == 0 ) { height = atof(val); }
-				else if( strcasecmp(key, "xoffset") == 0 ) { xoff = atof(val); }
-				else if( strcasecmp(key, "yoffset") == 0 ) { yoff = atof(val); }
-				else if( strcasecmp(key, "xadvance") == 0 ) { xadv = atof(val); }
+				else if( STR_CASECMP(key, "x") == 0 ) { x = atof(val); }
+				else if( STR_CASECMP(key, "y") == 0 ) { y = atof(val); }
+				else if( STR_CASECMP(key, "width") == 0 ) { width = atof(val); }
+				else if( STR_CASECMP(key, "height") == 0 ) { height = atof(val); }
+				else if( STR_CASECMP(key, "xoffset") == 0 ) { xoff = atof(val); }
+				else if( STR_CASECMP(key, "yoffset") == 0 ) { yoff = atof(val); }
+				else if( STR_CASECMP(key, "xadvance") == 0 ) { xadv = atof(val); }
 				
 			} while( !endl );
 			
@@ -628,15 +634,15 @@ void MOAIFont::LoadFontFromBMFont ( cc8* filename ) {
 			
 			do {
 				p = parseKeyVal(p, &key, &val, &endl);
-				if( strcasecmp(key, "first") == 0 )
+				if( STR_CASECMP(key, "first") == 0 )
 				{
 					first = atoi(val);
 				}
-				else if ( strcasecmp(key, "second") == 0 )
+				else if ( STR_CASECMP(key, "second") == 0 )
 				{
 					second = atoi(val);
 				}
-				else if ( strcasecmp(key, "amount") == 0 )
+				else if ( STR_CASECMP(key, "amount") == 0 )
 				{
 					amount = atof(val);
 				}
