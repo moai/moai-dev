@@ -6,48 +6,132 @@
 
 package com.ziplinegames.moai;
 
-import android.content.Context;
+import android.app.Activity;
+import android.content.Intent;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 
+//================================================================//
+// Moai
+//================================================================//
 public class Moai {
+	
+	private static String [] sExternalClasses = {
+		"com.ziplinegames.moai.MoaiTapjoy",
+		"com.ziplinegames.moai.MoaiFacebook",
+		"com.ziplinegames.moai.MoaiGooglePush",
+		"com.ziplinegames.moai.MoaiGoogleBilling",
+	};
+	
+	private static ArrayList < Class > sAvailableClasses = new ArrayList < Class > ();
 
-	public static void initialize ( Context context ) {
+	//----------------------------------------------------------------//
+	static {
 		
-		// Tapjoy may not have been added to this host when configured, so we 
-		// use reflection and only initialize it if it is present.
-		try {
-			
-			Class tapjoy = Class.forName ( "com.ziplinegames.moai.MoaiTapjoy" );
-			Method initialize = tapjoy.getMethod ( "initialize", Context.class );
+		for ( String className : sExternalClasses )
+		{
+			Class theClass = findClass ( className );
+			if ( theClass != null ) {
+				
+				sAvailableClasses.add ( theClass );
+			}
+		}
+	}
+	
+	//----------------------------------------------------------------//
+	public static void onActivityResult ( int requestCode, int resultCode, Intent data ) {
+	
+	}
 
-			initialize.invoke ( null, context );
+	//----------------------------------------------------------------//
+	public static void onCreate ( Activity activity ) {
+
+		for ( Class theClass : sAvailableClasses ) {
+			
+			executeMethod ( theClass, null, "onCreate", new Class [] { Activity.class }, new Object [] { activity });
+		}
+	}
+	
+	//----------------------------------------------------------------//
+	public static void onDestroy () {
+	
+		for ( Class theClass : sAvailableClasses ) {
+
+			executeMethod ( theClass, null, "onDestroy", new Class [] { }, new Object [] { });
+		}		
+	}
+
+	//----------------------------------------------------------------//
+	public static void onPause () {
+	
+		for ( Class theClass : sAvailableClasses ) {
+
+			executeMethod ( theClass, null, "onPause", new Class [] { }, new Object [] { });
+		}		
+	}
+
+	//----------------------------------------------------------------//
+	public static void onResume () {
+	
+		for ( Class theClass : sAvailableClasses ) {
+
+			executeMethod ( theClass, null, "onResume", new Class [] { }, new Object [] { });
+		}		
+	}
+
+	//----------------------------------------------------------------//
+	public static void onStart () {
+	
+		for ( Class theClass : sAvailableClasses ) {
+
+			executeMethod ( theClass, null, "onStart", new Class [] { }, new Object [] { });
+		}		
+	}
+
+	//----------------------------------------------------------------//
+	public static void onStop () {
+	
+		for ( Class theClass : sAvailableClasses ) {
+
+			executeMethod ( theClass, null, "onStop", new Class [] { }, new Object [] { });
+		}		
+	}
+	
+	//================================================================//
+	// Private methods
+	//================================================================//
+	
+	//----------------------------------------------------------------//
+	private static Class findClass ( String className ) {
+		
+		Class theClass = null;
+		try {
+
+			theClass = Class.forName ( className );
 		} catch ( Throwable e ) {
 
 		}
-
-		// Facebook may not have been added to this host when configured, so we 
-		// use reflection and only initialize it if it is present.
-		try {
+		
+		return theClass;
+	}
+	
+	//----------------------------------------------------------------//
+	private static Object executeMethod ( Class theClass, Object theInstance, String methodName, Class [] parameterTypes, Object [] parameterValues ) {
+		
+		Object result = null;
+		if ( theClass != null ) {
 			
-			Class facebook = Class.forName ( "com.ziplinegames.moai.MoaiFacebook" );
-			Method initialize = facebook.getMethod ( "initialize", Context.class );
+			try {
 
-			initialize.invoke ( null, context );
-		} catch ( Throwable e ) {
+				Method theMethod = theClass.getMethod ( methodName, parameterTypes );
 
+				result = theMethod.invoke ( theInstance, parameterValues );
+			} catch ( Throwable e ) {
+
+			}			
 		}
-
-		// Google Push may not have been added to this host when configured, so we 
-		// use reflection and only initialize it if it is present.
-		try {
-			
-			Class push = Class.forName ( "com.ziplinegames.moai.MoaiGooglePush" );
-			Method initialize = push.getMethod ( "initialize", Context.class );
-
-			initialize.invoke ( null, context );
-		} catch ( Throwable e ) {
-
-		}
+		
+		return result;
 	}
 }

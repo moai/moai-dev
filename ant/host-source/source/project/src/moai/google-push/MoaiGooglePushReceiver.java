@@ -16,29 +16,6 @@ import java.util.ArrayList;
 // MoaiGooglePushReceiver
 //================================================================//
 public class MoaiGooglePushReceiver extends BroadcastReceiver {
-	
-	public enum RegistrationCode {
-		
-		RESULT_REGISTERED,
-		RESULT_UNREGISTERED,
-        RESULT_ERROR_SERVICE_NOT_AVAILABLE,
-        RESULT_ERROR_ACCOUNT_MISSING,
-        RESULT_ERROR_AUTHENTICATION_FAILED,
-        RESULT_ERROR_TOO_MANY_REGISTRATIONS,
-        RESULT_ERROR_INVALID_SENDER,
-        RESULT_ERROR_PHONE_REGISTRATION_ERROR;
-						
-        public static RegistrationCode valueOf ( int index ) {
-	
-            RegistrationCode [] values = RegistrationCode.values ();
-            if (( index < 0 ) || ( index >= values.length )) {
-	
-                return RESULT_ERROR_PHONE_REGISTRATION_ERROR;
-            }
-
-            return values [ index ];
-        }
-    }
 
 	protected static native void AKUNotifyGooglePushRemoteNotificationRegistrationComplete	( int code , String registration );
 	protected static native void AKUNotifyGooglePushRemoteNotificationReceived 				( String [] keys, String [] values );
@@ -47,10 +24,10 @@ public class MoaiGooglePushReceiver extends BroadcastReceiver {
 	@Override
 	public void onReceive ( Context context, Intent intent ) {
 		
-		if ( intent.getAction ().equals ( "com.google.android.c2dm.intent.REGISTRATION" )) {
+		if ( intent.getAction ().equals ( MoaiGooglePushConstants.ACTION_REGISTRATION )) {
 
 	        handleRegistration ( context, intent );
-	    } else if ( intent.getAction ().equals ( "com.google.android.c2dm.intent.RECEIVE" )) {
+	    } else if ( intent.getAction ().equals ( MoaiGooglePushConstants.ACTION_RECEIVE )) {
 
 	        handleMessage ( context, intent );
 	    }
@@ -59,24 +36,24 @@ public class MoaiGooglePushReceiver extends BroadcastReceiver {
 	//----------------------------------------------------------------//
 	private void handleRegistration ( Context context, Intent intent ) {
 		
-	    if ( intent.getStringExtra ( "error" ) != null ) {
+	    if ( intent.getStringExtra ( MoaiGooglePushConstants.ERROR ) != null ) {
 
-		    String errorMessage = intent.getStringExtra ( "error" );
+		    String errorMessage = intent.getStringExtra ( MoaiGooglePushConstants.ERROR );
 		    MoaiLog.e ( "MoaiGooglePushReceiver handleRegistration: registration failed ( " + errorMessage + " )" );
 		
-			AKUNotifyGooglePushRemoteNotificationRegistrationComplete ( RegistrationCode.valueOf ( "RESULT_ERROR_" + errorMessage ).ordinal (), null );
-	    } else if ( intent.getStringExtra ( "unregistered" ) != null ) {
+			AKUNotifyGooglePushRemoteNotificationRegistrationComplete ( MoaiGooglePushConstants.RegistrationCode.valueOf ( "RESULT_ERROR_" + errorMessage ).ordinal (), null );
+	    } else if ( intent.getStringExtra ( MoaiGooglePushConstants.UNREGISTERED ) != null ) {
 
-		    String packageName = intent.getStringExtra ( "unregistered" );
+		    String packageName = intent.getStringExtra ( MoaiGooglePushConstants.UNREGISTERED );
 	    	MoaiLog.i ( "MoaiGooglePushReceiver handleRegistration: unregistered successfully ( " + packageName + " )" );
 
-			AKUNotifyGooglePushRemoteNotificationRegistrationComplete ( RegistrationCode.valueOf ( "RESULT_UNREGISTERED" ).ordinal (), null );
-	    } else if ( intent.getStringExtra ( "registration_id" ) != null ) {
+			AKUNotifyGooglePushRemoteNotificationRegistrationComplete ( MoaiGooglePushConstants.RegistrationCode.valueOf ( "RESULT_UNREGISTERED" ).ordinal (), null );
+	    } else if ( intent.getStringExtra ( MoaiGooglePushConstants.REGISTRATION_ID ) != null ) {
 
-		    String registrationId = intent.getStringExtra ( "registration_id" );
+		    String registrationId = intent.getStringExtra ( MoaiGooglePushConstants.REGISTRATION_ID );
 	    	MoaiLog.i ( "MoaiGooglePushReceiver handleRegistration: registered successfully ( " + registrationId + " )" );
 
-			AKUNotifyGooglePushRemoteNotificationRegistrationComplete ( RegistrationCode.valueOf ( "RESULT_REGISTERED" ).ordinal (), registrationId );
+			AKUNotifyGooglePushRemoteNotificationRegistrationComplete ( MoaiGooglePushConstants.RegistrationCode.valueOf ( "RESULT_REGISTERED" ).ordinal (), registrationId );
 	    }
 	}
 

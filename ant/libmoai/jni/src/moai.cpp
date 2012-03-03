@@ -139,13 +139,8 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 	jobject			mMoaiActivity;
 	jobject			mMoaiView;
 
-	jmethodID 		mCheckBillingSupportedFunc;
-	jmethodID		mConfirmNotificationFunc;
 	jmethodID 		mGenerateGuidFunc;
 	jmethodID		mOpenURLFunc;
-	jmethodID		mRequestPurchaseFunc;
-	jmethodID		mRestoreTransactionsFunc;
-	jmethodID		mSetMarketPublicKeyFunc;
 	jmethodID		mShowDialogFunc;
 	jmethodID		mShareFunc;
 	
@@ -155,59 +150,20 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 		jvm = vm;		
 		return JNI_VERSION_1_4;
 	}
-		
+
 //================================================================//
-// In-App Billing callbacks
+// External callbacks
 //================================================================//
 
 	//----------------------------------------------------------------//
-	bool CheckBillingSupported () {
+	void OpenURL ( const char* url ) {
 
 		GET_ENV ();
-
-		bool retVal = env->CallBooleanMethod ( mMoaiActivity , mCheckBillingSupportedFunc );
-		return retVal;
+		GET_JSTRING ( url, jstr );
+		
+		env->CallVoidMethod ( mMoaiActivity, mOpenURLFunc, jstr );
 	}
 
-	//----------------------------------------------------------------//
-	bool ConfirmNotification ( const char* notification ) {
-
-		GET_ENV ();
-		GET_JSTRING ( notification, jstr );
-		
-		bool retVal = ( bool )env->CallBooleanMethod ( mMoaiActivity , mConfirmNotificationFunc, jstr );
-		return retVal;
-	}
-
-	//----------------------------------------------------------------//
-	bool RequestPurchase ( const char* identifier, const char* payload ) {
-
-		GET_ENV ();
-		GET_JSTRING ( identifier, jidentifier );
-		GET_JSTRING ( payload, jpayload );
-
-		bool retVal = ( bool )env->CallBooleanMethod ( mMoaiActivity , mRequestPurchaseFunc, jidentifier, jpayload );
-		return retVal;
-	}	
-		
-	//----------------------------------------------------------------//
-	bool RestoreTransactions () {
-
-		GET_ENV ();
-		
-		bool retVal = ( bool )env->CallBooleanMethod ( mMoaiActivity , mRestoreTransactionsFunc );
-		return retVal;
-	}
-	
-	//----------------------------------------------------------------//
-	void SetMarketPublicKey ( const char* key ) {
-
-		GET_ENV ();
-		GET_JSTRING ( key, jstr );
-		
-		env->CallVoidMethod ( mMoaiActivity, mSetMarketPublicKeyFunc, jstr );
-	}
-	
 	//----------------------------------------------------------------//
 	void ShowDialog ( const char* title , const char* message , const char* positive , const char* neutral , const char* negative , bool cancelable ) {
 
@@ -234,10 +190,6 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 		env->CallVoidMethod ( mMoaiActivity , mShareFunc, jprompt, jsubject, jtext );
 	}
 	
-//================================================================//
-// Generate GUID callback
-//================================================================//
-
 	//----------------------------------------------------------------//
 	const char* GenerateGUID () {
 
@@ -257,19 +209,6 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 
 		// return guid string
 		return retVal;
-	}
-
-//================================================================//
-// Open Url External callback
-//================================================================//
-
-	//----------------------------------------------------------------//
-	void OpenURL ( const char* url ) {
-
-		GET_ENV ();
-		GET_JSTRING ( url, jstr );
-		
-		env->CallVoidMethod ( mMoaiActivity, mOpenURLFunc, jstr );
 	}
 
 //================================================================//
@@ -416,6 +355,11 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 		REGISTER_LUA_CLASS ( MOAINotifications );
 #endif
 
+#ifndef DISABLE_BILLING
+		MOAIBilling::Affirm ();
+		REGISTER_LUA_CLASS ( MOAIBilling );
+#endif
+
 #ifndef DISABLE_CRITTERCISM
 		MOAICrittercism::Affirm ();
 		REGISTER_LUA_CLASS ( MOAICrittercism );
@@ -438,24 +382,14 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 		g_InputQueue = new LockingQueue<InputEvent> ();
 		mGenerateGuidFunc = env->GetMethodID ( moaiViewClass, "getGUID", "()Ljava/lang/String;" );
 
-		MOAIApp::Get ().SetCheckBillingSupportedFunc( &CheckBillingSupported );
-		MOAIApp::Get ().SetConfirmNotificationFunc( &ConfirmNotification );
 		MOAIApp::Get ().SetOpenURLFunc( &OpenURL );
-		MOAIApp::Get ().SetMarketPublicKeyFunc( &SetMarketPublicKey );
-		MOAIApp::Get ().SetRequestPurchaseFunc( &RequestPurchase );
-		MOAIApp::Get ().SetRestoreTransactionsFunc( &RestoreTransactions );
 		MOAIApp::Get ().SetShowDialogFunc( &ShowDialog );
 		MOAIApp::Get ().SetShareFunc( &Share );
 
 		mMoaiActivity = ( jobject ) env->NewGlobalRef ( moaiActivity );
 		jclass moaiActivityClass = env->GetObjectClass ( mMoaiActivity );
 
-		mCheckBillingSupportedFunc = env->GetMethodID ( moaiActivityClass, "checkBillingSupported", "()Z" );
-		mConfirmNotificationFunc = env->GetMethodID ( moaiActivityClass, "confirmNotification", "(Ljava/lang/String;)Z" );
 		mOpenURLFunc = env->GetMethodID ( moaiActivityClass, "openURL", "(Ljava/lang/String;)V" );
-		mRequestPurchaseFunc = env->GetMethodID ( moaiActivityClass, "requestPurchase", "(Ljava/lang/String;Ljava/lang/String;)Z" );
-		mRestoreTransactionsFunc = env->GetMethodID ( moaiActivityClass, "restoreTransactions", "()Z" );
-		mSetMarketPublicKeyFunc = env->GetMethodID ( moaiActivityClass, "setMarketPublicKey", "(Ljava/lang/String;)V" );
 		mShowDialogFunc = env->GetMethodID ( moaiActivityClass, "showDialog", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)V" );
 		mShareFunc = env->GetMethodID ( moaiActivityClass, "share", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V" );
 	}
@@ -479,40 +413,6 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 		MOAIFacebook::Get ().NotifyFacebookDialog ( code );
 	}
 	
-	//----------------------------------------------------------------//
-	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiActivity_AKUNotifyBillingSupported ( JNIEnv* env, jclass obj, jboolean supported ) {
-		MOAIApp::Get ().NotifyBillingSupported ( supported );
-	}
-	
-	//----------------------------------------------------------------//
-	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiActivity_AKUNotifyPurchaseResponseReceived ( JNIEnv* env, jclass obj, jstring jidentifier, jint code ) {
-		GET_CSTRING ( jidentifier, identifier );
-
-		MOAIApp::Get ().NotifyPurchaseResponseReceived ( identifier, code );
-
-		RELEASE_CSTRING ( jidentifier, identifier );
-	}
-
-	//----------------------------------------------------------------//
-	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiActivity_AKUNotifyPurchaseStateChanged ( JNIEnv* env, jclass obj, jstring jidentifier, jint code, jstring jorder, jstring jnotification, jstring jpayload ) {
-		GET_CSTRING ( jidentifier, identifier );
-		GET_CSTRING ( jorder, order );
-		GET_CSTRING ( jnotification, notification );
-		GET_CSTRING ( jpayload, payload );
-		
-		MOAIApp::Get ().NotifyPurchaseStateChanged ( identifier, code, order, notification, payload );
-
-		RELEASE_CSTRING ( jidentifier, identifier );
-		RELEASE_CSTRING ( jorder, order );
-		RELEASE_CSTRING ( jnotification, notification );
-		RELEASE_CSTRING ( jpayload, payload );
-	}
-		
-	//----------------------------------------------------------------//
-	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiActivity_AKUNotifyRestoreResponseReceived ( JNIEnv* env, jclass obj, jint code ) {
-		MOAIApp::Get ().NotifyRestoreResponseReceived ( code );
-	}
-
 	//----------------------------------------------------------------//
 	extern "C" bool Java_@PACKAGE_UNDERSCORED@_MoaiActivity_AKUNotifyBackButtonPressed ( JNIEnv* env, jclass obj ) {
 		return MOAIApp::Get ().NotifyBackButtonPressed ();

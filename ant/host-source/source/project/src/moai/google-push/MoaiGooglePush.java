@@ -6,8 +6,8 @@
 
 package com.ziplinegames.moai;
 
+import android.app.Activity;
 import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 
 //================================================================//
@@ -15,14 +15,14 @@ import android.content.Intent;
 //================================================================//
 public class MoaiGooglePush {
 
-	private static Context mContext = null;
+	private static Activity sActivity = null;
 
 	//----------------------------------------------------------------//
-	public static void initialize ( Context context ) {
+	public static void onCreate ( Activity activity ) {
 		
-		MoaiLog.i ( "Initializing Google Push" );
+		MoaiLog.i ( "onCreate: Initializing Google Push" );
 		
-		mContext = context;
+		sActivity = activity;
 	}
 
 	//================================================================//
@@ -32,17 +32,17 @@ public class MoaiGooglePush {
 	//----------------------------------------------------------------//
 	public static void registerForRemoteNotifications ( String alias ) {
 	
-		Intent intent = new Intent ( "com.google.android.c2dm.intent.REGISTER" );
-		intent.putExtra ( "app", PendingIntent.getBroadcast ( mContext, 0, new Intent (), 0 ));
-		intent.putExtra ( "sender", alias );
-		mContext.startService ( intent );
+		Intent intent = new Intent ( MoaiGooglePushConstants.ACTION_REGISTER );
+		intent.putExtra ( MoaiGooglePushConstants.APP_ID, PendingIntent.getBroadcast ( sActivity, 0, new Intent (), 0 ));
+		intent.putExtra ( MoaiGooglePushConstants.SENDER_ALIAS, alias );
+		sActivity.startService ( intent );
 	}
 	
 	//----------------------------------------------------------------//
 	public static void unregisterForRemoteNotifications ( ) {
 	
-		Intent intent = new Intent ( "com.google.android.c2dm.intent.UNREGISTER" );
-		intent.putExtra ( "app", PendingIntent.getBroadcast ( mContext, 0, new Intent (), 0 ));
-		mContext.startService ( intent );
+		Intent intent = new Intent ( MoaiGooglePushConstants.ACTION_UNREGISTER );
+		intent.putExtra ( MoaiGooglePushConstants.APP_ID, PendingIntent.getBroadcast ( sActivity, 0, new Intent (), 0 ));
+		sActivity.startService ( intent );
 	}
 }

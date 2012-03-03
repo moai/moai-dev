@@ -4,5 +4,6 @@
 # http://getmoai.com
 #================================================================#
 
-	DISABLE_TAPJOY 			:= @DISABLE_TAPJOY@
+	DISABLE_BILLING			:= @DISABLE_BILLING@
 	DISABLE_NOTIFICATIONS 	:= @DISABLE_NOTIFICATIONS@
+	DISABLE_TAPJOY 			:= @DISABLE_TAPJOY@

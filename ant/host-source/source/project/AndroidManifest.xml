@@ -40,16 +40,6 @@
 		    <intent-filter><action android:name="com.crittercism.service.CrittercismService" /></intent-filter>
 		</service>
 		
-		<!-- Android Market IAP -->
-		<service android:name="AndroidMarketBillingService" />
-	    <receiver android:name="AndroidMarketBillingReceiver">
-	      <intent-filter>
-	        <action android:name="com.android.vending.billing.IN_APP_NOTIFY" />
-	        <action android:name="com.android.vending.billing.RESPONSE_CODE" />
-	        <action android:name="com.android.vending.billing.PURCHASE_STATE_CHANGED" />
-	      </intent-filter>
-	    </receiver>
-		
 		<!-- AdColony -->
 		<activity android:name="com.jirbo.adcolony.AdColonyOverlay" android:configChanges="keyboardHidden|orientation" android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" />
 		<activity android:name="com.jirbo.adcolony.AdColonyFullscreen" android:configChanges="keyboardHidden|orientation" android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" />
@@ -63,24 +53,18 @@
 	<uses-permission android:name="android.permission.INTERNET" />
 		
 	<!-- EXTERNAL PERMISSIONS: Placeholder (DO NOT MOVE OR REMOVE) -->
-	
-	<!-- Crittercism, AdColony -->
+		
+	<!-- Crittercism -->
+	<uses-permission android:name="android.permission.GET_TASKS"/>
  	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 	<uses-permission android:name="android.permission.INTERNET" />
+	<!-- <uses-permission android:name="android.permission.READ_LOGS"/> Optional permission to allow Crittercism to collect log data. -->
 
-	<!-- Android Market IAP -->
-  	<uses-permission android:name="com.android.vending.BILLING" />
-	
 	<!-- AdColony -->
+ 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+	<uses-permission android:name="android.permission.INTERNET" />
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
-	<!-- Crittercism, AdColony -->
-	<uses-permission android:name="android.permission.GET_TASKS"/>
-	
-	<!-- Crittercism -->
-	<!-- Optional permission to allow Crittercism to collect log data.
-	<uses-permission android:name="android.permission.READ_LOGS"/>
-	-->
+	<uses-permission android:name="android.permission.GET_TASKS"/>	
 	
 	<supports-screens 
 	    	android:smallScreens="false"
