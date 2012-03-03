@@ -18,10 +18,11 @@ import java.util.ArrayList;
 public class Moai {
 	
 	private static String [] sExternalClasses = {
-		"com.ziplinegames.moai.MoaiTapjoy",
+		"com.ziplinegames.moai.MoaiCrittercism",
 		"com.ziplinegames.moai.MoaiFacebook",
-		"com.ziplinegames.moai.MoaiGooglePush",
 		"com.ziplinegames.moai.MoaiGoogleBilling",
+		"com.ziplinegames.moai.MoaiGooglePush",
+		"com.ziplinegames.moai.MoaiTapjoy",
 	};
 	
 	private static ArrayList < Class > sAvailableClasses = new ArrayList < Class > ();

@@ -9,7 +9,7 @@
 	set -e
 
 	# check for command line switches
-	usage="usage: $0 -p <package> [-s] [-i thumb | arm] [-a all | armeabi | armeabi-v7a] [-l appPlatform] [--disable-tapjoy] [--disable-google-push] [--disable-google-billing]"
+	usage="usage: $0 -p <package> [-s] [-i thumb | arm] [-a all | armeabi | armeabi-v7a] [-l appPlatform] [--disable-tapjoy] [--disable-google-push] [--disable-google-billing] [--disable-crittercism]"
 	skip_build="false"
 	package_name=
 	arm_mode=arm
@@ -18,6 +18,7 @@
 	tapjoy_flags=
 	google_push_flags=
 	google_billing_flags=
+	crittercism_flags=
 	
 	while [ $# -gt 0 ];	do
 	    case "$1" in
@@ -29,6 +30,7 @@
 			--disable-tapjoy)  tapjoy_flags="--disable-tapjoy";;
 			--disable-google-push)  google_push_flags="--disable-google-push";;
 			--disable-google-billing)  google_billing_flags="--disable-google-billing";;
+			--disable-crittercism)  crittercism_flags="--disable-crittercism";;
 			-*)
 		    	echo >&2 \
 		    		$usage
@@ -65,7 +67,7 @@
 	# if the caller has not explicitly told us to skip a libmoai build, build now
 	if [ x"$skip_build" != xtrue ]; then
 		pushd libmoai > /dev/null
-			bash build.sh -p $package_name -i $arm_mode -a $arm_arch -l $app_platform $tapjoy_flags $google_push_flags $google_billing_flags
+			bash build.sh -p $package_name -i $arm_mode -a $arm_arch -l $app_platform $tapjoy_flags $google_push_flags $google_billing_flags $crittercism_flags
 		popd > /dev/null
 	fi
 
@@ -103,6 +105,10 @@
 
 	if [ x"$google_billing_flags" == x ]; then
 		required_libs="$required_libs \"google-billing\""
+	fi
+
+	if [ x"$crittercism_flags" == x ]; then
+		required_libs="$required_libs \"crittercism\""
 	fi
 
 	cp -f host-source/d.settings-global.sh $new_host_dir/settings-global.sh

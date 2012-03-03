@@ -128,6 +128,9 @@
 			rsync -r "host-source/external/${requires[$i-1]}/project/" "$out_dir/${requires[$i-1]}"
 			echo "android.library.reference.${i}=../${requires[$i-1]}/" >> "$out_dir/project/project.properties"
 		fi
+		if [ -d "host-source/external/${requires[$i-1]}/lib" ]; then
+			rsync -r "host-source/external/${requires[$i-1]}/lib/" "$out_dir/project/libs"
+		fi
 	done
 	
 	# replace the package name in AndroidManifest.xml

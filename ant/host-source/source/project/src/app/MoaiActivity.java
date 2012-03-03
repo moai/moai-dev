@@ -42,9 +42,6 @@ import java.util.concurrent.CountDownLatch;
 // Moai
 import com.ziplinegames.moai.*;
 
-// Crittercism
-import com.crittercism.app.Crittercism;
-
 // AdColony
 import com.jirbo.adcolony.AdColony;
 import com.jirbo.adcolony.AdColonyVideoAd;
@@ -443,16 +440,6 @@ public class MoaiActivity extends Activity {
 		MoaiActivity.this.startActivity ( intent );
 	}
 	
-	//================================================================//
-	// Crittercism JNI callback methods
-	//================================================================//
-
-	//----------------------------------------------------------------//
-	public void initCrittercism ( String appId ) {
-
-		Crittercism.init ( getApplicationContext(), appId );
-	}
-
 	//================================================================//
 	// Facebook JNI callback methods
 	//================================================================//
