@@ -10,24 +10,33 @@ import android.app.Activity;
 import android.content.Intent;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 
 //================================================================//
 // Moai
 //================================================================//
 public class Moai {
-
-	private static Class sTapjoyClass = null;
-	private static Class sFacebookClass = null;
-	private static Class sGooglePushClass = null;
-	private static Class sGoogleBillingClass = null;
+	
+	private static String [] sExternalClasses = {
+		"com.ziplinegames.moai.MoaiTapjoy",
+		"com.ziplinegames.moai.MoaiFacebook",
+		"com.ziplinegames.moai.MoaiGooglePush",
+		"com.ziplinegames.moai.MoaiGoogleBilling",
+	};
+	
+	private static ArrayList < Class > sAvailableClasses = new ArrayList < Class > ();
 
 	//----------------------------------------------------------------//
 	static {
-	
-		sTapjoyClass = findClass ( "com.ziplinegames.moai.MoaiTapjoy" );
-		sFacebookClass = findClass ( "com.ziplinegames.moai.MoaiFacebook" );
-		sGooglePushClass = findClass ( "com.ziplinegames.moai.MoaiGooglePush" );
-		sGoogleBillingClass = findClass ( "com.ziplinegames.moai.MoaiGoogleBilling" );
+		
+		for ( String className : sExternalClasses )
+		{
+			Class theClass = findClass ( className );
+			if ( theClass != null ) {
+				
+				sAvailableClasses.add ( theClass );
+			}
+		}
 	}
 	
 	//----------------------------------------------------------------//
@@ -38,55 +47,55 @@ public class Moai {
 	//----------------------------------------------------------------//
 	public static void onCreate ( Activity activity ) {
 
-		executeMethod ( sTapjoyClass, null, "onCreate", new Class [] { Activity.class }, new Object [] { activity });
-		executeMethod ( sFacebookClass, null, "onCreate", new Class [] { Activity.class }, new Object [] { activity });
-		executeMethod ( sGooglePushClass, null, "onCreate", new Class [] { Activity.class }, new Object [] { activity });
-		executeMethod ( sGoogleBillingClass, null, "onCreate", new Class [] { Activity.class }, new Object [] { activity });
+		for ( Class theClass : sAvailableClasses ) {
+			
+			executeMethod ( theClass, null, "onCreate", new Class [] { Activity.class }, new Object [] { activity });
+		}
 	}
 	
 	//----------------------------------------------------------------//
 	public static void onDestroy () {
 	
-		executeMethod ( sTapjoyClass, null, "onDestroy", new Class [] { }, new Object [] { });
-		executeMethod ( sFacebookClass, null, "onDestroy", new Class [] { }, new Object [] { });
-		executeMethod ( sGooglePushClass, null, "onDestroy", new Class [] { }, new Object [] { });
-		executeMethod ( sGoogleBillingClass, null, "onDestroy", new Class [] { }, new Object [] { });
+		for ( Class theClass : sAvailableClasses ) {
+
+			executeMethod ( theClass, null, "onDestroy", new Class [] { }, new Object [] { });
+		}		
 	}
 
 	//----------------------------------------------------------------//
 	public static void onPause () {
 	
-		executeMethod ( sTapjoyClass, null, "onPause", new Class [] { }, new Object [] { });
-		executeMethod ( sFacebookClass, null, "onPause", new Class [] { }, new Object [] { });
-		executeMethod ( sGooglePushClass, null, "onPause", new Class [] { }, new Object [] { });
-		executeMethod ( sGoogleBillingClass, null, "onPause", new Class [] { }, new Object [] { });
+		for ( Class theClass : sAvailableClasses ) {
+
+			executeMethod ( theClass, null, "onPause", new Class [] { }, new Object [] { });
+		}		
 	}
 
 	//----------------------------------------------------------------//
 	public static void onResume () {
 	
-		executeMethod ( sTapjoyClass, null, "onResume", new Class [] { }, new Object [] { });
-		executeMethod ( sFacebookClass, null, "onResume", new Class [] { }, new Object [] { });
-		executeMethod ( sGooglePushClass, null, "onResume", new Class [] { }, new Object [] { });
-		executeMethod ( sGoogleBillingClass, null, "onResume", new Class [] { }, new Object [] { });
+		for ( Class theClass : sAvailableClasses ) {
+
+			executeMethod ( theClass, null, "onResume", new Class [] { }, new Object [] { });
+		}		
 	}
 
 	//----------------------------------------------------------------//
 	public static void onStart () {
 	
-		executeMethod ( sTapjoyClass, null, "onStart", new Class [] { }, new Object [] { });
-		executeMethod ( sFacebookClass, null, "onStart", new Class [] { }, new Object [] { });
-		executeMethod ( sGooglePushClass, null, "onStart", new Class [] { }, new Object [] { });
-		executeMethod ( sGoogleBillingClass, null, "onStart", new Class [] { }, new Object [] { });
+		for ( Class theClass : sAvailableClasses ) {
+
+			executeMethod ( theClass, null, "onStart", new Class [] { }, new Object [] { });
+		}		
 	}
 
 	//----------------------------------------------------------------//
 	public static void onStop () {
 	
-		executeMethod ( sTapjoyClass, null, "onStop", new Class [] { }, new Object [] { });
-		executeMethod ( sFacebookClass, null, "onStop", new Class [] { }, new Object [] { });
-		executeMethod ( sGooglePushClass, null, "onStop", new Class [] { }, new Object [] { });
-		executeMethod ( sGoogleBillingClass, null, "onStop", new Class [] { }, new Object [] { });
+		for ( Class theClass : sAvailableClasses ) {
+
+			executeMethod ( theClass, null, "onStop", new Class [] { }, new Object [] { });
+		}		
 	}
 	
 	//================================================================//
