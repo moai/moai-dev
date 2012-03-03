@@ -5,34 +5,32 @@
 // http://getmoai.com
 //----------------------------------------------------------------//
 
-package @PACKAGE@;
-
-import @PACKAGE@.AndroidMarketBillingConstants.PurchaseState;
-import @PACKAGE@.AndroidMarketBillingConstants.ResponseCode;
-import @PACKAGE@.AndroidMarketBillingService.RequestPurchase;
-import @PACKAGE@.AndroidMarketBillingService.RestoreTransactions;
+package com.ziplinegames.moai;
 
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 
 //================================================================//
-// AndroidMarketBillingResponseHandler
+// MoaiGoogleBillingResponseHandler
 //================================================================//
-public class AndroidMarketBillingResponseHandler {
+public class MoaiGoogleBillingResponseHandler {
 	
-    private static AndroidMarketBillingPurchaseObserver sPurchaseObserver;
+    private static MoaiGoogleBillingPurchaseObserver sPurchaseObserver = null;
 
-    public static synchronized void register ( AndroidMarketBillingPurchaseObserver observer ) {
+	//----------------------------------------------------------------//
+    public static synchronized void register ( MoaiGoogleBillingPurchaseObserver observer ) {
 	
         sPurchaseObserver = observer;
     }
 
-    public static synchronized void unregister ( AndroidMarketBillingPurchaseObserver observer ) {
+	//----------------------------------------------------------------//
+    public static synchronized void unregister () {
 	
         sPurchaseObserver = null;
     }
 
+	//----------------------------------------------------------------//
     public static void checkBillingSupportedResponse ( boolean supported ) {
 	
         if ( sPurchaseObserver != null ) {
@@ -41,15 +39,17 @@ public class AndroidMarketBillingResponseHandler {
         }
     }
 
+	//----------------------------------------------------------------//
  	public static void buyPageIntentResponse ( PendingIntent pendingIntent, Intent intent ) {
 	
         if ( sPurchaseObserver != null ) {
 	
-        	sPurchaseObserver.startBuyPageActivity ( pendingIntent, intent );
+        	sPurchaseObserver.showBuyPage ( pendingIntent, intent );
 		}
     }
 
-    public static void purchaseResponse ( final PurchaseState purchaseState, final String productId, final String orderId, final String notificationId, final String developerPayload ) {
+	//----------------------------------------------------------------//
+    public static void purchaseResponse ( MoaiGoogleBillingConstants.PurchaseState purchaseState, String productId, String orderId, String notificationId, String developerPayload ) {
 
     	if ( sPurchaseObserver != null ) {
 	
@@ -57,7 +57,8 @@ public class AndroidMarketBillingResponseHandler {
         }
     }
     
-    public static void responseCodeReceived ( RequestPurchase request, ResponseCode responseCode ) {
+	//----------------------------------------------------------------//
+    public static void responseCodeReceived ( MoaiGoogleBillingService.RequestPurchase request, MoaiGoogleBillingConstants.ResponseCode responseCode ) {
 	
         if ( sPurchaseObserver != null ) {
 	
@@ -65,7 +66,8 @@ public class AndroidMarketBillingResponseHandler {
         }
     }
     
-    public static void responseCodeReceived ( RestoreTransactions request, ResponseCode responseCode ) {
+	//----------------------------------------------------------------//
+    public static void responseCodeReceived ( MoaiGoogleBillingService.RestoreTransactions request, MoaiGoogleBillingConstants.ResponseCode responseCode ) {
 	
         if ( sPurchaseObserver != null ) {
 	

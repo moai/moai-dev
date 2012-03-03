@@ -16,9 +16,9 @@ class MOAINotifications :
 private:
 
 	//----------------------------------------------------------------//
-	static int		_registerForRemoteNotifications 	( lua_State* L );
-	static int		_unregisterForRemoteNotifications 	( lua_State* L );
-	static int		_setListener						( lua_State* L );
+	static int	_registerForRemoteNotifications 	( lua_State* L );
+	static int	_unregisterForRemoteNotifications 	( lua_State* L );
+	static int	_setListener						( lua_State* L );
 	
 public:
 
@@ -45,9 +45,9 @@ public:
 	
 					MOAINotifications					();
 					~MOAINotifications					();
-	void			RegisterLuaClass					( MOAILuaState& state );
 	void			NotifyRemoteNotificationReceived	( int entries, cc8** keys, cc8** values );
 	void			NotifyRemoteRegistrationComplete	( int code, cc8* registration );
+	void			RegisterLuaClass					( MOAILuaState& state );
 };
 
 #endif  //DISABLE_NOTIFICATIONS

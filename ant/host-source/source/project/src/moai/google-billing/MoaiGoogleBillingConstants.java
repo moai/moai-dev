@@ -5,12 +5,12 @@
 // http://getmoai.com
 //----------------------------------------------------------------//
 
-package @PACKAGE@;
+package com.ziplinegames.moai;
 
 //================================================================//
-// AndroidMarketBillingConstants
+// MoaiGoogleBillingConstants
 //================================================================//
-public class AndroidMarketBillingConstants {
+public class MoaiGoogleBillingConstants {
 	
     public enum ResponseCode {
 	
@@ -24,7 +24,7 @@ public class AndroidMarketBillingConstants {
 
         public static ResponseCode valueOf ( int index ) {
 	
-            ResponseCode[] values = ResponseCode.values ();
+            ResponseCode [] values = ResponseCode.values ();
             if (( index < 0 ) || ( index >= values.length )) {
 	
                 return RESULT_ERROR;
@@ -57,10 +57,6 @@ public class AndroidMarketBillingConstants {
     public static final String ACTION_NOTIFY = 							"com.android.vending.billing.IN_APP_NOTIFY";
     public static final String ACTION_RESPONSE_CODE = 					"com.android.vending.billing.RESPONSE_CODE";
     public static final String ACTION_PURCHASE_STATE_CHANGED = 			"com.android.vending.billing.PURCHASE_STATE_CHANGED";
-
-    public static final String ACTION_CONFIRM_NOTIFICATION = 			"@PACKAGE@.CONFIRM_NOTIFICATION";
-    public static final String ACTION_GET_PURCHASE_INFORMATION = 		"@PACKAGE@.GET_PURCHASE_INFORMATION";
-    public static final String ACTION_RESTORE_TRANSACTIONS = 			"@PACKAGE@.RESTORE_TRANSACTIONS";
 
     public static final String NOTIFICATION_ID = 						"notification_id";
     public static final String INAPP_SIGNED_DATA = 						"inapp_signed_data";

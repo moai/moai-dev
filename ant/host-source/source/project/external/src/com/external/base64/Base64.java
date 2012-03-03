@@ -1,12 +1,3 @@
-//----------------------------------------------------------------//
-// Portions Copyright (c) 2010-2011 Zipline Games, Inc. 
-// Adapted from In-App Billing sample code from Google, Inc.
-// All Rights Reserved. 
-// http://getmoai.com
-//----------------------------------------------------------------//
-
-package @PACKAGE@;
-
 // This code was converted from code at http://iharder.sourceforge.net/base64/
 // Lots of extraneous features were removed.
 // The original code said:
@@ -23,6 +14,8 @@ package @PACKAGE@;
  * @author rharder@usa.net
  * @version 1.3
  */
+
+package com.external.base64;
 
 /**
  * Base64 converter class. This code is not a complete MIME encoder;

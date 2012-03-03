@@ -6,14 +6,10 @@
 
 package @PACKAGE@;
 
-import @PACKAGE@.AndroidMarketBillingService.RequestPurchase;
-import @PACKAGE@.AndroidMarketBillingService.RestoreTransactions;
-import @PACKAGE@.AndroidMarketBillingConstants.PurchaseState;
-import @PACKAGE@.AndroidMarketBillingConstants.ResponseCode;
-import @PACKAGE@.R;
-
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.AlertDialog;
+import android.content.pm.ConfigurationInfo;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -52,10 +48,6 @@ import com.crittercism.app.Crittercism;
 // AdColony
 import com.jirbo.adcolony.AdColony;
 import com.jirbo.adcolony.AdColonyVideoAd;
-
-// OpenGL 2.0
-import android.app.ActivityManager;
-import android.content.pm.ConfigurationInfo;
 
 // Facebook
 import com.facebook.android.*;
@@ -98,11 +90,9 @@ public class MoaiActivity extends Activity {
 
 	private AccelerometerEventListener		mAccelerometerListener;
 	private Sensor 							mAccelerometerSensor;
-	private AndroidMarketBillingService		mBillingService;
 	private ConnectivityBroadcastReceiver 	mConnectivityReceiver;
 	private Handler							mHandler;
 	private MoaiView						mMoaiView;
-    private PurchaseObserver 				mPurchaseObserver;
 	private SensorManager 					mSensorManager;
 	private boolean							mWaitingToResume;
 	private boolean							mWindowFocusLost;
@@ -118,11 +108,7 @@ public class MoaiActivity extends Activity {
 	protected static native void 		AKUFinalize 						(); // M
 	protected static native void 		AKUMountVirtualDirectory 			( String virtualPath, String archive ); // M
 	protected static native boolean 	AKUNotifyBackButtonPressed			(); // M
-	protected static native void 		AKUNotifyBillingSupported			( boolean supported ); // M
 	protected static native void 		AKUNotifyDialogDismissed			( int dialogResult ); // M
-	protected static native void 		AKUNotifyPurchaseResponseReceived	( String productId, int responseCode ); // M
-	protected static native void 		AKUNotifyPurchaseStateChanged		( String productId, int purchaseState, String orderId, String notificationId, String developerPayload ); // M
-	protected static native void 		AKUNotifyRestoreResponseReceived	( int responseCode ); // M
 	protected static native void		AKUNotifyFacebookDialog				( int statusCode );
 	protected static native void		AKUNotifyFacebookLogin				( int statusCode );
 	protected static native void 		AKUSetConnectionType 				( long connectionType ); // M	
@@ -138,7 +124,7 @@ public class MoaiActivity extends Activity {
 
        	System.load ( "/data/data/@PACKAGE@/lib/libmoai.so" ); 
 
-		Moai.initialize ( this );
+		Moai.onCreate ( this );
 
         requestWindowFeature ( Window.FEATURE_NO_TITLE );
 	    getWindow ().addFlags ( WindowManager.LayoutParams.FLAG_FULLSCREEN ); 
@@ -176,12 +162,6 @@ public class MoaiActivity extends Activity {
 		mWaitingToResume = false;
 		mWindowFocusLost = false;
 
-		mPurchaseObserver = new PurchaseObserver ( null );
-        AndroidMarketBillingResponseHandler.register ( mPurchaseObserver );
-        
-		mBillingService = new AndroidMarketBillingService();
-        mBillingService.setContext (this);
-
 		startConnectivityReceiver ();
 
 		setContentView ( mMoaiView );
@@ -194,10 +174,10 @@ public class MoaiActivity extends Activity {
 		
 		super.onDestroy ();
 		
+		Moai.onDestroy ();
+		
 		stopConnectivityReceiver ();
-		
-		mBillingService.unbind ();
-		
+				
 		AKUFinalize();
 	}
 
@@ -207,6 +187,8 @@ public class MoaiActivity extends Activity {
 		MoaiLog.i ( "MoaiActivity onPause: activity PAUSED" );
 		
 		super.onPause ();
+		
+		Moai.onPause ();
 		
 		if ( mAccelerometerListener != null ) {
 			
@@ -233,6 +215,8 @@ public class MoaiActivity extends Activity {
 
 		super.onResume ();
 		
+		Moai.onResume ();
+		
 		if ( mAccelerometerListener != null ) {
 			
 			mSensorManager.registerListener ( mAccelerometerListener, mAccelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL );
@@ -255,9 +239,9 @@ public class MoaiActivity extends Activity {
 
 		MoaiLog.i ( "MoaiActivity onStart: activity STARTED" );
 
-		super.onStart ();
-		
-        AndroidMarketBillingResponseHandler.register ( mPurchaseObserver );
+		super.onStart ();		
+
+		Moai.onStart ();
 	}
 	
 	//----------------------------------------------------------------//
@@ -267,13 +251,14 @@ public class MoaiActivity extends Activity {
 
 		super.onStop ();
 
-        AndroidMarketBillingResponseHandler.unregister ( mPurchaseObserver );
+		Moai.onStop ();
 	}
 	
-	@Override
     public void onActivityResult ( int requestCode, int resultCode, Intent data ) {
 	
         super.onActivityResult ( requestCode, resultCode, data );
+
+		Moai.onActivityResult ( requestCode, resultCode, data );
 
         mFacebook.authorizeCallback ( requestCode, resultCode, data );
     }
@@ -594,45 +579,6 @@ public class MoaiActivity extends Activity {
 	}
 			
 	//================================================================//
-	// In-App Billing JNI callback methods
-	//================================================================//
-
-	//----------------------------------------------------------------//
-	public boolean checkBillingSupported () {
-		
-		return mBillingService.checkBillingSupported ();				
-	}
-
-	//----------------------------------------------------------------//
-	public boolean confirmNotification ( String notificationId ) {
-
-		ArrayList<String> notifyList = new ArrayList<String> ();
-	   	notifyList.add ( notificationId );
-
-		String[] notifyIds = notifyList.toArray ( new String[notifyList.size ()] );
-					
-		return mBillingService.confirmNotifications ( notifyIds );
-	}
-		
-	//----------------------------------------------------------------//
-	public boolean requestPurchase ( String productId, String developerPayload ) {
-
-		return mBillingService.requestPurchase ( productId, developerPayload );
-	}
-	
-	//----------------------------------------------------------------//
-	public boolean restoreTransactions () {
-
-		return mBillingService.restoreTransactions ();
-	}
-	
-	//----------------------------------------------------------------//
-	public void setMarketPublicKey ( String key ) {
-	
-		AndroidMarketBillingSecurity.setPublicKey ( key );
-	}
-		
-	//================================================================//
 	// ConnectivityBroadcastReceiver
 	//================================================================//
 
@@ -693,45 +639,4 @@ public class MoaiActivity extends Activity {
 			AKUEnqueueLevelEvent ( deviceId, sensorId, x, y, z );
 		}
 	};
-
-	//================================================================//
-	// PurchaseObserver
-	//================================================================//
-
-	private class PurchaseObserver extends AndroidMarketBillingPurchaseObserver {
-	    
-		//----------------------------------------------------------------//
-		public PurchaseObserver ( Handler handler ) {
-			
-	        super ( MoaiActivity.this, handler );
-	    }
-
-		//----------------------------------------------------------------//
-		@Override
-	    public void onBillingSupported ( boolean supported ) {
-	
-			AKUNotifyBillingSupported ( supported );
-	    }
-
-		//----------------------------------------------------------------//
-	    @Override
-	    public void onPurchaseStateChange ( PurchaseState purchaseState, String itemId, String orderId, String notificationId, String developerPayload ) {
-	        
-			AKUNotifyPurchaseStateChanged ( itemId, purchaseState.ordinal(), orderId, notificationId, developerPayload );
-	    }
-
-		//----------------------------------------------------------------//
-		@Override
-	    public void onRequestPurchaseResponse ( RequestPurchase request, ResponseCode responseCode ) {
-	
-			AKUNotifyPurchaseResponseReceived ( request.mProductId, responseCode.ordinal() );
-	    }
-
-		//----------------------------------------------------------------//
-	    @Override
-	    public void onRestoreTransactionsResponse ( RestoreTransactions request, ResponseCode responseCode ) {
-
-			AKUNotifyRestoreResponseReceived ( responseCode.ordinal() );
-		}
-	}
 }

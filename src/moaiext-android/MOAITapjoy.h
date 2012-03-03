@@ -16,11 +16,11 @@ class MOAITapjoy :
 private:
 
 	//----------------------------------------------------------------//
-	static int		_getUserId				( lua_State* L );
-	static int		_initVideoAds			( lua_State* L );
-	static int		_requestTapjoyConnect	( lua_State* L );
-	static int		_setListener			( lua_State* L );
-	static int		_showOffers				( lua_State* L );
+	static int	_getUserId				( lua_State* L );
+	static int	_initVideoAds			( lua_State* L );
+	static int	_requestTapjoyConnect	( lua_State* L );
+	static int	_setListener			( lua_State* L );
+	static int	_showOffers				( lua_State* L );
 	
 public:
 
@@ -42,12 +42,12 @@ public:
 	
 	MOAILuaRef		mListeners [ TOTAL ];
 
-					MOAITapjoy						();
-					~MOAITapjoy						();
-	void			RegisterLuaClass				( MOAILuaState& state );
-	void			NotifyVideoAdReady				();
-	void			NotifyVideoAdError				( int code );
-	void			NotifyVideoAdClose				();
+					MOAITapjoy			();
+					~MOAITapjoy			();
+	void			NotifyVideoAdReady	();
+	void			NotifyVideoAdError	( int code );
+	void			NotifyVideoAdClose	();
+	void			RegisterLuaClass	( MOAILuaState& state );
 };
 
 #endif  //DISABLE_TAPJOY

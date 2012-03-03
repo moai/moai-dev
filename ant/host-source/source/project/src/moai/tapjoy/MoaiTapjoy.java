@@ -6,7 +6,7 @@
 
 package com.ziplinegames.moai;
 
-import android.content.Context;
+import android.app.Activity;
 
 import com.tapjoy.TapjoyConnect;
 import com.tapjoy.TapjoyVideoNotifier;
@@ -16,18 +16,18 @@ import com.tapjoy.TapjoyVideoNotifier;
 //================================================================//
 public class MoaiTapjoy implements TapjoyVideoNotifier {
 
-	private static Context mContext = null;
+	private static Activity sActivity = null;
 
 	protected static native void AKUNotifyTapjoyVideoAdReady	();
 	protected static native void AKUNotifyTapjoyVideoAdError	( int statusCode );
 	protected static native void AKUNotifyTapjoyVideoAdClose	();
 
 	//----------------------------------------------------------------//
-	public static void initialize ( Context context ) {
+	public static void onCreate ( Activity activity ) {
 		
-		MoaiLog.i ( "Initializing Tapjoy" );
+		MoaiLog.i ( "onCreate: Initializing Tapjoy" );
 		
-		mContext = context;
+		sActivity = activity;
 	}
 
 	//================================================================//
@@ -49,7 +49,7 @@ public class MoaiTapjoy implements TapjoyVideoNotifier {
 	//----------------------------------------------------------------//
 	public static void requestTapjoyConnect ( String appId, String appSecret ) {
 
-		TapjoyConnect.requestTapjoyConnect ( mContext, appId, appSecret );
+		TapjoyConnect.requestTapjoyConnect ( sActivity, appId, appSecret );
 	}
 		
 	//----------------------------------------------------------------//

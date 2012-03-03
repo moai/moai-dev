@@ -16,9 +16,9 @@ class MOAIAdColony :
 private:
     
 	//----------------------------------------------------------------//
-	static int		_initAdColony                   ( lua_State* L );
-	static int		_playVideo						( lua_State* L );
-	static int		_videoReadyForZone				( lua_State* L );
+	static int	_initAdColony                   ( lua_State* L );
+	static int	_playVideo						( lua_State* L );
+	static int	_videoReadyForZone				( lua_State* L );
 	
 public:
     

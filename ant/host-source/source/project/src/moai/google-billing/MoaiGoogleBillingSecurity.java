@@ -5,11 +5,7 @@
 // http://getmoai.com
 //----------------------------------------------------------------//
 
-package @PACKAGE@;
-
-import @PACKAGE@.AndroidMarketBillingConstants.PurchaseState;
-import @PACKAGE@.Base64;
-import @PACKAGE@.Base64DecoderException;
+package com.ziplinegames.moai;
 
 import android.text.TextUtils;
 
@@ -29,31 +25,34 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-// Moai
-import com.ziplinegames.moai.*;
+import com.external.base64.*;
 
 //================================================================//
-// AndroidMarketBillingSecurity
+// MoaiGoogleBillingSecurity
 //================================================================//
-public class AndroidMarketBillingSecurity {
+public class MoaiGoogleBillingSecurity {
 	
-    private static final String 		KEY_FACTORY_ALGORITHM = 	"RSA";
-    private static final String 		SIGNATURE_ALGORITHM = 		"SHA1withRSA";
-    private static final SecureRandom 	RANDOM = 					new SecureRandom ();
+    private static final String 		KEY_FACTORY_ALGORITHM = "RSA";
+    private static final String 		SIGNATURE_ALGORITHM = "SHA1withRSA";
+    private static final SecureRandom 	RANDOM = new SecureRandom ();
 
-	private static String 				sBase64EncodedPublicKey = 	null;
-    private static HashSet < Long >		sKnownNonces = 				new HashSet<Long> ();
+	private static String 				sBase64EncodedPublicKey = null;
+    private static HashSet < Long >		sKnownNonces = new HashSet<Long> ();
 
+	//================================================================//
+	// VerifiedPurchase
+	//================================================================//
     public static class VerifiedPurchase {
 	
-        public PurchaseState 	purchaseState;
-        public String 			notificationId;
-        public String 			productId;
-        public String 			orderId;
-        public long 			purchaseTime;
-        public String 			developerPayload;
+        public MoaiGoogleBillingConstants.PurchaseState	purchaseState;
+        public String 									notificationId;
+        public String 									productId;
+        public String 									orderId;
+        public long 									purchaseTime;
+        public String 									developerPayload;
 
-        public VerifiedPurchase ( PurchaseState purchaseState, String notificationId, String productId, String orderId, long purchaseTime, String developerPayload ) {
+		//----------------------------------------------------------------//
+        public VerifiedPurchase ( MoaiGoogleBillingConstants.PurchaseState purchaseState, String notificationId, String productId, String orderId, long purchaseTime, String developerPayload ) {
 	
             this.purchaseState = purchaseState;
             this.notificationId = notificationId;
@@ -64,50 +63,56 @@ public class AndroidMarketBillingSecurity {
         }
     }
 
+	//----------------------------------------------------------------//
     public static long generateNonce () {
 	
         long nonce = RANDOM.nextLong ();
         sKnownNonces.add ( nonce );
+
         return nonce;
     }
 
+	//----------------------------------------------------------------//
 	public static void setPublicKey ( String key ) {
 		
 		sBase64EncodedPublicKey = key;
 	}
 
+	//----------------------------------------------------------------//
     public static void removeNonce ( long nonce ) {
 	
         sKnownNonces.remove ( nonce );
     }
 
+	//----------------------------------------------------------------//
     public static boolean isNonceKnown ( long nonce ) {
 	
         return sKnownNonces.contains ( nonce );
     }
 
+	//----------------------------------------------------------------//
     public static ArrayList < VerifiedPurchase > verifyPurchase ( String signedData, String signature ) {
 	
         if ( sBase64EncodedPublicKey == null ) {
 	
-            MoaiLog.e ( "AndroidMarketBillingSecurity verifyPurchase: please specify your Android Market public key using MOAIApp.setMarketPublicKey ()" );
+            MoaiLog.e ( "MoaiGoogleBillingSecurity verifyPurchase: please specify your Android Market public key using MOAIBilling.setMarketPublicKey ()" );
             return null;
         }
 
         if ( signedData == null ) {
 	
-            MoaiLog.e ( "AndroidMarketBillingSecurity verifyPurchase: data is null" );
+            MoaiLog.e ( "MoaiGoogleBillingSecurity verifyPurchase: data is null" );
             return null;
         }
 
         boolean verified = false;
         if ( !TextUtils.isEmpty ( signature )) {
 	
-            PublicKey key = AndroidMarketBillingSecurity.generatePublicKey ( sBase64EncodedPublicKey );
-            verified = AndroidMarketBillingSecurity.verify ( key, signedData, signature );
+            PublicKey key = MoaiGoogleBillingSecurity.generatePublicKey ( sBase64EncodedPublicKey );
+            verified = MoaiGoogleBillingSecurity.verify ( key, signedData, signature );
             if ( !verified ) {
 	
-                MoaiLog.w ( "AndroidMarketBillingSecurity verifyPurchase: signature does not match data" );
+                MoaiLog.w ( "MoaiGoogleBillingSecurity verifyPurchase: signature does not match data" );
                 return null;
             }
         }
@@ -128,13 +133,13 @@ public class AndroidMarketBillingSecurity {
             }
         } catch ( JSONException e ) {
 	
-            MoaiLog.e ( "AndroidMarketBillingSecurity verifyPurchase: json exception", e );
+            MoaiLog.e ( "MoaiGoogleBillingSecurity verifyPurchase: json exception", e );
             return null;
         }
 
-        if ( !AndroidMarketBillingSecurity.isNonceKnown ( nonce )) {
+        if ( !MoaiGoogleBillingSecurity.isNonceKnown ( nonce )) {
 	
-            MoaiLog.w ( "AndroidMarketBillingSecurity verifyPurchase: nonce not found ( " + nonce + " )" );
+            MoaiLog.w ( "MoaiGoogleBillingSecurity verifyPurchase: nonce not found ( " + nonce + " )" );
             return null;
         }
 
@@ -145,7 +150,7 @@ public class AndroidMarketBillingSecurity {
 	
                 JSONObject jElement = jTransactionsArray.getJSONObject ( i );
                 int response = jElement.getInt ( "purchaseState" );
-                PurchaseState purchaseState = PurchaseState.valueOf ( response );
+                MoaiGoogleBillingConstants.PurchaseState purchaseState = MoaiGoogleBillingConstants.PurchaseState.valueOf ( response );
                 String productId = jElement.getString ( "productId" );
                 String packageName = jElement.getString ( "packageName" );
                 long purchaseTime = jElement.getLong ( "purchaseTime" );
@@ -159,7 +164,7 @@ public class AndroidMarketBillingSecurity {
 
                 String developerPayload = jElement.optString ( "developerPayload", null );
 
-                if (( purchaseState == PurchaseState.PURCHASED ) && !verified ) {
+                if (( purchaseState == MoaiGoogleBillingConstants.PurchaseState.PURCHASED ) && !verified ) {
 	
                     continue;
                 }
@@ -168,7 +173,7 @@ public class AndroidMarketBillingSecurity {
             }
         } catch ( JSONException e ) {
 	
-            MoaiLog.e ( "AndroidMarketBillingSecurity verifyPurchase: json exception", e );
+            MoaiLog.e ( "MoaiGoogleBillingSecurity verifyPurchase: json exception", e );
             return null;
         }
 
@@ -176,6 +181,7 @@ public class AndroidMarketBillingSecurity {
         return purchases;
     }
 
+	//----------------------------------------------------------------//
     public static PublicKey generatePublicKey ( String encodedPublicKey ) {
 	
         try {
@@ -185,19 +191,20 @@ public class AndroidMarketBillingSecurity {
             return keyFactory.generatePublic ( new X509EncodedKeySpec ( decodedKey ));
         } catch ( NoSuchAlgorithmException e ) {
 	
-            MoaiLog.e ( "AndroidMarketBillingSecurity generatePublicKey: no such algorithm" );
+            MoaiLog.e ( "MoaiGoogleBillingSecurity generatePublicKey: no such algorithm" );
             throw new RuntimeException ( e );
         } catch ( InvalidKeySpecException e ) {
 	
-            MoaiLog.e ( "AndroidMarketBillingSecurity generatePublicKey: invalid key" );
+            MoaiLog.e ( "MoaiGoogleBillingSecurity generatePublicKey: invalid key" );
             throw new IllegalArgumentException ( e );
         } catch ( Base64DecoderException e ) {
 	
-            MoaiLog.e ( "AndroidMarketBillingSecurity generatePublicKey: base64 decoding failed" );
+            MoaiLog.e ( "MoaiGoogleBillingSecurity generatePublicKey: base64 decoding failed" );
             throw new IllegalArgumentException ( e );
         }
     }
 
+	//----------------------------------------------------------------//
     public static boolean verify ( PublicKey publicKey, String signedData, String signature ) {
 	
         Signature sig;
@@ -208,23 +215,23 @@ public class AndroidMarketBillingSecurity {
             sig.update ( signedData.getBytes ());
             if ( !sig.verify ( Base64.decode ( signature ))) {
 	
-                MoaiLog.e ( "AndroidMarketBillingSecurity verify: signature verification failed" );
+                MoaiLog.e ( "MoaiGoogleBillingSecurity verify: signature verification failed" );
                 return false;
             }
 
             return true;
         } catch ( NoSuchAlgorithmException e ) {
 	
-            MoaiLog.e ( "AndroidMarketBillingSecurity verify: no such algorithm" );
+            MoaiLog.e ( "MoaiGoogleBillingSecurity verify: no such algorithm" );
         } catch ( InvalidKeyException e ) {
 	
-            MoaiLog.e ( "AndroidMarketBillingSecurity verify: invalid key" );
+            MoaiLog.e ( "MoaiGoogleBillingSecurity verify: invalid key" );
         } catch ( SignatureException e ) {
 	
-            MoaiLog.e ( "AndroidMarketBillingSecurity verify: invalid signature" );
+            MoaiLog.e ( "MoaiGoogleBillingSecurity verify: invalid signature" );
         } catch ( Base64DecoderException e ) {
 	
-            MoaiLog.e ( "AndroidMarketBillingSecurity verify: base64 decoding failed" );
+            MoaiLog.e ( "MoaiGoogleBillingSecurity verify: base64 decoding failed" );
         }
 
         return false;

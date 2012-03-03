@@ -6,48 +6,123 @@
 
 package com.ziplinegames.moai;
 
-import android.content.Context;
+import android.app.Activity;
+import android.content.Intent;
 
 import java.lang.reflect.Method;
 
+//================================================================//
+// Moai
+//================================================================//
 public class Moai {
 
-	public static void initialize ( Context context ) {
+	private static Class sTapjoyClass = null;
+	private static Class sFacebookClass = null;
+	private static Class sGooglePushClass = null;
+	private static Class sGoogleBillingClass = null;
+
+	//----------------------------------------------------------------//
+	static {
+	
+		sTapjoyClass = findClass ( "com.ziplinegames.moai.MoaiTapjoy" );
+		sFacebookClass = findClass ( "com.ziplinegames.moai.MoaiFacebook" );
+		sGooglePushClass = findClass ( "com.ziplinegames.moai.MoaiGooglePush" );
+		sGoogleBillingClass = findClass ( "com.ziplinegames.moai.MoaiGoogleBilling" );
+	}
+	
+	//----------------------------------------------------------------//
+	public static void onActivityResult ( int requestCode, int resultCode, Intent data ) {
+	
+	}
+
+	//----------------------------------------------------------------//
+	public static void onCreate ( Activity activity ) {
+
+		executeMethod ( sTapjoyClass, null, "onCreate", new Class [] { Activity.class }, new Object [] { activity });
+		executeMethod ( sFacebookClass, null, "onCreate", new Class [] { Activity.class }, new Object [] { activity });
+		executeMethod ( sGooglePushClass, null, "onCreate", new Class [] { Activity.class }, new Object [] { activity });
+		executeMethod ( sGoogleBillingClass, null, "onCreate", new Class [] { Activity.class }, new Object [] { activity });
+	}
+	
+	//----------------------------------------------------------------//
+	public static void onDestroy () {
+	
+		executeMethod ( sTapjoyClass, null, "onDestroy", new Class [] { }, new Object [] { });
+		executeMethod ( sFacebookClass, null, "onDestroy", new Class [] { }, new Object [] { });
+		executeMethod ( sGooglePushClass, null, "onDestroy", new Class [] { }, new Object [] { });
+		executeMethod ( sGoogleBillingClass, null, "onDestroy", new Class [] { }, new Object [] { });
+	}
+
+	//----------------------------------------------------------------//
+	public static void onPause () {
+	
+		executeMethod ( sTapjoyClass, null, "onPause", new Class [] { }, new Object [] { });
+		executeMethod ( sFacebookClass, null, "onPause", new Class [] { }, new Object [] { });
+		executeMethod ( sGooglePushClass, null, "onPause", new Class [] { }, new Object [] { });
+		executeMethod ( sGoogleBillingClass, null, "onPause", new Class [] { }, new Object [] { });
+	}
+
+	//----------------------------------------------------------------//
+	public static void onResume () {
+	
+		executeMethod ( sTapjoyClass, null, "onResume", new Class [] { }, new Object [] { });
+		executeMethod ( sFacebookClass, null, "onResume", new Class [] { }, new Object [] { });
+		executeMethod ( sGooglePushClass, null, "onResume", new Class [] { }, new Object [] { });
+		executeMethod ( sGoogleBillingClass, null, "onResume", new Class [] { }, new Object [] { });
+	}
+
+	//----------------------------------------------------------------//
+	public static void onStart () {
+	
+		executeMethod ( sTapjoyClass, null, "onStart", new Class [] { }, new Object [] { });
+		executeMethod ( sFacebookClass, null, "onStart", new Class [] { }, new Object [] { });
+		executeMethod ( sGooglePushClass, null, "onStart", new Class [] { }, new Object [] { });
+		executeMethod ( sGoogleBillingClass, null, "onStart", new Class [] { }, new Object [] { });
+	}
+
+	//----------------------------------------------------------------//
+	public static void onStop () {
+	
+		executeMethod ( sTapjoyClass, null, "onStop", new Class [] { }, new Object [] { });
+		executeMethod ( sFacebookClass, null, "onStop", new Class [] { }, new Object [] { });
+		executeMethod ( sGooglePushClass, null, "onStop", new Class [] { }, new Object [] { });
+		executeMethod ( sGoogleBillingClass, null, "onStop", new Class [] { }, new Object [] { });
+	}
+	
+	//================================================================//
+	// Private methods
+	//================================================================//
+	
+	//----------------------------------------------------------------//
+	private static Class findClass ( String className ) {
 		
-		// Tapjoy may not have been added to this host when configured, so we 
-		// use reflection and only initialize it if it is present.
+		Class theClass = null;
 		try {
-			
-			Class tapjoy = Class.forName ( "com.ziplinegames.moai.MoaiTapjoy" );
-			Method initialize = tapjoy.getMethod ( "initialize", Context.class );
 
-			initialize.invoke ( null, context );
+			theClass = Class.forName ( className );
 		} catch ( Throwable e ) {
 
 		}
-
-		// Facebook may not have been added to this host when configured, so we 
-		// use reflection and only initialize it if it is present.
-		try {
+		
+		return theClass;
+	}
+	
+	//----------------------------------------------------------------//
+	private static Object executeMethod ( Class theClass, Object theInstance, String methodName, Class [] parameterTypes, Object [] parameterValues ) {
+		
+		Object result = null;
+		if ( theClass != null ) {
 			
-			Class facebook = Class.forName ( "com.ziplinegames.moai.MoaiFacebook" );
-			Method initialize = facebook.getMethod ( "initialize", Context.class );
+			try {
 
-			initialize.invoke ( null, context );
-		} catch ( Throwable e ) {
+				Method theMethod = theClass.getMethod ( methodName, parameterTypes );
 
+				result = theMethod.invoke ( theInstance, parameterValues );
+			} catch ( Throwable e ) {
+
+			}			
 		}
-
-		// Google Push may not have been added to this host when configured, so we 
-		// use reflection and only initialize it if it is present.
-		try {
-			
-			Class push = Class.forName ( "com.ziplinegames.moai.MoaiGooglePush" );
-			Method initialize = push.getMethod ( "initialize", Context.class );
-
-			initialize.invoke ( null, context );
-		} catch ( Throwable e ) {
-
-		}
+		
+		return result;
 	}
 }

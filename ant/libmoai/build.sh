@@ -9,7 +9,7 @@
 	set -e
 	
 	# check for command line switches
-	usage="usage: $0 -p <package> [-v] [-i thumb | arm] [-a all | armeabi | armeabi-v7a] [-l appPlatform] [--disable-tapjoy] [--disable-google-push]"
+	usage="usage: $0 -p <package> [-v] [-i thumb | arm] [-a all | armeabi | armeabi-v7a] [-l appPlatform] [--disable-tapjoy] [--disable-google-push] [--disable-google-billing]"
 	verbose=
 	package_name=
 	arm_mode=arm
@@ -17,6 +17,7 @@
 	app_platform=android-10
 	tapjoy_flags=
 	google_push_flags=
+	google_billing_flags=
 	
 	while [ $# -gt 0 ];	do
 	    case "$1" in
@@ -27,6 +28,7 @@
 			-l)  app_platform="$2"; shift;;
 			--disable-tapjoy)  tapjoy_flags="-DDISABLE_TAPJOY";;
 			--disable-google-push)  google_push_flags="-DDISABLE_NOTIFICATIONS";;
+			--disable-google-billing)  google_push_flags="-DDISABLE_BILLING";;
 			-*)
 		    	echo >&2 \
 		    		$usage
@@ -61,6 +63,7 @@
 		existing_app_platform=$( sed -n '4p' libs/package.txt )
 		existing_tapjoy_flags=$( sed -n '5p' libs/package.txt )
 		existing_google_push_flags=$( sed -n '6p' libs/package.txt )
+		existing_google_billing_flags=$( sed -n '7p' libs/package.txt )
 	fi
 
 	should_clean=false
@@ -88,6 +91,10 @@
 	if [ x"$existing_google_push_flags" != x"$google_push_flags" ]; then
 		should_clean=true
 	fi
+
+	if [ x"$existing_google_billing_flags" != x"$google_billing_flags" ]; then
+		should_clean=true
+	fi
 	
 	if [ x"$should_clean" = xtrue ]; then
 		./clean.sh
@@ -102,6 +109,10 @@
 
 	if [ x"$google_push_flags" != x ]; then
 		echo "Google Push Notifications will be disabled"
+	fi 
+
+	if [ x"$google_billing_flags" != x ]; then
+		echo "Google Billing will be disabled"
 	fi 
 
 	# create package underscored value
@@ -129,8 +140,9 @@
 
 	pushd jni > /dev/null
 		cp -f OptionalComponents.mk OptionalComponentsDefined.mk
-		sed -i.backup s%@DISABLE_TAPJOY@%"$tapjoy_flags"%g OptionalComponentsDefined.mk
+		sed -i.backup s%@DISABLE_BILLING@%"$google_billing_flags"%g OptionalComponentsDefined.mk
 		sed -i.backup s%@DISABLE_NOTIFICATIONS@%"$google_push_flags"%g OptionalComponentsDefined.mk
+		sed -i.backup s%@DISABLE_TAPJOY@%"$tapjoy_flags"%g OptionalComponentsDefined.mk
 		rm -f OptionalComponentsDefined.mk.backup
 	popd > /dev/null
 	
@@ -160,3 +172,4 @@
 	echo "$app_platform" >> libs/package.txt
 	echo "$tapjoy_flags" >> libs/package.txt
 	echo "$google_push_flags" >> libs/package.txt
+	echo "$google_billing_flags" >> libs/package.txt
