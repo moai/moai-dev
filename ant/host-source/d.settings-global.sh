@@ -18,7 +18,7 @@
 
 #----------------------------------------------------------------#
 # space-delimited list of libraries (moai-supported) required
-# available: facebook, tapjoy
+# available: facebook, tapjoy, adcolony, crittercism, google-push, google-billing
 #----------------------------------------------------------------#
 
 	requires=( @REQUIRED_LIBS@ )
