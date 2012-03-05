@@ -365,14 +365,14 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 		REGISTER_LUA_CLASS ( MOAICrittercism );
 #endif
 
-#ifndef DISABLE_FACEBOOK
-		MOAIFacebook::Affirm ();
-		REGISTER_LUA_CLASS ( MOAIFacebook );
-#endif
-
 #ifndef DISABLE_ADCOLONY
 		MOAIAdColony::Affirm ();
 		REGISTER_LUA_CLASS ( MOAIAdColony );
+#endif
+
+#ifndef DISABLE_FACEBOOK
+		MOAIFacebook::Affirm ();
+		REGISTER_LUA_CLASS ( MOAIFacebook );
 #endif
 
 		// register callbacks into Java

@@ -9,7 +9,7 @@
 	set -e
 	
 	# check for command line switches
-	usage="usage: $0 -p <package> [-v] [-i thumb | arm] [-a all | armeabi | armeabi-v7a] [-l appPlatform] [--disable-tapjoy] [--disable-google-push] [--disable-google-billing] [--disable-crittercism]"
+	usage="usage: $0 -p <package> [-v] [-i thumb | arm] [-a all | armeabi | armeabi-v7a] [-l appPlatform] [--disable-tapjoy] [--disable-google-push] [--disable-google-billing] [--disable-crittercism] [--disable-adcolony]"
 	verbose=
 	package_name=
 	arm_mode=arm
@@ -19,6 +19,7 @@
 	google_push_flags=
 	google_billing_flags=
 	crittercism_flags=
+	adcolony_flags=
 	
 	while [ $# -gt 0 ];	do
 	    case "$1" in
@@ -31,6 +32,7 @@
 			--disable-google-push)  google_push_flags="-DDISABLE_NOTIFICATIONS";;
 			--disable-google-billing)  google_push_flags="-DDISABLE_BILLING";;
 			--disable-crittercism)  crittercism_flags="-DDISABLE_CRITTERCISM";;
+			--disable-adcolony)  adcolony_flags="-DDISABLE_ADCOLONY";;
 			-*)
 		    	echo >&2 \
 		    		$usage
@@ -67,6 +69,7 @@
 		existing_google_push_flags=$( sed -n '6p' libs/package.txt )
 		existing_google_billing_flags=$( sed -n '7p' libs/package.txt )
 		existing_crittercism_flags=$( sed -n '8p' libs/package.txt )
+		existing_adcolony_flags=$( sed -n '9p' libs/package.txt )
 	fi
 
 	should_clean=false
@@ -102,6 +105,10 @@
 	if [ x"$existing_crittercism_flags" != x"$crittercism_flags" ]; then
 		should_clean=true
 	fi
+
+	if [ x"$existing_adcolony_flags" != x"$adcolony_flags" ]; then
+		should_clean=true
+	fi
 	
 	if [ x"$should_clean" = xtrue ]; then
 		./clean.sh
@@ -124,6 +131,10 @@
 
 	if [ x"$crittercism_flags" != x ]; then
 		echo "Crittercism will be disabled"
+	fi 
+
+	if [ x"$adcolony_flags" != x ]; then
+		echo "AdColony will be disabled"
 	fi 
 
 	# create package underscored value
@@ -151,6 +162,7 @@
 
 	pushd jni > /dev/null
 		cp -f OptionalComponents.mk OptionalComponentsDefined.mk
+		sed -i.backup s%@DISABLE_ADCOLONY@%"$adcolony_flags"%g OptionalComponentsDefined.mk
 		sed -i.backup s%@DISABLE_BILLING@%"$google_billing_flags"%g OptionalComponentsDefined.mk
 		sed -i.backup s%@DISABLE_CRITTERCISM@%"$crittercism_flags"%g OptionalComponentsDefined.mk
 		sed -i.backup s%@DISABLE_NOTIFICATIONS@%"$google_push_flags"%g OptionalComponentsDefined.mk
@@ -186,3 +198,4 @@
 	echo "$google_push_flags" >> libs/package.txt
 	echo "$google_billing_flags" >> libs/package.txt
 	echo "$crittercism_flags" >> libs/package.txt
+	echo "$adcolony_flags" >> libs/package.txt

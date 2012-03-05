@@ -35,16 +35,8 @@ import android.content.pm.ConfigurationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 
-import java.util.Arrays;
-import java.util.ArrayList;
-import java.util.concurrent.CountDownLatch;
-
 // Moai
 import com.ziplinegames.moai.*;
-
-// AdColony
-import com.jirbo.adcolony.AdColony;
-import com.jirbo.adcolony.AdColonyVideoAd;
 
 // Facebook
 import com.facebook.android.*;
@@ -521,50 +513,6 @@ public class MoaiActivity extends Activity {
 		mFacebook.setAccessToken ( token ); 
 	}
 	
-	//================================================================//
-	// AdColony JNI callback methods
-	//================================================================//
-
-	//----------------------------------------------------------------//
-	public void initAdColony ( String appId, String [] zoneIds ) {
-
-		String appVersion;
-		try {
-			
-			appVersion = getApplicationContext ().getPackageManager ().getPackageInfo ( appId, 0 ).versionName;
-		}
-		catch ( Exception e ) {
-			
-			appVersion = "UNKNOWN";
-		}
-
-		ArrayList < String > parameters = new ArrayList < String > ( Arrays.asList ( zoneIds ));
-		parameters.add ( 0, appId );
-		
-		AdColony.configure ( this, appVersion, parameters.toArray ( new String [ parameters.size ()]));
-	}
-
-	//----------------------------------------------------------------//
-	public boolean isAdColonyVideoReady ( String zoneId ) {
-
-		return new AdColonyVideoAd ( zoneId ).isReady ();
-	}
-	
-	//----------------------------------------------------------------//
-	public void playAdColonyVideo ( String zoneId, boolean showPrompt, boolean showConfirmation ) {
-		
-		AdColonyVideoAd ad = new AdColonyVideoAd ( zoneId );
-		if ( showPrompt ) {
-			
-			ad.offerV4VC ( null, showConfirmation );
-		} else {
-			
-			ad.showV4VC ( null, showConfirmation );
-		}
-		
-		// TODO: Add listener to allow callbacks into Lua
-	}
-			
 	//================================================================//
 	// ConnectivityBroadcastReceiver
 	//================================================================//

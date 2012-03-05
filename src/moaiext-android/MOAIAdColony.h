@@ -24,9 +24,9 @@ public:
     
 	DECL_LUA_SINGLETON ( MOAIAdColony );
 	
-                    MOAIAdColony					();
-					~MOAIAdColony                   ();
-	void			RegisterLuaClass				( MOAILuaState& state );
+                    MOAIAdColony		();
+					~MOAIAdColony       ();
+	void			RegisterLuaClass	( MOAILuaState& state );
 };
 
 #endif  //DISABLE_ADCOLONY

@@ -113,6 +113,7 @@
 	fr $out_dir/project/ant.properties @KEY_ALIAS_PASSWORD@ "$key_alias_password"
 
 	# copy project.properties file and add dependent libraries
+	dependency_index=1
 	cp -f host-source/project/project.properties $out_dir/project/project.properties
 	for (( i=1; i<=${#requires[@]}; i++ )); do
 		if [ -f "host-source/external/${requires[$i-1]}/manifest_declarations.xml" ]; then
@@ -122,14 +123,18 @@
 			awk 'FNR==NR{ _[++d]=$0; next } /EXTERNAL PERMISSIONS:/ { print; print ""; for ( i=1; i<=d; i++ ) { print _[i] } next } 1' "host-source/external/${requires[$i-1]}/manifest_permissions.xml" $out_dir/project/AndroidManifest.xml > /tmp/AndroidManifest.tmp && mv -f /tmp/AndroidManifest.tmp $out_dir/project/AndroidManifest.xml
 		fi
 		if [ -d "host-source/moai/${requires[$i-1]}" ]; then
-			rsync -r "host-source/moai/${requires[$i-1]}/." "$out_dir/project/src/com/ziplinegames/moai"
+			rsync -r --exclude=.svn --exclude=.DS_Store "host-source/moai/${requires[$i-1]}/." "$out_dir/project/src/com/ziplinegames/moai"
 		fi
 		if [ -d "host-source/external/${requires[$i-1]}/project" ]; then
-			rsync -r "host-source/external/${requires[$i-1]}/project/" "$out_dir/${requires[$i-1]}"
-			echo "android.library.reference.${i}=../${requires[$i-1]}/" >> "$out_dir/project/project.properties"
+			rsync -r --exclude=.svn --exclude=.DS_Store "host-source/external/${requires[$i-1]}/project/" "$out_dir/${requires[$i-1]}"
+			echo "android.library.reference.${dependency_index}=../${requires[$i-1]}/" >> "$out_dir/project/project.properties"
+			dependency_index=$(($dependency_index+1))
 		fi
 		if [ -d "host-source/external/${requires[$i-1]}/lib" ]; then
-			rsync -r "host-source/external/${requires[$i-1]}/lib/" "$out_dir/project/libs"
+			rsync -r --exclude=.svn --exclude=.DS_Store "host-source/external/${requires[$i-1]}/lib/" "$out_dir/project/libs"
+		fi
+		if [ -d "host-source/external/${requires[$i-1]}/src" ]; then
+			rsync -r --exclude=.svn --exclude=.DS_Store "host-source/external/${requires[$i-1]}/src/" "$out_dir/project/src"
 		fi
 	done
 	

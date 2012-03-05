@@ -9,7 +9,7 @@
 	set -e
 
 	# check for command line switches
-	usage="usage: $0 -p <package> [-s] [-i thumb | arm] [-a all | armeabi | armeabi-v7a] [-l appPlatform] [--disable-tapjoy] [--disable-google-push] [--disable-google-billing] [--disable-crittercism]"
+	usage="usage: $0 -p <package> [-s] [-i thumb | arm] [-a all | armeabi | armeabi-v7a] [-l appPlatform] [--disable-tapjoy] [--disable-google-push] [--disable-google-billing] [--disable-crittercism] [--disable-adcolony]"
 	skip_build="false"
 	package_name=
 	arm_mode=arm
@@ -19,6 +19,7 @@
 	google_push_flags=
 	google_billing_flags=
 	crittercism_flags=
+	adcolony_flags=
 	
 	while [ $# -gt 0 ];	do
 	    case "$1" in
@@ -31,6 +32,7 @@
 			--disable-google-push)  google_push_flags="--disable-google-push";;
 			--disable-google-billing)  google_billing_flags="--disable-google-billing";;
 			--disable-crittercism)  crittercism_flags="--disable-crittercism";;
+			--disable-adcolony)  adcolony_flags="--disable-adcolony";;
 			-*)
 		    	echo >&2 \
 		    		$usage
@@ -67,7 +69,7 @@
 	# if the caller has not explicitly told us to skip a libmoai build, build now
 	if [ x"$skip_build" != xtrue ]; then
 		pushd libmoai > /dev/null
-			bash build.sh -p $package_name -i $arm_mode -a $arm_arch -l $app_platform $tapjoy_flags $google_push_flags $google_billing_flags $crittercism_flags
+			bash build.sh -p $package_name -i $arm_mode -a $arm_arch -l $app_platform $tapjoy_flags $google_push_flags $google_billing_flags $crittercism_flags $adcolony_flags
 		popd > /dev/null
 	fi
 
@@ -93,7 +95,7 @@
 		rm -f $1$backup_ext
 	}
 		
-	required_libs="\"facebook\""
+	required_libs="\"miscellaneous\" \"facebook\""
 	
 	if [ x"$tapjoy_flags" == x ]; then
 		required_libs="$required_libs \"tapjoy\""
@@ -109,6 +111,10 @@
 
 	if [ x"$crittercism_flags" == x ]; then
 		required_libs="$required_libs \"crittercism\""
+	fi
+
+	if [ x"$adcolony_flags" == x ]; then
+		required_libs="$required_libs \"adcolony\""
 	fi
 
 	cp -f host-source/d.settings-global.sh $new_host_dir/settings-global.sh
@@ -141,8 +147,6 @@
 
 	# copy external classes, resources, libs and projects into new host dir
 	rsync -r --exclude=.svn --exclude=.DS_Store host-source/source/project/external/projects/. $new_host_dir/host-source/external
-	rsync -r --exclude=.svn --exclude=.DS_Store host-source/source/project/external/src/. $new_host_dir/host-source/project/src
-	rsync -r --exclude=.svn --exclude=.DS_Store host-source/source/project/external/libs/. $new_host_lib_dir
 
 	# set the app platform in all project.properties files
 	for file in `find $new_host_dir/host-source/ -name "project.properties"` ; do fr $file @APP_PLATFORM@ "$app_platform" ; done
