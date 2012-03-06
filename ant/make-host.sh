@@ -126,9 +126,11 @@
 	cp -f host-source/d.run-host.sh $new_host_dir/run-host.sh
 	cp -f host-source/d.run-host.bat $new_host_dir/run-host.bat
 	rsync -r --exclude=.svn --exclude=.DS_Store host-source/d.res/. $new_host_dir/res
+#	find . -name ".?*" -type d -prune -o -print0 | cpio -pmd0 $new_host_dir/res
 
 	# copy source dir into new host dir
 	rsync -r --exclude=.svn --exclude=.DS_Store --exclude=src/ --exclude=external/ host-source/source/. $new_host_dir/host-source
+#	find host-source/source -name ".*" -type d -prune -o -name "src" -prune -o -name "external" -prune -o -print | cpio -pmd0 $new_host_dir/host-source
 
 	# create package src directories
 	mkdir -p $new_host_dir/host-source/project/src/com/ziplinegames/moai
