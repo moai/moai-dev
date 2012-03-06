@@ -147,7 +147,7 @@
 	rsync --exclude=.svn --exclude=.DS_Store host-source/source/project/src/moai/*.java $new_host_dir/host-source/project/src/com/ziplinegames/moai
 
 	# copy external classes, resources, libs and projects into new host dir
-	rsync -r --exclude=.svn --exclude=.DS_Store host-source/source/project/external/projects/. $new_host_dir/host-source/external
+	rsync -r --exclude=.svn --exclude=.DS_Store host-source/source/project/external/. $new_host_dir/host-source/external
 
 	# set the app platform in all project.properties files
 	for file in `find $new_host_dir/host-source/ -name "project.properties"` ; do fr $file @APP_PLATFORM@ "$app_platform" ; done
