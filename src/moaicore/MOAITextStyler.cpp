@@ -360,7 +360,7 @@ bool MOAITextStyler::ParseStyle () {
 //----------------------------------------------------------------//
 void MOAITextStyler::PopStyle () {
 
-	if ( this->mStyleStackTop ) {
+	if ( this->mStyleStackTop > 1 ) {
 		this->mStyleStackTop--;
 		
 		if ( this->mStyleStackTop && ( this->mStyleStackTop < STYLE_STACK_SIZE )) {
