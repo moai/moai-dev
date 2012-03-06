@@ -16,29 +16,13 @@
 	# delete build folder
 	rm -rf $out_dir
 
-	# load global settings
+	# load settings
 	source ./settings-global.sh
-
-	# load local settings
-	local_settings_created=false
-
-	if [ ! -f settings-local.sh ]; then
-		cp -f host-source/d.settings-local.sh settings-local.sh
-		local_settings_created=true
-		echo
-		echo -e "*** Local file \"settings-local.sh\" created"
-	fi
-
 	source ./settings-local.sh
 
 	# check for valid Android SDK root
-	if [ "$android_sdk_root" = "" ] || [ ! -d $android_sdk_root ]; then
-		
-		if [ $local_settings_created = false ]; then
-			echo
-		fi
-		echo -e "*** Please specify a valid path to Android SDK in \"settings-local.sh\""
-		echo -e "*** Add this file to the ignore list of your version control system."
+	if [ "$android_sdk_root" = "" ] || [ ! -d $android_sdk_root ]; then		
+		echo -e "*** Please specify a valid path to the Android SDK in \"settings-local.sh\""
 		echo
 		exit 1
 	fi
@@ -102,8 +86,8 @@
 	# copy AndroidManifest.xml file and replace text
 	cp -f host-source/project/AndroidManifest.xml $out_dir/project/AndroidManifest.xml
 	fr $out_dir/project/AndroidManifest.xml	@DEBUGGABLE@ "$debug"
-	fr $out_dir/project/AndroidManifest.xml	@VERSION_CODE@ "$versionCode"
-	fr $out_dir/project/AndroidManifest.xml	@VERSION_NAME@ "$versionName"	
+	fr $out_dir/project/AndroidManifest.xml	@VERSION_CODE@ "$version_code"
+	fr $out_dir/project/AndroidManifest.xml	@VERSION_NAME@ "$version_name"	
 	
 	# copy ant.properties file and replace text
 	cp -f host-source/project/ant.properties $out_dir/project/ant.properties

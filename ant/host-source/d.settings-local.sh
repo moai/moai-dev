@@ -6,18 +6,22 @@
 # http://getmoai.com
 #================================================================#
 
-	# DO NOT CHECK THIS FILE INTO VERSION CONTROL
-	# This file is local and should be added to 
-	# the ignore list of your version control system.
-
 #----------------------------------------------------------------#
-# path to Android SDK folder
-# On Windows, you MUST use forward slashes as directory separators.
-# For example: C:/android-sdk
+# path to Android SDK folder (on Windows, you MUST use forward 
+# slashes as directory separators, e.g. C:/android-sdk)
 #----------------------------------------------------------------#
 
 	android_sdk_root=""
-	
+
+#----------------------------------------------------------------#
+# space-delimited list of source lua directories to add to the 
+# application bundle and corresponding destination directories in 
+# the assets directory of the bundle
+#----------------------------------------------------------------#
+
+	src_dirs=( "../../samples/basics/anim-basic" )
+	dest_dirs=(	"lua" )
+
 #----------------------------------------------------------------#
 # debug & release settings
 # you must define key store data in order to build for release

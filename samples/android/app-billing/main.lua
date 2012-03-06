@@ -48,7 +48,7 @@ function onPurchaseStateChanged ( id, code, order, notification, payload )
 		print ( "purchase was canceled" )
 	end
 
-	if ( notification ~= 0 ) then
+	if ( notification ~= nil ) then
 		if MOAIBilling.confirmNotification ( notification ) ~= true then
 			print ( "failed to confirm notification" )
 		end

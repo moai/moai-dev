@@ -117,6 +117,7 @@
 		required_libs="$required_libs \"adcolony\""
 	fi
 
+	cp -f host-source/d.settings-local.sh $new_host_dir/settings-local.sh
 	cp -f host-source/d.settings-global.sh $new_host_dir/settings-global.sh
 	fr $new_host_dir/settings-global.sh @REQUIRED_LIBS@ "$required_libs"
 	
@@ -172,16 +173,24 @@
 	echo "  run, it will clobber the contents of the \"untitled-host\" directory so you"
 	echo "  will probably want to move this folder elsewhere and rename it."
 	echo ""
-	echo "- Edit \"settings-global.sh\" to configure your project and point it to your lua"
-	echo "  scripts and other resources."
+	echo "- Edit \"settings-global.sh\" to configure your project name and version info,"
+	echo "  required optional components, icon resources and the list of lua files to run"
+	echo "  when the application starts. This file is globally applicable to any users of"
+	echo "  the host and therefore may be checked into version control."
 	echo ""
-	echo "- The first time you run the host, the file \"settings-local.sh\" is created."
-	echo "  You will need to configure the path to your Android SDK therein."
+	echo "  Edit \"settings-local.sh\" to configure the path to your Android SDK and signing"
+	echo "  keys, as well as the paths to your lua source that need to be copies into the"
+	echo "  application bundle. Because this file contains machine-specific paths, it is"
+	echo "  probably not appropriate to check into version control - each user of the host"
+	echo "  will need their own \"settings-local.sh\" file configured appropriately."
 	echo ""
 	echo "- Note that host is tied to the package name you specified when it was created."
 	echo "  If you wish to change the package name, simply recreate the host with the new"
 	echo "  package name and re-apply your settings files (and any resource files) into the"
 	echo "  new project."
+	echo ""
+	echo "  WARNING: EVERY time this script is run, the contents of \"untitled-host\" will"
+	echo "  be obliterated!"
 	echo ""
 	echo "********************************************************************************"
 	
