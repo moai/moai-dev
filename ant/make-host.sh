@@ -54,11 +54,9 @@
 	if [ x"$arm_arch" != xarmeabi ] && [ x"$arm_arch" != xarmeabi-v7a ] && [ x"$arm_arch" != xall ]; then
 		echo $usage
 		exit 1		
-	elif [ x"$arm_arch" = xall ]; then
-		arm_arch="armeabi armeabi-v7a"
 	fi
 	
-	new_host_dir=untitled-host	
+	new_host_dir="`pwd`/untitled-host"
 	if [ -d $new_host_dir ]; then
 		rm -rf $new_host_dir
 	fi
@@ -120,12 +118,12 @@
 
 #	rsync -r --exclude=.svn --exclude=.DS_Store host-source/d.res/. $new_host_dir/res
 	pushd host-source/d.res > /dev/null
-		find . -name ".?*" -type d -prune -o -print0 | cpio -pmd0 --quiet ../../$new_host_dir/res
+		find . -name ".?*" -type d -prune -o -print0 | cpio -pmd0 --quiet $new_host_dir/res
 	popd > /dev/null	
 
 #	rsync -r --exclude=.svn --exclude=.DS_Store --exclude=src/ --exclude=external/ host-source/source/. $new_host_dir/host-source
 	pushd host-source/source > /dev/null
-		find . -name ".?*" -type d -prune -o -name "src" -type d -prune -o -name "external" -type d -prune -o -type f -print0 | cpio -pmd0 --quiet ../../$new_host_dir/host-source
+		find . -name ".?*" -type d -prune -o -name "src" -type d -prune -o -name "external" -type d -prune -o -type f -print0 | cpio -pmd0 --quiet $new_host_dir/host-source
 	popd > /dev/null
 
 	mkdir -p $new_host_dir/host-source/project/src/com/ziplinegames/moai
@@ -140,22 +138,22 @@
 	
 #	rsync -r --exclude=.svn --exclude=.DS_Store host-source/source/project/src/app/. $new_host_dir/host-source/project/$package_path
 	pushd host-source/source/project/src/app > /dev/null
-		find . -name ".?*" -type d -prune -o -type f -print0 | cpio -pmd0 --quiet ../../../../../$new_host_dir/host-source/project/$package_path
+		find . -name ".?*" -type d -prune -o -type f -print0 | cpio -pmd0 --quiet $new_host_dir/host-source/project/$package_path
 	popd > /dev/null
 
 #	rsync -r --exclude=.svn --exclude=.DS_Store --exclude=/*.java host-source/source/project/src/moai/. $new_host_dir/host-source/moai
 	pushd host-source/source/project/src/moai > /dev/null
-		find . -name ".?*" -type d -prune -o -mindepth 2 -type f -print0 | cpio -pmd0 --quiet ../../../../../$new_host_dir/host-source/moai
+		find . -name ".?*" -type d -prune -o -mindepth 2 -type f -print0 | cpio -pmd0 --quiet $new_host_dir/host-source/moai
 	popd > /dev/null
 
 #	rsync --exclude=.svn --exclude=.DS_Store host-source/source/project/src/moai/*.java $new_host_dir/host-source/project/src/com/ziplinegames/moai
 	pushd host-source/source/project/src/moai > /dev/null
-		find . -name ".?*" -type d -prune -o -maxdepth 1 -type f -print0 | cpio -pmd0 --quiet ../../../../../$new_host_dir/host-source/project/src/com/ziplinegames/moai
+		find . -name ".?*" -type d -prune -o -maxdepth 1 -type f -print0 | cpio -pmd0 --quiet $new_host_dir/host-source/project/src/com/ziplinegames/moai
 	popd > /dev/null
 
 #	rsync -r --exclude=.svn --exclude=.DS_Store host-source/source/project/external/. $new_host_dir/host-source/external
 	pushd host-source/source/project/external > /dev/null
-		find . -name ".?*" -type d -prune -o -type f -print0 | cpio -pmd0 --quiet ../../../../$new_host_dir/host-source/external
+		find . -name ".?*" -type d -prune -o -type f -print0 | cpio -pmd0 --quiet $new_host_dir/host-source/external
 	popd > /dev/null
 
 	for file in `find $new_host_dir/host-source/ -name "project.properties"` ; do fr $file @APP_PLATFORM@ "$app_platform" ; done
