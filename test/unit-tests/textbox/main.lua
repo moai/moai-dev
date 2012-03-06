@@ -9,6 +9,9 @@ MOAIFileSystem.setWorkingDirectory ( ".." )
 require "testhelpers"
 MOAIFileSystem.setWorkingDirectory ( workingDir )
 MOAISim.openWindow ( "test", 320, 480 )
+-- MOAIDebugLines.setStyle ( MOAIDebugLines.TEXT_BOX, 1, 1, 1, 1, 1 )
+-- MOAIDebugLines.setStyle ( MOAIDebugLines.TEXT_BOX_LAYOUT, 1, 0, 0, 1, 1 )
+-- MOAIDebugLines.setStyle ( MOAIDebugLines.TEXT_BOX_BASELINES, 1, 1, 0, 0, 1 )
 
 viewport = MOAIViewport.new ()
 viewport:setSize ( 320, 480 )
@@ -43,13 +46,13 @@ continue = false
 function curveTests ()
 	running = true
 	
-	text = 'This text is curved. This text is curved. This text is curved.'
+	text = 'This text is curved. This text is curved. This text is curved. This text is curved. This text is curved. This text is curved.'
 	
 	textbox = MOAITextBox.new ()
 	textbox:setString ( text )
 	textbox:setFont ( font )
 	textbox:setTextSize ( 12, 163 )
-	textbox:setRect ( -150, -230, 150, 230 )
+	textbox:setRect ( -150, 70, 150, 230 )
 	textbox:setYFlip ( true )
 	layer:insertProp ( textbox )
 	
@@ -65,7 +68,12 @@ function curveTests ()
 	continue = false
 	repeat coroutine.yield () until continue
 	
-	text = 'This text has two curves. This text has two curves. This text has two curves.'
+	textbox:nextPage ()
+	
+	continue = false
+	repeat coroutine.yield () until continue
+	
+	text = 'This text has two curves. This text has two curves. This text has two curves. This text has two curves. This text has two curves. This text has two curves.'
 	textbox:setString ( text )
 	curve2 = MOAIAnimCurve.new ()
 	curve2:reserveKeys ( 2 )
@@ -75,6 +83,11 @@ function curveTests ()
 	textbox:reserveCurves ( 2 )
 	textbox:setCurve ( 1, curve )
 	textbox:setCurve ( 2, curve2 )
+	
+	continue = false
+	repeat coroutine.yield () until continue
+	
+	textbox:nextPage ()
 	
 	continue = false
 	repeat coroutine.yield () until continue
@@ -386,17 +399,96 @@ function setStyleTests ()
 	textbox:reserveCurves ( 1 )
 	textbox:setCurve ( 1, curve )
 	
-	-- style1:setFont ( font2 )
-	-- style1:setSize ( 24 )
-	-- textbox:setStyle ( 'red2', style1 )
-	-- style3:setColor ( 0, 0, 1, 1 )
-	-- style3:setFont ( font2 )
-	-- style3:setSize ( 24 )
-	-- style4:setFont ( font2 )
-	-- style4:setSize ( 24 )
+	continue = false
+	repeat coroutine.yield () until continue
+	textbox:clearCurves ()
 	
-	-- local style5 = MOAITextStyle.new ()
-	-- style5:setColor ( 
+	textbox:nextPage ()
+	
+	continue = false
+	repeat coroutine.yield () until continue
+	textbox:nextPage ()
+	textbox:setReveal ( 0 )
+	
+	text = 'This is <green>some test</> text to <yellow><blue>print out while</> testing different styles.</>'
+	local textbox1 = MOAITextBox.new ()
+	textbox1:setString ( text )
+	textbox1:setStyle ( style1 )
+	textbox1:setStyle ( 'red', style1 )
+	textbox1:setStyle ( 'green', style2 )
+	textbox1:setStyle ( 'blue', style3 )
+	textbox1:setStyle ( 'yellow', style4 )
+	textbox1:setRect ( -150, 70, 150, 230 )
+	textbox1:setAlignment ( MOAITextBox.LEFT_JUSTIFY )
+	textbox1:setYFlip ( true )
+	layer:insertProp ( textbox1 )
+	
+	text = 'This is <green>some test</> text to <yellow><blue>print out while</> testing different styles.</>'
+	local textbox2 = MOAITextBox.new ()
+	textbox2:setString ( text )
+	textbox2:setStyle ( style1 )
+	textbox2:setStyle ( 'red', style1 )
+	textbox2:setStyle ( 'green', style2 )
+	textbox2:setStyle ( 'blue', style3 )
+	textbox2:setStyle ( 'yellow', style4 )
+	textbox2:setRect ( -150, -90, 150, 70 )
+	textbox2:setAlignment ( MOAITextBox.CENTER_JUSTIFY )
+	textbox2:setYFlip ( true )
+	layer:insertProp ( textbox2 )
+	
+	text = 'This is <green>some test</> text to <yellow><blue>print out while</> testing different styles.</>'
+	local textbox3 = MOAITextBox.new ()
+	textbox3:setString ( text )
+	textbox3:setStyle ( style1 )
+	textbox3:setStyle ( 'red', style1 )
+	textbox3:setStyle ( 'green', style2 )
+	textbox3:setStyle ( 'blue', style3 )
+	textbox3:setStyle ( 'yellow', style4 )
+	textbox3:setRect ( -150, -250, 150, -90 )
+	textbox3:setAlignment ( MOAITextBox.RIGHT_JUSTIFY )
+	textbox3:setYFlip ( true )
+	layer:insertProp ( textbox3 )
+	
+	continue = false
+	repeat coroutine.yield () until continue
+	textbox1:setReveal ( 0 )
+	textbox2:setReveal ( 0 )
+	textbox3:setReveal ( 0 )
+	
+	textbox:setReveal ( 25 )
+	
+	continue = false
+	repeat coroutine.yield () until continue
+	textbox:revealAll ()
+	
+	textbox:setHighlight ( 25, 20, 1, 1, 1, 1 )
+	
+	continue = false
+	repeat coroutine.yield () until continue
+	textbox:setHighlight ( 25, 20 )
+	textbox:setReveal ( 0 )
+	textbox1:setAlignment ( MOAITextBox.LEFT_JUSTIFY )
+	textbox2:setAlignment ( MOAITextBox.LEFT_JUSTIFY )
+	textbox3:setAlignment ( MOAITextBox.LEFT_JUSTIFY )
+	
+	textbox1:setSpeed ( 12 )
+	textbox2:setSpeed ( 24 )
+	textbox3:setSpeed ( 48 )
+	textbox1:spool ()
+	textbox2:spool ()
+	textbox3:spool ()
+	
+	continue = false
+	repeat coroutine.yield () until continue
+	textbox1:stop ()
+	textbox2:stop ()
+	textbox3:stop ()
+	textbox1:setReveal ( 0 )
+	textbox2:setReveal ( 0 )
+	textbox3:setReveal ( 0 )
+	textbox:revealAll ()
+	
+	textbox:setYFlip ( false )
 	
 	continue = false
 	repeat coroutine.yield () until continue
@@ -438,6 +530,116 @@ function setYFlipTests ()
 	running = false
 end
 
+function longTextTests ()
+	running = true
+	
+	-- text = '1<red>Lorem ipsum dolor sit amet,</> consectetur adipiscing elit. <green>Pellentesque id\
+	-- <red>2magna adipiscing</> augue mollis fringilla.</> Fusce mauris <yellow>justo, scelerisque sit</>\
+	-- 3amet condimentum at, <blue>accumsan in velit. Proin <yellow>suscipit, mauris <green>nec volutpat\
+	-- 4<blue>congue, orci sapien</> posuere arcu,</></> vitae</> tempor massa neque <green>nec metus.\
+	-- 5Lorem ipsum</> dolor sit<blue></><green> amet, consectetur</> adipi<green>scing elit.<blue>\
+	-- 6Etiam</> tristique,</> odio <red>vel adipiscing facilisis, magna neque scelerisque metus, et\
+	-- 7volutpat turpis erat in orci. <blue>Duis suscipit eleifend <red>posuere. Vivamus auctor cursus\
+	-- 8mi, eget dapibus risus fringilla eget. Donec bibendum urna vitae orci</></></> adipiscing\
+	-- 9facilisis. Nam ullamcorper ultrices tempor. Vivamus a tortor lectus, in euismod metus. Etiam\
+	-- 10cursus molestie arcu nec fermentum. Nulla porttitor dui eget neque dignissim tristique. Donec\
+	-- 11elit quam, lobortis vitae fringilla ut, placerat et leo. Phasellus iaculis commodo ante quis\
+	-- 12condimentum. Vestibulum at neque a nibh fringilla semper. Sed diam dolor, convallis a tempus\
+	-- 13in, fringilla id lacus. Donec bibendum, erat semper consequat cursus, nibh neque tempor quam,\
+	-- 14nec pellentesque justo ligula eget nibh. Vestibulum adipiscing, enim vitae porttitor semper,\
+	-- 15nisi est vestibulum elit, non varius tortor dui at quam. Suspendisse tincidunt, velit at mollis\
+	-- 16vehicula, nunc est vulputate enim, condimentum vestibulum tortor tortor sed nulla. Nunc ac lectus\
+	-- 17urna. Vivamus condimentum nisi volutpat nulla vestibulum at condimentum ligula viverra. Nunc nec\
+	-- 18adipiscing purus.'
+	
+	text = '1<red>Lorem ipsum dolor sit amet,</> consectetur adipiscing elit. <green>Pellentesque id\
+	<red>2magna adipiscing</> augue mollis fringilla.</> Fusce mauris <yellow>justo, scelerisque sit</>\
+	3amet condimentum at, <blue>accumsan in velit. Proin <yellow>suscipit, mauris <green>nec volutpat\
+	4<blue>congue, orci sapien</> posuere arcu,</></> vitae</> tempor massa neque <green>nec metus.\
+	5Lorem ipsum</> dolor sit<blue></><green> amet, consectetur</> adipi<green>scing elit.<blue>\
+	6Etiam</> tristique,</> odio <red>vel adipiscing facilisis, magna neque scelerisque metus, et\
+	7volutpat turpis erat in orci. <blue>Duis suscipit eleifend <red>posuere. Vivamus auctor cursus\
+	8mi, eget dapibus risus fringilla eget. Donec bibendum urna vitae orci</></></> adipiscing\
+	9facilisis. Nam ullamcorper ultrices tempor. Vivamus a tortor lectus, in euismod metus. Etiam\
+	10cursus molestie arcu nec fermentum. Nulla porttitor dui eget neque dignissim tristique. Donec\
+	11elit quam, lobortis vitae fringilla ut, placerat et leo. Phasellus iaculis commodo ante quis\
+	12condimentum. Vestibulum at neque a nibh fringilla semper. Sed diam dolor, convallis a tempus\
+	13in, fringilla id lacus. Donec bibendum, erat semper consequat cursus, nibh neque tempor quam,\
+	14nec pellentesque justo ligula eget nibh. Vestibulum adipiscing, enim vitae porttitor semper,\
+	15nisi est vestibulum elit, non varius tortor dui at quam. Suspendisse tincidunt, velit at mollis\
+	16vehicula, nunc est vulputate enim, condimentum vestibulum tortor tortor sed nulla. Nunc ac lectus\
+	17urna. Vivamus condimentum nisi volutpat nulla vestibulum at condimentum ligula viverra. Nunc nec\
+	18adipiscing purus.'
+	
+	local textbox = MOAITextBox.new ()
+	textbox:setString ( text )
+	textbox:setFont ( font )
+	textbox:setTextSize ( 12, 163 )
+	textbox:setRect ( -150, -230, 150, 230 )
+	textbox:setYFlip ( true )
+	layer:insertProp ( textbox )
+	
+	local style = MOAITextStyle.new ()
+	style:setColor ( 1, 1, 1, 1 )
+	style:setFont ( font1 )
+	style:setSize ( 24 )
+	textbox:setStyle ( style )
+	
+	local style1 = MOAITextStyle.new ()
+	style1:setColor ( 1, 0, 0, 1 )
+	style1:setFont ( font1 )
+	style1:setSize ( 24 )
+	textbox:setStyle ( 'red', style1 )
+	
+	local style2 = MOAITextStyle.new ()
+	style2:setColor ( 0, 1, 0, 1 )
+	style2:setFont ( font2 )
+	style2:setSize ( 24 )
+	textbox:setStyle ( 'green', style2 )
+	
+	local style3 = MOAITextStyle.new ()
+	style3:setColor ( 0, 0, 1, .5 )
+	style3:setFont ( font3 )
+	style3:setSize ( 36 )
+	textbox:setStyle ( 'blue', style3 )
+	
+	local style4 = MOAITextStyle.new ()
+	style4:setColor ( 1, 1, 0, 1 )
+	style4:setFont ( font1 )
+	style4:setSize ( 12 )
+	textbox:setStyle ( 'yellow', style4 )
+	
+	continue = false
+	repeat coroutine.yield () until continue
+	
+	textbox:nextPage ()
+	
+	continue = false
+	repeat coroutine.yield () until continue
+	
+	textbox:nextPage ()
+	
+	continue = false
+	repeat coroutine.yield () until continue
+	
+	textbox:nextPage ()
+	
+	continue = false
+	repeat coroutine.yield () until continue
+	
+	textbox:nextPage ()
+	
+	continue = false
+	repeat coroutine.yield () until continue
+	
+	textbox:nextPage ()
+	
+	continue = false
+	repeat coroutine.yield () until continue
+	textbox:setReveal ( 0 )
+	running = false
+end
+
 -- tests
 function onKeyboardEvent ( key, down )
 	if down == true then
@@ -471,6 +673,9 @@ function onKeyboardEvent ( key, down )
 		elseif key == 57 and not running then -- setYFlipTests
 			thread = MOAIThread.new ()
 			thread:run ( setYFlipTests )
+		elseif key == 48 and not running then -- longTextTests
+			thread = MOAIThread.new ()
+			thread:run ( longTextTests )
 		else
 			return
 		end
