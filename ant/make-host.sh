@@ -8,7 +8,6 @@
 
 	set -e
 
-	# check for command line switches
 	usage="usage: $0 -p <package> [-s] [-i thumb | arm] [-a all | armeabi | armeabi-v7a] [-l appPlatform] [--disable-tapjoy] [--disable-google-push] [--disable-google-billing] [--disable-crittercism] [--disable-adcolony]"
 	skip_build="false"
 	package_name=
@@ -37,7 +36,7 @@
 		    	echo >&2 \
 		    		$usage
 		    	exit 1;;
-			*)  break;;	# terminate while loop
+			*)  break;;
 	    esac
 	    shift
 	done	
@@ -59,21 +58,17 @@
 		arm_arch="armeabi armeabi-v7a"
 	fi
 	
-	# remove existing new host folder, if any
-	new_host_dir=untitled-host
-	
+	new_host_dir=untitled-host	
 	if [ -d $new_host_dir ]; then
 		rm -rf $new_host_dir
 	fi
 	
-	# if the caller has not explicitly told us to skip a libmoai build, build now
 	if [ x"$skip_build" != xtrue ]; then
 		pushd libmoai > /dev/null
 			bash build.sh -p $package_name -i $arm_mode -a $arm_arch -l $app_platform $tapjoy_flags $google_push_flags $google_billing_flags $crittercism_flags $adcolony_flags
 		popd > /dev/null
 	fi
 
-	# copy libmoai into new host template dir
 	new_host_lib_dir=$new_host_dir/host-source/project/libs
 	mkdir -p $new_host_lib_dir
 	
@@ -87,9 +82,7 @@
 		echo ""
 	fi
 
-	# create function for easy find and replace
-	backup_ext=.backup
-	
+	backup_ext=.backup	
 	function fr () { 
 		sed -i$backup_ext s%"$2"%"$3"%g $1
 		rm -f $1$backup_ext
@@ -121,18 +114,20 @@
 	cp -f host-source/d.settings-global.sh $new_host_dir/settings-global.sh
 	fr $new_host_dir/settings-global.sh @REQUIRED_LIBS@ "$required_libs"
 	
-	# copy default project files into new host dir
 	cp -f host-source/d.README.txt $new_host_dir/README.txt
 	cp -f host-source/d.run-host.sh $new_host_dir/run-host.sh
-	cp -f host-source/d.run-host.bat $new_host_dir/run-host.bat
-	rsync -r --exclude=.svn --exclude=.DS_Store host-source/d.res/. $new_host_dir/res
-#	find . -name ".?*" -type d -prune -o -print0 | cpio -pmd0 $new_host_dir/res
+	cp -f host-source/d.run-host.bat $new_host_dir/run-host.bat	
 
-	# copy source dir into new host dir
-	rsync -r --exclude=.svn --exclude=.DS_Store --exclude=src/ --exclude=external/ host-source/source/. $new_host_dir/host-source
-#	find host-source/source -name ".*" -type d -prune -o -name "src" -prune -o -name "external" -prune -o -print | cpio -pmd0 $new_host_dir/host-source
+#	rsync -r --exclude=.svn --exclude=.DS_Store host-source/d.res/. $new_host_dir/res
+	pushd host-source/d.res > /dev/null
+		find . -name ".?*" -type d -prune -o -print0 | cpio -pmd0 --quiet ../../$new_host_dir/res
+	popd > /dev/null	
 
-	# create package src directories
+#	rsync -r --exclude=.svn --exclude=.DS_Store --exclude=src/ --exclude=external/ host-source/source/. $new_host_dir/host-source
+	pushd host-source/source > /dev/null
+		find . -name ".?*" -type d -prune -o -name "src" -type d -prune -o -name "external" -type d -prune -o -type f -print0 | cpio -pmd0 --quiet ../../$new_host_dir/host-source
+	popd > /dev/null
+
 	mkdir -p $new_host_dir/host-source/project/src/com/ziplinegames/moai
 	OLD_IFS=$IFS
 	IFS='.'
@@ -143,30 +138,37 @@
 	done
 	IFS=$OLD_IFS
 	
-	# copy classes into new host dir
-	rsync -r --exclude=.svn --exclude=.DS_Store host-source/source/project/src/app/. $new_host_dir/host-source/project/$package_path
-	rsync -r --exclude=.svn --exclude=.DS_Store --exclude=/*.java host-source/source/project/src/moai/. $new_host_dir/host-source/moai
-	rsync --exclude=.svn --exclude=.DS_Store host-source/source/project/src/moai/*.java $new_host_dir/host-source/project/src/com/ziplinegames/moai
+#	rsync -r --exclude=.svn --exclude=.DS_Store host-source/source/project/src/app/. $new_host_dir/host-source/project/$package_path
+	pushd host-source/source/project/src/app > /dev/null
+		find . -name ".?*" -type d -prune -o -type f -print0 | cpio -pmd0 --quiet ../../../../../$new_host_dir/host-source/project/$package_path
+	popd > /dev/null
 
-	# copy external classes, resources, libs and projects into new host dir
-	rsync -r --exclude=.svn --exclude=.DS_Store host-source/source/project/external/. $new_host_dir/host-source/external
+#	rsync -r --exclude=.svn --exclude=.DS_Store --exclude=/*.java host-source/source/project/src/moai/. $new_host_dir/host-source/moai
+	pushd host-source/source/project/src/moai > /dev/null
+		find . -name ".?*" -type d -prune -o -mindepth 2 -type f -print0 | cpio -pmd0 --quiet ../../../../../$new_host_dir/host-source/moai
+	popd > /dev/null
 
-	# set the app platform in all project.properties files
+#	rsync --exclude=.svn --exclude=.DS_Store host-source/source/project/src/moai/*.java $new_host_dir/host-source/project/src/com/ziplinegames/moai
+	pushd host-source/source/project/src/moai > /dev/null
+		find . -name ".?*" -type d -prune -o -maxdepth 1 -type f -print0 | cpio -pmd0 --quiet ../../../../../$new_host_dir/host-source/project/src/com/ziplinegames/moai
+	popd > /dev/null
+
+#	rsync -r --exclude=.svn --exclude=.DS_Store host-source/source/project/external/. $new_host_dir/host-source/external
+	pushd host-source/source/project/external > /dev/null
+		find . -name ".?*" -type d -prune -o -type f -print0 | cpio -pmd0 --quiet ../../../../$new_host_dir/host-source/external
+	popd > /dev/null
+
 	for file in `find $new_host_dir/host-source/ -name "project.properties"` ; do fr $file @APP_PLATFORM@ "$app_platform" ; done
 
-	# inject the package path into the run script
 	sed -i.backup s%@SETTING_PACKAGE_PATH@%"$package_path"%g $new_host_dir/run-host.sh
 	rm -f $new_host_dir/run-host.sh.backup
 	
-	# inject the package name into the run script
 	sed -i.backup s%@SETTING_PACKAGE@%"$package_name"%g $new_host_dir/run-host.sh
 	rm -f $new_host_dir/run-host.sh.backup
 
-	# inject the package name into the run batch file
 	sed -i.backup s%@SETTING_PACKAGE@%"$package_name"%g $new_host_dir/run-host.bat
 	rm -f $new_host_dir/run-host.bat.backup
 	
-	# echo descriptive messages about this host
 	echo "********************************************************************************"
 	echo "* Android host successfully created.                                           *"
 	echo "********************************************************************************"
@@ -180,7 +182,7 @@
 	echo "  when the application starts. This file is globally applicable to any users of"
 	echo "  the host and therefore may be checked into version control."
 	echo ""
-	echo "  Edit \"settings-local.sh\" to configure the path to your Android SDK and signing"
+	echo "- Edit \"settings-local.sh\" to configure the path to your Android SDK and signing"
 	echo "  keys, as well as the paths to your lua source that need to be copies into the"
 	echo "  application bundle. Because this file contains machine-specific paths, it is"
 	echo "  probably not appropriate to check into version control - each user of the host"
