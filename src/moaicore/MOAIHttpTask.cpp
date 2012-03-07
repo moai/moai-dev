@@ -19,6 +19,50 @@
 // local
 //================================================================//
 
+
+//----------------------------------------------------------------//
+/**	@name	getResponseCode
+ @text	Returns the response code returned by the server after a httpPost or httpGet call.
+ 
+ @in		MOAIHttpTask self
+ @out	number code					The numeric response code returned by the server.
+ */
+int MOAIHttpTask::_getResponseCode ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIHttpTask, "U" )
+	
+	lua_pushnumber ( state, self->GetInfo()->mResponseCode );
+	
+	return 1;
+}
+
+//----------------------------------------------------------------//
+/**	@name	getResponseHeader
+ @text	Returns the response header given its name, or nil if it wasn't provided by the server.
+		Header names are case-insensitive and if multiple responses are given, they will be
+		concatenated with a comma separating the values.
+ @in		MOAIHttpTask self
+ @in	string header	The name of the header to return (case-insensitive).
+ @out	string response				The response given by the server or nil if none was specified.
+*/
+int MOAIHttpTask::_getResponseHeader ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIHttpTask, "US" )
+	
+	STLString header(state.GetValue < cc8* >( 2, "" ));
+	std::transform(header.begin(), header.end(), header.begin(), ::tolower);
+	MOAIHttpTaskInfo *info = self->GetInfo();
+	MOAIHttpTaskInfo::HeaderMap::iterator it = info->mResponseHeaders.find(header);
+	if( it != info->mResponseHeaders.end() )
+	{
+		lua_pushlstring ( state, it->second.c_str(), it->second.length() );
+	}
+	else
+	{
+		lua_pushnil( state );
+	}
+	
+	return 1;
+}
+
 //----------------------------------------------------------------//
 /**	@name	getSize
 	@text	Returns the size of the string obtained from a httpPost or httpGet call.
@@ -65,12 +109,23 @@ int MOAIHttpTask::_getString ( lua_State* L ) {
 int MOAIHttpTask::_httpGet ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIHttpTask, "US" )
 	
+	
 	cc8* url		= state.GetValue < cc8* >( 2, "" );
 	cc8* useragent	= state.GetValue < cc8* >( 3, DEFAULT_MOAI_HTTP_USERAGENT );
 	bool verbose	= state.GetValue < bool >( 4, false );
 	bool blocking	= state.GetValue < bool >( 5, false );
-	
-	self->HttpGet ( url, useragent, verbose, blocking );
+
+	HeaderList headers;
+	if( state.IsType(6, LUA_TTABLE) )
+	{
+		int itr = state.PushTableItr ( 6 );
+		while ( state.TableItrNext ( itr )) {
+			cc8* h = state.GetValue < cc8* >( -1, 0 );
+			headers.push_back(h);
+		}
+	}
+
+	self->HttpGet ( url, useragent, verbose, blocking, &headers );
 
 	return 0;
 }
@@ -106,6 +161,16 @@ int MOAIHttpTask::_httpPost ( lua_State* L ) {
 	cc8* useragent	= state.GetValue < cc8* >( 4, DEFAULT_MOAI_HTTP_USERAGENT );
 	bool verbose	= state.GetValue < bool >( 5, false );
 	bool blocking	= state.GetValue < bool >( 6, false );
+	
+	HeaderList headers;
+	if( state.IsType(7, LUA_TTABLE) )
+	{
+		int itr = state.PushTableItr ( 6 );
+		while ( state.TableItrNext ( itr )) {
+			cc8* h = state.GetValue < cc8* >( -1, 0 );
+			headers.push_back(h);
+		}
+	}
 
 	if ( state.IsType (3, LUA_TUSERDATA) ) {
 		
@@ -116,14 +181,14 @@ int MOAIHttpTask::_httpPost ( lua_State* L ) {
 			void* bytes;
 			size_t size;
 			data->Lock ( &bytes, &size );
-			self->HttpPost ( url, useragent, bytes, size, verbose, blocking );
+			self->HttpPost ( url, useragent, bytes, size, verbose, blocking, &headers );
 			data->Unlock ();
 		}
 	}
 	else if ( state.IsType (3, LUA_TSTRING )) {
 		
 		cc8* postString = lua_tostring ( state, 3 );
-		self->HttpPost ( url, useragent, postString, ( u32 )strlen ( postString ), verbose, blocking );
+		self->HttpPost ( url, useragent, postString, ( u32 )strlen ( postString ), verbose, blocking, &headers );
 	}
 
 	return 0;
@@ -211,12 +276,12 @@ void MOAIHttpTask::GetData ( void* buffer, u32 size ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIHttpTask::HttpGet ( cc8* url, cc8* useragent, bool verbose, bool blocking ) {
+void MOAIHttpTask::HttpGet ( cc8* url, cc8* useragent, bool verbose, bool blocking, HeaderList *extraHeaders ) {
 
 	this->Clear ();
 	
 	this->mInfo = new MOAIHttpTaskInfo ();
-	this->mInfo->InitForGet ( url, useragent, verbose );
+	this->mInfo->InitForGet ( url, useragent, verbose, extraHeaders );
 	
 	if ( blocking ) {
 		this->mInfo->PerformSync ();
@@ -228,12 +293,12 @@ void MOAIHttpTask::HttpGet ( cc8* url, cc8* useragent, bool verbose, bool blocki
 }
 
 //----------------------------------------------------------------//
-void MOAIHttpTask::HttpPost ( cc8* url, cc8* useragent, const void* buffer, u32 size, bool verbose, bool blocking ) {
+void MOAIHttpTask::HttpPost ( cc8* url, cc8* useragent, const void* buffer, u32 size, bool verbose, bool blocking, HeaderList *extraHeaders ) {
 
 	this->Clear ();
 	
 	this->mInfo = new MOAIHttpTaskInfo ();
-	this->mInfo->InitForPost ( url, useragent, buffer, size, verbose );
+	this->mInfo->InitForPost ( url, useragent, buffer, size, verbose, extraHeaders );
 	
 	if ( blocking ) {
 		this->mInfo->PerformSync ();
@@ -270,6 +335,8 @@ void MOAIHttpTask::RegisterLuaClass ( MOAILuaState& state ) {
 void MOAIHttpTask::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
+		{ "getResponseCode",	_getResponseCode },
+		{ "getResponseHeader",	_getResponseHeader },
 		{ "getSize",			_getSize },
 		{ "getString",			_getString },
 		{ "httpGet",			_httpGet },
