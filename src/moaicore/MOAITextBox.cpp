@@ -274,15 +274,17 @@ int MOAITextBox::_setHighlight ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	setLineSpacing
-	@text	Sets the scale of spacing between lines. '1' uses the font default spacing.
+	@text	Sets additional space between lines in text units. '0' uses
+			the default spacing. Valus must be positive.
 
 	@in		MOAITextBox self
-	@in		number lineSpacing		Default value is 1.
+	@in		number lineSpacing		Default value is 0.
 */
 int MOAITextBox::_setLineSpacing ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextBox, "U" )
 	
-	self->mLineSpacing = state.GetValue < float >( 2, 1.0f );
+	float lineSpacing = state.GetValue < float >( 2, 0.0f );
+	self->mLineSpacing = lineSpacing < 0.0f ? 0.0f : lineSpacing;
 	self->ScheduleLayout ();
 	
 	return 0;
@@ -653,7 +655,7 @@ void MOAITextBox::Layout () {
 
 //----------------------------------------------------------------//
 MOAITextBox::MOAITextBox () :
-	mLineSpacing ( 1.0f ),
+	mLineSpacing ( 0.0f ),
 	mText ( "" ),
 	mTextLength ( 0 ),
 	mHAlign ( LEFT_JUSTIFY ),

@@ -16,6 +16,8 @@
 //----------------------------------------------------------------//
 void MOAITextDesigner::BuildLayout ( MOAITextBox& textBox ) {
 	
+	if ( !textBox.mStyleMap.GetTop ()) return;
+	
 	this->mStr = textBox.mText;
 	this->mIdx = textBox.mCurrentPageIdx;
 	this->mStyleSpan = 0;
@@ -141,7 +143,7 @@ void MOAITextDesigner::BuildLayout ( MOAITextBox& textBox ) {
 			textBox.PushLine ( lineStart, lineSize, lineRect, lineAscent );
 			
 			// end line
-			pen.mY += lineRect.Height ();
+			pen.mY += lineRect.Height () + textBox.mLineSpacing;
 			lineRect.Init ( 0.0f, pen.mY, 0.0f, pen.mY );
 			
 			// next line
