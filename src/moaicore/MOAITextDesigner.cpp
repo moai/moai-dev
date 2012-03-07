@@ -16,6 +16,8 @@
 //----------------------------------------------------------------//
 void MOAITextDesigner::BuildLayout ( MOAITextBox& textBox ) {
 	
+	if ( !textBox.mStyleMap.GetTop ()) return;
+	
 	this->mStr = textBox.mText;
 	this->mIdx = textBox.mCurrentPageIdx;
 	this->mStyleSpan = 0;

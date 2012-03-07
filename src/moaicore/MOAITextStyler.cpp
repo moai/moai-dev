@@ -29,6 +29,9 @@ void MOAITextStyler::BuildStyleMap ( MOAITextBox& textBox ) {
 	textBox.mStyleMap.Reset ();
 	textBox.mActiveStyles.Reset ();
 	
+	MOAITextStyle* defaultStyle = textBox.GetStyle ();
+	if ( !defaultStyle ) return;
+	
 	this->mIdx = 0;
 	this->mPrev = 0;
 	this->mTextBox = &textBox;
@@ -41,9 +44,7 @@ void MOAITextStyler::BuildStyleMap ( MOAITextBox& textBox ) {
 	this->mStyleStackTop = 0;
 	this->mCurrentStyle = 0;
 	
-	this->PushStyle ( textBox.GetStyle ());
-	if ( !this->mCurrentStyle ) return;
-	
+	this->PushStyle ( defaultStyle );
 	this->Parse ();
 }
 
