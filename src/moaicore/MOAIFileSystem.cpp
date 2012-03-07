@@ -190,6 +190,10 @@ int MOAIFileSystem::_listDirectories ( lua_State* L ) {
 	int n = 0;
 	dirItr.Start ();
 	while ( dirItr.NextDirectory ()) {
+		if( strcmp(dirItr.Current(), "..") == 0 ||
+			strcmp(dirItr.Current(), ".") == 0 ) {
+			continue;
+		}
 		if ( dir ) {
 			lua_pushstring ( L, dir );
 			lua_pushstring ( L, "/" );
