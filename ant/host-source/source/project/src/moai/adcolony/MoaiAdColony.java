@@ -70,6 +70,9 @@ public class MoaiAdColony {
 			ad.showV4VC ( null, showConfirmation );
 		}
 		
+		
+		
+		
 		// TODO: Add listener to allow callbacks into Lua
 	}
 }

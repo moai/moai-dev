@@ -17,6 +17,7 @@ private:
     
 	//----------------------------------------------------------------//
 	static int	_init				( lua_State* L );
+	static cc8*	_luaParseTable 		( lua_State* L, int idx );
 	static int	_playVideo			( lua_State* L );
 	static int	_videoReadyForZone	( lua_State* L );
 	

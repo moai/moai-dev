@@ -403,16 +403,6 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 		RELEASE_CSTRING ( jarchive, archive );
 	}
 
-	//----------------------------Facebook ---------------------------//	
-	//----------------------------------------------------------------//
-	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiActivity_AKUNotifyFacebookLogin ( JNIEnv* env, jclass obj, jint code ) {
-		MOAIFacebook::Get ().NotifyFacebookLogin ( code );
-	}
-	//----------------------------------------------------------------//
-	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiActivity_AKUNotifyFacebookDialog ( JNIEnv* env, jclass obj, jint code ) {
-		MOAIFacebook::Get ().NotifyFacebookDialog ( code );
-	}
-	
 	//----------------------------------------------------------------//
 	extern "C" bool Java_@PACKAGE_UNDERSCORED@_MoaiActivity_AKUNotifyBackButtonPressed ( JNIEnv* env, jclass obj ) {
 		return MOAIApp::Get ().NotifyBackButtonPressed ();

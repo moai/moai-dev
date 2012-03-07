@@ -17,7 +17,7 @@ extern JavaVM* jvm;
 //================================================================//
 
 //----------------------------------------------------------------//
-cc8* _luaParseTable ( lua_State* L, int idx ) {
+cc8* MOAIAdColony::_luaParseTable ( lua_State* L, int idx ) {
 
 	switch ( lua_type ( L, idx )) {
 

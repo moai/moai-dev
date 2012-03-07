@@ -234,7 +234,7 @@ void MOAIBilling::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "BILLING_STATE_PURCHASE_CANCELED",		( u32 )BILLING_STATE_PURCHASE_CANCELED );
 	state.SetField ( -1, "BILLING_STATE_ITEM_REFUNDED",			( u32 )BILLING_STATE_ITEM_REFUNDED );
 
-	luaL_Reg regTable[] = {
+	luaL_Reg regTable [] = {
 		{ "checkBillingSupported",	_checkBillingSupported },
 		{ "confirmNotification",	_confirmNotification },
 		{ "requestPurchase",		_requestPurchase },

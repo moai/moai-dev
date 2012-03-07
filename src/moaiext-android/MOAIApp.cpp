@@ -106,7 +106,7 @@ void MOAIApp::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "DIALOG_RESULT_NEGATIVE",				( u32 )DIALOG_RESULT_NEGATIVE );
 	state.SetField ( -1, "DIALOG_RESULT_CANCEL",				( u32 )DIALOG_RESULT_CANCEL );
 
-	luaL_Reg regTable[] = {
+	luaL_Reg regTable [] = {
 		{ "openURL",							_openURL },
 		{ "setListener",						_setListener },
 		{ "showDialog",							_showDialog },
