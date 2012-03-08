@@ -170,6 +170,7 @@ int MOAITextBox::_nextPage ( lua_State* L ) {
 
 	bool reveal = state.GetValue < bool >( 2, true );
 	self->NextPage ( reveal );
+	self->ScheduleLayout ();
 
 	return 0;
 }
@@ -771,7 +772,6 @@ bool MOAITextBox::More () {
 
 //----------------------------------------------------------------//
 void MOAITextBox::NextPage ( bool reveal ) {
-	UNUSED ( reveal );
 	
 	if ( this->mMore ) {
 		this->mCurrentPageIdx = this->mNextPageIdx;
@@ -781,7 +781,6 @@ void MOAITextBox::NextPage ( bool reveal ) {
 		this->mNextPageIdx = 0;
 	}
 	
-	this->mNeedsLayout = true;
 	this->mReveal = reveal ? REVEAL_ALL : 0;
 	this->mSpool = 0.0f;
 }
