@@ -17,20 +17,23 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAITextStyleState::AffirmGlyph ( u32 c ) {
-
-	assert ( this->mFont );
-	this->mFont->AffirmGlyph ( this->mSize, c );
+MOAITextStyleState::MOAITextStyleState () :
+	mFont ( 0 ),
+	mSize ( 0.0f ),
+	mColor ( 0xffffffff ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAITextStyleState::IsMatch ( const MOAITextStyleState& compare ) const {
+MOAITextStyleState::~MOAITextStyleState () {
+}
 
-	if ( this->mFont != compare.mFont ) return false;
-	if ( this->mColor != compare.mColor ) return false;
-	if ( this->mSize != compare.mSize ) return false;
+//----------------------------------------------------------------//
+bool MOAITextStyleState::NeedsLayout ( const MOAITextStyleState& compare ) const {
+
+	if ( this->mFont != compare.mFont ) return true;
+	if ( this->mSize != compare.mSize ) return true;
 	
-	return true;
+	return false;
 }
 
 //================================================================//
@@ -71,7 +74,7 @@ int MOAITextStyle::_setSize ( lua_State* L ) {
 	float points	= state.GetValue < float >( 2, 0.0f );
 	float dpi		= state.GetValue < float >( 3, DPI );
 	
-	self->mSize = POINTS_TO_PIXELS ( points, dpi );
+	self->SetSize ( POINTS_TO_PIXELS ( points, dpi ));
 	return 0;
 }
 
@@ -80,14 +83,25 @@ int MOAITextStyle::_setSize ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAITextStyle::AffirmGlyph ( u32 c ) {
+
+	assert ( this->mFont );
+	this->mFont->AffirmGlyph ( this->mSize, c );
+}
+
+//----------------------------------------------------------------//
+void MOAITextStyle::Init ( MOAITextStyle& style ) {
+
+	this->SetFont ( style.mFont );
+	this->mSize = style.mSize;
+	this->mColor = style.mColor;
+}
+
+//----------------------------------------------------------------//
 MOAITextStyle::MOAITextStyle () {
 	
-	this->mFont = 0;
-	this->mSize = 0.0f;
-	this->mColor = 0xffffffff;
-	
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAILuaObject )
+		RTTI_EXTEND ( MOAINode )
 	RTTI_END
 }
 
@@ -136,5 +150,17 @@ void MOAITextStyle::SetFont ( MOAIFont* font ) {
 		this->LuaRetain ( font );
 		this->LuaRelease ( this->mFont );
 		this->mFont = font;
+		
+		this->ScheduleUpdate ();
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAITextStyle::SetSize ( float size ) {
+
+	if ( this->mSize != size ) {
+	
+		this->mSize = size;
+		this->ScheduleUpdate ();
 	}
 }

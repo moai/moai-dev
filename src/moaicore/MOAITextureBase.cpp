@@ -571,6 +571,8 @@ void MOAITextureBase::UpdateTextureFromImage ( MOAIImage& image, USIntRect rect 
 	// otherwise just update the sub-region
 	if ( this->mGLTexID ) {
 
+		glBindTexture ( GL_TEXTURE_2D, this->mGLTexID );
+
 		rect.Bless ();
 		USIntRect imageRect = image.GetRect ();
 		imageRect.Clip ( rect );

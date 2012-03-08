@@ -61,14 +61,10 @@ private:
 	cc8*					mStr;
 	MOAITextBox*			mTextBox;
 
-	MOAITextStyleState*		mStyleStack;
-	u32						mStyleStackTop;
+	USLeanStack < MOAITextStyle*, 8 > mStyleStack;
+	USLeanStack < MOAITextStyle*, 8 > mActiveStyles;
 
-	MOAITextStyleState*		mCurrentStyle;
-
-	USLeanStack < MOAITextStyleState, 8 > mActiveStyles;
-
-	static const u32 STYLE_STACK_SIZE = 256;
+	MOAITextStyle* mCurrentStyle;
 
 	//----------------------------------------------------------------//
 	u32				AffirmStyle			( MOAITextStyle& style );
@@ -79,7 +75,7 @@ private:
 	void			Parse				();
 	bool			ParseStyle			();
 	void			PopStyle			();
-	void			PushStyle			( MOAITextStyleState* styleState );
+	void			PushStyle			( MOAITextStyle* styleState );
 	void			UngetChar			();
 
 public:
