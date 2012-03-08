@@ -2,6 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <contrib/utf8.h>
 #include <moaicore/MOAIAnimCurve.h>
 #include <moaicore/MOAIDeck.h>
 #include <moaicore/MOAIDebugLines.h>
@@ -796,6 +797,7 @@ void MOAITextBox::OnDepNodeUpdate () {
 
 	if ( this->CheckStylesChanged ()) {
 		this->mNeedsLayout = true;
+		this->RefreshStyleGlyphs ();
 	}
 	this->Layout ();
 
@@ -858,6 +860,37 @@ void MOAITextBox::PushStyleSpan ( int base, int top, MOAITextStyle& style ) {
 	span.mStyle		= &style;
 
 	this->mStyleMap.Push ( span );
+}
+
+//----------------------------------------------------------------//
+void MOAITextBox::RefreshStyleGlyphs () {
+
+	u32 totalSpans = this->mStyleMap.GetTop ();
+	if ( !totalSpans ) return;
+	
+	for ( u32 i = 0; i < totalSpans; ++i ) {
+		MOAITextStyleSpan& span = this->mStyleMap [ i ];
+		
+		int idx = span.mBase;
+		while ( idx < span.mTop ) {
+			u32 c = u8_nextchar ( this->mText, &idx );
+			span.mStyle->AffirmGlyph ( c );
+		}
+	}
+	
+	// TODO: think about keeping list of currently active styles instead of iterating through everything
+	
+	u32 totalAnonymous = this->mAnonymousStyles.GetTop ();
+	for ( u32 i = 0; i < totalAnonymous; i++ ) {
+		MOAITextStyleRef& styleRef = this->mAnonymousStyles [ i ];
+		styleRef.mStyle->mFont->ProcessGlyphs ();
+	}
+
+	StyleSetIt styleSetIt = this->mStyleSet.begin ();
+	for ( ; styleSetIt != this->mStyleSet.end (); ++styleSetIt ) {
+		MOAITextStyleRef& styleRef = styleSetIt->second;
+		styleRef.mStyle->mFont->ProcessGlyphs ();
+	}
 }
 
 //----------------------------------------------------------------//

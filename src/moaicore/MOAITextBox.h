@@ -140,7 +140,7 @@ private:
 	// this is the style map. it is produced by analyzing the text and creating a
 	// 'style span' for each styled token. this is the preprocessing step to
 	// actually layout out a page of text. text is laid out based on the style spans.
-	USLeanStack < MOAITextStyleSpan, 64 >	mStyleMap;			// each span represents a stretch of 'styled' text
+	USLeanStack < MOAITextStyleSpan, 64 > mStyleMap; // each span represents a stretch of 'styled' text
 	
 	// this is the text page layout. these are the action sprites and lines
 	// that will be rendered for the current page.
@@ -179,6 +179,7 @@ private:
 	void				PushLine				( u32 start, u32 size, const USRect& rect, float ascent );
 	void				PushSprite				( u32 idx, MOAIGlyph& glyph, MOAITextStyle& style, float x, float y );
 	void				PushStyleSpan			( int base, int top, MOAITextStyle& style );
+	void				RefreshStyleGlyphs		();
 	void				ReleaseStyle			( MOAITextStyle* style );
 	void				ResetLayout				();
 	void				ResetStyleMap			();
