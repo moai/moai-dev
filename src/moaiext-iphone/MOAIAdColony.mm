@@ -59,7 +59,6 @@ int MOAIAdColony::_videoReadyForZone ( lua_State *L ) {
 //----------------------------------------------------------------//
 void MOAIAdColony::FireZoneListenerEvent (int event, cc8* zone ) {
 	
-	printf ("%d", event );
 	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 	
 	if ( this->PushListener ( event, state )) {

@@ -50,7 +50,7 @@ public:
 		SESSION_DID_NOT_LOGIN
 	};
 		
-	void			DialogDidCancel					();
+	void			DialogDidNotComplete			();
 	void			DialogDidComplete				();
 	void			HandleOpenURL					( NSURL* url );
                     MOAIFacebook					();
