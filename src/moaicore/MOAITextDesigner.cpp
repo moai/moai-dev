@@ -102,32 +102,24 @@ void MOAITextDesigner::BuildLayout ( MOAITextBox& textBox ) {
 			else {
 				
 				float glyphBottom = pen.mY + this->mDeck->mHeight;
-				if ( glyphBottom > height ) {
 					
-					textBox.mSprites.SetTop ( lineStart );
-					textBox.mNextPageIdx = lineIdx;
-					more = false;
+				// handle new token
+				if ( !tokenSize ) {
+					tokenIdx = this->mIdx - 1;
+					tokenStart = textBox.mSprites.GetTop ();
+					tokenRect.Init ( pen.mX, pen.mY, pen.mX, glyphBottom );
+					tokenAscent = this->mDeck->mAscent;
 				}
-				else {
-					
-					// handle new token
-					if ( !tokenSize ) {
-						tokenIdx = this->mIdx - 1;
-						tokenStart = textBox.mSprites.GetTop ();
-						tokenRect.Init ( pen.mX, pen.mY, pen.mX, glyphBottom );
-						tokenAscent = this->mDeck->mAscent;
-					}
-					
-					// check for overrun
-					float glyphRight = pen.mX + glyph->mBearingX + glyph->mWidth;
-					bool overrun = glyphRight > width;
-					acceptLine = ( lineSize && overrun );
-					
-					if ( acceptLine || !overrun ) {
-						textBox.PushSprite ( this->mIdx - 1, *glyph, *this->mStyle, pen.mX, pen.mY );
-						tokenRect.mXMax = glyphRight;
-						tokenSize++;
-					}
+				
+				// check for overrun
+				float glyphRight = pen.mX + glyph->mBearingX + glyph->mWidth;
+				bool overrun = glyphRight > width;
+				acceptLine = ( lineSize && overrun );
+				
+				if ( acceptLine || !overrun ) {
+					textBox.PushSprite ( this->mIdx - 1, *glyph, *this->mStyle, pen.mX, pen.mY );
+					tokenRect.mXMax = glyphRight;
+					tokenSize++;
 				}
 			}
 			
@@ -176,10 +168,10 @@ void MOAITextDesigner::BuildLayout ( MOAITextBox& textBox ) {
 			}
 		}
 		
-		// if we overrun height during a new line, then back up to the start of the current token
+		// if we overrun height, then back up to the start of the current line
 		if ( tokenRect.mYMax > height ) {
-			textBox.mSprites.SetTop ( textBox.mSprites.GetTop () - tokenSize );
-			textBox.mNextPageIdx = tokenIdx;
+			textBox.mSprites.SetTop ( lineStart );
+			textBox.mNextPageIdx = lineIdx;
 			more = false;
 		}
 	}
