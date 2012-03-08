@@ -23,7 +23,8 @@ void MOAITextDesigner::BuildLayout ( MOAITextBox& textBox ) {
 	this->mStyleSpan = 0;
 	this->mStyle = 0;
 	
-	int nextIdx = this->mIdx;
+	int tokenIdx = this->mIdx;
+	int lineIdx = this->mIdx;
 	
 	float width = textBox.mFrame.Width ();
 	float height = textBox.mFrame.Height ();
@@ -61,7 +62,8 @@ void MOAITextDesigner::BuildLayout ( MOAITextBox& textBox ) {
 		if ( MOAIFont::IsControl ( c )) {
 		
 			if ( c == '\n' ) {
-			
+				
+				tokenIdx = this->mIdx - 1;
 				tokenStart = textBox.mSprites.GetTop ();
 				acceptToken = true;
 				acceptLine = true;
@@ -99,34 +101,36 @@ void MOAITextDesigner::BuildLayout ( MOAITextBox& textBox ) {
 			}
 			else {
 				
-				float glyphRight = glyph->mBearingX + glyph->mWidth;
 				float glyphBottom = pen.mY + this->mDeck->mHeight;
-				
-				// handle new token
-				if ( !tokenSize ) {
-					nextIdx = this->mIdx - 1;
-					tokenStart = textBox.mSprites.GetTop ();
-
-					if (( glyphRight > width ) || ( glyphBottom > height )) {
-						more = false;
-						continue;
+				if ( glyphBottom > height ) {
+					
+					textBox.mSprites.SetTop ( lineStart );
+					textBox.mNextPageIdx = lineIdx;
+					more = false;
+				}
+				else {
+					
+					// handle new token
+					if ( !tokenSize ) {
+						tokenIdx = this->mIdx - 1;
+						tokenStart = textBox.mSprites.GetTop ();
+						tokenRect.Init ( pen.mX, pen.mY, pen.mX, glyphBottom );
+						tokenAscent = this->mDeck->mAscent;
 					}
 					
-					tokenRect.Init ( pen.mX, pen.mY, pen.mX, glyphBottom );
-					tokenAscent = this->mDeck->mAscent;
-				}
-				
-				// check for overrun
-				
-				bool overrun = ( pen.mX + glyphRight ) > width;
-				acceptLine = ( lineSize && overrun );
-				
-				if ( acceptLine || !overrun ) {
-					textBox.PushSprite ( this->mIdx - 1, *glyph, *this->mStyle, pen.mX, pen.mY );
-					tokenRect.mXMax = pen.mX + glyphRight;
-					tokenSize++;
+					// check for overrun
+					float glyphRight = pen.mX + glyph->mBearingX + glyph->mWidth;
+					bool overrun = glyphRight > width;
+					acceptLine = ( lineSize && overrun );
+					
+					if ( acceptLine || !overrun ) {
+						textBox.PushSprite ( this->mIdx - 1, *glyph, *this->mStyle, pen.mX, pen.mY );
+						tokenRect.mXMax = glyphRight;
+						tokenSize++;
+					}
 				}
 			}
+			
 			pen.mX += glyph->mAdvanceX;
 		}
 		
@@ -147,6 +151,7 @@ void MOAITextDesigner::BuildLayout ( MOAITextBox& textBox ) {
 			lineRect.Init ( 0.0f, pen.mY, 0.0f, pen.mY );
 			
 			// next line
+			lineIdx = tokenIdx;
 			lineStart = tokenStart;
 			lineSize = 0;
 			lineAscent = 0.0f;
@@ -171,8 +176,10 @@ void MOAITextDesigner::BuildLayout ( MOAITextBox& textBox ) {
 			}
 		}
 		
+		// if we overrun height during a new line, then back up to the start of the current token
 		if ( tokenRect.mYMax > height ) {
 			textBox.mSprites.SetTop ( textBox.mSprites.GetTop () - tokenSize );
+			textBox.mNextPageIdx = tokenIdx;
 			more = false;
 		}
 	}
@@ -238,8 +245,6 @@ void MOAITextDesigner::BuildLayout ( MOAITextBox& textBox ) {
 			}
 		}
 	}
-	
-	textBox.mNextPageIdx = nextIdx;
 }
 
 //----------------------------------------------------------------//
