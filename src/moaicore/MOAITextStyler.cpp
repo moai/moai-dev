@@ -27,7 +27,6 @@ void MOAITextStyler::BuildStyleMap ( MOAITextBox& textBox ) {
 
 	// throw out any existing style map
 	textBox.mStyleMap.Reset ();
-	textBox.mActiveStyles.Reset ();
 	
 	MOAITextStyle* defaultStyle = textBox.GetStyle ();
 	if ( !defaultStyle ) return;
@@ -39,10 +38,6 @@ void MOAITextStyler::BuildStyleMap ( MOAITextBox& textBox ) {
 	
 	this->mTokenBase = 0;
 	this->mTokenTop = 0;
-	
-	this->mStyleStack = ( MOAITextStyleState* )alloca ( STYLE_STACK_SIZE * sizeof ( MOAITextStyleState ));
-	this->mStyleStackTop = 0;
-	this->mCurrentStyle = 0;
 	
 	this->PushStyle ( defaultStyle );
 	this->Parse ();
@@ -194,10 +189,11 @@ void MOAITextStyler::Parse () {
 			}
 		}
 	}
+	
 	u32 totalActiveStyles = this->mActiveStyles.GetTop ();
 	for ( u32 i = 0; i < totalActiveStyles; ++i ) {
-		MOAITextStyleState& styleState = this->mActiveStyles [ i ];
-		styleState.mFont->ProcessGlyphs ();
+		MOAITextStyle* style = this->mActiveStyles [ i ];
+		style->mFont->ProcessGlyphs ();
 	}
 }
 
@@ -287,8 +283,9 @@ bool MOAITextStyler::ParseStyle () {
 				
 				this->FinishToken ();
 				
-				this->PushStyle ( this->mCurrentStyle );
-				this->mCurrentStyle->mColor = this->PackColor ( color, colorSize );
+				MOAITextStyle* style = this->mTextBox->AddAnonymousStyle ( this->mCurrentStyle );
+				style->mColor = this->PackColor ( color, colorSize );
+				this->PushStyle ( style );
 				
 				TRANSITION ( DONE );
 			}
@@ -361,46 +358,31 @@ bool MOAITextStyler::ParseStyle () {
 //----------------------------------------------------------------//
 void MOAITextStyler::PopStyle () {
 
-	if ( this->mStyleStackTop > 1 ) {
-		this->mStyleStackTop--;
-		
-		if ( this->mStyleStackTop && ( this->mStyleStackTop < STYLE_STACK_SIZE )) {
-			this->mCurrentStyle = &this->mStyleStack [ this->mStyleStackTop - 1 ];
-		}
+	if ( this->mStyleStack.GetTop () > 1 ) {
+		this->mStyleStack.Pop ();
+		this->mCurrentStyle = this->mStyleStack [ this->mStyleStack.GetTop () - 1 ];
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAITextStyler::PushStyle ( MOAITextStyleState* styleState ) {
+void MOAITextStyler::PushStyle ( MOAITextStyle* style ) {
 
-	assert ( styleState );
-
+	assert ( style );
+	
 	u32 styleID = 0;
 	u32 totalStyles = this->mActiveStyles.GetTop ();
 	for ( ; styleID < totalStyles; ++styleID ) {
-		if ( this->mActiveStyles [ styleID ].IsMatch ( *styleState )) {
+		if ( this->mActiveStyles [ styleID ] == style ) {
 			break;
 		}
 	}
 	
 	if ( styleID >= totalStyles ) {
-		this->mActiveStyles.Push ( *styleState );
+		this->mActiveStyles.Push ( style );
 	}
 
-	if ( this->mStyleStackTop < STYLE_STACK_SIZE ) {
-		MOAITextStyleState& newStyle = this->mStyleStack [ this->mStyleStackTop ];
-		
-		if ( styleState ) {
-			newStyle = *styleState;
-		}
-		else {
-			assert ( this->mCurrentStyle );
-			newStyle = *this->mCurrentStyle;
-		}
-		
-		this->mCurrentStyle = &newStyle;
-	}
-	this->mStyleStackTop++;
+	this->mStyleStack.Push ( style );
+	this->mCurrentStyle = style;
 }
 
 //----------------------------------------------------------------//

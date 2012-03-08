@@ -11,7 +11,26 @@
 
 class MOAIAnimCurve;
 class MOAIFont;
-class MOAIStyleState;
+
+//================================================================//
+// MOAITextStyleRef
+//================================================================//
+class MOAITextStyleRef {
+private:
+
+	friend class MOAITextBox;
+
+	MOAITextStyle*			mStyle;
+	MOAITextStyleState		mState;
+
+public:
+
+	//----------------------------------------------------------------//
+				MOAITextStyleRef		();
+				~MOAITextStyleRef		();
+	bool		NeedsLayout				() const;
+	void		UpdateState				();
+};
 
 //================================================================//
 // MOAITextStyleSpan
@@ -21,7 +40,7 @@ public:
 
 	int					mBase;		// base index of first utf-8 character in span
 	int					mTop;		// size of span
-	u32					mStyleID;	// style for span
+	MOAITextStyle*		mStyle;		// style for span
 };
 
 //================================================================//
@@ -34,13 +53,18 @@ private:
 	friend class MOAITextDesigner;
 	
 	MOAIGlyph*				mGlyph;
-	MOAITextStyleState*		mStyle;
-	MOAITextureBase*		mTexture; // caching this hear to avoid add'l virtual calls when drawing
+	MOAITextStyle*			mStyle;
+	MOAITextureBase*		mTexture; // caching this here to avoid add'l virtual calls when drawing
 	
 	u32			mIdx; // index in original string
 	float		mX;
 	float		mY;
 	u32			mRGBA;
+	u32			mMask;
+	
+	enum {
+		MASK_COLOR	= 0x01,
+	};
 };
 
 //================================================================//
@@ -107,14 +131,15 @@ private:
 	
 	// style set - these are the styles the texbox knows about
 	// only need to get these during text styling, so using an STLMap for now...
-	typedef STLMap < STLString, MOAITextStyle* >::iterator StyleSetIt;
-	STLMap < STLString, MOAITextStyle* > mStyleSet;
-	MOAITextStyle* mDefaultStyle;
+	typedef STLMap < STLString, MOAITextStyleRef >::iterator StyleSetIt;
+	STLMap < STLString, MOAITextStyleRef > mStyleSet;
+	
+	// anonymous styles - these are created on the fly as text is being styled
+	USLeanStack < MOAITextStyleRef, 8 > mAnonymousStyles;
 	
 	// this is the style map. it is produced by analyzing the text and creating a
 	// 'style span' for each styled token. this is the preprocessing step to
 	// actually layout out a page of text. text is laid out based on the style spans.
-	USLeanStack < MOAITextStyleState, 8 >	mActiveStyles;		// this is an array of the actual styles required for the text
 	USLeanStack < MOAITextStyleSpan, 64 >	mStyleMap;			// each span represents a stretch of 'styled' text
 	
 	// this is the text page layout. these are the action sprites and lines
@@ -124,38 +149,42 @@ private:
 	bool								mMore;
 	
 	//----------------------------------------------------------------//
-	static int		_clearCurves			( lua_State* L );
-	static int		_getLineSize			( lua_State* L );
-	static int		_getRect				( lua_State* L );
-	static int		_getStringBounds		( lua_State* L );
-	static int		_getStyle				( lua_State* L );
-	static int		_more					( lua_State* L );
-	static int		_nextPage				( lua_State* L );
-	static int		_revealAll				( lua_State* L );
-	static int		_reserveCurves			( lua_State* L );
-	static int		_setAlignment			( lua_State* L );
-	static int		_setCurve				( lua_State* L );
-	static int		_setHighlight			( lua_State* L );
-	static int		_setLineSpacing			( lua_State* L );
-	static int		_setRect				( lua_State* L );
-	static int		_setReveal				( lua_State* L );
-	static int		_setSpeed				( lua_State* L );
-	static int		_setString				( lua_State* L );
-	static int		_setStyle				( lua_State* L );
-	static int		_setYFlip				( lua_State* L );
-	static int		_spool					( lua_State* L );
+	static int			_clearCurves			( lua_State* L );
+	static int			_getLineSize			( lua_State* L );
+	static int			_getRect				( lua_State* L );
+	static int			_getStringBounds		( lua_State* L );
+	static int			_getStyle				( lua_State* L );
+	static int			_more					( lua_State* L );
+	static int			_nextPage				( lua_State* L );
+	static int			_revealAll				( lua_State* L );
+	static int			_reserveCurves			( lua_State* L );
+	static int			_setAlignment			( lua_State* L );
+	static int			_setCurve				( lua_State* L );
+	static int			_setHighlight			( lua_State* L );
+	static int			_setLineSpacing			( lua_State* L );
+	static int			_setRect				( lua_State* L );
+	static int			_setReveal				( lua_State* L );
+	static int			_setSpeed				( lua_State* L );
+	static int			_setString				( lua_State* L );
+	static int			_setStyle				( lua_State* L );
+	static int			_setYFlip				( lua_State* L );
+	static int			_spool					( lua_State* L );
 	
 	//----------------------------------------------------------------//
-	void			FindSpriteSpan			( u32 idx, u32 size, u32& spanIdx, u32& spanSize );
-	void			Layout					();
-	void			OnDepNodeUpdate			();
-	void			PushLine				( u32 start, u32 size, const USRect& rect, float ascent );
-	void			PushSprite				( u32 idx, MOAIGlyph& glyph, MOAITextStyleState& style, float x, float y );
-	void			PushStyleSpan			( int base, int top, MOAITextStyleState& styleState );
-	void			ResetLayout				();
-	void			ResetStyleMap			();
-	void			ResetStyleSet			();
-	void			ScheduleLayout			();
+	MOAITextStyle*		AddAnonymousStyle		( MOAITextStyle* source );
+	bool				CheckStylesChanged		();
+	void				FindSpriteSpan			( u32 idx, u32 size, u32& spanIdx, u32& spanSize );
+	void				Layout					();
+	void				OnDepNodeUpdate			();
+	void				PushLine				( u32 start, u32 size, const USRect& rect, float ascent );
+	void				PushSprite				( u32 idx, MOAIGlyph& glyph, MOAITextStyle& style, float x, float y );
+	void				PushStyleSpan			( int base, int top, MOAITextStyle& style );
+	void				ReleaseStyle			( MOAITextStyle* style );
+	void				ResetLayout				();
+	void				ResetStyleMap			();
+	void				ResetStyleSet			();
+	void				RetainStyle				( MOAITextStyle* style );
+	void				ScheduleLayout			();
 	
 public:
 

@@ -5,8 +5,8 @@
 #define	MOAITEXTDESIGNER_H
 
 class MOAITextBox;
+class MOAITextStyle;
 class MOAITextStyleSpan;
-class MOAITextStyleState;
 
 //================================================================//
 // MOAITextDesigner
@@ -15,7 +15,7 @@ class MOAITextDesigner {
 private:
 	
 	MOAITextStyleSpan*		mStyleSpan;
-	MOAITextStyleState*		mStyleState;
+	MOAITextStyle*			mStyle;
 	u32						mSpanIdx;
 	int						mIdx;
 	

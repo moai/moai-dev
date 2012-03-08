@@ -14,28 +14,30 @@ class MOAIFont;
 class MOAITextStyleState {
 protected:
 
-	friend class MOAITextBox;
-	friend class MOAITextDesigner;
-	friend class MOAITextStyler;
-
 	MOAIFont*	mFont;
 	float		mSize;
 	u32			mColor;
 
 public:
-	
+
 	//----------------------------------------------------------------//
-	void		AffirmGlyph				( u32 c );
-	bool		IsMatch					( const MOAITextStyleState& compare ) const;
+				MOAITextStyleState		();
+				~MOAITextStyleState		();
+	bool		NeedsLayout				( const MOAITextStyleState& compare ) const;
+
 };
 
 //================================================================//
 // MOAITextStyle
 //================================================================//
 class MOAITextStyle :
-	public MOAILuaObject,
+	public MOAINode,
 	public MOAITextStyleState {
 private:
+
+	friend class MOAITextBox;
+	friend class MOAITextDesigner;
+	friend class MOAITextStyler;
 
 	//----------------------------------------------------------------//
 	static int		_setColor				( lua_State* L );
@@ -49,10 +51,12 @@ public:
 	DECL_LUA_FACTORY ( MOAITextStyle )
 	
 	GET ( MOAIFont*, Font, mFont );
-	GET_SET ( float, Size, mSize );
+	GET ( float, Size, mSize );
 	GET_SET ( u32, Color, mColor );
 	
 	//----------------------------------------------------------------//
+	void			AffirmGlyph				( u32 c );
+	void			Init					( MOAITextStyle& style );
 					MOAITextStyle			();
 					~MOAITextStyle			();
 	void			RegisterLuaClass		( MOAILuaState& state );
@@ -60,6 +64,7 @@ public:
 	void			SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
 	void			SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
 	void			SetFont					( MOAIFont* font );
+	void			SetSize					( float size );
 };
 
 #endif
