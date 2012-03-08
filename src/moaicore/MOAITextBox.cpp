@@ -61,22 +61,6 @@ void MOAITextStyleRef::UpdateState () {
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	clearCurves
-	@text	Removes all of the animation curves currently bound to this text object.
-
-	@in		MOAITextBox self
-	@out	nil
-*/
-int MOAITextBox::_clearCurves ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITextBox, "U" )
-
-	self->ClearCurves ();
-	self->ScheduleLayout ();
-
-	return 0;
-}
-
-//----------------------------------------------------------------//
 /**	@name	getLineSize
 	@text	Returns the size of a line (in pixels).
 
@@ -243,24 +227,36 @@ int MOAITextBox::_setAlignment ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	setCurve
-	@text	Binds an animation curve to the text, where the Y value of the curve indicates the text offset.
+	@text	Binds an animation curve to the text, where the Y value of the curve indicates the text offset, or clears the curves.
 
-	@in		MOAITextBox self
-	@in		number curveID				The ID of the curve within this text object.
-	@in		MOAIAnimCurve curve			The MOAIAnimCurve to bind to.
-	@out	nil
+	@overload
+
+		@in		MOAITextBox self
+		@in		number curveID				The ID of the curve within this text object.
+		@in		MOAIAnimCurve curve			The MOAIAnimCurve to bind to.
+		@out	nil
+	
+	@overload
+		
+		@in		MOAITextBox self
 */
 int MOAITextBox::_setCurve ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITextBox, "UNU" )
+	MOAI_LUA_SETUP ( MOAITextBox, "U" )
 	
-	u32 index = state.GetValue < u32 >( 2, 1 ) - 1;
+	if ( state.GetTop () > 1 ) {
+
+		u32 index = state.GetValue < u32 >( 2, 1 ) - 1;
 	
-	MOAIAnimCurve* curve = state.GetLuaObject < MOAIAnimCurve >( 3 );
-	if ( !curve ) return 0;
+		MOAIAnimCurve* curve = state.GetLuaObject < MOAIAnimCurve >( 3 );
+		if ( !curve ) return 0;
 
-	self->SetCurve ( index, curve );
-	self->ScheduleLayout ();
-
+		self->SetCurve ( index, curve );
+		self->ScheduleLayout ();
+	}
+	else {
+		self->ClearCurves ();
+		self->ScheduleLayout ();
+	}
 	return 0;
 }
 
@@ -911,7 +907,6 @@ void MOAITextBox::RegisterLuaFuncs ( MOAILuaState& state ) {
 	MOAIAction::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
-		{ "clearCurves",			_clearCurves },
 		{ "getLineSize",			_getLineSize },
 		{ "getRect",				_getRect },
 		{ "getStringBounds",		_getStringBounds },

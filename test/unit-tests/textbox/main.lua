@@ -94,7 +94,7 @@ function curveTests ()
 
 	text = 'The curve has been cleared. The curve has been cleared. The curve has been cleared.'
 	textbox:setString ( text )
-	textbox:clearCurves ()
+	textbox:setCurve ()
 	
 	continue = false
 	repeat coroutine.yield () until continue
@@ -286,15 +286,51 @@ function lineSpacingTests ()
 	textbox:setString ( text )
 	textbox:setFont ( font )
 	textbox:setTextSize ( 12, 163 )
-	textbox:setRect ( -150, 70, 150, 230 )
+	textbox:setRect ( -150, -230, 150, 230 )
 	textbox:setYFlip ( true )
 	layer:insertProp ( textbox )
 	
+	textbox:setLineSpacing ( 0 )
+	
+	continue = false
+	repeat coroutine.yield () until continue
+	textbox:setLineSpacing ( -10 )
+	
+	continue = false
+	repeat coroutine.yield () until continue
 	textbox:setLineSpacing ( 2 )
 	
 	continue = false
 	repeat coroutine.yield () until continue
-	textbox:setLineSpacing ( 1 )
+	textbox:setLineSpacing ( 3 )
+	
+	continue = false
+	repeat coroutine.yield () until continue
+	textbox:setLineSpacing ( 4 )
+	
+	continue = false
+	repeat coroutine.yield () until continue
+	textbox:setLineSpacing ( 5 )
+	
+	continue = false
+	repeat coroutine.yield () until continue
+	textbox:setLineSpacing ( 6 )
+	
+	continue = false
+	repeat coroutine.yield () until continue
+	textbox:setLineSpacing ( 7 )
+	
+	continue = false
+	repeat coroutine.yield () until continue
+	textbox:setLineSpacing ( 8 )
+	
+	continue = false
+	repeat coroutine.yield () until continue
+	textbox:setLineSpacing ( 9 )
+	
+	continue = false
+	repeat coroutine.yield () until continue
+	textbox:setLineSpacing ( 10 )
 	
 	continue = false
 	repeat coroutine.yield () until continue
@@ -354,6 +390,7 @@ end
 function setStyleTests ()
 	running = true
 	
+	-- multiple styles
 	text = 'This is <green>some test</> text to <yellow><blue>print out while</> testing different styles.</> This is <green>some test</> text to <yellow><blue>print out while</> testing different styles.</> This is <green>some test</> text to <yellow><blue>print out while</> testing different styles.</>'
 	
 	local textbox = MOAITextBox.new ()
@@ -390,6 +427,7 @@ function setStyleTests ()
 	continue = false
 	repeat coroutine.yield () until continue
 	
+	-- styles with curves
 	curve = MOAIAnimCurve.new ()
 	curve:reserveKeys ( 3 )
 	curve:setKey ( 1, 0, 0 )
@@ -401,8 +439,9 @@ function setStyleTests ()
 	
 	continue = false
 	repeat coroutine.yield () until continue
-	textbox:clearCurves ()
+	textbox:setCurve ()
 	
+	-- styles with pages
 	textbox:nextPage ()
 	
 	continue = false
@@ -410,6 +449,7 @@ function setStyleTests ()
 	textbox:nextPage ()
 	textbox:setReveal ( 0 )
 	
+	-- styles with alignment
 	text = 'This is <green>some test</> text to <yellow><blue>print out while</> testing different styles.</>'
 	local textbox1 = MOAITextBox.new ()
 	textbox1:setString ( text )
@@ -455,17 +495,26 @@ function setStyleTests ()
 	textbox2:setReveal ( 0 )
 	textbox3:setReveal ( 0 )
 	
+	-- styles with setReveal
 	textbox:setReveal ( 25 )
 	
 	continue = false
 	repeat coroutine.yield () until continue
 	textbox:revealAll ()
 	
+	-- styles with a highlight
 	textbox:setHighlight ( 25, 20, 1, 1, 1, 1 )
 	
 	continue = false
 	repeat coroutine.yield () until continue
 	textbox:setHighlight ( 25, 20 )
+	
+	-- styles with line spacing
+	textbox:setLineSpacing ( 10 )
+	
+	continue = false
+	repeat coroutine.yield () until continue
+	textbox:setLineSpacing ( 0 )
 	textbox:setReveal ( 0 )
 	textbox1:setAlignment ( MOAITextBox.LEFT_JUSTIFY )
 	textbox2:setAlignment ( MOAITextBox.LEFT_JUSTIFY )
@@ -488,6 +537,7 @@ function setStyleTests ()
 	textbox3:setReveal ( 0 )
 	textbox:revealAll ()
 	
+	-- styles with yflip
 	textbox:setYFlip ( false )
 	
 	continue = false
@@ -533,43 +583,7 @@ end
 function longTextTests ()
 	running = true
 	
-	-- text = '1<red>Lorem ipsum dolor sit amet,</> consectetur adipiscing elit. <green>Pellentesque id\
-	-- <red>2magna adipiscing</> augue mollis fringilla.</> Fusce mauris <yellow>justo, scelerisque sit</>\
-	-- 3amet condimentum at, <blue>accumsan in velit. Proin <yellow>suscipit, mauris <green>nec volutpat\
-	-- 4<blue>congue, orci sapien</> posuere arcu,</></> vitae</> tempor massa neque <green>nec metus.\
-	-- 5Lorem ipsum</> dolor sit<blue></><green> amet, consectetur</> adipi<green>scing elit.<blue>\
-	-- 6Etiam</> tristique,</> odio <red>vel adipiscing facilisis, magna neque scelerisque metus, et\
-	-- 7volutpat turpis erat in orci. <blue>Duis suscipit eleifend <red>posuere. Vivamus auctor cursus\
-	-- 8mi, eget dapibus risus fringilla eget. Donec bibendum urna vitae orci</></></> adipiscing\
-	-- 9facilisis. Nam ullamcorper ultrices tempor. Vivamus a tortor lectus, in euismod metus. Etiam\
-	-- 10cursus molestie arcu nec fermentum. Nulla porttitor dui eget neque dignissim tristique. Donec\
-	-- 11elit quam, lobortis vitae fringilla ut, placerat et leo. Phasellus iaculis commodo ante quis\
-	-- 12condimentum. Vestibulum at neque a nibh fringilla semper. Sed diam dolor, convallis a tempus\
-	-- 13in, fringilla id lacus. Donec bibendum, erat semper consequat cursus, nibh neque tempor quam,\
-	-- 14nec pellentesque justo ligula eget nibh. Vestibulum adipiscing, enim vitae porttitor semper,\
-	-- 15nisi est vestibulum elit, non varius tortor dui at quam. Suspendisse tincidunt, velit at mollis\
-	-- 16vehicula, nunc est vulputate enim, condimentum vestibulum tortor tortor sed nulla. Nunc ac lectus\
-	-- 17urna. Vivamus condimentum nisi volutpat nulla vestibulum at condimentum ligula viverra. Nunc nec\
-	-- 18adipiscing purus.'
-	
-	text = '1<red>Lorem ipsum dolor sit amet,</> consectetur adipiscing elit. <green>Pellentesque id\
-	<red>2magna adipiscing</> augue mollis fringilla.</> Fusce mauris <yellow>justo, scelerisque sit</>\
-	3amet condimentum at, <blue>accumsan in velit. Proin <yellow>suscipit, mauris <green>nec volutpat\
-	4<blue>congue, orci sapien</> posuere arcu,</></> vitae</> tempor massa neque <green>nec metus.\
-	5Lorem ipsum</> dolor sit<blue></><green> amet, consectetur</> adipi<green>scing elit.<blue>\
-	6Etiam</> tristique,</> odio <red>vel adipiscing facilisis, magna neque scelerisque metus, et\
-	7volutpat turpis erat in orci. <blue>Duis suscipit eleifend <red>posuere. Vivamus auctor cursus\
-	8mi, eget dapibus risus fringilla eget. Donec bibendum urna vitae orci</></></> adipiscing\
-	9facilisis. Nam ullamcorper ultrices tempor. Vivamus a tortor lectus, in euismod metus. Etiam\
-	10cursus molestie arcu nec fermentum. Nulla porttitor dui eget neque dignissim tristique. Donec\
-	11elit quam, lobortis vitae fringilla ut, placerat et leo. Phasellus iaculis commodo ante quis\
-	12condimentum. Vestibulum at neque a nibh fringilla semper. Sed diam dolor, convallis a tempus\
-	13in, fringilla id lacus. Donec bibendum, erat semper consequat cursus, nibh neque tempor quam,\
-	14nec pellentesque justo ligula eget nibh. Vestibulum adipiscing, enim vitae porttitor semper,\
-	15nisi est vestibulum elit, non varius tortor dui at quam. Suspendisse tincidunt, velit at mollis\
-	16vehicula, nunc est vulputate enim, condimentum vestibulum tortor tortor sed nulla. Nunc ac lectus\
-	17urna. Vivamus condimentum nisi volutpat nulla vestibulum at condimentum ligula viverra. Nunc nec\
-	18adipiscing purus.'
+	text = '1<red>Lorem ipsum dolor sit amet,</> consectetur adipiscing elit. <green>Pellentesque id<red> magna adipiscing</> augue mollis fringilla.</> Fusce mauris <yellow>justo, scelerisque sit</> amet condimentum at, <blue>accumsan in velit. Proin <yellow>suscipit, mauris <green>nec volutpat <blue>congue, orci sapien</> posuere arcu,</></> vitae</> tempor 2massa neque <green>nec metus. Lorem ipsum</> dolor sit<blue></><green> amet, consectetur</> adipi<green>scing elit.<blue> Etiam</> tristique,</> odio <red>vel adipiscing facilisis, magna neque scelerisque metus, et volutpat turpis erat in orci. <blue>Duis suscipit eleifend <red>posuere. Vivamus auctor cursus mi, eget dapibus risus fringilla eget. Donec bibendum urna 3vitae orci</></></> adipiscing facilisis. Nam ullamcorper ultrices tempor. Vivamus a tortor lectus, in euismod metus. Etiam cursus molestie arcu nec fermentum. Nulla porttitor dui eget neque dignissim tristique. Donec elit quam, lobortis vitae fringilla ut, placerat et leo. Phasellus iaculis commodo ante quis condimentum. Vestibulum at neque a 4nibh fringilla semper. Sed diam dolor, convallis a tempus in, fringilla id lacus. Donec bibendum, erat semper consequat cursus, nibh neque tempor quam, nec pellentesque justo ligula eget nibh. Vestibulum adipiscing, enim vitae porttitor semper, nisi est vestibulum elit, non varius tortor dui at quam. Suspendisse tincidunt, velit at mollis vehicula, nunc est vulputate enim, 5condimentum vestibulum tortor tortor sed nulla. Nunc ac lectus urna. Vivamus condimentum nisi volutpat nulla vestibulum at condimentum ligula viverra. Nunc nec adipiscing purus.'
 	
 	local textbox = MOAITextBox.new ()
 	textbox:setString ( text )
@@ -608,11 +622,6 @@ function longTextTests ()
 	style4:setFont ( font1 )
 	style4:setSize ( 12 )
 	textbox:setStyle ( 'yellow', style4 )
-	
-	continue = false
-	repeat coroutine.yield () until continue
-	
-	textbox:nextPage ()
 	
 	continue = false
 	repeat coroutine.yield () until continue
@@ -683,7 +692,7 @@ function onKeyboardEvent ( key, down )
 end
 
 function homeScreen ()
-	text = 'Home\n\n1 Curve Tests\n2 Page Tests\n3 Alignment Tests\n4 Reveal Tests\n5 Highlight Tests\n6 Line Spacing Tests\n7 Spool Speed Tests\n8 Set Style Tests\n9 Set YFlip Tests'
+	text = 'Home\n\n1 Curve Tests\n2 Page Tests\n3 Alignment Tests\n4 Reveal Tests\n5 Highlight Tests\n6 Line Spacing Tests\n7 Spool Speed Tests\n8 Set Style Tests\n9 Set YFlip Tests\n0 Long Text'
 	
 	local textbox = MOAITextBox.new ()
 	textbox:setString ( text )
