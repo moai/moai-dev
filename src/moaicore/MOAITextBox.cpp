@@ -61,20 +61,17 @@ void MOAITextStyleRef::UpdateState () {
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	getLineSize
-	@text	Returns the size of a line (in pixels).
+/**	@name	getLineSpacing
+	@text	Returns the spacing between lines (in pixels).
 
 	@in		MOAITextBox self
-	@out	number lineScale		The size of the line in pixels.
+	@out	number lineScale		The size of the spacing in pixels.
 */
-int MOAITextBox::_getLineSize ( lua_State* L ) {
+int MOAITextBox::_getLineSpacing ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextBox, "U" )
 	
-	//if ( self->mFont ) {
-	//	lua_pushnumber ( state, self->mPoints * self->mFont->GetLineSpacing ());
-	//	return 1;
-	//}
-	return 0;
+	lua_pushnumber ( state, self->mLineSpacing );
+	return 1;
 }
 
 //----------------------------------------------------------------//
@@ -907,7 +904,7 @@ void MOAITextBox::RegisterLuaFuncs ( MOAILuaState& state ) {
 	MOAIAction::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
-		{ "getLineSize",			_getLineSize },
+		{ "getLineSpacing",			_getLineSpacing },
 		{ "getRect",				_getRect },
 		{ "getStringBounds",		_getStringBounds },
 		{ "getStyle",				_getStyle },
