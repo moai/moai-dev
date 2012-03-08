@@ -233,6 +233,13 @@ bool MOAITextStyler::ParseStyle () {
 				
 				c = this->GetChar ();
 
+				if ( c == '<' ) {
+					this->mIdx = startIdx + 1;
+					this->FinishToken ();
+					startIdx = this->mIdx;
+					TRANSITION ( DONE );
+				}
+				
 				TRANSITION_ON_MATCH ( '/', STYLE_POP_START );
 				TRANSITION_ON_MATCH ( '>', STYLE_POP_FINISH );
 				TRANSITION_ON_MATCH ( 'c', COLOR_START );
