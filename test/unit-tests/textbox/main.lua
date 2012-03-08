@@ -94,7 +94,7 @@ function curveTests ()
 
 	text = 'The curve has been cleared. The curve has been cleared. The curve has been cleared.'
 	textbox:setString ( text )
-	textbox:clearCurves ()
+	textbox:setCurve ()
 	
 	continue = false
 	repeat coroutine.yield () until continue
@@ -286,15 +286,51 @@ function lineSpacingTests ()
 	textbox:setString ( text )
 	textbox:setFont ( font )
 	textbox:setTextSize ( 12, 163 )
-	textbox:setRect ( -150, 70, 150, 230 )
+	textbox:setRect ( -150, -230, 150, 230 )
 	textbox:setYFlip ( true )
 	layer:insertProp ( textbox )
 	
+	textbox:setLineSpacing ( 0 )
+	
+	continue = false
+	repeat coroutine.yield () until continue
+	textbox:setLineSpacing ( -10 )
+	
+	continue = false
+	repeat coroutine.yield () until continue
 	textbox:setLineSpacing ( 2 )
 	
 	continue = false
 	repeat coroutine.yield () until continue
-	textbox:setLineSpacing ( 1 )
+	textbox:setLineSpacing ( 3 )
+	
+	continue = false
+	repeat coroutine.yield () until continue
+	textbox:setLineSpacing ( 4 )
+	
+	continue = false
+	repeat coroutine.yield () until continue
+	textbox:setLineSpacing ( 5 )
+	
+	continue = false
+	repeat coroutine.yield () until continue
+	textbox:setLineSpacing ( 6 )
+	
+	continue = false
+	repeat coroutine.yield () until continue
+	textbox:setLineSpacing ( 7 )
+	
+	continue = false
+	repeat coroutine.yield () until continue
+	textbox:setLineSpacing ( 8 )
+	
+	continue = false
+	repeat coroutine.yield () until continue
+	textbox:setLineSpacing ( 9 )
+	
+	continue = false
+	repeat coroutine.yield () until continue
+	textbox:setLineSpacing ( 10 )
 	
 	continue = false
 	repeat coroutine.yield () until continue
@@ -354,6 +390,7 @@ end
 function setStyleTests ()
 	running = true
 	
+	-- multiple styles
 	text = 'This is <green>some test</> text to <yellow><blue>print out while</> testing different styles.</> This is <green>some test</> text to <yellow><blue>print out while</> testing different styles.</> This is <green>some test</> text to <yellow><blue>print out while</> testing different styles.</>'
 	
 	local textbox = MOAITextBox.new ()
@@ -390,6 +427,7 @@ function setStyleTests ()
 	continue = false
 	repeat coroutine.yield () until continue
 	
+	-- styles with curves
 	curve = MOAIAnimCurve.new ()
 	curve:reserveKeys ( 3 )
 	curve:setKey ( 1, 0, 0 )
@@ -401,8 +439,9 @@ function setStyleTests ()
 	
 	continue = false
 	repeat coroutine.yield () until continue
-	textbox:clearCurves ()
+	textbox:setCurve ()
 	
+	-- styles with pages
 	textbox:nextPage ()
 	
 	continue = false
@@ -410,6 +449,7 @@ function setStyleTests ()
 	textbox:nextPage ()
 	textbox:setReveal ( 0 )
 	
+	-- styles with alignment
 	text = 'This is <green>some test</> text to <yellow><blue>print out while</> testing different styles.</>'
 	local textbox1 = MOAITextBox.new ()
 	textbox1:setString ( text )
@@ -455,17 +495,26 @@ function setStyleTests ()
 	textbox2:setReveal ( 0 )
 	textbox3:setReveal ( 0 )
 	
+	-- styles with setReveal
 	textbox:setReveal ( 25 )
 	
 	continue = false
 	repeat coroutine.yield () until continue
 	textbox:revealAll ()
 	
+	-- styles with a highlight
 	textbox:setHighlight ( 25, 20, 1, 1, 1, 1 )
 	
 	continue = false
 	repeat coroutine.yield () until continue
 	textbox:setHighlight ( 25, 20 )
+	
+	-- styles with line spacing
+	textbox:setLineSpacing ( 10 )
+	
+	continue = false
+	repeat coroutine.yield () until continue
+	textbox:setLineSpacing ( 0 )
 	textbox:setReveal ( 0 )
 	textbox1:setAlignment ( MOAITextBox.LEFT_JUSTIFY )
 	textbox2:setAlignment ( MOAITextBox.LEFT_JUSTIFY )
@@ -488,6 +537,7 @@ function setStyleTests ()
 	textbox3:setReveal ( 0 )
 	textbox:revealAll ()
 	
+	-- styles with yflip
 	textbox:setYFlip ( false )
 	
 	continue = false
