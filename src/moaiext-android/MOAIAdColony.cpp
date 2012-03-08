@@ -137,6 +137,21 @@ int MOAIAdColony::_playVideo ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+int MOAIAdColony::_setListener ( lua_State* L ) {
+	
+	MOAILuaState state ( L );
+	
+	u32 idx = state.GetValue < u32 >( 1, TOTAL );
+
+	if ( idx < TOTAL ) {
+		
+		MOAIAdColony::Get ().mListeners [ idx ].SetStrongRef ( state, 2 );
+	}
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 int MOAIAdColony::_videoReadyForZone ( lua_State *L ) {
 	
 	MOAILuaState state ( L );
@@ -175,6 +190,18 @@ int MOAIAdColony::_videoReadyForZone ( lua_State *L ) {
 //================================================================//
 // MOAIAdColony
 //================================================================//
+//----------------------------------------------------------------//
+void MOAIAdColony::FireVideoCompleteListenerEvent () {	
+	
+	MOAILuaRef& callback = this->mListeners [ VIDEO_ENDED_IN_ZONE ];
+	
+	if ( callback ) {
+		
+		MOAILuaStateHandle state = callback.GetSelf ();
+		
+		state.DebugCall ( 0, 0 );
+	}
+}
 
 //----------------------------------------------------------------//
 MOAIAdColony::MOAIAdColony () {
@@ -190,9 +217,12 @@ MOAIAdColony::~MOAIAdColony () {
 //----------------------------------------------------------------//
 void MOAIAdColony::RegisterLuaClass ( MOAILuaState& state ) {
     
+	state.SetField ( -1, "VIDEO_ENDED_IN_ZONE", ( u32 )VIDEO_ENDED_IN_ZONE );
+	
 	luaL_Reg regTable [] = {
 		{ "init",				_init },
 		{ "playVideo",			_playVideo },
+		{ "setListener",		_setListener },
 		{ "videoReadyForZone",	_videoReadyForZone },
 		{ NULL, NULL }	
 	};
@@ -200,4 +230,13 @@ void MOAIAdColony::RegisterLuaClass ( MOAILuaState& state ) {
 	luaL_register ( state, 0, regTable );
 }
 
+//================================================================//
+// Tapjoy JNI methods
+//================================================================//
+
+//----------------------------------------------------------------//
+extern "C" void Java_com_ziplinegames_moai_MoaiAdColony_AKUNotifyAdColonyVideoComplete ( JNIEnv* env, jclass obj ) {
+
+	MOAIAdColony::Get ().FireVideoCompleteListenerEvent ();
+}
 #endif
