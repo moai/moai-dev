@@ -42,7 +42,7 @@ public class MoaiFacebook {
 	private static Facebook	sFacebook = null;
 
 	protected static native void	AKUNotifyFacebookLoginComplete	( int statusCode );
-	protected static native void	AKUNotifyFacebookPostComplete	( int statusCode );
+	protected static native void	AKUNotifyFacebookDialogComplete	( int statusCode );
 
 	//----------------------------------------------------------------//
 	public static void onCreate ( Activity activity ) {
@@ -55,7 +55,7 @@ public class MoaiFacebook {
 	//----------------------------------------------------------------//
 	public static void onActivityResult ( int requestCode, int resultCode, Intent data ) {
 	
-//		sFacebook.authorizeCallback ( requestCode, resultCode, data );
+		sFacebook.authorizeCallback ( requestCode, resultCode, data );
 	}
 
 	//================================================================//
@@ -66,6 +66,19 @@ public class MoaiFacebook {
 	public static String getToken () {
 
 		return sFacebook.getAccessToken (); 
+	}
+	
+	//----------------------------------------------------------------//	
+	public static void init ( String appId ) {
+		
+		sFacebook = new Facebook ( appId ); 
+		sFacebook.extendAccessTokenIfNeeded ( sActivity, null );
+	}
+
+	//----------------------------------------------------------------//	
+	public static boolean isSessionValid () {
+
+		return sFacebook.isSessionValid ();
 	}
 	
 	//----------------------------------------------------------------//	
@@ -112,44 +125,76 @@ public class MoaiFacebook {
 	}
 	
 	//----------------------------------------------------------------//	
-	public static void init ( String appId ) {
-		
-		sFacebook = new Facebook ( appId ); 
-	}
+	public static void postToFeed ( String link, String picture, String name, String caption, String description, String message ) {
 
-	//----------------------------------------------------------------//	
-	public static boolean isSessionValid () {
-
-		return sFacebook.isSessionValid ();
-	}
-	
-	//----------------------------------------------------------------//	
-	public static void postToFeed () {
+		Bundle parameters = new Bundle ();
 		
-		sFacebook.dialog ( sActivity, "feed", new DialogListener () {
+		if ( link != null )	parameters.putString ( "link", link );
+		if ( picture != null )	parameters.putString ( "picture", picture );
+		if ( name != null )	parameters.putString ( "name", name );
+		if ( caption != null )	parameters.putString ( "caption", caption );
+		if ( description != null )	parameters.putString ( "description", description );
+		if ( message != null )	parameters.putString ( "message", message );
+		
+		sFacebook.dialog ( sActivity, "feed", parameters, new DialogListener () {
 			
 	        @Override
 	        public void onComplete ( Bundle values ) {
 		
-				AKUNotifyFacebookPostComplete ( DialogResultCode.RESULT_SUCCESS.ordinal() );
+				AKUNotifyFacebookDialogComplete ( DialogResultCode.RESULT_SUCCESS.ordinal() );
 	        }
 	
 	        @Override
 	        public void onFacebookError ( FacebookError error ) {
 		
-				AKUNotifyFacebookPostComplete ( DialogResultCode.RESULT_ERROR.ordinal() );
+				AKUNotifyFacebookDialogComplete ( DialogResultCode.RESULT_ERROR.ordinal() );
 			}
 	
 	        @Override
 	        public void onError ( DialogError e ) {
 		
-				AKUNotifyFacebookPostComplete ( DialogResultCode.RESULT_ERROR.ordinal() );
+				AKUNotifyFacebookDialogComplete ( DialogResultCode.RESULT_ERROR.ordinal() );
 			}
 	
 	        @Override
 	        public void onCancel () {
 		
-				AKUNotifyFacebookPostComplete ( DialogResultCode.RESULT_CANCEL.ordinal() );
+				AKUNotifyFacebookDialogComplete ( DialogResultCode.RESULT_CANCEL.ordinal() );
+			}
+		});
+	}
+	
+	//----------------------------------------------------------------//	
+	public static void sendRequest ( String message ) {
+
+		Bundle parameters = new Bundle ();
+		
+		if ( message != null )	parameters.putString ( "message", message );
+		
+		sFacebook.dialog ( sActivity, "apprequests", parameters, new DialogListener () {
+			
+	        @Override
+	        public void onComplete ( Bundle values ) {
+		
+				AKUNotifyFacebookDialogComplete ( DialogResultCode.RESULT_SUCCESS.ordinal() );
+	        }
+	
+	        @Override
+	        public void onFacebookError ( FacebookError error ) {
+		
+				AKUNotifyFacebookDialogComplete ( DialogResultCode.RESULT_ERROR.ordinal() );
+			}
+	
+	        @Override
+	        public void onError ( DialogError e ) {
+		
+				AKUNotifyFacebookDialogComplete ( DialogResultCode.RESULT_ERROR.ordinal() );
+			}
+	
+	        @Override
+	        public void onCancel () {
+		
+				AKUNotifyFacebookDialogComplete ( DialogResultCode.RESULT_CANCEL.ordinal() );
 			}
 		});
 	}

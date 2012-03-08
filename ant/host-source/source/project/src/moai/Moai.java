@@ -44,6 +44,10 @@ public class Moai {
 	//----------------------------------------------------------------//
 	public static void onActivityResult ( int requestCode, int resultCode, Intent data ) {
 	
+		for ( Class theClass : sAvailableClasses ) {
+
+			executeMethod ( theClass, null, "onActivityResult", new Class [] { java.lang.Integer.TYPE, java.lang.Integer.TYPE, Intent.class }, new Object [] { new Integer ( requestCode ), new Integer ( resultCode ), data });
+		}	
 	}
 
 	//----------------------------------------------------------------//
@@ -130,7 +134,7 @@ public class Moai {
 
 				result = theMethod.invoke ( theInstance, parameterValues );
 			} catch ( Throwable e ) {
-
+				
 			}			
 		}
 		

@@ -42,7 +42,7 @@ int MOAIAdColony::_init ( lua_State* L ) {
 	
 	JNI_GET_JSTRING ( identifier, jidentifier );
 		
-	jobjectArray jzones;
+	jobjectArray jzones = NULL;
 	
 	if ( state.IsType ( 2, LUA_TTABLE )) {
 	
@@ -77,6 +77,11 @@ int MOAIAdColony::_init ( lua_State* L ) {
 				break;
 			}	
 		}
+	}
+	
+	if ( jzones == NULL ) {
+		
+		jzones = env->NewObjectArray ( 0, env->FindClass( "java/lang/String" ), 0 );
 	}
 	
 	jclass adcolony = env->FindClass ( "com/ziplinegames/moai/MoaiAdColony" );

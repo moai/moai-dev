@@ -44,7 +44,7 @@ int MOAIFacebook::_getToken ( lua_State* L ) {
 		USLog::Print ( "MOAIFacebook: Unable to find java class %s", "com/ziplinegames/moai/MoaiFacebook" );
     } else {
 	
-    	jmethodID getToken = env->GetStaticMethodID ( facebook, "getToken", "(V)Ljava/lang/String;" );
+    	jmethodID getToken = env->GetStaticMethodID ( facebook, "getToken", "()Ljava/lang/String;" );
    		if ( getToken == NULL ) {
 	
 			USLog::Print ( "MOAIFacebook: Unable to find static java method %s", "getToken" );
@@ -104,7 +104,7 @@ int MOAIFacebook::_login ( lua_State *L ) {
 	
 	JNI_GET_ENV ( jvm, env );
 	
-	jobjectArray jpermissions;
+	jobjectArray jpermissions = NULL;
 	
 	if ( state.IsType ( 1, LUA_TTABLE )) {
 	
@@ -139,6 +139,11 @@ int MOAIFacebook::_login ( lua_State *L ) {
 				break;
 			}	
 		}
+	}
+	
+	if ( jpermissions == NULL ) {
+		
+		jpermissions = env->NewObjectArray ( 0, env->FindClass( "java/lang/String" ), 0 );
 	}
 	
 	jclass facebook = env->FindClass ( "com/ziplinegames/moai/MoaiFacebook" );
@@ -190,8 +195,22 @@ int MOAIFacebook::_logout ( lua_State *L ) {
 int MOAIFacebook::_postToFeed ( lua_State* L ) {
 
 	MOAILuaState state ( L );
-		
+	
+	cc8* link = lua_tostring ( state, 1 );
+	cc8* picture = lua_tostring ( state, 2 );
+	cc8* name = lua_tostring ( state, 3 );
+	cc8* caption = lua_tostring ( state, 4 );
+	cc8* description = lua_tostring ( state, 5 );
+	cc8* message = lua_tostring ( state, 6 );
+	
 	JNI_GET_ENV ( jvm, env );
+	
+	JNI_GET_JSTRING ( link, jlink );
+	JNI_GET_JSTRING ( picture, jpicture );
+	JNI_GET_JSTRING ( name, jname );
+	JNI_GET_JSTRING ( caption, jcaption );
+	JNI_GET_JSTRING ( description, jdescription );
+	JNI_GET_JSTRING ( message, jmessage );
 	
 	jclass facebook = env->FindClass ( "com/ziplinegames/moai/MoaiFacebook" );
     if ( facebook == NULL ) {
@@ -199,16 +218,46 @@ int MOAIFacebook::_postToFeed ( lua_State* L ) {
 		USLog::Print ( "MOAIFacebook: Unable to find java class %s", "com/ziplinegames/moai/MoaiFacebook" );
     } else {
 	
-    	jmethodID postToFeed = env->GetStaticMethodID ( facebook, "postToFeed", "()V" );
+    	jmethodID postToFeed = env->GetStaticMethodID ( facebook, "postToFeed", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V" );
    		if ( postToFeed == NULL ) {
 	
 			USLog::Print ( "MOAIFacebook: Unable to find static java method %s", "postToFeed" );
 		} else {
 	
-			env->CallStaticVoidMethod ( facebook, postToFeed );	
+			env->CallStaticVoidMethod ( facebook, postToFeed, jlink, jpicture, jname, jcaption, jdescription, jmessage );	
 		}
 	}
 		
+	return 0;
+}
+
+//----------------------------------------------------------------//
+int MOAIFacebook::_sendRequest ( lua_State* L ) {
+	
+	MOAILuaState state ( L );
+	
+	cc8* message = lua_tostring ( state, 1 );
+	
+	JNI_GET_ENV ( jvm, env );
+	
+	JNI_GET_JSTRING ( message, jmessage );
+	
+	jclass facebook = env->FindClass ( "com/ziplinegames/moai/MoaiFacebook" );
+    if ( facebook == NULL ) {
+	
+		USLog::Print ( "MOAIFacebook: Unable to find java class %s", "com/ziplinegames/moai/MoaiFacebook" );
+    } else {
+	
+    	jmethodID sendRequest = env->GetStaticMethodID ( facebook, "sendRequest", "(Ljava/lang/String;)V" );
+   		if ( sendRequest == NULL ) {
+	
+			USLog::Print ( "MOAIFacebook: Unable to find static java method %s", "sendRequest" );
+		} else {
+	
+			env->CallStaticVoidMethod ( facebook, sendRequest, jmessage );		
+		}
+	}
+	
 	return 0;
 }
 
@@ -307,12 +356,10 @@ MOAIFacebook::~MOAIFacebook () {
 //----------------------------------------------------------------//
 void MOAIFacebook::RegisterLuaClass ( MOAILuaState& state ) {
 
-	state.SetField ( -1, "LOGIN_COMPLETE", 			( u32 ) LOGIN_COMPLETE );
-	state.SetField ( -1, "POST_COMPLETE", 			( u32 ) POST_COMPLETE );
-
-	state.SetField ( -1, "DIALOG_RESULT_SUCCESS",	( u32 ) DIALOG_RESULT_SUCCESS );
-	state.SetField ( -1, "DIALOG_RESULT_CANCEL",	( u32 ) DIALOG_RESULT_CANCEL );
-	state.SetField ( -1, "DIALOG_RESULT_ERROR",		( u32 ) DIALOG_RESULT_ERROR );
+	state.SetField ( -1, "DIALOG_DID_COMPLETE",		( u32 ) DIALOG_DID_COMPLETE );
+	state.SetField ( -1, "DIALOG_DID_NOT_COMPLETE",	( u32 ) DIALOG_DID_NOT_COMPLETE );
+	state.SetField ( -1, "SESSION_DID_LOGIN",		( u32 ) SESSION_DID_LOGIN );
+	state.SetField ( -1, "SESSION_DID_NOT_LOGIN",	( u32 ) SESSION_DID_NOT_LOGIN );
 	
 	luaL_Reg regTable [] = {
 		{ "getToken",		_getToken },
@@ -320,6 +367,7 @@ void MOAIFacebook::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "login",			_login },
 		{ "logout",			_logout },
 		{ "postToFeed",		_postToFeed },
+		{ "sendRequest",	_sendRequest },
 		{ "sessionValid",	_sessionValid },
 		{ "setListener",	_setListener },
 		{ "setToken",		_setToken },
@@ -332,31 +380,35 @@ void MOAIFacebook::RegisterLuaClass ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIFacebook::NotifyLoginComplete ( int code ) {
 
-	MOAILuaRef& callback = this->mListeners [ LOGIN_COMPLETE ];
+	MOAILuaRef& callback = this->mListeners [ SESSION_DID_NOT_LOGIN ];
+	if ( code == DIALOG_RESULT_SUCCESS ) {
+		
+		callback = this->mListeners [ SESSION_DID_LOGIN ];
+	}
 
 	if ( callback ) {
-		
+	
 		MOAILuaStateHandle state = callback.GetSelf ();
-		
-		lua_pushinteger ( state, code );
-		
-		state.DebugCall ( 1, 0 );
+	
+		state.DebugCall ( 0, 0 );
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAIFacebook::NotifyPostComplete ( int code ) {
+void MOAIFacebook::NotifyDialogComplete ( int code ) {
 	
-	MOAILuaRef& callback = this->mListeners [ POST_COMPLETE ];
+	MOAILuaRef& callback = this->mListeners [ DIALOG_DID_NOT_COMPLETE ];
+	if ( code == DIALOG_RESULT_SUCCESS ) {
+		
+		callback = this->mListeners [ DIALOG_DID_COMPLETE ];
+	}
 
 	if ( callback ) {
-		
+	
 		MOAILuaStateHandle state = callback.GetSelf ();
-		
-		lua_pushinteger ( state, code );
-		
-		state.DebugCall ( 1, 0 );
-	}		
+	
+		state.DebugCall ( 0, 0 );
+	}
 }
 
 //================================================================//
@@ -370,9 +422,9 @@ extern "C" void Java_com_ziplinegames_moai_MoaiFacebook_AKUNotifyFacebookLoginCo
 }
 
 //----------------------------------------------------------------//
-extern "C" void Java_com_ziplinegames_moai_MoaiFacebook_AKUNotifyFacebookPostComplete ( JNIEnv* env, jclass obj, jint code ) {
+extern "C" void Java_com_ziplinegames_moai_MoaiFacebook_AKUNotifyFacebookDialogComplete ( JNIEnv* env, jclass obj, jint code ) {
 
-	MOAIFacebook::Get ().NotifyPostComplete ( code );
+	MOAIFacebook::Get ().NotifyDialogComplete ( code );
 }
 
 #endif
