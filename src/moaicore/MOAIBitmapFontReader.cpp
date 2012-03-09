@@ -283,8 +283,12 @@ void MOAIBitmapFontReader::RenderGlyph ( MOAIFont& font, MOAIGlyph& glyph ) {
 	glyph.mBearingX = 0.0f;
 	glyph.mBearingY = ( float )bitmapGlyph.mBase;
 	
-	// place and render the glyph
-	if ( useCache ) {
+	if ( bitmapGlyph.mIsWhitespace ) {
+		
+		glyph.mWidth = 0.0f;
+	}
+	else if ( useCache ) {
+	
 		glyphCache->PlaceGlyph ( glyph );
 		
 		MOAIImage* image = glyphCache->GetGlyphImage ( glyph );
