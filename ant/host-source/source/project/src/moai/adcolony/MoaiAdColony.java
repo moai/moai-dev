@@ -7,6 +7,7 @@
 package com.ziplinegames.moai;
 
 import android.app.Activity;
+import android.os.Bundle;
 
 import java.util.Arrays;
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ public class MoaiAdColony implements AdColonyVideoListener {
 	protected static native void AKUNotifyAdColonyVideoComplete ();
 
 	//----------------------------------------------------------------//
-	public static void onCreate ( Activity activity ) {
+	public static void onCreate ( Activity activity, Bundle extras ) {
 		
 		MoaiLog.i ( "onCreate: Initializing AdColony" );
 		

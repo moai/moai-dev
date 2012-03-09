@@ -45,7 +45,7 @@ public class MoaiFacebook {
 	protected static native void	AKUNotifyFacebookDialogComplete	( int statusCode );
 
 	//----------------------------------------------------------------//
-	public static void onCreate ( Activity activity ) {
+	public static void onCreate ( Activity activity, Bundle extras ) {
 		
 		MoaiLog.i ( "onCreate: Initializing Facebook" );
 		

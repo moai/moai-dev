@@ -9,6 +9,7 @@ package com.ziplinegames.moai;
 import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.os.Bundle;
 
 //================================================================//
 // MoaiGooglePush
@@ -18,11 +19,25 @@ public class MoaiGooglePush {
 	private static Activity sActivity = null;
 
 	//----------------------------------------------------------------//
-	public static void onCreate ( Activity activity ) {
+	public static void onCreate ( Activity activity, Bundle extras ) {
 		
 		MoaiLog.i ( "onCreate: Initializing Google Push" );
 		
 		sActivity = activity;
+		
+    	if ( extras.getBoolean ( MoaiGooglePushConstants.ACTION_RECEIVE )) {
+
+			MoaiLog.i ( "Got a remote notification in app launch" );
+			
+			for ( String key : intent.getExtras ().keySet ()) {
+
+				if ( intent.getExtras ().getString ( key ) != null ) {
+					
+					MoaiLog.i ( "Key = " + key );
+					MoaiLog.i ( "Value = " + intent.getExtras ().getString ( key ));
+				}
+			}
+		}
 	}
 
 	//================================================================//

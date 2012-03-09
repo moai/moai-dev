@@ -106,7 +106,7 @@ public class MoaiActivity extends Activity {
 
        	System.load ( "/data/data/@PACKAGE@/lib/libmoai.so" );
 
-		Moai.onCreate ( this );
+		Moai.onCreate ( this, getIntent ().getExtras ());
 
         requestWindowFeature ( Window.FEATURE_NO_TITLE );
 	    getWindow ().addFlags ( WindowManager.LayoutParams.FLAG_FULLSCREEN );

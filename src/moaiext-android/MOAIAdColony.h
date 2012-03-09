@@ -33,9 +33,9 @@ public:
 
 	MOAILuaRef		mListeners [ TOTAL ];
 	
-	void 			FireVideoCompleteListenerEvent	();
                     MOAIAdColony		();
 					~MOAIAdColony       ();
+	void 			NotifyVideoComplete	();
 	void			RegisterLuaClass	( MOAILuaState& state );
 };
 

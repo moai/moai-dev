@@ -7,6 +7,7 @@
 package com.ziplinegames.moai;
 
 import android.app.Activity;
+import android.os.Bundle;
 
 import com.tapjoy.TapjoyConnect;
 import com.tapjoy.TapjoyVideoNotifier;
@@ -23,7 +24,7 @@ public class MoaiTapjoy implements TapjoyVideoNotifier {
 	protected static native void AKUNotifyTapjoyVideoAdClose	();
 
 	//----------------------------------------------------------------//
-	public static void onCreate ( Activity activity ) {
+	public static void onCreate ( Activity activity, Bundle extras ) {
 		
 		MoaiLog.i ( "onCreate: Initializing Tapjoy" );
 		

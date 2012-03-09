@@ -100,10 +100,10 @@ public class MoaiGooglePushReceiver extends BroadcastReceiver {
 
 			int icon = context.getResources ().getIdentifier( "icon", "drawable", context.getPackageName ());
 
-		 	Intent notifyIntent = new Intent ( Intent.ACTION_MAIN );
-			notifyIntent = context.getPackageManager ().getLaunchIntentForPackage ( context.getPackageName ());
-			notifyIntent.addCategory ( Intent.CATEGORY_LAUNCHER );
-
+		 	Intent notifyIntent = context.getPackageManager ().getLaunchIntentForPackage ( context.getPackageName ());
+			notifyIntent.putExtra ( intent.getAction (), true );
+			notifyIntent.putExtras ( intent );
+		
 		    PendingIntent contentIntent = PendingIntent.getActivity ( context, 0, notifyIntent, 0 );
 
 		    NotificationManager notificationManager = ( NotificationManager ) context.getSystemService ( Context.NOTIFICATION_SERVICE );

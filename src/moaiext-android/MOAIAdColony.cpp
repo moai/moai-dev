@@ -191,7 +191,7 @@ int MOAIAdColony::_videoReadyForZone ( lua_State *L ) {
 // MOAIAdColony
 //================================================================//
 //----------------------------------------------------------------//
-void MOAIAdColony::FireVideoCompleteListenerEvent () {	
+void MOAIAdColony::NotifyVideoComplete () {	
 	
 	MOAILuaRef& callback = this->mListeners [ VIDEO_ENDED_IN_ZONE ];
 	
@@ -237,6 +237,7 @@ void MOAIAdColony::RegisterLuaClass ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 extern "C" void Java_com_ziplinegames_moai_MoaiAdColony_AKUNotifyAdColonyVideoComplete ( JNIEnv* env, jclass obj ) {
 
-	MOAIAdColony::Get ().FireVideoCompleteListenerEvent ();
+
+	MOAIAdColony::Get ().NotifyVideoComplete ();
 }
 #endif

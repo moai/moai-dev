@@ -8,6 +8,7 @@ package com.ziplinegames.moai;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -34,7 +35,7 @@ public class Moai {
             return values [ index ];
         }
     }
-	
+
 	private static String [] sExternalClasses = {
 		"com.ziplinegames.moai.MoaiAdColony",
 		"com.ziplinegames.moai.MoaiCrittercism",
@@ -60,11 +61,13 @@ public class Moai {
 		}
 	}
 
+	//----------------------------------------------------------------//
 	public static ApplicationState getApplicationState () {
 
 		return sApplicationState;
 	}
 	
+	//----------------------------------------------------------------//
 	public static void setApplicationState ( ApplicationState state ) {
 
 		sApplicationState = state;
@@ -80,11 +83,11 @@ public class Moai {
 	}
 
 	//----------------------------------------------------------------//
-	public static void onCreate ( Activity activity ) {
+	public static void onCreate ( Activity activity, Bundle extras ) {
 
 		for ( Class theClass : sAvailableClasses ) {
 			
-			executeMethod ( theClass, null, "onCreate", new Class [] { Activity.class }, new Object [] { activity });
+			executeMethod ( theClass, null, "onCreate", new Class [] { Activity.class, Bundle.class }, new Object [] { activity, extras });
 		}
 	}
 	
