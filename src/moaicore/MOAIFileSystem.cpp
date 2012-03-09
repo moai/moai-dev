@@ -74,13 +74,15 @@ int MOAIFileSystem::_checkPathExists ( lua_State* L ) {
 	@text	Deletes a directory and all of its contents.
 
 	@in		string path
+	@in		boolean (Optional) recursive If true, the directory and all contents beneath it will be purged. Otherwise, the directory will only be removed if empty.
 	@out	boolean success
 */
 int MOAIFileSystem::_deleteDirectory ( lua_State* L ) {
 	MOAILuaState state ( L );
 	
 	cc8* path = state.GetValue < cc8* >( 1, "" );
-	bool result = USFileSys::DeleteDirectory ( path );
+	bool recursive = state.GetValue < bool >( 2, false );
+	bool result = USFileSys::DeleteDirectory ( path, recursive, recursive );
 	
 	lua_pushboolean ( state, result );
 	return 1;
