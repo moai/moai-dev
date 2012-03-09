@@ -13,13 +13,16 @@ import java.util.ArrayList;
 
 import com.jirbo.adcolony.AdColony;
 import com.jirbo.adcolony.AdColonyVideoAd;
+import com.jirbo.adcolony.AdColonyVideoListener;
 
 //================================================================//
 // MoaiAdColony
 //================================================================//
-public class MoaiAdColony {
+public class MoaiAdColony implements AdColonyVideoListener {
 
 	private static Activity sActivity = null;
+	
+	protected static native void AKUNotifyAdColonyVideoComplete ();
 
 	//----------------------------------------------------------------//
 	public static void onCreate ( Activity activity ) {
@@ -64,15 +67,20 @@ public class MoaiAdColony {
 		AdColonyVideoAd ad = new AdColonyVideoAd ( zoneId );
 		if ( showPrompt ) {
 			
-			ad.offerV4VC ( null, showConfirmation );
+			ad.offerV4VC ( new MoaiAdColony (), showConfirmation );
 		} else {
 			
-			ad.showV4VC ( null, showConfirmation );
-		}
-		
-		
-		
-		
-		// TODO: Add listener to allow callbacks into Lua
+			ad.showV4VC ( new MoaiAdColony (), showConfirmation );
+		}				
+	}
+	
+	//================================================================//
+	// AdColonyVideoListener methods
+	//================================================================//	
+
+	//----------------------------------------------------------------//
+	public void onAdColonyVideoFinished () {
+
+		AKUNotifyAdColonyVideoComplete ();
 	}
 }

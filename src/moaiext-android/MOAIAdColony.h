@@ -19,12 +19,21 @@ private:
 	static int	_init				( lua_State* L );
 	static cc8*	_luaParseTable 		( lua_State* L, int idx );
 	static int	_playVideo			( lua_State* L );
+	static int	_setListener		( lua_State* L );
 	static int	_videoReadyForZone	( lua_State* L );
 	
 public:
     
 	DECL_LUA_SINGLETON ( MOAIAdColony );
 	
+	enum {
+		VIDEO_ENDED_IN_ZONE,
+		TOTAL
+	};
+
+	MOAILuaRef		mListeners [ TOTAL ];
+	
+	void 			FireVideoCompleteListenerEvent	();
                     MOAIAdColony		();
 					~MOAIAdColony       ();
 	void			RegisterLuaClass	( MOAILuaState& state );
