@@ -26,7 +26,7 @@ public class MoaiTapjoy implements TapjoyVideoNotifier {
 	//----------------------------------------------------------------//
 	public static void onCreate ( Activity activity, Bundle extras ) {
 		
-		MoaiLog.i ( "onCreate: Initializing Tapjoy" );
+		MoaiLog.i ( "MoaiTapjoy onCreate: Initializing Tapjoy" );
 		
 		sActivity = activity;
 	}

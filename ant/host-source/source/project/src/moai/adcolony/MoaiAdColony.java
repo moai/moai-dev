@@ -28,7 +28,7 @@ public class MoaiAdColony implements AdColonyVideoListener {
 	//----------------------------------------------------------------//
 	public static void onCreate ( Activity activity, Bundle extras ) {
 		
-		MoaiLog.i ( "onCreate: Initializing AdColony" );
+		MoaiLog.i ( "MoaiAdColony onCreate: Initializing AdColony" );
 		
 		sActivity = activity;
 	}

@@ -71,6 +71,11 @@ public class Moai {
 	public static void setApplicationState ( ApplicationState state ) {
 
 		sApplicationState = state;
+		
+		for ( Class theClass : sAvailableClasses ) {
+			
+			executeMethod ( theClass, null, "onApplicationStateChanged", new Class [] { ApplicationState.class }, new Object [] { sApplicationState });
+		}
 	}
 	
 	//----------------------------------------------------------------//

@@ -17,26 +17,55 @@ import android.os.Bundle;
 public class MoaiGooglePush {
 
 	private static Activity sActivity = null;
+	private static Bundle sPendingNotification = null;
 
 	//----------------------------------------------------------------//
 	public static void onCreate ( Activity activity, Bundle extras ) {
 		
-		MoaiLog.i ( "onCreate: Initializing Google Push" );
+		MoaiLog.i ( "MoaiGooglePush onCreate: Initializing Google Push" );
 		
 		sActivity = activity;
 		
-    	if ( extras.getBoolean ( MoaiGooglePushConstants.ACTION_RECEIVE )) {
+		Bundle notification = extras.getBundle ( MoaiGooglePushConstants.ACTION_RECEIVE );
+    	if ( notification != null ) {
 
-			MoaiLog.i ( "Got a remote notification in app launch" );
+			MoaiLog.i ( "MoaiGooglePush onCreate: Got a remote notification in app launch" );
 			
-			for ( String key : extras.keySet ()) {
+			for ( String key : notification.keySet ()) {
 
-				if ( extras.getString ( key ) != null ) {
+				if ( notification.getString ( key ) != null ) {
 					
 					MoaiLog.i ( "Key = " + key );
-					MoaiLog.i ( "Value = " + extras.getString ( key ));
+					MoaiLog.i ( "Value = " + notification.getString ( key ));
 				}
 			}
+
+			// TODO: Need to handle case where app was backgrounded - onCreate isn't called.
+
+			if ( Moai.getApplicationState () == Moai.ApplicationState.APPLICATION_RUNNING ) {
+				
+				Intent intent = new Intent ().putExtras ( notification );
+				MoaiGooglePushReceiver.handleMessage ( activity, intent );
+
+				sPendingNotification = null;
+			} else {
+				
+				sPendingNotification = notification;
+			}
+		}
+	}
+
+	//----------------------------------------------------------------//
+	public static void onApplicationStateChanged ( Moai.ApplicationState state ) {
+		
+		MoaiLog.i ( "MoaiGooglePush onApplicationStateChanged: " + state );
+
+		if (( state == Moai.ApplicationState.APPLICATION_RUNNING ) && ( sPendingNotification != null )) {
+			
+			Intent intent = new Intent ().putExtras ( sPendingNotification );
+			MoaiGooglePushReceiver.handleMessage ( sActivity, intent );
+			
+			sPendingNotification = null;
 		}
 	}
 

@@ -21,7 +21,7 @@ public class MoaiCrittercism {
 	//----------------------------------------------------------------//
 	public static void onCreate ( Activity activity, Bundle extras ) {
 		
-		MoaiLog.i ( "onCreate: Initializing Crittercism" );
+		MoaiLog.i ( "MoaiCrittercism onCreate: Initializing Crittercism" );
 		
 		sActivity = activity;
 	}

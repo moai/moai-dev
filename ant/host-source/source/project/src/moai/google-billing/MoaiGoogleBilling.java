@@ -33,7 +33,7 @@ public class MoaiGoogleBilling extends MoaiGoogleBillingPurchaseObserver {
 	//----------------------------------------------------------------//
 	public static void onCreate ( Activity activity, Bundle extras ) {
 		
-		MoaiLog.i ( "onCreate: Initializing Google Billing" );
+		MoaiLog.i ( "MoaiGoogleBilling onCreate: Initializing Google Billing" );
 		
 		sActivity = activity;
 

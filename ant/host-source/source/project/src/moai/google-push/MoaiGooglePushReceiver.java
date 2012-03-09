@@ -37,7 +37,7 @@ public class MoaiGooglePushReceiver extends BroadcastReceiver {
 	}
 
 	//----------------------------------------------------------------//
-	private void handleRegistration ( Context context, Intent intent ) {
+	private static void handleRegistration ( Context context, Intent intent ) {
 		
 		if ( Moai.getApplicationState () == Moai.ApplicationState.APPLICATION_UNINITIALIZED ) {
 			
@@ -69,7 +69,7 @@ public class MoaiGooglePushReceiver extends BroadcastReceiver {
 	}
 
 	//----------------------------------------------------------------//
-	private void handleMessage ( Context context, Intent intent ) {
+	/* package private */ static void handleMessage ( Context context, Intent intent ) {
 		
 		if ( Moai.getApplicationState () != Moai.ApplicationState.APPLICATION_RUNNING ) {
 
@@ -100,9 +100,12 @@ public class MoaiGooglePushReceiver extends BroadcastReceiver {
 
 			int icon = context.getResources ().getIdentifier( "icon", "drawable", context.getPackageName ());
 
+			// Add the notification data from the originating intent to the new intent
+			// that will launch the application from the notification tray and "mark"
+			// the intent with a known key (we'll use the Google-defined one for C2DM
+			// message receipt) so that we recognize it when the application is launched.
 		 	Intent notifyIntent = context.getPackageManager ().getLaunchIntentForPackage ( context.getPackageName ());
-			notifyIntent.putExtra ( intent.getAction (), true );
-			notifyIntent.putExtras ( intent );
+			notifyIntent.putExtra ( intent.getAction (), intent.getExtras ());
 		
 		    PendingIntent contentIntent = PendingIntent.getActivity ( context, 0, notifyIntent, 0 );
 

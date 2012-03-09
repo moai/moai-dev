@@ -47,7 +47,7 @@ public class MoaiFacebook {
 	//----------------------------------------------------------------//
 	public static void onCreate ( Activity activity, Bundle extras ) {
 		
-		MoaiLog.i ( "onCreate: Initializing Facebook" );
+		MoaiLog.i ( "MoaiFacebook onCreate: Initializing Facebook" );
 		
 		sActivity = activity;
 	}

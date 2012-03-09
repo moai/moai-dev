@@ -231,12 +231,11 @@ void MOAIAdColony::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //================================================================//
-// Tapjoy JNI methods
+// AdColony JNI methods
 //================================================================//
 
 //----------------------------------------------------------------//
 extern "C" void Java_com_ziplinegames_moai_MoaiAdColony_AKUNotifyAdColonyVideoComplete ( JNIEnv* env, jclass obj ) {
-
 
 	MOAIAdColony::Get ().NotifyVideoComplete ();
 }
