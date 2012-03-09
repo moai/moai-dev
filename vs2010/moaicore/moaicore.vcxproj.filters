@@ -567,6 +567,9 @@
     <ClCompile Include="..\..\src\moaicore\MOAIMultiTexture.cpp">
       <Filter>src\texture</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIBitmapFontReader.cpp">
+      <Filter>src\font</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\moaicore\MOAIAction.h">
@@ -1090,6 +1093,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\shaders\MOAIMeshShader-vsh.h">
       <Filter>src\gfx\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIBitmapFontReader.h">
+      <Filter>src\font</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
