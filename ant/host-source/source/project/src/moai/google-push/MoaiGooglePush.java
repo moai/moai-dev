@@ -39,53 +39,16 @@ public class MoaiGooglePush {
 		MoaiLog.i ( "MoaiGooglePush onCreate: Initializing Google Push" );
 		
 		sActivity = activity;
-		
-		// Bundle notification = extras.getBundle ( MoaiGooglePushConstants.ACTION_RECEIVE );
-		//     	if ( notification != null ) {
-		// 
-		// 	MoaiLog.i ( "MoaiGooglePush onCreate: Got a remote notification in app launch" );
-		// 	
-		// 	for ( String key : notification.keySet ()) {
-		// 
-		// 		if ( notification.getString ( key ) != null ) {
-		// 			
-		// 			MoaiLog.i ( "Key = " + key );
-		// 			MoaiLog.i ( "Value = " + notification.getString ( key ));
-		// 		}
-		// 	}
-		// 
-		// 	if ( Moai.getApplicationState () == Moai.ApplicationState.APPLICATION_RUNNING ) {
-		// 		
-		// 		Intent intent = new Intent ().putExtras ( notification );
-		// 		MoaiGooglePushReceiver.handleMessage ( activity, intent );
-		// 
-		// 		sPendingNotification = null;
-		// 	} else {
-		// 		
-		// 		sPendingNotification = notification;
-		// 	}
-		// }
 	}
 
 	//----------------------------------------------------------------//
 	public static void onResume ( Bundle extras ) {
-		
-		MoaiLog.i ( "MoaiGooglePush onResume: Resuming" );
 		
 		Bundle notification = extras.getBundle ( MoaiGooglePushConstants.ACTION_RECEIVE );
     	if ( notification != null ) {
 
 			MoaiLog.i ( "MoaiGooglePush onResume: Got a remote notification in app resume" );
 			
-			for ( String key : notification.keySet ()) {
-
-				if ( notification.getString ( key ) != null ) {
-					
-					MoaiLog.i ( "Key = " + key );
-					MoaiLog.i ( "Value = " + notification.getString ( key ));
-				}
-			}
-
 			if ( Moai.getApplicationState () == Moai.ApplicationState.APPLICATION_RUNNING ) {
 				
 				Intent intent = new Intent ().putExtras ( notification );

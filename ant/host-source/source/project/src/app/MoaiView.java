@@ -40,6 +40,7 @@ public class MoaiView extends GLSurfaceView {
 	private MoaiActivity 	mActivity;
 	private int 			mAku;
 	private Context			mContext;
+	private boolean			mForceLandscape;
 	private Handler			mHandler;
 	private int 		 	mHeight;
 	private Runnable		mUpdateRunnable;
@@ -88,21 +89,6 @@ public class MoaiView extends GLSurfaceView {
 		mContext = context;
 		mActivity = activity;
 		
-		// If the screen is locked when the view is created, the orientation 
-		// will initially be portrait, so we need to compensate. This, of 
-		// course, assumes that you're locking your application to landscape
-		// mode in the manifest.
-		if ( height > width ) {
-			
-			mWidth = height;
-			mHeight = width;
-		}
-		else {
-			
-			mWidth = width;
-			mHeight = height;
-		}
-		
 		mAku = AKUCreateContext ();
 		AKUSetContext ( mAku );
 		
@@ -123,6 +109,18 @@ public class MoaiView extends GLSurfaceView {
 		AKUSetInputDeviceTouch			( INPUT_DEVICE.DEVICE.ordinal (), INPUT_SENSOR.TOUCH.ordinal (),		"touch" );
 
 		AKUUntzInit ();
+
+		// If the screen is locked when the view is created, the orientation 
+		// may initially be portrait because the lock screen is portrait
+		// orientation, so we need to compensate and force landscape. This, 
+		// of course, assumes that you're locking your application to landscape
+		// mode in the manifest. If your application is portrait or supports
+		// multiple orientations, you'll have to edit the manfifest, set this
+		// setting to false, and may have to make other adjustments to properly
+		// handle orientation changes.
+		mForceLandscape = true;
+		
+		setScreenDimensions ( width, height );
 		AKUSetScreenSize ( mWidth, mHeight );
 
 		String appId = mContext.getPackageName ();
@@ -258,6 +256,26 @@ public class MoaiView extends GLSurfaceView {
 	}
 	
 	//================================================================//
+	// Private methods
+	//================================================================//
+	
+	//----------------------------------------------------------------//
+	public void setScreenDimensions ( int width, int height ) {
+	
+		if ( mForceLandscape && ( height > width )) {
+			
+			mWidth = height;
+			mHeight = width;
+		}
+		else {
+			
+			mWidth = width;
+			mHeight = height;
+		}
+		
+	}
+	
+	//================================================================//
 	// MoaiRenderer
 	//================================================================//
 	private class MoaiRenderer implements GLSurfaceView.Renderer {
@@ -280,9 +298,7 @@ public class MoaiView extends GLSurfaceView {
 
 			MoaiLog.i ( "MoaiRenderer onSurfaceChanged: surface CHANGED" );
 
-			mWidth = width;
-			mHeight = height;
-			
+			setScreenDimensions ( width, height );
 			AKUSetViewSize ( mWidth, mHeight );
 		}
         
