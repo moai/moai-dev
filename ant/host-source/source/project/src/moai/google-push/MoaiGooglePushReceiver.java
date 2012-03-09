@@ -6,6 +6,9 @@
 
 package com.ziplinegames.moai;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -36,6 +39,14 @@ public class MoaiGooglePushReceiver extends BroadcastReceiver {
 	//----------------------------------------------------------------//
 	private void handleRegistration ( Context context, Intent intent ) {
 		
+		if ( Moai.getApplicationState () == Moai.ApplicationState.APPLICATION_UNINITIALIZED ) {
+			
+			// If the application was not started as the result of a LAUNCHER action,
+			// then AKU has not been initialized, libmoai.so has not been loaded and
+			// no Lua scripts have been run, so we ignore the event. 
+			return;
+		}
+		
 	    if ( intent.getStringExtra ( MoaiGooglePushConstants.ERROR ) != null ) {
 
 		    String errorMessage = intent.getStringExtra ( MoaiGooglePushConstants.ERROR );
@@ -60,18 +71,65 @@ public class MoaiGooglePushReceiver extends BroadcastReceiver {
 	//----------------------------------------------------------------//
 	private void handleMessage ( Context context, Intent intent ) {
 		
-		ArrayList < String > keys = new ArrayList < String > ();
-		ArrayList < String > values = new ArrayList < String > ();
-		
-		for ( String key : intent.getExtras ().keySet ()) {
+		if ( Moai.getApplicationState () != Moai.ApplicationState.APPLICATION_RUNNING ) {
 
-			if ( intent.getExtras ().getString ( key ) != null ) {
-				
-				keys.add ( key );
-				values.add ( intent.getExtras ().getString ( key ));
+			// If the application is not actively running, then we want to send the
+			// notification to the notification tray.
+			
+			// By default, look for a key called "title" in the extras bundle. If we
+			// can't find one, then default to the application name.
+			String title = intent.getStringExtra ( "title" );
+			if ( title == null ) {
+
+				try {
+
+			    	title = context.getPackageManager ().getApplicationLabel ( context.getPackageManager ().getApplicationInfo ( context.getPackageName (), 0 )).toString ();
+				} catch ( Exception e ) {
+
+					title = "UNKNOWN";
+				}
 			}
-		}
+
+			// Look for a key called "message" in the extras bundle. If we can't find
+			// one, then construct a default one.
+			String message = intent.getStringExtra ( "message" );
+			if ( message == null ) {
+				
+				message = "A new message is waiting for you. Click here to view!";
+			}
+
+			int icon = context.getResources ().getIdentifier( "icon", "drawable", context.getPackageName ());
+
+		 	Intent notifyIntent = new Intent ( Intent.ACTION_MAIN );
+			notifyIntent = context.getPackageManager ().getLaunchIntentForPackage ( context.getPackageName ());
+			notifyIntent.addCategory ( Intent.CATEGORY_LAUNCHER );
+
+		    PendingIntent contentIntent = PendingIntent.getActivity ( context, 0, notifyIntent, 0 );
+
+		    NotificationManager notificationManager = ( NotificationManager ) context.getSystemService ( Context.NOTIFICATION_SERVICE );
+		    Notification notification = new Notification ( icon, message, System.currentTimeMillis ()); 
+		    notification.setLatestEventInfo ( context, title, message, contentIntent );
+		    notification.flags |= Notification.FLAG_AUTO_CANCEL;
+
+			String tag = intent.getStringExtra ( "tag" );
+			int id = ( intent.getStringExtra ( "id" ) != null ) ? Integer.parseInt ( intent.getStringExtra ( "id" )) : 1;
+
+		    notificationManager.notify ( tag, id, notification );		
+		} else {
 		
-		AKUNotifyGooglePushRemoteNotificationReceived ( keys.toArray ( new String [ keys.size ()]), values.toArray ( new String [ values.size ()]));
+			ArrayList < String > keys = new ArrayList < String > ();
+			ArrayList < String > values = new ArrayList < String > ();
+		
+			for ( String key : intent.getExtras ().keySet ()) {
+
+				if ( intent.getExtras ().getString ( key ) != null ) {
+				
+					keys.add ( key );
+					values.add ( intent.getExtras ().getString ( key ));
+				}
+			}
+
+			AKUNotifyGooglePushRemoteNotificationReceived ( keys.toArray ( new String [ keys.size ()]), values.toArray ( new String [ values.size ()]));
+		}		
 	}
 }

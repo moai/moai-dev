@@ -16,6 +16,24 @@ import java.util.ArrayList;
 // Moai
 //================================================================//
 public class Moai {
+
+	public enum ApplicationState {
+	
+        APPLICATION_UNINITIALIZED,
+        APPLICATION_RUNNING,
+        APPLICATION_PAUSED;
+
+        public static ApplicationState valueOf ( int index ) {
+	
+            ApplicationState [] values = ApplicationState.values ();
+            if (( index < 0 ) || ( index >= values.length )) {
+	
+                return APPLICATION_UNINITIALIZED;
+            }
+
+            return values [ index ];
+        }
+    }
 	
 	private static String [] sExternalClasses = {
 		"com.ziplinegames.moai.MoaiAdColony",
@@ -26,6 +44,7 @@ public class Moai {
 		"com.ziplinegames.moai.MoaiTapjoy",
 	};
 	
+	private static ApplicationState sApplicationState = ApplicationState.APPLICATION_UNINITIALIZED;
 	private static ArrayList < Class > sAvailableClasses = new ArrayList < Class > ();
 
 	//----------------------------------------------------------------//
@@ -39,6 +58,16 @@ public class Moai {
 				sAvailableClasses.add ( theClass );
 			}
 		}
+	}
+
+	public static ApplicationState getApplicationState () {
+
+		return sApplicationState;
+	}
+	
+	public static void setApplicationState ( ApplicationState state ) {
+
+		sApplicationState = state;
 	}
 	
 	//----------------------------------------------------------------//

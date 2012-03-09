@@ -20,6 +20,15 @@ public class MoaiGoogleBillingReceiver extends BroadcastReceiver {
     @Override
     public void onReceive ( Context context, Intent intent ) {
 	
+		if ( Moai.getApplicationState () == Moai.ApplicationState.APPLICATION_UNINITIALIZED ) {
+			
+			// If the application was not started as the result of a LAUNCHER action,
+			// then AKU has not been initialized, libmoai.so has not been loaded and
+			// no Lua scripts have been run, so we ignore the event. Important events
+			// will be resent by Android Market if not confirmed.
+			return;
+		}
+		
         String action = intent.getAction ();
         if ( MoaiGoogleBillingConstants.ACTION_PURCHASE_STATE_CHANGED.equals ( action )) {
 	

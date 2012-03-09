@@ -313,6 +313,8 @@ public class MoaiView extends GLSurfaceView {
 
 							// Sessions are ended in MoaiActivity.
 							AKUAppDidStartSession ( false );
+
+							Moai.setApplicationState ( Moai.ApplicationState.APPLICATION_RUNNING );
 						}
 					}
 				});
@@ -326,6 +328,8 @@ public class MoaiView extends GLSurfaceView {
 
 							// Sessions are ended in MoaiActivity.
 							AKUAppDidStartSession ( true );
+
+							Moai.setApplicationState ( Moai.ApplicationState.APPLICATION_RUNNING );
 						}
 					}
 				});

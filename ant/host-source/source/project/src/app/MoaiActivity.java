@@ -93,7 +93,7 @@ public class MoaiActivity extends Activity {
 	protected static native void 		AKUMountVirtualDirectory 			( String virtualPath, String archive ); // M
 	protected static native boolean 	AKUNotifyBackButtonPressed			(); // M
 	protected static native void 		AKUNotifyDialogDismissed			( int dialogResult ); // M
-	protected static native void 		AKUSetConnectionType 				( long connectionType ); // M	
+	protected static native void 		AKUSetConnectionType 				( long connectionType ); // M
 	protected static native void 		AKUSetDocumentDirectory 			( String path ); // M
 	protected static native void 		AKUSetWorkingDirectory 				( String path ); // M
 
@@ -104,12 +104,12 @@ public class MoaiActivity extends Activity {
 
     	super.onCreate ( savedInstanceState );
 
-       	System.load ( "/data/data/@PACKAGE@/lib/libmoai.so" ); 
+       	System.load ( "/data/data/@PACKAGE@/lib/libmoai.so" );
 
 		Moai.onCreate ( this );
 
         requestWindowFeature ( Window.FEATURE_NO_TITLE );
-	    getWindow ().addFlags ( WindowManager.LayoutParams.FLAG_FULLSCREEN ); 
+	    getWindow ().addFlags ( WindowManager.LayoutParams.FLAG_FULLSCREEN );
 	    getWindow ().addFlags ( WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON );
 
 		Display display = (( WindowManager ) getSystemService ( Context.WINDOW_SERVICE )).getDefaultDisplay ();
@@ -188,6 +188,8 @@ public class MoaiActivity extends Activity {
 		
 		// Sessions are started in MoaiView.
 		AKUAppWillEndSession ();
+
+		Moai.setApplicationState ( Moai.ApplicationState.APPLICATION_PAUSED );
 	}
 	
 	//----------------------------------------------------------------//
