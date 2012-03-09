@@ -199,7 +199,7 @@ public class MoaiActivity extends Activity {
 
 		super.onResume ();
 		
-		Moai.onResume ();
+		Moai.onResume ( getIntent ().getExtras ());
 		
 		if ( mAccelerometerListener != null ) {
 			

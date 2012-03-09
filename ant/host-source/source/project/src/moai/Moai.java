@@ -68,17 +68,6 @@ public class Moai {
 	}
 	
 	//----------------------------------------------------------------//
-	public static void setApplicationState ( ApplicationState state ) {
-
-		sApplicationState = state;
-		
-		for ( Class theClass : sAvailableClasses ) {
-			
-			executeMethod ( theClass, null, "onApplicationStateChanged", new Class [] { ApplicationState.class }, new Object [] { sApplicationState });
-		}
-	}
-	
-	//----------------------------------------------------------------//
 	public static void onActivityResult ( int requestCode, int resultCode, Intent data ) {
 	
 		for ( Class theClass : sAvailableClasses ) {
@@ -115,11 +104,11 @@ public class Moai {
 	}
 
 	//----------------------------------------------------------------//
-	public static void onResume () {
+	public static void onResume ( Bundle extras ) {
 	
 		for ( Class theClass : sAvailableClasses ) {
 
-			executeMethod ( theClass, null, "onResume", new Class [] { }, new Object [] { });
+			executeMethod ( theClass, null, "onResume", new Class [] { Bundle.class }, new Object [] { extras });
 		}		
 	}
 
@@ -139,6 +128,20 @@ public class Moai {
 
 			executeMethod ( theClass, null, "onStop", new Class [] { }, new Object [] { });
 		}		
+	}
+
+	//----------------------------------------------------------------//
+	public static void setApplicationState ( ApplicationState state ) {
+
+		if ( state != sApplicationState ) {
+			
+			sApplicationState = state;
+		
+			for ( Class theClass : sAvailableClasses ) {
+			
+				executeMethod ( theClass, null, "onApplicationStateChanged", new Class [] { ApplicationState.class }, new Object [] { sApplicationState });
+			}
+		}
 	}
 	
 	//================================================================//

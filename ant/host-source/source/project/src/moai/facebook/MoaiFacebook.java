@@ -45,6 +45,12 @@ public class MoaiFacebook {
 	protected static native void	AKUNotifyFacebookDialogComplete	( int statusCode );
 
 	//----------------------------------------------------------------//
+	public static void onActivityResult ( int requestCode, int resultCode, Intent data ) {
+	
+		sFacebook.authorizeCallback ( requestCode, resultCode, data );
+	}
+	
+	//----------------------------------------------------------------//
 	public static void onCreate ( Activity activity, Bundle extras ) {
 		
 		MoaiLog.i ( "MoaiFacebook onCreate: Initializing Facebook" );
@@ -52,12 +58,6 @@ public class MoaiFacebook {
 		sActivity = activity;
 	}
 	
-	//----------------------------------------------------------------//
-	public static void onActivityResult ( int requestCode, int resultCode, Intent data ) {
-	
-		sFacebook.authorizeCallback ( requestCode, resultCode, data );
-	}
-
 	//================================================================//
 	// Facebook JNI callback methods
 	//================================================================//
