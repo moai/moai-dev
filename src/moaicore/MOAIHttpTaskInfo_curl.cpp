@@ -31,10 +31,39 @@ u32 MOAIHttpTaskInfo::_writeHeader ( char* data, u32 n, u32 l, void* s ) {
 	MOAIHttpTaskInfo* self = ( MOAIHttpTaskInfo* )s;
 	u32 size = n * l;
 	
+	char *endp = data + size;
+	char *colon = data;
+	while( colon < endp && *colon != ':' )
+		colon++;
+	if( colon < endp )
+	{
+		STLString name(data, colon - data);
+		// Case insensitive
+		std::transform(name.begin(), name.end(), name.begin(), ::tolower);
+		char *vstart = colon;
+		vstart++;
+		while( vstart < endp && isspace(*vstart) )
+			vstart++;
+		char *vend = endp - 1;
+		while( vend > vstart && isspace(*vend) )
+			vend--;
+		STLString value(vstart, (vend - vstart) + 1);
+		
+		// Emulate XMLHTTPRequest.getResponseHeader() behavior of appending with comma
+		// separator if there are multiple header responses?
+		
+		if( self->mResponseHeaders.find(name) != self->mResponseHeaders.end() )
+			self->mResponseHeaders[name] = self->mResponseHeaders[name] + "," + value;
+		else
+			self->mResponseHeaders[name] = value;
+	}
+	
+	// Shouldn't this be a case-insensitive check?
 	STLString key = "content-length";
 	u32 keyLength = ( u32 )strlen ( key );
 	if ( strncmp ( data, key, keyLength ) == 0 ) {
-	
+
+		// NOTE: libcurl explicitly says to not assume zero termination here!
 		STLString header = data;
 		u32 end = ( u32 )header.find_last_of ( '\n' );
 		STLString value = header.clip ( keyLength + 2, end - 1 );
@@ -59,10 +88,17 @@ void MOAIHttpTaskInfo::Clear () {
 	this->mData.Clear ();
 	
 	this->mResponseCode = 0;
+	this->mResponseHeaders.clear();
 	
 	if ( this->mBody ) {
 		free ( this->mBody );
 		this->mBody = 0;
+	}
+	
+	if( mRequestHeaders )
+	{
+		curl_slist_free_all(mRequestHeaders);
+		mRequestHeaders = 0;
 	}
 	
 	if ( this->mEasyHandle ) {
@@ -94,7 +130,28 @@ void MOAIHttpTaskInfo::Finish () {
 }
 
 //----------------------------------------------------------------//
-void MOAIHttpTaskInfo::InitForGet ( cc8* url, cc8* useragent, bool verbose ) {
+void MOAIHttpTaskInfo::InitRequestHeaders ( HeaderList* extraHeaders ) {
+	if( mRequestHeaders ) {
+		curl_slist_free_all(mRequestHeaders);
+		mRequestHeaders = 0;
+	}
+	
+	if( extraHeaders ) {
+		HeaderList::iterator it = extraHeaders->begin();
+		HeaderList::iterator end = extraHeaders->end();
+		for( ; it != end; ++it ) {
+			mRequestHeaders = curl_slist_append(mRequestHeaders, it->c_str());
+		}
+	}
+
+	if(	mEasyHandle ) {
+		curl_easy_setopt( mEasyHandle, CURLOPT_HTTPHEADER, mRequestHeaders );
+	}
+}
+
+
+//----------------------------------------------------------------//
+void MOAIHttpTaskInfo::InitForGet ( cc8* url, cc8* useragent, bool verbose, HeaderList* extraHeaders ) {
 
 	this->Clear ();
 	
@@ -103,7 +160,7 @@ void MOAIHttpTaskInfo::InitForGet ( cc8* url, cc8* useragent, bool verbose ) {
 
 	result = curl_easy_setopt ( easyHandle, CURLOPT_URL, url );
 	_printError ( result );
-
+	
 	result = curl_easy_setopt ( easyHandle, CURLOPT_HEADERFUNCTION, _writeHeader );
 	_printError ( result );
 	
@@ -140,10 +197,11 @@ void MOAIHttpTaskInfo::InitForGet ( cc8* url, cc8* useragent, bool verbose ) {
 	
 	this->mEasyHandle = easyHandle;
 	this->mUrl = url;
+	this->InitRequestHeaders(extraHeaders);
 }
 
 //----------------------------------------------------------------//
-void MOAIHttpTaskInfo::InitForPost ( cc8* url, cc8* useragent, const void* buffer, u32 size, bool verbose ) {
+void MOAIHttpTaskInfo::InitForPost ( cc8* url, cc8* useragent, const void* buffer, u32 size, bool verbose, HeaderList* extraHeaders ) {
 
 	this->Clear ();
 	
@@ -211,12 +269,15 @@ void MOAIHttpTaskInfo::InitForPost ( cc8* url, cc8* useragent, const void* buffe
 	
 	this->mEasyHandle = easyHandle;
 	this->mUrl = url;
+	this->InitRequestHeaders(extraHeaders);
 }
 
 //----------------------------------------------------------------//
 MOAIHttpTaskInfo::MOAIHttpTaskInfo () :
 	mEasyHandle ( 0 ),
-	mBody ( 0 ) {
+	mRequestHeaders(0),
+	mBody ( 0 )
+	{
 	
 	this->mStream = &this->mMemStream;
 }

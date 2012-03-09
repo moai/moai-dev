@@ -18,6 +18,10 @@ class MOAIHttpTaskInfo;
 */
 class MOAIHttpTask :
 	public virtual MOAILuaObject {
+		
+public:
+	typedef STLArray<STLString> HeaderList;
+
 private:
 
 	MOAIHttpTaskInfo*	mInfo;
@@ -31,6 +35,8 @@ private:
 	MOAILuaLocal		mOnFinish;
 
 	//----------------------------------------------------------------//
+	static int		_getResponseCode    ( lua_State* L );
+	static int		_getResponseHeader	( lua_State* L );
 	static int		_getSize			( lua_State* L );
 	static int		_getString			( lua_State* L );
 	static int		_httpGet			( lua_State* L );
@@ -57,8 +63,8 @@ public:
 	void				Clear					();	
 	void				GetData					( void* buffer, u32 size );
 	MOAIHttpTaskInfo*	GetInfo					() { return mInfo; }
-	void				HttpGet					( cc8* url, cc8* useragent, bool verbose, bool blocking );
-	void				HttpPost				( cc8* url, cc8* useragent, const void* buffer, u32 size, bool verbose, bool blocking );
+	void				HttpGet					( cc8* url, cc8* useragent, bool verbose, bool blocking, HeaderList *extraHeaders);
+	void				HttpPost				( cc8* url, cc8* useragent, const void* buffer, u32 size, bool verbose, bool blocking, HeaderList *extraHeaders);
 						MOAIHttpTask			();
 						~MOAIHttpTask			();
 	void				RegisterLuaClass		( MOAILuaState& state );
