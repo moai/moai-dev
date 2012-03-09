@@ -127,6 +127,7 @@ void MOAIGlyphCache::PlaceGlyph ( MOAIGlyph& glyph ) {
 	
 	MOAIGlyphCachePage* page = new MOAIGlyphCachePage ();
 	this->mPages [ pageID ] = page;
+	page->mColorFormat = this->mColorFormat;
 
 	page->Alloc ( glyph );
 	glyph.SetPageID ( pageID );

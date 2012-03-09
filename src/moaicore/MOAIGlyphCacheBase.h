@@ -18,9 +18,12 @@ class MOAIGlyphCacheBase :
 protected:
 
 	friend class MOAIFont;
+	
+	USColor::Format mColorFormat;
 
 	//----------------------------------------------------------------//
 	static int					_getImage				( lua_State* L );
+	static int					_setColorFormat			( lua_State* L );
 	static int					_setImage				( lua_State* L );
 
 public:

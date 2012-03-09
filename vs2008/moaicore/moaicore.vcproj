@@ -1648,6 +1648,14 @@
 			Name="font"
 			>
 			<File
+				RelativePath="..\..\src\moaicore\MOAIBitmapFontReader.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIBitmapFontReader.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\moaicore\MOAIFont.cpp"
 				>
 			</File>
