@@ -29,12 +29,12 @@ public class MoaiGooglePush {
 
 			MoaiLog.i ( "Got a remote notification in app launch" );
 			
-			for ( String key : intent.getExtras ().keySet ()) {
+			for ( String key : extras.keySet ()) {
 
-				if ( intent.getExtras ().getString ( key ) != null ) {
+				if ( extras.getString ( key ) != null ) {
 					
 					MoaiLog.i ( "Key = " + key );
-					MoaiLog.i ( "Value = " + intent.getExtras ().getString ( key ));
+					MoaiLog.i ( "Value = " + extras.getString ( key ));
 				}
 			}
 		}
