@@ -182,7 +182,18 @@ public class MoaiFacebook {
 	        @Override
 	        public void onComplete ( Bundle values ) {
 		
-				AKUNotifyFacebookDialogComplete ( DialogResultCode.RESULT_SUCCESS.ordinal() );
+				for ( String key : values.keySet ()) {
+					
+					MoaiLog.i ( "Key = " + key + " Value = " + values.getString (key));
+				}
+		
+				if ( values.containsKey ( "post_id" )) {
+					
+					AKUNotifyFacebookDialogComplete ( DialogResultCode.RESULT_SUCCESS.ordinal() );
+				} else {
+				
+					AKUNotifyFacebookDialogComplete ( DialogResultCode.RESULT_CANCEL.ordinal() );
+				}
 	        }
 	
 	        @Override
