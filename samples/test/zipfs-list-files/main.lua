@@ -56,9 +56,9 @@ print ( "Mounting test.zip: " .. tostring ( MOAIFileSystem.mountVirtualDirectory
 file = io.open ( "testzip/assets/levels.main.lua", "r" )
 print ( "File open success: " .. tostring ( file ) )
 
--- print ( "\nListing files in textzip/assets/levels" )
--- files = MOAIFileSystem.listFiles ( "testzip/assets/levels" )
--- printTable ( files )
+print ( "\nListing files in textzip/assets/levels" )
+files = MOAIFileSystem.listFiles ( "testzip/assets/levels" )
+printTable ( files )
 
 print ( "\nListing directories in testzip/assets" )
 files = MOAIFileSystem.listDirectories ( "testzip/assets" )
