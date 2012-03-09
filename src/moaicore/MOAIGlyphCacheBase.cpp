@@ -26,6 +26,16 @@ int MOAIGlyphCacheBase::_getImage ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 // TODO: doxygen
+int MOAIGlyphCacheBase::_setColorFormat ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGlyphCacheBase, "UN" )
+
+	self->mColorFormat = ( USColor::Format )state.GetValue < u32 >( 2, ( u32 )USColor::A_8 );
+
+	return 0;	
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
 int MOAIGlyphCacheBase::_setImage ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGlyphCacheBase, "UU" )
 
@@ -41,7 +51,8 @@ int MOAIGlyphCacheBase::_setImage ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIGlyphCacheBase::MOAIGlyphCacheBase () {
+MOAIGlyphCacheBase::MOAIGlyphCacheBase () :
+	mColorFormat ( USColor::A_8 ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAILuaObject )
@@ -62,6 +73,7 @@ void MOAIGlyphCacheBase::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	luaL_Reg regTable [] = {
 		{ "getImage",				_getImage },
+		{ "setColorFormat",			_setColorFormat },
 		{ "setImage",				_setImage },
 		{ NULL, NULL }
 	};

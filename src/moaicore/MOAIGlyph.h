@@ -47,6 +47,7 @@ private:
 public:
 
 	// TODO: this is a lot of friends; good idea to clean this up
+	friend class MOAIBitmapFontReader;
 	friend class MOAIFont;
 	friend class MOAIFreeTypeFontReader;
 	friend class MOAIGlyphSet;

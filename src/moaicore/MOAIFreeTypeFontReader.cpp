@@ -180,7 +180,6 @@ void MOAIFreeTypeFontReader::RenderGlyph ( MOAIFont& font, MOAIGlyph& glyph ) {
 			render.mPenY = glyph.mSrcY + bearingY;
 			
 			FT_Outline_Render ( this->mLibrary, &face->glyph->outline, &params );
-			// TODO: need to invalidate glyph rect
 		}
 	}
 }

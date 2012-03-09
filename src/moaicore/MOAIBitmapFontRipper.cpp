@@ -262,7 +262,7 @@ void MOAIBitmapFontRipper::RipGlyph ( u32 x, u32 y ) {
 		
 		int base = y - glyphRipper.mSrcRect.mYMin;
 		if ( base > this->mFontBase ) {
-			this->mFontBase = height;
+			this->mFontBase = base;
 		}
 	}
 }

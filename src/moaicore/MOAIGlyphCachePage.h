@@ -26,6 +26,8 @@ private:
 	RowList mRows;
 
 	MOAIImageTexture* mImageTexture;
+	
+	USColor::Format mColorFormat;
 
 	float mThreshold;
 
