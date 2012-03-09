@@ -65,6 +65,10 @@ function curveTests ()
 	textbox:reserveCurves ( 1 )
 	textbox:setCurve ( 1, curve )
 	
+	xmin, ymin, xmax, ymax = textbox:getRect ()
+	test.evaluate ( xmin == -150 and ymin == 70 and xmax == 150 and ymax == 230,
+		"Get rect" )
+	
 	continue = false
 	repeat coroutine.yield () until continue
 	
@@ -120,6 +124,10 @@ function pageTests ()
 	
 	textbox:forceUpdate ()
 	
+	xmin, ymin, xmax, ymax = textbox:getRect ()
+	test.evaluate ( xmin == -150 and ymin == 100 and xmax == 150 and ymax == 230,
+		"Get rect" )
+	
 	continue = false
 	
 	while textbox:more () do
@@ -148,6 +156,10 @@ function alignmentTests ()
 	textbox1:setYFlip ( true )
 	layer:insertProp ( textbox1 )
 	
+	xmin, ymin, xmax, ymax = textbox1:getRect ()
+	test.evaluate ( xmin == -150 and ymin == 70 and xmax == 150 and ymax == 230,
+		"Get rect" )
+	
 	text = 'This text is center justified. This text is center justified.'
 	local textbox2 = MOAITextBox.new ()
 	textbox2:setString ( text )
@@ -158,6 +170,10 @@ function alignmentTests ()
 	textbox2:setYFlip ( true )
 	layer:insertProp ( textbox2 )
 	
+	xmin, ymin, xmax, ymax = textbox2:getRect ()
+	test.evaluate ( xmin == -150 and ymin == -90 and xmax == 150 and ymax == 70,
+		"Get rect" )
+	
 	text = 'This text is right justified. This text is right justified.'
 	local textbox3 = MOAITextBox.new ()
 	textbox3:setString ( text )
@@ -167,6 +183,10 @@ function alignmentTests ()
 	textbox3:setAlignment ( MOAITextBox.RIGHT_JUSTIFY )
 	textbox3:setYFlip ( true )
 	layer:insertProp ( textbox3 )
+	
+	xmin, ymin, xmax, ymax = textbox3:getRect ()
+	test.evaluate ( xmin == -150 and ymin == -250 and xmax == 150 and ymax == -90,
+		"Get rect" )
 	
 	continue = false
 	repeat coroutine.yield () until continue
@@ -210,11 +230,19 @@ function revealTests ()
 	layer:insertProp ( textbox )
 	textbox:spool ()
 	
+	xmin, ymin, xmax, ymax = textbox:getRect ()
+	test.evaluate ( xmin == -150 and ymin == 70 and xmax == -50 and ymax == 230,
+		"Get rect" )
+	
 	continue = false
 	repeat coroutine.yield () until continue
 	textbox:stop ()
 	textbox:revealAll ()
 	textbox:setRect ( -150, 70, 150, 230 )
+	
+	xmin, ymin, xmax, ymax = textbox:getRect ()
+	test.evaluate ( xmin == -150 and ymin == 70 and xmax == 150 and ymax == 230,
+		"Get rect" )
 	
 	continue = false
 	repeat coroutine.yield () until continue
@@ -247,6 +275,10 @@ function highlightTests ()
 	textbox:setRect ( -150, 70, 150, 230 )
 	textbox:setYFlip ( true )
 	layer:insertProp ( textbox )
+	
+	xmin, ymin, xmax, ymax = textbox:getRect ()
+	test.evaluate ( xmin == -150 and ymin == 70 and xmax == 150 and ymax == 230,
+		"Get rect" )
 	
 	textbox:setHighlight ( 12, 10, 1, 1, 0 )
 	
@@ -291,46 +323,72 @@ function lineSpacingTests ()
 	layer:insertProp ( textbox )
 	
 	textbox:setLineSpacing ( 0 )
+	test.evaluate ( textbox:getLineSpacing () == 0,
+		"getLineSpacing with 0" )
+	
+	xmin, ymin, xmax, ymax = textbox:getRect ()
+	test.evaluate ( xmin == -150 and ymin == -230 and xmax == 150 and ymax == 230,
+		"Get rect" )
 	
 	continue = false
 	repeat coroutine.yield () until continue
 	textbox:setLineSpacing ( -10 )
+	test.evaluate ( textbox:getLineSpacing () == 0,
+		"getLineSpacing with -10" )
 	
 	continue = false
 	repeat coroutine.yield () until continue
 	textbox:setLineSpacing ( 2 )
+	test.evaluate ( textbox:getLineSpacing () == 2,
+		"getLineSpacing with 2" )
 	
 	continue = false
 	repeat coroutine.yield () until continue
 	textbox:setLineSpacing ( 3 )
+	test.evaluate ( textbox:getLineSpacing () == 3,
+		"getLineSpacing with 3" )
 	
 	continue = false
 	repeat coroutine.yield () until continue
 	textbox:setLineSpacing ( 4 )
+	test.evaluate ( textbox:getLineSpacing () == 4,
+		"getLineSpacing with 4" )
 	
 	continue = false
 	repeat coroutine.yield () until continue
 	textbox:setLineSpacing ( 5 )
+	test.evaluate ( textbox:getLineSpacing () == 5,
+		"getLineSpacing with 5" )
 	
 	continue = false
 	repeat coroutine.yield () until continue
 	textbox:setLineSpacing ( 6 )
+	test.evaluate ( textbox:getLineSpacing () == 6,
+		"getLineSpacing with 6" )
 	
 	continue = false
 	repeat coroutine.yield () until continue
 	textbox:setLineSpacing ( 7 )
+	test.evaluate ( textbox:getLineSpacing () == 7,
+		"getLineSpacing with 7" )
 	
 	continue = false
 	repeat coroutine.yield () until continue
 	textbox:setLineSpacing ( 8 )
+	test.evaluate ( textbox:getLineSpacing () == 8,
+		"getLineSpacing with 8" )
 	
 	continue = false
 	repeat coroutine.yield () until continue
 	textbox:setLineSpacing ( 9 )
+	test.evaluate ( textbox:getLineSpacing () == 9,
+		"getLineSpacing with 9" )
 	
 	continue = false
 	repeat coroutine.yield () until continue
 	textbox:setLineSpacing ( 10 )
+	test.evaluate ( textbox:getLineSpacing () == 10,
+		"getLineSpacing with 10" )
 	
 	continue = false
 	repeat coroutine.yield () until continue
@@ -351,6 +409,10 @@ function spoolSpeedTests ()
 	textbox:setRect ( -150, 70, 150, 230 )
 	textbox:setYFlip ( true )
 	layer:insertProp ( textbox )
+	
+	xmin, ymin, xmax, ymax = textbox:getRect ()
+	test.evaluate ( xmin == -150 and ymin == 70 and xmax == 150 and ymax == 230,
+		"Get rect" )
 	
 	textbox:setSpeed ( 24 )
 	textbox:spool ()
@@ -398,6 +460,10 @@ function setStyleTests ()
 	textbox:setRect ( -150, 70, 150, 230 )
 	textbox:setYFlip ( true )
 	layer:insertProp ( textbox )
+	
+	xmin, ymin, xmax, ymax = textbox:getRect ()
+	test.evaluate ( xmin == -150 and ymin == 70 and xmax == 150 and ymax == 230,
+		"Get rect" )
 	
 	local style1 = MOAITextStyle.new ()
 	style1:setColor ( 1, 0, 0, 1 )
@@ -463,6 +529,10 @@ function setStyleTests ()
 	textbox1:setYFlip ( true )
 	layer:insertProp ( textbox1 )
 	
+	xmin, ymin, xmax, ymax = textbox1:getRect ()
+	test.evaluate ( xmin == -150 and ymin == 70 and xmax == 150 and ymax == 230,
+		"Get rect" )
+	
 	text = 'This is <green>some test</> text to <yellow><blue>print out while</> testing different styles.</>'
 	local textbox2 = MOAITextBox.new ()
 	textbox2:setString ( text )
@@ -476,6 +546,10 @@ function setStyleTests ()
 	textbox2:setYFlip ( true )
 	layer:insertProp ( textbox2 )
 	
+	xmin, ymin, xmax, ymax = textbox2:getRect ()
+	test.evaluate ( xmin == -150 and ymin == -90 and xmax == 150 and ymax == 70,
+		"Get rect" )
+	
 	text = 'This is <green>some test</> text to <yellow><blue>print out while</> testing different styles.</>'
 	local textbox3 = MOAITextBox.new ()
 	textbox3:setString ( text )
@@ -488,6 +562,10 @@ function setStyleTests ()
 	textbox3:setAlignment ( MOAITextBox.RIGHT_JUSTIFY )
 	textbox3:setYFlip ( true )
 	layer:insertProp ( textbox3 )
+	
+	xmin, ymin, xmax, ymax = textbox3:getRect ()
+	test.evaluate ( xmin == -150 and ymin == -250 and xmax == 150 and ymax == -90,
+		"Get rect" )
 	
 	continue = false
 	repeat coroutine.yield () until continue
@@ -560,6 +638,10 @@ function setYFlipTests ()
 	textbox:setYFlip ( true )
 	layer:insertProp ( textbox )
 	
+	xmin, ymin, xmax, ymax = textbox:getRect ()
+	test.evaluate ( xmin == -150 and ymin == 70 and xmax == 150 and ymax == 230,
+		"Get rect" )
+	
 	continue = false
 	repeat coroutine.yield () until continue
 	text = '1Text is not YFLipped. 2Text is not YFLipped. 3Text is not YFLipped.'
@@ -582,8 +664,18 @@ end
 
 function longTextTests ()
 	running = true
+	text = "test \
+	"
 	
 	text = '1<red>Lorem ipsum dolor sit amet,</> consectetur adipiscing elit. <green>Pellentesque id<red> magna adipiscing</> augue mollis fringilla.</> Fusce mauris <yellow>justo, scelerisque sit</> amet condimentum at, <blue>accumsan in velit. Proin <yellow>suscipit, mauris <green>nec volutpat <blue>congue, orci sapien</> posuere arcu,</></> vitae</> tempor 2massa neque <green>nec metus. Lorem ipsum</> dolor sit<blue></><green> amet, consectetur</> adipi<green>scing elit.<blue> Etiam</> tristique,</> odio <red>vel adipiscing facilisis, magna neque scelerisque metus, et volutpat turpis erat in orci. <blue>Duis suscipit eleifend <red>posuere. Vivamus auctor cursus mi, eget dapibus risus fringilla eget. Donec bibendum urna 3vitae orci</></></> adipiscing facilisis. Nam ullamcorper ultrices tempor. Vivamus a tortor lectus, in euismod metus. Etiam cursus molestie arcu nec fermentum. Nulla porttitor dui eget neque dignissim tristique. Donec elit quam, lobortis vitae fringilla ut, placerat et leo. Phasellus iaculis commodo ante quis condimentum. Vestibulum at neque a 4nibh fringilla semper. Sed diam dolor, convallis a tempus in, fringilla id lacus. Donec bibendum, erat semper consequat cursus, nibh neque tempor quam, nec pellentesque justo ligula eget nibh. Vestibulum adipiscing, enim vitae porttitor semper, nisi est vestibulum elit, non varius tortor dui at quam. Suspendisse tincidunt, velit at mollis vehicula, nunc est vulputate enim, 5condimentum vestibulum tortor tortor sed nulla. Nunc ac lectus urna. Vivamus condimentum nisi volutpat nulla vestibulum at condimentum ligula viverra. Nunc nec adipiscing purus.'
+
+	-- gfxQuad = MOAIGfxQuad2D.new ()
+	-- gfxQuad:setTexture ( "box.png" )
+	-- gfxQuad:setRect ( -64, -64, 64, 64 )
+
+	-- prop = MOAIProp2D.new ()
+	-- prop:setDeck ( gfxQuad )
+	-- layer:insertProp ( prop )
 	
 	local textbox = MOAITextBox.new ()
 	textbox:setString ( text )
@@ -592,6 +684,11 @@ function longTextTests ()
 	textbox:setRect ( -150, -230, 150, 230 )
 	textbox:setYFlip ( true )
 	layer:insertProp ( textbox )
+	
+	xmin, ymin, xmax, ymax = textbox:getRect ()
+	test.evaluate ( xmin == -150 and ymin == -230 and xmax == 150 and ymax == 230,
+		"Get rect" )
+	-- prop:setRect ( xmin, ymin, xmax, ymax )
 	
 	local style = MOAITextStyle.new ()
 	style:setColor ( 1, 1, 1, 1 )
@@ -622,6 +719,8 @@ function longTextTests ()
 	style4:setFont ( font1 )
 	style4:setSize ( 12 )
 	textbox:setStyle ( 'yellow', style4 )
+	
+	print ( textbox:getStringBounds ( 1, 10 ) )
 	
 	continue = false
 	repeat coroutine.yield () until continue
