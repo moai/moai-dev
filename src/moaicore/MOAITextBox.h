@@ -86,6 +86,23 @@ public:
 };
 
 //================================================================//
+// MOAITextHighlight
+//================================================================//
+class MOAITextHighlight {
+
+	friend class MOAITextBox;
+
+	u32		mBase;
+	u32		mTop;
+	u32		mColor;
+
+	MOAITextHighlight* mPrev;
+	MOAITextHighlight* mNext;
+
+public:
+};
+
+//================================================================//
 // MOAITextBox
 //================================================================//
 /**	@name	MOAITextBox
@@ -148,7 +165,11 @@ private:
 	USLeanStack < MOAITextLine, 8 >		mLines;
 	bool								mMore;
 	
+	// list of highlight spans
+	MOAITextHighlight* mHighlights;
+	
 	//----------------------------------------------------------------//
+	static int			_clearHighlights		( lua_State* L );
 	static int			_getLineSpacing			( lua_State* L );
 	static int			_getRect				( lua_State* L );
 	static int			_getStringBounds		( lua_State* L );
@@ -171,7 +192,12 @@ private:
 	
 	//----------------------------------------------------------------//
 	MOAITextStyle*		AddAnonymousStyle		( MOAITextStyle* source );
+	void				AddHighlight			( u32 base, u32 top, u32 color );
+	void				ApplyHighlights			();
+	void				ClearHighlight			( u32 base, u32 top );
+	void				ClearHighlights			();
 	bool				CheckStylesChanged		();
+	void				CompactHighlights		();
 	void				FindSpriteSpan			( u32 idx, u32 size, u32& spanIdx, u32& spanSize );
 	void				Layout					();
 	void				OnDepNodeUpdate			();
@@ -180,7 +206,9 @@ private:
 	void				PushStyleSpan			( int base, int top, MOAITextStyle& style );
 	void				RefreshStyleGlyphs		();
 	void				ReleaseStyle			( MOAITextStyle* style );
+	void				RemoveHighlight			( MOAITextHighlight& highlight );
 	void				ResetLayout				();
+	void				ResetHighlights			();
 	void				ResetStyleMap			();
 	void				ResetStyleSet			();
 	void				RetainStyle				( MOAITextStyle* style );
