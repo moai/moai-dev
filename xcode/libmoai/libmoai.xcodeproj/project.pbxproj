@@ -1395,6 +1395,14 @@
 		07F59347143E318B00C6D185 /* MOAIUntzSampleBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 07F59343143E318B00C6D185 /* MOAIUntzSampleBuffer.h */; };
 		07FAC91613B8F1CA00AFD0B3 /* moaicore-pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07FAC91513B8F1CA00AFD0B3 /* moaicore-pch.cpp */; };
 		07FAC91813B8F1E000AFD0B3 /* uslscore-pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07FAC91713B8F1E000AFD0B3 /* uslscore-pch.cpp */; };
+		27F4D824150AF46D00A8F9C3 /* MOAIBitmapFontReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27F4D820150AF46D00A8F9C3 /* MOAIBitmapFontReader.cpp */; };
+		27F4D825150AF46D00A8F9C3 /* MOAIBitmapFontReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27F4D820150AF46D00A8F9C3 /* MOAIBitmapFontReader.cpp */; };
+		27F4D826150AF46D00A8F9C3 /* MOAIBitmapFontReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 27F4D821150AF46D00A8F9C3 /* MOAIBitmapFontReader.h */; };
+		27F4D827150AF46D00A8F9C3 /* MOAIBitmapFontReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 27F4D821150AF46D00A8F9C3 /* MOAIBitmapFontReader.h */; };
+		27F4D828150AF46D00A8F9C3 /* MOAIBitmapFontRipper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27F4D822150AF46D00A8F9C3 /* MOAIBitmapFontRipper.cpp */; };
+		27F4D829150AF46D00A8F9C3 /* MOAIBitmapFontRipper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27F4D822150AF46D00A8F9C3 /* MOAIBitmapFontRipper.cpp */; };
+		27F4D82A150AF46D00A8F9C3 /* MOAIBitmapFontRipper.h in Headers */ = {isa = PBXBuildFile; fileRef = 27F4D823150AF46D00A8F9C3 /* MOAIBitmapFontRipper.h */; };
+		27F4D82B150AF46D00A8F9C3 /* MOAIBitmapFontRipper.h in Headers */ = {isa = PBXBuildFile; fileRef = 27F4D823150AF46D00A8F9C3 /* MOAIBitmapFontRipper.h */; };
 		668E165914887A0A00897ED6 /* MOAIWheelSensor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 668E165714887A0A00897ED6 /* MOAIWheelSensor.cpp */; };
 		668E165A14887A0A00897ED6 /* MOAIWheelSensor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 668E165714887A0A00897ED6 /* MOAIWheelSensor.cpp */; };
 		668E165B14887A0A00897ED6 /* MOAIWheelSensor.h in Headers */ = {isa = PBXBuildFile; fileRef = 668E165814887A0A00897ED6 /* MOAIWheelSensor.h */; };
@@ -3946,6 +3954,10 @@
 		07F59343143E318B00C6D185 /* MOAIUntzSampleBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIUntzSampleBuffer.h; path = "moaiext-untz/MOAIUntzSampleBuffer.h"; sourceTree = "<group>"; };
 		07FAC91513B8F1CA00AFD0B3 /* moaicore-pch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "moaicore-pch.cpp"; sourceTree = "<group>"; };
 		07FAC91713B8F1E000AFD0B3 /* uslscore-pch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "uslscore-pch.cpp"; sourceTree = "<group>"; };
+		27F4D820150AF46D00A8F9C3 /* MOAIBitmapFontReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIBitmapFontReader.cpp; sourceTree = "<group>"; };
+		27F4D821150AF46D00A8F9C3 /* MOAIBitmapFontReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIBitmapFontReader.h; sourceTree = "<group>"; };
+		27F4D822150AF46D00A8F9C3 /* MOAIBitmapFontRipper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIBitmapFontRipper.cpp; sourceTree = "<group>"; };
+		27F4D823150AF46D00A8F9C3 /* MOAIBitmapFontRipper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIBitmapFontRipper.h; sourceTree = "<group>"; };
 		668E165714887A0A00897ED6 /* MOAIWheelSensor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIWheelSensor.cpp; sourceTree = "<group>"; };
 		668E165814887A0A00897ED6 /* MOAIWheelSensor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIWheelSensor.h; sourceTree = "<group>"; };
 		66D967F4140479DF00017919 /* MOAILogMessages.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAILogMessages.cpp; sourceTree = "<group>"; };
@@ -8536,6 +8548,10 @@
 		CD8824D814FD675B00A3250F /* font */ = {
 			isa = PBXGroup;
 			children = (
+				27F4D820150AF46D00A8F9C3 /* MOAIBitmapFontReader.cpp */,
+				27F4D821150AF46D00A8F9C3 /* MOAIBitmapFontReader.h */,
+				27F4D822150AF46D00A8F9C3 /* MOAIBitmapFontRipper.cpp */,
+				27F4D823150AF46D00A8F9C3 /* MOAIBitmapFontRipper.h */,
 				CD8824E814FD682700A3250F /* MOAIFont.cpp */,
 				CD8824E914FD682700A3250F /* MOAIFont.h */,
 				CD8824EA14FD682700A3250F /* MOAIFontReader.cpp */,
@@ -9359,6 +9375,8 @@
 				CD88257814FD68CD00A3250F /* USPrism.h in Headers */,
 				CD88257C14FD68CD00A3250F /* USRhombus.h in Headers */,
 				CD88257E14FD68CD00A3250F /* USVec4D.h in Headers */,
+				27F4D827150AF46D00A8F9C3 /* MOAIBitmapFontReader.h in Headers */,
+				27F4D82B150AF46D00A8F9C3 /* MOAIBitmapFontRipper.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10032,6 +10050,8 @@
 				CD88257714FD68CD00A3250F /* USPrism.h in Headers */,
 				CD88257B14FD68CD00A3250F /* USRhombus.h in Headers */,
 				CD88257D14FD68CD00A3250F /* USVec4D.h in Headers */,
+				27F4D826150AF46D00A8F9C3 /* MOAIBitmapFontReader.h in Headers */,
+				27F4D82A150AF46D00A8F9C3 /* MOAIBitmapFontRipper.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11025,6 +11045,8 @@
 				CD88257214FD68CD00A3250F /* USFrustum.cpp in Sources */,
 				CD88257614FD68CD00A3250F /* USPrism.cpp in Sources */,
 				CD88257A14FD68CD00A3250F /* USRhombus.cpp in Sources */,
+				27F4D825150AF46D00A8F9C3 /* MOAIBitmapFontReader.cpp in Sources */,
+				27F4D829150AF46D00A8F9C3 /* MOAIBitmapFontRipper.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12173,6 +12195,8 @@
 				CD88257114FD68CD00A3250F /* USFrustum.cpp in Sources */,
 				CD88257514FD68CD00A3250F /* USPrism.cpp in Sources */,
 				CD88257914FD68CD00A3250F /* USRhombus.cpp in Sources */,
+				27F4D824150AF46D00A8F9C3 /* MOAIBitmapFontReader.cpp in Sources */,
+				27F4D828150AF46D00A8F9C3 /* MOAIBitmapFontRipper.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
