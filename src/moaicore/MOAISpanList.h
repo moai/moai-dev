@@ -46,7 +46,7 @@ public:
 		
 		// find the first span large enough to accomodate the request
 		// as allocations schemes go this is pretty naive, yo
-		// but glyphs will more or less me roughly the same size...
+		// but glyphs will more or less be roughly the same size...
 		// could also speed this up by keeping a free span list or sorted rb tree
 		for ( ; span; span = span->mNext ) {
 			

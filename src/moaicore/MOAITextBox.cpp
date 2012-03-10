@@ -61,6 +61,16 @@ void MOAITextStyleRef::UpdateState () {
 //================================================================//
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAITextBox::_clearHighlights ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextBox, "U" )
+	
+	self->ClearHighlights ();
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	getLineSpacing
 	@text	Returns the spacing between lines (in pixels).
 
@@ -478,6 +488,138 @@ MOAITextStyle* MOAITextBox::AddAnonymousStyle ( MOAITextStyle* source ) {
 }
 
 //----------------------------------------------------------------//
+void MOAITextBox::AddHighlight ( u32 base, u32 top, u32 color ) {
+
+	// make room for the new highlight
+	this->ClearHighlight ( base, top );
+
+	MOAITextHighlight* highlight = new MOAITextHighlight ();
+	
+	highlight->mBase	= base;
+	highlight->mTop		= top;
+	highlight->mColor	= color;
+	highlight->mPrev	= 0;
+	highlight->mNext	= 0;
+	
+	if ( !this->mHighlights ) {
+		this->mHighlights = highlight;
+		return;
+	}
+	
+	MOAITextHighlight* best = 0;
+	MOAITextHighlight* cursor = this->mHighlights;
+	for ( ; cursor; cursor = cursor->mNext ) {
+		if ( cursor->mBase >= base ) break;
+		best = cursor;
+	}
+	
+	if ( best ) {
+	
+		highlight->mNext = best->mNext;
+		highlight->mPrev = best;
+	
+		if ( best->mNext ) {
+			best->mNext->mPrev = highlight;
+		}
+		best->mNext = highlight;
+	}
+	else {
+	
+		highlight->mNext = this->mHighlights;
+		this->mHighlights = highlight;
+		
+		if ( highlight->mNext ) {
+			highlight->mNext->mPrev = highlight;
+		}
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAITextBox::ApplyHighlights () {
+
+	u32 totalSprites = this->mSprites.GetTop ();
+	u32 spriteIdx = 0;
+	MOAITextHighlight* highlight = this->mHighlights;
+	
+	while (( spriteIdx < totalSprites ) && highlight ) {
+		MOAITextSprite& sprite = this->mSprites [ spriteIdx ];
+		
+		if ( sprite.mIdx >= highlight->mTop ) {
+			highlight = highlight->mNext;
+		}
+		else {
+		
+			if ( sprite.mIdx >= highlight->mBase ) {
+				sprite.mRGBA = highlight->mColor;
+				sprite.mMask |= MOAITextSprite::MASK_COLOR;
+			}
+			spriteIdx++;
+		}
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAITextBox::ClearHighlight ( u32 base, u32 top ) {
+
+	MOAITextHighlight* highlight = this->mHighlights;
+	for ( ; highlight; highlight = highlight->mNext ) {
+		
+		if ( highlight->mTop <= base ) continue;
+		if ( highlight->mBase >= top ) continue;
+		
+		// cursor is inside of span
+		if (( highlight->mBase >= base ) && ( highlight->mTop <= top )) {
+			highlight->mBase = highlight->mTop;
+			continue;
+		}
+		
+		// cursor contains span
+		if (( highlight->mBase < base ) && ( highlight->mTop > top )) {
+			
+			MOAITextHighlight* split = new MOAITextHighlight ();
+			
+			split->mColor	= highlight->mColor;
+			split->mBase	= top;
+			split->mTop		= highlight->mTop;
+			
+			split->mPrev = highlight;
+			split->mNext = highlight->mNext;
+			
+			highlight->mTop = base;
+			
+			if ( highlight->mNext ) {
+				highlight->mNext->mPrev = split;
+			}
+			highlight->mNext = split;
+			break;
+		}
+		
+		if (( highlight->mBase < base ) && ( base < highlight->mTop )) {
+			highlight->mTop = base;
+			continue;
+		}
+		
+		if (( highlight->mBase < top ) && ( top < highlight->mTop )) {
+			highlight->mBase = top;
+			continue;
+		}
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAITextBox::ClearHighlights () {
+
+	MOAITextHighlight* cursor = this->mHighlights;
+	this->mHighlights = 0;
+	
+	while ( cursor ) {
+		MOAITextHighlight* highlight = cursor;
+		cursor = cursor->mNext;
+		delete highlight;
+	}
+}
+
+//----------------------------------------------------------------//
 bool MOAITextBox::CheckStylesChanged () {
 
 	bool status = false;
@@ -512,6 +654,47 @@ void MOAITextBox::ClearCurves () {
 		this->LuaRelease ( this->mCurves [ i ]);
 	}
 	this->mCurves.Clear ();
+}
+
+//----------------------------------------------------------------//
+void MOAITextBox::CompactHighlights () {
+
+	MOAITextHighlight* cursor = this->mHighlights;
+	while ( cursor ) {
+	
+		MOAITextHighlight* highlight = cursor;
+		cursor = highlight->mNext;
+	
+		// prune empty highlights
+		if ( highlight->mBase == highlight->mTop ) {
+			this->RemoveHighlight ( *highlight );
+			delete highlight;
+			continue;
+		}
+		
+		// gobble up any adjacent (or overlapping) same-colored highlights
+		// break if we hit a gap or another color
+		MOAITextHighlight* cursor2 = highlight->mNext;
+		while ( cursor2 ) {
+			MOAITextHighlight* highlight2 = cursor2;
+			cursor2 = highlight2->mNext;
+			
+			if ( highlight2->mBase != highlight2->mTop ) {
+			
+				if ( highlight->mColor != highlight2->mColor ) break;
+				if ( highlight->mTop < highlight2->mBase ) break;
+				
+				if ( highlight->mTop < highlight2->mTop ) {
+					highlight->mTop = highlight2->mTop;
+				}
+			}
+			
+			this->RemoveHighlight ( *highlight2 );
+			delete highlight2;
+		}
+		
+		cursor = highlight->mNext;
+	}
 }
 
 //----------------------------------------------------------------//
@@ -714,6 +897,8 @@ void MOAITextBox::Layout () {
 		
 		MOAITextDesigner designer;
 		designer.BuildLayout ( *this );
+	
+		this->ApplyHighlights ();
 	}
 	
 	this->mNeedsLayout = false;
@@ -733,7 +918,8 @@ MOAITextBox::MOAITextBox () :
 	mCurrentPageIdx ( 0 ),
 	mNextPageIdx ( 0 ),
 	mNeedsLayout ( false ),
-	mMore ( false ) {
+	mMore ( false ),
+	mHighlights ( 0 ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIProp )
@@ -742,7 +928,6 @@ MOAITextBox::MOAITextBox () :
 	
 	this->mFrame.Init ( 0.0f, 0.0f, 0.0f, 0.0f ); 
 	this->SetMask ( MOAIProp::CAN_DRAW | MOAIProp::CAN_DRAW_DEBUG );
-	
 	this->mBlendMode.SetBlend ( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
 }
 
@@ -750,6 +935,7 @@ MOAITextBox::MOAITextBox () :
 MOAITextBox::~MOAITextBox () {
 
 	this->ClearCurves ();
+	this->ClearHighlights ();
 	
 	this->ResetLayout ();
 	this->ResetStyleMap ();
@@ -903,6 +1089,7 @@ void MOAITextBox::RegisterLuaFuncs ( MOAILuaState& state ) {
 	MOAIAction::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
+		{ "clearHighlights",		_clearHighlights },
 		{ "getLineSpacing",			_getLineSpacing },
 		{ "getRect",				_getRect },
 		{ "getStringBounds",		_getStringBounds },
@@ -938,6 +1125,24 @@ void MOAITextBox::ReleaseStyle ( MOAITextStyle* style ) {
 }
 
 //----------------------------------------------------------------//
+void MOAITextBox::RemoveHighlight ( MOAITextHighlight& highlight ) {
+
+	MOAITextHighlight* prev = highlight.mPrev;
+	MOAITextHighlight* next = highlight.mNext;
+	
+	if ( prev ) {
+		prev->mNext = next;
+	}
+	else {
+		this->mHighlights = next;	
+	}
+	
+	if ( next ) {
+		next->mPrev = prev;
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAITextBox::ReserveCurves ( u32 total ) {
 
 	this->ClearCurves ();
@@ -952,6 +1157,16 @@ void MOAITextBox::ResetLayout () {
 	this->mMore = false;
 	this->mLines.Reset ();
 	this->mSprites.Reset ();
+}
+
+//----------------------------------------------------------------//
+void MOAITextBox::ResetHighlights () {
+
+	u32 top = this->mSprites.GetTop ();
+	for ( u32 i = 0; i > top; ++i ) {
+		MOAITextSprite& sprite = this->mSprites [ i ];
+		sprite.mMask = sprite.mMask & ~MOAITextSprite::MASK_COLOR;
+	}
 }
 
 //----------------------------------------------------------------//
@@ -1021,37 +1236,22 @@ void MOAITextBox::SetCurve ( u32 idx, MOAIAnimCurve* curve ) {
 void MOAITextBox::SetHighlight ( u32 idx, u32 size ) {
 
 	if ( !size ) return;
-	this->Layout ();
-	
-	u32 spanIdx;
-	u32 spanSize;
-	
-	this->FindSpriteSpan ( idx, size, spanIdx, spanSize );
-	if ( !spanSize ) return;
-	
-	for ( u32 i = 0; i < spanSize; ++i ) {
-		MOAITextSprite& sprite = this->mSprites [ spanIdx + i ];
-		sprite.mMask = sprite.mMask & ~MOAITextSprite::MASK_COLOR;
-	}
+
+	this->ClearHighlight ( idx, idx + size );
+	this->CompactHighlights ();
+	this->ResetHighlights ();
+	this->ApplyHighlights ();
 }
 
 //----------------------------------------------------------------//
 void MOAITextBox::SetHighlight ( u32 idx, u32 size, u32 color ) {
 
 	if ( !size ) return;
-	this->Layout ();
-	
-	u32 spanIdx;
-	u32 spanSize;
-	
-	this->FindSpriteSpan ( idx, size, spanIdx, spanSize );
-	if ( !spanSize ) return;
-	
-	for ( u32 i = 0; i < spanSize; ++i ) {
-		MOAITextSprite& sprite = this->mSprites [ spanIdx + i ];
-		sprite.mRGBA = color;
-		sprite.mMask |= MOAITextSprite::MASK_COLOR;
-	}
+
+	this->AddHighlight ( idx, idx + size, color );
+	this->CompactHighlights ();
+	this->ResetHighlights ();
+	this->ApplyHighlights ();
 }
 
 //----------------------------------------------------------------//
@@ -1106,5 +1306,5 @@ void MOAITextBox::SetText ( cc8* text ) {
 	this->mNextPageIdx = 0;
 	
 	this->ResetStyleMap ();
+	this->ClearHighlights ();
 }
-
