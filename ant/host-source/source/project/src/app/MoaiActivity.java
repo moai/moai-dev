@@ -38,10 +38,6 @@ import android.content.pm.PackageManager.NameNotFoundException;
 // Moai
 import com.ziplinegames.moai.*;
 
-// Facebook
-import com.facebook.android.*;
-import com.facebook.android.Facebook.*;
-
 enum DIALOG_RESULT {
 	POSITIVE,
 	NEUTRAL,
@@ -85,7 +81,6 @@ public class MoaiActivity extends Activity {
 	private SensorManager 					mSensorManager;
 	private boolean							mWaitingToResume;
 	private boolean							mWindowFocusLost;
-	private Facebook 						mFacebook;
 	
 	// Threading indications; M = Runs on Main thread, R = Runs on GL thread,
 	// ? = Runs on arbitrary thread.
@@ -98,9 +93,7 @@ public class MoaiActivity extends Activity {
 	protected static native void 		AKUMountVirtualDirectory 			( String virtualPath, String archive ); // M
 	protected static native boolean 	AKUNotifyBackButtonPressed			(); // M
 	protected static native void 		AKUNotifyDialogDismissed			( int dialogResult ); // M
-	protected static native void		AKUNotifyFacebookDialog				( int statusCode );
-	protected static native void		AKUNotifyFacebookLogin				( int statusCode );
-	protected static native void 		AKUSetConnectionType 				( long connectionType ); // M	
+	protected static native void 		AKUSetConnectionType 				( long connectionType ); // M
 	protected static native void 		AKUSetDocumentDirectory 			( String path ); // M
 	protected static native void 		AKUSetWorkingDirectory 				( String path ); // M
 
@@ -111,12 +104,12 @@ public class MoaiActivity extends Activity {
 
     	super.onCreate ( savedInstanceState );
 
-       	System.load ( "/data/data/@PACKAGE@/lib/libmoai.so" ); 
+       	System.load ( "/data/data/@PACKAGE@/lib/libmoai.so" );
 
-		Moai.onCreate ( this );
+		Moai.onCreate ( this, getIntent ().getExtras ());
 
         requestWindowFeature ( Window.FEATURE_NO_TITLE );
-	    getWindow ().addFlags ( WindowManager.LayoutParams.FLAG_FULLSCREEN ); 
+	    getWindow ().addFlags ( WindowManager.LayoutParams.FLAG_FULLSCREEN );
 	    getWindow ().addFlags ( WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON );
 
 		Display display = (( WindowManager ) getSystemService ( Context.WINDOW_SERVICE )).getDefaultDisplay ();
@@ -195,6 +188,8 @@ public class MoaiActivity extends Activity {
 		
 		// Sessions are started in MoaiView.
 		AKUAppWillEndSession ();
+
+		Moai.setApplicationState ( Moai.ApplicationState.APPLICATION_PAUSED );
 	}
 	
 	//----------------------------------------------------------------//
@@ -204,7 +199,7 @@ public class MoaiActivity extends Activity {
 
 		super.onResume ();
 		
-		Moai.onResume ();
+		Moai.onResume ( getIntent ().getExtras ());
 		
 		if ( mAccelerometerListener != null ) {
 			
@@ -248,8 +243,6 @@ public class MoaiActivity extends Activity {
         super.onActivityResult ( requestCode, resultCode, data );
 
 		Moai.onActivityResult ( requestCode, resultCode, data );
-
-        mFacebook.authorizeCallback ( requestCode, resultCode, data );
     }
 
 	//================================================================//
@@ -431,88 +424,7 @@ public class MoaiActivity extends Activity {
 		Intent intent = new Intent ( Intent.ACTION_VIEW, uri );
 		MoaiActivity.this.startActivity ( intent );
 	}
-	
-	//================================================================//
-	// Facebook JNI callback methods
-	//================================================================//
 
-	//----------------------------------------------------------------//
-	
-	public String facebookGetToken () {
-		return mFacebook.getAccessToken (); 
-	}
-	
-	public void facebookLogin ( String [] permissions ) {
-		mFacebook.authorize ( this, permissions, new DialogListener () {
-	        @Override
-	        public void onComplete( Bundle values ) {
-				AKUNotifyFacebookLogin ( 1 );
-	        }
-
-	        @Override
-	        public void onFacebookError ( FacebookError error ) {
-				AKUNotifyFacebookLogin ( 0 );
-			}
-
-	        @Override
-	        public void onError ( DialogError e ) {
-				AKUNotifyFacebookLogin ( 0 );
-			}
-
-	        @Override
-	        public void onCancel () {
-				AKUNotifyFacebookLogin ( 0 );
-			}
-	     });
-	}
-
-	public void facebookLogout () {
-		
-		try {
-			mFacebook.logout ( this );			
-		}
-		catch ( Throwable  e ) {
-			
-		}
-	}
-	
-	public void facebookInit ( String apId ) {
-		mFacebook = new Facebook ( apId ); 
-	}
-
-	public boolean facebookIsSessionValid () {
-		return mFacebook.isSessionValid ();
-	}
-	
-	public void facebookPostToFeed () {
-		
-		mFacebook.dialog ( this, "feed", new DialogListener () {
-	        @Override
-	        public void onComplete( Bundle values ) {
-				AKUNotifyFacebookDialog ( 1 );
-	        }
-
-	        @Override
-	        public void onFacebookError ( FacebookError error ) {
-				AKUNotifyFacebookDialog ( 0 );
-			}
-
-	        @Override
-	        public void onError ( DialogError e ) {
-				AKUNotifyFacebookDialog ( 0 );
-			}
-
-	        @Override
-	        public void onCancel () {
-				AKUNotifyFacebookDialog ( 0 );
-			}
-	     });
-	}
-	
-	public void facebookSetToken ( String token ) {
-		mFacebook.setAccessToken ( token ); 
-	}
-	
 	//================================================================//
 	// ConnectivityBroadcastReceiver
 	//================================================================//

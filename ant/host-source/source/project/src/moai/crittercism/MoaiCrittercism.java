@@ -7,6 +7,7 @@
 package com.ziplinegames.moai;
 
 import android.app.Activity;
+import android.os.Bundle;
 
 import com.crittercism.app.Crittercism;
 
@@ -18,9 +19,9 @@ public class MoaiCrittercism {
 	private static Activity sActivity = null;
 
 	//----------------------------------------------------------------//
-	public static void onCreate ( Activity activity ) {
+	public static void onCreate ( Activity activity, Bundle extras ) {
 		
-		MoaiLog.i ( "onCreate: Initializing Crittercism" );
+		MoaiLog.i ( "MoaiCrittercism onCreate: Initializing Crittercism" );
 		
 		sActivity = activity;
 	}

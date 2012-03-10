@@ -7,6 +7,7 @@
 package com.ziplinegames.moai;
 
 import android.app.Activity;
+import android.os.Bundle;
 
 import java.util.ArrayList;
 
@@ -30,9 +31,9 @@ public class MoaiGoogleBilling extends MoaiGoogleBillingPurchaseObserver {
 	}
 
 	//----------------------------------------------------------------//
-	public static void onCreate ( Activity activity ) {
+	public static void onCreate ( Activity activity, Bundle extras ) {
 		
-		MoaiLog.i ( "onCreate: Initializing Google Billing" );
+		MoaiLog.i ( "MoaiGoogleBilling onCreate: Initializing Google Billing" );
 		
 		sActivity = activity;
 

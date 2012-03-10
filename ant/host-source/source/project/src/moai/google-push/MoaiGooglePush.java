@@ -9,6 +9,7 @@ package com.ziplinegames.moai;
 import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.os.Bundle;
 
 //================================================================//
 // MoaiGooglePush
@@ -16,13 +17,49 @@ import android.content.Intent;
 public class MoaiGooglePush {
 
 	private static Activity sActivity = null;
+	private static Bundle sPendingNotification = null;
 
 	//----------------------------------------------------------------//
-	public static void onCreate ( Activity activity ) {
+	public static void onApplicationStateChanged ( Moai.ApplicationState state ) {
 		
-		MoaiLog.i ( "onCreate: Initializing Google Push" );
+		MoaiLog.i ( "MoaiGooglePush onApplicationStateChanged: " + state );
+
+		if (( state == Moai.ApplicationState.APPLICATION_RUNNING ) && ( sPendingNotification != null )) {
+			
+			Intent intent = new Intent ().putExtras ( sPendingNotification );
+			MoaiGooglePushReceiver.handleMessage ( sActivity, intent );
+			
+			sPendingNotification = null;
+		}
+	}
+
+	//----------------------------------------------------------------//
+	public static void onCreate ( Activity activity, Bundle extras ) {
+		
+		MoaiLog.i ( "MoaiGooglePush onCreate: Initializing Google Push" );
 		
 		sActivity = activity;
+	}
+
+	//----------------------------------------------------------------//
+	public static void onResume ( Bundle extras ) {
+		
+		Bundle notification = extras.getBundle ( MoaiGooglePushConstants.ACTION_RECEIVE );
+    	if ( notification != null ) {
+
+			MoaiLog.i ( "MoaiGooglePush onResume: Got a remote notification in app resume" );
+			
+			if ( Moai.getApplicationState () == Moai.ApplicationState.APPLICATION_RUNNING ) {
+				
+				Intent intent = new Intent ().putExtras ( notification );
+				MoaiGooglePushReceiver.handleMessage ( sActivity, intent );
+
+				sPendingNotification = null;
+			} else {
+				
+				sPendingNotification = notification;
+			}
+		}
 	}
 
 	//================================================================//

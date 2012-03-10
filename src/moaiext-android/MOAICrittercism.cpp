@@ -64,7 +64,7 @@ MOAICrittercism::~MOAICrittercism () {
 //----------------------------------------------------------------//
 void MOAICrittercism::RegisterLuaClass ( MOAILuaState& state ) {
 
-	luaL_Reg regTable[] = {
+	luaL_Reg regTable [] = {
 		{ "init",	_init },
 		{ NULL, NULL }
 	};

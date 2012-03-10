@@ -8,6 +8,7 @@ package com.ziplinegames.moai;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -16,7 +17,25 @@ import java.util.ArrayList;
 // Moai
 //================================================================//
 public class Moai {
+
+	public enum ApplicationState {
 	
+        APPLICATION_UNINITIALIZED,
+        APPLICATION_RUNNING,
+        APPLICATION_PAUSED;
+
+        public static ApplicationState valueOf ( int index ) {
+	
+            ApplicationState [] values = ApplicationState.values ();
+            if (( index < 0 ) || ( index >= values.length )) {
+	
+                return APPLICATION_UNINITIALIZED;
+            }
+
+            return values [ index ];
+        }
+    }
+
 	private static String [] sExternalClasses = {
 		"com.ziplinegames.moai.MoaiAdColony",
 		"com.ziplinegames.moai.MoaiCrittercism",
@@ -26,6 +45,7 @@ public class Moai {
 		"com.ziplinegames.moai.MoaiTapjoy",
 	};
 	
+	private static ApplicationState sApplicationState = ApplicationState.APPLICATION_UNINITIALIZED;
 	private static ArrayList < Class > sAvailableClasses = new ArrayList < Class > ();
 
 	//----------------------------------------------------------------//
@@ -40,18 +60,28 @@ public class Moai {
 			}
 		}
 	}
+
+	//----------------------------------------------------------------//
+	public static ApplicationState getApplicationState () {
+
+		return sApplicationState;
+	}
 	
 	//----------------------------------------------------------------//
 	public static void onActivityResult ( int requestCode, int resultCode, Intent data ) {
 	
+		for ( Class theClass : sAvailableClasses ) {
+
+			executeMethod ( theClass, null, "onActivityResult", new Class [] { java.lang.Integer.TYPE, java.lang.Integer.TYPE, Intent.class }, new Object [] { new Integer ( requestCode ), new Integer ( resultCode ), data });
+		}	
 	}
 
 	//----------------------------------------------------------------//
-	public static void onCreate ( Activity activity ) {
+	public static void onCreate ( Activity activity, Bundle extras ) {
 
 		for ( Class theClass : sAvailableClasses ) {
 			
-			executeMethod ( theClass, null, "onCreate", new Class [] { Activity.class }, new Object [] { activity });
+			executeMethod ( theClass, null, "onCreate", new Class [] { Activity.class, Bundle.class }, new Object [] { activity, extras });
 		}
 	}
 	
@@ -74,11 +104,11 @@ public class Moai {
 	}
 
 	//----------------------------------------------------------------//
-	public static void onResume () {
+	public static void onResume ( Bundle extras ) {
 	
 		for ( Class theClass : sAvailableClasses ) {
 
-			executeMethod ( theClass, null, "onResume", new Class [] { }, new Object [] { });
+			executeMethod ( theClass, null, "onResume", new Class [] { Bundle.class }, new Object [] { extras });
 		}		
 	}
 
@@ -98,6 +128,20 @@ public class Moai {
 
 			executeMethod ( theClass, null, "onStop", new Class [] { }, new Object [] { });
 		}		
+	}
+
+	//----------------------------------------------------------------//
+	public static void setApplicationState ( ApplicationState state ) {
+
+		if ( state != sApplicationState ) {
+			
+			sApplicationState = state;
+		
+			for ( Class theClass : sAvailableClasses ) {
+			
+				executeMethod ( theClass, null, "onApplicationStateChanged", new Class [] { ApplicationState.class }, new Object [] { sApplicationState });
+			}
+		}
 	}
 	
 	//================================================================//
@@ -130,7 +174,7 @@ public class Moai {
 
 				result = theMethod.invoke ( theInstance, parameterValues );
 			} catch ( Throwable e ) {
-
+				
 			}			
 		}
 		

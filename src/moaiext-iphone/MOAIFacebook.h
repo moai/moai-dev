@@ -44,14 +44,13 @@ public:
 	DECL_LUA_SINGLETON ( MOAIFacebook );
 		
 	enum {
-		
-		DIALOG_DID_CANCEL,
 		DIALOG_DID_COMPLETE,
+		DIALOG_DID_NOT_COMPLETE,
 		SESSION_DID_LOGIN,
 		SESSION_DID_NOT_LOGIN
 	};
 		
-	void			DialogDidCancel					();
+	void			DialogDidNotComplete			();
 	void			DialogDidComplete				();
 	void			HandleOpenURL					( NSURL* url );
                     MOAIFacebook					();
