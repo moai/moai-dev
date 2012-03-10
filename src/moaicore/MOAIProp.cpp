@@ -760,7 +760,7 @@ u32 MOAIProp::GetDeckBounds ( USBox& bounds ) {
 	if ( this->mGrid ) {
 		
 		USRect rect = this->mGrid->GetBounds ();
-		bounds.Init ( rect.mXMin, rect.mYMin, 0.0f, rect.mXMax, rect.mYMax, 0.0f );
+		bounds.Init ( rect.mXMin, rect.mYMin, rect.mXMax, rect.mYMax, 0.0f, 0.0f );
 		status = this->mGrid->GetRepeat () ? BOUNDS_GLOBAL : BOUNDS_OK;
 	}
 	else if ( this->mDeck ) {
