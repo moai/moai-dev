@@ -9,6 +9,10 @@
 #include <moaicore/MOAIUrlMgr.h>
 #include <moaicore/MOAIXmlParser.h>
 
+#ifdef _WIN32
+	#include <algorithm>
+#endif
+
 #ifdef MOAI_OS_NACL
 	#include <moaicore/MOAIHttpTaskInfo_nacl.h>
 #else

@@ -7,6 +7,11 @@
 #include <moaicore/MOAIHttpTaskInfo_curl.h>
 #include <moaicore/MOAIUrlMgr.h>
 
+#ifdef _WIN32
+	#include <algorithm>
+#endif
+
+
 //----------------------------------------------------------------//
 void MOAIHttpTaskInfo::_printError ( CURLcode error ) {
 
