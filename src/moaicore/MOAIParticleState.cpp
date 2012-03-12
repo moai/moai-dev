@@ -311,6 +311,7 @@ void MOAIParticleState::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setDamping",				_setDamping },
 		{ "setInitScript",			_setInitScript },
 		{ "setMass",				_setMass },
+		{ "setPexPlugin",			_setPexPlugin },
 		{ "setPlugin",				_setPlugin },
 		{ "setNext",				_setNext },
 		{ "setRenderScript",		_setRenderScript },

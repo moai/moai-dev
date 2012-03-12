@@ -30,12 +30,12 @@ int MOAIPexParticle::_getDuration( lua_State* L ){
 	lua_pushnumber ( state, self->mDuration );
 	return 1;
 }
-int MOAIPexParticle::_getEmissionCount( lua_State* L ){
+int MOAIPexParticle::_getEmission( lua_State* L ){
 	MOAI_LUA_SETUP ( MOAIPexParticle, "U" )
 	lua_pushnumber ( state, self->mEmissionCount );
 	return 1;
 }
-int MOAIPexParticle::_getEmissionRate( lua_State* L ){
+int MOAIPexParticle::_getFrequency( lua_State* L ){
 	MOAI_LUA_SETUP ( MOAIPexParticle, "U" )
 	lua_pushnumber ( state, self->mEmissionRate );
 	return 1;
@@ -74,23 +74,27 @@ int MOAIPexParticle::_getSize ( lua_State* L ) {
 	return 1;
 }
 
+//----------------------------------------------------------------//
+/**	@name	getTextureName
+	@text	Return the texture name associated with plugin.
+	
+	@in		MOAIParticlePlugin self
+	@out	string textureName
+*/
 int MOAIPexParticle::_getTextureName( lua_State* L ){
 	MOAI_LUA_SETUP ( MOAIPexParticle, "U" )
 
 		lua_pushstring( state, self->mTextureName);
 	return 1;
 }
-/**	@name	loadExternal
+/**	@name	load
 	@text	Create a particle plugin from an XML file
 	
 	@in		String file to load
-	@out	MOAIParticleSystem system
-	@out	MOAITParticleTimedEmitter emitter
-	@out	String	texture file associated with particle system
+	@out	MOAIPexPlugin - The plugin object that has been initialized with XML's data
 */
-int MOAIPexParticle::_loadExternal( lua_State* L ){
+int MOAIPexParticle::_load( lua_State* L ){
 
-	//MOAI_LUA_SETUP ( MOAIParticlePlugin, "S" )
 	MOAILuaState state ( L );										
 	if ( !state.CheckParams ( 1, "S" )) {							
 		MOAILog ( L, MOAILogMessages::MOAI_ParamTypeMismatch );		
@@ -99,42 +103,13 @@ int MOAIPexParticle::_loadExternal( lua_State* L ){
 		
 	cc8* xml = lua_tostring ( state, 1 );
 
-	lua_getglobal ( L, "PexParticles" );
 	
-	if ( lua_isnil ( L, -1 )) {
-		lua_newtable ( L );
-		lua_setglobal ( L, "PexParticles" );
-	}
-	
-	lua_getglobal ( L, "PexParticles" );
-
-	assert ( lua_isnil ( L, -1 ) == false );
-	MOAIPexParticle *particle = NULL;
-	
-	if ( lua_type (L, -2 ) == LUA_TUSERDATA) {
-		particle = *( MOAIPexParticle** )lua_touserdata (L, -2 );
-	}
-
-	if(particle)
-	{
-		particle->PushLuaUserdata( state );
-		return 1;
-	}
-	else if ( MOAILogMessages::CheckFileExists ( xml, L )) {
+	if ( MOAILogMessages::CheckFileExists ( xml, L )) {
 		TiXmlDocument doc;
 		doc.LoadFile ( xml );
-		particle = new MOAIPexParticle();
+		MOAIPexParticle *particle = new MOAIPexParticle();
 		MOAIPexParticle::Parse ( state, *particle, doc.RootElement ());
 		particle->mParticlePath = xml;
-		//PexInitFunc initFunc = &MOAIPexParticle::_initGravityScript;
-		//particle->mInitFunc = &MOAIPexParticle::_initGravityScript;
-		//particle->mRenderFunc = &MOAIPexParticle::_renderGravityScript;
-		/*if( particle->mEmitterType == EMITTER_GRAVITY )
-			particle->Init(_initGravityScript,_renderGravityScript);
-		else
-			particle->Init();*/
-		//lua_setfield ( L, -2, xml );
-		lua_pop ( L, 1 );
 		particle->PushLuaUserdata( state );
 		return 1;
 	}
@@ -666,8 +641,7 @@ void MOAIPexParticle::_renderGravityScript		( float* particle, float* registers,
 	sprite->mYLoc = particle[ MOAIParticle::PARTICLE_Y ];
 
 	sprite->mGfxID = 1;
-	//printf( "Arrr: %f, %f\n", particle[ MOAIParticle::PARTICLE_X ], particle[ MOAIParticle::PARTICLE_Y ]);
-
+	
 }
 void MOAIPexParticle::_renderRadialScript( float* particle, float* registers, AKUParticleSprite* sprite, float t0, float t1 )
 {
@@ -809,7 +783,7 @@ MOAIPexParticle::~MOAIPexParticle () {
 void MOAIPexParticle::RegisterLuaClass ( MOAILuaState& state ) {
 	//UNUSED ( state );
 	luaL_Reg regTable [] = {
-		{ "loadExternal", _loadExternal },
+		{ "load", _load },
 		{ NULL, NULL }
 	};
 	
@@ -822,8 +796,8 @@ void MOAIPexParticle::RegisterLuaFuncs ( MOAILuaState& state ) {
 	luaL_Reg regTable[] = {
 		{ "getBlendMode",		_getBlendMode },
 		{ "getDuration",		_getDuration },
-		{ "getEmissionCount",	_getEmissionCount },
-		{ "getEmissionRate",	_getEmissionRate },
+		{ "getEmission",		_getEmission },
+		{ "getFrequency",		_getFrequency },
 		{ "getLifespan",		_getLifespan },
 		{ "getMaxParticles",	_getMaxParticles },
 		{ "getRect",			_getRect },

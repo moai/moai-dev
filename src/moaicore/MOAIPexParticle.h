@@ -116,19 +116,16 @@ private:
 	//----------------------------------------------------------------//
 	static int		_getBlendMode		( lua_State* L );
 	static int		_getDuration		( lua_State* L );
-	static int		_getEmissionCount	( lua_State* L );
-	static int		_getEmissionRate	( lua_State* L );
+	static int		_getEmission		( lua_State* L );
+	static int		_getFrequency		( lua_State* L );
 	static int		_getLifespan		( lua_State* L );
 	static int		_getMaxParticles	( lua_State* L );
 	static int		_getRect			( lua_State* L );
 	static int		_getSize			( lua_State* L );
 	static int		_getTextureName		( lua_State* L );
-	static int		_loadExternal		( lua_State* L );
+	static int		_load				( lua_State* L );
 
 	static void		Parse						( MOAILuaState& state, MOAIPexParticle& plugin, TiXmlNode* node );
-
-	//void			_initFunc					( float* particle, float* registers );
-	//void			_renderFunc					( float* particle, float* registers );
 	void			InitFunc					( float* particle, float* registers );
 	void			RenderFunc					( float* particle, float* registers, AKUParticleSprite* sprite, float t0, float t1 );
 	void			_initGravityScript			( float* particle, float* registers );
@@ -143,15 +140,10 @@ public:
 	DECL_LUA_FACTORY ( MOAIPexParticle )
 	
 	//----------------------------------------------------------------//
-	//void			Init ( PexInitFunc initFunc, PexRenderFunc renderFunc);
 					MOAIPexParticle			();
 					~MOAIPexParticle			();
 	void			RegisterLuaClass			( MOAILuaState& state );
 	void			RegisterLuaFuncs			( MOAILuaState& state );
 };
-
-//typedef void	( MOAIPexParticle::*PexInitFunc )	( float* particle, float* registers );
-//typedef void	( MOAIPexParticle::*PexRenderFunc )	( float* particle, float* registers, AKUParticleSprite* sprite, float t0, float t1 );
-
 	
 #endif
