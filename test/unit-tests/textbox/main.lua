@@ -266,40 +266,55 @@ end
 function highlightTests ()
 	running = true
 
-	text = '1234567890 1234567890 1234567890 1234567890 1234567890 1234567890 1234567890 1234567890 1234567890 1234567890'
+	text = '123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789'
 	
 	local textbox = MOAITextBox.new ()
 	textbox:setString ( text )
 	textbox:setFont ( font )
 	textbox:setTextSize ( 12, 163 )
-	textbox:setRect ( -150, 70, 150, 230 )
+	textbox:setRect ( -150, 70, 130, 230 )
 	textbox:setYFlip ( true )
 	layer:insertProp ( textbox )
 	
 	xmin, ymin, xmax, ymax = textbox:getRect ()
-	test.evaluate ( xmin == -150 and ymin == 70 and xmax == 150 and ymax == 230,
+	test.evaluate ( xmin == -150 and ymin == 70 and xmax == 130 and ymax == 230,
 		"Get rect" )
 	
-	textbox:setHighlight ( 12, 10, 1, 1, 0 )
+	textbox:setHighlight ( 1, 5, 1, 0, 0 )
 	
 	continue = false
 	repeat coroutine.yield () until continue
-	textbox:setHighlight ( 12, 10, 1, 1, 0, .5 )
+	
+	textbox:setHighlight ( 15, 5, 1, 0, 0 )
 	
 	continue = false
 	repeat coroutine.yield () until continue
-	textbox:setHighlight ( 12, 10 )
+	
+	textbox:setHighlight ( 8, 5, 1, 0, 0 )
 	
 	continue = false
 	repeat coroutine.yield () until continue
-	textbox:setHighlight ( 50, 10, 0, 0, 1 )
+	
+	textbox:setHighlight ( 3, 14, 1, 0, 0 )
 	
 	continue = false
 	repeat coroutine.yield () until continue
+	
+	textbox:setHighlight ( 46, 20, 0, 0, 1 )
+	
+	continue = false
+	repeat coroutine.yield () until continue
+	
 	textbox:nextPage ()
 	
 	continue = false
 	repeat coroutine.yield () until continue
+	
+	textbox:nextPage ()
+	
+	continue = false
+	repeat coroutine.yield () until continue
+	
 	textbox:nextPage ()
 	
 	continue = false
@@ -453,7 +468,7 @@ function setStyleTests ()
 	running = true
 	
 	-- multiple styles
-	text = 'This is <green>some test</> text to <yellow><blue>print out while</> testing different styles.</> This is <green>some test</> text to <yellow><blue>print out while</> testing different styles.</> This is <green>some test</> text to <yellow><blue>print out while</> testing different styles.</>'
+	text = 'This is <gre/en>some test</> text <<to <yellow><blue>print out while</> testing different styles.</> This is <green>some test</> text to <yellow><blue>print out while</> testing different styles.</> This is <green>some test</> text to <yellow><blue>print <<>out while</> testing different styles.</>'
 	
 	local textbox = MOAITextBox.new ()
 	textbox:setString ( text )
@@ -477,6 +492,7 @@ function setStyleTests ()
 	style2:setFont ( font2 )
 	style2:setSize ( 24 )
 	textbox:setStyle ( 'green', style2 )
+	textbox:setStyle ( 'gre/en', style2 )
 	
 	local style3 = MOAITextStyle.new ()
 	style3:setColor ( 0, 0, 1, .5 )
