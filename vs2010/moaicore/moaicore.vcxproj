@@ -319,6 +319,7 @@
     <ClCompile Include="..\..\src\moaicore\MOAIPathFinder.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIPathGraph.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIPathTerrainDeck.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAIPexParticle.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIProp.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIProp2D.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIQuadBrush.cpp" />
@@ -473,6 +474,7 @@
     <ClInclude Include="..\..\src\moaicore\MOAIPathFinder.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIPathGraph.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIPathTerrainDeck.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAIPexParticle.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIProp.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIProp2D.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIPvrHeader.h" />

@@ -19,11 +19,15 @@
 */
 
 class MOAIPexParticle :
-	public MOAIParticlePlugin {
+	public virtual MOAILuaObject {
 private:
+	enum EmitterType{
+		EMITTER_GRAVITY,
+		EMITTER_RADIAL,
+	};
 
-	//PexInitFunc			mInitFunc;
-	//PexRenderFunc		mRenderFunc;
+	int	 mSize;
+
 	u32 mNumParticles;
 	EmitterType mEmitterType;
 	
@@ -125,8 +129,8 @@ private:
 
 	//void			_initFunc					( float* particle, float* registers );
 	//void			_renderFunc					( float* particle, float* registers );
-	void			mInitFunc					( float* particle, float* registers );
-	void			mRenderFunc					( float* particle, float* registers, AKUParticleSprite* sprite, float t0, float t1 );
+	void			InitFunc					( float* particle, float* registers );
+	void			RenderFunc					( float* particle, float* registers, AKUParticleSprite* sprite, float t0, float t1 );
 	void			_initGravityScript			( float* particle, float* registers );
 	void			_initRadialScript			( float* particle, float* registers );
 	void			_renderGravityScript		( float* particle, float* registers, AKUParticleSprite* sprite, float t0, float t1 );

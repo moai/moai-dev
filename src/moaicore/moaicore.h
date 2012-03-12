@@ -83,6 +83,7 @@
 #include <moaicore/MOAIParticleEmitter.h>
 #include <moaicore/MOAIParticleForce.h>
 #include <moaicore/MOAIParticlePlugin.h>
+#include <moaicore/MOAIPexParticle.h>
 #include <moaicore/MOAIParticleScript.h>
 #include <moaicore/MOAIParticleState.h>
 #include <moaicore/MOAIParticleSystem.h>

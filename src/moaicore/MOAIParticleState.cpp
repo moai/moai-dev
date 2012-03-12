@@ -9,6 +9,7 @@
 #include <moaicore/MOAIParticleScript.h>
 #include <moaicore/MOAIParticleState.h>
 #include <moaicore/MOAIParticleSystem.h>
+#include <moaicore/MOAIPexParticle.h>
 
 class MOAIDataBuffer;
 
@@ -125,6 +126,21 @@ int MOAIParticleState::_setNext ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	setPexPlugin
+	@text	Sets the pex particle plugin to use for initializing and updating particles.
+	
+	@in		MOAIParticleState self
+	@opt	MOAIPexPlugin plugin
+	@out	nil
+*/
+int MOAIParticleState::_setPexPlugin( lua_State* L ){
+	MOAI_LUA_SETUP ( MOAIParticleState, "U" )
+
+	self->mPexPlugin.Set ( *self, state.GetLuaObject < MOAIPexParticle >( 2 )); 
+	
+	return 0;
+}
+//----------------------------------------------------------------//
 /**	@name	setPlugin
 	@text	Sets the particle plugin to use for initializing and updating particles.
 	
@@ -234,6 +250,10 @@ void MOAIParticleState::InitParticle ( MOAIParticleSystem& system, MOAIParticle&
 	if ( plugin && plugin->mInitFunc ) {
 		plugin->mInitFunc ( particle.mData, &particle.mData [ MOAIParticle::TOTAL_PARTICLE_REG ]);
 	}
+
+	MOAIPexParticle* pex = this->mPexPlugin;
+	if( pex )
+		pex->InitFunc( particle.mData, &particle.mData [ MOAIParticle::TOTAL_PARTICLE_REG ]);
 	
 	particle.mAge = 0.0f;
 	particle.mTerm = USFloat::Rand ( this->mTermRange [ 0 ], this->mTermRange [ 1 ]);
@@ -339,6 +359,14 @@ void MOAIParticleState::ProcessParticle ( MOAIParticleSystem& system, MOAIPartic
 		
 		AKUParticleSprite sprite;
 		plugin->mRenderFunc ( particle.mData, &particle.mData [ MOAIParticle::TOTAL_PARTICLE_REG ], &sprite, t0, t1 );
+		system.PushSprite ( sprite );
+	}
+
+	MOAIPexParticle* pex = this->mPexPlugin;
+	if( pex )
+	{
+		AKUParticleSprite sprite;
+		pex->RenderFunc( particle.mData, &particle.mData [ MOAIParticle::TOTAL_PARTICLE_REG ], &sprite, t0, t1 );
 		system.PushSprite ( sprite );
 	}
 

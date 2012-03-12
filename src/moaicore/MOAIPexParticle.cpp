@@ -766,25 +766,21 @@ void MOAIPexParticle::_renderRadialScript( float* particle, float* registers, AK
 
 }
 
-void  MOAIPexParticle::mInitFunc( float* particle, float* registers )
+void  MOAIPexParticle::InitFunc( float* particle, float* registers )
 {
 	if(mEmitterType == EMITTER_GRAVITY)
 		_initGravityScript( particle, registers);
 	else
 		_initRadialScript( particle, registers);
 }
-void  MOAIPexParticle::mRenderFunc( float* particle, float* registers, AKUParticleSprite* sprite, float t0, float t1 )
+void  MOAIPexParticle::RenderFunc( float* particle, float* registers, AKUParticleSprite* sprite, float t0, float t1 )
 {
 	if(mEmitterType == EMITTER_GRAVITY)
 		_renderGravityScript( particle, registers, sprite, t0, t1);
 	else
 		_renderRadialScript( particle, registers, sprite, t0, t1);
 }
-/*void MOAIPexParticle::Init ( PexInitFunc initFunc, PexRenderFunc renderFunc) {
 
-	this->mInitFunc		= initFunc;
-	this->mRenderFunc	= renderFunc;
-}*/
 //----------------------------------------------------------------//
 MOAIPexParticle::MOAIPexParticle () :
 	mLifespanRegister(-1),
@@ -802,10 +798,7 @@ MOAIPexParticle::MOAIPexParticle () :
 	memset(mFinishColorRegister, -1, 4);
 
 
-	//RTTI_SINGLE ( MOAILuaObject )
-	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIParticlePlugin )
-	RTTI_END
+	RTTI_SINGLE ( MOAILuaObject )
 }
 
 //----------------------------------------------------------------//
