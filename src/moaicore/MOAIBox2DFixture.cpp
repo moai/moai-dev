@@ -56,6 +56,28 @@ int MOAIBox2DFixture::_getBody ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	getFilter
+	@text	See Box2D documentation.
+	
+	@in		MOAIBox2DFixture self
+	@out	(number) categoryBits
+	@out	(number) maskBits
+	@out	(number) groupIndex
+*/
+int MOAIBox2DFixture::_getFilter ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIBox2DFixture, "U" )
+	
+	if ( !self->mFixture ) return 0;
+	
+	const b2Filter& filterData = self->mFixture->GetFilterData ();
+	lua_pushnumber ( state, filterData.categoryBits );
+	lua_pushnumber ( state, filterData.maskBits );
+	lua_pushnumber ( state, filterData.groupIndex );
+
+	return 3;
+}
+
+//----------------------------------------------------------------//
 /**	@name	setCollisionHandler
 	@text	Sets a Lua function to call when collisions occur. The handler should
 			accept the following parameters: ( phase, fixtureA, fixtureB, arbiter ). 'phase' will
@@ -288,6 +310,7 @@ void MOAIBox2DFixture::RegisterLuaFuncs ( MOAILuaState& state ) {
 	luaL_Reg regTable [] = {
 		{ "destroy",				_destroy },
 		{ "getBody",				_getBody },
+		{ "getFilter",				_getFilter},
 		{ "setCollisionHandler",	_setCollisionHandler },
 		{ "setDensity",				_setDensity },
 		{ "setFilter",				_setFilter },
