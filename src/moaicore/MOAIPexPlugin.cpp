@@ -4,7 +4,7 @@
 #include "pch.h"
 #include <tinyxml.h>
 #include <moaicore/MOAILogMessages.h>
-#include <moaicore/MOAIPexParticle.h>
+#include <moaicore/MOAIPexPlugin.h>
 #include <moaicore/MOAIParticleSystem.h>
 #include <moaicore/MOAIParticleState.h>
 #include <moaicore/MOAIParticleScript.h>
@@ -17,42 +17,42 @@
 
 
 
-int	MOAIPexParticle::_getBlendMode( lua_State* L ){
-	MOAI_LUA_SETUP ( MOAIPexParticle, "U" )
+int	MOAIPexPlugin::_getBlendMode( lua_State* L ){
+	MOAI_LUA_SETUP ( MOAIPexPlugin, "U" )
 	
 	lua_pushnumber ( state, self->mBlendFuncSrc );
 	lua_pushnumber ( state, self->mBlendFuncDst );
 	return 2;
 }
-int MOAIPexParticle::_getDuration( lua_State* L ){
-	MOAI_LUA_SETUP ( MOAIPexParticle, "U" )
+int MOAIPexPlugin::_getDuration( lua_State* L ){
+	MOAI_LUA_SETUP ( MOAIPexPlugin, "U" )
 	
 	lua_pushnumber ( state, self->mDuration );
 	return 1;
 }
-int MOAIPexParticle::_getEmission( lua_State* L ){
-	MOAI_LUA_SETUP ( MOAIPexParticle, "U" )
+int MOAIPexPlugin::_getEmission( lua_State* L ){
+	MOAI_LUA_SETUP ( MOAIPexPlugin, "U" )
 	lua_pushnumber ( state, self->mEmissionCount );
 	return 1;
 }
-int MOAIPexParticle::_getFrequency( lua_State* L ){
-	MOAI_LUA_SETUP ( MOAIPexParticle, "U" )
+int MOAIPexPlugin::_getFrequency( lua_State* L ){
+	MOAI_LUA_SETUP ( MOAIPexPlugin, "U" )
 	lua_pushnumber ( state, self->mEmissionRate );
 	return 1;
 }
-int MOAIPexParticle::_getLifespan		( lua_State* L ){
-	MOAI_LUA_SETUP ( MOAIPexParticle, "U" )
+int MOAIPexPlugin::_getLifespan		( lua_State* L ){
+	MOAI_LUA_SETUP ( MOAIPexPlugin, "U" )
 	lua_pushnumber ( state, self->mLifespanTerm[0] );
 	lua_pushnumber ( state, self->mLifespanTerm[1] );
 	return 2;
 }
-int MOAIPexParticle::_getMaxParticles	( lua_State* L ){
-	MOAI_LUA_SETUP ( MOAIPexParticle, "U" )
+int MOAIPexPlugin::_getMaxParticles	( lua_State* L ){
+	MOAI_LUA_SETUP ( MOAIPexPlugin, "U" )
 	lua_pushnumber ( state, self->mNumParticles );
 	return 1;
 }
-int MOAIPexParticle::_getRect( lua_State* L ){
-	MOAI_LUA_SETUP ( MOAIPexParticle, "U" )
+int MOAIPexPlugin::_getRect( lua_State* L ){
+	MOAI_LUA_SETUP ( MOAIPexPlugin, "U" )
 	lua_pushnumber ( state, -self->mSourcePosVariance[0] );
 	lua_pushnumber ( state, -self->mSourcePosVariance[1] );
 	lua_pushnumber ( state, self->mSourcePosVariance[0] );
@@ -66,8 +66,8 @@ int MOAIPexParticle::_getRect( lua_State* L ){
 	@in		MOAIParticlePlugin self
 	@out	number size
 */
-int MOAIPexParticle::_getSize ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIPexParticle, "U" )
+int MOAIPexPlugin::_getSize ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIPexPlugin, "U" )
 	
 	lua_pushnumber ( state, self->mSize );
 	
@@ -81,8 +81,8 @@ int MOAIPexParticle::_getSize ( lua_State* L ) {
 	@in		MOAIParticlePlugin self
 	@out	string textureName
 */
-int MOAIPexParticle::_getTextureName( lua_State* L ){
-	MOAI_LUA_SETUP ( MOAIPexParticle, "U" )
+int MOAIPexPlugin::_getTextureName( lua_State* L ){
+	MOAI_LUA_SETUP ( MOAIPexPlugin, "U" )
 
 		lua_pushstring( state, self->mTextureName);
 	return 1;
@@ -93,7 +93,7 @@ int MOAIPexParticle::_getTextureName( lua_State* L ){
 	@in		String file to load
 	@out	MOAIPexPlugin - The plugin object that has been initialized with XML's data
 */
-int MOAIPexParticle::_load( lua_State* L ){
+int MOAIPexPlugin::_load( lua_State* L ){
 
 	MOAILuaState state ( L );										
 	if ( !state.CheckParams ( 1, "S" )) {							
@@ -107,8 +107,8 @@ int MOAIPexParticle::_load( lua_State* L ){
 	if ( MOAILogMessages::CheckFileExists ( xml, L )) {
 		TiXmlDocument doc;
 		doc.LoadFile ( xml );
-		MOAIPexParticle *particle = new MOAIPexParticle();
-		MOAIPexParticle::Parse ( state, *particle, doc.RootElement ());
+		MOAIPexPlugin *particle = new MOAIPexPlugin();
+		MOAIPexPlugin::Parse ( state, *particle, doc.RootElement ());
 		particle->mParticlePath = xml;
 		particle->PushLuaUserdata( state );
 		return 1;
@@ -121,7 +121,7 @@ int MOAIPexParticle::_load( lua_State* L ){
 //================================================================//
 
 
-void MOAIPexParticle::Parse( MOAILuaState& state, MOAIPexParticle& plugin, TiXmlNode* node )
+void MOAIPexPlugin::Parse( MOAILuaState& state, MOAIPexPlugin& plugin, TiXmlNode* node )
 {
 	if ( !node ) return;
 	
@@ -307,7 +307,7 @@ void MOAIPexParticle::Parse( MOAILuaState& state, MOAIPexParticle& plugin, TiXml
 	}
 }
 
-void MOAIPexParticle::_initGravityScript( float* particle, float* registers )
+void MOAIPexPlugin::_initGravityScript( float* particle, float* registers )
 {
 	// Set colors.
 	for(int i = 0; i < 4; i++)
@@ -393,7 +393,7 @@ void MOAIPexParticle::_initGravityScript( float* particle, float* registers )
 
 }
 		
-void MOAIPexParticle::_initRadialScript( float* particle, float* registers )
+void MOAIPexPlugin::_initRadialScript( float* particle, float* registers )
 {
 
 	// Set colors.
@@ -477,7 +477,7 @@ void MOAIPexParticle::_initRadialScript( float* particle, float* registers )
 	registers[mRadialRegister] = angleStartDeg;	
 }
 
-void MOAIPexParticle::_renderGravityScript		( float* particle, float* registers, AKUParticleSprite* sprite, float t0, float t1 )
+void MOAIPexPlugin::_renderGravityScript		( float* particle, float* registers, AKUParticleSprite* sprite, float t0, float t1 )
 {
 	// Set colors.
 	float sVal, eVal;
@@ -643,7 +643,7 @@ void MOAIPexParticle::_renderGravityScript		( float* particle, float* registers,
 	sprite->mGfxID = 1;
 	
 }
-void MOAIPexParticle::_renderRadialScript( float* particle, float* registers, AKUParticleSprite* sprite, float t0, float t1 )
+void MOAIPexPlugin::_renderRadialScript( float* particle, float* registers, AKUParticleSprite* sprite, float t0, float t1 )
 {
 	// Set colors.
 	float sVal, eVal;
@@ -740,14 +740,14 @@ void MOAIPexParticle::_renderRadialScript( float* particle, float* registers, AK
 
 }
 
-void  MOAIPexParticle::InitFunc( float* particle, float* registers )
+void  MOAIPexPlugin::InitFunc( float* particle, float* registers )
 {
 	if(mEmitterType == EMITTER_GRAVITY)
 		_initGravityScript( particle, registers);
 	else
 		_initRadialScript( particle, registers);
 }
-void  MOAIPexParticle::RenderFunc( float* particle, float* registers, AKUParticleSprite* sprite, float t0, float t1 )
+void  MOAIPexPlugin::RenderFunc( float* particle, float* registers, AKUParticleSprite* sprite, float t0, float t1 )
 {
 	if(mEmitterType == EMITTER_GRAVITY)
 		_renderGravityScript( particle, registers, sprite, t0, t1);
@@ -756,7 +756,7 @@ void  MOAIPexParticle::RenderFunc( float* particle, float* registers, AKUParticl
 }
 
 //----------------------------------------------------------------//
-MOAIPexParticle::MOAIPexParticle () :
+MOAIPexPlugin::MOAIPexPlugin () :
 	mLifespanRegister(-1),
 	mAngleRegister(-1),
 	mStartSizeRegister(-1),
@@ -776,11 +776,11 @@ MOAIPexParticle::MOAIPexParticle () :
 }
 
 //----------------------------------------------------------------//
-MOAIPexParticle::~MOAIPexParticle () {
+MOAIPexPlugin::~MOAIPexPlugin () {
 }
 
 //----------------------------------------------------------------//
-void MOAIPexParticle::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIPexPlugin::RegisterLuaClass ( MOAILuaState& state ) {
 	//UNUSED ( state );
 	luaL_Reg regTable [] = {
 		{ "load", _load },
@@ -791,7 +791,7 @@ void MOAIPexParticle::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIPexParticle::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIPexPlugin::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable[] = {
 		{ "getBlendMode",		_getBlendMode },

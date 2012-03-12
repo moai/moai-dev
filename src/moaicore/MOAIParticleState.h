@@ -7,7 +7,7 @@
 #include <moaicore/MOAILua.h>
 #include <moaicore/MOAIParticle.h>
 #include <moaicore/MOAIWeakPtr.h>
-#include <moaicore/MOAIPexParticle.h>
+#include <moaicore/MOAIPexPlugin.h>
 
 class MOAIParticleForce;
 class MOAIParticlePlugin;
@@ -38,7 +38,7 @@ private:
 	MOAILuaSharedPtr < MOAIParticleScript > mInit;
 	MOAILuaSharedPtr < MOAIParticleScript > mRender;
 	MOAILuaSharedPtr < MOAIParticlePlugin > mPlugin;
-	MOAILuaSharedPtr < MOAIPexParticle >	mPexPlugin;
+	MOAILuaSharedPtr < MOAIPexPlugin >	mPexPlugin;
 	
 	MOAIWeakPtr < MOAIParticleState > mNext;
 

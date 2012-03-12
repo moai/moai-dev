@@ -1,8 +1,8 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIPEXPARTICLE_H
-#define	MOAIPEXPARTICLE_H
+#ifndef	MOAIPEXPLUGIN_H
+#define	MOAIPEXPLUGIN_H
 
 #include <moaicore/MOAILua.h>
 #include <moaicore/MOAIParticlePlugin.h>
@@ -12,13 +12,13 @@
 #include <uslscore/STLString.h>
 
 //================================================================//
-// MOAIParticlePlugin
+// MOAIPexPlugin
 //================================================================//
-/**	@name	MOAIParticlePlugin
-	@text	Allows custom particle processing via C language callbacks.
+/**	@name	MOAIPexPlugin
+	@text	Allows custom particle processing  derived from .pex file via C language callbac.
 */
 
-class MOAIPexParticle :
+class MOAIPexPlugin :
 	public virtual MOAILuaObject {
 private:
 	enum EmitterType{
@@ -125,7 +125,7 @@ private:
 	static int		_getTextureName		( lua_State* L );
 	static int		_load				( lua_State* L );
 
-	static void		Parse						( MOAILuaState& state, MOAIPexParticle& plugin, TiXmlNode* node );
+	static void		Parse						( MOAILuaState& state, MOAIPexPlugin& plugin, TiXmlNode* node );
 	void			InitFunc					( float* particle, float* registers );
 	void			RenderFunc					( float* particle, float* registers, AKUParticleSprite* sprite, float t0, float t1 );
 	void			_initGravityScript			( float* particle, float* registers );
@@ -137,11 +137,11 @@ public:
 	
 	friend class MOAIParticleState;
 	
-	DECL_LUA_FACTORY ( MOAIPexParticle )
+	DECL_LUA_FACTORY ( MOAIPexPlugin )
 	
 	//----------------------------------------------------------------//
-					MOAIPexParticle			();
-					~MOAIPexParticle			();
+					MOAIPexPlugin			();
+					~MOAIPexPlugin			();
 	void			RegisterLuaClass			( MOAILuaState& state );
 	void			RegisterLuaFuncs			( MOAILuaState& state );
 };

@@ -83,7 +83,6 @@
 #include <moaicore/MOAIParticleEmitter.h>
 #include <moaicore/MOAIParticleForce.h>
 #include <moaicore/MOAIParticlePlugin.h>
-#include <moaicore/MOAIPexParticle.h>
 #include <moaicore/MOAIParticleScript.h>
 #include <moaicore/MOAIParticleState.h>
 #include <moaicore/MOAIParticleSystem.h>
@@ -95,6 +94,7 @@
 #include <moaicore/MOAIPartitionResultMgr.h>
 #include <moaicore/MOAIPathFinder.h>
 #include <moaicore/MOAIPathTerrainDeck.h>
+#include <moaicore/MOAIPexPlugin.h>
 #include <moaicore/MOAIPointerSensor.h>
 #include <moaicore/MOAIProp.h>
 #include <moaicore/MOAIProp2D.h>
