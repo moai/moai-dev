@@ -101,6 +101,18 @@
 #undef getwc
 #define getwc zipfs_getwc
 
+#undef pclose
+#define pclose zipfs_pclose
+
+#undef _pclose
+#define _pclose zipfs_pclose
+
+#undef popen
+#define popen zipfs_popen
+
+#undef _popen
+#define _popen zipfs_popen
+
 #undef putc
 #define putc zipfs_putc
 

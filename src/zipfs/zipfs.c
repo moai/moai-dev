@@ -694,6 +694,44 @@ int zipfs_getwc ( ZIPFSFILE* fp ) {
 }
 
 //----------------------------------------------------------------//
+int zipfs_pclose ( ZIPFSFILE* fp ) {
+
+	ZIPFSFile* file = ( ZIPFSFile* )fp;
+	
+	FILE* stdFile = 0;
+	if ( file && !file->mIsArchive ) {
+		stdFile = file->mPtr.mFile;
+		memset ( fp, 0, sizeof ( ZIPFSFile ));
+		free ( file );
+	}
+
+	#ifdef MOAI_OS_WINDOWS
+		return _pclose ( stdFile );
+	#else
+		return pclose ( stdFile );
+	#endif
+}
+
+//----------------------------------------------------------------//
+ZIPFSFILE* zipfs_popen ( const char *command, const char *mode ) {
+
+	ZIPFSFile* file = 0;
+	FILE* stdFile = 0;
+
+	#ifdef MOAI_OS_WINDOWS
+		stdFile = _popen ( command, mode );	
+	#else
+		stdFile = popen ( command, mode );
+	#endif
+
+	if ( stdFile ) {
+		file = ( ZIPFSFile* )calloc ( 1, sizeof ( ZIPFSFile ));
+		file->mPtr.mFile = stdFile;
+	}
+	return ( ZIPFSFILE* )file;
+}
+
+//----------------------------------------------------------------//
 int zipfs_putc ( int character, ZIPFSFILE* fp ) {
 
 	return zipfs_fputc ( character, fp );
