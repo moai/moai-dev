@@ -768,8 +768,8 @@ MOAIPexPlugin::MOAIPexPlugin () :
 	mRotEndRegister(-1),
 	mSpeedRegister(-1){
 
-	memset(mStartColorRegister, -1, 4);
-	memset(mFinishColorRegister, -1, 4);
+	memset(mStartColorRegister, -1, sizeof(mStartColorRegister));
+	memset(mFinishColorRegister, -1,sizeof(mFinishColorRegister));
 
 
 	RTTI_SINGLE ( MOAILuaObject )

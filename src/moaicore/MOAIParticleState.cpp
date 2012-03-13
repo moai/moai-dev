@@ -283,6 +283,7 @@ MOAIParticleState::~MOAIParticleState () {
 	
 	this->mInit.Set ( *this, 0 );
 	this->mRender.Set ( *this, 0 );
+	this->mPexPlugin.Set (*this, 0);
 	this->mPlugin.Set ( *this, 0 );
 }
 
