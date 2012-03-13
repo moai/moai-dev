@@ -31,7 +31,7 @@ public class MoaiGoogleBilling extends MoaiGoogleBillingPurchaseObserver {
 	}
 
 	//----------------------------------------------------------------//
-	public static void onCreate ( Activity activity, Bundle extras ) {
+	public static void onCreate ( Activity activity ) {
 		
 		MoaiLog.i ( "MoaiGoogleBilling onCreate: Initializing Google Billing" );
 		
@@ -44,18 +44,24 @@ public class MoaiGoogleBilling extends MoaiGoogleBillingPurchaseObserver {
 	//----------------------------------------------------------------//
 	public static void onDestroy () {
 	
+		MoaiLog.i ( "MoaiGoogleBilling onDestroy: Unbinding billing service" );
+
 		sBillingService.unbind ();
 	}
 
 	//----------------------------------------------------------------//
 	public static void onStart () {
 	
+		MoaiLog.i ( "MoaiGoogleBilling onStart: Registering billing handler" );
+
 	    MoaiGoogleBillingResponseHandler.register ( new MoaiGoogleBilling ( sActivity ));
 	}
 
 	//----------------------------------------------------------------//
 	public static void onStop () {
 	
+		MoaiLog.i ( "MoaiGoogleBilling onStop: Unregistering billing handler" );
+
 	    MoaiGoogleBillingResponseHandler.unregister ();
 	}
 

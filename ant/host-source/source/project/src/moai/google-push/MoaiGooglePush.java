@@ -34,7 +34,7 @@ public class MoaiGooglePush {
 	}
 
 	//----------------------------------------------------------------//
-	public static void onCreate ( Activity activity, Bundle extras ) {
+	public static void onCreate ( Activity activity ) {
 		
 		MoaiLog.i ( "MoaiGooglePush onCreate: Initializing Google Push" );
 		
@@ -42,13 +42,15 @@ public class MoaiGooglePush {
 	}
 
 	//----------------------------------------------------------------//
-	public static void onResume ( Bundle extras ) {
+	public static void onResume ( ) {
+
+		MoaiLog.i ( "MoaiGooglePush onResume: Checking for pending notification" );
 		
-		Bundle notification = extras.getBundle ( MoaiGooglePushConstants.ACTION_RECEIVE );
+		Bundle notification = sActivity.getIntent ().getExtras ().getBundle ( MoaiGooglePushConstants.ACTION_RECEIVE );
     	if ( notification != null ) {
 
 			MoaiLog.i ( "MoaiGooglePush onResume: Got a remote notification in app resume" );
-			
+
 			if ( Moai.getApplicationState () == Moai.ApplicationState.APPLICATION_RUNNING ) {
 				
 				Intent intent = new Intent ().putExtras ( notification );
@@ -57,8 +59,10 @@ public class MoaiGooglePush {
 				sPendingNotification = null;
 			} else {
 				
-				sPendingNotification = notification;
+				sPendingNotification = new Bundle ( notification );
 			}
+
+			sActivity.setIntent ( sActivity.getIntent ().cloneFilter ());
 		}
 	}
 

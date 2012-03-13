@@ -24,7 +24,7 @@ public class MoaiTapjoy implements TapjoyVideoNotifier {
 	protected static native void AKUNotifyTapjoyVideoAdClose	();
 
 	//----------------------------------------------------------------//
-	public static void onCreate ( Activity activity, Bundle extras ) {
+	public static void onCreate ( Activity activity ) {
 		
 		MoaiLog.i ( "MoaiTapjoy onCreate: Initializing Tapjoy" );
 		
