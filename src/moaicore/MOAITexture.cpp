@@ -31,7 +31,7 @@ int MOAITexture::_load ( lua_State* L ) {
 	u32 transform = state.GetValue < u32 >( 3, DEFAULT_TRANSFORM );
 
 	if ( data ) {
-		self->Init ( *data, transform );
+		self->Init ( *data, transform, "" );
 	}
 	else if ( state.IsType( 2, LUA_TSTRING ) ) {
 
@@ -63,7 +63,7 @@ MOAIGfxState* MOAITexture::AffirmTexture ( MOAILuaState& state, int idx ) {
 				
 				if ( image ) {
 					MOAITexture* texture = new MOAITexture ();
-					texture->Init ( *image );
+					texture->Init ( *image, "" );
 					gfxState = texture;
 				}
 				else {
@@ -72,7 +72,7 @@ MOAIGfxState* MOAITexture::AffirmTexture ( MOAILuaState& state, int idx ) {
 					
 					if ( data ) {
 						MOAITexture* texture = new MOAITexture ();
-						texture->Init ( *data, transform );
+						texture->Init ( *data, transform, "" );
 						gfxState = texture;
 					}
 				}
