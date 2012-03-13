@@ -36,7 +36,15 @@ public class MoaiAdColony implements AdColonyVideoListener {
 	//================================================================//
 	// AdColony JNI callback methods
 	//================================================================//
+	
+	//----------------------------------------------------------------//
+	public static String getDeviceID () {
 
+		MoaiLog.i ("java getDeviceID");
+		return "foo";
+		//return AdColony.getDeviceID ();
+	}
+	
 	//----------------------------------------------------------------//
 	public static void init ( String appId, String [] zoneIds ) {
 

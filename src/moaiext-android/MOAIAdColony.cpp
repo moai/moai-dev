@@ -32,6 +32,42 @@ cc8* MOAIAdColony::_luaParseTable ( lua_State* L, int idx ) {
 }
 
 //----------------------------------------------------------------//
+int MOAIAdColony::_getDeviceID ( lua_State *L ) {
+	USLog::Print ( "1" );
+	MOAILuaState state ( L );
+	USLog::Print ( "2" );	
+	JNI_GET_ENV ( jvm, env );
+	USLog::Print ( "3" );
+	jclass adcolony = env->FindClass ( "com/ziplinegames/moai/MoaiAdColony" );
+    if ( adcolony == NULL ) {
+	
+		USLog::Print ( "MOAIAdColony: Unable to find java class %s", "com/ziplinegames/moai/MoaiAdColony" );
+    } else {
+
+    	jmethodID getDeviceID = env->GetStaticMethodID ( adcolony, "getDeviceID", "()Ljava/lang/String;" );
+    	if ( getDeviceID == NULL ) {
+
+			USLog::Print ( "MOAIAdColony: Unable to find static java method %s", "getDeviceID" );
+    	} else {
+			USLog::Print ( "4" );
+			jstring jidentifier = ( jstring )env->CallStaticObjectMethod ( adcolony, getDeviceID );	
+				USLog::Print ( "5" );
+			JNI_GET_CSTRING ( jidentifier, identifier );
+	USLog::Print ( "6" );
+			lua_pushstring ( state, identifier );
+	USLog::Print ( "7" );
+			JNI_RELEASE_CSTRING ( jidentifier, identifier );
+				USLog::Print ( "8" );
+			return 1;
+		}
+	}
+	USLog::Print ( "PUSH NIL" );
+	lua_pushnil ( state );
+	
+	return 1;
+}
+
+//----------------------------------------------------------------//
 int MOAIAdColony::_init ( lua_State* L ) {
 	
 	MOAILuaState state ( L );
@@ -220,6 +256,7 @@ void MOAIAdColony::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "VIDEO_ENDED_IN_ZONE", ( u32 )VIDEO_ENDED_IN_ZONE );
 	
 	luaL_Reg regTable [] = {
+		{ "getDeviceID",		_getDeviceID },
 		{ "init",				_init },
 		{ "playVideo",			_playVideo },
 		{ "setListener",		_setListener },
