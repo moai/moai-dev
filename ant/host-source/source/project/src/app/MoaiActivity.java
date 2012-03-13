@@ -457,7 +457,9 @@ public class MoaiActivity extends Activity {
 				 	}
 				 }
 			}
-							 
+			
+			MoaiLog.i ( "ConnectivityBroadcastReceiver onReceive: Connection = " + connectionType );
+			
 			AKUSetConnectionType (( long )connectionType.ordinal ());
 		}
 	};
