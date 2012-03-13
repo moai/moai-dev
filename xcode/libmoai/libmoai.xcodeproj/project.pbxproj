@@ -1432,6 +1432,10 @@
 		83FE6864150164B8001CAEED /* MOAIFontShaderRGB-fsh.h in Headers */ = {isa = PBXBuildFile; fileRef = 83FE6861150164B7001CAEED /* MOAIFontShaderRGB-fsh.h */; };
 		83FE6865150164B8001CAEED /* MOAIFontShaderRGB-vsh.h in Headers */ = {isa = PBXBuildFile; fileRef = 83FE6862150164B7001CAEED /* MOAIFontShaderRGB-vsh.h */; };
 		83FE6866150164B8001CAEED /* MOAIFontShaderRGB-vsh.h in Headers */ = {isa = PBXBuildFile; fileRef = 83FE6862150164B7001CAEED /* MOAIFontShaderRGB-vsh.h */; };
+		A7758916150EDD2F00D36120 /* MOAIPexPlugin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A7758914150EDD2F00D36120 /* MOAIPexPlugin.cpp */; };
+		A7758917150EDD2F00D36120 /* MOAIPexPlugin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A7758914150EDD2F00D36120 /* MOAIPexPlugin.cpp */; };
+		A7758918150EDD2F00D36120 /* MOAIPexPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = A7758915150EDD2F00D36120 /* MOAIPexPlugin.h */; };
+		A7758919150EDD2F00D36120 /* MOAIPexPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = A7758915150EDD2F00D36120 /* MOAIPexPlugin.h */; };
 		C359A149143A81BA005E7829 /* RAudioBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = C359A148143A81BA005E7829 /* RAudioBuffer.h */; };
 		C37D422213B16930009600BB /* BufferedAudioSource.h in Headers */ = {isa = PBXBuildFile; fileRef = C37D421E13B1692F009600BB /* BufferedAudioSource.h */; };
 		C37D422413B16930009600BB /* BufferedAudioSourceThread.h in Headers */ = {isa = PBXBuildFile; fileRef = C37D422013B16930009600BB /* BufferedAudioSourceThread.h */; };
@@ -3887,6 +3891,8 @@
 		66D967F914047A2500017919 /* MOAIScriptDeck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIScriptDeck.h; sourceTree = "<group>"; };
 		83FE6861150164B7001CAEED /* MOAIFontShaderRGB-fsh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MOAIFontShaderRGB-fsh.h"; path = "shaders/MOAIFontShaderRGB-fsh.h"; sourceTree = "<group>"; };
 		83FE6862150164B7001CAEED /* MOAIFontShaderRGB-vsh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MOAIFontShaderRGB-vsh.h"; path = "shaders/MOAIFontShaderRGB-vsh.h"; sourceTree = "<group>"; };
+		A7758914150EDD2F00D36120 /* MOAIPexPlugin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIPexPlugin.cpp; sourceTree = "<group>"; };
+		A7758915150EDD2F00D36120 /* MOAIPexPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIPexPlugin.h; sourceTree = "<group>"; };
 		C359A148143A81BA005E7829 /* RAudioBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RAudioBuffer.h; path = ../../3rdparty/untz/src/RAudioBuffer.h; sourceTree = "<group>"; };
 		C37D421D13B1692F009600BB /* BufferedAudioSource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BufferedAudioSource.cpp; path = ../../3rdparty/untz/src/BufferedAudioSource.cpp; sourceTree = "<group>"; };
 		C37D421E13B1692F009600BB /* BufferedAudioSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BufferedAudioSource.h; path = ../../3rdparty/untz/src/BufferedAudioSource.h; sourceTree = "<group>"; };
@@ -6653,6 +6659,8 @@
 		CD148EEF1395AE7200A3F501 /* particles */ = {
 			isa = PBXGroup;
 			children = (
+				A7758914150EDD2F00D36120 /* MOAIPexPlugin.cpp */,
+				A7758915150EDD2F00D36120 /* MOAIPexPlugin.h */,
 				03E4E94013664F7C008D079B /* MOAIParticle.h */,
 				07E885BB13BE3E78008D75AA /* MOAIParticleDistanceEmitter.cpp */,
 				07E885BC13BE3E78008D75AA /* MOAIParticleDistanceEmitter.h */,
@@ -9150,6 +9158,7 @@
 				E9940E4914B7A4A0006465CC /* USXmlReader.h in Headers */,
 				83FE6864150164B8001CAEED /* MOAIFontShaderRGB-fsh.h in Headers */,
 				83FE6866150164B8001CAEED /* MOAIFontShaderRGB-vsh.h in Headers */,
+				A7758919150EDD2F00D36120 /* MOAIPexPlugin.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9803,6 +9812,7 @@
 				E952725C14D89C3300B32A28 /* MOAICrittercism.h in Headers */,
 				83FE6863150164B8001CAEED /* MOAIFontShaderRGB-fsh.h in Headers */,
 				83FE6865150164B8001CAEED /* MOAIFontShaderRGB-vsh.h in Headers */,
+				A7758918150EDD2F00D36120 /* MOAIPexPlugin.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10755,6 +10765,7 @@
 				E9940E3F14B7A4A0006465CC /* USTrig.cpp in Sources */,
 				E9940E4314B7A4A0006465CC /* USTypedPtr.cpp in Sources */,
 				E9940E4714B7A4A0006465CC /* USXmlReader.cpp in Sources */,
+				A7758917150EDD2F00D36120 /* MOAIPexPlugin.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11888,6 +11899,7 @@
 				E9940E4214B7A4A0006465CC /* USTypedPtr.cpp in Sources */,
 				E9940E4614B7A4A0006465CC /* USXmlReader.cpp in Sources */,
 				E952727314D8B0E000B32A28 /* MOAICrittercism.mm in Sources */,
+				A7758916150EDD2F00D36120 /* MOAIPexPlugin.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
