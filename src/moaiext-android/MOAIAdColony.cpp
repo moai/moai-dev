@@ -33,11 +33,11 @@ cc8* MOAIAdColony::_luaParseTable ( lua_State* L, int idx ) {
 
 //----------------------------------------------------------------//
 int MOAIAdColony::_getDeviceID ( lua_State *L ) {
-	USLog::Print ( "1" );
+
 	MOAILuaState state ( L );
-	USLog::Print ( "2" );	
+
 	JNI_GET_ENV ( jvm, env );
-	USLog::Print ( "3" );
+
 	jclass adcolony = env->FindClass ( "com/ziplinegames/moai/MoaiAdColony" );
     if ( adcolony == NULL ) {
 	
@@ -49,19 +49,19 @@ int MOAIAdColony::_getDeviceID ( lua_State *L ) {
 
 			USLog::Print ( "MOAIAdColony: Unable to find static java method %s", "getDeviceID" );
     	} else {
-			USLog::Print ( "4" );
+
 			jstring jidentifier = ( jstring )env->CallStaticObjectMethod ( adcolony, getDeviceID );	
-				USLog::Print ( "5" );
+
 			JNI_GET_CSTRING ( jidentifier, identifier );
-	USLog::Print ( "6" );
+
 			lua_pushstring ( state, identifier );
-	USLog::Print ( "7" );
+
 			JNI_RELEASE_CSTRING ( jidentifier, identifier );
-				USLog::Print ( "8" );
+
 			return 1;
 		}
 	}
-	USLog::Print ( "PUSH NIL" );
+
 	lua_pushnil ( state );
 	
 	return 1;

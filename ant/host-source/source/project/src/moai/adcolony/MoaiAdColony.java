@@ -40,9 +40,7 @@ public class MoaiAdColony implements AdColonyVideoListener {
 	//----------------------------------------------------------------//
 	public static String getDeviceID () {
 
-		MoaiLog.i ("java getDeviceID");
-		return "foo";
-		//return AdColony.getDeviceID ();
+		return AdColony.getDeviceID ();
 	}
 	
 	//----------------------------------------------------------------//
