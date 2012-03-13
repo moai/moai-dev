@@ -74,6 +74,9 @@ void MOAITextDesigner::BuildLayout ( MOAITextBox& textBox ) {
 			}
 			else if ( c == 0 ) {
 				textBox.mMore = false;
+				
+				tokenIdx = this->mIdx - 1;
+				tokenStart = textBox.mSprites.GetTop ();
 				acceptToken = true;
 				acceptLine = true;
 				more = false;
