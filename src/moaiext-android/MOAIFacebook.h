@@ -16,38 +16,42 @@ class MOAIFacebook :
 private:
 
 	//----------------------------------------------------------------//
-	static int		_getToken			( lua_State* L );
-	static int		_init				( lua_State* L );
-	static int		_login				( lua_State* L );
-	static int		_logout				( lua_State* L );
-	static int		_postToFeed			( lua_State* L );
-	static int		_sessionValid 		( lua_State* L );
-	static int		_setListener 		( lua_State* L );
-	static int		_setToken	 		( lua_State* L );
-	
-	
+	static int	_getToken		( lua_State* L );
+	static int	_init			( lua_State* L );
+	static int	_login			( lua_State* L );
+	static int	_logout			( lua_State* L );
+	static cc8*	_luaParseTable 	( lua_State* L, int idx );
+	static int	_postToFeed		( lua_State* L );
+	static int	_sendRequest	( lua_State* L );
+	static int	_sessionValid	( lua_State* L );
+	static int	_setListener 	( lua_State* L );
+	static int	_setToken	 	( lua_State* L );
+
 public:	
+
 	enum {
-		DIALOG_DID_CANCEL,
 		DIALOG_DID_COMPLETE,
+		DIALOG_DID_NOT_COMPLETE,
 		SESSION_DID_LOGIN,
 		SESSION_DID_NOT_LOGIN,
-		TOTAL_LISTENERS
+		TOTAL,
 	};
 	
-	MOAILuaRef		mListeners [ TOTAL_LISTENERS ];
+	enum {
+        DIALOG_RESULT_SUCCESS,
+        DIALOG_RESULT_CANCEL,
+        DIALOG_RESULT_ERROR,
+	};
+		
+	MOAILuaRef		mListeners [ TOTAL ];
 	
 	DECL_LUA_SINGLETON ( MOAIFacebook );
 
-					MOAIFacebook					();
-					~MOAIFacebook					();
-	void 			NotifyFacebookDialog 			( int );
-	void 			NotifyFacebookLogin 			( int );
-	void			RegisterLuaClass				( MOAILuaState& state );
-	
-	static cc8* 	_luaParseTable 					( lua_State* L, int idx );
-	
-	
+					MOAIFacebook			();
+					~MOAIFacebook			();
+	void 			NotifyLoginComplete		( int code );
+	void 			NotifyDialogComplete	( int code );
+	void			RegisterLuaClass		( MOAILuaState& state );
 };
 
 #endif  //DISABLE_FACEBOOK

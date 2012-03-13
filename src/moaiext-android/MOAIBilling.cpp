@@ -53,8 +53,8 @@ int MOAIBilling::_confirmNotification ( lua_State* L ) {
 	
 	MOAILuaState state ( L );
 	
-	cc8* notification = state.GetValue < cc8* >( 1, "" );
-
+	cc8* notification = lua_tostring ( state, 1 );
+	
 	JNI_GET_ENV ( jvm, env );
 
 	JNI_GET_JSTRING ( notification, jnotification );
@@ -89,9 +89,9 @@ int MOAIBilling::_requestPurchase ( lua_State* L ) {
 	
 	MOAILuaState state ( L );
 	
-	cc8* identifier = state.GetValue < cc8* >( 1, "" );
-	cc8* payload = state.GetValue < cc8* >( 2, "" );
-
+	cc8* identifier = lua_tostring ( state, 1 );
+	cc8* payload = lua_tostring ( state, 2 );
+	
 	JNI_GET_ENV ( jvm, env );
 
 	JNI_GET_JSTRING ( identifier, jidentifier );
@@ -174,7 +174,7 @@ int MOAIBilling::_setMarketPublicKey ( lua_State* L ) {
 	
 	MOAILuaState state ( L );
 	
-	cc8* key = state.GetValue < cc8* >( 1, "" );
+	cc8* key = lua_tostring ( state, 1 );
 	
 	JNI_GET_ENV ( jvm, env );
 
@@ -234,7 +234,7 @@ void MOAIBilling::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "BILLING_STATE_PURCHASE_CANCELED",		( u32 )BILLING_STATE_PURCHASE_CANCELED );
 	state.SetField ( -1, "BILLING_STATE_ITEM_REFUNDED",			( u32 )BILLING_STATE_ITEM_REFUNDED );
 
-	luaL_Reg regTable[] = {
+	luaL_Reg regTable [] = {
 		{ "checkBillingSupported",	_checkBillingSupported },
 		{ "confirmNotification",	_confirmNotification },
 		{ "requestPurchase",		_requestPurchase },

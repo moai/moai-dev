@@ -39,7 +39,7 @@ int MOAITapjoy::_getUserId ( lua_State *L ) {
 			
 			JNI_GET_CSTRING ( jidentifier, identifier );
 
-			lua_pushstring ( L, identifier );
+			lua_pushstring ( state, identifier );
 
 			JNI_RELEASE_CSTRING ( jidentifier, identifier );
 			
@@ -47,7 +47,7 @@ int MOAITapjoy::_getUserId ( lua_State *L ) {
 		}
 	}
 
-	lua_pushnil ( L );
+	lua_pushnil ( state );
 	
 	return 1;
 }

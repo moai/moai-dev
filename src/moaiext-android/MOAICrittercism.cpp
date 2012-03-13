@@ -7,56 +7,42 @@
 
 #include <jni.h>
 
-#include <android/log.h>
-
+#include <moaiext-android/moaiext-jni.h>
 #include <moaiext-android/MOAICrittercism.h>
 
 extern JavaVM* jvm;
-extern jobject mMoaiActivity;
 
-jmethodID mInitCrittercismFunc;
-
-//================================================================//
-// Utility macros
-//================================================================//
-
-	#define GET_ENV() 	\
-		JNIEnv* env; 	\
-		jvm->GetEnv (( void** )&env, JNI_VERSION_1_4 );
-		
-	#define GET_CSTRING(jstr, cstr) \
-		const char* cstr = ( jstr != NULL ) ? env->GetStringUTFChars ( jstr, NULL ) : NULL;
-
-	#define RELEASE_CSTRING(jstr, cstr) \
-		if ( cstr != NULL ) env->ReleaseStringUTFChars ( jstr, cstr );
-		
-	#define GET_JSTRING(cstr, jstr) \
-		jstring jstr = ( cstr != NULL ) ? env->NewStringUTF (( const char* )cstr ) : NULL;
-		
-	#define PRINT(str) \
-		__android_log_write ( ANDROID_LOG_INFO, "MoaiLog", str );
-		
 //================================================================//
 // lua
 //================================================================//
 
 //----------------------------------------------------------------//
 int MOAICrittercism::_init ( lua_State* L ) {
+	
 	MOAILuaState state ( L );
 
 	cc8* identifier = lua_tostring ( state, 1 );
 
-	GET_ENV ();
-	GET_JSTRING ( identifier, jidentifier );
+	JNI_GET_ENV ( jvm, env );
+	
+	JNI_GET_JSTRING ( identifier, jidentifier );
 
-	if ( mInitCrittercismFunc == NULL ) {
-		
-		jclass moaiActivityClass = env->GetObjectClass ( mMoaiActivity );		
-		mInitCrittercismFunc = env->GetMethodID ( moaiActivityClass, "initCrittercism", "(Ljava/lang/String;)V" );
+	jclass crittercism = env->FindClass ( "com/ziplinegames/moai/MoaiCrittercism" );
+    if ( crittercism == NULL ) {
+
+		USLog::Print ( "MOAICrittercism: Unable to find java class %s", "com/ziplinegames/moai/MoaiCrittercism" );
+    } else {
+
+    	jmethodID init = env->GetStaticMethodID ( crittercism, "init", "(Ljava/lang/String;)V" );
+    	if ( init == NULL ) {
+
+			USLog::Print ( "MOAICrittercism: Unable to find static java method %s", "init" );
+    	} else {
+
+			env->CallStaticVoidMethod ( crittercism, init, jidentifier );				
+		}
 	}
-
-	env->CallVoidMethod ( mMoaiActivity, mInitCrittercismFunc, jidentifier );
-		
+			
 	return 0;
 }
 
@@ -78,12 +64,12 @@ MOAICrittercism::~MOAICrittercism () {
 //----------------------------------------------------------------//
 void MOAICrittercism::RegisterLuaClass ( MOAILuaState& state ) {
 
-	luaL_Reg regTable[] = {
+	luaL_Reg regTable [] = {
 		{ "init",	_init },
 		{ NULL, NULL }
 	};
 
-	luaL_register( state, 0, regTable );
+	luaL_register ( state, 0, regTable );
 }
 
 #endif

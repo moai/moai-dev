@@ -6,6 +6,11 @@
 
 #include <moaicore/MOAILogMgr.h>
 
+#ifdef ANDROID
+#include <android/log.h>
+#define ANDROID_PRINT(...) __android_log_print(ANDROID_LOG_INFO, "MoaiLog", __VA_ARGS__);
+#endif
+
 #define REGISTER_LOG_MESSAGE(messageID) state.SetField ( -1, #messageID, ( u32 )messageID );
 
 #ifdef _DEBUG

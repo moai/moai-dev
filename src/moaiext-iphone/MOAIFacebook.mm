@@ -146,15 +146,15 @@ int MOAIFacebook::_setToken ( lua_State* L ) {
 }
 	
 //================================================================//
-// MOAIAdColony
+// MOAIFacebook
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIFacebook::DialogDidCancel ( ) {
+void MOAIFacebook::DialogDidNotComplete ( ) {
 	
 	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 	
-	if ( this->PushListener ( DIALOG_DID_CANCEL, state )) {
+	if ( this->PushListener ( DIALOG_DID_NOT_COMPLETE, state )) {
 		
 		state.DebugCall ( 0, 0 );
 	}
@@ -197,8 +197,8 @@ MOAIFacebook::~MOAIFacebook () {
 //----------------------------------------------------------------//
 void MOAIFacebook::RegisterLuaClass ( MOAILuaState& state ) {
     
-	state.SetField ( -1, "DIALOG_DID_CANCEL", ( u32 )DIALOG_DID_CANCEL );
 	state.SetField ( -1, "DIALOG_DID_COMPLETE", ( u32 )DIALOG_DID_COMPLETE );
+	state.SetField ( -1, "DIALOG_DID_NOT_COMPLETE", ( u32 )DIALOG_DID_NOT_COMPLETE );
 	state.SetField ( -1, "SESSION_DID_LOGIN", ( u32 )SESSION_DID_LOGIN );
 	state.SetField ( -1, "SESSION_DID_NOT_LOGIN", ( u32 )SESSION_DID_NOT_LOGIN );
 	
@@ -257,7 +257,7 @@ void MOAIFacebook::SessionDidNotLogin () {
 			MOAIFacebook::Get ().DialogDidComplete ();
 		} else {
 			
-			MOAIFacebook::Get ().DialogDidCancel ();
+			MOAIFacebook::Get ().DialogDidNotComplete ();
 		}
 	}
 
@@ -269,7 +269,7 @@ void MOAIFacebook::SessionDidNotLogin () {
 
 	- ( void ) dialogDidNotComplete: (FBDialog *)dialog {
 		
-		MOAIFacebook::Get ().DialogDidCancel ();
+		MOAIFacebook::Get ().DialogDidNotComplete ();
 	}
 
 @end

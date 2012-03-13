@@ -98,9 +98,11 @@ public class MoaiGoogleBillingService extends Service implements ServiceConnecti
 
 		//----------------------------------------------------------------//
         protected void onRemoteException ( RemoteException e ) {
-	
+
             MoaiLog.w ( "MoaiGoogleBillingService onRemoteException: remote billing service crashed" );
             mService = null;
+
+			e.printStackTrace ();
         }
 
 		//----------------------------------------------------------------//
@@ -108,6 +110,8 @@ public class MoaiGoogleBillingService extends Service implements ServiceConnecti
 	
             MoaiLog.w ( "MoaiGoogleBillingService onNullPointerException: remote billing service uninitialized" );
             mService = null;
+
+			e.printStackTrace ();
         }
 
 		//----------------------------------------------------------------//
@@ -221,7 +225,7 @@ public class MoaiGoogleBillingService extends Service implements ServiceConnecti
         final String [] mNotifyIds;
 
 		//----------------------------------------------------------------//
-        public ConfirmNotifications ( String[] notifyIds ) {
+        public ConfirmNotifications ( String [] notifyIds ) {
 	
             super (( int )MoaiGoogleBillingConstants.BILLING_RESPONSE_INVALID_REQUEST_ID );
 

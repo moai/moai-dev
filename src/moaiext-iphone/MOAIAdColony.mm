@@ -28,7 +28,7 @@ int MOAIAdColony::_playVideo ( lua_State* L ) {
 	bool postPopup = state.GetValue < bool >( 3, true );
 	
 	[ AdColony playVideoAdForSlot:zone 
-					 withDelegate:nil /* add takeover delegate */
+					 withDelegate:MOAIAdColony::Get ().mTakeoverDelegate
 				 withV4VCPrePopup:prePopup 
   				 andV4VCPostPopup:postPopup ];
 }
@@ -57,22 +57,44 @@ int MOAIAdColony::_videoReadyForZone ( lua_State *L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIAdColony::FireZoneListenerEvent (int event, cc8* zone ) {
+	
+	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+	
+	if ( this->PushListener ( event, state )) {
+		
+		state.Push ( zone );
+		state.DebugCall ( 1, 0 );
+	}
+}
+
+//----------------------------------------------------------------//
 MOAIAdColony::MOAIAdColony () : mAdColonyDelegate ( 0 ){
     
 	RTTI_SINGLE ( MOAILuaObject )	
+	
+	mTakeoverDelegate = [ MoaiAdColonyTakeoverDelegate alloc ];
 }
 
 //----------------------------------------------------------------//
 MOAIAdColony::~MOAIAdColony () {
     
+	[ mTakeoverDelegate release ];
 }
 
 //----------------------------------------------------------------//
 void MOAIAdColony::RegisterLuaClass ( MOAILuaState& state ) {
+	
+	state.SetField ( -1, "VIDEO_BEGAN_IN_ZONE", ( u32 )VIDEO_BEGAN_IN_ZONE );
+	state.SetField ( -1, "VIDEO_ENDED_IN_ZONE", ( u32 )VIDEO_ENDED_IN_ZONE );
+	state.SetField ( -1, "VIDEO_FAILED_IN_ZONE", ( u32 )VIDEO_FAILED_IN_ZONE );
+	state.SetField ( -1, "VIDEO_PAUSED_IN_ZONE", ( u32 )VIDEO_PAUSED_IN_ZONE );
+	state.SetField ( -1, "VIDEO_RESUMED_IN_ZONE", ( u32 )VIDEO_RESUMED_IN_ZONE );
     
 	luaL_Reg regTable[] = {
 		{ "initAdColony",				_initAdColony },
 		{ "playVideo",					_playVideo },
+		{ "setListener",				&MOAIGlobalEventSource::_setListener < MOAIAdColony > },
 		{ "videoReadyForZone",			_videoReadyForZone },
 		{ NULL, NULL }	
 	};
@@ -85,3 +107,45 @@ void MOAIAdColony::SetAdColonyDelegate ( id < AdColonyDelegate > delegate ) {
 	
 	mAdColonyDelegate = delegate;
 }
+
+//================================================================//
+// MoaiAdColonyTakeoverDelegate
+//================================================================//
+@implementation MoaiAdColonyTakeoverDelegate
+
+	//================================================================//
+	#pragma mark -
+	#pragma mark Protocol AdColonyTakeoverDelegate
+	//================================================================//
+
+	-(void)adColonyTakeoverBeganForZone:(NSString *)zone {
+
+		MOAIAdColony::Get ().FireZoneListenerEvent (
+			MOAIAdColony::Get ().VIDEO_BEGAN_IN_ZONE, [ zone UTF8String ]);
+	}
+
+	-(void)adColonyTakeoverEndedForZone:(NSString *)zone withVC:(BOOL)withVirtualCurrencyAward {
+		
+		MOAIAdColony::Get ().FireZoneListenerEvent (
+			MOAIAdColony::Get ().VIDEO_ENDED_IN_ZONE, [ zone UTF8String ]);
+	}
+
+	-(void)adColonyVideoAdNotServedForZone:(NSString *)zone {
+		
+		MOAIAdColony::Get ().FireZoneListenerEvent (
+			MOAIAdColony::Get ().VIDEO_FAILED_IN_ZONE, [ zone UTF8String ]);
+	}
+
+	-(void)adColonyVideoAdPausedInZone:(NSString *)zone {
+		
+		MOAIAdColony::Get ().FireZoneListenerEvent (
+			MOAIAdColony::Get ().VIDEO_PAUSED_IN_ZONE, [ zone UTF8String ]);
+	}
+
+	-(void)adColonyVideoAdResumedInZone:(NSString *)zone {
+		
+		MOAIAdColony::Get ().FireZoneListenerEvent (
+			MOAIAdColony::Get ().VIDEO_RESUMED_IN_ZONE, [ zone UTF8String ]);
+	}
+
+@end

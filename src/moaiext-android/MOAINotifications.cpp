@@ -117,7 +117,7 @@ void MOAINotifications::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "REMOTE_NOTIFICATION_RESULT_ERROR_INVALID_SENDER", 			( u32 )REMOTE_NOTIFICATION_RESULT_ERROR_INVALID_SENDER );
 	state.SetField ( -1, "REMOTE_NOTIFICATION_RESULT_ERROR_PHONE_REGISTRATION_ERROR",	( u32 )REMOTE_NOTIFICATION_RESULT_ERROR_PHONE_REGISTRATION_ERROR );
 	
-	luaL_Reg regTable[] = {
+	luaL_Reg regTable [] = {
 		{ "registerForRemoteNotifications",		_registerForRemoteNotifications },
 		{ "setListener",						_setListener },
 		{ "unregisterForRemoteNotifications",	_unregisterForRemoteNotifications },

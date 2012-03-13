@@ -31,19 +31,6 @@
 		
 		<!-- EXTERNAL DECLARATIONS: Placeholder (DO NOT MOVE OR REMOVE) -->
 		
-		<!-- Crittercism -->
-		<activity android:name="com.crittercism.FeedbackActivity"/>
-		<activity android:name="com.crittercism.FeedbackCreateActivity"/>
-		<activity android:name="com.crittercism.FeedbackDetailsActivity"/>
-		<activity android:name="com.crittercism.NotificationActivity"/>
-		<service android:name="com.crittercism.service.CrittercismService" android:process="com.crittercism.service" android:exported="true">
-		    <intent-filter><action android:name="com.crittercism.service.CrittercismService" /></intent-filter>
-		</service>
-		
-		<!-- AdColony -->
-		<activity android:name="com.jirbo.adcolony.AdColonyOverlay" android:configChanges="keyboardHidden|orientation" android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" />
-		<activity android:name="com.jirbo.adcolony.AdColonyFullscreen" android:configChanges="keyboardHidden|orientation" android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" />
-		<activity android:name="com.jirbo.adcolony.AdColonyBrowser" android:configChanges="keyboardHidden|orientation" android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" />		
 	</application>
 	
     <uses-sdk android:minSdkVersion="8"/>
@@ -53,18 +40,6 @@
 	<uses-permission android:name="android.permission.INTERNET" />
 		
 	<!-- EXTERNAL PERMISSIONS: Placeholder (DO NOT MOVE OR REMOVE) -->
-		
-	<!-- Crittercism -->
-	<uses-permission android:name="android.permission.GET_TASKS"/>
- 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-	<uses-permission android:name="android.permission.INTERNET" />
-	<!-- <uses-permission android:name="android.permission.READ_LOGS"/> Optional permission to allow Crittercism to collect log data. -->
-
-	<!-- AdColony -->
- 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-	<uses-permission android:name="android.permission.INTERNET" />
-	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-	<uses-permission android:name="android.permission.GET_TASKS"/>	
 	
 	<supports-screens 
 	    	android:smallScreens="false"
