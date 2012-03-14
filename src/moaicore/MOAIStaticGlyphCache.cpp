@@ -118,6 +118,7 @@ void MOAIStaticGlyphCache::SetImage ( MOAIImage& image ) {
 		textureHeight = textureHeight > width ? width : textureHeight;
 		
 		texture->Init ( image, 0, y, width, textureHeight, "" );
+		texture->SetFilter ( GL_LINEAR, GL_LINEAR );
 		
 		y += textureHeight;
 	}

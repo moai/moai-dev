@@ -20,6 +20,7 @@ void MOAIGlyphCachePage::AffirmCanvas () {
 		
 		this->mImageTexture = new MOAIImageTexture ();
 		this->mImageTexture->Init ( MAX_TEXTURE_SIZE, this->mRows.mSize, this->mColorFormat, USPixel::TRUECOLOR );
+		this->mImageTexture->SetFilter ( GL_LINEAR, GL_LINEAR );
 		this->mImageTexture->ClearBitmap ();
 	}
 	else if ( this->mImageTexture->MOAIImage::GetHeight () < this->mRows.mSize ) {
