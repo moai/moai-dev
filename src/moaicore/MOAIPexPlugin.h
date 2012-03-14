@@ -67,7 +67,7 @@ private:
 	
 	float mRadialAcceleration;
 	float mRadialAccelVariance;
-	u32	  mRadialAccelRegister;
+	s32	  mRadialAccelRegister;
 	
 	float mTanAccel;
 	float mTanAccelVariance;
@@ -125,7 +125,7 @@ private:
 	static int		_getTextureName		( lua_State* L );
 	static int		_load				( lua_State* L );
 
-	static void		Parse						( MOAILuaState& state, MOAIPexPlugin& plugin, TiXmlNode* node );
+	static void		Parse						( MOAIPexPlugin& plugin, TiXmlNode* node );
 	void			InitFunc					( float* particle, float* registers );
 	void			RenderFunc					( float* particle, float* registers, AKUParticleSprite* sprite, float t0, float t1 );
 	void			_initGravityScript			( float* particle, float* registers );

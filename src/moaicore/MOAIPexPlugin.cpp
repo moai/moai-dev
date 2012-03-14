@@ -108,7 +108,7 @@ int MOAIPexPlugin::_load( lua_State* L ){
 		TiXmlDocument doc;
 		doc.LoadFile ( xml );
 		MOAIPexPlugin *particle = new MOAIPexPlugin();
-		MOAIPexPlugin::Parse ( state, *particle, doc.RootElement ());
+		MOAIPexPlugin::Parse ( *particle, doc.RootElement ());
 		particle->mParticlePath = xml;
 		particle->PushLuaUserdata( state );
 		return 1;
@@ -121,7 +121,7 @@ int MOAIPexPlugin::_load( lua_State* L ){
 //================================================================//
 
 
-void MOAIPexPlugin::Parse( MOAILuaState& state, MOAIPexPlugin& plugin, TiXmlNode* node )
+void MOAIPexPlugin::Parse( MOAIPexPlugin& plugin, TiXmlNode* node )
 {
 	if ( !node ) return;
 	
