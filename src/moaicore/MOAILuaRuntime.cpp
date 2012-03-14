@@ -161,7 +161,11 @@ static void _dumpTypeByAddress ( lua_State* L, TValue* tvalue, const char *name,
 int MOAILuaRuntime::_panic ( lua_State *L ) {
 	UNUSED ( L );
 
+#ifdef ANDROID
+	USLog::Print ( "PANIC: unprotected error in call to Lua API (%s)\n", lua_tostring ( L, -1 ));
+#else
 	fprintf ( stderr, "PANIC: unprotected error in call to Lua API (%s)\n", lua_tostring ( L, -1 ));
+#endif
 	return 0;
 }
 
