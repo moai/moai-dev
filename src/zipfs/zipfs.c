@@ -1389,6 +1389,8 @@ char* zipfs_normalize_path ( const char* path ) {
 	}
 	
 	buffer [ top ] = 0;
+	sBuffer->mStrLen = top;
+	
 	return buffer;
 }
 
