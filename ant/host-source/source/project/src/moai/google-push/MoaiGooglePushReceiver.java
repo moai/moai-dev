@@ -12,6 +12,7 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 
 import java.util.ArrayList;
 
@@ -73,6 +74,8 @@ public class MoaiGooglePushReceiver extends BroadcastReceiver {
 		
 		if ( Moai.getApplicationState () != Moai.ApplicationState.APPLICATION_RUNNING ) {
 
+			MoaiLog.i ( "MoaiGooglePushReceiver handleMessage: Adding notification to tray" );
+				
 			// If the application is not actively running, then we want to send the
 			// notification to the notification tray.
 			
@@ -105,21 +108,23 @@ public class MoaiGooglePushReceiver extends BroadcastReceiver {
 			// the intent with a known key (we'll use the Google-defined one for C2DM
 			// message receipt) so that we recognize it when the application is launched.
 		 	Intent notifyIntent = context.getPackageManager ().getLaunchIntentForPackage ( context.getPackageName ());
-			notifyIntent.putExtra ( intent.getAction (), intent.getExtras ());
-		
-		    PendingIntent contentIntent = PendingIntent.getActivity ( context, 0, notifyIntent, 0 );
+			notifyIntent.putExtra ( MoaiGooglePushConstants.ACTION_RECEIVE, new Bundle ( intent.getExtras ()));
+
+		    PendingIntent contentIntent = PendingIntent.getActivity ( context, 0, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT );
 
 		    NotificationManager notificationManager = ( NotificationManager ) context.getSystemService ( Context.NOTIFICATION_SERVICE );
 		    Notification notification = new Notification ( icon, message, System.currentTimeMillis ()); 
 		    notification.setLatestEventInfo ( context, title, message, contentIntent );
 		    notification.flags |= Notification.FLAG_AUTO_CANCEL;
 
-			String tag = intent.getStringExtra ( "tag" );
+			String tag = intent.getStringExtra ( "collapse_key" );
 			int id = ( intent.getStringExtra ( "id" ) != null ) ? Integer.parseInt ( intent.getStringExtra ( "id" )) : 1;
 
 		    notificationManager.notify ( tag, id, notification );		
 		} else {
 		
+			MoaiLog.i ( "MoaiGooglePushReceiver handleMessage: delivering notification" );
+				
 			ArrayList < String > keys = new ArrayList < String > ();
 			ArrayList < String > values = new ArrayList < String > ();
 		

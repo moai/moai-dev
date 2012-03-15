@@ -77,11 +77,11 @@ public class Moai {
 	}
 
 	//----------------------------------------------------------------//
-	public static void onCreate ( Activity activity, Bundle extras ) {
+	public static void onCreate ( Activity activity ) {
 
 		for ( Class theClass : sAvailableClasses ) {
 			
-			executeMethod ( theClass, null, "onCreate", new Class [] { Activity.class, Bundle.class }, new Object [] { activity, extras });
+			executeMethod ( theClass, null, "onCreate", new Class [] { Activity.class }, new Object [] { activity });
 		}
 	}
 	
@@ -104,11 +104,11 @@ public class Moai {
 	}
 
 	//----------------------------------------------------------------//
-	public static void onResume ( Bundle extras ) {
+	public static void onResume () {
 	
 		for ( Class theClass : sAvailableClasses ) {
 
-			executeMethod ( theClass, null, "onResume", new Class [] { Bundle.class }, new Object [] { extras });
+			executeMethod ( theClass, null, "onResume", new Class [] { }, new Object [] { });
 		}		
 	}
 

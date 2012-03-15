@@ -106,7 +106,7 @@ public class MoaiActivity extends Activity {
 
        	System.load ( "/data/data/@PACKAGE@/lib/libmoai.so" );
 
-		Moai.onCreate ( this, getIntent ().getExtras ());
+		Moai.onCreate ( this );
 
         requestWindowFeature ( Window.FEATURE_NO_TITLE );
 	    getWindow ().addFlags ( WindowManager.LayoutParams.FLAG_FULLSCREEN );
@@ -162,6 +162,14 @@ public class MoaiActivity extends Activity {
 				
 		AKUFinalize();
 	}
+	
+	//----------------------------------------------------------------//
+	protected void onNewIntent ( Intent intent ) {
+		
+		MoaiLog.i ( "MoaiActivity onNewIntent: application started from NEW INTENT" );
+		
+		setIntent ( intent );
+	}
 
 	//----------------------------------------------------------------//
 	protected void onPause () {
@@ -199,7 +207,7 @@ public class MoaiActivity extends Activity {
 
 		super.onResume ();
 		
-		Moai.onResume ( getIntent ().getExtras ());
+		Moai.onResume ();
 		
 		if ( mAccelerometerListener != null ) {
 			

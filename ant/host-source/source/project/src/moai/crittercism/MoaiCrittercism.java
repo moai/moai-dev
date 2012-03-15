@@ -19,7 +19,7 @@ public class MoaiCrittercism {
 	private static Activity sActivity = null;
 
 	//----------------------------------------------------------------//
-	public static void onCreate ( Activity activity, Bundle extras ) {
+	public static void onCreate ( Activity activity ) {
 		
 		MoaiLog.i ( "MoaiCrittercism onCreate: Initializing Crittercism" );
 		

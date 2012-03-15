@@ -47,11 +47,13 @@ public class MoaiFacebook {
 	//----------------------------------------------------------------//
 	public static void onActivityResult ( int requestCode, int resultCode, Intent data ) {
 	
+		MoaiLog.i ( "MoaiFacebook onActivityResult: Calling authorize callback" );
+
 		sFacebook.authorizeCallback ( requestCode, resultCode, data );
 	}
 	
 	//----------------------------------------------------------------//
-	public static void onCreate ( Activity activity, Bundle extras ) {
+	public static void onCreate ( Activity activity ) {
 		
 		MoaiLog.i ( "MoaiFacebook onCreate: Initializing Facebook" );
 		

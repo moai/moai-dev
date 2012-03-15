@@ -26,7 +26,7 @@ public class MoaiAdColony implements AdColonyVideoListener {
 	protected static native void AKUNotifyAdColonyVideoComplete ();
 
 	//----------------------------------------------------------------//
-	public static void onCreate ( Activity activity, Bundle extras ) {
+	public static void onCreate ( Activity activity ) {
 		
 		MoaiLog.i ( "MoaiAdColony onCreate: Initializing AdColony" );
 		
