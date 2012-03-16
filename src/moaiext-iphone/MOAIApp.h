@@ -74,6 +74,7 @@ private:
 	enum {
 		DOMAIN_DOCUMENTS   = NSDocumentDirectory,
 		DOMAIN_APP_SUPPORT = NSApplicationSupportDirectory,
+		DOMAIN_CACHES      = NSCachesDirectory,
 	};
 	
 	UIApplication*			mApplication;
