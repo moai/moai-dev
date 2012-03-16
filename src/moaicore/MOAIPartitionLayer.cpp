@@ -57,15 +57,15 @@ void MOAIPartitionLayer::GatherProps ( MOAIPartitionResultBuffer& results, MOAIP
 
 	float halfSize = this->mCellSize * 0.5f;
 	cellPoint.mX = cellPoint.mX - halfSize;
-	cellPoint.mY = cellPoint.mY - halfSize;
+	cellPoint.mY = cellPoint.mY + halfSize;
 
 	MOAICellCoord coord = this->mGridSpace.GetCellCoord ( cellPoint.mX, cellPoint.mY );
 	
 	int width = this->mGridSpace.GetWidth ();
 	int height = this->mGridSpace.GetHeight ();
 	
-	int xTotal = ( width < 2 ) ? 1 : width;
-	int yTotal = ( height < 2 ) ? 1 : height;
+	int xTotal = ( width < 2 ) ? 1 : 2;
+	int yTotal = ( height < 2 ) ? 1 : 2;
 	
 	for ( int y = 0; y < yTotal; ++y ) {
 		for ( int x = 0; x < xTotal; ++x ) {
