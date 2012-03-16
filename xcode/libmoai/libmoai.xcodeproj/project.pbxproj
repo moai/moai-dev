@@ -1442,6 +1442,12 @@
 		07F59347143E318B00C6D185 /* MOAIUntzSampleBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 07F59343143E318B00C6D185 /* MOAIUntzSampleBuffer.h */; };
 		07FAC91613B8F1CA00AFD0B3 /* moaicore-pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07FAC91513B8F1CA00AFD0B3 /* moaicore-pch.cpp */; };
 		07FAC91813B8F1E000AFD0B3 /* uslscore-pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07FAC91713B8F1E000AFD0B3 /* uslscore-pch.cpp */; };
+		66459FB41511638B0075BF13 /* AKU-audiosampler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66459FB31511638B0075BF13 /* AKU-audiosampler.cpp */; };
+		66459FB51511638B0075BF13 /* AKU-audiosampler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66459FB31511638B0075BF13 /* AKU-audiosampler.cpp */; };
+		66459FBA1511641F0075BF13 /* MOAIAudioSampler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66459FB81511641F0075BF13 /* MOAIAudioSampler.cpp */; };
+		66459FBB1511641F0075BF13 /* MOAIAudioSampler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66459FB81511641F0075BF13 /* MOAIAudioSampler.cpp */; };
+		66459FBC1511641F0075BF13 /* MOAIAudioSampler.h in Headers */ = {isa = PBXBuildFile; fileRef = 66459FB91511641F0075BF13 /* MOAIAudioSampler.h */; };
+		66459FBD1511641F0075BF13 /* MOAIAudioSampler.h in Headers */ = {isa = PBXBuildFile; fileRef = 66459FB91511641F0075BF13 /* MOAIAudioSampler.h */; };
 		668E165914887A0A00897ED6 /* MOAIWheelSensor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 668E165714887A0A00897ED6 /* MOAIWheelSensor.cpp */; };
 		668E165A14887A0A00897ED6 /* MOAIWheelSensor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 668E165714887A0A00897ED6 /* MOAIWheelSensor.cpp */; };
 		668E165B14887A0A00897ED6 /* MOAIWheelSensor.h in Headers */ = {isa = PBXBuildFile; fileRef = 668E165814887A0A00897ED6 /* MOAIWheelSensor.h */; };
@@ -3923,6 +3929,9 @@
 		07F59343143E318B00C6D185 /* MOAIUntzSampleBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIUntzSampleBuffer.h; path = "moaiext-untz/MOAIUntzSampleBuffer.h"; sourceTree = "<group>"; };
 		07FAC91513B8F1CA00AFD0B3 /* moaicore-pch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "moaicore-pch.cpp"; sourceTree = "<group>"; };
 		07FAC91713B8F1E000AFD0B3 /* uslscore-pch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "uslscore-pch.cpp"; sourceTree = "<group>"; };
+		66459FB31511638B0075BF13 /* AKU-audiosampler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "AKU-audiosampler.cpp"; sourceTree = "<group>"; };
+		66459FB81511641F0075BF13 /* MOAIAudioSampler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIAudioSampler.cpp; sourceTree = "<group>"; };
+		66459FB91511641F0075BF13 /* MOAIAudioSampler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIAudioSampler.h; sourceTree = "<group>"; };
 		668E165714887A0A00897ED6 /* MOAIWheelSensor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIWheelSensor.cpp; sourceTree = "<group>"; };
 		668E165814887A0A00897ED6 /* MOAIWheelSensor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIWheelSensor.h; sourceTree = "<group>"; };
 		66D967F4140479DF00017919 /* MOAILogMessages.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAILogMessages.cpp; sourceTree = "<group>"; };
@@ -5873,6 +5882,7 @@
 		0324E4F113564BC7000ADC60 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				66459FB71511641F0075BF13 /* moaiext-audiosampler */,
 				0324E4F213564BC7000ADC60 /* aku */,
 				0324E4F913564BC7000ADC60 /* moaicore */,
 				CD524476135982480086DA15 /* moaiext-iphone */,
@@ -5888,6 +5898,7 @@
 		0324E4F213564BC7000ADC60 /* aku */ = {
 			isa = PBXGroup;
 			children = (
+				66459FB31511638B0075BF13 /* AKU-audiosampler.cpp */,
 				CD7C726913B947AC006CFA19 /* AKU-particles.cpp */,
 				CD7C726A13B947AC006CFA19 /* AKU-particles.h */,
 				0324E4F313564BC7000ADC60 /* AKU.cpp */,
@@ -6362,6 +6373,15 @@
 			name = CustomTemplate;
 			sourceTree = "<group>";
 			usesTabs = 1;
+		};
+		66459FB71511641F0075BF13 /* moaiext-audiosampler */ = {
+			isa = PBXGroup;
+			children = (
+				66459FB81511641F0075BF13 /* MOAIAudioSampler.cpp */,
+				66459FB91511641F0075BF13 /* MOAIAudioSampler.h */,
+			);
+			path = "moaiext-audiosampler";
+			sourceTree = "<group>";
 		};
 		CD04AEB6147256B0009C20E5 /* zlib */ = {
 			isa = PBXGroup;
@@ -9244,6 +9264,7 @@
 				E9940E4114B7A4A0006465CC /* USTrig.h in Headers */,
 				E9940E4514B7A4A0006465CC /* USTypedPtr.h in Headers */,
 				E9940E4914B7A4A0006465CC /* USXmlReader.h in Headers */,
+				66459FBD1511641F0075BF13 /* MOAIAudioSampler.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9896,6 +9917,7 @@
 				E9940E4814B7A4A0006465CC /* USXmlReader.h in Headers */,
 				E952725C14D89C3300B32A28 /* MOAICrittercism.h in Headers */,
 				07D740B514F5B1A100A6CBA8 /* AKU-adcolony.h in Headers */,
+				66459FBC1511641F0075BF13 /* MOAIAudioSampler.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10914,6 +10936,8 @@
 				E9940E3F14B7A4A0006465CC /* USTrig.cpp in Sources */,
 				E9940E4314B7A4A0006465CC /* USTypedPtr.cpp in Sources */,
 				E9940E4714B7A4A0006465CC /* USXmlReader.cpp in Sources */,
+				66459FB51511638B0075BF13 /* AKU-audiosampler.cpp in Sources */,
+				66459FBB1511641F0075BF13 /* MOAIAudioSampler.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12048,6 +12072,8 @@
 				E9940E4614B7A4A0006465CC /* USXmlReader.cpp in Sources */,
 				E952727314D8B0E000B32A28 /* MOAICrittercism.mm in Sources */,
 				07D740B414F5B1A100A6CBA8 /* AKU-adcolony.mm in Sources */,
+				66459FB41511638B0075BF13 /* AKU-audiosampler.cpp in Sources */,
+				66459FBA1511641F0075BF13 /* MOAIAudioSampler.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

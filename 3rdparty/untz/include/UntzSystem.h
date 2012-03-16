@@ -19,6 +19,10 @@ namespace UNTZ
 		int numOutputChannels;
 	} DeviceInfo;
 
+	typedef enum {
+		RECORDABLE = 0x100 // bitwise options
+	} SystemOption;
+
 	class SystemData;
 
     class System
