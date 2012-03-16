@@ -25,9 +25,19 @@ void MOAIPartitionCell::Clear () {
 }
 
 //----------------------------------------------------------------//
-void MOAIPartitionCell::ExtractProps ( USLeanList < MOAIProp* >& props ) {
+void MOAIPartitionCell::ExtractProps ( MOAIPartitionCell& cell, MOAIPartitionLayer* layer ) {
 
-	props.Join ( props, this->mProps );
+	if ( &cell != this ) {
+	
+		PropIt propIt = this->mProps.Head ();
+		for ( ; propIt; propIt = propIt->Next ()) {
+			MOAIProp* prop = propIt->Data ();
+			prop->mCell = &cell;
+			prop->mLayer = layer;
+		}
+	
+		cell.mProps.Join ( cell.mProps, this->mProps );
+	}
 }
 
 //----------------------------------------------------------------//

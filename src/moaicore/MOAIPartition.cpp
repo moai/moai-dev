@@ -409,10 +409,10 @@ void MOAIPartition::PrepareRebuild () {
 
 	u32 totalLayers = this->mLayers.Size ();
 	for ( u32 i = 0; i < totalLayers; ++i ) {
-		this->mLayers [ i ].ExtractProps ( this->mEmpties.mProps );
+		this->mLayers [ i ].ExtractProps ( this->mEmpties, 0 );
 	}
-	this->mBiggies.ExtractProps ( this->mEmpties.mProps );
-	this->mGlobals.ExtractProps ( this->mEmpties.mProps );
+	this->mBiggies.ExtractProps ( this->mEmpties, 0 );
+	this->mGlobals.ExtractProps ( this->mEmpties, 0 );
 }
 
 //----------------------------------------------------------------//
