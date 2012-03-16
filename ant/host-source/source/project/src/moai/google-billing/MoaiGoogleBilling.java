@@ -20,8 +20,8 @@ public class MoaiGoogleBilling extends MoaiGoogleBillingPurchaseObserver {
 	private static MoaiGoogleBillingService	sBillingService = null;
 
 	protected static native void AKUNotifyGoogleBillingSupported			( boolean supported );
-	protected static native void AKUNotifyGooglePurchaseResponseReceived	( String productId, int responseCode );
-	protected static native void AKUNotifyGooglePurchaseStateChanged		( String productId, int purchaseState, String orderId, String userId, String notificationId, String developerPayload );
+	protected static native void AKUNotifyGooglePurchaseResponseReceived	( int responseCode, String productId );
+	protected static native void AKUNotifyGooglePurchaseStateChanged		( int purchaseState, String productId, String orderId, String notificationId, String developerPayload );
 	protected static native void AKUNotifyGoogleRestoreResponseReceived		( int responseCode );
 
 	//----------------------------------------------------------------//
@@ -97,7 +97,7 @@ public class MoaiGoogleBilling extends MoaiGoogleBillingPurchaseObserver {
 	}
 	
 	//----------------------------------------------------------------//
-	public static boolean restoreTransactions () {
+	public static boolean restoreTransactions ( String offset ) {
 
 		return sBillingService.restoreTransactions ();
 	}
@@ -123,14 +123,14 @@ public class MoaiGoogleBilling extends MoaiGoogleBillingPurchaseObserver {
     @Override
     public void onPurchaseStateChange ( MoaiGoogleBillingConstants.PurchaseState purchaseState, String itemId, String orderId, String notificationId, String developerPayload ) {
 	        
-		AKUNotifyGooglePurchaseStateChanged ( itemId, purchaseState.ordinal(), orderId, null, notificationId, developerPayload );
+		AKUNotifyGooglePurchaseStateChanged ( purchaseState.ordinal(), itemId, orderId, notificationId, developerPayload );
     }
 	
 	//----------------------------------------------------------------//
 	@Override
     public void onRequestPurchaseResponse ( MoaiGoogleBillingService.RequestPurchase request, MoaiGoogleBillingConstants.ResponseCode responseCode ) {
 	
-		AKUNotifyGooglePurchaseResponseReceived ( request.mProductId, responseCode.ordinal ());
+		AKUNotifyGooglePurchaseResponseReceived ( responseCode.ordinal (), request.mProductId );
     }
 	
 	//----------------------------------------------------------------//

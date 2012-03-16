@@ -90,6 +90,11 @@ public:
 		AMAZON_PURCHASE_STATE_ITEM_REFUNDED,
 	};
 
+	enum {
+		AMAZON_USER_ID_RESTORE_STATUS_SUCCESS,
+		AMAZON_USER_ID_RESTORE_STATUS_FAILED,
+	};
+
 	cc8*			mBillingProvider;
 	MOAILuaRef		mListeners [ TOTAL ];
 	
@@ -97,13 +102,14 @@ public:
 					~MOAIBilling					();
 	static int		MapAmazonPurchaseRequestStatus	( int code );
 	static int		MapAmazonPurchaseStateCode		( int code );
+	static int		MapAmazonRestoreRequestStatus	( int code );
 	static int		MapAmazonUserIdRequestStatus	( int code );
 	static int		MapGooglePurchaseStateCode		( int code );
 	static int		MapGoogleResponseCode			( int code );
 	void			NotifyBillingSupported			( bool supported );
-	void			NotifyPurchaseResponseReceived	( cc8* identifier, int code );
-	void			NotifyPurchaseStateChanged		( cc8* identifier, int code, cc8* order, cc8* user, cc8* notification, cc8* payload );
-	void			NotifyRestoreResponseReceived	( int code );
+	void			NotifyPurchaseResponseReceived	( int code, cc8* identifier );
+	void			NotifyPurchaseStateChanged		( int code, cc8* identifier, cc8* order, cc8* user, cc8* notification, cc8* payload );
+	void			NotifyRestoreResponseReceived	( int code, bool more, cc8* offset );
 	void			NotifyUserIdDetermined			( int code, cc8* user );
 	void			RegisterLuaClass				( MOAILuaState& state );
 };

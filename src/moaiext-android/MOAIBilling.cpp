@@ -159,7 +159,11 @@ int MOAIBilling::_restoreTransactions ( lua_State* L ) {
 	
 	MOAILuaState state ( L );
 	
+	cc8* offset = lua_tostring ( state, 1 );
+	
 	JNI_GET_ENV ( jvm, env );
+	
+	JNI_GET_JSTRING ( offset, joffset );
 
 	jclass billing = env->FindClass ( MOAIBilling::Get ().mBillingProvider );
     if ( billing == NULL ) {
@@ -167,13 +171,13 @@ int MOAIBilling::_restoreTransactions ( lua_State* L ) {
 		USLog::Print ( "MOAIBilling: Unable to find java class %s", MOAIBilling::Get ().mBillingProvider );
     } else {
 
-    	jmethodID restoreTransactions = env->GetStaticMethodID ( billing, "restoreTransactions", "()Z" );
+    	jmethodID restoreTransactions = env->GetStaticMethodID ( billing, "restoreTransactions", "(Ljava/lang/String;)Z" );
     	if ( restoreTransactions == NULL ) {
 
 			USLog::Print ( "MOAIBilling: Unable to find static java method %s", "restoreTransactions" );
     	} else {
 
-			jboolean jsuccess = ( jboolean )env->CallStaticBooleanMethod ( billing, restoreTransactions );	
+			jboolean jsuccess = ( jboolean )env->CallStaticBooleanMethod ( billing, restoreTransactions, joffset );	
 
 			lua_pushboolean ( state, jsuccess );
 
@@ -343,6 +347,18 @@ int MOAIBilling::MapAmazonPurchaseStateCode ( int code ) {
 }
 
 //----------------------------------------------------------------//
+int MOAIBilling::MapAmazonRestoreRequestStatus ( int code ) {
+	
+	switch ( code ) {
+        case AMAZON_USER_ID_RESTORE_STATUS_SUCCESS:
+			return BILLING_RESULT_SUCCESS;
+        case AMAZON_USER_ID_RESTORE_STATUS_FAILED:
+		default:
+			return BILLING_RESULT_ERROR;
+	}
+}
+
+//----------------------------------------------------------------//
 int MOAIBilling::MapAmazonUserIdRequestStatus ( int code ) {
 	
 	switch ( code ) {
@@ -404,7 +420,7 @@ void MOAIBilling::NotifyBillingSupported ( bool supported ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIBilling::NotifyPurchaseResponseReceived ( cc8* identifier, int code ) {
+void MOAIBilling::NotifyPurchaseResponseReceived ( int code, cc8* identifier ) {
 	
 	MOAILuaRef& callback = this->mListeners [ PURCHASE_RESPONSE_RECEIVED ];
 	
@@ -412,15 +428,15 @@ void MOAIBilling::NotifyPurchaseResponseReceived ( cc8* identifier, int code ) {
 		
 		MOAILuaStateHandle state = callback.GetSelf ();
 		
-		lua_pushstring ( state, identifier );
 		lua_pushinteger ( state, code );	
+		lua_pushstring ( state, identifier );
 		
 		state.DebugCall ( 2, 0 );
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAIBilling::NotifyPurchaseStateChanged ( cc8* identifier, int code, cc8* order, cc8* user, cc8* notification, cc8* payload ) {
+void MOAIBilling::NotifyPurchaseStateChanged ( int code, cc8* identifier, cc8* order, cc8* user, cc8* notification, cc8* payload ) {
 	
 	MOAILuaRef& callback = this->mListeners [ PURCHASE_STATE_CHANGED ];
 	
@@ -428,8 +444,8 @@ void MOAIBilling::NotifyPurchaseStateChanged ( cc8* identifier, int code, cc8* o
 		
 		MOAILuaStateHandle state = callback.GetSelf ();
 		
-		lua_pushstring ( state, identifier );
 		lua_pushinteger ( state, code );
+		lua_pushstring ( state, identifier );
 		lua_pushstring ( state, order );
 		lua_pushstring ( state, user );
 		lua_pushstring ( state, notification );
@@ -440,7 +456,7 @@ void MOAIBilling::NotifyPurchaseStateChanged ( cc8* identifier, int code, cc8* o
 }
 
 //----------------------------------------------------------------//
-void MOAIBilling::NotifyRestoreResponseReceived ( int code ) {
+void MOAIBilling::NotifyRestoreResponseReceived ( int code, bool more, cc8* offset ) {
 	
 	MOAILuaRef& callback = this->mListeners [ RESTORE_RESPONSE_RECEIVED ];
 	
@@ -448,9 +464,11 @@ void MOAIBilling::NotifyRestoreResponseReceived ( int code ) {
 		
 		MOAILuaStateHandle state = callback.GetSelf ();
 
-		lua_pushinteger ( state, code );	
+		lua_pushinteger ( state, code );
+		lua_pushboolean ( state, more );
+		lua_pushstring ( state, offset );
 		
-		state.DebugCall ( 1, 0 );
+		state.DebugCall ( 3, 0 );
 	}
 }
 
@@ -471,7 +489,7 @@ void MOAIBilling::NotifyUserIdDetermined ( int code, cc8* user ) {
 }
 
 //================================================================//
-// Billing JNI methods
+// Amazon Billing JNI methods
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -481,31 +499,39 @@ extern "C" void Java_com_ziplinegames_moai_MoaiAmazonBilling_AKUNotifyAmazonBill
 }
 
 //----------------------------------------------------------------//
-extern "C" void Java_com_ziplinegames_moai_MoaiAmazonBilling_AKUNotifyAmazonPurchaseResponseReceived ( JNIEnv* env, jclass obj, jstring jidentifier, jint code ) {
+extern "C" void Java_com_ziplinegames_moai_MoaiAmazonBilling_AKUNotifyAmazonPurchaseResponseReceived ( JNIEnv* env, jclass obj, jint code, jstring jidentifier ) {
 
 	JNI_GET_CSTRING ( jidentifier, identifier );
 
-	MOAIBilling::Get ().NotifyPurchaseResponseReceived ( identifier, MOAIBilling::MapAmazonPurchaseRequestStatus ( code ));
+	MOAIBilling::Get ().NotifyPurchaseResponseReceived ( MOAIBilling::MapAmazonPurchaseRequestStatus ( code ), identifier );
 
 	JNI_RELEASE_CSTRING ( jidentifier, identifier );
 }
 
 //----------------------------------------------------------------//
-extern "C" void Java_com_ziplinegames_moai_MoaiAmazonBilling_AKUNotifyAmazonPurchaseStateChanged ( JNIEnv* env, jclass obj, jstring jidentifier, jint code, jstring jorder, jstring juser, jstring jnotification, jstring jpayload ) {
+extern "C" void Java_com_ziplinegames_moai_MoaiAmazonBilling_AKUNotifyAmazonPurchaseStateChanged ( JNIEnv* env, jclass obj, jint code, jstring jidentifier, jstring jorder, jstring juser, jstring jpayload ) {
 
 	JNI_GET_CSTRING ( jidentifier, identifier );
 	JNI_GET_CSTRING ( jorder, order );
 	JNI_GET_CSTRING ( juser, user );
-	JNI_GET_CSTRING ( jnotification, notification );
 	JNI_GET_CSTRING ( jpayload, payload );
 		
-	MOAIBilling::Get ().NotifyPurchaseStateChanged ( identifier, MOAIBilling::MapAmazonPurchaseStateCode ( code ), order, user, notification, payload );
+	MOAIBilling::Get ().NotifyPurchaseStateChanged ( MOAIBilling::MapAmazonPurchaseStateCode ( code ), identifier, order, user, NULL, payload );
 
 	JNI_RELEASE_CSTRING ( jidentifier, identifier );
 	JNI_RELEASE_CSTRING ( jorder, order );
 	JNI_RELEASE_CSTRING ( juser, user );
-	JNI_RELEASE_CSTRING ( jnotification, notification );
 	JNI_RELEASE_CSTRING ( jpayload, payload );
+}
+
+//----------------------------------------------------------------//
+extern "C" void Java_com_ziplinegames_moai_MoaiAmazonBilling_AKUNotifyAmazonRestoreResponseReceived ( JNIEnv* env, jclass obj, jint code, jboolean more, jstring joffset ) {
+
+	JNI_GET_CSTRING ( joffset, offset );
+
+	MOAIBilling::Get ().NotifyRestoreResponseReceived ( MOAIBilling::MapAmazonRestoreRequestStatus ( code ), more, offset );
+
+	JNI_RELEASE_CSTRING ( joffset, offset );
 }
 
 //----------------------------------------------------------------//
@@ -518,6 +544,10 @@ extern "C" void Java_com_ziplinegames_moai_MoaiAmazonBilling_AKUNotifyAmazonUser
 	JNI_RELEASE_CSTRING ( juser, user );
 }
 
+//================================================================//
+// Google Billing JNI methods
+//================================================================//
+
 //----------------------------------------------------------------//
 extern "C" void Java_com_ziplinegames_moai_MoaiGoogleBilling_AKUNotifyGoogleBillingSupported ( JNIEnv* env, jclass obj, jboolean supported ) {
 
@@ -525,29 +555,27 @@ extern "C" void Java_com_ziplinegames_moai_MoaiGoogleBilling_AKUNotifyGoogleBill
 }
 	
 //----------------------------------------------------------------//
-extern "C" void Java_com_ziplinegames_moai_MoaiGoogleBilling_AKUNotifyGooglePurchaseResponseReceived ( JNIEnv* env, jclass obj, jstring jidentifier, jint code ) {
+extern "C" void Java_com_ziplinegames_moai_MoaiGoogleBilling_AKUNotifyGooglePurchaseResponseReceived ( JNIEnv* env, jclass obj, jint code, jstring jidentifier ) {
 
 	JNI_GET_CSTRING ( jidentifier, identifier );
 
-	MOAIBilling::Get ().NotifyPurchaseResponseReceived ( identifier, MOAIBilling::MapGoogleResponseCode ( code ));
+	MOAIBilling::Get ().NotifyPurchaseResponseReceived ( MOAIBilling::MapGoogleResponseCode ( code ), identifier);
 
 	JNI_RELEASE_CSTRING ( jidentifier, identifier );
 }
 
 //----------------------------------------------------------------//
-extern "C" void Java_com_ziplinegames_moai_MoaiGoogleBilling_AKUNotifyGooglePurchaseStateChanged ( JNIEnv* env, jclass obj, jstring jidentifier, jint code, jstring jorder, jstring juser, jstring jnotification, jstring jpayload ) {
+extern "C" void Java_com_ziplinegames_moai_MoaiGoogleBilling_AKUNotifyGooglePurchaseStateChanged ( JNIEnv* env, jclass obj, jint code, jstring jidentifier, jstring jorder, jstring jnotification, jstring jpayload ) {
 
 	JNI_GET_CSTRING ( jidentifier, identifier );
 	JNI_GET_CSTRING ( jorder, order );
-	JNI_GET_CSTRING ( juser, user );
 	JNI_GET_CSTRING ( jnotification, notification );
 	JNI_GET_CSTRING ( jpayload, payload );
 		
-	MOAIBilling::Get ().NotifyPurchaseStateChanged ( identifier, MOAIBilling::MapGooglePurchaseStateCode ( code ), order, user, notification, payload );
+	MOAIBilling::Get ().NotifyPurchaseStateChanged ( MOAIBilling::MapGooglePurchaseStateCode ( code ), identifier, order, NULL, notification, payload );
 
 	JNI_RELEASE_CSTRING ( jidentifier, identifier );
 	JNI_RELEASE_CSTRING ( jorder, order );
-	JNI_RELEASE_CSTRING ( juser, user );
 	JNI_RELEASE_CSTRING ( jnotification, notification );
 	JNI_RELEASE_CSTRING ( jpayload, payload );
 }
@@ -555,7 +583,7 @@ extern "C" void Java_com_ziplinegames_moai_MoaiGoogleBilling_AKUNotifyGooglePurc
 //----------------------------------------------------------------//
 extern "C" void Java_com_ziplinegames_moai_MoaiGoogleBilling_AKUNotifyGoogleRestoreResponseReceived ( JNIEnv* env, jclass obj, jint code ) {
 
-	MOAIBilling::Get ().NotifyRestoreResponseReceived ( MOAIBilling::MapGoogleResponseCode ( code ) );
+	MOAIBilling::Get ().NotifyRestoreResponseReceived ( MOAIBilling::MapGoogleResponseCode ( code ), false, NULL );
 }
 
 #endif
