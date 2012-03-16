@@ -36,16 +36,16 @@ public class MoaiGoogleBillingConstants {
 
     public enum PurchaseState {
 	
-        PURCHASED,
-        CANCELED,
-        REFUNDED;
+        PURCHASE_COMPLETED,
+        PURCHASE_CANCELED,
+        PURCHASE_REFUNDED;
 
         public static PurchaseState valueOf ( int index ) {
 	
             PurchaseState [] values = PurchaseState.values ();
             if (( index < 0 ) || ( index >= values.length )) {
 
-                return CANCELED;
+                return PURCHASE_COMPLETED;
             }
 
             return values [ index ];

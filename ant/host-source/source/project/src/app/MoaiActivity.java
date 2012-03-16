@@ -97,14 +97,19 @@ public class MoaiActivity extends Activity {
 	protected static native void 		AKUSetDocumentDirectory 			( String path ); // M
 	protected static native void 		AKUSetWorkingDirectory 				( String path ); // M
 
+	static {
+		
+		MoaiLog.i ( "Loading libmoai.so" );
+		
+		System.loadLibrary ( "moai" );
+	}
+
    	//----------------------------------------------------------------//
     protected void onCreate ( Bundle savedInstanceState ) {
 
 		MoaiLog.i ( "MoaiActivity onCreate: activity CREATED" );
 
     	super.onCreate ( savedInstanceState );
-
-       	System.load ( "/data/data/@PACKAGE@/lib/libmoai.so" );
 
 		Moai.onCreate ( this );
 

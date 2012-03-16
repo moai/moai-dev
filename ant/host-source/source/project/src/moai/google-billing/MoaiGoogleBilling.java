@@ -21,7 +21,7 @@ public class MoaiGoogleBilling extends MoaiGoogleBillingPurchaseObserver {
 
 	protected static native void AKUNotifyGoogleBillingSupported			( boolean supported );
 	protected static native void AKUNotifyGooglePurchaseResponseReceived	( String productId, int responseCode );
-	protected static native void AKUNotifyGooglePurchaseStateChanged		( String productId, int purchaseState, String orderId, String notificationId, String developerPayload );
+	protected static native void AKUNotifyGooglePurchaseStateChanged		( String productId, int purchaseState, String orderId, String userId, String notificationId, String developerPayload );
 	protected static native void AKUNotifyGoogleRestoreResponseReceived		( int responseCode );
 
 	//----------------------------------------------------------------//
@@ -85,6 +85,12 @@ public class MoaiGoogleBilling extends MoaiGoogleBillingPurchaseObserver {
 	}
 		
 	//----------------------------------------------------------------//
+	public static boolean getUserId () {
+
+		return false;
+	}
+		
+	//----------------------------------------------------------------//
 	public static boolean requestPurchase ( String productId, String developerPayload ) {
 
 		return sBillingService.requestPurchase ( productId, developerPayload );
@@ -97,7 +103,7 @@ public class MoaiGoogleBilling extends MoaiGoogleBillingPurchaseObserver {
 	}
 	
 	//----------------------------------------------------------------//
-	public static void setMarketPublicKey ( String key ) {
+	public static void setPublicKey ( String key ) {
 	
 		MoaiGoogleBillingSecurity.setPublicKey ( key );
 	}
@@ -117,20 +123,20 @@ public class MoaiGoogleBilling extends MoaiGoogleBillingPurchaseObserver {
     @Override
     public void onPurchaseStateChange ( MoaiGoogleBillingConstants.PurchaseState purchaseState, String itemId, String orderId, String notificationId, String developerPayload ) {
 	        
-		AKUNotifyGooglePurchaseStateChanged ( itemId, purchaseState.ordinal(), orderId, notificationId, developerPayload );
+		AKUNotifyGooglePurchaseStateChanged ( itemId, purchaseState.ordinal(), orderId, null, notificationId, developerPayload );
     }
 	
 	//----------------------------------------------------------------//
 	@Override
     public void onRequestPurchaseResponse ( MoaiGoogleBillingService.RequestPurchase request, MoaiGoogleBillingConstants.ResponseCode responseCode ) {
 	
-		AKUNotifyGooglePurchaseResponseReceived ( request.mProductId, responseCode.ordinal() );
+		AKUNotifyGooglePurchaseResponseReceived ( request.mProductId, responseCode.ordinal ());
     }
 	
 	//----------------------------------------------------------------//
     @Override
     public void onRestoreTransactionsResponse ( MoaiGoogleBillingService.RestoreTransactions request, MoaiGoogleBillingConstants.ResponseCode responseCode ) {
 	
-		AKUNotifyGoogleRestoreResponseReceived ( responseCode.ordinal() );
+		AKUNotifyGoogleRestoreResponseReceived ( responseCode.ordinal ());
 	}
 }
