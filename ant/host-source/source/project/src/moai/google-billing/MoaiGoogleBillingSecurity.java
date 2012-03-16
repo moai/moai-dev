@@ -164,7 +164,7 @@ public class MoaiGoogleBillingSecurity {
 
                 String developerPayload = jElement.optString ( "developerPayload", null );
 
-                if (( purchaseState == MoaiGoogleBillingConstants.PurchaseState.PURCHASED ) && !verified ) {
+                if (( purchaseState == MoaiGoogleBillingConstants.PurchaseState.PURCHASE_COMPLETED ) && !verified ) {
 	
                     continue;
                 }
