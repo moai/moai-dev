@@ -70,6 +70,23 @@ int MOAIScriptDeck::_setRectCallback ( lua_State* L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
+/**	@name	setTotalRectCallback
+	@text	Sets the callback to be issued when the size of a deck item
+			needs to be determined.
+			The callback's parameters are ( ).
+
+	@in		MOAIScriptDeck self
+	@in		function callback
+	@out	nil
+*/
+int MOAIScriptDeck::_setTotalRectCallback ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIScriptDeck, "UF" )
+	
+	self->SetLocal ( state, 2, self->mOnTotalRect );
+	return 0;
+}
+
 //================================================================//
 // MOAIScriptDeck
 //================================================================//
@@ -92,6 +109,28 @@ void MOAIScriptDeck::DrawPatch ( u32 idx, float xOff, float yOff, float xScale, 
 		lua_pushnumber ( state, yScale );
 		state.DebugCall ( 5, 0 );
 	}
+}
+
+//----------------------------------------------------------------//
+USRect MOAIScriptDeck::GetRect () {
+
+	if ( this->mOnTotalRect ) {
+	
+		MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+		this->PushLocal ( state, this->mOnTotalRect );
+		
+		state.DebugCall ( 0, 4 );
+		
+		USRect rect;
+		rect.mXMin = state.GetValue < float >( -4, 0.0f );
+		rect.mYMin = state.GetValue < float >( -3, 0.0f );
+		rect.mXMax = state.GetValue < float >( -2, 0.0f );
+		rect.mYMax = state.GetValue < float >( -1, 0.0f );
+		
+		rect.Bless ();
+		return rect;
+	}
+	return this->mRect;
 }
 
 //----------------------------------------------------------------//
@@ -152,6 +191,7 @@ void MOAIScriptDeck::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setDrawCallback",		_setDrawCallback },
 		{ "setRect",				_setRect },
 		{ "setRectCallback",		_setRectCallback },
+		{ "setTotalRectCallback",	_setTotalRectCallback },
 		{ NULL, NULL }
 	};
 

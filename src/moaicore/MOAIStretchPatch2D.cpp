@@ -305,6 +305,11 @@ void MOAIStretchPatch2D::Draw ( const USAffine3D& transform, MOAIGrid& grid, MOA
 }
 
 //----------------------------------------------------------------//
+USBox MOAIStretchPatch2D::GetBounds () {
+	return GetBounds ( 0, NULL );
+}
+
+//----------------------------------------------------------------//
 USBox MOAIStretchPatch2D::GetBounds ( u32 idx, MOAIDeckRemapper* remapper ) {
 	UNUSED ( idx );
 	UNUSED ( remapper );

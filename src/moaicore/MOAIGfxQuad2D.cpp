@@ -72,6 +72,11 @@ void MOAIGfxQuad2D::DrawPatch ( u32 idx, float xOff, float yOff, float xScale, f
 }
 
 //----------------------------------------------------------------//
+USRect MOAIGfxQuad2D::GetRect ( ) {	
+	return this->mRect;
+}
+
+//----------------------------------------------------------------//
 USRect MOAIGfxQuad2D::GetRect ( u32 idx, MOAIDeckRemapper* remapper ) {
 	UNUSED ( idx );
 	UNUSED ( remapper );

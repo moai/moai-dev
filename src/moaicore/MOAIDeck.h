@@ -50,6 +50,7 @@ public:
 	virtual void			DrawDebug				( const USAffine3D& transform, MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1 );
 	virtual void			GatherSurfaces			( u32 idx, MOAIDeckRemapper* remapper, MOAISurfaceSampler2D& sampler );
 	virtual void			GatherSurfaces			( MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1, MOAISurfaceSampler2D& sampler );
+	virtual USBox			GetBounds				();
 	virtual USBox			GetBounds				( u32 idx, MOAIDeckRemapper* remapper );
 	MOAIGfxState*			GetShader				();
 	virtual MOAIGfxState*	GetShaderDefault		();

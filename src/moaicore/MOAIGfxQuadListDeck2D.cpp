@@ -334,6 +334,30 @@ void MOAIGfxQuadListDeck2D::DrawPatch ( u32 idx, float xOff, float yOff, float x
 		}
 	}
 }
+USRect MOAIGfxQuadListDeck2D::GetRect () {
+
+	u32 size = this->mQuads.Size ();
+
+	USRect totalRect;
+	totalRect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
+
+	for ( u32 i = 0; i < size; ++i ) {
+
+		USRect rect;
+		rect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
+
+		USQuad& quad = this->mQuads [ i ];
+				
+		rect.Grow ( quad.mV [ 0 ]);
+		rect.Grow ( quad.mV [ 1 ]);
+		rect.Grow ( quad.mV [ 2 ]);
+		rect.Grow ( quad.mV [ 3 ]);
+
+		totalRect.Grow ( rect );
+	}
+
+	return totalRect;
+}
 
 //----------------------------------------------------------------//
 USRect MOAIGfxQuadListDeck2D::GetRect ( u32 idx, MOAIDeckRemapper* remapper ) {

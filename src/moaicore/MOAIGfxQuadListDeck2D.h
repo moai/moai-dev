@@ -83,6 +83,7 @@ public:
 	//----------------------------------------------------------------//
 	bool			Contains				( u32 idx, MOAIDeckRemapper* remapper, const USVec2D& vec );
 	void			DrawPatch				( u32 idx, float xOff, float yOff, float xScale, float yScale );
+	USRect			GetRect					();
 	USRect			GetRect					( u32 idx, MOAIDeckRemapper* remapper );
 					MOAIGfxQuadListDeck2D	();
 					~MOAIGfxQuadListDeck2D	();
