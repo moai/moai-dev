@@ -28,14 +28,14 @@ int MOAIPointerSensor::_getLoc ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	setCallback
-	@text	Sets the callback to be issued when the pointer location changes.
+	@text	Sets or clears the callback to be issued when the pointer location changes.
 
 	@in		MOAIPointerSensor self
-	@in		function callback
+	@opt	function callback			Default value is nil.
 	@out	nil
 */
 int MOAIPointerSensor::_setCallback ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIPointerSensor, "UF" )
+	MOAI_LUA_SETUP ( MOAIPointerSensor, "U" )
 	
 	self->mOnMove.SetStrongRef ( state, 2 );
 	

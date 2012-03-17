@@ -110,14 +110,14 @@ int MOAITouchSensor::_isDown ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	setCallback
-	@text	Sets the callback to be issued when the pointer location changes.
+	@text	Sets or clears the callback to be issued when the pointer location changes.
 
 	@in		MOAITouchSensor self
-	@in		function callback
+	@opt	function callback		Default value is nil.
 	@out	nil
 */
 int MOAITouchSensor::_setCallback ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITouchSensor, "UF" )
+	MOAI_LUA_SETUP ( MOAITouchSensor, "U" )
 	
 	self->mCallback.SetStrongRef ( state, 2 );
 	

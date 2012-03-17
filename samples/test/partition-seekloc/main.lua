@@ -14,10 +14,6 @@ MOAIDebugLines.setStyle ( MOAIDebugLines.PARTITION_PADDED_CELLS, 1, 0.5, 0.5, 0.
 MOAIDebugLines.setStyle ( MOAIDebugLines.PROP_WORLD_BOUNDS, 2, 0.75, 0.75, 0.75 )
 
 Dialog = {}
- 
-function closeDialog ()
-	myDialog:close ()
-end
 
 function Dialog:new ( o )
  
@@ -39,22 +35,6 @@ function Dialog:new ( o )
     setmetatable ( o, self )
     self.__index = self
     return o
-end
- 
-function Dialog:close ()
-	if MOAIInputMgr.device.pointer then
-       
-        -- mouse input
-        MOAIInputMgr.device.pointer:setCallback ( nil )
- 
-        MOAIInputMgr.device.mouseLeft:setCallback ( nil )
-	else
-        -- touch input
-        MOAIInputMgr.device.touch:setCallback ( nil )
-	end
- 
-	-- alert_layer:clear()
-	-- alert_layer=nil
 end
  
 function Dialog:show ()
@@ -156,11 +136,8 @@ function Dialog:clickCallback( down )
 		if pick then
 			print ( pick.name )
 			if pick.name == "Button 1" then
-				--self:close()
 				alert_layer:seekLoc ( 960 / 2, 480 / 2, 0, 2)
 				action = alert_layer:seekScl (0, 0, 0, 2 )
-			   
-				action:setListener ( MOAIAction.EVENT_STOP, closeDialog )
 			end
 			if pick.name == "Button 2" then
 				alert_layer:seekLoc ( -500, 0, 0, 5 )

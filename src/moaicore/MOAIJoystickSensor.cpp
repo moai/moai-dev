@@ -37,14 +37,14 @@ int MOAIJoystickSensor::_getVector ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	setCallback
-	@text	Sets the callback to be issued when the joystick vector changes.
+	@text	Sets or clears the callback to be issued when the joystick vector changes.
 
 	@in		MOAIJoystickSensor self
-	@in		function callback
+	@opt	function callback			Default value is nil.
 	@out	nil
 */
 int MOAIJoystickSensor::_setCallback ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIJoystickSensor, "UF" )
+	MOAI_LUA_SETUP ( MOAIJoystickSensor, "U" )
 	
 	self->mOnStick.SetStrongRef ( state, 2 );
 	
