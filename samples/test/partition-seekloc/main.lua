@@ -9,8 +9,8 @@ viewport:setSize ( 960, 480 )
 viewport:setScale ( 960,480)
 screen_width=960
 
-MOAIDebugLines.setStyle ( MOAIDebugLines.PARTITION_CELLS, 2, 1, 1, 1 )
-MOAIDebugLines.setStyle ( MOAIDebugLines.PARTITION_PADDED_CELLS, 1, 0.5, 0.5, 0.5 )
+--MOAIDebugLines.setStyle ( MOAIDebugLines.PARTITION_CELLS, 2, 1, 1, 1 )
+--MOAIDebugLines.setStyle ( MOAIDebugLines.PARTITION_PADDED_CELLS, 1, 0.5, 0.5, 0.5 )
 MOAIDebugLines.setStyle ( MOAIDebugLines.PROP_WORLD_BOUNDS, 2, 0.75, 0.75, 0.75 )
 
 Dialog = {}
@@ -131,6 +131,7 @@ end
 function Dialog:clickCallback( down )
        
 	if down then
+		
 		pick = alert_partition:propForPoint ( mouseX, mouseY )
 	   
 		if pick then
@@ -150,7 +151,7 @@ function Dialog:clickCallback( down )
 		end
 	end
 end
- 
+
 main_layer = MOAILayer2D.new ()
 MOAISim.pushRenderPass ( main_layer )
 main_layer:setViewport ( viewport )
@@ -160,6 +161,6 @@ gfxQuad:setTexture ( "background.png" )
 gfxQuad:setRect ( -512, -512, 512, 512 )
 prop:setDeck ( gfxQuad )
 main_layer:insertProp ( prop )
- 
+
 myDialog=Dialog:new ()
 myDialog:show ()

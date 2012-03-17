@@ -633,14 +633,8 @@ void MOAILayer::GetViewMtx ( USMatrix4x4& view ) {
 //----------------------------------------------------------------//
 void MOAILayer::GetWndToWorldMtx ( USMatrix4x4& wndToWorld ) {
 
-	if ( this->mViewport ) {
-		
-		this->GetWorldToWndMtx ( wndToWorld );
-		wndToWorld.Inverse ();
-	}
-	else {
-		wndToWorld.Ident ();
-	}
+	this->GetWorldToWndMtx ( wndToWorld );
+	wndToWorld.Inverse ();
 }
 
 //----------------------------------------------------------------//
@@ -664,6 +658,10 @@ void MOAILayer::GetWorldToWndMtx ( USMatrix4x4& worldToWnd ) {
 	else {
 		worldToWnd.Ident ();
 	}
+	
+	USMatrix4x4 mtx;
+	mtx.Init ( this->mLocalToWorldMtx );
+	worldToWnd.Append ( mtx );
 }
 
 //----------------------------------------------------------------//

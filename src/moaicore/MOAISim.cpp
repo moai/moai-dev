@@ -911,8 +911,7 @@ double MOAISim::StepSim ( double step, u32 multiplier ) {
 	double time = USDeviceTime::GetTimeInSeconds ();
 
 	for ( u32 s = 0; s < multiplier; ++s ) {
-		
-		MOAIDebugLines::Get ().Reset ();		
+			
 		MOAIInputMgr::Get ().Update ();
 		MOAIActionMgr::Get ().Update (( float )step );		
 		MOAINodeMgr::Get ().Update ();
