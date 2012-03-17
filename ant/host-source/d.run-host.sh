@@ -33,14 +33,16 @@
 	mkdir -p $out_dir/project/res
 	cp -fR	host-source/project/res/*	$out_dir/project/res
 	
-	mkdir -p $out_dir/project/res/drawable-hdpi
 	mkdir -p $out_dir/project/res/drawable-ldpi
 	mkdir -p $out_dir/project/res/drawable-mdpi
+	mkdir -p $out_dir/project/res/drawable-hdpi
+	mkdir -p $out_dir/project/res/drawable-xhdpi
 	mkdir -p $out_dir/project/res/raw
 
 	cp -f $icon_ldpi $out_dir/project/res/drawable-ldpi/icon.png
 	cp -f $icon_mdpi $out_dir/project/res/drawable-mdpi/icon.png
 	cp -f $icon_hdpi $out_dir/project/res/drawable-hdpi/icon.png
+	cp -f $icon_xhdpi $out_dir/project/res/drawable-xhdpi/icon.png
 	
 	if [ "$key_store" != "" ] && [ -f $key_store ]; then
 		cp -f $key_store $out_dir/project/`basename $key_store`
