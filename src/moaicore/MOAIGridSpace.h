@@ -164,7 +164,7 @@ public:
 	
 	USRect				GetBounds				() const;
 	USRect				GetBounds				( MOAICellCoord c0, MOAICellCoord c1 ) const;
-	void				GetBoundsInRect			( USRect rect, MOAICellCoord& c0, MOAICellCoord& c1 ) const;
+	void				GetBoundsInRect			( USRect rect, MOAICellCoord& c0, MOAICellCoord& c1, USRect maxSize ) const;
 	
 	USMatrix3x3			GetGridToWorldMtx		() const;
 	

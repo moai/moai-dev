@@ -704,7 +704,9 @@ void MOAIProp::GatherSurfaces ( MOAISurfaceSampler2D& sampler ) {
 		MOAICellCoord c0;
 		MOAICellCoord c1;
 		
-		this->mGrid->GetBoundsInRect ( localRect, c0, c1 );
+		USRect deckBounds = this->mDeck->GetBounds ().GetRect( USBox::PLANE_XY );
+
+		this->mGrid->GetBoundsInRect ( localRect, c0, c1, deckBounds );
 		this->mDeck->GatherSurfaces ( *this->mGrid, this->mRemapper, this->mGridScale, c0, c1, sampler );
 	}
 	else {
@@ -760,6 +762,7 @@ u32 MOAIProp::GetDeckBounds ( USBox& bounds ) {
 	if ( this->mGrid ) {
 		
 		USRect rect = this->mGrid->GetBounds ();
+
 		bounds.Init ( rect.mXMin, rect.mYMin, rect.mXMax, rect.mYMax, 0.0f, 0.0f );
 		status = this->mGrid->GetRepeat () ? BOUNDS_GLOBAL : BOUNDS_OK;
 	}
@@ -802,8 +805,10 @@ void MOAIProp::GetGridBoundsInView ( MOAICellCoord& c0, MOAICellCoord& c1 ) {
 	
 		// TODO: need to take into account perspective and truncate rect based on horizon
 		// TODO: consider bringing back poly to tile scanline converter...
-	
-		this->mGrid->GetBoundsInRect ( viewRect, c0, c1 );
+
+		USRect deckBounds = this->mDeck->GetBounds ().GetRect ( USBox::PLANE_XY );
+
+		this->mGrid->GetBoundsInRect ( viewRect, c0, c1, deckBounds );
 	}
 }
 
