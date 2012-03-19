@@ -442,12 +442,15 @@ char* zipfs_fgets ( char* string, int length, ZIPFSFILE* fp ) {
 
 			do {
 				c = zipfs_fgetc ( fp );
-				if ( c == EOF ) break;
+				if ( c == EOF || c == NULL) break;
 				
 				string [ i++ ] = ( char )c;
 				if ( i >= length ) return 0;
 				
 			} while ( c && ( c != '\n' ));
+
+			if( i == 0 )
+				return 0;
 
 			string [ i ] = 0;
 			return string;
@@ -485,10 +488,11 @@ ZIPFSFILE* zipfs_fopen ( const char* filename, const char* mode ) {
 		
 		if ( mode [ 0 ] == 'r' ) {
 		
-			ZIPFSZipStream* zipStream;
+			ZIPFSZipStream* zipStream = 0;
 			
 			filename = ZIPFSVirtualPath_GetLocalPath ( mount, filename );
-			zipStream = ZIPFSZipStream_Open ( mount->mArchive, filename );
+			if( filename )
+				zipStream = ZIPFSZipStream_Open ( mount->mArchive, filename );
 			
 			if ( zipStream ) {
 				file = ( ZIPFSFile* )malloc ( sizeof ( ZIPFSFile ));
@@ -1159,7 +1163,7 @@ int zipfs_get_stat ( char const* path, zipfs_stat* filestat ) {
 
 		const char* localpath = ZIPFSVirtualPath_GetLocalPath ( mount, abspath );
 		
-		if ( abspath ) {
+		if ( abspath && localpath) {
 		
 			ZIPFSZipFileEntry* entry;
 		
@@ -1233,7 +1237,7 @@ char* zipfs_get_working_path ( void ) {
 //----------------------------------------------------------------//
 char* zipfs_getcwd ( char* buffer, size_t length ) {
 
-	if ( sWorkingPath->mSize < length ) return 0;
+	if ( sWorkingPath->mSize >= length ) return 0;
 	strcpy ( buffer, sWorkingPath->mMem );
 	return buffer;
 }
