@@ -210,8 +210,8 @@ void MOAIFacebook::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "postToFeed",				_postToFeed },
 		{ "sendRequest",			_sendRequest },
 		{ "sessionValid",			_sessionValid },
-		{ "setToken",				_setToken },
 		{ "setListener",			&MOAIGlobalEventSource::_setListener < MOAIFacebook > },
+		{ "setToken",				_setToken },
 		{ NULL, NULL }	
 	};
     

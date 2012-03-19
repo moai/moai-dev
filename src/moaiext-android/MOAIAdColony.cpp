@@ -276,4 +276,5 @@ extern "C" void Java_com_ziplinegames_moai_MoaiAdColony_AKUNotifyAdColonyVideoCo
 
 	MOAIAdColony::Get ().NotifyVideoComplete ();
 }
+
 #endif

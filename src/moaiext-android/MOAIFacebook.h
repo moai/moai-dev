@@ -29,6 +29,8 @@ private:
 
 public:	
 
+	DECL_LUA_SINGLETON ( MOAIFacebook );
+
 	enum {
 		DIALOG_DID_COMPLETE,
 		DIALOG_DID_NOT_COMPLETE,
@@ -45,8 +47,6 @@ public:
 		
 	MOAILuaRef		mListeners [ TOTAL ];
 	
-	DECL_LUA_SINGLETON ( MOAIFacebook );
-
 					MOAIFacebook			();
 					~MOAIFacebook			();
 	void 			NotifyLoginComplete		( int code );

@@ -8,240 +8,159 @@
 #include <string.h>
 
 #include <moaicore/moaicore.h>
+
 #include <moaiext-android/moaiext-android.h>
+#include <moaiext-android/moaiext-jni.h>
+
 #include <aku/AKU.h>
 #include <aku/AKU-untz.h>
 #include <aku/AKU-luaext.h>
 
-template <class T>
-class LockingQueue {
-public:
-	pthread_mutex_t mutex;
-	int tail;
-	int num;
+//================================================================//
+// Input event locking queue
+//================================================================//
 
-	static const int kMaxMessages = 100;
+	template < class T >
+	class LockingQueue {
+	public:
+		pthread_mutex_t mutex;
+		int tail;
+		int num;
 
-	T messages [ kMaxMessages ];
+		static const int kMaxMessages = 100;
 
-	//----------------------------------------------------------------//
-	void Push ( const T &message ) {
+		T messages [ kMaxMessages ];
 
-		pthread_mutex_lock( &mutex );
+		//----------------------------------------------------------------//
+		void Push ( const T &message ) {
 
-		if ( num >= LockingQueue::kMaxMessages ) {
-			printf ("ERROR: g_MessageQueue, kMaxMessages (%d) exceeded\n", LockingQueue::kMaxMessages );
-		} 
-		else {
-			int head = ( tail + num) % LockingQueue::kMaxMessages;
+			pthread_mutex_lock ( &mutex );
 
-			 messages [ head ] = message;
-			++num;
+			if ( num >= LockingQueue::kMaxMessages ) {
+				
+				printf ( "ERROR: g_MessageQueue, kMaxMessages (%d) exceeded\n", LockingQueue::kMaxMessages );
+			} 
+			else {
+				
+				int head = ( tail + num) % LockingQueue::kMaxMessages;
 
-			if ( num >= LockingQueue::kMaxMessages )  {
-				 num -= LockingQueue::kMaxMessages;
+			 	messages [ head ] = message;
+				++num;
+
+				if ( num >= LockingQueue::kMaxMessages )  {
+					
+				 	num -= LockingQueue::kMaxMessages;
+				}
 			}
 
+			pthread_mutex_unlock ( &mutex );
 		}
 
-		pthread_mutex_unlock( &mutex );
-	}
+		//----------------------------------------------------------------//
+		int Pop ( T &message ) {
 
-	int PopMessage ( T &message ) {
+			pthread_mutex_lock ( &mutex );
 
-		pthread_mutex_lock( &mutex );
+			int result = 0;
 
-		int result = 0;
+			if ( num > 0) {
 
-		if ( num > 0) {
+				result = 1;
+				message = messages [ tail ];
+				++tail;
 
-			result = 1;
-			message = messages [ tail ];
-			++tail;
-
-			if ( tail >=  LockingQueue::kMaxMessages) {
-				tail -=  LockingQueue::kMaxMessages;
+				if ( tail >= LockingQueue::kMaxMessages) {
+					
+					tail -= LockingQueue::kMaxMessages;
+				}
+			
+				--num;
 			}
-			--num;
+
+			pthread_mutex_unlock ( &mutex );
+
+			return result;
 		}
-
-		pthread_mutex_unlock( &mutex );
-
-		return result;
-	}
-};
-
-struct InputEvent {
-
-	enum {
-		INPUTEVENT_LEVEL,
-		INPUTEVENT_COMPASS,
-		INPUTEVENT_LOCATION,
-		INPUTEVENT_TOUCH,
 	};
 
-	int 	m_type;
-	int 	m_deviceId;
-	int 	m_sensorId;
+	struct InputEvent {
 
-	// touch, level
-	float 	m_x;
-	float 	m_y;
+		enum {
+			INPUTEVENT_LEVEL,
+			INPUTEVENT_COMPASS,
+			INPUTEVENT_LOCATION,
+			INPUTEVENT_TOUCH,
+		};
+
+		// all
+		int 	m_type;
+		int 	m_deviceId;
+		int 	m_sensorId;
+
+		// touch, level
+		float 	m_x;
+		float 	m_y;
 	
-	// level
-	float 	m_z;
+		// level
+		float 	m_z;
 
-	// compass
-	int 	m_heading;
+		// compass
+		int 	m_heading;
 
-	// touch
-	int  	m_touchId;
-	bool 	m_down;
-	int  	m_tapCount;
+		// touch
+		int  	m_touchId;
+		bool 	m_down;
+		int  	m_tapCount;
 	
-	// location
-	double 	m_longitude;
-	double 	m_latitude;
-	double 	m_altitude;
-	float  	m_hAccuracy;
-	float  	m_vAccuracy;
-	float  	m_speed;
-};
+		// location
+		double 	m_longitude;
+		double 	m_latitude;
+		double 	m_altitude;
+		float  	m_hAccuracy;
+		float  	m_vAccuracy;
+		float  	m_speed;
+	};
 
-LockingQueue<InputEvent> *g_InputQueue = NULL;
+	LockingQueue < InputEvent > * inputQueue = NULL;
 
-//================================================================//
-// Utility macros
-//================================================================//
-
-	#define GET_ENV() 	\
-		JNIEnv* env; 	\
-		jvm->GetEnv (( void** )&env, JNI_VERSION_1_4 );
-		
-	#define GET_CSTRING(jstr, cstr) \
-		const char* cstr = ( jstr != NULL ) ? env->GetStringUTFChars ( jstr, NULL ) : NULL;
-
-	#define RELEASE_CSTRING(jstr, cstr) \
-		if ( cstr != NULL ) env->ReleaseStringUTFChars ( jstr, cstr );
-		
-	#define GET_JSTRING(cstr, jstr) \
-		jstring jstr = ( cstr != NULL ) ? env->NewStringUTF (( const char* )cstr ) : NULL;
-		
-	#define PRINT(str) \
-		__android_log_write ( ANDROID_LOG_INFO, "MoaiLog", str );
-		
 //================================================================//
 // JNI set up
 //================================================================//
 
-	JavaVM* 		jvm;
+	JavaVM* jvm;
 
-	jobject			mMoaiActivity;
-	jobject			mMoaiView;
-
-	jmethodID 		mGenerateGuidFunc;
-	jmethodID		mOpenURLFunc;
-	jmethodID		mShowDialogFunc;
-	jmethodID		mShareFunc;
-	
 	//----------------------------------------------------------------//
 	int JNI_OnLoad ( JavaVM* vm, void* reserved ) {
     
-		jvm = vm;		
+		jvm = vm;
+		
 		return JNI_VERSION_1_4;
 	}
 
 //================================================================//
-// External callbacks
+// Miscellaneous JNI Functions
 //================================================================//
 
 	//----------------------------------------------------------------//
-	void OpenURL ( const char* url ) {
-
-		GET_ENV ();
-		GET_JSTRING ( url, jstr );
+	extern "C" int Java_com_ziplinegames_moai_Moai_AKUCreateContext ( JNIEnv* env, jclass obj ) {
 		
-		env->CallVoidMethod ( mMoaiActivity, mOpenURLFunc, jstr );
-	}
-
-	//----------------------------------------------------------------//
-	void ShowDialog ( const char* title , const char* message , const char* positive , const char* neutral , const char* negative , bool cancelable ) {
-
-		GET_ENV ();
-
-		GET_JSTRING ( title, jtitle );
-		GET_JSTRING ( message, jmessage );
-		GET_JSTRING ( positive, jpositive );
-		GET_JSTRING ( neutral, jneutral );
-		GET_JSTRING ( negative, jnegative );
-
-		env->CallVoidMethod ( mMoaiActivity , mShowDialogFunc, jtitle, jmessage, jpositive, jneutral, jnegative, cancelable );
-	}
-	
-	//----------------------------------------------------------------//
-	void Share ( const char* prompt , const char* subject , const char* text ) {
-
-		GET_ENV ();
-
-		GET_JSTRING ( prompt, jprompt );
-		GET_JSTRING ( subject, jsubject );
-		GET_JSTRING ( text, jtext );
-
-		env->CallVoidMethod ( mMoaiActivity , mShareFunc, jprompt, jsubject, jtext );
-	}
-	
-	//----------------------------------------------------------------//
-	const char* GenerateGUID () {
-
-		GET_ENV ();
-
-	    // call generate guid method in java
-		jstring jguid = ( jstring )env->CallObjectMethod ( mMoaiView, mGenerateGuidFunc );
-
-		// convert jstring to cstring
-		GET_CSTRING ( jguid, guid );
-
-		char buf [ 512 ];
-		strcpy ( buf, guid );
-		const char* retVal = buf;
-		
-		RELEASE_CSTRING ( jguid, guid );
-
-		// return guid string
-		return retVal;
-	}
-
-//================================================================//
-// JNI Functions
-//================================================================//
-
-	//----------------------------------------------------------------//
-	extern "C" int Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUCreateContext ( JNIEnv* env, jclass obj ) {
 		return AKUCreateContext ();
 	}
-
+	
 	//----------------------------------------------------------------//
-	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUDeleteContext ( JNIEnv* env, jclass obj, jint akuContextId ) {
-		AKUDeleteContext ( akuContextId );
+	extern "C" void Java_com_ziplinegames_moai_Moai_AKUDeleteContext ( JNIEnv* env, jclass obj, jint contextId ) {
+
+		AKUDeleteContext ( contextId );
 	}
 
 	//----------------------------------------------------------------//
-	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUDetectGfxContext ( JNIEnv* env, jclass obj ) {
+	extern "C" void Java_com_ziplinegames_moai_Moai_AKUDetectGfxContext ( JNIEnv* env, jclass obj ) {
+
 		AKUDetectGfxContext ();
 	}
 
 	//----------------------------------------------------------------//
-	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUAppDidStartSession ( JNIEnv* env, jclass obj, jboolean resumed ) {
-		MOAIApp::Get ().DidStartSession ( resumed );
-	}
-
-	//----------------------------------------------------------------//
-	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiActivity_AKUAppWillEndSession ( JNIEnv* env, jclass obj ) {
-		MOAIApp::Get ().WillEndSession ();
-	}
-	
-	//----------------------------------------------------------------//
-	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiActivity_AKUEnqueueCompassEvent ( JNIEnv* env, jclass obj, jint deviceId, jint sensorId, jint heading ) {
+	extern "C" void Java_com_ziplinegames_moai_Moai_AKUEnqueueCompassEvent ( JNIEnv* env, jclass obj, jint deviceId, jint sensorId, jint heading ) {
 
 		InputEvent ievent;
 
@@ -252,12 +171,11 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 
 		ievent.m_heading = heading;
 
-		g_InputQueue->Push ( ievent );
-		//AKUEnqueueCompassEvent ( deviceId, sensorId, heading );
+		inputQueue->Push ( ievent );
 	}
 
 	//----------------------------------------------------------------//
-	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiActivity_AKUEnqueueLevelEvent ( JNIEnv* env, jclass obj, jint deviceId, jint sensorId, jfloat x, jfloat y, jfloat z ) {
+	extern "C" void Java_com_ziplinegames_moai_Moai_AKUEnqueueLevelEvent ( JNIEnv* env, jclass obj, jint deviceId, jint sensorId, jfloat x, jfloat y, jfloat z ) {
 		
 		InputEvent ievent;
 
@@ -270,12 +188,11 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 		ievent.m_y = y;
 		ievent.m_z = z;
 
-		g_InputQueue->Push ( ievent );
-		//AKUEnqueueLevelEvent ( deviceId, sensorId, x, y, z );
+		inputQueue->Push ( ievent );
 	}
 
 	//----------------------------------------------------------------//
-	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiActivity_AKUEnqueueLocationEvent ( JNIEnv* env, jclass obj, jint deviceId, jint sensorId, jdouble longitude, jdouble latitude, jdouble altitude, jfloat hAccuracy, jfloat vAccuracy, jfloat speed ) {
+	extern "C" void Java_com_ziplinegames_moai_Moai_AKUEnqueueLocationEvent ( JNIEnv* env, jclass obj, jint deviceId, jint sensorId, jdouble longitude, jdouble latitude, jdouble altitude, jfloat hAccuracy, jfloat vAccuracy, jfloat speed ) {
 		
 		InputEvent ievent;
 
@@ -291,12 +208,12 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 		ievent.m_vAccuracy = vAccuracy;
 		ievent.m_speed = speed ;
 		
-		g_InputQueue->Push ( ievent );
-		//AKUEnqueueLocationEvent ( deviceId, sensorId, longitude, latitude, altitude, hAccuracy, vAccuracy, speed );
+		inputQueue->Push ( ievent );
 	}
 
 	//----------------------------------------------------------------//
-	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUEnqueueTouchEvent ( JNIEnv* env, jclass obj, jint deviceId, jint sensorId, jint touchId, jboolean down, jint x, jint y, jint tapCount ) {
+	extern "C" void Java_com_ziplinegames_moai_Moai_AKUEnqueueTouchEvent ( JNIEnv* env, jclass obj, jint deviceId, jint sensorId, jint touchId, jboolean down, jint x, jint y, jint tapCount ) {
+
 		InputEvent ievent;
 
 		ievent.m_type = InputEvent::INPUTEVENT_TOUCH;
@@ -310,37 +227,41 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 		ievent.m_y = y;
 		ievent.m_tapCount = tapCount;
 
-		g_InputQueue->Push ( ievent );
-		//AKUEnqueueTouchEvent ( deviceId, sensorId, touchId, down, x, y, tapCount );
+		inputQueue->Push ( ievent );
 	}
 
 	//----------------------------------------------------------------//
-	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiActivity_AKUFinalize	( JNIEnv* env, jclass obj ) {
-		AKUFinalize ();
-	}
-
-	//----------------------------------------------------------------//
-	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUExtLoadLuacrypto ( JNIEnv* env, jclass obj ) {
+	extern "C" void Java_com_ziplinegames_moai_Moai_AKUExtLoadLuacrypto ( JNIEnv* env, jclass obj ) {
+		
 		AKUExtLoadLuacrypto ();
 	}
 
 	//----------------------------------------------------------------//
-	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUExtLoadLuacurl ( JNIEnv* env, jclass obj ) {
+	extern "C" void Java_com_ziplinegames_moai_Moai_AKUExtLoadLuacurl ( JNIEnv* env, jclass obj ) {
+		
 		AKUExtLoadLuacurl ();
 	}
 
 	//----------------------------------------------------------------//
-	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUExtLoadLuasocket ( JNIEnv* env, jclass obj ) {
+	extern "C" void Java_com_ziplinegames_moai_Moai_AKUExtLoadLuasocket ( JNIEnv* env, jclass obj ) {
+		
 		AKUExtLoadLuasocket ();
 	}
 
 	//----------------------------------------------------------------//
-	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUExtLoadLuasql ( JNIEnv* env, jclass obj ) {
+	extern "C" void Java_com_ziplinegames_moai_Moai_AKUExtLoadLuasql ( JNIEnv* env, jclass obj ) {
+		
 		AKUExtLoadLuasql ();
 	}
 
 	//----------------------------------------------------------------//
-	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUInit ( JNIEnv* env, jclass obj, jobject moaiView, jobject moaiActivity ) {
+	extern "C" void Java_com_ziplinegames_moai_Moai_AKUFinalize	( JNIEnv* env, jclass obj ) {
+
+		AKUFinalize ();
+	}
+
+	//----------------------------------------------------------------//
+	extern "C" void Java_com_ziplinegames_moai_Moai_AKUInit ( JNIEnv* env, jclass obj ) {
 
 		MOAIApp::Affirm ();
 		REGISTER_LUA_CLASS ( MOAIApp );
@@ -375,46 +296,24 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 		REGISTER_LUA_CLASS ( MOAIFacebook );
 #endif
 
-		// register callbacks into Java
-		mMoaiView = ( jobject ) env->NewGlobalRef ( moaiView );
-		jclass moaiViewClass = env->GetObjectClass ( mMoaiView );
+		inputQueue = new LockingQueue < InputEvent > ();
+	}
+
+	//----------------------------------------------------------------//
+	extern "C" void Java_com_ziplinegames_moai_Moai_AKUMountVirtualDirectory ( JNIEnv* env, jclass obj, jstring jvirtualPath, jstring jarchive ) {
 		
-		g_InputQueue = new LockingQueue<InputEvent> ();
-		mGenerateGuidFunc = env->GetMethodID ( moaiViewClass, "getGUID", "()Ljava/lang/String;" );
+		JNI_GET_CSTRING ( jvirtualPath, virtualPath );
+		JNI_GET_CSTRING ( jarchive, archive );
 
-		MOAIApp::Get ().SetOpenURLFunc( &OpenURL );
-		MOAIApp::Get ().SetShowDialogFunc( &ShowDialog );
-		MOAIApp::Get ().SetShareFunc( &Share );
-
-		mMoaiActivity = ( jobject ) env->NewGlobalRef ( moaiActivity );
-		jclass moaiActivityClass = env->GetObjectClass ( mMoaiActivity );
-
-		mOpenURLFunc = env->GetMethodID ( moaiActivityClass, "openURL", "(Ljava/lang/String;)V" );
-		mShowDialogFunc = env->GetMethodID ( moaiActivityClass, "showDialog", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)V" );
-		mShareFunc = env->GetMethodID ( moaiActivityClass, "share", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V" );
-	}
-
-	//----------------------------------------------------------------//
-	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiActivity_AKUMountVirtualDirectory ( JNIEnv* env, jclass obj, jstring jvirtualPath, jstring jarchive ) {
-		GET_CSTRING ( jvirtualPath, virtualPath );
-		GET_CSTRING ( jarchive, archive );
 		AKUMountVirtualDirectory ( virtualPath, archive );
-		RELEASE_CSTRING ( jvirtualPath, virtualPath );
-		RELEASE_CSTRING ( jarchive, archive );
-	}
 
-	//----------------------------------------------------------------//
-	extern "C" bool Java_@PACKAGE_UNDERSCORED@_MoaiActivity_AKUNotifyBackButtonPressed ( JNIEnv* env, jclass obj ) {
-		return MOAIApp::Get ().NotifyBackButtonPressed ();
+		JNI_RELEASE_CSTRING ( jvirtualPath, virtualPath );
+		JNI_RELEASE_CSTRING ( jarchive, archive );
 	}
 	
 	//----------------------------------------------------------------//
-	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiActivity_AKUNotifyDialogDismissed ( JNIEnv* env, jclass obj, jint code ) {
-		MOAIApp::Get ().NotifyDialogDismissed ( code );
-	}
-	
-	//----------------------------------------------------------------//
-	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUPause ( JNIEnv* env, jclass obj, jboolean paused ) {
+	extern "C" void Java_com_ziplinegames_moai_Moai_AKUPause ( JNIEnv* env, jclass obj, jboolean paused ) {
+		
 		AKUPause ( paused );
 
 		if ( paused ) {
@@ -427,175 +326,201 @@ LockingQueue<InputEvent> *g_InputQueue = NULL;
 	}
 
 	//----------------------------------------------------------------//
-	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUReleaseGfxContext ( JNIEnv* env, jclass obj ) {
+	extern "C" void Java_com_ziplinegames_moai_Moai_AKUReleaseGfxContext ( JNIEnv* env, jclass obj ) {
+		
 		AKUReleaseGfxContext ();
 	}
 
 	//----------------------------------------------------------------//
-	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKURender ( JNIEnv* env, jclass obj ) {
+	extern "C" void Java_com_ziplinegames_moai_Moai_AKURender ( JNIEnv* env, jclass obj ) {
+		
 		AKURender ();
 	}
 
 	//----------------------------------------------------------------//
-	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUReserveInputDevices ( JNIEnv* env, jclass obj, jint total ) {
+	extern "C" void Java_com_ziplinegames_moai_Moai_AKUReserveInputDevices ( JNIEnv* env, jclass obj, jint total ) {
+
 		AKUReserveInputDevices ( total );
 	}
 
 	//----------------------------------------------------------------//
-	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUReserveInputDeviceSensors ( JNIEnv* env, jclass obj, jint deviceId, jint total ) {
+	extern "C" void Java_com_ziplinegames_moai_Moai_AKUReserveInputDeviceSensors ( JNIEnv* env, jclass obj, jint deviceId, jint total ) {
+
 		AKUReserveInputDeviceSensors ( deviceId, total );
 	}
 
 	//----------------------------------------------------------------//
-	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKURunScript ( JNIEnv* env, jclass obj, jstring jfilename ) {
-		GET_CSTRING ( jfilename, filename );
+	extern "C" void Java_com_ziplinegames_moai_Moai_AKURunScript ( JNIEnv* env, jclass obj, jstring jfilename ) {
+		
+		JNI_GET_CSTRING ( jfilename, filename );
+		
 		AKURunScript ( filename );
-		RELEASE_CSTRING ( jfilename, filename );
+		
+		JNI_RELEASE_CSTRING ( jfilename, filename );
 	}
 
 	//----------------------------------------------------------------//
-	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiActivity_AKUSetConnectionType ( JNIEnv* env, jclass obj, jlong connectionType ) {
+	extern "C" void Java_com_ziplinegames_moai_Moai_AKUSetConnectionType ( JNIEnv* env, jclass obj, jlong connectionType ) {
+
 		MOAIEnvironment::Get ().SetConnectionType ( connectionType );
 	}
 
 	//----------------------------------------------------------------//
-	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUSetContext ( JNIEnv* env, jclass obj, jint akuContextId ) {
-		AKUSetContext ( akuContextId );
+	extern "C" void Java_com_ziplinegames_moai_Moai_AKUSetContext ( JNIEnv* env, jclass obj, jint contextId ) {
+		
+		AKUSetContext ( contextId );
 	}
 	
 	//----------------------------------------------------------------//
-	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUSetDeviceProperties ( JNIEnv* env, jclass obj, jstring jappName, jstring jappId, jstring jappVersion, jstring jabi, jstring jdevBrand, jstring jdevName, jstring jdevManufacturer, jstring jdevModel, jstring jdevProduct, jstring josBrand, jstring josVersion, jstring judid ) {
+	extern "C" void Java_com_ziplinegames_moai_Moai_AKUSetDeviceProperties ( JNIEnv* env, jclass obj, jstring jappName, jstring jappId, jstring jappVersion, jstring jabi, jstring jdevBrand, jstring jdevName, jstring jdevManufacturer, jstring jdevModel, jstring jdevProduct, jstring josBrand, jstring josVersion, jstring judid ) {
 
-		// get the environment
-		MOAIEnvironment& moaiEnv = MOAIEnvironment::Get ();
+		JNI_GET_CSTRING ( jappName, appName );
+		JNI_GET_CSTRING ( jappId, appId );
+		JNI_GET_CSTRING ( jappVersion, appVersion );
+		JNI_GET_CSTRING ( jabi, abi );
+		JNI_GET_CSTRING ( jdevBrand, devBrand );
+		JNI_GET_CSTRING ( jdevName, devName );
+		JNI_GET_CSTRING ( jdevManufacturer, devManufacturer );
+		JNI_GET_CSTRING ( jdevModel, devModel );
+		JNI_GET_CSTRING ( jdevProduct, devProduct );
+		JNI_GET_CSTRING ( josBrand, osBrand );
+		JNI_GET_CSTRING ( josVersion, osVersion );
+		JNI_GET_CSTRING ( judid, udid );
 	
-		// set up environment callbacks
-		moaiEnv.SetGUIDFunc ( &GenerateGUID );
+		MOAIEnvironment::Get ().SetAppDisplayName 	( appName );
+		MOAIEnvironment::Get ().SetAppID 			( appId );
+		MOAIEnvironment::Get ().SetAppVersion		( appVersion );
+		MOAIEnvironment::Get ().SetCPUABI 			( abi );
+		MOAIEnvironment::Get ().SetDevBrand 		( devBrand );
+		MOAIEnvironment::Get ().SetDevName 			( devName );
+		MOAIEnvironment::Get ().SetDevManufacturer	( devManufacturer );
+		MOAIEnvironment::Get ().SetDevModel			( devModel );
+		MOAIEnvironment::Get ().SetDevProduct		( devProduct );
+		MOAIEnvironment::Get ().SetOSBrand			( osBrand );
+		MOAIEnvironment::Get ().SetOSVersion		( osVersion );
+		MOAIEnvironment::Get ().SetUDID				( udid );
 
-		// convert jstrings to cstrings
-		GET_CSTRING ( jappName, appName );
-		GET_CSTRING ( jappId, appId );
-		GET_CSTRING ( jappVersion, appVersion );
-		GET_CSTRING ( jabi, abi );
-		GET_CSTRING ( jdevBrand, devBrand );
-		GET_CSTRING ( jdevName, devName );
-		GET_CSTRING ( jdevManufacturer, devManufacturer );
-		GET_CSTRING ( jdevModel, devModel );
-		GET_CSTRING ( jdevProduct, devProduct );
-		GET_CSTRING ( josBrand, osBrand );
-		GET_CSTRING ( josVersion, osVersion );
-		GET_CSTRING ( judid, udid );
-	
-		// set environment properties
-		moaiEnv.SetAppDisplayName 	( appName );
-		moaiEnv.SetAppID 			( appId );
-		moaiEnv.SetAppVersion		( appVersion );
-		moaiEnv.SetCPUABI 			( abi );
-		moaiEnv.SetDevBrand 		( devBrand );
-		moaiEnv.SetDevName 			( devName );
-		moaiEnv.SetDevManufacturer	( devManufacturer );
-		moaiEnv.SetDevModel			( devModel );
-		moaiEnv.SetDevProduct		( devProduct );
-		moaiEnv.SetOSBrand			( osBrand );
-		moaiEnv.SetOSVersion		( osVersion );
-		moaiEnv.SetUDID				( udid );
-
-		// release jstrings
-		RELEASE_CSTRING ( jappName, appName );
-		RELEASE_CSTRING ( jappId, appId );
-		RELEASE_CSTRING ( jappVersion, appVersion );
-		RELEASE_CSTRING ( jabi, abi );
-		RELEASE_CSTRING ( jdevBrand, devBrand );
-		RELEASE_CSTRING ( jdevName, devName );
-		RELEASE_CSTRING ( jdevManufacturer, devManufacturer );
-		RELEASE_CSTRING ( jdevModel, devModel );
-		RELEASE_CSTRING ( jdevProduct, devProduct );
-		RELEASE_CSTRING ( josBrand, osBrand );
-		RELEASE_CSTRING ( josVersion, osVersion );
-		RELEASE_CSTRING ( judid, udid );
+		JNI_RELEASE_CSTRING ( jappName, appName );
+		JNI_RELEASE_CSTRING ( jappId, appId );
+		JNI_RELEASE_CSTRING ( jappVersion, appVersion );
+		JNI_RELEASE_CSTRING ( jabi, abi );
+		JNI_RELEASE_CSTRING ( jdevBrand, devBrand );
+		JNI_RELEASE_CSTRING ( jdevName, devName );
+		JNI_RELEASE_CSTRING ( jdevManufacturer, devManufacturer );
+		JNI_RELEASE_CSTRING ( jdevModel, devModel );
+		JNI_RELEASE_CSTRING ( jdevProduct, devProduct );
+		JNI_RELEASE_CSTRING ( josBrand, osBrand );
+		JNI_RELEASE_CSTRING ( josVersion, osVersion );
+		JNI_RELEASE_CSTRING ( judid, udid );
 	}
-
+	
 	//----------------------------------------------------------------//
-	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiActivity_AKUSetDocumentDirectory ( JNIEnv* env, jclass obj, jstring jpath ) {
-		GET_CSTRING ( jpath, path );
+	extern "C" void Java_com_ziplinegames_moai_Moai_AKUSetDocumentDirectory ( JNIEnv* env, jclass obj, jstring jpath ) {
+		
+		JNI_GET_CSTRING ( jpath, path );
+		
 		MOAIEnvironment::Get ().SetDocumentDirectory ( path );
-		RELEASE_CSTRING ( jpath, path );
+		
+		JNI_RELEASE_CSTRING ( jpath, path );
 	}
 
 	//----------------------------------------------------------------//
-	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiActivity_AKUSetWorkingDirectory ( JNIEnv* env, jclass obj, jstring jpath ) {
+	extern "C" void Java_com_ziplinegames_moai_Moai_AKUSetInputConfigurationName ( JNIEnv* env, jclass obj, jstring jname ) {
 
-		GET_CSTRING ( jpath, path );
+		JNI_GET_CSTRING ( jname, name );
 
-		USFileSys::SetCurrentPath ( path );
-		MOAILuaRuntime::Get ().SetPath ( path );
-	
-		RELEASE_CSTRING ( jpath, path );
-	}
-
-	//----------------------------------------------------------------//
-	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUSetInputConfigurationName ( JNIEnv* env, jclass obj, jstring jname ) {
-		GET_CSTRING ( jname, name );
 		AKUSetInputConfigurationName ( name );
-		RELEASE_CSTRING ( jname, name );
+
+		JNI_RELEASE_CSTRING ( jname, name );
 	}
 
 	//----------------------------------------------------------------//
-	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUSetInputDevice ( JNIEnv* env, jclass obj, jint deviceId, jstring jname ) {
-		GET_CSTRING ( jname, name );
+	extern "C" void Java_com_ziplinegames_moai_Moai_AKUSetInputDevice ( JNIEnv* env, jclass obj, jint deviceId, jstring jname ) {
+
+		JNI_GET_CSTRING ( jname, name );
+
 		AKUSetInputDevice ( deviceId, name );
-		RELEASE_CSTRING ( jname, name );
+
+		JNI_RELEASE_CSTRING ( jname, name );
 	}
 
 	//----------------------------------------------------------------//
-	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUSetInputDeviceCompass ( JNIEnv* env, jclass obj, jint deviceId, jint sensorId, jstring jname ) {
-		GET_CSTRING ( jname, name );
+	extern "C" void Java_com_ziplinegames_moai_Moai_AKUSetInputDeviceCompass ( JNIEnv* env, jclass obj, jint deviceId, jint sensorId, jstring jname ) {
+
+		JNI_GET_CSTRING ( jname, name );
+
 		AKUSetInputDeviceCompass ( deviceId, sensorId, name );
-		RELEASE_CSTRING ( jname, name );
+
+		JNI_RELEASE_CSTRING ( jname, name );
 	}
 
 	//----------------------------------------------------------------//
-	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUSetInputDeviceLevel ( JNIEnv* env, jclass obj, jint deviceId, jint sensorId, jstring jname ) {
-		GET_CSTRING ( jname, name );
+	extern "C" void Java_com_ziplinegames_moai_Moai_AKUSetInputDeviceLevel ( JNIEnv* env, jclass obj, jint deviceId, jint sensorId, jstring jname ) {
+
+		JNI_GET_CSTRING ( jname, name );
+
 		AKUSetInputDeviceLevel ( deviceId, sensorId, name );
-		RELEASE_CSTRING ( jname, name );
+
+		JNI_RELEASE_CSTRING ( jname, name );
 	}
 
 	//----------------------------------------------------------------//
-	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUSetInputDeviceLocation ( JNIEnv* env, jclass obj, jint deviceId, jint sensorId, jstring jname ) {
-		GET_CSTRING ( jname, name );
+	extern "C" void Java_com_ziplinegames_moai_Moai_AKUSetInputDeviceLocation ( JNIEnv* env, jclass obj, jint deviceId, jint sensorId, jstring jname ) {
+
+		JNI_GET_CSTRING ( jname, name );
+
 		AKUSetInputDeviceLocation ( deviceId, sensorId, name );
-		RELEASE_CSTRING ( jname, name );
+
+		JNI_RELEASE_CSTRING ( jname, name );
 	}
 	
 	//----------------------------------------------------------------//
-	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUSetInputDeviceTouch ( JNIEnv* env, jclass obj, jint deviceId, jint sensorId, jstring jname ) {
-		GET_CSTRING ( jname, name );
+	extern "C" void Java_com_ziplinegames_moai_Moai_AKUSetInputDeviceTouch ( JNIEnv* env, jclass obj, jint deviceId, jint sensorId, jstring jname ) {
+
+		JNI_GET_CSTRING ( jname, name );
+
 		AKUSetInputDeviceTouch ( deviceId, sensorId, name );
-		RELEASE_CSTRING ( jname, name );
+
+		JNI_RELEASE_CSTRING ( jname, name );
 	}
 
 	//----------------------------------------------------------------//
-	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUSetScreenSize ( JNIEnv* env, jclass obj, jint width, jint height ) {
+	extern "C" void Java_com_ziplinegames_moai_Moai_AKUSetScreenSize ( JNIEnv* env, jclass obj, jint width, jint height ) {
+
 		AKUSetScreenSize ( width, height );
 	}
 
 	//----------------------------------------------------------------//
-	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUSetViewSize ( JNIEnv* env, jclass obj, jint width, jint height ) {
+	extern "C" void Java_com_ziplinegames_moai_Moai_AKUSetViewSize ( JNIEnv* env, jclass obj, jint width, jint height ) {
+
 		AKUSetViewSize ( width, height );
 	}
 
 	//----------------------------------------------------------------//
-	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUUntzInit ( JNIEnv* env, jclass obj ) {
+	extern "C" void Java_com_ziplinegames_moai_Moai_AKUSetWorkingDirectory ( JNIEnv* env, jclass obj, jstring jpath ) {
+
+		JNI_GET_CSTRING ( jpath, path );
+
+		USFileSys::SetCurrentPath ( path );
+		MOAILuaRuntime::Get ().SetPath ( path );
+	
+		JNI_RELEASE_CSTRING ( jpath, path );
+	}
+
+	//----------------------------------------------------------------//
+	extern "C" void Java_com_ziplinegames_moai_Moai_AKUUntzInit ( JNIEnv* env, jclass obj ) {
+		
 		AKUUntzInit ();
 	}
 	
 	//----------------------------------------------------------------//
-	extern "C" void Java_@PACKAGE_UNDERSCORED@_MoaiView_AKUUpdate ( JNIEnv* env, jclass obj ) {
+	extern "C" void Java_com_ziplinegames_moai_Moai_AKUUpdate ( JNIEnv* env, jclass obj ) {
 
 		InputEvent ievent;
-		while ( g_InputQueue->PopMessage ( ievent )) {
+		while ( inputQueue->Pop ( ievent )) {
+			
 			switch ( ievent.m_type ) {
+				
 			case InputEvent::INPUTEVENT_TOUCH:
 				AKUEnqueueTouchEvent ( ievent.m_deviceId, ievent.m_sensorId, ievent.m_touchId, ievent.m_down, ievent.m_x, ievent.m_y, ievent.m_tapCount );
 				break;

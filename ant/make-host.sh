@@ -63,7 +63,7 @@
 	
 	if [ x"$skip_build" != xtrue ]; then
 		pushd libmoai > /dev/null
-			bash build.sh -p $package_name -i $arm_mode -a $arm_arch -l $app_platform $tapjoy_flags $google_push_flags $google_billing_flags $crittercism_flags $adcolony_flags
+			bash build.sh -i $arm_mode -a $arm_arch -l $app_platform $tapjoy_flags $google_push_flags $google_billing_flags $crittercism_flags $adcolony_flags
 		popd > /dev/null
 	fi
 

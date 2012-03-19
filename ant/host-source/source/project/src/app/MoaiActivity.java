@@ -8,95 +8,42 @@ package @PACKAGE@;
 
 import android.app.Activity;
 import android.app.ActivityManager;
-import android.app.AlertDialog;
-import android.content.pm.ConfigurationInfo;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.ConfigurationInfo;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.Uri;
-import android.opengl.GLSurfaceView;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.view.Display;
 import android.view.KeyEvent;
 import android.view.Window;
 import android.view.WindowManager;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.ConfigurationInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.PackageManager.NameNotFoundException;
 
 // Moai
 import com.ziplinegames.moai.*;
-
-enum DIALOG_RESULT {
-	POSITIVE,
-	NEUTRAL,
-	NEGATIVE,
-	CANCEL,
-	TOTAL,
-};
-
-enum CONNECTION_TYPE {
-	NONE,
-	WIFI,
-	WWAN,
-	TOTAL,
-};
-
-enum INPUT_DEVICE {
-	DEVICE,
-	TOTAL,
-};
-
-enum INPUT_SENSOR {
-	COMPASS,
-	LEVEL,
-	LOCATION,
-	TOUCH,
-	TOTAL,
-};
-
-// README: See README in MoaiView.java regarding thread safety in Java and Aku.
 
 //================================================================//
 // MoaiActivity
 //================================================================//
 public class MoaiActivity extends Activity {
 
-	private AccelerometerEventListener		mAccelerometerListener;
-	private Sensor 							mAccelerometerSensor;
-	private ConnectivityBroadcastReceiver 	mConnectivityReceiver;
-	private Handler							mHandler;
-	private MoaiView						mMoaiView;
-	private SensorManager 					mSensorManager;
-	private boolean							mWaitingToResume;
-	private boolean							mWindowFocusLost;
-	
-	// Threading indications; M = Runs on Main thread, R = Runs on GL thread,
-	// ? = Runs on arbitrary thread.
-	// NOTE that this is based on the current Android host setup; if you move
-	// any one of these calls elesewhere in the host, you may alter what thread
-	// it executes on. 
-	protected static native void 		AKUAppWillEndSession 				(); // M
-	protected static native void 		AKUEnqueueLevelEvent 				( int deviceId, int sensorId, float x, float y, float z ); // M
-	protected static native void 		AKUFinalize 						(); // M
-	protected static native void 		AKUMountVirtualDirectory 			( String virtualPath, String archive ); // M
-	protected static native boolean 	AKUNotifyBackButtonPressed			(); // M
-	protected static native void 		AKUNotifyDialogDismissed			( int dialogResult ); // M
-	protected static native void 		AKUSetConnectionType 				( long connectionType ); // M
-	protected static native void 		AKUSetDocumentDirectory 			( String path ); // M
-	protected static native void 		AKUSetWorkingDirectory 				( String path ); // M
+	private AccelerometerEventListener		mAccelerometerListener = null;
+	private Sensor 							mAccelerometerSensor = null;
+	private ConnectivityBroadcastReceiver 	mConnectivityReceiver = null;
+	private MoaiView						mMoaiView = null;
+	private SensorManager 					mSensorManager = null;
+	private boolean							mWaitingToResume = false;
+	private boolean							mWindowFocusLost = false;
 
+	//----------------------------------------------------------------//
 	static {
 		
 		MoaiLog.i ( "Loading libmoai.so" );
@@ -104,32 +51,34 @@ public class MoaiActivity extends Activity {
 		System.loadLibrary ( "moai" );
 	}
 
+	//----------------------------------------------------------------//
+    public void onActivityResult ( int requestCode, int resultCode, Intent data ) {
+	
+        super.onActivityResult ( requestCode, resultCode, data );
+		Moai.onActivityResult ( requestCode, resultCode, data );
+    }
+
    	//----------------------------------------------------------------//
     protected void onCreate ( Bundle savedInstanceState ) {
 
 		MoaiLog.i ( "MoaiActivity onCreate: activity CREATED" );
 
     	super.onCreate ( savedInstanceState );
-
 		Moai.onCreate ( this );
-
+		
+		Moai.init ();
+		Moai.createContext ();
+		
         requestWindowFeature ( Window.FEATURE_NO_TITLE );
 	    getWindow ().addFlags ( WindowManager.LayoutParams.FLAG_FULLSCREEN );
 	    getWindow ().addFlags ( WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON );
 
-		Display display = (( WindowManager ) getSystemService ( Context.WINDOW_SERVICE )).getDefaultDisplay ();
-		ConfigurationInfo info = (( ActivityManager ) getSystemService ( Context.ACTIVITY_SERVICE )).getDeviceConfigurationInfo ();
-
-	    mMoaiView = new MoaiView ( this, this, display.getWidth (), display.getHeight (), info.reqGlEsVersion );
-
-		// TODO: Reorder AKU initialization so that the virtual directory can be
-		// mounted BEFORE creating the MoaiView.
 		try {
 			
 			ApplicationInfo myApp = getPackageManager ().getApplicationInfo ( getPackageName (), 0 );
 
-			AKUMountVirtualDirectory ( "bundle", myApp.publicSourceDir );
-			AKUSetWorkingDirectory ( "bundle/assets/@WORKING_DIR@" );				
+			Moai.mount ( "bundle", myApp.publicSourceDir );
+			Moai.setWorkingDirectory ( "bundle/assets/@WORKING_DIR@" );				
 		} catch ( NameNotFoundException e ) {
 
 			MoaiLog.e ( "MoaiActivity onCreate: Unable to locate the application bundle" );
@@ -137,19 +86,20 @@ public class MoaiActivity extends Activity {
 
 		if ( getFilesDir () != null ) {
 		 
-		 	AKUSetDocumentDirectory ( getFilesDir ().getAbsolutePath ());
+		 	Moai.setDocumentDirectory ( getFilesDir ().getAbsolutePath ());
 		} else {
 
 			MoaiLog.e ( "MoaiActivity onCreate: Unable to set the document directory" );
 		}
 				
-		mHandler = new Handler ();
+		Display display = (( WindowManager ) getSystemService ( Context.WINDOW_SERVICE )).getDefaultDisplay ();
+		ConfigurationInfo info = (( ActivityManager ) getSystemService ( Context.ACTIVITY_SERVICE )).getDeviceConfigurationInfo ();
+
+	    mMoaiView = new MoaiView ( this, display.getWidth (), display.getHeight (), info.reqGlEsVersion );
 		mSensorManager = ( SensorManager ) getSystemService ( Context.SENSOR_SERVICE );
 
-		mWaitingToResume = false;
-		mWindowFocusLost = false;
-
 		startConnectivityReceiver ();
+		enableAccelerometerEvents ( false );	
 
 		setContentView ( mMoaiView );
     }
@@ -159,13 +109,12 @@ public class MoaiActivity extends Activity {
 
 		MoaiLog.i ( "MoaiActivity onDestroy: activity DESTROYED" );
 		
-		super.onDestroy ();
-		
+		super.onDestroy ();	
 		Moai.onDestroy ();
 		
 		stopConnectivityReceiver ();
 				
-		AKUFinalize();
+		Moai.finish ();
 	}
 	
 	//----------------------------------------------------------------//
@@ -181,8 +130,7 @@ public class MoaiActivity extends Activity {
 
 		MoaiLog.i ( "MoaiActivity onPause: activity PAUSED" );
 		
-		super.onPause ();
-		
+		super.onPause ();	
 		Moai.onPause ();
 		
 		if ( mAccelerometerListener != null ) {
@@ -199,10 +147,9 @@ public class MoaiActivity extends Activity {
 		MoaiLog.i ( "MoaiActivity onPause: PAUSING now" );
 		mMoaiView.pause ( true );
 		
-		// Sessions are started in MoaiView.
-		AKUAppWillEndSession ();
-
 		Moai.setApplicationState ( Moai.ApplicationState.APPLICATION_PAUSED );
+		
+		Moai.endSession ();		
 	}
 	
 	//----------------------------------------------------------------//
@@ -211,7 +158,6 @@ public class MoaiActivity extends Activity {
 		MoaiLog.i ( "MoaiActivity onResume: activity RESUMED" );
 
 		super.onResume ();
-		
 		Moai.onResume ();
 		
 		if ( mAccelerometerListener != null ) {
@@ -236,8 +182,7 @@ public class MoaiActivity extends Activity {
 
 		MoaiLog.i ( "MoaiActivity onStart: activity STARTED" );
 
-		super.onStart ();		
-
+		super.onStart ();
 		Moai.onStart ();
 	}
 	
@@ -247,23 +192,15 @@ public class MoaiActivity extends Activity {
 		MoaiLog.i ( "MoaiActivity onStop: activity STOPPED" );
 
 		super.onStop ();
-
 		Moai.onStop ();
 	}
 	
-    public void onActivityResult ( int requestCode, int resultCode, Intent data ) {
-	
-        super.onActivityResult ( requestCode, resultCode, data );
-
-		Moai.onActivityResult ( requestCode, resultCode, data );
-    }
-
 	//================================================================//
-	// Public methods
+	// Private methods
 	//================================================================//
-	
+
 	//----------------------------------------------------------------//
-	public void enableAccelerometerEvents ( boolean enabled ) {
+	private void enableAccelerometerEvents ( boolean enabled ) {
 		
 		if ( !enabled ) {
 			
@@ -292,10 +229,6 @@ public class MoaiActivity extends Activity {
 		}
 	}
 		
-	//================================================================//
-	// Private methods
-	//================================================================//
-
 	//----------------------------------------------------------------//
 	private void startConnectivityReceiver () {
 		
@@ -325,7 +258,8 @@ public class MoaiActivity extends Activity {
 
 	    if ( keyCode == KeyEvent.KEYCODE_BACK ) {
 	        
-			if ( AKUNotifyBackButtonPressed () ) {
+			if ( Moai.backButtonPressed ()) {
+				
 				return true;
 			}
 	    }
@@ -358,87 +292,6 @@ public class MoaiActivity extends Activity {
 	}
 
 	//================================================================//
-	// Misc JNI callback methods
-	//================================================================//
-	
-	//----------------------------------------------------------------//
-	public void showDialog ( String title, String message, String positiveButton, String neutralButton, String negativeButton, boolean cancelable ) {
-
-		AlertDialog.Builder builder = new AlertDialog.Builder ( MoaiActivity.this );
-
-		if ( title != null ) {
-			builder.setTitle ( title );
-		}
-
-		if ( message != null ) {
-			builder.setMessage ( message );
-		}
-
-		if ( positiveButton != null ) {
-			builder.setPositiveButton ( positiveButton, new DialogInterface.OnClickListener () {
-				public void onClick ( DialogInterface arg0, int arg1 ) 
-				{
-					AKUNotifyDialogDismissed ( DIALOG_RESULT.POSITIVE.ordinal () );
-				}
-			});
-		}
-
-		if ( neutralButton != null ) {
-			builder.setNeutralButton ( neutralButton, new DialogInterface.OnClickListener () {
-				public void onClick ( DialogInterface arg0, int arg1 ) 
-				{
-					AKUNotifyDialogDismissed ( DIALOG_RESULT.NEUTRAL.ordinal () );
-				}
-			});
-		}
-
-		if ( negativeButton != null ) {
-			builder.setNegativeButton ( negativeButton, new DialogInterface.OnClickListener () {
-				public void onClick ( DialogInterface arg0, int arg1 ) 
-				{
-					AKUNotifyDialogDismissed ( DIALOG_RESULT.NEGATIVE.ordinal () );
-				}
-			});
-		}
-
-		builder.setCancelable ( cancelable );
-		if ( cancelable ) {
-			builder.setOnCancelListener ( new DialogInterface.OnCancelListener () {
-				public void onCancel ( DialogInterface arg0 ) 
-				{
-					AKUNotifyDialogDismissed ( DIALOG_RESULT.CANCEL.ordinal () );
-				}
-			});
-		}
-
-		builder.create().show();			
-	}
-	
-	//----------------------------------------------------------------//
-	public void share ( String prompt, String subject, String text ) {
-
-		Intent intent = new Intent ( Intent.ACTION_SEND );
-		intent.setType ( "text/plain" );
-		
-		if ( subject != null ) intent.putExtra ( Intent.EXTRA_SUBJECT, subject );
-		if ( text != null ) intent.putExtra ( Intent.EXTRA_TEXT, text );
-	
-		MoaiActivity.this.startActivity ( Intent.createChooser ( intent, prompt ));
-	}
-
-	//================================================================//
-	// Open Url JNI callback methods
-	//================================================================//
-
-	//----------------------------------------------------------------//
-	public void openURL ( String url ) {
-
-		Uri uri = Uri.parse ( url );
-		Intent intent = new Intent ( Intent.ACTION_VIEW, uri );
-		MoaiActivity.this.startActivity ( intent );
-	}
-
-	//================================================================//
 	// ConnectivityBroadcastReceiver
 	//================================================================//
 
@@ -451,7 +304,7 @@ public class MoaiActivity extends Activity {
 			ConnectivityManager manager = ( ConnectivityManager )context.getSystemService ( Context.CONNECTIVITY_SERVICE );
 			NetworkInfo networkInfo = manager.getActiveNetworkInfo ();
 					
-			CONNECTION_TYPE connectionType = CONNECTION_TYPE.NONE;
+			Moai.ConnectionType connectionType = Moai.ConnectionType.CONNECTION_NONE;
 					
 			if ( networkInfo != null ) {
 				
@@ -459,13 +312,13 @@ public class MoaiActivity extends Activity {
 					 								
 				 	case ConnectivityManager.TYPE_MOBILE: {
 					
-				 		connectionType = CONNECTION_TYPE.WWAN;
+				 		connectionType = Moai.ConnectionType.CONNECTION_WWAN;
 				 		break;
 				 	}
 					 									
 				 	case ConnectivityManager.TYPE_WIFI: {
 					
-				 		connectionType = CONNECTION_TYPE.WIFI;
+				 		connectionType = Moai.ConnectionType.CONNECTION_WIFI;
 				 		break;
 				 	}
 				 }
@@ -473,7 +326,7 @@ public class MoaiActivity extends Activity {
 			
 			MoaiLog.i ( "ConnectivityBroadcastReceiver onReceive: Connection = " + connectionType );
 			
-			AKUSetConnectionType (( long )connectionType.ordinal ());
+			Moai.setConnectionType (( long )connectionType.ordinal ());
 		}
 	};
 	
@@ -495,10 +348,10 @@ public class MoaiActivity extends Activity {
 			float y = event.values [ 1 ];
 			float z = event.values [ 2 ];
 
-			int deviceId = INPUT_DEVICE.DEVICE.ordinal ();
-			int sensorId = INPUT_SENSOR.LEVEL.ordinal ();
+			int deviceId = Moai.InputDevice.INPUT_DEVICE.ordinal ();
+			int sensorId = Moai.InputSensor.SENSOR_LEVEL.ordinal ();
 
-			AKUEnqueueLevelEvent ( deviceId, sensorId, x, y, z );
+			Moai.enqueueLevelEvent ( deviceId, sensorId, x, y, z );
 		}
 	};
 }

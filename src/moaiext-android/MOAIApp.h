@@ -12,6 +12,16 @@
 class MOAIApp :
 	public MOAIGlobalClass < MOAIApp, MOAILuaObject > {
 private:
+	
+	//----------------------------------------------------------------//
+	static int	_openURL					( lua_State* L );
+	static int	_setListener				( lua_State* L );
+	static int	_share						( lua_State* L );
+	static int	_showDialog					( lua_State* L );
+
+public:
+	
+	DECL_LUA_SINGLETON ( MOAIApp )
 
 	enum {
 		SESSION_START,
@@ -27,36 +37,16 @@ private:
         DIALOG_RESULT_CANCEL,
 	};
 	
-	MOAILuaRef		mListeners [ TOTAL ];
 	MOAILuaRef 		mDialogCallback;
+	MOAILuaRef		mListeners [ TOTAL ];
 	
-	//----------------------------------------------------------------//
-	static int	_openURL					( lua_State* L );
-	static int	_setListener				( lua_State* L );
-	static int	_share						( lua_State* L );
-	static int	_showDialog					( lua_State* L );
-
-	void ( *openURLFunc ) 						( cc8* );
-	void ( *shareFunc )							( cc8*, cc8*, cc8* );
-	void ( *showDialogFunc )					( cc8*, cc8*, cc8*, cc8*, cc8*, bool );
-
-public:
-	
-	DECL_LUA_SINGLETON ( MOAIApp )
-	
-	//----------------------------------------------------------------//
-				MOAIApp							();
-				~MOAIApp						();
-	void		DidStartSession					( bool resumed );
-	bool		NotifyBackButtonPressed			();
-	void		NotifyDialogDismissed			( int code );
-	void		OnInit							();
-	void		RegisterLuaClass				( MOAILuaState& state );
-	void		Reset							();
-	void		SetOpenURLFunc					( void ( *func ) ( cc8* ));
-	void		SetShareFunc					( void ( *func ) ( cc8*, cc8*, cc8* ));
-	void		SetShowDialogFunc				( void ( *func ) ( cc8*, cc8*, cc8*, cc8*, cc8*, bool ));
-	void		WillEndSession					();
+					MOAIApp					();
+					~MOAIApp				();
+	bool			NotifyBackButtonPressed	();
+	void			NotifyDialogDismissed	( int code );
+	void			NotifyDidStartSession	( bool resumed );
+	void			NotifyWillEndSession	();
+	void			RegisterLuaClass		( MOAILuaState& state );
 };
 
 #endif
