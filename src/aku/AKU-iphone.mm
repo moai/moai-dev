@@ -12,30 +12,6 @@
 #import <Crittercism.h>
 #import <TapjoyConnect.h>
 
-//----------------------------------------------------------------//
-void AKUAppDidFailToRegisterForRemoteNotificationsWithError ( NSError* error ) {
-
-	MOAIApp::Get ().DidFailToRegisterForRemoteNotificationsWithError ( error );
-}
-
-//----------------------------------------------------------------//
-void AKUAppDidReceiveLocalNotification ( UILocalNotification* notification ) {
-
-	MOAIApp::Get ().DidReceiveLocalNotification ( notification );
-}
-
-//----------------------------------------------------------------//
-void AKUAppDidReceiveRemoteNotification ( NSDictionary* userInfo ) {
-
-	MOAIApp::Get ().DidReceiveRemoteNotification ( userInfo );
-}
-
-//----------------------------------------------------------------//
-void AKUAppDidRegisterForRemoteNotificationsWithDeviceToken ( NSData* deviceToken ) {
-
-	MOAIApp::Get ().DidRegisterForRemoteNotificationsWithDeviceToken ( deviceToken );
-}
-
 //-----------------------------------------------------------------//
 void AKUAppDidStartSession ( bool resumed ) {
 
@@ -136,11 +112,27 @@ void AKUIphoneInit ( UIApplication* application ) {
 		REGISTER_LUA_CLASS ( MOAITapjoy )
 	#endif
 
+	#ifndef DISABLE_NOTIFICATIONS
+		REGISTER_LUA_CLASS ( MOAINotifications )
+	#endif
+
 	#ifndef DISABLE_CRITTERCISM
 		REGISTER_LUA_CLASS ( MOAICrittercism )
 	#endif
 		
 	REGISTER_LUA_CLASS ( MOAIFacebook )
+}
+
+//----------------------------------------------------------------//
+void AKUNotifyRemoteNotificationReceived ( NSDictionary* notification ) {
+
+	MOAINotifications::Get ().NotifyRemoteNotificationReceived ( notification );
+}
+
+//----------------------------------------------------------------//
+void AKUNotifyRemoteNotificationRegistrationComplete ( NSData* deviceToken ) {
+
+	MOAINotifications::Get ().NotifyRemoteRegistrationComplete ( deviceToken );
 }
 
 //-----------------------------------------------------------------//
@@ -163,13 +155,4 @@ void AKUSetConnectionType ( long type ) {
 void AKUSetDefaultFrameBuffer ( GLuint frameBuffer ) {
 
 	MOAIGfxDevice::Get ().SetDefaultFrameBuffer ( frameBuffer );
-}
-
-//-----------------------------------------------------------------//
-void AKUWasLaunchedWithRemoteNotification ( NSDictionary* remoteNotificationPayload ) {
-
-	if ( remoteNotificationPayload ) {
-	
-		MOAIApp::Get ().SetRemoteNotificationPayload ( remoteNotificationPayload );
-	}
 }

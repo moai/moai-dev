@@ -34,7 +34,7 @@
 	//----------------------------------------------------------------//
 	-( void ) application:( UIApplication* )application didFailToRegisterForRemoteNotificationsWithError:( NSError* )error {
 	
-		AKUAppDidFailToRegisterForRemoteNotificationsWithError ( error );
+		AKUNotifyRemoteNotificationRegistrationComplete ( nil );
 	}
 
 	//----------------------------------------------------------------//
@@ -59,26 +59,27 @@
 		// run scripts
 		[ mMoaiView run:@"main.lua" ];
 
+        // check to see if the app was lanuched from a remote notification
+        NSDictionary* pushBundle = [ launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey ];
+        if ( pushBundle != NULL ) {
+            
+            AKUNotifyRemoteNotificationReceived ( pushBundle );
+        }
+        
 		// return
 		return true;
 	}
-	
-	//----------------------------------------------------------------//
-	-( void ) application:( UIApplication* )application didReceiveLocalNotification:( UILocalNotification* )notification {
-	
-		AKUAppDidReceiveLocalNotification ( notification );
-	}
-	
-	//----------------------------------------------------------------//
-	-( void ) application:( UIApplication* )application didReceiveRemoteNotification:( NSDictionary* )userInfo {
 		
-		AKUAppDidReceiveRemoteNotification ( userInfo );
+	//----------------------------------------------------------------//
+	-( void ) application:( UIApplication* )application didReceiveRemoteNotification:( NSDictionary* )pushBundle {
+		
+		AKUNotifyRemoteNotificationReceived ( pushBundle );
 	}
 	
 	//----------------------------------------------------------------//
 	-( void ) application:( UIApplication* )application didRegisterForRemoteNotificationsWithDeviceToken:( NSData* )deviceToken {
 	
-		AKUAppDidRegisterForRemoteNotificationsWithDeviceToken ( deviceToken );
+		AKUNotifyRemoteNotificationRegistrationComplete ( deviceToken );
 	}
 	
 	//----------------------------------------------------------------//

@@ -2955,6 +2955,8 @@
 		CDF71328141EBDEE00D650CA /* MOAIScriptDeck.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66D967F814047A2500017919 /* MOAIScriptDeck.cpp */; };
 		CDF71329141EBDEF00D650CA /* MOAIScriptDeck.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66D967F814047A2500017919 /* MOAIScriptDeck.cpp */; };
 		CDF7132E141EBE7300D650CA /* MOAIGameCenter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 07E6C62F140C490B004D1227 /* MOAIGameCenter.mm */; };
+		E91A4BF11517E4090008F1A5 /* MOAINotifications.h in Headers */ = {isa = PBXBuildFile; fileRef = E91A4BEF1517E4090008F1A5 /* MOAINotifications.h */; };
+		E91A4BF21517E4090008F1A5 /* MOAINotifications.mm in Sources */ = {isa = PBXBuildFile; fileRef = E91A4BF01517E4090008F1A5 /* MOAINotifications.mm */; };
 		E952725C14D89C3300B32A28 /* MOAICrittercism.h in Headers */ = {isa = PBXBuildFile; fileRef = E952725A14D89C3300B32A28 /* MOAICrittercism.h */; };
 		E952727314D8B0E000B32A28 /* MOAICrittercism.mm in Sources */ = {isa = PBXBuildFile; fileRef = E952727214D8B0E000B32A28 /* MOAICrittercism.mm */; };
 		E9940D6814B7A217006465CC /* lfs.c in Sources */ = {isa = PBXBuildFile; fileRef = E9940D6514B7A217006465CC /* lfs.c */; };
@@ -5122,6 +5124,8 @@
 		CDEFB3F613E37F3C000A9523 /* MOAIVertexFormatMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIVertexFormatMgr.h; sourceTree = "<group>"; };
 		CDF7130D141EBC5C00D650CA /* MOAIGfxResource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIGfxResource.cpp; path = ../../src/moaicore/MOAIGfxResource.cpp; sourceTree = SOURCE_ROOT; };
 		CDF7130E141EBC5C00D650CA /* MOAIGfxResource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIGfxResource.h; path = ../../src/moaicore/MOAIGfxResource.h; sourceTree = SOURCE_ROOT; };
+		E91A4BEF1517E4090008F1A5 /* MOAINotifications.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAINotifications.h; path = "moaiext-iphone/MOAINotifications.h"; sourceTree = "<group>"; };
+		E91A4BF01517E4090008F1A5 /* MOAINotifications.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAINotifications.mm; path = "moaiext-iphone/MOAINotifications.mm"; sourceTree = "<group>"; };
 		E952725A14D89C3300B32A28 /* MOAICrittercism.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAICrittercism.h; path = "moaiext-iphone/MOAICrittercism.h"; sourceTree = "<group>"; };
 		E952727214D8B0E000B32A28 /* MOAICrittercism.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAICrittercism.mm; path = "moaiext-iphone/MOAICrittercism.mm"; sourceTree = "<group>"; };
 		E9940D6514B7A217006465CC /* lfs.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lfs.c; sourceTree = "<group>"; };
@@ -7340,6 +7344,8 @@
 				077E0F9914FC4A91006B0B4D /* MOAIFacebook.mm */,
 				07E6C62E140C490B004D1227 /* MOAIGameCenter.h */,
 				07E6C62F140C490B004D1227 /* MOAIGameCenter.mm */,
+				E91A4BEF1517E4090008F1A5 /* MOAINotifications.h */,
+				E91A4BF01517E4090008F1A5 /* MOAINotifications.mm */,
 				0780B1D514463B71006626CF /* MOAITapjoy.h */,
 				0780B1D614463B71006626CF /* MOAITapjoy.mm */,
 				03F135D813A2EFC000044AE8 /* MOAIWebView.h */,
@@ -9918,6 +9924,7 @@
 				E952725C14D89C3300B32A28 /* MOAICrittercism.h in Headers */,
 				07D740B514F5B1A100A6CBA8 /* AKU-adcolony.h in Headers */,
 				66459FBC1511641F0075BF13 /* MOAIAudioSampler.h in Headers */,
+				E91A4BF11517E4090008F1A5 /* MOAINotifications.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12074,6 +12081,7 @@
 				07D740B414F5B1A100A6CBA8 /* AKU-adcolony.mm in Sources */,
 				66459FB41511638B0075BF13 /* AKU-audiosampler.cpp in Sources */,
 				66459FBA1511641F0075BF13 /* MOAIAudioSampler.cpp in Sources */,
+				E91A4BF21517E4090008F1A5 /* MOAINotifications.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

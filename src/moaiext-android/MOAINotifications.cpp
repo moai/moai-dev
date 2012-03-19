@@ -17,6 +17,16 @@ extern JavaVM* jvm;
 //================================================================//
 
 //----------------------------------------------------------------//
+int MOAINotifications::_getAppIconBadgeNumber ( lua_State* L ) {
+	
+	MOAILuaState state ( L );
+	
+	lua_pushnumber ( state, 0 );
+	
+	return 1;
+}
+
+//----------------------------------------------------------------//
 int MOAINotifications::_registerForRemoteNotifications ( lua_State* L ) {
 	
 	MOAILuaState state ( L );
@@ -43,6 +53,12 @@ int MOAINotifications::_registerForRemoteNotifications ( lua_State* L ) {
 		}
 	}
 			
+	return 0;
+}
+
+//----------------------------------------------------------------//
+int MOAINotifications::_setAppIconBadgeNumber ( lua_State* L ) {
+	
 	return 0;
 }
 
@@ -105,20 +121,22 @@ MOAINotifications::~MOAINotifications () {
 //----------------------------------------------------------------//
 void MOAINotifications::RegisterLuaClass ( MOAILuaState& state ) {
 
-	state.SetField ( -1, "REMOTE_NOTIFICATION_REGISTRATION_COMPLETE", 					( u32 )REMOTE_NOTIFICATION_REGISTRATION_COMPLETE );
-	state.SetField ( -1, "REMOTE_NOTIFICATION_MESSAGE_RECEIVED", 						( u32 )REMOTE_NOTIFICATION_MESSAGE_RECEIVED );
-        
-	state.SetField ( -1, "REMOTE_NOTIFICATION_RESULT_REGISTERED", 						( u32 )REMOTE_NOTIFICATION_RESULT_REGISTERED );
-	state.SetField ( -1, "REMOTE_NOTIFICATION_RESULT_UNREGISTERED", 					( u32 )REMOTE_NOTIFICATION_RESULT_UNREGISTERED );
-	state.SetField ( -1, "REMOTE_NOTIFICATION_RESULT_ERROR_SERVICE_NOT_AVAILABLE", 		( u32 )REMOTE_NOTIFICATION_RESULT_ERROR_SERVICE_NOT_AVAILABLE );
-	state.SetField ( -1, "REMOTE_NOTIFICATION_RESULT_ERROR_ACCOUNT_MISSING", 			( u32 )REMOTE_NOTIFICATION_RESULT_ERROR_ACCOUNT_MISSING );
-	state.SetField ( -1, "REMOTE_NOTIFICATION_RESULT_ERROR_AUTHENTICATION_FAILED", 		( u32 )REMOTE_NOTIFICATION_RESULT_ERROR_AUTHENTICATION_FAILED );
-	state.SetField ( -1, "REMOTE_NOTIFICATION_RESULT_ERROR_TOO_MANY_REGISTRATIONS", 	( u32 )REMOTE_NOTIFICATION_RESULT_ERROR_TOO_MANY_REGISTRATIONS );
-	state.SetField ( -1, "REMOTE_NOTIFICATION_RESULT_ERROR_INVALID_SENDER", 			( u32 )REMOTE_NOTIFICATION_RESULT_ERROR_INVALID_SENDER );
-	state.SetField ( -1, "REMOTE_NOTIFICATION_RESULT_ERROR_PHONE_REGISTRATION_ERROR",	( u32 )REMOTE_NOTIFICATION_RESULT_ERROR_PHONE_REGISTRATION_ERROR );
+	state.SetField ( -1, "REMOTE_NOTIFICATION_NONE",					( u32 )0 );
+	state.SetField ( -1, "REMOTE_NOTIFICATION_BADGE",					( u32 )0 );
+	state.SetField ( -1, "REMOTE_NOTIFICATION_SOUND",					( u32 )0 );
+	state.SetField ( -1, "REMOTE_NOTIFICATION_ALERT",					( u32 )0 );
+
+	state.SetField ( -1, "REMOTE_NOTIFICATION_REGISTRATION_COMPLETE",	( u32 )REMOTE_NOTIFICATION_REGISTRATION_COMPLETE );
+	state.SetField ( -1, "REMOTE_NOTIFICATION_MESSAGE_RECEIVED", 		( u32 )REMOTE_NOTIFICATION_MESSAGE_RECEIVED );
+
+	state.SetField ( -1, "REMOTE_NOTIFICATION_RESULT_REGISTERED", 		( u32 )REMOTE_NOTIFICATION_RESULT_REGISTERED );
+	state.SetField ( -1, "REMOTE_NOTIFICATION_RESULT_UNREGISTERED", 	( u32 )REMOTE_NOTIFICATION_RESULT_UNREGISTERED );
+	state.SetField ( -1, "REMOTE_NOTIFICATION_RESULT_ERROR", 			( u32 )REMOTE_NOTIFICATION_RESULT_ERROR );
 	
 	luaL_Reg regTable [] = {
+		{ "getAppIconBadgeNumber",				_getAppIconBadgeNumber },
 		{ "registerForRemoteNotifications",		_registerForRemoteNotifications },
+		{ "setAppIconBadgeNumber",				_setAppIconBadgeNumber },
 		{ "setListener",						_setListener },
 		{ "unregisterForRemoteNotifications",	_unregisterForRemoteNotifications },
 		{ NULL, NULL }
@@ -155,6 +173,11 @@ void MOAINotifications::NotifyRemoteRegistrationComplete ( int code, cc8* regist
 	if ( callback ) {
 		
 		MOAILuaStateHandle state = callback.GetSelf ();
+	
+		if ( code > DIALOG_RESULT_ERROR ) {
+			
+			code = DIALOG_RESULT_ERROR;
+		}
 		
 		lua_pushinteger ( state, code );
 		lua_pushstring ( state, registration );
