@@ -882,6 +882,7 @@ void MOAIApp::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	state.SetField ( -1, "DOMAIN_DOCUMENTS",			( u32 )DOMAIN_DOCUMENTS );
 	state.SetField ( -1, "DOMAIN_APP_SUPPORT",			( u32 )DOMAIN_APP_SUPPORT );
+	state.SetField ( -1, "DOMAIN_CACHES",				( u32 )DOMAIN_CACHES );
 
 	state.SetField ( -1, "TRANSACTION_STATE_PURCHASING",( u32 )TRANSACTION_STATE_PURCHASING );
 	state.SetField ( -1, "TRANSACTION_STATE_PURCHASED", ( u32 )TRANSACTION_STATE_PURCHASED );
