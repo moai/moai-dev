@@ -149,6 +149,8 @@ void MOAIDebugLines::Draw () {
 	for ( u32 i = 0; i < this->mTop; ++i ) {
 		this->mLineBuffer [ i ].Draw ();
 	}
+	
+	this->Reset ();
 }
 
 //----------------------------------------------------------------//

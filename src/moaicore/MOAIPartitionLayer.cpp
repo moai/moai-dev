@@ -21,11 +21,11 @@ void MOAIPartitionLayer::Clear () {
 }
 
 //----------------------------------------------------------------//
-void MOAIPartitionLayer::ExtractProps ( USLeanList < MOAIProp* >& props ) {
+void MOAIPartitionLayer::ExtractProps ( MOAIPartitionCell& cell, MOAIPartitionLayer* layer ) {
 
 	u32 totalCells = this->mCells.Size ();
 	for ( u32 i = 0; i < totalCells; ++i ) {
-		this->mCells [ i ].ExtractProps ( props );
+		this->mCells [ i ].ExtractProps ( cell, layer );
 	}
 }
 
@@ -57,12 +57,12 @@ void MOAIPartitionLayer::GatherProps ( MOAIPartitionResultBuffer& results, MOAIP
 
 	float halfSize = this->mCellSize * 0.5f;
 	cellPoint.mX = cellPoint.mX - halfSize;
-	cellPoint.mY = cellPoint.mY - halfSize;
+	cellPoint.mY = cellPoint.mY + halfSize;
 
 	MOAICellCoord coord = this->mGridSpace.GetCellCoord ( cellPoint.mX, cellPoint.mY );
 	
 	int width = this->mGridSpace.GetWidth ();
-	int height = this->mGridSpace.GetWidth ();
+	int height = this->mGridSpace.GetHeight ();
 	
 	int xTotal = ( width < 2 ) ? 1 : 2;
 	int yTotal = ( height < 2 ) ? 1 : 2;

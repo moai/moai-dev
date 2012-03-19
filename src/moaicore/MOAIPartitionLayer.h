@@ -19,7 +19,7 @@ private:
 
 	//----------------------------------------------------------------//
 	void					Clear				();
-	void					ExtractProps		( USLeanList < MOAIProp* >& props );
+	void					ExtractProps		( MOAIPartitionCell& cell, MOAIPartitionLayer* layer );
 	void					GatherProps			( MOAIPartitionResultBuffer& results, MOAIProp* ignore, u32 mask );
 	void					GatherProps			( MOAIPartitionResultBuffer& results, MOAIProp* ignore, const USVec3D& point, u32 planeID, u32 mask );
 	void					GatherProps			( MOAIPartitionResultBuffer& results, MOAIProp* ignore, const USBox& box, u32 planeID, u32 mask );
