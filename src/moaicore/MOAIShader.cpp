@@ -9,23 +9,6 @@
 #include <moaicore/MOAIShader.h>
 #include <moaicore/MOAITransformBase.h>
 
-#if MOAI_OS_NACL
-#include "moai_nacl.h"
-
-bool g_blockOnMainThreadShaderUnload;
-
-//----------------------------------------------------------------//
-void NaClUnLoadShader ( void* userData, int32_t result ) {
-
-	MOAIShader *shader = ( MOAIShader * ) userData;
-
-	shader->DeleteShaders ();
-
-	g_blockOnMainThreadShaderUnload = false;
-}
-
-#endif
-
 //================================================================//
 // MOAIShaderUniform
 //================================================================//

@@ -1,40 +1,106 @@
-----------------------------------------------------------------
+--==============================================================
 -- Copyright (c) 2010-2011 Zipline Games, Inc. 
 -- All Rights Reserved. 
 -- http://getmoai.com
-----------------------------------------------------------------
+--==============================================================
 
-print ( "hello, Tapjoy!" )
+print ( "hello!" )
 
-MOAITapjoy.setListener ( MOAITapjoy.TAPJOY_VIDEO_AD_BEGIN, function () print ( 'Video Ad started...' ) if ENABLE_SOUND then MOAIUntzSystem.setVolume ( 0 ) end end )
-MOAITapjoy.setListener ( MOAITapjoy.TAPJOY_VIDEO_AD_CLOSE, function () print ( 'Video Ad closed' ) if ENABLE_SOUND then MOAIUntzSystem.setVolume ( 1 ) end end )
+require "tapjoy"
 
-MOAITapjoy.requestTapjoyConnect ( "TAPJOY APP KEY", "TAPJOY APP SECRET" )
+SCREEN_UNITS_X = 320
+SCREEN_UNITS_Y = 480
 
-print ( "Tapjoy User Id: " .. MOAITapjoy.getUserId () )
-
-MOAITapjoy.initVideoAds ( 2 )
-
-MOAITapjoy.showOffers ()
-
-----------------------------------------------------------------
-
-MOAISim.openWindow ( "test", 320, 480 )
+if MOAIEnvironment.isRetinaDisplay () then
+	SCREEN_WIDTH = 640
+	SCREEN_HEIGHT = 960
+else
+	SCREEN_WIDTH = 320
+	SCREEN_HEIGHT = 480
+end
 
 viewport = MOAIViewport.new ()
-viewport:setSize ( 320, 480 )
-viewport:setScale ( 320, 480 )
+viewport:setSize ( SCREEN_WIDTH, SCREEN_HEIGHT )
+viewport:setScale ( SCREEN_UNITS_X, SCREEN_UNITS_Y )
 
 layer = MOAILayer2D.new ()
 layer:setViewport ( viewport )
 MOAISim.pushRenderPass ( layer )
 
-gfxQuad = MOAIGfxQuad2D.new ()
-gfxQuad:setTexture ( "cathead.png" )
-gfxQuad:setRect ( -64, -64, 64, 64 )
+--==============================================================
+-- tapjoy examples
+--==============================================================
 
-prop = MOAIProp2D.new ()
-prop:setDeck ( gfxQuad )
-layer:insertProp ( prop )
+ACTIVE_EXAMPLE = "showOffersWebView"
+--ACTIVE_EXAMPLE = "showFeaturedAppWebView"
+--ACTIVE_EXAMPLE = "getBannerAdProp"
+--ACTIVE_EXAMPLE = "google"
 
-prop:moveRot ( 720, 2.0 )
+tapjoy.init ( "7f0cc735-d561-4761-b74b-91fd6787d200", "ZnIBakPig9ygaJN4lAod" )
+
+-----------------------------------------------------------------
+-- offers webview example
+-----------------------------------------------------------------
+if ACTIVE_EXAMPLE == "showOffersWebView" then
+	
+	function showOffersWebViewCallback ( task, webView )
+
+		webView:show ()
+	end
+
+	tapjoy.showOffersWebView ( showOffersWebViewCallback )
+end
+
+-----------------------------------------------------------------
+-- featured app ad example
+-----------------------------------------------------------------
+if ACTIVE_EXAMPLE == "showFeaturedAppWebView" then
+
+	function showFeaturedAppWebViewCallback ( task, webView )
+
+		webView:show ()
+	end
+
+	tapjoy.showFeaturedAppWebView ( showFeaturedAppWebViewCallback )
+end
+
+-----------------------------------------------------------------
+-- banner ad example
+-----------------------------------------------------------------
+if ACTIVE_EXAMPLE == "getBannerAdProp" then
+
+	function getBannerAdPropCallback ( task, bannerProp )
+
+		-- add banner ad prop to layer
+		layer:insertProp ( bannerProp )
+		
+		-- set up click behavior for banner ad prop
+		MOAIInputMgr.device.touch:setCallback ( 
+			
+			function ( eventType, id, x, y, tapCount )
+			
+				print ( layer:wndToWorld ( x, y ))
+			
+				if ( eventType == MOAITouchSensor.TOUCH_DOWN ) and bannerProp:inside ( layer:wndToWorld ( x, y )) then
+					local jsonTable = MOAIJsonParser.decode ( task:getString () )
+					MOAIWebView.openUrlInSafari ( jsonTable.ClickURL )
+				end
+			end
+		)
+	end
+
+	tapjoy.getBannerAdProp ( "320x50", getBannerAdPropCallback )
+end
+
+-----------------------------------------------------------------
+-- google webview example
+-----------------------------------------------------------------
+if ACTIVE_EXAMPLE == "google" then
+
+	print "google"
+	webView = MOAIWebView.new ()
+	webView:initWebView ( 0, 0, 360, 480, false )
+	webView:loadRequest ( "http://www.google.com/")
+	webView:show ()
+	
+end
