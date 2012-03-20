@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # remove existing run.bat files, and replace with sdk run scripts
-for f in $(find ../moai-sdk -type f -name *.bat); do 
+for f in $(find ../moai-sdk -type f -name run.bat); do 
 	
 	rm -f $f; 
 	cp -f run.sh ${f%/*}/run.sh;

@@ -4,6 +4,20 @@
 -- http://getmoai.com
 ----------------------------------------------------------------
 
+print ( "hello, iPhone!" )
+
+screenWidth, screenHeight = MOAIEnvironment.getScreenSize ()
+print ( 'screen: ', screenWidth, screenHeight )
+
+viewWidth, viewHeight = MOAIEnvironment.getViewSize ()
+print ( 'view: ', viewWidth, viewHeight )
+
+if MOAIEnvironment.isRetinaDisplay () then
+	print ( 'retina display' )
+end
+
+----------------------------------------------------------------
+
 MOAISim.openWindow ( "test", 320, 480 )
 
 viewport = MOAIViewport.new ()
@@ -24,13 +38,3 @@ prop:setDeck ( gfxQuad )
 layer:insertProp ( prop )
 
 prop:moveRot ( 360, 1.5 )
-
-screenWidth, screenHeight = MOAIEnvironment.getScreenSize ()
-print ( 'screen: ', screenWidth, screenHeight )
-
-viewWidth, viewHeight = MOAIEnvironment.getViewSize ()
-print ( 'view: ', viewWidth, viewHeight )
-
-if MOAIEnvironment.isRetinaDisplay () then
-	print ( 'retina display' )
-end

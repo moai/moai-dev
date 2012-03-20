@@ -6,7 +6,6 @@
 
 print ( "hello, iPhone!" )
 
-
 function onPaymentQueueTransaction ( transaction )
 
 	print ( 'onPaymentQueueTransaction' )
@@ -45,11 +44,7 @@ if MOAIApp.canMakePayments () then
 	MOAIApp.requestProductIdentifiers ( products )
 end
 
-
 ----------------------------------------------------------------
-
-MOAIApp.setAppIconBadgeNumber ( 0 )
-MOAIApp.registerForRemoteNotifications ( MOAIApp.REMOTE_NOTIFICATION_BADGE + MOAIApp.REMOTE_NOTIFICATION_ALERT )
 
 MOAISim.openWindow ( "test", 320, 480 )
 

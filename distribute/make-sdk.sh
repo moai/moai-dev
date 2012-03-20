@@ -22,6 +22,11 @@ cd ../samples/basics
 cp -R * ../../distribute/moai-sdk/samples/basics
 cd ../../distribute
 
+mkdir -p moai-sdk/samples/chrome
+cd ../samples/chrome
+cp -R * ../../distribute/moai-sdk/samples/chrome
+cd ../../distribute
+
 mkdir -p moai-sdk/samples/config
 cd ../samples/config
 cp -R * ../../distribute/moai-sdk/samples/config
@@ -30,11 +35,6 @@ cd ../../distribute
 mkdir -p moai-sdk/samples/contrib
 cd ../samples/contrib
 cp -R * ../../distribute/moai-sdk/samples/contrib
-cd ../../distribute
-
-mkdir -p moai-sdk/samples/chrome
-cd ../samples/chrome
-cp -R * ../../distribute/moai-sdk/samples/chrome
 cd ../../distribute
 
 mkdir -p moai-sdk/samples/flash
