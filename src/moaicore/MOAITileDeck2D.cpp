@@ -111,6 +111,11 @@ void MOAITileDeck2D::DrawPatch ( u32 idx, float xOff, float yOff, float xScale, 
 }
 
 //----------------------------------------------------------------//
+USRect MOAITileDeck2D::GetRect () {
+	return this->mRect;
+}
+
+//----------------------------------------------------------------//
 USRect MOAITileDeck2D::GetRect ( u32 idx, MOAIDeckRemapper* remapper ) {
 	UNUSED ( idx );
 	UNUSED ( remapper );

@@ -96,7 +96,7 @@ void MOAIImageTexture::OnClear () {
 }
 
 //----------------------------------------------------------------//
-void MOAIImageTexture::OnLoad () {
+void MOAIImageTexture::OnCreate () {
 
 	if ( !this->IsOK ()) return;
 	
@@ -112,6 +112,10 @@ void MOAIImageTexture::OnLoad () {
 		this->UpdateTextureFromImage ( *this, rect );
 	}
 	this->mStatus = VALID;
+}
+
+//----------------------------------------------------------------//
+void MOAIImageTexture::OnLoad () {
 }
 
 //----------------------------------------------------------------//

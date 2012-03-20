@@ -51,6 +51,7 @@ public:
 	void					DrawDebug				( const USAffine3D& transform, MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1 );
 	void					GatherSurfaces			( u32 idx, MOAIDeckRemapper* remapper, MOAISurfaceSampler2D& sampler );
 	void					GatherSurfaces			( MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1, MOAISurfaceSampler2D& sampler );
+	USRect					GetRect					();
 	USRect					GetRect					( u32 idx, MOAIDeckRemapper* remapper );
 							MOAISurfaceDeck2D		();
 							~MOAISurfaceDeck2D		();

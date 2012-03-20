@@ -131,7 +131,7 @@ end
 function Dialog:clickCallback( down )
        
 	if down then
-		
+
 		pick = alert_partition:propForPoint ( mouseX, mouseY )
 	   
 		if pick then
@@ -142,7 +142,6 @@ function Dialog:clickCallback( down )
 			end
 			if pick.name == "Button 2" then
 				alert_layer:seekLoc ( -500, 0, 0, 5 )
-
 			end
 		end
 	else

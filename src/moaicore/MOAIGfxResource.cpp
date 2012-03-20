@@ -28,14 +28,6 @@ MOAIGfxState::~MOAIGfxState () {
 
 //----------------------------------------------------------------//
 // TODO: doxygen
-int MOAIGfxResource::_clear ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIGfxResource, "U" )
-
-	return 0;
-}
-
-//----------------------------------------------------------------//
-// TODO: doxygen
 int MOAIGfxResource::_getAge ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGfxResource, "U" )
 
@@ -43,22 +35,6 @@ int MOAIGfxResource::_getAge ( lua_State* L ) {
 	lua_pushnumber ( state, age );
 
 	return 1;
-}
-
-//----------------------------------------------------------------//
-// TODO: doxygen
-int MOAIGfxResource::_preload ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIGfxResource, "U" )
-
-	return 0;
-}
-
-//----------------------------------------------------------------//
-// TODO: doxygen
-int MOAIGfxResource::_setRenewCallback ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIGfxResource, "U" )
-
-	return 0;
 }
 
 //----------------------------------------------------------------//
@@ -81,7 +57,7 @@ int MOAIGfxResource::_softRelease ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGfxResource, "U" )
 
 	int age = state.GetValue < int >( 2, 0 );
-	lua_pushboolean ( L, self->SoftReleaseGfxResource ( age ));
+	lua_pushboolean ( L, self->SoftRelease ( age ));
 
 	return 1;
 }
@@ -92,27 +68,12 @@ int MOAIGfxResource::_softRelease ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 bool MOAIGfxResource::Affirm () {
-
-	if ( this->mState == STATE_RENEW ) {
-		this->mState = STATE_CLEAR;
-		
-		if ( this->mOnRenew ) {
-			MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
-			this->PushLocal ( state, this->mOnRenew );
-			this->PushLuaUserdata ( state );
-			state.DebugCall ( 1, 0 );
-		}
-		else if ( this->IsRenewable ()) {
-			this->OnRenew ();
-		}
+	
+	if ( this->mState == STATE_PRECREATE ) {
+		this->OnCreate ();
+		this->mState = this->IsValid () ? STATE_READY : STATE_ERROR;
 	}
-	
-	if ( this->IsValid ()) return true;
-	if ( this->mState != STATE_CLEAR ) return false;
-	
-	this->OnLoad ();
-	
-	return this->IsValid ();
+	return this->mState == STATE_READY;
 }
 
 //----------------------------------------------------------------//
@@ -137,15 +98,62 @@ bool MOAIGfxResource::Bind () {
 void MOAIGfxResource::Clear () {
 
 	if ( MOAIGfxDevice::IsValid ()) {
-		this->OnUnload ();
+		this->OnDestroy ();
 	}
+	this->OnInvalidate ();
 	this->OnClear ();
-	this->mState = STATE_CLEAR;
+	this->mState = STATE_PRELOAD;
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxResource::Destroy () {
+
+	if ( this->mState == STATE_READY ) {
+
+		this->OnDestroy ();
+		this->OnInvalidate ();
+
+		this->mState = STATE_PRELOAD;
+	}
+	else if ( this->mState == STATE_PRECREATE ) {
+
+		this->mState = STATE_PRELOAD;
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxResource::Invalidate () {
+
+	if ( this->mState == STATE_READY ) {
+
+		this->OnInvalidate ();
+
+		this->mState = STATE_PRELOAD;
+	}
+	else if ( this->mState == STATE_PRECREATE ) {
+
+		this->mState = STATE_PRELOAD;
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxResource::Load () {
+
+	if ( this->mState != STATE_ERROR ) {
+
+		if ( this->mState == STATE_READY ) {
+			this->OnDestroy ();
+			this->OnInvalidate ();
+		}
+
+		this->OnLoad ();
+		this->mState = STATE_PRECREATE;
+	}
 }
 
 //----------------------------------------------------------------//
 MOAIGfxResource::MOAIGfxResource () :
-	mState ( STATE_CLEAR ),
+	mState ( STATE_PRECREATE ),
 	mLastRenderCount ( 0 ) {
 
 	RTTI_SINGLE ( MOAIGfxState )
@@ -172,10 +180,7 @@ void MOAIGfxResource::RegisterLuaClass ( MOAILuaState& state ) {
 void MOAIGfxResource::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
-		{ "clear",					_clear },
 		{ "getAge",					_getAge },
-		{ "preload",				_preload },
-		{ "setRenewCallback",		_setRenewCallback },
 		{ "softRelease",			_softRelease },
 		{ NULL, NULL }
 	};
@@ -183,45 +188,15 @@ void MOAIGfxResource::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxResource::ReleaseGfxResource () {
+bool MOAIGfxResource::SoftRelease ( u32 age ) {
 
-	if ( this->mState != STATE_CLEAR ) return;
-
-	this->OnUnload ();
-	this->mState = STATE_WAIT_RENEW;
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxResource::RenewGfxResource () {
-
-	if ( this->mState == STATE_WAIT_RENEW ) {
-		this->mState = STATE_RENEW;
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxResource::ResetGfxResource () {
-
-	this->mState = STATE_RENEW;
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxResource::SetError () {
-
-	this->mState = STATE_ERROR;	
-}
-
-//----------------------------------------------------------------//
-bool MOAIGfxResource::SoftReleaseGfxResource ( u32 age ) {
-
-	if ( this->mState != STATE_CLEAR ) return false;
+	if ( this->mState != STATE_READY ) return false;
 
 	age = MOAISim::Get ().GetRenderCounter () - age;
 
 	if ( this->mLastRenderCount <= age ) {
 		if ( this->IsRenewable ()) {
-			this->OnUnload ();
-			this->mState = STATE_RENEW;
+			this->Load ();
 			return true;
 		}
 	}

@@ -142,6 +142,17 @@ void MOAIDeck2D::GatherSurfaces ( MOAIGrid& grid, MOAIDeckRemapper* remapper, US
 	UNUSED ( sampler );
 }
 
+USBox MOAIDeck2D::GetBounds () {
+
+	USRect rect = this->GetRect ();
+	USBox bounds;
+	
+	bounds.mMin.Init ( rect.mXMin, rect.mYMin, 0.0f );
+	bounds.mMax.Init ( rect.mXMax, rect.mYMax, 0.0f );
+	
+	return bounds;
+}
+
 //----------------------------------------------------------------//
 USBox MOAIDeck2D::GetBounds ( u32 idx, MOAIDeckRemapper* remapper ) {
 

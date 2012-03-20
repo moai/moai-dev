@@ -34,9 +34,10 @@ private:
 	bool		IsValid					();
 	void		OnBind					();
 	void		OnClear					();
+	void		OnCreate				();
+	void		OnDestroy				();
+	void		OnInvalidate			();
 	void		OnLoad					();
-	void		OnRenew					();
-	void		OnUnload				();
 	
 public:
 	

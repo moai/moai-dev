@@ -73,6 +73,24 @@ int MOAIGfxDevice::_getMaxTextureUnits ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	getViewSize
+	@text	Returns the width and height of the view
+	
+	@out	int width
+	@out	int height
+*/
+int MOAIGfxDevice::_getViewSize ( lua_State* L  ) {
+
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	
+	lua_pushnumber ( L, gfxDevice.GetWidth ());
+	lua_pushnumber ( L, gfxDevice.GetHeight ());
+	
+	return 2;
+}
+
+
+//----------------------------------------------------------------//
 /**	@name	isProgrammable
 	@text	Returns a boolean indicating whether or not Moai is running
 			under the programmable pipeline.
@@ -789,6 +807,7 @@ void MOAIGfxDevice::RegisterLuaClass ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "getMaxTextureUnits",			_getMaxTextureUnits },
+		{ "getViewSize",				_getViewSize },
 		{ "isProgrammable",				_isProgrammable },
 		{ "setClearColor",				_setClearColor },
 		{ "setClearDepth",				_setClearDepth },
@@ -807,7 +826,7 @@ void MOAIGfxDevice::ReleaseResources () {
 
 	ResourceIt resourceIt = this->mResources.Head ();
 	for ( ; resourceIt; resourceIt = resourceIt->Next ()) {
-		resourceIt->Data ()->ReleaseGfxResource ();
+		resourceIt->Data ()->Destroy ();
 	}
 }
 
@@ -822,7 +841,7 @@ void MOAIGfxDevice::RenewResources () {
 
 	ResourceIt resourceIt = this->mResources.Head ();
 	for ( ; resourceIt; resourceIt = resourceIt->Next ()) {
-		resourceIt->Data ()->RenewGfxResource ();
+		resourceIt->Data ()->Load ();
 	}
 }
 
@@ -855,7 +874,8 @@ void MOAIGfxDevice::ResetResources () {
 
 	ResourceIt resourceIt = this->mResources.Head ();
 	for ( ; resourceIt; resourceIt = resourceIt->Next ()) {
-		resourceIt->Data ()->ResetGfxResource ();
+		resourceIt->Data ()->Invalidate ();
+		resourceIt->Data ()->Load ();
 	}
 }
 
@@ -1478,7 +1498,7 @@ void MOAIGfxDevice::SoftReleaseResources ( u32 age ) {
 
 	ResourceIt resourceIt = this->mResources.Head ();
 	for ( ; resourceIt; resourceIt = resourceIt->Next ()) {
-		resourceIt->Data ()->SoftReleaseGfxResource ( age );
+		resourceIt->Data ()->SoftRelease ( age );
 	}
 	
 	// Horrible to call this, but generally soft release is only used

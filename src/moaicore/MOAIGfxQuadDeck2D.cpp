@@ -210,6 +210,21 @@ USRect MOAIGfxQuadDeck2D::GetRect ( u32 idx, MOAIDeckRemapper* remapper ) {
 	return rect;
 }
 
+USRect MOAIGfxQuadDeck2D::GetRect ( ) {
+
+	u32 size = this->mQuads.Size ();
+	USRect totalRect;
+	totalRect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
+
+	for ( u32 i = 0; i < size; ++i ) {
+		MOAIQuadBrush& quad = this->mQuads [ i ];
+		USRect rect = quad.GetVtxBounds ();
+
+		totalRect.Grow ( rect );
+	}
+	return totalRect;
+}
+
 //----------------------------------------------------------------//
 MOAIGfxQuadDeck2D::MOAIGfxQuadDeck2D () {
 

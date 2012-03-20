@@ -7,73 +7,103 @@
 print ( "hello, Android!" )
 
 function onBillingSupported ( supported )
+
 	print ( "onBillingSupported: " )
 
 	if ( supported ) then
+
 		print ( "billing is supported" )
 		
-		if MOAIApp.requestPurchase ( 'sword_001', 'this is a payload available to developers that is returned as part of the purchase state changed callback' ) then
---		if MOAIApp.restoreTransactions () then
+		if MOAIBilling.requestPurchase ( 'sword_001', 'this is a payload available to developers that is returned as part of the purchase state changed callback' ) then
+--		if MOAIBilling.restoreTransactions () then
+
 			print ( "purchase successfully requested" )
 --			print ( "restore transactions successfully requested" )
 		else
+
 			print ( "requesting purchase failed" )
 --			print ( "requesting transaction restore failed" )
 		end
 	else
+
 		print ( "billing is not supported" )
 	end
 end
 
-function onPurchaseResponseReceived ( id, code )
+function onPurchaseResponseReceived ( code, id )
+
 	print ( "onPurchaseResponseReceived: " .. id )
 	
-	if ( code == MOAIApp.BILLING_RESULT_OK ) then
+	if ( code == MOAIBilling.BILLING_RESULT_SUCCESS ) then
+
 		print ( "purchase request received" )
-	elseif ( code == MOAIApp.BILLING_RESULT_USER_CANCELED ) then
+	elseif ( code == MOAIBilling.BILLING_RESULT_USER_CANCELED ) then
+
 		print ( "user canceled purchase" )
 	else
+
 		print ( "purchase failed" )
 	end
 end
 
-function onPurchaseStateChanged ( id, code, order, notification, payload )
+function onPurchaseStateChanged ( code, id, order, user, notification, payload )
+
 	print ( "onPurchaseStateChanged: " .. id )
 
-	if ( code == MOAIApp.BILLING_STATE_ITEM_PURCHASED ) then
+	if ( code == MOAIBilling.BILLING_PURCHASE_STATE_ITEM_PURCHASED ) then
+
 		print ( "item has been purchased" )
-	elseif ( code == MOAIApp.BILLING_STATE_ITEM_REFUNDED ) then
+	elseif ( code == MOAIBilling.BILLING_PURCHASE_STATE_ITEM_REFUNDED ) then
+
 		print ( "item has been refunded" )
 	else
+
 		print ( "purchase was canceled" )
 	end
 
-	if ( notification ~= 0 ) then
-		if MOAIApp.confirmNotification ( notification ) ~= true then
+	if ( notification ~= nil ) then
+
+		if MOAIBilling.confirmNotification ( notification ) ~= true then
+
 			print ( "failed to confirm notification" )
 		end
 	end
 end
 
-function onRestoreResponseReceived ( code )
+function onRestoreResponseReceived ( code, more, offset )
+
 	print ( "onRestoreResponseReceived: " )
-	
-	if ( code == MOAIApp.BILLING_RESULT_OK ) then
+
+	if ( code == MOAIBilling.BILLING_RESULT_SUCCESS ) then
+
 		print ( "restore request received" )
+	
+		if ( more ) then
+	
+			MOAIBilling.restoreTransactions ( offset )
+		end
 	else
-		print ( "restore failed" )
+
+		print ( "restore request failed" )
 	end
 end
 
-MOAIApp.setListener ( MOAIApp.CHECK_BILLING_SUPPORTED, onBillingSupported )
-MOAIApp.setListener ( MOAIApp.PURCHASE_RESPONSE_RECEIVED, onPurchaseResponseReceived )
-MOAIApp.setListener ( MOAIApp.PURCHASE_STATE_CHANGED, onPurchaseStateChanged )
-MOAIApp.setListener ( MOAIApp.RESTORE_RESPONSE_RECEIVED, onRestoreResponseReceived )
+MOAIBilling.setListener ( MOAIBilling.CHECK_BILLING_SUPPORTED, onBillingSupported )
+MOAIBilling.setListener ( MOAIBilling.PURCHASE_RESPONSE_RECEIVED, onPurchaseResponseReceived )
+MOAIBilling.setListener ( MOAIBilling.PURCHASE_STATE_CHANGED, onPurchaseStateChanged )
+MOAIBilling.setListener ( MOAIBilling.RESTORE_RESPONSE_RECEIVED, onRestoreResponseReceived )
 
-MOAIApp.setMarketPublicKey ( "SET YOUR ANDROID MARKET PUBLIC KEY HERE. SEE https://market.android.com/publish/editProfile" )
+MOAIBilling.setPublicKey ( "SET YOUR ANDROID MARKET PUBLIC KEY HERE. SEE https://market.android.com/publish/editProfile" )
 
-if MOAIApp.checkBillingSupported () ~= true then
-	print ( "cannot connect to billing service" )
+if not MOAIBilling.setBillingProvider ( MOAIBilling.BILLING_PROVIDER_GOOGLE ) then
+
+	print ( "unable to set billing provider" )
+else
+
+	if not MOAIBilling.checkBillingSupported () then
+
+		print ( "check billing supported failed" )
+	end
 end
 
 ----------------------------------------------------------------

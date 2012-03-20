@@ -108,8 +108,6 @@ void MOAIIndexBuffer::OnBind () {
 
 //----------------------------------------------------------------//
 void MOAIIndexBuffer::OnClear () {
-
-	this->OnUnload ();
 	
 	if ( this->mBuffer ) {
 		free ( this->mBuffer );
@@ -118,7 +116,7 @@ void MOAIIndexBuffer::OnClear () {
 }
 
 //----------------------------------------------------------------//
-void MOAIIndexBuffer::OnLoad () {
+void MOAIIndexBuffer::OnCreate () {
 
 	if ( this->mBuffer ) {
 		
@@ -132,18 +130,22 @@ void MOAIIndexBuffer::OnLoad () {
 }
 
 //----------------------------------------------------------------//
-void MOAIIndexBuffer::OnRenew () {
-
-	this->OnLoad ();
-}
-
-//----------------------------------------------------------------//
-void MOAIIndexBuffer::OnUnload () {
+void MOAIIndexBuffer::OnDestroy () {
 
 	if ( this->mGLBufferID ) {
 		glDeleteBuffers ( 1, &this->mGLBufferID );
 		this->mGLBufferID = 0;
 	}
+}
+
+//----------------------------------------------------------------//
+void MOAIIndexBuffer::OnInvalidate () {
+
+	this->mGLBufferID = 0;
+}
+
+//----------------------------------------------------------------//
+void MOAIIndexBuffer::OnLoad () {
 }
 
 //----------------------------------------------------------------//

@@ -28,7 +28,9 @@ public:
 	virtual void		DrawPatch			( u32 idx, float xOff, float yOff, float xScale, float yScale );
 	void				GatherSurfaces		( u32 idx, MOAIDeckRemapper* remapper, MOAISurfaceSampler2D& sampler );
 	void				GatherSurfaces		( MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1, MOAISurfaceSampler2D& sampler );
+	USBox				GetBounds			();
 	USBox				GetBounds			( u32 idx, MOAIDeckRemapper* remapper );
+	virtual USRect		GetRect				( ) = 0;
 	virtual USRect		GetRect				( u32 idx, MOAIDeckRemapper* remapper ) = 0;
 						MOAIDeck2D			();
 						~MOAIDeck2D			();
