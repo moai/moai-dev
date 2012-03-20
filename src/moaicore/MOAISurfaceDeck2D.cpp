@@ -268,7 +268,7 @@ USRect MOAISurfaceDeck2D::GetRect () {
 	USRect totalRect;
 	totalRect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
 
-	for ( int i = 0; i < size; ++i ) {
+	for ( u32 i = 0; i < size; ++i ) {
 		totalRect.Grow ( this->mBrushes [ i ].mBounds );
 	}
 
