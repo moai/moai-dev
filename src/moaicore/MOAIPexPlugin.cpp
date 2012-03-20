@@ -196,8 +196,8 @@ void MOAIPexPlugin::Parse( MOAIPexPlugin& plugin, TiXmlNode* node )
 			else if(text == "particleLifespanVariance")
 			{
 				plugin.mLifespanVariance = (float)atof(attribute->Value());
-				if(plugin.mMaxRadiusVariance != 0)
-						plugin.mMaxRadiusRegister = plugin.mSize++;
+				if(plugin.mLifespanVariance != 0)
+						plugin.mLifespanRegister = plugin.mSize++;
 			}
 			else if(text == "radialAcceleration")
 				plugin.mRadialAcceleration = (float)atof(attribute->Value());
@@ -212,8 +212,6 @@ void MOAIPexPlugin::Parse( MOAIPexPlugin& plugin, TiXmlNode* node )
 			else if(text == "rotatePerSecondVariance")
 			{
 				plugin.mRotPerSecondVariance = (float)atof(attribute->Value());
-				if(plugin.mRotPerSecondVariance != 0)
-						plugin.mRotPerSecondRegister = plugin.mSize++;
 			}
 			else if(text == "rotationEnd")
 				plugin.mRotEnd = (float)atof(attribute->Value());
@@ -716,14 +714,13 @@ void MOAIPexPlugin::_renderRadialScript( float* particle, float* registers, AKUP
 		sprite->mZRot = sVal;
 
 	
-	if( mRotPerSecondRegister > - 1)
-		eVal = registers[mRotPerSecondRegister];
-	else
-		eVal = mRotPerSecond;
+	
+	eVal = registers[mRotPerSecondRegister];
+
 
 	float v0 =  USInterpolate::Interpolate ( USInterpolate::kLinear, registers[mRadialRegister], eVal, t0 );
 	float v1 =  USInterpolate::Interpolate ( USInterpolate::kLinear, registers[mRadialRegister], eVal, t1 );
-	registers[mRadialRegister] += (v0 - v1);
+	registers[mRadialRegister] += (v1 - v0);
 	
 
 	if(mMaxRadiusRegister > -1)
