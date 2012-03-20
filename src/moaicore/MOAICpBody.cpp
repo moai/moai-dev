@@ -467,7 +467,7 @@ int MOAICpBody::_new ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	new
+/**	@name	newStatic
 	@text	Creates a new static body.
 
 	@out	MOAICpBody body		The new static body.

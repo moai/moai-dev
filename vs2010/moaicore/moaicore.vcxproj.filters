@@ -929,9 +929,6 @@
     <ClInclude Include="..\..\src\moaicore\MOAILuaState-impl.h">
       <Filter>src\lua</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\MOAIObject-impl.h">
-      <Filter>src\lua</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIDeserializer.h">
       <Filter>src\lua</Filter>
     </ClInclude>

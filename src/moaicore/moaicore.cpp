@@ -4,7 +4,7 @@
 #include "pch.h"
 #include <chipmunk/chipmunk.h>
 #include <moaicore/moaicore.h>
-#include <lua-headers/moai2D_lua.h>
+#include <lua-headers/moai_lua.h>
 
 extern "C" {
 	#include <zlib.h>
@@ -57,7 +57,15 @@ void moaicore::InitGlobals ( MOAIGlobals* globals ) {
 	MOAILuaRuntime::Affirm ();
 	MOAILogMgr::Affirm ();
 	MOAIGfxDevice::Affirm ();
-	MOAIUrlMgr::Affirm ();
+	
+	#if USE_CURL
+		MOAIUrlMgrCurl::Affirm ();
+	#endif
+	
+	#if MOAI_OS_NACL
+		MOAIUrlMgrNaCl::Affirm ();
+	#endif
+	
 	MOAIXmlParser::Affirm ();
 	MOAIActionMgr::Affirm ();
 	MOAIInputMgr::Affirm ();
@@ -109,7 +117,7 @@ void moaicore::InitGlobals ( MOAIGlobals* globals ) {
 	REGISTER_LUA_CLASS ( MOAIGrid )
 	REGISTER_LUA_CLASS ( MOAIGridSpace )
 	REGISTER_LUA_CLASS ( MOAIGridPathGraph )
-	REGISTER_LUA_CLASS ( MOAIHttpTask )
+
 	REGISTER_LUA_CLASS ( MOAIImage )
 	REGISTER_LUA_CLASS ( MOAIImageTexture )
 	REGISTER_LUA_CLASS ( MOAIIndexBuffer )
@@ -192,11 +200,19 @@ void moaicore::InitGlobals ( MOAIGlobals* globals ) {
 		REGISTER_LUA_CLASS ( MOAIFreeTypeFontReader )
 	#endif
 	
+	#if USE_CURL
+		REGISTER_LUA_CLASS ( MOAIHttpTaskCurl )
+	#endif
+
+	#if MOAI_OS_NACL
+		REGISTER_LUA_CLASS ( MOAIHttpTaskNaCl )
+	#endif
+	
 	// run bundled init scripts for back compat and Lua framework extensions
-	int size = moai2D_lua_SIZE; // avoid 'condition expression is constant' warning
+	int size = moai_lua_SIZE; // avoid 'condition expression is constant' warning
 	if ( size ) {
 		MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
-		state.Run ( moai2D_lua, moai2D_lua_SIZE, 0, 0 );
+		state.Run ( moai_lua, moai_lua_SIZE, 0, 0 );
 	}
 }
 

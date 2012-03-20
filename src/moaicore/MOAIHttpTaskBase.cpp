@@ -6,7 +6,6 @@
 #include <tinyxml.h>
 #include <moaicore/MOAIDataBuffer.h>
 #include <moaicore/MOAIHttpTaskBase.h>
-#include <moaicore/MOAIUrlMgr.h>
 #include <moaicore/MOAIXmlParser.h>
 
 //================================================================//
@@ -18,7 +17,7 @@
 	@text	Returns the size of the string obtained from a httpPost or httpGet call.
 
 	@in		MOAIHttpTaskBase self
-	@out	number size				The string size.  If the call found nothing, this will return the value zero (not nil).
+	@out	number size				The string size. If the call found nothing, this will return the value zero (not nil).
 */
 int MOAIHttpTaskBase::_getSize ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIHttpTaskBase, "U" )

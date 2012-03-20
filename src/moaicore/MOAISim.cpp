@@ -11,7 +11,15 @@
 #include <moaicore/MOAIProp.h>
 #include <moaicore/MOAISim.h>
 #include <moaicore/MOAITextureBase.h>
-#include <moaicore/MOAIUrlMgr.h>
+
+#if USE_CURL
+	#include <moaicore/MOAIUrlMgrCurl.h>
+#endif
+
+#if MOAI_OS_NACL
+	#include <moaicore/MOAIUrlMgrNaCl.h>
+#endif
+
 #include <aku/AKU.h>
 
 #if defined(_WIN32)
@@ -908,8 +916,14 @@ void MOAISim::Update () {
 
 	double interval = this->MeasureFrameRate ();
 
-	// these stay out of the sim step for now
-	MOAIUrlMgr::Get ().Process ();
+	#if USE_CURL
+		MOAIUrlMgrCurl::Get ().Process ();
+	#endif
+	
+	#if MOAI_OS_NACL
+		MOAIUrlMgrNaCl::Get ().Process ();
+	#endif
+	
 	this->mDataIOThread.Publish ();
 	
 	// try to account for timer error

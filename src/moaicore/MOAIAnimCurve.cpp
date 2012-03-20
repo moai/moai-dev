@@ -102,6 +102,8 @@ int	MOAIAnimCurve::_setWrapMode	( lua_State* L ) {
 	u32 mode = state.GetValue < u32 >( 2, CLAMP );
 
 	self->mWrapMode = mode;
+	
+	return 0;
 }
 
 //================================================================//

@@ -15,7 +15,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-// TODO
+// TODO: doxygen
 int MOAIDraw::_drawAxisGrid ( lua_State* L ) {
 	UNUSED ( L );
 	return 0;
@@ -71,7 +71,7 @@ int MOAIDraw::_drawEllipse ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO
+// TODO: doxygen
 int MOAIDraw::_drawGrid ( lua_State* L ) {
 	UNUSED ( L );
 	return 0;
