@@ -304,12 +304,6 @@ void MOAIParticleEmitter::SetMagnitudeRange ( float min, float max ) {
 	this->mMaxMagnitude = max;
 }
 
-//---------------------------------------------------------------//
-void MOAIParticleEmitter::SetSystem ( MOAIParticleSystem *system ) {
-
-	this->mSystem.Set(*this, system);
-}
-
 //----------------------------------------------------------------//
 void MOAIParticleEmitter::Surge ( u32 total ) {
 

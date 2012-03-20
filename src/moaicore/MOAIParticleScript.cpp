@@ -226,20 +226,6 @@ int MOAIParticleScript::_add ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	atan2rot
- @text	r0 = atan2(v0, v1) * 180 / PI
- 
- @in		MOAIParticleScript self
- @in		number r0
- @in		number v0
- @in		number v1
- @out	nil
- */
-int MOAIParticleScript::_atan2rot ( lua_State* L ) {
-	IMPL_LUA_PARTICLE_OP ( ATAN2ROT, "RVV" )
-}
-
-//----------------------------------------------------------------//
 /**	@name	cycle
 	@text	Cycle v0 between v1 and v2.
 	
@@ -313,24 +299,6 @@ int MOAIParticleScript::_easeDelta ( lua_State* L ) {
 int MOAIParticleScript::_mul ( lua_State* L ) {
 	IMPL_LUA_PARTICLE_OP ( MUL, "RVV" )
 }
-
-//----------------------------------------------------------------//
-/**	@name	norm
-	@text	r0 = v0 / |v|
-	@text	r1 = v1 / |v|
-	@text	Where |v| == sqrt( v0^2 + v1^2)
-	
-	@in		MOAIParticleScript self
-	@in		number r0
-	@in		number r1
-	@in		number v0
-	@in		number v1
-	@out	nil
-*/
-int MOAIParticleScript::_norm ( lua_State* L ) {
-	IMPL_LUA_PARTICLE_OP ( NORM, "RRVV" )
-}
-
 
 //----------------------------------------------------------------//
 /**	@name	packConst
@@ -452,18 +420,6 @@ int MOAIParticleScript::_time ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	timeDelta
-	@text	Load the timeDelta of the particle into a register.
-	
-	@in		MOAIParticleScript self
-	@in		number r0
-	@out	nil
-*/
-int MOAIParticleScript::_timeDelta ( lua_State* L ) {
-	IMPL_LUA_PARTICLE_OP ( TIME_DELTA, "R" )
-}
-
-//----------------------------------------------------------------//
 /**	@name	wrap
 	@text	Wrap v0 between v1 and v2.
 	
@@ -490,10 +446,6 @@ int MOAIParticleScript::_wrap ( lua_State* L ) {
 */
 int MOAIParticleScript::_vecAngle ( lua_State* L ) {
 	IMPL_LUA_PARTICLE_OP ( VEC_ANGLE, "RVV" )
-}
-
-int MOAIParticleScript::_angleVec ( lua_State* L ) {
-	IMPL_LUA_PARTICLE_OP ( ANGLE_VEC, "RRV" )
 }
 
 //================================================================//
@@ -632,20 +584,17 @@ void MOAIParticleScript::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	luaL_Reg regTable [] = {
 		{ "add",				_add },
-		{ "atan2rot",			_atan2rot },
 		{ "cycle",				_cycle },
 		{ "div",				_div },
 		{ "ease",				_ease },
 		{ "easeDelta",			_easeDelta },
 		{ "mul",				_mul },
-		{ "norm",				_norm },
 		{ "rand",				_rand },
 		{ "randVec",			_randVec },
 		{ "set",				_set },
 		{ "sprite",				_sprite },
 		{ "sub",				_sub },
 		{ "time",				_time },
-		{ "timeDelta",			_timeDelta },
 		{ "vecAngle",			_vecAngle },
 		{ "wrap",				_wrap },
 		{ NULL, NULL }
@@ -706,17 +655,7 @@ void MOAIParticleScript::Run ( MOAIParticleSystem& system, MOAIParticle& particl
 					*r0 = v0 + v1;
 				}
 				break;
-
-			case ATAN2ROT: // RVV
-				READ_ADDR   ( r0, bytecode );
-				READ_VALUE  ( v0, bytecode );
-				READ_VALUE  ( v1, bytecode );
-				
-				if ( r0 ) {
-					*r0 = ( float )( atan2 ( v0, v1 ) * R2D );
-				}
-				break;
-
+			
 			case CYCLE: // RVVV
 				
 				READ_ADDR	( r0, bytecode );
@@ -860,15 +799,6 @@ void MOAIParticleScript::Run ( MOAIParticleSystem& system, MOAIParticle& particl
 					*r0 = t1;
 				}
 				break;
-
-			case TIME_DELTA: // R
-				
-				READ_ADDR	( r0, bytecode );
-				
-				if ( r0 ) {
-					*r0 = t1 - t0;
-				}
-				break;
 			
 			case VEC_ANGLE: // RVV
 				
@@ -880,36 +810,7 @@ void MOAIParticleScript::Run ( MOAIParticleSystem& system, MOAIParticle& particl
 					*r0 = ( float )( atan2 ( v0, v1 ) * R2D );
 				}
 				break;
-			case ANGLE_VEC: // RRV
-				READ_ADDR ( r0, bytecode );
-				READ_ADDR ( r1, bytecode );
-				READ_VALUE ( v0, bytecode );
-
-				if( r0 && r1){
-					*r0 = (float)( Cos ( v0 * (float)D2R ) );
-					*r1 = (float)( Sin ( v0 * (float)D2R ) );
-				}
-				break;
-			case NORM:
-				READ_ADDR ( r0, bytecode );
-				READ_ADDR ( r1, bytecode );
-				READ_VALUE ( v0, bytecode );
-				READ_VALUE ( v1, bytecode );
-
-				if( r0 && r1){
-					v3 = Sqrt( (v0 * v0 ) + (v1 * v1) );
-					if(v3)
-					{
-						*r0 = (float)( v0 / v3 );
-						*r1 = (float)( v1 / v3 );
-					}
-					else
-					{
-						*r0 = 0;
-						*r1 = 0;
-					}
-				}
-				break;
+			
 			case WRAP: // RVVV
 				
 				READ_ADDR	( r0, bytecode );

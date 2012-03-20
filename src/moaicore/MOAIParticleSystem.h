@@ -32,7 +32,6 @@ private:
 	
 	bool								mCapParticles;
 	bool								mCapSprites;
-	bool								mIgnoreLocalTransform;
 	
 	MOAIParticle*						mHead;
 	MOAIParticle*						mTail;

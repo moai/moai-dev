@@ -76,7 +76,6 @@ public:
 	void			SetAngleRange			( float min, float max );
 	void			SetEmissionRange		( u32 min, u32 max );
 	void			SetMagnitudeRange		( float min, float max );
-	void			SetSystem				( MOAIParticleSystem *system );
 	void			Surge					( u32 total );
 };
 

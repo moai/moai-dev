@@ -90,7 +90,7 @@ int MOAIParticleSystem::_getState ( lua_State* L ) {
 	@in		MOAIParticleSystem self
 	@out	boolean whether the system is currently idle
 */
-int  MOAIParticleSystem::_isIdle( lua_State* L ){
+int MOAIParticleSystem::_isIdle( lua_State* L ){
 
 	MOAI_LUA_SETUP ( MOAIParticleSystem, "U" )
 
@@ -100,6 +100,7 @@ int  MOAIParticleSystem::_isIdle( lua_State* L ){
 	return 1;
 }
 
+//----------------------------------------------------------------//
 /**	@name	setIgnoreLocalTransform
 	@text	Controls whether the local transform matrix will
 			be applied to rendered sprites
@@ -114,6 +115,7 @@ int	MOAIParticleSystem::_setIgnoreLocalTransform ( lua_State* L ){
 	self->mIgnoreLocalTransform = state.GetValue < bool >( 2, true );
 	return 0;
 }
+
 //----------------------------------------------------------------//
 /**	@name	pushParticle
 	@text	Adds a particle to the system.
