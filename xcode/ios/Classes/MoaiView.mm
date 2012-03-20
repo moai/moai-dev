@@ -16,6 +16,7 @@
 #import <aku/AKU-iphone.h>
 #include <aku/AKU-luaext.h>
 #include <aku/AKU-untz.h>
+#include <aku/AKU-audiosampler.h>
 
 #import "LocationObserver.h"
 #import "MoaiView.h"
@@ -153,7 +154,8 @@ namespace MoaiInputDeviceSensorID {
 		AKUExtLoadLuasocket ();
 		
 		AKUUntzInit ();
-		
+		AKUAudioSamplerInit ();
+        
 		AKUSetInputConfigurationName ( "iPhone" );
 
 		AKUReserveInputDevices			( MoaiInputDeviceID::TOTAL );

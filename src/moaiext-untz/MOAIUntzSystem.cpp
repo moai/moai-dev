@@ -206,6 +206,8 @@ void MOAIUntzSystem::RegisterLuaClass ( MOAILuaState& state ) {
 	};
 
 	luaL_register ( state, 0, regTable );
+	
+	state.SetField(-1,"RECORDABLE", (u32) UNTZ::RECORDABLE ); // bitwise
 }
 
 //----------------------------------------------------------------//

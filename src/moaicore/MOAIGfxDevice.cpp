@@ -826,7 +826,7 @@ void MOAIGfxDevice::ReleaseResources () {
 
 	ResourceIt resourceIt = this->mResources.Head ();
 	for ( ; resourceIt; resourceIt = resourceIt->Next ()) {
-		resourceIt->Data ()->ReleaseGfxResource ();
+		resourceIt->Data ()->Destroy ();
 	}
 }
 
@@ -841,7 +841,7 @@ void MOAIGfxDevice::RenewResources () {
 
 	ResourceIt resourceIt = this->mResources.Head ();
 	for ( ; resourceIt; resourceIt = resourceIt->Next ()) {
-		resourceIt->Data ()->RenewGfxResource ();
+		resourceIt->Data ()->Load ();
 	}
 }
 
@@ -874,7 +874,8 @@ void MOAIGfxDevice::ResetResources () {
 
 	ResourceIt resourceIt = this->mResources.Head ();
 	for ( ; resourceIt; resourceIt = resourceIt->Next ()) {
-		resourceIt->Data ()->ResetGfxResource ();
+		resourceIt->Data ()->Invalidate ();
+		resourceIt->Data ()->Load ();
 	}
 }
 
@@ -1497,7 +1498,7 @@ void MOAIGfxDevice::SoftReleaseResources ( u32 age ) {
 
 	ResourceIt resourceIt = this->mResources.Head ();
 	for ( ; resourceIt; resourceIt = resourceIt->Next ()) {
-		resourceIt->Data ()->SoftReleaseGfxResource ( age );
+		resourceIt->Data ()->SoftRelease ( age );
 	}
 	
 	// Horrible to call this, but generally soft release is only used

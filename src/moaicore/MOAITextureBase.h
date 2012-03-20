@@ -73,8 +73,8 @@ protected:
 	bool			IsRenewable				();
 	void			OnBind					();
 	void			OnClear					();
-	void			OnRenew					();
-	void			OnUnload				();
+	void			OnDestroy				();
+	void			OnInvalidate			();
 	void			ReleaseLoader			();
 	void			UpdateTextureFromImage	( MOAIImage& image, USIntRect rect );
 

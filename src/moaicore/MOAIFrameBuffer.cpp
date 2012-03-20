@@ -175,16 +175,9 @@ MOAIFrameBuffer::~MOAIFrameBuffer () {
 }
 
 //----------------------------------------------------------------//
-void MOAIFrameBuffer::OnClear () {
-
-	MOAITextureBase::OnClear ();
-}
-
-//----------------------------------------------------------------//
-void MOAIFrameBuffer::OnLoad () {
+void MOAIFrameBuffer::OnCreate () {
 	
 	if ( !( this->mWidth && this->mHeight && ( this->mColorFormat || this->mDepthFormat || this->mStencilFormat ))) {
-		this->SetError ();
 		return;
 	}
 	
@@ -239,18 +232,11 @@ void MOAIFrameBuffer::OnLoad () {
 	}
 	else {
 		this->Clear ();
-		this->SetError ();
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAIFrameBuffer::OnRenew () {
-}
-
-//----------------------------------------------------------------//
-void MOAIFrameBuffer::OnUnload () {
-
-	// TODO: all of these need to use the gfx device release queue
+void MOAIFrameBuffer::OnDestroy () {
 
 	if ( this->mGLFrameBufferID ) {
 		MOAIGfxDevice::Get ().PushDeleter ( MOAIGfxDeleter::DELETE_FRAMEBUFFER, this->mGLFrameBufferID );
@@ -272,7 +258,22 @@ void MOAIFrameBuffer::OnUnload () {
 		this->mGLStencilBufferID = 0;
 	}
 	
-	this->MOAITextureBase::OnUnload ();
+	this->MOAITextureBase::OnDestroy ();
+}
+
+//----------------------------------------------------------------//
+void MOAIFrameBuffer::OnInvalidate () {
+
+	this->mGLFrameBufferID = 0;
+	this->mGLColorBufferID = 0;
+	this->mGLDepthBufferID = 0;
+	this->mGLStencilBufferID = 0;
+
+	this->MOAITextureBase::OnInvalidate ();
+}
+
+//----------------------------------------------------------------//
+void MOAIFrameBuffer::OnLoad () {
 }
 
 //----------------------------------------------------------------//
