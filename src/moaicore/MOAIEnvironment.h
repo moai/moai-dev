@@ -85,7 +85,6 @@ private:
 	static int			_getResourceDirectory			( lua_State* L );
 	static int			_getScreenSize					( lua_State* L );
 	static int			_getUDID						( lua_State* L );
-	static int			_getViewSize					( lua_State* L );
 	static int			_isRetinaDisplay				( lua_State* L );
 
 public:	

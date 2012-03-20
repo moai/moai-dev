@@ -427,23 +427,6 @@ int MOAIEnvironment::_getUDID ( lua_State* L  ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getViewSize
-	@text	Returns the width and height of the view
-	
-	@out	int width
-	@out	int height
-*/
-int MOAIEnvironment::_getViewSize ( lua_State* L  ) {
-
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-	
-	lua_pushnumber ( L, gfxDevice.GetWidth ());
-	lua_pushnumber ( L, gfxDevice.GetHeight ());
-	
-	return 2;
-}
-
-//----------------------------------------------------------------//
 /**	@name	isRetinaDisplay
 	@text	Returns whether or not the device has a Retina Display 
 	
@@ -524,7 +507,6 @@ void MOAIEnvironment::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "getResourceDirectory",			_getResourceDirectory			},
 		{ "getScreenSize",					_getScreenSize					},
 		{ "getUDID",						_getUDID						},
-		{ "getViewSize",					_getViewSize					},
 		{ "isRetinaDisplay",				_isRetinaDisplay				},
 		{ NULL, NULL }
 	};
