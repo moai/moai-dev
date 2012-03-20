@@ -10,7 +10,24 @@
 #include <moaicore/MOAIParticleScript.h>
 #include <moaicore/MOAIParticleTimedEmitter.h>
 
- #define CALL_MEMBER_FN(object,ptrToMember)  ((object).*(ptrToMember))
+//================================================================
+// An implementation of a particle plugin that implements the
+// behavior that this tool creates:
+//   http://particledesigner.71squared.com/
+// 
+// It basically has a ton of tweakable variables and changes behavior
+// based on those variables at runtime. This implementation currently
+// tries to reduce the register count per particle by detecting when
+// values are invariant over the lifetime of each particle and storing
+// that on the plugin instance. This makes the implementations below
+// a bit more complex (and can probably be optimized further), but it
+// drastically reduces the footprint for most particle configurations
+// which are only "using" a subset of the total variable set at a time.
+// (Upwards of like 30+ registers per particle starts to eat into memory
+// budgets.)
+//================================================================
+
+
 //================================================================//
 // lua
 //================================================================//
@@ -24,33 +41,39 @@ int	MOAIPexPlugin::_getBlendMode( lua_State* L ){
 	lua_pushnumber ( state, self->mBlendFuncDst );
 	return 2;
 }
+
 int MOAIPexPlugin::_getDuration( lua_State* L ){
 	MOAI_LUA_SETUP ( MOAIPexPlugin, "U" )
 	
 	lua_pushnumber ( state, self->mDuration );
 	return 1;
 }
+
 int MOAIPexPlugin::_getEmission( lua_State* L ){
 	MOAI_LUA_SETUP ( MOAIPexPlugin, "U" )
 	lua_pushnumber ( state, self->mEmissionCount );
 	return 1;
 }
+
 int MOAIPexPlugin::_getFrequency( lua_State* L ){
 	MOAI_LUA_SETUP ( MOAIPexPlugin, "U" )
 	lua_pushnumber ( state, self->mEmissionRate );
 	return 1;
 }
+
 int MOAIPexPlugin::_getLifespan		( lua_State* L ){
 	MOAI_LUA_SETUP ( MOAIPexPlugin, "U" )
 	lua_pushnumber ( state, self->mLifespanTerm[0] );
 	lua_pushnumber ( state, self->mLifespanTerm[1] );
 	return 2;
 }
+
 int MOAIPexPlugin::_getMaxParticles	( lua_State* L ){
 	MOAI_LUA_SETUP ( MOAIPexPlugin, "U" )
 	lua_pushnumber ( state, self->mNumParticles );
 	return 1;
 }
+
 int MOAIPexPlugin::_getRect( lua_State* L ){
 	MOAI_LUA_SETUP ( MOAIPexPlugin, "U" )
 	lua_pushnumber ( state, -self->mSourcePosVariance[0] );
@@ -59,6 +82,7 @@ int MOAIPexPlugin::_getRect( lua_State* L ){
 	lua_pushnumber ( state, self->mSourcePosVariance[1] );
 	return 4;
 }
+
 //----------------------------------------------------------------//
 /**	@name	getSize
 	@text	Return the particle size expected by the plugin.
@@ -87,6 +111,8 @@ int MOAIPexPlugin::_getTextureName( lua_State* L ){
 		lua_pushstring( state, self->mTextureName);
 	return 1;
 }
+
+//----------------------------------------------------------------//
 /**	@name	load
 	@text	Create a particle plugin from an XML file
 	
