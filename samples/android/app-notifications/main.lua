@@ -6,25 +6,13 @@
 
 print ( "hello, Android!" )
 
-function onRemoteRegistrationComplete ( code, registration )
+function onRemoteRegistrationComplete ( code, token )
 	print ( "onRemoteRegistrationComplete: " )
 	
 	if ( code == MOAINotifications.REMOTE_NOTIFICATION_RESULT_REGISTERED ) then
-		print ( "registered: " .. registration )
+		print ( "registered: " .. token )
 	elseif ( code == MOAINotifications.REMOTE_NOTIFICATION_RESULT_UNREGISTERED ) then
 		print ( "unregistered" )
-	elseif ( code == MOAINotifications.REMOTE_NOTIFICATION_RESULT_ERROR_SERVICE_NOT_AVAILABLE ) then
-		print ( "registration failed: Service not available" )
-	elseif ( code == MOAINotifications.REMOTE_NOTIFICATION_RESULT_ERROR_ACCOUNT_MISSING ) then
-		print ( "registration failed: Google account missing" )
-	elseif ( code == MOAINotifications.REMOTE_NOTIFICATION_RESULT_ERROR_AUTHENTICATION_FAILED ) then
-		print ( "registration failed: Authentication failed" )
-	elseif ( code == MOAINotifications.REMOTE_NOTIFICATION_RESULT_ERROR_TOO_MANY_REGISTRATIONS ) then
-		print ( "registration failed: Too many registrations" )
-	elseif ( code == MOAINotifications.REMOTE_NOTIFICATION_RESULT_ERROR_INVALID_SENDER ) then
-		print ( "registration failed: Invalid sender" )
-	elseif ( code == MOAINotifications.REMOTE_NOTIFICATION_RESULT_ERROR_PHONE_REGISTRATION_ERROR ) then
-		print ( "registration failed: Phone registration error" )
 	else
 		print ( "registration failed: Unknown error" )
 	end
