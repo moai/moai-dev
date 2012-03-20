@@ -54,6 +54,7 @@ public:
 //================================================================//
 // MOAIBitmapFontReader
 //================================================================//
+// TODO: doxygen
 class MOAIBitmapFontReader :
 	public MOAIFontReader {
 private:

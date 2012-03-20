@@ -9,6 +9,7 @@
 //================================================================//
 // MOAIFrameBuffer
 //================================================================//
+// TODO: doxygen
 class MOAIFrameBuffer :
 	public MOAITextureBase {
 private:
