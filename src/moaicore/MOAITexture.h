@@ -29,9 +29,6 @@ private:
 	// for loading compressed data
 	void*				mData;
 	size_t				mDataSize;
-	
-	// flag to trigger load
-	bool				mReload;
 
 	//----------------------------------------------------------------//
 	static int			_load					( lua_State* L );
@@ -39,8 +36,8 @@ private:
 	//----------------------------------------------------------------//
 	bool				IsRenewable				();
 	void				OnClear					();
+	void				OnCreate				();
 	void				OnLoad					();
-	void				OnRenew					();
 
 public:
 	

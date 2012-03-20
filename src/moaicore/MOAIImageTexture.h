@@ -34,6 +34,7 @@ private:
 	bool			IsRenewable				();
 	bool			IsValid					();
 	void			OnClear					();
+	void			OnCreate				();
 	void			OnLoad					();
 
 public:

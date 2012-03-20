@@ -36,10 +36,10 @@ class MOAIGfxResource :
 private:
 
 	enum {
-		STATE_CLEAR,
+		STATE_READY,
 		STATE_ERROR,
-		STATE_RENEW,
-		STATE_WAIT_RENEW,
+		STATE_PRECREATE,
+		STATE_PRELOAD,
 	};
 
 	u32				mState;
@@ -50,10 +50,7 @@ private:
 	USLeanLink < MOAIGfxResource* > mLink;
 
 	//----------------------------------------------------------------//
-	static int		_clear						( lua_State* L );
 	static int		_getAge						( lua_State* L );
-	static int		_preload					( lua_State* L );
-	static int		_setRenewCallback			( lua_State* L );
 	static int		_softRelease				( lua_State* L );
 
 protected:
@@ -62,13 +59,13 @@ protected:
 	bool			Affirm						();
 	bool			Bind						();
 	bool			HasLoadScript				();
-	virtual bool	IsRenewable					() = 0;
-	virtual void	OnBind						() = 0;
-	virtual void	OnClear						() = 0;
-	virtual void	OnLoad						() = 0;
-	virtual void	OnRenew						() = 0;
-	virtual void	OnUnload					() = 0;
-	void			SetError					();
+	virtual bool	IsRenewable					() = 0; // return 'true' if resource has sufficient information to create GPU-side resource - MAIN THREAD
+	virtual void	OnBind						() = 0; // select GPU-side resource on device for use - GRAPHICS THREAD
+	virtual void	OnClear						() = 0; // clear any CPU-side resources used by class - MAIN THREAD
+	virtual void	OnCreate					() = 0; // create GPU-side resource - GRAPHICS THREAD
+	virtual void	OnDestroy					() = 0; // destroy GPU-side resource - MAIN THREAD
+	virtual void	OnInvalidate				() = 0; // clear any handles or references to GPU-side resource - MAIN THREAD
+	virtual void	OnLoad						() = 0; // load or initialize any CPU-side resources required to create device resource - MAIN THREAD
 
 public:
 
@@ -76,15 +73,15 @@ public:
 
 	//----------------------------------------------------------------//
 	void			Clear						();
-	virtual bool	IsValid						() = 0;
+	void			Destroy						();
+	void			Invalidate					();
+	virtual bool	IsValid						() = 0; // return 'true' if the handle to the GPU-side resource is valid (or initialized) - GRAPHICS THREAD
+	void			Load						();
 					MOAIGfxResource				();
 	virtual			~MOAIGfxResource			();
 	void			RegisterLuaClass			( MOAILuaState& state );
 	void			RegisterLuaFuncs			( MOAILuaState& state );
-	void			ReleaseGfxResource			();
-	void			RenewGfxResource			();
-	void			ResetGfxResource			();
-	bool			SoftReleaseGfxResource		( u32 age );
+	bool			SoftRelease					( u32 age );
 };
 
 #endif
