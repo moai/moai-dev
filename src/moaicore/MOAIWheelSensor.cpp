@@ -42,10 +42,10 @@ int MOAIWheelSensor::_getDelta ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	setCallback
-	@text	Sets the callback to be issued on a wheel delta event
+	@text	Sets or clears the callback to be issued on a wheel delta event
 
 	@in		MOAIWheelSensor self
-	@in		function callback
+	@opt	function callback		Default value is nil.
 	@out	nil
 */
 int MOAIWheelSensor::_setCallback ( lua_State* L ) {

@@ -91,10 +91,10 @@ void MOAILogMessages::RegisterDefaultLogMessages () {
 		log.RegisterLogMessage ( MOAIBox2DJoint_MissingInstance,		MOAILogMgr::LOG_ERROR,		"BOX2D ERROR: Attempt to access missing Box2D joint instance" );
 		log.RegisterLogMessage ( MOAIBox2DWorld_IsLocked,				MOAILogMgr::LOG_ERROR,		"BOX2D ERROR: Attempt to perform illegal operation during collision update" );
 		log.RegisterLogMessage ( MOAIGfxDevice_OpenGLError_S,			MOAILogMgr::LOG_ERROR,		"OPENGL ERROR: %s" );
+		log.RegisterLogMessage ( MOAIGfxResource_MissingDevice,			MOAILogMgr::LOG_ERROR,		"Unable to bind graphics resource - missing graphics device" );
 		log.RegisterLogMessage ( MOAINode_AttributeNotFound,			MOAILogMgr::LOG_ERROR,		"No such attribute" );
 		log.RegisterLogMessage ( MOAIShader_ShaderInfoLog_S,			MOAILogMgr::LOG_ERROR,		"%s" );
 		log.RegisterLogMessage ( MOAITexture_MemoryUse_SDFS,			MOAILogMgr::LOG_STATUS,		"TEXTURE: '%s' %10lu = %6.2fMB < %s" );
-		log.RegisterLogMessage ( MOAITexture_MissingDevice_S,			MOAILogMgr::LOG_ERROR,		"TEXTURE: Attempt to create texture '%s' while missing graphics device" );
 		log.RegisterLogMessage ( MOAITexture_NoFramebuffer,				MOAILogMgr::LOG_ERROR,		"TEXTURE: OpenGL framebuffer object is unsupported on this device" );
 		log.RegisterLogMessage ( MOAITexture_NonPowerOfTwo_SDD,			MOAILogMgr::LOG_WARNING,	"TEXTURE: '%s' is not a power of two (w:%d, h:%d)" );
 	
@@ -118,10 +118,10 @@ void MOAILogMessages::RegisterLogMessageIDs ( MOAILuaState& state ) {
 	REGISTER_LOG_MESSAGE ( MOAIBox2DJoint_MissingInstance )
 	REGISTER_LOG_MESSAGE ( MOAIBox2DWorld_IsLocked )
 	REGISTER_LOG_MESSAGE ( MOAIGfxDevice_OpenGLError_S )
+	REGISTER_LOG_MESSAGE ( MOAIGfxResource_MissingDevice )
 	REGISTER_LOG_MESSAGE ( MOAINode_AttributeNotFound )
 	REGISTER_LOG_MESSAGE ( MOAIShader_ShaderInfoLog_S )
 	REGISTER_LOG_MESSAGE ( MOAITexture_MemoryUse_SDFS )
-	REGISTER_LOG_MESSAGE ( MOAITexture_MissingDevice_S )
 	REGISTER_LOG_MESSAGE ( MOAITexture_NoFramebuffer )
 	REGISTER_LOG_MESSAGE ( MOAITexture_NonPowerOfTwo_SDD )
 }

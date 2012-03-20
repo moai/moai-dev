@@ -8,7 +8,7 @@
 #include <moaicore/MOAILua.h>
 #include <moaicore/MOAIQuadBrush.h>
 
-class MOAITexture;
+class MOAITextureBase;
 
 //================================================================//
 // USSpriteUVRect
@@ -58,8 +58,6 @@ private:
 class MOAIGfxQuadListDeck2D :
 	public MOAIDeck2D {
 private:
-
-	MOAILuaSharedPtr < MOAITexture >	mTexture;
 	
 	USLeanArray < USQuad >			mUVQuads;
 	USLeanArray < USQuad >			mQuads;
@@ -75,7 +73,6 @@ private:
 	static int	_setPair				( lua_State* L );
 	static int	_setQuad				( lua_State* L );
 	static int	_setRect				( lua_State* L );
-	static int	_setTexture				( lua_State* L );
 	static int	_setUVQuad				( lua_State* L );
 	static int	_setUVRect				( lua_State* L );
 
@@ -84,15 +81,14 @@ public:
 	DECL_LUA_FACTORY ( MOAIGfxQuadListDeck2D )
 	
 	//----------------------------------------------------------------//
-	bool			Bind					();
 	bool			Contains				( u32 idx, MOAIDeckRemapper* remapper, const USVec2D& vec );
 	void			DrawPatch				( u32 idx, float xOff, float yOff, float xScale, float yScale );
-	USRect			GetBounds				( u32 idx, MOAIDeckRemapper* remapper );
+	USRect			GetRect					();
+	USRect			GetRect					( u32 idx, MOAIDeckRemapper* remapper );
 					MOAIGfxQuadListDeck2D	();
 					~MOAIGfxQuadListDeck2D	();
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
-	void			ReleaseTexture			();
 	void			ReserveLists			( u32 total );
 	void			ReservePairs			( u32 total );
 	void			ReserveQuads			( u32 total );

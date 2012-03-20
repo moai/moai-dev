@@ -63,6 +63,7 @@ private:
 	static int		_copy				( lua_State* L );
 	static int		_copyBits			( lua_State* L );
 	static int		_copyRect			( lua_State* L );
+	static int		_fillRect			( lua_State* L );
 	static int		_getColor32			( lua_State* L );
 	static int		_getFormat			( lua_State* L );
 	static int		_getRGBA			( lua_State* L );
@@ -79,7 +80,7 @@ private:
 	//----------------------------------------------------------------//
 	void			Alloc				();
 	static u32		GetMinPowerOfTwo	( u32 size ); // gets the smallest power of two greater than size
-	void			Init				( const void* bitmap, u32 width, u32 height, USColor::Format colorFmt, bool copy );
+	void			Init				( void* bitmap, u32 width, u32 height, USColor::Format colorFmt, bool copy );
 	static bool		IsJpg				( const void* buffer, u32 size );
 	static bool		IsPng				( const void* buffer, u32 size );
 	void			LoadJpg				( USStream& stream, u32 transform );
@@ -110,11 +111,14 @@ public:
 	void				BleedRect				( int xMin, int yMin, int xMax, int yMax );
 	void				Clear					();
 	void				ClearBitmap				();
+	void				ClearRect				( USIntRect rect );
 	void				ConvertColors			( const MOAIImage& image, USColor::Format colorFmt );
 	void				Copy					( const MOAIImage& image );
 	void				CopyBits				( const MOAIImage& image, int srcX, int srcY, int destX, int destY, int width, int height );
 	void				CopyRect				( const MOAIImage& image, USIntRect srcRect, USIntRect destRest, u32 filter );
+	void				FillRect				( USIntRect rect, u32 color );
 	u32					GetBitmapSize			() const;
+	USIntRect			GetBounds				();
 	u32					GetColor				( u32 i ) const;
 	u32					GetColor				( u32 x, u32 y ) const;
 	u32					GetDataSize				() const;
@@ -122,11 +126,14 @@ public:
 	u32					GetPaletteColor			( u32 idx ) const;
 	u32					GetPaletteSize			() const;
 	u32					GetPixel				( u32 x, u32 y ) const;
+	USIntRect			GetRect					();
 	void*				GetRowAddr				( u32 y );
 	const void*			GetRowAddr				( u32 y ) const;
 	u32					GetRowSize				() const;
+	void				GetSubImage				( USIntRect rect, void* buffer );
+	u32					GetSubImageSize			( USIntRect rect );
 	void				Init					( u32 width, u32 height, USColor::Format colorFmt, USPixel::Format pixelFmt );
-	void				Init					( const void* bitmap, u32 width, u32 height, USColor::Format colorFmt );
+	void				Init					( void* bitmap, u32 width, u32 height, USColor::Format colorFmt );
 	bool				IsPow2					();
 	static bool			IsPow2					( u32 n );
 	void				Load					( USData& data, u32 transform = 0 );

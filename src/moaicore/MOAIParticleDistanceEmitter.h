@@ -19,7 +19,7 @@ private:
 	
 	bool		mReset;
 	
-	USVec2D		mEmitLoc;			// location of the last emission
+	USVec3D		mEmitLoc;			// location of the last emission
 	
 	float		mMinDistance;
 	float		mMaxDistance;

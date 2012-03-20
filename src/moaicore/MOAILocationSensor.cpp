@@ -36,10 +36,10 @@ int MOAILocationSensor::_getLocation ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	setCallback
-	@text	Sets the callback to be issued when the location changes.
+	@text	Sets or clears the callback to be issued when the location changes.
 
 	@in		MOAILocationSensor self
-	@in		function callback
+	@opt	function callback			Default value is nil.
 	@out	nil
 */
 int MOAILocationSensor::_setCallback ( lua_State* L ) {

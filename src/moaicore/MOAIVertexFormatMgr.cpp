@@ -22,16 +22,16 @@ MOAIVertexFormatMgr::MOAIVertexFormatMgr () {
 	
 	MOAIVertexFormat* format;
 	
-	format = &this->mFormats [ XYC ];
-		
-	format->DeclareAttribute ( XYC_POSITION, GL_FLOAT, 2, MOAIVertexFormat::ARRAY_VERTEX, false );
-	format->DeclareAttribute ( XYC_COLOR, GL_UNSIGNED_BYTE, 4, MOAIVertexFormat::ARRAY_COLOR, true );
+	format = &this->mFormats [ XYZWC ];
 	
-	format = &this->mFormats [ XYUVC ];
+	format->DeclareAttribute ( XYZWC_POSITION, GL_FLOAT, 4, MOAIVertexFormat::ARRAY_VERTEX, false );
+	format->DeclareAttribute ( XYZWC_COLOR, GL_UNSIGNED_BYTE, 4, MOAIVertexFormat::ARRAY_COLOR, true );
+	
+	format = &this->mFormats [ XYZWUVC ];
 
-	format->DeclareAttribute ( XYUVC_POSITION, GL_FLOAT, 2, MOAIVertexFormat::ARRAY_VERTEX, false );
-	format->DeclareAttribute ( XYUVC_TEXCOORD, GL_FLOAT, 2, MOAIVertexFormat::ARRAY_TEX_COORD, false );
-	format->DeclareAttribute ( XYUVC_COLOR, GL_UNSIGNED_BYTE, 4, MOAIVertexFormat::ARRAY_COLOR, true );
+	format->DeclareAttribute ( XYZWUVC_POSITION, GL_FLOAT, 4, MOAIVertexFormat::ARRAY_VERTEX, false );
+	format->DeclareAttribute ( XYZWUVC_TEXCOORD, GL_FLOAT, 2, MOAIVertexFormat::ARRAY_TEX_COORD, false );
+	format->DeclareAttribute ( XYZWUVC_COLOR, GL_UNSIGNED_BYTE, 4, MOAIVertexFormat::ARRAY_COLOR, true );
 }
 
 //----------------------------------------------------------------//

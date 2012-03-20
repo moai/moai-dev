@@ -8,7 +8,7 @@
 #include <moaicore/MOAILua.h>
 #include <moaicore/MOAIQuadBrush.h>
 
-class MOAITexture;
+class MOAIGfxState;
 
 //================================================================//
 // MOAIGfxQuad2D
@@ -20,13 +20,11 @@ class MOAIGfxQuad2D :
 	public MOAIDeck2D {
 private:
 
-	MOAILuaSharedPtr < MOAITexture > mTexture;
 	USRect	mRect;
 	USRect	mUVRect;
 
 	//----------------------------------------------------------------//
 	static int		_setRect			( lua_State* L );
-	static int		_setTexture			( lua_State* L );
 	static int		_setUVRect			( lua_State* L );
 
 public:
@@ -34,13 +32,13 @@ public:
 	DECL_LUA_FACTORY ( MOAIGfxQuad2D )
 	
 	//----------------------------------------------------------------//
-	bool					Bind					();
-	void					DrawPatch				( u32 idx, float xOff, float yOff, float xScale, float yScale );
-	USRect					GetBounds				( u32 idx, MOAIDeckRemapper* remapper );
-							MOAIGfxQuad2D			();
-							~MOAIGfxQuad2D			();
-	void					RegisterLuaClass		( MOAILuaState& state );
-	void					RegisterLuaFuncs		( MOAILuaState& state );
+	void			DrawPatch				( u32 idx, float xOff, float yOff, float xScale, float yScale );
+	USRect			GetRect					( u32 idx, MOAIDeckRemapper* remapper );
+	USRect			GetRect					( );
+					MOAIGfxQuad2D			();
+					~MOAIGfxQuad2D			();
+	void			RegisterLuaClass		( MOAILuaState& state );
+	void			RegisterLuaFuncs		( MOAILuaState& state );
 };
 
 #endif

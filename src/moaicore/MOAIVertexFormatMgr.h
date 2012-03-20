@@ -14,8 +14,8 @@ class MOAIVertexFormatMgr :
 public:
 
 	enum {
-		XYC,
-		XYUVC,
+		XYZWC,
+		XYZWUVC,
 		TOTAL_PRESETS,
 	};
 
@@ -25,30 +25,17 @@ private:
 	
 public:
 	
-	//----------------------------------------------------------------//
-	struct VtxXYC {
-		float	mX, mY;
-		u32		mC;
-	};
-	
-	//----------------------------------------------------------------//
-	struct VtxXYUVC {
-		float	mX, mY;
-		float	mU, mV;
-		u32		mC;
+	enum {
+		XYZWC_POSITION,
+		XYZWC_COLOR,
+		XYZWC_SIZE,
 	};
 	
 	enum {
-		XYC_POSITION,
-		XYC_COLOR,
-		XYC_SIZE,
-	};
-	
-	enum {
-		XYUVC_POSITION,
-		XYUVC_TEXCOORD,
-		XYUVC_COLOR,
-		XYUVC_SIZE,
+		XYZWUVC_POSITION,
+		XYZWUVC_TEXCOORD,
+		XYZWUVC_COLOR,
+		XYZWUVC_SIZE,
 	};
 	
 	//----------------------------------------------------------------//

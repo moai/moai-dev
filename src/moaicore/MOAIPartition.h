@@ -14,6 +14,10 @@
 /**	@name	MOAIPartition
 	@text	Class for optimizing spatial queries against sets of primitives.
 			Configure for performance; default behavior is a simple list.
+	
+	@const PLANE_XY
+	@const PLANE_XZ
+	@const PLANE_YZ
 */
 class MOAIPartition :
 	public virtual MOAILuaObject {
@@ -26,26 +30,29 @@ private:
 	USLeanArray < MOAIPartitionLayer >	mLayers;
 	MOAIPartitionCell					mEmpties;
 	MOAIPartitionCell					mGlobals;
+	MOAIPartitionCell					mBiggies;
 
 	s32					mPriorityCounter;
 	static const s32	PRIORITY_MASK = 0x7fffffff;
 
+	u32 mPlaneID; // One of USBox::PLANE_XY, USBox::PLANE_XZ, USBox::PLANE_YZ
+
 	//----------------------------------------------------------------//
-	static int		_clear						( lua_State* L );
-	static int		_insertProp					( lua_State* L );
-	static int		_propForPoint				( lua_State* L );
-	static int		_propListForPoint			( lua_State* L );
-	static int		_propListForRect			( lua_State* L );
-	static int		_removeProp					( lua_State* L );
-	static int		_reserveLayers				( lua_State* L );
-	static int		_setLayer					( lua_State* L );
-	static int		_sortedPropListForPoint		( lua_State* L );
-	static int		_sortedPropListForRect		( lua_State* L );
+	static int		_clear					( lua_State* L );
+	static int		_insertProp				( lua_State* L );
+	static int		_propForPoint			( lua_State* L );
+	static int		_propListForPoint		( lua_State* L );
+	static int		_propListForRect		( lua_State* L );
+	static int		_removeProp				( lua_State* L );
+	static int		_reserveLayers			( lua_State* L );
+	static int		_setLayer				( lua_State* L );
+	static int		_setPlane				( lua_State* L );
 
 	//----------------------------------------------------------------//
 	void			AffirmPriority			( MOAIProp& prop );
+	void			PrepareRebuild			();
+	void			Rebuild					();
 	void			UpdateProp				( MOAIProp& prop, u32 status );
-	void			UpdateProp				( MOAIProp& prop, const USRect& bounds, u32 status );
 
 public:
 	
@@ -54,8 +61,9 @@ public:
 	//----------------------------------------------------------------//
 	void			Clear					();
 	u32				GatherProps				( MOAIPartitionResultBuffer& results, MOAIProp* ignore, u32 mask = 0xffffffff );
-	u32				GatherProps				( MOAIPartitionResultBuffer& results, USVec2D& point, MOAIProp* ignore, u32 mask = 0xffffffff );
-	u32				GatherProps				( MOAIPartitionResultBuffer& results, USRect& rect, MOAIProp* ignore, u32 mask = 0xffffffff );
+	u32				GatherProps				( MOAIPartitionResultBuffer& results, MOAIProp* ignore, const USVec3D& point, u32 mask = 0xffffffff );
+	u32				GatherProps				( MOAIPartitionResultBuffer& results, MOAIProp* ignore, USBox box, u32 mask = 0xffffffff );
+	u32				GatherProps				( MOAIPartitionResultBuffer& results, MOAIProp* ignore, const USFrustum& frustum, u32 mask = 0xffffffff );
 	void			InsertProp				( MOAIProp& prop );
 					MOAIPartition			();
 					~MOAIPartition			();
@@ -64,6 +72,7 @@ public:
 	void			RemoveProp				( MOAIProp& prop );
 	void			ReserveLayers			( int totalLayers );
 	void			SetLayer				( int layerID, float cellSize, int width, int height );
+	void			SetPlane				( u32 planeID );
 };
 
 #endif

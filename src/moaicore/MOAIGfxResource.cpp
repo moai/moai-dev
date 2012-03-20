@@ -9,6 +9,20 @@
 #include <moaicore/MOAISim.h>
 
 //================================================================//
+// MOAIGfxState
+//================================================================//
+
+//----------------------------------------------------------------//
+MOAIGfxState::MOAIGfxState () {
+
+	RTTI_SINGLE ( MOAILuaObject )
+}
+
+//----------------------------------------------------------------//
+MOAIGfxState::~MOAIGfxState () {
+}
+
+//================================================================//
 // lua
 //================================================================//
 
@@ -59,7 +73,7 @@ int MOAIGfxResource::_setRenewCallback ( lua_State* L ) {
 			circumstances, but may trigger reloads of resources during
 			runtime which can significantly degrade performance.
  
-	@in		MOAITexture self
+	@in		MOAIGfxResource self
 	@opt	int age				Release only if the texture hasn't been used in X frames.
 	@out	boolean				True if the texture was actually released.
 */
@@ -81,7 +95,7 @@ bool MOAIGfxResource::Affirm () {
 
 	if ( this->mState == STATE_RENEW ) {
 		this->mState = STATE_CLEAR;
-	
+		
 		if ( this->mOnRenew ) {
 			MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 			this->PushLocal ( state, this->mOnRenew );
@@ -103,6 +117,11 @@ bool MOAIGfxResource::Affirm () {
 
 //----------------------------------------------------------------//
 bool MOAIGfxResource::Bind () {
+
+	if ( !MOAIGfxDevice::Get ().GetHasContext ()) {
+		MOAILog ( 0, MOAILogMessages::MOAIGfxResource_MissingDevice );
+		return false;
+	}
 
 	if ( this->Affirm ()) {
 		this->OnBind ();
@@ -131,7 +150,7 @@ MOAIGfxResource::MOAIGfxResource () :
 	mState ( STATE_CLEAR ),
 	mLastRenderCount ( 0 ) {
 
-	RTTI_SINGLE ( MOAILuaObject )
+	RTTI_SINGLE ( MOAIGfxState )
 
 	this->mLink.Data ( this );
 	

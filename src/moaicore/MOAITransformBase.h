@@ -14,16 +14,19 @@
 	
 	@attr	ATTR_WORLD_X_LOC
 	@attr	ATTR_WORLD_Y_LOC
+	@attr	ATTR_WORLD_Z_LOC
 	@attr	ATTR_WORLD_Z_ROT
 	@attr	ATTR_WORLD_X_SCL
 	@attr	ATTR_WORLD_Y_SCL
+	@attr	ATTR_WORLD_Z_SCL
+	@attr	TRANSFORM_TRAIT
 */
 class MOAITransformBase :
 	public virtual MOAINode {
 protected:
 	
-	USAffine2D		mLocalToWorldMtx;
-	USAffine2D		mWorldToLocalMtx;
+	USAffine3D		mLocalToWorldMtx;
+	USAffine3D		mWorldToLocalMtx;
 
 	//----------------------------------------------------------------//
 	static int	_getWorldDir	( lua_State* L );
@@ -38,24 +41,28 @@ public:
 	enum {
 		ATTR_WORLD_X_LOC,
 		ATTR_WORLD_Y_LOC,
+		ATTR_WORLD_Z_LOC,
+		
 		ATTR_WORLD_Z_ROT,
+		
 		ATTR_WORLD_X_SCL,
 		ATTR_WORLD_Y_SCL,
+		ATTR_WORLD_Z_SCL,
 		
 		TRANSFORM_TRAIT,
 		
 		TOTAL_ATTR,
 	};
 	
-	GET ( float, WorldXLoc, mLocalToWorldMtx.m [ USAffine2D::C2_R0 ])
-	GET ( float, WorldYLoc, mLocalToWorldMtx.m [ USAffine2D::C2_R1 ])
+	GET ( float, WorldXLoc, mLocalToWorldMtx.m [ USAffine3D::C3_R0 ])
+	GET ( float, WorldYLoc, mLocalToWorldMtx.m [ USAffine3D::C3_R1 ])
 	
 	//----------------------------------------------------------------//
 	bool					ApplyAttrOp					( u32 attrID, MOAIAttrOp& attrOp, u32 op );
-	const USAffine2D&		GetLocalToWorldMtx			();
-	const USAffine2D*		GetLocTrait					();
-	const USAffine2D*		GetTransformTrait			();
-	const USAffine2D&		GetWorldToLocalMtx			();
+	const USAffine3D&		GetLocalToWorldMtx			();
+	const USAffine3D*		GetLocTrait					();
+	const USAffine3D*		GetTransformTrait			();
+	const USAffine3D&		GetWorldToLocalMtx			();
 							MOAITransformBase			();
 							~MOAITransformBase			();
 	void					RegisterLuaClass			( MOAILuaState& state );

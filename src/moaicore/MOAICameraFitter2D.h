@@ -37,10 +37,10 @@ private:
 	typedef STLSet < MOAICameraAnchor2D* >::iterator AnchorIt;
 	STLSet < MOAICameraAnchor2D* > mAnchors;
 
-	USVec2D		mFitLoc;
+	USVec3D		mFitLoc;
 	float		mFitScale;
 
-	USVec2D		mTargetLoc;
+	USVec3D		mTargetLoc;
 	float		mTargetScale;
 
 	USRect		mBounds;
@@ -72,10 +72,10 @@ private:
 
 	//----------------------------------------------------------------//
 	USRect			GetAnchorRect			();
-	void			GetCamera				( USAffine2D& camera );
+	void			GetCamera				( USAffine3D& camera );
 	void			OnDepNodeUpdate			();
 	void			OnUpdate				( float step );
-	void			SetTarget				( const USAffine2D& camera, const USRect& screenRect );
+	void			SetTarget				( const USAffine3D& camera, const USRect& screenRect );
 	void			SnapToTargetLoc			( MOAITransform& camera );
 	void			SnapToTargetScale		( MOAITransform& camera );
 	void			UpdateFit				();

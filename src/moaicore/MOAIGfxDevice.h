@@ -11,8 +11,10 @@
 
 class MOAIFrameBuffer;
 class MOAIGfxResource;
+class MOAIGfxState;
+class MOAIMultiTexture;
 class MOAIShader;
-class MOAITexture;
+class MOAITextureBase;
 class MOAIVertexFormat;
 class MOAIViewport;
 
@@ -75,7 +77,11 @@ public:
 private:
 	
 	static const u32 DEFAULT_BUFFER_SIZE	= 0x8000;
-		
+	
+	int				mCullFunc;	
+	int				mDepthFunc;
+	bool			mDepthMask;
+
 	MOAIBlendMode	mBlendMode;
 	bool			mBlendEnabled;
 
@@ -121,8 +127,10 @@ private:
 	MOAIShader*		mShader;	
 	u32				mSize;
 	
-	MOAITexture*	mTexture;
+	USLeanArray < MOAITextureBase* > mTextureUnits;
+	u32				mActiveTextures;
 	size_t			mTextureMemoryUsage;
+	u32				mMaxTextureSize;
 	u32				mTop;
 	
 	u32				mUVMtxInput;
@@ -138,9 +146,12 @@ private:
 
 	u32				mWidth;
 
+	USFrustum		mViewVolume;
+	
 	USLeanStack < MOAIGfxDeleter, 32 > mDeleterStack;
 
 	//----------------------------------------------------------------//
+	static int				_getMaxTextureUnits		( lua_State* L );
 	static int				_isProgrammable			( lua_State* L );
 	static int				_setClearColor			( lua_State* L );
 	static int				_setClearDepth			( lua_State* L );
@@ -155,8 +166,6 @@ private:
 	void					GpuMultMatrix			( const USMatrix4x4& mtx ) const;
 	void					InsertGfxResource		( MOAIGfxResource& resource );
 	void					RemoveGfxResource		( MOAIGfxResource& resource );
-	void					ReportTextureAlloc		( cc8* name, size_t size );
-	void					ReportTextureFree		( cc8* name, size_t size );
 	void					UpdateCpuVertexMtx		();
 	void					UpdateGpuVertexMtx		();
 	void					UpdateUVMtx				();
@@ -165,16 +174,19 @@ private:
 public:
 	
 	friend class MOAIGfxResource;
-	friend class MOAITexture;
+	friend class MOAITextureBase;
 	
 	DECL_LUA_SINGLETON ( MOAIGfxDevice )
 	
 	GET ( size_t, TextureMemoryUsage, mTextureMemoryUsage )
+	GET ( u32, MaxTextureSize, mMaxTextureSize )
 	GET ( bool, HasContext, mHasContext )
 	
 	GET_BOOL ( IsOpenGLES, mIsOpenGLES )
 	GET_BOOL ( IsProgrammable, mIsProgrammable )
 	GET_BOOL ( IsFramebufferSupported, mIsFramebufferSupported )
+	
+	GET ( const USFrustum&, ViewVolume, mViewVolume )
 	
 	//----------------------------------------------------------------//
 	void					BeginDrawing			();
@@ -185,7 +197,6 @@ public:
 	
 	void					ClearErrors				();
 	void					DetectContext			();
-	void					DrawPrims				( const MOAIVertexFormat& format, GLenum primType, void* buffer, u32 size ); 
 	void					EndPrim					();
 	void					Flush					();
 	
@@ -194,24 +205,14 @@ public:
 	
 	u32						GetHeight				() const;
 	
-	USMatrix4x4				GetModelToWndMtx		() const;
-	USMatrix4x4				GetModelToWorldMtx		() const;
-	
 	USColorVec				GetPenColor				() const;
 	USRect					GetRect					() const;
 	USMatrix4x4				GetUVTransform			() const;
 	USMatrix4x4				GetVertexTransform		( u32 id ) const;
 	
 	USMatrix4x4				GetViewProjMtx			() const;
-	USQuad					GetViewQuad				() const;
-	USRect					GetViewRect				() const;
-	
-	u32						GetWidth				() const;
 
-	USMatrix4x4				GetWorldToModelMtx		() const;
-	USMatrix4x4				GetWorldToWndMtx		( float xScale = 1.0f, float yScale = 1.0f ) const;
-	USMatrix4x4				GetWndToModelMtx		() const;
-	USMatrix4x4				GetWndToWorldMtx		() const;
+	u32						GetWidth				() const;
 	
 	u32						LogErrors				();
 	
@@ -220,10 +221,13 @@ public:
 	
 	void					ProcessDeleters			();
 	void					PushDeleter				( u32 type, GLuint id );
-								
+
 	void					RegisterLuaClass		( MOAILuaState& state );
 	void					ReleaseResources		();
 	void					RenewResources			();
+	
+	void					ReportTextureAlloc		( cc8* name, size_t size );
+	void					ReportTextureFree		( cc8* name, size_t size );
 	
 	void					Reserve					( u32 size );
 	void					ResetResources			();
@@ -234,9 +238,19 @@ public:
 	void					SetBlendMode			( int srcFactor, int dstFactor );
 	
 	void					SetClearColor			( MOAIColor* color );
+	
+	void					SetCullFunc				();
+	void					SetCullFunc				( int cullFunc );
+	
 	void					SetDefaultFrameBuffer	( GLuint frameBuffer );
+
+	void					SetDepthFunc			();
+	void					SetDepthFunc			( int depthFunc );
+	void					SetDepthMask			( bool depthMask );
+	
 	void					SetDeviceScale			( float scale );
-	void					SetFrameBuffer			( MOAITexture* texture );
+	void					SetFrameBuffer			( MOAIFrameBuffer* frameBuffer );
+	bool					SetGfxState				( MOAIGfxState* gfxState );
 	void					SetPenColor				( u32 color );
 	void					SetPenColor				( const USColorVec& colorVec );
 	void					SetPenColor				( float r, float g, float b, float a );
@@ -249,11 +263,13 @@ public:
 	void					SetShader				( MOAIShader* shader = 0 );
 	void					SetShaderPreset			( u32 preset );
 	void					SetSize					( u32 width, u32 height );
-	bool					SetTexture				( MOAITexture* texture = 0 );
+	bool					SetTexture				();
+	bool					SetTexture				( MOAITextureBase* texture );
+	bool					SetTexture				( MOAIMultiTexture* multi );
 	
 	void					SetUVMtxMode			( u32 input, u32 output );
 	void					SetUVTransform			();
-	void					SetUVTransform			( const USAffine2D& transform );
+	void					SetUVTransform			( const USAffine3D& transform );
 	void					SetUVTransform			( const USMatrix4x4& transform );
 	
 	void					SetVertexFormat			();
@@ -261,7 +277,7 @@ public:
 	void					SetVertexMtxMode		( u32 input, u32 output );
 	void					SetVertexPreset			( u32 preset );
 	void					SetVertexTransform		( u32 id );
-	void					SetVertexTransform		( u32 id, const USAffine2D& transform );
+	void					SetVertexTransform		( u32 id, const USAffine3D& transform );
 	void					SetVertexTransform		( u32 id, const USMatrix4x4& transform );
 	
 	void					SetViewport				();
@@ -269,7 +285,10 @@ public:
 	
 	void					SoftReleaseResources	( u32 age );
 	
+	void					UpdateViewVolume		();
+	
 	void					WriteQuad				( USVec2D* vtx, USVec2D* uv );
+	void					WriteQuad				( USVec4D* vtx, USVec2D* uv );
 	
 	//----------------------------------------------------------------//
 	template < typename TYPE >
@@ -324,9 +343,17 @@ public:
 	//----------------------------------------------------------------//
 	inline void WriteVtx ( float x, float y ) {
 		
-		USVec2D vtx;
+		this->WriteVtx ( x, y, 0.0f );
+	}
+	
+	//----------------------------------------------------------------//
+	inline void WriteVtx ( float x, float y, float z ) {
+		
+		USVec4D vtx;
 		vtx.mX = x;
 		vtx.mY = y;
+		vtx.mZ = z;
+		vtx.mW = 1.0f;
 		
 		if ( this->mCpuVertexTransform ) {
 			this->mCpuVertexTransformMtx.Transform ( vtx );	
@@ -337,10 +364,13 @@ public:
 	//----------------------------------------------------------------//
 	inline void WriteVtx ( USVec2D vtx ) {
 		
-		if ( this->mCpuVertexTransform ) {
-			this->mCpuVertexTransformMtx.Transform ( vtx );	
-		}
-		this->Write ( vtx );
+		this->WriteVtx ( vtx.mX, vtx.mY, 0.0f );
+	}
+	
+	//----------------------------------------------------------------//
+	inline void WriteVtx ( USVec3D vtx ) {
+		
+		this->WriteVtx ( vtx.mX, vtx.mY, vtx.mZ );
 	}
 };
 

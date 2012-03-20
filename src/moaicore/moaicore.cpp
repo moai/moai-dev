@@ -4,6 +4,7 @@
 #include "pch.h"
 #include <chipmunk/chipmunk.h>
 #include <moaicore/moaicore.h>
+#include <lua-headers/moai2D_lua.h>
 
 extern "C" {
 	#include <zlib.h>
@@ -53,20 +54,20 @@ void moaicore::InitGlobals ( MOAIGlobals* globals ) {
 
 	MOAIGlobalsMgr::Set ( globals );
 
+	MOAILuaRuntime::Affirm ();
+	MOAILogMgr::Affirm ();
+	MOAIGfxDevice::Affirm ();
 	MOAIUrlMgr::Affirm ();
 	MOAIXmlParser::Affirm ();
 	MOAIActionMgr::Affirm ();
 	MOAIInputMgr::Affirm ();
-	MOAILogMgr::Affirm ();
 	MOAINodeMgr::Affirm ();
 	MOAIVertexFormatMgr::Affirm ();
 	MOAIShaderMgr::Affirm ();
-	MOAIGfxDevice::Affirm ();
 	MOAIDraw::Affirm ();
 	MOAIDebugLines::Affirm ();
 	MOAIPartitionResultMgr::Affirm ();
 	MOAISim::Affirm ();
-	MOAILuaRuntime::Affirm ();
 	
 	// Start Lua
 	MOAILuaRuntime& luaRuntime = MOAILuaRuntime::Get ();
@@ -80,7 +81,9 @@ void moaicore::InitGlobals ( MOAIGlobals* globals ) {
 	REGISTER_LUA_CLASS ( MOAIActionMgr )
 	REGISTER_LUA_CLASS ( MOAIAnim )
 	REGISTER_LUA_CLASS ( MOAIAnimCurve )
+	REGISTER_LUA_CLASS ( MOAIBitmapFontReader )
 	REGISTER_LUA_CLASS ( MOAIButtonSensor )
+	REGISTER_LUA_CLASS ( MOAICamera )
 	REGISTER_LUA_CLASS ( MOAICameraAnchor2D )
 	REGISTER_LUA_CLASS ( MOAICameraFitter2D )
 	REGISTER_LUA_CLASS ( MOAIColor )
@@ -92,11 +95,13 @@ void moaicore::InitGlobals ( MOAIGlobals* globals ) {
 	REGISTER_LUA_CLASS ( MOAIDeckRemapper )
 	REGISTER_LUA_CLASS ( MOAIDeserializer )
 	REGISTER_LUA_CLASS ( MOAIDraw )
+	REGISTER_LUA_CLASS ( MOAIGlyphCache )
 	REGISTER_LUA_CLASS ( MOAIEnvironment )
 	REGISTER_LUA_CLASS ( MOAIEaseDriver )
 	REGISTER_LUA_CLASS ( MOAIEaseType )
 	REGISTER_LUA_CLASS ( MOAIFileSystem )
 	REGISTER_LUA_CLASS ( MOAIFont )
+	REGISTER_LUA_CLASS ( MOAIFrameBuffer )
 	REGISTER_LUA_CLASS ( MOAIGfxDevice )
 	REGISTER_LUA_CLASS ( MOAIGfxQuad2D )
 	REGISTER_LUA_CLASS ( MOAIGfxQuadDeck2D )
@@ -106,19 +111,21 @@ void moaicore::InitGlobals ( MOAIGlobals* globals ) {
 	REGISTER_LUA_CLASS ( MOAIGridPathGraph )
 	REGISTER_LUA_CLASS ( MOAIHttpTask )
 	REGISTER_LUA_CLASS ( MOAIImage )
+	REGISTER_LUA_CLASS ( MOAIImageTexture )
 	REGISTER_LUA_CLASS ( MOAIIndexBuffer )
 	REGISTER_LUA_CLASS ( MOAIInputDevice )
 	REGISTER_LUA_CLASS ( MOAIInputMgr )
 	REGISTER_LUA_CLASS ( MOAIJoystickSensor )
 	REGISTER_LUA_CLASS ( MOAIJsonParser )
 	REGISTER_LUA_CLASS ( MOAIKeyboardSensor )
-	REGISTER_LUA_CLASS ( MOAILayer2D )
-	REGISTER_LUA_CLASS ( MOAILayerBridge2D )
+	REGISTER_LUA_CLASS ( MOAILayer )
+	REGISTER_LUA_CLASS ( MOAILayerBridge )
 	//REGISTER_LUA_CLASS ( MOAILayoutFrame )
 	REGISTER_LUA_CLASS ( MOAILocationSensor )
 	REGISTER_LUA_CLASS ( MOAILogMgr )
 	REGISTER_LUA_CLASS ( MOAIMesh )
 	REGISTER_LUA_CLASS ( MOAIMotionSensor )
+	REGISTER_LUA_CLASS ( MOAIMultiTexture )
 	REGISTER_LUA_CLASS ( MOAIParser )
 	REGISTER_LUA_CLASS ( MOAIParticleDistanceEmitter )
 	REGISTER_LUA_CLASS ( MOAIParticleForce )
@@ -131,16 +138,17 @@ void moaicore::InitGlobals ( MOAIGlobals* globals ) {
 	REGISTER_LUA_CLASS ( MOAIPathTerrainDeck )
 	REGISTER_LUA_CLASS ( MOAIPointerSensor )
 	REGISTER_LUA_CLASS ( MOAIProp )
-	REGISTER_LUA_CLASS ( MOAIProp2D )
 	REGISTER_LUA_CLASS ( MOAIScriptDeck )
 	REGISTER_LUA_CLASS ( MOAIScriptNode )
 	REGISTER_LUA_CLASS ( MOAISerializer )
 	REGISTER_LUA_CLASS ( MOAIShader )
 	REGISTER_LUA_CLASS ( MOAIShaderMgr )
 	REGISTER_LUA_CLASS ( MOAISim )
+	REGISTER_LUA_CLASS ( MOAIStaticGlyphCache )
 	REGISTER_LUA_CLASS ( MOAIStretchPatch2D )
 	REGISTER_LUA_CLASS ( MOAISurfaceDeck2D )
 	REGISTER_LUA_CLASS ( MOAITextBox )
+	REGISTER_LUA_CLASS ( MOAITextStyle )
 	REGISTER_LUA_CLASS ( MOAITexture )
 	REGISTER_LUA_CLASS ( MOAITileDeck2D )
 	REGISTER_LUA_CLASS ( MOAITimer )
@@ -180,10 +188,16 @@ void moaicore::InitGlobals ( MOAIGlobals* globals ) {
 		REGISTER_LUA_CLASS ( MOAICpSpace )
 	#endif
 	
-	// TODO: for back compat; remove in next release
-	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
-	lua_getglobal ( state, "MOAICoroutine" );
-	lua_setglobal ( state, "MOAIThread" );
+	#if USE_FREETYPE
+		REGISTER_LUA_CLASS ( MOAIFreeTypeFontReader )
+	#endif
+	
+	// run bundled init scripts for back compat and Lua framework extensions
+	int size = moai2D_lua_SIZE; // avoid 'condition expression is constant' warning
+	if ( size ) {
+		MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+		state.Run ( moai2D_lua, moai2D_lua_SIZE, 0, 0 );
+	}
 }
 
 //----------------------------------------------------------------//

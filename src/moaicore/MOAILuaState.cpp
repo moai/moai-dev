@@ -217,6 +217,41 @@ bool MOAILuaState::Deflate ( int idx, int level, int windowBits ) {
 }
 
 //----------------------------------------------------------------//
+USBox MOAILuaState::GetBox ( int idx ) {
+
+	USBox box;
+
+	box.mMin.mX = this->GetValue < float >( idx++, 0.0f );
+	box.mMin.mY = this->GetValue < float >( idx++, 0.0f );
+	box.mMin.mZ = this->GetValue < float >( idx++, 0.0f );
+	
+	box.mMax.mX = this->GetValue < float >( idx++, 0.0f );
+	box.mMax.mY = this->GetValue < float >( idx++, 0.0f );
+	box.mMax.mZ = this->GetValue < float >( idx++, 0.0f );
+	
+	return box;
+}
+
+//----------------------------------------------------------------//
+USColorVec MOAILuaState::GetColor ( int idx, float r, float g, float b, float a ) {
+
+	USColorVec color;
+	color.mR = this->GetValue < float >( idx++, r );
+	color.mG = this->GetValue < float >( idx++, g );
+	color.mB = this->GetValue < float >( idx++, b );
+	color.mA = this->GetValue < float >( idx++, a );
+	
+	return color;
+}
+
+//----------------------------------------------------------------//
+u32 MOAILuaState::GetColor32 ( int idx, float r, float g, float b, float a ) {
+
+	USColorVec color = this->GetColor ( idx, r, g, b, a );
+	return color.PackRGBA ();
+}
+
+//----------------------------------------------------------------//
 bool MOAILuaState::Encode ( int idx, USCipher& cipher ) {
 
 	if ( !this->IsType ( idx, LUA_TSTRING )) return false;
@@ -276,6 +311,34 @@ STLString MOAILuaState::GetField ( int idx, cc8* key, cc8* value ) {
 
 //----------------------------------------------------------------//
 STLString MOAILuaState::GetField ( int idx, int key, cc8* value ) {
+
+	STLString str;
+	if ( this->GetFieldWithType ( idx, key, LUA_TSTRING )) {
+		str = lua_tostring ( this->mState, -1 );
+		lua_pop ( this->mState, 1 );
+	}
+	else {
+		str = value;
+	}
+	return str;
+}
+
+//----------------------------------------------------------------//
+STLString MOAILuaState::GetField ( int idx, cc8* key, const STLString& value ) {
+
+	STLString str;
+	if ( this->GetFieldWithType ( idx, key, LUA_TSTRING )) {
+		str = lua_tostring ( this->mState, -1 );
+		lua_pop ( this->mState, 1 );
+	}
+	else {
+		str = value;
+	}
+	return str;
+}
+
+//----------------------------------------------------------------//
+STLString MOAILuaState::GetField ( int idx, int key, const STLString& value ) {
 
 	STLString str;
 	if ( this->GetFieldWithType ( idx, key, LUA_TSTRING )) {
@@ -749,6 +812,12 @@ void MOAILuaState::Push ( MOAILuaRef& ref ) {
 }
 
 //----------------------------------------------------------------//
+void MOAILuaState::Push ( void* data, size_t size ) {
+
+	lua_pushlstring ( this->mState, ( cc8* )data, size );
+}
+
+//----------------------------------------------------------------//
 void MOAILuaState::PushPtrUserData ( void* ptr ) {
 
 	void** handle = ( void** )lua_newuserdata ( this->mState, sizeof ( void* ));
@@ -769,19 +838,21 @@ int MOAILuaState::PushTableItr ( int idx ) {
 }
 
 //----------------------------------------------------------------//
-void MOAILuaState::RegisterModule ( cc8* name, lua_CFunction loader, bool autoLoad ) {
+void MOAILuaState::RegisterModule ( int idx, cc8* name, bool autoload ) {
+
+	idx = this->AbsIndex ( idx );
 
 	lua_getglobal ( this->mState, "package" );
 	lua_getfield ( this->mState, -1, "preload" );
 
 	lua_pushstring ( this->mState, name );
-	lua_pushcfunction ( this->mState, loader );
+	lua_pushvalue ( this->mState, idx );
 	lua_settable ( this->mState, -3 );
 	
 	// pop 'preload'
 	lua_pop ( this->mState, 1 );
 	
-	if ( autoLoad ) {
+	if ( autoload ) {
 	
 		lua_getfield ( this->mState, -1, "loaded" );
 		
@@ -789,7 +860,7 @@ void MOAILuaState::RegisterModule ( cc8* name, lua_CFunction loader, bool autoLo
 		lua_pushstring ( this->mState, name );
 		
 		// push the table
-		lua_pushcfunction ( this->mState, loader );
+		lua_pushvalue ( this->mState, idx );
 		lua_pushstring ( this->mState, name );
 		lua_pcall ( this->mState, 1, 1, 0 );
 		
@@ -805,12 +876,45 @@ void MOAILuaState::RegisterModule ( cc8* name, lua_CFunction loader, bool autoLo
 }
 
 //----------------------------------------------------------------//
+void MOAILuaState::RegisterModule ( lua_CFunction loader, cc8* name, bool autoload ) {
+
+	lua_pushcfunction ( this->mState, loader );
+	this->RegisterModule ( -1, name, autoload );
+	lua_pop ( this->mState, 1 );
+}
+
+//----------------------------------------------------------------//
+void MOAILuaState::RegisterModule ( void* data, size_t size, cc8* name, bool autoload ) {
+
+	lua_getglobal ( this->mState, "loadstring" );
+	this->Push ( data, size );
+	this->DebugCall ( 1, 1 );
+
+	this->RegisterModule ( -1, name, autoload );
+	lua_pop ( this->mState, 1 );
+}
+
+//----------------------------------------------------------------//
 int MOAILuaState::RelIndex ( int idx ) {
 
 	if ( idx > 0 ) {
 		return idx - lua_gettop ( this->mState );
 	}
 	return idx;
+}
+
+//----------------------------------------------------------------//
+int MOAILuaState::Run ( void* data, size_t size, int nArgs, int nResults ) {
+
+	lua_getglobal ( this->mState, "loadstring" );
+	this->Push ( data, size );
+	this->DebugCall ( 1, 1 );
+	
+	if ( nArgs ) {
+		lua_insert ( this->mState, -( nArgs + 1 ));
+	}
+	
+	return this->DebugCall ( nArgs, nResults );
 }
 
 //----------------------------------------------------------------//

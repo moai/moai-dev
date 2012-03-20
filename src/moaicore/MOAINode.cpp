@@ -8,7 +8,7 @@
 #include <moaicore/MOAINodeMgr.h>
 
 // TODO: remove when setParent is removed
-#include <moaicore/MOAIProp2D.h>
+#include <moaicore/MOAIProp.h>
 
 //================================================================//
 // MOAIDepLink
@@ -447,8 +447,6 @@ void MOAINode::DepNodeUpdate () {
 	
 	if ( this->mState == STATE_SCHEDULED ) {
 	
-		
-	
 		this->PullAttributes ();
 		this->OnDepNodeUpdate ();
 		this->ExtendUpdate ();
@@ -525,7 +523,7 @@ MOAINode::MOAINode () :
 
 //----------------------------------------------------------------//
 MOAINode::~MOAINode () {
-
+	
 	while ( this->mPullLinks ) {
 		MOAIDepLink* link = this->mPullLinks;
 		this->mPullLinks = link->mNextInDest;
@@ -641,20 +639,23 @@ void MOAINode::RegisterLuaFuncs ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAINode::ScheduleUpdate () {
 	
-	// add to the list if not already in it
-	if ( this->mState == STATE_IDLE ) {
-		this->mState = STATE_SCHEDULED;
+	if ( MOAINodeMgr::IsValid ()) {
+	
+		// add to the list if not already in it
+		if ( this->mState == STATE_IDLE ) {
+			this->mState = STATE_SCHEDULED;
 
-		// push us at the end of the list
-		MOAINodeMgr::Get ().PushBack ( *this );
-		
-		// activate source nodes
-		MOAIDepLink* link = this->mPullLinks;
-		for ( ; link ; link = link->mNextInDest ) {
-			link->mSourceNode->Activate ( *this );
+			// push us at the end of the list
+			MOAINodeMgr::Get ().PushBack ( *this );
+			
+			// activate source nodes
+			MOAIDepLink* link = this->mPullLinks;
+			for ( ; link ; link = link->mNextInDest ) {
+				link->mSourceNode->Activate ( *this );
+			}
 		}
+		this->mState = STATE_SCHEDULED;
 	}
-	this->mState = STATE_SCHEDULED;
 }
 
 //----------------------------------------------------------------//

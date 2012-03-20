@@ -35,4 +35,3 @@ timer:setSpan ( 0, curve:getLength ())
 curve:setAttrLink ( MOAIAnimCurve.ATTR_TIME, timer, MOAITimer.ATTR_TIME )
 
 timer:start ()
-

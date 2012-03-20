@@ -7,7 +7,7 @@
 #include <moaicore/MOAIGfxQuadListDeck2D.h>
 #include <moaicore/MOAILogMessages.h>
 #include <moaicore/MOAIProp.h>
-#include <moaicore/MOAITexture.h>
+#include <moaicore/MOAITextureBase.h>
 #include <moaicore/MOAITransformBase.h>
 
 //================================================================//
@@ -210,26 +210,6 @@ int MOAIGfxQuadListDeck2D::_setRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setTexture
-	@text	Set or load a texture for this deck.
-	
-	@in		MOAIGfxQuadListDeck2D self
-	@in		variant texture			A MOAITexture, a MOAIDataBuffer or a path to a texture file
-	@opt	number transform		Any bitwise combination of MOAITexture.QUANTIZE, MOAITexture.TRUECOLOR, MOAITexture.PREMULTIPLY_ALPHA
-	@out	MOAITexture texture
-*/
-int MOAIGfxQuadListDeck2D::_setTexture ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIGfxQuadListDeck2D, "U" )
-
-	self->mTexture.Set ( *self, MOAITexture::AffirmTexture ( state, 2 ));
-	if ( self->mTexture ) {
-		self->mTexture->PushLuaUserdata ( state );
-		return 1;
-	}
-	return 0;
-}
-
-//----------------------------------------------------------------//
 /**	@name	setUVQuad
 	@text	Set UV space quad given a valid deck index. Vertex order is
 			clockwise from upper left (xMin, yMax)
@@ -303,16 +283,6 @@ int MOAIGfxQuadListDeck2D::_setUVRect ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIGfxQuadListDeck2D::Bind () {
-
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-	if ( !gfxDevice.SetTexture ( this->mTexture )) return false;
-	MOAIQuadBrush::BindVertexFormat ( gfxDevice );
-
-	return true;
-}
-
-//----------------------------------------------------------------//
 bool MOAIGfxQuadListDeck2D::Contains ( u32 idx, MOAIDeckRemapper* remapper, const USVec2D& vec ) {
 	
 	u32 size = this->mSprites.Size ();
@@ -338,6 +308,9 @@ void MOAIGfxQuadListDeck2D::DrawPatch ( u32 idx, float xOff, float yOff, float x
 	u32 size = this->mSprites.Size ();
 	if ( size ) {
 
+		MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+		MOAIQuadBrush::BindVertexFormat ( gfxDevice );
+
 		idx = ( idx - 1 ) % size;
 
 		USSprite& sprite = this->mSprites [ idx ];
@@ -361,9 +334,33 @@ void MOAIGfxQuadListDeck2D::DrawPatch ( u32 idx, float xOff, float yOff, float x
 		}
 	}
 }
+USRect MOAIGfxQuadListDeck2D::GetRect () {
+
+	u32 size = this->mQuads.Size ();
+
+	USRect totalRect;
+	totalRect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
+
+	for ( u32 i = 0; i < size; ++i ) {
+
+		USRect rect;
+		rect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
+
+		USQuad& quad = this->mQuads [ i ];
+				
+		rect.Grow ( quad.mV [ 0 ]);
+		rect.Grow ( quad.mV [ 1 ]);
+		rect.Grow ( quad.mV [ 2 ]);
+		rect.Grow ( quad.mV [ 3 ]);
+
+		totalRect.Grow ( rect );
+	}
+
+	return totalRect;
+}
 
 //----------------------------------------------------------------//
-USRect MOAIGfxQuadListDeck2D::GetBounds ( u32 idx, MOAIDeckRemapper* remapper ) {
+USRect MOAIGfxQuadListDeck2D::GetRect ( u32 idx, MOAIDeckRemapper* remapper ) {
 
 	USRect rect;
 	rect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
@@ -401,7 +398,10 @@ USRect MOAIGfxQuadListDeck2D::GetBounds ( u32 idx, MOAIDeckRemapper* remapper ) 
 //----------------------------------------------------------------//
 MOAIGfxQuadListDeck2D::MOAIGfxQuadListDeck2D () {
 	
-	RTTI_SINGLE ( MOAIDeck2D )
+	RTTI_BEGIN
+		RTTI_EXTEND ( MOAIDeck2D )
+	RTTI_END
+	
 	this->SetContentMask ( MOAIProp::CAN_DRAW );
 }
 
@@ -433,17 +433,10 @@ void MOAIGfxQuadListDeck2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setRect",				_setRect },
 		{ "setUVQuad",				_setUVQuad },
 		{ "setUVRect",				_setUVRect },
-		{ "setTexture",				_setTexture },
 		{ NULL, NULL }
 	};
 
 	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxQuadListDeck2D::ReleaseTexture () {
-
-	this->mTexture->MOAITexture::Release ();
 }
 
 //----------------------------------------------------------------//

@@ -57,6 +57,7 @@ private:
 	void			ScanRow						( u32 y );
 	void			SetPixel					( u32 x, u32 y, u32 color );
 	void			RipAndReturn				( MOAIFont& font, MOAIImage& image, cc8* charCodes );
+	
 public:
 
 	//----------------------------------------------------------------//

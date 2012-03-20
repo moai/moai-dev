@@ -82,8 +82,8 @@ public:
 	MOAILuaStateHandle		GetSelf						();
 	bool					IsBound						();
 	void					LockToRefCount				();
-	void					LuaRelease					( MOAILuaObject& object );
-	void					LuaRetain					( MOAILuaObject& object );
+	void					LuaRelease					( MOAILuaObject* object );
+	void					LuaRetain					( MOAILuaObject* object );
 	void					LuaUnbind					();
 	void					PushLuaClassTable			( MOAILuaState& state );
 	void					PushLuaUserdata				( MOAILuaState& state );
@@ -109,6 +109,7 @@ protected:
 	//----------------------------------------------------------------//
 	static int			_extendFactory				( lua_State* L );
 	static int			_extendSingleton			( lua_State* L );
+	static int			_getInterfaceTable			( lua_State* L );
 	static int			_new						( lua_State* L );
 
 	//----------------------------------------------------------------//

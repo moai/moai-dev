@@ -1,0 +1,1 @@
+This folder is for C++ headers generated from the files in the lua-modules folder. The batchfile and main.lua will generate headers for certain modules which may then be linked into the main project. This is intended for implemention additional framework features and backward compatibility extensions that should always be available.

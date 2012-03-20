@@ -158,6 +158,32 @@ int MOAIImage::_copyRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	fillRect
+	@text	Fill a rectangle in the image with a solid color.
+
+	@in		MOAIImage self
+	@in		number xMin
+	@in		number yMin
+	@in		number xMax
+	@in		number yMax
+	@opt	number r			Default value is 0.
+	@opt	number g			Default value is 0.
+	@opt	number b			Default value is 0.
+	@opt	number a			Default value is 0.
+	@out	nil
+*/
+int MOAIImage::_fillRect ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIImage, "U" )
+
+	USIntRect rect = state.GetRect < int >( 2 );
+	u32 color = state.GetColor32 ( 6, 0.0f, 0.0f, 0.0f, 0.0f );
+
+	self->FillRect ( rect, color );
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	getColor32
 	@text	Returns a 32-bit packed RGBA value from the image for a
 			given pixel coordinate.
@@ -472,20 +498,23 @@ void MOAIImage::Alloc () {
 
 	if ( this->mData ) {
 		free ( this->mData );
+		this->mData = 0;
 	}
 
-	u32 paletteSize = this->GetPaletteSize ();
+	if ( this->mPalette ) {
+		free ( this->mPalette );
+		this->mPalette = 0;
+	}
+	
 	u32 bitmapSize = this->GetBitmapSize ();
 
-	this->mData = malloc ( paletteSize + bitmapSize );
-	this->mBitmap = ( void* )(( uintptr )this->mData + paletteSize );
+	this->mData = malloc ( bitmapSize );
+	this->mBitmap = this->mData;
 	
+	u32 paletteSize = this->GetPaletteSize ();
 	if ( paletteSize ) {
-		this->mPalette = this->mData;
+		this->mData = malloc ( paletteSize );
 		memset ( this->mPalette, 0, paletteSize );
-	}
-	else {
-		this->mPalette = 0;
 	}
 }
 
@@ -554,6 +583,10 @@ void MOAIImage::Clear () {
 		free ( this->mData );
 	}
 	
+	if ( this->mPalette ) {
+		free ( this->mPalette );
+	}
+	
 	this->mColorFormat	= USColor::CLR_FMT_UNKNOWN;
 	this->mPixelFormat	= USPixel::PXL_FMT_UNKNOWN;
 
@@ -570,6 +603,69 @@ void MOAIImage::ClearBitmap () {
 
 	if ( this->mBitmap ) {
 		memset ( this->mBitmap, 0, this->GetBitmapSize ());
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIImage::ClearRect ( USIntRect rect ) {
+
+	rect.Bless ();
+	
+	USIntRect bounds = this->GetBounds ();
+	bounds.Clip ( rect );
+	
+	int width = rect.Width ();
+	
+	if ( !width ) return;
+	if ( !rect.Height ()) return;
+
+	u32 depth = USPixel::GetDepth ( this->mPixelFormat, this->mColorFormat );
+	
+	size_t offset;
+	size_t size;
+	
+	if ( depth == 4 ) {
+		offset = rect.mXMin >> 1;
+		size = width >> 1; // this will omit the last column of pixels if width is odd
+		
+		if ( rect.mXMin & 0x01 ) {
+			
+			offset++;
+			
+			if ( size ) {
+				size--;
+			}
+			
+			// go ahead and set the pixels for the first column here
+			for ( int y = rect.mYMin; y < rect.mYMax; ++y ) {
+				this->SetPixel ( rect.mXMin, y, 0 );
+			}
+		}
+		
+		// fill in the last column of pixels if odd
+		if ( rect.mXMax & 0x01 ) {
+			int x = rect.mXMax - 1;
+			for ( int y = rect.mYMin; y < rect.mYMax; ++y ) {
+				this->SetPixel ( x, y, 0 );
+			}
+		}
+	}
+	else {
+		size_t pixelSize = depth >> 3;
+		offset = rect.mXMin * pixelSize;
+		size = width * pixelSize;
+	}
+	
+	if ( size ) {
+		
+		size_t rowSize = this->GetRowSize ();
+		
+		for ( int y = rect.mYMin; y < rect.mYMax; ++y ) {
+			for ( int x = rect.mXMin; x < rect.mXMax; ++x ) {
+				void* addr = ( void* )(( uintptr )this->mBitmap + ( rowSize * y ) + offset );
+				memset ( addr, 0, size );
+			}
+		}
 	}
 }
 
@@ -867,9 +963,40 @@ void MOAIImage::CopyRect ( const MOAIImage& image, USIntRect srcRect, USIntRect 
 }
 
 //----------------------------------------------------------------//
+void MOAIImage::FillRect ( USIntRect rect, u32 color ) {
+
+	if ( !color ) {
+		this->ClearRect ( rect );
+		return;
+	}
+
+	rect.Bless ();
+	
+	USIntRect bounds = this->GetBounds ();
+	bounds.Clip ( rect );
+	
+	if ( !rect.Width ()) return;
+	if ( !rect.Height ()) return;
+	
+	for ( int y = rect.mYMin; y < rect.mYMax; ++y ) {
+		for ( int x = rect.mXMin; x < rect.mXMax; ++x ) {
+			this->SetColor ( x, y, color );
+		}
+	}
+}
+
+//----------------------------------------------------------------//
 u32 MOAIImage::GetBitmapSize () const {
 
 	return this->GetRowSize () * this->mHeight;
+}
+
+//----------------------------------------------------------------//
+USIntRect MOAIImage::GetBounds () {
+
+	USIntRect bounds;
+	bounds.Init ( 0, 0, this->mWidth, this->mHeight );
+	return bounds;
 }
 
 //----------------------------------------------------------------//
@@ -982,6 +1109,14 @@ u32 MOAIImage::GetPixel ( u32 x, u32 y ) const {
 }
 
 //----------------------------------------------------------------//
+USIntRect MOAIImage::GetRect () {
+
+	USIntRect rect;
+	rect.Init ( 0, 0, this->mWidth, this->mHeight );
+	return rect;
+}
+
+//----------------------------------------------------------------//
 void* MOAIImage::GetRowAddr ( u32 y ) {
 
 	return ( void* )(( uintptr )this->mBitmap + ( this->GetRowSize () * y ));
@@ -1001,6 +1136,23 @@ u32 MOAIImage::GetRowSize () const {
 }
 
 //----------------------------------------------------------------//
+void MOAIImage::GetSubImage ( USIntRect rect, void* buffer ) {
+
+	int width = rect.Width ();
+	int height = rect.Height ();
+	
+	MOAIImage temp;
+	temp.Init ( buffer, width, height, this->mColorFormat, false );
+	temp.CopyBits ( *this, rect.mXMin, rect.mYMin, 0, 0, width, height );
+}
+
+//----------------------------------------------------------------//
+u32 MOAIImage::GetSubImageSize ( USIntRect rect ) {
+
+	return (( rect.Width () * USPixel::GetDepth ( this->mPixelFormat, this->mColorFormat )) >> 3 ) * rect.Height ();
+}
+
+//----------------------------------------------------------------//
 void MOAIImage::Init ( u32 width, u32 height, USColor::Format colorFmt, USPixel::Format pixelFmt ) {
 
 	this->mColorFormat = colorFmt;
@@ -1014,13 +1166,13 @@ void MOAIImage::Init ( u32 width, u32 height, USColor::Format colorFmt, USPixel:
 }
 
 //----------------------------------------------------------------//
-void MOAIImage::Init ( const void* bitmap, u32 width, u32 height, USColor::Format colorFmt ) {
+void MOAIImage::Init ( void* bitmap, u32 width, u32 height, USColor::Format colorFmt ) {
 
 	this->Init ( bitmap, width, height, colorFmt, true );
 }
 
 //----------------------------------------------------------------//
-void MOAIImage::Init ( const void* bitmap, u32 width, u32 height, USColor::Format colorFmt, bool copy ) {
+void MOAIImage::Init ( void* bitmap, u32 width, u32 height, USColor::Format colorFmt, bool copy ) {
 
 	this->Clear ();
 
@@ -1035,12 +1187,10 @@ void MOAIImage::Init ( const void* bitmap, u32 width, u32 height, USColor::Forma
 	if ( copy ) {
 		this->Alloc ();
 		u32 size = this->GetBitmapSize ();
-		memcpy ( this->mBitmap, bitmap, size );
+		memcpy ( this->mData, bitmap, size );
 	}
 	else {
-		this->mData = ( void* )bitmap;
-		this->mBitmap = this->mData;
-		this->mPalette = 0;
+		this->mBitmap = ( void* )bitmap;
 	}
 }
 
@@ -1253,6 +1403,7 @@ void MOAIImage::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "copy",				_copy },
 		{ "copyBits",			_copyBits },
 		{ "copyRect",			_copyRect },
+		{ "fillRect",			_fillRect },
 		{ "getColor32",			_getColor32 },
 		{ "getFormat",			_getFormat },
 		{ "getRGBA",			_getRGBA },
@@ -1281,7 +1432,8 @@ void MOAIImage::ResizeCanvas ( const MOAIImage& image, USIntRect rect ) {
 	int width = rect.Width ();
 	int height = rect.Height ();
 	
-	this->Init (( u32 )width, ( u32 )height, image.mColorFormat, image.mPixelFormat );
+	MOAIImage newImage;
+	newImage.Init (( u32 )width, ( u32 )height, image.mColorFormat, image.mPixelFormat );
 	
 	USIntRect srcRect;
 	srcRect.mXMin = -rect.mXMin;
@@ -1291,66 +1443,68 @@ void MOAIImage::ResizeCanvas ( const MOAIImage& image, USIntRect rect ) {
 	
 	rect.Offset ( -rect.mXMin, -rect.mYMin );
 	
-	if ( !srcRect.Overlap ( rect )) {
-		this->ClearBitmap ();
-		return;
-	}
+	if ( srcRect.Overlap ( rect )) {
 	
-	u32 beginSpan = 0;
-	u32 leftSize = 0;
-	
-	if ( srcRect.mXMin > 0 ) {
-		beginSpan = srcRect.mXMin;
-		leftSize = beginSpan;
-	}
-	
-	u32 endSpan = width;
-	u32 rightSize = 0;
-	
-	if ( srcRect.mXMax < width ) {
-		endSpan = srcRect.mXMax;
-		rightSize = width - endSpan;
-	}
-	
-	u32 spanSize = endSpan - beginSpan;
-	
-	u32 pixSize = USPixel::GetDepth ( this->mPixelFormat, this->mColorFormat ) >> 3;
-	u32 rowSize = this->GetRowSize ();
-	
-	leftSize *= pixSize;
-	spanSize *= pixSize;
-	rightSize *= pixSize;
-	
-	u32 srcRowSize = image.GetRowSize ();
-	u32 srcRowXOff = srcRect.mXMin < 0 ? -srcRect.mXMin * pixSize : 0;
-	
-	for ( int y = 0; y < height; ++y ) {
-	
-		void* row = this->GetRowAddr ( y );
-	
-		if (( y < srcRect.mYMin ) || ( y >= srcRect.mYMax )) {
-			memset ( row, 0, rowSize );
-		}
-		else {
+		u32 beginSpan = 0;
+		u32 leftSize = 0;
 		
-			if ( leftSize ) {
-				memset ( row, 0, leftSize );
-				row = ( void* )(( uintptr )row + leftSize );
+		if ( srcRect.mXMin > 0 ) {
+			beginSpan = srcRect.mXMin;
+			leftSize = beginSpan;
+		}
+		
+		u32 endSpan = width;
+		u32 rightSize = 0;
+		
+		if ( srcRect.mXMax < width ) {
+			endSpan = srcRect.mXMax;
+			rightSize = width - endSpan;
+		}
+		
+		u32 spanSize = endSpan - beginSpan;
+		
+		u32 pixSize = USPixel::GetDepth ( newImage.mPixelFormat, newImage.mColorFormat ) >> 3;
+		u32 rowSize = newImage.GetRowSize ();
+		
+		leftSize *= pixSize;
+		spanSize *= pixSize;
+		rightSize *= pixSize;
+		
+		u32 srcRowSize = image.GetRowSize ();
+		u32 srcRowXOff = srcRect.mXMin < 0 ? -srcRect.mXMin * pixSize : 0;
+		
+		for ( int y = 0; y < height; ++y ) {
+		
+			void* row = newImage.GetRowAddr ( y );
+		
+			if (( y < srcRect.mYMin ) || ( y >= srcRect.mYMax )) {
+				memset ( row, 0, rowSize );
 			}
+			else {
 			
-			if ( spanSize ) {
-			
-				void* srcRow = ( void* )(( uintptr )image.mBitmap + ( srcRowSize * ( y - srcRect.mYMin )) + srcRowXOff );
+				if ( leftSize ) {
+					memset ( row, 0, leftSize );
+					row = ( void* )(( uintptr )row + leftSize );
+				}
 				
-				memcpy ( row, srcRow, spanSize );
-				row = ( void* )(( uintptr )row + spanSize );
-			}
-			
-			if ( rightSize ) {
-				memset ( row, 0, rightSize );
+				if ( spanSize ) {
+				
+					void* srcRow = ( void* )(( uintptr )image.mBitmap + ( srcRowSize * ( y - srcRect.mYMin )) + srcRowXOff );
+					
+					memcpy ( row, srcRow, spanSize );
+					row = ( void* )(( uintptr )row + spanSize );
+				}
+				
+				if ( rightSize ) {
+					memset ( row, 0, rightSize );
+				}
 			}
 		}
 	}
+	else {
+		newImage.ClearBitmap ();
+	}
+	this->Take ( newImage );
 }
 
 //----------------------------------------------------------------//

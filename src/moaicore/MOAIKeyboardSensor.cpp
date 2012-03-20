@@ -149,14 +149,14 @@ int MOAIKeyboardSensor::_keyUp ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	setCallback
-	@text	Sets the callback to be issued when a key is pressed.
+	@text	Sets or clears the callback to be issued when a key is pressed.
 
 	@in		MOAIKeyboardSensor self
-	@in		function callback
+	@opt	function callback			Default value is nil.
 	@out	nil
 */
 int MOAIKeyboardSensor::_setCallback ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIKeyboardSensor, "UF" )
+	MOAI_LUA_SETUP ( MOAIKeyboardSensor, "U" )
 	
 	self->mOnKey.SetStrongRef ( state, 2 );
 	

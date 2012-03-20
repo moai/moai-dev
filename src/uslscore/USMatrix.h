@@ -25,6 +25,30 @@ namespace AffineElem2D {
 }
 
 //================================================================//
+// AffineElem3D
+//================================================================//
+namespace AffineElem3D {
+
+	enum {
+		C0_R0	=	0,
+		C0_R1,
+		C0_R2,
+		
+		C1_R0,
+		C1_R1,
+		C1_R2,
+		
+		C2_R0,
+		C2_R1,
+		C2_R2,
+		
+		C3_R0,
+		C3_R1,
+		C3_R2,
+	};
+}
+
+//================================================================//
 // MatrixElem2D
 //================================================================//
 namespace MatrixElem2D {
@@ -73,6 +97,7 @@ namespace MatrixElem3D {
 }
 
 template < typename TYPE > class USMetaAffine2D;
+template < typename TYPE > class USMetaAffine3D;
 template < typename TYPE > class USMetaMatrix3x3;
 template < typename TYPE > class USMetaMatrix4x4;
 

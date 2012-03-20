@@ -63,7 +63,7 @@ USRect MOAISurfaceSampler2D::GetLocalRect () {
 }
 
 //----------------------------------------------------------------//
-void MOAISurfaceSampler2D::Init ( const USAffine2D& worldToSampleMtx, const USRect& worldRect ) {
+void MOAISurfaceSampler2D::Init ( const USAffine3D& worldToSampleMtx, const USRect& worldRect ) {
 
 	this->Clear ();
 
@@ -89,7 +89,7 @@ void MOAISurfaceSampler2D::SetObjectMtx () {
 }
 
 //----------------------------------------------------------------//
-void MOAISurfaceSampler2D::SetObjectMtx ( const USAffine2D& localToWorld, const USAffine2D& worldToLocal ) {
+void MOAISurfaceSampler2D::SetObjectMtx ( const USAffine3D& localToWorld, const USAffine3D& worldToLocal ) {
 
 	this->mLocalToSampleMtx = localToWorld;
 	this->mLocalToSampleMtx.Append ( this->mWorldToSampleMtx );
@@ -103,8 +103,8 @@ void MOAISurfaceSampler2D::SetSourcePrim ( MOAITransform* sourcePrim ) {
 
 	if ( sourcePrim ) {
 	
-		const USAffine2D& localToWorldMtx = sourcePrim->GetLocalToWorldMtx ();
-		const USAffine2D& worldToLocalMtx = sourcePrim->GetWorldToLocalMtx ();
+		const USAffine3D& localToWorldMtx = sourcePrim->GetLocalToWorldMtx ();
+		const USAffine3D& worldToLocalMtx = sourcePrim->GetWorldToLocalMtx ();
 		
 		this->mSourcePrim = sourcePrim;
 		this->SetObjectMtx ( localToWorldMtx, worldToLocalMtx );

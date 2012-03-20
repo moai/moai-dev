@@ -30,10 +30,10 @@ int MOAIMotionSensor::_getLevel ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	setCallback
-	@text	Sets the callback to be issued when the level changes.
+	@text	Sets or clears the callback to be issued when the level changes.
 
 	@in		MOAIMotionSensor self
-	@in		function callback
+	@opt	function callback		Default value is nil.
 	@out	nil
 */
 int MOAIMotionSensor::_setCallback ( lua_State* L ) {

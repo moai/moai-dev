@@ -21,7 +21,7 @@ class MOAICameraAnchor2D :
 private:
 
 	USRect							mRect;
-	USVec2D							mLoc;
+	USVec3D							mLoc;
 	
 	//----------------------------------------------------------------//
 	static int		_setParent				( lua_State* L );

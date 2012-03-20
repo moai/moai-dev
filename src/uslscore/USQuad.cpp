@@ -315,6 +315,39 @@ void USQuad::Transform ( const USAffine2D& transform ) {
 }
 
 //----------------------------------------------------------------//
+void USQuad::Transform ( const USAffine3D& transform ) {
+	
+	float x;
+	float y;
+	
+	const float* m = transform.m;
+	
+	x =	( m[ USAffine3D::C0_R0 ] * this->mV [ 0 ].mX ) + ( m[ USAffine3D::C1_R0 ] * this->mV [ 0 ].mY ) + ( m[ USAffine3D::C3_R0 ]);
+	y =	( m[ USAffine3D::C0_R1 ] * this->mV [ 0 ].mX ) + ( m[ USAffine3D::C1_R1 ] * this->mV [ 0 ].mY ) + ( m[ USAffine3D::C3_R1 ]);
+	
+	this->mV [ 0 ].mX = x;
+	this->mV [ 0 ].mY = y;
+	
+	x =	( m[ USAffine3D::C0_R0 ] * this->mV [ 1 ].mX ) + ( m[ USAffine3D::C1_R0 ] * this->mV [ 1 ].mY ) + ( m[ USAffine3D::C3_R0 ]);
+	y =	( m[ USAffine3D::C0_R1 ] * this->mV [ 1 ].mX ) + ( m[ USAffine3D::C1_R1 ] * this->mV [ 1 ].mY ) + ( m[ USAffine3D::C3_R1 ]);
+	
+	this->mV [ 1 ].mX = x;
+	this->mV [ 1 ].mY = y;
+	
+	x =	( m[ USAffine3D::C0_R0 ] * this->mV [ 2 ].mX ) + ( m[ USAffine3D::C1_R0 ] * this->mV [ 2 ].mY ) + ( m[ USAffine3D::C3_R0 ]);
+	y =	( m[ USAffine3D::C0_R1 ] * this->mV [ 2 ].mX ) + ( m[ USAffine3D::C1_R1 ] * this->mV [ 2 ].mY ) + ( m[ USAffine3D::C3_R1 ]);
+	
+	this->mV [ 2 ].mX = x;
+	this->mV [ 2 ].mY = y;
+	
+	x =	( m[ USAffine3D::C0_R0 ] * this->mV [ 3 ].mX ) + ( m[ USAffine3D::C1_R0 ] * this->mV [ 3 ].mY ) + ( m[ USAffine3D::C3_R0 ]);
+	y =	( m[ USAffine3D::C0_R1 ] * this->mV [ 3 ].mX ) + ( m[ USAffine3D::C1_R1 ] * this->mV [ 3 ].mY ) + ( m[ USAffine3D::C3_R1 ]);
+	
+	this->mV [ 3 ].mX = x;
+	this->mV [ 3 ].mY = y;
+}
+
+//----------------------------------------------------------------//
 void USQuad::Transform ( const USMatrix3x3& transform ) {
 	
 	float x;
@@ -346,4 +379,3 @@ void USQuad::Transform ( const USMatrix3x3& transform ) {
 	this->mV [ 3 ].mX = x;
 	this->mV [ 3 ].mY = y;
 }
-

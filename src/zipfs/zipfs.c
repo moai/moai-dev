@@ -52,9 +52,10 @@ typedef struct ZIPFSDir {
 	char*					mDirName;
 	size_t					mDirNameLen;
 
-	ZIPFSZipFileDir*		mZipFileDir;
-	ZIPFSZipFileDir*		mZipFileSubDir;
-	ZIPFSZipFileEntry*		mZipFileEntry;
+	ZIPFSZipFileDir*		mZipFileDir; // this is a ref to the directory being interated
+	
+	ZIPFSZipFileDir*		mZipFileSubDir; // this is the sub directory iterator
+	ZIPFSZipFileEntry*		mZipFileEntry; // this is the file entry iterator
 	ZIPFSVirtualPath*		mVirtualSubDir;
 
 	char const*				mName;
@@ -74,38 +75,63 @@ typedef struct ZIPFSDir {
 int ZIPFSDir_ReadZipEntry ( ZIPFSDir* self );
 int ZIPFSDir_ReadZipEntry ( ZIPFSDir* self ) {
 
-	if ( self->mZipFileSubDir ) {
-		
-		self->mZipFileSubDir = self->mZipFileSubDir->mNext;
-		if ( !self->mZipFileSubDir ) {
-		
-			self->mZipFileEntry = self->mZipFileDir->mChildFiles;
-			if ( !self->mZipFileEntry ) {
-				self->mZipFileDir = 0;
-			}
-		}
-	}
-	else if ( self->mZipFileEntry  ) {
-	
-		self->mZipFileSubDir = self->mZipFileSubDir->mNext;
-		if ( !self->mZipFileSubDir ) {
-			self->mZipFileDir = 0;
-		}
-	}
-	else {
-		
-		self->mZipFileSubDir = self->mZipFileDir->mChildDirs;
-		if ( !self->mZipFileSubDir ) {
-	
-			self->mZipFileEntry = self->mZipFileDir->mChildFiles;
-			if ( !self->mZipFileEntry ) {
-				self->mZipFileDir = 0;
-			}
-		}
-	}
-	
+	// only perform iteration if we have a valid directory
+	// directory will be set to nil when iteration is finished
 	if ( self->mZipFileDir ) {
+
+		// iterate through the sub directories first
+		// then the file entries
+
+		if ( self->mZipFileSubDir ) {
+			
+			// we have a valid sub dir iterator, so iterate through
+			// when iteration ends, move on to files
+			
+			self->mZipFileSubDir = self->mZipFileSubDir->mNext;
+			if ( !self->mZipFileSubDir ) {
+			
+				// no more sub directories; move on to files
+				self->mZipFileEntry = self->mZipFileDir->mChildFiles;
+				if ( !self->mZipFileEntry ) {
+				
+					// no files, so end all iteration
+					self->mZipFileDir = 0;
+				}
+			}
+		}
+		else if ( self->mZipFileEntry  ) {
+			
+			// try the next file in the iteration
+			self->mZipFileEntry = self->mZipFileEntry->mNext;
+			if ( !self->mZipFileEntry ) {
+			
+				// no more files, so end all iteration
+				self->mZipFileDir = 0;
+			}
+		}
+		else  {
+			
+			// there is no valid directory or file iterator, so begin iteration
+			
+			// first see if we have an valid sub directories
+			self->mZipFileSubDir = self->mZipFileDir->mChildDirs;
+			if ( !self->mZipFileSubDir ) {
+		
+				// no valid sub directories, so try files
+				self->mZipFileEntry = self->mZipFileDir->mChildFiles;
+				if ( !self->mZipFileEntry ) {
+				
+					// no valid files, so we're done
+					self->mZipFileDir = 0;
+				}
+			}
+		}
+	}
 	
+	// if we have a valid dir at this point, it means we are still iterating
+	if ( self->mZipFileDir ) {
+		
+		// get the name of the current directory or file and set the isDir flag accordingly
 		if ( self->mZipFileSubDir ) {
 			self->mName = self->mZipFileSubDir->mName;
 			self->mIsDir = 1;
@@ -691,6 +717,44 @@ int zipfs_getwc ( ZIPFSFILE* fp ) {
 
 	assert ( 0 ); // TODO:
 	return -1;
+}
+
+//----------------------------------------------------------------//
+int zipfs_pclose ( ZIPFSFILE* fp ) {
+
+	ZIPFSFile* file = ( ZIPFSFile* )fp;
+	
+	FILE* stdFile = 0;
+	if ( file && !file->mIsArchive ) {
+		stdFile = file->mPtr.mFile;
+		memset ( fp, 0, sizeof ( ZIPFSFile ));
+		free ( file );
+	}
+
+	#ifdef MOAI_OS_WINDOWS
+		return _pclose ( stdFile );
+	#else
+		return pclose ( stdFile );
+	#endif
+}
+
+//----------------------------------------------------------------//
+ZIPFSFILE* zipfs_popen ( const char *command, const char *mode ) {
+
+	ZIPFSFile* file = 0;
+	FILE* stdFile = 0;
+
+	#ifdef MOAI_OS_WINDOWS
+		stdFile = _popen ( command, mode );	
+	#else
+		stdFile = popen ( command, mode );
+	#endif
+
+	if ( stdFile ) {
+		file = ( ZIPFSFile* )calloc ( 1, sizeof ( ZIPFSFile ));
+		file->mPtr.mFile = stdFile;
+	}
+	return ( ZIPFSFILE* )file;
 }
 
 //----------------------------------------------------------------//
@@ -1384,6 +1448,7 @@ char* zipfs_normalize_path ( const char* path ) {
 	}
 	
 	buffer [ top ] = 0;
+	sBuffer->mStrLen = strlen ( buffer );
 	return buffer;
 }
 

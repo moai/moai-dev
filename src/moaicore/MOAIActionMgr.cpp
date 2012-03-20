@@ -84,7 +84,7 @@ MOAIAction* MOAIActionMgr::AffirmRoot () {
 
 	if ( !this->mRoot ) {
 		this->mRoot = new MOAIAction ();
-		this->LuaRetain ( *this->mRoot );
+		this->LuaRetain ( this->mRoot );
 	}
 	return this->mRoot;
 }
@@ -110,10 +110,8 @@ MOAIActionMgr::MOAIActionMgr () :
 //----------------------------------------------------------------//
 MOAIActionMgr::~MOAIActionMgr () {
 
-	if ( this->mRoot ) {
-		this->LuaRelease ( *this->mRoot );
-		this->mRoot = 0;
-	}
+	this->LuaRelease ( this->mRoot );
+	this->mRoot = 0;
 }
 
 //----------------------------------------------------------------//
@@ -128,13 +126,6 @@ void MOAIActionMgr::RegisterLuaClass ( MOAILuaState& state ) {
 	};
 
 	luaL_register( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAIActionMgr::StartAction ( MOAIAction& action ) {
-
-	MOAIAction* root = this->AffirmRoot ();
-	root->AddChild ( action );
 }
 
 //----------------------------------------------------------------//

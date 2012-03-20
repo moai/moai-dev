@@ -8,6 +8,7 @@
 #include <moaicore/MOAIGfxDevice.h>
 #include <moaicore/MOAIGrid.h>
 #include <moaicore/MOAILogMessages.h>
+#include <moaicore/MOAIShader.h>
 #include <moaicore/MOAIShaderMgr.h>
 #include <moaicore/MOAISurfaceSampler2D.h>
 #include <moaicore/MOAITransform.h>
@@ -69,25 +70,34 @@ int MOAIScriptDeck::_setRectCallback ( lua_State* L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
+/**	@name	setTotalRectCallback
+	@text	Sets the callback to be issued when the size of a deck item
+			needs to be determined.
+			The callback's parameters are ( ).
+
+	@in		MOAIScriptDeck self
+	@in		function callback
+	@out	nil
+*/
+int MOAIScriptDeck::_setTotalRectCallback ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIScriptDeck, "UF" )
+	
+	self->SetLocal ( state, 2, self->mOnTotalRect );
+	return 0;
+}
+
 //================================================================//
 // MOAIScriptDeck
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIScriptDeck::Bind () {
-
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-	
-	gfxDevice.SetTexture ();
-	gfxDevice.SetVertexPreset ( MOAIVertexFormatMgr::XYC );
-
-	return true;
-}
-
-//----------------------------------------------------------------//
 void MOAIScriptDeck::DrawPatch ( u32 idx, float xOff, float yOff, float xScale, float yScale ) {
 	
 	if ( this->mOnDraw ) {
+	
+		MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+		gfxDevice.SetVertexPreset ( MOAIVertexFormatMgr::XYZWC );
 	
 		MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 		this->PushLocal ( state, this->mOnDraw );
@@ -102,7 +112,29 @@ void MOAIScriptDeck::DrawPatch ( u32 idx, float xOff, float yOff, float xScale, 
 }
 
 //----------------------------------------------------------------//
-USRect MOAIScriptDeck::GetBounds ( u32 idx, MOAIDeckRemapper* remapper ) {
+USRect MOAIScriptDeck::GetRect () {
+
+	if ( this->mOnTotalRect ) {
+	
+		MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+		this->PushLocal ( state, this->mOnTotalRect );
+		
+		state.DebugCall ( 0, 4 );
+		
+		USRect rect;
+		rect.mXMin = state.GetValue < float >( -4, 0.0f );
+		rect.mYMin = state.GetValue < float >( -3, 0.0f );
+		rect.mXMax = state.GetValue < float >( -2, 0.0f );
+		rect.mYMax = state.GetValue < float >( -1, 0.0f );
+		
+		rect.Bless ();
+		return rect;
+	}
+	return this->mRect;
+}
+
+//----------------------------------------------------------------//
+USRect MOAIScriptDeck::GetRect ( u32 idx, MOAIDeckRemapper* remapper ) {
 	
 	if ( this->mOnRect ) {
 	
@@ -127,14 +159,9 @@ USRect MOAIScriptDeck::GetBounds ( u32 idx, MOAIDeckRemapper* remapper ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIScriptDeck::LoadShader () {
+MOAIGfxState* MOAIScriptDeck::GetShaderDefault () {
 
-	if ( this->mShader ) {
-		MOAIGfxDevice::Get ().SetShader ( this->mShader );
-	}
-	else {
-		MOAIShaderMgr::Get ().BindShader ( MOAIShaderMgr::LINE_SHADER );
-	}
+	return &MOAIShaderMgr::Get ().GetShader ( MOAIShaderMgr::LINE_SHADER );
 }
 
 //----------------------------------------------------------------//
@@ -164,6 +191,7 @@ void MOAIScriptDeck::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setDrawCallback",		_setDrawCallback },
 		{ "setRect",				_setRect },
 		{ "setRectCallback",		_setRectCallback },
+		{ "setTotalRectCallback",	_setTotalRectCallback },
 		{ NULL, NULL }
 	};
 

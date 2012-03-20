@@ -49,10 +49,10 @@ public:
 		MOAIBox2DJoint_MissingInstance,
 		MOAIBox2DWorld_IsLocked,
 		MOAIGfxDevice_OpenGLError_S,
+		MOAIGfxResource_MissingDevice,
 		MOAINode_AttributeNotFound,
 		MOAIShader_ShaderInfoLog_S,
 		MOAITexture_MemoryUse_SDFS,
-		MOAITexture_MissingDevice_S,
 		MOAITexture_NoFramebuffer,
 		MOAITexture_NonPowerOfTwo_SDD,
 	};

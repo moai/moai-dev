@@ -49,9 +49,7 @@ MOAIInputDevice::MOAIInputDevice () :
 MOAIInputDevice::~MOAIInputDevice () {
 
 	for ( u32 i = 0; i < this->mSensors.Size (); ++i ) {
-		if ( this->mSensors [ i ]) {
-			this->LuaRelease ( *this->mSensors [ i ]);
-		}
+		this->LuaRelease ( this->mSensors [ i ]);
 	}
 }
 
@@ -140,12 +138,10 @@ void MOAIInputDevice::SetSensor ( u8 sensorID, cc8* name, u32 type ) {
 	sensor->mType = type;
 	sensor->mName = name;
 	
-	if ( this->mSensors [ sensorID ]) {
-		this->LuaRelease ( *this->mSensors [ sensorID ]);
-	}
+	this->LuaRelease ( this->mSensors [ sensorID ]);
 	
 	this->mSensors [ sensorID ] = sensor;
-	this->LuaRetain ( *sensor );
+	this->LuaRetain ( sensor );
 	
 	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 	this->PushLuaUserdata ( state );

@@ -55,7 +55,6 @@ public:
 						MOAIActionMgr			();
 						~MOAIActionMgr			();
 	void				RegisterLuaClass		( MOAILuaState& state );
-	void				StartAction				( MOAIAction& action );
 	void				Update					( float step );
 };
 

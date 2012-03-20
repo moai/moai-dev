@@ -173,7 +173,7 @@ u32 MOAIParticleEmitter::GetRandomEmission () {
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleEmitter::GetRandomParticle ( USVec2D& loc, USVec2D& vec ) {
+void MOAIParticleEmitter::GetRandomParticle ( USVec3D& loc, USVec3D& vec ) {
 	
 	switch ( this->mShapeID ) {
 	
@@ -186,12 +186,14 @@ void MOAIParticleEmitter::GetRandomParticle ( USVec2D& loc, USVec2D& vec ) {
 			
 			loc.mX = 0.0f;
 			loc.mY = 0.0f;
+			loc.mZ = 0.0f;
 			break;
 
 		case RECT:
 		
 			loc.mX = USFloat::Rand ( this->mRect.mXMin, this->mRect.mXMax );
 			loc.mY = USFloat::Rand ( this->mRect.mYMin, this->mRect.mYMax );
+			loc.mZ = 0.0f;
 			break;
 	}
 	
@@ -199,14 +201,15 @@ void MOAIParticleEmitter::GetRandomParticle ( USVec2D& loc, USVec2D& vec ) {
 }
 
 //----------------------------------------------------------------//
-USVec2D MOAIParticleEmitter::GetRandomVec ( float minAngle, float maxAngle, float min, float max ) {
+USVec3D MOAIParticleEmitter::GetRandomVec ( float minAngle, float maxAngle, float min, float max ) {
 
 	float r = USFloat::Rand ( minAngle, maxAngle ) * ( float )D2R;
 	float m = USFloat::Rand ( min, max );
 	
-	USVec2D vec;
+	USVec3D vec;
 	vec.mX = Cos ( r ) * m;
 	vec.mY = Sin ( r ) * m;
+	vec.mZ = 0.0f;
 	
 	return vec;
 }
@@ -308,8 +311,8 @@ void MOAIParticleEmitter::Surge ( u32 total ) {
 
 	if ( this->mSystem ) {
 
-		USVec2D loc;
-		USVec2D vec;
+		USVec3D loc;
+		USVec3D vec;
 		for ( u32 i = 0; i < total; ++i ) {
 			this->GetRandomParticle ( loc, vec );
 			this->mLocalToWorldMtx.Transform ( loc );

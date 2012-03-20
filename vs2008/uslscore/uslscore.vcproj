@@ -498,6 +498,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\uslscore\USAffine3D.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\uslscore\USBox.cpp"
 				>
 			</File>
@@ -523,6 +527,14 @@
 			</File>
 			<File
 				RelativePath="..\..\src\uslscore\USFloat.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\uslscore\USFrustum.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\uslscore\USFrustum.h"
 				>
 			</File>
 			<File
@@ -586,6 +598,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\uslscore\USPrism.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\uslscore\USPrism.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\uslscore\USQuad.cpp"
 				>
 			</File>
@@ -603,6 +623,14 @@
 			</File>
 			<File
 				RelativePath="..\..\src\uslscore\USRect.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\uslscore\USRhombus.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\uslscore\USRhombus.h"
 				>
 			</File>
 			<File
@@ -627,6 +655,10 @@
 			</File>
 			<File
 				RelativePath="..\..\src\uslscore\USVec3D.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\uslscore\USVec4D.h"
 				>
 			</File>
 		</Filter>

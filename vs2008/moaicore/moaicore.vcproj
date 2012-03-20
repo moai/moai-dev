@@ -412,19 +412,19 @@
 			Name="layer"
 			>
 			<File
-				RelativePath="..\..\src\moaicore\MOAILayer2D.cpp"
+				RelativePath="..\..\src\moaicore\MOAILayer.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAILayer2D.h"
+				RelativePath="..\..\src\moaicore\MOAILayer.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAILayerBridge2D.cpp"
+				RelativePath="..\..\src\moaicore\MOAILayerBridge.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAILayerBridge2D.h"
+				RelativePath="..\..\src\moaicore\MOAILayerBridge.h"
 				>
 			</File>
 		</Filter>
@@ -473,14 +473,6 @@
 			</File>
 			<File
 				RelativePath="..\..\src\moaicore\MOAIDraw.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIFrameBuffer.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIFrameBuffer.h"
 				>
 			</File>
 			<File
@@ -541,14 +533,6 @@
 			</File>
 			<File
 				RelativePath="..\..\src\moaicore\MOAIShaderMgr.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAITexture.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAITexture.h"
 				>
 			</File>
 			<File
@@ -616,6 +600,14 @@
 				</File>
 				<File
 					RelativePath="..\..\src\moaicore\shaders\MOAILineShader-vsh.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\moaicore\shaders\MOAIMeshShader-fsh.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\moaicore\shaders\MOAIMeshShader-vsh.h"
 					>
 				</File>
 			</Filter>
@@ -876,19 +868,31 @@
 			Name="web"
 			>
 			<File
-				RelativePath="..\..\src\moaicore\MOAIHttpTask.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\moaicore\MOAIHttpTask.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAIHttpTaskInfo_curl.cpp"
+				RelativePath="..\..\src\moaicore\MOAIHttpTask_curl.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAIHttpTaskInfo_curl.h"
+				RelativePath="..\..\src\moaicore\MOAIHttpTask_curl.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIHttpTaskBase.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIHttpTaskBase.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIHttpTaskInfo_nacl.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIHttpTaskInfo_nacl.h"
 				>
 			</File>
 			<File
@@ -899,42 +903,14 @@
 				RelativePath="..\..\src\moaicore\MOAIUrlMgr_curl.cpp"
 				>
 			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIUrlMgr_nacl.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
-			Name="textbox"
+			Name="text"
 			>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIBitmapFontRipper.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIBitmapFontRipper.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIFont.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIFont.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIFreetypeFontRipper.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIFreetypeFontRipper.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIGlyph.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIGlyph.h"
-				>
-			</File>
 			<File
 				RelativePath="..\..\src\moaicore\MOAITextBox.cpp"
 				>
@@ -944,19 +920,27 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAITextFrame.cpp"
+				RelativePath="..\..\src\moaicore\MOAITextDesigner.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAITextFrame.h"
+				RelativePath="..\..\src\moaicore\MOAITextDesigner.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAITextLayout.cpp"
+				RelativePath="..\..\src\moaicore\MOAITextStyle.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moaicore\MOAITextLayout.h"
+				RelativePath="..\..\src\moaicore\MOAITextStyle.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAITextStyler.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAITextStyler.h"
 				>
 			</File>
 		</Filter>
@@ -1311,14 +1295,6 @@
 				RelativePath="..\..\src\moaicore\MOAIProp.h"
 				>
 			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIProp2D.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moaicore\MOAIProp2D.h"
-				>
-			</File>
 		</Filter>
 		<Filter
 			Name="deck"
@@ -1427,6 +1403,14 @@
 		<Filter
 			Name="camera"
 			>
+			<File
+				RelativePath="..\..\src\moaicore\MOAICamera.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAICamera.h"
+				>
+			</File>
 			<File
 				RelativePath="..\..\src\moaicore\MOAICameraAnchor2D.cpp"
 				>
@@ -1649,6 +1633,158 @@
 			</File>
 			<File
 				RelativePath="..\..\src\moaicore\MOAIPathTerrainDeck.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="lua-headers"
+			>
+			<File
+				RelativePath="..\..\src\lua-headers\moai2D_lua.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="font"
+			>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIBitmapFontReader.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIBitmapFontReader.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIFont.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIFont.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIFontReader.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIFontReader.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIFreeTypeFontReader.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIFreeTypeFontReader.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIGlyph.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIGlyph.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIGlyphCache.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIGlyphCache.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIGlyphCacheBase.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIGlyphCacheBase.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIGlyphCachePage.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIGlyphCachePage.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIGlyphSet.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIGlyphSet.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAISpanList.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIStaticGlyphCache.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIStaticGlyphCache.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="texture"
+			>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIFrameBuffer.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIFrameBuffer.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIImageTexture.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIImageTexture.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIMultiTexture.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAIMultiTexture.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAITexture.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAITexture.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAITextureBase.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAITextureBase.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="collision"
+			>
+			<File
+				RelativePath="..\..\src\moaicore\MOAICollisionShape.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moaicore\MOAICollisionShape.h"
 				>
 			</File>
 		</Filter>

@@ -34,18 +34,20 @@ public:
 	
 	DECL_LUA_FACTORY ( MOAIViewport )
 	
+	friend class MOAICamera;
+	
 	//----------------------------------------------------------------//
 	float			GetAspect				() const;
 	float			GetInvAspect			() const;
-	void			GetNormToWndMtx			( USAffine2D& normToWnd ) const;
-	USAffine2D		GetProjMtx				() const;
-	USAffine2D		GetProjMtxInv			() const;
+	void			GetNormToWndMtx			( USMatrix4x4& normToWnd ) const;
+	USMatrix4x4		GetProjMtx				() const;
+	USMatrix4x4		GetProjMtxInv			() const;
 	USRect			GetRect					() const;
 	USVec2D			GetScale				() const;
 	USVec2D			GetUnits				() const;
-	void			GetWndToNormMtx			( USAffine2D& wndToNorm ) const;
-	USAffine2D		GetWndToWorldMtx		( const USAffine2D& view ) const;
-	USAffine2D		GetWorldToWndMtx		( const USAffine2D& view ) const;
+	void			GetWndToNormMtx			( USMatrix4x4& wndToNorm ) const;
+	USMatrix4x4		GetWndToWorldMtx		( const USMatrix4x4& view ) const;
+	USMatrix4x4		GetWorldToWndMtx		( const USMatrix4x4& view ) const;
 					MOAIViewport			();
 					~MOAIViewport			();
 	void			RegisterLuaClass		( MOAILuaState& state );

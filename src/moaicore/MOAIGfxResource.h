@@ -7,10 +7,32 @@
 #include <moaicore/MOAILua.h>
 
 //================================================================//
+// MOAIGfxState
+//================================================================//
+/**	@name	MOAIGfxState
+	@text	Abstract base class for objects that represent changes
+			to graphics state.
+*/
+class MOAIGfxState :
+	public virtual MOAILuaObject {
+public:
+
+	//----------------------------------------------------------------//
+	virtual bool		LoadGfxState			() { return false; }
+						MOAIGfxState			();
+	virtual				~MOAIGfxState			();
+};
+
+//================================================================//
 // MOAIGfxResource
 //================================================================//
+/**	@name	MOAIGfxResource
+	@text	Base class for graphics resources owned by OpenGL. Implements
+			resource lifecycle including restoration from a lost graphics
+			context (if possible).
+*/
 class MOAIGfxResource :
-	public virtual MOAILuaObject {
+	public MOAIGfxState {
 private:
 
 	enum {
@@ -23,7 +45,7 @@ private:
 	u32				mState;
 	u32				mLastRenderCount;
 	
-	MOAILuaLocal		mOnRenew;
+	MOAILuaLocal	mOnRenew;
 
 	USLeanLink < MOAIGfxResource* > mLink;
 
@@ -38,6 +60,7 @@ protected:
 
 	//----------------------------------------------------------------//
 	bool			Affirm						();
+	bool			Bind						();
 	bool			HasLoadScript				();
 	virtual bool	IsRenewable					() = 0;
 	virtual void	OnBind						() = 0;
@@ -52,7 +75,6 @@ public:
 	friend class MOAIGfxDevice;
 
 	//----------------------------------------------------------------//
-	bool			Bind						();
 	void			Clear						();
 	virtual bool	IsValid						() = 0;
 					MOAIGfxResource				();

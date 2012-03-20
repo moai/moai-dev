@@ -365,6 +365,26 @@ public:
 
 	//----------------------------------------------------------------//
 	template < typename PARAM_TYPE >
+	void Transform ( USMetaVec3D < PARAM_TYPE >& point ) const {
+		
+		TYPE x =	( m[C0_R0 ] * ( TYPE )point.mX ) +
+					( m[C1_R0 ] * ( TYPE )point.mY ) +
+					( m[C2_R0 ] * ( TYPE )point.mZ );
+		
+		TYPE y =	( m[C0_R1 ] * ( TYPE )point.mX ) +
+					( m[C1_R1 ] * ( TYPE )point.mY ) +
+					( m[C2_R1 ] * ( TYPE )point.mZ );
+		
+		point.mZ =	( m[C0_R2 ] * ( TYPE )point.mX ) +
+					( m[C1_R2 ] * ( TYPE )point.mY ) +
+					( m[C2_R2 ] * ( TYPE )point.mZ );
+		
+		point.mX = ( PARAM_TYPE )x;
+		point.mY = ( PARAM_TYPE )y;
+	}
+
+	//----------------------------------------------------------------//
+	template < typename PARAM_TYPE >
 	void Transform ( USMetaRect < PARAM_TYPE >& rect ) const {
 
 		USMetaVec2D < TYPE > point;

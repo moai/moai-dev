@@ -19,8 +19,9 @@ function initFrameBuffer ()
 	viewport:setSize ( 128, 128 )
 	viewport:setScale ( 128, 128 )
 
-	local frameBuffer = MOAITexture.new ()
-	frameBuffer:initFrameBuffer ( 128, 128 )
+	local frameBuffer = MOAIFrameBuffer.new ()
+	frameBuffer:init ( 128, 128 )
+	frameBuffer:setClearColor ( 1, 0, 0, 1 )
 
 	local layer = MOAILayer2D.new ()
 	layer:setViewport ( viewport )
@@ -56,4 +57,4 @@ prop = MOAIProp2D.new ()
 prop:setDeck ( gfxQuad )
 layer:insertProp ( prop )
 
-prop:moveRot ( -360, 1.5 )
+--prop:moveRot ( -360, 1.5 )

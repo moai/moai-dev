@@ -20,7 +20,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIDeck2D::Draw ( const USAffine2D& transform, u32 idx, MOAIDeckRemapper* remapper ) {
+void MOAIDeck2D::Draw ( const USAffine3D& transform, u32 idx, MOAIDeckRemapper* remapper ) {
 	
 	idx = remapper ? remapper->Remap ( idx ) : idx;
 	if ( !idx || ( idx & MOAITileFlags::HIDDEN )) return;
@@ -38,7 +38,7 @@ void MOAIDeck2D::Draw ( const USAffine2D& transform, u32 idx, MOAIDeckRemapper* 
 }
 
 //----------------------------------------------------------------//
-void MOAIDeck2D::Draw ( const USAffine2D& transform, bool reload, MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, int cellAddr ) {
+void MOAIDeck2D::Draw ( const USAffine3D& transform, bool reload, MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, int cellAddr ) {
 
 	if ( reload ) {
 		MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
@@ -67,7 +67,7 @@ void MOAIDeck2D::Draw ( const USAffine2D& transform, bool reload, MOAIGrid& grid
 }
 
 //----------------------------------------------------------------//
-void MOAIDeck2D::Draw ( const USAffine2D& transform, MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1 ) {
+void MOAIDeck2D::Draw ( const USAffine3D& transform, MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1 ) {
 	
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	
@@ -100,14 +100,14 @@ void MOAIDeck2D::Draw ( const USAffine2D& transform, MOAIGrid& grid, MOAIDeckRem
 }
 
 //----------------------------------------------------------------//
-void MOAIDeck2D::DrawDebug ( const USAffine2D& transform, u32 idx, MOAIDeckRemapper* remapper ) {
+void MOAIDeck2D::DrawDebug ( const USAffine3D& transform, u32 idx, MOAIDeckRemapper* remapper ) {
 	UNUSED ( transform );
 	UNUSED ( idx );
 	UNUSED ( remapper );
 }
 
 //----------------------------------------------------------------//
-void MOAIDeck2D::DrawDebug ( const USAffine2D& transform, MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1 ) {
+void MOAIDeck2D::DrawDebug ( const USAffine3D& transform, MOAIGrid& grid, MOAIDeckRemapper* remapper, USVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1 ) {
 	UNUSED ( transform );
 	UNUSED ( grid );
 	UNUSED ( remapper );
@@ -140,6 +140,29 @@ void MOAIDeck2D::GatherSurfaces ( MOAIGrid& grid, MOAIDeckRemapper* remapper, US
 	UNUSED ( c0 );
 	UNUSED ( c1 );
 	UNUSED ( sampler );
+}
+
+USBox MOAIDeck2D::GetBounds () {
+
+	USRect rect = this->GetRect ();
+	USBox bounds;
+	
+	bounds.mMin.Init ( rect.mXMin, rect.mYMin, 0.0f );
+	bounds.mMax.Init ( rect.mXMax, rect.mYMax, 0.0f );
+	
+	return bounds;
+}
+
+//----------------------------------------------------------------//
+USBox MOAIDeck2D::GetBounds ( u32 idx, MOAIDeckRemapper* remapper ) {
+
+	USRect rect = this->GetRect ( idx, remapper );
+	USBox bounds;
+	
+	bounds.mMin.Init ( rect.mXMin, rect.mYMin, 0.0f );
+	bounds.mMax.Init ( rect.mXMax, rect.mYMax, 0.0f );
+	
+	return bounds;
 }
 
 //----------------------------------------------------------------//

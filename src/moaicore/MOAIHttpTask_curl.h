@@ -1,0 +1,77 @@
+// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// http://getmoai.com
+
+#ifndef MOAIHTTPTASK_CURL_H
+#define MOAIHTTPTASK_CURL_H
+
+#ifdef USE_CURL
+
+#include <moaicore/MOAIHttpTaskBase.h>
+
+#define  CURL_STATICLIB
+#define  CURL_DISABLE_LDAP
+
+extern "C" {
+	#include <curl/curl.h>
+}
+
+//================================================================//
+// MOAIHttpTask
+//================================================================//
+class MOAIHttpTask :
+	public MOAIHttpTaskBase {
+private:
+	
+	friend class MOAIHttpTask;
+	friend class MOAIUrlMgr;
+
+	STLString			mUrl;
+	CURL*				mEasyHandle;
+	curl_slist*			mHeaderList;
+
+	// This buffer holds data being sent *to* the server
+	USLeanArray < u8 >	mBody;
+	
+	// The streams below are used to hold data coming *back* from the request
+	
+	// The USMemStream is used when the size is not know (USMemStream grows dynamically)
+	USMemStream			mMemStream;
+	
+	// The USByteStream and data buffer is used when the size of the data is known in advance
+	USByteStream		mByteStream;
+	
+	// This points to the stream being used
+	USStream*			mStream;
+
+	//----------------------------------------------------------------//
+	static void		_printError				( CURLcode error );
+	static u32		_writeData				( char* data, u32 n, u32 l, void* s );
+	static u32		_writeHeader			( char* data, u32 n, u32 l, void* s );
+
+	//----------------------------------------------------------------//
+	void			AffirmHandle			();
+	void			Clear					();
+	void			CurlFinish				();
+	void			Prepare					();
+
+public:
+
+	DECL_LUA_FACTORY ( MOAIHttpTask )
+
+	//----------------------------------------------------------------//
+					MOAIHttpTask			();
+					~MOAIHttpTask			();
+	void			PerformAsync			();
+	void			PerformSync				();
+	void			RegisterLuaClass		( MOAILuaState& state );
+	void			RegisterLuaFuncs		( MOAILuaState& state );
+	void			Reset					();
+	void			SetBody					( const void* buffer, u32 size );
+	void			SetUrl					( cc8* url );
+	void			SetUserAgent			( cc8* useragent );
+	void			SetVerb					( u32 verb );
+	void			SetVerbose				( bool verbose );
+};
+
+#endif
+#endif

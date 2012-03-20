@@ -32,6 +32,8 @@ class GetURLHandler {
 		 GET,
 		 HEAD,
 		 POST,
+		 PUT,
+		 DELETE
 	 };
 
 	static GetURLHandler* Create ( pp::Instance* instance_, const std::string& url );
@@ -45,6 +47,7 @@ class GetURLHandler {
 	void *GetUserData () { return mUserData; }
 
 	void SetBody ( const void *data, int size );
+	void SetHeaders ( const char *string );
 
  private:
 	static const int kBufferSize = 4096;

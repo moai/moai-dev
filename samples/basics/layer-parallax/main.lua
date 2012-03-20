@@ -10,7 +10,7 @@ viewport = MOAIViewport.new ()
 viewport:setSize ( 480, 320 )
 viewport:setScale ( 480, 320 )
 
-camera = MOAITransform.new ()
+camera = MOAICamera2D.new ()
 camera:moveLoc ( 240, 0, 4 )
 
 layer1 = MOAILayer2D.new ()
@@ -36,4 +36,3 @@ layer1:insertProp ( prop )
 prop = MOAIProp2D.new ()
 prop:setDeck ( gfxQuad )
 layer2:insertProp ( prop )
-

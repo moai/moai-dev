@@ -146,9 +146,7 @@ MOAIInputMgr::MOAIInputMgr () {
 MOAIInputMgr::~MOAIInputMgr () {
 
 	for ( u32 i = 0; i < this->mDevices.Size (); ++i ) {
-		if ( this->mDevices [ i ]) {
-			this->LuaRelease ( *this->mDevices [ i ]);
-		}
+		this->LuaRelease ( this->mDevices [ i ]);
 	}
 }
 
@@ -202,12 +200,10 @@ void MOAIInputMgr::SetDevice ( u8 deviceID, cc8* name ) {
 	MOAIInputDevice* device = new MOAIInputDevice ();
 	device->SetName ( name );
 	
-	if ( this->mDevices [ deviceID ]) {
-		this->LuaRelease ( *this->mDevices [ deviceID ]);
-	}
+	this->LuaRelease ( this->mDevices [ deviceID ]);
 	
 	this->mDevices [ deviceID ] = device;
-	this->LuaRetain ( *device );
+	this->LuaRetain ( device );
 	
 	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 	this->PushLuaClassTable ( state );

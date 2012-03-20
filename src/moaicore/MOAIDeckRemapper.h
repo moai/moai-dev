@@ -8,7 +8,7 @@
 #include <moaicore/MOAINode.h>
 
 class MOAIDeck;
-class MOAILayer2D;
+class MOAILayer;
 
 //================================================================//
 // MOAIDeckRemapper

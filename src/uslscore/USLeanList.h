@@ -95,7 +95,7 @@ public:
 
 	//----------------------------------------------------------------//
 	void Clear () {
-	
+		
 		Iterator iterator = this->Head ();
 		while ( iterator ) {
 			Iterator clear = iterator;
@@ -143,6 +143,65 @@ public:
 	inline TYPE& Front () {
 		assert ( this->mHead );
 		return this->mHead->Data ();
+	}
+
+	//----------------------------------------------------------------//
+	void Join ( USLeanList < TYPE >& a, USLeanList < TYPE >& b ) {
+		
+		USLeanLink < TYPE >* headA = a.mHead;
+		USLeanLink < TYPE >* tailA = a.mTail;
+		
+		USLeanLink < TYPE >* headB = b.mHead;
+		USLeanLink < TYPE >* tailB = b.mTail;
+		
+		u32 count = 0;
+		
+		if ( headA == headB ) {
+			count = a.mCount;
+			headB = 0;
+			tailB = 0;
+		}
+		else {
+			count = a.mCount + b.mCount;
+		}
+		
+		a.mHead = 0;
+		a.mTail = 0;
+		a.mCount = 0;
+		
+		b.mHead = 0;
+		b.mTail = 0;
+		b.mCount = 0;
+		
+		// set 'this' last in case it is same as 'a' or 'b'
+		this->mHead = 0;
+		this->mTail = 0;
+		this->mCount = count;
+		
+		if ( count ) {
+
+			if ( headA && headB ) {
+				
+				tailA->mNext = headB;
+				headB->mPrev = tailA;
+				
+				this->mHead = headA;
+				this->mTail = tailB;
+			}
+			else if ( headA ) {
+				this->mHead = headA;
+				this->mTail = tailA;
+			}
+			else {
+				this->mHead = headB;
+				this->mTail = tailB;
+			}
+			
+			USLeanLink < TYPE >* cursor = this->mHead;
+			for ( ; cursor; cursor = cursor->mNext ) {
+				cursor->mList = this;
+			}
+		}
 	}
 
 	//----------------------------------------------------------------//

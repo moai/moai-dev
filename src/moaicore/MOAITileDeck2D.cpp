@@ -8,7 +8,7 @@
 #include <moaicore/MOAIProp.h>
 #include <moaicore/MOAIQuadBrush.h>
 #include <moaicore/MOAITileDeck2D.h>
-#include <moaicore/MOAITexture.h>
+#include <moaicore/MOAITextureBase.h>
 #include <moaicore/MOAITransformBase.h>
 
 //================================================================//
@@ -88,42 +88,15 @@ int	MOAITileDeck2D::_setSize ( lua_State* L ) {
 	return 0;
 }
 
-//----------------------------------------------------------------//
-/**	@name	setTexture
-	@text	Set or load a texture for this deck.
-	
-	@in		MOAITileDeck2D self
-	@in		variant texture		A MOAITexture, a MOAIDataBuffer or a path to a texture file
-	@opt	number transform	Any bitwise combination of MOAITexture.QUANTIZE, MOAITexture.TRUECOLOR, MOAITexture.PREMULTIPLY_ALPHA
-	@out	MOAITexture texture
-*/
-int	MOAITileDeck2D::_setTexture ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITileDeck2D, "U" )
-	
-	self->mTexture.Set ( *self, MOAITexture::AffirmTexture ( state, 2 ));
-	if ( self->mTexture ) {
-		self->mTexture->PushLuaUserdata ( state );
-		return 1;
-	}
-	return 0;
-}
-
 //================================================================//
 // MOAITileDeck2D
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAITileDeck2D::Bind () {
-
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-	if ( !gfxDevice.SetTexture ( this->mTexture )) return false;
-	MOAIQuadBrush::BindVertexFormat ( gfxDevice );
-
-	return true;
-}
-
-//----------------------------------------------------------------//
 void MOAITileDeck2D::DrawPatch ( u32 idx, float xOff, float yOff, float xScale, float yScale ) {
+	
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	MOAIQuadBrush::BindVertexFormat ( gfxDevice );
 	
 	idx = idx - 1;
 	
@@ -138,7 +111,12 @@ void MOAITileDeck2D::DrawPatch ( u32 idx, float xOff, float yOff, float xScale, 
 }
 
 //----------------------------------------------------------------//
-USRect MOAITileDeck2D::GetBounds ( u32 idx, MOAIDeckRemapper* remapper ) {
+USRect MOAITileDeck2D::GetRect () {
+	return this->mRect;
+}
+
+//----------------------------------------------------------------//
+USRect MOAITileDeck2D::GetRect ( u32 idx, MOAIDeckRemapper* remapper ) {
 	UNUSED ( idx );
 	UNUSED ( remapper );
 
@@ -148,9 +126,11 @@ USRect MOAITileDeck2D::GetBounds ( u32 idx, MOAIDeckRemapper* remapper ) {
 //----------------------------------------------------------------//
 MOAITileDeck2D::MOAITileDeck2D () {
 	
-	RTTI_SINGLE ( MOAIDeck2D )
-	this->SetContentMask ( MOAIProp::CAN_DRAW );
+	RTTI_BEGIN
+		RTTI_EXTEND ( MOAIDeck2D )
+	RTTI_END
 	
+	this->SetContentMask ( MOAIProp::CAN_DRAW );
 	this->mRect.Init ( -0.5f, -0.5f, 0.5f, 0.5f );
 }
 
@@ -163,18 +143,17 @@ MOAITileDeck2D::~MOAITileDeck2D () {
 //----------------------------------------------------------------//
 void MOAITileDeck2D::RegisterLuaClass ( MOAILuaState& state ) {
 
-	this->MOAIDeck2D::RegisterLuaClass ( state );
+	MOAIDeck2D::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAITileDeck2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 
-	this->MOAIDeck2D::RegisterLuaFuncs ( state );
+	MOAIDeck2D::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
 		{ "setRect",			_setRect },
 		{ "setSize",			_setSize },
-		{ "setTexture",			_setTexture },
 		{ NULL, NULL }
 	};
 
@@ -186,7 +165,7 @@ void MOAITileDeck2D::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serial
 
 	MOAIGridSpace::SerializeIn ( state, serializer );
 	
-	this->mTexture.Set ( *this, serializer.MemberIDToObject < MOAITexture >( state.GetField < uintptr >( -1, "mTexture", 0 )));
+	this->mTexture.Set ( *this, serializer.MemberIDToObject < MOAITextureBase >( state.GetField < uintptr >( -1, "mTexture", 0 )));
 }
 
 //----------------------------------------------------------------//

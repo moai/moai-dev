@@ -9,5 +9,5 @@
 //----------------------------------------------------------------//
 int main ( int argc, char** argv ) {
 
-	return work_pathfinding ( argc, argv );
+	return work_zipfs ( argc, argv );
 }

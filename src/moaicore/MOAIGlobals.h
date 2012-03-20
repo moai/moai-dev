@@ -80,12 +80,12 @@ private:
 	};
 
 	USLeanArray < MOAIGlobalPair >	mGlobals;
-	MOAIGlobalClassFinalizer*			mFinalizers;
+	MOAIGlobalClassFinalizer*		mFinalizers;
 
 	//----------------------------------------------------------------//
-	void		Restore			();
-	void		Retire			();
-				MOAIGlobals		();
+	void		Restore				();
+	void		Retire				();
+				MOAIGlobals			();
 				~MOAIGlobals		();
 
 public:

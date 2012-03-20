@@ -6,6 +6,9 @@
 
 #include <moaicore/MOAILua.h>
 
+class MOAIGlyphCachePage;
+class MOAITextureBase;
+
 //================================================================//
 // MOAIKernVec
 //================================================================//
@@ -21,36 +24,45 @@ public:
 //================================================================//
 class MOAIGlyph {
 private:
-
-	u32			mCode;
-	USRect		mUVRect;
-
-	float		mWidth;
-	float		mHeight;
-	float		mYOff;
 	
+	static const u32 MAX_KERN_TABLE_SIZE	= 256;
+	static const u32 NULL_PAGE_ID			= 0xffffffff;
+	
+	u32			mCode;
+	u32			mPageID; // ID of texture page in glyph cache
+	
+	float		mWidth; // width in pixels
+	float		mHeight; // height in pixels
 	float		mAdvanceX;
 	float		mBearingX;
-
+	float		mBearingY;
+	
+	u32			mSrcX; // corresponds to glyph location on page
+	u32			mSrcY; // corresponds to glyph location on page
+	
 	USLeanArray < MOAIKernVec > mKernTable;
+	
+	MOAIGlyph*	mNext; // for use in glyph processing list
 	
 public:
 
+	// TODO: this is a lot of friends; good idea to clean this up
+	friend class MOAIBitmapFontReader;
 	friend class MOAIFont;
-	friend class MOAITextFrame;
-	friend class MOAITextLayout;
+	friend class MOAIFreeTypeFontReader;
+	friend class MOAIGlyphSet;
+	friend class MOAIGlyphCacheBase;
+	friend class MOAIGlyphCachePage;
+	friend class MOAITextBox;
+	friend class MOAITextDesigner;
+	friend class MOAITextStyler;
 
-	SET ( const USRect&, UVRect, mUVRect )
-	
-	SET ( float, AdvanceX, mAdvanceX )
-	SET ( float, BearingX, mBearingX )
-	
-	GET_SET ( u32, Code, mCode )
+	GET_SET ( u32, PageID, mPageID );
 
 	//----------------------------------------------------------------//
-	void			Draw				( float points, float x, float y ) const;
+	void			Draw				( MOAITextureBase& texture, float x, float y ) const;
 	MOAIKernVec		GetKerning			( u32 name ) const;
-	USRect			GetRect				( float points, float x, float y ) const;
+	USRect			GetRect				( float x, float y ) const;
 					MOAIGlyph			();
 					~MOAIGlyph			();
 	void			ReserveKernTable	( u32 total );
@@ -58,6 +70,7 @@ public:
 	void			SerializeOut		( MOAILuaState& state );
 	void			SetKernVec			( u32 id, const MOAIKernVec& kernVec );
 	void			SetScreenRect		( float width, float height, float yOff );
+	void			SetSourceLoc		( u32 srcX, u32 srcY );
 };
 
 #endif

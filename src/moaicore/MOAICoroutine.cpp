@@ -117,7 +117,8 @@ bool MOAICoroutine::IsDone () {
 //----------------------------------------------------------------//
 MOAICoroutine::MOAICoroutine () :
 	mState ( 0 ),
-	mNarg ( 0 ) {
+	mNarg ( 0 ),
+	mIsFirstRun ( true ) {
 
 	RTTI_SINGLE ( MOAIAction )
 }
@@ -132,8 +133,18 @@ void MOAICoroutine::OnUpdate ( float step ) {
 	
 	if ( this->mState ) {
 		
-		int result = lua_resume ( this->mState, this->mNarg );
-		this->mNarg = 0;
+		int result;
+		
+		if ( this->mIsFirstRun ) {
+			result = lua_resume ( this->mState, this->mNarg );
+			this->mNarg = 0;
+			this->mIsFirstRun = false;
+		}
+		else {	
+			// Pass the step value as the return result from coroutine.yield ()
+			lua_pushnumber ( this->mState, step );
+			result = lua_resume ( this->mState, 1 );	
+		}
 		
 		if ( this->IsActive ()) {
 			if (( result != LUA_YIELD )) {

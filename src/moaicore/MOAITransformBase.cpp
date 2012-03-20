@@ -18,16 +18,18 @@
 	@in		MOAITransformBase self
 	@out	number xDirection
 	@out	number yDirection
+	@out	number zDirection
 */
 int MOAITransformBase::_getWorldDir ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITransformBase, "U" )
 
-	USVec2D direction = self->mLocalToWorldMtx.GetHeading ();
+	USVec3D direction = self->mLocalToWorldMtx.GetHeading ();
 
 	lua_pushnumber ( state, direction.mX );
 	lua_pushnumber ( state, direction.mY );
+	lua_pushnumber ( state, direction.mZ );
 
-	return 2;
+	return 3;
 }
 
 //----------------------------------------------------------------//
@@ -37,16 +39,18 @@ int MOAITransformBase::_getWorldDir ( lua_State* L ) {
 	@in		MOAITransformBase self
 	@out	number xLoc
 	@out	number yLoc
+	@out	number zLoc
 */
 int MOAITransformBase::_getWorldLoc ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITransformBase, "U" )
 
-	USVec2D loc = self->mLocalToWorldMtx.GetTranslation ();
+	USVec3D loc = self->mLocalToWorldMtx.GetTranslation ();
 
 	lua_pushnumber ( state, loc.mX );
 	lua_pushnumber ( state, loc.mY );
+	lua_pushnumber ( state, loc.mZ );
 
-	return 2;
+	return 3;
 }
 
 //----------------------------------------------------------------//
@@ -73,16 +77,18 @@ int MOAITransformBase::_getWorldRot ( lua_State* L ) {
 	@in		MOAITransformBase self
 	@out	number xScale
 	@out	number yScale
+	@out	number zScale
 */
 int MOAITransformBase::_getWorldScl ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITransformBase, "U" )
 
-	USVec2D scale = self->mLocalToWorldMtx.GetStretch ();
+	USVec3D scale = self->mLocalToWorldMtx.GetStretch ();
 	
 	lua_pushnumber ( state, scale.mX );
 	lua_pushnumber ( state, scale.mY );
+	lua_pushnumber ( state, scale.mZ );
 
-	return 2;
+	return 3;
 }
 
 //================================================================//
@@ -98,40 +104,57 @@ bool MOAITransformBase::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 		switch ( UNPACK_ATTR ( attrID )) {
 			
 			case ATTR_WORLD_X_LOC:
-				attrOp.Apply ( this->mLocalToWorldMtx.m [ USAffine2D::C2_R0 ], op, MOAINode::ATTR_READ );
+				attrOp.Apply ( this->mLocalToWorldMtx.m [ USAffine3D::C2_R0 ], op, MOAINode::ATTR_READ );
 				return true;
 			
 			case ATTR_WORLD_Y_LOC:
-				attrOp.Apply ( this->mLocalToWorldMtx.m [ USAffine2D::C2_R1 ], op, MOAINode::ATTR_READ );
+				attrOp.Apply ( this->mLocalToWorldMtx.m [ USAffine3D::C2_R1 ], op, MOAINode::ATTR_READ );
 				return true;
-				
+			
+			case ATTR_WORLD_Z_LOC:
+				attrOp.Apply ( this->mLocalToWorldMtx.m [ USAffine3D::C2_R2 ], op, MOAINode::ATTR_READ );
+				return true;
+			
 			case ATTR_WORLD_Z_ROT: {
-				float rot = ( float )( atan2 ( this->mLocalToWorldMtx.m [ USAffine2D::C0_R0 ], this->mLocalToWorldMtx.m [ USAffine2D::C0_R1 ]) * R2D );
+				float rot = ( float )( atan2 ( this->mLocalToWorldMtx.m [ USAffine3D::C0_R0 ], this->mLocalToWorldMtx.m [ USAffine3D::C0_R1 ]) * R2D );
 				attrOp.Apply ( rot, op, MOAINode::ATTR_READ );
 				return true;
 			}
 			case ATTR_WORLD_X_SCL: {
 				
-				USVec2D axis;
+				USVec3D axis;
 			
-				axis.mX =	this->mLocalToWorldMtx.m [ USAffine2D::C0_R0 ];
-				axis.mY =	this->mLocalToWorldMtx.m [ USAffine2D::C0_R1 ];
+				axis.mX =	this->mLocalToWorldMtx.m [ USAffine3D::C0_R0 ];
+				axis.mY =	this->mLocalToWorldMtx.m [ USAffine3D::C0_R1 ];
+				axis.mZ =	this->mLocalToWorldMtx.m [ USAffine3D::C0_R2 ];
 			
 				attrOp.Apply ( axis.Length (), op, MOAINode::ATTR_READ );
 				return true;
 			}
 			case ATTR_WORLD_Y_SCL: {
 				
-				USVec2D axis;
+				USVec3D axis;
 			
-				axis.mX =	this->mLocalToWorldMtx.m [ USAffine2D::C1_R0 ];
-				axis.mY =	this->mLocalToWorldMtx.m [ USAffine2D::C1_R1 ];
+				axis.mX =	this->mLocalToWorldMtx.m [ USAffine3D::C1_R0 ];
+				axis.mY =	this->mLocalToWorldMtx.m [ USAffine3D::C1_R1 ];
+				axis.mZ =	this->mLocalToWorldMtx.m [ USAffine3D::C1_R2 ];
+				
+				attrOp.Apply ( axis.Length (), op, MOAINode::ATTR_READ );
+				return true;
+			}
+			case ATTR_WORLD_Z_SCL: {
+				
+				USVec3D axis;
+			
+				axis.mX =	this->mLocalToWorldMtx.m [ USAffine3D::C2_R0 ];
+				axis.mY =	this->mLocalToWorldMtx.m [ USAffine3D::C2_R1 ];
+				axis.mZ =	this->mLocalToWorldMtx.m [ USAffine3D::C2_R2 ];
 				
 				attrOp.Apply ( axis.Length (), op, MOAINode::ATTR_READ );
 				return true;
 			}
 			case TRANSFORM_TRAIT:
-				attrOp.Apply < USAffine2D >( &this->mLocalToWorldMtx, op, MOAINode::ATTR_READ );
+				attrOp.Apply < USAffine3D >( &this->mLocalToWorldMtx, op, MOAINode::ATTR_READ );
 				return true;
 		}
 	}
@@ -139,25 +162,25 @@ bool MOAITransformBase::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 }
 
 //----------------------------------------------------------------//
-const USAffine2D& MOAITransformBase::GetLocalToWorldMtx () {
+const USAffine3D& MOAITransformBase::GetLocalToWorldMtx () {
 
 	return this->mLocalToWorldMtx;
 }
 
 //----------------------------------------------------------------//
-const USAffine2D* MOAITransformBase::GetLocTrait () {
+const USAffine3D* MOAITransformBase::GetLocTrait () {
 
 	return &this->mLocalToWorldMtx;
 }
 
 //----------------------------------------------------------------//
-const USAffine2D* MOAITransformBase::GetTransformTrait () {
+const USAffine3D* MOAITransformBase::GetTransformTrait () {
 
 	return &this->mLocalToWorldMtx;
 }
 
 //----------------------------------------------------------------//
-const USAffine2D& MOAITransformBase::GetWorldToLocalMtx () {
+const USAffine3D& MOAITransformBase::GetWorldToLocalMtx () {
 
 	return this->mWorldToLocalMtx;
 }
@@ -182,9 +205,11 @@ void MOAITransformBase::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	state.SetField ( -1, "ATTR_WORLD_X_LOC",	MOAITransformBaseAttr::Pack ( ATTR_WORLD_X_LOC ));
 	state.SetField ( -1, "ATTR_WORLD_Y_LOC",	MOAITransformBaseAttr::Pack ( ATTR_WORLD_Y_LOC ));
+	state.SetField ( -1, "ATTR_WORLD_Z_LOC",	MOAITransformBaseAttr::Pack ( ATTR_WORLD_Z_LOC ));
 	state.SetField ( -1, "ATTR_WORLD_Z_ROT",	MOAITransformBaseAttr::Pack ( ATTR_WORLD_Z_ROT ));
 	state.SetField ( -1, "ATTR_WORLD_X_SCL",	MOAITransformBaseAttr::Pack ( ATTR_WORLD_X_SCL ));
 	state.SetField ( -1, "ATTR_WORLD_Y_SCL",	MOAITransformBaseAttr::Pack ( ATTR_WORLD_Y_SCL ));
+	state.SetField ( -1, "ATTR_WORLD_Z_SCL",	MOAITransformBaseAttr::Pack ( ATTR_WORLD_Z_SCL ));
 	state.SetField ( -1, "TRANSFORM_TRAIT",		MOAITransformBaseAttr::Pack ( TRANSFORM_TRAIT ));
 }
 
