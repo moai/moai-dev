@@ -35,6 +35,8 @@ protected:
 	typedef STLMap < float, MOAIGlyphSet >::iterator GlyphSetsIt;
 	STLMap < float, MOAIGlyphSet > mGlyphSets;
 
+	float mDefaultSize;
+
 	//----------------------------------------------------------------//
 	static int			_getFlags				( lua_State* L );
 	static int			_getImage				( lua_State* L );
@@ -42,6 +44,7 @@ protected:
 	static int			_preloadGlyphs			( lua_State* L );
 	static int			_rebuildKerningTables	( lua_State* L );
 	static int			_setCache				( lua_State* L );
+	static int			_setDefaultSize			( lua_State* L );
 	static int			_setFlags				( lua_State* L );
 	static int			_setImage				( lua_State* L );
 	static int			_setReader				( lua_State* L );
@@ -64,8 +67,8 @@ public:
 	static const u32 DEFAULT_FLAGS = FONT_AUTOLOAD_KERNING;
 	
 	//----------------------------------------------------------------//
-	void				AffirmGlyph				( float points, u32 c );
-	MOAIGlyphSet*		GetGlyphDeck			( float points );
+	void				AffirmGlyph				( float size, u32 c );
+	MOAIGlyphSet*		GetGlyphDeck			( float size );
 	MOAITextureBase*	GetGlyphTexture			( MOAIGlyph& glyph );
 	void				Init					( cc8* filename );
 	static bool			IsControl				( u32 c );
@@ -74,7 +77,7 @@ public:
 						~MOAIFont				();
 	void				ProcessGlyphs			();
 	void				RebuildKerning			();
-	void				RebuildKerning			( float points );
+	void				RebuildKerning			( float size );
 	void				RegisterLuaClass		( MOAILuaState& state );
 	void				RegisterLuaFuncs		( MOAILuaState& state );
 	void				ResizePageList			( u32 size );
