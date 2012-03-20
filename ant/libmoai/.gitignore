@@ -4,3 +4,4 @@ libs/
 jni/src/packaged-moai.cpp
 jni/ArmModeDefined.mk
 jni/AppPlatformDefined.mk
+jni/OptionalComponentsDefined.mk

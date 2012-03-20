@@ -2,80 +2,94 @@
 // http://getmoai.com
 
 #include "pch.h"
+
+#include <jni.h>
+
+#include <moaiext-android/moaiext-jni.h>
 #include <moaiext-android/MOAIApp.h>
-#include <android/log.h>
 
-//================================================================//
-// Utility macros
-//================================================================//
-
-	#define PRINT(str) \
-		__android_log_write ( ANDROID_LOG_INFO, "MoaiLog", str );
+extern JavaVM* jvm;
 
 //================================================================//
 // lua
 //================================================================//
 
 //----------------------------------------------------------------//
-int MOAIApp::_checkBillingSupported ( lua_State* L ) {
-	MOAILuaState state ( L );
-	
-	bool result = MOAIApp::Get ().checkBillingSupportedFunc ();
-	lua_pushboolean ( state, result );
-	
-	return 1;
-}
+const cc8* _getGuid () {
 
-//----------------------------------------------------------------//
-int MOAIApp::_confirmNotification ( lua_State* L ) {
-	MOAILuaState state ( L );
-	
-	cc8* notification = state.GetValue < cc8* >( 1, "" );
-	bool result = MOAIApp::Get ().confirmNotificationFunc ( notification );
-	lua_pushboolean ( state, result );
-	
-	return 1;
+	JNI_GET_ENV ( jvm, env );
+
+	jclass moai = env->FindClass ( "com/ziplinegames/moai/Moai" );
+    if ( moai == NULL ) {
+
+		USLog::Print ( "MOAIApp: Unable to find java class %s", "com/ziplinegames/moai/Moai" );
+    } else {
+
+    	jmethodID getGUID = env->GetStaticMethodID ( moai, "getGUID", "()Ljava/lang/String;" );
+    	if ( getGUID == NULL ) {
+
+			USLog::Print ( "MOAIApp: Unable to find static java method %s", "getGUID" );
+    	} else {
+
+			jstring jguid = ( jstring )env->CallStaticObjectMethod ( moai, getGUID );	
+			
+			JNI_GET_CSTRING ( jguid, guid );
+
+			// NOTE: This is a hack for two reasons: (1) we're assuming that a guid is less
+			// than 512 characters (pretty safe) and (2) we know that upon return, this string
+			// will be immediately copied, such that when this function returns, the system 
+			// can safely reclaim the stack space we're utilizing.
+			char hack [ 512 ];
+			strcpy ( hack, guid );
+
+			JNI_RELEASE_CSTRING ( jguid, guid );
+			
+			return hack;
+		}
+	}
+
+	return NULL;
 }
 
 //----------------------------------------------------------------//
 int MOAIApp::_openURL ( lua_State* L ) {
+	
 	MOAILuaState state ( L );
 	
-	cc8* url = state.GetValue < cc8* >( 1, "" );
-	MOAIApp::Get ().openURLFunc ( url );
+	cc8* url = lua_tostring ( state, 1 );
+	
+	JNI_GET_ENV ( jvm, env );
+
+	JNI_GET_JSTRING ( url, jurl );
+
+	jclass moai = env->FindClass ( "com/ziplinegames/moai/Moai" );
+    if ( moai == NULL ) {
+
+		USLog::Print ( "MOAIApp: Unable to find java class %s", "com/ziplinegames/moai/Moai" );
+    } else {
+
+    	jmethodID openURL = env->GetStaticMethodID ( moai, "openURL", "(Ljava/lang/String;)V" );
+    	if ( openURL == NULL ) {
+
+			USLog::Print ( "MOAIApp: Unable to find static java method %s", "openURL" );
+    	} else {
+
+			env->CallStaticVoidMethod ( moai, openURL, jurl );	
+		}
+	}
 	
 	return 0;
 }
 
 //----------------------------------------------------------------//
-int MOAIApp::_requestPurchase ( lua_State* L ) {
-	MOAILuaState state ( L );
-	
-	cc8* identifier = state.GetValue < cc8* >( 1, "" );
-	cc8* payload = state.GetValue < cc8* >( 2, "" );
-	bool result = MOAIApp::Get ().requestPurchaseFunc ( identifier, payload );
-	lua_pushboolean ( state, result );
-	
-	return 1;
-}
-
-//----------------------------------------------------------------//
-int MOAIApp::_restoreTransactions ( lua_State* L ) {
-	MOAILuaState state ( L );
-	
-	bool result = MOAIApp::Get ().restoreTransactionsFunc ();
-	lua_pushboolean ( state, result );
-	
-	return 1;
-}
-
-//----------------------------------------------------------------//
 int MOAIApp::_setListener ( lua_State* L ) {
+	
 	MOAILuaState state ( L );
 	
 	u32 idx = state.GetValue < u32 >( 1, TOTAL );
 
 	if ( idx < TOTAL ) {
+		
 		MOAIApp::Get ().mListeners [ idx ].SetStrongRef ( state, 2 );
 	}
 	
@@ -83,50 +97,85 @@ int MOAIApp::_setListener ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-int MOAIApp::_setMarketPublicKey ( lua_State* L ) {
+int MOAIApp::_share ( lua_State* L ) {
+	
 	MOAILuaState state ( L );
 	
-	cc8* key = state.GetValue < cc8* >( 1, "" );
-	MOAIApp::Get ().setMarketPublicKeyFunc ( key );
+	cc8* prompt = lua_tostring ( state, 1 );
+	cc8* subject = lua_tostring ( state, 2 );
+	cc8* text = lua_tostring ( state, 3 );
+	
+	JNI_GET_ENV ( jvm, env );
+
+	JNI_GET_JSTRING ( prompt, jprompt );
+	JNI_GET_JSTRING ( subject, jsubject );
+	JNI_GET_JSTRING ( text, jtext );
+
+	jclass moai = env->FindClass ( "com/ziplinegames/moai/Moai" );
+    if ( moai == NULL ) {
+
+		USLog::Print ( "MOAIApp: Unable to find java class %s", "com/ziplinegames/moai/Moai" );
+    } else {
+
+    	jmethodID share = env->GetStaticMethodID ( moai, "share", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V" );
+    	if ( share == NULL ) {
+
+			USLog::Print ( "MOAIApp: Unable to find static java method %s", "share" );
+    	} else {
+
+			env->CallStaticVoidMethod ( moai, share, jprompt, jsubject, jtext );	
+		}
+	}
 	
 	return 0;
 }
 
 //----------------------------------------------------------------//
 int MOAIApp::_showDialog ( lua_State* L ) {
-	MOAILuaState state ( L );
 	
-	cc8* title = state.GetValue < cc8* >( 1, "" );
-	cc8* message = state.GetValue < cc8* >( 2, "" );
-	cc8* positive = state.GetValue < cc8* >( 3, "" );
-	cc8* neutral = state.GetValue < cc8* >( 4, "" );
-	cc8* negative = state.GetValue < cc8* >( 5, "" );
-	bool cancelable = state.GetValue < bool >( 6, "" );
+	MOAILuaState state ( L );	
+	
+	cc8* title = lua_tostring ( state, 1 );
+	cc8* message = lua_tostring ( state, 2 );
+	cc8* positive = lua_tostring ( state, 3 );
+	cc8* neutral = lua_tostring ( state, 4 );
+	cc8* negative = lua_tostring ( state, 5 );
+	bool cancelable = lua_toboolean ( state, 6 );
 	
 	if ( state.IsType ( 7, LUA_TFUNCTION )) {
+		
 		// NOTE: This is fragile. We're storing the callback function in a global variable,
 		// effectively. Invoking the showDialog method multiple times in succession can
 		// therefore lead to unpredictable results. In fact, it's unknown how Android itself
 		// handles multiple invocations - are they queued? On iOS, UIAlertView is LIFO and
 		// new invocations supersede previous ones, but once dismissed, the system continues
-		// down the alert stack... 
+		// down the alert stack.
 		MOAIApp::Get ().mDialogCallback.SetStrongRef ( state, 7 );
 	}	
-		
-	MOAIApp::Get ().showDialogFunc ( title, message, positive, neutral, negative, cancelable );
 	
-	return 0;
-}
+	JNI_GET_ENV ( jvm, env );
 
-//----------------------------------------------------------------//
-int MOAIApp::_share ( lua_State* L ) {
-	MOAILuaState state ( L );
-	
-	cc8* prompt = state.GetValue < cc8* >( 1, "" );
-	cc8* subject = state.GetValue < cc8* >( 2, "" );
-	cc8* text = state.GetValue < cc8* >( 3, "" );
-	
-	MOAIApp::Get ().shareFunc ( prompt, subject, text );
+	JNI_GET_JSTRING ( title, jtitle );
+	JNI_GET_JSTRING ( message, jmessage );
+	JNI_GET_JSTRING ( positive, jpositive );
+	JNI_GET_JSTRING ( neutral, jneutral );
+	JNI_GET_JSTRING ( negative, jnegative );
+
+	jclass moai = env->FindClass ( "com/ziplinegames/moai/Moai" );
+    if ( moai == NULL ) {
+
+		USLog::Print ( "MOAIApp: Unable to find java class %s", "com/ziplinegames/moai/Moai" );
+    } else {
+
+    	jmethodID showDialog = env->GetStaticMethodID ( moai, "showDialog", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)V" );
+    	if ( showDialog == NULL ) {
+
+			USLog::Print ( "MOAIApp: Unable to find static java method %s", "showDialog" );
+    	} else {
+
+			env->CallStaticVoidMethod ( moai, showDialog, jtitle, jmessage, jpositive, jneutral, jnegative, cancelable );	
+		}
+	}
 	
 	return 0;
 }
@@ -136,11 +185,81 @@ int MOAIApp::_share ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIApp::DidStartSession ( bool resumed ) {
+MOAIApp::MOAIApp () {
+
+	RTTI_SINGLE ( MOAILuaObject )
+}
+
+//----------------------------------------------------------------//
+MOAIApp::~MOAIApp () {
+
+}
+
+//----------------------------------------------------------------//
+void MOAIApp::RegisterLuaClass ( MOAILuaState& state ) {
+
+	state.SetField ( -1, "SESSION_START",		    ( u32 )SESSION_START );
+	state.SetField ( -1, "SESSION_END",			    ( u32 )SESSION_END );
+	state.SetField ( -1, "BACK_BUTTON_PRESSED",		( u32 )BACK_BUTTON_PRESSED );
+
+	state.SetField ( -1, "DIALOG_RESULT_POSITIVE",	( u32 )DIALOG_RESULT_POSITIVE );
+	state.SetField ( -1, "DIALOG_RESULT_NEUTRAL",	( u32 )DIALOG_RESULT_NEUTRAL );
+	state.SetField ( -1, "DIALOG_RESULT_NEGATIVE",	( u32 )DIALOG_RESULT_NEGATIVE );
+	state.SetField ( -1, "DIALOG_RESULT_CANCEL",	( u32 )DIALOG_RESULT_CANCEL );
+
+	luaL_Reg regTable [] = {
+		{ "openURL",		_openURL },
+		{ "setListener",	_setListener },
+		{ "showDialog",		_showDialog },
+		{ "share",			_share },
+		{ NULL, NULL }
+	};
+
+	luaL_register ( state, 0, regTable );
+	
+	MOAIEnvironment::Get ().SetGUIDFunc ( &_getGuid );
+}
+
+//----------------------------------------------------------------//
+bool MOAIApp::NotifyBackButtonPressed () {
+	
+	MOAILuaRef& callback = this->mListeners [ BACK_BUTTON_PRESSED ];
+	
+	if ( callback ) {
+		
+		MOAILuaStateHandle state = callback.GetSelf ();
+
+		state.DebugCall ( 0, 1 );
+
+		return lua_toboolean ( state, -1 );
+	} else {
+		
+		return false;
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIApp::NotifyDialogDismissed ( int dialogResult ) {
+
+	if ( !mDialogCallback.IsNil ()) {
+		
+		MOAILuaStateHandle state = mDialogCallback.GetSelf ();
+
+		lua_pushinteger ( state, dialogResult );
+		
+		state.DebugCall ( 1, 0 );
+		
+		mDialogCallback.Clear ();
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIApp::NotifyDidStartSession ( bool resumed ) {
 
 	MOAILuaRef& callback = this->mListeners [ SESSION_START ];
 	
 	if ( callback ) {
+		
 		MOAILuaStateHandle state = callback.GetSelf ();
 
 		lua_pushboolean ( state, resumed );
@@ -150,202 +269,42 @@ void MOAIApp::DidStartSession ( bool resumed ) {
 }
 
 //----------------------------------------------------------------//
-MOAIApp::MOAIApp () {
-
-	RTTI_SINGLE ( MOAILuaObject )
-}
-
-//----------------------------------------------------------------//
-MOAIApp::~MOAIApp () {
-}
-
-//----------------------------------------------------------------//
-void MOAIApp::OnInit () {
-}
-
-//----------------------------------------------------------------//
-void MOAIApp::RegisterLuaClass ( MOAILuaState& state ) {
-
-	state.SetField ( -1, "SESSION_START",		    			( u32 )SESSION_START );
-	state.SetField ( -1, "SESSION_END",			    			( u32 )SESSION_END );
-	state.SetField ( -1, "CHECK_BILLING_SUPPORTED",				( u32 )CHECK_BILLING_SUPPORTED );
-	state.SetField ( -1, "PURCHASE_RESPONSE_RECEIVED",			( u32 )PURCHASE_RESPONSE_RECEIVED );
-	state.SetField ( -1, "PURCHASE_STATE_CHANGED",				( u32 )PURCHASE_STATE_CHANGED );
-	state.SetField ( -1, "RESTORE_RESPONSE_RECEIVED",			( u32 )RESTORE_RESPONSE_RECEIVED );
-	state.SetField ( -1, "BACK_BUTTON_PRESSED",					( u32 )BACK_BUTTON_PRESSED );
-
-	state.SetField ( -1, "BILLING_RESULT_OK",					( u32 )BILLING_RESULT_OK );
-	state.SetField ( -1, "BILLING_RESULT_USER_CANCELED",		( u32 )BILLING_RESULT_USER_CANCELED );
-	state.SetField ( -1, "BILLING_RESULT_SERVICE_UNAVAILABLE",	( u32 )BILLING_RESULT_SERVICE_UNAVAILABLE );
-	state.SetField ( -1, "BILLING_RESULT_BILLING_UNAVAILABLE",	( u32 )BILLING_RESULT_BILLING_UNAVAILABLE );
-	state.SetField ( -1, "BILLING_RESULT_ITEM_UNAVAILABLE",		( u32 )BILLING_RESULT_ITEM_UNAVAILABLE );
-	state.SetField ( -1, "BILLING_RESULT_DEVELOPER_ERROR",		( u32 )BILLING_RESULT_DEVELOPER_ERROR );
-	state.SetField ( -1, "BILLING_RESULT_ERROR",				( u32 )BILLING_RESULT_ERROR );
-
-	state.SetField ( -1, "BILLING_STATE_ITEM_PURCHASED",		( u32 )BILLING_STATE_ITEM_PURCHASED );
-	state.SetField ( -1, "BILLING_STATE_PURCHASE_CANCELED",		( u32 )BILLING_STATE_PURCHASE_CANCELED );
-	state.SetField ( -1, "BILLING_STATE_ITEM_REFUNDED",			( u32 )BILLING_STATE_ITEM_REFUNDED );
-
-	state.SetField ( -1, "DIALOG_RESULT_POSITIVE",				( u32 )DIALOG_RESULT_POSITIVE );
-	state.SetField ( -1, "DIALOG_RESULT_NEUTRAL",				( u32 )DIALOG_RESULT_NEUTRAL );
-	state.SetField ( -1, "DIALOG_RESULT_NEGATIVE",				( u32 )DIALOG_RESULT_NEGATIVE );
-	state.SetField ( -1, "DIALOG_RESULT_CANCEL",				( u32 )DIALOG_RESULT_CANCEL );
-
-	luaL_Reg regTable[] = {
-		{ "checkBillingSupported",				_checkBillingSupported },
-		{ "confirmNotification",				_confirmNotification },
-		{ "openURL",							_openURL },
-		{ "requestPurchase",					_requestPurchase },
-		{ "restoreTransactions",				_restoreTransactions },
-		{ "setListener",						_setListener },
-		{ "setMarketPublicKey",					_setMarketPublicKey },
-		{ "showDialog",							_showDialog },
-		{ "share",								_share },
-		{ NULL, NULL }
-	};
-
-	luaL_register( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAIApp::Reset () {
-	for ( int i = 0 ; i < TOTAL; i++ ) {
-		mListeners [ i ].Clear ();
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIApp::SetCheckBillingSupportedFunc ( bool ( *func ) ( void )) {
-	checkBillingSupportedFunc = func;
-}
-
-//----------------------------------------------------------------//
-void MOAIApp::SetConfirmNotificationFunc ( bool ( *func ) ( cc8* )) {
-	confirmNotificationFunc = func;
-}
-
-//----------------------------------------------------------------//
-void MOAIApp::SetOpenURLFunc ( void ( *func ) ( cc8* )) {
-	openURLFunc = func;
-}
-
-//----------------------------------------------------------------//
-void MOAIApp::SetRequestPurchaseFunc ( bool ( *func ) ( cc8*, cc8* )) {
-	requestPurchaseFunc = func;
-}
-
-//----------------------------------------------------------------//
-void MOAIApp::SetRestoreTransactionsFunc ( bool ( *func ) ( void )) {
-	restoreTransactionsFunc = func;
-}
-
-//----------------------------------------------------------------//
-void MOAIApp::SetMarketPublicKeyFunc ( void ( *func ) ( cc8* )) {
-	setMarketPublicKeyFunc = func;
-}
-
-//----------------------------------------------------------------//
-void MOAIApp::SetShowDialogFunc ( void ( *func ) ( cc8*, cc8*, cc8*, cc8*, cc8*, bool )) {
-	showDialogFunc = func;
-}
-
-//----------------------------------------------------------------//
-void MOAIApp::SetShareFunc ( void ( *func ) ( cc8*, cc8*, cc8* )) {
-	shareFunc = func;
-}
-
-//----------------------------------------------------------------//
-void MOAIApp::NotifyBillingSupported ( bool supported ) {	
-	MOAILuaRef& callback = this->mListeners [ CHECK_BILLING_SUPPORTED ];
+void MOAIApp::NotifyWillEndSession () {
 	
-	if ( callback ) {
-		MOAILuaStateHandle state = callback.GetSelf ();
-		
-		lua_pushboolean ( state, supported );
-			
-		state.DebugCall ( 1, 0 );
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIApp::NotifyPurchaseResponseReceived ( cc8* identifier, int code ) {
-	MOAILuaRef& callback = this->mListeners [ PURCHASE_RESPONSE_RECEIVED ];
-	
-	if ( callback ) {
-		MOAILuaStateHandle state = callback.GetSelf ();
-		
-		lua_pushstring ( state, identifier );
-		lua_pushinteger ( state, code );	
-		
-		state.DebugCall ( 2, 0 );
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIApp::NotifyPurchaseStateChanged ( cc8* identifier, int code, cc8* order, cc8* notification, cc8* payload ) {
-	MOAILuaRef& callback = this->mListeners [ PURCHASE_STATE_CHANGED ];
-	
-	if ( callback ) {
-		MOAILuaStateHandle state = callback.GetSelf ();
-		
-		lua_pushstring ( state, identifier );
-		lua_pushinteger ( state, code );	
-		lua_pushstring ( state, order );
-		lua_pushstring ( state, notification );
-		lua_pushstring ( state, payload );
-		
-		state.DebugCall ( 5, 0 );
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIApp::NotifyRestoreResponseReceived ( int code ) {
-	MOAILuaRef& callback = this->mListeners [ RESTORE_RESPONSE_RECEIVED ];
-	
-	if ( callback ) {
-		MOAILuaStateHandle state = callback.GetSelf ();
-
-		lua_pushinteger ( state, code );	
-		
-		state.DebugCall ( 1, 0 );
-	}
-}
-
-//----------------------------------------------------------------//
-bool MOAIApp::NotifyBackButtonPressed () {
-	MOAILuaRef& callback = this->mListeners [ BACK_BUTTON_PRESSED ];
-	
-	if ( callback ) {
-		MOAILuaStateHandle state = callback.GetSelf ();
-
-		state.DebugCall ( 0, 1 );
-
-		return lua_toboolean ( state, -1 );
-	} else {
-		return false;
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIApp::NotifyDialogDismissed ( int dialogResult ) {
-
-	if ( ! mDialogCallback.IsNil() ) {
-		MOAILuaStateHandle state = mDialogCallback.GetSelf ();
-		
-		state.Push ( dialogResult );
-		state.DebugCall ( 1, 0 );
-		
-		mDialogCallback.Clear();
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIApp::WillEndSession( ) {
 	MOAILuaRef& callback = this->mListeners [ SESSION_END ];
 	
 	if ( callback ) {
+
 		MOAILuaStateHandle state = callback.GetSelf ();
 		
 		state.DebugCall ( 0, 0 );
 	}
+}
+
+//================================================================//
+// Miscellaneous JNI Functions
+//================================================================//
+
+//----------------------------------------------------------------//
+extern "C" bool Java_com_ziplinegames_moai_Moai_AKUAppBackButtonPressed ( JNIEnv* env, jclass obj ) {
+
+	return MOAIApp::Get ().NotifyBackButtonPressed ();
+}
+
+//----------------------------------------------------------------//
+extern "C" void Java_com_ziplinegames_moai_Moai_AKUAppDialogDismissed ( JNIEnv* env, jclass obj, jint code ) {
+
+	MOAIApp::Get ().NotifyDialogDismissed ( code );
+}	
+
+//----------------------------------------------------------------//
+extern "C" void Java_com_ziplinegames_moai_Moai_AKUAppDidStartSession ( JNIEnv* env, jclass obj, jboolean resumed ) {
+
+	MOAIApp::Get ().NotifyDidStartSession ( resumed );
+}
+
+//----------------------------------------------------------------//
+extern "C" void Java_com_ziplinegames_moai_Moai_AKUAppWillEndSession ( JNIEnv* env, jclass obj ) {
+
+	MOAIApp::Get ().NotifyWillEndSession ();
 }

@@ -233,11 +233,7 @@ public:
 	//----------------------------------------------------------------//
 	static inline float Round ( float n ) {
 
-		float integer = ( float )(( u32 )n );
-		float decimal = n - integer;
-
-		if ( decimal >= 0.5f ) integer += 1.0f;
-		return integer;
+		return ( float )floor ( n + 0.5f );
 	}
 	
 	//----------------------------------------------------------------//

@@ -199,8 +199,11 @@ System::System(UInt32 sampleRate, UInt32 numFrames, UInt32 options)
     status = AudioSessionInitialize(NULL, NULL, audioSessionInterruptionListener, this);
     AudioSessionSetActive(true);
     checkStatus(status);
-    //UInt32 category = kAudioSessionCategory_PlayAndRecord;
-    UInt32 category = kAudioSessionCategory_AmbientSound;
+	
+	UInt32 category = kAudioSessionCategory_AmbientSound;
+	if( options & UNTZ::RECORDABLE ) {
+		category = kAudioSessionCategory_PlayAndRecord;
+	}
     status = AudioSessionSetProperty(kAudioSessionProperty_AudioCategory, 4, &category);
     checkStatus(status);
     
