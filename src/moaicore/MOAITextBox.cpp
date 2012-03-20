@@ -706,21 +706,7 @@ void MOAITextBox::Draw ( int subPrimID, bool reload ) {
 	
 		MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 
-<<<<<<< HEAD
 		this->LoadGfxState ();
-=======
-		if ( this->mUVTransform ) {
-			USAffine2D uvMtx = this->mUVTransform->GetLocalToWorldMtx ();
-			gfxDevice.SetUVTransform ( uvMtx );
-		}
-		else {
-			gfxDevice.SetUVTransform ();
-		}
-
-		gfxDevice.SetPenColor ( this->mColor );
-		gfxDevice.SetBlendMode ( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
-		gfxDevice.SetScissorRect ();
->>>>>>> master
 
 		if ( !this->mShader ) {
 			// TODO: this should really come from MOAIFont, which should really be a
