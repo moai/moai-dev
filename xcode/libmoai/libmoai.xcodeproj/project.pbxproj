@@ -3128,6 +3128,27 @@
 		E9940E4714B7A4A0006465CC /* USXmlReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9940DB814B7A4A0006465CC /* USXmlReader.cpp */; };
 		E9940E4814B7A4A0006465CC /* USXmlReader.h in Headers */ = {isa = PBXBuildFile; fileRef = E9940DB914B7A4A0006465CC /* USXmlReader.h */; };
 		E9940E4914B7A4A0006465CC /* USXmlReader.h in Headers */ = {isa = PBXBuildFile; fileRef = E9940DB914B7A4A0006465CC /* USXmlReader.h */; };
+		E9C406281518614200C7AB04 /* MOAITextureBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E91A4C66151820CF0008F1A5 /* MOAITextureBase.cpp */; };
+		E9C4062A1518615A00C7AB04 /* MOAIGlyphSet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E91A4C5B151820CE0008F1A5 /* MOAIGlyphSet.cpp */; };
+		E9C4062B1518616F00C7AB04 /* MOAITextDesigner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E91A4C37151820470008F1A5 /* MOAITextDesigner.cpp */; };
+		E9C4062C151861A700C7AB04 /* MOAIGlyphCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E91A4C55151820CE0008F1A5 /* MOAIGlyphCache.cpp */; };
+		E9C4062D151861A700C7AB04 /* MOAIGlyphCacheBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E91A4C57151820CE0008F1A5 /* MOAIGlyphCacheBase.cpp */; };
+		E9C4062E151861A700C7AB04 /* MOAIGlyphCachePage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E91A4C59151820CE0008F1A5 /* MOAIGlyphCachePage.cpp */; };
+		E9C4062F151861F200C7AB04 /* MOAITextStyle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E91A4C39151820470008F1A5 /* MOAITextStyle.cpp */; };
+		E9C40630151861F200C7AB04 /* MOAITextStyler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E91A4C3B151820470008F1A5 /* MOAITextStyler.cpp */; };
+		E9C406311518621000C7AB04 /* MOAIBitmapFontReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E91A4C4B151820CE0008F1A5 /* MOAIBitmapFontReader.cpp */; };
+		E9C406321518621000C7AB04 /* MOAIFontReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E91A4C51151820CE0008F1A5 /* MOAIFontReader.cpp */; };
+		E9C406331518621000C7AB04 /* MOAIFreeTypeFontReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E91A4C53151820CE0008F1A5 /* MOAIFreeTypeFontReader.cpp */; };
+		E9C40634151863CC00C7AB04 /* USFrustum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E91A4C96151829070008F1A5 /* USFrustum.cpp */; };
+		E9C40635151863E400C7AB04 /* MOAICamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E91A4C4D151820CE0008F1A5 /* MOAICamera.cpp */; };
+		E9C406361518640100C7AB04 /* USPrism.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E91A4C98151829070008F1A5 /* USPrism.cpp */; };
+		E9C406371518640C00C7AB04 /* MOAIImageTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E91A4C5F151820CE0008F1A5 /* MOAIImageTexture.cpp */; };
+		E9C406381518642100C7AB04 /* MOAIStaticGlyphCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E91A4C64151820CF0008F1A5 /* MOAIStaticGlyphCache.cpp */; };
+		E9C406391518642F00C7AB04 /* MOAIHttpTaskBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E91A4C45151820890008F1A5 /* MOAIHttpTaskBase.cpp */; };
+		E9C4063A1518643E00C7AB04 /* MOAILayerBridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E91A4C3015181FDF0008F1A5 /* MOAILayerBridge.cpp */; };
+		E9C4063B1518645900C7AB04 /* MOAIMultiTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E91A4C61151820CE0008F1A5 /* MOAIMultiTexture.cpp */; };
+		E9C4063C1518646D00C7AB04 /* MOAIHttpTask_curl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E91A4C43151820890008F1A5 /* MOAIHttpTask_curl.cpp */; };
+		E9C4063D151864A100C7AB04 /* MOAILayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E91A4C2E15181FDF0008F1A5 /* MOAILayer.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -12008,6 +12029,27 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E9C4063D151864A100C7AB04 /* MOAILayer.cpp in Sources */,
+				E9C4063C1518646D00C7AB04 /* MOAIHttpTask_curl.cpp in Sources */,
+				E9C4063B1518645900C7AB04 /* MOAIMultiTexture.cpp in Sources */,
+				E9C4063A1518643E00C7AB04 /* MOAILayerBridge.cpp in Sources */,
+				E9C406391518642F00C7AB04 /* MOAIHttpTaskBase.cpp in Sources */,
+				E9C406381518642100C7AB04 /* MOAIStaticGlyphCache.cpp in Sources */,
+				E9C406371518640C00C7AB04 /* MOAIImageTexture.cpp in Sources */,
+				E9C406361518640100C7AB04 /* USPrism.cpp in Sources */,
+				E9C40635151863E400C7AB04 /* MOAICamera.cpp in Sources */,
+				E9C40634151863CC00C7AB04 /* USFrustum.cpp in Sources */,
+				E9C406311518621000C7AB04 /* MOAIBitmapFontReader.cpp in Sources */,
+				E9C406321518621000C7AB04 /* MOAIFontReader.cpp in Sources */,
+				E9C406331518621000C7AB04 /* MOAIFreeTypeFontReader.cpp in Sources */,
+				E9C4062F151861F200C7AB04 /* MOAITextStyle.cpp in Sources */,
+				E9C40630151861F200C7AB04 /* MOAITextStyler.cpp in Sources */,
+				E9C4062C151861A700C7AB04 /* MOAIGlyphCache.cpp in Sources */,
+				E9C4062D151861A700C7AB04 /* MOAIGlyphCacheBase.cpp in Sources */,
+				E9C4062E151861A700C7AB04 /* MOAIGlyphCachePage.cpp in Sources */,
+				E9C4062B1518616F00C7AB04 /* MOAITextDesigner.cpp in Sources */,
+				E9C4062A1518615A00C7AB04 /* MOAIGlyphSet.cpp in Sources */,
+				E9C406281518614200C7AB04 /* MOAITextureBase.cpp in Sources */,
 				0324E69413564BC8000ADC60 /* AKU.cpp in Sources */,
 				0324E69813564BC8000ADC60 /* pch.cpp in Sources */,
 				0324E69A13564BC8000ADC60 /* MOAIAction.cpp in Sources */,
