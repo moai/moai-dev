@@ -127,23 +127,6 @@ int MOAISim::_framesToTime ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getDeviceSize
-	@text	Gets the dimensions of the device screen as two return values (width, height).
-
-	@out	number width		The width of the device screen.
-	@out	number height		The height of the device screen.
-*/
-int MOAISim::_getDeviceSize ( lua_State* L ) {
-
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-	
-	lua_pushnumber ( L, gfxDevice.GetWidth ());
-	lua_pushnumber ( L, gfxDevice.GetHeight ());
-
-	return 2;
-}
-
-//----------------------------------------------------------------//
 /**	@name	getDeviceTime
 	@text	Gets the raw device clock. This is a replacement for Lua's os.time ().
 
@@ -778,7 +761,6 @@ void MOAISim::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "exitFullscreenMode",			_exitFullscreenMode },
 		{ "forceGarbageCollection",		_forceGarbageCollection },
 		{ "framesToTime",				_framesToTime },
-		{ "getDeviceSize",				_getDeviceSize },
 		{ "getDeviceTime",				_getDeviceTime },
 		{ "getElapsedFrames",			_getElapsedFrames },
 		{ "getElapsedTime",				_getElapsedTime },

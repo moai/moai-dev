@@ -73,6 +73,24 @@ int MOAIGfxDevice::_getMaxTextureUnits ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	getViewSize
+	@text	Returns the width and height of the view
+	
+	@out	int width
+	@out	int height
+*/
+int MOAIGfxDevice::_getViewSize ( lua_State* L  ) {
+
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	
+	lua_pushnumber ( L, gfxDevice.GetWidth ());
+	lua_pushnumber ( L, gfxDevice.GetHeight ());
+	
+	return 2;
+}
+
+
+//----------------------------------------------------------------//
 /**	@name	isProgrammable
 	@text	Returns a boolean indicating whether or not Moai is running
 			under the programmable pipeline.
@@ -789,6 +807,7 @@ void MOAIGfxDevice::RegisterLuaClass ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "getMaxTextureUnits",			_getMaxTextureUnits },
+		{ "getViewSize",				_getViewSize },
 		{ "isProgrammable",				_isProgrammable },
 		{ "setClearColor",				_setClearColor },
 		{ "setClearDepth",				_setClearDepth },
