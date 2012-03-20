@@ -7,7 +7,7 @@
 #include <moaicore/MOAILua.h>
 
 //================================================================//
-// MOAIXmlParser
+// MOAIJsonParser
 //================================================================//
 /**	@name	MOAIJsonParser
 	@text	Converts between Lua and JSON.
@@ -17,8 +17,8 @@ class MOAIJsonParser :
 private:
 
 	//----------------------------------------------------------------//
-	static int			_encode					( lua_State* L );
 	static int			_decode					( lua_State* L );
+	static int			_encode					( lua_State* L );
 
 public:
 	

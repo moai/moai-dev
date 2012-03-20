@@ -13,6 +13,7 @@ class MOAITextureBase;
 //================================================================//
 // MOAIGlyphCacheBase
 //================================================================//
+// TODO: doxygen
 class MOAIGlyphCacheBase :
 	public MOAILuaObject {
 protected:

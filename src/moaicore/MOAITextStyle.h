@@ -30,6 +30,7 @@ public:
 //================================================================//
 // MOAITextStyle
 //================================================================//
+// TODO: doxygen
 class MOAITextStyle :
 	public MOAINode,
 	public MOAITextStyleState {

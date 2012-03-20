@@ -12,6 +12,7 @@ class MOAIGlyphCachePage;
 //================================================================//
 // MOAIGlyphCache
 //================================================================//
+// TODO: doxygen
 class MOAIGlyphCache :
 	public MOAIGlyphCacheBase {
 protected:

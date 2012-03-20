@@ -20,6 +20,7 @@ class MOAITextureBase;
 //================================================================//
 // MOAIFont
 //================================================================//
+// TODO: doxygen
 class MOAIFont :
 	public MOAILuaObject {
 protected:

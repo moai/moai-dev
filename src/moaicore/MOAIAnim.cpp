@@ -31,7 +31,7 @@ int MOAIAnim::_apply ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAnim, "U" );
 
 	float t0 = state.GetValue < float >( 2, 0.0f );
-	float t1 = state.GetValue < float >( 3, 0.0f );
+	float t1 = state.GetValue < float >( 3, t0 );
 
 	self->Apply ( t0, t1 );
 
