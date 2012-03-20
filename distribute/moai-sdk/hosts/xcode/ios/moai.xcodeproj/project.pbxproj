@@ -36,6 +36,11 @@
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
 		CD164CE61474FB8D007734B2 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD164CE51474FB8D007734B2 /* GameKit.framework */; };
 		CD164CE91474FBA2007734B2 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD164CE81474FBA2007734B2 /* MediaPlayer.framework */; };
+		E91A4CD71519233A0008F1A5 /* FBDialog.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E91A4CD61519233A0008F1A5 /* FBDialog.bundle */; };
+		E91A4CDA151923860008F1A5 /* libmoai-ios-adcolony.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E91A4CD8151923860008F1A5 /* libmoai-ios-adcolony.a */; };
+		E91A4CDB151923860008F1A5 /* libmoai-ios-facebook.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E91A4CD9151923860008F1A5 /* libmoai-ios-facebook.a */; };
+		E9502747151926AB0094AEA1 /* libAdColony.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E9502746151926AB0094AEA1 /* libAdColony.a */; };
+		E9502749151926BE0094AEA1 /* libfacebook_ios_sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E9502748151926BE0094AEA1 /* libfacebook_ios_sdk.a */; };
 		E9881F121498456600882720 /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9881F111498456600882720 /* Twitter.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		E9881F2614993D9500882720 /* back_default.png in Resources */ = {isa = PBXBuildFile; fileRef = E9881F1314993D9500882720 /* back_default.png */; };
 		E9881F2714993D9500882720 /* button_highlight.png in Resources */ = {isa = PBXBuildFile; fileRef = E9881F1414993D9500882720 /* button_highlight.png */; };
@@ -179,6 +184,11 @@
 		32CA4F630368D1EE00C91783 /* moai_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = moai_Prefix.pch; sourceTree = "<group>"; };
 		CD164CE51474FB8D007734B2 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		CD164CE81474FBA2007734B2 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		E91A4CD61519233A0008F1A5 /* FBDialog.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = FBDialog.bundle; path = Libraries/Facebook/FBDialog.bundle; sourceTree = "<group>"; };
+		E91A4CD8151923860008F1A5 /* libmoai-ios-adcolony.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-ios-adcolony.a"; path = "../../../bin/ios/universal/libmoai-ios-adcolony.a"; sourceTree = "<group>"; };
+		E91A4CD9151923860008F1A5 /* libmoai-ios-facebook.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-ios-facebook.a"; path = "../../../bin/ios/universal/libmoai-ios-facebook.a"; sourceTree = "<group>"; };
+		E9502746151926AB0094AEA1 /* libAdColony.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libAdColony.a; path = Libraries/AdColony/libAdColony.a; sourceTree = "<group>"; };
+		E9502748151926BE0094AEA1 /* libfacebook_ios_sdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfacebook_ios_sdk.a; path = Libraries/Facebook/libfacebook_ios_sdk.a; sourceTree = "<group>"; };
 		E9881F111498456600882720 /* Twitter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Twitter.framework; path = System/Library/Frameworks/Twitter.framework; sourceTree = SDKROOT; };
 		E9881F1314993D9500882720 /* back_default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = back_default.png; path = Libraries/TapjoyConnect/back_default.png; sourceTree = "<group>"; };
 		E9881F1414993D9500882720 /* button_highlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = button_highlight.png; path = Libraries/TapjoyConnect/button_highlight.png; sourceTree = "<group>"; };
@@ -286,7 +296,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				E9AA205614D9D31A0086E9DE /* Crittercism_v2_9_37.a in Frameworks */,
+				E9502747151926AB0094AEA1 /* libAdColony.a in Frameworks */,
+				E9502749151926BE0094AEA1 /* libfacebook_ios_sdk.a in Frameworks */,
 				E9AA1E2E14D8CFA50086E9DE /* libmoai-ios-3rdparty.a in Frameworks */,
+				E91A4CDA151923860008F1A5 /* libmoai-ios-adcolony.a in Frameworks */,
+				E91A4CDB151923860008F1A5 /* libmoai-ios-facebook.a in Frameworks */,
 				E9AA1E2F14D8CFA50086E9DE /* libmoai-ios-luaext.a in Frameworks */,
 				E9AA1E3014D8CFA50086E9DE /* libmoai-ios-tapjoy.a in Frameworks */,
 				E9AA1E3114D8CFA50086E9DE /* libmoai-ios-untz.a in Frameworks */,
@@ -400,6 +414,7 @@
 			isa = PBXGroup;
 			children = (
 				E9AA1D9514D8CF340086E9DE /* Crittercism */,
+				E91A4CD41519231C0008F1A5 /* Facebook */,
 				07B0C73414885CF10071AC46 /* Tapjoy */,
 				03E280A413C7D16200EE3B0D /* build */,
 				03CC90AA13B3C38800B2724C /* Entitlements.plist */,
@@ -420,7 +435,11 @@
 			isa = PBXGroup;
 			children = (
 				E9AA205514D9D3190086E9DE /* Crittercism_v2_9_37.a */,
+				E9502746151926AB0094AEA1 /* libAdColony.a */,
+				E9502748151926BE0094AEA1 /* libfacebook_ios_sdk.a */,
 				E9AA1E2814D8CFA50086E9DE /* libmoai-ios-3rdparty.a */,
+				E91A4CD8151923860008F1A5 /* libmoai-ios-adcolony.a */,
+				E91A4CD9151923860008F1A5 /* libmoai-ios-facebook.a */,
 				E9AA1E2914D8CFA50086E9DE /* libmoai-ios-luaext.a */,
 				E9AA1E2A14D8CFA50086E9DE /* libmoai-ios-tapjoy.a */,
 				E9AA1E2B14D8CFA50086E9DE /* libmoai-ios-untz.a */,
@@ -442,6 +461,14 @@
 				CD164CE51474FB8D007734B2 /* GameKit.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E91A4CD41519231C0008F1A5 /* Facebook */ = {
+			isa = PBXGroup;
+			children = (
+				E91A4CD61519233A0008F1A5 /* FBDialog.bundle */,
+			);
+			name = Facebook;
 			sourceTree = "<group>";
 		};
 		E9AA1D9514D8CF340086E9DE /* Crittercism */ = {
@@ -676,6 +703,7 @@
 				E9AA1E2514D8CF5F0086E9DE /* CrittercismDescriptionViewController.xib in Resources */,
 				E9AA1E2614D8CF5F0086E9DE /* CrittercismRootViewController.xib in Resources */,
 				E9AA1E2714D8CF5F0086E9DE /* CrittercismViewController.xib in Resources */,
+				E91A4CD71519233A0008F1A5 /* FBDialog.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -719,14 +747,6 @@
 		1D6058940D05DD3E006BFB54 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				HEADER_SEARCH_PATHS = ../../../include/;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../../../bin/ios\"",
-					"\"$(SRCROOT)/../../../bin/ios/universal\"",
-					"\"$(SRCROOT)/Libraries/Crittercism\"",
-				);
-				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_NAME = MoaiSample;
 			};
 			name = Debug;
@@ -734,14 +754,6 @@
 		1D6058950D05DD3E006BFB54 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				HEADER_SEARCH_PATHS = ../../../include/;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../../../bin/ios\"",
-					"\"$(SRCROOT)/../../../bin/ios/universal\"",
-					"\"$(SRCROOT)/Libraries/Crittercism\"",
-				);
-				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_NAME = MoaiSample;
 			};
 			name = Release;
@@ -753,13 +765,18 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				GCC_C_LANGUAGE_STANDARD = c99;
-				HEADER_SEARCH_PATHS = "";
+				HEADER_SEARCH_PATHS = ../../../include/;
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
-				LIBRARY_SEARCH_PATHS = "";
+				LIBRARY_SEARCH_PATHS = (
+					../../../bin/ios/universal,
+					"Libraries/**",
+				);
 				OTHER_LDFLAGS = (
 					"-force_load",
-					"../../bin/ios/universal/libmoai-ios-tapjoy.a",
+					"../../../bin/ios/universal/libmoai-ios-tapjoy.a",
+					"-force_load",
+					Libraries/AdColony/libAdColony.a,
 				);
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -774,13 +791,18 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				GCC_C_LANGUAGE_STANDARD = c99;
-				HEADER_SEARCH_PATHS = "";
+				HEADER_SEARCH_PATHS = ../../../include/;
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
-				LIBRARY_SEARCH_PATHS = "";
+				LIBRARY_SEARCH_PATHS = (
+					../../../bin/ios/universal,
+					"Libraries/**",
+				);
 				OTHER_LDFLAGS = (
 					"-force_load",
-					"../../bin/ios/universal/libmoai-ios-tapjoy.a",
+					"../../../bin/ios/universal/libmoai-ios-tapjoy.a",
+					"-force_load",
+					Libraries/AdColony/libAdColony.a,
 				);
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
