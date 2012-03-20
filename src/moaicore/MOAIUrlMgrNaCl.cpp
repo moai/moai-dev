@@ -3,56 +3,46 @@
 
 #include "pch.h"
 
-#include <moaicore/MOAIHttpTask.h>
-#include <moaicore/MOAIHttpTaskInfo_nacl.h>
-#include <moaicore/MOAIUrlMgr.h>
+#include <moaicore/MOAIHttpTaskNaCl.h>
+#include <moaicore/MOAIUrlMgrNaCl.h>
 
 SUPPRESS_EMPTY_FILE_WARNING
 #ifdef MOAI_OS_NACL
 
 //================================================================//
-// MOAIUrlMgr
+// MOAIUrlMgrNaCl
 //================================================================//
 
-static bool sMore = false;
-static STLList < MOAIHttpTask* > sTasks;
-
 //----------------------------------------------------------------//
-void MOAIUrlMgr::AddHandle ( MOAIHttpTask& task ) {
+void MOAIUrlMgrNaCl::AddHandle ( MOAIHttpTaskNaCl& task ) {
 	
-	sTasks.push_back ( &task );
+	this->mTasks.push_back ( &task );
 }
 
 //----------------------------------------------------------------//
-bool MOAIUrlMgr::More () {
+void MOAIUrlMgrNaCl::Process () {
 
-	return false;
-}
-
-//----------------------------------------------------------------//
-void MOAIUrlMgr::Process () {
-
-	for( STLList < MOAIHttpTask* >::iterator iter = sTasks.begin(); iter != sTasks.end(); ++iter )
-	{
+	for( STLList < MOAIHttpTaskNaCl* >::iterator iter = this->mTasks.begin(); iter != this->mTasks.end(); ++iter ) {
+	
 		if(( *iter )->mReady ) {
 
 			( *iter )->NaClFinish ();
 			( *iter )->Release ();
 
-			STLList < MOAIHttpTask* >::iterator old_iter = iter;
+			STLList < MOAIHttpTaskNaCl* >::iterator old_iter = iter;
 			old_iter--;
-			sTasks.erase ( iter );
+			this->mTasks.erase ( iter );
 			iter = old_iter;
 		}
 	}
 }
 
 //----------------------------------------------------------------//
-MOAIUrlMgr::MOAIUrlMgr () {
+MOAIUrlMgrNaCl::MOAIUrlMgrNaCl () {
 }
 
 //----------------------------------------------------------------//
-MOAIUrlMgr::~MOAIUrlMgr () {
+MOAIUrlMgrNaCl::~MOAIUrlMgrNaCl () {
 }
 
 #endif

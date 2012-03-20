@@ -3,9 +3,8 @@
 
 #include "pch.h"
 
-#include <moaicore/MOAIHttpTaskBase.h>
-#include <moaicore/MOAIHttpTask_curl.h>
-#include <moaicore/MOAIUrlMgr.h>
+#include <moaicore/MOAIHttpTaskCurl.h>
+#include <moaicore/MOAIUrlMgrCurl.h>
 
 SUPPRESS_EMPTY_FILE_WARNING
 #ifdef USE_CURL
@@ -17,17 +16,9 @@ SUPPRESS_EMPTY_FILE_WARNING
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIHttpTask::_printError ( CURLcode error ) {
-
-	if ( error ) {
-		USLog::Print ( "%s\n", curl_easy_strerror ( error ));
-	}
-}
-
-//----------------------------------------------------------------//
-u32 MOAIHttpTask::_writeData ( char* data, u32 n, u32 l, void* s ) {
+u32 MOAIHttpTaskCurl::_writeData ( char* data, u32 n, u32 l, void* s ) {
 	
-	MOAIHttpTask* self = ( MOAIHttpTask* )s;
+	MOAIHttpTaskCurl* self = ( MOAIHttpTaskCurl* )s;
 	u32 size = n * l;
 	
 	self->mStream->WriteBytes ( data, size );
@@ -35,9 +26,9 @@ u32 MOAIHttpTask::_writeData ( char* data, u32 n, u32 l, void* s ) {
 }
 
 //----------------------------------------------------------------//
-u32 MOAIHttpTask::_writeHeader ( char* data, u32 n, u32 l, void* s ) {
+u32 MOAIHttpTaskCurl::_writeHeader ( char* data, u32 n, u32 l, void* s ) {
 	
-	MOAIHttpTask* self = ( MOAIHttpTask* )s;
+	MOAIHttpTaskCurl* self = ( MOAIHttpTaskCurl* )s;
 	u32 size = n * l;
 	
 	STLString key = "content-length";
@@ -61,11 +52,11 @@ u32 MOAIHttpTask::_writeHeader ( char* data, u32 n, u32 l, void* s ) {
 }
 
 //================================================================//
-// MOAIHttpTask
+// MOAIHttpTaskCurl
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIHttpTask::AffirmHandle () {
+void MOAIHttpTaskCurl::AffirmHandle () {
 
 	if ( this->mEasyHandle ) return;
 	
@@ -74,32 +65,32 @@ void MOAIHttpTask::AffirmHandle () {
 	this->mEasyHandle = curl_easy_init ();
 	
 	result = curl_easy_setopt ( this->mEasyHandle, CURLOPT_HEADERFUNCTION, _writeHeader );
-	_printError ( result );
+	PrintError ( result );
 	
 	result = curl_easy_setopt ( this->mEasyHandle, CURLOPT_HEADERDATA, this );
-	_printError ( result );
+	PrintError ( result );
 
 	result = curl_easy_setopt ( this->mEasyHandle, CURLOPT_WRITEFUNCTION, _writeData );
-	_printError ( result );
+	PrintError ( result );
 	
 	result = curl_easy_setopt ( this->mEasyHandle, CURLOPT_WRITEDATA, this );
-	_printError ( result );
+	PrintError ( result );
 	
 	result = curl_easy_setopt ( this->mEasyHandle, CURLOPT_FAILONERROR, 1 );
-	_printError ( result );
+	PrintError ( result );
 	
 	result = curl_easy_setopt ( this->mEasyHandle, CURLOPT_NOPROGRESS, 1 );
-	_printError ( result );
+	PrintError ( result );
 	
 	result = curl_easy_setopt ( this->mEasyHandle, CURLOPT_SSL_VERIFYPEER, 0 );
-	_printError ( result );
+	PrintError ( result );
 	
 	result = curl_easy_setopt ( this->mEasyHandle, CURLOPT_SSL_VERIFYHOST, 0 );
-	_printError ( result );
+	PrintError ( result );
 }
 
 //----------------------------------------------------------------//
-void MOAIHttpTask::Clear () {
+void MOAIHttpTaskCurl::Clear () {
 
 	this->mUrl.clear ();
 	this->mBody.Clear ();
@@ -121,7 +112,7 @@ void MOAIHttpTask::Clear () {
 }
 
 //----------------------------------------------------------------//
-void MOAIHttpTask::CurlFinish () {
+void MOAIHttpTaskCurl::CurlFinish () {
 
 	if ( this->mEasyHandle ) {
 		long response;
@@ -144,7 +135,7 @@ void MOAIHttpTask::CurlFinish () {
 }
 
 //----------------------------------------------------------------//
-MOAIHttpTask::MOAIHttpTask () :
+MOAIHttpTaskCurl::MOAIHttpTaskCurl () :
 	mEasyHandle ( 0 ),
 	mHeaderList ( 0 ),
 	mStream ( 0 ) {
@@ -155,13 +146,13 @@ MOAIHttpTask::MOAIHttpTask () :
 }
 
 //----------------------------------------------------------------//
-MOAIHttpTask::~MOAIHttpTask () {
+MOAIHttpTaskCurl::~MOAIHttpTaskCurl () {
 
 	this->Clear ();
 }
 
 //----------------------------------------------------------------//
-void MOAIHttpTask::Prepare () {
+void MOAIHttpTaskCurl::Prepare () {
 
 	// until we get a header indicating otherwise, assume we won't
 	// know the final length of the stream, so default to use the
@@ -191,21 +182,21 @@ void MOAIHttpTask::Prepare () {
 	
 	if ( this->mHeaderList ) {
 		CURLcode result = curl_easy_setopt ( this->mEasyHandle, CURLOPT_HTTPHEADER, this->mHeaderList );
-		_printError ( result );
+		PrintError ( result );
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAIHttpTask::PerformAsync () {
+void MOAIHttpTaskCurl::PerformAsync () {
 
 	if ( this->mEasyHandle ) {
 		this->Prepare ();
-		MOAIUrlMgr::Get ().AddHandle ( *this );
+		MOAIUrlMgrCurl::Get ().AddHandle ( *this );
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAIHttpTask::PerformSync () {
+void MOAIHttpTaskCurl::PerformSync () {
 
 	if ( this->mEasyHandle ) {
 		this->Prepare ();
@@ -215,26 +206,34 @@ void MOAIHttpTask::PerformSync () {
 }
 
 //----------------------------------------------------------------//
-void MOAIHttpTask::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIHttpTaskCurl::PrintError ( CURLcode error ) {
+
+	if ( error ) {
+		USLog::Print ( "%s\n", curl_easy_strerror ( error ));
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIHttpTaskCurl::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAIHttpTaskBase::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAIHttpTask::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIHttpTaskCurl::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	MOAIHttpTaskBase::RegisterLuaFuncs ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAIHttpTask::Reset () {
+void MOAIHttpTaskCurl::Reset () {
 
 	this->Clear ();
 	this->AffirmHandle ();
 }
 
 //----------------------------------------------------------------//
-void MOAIHttpTask::SetBody ( const void* buffer, u32 size ) {
+void MOAIHttpTaskCurl::SetBody ( const void* buffer, u32 size ) {
 
 	this->mBody.Init ( size );
 	memcpy ( this->mBody, buffer, size );
@@ -242,30 +241,30 @@ void MOAIHttpTask::SetBody ( const void* buffer, u32 size ) {
 	CURLcode result;
 
 	result = curl_easy_setopt ( this->mEasyHandle, CURLOPT_POSTFIELDS, this->mBody.Data ());
-	_printError ( result );
+	PrintError ( result );
 	
     result = curl_easy_setopt ( this->mEasyHandle, CURLOPT_POSTFIELDSIZE, ( long )size );
-    _printError ( result );
+    PrintError ( result );
 }
 
 //----------------------------------------------------------------//
-void MOAIHttpTask::SetUrl ( cc8* url ) {
+void MOAIHttpTaskCurl::SetUrl ( cc8* url ) {
 
 	CURLcode result = curl_easy_setopt ( this->mEasyHandle, CURLOPT_URL, url );
-	_printError ( result );
+	PrintError ( result );
 	
 	this->mUrl = url;
 }
 
 //----------------------------------------------------------------//
-void MOAIHttpTask::SetUserAgent ( cc8* useragent ) {
+void MOAIHttpTaskCurl::SetUserAgent ( cc8* useragent ) {
 	
 	CURLcode result = curl_easy_setopt ( this->mEasyHandle, CURLOPT_USERAGENT, useragent );
-	_printError ( result );
+	PrintError ( result );
 }
 
 //----------------------------------------------------------------//
-void MOAIHttpTask::SetVerb ( u32 verb ) {
+void MOAIHttpTaskCurl::SetVerb ( u32 verb ) {
 
 	CURLcode result = CURLE_OK;
 	
@@ -292,17 +291,17 @@ void MOAIHttpTask::SetVerb ( u32 verb ) {
 			break;
 	}
 	
-	_printError ( result );
+	PrintError ( result );
 	
 	result = curl_easy_setopt ( this->mEasyHandle, CURLOPT_NOBODY, verb == HTTP_HEAD ? 1 : 0 );
-	_printError ( result );
+	PrintError ( result );
 }
 
 //----------------------------------------------------------------//
-void MOAIHttpTask::SetVerbose ( bool verbose ) {
+void MOAIHttpTaskCurl::SetVerbose ( bool verbose ) {
 
 	CURLcode result = curl_easy_setopt ( this->mEasyHandle, CURLOPT_VERBOSE, verbose ? 1 : 0 );
-	_printError ( result );
+	PrintError ( result );
 }
 
 #endif

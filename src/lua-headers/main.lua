@@ -23,7 +23,7 @@ function dumpHeader ( filename, headername, outname )
 
 end
 
-dumpHeader ( 'moai2D.lua', 'moai2D_lua', 'moai2D_lua.h' )
+dumpHeader ( 'moai.lua', 'moai_lua', 'moai_lua.h' )
 
 
 

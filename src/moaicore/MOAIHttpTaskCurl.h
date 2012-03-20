@@ -1,8 +1,8 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef MOAIHTTPTASK_CURL_H
-#define MOAIHTTPTASK_CURL_H
+#ifndef MOAIHTTPTASKCURL_H
+#define MOAIHTTPTASKCURL_H
 
 #ifdef USE_CURL
 
@@ -16,14 +16,14 @@ extern "C" {
 }
 
 //================================================================//
-// MOAIHttpTask
+// MOAIHttpTaskCurl
 //================================================================//
-class MOAIHttpTask :
+class MOAIHttpTaskCurl :
 	public MOAIHttpTaskBase {
 private:
 	
-	friend class MOAIHttpTask;
-	friend class MOAIUrlMgr;
+	friend class MOAIHttpTaskCurl;
+	friend class MOAIUrlMgrCurl;
 
 	STLString			mUrl;
 	CURL*				mEasyHandle;
@@ -44,7 +44,6 @@ private:
 	USStream*			mStream;
 
 	//----------------------------------------------------------------//
-	static void		_printError				( CURLcode error );
 	static u32		_writeData				( char* data, u32 n, u32 l, void* s );
 	static u32		_writeHeader			( char* data, u32 n, u32 l, void* s );
 
@@ -53,14 +52,15 @@ private:
 	void			Clear					();
 	void			CurlFinish				();
 	void			Prepare					();
+	static void		PrintError				( CURLcode error );
 
 public:
 
-	DECL_LUA_FACTORY ( MOAIHttpTask )
+	DECL_LUA_FACTORY ( MOAIHttpTaskCurl )
 
 	//----------------------------------------------------------------//
-					MOAIHttpTask			();
-					~MOAIHttpTask			();
+					MOAIHttpTaskCurl			();
+					~MOAIHttpTaskCurl			();
 	void			PerformAsync			();
 	void			PerformSync				();
 	void			RegisterLuaClass		( MOAILuaState& state );

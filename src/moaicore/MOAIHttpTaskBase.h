@@ -8,8 +8,6 @@
 
 #define DEFAULT_MOAI_HTTP_USERAGENT "Moai SDK beta; support@getmoai.com"
 
-class MOAIHttpTaskInfo;
-
 //================================================================//
 // MOAIHttpTaskBase
 //================================================================//

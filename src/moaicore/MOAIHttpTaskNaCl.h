@@ -1,8 +1,8 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef MOAIHTTPTASK_NACL_H
-#define MOAIHTTPTASK_NACL_H
+#ifndef MOAIHTTPTASKNACL_H
+#define MOAIHTTPTASKNACL_H
 
 #include <moaicore/MOAIHttpTaskBase.h>
 
@@ -11,9 +11,9 @@
 #include "geturl_handler.h"
 
 //================================================================//
-// MOAIHttpTask
+// MOAIHttpTaskNaCl
 //================================================================//
-class MOAIHttpTask :
+class MOAIHttpTaskNaCl :
 	public MOAIHttpTaskBase {
 private:
 	STLString			mUrl;
@@ -42,12 +42,13 @@ private:
 
 public:
 
-	DECL_LUA_FACTORY ( MOAIHttpTask )
+	DECL_LUA_FACTORY ( MOAIHttpTaskNaCl )
 
 	//----------------------------------------------------------------//
-					MOAIHttpTask			();
-					~MOAIHttpTask			();
-
+	void			Clear					();
+					MOAIHttpTaskNaCl		();
+					~MOAIHttpTaskNaCl		();
+	void			NaClFinish				();
 	void			PerformAsync			();
 	void			PerformSync				();
 	void			RegisterLuaClass		( MOAILuaState& state );
@@ -58,9 +59,6 @@ public:
 	void			SetUserAgent			( cc8* useragent );
 	void			SetVerb					( u32 verb );
 	void			SetVerbose				( bool verbose );
-
-	void			Clear					();
-	void			NaClFinish				();
 };
 
 #endif

@@ -117,6 +117,8 @@ if MOAIFreeTypeFontReader then
 	)
 end
 
+MOAIHttpTask = MOAIHttpTaskCurl or MOAIHttpNaCl
+
 MOAILayer2D = MOAILayer.extend (
 
 	-- extend the instance interface
