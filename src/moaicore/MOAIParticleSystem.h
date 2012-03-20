@@ -32,6 +32,7 @@ private:
 	
 	bool								mCapParticles;
 	bool								mCapSprites;
+	bool								mIgnoreLocalTransform;
 	
 	MOAIParticle*						mHead;
 	MOAIParticle*						mTail;
@@ -39,6 +40,7 @@ private:
 	
 	USLeanArray < AKUParticleSprite >	mSprites;
 	u32									mSpriteTop;
+		
 	
 	//----------------------------------------------------------------//
 	static int		_capParticles		( lua_State* L );
