@@ -44,7 +44,7 @@ cd ../../distribute
 
 mkdir -p moai-sdk/samples/iphone
 cd ../samples/iphone
-cp -R * ../../distribute/moai-sdk/samples/iphone
+cp -R * ../../distribute/moai-sdk/samples/ios
 cd ../../distribute
 
 mkdir -p moai-sdk/include/aku

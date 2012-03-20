@@ -66,8 +66,8 @@ public class MoaiActivity extends Activity {
     	super.onCreate ( savedInstanceState );
 		Moai.onCreate ( this );
 		
-		Moai.init ();
 		Moai.createContext ();
+		Moai.init ();
 		
         requestWindowFeature ( Window.FEATURE_NO_TITLE );
 	    getWindow ().addFlags ( WindowManager.LayoutParams.FLAG_FULLSCREEN );
