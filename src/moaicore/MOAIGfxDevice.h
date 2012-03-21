@@ -110,8 +110,12 @@ private:
 	u32				mMaxPrims;
 	u32				mMinorVersion;
 	
+	USColorVec		mAmbientColor;
 	USColorVec		mPenColor;
-	u32				mPackedColor;
+	
+	USColorVec		mFinalColor;
+	u32				mFinalColor32;
+	
 	float			mPenWidth;
 	float			mPointSize;
 	
@@ -167,6 +171,7 @@ private:
 	void					GpuMultMatrix			( const USMatrix4x4& mtx ) const;
 	void					InsertGfxResource		( MOAIGfxResource& resource );
 	void					RemoveGfxResource		( MOAIGfxResource& resource );
+	void					UpdateFinalColor		();
 	void					UpdateCpuVertexMtx		();
 	void					UpdateGpuVertexMtx		();
 	void					UpdateUVMtx				();
@@ -189,6 +194,10 @@ public:
 	
 	GET ( const USFrustum&, ViewVolume, mViewVolume )
 	
+	GET ( USColorVec, AmbientColor, mAmbientColor )
+	GET ( USColorVec, FinalColor, mFinalColor )
+	GET ( USColorVec, PenColor, mPenColor )
+	
 	//----------------------------------------------------------------//
 	void					BeginDrawing			();
 	void					BeginLayer				();
@@ -201,12 +210,13 @@ public:
 	void					EndPrim					();
 	void					Flush					();
 	
+	USColorVec				GetAmbientColor			() const;
+	
 	float					GetDeviceScale			();
 	cc8*					GetErrorString			( int error ) const;
 	
 	u32						GetHeight				() const;
 	
-	USColorVec				GetPenColor				() const;
 	USRect					GetRect					() const;
 	USMatrix4x4				GetUVTransform			() const;
 	USMatrix4x4				GetVertexTransform		( u32 id ) const;
@@ -233,6 +243,10 @@ public:
 	void					Reserve					( u32 size );
 	void					ResetResources			();
 	void					ResetState				();
+	
+	void					SetAmbientColor			( u32 color );
+	void					SetAmbientColor			( const USColorVec& colorVec );
+	void					SetAmbientColor			( float r, float g, float b, float a );
 	
 	void					SetBlendMode			();
 	void					SetBlendMode			( const MOAIBlendMode& blendMode );
@@ -308,15 +322,15 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	inline void WritePenColor4b () {
+	inline void WriteFinalColor4b () {
 		
-		this->Write < u32 >( this->mPackedColor );
+		this->Write < u32 >( this->mFinalColor32 );
 	}
 	
 	//----------------------------------------------------------------//
-	inline void WritePenColor4f () {
+	inline void WriteFinalColor4f () {
 		
-		this->Write < USColorVec >( this->mPenColor );
+		this->Write < USColorVec >( this->mFinalColor );
 	}
 	
 	//----------------------------------------------------------------//

@@ -551,12 +551,6 @@ u32 MOAIGfxDevice::GetHeight () const {
 //}
 
 //----------------------------------------------------------------//
-USColorVec MOAIGfxDevice::GetPenColor () const {
-
-	return this->mPenColor;
-}
-
-//----------------------------------------------------------------//
 USRect MOAIGfxDevice::GetRect () const {
 
 	USRect rect;
@@ -738,7 +732,7 @@ MOAIGfxDevice::MOAIGfxDevice () :
 	mMajorVersion ( 0 ),
 	mMaxPrims ( 0 ),
 	mMinorVersion ( 0 ),
-	mPackedColor ( 0xffffffff ),
+	mFinalColor32 ( 0xffffffff ),
 	mPenWidth ( 1.0f ),
 	mPointSize ( 1.0f ),
 	mPrimCount ( 0 ),
@@ -768,6 +762,8 @@ MOAIGfxDevice::MOAIGfxDevice () :
 	this->mUVTransform.Ident ();
 	this->mCpuVertexTransformMtx.Ident ();
 	
+	this->mAmbientColor.Set ( 1.0f, 1.0f, 1.0f, 1.0f );
+	this->mFinalColor.Set ( 1.0f, 1.0f, 1.0f, 1.0f );
 	this->mPenColor.Set ( 1.0f, 1.0f, 1.0f, 1.0f );
 	this->mViewRect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
 	this->mScissorRect.Init ( 0.0f, 0.0f, 0.0f, 0.0f );
@@ -886,9 +882,9 @@ void MOAIGfxDevice::ResetState () {
 	this->mPrimCount = 0;
 
 	// turn off texture
-#if USE_OPENGLES1
-	glDisable ( GL_TEXTURE_2D );
-#endif
+	#if USE_OPENGLES1
+		glDisable ( GL_TEXTURE_2D );
+	#endif
 	this->mTextureUnits [ 0 ] = 0;
 	
 	// turn off blending
@@ -924,18 +920,41 @@ void MOAIGfxDevice::ResetState () {
 	MOAIGfxDevice& device = MOAIGfxDevice::Get ();
 	USRect scissorRect = device.GetRect ();
 	glScissor (( int )scissorRect.mXMin, ( int )scissorRect.mYMin, ( int )scissorRect.Width (), ( int )scissorRect.Height ());
+	
 	this->mScissorRect = scissorRect;
-#if USE_OPENGLES1
-	// fixed function reset
-	if ( !this->IsProgrammable ()) {
-		
-		// reset the current vertex color
-		glColor4f ( 1.0f, 1.0f, 1.0f, 1.0f );
-		
-		// reset the point size
-		glPointSize (( GLfloat )this->mPointSize );
-	}
-#endif
+	
+	#if USE_OPENGLES1
+		// fixed function reset
+		if ( !this->IsProgrammable ()) {
+			
+			// reset the current vertex color
+			glColor4f ( 1.0f, 1.0f, 1.0f, 1.0f );
+			
+			// reset the point size
+			glPointSize (( GLfloat )this->mPointSize );
+		}
+	#endif
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDevice::SetAmbientColor ( u32 color ) {
+
+	this->mAmbientColor.SetRGBA ( color );
+	this->UpdateFinalColor ();
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDevice::SetAmbientColor ( const USColorVec& colorVec ) {
+
+	this->mAmbientColor = colorVec;
+	this->UpdateFinalColor ();
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDevice::SetAmbientColor ( float r, float g, float b, float a ) {
+
+	this->mAmbientColor.Set ( r, g, b, a );
+	this->UpdateFinalColor ();
 }
 
 //----------------------------------------------------------------//
@@ -1082,33 +1101,21 @@ bool MOAIGfxDevice::SetGfxState ( MOAIGfxState* gfxState ) {
 void MOAIGfxDevice::SetPenColor ( u32 color ) {
 
 	this->mPenColor.SetRGBA ( color );
-	this->mPackedColor = color;
-	
-	if ( this->mShader ) {
-		this->mShader->UpdatePenColor ( this->mPenColor.mR, this->mPenColor.mG, this->mPenColor.mB, this->mPenColor.mA );
-	}
+	this->UpdateFinalColor ();
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxDevice::SetPenColor ( const USColorVec& colorVec ) {
 
 	this->mPenColor = colorVec;
-	this->mPackedColor = this->mPenColor.PackRGBA ();
-	
-	if ( this->mShader ) {
-		this->mShader->UpdatePenColor ( this->mPenColor.mR, this->mPenColor.mG, this->mPenColor.mB, this->mPenColor.mA );
-	}
+	this->UpdateFinalColor ();
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxDevice::SetPenColor ( float r, float g, float b, float a ) {
 
 	this->mPenColor.Set ( r, g, b, a );
-	this->mPackedColor = this->mPenColor.PackRGBA ();
-	
-	if ( this->mShader ) {
-		this->mShader->UpdatePenColor ( this->mPenColor.mR, this->mPenColor.mG, this->mPenColor.mB, this->mPenColor.mA );
-	}
+	this->UpdateFinalColor ();
 }
 
 //----------------------------------------------------------------//
@@ -1123,14 +1130,15 @@ void MOAIGfxDevice::SetPenWidth ( float penWidth ) {
 
 //----------------------------------------------------------------//
 void MOAIGfxDevice::SetPointSize ( float pointSize ) {
-#if USE_OPENGLES1
-	if ( this->mPointSize != pointSize ) {
-		this->Flush ();
-		this->mPointSize = pointSize;
 
-		glPointSize (( GLfloat )pointSize );
-	}
-#endif
+	#if USE_OPENGLES1
+		if ( this->mPointSize != pointSize ) {
+			this->Flush ();
+			this->mPointSize = pointSize;
+
+			glPointSize (( GLfloat )pointSize );
+		}
+	#endif
 }
 
 //----------------------------------------------------------------//
@@ -1507,6 +1515,21 @@ void MOAIGfxDevice::SoftReleaseResources ( u32 age ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIGfxDevice::UpdateFinalColor () {
+
+	this->mFinalColor.mR = this->mAmbientColor.mR * this->mPenColor.mR;
+	this->mFinalColor.mG = this->mAmbientColor.mG * this->mPenColor.mG;
+	this->mFinalColor.mB = this->mAmbientColor.mB * this->mPenColor.mB;
+	this->mFinalColor.mA = this->mAmbientColor.mA * this->mPenColor.mA;
+
+	this->mFinalColor32 = this->mFinalColor.PackRGBA ();
+	
+	if ( this->mShader ) {
+		this->mShader->UpdatePenColor ( this->mFinalColor.mR, this->mFinalColor.mG, this->mFinalColor.mB, this->mFinalColor.mA );
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAIGfxDevice::UpdateCpuVertexMtx () {
 
 	u32 start = this->mVertexMtxInput;
@@ -1525,54 +1548,54 @@ void MOAIGfxDevice::UpdateGpuVertexMtx () {
 
 	if ( this->IsProgrammable ()) return;
 
-#if USE_OPENGLES1
-	this->Flush ();
+	#if USE_OPENGLES1
+		this->Flush ();
 
-	// update the gpu matrices
-	switch ( this->mVertexMtxOutput ) {
-		
-		case VTX_STAGE_MODEL:
-		
-			glMatrixMode ( GL_MODELVIEW );
-			this->GpuLoadMatrix ( this->mVertexTransforms [ VTX_WORLD_TRANSFORM ]);
-			this->GpuMultMatrix ( this->mVertexTransforms [ VTX_VIEW_TRANSFORM ]);
-		
-			glMatrixMode ( GL_PROJECTION );
-			this->GpuLoadMatrix ( this->mVertexTransforms [ VTX_PROJ_TRANSFORM ]);
+		// update the gpu matrices
+		switch ( this->mVertexMtxOutput ) {
 			
-			break;
+			case VTX_STAGE_MODEL:
 			
-		case VTX_STAGE_WORLD:
+				glMatrixMode ( GL_MODELVIEW );
+				this->GpuLoadMatrix ( this->mVertexTransforms [ VTX_WORLD_TRANSFORM ]);
+				this->GpuMultMatrix ( this->mVertexTransforms [ VTX_VIEW_TRANSFORM ]);
 			
-			glMatrixMode ( GL_MODELVIEW );
-			this->GpuLoadMatrix ( this->mVertexTransforms [ VTX_VIEW_TRANSFORM ]);
+				glMatrixMode ( GL_PROJECTION );
+				this->GpuLoadMatrix ( this->mVertexTransforms [ VTX_PROJ_TRANSFORM ]);
+				
+				break;
+				
+			case VTX_STAGE_WORLD:
+				
+				glMatrixMode ( GL_MODELVIEW );
+				this->GpuLoadMatrix ( this->mVertexTransforms [ VTX_VIEW_TRANSFORM ]);
+				
+				glMatrixMode ( GL_PROJECTION );
+				this->GpuLoadMatrix ( this->mVertexTransforms [ VTX_PROJ_TRANSFORM ]);
 			
-			glMatrixMode ( GL_PROJECTION );
-			this->GpuLoadMatrix ( this->mVertexTransforms [ VTX_PROJ_TRANSFORM ]);
-		
-			break;
+				break;
+				
+			case VTX_STAGE_VIEW:
+				
+				glMatrixMode ( GL_MODELVIEW );
+				glLoadIdentity ();
+				
+				glMatrixMode ( GL_PROJECTION );
+				this->GpuLoadMatrix ( this->mVertexTransforms [ VTX_PROJ_TRANSFORM ]);
+				
+				break;
 			
-		case VTX_STAGE_VIEW:
+			case VTX_STAGE_PROJ:
 			
-			glMatrixMode ( GL_MODELVIEW );
-			glLoadIdentity ();
+				glMatrixMode ( GL_MODELVIEW );
+				glLoadIdentity ();
+				
+				glMatrixMode ( GL_PROJECTION );
+				glLoadIdentity ();
 			
-			glMatrixMode ( GL_PROJECTION );
-			this->GpuLoadMatrix ( this->mVertexTransforms [ VTX_PROJ_TRANSFORM ]);
-			
-			break;
-		
-		case VTX_STAGE_PROJ:
-		
-			glMatrixMode ( GL_MODELVIEW );
-			glLoadIdentity ();
-			
-			glMatrixMode ( GL_PROJECTION );
-			glLoadIdentity ();
-		
-			break;
-	}
-#endif
+				break;
+		}
+	#endif
 }
 
 //----------------------------------------------------------------//
@@ -1582,27 +1605,27 @@ void MOAIGfxDevice::UpdateUVMtx () {
 		
 		this->mCpuUVTransform = !this->mUVTransform.IsIdent ();
 
-#if USE_OPENGLES1
-		// flush and load gl UV transform
-		if ( !this->mIsProgrammable ) {
-			this->Flush ();
-			glMatrixMode ( GL_TEXTURE );
-			glLoadIdentity ();
-		}
-#endif
+		#if USE_OPENGLES1
+			// flush and load gl UV transform
+			if ( !this->mIsProgrammable ) {
+				this->Flush ();
+				glMatrixMode ( GL_TEXTURE );
+				glLoadIdentity ();
+			}
+		#endif
 	}
 	else {
 		
 		this->mCpuUVTransform = false;
 
-#if USE_OPENGLES1
-		// flush and load gl UV transform
-		if ( !this->mIsProgrammable ) {
-			this->Flush ();
-			glMatrixMode ( GL_TEXTURE );
-			this->GpuLoadMatrix ( this->mUVTransform );
-		}
-#endif
+		#if USE_OPENGLES1
+			// flush and load gl UV transform
+			if ( !this->mIsProgrammable ) {
+				this->Flush ();
+				glMatrixMode ( GL_TEXTURE );
+				this->GpuLoadMatrix ( this->mUVTransform );
+			}
+		#endif
 	}
 }
 
@@ -1658,17 +1681,17 @@ void MOAIGfxDevice::WriteQuad ( USVec4D* vtx, USVec2D* uv ) {
 		// left top
 		this->Write ( vtx [ 0 ]);
 		this->Write ( uv [ 0 ]);
-		this->WritePenColor4b ();
+		this->WriteFinalColor4b ();
 		
 		// left bottom
 		this->Write ( vtx [ 3 ]);
 		this->Write ( uv [ 3 ]);
-		this->WritePenColor4b ();	
+		this->WriteFinalColor4b ();	
 	
 		// right bottom
 		this->Write ( vtx[ 2 ]);
 		this->Write ( uv [ 2 ]);
-		this->WritePenColor4b ();
+		this->WriteFinalColor4b ();
 		
 	this->EndPrim ();
 	
@@ -1677,17 +1700,17 @@ void MOAIGfxDevice::WriteQuad ( USVec4D* vtx, USVec2D* uv ) {
 		// left top
 		this->Write ( vtx [ 0 ]);
 		this->Write ( uv [ 0 ]);
-		this->WritePenColor4b ();	
+		this->WriteFinalColor4b ();	
 	
 		// right bottom
 		this->Write ( vtx [ 2 ]);
 		this->Write ( uv [ 2 ]);
-		this->WritePenColor4b ();	
+		this->WriteFinalColor4b ();	
 	
 		// right top
 		this->Write ( vtx [ 1 ]);
 		this->Write ( uv [ 1 ]);
-		this->WritePenColor4b ();
+		this->WriteFinalColor4b ();
 		
 	this->EndPrim ();
 }

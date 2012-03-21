@@ -152,6 +152,76 @@ MOAIProp2D = MOAIProp.extend (
 	end
 )
 
+MOAIRenderMgr = MOAIRenderMgr.extend (
+	
+	-- extend the class
+	function ( class, super )
+	
+		function class.affirmRenderTable ()
+
+			local renderTable = class.getRenderTable ()
+			if not renderTable then
+				renderTable = {}
+				class.setRenderTable ( renderTable )
+			end
+			
+			return renderTable
+		end
+
+		function class.clearRenderStack ()
+			
+			local renderTable = class.affirmRenderTable ()
+			renderTable [ 1 ] = nil
+		end
+		
+		function class.popRenderPass ()
+
+			local renderTable = class.affirmRenderTable ()
+			table.remove ( renderTable )
+		end
+		
+		function class.pushRenderPass ( pass )
+
+			local renderTable = class.affirmRenderTable ()
+			table.insert ( renderTable, pass )
+		end
+		
+		function class.removeRenderPass ( pass )
+
+			local renderTable = class.affirmRenderTable ()
+			for i, cursor in ipairs ( renderTable ) do
+				if cursor == pass then
+					table.remove ( renderTable, i )
+					break
+				end
+			end
+		end
+	end
+)
+
+MOAISim = MOAISim.extend (
+	
+	-- extend the class
+	function ( class, super )
+
+		function class.clearRenderStack ()
+			MOAIRenderMgr.clearRenderStack ()
+		end
+		
+		function class.popRenderPass ()
+			MOAIRenderMgr.popRenderPass ()
+		end
+		
+		function class.pushRenderPass ( pass )
+			MOAIRenderMgr.pushRenderPass ( pass )
+		end
+		
+		function class.removeRenderPass ( pass )
+			MOAIRenderMgr.removeRenderPass ( pass )
+		end
+	end
+)
+
 MOAITextBox = MOAITextBox.extend (
 
 	-- extend the instance interface

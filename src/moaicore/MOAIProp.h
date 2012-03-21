@@ -8,6 +8,7 @@
 #include <moaicore/MOAIColor.h>
 #include <moaicore/MOAILua.h>
 #include <moaicore/MOAIProp.h>
+#include <moaicore/MOAIRenderable.h>
 #include <moaicore/MOAITransform.h>
 
 class MOAICellCoord;
@@ -71,7 +72,8 @@ class MOAITextureBase;
 */
 class MOAIProp :
 	public MOAITransform,
-	public MOAIColor {
+	public MOAIColor,
+	public MOAIRenderable {
 private:
 
 	friend class MOAIPartition;
@@ -205,6 +207,7 @@ public:
 	void				OnDepNodeUpdate			();
 	void				RegisterLuaClass		( MOAILuaState& state );
 	void				RegisterLuaFuncs		( MOAILuaState& state );
+	void				Render					();
 	void				SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
 	void				SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
 	void				SetPartition			( MOAIPartition* partition );

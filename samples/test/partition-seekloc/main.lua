@@ -132,6 +132,8 @@ function Dialog:clickCallback( down )
        
 	if down then
 
+		mouseX, mouseY = MOAIInputMgr.device.pointer:getLoc () -- TODO: fix to also work with touch sensor
+		mouseX, mouseY = alert_layer:wndToWorld ( mouseX, mouseY )
 		pick = alert_partition:propForPoint ( mouseX, mouseY )
 	   
 		if pick then

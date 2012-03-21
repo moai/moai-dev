@@ -83,10 +83,11 @@ void MOAIPartitionLayer::GatherProps ( MOAIPartitionResultBuffer& results, MOAIP
 	float halfSize = this->mCellSize * 0.5f;
 
 	USRect rect = box.GetRect ( planeID );
-	MOAICellCoord coord = this->mGridSpace.GetCellCoord ( rect.mXMin - halfSize, rect.mYMax + halfSize );
+	MOAICellCoord coord0 = this->mGridSpace.GetCellCoord ( rect.mXMin - halfSize, rect.mYMin - halfSize );
+	MOAICellCoord coord1 = this->mGridSpace.GetCellCoord ( rect.mXMax + halfSize, rect.mYMax + halfSize );
 
-	int xTotal = ( int )( rect.Width () / this->mGridSpace.GetCellWidth ()) + 2;
-	int yTotal = ( int )( rect.Height () / this->mGridSpace.GetCellHeight ()) + 2;
+	int xTotal = coord1.mX - coord0.mX + 1;
+	int yTotal = coord1.mY - coord0.mY + 1;
 	
 	int width = this->mGridSpace.GetWidth ();
 	int height = this->mGridSpace.GetHeight ();
@@ -97,7 +98,7 @@ void MOAIPartitionLayer::GatherProps ( MOAIPartitionResultBuffer& results, MOAIP
 	for ( int y = 0; y < yTotal; ++y ) {
 		for ( int x = 0; x < xTotal; ++x ) {
 			
-			MOAICellCoord offset = this->mGridSpace.WrapCellCoord ( coord.mX + x, coord.mY - y );
+			MOAICellCoord offset = this->mGridSpace.WrapCellCoord ( coord0.mX + x, coord0.mY + y );
 			u32 addr = this->mGridSpace.GetCellAddr ( offset );
 			this->mCells [ addr ].GatherProps ( results, ignore, box, mask );
 		}
@@ -110,10 +111,11 @@ void MOAIPartitionLayer::GatherProps ( MOAIPartitionResultBuffer& results, MOAIP
 	float halfSize = this->mCellSize * 0.5f;
 
 	USRect rect = frustum.mAABB.GetRect ( planeID );
-	MOAICellCoord coord = this->mGridSpace.GetCellCoord ( rect.mXMin - halfSize, rect.mYMax + halfSize );
+	MOAICellCoord coord0 = this->mGridSpace.GetCellCoord ( rect.mXMin - halfSize, rect.mYMin - halfSize );
+	MOAICellCoord coord1 = this->mGridSpace.GetCellCoord ( rect.mXMax + halfSize, rect.mYMax + halfSize );
 
-	int xTotal = ( int )( rect.Width () / this->mGridSpace.GetCellWidth ()) + 2;
-	int yTotal = ( int )( rect.Height () / this->mGridSpace.GetCellHeight ()) + 2;
+	int xTotal = coord1.mX - coord0.mX + 1;
+	int yTotal = coord1.mY - coord0.mY + 1;
 	
 	int width = this->mGridSpace.GetWidth ();
 	int height = this->mGridSpace.GetHeight ();
@@ -124,7 +126,7 @@ void MOAIPartitionLayer::GatherProps ( MOAIPartitionResultBuffer& results, MOAIP
 	for ( int y = 0; y < yTotal; ++y ) {
 		for ( int x = 0; x < xTotal; ++x ) {
 			
-			MOAICellCoord offset = this->mGridSpace.WrapCellCoord ( coord.mX + x, coord.mY - y );
+			MOAICellCoord offset = this->mGridSpace.WrapCellCoord ( coord0.mX + x, coord0.mY + y );
 			u32 addr = this->mGridSpace.GetCellAddr ( offset );
 			this->mCells [ addr ].GatherProps ( results, ignore, frustum, mask );
 		}
@@ -168,11 +170,10 @@ MOAIPartitionLayer::~MOAIPartitionLayer () {
 //----------------------------------------------------------------//
 void MOAIPartitionLayer::PlaceProp ( MOAIProp& prop ) {
 
-	USVec3D loc;
-	prop.mBounds.GetCenter ( loc );
-	MOAICellCoord coord = this->mGridSpace.GetCellCoord ( loc.mX, loc.mY );
-
-	//printf ( "cell %d ( %d, %d )\n", this->mGridSpace.GetTileAddr ( coord ), coord.mX, coord.mY );
+	//USVec3D loc;
+	//prop.mBounds.GetCenter ( loc );
+	//MOAICellCoord coord = this->mGridSpace.GetCellCoord ( loc.mX, loc.mY );
+	//printf ( "cell %d ( %d, %d )\n", this->mGridSpace.GetCellAddr ( coord ), coord.mX, coord.mY );
 
 	MOAIPartitionCell* cell = this->GetCell ( prop );
 	cell->InsertProp ( prop );

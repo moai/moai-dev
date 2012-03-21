@@ -101,6 +101,8 @@
 #include <moaicore/MOAIProp.h>
 #include <moaicore/MOAIPvrHeader.h>
 #include <moaicore/MOAIQuadBrush.h>
+#include <moaicore/MOAIRenderable.h>
+#include <moaicore/MOAIRenderMgr.h>
 #include <moaicore/MOAIRtti.h>
 #include <moaicore/MOAIScriptDeck.h>
 #include <moaicore/MOAIScriptNode.h>

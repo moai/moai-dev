@@ -6,7 +6,7 @@
 #include <moaicore/MOAIGfxDevice.h>
 #include <moaicore/MOAIGfxResource.h>
 #include <moaicore/MOAILogMessages.h>
-#include <moaicore/MOAISim.h>
+#include <moaicore/MOAIRenderMgr.h>
 
 //================================================================//
 // MOAIGfxState
@@ -31,7 +31,7 @@ MOAIGfxState::~MOAIGfxState () {
 int MOAIGfxResource::_getAge ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGfxResource, "U" )
 
-	u32 age = MOAISim::Get ().GetRenderCounter () - self->mLastRenderCount;
+	u32 age = MOAIRenderMgr::Get ().GetRenderCounter () - self->mLastRenderCount;
 	lua_pushnumber ( state, age );
 
 	return 1;
@@ -87,7 +87,7 @@ bool MOAIGfxResource::Bind () {
 	if ( this->Affirm ()) {
 		this->OnBind ();
 		
-		this->mLastRenderCount = MOAISim::Get ().GetRenderCounter ();
+		this->mLastRenderCount = MOAIRenderMgr::Get ().GetRenderCounter ();
 		
 		return true;
 	}
@@ -192,7 +192,7 @@ bool MOAIGfxResource::SoftRelease ( u32 age ) {
 
 	if ( this->mState != STATE_READY ) return false;
 
-	age = MOAISim::Get ().GetRenderCounter () - age;
+	age = MOAIRenderMgr::Get ().GetRenderCounter () - age;
 
 	if ( this->mLastRenderCount <= age ) {
 		if ( this->IsRenewable ()) {

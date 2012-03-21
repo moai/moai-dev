@@ -248,10 +248,10 @@ static void drawSegmentShape ( cpBody* body, cpSegmentShape* seg, cpSpace* space
 		gfxDevice.SetPenColor ( USColor::PackRGBA ( LINE_COLOR, 1.0f ));
 		
 		gfxDevice.WriteVtx (( float )a.x, ( float )a.y, 0.0f );
-		gfxDevice.WritePenColor4b ();
+		gfxDevice.WriteFinalColor4b ();
 		
 		gfxDevice.WriteVtx (( float )b.x, ( float )b.y, 0.0f );
-		gfxDevice.WritePenColor4b ();
+		gfxDevice.WriteFinalColor4b ();
 		
 		gfxDevice.Flush ();
 	}
@@ -435,16 +435,16 @@ static void drawBB ( cpShape *shape, void *unused ) {
 	gfxDevice.SetPrimType ( GL_LINE_LOOP );
 
 	gfxDevice.WriteVtx (( float )shape->bb.l, ( float )shape->bb.b, 0.0f );
-	gfxDevice.WritePenColor4b ();
+	gfxDevice.WriteFinalColor4b ();
 	
 	gfxDevice.WriteVtx (( float )shape->bb.l, ( float )shape->bb.t, 0.0f );
-	gfxDevice.WritePenColor4b ();
+	gfxDevice.WriteFinalColor4b ();
 	
 	gfxDevice.WriteVtx (( float )shape->bb.r, ( float )shape->bb.t, 0.0f );
-	gfxDevice.WritePenColor4b ();
+	gfxDevice.WriteFinalColor4b ();
 	
 	gfxDevice.WriteVtx (( float )shape->bb.r, ( float )shape->bb.b, 0.0f );
-	gfxDevice.WritePenColor4b ();
+	gfxDevice.WriteFinalColor4b ();
 
 	gfxDevice.Flush ();
 }

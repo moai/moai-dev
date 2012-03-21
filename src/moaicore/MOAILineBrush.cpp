@@ -19,10 +19,10 @@ void MOAILineBrush::Draw () {
 	gfxDevice.BeginPrim ();
 	
 		gfxDevice.WriteVtx ( this->mVtx [ 0 ], this->mVtx [ 1 ], 0.0f );
-		gfxDevice.WritePenColor4b ();
+		gfxDevice.WriteFinalColor4b ();
 		
 		gfxDevice.WriteVtx ( this->mVtx [ 2 ], this->mVtx [ 3 ], 0.0f );
-		gfxDevice.WritePenColor4b ();
+		gfxDevice.WriteFinalColor4b ();
 	
 	gfxDevice.EndPrim ();
 }

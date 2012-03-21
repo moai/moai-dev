@@ -903,6 +903,7 @@ MOAIProp::MOAIProp () :
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAITransform )
 		RTTI_EXTEND ( MOAIColor )
+		RTTI_EXTEND ( MOAIRenderable )
 	RTTI_END
 	
 	this->mLinkInCell.Data ( this );
@@ -1042,6 +1043,12 @@ void MOAIProp::RegisterLuaFuncs ( MOAILuaState& state ) {
 	};
 	
 	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAIProp::Render () {
+
+	this->Draw ( MOAIProp::NO_SUBPRIM_ID, true );
 }
 
 //----------------------------------------------------------------//
