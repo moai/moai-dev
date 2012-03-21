@@ -6,11 +6,7 @@
 
 #include <moaicore/MOAILua.h>
 
-// Swap the endianness of a 4-byte word.
-// On some architectures you can replace my_swap4 with an inlined instruction.
-inline unsigned long my_swap4(unsigned long result) {
-    
-}
+class MOAIDataBuffer;
 
 
 //================================================================//
@@ -44,10 +40,10 @@ private:
 		
 		if( this->mReversed ) {
 			unsigned long v = *ptr;
-			unsigned long c0 = (result >> 0) & 0xff;
-			unsigned long c1 = (result >> 8) & 0xff;
-			unsigned long c2 = (result >> 16) & 0xff;
-			unsigned long c3 = (result >> 24) & 0xff;
+			unsigned long c0 = (v >> 0) & 0xff;
+			unsigned long c1 = (v >> 8) & 0xff;
+			unsigned long c2 = (v >> 16) & 0xff;
+			unsigned long c3 = (v >> 24) & 0xff;
 			return (c0 << 24) | (c1 << 16) | (c2 << 8) | c3;
 		}
 		else {

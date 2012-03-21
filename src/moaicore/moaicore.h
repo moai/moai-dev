@@ -113,6 +113,7 @@
 #include <moaicore/MOAIStretchPatch2D.h>
 #include <moaicore/MOAISurfaceDeck2D.h>
 #include <moaicore/MOAITextBox.h>
+#include <moaicore/MOAITextBundle.h>
 #include <moaicore/MOAITextFrame.h>
 #include <moaicore/MOAITextLayout.h>
 #include <moaicore/MOAITexture.h>

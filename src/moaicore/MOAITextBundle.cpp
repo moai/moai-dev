@@ -36,16 +36,16 @@ inline unsigned long hashpjw(const char *str_param) {
  @in mixed source A MOAIDataBuffer containing the text bundle, or a string containing the filename to load.
  @out	number size				The number of bytes in this data buffer object.
  */
-static int MOAITextBundle::_load( lua_State* L ) {
+int MOAITextBundle::_load( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextBundle, "U" );
 	
 	MOAIDataBuffer* data = state.GetLuaObject < MOAIDataBuffer >( 2 );
 	if( data )
 	{
-		lua_pushbool(state, self->Load(data));
+		lua_pushboolean(state, self->Load(data));
 	}
 	else if ( state.IsType( 2, LUA_TSTRING ) ) {
-		lua_pushbool(state, self->Load(state.GetValue<cc8*>(2)));
+		lua_pushboolean(state, self->Load(state.GetValue<cc8*>(2, 0)));
 	}
 	
 	return 1;
@@ -59,7 +59,7 @@ static int MOAITextBundle::_load( lua_State* L ) {
  @in string key A text string to use as a "key"
  @out string value The value if found, otherwise it returns the original string if not found.
  */
-static int MOAITextBundle::_load( lua_State* L ) {
+int MOAITextBundle::_lookup( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextBundle, "US" );
 	
 	cc8 *key = state.GetValue<cc8*>(2, 0);
@@ -93,7 +93,7 @@ MOAITextBundle::~MOAITextBundle () {
 
 //----------------------------------------------------------------//
 void MOAITextBundle::RegisterLuaClass ( MOAILuaState& state ) {
-	
+	UNUSED(state);
 }
 
 //----------------------------------------------------------------//
@@ -132,7 +132,7 @@ bool MOAITextBundle::Load(const char *filename) {
 	}
 	
 	MOAIDataBuffer buf;
-	if( !buf->Load ( filename ) ) {
+	if( !buf.Load ( filename ) ) {
 		// TODO: log error message?
 		return false;
 	}
@@ -168,10 +168,10 @@ bool MOAITextBundle::Load(MOAIDataBuffer *buffer) {
 	
 	unsigned long magic = ((unsigned long *)mData)[0];
 	if( magic == MAGIC ) {
-		mReversed = false
+		mReversed = false;
 	}
 	else if( magic == MAGIC_REVERSED ) {
-		mReversed = true
+		mReversed = true;
 	}
 	else {
 		// Bad file?
@@ -195,7 +195,7 @@ bool MOAITextBundle::Load(MOAIDataBuffer *buffer) {
 }
 
 //----------------------------------------------------------------//
-const char *MOAITextBundle::GetIndex(const char *key) {
+int MOAITextBundle::GetIndex(const char *key) {
 	unsigned long V = hashpjw(key);
 	int S = this->mNumHashEntries;
 	
@@ -211,7 +211,7 @@ const char *MOAITextBundle::GetIndex(const char *key) {
 		
 		idx--; // Indexes are stored as +1, so 0 indicates empty
 		
-		char *s = this->GetKeyString(idx);
+		const char *s = this->GetKeyString(idx);
 		if( strcmp(key, s) == 0 ) {
 			return idx;
 		}
@@ -230,14 +230,14 @@ const char *MOAITextBundle::GetIndex(const char *key) {
 
 //----------------------------------------------------------------//
 const char *MOAITextBundle::GetKeyString(int idx) {
-	int offset = mKTableOffset + 8 * index + 4;
+	int offset = mKTableOffset + 8 * idx + 4;
 	offset = readInt4(offset);
 	return ((const char *)mData) + offset;
 }
 
 //----------------------------------------------------------------//
 const char *MOAITextBundle::GetValueString(int idx) {
-	int offset = mVTableOffset + 8 * index + 4;
+	int offset = mVTableOffset + 8 * idx + 4;
 	offset = readInt4(offset);
 	return ((const char *)mData) + offset;
 }
