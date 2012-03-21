@@ -1428,6 +1428,10 @@
 		668E165C14887A0A00897ED6 /* MOAIWheelSensor.h in Headers */ = {isa = PBXBuildFile; fileRef = 668E165814887A0A00897ED6 /* MOAIWheelSensor.h */; };
 		66D967FC14047A2500017919 /* MOAIScriptDeck.h in Headers */ = {isa = PBXBuildFile; fileRef = 66D967F914047A2500017919 /* MOAIScriptDeck.h */; };
 		66D967FD14047A2500017919 /* MOAIScriptDeck.h in Headers */ = {isa = PBXBuildFile; fileRef = 66D967F914047A2500017919 /* MOAIScriptDeck.h */; };
+		83AAF8D41519419000C7DFD0 /* MOAITextBundle.h in Headers */ = {isa = PBXBuildFile; fileRef = 83AAF8D31519419000C7DFD0 /* MOAITextBundle.h */; };
+		83AAF8D51519419000C7DFD0 /* MOAITextBundle.h in Headers */ = {isa = PBXBuildFile; fileRef = 83AAF8D31519419000C7DFD0 /* MOAITextBundle.h */; };
+		83AAF8D7151941A000C7DFD0 /* MOAITextBundle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83AAF8D6151941A000C7DFD0 /* MOAITextBundle.cpp */; };
+		83AAF8D8151941A000C7DFD0 /* MOAITextBundle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83AAF8D6151941A000C7DFD0 /* MOAITextBundle.cpp */; };
 		83FE6863150164B8001CAEED /* MOAIFontShaderRGB-fsh.h in Headers */ = {isa = PBXBuildFile; fileRef = 83FE6861150164B7001CAEED /* MOAIFontShaderRGB-fsh.h */; };
 		83FE6864150164B8001CAEED /* MOAIFontShaderRGB-fsh.h in Headers */ = {isa = PBXBuildFile; fileRef = 83FE6861150164B7001CAEED /* MOAIFontShaderRGB-fsh.h */; };
 		83FE6865150164B8001CAEED /* MOAIFontShaderRGB-vsh.h in Headers */ = {isa = PBXBuildFile; fileRef = 83FE6862150164B7001CAEED /* MOAIFontShaderRGB-vsh.h */; };
@@ -3889,6 +3893,8 @@
 		66D967F4140479DF00017919 /* MOAILogMessages.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAILogMessages.cpp; sourceTree = "<group>"; };
 		66D967F814047A2500017919 /* MOAIScriptDeck.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIScriptDeck.cpp; sourceTree = "<group>"; };
 		66D967F914047A2500017919 /* MOAIScriptDeck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIScriptDeck.h; sourceTree = "<group>"; };
+		83AAF8D31519419000C7DFD0 /* MOAITextBundle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAITextBundle.h; sourceTree = "<group>"; };
+		83AAF8D6151941A000C7DFD0 /* MOAITextBundle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAITextBundle.cpp; sourceTree = "<group>"; };
 		83FE6861150164B7001CAEED /* MOAIFontShaderRGB-fsh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MOAIFontShaderRGB-fsh.h"; path = "shaders/MOAIFontShaderRGB-fsh.h"; sourceTree = "<group>"; };
 		83FE6862150164B7001CAEED /* MOAIFontShaderRGB-vsh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MOAIFontShaderRGB-vsh.h"; path = "shaders/MOAIFontShaderRGB-vsh.h"; sourceTree = "<group>"; };
 		A7758914150EDD2F00D36120 /* MOAIPexPlugin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIPexPlugin.cpp; sourceTree = "<group>"; };
@@ -6613,6 +6619,8 @@
 				CDEFB3F013E37F3C000A9523 /* MOAITextFrame.h */,
 				CDEFB3F113E37F3C000A9523 /* MOAITextLayout.cpp */,
 				CDEFB3F213E37F3C000A9523 /* MOAITextLayout.h */,
+				83AAF8D31519419000C7DFD0 /* MOAITextBundle.h */,
+				83AAF8D6151941A000C7DFD0 /* MOAITextBundle.cpp */,
 			);
 			name = textbox;
 			sourceTree = "<group>";
@@ -9159,6 +9167,7 @@
 				83FE6864150164B8001CAEED /* MOAIFontShaderRGB-fsh.h in Headers */,
 				83FE6866150164B8001CAEED /* MOAIFontShaderRGB-vsh.h in Headers */,
 				A7758919150EDD2F00D36120 /* MOAIPexPlugin.h in Headers */,
+				83AAF8D51519419000C7DFD0 /* MOAITextBundle.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9813,6 +9822,7 @@
 				83FE6863150164B8001CAEED /* MOAIFontShaderRGB-fsh.h in Headers */,
 				83FE6865150164B8001CAEED /* MOAIFontShaderRGB-vsh.h in Headers */,
 				A7758918150EDD2F00D36120 /* MOAIPexPlugin.h in Headers */,
+				83AAF8D41519419000C7DFD0 /* MOAITextBundle.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10766,6 +10776,7 @@
 				E9940E4314B7A4A0006465CC /* USTypedPtr.cpp in Sources */,
 				E9940E4714B7A4A0006465CC /* USXmlReader.cpp in Sources */,
 				A7758917150EDD2F00D36120 /* MOAIPexPlugin.cpp in Sources */,
+				83AAF8D8151941A000C7DFD0 /* MOAITextBundle.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11900,6 +11911,7 @@
 				E9940E4614B7A4A0006465CC /* USXmlReader.cpp in Sources */,
 				E952727314D8B0E000B32A28 /* MOAICrittercism.mm in Sources */,
 				A7758916150EDD2F00D36120 /* MOAIPexPlugin.cpp in Sources */,
+				83AAF8D7151941A000C7DFD0 /* MOAITextBundle.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

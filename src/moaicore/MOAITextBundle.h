@@ -1,14 +1,79 @@
-//
-//  MOAITextBundle.h
-//  libmoai
-//
-//  Created by Christopher Kohnert on 3/20/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
-//
+// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// http://getmoai.com
 
-#ifndef libmoai_MOAITextBundle_h
-#define libmoai_MOAITextBundle_h
+#ifndef MOAITEXTBUNDLE_H
+#define MOAITEXTBUNDLE_H
 
+#include <moaicore/MOAILua.h>
+
+// Swap the endianness of a 4-byte word.
+// On some architectures you can replace my_swap4 with an inlined instruction.
+inline unsigned long my_swap4(unsigned long result) {
+    
+}
+
+
+//================================================================//
+// MOAITextBundle
+//================================================================//
+/**	@name	MOAITextBundle
+ @text	A read-only lookup table of strings suitable for internationalization purposes. This
+ currently wraps a loaded gettext() style MO file (see http://www.gnu.org/software/gettext/manual/gettext.html).
+ So you are going to want to generate the .mo file from one of the existing tools such as poedit or msgfmt,
+ and then load that file using this class. Then you can lookup strings using MOAITextBundle->Lookup().
+ */
+
+class MOAITextBundle :
+	public virtual MOAILuaObject {
+private:
+	
+	//----------------------------------------------------------------//
+	static int		_load			( lua_State* L );
+	static int		_lookup			( lua_State* L );
+		
+	void * mData;
+	bool mReversed;
+	int mNumStrings;
+	int mKTableOffset;
+	int mVTableOffset;
+	int mNumHashEntries;
+	int mHashOffset;
+	
+	inline int readInt4(int offset) {
+		unsigned long *ptr = (unsigned long *)(((char *)this->mData) + offset);
+		
+		if( this->mReversed ) {
+			unsigned long v = *ptr;
+			unsigned long c0 = (result >> 0) & 0xff;
+			unsigned long c1 = (result >> 8) & 0xff;
+			unsigned long c2 = (result >> 16) & 0xff;
+			unsigned long c3 = (result >> 24) & 0xff;
+			return (c0 << 24) | (c1 << 16) | (c2 << 8) | c3;
+		}
+		else {
+			return *ptr;
+		}
+	}
+		
+	const char *			GetKeyString(int idx);
+	const char *			GetValueString(int idx);
+	int						GetIndex(const char *key);
+		
+public:
+	
+	DECL_LUA_FACTORY ( MOAITextBundle )
+	
+	//----------------------------------------------------------------//
+	MOAITextBundle			();
+	~MOAITextBundle			();
+	void					Clear();
+	bool					Load(const char *filename);
+	bool					Load(MOAIDataBuffer *buffer);
+	const char *			Lookup(const char *key);
+		
+	void			RegisterLuaClass	( MOAILuaState& state );
+	void			RegisterLuaFuncs	( MOAILuaState& state );
+};
 
 
 #endif
