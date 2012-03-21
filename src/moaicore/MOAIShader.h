@@ -118,9 +118,10 @@ protected:
 	bool			IsRenewable					();
 	void			OnBind						();
 	void			OnClear						();
+	void			OnCreate					();
+	void			OnDestroy					();
+	void			OnInvalidate				();
 	void			OnLoad						();
-	void			OnRenew						();
-	void			OnUnload					();
 	void			UpdatePenColor				( float r, float g, float b, float a );
 	void			UpdatePipelineTransforms	( const USMatrix4x4& world, const USMatrix4x4& view, const USMatrix4x4& proj );
 	bool			Validate					();

@@ -109,18 +109,18 @@ public:
 	static inline float Decimal ( float n ) {
 
 		if ( n < 0.0f ) {
-			return n + ( float )(( int )n );
+			return n + floorf ( n );
 		}
-		return n - ( float )(( int )n );
+		return n - floorf ( n );
 	}
 	
 	//----------------------------------------------------------------//
 	static inline double Decimal ( double n ) {
 
-		if ( n < 0.0f ) {
-			return n + ( double )(( s64 )n );
+		if ( n < 0.0 ) {
+			return n + floor ( n );
 		}
-		return n - ( double )(( s64 )n );
+		return n - floor ( n );
 	}
 
 	//----------------------------------------------------------------//

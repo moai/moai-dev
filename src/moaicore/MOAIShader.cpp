@@ -656,7 +656,7 @@ void MOAIShader::OnClear () {
 }
 
 //----------------------------------------------------------------//
-void MOAIShader::OnLoad () {
+void MOAIShader::OnCreate () {
 
 	this->mVertexShader = this->CompileShader ( GL_VERTEX_SHADER, this->mVertexShaderSource );
 	this->mFragmentShader = this->CompileShader ( GL_FRAGMENT_SHADER, this->mFragmentShaderSource );
@@ -664,7 +664,6 @@ void MOAIShader::OnLoad () {
 	
 	if ( !( this->mVertexShader && this->mFragmentShader && this->mProgram )) {
 		this->Clear ();
-		this->SetError ();
 		return;
 	}
     
@@ -686,7 +685,6 @@ void MOAIShader::OnLoad () {
 	
 	if ( status == 0 ) {
 		this->Clear ();
-		this->SetError ();
 		return;
 	}
 	
@@ -711,17 +709,7 @@ void MOAIShader::OnLoad () {
 }
 
 //----------------------------------------------------------------//
-void MOAIShader::OnRenew () {
-
-	this->mProgram = 0;
-	this->mVertexShader = 0;
-	this->mFragmentShader = 0;
-	
-	this->OnLoad ();
-}
-
-//----------------------------------------------------------------//
-void MOAIShader::OnUnload () {
+void MOAIShader::OnDestroy () {
 
 	if ( this->mVertexShader ) {
 		MOAIGfxDevice::Get ().PushDeleter ( MOAIGfxDeleter::DELETE_SHADER, this->mVertexShader );
@@ -737,6 +725,18 @@ void MOAIShader::OnUnload () {
 		MOAIGfxDevice::Get ().PushDeleter ( MOAIGfxDeleter::DELETE_SHADER, this->mProgram );
 		this->mProgram = 0;
 	}
+}
+
+//----------------------------------------------------------------//
+void MOAIShader::OnInvalidate () {
+
+	this->mVertexShader = 0;
+	this->mFragmentShader = 0;
+	this->mProgram = 0;
+}
+
+//----------------------------------------------------------------//
+void MOAIShader::OnLoad () {
 }
 
 //----------------------------------------------------------------//

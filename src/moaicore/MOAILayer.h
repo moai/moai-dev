@@ -97,6 +97,7 @@ public:
 					~MOAILayer				();
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
+	void			Render					();
 };
 
 #endif

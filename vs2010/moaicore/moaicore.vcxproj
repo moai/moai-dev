@@ -479,7 +479,6 @@
     <ClInclude Include="..\..\src\moaicore\MOAIMesh.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIMotionSensor.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIMultiTexture.h" />
-    <ClInclude Include="..\..\src\moaicore\MOAIObject-impl.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIObject.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIParser.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIParticle.h" />

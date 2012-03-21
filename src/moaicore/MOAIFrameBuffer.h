@@ -9,6 +9,7 @@
 //================================================================//
 // MOAIFrameBuffer
 //================================================================//
+// TODO: doxygen
 class MOAIFrameBuffer :
 	public MOAITextureBase {
 private:
@@ -33,10 +34,10 @@ private:
 	
 	//----------------------------------------------------------------//
 	virtual bool		IsRenewable				();
-	virtual void		OnClear					();
+	virtual void		OnCreate				();
+	virtual void		OnDestroy				();
+	virtual void		OnInvalidate			();
 	virtual void		OnLoad					();
-	virtual void		OnRenew					();
-	virtual void		OnUnload				();
 
 public:
 	

@@ -560,6 +560,9 @@ void MOAILayer::Draw ( int subPrimID, bool reload ) {
 
 		MOAIProp* prevProp = 0;
 		
+		// set up the ambient color
+		gfxDevice.SetAmbientColor ( this->mColor );
+		
 		// render the sorted list
 		for ( u32 i = 0; i < totalResults; ++i ) {
 			MOAIPartitionResult* result = buffer.GetResultUnsafe ( i );
@@ -573,6 +576,9 @@ void MOAILayer::Draw ( int subPrimID, bool reload ) {
 			prevProp = prop;
 		}
 	}
+	
+	// clear the ambient color
+	gfxDevice.SetAmbientColor ( 1.0f, 1.0f, 1.0f, 1.0f );
 	
 	// render the debug lines
 	if ( this->mShowDebugLines ) {
@@ -747,4 +753,11 @@ void MOAILayer::RegisterLuaFuncs ( MOAILuaState& state ) {
 	};
 	
 	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAILayer::Render () {
+
+	MOAIGfxDevice::Get ().BeginLayer ();
+	this->Draw ( MOAIProp::NO_SUBPRIM_ID, true );
 }

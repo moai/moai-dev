@@ -69,8 +69,7 @@ int MOAITimer::_setMode ( lua_State* L ) {
 
 	self->mMode = state.GetValue < int >( 2, NORMAL );
 	
-	if( self->mMode == REVERSE ||
-		self->mMode == LOOP_REVERSE ){
+	if( self->mMode == REVERSE || self->mMode == LOOP_REVERSE ){
 		self->mDirection = -1.0f;
 	}
 	else {
@@ -100,12 +99,16 @@ int MOAITimer::_setSpan ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITimer, "UN" )
 
 	if ( state.IsType ( 3, LUA_TNUMBER )) {
-		self->mStartTime = state.GetValue < float >( 2, 0.0f );
-		self->mEndTime = state.GetValue < float >( 3, 1.0f );
+		
+		float startTime		= state.GetValue < float >( 2, 0.0f );
+		float endTime		= state.GetValue < float >( 3, 1.0f );
+		
+		self->SetSpan ( startTime, endTime );
 	}
 	else {
-		self->mStartTime = 0.0f;
-		self->mEndTime = state.GetValue < float >( 2, 1.0f );
+		float span			= state.GetValue < float >( 2, 1.0f );
+		
+		self->SetSpan ( span );
 	}
 	return 0;
 }
@@ -166,6 +169,8 @@ bool MOAITimer::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 //----------------------------------------------------------------//
 float MOAITimer::DoStep ( float step ) {
 
+	if ( step == 0.0f ) return 0.0f;
+
 	float length = this->mEndTime - this->mStartTime;
 
 	if ( length == 0.0f ) {
@@ -205,6 +210,7 @@ float MOAITimer::DoStep ( float step ) {
 				
 				while ( this->mTime >= this->mEndTime ) {
 					this->mTime -= length;
+					this->mCycle += 1.0f;
 					this->OnLoop ();
 					
 					float end = this->mTime < this->mEndTime ? this->mTime : this->mEndTime;
@@ -241,6 +247,7 @@ float MOAITimer::DoStep ( float step ) {
 				
 				while ( this->mTime <= this->mStartTime ) {
 					this->mTime += length;
+					this->mCycle -= 1.0f;
 					this->OnLoop ();
 					
 					float end = this->mTime > this->mStartTime ? this->mTime : this->mStartTime;
@@ -329,6 +336,27 @@ void MOAITimer::GenerateCallbacks ( float t0, float t1, bool end ) {
 }
 
 //----------------------------------------------------------------//
+float MOAITimer::GetCycle () {
+
+	float length = this->mEndTime - this->mStartTime;
+	float time = ( this->mTime + ( length * this->mCycle )) / length;
+	return time;
+}
+
+//----------------------------------------------------------------//
+float MOAITimer::GetNormalizedTime () {
+
+	float length = this->mEndTime - this->mStartTime;
+	
+	float time = ( this->mTime - this->mStartTime ) / length;
+	time = USFloat::Decimal ( time );
+	if ( time < 0.0f ) {
+		time += 1.0f;
+	}
+	return time;
+}
+
+//----------------------------------------------------------------//
 bool MOAITimer::IsDone () {
 
 	if ( this->mMode == NORMAL ) {
@@ -347,10 +375,11 @@ MOAITimer::MOAITimer () :
 	mStartTime ( 0.0f ),
 	mEndTime ( 1.0f ),
 	mTime ( 0.0f ),
+	mCycle ( 0.0f ),
 	mSpeed ( 1.0f ),
 	mDirection ( 1.0f ),
 	mMode ( NORMAL ),
-	mTimesExecuted ( 0 ) {
+	mTimesExecuted ( 0.0f ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAINode )
@@ -383,7 +412,7 @@ void MOAITimer::OnKeyframe ( u32 idx, float time, float value ) {
 //----------------------------------------------------------------//
 void MOAITimer::OnLoop () {
 	
-	this->mTimesExecuted++;
+	this->mTimesExecuted += 1.0f;
 	
 	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 	if ( this->PushListenerAndSelf ( EVENT_TIMER_LOOP, state )) {
@@ -448,6 +477,20 @@ void MOAITimer::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
+void MOAITimer::SetSpan ( float span ) {
+
+	this->mStartTime = 0.0f;
+	this->mEndTime = span;
+}
+
+//----------------------------------------------------------------//
+void MOAITimer::SetSpan ( float startTime, float endTime ) {
+
+	this->mStartTime = startTime;
+	this->mEndTime = endTime;
+}
+
+//----------------------------------------------------------------//
 void MOAITimer::SetTime ( float time ) {
 
 	float length = USFloat::Abs ( this->mEndTime - this->mStartTime );
@@ -455,7 +498,7 @@ void MOAITimer::SetTime ( float time ) {
 		time -= length;
 	}
 	this->mTime = time;
-	this->mTimesExecuted = 0;
+	this->mTimesExecuted = 0.0f;
 	this->ScheduleUpdate ();
 }
 

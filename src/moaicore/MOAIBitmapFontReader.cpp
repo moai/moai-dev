@@ -133,8 +133,8 @@ void MOAIBitmapFontPage::RipBitmap ( cc8* filename, cc8* charCodes ) {
 			
 			for ( u32 x = 1; x < width; ++x ) {
 	
-				u32 color = this->GetRGB ( x, y );
-				if ( color == maskColor ) {
+				u32 colorRgb = this->GetRGB ( x, y );
+				if ( colorRgb == maskColor ) {
 					
 					USIntRect frame = this->GetGlyphFrame ( x, y, maskColor );
 

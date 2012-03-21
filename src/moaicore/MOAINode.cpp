@@ -184,7 +184,7 @@ int MOAINode::_moveAttr ( lua_State* L ) {
 	if ( self->CheckAttrExists ( attrID )) {
 	
 		action->SetLink ( 0, self, attrID, value, mode );
-		action->SetLength ( length );
+		action->SetSpan ( length );
 		action->Start ();
 		action->PushLuaUserdata ( state );
 
@@ -244,7 +244,7 @@ int MOAINode::_seekAttr ( lua_State* L ) {
 		
 		action->SetLink ( 0, self, attrID, value - getter.GetValue (), mode );
 		
-		action->SetLength ( delay );
+		action->SetSpan ( delay );
 		action->Start ();
 		action->PushLuaUserdata ( state );
 

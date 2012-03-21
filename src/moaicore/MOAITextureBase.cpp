@@ -462,11 +462,7 @@ void MOAITextureBase::OnClear () {
 }
 
 //----------------------------------------------------------------//
-void MOAITextureBase::OnRenew () {
-}
-
-//----------------------------------------------------------------//
-void MOAITextureBase::OnUnload () {
+void MOAITextureBase::OnDestroy () {
 
 	if ( this->mGLTexID ) {
 		
@@ -474,6 +470,12 @@ void MOAITextureBase::OnUnload () {
 		MOAIGfxDevice::Get ().PushDeleter ( MOAIGfxDeleter::DELETE_TEXTURE, this->mGLTexID );
 		this->mGLTexID = 0;
 	}
+}
+
+//----------------------------------------------------------------//
+void MOAITextureBase::OnInvalidate () {
+
+	this->mGLTexID = 0;
 }
 
 //----------------------------------------------------------------//

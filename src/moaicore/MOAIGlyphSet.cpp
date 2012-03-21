@@ -28,7 +28,7 @@ MOAIGlyph* MOAIGlyphSet::GetGlyph ( u32 c ) {
 
 //----------------------------------------------------------------//
 MOAIGlyphSet::MOAIGlyphSet () :
-	mPoints ( 0.0f ),
+	mSize ( 0.0f ),
 	mHeight ( 0.0f ),
 	mAscent ( 0.0f ),
 	mPending ( 0 ),
@@ -43,7 +43,7 @@ MOAIGlyphSet::~MOAIGlyphSet (){
 void MOAIGlyphSet::SerializeIn ( MOAILuaState& state ) {
 	UNUSED ( state );
 	
-	this->mPoints	= state.GetField ( -1, "mPoints", this->mPoints );
+	this->mSize		= state.GetField ( -1, "mSize", this->mSize );
 	this->mHeight	= state.GetField ( -1, "mHeight", this->mHeight );
 	this->mAscent	= state.GetField ( -1, "mAscent", this->mAscent );
 
@@ -77,7 +77,7 @@ void MOAIGlyphSet::SerializeIn ( MOAILuaState& state ) {
 void MOAIGlyphSet::SerializeOut ( MOAILuaState& state ) {
 	UNUSED ( state );
 	
-	state.SetField ( -1, "mPoints", this->mPoints );
+	state.SetField ( -1, "mSize", this->mSize );
 	state.SetField ( -1, "mHeight", this->mHeight );
 	state.SetField ( -1, "mAscent", this->mAscent );
 
