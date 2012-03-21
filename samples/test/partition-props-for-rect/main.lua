@@ -34,6 +34,10 @@ prop = MOAIProp2D.new ()
 prop:setDeck ( gfxQuad )
 layer:insertProp ( prop )
 
+prop2 = MOAIProp2D.new ()
+prop2:setDeck ( gfxQuad )
+layer:insertProp ( prop2 )
+
 function onKeyboardEvent ( key, down )
 	if down == true then
 		-- print ( key )
@@ -71,6 +75,7 @@ local y2 = 0
 function onPointerEvent ( x, y )
 
 	x2, y2 = layer:wndToWorld ( x, y )
+	prop2:setLoc ( x2, y2 )
 end
 
 function onMouseLeftEvent ( down )
