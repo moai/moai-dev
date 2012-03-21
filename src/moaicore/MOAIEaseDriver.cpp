@@ -85,14 +85,14 @@ MOAIEaseDriver::~MOAIEaseDriver () {
 //----------------------------------------------------------------//
 void MOAIEaseDriver::OnUpdate ( float step ) {
 	
-	float t0 = USFloat::Clamp ( this->GetNormalizedTime (), 0.0f, 1.0f );
-	float c0 = this->mCycle;
+	float c0 = this->GetCycle ();
+	float t0 = USFloat::Clamp ( this->GetNormalizedTime () - c0, 0.0f, 1.0f );
 	
 	MOAITimer::OnUpdate ( step );
 	if ( step == 0.0f ) return;
 	
-	float t1 = USFloat::Clamp ( this->GetNormalizedTime (), 0.0f, 1.0f );
-	float c1 = this->mCycle;
+	float c1 = this->GetCycle ();
+	float t1 = USFloat::Clamp ( this->GetNormalizedTime () - c1, 0.0f, 1.0f );
 
 	MOAIAttrOp adder;
 
