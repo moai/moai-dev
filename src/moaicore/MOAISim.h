@@ -64,13 +64,6 @@ private:
 	float			mFrameRateBuffer [ FPS_BUFFER_SIZE ];
 	u32				mFrameRateIdx;
 	
-	USCallback < int > mLoadingScreenCallback;
-	USCallback < int > mTextInputCallback;
-	
-	bool			mNeedsInit;
-	STLString		mInitFromFilename;
-	STLString		mInitFromString;
-	
 	USTaskThread	mDataIOThread;
 	
 	u32				mLoopFlags;
