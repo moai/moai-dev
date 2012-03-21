@@ -173,6 +173,7 @@ namespace moaicore {
 
 	//----------------------------------------------------------------//
 	void			InitGlobals			( MOAIGlobals* globals ); // initialize a Moai context
+	void 			RunInitScripts 		();
 	void			SystemFinalize		(); // call *once* at exit
 	void			SystemInit			(); // call *once* at program startup
 }

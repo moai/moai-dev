@@ -3,14 +3,10 @@
 
 #import <aku/AKU-iphone.h>
 #import <moaiext-iphone/moaiext-iphone.h>
-#import <moaiext-iphone/MOAIFacebook.h>
-#import <moaiext-iphone/Reachability.h>
 #import <moaicore/MOAIEnvironment.h>
+
 #import <CoreTelephony/CTTelephonyNetworkInfo.h>
 #import <CoreTelephony/CTCarrier.h>
-
-#import <Crittercism.h>
-#import <TapjoyConnect.h>
 
 //-----------------------------------------------------------------//
 void AKUAppDidStartSession ( bool resumed ) {
@@ -117,10 +113,12 @@ void AKUIphoneInit ( UIApplication* application ) {
 	#endif
 
 	#ifndef DISABLE_CRITTERCISM
-		REGISTER_LUA_CLASS ( MOAICrittercism )
+		REGISTER_LUA_CLASS ( MOAICrittercismiOS )
 	#endif
 		
 	REGISTER_LUA_CLASS ( MOAIFacebook )
+	
+	AKUInit ();
 }
 
 //----------------------------------------------------------------//

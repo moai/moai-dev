@@ -54,6 +54,7 @@ AKU_API AKUContextID	AKUGetContext					();
 AKU_API void*			AKUGetUserdata					();
 AKU_API void			AKUFinalize						();
 AKU_API void			AKUInitMemPool					( size_t sizeInBytes );
+AKU_API void			AKUInit							();
 AKU_API void			AKUSetContext					( AKUContextID context );
 AKU_API void			AKUSetUserdata					( void* user );
 

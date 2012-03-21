@@ -248,6 +248,12 @@ char const* AKUGetWorkingDirectory () {
 }
 
 //----------------------------------------------------------------//
+void AKUInit () {
+	
+	moaicore::RunInitScripts ();
+}
+
+//----------------------------------------------------------------//
 void AKUInitMemPool ( size_t bytes ) {
 
 	assert ( !zipfs_tlsf_get_pool ());

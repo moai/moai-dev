@@ -191,3 +191,5 @@ MOAITransform2D = MOAITransform.extend (
 	function ( class, super )
 	end
 )
+
+MOAICrittercism = MOAICrittercismAndroid or MOAICrittercismiOS

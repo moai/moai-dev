@@ -282,8 +282,8 @@
 #endif
 
 #ifndef DISABLE_CRITTERCISM
-		MOAICrittercism::Affirm ();
-		REGISTER_LUA_CLASS ( MOAICrittercism );
+		MOAICrittercismAndroid::Affirm ();
+		REGISTER_LUA_CLASS ( MOAICrittercismAndroid );
 #endif
 
 #ifndef DISABLE_ADCOLONY
@@ -295,6 +295,8 @@
 		MOAIFacebook::Affirm ();
 		REGISTER_LUA_CLASS ( MOAIFacebook );
 #endif
+
+		AKUInit ();
 
 		inputQueue = new LockingQueue < InputEvent > ();
 	}

@@ -191,7 +191,11 @@ void moaicore::InitGlobals ( MOAIGlobals* globals ) {
 	#if USE_FREETYPE
 		REGISTER_LUA_CLASS ( MOAIFreeTypeFontReader )
 	#endif
-	
+}
+
+//----------------------------------------------------------------//
+void moaicore::RunInitScripts () {
+
 	// run bundled init scripts for back compat and Lua framework extensions
 	int size = moai2D_lua_SIZE; // avoid 'condition expression is constant' warning
 	if ( size ) {

@@ -265,6 +265,8 @@ int GlutHost ( int argc, char** argv ) {
 
 	AKUCreateContext ();
 	
+	AKUInit ();
+
 	#ifdef GLUTHOST_USE_FMOD
 		AKUFmodLoad ();
 	#endif
