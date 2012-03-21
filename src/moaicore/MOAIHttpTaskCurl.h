@@ -22,7 +22,6 @@ class MOAIHttpTaskCurl :
 	public MOAIHttpTaskBase {
 private:
 	
-	friend class MOAIHttpTaskCurl;
 	friend class MOAIUrlMgrCurl;
 
 	STLString			mUrl;
