@@ -46,6 +46,7 @@ public:
 
 	//----------------------------------------------------------------//
 	void			Clear					();
+	bool			IsReady					();
 					MOAIHttpTaskNaCl		();
 					~MOAIHttpTaskNaCl		();
 	void			NaClFinish				();
