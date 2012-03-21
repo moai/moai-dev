@@ -38,11 +38,13 @@ protected:
 	float	mEndTime;
 
 	float	mTime;
+	float	mCycle;
+	
 	float	mSpeed;
 	float	mDirection;
 
 	u32		mMode;
-	int		mTimesExecuted;
+	float	mTimesExecuted;
 
 	//----------------------------------------------------------------//
 	static int		_getTime			( lua_State* L );
@@ -85,6 +87,8 @@ public:
 	
 	//----------------------------------------------------------------//
 	bool			ApplyAttrOp			( u32 attrID, MOAIAttrOp& attrOp, u32 op );
+	float			GetCycle			();
+	float			GetNormalizedTime	();
 	bool			IsDone				();
 					MOAITimer			();
 					~MOAITimer			();
@@ -93,6 +97,8 @@ public:
 	void			OnUpdate			( float step );
 	void			RegisterLuaClass	( MOAILuaState& state );
 	void			RegisterLuaFuncs	( MOAILuaState& state );
+	void			SetSpan				( float span );
+	void			SetSpan				( float startTime, float endTime );
 	void			SetTime				( float time );
 };
 

@@ -4,8 +4,8 @@
 #ifndef MOAIEASEDRIVER_H
 #define MOAIEASEDRIVER_H
 
-#include <moaicore/MOAIAction.h>
 #include <moaicore/MOAILua.h>
+#include <moaicore/MOAITimer.h>
 #include <moaicore/MOAIWeakPtr.h>
 
 class MOAINode;
@@ -25,7 +25,6 @@ public:
 	float						mV0;
 	float						mV1;
 	u32							mMode;
-	float						mValue;
 };
 
 //================================================================//
@@ -35,33 +34,25 @@ public:
 	@text Action that applies simple ease curves to node attributes.
 */
 class MOAIEaseDriver :
-	public MOAIAction {
+	public MOAITimer {
 private:
 
 	USLeanArray < MOAIEaseDriverLink > mLinks;
-	
-	float	mTime;
-	float	mLength;
 
 	//----------------------------------------------------------------//
 	static int		_reserveLinks		( lua_State* L );
-	static int		_setLength			( lua_State* L );
 	static int		_setLink			( lua_State* L );
-
-	//----------------------------------------------------------------//
-	void			Apply				( float step );
 
 public:
 
 	DECL_LUA_FACTORY ( MOAIEaseDriver )
 
-	SET ( float, Length, mLength )
-
 	//----------------------------------------------------------------//
-	bool			IsDone				();
 					MOAIEaseDriver		();
 					~MOAIEaseDriver		();
 	void			OnUpdate			( float step );
+	u32				ParseForMove		( MOAILuaState& state, int idx, MOAINode* dest, u32 total, int mode, ... );
+	u32				ParseForSeek		( MOAILuaState& state, int idx, MOAINode* dest, u32 total, int mode, ... );
 	void			RegisterLuaClass	( MOAILuaState& state );
 	void			RegisterLuaFuncs	( MOAILuaState& state );
 	void			ReserveLinks		( u32 total );
