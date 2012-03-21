@@ -3128,6 +3128,8 @@
 		E9940E4714B7A4A0006465CC /* USXmlReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E9940DB814B7A4A0006465CC /* USXmlReader.cpp */; };
 		E9940E4814B7A4A0006465CC /* USXmlReader.h in Headers */ = {isa = PBXBuildFile; fileRef = E9940DB914B7A4A0006465CC /* USXmlReader.h */; };
 		E9940E4914B7A4A0006465CC /* USXmlReader.h in Headers */ = {isa = PBXBuildFile; fileRef = E9940DB914B7A4A0006465CC /* USXmlReader.h */; };
+		E9A41A95151A61A200650276 /* USRhombus.h in Headers */ = {isa = PBXBuildFile; fileRef = E91A4C9B151829070008F1A5 /* USRhombus.h */; };
+		E9A41A9A151A62FC00650276 /* USRhombus.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E91A4C9A151829070008F1A5 /* USRhombus.cpp */; };
 		E9C406281518614200C7AB04 /* MOAITextureBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E91A4C66151820CF0008F1A5 /* MOAITextureBase.cpp */; };
 		E9C4062A1518615A00C7AB04 /* MOAIGlyphSet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E91A4C5B151820CE0008F1A5 /* MOAIGlyphSet.cpp */; };
 		E9C4062B1518616F00C7AB04 /* MOAITextDesigner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E91A4C37151820470008F1A5 /* MOAITextDesigner.cpp */; };
@@ -9820,6 +9822,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0324E69513564BC8000ADC60 /* AKU.h in Headers */,
+				E9A41A95151A61A200650276 /* USRhombus.h in Headers */,
 				0324E69913564BC8000ADC60 /* pch.h in Headers */,
 				0324E69B13564BC8000ADC60 /* MOAIAction.h in Headers */,
 				0324E69D13564BC8000ADC60 /* MOAIAnim.h in Headers */,
@@ -12059,6 +12062,7 @@
 				0324E6A213564BC8000ADC60 /* MOAIBox2DArbiter.cpp in Sources */,
 				0324E6A413564BC8000ADC60 /* MOAIBox2DBody.cpp in Sources */,
 				0324E6A613564BC8000ADC60 /* MOAIBox2DDebugDraw.cpp in Sources */,
+				E9A41A9A151A62FC00650276 /* USRhombus.cpp in Sources */,
 				0324E6A813564BC8000ADC60 /* MOAIBox2DFixture.cpp in Sources */,
 				0324E6AA13564BC8000ADC60 /* MOAIBox2DJoint.cpp in Sources */,
 				0324E6AC13564BC8000ADC60 /* MOAIBox2DWorld.cpp in Sources */,
@@ -12658,7 +12662,7 @@
 				);
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx";
-				SDKROOT = "";
+				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 			};
 			name = Debug;
@@ -12673,7 +12677,7 @@
 				);
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx";
-				SDKROOT = "";
+				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 			};
 			name = Release;
@@ -13338,7 +13342,7 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-osx-zipfs";
-				SDKROOT = "";
+				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
@@ -13355,7 +13359,7 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-osx-zipfs";
-				SDKROOT = "";
+				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
@@ -13466,7 +13470,7 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx-untz";
-				SDKROOT = "";
+				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
@@ -13503,7 +13507,7 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx-untz";
-				SDKROOT = "";
+				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
@@ -13614,7 +13618,7 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx-luaext";
-				SDKROOT = "";
+				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
@@ -13651,7 +13655,7 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx-luaext";
-				SDKROOT = "";
+				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
@@ -13949,7 +13953,7 @@
 				);
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx";
-				SDKROOT = "";
+				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 			};
 			name = Distribution;
@@ -14035,7 +14039,7 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx-luaext";
-				SDKROOT = "";
+				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
@@ -14072,7 +14076,7 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx-untz";
-				SDKROOT = "";
+				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
@@ -14089,7 +14093,7 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-osx-zipfs";
-				SDKROOT = "";
+				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
@@ -14463,7 +14467,7 @@
 				);
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx";
-				SDKROOT = "";
+				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 			};
 			name = AdHoc;
@@ -14549,7 +14553,7 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx-luaext";
-				SDKROOT = "";
+				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
@@ -14586,7 +14590,7 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx-untz";
-				SDKROOT = "";
+				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
@@ -14603,7 +14607,7 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-osx-zipfs";
-				SDKROOT = "";
+				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
 				WARNING_CFLAGS = "-w";
 			};
