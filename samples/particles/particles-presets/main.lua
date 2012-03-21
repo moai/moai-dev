@@ -50,7 +50,11 @@ layer:insertProp ( system )
 state1 = MOAIParticleState.new ()
 state1:setTerm ( .75, 1.25 )
 state1:setInitScript ( init )
-state1:setPlugin ( ParticlePresets.test )
+if ParticlePresets then
+	state1:setPlugin ( ParticlePresets.test )
+else
+	print ( 'Missing ParticlePresets table. Use AKUSetParticlePreset to register a C function as a particle handler.' )
+end
 system:setState ( 1, state1 )
 
 system:surge ( 128 )
