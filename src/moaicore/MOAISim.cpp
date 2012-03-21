@@ -48,22 +48,6 @@ int MOAISim::_clearLoopFlags ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	clearRenderStack
-	@text	Clears the render stack.
-
-	@out	nil
-*/
-int MOAISim::_clearRenderStack ( lua_State* L ) {
-
-	MOAILuaState state ( L );
-	
-	MOAISim& device = MOAISim::Get ();
-	device.Clear ();
-	
-	return 0;
-}
-
-//----------------------------------------------------------------//
 /**	@name	enterFullscreenMode
 	@text	Enters fullscreen mode on the device if possible.
 
@@ -353,63 +337,6 @@ int MOAISim::_pauseTimer ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	popRenderPass
-	@text	Pops the rendering prim off the stack.
-
-	@out	nil
-*/
-int MOAISim::_popRenderPass ( lua_State* L ) {
-	UNUSED ( L );
-	
-	MOAISim& device = MOAISim::Get ();
-	device.PopRenderPass ();
-	
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@name	pushRenderPass
-	@text	Pushes the specified prim onto the render stack.
-
-	@in		MOAIProp prop		The viewport of the render prim.
-	@out	nil
-*/
-int MOAISim::_pushRenderPass ( lua_State* L ) {
-
-	MOAILuaState state ( L );
-	if ( !state.CheckParams ( 1, "U" )) return 0;
-	
-	MOAIProp* prop = state.GetLuaObject < MOAIProp >( 1 );
-	if ( !prop ) return 0;
-	
-	MOAISim& device = MOAISim::Get ();
-	device.PushRenderPass ( prop );
-	
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@name	removeRenderPass
-	@text	Removes the specified prim from the render stack.
-
-	@in		MOAIProp2D prop		The viewport of the render prim.
-	@out	nil
-*/
-int MOAISim::_removeRenderPass ( lua_State* L ) {
-
-	MOAILuaState state ( L );
-	if ( !state.CheckParams ( 1, "U" )) return 0;
-	
-	MOAIProp* prop = state.GetLuaObject < MOAIProp >( 1 );
-	if ( !prop ) return 0;
-	
-	MOAISim& device = MOAISim::Get ();
-	device.RemoveRenderPass ( prop );
-
-	return 0;
-}
-
-//----------------------------------------------------------------//
 /**	@name	reportHistogram
 	@text	Generates a histogram of active MOAIObjects.
 
@@ -635,21 +562,12 @@ int MOAISim::_timeToFrames ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAISim::Clear () {
-
-	while ( this->mRenderPasses.Count ()) {
-		this->PopRenderPass ();
-	}
-}
-
-//----------------------------------------------------------------//
 MOAISim::MOAISim () :
 	mLoopState ( START ),
 	mStep ( 1.0 / ( double )DEFAULT_STEPS_PER_SECOND ),
 	mSimTime ( 0.0 ),
 	mRealTime ( 0.0 ),
 	mFrameTime ( 0.0 ),
-	mRenderCounter ( 0 ),
 	mFrameRate ( 0.0f ),
 	mFrameRateIdx ( 0 ),
 	mLoopFlags ( LOOP_FLAGS_DEFAULT ),
@@ -670,8 +588,6 @@ MOAISim::MOAISim () :
 
 //----------------------------------------------------------------//
 MOAISim::~MOAISim () {
-
-	this->Clear ();
 }
 
 //----------------------------------------------------------------//
@@ -718,27 +634,6 @@ void MOAISim::PauseMOAI () {
 }
 
 //----------------------------------------------------------------//
-void MOAISim::PopRenderPass () {
-
-	if ( this->mRenderPasses.Count ()) {
-		MOAIProp* prop = this->mRenderPasses.Back ();
-		this->mRenderPasses.PopBack ();
-		this->LuaRelease ( prop );
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAISim::PushRenderPass ( MOAIProp* prop ) {
-
-	if ( prop ) {
-		if ( !this->mRenderPasses.Contains ( prop )) {
-			this->LuaRetain ( prop );
-			this->mRenderPasses.PushBack ( prop );
-		}
-	}
-}
-
-//----------------------------------------------------------------//
 void MOAISim::RegisterLuaClass ( MOAILuaState& state ) {
 
 	state.SetField ( -1, "EVENT_FINALIZE", ( u32 )EVENT_FINALIZE );
@@ -755,7 +650,6 @@ void MOAISim::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "LOOP_FLAGS_MULTISTEP", ( u32 )LOOP_FLAGS_MULTISTEP );
 	state.SetField ( -1, "LOOP_FLAGS_SOAK", ( u32 )LOOP_FLAGS_SOAK );
 
-
 	state.SetField ( -1, "DEFAULT_STEPS_PER_SECOND", ( u32 )DEFAULT_STEPS_PER_SECOND );
 	state.SetField ( -1, "DEFAULT_BOOST_THRESHOLD", ( u32 )DEFAULT_BOOST_THRESHOLD );
 	state.SetField ( -1, "DEFAULT_LONG_DELAY_THRESHOLD", ( u32 )DEFAULT_LONG_DELAY_THRESHOLD );
@@ -764,7 +658,6 @@ void MOAISim::RegisterLuaClass ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "clearLoopFlags",				_clearLoopFlags },
-		{ "clearRenderStack",			_clearRenderStack },
 		{ "enterFullscreenMode",		_enterFullscreenMode },
 		{ "exitFullscreenMode",			_exitFullscreenMode },
 		{ "forceGarbageCollection",		_forceGarbageCollection },
@@ -779,9 +672,6 @@ void MOAISim::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "getStep",					_getStep },
 		{ "openWindow",					_openWindow },
 		{ "pauseTimer",					_pauseTimer },
-		{ "popRenderPass",				_popRenderPass },
-		{ "pushRenderPass",				_pushRenderPass },
-		{ "removeRenderPass",			_removeRenderPass },
 		{ "reportHistogram",			_reportHistogram },
 		{ "reportLeaks",				_reportLeaks },
 		{ "setBoostThreshold",			_setBoostThreshold },
@@ -805,38 +695,6 @@ void MOAISim::RegisterLuaClass ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAISim::RegisterLuaFuncs ( MOAILuaState& state ) {
 	UNUSED ( state );
-}
-
-//----------------------------------------------------------------//
-void MOAISim::RemoveRenderPass ( MOAIProp* prop ) {
-
-	if ( prop ) {
-		if ( this->mRenderPasses.Contains ( prop )) {
-			this->mRenderPasses.Remove ( prop );
-			this->LuaRelease ( prop );
-		}
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAISim::Render () {
-
-	this->mRenderCounter++;
-
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-
-	gfxDevice.BeginDrawing ();
-
-	RenderPassIt passIt = this->mRenderPasses.Head ();
-	for ( ; passIt; passIt = passIt->Next ()) {
-		MOAIProp* renderPass = passIt->Data ();
-		
-		gfxDevice.BeginLayer ();
-		renderPass->Draw ( MOAIProp::NO_SUBPRIM_ID, true );
-	}
-	
-	gfxDevice.Flush ();
-	gfxDevice.ProcessDeleters ();
 }
 
 //----------------------------------------------------------------//

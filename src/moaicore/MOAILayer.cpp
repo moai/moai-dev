@@ -748,3 +748,10 @@ void MOAILayer::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	luaL_register ( state, 0, regTable );
 }
+
+//----------------------------------------------------------------//
+void MOAILayer::Render () {
+
+	MOAIGfxDevice::Get ().BeginLayer ();
+	this->Draw ( MOAIProp::NO_SUBPRIM_ID, true );
+}
