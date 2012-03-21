@@ -611,6 +611,7 @@ USRect MOAIGridSpace::GetBounds ( MOAICellCoord c0, MOAICellCoord c1 ) const {
 void MOAIGridSpace::GetBoundsInRect ( USRect rect, MOAICellCoord& c0, MOAICellCoord& c1, USRect maxSize ) const {
 
 	rect.Bless ();
+	maxSize.Bless ();
 
 	c0.mX = ( int )floorf ( ( rect.mXMin / this->mCellWidth )  - ( maxSize.mXMax / 0.5f - 1.0f ) );
 	c0.mY = ( int )floorf ( ( rect.mYMin / this->mCellHeight ) - ( maxSize.mYMax / 0.5f - 1.0f ) );

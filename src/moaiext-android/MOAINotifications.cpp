@@ -174,9 +174,9 @@ void MOAINotifications::NotifyRemoteRegistrationComplete ( int code, cc8* regist
 		
 		MOAILuaStateHandle state = callback.GetSelf ();
 	
-		if ( code > DIALOG_RESULT_ERROR ) {
+		if ( code > REMOTE_NOTIFICATION_RESULT_ERROR ) {
 			
-			code = DIALOG_RESULT_ERROR;
+			code = REMOTE_NOTIFICATION_RESULT_ERROR;
 		}
 		
 		lua_pushinteger ( state, code );

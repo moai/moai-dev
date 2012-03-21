@@ -1,0 +1,48 @@
+"Name"    = Simple
+"Author"  = Devin Cook
+"Version" = 1.1 
+"About"   = This is a very simple grammar designed for use in examples
+
+"Case Sensitive" = False 
+"Start Symbol"   = <Statements>
+
+{String Ch} = {Printable} - ['']
+
+Id            = {Letter}{AlphaNumeric}*
+StringLiteral = ''{String Ch}*''
+NumberLiteral = {Digit}+('.'{Digit}+)?
+
+<Statements> ::= <Statement> <Statements>
+               | <Statement>
+
+<Statement>  ::= display <Expression>
+               | display <Expression> read ID
+               | assign ID '=' <Expression>
+               | while <Expression> do <Statements> end
+               | if <Expression> then <Statements> end
+               | if <Expression> then <Statements> else <Statements> end
+               
+<Expression>   ::= <Expression> '>'  <Add Exp> 
+                 | <Expression> '<'  <Add Exp> 
+                 | <Expression> '<=' <Add Exp> 
+                 | <Expression> '>=' <Add Exp>
+                 | <Expression> '==' <Add Exp>
+                 | <Expression> '<>' <Add Exp>
+                 | <Add Exp> 
+
+<Add Exp>      ::= <Add Exp> '+' <Mult Exp>
+                 | <Add Exp> '-' <Mult Exp>
+                 | <Add Exp> '&' <Mult Exp>
+                 | <Mult Exp> 
+
+<Mult Exp>    ::= <Mult Exp> '*' <Negate Exp> 
+                | <Mult Exp> '/' <Negate Exp> 
+                | <Negate Exp> 
+
+<Negate Exp>  ::= '-' <Value> 
+                | <Value> 
+
+<Value>       ::= ID           
+                | StringLiteral
+                | NumberLiteral
+                | '(' <Expression> ')'
