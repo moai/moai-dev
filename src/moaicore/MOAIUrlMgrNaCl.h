@@ -6,7 +6,7 @@
 
 #ifdef MOAI_OS_NACL
 
-class MOAIHttpTask;
+class MOAIHttpTaskNaCl;
 class MOAIUrlMgrOpaque;
 
 //================================================================//
@@ -18,14 +18,12 @@ private:
 
 	STLList < MOAIHttpTaskNaCl* > mTasks;
 
-	//----------------------------------------------------------------//
-	void			AddHandle				( MOAIHttpTaskNaCl& task );
-
 public:
 
 	friend class MOAIHttpTask;
 
 	//----------------------------------------------------------------//
+	void			AddHandle				( MOAIHttpTaskNaCl& task );
 					MOAIUrlMgrNaCl			();
 					~MOAIUrlMgrNaCl			();
 	void			Process					();

@@ -22,6 +22,11 @@ void MOAIHttpTaskNaCl::Clear () {
 }
 
 //----------------------------------------------------------------//
+bool MOAIHttpTaskNaCl::IsReady () {
+	return mReady;
+}
+
+//----------------------------------------------------------------//
 void MOAIHttpTaskNaCl::HttpLoaded ( GetURLHandler *handler, const char *buffer, int32_t size ) {
 
 	MOAIHttpTaskNaCl *taskInfo = static_cast < MOAIHttpTaskNaCl * > ( handler->GetUserData ());
@@ -139,7 +144,7 @@ void MOAIHttpTaskNaCl::PerformAsync () {
 		sleep ( 0.0001f );
 	}
 
-	MOAIUrlMgr::Get ().AddHandle ( *this );
+	MOAIUrlMgrNaCl::Get ().AddHandle ( *this );
 
 }
 

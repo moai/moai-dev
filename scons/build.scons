@@ -14,7 +14,7 @@ nacl_env = make_nacl_env.NaClEnvironment(
 	nacl_platform=os.getenv('NACL_TARGET_PLATFORM'))
 	
 fmod_include = os.getenv('FMOD_SDK_ROOT') + '/api/inc';
-fmod_library = os.getenv('FMOD_SDK_ROOT') + '/api/lib/' + os.getenv('NACL_TARGET_PLATFORM') + '/x86-';
+fmod_library = os.getenv('FMOD_SDK_ROOT') + '/api/lib/' + 'pepper_15' + '/x86-';
 
 Repository ( "../3rdparty", "../src", "src" )
 
@@ -49,6 +49,47 @@ lua_sources = [ os.path.join( 'lua-5.1.3/src', src_file ) for src_file in [
 				  'lvm.c',
 				  'lzio.c',
 				  'print.c',
+]]
+
+freetype_sources = [ os.path.join( 'freetype-2.4.4/src', src_file ) for src_file in [
+					'autofit/autofit.c',
+					'bdf/bdf.c',
+					'cff/cff.c',
+					'base/ftbase.c',
+					'base/ftbitmap.c',
+					'cache/ftcache.c',
+					'base/ftfstype.c',
+					'base/ftgasp.c',
+					'base/ftglyph.c',
+					'gzip/ftgzip.c',
+					'base/ftinit.c',
+					'lzw/ftlzw.c',
+					'base/ftstroke.c',
+					'base/ftsystem.c',
+					'smooth/smooth.c',
+					'base/ftbbox.c',
+					'base/ftgxval.c',
+					'base/ftlcdfil.c',
+					'base/ftmm.c',
+					'base/ftotval.c',
+					'base/ftpatent.c',
+					'base/ftpfr.c',
+					'base/ftsynth.c',
+					'base/fttype1.c',
+					'base/ftwinfnt.c',
+					'base/ftxf86.c',
+					'pcf/pcf.c',
+					'pfr/pfr.c',
+					'psaux/psaux.c',
+					'pshinter/pshinter.c',
+					'psnames/psmodule.c',
+					'raster/raster.c',
+					'sfnt/sfnt.c',
+					'truetype/truetype.c',
+					'type1/type1.c',
+					'cid/type1cid.c',
+					'type42/type42.c',
+					'winfonts/winfnt.c',
 ]]
 
 zlib_sources = [ os.path.join( 'zlib-1.2.3', src_file ) for src_file in [
@@ -343,6 +384,7 @@ moai_sources = [ os.path.join('moaicore', src_file) for src_file in [
 				'MOAIFont.cpp'                   ,
 				'MOAIFontReader.cpp'       		 ,
 				'MOAIFrameBuffer.cpp'            ,
+				'MOAIFreeTypeFontReader.cpp'	 ,
 				'MOAIGfxDevice.cpp'              ,
 				'MOAIGfxQuad2D.cpp'              ,
 				'MOAIGfxQuadDeck2D.cpp'          ,
@@ -358,7 +400,7 @@ moai_sources = [ os.path.join('moaicore', src_file) for src_file in [
 				'MOAIGridPathGraph.cpp'			 ,
 				'MOAIGridSpace.cpp'              ,
 				'MOAIHttpTaskBase.cpp'           ,
-				'MOAIHttpTaskInfo_nacl.cpp' 	 ,
+				'MOAIHttpTaskNaCl.cpp' 	 		 ,
 				'MOAIImage.cpp'                  ,
 				'MOAIImageTexture.cpp'           ,
 				'MOAIImage-jpg.cpp'              ,
@@ -433,7 +475,7 @@ moai_sources = [ os.path.join('moaicore', src_file) for src_file in [
 				'MOAITouchSensor.cpp'            ,
 				'MOAITransform.cpp'              ,
 				'MOAITransformBase.cpp'          ,
-				'MOAIUrlMgr_nacl.cpp'       	 ,
+				'MOAIUrlMgrNaCl.cpp'       	 	 ,
 				'MOAIVertexBuffer.cpp'           ,
 				'MOAIVertexFormat.cpp'           ,
 				'MOAIVertexFormatMgr.cpp'        ,
@@ -464,7 +506,7 @@ sources = nacl_moai_sources + zlib_sources + tinyxml_sources + libjpg_sources + 
 
 nacl_env.Append ( LIBS=['m','nacl_dyncode','c', 'g', 'nacl', 'ppapi_gles2','fmodex', 'ppapi', 'ppapi_cpp', 'pthread', 'nosys' ] )
 
-nacl_env.Append ( CPPDEFINES=['MOAI_OS_NACL','HAVE_MEMMOVE','__linux', 'NACL', 'USE_CURL=0','USE_CHIPMUNK=0','USE_OPENGLES1=0','USE_FREETYPE=0', 'USE_SQL=0', 'USE_OPENSSL=0'] )
+nacl_env.Append ( CPPDEFINES=['MOAI_OS_NACL','HAVE_MEMMOVE','__linux', 'NACL', 'USE_CURL=0','USE_CHIPMUNK=0','USE_OPENGLES1=0','USE_SQL=0', 'USE_OPENSSL=0','FT2_BUILD_LIBRARY'] )
 
 nacl_env["CPPPATH"] = [ 'lua-5.1.3/src', 
                         'box2d-2.2.1', 
@@ -480,6 +522,7 @@ nacl_env["CPPPATH"] = [ 'lua-5.1.3/src',
 						fmod_include,
 						'openssl-1.0.0d/include-android',
 						'openssl-1.0.0d/crypto',
+						'freetype-2.4.4/include',
 						'tlsf-2.0',
 						'jpeg-8c',
 						'zipfs',
@@ -502,10 +545,11 @@ nacl_env.NaClStaticLibraries ( expat_sources, 'expat', is_debug=False )
 nacl_env.NaClStaticLibraries ( libpng_sources, 'libpng', is_debug=False )
 nacl_env.NaClStaticLibraries ( contrib_sources, 'contrib', is_debug=False )
 nacl_env.NaClStaticLibraries ( lua_sources, 'lua', is_debug=False )
+nacl_env.NaClStaticLibraries ( freetype_sources, 'freetype', is_debug=False )
 
 nacl_env.FilterOut ( CCFLAGS = ['-include','zipfs_replace.h'] )
 nacl_env.FilterOut( LIBS=['nosys'] )
-nacl_env.Append ( LIBS=['zlib','box2d','lua','tinyxml','libjpg','jansson','expat','libpng','contrib','lua','nosys'] )
+nacl_env.Append ( LIBS=['zlib','freetype','box2d','lua','tinyxml','libjpg','jansson','expat','libpng','contrib','lua','nosys'] )
 
 module_name = 'moai'
 opt_nexes = nacl_env.NaClModules( tlsf_sources + zipfs_sources + uslcore_sources + aku_sources + moaiextfmod_sources + moai_sources + nacl_moai_sources , module_name, is_debug=False )

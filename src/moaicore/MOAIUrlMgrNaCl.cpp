@@ -24,7 +24,7 @@ void MOAIUrlMgrNaCl::Process () {
 
 	for( STLList < MOAIHttpTaskNaCl* >::iterator iter = this->mTasks.begin(); iter != this->mTasks.end(); ++iter ) {
 	
-		if(( *iter )->mReady ) {
+		if(( *iter )->IsReady () ) {
 
 			( *iter )->NaClFinish ();
 			( *iter )->Release ();
