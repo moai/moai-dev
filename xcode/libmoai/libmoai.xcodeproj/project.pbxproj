@@ -1278,6 +1278,14 @@
 		07658753145CD06900723A7D /* tlsfbits.h in Headers */ = {isa = PBXBuildFile; fileRef = 0765874D145CD06900723A7D /* tlsfbits.h */; };
 		0767117C13F3414000121E13 /* ReachabilityListener.h in Headers */ = {isa = PBXBuildFile; fileRef = 0767117A13F3414000121E13 /* ReachabilityListener.h */; };
 		0767117D13F3414000121E13 /* ReachabilityListener.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0767117B13F3414000121E13 /* ReachabilityListener.mm */; };
+		077D500F1519A4A1003DFC89 /* MOAIRenderable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 077D500B1519A4A1003DFC89 /* MOAIRenderable.cpp */; };
+		077D50101519A4A1003DFC89 /* MOAIRenderable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 077D500B1519A4A1003DFC89 /* MOAIRenderable.cpp */; };
+		077D50111519A4A1003DFC89 /* MOAIRenderable.h in Headers */ = {isa = PBXBuildFile; fileRef = 077D500C1519A4A1003DFC89 /* MOAIRenderable.h */; };
+		077D50121519A4A1003DFC89 /* MOAIRenderable.h in Headers */ = {isa = PBXBuildFile; fileRef = 077D500C1519A4A1003DFC89 /* MOAIRenderable.h */; };
+		077D50131519A4A1003DFC89 /* MOAIRenderMgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 077D500D1519A4A1003DFC89 /* MOAIRenderMgr.cpp */; };
+		077D50141519A4A1003DFC89 /* MOAIRenderMgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 077D500D1519A4A1003DFC89 /* MOAIRenderMgr.cpp */; };
+		077D50151519A4A1003DFC89 /* MOAIRenderMgr.h in Headers */ = {isa = PBXBuildFile; fileRef = 077D500E1519A4A1003DFC89 /* MOAIRenderMgr.h */; };
+		077D50161519A4A1003DFC89 /* MOAIRenderMgr.h in Headers */ = {isa = PBXBuildFile; fileRef = 077D500E1519A4A1003DFC89 /* MOAIRenderMgr.h */; };
 		077E0F9A14FC4A91006B0B4D /* MOAIFacebook.h in Headers */ = {isa = PBXBuildFile; fileRef = 077E0F9814FC4A91006B0B4D /* MOAIFacebook.h */; };
 		077E0F9B14FC4A91006B0B4D /* MOAIFacebook.mm in Sources */ = {isa = PBXBuildFile; fileRef = 077E0F9914FC4A91006B0B4D /* MOAIFacebook.mm */; };
 		0780B1D714463B71006626CF /* MOAITapjoy.h in Headers */ = {isa = PBXBuildFile; fileRef = 0780B1D514463B71006626CF /* MOAITapjoy.h */; };
@@ -3880,6 +3888,10 @@
 		0765874D145CD06900723A7D /* tlsfbits.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tlsfbits.h; path = "../../3rdparty/tlsf-2.0/tlsfbits.h"; sourceTree = "<group>"; };
 		0767117A13F3414000121E13 /* ReachabilityListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ReachabilityListener.h; path = "moaiext-iphone/ReachabilityListener.h"; sourceTree = "<group>"; };
 		0767117B13F3414000121E13 /* ReachabilityListener.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ReachabilityListener.mm; path = "moaiext-iphone/ReachabilityListener.mm"; sourceTree = "<group>"; };
+		077D500B1519A4A1003DFC89 /* MOAIRenderable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIRenderable.cpp; sourceTree = "<group>"; };
+		077D500C1519A4A1003DFC89 /* MOAIRenderable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIRenderable.h; sourceTree = "<group>"; };
+		077D500D1519A4A1003DFC89 /* MOAIRenderMgr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIRenderMgr.cpp; sourceTree = "<group>"; };
+		077D500E1519A4A1003DFC89 /* MOAIRenderMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIRenderMgr.h; sourceTree = "<group>"; };
 		077E0F9814FC4A91006B0B4D /* MOAIFacebook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIFacebook.h; path = "moaiext-iphone/MOAIFacebook.h"; sourceTree = "<group>"; };
 		077E0F9914FC4A91006B0B4D /* MOAIFacebook.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIFacebook.mm; path = "moaiext-iphone/MOAIFacebook.mm"; sourceTree = "<group>"; };
 		0780B1D514463B71006626CF /* MOAITapjoy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = MOAITapjoy.h; path = "moaiext-iphone/MOAITapjoy.h"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -6939,6 +6951,10 @@
 		CD148EF51395AEA300A3F501 /* gfx */ = {
 			isa = PBXGroup;
 			children = (
+				077D500B1519A4A1003DFC89 /* MOAIRenderable.cpp */,
+				077D500C1519A4A1003DFC89 /* MOAIRenderable.h */,
+				077D500D1519A4A1003DFC89 /* MOAIRenderMgr.cpp */,
+				077D500E1519A4A1003DFC89 /* MOAIRenderMgr.h */,
 				CDEFB42D13E37FA6000A9523 /* shaders */,
 				07D1A89E13EDFD8300604979 /* MOAIBlendMode.cpp */,
 				07D1A89F13EDFD8300604979 /* MOAIBlendMode.h */,
@@ -9444,6 +9460,8 @@
 				075BA096151949C50002E925 /* MOAIHttpTaskNaCl.h in Headers */,
 				075BA09A151949C50002E925 /* MOAIUrlMgrCurl.h in Headers */,
 				075BA09E151949C50002E925 /* MOAIUrlMgrNaCl.h in Headers */,
+				077D50121519A4A1003DFC89 /* MOAIRenderable.h in Headers */,
+				077D50161519A4A1003DFC89 /* MOAIRenderMgr.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10092,6 +10110,8 @@
 				075BA095151949C50002E925 /* MOAIHttpTaskNaCl.h in Headers */,
 				075BA099151949C50002E925 /* MOAIUrlMgrCurl.h in Headers */,
 				075BA09D151949C50002E925 /* MOAIUrlMgrNaCl.h in Headers */,
+				077D50111519A4A1003DFC89 /* MOAIRenderable.h in Headers */,
+				077D50151519A4A1003DFC89 /* MOAIRenderMgr.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11128,6 +11148,8 @@
 				075BA094151949C50002E925 /* MOAIHttpTaskNaCl.cpp in Sources */,
 				075BA098151949C50002E925 /* MOAIUrlMgrCurl.cpp in Sources */,
 				075BA09C151949C50002E925 /* MOAIUrlMgrNaCl.cpp in Sources */,
+				077D50101519A4A1003DFC89 /* MOAIRenderable.cpp in Sources */,
+				077D50141519A4A1003DFC89 /* MOAIRenderMgr.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12279,6 +12301,8 @@
 				075BA093151949C50002E925 /* MOAIHttpTaskNaCl.cpp in Sources */,
 				075BA097151949C50002E925 /* MOAIUrlMgrCurl.cpp in Sources */,
 				075BA09B151949C50002E925 /* MOAIUrlMgrNaCl.cpp in Sources */,
+				077D500F1519A4A1003DFC89 /* MOAIRenderable.cpp in Sources */,
+				077D50131519A4A1003DFC89 /* MOAIRenderMgr.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

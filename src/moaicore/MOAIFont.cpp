@@ -475,6 +475,7 @@ void MOAIFont::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer )
 
 	this->mFilename = state.GetField ( -1, "mFilename", this->mFilename );
 	this->mFlags = state.GetField ( -1, "mFlags", this->mFlags );
+	this->mDefaultSize = state.GetField ( -1, "mDefaultSize", this->mDefaultSize );
 	
 	if ( state.GetFieldWithType ( -1, "mGlyphSets", LUA_TTABLE )) {
 
@@ -494,6 +495,7 @@ void MOAIFont::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) 
 
 	state.SetField ( -1, "mFilename", this->mFilename );
 	state.SetField ( -1, "mFlags", this->mFlags );
+	state.SetField ( -1, "mDefaultSize", this->mDefaultSize );
 	
 	lua_newtable ( state );
 	GlyphSetsIt glyphSetsIt = this->mGlyphSets.begin ();
