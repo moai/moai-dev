@@ -24,7 +24,6 @@ vertexFormat:declareColor ( 3, MOAIVertexFormat.GL_UNSIGNED_BYTE )
 vbo = MOAIVertexBuffer.new ()
 vbo:setFormat ( vertexFormat )
 vbo:reserveVerts ( 4 )
-vbo:setPrimType ( MOAIVertexBuffer.GL_TRIANGLE_FAN )
 
 vbo:writeFloat ( -64, -64 )
 vbo:writeFloat ( 0, 1 )
@@ -47,6 +46,7 @@ vbo:bless ()
 mesh = MOAIMesh.new ()
 mesh:setTexture ( "cathead.png" )
 mesh:setVertexBuffer ( vbo )
+mesh:setPrimType ( MOAIMesh.GL_TRIANGLE_FAN )
 
 if MOAIGfxDevice.isProgrammable () then
 
