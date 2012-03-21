@@ -192,6 +192,7 @@ float MOAITimer::DoStep ( float step ) {
 			if ( this->mTime >= this->mEndTime ) {
 				this->mTime = this->mEndTime;
 				this->GenerateCallbacks ( t0, this->mTime, true );
+				this->mCycle = 1.0f;
 				this->OnLoop ();
 				this->Stop ();
 			}
@@ -229,6 +230,7 @@ float MOAITimer::DoStep ( float step ) {
 			if ( this->mTime < this->mStartTime ) {
 				this->mTime = this->mStartTime ;
 				this->GenerateCallbacks ( t0, this->mTime, true );
+				this->mCycle = -1.0f;
 				this->OnLoop ();
 				this->Stop ();
 			}
@@ -430,6 +432,7 @@ void MOAITimer::OnStart () {
 	else {
 		this->mTime = this->mEndTime;
 	}
+	this->mCycle = 0.0f;
 }
 
 //----------------------------------------------------------------//

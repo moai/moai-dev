@@ -109,7 +109,6 @@ void MOAIEaseDriver::OnUpdate ( float step ) {
 			float magnitude = ( link.mV1 - link.mV0 );
 			if ( magnitude == 0.0f ) continue;
 			
-			
 			float v0 = link.mV0 + ( magnitude * c0 ) + USInterpolate::Interpolate ( link.mMode, 0.0f, magnitude, t0 );
 			float v1 = link.mV0 + ( magnitude * c1 ) + USInterpolate::Interpolate ( link.mMode, 0.0f, magnitude, t1 );
 			
