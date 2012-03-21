@@ -74,11 +74,13 @@ cd ../../distribute
 
 # android host
 mkdir -p moai-sdk/hosts/ant
+cp moai-sdk/hosts/ant/settings-local.sh moai-sdk/hosts/ant/settings-local.sh.backup
 cd ../ant
 ./make-host.sh -p com.getmoai.samples -s
 cd untitled-host
 cp -R . ../../distribute/moai-sdk/hosts/ant
 cd ../../distribute
+mv moai-sdk/hosts/ant/settings-local.sh.backup moai-sdk/hosts/ant/settings-local.sh
 
 # ios host
 mkdir -p moai-sdk/hosts/xcode/ios/Classes
