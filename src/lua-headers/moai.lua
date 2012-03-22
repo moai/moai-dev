@@ -9,7 +9,12 @@ local function initTransform2DInterface ( interface, super )
 	function interface.addRot ( self, rDelta )
 		super.addRot ( self, 0, 0, rDelta )
 	end
-
+	
+	function interface.getLoc ( self )
+		local x, y, z = super.getLoc ( self )
+		return x, y
+	end
+	
 	function interface.getRot ( self )
 		local x, y, z = super.getRot ( self )
 		return z
@@ -53,6 +58,10 @@ local function initTransform2DInterface ( interface, super )
 	
 	function interface.seekScl ( self, xSclGoal, ySclGoal, length, mode )
 		return super.seekScl ( self, xSclGoal, ySclGoal, 1, length, mode )
+	end
+	
+	function interface.setLoc ( self, x, y )
+		super.setLoc ( self, x, y, 0 )
 	end
 	
 	function interface.setRot ( self, rot )
@@ -176,8 +185,9 @@ MOAIRenderMgr = MOAIRenderMgr.extend (
 
 		function class.clearRenderStack ()
 			
-			local renderTable = class.affirmRenderTable ()
-			renderTable [ 1 ] = nil
+			--local renderTable = class.affirmRenderTable ()
+			--renderTable [ 1 ] = nil
+			class.setRenderTable ( nil )
 		end
 		
 		function class.popRenderPass ()
