@@ -7,7 +7,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import <moaiext-iphone/MOAICrittercismiOS.h>
+#import <moaiext-iphone/MOAICrittercismIOS.h>
 
 #import <Crittercism.h>
 
@@ -24,7 +24,7 @@
 	@in		string appSecret		Available in Crittercism dashboard settings.
 	@out	nil
 */
-int MOAICrittercismiOS::_init ( lua_State* L ) {
+int MOAICrittercismIOS::_init ( lua_State* L ) {
 	MOAILuaState state ( L );
 
 	cc8* appId = lua_tostring ( state, 1 );
@@ -48,22 +48,22 @@ int MOAICrittercismiOS::_init ( lua_State* L ) {
 }
 
 //================================================================//
-// MOAICrittercismiOS
+// MOAICrittercismIOS
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAICrittercismiOS::MOAICrittercismiOS () {
+MOAICrittercismIOS::MOAICrittercismIOS () {
 
 	RTTI_SINGLE ( MOAILuaObject )	
 }
 
 //----------------------------------------------------------------//
-MOAICrittercismiOS::~MOAICrittercismiOS () {
+MOAICrittercismIOS::~MOAICrittercismIOS () {
 
 }
 
 //----------------------------------------------------------------//
-void MOAICrittercismiOS::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAICrittercismIOS::RegisterLuaClass ( MOAILuaState& state ) {
 
 	luaL_Reg regTable[] = {
 		{ "init",	_init },
