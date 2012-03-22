@@ -2,11 +2,11 @@
 // http://getmoai.com
 
 #import <moaiext-iphone/MOAIApp.h>
-#import <moaiext-iphone/MOAICrittercismiOS.h>
+#import <moaiext-iphone/MOAICrittercismIOS.h>
 #import <moaiext-iphone/MOAIFacebook.h>
 #import <moaiext-iphone/MOAIGameCenter.h>
 #import <moaiext-iphone/MOAINotifications.h>
-#import <moaiext-iphone/MOAITapjoy.h>
+#import <moaiext-iphone/MOAITapjoyIOS.h>
 #import <moaiext-iphone/MOAIWebView.h>
 
 #import <moaiext-iphone/NSArray+MOAILib.h>

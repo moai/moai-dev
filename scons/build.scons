@@ -449,6 +449,8 @@ moai_sources = [ os.path.join('moaicore', src_file) for src_file in [
 				'MOAIPointerSensor.cpp'          ,
 				'MOAIProp.cpp'                   ,
 				'MOAIQuadBrush.cpp'              ,
+				'MOAIRenderMgr.cpp'              ,
+				'MOAIRenderable.cpp'             ,
 				'MOAIRtti.cpp'              	 ,
 				'MOAIScriptDeck.cpp'             ,
 				'MOAIScriptNode.cpp'             ,

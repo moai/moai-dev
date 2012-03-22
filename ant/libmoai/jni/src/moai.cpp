@@ -267,8 +267,8 @@
 		REGISTER_LUA_CLASS ( MOAIApp );
 
 #ifndef DISABLE_TAPJOY
-		MOAITapjoy::Affirm ();
-		REGISTER_LUA_CLASS ( MOAITapjoy );
+		MOAITapjoyAndroid::Affirm ();
+		REGISTER_LUA_CLASS ( MOAITapjoyAndroid );
 #endif
 
 #ifndef DISABLE_NOTIFICATIONS

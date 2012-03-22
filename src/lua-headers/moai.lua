@@ -265,3 +265,4 @@ MOAITransform2D = MOAITransform.extend (
 )
 
 MOAICrittercism = MOAICrittercismAndroid or MOAICrittercismIOS
+MOAITapjoy = MOAITapjoyAndroid or MOAITapjoyIOS

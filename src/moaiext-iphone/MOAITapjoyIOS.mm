@@ -7,7 +7,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import <moaiext-iphone/MOAITapjoy.h>
+#import <moaiext-iphone/MOAITapjoyIOS.h>
 #import <TapjoyConnect.h>
 
 //================================================================//
@@ -16,11 +16,11 @@
 
 //----------------------------------------------------------------//
 /**	@name	getUserId
- @text	Gets the tapjoy user id
+ 	@text	Gets the tapjoy user ID
  
- @out	string userID
+ 	@out	string userId
  */
-int MOAITapjoy::_getUserId ( lua_State *L ) {
+int MOAITapjoyIOS::_getUserId ( lua_State *L ) {
 	
 	lua_pushstring ( L, [[TapjoyConnect getUserID] UTF8String ] );
 	
@@ -29,16 +29,16 @@ int MOAITapjoy::_getUserId ( lua_State *L ) {
 
 //----------------------------------------------------------------//
 /**	@name	initVideoAds
-	@text	Initializes TapjoyConnect interface for video ads. Optionally
-			provide a number of how many to cache.
+	@text	Initializes Tapjoy to display video ads.
 				
-	@opt	number countToCache
+	@opt	number count			The optional number of ads to cache.
 	@out	nil
 */
-int MOAITapjoy::_initVideoAds ( lua_State* L ) {
+int MOAITapjoyIOS::_initVideoAds ( lua_State* L ) {
+	
 	MOAILuaState state ( L );
 
-	[ TapjoyConnect initVideoAdWithDelegate:MOAITapjoy::Get ().mVideoAdDelegate ];
+	[ TapjoyConnect initVideoAdWithDelegate:MOAITapjoyIOS::Get ().mVideoAdDelegate ];
 	
 	u32 cacheCount = state.GetValue < u32 >( 1, 0 );
 	if ( cacheCount > 0 ) {
@@ -52,13 +52,14 @@ int MOAITapjoy::_initVideoAds ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	requestTapjoyConnect
-	@text	Initializes the TapjoyConnect interface
+	@text	Initializes Tapjoy.
 				
-	@in		string	appId
-	@in		string	secretKey
+	@in		string	appId			Available in Tapjoy dashboard settings.
+	@in		string	secretKey		Available in Tapjoy dashboard settings.
 	@out	nil
 */
-int MOAITapjoy::_requestTapjoyConnect ( lua_State* L ) {
+int MOAITapjoyIOS::_requestTapjoyConnect ( lua_State* L ) {
+	
 	MOAILuaState state ( L );
 
 	cc8* appId = lua_tostring ( state, 1 );
@@ -77,12 +78,13 @@ int MOAITapjoy::_requestTapjoyConnect ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	showOffers
-	@text	Displays the Tapjoy marketplace
+	@text	Displays the Tapjoy marketplace.
 				
 	@in		nil
 	@out	nil
 */
-int MOAITapjoy::_showOffers ( lua_State* L ) {
+int MOAITapjoyIOS::_showOffers ( lua_State* L ) {
+	
 	UNUSED ( L );
 	
 	UIWindow* window = [[ UIApplication sharedApplication ] keyWindow ];
@@ -97,44 +99,46 @@ int MOAITapjoy::_showOffers ( lua_State* L ) {
 }
 
 //================================================================//
-// MOAITapjoy
+// MOAITapjoyIOS
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAITapjoy::MOAITapjoy () {
+MOAITapjoyIOS::MOAITapjoyIOS () {
 
 	RTTI_SINGLE ( MOAIEventSource )		
 	
-	mVideoAdDelegate = [ MoaiTapjoyVideoAdDelegate alloc ];
+	mVideoAdDelegate = [ MOAITapjoyIOSVideoAdDelegate alloc ];
 }
 
 //----------------------------------------------------------------//
-MOAITapjoy::~MOAITapjoy () {
+MOAITapjoyIOS::~MOAITapjoyIOS () {
 
 	[ mVideoAdDelegate release ];
 }
 
 //----------------------------------------------------------------//
-void MOAITapjoy::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAITapjoyIOS::RegisterLuaClass ( MOAILuaState& state ) {
 
 	state.SetField ( -1, "TAPJOY_VIDEO_AD_BEGIN", ( u32 )TAPJOY_VIDEO_AD_BEGIN );
 	state.SetField ( -1, "TAPJOY_VIDEO_AD_CLOSE", ( u32 )TAPJOY_VIDEO_AD_CLOSE );
+	state.SetField ( -1, "TAPJOY_VIDEO_AD_ERROR", ( u32 )TAPJOY_VIDEO_AD_ERROR );
+	state.SetField ( -1, "TAPJOY_VIDEO_AD_READY", ( u32 )TAPJOY_VIDEO_AD_READY );
 
 	luaL_Reg regTable[] = {
 		
-		{ "getUserId",					_getUserId },
-		{ "initVideoAds",				_initVideoAds },
-		{ "requestTapjoyConnect",		_requestTapjoyConnect },
-		{ "setListener",				&MOAIGlobalEventSource::_setListener < MOAITapjoy >  },
-		{ "showOffers",					_showOffers },
+		{ "getUserId",				_getUserId },
+		{ "initVideoAds",			_initVideoAds },
+		{ "requestTapjoyConnect",	_requestTapjoyConnect },
+		{ "setListener",			&MOAIGlobalEventSource::_setListener < MOAITapjoyIOS >  },
+		{ "showOffers",				_showOffers },
 		{ NULL, NULL }
 	};
 
-	luaL_register( state, 0, regTable );
+	luaL_register ( state, 0, regTable );
 }
 
 //----------------------------------------------------------------//
-void MOAITapjoy::SendVideoAdBeginEvent () {	
+void MOAITapjoyIOS::NotifyVideoAdBegin () {	
 
 	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 	
@@ -145,7 +149,7 @@ void MOAITapjoy::SendVideoAdBeginEvent () {
 }
 
 //----------------------------------------------------------------//
-void MOAITapjoy::SendVideoAdCloseEvent () {
+void MOAITapjoyIOS::NotifyVideoAdClose () {
 
 	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 	
@@ -156,9 +160,9 @@ void MOAITapjoy::SendVideoAdCloseEvent () {
 }
 
 //================================================================//
-// MoaiTapjoyVideoAdDelegate
+// MOAITapjoyIOSVideoAdDelegate
 //================================================================//
-@implementation MoaiTapjoyVideoAdDelegate
+@implementation MOAITapjoyIOSVideoAdDelegate
 
 	//================================================================//
 	#pragma mark -
@@ -167,12 +171,12 @@ void MOAITapjoy::SendVideoAdCloseEvent () {
 	
 	-( void ) videoAdBegan {
 	
-		MOAITapjoy::Get ().SendVideoAdBeginEvent ();
+		MOAITapjoyIOS::Get ().NotifyVideoAdBegin ();
 	}
 	
 	-( void ) videoAdClosed {
 	
-		MOAITapjoy::Get ().SendVideoAdCloseEvent ();
+		MOAITapjoyIOS::Get ().NotifyVideoAdClose ();
 	}
 	
 @end

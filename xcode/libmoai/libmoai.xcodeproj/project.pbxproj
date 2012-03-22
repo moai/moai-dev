@@ -1288,8 +1288,6 @@
 		077D50161519A4A1003DFC89 /* MOAIRenderMgr.h in Headers */ = {isa = PBXBuildFile; fileRef = 077D500E1519A4A1003DFC89 /* MOAIRenderMgr.h */; };
 		077E0F9A14FC4A91006B0B4D /* MOAIFacebook.h in Headers */ = {isa = PBXBuildFile; fileRef = 077E0F9814FC4A91006B0B4D /* MOAIFacebook.h */; };
 		077E0F9B14FC4A91006B0B4D /* MOAIFacebook.mm in Sources */ = {isa = PBXBuildFile; fileRef = 077E0F9914FC4A91006B0B4D /* MOAIFacebook.mm */; };
-		0780B1D714463B71006626CF /* MOAITapjoy.h in Headers */ = {isa = PBXBuildFile; fileRef = 0780B1D514463B71006626CF /* MOAITapjoy.h */; };
-		0780B1D814463B71006626CF /* MOAITapjoy.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0780B1D614463B71006626CF /* MOAITapjoy.mm */; };
 		079529111447902700143A72 /* MOAIImage-jpg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0795290F1447902700143A72 /* MOAIImage-jpg.cpp */; };
 		079529121447902700143A72 /* MOAIImage-png.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 079529101447902700143A72 /* MOAIImage-png.cpp */; };
 		079529131447902700143A72 /* MOAIImage-jpg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0795290F1447902700143A72 /* MOAIImage-jpg.cpp */; };
@@ -3144,8 +3142,10 @@
 		E9940E4914B7A4A0006465CC /* USXmlReader.h in Headers */ = {isa = PBXBuildFile; fileRef = E9940DB914B7A4A0006465CC /* USXmlReader.h */; };
 		E9A41A95151A61A200650276 /* USRhombus.h in Headers */ = {isa = PBXBuildFile; fileRef = E91A4C9B151829070008F1A5 /* USRhombus.h */; };
 		E9A41A9A151A62FC00650276 /* USRhombus.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E91A4C9A151829070008F1A5 /* USRhombus.cpp */; };
-		E9A41AAF151A671100650276 /* MOAICrittercismiOS.h in Headers */ = {isa = PBXBuildFile; fileRef = E9A41AAD151A671100650276 /* MOAICrittercismiOS.h */; };
-		E9A41AB0151A671100650276 /* MOAICrittercismiOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = E9A41AAE151A671100650276 /* MOAICrittercismiOS.mm */; };
+		E9A41AB7151AAA5400650276 /* MOAICrittercismIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = E9A41AB5151AAA5400650276 /* MOAICrittercismIOS.h */; };
+		E9A41AB8151AAA5400650276 /* MOAICrittercismIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = E9A41AB6151AAA5400650276 /* MOAICrittercismIOS.mm */; };
+		E9A41AC0151AAE6600650276 /* MOAITapjoyIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = E9A41ABE151AAE6600650276 /* MOAITapjoyIOS.h */; };
+		E9A41AC1151AAE6700650276 /* MOAITapjoyIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = E9A41ABF151AAE6600650276 /* MOAITapjoyIOS.mm */; };
 		E9C406281518614200C7AB04 /* MOAITextureBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E91A4C66151820CF0008F1A5 /* MOAITextureBase.cpp */; };
 		E9C4062A1518615A00C7AB04 /* MOAIGlyphSet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E91A4C5B151820CE0008F1A5 /* MOAIGlyphSet.cpp */; };
 		E9C4062B1518616F00C7AB04 /* MOAITextDesigner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E91A4C37151820470008F1A5 /* MOAITextDesigner.cpp */; };
@@ -3896,8 +3896,6 @@
 		077D500E1519A4A1003DFC89 /* MOAIRenderMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIRenderMgr.h; sourceTree = "<group>"; };
 		077E0F9814FC4A91006B0B4D /* MOAIFacebook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIFacebook.h; path = "moaiext-iphone/MOAIFacebook.h"; sourceTree = "<group>"; };
 		077E0F9914FC4A91006B0B4D /* MOAIFacebook.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIFacebook.mm; path = "moaiext-iphone/MOAIFacebook.mm"; sourceTree = "<group>"; };
-		0780B1D514463B71006626CF /* MOAITapjoy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = MOAITapjoy.h; path = "moaiext-iphone/MOAITapjoy.h"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		0780B1D614463B71006626CF /* MOAITapjoy.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAITapjoy.mm; path = "moaiext-iphone/MOAITapjoy.mm"; sourceTree = "<group>"; };
 		0795290F1447902700143A72 /* MOAIImage-jpg.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "MOAIImage-jpg.cpp"; sourceTree = "<group>"; };
 		079529101447902700143A72 /* MOAIImage-png.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "MOAIImage-png.cpp"; sourceTree = "<group>"; };
 		079529311447907100143A72 /* jaricom.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = jaricom.c; sourceTree = "<group>"; };
@@ -5302,8 +5300,10 @@
 		E9940DB714B7A4A0006465CC /* USTypedPtr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USTypedPtr.h; sourceTree = "<group>"; };
 		E9940DB814B7A4A0006465CC /* USXmlReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USXmlReader.cpp; sourceTree = "<group>"; };
 		E9940DB914B7A4A0006465CC /* USXmlReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USXmlReader.h; sourceTree = "<group>"; };
-		E9A41AAD151A671100650276 /* MOAICrittercismiOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAICrittercismiOS.h; path = "moaiext-iphone/MOAICrittercismiOS.h"; sourceTree = "<group>"; };
-		E9A41AAE151A671100650276 /* MOAICrittercismiOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAICrittercismiOS.mm; path = "moaiext-iphone/MOAICrittercismiOS.mm"; sourceTree = "<group>"; };
+		E9A41AB5151AAA5400650276 /* MOAICrittercismIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAICrittercismIOS.h; path = "moaiext-iphone/MOAICrittercismIOS.h"; sourceTree = "<group>"; };
+		E9A41AB6151AAA5400650276 /* MOAICrittercismIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAICrittercismIOS.mm; path = "moaiext-iphone/MOAICrittercismIOS.mm"; sourceTree = "<group>"; };
+		E9A41ABE151AAE6600650276 /* MOAITapjoyIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAITapjoyIOS.h; path = "moaiext-iphone/MOAITapjoyIOS.h"; sourceTree = "<group>"; };
+		E9A41ABF151AAE6600650276 /* MOAITapjoyIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAITapjoyIOS.mm; path = "moaiext-iphone/MOAITapjoyIOS.mm"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -6017,6 +6017,7 @@
 		0324E4F913564BC7000ADC60 /* moaicore */ = {
 			isa = PBXGroup;
 			children = (
+				E9A41AB9151AAB4600650276 /* render */,
 				E91A4C69151820CF0008F1A5 /* shaders */,
 				CD148EFD1395AF4400A3F501 /* action */,
 				CD148EFC1395AF3900A3F501 /* anim */,
@@ -6953,10 +6954,6 @@
 		CD148EF51395AEA300A3F501 /* gfx */ = {
 			isa = PBXGroup;
 			children = (
-				077D500B1519A4A1003DFC89 /* MOAIRenderable.cpp */,
-				077D500C1519A4A1003DFC89 /* MOAIRenderable.h */,
-				077D500D1519A4A1003DFC89 /* MOAIRenderMgr.cpp */,
-				077D500E1519A4A1003DFC89 /* MOAIRenderMgr.h */,
 				CDEFB42D13E37FA6000A9523 /* shaders */,
 				07D1A89E13EDFD8300604979 /* MOAIBlendMode.cpp */,
 				07D1A89F13EDFD8300604979 /* MOAIBlendMode.h */,
@@ -7421,16 +7418,16 @@
 				0725E2E514F459E600551DB5 /* MOAIAdColony.mm */,
 				CDD06EC81398BA6200AB0420 /* MOAIApp.h */,
 				CDD06EC91398BA6200AB0420 /* MOAIApp.mm */,
-				E9A41AAD151A671100650276 /* MOAICrittercismiOS.h */,
-				E9A41AAE151A671100650276 /* MOAICrittercismiOS.mm */,
+				E9A41AB5151AAA5400650276 /* MOAICrittercismIOS.h */,
+				E9A41AB6151AAA5400650276 /* MOAICrittercismIOS.mm */,
 				077E0F9814FC4A91006B0B4D /* MOAIFacebook.h */,
 				077E0F9914FC4A91006B0B4D /* MOAIFacebook.mm */,
 				07E6C62E140C490B004D1227 /* MOAIGameCenter.h */,
 				07E6C62F140C490B004D1227 /* MOAIGameCenter.mm */,
 				E91A4BEF1517E4090008F1A5 /* MOAINotifications.h */,
 				E91A4BF01517E4090008F1A5 /* MOAINotifications.mm */,
-				0780B1D514463B71006626CF /* MOAITapjoy.h */,
-				0780B1D614463B71006626CF /* MOAITapjoy.mm */,
+				E9A41ABE151AAE6600650276 /* MOAITapjoyIOS.h */,
+				E9A41ABF151AAE6600650276 /* MOAITapjoyIOS.mm */,
 				03F135D813A2EFC000044AE8 /* MOAIWebView.h */,
 				03F135D913A2EFC000044AE8 /* MOAIWebView.mm */,
 				03F135D613A2EFC000044AE8 /* MoaiUiWebView.h */,
@@ -8944,6 +8941,17 @@
 			name = xml;
 			sourceTree = "<group>";
 		};
+		E9A41AB9151AAB4600650276 /* render */ = {
+			isa = PBXGroup;
+			children = (
+				077D500B1519A4A1003DFC89 /* MOAIRenderable.cpp */,
+				077D500C1519A4A1003DFC89 /* MOAIRenderable.h */,
+				077D500D1519A4A1003DFC89 /* MOAIRenderMgr.cpp */,
+				077D500E1519A4A1003DFC89 /* MOAIRenderMgr.h */,
+			);
+			name = render;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -10038,7 +10046,6 @@
 				CDBD3D3D1425DC2600BC33D4 /* MOAIBox2DRevoluteJoint.h in Headers */,
 				CDBD3D3F1425DC2600BC33D4 /* MOAIBox2DWeldJoint.h in Headers */,
 				C359A149143A81BA005E7829 /* RAudioBuffer.h in Headers */,
-				0780B1D714463B71006626CF /* MOAITapjoy.h in Headers */,
 				CDDA3DA51458D70700755FB4 /* MOAIAttrOp.h in Headers */,
 				CDEBDE53146909ED00C86DF9 /* MOAIBox2DRopeJoint.h in Headers */,
 				CDEBDE57146909ED00C86DF9 /* MOAIBox2DWheelJoint.h in Headers */,
@@ -10108,13 +10115,14 @@
 				07D740B514F5B1A100A6CBA8 /* AKU-adcolony.h in Headers */,
 				66459FBC1511641F0075BF13 /* MOAIAudioSampler.h in Headers */,
 				E91A4BF11517E4090008F1A5 /* MOAINotifications.h in Headers */,
-				E9A41AAF151A671100650276 /* MOAICrittercismiOS.h in Headers */,
 				075BA091151949C50002E925 /* MOAIHttpTaskCurl.h in Headers */,
 				075BA095151949C50002E925 /* MOAIHttpTaskNaCl.h in Headers */,
 				075BA099151949C50002E925 /* MOAIUrlMgrCurl.h in Headers */,
 				075BA09D151949C50002E925 /* MOAIUrlMgrNaCl.h in Headers */,
 				077D50111519A4A1003DFC89 /* MOAIRenderable.h in Headers */,
 				077D50151519A4A1003DFC89 /* MOAIRenderMgr.h in Headers */,
+				E9A41AB7151AAA5400650276 /* MOAICrittercismIOS.h in Headers */,
+				E9A41AC0151AAE6600650276 /* MOAITapjoyIOS.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12245,7 +12253,6 @@
 				CDBD3D3A1425DC2600BC33D4 /* MOAIBox2DPulleyJoint.cpp in Sources */,
 				CDBD3D3C1425DC2600BC33D4 /* MOAIBox2DRevoluteJoint.cpp in Sources */,
 				CDBD3D3E1425DC2600BC33D4 /* MOAIBox2DWeldJoint.cpp in Sources */,
-				0780B1D814463B71006626CF /* MOAITapjoy.mm in Sources */,
 				079529111447902700143A72 /* MOAIImage-jpg.cpp in Sources */,
 				079529121447902700143A72 /* MOAIImage-png.cpp in Sources */,
 				CDEBDE51146909ED00C86DF9 /* MOAIBox2DRopeJoint.cpp in Sources */,
@@ -12300,13 +12307,14 @@
 				66459FB41511638B0075BF13 /* AKU-audiosampler.cpp in Sources */,
 				66459FBA1511641F0075BF13 /* MOAIAudioSampler.cpp in Sources */,
 				E91A4BF21517E4090008F1A5 /* MOAINotifications.mm in Sources */,
-				E9A41AB0151A671100650276 /* MOAICrittercismiOS.mm in Sources */,
 				075BA08F151949C50002E925 /* MOAIHttpTaskCurl.cpp in Sources */,
 				075BA093151949C50002E925 /* MOAIHttpTaskNaCl.cpp in Sources */,
 				075BA097151949C50002E925 /* MOAIUrlMgrCurl.cpp in Sources */,
 				075BA09B151949C50002E925 /* MOAIUrlMgrNaCl.cpp in Sources */,
 				077D500F1519A4A1003DFC89 /* MOAIRenderable.cpp in Sources */,
 				077D50131519A4A1003DFC89 /* MOAIRenderMgr.cpp in Sources */,
+				E9A41AB8151AAA5400650276 /* MOAICrittercismIOS.mm in Sources */,
+				E9A41AC1151AAE6700650276 /* MOAITapjoyIOS.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

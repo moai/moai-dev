@@ -105,7 +105,7 @@ void AKUIphoneInit ( UIApplication* application ) {
 	REGISTER_LUA_CLASS ( MOAIWebView )
 			
 	#ifndef DISABLE_TAPJOY
-		REGISTER_LUA_CLASS ( MOAITapjoy )
+		REGISTER_LUA_CLASS ( MOAITapjoyIOS )
 	#endif
 
 	#ifndef DISABLE_NOTIFICATIONS
@@ -113,7 +113,7 @@ void AKUIphoneInit ( UIApplication* application ) {
 	#endif
 
 	#ifndef DISABLE_CRITTERCISM
-		REGISTER_LUA_CLASS ( MOAICrittercismiOS )
+		REGISTER_LUA_CLASS ( MOAICrittercismIOS )
 	#endif
 		
 	REGISTER_LUA_CLASS ( MOAIFacebook )

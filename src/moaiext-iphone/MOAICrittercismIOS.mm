@@ -25,6 +25,7 @@
 	@out	nil
 */
 int MOAICrittercismIOS::_init ( lua_State* L ) {
+	
 	MOAILuaState state ( L );
 
 	cc8* appId = lua_tostring ( state, 1 );
@@ -70,7 +71,7 @@ void MOAICrittercismIOS::RegisterLuaClass ( MOAILuaState& state ) {
 		{ NULL, NULL }
 	};
 
-	luaL_register( state, 0, regTable );
+	luaL_register ( state, 0, regTable );
 }
 
 #endif
