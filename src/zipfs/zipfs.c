@@ -1234,22 +1234,41 @@ int zipfs_get_stat ( char const* path, zipfs_stat* filestat ) {
 		
 			ZIPFSZipFileEntry* entry;
 		
+			ZIPFSZipFileDir* dir = ZIPFSZipFile_FindDir ( mount->mArchive, localpath );
+		
+			const char *filename = localpath;
+			int i = strlen ( filename ) - 1;
+
 			result = stat ( mount->mArchive->mFilename, &s );
+
 			if ( result ) return -1;
-					
-			filestat->mIsDir			= 1;
-			filestat->mSize				= 0;
-			filestat->mTimeCreated		= s.st_ctime;
-			filestat->mTimeModified		= s.st_mtime;
-			filestat->mTimeViewed		= s.st_atime;
+			
+			for ( ; i >= 0; --i ) {
+				if ( filename [ i ] == '/' ) {
+					filename = &filename [ i + 1 ];
+					break;
+				}
+			}
 			
 			entry = ZIPFSZipFile_FindEntry ( mount->mArchive, localpath );
-			if ( entry ) {
-				
-				filestat->mExists		= 1;
+
+			if(filename == dir->mName) { // Directory		
+				filestat->mIsDir      = 1;	
+				filestat->mSize        = 0;	
+			}
+			else if ( entry ) { // Entry
+					
 				filestat->mIsDir		= 0;
 				filestat->mSize			= entry->mUncompressedSize;
 			}
+			else {
+				return 0;
+			}
+
+			filestat->mExists        = 1;	
+			filestat->mTimeCreated    = s.st_ctime;	
+			filestat->mTimeModified    = s.st_mtime;	
+			filestat->mTimeViewed    = s.st_atime;
 		}
 	}
 	else {
