@@ -5,7 +5,7 @@
 
 #include "pch.h"
 
-#import <moaiext-iphone/MOAINotifications.h>
+#import <moaiext-iphone/MOAINotificationsIOS.h>
 #import <moaiext-iphone/NSDictionary+MOAILib.h>
 
 //================================================================//
@@ -13,7 +13,12 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-int MOAINotifications::_getAppIconBadgeNumber ( lua_State* L ) {
+/**	@name	getAppIconBadgeNumber
+	@text	Get the current icon badge number.
+				
+	@out 	integer	count
+*/
+int MOAINotificationsIOS::_getAppIconBadgeNumber ( lua_State* L ) {
 	
 	MOAILuaState state ( L );
 	
@@ -24,7 +29,13 @@ int MOAINotifications::_getAppIconBadgeNumber ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-int MOAINotifications::_registerForRemoteNotifications ( lua_State* L ) {
+/**	@name	registerForRemoteNotifications
+	@text	Register to receive remote notifications.
+			
+	@in		integer	types			A mask of requested notification types. See Apple documentation.
+	@out 	nil
+*/
+int MOAINotificationsIOS::_registerForRemoteNotifications ( lua_State* L ) {
 	
 	MOAILuaState state ( L );
 	
@@ -35,7 +46,13 @@ int MOAINotifications::_registerForRemoteNotifications ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-int MOAINotifications::_setAppIconBadgeNumber ( lua_State* L ) {
+/**	@name	setAppIconBadgeNumber
+	@text	Set the current icon badge number.
+			
+	@in		integer	count			The count to set on the icon badge.
+	@out 	nil
+*/
+int MOAINotificationsIOS::_setAppIconBadgeNumber ( lua_State* L ) {
 
 	MOAILuaState state ( L );
 	
@@ -46,7 +63,7 @@ int MOAINotifications::_setAppIconBadgeNumber ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-int MOAINotifications::_setListener ( lua_State* L ) {
+int MOAINotificationsIOS::_setListener ( lua_State* L ) {
 	
 	MOAILuaState state ( L );
 	
@@ -54,42 +71,47 @@ int MOAINotifications::_setListener ( lua_State* L ) {
 	
 	if ( idx < TOTAL ) {
 		
-		MOAINotifications::Get ().mListeners [ idx ].SetStrongRef ( state, 2 );
+		MOAINotificationsIOS::Get ().mListeners [ idx ].SetStrongRef ( state, 2 );
 	}
 	
 	return 0;
 }
 
 //----------------------------------------------------------------//
-int MOAINotifications::_unregisterForRemoteNotifications ( lua_State* L ) {
+/**	@name	unregisterForRemoteNotifications
+	@text	Dregister for remote notifications.
+			
+	@out 	nil
+*/
+int MOAINotificationsIOS::_unregisterForRemoteNotifications ( lua_State* L ) {
 	
 	MOAILuaState state ( L );
 	
 	UIApplication* application = [ UIApplication sharedApplication ];
 	[ application unregisterForRemoteNotifications ];
 
-	MOAINotifications::Get ().NotifyRemoteDeregistrationComplete ();
+	MOAINotificationsIOS::Get ().NotifyRemoteDeregistrationComplete ();
 	
 	return 0;
 }
 
 //================================================================//
-// MOAINotifications
+// MOAINotificationsIOS
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAINotifications::MOAINotifications () {
+MOAINotificationsIOS::MOAINotificationsIOS () {
 
 	RTTI_SINGLE ( MOAILuaObject )
 }
 
 //----------------------------------------------------------------//
-MOAINotifications::~MOAINotifications () {
+MOAINotificationsIOS::~MOAINotificationsIOS () {
 
 }
 
 //----------------------------------------------------------------//
-void MOAINotifications::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAINotificationsIOS::RegisterLuaClass ( MOAILuaState& state ) {
 
 	state.SetField ( -1, "REMOTE_NOTIFICATION_NONE",					( u32 )UIRemoteNotificationTypeNone );
 	state.SetField ( -1, "REMOTE_NOTIFICATION_BADGE",					( u32 )UIRemoteNotificationTypeBadge );
@@ -116,7 +138,7 @@ void MOAINotifications::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAINotifications::NotifyRemoteNotificationReceived ( NSDictionary* notification ) {
+void MOAINotificationsIOS::NotifyRemoteNotificationReceived ( NSDictionary* notification ) {
 
 	MOAILuaRef& callback = this->mListeners [ REMOTE_NOTIFICATION_MESSAGE_RECEIVED ];
 	
@@ -131,7 +153,7 @@ void MOAINotifications::NotifyRemoteNotificationReceived ( NSDictionary* notific
 }
 
 //----------------------------------------------------------------//
-void MOAINotifications::NotifyRemoteDeregistrationComplete () {
+void MOAINotificationsIOS::NotifyRemoteDeregistrationComplete () {
 
 	MOAILuaRef& callback = this->mListeners [ REMOTE_NOTIFICATION_REGISTRATION_COMPLETE ];
 
@@ -147,7 +169,7 @@ void MOAINotifications::NotifyRemoteDeregistrationComplete () {
 }
 
 //----------------------------------------------------------------//
-void MOAINotifications::NotifyRemoteRegistrationComplete ( NSData* deviceToken ) {
+void MOAINotificationsIOS::NotifyRemoteRegistrationComplete ( NSData* deviceToken ) {
 	
 	MOAILuaRef& callback = this->mListeners [ REMOTE_NOTIFICATION_REGISTRATION_COMPLETE ];
 	

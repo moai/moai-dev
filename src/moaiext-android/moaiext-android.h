@@ -7,4 +7,4 @@
 #include <moaiext-android/MOAICrittercismAndroid.h>
 #include <moaiext-android/MOAITapjoyAndroid.h>
 #include <moaiext-android/MOAIFacebookAndroid.h>
-#include <moaiext-android/MOAINotifications.h>
+#include <moaiext-android/MOAINotificationsAndroid.h>

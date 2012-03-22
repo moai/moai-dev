@@ -112,7 +112,7 @@ void AKUIphoneInit ( UIApplication* application ) {
 	#endif
 
 	#ifndef DISABLE_NOTIFICATIONS
-		REGISTER_LUA_CLASS ( MOAINotifications )
+		REGISTER_LUA_CLASS ( MOAINotificationsIOS )
 	#endif
 
 	#ifndef DISABLE_CRITTERCISM
@@ -129,13 +129,17 @@ void AKUIphoneInit ( UIApplication* application ) {
 //----------------------------------------------------------------//
 void AKUNotifyRemoteNotificationReceived ( NSDictionary* notification ) {
 
-	MOAINotifications::Get ().NotifyRemoteNotificationReceived ( notification );
+#ifndef DISABLE_NOTIFICATIONS
+	MOAINotificationsIOS::Get ().NotifyRemoteNotificationReceived ( notification );
+#endif
 }
 
 //----------------------------------------------------------------//
 void AKUNotifyRemoteNotificationRegistrationComplete ( NSData* deviceToken ) {
 
-	MOAINotifications::Get ().NotifyRemoteRegistrationComplete ( deviceToken );
+#ifndef DISABLE_NOTIFICATIONS
+	MOAINotificationsIOS::Get ().NotifyRemoteRegistrationComplete ( deviceToken );
+#endif
 }
 
 //-----------------------------------------------------------------//

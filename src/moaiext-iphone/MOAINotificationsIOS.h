@@ -12,10 +12,27 @@
 #import <UIKit/UIKit.h>
 
 //================================================================//
-// MOAINotifications
+// MOAINotificationsIOS
 //================================================================//
-class MOAINotifications :
-	public MOAIGlobalClass < MOAINotifications, MOAILuaObject > {
+/**	@name	MOAINotificationsIOS
+	@text	Wrapper for push notificiation integration on iOS 
+			devices. Exposed to lua via MOAINotifications on all
+			mobile platforms.
+
+	@const	REMOTE_NOTIFICATION_REGISTRATION_COMPLETE	Event code for notification registration completion.
+	@const	REMOTE_NOTIFICATION_MESSAGE_RECEIVED		Event code for a push notification message receipt.
+
+	@const	REMOTE_NOTIFICATION_RESULT_REGISTERED		Error code for a successful notification registration.
+	@const	REMOTE_NOTIFICATION_RESULT_UNREGISTERED		Error code for a successful notification deregistration.
+	@const	REMOTE_NOTIFICATION_RESULT_ERROR			Error code for a failed notification registration or deregistration.
+	
+	@const	REMOTE_NOTIFICATION_NONE					Notification type none.
+	@const	REMOTE_NOTIFICATION_BADGE					Notification type icon badges.
+	@const	REMOTE_NOTIFICATION_SOUND					Notification type sound.
+	@const	REMOTE_NOTIFICATION_ALERT					Notification type alerts.
+*/
+class MOAINotificationsIOS :
+	public MOAIGlobalClass < MOAINotificationsIOS, MOAILuaObject > {
 private:
 
 	//----------------------------------------------------------------//
@@ -27,7 +44,7 @@ private:
 
 public:
 
-	DECL_LUA_SINGLETON ( MOAINotifications )
+	DECL_LUA_SINGLETON ( MOAINotificationsIOS )
 	
 	enum {
 		REMOTE_NOTIFICATION_REGISTRATION_COMPLETE,
@@ -44,8 +61,8 @@ public:
 	MOAILuaRef		mListeners [ TOTAL ];
 	
 	//----------------------------------------------------------------//
-				MOAINotifications					();
-				~MOAINotifications					();
+				MOAINotificationsIOS				();
+				~MOAINotificationsIOS				();
 	void		NotifyRemoteDeregistrationComplete	();
 	void		NotifyRemoteNotificationReceived	( NSDictionary* notification );
 	void		NotifyRemoteRegistrationComplete	( NSData* token );

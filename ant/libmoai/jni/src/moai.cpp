@@ -272,8 +272,8 @@
 #endif
 
 #ifndef DISABLE_NOTIFICATIONS
-		MOAINotifications::Affirm ();
-		REGISTER_LUA_CLASS ( MOAINotifications );
+		MOAINotificationsAndroid::Affirm ();
+		REGISTER_LUA_CLASS ( MOAINotificationsAndroid );
 #endif
 
 #ifndef DISABLE_BILLING
