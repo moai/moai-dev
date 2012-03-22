@@ -1286,8 +1286,6 @@
 		077D50141519A4A1003DFC89 /* MOAIRenderMgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 077D500D1519A4A1003DFC89 /* MOAIRenderMgr.cpp */; };
 		077D50151519A4A1003DFC89 /* MOAIRenderMgr.h in Headers */ = {isa = PBXBuildFile; fileRef = 077D500E1519A4A1003DFC89 /* MOAIRenderMgr.h */; };
 		077D50161519A4A1003DFC89 /* MOAIRenderMgr.h in Headers */ = {isa = PBXBuildFile; fileRef = 077D500E1519A4A1003DFC89 /* MOAIRenderMgr.h */; };
-		077E0F9A14FC4A91006B0B4D /* MOAIFacebook.h in Headers */ = {isa = PBXBuildFile; fileRef = 077E0F9814FC4A91006B0B4D /* MOAIFacebook.h */; };
-		077E0F9B14FC4A91006B0B4D /* MOAIFacebook.mm in Sources */ = {isa = PBXBuildFile; fileRef = 077E0F9914FC4A91006B0B4D /* MOAIFacebook.mm */; };
 		079529111447902700143A72 /* MOAIImage-jpg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0795290F1447902700143A72 /* MOAIImage-jpg.cpp */; };
 		079529121447902700143A72 /* MOAIImage-png.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 079529101447902700143A72 /* MOAIImage-png.cpp */; };
 		079529131447902700143A72 /* MOAIImage-jpg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0795290F1447902700143A72 /* MOAIImage-jpg.cpp */; };
@@ -3146,6 +3144,8 @@
 		E9A41AB8151AAA5400650276 /* MOAICrittercismIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = E9A41AB6151AAA5400650276 /* MOAICrittercismIOS.mm */; };
 		E9A41AC0151AAE6600650276 /* MOAITapjoyIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = E9A41ABE151AAE6600650276 /* MOAITapjoyIOS.h */; };
 		E9A41AC1151AAE6700650276 /* MOAITapjoyIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = E9A41ABF151AAE6600650276 /* MOAITapjoyIOS.mm */; };
+		E9A41ADC151ABEDC00650276 /* MOAIFacebookIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = E9A41ADA151ABEDC00650276 /* MOAIFacebookIOS.h */; };
+		E9A41ADD151ABEDC00650276 /* MOAIFacebookIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = E9A41ADB151ABEDC00650276 /* MOAIFacebookIOS.mm */; };
 		E9C406281518614200C7AB04 /* MOAITextureBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E91A4C66151820CF0008F1A5 /* MOAITextureBase.cpp */; };
 		E9C4062A1518615A00C7AB04 /* MOAIGlyphSet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E91A4C5B151820CE0008F1A5 /* MOAIGlyphSet.cpp */; };
 		E9C4062B1518616F00C7AB04 /* MOAITextDesigner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E91A4C37151820470008F1A5 /* MOAITextDesigner.cpp */; };
@@ -3894,8 +3894,6 @@
 		077D500C1519A4A1003DFC89 /* MOAIRenderable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIRenderable.h; sourceTree = "<group>"; };
 		077D500D1519A4A1003DFC89 /* MOAIRenderMgr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIRenderMgr.cpp; sourceTree = "<group>"; };
 		077D500E1519A4A1003DFC89 /* MOAIRenderMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIRenderMgr.h; sourceTree = "<group>"; };
-		077E0F9814FC4A91006B0B4D /* MOAIFacebook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIFacebook.h; path = "moaiext-iphone/MOAIFacebook.h"; sourceTree = "<group>"; };
-		077E0F9914FC4A91006B0B4D /* MOAIFacebook.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIFacebook.mm; path = "moaiext-iphone/MOAIFacebook.mm"; sourceTree = "<group>"; };
 		0795290F1447902700143A72 /* MOAIImage-jpg.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "MOAIImage-jpg.cpp"; sourceTree = "<group>"; };
 		079529101447902700143A72 /* MOAIImage-png.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "MOAIImage-png.cpp"; sourceTree = "<group>"; };
 		079529311447907100143A72 /* jaricom.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = jaricom.c; sourceTree = "<group>"; };
@@ -5304,6 +5302,8 @@
 		E9A41AB6151AAA5400650276 /* MOAICrittercismIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAICrittercismIOS.mm; path = "moaiext-iphone/MOAICrittercismIOS.mm"; sourceTree = "<group>"; };
 		E9A41ABE151AAE6600650276 /* MOAITapjoyIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAITapjoyIOS.h; path = "moaiext-iphone/MOAITapjoyIOS.h"; sourceTree = "<group>"; };
 		E9A41ABF151AAE6600650276 /* MOAITapjoyIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAITapjoyIOS.mm; path = "moaiext-iphone/MOAITapjoyIOS.mm"; sourceTree = "<group>"; };
+		E9A41ADA151ABEDC00650276 /* MOAIFacebookIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIFacebookIOS.h; path = "moaiext-iphone/MOAIFacebookIOS.h"; sourceTree = "<group>"; };
+		E9A41ADB151ABEDC00650276 /* MOAIFacebookIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIFacebookIOS.mm; path = "moaiext-iphone/MOAIFacebookIOS.mm"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -7420,8 +7420,8 @@
 				CDD06EC91398BA6200AB0420 /* MOAIApp.mm */,
 				E9A41AB5151AAA5400650276 /* MOAICrittercismIOS.h */,
 				E9A41AB6151AAA5400650276 /* MOAICrittercismIOS.mm */,
-				077E0F9814FC4A91006B0B4D /* MOAIFacebook.h */,
-				077E0F9914FC4A91006B0B4D /* MOAIFacebook.mm */,
+				E9A41ADA151ABEDC00650276 /* MOAIFacebookIOS.h */,
+				E9A41ADB151ABEDC00650276 /* MOAIFacebookIOS.mm */,
 				07E6C62E140C490B004D1227 /* MOAIGameCenter.h */,
 				07E6C62F140C490B004D1227 /* MOAIGameCenter.mm */,
 				E91A4BEF1517E4090008F1A5 /* MOAINotifications.h */,
@@ -10123,6 +10123,7 @@
 				077D50151519A4A1003DFC89 /* MOAIRenderMgr.h in Headers */,
 				E9A41AB7151AAA5400650276 /* MOAICrittercismIOS.h in Headers */,
 				E9A41AC0151AAE6600650276 /* MOAITapjoyIOS.h in Headers */,
+				E9A41ADC151ABEDC00650276 /* MOAIFacebookIOS.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -10222,7 +10223,6 @@
 				07F4C7C814FC449E00FB78BA /* SBJsonBase.h in Headers */,
 				07F4C7C914FC449E00FB78BA /* SBJsonParser.h in Headers */,
 				07F4C7CA14FC449E00FB78BA /* SBJsonWriter.h in Headers */,
-				077E0F9A14FC4A91006B0B4D /* MOAIFacebook.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12315,6 +12315,7 @@
 				077D50131519A4A1003DFC89 /* MOAIRenderMgr.cpp in Sources */,
 				E9A41AB8151AAA5400650276 /* MOAICrittercismIOS.mm in Sources */,
 				E9A41AC1151AAE6700650276 /* MOAITapjoyIOS.mm in Sources */,
+				E9A41ADD151ABEDC00650276 /* MOAIFacebookIOS.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12391,7 +12392,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				077E0F9B14FC4A91006B0B4D /* MOAIFacebook.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

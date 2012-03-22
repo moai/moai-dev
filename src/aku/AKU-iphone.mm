@@ -18,7 +18,10 @@ void AKUAppDidStartSession ( bool resumed ) {
 void AKUAppOpenFromURL ( NSURL* url ) {
 	
 	MOAIApp::Get ().AppOpenedFromURL ( url );
-	MOAIFacebook::Get ().HandleOpenURL ( url );
+
+#ifndef DISABLE_FACEBOOK
+	MOAIFacebookIOS::Get ().HandleOpenURL ( url );
+#endif
 }
 
 //-----------------------------------------------------------------//
@@ -116,7 +119,9 @@ void AKUIphoneInit ( UIApplication* application ) {
 		REGISTER_LUA_CLASS ( MOAICrittercismIOS )
 	#endif
 		
-	REGISTER_LUA_CLASS ( MOAIFacebook )
+	#ifndef DISABLE_FACEBOOK
+		REGISTER_LUA_CLASS ( MOAIFacebookIOS )
+	#endif
 	
 	AKUInit ();
 }

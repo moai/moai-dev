@@ -3,7 +3,7 @@
 
 #import <moaiext-iphone/MOAIApp.h>
 #import <moaiext-iphone/MOAICrittercismIOS.h>
-#import <moaiext-iphone/MOAIFacebook.h>
+#import <moaiext-iphone/MOAIFacebookIOS.h>
 #import <moaiext-iphone/MOAIGameCenter.h>
 #import <moaiext-iphone/MOAINotifications.h>
 #import <moaiext-iphone/MOAITapjoyIOS.h>

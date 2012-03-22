@@ -166,7 +166,7 @@ void MOAITapjoyIOS::NotifyVideoAdClose () {
 
 	//================================================================//
 	#pragma mark -
-	#pragma mark Protocol TJCVideoAdDelegate
+	#pragma mark Protocol MOAITapjoyIOSVideoAdDelegate
 	//================================================================//
 	
 	-( void ) videoAdBegan {

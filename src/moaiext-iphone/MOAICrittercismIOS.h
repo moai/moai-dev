@@ -6,7 +6,8 @@
 
 #ifndef DISABLE_CRITTERCISM
 
-#include <moaicore/moaicore.h>
+#import <Foundation/Foundation.h> 
+#import <moaicore/moaicore.h>
 
 //================================================================//
 // MOAICrittercismIOS

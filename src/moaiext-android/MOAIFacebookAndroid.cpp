@@ -8,7 +8,7 @@
 #include <jni.h>
 
 #include <moaiext-android/moaiext-jni.h>
-#include <moaiext-android/MOAIFacebook.h>
+#include <moaiext-android/MOAIFacebookAndroid.h>
 
 extern JavaVM* jvm;
 
@@ -17,7 +17,7 @@ extern JavaVM* jvm;
 //================================================================//
 
 //----------------------------------------------------------------//
-cc8* MOAIFacebook::_luaParseTable ( lua_State* L, int idx ) {
+cc8* MOAIFacebookAndroid::_luaParseTable ( lua_State* L, int idx ) {
 
 	switch ( lua_type ( L, idx )) {
 
@@ -32,7 +32,12 @@ cc8* MOAIFacebook::_luaParseTable ( lua_State* L, int idx ) {
 }
 
 //----------------------------------------------------------------//
-int MOAIFacebook::_getToken ( lua_State* L ) {
+/**	@name	getToken
+	@text	Retrieve the Facebook login token.
+				
+	@out	string	token
+*/
+int MOAIFacebookAndroid::_getToken ( lua_State* L ) {
 	
 	MOAILuaState state ( L );
 	
@@ -41,13 +46,13 @@ int MOAIFacebook::_getToken ( lua_State* L ) {
 	jclass facebook = env->FindClass ( "com/ziplinegames/moai/MoaiFacebook" );
     if ( facebook == NULL ) {
 	
-		USLog::Print ( "MOAIFacebook: Unable to find java class %s", "com/ziplinegames/moai/MoaiFacebook" );
+		USLog::Print ( "MOAIFacebookAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiFacebook" );
     } else {
 	
     	jmethodID getToken = env->GetStaticMethodID ( facebook, "getToken", "()Ljava/lang/String;" );
    		if ( getToken == NULL ) {
 	
-			USLog::Print ( "MOAIFacebook: Unable to find static java method %s", "getToken" );
+			USLog::Print ( "MOAIFacebookAndroid: Unable to find static java method %s", "getToken" );
 		} else {
 	
 			jstring jtoken = ( jstring )env->CallStaticObjectMethod ( facebook, getToken );
@@ -68,7 +73,13 @@ int MOAIFacebook::_getToken ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-int MOAIFacebook::_init ( lua_State* L ) {
+/**	@name	init
+	@text	Initialize Facebook.
+				
+	@in		string	appId			Available in Facebook developer settings.
+	@out 	nil
+*/
+int MOAIFacebookAndroid::_init ( lua_State* L ) {
 	
 	MOAILuaState state ( L );
 	
@@ -81,13 +92,13 @@ int MOAIFacebook::_init ( lua_State* L ) {
 	jclass facebook = env->FindClass ( "com/ziplinegames/moai/MoaiFacebook" );
     if ( facebook == NULL ) {
 	
-		USLog::Print ( "MOAIFacebook: Unable to find java class %s", "com/ziplinegames/moai/MoaiFacebook" );
+		USLog::Print ( "MOAIFacebookAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiFacebook" );
     } else {
 	
     	jmethodID init = env->GetStaticMethodID ( facebook, "init", "(Ljava/lang/String;)V" );
    		if ( init == NULL ) {
 	
-			USLog::Print ( "MOAIFacebook: Unable to find static java method %s", "init" );
+			USLog::Print ( "MOAIFacebookAndroid: Unable to find static java method %s", "init" );
 		} else {
 	
 			env->CallStaticVoidMethod ( facebook, init, jidentifier );		
@@ -98,7 +109,14 @@ int MOAIFacebook::_init ( lua_State* L ) {
 }
 		
 //----------------------------------------------------------------//
-int MOAIFacebook::_login ( lua_State *L ) {
+/**	@name	login
+	@text	Prompt the user to login to Facebook.
+				
+	@opt	table	permissions			Optional set of required permissions. 
+										See Facebook documentation for a full list.
+	@out 	nil
+*/
+int MOAIFacebookAndroid::_login ( lua_State *L ) {
 	
 	MOAILuaState state ( L );
 	
@@ -149,13 +167,13 @@ int MOAIFacebook::_login ( lua_State *L ) {
 	jclass facebook = env->FindClass ( "com/ziplinegames/moai/MoaiFacebook" );
     if ( facebook == NULL ) {
 
-		USLog::Print ( "MOAIFacebook: Unable to find java class %s", "com/ziplinegames/moai/MoaiFacebook" );
+		USLog::Print ( "MOAIFacebookAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiFacebook" );
     } else {
 
     	jmethodID login = env->GetStaticMethodID ( facebook, "login", "([Ljava/lang/String;)V" );
     	if ( login == NULL ) {
 
-			USLog::Print ( "MOAIFacebook: Unable to find static java method %s", "login" );
+			USLog::Print ( "MOAIFacebookAndroid: Unable to find static java method %s", "login" );
     	} else {
 
 			env->CallStaticVoidMethod ( facebook, login, jpermissions );				
@@ -166,7 +184,12 @@ int MOAIFacebook::_login ( lua_State *L ) {
 }
 
 //----------------------------------------------------------------//
-int MOAIFacebook::_logout ( lua_State *L ) {
+/**	@name	logout
+	@text	Log the user out of Facebook.
+				
+	@out 	nil
+*/
+int MOAIFacebookAndroid::_logout ( lua_State *L ) {
 	
 	MOAILuaState state ( L );
 	
@@ -175,16 +198,16 @@ int MOAIFacebook::_logout ( lua_State *L ) {
 	jclass facebook = env->FindClass ( "com/ziplinegames/moai/MoaiFacebook" );
     if ( facebook == NULL ) {
 	
-		USLog::Print ( "MOAIFacebook: Unable to find java class %s", "com/ziplinegames/moai/MoaiFacebook" );
+		USLog::Print ( "MOAIFacebookAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiFacebook" );
     } else {
 	
     	jmethodID logout = env->GetStaticMethodID ( facebook, "logout", "()V" );
    		if ( logout == NULL ) {
 	
-			USLog::Print ( "MOAIFacebook: Unable to find static java method %s", "logout" );
+			USLog::Print ( "MOAIFacebookAndroid: Unable to find static java method %s", "logout" );
 		} else {
 	
-			env->CallStaticVoidMethod ( facebook, logout );		
+			env->CallStaticVoidMethod ( facebook, logout );
 		}
 	}
 
@@ -192,7 +215,18 @@ int MOAIFacebook::_logout ( lua_State *L ) {
 }
 
 //----------------------------------------------------------------//
-int MOAIFacebook::_postToFeed ( lua_State* L ) {
+/**	@name	postToFeed
+	@text	Post a message to the logged in users' news feed.
+				
+	@opt	string	link			The URL that the post links to. See Facebook documentation.
+	@opt	string	picture			The URL of an image to include in the post. See Facebook documentation.
+	@opt	string	name			The name of the link. See Facebook documentation.
+	@opt	string	caption			The caption of the link. See Facebook documentation.
+	@opt	string	description		The description of the link. See Facebook documentation.
+	@opt	string	message			The message for the post. See Facebook documentation.
+	@out 	nil
+*/
+int MOAIFacebookAndroid::_postToFeed ( lua_State* L ) {
 
 	MOAILuaState state ( L );
 	
@@ -215,13 +249,13 @@ int MOAIFacebook::_postToFeed ( lua_State* L ) {
 	jclass facebook = env->FindClass ( "com/ziplinegames/moai/MoaiFacebook" );
     if ( facebook == NULL ) {
 	
-		USLog::Print ( "MOAIFacebook: Unable to find java class %s", "com/ziplinegames/moai/MoaiFacebook" );
+		USLog::Print ( "MOAIFacebookAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiFacebook" );
     } else {
 	
     	jmethodID postToFeed = env->GetStaticMethodID ( facebook, "postToFeed", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V" );
    		if ( postToFeed == NULL ) {
 	
-			USLog::Print ( "MOAIFacebook: Unable to find static java method %s", "postToFeed" );
+			USLog::Print ( "MOAIFacebookAndroid: Unable to find static java method %s", "postToFeed" );
 		} else {
 	
 			env->CallStaticVoidMethod ( facebook, postToFeed, jlink, jpicture, jname, jcaption, jdescription, jmessage );	
@@ -232,7 +266,13 @@ int MOAIFacebook::_postToFeed ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-int MOAIFacebook::_sendRequest ( lua_State* L ) {
+/**	@name	sendRequest
+	@text	Send an app request to the logged in users' friends.
+				
+	@opt	string	message			The message for the request. See Facebook documentation.
+	@out 	nil
+*/
+int MOAIFacebookAndroid::_sendRequest ( lua_State* L ) {
 	
 	MOAILuaState state ( L );
 	
@@ -245,13 +285,13 @@ int MOAIFacebook::_sendRequest ( lua_State* L ) {
 	jclass facebook = env->FindClass ( "com/ziplinegames/moai/MoaiFacebook" );
     if ( facebook == NULL ) {
 	
-		USLog::Print ( "MOAIFacebook: Unable to find java class %s", "com/ziplinegames/moai/MoaiFacebook" );
+		USLog::Print ( "MOAIFacebookAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiFacebook" );
     } else {
 	
     	jmethodID sendRequest = env->GetStaticMethodID ( facebook, "sendRequest", "(Ljava/lang/String;)V" );
    		if ( sendRequest == NULL ) {
 	
-			USLog::Print ( "MOAIFacebook: Unable to find static java method %s", "sendRequest" );
+			USLog::Print ( "MOAIFacebookAndroid: Unable to find static java method %s", "sendRequest" );
 		} else {
 	
 			env->CallStaticVoidMethod ( facebook, sendRequest, jmessage );		
@@ -262,7 +302,12 @@ int MOAIFacebook::_sendRequest ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-int MOAIFacebook::_sessionValid ( lua_State* L ) {
+/**	@name	sessionValid
+	@text	Determine whether or not the current Facebook session is valid.
+				
+	@out 	boolean	valid
+*/
+int MOAIFacebookAndroid::_sessionValid ( lua_State* L ) {
 
 	MOAILuaState state ( L );
 
@@ -271,13 +316,13 @@ int MOAIFacebook::_sessionValid ( lua_State* L ) {
 	jclass facebook = env->FindClass ( "com/ziplinegames/moai/MoaiFacebook" );
     if ( facebook == NULL ) {
 
-		USLog::Print ( "MOAIFacebook: Unable to find java class %s", "com/ziplinegames/moai/MoaiFacebook" );
+		USLog::Print ( "MOAIFacebookAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiFacebook" );
     } else {
 
     	jmethodID isSessionValid = env->GetStaticMethodID ( facebook, "isSessionValid", "()Z" );
     	if ( isSessionValid == NULL ) {
 
-			USLog::Print ( "MOAIFacebook: Unable to find static java method %s", "isSessionValid" );
+			USLog::Print ( "MOAIFacebookAndroid: Unable to find static java method %s", "isSessionValid" );
     	} else {
 
 			jboolean jvalid = ( jboolean )env->CallStaticBooleanMethod ( facebook, isSessionValid );	
@@ -294,7 +339,7 @@ int MOAIFacebook::_sessionValid ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-int MOAIFacebook::_setListener ( lua_State* L ) {
+int MOAIFacebookAndroid::_setListener ( lua_State* L ) {
 	
 	MOAILuaState state ( L );
 	
@@ -302,14 +347,20 @@ int MOAIFacebook::_setListener ( lua_State* L ) {
 
 	if ( idx < TOTAL ) {
 		
-		MOAIFacebook::Get ().mListeners [ idx ].SetStrongRef ( state, 2 );
+		MOAIFacebookAndroid::Get ().mListeners [ idx ].SetStrongRef ( state, 2 );
 	}
 	
 	return 0;
 }
 
 //----------------------------------------------------------------//
-int MOAIFacebook::_setToken ( lua_State* L ) {
+/**	@name	setToken
+	@text	Set the Facebook login token.
+			
+	@in		string	token	
+	@out 	nil
+*/
+int MOAIFacebookAndroid::_setToken ( lua_State* L ) {
 
 	MOAILuaState state ( L );
 	
@@ -322,13 +373,13 @@ int MOAIFacebook::_setToken ( lua_State* L ) {
 	jclass facebook = env->FindClass ( "com/ziplinegames/moai/MoaiFacebook" );
     if ( facebook == NULL ) {
 	
-		USLog::Print ( "MOAIFacebook: Unable to find java class %s", "com/ziplinegames/moai/MoaiFacebook" );
+		USLog::Print ( "MOAIFacebookAndroid: Unable to find java class %s", "com/ziplinegames/moai/MoaiFacebook" );
     } else {
 	
     	jmethodID setToken = env->GetStaticMethodID ( facebook, "setToken", "(Ljava/lang/String;)V" );
    		if ( setToken == NULL ) {
 	
-			USLog::Print ( "MOAIFacebook: Unable to find static java method %s", "setToken" );
+			USLog::Print ( "MOAIFacebookAndroid: Unable to find static java method %s", "setToken" );
 		} else {
 	
 			env->CallStaticVoidMethod ( facebook, setToken, jtoken );		
@@ -339,22 +390,22 @@ int MOAIFacebook::_setToken ( lua_State* L ) {
 }
 
 //================================================================//
-// MOAIFacebook
+// MOAIFacebookAndroid
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIFacebook::MOAIFacebook () {
+MOAIFacebookAndroid::MOAIFacebookAndroid () {
 
 	RTTI_SINGLE ( MOAILuaObject )	
 }
 
 //----------------------------------------------------------------//
-MOAIFacebook::~MOAIFacebook () {
+MOAIFacebookAndroid::~MOAIFacebookAndroid () {
 
 }
 
 //----------------------------------------------------------------//
-void MOAIFacebook::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIFacebookAndroid::RegisterLuaClass ( MOAILuaState& state ) {
 
 	state.SetField ( -1, "DIALOG_DID_COMPLETE",		( u32 ) DIALOG_DID_COMPLETE );
 	state.SetField ( -1, "DIALOG_DID_NOT_COMPLETE",	( u32 ) DIALOG_DID_NOT_COMPLETE );
@@ -378,7 +429,7 @@ void MOAIFacebook::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIFacebook::NotifyLoginComplete ( int code ) {
+void MOAIFacebookAndroid::NotifyLoginComplete ( int code ) {
 
 	MOAILuaRef& callback = this->mListeners [ SESSION_DID_NOT_LOGIN ];
 	if ( code == DIALOG_RESULT_SUCCESS ) {
@@ -395,7 +446,7 @@ void MOAIFacebook::NotifyLoginComplete ( int code ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIFacebook::NotifyDialogComplete ( int code ) {
+void MOAIFacebookAndroid::NotifyDialogComplete ( int code ) {
 	
 	MOAILuaRef& callback = this->mListeners [ DIALOG_DID_NOT_COMPLETE ];
 	if ( code == DIALOG_RESULT_SUCCESS ) {
@@ -418,13 +469,13 @@ void MOAIFacebook::NotifyDialogComplete ( int code ) {
 //----------------------------------------------------------------//
 extern "C" void Java_com_ziplinegames_moai_MoaiFacebook_AKUNotifyFacebookLoginComplete ( JNIEnv* env, jclass obj, jint code ) {
 
-	MOAIFacebook::Get ().NotifyLoginComplete ( code );
+	MOAIFacebookAndroid::Get ().NotifyLoginComplete ( code );
 }
 
 //----------------------------------------------------------------//
 extern "C" void Java_com_ziplinegames_moai_MoaiFacebook_AKUNotifyFacebookDialogComplete ( JNIEnv* env, jclass obj, jint code ) {
 
-	MOAIFacebook::Get ().NotifyDialogComplete ( code );
+	MOAIFacebookAndroid::Get ().NotifyDialogComplete ( code );
 }
 
 #endif

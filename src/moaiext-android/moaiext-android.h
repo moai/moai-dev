@@ -6,5 +6,5 @@
 #include <moaiext-android/MOAIBilling.h>
 #include <moaiext-android/MOAICrittercismAndroid.h>
 #include <moaiext-android/MOAITapjoyAndroid.h>
-#include <moaiext-android/MOAIFacebook.h>
+#include <moaiext-android/MOAIFacebookAndroid.h>
 #include <moaiext-android/MOAINotifications.h>

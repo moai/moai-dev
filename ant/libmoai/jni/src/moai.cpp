@@ -292,8 +292,8 @@
 #endif
 
 #ifndef DISABLE_FACEBOOK
-		MOAIFacebook::Affirm ();
-		REGISTER_LUA_CLASS ( MOAIFacebook );
+		MOAIFacebookAndroid::Affirm ();
+		REGISTER_LUA_CLASS ( MOAIFacebookAndroid );
 #endif
 
 		AKUInit ();

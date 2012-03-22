@@ -33,10 +33,10 @@ private:
 	MOAITapjoyIOSVideoAdDelegate* mVideoAdDelegate;
 
 	//----------------------------------------------------------------//
-	static int		_getUserId						( lua_State* L );
-	static int		_initVideoAds					( lua_State* L );
-	static int		_requestTapjoyConnect			( lua_State* L );
-	static int		_showOffers						( lua_State* L );
+	static int	_getUserId				( lua_State* L );
+	static int	_initVideoAds			( lua_State* L );
+	static int	_requestTapjoyConnect	( lua_State* L );
+	static int	_showOffers				( lua_State* L );
 	
 public:
 

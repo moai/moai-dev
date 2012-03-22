@@ -265,4 +265,5 @@ MOAITransform2D = MOAITransform.extend (
 )
 
 MOAICrittercism = MOAICrittercismAndroid or MOAICrittercismIOS
+MOAIFacebook = MOAIFacebookAndroid or MOAIFacebookIOS
 MOAITapjoy = MOAITapjoyAndroid or MOAITapjoyIOS
