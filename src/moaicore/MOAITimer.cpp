@@ -21,7 +21,7 @@
 int MOAITimer::_getTime( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITimer, "U" )
 
-	lua_pushnumber ( L, self->mTime );
+	lua_pushnumber ( L, self->GetTime ());
 	return 1;
 }
 
@@ -159,7 +159,7 @@ bool MOAITimer::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 		attrID = UNPACK_ATTR ( attrID );
 		
 		if ( attrID == ATTR_TIME ) {
-			this->mTime = attrOp.Apply ( this->mTime, op, MOAINode::ATTR_READ_WRITE );
+			attrOp.Apply ( this->GetTime (), op, MOAINode::ATTR_READ );
 			return true;
 		}
 	}
