@@ -69,7 +69,7 @@ int MOAITimer::_setMode ( lua_State* L ) {
 
 	self->mMode = state.GetValue < int >( 2, NORMAL );
 	
-	if( self->mMode == REVERSE || self->mMode == LOOP_REVERSE ){
+	if( self->mMode == REVERSE || self->mMode == LOOP_REVERSE || self->mMode == CONTINUE_REVERSE ){
 		self->mDirection = -1.0f;
 	}
 	else {
