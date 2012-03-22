@@ -293,6 +293,9 @@
     <ClInclude Include="..\..\src\uslscore\USVec3D.h">
       <Filter>math</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\uslscore\USUnique.h">
+      <Filter>util</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\uslscore\USAdapterInfo_win32.cpp">
@@ -460,6 +463,12 @@
     </ClCompile>
     <ClCompile Include="..\..\src\uslscore\USTrig.cpp">
       <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslscore\USUnique_linux.cpp">
+      <Filter>util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\uslscore\USUnique_win32.cpp">
+      <Filter>util</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
