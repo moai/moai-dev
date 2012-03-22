@@ -3,7 +3,7 @@
 
 #include <moaiext-android/MOAIAdColony.h>
 #include <moaiext-android/MOAIApp.h>
-#include <moaiext-android/MOAIBilling.h>
+#include <moaiext-android/MOAIBillingAndroid.h>
 #include <moaiext-android/MOAICrittercismAndroid.h>
 #include <moaiext-android/MOAITapjoyAndroid.h>
 #include <moaiext-android/MOAIFacebookAndroid.h>

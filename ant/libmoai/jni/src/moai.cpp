@@ -277,8 +277,8 @@
 #endif
 
 #ifndef DISABLE_BILLING
-		MOAIBilling::Affirm ();
-		REGISTER_LUA_CLASS ( MOAIBilling );
+		MOAIBillingAndroid::Affirm ();
+		REGISTER_LUA_CLASS ( MOAIBillingAndroid );
 #endif
 
 #ifndef DISABLE_CRITTERCISM

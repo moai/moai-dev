@@ -264,6 +264,7 @@ MOAITransform2D = MOAITransform.extend (
 	end
 )
 
+MOAIBilling = MOAIBillingAndroid or MOAIBillingIOS
 MOAICrittercism = MOAICrittercismAndroid or MOAICrittercismIOS
 MOAIFacebook = MOAIFacebookAndroid or MOAIFacebookIOS
 MOAINotifications = MOAINotificationsAndroid or MOAINotificationsIOS
