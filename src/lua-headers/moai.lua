@@ -145,6 +145,12 @@ MOAIProp2D = MOAIProp.extend (
 		function interface.setFrame ( self, xMin, yMin, xMax, yMax )
 			super.setFrame ( self, xMin, yMin, 0, xMax, yMax, 0 )
 		end
+		
+		function interface.getRect ( self )			
+			print ( self )
+			local xMin, yMin, zMin, xMax, yMax, zMax = super.getBounds ( self )
+			return xMin, yMin, xMax, yMax
+		end
 	end,
 	
 	-- extend the class
