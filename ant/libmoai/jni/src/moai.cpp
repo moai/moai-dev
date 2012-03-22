@@ -287,8 +287,8 @@
 #endif
 
 #ifndef DISABLE_ADCOLONY
-		MOAIAdColony::Affirm ();
-		REGISTER_LUA_CLASS ( MOAIAdColony );
+		MOAIAdColonyAndroid::Affirm ();
+		REGISTER_LUA_CLASS ( MOAIAdColonyAndroid );
 #endif
 
 #ifndef DISABLE_FACEBOOK

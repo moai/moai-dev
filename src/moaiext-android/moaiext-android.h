@@ -1,7 +1,7 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#include <moaiext-android/MOAIAdColony.h>
+#include <moaiext-android/MOAIAdColonyAndroid.h>
 #include <moaiext-android/MOAIApp.h>
 #include <moaiext-android/MOAIBillingAndroid.h>
 #include <moaiext-android/MOAICrittercismAndroid.h>

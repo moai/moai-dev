@@ -1418,10 +1418,6 @@
 		07D1A8A713EDFD8300604979 /* MOAIBlendMode.h in Headers */ = {isa = PBXBuildFile; fileRef = 07D1A89F13EDFD8300604979 /* MOAIBlendMode.h */; };
 		07D1A8A813EDFD8300604979 /* MOAIFrameBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07D1A8A013EDFD8300604979 /* MOAIFrameBuffer.cpp */; };
 		07D1A8A913EDFD8300604979 /* MOAIFrameBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 07D1A8A113EDFD8300604979 /* MOAIFrameBuffer.h */; };
-		07D7409714F59E1F00A6CBA8 /* MOAIAdColony.h in Headers */ = {isa = PBXBuildFile; fileRef = 0725E2E414F459E600551DB5 /* MOAIAdColony.h */; };
-		07D7409814F59E1F00A6CBA8 /* MOAIAdColony.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0725E2E514F459E600551DB5 /* MOAIAdColony.mm */; };
-		07D740B414F5B1A100A6CBA8 /* AKU-adcolony.mm in Sources */ = {isa = PBXBuildFile; fileRef = 07D740B214F5B1A100A6CBA8 /* AKU-adcolony.mm */; };
-		07D740B514F5B1A100A6CBA8 /* AKU-adcolony.h in Headers */ = {isa = PBXBuildFile; fileRef = 07D740B314F5B1A100A6CBA8 /* AKU-adcolony.h */; };
 		07E6C630140C490B004D1227 /* MOAIGameCenter.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E6C62E140C490B004D1227 /* MOAIGameCenter.h */; };
 		07E885BF13BE3E78008D75AA /* MOAIParticleDistanceEmitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07E885BB13BE3E78008D75AA /* MOAIParticleDistanceEmitter.cpp */; };
 		07E885C013BE3E78008D75AA /* MOAIParticleDistanceEmitter.h in Headers */ = {isa = PBXBuildFile; fileRef = 07E885BC13BE3E78008D75AA /* MOAIParticleDistanceEmitter.h */; };
@@ -3166,6 +3162,10 @@
 		E9C4063D151864A100C7AB04 /* MOAILayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E91A4C2E15181FDF0008F1A5 /* MOAILayer.cpp */; };
 		E9CA1DFE151AD5B4005F39B7 /* MOAINotificationsIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = E9CA1DFC151AD5B4005F39B7 /* MOAINotificationsIOS.h */; };
 		E9CA1DFF151AD5B4005F39B7 /* MOAINotificationsIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = E9CA1DFD151AD5B4005F39B7 /* MOAINotificationsIOS.mm */; };
+		E9CA1E02151AE80E005F39B7 /* MOAIAdColonyIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = E9CA1E00151AE80E005F39B7 /* MOAIAdColonyIOS.h */; };
+		E9CA1E03151AE80E005F39B7 /* MOAIAdColonyIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = E9CA1E01151AE80E005F39B7 /* MOAIAdColonyIOS.mm */; };
+		E9CA1E04151AEE1D005F39B7 /* AKU-adcolony.h in Headers */ = {isa = PBXBuildFile; fileRef = 07D740B314F5B1A100A6CBA8 /* AKU-adcolony.h */; };
+		E9CA1E05151AEE21005F39B7 /* AKU-adcolony.mm in Sources */ = {isa = PBXBuildFile; fileRef = 07D740B214F5B1A100A6CBA8 /* AKU-adcolony.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -3741,8 +3741,6 @@
 		071398D514F46E9E00745A12 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS5.0.sdk/System/Library/Frameworks/MediaPlayer.framework; sourceTree = DEVELOPER_DIR; };
 		071398D614F46E9E00745A12 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS5.0.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
 		071398D714F46E9E00745A12 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS5.0.sdk/System/Library/Frameworks/SystemConfiguration.framework; sourceTree = DEVELOPER_DIR; };
-		0725E2E414F459E600551DB5 /* MOAIAdColony.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIAdColony.h; path = "moaiext-iphone/MOAIAdColony.h"; sourceTree = "<group>"; };
-		0725E2E514F459E600551DB5 /* MOAIAdColony.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIAdColony.mm; path = "moaiext-iphone/MOAIAdColony.mm"; sourceTree = "<group>"; };
 		0725E2EC14F45AE200551DB5 /* AdColonyPublic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AdColonyPublic.h; path = "../../3rdparty/adcolonyiOS-197/Library/AdColonyPublic.h"; sourceTree = "<group>"; };
 		0725E2EE14F45B0C00551DB5 /* libAdColony.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libAdColony.a; path = "../../3rdparty/adcolonyiOS-197/Library/libAdColony.a"; sourceTree = "<group>"; };
 		073D58591459269600289D5C /* libmoai-ios-tapjoy.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-tapjoy.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -5304,6 +5302,8 @@
 		E9A41ADB151ABEDC00650276 /* MOAIFacebookIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIFacebookIOS.mm; path = "moaiext-iphone/MOAIFacebookIOS.mm"; sourceTree = "<group>"; };
 		E9CA1DFC151AD5B4005F39B7 /* MOAINotificationsIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAINotificationsIOS.h; path = "moaiext-iphone/MOAINotificationsIOS.h"; sourceTree = "<group>"; };
 		E9CA1DFD151AD5B4005F39B7 /* MOAINotificationsIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAINotificationsIOS.mm; path = "moaiext-iphone/MOAINotificationsIOS.mm"; sourceTree = "<group>"; };
+		E9CA1E00151AE80E005F39B7 /* MOAIAdColonyIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIAdColonyIOS.h; path = "moaiext-iphone/MOAIAdColonyIOS.h"; sourceTree = "<group>"; };
+		E9CA1E01151AE80E005F39B7 /* MOAIAdColonyIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIAdColonyIOS.mm; path = "moaiext-iphone/MOAIAdColonyIOS.mm"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -7414,8 +7414,8 @@
 				07D740B314F5B1A100A6CBA8 /* AKU-adcolony.h */,
 				CD1D0BA213599FD200802A3C /* AKU-iphone.h */,
 				CD1D0BA313599FD200802A3C /* AKU-iphone.mm */,
-				0725E2E414F459E600551DB5 /* MOAIAdColony.h */,
-				0725E2E514F459E600551DB5 /* MOAIAdColony.mm */,
+				E9CA1E00151AE80E005F39B7 /* MOAIAdColonyIOS.h */,
+				E9CA1E01151AE80E005F39B7 /* MOAIAdColonyIOS.mm */,
 				CDD06EC81398BA6200AB0420 /* MOAIApp.h */,
 				CDD06EC91398BA6200AB0420 /* MOAIApp.mm */,
 				E9A41AB5151AAA5400650276 /* MOAICrittercismIOS.h */,
@@ -10112,7 +10112,6 @@
 				E9940E4014B7A4A0006465CC /* USTrig.h in Headers */,
 				E9940E4414B7A4A0006465CC /* USTypedPtr.h in Headers */,
 				E9940E4814B7A4A0006465CC /* USXmlReader.h in Headers */,
-				07D740B514F5B1A100A6CBA8 /* AKU-adcolony.h in Headers */,
 				66459FBC1511641F0075BF13 /* MOAIAudioSampler.h in Headers */,
 				075BA091151949C50002E925 /* MOAIHttpTaskCurl.h in Headers */,
 				075BA095151949C50002E925 /* MOAIHttpTaskNaCl.h in Headers */,
@@ -10132,7 +10131,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				071398D214F46C5A00745A12 /* AdColonyPublic.h in Headers */,
-				07D7409714F59E1F00A6CBA8 /* MOAIAdColony.h in Headers */,
+				E9CA1E02151AE80E005F39B7 /* MOAIAdColonyIOS.h in Headers */,
+				E9CA1E04151AEE1D005F39B7 /* AKU-adcolony.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12303,7 +12303,6 @@
 				E9940E3E14B7A4A0006465CC /* USTrig.cpp in Sources */,
 				E9940E4214B7A4A0006465CC /* USTypedPtr.cpp in Sources */,
 				E9940E4614B7A4A0006465CC /* USXmlReader.cpp in Sources */,
-				07D740B414F5B1A100A6CBA8 /* AKU-adcolony.mm in Sources */,
 				66459FB41511638B0075BF13 /* AKU-audiosampler.cpp in Sources */,
 				66459FBA1511641F0075BF13 /* MOAIAudioSampler.cpp in Sources */,
 				075BA08F151949C50002E925 /* MOAIHttpTaskCurl.cpp in Sources */,
@@ -12323,7 +12322,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				07D7409814F59E1F00A6CBA8 /* MOAIAdColony.mm in Sources */,
+				E9CA1E03151AE80E005F39B7 /* MOAIAdColonyIOS.mm in Sources */,
+				E9CA1E05151AEE21005F39B7 /* AKU-adcolony.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -169,12 +169,12 @@ void MOAITapjoyIOS::NotifyVideoAdClose () {
 	#pragma mark Protocol MOAITapjoyIOSVideoAdDelegate
 	//================================================================//
 	
-	-( void ) videoAdBegan {
+	- ( void ) videoAdBegan {
 	
 		MOAITapjoyIOS::Get ().NotifyVideoAdBegin ();
 	}
 	
-	-( void ) videoAdClosed {
+	- ( void ) videoAdClosed {
 	
 		MOAITapjoyIOS::Get ().NotifyVideoAdClose ();
 	}

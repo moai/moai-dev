@@ -11,6 +11,5 @@
 #import <AdColonyPublic.h>
 
 AKU_API void	AKUAdColonyInit				();
-AKU_API void	AKUAdColonySetDelegate		( id < AdColonyDelegate > delegate );
 
 #endif
