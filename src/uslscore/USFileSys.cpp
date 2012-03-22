@@ -63,6 +63,10 @@ bool USFileSys::DeleteDirectory ( cc8* path, bool force, bool recursive ) {
 	if ( recursive ) {
 		dirItr.Start ();
 		while ( dirItr.NextDirectory ()) {
+			if( strcmp(dirItr.Current(), "..") == 0 ||
+				strcmp(dirItr.Current(), ".") == 0 ) {
+				continue;
+			}
 			USFileSys::DeleteDirectory ( dirItr.Current (), force, recursive );
 		}
 	}
