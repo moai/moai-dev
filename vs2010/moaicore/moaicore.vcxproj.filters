@@ -531,21 +531,6 @@
     <ClCompile Include="..\..\src\moaicore\MOAILayerBridge.cpp">
       <Filter>src\layer</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAIUrlMgr_nacl.cpp">
-      <Filter>src\web</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAIHttpTask_curl.cpp">
-      <Filter>src\web</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAIHttpTaskBase.cpp">
-      <Filter>src\web</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAIHttpTaskInfo_nacl.cpp">
-      <Filter>src\web</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\moaicore\MOAIUrlMgr_curl.cpp">
-      <Filter>src\web</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAICamera.cpp">
       <Filter>src\camera</Filter>
     </ClCompile>
@@ -578,6 +563,21 @@
     </ClCompile>
     <ClCompile Include="..\..\src\moaicore\MOAIRenderMgr.cpp">
       <Filter>src\render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIHttpTaskBase.cpp">
+      <Filter>src\web</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIHttpTaskCurl.cpp">
+      <Filter>src\web</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIHttpTaskNaCl.cpp">
+      <Filter>src\web</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIUrlMgrCurl.cpp">
+      <Filter>src\web</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\moaicore\MOAIUrlMgrNaCl.cpp">
+      <Filter>src\web</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1034,18 +1034,6 @@
     <ClInclude Include="..\..\src\moaicore\MOAILayerBridge.h">
       <Filter>src\layer</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\MOAIHttpTask_curl.h">
-      <Filter>src\web</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\MOAIHttpTaskBase.h">
-      <Filter>src\web</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\MOAIHttpTaskInfo_nacl.h">
-      <Filter>src\web</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\moaicore\MOAIUrlMgr.h">
-      <Filter>src\web</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAICamera.h">
       <Filter>src\camera</Filter>
     </ClInclude>
@@ -1108,6 +1096,21 @@
     </ClInclude>
     <ClInclude Include="..\..\src\moaicore\MOAIRenderable.h">
       <Filter>src\render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIUrlMgrNaCl.h">
+      <Filter>src\web</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIHttpTaskBase.h">
+      <Filter>src\web</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIHttpTaskCurl.h">
+      <Filter>src\web</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIHttpTaskNaCl.h">
+      <Filter>src\web</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\moaicore\MOAIUrlMgrCurl.h">
+      <Filter>src\web</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

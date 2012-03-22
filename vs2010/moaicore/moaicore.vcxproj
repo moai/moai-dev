@@ -293,8 +293,8 @@
     <ClCompile Include="..\..\src\moaicore\MOAIGridPathGraph.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIGridSpace.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIHttpTaskBase.cpp" />
-    <ClCompile Include="..\..\src\moaicore\MOAIHttpTaskInfo_nacl.cpp" />
-    <ClCompile Include="..\..\src\moaicore\MOAIHttpTask_curl.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAIHttpTaskCurl.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAIHttpTaskNaCl.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIImage-jpg.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIImage-png.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIImage.cpp" />
@@ -360,8 +360,8 @@
     <ClCompile Include="..\..\src\moaicore\MOAIShader.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAITransform.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAITransformBase.cpp" />
-    <ClCompile Include="..\..\src\moaicore\MOAIUrlMgr_curl.cpp" />
-    <ClCompile Include="..\..\src\moaicore\MOAIUrlMgr_nacl.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAIUrlMgrCurl.cpp" />
+    <ClCompile Include="..\..\src\moaicore\MOAIUrlMgrNaCl.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIVertexBuffer.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIVertexFormat.cpp" />
     <ClCompile Include="..\..\src\moaicore\MOAIVertexFormatMgr.cpp" />
@@ -458,8 +458,8 @@
     <ClInclude Include="..\..\src\moaicore\MOAIGridPathGraph.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIGridSpace.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIHttpTaskBase.h" />
-    <ClInclude Include="..\..\src\moaicore\MOAIHttpTaskInfo_nacl.h" />
-    <ClInclude Include="..\..\src\moaicore\MOAIHttpTask_curl.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAIHttpTaskCurl.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAIHttpTaskNaCl.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIImage.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIImageTexture.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIIndexBuffer.h" />
@@ -530,7 +530,8 @@
     <ClInclude Include="..\..\src\moaicore\MOAIShader.h" />
     <ClInclude Include="..\..\src\moaicore\MOAITransform.h" />
     <ClInclude Include="..\..\src\moaicore\MOAITransformBase.h" />
-    <ClInclude Include="..\..\src\moaicore\MOAIUrlMgr.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAIUrlMgrCurl.h" />
+    <ClInclude Include="..\..\src\moaicore\MOAIUrlMgrNaCl.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIVertexBuffer.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIVertexFormat.h" />
     <ClInclude Include="..\..\src\moaicore\MOAIVertexFormatMgr.h" />
