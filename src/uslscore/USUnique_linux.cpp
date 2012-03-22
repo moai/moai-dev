@@ -23,7 +23,7 @@ STLString USUnique::GetGUID () {
 	kashmir::uuid_t uuid;
     
 	devrandom >> uuid;
-    buffer << uuid << '\n';
+    buffer << uuid;
 
     return buffer.str ();
 	

@@ -3,7 +3,6 @@
 
 #ifndef	ROOT_TYPEID_H
 #define	ROOT_TYPEID_H
-#pragma once
 
 //================================================================//
 // USTypeIDBase
